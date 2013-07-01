@@ -9711,21 +9711,21 @@ static bool pc_readdb_job_maxhpsp(char* fields[], int columns, int current)
 
 	startlvl = atoi(fields[0]);
 	if(startlvl > MAX_LEVEL || startlvl<1){
-		ShowError("pc_readdb_job_maxhpsp: Invalid startlvl %d specified.\n", startlvl);
+		ShowError("pc_readdb_job_maxhpsp: Invalid start level %d specified.\n", startlvl);
 		return false;
 	}
 	maxlvl = atoi(fields[1]);
 	if(maxlvl > MAX_LEVEL || maxlvl<1){
-		ShowError("pc_readdb_job_maxhpsp: Invalid maxlevel %d specified.\n", maxlvl);
+		ShowError("pc_readdb_job_maxhpsp: Invalid max level %d specified.\n", maxlvl);
 		return false;
 	}
 	if((maxlvl-startlvl+1+4) != columns){ //nb values = (maxlvl-startlvl)+1-index1stvalue
-		ShowError("pc_readdb_job_maxhpsp: Number of colums=%d defined is too low for startlevel=%d,maxlevel=%d\n",columns,startlvl,maxlvl);
+		ShowError("pc_readdb_job_maxhpsp: Number of columns %d defined is too low for start level %d, max level %d.\n",columns,startlvl,maxlvl);
 		return false;
 	}
 	type = atoi(fields[3]);
 	if(type < 0 || type > 1){
-		ShowError("pc_readdb_job_maxhpsp: Invalid type %d specified, only [0;1] is valid.\n", type);
+		ShowError("pc_readdb_job_maxhpsp: Invalid type %d specified.\n", type);
 		return false;
 	}
 	job_count = pc_split_atoi(fields[2],jobs,':',CLASS_COUNT);
@@ -9751,13 +9751,13 @@ static bool pc_readdb_job_maxhpsp(char* fields[], int columns, int current)
 					level++; // This tells us when we didn't use the database so we know what field to grab
 				}
 				if(oldval > val && i > startlvl && i <= maxlvl) // Let's not warn about the formula table giving us a higher value, only DB
-					ShowWarning("Warn, HP value is lower than previous one for (job=%d,oldval=%d,val=%d,lvl=%d hp_factor=%d,hp_multiplicator=%d,k=%d)\n",
+					ShowWarning("pc_readdb_job_maxhpsp: HP value is lower than previous level (job=%d,oldval=%d,val=%d,lvl=%d hp_factor=%d,hp_multiplicator=%d,k=%d).\n",
 						job_id,oldval,val,i+1,job_info[idx].hp_factor,job_info[idx].hp_multiplicator,k);
 				val = min(INT_MAX,val);
 				job_info[idx].hp_table[i] = val;
 				oldval = val;
 			}
-	//		ShowInfo("Have readen hp table for job=%d\n{",job_id);
+	//		ShowInfo("Finished reading HP table for job %d.\n{",job_id);
 	//		for(i=0; i<=MAX_LEVEL; i++ )
 	//			printf("%d,",job_info[idx].hp_table[i]);
 	//		printf("\n}\n");
@@ -9773,13 +9773,13 @@ static bool pc_readdb_job_maxhpsp(char* fields[], int columns, int current)
 					level++; // This tells us when we didn't use the database so we know what field to grab
 				}
 				if(oldval > val && i > startlvl && i <= maxlvl) // Let's not warn about the formula table giving us a higher value, only DB
-					ShowWarning("Warn, SP value is lower than previous one for (job=%d,oldval=%d,val=%d,lvl=%d,sp_factor=%d)\n",
+					ShowWarning("pc_readdb_job_maxhpsp: SP value is lower than previous level (job=%d,oldval=%d,val=%d,lvl=%d,sp_factor=%d).\n",
 						job_id,oldval,val,i+1,job_info[idx].sp_factor);
 				val = min(INT_MAX,val);
 				job_info[idx].sp_table[i] = val;
 				oldval = val;
 			}
-	//		ShowInfo("Have readen sp table for job=%d\n{",job_id);
+	//		ShowInfo("Finished reading SP table for job %d.\n{",job_id);
 	//		for(i=0; i<MAX_LEVEL; i++ )
 	//			printf("%d,",job_info[idx].sp_table[i]);
 	//		printf("\n}\n");
@@ -9788,7 +9788,7 @@ static bool pc_readdb_job_maxhpsp(char* fields[], int columns, int current)
 	return true;
 }
 
-//Reading job_maxhpsp.txt line
+//Reading job_exp.txt line
 //Max Level,Class list,Type (0 - Base Exp; 1 - Job Exp),Exp/lvl...
 static bool pc_readdb_job_exp(char* fields[], int columns, int current)
 {
@@ -9802,12 +9802,12 @@ static bool pc_readdb_job_exp(char* fields[], int columns, int current)
 		return false;
 	}
 	if((maxlvl+3) > columns){ //nb values = (maxlvl-startlvl)+1-index1stvalue
-		ShowError("pc_readdb_job_exp: Number of colums=%d defined is too low for maxlevel=%d\n",columns,maxlvl);
+		ShowError("pc_readdb_job_exp: Number of columns %d defined is too low for max level %d.\n",columns,maxlvl);
 		return false;
 	}
 	type = atoi(fields[2]);
 	if(type < 0 || type > 1){
-		ShowError("pc_readdb_job_exp: Invalid type %d specified, only [0;1] is valid.\n", type);
+		ShowError("pc_readdb_job_exp: Invalid type %d specified.\n", type);
 		return false;
 	}
 	job_count = pc_split_atoi(fields[1],jobs,':',CLASS_COUNT);

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Euphy
 //===== Current Version: ===================================== 
-//= 1.1b
+//= 1.1a
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -14,7 +14,6 @@
 //= 1.0 First Version. [Euphy]
 //= 1.1 Optimized. [Euphy]
 //= 1.1a Bug fixes. [Lemongrass]
-//= 1.1b Added missing items to Guardian of Power. [Euphy]
 //============================================================ 
 
 // Arch Bishop Enchants :: coin_arc
@@ -566,16 +565,16 @@ mora,152,97,5	script	Guardian of Power#pa082	515,{
 	next;
 	switch(.@job) {
 	case 0: // Rune Knight
-		setarray .@items[0],2475,2476,2574,2575,15036,15037,2883,2884;
-		set .@i, select("Cancel:Ur's Greaves (Shoes):Peuz's Greaves (Shoes):Ur's Manteau (Garment):Peuz's Manteau (Garment):Ur's Plate (Armor):Peuz Plate (Armor):Ur's Seal (Accessory):Peuz's Seal (Accessory)")-2;
+		setarray .@items[0],2475,2476,2574,2575;
+		set .@i, select("Cancel:Ur's Greaves (Shoes):Peuz's Greaves (Shoes):Ur's Manteau (Garment):Peuz's Manteau (Garment)")-2;
 		break;
 	case 1: // Guillotine Cross
-		setarray .@items[0],2477,2478,2577,2578,15038,15039,2886,2887;
-		set .@i, select("Cancel:Sapha Shoes (Shoes):Nab Shoes (Shoes):Sapha Hood (Garment):Nab Hood (Garment):Sapha's Cloth (Armor):Nab's Cloth (Armor):Sapha Ring (Accessory):Nab Ring (Accessory)")-2;
+		setarray .@items[0],2477,2478,2577,2578;
+		set .@i, select("Cancel:Sapha Shoes (Shoes):Nab Shoes (Shoes):Sapha Hood (Garment):Nab Hood (Garment)")-2;
 		break;
 	case 2: // Ranger
-		setarray .@items[0],2479,2480,2580,2581,15042,15043,2890,2891;
-		set .@i, select("Cancel:White Wing Boots (Shoes):Black Wing Boots (Shoes):White Wing Manteau (Garment):Black Wing Manteau (Garment):White Wing Suit (Armor):Black Wing Suit (Armor):White Wing Brooch (Accessory):Black Wing Brooch (Accessory)")-2;
+		setarray .@items[0],2479,2480,2580,2581;
+		set .@i, select("Cancel:White Wing Boots (Shoes):Black Wing Boots (Shoes):White Wing Manteau (Garment):Black Wing Manteau (Garment)")-2;
 		break;
 	}
 	if (.@i == -1) {

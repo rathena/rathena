@@ -883,6 +883,12 @@ RID with 'attachrid' (see below).
 The above also applies to, the last three labels, the only difference is that
 these labels are used exclusively for WoE SE, and are called independently.
 
+OnInstanceInit:
+
+This label will be executed when an instance is created and initialized through
+the 'instance_create' command. It will run again if @reloadscript is used while
+an instance is in progress.
+
 OnTouch:
 
 This label will be executed if a trigger area is defined for the NPC object it's 
