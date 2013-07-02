@@ -760,6 +760,13 @@ IG_S_Grade_Coin_Bag	59
 IG_A_Grade_Coin_Bag	60
 IG_Advanced_Weapons_Box	61
 IG_Splendid_Box	62
+IG_CardAlbum_Armor	63
+IG_CardAlbum_Helm	64
+IG_CardAlbum_Acc	65
+IG_CardAlbum_Shoes	66
+IG_CardAlbum_Shield	67
+IG_CardAlbum_Weapon	68
+IG_CardAlbum_Garment	69
 
 SC_ALL	-1
 SC_STONE	0

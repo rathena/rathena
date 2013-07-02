@@ -2288,6 +2288,9 @@
 12300,0,0,0,0,0,0,0,"Revisiting Etran"
 12301,0,0,0,0,0,0,0,"Two remaining friends"
 
+13000,0,0,0,0,0,0,0,"RWC2011Card Gathering"
+13001,82800,0,0,0,0,0,0,"RWC2011Card Gathering - Hold"
+
 13050,0,0,0,0,0,0,0,"The Laphine that loves the land"
 13051,0,0,0,0,0,0,0,"The singing Laphine"
 13052,0,0,0,0,0,0,0,"The watering Laphine"
