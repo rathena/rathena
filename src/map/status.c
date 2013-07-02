@@ -7860,7 +7860,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		{
 			struct block_list *src = val2?map_id2bl(val2):NULL;
 			struct status_change *sc2 = src?status_get_sc(src):NULL;
-			int type2 = ((type == SC_TINDER_BREAKER2)?SC_TINDER_BREAKER:SC_CLOSECONFINE);
+			enum sc_type type2 = ((type == SC_TINDER_BREAKER2)?SC_TINDER_BREAKER:SC_CLOSECONFINE);
 			struct status_change_entry *sce2 = sc2?sc2->data[type2]:NULL;
 
 			if (src && sc2) {
@@ -8724,15 +8724,15 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val4 = 50; //def reduc %
 			break;
 		case SC_GRANITIC_ARMOR:
-			val2 = 2*val1; //dmg hp reduction
-			val3 = (6*status_get_max_hp(src))/100; //dmg hp on status end
-			val4 = 5 * val1; //unknow formula
+			val2 = 2*val1; //dmg reduction
+			val3 = 6*val1; //dmg taken on status end (6%:12%:18%:24%:30%)
+			val4 = 5*val1; //unknow formula
 			break;
 		case SC_MAGMA_FLOW:
 			val2 = 3*val1; //activation chance
 			break;
 		case SC_PYROCLASTIC:
-			val2 += 10*val1+status_get_lv(src); //atk bonus
+			val2 += 10*val1; //atk bonus
 			val3 = 2*val1;//Chance To AutoCast Hammer Fall %
 			break;
 		case SC_PARALYSIS: //[Lighta] need real info
@@ -9305,16 +9305,17 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	vd = status_get_viewdata(bl);
 	calc_flag = StatusChangeFlagTable[type];
 	switch(type){
-		case SC_GRANITIC_ARMOR:{
-		    int dammage = status->max_hp*sce->val3/100;
-		    if(status->hp < dammage) //to not kill him
-			dammage = status->hp-1;
-		    status_damage(NULL, bl, dammage,0,0,1);
+		case SC_GRANITIC_ARMOR:
+			{
+				int damage = status->max_hp*sce->val3/100;
+				if(status->hp < damage) //to not kill him
+					damage = status->hp-1;
+				status_damage(NULL,bl,damage,0,0,1);
+			}
 		    break;
-		}
 		case SC_PYROCLASTIC:
 		    if(bl->type == BL_PC)
-			skill_break_equip(bl,bl,EQP_WEAPON,10000,BCT_SELF);
+				skill_break_equip(bl,bl,EQP_WEAPON,10000,BCT_SELF);
 		    break;
 		case SC_WEDDING:
 		case SC_XMAS:
@@ -9498,7 +9499,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_CLOSECONFINE2:{
 			struct block_list *src = sce->val2?map_id2bl(sce->val2):NULL;
 			struct status_change *sc2 = src?status_get_sc(src):NULL;
-			int type2 = ((type==SC_CLOSECONFINE2)?SC_CLOSECONFINE:SC_TINDER_BREAKER);
+			enum sc_type type2 = ((type==SC_CLOSECONFINE2)?SC_CLOSECONFINE:SC_TINDER_BREAKER);
 			if (src && sc2 && sc2->data[type2]) {
 				//If status was already ended, do nothing.
 				//Decrease count
