@@ -10092,27 +10092,29 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 	}
 
 	// if player ignores everyone
-	if (dstsd->state.ignoreAll) {
+	if (dstsd->state.ignoreAll && pc_get_group_level(sd) <= pc_get_group_level(dstsd)) {
 		if (dstsd->sc.option & OPTION_INVISIBLE && pc_get_group_level(sd) < pc_get_group_level(dstsd))
-			clif_wis_end(fd, 1); // 1: target character is not loged in
+			clif_wis_end(fd, 1); // 1: target character is not logged in
 		else
 			clif_wis_end(fd, 3); // 3: everyone ignored by target
 		return;
 	}
 
 	// if player is autotrading
-	if( dstsd->state.autotrade == 1 ) {
+	if (dstsd->state.autotrade == 1) {
 		char output[256];
 		sprintf(output, "%s is in autotrade mode and cannot receive whispered messages.", dstsd->status.name);
 		clif_wis_message(fd, wisp_server_name, output, strlen(output) + 1);
 		return;
 	}
 
-	// if player ignores the source character
-	ARR_FIND(0, MAX_IGNORE_LIST, i, dstsd->ignore[i].name[0] == '\0' || strcmp(dstsd->ignore[i].name, sd->status.name) == 0);
-	if(i < MAX_IGNORE_LIST && dstsd->ignore[i].name[0] != '\0') { // source char present in ignore list
-		clif_wis_end(fd, 2); // 2: ignored by target
-		return;
+	if (pc_get_group_level(sd) <= pc_get_group_level(dstsd)) {
+		// if player ignores the source character
+		ARR_FIND(0, MAX_IGNORE_LIST, i, dstsd->ignore[i].name[0] == '\0' || strcmp(dstsd->ignore[i].name, sd->status.name) == 0);
+		if(i < MAX_IGNORE_LIST && dstsd->ignore[i].name[0] != '\0') { // source char present in ignore list
+			clif_wis_end(fd, 2); // 2: ignored by target
+			return;
+		}
 	}
 
 	// notify sender of success

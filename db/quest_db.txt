@@ -949,6 +949,8 @@
 7206,0,0,0,0,0,0,0,"New Day for Cheshire"
 7207,0,0,0,0,0,0,0,"Cheshire's Box"
 7208,86400,0,0,0,0,0,0,"Wait for Cheshire?"
+7209,0,0,0,0,0,0,0,"Forget the box."
+7210,0,0,0,0,0,0,0,"Daily delivery"
 
 // Misty Forest Labyrinth
 7211,9000,0,0,0,0,0,0,"Misty Forest Labyrinth Exploration"
@@ -1497,10 +1499,10 @@
 9058,0,0,0,0,0,0,0,"O'Riley's Request"
 9059,0,0,0,0,0,0,0,"Happy St. Patrick's Day"
 9117,0,0,0,0,0,0,0,"Lina's Curse"
-9118,0,0,0,0,0,0,0,"Lina's Curse - Deviruchi Hunt"
-9119,0,0,0,0,0,0,0,"Lina's Curse - Wraith Dead Hunt"
-9120,0,0,0,0,0,0,0,"Lina's Curse - Dullahan Hunt"
-9121,0,0,0,0,0,0,0,"Lina's Curse - Nightmare Terror Hunt"
+9118,0,1109,50,0,0,0,0,"Lina's Curse - Deviruchi Hunt"
+9119,0,1291,50,0,0,0,0,"Lina's Curse - Wraith Dead Hunt"
+9120,0,1504,50,0,0,0,0,"Lina's Curse - Dullahan Hunt"
+9121,0,1379,50,0,0,0,0,"Lina's Curse - Nightmare Terror Hunt"
 9122,0,0,0,0,0,0,0,"Lina's Curse"
 9123,0,0,0,0,0,0,0,"Lina's Curse"
 9024,0,0,0,0,0,0,0,"An errand boy from Einbroch"

@@ -3543,7 +3543,7 @@
 //5849,Doctor_Hairband,Doctor Hairband,5,20,,0,,0,,0,0xFFFFFFFF,7,2,256,,1,0,60,{},{},{}
 //5850,Golden_Savage_Hat,Golden Savage Hat,5,20,,500,,5,,0,0xFFFFFFFF,7,2,256,,50,1,648,{},{},{}
 5851,Summer_Knight,Summer Knight,5,20,,0,,1,,0,0xFFFFFFFF,7,2,768,,60,0,138,{},{},{}
-//5852,Resurrect_Egg_Shell,Resurrect Egg Shell,5,20,,500,,-7,,0,0xFFFFFFFF,7,2,256,,40,1,537,{ bonus bMdef,-7; },{},{}
+5852,Easter_Egg_Shell,Easter Egg Shell,5,20,,500,,0,,0,0xFFFFFFFF,7,2,256,,40,1,537,{ bonus bDef,-7; bonus bMdef,-7; bonus2 bHPRegenRate,(MaxHp/100),10000; if (getrefine()>=7) bonus bFlee,2; if (getrefine() >= 9) bonus2 bSPRegenRate,(MaxSp/100),10000; },{},{}
 //
 5856,Passion_FB_Hat,Passion FB Hat,5,20,,600,,2,,1,0xFFFFFFFF,7,2,256,,1,1,671,{ bonus bStr,2; bonus bDex,2; },{},{}
 5857,Cool_FB_Hat,Cool FB Hat,5,20,,600,,2,,1,0xFFFFFFFF,7,2,256,,1,1,672,{ bonus bInt,2; bonus bVit,2; },{},{}
