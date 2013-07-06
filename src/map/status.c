@@ -1906,7 +1906,7 @@ static unsigned short status_base_atk(const struct block_list *bl, const struct 
 #ifdef RENEWAL
 unsigned int status_weapon_atk(struct weapon_atk wa, struct status_data *status)
 {
-	float str = status->str;
+	short str = status->str;
 
 	if (wa.range > 1)
 		str = status->dex;

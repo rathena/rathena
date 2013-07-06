@@ -4216,12 +4216,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 #ifdef RENEWAL
 	case NJ_ISSEN: // teleport for Issen
 		{
-			status_change_end(bl, SC_NEN, INVALID_TIMER);
-			status_change_end(bl, SC_HIDING, INVALID_TIMER);
-		
 			short x, y, i = 2; // Move 2 cells for Issen(from target)
 			struct block_list *mbl = bl;
 			short dir = 0;
+
+			status_change_end(bl, SC_NEN, INVALID_TIMER);
+			status_change_end(bl, SC_HIDING, INVALID_TIMER);
 
 			skill_attack(BF_MISC,src,src,bl,skill_id,skill_lv,tick,flag);
 

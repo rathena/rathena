@@ -3574,7 +3574,7 @@ REPLACE INTO `item_db_re` VALUES (5846,'Buzzy_Ball_Gum','Buzzy Ball Gum',5,50,NU
 #REPLACE INTO `item_db_re` VALUES (5849,'Doctor_Hairband','Doctor Hairband',5,20,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,7,2,256,NULL,'1',0,60,NULL,NULL,NULL);
 #REPLACE INTO `item_db_re` VALUES (5850,'Golden_Savage_Hat','Golden Savage Hat',5,20,NULL,500,NULL,5,NULL,0,0xFFFFFFFF,7,2,256,NULL,'50',1,648,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5851,'Summer_Knight','Summer Knight',5,20,NULL,0,NULL,1,NULL,0,0xFFFFFFFF,7,2,768,NULL,'60',0,138,NULL,NULL,NULL);
-#REPLACE INTO `item_db_re` VALUES (5852,'Resurrect_Egg_Shell','Resurrect Egg Shell',5,20,NULL,500,NULL,-7,NULL,0,0xFFFFFFFF,7,2,256,NULL,'40',1,537,'bonus bMdef,-7;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (5852,'Easter_Egg_Shell','Easter Egg Shell',5,20,NULL,500,NULL,0,NULL,0,0xFFFFFFFF,7,2,256,NULL,'40',1,537,'bonus bDef,-7; bonus bMdef,-7; bonus2 bHPRegenRate,(MaxHp/100),10000; if (getrefine()>=7) bonus bFlee,2; if (getrefine() >= 9) bonus2 bSPRegenRate,(MaxSp/100),10000;',NULL,NULL);
 #
 REPLACE INTO `item_db_re` VALUES (5856,'Passion_FB_Hat','Passion FB Hat',5,20,NULL,600,NULL,2,NULL,1,0xFFFFFFFF,7,2,256,NULL,'1',1,671,'bonus bStr,2; bonus bDex,2;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5857,'Cool_FB_Hat','Cool FB Hat',5,20,NULL,600,NULL,2,NULL,1,0xFFFFFFFF,7,2,256,NULL,'1',1,672,'bonus bInt,2; bonus bVit,2;',NULL,NULL);

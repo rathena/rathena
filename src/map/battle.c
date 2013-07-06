@@ -2372,10 +2372,6 @@ struct Damage battle_calc_skill_base_damage(struct Damage wd, struct block_list 
 	struct status_data *sstatus = status_get_status_data(src);
 	struct status_data *tstatus = status_get_status_data(target);
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
-#ifdef RENEWAL
-	struct map_session_data *tsd = BL_CAST(BL_PC, target);
-	int right_element, left_element;
-#endif
 	int i, skill;
 	
 	int nk = battle_skill_get_damage_properties(skill_id, wd.miscflag);
@@ -4185,9 +4181,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 #ifdef RENEWAL
 	if(is_attack_critical(wd, src, target, skill_id, skill_lv, false)) {
 		if(sd) // monsters don't have crit_atk_rate
-			wd.damage = (int64)floor((double)wd.damage * 1.4 * ((double)(100 + sd->bonus.crit_atk_rate) / 100.0));
+			wd.damage = (int32)floor(wd.damage * 1.4 * ((100 + sd->bonus.crit_atk_rate) / 100));
 		else
-			wd.damage = (int64)floor((double)wd.damage * 1.4);
+			wd.damage = (int32)floor(wd.damage * 1.4);
 	}
 #endif
 
@@ -5055,16 +5051,18 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		// base skill dmg = currenthp + ((atk * currenthp * skill lvl) / maxhp) 
 		// final damage = base damage + ((mirror image count + 1) / 5 * base damage) - (edef + sdef)
 		{
+			short totaldef;
 			struct Damage atk = battle_calc_weapon_attack(src, target, skill_id, skill_lv, 0);
-			md.damage = (int64)sstatus->hp + (atk.damage * (int64)sstatus->hp * skill_lv) / (int64)sstatus->max_hp;
-			
 			struct status_change *sc = status_get_sc(src);
+
+			md.damage = (int64)sstatus->hp + (atk.damage * (int64)sstatus->hp * skill_lv) / (int64)sstatus->max_hp;
+
 			if (sc && sc->data[SC_BUNSINJYUTSU] && (i=sc->data[SC_BUNSINJYUTSU]->val2) > 0) { // mirror image bonus only occurs if active
 				md.div_ = -( i + 2 ); // mirror image count + 2
 				md.damage += (md.damage * (((i + 1) * 10) / 5)) / 10;
 			}
 			// modified def reduction, final damage = base damage - (edef + sdef)
-			short totaldef = tstatus->def2 + (short)status_get_def(target);
+			totaldef = tstatus->def2 + (short)status_get_def(target);
 			md.damage -= totaldef;
 		}
 		break;
@@ -5082,6 +5080,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	case ASC_BREAKER:
 #ifdef RENEWAL
 		{
+			short totaldef, totalmdef;
 			struct Damage atk = battle_calc_weapon_attack(src, target, skill_id, skill_lv, 0);
 			struct Damage matk = battle_calc_magic_attack(src, target, skill_id, skill_lv, 0);
 			nk|=NK_NO_ELEFIX; // atk part takes on weapon element, matk part is non-elemental
@@ -5090,8 +5089,8 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			md.damage = ((30 + (5 * skill_lv)) * (atk.damage + matk.damage)) / 10;
 			
 			// modified def reduction, final damage = base damage - (edef + sdef + emdef + smdef)
-			short totaldef = tstatus->def2 + (short)status_get_def(target);
-			short totalmdef = tstatus->mdef + tstatus->mdef2;
+			totaldef = tstatus->def2 + (short)status_get_def(target);
+			totalmdef = tstatus->mdef + tstatus->mdef2;
 			md.damage -= totaldef + totalmdef;
 		}
 #else
