@@ -1622,6 +1622,10 @@ struct status_data {
 	unsigned short
 		str, agi, vit, int_, dex, luk,
 		batk,
+#ifdef RENEWAL
+		watk,
+		eatk,
+#endif
 		matk_min, matk_max,
 		speed,
 		amotion, adelay, dmotion;
@@ -1847,6 +1851,7 @@ int status_check_visibility(struct block_list *src, struct block_list *target); 
 int status_change_spread( struct block_list *src, struct block_list *bl );
 
 #ifdef RENEWAL
+unsigned int status_weapon_atk(struct weapon_atk wa, struct status_data *status);
 unsigned short status_base_matk(const struct status_data* status, int level);
 #endif
 

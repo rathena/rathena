@@ -16,11 +16,15 @@ typedef enum damage_lv {
 
 // dammage structure
 struct Damage {
+#ifdef RENEWAL
+	int statusAtk, statusAtk2, weaponAtk, weaponAtk2, equipAtk, equipAtk2, masteryAtk, masteryAtk2;
+#endif
 	int damage,damage2; //right, left dmg
 	int type,div_; //chk clif_damage for type @TODO add an enum ? ;  nb of hit
 	int amotion,dmotion;
 	int blewcount; //nb of knockback
 	int flag; //chk BF_* flag, (enum below)
+	int miscflag; //
 	enum damage_lv dmg_lv;	//ATK_LUCKY,ATK_FLEE,ATK_DEF
 };
 

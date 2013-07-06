@@ -1886,7 +1886,7 @@ static unsigned short status_base_atk(const struct block_list *bl, const struct 
 	// [Skotlex]
 #ifdef RENEWAL
 	if (bl->type == BL_HOM) {
-		//str = ((rstr + dex + status->luk) / 3) + (((TBL_HOM*)bl)->homunculus.level / 10);
+		// str = ((rstr + dex + status->luk) / 3) + (((TBL_HOM*)bl)->homunculus.level / 10);
 		str = (((rstr + dex + status->luk) / 3) + (((TBL_HOM*)bl)->homunculus.level / 10))*2; //Because Renewal ATK isn't implemented we adjust the actual ATK until it is
 		return cap_value(str, 0, USHRT_MAX);
 	}
@@ -1902,6 +1902,18 @@ static unsigned short status_base_atk(const struct block_list *bl, const struct 
 	}
 	return cap_value(str, 0, USHRT_MAX);
 }
+
+#ifdef RENEWAL
+unsigned int status_weapon_atk(struct weapon_atk wa, struct status_data *status)
+{
+	float str = status->str;
+
+	if (wa.range > 1)
+		str = status->dex;
+
+	return wa.atk + wa.atk2 + wa.atk * (str/200);
+}
+#endif
 
 #ifndef RENEWAL
 static inline unsigned short status_base_matk_min(const struct status_data* status){ return status->int_+(status->int_/7)*(status->int_/7); }
@@ -2711,15 +2723,20 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	i = status->luk + sd->status.luk + sd->param_bonus[5] + sd->param_equip[5];
 	status->luk = cap_value(i,0,USHRT_MAX);
 
-// ------ BASE ATTACK CALCULATION ------
+// ------ ATTACK CALCULATION ------
 
-	// Base batk value is set on status_calc_misc
+	// Base batk value is set in status_calc_misc
+#ifndef RENEWAL
 	// weapon-type bonus (FIXME: Why is the weapon_atk bonus applied to base attack?)
 	if (sd->status.weapon < MAX_WEAPON_TYPE && sd->weapon_atk[sd->status.weapon])
 		status->batk += sd->weapon_atk[sd->status.weapon];
 	// Absolute modifiers from passive skills
 	if((skill=pc_checkskill(sd,BS_HILTBINDING))>0)
 		status->batk += 4;
+#else
+	status->watk = (status_weapon_atk(status->lhw, status) >= 0) ? status_weapon_atk(status->lhw, status) : 0;
+	status->eatk = (sd->bonus.eatk >= 0) ? sd->bonus.eatk : 0;
+#endif
 
 // ----- HP MAX CALCULATION -----
 
@@ -3907,6 +3924,9 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 		 **/
 		status->matk_min = status->matk_max = status_base_matk(status, status_get_lv(bl));
 		if( bl->type&BL_PC ){
+			int wMatk = 0;
+			int variance = 0;
+			
 			//  Any +MATK you get from skills and cards, including cards in weapon, is added here.
 			if( sd->bonus.ematk > 0 ){
 				status->matk_max += sd->bonus.ematk;
@@ -3915,12 +3935,33 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			status->matk_min = status_calc_ematk(bl, sc, status->matk_min);
 			status->matk_max = status_calc_ematk(bl, sc, status->matk_max);
 			//This is the only portion in MATK that varies depending on the weapon level and refinement rate.
-			if( status->rhw.matk > 0 ){
-				int wMatk = status->rhw.matk;
-				int variance = wMatk * status->rhw.wlv / 10;
-				status->matk_min += wMatk - variance;
-				status->matk_max += wMatk + variance;
+			
+			if(b_status->lhw.matk) {
+				if (sd) {
+					sd->state.lr_flag = 1;
+					status->lhw.matk = b_status->lhw.matk;
+					sd->state.lr_flag = 0;
+				} else {
+					status->lhw.matk = b_status->lhw.matk;
+				}
 			}
+						
+			if(b_status->rhw.matk) {
+				status->rhw.matk = b_status->rhw.matk;
+			}
+			
+			if(status->rhw.matk) {
+				wMatk += status->rhw.matk;
+				variance += wMatk * status->rhw.wlv / 10;
+			}
+			
+			if(status->lhw.matk) {
+				wMatk += status->lhw.matk;
+				variance += status->lhw.matk * status->lhw.wlv / 10;
+			}
+			
+			status->matk_min += wMatk - variance;
+			status->matk_max += wMatk + variance;
 		}
 #endif
 		if (bl->type&BL_PC && sd->matk_rate != 100) {

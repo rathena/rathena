@@ -2378,7 +2378,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	 //Trick Dead protects you from damage, but not from buffs and the like, hence it's placed here.
 	if (sc && sc->data[SC_TRICKDEAD])
 		return 0;
-
+	
 	dmg = battle_calc_attack(attack_type,src,bl,skill_id,skill_lv,flag&0xFFF);
 
 	//Skotlex: Adjusted to the new system
@@ -3646,7 +3646,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case GS_FULLBUSTER:
 	case NJ_SYURIKEN:
 	case NJ_KUNAI:
+#ifndef RENEWAL
 	case ASC_BREAKER:
+#endif
 	case HFLI_MOON:	//[orn]
 	case HFLI_SBR44:	//[orn]
 	case NPC_BLEEDING:
@@ -3808,9 +3810,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		status_change_end(src, SC_BLADESTOP, INVALID_TIMER);
 		break;
 
+#ifndef RENEWAL
 	case NJ_ISSEN:
 		status_change_end(src, SC_NEN, INVALID_TIMER);
 		status_change_end(src, SC_HIDING, INVALID_TIMER);
+#endif
 		// fall through
 	case MO_EXTREMITYFIST:
 		{
@@ -4199,6 +4203,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case PA_PRESSURE:
 	case CR_ACIDDEMONSTRATION:
 	case TF_THROWSTONE:
+#ifdef RENEWAL
+	case ASC_BREAKER:
+#endif
 	case NPC_SMOKING:
 	case GS_FLING:
 	case NJ_ZENYNAGE:
@@ -4206,6 +4213,36 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case GN_HELLS_PLANT_ATK:
 		skill_attack(BF_MISC,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
+#ifdef RENEWAL
+	case NJ_ISSEN: // teleport for Issen
+		{
+			status_change_end(bl, SC_NEN, INVALID_TIMER);
+			status_change_end(bl, SC_HIDING, INVALID_TIMER);
+		
+			short x, y, i = 2; // Move 2 cells for Issen(from target)
+			struct block_list *mbl = bl;
+			short dir = 0;
+
+			skill_attack(BF_MISC,src,src,bl,skill_id,skill_lv,tick,flag);
+
+			status_set_hp(src,max(status_get_max_hp(src)/100, 1),0);
+
+			dir = map_calc_dir(src,bl->x,bl->y);
+			if( dir > 0 && dir < 4) x = -i;
+			else if( dir > 4 ) x = i;
+			else x = 0;
+			if( dir > 2 && dir < 6 ) y = -i;
+			else if( dir == 7 || dir < 2 ) y = i;
+			else y = 0;
+			if( (mbl == src || (!map_flag_gvg(src->m) && !map[src->m].flag.battleground) ) && // only NJ_ISSEN don't have slide effect in GVG
+				unit_movepos(src, mbl->x+x, mbl->y+y, 1, 1) ) {
+				clif_slide(src, src->x, src->y);
+				//uncomment this if you want to remove MO_EXTREMITYFIST glitchy walking effect. [malufett]
+				//clif_fixpos(src);
+			}
+		}
+		break;
+#endif
 	/**
 	 * Rune Knight
 	 **/
@@ -5523,6 +5560,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		clif_skill_nodamage(src,src,skill_id,skill_lv,sc_start(src,src,type,100,skill_lv,i)); // Homunc
 		break;
 	case NJ_BUNSINJYUTSU:
+		status_change_end(bl, SC_BUNSINJYUTSU, INVALID_TIMER); // on official recasting cancels existing mirror image [helvetica]
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		status_change_end(bl, SC_NEN, INVALID_TIMER);
@@ -15234,23 +15272,23 @@ static int skill_trap_splash (struct block_list *bl, va_list ap)
 			skill_additional_effect(ss,bl,sg->skill_id,sg->skill_lv,BF_MISC,ATK_DEF,tick);
 			break;
 		case UNT_GROUNDDRIFT_WIND:
-			if(skill_attack(BF_WEAPON,ss,src,bl,sg->skill_id,sg->skill_lv,tick,sg->val1))
+			if(skill_attack(BF_MISC,ss,src,bl,sg->skill_id,sg->skill_lv,tick,sg->val1))
 				sc_start(ss,bl,SC_STUN,5,sg->skill_lv,skill_get_time2(sg->skill_id, sg->skill_lv));
 			break;
 		case UNT_GROUNDDRIFT_DARK:
-			if(skill_attack(BF_WEAPON,ss,src,bl,sg->skill_id,sg->skill_lv,tick,sg->val1))
+			if(skill_attack(BF_MISC,ss,src,bl,sg->skill_id,sg->skill_lv,tick,sg->val1))
 				sc_start(ss,bl,SC_BLIND,5,sg->skill_lv,skill_get_time2(sg->skill_id, sg->skill_lv));
 			break;
 		case UNT_GROUNDDRIFT_POISON:
-			if(skill_attack(BF_WEAPON,ss,src,bl,sg->skill_id,sg->skill_lv,tick,sg->val1))
+			if(skill_attack(BF_MISC,ss,src,bl,sg->skill_id,sg->skill_lv,tick,sg->val1))
 				sc_start(ss,bl,SC_POISON,5,sg->skill_lv,skill_get_time2(sg->skill_id, sg->skill_lv));
 			break;
 		case UNT_GROUNDDRIFT_WATER:
-			if(skill_attack(BF_WEAPON,ss,src,bl,sg->skill_id,sg->skill_lv,tick,sg->val1))
+			if(skill_attack(BF_MISC,ss,src,bl,sg->skill_id,sg->skill_lv,tick,sg->val1))
 				sc_start(ss,bl,SC_FREEZE,5,sg->skill_lv,skill_get_time2(sg->skill_id, sg->skill_lv));
 			break;
 		case UNT_GROUNDDRIFT_FIRE:
-			if(skill_attack(BF_WEAPON,ss,src,bl,sg->skill_id,sg->skill_lv,tick,sg->val1))
+			if(skill_attack(BF_MISC,ss,src,bl,sg->skill_id,sg->skill_lv,tick,sg->val1))
 				skill_blown(src,bl,skill_get_blewcount(sg->skill_id,sg->skill_lv),-1,0);
 			break;
 		case UNT_ELECTRICSHOCKER:
