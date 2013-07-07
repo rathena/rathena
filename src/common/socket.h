@@ -5,7 +5,6 @@
 #define _SOCKET_H_
 
 #include "../common/cbasetypes.h"
-#include "../config/core.h"
 
 #ifdef WIN32
 	#include "../common/winapi.h"
