@@ -3448,6 +3448,8 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 		map[m].flag.nomineeffect = state;
 	else if (!strcmpi(w3,"nolockon"))
 		map[m].flag.nolockon = state;
+	else if (!strcmpi(w3,"notomb"))
+		map[m].flag.notomb = state;
 	else
 		ShowError("npc_parse_mapflag: unrecognized mapflag '%s' (file '%s', line '%d').\n", w3, filepath, strline(buffer,start-buffer));
 

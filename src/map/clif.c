@@ -12538,9 +12538,12 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 
 	case BL_NPC:
 	{
-		char command[NAME_LENGTH+11];
-		sprintf(command, "%cunloadnpc %s", atcommand_symbol, status_get_name(target));
-		is_atcommand(fd, sd, command, 1);
+		struct npc_data* nd = (struct npc_data *)target;
+		if( pc_can_use_command(sd, "unloadnpc", COMMAND_ATCOMMAND)) {
+			npc_unload_duplicates(nd);
+			npc_unload(nd,true);
+			npc_read_event_script();
+		}
 	}
 	break;
 

@@ -220,6 +220,13 @@ int naddr_ = 0;   // # of ip addresses
 // Larger packets cause a buffer overflow and stack corruption.
 static size_t socket_max_client_packet = 24576;
 
+#ifdef SHOW_SERVER_STATS
+// Data I/O statistics
+static size_t socket_data_i = 0, socket_data_ci = 0, socket_data_qi = 0;
+static size_t socket_data_o = 0, socket_data_co = 0, socket_data_qo = 0;
+static time_t socket_data_last_tick = 0;
+#endif
+
 // initial recv buffer size (this will also be the max. size)
 // biggest known packet: S 0153 <len>.w <emblem data>.?B -> 24x24 256 color .bmp (0153 + len.w + 1618/1654/1756 bytes)
 #define RFIFO_SIZE (2*1024)
@@ -358,6 +365,14 @@ int recv_to_fifo(int fd)
 
 	session[fd]->rdata_size += len;
 	session[fd]->rdata_tick = last_tick;
+#ifdef SHOW_SERVER_STATS
+	socket_data_i += len;
+	socket_data_qi += len;
+	if (!session[fd]->flag.server)
+	{
+		socket_data_ci += len;
+	}
+#endif
 	return 0;
 }
 
@@ -377,6 +392,9 @@ int send_from_fifo(int fd)
 	{//An exception has occured
 		if( sErrno != S_EWOULDBLOCK ) {
 			//ShowDebug("send_from_fifo: %s, ending connection #%d\n", error_msg(), fd);
+#ifdef SHOW_SERVER_STATS
+			socket_data_qo -= session[fd]->wdata_size;
+#endif
 			session[fd]->wdata_size = 0; //Clear the send queue as we can't send anymore. [Skotlex]
 			set_eof(fd);
 		}
@@ -391,6 +409,14 @@ int send_from_fifo(int fd)
 			memmove(session[fd]->wdata, session[fd]->wdata + len, session[fd]->wdata_size - len);
 
 		session[fd]->wdata_size -= len;
+#ifdef SHOW_SERVER_STATS
+		socket_data_o += len;
+		socket_data_qo -= len;
+		if (!session[fd]->flag.server)
+		{
+			socket_data_co += len;
+		}
+#endif
 	}
 
 	return 0;
@@ -582,6 +608,10 @@ static void delete_session(int fd)
 {
 	if( session_isValid(fd) )
 	{
+#ifdef SHOW_SERVER_STATS
+		socket_data_qi -= session[fd]->rdata_size - session[fd]->rdata_pos;
+		socket_data_qo -= session[fd]->wdata_size;
+#endif
 		aFree(session[fd]->rdata);
 		aFree(session[fd]->wdata);
 		aFree(session[fd]->session_data);
@@ -650,6 +680,9 @@ int RFIFOSKIP(int fd, size_t len)
 	}
 
 	s->rdata_pos = s->rdata_pos + len;
+#ifdef SHOW_SERVER_STATS
+	socket_data_qi -= len;
+#endif
 	return 0;
 }
 
@@ -703,6 +736,9 @@ int WFIFOSET(int fd, size_t len)
 
 	}
 	s->wdata_size += len;
+#ifdef SHOW_SERVER_STATS
+	socket_data_qo += len;
+#endif
 	//If the interserver has 200% of its normal size full, flush the data.
 	if( s->flag.server && s->wdata_size >= 2*FIFOSIZE_SERVERLINK )
 		flush_fifo(fd);
@@ -828,6 +864,23 @@ int do_sockets(int next)
 		}
 		RFIFOFLUSH(i);
 	}
+
+#ifdef SHOW_SERVER_STATS
+	if (last_tick != socket_data_last_tick)
+	{
+		char buf[1024];
+		
+		sprintf(buf, "In: %.03f kB/s (%.03f kB/s, Q: %.03f kB) | Out: %.03f kB/s (%.03f kB/s, Q: %.03f kB) | RAM: %.03f MB", socket_data_i/1024., socket_data_ci/1024., socket_data_qi/1024., socket_data_o/1024., socket_data_co/1024., socket_data_qo/1024., malloc_usage()/1024.);
+#ifdef _WIN32
+		SetConsoleTitle(buf);
+#else
+		ShowMessage("\033[s\033[1;1H\033[2K%s\033[u", buf);
+#endif
+		socket_data_last_tick = last_tick;
+		socket_data_i = socket_data_ci = 0;
+		socket_data_o = socket_data_co = 0;
+	}
+#endif
 
 	return 0;
 }

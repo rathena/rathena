@@ -7655,7 +7655,7 @@ ACMD_FUNC(mapflag) {
 		checkflag(nogo);				checkflag(nobaseexp);
 		checkflag(nojobexp);			checkflag(nomobloot);			checkflag(nomvploot);	checkflag(nightenabled);
 		checkflag(restricted);			checkflag(nodrop);				checkflag(novending);	checkflag(loadevent);
-		checkflag(nochat);				checkflag(partylock);			checkflag(guildlock);
+		checkflag(nochat);				checkflag(partylock);			checkflag(guildlock);	checkflag(notomb);
 		clif_displaymessage(sd->fd," ");
 		clif_displaymessage(sd->fd,msg_txt(sd,1312)); // Usage: "@mapflag monster_noteleport 1" (0=Off | 1=On)
 		clif_displaymessage(sd->fd,msg_txt(sd,1313)); // Type "@mapflag available" to list the available mapflags.
@@ -7675,7 +7675,7 @@ ACMD_FUNC(mapflag) {
 	setflag(nogo);				setflag(nobaseexp);
 	setflag(nojobexp);			setflag(nomobloot);			setflag(nomvploot);			setflag(nightenabled);
 	setflag(restricted);		setflag(nodrop);			setflag(novending);			setflag(loadevent);
-	setflag(nochat);			setflag(partylock);			setflag(guildlock);
+	setflag(nochat);			setflag(partylock);			setflag(guildlock);			setflag(notomb);
 
 	clif_displaymessage(sd->fd,msg_txt(sd,1314)); // Invalid flag name or flag.
 	clif_displaymessage(sd->fd,msg_txt(sd,1312)); // Usage: "@mapflag monster_noteleport 1" (0=Off | 1=On)
@@ -7687,7 +7687,7 @@ ACMD_FUNC(mapflag) {
 	clif_displaymessage(sd->fd,"nozenypenalty, notrade, noskill, nowarp, nowarpto, noicewall, snow, clouds, clouds2,");
 	clif_displaymessage(sd->fd,"fog, fireworks, sakura, leaves, nogo, nobaseexp, nojobexp, nomobloot,");
 	clif_displaymessage(sd->fd,"nomvploot, nightenabled, restricted, nodrop, novending, loadevent, nochat, partylock,");
-	clif_displaymessage(sd->fd,"guildlock");
+	clif_displaymessage(sd->fd,"guildlock, notomb");
 
 #undef checkflag
 #undef setflag

@@ -5169,7 +5169,7 @@ everything not equippable by the new job class anyway.
 *sit {"<character name>"};
 *stand {"<character name>"};
 
-These commands will make a character sit if standing and stand if sitting.
+These commands will make a character sit or stand.
 If no character is specified, the command will run for the invoking character.
 
 ---------------------------------------

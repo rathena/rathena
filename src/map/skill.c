@@ -6247,7 +6247,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if(sd) {
 			clif_item_identify_list(sd);
 			if( sd->menuskill_id != MC_IDENTIFY ) {/* failed, dont consume anything, return */
-				clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 				map_freeblock_unlock();
 				return 1;
 			}
@@ -14242,6 +14241,8 @@ int skill_vfcastfix (struct block_list *bl, double time, uint16 skill_id, uint16
 		// All variable cast additive bonuses must come first
 		if (sc->data[SC_SLOWCAST])
 			VARCAST_REDUCTION(-sc->data[SC_SLOWCAST]->val2);
+		if( sc->data[SC__LAZINESS] )
+			VARCAST_REDUCTION(-sc->data[SC__LAZINESS]->val2);
 
 		// Variable cast reduction bonuses
 		if (sc->data[SC_SUFFRAGIUM]) {
@@ -14260,8 +14261,6 @@ int skill_vfcastfix (struct block_list *bl, double time, uint16 skill_id, uint16
 		if (sc->data[SC_WATER_INSIGNIA] && sc->data[SC_WATER_INSIGNIA]->val1 == 3 && (skill_get_ele(skill_id, skill_lv) == ELE_WATER))
 			VARCAST_REDUCTION(30); //Reduces 30% Variable Cast Time of Water spells.
 		// Fixed cast reduction bonuses
-		if( sc->data[SC__LAZINESS] )
-			fixcast_r = max(fixcast_r, sc->data[SC__LAZINESS]->val2);
 		if( sc->data[SC_SECRAMENT] )
 			fixcast_r = max(fixcast_r, sc->data[SC_SECRAMENT]->val2);
 		if( sd && ( skill_lv = pc_checkskill(sd, WL_RADIUS) ) && skill_id >= WL_WHITEIMPRISON && skill_id <= WL_FREEZE_SP  )

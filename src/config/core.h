@@ -56,6 +56,9 @@
 /// By default, we recover/remove Guild/Party Bound items automatically
 #define BOUND_ITEMS
 
+/// Uncomment to enable real-time server stats (in and out data and ram usage).
+//#define SHOW_SERVER_STATS
+
 /**
  * No settings past this point
  **/

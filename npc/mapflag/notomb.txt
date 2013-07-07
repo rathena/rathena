@@ -1,0 +1,19 @@
+//===== rAthena Script =======================================
+//= Mapflag: Disable MVP Tomb.
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: ========================================= 
+//= Disables MVP tomb on a map.
+//===== Additional Comments: ================================= 
+//= 1.0 Initial script.
+//============================================================
+
+// Bossnia ====================
+bossnia_01	mapflag	notomb
+bossnia_02	mapflag	notomb
+bossnia_03	mapflag	notomb
+bossnia_04	mapflag	notomb

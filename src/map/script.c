@@ -410,6 +410,7 @@ enum {
 	MF_SUMSTARTMIRACLE,
 	MF_NOMINEEFFECT,
 	MF_NOLOCKON,
+	MF_NOTOMB
 };
 
 const char* script_op2name(int op)
@@ -10702,6 +10703,7 @@ BUILDIN_FUNC(getmapflag)
 			case MF_SUMSTARTMIRACLE:		script_pushint(st,map[m].flag.nosumstarmiracle); break;
 			case MF_NOMINEEFFECT:			script_pushint(st,map[m].flag.nomineeffect); break;
 			case MF_NOLOCKON:			script_pushint(st,map[m].flag.nolockon); break;
+			case MF_NOTOMB:			script_pushint(st,map[m].flag.notomb); break;
 		}
 	}
 
@@ -10809,6 +10811,7 @@ BUILDIN_FUNC(setmapflag)
 			case MF_SUMSTARTMIRACLE:		map[m].flag.nosumstarmiracle = 1 ; break;
 			case MF_NOMINEEFFECT:		map[m].flag.nomineeffect = 1 ; break;
 			case MF_NOLOCKON:		map[m].flag.nolockon = 1 ; break;
+			case MF_NOTOMB:		map[m].flag.notomb = 1; break;
 		}
 	}
 
@@ -10907,6 +10910,7 @@ BUILDIN_FUNC(removemapflag)
 			case MF_SUMSTARTMIRACLE:		map[m].flag.nosumstarmiracle = 0 ; break;
 			case MF_NOMINEEFFECT:		map[m].flag.nomineeffect = 0 ; break;
 			case MF_NOLOCKON:		map[m].flag.nolockon = 0 ; break;
+			case MF_NOTOMB:		map[m].flag.notomb = 0; break;
 		}
 	}
 
@@ -17491,10 +17495,12 @@ BUILDIN_FUNC(consumeitem)
 	return 0;
 }
 
-/* Make a player sit/stand.
+/*=======================================================
+ * Make a player sit/stand.
  * sit {"<character name>"};
  * stand {"<character name>"};
- * Note: Use readparam(Sitting) which returns 1 or 0 (sitting or standing). */
+ * Note: Use readparam(Sitting) which returns 1 or 0 (sitting or standing).
+ *-------------------------------------------------------*/
 BUILDIN_FUNC(sit)
 {
 	TBL_PC *sd;
@@ -17507,15 +17513,32 @@ BUILDIN_FUNC(sit)
 	if( sd == NULL)
 		return 0;
 
-	if( pc_issit(sd) ) {
-		pc_setstand(sd);
-		skill_sit(sd, 0);
-		clif_standing(&sd->bl);
-	} else {
+	if( !pc_issit(sd) ) {
 		unit_stop_walking(&sd->bl, 1|4);
 		pc_setsit(sd);
 		skill_sit(sd, 1);
 		clif_sitting(&sd->bl);
+	}
+
+	return 0;
+}
+BUILDIN_FUNC(stand)
+{
+	TBL_PC *sd;
+
+	if( script_hasdata(st, 2) )
+		sd = map_nick2sd(script_getstr(st, 2));
+	else
+		sd = script_rid2sd(st);
+
+	if( sd == NULL)
+		return 0;
+
+
+	if( pc_issit(sd) ) {
+		pc_setstand(sd);
+		skill_sit(sd, 0);
+		clif_standing(&sd->bl);
 	}
 
 	return 0;
@@ -18000,7 +18023,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(consumeitem,"v"),
 	BUILDIN_DEF(delequip,"i"),
 	BUILDIN_DEF(sit,"?"),
-	BUILDIN_DEF2(sit,"stand","?"),
+	BUILDIN_DEF(stand,"?"),
 	/**
 	 * @commands (script based)
 	 **/

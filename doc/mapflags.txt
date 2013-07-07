@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 20130527
+//= 20130706
 //===== Description: =========================================
 //= List of available mapflags and their functions.
 //============================================================
@@ -353,5 +353,11 @@ Stops players from automatically joining the #map channel on a map.
 
 This only applies if map channels are enabled and 'map_local_channel_autojoin' is true
 in '/conf/channels.conf'.
+
+---------------------------------------
+
+*notomb
+
+Disables MVP tombs from appearing on a map.
 
 ---------------------------------------

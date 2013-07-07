@@ -8394,7 +8394,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			}
 			break;
 		case SC__LAZINESS:
-			val2 = 10 + 10 * val1; // Cast reduction
+			val2 = 10 + 10 * val1; // Cast Increase
 			val3 = 10 * val1; // Flee Reduction
 			val_flag |= 1|2|4;
 			break;
