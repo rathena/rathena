@@ -3671,7 +3671,7 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, u
 						break; // skills above have no effect with edp
 
 #if defined RENEWAL && defined RENEWAL_EDP // renewal EDP mode requires renewal enabled as well
-					// Renewal: damage gets a half modifier on top of EDP bonus for skills [helvetica]
+					// Renewal EDP: damage gets a half modifier on top of EDP bonus for skills [helvetica]
 					// * Sonic Blow
 					// * Soul Breaker
 					// * Counter Slash
@@ -3682,19 +3682,19 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, u
 					case GC_CROSSIMPACT:
 						ATK_RATE(wd.weaponAtk, wd.weaponAtk2, 50); 
 						ATK_RATE(wd.equipAtk, wd.equipAtk2, 50);
+					default: // fall through to apply EDP bonuses
+						// Renewal EDP formula [helvetica]
+						// weapon atk * (1 + (edp level * .8))
+						// equip atk * (1 + (edp level * .6))
+						ATK_RATE(wd.weaponAtk, wd.weaponAtk2, 100 + (sc->data[SC_EDP]->val1 * 80));
+						ATK_RATE(wd.equipAtk, wd.equipAtk2, 100 + (sc->data[SC_EDP]->val1 * 60));
 						break;
 #else
 					default:
 						ATK_ADDRATE(wd.damage, wd.damage2, sc->data[SC_EDP]->val3);
+						
 #endif
 				}
-#if defined RENEWAL && defined RENEWAL_EDP 
-				// Renewal EDP formula [helvetica]
-				// weapon atk * (1 + (edp level * .8))
-				// equip atk * (1 + (edp level * .6))
-				ATK_RATE(wd.weaponAtk, wd.weaponAtk2, 100 + (sc->data[SC_EDP]->val1 * 80));
-				ATK_RATE(wd.equipAtk, wd.equipAtk2, 100 + (sc->data[SC_EDP]->val1 * 60));
-#endif
 			}
 			if(sc->data[SC_STYLE_CHANGE]){
 				TBL_HOM *hd = BL_CAST(BL_HOM,src);
