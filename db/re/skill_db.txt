@@ -874,7 +874,7 @@
 2300,7,6,2,0,0x1,0,3,1,yes,0,0,1,none,0,	SC_DIMENSIONDOOR,Dimension Door
 2301,7,6,2,0,0x1,0,3,1,yes,0,0,0,none,0,	SC_CHAOSPANIC,Chaos Panic
 2302,7,6,2,0,0x1,0,3,1,yes,0,0,0,none,0,	SC_MAELSTROM,Maelstrom
-2303,7,6,2,0,0x1,0,3,1,yes,0,0,0,none,0,	SC_BLOODYLUST,Bloody Lust
+2303,7,6,2,0,0x1,3,3,1,yes,0,0,1,none,0,	SC_BLOODYLUST,Bloody Lust
 2304,0,6,4,-1,0,0,3,1,no,0,0,0,weapon,0,	SC_FEINTBOMB,Feint Bomb
 
 //****

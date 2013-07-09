@@ -304,7 +304,22 @@ int chrif_save(struct map_session_data *sd, int flag) {
 	WFIFOL(char_fd,4) = sd->status.account_id;
 	WFIFOL(char_fd,8) = sd->status.char_id;
 	WFIFOB(char_fd,12) = (flag==1)?1:0; //Flag to tell char-server this character is quitting.
-	memcpy(WFIFOP(char_fd,13), &sd->status, sizeof(sd->status));
+
+	// If the user is on a instance map, we have to fake his current position
+	if( map[sd->bl.m].instance_id ){
+		struct mmo_charstatus status;
+
+		// Copy the whole status
+		memcpy( &status, &sd->status, sizeof( struct mmo_charstatus ) );
+		// Change his current position to his savepoint
+		memcpy( &status.last_point, &status.save_point, sizeof( struct point ) );
+		// Copy the copied status into the packet
+		memcpy( WFIFOP( char_fd, 13 ), &status, sizeof( struct mmo_charstatus ) );
+	} else {
+		// Copy the whole status into the packet
+		memcpy( WFIFOP( char_fd, 13 ), &sd->status, sizeof( struct mmo_charstatus ) );
+	}
+
 	WFIFOSET(char_fd, WFIFOW(char_fd,2));
 
 	if( sd->status.pet_id > 0 && sd->pd )

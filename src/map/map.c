@@ -425,8 +425,6 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 			if (sc->data[SC_DANCING])
 				skill_unit_move_unit_group(skill_id2group(sc->data[SC_DANCING]->val2), bl->m, x1-x0, y1-y0);
 			else {
-				if (sc->data[SC_CLOAKING])
-					skill_check_cloaking(bl, sc->data[SC_CLOAKING]);
 				if (sc->data[SC_WARM])
 					skill_unit_move_unit_group(skill_id2group(sc->data[SC_WARM]->val4), bl->m, x1-x0, y1-y0);
 				if (sc->data[SC_BANDING])
@@ -2181,6 +2179,7 @@ int map_addinstancemap(const char *name, int id)
 {
 	int src_m = map_mapname2mapid(name);
 	int dst_m = -1, i;
+	char iname[MAP_NAME_LENGTH];
 	size_t size;
 
 	if(src_m < 0)
@@ -2209,8 +2208,16 @@ int map_addinstancemap(const char *name, int id)
 	// Copy the map
 	memcpy(&map[dst_m], &map[src_m], sizeof(struct map_data));
 
+	strcpy(iname,name);
+
 	// Alter the name
-	snprintf(map[dst_m].name, sizeof(map[dst_m].name), ((strchr(name,'@') == NULL)?"%.3d#%s":"%.3d%s"), id, name);
+	// Due to this being custom we only worry about preserving as many characters as necessary for accurate map distinguishing
+	// This also allows us to maintain complete independence with main map functions
+	if((strchr(iname,'@') == NULL) && strlen(iname) > 8) {
+		memmove(iname, iname+(strlen(iname)-9), strlen(iname));
+		snprintf(map[dst_m].name, sizeof(map[dst_m].name),"%d#%s", id, iname);
+	} else
+		snprintf(map[dst_m].name, sizeof(map[dst_m].name),"%.3d%s", id, iname);
 	map[dst_m].name[MAP_NAME_LENGTH-1] = '\0';
 
 	map[dst_m].m = dst_m;
@@ -2225,6 +2232,7 @@ int map_addinstancemap(const char *name, int id)
 	map[dst_m].block_mob = (struct block_list **)aCalloc(1,size);
 
 	map[dst_m].index = mapindex_addmap(-1, map[dst_m].name);
+	map[dst_m].channel = NULL;
 
 	map_addmap2db(&map[dst_m]);
 

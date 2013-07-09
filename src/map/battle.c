@@ -745,6 +745,10 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 	if( battle_config.ksprotection && mob_ksprotected(src, bl) )
 		return 0;
 
+	if( map_getcell(bl->m, bl->x, bl->y, CELL_CHKMAELSTROM) && skill_get_type(skill_id) != BF_MISC  
+		&& skill_get_casttype(skill_id) == CAST_GROUND ) 
+		return 0;
+
 	if (bl->type == BL_PC) {
 		sd=(struct map_session_data *)bl;
 		//Special no damage states
@@ -2739,7 +2743,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			skillratio += sc->data[SC_OVERTHRUST]->val3;
 		if(sc->data[SC_MAXOVERTHRUST])
 			skillratio += sc->data[SC_MAXOVERTHRUST]->val2;
-		if (sc->data[SC_BERSERK] || sc->data[SC_SATURDAYNIGHTFEVER] || sc->data[SC__BLOODYLUST])
+		if (sc->data[SC_BERSERK] || sc->data[SC_SATURDAYNIGHTFEVER])
 			skillratio += 100;
 		if(sc->data[SC_ZENKAI] && sstatus->rhw.ele == sc->data[SC_ZENKAI]->val2 )
 			skillratio += sc->data[SC_ZENKAI]->val1 * 2;
@@ -6008,7 +6012,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	}
 
 	if (tsc) {
-		if (tsc->data[SC_POISONREACT] &&
+		if (damage > 0 && tsc->data[SC_POISONREACT] &&
 			(rnd()%100 < tsc->data[SC_POISONREACT]->val3
 			|| sstatus->def_ele == ELE_POISON) &&
 //			check_distance_bl(src, target, tstatus->rhw.range+1) && Doesn't checks range! o.O;

@@ -1091,7 +1091,7 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 		/**
 		 * Fixes login-without-aura glitch (the screen won't blink at this point, don't worry :P)
 		 **/
-		clif_changemap(sd,sd->mapindex,sd->bl.x,sd->bl.y);
+		clif_changemap(sd,sd->bl.m,sd->bl.x,sd->bl.y);
 	}
 
 	/**
@@ -4211,7 +4211,7 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 		case 12243: // Mercenary's Berserk Potion
 			if( sd->md == NULL || sd->md->db == NULL )
 				return 0;
-			if (sd->md->sc.data[SC_BERSERK] || sd->md->sc.data[SC_SATURDAYNIGHTFEVER] || sd->md->sc.data[SC__BLOODYLUST])
+			if (sd->md->sc.data[SC_BERSERK] || sd->md->sc.data[SC_SATURDAYNIGHTFEVER])
 				return 0;
 			if( nameid == 12242 && sd->md->db->lv < 40 )
 				return 0;
@@ -4308,7 +4308,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 		return 0;
 
 	if (sd->sc.count && (
-		sd->sc.data[SC_BERSERK] || sd->sc.data[SC__BLOODYLUST] || sd->sc.data[SC_SATURDAYNIGHTFEVER] ||
+		sd->sc.data[SC_BERSERK] || sd->sc.data[SC_SATURDAYNIGHTFEVER] ||
 		(sd->sc.data[SC_GRAVITATION] && sd->sc.data[SC_GRAVITATION]->val3 == BCT_SELF) ||
 		sd->sc.data[SC_TRICKDEAD] ||
 		sd->sc.data[SC_HIDING] ||
@@ -4879,7 +4879,7 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 
 	if(sd->bl.prev != NULL){
 		unit_remove_map_pc(sd,clrtype);
-		clif_changemap(sd,map[m].index,x,y); // [MouseJstr]
+		clif_changemap(sd,m,x,y); // [MouseJstr]
 	} else if(sd->state.active) //Tag player for rewarping after map-loading is done. [Skotlex]
 		sd->state.rewarp = 1;
 
@@ -4990,6 +4990,11 @@ int pc_memo(struct map_session_data* sd, int pos)
 		ARR_FIND( 0, MAX_MEMOPOINTS, i, sd->status.memo_point[i].map == map_id2index(sd->bl.m) );
 		memmove(&sd->status.memo_point[1], &sd->status.memo_point[0], (min(i,MAX_MEMOPOINTS-1))*sizeof(struct point));
 		pos = 0;
+	}
+
+	if( map[sd->bl.m].instance_id ) {
+		clif_displaymessage( sd->fd, msg_txt(sd,384) ); // You cannot create a memo in an instance.
+		return 0;
 	}
 
 	sd->status.memo_point[pos].map = map_id2index(sd->bl.m);
@@ -8553,8 +8558,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 		return 0;
 	}
 
-	if( DIFF_TICK(sd->canequip_tick,gettick()) > 0 )
-	{
+	if( DIFF_TICK(sd->canequip_tick,gettick()) > 0 ) {
 		clif_equipitemack(sd,n,0,0);
 		return 0;
 	}
@@ -8570,8 +8574,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 		return 0;
 	}
 
-	if (sd->sc.data[SC_BERSERK] || sd->sc.data[SC_SATURDAYNIGHTFEVER] || sd->sc.data[SC__BLOODYLUST])
-	{
+	if (sd->sc.data[SC_BERSERK] || sd->sc.data[SC_SATURDAYNIGHTFEVER]) {
 		clif_equipitemack(sd,n,0,0);	// fail
 		return 0;
 	}
@@ -8582,15 +8585,14 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 			pos = sd->equip_index[EQI_ACC_R] >= 0 ? EQP_ACC_L : EQP_ACC_R;
 	}
 
-	if(pos == EQP_ARMS && id->equip == EQP_HAND_R)
-	{	//Dual wield capable weapon.
+	if(pos == EQP_ARMS && id->equip == EQP_HAND_R) { //Dual wield capable weapon.
 		pos = (req_pos&EQP_ARMS);
 		if (pos == EQP_ARMS) //User specified both slots, pick one for them.
 			pos = sd->equip_index[EQI_HAND_R] >= 0 ? EQP_HAND_L : EQP_HAND_R;
 	}
 
-	if (pos&EQP_HAND_R && battle_config.use_weapon_skill_range&BL_PC)
-	{	//Update skill-block range database when weapon range changes. [Skotlex]
+	if (pos&EQP_HAND_R && battle_config.use_weapon_skill_range&BL_PC) {
+		//Update skill-block range database when weapon range changes. [Skotlex]
 		i = sd->equip_index[EQI_HAND_R];
 		if (i < 0 || !sd->inventory_data[i]) //No data, or no weapon equipped
 			flag = 1;
@@ -8607,7 +8609,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 		}
 	}
 
-	if(pos==EQP_AMMO){
+	if(pos==EQP_AMMO) {
 		clif_arrowequip(sd,n);
 		clif_arrow_fail(sd,3);
 	}

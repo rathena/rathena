@@ -345,7 +345,7 @@ void clif_clearunit_delayed(struct block_list* bl, clr_type type, unsigned int t
 int clif_spawn(struct block_list *bl);	//area
 void clif_walkok(struct map_session_data *sd);	// self
 void clif_move(struct unit_data *ud); //area
-void clif_changemap(struct map_session_data *sd, short map, int x, int y);	//self
+void clif_changemap(struct map_session_data *sd, short m, int x, int y);	//self
 void clif_changemapserver(struct map_session_data* sd, unsigned short map_index, int x, int y, uint32 ip, uint16 port);	//self
 void clif_blown(struct block_list *bl); // area
 void clif_slide(struct block_list *bl, int x, int y); // area

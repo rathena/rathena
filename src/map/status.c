@@ -496,10 +496,10 @@ void initChangeTables(void) {
 	set_sc(MH_PAIN_KILLER		, SC_PAIN_KILLER	, SI_PAIN_KILLER	, SCB_ASPD );
 
 	add_sc(MH_STYLE_CHANGE		, SC_STYLE_CHANGE	);
-	set_sc(MH_TINDER_BREAKER	, SC_TINDER_BREAKER2	, SI_TINDER_BREAKER, SCB_FLEE );
-	set_sc(MH_TINDER_BREAKER	, SC_TINDER_BREAKER	, SI_TINDER_BREAKER_POSTDELAY, SCB_FLEE );
-	set_sc(MH_CBC			, SC_CBC, SI_CBC	, SCB_FLEE );
-	set_sc(MH_EQC			, SC_EQC, SI_EQC	, SCB_DEF2|SCB_BATK|SCB_MAXHP );
+	set_sc(MH_TINDER_BREAKER	, SC_TINDER_BREAKER2	, SI_TINDER_BREAKER		, SCB_FLEE );
+	set_sc(MH_TINDER_BREAKER	, SC_TINDER_BREAKER	, SI_TINDER_BREAKER_POSTDELAY	, SCB_FLEE );
+	set_sc(MH_CBC			, SC_CBC		, SI_CBC			, SCB_FLEE );
+	set_sc(MH_EQC			, SC_EQC		, SI_EQC			, SCB_DEF2|SCB_BATK|SCB_MAXHP );
 
 	add_sc( MER_CRASH		, SC_STUN		);
 	set_sc( MER_PROVOKE		, SC_PROVOKE		, SI_PROVOKE		, SCB_DEF|SCB_DEF2|SCB_BATK|SCB_WATK );
@@ -635,7 +635,7 @@ void initChangeTables(void) {
 	set_sc( SC_STRIPACCESSARY	, SC__STRIPACCESSORY	, SI_STRIPACCESSARY	, SCB_DEX|SCB_INT|SCB_LUK );
 	set_sc_with_vfx( SC_MANHOLE	, SC__MANHOLE		, SI_MANHOLE		, SCB_NONE );
 	add_sc( SC_CHAOSPANIC		, SC_CONFUSION		);
-	set_sc_with_vfx( SC_BLOODYLUST	, SC__BLOODYLUST	, SI_BERSERK		, SCB_DEF | SCB_DEF2 | SCB_MDEF | SCB_MDEF2 | SCB_FLEE | SCB_SPEED | SCB_ASPD | SCB_MAXHP | SCB_REGEN );
+	add_sc( SC_BLOODYLUST		, SC_BERSERK		);
 	/**
 	 * Sura
 	 **/
@@ -1048,7 +1048,6 @@ void initChangeTables(void) {
 	StatusChangeStateTable[SC_BERSERK]		|= SCS_NOCHAT;
 	StatusChangeStateTable[SC_SATURDAYNIGHTFEVER]	|= SCS_NOCHAT;
 	StatusChangeStateTable[SC_DEEPSLEEP]		|= SCS_NOCHAT;
-	StatusChangeStateTable[SC__BLOODYLUST]		|= SCS_NOCHAT;
 	StatusChangeStateTable[SC_NOCHAT]		|= SCS_NOCHAT|SCS_NOCHATCOND;
 
 }
@@ -1233,8 +1232,6 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 			status_change_end(target, SC_RAISINGDRAGON, INVALID_TIMER);
 		if (sc->data[SC_SATURDAYNIGHTFEVER] && status->hp <= 100)
 			status_change_end(target, SC_SATURDAYNIGHTFEVER, INVALID_TIMER);
-		if (sc->data[SC__BLOODYLUST] && status->hp <= 100)
-			status_change_end(target, SC__BLOODYLUST, INVALID_TIMER);
 	}
 
 	switch (target->type) {
@@ -1367,7 +1364,7 @@ int status_heal(struct block_list *bl,int hp,int sp, int flag)
 	}
 
 	if(hp) {
-		if( sc && (sc->data[SC_BERSERK] || sc->data[SC__BLOODYLUST]) ) {
+		if( sc && (sc->data[SC_BERSERK]) ) {
 			if( flag&1 )
 				flag &= ~2;
 			else
@@ -3488,7 +3485,7 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 	if (
 		(sc->data[SC_POISON] && !sc->data[SC_SLOWPOISON])
 		|| (sc->data[SC_DPOISON] && !sc->data[SC_SLOWPOISON])
-		|| sc->data[SC_BERSERK] || sc->data[SC__BLOODYLUST]
+		|| sc->data[SC_BERSERK]
 		|| sc->data[SC_TRICKDEAD]
 		|| sc->data[SC_BLEEDING]
 		|| sc->data[SC_MAGICMUSHROOM]
@@ -4910,7 +4907,7 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 		flee += flee * sc->data[SC_INCFLEERATE]->val1/100;
 	if(sc->data[SC_SPIDERWEB] && sc->data[SC_SPIDERWEB]->val1)
 		flee -= flee * 50/100;
-	if (sc->data[SC_BERSERK] || sc->data[SC__BLOODYLUST])
+	if(sc->data[SC_BERSERK])
 		flee -= flee * 50/100;
 	if(sc->data[SC_BLIND])
 		flee -= flee * 25/100;
@@ -4957,7 +4954,7 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 	if(!sc || !sc->count)
 		return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);
 
-	if (sc->data[SC_BERSERK] || sc->data[SC__BLOODYLUST])
+	if(sc->data[SC_BERSERK])
 		return 0;
 	if(sc->data[SC_SKA])
 		return sc->data[SC_SKA]->val3;
@@ -5037,7 +5034,7 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 		return (short)cap_value(def2,1,SHRT_MAX);
 #endif
 
-	if (sc->data[SC_BERSERK] || sc->data[SC__BLOODYLUST])
+	if(sc->data[SC_BERSERK])
 		return 0;
 	if(sc->data[SC_ETERNALCHAOS])
 		return 0;
@@ -5095,7 +5092,7 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 	if(!sc || !sc->count)
 		return (defType)cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX);
 
-	if (sc->data[SC_BERSERK] || sc->data[SC__BLOODYLUST])
+	if(sc->data[SC_BERSERK])
 		return 0;
 	if(sc->data[SC_BARRIER])
 		return 100;
@@ -5145,7 +5142,7 @@ static signed short status_calc_mdef2(struct block_list *bl, struct status_chang
 #endif
 
 
-	if (sc->data[SC_BERSERK] || sc->data[SC__BLOODYLUST])
+	if(sc->data[SC_BERSERK])
 		return 0;
 	if(sc->data[SC_SKA])
 		return 90;
@@ -5290,7 +5287,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 				val = max( val, 1 * pc_checkskill(sd,TF_MISS) );
 			if( sc->data[SC_CLOAKING] && (sc->data[SC_CLOAKING]->val4&1) == 1 )
 				val = max( val, sc->data[SC_CLOAKING]->val1 >= 10 ? 25 : 3 * sc->data[SC_CLOAKING]->val1 - 3 );
-			if (sc->data[SC_BERSERK] || sc->data[SC__BLOODYLUST])
+			if( sc->data[SC_BERSERK] )
 				val = max( val, 25 );
 			if( sc->data[SC_RUN] )
 				val = max( val, 55 );
@@ -5405,7 +5402,7 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, s
 		}
 	}
 
-	if((sc->data[SC_BERSERK] || sc->data[SC__BLOODYLUST]) &&	skills1 < 15)
+	if(sc->data[SC_BERSERK] && skills1 < 15)
 		skills1 = 15;
 	else if(sc->data[SC_MADNESSCANCEL] && skills1 < 15) // needs more info
 		skills1 = 15;
@@ -5550,7 +5547,7 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		}
 		aspd_rate -= max;
 
-		if((sc->data[SC_BERSERK] || sc->data[SC__BLOODYLUST]))
+		if(sc->data[SC_BERSERK])
 			aspd_rate -= 300;
 		else if(sc->data[SC_MADNESSCANCEL])
 			aspd_rate -= 200;
@@ -5652,7 +5649,7 @@ static unsigned int status_calc_maxhp(struct block_list *bl, struct status_chang
 		maxhp += maxhp * sc->data[SC_APPLEIDUN]->val2/100;
 	if(sc->data[SC_DELUGE])
 		maxhp += maxhp * sc->data[SC_DELUGE]->val2/100;
-	if (sc->data[SC_BERSERK] || sc->data[SC__BLOODYLUST])
+	if(sc->data[SC_BERSERK])
 		maxhp += maxhp * 2;
 	if(sc->data[SC_MARIONETTE])
 		maxhp -= 1000;
@@ -6310,7 +6307,6 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			case SC__LAZINESS:
 			case SC__UNLUCKY:
 			case SC__WEAKNESS:
-			case SC__BLOODYLUST:
 				return 0;
 		}
 
@@ -6690,12 +6686,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	break;
 
 	//There all like berserk, do not everlap each other
-	case SC__BLOODYLUST:
-		if(!sd) return 0; //should only affect player
 	case SC_BERSERK:
-		if (((type == SC_BERSERK) && (sc->data[SC_SATURDAYNIGHTFEVER] || sc->data[SC__BLOODYLUST]))
-		|| ((type == SC__BLOODYLUST) && (sc->data[SC_SATURDAYNIGHTFEVER] || sc->data[SC_BERSERK]))
-		)
+		if(sc->data[SC_SATURDAYNIGHTFEVER] || sc->data[SC__BLOODYLUST])
 			return 0;
 		break;
 
@@ -6946,7 +6938,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		}
 	break;
 	case SC_SATURDAYNIGHTFEVER:
-		if (sc->data[SC_BERSERK] || sc->data[SC_INSPIRATION] || sc->data[SC__BLOODYLUST])
+		if (sc->data[SC_BERSERK] || sc->data[SC_INSPIRATION])
 			return 0;
 		break;
 	}
@@ -7067,8 +7059,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		status_change_end(bl, SC_CLOSECONFINE, INVALID_TIMER);
 		status_change_end(bl, SC_CLOSECONFINE2, INVALID_TIMER);
 		break;
-	case SC__BLOODYLUST:
 	case SC_BERSERK:
+		if( val3 == SC__BLOODYLUST )
+			break;
 		if(battle_config.berserk_cancels_buffs) {
 			status_change_end(bl, SC_ONEHAND, INVALID_TIMER);
 			status_change_end(bl, SC_TWOHANDQUICKEN, INVALID_TIMER);
@@ -7324,7 +7317,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val4 = sce->val4;
 				break;
 			case SC_LERADSDEW:
-				if (sc && (sc->data[SC_BERSERK] || sc->data[SC__BLOODYLUST]))
+				if (sc && sc->data[SC_BERSERK])
 					return 0;
 			case SC_SHAPESHIFT:
 			case SC_PROPERTYWALK:
@@ -7785,9 +7778,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 
 		case SC_BERSERK:
-			if (!sc->data[SC_ENDURE] || !sc->data[SC_ENDURE]->val4)
+			if( val3 == SC__BLOODYLUST )
+				sc_start(src,bl,(sc_type)val3,100,val1,tick);
+			if (!val3 && !(sc->data[SC_ENDURE] && sc->data[SC_ENDURE]->val4))
 				sc_start4(src,bl, SC_ENDURE, 100,10,0,0,2, tick);
-		case SC__BLOODYLUST:
 			//HP healing is performing after the calc_status call.
 			//Val2 holds HP penalty
 			if (!val4) val4 = skill_get_time2(status_sc2skill(type),val1);
@@ -8962,7 +8956,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_BERSERK:
 			opt_flag = 0;
-//		case SC__BLOODYLUST:
 			sc->opt3 |= OPT3_BERSERK;
 			break;
 //		case ???: // doesn't seem to do anything
@@ -9101,7 +9094,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		pet_sc_check(sd, type); //Skotlex: Pet Status Effect Healing
 
     switch (type) {
-		case SC__BLOODYLUST:
 		case SC_BERSERK:
 			if (!(sce->val2)) { //don't heal if already set
 				status_heal(bl, status->max_hp, 0, 1); //Do not use percent_heal as this healing must override BERSERK's block.
@@ -9580,15 +9572,15 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 
 		case SC_BERSERK:
 		case SC_SATURDAYNIGHTFEVER:
-			//If val2 is removed, no HP penalty (dispelled?) [Skotlex]
-			if (status->hp > 100 && sce->val2)
+			if(status->hp > 200 && sc && sc->data[SC__BLOODYLUST]) {
+				status_percent_heal(bl, 100, 0);
+				status_change_end(bl, SC__BLOODYLUST, INVALID_TIMER);
+			} else if (status->hp > 100 && sce->val2) //If val2 is removed, no HP penalty (dispelled?) [Skotlex]
 				status_set_hp(bl, 100, 0);
-			if(sc->data[SC_ENDURE] && sc->data[SC_ENDURE]->val4 == 2)
-			{
+			if(sc->data[SC_ENDURE] && sc->data[SC_ENDURE]->val4 == 2) {
 				sc->data[SC_ENDURE]->val4 = 0;
 				status_change_end(bl, SC_ENDURE, INVALID_TIMER);
 			}
-		case SC__BLOODYLUST:
 			sc_start4(bl, bl, SC_REGENERATION, 100, 10,0,0,(RGN_HP|RGN_SP), skill_get_time(LK_BERSERK, sce->val1));
 			if( type == SC_SATURDAYNIGHTFEVER ) //Sit down force of Saturday Night Fever has the duration of only 3 seconds.
 				sc_start(bl, bl,SC_SITDOWN_FORCE,100,sce->val1,skill_get_time2(WM_SATURDAY_NIGHT_FEVER,sce->val1));
@@ -9875,7 +9867,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		break;
 	case SC_BERSERK:
 		opt_flag = 0;
-//	case SC__BLOODYLUST:
 		sc->opt3 &= ~OPT3_BERSERK;
 		break;
 //	case ???: // doesn't seem to do anything
@@ -10257,7 +10248,6 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			return 0;
 		}
 		break;
-	case SC__BLOODYLUST:
 	case SC_BERSERK:
 		// 5% every 10 seconds [DracoRPG]
 		if( --( sce->val3 ) > 0 && status_charge(bl, sce->val2, 0) && status->hp > 100 )
@@ -11015,7 +11005,6 @@ int status_change_clear_buffs (struct block_list* bl, int type)
 					continue;
 				break;
 				//The rest are buffs that can be removed.
-			case SC__BLOODYLUST:
 			case SC_BERSERK:
 			case SC_SATURDAYNIGHTFEVER:
 				if (!(type&1))

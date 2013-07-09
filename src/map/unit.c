@@ -987,8 +987,7 @@ int unit_can_move(struct block_list *bl) {
 				(sc->data[SC_DANCING]->val1&0xFFFF) == CG_MOONLIT ||
 				(sc->data[SC_DANCING]->val1&0xFFFF) == CG_HERMODE
 				) )
-			|| (sc->data[SC_CLOAKING] && //Need wall at level 1-2
-				sc->data[SC_CLOAKING]->val1 < 3 && !(sc->data[SC_CLOAKING]->val4&1))
+			|| (sc->data[SC_CLOAKING] && sc->data[SC_CLOAKING]->val1 < 3) // Can't move at level less than 3
 			)
 			return 0;
 
@@ -1473,6 +1472,11 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 			return 0;
 		}
+	}
+
+	if( (skill_id >= SC_MANHOLE && skill_id <= SC_FEINTBOMB) && map_getcell(src->m, skill_x, skill_y, CELL_CHKMAELSTROM) ) {
+		clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+		return 0;
 	}
 
 	if (!status_check_skilluse(src, NULL, skill_id, 0))

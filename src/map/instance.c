@@ -369,13 +369,15 @@ int instance_mapname2mapid(const char *name, short instance_id)
 {
 	struct instance_data *im;
 	int m = map_mapname2mapid(name);
-	char iname[12];
+	char iname[MAP_NAME_LENGTH];
 	int i;
 
 	if(m < 0) {
 		ShowError("instance_mapname2mapid: map name %s does not exist.\n",name);
 		return m;
 	}
+
+	strcpy(iname,name);
 
 	if(instance_id <= 0 || instance_id > MAX_INSTANCE_DATA)
 		return m;
@@ -386,8 +388,13 @@ int instance_mapname2mapid(const char *name, short instance_id)
 
 	for(i = 0; i < MAX_MAP_PER_INSTANCE; i++)
 		if(im->map[i].src_m == m) {
-			snprintf(iname, sizeof(iname), ((strchr(name,'@') == NULL)?"%.3d#%s":"%.3d%s"), instance_id, name);
-			return mapindex_name2id(iname);
+			char alt_name[MAP_NAME_LENGTH];
+			if((strchr(iname,'@') == NULL) && strlen(iname) > 8) {
+				memmove(iname, iname+(strlen(iname)-9), strlen(iname));
+				snprintf(alt_name, sizeof(alt_name),"%d#%s", instance_id, iname);
+			} else
+				snprintf(alt_name, sizeof(alt_name),"%.3d%s", instance_id, iname);
+			return map_mapname2mapid(alt_name);
 		}
 
 	return m;
@@ -515,7 +522,7 @@ int instance_enter(struct map_session_data *sd, const char *name)
 	if((m = instance_mapname2mapid(db->enter.mapname, p->instance_id)) < 0)
 		return 3;
 
-	if(pc_setpos(sd, m, db->enter.x, db->enter.y, 0))
+	if(pc_setpos(sd, map_id2index(m), db->enter.x, db->enter.y, 0))
 		return 3;
 
 	// If there was an idle timer, let's stop it

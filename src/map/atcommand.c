@@ -729,6 +729,11 @@ ACMD_FUNC(save)
 {
 	nullpo_retr(-1, sd);
 
+	if( map[sd->bl.m].instance_id ) {
+		clif_displaymessage(fd, msg_txt(sd,383)); // You cannot create a savepoint in an instance.
+		return 1;
+	}
+
 	pc_setsavepoint(sd, sd->mapindex, sd->bl.x, sd->bl.y);
 	if (sd->status.pet_id > 0 && sd->pd)
 		intif_save_petdata(sd->status.account_id, &sd->pd->pet);
@@ -2221,8 +2226,7 @@ ACMD_FUNC(memo)
 		return -1;
 	}
 
-	pc_memo(sd, position);
-	return 0;
+	return !pc_memo( sd, position );
 }
 
 /*==========================================

@@ -16561,21 +16561,18 @@ BUILDIN_FUNC(instance_npcname)
 BUILDIN_FUNC(instance_mapname)
 {
  	const char *str;
-	char iname[12];
 	int16 m;
 	short instance_id = 0;
 
  	str = script_getstr(st,2);
+
 	if( script_hasdata(st,3) )
 		instance_id = script_getnum(st,3);
 	else
 		instance_id = script_instancegetid(st);
 
-	// Build the instance mapname
-	snprintf(iname, sizeof(iname), ((strchr(str,'@') == NULL)?"%.3d#%s":"%.3d%s"), instance_id, str);
-
 	// Check that instance mapname is a valid map
-	if( !instance_id || (m = map_mapname2mapid(iname)) < 0 )
+	if(!instance_id || (m = instance_mapname2mapid(str,instance_id)) < 0)
 		script_pushconststr(st, "");
 	else
 		script_pushconststr(st, map[m].name);
@@ -16616,7 +16613,6 @@ BUILDIN_FUNC(instance_warpall)
 	short instance_id;
 	const char *mapn;
 	int x, y;
-	unsigned short mapindex;
 
 	mapn = script_getstr(st,2);
 	x    = script_getnum(st,3);
@@ -16632,9 +16628,8 @@ BUILDIN_FUNC(instance_warpall)
 	if( !(p = party_search(instance_data[instance_id].party_id)) )
 		return 0;
 
-	mapindex = map_id2index(m);
 	for( i = 0; i < MAX_PARTY; i++ )
-		if( (pl_sd = p->data[i].sd) && map[pl_sd->bl.m].instance_id == instance_id ) pc_setpos(pl_sd,mapindex,x,y,CLR_TELEPORT);
+		if( (pl_sd = p->data[i].sd) && map[pl_sd->bl.m].instance_id == instance_id ) pc_setpos(pl_sd,map_id2index(m),x,y,CLR_TELEPORT);
 
 	return 0;
 }
