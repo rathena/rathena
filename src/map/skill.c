@@ -12896,8 +12896,8 @@ int skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_id
 			static int dx[] = { 0, 1, 0, -1, -1,  1, 1, -1};
 			static int dy[] = {-1, 0, 1,  0, -1, -1, 1,  1};
 
-			if( (sd->bl.type == BL_PC && battle_config.pc_cloak_check_type&1)
-			||	(sd->bl.type != BL_PC && battle_config.monster_cloak_check_type&1) ) { //Check for walls.
+			if( skill_lv < 3 && ((sd->bl.type == BL_PC && battle_config.pc_cloak_check_type&1)
+			||	(sd->bl.type != BL_PC && battle_config.monster_cloak_check_type&1) )) { //Check for walls.
 				int i;
 				ARR_FIND( 0, 8, i, map_getcell(sd->bl.m, sd->bl.x+dx[i], sd->bl.y+dy[i], CELL_CHKNOPASS) != 0 );
 				if( i == 8 ) {

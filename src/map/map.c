@@ -425,7 +425,7 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 			if (sc->data[SC_DANCING])
 				skill_unit_move_unit_group(skill_id2group(sc->data[SC_DANCING]->val2), bl->m, x1-x0, y1-y0);
 			else {
-				if (sc->data[SC_CLOAKING] && !skill_check_cloaking(bl, NULL))
+				if (sc->data[SC_CLOAKING] && sc->data[SC_CLOAKING]->val1 < 3 && !skill_check_cloaking(bl, NULL))
 					status_change_end(bl, SC_CLOAKING, INVALID_TIMER);
 				if (sc->data[SC_WARM])
 					skill_unit_move_unit_group(skill_id2group(sc->data[SC_WARM]->val4), bl->m, x1-x0, y1-y0);
