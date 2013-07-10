@@ -4220,8 +4220,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			struct block_list *mbl = bl;
 			short dir = 0;
 
-			status_change_end(bl, SC_NEN, INVALID_TIMER);
-			status_change_end(bl, SC_HIDING, INVALID_TIMER);
+			status_change_end(src, SC_NEN, INVALID_TIMER);
+			status_change_end(src, SC_HIDING, INVALID_TIMER);
 
 			skill_attack(BF_MISC,src,src,bl,skill_id,skill_lv,tick,flag);
 
