@@ -7,6 +7,7 @@
 #include "../common/db.h"
 #include "../common/malloc.h"
 #include "../common/random.h"
+#include "../common/socket.h"
 
 #include "map.h"
 #include "path.h"
@@ -987,7 +988,6 @@ int unit_can_move(struct block_list *bl) {
 				(sc->data[SC_DANCING]->val1&0xFFFF) == CG_MOONLIT ||
 				(sc->data[SC_DANCING]->val1&0xFFFF) == CG_HERMODE
 				) )
-			|| (sc->data[SC_CLOAKING] && sc->data[SC_CLOAKING]->val1 < 3) // Can't move at level less than 3
 			)
 			return 0;
 
@@ -1927,8 +1927,11 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 			unit_set_walkdelay(src, tick, sstatus->amotion, 1);
 	}
 
-	if(ud->state.attack_continue)
+	if(ud->state.attack_continue) {
+		if( src->type == BL_PC )
+			((TBL_PC*)src)->idletime = last_tick;
 		ud->attacktimer = add_timer(ud->attackabletime,unit_attack_timer,src->id,0);
+	}
 
 	if( sd )
 		sd->canlog_tick = gettick();

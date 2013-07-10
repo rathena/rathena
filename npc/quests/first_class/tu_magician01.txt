@@ -1,19 +1,20 @@
 //===== rAthena Script ======================================= 
-//= Magican Class Tutorial and Job Specific Quest
+//= Magician Class Tutorial and Job Specific Quest
 //===== By: ================================================== 
 //= Fix up by Jukka
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
-//= rAthena SVN (Testet in Trunk 88xx)
+//= rAthena SVN
 //===== Description: ========================================= 
-//=
+//= [Official Conversion]
+//= Magician training quest.
 //===== Additional Comments: ================================= 
 //= 1.0 Fully working
 //= 1.1 Optimized [Lupus]
-//=	TODO: Test, Add proper misceffects
 //= 1.2 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //= 1.3 Misc. updates. [L0ne_W0lf]
+//= 1.4 Updated to match the official script. [Euphy]
 //============================================================ 
 
 // Sign
@@ -45,9 +46,14 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 		mes "anyone can do what you do~";
 		close;
 	}
-	if(eaclass()&(EAJL_UPPER|EAJL_2) && tu_magician01 < 7){
+	if(eaclass()&(EAJL_UPPER|EAJL_2|EAJL_THIRD) && tu_magician01 < 7){
 		mes "[Mana]";
-		mes "My training isn't very helpful to those that are already skilled in magic. I'm afraid you'll have to rely on yourself to improve your skills.";
+		mes "Although I offer magic";
+		mes "training, it's not very helpful";
+		mes "if you're already experienced";
+		mes "in the use of magic. I'm sorry,";
+		mes "but you'll have to rely on your";
+		mes "own self to hone your skills.";
 		close;
 	}
 	switch(tu_magician01){
@@ -128,7 +134,10 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 		mes "time for a break. But we'll";
 		mes "continue this later, okay?";
 		set tu_magician01, 1;
-		getexp BaseLevel*3,BaseLevel*2;
+		if (checkre(3))
+			getexp BaseLevel*3,BaseLevel*2;
+		else
+			getexp BaseLevel*30,BaseLevel*15;
 		specialeffect2 EF_HIT5;
 		close;
 	case 1:
@@ -202,7 +211,7 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 				mes "only slightly injured and the";
 				mes "Fire Wall won't necessarily";
 				mes "block its approach. So beware!";
-				set tu_mana,tu_mana|1;
+				set .@eread_1,1;
 				next;
 				break;
 			case 2:
@@ -237,7 +246,7 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 				mes "afterwards, like Fire Bolt and";
 				mes "Fire Ball, to take advantage of";
 				mes "the monster's Earth property.";
-				set tu_mana,tu_mana|2;
+				set .@eread_2,1;
 				next;
 				break;
 			case 3:
@@ -275,8 +284,7 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 				mes "the ^93DB70Wind^000000 property skills";
 				mes "that we Mages can use are";
 				mes "Lighning Bolt and Thunder Storm.";
-				next;
-				set tu_mana,tu_mana|4;
+				set .@eread_3,1;
 				next;
 				break;
 			case 4:
@@ -313,7 +321,7 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 				mes "actually freeze monsters.";
 				mes "While monsters are frozen by";
 				mes "Frost Diver, they're considered Water monsters. Interesting, huh?";
-				set tu_mana,tu_mana|8;
+				set .@eread_4,1;
 				next;
 				break;
 			case 5:
@@ -346,7 +354,7 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 				mes "shield against long range";
 				mes "attacks or strong property";
 				mes "attacks, so be really careful!";
-				set tu_mana,tu_mana|16;
+				set .@eread_5,1;
 				next;
 				break;
 			case 6:
@@ -358,32 +366,18 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 				mes "ready, we'll cover some new";
 				mes "material for you to learn.";
 				next;
-				switch(select("W-wait, not yet!:I'm ready to go on.")) {
-				case 1:
-					break;
-				case 2:
+				if(select("W-wait, not yet!:I'm ready to go on.") == 2) {
 					mes "[Mana]";
 					mes "Alrighty, we'll";
 					mes "move on to the next";
 					mes "subject then. Ho ho ho~!";
 					set tu_magician01,2;
 					specialeffect2 EF_HIT5;
-					if(tu_mana&1){
-						getexp 15,7;
-					}
-					if(tu_mana&2){
-						getexp 15,7;
-					}
-					if(tu_mana&4){
-						getexp 15,7;
-					}
-					if(tu_mana&8){
-						getexp 15,7;
-					}
-					if(tu_mana&16){
-						getexp 15,7;
-					}
-					set tu_mana,0;
+					if(.@eread_1) getexp 150,70;
+					if(.@eread_2) getexp 150,70;
+					if(.@eread_3) getexp 150,70;
+					if(.@eread_4) getexp 150,70;
+					if(.@eread_5) getexp 150,70;
 				}
 				close;
 			}
@@ -465,7 +459,7 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 		mes "10 Chrysalis from them.";
 		mes "Then bring them to me, okay?";
 		set tu_magician01, 3;
-		getexp 40,20;
+		getexp 400,200;
 		specialeffect2 EF_HIT5;
 		close;
 	case 3:
@@ -493,7 +487,7 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 			mes "used to using your skills, huh?";
 			mes "Anyway, let me know when you're ready for the next lesson, okay?";
 			set tu_magician01, 5;
-			getexp 40,20;
+			getexp 400,200;
 			specialeffect2 EF_HIT5;
 			close;
 		}
@@ -521,7 +515,7 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 			mes "used to using your skills, huh?";
 			mes "Anyway, let me know when you're ready for the next lesson, okay?";
 			set tu_magician01, 5;
-			getexp 40,20;
+			getexp 400,200;
 			specialeffect2 EF_HIT5;
 			close;
 		}
@@ -550,7 +544,7 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 				mes "of Soul Strike and increase";
 				mes "that skill's level, it will grow in strength and you'll be able";
 				mes "to cast it much more quickly.";
-				set tu_mana,tu_mana|1;
+				set .@skill_e1,1;
 				next;
 				break;
 			case 2:
@@ -570,7 +564,7 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 				mes "certain number of attacks,";
 				mes "depending on the level of the";
 				mes "Safety Wall skill that you use.";
-				set tu_mana,tu_mana|2;
+				set .@skill_e2,1;
 				next;
 				break;
 			case 3:
@@ -590,7 +584,7 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 				mes "good use of the destructive";
 				mes "power of the Fire Ball!";
 				next;
-				set tu_mana,tu_mana|4;
+				set .@skill_e3,1;
 				break;
 			case 4:
 				mes "[Mana]";
@@ -616,7 +610,7 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 				mes "skill, its damage and chance";
 				mes "of freezing monsters will also";
 				mes "increase. Pretty dangerous, eh? ^FFFFFFkamenriderblack^000000";
-				set tu_mana,tu_mana|8;
+				set .@skill_e4,1;
 				next;
 				break;
 			case 5:
@@ -635,7 +629,7 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 				mes "within a certain range.";
 				mes "It's an incredibly potent";
 				mes "ground targeting attack.";
-				set tu_mana,tu_mana|16;
+				set .@skill_e5,1;
 				next;
 				break;
 			case 6:
@@ -661,7 +655,7 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 				mes "Fire Well strategically";
 				mes "and effectively, it can";
 				mes "be a very powerful skill~";
-				set tu_mana,tu_mana|32;
+				set .@skill_e6,1;
 				next;
 				break;
 			case 7:
@@ -680,7 +674,7 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 				mes "learn Energy Coat, I'm";
 				mes "sure Blizardis will tell";
 				mes "you all you need to know.";
-				set tu_mana,tu_mana|64;
+				set .@skill_e7,1;
 				next;
 				break;
 			case 8:
@@ -701,28 +695,13 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 				set tu_magician01, 6;
 				getitem 1604,1; //Wand
 				specialeffect2 EF_HIT5;
-				if(tu_mana&1){
-					getexp 30,10;
-				}
-				if(tu_mana&2){
-					getexp 30,10;
-				}
-				if(tu_mana&4){
-					getexp 30,10;
-				}
-				if(tu_mana&8){
-					getexp 30,10;
-				}
-				if(tu_mana&16){
-					getexp 30,10;
-				}
-				if(tu_mana&32){
-					getexp 30,10;
-				}
-				if(tu_mana&64){
-					getexp 30,10;
-				}
-				set tu_mana,0;
+				if(.@skill_e1) getexp 300,100;
+				if(.@skill_e2) getexp 300,100;
+				if(.@skill_e3) getexp 300,100;
+				if(.@skill_e4) getexp 300,100;
+				if(.@skill_e5) getexp 300,100;
+				if(.@skill_e6) getexp 300,100;
+				if(.@skill_e7) getexp 300,100;
 				close;
 			default: 
 				break;
@@ -810,7 +789,7 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 		set tu_magician01, 28;
 		getitem 2321,1; //Silk_Robe
 		set Zeny, Zeny + 3000;
-		getexp 300,100;
+		getexp 3000,1000;
 		close;
 	default:
 		if(tu_magician01 < 27){

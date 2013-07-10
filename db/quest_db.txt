@@ -640,7 +640,9 @@
 5052,0,0,0,0,0,0,0,"Traditional Weapon"
 5053,0,0,0,0,0,0,0,"Traditional Weapon"
 5054,0,0,0,0,0,0,0,"Traditional Weapon"
-
+5055,0,2071,15,0,0,0,0,"Local Rising - Headless Horse"
+5056,0,1584,15,0,0,0,0,"Local Rising - Tamruan"
+5057,0,0,0,0,0,0,0,"Local Rising - Ready the Festival"
 5058,0,0,0,0,0,0,0,"The mood of the players-(1)"
 5059,0,0,0,0,0,0,0,"The mood of the players-(2)"
 5060,180,0,0,0,0,0,0,"Cat Shock"

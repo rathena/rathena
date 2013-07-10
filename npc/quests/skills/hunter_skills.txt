@@ -20,15 +20,14 @@
 //= 1.3b Splitted into different files [DracoRPG]
 //= 1.3c Fixed some typos [IVBela]
 //= 1.3d Changed NPC Name to the official [Lupus]
-//= 1.4	Moved Arpesto from tu_archer and added his script. [Kisuka]
+//= 1.4 Moved Arpesto from tu_archer and added his script. [Kisuka]
 //============================================================
-
 
 //============================================================
 // HUNTER SKILL - PHANTASMIC ARROW
 //============================================================
 pay_arche,109,169,3	script	Arpesto	712,{
-	if (Class == Job_Hunter || Class == Job_Sniper) {
+	if (BaseJob == Job_Hunter) {
 		if (qskill_hunter == 100) {
 			if (getskilllv("HT_PHANTASMIC")) {
 				mes "[Arpesto]";
@@ -241,7 +240,7 @@ pay_arche,109,169,3	script	Arpesto	712,{
 				set qskill_hunter,100;
 				close;
 			}
-			if (JobLevel < 40) {
+			if (BaseJob == Job_Hunter && JobLevel < 40) {
 				mes "[Arpesto]";
 				mes "Did the master send you";
 				mes "to me? Hmm... You're still";

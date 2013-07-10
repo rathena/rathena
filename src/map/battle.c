@@ -4356,9 +4356,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 #ifdef RENEWAL
 	if(is_attack_critical(wd, src, target, skill_id, skill_lv, false)) {
 		if(sd) // check for player so we don't crash out, monsters don't have bonus crit rates [helvetica]
-			wd.damage = (int32)floor(wd.damage * 1.4 * ((100 + sd->bonus.crit_atk_rate) / 100));
+			wd.damage = (int32)floor((double)wd.damage * 1.4 * ((100 + sd->bonus.crit_atk_rate) / 100));
 		else
-			wd.damage = (int32)floor(wd.damage * 1.4);
+			wd.damage = (int32)floor((double)wd.damage * 1.4);
 	}
 #endif
 

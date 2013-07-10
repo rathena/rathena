@@ -9329,6 +9329,9 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		// Notify everyone that this char logged in [Skotlex].
 		map_foreachpc(clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, 1);
 
+		// Set the initial idle time
+		sd->idletime = last_tick;
+
 		//Login Event
 		npc_script_event(sd, NPCE_LOGIN);
 	} else {

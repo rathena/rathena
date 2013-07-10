@@ -3,15 +3,15 @@
 //===== By: ================================================== 
 //= Fix up by Jukka
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
-//= rAthena SVN (Testet in Trunk 88xx)
+//= rAthena SVN
 //===== Description: ========================================= 
-//=
+//= [Official Conversion]
+//= Acolyte training quest.
 //===== Additional Comments: ================================= 
 //= 1.0 Fully working
 //= 1.1 optimized [Lupus]
-//=	TODO: Test, Add correct misceffects numbers
 //= 1.2 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //= 1.3 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //= 1.4 Misc. updates. [L0ne_W0lf]
@@ -19,6 +19,7 @@
 //= 1.6 Fixed a wrong placed curly bracket. [Joseph]
 //= 1.6a Added 'npcskill' command. [Euphy]
 //= 1.7 Fixed exp, texts, and requirements in pre-renewal [Daegaladh]
+//= 1.8 Updated to match the official script. [Euphy]
 //============================================================ 
 
 // Priest Praupin
@@ -291,13 +292,10 @@ prt_monk,230,106,3	script	Asthe#tu	79,{
 		next;
 		mes "[Asthe]";
 		mes "HEAL !!";
-		npcskill "AL_HEAL",10,99,60;
+		npcskill "AL_HEAL",11,99,60;
 		set tu_acolyte01, 3;
 		if(getskilllv("AL_HEAL") == 0){
-			if(checkre(3))
-				getexp 0,10;
-			else
-				getexp 0,100;
+			getexp 0,100;
 			specialeffect2 EF_CONE;
 		}
 		close;
@@ -386,17 +384,11 @@ prt_monk,230,106,3	script	Asthe#tu	79,{
 				set tu_acolyte01, 5;
 				delitem 1504, 1; //Mace
 				if(Class == Job_Acolyte_High) {
-					if(checkre(3))
-						getexp 200,100;
-					else
-						getexp 2000,1000;	
+					getexp 2000,1000;
 					specialeffect2 EF_CONE;
 					close;
 				} else {
-					if(checkre(3))
-						getexp 100,50;
-					else
-						getexp 1000,500;
+					getexp 1000,500;
 					specialeffect2 EF_CONE;
 					close;
 				}
@@ -785,8 +777,8 @@ prt_monk,230,106,3	script	Asthe#tu	79,{
 		mes "[Asthe]";
 		mes "Well, please don't forget what I've taught you. I hope you look back with fondness at our time together amongst these beautiful flowers. May God bless you~";
 		set tu_acolyte01, 25;
-		if(checkre(3))
-			getexp 500,300;
+		if (checkre(3))
+			getexp 1000,1000;
 		else
 			getexp 5000,3000;
 		specialeffect2 EF_CONE;
@@ -842,8 +834,8 @@ monk_in,18,38,6	script	Priest Gardron#tu	110,{
 			close;
 		}
 	} else if(tu_acolyte01 == 8){
-		if(countitem(checkre(0)?939:957) > 4){
-			mes "Oh..!";
+		if(countitem((checkre(0)?939:957)) > 4){
+			mes "Oh...!";
 			mes "You've returned!";
 			mes "Let's see... One...";
 			mes "Two... Three...";
@@ -864,45 +856,48 @@ monk_in,18,38,6	script	Priest Gardron#tu	110,{
 			mes "Acolyte training.";
 			set tu_acolyte01, 9;
 			percentheal 100,100;
-			if(checkre(3))
-				getexp 200,200;
+			if (checkre(3))
+				getexp 1000,1000;
 			else
 				getexp 2000,2000;
 			specialeffect2 EF_CONE;
 			//getitem 505,1; //Blue_Potion
 			close;
 		} else {
-			if(checkre(0)) {
-				mes "A little while ago, a Prontera Sister sent me a message. Apparently,";
-				mes "the residents of Prontera are being plagued by Hornets.";
+			if (checkre(0)) {
+				mes "A few days ago, a sister in Prontera";
+				mes "sent me a telegram that citizens had been harmed";
+				mes "by Hornets in the western field,";
+				mes "so she asked the abbey to help with them.";
 				next;
 				mes "[Priest Gardron]";
-				mes "She has requested the convent for help, but we've got a big problem. We're running out of people here that can deal with this situation...";
+				mes "But at this time,";
+				mes "we are also short of hands...";
+				mes "so it's a big problem.";
 				next;
 				mes "[Priest Gardron]";
 				mes "....!";
 				emotion e_gasp;
 				next;
 				mes "[Priest Gardron]";
-				mes ""+strcharinfo(0)+",";
-				mes "may I ask";
-				mes "you to take care";
-				mes "of this task? Exterminate the Hornets west of Prontera.";
+				mes "May I entrust you, acolyte "+strcharinfo(0)+",";
+				mes "this urgent matter?";
+				mes "Please dispose of Hornets";
+				mes "which are causint trouble on ^FF0000the western field of Prontera^000000.";
 				next;
 				mes "[Priest Gardron]";
-				mes "Since you're still in basic training, I will give you some";
-				mes "help if you return with";
-				mes "^3131FF5 Bee Stings^000000.";
+				mes "I know that you are undergoing the discipline,";
+				mes "So I will give you something to help you";
+				mes "if you bring me ^3131FF 5^000000 ^3131FFBee Sting^000000.";
 				next;
 				mes "[Priest Gardron]";
-				mes "Now then...";
 				mes "Will you go to Prontera?";
 				next;
-				if(select("Let's go to Prontera!:Um, let me get ready first.")==1) {
+				if(select("Let's go to Prontera!:I'll be back after doing some preparation.") == 1) {
 					mes "[Priest Gardron]";
-					mes "Good, good.";
-					mes "I shall send you";
-					mes "there to fight the monsters west of Prontera so that you can return with 5 Bee Stings. May God bless you...";
+					mes "Okay, I will send you to Prontera.";
+					mes "Please dispose of Hornets and bring me 5 Bee Stings for confirmation.";
+					mes "My Lord, please protect this acolyte from evil monsters.";
 					close2;
 					warp "prontera",116,72;
 					end;
@@ -964,8 +959,7 @@ prt_monk,235,245,5	script	Dog#tu	81,{
 	mes "Woof woof!^000000";
 	next;
 	if(tu_acolyte01 == 10){
-		set .@dog_food, 0;
-		while((1)){
+		while(1) {
 			switch(select("Give a treat.:Pet the dog.:End actions.")){
 			case 1:
 				set .@dog_food, .@dog_food + 1;
@@ -1051,7 +1045,6 @@ prt_monk,226,257,6	script	Ill Girl#tu	93,{
 		mes "H-hurts...";
 		next;
 		select("Are you alright?");
-
 		mes "[Angelic]";
 		mes "My sister...";
 		mes "She was so beautiful...";
@@ -1079,8 +1072,9 @@ prt_monk,226,257,6	script	Ill Girl#tu	93,{
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "Are you alright?";
+		mes "................";
 		next;
-		specialeffect EF_CURSEATTACK ;
+		specialeffect EF_CURSEATTACK;
 		soundeffectall "_curse.wav",0;
 		emotion e_omg;
 		mes "["+strcharinfo(0)+"]";
@@ -1112,7 +1106,7 @@ prt_monk,226,257,6	script	Ill Girl#tu	93,{
 			mes "["+strcharinfo(0)+"]";
 			mes "H...";
 			mes "Heal !!";
-			specialeffect EF_HEAL ;
+			specialeffect EF_HEAL;
 			next;
 			mes "^3355FFNothing happened.";
 			mes "It doesn't look like";
@@ -1137,8 +1131,8 @@ prt_monk,226,257,6	script	Ill Girl#tu	93,{
 					mes "It seemed that this good";
 					mes "deed has improved your skills.^000000";
 					set tu_acolyte01, 13;
-					if(checkre(3))
-						getexp 0,100;
+					if (checkre(3))
+						getexp 0,500;
 					else
 						getexp 0,1000;
 					specialeffect2 EF_CONE;

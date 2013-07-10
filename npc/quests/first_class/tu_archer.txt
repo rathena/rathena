@@ -3,17 +3,18 @@
 //===== By: ================================================== 
 //= Fix up by Jukka
 //===== Current Version: ===================================== 
-//= 1.9a
+//= 2.0
 //===== Compatible With: ===================================== 
-//= rAthena SVN (Testet in Trunk 88xx)
+//= rAthena SVN
 //===== Description: ========================================= 
-//=
+//= [Official Conversion]
+//= Archer training quest.
 //===== Additional Comments: ================================= 
 //= 1.0 Fully working
-//= 1.1 optimized [Lupus] 1.2 fixed Weight check
-//=	TODO: Test, Add correct misceffects numbers
+//= 1.1 optimized [Lupus]
+//= 1.2 fixed Weight check
 //= 1.3 Moved Master Kavaruk (overlapped Phantasmic Arrow
-//=	Skill quest NPC) [Lupus]
+//=     Skill quest NPC) [Lupus]
 //= 1.4 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //= 1.5 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //= 1.6 Fixed infinate loop. (bugreport:2393) [L0ne_W0lf]
@@ -21,6 +22,8 @@
 //= 1.8 Updated slightly, removed additional emotions from Reiden. [L0ne_W0lf]
 //= 1.9 Misc. updates. [L0ne_W0lf]
 //= 1.9a Added 'npcskill' command. [Euphy]
+//= 2.0 Updated to match the official script. [Euphy]
+//=     Added Pre-Renewal support.
 //============================================================ 
 
 // Bard Jet
@@ -278,7 +281,7 @@ payon_in02,54,13,3	script	Master Kavaruk	55,{
 				next;
 				mes "[Master Kavaruk]";
 				mes "I asked a member of Icarus to";
-				mes "wander about the Rune-Midgarts Kingdom and gather news and information about what has been going on recenty.";
+				mes "wander about the Rune-Midgarts Kingdom and gather news and information about what has been going on recently.";
 				next;
 				mes "[Master Kavaruk]";
 				mes "He has been sending me letters containing detailed information, but all of a sudden, I've lost contact with him. I'm concerned over what may have happened.";
@@ -305,7 +308,10 @@ payon_in02,54,13,3	script	Master Kavaruk	55,{
 				mes "for bringing me the news. As Arthail has said, I shall wait until he has more news for me.";
 				mes "You should also train and prepare for the future as well.";
 				set tu_archer02, 10;
-				getexp 200,100;
+				if (checkre(3))
+					getexp 1000,1000;
+				else
+					getexp 2000,1000;
 				close;
 			}
 		}
@@ -543,7 +549,10 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 					set tu_archer01, 6;
 					mes "Now, your first assignment";
 					mes "is to learn ^3131FFLevel 3 Owl's Eye^000000!";
-					mes "From Morroc, if you travel south, you can fight Condors for your training.";
+					if (checkre(0))
+						mes "From Morroc, if you travel south, you can fight Condors for your training.";
+					else
+						mes "From Prontera, if you travel south, south and then west, you can fight Condors for your training.";
 					next;
 					mes "[Reidin Corse]";
 					mes "You can head somewhere";
@@ -553,11 +562,20 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 					switch(select("I'll follow your advice, Chief!:I'll hunt somewhere else...")) {
 					case 1:
 						mes "[Reidin Corse]";
-						mes "I'll send you to";
-						mes "Morroc for now,";
-						mes "so don't forget the";
-						mes "directions I gave you.";
-						mes "Travel ^3131FFsouth^000000.";
+						if (checkre(0)) {
+							mes "I'll send you to";
+							mes "Morroc for now,";
+							mes "so don't forget the";
+							mes "directions I gave you.";
+							mes "Travel ^3131FFsouth^000000.";
+						} else {
+							mes "I'll send you to";
+							mes "Prontera for now,";
+							mes "so don't forget the";
+							mes "directions I gave you.";
+							mes "Travel ^3131FFsouth^000000, ^3131FFsouth^000000,";
+							mes "and then ^3131FFwest^000000.";
+						}
 						next;
 						switch(select("Leave right away~:W-wait, let me get ready!")) {
 						case 1:
@@ -573,9 +591,15 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 							mes "[Reidin Corse]";
 							mes "Okay...!";
 							mes "Off you go!";
-							mes "To Morroc!";
-							close2;
-							warp "morocc",156,46;
+							if (checkre(0)) {
+								mes "To Morroc!";
+								close2;
+								warp "morocc",156,46;
+							} else {
+								mes "To Prontera!";
+								close2;
+								warp "prontera",116,72;
+							}
 							end;
 						case 2:
 							mes "[Reidin Corse]";
@@ -601,7 +625,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 					emotion e_ag;
 					mes "Huh. So you already know a little about Owl's Eye already, huh? Well then, I guess I oughta talk about something you don't know about!";
 					set tu_archer01, 7;
-					getexp 50,0;
+					getexp 500,0;
 					close;
 				}
 				break;
@@ -628,7 +652,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 				mes "Here, this is a small, special reward for you.";
 				specialeffect2 EF_WIND;
 				set tu_archer01, 7;
-				getexp 50,0;
+				getexp 500,0;
 				next;
 				emotion e_pif;
 				mes "[Reidin Corse]";
@@ -709,7 +733,10 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 
 			set .@eagle, getskilllv("AC_VULTURE");
 			if(.@eagle < 3){
-				mes "Alright, Mandagora usually live around Geffen. I can send you to Geffen, so just travel north from there to find";
+				if (checkre(0))
+					mes "Alright, Mandagora usually live around Geffen. I can send you to Geffen, so just travel north from there to find";
+				else
+					mes "Alright, Mandagora usually live around Mt. Mjolnir. I can send you to Prontera, so just travel north, then east from there to find";
 				mes "some of them.";
 				next;
 				mes "[Reidin Corse]";
@@ -738,7 +765,10 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 					mes "Alright...!";
 					mes "Get a move on!";
 					close2;
-					warp "geffen",120,39;
+					if (checkre(0))
+						warp "geffen",120,39;
+					else
+						warp "prontera",116,72;
 					end;
 				case 2:
 					mes "[Reidin Corse]";
@@ -763,7 +793,10 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 		} else if(tu_archer01 == 8){
 			set .@eagle, getskilllv("AC_VULTURE");
 			if(.@eagle < 3){
-				mes "Mandagora lives in the area north of Geffen. Learn up to Level 3 Vulture's Eye and get acquainted with your attack range.";
+				if (checkre(0))
+					mes "Mandagora lives in the area north of Geffen. Learn up to Level 3 Vulture's Eye and get acquainted with your attack range.";
+				else
+					mes "Mandagora lives in the area north and east of Prontera. Learn up to Level 3 Vulture's Eye and get acquainted with your attack range.";
 				next;
 				mes "[Reidin Corse]";
 				mes "Okay...";
@@ -776,7 +809,10 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 					mes "Alright...!";
 					mes "Get a move on!";
 					close2;
-					warp "geffen",120,39;
+					if (checkre(0))
+						warp "geffen",120,39;
+					else
+						warp "prontera",116,72;
 					end;
 				case 2:
 					mes "[Reidin Corse]";
@@ -843,7 +879,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 				if(.@eagle == 0){
 					specialeffect2 EF_WIND;
 					set tu_archer01, 10;
-					getexp 0,50;
+					getexp 0,500;
 				}
 				emotion e_no1;
 				next;
@@ -857,47 +893,74 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 				close;
 			}
 		} else if(tu_archer01 == 10){
-			mes "Now, I've taught you a lot of stuff and I wanna make sure you retain all of it. That's why I want you to take this midterm. Your mission: ^FF0000Attack the Rockers^000000!";
-			emotion e_no1;
-			next;
-			mes "[Reidin Corse]";
-			mes "Rockers live just southwest of Prontera.";
-			next;
-			mes "[Reidin Corse]";
-			mes "Be aware that Rockers are earth element monsters!! ^3131FFSo they should be weak against fire^000000.";
-			next;
-			mes "[Reidin Corse]";
-			mes "Now go and bring ^3131FF10 Grasshopper's Leg^000000 from hunting Rockers.";
-			mes "Bring all of that and you pass~";
-			next;
-			mes "[Reidin Corse]";
-			mes "It's easier to find them if you pass by the southern gate of Prontera and then head west. Alright, off you go, " + strcharinfo(0) + "~";
+			if (checkre(0)) {
+				mes "Now, I've taught you a lot of stuff and I wanna make sure you retain all of it. That's why I want you to take this midterm. Your mission: ^FF0000Attack the Rockers^000000!";
+				emotion e_no1;
+				next;
+				mes "[Reidin Corse]";
+				mes "Rockers live just southwest of Prontera.";
+				next;
+				mes "[Reidin Corse]";
+				mes "Be aware that Rockers are earth element monsters!! ^3131FFSo they should be weak against fire^000000.";
+				next;
+				mes "[Reidin Corse]";
+				mes "Now go and bring ^3131FF10 Grasshopper's Leg^000000 from hunting Rockers.";
+				mes "Bring all of that and you pass~";
+				next;
+				mes "[Reidin Corse]";
+				mes "It's easier to find them if you pass by the southern gate of Prontera and then head west. Alright, off you go, " + strcharinfo(0) + "~";
+			} else {
+				mes "Now, I've taught you a lot of stuff and I wanna make sure you retain all of it. That's why I want you to take this midterm. Your mission: ^FF0000Attack the Rockers^000000!";
+				emotion e_no1;
+				next;
+				mes "[Reidin Corse]";
+				mes "There's a ship that";
+				mes "leads to Byalan Island in Izlude, Prontera's satellite city. Ride that ship to Byalan Island.";
+				next;
+				mes "[Reidin Corse]";
+				mes "In the center of that island is the entrance to a dungeon where a lot of Hydras live. Remember that it's a water dungeon, and that ^3131FFWater resists Fire^000000, ^3131FFbut is weak against Wind^000000.";
+				next;
+				mes "[Reidin Corse]";
+				mes "Now go and bring ^3131FF10 Tentacles^000000";
+				mes "from hunting Hydra and ^3131FF1 Crystal Blue^000000, which you can get from hunting the Mushrooms there.";
+				mes "Bring all of that and you pass~";
+				next;
+				mes "[Reidin Corse]";
+				mes "It's easier to find Izlude if you pass by Prontera, so head towards the fields near Prontera. Alright, off you go, " + strcharinfo(0) + "~";
+			}
 			set tu_archer01,11;
 			close;
 		} else if(tu_archer01 == 11){
-			if(countitem(940) > 9){
-				if(MaxWeight - Weight < 1000){
-					mes "Why are you carrying";
-					mes "so much stuff? You better put everything you don't need into Kafra Storage.";
-					close;
-				} else {
-					mes "Hey, you're back!";
-					mes "Let's see now...";
-					next;
-					emotion e_no1;
-					mes "[Reidin Corse]";
-					mes "Good! You pass.";
-					mes "Don't forget that you gotta keep training and improve your skills. Before you know it, you'll be an expert almost as good as me!";
-					specialeffect2 EF_WIND;
-					set tu_archer01, 12;
-					getexp 100,100;
-					getitem 1707,1; //Great_Bow
-					close;
-				}
-			} else {
+			if (checkre(0) && countitem(940) < 10) {
 				mes "Hey...";
 				mes "You gotta bring";
 				mes "^3131FF10 Grasshopper's Leg^000000 to pass my midterm! Go back to the southwest area of Prontera and get them!";
+				close;
+			} else if (!checkre(0) && (countitem(962) < 10 || countitem(991) == 0)) {
+				mes "Hey...";
+				mes "You gotta bring";
+				mes "^3131FF10 Tentacles^000000 and";
+				mes "^3131FF1 Crystal Blue^000000 to pass my midterm! Go back to the dungeon on Byalan Island and get them!";
+				close;
+			}
+			if(MaxWeight - Weight < 1000){
+				mes "Why are you carrying";
+				mes "so much stuff? You better put everything you don't need into Kafra Storage.";
+				close;
+			} else {
+				mes "Hey, you're back!";
+				mes "Let's see now...";
+				next;
+				emotion e_no1;
+				mes "[Reidin Corse]";
+				mes "Good! You pass.";
+				mes "Don't forget that you gotta keep training and improve your skills. Before you know it, you'll be an expert almost as good as me!";
+				specialeffect2 EF_WIND;
+				set tu_archer01, 12;
+				if (checkre(0))
+					delitem 940,10; //Grasshopper's_Leg
+				getexp 1000,1000;
+				getitem 1707,1; //Great_Bow
 				close;
 			}
 		} else if(tu_archer01 == 12){
@@ -940,8 +1003,13 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 			mes "no need for you to fret.";
 			next;
 			mes "[Reidin Corse]";
-			mes "Now, go into the forest east of Payon and hunt Spores and Wormtails. Your test will be to bring back ^3131FF10 Mushroom Spores^000000 and";
-			mes "^3131FF10 Pointed Scales^000000.";
+			if (checkre(0)) {
+				mes "Now, go into the forest east of Payon and hunt Spores and Wormtails. Your test will be to bring back ^3131FF10 Mushroom Spores^000000 and";
+				mes "^3131FF10 Pointed Scales^000000.";
+			} else {
+				mes "Now, go to Mt. Mjolnir and hunt Floras. Your test will be to bring back ^3131FF5 Maneater Blossoms^000000 and";
+				mes "^3131FF20 Stems^000000.";
+			}
 			next;
 			mes "[Reidin Corse]";
 			mes "I know it's a little dangerous,";
@@ -968,49 +1036,81 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 				close;
 			}
 		} else if((tu_archer01 == 14) || (tu_archer01 == 15)){
-			if((countitem(906) > 9) && (countitem(921) > 9)){
-				mes "Ha-ha~!";
-				mes "You look more like";
-				mes "a veteran than a rookie";
-				mes "now! Yeap, I can see it";
-				mes "in your eyes.";
-				next;
-				mes "[Reidin Corse]";
-				mes "Right, did you get a chance to meet my Acolyte pal, Mafra? She's pretty shy, but I hope you two got along.";
-				next;
-				mes "[Reidin Corse]";
-				mes "I'm happy to tell";
-				mes "you that you've passed";
-				mes "my final exam! Here, take";
-				mes "this little reward!";
-				specialeffect2 EF_WIND;
-				set tu_archer01,16;
-				getexp 300,300;
-				getitem 1770,500; //Iron_Arrow
-				next;
-				mes "[Reidin Corse]";
-				mes "Well, it's like you're a full fledged Archer now. Honestly,";
-				mes "I've got nothing more to teach you. Well, about archery, anyway.";
-				emotion e_heh;
-				next;
-				mes "[Reidin Corse]";
-				mes "Well, if you talk to him, Master Kavaruk might have something for you to do. He happens to have me running around to doing errands";
-				mes "for him too. That creep!";
-				emotion e_pif;
-				next;
-				mes "[Reidin Corse]";
-				mes "Well, "+ strcharinfo(0) +",";
-				mes "It'd make me really happy if you get to the point where you develop a true love for the art of archery. I'll see you sometime, okay?";
-				emotion e_no1;
-				close;
-			} else {
+			if (checkre(0) && (countitem(906) < 10 || countitem(921) < 10)) {
 				mes "Remember, you";
 				mes "need to head into";
 				mes "the forest east of Payon and get me";
 				mes "^3131FF10 Mushroom Spores^000000";
 				mes "and ^3131FF10 Pointed Scales^000000.";
 				close;
+			} else if (!checkre(0) && (countitem(1032) < 5 || countitem(905) < 20)) {
+				mes "Remember, you";
+				mes "need to head over to";
+				mes "Mt. Mjolnir and get me";
+				mes "^3131FF5 Maneater Blossoms^000000";
+				mes "and ^3131FF20 Stems^000000.";
+				next;
+				mes "[Reidin Corse]";
+				mes "From Prontera, you'd get to Mt. Mjolnir by traveling ^3131FFnorth^000000, ^3131FFnorth^000000 and then ^3131FFeast^000000. But if you want,";
+				mes "I can just send you there.";
+				next;
+				switch(select("Go!:W-Wait!")) {
+				case 1:
+					mes "[Reidin Corse]";
+					mes "Alright!";
+					mes "Oh, and if you get";
+					mes "the chance, give a hello to my Acolyte pal over there for me~";
+					emotion e_heh;
+					close2;
+					warp "mjolnir_11",25,221;
+					end;
+				case 2:
+					mes "[Reidin Corse]";
+					mes "Huh?";
+					mes "Um, sure. But";
+					mes "there's no reason to";
+					mes "get so nervous, even if";
+					mes "this my final exam for you.";
+					close;
+				}
 			}
+			mes "Ha-ha~!";
+			mes "You look more like";
+			mes "a veteran than a rookie";
+			mes "now! Yeap, I can see it";
+			mes "in your eyes.";
+			next;
+			mes "[Reidin Corse]";
+			mes "Right, did you get a chance to meet my Acolyte pal, Mafra? She's pretty shy, but I hope you two got along.";
+			next;
+			mes "[Reidin Corse]";
+			mes "I'm happy to tell";
+			mes "you that you've passed";
+			mes "my final exam! Here, take";
+			mes "this little reward!";
+			specialeffect2 EF_WIND;
+			set tu_archer01,16;
+			if (checkre(3))
+				getexp 1000,1000;
+			else
+				getexp 3000,3000;
+			getitem 1770,500; //Iron_Arrow
+			next;
+			mes "[Reidin Corse]";
+			mes "Well, it's like you're a full fledged Archer now. Honestly,";
+			mes "I've got nothing more to teach you. Well, about archery, anyway.";
+			emotion e_heh;
+			next;
+			mes "[Reidin Corse]";
+			mes "Well, if you talk to him, Master Kavaruk might have something for you to do. He happens to have me running around to doing errands";
+			mes "for him too. That creep!";
+			emotion e_pif;
+			next;
+			mes "[Reidin Corse]";
+			mes "Well, "+ strcharinfo(0) +",";
+			mes "It'd make me really happy if you get to the point where you develop a true love for the art of archery. I'll see you sometime, okay?";
+			emotion e_no1;
+			close;
 		} else if(tu_archer01 == 16){
 			mes "I really like this town.";
 			mes "There's so much lush greenery";
@@ -1280,13 +1380,13 @@ pay_arche,84,139,3	script	Seisner	727,{
 		specialeffect2 EF_WIND;
 		set tu_archer01, 3;
 		if(JobLevel == 1){
-			getexp 0,5;
+			getexp 0,30;
 		} else if((JobLevel > 1) && (JobLevel < 11)){
-			getexp 0,10;
+			getexp 0,80;
 		} else if((JobLevel > 10) && (JobLevel < 21)){
-			getexp 0,25;
+			getexp 0,100;
 		} else {
-			getexp 0,50;
+			getexp 0,120;
 		}
 		end;
 	}
@@ -1295,11 +1395,11 @@ pay_arche,84,139,3	script	Seisner	727,{
 
 // Target
 //============================================================
-pay_arche,76,135,3	script	Target#Target	111,{ end; }	// empty NPC?? [Jukka]
+pay_arche,76,135,3	script	#Target	111,{ end; }
 
 // Acolyte
 //============================================================
-pay_fild08,40,83,5	script	Acolyte#tu	95,{
+-	script	::Acolyte_Tu	-1,{
 	mes "[Acolyte]";
 	if(tu_archer01 == 14){
 		if(gettime(3) >= 18 && gettime(3) < 22){

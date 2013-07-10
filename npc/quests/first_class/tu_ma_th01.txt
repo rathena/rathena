@@ -1,17 +1,17 @@
 //===== rAthena Script ======================================= 
-//= Theif Mage Quest Story Mode
+//= Thief Mage Quest Story Mode
 //===== By: ================================================== 
 //= Fix up by Jukka
 //===== Current Version: ===================================== 
 //= 1.3
 //===== Compatible With: ===================================== 
-//= rAthena SVN (Testet in Trunk 88xx)
+//= rAthena SVN
 //===== Description: ========================================= 
-//=
+//= [Official Conversion]
+//= Battle Traces from Thief and Magician training quests.
 //===== Additional Comments: ================================= 
 //= 1.0 Fully working
 //= 1.1 optimized [Lupus]
-//=	TODO: Test, Add correct misceffects numbers
 //= 1.2 Changed "battle_trace" to "Trace of Battle". [L0ne_W0lf]
 //= 1.3 Misc. updates. [L0ne_W0lf]
 //============================================================ 

@@ -1147,7 +1147,7 @@ OnAgitInvest:
 		callfunc "F_Invest_Abyss","$fund_"+.@npc$+"0"+.@id,"[Gate Manager]";
 		end;
 	case 2:
-		callsub L_Enter,1,.@realm$;
+		callsub L_Enter,1,.@realm$,.@npc$;
 		mes "[Gate Manager]";
 		mes "You are interested in exploring the "+.@realm$+" Guild Dungeon Deepest Layer (2F).";
 		mes "Let me guide you. Good luck.";
@@ -1187,7 +1187,7 @@ OnAgitInvest:
 		}
 		end;
 	case 3:
-		callsub L_Enter,2,.@realm$;
+		callsub L_Enter,2,.@realm$,.@npc$;
 		mes "[Gate Manager]";
 		mes "Let me guide you to the Abyss Gap connected with "+.@realm$+", the Abyss Gate 'Way of the Warrior'.";
 		close2;
@@ -1235,7 +1235,7 @@ OnAgitInvest:
 L_Enter:
 	set .@invest_status, callfunc("F_Invest_Status");
 	if (.@invest_status == 3) {
-		set .@status, getd("$"+.@npc$+"_invest_result");
+		set .@status, getd("$"+getarg(2)+"_invest_result");
 		if ((getarg(0) == 1 && .@status == 2) || .@status == 3)
 			return;
 		else {

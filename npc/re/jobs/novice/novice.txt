@@ -933,7 +933,8 @@ new_1-2,35,176,4	script	Soldier#nv	105,{
 		mes "Kill enough Porings.";
 		mes "Porings are easy to deal with, so cheer up.";
 		mes "Try again.";
-		npcskill "AL_HEAL",10,99,60;
+		npcskill "AL_HEAL",11,99,60;
+		percentheal 100,100;
 		close;
 	}
 	mes "[Brade]";
@@ -946,7 +947,8 @@ new_1-2,35,176,4	script	Soldier#nv	105,{
 	mes "[Brade]";
 	mes "Try using the job manuals to find out the characteristics of each job's skills.";
 	mes "I will restore your HP and SP... Keep it up.";
-	npcskill "AL_HEAL",10,99,60;
+	npcskill "AL_HEAL",11,99,60;
+	percentheal 100,100;
 	close;
 }
 
