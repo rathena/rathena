@@ -667,7 +667,7 @@ OnInit:
 	set $maobar_room,0;
 	end;
 
-Onreset:
+OnReset:
 	set $maobar_room,0;
 	end;
 
@@ -741,12 +741,12 @@ OnEnable:
 	mapannounce "que_job01","You will now enter the Master Zone, Area 1.",bc_map,"0x70DBDB";
 	end;
 
-Onstop:
+OnStop:
 	mapannounce "que_job01","The security magic in the Master Zone, Area 1 is deactivated.",bc_map,"0x70DBDB";
 	donpcevent "#room1_warp::OnDisable";
 	donpcevent "Valdes#moc_master_1::OnDisable";
 	donpcevent "Marjana#poison::OnDisable";
-	donpcevent "que_job01#room_1::Onreset";
+	donpcevent "que_job01#room_1::OnReset";
 	stopnpctimer;
 	end;
 
@@ -762,7 +762,7 @@ OnTimer245000:
 
 OnTimer250000:
 	mapannounce "que_job01","The security magic Master Zone, Area 1 is now activated.",bc_map,"0x70DBDB";
-	donpcevent "que_job01#room_1::Onreset";
+	donpcevent "que_job01#room_1::OnReset";
 	stopnpctimer;
 	end;
 }

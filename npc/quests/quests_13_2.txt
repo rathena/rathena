@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 2.6
+//= 2.6a
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -45,6 +45,7 @@
 //= 2.4a Fixed an invisible NPC clashing with a warp portal. [Euphy]
 //= 2.5 Updated EXP rewards.
 //= 2.6 Fixed incorrect use of 'close'. [Joseph]
+//= 2.6a Disabled GM NPC. [Euphy]
 //============================================================ 
 
 // Cat Hand Addition.
@@ -3440,11 +3441,11 @@ OnDisable:
 	disablenpc "Stranger#ep13_2_dan01";
 	end;
 
-Oncall:
+OnCall:
 	monster "nyd_dun02",144,103,"Runway Dandelion",2026,1,"Stranger#ep13_2_dan03::OnMyMobDead";
 	end;
 
-Onreset:
+OnReset:
 	killmonster "nyd_dun02","Stranger#ep13_2_dan03::OnMyMobDead";
 	end;
 
@@ -3452,7 +3453,7 @@ OnTouch:
 	emotion e_gasp,1;
 	emotion e_omg;
 	disablenpc "Stranger#ep13_2_dan01";
-	donpcevent "Stranger#ep13_2_dan02::Oncall";
+	donpcevent "Stranger#ep13_2_dan02::OnCall";
 	end;
 }
 
@@ -3468,11 +3469,11 @@ OnEnable:
 	enablenpc "Stranger#ep13_2_dan02";
 	end;
 
-Oncall:
+OnCall:
 	monster "nyd_dun02",206,114,"Runway Dandelion",2026,1,"Stranger#ep13_2_dan04::OnMyMobDead";
 	end;
 
-Onreset:
+OnReset:
 	killmonster "nyd_dun02","Stranger#ep13_2_dan04::OnMyMobDead";
 	end;
 
@@ -3480,7 +3481,7 @@ OnTouch:
 	emotion e_gasp,1;
 	emotion e_omg;
 	disablenpc "Stranger#ep13_2_dan02";
-	donpcevent "Stranger#ep13_2_dan01::Oncall";
+	donpcevent "Stranger#ep13_2_dan01::OnCall";
 	end;
 }
 
@@ -6963,7 +6964,7 @@ nyd_dun02,139,274,0	script	Strange Device#ep13_in	844,3,3,{
 	end;
 
 OnTimer70000:
-	donpcevent "ep13_nd2f_mng::Onreset";
+	donpcevent "ep13_nd2f_mng::OnReset";
 	set $@08_ep13nydun02_in,0;
 	stopnpctimer;
 	end;
@@ -7304,7 +7305,7 @@ OnTouch:
 nyd_dun01,255,142,0	warp	nynm_dun1f_to_2f	1,1,nyd_dun02,61,265
 nyd_dun02,56,264,0	warp	nynm_dun2f_to_1f	1,1,nyd_dun01,249,143
 
-//==============================================================================
+/*
 nyd_dun02,1,1,0	script	ep13_nd2f_mng	844,{
 	mes "Enter password.";
 	next;
@@ -7314,7 +7315,7 @@ nyd_dun02,1,1,0	script	ep13_nd2f_mng	844,{
 		next;
 		switch(select("Yes:No")) {
 		case 1:
-			donpcevent "ep13_nd2f_mng::Onreset";
+			donpcevent "ep13_nd2f_mng::OnReset";
 			set $@08_ep13nydun02_in,0;
 			mes "Puzzle reset";
 			close;
@@ -7329,7 +7330,7 @@ nyd_dun02,1,1,0	script	ep13_nd2f_mng	844,{
 	}
 	end;
 
-Onreset:
+OnReset:
 	donpcevent "ep13_warp_s1::OnEnable";
 	donpcevent "ep13_warp_s3::OnEnable";
 
@@ -7396,3 +7397,4 @@ Onreset:
 	donpcevent "ep13_warp_85_2::OnDisable";
 	end;
 }
+*/

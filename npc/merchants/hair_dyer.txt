@@ -93,7 +93,7 @@ prt_in,243,168,4	script	Jovovich	91,{
 						case 5: callsub S_NoDye,981,"blue"; break;
 						case 6: callsub S_NoDye,982,"white"; break;
 						case 7: callsub S_NoDye,983,"black"; break;
-						Case 8: callsub S_NoDye,975,"red"; break;
+						case 8: callsub S_NoDye,975,"red"; break;
 						}
 						if (zeny < 1000) {
 							mes "[Hairdresser Jovovich]";

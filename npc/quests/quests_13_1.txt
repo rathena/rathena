@@ -1832,7 +1832,7 @@ OnEnable:
 	monster "moc_fild22b",0,0,"Allied Soldier",1851,80,"Head of the Alliance#moo::OnMyMobDead";
 	end;
 
-Onreset:
+OnReset:
 	killmonster "moc_fild22b","Head of the Alliance#moo::OnMyMobDead";
 	end;
 
@@ -5368,7 +5368,7 @@ OnTouch:
 			mes "Finally, the meeting's starting.";
 			mes "You should come in.";
 			next;
-			donpcevent "Research Official#ep131::Onmeet";
+			donpcevent "Research Official#ep131::OnMeet";
 			mes "[United Research Official]";
 			mes "So, everyone's here.";
 			mes "Let us begin our meeting.";
@@ -5454,7 +5454,7 @@ OnTouch:
 			mes "scream as well, and rushed out of";
 			mes "the room. -";
 			set ep13_1_rhea,20;
-			donpcevent "Research Official#ep131::Oncall";
+			donpcevent "Research Official#ep131::OnCall";
 			close2;
 			warp "mid_camp",165,236;
 			end;
@@ -5469,7 +5469,7 @@ OnTouch:
 			mes "- Knock, knock-";
 			mes "- The researchers come back into the room. -";
 			next;
-			donpcevent "Research Official#ep131::Onmeet";
+			donpcevent "Research Official#ep131::OnMeet";
 			mes "[Ryosen]";
 			mes "Uh-hmm! Sorry about the mess.";
 			mes "I... Something urgent came up...";
@@ -5682,13 +5682,13 @@ OnDisable:
 	hideonnpc "Research Official#ep131";
 	end;
 
-Onmeet:
+OnMeet:
 	donpcevent "Ryosen#ep131_rhea05::OnEnable";
 	donpcevent "Hue#ep131_rhea06::OnEnable";
 	donpcevent "Hansenne#ep131_rhea07::OnEnable";
 	end;
 
-Oncall:
+OnCall:
 	initnpctimer;
 	monster "mid_campin",376,134,"Thief Bug",1051,1,"Research Official#ep131::OnMyMobDead";
 	monster "mid_campin",376,134,"Thief Bug",1051,1,"Research Official#ep131::OnMyMobDead";
@@ -7233,7 +7233,7 @@ OnEnable:
 	initnpctimer;
 	end;
 
-Onstop:
+OnStop:
 	stopnpctimer;
 	end;
 
@@ -7729,7 +7729,7 @@ OnEnable:
 	if (rand(1,3) > 1) initnpctimer;
 	end;
 
-Onstop:
+OnStop:
 	killmonster "mid_camp","#monster_master::OnMyMobDead";
 	stopnpctimer;
 	end;
@@ -12634,7 +12634,7 @@ que_job01,49,49,5	script	Tao#dan_09	877,{
 que_job01,51,55,0	script	que_job01#room_1	45,1,1,{
 OnInit:
 	if ($maobar_room) set $maobar_room,0;
-Onreset:
+OnReset:
 	set $@moc_mao_room1,0; //Global Variable
 	end;
 
@@ -12703,12 +12703,12 @@ OnEnable:
 	mapannounce "que_job01", "You will now enter the Master Zone, Area 1.",bc_map,"0x70DBDB";
 	end;
 
-Onstop:
+OnStop:
 	mapannounce "que_job01", "The security magic in the Master Zone, Area 1 is deactivated.",bc_map,"0x70DBDB";
 	donpcevent "#room1_warp13::OnDisable";
 	donpcevent "Valdes#moc_master_1::OnDisable";
 	donpcevent "Marjana#poison::OnDisable";
-	donpcevent "que_job01#room_1::Onreset";
+	donpcevent "que_job01#room_1::OnReset";
 	stopnpctimer;
 	end;
 
@@ -12724,7 +12724,7 @@ OnTimer245000:
 
 OnTimer250000:
 	mapannounce "que_job01", "The security magic Master Zone, Area 1 is now activated.",bc_map,"0x70DBDB";
-	donpcevent "que_job01#room_1::Onreset";
+	donpcevent "que_job01#room_1::OnReset";
 	stopnpctimer;
 }
 
@@ -12746,7 +12746,7 @@ OnTouch:
 que_job01,11,4,0	script	que_job01#room1_out	45,1,1,{
 OnTouch:
 	warp "que_job01",52,50;
-	donpcevent " #room1timer::Onstop";
+	donpcevent " #room1timer::OnStop";
 	end;
 }
 
@@ -12794,7 +12794,7 @@ que_job01,51,44,0	script	que_job01#room_2	45,1,1,{
 	end;
 
 OnInit:
-Onreset:
+OnReset:
 	set $@moc_mao_room2,0; //Global Variable
 	end;
 
@@ -12881,14 +12881,14 @@ OnEnable:
 	mapannounce "que_job01", "Master Zone 2 is now under surveillance.",bc_map,"0x70DBDB";
 	end;
 
-Onstop:
+OnStop:
 	mapannounce "que_job01", "The magic shield of Master Zone 2 has been reset.",bc_map,"0x70DBDB";
 	donpcevent "#room2_1_warp::OnDisable";
 	donpcevent "#room2_2_warp::OnDisable";
 	donpcevent "Rin#moc_room2_2::OnDisable";
 	donpcevent "Rin#moc_room2_1::OnDisable";
 	donpcevent "Rayan#moc_room2_2::OnDisable";
-	donpcevent "que_job01#room_2::Onreset";
+	donpcevent "que_job01#room_2::OnReset";
 	stopnpctimer;
 	end;
 
@@ -12907,7 +12907,7 @@ OnTimer245000:
 
 OnTimer250000:
 	mapannounce "que_job01", "Master Zone 2 has been released from surveillance.",bc_map,"0x70DBDB";
-	donpcevent "que_job01#room_2::Onreset";
+	donpcevent "que_job01#room_2::OnReset";
 	stopnpctimer;
 }
 
@@ -12944,14 +12944,14 @@ OnTouch:
 que_job01,80,27,0	script	que_job01#room2_1_out	45,1,1,{
 OnTouch:
 	warp "que_job01",52,50;
-	donpcevent " #room2timer::Onstop";
+	donpcevent " #room2timer::OnStop";
 	end;
 }
 
 que_job01,144,61,0	script	que_job01#room2_2_out	45,1,1,{
 OnTouch:
 	warp "que_job01",52,50;
-	donpcevent " #room2timer::Onstop";
+	donpcevent " #room2timer::OnStop";
 	end;
 }
 
@@ -13658,7 +13658,7 @@ OnDisable:
 	disablenpc "#moc2_event_on";
 	end;
 
-Onstop:
+OnStop:
 	stopnpctimer;
 	end;
 
@@ -13701,7 +13701,7 @@ OnTimer307000:
 	donpcevent "Dandelion Member#moc2_4::OnDisable";
 	donpcevent "Dandelion Member#moc2_5::OnDisable";
 	donpcevent "#moc2_event01::OnDisable";
-	donpcevent "Corpse#moc2_dead01::Onreset";
+	donpcevent "Corpse#moc2_dead01::OnReset";
 	end;
 
 OnTimer308000:
@@ -13818,7 +13818,7 @@ OnTouch:
 	donpcevent "Dandelion Member#moc2_4::OnDisable";
 	donpcevent "Dandelion Member#moc2_5::OnDisable";
 	donpcevent "Corpse#moc2_dead01::OnEnable";
-	donpcevent "Corpse#moc2_dead01::Oncall";
+	donpcevent "Corpse#moc2_dead01::OnCall";
 	end;
 }
 
@@ -13851,7 +13851,7 @@ que_dan01,49,36,5	script	Corpse#moc2_dead01	457,{
 			mes "Let's bring this to Kidd.^000000";
 			set mao_morocc2,11;
 			getitem 6028,1; //Seal_Scroll
-			donpcevent "#moc2_event_on::Onstop";
+			donpcevent "#moc2_event_on::OnStop";
 			initnpctimer;
 			changequest 7020,7021;
 			close;
@@ -13884,7 +13884,7 @@ OnEnable:
 	enablenpc "Corpse#moc2_dead01";
 	end;
 
-Oncall:
+OnCall:
 	monster "que_dan01",26,40,"Dandelion Member",1985,1,"Corpse#moc2_dead01::OnMyMobDead";
 	monster "que_dan01",21,35,"Dandelion Member",1985,1,"Corpse#moc2_dead01::OnMyMobDead";
 	monster "que_dan01",25,32,"Dandelion Member",1985,1,"Corpse#moc2_dead01::OnMyMobDead";
@@ -13895,7 +13895,7 @@ Oncall:
 OnMyMobDead:
 	end;
 
-Onreset:
+OnReset:
 	killmonster "que_dan01","Corpse#moc2_dead01::OnMyMobDead";
 	end;
 

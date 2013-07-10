@@ -27,9 +27,8 @@
 //= 2.1 Fixed incorrect use of 'close'. [Joseph]
 //============================================================ 
 
-//============================================================================
 // The Moving Island
-//============================================================================
+//============================================================
 
 //----------------------------------------------------------------------------
 // Berbayeff - Starting Point
@@ -1709,7 +1708,7 @@ S_AS_2:
 	mes "So, what will you do now?";
 	next;
 	switch (select("How would I get back here?:"+((getarg(0))?"I want to learn the Gusli":"")+":Go back to the mainland.")) {
-		Case 1:
+		case 1:
 			mes "[Aged Stranger]";
 			mes "You are my friend now,";
 			mes "and you have this instrument.";
@@ -1734,7 +1733,7 @@ S_AS_2:
 			mes "with this island. Only if you are a";
 			mes "friend... heheh.";
 			close;
-		Case 2:
+		case 2:
 			mes "[Aged Stranger]";
 			mes "You really want to...";
 			mes "learn this instrument...";
@@ -1757,7 +1756,7 @@ S_AS_2:
 			mes "Gusli, let me know.";
 			set mos_whale_edq,36;
 			close;	
-		Case 3:
+		case 3:
 			mes "[Aged Stranger]";
 			mes "I see. Okay, let's go.";
 			next;
@@ -2579,10 +2578,10 @@ OnEnable:
 	enablenpc strnpcinfo(0);
 	set .@c,charat(strnpcinfo(0),9);
 	switch (.@c) {
-		Case 1: setarray .@m, 89,112,1425,85,110,1425; break;
-		Case 2: setarray .@m, 89,112,1425,80,110,1426,83,114,1426,85,110,1425; break;
-		Case 3: setarray .@m, 85,111,1451,89,112,1543,90,106,1543; break;
-		Case 4: setarray .@m, 85,111,1451,89,112,1543,90,106,1543; break;
+		case 1: setarray .@m, 89,112,1425,85,110,1425; break;
+		case 2: setarray .@m, 89,112,1425,80,110,1426,83,114,1426,85,110,1425; break;
+		case 3: setarray .@m, 85,111,1451,89,112,1543,90,106,1543; break;
+		case 4: setarray .@m, 85,111,1451,89,112,1543,90,106,1543; break;
 	}
 	for (set .@i, 0; .@i < getarraysize(.@m); set .@i, .@i + 3)
 		monster "mosk_ship",.@m[.@i],.@m[.@i+1],"Sea Monster",.@m[.@i+2],1,strnpcinfo(0)+"::OnMyMobDead";
@@ -2604,10 +2603,10 @@ OnMyMobDead:
 		mes "normally.";
 		set .@c,charat(strnpcinfo(0),9);
 		switch (.@c) {
-			Case 1: break;
-			Case 2: break;
-			Case 3: set mos_whale_edq,11; break;
-			Case 4: set mos_whale_edq,26; break;
+			case 1: break;
+			case 2: break;
+			case 3: set mos_whale_edq,11; break;
+			case 4: set mos_whale_edq,26; break;
 		}
 		donpcevent strnpcinfo(0)+"::OnDisable";
 		close;
@@ -2625,9 +2624,8 @@ mosk_ship,3,3,4	duplicate(Baehideun#main)	Baehideun2#ship	-1
 mosk_ship,5,5,4	duplicate(Baehideun#main)	Baehideun3#ship	-1
 mosk_ship,15,15,4	duplicate(Baehideun#main)	Baehideun4#ship	-1
 
-//============================================================================
 // Help Mikhail
-//============================================================================
+//============================================================
 
 //----------------------------------------------------------------------------
 // Gallina - Starting Point
@@ -3940,9 +3938,8 @@ mosk_in,211,259,5	script	Larissa#mos_01	960,{
 	close;
 }
 
-//============================================================================
 // Acorn Exchange
-//============================================================================
+//============================================================
 
 //----------------------------------------------------------------------------
 // Acorn Dealer - Sells Acorns
@@ -4123,9 +4120,8 @@ S_BS_1:
 mosk_fild01,113,108,3	duplicate(Squirrel#mos_main)	Big Squirrel#mos	111
 mosk_fild01,113,108,5	duplicate(Squirrel#mos_main)	#mos_sq	1104,2,2
 
-//============================================================================
 // Banish Winter
-//============================================================================
+//============================================================
 
 //----------------------------------------------------------------------------
 // Baba Yaga, the Horrible - Starting Point
@@ -6481,9 +6477,8 @@ mosk_in,131,92,3	script	#Csar	-1,7,7,{
 	end;
 }
 
-//============================================================================
 // Shafka Hat
-//============================================================================
+//============================================================
 moscovia,211,93,3	script	Irina#edq	958,{
 	if (!checkweight(1201,1)) {
 		mes "Wait a moment!!";
@@ -6591,9 +6586,8 @@ moscovia,211,93,3	script	Irina#edq	958,{
 	close;
 }
 
-//============================================================================
 // Koshei the Immortal
-//============================================================================
+//============================================================
 
 //----------------------------------------------------------------------------
 // Sage - Starting Point
@@ -7307,12 +7301,12 @@ mosk_dun01,45,259,0	script	Wall#rus04	111,{
 		set rhea_rus_main,52;
 		set .@rus_food,rand(1,6);
 		switch (rand(1,6)) {
-			Case 1: getitem 12093,1; break;
-			Case 2: getitem 12088,1; break;
-			Case 3: getitem 12073,1; break;
-			Case 4: getitem 12078,1; break;
-			Case 5: getitem 12083,1; break;
-			Case 6: getitem 12098,1; break;
+			case 1: getitem 12093,1; break;
+			case 2: getitem 12088,1; break;
+			case 3: getitem 12073,1; break;
+			case 4: getitem 12078,1; break;
+			case 5: getitem 12083,1; break;
+			case 6: getitem 12098,1; break;
 		}
 		if (BaseLevel < 56) getexp 1300,350;
 		else if (BaseLevel < 61) getexp 2460,615;
@@ -11057,12 +11051,12 @@ treasure01,27,115,0	script	Opened Treasure Chest#41	111,{
 			next;
 		} else {
 			switch (.@russ_key02) {
-				Case 1: mes "- You find the cuticle of Kukre !! -"; break;
-				Case 2: mes "- You find the egg of a Theif Bug !! -"; break;
-				Case 4: mes "- You find something that seems to be a banana before !! -"; break;
-				Case 5: mes "- You find the tentacles of a Jelly Fish !! -"; break;
-				Case 6: mes "- You find pieces of cloth with must on it !! -"; break;
-				Case 7: mes "- You find a bone !! -"; break;
+				case 1: mes "- You find the cuticle of Kukre !! -"; break;
+				case 2: mes "- You find the egg of a Theif Bug !! -"; break;
+				case 4: mes "- You find something that seems to be a banana before !! -"; break;
+				case 5: mes "- You find the tentacles of a Jelly Fish !! -"; break;
+				case 6: mes "- You find pieces of cloth with must on it !! -"; break;
+				case 7: mes "- You find a bone !! -"; break;
 			}
 			next;
 			mes "["+ strcharinfo(0) +"]";

@@ -45,7 +45,7 @@ OnEnable:
 	}
 	end;
 
-Onkill:
+OnKill:
 	killmonster "arug_dun01","Monster Controler1#aru::OnMyMObDead";
 	end;
 
@@ -676,7 +676,7 @@ arug_que01,100,81,3	script	Pierrot Pier#aru_gd	715,{
 			mes "Let me see...";
 			next;
 			if (countitem(6031) > 0) {
-				donpcevent "Controller#gdevent_a::Onstop";
+				donpcevent "Controller#gdevent_a::OnStop";
 				set $@gdeventv_a2,3;
 				donpcevent "eff_mvp#aru_gd::Onmvp";
 				mes "[Pierrot Pier]";
@@ -818,7 +818,7 @@ arug_que01,100,81,3	script	Pierrot Pier#aru_gd	715,{
 			mes "Let me see.";
 			next;
 			if (countitem(6031) > 0) {
-				donpcevent "Controller#gdevent_a::Onstop";
+				donpcevent "Controller#gdevent_a::OnStop";
 				set $@gdeventv_a2,3;
 				donpcevent "eff_mvp#aru_gd::Onmvp";
 				mes "[Pierrot Pier]";
@@ -928,7 +928,7 @@ arug_que01,100,81,3	script	Pierrot Pier#aru_gd	715,{
 			mes "Let me see...";
 			next;
 			if (countitem(6031) > 0) {
-				donpcevent "Controller#gdevent_a::Onstop";
+				donpcevent "Controller#gdevent_a::OnStop";
 				set $@gdeventv_a2,3;
 				donpcevent "eff_mvp#aru_gd::Onmvp";
 				mes "[Pierrot Pier]";
@@ -985,14 +985,14 @@ arug_que01,100,81,3	script	Pierrot Pier#aru_gd	715,{
 		}
 		else {
 			mes "[Pierrot Pier]";
-			mes "Voc� encontrou o tesouro?";
-			mes "Mostre-me o que voc� tem nas m�os agora.";
+			mes "Did you find the treasure?";
+			mes "Show me that thing you are holding, now!";
 			next;
 			mes "[Pierrot Pier]";
-			mes "Deixe-me ver...";
+			mes "Let me see...";
 			next;
 			if (countitem(6031) > 0) {
-				donpcevent "Controller#gdevent_a::Onstop";
+				donpcevent "Controller#gdevent_a::OnStop";
 				set $@gdeventv_a2,3;
 				donpcevent "eff_mvp#aru_gd::Onmvp";
 				mes "[Pierrot Pier]";
@@ -1042,35 +1042,35 @@ Ongame_start:
 	donpcevent "paper_sp_9_a::OnEnable";
 	set .@roulette_where,rand(1,9);
 	if (.@roulette_where == 1) {
-		donpcevent "paper_sp_1_a::Onbingo";
+		donpcevent "paper_sp_1_a::OnBingo";
 	}
 	else if (.@roulette_where == 2) {
-		donpcevent "paper_sp_2_a::Onbingo";
+		donpcevent "paper_sp_2_a::OnBingo";
 	}
 	else if (.@roulette_where == 3) {
-		donpcevent "paper_sp_3_a::Onbingo";
+		donpcevent "paper_sp_3_a::OnBingo";
 	}
 	else if (.@roulette_where == 4) {
-		donpcevent "paper_sp_4_a::Onbingo";
+		donpcevent "paper_sp_4_a::OnBingo";
 	}
 	else if (.@roulette_where == 5) {
-		donpcevent "paper_sp_5_a::Onbingo";
+		donpcevent "paper_sp_5_a::OnBingo";
 	}
 	else if (.@roulette_where == 6) {
-		donpcevent "paper_sp_6_a::Onbingo";
+		donpcevent "paper_sp_6_a::OnBingo";
 	}
 	else if (.@roulette_where == 7) {
-		donpcevent "paper_sp_7_a::Onbingo";
+		donpcevent "paper_sp_7_a::OnBingo";
 	}
 	else if (.@roulette_where == 8) {
-		donpcevent "paper_sp_8_a::Onbingo";
+		donpcevent "paper_sp_8_a::OnBingo";
 	}
 	else {
-		donpcevent "paper_sp_9_a::Onbingo";
+		donpcevent "paper_sp_9_a::OnBingo";
 	}
 	end;
 
-Onstop:
+OnStop:
 	stopnpctimer;
 	end;
 
@@ -1108,7 +1108,7 @@ OnEnable:
 	}
 	end;
 
-Onbingo:
+OnBingo:
 	set .@paper_x1,rand(81,95);
 	set .@paper_y1,rand(87,100);
 	makeitem 6031,1,"arug_que01",.@paper_x1,.@paper_y1; //Glitering_PaperB
@@ -1133,7 +1133,7 @@ OnEnable:
 	}
 	end;
 
-Onbingo:
+OnBingo:
 	set .@paper_x2,rand(96,110);
 	set .@paper_y2,rand(87,100);
 	makeitem 6031,1,"arug_que01",.@paper_x2,.@paper_y2; //Glitering_PaperB
@@ -1158,7 +1158,7 @@ OnEnable:
 	}
 	end;
 
-Onbingo:
+OnBingo:
 	set .@paper_x3,rand(111,124);
 	set .@paper_y3,rand(87,100);
 	makeitem 6031,1,"arug_que01",.@paper_x3,.@paper_y3; //Glitering_PaperB
@@ -1183,7 +1183,7 @@ OnEnable:
 	}
 	end;
 
-Onbingo:
+OnBingo:
 	set .@paper_x4,rand(81,95);
 	set .@paper_y4,rand(73,86);
 	makeitem 6031,1,"arug_que01",.@paper_x4,.@paper_y4; //Glitering_PaperB
@@ -1208,7 +1208,7 @@ OnEnable:
 	}
 	end;
 
-Onbingo:
+OnBingo:
 	set .@paper_x5,rand(96,110);
 	set .@paper_y5,rand(73,86);
 	makeitem 6031,1,"arug_que01",.@paper_x5,.@paper_y5; //Glitering_PaperB
@@ -1233,7 +1233,7 @@ OnEnable:
 	}
 	end;
 
-Onbingo:
+OnBingo:
 	set .@paper_x6,rand(111,124);
 	set .@paper_y6,rand(73,86);
 	makeitem 6031,1,"arug_que01",.@paper_x6,.@paper_y6; //Glitering_PaperB
@@ -1258,7 +1258,7 @@ OnEnable:
 	}
 	end;
 
-Onbingo:
+OnBingo:
 	set .@paper_x7,rand(81,95);
 	set .@paper_y7,rand(59,72);
 	makeitem 6031,1,"arug_que01",.@paper_x7,.@paper_y7; //Glitering_PaperB
@@ -1283,7 +1283,7 @@ OnEnable:
 	}
 	end;
 
-Onbingo:
+OnBingo:
 	set .@paper_x8,rand(96,110);
 	set .@paper_y8,rand(59,72);
 	makeitem 6031,1,"arug_que01",.@paper_x8,.@paper_y8; //Glitering_PaperB
@@ -1308,7 +1308,7 @@ OnEnable:
 	}
 	end;
 
-Onbingo:
+OnBingo:
 	set .@paper_x9,rand(111,124);
 	set .@paper_y9,rand(59,72);
 	makeitem 6031,1,"arug_que01",.@paper_x9,.@paper_y9; //Glitering_PaperB

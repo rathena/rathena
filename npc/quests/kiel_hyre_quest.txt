@@ -1043,7 +1043,7 @@ kh_school,179,39,0	script	Cute Student#kh	895,{
 				mes "Thank you! Thanks so much!";
 				next;
 				break;
-			Case 2:
+			case 2:
 				mes "[Elly]";
 				mes "Wait, you don't go";
 				mes "to this school, don't";

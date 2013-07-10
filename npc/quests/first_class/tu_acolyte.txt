@@ -883,7 +883,7 @@ monk_in,18,38,6	script	Priest Gardron#tu	110,{
 				mes "May I entrust you, acolyte "+strcharinfo(0)+",";
 				mes "this urgent matter?";
 				mes "Please dispose of Hornets";
-				mes "which are causint trouble on ^FF0000the western field of Prontera^000000.";
+				mes "which are causing trouble on ^FF0000the western field of Prontera^000000.";
 				next;
 				mes "[Priest Gardron]";
 				mes "I know that you are undergoing the discipline,";

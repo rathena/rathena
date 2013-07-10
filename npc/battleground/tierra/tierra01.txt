@@ -1,9 +1,9 @@
 //===== rAthena Script ======================================= 
-// BattleGround System - Tierra Gorge
+//= BattleGround System - Tierra Gorge
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= rAthena 1.0
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //= 1.1 Corrected setwalls for barricades. [L0ne_W0lf]
 //= 1.2 Updated 'waitingroom' to support required zeny/lvl. [Kisuka]
 //= 1.3 Removed MaxLvl check in waitingrooms.
+//= 1.4 Label standardization. [Euphy]
 //============================================================
 
 // Waiting Room NPCs
@@ -47,7 +48,7 @@ OnEnterBG:
 bat_room,1,151,3	script	#bat_a01_timer	844,{
 	end;
 
-onInit:
+OnInit:
 OnEnable:
 	initnpctimer;
 	end;
@@ -98,18 +99,18 @@ OnInit:
 	end;
 
 OnEnable:
-	donpcevent "OBJ#bat_a01_a::Onkill";
+	donpcevent "OBJ#bat_a01_a::OnKill";
 	donpcevent "OBJ#bat_a01_a::OnEnable";
-	donpcevent "OBJ#bat_a01_b::Onkill";
+	donpcevent "OBJ#bat_a01_b::OnKill";
 	donpcevent "OBJ#bat_a01_b::OnEnable";
-	donpcevent "barricade#bat_a01_a::Onkill";
+	donpcevent "barricade#bat_a01_a::OnKill";
 	donpcevent "barricade#bat_a01_a::OnEnable";
-	donpcevent "barricade#bat_a01_b::Onkill";
+	donpcevent "barricade#bat_a01_b::OnKill";
 	donpcevent "barricade#bat_a01_b::OnEnable";
-	donpcevent "OBJ#bat_a01_n::Onkill";
+	donpcevent "OBJ#bat_a01_n::OnKill";
 	donpcevent "OBJ#bat_a01_n::OnEnable";
-	donpcevent "NOBJ_mob#bat_a01_a::Onkill";
-	donpcevent "NOBJ_mob#bat_a01_b::Onkill";
+	donpcevent "NOBJ_mob#bat_a01_a::OnKill";
+	donpcevent "NOBJ_mob#bat_a01_b::OnKill";
 	donpcevent "Battle Therapist#a01_a::OnEnable";
 	donpcevent "Battle Therapist#a01_b::OnEnable";
 	donpcevent "countdown#bat_a01::OnEnable";
@@ -138,7 +139,7 @@ OnReadyCheck:
 	set $@TierraBG1,1;
 	donpcevent "Lieutenant Kalos::OnEnterBG";
 	donpcevent "Lieutenant Eyor::OnEnterBG";
-	donpcevent "start#bat_a01::onEnable";
+	donpcevent "start#bat_a01::OnEnable";
 	bg_warp $@TierraBG1_id1,"bat_a01",352,342;
 	bg_warp $@TierraBG1_id2,"bat_a01",353,52;
 	initnpctimer;
@@ -155,7 +156,7 @@ OnEnable:
 	bg_monster $@TierraBG1_id1,"bat_a01",177,345,"Food Storage",1909,"OBJ#bat_a01_a::OnMyMobDead";
 	end;
 
-Onkill:
+OnKill:
 	killmonster "bat_a01","OBJ#bat_a01_a::OnMyMobDead";
 	end;
 
@@ -178,7 +179,7 @@ OnEnable:
 	bg_monster $@TierraBG1_id2,"bat_a01",167,50,"Food Depot",1910,"OBJ#bat_a01_b::OnMyMobDead";
 	end;
 
-Onkill:
+OnKill:
 	killmonster "bat_a01","OBJ#bat_a01_b::OnMyMobDead";
 	end;
 
@@ -203,7 +204,7 @@ OnEnable:
 	setwall "bat_a01",186,266,16,6,1,"bat_a01_c1";
 	end;
 
-Onkill:
+OnKill:
 	killmonster "bat_a01","barricade#bat_a01_a::OnMyMobDead";
 	delwall "bat_a01_c1";
 	end;
@@ -225,7 +226,7 @@ OnEnable:
 	setwall "bat_a01",170,129,16,6,1,"bat_a01_g1";
 	end;
 
-Onkill:
+OnKill:
 	killmonster "bat_a01","barricade#bat_a01_b::OnMyMobDead";
 	delwall "bat_a01_g1";
 	end;
@@ -245,7 +246,7 @@ OnEnable:
 	monster "bat_a01",273,203,"Neutrality Flag",1911,1,"OBJ#bat_a01_n::OnMyMobDead";
 	end;
 
-Onkill:
+OnKill:
 	killmonster "bat_a01","OBJ#bat_a01_n::OnMyMobDead";
 	end;
 
@@ -266,13 +267,13 @@ OnMyMobDead:
 
 bat_a01,15,21,3	script	NOBJ_mob#bat_a01_a	844,{
 OnEnable:
-	donpcevent "NOBJ_mob#bat_a01_b::Onkill";
+	donpcevent "NOBJ_mob#bat_a01_b::OnKill";
 	bg_monster $@TierraBG1_id1,"bat_a01",272,204,"Guillaume Camp Guardian",1949,"NOBJ_mob#bat_a01_a::OnMyMobDead";
 	bg_monster $@TierraBG1_id1,"bat_a01",272,213,"Guillaume Camp Guardian",1949,"NOBJ_mob#bat_a01_a::OnMyMobDead";
 	bg_monster $@TierraBG1_id1,"bat_a01",273,197,"Guillaume Camp Guardian",1950,"NOBJ_mob#bat_a01_a::OnMyMobDead";
 	end;
 
-Onkill:
+OnKill:
 	killmonster "bat_a01","NOBJ_mob#bat_a01_a::OnMyMobDead";
 	end;
 
@@ -282,13 +283,13 @@ OnMyMobDead:
 
 bat_a01,15,22,3	script	NOBJ_mob#bat_a01_b	844,{
 OnEnable:
-	donpcevent "NOBJ_mob#bat_a01_a::Onkill";
+	donpcevent "NOBJ_mob#bat_a01_a::OnKill";
 	bg_monster $@TierraBG1_id2,"bat_a01",272,204,"Croix Camp Guardian",1949,"NOBJ_mob#bat_a01_a::OnMyMobDead";
 	bg_monster $@TierraBG1_id2,"bat_a01",272,213,"Croix Camp Guardian",1949,"NOBJ_mob#bat_a01_a::OnMyMobDead";
 	bg_monster $@TierraBG1_id2,"bat_a01",273,197,"Croix Camp Guardian",1950,"NOBJ_mob#bat_a01_a::OnMyMobDead";
 	end;
 
-Onkill:
+OnKill:
 	killmonster "bat_a01","NOBJ_mob#bat_a01_b::OnMyMobDead";
 	end;
 
@@ -483,7 +484,7 @@ OnEnable:
 	enablenpc "Battle Therapist#a01_a";
 	end;
 
-Onstop:
+OnStop:
 	disablenpc "bat_a01_rp1_a_warp";
 	disablenpc "Battle Therapist#a01_a";
 	stopnpctimer;
@@ -533,7 +534,7 @@ OnEnable:
 	enablenpc "Battle Therapist#a01_b";
 	end;
 
-Onstop:
+OnStop:
 	disablenpc "bat_a01_rp1_b_warp";
 	disablenpc "Battle Therapist#a01_b";
 	stopnpctimer;
@@ -873,7 +874,7 @@ OnEnable:
 	initnpctimer;
 	end;
 
-Onstop:
+OnStop:
 	stopnpctimer;
 	end;
 
@@ -907,7 +908,7 @@ OnTimer1825000:
 
 OnTimer1830000:
 	mapwarp "bat_a01","bat_room",154,150;
-	donpcevent "countdown#bat_a01::Onstop";
+	donpcevent "countdown#bat_a01::OnStop";
 	end;
 }
 

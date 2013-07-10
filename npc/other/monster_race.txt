@@ -22,7 +22,7 @@
 //= 1.6 Updated experience rewards. [L0ne_W0lf]
 //= 1.7 Optimization, -4000 lines (more can still be done). [Euphy]
 //= 1.8 Optimized.
-//= 	Fixed Medal Distributor (Dual Race) disappears accordingly. [Joseph] 
+//=     Fixed Medal Distributor (Dual Race) disappears accordingly. [Joseph] 
 //============================================================
 
 // Monstrer Race - Single Monster Race
@@ -1414,12 +1414,12 @@ p_track02,73,22,1	script	Ticket Helper#2	899,{
 				set .@m, 0;
 				set .@m, select (.@m$);
 				switch (.@m) {
-					Case 1: setarray .@w$, "a friendly","Poring type monster"; break;
-					Case 2: setarray .@w$, "an adorable","Lunatic type monster"; break;
-					Case 3: setarray .@w$, "a darling","Savage Babe monster"; break;
-					Case 4: setarray .@w$, "a gentle baby","Desert Wolf monster"; break;
-					Case 5: setarray .@w$, "a small, yet","demonic, Deviruchi"; break;
-					Case 6: setarray .@w$, "a naughty","Baphomet Jr. monster"; break;
+					case 1: setarray .@w$, "a friendly","Poring type monster"; break;
+					case 2: setarray .@w$, "an adorable","Lunatic type monster"; break;
+					case 3: setarray .@w$, "a darling","Savage Babe monster"; break;
+					case 4: setarray .@w$, "a gentle baby","Desert Wolf monster"; break;
+					case 5: setarray .@w$, "a small, yet","demonic, Deviruchi"; break;
+					case 6: setarray .@w$, "a naughty","Baphomet Jr. monster"; break;
 				}
 				mes "[Ticket Helper]";
 				mes "You've chosen";
@@ -2283,54 +2283,54 @@ ein_in01,85,208,5	script	Ei'felle#repay01	854,{
 		mes "that you want me to create.";
 		next;
 		switch (.@m) {
-			Case 0:
+			case 0:
 				setarray .@mw$, "Ginnungagap:Grimtooth:Dragon Killer:Mail Breaker:Bazerald:Sword Breaker:Ice Pick:Sucsamad:Kitchen Knife:Azoth:Exorciser:Assassin Dagger:Moonlight Dagger:Weeder Knife:Cursed Dagger:Dagger of Counter:Combat Knife:Fortune Sword";
 				setarray .@mw, 13002,1237,13001,1225,1231,1224,1230,1236,1229,1235,1233,1232,1234,1227,1241,1242,1228,1223;
 				break;
-			Case 1:
+			case 1:
 				setarray .@mw$, "Nagan:Immaterial Sword:Mysteltainn:Byeollungum:Star Dust Blade:Caesar's Sword:Ice Falchion:Excalibur:Edge:Cutlus:Solar Sword:Tirfing:Fireblend";
 				setarray .@mw, 1130,1141,1138,1140,1148,1134,1131,1137,1132,1135,1136,1139,1133;
 				break;
-			Case 2:	
+			case 2:	
 				setarray .@mw$, "Dragon Slayer:Masamune:Muramasa:Schweizersabel:Executioner:Zweihander:Katzbalger";
 				setarray .@mw, 1166,1165,1164,1167,1169,1168,1170;
 				break;
-			Case 3:
+			case 3:
 				setarray .@mw$, "Great Axe:Guillotine:Light Epsilon:Bloody Axe:Sabbath:Slaughter:Cleaver:Tomahawk";
 				setarray .@mw, 1364,1369,1366,1363,1365,1367,1305,1368;
 				break;
-			Case 4:
+			case 4:
 				setarray .@mw$, "Golden Mace:Grand Cross:Long Mace:Spike:Slash:Quadrille";
 				setarray .@mw, 1524,1528,1525,1523,1526,1527;
 				break;
-			Case 5:
+			case 5:
 				setarray .@mw$, "Roguemaster's Bow:Dragon Wing:Rudra's Bow:Ballista";
 				setarray .@mw, 1719,1724,1720,1722;
 				break;
-			Case 6:
+			case 6:
 				setarray .@mw$, "Wing Staff:Wizardry Staff";
 				setarray .@mw, 1616,1473;
-			Case 7:
+			case 7:
 				setarray .@mw$, "Legacy of Dragon:Book of the Apocalypse:Girl's Diary:Hardcover Book";
 				setarray .@mw, 1559,1557,1558,1561;
 				break;
-			Case 8:
+			case 8:
 				setarray .@mw$, "Gae Bolg:Gelerdria:Gungnir:Skewer:Longinus's Spear:Brionac:Bill Guisarme:Zephyrus:Crescent Scythe:Tjungkuletti:Hellfire";
 				setarray .@mw, 1474,1414,1413,1415,1469,1470,1467,1468,1466,1416,1471;
 				break;
-			Case 9:
+			case 9:
 				setarray .@mw$, "Infiltrator:Bloody Roar:Unholy Touch";
 				setarray .@mw, 1261,1265,1263;
 				break;
-			Case 10:
+			case 10:
 				setarray .@mw$, "Hatii Claw:Berserk:Kaiser Knuckle";
 				setarray .@mw, 1815,1814,1813;
 				break;
-			Case 11:
+			case 11:
 				setarray .@mw$, "Lariat:Rapture Rose:Blade Whip:Chemeti:Queen's Whip";
 				setarray .@mw, 1962,1963,1969,1964,1970;
 				break;
-			Case 12:
+			case 12:
 				setarray .@mw$, "Oriental Lute:Electric Guitar";
 				setarray .@mw, 1918,1913;
 				break;		
@@ -2704,35 +2704,35 @@ hugel,71,83,4	script	Wayne	900,{
 			set .@m$, .@m$ + .@pm[.@i] + " Prize medal:";
 		set .@m, select (.@m$) - 1;
 		switch (.@m) {
-			Case 0: 
+			case 0: 
 				setarray .@mr$, "2 Hinale Leaflets:2 Aloe Leaflets:1 Mastela Fruit:5 Witch Starsands:4 Condensed Red Potions";
 				setarray .@mr, 520,2,521,2,522,1,1061,5,545,4;
 				break;
-			Case 1:
+			case 1:
 				setarray .@mr$, "1 Royal Jelly:6 Holy Waters";
 				setarray .@mr, 526,1,523,6;
 				break;
-			Case 2:
+			case 2:
 				setarray .@mr$, "1 Cookie Bag:1 First Aid Kit";
 				setarray .@mr, 12130,1,12110,1;
 				break;
-			Case 3:
+			case 3:
 				set .@mr$, "1 Gift Box";
 				setarray .@mr, 644,1;
 				break;
-			Case 4:
+			case 4:
 				set .@mr$, "1 Old Blue Box";
 				setarray .@mr, 603,1;
 				break;
-			Case 5:
+			case 5:
 				set .@mr$, "1 Taming Gift Set";
 				setarray .@mr, 12105,1;
 				break;
-			Case 6:
+			case 6:
 				set .@mr$, "1 Old Purple Box";
 				setarray .@mr, 617,1;
 				break;
-			Case 7:
+			case 7:
 				set .@mr$, "1 Poring Box";
 				setarray .@mr, 12109,1;
 				break;

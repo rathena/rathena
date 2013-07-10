@@ -1833,7 +1833,7 @@ OnInit:
 	initnpctimer;
 	end;
 
-Onreset:
+OnReset:
 	killmonster "juperos_02","3F Gate Switch#jupe::OnMyMobDead";
 	end;
 
@@ -2049,7 +2049,7 @@ jupe_area1,88,224,0	script	#hole#1-1	844,{
 		end;
 	}
 
-Onstop_timer:
+OnStop_Timer:
 	stopnpctimer;
 	end;
 
@@ -2090,7 +2090,7 @@ OnInit:
 OnTouch:
 	donpcevent "Red Alarm On#1-1::OnEnable";
 	disablenpc "Red Alarm#1-1";
-	donpcevent "#hole#1-1::Onstop_timer";
+	donpcevent "#hole#1-1::OnStop_Timer";
 	set $@JupreArea1InUse,1;
 	disablenpc "#hole#1-1";
 	end;
@@ -2343,7 +2343,7 @@ jupe_area1,25,238,0	script	#hole#1-2	844,{
 	}
 	end;
 
-Onstop_timer:
+OnStop_Timer:
 	stopnpctimer;
 	end;
 
@@ -2630,7 +2630,7 @@ jupe_area1,36,146,0	script	#hole#1-3	844,{
 	}
 	end;
 
-Onstop_timer:
+OnStop_Timer:
 	stopnpctimer;
 	end;
 
@@ -2919,7 +2919,7 @@ jupe_area1,50,49,0	script	#hole#1-4	844,{
 	}
 	end;
 
-Onstop_timer:
+OnStop_Timer:
 	stopnpctimer;
 	end;
 
@@ -3258,7 +3258,7 @@ jupe_area2,74,224,0	script	#hole#2-1	844,{
 		end;
 	}
 
-Onstop_timer:
+OnStop_Timer:
 	stopnpctimer;
 	end;
 
@@ -3299,7 +3299,7 @@ OnInit:
 OnTouch:
 	donpcevent "Red Alarm On#2-1::OnEnable";
 	disablenpc "Red Alarm#2-1";
-	donpcevent "#hole#2-1::Onstop_timer";
+	donpcevent "#hole#2-1::OnStop_Timer";
 	set $@JupreArea2InUse,1;
 	disablenpc "#hole#2-1";
 	end;
@@ -3552,7 +3552,7 @@ jupe_area2,138,238,0	script	#hole#2-2	844,{
 	}
 	end;
 
-Onstop_timer:
+OnStop_Timer:
 	stopnpctimer;
 	end;
 
@@ -3839,7 +3839,7 @@ jupe_area2,127,146,0	script	#hole#2-3	844,{
 	}
 	end;
 
-Onstop_timer:
+OnStop_Timer:
 	stopnpctimer;
 	end;
 
@@ -4130,7 +4130,7 @@ jupe_area2,113,49,0	script	#hole#2-4	844,{
 	}
 	end;
 
-Onstop_timer:
+OnStop_Timer:
 	stopnpctimer;
 	end;
 

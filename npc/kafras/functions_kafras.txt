@@ -478,7 +478,7 @@ function	script	F_SetKafCode	{
 		mes "Your storage is protected with a password. What would you do now?";
 		next;
 		switch (select("Change old password -> 5000z:Remove storage password -> 1000z:Cancel")) {
-			Case 1:
+			case 1:
 				mes getarg(0);
 				mes "At first, please enter your ^0000FFold password^000000.";
 				set @code,callfunc("F_EntKafCode");
@@ -490,7 +490,7 @@ function	script	F_SetKafCode	{
 				next;
 				callsub S_SET,getarg(0),getarg(1);
 				break;
-			Case 2:
+			case 2:
 				mes getarg(0);
 				mes "Please, enter your password before its removal.";
 				set @code,callfunc("F_EntKafCode");
@@ -518,7 +518,7 @@ function	script	F_SetKafCode	{
 					emotion e_sry;
 				}
 				break;
-			Case 3:
+			case 3:
 				break;
 		}
 	} else {
@@ -526,8 +526,8 @@ function	script	F_SetKafCode	{
 		mes "Additional storage protection with a password.";
 		next;
 		switch (select("Set new password -> 5000z:Cancel")) {
-			Case 1: callsub S_SET,getarg(0),getarg(1); break;
-			Case 2: break;		
+			case 1: callsub S_SET,getarg(0),getarg(1); break;
+			case 2: break;		
 		}
 	}
 	close2;

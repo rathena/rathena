@@ -1,9 +1,9 @@
 //===== rAthena Script ======================================= 
-// BattleGround System - Flavius
+//= BattleGround System - Flavius
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= rAthena 1.0
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //= 1.1 Fixed pink crystal spawning as blue. [L0ne_W0lf]
 //= 1.2 Updated 'waitingroom' to support required zeny/lvl. [Kisuka]
 //= 1.3 Removed MaxLvl check in waitingrooms. Replaced setwall with setcell.
+//= 1.4 Label standardization. [Euphy]
 //============================================================
 
 // Waiting Room NPCs
@@ -95,16 +96,16 @@ OnReadyCheck:
 
 	donpcevent "Lieutenant Ator::OnEnterBG";
 	donpcevent "Lieutenant Thelokus::OnEnterBG";
-	donpcevent "OBJ#bat_b01_a::Onkill";
+	donpcevent "OBJ#bat_b01_a::OnKill";
 	donpcevent "OBJ#bat_b01_a::OnEnable";
-	donpcevent "OBJ#bat_b01_b::Onkill";
+	donpcevent "OBJ#bat_b01_b::OnKill";
 	donpcevent "OBJ#bat_b01_b::OnEnable";
-	donpcevent "guardian#bat_b01_a::Onkill";
-	donpcevent "guardian#bat_b01_b::Onkill";
+	donpcevent "guardian#bat_b01_a::OnKill";
+	donpcevent "guardian#bat_b01_b::OnKill";
 	donpcevent "guardian#bat_b01_a::OnEnable";
 	donpcevent "guardian#bat_b01_b::OnEnable";
-	donpcevent "cell#bat_b01_a::Onred";
-	donpcevent "cell#bat_b01_b::Onred";
+	donpcevent "cell#bat_b01_a::OnRed";
+	donpcevent "cell#bat_b01_b::OnRed";
 	donpcevent "time#bat_b01::OnEnable";
 	disablenpc "Guillaume Vintenar#b01_a";
 	disablenpc "Croix Vintenar#b01_b";
@@ -117,16 +118,16 @@ OnReadyCheck:
 	end;
 
 OnReset:
-	donpcevent "OBJ#bat_b01_a::Onkill";
+	donpcevent "OBJ#bat_b01_a::OnKill";
 	donpcevent "OBJ#bat_b01_a::OnEnable";
-	donpcevent "OBJ#bat_b01_b::Onkill";
+	donpcevent "OBJ#bat_b01_b::OnKill";
 	donpcevent "OBJ#bat_b01_b::OnEnable";
-	donpcevent "guardian#bat_b01_a::Onkill";
-	donpcevent "guardian#bat_b01_b::Onkill";
+	donpcevent "guardian#bat_b01_a::OnKill";
+	donpcevent "guardian#bat_b01_b::OnKill";
 	donpcevent "guardian#bat_b01_a::OnEnable";
 	donpcevent "guardian#bat_b01_b::OnEnable";
-	donpcevent "cell#bat_b01_a::Onred";
-	donpcevent "cell#bat_b01_b::Onred";
+	donpcevent "cell#bat_b01_a::OnRed";
+	donpcevent "cell#bat_b01_b::OnRed";
 	donpcevent "time#bat_b01::OnEnable";
 	disablenpc "Guillaume Vintenar#b01_a";
 	disablenpc "Croix Vintenar#b01_b";
@@ -152,7 +153,7 @@ OnEnable:
 	bg_monster $@FlaviusBG1_id1,"bat_b01",61,150,"Pink Crystal",1915,"OBJ#bat_b01_a::OnMyMobDead";
 	end;
 
-Onkill:
+OnKill:
 	killmonster "bat_b01","OBJ#bat_b01_a::OnMyMobDead";
 	end;
 
@@ -164,12 +165,12 @@ OnMyMobDead:
 			set $@Croix_ScoreBG1,$@Croix_ScoreBG1+1;
 			enablenpc "Guillaume Vintenar#b01_a";
 			enablenpc "Croix Vintenar#b01_b";
-			donpcevent "time#bat_b01::Onstop";
+			donpcevent "time#bat_b01::OnStop";
 		}
 		else {
 			set $@Croix_ScoreBG1,1;
 			donpcevent "time#bat_b01::OnEnable";
-			donpcevent "start#bat_b01::onReset";
+			donpcevent "start#bat_b01::OnReset";
 		}
 		donpcevent "#bat_b01_timer::OnStop";
 		bg_updatescore "bat_b01",$@Guill_ScoreBG1,$@Croix_ScoreBG1;
@@ -185,7 +186,7 @@ OnEnable:
 	bg_monster $@FlaviusBG1_id2,"bat_b01",328,150,"Blue Crystal",1914,"OBJ#bat_b01_b::OnMyMobDead";
 	end;
 
-Onkill:
+OnKill:
 	killmonster "bat_b01","OBJ#bat_b01_b::OnMyMobDead";
 	end;
 
@@ -197,12 +198,12 @@ OnMyMobDead:
 			set $@Guill_ScoreBG1,$@Guill_ScoreBG1+1;
 			enablenpc "Guillaume Vintenar#b01_a";
 			enablenpc "Croix Vintenar#b01_b";
-			donpcevent "time#bat_b01::Onstop";
+			donpcevent "time#bat_b01::OnStop";
 		}
 		else {
 			set $@Guill_ScoreBG1,1;
 			donpcevent "time#bat_b01::OnEnable";
-			donpcevent "start#bat_b01::onReset";
+			donpcevent "start#bat_b01::OnReset";
 		}
 		donpcevent "#bat_b01_timer::OnStop";
 		bg_updatescore "bat_b01",$@Guill_ScoreBG1,$@Croix_ScoreBG1;
@@ -219,13 +220,13 @@ OnEnable:
 	bg_monster $@FlaviusBG1_id1,"bat_b01",108,141,"Guillaume Camp Guardian",1949,"guardian#bat_b01_a::OnMyMobDead";
 	end;
 
-Onkill:
+OnKill:
 	killmonster "bat_b01","guardian#bat_b01_a::OnMyMobDead";
 	end;
 
 OnMyMobDead:
 	if (mobcount("bat_b01","guardian#bat_b01_a::OnMyMobDead") < 1) {
-		donpcevent "cell#bat_b01_a::Ongreen";
+		donpcevent "cell#bat_b01_a::OnGreen";
 		mapannounce "bat_b01", "The Guardian protecting Guillaume's Crystal has been slain.",bc_map,"0xFFCE00";
 	}
 	end;
@@ -237,37 +238,37 @@ OnEnable:
 	bg_monster $@FlaviusBG1_id2,"bat_b01",307,138,"Croix Camp Guardian",1949,"guardian#bat_b01_b::OnMyMobDead";
 	end;
 
-Onkill:
+OnKill:
 	killmonster "bat_b01","guardian#bat_b01_b::OnMyMobDead";
 	end;
 
 OnMyMobDead:
 	if (mobcount("bat_b01","guardian#bat_b01_b::OnMyMobDead") < 1) {
-		donpcevent "cell#bat_b01_b::Ongreen";
+		donpcevent "cell#bat_b01_b::OnGreen";
 		mapannounce "bat_b01", "The Guardian protecting Croix's Crystal has been slain.",bc_map,"0xFFCE00";
 	}
 	end;
 }
 
 bat_b01,1,4,3	script	cell#bat_b01_a	844,{
-Onred:
+OnRed:
 	setcell "bat_b01",62,149,60,151,cell_basilica,1;
 	setcell "bat_b01",62,149,60,151,cell_walkable,0;
 	end;
 
-Ongreen:
+OnGreen:
 	setcell "bat_b01",62,149,60,151,cell_basilica,0;
 	setcell "bat_b01",62,149,60,151,cell_walkable,1;
 	end;
 }
 
 bat_b01,1,5,3	script	cell#bat_b01_b	844,{
-Onred:
+OnRed:
 	setcell "bat_b01",327,151,329,149,cell_basilica,1;
 	setcell "bat_b01",327,151,329,149,cell_walkable,0;
 	end;
 
-Ongreen:
+OnGreen:
 	setcell "bat_b01",327,151,329,149,cell_basilica,0;
 	setcell "bat_b01",327,151,329,149,cell_walkable,1;
 	end;
@@ -279,7 +280,7 @@ OnEnable:
 	donpcevent "Battle Therapist#b01_b::OnEnable";
 	end;
 
-Onstop:
+OnStop:
 	donpcevent "Battle Therapist#b01_a::OnStop";
 	donpcevent "Battle Therapist#b01_b::OnStop";
 	end;
@@ -304,7 +305,7 @@ OnTimer26000:
 
 OnTimer26500:
 	stopnpctimer;
-	donpcevent "Battle Therapist#b01_a::onEnable";
+	donpcevent "Battle Therapist#b01_a::OnEnable";
 	end;
 
 OnEnable:
@@ -312,7 +313,7 @@ OnEnable:
 	enablenpc "Battle Therapist#b01_a";
 	end;
 
-Onstop:
+OnStop:
 	disablenpc "bat_b01_rp1_a_warp";
 	disablenpc "Battle Therapist#b01_a";
 	stopnpctimer;
@@ -357,7 +358,7 @@ OnEnable:
 	enablenpc "Battle Therapist#b01_b";
 	end;
 
-Onstop:
+OnStop:
 	disablenpc "bat_b01_rp1_b_warp";
 	disablenpc "Battle Therapist#b01_b";
 	stopnpctimer;
@@ -503,7 +504,7 @@ OnEnable:
 	initnpctimer;
 	end;
 
-Onstop:
+OnStop:
 	stopnpctimer;
 	end;
 
@@ -536,7 +537,7 @@ OnTimer1825000:
 	end;
 
 OnTimer1830000:
-	donpcevent "time#bat_b01::Onstop";
+	donpcevent "time#bat_b01::OnStop";
 	bg_warp $@FlaviusBG1_id1,"bat_b01",10,290;
 	bg_warp $@FlaviusBG1_id2,"bat_b01",390,10;
 	enablenpc "Vintenar#bat_b01_aover";
@@ -545,7 +546,7 @@ OnTimer1830000:
 
 OnTimer1900000:
 	mapwarp "bat_b01","bat_room",154,150;
-	donpcevent "countdown#bat_b01::Onstop";
+	donpcevent "countdown#bat_b01::OnStop";
 	end;
 }
 

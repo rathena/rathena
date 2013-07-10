@@ -1,5 +1,5 @@
 //===== rAthena Script ======================================= 
-// BattleGround System - Common NPCs
+//= BattleGround System - Common NPCs
 //===== By: ================================================== 
 //= ????, L0ne_W0lf
 //===== Current Version: ===================================== 

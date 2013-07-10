@@ -1,5 +1,5 @@
 //===== rAthena Script ======================================= 
-// BattleGround System - KvM Item Dealer
+//= BattleGround System - KvM Item Dealer
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 

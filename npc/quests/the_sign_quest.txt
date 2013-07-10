@@ -1,7 +1,7 @@
 //===== rAthena Script ======================================= 
 //= The Sign Quest
 //===== By: ================================================== 
-//= SinSloth(Most of the NPCs), MasterOfMuppets(Some of the NPCs + bug fixes) & Kargha(The quiz NPCs)
+//= SinSloth, MasterOfMuppets, Kargha
 //===== Current Version: ===================================== 
 //= 3.7
 //===== Compatible With: ===================================== 
@@ -28,9 +28,8 @@
 //= 3.8 Corrected an invalid map name. [Joseph]
 //============================================================ 
 
-//============================================================ 
 // The Sign (Part 1)
-//============================================================ 
+//============================================================
 -	script	Sign::TheSign	111,{
 	callfunc "F_UpdateSignVars";
 	cutin "sign_01",4;
@@ -4969,14 +4968,14 @@ OnInit:
 	end;
 
 OnStartArena:
-	donpcevent "s_dance_timer::Onbutton_off";
+	donpcevent "s_dance_timer::OnButton_Off";
 	donpcevent "Examiner#sd::OnDisable";
 	warpwaitingpc "cmd_in01",16,15,1;
 	donpcevent "s_dance_timer::OnEnable";
 	disablewaitingroomevent;
 	end;
 
-Onreset:
+OnReset:
 	enablewaitingroomevent;
 	end;
 }
@@ -4990,7 +4989,7 @@ OnDisable:
 	stopnpctimer;
 	end;
 
-Onbutton_off:
+OnButton_Off:
 	callsub OnDisableAll;
 	end;
 
@@ -5008,90 +5007,90 @@ OnTimer2000:
 
 OnTimer4000:
 	mapannounce "cmd_in01"," UP LEFT",bc_map,"0xFFFF00";
-	donpcevent "s_dance#up::Onup";
+	donpcevent "s_dance#up::OnUp";
 	donpcevent "s_dance#up::OnEnable";
 	end;
 
 OnTimer6000:
 	callsub OnDisableAll;
 	mapannounce "cmd_in01"," DOWN RIGHT",bc_map,"0xFFFF00";
-	donpcevent "s_dance#down::Onup";
+	donpcevent "s_dance#down::OnUp";
 	donpcevent "s_dance#down::OnEnable";
 	end;
 
 OnTimer8000:
 	callsub OnDisableAll;
 	mapannounce "cmd_in01"," DOWN LEFT & UP RIGHT",bc_map,"0xFFFF00";
-	donpcevent "s_dance#left::Onup";
+	donpcevent "s_dance#left::OnUp";
 	donpcevent "s_dance#left::OnEnable";
 	end;
 
 OnTimer11000:
 	callsub OnDisableAll;
 	mapannounce "cmd_in01"," DOWN RIGHT",bc_map,"0xFFFF00";
-	donpcevent "s_dance#down::Onup";
+	donpcevent "s_dance#down::OnUp";
 	donpcevent "s_dance#down::OnEnable";
 	end;
 
 OnTimer13000:
 	callsub OnDisableAll;
 	mapannounce "cmd_in01"," DOWN LEFT & UP RIGHT & UP LEFT & STAY CENTER",bc_map,"0xFFFF00";
-	donpcevent "s_dance#left::Onup";
+	donpcevent "s_dance#left::OnUp";
 	donpcevent "s_dance#left::OnEnable";
 	end;
 
 OnTimer18000:
 	callsub OnDisableAll;
 	mapannounce "cmd_in01"," DOWN LEFT & DOWN RIGHT & DOWN LEFT",bc_map,"0xFFFF00";
-	donpcevent "s_dance#left::Onup";
+	donpcevent "s_dance#left::OnUp";
 	donpcevent "s_dance#left::OnEnable";
 	end;
 
 OnTimer21000:
 	callsub OnDisableAll;
 	mapannounce "cmd_in01"," DOWN RIGHT & CENTER & DOWN RIGHT",bc_map,"0xFFFF00";
-	donpcevent "s_dance#down::Onup";
+	donpcevent "s_dance#down::OnUp";
 	donpcevent "s_dance#down::OnEnable";
 	end;
 
 OnTimer24000:
 	callsub OnDisableAll;
 	mapannounce "cmd_in01"," DOWN LEFT & UP LEFT & UP RIGHT & DOWN RIGHT & CENTER",bc_map,"0xFFFF00";
-	donpcevent "s_dance#left::Onup";
+	donpcevent "s_dance#left::OnUp";
 	donpcevent "s_dance#left::OnEnable";
 	end;
 
 OnTimer30000:
 	callsub OnDisableAll;
 	mapannounce "cmd_in01"," DOWN LEFT & UP RIGHT & UP LEFT & DOWN RIGHT",bc_map,"0xFFFF00";
-	donpcevent "s_dance#left::Onup";
+	donpcevent "s_dance#left::OnUp";
 	donpcevent "s_dance#left::OnEnable";
 	end;
 
 OnTimer34000:
 	callsub OnDisableAll;
 	mapannounce "cmd_in01"," UP RIGHT & DOWN RIGHT & UP RIGHT & DOWN RIGHT",bc_map,"0xFFFF00";
-	donpcevent "s_dance#right::Onup";
+	donpcevent "s_dance#right::OnUp";
 	donpcevent "s_dance#right::OnEnable";
 	end;
 
 OnTimer38000:
 	callsub OnDisableAll;
 	mapannounce "cmd_in01"," UP LEFT & UP RIGHT & CENTER & UP RIGHT & DOWN LEFT & DOWN RIGHT",bc_map,"0xFFFF00";
-	donpcevent "s_dance#up::Onup";
+	donpcevent "s_dance#up::OnUp";
 	donpcevent "s_dance#up::OnEnable";
 	end;
 
 OnTimer44000:
 	stopnpctimer;
-	donpcevent "s_dance#up::Onreset";
-	donpcevent "s_dance#down::Onreset";
-	donpcevent "s_dance#left::Onreset";
-	donpcevent "s_dance#right::Onreset";
-	donpcevent "s_dance#cen::Onreset";
+	donpcevent "s_dance#up::OnReset";
+	donpcevent "s_dance#down::OnReset";
+	donpcevent "s_dance#left::OnReset";
+	donpcevent "s_dance#right::OnReset";
+	donpcevent "s_dance#cen::OnReset";
 	mapannounce "cmd_in01","Well done.",bc_map,"0xFFFF00";
 	enablenpc "Examiner#sd";
-	donpcevent "Standby Room#sign::Onreset";
+	donpcevent "Standby Room#sign::OnReset";
 	end;
 }
 
@@ -5110,41 +5109,41 @@ OnDisable:
 	disablenpc "s_dance#up";
 	end;
 
-Onup:
+OnUp:
 	set .s_up,.s_up + 1;
 	end;
 
-Onreset:
+OnReset:
 	set .s_up,0;
 	end;
 
 OnTouch:
 	soundeffect "effect\\sign_up.wav",1;
 	if (.s_up == 1) {
-		donpcevent "Examiner#sd::Onup";
+		donpcevent "Examiner#sd::OnUp";
 		donpcevent "s_dance#up::OnDisable";
 	}
 	else if (.s_up == 2) {
-		donpcevent "Examiner#sd::Onup";
-		donpcevent "s_dance#cen::Onup";
+		donpcevent "Examiner#sd::OnUp";
+		donpcevent "s_dance#cen::OnUp";
 		donpcevent "s_dance#cen::OnEnable";
 		donpcevent "s_dance#up::OnDisable";
 	}
 	else if (.s_up == 3) {
-		donpcevent "Examiner#sd::Onup";
-		donpcevent "s_dance#right::Onup";
+		donpcevent "Examiner#sd::OnUp";
+		donpcevent "s_dance#right::OnUp";
 		donpcevent "s_dance#right::OnEnable";
 		donpcevent "s_dance#up::OnDisable";
 	}
 	else if (.s_up == 4) {
-		donpcevent "Examiner#sd::Onup";
-		donpcevent "s_dance#down::Onup";
+		donpcevent "Examiner#sd::OnUp";
+		donpcevent "s_dance#down::OnUp";
 		donpcevent "s_dance#down::OnEnable";
 		donpcevent "s_dance#up::OnDisable";
 	}
 	else if (.s_up == 5) {
-		donpcevent "Examiner#sd::Onup";
-		donpcevent "s_dance#right::Onup";
+		donpcevent "Examiner#sd::OnUp";
+		donpcevent "s_dance#right::OnUp";
 		donpcevent "s_dance#right::OnEnable";
 		donpcevent "s_dance#up::OnDisable";
 	}
@@ -5166,62 +5165,62 @@ OnDisable:
 	disablenpc "s_dance#down";
 	end;
 
-Onup:
+OnUp:
 	set .s_down,.s_down + 1;
 	end;
 
-Onreset:
+OnReset:
 	set .s_down,0;
 	end;
 
 OnTouch:
 	soundeffect "effect\\sign_down.wav",1;
 	if (.s_down == 1) {
-		donpcevent "Examiner#sd::Onup";
+		donpcevent "Examiner#sd::OnUp";
 		donpcevent "s_dance#down::OnDisable";
 	}
 	else if (.s_down == 2) {
-		donpcevent "Examiner#sd::Onup";
+		donpcevent "Examiner#sd::OnUp";
 		donpcevent "s_dance#down::OnDisable";
 	}
 	else if (.s_down == 3) {
-		donpcevent "Examiner#sd::Onup";
-		donpcevent "s_dance#left::Onup";
+		donpcevent "Examiner#sd::OnUp";
+		donpcevent "s_dance#left::OnUp";
 		donpcevent "s_dance#left::OnEnable";
 		donpcevent "s_dance#down::OnDisable";
 	}
 	else if (.s_down == 4) {
-		donpcevent "Examiner#sd::Onup";
-		donpcevent "s_dance#cen::Onup";
+		donpcevent "Examiner#sd::OnUp";
+		donpcevent "s_dance#cen::OnUp";
 		donpcevent "s_dance#cen::OnEnable";
 		donpcevent "s_dance#down::OnDisable";
 	}
 	else if (.s_down == 5) {
-		donpcevent "Examiner#sd::Onup";
+		donpcevent "Examiner#sd::OnUp";
 		donpcevent "s_dance#down::OnDisable";
 	}
 	else if (.s_down == 6) {
-		donpcevent "Examiner#sd::Onup";
-		donpcevent "s_dance#cen::Onup";
+		donpcevent "Examiner#sd::OnUp";
+		donpcevent "s_dance#cen::OnUp";
 		donpcevent "s_dance#cen::OnEnable";
 		donpcevent "s_dance#down::OnDisable";
 	}
 	else if (.s_down == 7) {
-		donpcevent "Examiner#sd::Onup";
+		donpcevent "Examiner#sd::OnUp";
 		donpcevent "s_dance#down::OnDisable";
 	}
 	else if (.s_down == 8) {
-		donpcevent "Examiner#sd::Onup";
-		donpcevent "s_dance#right::Onup";
+		donpcevent "Examiner#sd::OnUp";
+		donpcevent "s_dance#right::OnUp";
 		donpcevent "s_dance#right::OnEnable";
 		donpcevent "s_dance#down::OnDisable";
 	}
 	else if (.s_down == 9) {
-		donpcevent "Examiner#sd::Onup";
+		donpcevent "Examiner#sd::OnUp";
 		donpcevent "s_dance#down::OnDisable";
 	}
 	else if (.s_down == 10) {
-		donpcevent "Examiner#sd::Onup";
+		donpcevent "Examiner#sd::OnUp";
 		donpcevent "s_dance#down::OnDisable";
 	}
 	end;
@@ -5243,53 +5242,53 @@ OnDisable:
 	disablenpc "s_dance#left";
 	end;
 
-Onup:
+OnUp:
 	set .s_left,.s_left + 1;
 	end;
 
-Onreset:
+OnReset:
 	set .s_left,0;
 	end;
 
 OnTouch:
 	soundeffect "effect\\sign_left.wav",1;
 	if (.s_left == 1) {
-		donpcevent "Examiner#sd::Onup";
-		donpcevent "s_dance#right::Onup";
+		donpcevent "Examiner#sd::OnUp";
+		donpcevent "s_dance#right::OnUp";
 		donpcevent "s_dance#right::OnEnable";
 		donpcevent "s_dance#left::OnDisable";
 	}
 	else if (.s_left == 2) {
-		donpcevent "Examiner#sd::Onup";
-		donpcevent "s_dance#right::Onup";
+		donpcevent "Examiner#sd::OnUp";
+		donpcevent "s_dance#right::OnUp";
 		donpcevent "s_dance#right::OnEnable";
 		donpcevent "s_dance#left::OnDisable";
 	}
 	else if (.s_left == 3) {
-		donpcevent "Examiner#sd::Onup";
-		donpcevent "s_dance#down::Onup";
+		donpcevent "Examiner#sd::OnUp";
+		donpcevent "s_dance#down::OnUp";
 		donpcevent "s_dance#down::OnEnable";
 		donpcevent "s_dance#left::OnDisable";
 	}
 	else if (.s_left == 4) {
-		donpcevent "Examiner#sd::Onup";
+		donpcevent "Examiner#sd::OnUp";
 		donpcevent "s_dance#left::OnDisable";
 	}
 	else if (.s_left == 5) {
-		donpcevent "Examiner#sd::Onup";
-		donpcevent "s_dance#up::Onup";
+		donpcevent "Examiner#sd::OnUp";
+		donpcevent "s_dance#up::OnUp";
 		donpcevent "s_dance#up::OnEnable";
 		donpcevent "s_dance#left::OnDisable";
 	}
 	else if (.s_left == 6) {
-		donpcevent "Examiner#sd::Onup";
-		donpcevent "s_dance#right::Onup";
+		donpcevent "Examiner#sd::OnUp";
+		donpcevent "s_dance#right::OnUp";
 		donpcevent  "s_dance#right::OnEnable";
 		donpcevent "s_dance#left::OnDisable";
 	}
 	else if (.s_left == 7) {
-		donpcevent "Examiner#sd::Onup";
-		donpcevent "s_dance#down::Onup";
+		donpcevent "Examiner#sd::OnUp";
+		donpcevent "s_dance#down::OnUp";
 		donpcevent "s_dance#down::OnEnable";
 		donpcevent "s_dance#left::OnDisable";
 	}
@@ -5311,59 +5310,59 @@ OnDisable:
 	disablenpc "s_dance#right";
 	end;
 
-Onup:
+OnUp:
 	set .s_right,.s_right + 1;
 	end;
 
-Onreset:
+OnReset:
 	set .s_right,0;
 	end;
 
 OnTouch:
 	soundeffect "effect\\sign_right.wav",1;
 	if (.s_right == 1) {
-		donpcevent "Examiner#sd::Onup";
+		donpcevent "Examiner#sd::OnUp";
 		donpcevent "s_dance#right::OnDisable";
 	}
 	else if (.s_right == 2) {
-		donpcevent "Examiner#sd::Onup";
-		donpcevent "s_dance#up::Onup";
+		donpcevent "Examiner#sd::OnUp";
+		donpcevent "s_dance#up::OnUp";
 		donpcevent "s_dance#up::OnEnable";
 		donpcevent "s_dance#right::OnDisable";
 	}
 	else if (.s_right == 3) {
-		donpcevent "Examiner#sd::Onup";
-		donpcevent "s_dance#down::Onup";
+		donpcevent "Examiner#sd::OnUp";
+		donpcevent "s_dance#down::OnUp";
 		donpcevent "s_dance#down::OnEnable";
 		donpcevent "s_dance#right::OnDisable";
 	}
 	else if (.s_right == 4) {
-		donpcevent "Examiner#sd::Onup";
-		donpcevent "s_dance#up::Onup";
+		donpcevent "Examiner#sd::OnUp";
+		donpcevent "s_dance#up::OnUp";
 		donpcevent "s_dance#up::OnEnable";
 		donpcevent "s_dance#right::OnDisable";
 	}
 	else if (.s_right == 5) {
-		donpcevent "Examiner#sd::Onup";
-		donpcevent "s_dance#down::Onup";
+		donpcevent "Examiner#sd::OnUp";
+		donpcevent "s_dance#down::OnUp";
 		donpcevent "s_dance#down::OnEnable";
 		donpcevent "s_dance#right::OnDisable";
 	}
 	else if (.s_right == 6) {
-		donpcevent "Examiner#sd::Onup";
-		donpcevent "s_dance#down::Onup";
+		donpcevent "Examiner#sd::OnUp";
+		donpcevent "s_dance#down::OnUp";
 		donpcevent "s_dance#down::OnEnable";
 		donpcevent "s_dance#right::OnDisable";
 	}
 	else if (.s_right == 7) {
-		donpcevent "Examiner#sd::Onup";
-		donpcevent "s_dance#cen::Onup";
+		donpcevent "Examiner#sd::OnUp";
+		donpcevent "s_dance#cen::OnUp";
 		donpcevent "s_dance#cen::OnEnable";
 		donpcevent "s_dance#right::OnDisable";
 	}
 	else if (.s_right == 8) {
-		donpcevent "Examiner#sd::Onup";
-		donpcevent "s_dance#left::Onup";
+		donpcevent "Examiner#sd::OnUp";
+		donpcevent "s_dance#left::OnUp";
 		donpcevent "s_dance#left::OnEnable";
 		donpcevent "s_dance#right::OnDisable";
 	}
@@ -5385,33 +5384,33 @@ OnDisable:
 	disablenpc "s_dance#cen";
 	end;
 	
-Onup:
+OnUp:
 	set .s_center,.s_center + 1;
 	end;
 
-Onreset:
+OnReset:
 	set .s_center,0;
 	end;
 
 OnTouch:
 	soundeffect "effect\\sign_center.wav",1;
 	if (.s_center == 1) {
-		donpcevent "Examiner#sd::Onup";
+		donpcevent "Examiner#sd::OnUp";
 		donpcevent "s_dance#cen::OnDisable";
 	}
 	else if (.s_center == 2) {
-		donpcevent "Examiner#sd::Onup";
-		donpcevent "s_dance#down::Onup";
+		donpcevent "Examiner#sd::OnUp";
+		donpcevent "s_dance#down::OnUp";
 		donpcevent "s_dance#down::OnEnable";
 		donpcevent "s_dance#cen::OnDisable";
 	}
 	else if (.s_center == 3) {
-		donpcevent "Examiner#sd::Onup";
+		donpcevent "Examiner#sd::OnUp";
 		donpcevent "s_dance#cen::OnDisable";
 	}
 	else if (.s_center == 4) {
-		donpcevent "Examiner#sd::Onup";
-		donpcevent "s_dance#right::Onup";
+		donpcevent "Examiner#sd::OnUp";
+		donpcevent "s_dance#right::OnUp";
 		donpcevent "s_dance#right::OnEnable";
 		donpcevent "s_dance#cen::OnDisable";
 	}
@@ -5443,7 +5442,7 @@ OnTouch:
 	donpcevent "Examiner#sd::OnDisable";
 	end;
 
-Onup:
+OnUp:
 	set .s_check,.s_check + 1;
 	end;
 
@@ -6847,10 +6846,8 @@ yuno,330,100,4	script	Knight#ss	734,{
 	}
 }
 
-//============================================================ 
 // The Sign (Part 2)
-//============================================================ 
-
+//============================================================
 geffen_in,159,48,5	script	Lonely-looking Woman	711,{
 	callfunc "F_UpdateSignVars";
 	mes "[Brenda Howard]";
@@ -8295,10 +8292,8 @@ himinn,48,86,5	script	Valkyrie#sign	811,{
 	}
 }
 
-//============================================================ 
 // The Sign (Part 3)
-//============================================================ 
-
+//============================================================
 que_sign01,196,39,4	script	Serin#dummy	90,{
 	end;
 
@@ -8311,7 +8306,7 @@ OnEnable:
 	enablenpc "Serin#dummy";
 	end;
 
-Onstart:
+OnStart:
 	initnpctimer;
 	end;
 
@@ -8379,7 +8374,7 @@ que_sign01,196,39,4	script	Serin#serin	90,{
 		delitem 7305,1; //Authority_Of_Nine_World
 		set sign_q,133;
 		donpcevent "Serin#dummy::OnEnable";
-		donpcevent "Serin#dummy::Onstart";
+		donpcevent "Serin#dummy::OnStart";
 		donpcevent "Serin#serin::OnDisable";
 		close;
 	}
@@ -12230,7 +12225,7 @@ geffen,119,48,0	script	Fountain#s	111,{
 
 que_sign01,196,44,0	script	Starter#serin	-1,32,32,{
 OnTouch:
-	donpcevent "Timer#serin::Onstart";
+	donpcevent "Timer#serin::OnStart";
 	disablenpc "Starter#serin";
 	end;
 
@@ -12255,7 +12250,7 @@ OnEnable:
 }
 
 que_sign01,1,0,0	script	Timer#serin	-1,{
-Onstart:
+OnStart:
 	initnpctimer;
 	end;
 
@@ -12270,7 +12265,7 @@ OnTimer620000:
 	donpcevent "Serin#serin::OnEnable";
 	donpcevent "Dark Lord#serin::OnDisable";
 	donpcevent "Serin#dummy::OnDisable";
-	donpcevent "CallMonster#serin::Onreset";
+	donpcevent "CallMonster#serin::OnReset";
 	stopnpctimer;
 	end;
 }
@@ -12285,13 +12280,13 @@ OnMyMobDead:
 		donpcevent "Serin#serin::OnEnable";
 	end;
 
-Onreset:
+OnReset:
 	killmonster "que_sign01","CallMonster#serin::OnMyMobDead";
 }
 
 que_sign01,197,195,0	script	Starter#witch	-1,32,32,{
 OnTouch:
-	donpcevent "Timer#witch::Onstart";
+	donpcevent "Timer#witch::OnStart";
 	disablenpc "Starter#witch";
 	end;
 
@@ -12301,7 +12296,7 @@ OnEnable:
 }
 
 que_sign01,1,1,0	script	Timer#witch	-1,{
-Onstart:
+OnStart:
 	initnpctimer;
 	end;
 
@@ -12312,7 +12307,7 @@ OnTimer600000:
 OnTimer620000:
 	donpcevent "Starter#witch::OnEnable";
 	donpcevent "Warp#witch::OnDisable";
-	donpcevent "CallMonster#witch::Onreset";
+	donpcevent "CallMonster#witch::OnReset";
 	donpcevent "Serin#witch::OnEnable";
 	set $@sign_w1,0;
 	stopnpctimer;
@@ -12354,7 +12349,7 @@ OnMyMobDead:
 	}
 	end;
 
-Onreset:
+OnReset:
 	killmonster "que_sign01","CallMonster#witch::OnMyMobDead";
 	end;
 }

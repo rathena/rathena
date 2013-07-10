@@ -229,52 +229,52 @@ OnInit:
 
 OnTimer6000000:
 	if (rand(1,6) == 1) {
-		donpcevent "summon_boss_lt::Onsummon";
+		donpcevent "summon_boss_lt::OnSummon";
 		stopnpctimer;
 	}
 	end;
 
 OnTimer6300000:
 	if (rand(1,6) == 2) {
-		donpcevent "summon_boss_lt::Onsummon";
+		donpcevent "summon_boss_lt::OnSummon";
 		stopnpctimer;
 	}
 	end;
 
 OnTimer6600000:
 	if (rand(1,6) == 3) {
-		donpcevent "summon_boss_lt::Onsummon";
+		donpcevent "summon_boss_lt::OnSummon";
 		stopnpctimer;
 	}
 	end;
 
 OnTimer6900000:
 	if (rand(1,6) == 4) {
-		donpcevent "summon_boss_lt::Onsummon";
+		donpcevent "summon_boss_lt::OnSummon";
 		stopnpctimer;
 	}
 	end;
 
 OnTimer7200000:
 	if (rand(1,6) == 5) {
-		donpcevent "summon_boss_lt::Onsummon";
+		donpcevent "summon_boss_lt::OnSummon";
 		stopnpctimer;
 	}
 	end;
 
 OnTimer7500000:
 	if (rand(1,6) == 6) {
-		donpcevent "summon_boss_lt::Onsummon";
+		donpcevent "summon_boss_lt::OnSummon";
 		stopnpctimer;
 	}
 	end;
 
 OnTimer7800000:
-	donpcevent "summon_boss_lt::Onsummon";
+	donpcevent "summon_boss_lt::OnSummon";
 	stopnpctimer;
 	end;
 
-Onsummon:
+OnSummon:
 	// Select Coordinates to summon a random MVP on
 	switch(rand(1,6)) {
 	case 1: set .@x,140;	set .@y,232;	break;

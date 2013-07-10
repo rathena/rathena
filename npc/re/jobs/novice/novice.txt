@@ -1798,9 +1798,8 @@ new_3-3,121,41,4	duplicate(NvBruce)	Bruce#nv3	57
 new_4-3,121,41,4	duplicate(NvBruce)	Bruce#nv4	57
 new_5-3,121,41,4	duplicate(NvBruce)	Bruce#nv5	57
 
-//============================================================================
 // Eden Group Officer (Real Combat Training)
-//============================================================================
+//============================================================
 -	script	Eden Group Officer#nv::NvEdn	-1,{
 	if(BaseLevel < 10) {
 		mes "[Eden Group Officer]";

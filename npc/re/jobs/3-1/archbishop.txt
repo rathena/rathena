@@ -278,7 +278,7 @@ umbala,139,227,3	script	Priest#arch	60,{
 		mes "And in Asgard, the world of the Gods, there is the Word spring.";
 		next;
 		mes "[Priest Dayan]";
-		mes "Mimir's spring wells with intelligence, myth says that if Odin lets you have his eye that you will gain all of the knowledge within that spring.";
+		mes "Mimir's spring wells with intelligence, myth says that if Odin lets you have his eye that you will gain all of the knowledge within that spring.";
 		next;
 		mes "[Priest Dayan]";
 		mes Sex?"Brother.":"Sister.";
@@ -1532,8 +1532,8 @@ OnEnable:
 	donpcevent "#arch_redcell::OnRed";
 	donpcevent "mob#arch_1::OnKill";
 	donpcevent "mob#arch_2::OnKill";
-	donpcevent "start#arch::OnTimeoff";
-	donpcevent "start#arch::OnTimeon";
+	donpcevent "start#arch::OnTimeOff";
+	donpcevent "start#arch::OnTimeOn";
 	donpcevent "#arch_val01::OnKill";
 	donpcevent "#arch_val02::OnKill";
 	donpcevent "mob#arch_1::OnKill";
@@ -1541,10 +1541,10 @@ OnEnable:
 	donpcevent "mob#arch_1::OnEnable";
 	donpcevent "#arch_val01::OnEnable";
 	end;
-OnTimeon:
+OnTimeOn:
 	initnpctimer;
 	end;
-OnTimeoff:
+OnTimeOff:
 	stopnpctimer;
 	end;
 OnTimer60000:

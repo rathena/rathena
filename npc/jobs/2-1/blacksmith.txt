@@ -702,7 +702,7 @@ ein_in01,201,27,3	script	Guildsman#alberta	63,{
 					mes "Anyway, take this";
 					mes "to ^8E6B23Wickebine^000000 in Morroc of Rune-Midgarts Kingdom,";
 					break;
-				Case 11:
+				case 11:
 					mes "Okay, now take this to ^8E6B23Krongast^000000 in Lighthalzen. Simply deliver it and bring me the receipt.";
 					getitem 1119,1; //Tsurugi
 					if(checkquest(2005) != -1) {

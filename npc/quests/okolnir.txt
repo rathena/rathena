@@ -145,16 +145,16 @@ OnInit:
 	end;
 }
 
-arug_cas01,161,371,3	duplicate(Guide#gq_main)	Guide#gq_aru01	899,
-arug_cas02,349,347,3	duplicate(Guide#gq_main)	Guide#gq_aru02	899,
-arug_cas03,324,161,3	duplicate(Guide#gq_main)	Guide#gq_aru03	899,
-arug_cas04,324,161,3	duplicate(Guide#gq_main)	Guide#gq_aru04	899,
-arug_cas05,324,161,3	duplicate(Guide#gq_main)	Guide#gq_aru05	899,
-schg_cas01,376,307,3	duplicate(Guide#gq_main)	Guide#gq_sch01	899,
-schg_cas02,181,335,3	duplicate(Guide#gq_main)	Guide#gq_sch02	899,
-schg_cas03,84,101,3	duplicate(Guide#gq_main)	Guide#gq_sch03	899,
-schg_cas04,376,307,3	duplicate(Guide#gq_main)	Guide#gq_sch04	899,
-schg_cas05,376,307,3	duplicate(Guide#gq_main)	Guide#gq_sch05	899,
+arug_cas01,161,371,3	duplicate(Guide#gq_main)	Guide#gq_aru01	899
+arug_cas02,349,347,3	duplicate(Guide#gq_main)	Guide#gq_aru02	899
+arug_cas03,324,161,3	duplicate(Guide#gq_main)	Guide#gq_aru03	899
+arug_cas04,324,161,3	duplicate(Guide#gq_main)	Guide#gq_aru04	899
+arug_cas05,324,161,3	duplicate(Guide#gq_main)	Guide#gq_aru05	899
+schg_cas01,376,307,3	duplicate(Guide#gq_main)	Guide#gq_sch01	899
+schg_cas02,181,335,3	duplicate(Guide#gq_main)	Guide#gq_sch02	899
+schg_cas03,84,101,3	duplicate(Guide#gq_main)	Guide#gq_sch03	899
+schg_cas04,376,307,3	duplicate(Guide#gq_main)	Guide#gq_sch04	899
+schg_cas05,376,307,3	duplicate(Guide#gq_main)	Guide#gq_sch05	899
 
 que_qaru01,345,23,0	warp	Gate02#gq_aru01	1,1,arug_cas01,157,369
 que_qaru02,345,23,0	warp	Gate02#gq_aru02	1,1,arug_cas02,349,355
@@ -354,16 +354,16 @@ OnInit:
 	end;
 }
 
-que_qaru01,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_aru01	403,
-que_qaru02,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_aru02	403,
-que_qaru03,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_aru03	403,
-que_qaru04,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_aru04	403,
-que_qaru05,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_aru05	403,
-que_qsch01,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_sch01	403,
-que_qsch02,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_sch02	403,
-que_qsch03,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_sch03	403,
-que_qsch04,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_sch04	403,
-que_qsch05,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_sch05	403,
+que_qaru01,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_aru01	403
+que_qaru02,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_aru02	403
+que_qaru03,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_aru03	403
+que_qaru04,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_aru04	403
+que_qaru05,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_aru05	403
+que_qsch01,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_sch01	403
+que_qsch02,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_sch02	403
+que_qsch03,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_sch03	403
+que_qsch04,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_sch04	403
+que_qsch05,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_sch05	403
 
 -	script	Gate01#gq_main	-1,{
 	function	SMonster;
@@ -376,36 +376,36 @@ OnTouch:
 		if (getd("$@gqse_"+.@sub$+"_miro") == getd("$@gqse_"+.@sub$+"_pcc")) {
 			set .@point,rand(1,5);
 			switch (.@point) {
-				Case 1: warp "que_q"+.@sub$,72,271; break;
-				Case 2: warp "que_q"+.@sub$,45,243; break;
-				Case 3: warp "que_q"+.@sub$,102,248; break;
-				Case 4: warp "que_q"+.@sub$,102,300; break;
-				Case 5: warp "que_q"+.@sub$,46,300; break;
+				case 1: warp "que_q"+.@sub$,72,271; break;
+				case 2: warp "que_q"+.@sub$,45,243; break;
+				case 3: warp "que_q"+.@sub$,102,248; break;
+				case 4: warp "que_q"+.@sub$,102,300; break;
+				case 5: warp "que_q"+.@sub$,46,300; break;
 			}
 			end;
 	
 		}
 		switch (getd("$@gqse_"+.@sub$+"_miro")) {
-			Case 0: setarray .@n, 77,271,72,271,1; break;
-			Case 1: setarray .@n, 63,278,63,282,2; break;
-			Case 2: setarray .@n, 63,294,59,294,3; break;
-			Case 3: setarray .@n, 50,300,46,300,4; break;
-			Case 4: setarray .@n, 51,280,51,285,5; break;
-			Case 5: setarray .@n, 51,258,51,262,6; break;
-			Case 6: setarray .@n, 49,243,45,243,7; break;
-			Case 7: setarray .@n, 86,249,82,249,8; break;
-			Case 8: setarray .@n, 102,243,102,248,9; break;
-			Case 9: setarray .@n, 90,256,90,260,10; break;
-			Case 10: setarray .@n, 90,283,90,280,11; break;
-			Case 11: setarray .@n, 102,295,102,300,12; break;
-			Case 12: setarray .@n, 96,285,96,290,13; break;
-			Case 13: setarray .@n, 63,278,63,282,14; break;
-			Case 14: setarray .@n, 65,243,61,243,15; break;
-			Case 15: setarray .@n, 73,249,70,249,16; break;
-			Case 16: setarray .@n, 102,275,102,282,17; break;
-			Case 17: setarray .@n, 70,300,66,300,18; break;
-			Case 18: setarray .@n, 57,255,57,258,19; break;
-			Case 19: setarray .@n, 84,277,84,280,20; break;
+			case 0: setarray .@n, 77,271,72,271,1; break;
+			case 1: setarray .@n, 63,278,63,282,2; break;
+			case 2: setarray .@n, 63,294,59,294,3; break;
+			case 3: setarray .@n, 50,300,46,300,4; break;
+			case 4: setarray .@n, 51,280,51,285,5; break;
+			case 5: setarray .@n, 51,258,51,262,6; break;
+			case 6: setarray .@n, 49,243,45,243,7; break;
+			case 7: setarray .@n, 86,249,82,249,8; break;
+			case 8: setarray .@n, 102,243,102,248,9; break;
+			case 9: setarray .@n, 90,256,90,260,10; break;
+			case 10: setarray .@n, 90,283,90,280,11; break;
+			case 11: setarray .@n, 102,295,102,300,12; break;
+			case 12: setarray .@n, 96,285,96,290,13; break;
+			case 13: setarray .@n, 63,278,63,282,14; break;
+			case 14: setarray .@n, 65,243,61,243,15; break;
+			case 15: setarray .@n, 73,249,70,249,16; break;
+			case 16: setarray .@n, 102,275,102,282,17; break;
+			case 17: setarray .@n, 70,300,66,300,18; break;
+			case 18: setarray .@n, 57,255,57,258,19; break;
+			case 19: setarray .@n, 84,277,84,280,20; break;
 		}
 			SMonster(.@sub$,.@n[0],.@n[1]);
 			setd "$@gqse_"+.@sub$+"_miro",.@n[4];
@@ -420,12 +420,12 @@ OnTouch:
 	function	SMonster	{
 	
 		switch (BaseClass) {
-			Case 1: set .@m, 1652; break;
-			Case 2: set .@m, 1663; break;
-			Case 3: set .@m, 1662; break;
-			Case 4: set .@m, 1661; break;
-			Case 5: set .@m, 1660; break;
-			Case 6: set .@m, 1659; break;
+			case 1: set .@m, 1652; break;
+			case 2: set .@m, 1663; break;
+			case 3: set .@m, 1662; break;
+			case 4: set .@m, 1661; break;
+			case 5: set .@m, 1660; break;
+			case 6: set .@m, 1659; break;
 			Default: set .@m, 1652; break;
 		}
 		monster "que_q"+getarg(0),getarg(1),getarg(2),strcharinfo(0),.@m,1,"#Gate_manager_"+getarg(0)+"::OnMyMobDead";
@@ -451,16 +451,16 @@ OnInit:
 	end;
 }
 
-que_qaru01,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_aru01	45,1,1,
-que_qaru02,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_aru02	45,1,1,
-que_qaru03,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_aru03	45,1,1,
-que_qaru04,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_aru04	45,1,1,
-que_qaru05,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_aru05	45,1,1,
-que_qsch01,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_sch01	45,1,1,
-que_qsch02,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_sch02	45,1,1,
-que_qsch03,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_sch03	45,1,1,
-que_qsch04,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_sch04	45,1,1,
-que_qsch05,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_sch05	45,1,1,
+que_qaru01,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_aru01	45,1,1
+que_qaru02,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_aru02	45,1,1
+que_qaru03,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_aru03	45,1,1
+que_qaru04,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_aru04	45,1,1
+que_qaru05,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_aru05	45,1,1
+que_qsch01,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_sch01	45,1,1
+que_qsch02,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_sch02	45,1,1
+que_qsch03,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_sch03	45,1,1
+que_qsch04,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_sch04	45,1,1
+que_qsch05,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_sch05	45,1,1
 
 -	script	#Gate_manager_main	-1,{
 	end;
@@ -474,16 +474,16 @@ OnMyMobDead:
 	}
 	end;
 }
-que_qaru01,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_aru01	844,
-que_qaru02,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_aru02	844,
-que_qaru03,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_aru03	844,
-que_qaru04,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_aru04	844,
-que_qaru05,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_aru05	844,
-que_qsch01,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_sch01	844,
-que_qsch02,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_sch02	844,
-que_qsch03,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_sch03	844,
-que_qsch04,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_sch04	844,
-que_qsch05,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_sch05	844,
+que_qaru01,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_aru01	844
+que_qaru02,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_aru02	844
+que_qaru03,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_aru03	844
+que_qaru04,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_aru04	844
+que_qaru05,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_aru05	844
+que_qsch01,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_sch01	844
+que_qsch02,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_sch02	844
+que_qsch03,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_sch03	844
+que_qsch04,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_sch04	844
+que_qsch05,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_sch05	844
 
 -	script	#gq_miromob2_main	-1,{
 	end;
@@ -512,7 +512,7 @@ OnTimer6000:
 	stopnpctimer;
 	end;
 
-Onreset:
+OnReset:
 	set .@sub$,callfunc("F_Okolnir");
 	killmonster "que_q"+.@sub$,"#gq_miromob2_"+.@sub$+"::OnMyMobDead";
 	stopnpctimer;
@@ -528,16 +528,16 @@ OnMyMobDead:
 	}
 	end;
 }
-que_qaru01,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_aru01	844,
-que_qaru02,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_aru02	844,
-que_qaru03,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_aru03	844,
-que_qaru04,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_aru04	844,
-que_qaru05,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_aru05	844,
-que_qsch01,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_sch01	844,
-que_qsch02,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_sch02	844,
-que_qsch03,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_sch03	844,
-que_qsch04,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_sch04	844,
-que_qsch05,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_sch05	844,
+que_qaru01,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_aru01	844
+que_qaru02,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_aru02	844
+que_qaru03,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_aru03	844
+que_qaru04,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_aru04	844
+que_qaru05,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_aru05	844
+que_qsch01,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_sch01	844
+que_qsch02,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_sch02	844
+que_qsch03,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_sch03	844
+que_qsch04,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_sch04	844
+que_qsch05,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_sch05	844
 
 -	script	#okolnir_main	-1,{
 	end;
@@ -564,14 +564,14 @@ OnEnable:
 OnDisable:
 	set .@sub$,callfunc("F_Okolnir");
 	disablenpc "Wish Maiden#gq_"+.@sub$;
-	donpcevent "#gq_miromob2_"+.@sub$+"::Onreset";
+	donpcevent "#gq_miromob2_"+.@sub$+"::OnReset";
 	disablenpc "Piamette#"+.@sub$;
-	donpcevent "#gdtimer01_"+.@sub$+"::Onstop";
-	donpcevent "#gdtimer02_"+.@sub$+"::Onstop";
-	donpcevent "#piamette_"+.@sub$+"::Onreset";
+	donpcevent "#gdtimer01_"+.@sub$+"::OnStop";
+	donpcevent "#gdtimer02_"+.@sub$+"::OnStop";
+	donpcevent "#piamette_"+.@sub$+"::OnReset";
 	donpcevent "Wish Maiden#"+.@sub$+"_boss::OnDisable";
 	donpcevent "Wish Maiden#"+.@sub$+"_gift::OnDisable";
-	donpcevent "#gd_"+.@sub$+"_mobctrl::Onreset";
+	donpcevent "#gd_"+.@sub$+"_mobctrl::OnReset";
 	donpcevent "Gate01#gq_"+.@sub$+"::OnDisable";
 	donpcevent "#Maze_Manager_"+.@sub$+"::OnDisable";
 	donpcevent "#event_start01_"+.@sub$+"::OnDisable";
@@ -590,9 +590,9 @@ OnDisable:
 	donpcevent "Temple Keeper#"+.@sub$+"_ac01::OnDisable";
 	donpcevent "Temple Keeper#"+.@sub$+"_ac02::OnDisable";
 	disablenpc "#to_agit_"+.@sub$+"_gate";
-	donpcevent "#"+.@sub$+"_stone01::Onreset";
-	donpcevent "#"+.@sub$+"_stone02::Onreset";
-	donpcevent "#"+.@sub$+"_stone03::Onreset";
+	donpcevent "#"+.@sub$+"_stone01::OnReset";
+	donpcevent "#"+.@sub$+"_stone02::OnReset";
+	donpcevent "#"+.@sub$+"_stone03::OnReset";
 	disablenpc "#"+.@sub$+"_cage01";
 	disablenpc "#"+.@sub$+"_cage02";
 	disablenpc "#"+.@sub$+"_cage03";
@@ -608,7 +608,7 @@ OnDisable:
 	stopnpctimer;
 	end;
 
-Onstop:
+OnStop:
 	stopnpctimer;
 	end;
 
@@ -661,14 +661,14 @@ OnTimer3600000:
 	set .@sub$,callfunc("F_Okolnir");
 	mapannounce "que_q"+.@sub$,"Okolnir has begun to disappear.",bc_map,"0x4d4dff";
 	disablenpc "Wish Maiden#gq_"+.@sub$;
-	donpcevent "#gq_miromob2_"+.@sub$+"::Onreset";
+	donpcevent "#gq_miromob2_"+.@sub$+"::OnReset";
 	disablenpc "Piamette#"+.@sub$;
-	donpcevent "#gdtimer01_"+.@sub$+"::Onstop";
-	donpcevent "#gdtimer02_"+.@sub$+"::Onstop";
-	donpcevent "#piamette_"+.@sub$+"::Onreset";
-	donpcevent "Wish Maiden#"+.@sub$+"_boss::onDisable";
+	donpcevent "#gdtimer01_"+.@sub$+"::OnStop";
+	donpcevent "#gdtimer02_"+.@sub$+"::OnStop";
+	donpcevent "#piamette_"+.@sub$+"::OnReset";
+	donpcevent "Wish Maiden#"+.@sub$+"_boss::OnDisable";
 	donpcevent "Wish Maiden#"+.@sub$+"_gift::OnDisable";
-	donpcevent "#gd_"+.@sub$+"_mobctrl::Onreset";
+	donpcevent "#gd_"+.@sub$+"_mobctrl::OnReset";
 	donpcevent "Gate01#gq_"+.@sub$+"::OnDisable";
 	donpcevent "#Maze_Manager_"+.@sub$+"::OnDisable";
 	donpcevent "#event_start01_"+.@sub$+"::OnDisable";
@@ -687,9 +687,9 @@ OnTimer3600000:
 	donpcevent "Temple Keeper#"+.@sub$+"_ac01::OnDisable";
 	donpcevent "Temple Keeper#"+.@sub$+"_ac02::OnDisable";
 	disablenpc "#to_agit_"+.@sub$+"_gate";
-	donpcevent "#"+.@sub$+"_stone01::Onreset";
-	donpcevent "#"+.@sub$+"_stone02::Onreset";
-	donpcevent "#"+.@sub$+"_stone03::Onreset";
+	donpcevent "#"+.@sub$+"_stone01::OnReset";
+	donpcevent "#"+.@sub$+"_stone02::OnReset";
+	donpcevent "#"+.@sub$+"_stone03::OnReset";
 	disablenpc "#"+.@sub$+"_cage01";
 	disablenpc "#"+.@sub$+"_cage02";
 	disablenpc "#"+.@sub$+"_cage03";
@@ -725,16 +725,16 @@ OnTimer3611000:
 	stopnpctimer;
 	end;
 }
-que_qaru01,1,1,0	duplicate(#okolnir_main)	#okolnir_aru01	844,
-que_qaru02,1,1,0	duplicate(#okolnir_main)	#okolnir_aru02	844,
-que_qaru03,1,1,0	duplicate(#okolnir_main)	#okolnir_aru03	844,
-que_qaru04,1,1,0	duplicate(#okolnir_main)	#okolnir_aru04	844,
-que_qaru05,1,1,0	duplicate(#okolnir_main)	#okolnir_aru05	844,
-que_qsch01,1,1,0	duplicate(#okolnir_main)	#okolnir_sch01	844,
-que_qsch02,1,1,0	duplicate(#okolnir_main)	#okolnir_sch02	844,
-que_qsch03,1,1,0	duplicate(#okolnir_main)	#okolnir_sch03	844,
-que_qsch04,1,1,0	duplicate(#okolnir_main)	#okolnir_sch04	844,
-que_qsch05,1,1,0	duplicate(#okolnir_main)	#okolnir_sch05	844,
+que_qaru01,1,1,0	duplicate(#okolnir_main)	#okolnir_aru01	844
+que_qaru02,1,1,0	duplicate(#okolnir_main)	#okolnir_aru02	844
+que_qaru03,1,1,0	duplicate(#okolnir_main)	#okolnir_aru03	844
+que_qaru04,1,1,0	duplicate(#okolnir_main)	#okolnir_aru04	844
+que_qaru05,1,1,0	duplicate(#okolnir_main)	#okolnir_aru05	844
+que_qsch01,1,1,0	duplicate(#okolnir_main)	#okolnir_sch01	844
+que_qsch02,1,1,0	duplicate(#okolnir_main)	#okolnir_sch02	844
+que_qsch03,1,1,0	duplicate(#okolnir_main)	#okolnir_sch03	844
+que_qsch04,1,1,0	duplicate(#okolnir_main)	#okolnir_sch04	844
+que_qsch05,1,1,0	duplicate(#okolnir_main)	#okolnir_sch05	844
 
 -	script	#Maze_Manager_main	-1,{
 	end;
@@ -809,16 +809,16 @@ OnInit:
 	donpcevent "#miro_yf_"+.@sub$+"::OnDisable";
 	end;
 }
-que_qaru01,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_aru01	844,
-que_qaru02,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_aru02	844,
-que_qaru03,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_aru03	844,
-que_qaru04,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_aru04	844,
-que_qaru05,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_aru05	844,
-que_qsch01,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_sch01	844,
-que_qsch02,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_sch02	844,
-que_qsch03,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_sch03	844,
-que_qsch04,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_sch04	844,
-que_qsch05,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_sch05	844,
+que_qaru01,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_aru01	844
+que_qaru02,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_aru02	844
+que_qaru03,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_aru03	844
+que_qaru04,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_aru04	844
+que_qaru05,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_aru05	844
+que_qsch01,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_sch01	844
+que_qsch02,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_sch02	844
+que_qsch03,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_sch03	844
+que_qsch04,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_sch04	844
+que_qsch05,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_sch05	844
 
 -	script	#miro_bf_main	-1,{
 	function	Cell;
@@ -846,16 +846,16 @@ OnDisable:
 OnMyMobDead:
 	end;
 }
-que_qaru01,2,1,0	duplicate(#miro_bf_main)	#miro_bf_aru01	844,
-que_qaru02,2,1,0	duplicate(#miro_bf_main)	#miro_bf_aru02	844,
-que_qaru03,2,1,0	duplicate(#miro_bf_main)	#miro_bf_aru03	844,
-que_qaru04,2,1,0	duplicate(#miro_bf_main)	#miro_bf_aru04	844,
-que_qaru05,2,1,0	duplicate(#miro_bf_main)	#miro_bf_aru05	844,
-que_qsch01,2,1,0	duplicate(#miro_bf_main)	#miro_bf_sch01	844,
-que_qsch02,2,1,0	duplicate(#miro_bf_main)	#miro_bf_sch02	844,
-que_qsch03,2,1,0	duplicate(#miro_bf_main)	#miro_bf_sch03	844,
-que_qsch04,2,1,0	duplicate(#miro_bf_main)	#miro_bf_sch04	844,
-que_qsch05,2,1,0	duplicate(#miro_bf_main)	#miro_bf_sch05	844,
+que_qaru01,2,1,0	duplicate(#miro_bf_main)	#miro_bf_aru01	844
+que_qaru02,2,1,0	duplicate(#miro_bf_main)	#miro_bf_aru02	844
+que_qaru03,2,1,0	duplicate(#miro_bf_main)	#miro_bf_aru03	844
+que_qaru04,2,1,0	duplicate(#miro_bf_main)	#miro_bf_aru04	844
+que_qaru05,2,1,0	duplicate(#miro_bf_main)	#miro_bf_aru05	844
+que_qsch01,2,1,0	duplicate(#miro_bf_main)	#miro_bf_sch01	844
+que_qsch02,2,1,0	duplicate(#miro_bf_main)	#miro_bf_sch02	844
+que_qsch03,2,1,0	duplicate(#miro_bf_main)	#miro_bf_sch03	844
+que_qsch04,2,1,0	duplicate(#miro_bf_main)	#miro_bf_sch04	844
+que_qsch05,2,1,0	duplicate(#miro_bf_main)	#miro_bf_sch05	844
 
 -	script	#miro_rf_main	-1,{
 	function	Cell;
@@ -884,16 +884,16 @@ OnMyMobDead:
 		}
 	}
 }
-que_qaru01,2,2,0	duplicate(#miro_rf_main)	#miro_rf_aru01	844,
-que_qaru02,2,2,0	duplicate(#miro_rf_main)	#miro_rf_aru02	844,
-que_qaru03,2,2,0	duplicate(#miro_rf_main)	#miro_rf_aru03	844,
-que_qaru04,2,2,0	duplicate(#miro_rf_main)	#miro_rf_aru04	844,
-que_qaru05,2,2,0	duplicate(#miro_rf_main)	#miro_rf_aru05	844,
-que_qsch01,2,2,0	duplicate(#miro_rf_main)	#miro_rf_sch01	844,
-que_qsch02,2,2,0	duplicate(#miro_rf_main)	#miro_rf_sch02	844,
-que_qsch03,2,2,0	duplicate(#miro_rf_main)	#miro_rf_sch03	844,
-que_qsch04,2,2,0	duplicate(#miro_rf_main)	#miro_rf_sch04	844,
-que_qsch05,2,2,0	duplicate(#miro_rf_main)	#miro_rf_sch05	844,
+que_qaru01,2,2,0	duplicate(#miro_rf_main)	#miro_rf_aru01	844
+que_qaru02,2,2,0	duplicate(#miro_rf_main)	#miro_rf_aru02	844
+que_qaru03,2,2,0	duplicate(#miro_rf_main)	#miro_rf_aru03	844
+que_qaru04,2,2,0	duplicate(#miro_rf_main)	#miro_rf_aru04	844
+que_qaru05,2,2,0	duplicate(#miro_rf_main)	#miro_rf_aru05	844
+que_qsch01,2,2,0	duplicate(#miro_rf_main)	#miro_rf_sch01	844
+que_qsch02,2,2,0	duplicate(#miro_rf_main)	#miro_rf_sch02	844
+que_qsch03,2,2,0	duplicate(#miro_rf_main)	#miro_rf_sch03	844
+que_qsch04,2,2,0	duplicate(#miro_rf_main)	#miro_rf_sch04	844
+que_qsch05,2,2,0	duplicate(#miro_rf_main)	#miro_rf_sch05	844
 
 -	script	#miro_yf_main	-1,{
 	function	Cell;
@@ -922,16 +922,16 @@ OnMyMobDead:
 		}
 	}
 }
-que_qaru01,2,3,0	duplicate(#miro_yf_main)	#miro_yf_aru01	844,
-que_qaru02,2,3,0	duplicate(#miro_yf_main)	#miro_yf_aru02	844,
-que_qaru03,2,3,0	duplicate(#miro_yf_main)	#miro_yf_aru03	844,
-que_qaru04,2,3,0	duplicate(#miro_yf_main)	#miro_yf_aru04	844,
-que_qaru05,2,3,0	duplicate(#miro_yf_main)	#miro_yf_aru05	844,
-que_qsch01,2,3,0	duplicate(#miro_yf_main)	#miro_yf_sch01	844,
-que_qsch02,2,3,0	duplicate(#miro_yf_main)	#miro_yf_sch02	844,
-que_qsch03,2,3,0	duplicate(#miro_yf_main)	#miro_yf_sch03	844,
-que_qsch04,2,3,0	duplicate(#miro_yf_main)	#miro_yf_sch04	844,
-que_qsch05,2,3,0	duplicate(#miro_yf_main)	#miro_yf_sch05	844,
+que_qaru01,2,3,0	duplicate(#miro_yf_main)	#miro_yf_aru01	844
+que_qaru02,2,3,0	duplicate(#miro_yf_main)	#miro_yf_aru02	844
+que_qaru03,2,3,0	duplicate(#miro_yf_main)	#miro_yf_aru03	844
+que_qaru04,2,3,0	duplicate(#miro_yf_main)	#miro_yf_aru04	844
+que_qaru05,2,3,0	duplicate(#miro_yf_main)	#miro_yf_aru05	844
+que_qsch01,2,3,0	duplicate(#miro_yf_main)	#miro_yf_sch01	844
+que_qsch02,2,3,0	duplicate(#miro_yf_main)	#miro_yf_sch02	844
+que_qsch03,2,3,0	duplicate(#miro_yf_main)	#miro_yf_sch03	844
+que_qsch04,2,3,0	duplicate(#miro_yf_main)	#miro_yf_sch04	844
+que_qsch05,2,3,0	duplicate(#miro_yf_main)	#miro_yf_sch05	844
 
 -	script	windpath01_main	-1,{
 	end;
@@ -948,16 +948,16 @@ OnTouch:
 	mes "You need the Crystal Key to activate the Warp Gate.";
 	close;
 }
-que_qaru01,132,172,0	duplicate(windpath01_main)	windpath01_aru01	45,1,1,
-que_qaru02,132,172,0	duplicate(windpath01_main)	windpath01_aru02	45,1,1,
-que_qaru03,132,172,0	duplicate(windpath01_main)	windpath01_aru03	45,1,1,
-que_qaru04,132,172,0	duplicate(windpath01_main)	windpath01_aru04	45,1,1,
-que_qaru05,132,172,0	duplicate(windpath01_main)	windpath01_aru05	45,1,1,
-que_qsch01,132,172,0	duplicate(windpath01_main)	windpath01_sch01	45,1,1,
-que_qsch02,132,172,0	duplicate(windpath01_main)	windpath01_sch02	45,1,1,
-que_qsch03,132,172,0	duplicate(windpath01_main)	windpath01_sch03	45,1,1,
-que_qsch04,132,172,0	duplicate(windpath01_main)	windpath01_sch04	45,1,1,
-que_qsch05,132,172,0	duplicate(windpath01_main)	windpath01_sch05	45,1,1,
+que_qaru01,132,172,0	duplicate(windpath01_main)	windpath01_aru01	45,1,1
+que_qaru02,132,172,0	duplicate(windpath01_main)	windpath01_aru02	45,1,1
+que_qaru03,132,172,0	duplicate(windpath01_main)	windpath01_aru03	45,1,1
+que_qaru04,132,172,0	duplicate(windpath01_main)	windpath01_aru04	45,1,1
+que_qaru05,132,172,0	duplicate(windpath01_main)	windpath01_aru05	45,1,1
+que_qsch01,132,172,0	duplicate(windpath01_main)	windpath01_sch01	45,1,1
+que_qsch02,132,172,0	duplicate(windpath01_main)	windpath01_sch02	45,1,1
+que_qsch03,132,172,0	duplicate(windpath01_main)	windpath01_sch03	45,1,1
+que_qsch04,132,172,0	duplicate(windpath01_main)	windpath01_sch04	45,1,1
+que_qsch05,132,172,0	duplicate(windpath01_main)	windpath01_sch05	45,1,1
 
 que_qaru01,113,165,0	warp	windpath02_aru01	1,1,que_qaru01,139,172
 que_qaru02,113,165,0	warp	windpath02_aru02	1,1,que_qaru02,139,172
@@ -979,16 +979,16 @@ OnInit:
 	end;
 }
 
-que_qaru01,131,136,3	duplicate(Piamette#main)	Piamette#aru01	1930,
-que_qaru02,131,136,3	duplicate(Piamette#main)	Piamette#aru02	1930,
-que_qaru03,131,136,3	duplicate(Piamette#main)	Piamette#aru03	1930,
-que_qaru04,131,136,3	duplicate(Piamette#main)	Piamette#aru04	1930,
-que_qaru05,131,136,3	duplicate(Piamette#main)	Piamette#aru05	1930,
-que_qsch01,131,136,3	duplicate(Piamette#main)	Piamette#sch01	1930,
-que_qsch02,131,136,3	duplicate(Piamette#main)	Piamette#sch02	1930,
-que_qsch03,131,136,3	duplicate(Piamette#main)	Piamette#sch03	1930,
-que_qsch04,131,136,3	duplicate(Piamette#main)	Piamette#sch04	1930,
-que_qsch05,131,136,3	duplicate(Piamette#main)	Piamette#sch05	1930,
+que_qaru01,131,136,3	duplicate(Piamette#main)	Piamette#aru01	1930
+que_qaru02,131,136,3	duplicate(Piamette#main)	Piamette#aru02	1930
+que_qaru03,131,136,3	duplicate(Piamette#main)	Piamette#aru03	1930
+que_qaru04,131,136,3	duplicate(Piamette#main)	Piamette#aru04	1930
+que_qaru05,131,136,3	duplicate(Piamette#main)	Piamette#aru05	1930
+que_qsch01,131,136,3	duplicate(Piamette#main)	Piamette#sch01	1930
+que_qsch02,131,136,3	duplicate(Piamette#main)	Piamette#sch02	1930
+que_qsch03,131,136,3	duplicate(Piamette#main)	Piamette#sch03	1930
+que_qsch04,131,136,3	duplicate(Piamette#main)	Piamette#sch04	1930
+que_qsch05,131,136,3	duplicate(Piamette#main)	Piamette#sch05	1930
 
 -	script	#event_start01_main	-1,{
 	end;
@@ -1037,16 +1037,16 @@ OnInit:
 	disablenpc "#event_start01_"+.@sub$;
 	end;
 }
-que_qaru01,114,158,0	duplicate(#event_start01_main)	#event_start01_aru01	-1,1,1,
-que_qaru02,114,158,0	duplicate(#event_start01_main)	#event_start01_aru02	-1,1,1,
-que_qaru03,114,158,0	duplicate(#event_start01_main)	#event_start01_aru03	-1,1,1,
-que_qaru04,114,158,0	duplicate(#event_start01_main)	#event_start01_aru04	-1,1,1,
-que_qaru05,114,158,0	duplicate(#event_start01_main)	#event_start01_aru05	-1,1,1,
-que_qsch01,114,158,0	duplicate(#event_start01_main)	#event_start01_sch01	-1,1,1,
-que_qsch02,114,158,0	duplicate(#event_start01_main)	#event_start01_sch02	-1,1,1,
-que_qsch03,114,158,0	duplicate(#event_start01_main)	#event_start01_sch03	-1,1,1,
-que_qsch04,114,158,0	duplicate(#event_start01_main)	#event_start01_sch04	-1,1,1,
-que_qsch05,114,158,0	duplicate(#event_start01_main)	#event_start01_sch05	-1,1,1,
+que_qaru01,114,158,0	duplicate(#event_start01_main)	#event_start01_aru01	-1,1,1
+que_qaru02,114,158,0	duplicate(#event_start01_main)	#event_start01_aru02	-1,1,1
+que_qaru03,114,158,0	duplicate(#event_start01_main)	#event_start01_aru03	-1,1,1
+que_qaru04,114,158,0	duplicate(#event_start01_main)	#event_start01_aru04	-1,1,1
+que_qaru05,114,158,0	duplicate(#event_start01_main)	#event_start01_aru05	-1,1,1
+que_qsch01,114,158,0	duplicate(#event_start01_main)	#event_start01_sch01	-1,1,1
+que_qsch02,114,158,0	duplicate(#event_start01_main)	#event_start01_sch02	-1,1,1
+que_qsch03,114,158,0	duplicate(#event_start01_main)	#event_start01_sch03	-1,1,1
+que_qsch04,114,158,0	duplicate(#event_start01_main)	#event_start01_sch04	-1,1,1
+que_qsch05,114,158,0	duplicate(#event_start01_main)	#event_start01_sch05	-1,1,1
 
 -	script	#gdtimer01_main	-1,{
 	end;
@@ -1055,7 +1055,7 @@ OnEnable:
 	initnpctimer;
 	end;
 
-Onstop:
+OnStop:
 	set .@sub$,callfunc("F_Okolnir");
 	for (set .@i, 1; .@i <= 8; set .@i, .@i + 1)
 		donpcevent "#getspell0"+.@i+"_"+.@sub$+"::OnDisable";
@@ -1131,16 +1131,16 @@ OnTimer80000:
 	donpcevent "#gdtimer01_"+.@sub$+"::OnEnable";
 	end;
 }
-que_qaru01,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_aru01	844,
-que_qaru02,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_aru02	844,
-que_qaru03,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_aru03	844,
-que_qaru04,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_aru04	844,
-que_qaru05,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_aru05	844,
-que_qsch01,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_sch01	844,
-que_qsch02,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_sch02	844,
-que_qsch03,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_sch03	844,
-que_qsch04,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_sch04	844,
-que_qsch05,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_sch05	844,
+que_qaru01,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_aru01	844
+que_qaru02,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_aru02	844
+que_qaru03,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_aru03	844
+que_qaru04,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_aru04	844
+que_qaru05,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_aru05	844
+que_qsch01,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_sch01	844
+que_qsch02,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_sch02	844
+que_qsch03,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_sch03	844
+que_qsch04,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_sch04	844
+que_qsch05,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_sch05	844
 
 -	script	#gdtimer02_main	-1,{
 	end;
@@ -1149,7 +1149,7 @@ OnEnable:
 	initnpctimer;
 	end;
 
-Onstop:
+OnStop:
 	stopnpctimer;
 	set .@sub$,callfunc("F_Okolnir");
 	killmonster "que_q"+.@sub$,"#gdtimer02_"+.@sub$+"::OnMyMobDead";
@@ -1190,7 +1190,7 @@ OnTimer113000:
 	stopnpctimer;
 	end;
 
-Onreset:
+OnReset:
 	set .@sub$,callfunc("F_Okolnir");
 	killmonster "que_q"+.@sub$,"#gdtimer02_"+.@sub$+"::OnMyMobDead";
 	end;
@@ -1205,23 +1205,23 @@ OnMyMobDead:
 	}
 	end;
 }
-que_qaru01,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_aru01	844,
-que_qaru02,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_aru02	844,
-que_qaru03,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_aru03	844,
-que_qaru04,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_aru04	844,
-que_qaru05,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_aru05	844,
-que_qsch01,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_sch01	844,
-que_qsch02,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_sch02	844,
-que_qsch03,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_sch03	844,
-que_qsch04,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_sch04	844,
-que_qsch05,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_sch05	844,
+que_qaru01,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_aru01	844
+que_qaru02,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_aru02	844
+que_qaru03,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_aru03	844
+que_qaru04,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_aru04	844
+que_qaru05,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_aru05	844
+que_qsch01,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_sch01	844
+que_qsch02,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_sch02	844
+que_qsch03,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_sch03	844
+que_qsch04,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_sch04	844
+que_qsch05,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_sch05	844
 
 -	script	#piamette_main	-1,{
 OnEnable:
 	initnpctimer;
 	end;
 
-Onreset:
+OnReset:
 	set .@sub$,callfunc("F_Okolnir");
 	killmonster "que_q"+.@sub$,"#piamette_"+.@sub$+"::OnMyMobDead";
 	stopnpctimer;
@@ -1248,16 +1248,16 @@ OnMyMobDead:
 	donpcevent "#nm_switch_"+.@sub$+"::OnEnable";
 	end;
 }
-que_qaru01,1,4,0	duplicate(#piamette_main)	#piamette_aru01	844,
-que_qaru02,1,4,0	duplicate(#piamette_main)	#piamette_aru02	844,
-que_qaru03,1,4,0	duplicate(#piamette_main)	#piamette_aru03	844,
-que_qaru04,1,4,0	duplicate(#piamette_main)	#piamette_aru04	844,
-que_qaru05,1,4,0	duplicate(#piamette_main)	#piamette_aru05	844,
-que_qsch01,1,4,0	duplicate(#piamette_main)	#piamette_sch01	844,
-que_qsch02,1,4,0	duplicate(#piamette_main)	#piamette_sch02	844,
-que_qsch03,1,4,0	duplicate(#piamette_main)	#piamette_sch03	844,
-que_qsch04,1,4,0	duplicate(#piamette_main)	#piamette_sch04	844,
-que_qsch05,1,4,0	duplicate(#piamette_main)	#piamette_sch05	844,
+que_qaru01,1,4,0	duplicate(#piamette_main)	#piamette_aru01	844
+que_qaru02,1,4,0	duplicate(#piamette_main)	#piamette_aru02	844
+que_qaru03,1,4,0	duplicate(#piamette_main)	#piamette_aru03	844
+que_qaru04,1,4,0	duplicate(#piamette_main)	#piamette_aru04	844
+que_qaru05,1,4,0	duplicate(#piamette_main)	#piamette_aru05	844
+que_qsch01,1,4,0	duplicate(#piamette_main)	#piamette_sch01	844
+que_qsch02,1,4,0	duplicate(#piamette_main)	#piamette_sch02	844
+que_qsch03,1,4,0	duplicate(#piamette_main)	#piamette_sch03	844
+que_qsch04,1,4,0	duplicate(#piamette_main)	#piamette_sch04	844
+que_qsch05,1,4,0	duplicate(#piamette_main)	#piamette_sch05	844
 
 -	script	#getspells_main	-1,{
 	end;
@@ -1279,15 +1279,15 @@ OnTouch:
 	set .@sub$,callfunc("F_Okolnir");
 	sc_start SC_Stone,300000,0,10000;
 	switch (getd("$@gqse_"+.@sub$+"_gd")) {
-		Case 0: setarray .@n$, "103","153","1","Piamette : One white bird has dropped with its wing pierced by an arrow."; break;
-		Case 1: setarray .@n$, "102","135","2","Piamette : One bird is caught in a snare, and dropped into a lake."; break;
-		Case 2: setarray .@n$, "113","111","3","Piamette : One bird has died trapped in it's cage."; break;
-		Case 3: setarray .@n$, "161","105","4","Piamette : One bird was poisoned to death."; break;
-		Case 4: setarray .@n$, "168","135","5","Piamette : One bird vomited blood while singing seven days and seven nights."; break;
-		Case 5: 
+		case 0: setarray .@n$, "103","153","1","Piamette : One white bird has dropped with its wing pierced by an arrow."; break;
+		case 1: setarray .@n$, "102","135","2","Piamette : One bird is caught in a snare, and dropped into a lake."; break;
+		case 2: setarray .@n$, "113","111","3","Piamette : One bird has died trapped in it's cage."; break;
+		case 3: setarray .@n$, "161","105","4","Piamette : One bird was poisoned to death."; break;
+		case 4: setarray .@n$, "168","135","5","Piamette : One bird vomited blood while singing seven days and seven nights."; break;
+		case 5: 
 			setarray .@n$, "150","159","6","Piamette : The last one broke her neck wriggling to get out of from it's eggshell!"; 
 			donpcevent "#gdtimer02_"+.@sub$+"::OnEnable";
-			donpcevent "#gdtimer01_"+.@sub$+"::Onstop";
+			donpcevent "#gdtimer01_"+.@sub$+"::OnStop";
 			break;
 	}
 	disablenpc "#getspell01_"+.@sub$;
@@ -1302,86 +1302,86 @@ OnInit:
 		disablenpc "#getspell0"+.@i+"_"+.@sub$;
 	end;
 }
-que_qaru01,113,135,0	duplicate(#getspells_main)	#getspell01_aru01	-1,1,1,
-que_qaru02,113,135,0	duplicate(#getspells_main)	#getspell01_aru02	-1,1,1,
-que_qaru03,113,135,0	duplicate(#getspells_main)	#getspell01_aru03	-1,1,1,
-que_qaru04,113,135,0	duplicate(#getspells_main)	#getspell01_aru04	-1,1,1,
-que_qaru05,113,135,0	duplicate(#getspells_main)	#getspell01_aru05	-1,1,1,
-que_qsch01,113,135,0	duplicate(#getspells_main)	#getspell01_sch01	-1,1,1,
-que_qsch02,113,135,0	duplicate(#getspells_main)	#getspell01_sch02	-1,1,1,
-que_qsch03,113,135,0	duplicate(#getspells_main)	#getspell01_sch03	-1,1,1,
-que_qsch04,113,135,0	duplicate(#getspells_main)	#getspell01_sch04	-1,1,1,
-que_qsch05,113,135,0	duplicate(#getspells_main)	#getspell01_sch05	-1,1,1,
-que_qaru01,146,150,0	duplicate(#getspells_main)	#getspell02_aru01	-1,1,1,
-que_qaru02,146,150,0	duplicate(#getspells_main)	#getspell02_aru02	-1,1,1,
-que_qaru03,146,150,0	duplicate(#getspells_main)	#getspell02_aru03	-1,1,1,
-que_qaru04,146,150,0	duplicate(#getspells_main)	#getspell02_aru04	-1,1,1,
-que_qaru05,146,150,0	duplicate(#getspells_main)	#getspell02_aru05	-1,1,1,
-que_qsch01,146,150,0	duplicate(#getspells_main)	#getspell02_sch01	-1,1,1,
-que_qsch02,146,150,0	duplicate(#getspells_main)	#getspell02_sch02	-1,1,1,
-que_qsch03,146,150,0	duplicate(#getspells_main)	#getspell02_sch03	-1,1,1,
-que_qsch04,146,150,0	duplicate(#getspells_main)	#getspell02_sch04	-1,1,1,
-que_qsch05,146,150,0	duplicate(#getspells_main)	#getspell02_sch05	-1,1,1,
-que_qaru01,131,117,0	duplicate(#getspells_main)	#getspell03_aru01	-1,1,1,
-que_qaru02,131,117,0	duplicate(#getspells_main)	#getspell03_aru02	-1,1,1,
-que_qaru03,131,117,0	duplicate(#getspells_main)	#getspell03_aru03	-1,1,1,
-que_qaru04,131,117,0	duplicate(#getspells_main)	#getspell03_aru04	-1,1,1,
-que_qaru05,131,117,0	duplicate(#getspells_main)	#getspell03_aru05	-1,1,1,
-que_qsch01,131,117,0	duplicate(#getspells_main)	#getspell03_sch01	-1,1,1,
-que_qsch02,131,117,0	duplicate(#getspells_main)	#getspell03_sch02	-1,1,1,
-que_qsch03,131,117,0	duplicate(#getspells_main)	#getspell03_sch03	-1,1,1,
-que_qsch04,131,117,0	duplicate(#getspells_main)	#getspell03_sch04	-1,1,1,
-que_qsch05,131,117,0	duplicate(#getspells_main)	#getspell03_sch05	-1,1,1,
-que_qaru01,117,150,0	duplicate(#getspells_main)	#getspell04_aru01	-1,1,1,
-que_qaru02,117,150,0	duplicate(#getspells_main)	#getspell04_aru02	-1,1,1,
-que_qaru03,117,150,0	duplicate(#getspells_main)	#getspell04_aru03	-1,1,1,
-que_qaru04,117,150,0	duplicate(#getspells_main)	#getspell04_aru04	-1,1,1,
-que_qaru05,117,150,0	duplicate(#getspells_main)	#getspell04_aru05	-1,1,1,
-que_qsch01,117,150,0	duplicate(#getspells_main)	#getspell04_sch01	-1,1,1,
-que_qsch02,117,150,0	duplicate(#getspells_main)	#getspell04_sch02	-1,1,1,
-que_qsch03,117,150,0	duplicate(#getspells_main)	#getspell04_sch03	-1,1,1,
-que_qsch04,117,150,0	duplicate(#getspells_main)	#getspell04_sch04	-1,1,1,
-que_qsch05,117,150,0	duplicate(#getspells_main)	#getspell04_sch05	-1,1,1,
-que_qaru01,150,135,0	duplicate(#getspells_main)	#getspell05_aru01	-1,1,1,
-que_qaru02,150,135,0	duplicate(#getspells_main)	#getspell05_aru02	-1,1,1,
-que_qaru03,150,135,0	duplicate(#getspells_main)	#getspell05_aru03	-1,1,1,
-que_qaru04,150,135,0	duplicate(#getspells_main)	#getspell05_aru04	-1,1,1,
-que_qaru05,150,135,0	duplicate(#getspells_main)	#getspell05_aru05	-1,1,1,
-que_qsch01,150,135,0	duplicate(#getspells_main)	#getspell05_sch01	-1,1,1,
-que_qsch02,150,135,0	duplicate(#getspells_main)	#getspell05_sch02	-1,1,1,
-que_qsch03,150,135,0	duplicate(#getspells_main)	#getspell05_sch03	-1,1,1,
-que_qsch04,150,135,0	duplicate(#getspells_main)	#getspell05_sch04	-1,1,1,
-que_qsch05,150,135,0	duplicate(#getspells_main)	#getspell05_sch05	-1,1,1,
-que_qaru01,117,121,0	duplicate(#getspells_main)	#getspell06_aru01	-1,1,1,
-que_qaru02,117,121,0	duplicate(#getspells_main)	#getspell06_aru02	-1,1,1,
-que_qaru03,117,121,0	duplicate(#getspells_main)	#getspell06_aru03	-1,1,1,
-que_qaru04,117,121,0	duplicate(#getspells_main)	#getspell06_aru04	-1,1,1,
-que_qaru05,117,121,0	duplicate(#getspells_main)	#getspell06_aru05	-1,1,1,
-que_qsch01,117,121,0	duplicate(#getspells_main)	#getspell06_sch01	-1,1,1,
-que_qsch02,117,121,0	duplicate(#getspells_main)	#getspell06_sch02	-1,1,1,
-que_qsch03,117,121,0	duplicate(#getspells_main)	#getspell06_sch03	-1,1,1,
-que_qsch04,117,121,0	duplicate(#getspells_main)	#getspell06_sch04	-1,1,1,
-que_qsch05,117,121,0	duplicate(#getspells_main)	#getspell06_sch05	-1,1,1,
-que_qaru01,131,154,0	duplicate(#getspells_main)	#getspell07_aru01	-1,1,1,
-que_qaru02,131,154,0	duplicate(#getspells_main)	#getspell07_aru02	-1,1,1,
-que_qaru03,131,154,0	duplicate(#getspells_main)	#getspell07_aru03	-1,1,1,
-que_qaru04,131,154,0	duplicate(#getspells_main)	#getspell07_aru04	-1,1,1,
-que_qaru05,131,154,0	duplicate(#getspells_main)	#getspell07_aru05	-1,1,1,
-que_qsch01,131,154,0	duplicate(#getspells_main)	#getspell07_sch01	-1,1,1,
-que_qsch02,131,154,0	duplicate(#getspells_main)	#getspell07_sch02	-1,1,1,
-que_qsch03,131,154,0	duplicate(#getspells_main)	#getspell07_sch03	-1,1,1,
-que_qsch04,131,154,0	duplicate(#getspells_main)	#getspell07_sch04	-1,1,1,
-que_qsch05,131,154,0	duplicate(#getspells_main)	#getspell07_sch05	-1,1,1,
-que_qaru01,146,121,0	duplicate(#getspells_main)	#getspell08_aru01	-1,1,1,
-que_qaru02,146,121,0	duplicate(#getspells_main)	#getspell08_aru02	-1,1,1,
-que_qaru03,146,121,0	duplicate(#getspells_main)	#getspell08_aru03	-1,1,1,
-que_qaru04,146,121,0	duplicate(#getspells_main)	#getspell08_aru04	-1,1,1,
-que_qaru05,146,121,0	duplicate(#getspells_main)	#getspell08_aru05	-1,1,1,
-que_qsch01,146,121,0	duplicate(#getspells_main)	#getspell08_sch01	-1,1,1,
-que_qsch02,146,121,0	duplicate(#getspells_main)	#getspell08_sch02	-1,1,1,
-que_qsch03,146,121,0	duplicate(#getspells_main)	#getspell08_sch03	-1,1,1,
-que_qsch04,146,121,0	duplicate(#getspells_main)	#getspell08_sch04	-1,1,1,
-que_qsch05,146,121,0	duplicate(#getspells_main)	#getspell08_sch05	-1,1,1,
+que_qaru01,113,135,0	duplicate(#getspells_main)	#getspell01_aru01	-1,1,1
+que_qaru02,113,135,0	duplicate(#getspells_main)	#getspell01_aru02	-1,1,1
+que_qaru03,113,135,0	duplicate(#getspells_main)	#getspell01_aru03	-1,1,1
+que_qaru04,113,135,0	duplicate(#getspells_main)	#getspell01_aru04	-1,1,1
+que_qaru05,113,135,0	duplicate(#getspells_main)	#getspell01_aru05	-1,1,1
+que_qsch01,113,135,0	duplicate(#getspells_main)	#getspell01_sch01	-1,1,1
+que_qsch02,113,135,0	duplicate(#getspells_main)	#getspell01_sch02	-1,1,1
+que_qsch03,113,135,0	duplicate(#getspells_main)	#getspell01_sch03	-1,1,1
+que_qsch04,113,135,0	duplicate(#getspells_main)	#getspell01_sch04	-1,1,1
+que_qsch05,113,135,0	duplicate(#getspells_main)	#getspell01_sch05	-1,1,1
+que_qaru01,146,150,0	duplicate(#getspells_main)	#getspell02_aru01	-1,1,1
+que_qaru02,146,150,0	duplicate(#getspells_main)	#getspell02_aru02	-1,1,1
+que_qaru03,146,150,0	duplicate(#getspells_main)	#getspell02_aru03	-1,1,1
+que_qaru04,146,150,0	duplicate(#getspells_main)	#getspell02_aru04	-1,1,1
+que_qaru05,146,150,0	duplicate(#getspells_main)	#getspell02_aru05	-1,1,1
+que_qsch01,146,150,0	duplicate(#getspells_main)	#getspell02_sch01	-1,1,1
+que_qsch02,146,150,0	duplicate(#getspells_main)	#getspell02_sch02	-1,1,1
+que_qsch03,146,150,0	duplicate(#getspells_main)	#getspell02_sch03	-1,1,1
+que_qsch04,146,150,0	duplicate(#getspells_main)	#getspell02_sch04	-1,1,1
+que_qsch05,146,150,0	duplicate(#getspells_main)	#getspell02_sch05	-1,1,1
+que_qaru01,131,117,0	duplicate(#getspells_main)	#getspell03_aru01	-1,1,1
+que_qaru02,131,117,0	duplicate(#getspells_main)	#getspell03_aru02	-1,1,1
+que_qaru03,131,117,0	duplicate(#getspells_main)	#getspell03_aru03	-1,1,1
+que_qaru04,131,117,0	duplicate(#getspells_main)	#getspell03_aru04	-1,1,1
+que_qaru05,131,117,0	duplicate(#getspells_main)	#getspell03_aru05	-1,1,1
+que_qsch01,131,117,0	duplicate(#getspells_main)	#getspell03_sch01	-1,1,1
+que_qsch02,131,117,0	duplicate(#getspells_main)	#getspell03_sch02	-1,1,1
+que_qsch03,131,117,0	duplicate(#getspells_main)	#getspell03_sch03	-1,1,1
+que_qsch04,131,117,0	duplicate(#getspells_main)	#getspell03_sch04	-1,1,1
+que_qsch05,131,117,0	duplicate(#getspells_main)	#getspell03_sch05	-1,1,1
+que_qaru01,117,150,0	duplicate(#getspells_main)	#getspell04_aru01	-1,1,1
+que_qaru02,117,150,0	duplicate(#getspells_main)	#getspell04_aru02	-1,1,1
+que_qaru03,117,150,0	duplicate(#getspells_main)	#getspell04_aru03	-1,1,1
+que_qaru04,117,150,0	duplicate(#getspells_main)	#getspell04_aru04	-1,1,1
+que_qaru05,117,150,0	duplicate(#getspells_main)	#getspell04_aru05	-1,1,1
+que_qsch01,117,150,0	duplicate(#getspells_main)	#getspell04_sch01	-1,1,1
+que_qsch02,117,150,0	duplicate(#getspells_main)	#getspell04_sch02	-1,1,1
+que_qsch03,117,150,0	duplicate(#getspells_main)	#getspell04_sch03	-1,1,1
+que_qsch04,117,150,0	duplicate(#getspells_main)	#getspell04_sch04	-1,1,1
+que_qsch05,117,150,0	duplicate(#getspells_main)	#getspell04_sch05	-1,1,1
+que_qaru01,150,135,0	duplicate(#getspells_main)	#getspell05_aru01	-1,1,1
+que_qaru02,150,135,0	duplicate(#getspells_main)	#getspell05_aru02	-1,1,1
+que_qaru03,150,135,0	duplicate(#getspells_main)	#getspell05_aru03	-1,1,1
+que_qaru04,150,135,0	duplicate(#getspells_main)	#getspell05_aru04	-1,1,1
+que_qaru05,150,135,0	duplicate(#getspells_main)	#getspell05_aru05	-1,1,1
+que_qsch01,150,135,0	duplicate(#getspells_main)	#getspell05_sch01	-1,1,1
+que_qsch02,150,135,0	duplicate(#getspells_main)	#getspell05_sch02	-1,1,1
+que_qsch03,150,135,0	duplicate(#getspells_main)	#getspell05_sch03	-1,1,1
+que_qsch04,150,135,0	duplicate(#getspells_main)	#getspell05_sch04	-1,1,1
+que_qsch05,150,135,0	duplicate(#getspells_main)	#getspell05_sch05	-1,1,1
+que_qaru01,117,121,0	duplicate(#getspells_main)	#getspell06_aru01	-1,1,1
+que_qaru02,117,121,0	duplicate(#getspells_main)	#getspell06_aru02	-1,1,1
+que_qaru03,117,121,0	duplicate(#getspells_main)	#getspell06_aru03	-1,1,1
+que_qaru04,117,121,0	duplicate(#getspells_main)	#getspell06_aru04	-1,1,1
+que_qaru05,117,121,0	duplicate(#getspells_main)	#getspell06_aru05	-1,1,1
+que_qsch01,117,121,0	duplicate(#getspells_main)	#getspell06_sch01	-1,1,1
+que_qsch02,117,121,0	duplicate(#getspells_main)	#getspell06_sch02	-1,1,1
+que_qsch03,117,121,0	duplicate(#getspells_main)	#getspell06_sch03	-1,1,1
+que_qsch04,117,121,0	duplicate(#getspells_main)	#getspell06_sch04	-1,1,1
+que_qsch05,117,121,0	duplicate(#getspells_main)	#getspell06_sch05	-1,1,1
+que_qaru01,131,154,0	duplicate(#getspells_main)	#getspell07_aru01	-1,1,1
+que_qaru02,131,154,0	duplicate(#getspells_main)	#getspell07_aru02	-1,1,1
+que_qaru03,131,154,0	duplicate(#getspells_main)	#getspell07_aru03	-1,1,1
+que_qaru04,131,154,0	duplicate(#getspells_main)	#getspell07_aru04	-1,1,1
+que_qaru05,131,154,0	duplicate(#getspells_main)	#getspell07_aru05	-1,1,1
+que_qsch01,131,154,0	duplicate(#getspells_main)	#getspell07_sch01	-1,1,1
+que_qsch02,131,154,0	duplicate(#getspells_main)	#getspell07_sch02	-1,1,1
+que_qsch03,131,154,0	duplicate(#getspells_main)	#getspell07_sch03	-1,1,1
+que_qsch04,131,154,0	duplicate(#getspells_main)	#getspell07_sch04	-1,1,1
+que_qsch05,131,154,0	duplicate(#getspells_main)	#getspell07_sch05	-1,1,1
+que_qaru01,146,121,0	duplicate(#getspells_main)	#getspell08_aru01	-1,1,1
+que_qaru02,146,121,0	duplicate(#getspells_main)	#getspell08_aru02	-1,1,1
+que_qaru03,146,121,0	duplicate(#getspells_main)	#getspell08_aru03	-1,1,1
+que_qaru04,146,121,0	duplicate(#getspells_main)	#getspell08_aru04	-1,1,1
+que_qaru05,146,121,0	duplicate(#getspells_main)	#getspell08_aru05	-1,1,1
+que_qsch01,146,121,0	duplicate(#getspells_main)	#getspell08_sch01	-1,1,1
+que_qsch02,146,121,0	duplicate(#getspells_main)	#getspell08_sch02	-1,1,1
+que_qsch03,146,121,0	duplicate(#getspells_main)	#getspell08_sch03	-1,1,1
+que_qsch04,146,121,0	duplicate(#getspells_main)	#getspell08_sch04	-1,1,1
+que_qsch05,146,121,0	duplicate(#getspells_main)	#getspell08_sch05	-1,1,1
 
 -	script	#main_cages	-1,{
 	end;
@@ -1402,66 +1402,66 @@ OnInit:
 		disablenpc "#"+.@sub$+"_cage0"+.@i;
 	end;
 }
-que_qaru01,103,153,0	duplicate(#main_cages)	#aru01_cage01	-1,1,1,
-que_qaru02,103,153,0	duplicate(#main_cages)	#aru02_cage01	-1,1,1,
-que_qaru03,103,153,0	duplicate(#main_cages)	#aru03_cage01	-1,1,1,
-que_qaru04,103,153,0	duplicate(#main_cages)	#aru04_cage01	-1,1,1,
-que_qaru05,103,153,0	duplicate(#main_cages)	#aru05_cage01	-1,1,1,
-que_qsch01,103,153,0	duplicate(#main_cages)	#sch01_cage01	-1,1,1,
-que_qsch02,103,153,0	duplicate(#main_cages)	#sch02_cage01	-1,1,1,
-que_qsch03,103,153,0	duplicate(#main_cages)	#sch03_cage01	-1,1,1,
-que_qsch04,103,153,0	duplicate(#main_cages)	#sch04_cage01	-1,1,1,
-que_qsch05,103,153,0	duplicate(#main_cages)	#sch05_cage01	-1,1,1,
-que_qaru01,102,135,0	duplicate(#main_cages)	#aru01_cage02	-1,1,1,
-que_qaru02,102,135,0	duplicate(#main_cages)	#aru02_cage02	-1,1,1,
-que_qaru03,102,135,0	duplicate(#main_cages)	#aru03_cage02	-1,1,1,
-que_qaru04,102,135,0	duplicate(#main_cages)	#aru04_cage02	-1,1,1,
-que_qaru05,102,135,0	duplicate(#main_cages)	#aru05_cage02	-1,1,1,
-que_qsch01,102,135,0	duplicate(#main_cages)	#sch01_cage02	-1,1,1,
-que_qsch02,102,135,0	duplicate(#main_cages)	#sch02_cage02	-1,1,1,
-que_qsch03,102,135,0	duplicate(#main_cages)	#sch03_cage02	-1,1,1,
-que_qsch04,102,135,0	duplicate(#main_cages)	#sch04_cage02	-1,1,1,
-que_qsch05,102,135,0	duplicate(#main_cages)	#sch05_cage02	-1,1,1,
-que_qaru01,113,111,0	duplicate(#main_cages)	#aru01_cage03	-1,1,1,
-que_qaru02,113,111,0	duplicate(#main_cages)	#aru02_cage03	-1,1,1,
-que_qaru03,113,111,0	duplicate(#main_cages)	#aru03_cage03	-1,1,1,
-que_qaru04,113,111,0	duplicate(#main_cages)	#aru04_cage03	-1,1,1,
-que_qaru05,113,111,0	duplicate(#main_cages)	#aru05_cage03	-1,1,1,
-que_qsch01,113,111,0	duplicate(#main_cages)	#sch01_cage03	-1,1,1,
-que_qsch02,113,111,0	duplicate(#main_cages)	#sch02_cage03	-1,1,1,
-que_qsch03,113,111,0	duplicate(#main_cages)	#sch03_cage03	-1,1,1,
-que_qsch04,113,111,0	duplicate(#main_cages)	#sch04_cage03	-1,1,1,
-que_qsch05,113,111,0	duplicate(#main_cages)	#sch05_cage03	-1,1,1,
-que_qaru01,161,105,0	duplicate(#main_cages)	#aru01_cage04	-1,1,1,
-que_qaru02,161,105,0	duplicate(#main_cages)	#aru02_cage04	-1,1,1,
-que_qaru03,161,105,0	duplicate(#main_cages)	#aru03_cage04	-1,1,1,
-que_qaru04,161,105,0	duplicate(#main_cages)	#aru04_cage04	-1,1,1,
-que_qaru05,161,105,0	duplicate(#main_cages)	#aru05_cage04	-1,1,1,
-que_qsch01,161,105,0	duplicate(#main_cages)	#sch01_cage04	-1,1,1,
-que_qsch02,161,105,0	duplicate(#main_cages)	#sch02_cage04	-1,1,1,
-que_qsch03,161,105,0	duplicate(#main_cages)	#sch03_cage04	-1,1,1,
-que_qsch04,161,105,0	duplicate(#main_cages)	#sch04_cage04	-1,1,1,
-que_qsch05,161,105,0	duplicate(#main_cages)	#sch05_cage04	-1,1,1,
-que_qaru01,168,135,0	duplicate(#main_cages)	#aru01_cage05	-1,1,1,
-que_qaru02,168,135,0	duplicate(#main_cages)	#aru02_cage05	-1,1,1,
-que_qaru03,168,135,0	duplicate(#main_cages)	#aru03_cage05	-1,1,1,
-que_qaru04,168,135,0	duplicate(#main_cages)	#aru04_cage05	-1,1,1,
-que_qaru05,168,135,0	duplicate(#main_cages)	#aru05_cage05	-1,1,1,
-que_qsch01,168,135,0	duplicate(#main_cages)	#sch01_cage05	-1,1,1,
-que_qsch02,168,135,0	duplicate(#main_cages)	#sch02_cage05	-1,1,1,
-que_qsch03,168,135,0	duplicate(#main_cages)	#sch03_cage05	-1,1,1,
-que_qsch04,168,135,0	duplicate(#main_cages)	#sch04_cage05	-1,1,1,
-que_qsch05,168,135,0	duplicate(#main_cages)	#sch05_cage05	-1,1,1,
-que_qaru01,150,159,0	duplicate(#main_cages)	#aru01_cage06	-1,1,1,
-que_qaru02,150,159,0	duplicate(#main_cages)	#aru02_cage06	-1,1,1,
-que_qaru03,150,159,0	duplicate(#main_cages)	#aru03_cage06	-1,1,1,
-que_qaru04,150,159,0	duplicate(#main_cages)	#aru04_cage06	-1,1,1,
-que_qaru05,150,159,0	duplicate(#main_cages)	#aru05_cage06	-1,1,1,
-que_qsch01,150,159,0	duplicate(#main_cages)	#sch01_cage06	-1,1,1,
-que_qsch02,150,159,0	duplicate(#main_cages)	#sch02_cage06	-1,1,1,
-que_qsch03,150,159,0	duplicate(#main_cages)	#sch03_cage06	-1,1,1,
-que_qsch04,150,159,0	duplicate(#main_cages)	#sch04_cage06	-1,1,1,
-que_qsch05,150,159,0	duplicate(#main_cages)	#sch05_cage06	-1,1,1,
+que_qaru01,103,153,0	duplicate(#main_cages)	#aru01_cage01	-1,1,1
+que_qaru02,103,153,0	duplicate(#main_cages)	#aru02_cage01	-1,1,1
+que_qaru03,103,153,0	duplicate(#main_cages)	#aru03_cage01	-1,1,1
+que_qaru04,103,153,0	duplicate(#main_cages)	#aru04_cage01	-1,1,1
+que_qaru05,103,153,0	duplicate(#main_cages)	#aru05_cage01	-1,1,1
+que_qsch01,103,153,0	duplicate(#main_cages)	#sch01_cage01	-1,1,1
+que_qsch02,103,153,0	duplicate(#main_cages)	#sch02_cage01	-1,1,1
+que_qsch03,103,153,0	duplicate(#main_cages)	#sch03_cage01	-1,1,1
+que_qsch04,103,153,0	duplicate(#main_cages)	#sch04_cage01	-1,1,1
+que_qsch05,103,153,0	duplicate(#main_cages)	#sch05_cage01	-1,1,1
+que_qaru01,102,135,0	duplicate(#main_cages)	#aru01_cage02	-1,1,1
+que_qaru02,102,135,0	duplicate(#main_cages)	#aru02_cage02	-1,1,1
+que_qaru03,102,135,0	duplicate(#main_cages)	#aru03_cage02	-1,1,1
+que_qaru04,102,135,0	duplicate(#main_cages)	#aru04_cage02	-1,1,1
+que_qaru05,102,135,0	duplicate(#main_cages)	#aru05_cage02	-1,1,1
+que_qsch01,102,135,0	duplicate(#main_cages)	#sch01_cage02	-1,1,1
+que_qsch02,102,135,0	duplicate(#main_cages)	#sch02_cage02	-1,1,1
+que_qsch03,102,135,0	duplicate(#main_cages)	#sch03_cage02	-1,1,1
+que_qsch04,102,135,0	duplicate(#main_cages)	#sch04_cage02	-1,1,1
+que_qsch05,102,135,0	duplicate(#main_cages)	#sch05_cage02	-1,1,1
+que_qaru01,113,111,0	duplicate(#main_cages)	#aru01_cage03	-1,1,1
+que_qaru02,113,111,0	duplicate(#main_cages)	#aru02_cage03	-1,1,1
+que_qaru03,113,111,0	duplicate(#main_cages)	#aru03_cage03	-1,1,1
+que_qaru04,113,111,0	duplicate(#main_cages)	#aru04_cage03	-1,1,1
+que_qaru05,113,111,0	duplicate(#main_cages)	#aru05_cage03	-1,1,1
+que_qsch01,113,111,0	duplicate(#main_cages)	#sch01_cage03	-1,1,1
+que_qsch02,113,111,0	duplicate(#main_cages)	#sch02_cage03	-1,1,1
+que_qsch03,113,111,0	duplicate(#main_cages)	#sch03_cage03	-1,1,1
+que_qsch04,113,111,0	duplicate(#main_cages)	#sch04_cage03	-1,1,1
+que_qsch05,113,111,0	duplicate(#main_cages)	#sch05_cage03	-1,1,1
+que_qaru01,161,105,0	duplicate(#main_cages)	#aru01_cage04	-1,1,1
+que_qaru02,161,105,0	duplicate(#main_cages)	#aru02_cage04	-1,1,1
+que_qaru03,161,105,0	duplicate(#main_cages)	#aru03_cage04	-1,1,1
+que_qaru04,161,105,0	duplicate(#main_cages)	#aru04_cage04	-1,1,1
+que_qaru05,161,105,0	duplicate(#main_cages)	#aru05_cage04	-1,1,1
+que_qsch01,161,105,0	duplicate(#main_cages)	#sch01_cage04	-1,1,1
+que_qsch02,161,105,0	duplicate(#main_cages)	#sch02_cage04	-1,1,1
+que_qsch03,161,105,0	duplicate(#main_cages)	#sch03_cage04	-1,1,1
+que_qsch04,161,105,0	duplicate(#main_cages)	#sch04_cage04	-1,1,1
+que_qsch05,161,105,0	duplicate(#main_cages)	#sch05_cage04	-1,1,1
+que_qaru01,168,135,0	duplicate(#main_cages)	#aru01_cage05	-1,1,1
+que_qaru02,168,135,0	duplicate(#main_cages)	#aru02_cage05	-1,1,1
+que_qaru03,168,135,0	duplicate(#main_cages)	#aru03_cage05	-1,1,1
+que_qaru04,168,135,0	duplicate(#main_cages)	#aru04_cage05	-1,1,1
+que_qaru05,168,135,0	duplicate(#main_cages)	#aru05_cage05	-1,1,1
+que_qsch01,168,135,0	duplicate(#main_cages)	#sch01_cage05	-1,1,1
+que_qsch02,168,135,0	duplicate(#main_cages)	#sch02_cage05	-1,1,1
+que_qsch03,168,135,0	duplicate(#main_cages)	#sch03_cage05	-1,1,1
+que_qsch04,168,135,0	duplicate(#main_cages)	#sch04_cage05	-1,1,1
+que_qsch05,168,135,0	duplicate(#main_cages)	#sch05_cage05	-1,1,1
+que_qaru01,150,159,0	duplicate(#main_cages)	#aru01_cage06	-1,1,1
+que_qaru02,150,159,0	duplicate(#main_cages)	#aru02_cage06	-1,1,1
+que_qaru03,150,159,0	duplicate(#main_cages)	#aru03_cage06	-1,1,1
+que_qaru04,150,159,0	duplicate(#main_cages)	#aru04_cage06	-1,1,1
+que_qaru05,150,159,0	duplicate(#main_cages)	#aru05_cage06	-1,1,1
+que_qsch01,150,159,0	duplicate(#main_cages)	#sch01_cage06	-1,1,1
+que_qsch02,150,159,0	duplicate(#main_cages)	#sch02_cage06	-1,1,1
+que_qsch03,150,159,0	duplicate(#main_cages)	#sch03_cage06	-1,1,1
+que_qsch04,150,159,0	duplicate(#main_cages)	#sch04_cage06	-1,1,1
+que_qsch05,150,159,0	duplicate(#main_cages)	#sch05_cage06	-1,1,1
 
 que_qaru01,1,8,0	script	#gd_main_mobctrl	844,{
 	end;
@@ -1484,7 +1484,7 @@ OnEnable:
 	}
 	end;
 
-Onreset:
+OnReset:
 	set .@sub$,callfunc("F_Okolnir");
 	killmonster "que_q"+.@sub$,"#gd_"+.@sub$+"_mobctrl::OnMyMobDead";
 	end;
@@ -1498,16 +1498,16 @@ OnMyMobDead:
 	}
 	end;
 }
-que_qaru01,1,8,0	duplicate(#gd_main_mobctrl)	#gd_aru01_mobctrl	844,
-que_qaru02,1,8,0	duplicate(#gd_main_mobctrl)	#gd_aru02_mobctrl	844,
-que_qaru03,1,8,0	duplicate(#gd_main_mobctrl)	#gd_aru03_mobctrl	844,
-que_qaru04,1,8,0	duplicate(#gd_main_mobctrl)	#gd_aru04_mobctrl	844,
-que_qaru05,1,8,0	duplicate(#gd_main_mobctrl)	#gd_aru05_mobctrl	844,
-que_qsch01,1,8,0	duplicate(#gd_main_mobctrl)	#gd_sch01_mobctrl	844,
-que_qsch02,1,8,0	duplicate(#gd_main_mobctrl)	#gd_sch02_mobctrl	844,
-que_qsch03,1,8,0	duplicate(#gd_main_mobctrl)	#gd_sch03_mobctrl	844,
-que_qsch04,1,8,0	duplicate(#gd_main_mobctrl)	#gd_sch04_mobctrl	844,
-que_qsch05,1,8,0	duplicate(#gd_main_mobctrl)	#gd_sch05_mobctrl	844,
+que_qaru01,1,8,0	duplicate(#gd_main_mobctrl)	#gd_aru01_mobctrl	844
+que_qaru02,1,8,0	duplicate(#gd_main_mobctrl)	#gd_aru02_mobctrl	844
+que_qaru03,1,8,0	duplicate(#gd_main_mobctrl)	#gd_aru03_mobctrl	844
+que_qaru04,1,8,0	duplicate(#gd_main_mobctrl)	#gd_aru04_mobctrl	844
+que_qaru05,1,8,0	duplicate(#gd_main_mobctrl)	#gd_aru05_mobctrl	844
+que_qsch01,1,8,0	duplicate(#gd_main_mobctrl)	#gd_sch01_mobctrl	844
+que_qsch02,1,8,0	duplicate(#gd_main_mobctrl)	#gd_sch02_mobctrl	844
+que_qsch03,1,8,0	duplicate(#gd_main_mobctrl)	#gd_sch03_mobctrl	844
+que_qsch04,1,8,0	duplicate(#gd_main_mobctrl)	#gd_sch04_mobctrl	844
+que_qsch05,1,8,0	duplicate(#gd_main_mobctrl)	#gd_sch05_mobctrl	844
 
 -	script	windpaths_main	-1,{
 	end;
@@ -1527,27 +1527,27 @@ OnInit:
 	disablenpc "windpath04_"+.@sub$;
 	end;
 }
-que_qaru01,149,105,0	duplicate(windpaths_main)	windpath03_aru01	45,1,1,{
-que_qaru02,149,105,0	duplicate(windpaths_main)	windpath03_aru02	45,1,1,{
-que_qaru03,149,105,0	duplicate(windpaths_main)	windpath03_aru03	45,1,1,{
-que_qaru04,149,105,0	duplicate(windpaths_main)	windpath03_aru04	45,1,1,{
-que_qaru05,149,105,0	duplicate(windpaths_main)	windpath03_aru05	45,1,1,{
-que_qsch01,149,105,0	duplicate(windpaths_main)	windpath03_sch01	45,1,1,{
-que_qsch02,149,105,0	duplicate(windpaths_main)	windpath03_sch02	45,1,1,{
-que_qsch03,149,105,0	duplicate(windpaths_main)	windpath03_sch03	45,1,1,{
-que_qsch04,149,105,0	duplicate(windpaths_main)	windpath03_sch04	45,1,1,{
-que_qsch05,149,105,0	duplicate(windpaths_main)	windpath03_sch05	45,1,1,{
+que_qaru01,149,105,0	duplicate(windpaths_main)	windpath03_aru01	45,1,1
+que_qaru02,149,105,0	duplicate(windpaths_main)	windpath03_aru02	45,1,1
+que_qaru03,149,105,0	duplicate(windpaths_main)	windpath03_aru03	45,1,1
+que_qaru04,149,105,0	duplicate(windpaths_main)	windpath03_aru04	45,1,1
+que_qaru05,149,105,0	duplicate(windpaths_main)	windpath03_aru05	45,1,1
+que_qsch01,149,105,0	duplicate(windpaths_main)	windpath03_sch01	45,1,1
+que_qsch02,149,105,0	duplicate(windpaths_main)	windpath03_sch02	45,1,1
+que_qsch03,149,105,0	duplicate(windpaths_main)	windpath03_sch03	45,1,1
+que_qsch04,149,105,0	duplicate(windpaths_main)	windpath03_sch04	45,1,1
+que_qsch05,149,105,0	duplicate(windpaths_main)	windpath03_sch05	45,1,1
 
-que_qaru01,128,104,0	duplicate(windpaths_main)	windpath04_aru01	45,1,1,{
-que_qaru02,128,104,0	duplicate(windpaths_main)	windpath04_aru02	45,1,1,{
-que_qaru03,128,104,0	duplicate(windpaths_main)	windpath04_aru03	45,1,1,{
-que_qaru04,128,104,0	duplicate(windpaths_main)	windpath04_aru04	45,1,1,{
-que_qaru05,128,104,0	duplicate(windpaths_main)	windpath04_aru05	45,1,1,{
-que_qsch01,128,104,0	duplicate(windpaths_main)	windpath04_sch01	45,1,1,{
-que_qsch02,128,104,0	duplicate(windpaths_main)	windpath04_sch02	45,1,1,{
-que_qsch03,128,104,0	duplicate(windpaths_main)	windpath04_sch03	45,1,1,{
-que_qsch04,128,104,0	duplicate(windpaths_main)	windpath04_sch04	45,1,1,{
-que_qsch05,128,104,0	duplicate(windpaths_main)	windpath04_sch05	45,1,1,{
+que_qaru01,128,104,0	duplicate(windpaths_main)	windpath04_aru01	45,1,1
+que_qaru02,128,104,0	duplicate(windpaths_main)	windpath04_aru02	45,1,1
+que_qaru03,128,104,0	duplicate(windpaths_main)	windpath04_aru03	45,1,1
+que_qaru04,128,104,0	duplicate(windpaths_main)	windpath04_aru04	45,1,1
+que_qaru05,128,104,0	duplicate(windpaths_main)	windpath04_aru05	45,1,1
+que_qsch01,128,104,0	duplicate(windpaths_main)	windpath04_sch01	45,1,1
+que_qsch02,128,104,0	duplicate(windpaths_main)	windpath04_sch02	45,1,1
+que_qsch03,128,104,0	duplicate(windpaths_main)	windpath04_sch03	45,1,1
+que_qsch04,128,104,0	duplicate(windpaths_main)	windpath04_sch04	45,1,1
+que_qsch05,128,104,0	duplicate(windpaths_main)	windpath04_sch05	45,1,1
 
 -	script	#nm_switch_main	-1,{
 	end;
@@ -1608,16 +1608,16 @@ OnInit:
 	disablenpc "#nm_switch_"+.@sub$;
 	end;
 }
-que_qaru01,253,273,0	duplicate(#nm_switch_main)	#nm_switch_aru01	-1,5,5,
-que_qaru02,253,273,0	duplicate(#nm_switch_main)	#nm_switch_aru02	-1,5,5,
-que_qaru03,253,273,0	duplicate(#nm_switch_main)	#nm_switch_aru03	-1,5,5,
-que_qaru04,253,273,0	duplicate(#nm_switch_main)	#nm_switch_aru04	-1,5,5,
-que_qaru05,253,273,0	duplicate(#nm_switch_main)	#nm_switch_aru05	-1,5,5,
-que_qsch01,253,273,0	duplicate(#nm_switch_main)	#nm_switch_sch01	-1,5,5,
-que_qsch02,253,273,0	duplicate(#nm_switch_main)	#nm_switch_sch02	-1,5,5,
-que_qsch03,253,273,0	duplicate(#nm_switch_main)	#nm_switch_sch03	-1,5,5,
-que_qsch04,253,273,0	duplicate(#nm_switch_main)	#nm_switch_sch04	-1,5,5,
-que_qsch05,253,273,0	duplicate(#nm_switch_main)	#nm_switch_sch05	-1,5,5,
+que_qaru01,253,273,0	duplicate(#nm_switch_main)	#nm_switch_aru01	-1,5,5
+que_qaru02,253,273,0	duplicate(#nm_switch_main)	#nm_switch_aru02	-1,5,5
+que_qaru03,253,273,0	duplicate(#nm_switch_main)	#nm_switch_aru03	-1,5,5
+que_qaru04,253,273,0	duplicate(#nm_switch_main)	#nm_switch_aru04	-1,5,5
+que_qaru05,253,273,0	duplicate(#nm_switch_main)	#nm_switch_aru05	-1,5,5
+que_qsch01,253,273,0	duplicate(#nm_switch_main)	#nm_switch_sch01	-1,5,5
+que_qsch02,253,273,0	duplicate(#nm_switch_main)	#nm_switch_sch02	-1,5,5
+que_qsch03,253,273,0	duplicate(#nm_switch_main)	#nm_switch_sch03	-1,5,5
+que_qsch04,253,273,0	duplicate(#nm_switch_main)	#nm_switch_sch04	-1,5,5
+que_qsch05,253,273,0	duplicate(#nm_switch_main)	#nm_switch_sch05	-1,5,5
 
 -	script	#nmsommain_jin01	-1,{
 OnEnable:
@@ -1657,16 +1657,16 @@ OnTimer180000:
 OnMyMobDead:
 	end;
 }
-que_qaru01,229,297,0	duplicate(#nmsommain_jin01)	#nmsomaru01_jin01	-1,
-que_qaru02,229,297,0	duplicate(#nmsommain_jin01)	#nmsomaru02_jin01	-1,
-que_qaru03,229,297,0	duplicate(#nmsommain_jin01)	#nmsomaru03_jin01	-1,
-que_qaru04,229,297,0	duplicate(#nmsommain_jin01)	#nmsomaru04_jin01	-1,
-que_qaru05,229,297,0	duplicate(#nmsommain_jin01)	#nmsomaru05_jin01	-1,
-que_qsch01,229,297,0	duplicate(#nmsommain_jin01)	#nmsomsch01_jin01	-1,
-que_qsch02,229,297,0	duplicate(#nmsommain_jin01)	#nmsomsch02_jin01	-1,
-que_qsch03,229,297,0	duplicate(#nmsommain_jin01)	#nmsomsch03_jin01	-1,
-que_qsch04,229,297,0	duplicate(#nmsommain_jin01)	#nmsomsch04_jin01	-1,
-que_qsch05,229,297,0	duplicate(#nmsommain_jin01)	#nmsomsch05_jin01	-1,
+que_qaru01,229,297,0	duplicate(#nmsommain_jin01)	#nmsomaru01_jin01	-1
+que_qaru02,229,297,0	duplicate(#nmsommain_jin01)	#nmsomaru02_jin01	-1
+que_qaru03,229,297,0	duplicate(#nmsommain_jin01)	#nmsomaru03_jin01	-1
+que_qaru04,229,297,0	duplicate(#nmsommain_jin01)	#nmsomaru04_jin01	-1
+que_qaru05,229,297,0	duplicate(#nmsommain_jin01)	#nmsomaru05_jin01	-1
+que_qsch01,229,297,0	duplicate(#nmsommain_jin01)	#nmsomsch01_jin01	-1
+que_qsch02,229,297,0	duplicate(#nmsommain_jin01)	#nmsomsch02_jin01	-1
+que_qsch03,229,297,0	duplicate(#nmsommain_jin01)	#nmsomsch03_jin01	-1
+que_qsch04,229,297,0	duplicate(#nmsommain_jin01)	#nmsomsch04_jin01	-1
+que_qsch05,229,297,0	duplicate(#nmsommain_jin01)	#nmsomsch05_jin01	-1
 
 -	script	#main_stone01	-1,{
 	end;
@@ -1678,7 +1678,7 @@ OnEnable:
 		monster "que_q"+.@sub$,.@xy[.@i],.@xy[.@i+1],"Western Magic Guardian",1752,1,"#"+.@sub$+"_stone01::OnMyMobDead";
 	end;
 
-Onreset:
+OnReset:
 	set .@sub$,callfunc("F_Okolnir");
 	killmonster "que_q"+.@sub$,"#"+.@sub$+"_stone01::OnMyMobDead";
 	end;
@@ -1689,21 +1689,21 @@ OnMyMobDead:
 		setd "$@gqse_"+.@sub$+"_nm",getd("$@gqse_"+.@sub$+"_nm")+1;
 		donpcevent "#nmsom"+.@sub$+"_jin01::OnDisable";
 		if (getd("$@gqse_"+.@sub$+"_nm") == 3) {
-			donpcevent "Wish Maiden#"+.@sub$+"_boss::Onfight";
+			donpcevent "Wish Maiden#"+.@sub$+"_boss::OnFight";
 		}
 	}
 	end;
 }
-que_qaru01,2,8,0	duplicate(#main_stone01)	#aru01_stone01	844,
-que_qaru02,2,8,0	duplicate(#main_stone01)	#aru02_stone01	844,
-que_qaru03,2,8,0	duplicate(#main_stone01)	#aru03_stone01	844,
-que_qaru04,2,8,0	duplicate(#main_stone01)	#aru04_stone01	844,
-que_qaru05,2,8,0	duplicate(#main_stone01)	#aru05_stone01	844,
-que_qsch01,2,8,0	duplicate(#main_stone01)	#sch01_stone01	844,
-que_qsch02,2,8,0	duplicate(#main_stone01)	#sch02_stone01	844,
-que_qsch03,2,8,0	duplicate(#main_stone01)	#sch03_stone01	844,
-que_qsch04,2,8,0	duplicate(#main_stone01)	#sch04_stone01	844,
-que_qsch05,2,8,0	duplicate(#main_stone01)	#sch05_stone01	844,
+que_qaru01,2,8,0	duplicate(#main_stone01)	#aru01_stone01	844
+que_qaru02,2,8,0	duplicate(#main_stone01)	#aru02_stone01	844
+que_qaru03,2,8,0	duplicate(#main_stone01)	#aru03_stone01	844
+que_qaru04,2,8,0	duplicate(#main_stone01)	#aru04_stone01	844
+que_qaru05,2,8,0	duplicate(#main_stone01)	#aru05_stone01	844
+que_qsch01,2,8,0	duplicate(#main_stone01)	#sch01_stone01	844
+que_qsch02,2,8,0	duplicate(#main_stone01)	#sch02_stone01	844
+que_qsch03,2,8,0	duplicate(#main_stone01)	#sch03_stone01	844
+que_qsch04,2,8,0	duplicate(#main_stone01)	#sch04_stone01	844
+que_qsch05,2,8,0	duplicate(#main_stone01)	#sch05_stone01	844
 
 -	script	#nmsommain_jin02	-1,{
 OnEnable:
@@ -1741,16 +1741,16 @@ OnTimer180000:
 OnMyMobDead:
 	end;
 }
-que_qaru01,275,299,0	duplicate(#nmsommain_jin02)	#nmsomaru01_jin02	-1,
-que_qaru02,275,299,0	duplicate(#nmsommain_jin02)	#nmsomaru02_jin02	-1,
-que_qaru03,275,299,0	duplicate(#nmsommain_jin02)	#nmsomaru03_jin02	-1,
-que_qaru04,275,299,0	duplicate(#nmsommain_jin02)	#nmsomaru04_jin02	-1,
-que_qaru05,275,299,0	duplicate(#nmsommain_jin02)	#nmsomaru05_jin02	-1,
-que_qsch01,275,299,0	duplicate(#nmsommain_jin02)	#nmsomsch01_jin02	-1,
-que_qsch02,275,299,0	duplicate(#nmsommain_jin02)	#nmsomsch02_jin02	-1,
-que_qsch03,275,299,0	duplicate(#nmsommain_jin02)	#nmsomsch03_jin02	-1,
-que_qsch04,275,299,0	duplicate(#nmsommain_jin02)	#nmsomsch04_jin02	-1,
-que_qsch05,275,299,0	duplicate(#nmsommain_jin02)	#nmsomsch05_jin02	-1,
+que_qaru01,275,299,0	duplicate(#nmsommain_jin02)	#nmsomaru01_jin02	-1
+que_qaru02,275,299,0	duplicate(#nmsommain_jin02)	#nmsomaru02_jin02	-1
+que_qaru03,275,299,0	duplicate(#nmsommain_jin02)	#nmsomaru03_jin02	-1
+que_qaru04,275,299,0	duplicate(#nmsommain_jin02)	#nmsomaru04_jin02	-1
+que_qaru05,275,299,0	duplicate(#nmsommain_jin02)	#nmsomaru05_jin02	-1
+que_qsch01,275,299,0	duplicate(#nmsommain_jin02)	#nmsomsch01_jin02	-1
+que_qsch02,275,299,0	duplicate(#nmsommain_jin02)	#nmsomsch02_jin02	-1
+que_qsch03,275,299,0	duplicate(#nmsommain_jin02)	#nmsomsch03_jin02	-1
+que_qsch04,275,299,0	duplicate(#nmsommain_jin02)	#nmsomsch04_jin02	-1
+que_qsch05,275,299,0	duplicate(#nmsommain_jin02)	#nmsomsch05_jin02	-1
 
 -	script	#main_stone02	-1,{
 	end;
@@ -1762,7 +1762,7 @@ OnEnable:
 		monster "que_q"+.@sub$,.@xy[.@i],.@xy[.@i+1],"Eastern Magic Guardian",1753,1,"#"+.@sub$+"_stone02::OnMyMobDead";
 	end;
 
-Onreset:
+OnReset:
 	set .@sub$,callfunc("F_Okolnir");
 	killmonster "que_q"+.@sub$,"#"+.@sub$+"_stone02::OnMyMobDead";
 	end;
@@ -1773,21 +1773,21 @@ OnMyMobDead:
 		setd "$@gqse_"+.@sub$+"_nm",getd("$@gqse_"+.@sub$+"_nm")+1;
 		donpcevent "#nmsom"+.@sub$+"_jin02::OnDisable";
 		if (getd("$@gqse_"+.@sub$+"_nm") == 3) {
-			donpcevent "Wish Maiden#"+.@sub$+"_boss::Onfight";
+			donpcevent "Wish Maiden#"+.@sub$+"_boss::OnFight";
 		}
 	}
 	end;
 }
-que_qaru01,2,9,0	duplicate(#main_stone02)	#aru01_stone02	844,
-que_qaru02,2,9,0	duplicate(#main_stone02)	#aru02_stone02	844,
-que_qaru03,2,9,0	duplicate(#main_stone02)	#aru03_stone02	844,
-que_qaru04,2,9,0	duplicate(#main_stone02)	#aru04_stone02	844,
-que_qaru05,2,9,0	duplicate(#main_stone02)	#aru05_stone02	844,
-que_qsch01,2,9,0	duplicate(#main_stone02)	#sch01_stone02	844,
-que_qsch02,2,9,0	duplicate(#main_stone02)	#sch02_stone02	844,
-que_qsch03,2,9,0	duplicate(#main_stone02)	#sch03_stone02	844,
-que_qsch04,2,9,0	duplicate(#main_stone02)	#sch04_stone02	844,
-que_qsch05,2,9,0	duplicate(#main_stone02)	#sch05_stone02	844,
+que_qaru01,2,9,0	duplicate(#main_stone02)	#aru01_stone02	844
+que_qaru02,2,9,0	duplicate(#main_stone02)	#aru02_stone02	844
+que_qaru03,2,9,0	duplicate(#main_stone02)	#aru03_stone02	844
+que_qaru04,2,9,0	duplicate(#main_stone02)	#aru04_stone02	844
+que_qaru05,2,9,0	duplicate(#main_stone02)	#aru05_stone02	844
+que_qsch01,2,9,0	duplicate(#main_stone02)	#sch01_stone02	844
+que_qsch02,2,9,0	duplicate(#main_stone02)	#sch02_stone02	844
+que_qsch03,2,9,0	duplicate(#main_stone02)	#sch03_stone02	844
+que_qsch04,2,9,0	duplicate(#main_stone02)	#sch04_stone02	844
+que_qsch05,2,9,0	duplicate(#main_stone02)	#sch05_stone02	844
 
 -	script	#nmsommain_jin03	-1,{
 OnEnable:
@@ -1833,16 +1833,16 @@ OnTimer360000:
 OnMyMobDead:
 	end;
 }
-que_qaru01,251,340,0	duplicate(#nmsommain_jin03)	#nmsomaru01_jin03	-1,
-que_qaru02,251,340,0	duplicate(#nmsommain_jin03)	#nmsomaru02_jin03	-1,
-que_qaru03,251,340,0	duplicate(#nmsommain_jin03)	#nmsomaru03_jin03	-1,
-que_qaru04,251,340,0	duplicate(#nmsommain_jin03)	#nmsomaru04_jin03	-1,
-que_qaru05,251,340,0	duplicate(#nmsommain_jin03)	#nmsomaru05_jin03	-1,
-que_qsch01,251,340,0	duplicate(#nmsommain_jin03)	#nmsomsch01_jin03	-1,
-que_qsch02,251,340,0	duplicate(#nmsommain_jin03)	#nmsomsch02_jin03	-1,
-que_qsch03,251,340,0	duplicate(#nmsommain_jin03)	#nmsomsch03_jin03	-1,
-que_qsch04,251,340,0	duplicate(#nmsommain_jin03)	#nmsomsch04_jin03	-1,
-que_qsch05,251,340,0	duplicate(#nmsommain_jin03)	#nmsomsch05_jin03	-1,
+que_qaru01,251,340,0	duplicate(#nmsommain_jin03)	#nmsomaru01_jin03	-1
+que_qaru02,251,340,0	duplicate(#nmsommain_jin03)	#nmsomaru02_jin03	-1
+que_qaru03,251,340,0	duplicate(#nmsommain_jin03)	#nmsomaru03_jin03	-1
+que_qaru04,251,340,0	duplicate(#nmsommain_jin03)	#nmsomaru04_jin03	-1
+que_qaru05,251,340,0	duplicate(#nmsommain_jin03)	#nmsomaru05_jin03	-1
+que_qsch01,251,340,0	duplicate(#nmsommain_jin03)	#nmsomsch01_jin03	-1
+que_qsch02,251,340,0	duplicate(#nmsommain_jin03)	#nmsomsch02_jin03	-1
+que_qsch03,251,340,0	duplicate(#nmsommain_jin03)	#nmsomsch03_jin03	-1
+que_qsch04,251,340,0	duplicate(#nmsommain_jin03)	#nmsomsch04_jin03	-1
+que_qsch05,251,340,0	duplicate(#nmsommain_jin03)	#nmsomsch05_jin03	-1
 
 -	script	#main_stone03	-1,{
 	end;
@@ -1854,7 +1854,7 @@ OnEnable:
 		monster "que_q"+.@sub$,.@xy[.@i],.@xy[.@i+1],"Northern Magic Guardian",1933,1,"#"+.@sub$+"_stone03::OnMyMobDead";
 	end;
 
-Onreset:
+OnReset:
 	set .@sub$,callfunc("F_Okolnir");
 	killmonster "que_q"+.@sub$,"#"+.@sub$+"_stone03::OnMyMobDead";
 	end;
@@ -1866,21 +1866,21 @@ OnMyMobDead:
 		donpcevent "#nmsom"+.@sub$+"_jin03::OnDisable";
 
 		if (getd("$@gqse_"+.@sub$+"_nm") == 3) {
-			donpcevent "Wish Maiden#"+.@sub$+"_boss::Onfight";
+			donpcevent "Wish Maiden#"+.@sub$+"_boss::OnFight";
 		}
 	}
 	end;
 }
-que_qaru01,2,10,0	duplicate(#main_stone03)	#aru01_stone03	844,
-que_qaru02,2,10,0	duplicate(#main_stone03)	#aru02_stone03	844,
-que_qaru03,2,10,0	duplicate(#main_stone03)	#aru03_stone03	844,
-que_qaru04,2,10,0	duplicate(#main_stone03)	#aru04_stone03	844,
-que_qaru05,2,10,0	duplicate(#main_stone03)	#aru05_stone03	844,
-que_qsch01,2,10,0	duplicate(#main_stone03)	#sch01_stone03	844,
-que_qsch02,2,10,0	duplicate(#main_stone03)	#sch02_stone03	844,
-que_qsch03,2,10,0	duplicate(#main_stone03)	#sch03_stone03	844,
-que_qsch04,2,10,0	duplicate(#main_stone03)	#sch04_stone03	844,
-que_qsch05,2,10,0	duplicate(#main_stone03)	#sch05_stone03	844,
+que_qaru01,2,10,0	duplicate(#main_stone03)	#aru01_stone03	844
+que_qaru02,2,10,0	duplicate(#main_stone03)	#aru02_stone03	844
+que_qaru03,2,10,0	duplicate(#main_stone03)	#aru03_stone03	844
+que_qaru04,2,10,0	duplicate(#main_stone03)	#aru04_stone03	844
+que_qaru05,2,10,0	duplicate(#main_stone03)	#aru05_stone03	844
+que_qsch01,2,10,0	duplicate(#main_stone03)	#sch01_stone03	844
+que_qsch02,2,10,0	duplicate(#main_stone03)	#sch02_stone03	844
+que_qsch03,2,10,0	duplicate(#main_stone03)	#sch03_stone03	844
+que_qsch04,2,10,0	duplicate(#main_stone03)	#sch04_stone03	844
+que_qsch05,2,10,0	duplicate(#main_stone03)	#sch05_stone03	844
 
 -	script	Guard of Shadow#main_all	-1,{
 	end;
@@ -1890,10 +1890,10 @@ OnTouch:
 	set .@in, charat(strnpcinfo(2),getstrlen(strnpcinfo(2))-1);
 	disablenpc "Guard of Shadow#"+.@sub$+"_0"+.@in;
 	switch (.@in) {
-		Case 1: setarray .@n, 234,284,235,285,236,286; break;
-		Case 2: setarray .@n, 223,289,224,290,225,291; break;
-		Case 3: setarray .@n, 235,295,236,296,237,297; break;
-		Case 4: setarray .@n, 224,302,225,303,226,304; break;
+		case 1: setarray .@n, 234,284,235,285,236,286; break;
+		case 2: setarray .@n, 223,289,224,290,225,291; break;
+		case 3: setarray .@n, 235,295,236,296,237,297; break;
+		case 4: setarray .@n, 224,302,225,303,226,304; break;
 	}
 	for (set .@i, 0; .@i < getarraysize(.@n); set .@i, .@i + 2)
 		monster "que_q"+.@sub$,.@n[.@i],.@n[.@i+1],"Guard of Shadow",1752,1,"Guard of Shadow#"+.@sub$+"_0"+.@in+"::OnMyMobDead";
@@ -1915,46 +1915,46 @@ OnInit:
 		disablenpc "Guard of Shadow#"+.@sub$+"_0"+.@i;
 	end;
 }
-que_qaru01,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru01_01	1752,4,4,
-que_qaru01,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru01_02	1752,4,4,
-que_qaru01,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru01_03	1752,4,4,
-que_qaru01,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru01_04	1752,4,4,
-que_qaru02,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru02_01	1752,4,4,
-que_qaru02,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru02_02	1752,4,4,
-que_qaru02,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru02_03	1752,4,4,
-que_qaru02,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru02_04	1752,4,4,
-que_qaru03,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru03_01	1752,4,4,
-que_qaru03,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru03_02	1752,4,4,
-que_qaru03,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru03_03	1752,4,4,
-que_qaru03,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru03_04	1752,4,4,
-que_qaru04,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru04_01	1752,4,4,
-que_qaru04,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru04_02	1752,4,4,
-que_qaru04,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru04_03	1752,4,4,
-que_qaru04,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru04_04	1752,4,4,
-que_qaru05,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru05_01	1752,4,4,
-que_qaru05,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru05_02	1752,4,4,
-que_qaru05,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru05_03	1752,4,4,
-que_qaru05,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru05_04	1752,4,4,
-que_qsch01,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch01_01	1752,4,4,
-que_qsch01,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch01_02	1752,4,4,
-que_qsch01,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch01_03	1752,4,4,
-que_qsch01,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch01_04	1752,4,4,
-que_qsch02,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch02_01	1752,4,4,
-que_qsch02,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch02_02	1752,4,4,
-que_qsch02,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch02_03	1752,4,4,
-que_qsch02,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch02_04	1752,4,4,
-que_qsch03,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch03_01	1752,4,4,
-que_qsch03,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch03_02	1752,4,4,
-que_qsch03,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch03_03	1752,4,4,
-que_qsch03,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch03_04	1752,4,4,
-que_qsch04,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch04_01	1752,4,4,
-que_qsch04,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch04_02	1752,4,4,
-que_qsch04,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch04_03	1752,4,4,
-que_qsch04,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch04_04	1752,4,4,
-que_qsch05,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch05_01	1752,4,4,
-que_qsch05,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch05_02	1752,4,4,
-que_qsch05,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch05_03	1752,4,4,
-que_qsch05,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch05_04	1752,4,4,
+que_qaru01,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru01_01	1752,4,4
+que_qaru01,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru01_02	1752,4,4
+que_qaru01,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru01_03	1752,4,4
+que_qaru01,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru01_04	1752,4,4
+que_qaru02,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru02_01	1752,4,4
+que_qaru02,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru02_02	1752,4,4
+que_qaru02,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru02_03	1752,4,4
+que_qaru02,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru02_04	1752,4,4
+que_qaru03,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru03_01	1752,4,4
+que_qaru03,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru03_02	1752,4,4
+que_qaru03,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru03_03	1752,4,4
+que_qaru03,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru03_04	1752,4,4
+que_qaru04,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru04_01	1752,4,4
+que_qaru04,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru04_02	1752,4,4
+que_qaru04,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru04_03	1752,4,4
+que_qaru04,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru04_04	1752,4,4
+que_qaru05,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru05_01	1752,4,4
+que_qaru05,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru05_02	1752,4,4
+que_qaru05,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru05_03	1752,4,4
+que_qaru05,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru05_04	1752,4,4
+que_qsch01,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch01_01	1752,4,4
+que_qsch01,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch01_02	1752,4,4
+que_qsch01,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch01_03	1752,4,4
+que_qsch01,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch01_04	1752,4,4
+que_qsch02,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch02_01	1752,4,4
+que_qsch02,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch02_02	1752,4,4
+que_qsch02,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch02_03	1752,4,4
+que_qsch02,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch02_04	1752,4,4
+que_qsch03,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch03_01	1752,4,4
+que_qsch03,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch03_02	1752,4,4
+que_qsch03,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch03_03	1752,4,4
+que_qsch03,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch03_04	1752,4,4
+que_qsch04,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch04_01	1752,4,4
+que_qsch04,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch04_02	1752,4,4
+que_qsch04,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch04_03	1752,4,4
+que_qsch04,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch04_04	1752,4,4
+que_qsch05,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch05_01	1752,4,4
+que_qsch05,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch05_02	1752,4,4
+que_qsch05,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch05_03	1752,4,4
+que_qsch05,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch05_04	1752,4,4
 
 -	script	Bloody Hunter#main_all	-1,{
 	end;
@@ -1964,10 +1964,10 @@ OnTouch:
 	set .@in, charat(strnpcinfo(2),getstrlen(strnpcinfo(2))-1);
 	disablenpc "Bloody Hunter#"+.@sub$+"_ac0"+.@in;
 	switch (.@in) {
-		Case 1: setarray .@n, 265,297,266,296,267,295;
-		Case 2: setarray .@n, 270,284,271,283,272,282;
-		Case 3: setarray .@n, 269,308,270,307,271,306;
-		Case 4: setarray .@n, 278,301,279,300,280,299;
+		case 1: setarray .@n, 265,297,266,296,267,295;
+		case 2: setarray .@n, 270,284,271,283,272,282;
+		case 3: setarray .@n, 269,308,270,307,271,306;
+		case 4: setarray .@n, 278,301,279,300,280,299;
 	}
 	for (set .@i, 0; .@i < getarraysize(.@n); set .@i, .@i + 2)
 		monster "que_q"+.@sub$,.@n[.@i],.@n[.@i+1],"Bloody Hunter",1753,1,"Bloody Hunter#"+.@sub$+"_ac0"+.@in+"::OnMyMobDead";
@@ -1989,46 +1989,46 @@ OnInit:
 		disablenpc "Bloody Hunter#"+.@sub$+"_ac0"+.@i;
 	end;
 }
-que_qaru01,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru01_ac01	1753,4,4,
+que_qaru01,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru01_ac01	1753,4,4
 que_qaru01,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru01_ac02	1753,4,4,
 que_qaru01,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru01_ac03	1753,4,4,
 que_qaru01,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru01_ac04	1753,4,4,
 que_qaru02,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru02_ac01	1753,4,4,
-que_qaru02,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru02_ac02	1753,4,4,
-que_qaru02,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru02_ac03	1753,4,4,
-que_qaru02,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru02_ac04	1753,4,4,
-que_qaru03,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru03_ac01	1753,4,4,
-que_qaru03,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru03_ac02	1753,4,4,
-que_qaru03,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru03_ac03	1753,4,4,
-que_qaru03,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru03_ac04	1753,4,4,
-que_qaru04,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru04_ac01	1753,4,4,
-que_qaru04,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru04_ac02	1753,4,4,
-que_qaru04,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru04_ac03	1753,4,4,
-que_qaru04,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru04_ac04	1753,4,4,
-que_qaru05,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru05_ac01	1753,4,4,
-que_qaru05,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru05_ac02	1753,4,4,
-que_qaru05,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru05_ac03	1753,4,4,
-que_qaru05,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru05_ac04	1753,4,4,
-que_qsch01,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch01_ac01	1753,4,4,
-que_qsch01,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch01_ac02	1753,4,4,
-que_qsch01,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch01_ac03	1753,4,4,
-que_qsch01,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch01_ac04	1753,4,4,
-que_qsch02,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch02_ac01	1753,4,4,
-que_qsch02,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch02_ac02	1753,4,4,
-que_qsch02,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch02_ac03	1753,4,4,
-que_qsch02,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch02_ac04	1753,4,4,
-que_qsch03,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch03_ac01	1753,4,4,
-que_qsch03,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch03_ac02	1753,4,4,
-que_qsch03,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch03_ac03	1753,4,4,
-que_qsch03,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch03_ac04	1753,4,4,
-que_qsch04,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch04_ac01	1753,4,4,
-que_qsch04,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch04_ac02	1753,4,4,
-que_qsch04,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch04_ac03	1753,4,4,
-que_qsch04,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch04_ac04	1753,4,4,
-que_qsch05,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch05_ac01	1753,4,4,
-que_qsch05,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch05_ac02	1753,4,4,
-que_qsch05,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch05_ac03	1753,4,4,
-que_qsch05,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch05_ac04	1753,4,4,
+que_qaru02,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru02_ac02	1753,4,4
+que_qaru02,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru02_ac03	1753,4,4
+que_qaru02,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru02_ac04	1753,4,4
+que_qaru03,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru03_ac01	1753,4,4
+que_qaru03,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru03_ac02	1753,4,4
+que_qaru03,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru03_ac03	1753,4,4
+que_qaru03,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru03_ac04	1753,4,4
+que_qaru04,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru04_ac01	1753,4,4
+que_qaru04,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru04_ac02	1753,4,4
+que_qaru04,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru04_ac03	1753,4,4
+que_qaru04,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru04_ac04	1753,4,4
+que_qaru05,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru05_ac01	1753,4,4
+que_qaru05,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru05_ac02	1753,4,4
+que_qaru05,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru05_ac03	1753,4,4
+que_qaru05,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru05_ac04	1753,4,4
+que_qsch01,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch01_ac01	1753,4,4
+que_qsch01,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch01_ac02	1753,4,4
+que_qsch01,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch01_ac03	1753,4,4
+que_qsch01,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch01_ac04	1753,4,4
+que_qsch02,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch02_ac01	1753,4,4
+que_qsch02,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch02_ac02	1753,4,4
+que_qsch02,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch02_ac03	1753,4,4
+que_qsch02,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch02_ac04	1753,4,4
+que_qsch03,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch03_ac01	1753,4,4
+que_qsch03,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch03_ac02	1753,4,4
+que_qsch03,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch03_ac03	1753,4,4
+que_qsch03,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch03_ac04	1753,4,4
+que_qsch04,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch04_ac01	1753,4,4
+que_qsch04,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch04_ac02	1753,4,4
+que_qsch04,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch04_ac03	1753,4,4
+que_qsch04,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch04_ac04	1753,4,4
+que_qsch05,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch05_ac01	1753,4,4
+que_qsch05,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch05_ac02	1753,4,4
+que_qsch05,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch05_ac03	1753,4,4
+que_qsch05,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch05_ac04	1753,4,4
 
 -	script	Temple Keeper#main_all	-1,{
 	end;
@@ -2038,8 +2038,8 @@ OnTouch:
 	set .@in, charat(strnpcinfo(2),getstrlen(strnpcinfo(2))-1);
 	disablenpc "Temple Keeper#"+.@sub$+"_ac0"+.@in;
 	switch (.@in) {
-		Case 1: setarray .@n, 246,330,247,330,248,330; break;
-		Case 2: setarray .@n, 254,330,255,330,256,330; break;
+		case 1: setarray .@n, 246,330,247,330,248,330; break;
+		case 2: setarray .@n, 254,330,255,330,256,330; break;
 	}
 	for (set .@i, 0; .@i < getarraysize(.@n); set .@i, .@i + 2)
 		monster "que_q"+.@sub$,.@n[.@i],.@n[.@i+1],"Keeper Of The Temple",1933,1,"Temple Keeper#"+.@sub$+"_ac0"+.@in+"::OnMyMobDead";
@@ -2061,26 +2061,26 @@ OnInit:
 		disablenpc "Temple Keeper#"+.@sub$+"_ac0"+.@i;
 	end;
 }
-que_qaru01,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#aru01_ac01	1933,4,4,
-que_qaru01,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#aru01_ac02	1933,4,4,
-que_qaru02,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#aru02_ac01	1933,4,4,
-que_qaru02,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#aru02_ac02	1933,4,4,
-que_qaru03,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#aru03_ac01	1933,4,4,
-que_qaru03,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#aru03_ac02	1933,4,4,
-que_qaru04,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#aru04_ac01	1933,4,4,
-que_qaru04,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#aru04_ac02	1933,4,4,
-que_qaru05,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#aru05_ac01	1933,4,4,
-que_qaru05,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#aru05_ac02	1933,4,4,
-que_qsch01,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#sch01_ac01	1933,4,4,
-que_qsch01,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#sch01_ac02	1933,4,4,
-que_qsch02,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#sch02_ac01	1933,4,4,
-que_qsch02,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#sch02_ac02	1933,4,4,
-que_qsch03,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#sch03_ac01	1933,4,4,
-que_qsch03,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#sch03_ac02	1933,4,4,
-que_qsch04,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#sch04_ac01	1933,4,4,
-que_qsch04,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#sch04_ac02	1933,4,4,
-que_qsch05,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#sch05_ac01	1933,4,4,
-que_qsch05,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#sch05_ac02	1933,4,4,
+que_qaru01,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#aru01_ac01	1933,4,4
+que_qaru01,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#aru01_ac02	1933,4,4
+que_qaru02,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#aru02_ac01	1933,4,4
+que_qaru02,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#aru02_ac02	1933,4,4
+que_qaru03,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#aru03_ac01	1933,4,4
+que_qaru03,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#aru03_ac02	1933,4,4
+que_qaru04,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#aru04_ac01	1933,4,4
+que_qaru04,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#aru04_ac02	1933,4,4
+que_qaru05,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#aru05_ac01	1933,4,4
+que_qaru05,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#aru05_ac02	1933,4,4
+que_qsch01,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#sch01_ac01	1933,4,4
+que_qsch01,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#sch01_ac02	1933,4,4
+que_qsch02,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#sch02_ac01	1933,4,4
+que_qsch02,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#sch02_ac02	1933,4,4
+que_qsch03,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#sch03_ac01	1933,4,4
+que_qsch03,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#sch03_ac02	1933,4,4
+que_qsch04,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#sch04_ac01	1933,4,4
+que_qsch04,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#sch04_ac02	1933,4,4
+que_qsch05,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#sch05_ac01	1933,4,4
+que_qsch05,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#sch05_ac02	1933,4,4
 
 -	script	Wish Maiden#main_boss	-1,{
 	end;
@@ -2092,7 +2092,7 @@ OnDisable:
 	stopnpctimer;
 	end;
 
-Onfight:
+OnFight:
 	initnpctimer;
 	end;
 
@@ -2118,7 +2118,7 @@ OnTimer5000:
 OnMyMobDead:
 	set .@sub$,callfunc("F_Okolnir");
 	if (!mobcount("que_q"+.@sub$,"Wish Maiden#"+.@sub$+"_boss::OnMyMobDead")) {
-		donpcevent "#okolnir_"+.@sub$+"::Onstop";
+		donpcevent "#okolnir_"+.@sub$+"::OnStop";
 		donpcevent "Wish Maiden#"+.@sub$+"_gift::OnEnable";
 		mapannounce "que_q"+.@sub$,"Wish Maiden : ..Good, you deserve the Goddess' shine.",bc_map,"0x00ff00";
 	}
@@ -2129,16 +2129,16 @@ OnInit:
 		hideonnpc "Wish Maiden#"+.@sub$+"_boss";	
 	end;
 }
-que_qaru01,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#aru01_boss	1931,
-que_qaru02,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#aru02_boss	1931,
-que_qaru03,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#aru03_boss	1931,
-que_qaru04,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#aru04_boss	1931,
-que_qaru05,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#aru05_boss	1931,
-que_qsch01,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#sch01_boss	1931,
-que_qsch02,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#sch02_boss	1931,
-que_qsch03,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#sch03_boss	1931,
-que_qsch04,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#sch04_boss	1931,
-que_qsch05,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#sch05_boss	1931,
+que_qaru01,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#aru01_boss	1931
+que_qaru02,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#aru02_boss	1931
+que_qaru03,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#aru03_boss	1931
+que_qaru04,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#aru04_boss	1931
+que_qaru05,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#aru05_boss	1931
+que_qsch01,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#sch01_boss	1931
+que_qsch02,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#sch02_boss	1931
+que_qsch03,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#sch03_boss	1931
+que_qsch04,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#sch04_boss	1931
+que_qsch05,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#sch05_boss	1931
 
 -	script	Wish Maiden#main_gift	-1,{
 	set .@sub$,callfunc("F_Okolnir");
@@ -2258,16 +2258,16 @@ OnInit:
 		disablenpc "Wish Maiden#"+.@sub$+"_gift";
 	end;
 }
-que_qaru01,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#aru01_gift	403,
-que_qaru02,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#aru02_gift	403,
-que_qaru03,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#aru03_gift	403,
-que_qaru04,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#aru04_gift	403,
-que_qaru05,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#aru05_gift	403,
-que_qsch01,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#sch01_gift	403,
-que_qsch02,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#sch02_gift	403,
-que_qsch03,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#sch03_gift	403,
-que_qsch04,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#sch04_gift	403,
-que_qsch05,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#sch05_gift	403,
+que_qaru01,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#aru01_gift	403
+que_qaru02,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#aru02_gift	403
+que_qaru03,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#aru03_gift	403
+que_qaru04,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#aru04_gift	403
+que_qaru05,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#aru05_gift	403
+que_qsch01,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#sch01_gift	403
+que_qsch02,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#sch02_gift	403
+que_qsch03,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#sch03_gift	403
+que_qsch04,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#sch04_gift	403
+que_qsch05,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#sch05_gift	403
 
 -	script	#to_agit_main_gate	-1,{
 	end;
@@ -2282,16 +2282,16 @@ OnInit:
 		disablenpc "#to_agit_"+.@sub$+"_gate";
 	end;
 }
-que_qaru01,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_aru01_gate	45,1,1,
-que_qaru02,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_aru02_gate	45,1,1,
-que_qaru03,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_aru03_gate	45,1,1,
-que_qaru04,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_aru04_gate	45,1,1,
-que_qaru05,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_aru05_gate	45,1,1,
-que_qsch01,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_sch01_gate	45,1,1,
-que_qsch02,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_sch02_gate	45,1,1,
-que_qsch03,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_sch03_gate	45,1,1,
-que_qsch04,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_sch04_gate	45,1,1,
-que_qsch05,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_sch05_gate	45,1,1,
+que_qaru01,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_aru01_gate	45,1,1
+que_qaru02,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_aru02_gate	45,1,1
+que_qaru03,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_aru03_gate	45,1,1
+que_qaru04,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_aru04_gate	45,1,1
+que_qaru05,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_aru05_gate	45,1,1
+que_qsch01,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_sch01_gate	45,1,1
+que_qsch02,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_sch02_gate	45,1,1
+que_qsch03,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_sch03_gate	45,1,1
+que_qsch04,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_sch04_gate	45,1,1
+que_qsch05,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_sch05_gate	45,1,1
 
 -	script	#okolnir_main_time01	-1,{
 	end;
@@ -2302,7 +2302,7 @@ OnEnable:
 	initnpctimer;
 	end;
 
-Onreset:
+OnReset:
 	set .@sub$,callfunc("F_Okolnir");
 	setd "$siz_"+.@sub$+"_on",0;
 	setd "$gqse_"+.@sub$+"_time",0;
@@ -2330,16 +2330,16 @@ OnInit:
 	if (getd("$siz_"+.@sub$+"_on") == 2) initnpctimer;
 	end;
 }
-que_qaru01,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_aru01_time01	844,
-que_qaru02,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_aru02_time01	844,
-que_qaru03,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_aru03_time01	844,
-que_qaru04,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_aru04_time01	844,
-que_qaru05,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_aru05_time01	844,
-que_qsch01,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_sch01_time01	844,
-que_qsch02,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_sch02_time01	844,
-que_qsch03,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_sch03_time01	844,
-que_qsch04,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_sch04_time01	844,
-que_qsch05,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_sch05_time01	844,
+que_qaru01,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_aru01_time01	844
+que_qaru02,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_aru02_time01	844
+que_qaru03,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_aru03_time01	844
+que_qaru04,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_aru04_time01	844
+que_qaru05,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_aru05_time01	844
+que_qsch01,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_sch01_time01	844
+que_qsch02,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_sch02_time01	844
+que_qsch03,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_sch03_time01	844
+que_qsch04,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_sch04_time01	844
+que_qsch05,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_sch05_time01	844
 
 que_qaru01,116,313,0,0	monster	Garden Keeper	1932,1,180000,0,0
 que_qaru01,120,285,0,0	monster	Garden Keeper	1932,1,180000,0,0

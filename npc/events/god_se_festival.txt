@@ -121,7 +121,7 @@ yuno,118,192,5	script	Rmimi Ravies#gq_fes01	891,{
 				next;
 				mes "[Rmimi Ravies]";
 				mes "Have a good time.";
-				donpcevent "Rmimi Ravies#gq_fes01::Onstart";
+				donpcevent "Rmimi Ravies#gq_fes01::OnStart";
 				
 				announce "["+ strcharinfo(0) +"] member of ["+ GetGuildName(.@GID) +"] is summoning a 'Valkyrie's Present' in 'Juno'.",bc_all,"0x70dbdb";
 				close;
@@ -166,7 +166,7 @@ OnDisable:
 	disablenpc "Rmimi Ravies#gq_fes01";
 	end;
 
-Onstart:
+OnStart:
 	initnpctimer;
 	set $@gqse_festival,1;
 	end;
@@ -392,11 +392,6 @@ OnTimer3900000:
 	end;
 }
 
-//===============================================================================================
-//                                             Rachel                                              
-//===============================================================================================
-
-//-------------------------------------Rachel Festival Manager-----------------------------------
 /*
 rachel,1,1,0	script	Festival Manager#god_se_fes02	891,{
 	mes "[Festival Manager]";
@@ -428,7 +423,6 @@ rachel,1,1,0	script	Festival Manager#god_se_fes02	891,{
 	}
 }
 */
-//----------------------------------------Rhehe Ravies----------------------------------------
 
 rachel,132,117,3	script	Rhehe Ravies#gq_fes03	891,{
 	set .@GID, getcharid(2);
@@ -509,7 +503,7 @@ rachel,132,117,3	script	Rhehe Ravies#gq_fes03	891,{
 				next;
 				mes "[Rhehe Ravies]";
 				mes "I hope you enjoy yourself!";
-				donpcevent "Rhehe Ravies#gq_fes03::Onstart";
+				donpcevent "Rhehe Ravies#gq_fes03::OnStart";
 				announce "["+ strcharinfo(0) +"] member of ["+ GetGuildName(.@GID) +"] is summoning a 'Valkyrie's Present' in 'Rachel'.",bc_all,"0x70dbdb";
 				close;
 			}
@@ -554,7 +548,7 @@ OnDisable:
 	disablenpc "Rhehe Ravies#gq_fes03";
 	end;
 
-Onstart:
+OnStart:
 	initnpctimer;
 	set $@gqse_festival,1;
 	end;

@@ -8744,7 +8744,7 @@ OnDisable:
 	stopnpctimer;
 	end;
 
-Onreset:
+OnReset:
 	killmonster "z_agit","#ZGuard::OnMyMobDead";
 	set $@monster_zgang,0;
 	end;

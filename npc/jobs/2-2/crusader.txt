@@ -221,13 +221,13 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 			set @item3, 1099;
 			set @item4, 901;
 			break;
-		Case 2:
+		case 2:
 			set @item1, 932;
 			set @item2, 1043;
 			set @item3, 1098;
 			set @item4, 1094;
 			break;
-		Case 3:
+		case 3:
 			set @item1, 958;
 			set @item2, 930;
 			set @item3, 1041;

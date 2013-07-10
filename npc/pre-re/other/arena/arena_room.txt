@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= SinSloth
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -11,6 +11,7 @@
 //===== Additional Comments: =================================
 //= 1.0 First version.
 //= 1.1 Fixed a small reward typo (was giving potato.) [L0ne_W0lf]
+//= 1.2 Label standardization, disabled GM NPCs. [Euphy]
 //============================================================
 
 arena_room,94,93,5	script	Vendigos	97,{
@@ -75,26 +76,26 @@ L_Menu:
 	mes "Is there anything I can help you more?";
 	goto L_Menu;
 
-Onlinerec_50:
+OnLineRec_50:
 	mapannounce "arena_room",""+$arena_50topn$+" has renewed the top record in the Arena Time Force Battle level 50. Congratulations!",0;
 	end;
 
-Onlinerec_60:
+OnLineRec_60:
 	mapannounce "arena_room",""+$arena_60topn$+" has renewed the top record in the Arena Time Force Battle level 60. Congratulations!",0;
 	end;
 
-Onlinerec_70:
+OnLineRec_70:
 	mapannounce "arena_room",""+$arena_70topn$+" has renewed the top record in the Arena Time Force Battle level 70. Congratulations!",0;
 	end;
-Onlinerec_80:
+OnLineRec_80:
 	mapannounce "arena_room",""+$arena_80topn$+" has renewed the top record in the Arena Time Force Battle level 80. Congratulations!",0;
 	end;
 
-Onlinerec_pt:
+OnLineRec_pt:
 	mapannounce "arena_room","Party "+$arena_pttopn$+" has renewed the top record in the Arena Time Force Battle. Congratulations!",0;
 	end;
 
-//OnCommand: "linerec_vs"
+//OnCommand: "LineRec_vs"
 // var vs_winner = GetGlobalStr "040611_arn_vstopn"
 // broadcastinmap "Party "+vs_winner+" has renewed the top record in the Arena Time Force Battle. Congratulations!"
 // end;
@@ -448,7 +449,7 @@ sec_in02,72,180,3	script	Arena Manager#arena	802,{
 						switch( select( "Yes","No" ) )
 						{
 							case 1:
-								donpcevent "Ponox::Onstart";
+								donpcevent "Ponox::OnStart";
 								mes "[Arena Manager]";
 								mes "The arena stage has been successfuly reactivated.";
 								close;
@@ -467,7 +468,7 @@ sec_in02,72,180,3	script	Arena Manager#arena	802,{
 				switch( select( "Yes","No" ) )
 				{
 					case 1:
-						donpcevent "lvl "+.@arena+"s Waiting Room::Onstart";
+						donpcevent "lvl "+.@arena+"s Waiting Room::OnStart";
 						mes "[Arena Manager]";
 						mes "The arena stage has been successfuly reactivated.";
 						close;
@@ -1028,10 +1029,8 @@ OnTimer62000:
 	stopnpctimer;
 	end;
 }
-
+/*
 sec_in02,72,171,3	script	Picture Manager#arena	802,{
-
-	if (!getgmlevel()) end;
 
 	input .@arena;
 	if(!.@arena)
@@ -1075,6 +1074,7 @@ sec_in02,76,176,5	script	Live Broadcast#arena	802,{
 	mes "Currently there are "+getmapusers("arena_room")+" people in the waiting room.";
 	close;
 }
+*/
 
 function	script	Func_Are_Rew	{
 

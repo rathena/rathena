@@ -1,5 +1,5 @@
 //===== rAthena Script ======================================= 
-// BattleGround System - Tierra Gorge Entrance NPCs
+//= BattleGround System - Tierra Gorge Entrance NPCs
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 

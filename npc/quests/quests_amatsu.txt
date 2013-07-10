@@ -367,9 +367,9 @@ OnInit:
 
 OnStartArena:
 	disablenpc "Coach#ama";
-	donpcevent "Am Mut#ama::Onreset";
-	donpcevent "Dokebi#ez::Onreset";
-	donpcevent "Dokebi#hd::Onreset";
+	donpcevent "Am Mut#ama::OnReset";
+	donpcevent "Dokebi#ez::OnReset";
+	donpcevent "Dokebi#hd::OnReset";
 	enablenpc "Grandma#ama1";
 	enablenpc "Grandpa#ama";
 	warpwaitingpc "ama_test",50,83;
@@ -377,7 +377,7 @@ OnStartArena:
 	disablewaitingroomevent "Assistant#ama";
 	end;
 
-Onreset:
+OnReset:
 	enablewaitingroomevent "Assistant#ama";
 	end;
 }
@@ -482,7 +482,7 @@ OnEnable:
 	monster "ama_test",49,91,"Dokebi",1110,1,"Dokebi#ez::OnMyMobDead";
 	end;
 
-Onreset:
+OnReset:
 	killmonster "ama_test","Dokebi#ez::OnMyMobDead";
 	end;
 
@@ -530,7 +530,7 @@ OnEnable:
 	monster "ama_test",49,91,"Dokebi",1110,1,"Dokebi#hd::OnMyMobDead";
 	end;
 
-Onreset:
+OnReset:
 	killmonster "ama_test","Dokebi#hd::OnMyMobDead";
 	end;
 
@@ -595,7 +595,7 @@ ama_test,50,100,3	script	Coach#ama	762,15,15,{
 		donpcevent "Timer#ama::OnDisable";
 		warp "amatsu",223,230;
 		disablenpc "Coach#ama";
-		donpcevent "Assistant#ama::Onreset";
+		donpcevent "Assistant#ama::OnReset";
 		end;
 	case 2:
 		mes "[Coach]";
@@ -635,7 +635,7 @@ ama_test,50,100,3	script	Coach#ama	762,15,15,{
 			warp "amatsu",223,230;
 			disablenpc "Coach#ama";
 			donpcevent "Timer#ama::OnDisable";
-			donpcevent "Assistant#ama::Onreset";
+			donpcevent "Assistant#ama::OnReset";
 			end;
 		}
 		mes "[Coach]";
@@ -673,7 +673,7 @@ OnEnable:
 	monster "ama_test",56,108,"Am Mut",1301,1,"Am Mut#ama::OnMyMobDead";
 	end;
 
-Onreset:
+OnReset:
 	killmonster "ama_test","Am Mut#ama::OnMyMobDead";
 	end;
 
@@ -723,7 +723,7 @@ OnTouch:
 	warp "amatsu",223,230;
 	disablenpc "Coach#after";
 	donpcevent "Timer#ama::OnDisable";
-	donpcevent "Assistant#ama::Onreset";
+	donpcevent "Assistant#ama::OnReset";
 	end;
 }
 	
@@ -764,7 +764,7 @@ OnTimer362000:
 	end;
 
 OnTimer362500:
-	donpcevent "Assistant#ama::Onreset";
+	donpcevent "Assistant#ama::OnReset";
 	donpcevent "Timer#ama::OnDisable";
 	end;
 }
