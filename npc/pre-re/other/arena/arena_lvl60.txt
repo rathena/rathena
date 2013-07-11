@@ -949,7 +949,7 @@ prt_are_in,25,135,3	script	Staff#60-2	67,{
 			close2;
 		}
 		specialeffect2 EF_EXIT;
- 		donpcevent "cast#60::OnNormal1";
+ 		donpcevent "cast#60::OnNomal1";
 		warp "arena_room",100,75;
 		donpcevent "#arn_timer_60::OnStop";
 		donpcevent "alloff#60::OnEnable";
@@ -1000,7 +1000,7 @@ prt_are_in,25,135,3	script	Staff#60-2	67,{
 			close2;
 		}
 		specialeffect2 EF_HIT5;
- 		donpcevent "cast#60::OnNormal2";
+ 		donpcevent "cast#60::OnNomal2";
 		warp "arena_room",100,75;
 		donpcevent "#arn_timer_60::OnStop";
 		donpcevent "alloff#60::OnEnable";
@@ -1054,11 +1054,11 @@ OnTimeOver1:
 	mapannounce "force_2-1","Arena will be reactivated due to an error occurred during battle.",0,0xFFCE00;
 	end;
 
-OnNormal1:
+OnNomal1:
 	mapannounce "force_2-1","Arena will be reactivated.",0,0xFFCE00;
 	end;
 
-OnNormal2:
+OnNomal2:
 	mapannounce "force_2-1","Arena will be reactivated.",0,0xFFCE00;
 	end;
 

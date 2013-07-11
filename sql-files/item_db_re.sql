@@ -2518,7 +2518,7 @@ REPLACE INTO `item_db_re` VALUES (4514,'Pom_Spider_Card','Pom Spider Card',6,20,
 REPLACE INTO `item_db_re` VALUES (4515,'Alnoldi_Card','Alnoldi Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,NULL,NULL,'bonus2 bSubRace,RC_Plant,30;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4516,'Comodo_Card','Comodo Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL,NULL,'bonus bDef,50; bonus bFlee,-25;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4517,'Cendrawasih_Card','Cendrawasih Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,769,NULL,NULL,NULL,NULL,'bonus bInt,2; if(BaseClass==Job_Mage){ bonus bInt,getrefine()/3; }',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (4518,'Banaspaty_Card','Banaspaty Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (4518,'Banaspaty_Card','Banaspaty Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus2 bAddEff,Eff_Burning,1500;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4519,'Butoijo_Card','Butoijo Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus2 bAddRace,RC_Angel,20;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4520,'Leak_Card','Leak Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,NULL,NULL,'bonus bStr,3; bonus2 bAddEff,Eff_Confusion,5000; bonus3 bAddEff,Eff_Confusion,5000,ATF_SKILL;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4521,'Sedora_Card','Sedora Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus bCritAtkRate,15;',NULL,NULL);

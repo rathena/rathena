@@ -26,7 +26,7 @@ moc_para01,40,38,3	script	Mission [41 - 55]	857,{
 	}
 	if (checkquest(12088) == -1) {
 		if (BaseLevel < 41 || BaseLevel > 55) {
-			mes "[41 ~ 55 Lv. Mission Board]";
+			mes "Mission bulletin board for Lv41~55 adventurers.";
 			close;
 		}
 		mes "[Mission Board]";
@@ -50,7 +50,7 @@ moc_para01,40,38,3	script	Mission [41 - 55]	857,{
 			case 11: callsub L_Quest,12082,"Don't ask why, but please hunt 30 Shellfish. It is a secret mission!";
 			case 12: callsub L_Quest,12083,"Marine Sphere? Do you know what a Marine Sphere is? I got a mission for you to hunt 15 Marine Sphere, so please do so.";
 			case 13: callsub L_Quest,12084,"The mayor wants to eat a delicious fish dish. Phen will be the perfect ingredient for it. Please hunt 20 Phen!";
-			case 14: callsub L_Quest,12085,"You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
+			case 14: callsub L_Quest,12085,"Dead Orc monsters got back to our town and they've revived as Orc Skeletons. We are in chaos! Please hunt 15 Orc Skeleton.";
 			case 15: callsub L_Quest,12086,"Some weird monsters called Zenorc are attacking us. Please hunt 30 Zenorc.";
 			case 16: callsub L_Quest,12087,"Be prepared! It is a cruel mission! Hunt 15 Mummies!! I tried once, but I couldn't succeed. It is too scary!";
 		}

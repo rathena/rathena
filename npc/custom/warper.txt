@@ -413,19 +413,26 @@ G6: Go("schg_dun01",200,124);
 	Instances:
 // --------------------------------------------------
 
-menu	"Endless Tower",I1, "Hazy Forest",I2, "Malangdo Culvert",I3,
-	"Nidhoggur's Nest",I4, "Octopus Cave",I5, "Orc's Memory",I6, "Sealed Shrine",I7;
+menu	"Bakonawa Lake",I1, "Bangungot Hospital 2F",I2, "Buwaya Cave",I3,
+	"Endless Tower",I4, "Hazy Forest",I5, "Malangdo Culvert",I6,
+	"Nidhoggur's Nest",I7, "Octopus Cave",I8, "Orc's Memory",I9, "Sealed Shrine",I10;
 
-I1: Go("e_tower",72,112);
+I1: Restrict("RE");
+	Go("ma_scene01",172,175);
 I2: Restrict("RE");
-	Go("bif_fild01",161,334);
+	Go("ma_dun01",151,8);
 I3: Restrict("RE");
-	Go("mal_in01",164,21);
-I4: Go("nyd_dun02",95,193);
+	Go("ma_fild02",316,317);
+I4: Go("e_tower",72,112);
 I5: Restrict("RE");
+	Go("bif_fild01",161,334);
+I6: Restrict("RE");
+	Go("mal_in01",164,21);
+I7: Go("nyd_dun02",95,193);
+I8: Restrict("RE");
 	Go("mal_dun01",152,230);
-I6: Go("gef_fild10",240,198);
-I7: Go("monk_test",306,143);
+I9: Go("gef_fild10",240,198);
+I10: Go("monk_test",306,143);
 
 // --------------------------------------------------
 	Special:

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 20121219
+//= 20130711
 //===== Description: =========================================
 //= List of script instructions used in item bonuses,
 //= mainly bonus/bonus2/bonus3/bonus4/bonus5 arguments.
@@ -77,11 +77,11 @@ bonus bIgnoreMDefRace,n;		Disregard MDEF against enemies of race n
 bonus bIgnoreMDefEle,n;			Disregard MDEF against enemies of element n
 					n:	0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison, 6=Holy, 7=Dark, 8=Spirit, 9=Undead
 bonus bIgnoreMdefRate,n;		Disregard n% of the target's MDEF
-bonus bDefRatioAtkRace,n;		Does more damage depending on monster Defense against race n (defense disregard) :
+bonus bDefRatioAtkRace,n;		Does more damage depending on monster Defense against race n (defense disregard)
 					n: 	0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
 						5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
 						10=Boss monster, 11=Other than (normal monster) boss monster
-bonus bDefRatioAtkEle,n;		n attribute if defensive power is high the high extent big damage is given, (defense disregard) :
+bonus bDefRatioAtkEle,n;		n attribute if defensive power is high the high extent big damage is given, (defense disregard)
 					n:	0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison, 6=Holy, 7=Dark, 8=Spirit, 9=Undead
 bonus bAtkEle,n;			Gives the player's attacks element n
 					n:	0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison, 6=Holy, 7=Dark, 8=Spirit, 9=Undead
@@ -101,9 +101,13 @@ bonus bIntravision,n;			Always see Hiding and Cloaking players/mobs (n is meanin
 bonus bHealPower,n;			Increase heal amount of all heal skills by n%
 bonus bHealPower2,n;			Increase heal amount if you are healed by any skills by n%
 bonus2 bAddEff,e,x;			Adds a x/100 chance to cause effect e to the target when attacking (e.g. x=100 makes 1% chance, x=10000 makes 100% chance, etc)
-					e:	Eff_Blind, Eff_Sleep, Eff_Poison, Eff_Freeze, Eff_Silence, Eff_Stun, Eff_Curse, Eff_Confusion, Eff_Stone, Eff_Bleeding
+					e:	Eff_Blind, Eff_Sleep, Eff_Poison, Eff_Freeze, Eff_Silence,
+						Eff_Stun, Eff_Curse, Eff_Confusion, Eff_Stone, Eff_Bleeding,
+						Eff_DPoison, Eff_Fear, Eff_Burning
 bonus2 bResEff,e,x;			Adds a x/100 tolerance to effect e (e.g. x=100 makes 1% tolerance, x=10000 makes 100% tolerance, etc)
-					e:	Eff_Blind, Eff_Sleep, Eff_Poison, Eff_Freeze, Eff_Silence, Eff_Stun, Eff_Curse, Eff_Confusion, Eff_Stone, Eff_Bleeding
+					e:	Eff_Blind, Eff_Sleep, Eff_Poison, Eff_Freeze, Eff_Silence,
+						Eff_Stun, Eff_Curse, Eff_Confusion, Eff_Stone, Eff_Bleeding,
+						Eff_DPoison, Eff_Fear, Eff_Burning
 bonus2 bCastrate,n,x;			Adjust casting time of skill n by x% (supports skill names)
 bonus2 bAddSize,n,x;			+x% physical damage against size n.
 					n:	0=Small  1=Medium  2=Large
@@ -143,7 +147,7 @@ bonus2 bAddDefClass,n,x;		x% physical damage reduction against monsters of class
 					Against players, n is their job id.
 bonus2 bAddMDefClass,n,x;		x% magical damage reduction against monsters of class n
 					Against players, n is their job id.
-bonus2 bIgnoreMdefRate,n,x;		Disregard x% of the target's MDEF if the target belongs to race n;
+bonus2 bIgnoreMdefRate,n,x;		Disregard x% of the target's MDEF if the target belongs to race n
 bonus2 bHPDrainRate,n,x;		n/10 % probability to drain x% HP when attacking
 bonus2 bSPDrainRate,n,x;		n/10 % probability to drain x% SP when attacking
 bonus2 bSPVanishRate,n,x;		Add the (n/10)% chance of decreasing enemy's SP (player) amount by x% when attacking
@@ -307,7 +311,7 @@ bonus2 bSPDrainValue,n,x;		When hitting a monster by physical attack, ...
 					x:
 						0=you gain n SP, 1=you drain n SP from target
 
-bonus2 bIgnoreDefRate,n,x;		Disregard x% of the target's DEF if the target belongs to race n;
+bonus2 bIgnoreDefRate,n,x;		Disregard x% of the target's DEF if the target belongs to race n
 
 bonus3 bAddEle,n,x,t;			+x% physical damage against element n
 					n: 	0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison,
@@ -372,9 +376,10 @@ bonus bLongWeaponDamageReturn,n;	Reflects n% of received ranged damage back to t
 bonus2 bWeaponComaEle,x,n;		Adds a n/100% chance to cause Coma when attacking a monster of element x with normal attack.
 					x:	0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison,
 						6=Holy, 7=Dark, 8=Spirit, 9=Undead
-bonus2 bAddEff2,x,n;			Adds a n/100% chance to cause status change x on self when attacking.
-					x:	Eff_Blind, Eff_Sleep, Eff_Poison, Eff_Freeze, Eff_Silence,
-						Eff_Stun, Eff_Curse, Eff_Confusion, Eff_Stone, Eff_Bleeding
+bonus2 bAddEff2,e,n;			Adds a n/100% chance to cause status change e on self when attacking.
+					e:	Eff_Blind, Eff_Sleep, Eff_Poison, Eff_Freeze, Eff_Silence,
+						Eff_Stun, Eff_Curse, Eff_Confusion, Eff_Stone, Eff_Bleeding,
+						Eff_DPoison, Eff_Fear, Eff_Burning
 bonus bMagicDamageReturn,n;		Adds a n% chance to reflect targetted magic spells back to the enemy that caused it.
 bonus bPerfectHide,n;			Hidden/cloaked character is no longer detected by monsters with 'detector' mode (n is meaningless).
 bonus bNoKnockback,n;			Character is no longer knocked back by enemy skills with such effect (n is meaningless).

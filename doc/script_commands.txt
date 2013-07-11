@@ -7204,11 +7204,11 @@ that fails, the command returns an empty string instead.
 
 ---------------------------------------
 
-*instance_id({<type>});
+*instance_id();
 
-Returns the unique instance id depending on <type>:
- 0: Instance ID of the attached script (default).
- 1: Instance ID of the currently attached player's party.
+Returns the unique instance id of the attached script. If the script is not
+attached to an instance, the instance of the currently attached player's party is
+used. If that fails, the function will return 0.
 
 ---------------------------------------
 
@@ -7712,9 +7712,10 @@ current invoking character.
 
 *mercenary_create <class>,<contract time>;
 
-This command summons a mercenary of given class, for given amount of
-time in milliseconds. Typically used in item scripts of mercenary
-scrolls.
+This command summons a mercenary for a given time (in milliseconds). For a
+list of all available classes, see 'db/mercenary_db'.
+
+This command is typically used in item scripts of mercenary scrolls.
 
 ---------------------------------------
 
@@ -7977,15 +7978,14 @@ The command returns 1 upon success, and these values upon failure:
 
 *party_changeleader(<party id>,<character id>);
 
-Transfers leadership of a party to the specified character. The original
-party leader doesn't need be online.
+Transfers leadership of a party to the specified character.
 
 The command returns 1 upon success, and these values upon failure:
  0: Unknown error.
 -1: Party not found.
 -2: Player not found.
 -3: Player is not in the party.
--4: Player is already party leader
+-4: Player is already party leader.
 
 ---------------------------------------
 

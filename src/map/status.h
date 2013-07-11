@@ -492,7 +492,7 @@ typedef enum sc_type {
 	/**
 	 * Genetic
 	 **/
-	SC_GN_CARTBOOST,//427
+	SC_GN_CARTBOOST,//421
 	SC_THORNSTRAP,
 	SC_BLOODSUCKER,
 	SC_SMOKEPOWDER,

@@ -6417,8 +6417,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 				tick_def2 = (status->vit + status->luk)*50;
 			break;
 		case SC_BURNING:
-			// From iROwiki : http://forums.irowiki.org/showpost.php?p=577240&postcount=583
-			tick_def2 = 50*status->luk + 60*status->int_ + 170*status->vit;
+			tick_def2 = 75*status->luk + 125*status->agi;
 			break;
 		case SC_FREEZING:
 			tick_def2 = (status->vit + status->dex)*50;
@@ -6541,8 +6540,10 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			tick = max(tick, 5000); //Minimum duration 5s
 			break;
 		case SC_BURNING:
+			tick = max(tick, 5000); //Minimum duration 5s
+			break;
 		case SC_FREEZING:
-			tick = max(tick, 10000); //Minimum duration 10s
+			tick = max(tick, 6000); //Minimum duration 6s
 			break;
 		default:
 			//Skills need to trigger even if the duration is reduced below 1ms
