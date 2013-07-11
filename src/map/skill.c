@@ -7294,8 +7294,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case CG_TAROTCARD:
 		{
 			int eff, count = -1;
-			if( rnd() % 100 > skill_lv * 8 || (dstmd && ((dstmd->guardian_data && dstmd->class_ == MOBID_EMPERIUM) || mob_is_battleground(dstmd))) )
-			{
+			if( rnd() % 100 > skill_lv * 8 || (tsc && tsc->data[SC_BASILICA]) || 
+			(dstmd && ((dstmd->guardian_data && dstmd->class_ == MOBID_EMPERIUM) || mob_is_battleground(dstmd))) ) {
 				if( sd )
 					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 
@@ -12297,7 +12297,7 @@ int skill_unit_onout (struct skill_unit *src, struct block_list *bl, unsigned in
 			break;
 
 		case UNT_BASILICA:
-			if( sce && sce->val4 == src->bl.id )
+			if (sce)
 				status_change_end(bl, type, INVALID_TIMER);
 			break;
 		case UNT_HERMODE:	//Clear Hermode if the owner moved.
@@ -12392,6 +12392,7 @@ int skill_unit_onleft (uint16 skill_id, struct block_list *bl, unsigned int tick
 		case SA_VIOLENTGALE:
 		case CG_HERMODE:
 		case HW_GRAVITATION:
+		case HP_BASILICA:
 		case NJ_SUITON:
 		case SC_MAELSTROM:
 		case EL_WATER_BARRIER:
@@ -15514,6 +15515,8 @@ int skill_delunit (struct skill_unit* unit) {
 			break;
 		case HP_BASILICA:
 			skill_unitsetmapcell(unit,HP_BASILICA,group->skill_lv,CELL_BASILICA,false);
+			// Because of Basilica's range we need to specifically update the players inside when it's cancelled prematurely
+			map_foreachincell(skill_unit_effect,unit->bl.m,unit->bl.x,unit->bl.y,group->bl_flag,&unit->bl,0,4);
 			break;
 		case RA_ELECTRICSHOCKER: {
 				struct block_list* target = map_id2bl(group->val2);

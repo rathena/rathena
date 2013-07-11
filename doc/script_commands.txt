@@ -2304,23 +2304,6 @@ Examples:
 	mes "Silver's IP: " + getcharip("Silver");
 
 ---------------------------------------
-
-*checklang
-
-Returns the language number from player, and -1 if upon error
-
-	0 - English (ENG)
-	1 - Russkiy (RUS)
-	2 - Espanol (SPN)
-	3 - Deutsch (GRM)
-	4 - Hanyu (CHN)
-	5 - Bahasa Malaysia (MAL)
-	6 - Bahasa Indonesia (IDN)
-	7 - Francais (FRN)
-	8 - Portugues Brasileiro (POR)
-	9 - Thai (THA)
-
----------------------------------------
 \\
 2,2 Item-related commands
 \\
@@ -7978,7 +7961,7 @@ The command returns 1 upon success, and these values upon failure:
 
 ---------------------------------------
 
-*party_delmember({<character id>});
+*party_delmember({<character id>,<party id>});
 
 Removes a player from his/her party. If no player is specified, the command
 will run for the invoking player. If that player is the only party member
@@ -7987,7 +7970,8 @@ remaining, the party will be disbanded.
 The command returns 1 upon success, and these values upon failure:
  0: Unknown error.
 -1: Player not found.
--2: Player is not in the party.
+-2: Party not found.
+-3: Player is not in the party.
 
 ---------------------------------------
 

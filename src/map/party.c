@@ -535,6 +535,30 @@ int party_removemember(struct map_session_data* sd, int account_id, char* name)
 	return 1;
 }
 
+int party_removemember2(struct map_session_data *sd,int char_id,int party_id)
+{
+	struct party_data *p;
+
+	if( sd ) {
+		if( !sd->status.party_id )
+			return -3;
+		intif_party_leave(sd->status.party_id,sd->status.account_id,sd->status.char_id);
+		return 1;
+	} else {
+		int i;
+		if( !(p = party_search(party_id)) )
+			return -2;
+
+		ARR_FIND(0,MAX_PARTY,i,p->party.member[i].char_id == char_id );
+		if( i >= MAX_PARTY )
+			return -1;
+
+		intif_party_leave(party_id,p->party.member[i].account_id,char_id);
+		return 1;
+	}
+	return 0;
+}
+
 /// Party member 'sd' requesting exit from party.
 int party_leave(struct map_session_data *sd)
 {

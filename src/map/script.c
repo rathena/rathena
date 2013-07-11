@@ -10651,12 +10651,12 @@ BUILDIN_FUNC(getmapflag)
 			case MF_NOSAVE:				script_pushint(st,map[m].flag.nosave); break;
 			case MF_NOBRANCH:			script_pushint(st,map[m].flag.nobranch); break;
 			case MF_NOPENALTY:			script_pushint(st,map[m].flag.noexppenalty); break;
-			case MF_NOZENYPENALTY:			script_pushint(st,map[m].flag.nozenypenalty); break;
+			case MF_NOZENYPENALTY:		script_pushint(st,map[m].flag.nozenypenalty); break;
 			case MF_PVP:				script_pushint(st,map[m].flag.pvp); break;
-			case MF_PVP_NOPARTY:			script_pushint(st,map[m].flag.pvp_noparty); break;
-			case MF_PVP_NOGUILD:			script_pushint(st,map[m].flag.pvp_noguild); break;
+			case MF_PVP_NOPARTY:		script_pushint(st,map[m].flag.pvp_noparty); break;
+			case MF_PVP_NOGUILD:		script_pushint(st,map[m].flag.pvp_noguild); break;
 			case MF_GVG:				script_pushint(st,map[m].flag.gvg); break;
-			case MF_GVG_NOPARTY:			script_pushint(st,map[m].flag.gvg_noparty); break;
+			case MF_GVG_NOPARTY:		script_pushint(st,map[m].flag.gvg_noparty); break;
 			case MF_NOTRADE:			script_pushint(st,map[m].flag.notrade); break;
 			case MF_NOSKILL:			script_pushint(st,map[m].flag.noskill); break;
 			case MF_NOWARP:				script_pushint(st,map[m].flag.nowarp); break;
@@ -10671,15 +10671,15 @@ BUILDIN_FUNC(getmapflag)
 			case MF_CLOUDS2:			script_pushint(st,map[m].flag.clouds2); break;
 			case MF_FIREWORKS:			script_pushint(st,map[m].flag.fireworks); break;
 			case MF_GVG_CASTLE:			script_pushint(st,map[m].flag.gvg_castle); break;
-			case MF_GVG_DUNGEON:			script_pushint(st,map[m].flag.gvg_dungeon); break;
-			case MF_NIGHTENABLED:			script_pushint(st,map[m].flag.nightenabled); break;
+			case MF_GVG_DUNGEON:		script_pushint(st,map[m].flag.gvg_dungeon); break;
+			case MF_NIGHTENABLED:		script_pushint(st,map[m].flag.nightenabled); break;
 			case MF_NOBASEEXP:			script_pushint(st,map[m].flag.nobaseexp); break;
 			case MF_NOJOBEXP:			script_pushint(st,map[m].flag.nojobexp); break;
 			case MF_NOMOBLOOT:			script_pushint(st,map[m].flag.nomobloot); break;
 			case MF_NOMVPLOOT:			script_pushint(st,map[m].flag.nomvploot); break;
 			case MF_NORETURN:			script_pushint(st,map[m].flag.noreturn); break;
 			case MF_NOWARPTO:			script_pushint(st,map[m].flag.nowarpto); break;
-			case MF_NIGHTMAREDROP:			script_pushint(st,map[m].flag.pvp_nightmaredrop); break;
+			case MF_NIGHTMAREDROP:		script_pushint(st,map[m].flag.pvp_nightmaredrop); break;
 			case MF_RESTRICTED:			script_pushint(st,map[m].flag.restricted); break;
 			case MF_NOCOMMAND:			script_pushint(st,map[m].nocommand); break;
 			case MF_NODROP:				script_pushint(st,map[m].flag.nodrop); break;
@@ -10688,22 +10688,22 @@ BUILDIN_FUNC(getmapflag)
 			case MF_NOVENDING:			script_pushint(st,map[m].flag.novending); break;
 			case MF_LOADEVENT:			script_pushint(st,map[m].flag.loadevent); break;
 			case MF_NOCHAT:				script_pushint(st,map[m].flag.nochat); break;
-			case MF_NOEXPPENALTY:			script_pushint(st,map[m].flag.noexppenalty ); break;
+			case MF_NOEXPPENALTY:		script_pushint(st,map[m].flag.noexppenalty ); break;
 			case MF_GUILDLOCK:			script_pushint(st,map[m].flag.guildlock); break;
 			case MF_TOWN:				script_pushint(st,map[m].flag.town); break;
 			case MF_AUTOTRADE:			script_pushint(st,map[m].flag.autotrade); break;
 			case MF_ALLOWKS:			script_pushint(st,map[m].flag.allowks); break;
-			case MF_MONSTER_NOTELEPORT:		script_pushint(st,map[m].flag.monster_noteleport); break;
-			case MF_PVP_NOCALCRANK:			script_pushint(st,map[m].flag.pvp_nocalcrank); break;
-			case MF_BATTLEGROUND:			script_pushint(st,map[m].flag.battleground); break;
+			case MF_MONSTER_NOTELEPORT:	script_pushint(st,map[m].flag.monster_noteleport); break;
+			case MF_PVP_NOCALCRANK:		script_pushint(st,map[m].flag.pvp_nocalcrank); break;
+			case MF_BATTLEGROUND:		script_pushint(st,map[m].flag.battleground); break;
 			case MF_RESET:				script_pushint(st,map[m].flag.reset); break;
-			case MF_CHANNELAUTOJOIN:		script_pushint(st,map[m].flag.chmautojoin); break;
+			case MF_CHANNELAUTOJOIN:	script_pushint(st,map[m].flag.chmautojoin); break;
 			case MF_NOUSECART:			script_pushint(st,map[m].flag.nousecart); break;
-			case MF_NOITEMCONSUMPTION:		script_pushint(st,map[m].flag.noitemconsumption); break;
-			case MF_SUMSTARTMIRACLE:		script_pushint(st,map[m].flag.nosumstarmiracle); break;
-			case MF_NOMINEEFFECT:			script_pushint(st,map[m].flag.nomineeffect); break;
+			case MF_NOITEMCONSUMPTION:	script_pushint(st,map[m].flag.noitemconsumption); break;
+			case MF_SUMSTARTMIRACLE:	script_pushint(st,map[m].flag.nosumstarmiracle); break;
+			case MF_NOMINEEFFECT:		script_pushint(st,map[m].flag.nomineeffect); break;
 			case MF_NOLOCKON:			script_pushint(st,map[m].flag.nolockon); break;
-			case MF_NOTOMB:			script_pushint(st,map[m].flag.notomb); break;
+			case MF_NOTOMB:				script_pushint(st,map[m].flag.notomb); break;
 		}
 	}
 
@@ -10805,13 +10805,13 @@ BUILDIN_FUNC(setmapflag)
 			case MF_PVP_NOCALCRANK:		map[m].flag.pvp_nocalcrank = 1; break;
 			case MF_BATTLEGROUND:		map[m].flag.battleground = (val <= 0 || val > 2) ? 1 : val; break;
 			case MF_RESET:				map[m].flag.reset = 1; break;
-			case MF_CHANNELAUTOJOIN:		map[m].flag.chmautojoin = 1 ; break;
+			case MF_CHANNELAUTOJOIN:	map[m].flag.chmautojoin = 1 ; break;
 			case MF_NOUSECART:			map[m].flag.nousecart = 1 ; break;
-			case MF_NOITEMCONSUMPTION:		map[m].flag.noitemconsumption = 1 ; break;
-			case MF_SUMSTARTMIRACLE:		map[m].flag.nosumstarmiracle = 1 ; break;
+			case MF_NOITEMCONSUMPTION:	map[m].flag.noitemconsumption = 1 ; break;
+			case MF_SUMSTARTMIRACLE:	map[m].flag.nosumstarmiracle = 1 ; break;
 			case MF_NOMINEEFFECT:		map[m].flag.nomineeffect = 1 ; break;
-			case MF_NOLOCKON:		map[m].flag.nolockon = 1 ; break;
-			case MF_NOTOMB:		map[m].flag.notomb = 1; break;
+			case MF_NOLOCKON:			map[m].flag.nolockon = 1 ; break;
+			case MF_NOTOMB:				map[m].flag.notomb = 1; break;
 		}
 	}
 
@@ -10904,13 +10904,13 @@ BUILDIN_FUNC(removemapflag)
 			case MF_PVP_NOCALCRANK:		map[m].flag.pvp_nocalcrank = 0; break;
 			case MF_BATTLEGROUND:		map[m].flag.battleground = 0; break;
 			case MF_RESET:				map[m].flag.reset = 0; break;
-			case MF_CHANNELAUTOJOIN:		map[m].flag.chmautojoin = 0 ; break;
+			case MF_CHANNELAUTOJOIN:	map[m].flag.chmautojoin = 0 ; break;
 			case MF_NOUSECART:			map[m].flag.nousecart = 0 ; break;
-			case MF_NOITEMCONSUMPTION:		map[m].flag.noitemconsumption = 0 ; break;
-			case MF_SUMSTARTMIRACLE:		map[m].flag.nosumstarmiracle = 0 ; break;
+			case MF_NOITEMCONSUMPTION:	map[m].flag.noitemconsumption = 0 ; break;
+			case MF_SUMSTARTMIRACLE:	map[m].flag.nosumstarmiracle = 0 ; break;
 			case MF_NOMINEEFFECT:		map[m].flag.nomineeffect = 0 ; break;
-			case MF_NOLOCKON:		map[m].flag.nolockon = 0 ; break;
-			case MF_NOTOMB:		map[m].flag.notomb = 0; break;
+			case MF_NOLOCKON:			map[m].flag.nolockon = 0 ; break;
+			case MF_NOTOMB:				map[m].flag.notomb = 0; break;
 		}
 	}
 
@@ -17574,7 +17574,9 @@ BUILDIN_FUNC(countbound)
 }
 
 /*==========================================
- * party_create "<party name>"{,<char id>{,<item share: 0-no. 1-yes>{,<item share type: 0-favorite. 1-shared>}}};
+ * party_create "<party name>"{,<char id>{,<item share>{,<item share type>}}};
+ * <item share>: 0-Each Take. 1-Party Share
+ * <item share type>: 0-Each Take. 1-Even Share
  * Return values:
  *	-3	- party name is exist
  *	-2	- player is in party already
@@ -17656,27 +17658,28 @@ BUILDIN_FUNC(party_addmember)
 }
 
 /*==========================================
- * party_delmember {<char id>};
- * Removes player from his/her party
+ * party_delmember {<char id>,<party_id>};
+ * Removes player from his/her party. If party_id and char_id is empty
+ * remove the invoker from his/her party
  * Return values:
- *	-2	- player is not in party
+ *	-3	- player is not in party
+ *	-2	- party is not found
  *	-1	- player is not found
  *	0	- unknown error
  *	1	- success
  *------------------------------------------*/
 BUILDIN_FUNC(party_delmember)
 {
-	TBL_PC *sd;
+	TBL_PC *sd = NULL;
 
-	if( (!script_hasdata(st,2) && !(sd = script_rid2sd(st))) || (script_hasdata(st,2) && !(sd = map_charid2sd(script_getnum(st,2)))) ) {
+	if( !script_hasdata(st,2) && !script_hasdata(st,3) && !(sd = script_rid2sd(st)) ) {
 		script_pushint(st,-1);
 		return 0;
-	}	
-	if( !sd->status.party_id ) {
-		script_pushint(st,-2);
-		return 0;
 	}
-	script_pushint(st,party_leave(sd));
+	if( sd || (script_getnum(st,2) && (sd = map_charid2sd(script_getnum(st,2)))) )
+		script_pushint(st,party_removemember2(sd,0,0));
+	else
+		script_pushint(st,party_removemember2(NULL,script_getnum(st,2),script_getnum(st,3)));
 	return 0;
 }
 
@@ -17684,7 +17687,7 @@ BUILDIN_FUNC(party_delmember)
  * party_changeleader <party id>,<char id>;
  * Can change party leader even the leader is not online
  * Return values:
- *	-4	- selected player is party leader already
+ *	-4	- player is party leader already
  *	-3	- player is not in this party
  *	-2	- player is not found
  *	-1	- party is not found
@@ -17748,7 +17751,7 @@ BUILDIN_FUNC(party_changeoption)
 
 /*==========================================
  * party_destroy <party id>;
- * Destroys party with party id. If char id is specified, destroys player's party
+ * Destroys party with party id.
  * Return values:
  *	0	- failed
  *	1	- success
@@ -17778,19 +17781,6 @@ BUILDIN_FUNC(party_destroy)
 	}
 	else	//leader leave = party broken
 		script_pushint(st,party_leave(party->data[i].sd));
-	return 0;
-}
- 
-BUILDIN_FUNC(checklang)
-{
-	TBL_PC* sd = NULL;
-
-	if( (sd = script_rid2sd(st)) == NULL ) {
-		script_pushint(st,-1);
-		return 0;
-	}
-
-	script_pushint(st,sd->langtype);
 	return 0;
 }
 
@@ -18240,7 +18230,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(delequip,"i"),
 	BUILDIN_DEF(sit,"?"),
 	BUILDIN_DEF(stand,"?"),
-	BUILDIN_DEF(checklang,""),
 	/**
 	 * @commands (script based)
 	 **/
@@ -18264,7 +18253,7 @@ struct script_function buildin_func[] = {
 	// Party related
 	BUILDIN_DEF(party_create,"s???"),
 	BUILDIN_DEF(party_addmember,"ii"),
-	BUILDIN_DEF(party_delmember,"?"),
+	BUILDIN_DEF(party_delmember,"??"),
 	BUILDIN_DEF(party_changeleader,"ii"),
 	BUILDIN_DEF(party_changeoption,"iii"),
 	BUILDIN_DEF(party_destroy,"i"),
