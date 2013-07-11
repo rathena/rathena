@@ -217,6 +217,13 @@ Disables locking on a map.
 
 ---------------------------------------
 
+*nocommand	<group level>
+
+Disables everyone to use command on a map. If group level is specified, only disables
+player who has group level below it.
+
+---------------------------------------
+
 =====================
 | 2. Battle-related |
 =====================

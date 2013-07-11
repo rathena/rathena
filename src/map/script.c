@@ -17573,6 +17573,227 @@ BUILDIN_FUNC(countbound)
 	return 0;
 }
 
+/*==========================================
+ * party_create "<party name>"{,<char id>{,<item share: 0-no. 1-yes>{,<item share type: 0-favorite. 1-shared>}}};
+ * Return values:
+ *	-3	- party name is exist
+ *	-2	- player is in party already
+ *	-1	- player is not found
+ *	0	- unknown error
+ *	1	- success, will return party id $@party_create_id
+ *------------------------------------------*/
+BUILDIN_FUNC(party_create)
+{
+	char party_name[NAME_LENGTH];
+	int item1 = 0, item2 = 0;
+	TBL_PC *sd;
+
+	if( (!script_hasdata(st,3) && !(sd = script_rid2sd(st))) || (script_hasdata(st,3) && !(sd = map_charid2sd(script_getnum(st,3)))) ) {
+		script_pushint(st,-1);
+		return 0;
+	}
+
+	if( sd->status.party_id ) {
+		script_pushint(st,-2);
+		return 0;
+	}
+
+	safestrncpy(party_name,script_getstr(st,2),NAME_LENGTH);
+	trim(party_name);
+	if( party_searchname(party_name) ) {
+		script_pushint(st,-3);
+		return 0;
+	}
+	if( script_getnum(st,4) )
+		item1 = 1;
+	if( script_getnum(st,5) )
+		item2 = 1;
+
+	party_create_byscript = 1;
+	script_pushint(st,party_create(sd,party_name,item1,item2));
+	return 0;
+}
+
+/*==========================================
+ * party_addmember <party id>,<char id>;
+ * Adds player to specified party
+ * Return values:
+ *	-4	- party is full
+ *	-3	- party is not found
+ *	-2	- player is in party already
+ *	-1	- player is not found
+ *	0	- unknown error
+ *	1	- success
+ *------------------------------------------*/
+BUILDIN_FUNC(party_addmember)
+{
+	int party_id = script_getnum(st,2);
+	TBL_PC *sd;
+	struct party_data *party;
+
+	if( !(sd = map_charid2sd(script_getnum(st,3))) ) {
+		script_pushint(st,-1);
+		return 0;
+	}
+
+	if( sd->status.party_id ) {
+		script_pushint(st,-2);
+		return 0;
+	}
+
+	if( !(party = party_search(party_id)) ) {
+		script_pushint(st,-3);
+		return 0;
+	}
+
+	if( party->party.count >= MAX_PARTY ) {
+		script_pushint(st,-4);
+		return 0;
+	}
+	sd->party_invite = party_id;
+	script_pushint(st,party_add_member(party_id,sd));
+	return 0;
+}
+
+/*==========================================
+ * party_delmember {<char id>};
+ * Removes player from his/her party
+ * Return values:
+ *	-2	- player is not in party
+ *	-1	- player is not found
+ *	0	- unknown error
+ *	1	- success
+ *------------------------------------------*/
+BUILDIN_FUNC(party_delmember)
+{
+	TBL_PC *sd;
+
+	if( (!script_hasdata(st,2) && !(sd = script_rid2sd(st))) || (script_hasdata(st,2) && !(sd = map_charid2sd(script_getnum(st,2)))) ) {
+		script_pushint(st,-1);
+		return 0;
+	}	
+	if( !sd->status.party_id ) {
+		script_pushint(st,-2);
+		return 0;
+	}
+	script_pushint(st,party_leave(sd));
+	return 0;
+}
+
+/*==========================================
+ * party_changeleader <party id>,<char id>;
+ * Can change party leader even the leader is not online
+ * Return values:
+ *	-4	- selected player is party leader already
+ *	-3	- player is not in this party
+ *	-2	- player is not found
+ *	-1	- party is not found
+ *	0	- unknown error
+ *	1	- success
+ *------------------------------------------*/
+BUILDIN_FUNC(party_changeleader)
+{
+	int i, party_id = script_getnum(st,2);
+	TBL_PC *sd = NULL;
+	TBL_PC *tsd = NULL;
+	struct party_data *party = NULL;
+
+	if( !(party = party_search(party_id)) ) {
+		script_pushint(st,-1);
+		return 0;
+	}
+
+	if( !(tsd = map_charid2sd(script_getnum(st,3))) ) {
+		script_pushint(st,-2);
+		return 0;
+	}
+
+	if( tsd->status.party_id != party_id ) {
+		script_pushint(st,-3);
+		return 0;
+	}
+
+	ARR_FIND(0,MAX_PARTY,i,party->party.member[i].leader);
+	if( i >= MAX_PARTY ) {	//this is should impossible!
+		script_pushint(st,0);
+		return 0;
+	}
+	if( party->data[i].sd == tsd ) {
+		script_pushint(st,-4);
+		return 0;
+	}
+
+	script_pushint(st,party_changeleader(sd,tsd,party));
+	return 0;
+}
+
+/*==========================================
+ * party_changeoption <party id>,<option>,<flag>;
+ * Return values:
+ *	-1	- party is not found
+ *	0	- invalid option
+ *	1	- success
+ *------------------------------------------*/
+BUILDIN_FUNC(party_changeoption)
+{
+	struct party_data *party;
+
+	if( !(party = party_search(script_getnum(st,2))) ) {
+		script_pushint(st,-1);
+		return 0;
+	}
+	script_pushint(st,party_setoption(party,script_getnum(st,3),script_getnum(st,4)));
+	return 0;
+}
+
+/*==========================================
+ * party_destroy <party id>;
+ * Destroys party with party id. If char id is specified, destroys player's party
+ * Return values:
+ *	0	- failed
+ *	1	- success
+ *------------------------------------------*/
+BUILDIN_FUNC(party_destroy)
+{
+	int i;
+	struct party_data *party;
+
+	if( !(party = party_search(script_getnum(st,2))) ) {
+		script_pushint(st,0);
+		return 0;
+	}
+
+	ARR_FIND(0,MAX_PARTY,i,party->party.member[i].leader);
+	if( i >= MAX_PARTY || !party->data[i].sd ) { //leader not online
+		int j;
+		for( j = 0; j < MAX_PARTY; j++ ) {
+			TBL_PC *sd = party->data[j].sd;
+			if(sd)
+				party_member_withdraw(party->party.party_id,sd->status.account_id,sd->status.char_id);
+			else if( party->party.member[j].char_id )
+				intif_party_leave(party->party.party_id,party->party.member[j].account_id,party->party.member[j].char_id);
+		}
+		party_broken(party->party.party_id);
+		script_pushint(st,1);
+	}
+	else	//leader leave = party broken
+		script_pushint(st,party_leave(party->data[i].sd));
+	return 0;
+}
+ 
+BUILDIN_FUNC(checklang)
+{
+	TBL_PC* sd = NULL;
+
+	if( (sd = script_rid2sd(st)) == NULL ) {
+		script_pushint(st,-1);
+		return 0;
+	}
+
+	script_pushint(st,sd->langtype);
+	return 0;
+}
+
 // declarations that were supposed to be exported from npc_chat.c
 #ifdef PCRE_SUPPORT
 BUILDIN_FUNC(defpattern);
@@ -18019,6 +18240,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(delequip,"i"),
 	BUILDIN_DEF(sit,"?"),
 	BUILDIN_DEF(stand,"?"),
+	BUILDIN_DEF(checklang,""),
 	/**
 	 * @commands (script based)
 	 **/
@@ -18038,5 +18260,13 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(getitem,"getitembound","vii?"),
 	BUILDIN_DEF2(getitem2,"getitembound2","viiiiiiiii?"),
 	BUILDIN_DEF(countbound, "?"),
+
+	// Party related
+	BUILDIN_DEF(party_create,"s???"),
+	BUILDIN_DEF(party_addmember,"ii"),
+	BUILDIN_DEF(party_delmember,"?"),
+	BUILDIN_DEF(party_changeleader,"ii"),
+	BUILDIN_DEF(party_changeoption,"iii"),
+	BUILDIN_DEF(party_destroy,"i"),
 	{NULL,NULL,NULL},
 };

@@ -9879,7 +9879,7 @@ static bool pc_readdb_job_exp(char* fields[], int columns, int current)
  *------------------------------------------*/
 int pc_readdb(void)
 {
-	int i,j,k, entries;
+	int i,k, entries;
 	FILE *fp;
 	char line[24000];
 
@@ -9894,6 +9894,7 @@ int pc_readdb(void)
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 	sv_readdb(db_path, "re/level_penalty.txt", ',', 4, 4, -1, &pc_readdb_levelpenalty);
 	for( k=1; k < 3; k++ ){ // fill in the blanks
+		int j;
 		for( j = 0; j < RC_MAX; j++ ){
 			int tmp = 0;
 			for( i = 0; i < MAX_LEVEL*2; i++ ){

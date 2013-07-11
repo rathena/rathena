@@ -11767,7 +11767,7 @@ void clif_parse_PartyMessage(int fd, struct map_session_data* sd){
 /// Changes Party Leader (CZ_CHANGE_GROUP_MASTER).
 /// 07da <account id>.L
 void clif_parse_PartyChangeLeader(int fd, struct map_session_data* sd){
-	party_changeleader(sd, map_id2sd(RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0])));
+	party_changeleader(sd, map_id2sd(RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0])),NULL);
 }
 
 

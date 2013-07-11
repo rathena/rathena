@@ -3956,15 +3956,17 @@ ACMD_FUNC(mapinfo) {
 	if (map[m_id].flag.chmautojoin)
 		strcat(atcmd_output, msg_txt(sd,1100)); // Chmautojoin |
 	if (map[m_id].flag.nousecart)
-		strcat(atcmd_output, msg_txt(sd,1101)); // nousecart |
+		strcat(atcmd_output, msg_txt(sd,1101)); // NoUsecart |
 	if (map[m_id].flag.noitemconsumption)
-		strcat(atcmd_output, msg_txt(sd,1102)); // noitemconsumption |
+		strcat(atcmd_output, msg_txt(sd,1102)); // NoItemConsumption |
 	if (map[m_id].flag.nosumstarmiracle)
-		strcat(atcmd_output, msg_txt(sd,1103)); // nosumstarmiracle |
+		strcat(atcmd_output, msg_txt(sd,1103)); // NoSumStarMiracle |
 	if (map[m_id].flag.nomineeffect)
-		strcat(atcmd_output, msg_txt(sd,1104)); // nomineeffect |
+		strcat(atcmd_output, msg_txt(sd,1104)); // NoMineEffect |
 	if (map[m_id].flag.nolockon)
-		strcat(atcmd_output, msg_txt(sd,1105)); // nolockon |
+		strcat(atcmd_output, msg_txt(sd,1105)); // NoLockOn |
+	if (map[m_id].flag.notomb)
+		strcat(atcmd_output, msg_txt(sd,1107)); // NoTomb |
 	clif_displaymessage(fd, atcmd_output);
 
 	switch (list) {
@@ -5719,7 +5721,7 @@ ACMD_FUNC(changeleader)
 		return -1;
 	}
 
-	if (party_changeleader(sd, map_nick2sd((char *) message)))
+	if (party_changeleader(sd, map_nick2sd((char *) message),NULL))
 		return 0;
 	return -1;
 }
@@ -7647,39 +7649,41 @@ ACMD_FUNC(mapflag) {
 	if (!message || !*message || (sscanf(message, "%99s %hd", flag_name, &flag) < 1)) {
 		clif_displaymessage(sd->fd,msg_txt(sd,1311)); // Enabled Mapflags in this map:
 		clif_displaymessage(sd->fd,"----------------------------------");
-		checkflag(town);
-		checkflag(autotrade);			checkflag(allowks);				checkflag(nomemo);		checkflag(noteleport);
-		checkflag(noreturn);			checkflag(monster_noteleport);	checkflag(nosave);		checkflag(nobranch);
-		checkflag(noexppenalty);		checkflag(pvp);					checkflag(pvp_noparty);	checkflag(pvp_noguild);
-		checkflag(pvp_nightmaredrop);	checkflag(pvp_nocalcrank);		checkflag(gvg_castle);	checkflag(gvg);
-		checkflag(gvg_dungeon);			checkflag(gvg_noparty);			checkflag(battleground);checkflag(nozenypenalty);
-		checkflag(notrade);				checkflag(noskill);				checkflag(nowarp);		checkflag(nowarpto);
-		checkflag(noicewall);			checkflag(snow);				checkflag(clouds);		checkflag(clouds2);
-		checkflag(fog);					checkflag(fireworks);			checkflag(sakura);		checkflag(leaves);
-		checkflag(nogo);				checkflag(nobaseexp);
-		checkflag(nojobexp);			checkflag(nomobloot);			checkflag(nomvploot);	checkflag(nightenabled);
-		checkflag(restricted);			checkflag(nodrop);				checkflag(novending);	checkflag(loadevent);
-		checkflag(nochat);				checkflag(partylock);			checkflag(guildlock);	checkflag(notomb);
+		checkflag(town);				checkflag(autotrade);			checkflag(allowks);				checkflag(nomemo);
+		checkflag(noteleport);			checkflag(noreturn);			checkflag(monster_noteleport);	checkflag(nosave);
+		checkflag(nobranch);			checkflag(noexppenalty);		checkflag(pvp);					checkflag(pvp_noparty);
+		checkflag(pvp_noguild);			checkflag(pvp_nightmaredrop);	checkflag(pvp_nocalcrank);		checkflag(gvg_castle);
+		checkflag(gvg);					checkflag(gvg_dungeon);			checkflag(gvg_noparty);			checkflag(battleground);
+		checkflag(nozenypenalty);		checkflag(notrade);				checkflag(noskill);				checkflag(nowarp);
+		checkflag(nowarpto);			checkflag(noicewall);			checkflag(snow);				checkflag(clouds);
+		checkflag(clouds2);				checkflag(fog);					checkflag(fireworks);			checkflag(sakura);
+		checkflag(leaves);				checkflag(nogo);				checkflag(nobaseexp);			checkflag(nojobexp);
+		checkflag(nomobloot);			checkflag(nomvploot);			checkflag(nightenabled);		checkflag(restricted);
+		checkflag(nodrop);				checkflag(novending);			checkflag(loadevent);			checkflag(nochat);
+		checkflag(partylock);			checkflag(guildlock);			checkflag(reset);				checkflag(chmautojoin);
+		checkflag(nousecart);			checkflag(noitemconsumption);	checkflag(nosumstarmiracle);	checkflag(nomineeffect);
+		checkflag(nolockon);			checkflag(notomb);
 		clif_displaymessage(sd->fd," ");
 		clif_displaymessage(sd->fd,msg_txt(sd,1312)); // Usage: "@mapflag monster_noteleport 1" (0=Off | 1=On)
 		clif_displaymessage(sd->fd,msg_txt(sd,1313)); // Type "@mapflag available" to list the available mapflags.
 		return 1;
 	}
 	for (i = 0; flag_name[i]; i++) flag_name[i] = (char)tolower(flag_name[i]); //lowercase
-
-	setflag(town);
-	setflag(autotrade);			setflag(allowks);			setflag(nomemo);			setflag(noteleport);
-	setflag(noreturn);			setflag(monster_noteleport);setflag(nosave);			setflag(nobranch);
-	setflag(noexppenalty);		setflag(pvp);				setflag(pvp_noparty);		setflag(pvp_noguild);
-	setflag(pvp_nightmaredrop);	setflag(pvp_nocalcrank);	setflag(gvg_castle);		setflag(gvg);
-	setflag(gvg_dungeon);		setflag(gvg_noparty);		setflag(battleground);		setflag(nozenypenalty);
-	setflag(notrade);			setflag(noskill);			setflag(nowarp);			setflag(nowarpto);
-	setflag(noicewall);			setflag(snow);				setflag(clouds);			setflag(clouds2);
-	setflag(fog);				setflag(fireworks);			setflag(sakura);			setflag(leaves);
-	setflag(nogo);				setflag(nobaseexp);
-	setflag(nojobexp);			setflag(nomobloot);			setflag(nomvploot);			setflag(nightenabled);
-	setflag(restricted);		setflag(nodrop);			setflag(novending);			setflag(loadevent);
-	setflag(nochat);			setflag(partylock);			setflag(guildlock);			setflag(notomb);
+	
+	setflag(town);				setflag(autotrade);			setflag(allowks);				setflag(nomemo);
+	setflag(noteleport);		setflag(noreturn);			setflag(monster_noteleport);	setflag(nosave);
+	setflag(nobranch);			setflag(noexppenalty);		setflag(pvp);					setflag(pvp_noparty);
+	setflag(pvp_noguild);		setflag(pvp_nightmaredrop);	setflag(pvp_nocalcrank);		setflag(gvg_castle);
+	setflag(gvg);				setflag(gvg_dungeon);		setflag(gvg_noparty);			setflag(battleground);
+	setflag(nozenypenalty);		setflag(notrade);			setflag(noskill);				setflag(nowarp);
+	setflag(nowarpto);			setflag(noicewall);			setflag(snow);					setflag(clouds);
+	setflag(clouds2);			setflag(fog);				setflag(fireworks);				setflag(sakura);
+	setflag(leaves);			setflag(nogo);				setflag(nobaseexp);				setflag(nojobexp);
+	setflag(nomobloot);			setflag(nomvploot);			setflag(nightenabled);			setflag(restricted);
+	setflag(nodrop);			setflag(novending);			setflag(loadevent);				setflag(nochat);
+	setflag(partylock);			setflag(guildlock);			setflag(reset);					setflag(chmautojoin);
+	setflag(nousecart);			setflag(noitemconsumption);	setflag(nosumstarmiracle);		setflag(nomineeffect);
+	setflag(nolockon);			setflag(notomb);
 
 	clif_displaymessage(sd->fd,msg_txt(sd,1314)); // Invalid flag name or flag.
 	clif_displaymessage(sd->fd,msg_txt(sd,1312)); // Usage: "@mapflag monster_noteleport 1" (0=Off | 1=On)
@@ -7689,9 +7693,9 @@ ACMD_FUNC(mapflag) {
 	clif_displaymessage(sd->fd,"nobranch, noexppenalty, pvp, pvp_noparty, pvp_noguild, pvp_nightmaredrop,");
 	clif_displaymessage(sd->fd,"pvp_nocalcrank, gvg_castle, gvg, gvg_dungeon, gvg_noparty, battleground,");
 	clif_displaymessage(sd->fd,"nozenypenalty, notrade, noskill, nowarp, nowarpto, noicewall, snow, clouds, clouds2,");
-	clif_displaymessage(sd->fd,"fog, fireworks, sakura, leaves, nogo, nobaseexp, nojobexp, nomobloot,");
-	clif_displaymessage(sd->fd,"nomvploot, nightenabled, restricted, nodrop, novending, loadevent, nochat, partylock,");
-	clif_displaymessage(sd->fd,"guildlock, notomb");
+	clif_displaymessage(sd->fd,"fog, fireworks, sakura, leaves, nogo, nobaseexp, nojobexp, nomobloot, nomvploot,");
+	clif_displaymessage(sd->fd,"nightenabled, restricted, nodrop, novending, loadevent, nochat, partylock, guildlock,");
+	clif_displaymessage(sd->fd,"reset, chmautojoin, nousecart, noitemconsumption, nosumstarmiracle, nolockon, notomb");
 
 #undef checkflag
 #undef setflag

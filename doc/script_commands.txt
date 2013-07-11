@@ -997,6 +997,7 @@ From here on, we will have the commands sorted as follow:
 10.- Pet commands.
 11.- Homunculus commands.
 12.- Mercenary commands.
+13.- Party commands.
 
 =====================
 |1.- Basic commands.|
@@ -2267,148 +2268,6 @@ which is a quick way to see if they are married:
 
 ---------------------------------------
 
-*getpartyname(<party id>)
-
-This function will return the name of a party that has the specified ID number. 
-If there is no such party ID, "null" will be returned.
-
-Lets say the ID of a party was saved as a global variable:
-
-    // This would return the name of the party from the ID stored in a variable
-    mes "You're in the '"+getpartyname($@var)+"' party, I know!";
-
----------------------------------------
-
-*getpartymember <party id>{,<type>};
-
-This command will find all members of a specified party and returns their names 
-(or character id or account id depending on the value of "type") into an array
-of temporary global variables. There's actually quite a few commands like this
-which will fill a special variable with data upon execution and not do anything
-else.
-
-Upon executing this,
-
-$@partymembername$[] is a global temporary string array which contains all the 
-                     names of these party members
-                     (only set when type is 0 or not specified)
-
-$@partymembercid[]   is a global temporary number array which contains the 
-                     character id of these party members.
-                     (only set when type is 1)
-
-$@partymemberaid[]   is a global temporary number array which contains the 
-                     account id of these party members.
-                     (only set when type is 2)
-
-$@partymembercount   is the number of party members that were found.
-
-The party members will (apparently) be found regardless of whether they are 
-online or offline. Note that the names come in no particular order.
-
-Be sure to use $@partymembercount to go through this array, and not 
-'getarraysize', because it is not cleared between runs of 'getpartymember'. If 
-someone with 7 party members invokes this script, the array would have 7 
-elements. But if another person calls up the NPC, and he has a party of 5, the 
-server will not clear the array for you, overwriting the values instead. So in 
-addition to returning the 5 member names, the 6th and 7th elements from the last 
-call remain, and you will get 5+2 members, of which the last 2 don't belong to 
-the new guy's party. $@partymembercount will always contain the correct number, 
-(5) unlike 'getarraysize()' which will return 7 in this case.
-
-Example 1: list party member names
-
-	// get the party member names
-	getpartymember getcharid(1),0;
-	
-	// It's a good idea to copy the global temporary $@partymember***** 
-	// variables to your own scope variables because if you have pauses in this 
-	// script (sleep, sleep2, next, close2, input, menu, select, or prompt), 
-	// another player could click this NPC, trigger 'getpartymember', and 
-	// overwrite the $@partymember***** variables.
-	set .@count, $@partymembercount;
-	copyarray .@name$[0], $@partymembername$[0], $@partymembercount;
-	
-	// list the party member names
-	for (set .@i,0; .@i < .@count; set .@i, .@i+1) {
-		mes (.@i +1) + ". ^0000FF" + .@name$[.@i] + "^000000";
-	}
-	close;
-
-
-Example 2: check party count (with a 'next' pause), before warping to event
-
-	set .register_num, 5; // How many party members are required?
-	
-	// get the charID and accountID of character's party members
-	getpartymember getcharid(1), 1;
-	getpartymember getcharid(1), 2;
-	
-	if ( $@partymembercount != .register_num ) {
-		mes "Please form a party of "+ .register_num +" to continue";
-		close;
-	}
-	
-	// loop through both and use 'isloggedin' to count online party members
-	for ( set .@i, 0; .@i < $@partymembercount; set .@i, .@i +1 )
-		if ( isloggedin( $@partymemberaid[.@i], $@partymembercid[.@i] ) )
-			set .@count_online, .@count_online +1 ;
-	// We search accountID & charID because a single party can have multiple 
-	// characters from the same account. Without searching through the charID, 
-	// if a player has 2 characters from the same account inside the party but 
-	// only 1 char online, it would count their online char twice.
-	
-	if ( .@count_online != .register_num ) {
-		mes "All your party members must be online to continue";
-		close;
-	}
-	
-	// copy the array to prevent players cheating the system
-	copyarray .@partymembercid, $@partymembercid, .register_num;
-	
-	mes "Are you ready ?";
-	next; // careful here
-	select "Yes";
-	
-	// When a script hits a next, menu, sleep or input that pauses the script, 
-	// players can invite or /leave and make changes in their party. To prevent 
-	// this, we call getpartymember again and compare with the original values.
-	
-	getpartymember getcharid(1), 1;
-	if ( $@partymembercount != .register_num ) {
-		mes "You've made changes to your party !";
-		close;
-	}
-	for ( set .@i, 0; .@i < $@partymembercount; set .@i, .@i +1 ) {
-		if ( .@partymembercid[.@i] != $@partymembercid[.@i] ) {
-			mes "You've made changes to your party !";
-			close;
-		}
-	}
-	
-	// Finally, it's safe to start the event!
-	warpparty "event_map", 0,0, getcharid(1);
-
----------------------------------------
-
-*getpartyleader(<party id>{,<type>})
-
-This function returns some information about the given party-id's leader.
-When type is omitted, the default information retrieved is the leader's name.
-Possible types are:
-
-	1: Leader account id
-	2: Leader character id
-	3: Leader's class
-	4: Leader's current map name
-	5: Leader's current level as stored on the party structure (may not be
-	   current level if leader leveled up recently).
-
-If retrieval fails (leader not found or party does not exist), this function
-returns "null" instead of the character name, and -1 for the other types.
-
----------------------------------------
-
 *getlook(<type>)
 
 This function will return the number for the current character look value 
@@ -2443,7 +2302,24 @@ Examples:
 
 // Outputs IP address of character "Silver".
 	mes "Silver's IP: " + getcharip("Silver");
- 
+
+---------------------------------------
+
+*checklang
+
+Returns the language number from player, and -1 if upon error
+
+	0 - English (ENG)
+	1 - Russkiy (RUS)
+	2 - Espanol (SPN)
+	3 - Deutsch (GRM)
+	4 - Hanyu (CHN)
+	5 - Bahasa Malaysia (MAL)
+	6 - Bahasa Indonesia (IDN)
+	7 - Francais (FRN)
+	8 - Portugues Brasileiro (POR)
+	9 - Thai (THA)
+
 ---------------------------------------
 \\
 2,2 Item-related commands
@@ -7915,6 +7791,232 @@ can be one of the following:
 
 If the character does not have a mercenary, the command returns ""
 for name and 0 for all other types.
+
+---------------------------------------
+
+======================
+|13.- Party commands.|
+======================
+---------------------------------------
+
+*getpartyname(<party id>)
+
+This function will return the name of a party that has the specified ID number. 
+If there is no such party ID, "null" will be returned.
+
+Lets say the ID of a party was saved as a global variable:
+
+    // This would return the name of the party from the ID stored in a variable
+    mes "You're in the '"+getpartyname($@var)+"' party, I know!";
+
+---------------------------------------
+
+*getpartymember <party id>{,<type>};
+
+This command will find all members of a specified party and returns their names 
+(or character id or account id depending on the value of "type") into an array
+of temporary global variables. There's actually quite a few commands like this
+which will fill a special variable with data upon execution and not do anything
+else.
+
+Upon executing this,
+
+$@partymembername$[] is a global temporary string array which contains all the 
+                     names of these party members
+                     (only set when type is 0 or not specified)
+
+$@partymembercid[]   is a global temporary number array which contains the 
+                     character id of these party members.
+                     (only set when type is 1)
+
+$@partymemberaid[]   is a global temporary number array which contains the 
+                     account id of these party members.
+                     (only set when type is 2)
+
+$@partymembercount   is the number of party members that were found.
+
+The party members will (apparently) be found regardless of whether they are 
+online or offline. Note that the names come in no particular order.
+
+Be sure to use $@partymembercount to go through this array, and not 
+'getarraysize', because it is not cleared between runs of 'getpartymember'. If 
+someone with 7 party members invokes this script, the array would have 7 
+elements. But if another person calls up the NPC, and he has a party of 5, the 
+server will not clear the array for you, overwriting the values instead. So in 
+addition to returning the 5 member names, the 6th and 7th elements from the last 
+call remain, and you will get 5+2 members, of which the last 2 don't belong to 
+the new guy's party. $@partymembercount will always contain the correct number, 
+(5) unlike 'getarraysize()' which will return 7 in this case.
+
+Example 1: list party member names
+
+	// get the party member names
+	getpartymember getcharid(1),0;
+	
+	// It's a good idea to copy the global temporary $@partymember***** 
+	// variables to your own scope variables because if you have pauses in this 
+	// script (sleep, sleep2, next, close2, input, menu, select, or prompt), 
+	// another player could click this NPC, trigger 'getpartymember', and 
+	// overwrite the $@partymember***** variables.
+	set .@count, $@partymembercount;
+	copyarray .@name$[0], $@partymembername$[0], $@partymembercount;
+	
+	// list the party member names
+	for (set .@i,0; .@i < .@count; set .@i, .@i+1) {
+		mes (.@i +1) + ". ^0000FF" + .@name$[.@i] + "^000000";
+	}
+	close;
+
+
+Example 2: check party count (with a 'next' pause), before warping to event
+
+	set .register_num, 5; // How many party members are required?
+	
+	// get the charID and accountID of character's party members
+	getpartymember getcharid(1), 1;
+	getpartymember getcharid(1), 2;
+	
+	if ( $@partymembercount != .register_num ) {
+		mes "Please form a party of "+ .register_num +" to continue";
+		close;
+	}
+	
+	// loop through both and use 'isloggedin' to count online party members
+	for ( set .@i, 0; .@i < $@partymembercount; set .@i, .@i +1 )
+		if ( isloggedin( $@partymemberaid[.@i], $@partymembercid[.@i] ) )
+			set .@count_online, .@count_online +1 ;
+	// We search accountID & charID because a single party can have multiple 
+	// characters from the same account. Without searching through the charID, 
+	// if a player has 2 characters from the same account inside the party but 
+	// only 1 char online, it would count their online char twice.
+	
+	if ( .@count_online != .register_num ) {
+		mes "All your party members must be online to continue";
+		close;
+	}
+	
+	// copy the array to prevent players cheating the system
+	copyarray .@partymembercid, $@partymembercid, .register_num;
+	
+	mes "Are you ready ?";
+	next; // careful here
+	select "Yes";
+	
+	// When a script hits a next, menu, sleep or input that pauses the script, 
+	// players can invite or /leave and make changes in their party. To prevent 
+	// this, we call getpartymember again and compare with the original values.
+	
+	getpartymember getcharid(1), 1;
+	if ( $@partymembercount != .register_num ) {
+		mes "You've made changes to your party !";
+		close;
+	}
+	for ( set .@i, 0; .@i < $@partymembercount; set .@i, .@i +1 ) {
+		if ( .@partymembercid[.@i] != $@partymembercid[.@i] ) {
+			mes "You've made changes to your party !";
+			close;
+		}
+	}
+	
+	// Finally, it's safe to start the event!
+	warpparty "event_map", 0,0, getcharid(1);
+
+---------------------------------------
+
+*getpartyleader(<party id>{,<type>})
+
+This function returns some information about the given party-id's leader.
+When type is omitted, the default information retrieved is the leader's name.
+Possible types are:
+
+	1: Leader account id
+	2: Leader character id
+	3: Leader's class
+	4: Leader's current map name
+	5: Leader's current level as stored on the party structure (may not be
+	   current level if leader leveled up recently).
+
+If retrieval fails (leader not found or party does not exist), this function
+returns "null" instead of the character name, and -1 for the other types.
+
+---------------------------------------
+
+*party_create("<party name>"{,<character id>{,<item share>,<item share type>}});
+
+Organizes a party with the attached or specified character as leader. If
+successful, the command returns 1 and sets the global temporary variable
+"$@party_create_id" to the ID of the party created.
+
+Additionally, item sharing options can be provided:
+ - Item Share: 0-Each Take (default), 1-Party Share
+ - Item Share Type: 0-Each Take (default), 1-Even Share
+
+These values are returned upon failure:
+ 0: Unknown error.
+-1: Player not found.
+-2: Player already has a party.
+-3: Party name exists.
+
+---------------------------------------
+
+*party_destroy(<party id>);
+
+Disbands a party. The command returns 1 upon success and 0 upon failure.
+
+---------------------------------------
+
+*party_addmember(<party id>,<character id>);
+
+Adds a player to an existing party.
+
+The command returns 1 upon success, and these values upon failure:
+ 0: Unknown error.
+-1: Player not found.
+-2: Player already has a party.
+-3: Party not found.
+-4: Party is full.
+
+---------------------------------------
+
+*party_delmember({<character id>});
+
+Removes a player from his/her party. If no player is specified, the command
+will run for the invoking player. If that player is the only party member
+remaining, the party will be disbanded.
+
+The command returns 1 upon success, and these values upon failure:
+ 0: Unknown error.
+-1: Player not found.
+-2: Player is not in the party.
+
+---------------------------------------
+
+*party_changeleader(<party id>,<character id>);
+
+Transfers leadership of a party to the specified character. The original
+party leader doesn't need be online.
+
+The command returns 1 upon success, and these values upon failure:
+ 0: Unknown error.
+-1: Party not found.
+-2: Player not found.
+-3: Player is not in the party.
+-4: Player is already party leader
+
+---------------------------------------
+
+*party_changeoption(<party id>,<option>,<flag>);
+
+Changes a party option.
+
+Valid options are:
+ 0 - Exp Share (flags: 0-Each Take, 1-Even Share)
+ 1 - Item Share (flags: 0-Each Take, 1-Party Share)
+ 2 - Item Share Type (flags: 0-Each Take, 1-Even Share)
+
+The command returns 1 upon success, and these values upon failure:
+ 0: Invalid option.
+-1: Party not found.
 
 ---------------------------------------
 
