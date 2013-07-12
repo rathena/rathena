@@ -4703,10 +4703,6 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 		watk += watk * sc->data[SC_TIDAL_WEAPON]->val2 / 100;
 	if(sc->data[SC_ANGRIFFS_MODUS])
 		watk += watk * sc->data[SC_ANGRIFFS_MODUS]->val2/100;
-#ifdef RENEWAL_EDP
-	if( sc->data[SC_EDP] )
-		watk = watk * (100 + sc->data[SC_EDP]->val1 * 80) / 100;
-#endif
 
 	return (unsigned short)cap_value(watk,0,USHRT_MAX);
 }
