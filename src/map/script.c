@@ -12706,7 +12706,7 @@ BUILDIN_FUNC(recovery)
 	switch(type) {
 		case 0:
 			if(script_hasdata(st,3))
-				sd=map_id2sd(script_getnum(st,3));
+				sd=map_charid2sd(script_getnum(st,3));
 			if(sd == NULL) //If we don't have sd by now, bail out
 				return 0;
 			recovery_sub(sd, revive);
