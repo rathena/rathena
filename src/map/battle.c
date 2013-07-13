@@ -4396,14 +4396,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 #endif
 	}
 
-#ifdef RENEWAL
-	if(!sd) {
-#endif
-		if(tsd) // Card Fix for target (tsd), 2 is not added to the "left" flag meaning "target cards only" 
-			wd.damage += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.damage, is_attack_left_handed(src, skill_id), wd.flag);
-#ifdef RENEWAL
-	}
-#endif
+	if(tsd) // Card Fix for target (tsd), 2 is not added to the "left" flag meaning "target cards only" 
+		wd.damage += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.damage, is_attack_left_handed(src, skill_id), wd.flag);
 
 	// forced to neutral skills [helvetica]
 	// skills forced to neutral gain benefits from weapon element

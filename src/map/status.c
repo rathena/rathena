@@ -22,6 +22,7 @@
 #include "skill.h"
 #include "itemdb.h"
 #include "battle.h"
+#include "battleground.h"
 #include "chrif.h"
 #include "skill.h"
 #include "status.h"
@@ -1336,6 +1337,18 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		clif_clearunit_area(target,CLR_DEAD);
 		skill_unit_move(target,gettick(),4);
 		skill_cleartimerskill(target);
+	}
+
+	// Always run NPC scripts for players last
+	if(target->type == BL_PC) {
+		TBL_PC *sd = BL_CAST(BL_PC,target);
+		if( sd->bg_id ) {
+			struct battleground_data *bg;
+			if( (bg = bg_team_search(sd->bg_id)) != NULL && bg->die_event[0] )
+				npc_event(sd, bg->die_event, 0);
+		}
+
+		npc_script_event(sd,NPCE_DIE);
 	}
 
 	return hp+sp;
