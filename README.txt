@@ -42,10 +42,12 @@ This differs between the varying operating systems available, so the following
 is broken down into Windows and Linux prerequisites.
 
 Windows
-	* TortoiseSVN (http://tortoisesvn.net/downloads.html)
 	* MySQL (http://www.mysql.com/downloads/mysql/)
 	* MySQL Workbench (http://www.mysql.com/downloads/workbench/)
 	* MS Visual C++ (http://www.microsoft.com/visualstudio/en-us/products/2010-editions/visual-cpp-express)
+	* [svn] TortoiseSVN (http://tortoisesvn.net/downloads.html)
+	* [git] TortoiseGIT (http://code.google.com/p/tortoisegit/)
+	* [git] MSysGit (http://code.google.com/p/msysgit/downloads/)
 
 Linux (names of packages may require specific version numbers on certain distributions)
 	* gcc
@@ -54,8 +56,9 @@ Linux (names of packages may require specific version numbers on certain distrib
 	* mysql-devel
 	* mysql-server
 	* pcre-devel
-	* subversion
 	* zlib-devel
+	* [svn] subversion
+	* [git] git
 
 
 ============================
@@ -67,21 +70,36 @@ relevant to your Operation System, please refer to the Wiki (links at the end of
 Windows
 	* Install prerequisites
 	* Create a folder to download rAthena into (e.g. C:\rAthena)
-	* Right click this folder and select "SVN Checkout".
-	* Paste the SVN URL into the box: https://rathena.svn.sourceforge.net/svnroot/rathena/trunk/
+	* Right click this folder and select:
+		[svn] "SVN Checkout"
+		[git] "Git Clone"
+	* Paste the SVN URL into the box:
+		[svn] https://rathena.svn.sourceforge.net/svnroot/rathena/trunk/
+		[git] https://github.com/rathena/rathena.git
 	* Open MySQL Workbench and create an instance to connect to your MySQL Server
 	* Create a database (rathena), a user (rathena), give permissions (GRANT SELECT,INSERT,UPDATE,DELETE)
 		and then login using the new user
 	* Use MySQL Workbench to run the .sql files in /sql-files/ on the new rathena database
 
 Linux
-	(For CentOS) Type: yum install gcc make mysql mysql-devel mysql-server pcre-devel subversion zlib-devel
-	(For Debian) Type: apt-get install subversion make gcc libmysqlclient-dev zlib1g-dev libpcre3-dev
+	* Type:
+	(For CentOS)
+		[svn] yum install gcc make mysql mysql-devel mysql-server pcre-devel subversion zlib-devel
+		[git]
+		      yum install gcc make mysql mysql-devel mysql-server pcre-devel zlib-devel
+		      rpm -Uvhhttp://repo.webtatic.com/yum/centos/5/latest.rpm
+		      yum install --enablerepo=webtatic git-all
+		      yum install --enablerepo=webtatic --disableexcludes=main git-all
+	(For Debian)
+		[svn] apt-get install subversion make gcc libmysqlclient-dev zlib1g-dev libpcre3-dev
+		[git] apt-get install git make gcc libmysqlclient-dev zlib1g-dev libpcre3-dev
 	* Type: mysql_secure_installation
 	* Start your MySQL server
 	* Setup a MySQL user: CREATE USER 'rathena'@'localhost' IDENTIFIED BY 'password';
 	* Assign permissions: GRANT SELECT,INSERT,UPDATE,DELETE ON `rathena\_rag`.* TO 'rathena'@'localhost';
-	* Type: svn checkout https://rathena.svn.sourceforge.net/svnroot/rathena/trunk/ ~/trunk
+	* Type:
+		[svn] svn checkout https://rathena.svn.sourceforge.net/svnroot/rathena/trunk/ ~/trunk
+		[git] git clone https://github.com/rathena/rathena.git ~/rathena
 	* Insert SQL files: mysql --user=root -p rathena_rag < trunk/sql-files/main.sql (and others)
 	* Type: cd trunk && ./configure && make clean && make sql
 	* When you're ready, type: ./athena-start start
@@ -143,6 +161,9 @@ pages on the Wiki or topics within the rAthena forum.
 
 * SVN Repository
 	https://rathena.svn.sourceforge.net/svnroot/rathena/trunk/
+
+* GIT Repository
+	https://github.com/rathena/rathena
 
 * Full Installation Instructions
 	Windows 	http://rathena.org/wiki/Installation_on_Windows
