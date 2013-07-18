@@ -16,6 +16,8 @@ extern char **arg_v;
 	extern int buildbotflag;
 #endif
 
+#define UNKNOWN_VERSION '\x02'
+
 /// @see E_CORE_ST
 extern int runflag;
 extern char *SERVER_NAME;
@@ -31,7 +33,8 @@ enum {
 extern char SERVER_TYPE;
 
 extern int parse_console(const char* buf);
-extern const char *get_svn_revision(void);
+const char *get_svn_revision(void);
+const char *get_git_hash(void);
 extern int do_init(int,char**);
 extern void set_server_type(void);
 extern void do_abort(void);

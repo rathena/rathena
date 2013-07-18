@@ -17105,12 +17105,12 @@ BUILDIN_FUNC(is_function) {
  * get_revision() -> retrieves the current svn revision (if available)
  **/
 BUILDIN_FUNC(get_revision) {
-	const char * revision;
+	const char *svn = get_svn_revision();
 
-	if ( (revision = get_svn_revision()) != 0 )
-		script_pushint(st,atoi(revision));
+	if ( svn[0] != UNKNOWN_VERSION )
+		script_pushint(st,atoi(svn));
 	else
-		script_pushint(st,-1);//unknown
+		script_pushint(st,-1); //unknown
 
 	return 0;
 }
