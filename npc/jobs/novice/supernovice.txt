@@ -336,7 +336,8 @@ aldeba_in,216,169,5	script	Esseray#sn	86,{
 		close;
 	}
 	if (BaseJob == Job_SuperNovice) {
-		if (is_function("Esseray_Ex")) callfunc "Esseray_Ex";
+		if (checkre(0))
+			callfunc "Esseray_Ex";
 		mes "[Esseray]";
 		mes "Hm? Hey, you're a member";
 		mes "of our great Novice Society,";

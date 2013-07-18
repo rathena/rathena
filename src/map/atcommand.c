@@ -1155,7 +1155,7 @@ ACMD_FUNC(item)
 		return -1;
 	}
 
-	if( bound < 0 || bound > 3 ) {
+	if( bound < 0 || bound > 4 ) {
 		clif_displaymessage(fd, msg_txt(sd,298)); // Invalid bound type
 		return -1;
 	}

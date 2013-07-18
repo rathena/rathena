@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Masao, Muad_Dib, Ziu
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.2a
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -12,11 +12,12 @@
 //= 1.0 First Version. [Masao]
 //= 1.1 Added Baby Hunter and Baby Ranger check. bugreport:5728 [Masao]
 //= 1.2 Added Wolf Flute trader, optimized. [Euphy]
+//= 1.2a Fixed some conditions. [Euphy]
 //============================================================ 
 
 -	script	Falcon Flute Trader::fflute	-1,{
 	mes "[Falcon Flute Trader]";
-	if (BaseJob == Job_Hunter || Class == Job_Ranger || Class == Job_Ranger_T || Class == Job_Baby_Ranger) {
+	if (BaseJob == Job_Hunter) {
 		mes "Do you need a Falcon?";
 		mes "With a magical Flute, you can call your Falcon from anywhere!";
 		next;
@@ -40,14 +41,13 @@
 		mes "[Falcon Flute Trader]";
 		mes "If you need a Falcon Flute I will sell them for 12,500 zeny. Or is that too expensive?";
 		next;
-		if (BaseJob == Job_Hunter)
-			set .@price,12500;
-		else {
+		if (eaclass()&EAJL_THIRD) {
 			mes "[Falcon Flute Trader]";
 			mes "For Rangers, however, I have a special price of 10,000 zeny!";
 			set .@price,10000;
 			next;
-		}
+		} else
+			set .@price,12500;
 		if(select("Don't buy one:Buy a Falcon Flute") == 1) {
 			mes "[Falcon Flute Trader]";
 			mes "That's too bad. If you need one, come back!";
@@ -65,7 +65,7 @@
 			mes "Here, take this flute.";
 			mes "With it you can whistle for your Falcon from anywhere.";
 		  	set Zeny, Zeny - .@price;
-			getitem 12848,1; // Falcon Flute
+			getitem 12848,1; //Falcon_Flute
 			next;
 			mes "[Falcon Flute Trader]";
 			mes "Just a reminder.";
@@ -76,7 +76,7 @@
 		mes "I'm sorry but you don't have enough money to buy a Falcon Flute, please come back when you have more money!";
 		close;
 	}
-	if (Class == Job_Baby_Archer || Class == Job_Archer) {
+	if (BaseJob == Job_Archer) {
 		mes "Hello, young one!";
 		mes "Currently I can't help you,";
 		mes "but why don't you return to me when you've become a great Hunter and learned how to handle Falcons properly?";
