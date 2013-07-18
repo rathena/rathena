@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.4
+//= 1.4a
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -16,6 +16,7 @@
 //= 1.2 Hopefully fixed a processing error. [Euphy]
 //= 1.3 Fixed barricade issue in schg_cas02. [Cookie]
 //= 1.4 Added OnGuildBreak event and a spawn check. [Euphy]
+//= 1.4a Fixed Guardian Stone respawns. [Euphy]
 //============================================================
 
 // Core, triggers all other events
@@ -109,8 +110,8 @@ OnEmpSpawn:
 
 OnReset:
 	set .@str$, substr(strnpcinfo(2),0,1)+substr(strnpcinfo(2),8,9);
-	donpcevent "df1#"+strnpcinfo(2)+"::OnEnable";
-	donpcevent "df2#"+strnpcinfo(2)+"::OnEnable";
+	donpcevent "df1#"+strnpcinfo(2)+"::OnDisable";
+	donpcevent "df2#"+strnpcinfo(2)+"::OnDisable";
 	donpcevent "gard1#"+strnpcinfo(2)+"::OnReset";
 	donpcevent "gard2#"+strnpcinfo(2)+"::OnReset";
 	donpcevent "1st Guardian Stone#"+.@str$+"::OnDisable";

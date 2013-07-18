@@ -9,6 +9,7 @@
 //===== Description: =========================================
 //= Spawns monsters to clean up city. Apparently spawning
 //= occured in iRO and kRO. Enable this if you want. 
+//===== Additional Comments: =================================
 //= 0.1a Added a few more towns to spawn Wild rose [MasterOfMuppets]
 //= 0.1b And even more from Poki#3 [Komurka]
 //= 1.0 Removed unofficial city cleaners [Playtester]

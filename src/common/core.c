@@ -245,17 +245,49 @@ const char* get_svn_revision(void) {
 	}
 
 	// fallback
-	snprintf(svn_version_buffer, sizeof(svn_version_buffer), "Unknown");
+	svn_version_buffer[0] = UNKNOWN_VERSION;
 	return svn_version_buffer;
 }
 #endif
+
+// GIT path
+#define GIT_ORIGIN "refs/remotes/origin/master"
+
+// Grabs the hash from the last time the user updated their working copy (last pull)
+const char *get_git_hash (void) {
+	static char GitHash[41] = ""; //Sha(40) + 1
+	FILE *fp;
+
+	if( GitHash[0] != '\0' )
+		return GitHash;
+
+	if( (fp = fopen(".git/"GIT_ORIGIN, "r")) != NULL ) {
+		char line[64];
+		char *rev = malloc(sizeof(char) * 50);
+
+		if( fgets(line, sizeof(line), fp) && sscanf(line, "%s", rev) )
+			snprintf(GitHash, sizeof(GitHash), "%s", rev);
+
+		free(rev);
+		fclose(fp);
+	} else {
+		GitHash[0] = UNKNOWN_VERSION;
+	}
+
+	if ( !(*GitHash) ) {
+		GitHash[0] = UNKNOWN_VERSION;
+	}
+
+	return GitHash;
+}
 
 /*======================================
  *	CORE : Display title
  *  ASCII By CalciumKid 1/12/2011
  *--------------------------------------*/
 static void display_title(void) {
-	//ClearScreen(); // clear screen and go up/left (0, 0 position in text)
+	const char* svn = get_svn_revision();
+	const char* git = get_git_hash();
 
 	ShowMessage("\n");
 	ShowMessage(""CL_PASS"     "CL_BOLD"                                                                 "CL_PASS""CL_CLL""CL_NORMAL"\n");
@@ -269,7 +301,10 @@ static void display_title(void) {
 	ShowMessage(""CL_PASS"       "CL_GREEN"              http://rathena.org/board/                        "CL_PASS""CL_CLL""CL_NORMAL"\n");
 	ShowMessage(""CL_PASS"     "CL_BOLD"                                                                 "CL_PASS""CL_CLL""CL_NORMAL"\n");
 
-	ShowInfo("SVN Revision: '"CL_WHITE"%s"CL_RESET"'.\n", get_svn_revision());
+	if( svn[0] != UNKNOWN_VERSION )
+		ShowInfo("SVN Revision: '"CL_WHITE"%s"CL_RESET"'\n", svn);
+	else if( git[0] != UNKNOWN_VERSION )
+		ShowInfo("Git Hash: '"CL_WHITE"%s"CL_RESET"'\n", git);
 }
 
 // Warning if executed as superuser (root)

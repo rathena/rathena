@@ -1523,10 +1523,9 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 #ifdef RENEWAL
 static int battle_calc_sizefix(int damage, struct map_session_data *sd, unsigned char t_size, unsigned char weapon_type, short flag)
 {
-	if (sd)
-	{
+	if (sd) {
 		//SizeFix only for players
-		if (!(sd->special_state.no_sizefix) || flag)
+		if (!(sd->special_state.no_sizefix) && !flag)
 			DAMAGE_RATE(weapon_type==EQI_HAND_L?
 				sd->left_weapon.atkmods[t_size]:
 				sd->right_weapon.atkmods[t_size])
@@ -2063,6 +2062,9 @@ static bool is_attack_hitting(struct Damage wd, struct block_list *src, struct b
 		case GN_CARTCANNON:
 			if( sd && pc_checkskill(sd, GN_REMODELING_CART) )
 				hitrate += pc_checkskill(sd, GN_REMODELING_CART) * 4;
+			break;
+		case LG_BANISHINGPOINT:
+			hitrate += 3 * skill_lv;
 			break;
 		case GC_VENOMPRESSURE:
 			hitrate += 10 + 4 * skill_lv;
@@ -4365,9 +4367,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 #ifdef RENEWAL
 	if(is_attack_critical(wd, src, target, skill_id, skill_lv, false)) {
 		if(sd) // check for player so we don't crash out, monsters don't have bonus crit rates [helvetica]
-			wd.damage = (int32)floor((double)wd.damage * 1.4 * ((100 + sd->bonus.crit_atk_rate) / 100));
+			wd.damage = (int)floor((double)(wd.damage * 1.4 * (100 + sd->bonus.crit_atk_rate)) / 100);
 		else
-			wd.damage = (int32)floor((double)wd.damage * 1.4);
+			wd.damage = (int)floor((double)wd.damage * 1.4);
 	}
 #endif
 
