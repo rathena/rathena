@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.6a
+//= 1.6b
 //===== Compatible With: =====================================
 //= rAthena SVN r16862+
 //===== Description: =========================================
@@ -18,6 +18,7 @@
 //= 1.5 Replaced categories with shop IDs.
 //= 1.6 Added support for purchasing stackables.
 //= 1.6a Added support for previewing costumes and robes.
+//= 1.6b Added 'disable_items' command.
 //============================================================
 
 // Shop NPCs -- supplying no argument displays entire menu.
@@ -118,6 +119,7 @@ OnBuyItem:
 	mes "[Quest Shop]";
 	mes "Reward: ^0055FF"+((.@q[2] > 1)?.@q[2]+"x ":"")+Slot(.@q[0])+"^000000";
 	mes "Requirements:";
+	disable_items;
 	if (.@q[4]) mes " > "+Chk(Zeny,.@q[4]*.@q[1])+(.@q[4]*.@q[1])+" Zeny^000000";
 	if (.@q[5]) mes " > "+Chk(getd(.Points$[0]),.@q[5]*.@q[1])+(.@q[5]*.@q[1])+" "+.Points$[1]+" ("+getd(.Points$[0])+"/"+(.@q[5]*.@q[1])+")^000000";
 	if (.@q[6]) for(set .@i,6; .@i<getarraysize(.@q); set .@i,.@i+2)

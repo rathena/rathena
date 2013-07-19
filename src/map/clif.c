@@ -10210,7 +10210,7 @@ void clif_parse_DropItem(int fd, struct map_session_data *sd){
 		if (pc_isdead(sd))
 			break;
 
-		if (pc_cant_act2(sd))
+		if (pc_cant_act2(sd) || sd->npc_id)
 			break;
 
 		if (sd->sc.count && (
@@ -10348,7 +10348,7 @@ void clif_parse_NpcClicked(int fd,struct map_session_data *sd)
 		return;
 	}
 
-	if (pc_cant_act2(sd))
+	if (pc_cant_act2(sd) || sd->npc_id)
 		return;
 
 	bl = map_id2bl(RFIFOL(fd,info->pos[0]));
@@ -10889,11 +10889,14 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 	if( sd->npc_id ){
 #ifdef RENEWAL
 		clif_msg(sd, USAGE_FAIL); // TODO look for the client date that has this message.
-#endif
 		return;
+#else
+		if( !sd->npc_item_flag || !(tmp&INF_SELF_SKILL) )
+			return;
+#endif
 	}
 
-	if( pc_cant_act(sd) && skill_id != RK_REFRESH && !(skill_id == SR_GENTLETOUCH_CURE && (sd->sc.opt1 == OPT1_STONE || sd->sc.opt1 == OPT1_FREEZE || sd->sc.opt1 == OPT1_STUN)) )
+	if( (pc_cant_act2(sd) || sd->chatID) && skill_id != RK_REFRESH && !(skill_id == SR_GENTLETOUCH_CURE && (sd->sc.opt1 == OPT1_STONE || sd->sc.opt1 == OPT1_FREEZE || sd->sc.opt1 == OPT1_STUN)) )
 		return;
 	if( pc_issit(sd) )
 		return;
