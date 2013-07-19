@@ -924,7 +924,6 @@ new_1-2,115,111,3	script	Item Tutor#nv	726,{
 		}
 	}
 	else if (nov_get_item04 < 10) {
-		enable_items;
 		mes "[Alice]";
 		mes "^666666*Yawn~*^000000";
 		mes "This is so boring.";

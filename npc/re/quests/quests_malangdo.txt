@@ -10683,6 +10683,7 @@ mal_in01,15,16,3	script	Fallen Angel#mal	403,{
 		}
 		set .@equip_refine, getequiprefinerycnt(EQI_GARMENT);
 		setarray .@equip_card[0], getequipcardid(EQI_GARMENT,0),getequipcardid(EQI_GARMENT,1),getequipcardid(EQI_GARMENT,2);
+		delitem 6417,3; //Silvervine
 		delequip EQI_GARMENT;
 		getitem2 2573,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],0; //Archangel_Wing
 		mes "[Fallen Angel]";

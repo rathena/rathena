@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 3.5
+//= 3.6
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -48,6 +48,7 @@
 //= 3.3 Added Quest Log commands. [Kisuka]
 //= 3.4 Removed the need for use of 'goto.' [L0ne_W0lf]
 //= 3.5 Fixed the waitingroom where player can enter the Test Area without passing the written exam. Now player will not be warp inside the Test Area when did not passed the written exam instead the player will be warp back to the written exam entrance [JayPee]
+//= 3.6 Fixed broken event calls. [Euphy]
 //============================================================ 
 
 in_moc_16,19,33,1	script	Guildsman#asn	55,{
@@ -1609,7 +1610,7 @@ OnTouch:
 	else {
 		mapannounce "in_moc_16",strcharinfo(0)+" has entered 'Guildmaster's room.'",bc_map;
 		savepoint "in_moc_16",181,183;
-		donpcevent "Guildmaster#ASN2::OnDisable";
+		donpcevent "Guildmaster#ASN1::OnCast";
 		warp "in_moc_16",167,113;
 		end;
 	}
@@ -1631,7 +1632,7 @@ OnTouch:
 	mes "at the end of maze.";
 	close;
 
-OnDisable:
+OnCast:
 	mapannounce "in_moc_16","...Next volunteer, please come in.",bc_map;
 	end;
 }
@@ -1998,7 +1999,7 @@ OnTouch:
 		mes "'Beholder,' what";
 		mes "is your opinion?";
 		next;
-		donpcevent "[Huey]::OnDisable";
+		disablenpc "[Huey]";
 		mes "[Beholder]";
 		mes "Well, I don't like the course score. But, somehow the whole test was passed. I'm okay with this person.";
 		next;
@@ -2242,58 +2243,17 @@ OnTouch:
 	close;
 }
 
-in_moc_16,156,87,1	script	[Huey]	55,{
+-	script	#moc_assin_dup	-1,{
 	end;
 
 OnInit:
-	disablenpc "[Huey]";
+	disablenpc strnpcinfo(0);
 	end;
 }
-
-in_moc_16,156,85,1	script	[Khai]	730,{
-	end;
-
-OnInit:
-	disablenpc "[Khai]";
-	end;
-}
-
-in_moc_16,156,83,1	script	[The Anonymous One]	106,{
-	end;
-
-OnInit:
-	disablenpc "[The Anonymous One]";
-	end;
-}
-
-in_moc_16,156,81,2	script	[Barcardi]	725,{
-	end;
-
-OnInit:
-	disablenpc "[Barcardi]";
-	end;
-}
-
-in_moc_16,156,79,1	script	[Beholder]	118,{
-	end;
-
-OnInit:
-	disablenpc "[Beholder]";
-	end;
-}
-
-in_moc_16,156,77,1	script	[Thomas]	118,{
-	end;
-
-OnInit:
-	disablenpc "[Thomas]";
-	end;
-}
-
-in_moc_16,156,75,1	script	[Gayle Maroubitz]	55,{
-	end;
-
-OnInit:
-	disablenpc "[Gayle Maroubitz]";
-	end;
-}
+in_moc_16,156,87,1	duplicate(#moc_assin_dup)	[Huey]	55
+in_moc_16,156,85,1	duplicate(#moc_assin_dup)	[Khai]	730
+in_moc_16,156,83,1	duplicate(#moc_assin_dup)	[The Anonymous One]	106
+in_moc_16,156,81,2	duplicate(#moc_assin_dup)	[Barcardi]	725
+in_moc_16,156,79,1	duplicate(#moc_assin_dup)	[Beholder]	118
+in_moc_16,156,77,1	duplicate(#moc_assin_dup)	[Thomas]	118
+in_moc_16,156,75,1	duplicate(#moc_assin_dup)	[Gayle Maroubitz]	55

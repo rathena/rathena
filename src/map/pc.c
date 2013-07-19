@@ -4299,8 +4299,11 @@ int pc_useitem(struct map_session_data *sd,int n)
 	if( sd->npc_id ){
 #ifdef RENEWAL
 		clif_msg(sd, USAGE_FAIL); // TODO look for the client date that has this message.
-#endif
 		return 0;
+#else
+		if( !sd->npc_item_flag )
+			return 0;
+#endif
 	}
 
 	if( sd->status.inventory[n].nameid <= 0 || sd->status.inventory[n].amount <= 0 )
