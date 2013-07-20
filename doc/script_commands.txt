@@ -900,6 +900,10 @@ OnTouch_:
 Similar to OnTouch, but will only run one instance. Another character is
 chosen once the triggering character leaves the area.
 
+OnTouchNPC:
+
+Similar to OnTouch, but will only trigger for monsters.
+
 OnPCLoginEvent:
 OnPCLogoutEvent:
 OnPCBaseLvUpEvent:
@@ -1015,6 +1019,8 @@ will show up as an empty line.
 
     mes "Text that will appear in the box";
 
+Colors
+------
 Inside the string you may put color codes, which will alter the color of the 
 text printed after them. The color codes are all '^<R><G><B>' and contain three 
 hexadecimal numbers representing colors as if they were HTML colors - ^FF0000 is 
@@ -1032,6 +1038,8 @@ English characters, the color codes might get screwed if they stick to letters
 with no intervening space. Separating them with spaces from the letters on 
 either side solves the problem.
 
+Multiple Lines
+--------------
 To display multiple lines of message while only using a single 'mes' command,
 use the script command in the following format:
 
@@ -1039,6 +1047,28 @@ use the script command in the following format:
 
 This will display 3 different lines while only consuming a single line in
 the relevant script file.
+
+Navigation
+----------
+For clients dated 2011-10-10aRagexe onwards, you can generate navigation links
+using HTML-like labels:
+
+    <NAVI>Display Name<INFO>mapname,x,y,0,000,flag</INFO></NAVI>
+
+The "flag" parameter can be:
+ 0: Do not open Navigation Window (default).
+ 1: Open Navigation Window.
+
+The example below will make the [Tool Shop] text clickable and begin navigation
+to alberta (98,154) when clicked.
+
+    mes "Have you checked out the <NAVI>[Tool Shop]<INFO>alberta,98,154,0,000,0</INFO></NAVI>?";
+
+URLs
+----
+Similarly, you can create links to websites that launch in a new window:
+
+    <URL>Display Name<INFO>http://www.example.com/</INFO></URL>";
 
 ---------------------------------------
 

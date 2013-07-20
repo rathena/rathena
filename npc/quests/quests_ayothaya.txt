@@ -3,7 +3,7 @@
 //===== By ===================================================
 //= Fredzilla, MasterOfMuppets
 //===== Version ==============================================
-//= 2.3
+//= 2.4
 //===== Compatible With ======================================
 //= rAthena SVN
 //===== Description ==========================================
@@ -29,6 +29,7 @@
 //= 2.1 Added missing checkweights. [L0ne_W0lf]
 //= 2.2 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 2.3 Replaced effect numerics with constants. [Samuray22]
+//= 2.4 Updated RE/Pre-RE EXP. [Euphy]
 //============================================================
 
 // Ayothaya Ring Quest
@@ -137,7 +138,6 @@ ayothaya,233,105,3	script	Powerful-Looking Woman	838,2,2,{
 				delitem 7288,1; //Engagement Ring
 				set thai_find,3;
 				close;
-			break;
 			case 2:
 				mes "[Shuda]";
 				mes "Yes, I knew I could count on you! So find Annon! It's my destiny to make him ^660000mine^000000. Hoo ho ho ho ho!";
@@ -151,7 +151,6 @@ ayothaya,233,105,3	script	Powerful-Looking Woman	838,2,2,{
 				delitem 7288,1; //Engagement Ring
 				set thai_find,3;
 				close;
-			break;
 			}
 		}
 		else
@@ -234,7 +233,6 @@ ayothaya,233,105,3	script	Powerful-Looking Woman	838,2,2,{
 				mes "Wh-who are you to say";
 				mes "something so rude to such a nice lady like myself. Go away, I don't wanna talk to you!";
 				close;
-			break;
 			case 2:
 				mes "[Powerful-Looking Woman]";
 				mes "What lies?";
@@ -343,7 +341,6 @@ ayothaya,233,105,3	script	Powerful-Looking Woman	838,2,2,{
 					emotion e_heh;
 					set thai_find,1;
 					close;
-				break;
 				case 2:
 					mes "[Powerful-Looking Woman]";
 					mes "^666666*Sigh...*^000000";
@@ -409,7 +406,6 @@ ayothaya,233,105,3	script	Powerful-Looking Woman	838,2,2,{
 					mes "So go and look under the water! There's no water current, so I'm sure it's still there! What are you waiting for, it's should be an easy swim for you! Oho ho ho ho ho!";
 					set thai_find,1;
 					close;
-				break;
 				}
 			break;
 			}
@@ -522,7 +518,6 @@ if(!$annonactive)
 					disablenpc "Haggard Man";
 					mes "^3355FFHe vanished!^000000";
 					close;
-				break;
 				case 2:
 					mes "[Haggard Man]";
 					mes "Hmmm...?";
@@ -531,7 +526,6 @@ if(!$annonactive)
 					mes "[Haggard Man]";
 					mes "You are unfamiliar to me, outsider. I'm unsure of how you found my hiding place, but if you have something to say, make it short!";
 					close;
-				break;
 				}
 			}
 			else
@@ -546,7 +540,6 @@ if(!$annonactive)
 				mes "of dust!";
 				close;
 			}
-		break;
 		case 2:
 			mes "^3355FFAs you dig up the bushes, the ground beneath one of the bushes crumbles and you hear a scream";
 			mes "from beneath.^000000";
@@ -570,7 +563,6 @@ if(!$annonactive)
 				mes "^666666*cough cough cough*^000000";
 				close;
 			}
-		break;
 		}
 	}
 	else if(thai_find == 14)
@@ -717,74 +709,11 @@ ayo_dun02,91,264,3	script	Haggard Man	841,{
 					mes "[Annon]";
 					mes "Of course, if you reveal to her that you've found me, I'll repay your favor. I implore you, just pretend you haven't found me, please?";
 					next;
-					menu "...Alright, alright.",-;
+					select("...Alright, alright.");
 					mes "[Annon]";
 					mes "Thank you so much!";
 					mes "Now, to pay you back, let me use one of the skills I've learned in my spiritual training.";
-					next;
-					mes "[Annon]";
-					mes "Let's see...";
-					mes "Let me twist your";
-					mes "arm this way, and";
-					mes "apply pressure here...";
-					next;
-					mes "[" +strcharinfo(0)+ "]";
-					mes "Wahhh~!";
-					mes "What the hell";
-					mes "are you doing!";
-					mes "You're hurting me, man!";
-					next;
-					mes "[Annon]";
-					mes "Oh, this is a special kind of massage. Don't worry, it'll relieve you of fatigue. It's quite heavenly, actually. You'll see~";
-					next;
-					mes "^3355FF*Snap snap snap*";
-					mes "*Snap snap snap*";
-					mes "*Crack crack crack*";
-					mes "*Crack crack crack*^000000";
-					next;
-					mes "^3355FFYou feel as though Annon";
-					mes "realigned every bone in your skeleton, placing them in the right spots. Strangely, you feel intense relaxation and refreshment instead of excruciating pain.";
-					set thai_find,14;
-					if(BaseLevel < 56)
-						getexp 900,0;
-					else if(BaseLevel > 55 && BaseLevel < 61)
-						getexp 1050,0;
-					else if(BaseLevel > 60 && BaseLevel < 66)
-						getexp 1868,0;
-					else if(BaseLevel > 65 && BaseLevel < 71)
-						getexp 2741,0;
-					else if(BaseLevel > 70 && BaseLevel < 76)
-						getexp 7076,0;
-					else if(BaseLevel > 75 && BaseLevel < 81)
-						getexp 13025,0;
-					else if(BaseLevel > 80 && BaseLevel < 86)
-						getexp 15034,0;
-					else if(BaseLevel > 85 && BaseLevel < 91)
-						getexp 18205,0;
-					else if(BaseLevel > 90)
-						getexp 40679,0;
-					next;
-					mes "[" +strcharinfo(0)+ "]";
-					mes "Whoa...?";
-					mes "That felt was so great~";
-					mes "It even feels like my mind";
-					mes "has been cleansed too!";
-					mes "You've got a deal!";
-					next;
-					mes "[Annon]";
-					mes "Thank you, thank you so much.";
-					mes "Now I can avoid being tied to Shuda, at least for a little longer.";
-					next;
-					mes "[Annon]";
-					mes "Now, if you'll excuse me,";
-					mes "I must make good my escape";
-					mes "before others find me.";
-					mes "Good day~!";
-					close2;
-					set $annonactive,0;
-					disablenpc "Haggard Man";
-					end;
-				break;
+					break;
 				case 2:
 					mes "[Annon]";
 					mes "Of course, what I want you to do is to keep me a secret from Shuda. Just forget that you've ever met me, and let Shuda know it was impossible to find me.";
@@ -795,73 +724,76 @@ ayo_dun02,91,264,3	script	Haggard Man	841,{
 					mes "[Annon]";
 					mes "Now, you must be wondering";
 					mes "how I would repay you for your silence. Well, let me show you one of the skills I've learned in my spiritual training.";
-					next;
-					mes "[Annon]";
-					mes "Let's see...";
-					mes "Let me twist your";
-					mes "arm this way, and";
-					mes "apply pressure here...";
-					next;
-					mes "[" +strcharinfo(0)+ "]";
-					mes "Wahhh~!";
-					mes "What the hell";
-					mes "are you doing!";
-					mes "You're hurting me, man!";
-					next;
-					mes "[Annon]";
-					mes "Oh, this is a special kind";
-					mes "of massage. Don't worry, it'll";
-					mes "relieve you of fatigue. It's quite heavenly, actually. You'll see~";
-					next;
-					mes "^3355FF*Snap snap snap*";
-					mes "*Snap snap snap*";
-					mes "*Crack crack crack*";
-					mes "*Crack crack crack*^000000";
-					next;
-					mes "^3355FFYou feel as though Annon";
-					mes "realigned every bone in your skeleton, placing them in the right spots. Strangely, you feel intense relaxation and refreshment instead of excruciating pain.";
-					set thai_find,14;
-					if(BaseLevel < 56)
-						getexp 900,0;
-					else if(BaseLevel > 55 && BaseLevel < 61)
-						getexp 1050,0;
-					else if(BaseLevel > 60 && BaseLevel < 66)
-						getexp 1868,0;
-					else if(BaseLevel > 65 && BaseLevel < 71)
-						getexp 2741,0;
-					else if(BaseLevel > 70 && BaseLevel < 76)
-						getexp 7076,0;
-					else if(BaseLevel > 75 && BaseLevel < 81)
-						getexp 13025,0;
-					else if(BaseLevel > 80 && BaseLevel < 86)
-						getexp 15034,0;
-					else if(BaseLevel > 85 && BaseLevel < 91)
-						getexp 18205,0;
-					else if(BaseLevel > 90)
-						getexp 40679,0;
-					next;
-					mes "[" +strcharinfo(0)+ "]";
-					mes "Whoa...?";
-					mes "That felt was so great~";
-					mes "It even feels like my mind";
-					mes "has been cleansed too!";
-					mes "You've got a deal!";
-					next;
-					mes "[Annon]";
-					mes "Thank you, thank you so much.";
-					mes "Now I can avoid being tied to Shuda, at least for a little longer.";
-					next;
-					mes "[Annon]";
-					mes "Now, if you'll excuse me,";
-					mes "I must make good my escape";
-					mes "before others find me.";
-					mes "Good day~!";
-					close2;
-					set $annonactive,0;
-					disablenpc "Haggard Man";
-					end;
-				break;
+					break;
 				}
+				next;
+				mes "[Annon]";
+				mes "Let's see...";
+				mes "Let me twist your";
+				mes "arm this way, and";
+				mes "apply pressure here...";
+				next;
+				mes "[" +strcharinfo(0)+ "]";
+				mes "Wahhh~!";
+				mes "What the hell";
+				mes "are you doing!";
+				mes "You're hurting me, man!";
+				next;
+				mes "[Annon]";
+				mes "Oh, this is a special kind";
+				mes "of massage. Don't worry, it'll";
+				mes "relieve you of fatigue. It's quite heavenly, actually. You'll see~";
+				next;
+				mes "^3355FF*Snap snap snap*";
+				mes "*Snap snap snap*";
+				mes "*Crack crack crack*";
+				mes "*Crack crack crack*^000000";
+				next;
+				mes "^3355FFYou feel as though Annon";
+				mes "realigned every bone in your skeleton, placing them in the right spots. Strangely, you feel intense relaxation and refreshment instead of excruciating pain.";
+				set thai_find,14;
+				if (checkre(3)) {
+					if(BaseLevel < 56) getexp 900,0;
+					else if(BaseLevel > 55 && BaseLevel < 61) getexp 1050,0;
+					else if(BaseLevel > 60 && BaseLevel < 66) getexp 1868,0;
+					else if(BaseLevel > 65 && BaseLevel < 71) getexp 2741,0;
+					else if(BaseLevel > 70 && BaseLevel < 76) getexp 7075,0;
+					else if(BaseLevel > 75 && BaseLevel < 81) getexp 13024,0;
+					else if(BaseLevel > 80 && BaseLevel < 86) getexp 15034,0;
+					else if(BaseLevel > 85 && BaseLevel < 91) getexp 18205,0;
+					else getexp 40678,0;
+				} else {
+					if(BaseLevel < 56) getexp 9000,0;
+					else if(BaseLevel > 55 && BaseLevel < 61) getexp 10500,0;
+					else if(BaseLevel > 60 && BaseLevel < 66) getexp 18684,0;
+					else if(BaseLevel > 65 && BaseLevel < 71) getexp 27411,0;
+					else if(BaseLevel > 70 && BaseLevel < 76) getexp 70757,0;
+					else if(BaseLevel > 75 && BaseLevel < 81) getexp 130246,0;
+					else if(BaseLevel > 80 && BaseLevel < 86) getexp 150340,0;
+					else if(BaseLevel > 85 && BaseLevel < 91) getexp 182052,0;
+					else getexp 406786,0;
+				}
+				next;
+				mes "[" +strcharinfo(0)+ "]";
+				mes "Whoa...?";
+				mes "That felt was so great~";
+				mes "It even feels like my mind";
+				mes "has been cleansed too!";
+				mes "You've got a deal!";
+				next;
+				mes "[Annon]";
+				mes "Thank you, thank you so much.";
+				mes "Now I can avoid being tied to Shuda, at least for a little longer.";
+				next;
+				mes "[Annon]";
+				mes "Now, if you'll excuse me,";
+				mes "I must make good my escape";
+				mes "before others find me.";
+				mes "Good day~!";
+				close2;
+				set $annonactive,0;
+				disablenpc "Haggard Man";
+				end;
 			}
 			else
 			{
@@ -899,7 +831,6 @@ ayo_dun02,91,264,3	script	Haggard Man	841,{
 				emotion e_no1,1;
 				close;
 			}
-		break;
 		case 2:
 			mes "[Haggard Man]";
 			mes "Annon...?";
@@ -926,7 +857,6 @@ ayo_dun02,91,264,3	script	Haggard Man	841,{
 			set $annonactive,0;
 			disablenpc "Haggard Man";
 			end;
-		break;
 		}
 	}
 	else
@@ -1053,7 +983,6 @@ ayothaya,253,99,3	script	Fisherman	843,{
 				mes "Remember, you need ^3355FF1 Monster's Feed^000000 to use as bait and ^3355FF50 zeny^000000 to rend a rod.";
 				close;
 			}
-		break;
 		case 2:
 			mes "[Dannai]";
 			mes "No problem,";
@@ -1062,7 +991,6 @@ ayothaya,253,99,3	script	Fisherman	843,{
 			mes "the mind and makes you";
 			mes "feel at peace...";
 			close;
-		break;
 		}
 		close;
 	}
@@ -1207,7 +1135,6 @@ OnTouch:
 				mes "Well, it's probably nothing. But which way should I go now?";
 				set thai_find,10;
 				close;
-			break;
 			case 2:
 				set @randayo,rand(1,10);
 				if(@randayo < 2)
@@ -1262,7 +1189,6 @@ OnTouch:
 					set thai_find,10;
 					close;
 				}
-			break;
 			}
 			close;
 		}

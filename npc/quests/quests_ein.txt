@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera and The rAthena Dev Team
 //===== Current Version: ===================================== 
-//= 2.5
+//= 2.6
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -24,7 +24,7 @@
 //= 1.0 Initial Release [Evera]
 //= 1.1 Added more quests [Evera]
 //= 1.2 Added quest bits from Einbech and renamed file to
-//=	quests_ein.txt [Evera]
+//=     quests_ein.txt [Evera]
 //= 1.3 Implemented the polution quest. [MasterOfMuppets]
 //= 1.4.1 Massive bugfix. Fixed Pollution exploit [Lupus]
 //= 1.4.2 Fixed Khowropher bug [Lupus]
@@ -49,6 +49,7 @@
 //= 2.5 Added quest log entries for:
 //=     - Factory Quest
 //=     - Murder Quest
+//= 2.6 Updated RE/Pre-RE EXP. [Euphy]
 //============================================================ 
 
 // Oridecon Stone OR Mineral Stone Quest
@@ -3555,26 +3556,22 @@ ein_in01,67,242,3	script	Zelmeto	851,{
 			set $EinPolution,$EinPolution+1;
 			completequest 8031;
 			set EinFactory,16;
-			if (BaseLevel < 41) {
-				getexp 62,0;
-			}
-			else if (BaseLevel < 51) {
-				getexp 308,0;
-			}
-			else if (BaseLevel < 61) {
-				getexp 660,0;
-			}
-			else if (BaseLevel < 71) {
-				getexp 1851,0;
-			}
-			else if( BaseLevel < 81) {
-				getexp 3206,0;
-			}
-			else if (BaseLevel < 91) {
-				getexp 7603,0;
-			}
-			else if (BaseLevel < 99) {
-				getexp 29068,0;
+			if (checkre(3)) {
+				if (BaseLevel < 41) getexp 61,0;
+				else if (BaseLevel < 51) getexp 307,0;
+				else if (BaseLevel < 61) getexp 660,0;
+				else if (BaseLevel < 71) getexp 1850,0;
+				else if( BaseLevel < 81) getexp 3206,0;
+				else if (BaseLevel < 91) getexp 7602,0;
+				else getexp 29067,0;
+			} else {
+				if (BaseLevel < 41) getexp 615,0;
+				else if (BaseLevel < 51) getexp 3075,0;
+				else if (BaseLevel < 61) getexp 6604,0;
+				else if (BaseLevel < 71) getexp 18508,0;
+				else if( BaseLevel < 81) getexp 32066,0;
+				else if (BaseLevel < 91) getexp 76026,0;
+				else getexp 290675,0;
 			}
 			next;
 			mes "[Zelmeto]";
@@ -4674,17 +4671,16 @@ einbech,165,105,7	script	Buender Hikeman#ein	847,{
 			cutin "ein_hicman",255;
 			completequest 2078;
 			set Shinokas_Quest,11;
-			if (BaseLevel < 70) {
-				getexp 10000,8000;
-			}
-			else if ((BaseLevel > 69) && (BaseLevel < 80)) {
-				getexp 30000,10000;
-			}
-			else if ((BaseLevel > 79) && (BaseLevel < 90)) {
-				getexp 50000,30000;
-			}
-			else if ((BaseLevel > 89) && (BaseLevel < 100)) {
-				getexp 70000,50000;
+			if (checkre(3)) {
+				if (BaseLevel < 70) getexp 30000,30000;
+				else if ((BaseLevel > 69) && (BaseLevel < 80)) getexp 40000,40000;
+				else if ((BaseLevel > 79) && (BaseLevel < 90)) getexp 70000,70000;
+				else getexp 90000,90000;
+			} else {
+				if (BaseLevel < 70) getexp 100000,80000;
+				else if ((BaseLevel > 69) && (BaseLevel < 80)) getexp 300000,100000;
+				else if ((BaseLevel > 79) && (BaseLevel < 90)) getexp 500000,300000;
+				else getexp 700000,500000;
 			}
 			end;
 		case 2:
@@ -5946,17 +5942,17 @@ ein_in01,31,138,3	script	Calla#ein	90,{
 		mes "feel goooood~";
 		percentheal 100,0;
 		set EIN_LOVERQ,17;
-		if (BaseLevel < 41) {
-			getexp 61,0;
-		}
-		else if (BaseLevel < 61) {
-			getexp 600,0;
-		}
-		else if (BaseLevel < 81) {
-			getexp 3000,0;
-		}
-		else if (BaseLevel < 99) {
-			getexp 20000,0;
+		if (checkre(3)) {
+			if (BaseLevel < 41) getexp 61,0;
+			else if (BaseLevel < 61) getexp 600,0;
+			else if (BaseLevel < 81) getexp 3000,0;
+			else if (BaseLevel < 99) getexp 20000,0;
+			else getexp 30000,0;
+		} else {
+			if (BaseLevel < 41) getexp 610,0;
+			else if (BaseLevel < 61) getexp 6000,0;
+			else if (BaseLevel < 81) getexp 30000,0;
+			else getexp 200000,0;
 		}
 		next;
 		mes "[Calla]";
@@ -6414,17 +6410,17 @@ ein_in01,200,101,5	script	Klitzer#ein	854,{
 		percentheal 100,0;
 		delitem 1901,1; //Violin
 		set EIN_LOVERQ,5;
-		if (BaseLevel < 41) {
-			getexp 61,0;
-		}
-		else if (BaseLevel < 61) {
-			getexp 600,0;
-		}
-		else if (BaseLevel < 81) {
-			getexp 3000,0;
-		}
-		else if (BaseLevel < 99) {
-			getexp 20000,0;
+		if (checkre(3)) {
+			if (BaseLevel < 41) getexp 61,0;
+			else if (BaseLevel < 61) getexp 600,0;
+			else if (BaseLevel < 81) getexp 3000,0;
+			else if (BaseLevel < 99) getexp 20000,0;
+			else getexp 30000,0;
+		} else {
+			if (BaseLevel < 41) getexp 610,0;
+			else if (BaseLevel < 61) getexp 6000,0;
+			else if (BaseLevel < 81) getexp 30000,0;
+			else getexp 200000,0;
 		}
 		next;
 		mes "[Klitzer]";

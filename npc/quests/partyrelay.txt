@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First version. [L0ne_W0lf]
 //= 1.1 Fixed a couple typos, npcs check area for PCs. [L0ne_W0lf]
+//= 1.2 Updated RE/Pre-RE EXP. [Euphy]
 //============================================================
 
 payon,103,113,3	script	Ledrion#payon::RelayLedrion	109,{
@@ -75,27 +76,7 @@ payon,103,113,3	script	Ledrion#payon::RelayLedrion	109,{
 		else {
 			getitem 617,3; //Old_Violet_Box
 		}
-		if (BaseLevel > 94) {
-			getexp 104760,0;
-		}
-		else if (BaseLevel > 89) {
-			getexp 85920,0;
-		}
-		else if (BaseLevel > 79) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 69) {
-			getexp 19560,0;
-		}
-		else if (BaseLevel > 59) {
-			getexp 67200,0;
-		}
-		else if (BaseLevel > 49) {
-			getexp 28800,0;
-		}
-		else {
-			getexp 1080,0;
-		}
+		callfunc "F_PartyRelay_Exp";
 		mes "[Ledrion]";
 		mes "Well, I hope you like it!";
 		mes "If you can't use it, then";
@@ -151,27 +132,7 @@ payon,103,113,3	script	Ledrion#payon::RelayLedrion	109,{
 		getitem 603,3; //Old_Blue_Box
 		getitem 617,1; //Old_Violet_Box
 		getitem 7738,1; //Mission_Certificate9
-		if (BaseLevel > 94) {
-			getexp 104760,0;
-		}
-		else if (BaseLevel > 89) {
-			getexp 85920,0;
-		}
-		else if (BaseLevel > 79) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 69) {
-			getexp 19560,0;
-		}
-		else if (BaseLevel > 59) {
-			getexp 67200,0;
-		}
-		else if (BaseLevel > 49) {
-			getexp 28800,0;
-		}
-		else {
-			getexp 1080,0;
-		}
+		callfunc "F_PartyRelay_Exp";
 		next;
 		mes "[Ledrion]";
 		mes "Please give that ticket";
@@ -220,27 +181,7 @@ payon,103,113,3	script	Ledrion#payon::RelayLedrion	109,{
 		getitem 644,3; //Gift_Box
 		getitem 603,1; //Old_Blue_Box
 		getitem 7734,1; //Mission_Certificate5
-		if (BaseLevel > 94) {
-			getexp 104760,0;
-		}
-		else if (BaseLevel > 89) {
-			getexp 85920,0;
-		}
-		else if (BaseLevel > 79) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 69) {
-			getexp 19560,0;
-		}
-		else if (BaseLevel > 59) {
-			getexp 67200,0;
-		}
-		else if (BaseLevel > 49) {
-			getexp 28800,0;
-		}
-		else {
-			getexp 1080,0;
-		}
+		callfunc "F_PartyRelay_Exp";
 		close;
 	}
 	if (countitem(7733) > 0) {
@@ -485,27 +426,7 @@ payon,83,327,3	script	Gatan#payon::RelayGatan	86,{
 		getitem 7739,1; //Mission_Certificate10
 		getitem 610,2; //Leaf_Of_Yggdrasil
 		getitem 607,2; //Yggdrasilberry
-		if (BaseLevel > 94) {
-			getexp 104760,0;
-		}
-		else if (BaseLevel > 89) {
-			getexp 85920,0;
-		}
-		else if (BaseLevel > 79) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 69) {
-			getexp 19560,0;
-		}
-		else if (BaseLevel > 59) {
-			getexp 67200,0;
-		}
-		else if (BaseLevel > 49) {
-			getexp 28800,0;
-		}
-		else {
-			getexp 1080,0;
-		}
+		callfunc "F_PartyRelay_Exp";
 		next;
 		mes "[Gatan]";
 		mes "Alright, get that done.";
@@ -970,27 +891,7 @@ payon,83,327,3	script	Gatan#payon::RelayGatan	86,{
 		set party_relay,17;
 		getitem 7735,1; //Mission_Certificate6
 		getitem 610,2; //Leaf_Of_Yggdrasil
-		if (BaseLevel > 94) {
-			getexp 104760,0;
-		}
-		else if (BaseLevel > 89) {
-			getexp 85920,0;
-		}
-		else if (BaseLevel > 79) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 69) {
-			getexp 19560,0;
-		}
-		else if (BaseLevel > 59) {
-			getexp 67200,0;
-		}
-		else if (BaseLevel > 49) {
-			getexp 28800,0;
-		}
-		else {
-			getexp 1080,0;
-		}
+		callfunc "F_PartyRelay_Exp";
 		next;
 		mes "[Gatan]";
 		mes "Alright, get that done.";
@@ -1461,27 +1362,7 @@ payon,83,327,3	script	Gatan#payon::RelayGatan	86,{
 		set party_relay,6;
 		getitem 7731,1; //Mission_Certificate2
 		getitem 607,2; //Yggdrasilberry
-		if (BaseLevel > 94) {
-			getexp 104760,0;
-		}
-		else if (BaseLevel > 89) {
-			getexp 85920,0;
-		}
-		else if (BaseLevel > 79) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 69) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 59) {
-			getexp 67200,0;
-		}
-		else if (BaseLevel > 49) {
-			getexp 28800,0;
-		}
-		else {
-			getexp 1080,0;
-		}
+		callfunc "F_PartyRelay_Exp";
 		next;
 		mes "[Gatan]";
 		mes "Don't forget to make";
@@ -1983,27 +1864,7 @@ payon,204,221,3	script	Bafhail#payon::RelayBafhail	731,{
 		getitem 7740,1; //Mission_Certificate11
 		getitem 610,2; //Leaf_Of_Yggdrasil
 		getitem 607,2; //Yggdrasilberry
-		if (BaseLevel > 94) {
-			getexp 104760,0;
-		}
-		else if (BaseLevel > 89) {
-			getexp 85920,0;
-		}
-		else if (BaseLevel > 79) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 69) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 59) {
-			getexp 67200,0;
-		}
-		else if (BaseLevel > 49) {
-			getexp 28800,0;
-		}
-		else {
-			getexp 1080,0;
-		}
+		callfunc "F_PartyRelay_Exp";
 		mes "[Bafhail]";
 		mes "Make sure that you give";
 		mes "that ticket to an Archer";
@@ -2028,27 +1889,7 @@ payon,204,221,3	script	Bafhail#payon::RelayBafhail	731,{
 		getitem 7740,1; //Mission_Certificate11
 		getitem 610,2; //Leaf_Of_Yggdrasil
 		getitem 607,2; //Yggdrasilberry
-		if (BaseLevel > 94) {
-			getexp 104760,0;
-		}
-		else if (BaseLevel > 89) {
-			getexp 85920,0;
-		}
-		else if (BaseLevel > 79) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 69) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 59) {
-			getexp 67200,0;
-		}
-		else if (BaseLevel > 49) {
-			getexp 28800,0;
-		}
-		else {
-			getexp 1080,0;
-		}
+		callfunc "F_PartyRelay_Exp";
 		mes "[Bafhail]";
 		mes "Make sure that you give";
 		mes "that ticket to an Archer";
@@ -2170,27 +2011,7 @@ payon,204,221,3	script	Bafhail#payon::RelayBafhail	731,{
 		set party_relay,20;
 		getitem 7736,1; //Mission_Certificate7
 		getitem 610,2; //Leaf_Of_Yggdrasil
-		if (BaseLevel > 94) {
-			getexp 104760,0;
-		}
-		else if (BaseLevel > 89) {
-			getexp 85920,0;
-		}
-		else if (BaseLevel > 79) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 69) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 59) {
-			getexp 67200,0;
-		}
-		else if (BaseLevel > 49) {
-			getexp 28800,0;
-		}
-		else {
-			getexp 1080,0;
-		}
+		callfunc "F_PartyRelay_Exp";
 		mes "[Bafhail]";
 		mes "Do me a favor and make";
 		mes "sure that the Merchant";
@@ -2214,27 +2035,7 @@ payon,204,221,3	script	Bafhail#payon::RelayBafhail	731,{
 		set party_relay,20;
 		getitem 7736,1; //Mission_Certificate7
 		getitem 610,2; //Leaf_Of_Yggdrasil
-		if (BaseLevel > 94) {
-			getexp 104760,0;
-		}
-		else if (BaseLevel > 89) {
-			getexp 85920,0;
-		}
-		else if (BaseLevel > 79) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 69) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 59) {
-			getexp 67200,0;
-		}
-		else if (BaseLevel > 49) {
-			getexp 28800,0;
-		}
-		else {
-			getexp 1080,0;
-		}
+		callfunc "F_PartyRelay_Exp";
 		mes "[Bafhail]";
 		mes "Do me a favor and make";
 		mes "sure that the Merchant";
@@ -2276,27 +2077,7 @@ payon,204,221,3	script	Bafhail#payon::RelayBafhail	731,{
 		set party_relay,20;
 		getitem 7736,1; //Mission_Certificate7
 		getitem 610,2; //Leaf_Of_Yggdrasil
-		if (BaseLevel > 94) {
-			getexp 104760,0;
-		}
-		else if (BaseLevel > 89) {
-			getexp 85920,0;
-		}
-		else if (BaseLevel > 79) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 69) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 59) {
-			getexp 67200,0;
-		}
-		else if (BaseLevel > 49) {
-			getexp 28800,0;
-		}
-		else {
-			getexp 1080,0;
-		}
+		callfunc "F_PartyRelay_Exp";
 		mes "[Bafhail]";
 		mes "Do me a favor and make";
 		mes "sure that the Merchant";
@@ -2320,27 +2101,7 @@ payon,204,221,3	script	Bafhail#payon::RelayBafhail	731,{
 		set party_relay,20;
 		getitem 7736,1; //Mission_Certificate7
 		getitem 610,2; //Leaf_Of_Yggdrasil
-		if (BaseLevel > 94) {
-			getexp 104760,0;
-		}
-		else if (BaseLevel > 89) {
-			getexp 85920,0;
-		}
-		else if (BaseLevel > 79) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 69) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 59) {
-			getexp 67200,0;
-		}
-		else if (BaseLevel > 49) {
-			getexp 28800,0;
-		}
-		else {
-			getexp 1080,0;
-		}
+		callfunc "F_PartyRelay_Exp";
 		mes "[Bafhail]";
 		mes "Do me a favor and make";
 		mes "sure that the Merchant";
@@ -2480,27 +2241,7 @@ payon,204,221,3	script	Bafhail#payon::RelayBafhail	731,{
 		set party_relay,9;
 		getitem 7732,1; //Mission_Certificate3
 		getitem 607,2; //Yggdrasilberry
-		if (BaseLevel > 94) {
-			getexp 104760,0;
-		}
-		else if (BaseLevel > 89) {
-			getexp 85920,0;
-		}
-		else if (BaseLevel > 79) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 69) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 59) {
-			getexp 67200,0;
-		}
-		else if (BaseLevel > 49) {
-			getexp 28800,0;
-		}
-		else {
-			getexp 1080,0;
-		}
+		callfunc "F_PartyRelay_Exp";
 		mes "[Bafhail]";
 		mes "Please give that";
 		mes "ticket to the Archer";
@@ -2523,27 +2264,7 @@ payon,204,221,3	script	Bafhail#payon::RelayBafhail	731,{
 		set party_relay,9;
 		getitem 7732,1; //Mission_Certificate3
 		getitem 607,2; //Yggdrasilberry
-		if (BaseLevel > 94) {
-			getexp 104760,0;
-		}
-		else if (BaseLevel > 89) {
-			getexp 85920,0;
-		}
-		else if (BaseLevel > 79) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 69) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 59) {
-			getexp 67200,0;
-		}
-		else if (BaseLevel > 49) {
-			getexp 28800,0;
-		}
-		else {
-			getexp 1080,0;
-		}
+		callfunc "F_PartyRelay_Exp";
 		next;
 		mes "[Bafhail]";
 		mes "Please give that";
@@ -2783,27 +2504,7 @@ payon,168,314,3	script	Lospii#payon::RelayLospii	706,{
 		getitem 7741,1; //Mission_Certificate12
 		getitem 610,2; //Leaf_Of_Yggdrasil
 		getitem 607,2; //Yggdrasilberry
-		if (BaseLevel > 94) {
-			getexp 104760,0;
-		}
-		else if (BaseLevel > 89) {
-			getexp 85920,0;
-		}
-		else if (BaseLevel > 79) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 69) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 59) {
-			getexp 67200,0;
-		}
-		else if (BaseLevel > 49) {
-			getexp 28800,0;
-		}
-		else {
-			getexp 1080,0;
-		}
+		callfunc "F_PartyRelay_Exp";
 		mes "[Lospii]";
 		mes "Okay, now take this";
 		mes "ticket, and give it to";
@@ -2840,27 +2541,7 @@ payon,168,314,3	script	Lospii#payon::RelayLospii	706,{
 		getitem 7741,1; //Mission_Certificate12
 		getitem 610,2; //Leaf_Of_Yggdrasil
 		getitem 607,2; //Yggdrasilberry
-		if (BaseLevel > 94) {
-			getexp 104760,0;
-		}
-		else if (BaseLevel > 89) {
-			getexp 85920,0;
-		}
-		else if (BaseLevel > 79) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 69) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 59) {
-			getexp 67200,0;
-		}
-		else if (BaseLevel > 49) {
-			getexp 28800,0;
-		}
-		else {
-			getexp 1080,0;
-		}
+		callfunc "F_PartyRelay_Exp";
 		mes "[Lospii]";
 		mes "Okay, now take this";
 		mes "ticket, and give it to";
@@ -3021,27 +2702,7 @@ payon,168,314,3	script	Lospii#payon::RelayLospii	706,{
 		set party_relay,22;
 		getitem 7737,1; //Mission_Certificate8
 		getitem 610,2; //Leaf_Of_Yggdrasil
-		if (BaseLevel > 94) {
-			getexp 104760,0;
-		}
-		else if (BaseLevel > 89) {
-			getexp 85920,0;
-		}
-		else if (BaseLevel > 79) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 69) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 59) {
-			getexp 67200,0;
-		}
-		else if (BaseLevel > 49) {
-			getexp 28800,0;
-		}
-		else {
-			getexp 1080,0;
-		}
+		callfunc "F_PartyRelay_Exp";
 		mes "[Lospii]";
 		mes "Okay, now take this";
 		mes "ticket, and give it to";
@@ -3077,27 +2738,7 @@ payon,168,314,3	script	Lospii#payon::RelayLospii	706,{
 		set party_relay,22;
 		getitem 7737,1; //Mission_Certificate8
 		getitem 610,2; //Leaf_Of_Yggdrasil
-		if (BaseLevel > 94) {
-			getexp 104760,0;
-		}
-		else if (BaseLevel > 89) {
-			getexp 85920,0;
-		}
-		else if (BaseLevel > 79) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 69) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 59) {
-			getexp 67200,0;
-		}
-		else if (BaseLevel > 49) {
-			getexp 28800,0;
-		}
-		else {
-			getexp 1080,0;
-		}
+		callfunc "F_PartyRelay_Exp";
 		mes "[Lospii]";
 		mes "Okay, now take this";
 		mes "ticket, and give it to";
@@ -3258,27 +2899,7 @@ payon,168,314,3	script	Lospii#payon::RelayLospii	706,{
 		set party_relay,11;
 		getitem 7733,1; //Mission_Certificate4
 		getitem 607,2; //Yggdrasilberry
-		if (BaseLevel > 94) {
-			getexp 104760,0;
-		}
-		else if (BaseLevel > 89) {
-			getexp 85920,0;
-		}
-		else if (BaseLevel > 79) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 69) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 59) {
-			getexp 67200,0;
-		}
-		else if (BaseLevel > 49) {
-			getexp 28800,0;
-		}
-		else {
-			getexp 1080,0;
-		}
+		callfunc "F_PartyRelay_Exp";
 		mes "[Lospii]";
 		mes "Okay, now take this";
 		mes "ticket, and give it to";
@@ -3314,27 +2935,7 @@ payon,168,314,3	script	Lospii#payon::RelayLospii	706,{
 		set party_relay,11;
 		getitem 7733,1; //Mission_Certificate4
 		getitem 607,2; //Yggdrasilberry
-		if (BaseLevel > 94) {
-			getexp 104760,0;
-		}
-		else if (BaseLevel > 89) {
-			getexp 85920,0;
-		}
-		else if (BaseLevel > 79) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 69) {
-			getexp 38520,0;
-		}
-		else if (BaseLevel > 59) {
-			getexp 67200,0;
-		}
-		else if (BaseLevel > 49) {
-			getexp 28800,0;
-		}
-		else {
-			getexp 1080,0;
-		}
+		callfunc "F_PartyRelay_Exp";
 		mes "[Lospii]";
 		mes "Okay, now take this";
 		mes "ticket, and give it to";
@@ -3474,6 +3075,28 @@ payon,168,314,3	script	Lospii#payon::RelayLospii	706,{
 	mes "I got a job! I'm helping";
 	mes "my friends a lot!";
 	close;
+}
+
+// EXP Rewards
+function	script	F_PartyRelay_Exp	{
+	if (checkre(3)) { //unconfirmed
+		if (BaseLevel > 94) getexp 104760,0;
+		else if (BaseLevel > 89) getexp 85920,0;
+		else if (BaseLevel > 79) getexp 38520,0;
+		else if (BaseLevel > 69) getexp 19560,0;
+		else if (BaseLevel > 59) getexp 6720,0;
+		else if (BaseLevel > 49) getexp 2880,0;
+		else getexp 1080,0;
+	} else {
+		if (BaseLevel > 94) getexp 1047600,0;
+		else if (BaseLevel > 89) getexp 859200,0;
+		else if (BaseLevel > 79) getexp 385200,0;
+		else if (BaseLevel > 69) getexp 195600,0;
+		else if (BaseLevel > 59) getexp 67200,0;
+		else if (BaseLevel > 49) getexp 28800,0;
+		else getexp 10800,0;
+	}
+	return;
 }
 
 // Comodo Relay

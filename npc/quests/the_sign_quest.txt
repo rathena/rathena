@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth, MasterOfMuppets, Kargha
 //===== Current Version: ===================================== 
-//= 3.8
+//= 3.9
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -26,6 +26,7 @@
 //= 3.6 Corrected the Level Requirements for 'Standby Room' [tr0n]
 //= 3.7 Massive cleaning/optimization (more can still be done). [Euphy]
 //= 3.8 Corrected an invalid map name. [Joseph]
+//= 3.9 Updated RE/Pre-RE EXP. [Euphy]
 //============================================================ 
 
 // The Sign (Part 1)
@@ -694,7 +695,7 @@ prt_in,227,45,0	script	Archeologist#sign	804,{
 			mes "You may have had your doubts,";
 			mes "but I'm happy enough to confirm that the Sign really exists. Thanks again, and I hope you stop by and chat from time to time.";
 			set sign_q,142;
-			getexp 200000,0;
+			getexp (checkre(3))?200000:2000000,0;
 		}
 		else {
 			mes "Have you visited";
@@ -727,7 +728,7 @@ prt_in,227,45,0	script	Archeologist#sign	804,{
 		}
 		delitem 7178,1; //Star's_Sob
 		set sign_q,202;
-		getexp 10000,0;
+		getexp (checkre(3))?10000:100000,0;
 		getitem 617,1; //Old_Violet_Box
 	}
 	else if (sign_q > 201) {
@@ -1495,11 +1496,19 @@ morocc_in,115,154,5	script	Rogue#sign	810,{
 			mes "you gave Ganaan tell me";
 			mes "you're not a total dumbass.";
 			mes "Now you're supposed to go see Daewoon in Payon. And don't forget to show him this Star thingee.";
-			if (BaseLevel < 60) getexp 300,0;
-			else if (BaseLevel < 70) getexp 750,0;
-			else if (BaseLevel < 80) getexp 1000,0;
-			else if (BaseLevel < 90) getexp 1300,0;
-			else if (BaseLevel < 150) getexp 1800,0;
+			if (checkre(3)) {
+				if (BaseLevel < 60) getexp 300,0;
+				else if (BaseLevel < 70) getexp 750,0;
+				else if (BaseLevel < 80) getexp 1000,0;
+				else if (BaseLevel < 90) getexp 1300,0;
+				else getexp 1800,0;
+			} else {
+				if (BaseLevel < 60) getexp 3000,0;
+				else if (BaseLevel < 70) getexp 7500,0;
+				else if (BaseLevel < 80) getexp 10000,0;
+				else if (BaseLevel < 90) getexp 13000,0;
+				else getexp 18000,0;
+			}
 			set sign_q,14;
 			getitem 7177,1; //Part_Of_Star's_Sob
 			close;
@@ -2357,11 +2366,19 @@ payon_in03,11,31,4	script	Daewoon#sign	808,{
 			if (.@pay_point > 29) {
 				set sign_q,15;
 				getitem 7177,1; //Part_Of_Star's_Sob
-				if (BaseLevel < 60) getexp 300,0;
-				else if (BaseLevel < 70) getexp 700,0;
-				else if (BaseLevel < 80) getexp 1000,0;
-				else if (BaseLevel < 90) getexp 1300,0;
-				else if (BaseLevel < 150) getexp 1800,0;
+				if (checkre(3)) {
+					if (BaseLevel < 60) getexp 300,0;
+					else if (BaseLevel < 70) getexp 750,0;
+					else if (BaseLevel < 80) getexp 1000,0;
+					else if (BaseLevel < 90) getexp 1300,0;
+					else getexp 1800,0;
+				} else {
+					if (BaseLevel < 60) getexp 3000,0;
+					else if (BaseLevel < 70) getexp 7500,0;
+					else if (BaseLevel < 80) getexp 10000,0;
+					else if (BaseLevel < 90) getexp 13000,0;
+					else getexp 18000,0;
+				}
 				emotion e_heh;
 				mes "[Daewoon]";
 				mes "Well, I must say that I've";
@@ -2393,11 +2410,19 @@ payon_in03,11,31,4	script	Daewoon#sign	808,{
 			else if ((.@pay_point > 26) && (.@pay_point < 30)) {
 				set sign_q,15;
 				getitem 7177,1; //Part_Of_Star's_Sob
-				if (BaseLevel < 60) getexp 300,0;
-				else if (BaseLevel < 70) getexp 700,0;
-				else if (BaseLevel < 80) getexp 1000,0;
-				else if (BaseLevel < 90) getexp 1300,0;
-				else if (BaseLevel < 150) getexp 1800,0;
+				if (checkre(3)) {
+					if (BaseLevel < 60) getexp 300,0;
+					else if (BaseLevel < 70) getexp 750,0;
+					else if (BaseLevel < 80) getexp 1000,0;
+					else if (BaseLevel < 90) getexp 1300,0;
+					else getexp 1800,0;
+				} else {
+					if (BaseLevel < 60) getexp 3000,0;
+					else if (BaseLevel < 70) getexp 7500,0;
+					else if (BaseLevel < 80) getexp 10000,0;
+					else if (BaseLevel < 90) getexp 13000,0;
+					else getexp 18000,0;
+				}
 				mes "[Daewoon]";
 				mes "You know, after talking with";
 				mes "you for a while, I now feel fairly comfortable with leaving you this piece of the Sobbing Starlight. Somehow, I think you're strong enough to get all the pieces.";
@@ -3067,11 +3092,13 @@ OnTouch:
 	end;
 }
 
-//prt_maze02,25,161,0	script	#music	-1,7,7,{
-//OnTouch:
-//	soundeffect "effect\\¼®¾çÀÇ ¾î½Ø½Å.wav",1;
-//	end;
-//}
+/* Currently broken.
+prt_maze02,25,161,0	script	#music	-1,7,7,{
+OnTouch:
+	soundeffect "effect\\¼®¾çÀÇ ¾î½Ø½Å.wav",1;
+	end;
+}
+*/
 
 prt_maze02,132,132,0	script	#skill	-1,{
 OnEnable:
@@ -4615,11 +4642,19 @@ cmd_in02,88,51,4	script	Strange Guy#sign	806,{
 				if (countitem(750)) delitem 750,1; //Baphomet_Doll
 				if (countitem(751)) delitem 751,1; //Osiris_Doll
 				set sign_q,30;
-				if (BaseLevel < 60) getexp 300,0;
-				else if (BaseLevel < 70) getexp 500,0;
-				else if (BaseLevel < 80) getexp 800,0;
-				else if (BaseLevel < 90) getexp 1000,0;
-				else if (BaseLevel < 150) getexp 1300,0;
+				if (checkre(3)) {
+					if (BaseLevel < 60) getexp 300,0;
+					else if (BaseLevel < 70) getexp 500,0;
+					else if (BaseLevel < 80) getexp 800,0;
+					else if (BaseLevel < 90) getexp 1000,0;
+					else getexp 1300,0;
+				} else {
+					if (BaseLevel < 60) getexp 3000,0;
+					else if (BaseLevel < 70) getexp 5000,0;
+					else if (BaseLevel < 80) getexp 8000,0;
+					else if (BaseLevel < 90) getexp 10000,0;
+					else getexp 13000,0;
+				}
 				next;
 				warp "cmd_in01",33,29;
 				end;
@@ -4698,11 +4733,19 @@ cmd_in02,88,51,4	script	Strange Guy#sign	806,{
 			mes "um, ''Bakerlan'' in Alberta.";
 			set sign_q,35;
 			getitem 7177,1; //Part_Of_Star's_Sob
-			if (BaseLevel < 60) getexp 300,0;
-			else if (BaseLevel < 70) getexp 700,0;
-			else if (BaseLevel < 80) getexp 1900,0;
-			else if (BaseLevel < 90) getexp 1200,0;
-			else if (BaseLevel < 150) getexp 1700,0;
+			if (checkre(3)) {
+				if (BaseLevel < 60) getexp 300,0;
+				else if (BaseLevel < 70) getexp 700,0;
+				else if (BaseLevel < 80) getexp 1900,0;
+				else if (BaseLevel < 90) getexp 1200,0;
+				else getexp 1700,0;
+			} else {
+				if (BaseLevel < 60) getexp 3000,0;
+				else if (BaseLevel < 70) getexp 7000,0;
+				else if (BaseLevel < 80) getexp 19000,0;
+				else if (BaseLevel < 90) getexp 12000,0;
+				else getexp 17000,0;
+			}
 			next;
 			mes "[Dearles]";
 			mes "Well, that's it.";
@@ -4728,11 +4771,19 @@ cmd_in02,88,51,4	script	Strange Guy#sign	806,{
 			set sign_q,35;
 			getitem 7177,1; //Part_Of_Star's_Sob
 			set zeny,zeny+20000;
-			if (BaseLevel < 60) getexp 300,0;
-			else if (BaseLevel < 70) getexp 700,0;
-			else if (BaseLevel < 80) getexp 1000,0;
-			else if (BaseLevel < 90) getexp 1400,0;
-			else if (BaseLevel < 150) getexp 1900,0;
+			if (checkre(3)) {
+				if (BaseLevel < 60) getexp 300,0;
+				else if (BaseLevel < 70) getexp 700,0;
+				else if (BaseLevel < 80) getexp 1000,0;
+				else if (BaseLevel < 90) getexp 1400,0;
+				else getexp 1900,0;
+			} else {
+				if (BaseLevel < 60) getexp 3000,0;
+				else if (BaseLevel < 70) getexp 7000,0;
+				else if (BaseLevel < 80) getexp 10000,0;
+				else if (BaseLevel < 90) getexp 14000,0;
+				else getexp 19000,0;
+			}
 			next;
 			mes "[Dearles]";
 			mes "Well, that's it.";
@@ -5591,11 +5642,19 @@ alberta_in,125,101,5	script	Wealthy-looking Merchant	807,{
 		mes "He will tell you what you need to do next.";
 		set sign_q,53;
 		getitem 7177,1; //Part_Of_Star's_Sob
-		if (BaseLevel < 60) getexp 500,0;
-		else if (BaseLevel < 70) getexp 800,0;
-		else if (BaseLevel < 80) getexp 1100,0;
-		else if (BaseLevel < 90) getexp 1500,0;
-		else if (BaseLevel < 150) getexp 2000,0;
+		if (checkre(3)) {
+			if (BaseLevel < 60) getexp 500,0;
+			else if (BaseLevel < 70) getexp 800,0;
+			else if (BaseLevel < 80) getexp 1100,0;
+			else if (BaseLevel < 90) getexp 1500,0;
+			else getexp 2000,0;
+		} else {
+			if (BaseLevel < 60) getexp 5000,0;
+			else if (BaseLevel < 70) getexp 8000,0;
+			else if (BaseLevel < 80) getexp 11000,0;
+			else if (BaseLevel < 90) getexp 15000,0;
+			else getexp 20000,0;
+		}
 		close;
 	}
 	else if (sign_q == 97) {
@@ -6797,11 +6856,19 @@ yuno,330,100,4	script	Knight#ss	734,{
 				delitem2 7049,1,1,0,0,.@sign1,.@sign2,.@sign3,.@sign4;
 				set sign_q,39;
 				getitem 7181,1; //Receipt_01
-				if (BaseLevel < 60) getexp 100,0;
-				else if (BaseLevel < 70) getexp 200,0;
-				else if (BaseLevel < 80) getexp 400,0;
-				else if (BaseLevel < 90) getexp 700,0;
-				else if (BaseLevel < 150) getexp 1100,0;
+				if (checkre(3)) {
+					if (BaseLevel < 60) getexp 100,0;
+					else if (BaseLevel < 70) getexp 200,0;
+					else if (BaseLevel < 80) getexp 400,0;
+					else if (BaseLevel < 90) getexp 700,0;
+					else getexp 1100,0;
+				} else {
+					if (BaseLevel < 60) getexp 1000,0;
+					else if (BaseLevel < 70) getexp 2000,0;
+					else if (BaseLevel < 80) getexp 4000,0;
+					else if (BaseLevel < 90) getexp 7000,0;
+					else getexp 11000,0;
+				}
 				close;
 			}
 		}
@@ -7105,7 +7172,7 @@ mjo_dun02,88,295,4	script	Flaming Spirit Man	85,{
 				mes "If it weren't for your help,";
 				mes "I'd be in big trouble. I really appreciate you stepping in and volunteering your materials like this.";
 				delitem 1002,1; //Iron_Ore
-				getexp 1,0;
+				getexp 10,0;
 				close;
 			case 2:
 				mes "[Engel]";
@@ -8180,15 +8247,27 @@ himinn,48,86,5	script	Valkyrie#sign	811,{
 		mes "one of the hearts there...";
 		set sign_q,82;
 		percentheal 100,100;
-		if (BaseLevel < 56) getexp 900,0;
-		else if ((BaseLevel > 55) && (BaseLevel < 61)) getexp 1200,0;
-		else if ((BaseLevel > 60) && (BaseLevel < 66)) getexp 2000,0;
-		else if ((BaseLevel > 65) && (BaseLevel < 71)) getexp 3500,0;
-		else if ((BaseLevel > 70) && (BaseLevel < 76)) getexp 7000,0;
-		else if ((BaseLevel > 75) && (BaseLevel < 81)) getexp 12000,0;
-		else if ((BaseLevel > 80) && (BaseLevel < 86)) getexp 16000,0;
-		else if ((BaseLevel > 85) && (BaseLevel < 91)) getexp 21000,0;
-		else if (BaseLevel > 90) getexp 35000,0;
+		if (checkre(3)) {
+			if (BaseLevel < 56) getexp 900,0;
+			else if ((BaseLevel > 55) && (BaseLevel < 61)) getexp 1200,0;
+			else if ((BaseLevel > 60) && (BaseLevel < 66)) getexp 2000,0;
+			else if ((BaseLevel > 65) && (BaseLevel < 71)) getexp 3500,0;
+			else if ((BaseLevel > 70) && (BaseLevel < 76)) getexp 7000,0;
+			else if ((BaseLevel > 75) && (BaseLevel < 81)) getexp 12000,0;
+			else if ((BaseLevel > 80) && (BaseLevel < 86)) getexp 16000,0;
+			else if ((BaseLevel > 85) && (BaseLevel < 91)) getexp 21000,0;
+			else getexp 35000,0;
+		} else {
+			if (BaseLevel < 56) getexp 9000,0;
+			else if ((BaseLevel > 55) && (BaseLevel < 61)) getexp 12000,0;
+			else if ((BaseLevel > 60) && (BaseLevel < 66)) getexp 20000,0;
+			else if ((BaseLevel > 65) && (BaseLevel < 71)) getexp 35000,0;
+			else if ((BaseLevel > 70) && (BaseLevel < 76)) getexp 70000,0;
+			else if ((BaseLevel > 75) && (BaseLevel < 81)) getexp 120000,0;
+			else if ((BaseLevel > 80) && (BaseLevel < 86)) getexp 160000,0;
+			else if ((BaseLevel > 85) && (BaseLevel < 91)) getexp 210000,0;
+			else getexp 350000,0;
+		}
 		close2;
 		warp "geffen",120,100;
 		end;
@@ -8458,7 +8537,7 @@ que_sign01,196,39,4	script	Serin#serin	90,{
 				mes "ask the Dark Lord to spare";
 				mes "you. Thank you so much...";
 				set sign_q,200;
-				getexp 20000,0;
+				getexp (checkre(3))?20000:200000,0;
 				set $@sign_w2,0;
 				donpcevent "Dark Lord#serin::OnDisable";
 				close2;
@@ -8729,7 +8808,7 @@ que_sign01,197,195,4	script	Serin#witch	90,{
 				mes "ask the Dark Lord to spare";
 				mes "you. Thank you so much...";
 				set sign_q,200;
-				getexp 20000,0;
+				getexp (checkre(3))?20000:200000,0;
 				set $@sign_w1,0;
 				close2;
 				warp "umbala,",132,203;
@@ -9475,7 +9554,7 @@ niflheim,313,70,4	script	Pleasant-Featured Lady#s	90,{
 				mes "the faint smile on her lips tell you that her memories of you";
 				mes "will always remain in her heart.^000000";
 				delitem 2643,1; //Serin's_Gold_Ring_
-				getexp 50000,0;
+				getexp (checkre(3))?50000:500000,0;
 				close;
 			case 2:
 				emotion e_sob;
@@ -10237,7 +10316,7 @@ que_sign01,122,141,4	script	Witch#s	792,{
 				mes "please visit our queen, Lady Hell. I believe she wants to see you for some reason, "+strcharinfo(0)+"...";
 				delitem 7313,5; //Seal_Of_Witch
 				set sign_q,129;
-				getexp 50000,0;
+				getexp (checkre(3))?50000:500000,0;
 				close;
 			}
 		}
@@ -10266,7 +10345,7 @@ que_sign01,122,141,4	script	Witch#s	792,{
 				mes "please visit our queen, Lady Hell. I believe she wants to see you for some reason...";
 				delitem 7313,5; //Seal_Of_Witch
 				set sign_q,130;
-				getexp 30000,0;
+				getexp (checkre(3))?30000:300000,0;
 				close;
 			}
 		}
@@ -10292,7 +10371,7 @@ que_sign01,122,141,4	script	Witch#s	792,{
 		mes "please visit our queen, Lady Hell. I believe she wants to see you for some reason...";
 		if (countitem(2643) == 1) set sign_q,129;
 		else set sign_q,130;
-		getexp 30000,0;
+		getexp (checkre(3))?30000:300000,0;
 		close;
 	}
 	else if (sign_q == 200) {
@@ -10322,7 +10401,7 @@ que_sign01,122,141,4	script	Witch#s	792,{
 		if (countitem(2642) > 0) delitem 2642,1; //Serin's_Gold_Ring
 		if (countitem(7308) > 0) delitem 7308,1; //Witch's_Potion
 		set sign_q,201;
-		getexp 20000,0;
+		getexp (checkre(3))?20000:200000,0;
 		close;
 	}
 	else if (sign_q > 200) {
@@ -12594,3 +12673,4 @@ function	script	F_UpdateSignVars	{
 //= 2.8 Fixed some bugs with itemids and leftover questitems [Fish0r]
 //= 2.9 Made a delitem causing script to fault use countitem when deleting. [L0ne_W0lf]
 //= 2.9a Added a check for Sign_Branch8A before attempting to run a delitem on items not needed based on Path taken. [Paradox924X]
+//============================================================

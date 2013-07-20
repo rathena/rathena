@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.5
+//= 2.6
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -32,6 +32,7 @@
 //= 2.3 Updated heardgear Quest NPCs. [L0ne_W0lf]
 //= 2.4 Updated 'Doll Quest' to match AEGIS script. [Kisuka]
 //= 2.5 Moved Alberta NPC to pre-re/re paths. [Euphy]
+//= 2.6 Updated RE/Pre-RE EXP. [Euphy]
 //============================================================ 
 
 // Doll Quest
@@ -2381,7 +2382,7 @@ alberta_in,131,95,5	script	Iromo#ep3_2	706,{
 		next;
 		set ep13_2_hiki,13;
 		completequest 10089;
-		getexp 8000,0;
+		getexp (checkre(3))?8000:80000,0;
 		mes "[Iromo]";
 		mes "The world is big, there are many things...";
 		mes "I have not seen yet. Yes... I want to...";
@@ -2510,7 +2511,7 @@ alberta_in,131,95,5	script	Iromo#ep3_2	706,{
 			next;
 			set ep13_2_hiki,11;
 			changequest 10087,10088;
-			getexp 6700,0;
+			getexp (checkre(3))?6700:67000,0;
 			mes "[Iromo]";
 			mes "Nevermind... it's not unexpected...";
 			mes "To go on an adventure with my friends,";
@@ -2578,7 +2579,7 @@ alberta_in,131,95,5	script	Iromo#ep3_2	706,{
 		next;
 		set ep13_2_hiki,10;
 		changequest 10086,10087;
-		getexp 5700,0;
+		getexp (checkre(3))?5700:57000,0;
 		mes "[Iromo]";
 		mes "...I'm not in a good mood, get out...";
 		close;
@@ -2637,7 +2638,7 @@ alberta_in,131,95,5	script	Iromo#ep3_2	706,{
 			next;
 			set ep13_2_hiki,8;
 			changequest 10084,10085;
-			getexp 4700,0;
+			getexp (checkre(3))?4700:47000,0;
 			mes "[Iromo]";
 			mes "Thank you for being helpful.";
 			mes "But, no thanks.";
@@ -2693,7 +2694,7 @@ alberta_in,131,95,5	script	Iromo#ep3_2	706,{
 		delitem 501,1; //Red_Potion
 		set ep13_2_hiki,7;
 		changequest 10083,10084;
-		getexp 3750,0;
+		getexp (checkre(3))?3750:37500,0;
 		mes "[Iromo]";
 		mes "I don't want to see the cat again.";
 		mes "If I go out, I will see him. It is scary.";

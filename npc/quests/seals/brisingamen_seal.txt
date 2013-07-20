@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= rAthena
 //===== Description: ========================================= 
@@ -17,6 +17,7 @@
 //= 1.3a Changed some " + name +" to strcharinfo(0) [Samuray22]
 //= 1.4 Replaced effect numerics with constants. [Samuray22]
 //= 1.5 Corrected serverwide announcement. [L0ne_W0lf]
+//= 1.6 Updated RE/Pre-RE EXP. [Euphy]
 //============================================================
 
 prt_fild08,175,374,3	script	Bard#brising	51,{
@@ -888,10 +889,10 @@ yuno_in04,47,113,1	script	Studying Scholar#1	749,{
 				next;
 				mes "[Enrico Kaili]";
 				mes "Please...";
-				mes "Take this";
+				mes "Take this.";
 				set god_brising,50;
 				getitem 616,1; // Old_Card_Album
-				getexp 60000,0;
+				getexp 600000,0; //unconfirmed
 				next;
 				mes "[Enrico Kaili]";
 				mes "Please accept this as my way of thanking you for assisting in my";
