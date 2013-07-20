@@ -3,18 +3,18 @@
 //===== By: ==================================================
 //= MasterOfMuppets & SinSloth
 //===== Current Version: =====================================
-//= 2.1
+//= 2.2
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= Quest NPC's related to Hugel
+//= Quest NPCs related to Hugel
 //===== Additional Comments: =================================
 //= 1.0 First version. [MasterOfMuppets]
 //= 1.1 Added most of Hugel quests. Thanks to MasterOfMuppets
 //= for scripting most of them. [SinSloth]
 //= 1.2 Added Odin Temple Excavation quest. [SinSloth]
 //= 1.3 Added a Missing "close;". [Samuray22]
-//=	-Thanks to Elfange
+//=     -Thanks to Elfange
 //= 1.4 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //= 1.5a Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 1.5b Fixed a variable name. [SinSloth]
@@ -25,6 +25,7 @@
 //= 2.0 Commented a break out to fix a script hang.
 //= 2.1 Added quest log entries for:
 //=     - Juno Remedy Quest
+//= 2.2 Updated RE/Pre-RE EXP. [Euphy]
 //============================================================
 
 // Medicine Quest
@@ -85,7 +86,6 @@ hu_in01,387,245,0	script	Allen Schuwell	849,2,2,{
 				mes "He's dead to me if he";
 				mes "doesn't love his father!";
 				close;
-			break;
 			case 2:
 				mes "[Allen]";
 				mes "I... I don't understand...!";
@@ -94,7 +94,6 @@ hu_in01,387,245,0	script	Allen Schuwell	849,2,2,{
 				mes "I-I desperately need help!";
 				mes "No! Please, d-don't go away!";
 				close;
-			break;
 			}
 		}
 		else if(hg_herb == 2)
@@ -191,7 +190,6 @@ hu_in01,387,245,0	script	Allen Schuwell	849,2,2,{
 					mes "............";
 					close;
 				}
-			break;
 			case 2:
 				mes "[Allen]";
 				mes "W-wait! A-are you just";
@@ -199,7 +197,6 @@ hu_in01,387,245,0	script	Allen Schuwell	849,2,2,{
 				mes "Noo! ^333333*Cough*^000000 Arrgh! A plague!";
 				mes "A plague on both your houses!";
 				close;
-			break;
 			}
 		}
 		else if(hg_herb == 3)
@@ -527,7 +524,6 @@ hu_fild06,34,123,3	script	Postell Schuwell	97,{
 			mes "appreciate it if you do.";
 			set hg_herb,2;
 			close;
-		break;
 		case 2:
 			mes "[Postell]";
 			mes "Yeah, like he's addicted";
@@ -536,7 +532,6 @@ hu_fild06,34,123,3	script	Postell Schuwell	97,{
 			mes "gets as little of it as possible! Honestly, I think he drinks";
 			mes "too much medicine already...";
 			close;
-		break;
 		}
 	}
 	else if(hg_herb > 1)
@@ -698,8 +693,8 @@ OnTouch:
 		close2;
 		specialeffect EF_CONE;
 		set hg_herb,13;
-		getitem 603,1; //Old blue box
-		getexp 5000,0;
+		getitem 603,1; //Old Blue Box
+		getexp (checkre(3))?5000:50000,0;
 	}
 	else
 	{
@@ -863,7 +858,6 @@ ein_in01,16,36,3	script	Morriphen	86,{
 				mes "just fine. You take care";
 				mes "of yourself, you hear?";
 				close;
-			break;
 			case 2:
 				mes "["+strcharinfo(0)+"]";
 				mes "Hey...";
@@ -928,7 +922,6 @@ ein_in01,16,36,3	script	Morriphen	86,{
 				mes "*Cough Cough*^000000";
 				set hg_bio,1;
 				close;
-			break;
 			}
 		}
 		else
@@ -1314,7 +1307,7 @@ ein_in01,16,36,3	script	Morriphen	86,{
 		mes "I won't have to worry";
 		mes "about you. Take care~";
 		set hg_bio,9;
-		getexp 70000,0;
+		getexp (checkre(3))?70000:700000,0;
 		close;
 	}
 	else if(hg_bio == 9)
@@ -1526,7 +1519,7 @@ hu_in01,326,307,3	script	Siria	90,{
 		mes "I just... I just need to relax.";
 		mes "Thank you for everything...";
 		set hg_bio,8;
-		getexp 50000,0;
+		getexp (checkre(3))?30000:500000,0;
 		close;
 	}
 	else if(hg_bio == 8)
@@ -2104,7 +2097,6 @@ hugel,70,137,5	script	Shede	879,{
 					close2;
 					cutin "",255;
 					end;
-				break;
 				case 2:
 					mes "In fact, Agette and I am competing with each other for the Hugel's best cookie master position.";
 					next;
@@ -2155,7 +2147,6 @@ hugel,70,137,5	script	Shede	879,{
 					close2;
 					cutin "",255;
 					end;
-				break;
 				case 3:
 					mes "In fact, I gave my heart to a gentleman.";
 					mes "I think that the time has come to let him know";
@@ -2196,16 +2187,13 @@ hugel,70,137,5	script	Shede	879,{
 					close2;
 					cutin "",255;
 					end;
-				break;
 			}
-		break;
 		case 2:
 			mes "[Shede]";
 			mes "No, it is fine. Somehow I needed a break, hohoh!";
 			close2;
 			cutin "",255;
 			end;
-		break;
 		}
 	}
 	else if(hg_tre > 9 && hg_tre < 15)
@@ -2401,7 +2389,6 @@ hu_in01,256,40,3	script	Herico	897,{
 			close2;
 			cutin "",255;
 			end;
-		break;
 		case 2:
 			mes "[Herico]";
 			mes "Then I guess that you have not been deeply impressed by this country.";
@@ -2409,7 +2396,6 @@ hu_in01,256,40,3	script	Herico	897,{
 			close2;
 			cutin "",255;
 			end;
-		break;
 		case 3:
 			mes "[Herico]";
 			mes "Oh, am I not?";
@@ -2417,7 +2403,6 @@ hu_in01,256,40,3	script	Herico	897,{
 			close2;
 			cutin "",255;
 			end;
-		break;
 		}
 	}
 	else if(hg_tre == 42)
@@ -2683,11 +2668,11 @@ hu_in01,256,40,3	script	Herico	897,{
 			mes "["+strcharinfo(0)+"]";
 			mes "Rekenber has taken them into their possession.";
 			next;
-		break;
+			break;
 		case 2:
 			mes "Rekenber has taken them into their possession.";
 			next;
-		break;
+			break;
 		}
 		cutin "heri3.bmp",2;
 		mes "[Herico]";
@@ -2846,7 +2831,6 @@ hu_in01,256,40,3	script	Herico	897,{
 			close2;
 			cutin "",255;
 			end;
-		break;
 		case 2:
 			cutin "heri2.bmp",2;
 			mes "[Herico]";
@@ -2862,7 +2846,6 @@ hu_in01,256,40,3	script	Herico	897,{
 			close2;
 			cutin "",255;
 			end;
-		break;
 		}
 	}
 	else if(hg_tre == 51)
@@ -3079,9 +3062,8 @@ hu_in01,256,40,3	script	Herico	897,{
 				mes "[Herico]";
 				mes "I am willing to exchange 1 of level 4 food with 100 Handcuffs.";
 				next;
-				switch( select( "Exchange.","Cancel." ) )
+				if( select( "Exchange.","Cancel." ) == 1 )
 				{
-				case 1:
 					if(countitem(7345) > 99) //Handcuffs
 					{
 						mes "[Herico]";
@@ -3091,43 +3073,33 @@ hu_in01,256,40,3	script	Herico	897,{
 						{
 						case 1:
 							getitem 12044,1; //Herb Marinade Beef
-						break;
+							break;
 						case 2:
 							getitem 12049,1; //Morroc Fruit Wine
-						break;
+							break;
 						case 3:
 							getitem 12059,1; //Lutie Cold Noodle
-						break;
+							break;
 						case 4:
 							getitem 12064,1; //Cream Sandwich
-						break;
+							break;
 						case 5:
 							getitem 12069,1; //Steamed Ancient Lips
-						break;
+							break;
 						case 6:
 							getitem 12054,1; //Seasoned Jellyfish
-						break;
+							break;
 						}
-						close2;
-						cutin "",255;
-						end;
 					}
 					else
 					{
 						mes "[Herico]";
 						mes "I don't think that you have brought me 100 Handcuffs.";
-						close2;
-						cutin "",255;
-						end;
 					}
-				break;
-				case 2:
-				break;
 				}
 				close2;
 				cutin "",255;
 				end;
-			break;
 			case 2:
 				mes "[Herico]";
 				mes "When I checked the research data that you have brought to me,";
@@ -3138,7 +3110,6 @@ hu_in01,256,40,3	script	Herico	897,{
 				close2;
 				cutin "",255;
 				end;
-			break;
 			}
 		}
 	}
@@ -3241,7 +3212,6 @@ lhz_in03,39,44,3	script	Enquro Carson	97,{
 			mes "Can you please get me the drink? Hahaha, thanks!";
 			set hg_tre,46;
 			close;
-		break;
 		case 2:
 			mes "[Enquro Carson]";
 			mes ".......Hmmm...Hmmm...Hmmm.";
@@ -3251,7 +3221,6 @@ lhz_in03,39,44,3	script	Enquro Carson	97,{
 			mes "[Enquro Carson]";
 			mes "You are not saying that you want to be a news reporter, are you?";
 			close;
-		break;
 		}
 	}
 	else if(hg_tre == 46)
@@ -3511,7 +3480,7 @@ hu_in01,317,312,0	script	Book	111,{
 					mes "...............................";
 					mes "...............................";
 					next;
-				break;
+					break;
 				case 2:
 					mes "- You started reading the 2nd page of the book. -";
 					next;
@@ -3524,7 +3493,7 @@ hu_in01,317,312,0	script	Book	111,{
 					mes "...............................";
 					mes "...............................";
 					next;
-				break;
+					break;
 				case 3:
 					mes "- You started reading the 3rd page of the book. -";
 					next;
@@ -3552,7 +3521,7 @@ hu_in01,317,312,0	script	Book	111,{
 					mes "...............................";
 					mes "...............................";
 					next;
-				break;
+					break;
 				case 4:
 					mes "- You started reading the 4th page of the book. -";
 					next;
@@ -3563,7 +3532,7 @@ hu_in01,317,312,0	script	Book	111,{
 					mes "...............................";
 					mes "...............................";
 					next;
-				break;
+					break;
 				case 5:
 					mes "- You started reading the 5th page of the book. -";
 					next;
@@ -3585,7 +3554,7 @@ hu_in01,317,312,0	script	Book	111,{
 					mes "...............................";
 					mes "...............................";
 					next;
-				break;
+					break;
 				case 6:
 					mes "- You started reading the 6th page of the book. -";
 					next;
@@ -3611,10 +3580,8 @@ hu_in01,317,312,0	script	Book	111,{
 					next;
 					mes "- You found a folded note between the pages that you were reading. -";
 					next;
-					switch( select( "Check the note.","Read the next page." ) )
+					if( select( "Check the note.","Read the next page." ) == 1 )
 					{
-					case 1:
-						next;
 						mes "^3131FF.........................^000000";
 						next;
 						mes "^3131FF...I am so sorry for hearing such devastating news and for your loss.";
@@ -3627,11 +3594,8 @@ hu_in01,317,312,0	script	Book	111,{
 						next;
 						mes "^3131FF.........................^000000";
 						next;
-					break;
-					case 2:
-					break;
 					}
-				break;
+					break;
 				case 7:
 					mes "- You started reading the 7th page.-";
 					next;
@@ -3659,7 +3623,7 @@ hu_in01,317,312,0	script	Book	111,{
 					mes "...............................";
 					mes "...............................";
 					next;
-				break;
+					break;
 				case 8:
 					mes "- You started reading the 8th page. -";
 					next;
@@ -3678,7 +3642,7 @@ hu_in01,317,312,0	script	Book	111,{
 					mes "...............................";
 					mes "...............................";
 					next;
-				break;
+					break;
 				case 9:
 					mes "- You started reading the 9th page. -";
 					next;
@@ -3702,23 +3666,20 @@ hu_in01,317,312,0	script	Book	111,{
 					next;
 					mes "- The journal was ended at the page. -";
 					next;
-				break;
+					break;
 				case 10:
 					set @whilevar,0;
 					mes "- You closed the book. -";
 					close2;
 					cutin "",255;
 					end;
-				break;
 				}
 			}
-		break;
 		case 2:
 			mes "- You closed the book. -";
 			close2;
 			cutin "",255;
 			end;
-		break;
 		}
 
 	}
@@ -3764,25 +3725,21 @@ einbech,208,124,3	script	Bomb Maker	851,{
 					mes "Errr...You must have been so hurry to carry your wallet with you.";
 					close;
 				}
-					mes "[Boomer]";
-					mes "Just make sure that you are not going to";
-					mes "blow yourself away with this bomb, hahah!";
-					set Zeny,Zeny-3000;
-					getitem 7138,1; //Marine Sphere Bottle
-					close;
-			break;
+				mes "[Boomer]";
+				mes "Just make sure that you are not going to";
+				mes "blow yourself away with this bomb, hahah!";
+				set Zeny,Zeny-3000;
+				getitem 7138,1; //Marine Sphere Bottle
+				close;
 			case 2:
 				mes "[Boomer]";
 				mes "I believe that you will end up coming back to me. Heheh.";
 				close;
-			break;
 			}
-		break;
 		case 2:
 			mes "[Boomer]";
 			mes "Boom! Don't you need a bomb? Boom!";
 			close;
-		break;
 		}
 	}
 	else
@@ -3839,11 +3796,9 @@ hu_fild06,168,359,3	script	Moks Mushrooms#Mush1	111,{
 			initnpctimer;
 			disablenpc "Moks Mushrooms#Mush1";
 			close;
-		break;
 		case 2:
 			mes "- You decided to pass by them. -";
 			close;
-		break;
 		}
 	}
 	else if(hg_tre == 15)
@@ -3903,11 +3858,9 @@ hu_fild06,194,341,3	script	Moks Mushrooms#Mush2	111,{
 			initnpctimer;
 			disablenpc "Moks Mushrooms#Mush2";
 			close;
-		break;
 		case 2:
 			mes "- You decided to pass by them. -";
 			close;
-		break;
 		}
 	}
 	else if(hg_tre == 15)
@@ -3967,11 +3920,9 @@ hu_fild06,198,339,3	script	Moks Mushrooms#Mush3	111,{
 			initnpctimer;
 			disablenpc "Moks Mushrooms#Mush3";
 			close;
-		break;
 		case 2:
 			mes "- You decided to pass by them. -";
 			close;
-		break;
 		}
 	}
 	else if(hg_tre == 15)
@@ -4031,11 +3982,9 @@ hugel,209,163,3	script	Clam#C1	111,{
 			initnpctimer;
 			disablenpc "Clam#C1";
 			close;
-		break;
 		case 2:
 			mes "- You decided to pass by them. -";
 			close;
-		break;
 		}
 	}
 	else if(hg_tre == 25)
@@ -4095,11 +4044,9 @@ hugel,203,166,3	script	Clam#C2	111,{
 			initnpctimer;
 			disablenpc "Clam#C2";
 			close;
-		break;
 		case 2:
 			mes "- You decided to pass by them. -";
 			close;
-		break;
 		}
 	}
 	else if(hg_tre == 25)
@@ -4159,11 +4106,9 @@ hugel,217,158,3	script	Clam#C3	111,{
 			initnpctimer;
 			disablenpc "Clam#C3";
 			close;
-		break;
 		case 2:
 			mes "- You decided to pass by them. -";
 			close;
-		break;
 		}
 	}
 	else if(hg_tre == 25)
@@ -4223,11 +4168,9 @@ hugel,204,150,3	script	Clam#C4	111,{
 			initnpctimer;
 			disablenpc "Clam#C4";
 			close;
-		break;
 		case 2:
 			mes "- You decided to pass by them. -";
 			close;
-		break;
 		}
 	}
 	else if(hg_tre == 25)
@@ -4287,11 +4230,9 @@ hu_fild06,155,309,1	script	Moks Bugs#Bug1	1053,{
 			initnpctimer;
 			disablenpc "Moks Bugs#Bug1";
 			close;
-		break;
 		case 2:
 			mes "- You decided to pass by them. -";
 			close;
-		break;
 		}
 	}
 	else if(hg_tre == 35)
@@ -4351,11 +4292,9 @@ hu_fild06,218,320,1	script	Moks Bugs#Bug2	1053,{
 			initnpctimer;
 			disablenpc "Moks Bugs#Bug2";
 			close;
-		break;
 		case 2:
 			mes "- You decided to pass by them. -";
 			close;
-		break;
 		}
 	}
 	else if(hg_tre == 35)
@@ -4415,11 +4354,9 @@ hu_fild06,249,329,1	script	Moks Bugs#Bug3	1053,{
 			initnpctimer;
 			disablenpc "Moks Bugs#Bug3";
 			close;
-		break;
 		case 2:
 			mes "- You decided to pass by them. -";
 			close;
-		break;
 		}
 	}
 	else if(hg_tre == 35)
@@ -4479,11 +4416,9 @@ hu_fild06,218,373,1	script	Moks Bugs#Bug4	1053,{
 			initnpctimer;
 			disablenpc "Moks Bugs#Bug4";
 			close;
-		break;
 		case 2:
 			mes "- You decided to pass by them. -";
 			close;
-		break;
 		}
 	}
 	else if(hg_tre == 35)
@@ -5338,8 +5273,8 @@ hugel,196,164,3	script	El Schatt	50,{
 		next;
 		specialeffect2 EF_CONE;
 		set hg_memory,12;
-		getexp 5000,0;
-		getitem 603,1; //Old blue box
+		getexp (checkre(3))?8000:50000,0;
+		getitem 603,1; //Old Blue Box
 		mes "[El Schatt]";
 		mes "Oh... Oh dear";
 		mes "sweet God... My...";
@@ -5427,7 +5362,6 @@ hugel,107,67,3	script	Torpy	706,{
 					mes "outside of town.";
 					set hg_ubu01,1;
 					close;
-				break;
 				case 2:
 					mes "["+strcharinfo(0)+"]";
 					mes "Don't worry, your";
@@ -5437,9 +5371,7 @@ hugel,107,67,3	script	Torpy	706,{
 					mes "of luck, kid.";
 					emotion e_dots,1;
 					close;
-				break;
 				}
-			break;
 			case 2:
 				mes "[Torpy]";
 				mes "D-Daddy...!";
@@ -5447,7 +5379,6 @@ hugel,107,67,3	script	Torpy	706,{
 				mes "Where are yoooou?!";
 				mes "Wuh-Waaaaaaaaaah!";
 				close;
-			break;
 			}
 		}
 		else if(hg_ubu01 == 2)
@@ -5648,7 +5579,7 @@ hu_fild06,190,367,3	script	Torpy's Mom	701,{
 		mes "him that he better come home!";
 		close;
 	}
-	else if(hg_ubu01 == 6)
+	else if(hg_ubu01 == 6 || hg_ubu01 == 7)
 	{
 		mes "[Torpy's Mom]";
 		mes "What?! He was hiding";
@@ -5664,32 +5595,10 @@ hu_fild06,190,367,3	script	Torpy's Mom	701,{
 		mes "it's not much, but I hope";
 		mes "you accept this as our thanks.";
 		mes "Goodbye for now, adventurer~";
-		specialeffect2 EF_CONE;
+		specialeffect2 (hg_ubu01 == 6)?EF_CONE:EF_MVP;
 		set hg_ubu01,8;
-		getitem 12065,3; //Green salad
-		getexp 5000,0;
-		close;
-	}
-	else if(hg_ubu01 == 7)
-	{
-		mes "[Torpy's Mom]";
-		mes "What?! He was hiding";
-		mes "inside a barrel this";
-		mes "entire time?! Oh, no.";
-		mes "I'm sorry, my husband has";
-		mes "caused you so much trouble.";
-		next;
-		mes "[Torpy's Mom]";
-		mes "I really appreciate";
-		mes "everything you've done";
-		mes "to help us find him. I know";
-		mes "it's not much, but I hope";
-		mes "you accept this as our thanks.";
-		mes "Goodbye for now, adventurer~";
-		specialeffect2 EF_MVP;
-		set hg_ubu01,8;
-		getitem 12065,3; //Green salad
-		getexp 5000,0;
+		getitem 12065,3; //Green Salad
+		getexp (checkre(3))?5000:50000,0;
 		close;
 	}
 	else if(hg_ubu01 == 8)
@@ -5768,7 +5677,6 @@ hugel,100,176,3	script	Suspicious Barrel	111,{
 			mes "Way... P-please help...";
 			set hg_ubu01,4;
 			close;
-		break;
 		case 2:
 			mes "[Strange Man]";
 			mes "D-don't... leave...";
@@ -5783,7 +5691,6 @@ hugel,100,176,3	script	Suspicious Barrel	111,{
 			mes "and get your Steamed";
 			mes "Crab Nippers yourself?!";
 			close;
-		break;
 		}
 	}
 	else if(hg_ubu01 == 4)
@@ -6128,7 +6035,6 @@ hu_in01,15,372,3	script	Cellette Lavit	74,{
 				getitem 584,1; //Skewer soup
 				close;
 			}
-		break;
 		case 2:
 			mes "[Cellette]";
 			mes "Oh, you'd like to try my";
@@ -6162,7 +6068,6 @@ hu_in01,15,372,3	script	Cellette Lavit	74,{
 					mes "for my gourmet soup, you know.";
 					close;
 				}
-			break;
 			case 2:
 				mes "[Cellette]";
 				mes "If you're ever hungry,";
@@ -6170,9 +6075,7 @@ hu_in01,15,372,3	script	Cellette Lavit	74,{
 				mes "a delicious meal, come";
 				mes "and have some of my soup~";
 				close;
-			break;
 			}
-		break;
 		case 3:
 			mes "[Cellette]";
 			mes "Oh? You're not interested";
@@ -6182,7 +6085,6 @@ hu_in01,15,372,3	script	Cellette Lavit	74,{
 			mes "back. I just know you'll love";
 			mes "the taste if you give it a try.";
 			close;
-		break;
 		}
 	}
 	else if(hg_odeng == 1)
@@ -6403,8 +6305,8 @@ hu_in01,15,372,3	script	Cellette Lavit	74,{
 		mes "is your Fish Cake Soup. Thank";
 		mes "you so much for your help~";
 		set hg_odeng,0;
-		getitem 584,3; //Skewer soup
-		getexp 100,0;
+		getitem 584,3; //Skewer Soup
+		getexp (checkre(3))?100:1000,0;
 		next;
 		mes "[Cellette]";
 		mes "It was really nice working";
@@ -6825,7 +6727,6 @@ yuno,111,156,3	script	Euslan	90,{
 			mes "*Huff Huff*";
 			mes "*Cough Cough*^000000";
 			close;
-		break;
 		case 2:
 			mes "[Euslan]";
 			mes "*Huff Huff*";
@@ -6838,7 +6739,6 @@ yuno,111,156,3	script	Euslan	90,{
 			mes "to speak to her.^000000";
 			set hg_ma1,1;
 			close;
-		break;
 		}
 	}
 	else if(hg_ma1 == 1)
@@ -6856,7 +6756,6 @@ yuno,111,156,3	script	Euslan	90,{
 			mes "*Huff Huff*";
 			mes "*Cough Cough*^000000";
 			close;
-		break;
 		case 2:
 			mes "[Euslan]";
 			mes "^333333*Sniff*";
@@ -6869,7 +6768,7 @@ yuno,111,156,3	script	Euslan	90,{
 			mes "^333333*Cough cough*^000000 did";
 			mes "you want? ^333333*Sniff*^000000";
 			next;
-		break;
+			break;
 		}
 		switch( select( "Nothing!:Are you alright?" ) )
 		{
@@ -6879,7 +6778,6 @@ yuno,111,156,3	script	Euslan	90,{
 			mes "^333333*Cough Cough*^000000 I must";
 			mes "have been mistaken...";
 			close;
-		break;
 		case 2:
 			mes "[Euslan]";
 			mes "Th-thank you so much";
@@ -6903,7 +6801,7 @@ yuno,111,156,3	script	Euslan	90,{
 			mes "is he? ^333333*Sniff*^000000 Where's my";
 			mes "Thierry? I want to see him...";
 			next;
-		break;
+			break;
 		}
 		switch( select( "Leave her alone:Offer to find Thierry" ) )
 		{
@@ -6916,7 +6814,6 @@ yuno,111,156,3	script	Euslan	90,{
 			mes "^333333*Cough Cough*^000000";
 			set hg_ma1,2;
 			close;
-		break;
 		case 2:
 			mes "[Euslan]";
 			mes "...Are you really willing to";
@@ -6959,7 +6856,6 @@ yuno,111,156,3	script	Euslan	90,{
 			setquest 8044;
 			set hg_ma1,3;
 			close;
-		break;
 		}
 	}
 	else if(hg_ma1 == 2)
@@ -6990,7 +6886,6 @@ yuno,111,156,3	script	Euslan	90,{
 			mes "I'm so worried...";
 			mes "^333333*Cough Cough*^000000";
 			close;
-		break;
 		case 2:
 			mes "[Euslan]";
 			mes "...Are you really willing to";
@@ -7033,7 +6928,6 @@ yuno,111,156,3	script	Euslan	90,{
 			setquest 8044;
 			set hg_ma1,3;
 			close;
-		break;
 		}
 	}
 	else if(hg_ma1 == 3 || hg_ma1 == 4)
@@ -7054,7 +6948,7 @@ yuno,111,156,3	script	Euslan	90,{
 		mes "you learn anything about";
 		mes "where my fiancee might be?";
 		next;
-		menu "Well, I met Kaci on the Airship.",-;
+		select("Well, I met Kaci on the Airship.");
 		mes "[Euslan]";
 		mes "Oh, Kaci works on the";
 		mes "Airship? It's been so long";
@@ -7157,7 +7051,10 @@ yuno,111,156,3	script	Euslan	90,{
 		completequest 8052;
 		set hg_ma1,13;
 		specialeffect EF_ABSORBSPIRITS;
-		getexp 90000,60000;
+		if (checkre(3))
+			getexp 90000,60000;
+		else
+			getexp 900000,600000;
 		end;
 	}
 	else if(hg_ma1 == 13)
@@ -7182,7 +7079,7 @@ OnTouch:
 		mes "Would you like to";
 		mes "play a game?";
 		next;
-		menu "I want to meet the game coordinator.",-;
+		select("I want to meet the game coordinator.");
 		mes "[Arcade Owner]";
 		mes "I'm sorry, but if he's on";
 		mes "duty, we can't really let you";
@@ -7205,7 +7102,7 @@ que_bingo,53,190,7	script	Eukran	778,{
 		mes "the game. Now, can";
 		mes "I help you with anything?";
 		next;
-		menu "Talk about Euslan",-;
+		select("Talk about Euslan");
 		mes "^3355FFYou tell Eukran about his";
 		mes "sister's illness, and that";
 		mes "she has sent you to search";
@@ -7323,7 +7220,7 @@ odin_tem01,130,134,4	script	Young Man#Hu_Quest	774,{
 		mes "of you coming to visit this";
 		mes "Odin Shrine nowadays.";
 		next;
-		menu "Mr. Thierry?",-;
+		select("Mr. Thierry?");
 		mes "[Thierry]";
 		mes "...?!";
 		mes "H-how do you";
@@ -7331,7 +7228,7 @@ odin_tem01,130,134,4	script	Young Man#Hu_Quest	774,{
 		mes "Do I know you";
 		mes "from somewhere?";
 		next;
-		menu "Tell him about Euslan",-;
+		select("Tell him about Euslan");
 		mes "[Thierry]";
 		mes "Oh, Euslan sent you to me?";
 		mes "I'm so sorry that you had to";
@@ -7339,7 +7236,7 @@ odin_tem01,130,134,4	script	Young Man#Hu_Quest	774,{
 		mes "Still, I'm glad to hear from her. Please let her know that I'm";
 		mes "coming home soon, would you?";
 		next;
-		menu "What are you doing here?",-;
+		select("What are you doing here?");
 		mes "[Thierry]";
 		mes "Well, um, I'm sorry.";
 		mes "I can't really go into the";
@@ -7371,7 +7268,7 @@ odin_tem01,130,134,4	script	Young Man#Hu_Quest	774,{
 		mes "You don't have anything ";
 		mes "else to tell me, do you?";
 		next;
-		menu "Warn Thierry about Suspicious Men",-;
+		select("Warn Thierry about Suspicious Men");
 		mes "[Thierry]";
 		mes "What?! It's just what";
 		mes "I thought! They were just";
@@ -7713,7 +7610,7 @@ hugel,56,104,3	script	Kurupe	709,3,3,{
 		}
 		set hg_milk,9;
 		specialeffect2 EF_CONE;
-		getexp 10000,0;
+		getexp (checkre(3))?10000:100000,0;
 		getitem 12063,3;
 		mes "[Kurupe]";
 		mes "I always need";
@@ -8989,40 +8886,36 @@ hu_in01,14,11,4	script	Laura	70,{
 				mes "We need to work together to";
 				mes "build a better future, right?";
 				next;
-				switch( select( "But you can't pay me.","Alright, I'll do it." ) )
+				if( select( "But you can't pay me.","Alright, I'll do it." ) == 1 )
 				{
-					case 1:
-						cutin "hu_laura04.bmp",2;
-						mes "[Laura]";
-						mes "You're right.";
-						mes "It's like I said";
-						mes "before. I don't have";
-						mes "anything to pay you.";
-						mes "...............................";
-						next;
-						cutin "hu_laura01.bmp",2;
-						mes "[Laura]";
-						mes "Curses! If this project had";
-						mes "more funding, we'd have more";
-						mes "than a cheesy recruitment ad,";
-						mes "and some professional staff";
-						mes "like those rich Schwaltzvalt";
-						mes "Republic boys in the next room!";
-						next;
-						cutin "hu_laura02.bmp",2;
-						mes "[Laura]";
-						mes "Fine, it's your choice";
-						mes "whether you want to work";
-						mes "for us. I'm just disappointed";
-						mes "that someone like you won't";
-						mes "help us. I mean, don't you";
-						mes "have any patriotism at all?";
-						close2;
-						cutin "hu_laura02.bmp",255;
-						end;
-						
-					case 2:
-						break;
+					cutin "hu_laura04.bmp",2;
+					mes "[Laura]";
+					mes "You're right.";
+					mes "It's like I said";
+					mes "before. I don't have";
+					mes "anything to pay you.";
+					mes "...............................";
+					next;
+					cutin "hu_laura01.bmp",2;
+					mes "[Laura]";
+					mes "Curses! If this project had";
+					mes "more funding, we'd have more";
+					mes "than a cheesy recruitment ad,";
+					mes "and some professional staff";
+					mes "like those rich Schwaltzvalt";
+					mes "Republic boys in the next room!";
+					next;
+					cutin "hu_laura02.bmp",2;
+					mes "[Laura]";
+					mes "Fine, it's your choice";
+					mes "whether you want to work";
+					mes "for us. I'm just disappointed";
+					mes "that someone like you won't";
+					mes "help us. I mean, don't you";
+					mes "have any patriotism at all?";
+					close2;
+					cutin "hu_laura02.bmp",255;
+					end;
 				}
 				// Allow fall-through into the next case statment as this is a minor bug in aegis.
 				//break;
@@ -9154,14 +9047,7 @@ hu_in01,14,11,4	script	Laura	70,{
 		mes "[Laura]";
 		mes "RIGHT?!";
 		next;
-		switch( select( "Yeah, yeah, whatever.","Sure thing.","I s-s-s-suppose...!","Yes, Ma'am!" ) )
-		{
-			case 1:
-			case 2:
-			case 3:
-			case 4:
-				break;
-		}
+		select("Yeah, yeah, whatever.","Sure thing.","I s-s-s-suppose...!","Yes, Ma'am!");
 		set hg_odin,17;
 		cutin "hu_laura04.bmp",2;
 		mes "[Laura]";
@@ -9194,13 +9080,7 @@ hu_in01,14,11,4	script	Laura	70,{
 		mes "need to finish our research";
 		mes "for the good of mankind.";
 		next;
-		switch( select( "Yeah, yeah, whatever.","I see.","You're right, Ma'am." ) )
-		{
-			case 1:
-			case 2:
-			case 3:
-				break;
-		}
+		select("Yeah, yeah, whatever.","I see.","You're right, Ma'am.");
 		mes "[Laura]";
 		mes "Well, then.";
 		mes "Did you happen to";
@@ -9538,20 +9418,15 @@ hu_in01,14,11,4	script	Laura	70,{
 		mes "[Laura]";
 		mes "...Hey, you.";
 		next;
-		switch( select( "...","...Me?" ) )
+		if( select( "...","...Me?" ) == 1)
 		{
-			case 1:
-				mes "[Laura]";
-				mes "Hey, hey!";
-				mes "Hey hey hey!";
-				next;
-				mes "["+strcharinfo(0)+"]";
-				mes "...Me?";
-				next;
-				break;
-				
-			case 2:
-				break;
+			mes "[Laura]";
+			mes "Hey, hey!";
+			mes "Hey hey hey!";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "...Me?";
+			next;
 		}
 		mes "[Laura]";
 		mes "Basically, I want you";
@@ -9578,14 +9453,7 @@ hu_in01,14,11,4	script	Laura	70,{
 		mes "[Laura]";
 		mes "RIGHT?!";
 		next;
-		switch( select( "Yeah, yeah, whatever.","Sure thing.","I s-s-s-suppose...!","Yes, Ma'am!" ) )
-		{
-			case 1:
-			case 2:
-			case 3:
-			case 4:
-				break;
-		}
+		select("Yeah, yeah, whatever.","Sure thing.","I s-s-s-suppose...!","Yes, Ma'am!");
 		set hg_odin,17;
 		cutin "hu_laura04.bmp",2;
 		mes "[Laura]";
@@ -10393,7 +10261,7 @@ OnTouch:
 		mes "used... Like that one lady,";
 		mes "that archaeologist, Laura.";
 		next;
-		getexp 70000,0;
+		getexp (checkre(3))?100000:700000,0;
 		set hg_odin,60;
 		mes "[???]";
 		mes "...Thanks for";

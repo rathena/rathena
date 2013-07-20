@@ -3,7 +3,7 @@
 //===== By ===================================================
 //= MasterOfMuppets
 //===== Version ==============================================
-//= 1.7
+//= 1.8
 //===== Compatible With ======================================
 //= rAthena SVN
 //===== Description ==========================================
@@ -12,16 +12,17 @@
 //===== Comments =============================================
 //= 1.0 First version, partly implemented [MasterOfMuppets]
 //= 1.1 Added official Juperos Ruins History Quest. Thanks
-//= to Keplerk for his first version. [SinSloth]
+//=     to Keplerk for his first version. [SinSloth]
 //= 1.2 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 1.3 Removed semi-official core access NPCs, replaced with [L0ne_W0lf]
-//=	event-driven story progressive NPCs. Optimization needed.
+//=     event-driven story progressive NPCs. Optimization needed.
 //= 1.3a Adjusted the elevafor timer. (132000 -> 142000) [L0ne_W0lf]
 //= 1.3b Minor updates to juperos elevator NPCs. [L0ne_W0lf]
 //= 1.4 Fixed Elevator not working after failing once. [L0ne_W0lf]
 //= 1.5 Lots of Fixes, missing stopnpctimers, cleanup. [Zephyrus]
 //= 1.6 Added missing close in "Popular Feats" [L0ne_W0lf]
 //= 1.7 Replaced effect numerics with constants. [L0ne_W0lf]
+//= 1.8 Updated RE/Pre-RE EXP. [Euphy]
 //============================================================
 
 yuno_in04,190,125,4	script	Scholar	700,{
@@ -647,7 +648,7 @@ function	script	Func_JupHist	{
 			delitem getarg(0),1;
 			set yuno_hist,5;
 			set jupe_hist,getarg(1);
-			getexp 10000,0;
+			getexp (checkre(3))?10000:100000,0;
 			next;
 			mes "[Fayruz]";
 			mes "Everyone can relate";
@@ -728,7 +729,7 @@ function	script	Func_JupHist	{
 					else set jupe_hist,jupe_hist +8;
 				}
 				set yuno_hist,6;
-				getexp 10000,0;
+				getexp (checkre(3))?10000:100000,0;
 				next;
 				mes "[Fayruz]";
 				mes "By now I'm sure you've";
@@ -858,7 +859,7 @@ function	script	Func_JupHist	{
 					else set jupe_hist,jupe_hist +8;
 				}
 				set yuno_hist,8;
-				getexp 10000,0;
+				getexp (checkre(3))?10000:100000,0;
 				next;
 				mes "[Fayruz]";
 				mes "Well... That's just my";
@@ -959,7 +960,7 @@ function	script	Func_JupHist	{
 				else set jupe_hist,jupe_hist+8;
 				set yuno_hist,10;
 				delitem getarg(0),1;
-				getexp 10000,0;
+				getexp (checkre(3))?10000:100000,0;
 				next;
 				mes "[Fayruz]";
 				mes "Well, that is the";

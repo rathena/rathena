@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 3.4
+//= 3.5
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -26,33 +26,6 @@
 //= - Variable in use: ra_have_donated (0 no/1 yes)
 //= - Variable in use: $rachel_donate (max 10000)
 //===== Additional Comments: ================================= 
-//= 1.0 First version, needs testing. [L0ne_W0lf]
-//= 1.1 Some slight optimization. [L0ne_W0lf]
-//= 1.2 Fixed Man Stuck in Ice only giving 1 Freezing Snow Powder. [L0ne_W0lf]
-//= 1.3 Added the ability to redeem lottery tickets before donation max is met. [L0ne_W0lf]
-//= 1.4 Removed an erroneous "case". Thanks, Jet. [L0ne_W0lf]
-//= 1.5 Fixed a bug in Bruspetti quest. [SinSloth]
-//= 1.5b Fixed some typos in various quests. [SinSloth]
-//= 1.6 Fixed a couple bugs with the Pope's Office Guards... [L0ne_W0lf]
-//= 1.7 Fixed Maheo, he will revert to his frozen state when clicked. [L0ne_W0lf]
-//=	Replaced  instances of "+name+", with "+strcharinfo(0)".
-//= 1.8 Various fixes: Hamion will now delete items used for Wind Hammer. [L0ne_W0lf]
-//=	Fixed EXP reward in Ice Necklace quest, fixed a typo in an NPC header.
-//=	Another minor fix to Hamion. "< 1" -> "< 2". Added a missing close to
-//=	the ontouch "key". Thanks to Gepard for pointing them out.
-//= 1.9 Fixed a misorder with variable checkings. [SinSloth]
-//= 2.0 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
-//= 2.1 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
-//= 2.2 Maheo NPC now uses "setnpcdisplay" instead of two NPCs. [L0ne_W0lf]
-//= 2.2a Corrected a Typo error ";;". [Samuray22]
-//= 2.3 Added Zhed's portion of Thor Volcano Base Quest. (euRO) [L0ne_W0lf]
-//= 2.4 Updated Zhed's Thor Vol. Base addition dialog to iRO's. [L0ne_W0lf]
-//= 2.4a Further updates to Zhed's Veins addition. [L0ne_W0lf]
-//= 2.5 Added Nameless Island quest addition. [L0ne_W0lf]
-//= 2.6 Uncommented ontouchNPC label for Man Stuck in Ice. [L0ne_W0lf]
-//= 2.7 Corrected overlaping warp coordinates. [L0ne_W0lf]
-//= 2.8 Replaced effect numerics with constants. [L0ne_W0lf]
-//= 2.9 Replaced effect numerics with constants. [Samuray22]
 //= 3.0 Large reordering of Zhed, and Peace to the Arunafeltz addition. [L0ne_W0lf]
 //=     Some more numeric conversion, and some other cleanup.
 //= 3.1 Updated Ice Necklace quest, added missing checks. [L0ne_W0lf]
@@ -63,6 +36,7 @@
 //= 3.4 Added quest log entries for:
 //=     - Ice Necklace Quest
 //=     - Thor Volcano Base Quest addition.
+//= 3.5 Updated RE/Pre-RE EXP. [Euphy]
 //============================================================ 
 
 // Lost Child Quest (Prerequisite to High Priest quest)
@@ -1290,10 +1264,7 @@ rachel,263,32,3	script	Kid#ra_in01	931,{
 
 }
 
-//End of Lost Child quest
-//============================================================ 
-
-//Bruspetti Quest (Perequisite: Lighthalzen "Friendship" quest)
+// Bruspetti Quest (Perequisite: Lighthalzen "Friendship" quest)
 //============================================================ 
 ra_in01,235,194,5	script	Katinshuell	931,{
 	if (rach_vice > 21) {
@@ -2620,9 +2591,15 @@ OnTouch:
 		mes "Who would be to blame?";
 		next;
 		set rach_vice,24;
-		if (BaseLevel > 90) getexp 130000,0;
-		else if (BaseLevel > 75) getexp 85000,0;
-		else getexp 45000,0;
+		if (checkre(3)) {
+			if (BaseLevel > 90) getexp 130000,0;
+			else if (BaseLevel > 75) getexp 85000,0;
+			else getexp 45000,0;
+		} else {
+			if (BaseLevel > 90) getexp 1300000,0;
+			else if (BaseLevel > 75) getexp 850000,0;
+			else getexp 450000,0;
+		}
 		mes "[" + strcharinfo(0) + "]";
 		mes "Somehow, I wish that";
 		mes "Katinshuell had the";
@@ -2732,9 +2709,6 @@ ra_in01,255,25,0	script	Book#ra_in	111,{
 	}
 
 }
-
-//End of Bruspetti quest
-//============================================================ 
 
 // Ice Necklace/Summon Ktullanux Quest and Glacial Heart buyer
 //============================================================ 
@@ -2924,7 +2898,7 @@ rachel,157,183,3	script	Sincere Follower Urstia	916,{
 			mes "token of my appreication for";
 			mes " what you have done for me.";
 			delitem 7573,1; //Magic_Necklace_
-			getexp 70000,0;
+			getexp (checkre(3))?90000:700000,0;
 			completequest 2113;
 			set ice_necklace_q,6;
 			next;
@@ -3902,10 +3876,6 @@ OnEnable:
 
 }
 
-// End of Ice Necklace/Summon Ktullanux Quest
-//============================================================ 
-
-
 // Donation Lottery Quest/High Priest Quest
 //============================================================ 
 ra_temple,119,180,0	script	Temple Entrance#ra_tem	45,1,1,{
@@ -4265,8 +4235,8 @@ ra_temple,116,174,3	script	Nemma#ra_temple	920,{
 				next;
 				if (countitem(12018) >= 20) {
 					cutin "ra_nemma04",2;
-					delitem 12018,20; //FireCracker";
-					getexp 20000,0;
+					delitem 12018,20; //Fire_Cracker
+					getexp (checkre(3))?50000:200000,0;
 					set ra_tem_q,14;
 					mes "[Priestess Nemma]";
 					mes "Yay!";
@@ -5054,7 +5024,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 		cutin "ra_gman",255;
 		set lost_boy,13;
 		specialeffect2 EF_ABSORBSPIRITS;
-		getexp 90000,0;
+		getexp (checkre(3))?90000:900000,0;
 		end;
 	}
 	else if ((lost_boy == 13) && (ra_tem_q < 14)) {
@@ -5469,7 +5439,10 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 		set ra_tem_q,0;
 		cutin "",255;
 		specialeffect2 EF_ABSORBSPIRITS;
-		getexp 90000,60000;
+		if (checkre(3))
+			getexp 90000,60000;
+		else
+			getexp 900000,600000;
 		end;
 	}
 	else if (MISC_QUEST & 8192) {
@@ -6025,7 +5998,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 				mes "peace between our nations.";
 				completequest 60213;
 				set aru_vol,27;
-				getexp 20000,0;
+				getexp (checkre(3))?20000:200000,0;
 				close2;
 				cutin "ra_gman",255;
 				end;
@@ -6465,7 +6438,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 					mes "Your place in Valhalla is";
 					mes "already assured, I'm sure.";
 					set aru_em,24;
-					getexp 150000,0;
+					getexp (checkre(3))?150000:1500000,0;
 				}
 				else {
 					mes "[High Priest Zhed]";
@@ -7667,5 +7640,34 @@ OnTouch:
 	end;
 }
 
-// End of Donation Lottery/High Priest quest
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.0 First version, needs testing. [L0ne_W0lf]
+//= 1.1 Some slight optimization. [L0ne_W0lf]
+//= 1.2 Fixed Man Stuck in Ice only giving 1 Freezing Snow Powder. [L0ne_W0lf]
+//= 1.3 Added the ability to redeem lottery tickets before donation max is met. [L0ne_W0lf]
+//= 1.4 Removed an erroneous "case". Thanks, Jet. [L0ne_W0lf]
+//= 1.5 Fixed a bug in Bruspetti quest. [SinSloth]
+//= 1.5b Fixed some typos in various quests. [SinSloth]
+//= 1.6 Fixed a couple bugs with the Pope's Office Guards... [L0ne_W0lf]
+//= 1.7 Fixed Maheo, he will revert to his frozen state when clicked. [L0ne_W0lf]
+//=	Replaced  instances of "+name+", with "+strcharinfo(0)".
+//= 1.8 Various fixes: Hamion will now delete items used for Wind Hammer. [L0ne_W0lf]
+//=	Fixed EXP reward in Ice Necklace quest, fixed a typo in an NPC header.
+//=	Another minor fix to Hamion. "< 1" -> "< 2". Added a missing close to
+//=	the ontouch "key". Thanks to Gepard for pointing them out.
+//= 1.9 Fixed a misorder with variable checkings. [SinSloth]
+//= 2.0 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
+//= 2.1 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 2.2 Maheo NPC now uses "setnpcdisplay" instead of two NPCs. [L0ne_W0lf]
+//= 2.2a Corrected a Typo error ";;". [Samuray22]
+//= 2.3 Added Zhed's portion of Thor Volcano Base Quest. (euRO) [L0ne_W0lf]
+//= 2.4 Updated Zhed's Thor Vol. Base addition dialog to iRO's. [L0ne_W0lf]
+//= 2.4a Further updates to Zhed's Veins addition. [L0ne_W0lf]
+//= 2.5 Added Nameless Island quest addition. [L0ne_W0lf]
+//= 2.6 Uncommented ontouchNPC label for Man Stuck in Ice. [L0ne_W0lf]
+//= 2.7 Corrected overlaping warp coordinates. [L0ne_W0lf]
+//= 2.8 Replaced effect numerics with constants. [L0ne_W0lf]
+//= 2.9 Replaced effect numerics with constants. [Samuray22]
 //============================================================

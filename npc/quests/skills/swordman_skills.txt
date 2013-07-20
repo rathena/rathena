@@ -55,7 +55,7 @@ izlude_in,175,130,2	script	Knight De Thomas	98,4,4,{
 			mes "Bring your armor!";
 			mes "Last but not least... bring me one ^008800Moth Wing^000000.";
 			next;
-			menu "Eh? You need that, too?",-;
+			select("Eh? You need that, too?");
 			mes "[De Thomas]";
 			mes "Not really.. I don't really NEED it.";
 			mes "It's just that my niece has gotten a bug hunting as a holiday task during the summer vacation.";
@@ -208,7 +208,7 @@ prt_in,75,88,5	script	Leon Von Frich	85,3,3,{
 		mes "[Leon]";
 		mes "Wow, seeing your arm, you must enjoy using bash?";
 		next;
-		menu "Eh, I.. just...",-;
+		select("Eh, I... just...");
 		mes "[Leon]";
 		if (Sex == 0) {
 			mes "No need to be surprised.";

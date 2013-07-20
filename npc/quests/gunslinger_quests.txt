@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Playtester
 //===== Current Version: =====================================
-//= 1.6c
+//= 1.7
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -21,6 +21,7 @@
 //= 1.6a Removed .GATs [Lupus]
 //= 1.6b Changed item names to item IDs on some scripts. [Samuray22]
 //= 1.6c Corrected a bad delitem. (bugreport:763) [Samuray22]
+//= 1.7 Removed all 'menu' and 'goto'. [Euphy]
 //============================================================
 
 que_ng,182,85,3	script	Garrison	109,{
@@ -1095,7 +1096,7 @@ que_ng,149,178,4	script	Lab Director	744,{
 		mes "My name is 'Lab Director'.";
 		mes "Do you need something?";
 		next;
-		menu "I need a Special Metal Rod.",-;
+		select("I need a Special Metal Rod.");
 		mes "[N. A]";
 		mes "Huh...? Hey, weren't you that guy";
 		mes "who walked out of here with a";
@@ -1111,7 +1112,7 @@ que_ng,149,178,4	script	Lab Director	744,{
 		mes "You betrayed my faith in you!";
 		mes "You traitor! Traitor!! TRAITOR!!!!";
 		next;
-		menu "Explain everything.",-;
+		select("Explain everything.");
 		mes "[N. A]";
 		mes "...... Whew.";
 		mes "So it was Mr. F. Harrison who";
@@ -1131,11 +1132,11 @@ que_ng,149,178,4	script	Lab Director	744,{
 		mes "Elemental Spheres to keep going";
 		mes "with my research...";
 		next;
-		menu "Make him an offer.",-;
+		select("Make him an offer.");
 		mes "[N. A]";
 		mes "An offer? Like what?";
 		next;
-		menu "We find things for each other.",-;
+		select("We find things for each other.");
 		mes "[N. A]";
 		mes "Hmm... That sounds good.";
 		mes "Well, according to the offer,";
@@ -1159,50 +1160,49 @@ que_ng,149,178,4	script	Lab Director	744,{
 		mes "Find me 30 of each Element.";
 		mes "Did you find them?";
 		next;
-
 		switch(select("Nope.:I found 30 Poison Spheres.:I found 30 Flare Spheres.:I found 30 Lightning Spheres.:I found 30 Blind Spheres.:I found 30 Freezing Spheres.")){
-
 		case 1:
 			mes "[N. A]";
 			mes "Just bring me whatever type";
 			mes "you could find.";
 			close;
-			break;
 		case 2:
 			if(countitem(13205) >= 30){
 				delitem 13205,30;
 				set gun_na,103;
 			}
-			else goto L_MORE;
 			break;
 		case 3:
 			if(countitem(13203) >= 30){
 				delitem 13203,30;
 				set gun_na,103;
 			}
-			else goto L_MORE;
 			break;
 		case 4:
 			if(countitem(13204) >= 30){
 				delitem 13204,30;
 				set gun_na,103;
 			}
-			else goto L_MORE;
 			break;
 		case 5:
 			if(countitem(13206) >= 30){
 				delitem 13206,30;
 				set gun_na,103;
 			}
-			else goto L_MORE;
 			break;
 		case 6:
 			if(countitem(13207) >= 30){
 				delitem 13207,30;
 				set gun_na,103;
 			}
-			else goto L_MORE;
 			break;
+		}
+		if (gun_na != 103) {
+			mes "[N. A]";
+			mes "Eh? What? Am I the only";
+			mes "person who can't see them?";
+			mes "Bring me more!";
+			close;
 		}
 		mes "[N. A]";
 		mes "Wow, you found them all for me!";
@@ -1237,7 +1237,7 @@ que_ng,149,178,4	script	Lab Director	744,{
 	mes "Do you need something?";
 	next;
 	if (BaseJob != Job_Gunslinger){
-		menu "Talk to him.",-;
+		select("Talk to him.");
 		mes "[N. A]";
 		mes "If you see Gunslingers around,";
 		mes "please tell them that I have";
@@ -1246,14 +1246,8 @@ que_ng,149,178,4	script	Lab Director	744,{
 		mes "here. Heheheheh...";
 		close;
 	}
-	if (BaseLevel > 67){
-		menu "Ask about 'Butcher'.",L_BUTCHER,"Ask about the 'Drifter'.",L_DRIFTER,"Cancel",L_CANCEL;
-	}
-	else if(BaseLevel > 54){
-		menu "Ask about the 'Drifter'.",L_DRIFTER,"Cancel",L_CANCEL;
-	}
-	else{
-		menu "Talk.",-;
+	if (BaseLevel < 55) {
+		select("Talk.");
 		mes "[N. A]";
 		mes "... Destruction... Madness...";
 		mes "Hmm... Attack speed over 180...";
@@ -1264,137 +1258,129 @@ que_ng,149,178,4	script	Lab Director	744,{
 		mes "disturb me.";
 		close;
 	}
-
-L_CANCEL:
-	mes "[N. A]";
-	mes "I have news on the latest";
-	mes "weapons but... I guess you're";
-	mes "too busy to hear them.";
-	mes "Maybe next time I guess.";
-	close;
-
-L_BUTCHER:
-	mes "[N. A]";
-	mes "Ah, you heard the news";
-	mes "shortly after the end";
-	mes "of the development eh?";
-	next;
-	mes "[N. A]";
-	mes "^ff0000Butcher^000000 is the newest development";
-	mes "by us, the Einbroch Firearm Lab.";
-	mes "It is the newest type of Gatling";
-	mes "we have developed. While";
-	mes "^ff0000Drifter^000000 is a good weapon";
-	mes "as well, the ^ff0000Butcher^000000 definitely has";
-	mes "a much stronger firepower!";
-	next;
-	mes "[N. A]";
-	mes "Due to its strong firepower,";
-	mes "the Butcher was also dubbed";
-	mes "as the 'Murderer'.";
-	next;
-	mes "[N. A]";
-	mes "However, even Gunslingers could";
-	mes "have troubles controlling such";
-	mes "a powerful weapon.";
-	next;
-	mes "[N. A]";
-	mes "Do you think you can handle it?";
-	next;
-	if(select("I'm not sure...:Of course I can!!") == 1){
+	switch(select(((BaseLevel > 67)?"Ask about 'Butcher'.":"")+":Ask about the 'Drifter'.:Cancel")) {
+	case 1:
 		mes "[N. A]";
-		mes "The ^ff0000Butcher^000000 is a weapon that you";
-		mes "can't handle without a strong";
-		mes "will. I'll see you again when";
-		mes "you have enough confidence to";
-		mes "handle this monster.";
-		close;
-	}else{
-		mes "[N. A]";
-		mes "Aha, how self-confident you";
-		mes "are! However, I see people with";
-		mes "such self-confidence everywhere.";
-		mes "You'll need to prove it...";
-		mes "But how... Hmm...";
+		mes "Ah, you heard the news";
+		mes "shortly after the end";
+		mes "of the development eh?";
 		next;
 		mes "[N. A]";
-		mes "Hmmm......";
+		mes "^ff0000Butcher^000000 is the newest development";
+		mes "by us, the Einbroch Firearm Lab.";
+		mes "It is the newest type of Gatling";
+		mes "we have developed. While";
+		mes "^ff0000Drifter^000000 is a good weapon";
+		mes "as well, the ^ff0000Butcher^000000 definitely has";
+		mes "a much stronger firepower!";
 		next;
 		mes "[N. A]";
-		mes "Aha! I got it!";
+		mes "Due to its strong firepower,";
+		mes "the Butcher was also dubbed";
+		mes "as the 'Murderer'.";
 		next;
 		mes "[N. A]";
-		mes "Here, bring me ^ff00001000 Orc Claws^000000 and ^ff00001000 Skel Bone^000000.";
-		mes "If you can bring me these items,";
-		mes "I'll let you use the Butcher.";
+		mes "However, even Gunslingers could";
+		mes "have troubles controlling such";
+		mes "a powerful weapon.";
 		next;
 		mes "[N. A]";
-		mes "Easy, ain't it? Go and prove";
-		mes "your ability then! Heheheh...";
-		set gun_na,1;
+		mes "Do you think you can handle it?";
+		next;
+		if(select("I'm not sure...:Of course I can!!") == 1){
+			mes "[N. A]";
+			mes "The ^ff0000Butcher^000000 is a weapon that you";
+			mes "can't handle without a strong";
+			mes "will. I'll see you again when";
+			mes "you have enough confidence to";
+			mes "handle this monster.";
+			close;
+		}else{
+			mes "[N. A]";
+			mes "Aha, how self-confident you";
+			mes "are! However, I see people with";
+			mes "such self-confidence everywhere.";
+			mes "You'll need to prove it...";
+			mes "But how... Hmm...";
+			next;
+			mes "[N. A]";
+			mes "Hmmm......";
+			next;
+			mes "[N. A]";
+			mes "Aha! I got it!";
+			next;
+			mes "[N. A]";
+			mes "Here, bring me ^ff00001000 Orc Claws^000000 and ^ff00001000 Skel Bone^000000.";
+			mes "If you can bring me these items,";
+			mes "I'll let you use the Butcher.";
+			next;
+			mes "[N. A]";
+			mes "Easy, ain't it? Go and prove";
+			mes "your ability then! Heheheh...";
+			set gun_na,1;
+			close;
+		}
+	case 2:
+		mes "[N. A]";
+		mes "Ah, you're here to learn about";
+		mes "the ^ff0000Drifter^000000 eh?";
+		next;
+		mes "[N. A]";
+		mes "The ^ff0000Drifter^000000 is one of the many";
+		mes "highest-classed weapons developed";
+		mes "by Lady Celena. It's an automatic";
+		mes "Gatling which boasts very high";
+		mes "rate of fire, which is the highest";
+		mes "among all Gunslinger weapons.";
+		next;
+		mes "[N. A]";
+		mes "Of course, you will need the Skill";
+		mes "to allow you to control Gatlings,";
+		mes "but he who contorls Gatlings well";
+		mes "will receive full aid from the";
+		mes "^ff0000Drifter^000000.";
+		next;
+		mes "[N. A]";
+		mes "Do you want to try using the ^ff0000Drifter^000000?";
+		next;
+		if(select("Um, no.:Yeah!") == 1){
+			mes "[N. A]";
+			mes "If you want to try it out";
+			mes "some time, come back here.";
+			close;
+		}else{
+			set gun_na,10;
+			mes "[N. A]";
+			mes "Since it's really hard to find";
+			mes "the materials for constructing";
+			mes "the ^ff0000Drifter^000000, we only make them";
+			mes "on requests, and we require those";
+			mes "who want to use the ^ff0000Drifter^000000 to bring";
+			mes "us the materials.";
+			next;
+			mes "[N. A]";
+			mes "I'll tell you the materials";
+			mes "needed, just bring them and";
+			mes "we'll construct it for you.";
+			next;
+			mes "[N. A]";
+			mes "To make a Drifter, we need";
+			mes "70 Steel, 5 Eluniums, 3";
+			mes "Oridecons, 70 Coal, 50 Rusty";
+			mes "Screws, and a fee of";
+			mes "50,000 zeny.";
+			mes "Come back after you found";
+			mes "them all.";
+			close;
+		}
+	case 3:
+		mes "[N. A]";
+		mes "I have news on the latest";
+		mes "weapons but... I guess you're";
+		mes "too busy to hear them.";
+		mes "Maybe next time I guess.";
 		close;
 	}
-
-L_DRIFTER:
-	mes "[N. A]";
-	mes "Ah, you're here to learn about";
-	mes "the ^ff0000Drifter^000000 eh?";
-	next;
-	mes "[N. A]";
-	mes "The ^ff0000Drifter^000000 is one of the many";
-	mes "highest-classed weapons developed";
-	mes "by Lady Celena. It's an automatic";
-	mes "Gatling which boasts very high";
-	mes "rate of fire, which is the highest";
-	mes "among all Gunslinger weapons.";
-	next;
-	mes "[N. A]";
-	mes "Of course, you will need the Skill";
-	mes "to allow you to control Gatlings,";
-	mes "but he who contorls Gatlings well";
-	mes "will receive full aid from the";
-	mes "^ff0000Drifter^000000.";
-	next;
-	mes "[N. A]";
-	mes "Do you want to try using the ^ff0000Drifter^000000?";
-	next;
-	if(select("Um, no.:Yeah!") == 1){
-		mes "[N. A]";
-		mes "If you want to try it out";
-		mes "some time, come back here.";
-		close;
-	}else{
-		set gun_na,10;
-		mes "[N. A]";
-		mes "Since it's really hard to find";
-		mes "the materials for constructing";
-		mes "the ^ff0000Drifter^000000, we only make them";
-		mes "on requests, and we require those";
-		mes "who want to use the ^ff0000Drifter^000000 to bring";
-		mes "us the materials.";
-		next;
-		mes "[N. A]";
-		mes "I'll tell you the materials";
-		mes "needed, just bring them and";
-		mes "we'll construct it for you.";
-		next;
-		mes "[N. A]";
-		mes "To make a Drifter, we need";
-		mes "70 Steel, 5 Eluniums, 3";
-		mes "Oridecons, 70 Coal, 50 Rusty";
-		mes "Screws, and a fee of";
-		mes "50,000 zeny.";
-		mes "Come back after you found";
-		mes "them all.";
-		close;
-	}
-
-L_MORE:
-	mes "[N. A]";
-	mes "Eh? What? Am I the only";
-	mes "person who can't see them?";
-	mes "Bring me more!";
-	close;
 }
 
 lighthalzen,205,284,6	script	F. Harrison	85,{
@@ -1415,7 +1401,7 @@ lighthalzen,205,284,6	script	F. Harrison	85,{
 		mes "[F. Harrison]";
 		mes "Heheh... Hmm... Huh...?";
 		next;
-		menu "May I have my Butcher back now?",-;
+		select("May I have my Butcher back now?");
 		mes "[F. Harrison]";
 		mes "Uh? Oh, umm... Heheh...";
 		next;
@@ -1555,7 +1541,17 @@ lighthalzen,205,284,6	script	F. Harrison	85,{
 		close;
 	}
 	else if(gun_na == 0){
-		if(BaseJob != Job_Gunslinger) goto L_BORED;
+		if(BaseJob != Job_Gunslinger) {
+			mes "[F. Harrison]";
+			mes "Man, I'm so bored...";
+			mes "I wonder if there's anything";
+			mes "interesting...";
+			next;
+			mes "[F. Harrison]";
+			mes "Oh well... I'll just play with my";
+			mes "beautiful 'Crimson Bolt'.";
+			close;
+		}
 		if(BaseLevel > 67 && countitem(13158) > 0){
 			mes "[F. Harrison]";
 			mes "Man, I'm so bored...";
@@ -1599,15 +1595,4 @@ lighthalzen,205,284,6	script	F. Harrison	85,{
 			close;
 		}
 	}
-
-L_BORED:
-	mes "[F. Harrison]";
-	mes "Man, I'm so bored...";
-	mes "I wonder if there's anything";
-	mes "interesting...";
-	next;
-	mes "[F. Harrison]";
-	mes "Oh well... I'll just play with my";
-	mes "beautiful 'Crimson Bolt'.";
-	close;
 }

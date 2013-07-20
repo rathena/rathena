@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 3.0
+//= 3.1
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -50,6 +50,7 @@
 //= 2.8 Some optimization, and moved an Izlude NPC. [Euphy]
 //= 2.9 Fixed an invalid event label. [Joseph]
 //= 3.0 Fixed a missing variable check. [Joseph]
+//= 3.1 Updated RE/Pre-RE EXP. [Euphy]
 //============================================================ 
 
 // Onward to the New World
@@ -4237,10 +4238,7 @@ mid_camp,188,254,3	script	Monster Scholar#ep13	883,{
 				mes "I hope you'll make yourself known in Ash Vacuum with your great accomplishments.";
 				set ep13_animal,15;
 				completequest 2157;
-				if (checkre(3))
-					getexp 100000,0;
-				else
-					getexp 1500000,0;
+				getexp (checkre(3))?100000:1500000,0;
 				close;
 			}
 			else {
@@ -4338,10 +4336,7 @@ mid_camp,188,254,3	script	Monster Scholar#ep13	883,{
 				mes "- You pat his shoulder gently, it's worrying that Rumis is not able to return to his country. -";
 				set ep13_animal,100;
 				delitem 6033,1; //Horn_Of_Tendrilion
-				if (checkre(3))
-					getexp 50000,0;
-				else
-					getexp 1000000,0;
+				getexp (checkre(3))?50000:1000000,0;
 				close;
 			}
 			else {
@@ -5173,10 +5168,7 @@ mid_camp,212,237,5	script	Camp Guard Captain#man1	852,{
 			mes "I'll discuss this more with the expedition management.";
 			mes "Thank you for your valuable information.";
 			completequest 2158;
-			if (checkre(3))
-				getexp 90000,0;
-			else
-				getexp 900000,0;
+			getexp (checkre(3))?90000:900000,0;
 			close;
 		}
 		else if (checkquest(2158) == -1) {
@@ -5197,10 +5189,7 @@ mid_camp,212,237,5	script	Camp Guard Captain#man1	852,{
 				mes "I'll discuss this more with the expedition management.";
 				mes "Thank you for your valuable information.";
 				completequest 2159;
-				if (checkre(3))
-					getexp 90000,0;
-				else
-					getexp 900000,0;
+				getexp (checkre(3))?90000:900000,0;
 				close;
 			}
 			else {
@@ -7446,14 +7435,17 @@ mid_camp,143,306,5	script	Breeder Taab#ep13_alba	946,{
 				next;
 				delitem 579,50; //Delicious_Fish
 				set ep13_alba,6;
-				if (checkre(3))
+				if (checkre(3)) {
 					getexp 8000,3000;
-				else
+					mes "^4d4dff You have received 8,000 EXP";
+					mes "and 3,000 JEXP.^000000.";
+				} else {
 					getexp 80000,30000;
+					mes "^4d4dff You have received 80,000 EXP";
+					mes "and 30,000 JEXP.^000000.";
+				}
 				erasequest 7042;
 				setquest 7047;
-				mes "^4d4dff You have received 8,000 EXP";
-				mes "and 3,000 JEXP.^000000.";
 				close;
 			}
 			else {
@@ -7482,14 +7474,17 @@ mid_camp,143,306,5	script	Breeder Taab#ep13_alba	946,{
 				delitem 7198,30; //Great_Leaf
 				delitem 7188,30; //Browny_Root
 				set ep13_alba,6;
-				if (checkre(3))
+				if (checkre(3)) {
 					getexp 9000,4000;
-				else
+					mes "^4d4dff You have received 9,000 EXP";
+					mes "and 4,000 JEXP.^000000.";
+				} else {
 					getexp 90000,40000;
+					mes "^4d4dff You have received 90,000 EXP";
+					mes "and 40,000 JEXP.^000000.";
+				}
 				erasequest 7043;
 				setquest 7047;
-				mes "^4d4dff You have received 9,000 EXP";
-				mes "and 4,000 JEXP.^000000.";
 				close;
 			}
 			else {
@@ -7523,14 +7518,17 @@ mid_camp,143,306,5	script	Breeder Taab#ep13_alba	946,{
 				delitem 528,20; //Monster's_Feed
 				delitem 537,30; //Pet_Food
 				set ep13_alba,6;
-				if (checkre(3))
+				if (checkre(3)) {
 					getexp 8000,3000;
-				else
+					mes "^4d4dff You have received 8,000 EXP";
+					mes "and 3,000 JEXP.^000000.";
+				} else {
 					getexp 80000,30000;
+					mes "^4d4dff You have received 80,000 EXP";
+					mes "and 30,000 JEXP.^000000.";
+				}
 				erasequest 7044;
 				setquest 7047;
-				mes "^4d4dff You have received 8,000 EXP";
-				mes "and 3,000 JEXP.^000000.";
 				close;
 			}
 			else {
@@ -7561,14 +7559,17 @@ mid_camp,143,306,5	script	Breeder Taab#ep13_alba	946,{
 				delitem 517,50; //Meat
 				delitem 537,30; //Pet_Food
 				set ep13_alba,6;
-				if (checkre(3))
+				if (checkre(3)) {
 					getexp 8000,3000;
-				else
+					mes "^4d4dff You have received 8,000 EXP";
+					mes "and 3,000 JEXP.^000000.";
+				} else {
 					getexp 80000,30000;
+					mes "^4d4dff You have received 80,000 EXP";
+					mes "and 30,000 JEXP.^000000.";
+				}
 				erasequest 7045;
 				setquest 7047;
-				mes "^4d4dff You have received 8,000 EXP";
-				mes "and 3,000 JEXP.^000000.";
 				close;
 			}
 			else {
@@ -7596,14 +7597,17 @@ mid_camp,143,306,5	script	Breeder Taab#ep13_alba	946,{
 				next;
 				delitem 6020,30; //Fur
 				set ep13_alba,6;
-				if (checkre(3))
+				if (checkre(3)) {
 					getexp 8000,3000;
-				else
+					mes "^4d4dff You have received 8,000 EXP";
+					mes "and 3,000 JEXP.^000000.";
+				} else {
 					getexp 80000,30000;
+					mes "^4d4dff You have received 80,000 EXP";
+					mes "and 30,000 JEXP.^000000.";
+				}
 				erasequest 7046;
 				setquest 7047;
-				mes "^4d4dff You have received 8,000 EXP";
-				mes "and 3,000 JEXP.^000000.";
 				close;
 			}
 			else {
@@ -8351,11 +8355,11 @@ mid_camp,69,144,0	script	Ferocious Gorurug	421,{
 				mes "You've brough Pieces of Fish!";
 				mes "GOOD JOB!";
 				delitem 6039,10; //Piece_Of_Fish
-				getexp 20000,0;
+				getexp (checkre(3))?20000:30000,0;
 				set ep13_yong1,10;
 				setquest 12060;
 				next;
-				mes "^0000ffYou gain EXP 3,000^000000";
+				mes "^0000ffYou gain EXP "+(checkre(3)?"20,000":"30,000")+"^000000";
 				close;
 			}
 			else {
@@ -8375,7 +8379,7 @@ mid_camp,69,144,0	script	Ferocious Gorurug	421,{
 				setquest 12060;
 				set ep13_yong1,ep13_yong1+1;
 				next;
-				mes "^0000ffYou gain EXP 1,500^000000";
+				mes "^0000ffYou gain EXP 15,000^000000";
 				close;
 			}
 			else {
@@ -8396,7 +8400,7 @@ mid_camp,69,144,0	script	Ferocious Gorurug	421,{
 				setquest 12060;
 				set ep13_yong1,ep13_yong1+1;
 				next;
-				mes "^0000ffYou gain EXP 1,500^000000";
+				mes "^0000ffYou gain EXP 15,000^000000";
 				close;
 			}
 			else {
@@ -8416,7 +8420,7 @@ mid_camp,69,144,0	script	Ferocious Gorurug	421,{
 				setquest 12060;
 				set ep13_yong1,ep13_yong1+1;
 				next;
-				mes "^0000ffYou gain EXP 1,500^000000";
+				mes "^0000ffYou gain EXP 15,000^000000";
 				close;
 			}
 			else {
@@ -8598,7 +8602,7 @@ mid_camp,88,100,55	script	Cat Hand Mining Agent	876,{
 			mes "Thank you for collecting minerals for me.";
 			next;
 			delitem 6048,3; //Unidentified_Mineral
-			getexp 20000,0;
+			getexp (checkre(3))?20000:30000,0;
 			setquest 12062;
 			set ep13_yong1,ep13_yong1+1;
 			select("I'm freezing! Take them quickly.");
@@ -9114,7 +9118,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 		mes "Thank you for your help so far.";
 		next;
 		if (checkre(3))
-			getexp 30000,0;
+			getexp 300000,0;
 		else
 			getexp 2500000,0;
 		getitem 12110,3; //First_Aid_Kit

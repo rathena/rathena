@@ -82,7 +82,7 @@ moc_ruins,118,99,5	script	Roberto	88,{
 				mes "Isn't it hard to find arrows?";
 				mes "That's why I make my own.";
 				next;
-				menu "Eh, really?!",-;
+				select("Eh, really?!");
 				mes "[Roberto]";
 				mes "Yeah! I gather different items";
 				mes "and make arrows using them.";
@@ -90,7 +90,7 @@ moc_ruins,118,99,5	script	Roberto	88,{
 				mes "survive alone in this tough world.";
 				mes "If you'd like, I can teach you.";
 				next;
-				menu "That would be wonderful.",-;
+				select("That would be wonderful.");
 				mes "[Roberto]";
 				mes "But.. I can't do it for free.";
 				mes "Nothing is free in this world~";

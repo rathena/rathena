@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.2a
+//= 2.3
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -60,6 +60,7 @@
 //=     - Broken Diamond
 //=     - Z-Gang Quest
 //= 2.2a Fixed a few job constant typos. [Euphy]
+//= 2.3 Updated RE/Pre-RE EXP. [Euphy]
 //============================================================ 
 
 // Nameless Island and Cursed Monestary Access Quest
@@ -879,7 +880,7 @@ ra_temple,165,57,5	script	Niren#ss	915,{
 				mes "comes from that place.";
 				delitem 7755,1; //Research_Note
 				set aru_monas,26;
-				getexp 50000,0;
+				getexp (checkre(3))?50000:500000,0;
 				close2;
 			}
 		}
@@ -1348,7 +1349,7 @@ ra_temple,165,57,5	script	Niren#ss	915,{
 			mes "that you've seen that";
 			mes "expression on her face.^000000";
 			set aru_em,23;
-			getexp 100000,0;
+			getexp (checkre(3))?100000:1000000,0;
 			close2;
 		}
 		else if (aru_em > 21) {
@@ -1925,7 +1926,7 @@ nameless_n,259,218,3	script	Larjes#Boat1	97,{
 		mes "This is huge!";
 		set aru_monas,24;
 		delitem 7726,1; //Token_Of_King
-		getexp 100000,0;
+		getexp (checkre(3))?100000:1000000,0;
 		close;
 	}
 	mes "[Larjes]";
@@ -6555,7 +6556,7 @@ prontera,148,326,3	script	Chief Officer#edq	734,{
 		mes "Congratulations! ";
 		completequest 3134;
 		set zdan_edq,19;
-		getexp 100000,0;
+		getexp (checkre(3))?100000:1000000,0;
 		close;
 	}
 	mes "[Chief Officer]";
@@ -11066,42 +11067,26 @@ prontera,140,304,5	script	Old Soldier	901,{
 					delitem 7725,1; //Unlucky_Emerald
 					set jewel_nd,31;
 					getitem 603,1; //Old_Blue_Box
-					if (BaseLevel < 66) {
-						getitem 607,1; //Yggdrasilberry
-						next;
+					if (checkre(3)) {
+						if (BaseLevel < 66) getitem 607,1; //Yggdrasilberry
+						else if ((BaseLevel > 65) && (BaseLevel < 75)) getexp 5000,0;
+						else if ((BaseLevel > 74) && (BaseLevel < 81)) getexp 18000,0;
+						else if ((BaseLevel > 80) && (BaseLevel < 86)) getexp 36000,0;
+						else if ((BaseLevel > 85) && (BaseLevel < 91)) getexp 50000,0;
+						else if ((BaseLevel > 90) && (BaseLevel < 96)) getexp 80000,0;
+						else if ((BaseLevel > 95) && (BaseLevel < 160)) getexp 100000,0;
+						else getitem 617,1; //Old_Violet_Box
+					} else {
+						if (BaseLevel < 66) getitem 607,1; //Yggdrasilberry
+						else if ((BaseLevel > 65) && (BaseLevel < 75)) getexp 50000,0;
+						else if ((BaseLevel > 74) && (BaseLevel < 81)) getexp 180000,0;
+						else if ((BaseLevel > 80) && (BaseLevel < 86)) getexp 360000,0;
+						else if ((BaseLevel > 85) && (BaseLevel < 91)) getexp 500000,0;
+						else if ((BaseLevel > 90) && (BaseLevel < 96)) getexp 800000,0;
+						else if ((BaseLevel > 95) && (BaseLevel < 99)) getexp 1000000,0;
+						else getitem 617,1; //Old_Violet_Box
 					}
-					else if ((BaseLevel > 65) && (BaseLevel < 75)) {
-						getexp 5000,0;
-						next;
-					}
-					else if ((BaseLevel > 74) && (BaseLevel < 81)) {
-						getexp 18000,0;
-						next;
-					}
-					else if ((BaseLevel > 80) && (BaseLevel < 86)) {
-						getexp 36000,0;
-						next;
-					}
-					else if ((BaseLevel > 85) && (BaseLevel < 91)) {
-						getexp 50000,0;
-						next;
-					}
-					else if ((BaseLevel > 90) && (BaseLevel < 96)) {
-						getexp 80000,0;
-						next;
-					}
-					else if ((BaseLevel > 95) && (BaseLevel < 150)) {
-						getexp 100000,0;
-						next;
-					}
-					else if (BaseLevel == 150) {
-						getitem 617,1; //Old_Violet_Box
-						next;
-					}
-					else {
-						getitem 617,1; //Old_Violet_Box
-						next;
-					}
+					next;
 					mes "[Retired Soldier]";
 					mes "If there's anything";
 					mes "you learn from all this,";
@@ -11137,42 +11122,26 @@ prontera,140,304,5	script	Old Soldier	901,{
 			delitem 7725,1; //Unlucky_Emerald
 			set jewel_nd,31;
 			getitem 603,1; //Old_Blue_Box
-			if (BaseLevel < 66) {
-				getitem 607,1; //Yggdrasilberry
-				next;
+			if (checkre(3)) {
+				if (BaseLevel < 66) getitem 607,1; //Yggdrasilberry
+				else if ((BaseLevel > 65) && (BaseLevel < 75)) getexp 5000,0;
+				else if ((BaseLevel > 74) && (BaseLevel < 81)) getexp 8000,0;
+				else if ((BaseLevel > 80) && (BaseLevel < 86)) getexp 15000,0;
+				else if ((BaseLevel > 85) && (BaseLevel < 91)) getexp 20000,0;
+				else if ((BaseLevel > 90) && (BaseLevel < 96)) getexp 40000,0;
+				else if ((BaseLevel > 95) && (BaseLevel < 160)) getexp 50000,0;
+				else getitem 617,1; //Old_Violet_Box
+			} else {
+				if (BaseLevel < 66) getitem 607,1; //Yggdrasilberry
+				else if ((BaseLevel > 65) && (BaseLevel < 75)) getexp 50000,0;
+				else if ((BaseLevel > 74) && (BaseLevel < 81)) getexp 80000,0;
+				else if ((BaseLevel > 80) && (BaseLevel < 86)) getexp 150000,0;
+				else if ((BaseLevel > 85) && (BaseLevel < 91)) getexp 200000,0;
+				else if ((BaseLevel > 90) && (BaseLevel < 96)) getexp 400000,0;
+				else if ((BaseLevel > 95) && (BaseLevel < 99)) getexp 500000,0;
+				else getitem 617,1; //Old_Violet_Box
 			}
-			else if ((BaseLevel > 65) && (BaseLevel < 75)) {
-				getexp 5000,0;
-				next;
-			}
-			else if ((BaseLevel > 74) && (BaseLevel < 81)) {
-				getexp 8000,0;
-				next;
-			}
-			else if ((BaseLevel > 80) && (BaseLevel < 86)) {
-				getexp 15000,0;
-				next;
-			}
-			else if ((BaseLevel > 85) && (BaseLevel < 91)) {
-				getexp 20000,0;
-				next;
-			}
-			else if ((BaseLevel > 90) && (BaseLevel < 96)) {
-				getexp 40000,0;
-				next;
-			}
-			else if ((BaseLevel > 95) && (BaseLevel < 150)) {
-				getexp 50000,0;
-				next;
-			}
-			else if (BaseLevel == 150) {
-				getitem 617,1; //Old_Violet_Box
-				next;
-			}
-			else {
-				getitem 617,1; //Old_Violet_Box
-				next;
-			}
+			next;
 			mes "[Retired Soldier]";
 			mes "If there's anything";
 			mes "you learn from all this,";

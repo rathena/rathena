@@ -3,78 +3,12 @@
 //===== By: ================================================== 
 //= L0ne_W0lf (Script), DZeroX (Timer)
 //===== Current Version: ===================================== 
-//= 4.6
+//= 4.7
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
 //= Quest for opening Robot Factory first and second floors.
-//===== Comments: ============================================
-//= See below
 //===== Additional Comments: ================================= 
-//= 1.0 First version, needs testing [Playtester]
-//= 1.1 Copied over some changes made by -Tsuyuki- [L0ne_W0lf]
-//=	Reworked variables slightly so that the permenents ones aside from the 
-//=	main tracking variable, are deleted when no longer needed. Renamed
-//=	several variables that handle strings to @KHInput$. [L0ne_W0lf]
-//= 1.2 Removed duplicate NPCs. [Toms]
-//= 1.3 More Bug fixes, fixed typo. Updated Additional comments. [L0ne_W0lf]
-//= 1.4 Fixed doors not resetting in kh_kiehl01 after 30 second timer is up. [L0ne_W0lf]
-//= 1.5 Another bug fixed (&& instead of ||). [L0ne_W0lf]
-//= 1.6 More squashed bugs with if checking. [L0ne_W0lf]
-//= 1.7 Corrected some spelling mistakes. [Balish]
-//	Corrected Exploit with the pub man, giving infinite wine and money.
-//	Corrected pool and map not showing text for some states of the quest.
-//	Corrected Elly showing cutin but not text for some states of the quest (causing players to log off to continue).
-//	Let fisherman talk to you when you have 10 fishes OR MORE.
-//	Corrected not letting you enter the tombstone after finishing the quest.
-//= 1.8 Elly now deletes the Iron_Box, and Kiel Hyre deletes the Pin. [L0ne_W0lf]
-//= 	More security on the 5th Big Door, now makes sure no one outside of who-
-//=	acticated it initially can use it. Resets after 10 minutes to make it.
-//=	Made it so that you need to be at least step 84 to activate the final door.
-//=	Corrected not deleting Allysia's Ring from inventory.
-//= 1.9 Exit will now enable if you are just retrieving the Ring, keeps you from getting stuck. [L0ne_W0lf]
-//=	Corrected "KH_Kielh02", was setting off a debug, invalid map index. Should have been "kh_Kiehl02"
-//=	Made .KHQuestBusy$ into a temp global variable. $@KHQuestBusy$. 
-//= 2.0 Changed the labels on the "Big Doors" to "Identifier Names" to prevent an error with using getvariableofnpc [L0ne_W0lf]
-//= 2.1 Fifth door now checks for a variable HIGHER or EQUAL to 74 not 84, as pointed out by Stollen. [L0ne_W0lf]
-//= 2.2 Another fix for Elly, no longer RESETS to 26 when you talk to her. [L0ne_W0lf]
-//= 2.3 Should NOT have been setting .KHQuestBusy at all. It's not used or accessed anymore. Removed. [L0ne_W0lf]
-//= 2.4 Lots of fixes (4ish) from Valandi. [L0ne_W0lf]
-//=	Added a getmapuser check to the mapwarp in KHTimerEnd so it's not trying to warp out 0 users. [L0ne_W0lf]
-//= 2.5 Fixed several small issues (and large one) such as typos in cutins, typos in dialog, etc. [L0ne_W0lf]
-//=	Added some of the missing dialogs for several NPCs, and fixed a few NPC locations.
-//=	ALL books can now trigger the wall.
-//=	Allysia will now summon 4 (was 2) G_CONSTANTS instead of REGULAR constants.
-//=	Fixed where Golden_Key and Kiel_Button are deleted.
-//=	Removed KHTimerEnd, and instead use OnReset.
-//=	Fixed typo in the second NPC that gives Black Keycards.
-//=	Added Monster Warps. (Keeps monsters from being in dungeon quest area.) [Non-functional]
-//= 2.6 Stupid mistake, accidentally had 4 copies of the same script in 1... [L0ne_W0lf the bonehead]
-//= 2.7 Fixed the wrong name being displayed for Kiel Hyre in one dialog. 
-//=	Removed $@KH_DoorInvoker entirely. The quest is now working like it should according to iRO.
-//=	Fixed up a few more NPC headers. Facing direction fixes mostly this time.
-//=	More progression changes to Kiehl Hyre. He no longer stops dialog after the agents appear.
-//= 2.8 Fixed the weight checking in Vandt, and added official dialog. [L0ne_W0lf]
-//=	Added weight checks for all NPCs that give items. Semi-official dialog.
-//=	Got the missing portion of dialog for Mills'.
-//=	Will add further proper dialogs as I get to them on the second runthrough of the quest.
-//= 2.8a minor optimization with extra goto, else or empty switch [Lupus]
-//= 2.9 Fixed the "enablenpc" problem with the missing spaces. No idea how it happened. [L0ne_W0lf]
-//= 3.0 Fixed a typo in Elly, in her room. (was <= should have been <) [L0ne_W0lf]
-//=	Added an 'end;' to the cookie basket. Kiel Hyre's final dialog will now delete all quest-related items.
-//= 3.1 Moved the "delitem" for all related quest items to the proper NPC. [L0ne_W0lf]
-//= 3.2 Fixed error with Allysia teling you to "Go away." maybe. [L0ne_W0lf]
-//= 3.2b Fixed some typos and grammar mistakes. [SinSloth]
-//= 3.3 Fixed the receiver log out bugs. [L0ne_W0lf]
-//= 3.4 Fixed bug when u can't get a Yellow Keycard if u got the Blue one at first [Lupus]
-//=     Note: There are many condition checks that should be omitted in the future fixed item names in item_db.txt / txt resources according the quest
-//=     for items, should be used bitwise methods in a single variable. So let's fix the rest possible bugs (if they exist) and then optimize ^_-
-//= 3.5 Changed the way the Black Keycard distibuting NPCs work slighty. [L0ne_W0lf]
-//= 3.6 Keil Hyre removes ALL outstanding quest items when he is talked [L0ne_W0lf]
-//=	to after finishing the quest.
-//= 3.7 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
-//= 3.8 Corrected some delitems. (bugreport:690) [Samuray22]
-//= 3.9 Fixed a cutin not being erased. (bugreport:1539) [L0ne_W0lf]
 //= 4.0 A whole bunch-a-updates to various npcs. [L0ne_W0lf]
 //=     Corrected condition checks throughout the quest.
 //=     Npcs no longer make use of the goto command.
@@ -97,6 +31,7 @@
 //= 4.4 Updated reviecer and robots NPC to use mobcount. (bugreport:2380) [L0ne_W0lf]
 //= 4.5 Removed a delitem that was no logner needed. [L0en_W0lf]
 //= 4.6 Fixed impossible condition for security guard. [L0ne_W0lf]
+//= 4.7 Updated RE/Pre-RE EXP. [Euphy]
 //============================================================ 
 
 //============================================================================
@@ -2025,8 +1960,6 @@ yuno_fild08,71,170,0	script	Grave#kh	111,{
 }
 
 //============================================================================
-
-//============================================================================
 //Kiel Hyre Cottage NPCs
 //============================================================================
 
@@ -3320,8 +3253,6 @@ kh_vila,185,68,0	script	Test Tube::TestTubeKHQ2	111,{
 }
 
 //============================================================================
-
-//============================================================================
 // Robot Factory NPCs
 //============================================================================
 
@@ -3882,8 +3813,6 @@ kh_dun01,44,203,0	script	Entrance Device#khd2::KHAccess	111,{
 kh_dun01,36,195,0	duplicate(KHAccess)	Entrance Device#khd1	111
 
 //============================================================================
-
-//============================================================================
 // Kiel Hyre Mansion NPCs, and Kiehl's Room NPCs
 //============================================================================
 
@@ -4120,7 +4049,7 @@ kh_mansion,22,28,4	script	Kiel Hyre#kh	903,{
 		mes "a little reward for";
 		mes "saving my life.";
 		getitem 12105,1; //Taming_Gift_Set
-		getexp 70000,0;
+		getexp (checkre(3))?70000:700000,0;
 		set KielHyreQuest,50;
 	}
 	else if ((KielHyreQuest >= 50) && (KielHyreQuest < 64)) {
@@ -4745,9 +4674,9 @@ kh_mansion,22,28,4	script	Kiel Hyre#kh	903,{
 		mes "and here, please take this";
 		mes "with my thanks for all of";
 		mes "your help, "+.@KHTitle$+" "+strcharinfo(0)+".";
-		getitem 616,1;  //Old card Album
+		getitem 616,1;  //Old Card Album
 		delitem 7508,1; //Elysia_Ring
-		getexp 100000,0;
+		getexp (checkre(3))?100000:1000000,0;
 	}
 	else if (KielHyreQuest >= 108) {
 		mes "[Kiel Hyre]";
@@ -5256,8 +5185,6 @@ OnInit:
 	disablenpc "Kiehl_Room_Warp";
 	end;
 }
-
-//============================================================================
 
 //============================================================================
 // Rosimier NPCs and other Related NPCs
@@ -7232,4 +7159,71 @@ OnInit:
 	end;
 }
 
-//============================================================================
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.0 First version, needs testing [Playtester]
+//= 1.1 Copied over some changes made by -Tsuyuki- [L0ne_W0lf]
+//=	Reworked variables slightly so that the permenents ones aside from the 
+//=	main tracking variable, are deleted when no longer needed. Renamed
+//=	several variables that handle strings to @KHInput$. [L0ne_W0lf]
+//= 1.2 Removed duplicate NPCs. [Toms]
+//= 1.3 More Bug fixes, fixed typo. Updated Additional comments. [L0ne_W0lf]
+//= 1.4 Fixed doors not resetting in kh_kiehl01 after 30 second timer is up. [L0ne_W0lf]
+//= 1.5 Another bug fixed (&& instead of ||). [L0ne_W0lf]
+//= 1.6 More squashed bugs with if checking. [L0ne_W0lf]
+//= 1.7 Corrected some spelling mistakes. [Balish]
+//	Corrected Exploit with the pub man, giving infinite wine and money.
+//	Corrected pool and map not showing text for some states of the quest.
+//	Corrected Elly showing cutin but not text for some states of the quest (causing players to log off to continue).
+//	Let fisherman talk to you when you have 10 fishes OR MORE.
+//	Corrected not letting you enter the tombstone after finishing the quest.
+//= 1.8 Elly now deletes the Iron_Box, and Kiel Hyre deletes the Pin. [L0ne_W0lf]
+//= 	More security on the 5th Big Door, now makes sure no one outside of who-
+//=	acticated it initially can use it. Resets after 10 minutes to make it.
+//=	Made it so that you need to be at least step 84 to activate the final door.
+//=	Corrected not deleting Allysia's Ring from inventory.
+//= 1.9 Exit will now enable if you are just retrieving the Ring, keeps you from getting stuck. [L0ne_W0lf]
+//=	Corrected "KH_Kielh02", was setting off a debug, invalid map index. Should have been "kh_Kiehl02"
+//=	Made .KHQuestBusy$ into a temp global variable. $@KHQuestBusy$. 
+//= 2.0 Changed the labels on the "Big Doors" to "Identifier Names" to prevent an error with using getvariableofnpc [L0ne_W0lf]
+//= 2.1 Fifth door now checks for a variable HIGHER or EQUAL to 74 not 84, as pointed out by Stollen. [L0ne_W0lf]
+//= 2.2 Another fix for Elly, no longer RESETS to 26 when you talk to her. [L0ne_W0lf]
+//= 2.3 Should NOT have been setting .KHQuestBusy at all. It's not used or accessed anymore. Removed. [L0ne_W0lf]
+//= 2.4 Lots of fixes (4ish) from Valandi. [L0ne_W0lf]
+//=	Added a getmapuser check to the mapwarp in KHTimerEnd so it's not trying to warp out 0 users. [L0ne_W0lf]
+//= 2.5 Fixed several small issues (and large one) such as typos in cutins, typos in dialog, etc. [L0ne_W0lf]
+//=	Added some of the missing dialogs for several NPCs, and fixed a few NPC locations.
+//=	ALL books can now trigger the wall.
+//=	Allysia will now summon 4 (was 2) G_CONSTANTS instead of REGULAR constants.
+//=	Fixed where Golden_Key and Kiel_Button are deleted.
+//=	Removed KHTimerEnd, and instead use OnReset.
+//=	Fixed typo in the second NPC that gives Black Keycards.
+//=	Added Monster Warps. (Keeps monsters from being in dungeon quest area.) [Non-functional]
+//= 2.6 Stupid mistake, accidentally had 4 copies of the same script in 1... [L0ne_W0lf the bonehead]
+//= 2.7 Fixed the wrong name being displayed for Kiel Hyre in one dialog. 
+//=	Removed $@KH_DoorInvoker entirely. The quest is now working like it should according to iRO.
+//=	Fixed up a few more NPC headers. Facing direction fixes mostly this time.
+//=	More progression changes to Kiehl Hyre. He no longer stops dialog after the agents appear.
+//= 2.8 Fixed the weight checking in Vandt, and added official dialog. [L0ne_W0lf]
+//=	Added weight checks for all NPCs that give items. Semi-official dialog.
+//=	Got the missing portion of dialog for Mills'.
+//=	Will add further proper dialogs as I get to them on the second runthrough of the quest.
+//= 2.8a minor optimization with extra goto, else or empty switch [Lupus]
+//= 2.9 Fixed the "enablenpc" problem with the missing spaces. No idea how it happened. [L0ne_W0lf]
+//= 3.0 Fixed a typo in Elly, in her room. (was <= should have been <) [L0ne_W0lf]
+//=	Added an 'end;' to the cookie basket. Kiel Hyre's final dialog will now delete all quest-related items.
+//= 3.1 Moved the "delitem" for all related quest items to the proper NPC. [L0ne_W0lf]
+//= 3.2 Fixed error with Allysia teling you to "Go away." maybe. [L0ne_W0lf]
+//= 3.2b Fixed some typos and grammar mistakes. [SinSloth]
+//= 3.3 Fixed the receiver log out bugs. [L0ne_W0lf]
+//= 3.4 Fixed bug when u can't get a Yellow Keycard if u got the Blue one at first [Lupus]
+//=     Note: There are many condition checks that should be omitted in the future fixed item names in item_db.txt / txt resources according the quest
+//=     for items, should be used bitwise methods in a single variable. So let's fix the rest possible bugs (if they exist) and then optimize ^_-
+//= 3.5 Changed the way the Black Keycard distibuting NPCs work slighty. [L0ne_W0lf]
+//= 3.6 Keil Hyre removes ALL outstanding quest items when he is talked [L0ne_W0lf]
+//=	to after finishing the quest.
+//= 3.7 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 3.8 Corrected some delitems. (bugreport:690) [Samuray22]
+//= 3.9 Fixed a cutin not being erased. (bugreport:1539) [L0ne_W0lf]
+//============================================================

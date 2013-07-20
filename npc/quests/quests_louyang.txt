@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera and The rAthena Dev Team
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.3
 //===== Compatible With: ===================================== 
 //= rAthena 1.0
 //===== Description: ========================================= 
@@ -24,15 +24,16 @@
 //= 1.4 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 1.5 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //= 1.6 Rescripted Soup, Doctor, and Poison King quests [L0ne_W0lf]
-//=	to Aegis 10.3 standards. Attempted to save current
-//=	quest progress from the old scripts.
+//=     to Aegis 10.3 standards. Attempted to save current
+//=     quest progress from the old scripts.
 //= 1.7 Added missing checkweights. And corrected [L0ne_W0lf]
-//=	a typo in Poison King quest.
+//=     a typo in Poison King quest.
 //= 1.8 Bug fixes. (bugreport:1025 bugreport:1062) [L0ne_W0lf]
 //= 1.9 Bug fixes/Typos. [Paradox924X]
 //= 2.0 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 2.1 Fixed guard tower warper ALWAYS warping. (bugreport:2377) [L0ne_W0lf]
 //= 2.2 Removed unused "name" variable. [L0ne_W0lf]
+//= 2.3 Updated RE/Pre-RE EXP. [Euphy]
 //============================================================ 
 
 // Soup Quest
@@ -1291,7 +1292,7 @@ lou_in02,265,69,5	script	Doctor#lyang	814,{
 			delitem 7252,1; //Herb_Medicine
 			set ch_par,10;
 			getitem 679,2; //Gold_Pill
-			getexp 1000,0;
+			getexp (checkre(3))?1000:10000,0;
 			next;
 			mes "[Hua Tuo]";
 			mes "Well then,";
@@ -1408,7 +1409,7 @@ lou_in02,265,69,5	script	Doctor#lyang	814,{
 			delitem 7252,1; //Herb_Medicine
 			set ch_par,10;
 			getitem 679,2; //Gold_Pill
-			getexp 1000,0;
+			getexp (checkre(3))?1000:10000,0;
 			next;
 			mes "[Hua Tuo]";
 			mes "Well then, I will see you around. Once again, I'd like to thank you for your help.";
@@ -1462,7 +1463,7 @@ lou_in02,265,69,5	script	Doctor#lyang	814,{
 			delitem 7252,1; //Herb_Medicine
 			set ch_par,18;
 			getitem 679,5; //Gold_Pill
-			getexp 3000,0;
+			getexp (checkre(3))?10000:30000,0;
 			next;
 			mes "[Hua Tuo]";
 			mes "However, please remember not to take more than the recommended dosage for the pills I have given you. Even medicine, in the wrong doses, can become poison to the body.";
@@ -3340,32 +3341,26 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 		mes "^3355FFYou grow dizzy, but you also feel like you're becoming more powerful and gaining experience.^000000";
 		next;
 		set ch_poison,20;
-		if (BaseLevel < 56) {
-			getexp 900,0;
-		}
-		else if (BaseLevel > 55 && BaseLevel < 61) {
-			getexp 1050,0;
-		}
-		else if (BaseLevel > 60 && BaseLevel < 66) {
-			getexp 1868,0;
-		}
-		else if (BaseLevel > 65 && BaseLevel < 71) {
-			getexp 2741,0;
-		}
-		else if (BaseLevel > 70 && BaseLevel < 76) {
-			getexp 7076,0;
-		}
-		else if (BaseLevel > 75 && BaseLevel < 81) {
-			getexp 13025,0;
-		}
-		else if (BaseLevel > 80 && BaseLevel < 86) {
-			getexp 15034,0;
-		}
-		else if (BaseLevel > 85 && BaseLevel < 91) {
-			getexp 18205,0;
-		}
-		else if (BaseLevel > 90) {
-			getexp 40679,0;
+		if (checkre(3)) {
+			if (BaseLevel < 56) getexp 1050,0;
+			else if (BaseLevel > 55 && BaseLevel < 61) getexp 1230,0;
+			else if (BaseLevel > 60 && BaseLevel < 66) getexp 1570,0;
+			else if (BaseLevel > 65 && BaseLevel < 71) getexp 2300,0;
+			else if (BaseLevel > 70 && BaseLevel < 76) getexp 3400,0;
+			else if (BaseLevel > 75 && BaseLevel < 81) getexp 4500,0;
+			else if (BaseLevel > 80 && BaseLevel < 86) getexp 9000,0;
+			else if (BaseLevel > 85 && BaseLevel < 91) getexp 18000,0;
+			else getexp 20000,0;
+		} else {
+			if (BaseLevel < 56) getexp 9000,0;
+			else if (BaseLevel > 55 && BaseLevel < 61) getexp 10500,0;
+			else if (BaseLevel > 60 && BaseLevel < 66) getexp 18684,0;
+			else if (BaseLevel > 65 && BaseLevel < 71) getexp 27411,0;
+			else if (BaseLevel > 70 && BaseLevel < 76) getexp 70757,0;
+			else if (BaseLevel > 75 && BaseLevel < 81) getexp 130246,0;
+			else if (BaseLevel > 80 && BaseLevel < 86) getexp 150340,0;
+			else if (BaseLevel > 85 && BaseLevel < 91) getexp 182052,0;
+			else getexp 406786,0;
 		}
 		mes "^3355FFThen...";
 		mes "Everything blacks out...^000000";
@@ -3991,32 +3986,26 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 		next;
 		mes "^3355FFThe nasty taste lingers in your mouth, but then you feel a great warmth flowing throughout your body. Eventually, you pass out.^000000";
 		next;
-		if (BaseLevel < 56) {
-			getexp 891,0;
-		}
-		else if (BaseLevel > 55 && BaseLevel < 61) {
-			getexp 1021,0;
-		}
-		else if (BaseLevel > 60 && BaseLevel < 66) {
-			getexp 1768,0;
-		}
-		else if (BaseLevel > 65 && BaseLevel < 71) {
-			getexp 2541,0;
-		}
-		else if (BaseLevel > 70 && BaseLevel < 76) {
-			getexp 6876,0;
-		}
-		else if (BaseLevel > 75 && BaseLevel < 81) {
-			getexp 12825,0;
-		}
-		else if (BaseLevel > 80 && BaseLevel < 86) {
-			getexp 14234,0;
-		}
-		else if (BaseLevel > 85 && BaseLevel < 91) {
-			getexp 15205,0;
-		}
-		else if (BaseLevel > 90) {
-			getexp 36679,0;
+		if (checkre(3)) {
+			if (BaseLevel < 56) getexp 500,0;
+			else if (BaseLevel > 55 && BaseLevel < 61) getexp 700,0;
+			else if (BaseLevel > 60 && BaseLevel < 66) getexp 850,0;
+			else if (BaseLevel > 65 && BaseLevel < 71) getexp 1270,0;
+			else if (BaseLevel > 70 && BaseLevel < 76) getexp 1600,0;
+			else if (BaseLevel > 75 && BaseLevel < 81) getexp 2100,0;
+			else if (BaseLevel > 80 && BaseLevel < 86) getexp 4000,0;
+			else if (BaseLevel > 85 && BaseLevel < 91) getexp 7000,0;
+			else getexp 11000,0;
+		} else {
+			if (BaseLevel < 56) getexp 8909,0;
+			else if (BaseLevel > 55 && BaseLevel < 61) getexp 10213,0;
+			else if (BaseLevel > 60 && BaseLevel < 66) getexp 17684,0;
+			else if (BaseLevel > 65 && BaseLevel < 71) getexp 25411,0;
+			else if (BaseLevel > 70 && BaseLevel < 76) getexp 68757,0;
+			else if (BaseLevel > 75 && BaseLevel < 81) getexp 128246,0;
+			else if (BaseLevel > 80 && BaseLevel < 86) getexp 142340,0;
+			else if (BaseLevel > 85 && BaseLevel < 91) getexp 152052,0;
+			else getexp 366786,0;
 		}
 		warp "louyang",270,136;
 		end;

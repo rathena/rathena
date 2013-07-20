@@ -1,9 +1,9 @@
 //===== rAthena Script =======================================
-//= The Eye of Hellion Quest.
+//= The Eye of Hellion Quest
 //===== By: ==================================================
 //= MasterOfMuppets
 //===== Current Version: =====================================
-//= 2.0
+//= 2.1
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -22,6 +22,7 @@
 //= 1.8 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 1.9 Removed duplicate text. [Kisuka]
 //= 2.0 Updated EXP rewards.
+//= 2.1 Updated RE/Pre-RE EXP. [Euphy]
 //============================================================
 
 morocc_in,116,101,3	script	Old Scholar Tyus#hellion	735,3,3,{
@@ -548,7 +549,7 @@ morocc_in,116,101,3	script	Old Scholar Tyus#hellion	735,3,3,{
 			set HELLIONQ,69;
 			getitem 2658,1; //Nile_Rose_
 			getitem 603,1; //Old_Blue_Box
-			getexp 1200000,0;
+			getexp (checkre(3))?120000:1200000,0;
 			next;
 			mes "[Sir Chilias'Tyus]";
 			mes "Thank you, kind";
@@ -615,7 +616,7 @@ morocc_in,116,101,3	script	Old Scholar Tyus#hellion	735,3,3,{
 			delitem 7332,1; //Slate
 			set HELLIONQ,70;
 			getitem 2658,1; //Nile_Rose_
-			getexp 1000000,0;
+			getexp (checkre(3))?100000:1000000,0;
 			next;
 			mes "[Sir Chilias'Tyus]";
 			mes "Thank you, kind";

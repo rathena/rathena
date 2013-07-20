@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Joseph
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //===== Additional Comments: =================================
 //= 0.x Previous authors: L0ne_W0lf, Kisuka, Elias
 //= 1.0 Merged Turbo Track. [Joseph]
+//= 1.1 Updated RE/Pre-RE EXP. [Euphy]
 //============================================================
 
 function	script	F_tt	{
@@ -4250,14 +4251,10 @@ turbo_room,93,117,5	script	Point Exchange Helper	125,{
 	
 					}
 					set tt_point,tt_point-40;
-					if (BaseLevel < 70)
-						getexp 300,0;
-					else if (BaseLevel < 80)
-						getexp 900,0;
-					else if (BaseLevel < 90)
-						getexp 1000,0;
-					else if (BaseLevel < 151)
-						getexp 3000,0;
+					if (BaseLevel < 70) getexp 3000,0;
+					else if (BaseLevel < 80) getexp 9000,0;
+					else if (BaseLevel < 90) getexp 10000,0;
+					else if (BaseLevel < 100) getexp 30000,0;
 					mes "[Item Exchange Helper]";
 					mes "Thank you, your";
 					mes "Turbo Track Points";
