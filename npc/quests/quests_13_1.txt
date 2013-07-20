@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 3.1
+//= 3.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -17,13 +17,9 @@
 //= Finding a Fairy & Finding a Giant Tree
 //= The Tripartite Union's Feud
 //= Cat Hand Agent
-//= - Contains untranslated dialog.
 //= Part Time Work
-//= - Contains Custom translated dialog.
 //= Report from the New World
-//= - Contains Custom translated dialog.
-// Persuing Rayan Moore
-//= - Contains Custom translated dialog.
+//= Persuing Rayan Moore
 //===== Additional Comments: ================================= 
 //= 1.0 First Version. [L0ne_W0lf]
 //= 1.1 I missed an end in one of the lhz guards. [L0ne_W0lf]
@@ -51,6 +47,7 @@
 //= 2.9 Fixed an invalid event label. [Joseph]
 //= 3.0 Fixed a missing variable check. [Joseph]
 //= 3.1 Updated RE/Pre-RE EXP. [Euphy]
+//= 3.2 Updated ep13_start and dialog to match official script. [Joseph]
 //============================================================ 
 
 // Onward to the New World
@@ -1990,14 +1987,14 @@ moc_fild22b,370,370,3	script	Allied Manager#gm	100,{
 // New Surroundings
 //============================================================ 
 mid_camp,222,283,4	script	Marian#ep13bs	727,{
-	if (checkweight(1201,1) == 0) {
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 1000) {
 		mes "[Marian]";
-		mes "You are carrying too much weight.";
-		mes "Please try again after losing some weight.";
+		mes "You have too many items~";
+		mes "Drop some and come back to me.";
 		close;
 	}
 	if (ep13_newbs < 1) {
-		if (ep13_ryu > 99) {
+		if (ep13_ryu > 99 || ep13_start > 99) {
 			mes "[Marian]";
 			mes "You must be a stranger here.";
 			mes "Is this your first visit here?";
@@ -4249,91 +4246,90 @@ mid_camp,188,254,3	script	Monster Scholar#ep13	883,{
 		}
 		else if (ep13_animal == 15) {
 			if (countitem(6033) > 0) {
-				// Custom Translation.
 				mes "["+strcharinfo(0)+"]";
-				mes "Rumis! Come see this!";
+				mes "Mr. Rumis! Take a look at this!";
 				next;
 				mes "[Rumis Block]";
-				mes "... What's all the fuss?";
-				mes "I feel so down because I cannot go back to my own country...";
-				next;
-				mes "["+strcharinfo(0)+"]";
-				mes "I found this on a monster at the Splendide Area.";
-				mes "It's a mysterious monster with grass grown over it's body!";
-				next;
-				mes "[Rumis Block]";
-				mes "Oeh... body with grass grown over it?";
-				mes "No, no. I'm not interested with it.";
-				next;
-				mes "[Rumis Block]";
-				mes "Let me see the horn you brought back.";
-				next;
-				mes "[Rumis Block]";
-				mes "Okay.";
-				next;
-				mes "[Rumis Block]";
-				mes "Okay.....";
-				next;
-				mes "[Rumis Block]";
-				mes "Hah....?";
-				next;
-				mes "[Rumis Block]";
-				mes "... This is amazing.";
-				mes "... It's actually almost identical to the Manuk Field area Hillsrion horn.";
-				next;
-				mes "[Rumis Block]";
-				mes "Could they be related?";
-				mes "Or has it evolved?";
+				mes "...Oh, hello.";
+				mes "I'm extremely frustrated. I feel helpless because I wasn't able to go back home last time...";
 				next;
 				mes "["+strcharinfo(0)+"]";
-				mes "What about evolution due to the enviromental changes?";
+				mes "I found this horm from a monster in the Splendide Area.";
+				mes "That monster was very mysterious, and its body was covered with grass.";
 				next;
 				mes "[Rumis Block]";
-				mes "... What do you mean by that?";
-				mes "Do you mean that the changes made their physical appearance evolved?";
+				mes "Ho... Covered with grass?";
+				mes "...I know you're excited, but that doesn't sound interesting to me. Sorry.";
+				next;
+				mes "[Rumis Block]";
+				mes "Let me take a look at the horn.";
+				next;
+				mes "[Rumis Block]";
+				mes "Hmm.";
+				next;
+				mes "[Rumis Block]";
+				mes "Uhmm...";
+				next;
+				mes "[Rumis Block]";
+				mes "Huh...?";
+				next;
+				mes "[Rumis Block]";
+				mes "...This is remarkable.";
+				mes "...This horn looks very similar to that of the Hillsrions that inhabit the Manuk area.";
+				next;
+				mes "[Rumis Block]";
+				mes "I wonder if they're related,";
+				mes "or if this is an evolved Hillsrion.";
 				next;
 				mes "["+strcharinfo(0)+"]";
-				mes "Yes... That is right. Maybe like that! Hehe.";
-				next;
-				mes "- You told Rumis about the mutated plant that you heard about from Botanist Terris -";
+				mes "Ah, and there's the possibility of mutation caused by the environment.";
 				next;
 				mes "[Rumis Block]";
-				mes "Hoho... this is interesting.";
-				mes "If there are those special... miracle energy filling devices, I guess.. it can cause those monsters to mutate.";
-				next;
-				mes "[Rumis Block]";
-				mes "But, who setup that device?";
+				mes "...What do you mean?";
+				mes "Are you saying the monster has been mutated by environmental causes?";
 				next;
 				mes "["+strcharinfo(0)+"]";
-				mes "That I do not know. Hehe.";
+				mes "Well, that's possible, isn't it? Haha!";
+				next;
+				mes "- You told Rumis what you've heard from Botanist Terris: some plants are already showing signs of mutation. -";
+				next;
+				mes "[Rumis Block]";
+				mes "Oh, that's interesting.";
+				mes "If such a device really exists, it's possible to cause abnormal growth to monsters by injecting them with special energy.";
+				next;
+				mes "[Rumis Block]";
+				mes "By the way, who came up with the idea of that device?";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "I have no idea. Haha!";
 				next;
 				mes "[Rumis Block]";
 				mes "I see...";
-				mes "Human devices cause these mutations... other than Tendrilrion, there may be other things alike aswell..";
+				mes "Mutants caused by a man-made device... Then there might be more mutated creatures in addition to Tendrillion.";
 				next;
 				mes "[Rumis Block]";
-				mes "... I would like to know.";
-				mes "But, I have to go back to my country now. The management should be giving me my order to go back, my researches are worthless now.";
+				mes "...Now I'm very curious.";
+				mes "But... I want to go back home... It's no use studying them if the management will order me to return.";
 				next;
 				mes "[Rumis Block]";
-				mes "My brother seems to like this place.";
-				mes "He spents a lot of time here...";
+				mes "I guess my brother really likes this place.";
+				mes "I mean, he's working so hard to figure things out...";
 				next;
 				mes "[Rumis Block]";
-				mes "But, I guess everyone has their own life.";
-				mes "Perhaps if my brother can... understands this younger brother a little, I won't ask for any other things anymore...";
+				mes "Well, not everyone can live the same life.";
+				mes "I just hope he'll have a better understanding about me...";
 				next;
 				mes "[Rumis Block]";
-				mes "What will others think of me when I go back to Midgard?";
-				mes "But still, thank you, at least I can still talk to another human. ...Thank you.";
+				mes "I don't know if people in Midgard will welcome me back.";
+				mes "Thanks to you, I at least have a few interesting stories to tell them.";
 				next;
 				mes "[Rumis Block]";
-				mes "If after this can stay here, please take care of my brother.";
-				mes "If this area can be developed, by that time I will...";
+				mes "If you're going to stick around here longer, please help my brother with his study.";
+				mes "I might want to come back later once this area is fully explored and developed...";
 				next;
-				mes "- Rumis Block laid his hand out shyly, but then backed off -";
+				mes "- With a shy smile on the face, Rumis Block asked you to shake hands, and then turned around hurriedly. -";
 				next;
-				mes "- You pat his shoulder gently, it's worrying that Rumis is not able to return to his country. -";
+				mes "- You really hope that Rumis will be able to go back home. -";
 				set ep13_animal,100;
 				delitem 6033,1; //Horn_Of_Tendrilion
 				getexp (checkre(3))?50000:1000000,0;
@@ -4342,19 +4338,17 @@ mid_camp,188,254,3	script	Monster Scholar#ep13	883,{
 			else {
 				mes "[Rumis Block]";
 				mes "...I submitted the report to the management, but they have not yet ordered me to go back home...";
-				mes "*Sigh* I guess nothing's as easy as I'd hoped....";
+				mes "...*Sigh* I guess nothing's as easy as I'd hoped.";
 				close;
 			}
 		}
 		else if (ep13_animal == 100) {
-			// Custom Translation.
-			mes "Rumis seems anxious.";
+			mes "- Rumis seems anxious and scatterbrained. -";
 			close;
 		}
 		else {
-			// Custom Translation.
 			mes "[Rumis Block]";
-			mes "If only I can go back to Rune Midgard....";
+			mes "When can I go back to Midgard...? *Sigh*";
 			close;
 		}
 	}
@@ -4642,79 +4636,70 @@ mid_camp,240,270,3	script	Botanist#ep13	750,{
 }
 
 mid_camp,336,171,1	script	Camp Guard#man1	852,{
+	if (ep13_newbs == 6 || ep13_newbs == 19)
+		callsub OnHalt,(ep13_newbs == 6?"Diego.":"Lugen.");
 	if (ep13_animal == 0) {
-		if (ep13_newbs == 6 || ep13_newbs == 19 || ep13_start == 100) goto OnHalt;
-		else {
-			mes "[Camp Guard]";
-			mes "Stop!";
-			mes "You're about to enter an area that has not been fully explored.";
-			mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
+		mes "[Camp Guard]";
+		mes "Stop!";
+		mes "You're about to enter an area that has not been fully explored.";
+		mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
+		next;
+		mes "[Camp Guard]";
+		mes "Your cooperation is appreciated.";
+		close;
+	}
+	else if (ep13_animal == 1) {
+		mes "[Camp Guard]";
+		mes "Stop!";
+		mes "You're about to enter an area that has not been fully explored.";
+		mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
+		next;
+		mes "[Camp Guard]";
+		mes "Your cooperation is appreciated.";
+		next;
+		switch(select("I've come to help with some research.:I want to stay.")) {
+		case 1:
+			mes "["+strcharinfo(0)+"]";
+			mes "Hi, my name is "+strcharinfo(0)+". I'm the assistant of Monster Scholar Rumis Block.";
 			next;
 			mes "[Camp Guard]";
-			mes "Your cooperation is appreciated.";
+			mes "That 'fraidy-- Wah! I'm sorry!";
+			mes "I didn't mean to say that... And I completely understand that he hasn't been able to adapt himself to new surroundings.";
+			next;
+			mes "[Camp Guard]";
+			mes "So, you're here to assist Mr. Rumis Block, huh?";
+			mes "You may pass. If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
+			set ep13_animal,2;
+			close2;
+			warp "man_fild01",36,235;
+			end;
+		case 2:
+			mes "[Camp Guard]";
+			mes "No, you can't. Please return to the expedition camp.";
 			close;
 		}
 	}
-	else if (ep13_animal == 1) {
-		if (ep13_newbs == 6 || ep13_newbs == 19) goto OnHalt;
-		else {
-			mes "[Camp Guard]";
-			mes "Stop!";
-			mes "You're about to enter an area that has not been fully explored.";
-			mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
-			next;
-			mes "[Camp Guard]";
-			mes "Your cooperation is appreciated.";
-			next;
-			switch(select("I've come to help with some research.:I want to stay.")) {
-			case 1:
-				mes "["+strcharinfo(0)+"]";
-				mes "Hi, my name is "+strcharinfo(0)+". I'm the assistant of Monster Scholar Rumis Block.";
-				next;
-				mes "[Camp Guard]";
-				mes "That 'fraidy-- Wah! I'm sorry!";
-				mes "I didn't mean to say that... And I completely understand that he hasn't been able to adapt himself to new surroundings.";
-				next;
-				mes "[Camp Guard]";
-				mes "So, you're here to assist Mr. Rumis Block, huh?";
-				mes "You may pass. If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
-				set ep13_animal,2;
-				close2;
-				warp "man_fild01",36,235;
-				end;
-			case 2:
-				mes "[Camp Guard]";
-				mes "No, you can't. Please return to the expedition camp.";
-				close;
-			}
-		}
-	}
 	else {
-		if (ep13_newbs == 6 || ep13_newbs == 19) goto OnHalt;
-		else {
+		mes "[Camp Guard]";
+		mes "Stop!";
+		mes "You're about to enter an area that has not been fully explored.";
+		mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
+		next;
+		switch(select("Let me move to the next zone.:I want to stay here.")) {
+		case 1:
 			mes "[Camp Guard]";
-			mes "Stop!";
-			mes "You're about to enter an area that has not been fully explored.";
-			mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
-			next;
-			switch(select("Let me move to the next zone.:I want to stay here.")) {
-			case 1:
-				mes "[Camp Guard]";
-				mes "Please be careful out there.";
-				mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
-				close2;
-				warp "man_fild01",36,235;
-				end;
-			case 2:
-				mes "[Camp Guard]";
-				mes "No, you can't. Please return to the expedition camp.";
-				close;
-			}
+			mes "Please be careful out there.";
+			mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
+			close2;
+			warp "man_fild01",36,235;
+			end;
+		case 2:
+			mes "[Camp Guard]";
+			mes "No, you can't. Please return to the expedition camp.";
+			close;
 		}
 	}
 OnHalt:
-	if (ep13_newbs == 6) set .@n$,"Diego.";
-	else if (ep13_newbs == 19) set .@n$,"Lugen.";
 	mes "[Camp Guard]";
 	mes "Stop!";
 	mes "You're about to enter an area that has not been fully explored.";
@@ -4724,7 +4709,7 @@ OnHalt:
 	mes "Your cooperation is appreciated.";
 	next;
 	mes "[Camp Guard]";
-	mes "Oh, I was informed of your arrival by Mr. "+.@n$;
+	mes "Oh, I was informed of your arrival by Mr. "+getarg(0);
 	mes "You may pass.";
 	next;
 	mes "[Camp Guard]";
@@ -4736,47 +4721,41 @@ OnHalt:
 }
 
 mid_camp,13,143,5	script	Camp Guard#man2	852,{
+	if (ep13_newbs == 6 || ep13_newbs == 19)
+		callsub OnHalt,(ep13_newbs == 6?"Diego.":"Lugen.");
 	if (ep13_animal == 0) {
-		if (ep13_newbs == 6 || ep13_newbs == 19 || ep13_start == 100) goto OnHalt;
-		else {
+		mes "[Camp Guard]";
+		mes "Stop!";
+		mes "You're about to enter an area that has not been fully explored.";
+		mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
+		next;
+		mes "[Camp Guard]";
+		mes "Your cooperation is appreciated.";
+		close;
+	}
+	else if (ep13_animal == 5)
+		callsub OnHalt,"Terris.";
+	else {
+		mes "[Camp Guard]";
+		mes "Stop!";
+		mes "You're about to enter an area that has not been fully explored.";
+		mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
+		next;
+		switch(select("Let me move to the next zone.:I want to stay here.")) {
+		case 1:
 			mes "[Camp Guard]";
-			mes "Stop!";
-			mes "You're about to enter an area that has not been fully explored.";
-			mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
-			next;
+			mes "Please be careful out there.";
+			mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
+			close2;
+			warp "spl_fild02",379,143;
+			end;
+		case 2:
 			mes "[Camp Guard]";
-			mes "Your cooperation is appreciated.";
+			mes "No, you can't. Please return to the expedition camp.";
 			close;
 		}
 	}
-	else if (ep13_animal == 5) goto OnHalt;
-	else {
-		if (ep13_newbs == 6 || ep13_newbs == 19) goto OnHalt;
-		else {
-			mes "[Camp Guard]";
-			mes "Stop!";
-			mes "You're about to enter an area that has not been fully explored.";
-			mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
-			next;
-			switch(select("Let me move to the next zone.:I want to stay here.")) {
-			case 1:
-				mes "[Camp Guard]";
-				mes "Please be careful out there.";
-				mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
-				close2;
-				warp "spl_fild02",379,143;
-				end;
-			case 2:
-				mes "[Camp Guard]";
-				mes "No, you can't. Please return to the expedition camp.";
-				close;
-			}
-		}
-	}
 OnHalt:
-	if (ep13_newbs == 6) set .@n$,"Diego.";
-	else if (ep13_newbs == 19) set .@n$,"Lugen.";
-	else set .@n$,"Terris.";
 	mes "[Camp Guard]";
 	mes "Stop!";
 	mes "You're about to enter an area that has not been fully explored.";
@@ -4786,7 +4765,7 @@ OnHalt:
 	mes "Your cooperation is appreciated.";
 	next;
 	mes "[Camp Guard]";
-	mes "Oh, I was informed of your arrival by Mr. "+.@n$;
+	mes "Oh, I was informed of your arrival by Mr. "+getarg(0);
 	mes "You may pass.";
 	next;
 	mes "[Camp Guard]";
@@ -4798,47 +4777,41 @@ OnHalt:
 }
 
 mid_camp,9,215,5	script	Camp Guard#man3	852,{
+	if (ep13_newbs == 6 || ep13_newbs == 19)
+		callsub OnHalt,(ep13_newbs == 6?"Diego.":"Lugen.");
 	if (ep13_animal == 0) {
-		if (ep13_newbs == 6 || ep13_newbs == 19 || ep13_start == 100) goto OnHalt;
-		else {
+		mes "[Camp Guard]";
+		mes "Stop!";
+		mes "You're about to enter an area that has not been fully explored.";
+		mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
+		next;
+		mes "[Camp Guard]";
+		mes "Your cooperation is appreciated.";
+		close;
+	}
+	else if (ep13_animal == 5)
+		callsub OnHalt,"Terris.";
+	else {
+		mes "[Camp Guard]";
+		mes "Stop!";
+		mes "You're about to enter an area that has not been fully explored.";
+		mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
+		next;
+		switch(select("Let me move to the next zone.:I want to stay here.")) {
+		case 1:
 			mes "[Camp Guard]";
-			mes "Stop!";
-			mes "You're about to enter an area that has not been fully explored.";
-			mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
-			next;
+			mes "Please be careful out there.";
+			mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
+			close2;
+			warp "spl_fild02",380,217;
+			end;
+		case 2:
 			mes "[Camp Guard]";
-			mes "Your cooperation is appreciated.";
+			mes "No, you can't. Please return to the expedition camp.";
 			close;
 		}
 	}
-	else if (ep13_animal == 5) goto OnHalt;
-	else {
-		if (ep13_newbs == 6 || ep13_newbs == 19) goto OnHalt;
-		else {
-			mes "[Camp Guard]";
-			mes "Stop!";
-			mes "You're about to enter an area that has not been fully explored.";
-			mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
-			next;
-			switch(select("Let me move to the next zone.:I want to stay here.")) {
-			case 1:
-				mes "[Camp Guard]";
-				mes "Please be careful out there.";
-				mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
-				close2;
-				warp "spl_fild02",380,217;
-				end;
-			case 2:
-				mes "[Camp Guard]";
-				mes "No, you can't. Please return to the expedition camp.";
-				close;
-			}
-		}
-	}
 OnHalt:
-	if (ep13_newbs == 6) set .@n$,"Diego.";
-	else if (ep13_newbs == 19) set .@n$,"Lugen.";
-	else set .@n$,"Terris.";
 	mes "[Camp Guard]";
 	mes "Stop!";
 	mes "You're about to enter an area that has not been fully explored.";
@@ -4848,7 +4821,7 @@ OnHalt:
 	mes "Your cooperation is appreciated.";
 	next;
 	mes "[Camp Guard]";
-	mes "Oh, I was informed of your arrival by Mr. "+.@n$;
+	mes "Oh, I was informed of your arrival by Mr. "+getarg(0);
 	mes "You may pass.";
 	next;
 	mes "[Camp Guard]";
@@ -4860,7 +4833,6 @@ OnHalt:
 }
 
 mid_camp,49,154,0	script	#env_clear	-1,3,3,{
-//OnTouch2:
 OnTouch:
 	if (ep13_animal == 7) {
 		enablenpc "Botanist#ep13_1";
@@ -5205,15 +5177,14 @@ mid_camp,212,237,5	script	Camp Guard Captain#man1	852,{
 // The Tripartite Union's Feud
 //============================================================ 
 mid_campin,376,120,0	script	Research Official#ep131	754,3,3,{
-
 OnTouch:
-	if (checkweight(1201,1) == 0) {
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 3500) {
 		mes "[United Research Official]";
-		mes "Why are you carrying so much stuff?";
-		mes "Are you working out?";
+		mes "How come you've got so much to carry?";
+		mes "Are you perhaps on training or something?";
 		close;
 	}
-	if (ep13_ryu > 99) {
+	if (ep13_ryu > 99 || ep13_start > 99) {
 		if (ep13_1_rhea < 1) {
 			mes "[United Research Official]";
 			mes "Hmmmm...mmm...";
@@ -5710,13 +5681,13 @@ OnTimer300000:
 }
 
 mid_camp,165,245,0	script	Ryosen#ep131_rhea01	748,{
-	if (checkweight(1201,1) == 0) {
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 3500) {
 		mes "[Ryosen]";
-		mes "Why are you carrying so much stuff?";
-		mes "Are you working out?";
+		mes "How come you've got so much to carry?";
+		mes "Are you perhaps on training or something?";
 		close;
 	}
-	if (ep13_ryu > 99) {
+	if (ep13_ryu > 99 || ep13_start > 99) {
 		if (ep13_1_rhea < 1) {
 			mes "[Ryosen]";
 			mes "Please, keep your hands off my stuff!";
@@ -6256,13 +6227,13 @@ mid_camp,165,245,0	script	Ryosen#ep131_rhea01	748,{
 }
 
 mid_camp,247,255,1	script	Hue#ep131_rhea02	868,{
-	if (checkweight(1201,1) == 0) {
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 3500) {
 		mes "[Hue]";
-		mes "Why are you carrying so much stuff?";
-		mes "Are you working out?";
+		mes "How come you've got so much to carry?";
+		mes "Are you perhaps on training or something?";
 		close;
 	}
-	if (ep13_ryu > 99) {
+	if (ep13_ryu > 99 || ep13_start > 99) {
 		if (ep13_1_rhea < 4) {
 			mes "[Hue]";
 			mes "What is it you want?";
@@ -6649,13 +6620,13 @@ mid_camp,247,255,1	script	Hue#ep131_rhea02	868,{
 }
 
 mid_camp,222,218,3	script	Hansenne#ep131_rhea03	931,{
-	if (checkweight(1201,1) == 0) {
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 3500) {
 		mes "[Hansenne]";
-		mes "Why are you carrying so much stuff?";
-		mes "Are you working out?";
+		mes "How come you've got so much to carry?";
+		mes "Are you perhaps on training or something?";
 		close;
 	}
-	if (ep13_ryu > 99) {
+	if (ep13_ryu > 99 || ep13_start > 99) {
 		if (ep13_1_rhea < 6) {
 			mes "[Hansenne]";
 			mes "Who's there?";
@@ -7250,7 +7221,7 @@ OnTimer7800000:
 }
 
 mid_camp,143,306,5	script	Breeder Taab#ep13_alba	946,{
-	if (ep13_ryu > 99) {
+	if (ep13_ryu > 99 || ep13_start > 99) {
 		if (ep13_alba < 1) {
 			mes "[Taab]";
 			mes "How may I help you?";
@@ -7380,33 +7351,40 @@ mid_camp,143,306,5	script	Breeder Taab#ep13_alba	946,{
 							close;
 						}
 						else {
-							// Custom Translation
 							set ep13_alba,5;
 							setquest 7046;
 							mes "[Taab]";
-							mes "I would like to place something on the floor of the cage. Something soft, and fur-like should be good. Something to keep the ground dry.";
+							mes "Oh, I always wanted to put something warm on the floor for my creatures.";
+							mes "I was thinking of using fur.";
+							mes "I can also use fur to cover the cage during rainy days, you know?";
 							next;
 							mes "[Taab]";
-							mes "Would you collect ^4d4dff30 Fur^000000. This should be very simple, right? I've heard Tatacho and Hillsrion fur is quite durable.";
+							mes "Can you please bring me ^4d4dff30 scraps of fur^000000?";
+							mes "It sounds easy, doesn't it?";
+							mes "I think the fur of Tatachoes and Hillsrions will be perfect.";
 							next;
 							mes "[Taab]";
-							mes "Of course, I do not intend to put them into the Hillsrion and Tatacho cage on the ground. I would put them on the ground of the Cornus cage.";
+							mes "Of course, I'm not going to use them for the cages with the Tatachoes and Hillsrions.";
+							mes "Those furs will be for the Cornuses.";
 							next;
 							mes "[Taab]";
-							mes "The Cornus seem to like a warmer climate, and the climate is very unusual here... so it hasn't been very easy for them here.";
+							mes "It seems Cornuses love being warm.";
+							mes "The weather in this area is so strange that I'm having a hard time optimizing the temperature for each kind of creature.";
 							next;
 							mes "[Taab]";
 							mes "Thank you in advance.";
-							mes "Don't forget the";
-							mes "^4d4dff30 Fur^000000.";
+							mes "Don't forget the 30 scraps of fur.";
 							close;
 						}
 					}
 					else {
 						mes "[Taab]";
-						mes "I'm sorry, but I don't need any assistance right now.";
-						mes "I'll make an official anouncement if I need help.";
-						mes "Please come back then.";
+						mes "Oh, I'm sorry, but no jobs are available right now.";
+						mes "Some other part-timers finished all the work.";
+						next;
+						mes "[Taab]";
+						mes "I'm sorry for the trouble I must have caused you to come here. Haha...";
+						mes "I'll see you next time.";
 						close;
 					}
 				}
@@ -8022,9 +8000,8 @@ function Catwarp;
 				}
 			}
 			else {
-				// Custom Translation.
 				mes "[Cat Hand Agent]";
-				mes "I am sorry, but you don't have enough credit points to use the warp service. Please come back when you have more points.";
+				mes "I'm sorry, but you're not eligible to use the warp service. Please check your points, and then come back.";
 			}
 			close;
 		case 4:
@@ -8136,9 +8113,8 @@ function Catwarp;
 				}
 			}
 			else {
-				// Custom Translation
 				mes "[Cat Hand Agent]";
-				mes "I am sorry, but you don't have enough credit points to use the warp service. Please come back when you have more points.";
+				mes "I'm sorry, but you're not eligible to use the warp service. Please check your points, and then come back.";
 			}
 			close;
 		case 4:
@@ -8431,7 +8407,7 @@ mid_camp,69,144,0	script	Ferocious Gorurug	421,{
 				close;
 			}
 		}
-		else if ((ep13_yong1 > 59) && (ep13_yong1 < 300)) {
+		else if (ep13_yong1 > 59) {
 			npcskill "AL_HEAL",8,50,50;
 			if (countitem(6039) > 9) {
 				mes "[Ferocious Gorurug]";
@@ -8446,12 +8422,11 @@ mid_camp,69,144,0	script	Ferocious Gorurug	421,{
 				close;
 			}
 			else {
-				// custom translation
-				mes "Ferocious Gorurug welcomes you gracefully.";
+				mes "Gorurung welcomes you with a happy purr.";
 				next;
 				mes "[Ferocious Gorurug]";
-				mes "There you are!";
-				mes "What did you catch today?";
+				mes "Welcome!";
+				mes "You're here to give me fishes, aren't you?";
 				close;
 			}
 		}
@@ -8694,8 +8669,8 @@ man_fild03,95,301,0	duplicate(manukrock)	Mysterious Rock#18	844
 //============================================================ 
 mid_campin,90,121,5	script	Hibba Agip	459,{
 	cutin "ep13_captin_edq",2;
-	set .@start,(ep13_newbs + ep13_ryu + mao_morocc2 + ep13_1_rhea + ep13_animal);
-	if ((ep13_1_edq == 0) && (.@start > 298)) {
+	set .@start,(ep13_newbs + ep13_ryu + mao_morocc2 + ep13_1_rhea + ep13_animal + ep13_start);
+	if ((ep13_1_edq == 0) && (.@start > 115)) {
 		mes "[Hibba Agip]";
 		mes "*Sigh* Look at me, I used to command the desert of Morroc, but I've been deployed to a world that only God knows where...";
 		next;
@@ -8882,21 +8857,17 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 		mes "[Hibba Agip]";
 		mes "Now, search everywhere for the pages of that report. Staff Officer Abidal will bind them into the full report for you.";
 		next;
-		// custom translation
 		mes "[Hibba Agip]";
-		mes "Hmm... and... I received a report, that you surrendered the report to the enemy, right?";
+		mes "Ah, and... I've received a report that you tried to hand out the report to our enemy when the situation happened.";
 		next;
-		// custom translation
 		mes "[Instructor Igrid]";
-		mes "Hmm...";
+		mes "Argh...";
 		next;
-		// custom translation
 		mes "[Hibba Agip]";
-		mes "Hehehehe. How smart of you... Thou feel not safe for you to be my subordinate...";
+		mes "Hahaha! You're smart, my friend. Of course, I don't like smart soldiers.";
 		next;
-		// custom translation
 		mes "[Hibba Agip]";
-		mes "Hey, I said. It is justice as well, injustice as well. But, trust and deal... is very important. Understand? You must remember this.";
+		mes "Let me tell you this: I can care less about justice or righteousness, but loyalty and faithfulness are very important. Keep that in mind for your own good, alright?";
 		set ep13_1_edq,61;
 		changequest 3088,3089;
 		next;
@@ -10644,63 +10615,63 @@ OnMyMobDead:
 // Persuing Rayan Moore
 //============================================================ 
 mid_campin,68,185,3	script	Pursuit Party Leader#1	803,{
-	if (checkweight(714,1) == 0) {
+	if (checkweight(714,3) == 0) {
 		mes "- You cannot proceed with the quest when you're carrying too many items with you. -";
 		close;
 	}
 	if (mao_morocc2 == 0) {
-		if (ep13_ryu == 100) {
-			mes "[Echinacea]";
-			mes "Oh adventurer, you've come at the perfect time.";
-			mes "Since you and I both know that we can't waste time on idle chitchat,";
-			mes "I'll cut to the chase.";
-			next;
-			mes "[Echinacea]";
-			mes "Most expeditions come to this area to explore the Ash Vacuum,";
-			mes "but we've come here for a different reason.";
-			next;
-			mes "[Echinacea]";
-			mes "You know about this space gap that was caused by Satan Morocc, don't you?";
-			next;
-			mes "[Echinacea]";
-			mes "Our job is to pursue Satan Morocc and figure out how this all happened.";
-			mes "Your job is to assist us, and prove that you can be a good member of our expedition.";
-			next;
-			mes "[Echinacea]";
-			mes "... Umm... So, you'll have to.. Let me think which job would be perfect for you.";
-			mes "Umm.. I remember someone said that he needed assistance...";
-			next;
-			select("Hey, excuse me.");
-			mes "[Echinacea]";
-			mes "Ah, I know what you can do!";
-			mes "There's a guy conducting an investigation near the space gap. You can go help him.";
-			mes "Just do what he asks you to do, alright?";
-			mes "Now go!";
-			next;
-			mes "[Echinacea]";
-			mes "......";
-			mes "By the way, adventurer,";
-			mes "What's your name?";
-			next;
-			mes "[" + strcharinfo(0) + "]";
-			mes "......";
-			mes "......";
-			mes "" + strcharinfo(0) + "...";
-			mes "......";
-			next;
-			mes "[Echinacea]";
-			mes "Ah, you are";
-			mes "" + strcharinfo(0) + ".";
-			mes "Well, " + strcharinfo(0) + ", I've just assigned you as Mr. Kidd's assistant.";
-			mes "Good, everything's done on this end. I just needed to get your name on record.";
-			next;
-			mes "[Echinacea]";
-			mes "What are you still doing here?";
-			mes "" + strcharinfo(0) + ", your job is to assist Mr. Kidd.";
-			mes "Please go help him, will you?";
-			set mao_morocc2,1;
-			setquest 7012;
-			close;
+		if (ep13_ryu == 100 || ep13_start == 100) {
+				mes "[Echinacea]";
+				mes "Oh adventurer, you've come at the perfect time.";
+				mes "Since you and I both know that we can't waste time on idle chitchat,";
+				mes "I'll cut to the chase.";
+				next;
+				mes "[Echinacea]";
+				mes "Most expeditions come to this area to explore the Ash Vacuum,";
+				mes "but we've come here for a different reason.";
+				next;
+				mes "[Echinacea]";
+				mes "You know about this space gap that was caused by Satan Morocc, don't you?";
+				next;
+				mes "[Echinacea]";
+				mes "Our job is to pursue Satan Morocc and figure out how this all happened.";
+				mes "Your job is to assist us, and prove that you can be a good member of our expedition.";
+				next;
+				mes "[Echinacea]";
+				mes "... Umm... So, you'll have to.. Let me think which job would be perfect for you.";
+				mes "Umm.. I remember someone said that he needed assistance...";
+				next;
+				select("Hey, excuse me.");
+				mes "[Echinacea]";
+				mes "Ah, I know what you can do!";
+				mes "There's a guy conducting an investigation near the space gap. You can go help him.";
+				mes "Just do what he asks you to do, alright?";
+				mes "Now go!";
+				next;
+				mes "[Echinacea]";
+				mes "......";
+				mes "By the way, adventurer,";
+				mes "What's your name?";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "......";
+				mes "......";
+				mes "" + strcharinfo(0) + "...";
+				mes "......";
+				next;
+				mes "[Echinacea]";
+				mes "Ah, you are";
+				mes "" + strcharinfo(0) + ".";
+				mes "Well, " + strcharinfo(0) + ", I've just assigned you as Mr. Kidd's assistant.";
+				mes "Good, everything's done on this end. I just needed to get your name on record.";
+				next;
+				mes "[Echinacea]";
+				mes "What are you still doing here?";
+				mes "" + strcharinfo(0) + ", your job is to assist Mr. Kidd.";
+				mes "Please go help him, will you?";
+				set mao_morocc2,1;
+				setquest 7012;
+				close;
 		}
 		else {
 			mes "[Echinacea]";
@@ -10838,7 +10809,7 @@ mid_campin,68,185,3	script	Pursuit Party Leader#1	803,{
 			next;
 			mes "[Echinacea]";
 			mes "Go check the number again.";
-			set mao_morocc2,.@quest+3;
+			if (mao_morocc2 < 26) set mao_morocc2,.@quest+3;
 			close;
 		}
 	}
@@ -11290,9 +11261,9 @@ mid_camp,199,311,7	script	Mr. Kidd#ep13_dan01	884,{
 			close2;
 		}
 		else {
-			//custom translation
 			mes "[" + strcharinfo(0) + "]";
-			mes "Now where did I put Rin's journal and the bloody crystal...";
+			mes "(I was supposed to give him the 'Morroc Pursuit Journal' and a 'Bloody Crystal of the Darkness'...";
+			mes "Err? Where have they gone? I need to find them.)";
 			close2;
 		}
 	}
@@ -13144,10 +13115,9 @@ que_job01,84,17,3	script	Rin#moc_room2_1	885,{
 		close2;
 	}
 	else if (mao_morocc2 == 8) {
-		// Missed
 		cutin "moc2_rin02",2;
 		mes "[Rin]";
-		mes "Anything new?";
+		mes "Have you found anything?";
 		next;
 		mes "- You told her you couldn't find anything regarding their whereabouts,";
 		mes "but you found the ''Bloody Crystal of Darkness'' in the bushes.";
@@ -13198,15 +13168,14 @@ que_job01,84,17,3	script	Rin#moc_room2_1	885,{
 			close2;
 		}
 		else {
-			//custom translation
 			cutin "moc2_rin01",2;
 			mes "[Rin]";
-			mes "...The 'Bloody Crystal of Darkness'...";
-			mes "Where is it?";
+			mes "..A bloody Crystal of the Darkness?";
+			mes "Can you show it to me?";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			mes "I'll bring it right away.";
-			mes "^4d4dffNow what did I do with it...?^000000";
+			mes "Oh, I don't have it with me. I'll go bring it right away.";
+			mes "^4d4dff(Wait, what did I do with it? I didn't sell it or anything, did I?)^000000";
 			close2;
 		}
 	}
@@ -13223,10 +13192,9 @@ que_job01,84,17,3	script	Rin#moc_room2_1	885,{
 		close2;
 	}
 	else {
-		//custom translation
 		cutin "moc2_rin03",2;
 		mes "[Rin]";
-		mes "... ... I am just a patient here, don't mind me~";
+		mes "..Argh.. I'm still recovering .. I'm not supposed to move~";
 		close2;
 	}
 	cutin "moc2_rin03",255;
@@ -13405,14 +13373,14 @@ que_job01,144,54,3	script	Rin#moc_room2_2	885,{
 			close2;
 		}
 		else {
-			//custom translation
 			cutin "moc2_rin01",2;
 			mes "[Rin]";
-			mes "What is it? I'm a little busy...";
+			mes "What's up?";
+			mes "I'm kind of busy right now.";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			mes "Oh, I seem to have forgot to bring the Journal...";
-			mes "...Yeah. ...I'll be back with it soon.";
+			mes "..I've brought back the journal and something else..";
+			mes "..Er, sorry. I forgot to bring the journal! I'll be right back.";
 			close2;
 		}
 	}
@@ -13673,8 +13641,7 @@ OnTouch:
 		initnpctimer;
 	}
 	else {
-		//custom translation
-		mes "An unknown force seems to block you.";
+		mes "A mysterious force is repelling you, and you're unable to push forward into this area.";
 		close2;
 		warp "morocc",100,100;
 		set $@moc_mao_gate1,0; //Global Variable
