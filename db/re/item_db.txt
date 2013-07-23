@@ -7759,17 +7759,17 @@
 16691,Scorpius_Scroll,Scorpius Scroll,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 //
 16740,Ptotection_Seagod_Box,The Sea God's Call 23 Hour Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 6436,86400; },{},{}
-16741,Hairtail_Box1,Cutlass 1 Day Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 1198,86400; },{},{}
+16741,Hairtail_Box1,Cutlass 1 Hour Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 1198,3600; },{},{}
 16742,Hairtail_Box2,Cutlass 7 Day Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 1198,604800; },{},{}
-16743,Spearfish_Box1,Marlin 1 Day Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 1489,86400; },{},{}
+16743,Spearfish_Box1,Marlin 1 Hour Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 1489,3600; },{},{}
 16744,Spearfish_Box2,Marlin 7 Day Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 1489,604800; },{},{}
-16745,Saurel_Box1,Pompano 1 Day Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 13068,86400; },{},{}
+16745,Saurel_Box1,Pompano 1 Hour Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 13068,3600; },{},{}
 16746,Saurel_Box2,Pompano 7 Day Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 13068,604800; },{},{}
-16747,Tuna_Box1,Tuna 1 Day Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 16016,86400; },{},{}
+16747,Tuna_Box1,Tuna 1 Hour Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 16016,3600; },{},{}
 16748,Tuna_Box2,Tuna 7 Day Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 16016,604800; },{},{}
-16749,Malang_Crab_Box1,Malangdo Crab 1 Day Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 18107,86400; },{},{}
+16749,Malang_Crab_Box1,Malangdo Crab 1 Hour Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 18107,3600; },{},{}
 16750,Malang_Crab_Box2,Malangdo Crab 7 Day Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 18107,604800; },{},{}
-16751,Brindle_Eel_Box1,Zebra Eel 1 Day Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 18108,86400; },{},{}
+16751,Brindle_Eel_Box1,Zebra Eel 1 Hour Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 18108,3600; },{},{}
 16752,Brindle_Eel_Box2,Zebra Eel 7 Day Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 18108,604800; },{},{}
 16753,Unbreak_Weap_Box,Unbreakable Weapon Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 6438,1; },{},{}
 16754,F_Unbreak_Weap_Box,Unbreakable Weapon Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 6438,1; },{},{}

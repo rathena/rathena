@@ -1213,7 +1213,7 @@ OnTalk1:
 	npctalk "Himmelmez! I won't let you take even a single more step here.";
 	end;
 OnTalk2:
-	npctalk "What.. is this!";
+	npctalk "What... is this?!";
 	end;
 OnTalk3:
 	npctalk "Varmunt Sir! Help the adventurers and I'll chase Himmelmez!";
@@ -1387,7 +1387,7 @@ OnTalk15:
 	npctalk "You guys are of a great help. Try to follow us.";
 	end;
 OnTalk16:
-	npctalk "There can be a tough fight. Hold on and it would be nice to eat something";
+	npctalk "There can be a tough fight. Hold on, and it would be nice to eat something.";
 	end;
 OnTalk17:
 	npctalk "Guys. It is time to depart, Heinrich Sir.";

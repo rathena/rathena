@@ -414,8 +414,8 @@ G6: Go("schg_dun01",200,124);
 // --------------------------------------------------
 
 menu	"Bakonawa Lake",I1, "Bangungot Hospital 2F",I2, "Buwaya Cave",I3,
-	"Endless Tower",I4, "Hazy Forest",I5, "Malangdo Culvert",I6,
-	"Nidhoggur's Nest",I7, "Octopus Cave",I8, "Orc's Memory",I9, "Sealed Shrine",I10;
+	"Endless Tower",I4, "Hazy Forest",I5, "Malangdo Culvert",I6, "Nidhoggur's Nest",I7,
+	"Octopus Cave",I8, "Old Glast Heim",I9, "Orc's Memory",I10, "Sealed Shrine",I111;
 
 I1: Restrict("RE");
 	Go("ma_scene01",172,175);
@@ -431,8 +431,10 @@ I6: Restrict("RE");
 I7: Go("nyd_dun02",95,193);
 I8: Restrict("RE");
 	Go("mal_dun01",152,230);
-I9: Go("gef_fild10",240,198);
-I10: Go("monk_test",306,143);
+I9: Restrict("RE");
+	Go("glast_01",204,268);
+I10: Go("gef_fild10",240,198);
+I11: Go("monk_test",306,143);
 
 // --------------------------------------------------
 	Special:
