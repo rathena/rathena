@@ -4114,6 +4114,7 @@
 6583,3rd_Test_Pass,3rd Test Pass,3,0,,0,,,,,,,,,,,,,{},{},{}
 6593,Cryptura_Hair_Coupon,Cryptura Hair Coupon,3,0,,0,,,,,,,,,,,,,{},{},{}
 6606,P_Cart_C,P Cart C,3,0,,10,,,,,,,,,,,,,{},{},{}
+6608,Coagulated_Spell,Coagulated Spell,3,0,,10,,,,,,,,,,,,,{},{},{}
 6616,Lmtd_Manny_Card,Lmtd Manny Card,3,20,,10,,,,,,,,,,,,,{},{},{}
 6617,Lmtd_Sid_Card,Lmtd Sid Card,3,20,,10,,,,,,,,,,,,,{},{},{}
 6618,Lmtd_Diego_Card,Lmtd Diego Card,3,20,,10,,,,,,,,,,,,,{},{},{}

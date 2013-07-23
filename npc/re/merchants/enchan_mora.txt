@@ -457,7 +457,7 @@ mora,99,93,5	script	Artifact Crafter#pa0829	495,{
 		break;
 	}
 	set .@item, .@items[(.@select-2)%4];
-	if (countitem(6380) == 0 || countitem(.@item) == 0) {
+	if (countitem(6380) < 2 || countitem(.@item) == 0) {
 		mes "[Artifact Crafter]";
 		mes "You have to have 2 Mora Coins and an item to be reinforced before I can do my work.";
 		close;
@@ -634,7 +634,7 @@ mora,148,98,3	script	Artifact Researcher#new	521,{
 	}
 	if (Zeny < 100000 || countitem(6380) == 0) {
 		mes "[Artifact Researcher]";
-		mes "I'm not giving these services out for free pal. 100,000 zeny or 1 Mora Coin. Is that too much to ask?";
+		mes "I'm not giving these services out for free pal. 100,000 zeny and 1 Mora Coin. Is that too much to ask?";
 		close;
 	}
 	mes "[Artifact Researcher]";
