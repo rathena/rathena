@@ -11065,6 +11065,7 @@ BUILDIN_FUNC(emotion)
 	return 0;
 }
 
+
 static int buildin_maprespawnguildid_sub_pc(struct map_session_data* sd, va_list ap)
 {
 	int16 m=va_arg(ap,int);
@@ -11076,7 +11077,7 @@ static int buildin_maprespawnguildid_sub_pc(struct map_session_data* sd, va_list
 	if(
 		(sd->status.guild_id == g_id && flag&1) || //Warp out owners
 		(sd->status.guild_id != g_id && flag&2) || //Warp out outsiders
-		(sd->status.guild_id == 0)	// Warp out players not in guild [Valaris]
+		(sd->status.guild_id == 0 && flag&2)	// Warp out players not in guild
 	)
 		pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
 	return 1;
@@ -11092,6 +11093,15 @@ static int buildin_maprespawnguildid_sub_mob(struct block_list *bl,va_list ap)
 	return 0;
 }
 
+/*
+ * Function to kickout guildies out of a map. (Put them back into thei save point)
+ * (mob are being killed)
+ * m : mapid
+ * g_id : owner guild id
+ * flag & 1 : Warp out owners
+ * flag & 2 : Warp out outsider
+ * flag & 4 : reserved for mob
+ * */
 BUILDIN_FUNC(maprespawnguildid)
 {
 	const char *mapname=script_getstr(st,2);
