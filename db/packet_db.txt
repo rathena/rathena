@@ -1707,7 +1707,7 @@ packet_ver: 30
 0x089c,26,friendslistadd,2
 0x0885,5,hommenu,2:4
 0x0961,36,storagepassword,2:4:20
-0x0288,-1,cashshopbuy,2:4:6:10
+0x0288,-1,cashshopbuy,2:4:8:10
 0x091c,26,partyinvite2,2
 0x094b,19,wanttoconnection,2:6:10:14:18
 0x0369,7,actionrequest,2:6
@@ -1816,7 +1816,7 @@ packet_ver: 34
 0x0447,2,booking_playcancel,0
 0x044A,6,clientversion,2
 0x0844,2,cashshopopen,0
-0x0848,-1,cashshopbuy,2:4:6:10
+0x0848,-1,cashshopbuy,2:6:4:10
 0x084a,2,cashshopclose,0
 0x084b,19 //fallitem4
 0x085a,90,useskilltoposinfo,2:4:6:8:10
