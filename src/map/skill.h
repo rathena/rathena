@@ -312,6 +312,7 @@ int skill_delayfix( struct block_list *bl, uint16 skill_id, uint16 skill_lv);
 // Skill conditions check and remove [Inkfish]
 int skill_check_condition_castbegin(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 int skill_check_condition_castend(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
+int skill_check_condition_char_sub (struct block_list *bl, va_list ap);
 int skill_consume_requirement(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv, short type);
 struct skill_condition skill_get_requirement(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 int skill_disable_check(struct status_change *sc, uint16 skill_id);

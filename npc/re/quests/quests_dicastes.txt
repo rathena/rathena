@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Gennosuke Kouga, Muad_Dib
 //===== Current Version: =====================================
-//= 2.0
+//= 2.1
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -30,6 +30,7 @@
 //= 1.9 Updated "Fish Tails" with RE coordinates.
 //= 1.9a Minor fix. [Joseph]
 //= 2.0 Fixed variables. [Joseph]
+//= 2.1 Added reset option to "Kareka". [Euphy]
 //============================================================
 
 // Entrance
@@ -6924,8 +6925,37 @@ dic_in01,42,264,3	script	Adventurer Clerk#ep133	453,{
 			mes "[Kareka]";
 			mes "Do you want to upgrade the ^990099Light of El Dicastes^000000 again?";
 			next;
+
+			// The reset feature was disabled in previous versions.
+			//mes "[Kareka]";
+			//mes "Ha ha ha, that is out of the question. This item is very rare and valuable so I cannot give you a new one.";
+			//close;
+
 			mes "[Kareka]";
-			mes "Ha ha ha, that is out of the question. This item is very rare and valuable so I cannot give you a new one.";
+			mes "That will cost ^9900996 Sapha Certifications^000000 in order to retry.";
+			mes "And note this, your current Light of El Dicastes will be destroyed along with all of its enchantments.";
+			next;
+			mes "[Kareka]";
+			mes "Are you sure you want to do this?";
+			next;
+			if(select("No, let me think about it.:Take my Light of El Dicastes.") == 2) {
+				if (countitem(2844) == 0 || countitem(6304) < 6) {
+					mes "[Kareka]";
+					mes "You need to bring the Light of El Dicastes and 6 Sapha Certifications!";
+					mes "Don't try to cheat me!";
+					close;
+				}
+				mes "[Kareka]";
+				mes "Ok, let's get this started.";
+				mes "I'm going to remove all enchantments from your Light of El Dicastes.";
+				mes "Haaap--!";
+				specialeffect2 EF_REPAIRWEAPON;
+				progressbar "ffff00",3;
+				delitem 6304,6; //Sapa_Feat_Cert
+				delitem 2844,1; //El_Dicastes_Light
+				getitem 2844,1; //El_Dicastes_Light
+				set ep13_3_ring2,0;
+			}
 			close;
 		}
 		if (countitem(6304) < 1) {

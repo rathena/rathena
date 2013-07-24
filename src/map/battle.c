@@ -894,7 +894,8 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 		if(sc->data[SC_TATAMIGAESHI] && (flag&(BF_MAGIC|BF_LONG)) == BF_LONG)
 			return 0;
 
-		if( sc->data[SC_NEUTRALBARRIER] && (flag&(BF_MAGIC|BF_LONG)) == (BF_MAGIC|BF_LONG) ) {
+		// TODO: Find out whether Neutral Barrier really blocks all splash damage or just specific cases (Earthquake)
+		if( sc->data[SC_NEUTRALBARRIER] && ((flag&(BF_MAGIC|BF_LONG)) == BF_LONG || (skill_id && skill_get_splash(skill_id,skill_lv))) ) {
 			d->dmg_lv = ATK_MISS;
 			return 0;
 		}
@@ -1990,6 +1991,9 @@ static bool is_attack_hitting(struct Damage wd, struct block_list *src, struct b
 		return true;
 	else if (nk&NK_IGNORE_FLEE)
 		return true;
+
+	if( sc && (sc->data[SC_NEUTRALBARRIER] || sc->data[SC_NEUTRALBARRIER_MASTER]) && wd.flag&BF_LONG )
+		return false;
 
 	flee = tstatus->flee;
 #ifdef RENEWAL
@@ -3586,11 +3590,11 @@ static int battle_calc_skill_constant_addition(struct Damage wd, struct block_li
 				atk = (30*pc_checkskill(sd, RA_TOOTHOFWUG));
 			break;
 		case SR_GATEOFHELL:
-			atk =  (sstatus->max_hp - status_get_hp(src));
-			if(sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE){
-				atk =  ( ((int64)sstatus->max_sp * (1 + skill_lv * 2 / 10)) + 40 * status_get_lv(src) );
-			}else{
-				atk =  ( ((int64)sstatus->sp * (1 + skill_lv * 2 / 10)) + 10 * status_get_lv(src) );
+			atk = (sstatus->max_hp - status_get_hp(src));
+			if(sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE) {
+				atk +=  ( ((int64)sstatus->max_sp * (1 + skill_lv * 2 / 10)) + 40 * status_get_lv(src) );
+			} else {
+				atk +=  ( ((int64)sstatus->sp * (1 + skill_lv * 2 / 10)) + 10 * status_get_lv(src) );
 			}
 			break;
 		case SR_TIGERCANNON: // (Tiger Cannon skill level x 240) + (Target Base Level x 40)
@@ -4787,21 +4791,34 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						if( mflag&ELE_DARK ){ skillratio *= 4; s_ele = ELE_DARK; }
 						skillratio /= 5;
 						break;
-					case WL_COMET: {
-						struct status_change * sc = status_get_sc(src);
-						if( sc )
-							i = distance_xy(target->x, target->y, sc->comet_x, sc->comet_y);
+					case WL_COMET:
+						i = ( sc ? distance_xy(target->x, target->y, sc->comet_x, sc->comet_y) : 8 );
+						if( i <= 3 ) 
+							skillratio += 2400 + 500 * skill_lv; // 7 x 7 cell
+						else if( i <= 5 ) 
+							skillratio += 1900 + 500 * skill_lv; // 11 x 11 cell
+						else if( i <= 7 ) 
+							skillratio += 1400 + 500 * skill_lv; // 15 x 15 cell
 						else
-							i = 8;
-						if( i < 2 ) skillratio = 2500 + 500 * skill_lv;
-						else
-						if( i < 4 ) skillratio = 1600 + 400 * skill_lv;
-						else
-						if( i < 6 ) skillratio = 1200 + 300 * skill_lv;
-						else
-						skillratio = 800 + 200 * skill_lv;
+							skillratio += 900 + 500 * skill_lv; // 19 x 19 cell
+
+						if( sd && sd->status.party_id ){
+							struct map_session_data* psd;
+							int p_sd[5] = {0, 0, 0, 0, 0}, c; // just limit it to 5
+
+							c = 0;
+							memset (p_sd, 0, sizeof(p_sd));
+							party_foreachsamemap(skill_check_condition_char_sub, sd, 3, &sd->bl, &c, &p_sd, skill_id);
+							c = ( c > 1 ? rand()%c : 0 );
+
+							if( (psd = map_id2sd(p_sd[c])) && pc_checkskill(psd,WL_COMET) > 0 ){
+								skillratio = skill_lv * 400; //MATK [{( Skill Level x 400 ) x ( Caster's Base Level / 120 )} + 2500 ] %
+								RE_LVL_DMOD(120);
+								skillratio += 2500;
+								status_zap(&psd->bl, 0, skill_get_sp(skill_id, skill_lv) / 2);
+							}
 						}
-						break;
+					break;
 					case WL_CHAINLIGHTNING_ATK:
 						skillratio += 100 + 300 * skill_lv;
 						RE_LVL_DMOD(100);
@@ -6164,14 +6181,18 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			}
 			break;
 		case BL_MOB:
-			if(((((TBL_MOB*)target)->special_state.ai == AI_SPHERE || //Marine Spheres
-				(((TBL_MOB*)target)->special_state.ai == AI_FLORA && battle_config.summon_flora&1)) && //Floras
-				s_bl->type == BL_PC && src->type != BL_MOB) || (((TBL_MOB*)target)->special_state.ai == AI_ZANZOU && t_bl->id != s_bl->id)) //Zanzoe
-			{	//Targettable by players
+		{
+			struct mob_data *md = ((TBL_MOB*)target);
+			if(((md->special_state.ai == AI_SPHERE || //Marine Spheres
+				(md->special_state.ai == AI_FLORA && battle_config.summon_flora&1)) && s_bl->type == BL_PC && src->type != BL_MOB) || //Floras
+				(md->special_state.ai == AI_ZANZOU && t_bl->id != s_bl->id) || //Zanzoe
+				(md->special_state.ai == AI_FAW && (t_bl->id != s_bl->id || (s_bl->type == BL_PC && src->type != BL_MOB)))
+			){	//Targettable by players
 				state |= BCT_ENEMY;
 				strip_enemy = 0;
 			}
 			break;
+		}
 		case BL_SKILL:
 		{
 			TBL_SKILL *su = (TBL_SKILL*)target;

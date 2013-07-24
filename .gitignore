@@ -23,6 +23,7 @@
 /Makefile.cache
 /map-server_sql
 /mapcache
+/nbproject
 
 # /3rdparty/libconfig/
 /3rdparty/libconfig/Makefile
@@ -34,6 +35,7 @@
 
 # /conf/
 /conf/import
+/conf/msg_conf/import
 
 # /log/
 /log/*.log

@@ -4,7 +4,7 @@
 //= Kalen - Original jAthena
 //= Fredzilla - Converted, Lupus
 //===== Current Version: ===================================== 
-//= 3.7
+//= 3.7a
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //= 3.6 Applied Correction bug with for loop. [L0ne_W0lf]
 //= 3.6a Fixed a little Exploit to bug the quest with a timeout. (bugreport:2252) [Samuray22]
 //= 3.7 Added Quest Log commands. [Kisuka]
+//= 3.7a Fixed a label execution. [Euphy]
 //============================================================
 
 comodo,180,153,4	script	Sonotora#1	90,{
@@ -1323,7 +1324,7 @@ OnDisable:
 
 // Backup Dancers
 //============================================================ 
-job_duncer,63,110,4	script	Backdancer#1::BackDancer	724,{
+job_duncer,63,110,4	script	Backdancer#1	724,{
 	end;
 
 OnSmile:
@@ -1400,3 +1401,4 @@ OnOmg:
 //=	Concentration' to 'Attention Concentrate' [Lupus]
 //= 3.0 Some optimization, typos, added missing dialogues (4Kb lighter) [Lupus]
 //= 3.1 Implemented JOBLVL as in other quests [Lupus]
+//============================================================

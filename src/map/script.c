@@ -8809,11 +8809,11 @@ BUILDIN_FUNC(guildchangegm)
 BUILDIN_FUNC(monster)
 {
 	const char* mapn	= script_getstr(st,2);
-	int x				= script_getnum(st,3);
-	int y				= script_getnum(st,4);
+	int x			= script_getnum(st,3);
+	int y			= script_getnum(st,4);
 	const char* str		= script_getstr(st,5);
-	int class_			= script_getnum(st,6);
-	int amount			= script_getnum(st,7);
+	int class_		= script_getnum(st,6);
+	int amount		= script_getnum(st,7);
 	const char* event	= "";
 	unsigned int size	= SZ_SMALL;
 	unsigned int ai		= AI_NONE;
@@ -8836,7 +8836,7 @@ BUILDIN_FUNC(monster)
 
 	if (script_hasdata(st, 10)) {
 		ai = script_getnum(st, 10);
-		if (ai > 4) {
+		if (ai >= AI_MAX) {
 			ShowWarning("buildin_monster: Attempted to spawn non-existing ai %d for monster class %d\n", ai, class_);
 			return 1;
 		}
@@ -11065,6 +11065,7 @@ BUILDIN_FUNC(emotion)
 	return 0;
 }
 
+
 static int buildin_maprespawnguildid_sub_pc(struct map_session_data* sd, va_list ap)
 {
 	int16 m=va_arg(ap,int);
@@ -11076,7 +11077,7 @@ static int buildin_maprespawnguildid_sub_pc(struct map_session_data* sd, va_list
 	if(
 		(sd->status.guild_id == g_id && flag&1) || //Warp out owners
 		(sd->status.guild_id != g_id && flag&2) || //Warp out outsiders
-		(sd->status.guild_id == 0)	// Warp out players not in guild [Valaris]
+		(sd->status.guild_id == 0 && flag&2)	// Warp out players not in guild
 	)
 		pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
 	return 1;
@@ -11092,6 +11093,15 @@ static int buildin_maprespawnguildid_sub_mob(struct block_list *bl,va_list ap)
 	return 0;
 }
 
+/*
+ * Function to kickout guildies out of a map. (Put them back into thei save point)
+ * (mob are being killed)
+ * m : mapid
+ * g_id : owner guild id
+ * flag & 1 : Warp out owners
+ * flag & 2 : Warp out outsider
+ * flag & 4 : reserved for mob
+ * */
 BUILDIN_FUNC(maprespawnguildid)
 {
 	const char *mapname=script_getstr(st,2);

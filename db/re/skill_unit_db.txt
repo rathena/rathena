@@ -117,8 +117,8 @@
 2253,0xd6,    ,  0, 1,1000,enemy, 0x002	//RA_FIRINGTRAP
 2254,0xd7,    ,  0, 1,1000,enemy, 0x002	//RA_ICEBOUNDTRAP
 
-2273,0xe2,    ,  1, 0, 500,friend,0x000	//NC_NEUTRALBARRIER
-2274,0xe3,    ,  1, 0, 500,all,   0x000	//NC_STEALTHFIELD
+2273,0xe2,    ,  2, 0, 500,friend,0x000	//NC_NEUTRALBARRIER
+2274,0xe3,    ,  2, 0, 500,all,   0x000	//NC_STEALTHFIELD
 
 2299,0xcc,    ,  0, 1,1000,all,   0x006	//SC_MANHOLE
 2300,0xcd,    ,  0, 1,1000,all,   0x006	//SC_DIMENSIONDOOR
