@@ -603,7 +603,7 @@ void initChangeTables(void) {
 	set_sc( NC_INFRAREDSCAN		, SC_INFRAREDSCAN	, SI_INFRAREDSCAN	, SCB_FLEE );
 	set_sc( NC_ANALYZE		, SC_ANALYZE		, SI_ANALYZE		, SCB_DEF|SCB_DEF2|SCB_MDEF|SCB_MDEF2 );
 	set_sc( NC_MAGNETICFIELD	, SC_MAGNETICFIELD	, SI_MAGNETICFIELD	, SCB_NONE );
-	set_sc( NC_NEUTRALBARRIER	, SC_NEUTRALBARRIER	, SI_NEUTRALBARRIER	, SCB_NONE );
+	set_sc( NC_NEUTRALBARRIER	, SC_NEUTRALBARRIER	, SI_NEUTRALBARRIER	, SCB_DEF|SCB_MDEF );
 	set_sc( NC_STEALTHFIELD		, SC_STEALTHFIELD	, SI_STEALTHFIELD	, SCB_NONE );
 	/**
 	 * Royal Guard
@@ -1764,8 +1764,6 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, uin
 			if( tsc ) {
 				if( tsc->option&hide_flag && !(status->mode&(MD_BOSS|MD_DETECTOR)))
 					return 0;
-				if( tsc->data[SC_STEALTHFIELD] && !(status->mode&MD_BOSS) )
-					return 0;
 			}
 	}
 	return 1;
@@ -1895,11 +1893,8 @@ static unsigned short status_base_atk(const struct block_list *bl, const struct 
 	// equation, hinting that perhaps non-players should use this for batk.
 	// [Skotlex]
 #ifdef RENEWAL
-	if (bl->type == BL_HOM) {
-		// str = ((rstr + dex + status->luk) / 3) + (((TBL_HOM*)bl)->homunculus.level / 10);
-		str = (((rstr + dex + status->luk) / 3) + (((TBL_HOM*)bl)->homunculus.level / 10))*2; //Because Renewal ATK isn't implemented we adjust the actual ATK until it is
-		return cap_value(str, 0, USHRT_MAX);
-	}
+	if (bl->type == BL_HOM)
+		str = floor((rstr + dex + status->luk) / 3) + floor(((TBL_HOM*)bl)->homunculus.level / 10);
 #endif
 	dstr = str/10;
 	str += dstr*dstr;
@@ -2063,39 +2058,6 @@ int status_calc_mob_(struct mob_data* md, bool first)
 			status->speed = 2;
 	}
 
-	if (flag&16 && mbl)
-	{	//Max HP setting from Summon Flora/marine Sphere
-		struct unit_data *ud = unit_bl2ud(mbl);
-		//Remove special AI when this is used by regular mobs.
-		if (mbl->type == BL_MOB && !((TBL_MOB*)mbl)->special_state.ai)
-			md->special_state.ai = AI_NONE;
-		if (ud)
-		{	// different levels of HP according to skill level
-			switch(ud->skill_id){
-				case AM_SPHEREMINE:
-					status->max_hp = 2000 + 400*ud->skill_lv;
-					break;
-				case KO_ZANZOU:
-					status->max_hp = 3000 + 3000 * ud->skill_lv;
-					break;
-				case AM_CANNIBALIZE:
-					status->max_hp = 1500 + 200*ud->skill_lv + 10*status_get_lv(mbl);
-					status->mode|= MD_CANATTACK|MD_AGGRESSIVE;
-					break;
-				case MH_SUMMON_LEGION:{
-					int homblvl = status_get_lv(mbl);
-					status->max_hp = 10 * (100 * (ud->skill_lv + 2) + homblvl);
-					status->batk = 100 * (ud->skill_lv+5) / 2;
-					status->def = 10 * (100 * (ud->skill_lv+2) + homblvl);
-					//status->aspd_rate = 10 * (2 * (20 - ud->skill_lv) - homblvl/10);
-					//status->aspd_rate = max(100,status->aspd_rate);
-					break;
-				}
-			}
-			status->hp = status->max_hp;
-		}
-	}
-
 	if (flag&1)
 	{	// increase from mobs leveling up [Valaris]
 		int diff = md->level - md->db->lv;
@@ -2175,6 +2137,60 @@ int status_calc_mob_(struct mob_data* md, bool first)
 			status->rhw.atk += status->rhw.atk * 10*md->guardian_data->guardup_lv/100;
 			status->rhw.atk2 += status->rhw.atk2 * 10*md->guardian_data->guardup_lv/100;
 			status->aspd_rate -= 100*md->guardian_data->guardup_lv;
+		}
+	}
+
+	if (flag&16 && mbl)
+	{	//Max HP setting from Summon Flora/marine Sphere
+		struct unit_data *ud = unit_bl2ud(mbl);
+		//Remove special AI when this is used by regular mobs.
+		if (mbl->type == BL_MOB && !((TBL_MOB*)mbl)->special_state.ai)
+			md->special_state.ai = AI_NONE;
+		if (ud)
+		{	// different levels of HP according to skill level
+			if(!ud->skill_id) // FIXME: We lost the unit data for magic decoy in somewhere before this
+				ud->skill_id = ((TBL_PC*)mbl)->menuskill_id;
+			switch(ud->skill_id){
+				case AM_SPHEREMINE:
+					status->max_hp = 2000 + 400*ud->skill_lv;
+					break;
+				case KO_ZANZOU:
+					status->max_hp = 3000 + 3000 * ud->skill_lv;
+					break;
+				case AM_CANNIBALIZE:
+					status->max_hp = 1500 + 200*ud->skill_lv + 10*status_get_lv(mbl);
+					status->mode|= MD_CANATTACK|MD_AGGRESSIVE;
+					break;
+				case MH_SUMMON_LEGION:
+				{
+					int homblvl = status_get_lv(mbl);
+					status->max_hp = 10 * (100 * (ud->skill_lv + 2) + homblvl);
+					status->batk = 100 * (ud->skill_lv+5) / 2;
+					status->def = 10 * (100 * (ud->skill_lv+2) + homblvl);
+					//status->aspd_rate = 10 * (2 * (20 - ud->skill_lv) - homblvl/10);
+					//status->aspd_rate = max(100,status->aspd_rate);
+					break;
+				}
+				case NC_SILVERSNIPER:
+				{
+					struct status_data *mstatus = status_get_status_data(mbl);
+					if(!mstatus)
+						break;
+					status->max_hp = (1000 * ud->skill_lv) + (mstatus->hp / 3) + (status_get_lv(mbl) * 12);
+					status->batk = (((ud->skill_lv > 3)?300:100) + (200 * ud->skill_lv));
+					break;
+				}
+				case NC_MAGICDECOY:
+				{
+					struct status_data *mstatus = status_get_status_data(mbl);
+					if(!mstatus)
+						break;
+					status->max_hp = (1000 * ((TBL_PC*)mbl)->menuskill_val) + (mstatus->hp * 4) + (status_get_lv(mbl) * 12);
+					status->matk_min = status->matk_max = 250 + 50*((TBL_PC*)mbl)->menuskill_val;
+					break;
+				}
+			}
+			status->hp = status->max_hp;
 		}
 	}
 
@@ -3508,9 +3524,11 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 		regen->flag = 0;
 
 	if (
-		sc->data[SC_DANCING] || sc->data[SC_OBLIVIONCURSE] || sc->data[SC_MAXIMIZEPOWER]
-		|| (
-			(bl->type == BL_PC && ((TBL_PC*)bl)->class_&MAPID_UPPERMASK) == MAPID_MONK &&
+		sc->data[SC_DANCING] || sc->data[SC_OBLIVIONCURSE] ||
+#ifdef RENEWAL
+		sc->data[SC_MAXIMIZEPOWER] ||
+#endif
+			( (bl->type == BL_PC && ((TBL_PC*)bl)->class_&MAPID_UPPERMASK) == MAPID_MONK &&
 			(sc->data[SC_EXTREMITYFIST] || (sc->data[SC_EXPLOSIONSPIRITS] && (!sc->data[SC_SPIRIT] || sc->data[SC_SPIRIT]->val2 != SL_MONK)))
 			)
 	)	//No natural SP regen
@@ -5016,6 +5034,8 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 		def -= def * ( 14 * sc->data[SC_ANALYZE]->val1 ) / 100;
 	if( sc->data[SC_FORCEOFVANGUARD] )
 		def += def * 2 * sc->data[SC_FORCEOFVANGUARD]->val1 / 100;
+	if( sc->data[SC_NEUTRALBARRIER] )
+		def += def * (10 + sc->data[SC_NEUTRALBARRIER]->val1 * 5) / 100;
 	if(sc->data[SC_SATURDAYNIGHTFEVER])
 		def -= def * (10 + 10 * sc->data[SC_SATURDAYNIGHTFEVER]->val1) / 100;
 	if(sc->data[SC_EARTHDRIVE])
@@ -5127,6 +5147,8 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 		mdef += 25*mdef/100;
 	if(sc->data[SC_FREEZE])
 		mdef += 25*mdef/100;
+	if( sc->data[SC_NEUTRALBARRIER] )
+		mdef += mdef * (10 + sc->data[SC_NEUTRALBARRIER]->val1 * 5) / 100;
 	if( sc->data[SC_MARSHOFABYSS] )
 		mdef -= mdef * ( 6 + 6 * sc->data[SC_MARSHOFABYSS]->val3/10 + (bl->type == BL_MOB ? 5 : 3) * sc->data[SC_MARSHOFABYSS]->val2/36 ) / 100;
 	if(sc->data[SC_ANALYZE])
