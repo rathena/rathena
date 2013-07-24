@@ -14,6 +14,33 @@ typedef enum damage_lv {
 	ATK_DEF      // attack connected
 } damage_lv;
 
+enum {	// Flag of the final calculation
+	BF_WEAPON	= 0x0001,
+	BF_MAGIC	= 0x0002,
+	BF_MISC		= 0x0004,
+	BF_SHORT	= 0x0010,
+	BF_LONG		= 0x0040,
+	BF_SKILL	= 0x0100,
+	BF_NORMAL	= 0x0200,
+	BF_WEAPONMASK=0x000f,
+	BF_RANGEMASK= 0x00f0,
+	BF_SKILLMASK= 0x0f00,
+};
+
+enum e_battle_check_target
+{//New definitions [Skotlex]
+	BCT_ENEMY   = 0x020000,
+	BCT_NOENEMY = 0x1d0000, //This should be (~BCT_ENEMY&BCT_ALL)
+	BCT_PARTY	= 0x040000,
+	BCT_NOPARTY = 0x1b0000, //This should be (~BCT_PARTY&BCT_ALL)
+	BCT_GUILD	= 0x080000,
+	BCT_NOGUILD = 0x170000, //This should be (~BCT_GUILD&BCT_ALL)
+	BCT_ALL     = 0x1f0000,
+	BCT_NOONE   = 0x000000,
+	BCT_SELF    = 0x010000,
+	BCT_NEUTRAL = 0x100000,
+};
+
 // dammage structure
 struct Damage {
 #ifdef RENEWAL
@@ -52,19 +79,6 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 int battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int damage,int div_,uint16 skill_id,uint16 skill_lv,int flag);
 int battle_calc_bg_damage(struct block_list *src,struct block_list *bl,int damage,int div_,uint16 skill_id,uint16 skill_lv,int flag);
 
-enum {	// Flag of the final calculation
-	BF_WEAPON	= 0x0001,
-	BF_MAGIC	= 0x0002,
-	BF_MISC		= 0x0004,
-	BF_SHORT	= 0x0010,
-	BF_LONG		= 0x0040,
-	BF_SKILL	= 0x0100,
-	BF_NORMAL	= 0x0200,
-	BF_WEAPONMASK=0x000f,
-	BF_RANGEMASK= 0x00f0,
-	BF_SKILLMASK= 0x0f00,
-};
-
 int battle_delay_damage (unsigned int tick, int amotion, struct block_list *src, struct block_list *target, int attack_type, uint16 skill_id, uint16 skill_lv, int damage, enum damage_lv dmg_lv, int ddelay, bool additional_effects);
 
 // Summary normal attack treatment (basic attack)
@@ -76,20 +90,6 @@ struct block_list* battle_gettargeted(struct block_list *target);
 struct block_list* battle_getenemy(struct block_list *target, int type, int range);
 int battle_gettarget(struct block_list *bl);
 int battle_getcurrentskill(struct block_list *bl);
-
-enum e_battle_check_target
-{//New definitions [Skotlex]
-	BCT_ENEMY   = 0x020000,
-	BCT_NOENEMY = 0x1d0000, //This should be (~BCT_ENEMY&BCT_ALL)
-	BCT_PARTY	= 0x040000,
-	BCT_NOPARTY = 0x1b0000, //This should be (~BCT_PARTY&BCT_ALL)
-	BCT_GUILD	= 0x080000,
-	BCT_NOGUILD = 0x170000, //This should be (~BCT_GUILD&BCT_ALL)
-	BCT_ALL     = 0x1f0000,
-	BCT_NOONE   = 0x000000,
-	BCT_SELF    = 0x010000,
-	BCT_NEUTRAL = 0x100000,
-};
 
 #define	is_boss(bl)	(status_get_mode(bl)&MD_BOSS)	// Can refine later [Aru]
 

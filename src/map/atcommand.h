@@ -12,8 +12,10 @@ struct map_session_data;
 //Note: The range is unlimited unless this define is set.
 //#define AUTOLOOT_DISTANCE AREA_SIZE
 
+//global var
 extern char atcommand_symbol;
 extern char charcommand_symbol;
+extern int atcmd_binding_count;
 
 typedef enum {
 	COMMAND_ATCOMMAND = 1,
@@ -30,8 +32,6 @@ void atcommand_db_load_groups(int* group_ids);
 
 bool atcommand_exists(const char* name);
 
-extern int atcmd_binding_count;
-
 // @commands (script based)
 struct atcmd_binding_data {
 	char command[50];
@@ -39,9 +39,7 @@ struct atcmd_binding_data {
 	int level;
 	int level2;
 };
-
 struct atcmd_binding_data** atcmd_binding;
-
 struct atcmd_binding_data* get_atcommandbind_byname(const char* name);
 
 #endif /* _ATCOMMAND_H_ */

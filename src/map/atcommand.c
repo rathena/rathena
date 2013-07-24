@@ -3826,7 +3826,7 @@ ACMD_FUNC(mapinfo) {
 	if (map[m_id].flag.town)
 		clif_displaymessage(fd, msg_txt(sd,1042)); // Town Map
 	if (map[m_id].flag.restricted){
-		sprintf(atcmd_output, msg_txt(sd,1106),map[m_id].zone); // Restricted (zone %d)
+		sprintf(atcmd_output, " Restricted (zone %d)",map[m_id].zone);
 		clif_displaymessage(fd, atcmd_output);
 	}
 
@@ -3841,43 +3841,43 @@ ACMD_FUNC(mapinfo) {
 	}
 	strcpy(atcmd_output,msg_txt(sd,1046)); // PvP Flags:
 	if (map[m_id].flag.pvp)
-		strcat(atcmd_output, msg_txt(sd,1047)); // Pvp ON |
+		strcat(atcmd_output, " Pvp ON |");
 	if (map[m_id].flag.pvp_noguild)
-		strcat(atcmd_output, msg_txt(sd,1048)); // NoGuild |
+		strcat(atcmd_output, " NoGuild |");
 	if (map[m_id].flag.pvp_noparty)
-		strcat(atcmd_output, msg_txt(sd,1049)); // NoParty |
+		strcat(atcmd_output, " NoParty |");
 	if (map[m_id].flag.pvp_nightmaredrop)
-		strcat(atcmd_output, msg_txt(sd,1050)); // NightmareDrop |
+		strcat(atcmd_output, " NightmareDrop |");
 	if (map[m_id].flag.pvp_nocalcrank)
-		strcat(atcmd_output, msg_txt(sd,1051)); // NoCalcRank |
+		strcat(atcmd_output, " NoCalcRank |");
 	clif_displaymessage(fd, atcmd_output);
 
-	strcpy(atcmd_output,msg_txt(sd,1052)); // GvG Flags:
+	strcpy(atcmd_output,msg_txt(sd,1047)); // GvG Flags:
 	if (map[m_id].flag.gvg)
-		strcat(atcmd_output, msg_txt(sd,1053)); // GvG ON |
+		strcat(atcmd_output, " GvG ON |");
 	if (map[m_id].flag.gvg_dungeon)
-		strcat(atcmd_output, msg_txt(sd,1054)); // GvG Dungeon |
+		strcat(atcmd_output, " GvG Dungeon |"); 
 	if (map[m_id].flag.gvg_castle)
-		strcat(atcmd_output, msg_txt(sd,1055)); // GvG Castle |
+		strcat(atcmd_output, " GvG Castle |");
 	if (map[m_id].flag.gvg_noparty)
-		strcat(atcmd_output, msg_txt(sd,1056)); // NoParty |
+		strcat(atcmd_output, " NoParty |");
 	clif_displaymessage(fd, atcmd_output);
 
-	strcpy(atcmd_output,msg_txt(sd,1057)); // Teleport Flags:
+	strcpy(atcmd_output,msg_txt(sd,1048)); // Teleport Flags:
 	if (map[m_id].flag.noteleport)
-		strcat(atcmd_output, msg_txt(sd,1058)); // NoTeleport |
+		strcat(atcmd_output, " NoTeleport |");
 	if (map[m_id].flag.monster_noteleport)
-		strcat(atcmd_output, msg_txt(sd,1059)); // Monster NoTeleport |
+		strcat(atcmd_output, " Monster NoTeleport |");
 	if (map[m_id].flag.nowarp)
-		strcat(atcmd_output, msg_txt(sd,1060)); // NoWarp |
+		strcat(atcmd_output, " NoWarp |");
 	if (map[m_id].flag.nowarpto)
-		strcat(atcmd_output, msg_txt(sd,1061)); // NoWarpTo |
+		strcat(atcmd_output, " NoWarpTo |");
 	if (map[m_id].flag.noreturn)
-		strcat(atcmd_output, msg_txt(sd,1062)); // NoReturn |
+		strcat(atcmd_output, " NoReturn |");
 	if (map[m_id].flag.nogo)
-		strcat(atcmd_output, msg_txt(sd,1063)); // NoGo |
+		strcat(atcmd_output, " NoGo |"); // 
 	if (map[m_id].flag.nomemo)
-		strcat(atcmd_output, msg_txt(sd,1064)); // NoMemo |
+		strcat(atcmd_output, "  NoMemo |");
 	clif_displaymessage(fd, atcmd_output);
 
 	sprintf(atcmd_output, msg_txt(sd,1065),  // No Exp Penalty: %s | No Zeny Penalty: %s
@@ -3898,75 +3898,75 @@ ACMD_FUNC(mapinfo) {
 		}
 	}
 
-	strcpy(atcmd_output,msg_txt(sd,1071)); // Weather Flags:
+	strcpy(atcmd_output,msg_txt(sd,1049)); // Weather Flags:
 	if (map[m_id].flag.snow)
-		strcat(atcmd_output, msg_txt(sd,1072)); // Snow |
+		strcat(atcmd_output, " Snow |");
 	if (map[m_id].flag.fog)
-		strcat(atcmd_output, msg_txt(sd,1073)); // Fog |
+		strcat(atcmd_output, " Fog |");
 	if (map[m_id].flag.sakura)
-		strcat(atcmd_output, msg_txt(sd,1074)); // Sakura |
+		strcat(atcmd_output, " Sakura |");
 	if (map[m_id].flag.clouds)
-		strcat(atcmd_output, msg_txt(sd,1075)); // Clouds |
+		strcat(atcmd_output, " Clouds |");
 	if (map[m_id].flag.clouds2)
-		strcat(atcmd_output, msg_txt(sd,1076)); // Clouds2 |
+		strcat(atcmd_output, "  Clouds2 |");
 	if (map[m_id].flag.fireworks)
-		strcat(atcmd_output, msg_txt(sd,1077)); // Fireworks |
+		strcat(atcmd_output, " Fireworks |");
 	if (map[m_id].flag.leaves)
-		strcat(atcmd_output, msg_txt(sd,1078)); // Leaves |
+		strcat(atcmd_output, "  Leaves |");
 	if (map[m_id].flag.nightenabled)
-		strcat(atcmd_output, msg_txt(sd,1080)); // Displays Night |
+		strcat(atcmd_output, "  Displays Night |");
 	clif_displaymessage(fd, atcmd_output);
 
-	strcpy(atcmd_output,msg_txt(sd,1081)); // Other Flags:
+	strcpy(atcmd_output,msg_txt(sd,1050)); // Other Flags:
 	if (map[m_id].flag.nobranch)
-		strcat(atcmd_output, msg_txt(sd,1082)); // NoBranch |
+		strcat(atcmd_output, " NoBranch |");
 	if (map[m_id].flag.notrade)
-		strcat(atcmd_output, msg_txt(sd,1083)); // NoTrade |
+		strcat(atcmd_output, " NoTrade |");
 	if (map[m_id].flag.novending)
-		strcat(atcmd_output, msg_txt(sd,1084)); // NoVending |
+		strcat(atcmd_output, " NoVending |"); 
 	if (map[m_id].flag.nodrop)
-		strcat(atcmd_output, msg_txt(sd,1085)); // NoDrop |
+		strcat(atcmd_output, " NoDrop |"); 
 	if (map[m_id].flag.noskill)
-		strcat(atcmd_output, msg_txt(sd,1086)); // NoSkill |
+		strcat(atcmd_output, " NoSkill |");
 	if (map[m_id].flag.noicewall)
-		strcat(atcmd_output, msg_txt(sd,1087)); // NoIcewall |
+		strcat(atcmd_output, " NoIcewall |");
 	if (map[m_id].flag.allowks)
-		strcat(atcmd_output, msg_txt(sd,1088)); // AllowKS |
+		strcat(atcmd_output, " AllowKS |");
 	if (map[m_id].flag.reset)
-		strcat(atcmd_output, msg_txt(sd,1089)); // Reset |
+		strcat(atcmd_output, " Reset |"); 
 	clif_displaymessage(fd, atcmd_output);
 
-	strcpy(atcmd_output,msg_txt(sd,1090)); // Other Flags:
+	strcpy(atcmd_output,msg_txt(sd,1051)); // Other Flags2:
 	if (map[m_id].nocommand)
-		strcat(atcmd_output, msg_txt(sd,1091)); // NoCommand |
+		strcat(atcmd_output, " NoCommand |");
 	if (map[m_id].flag.nobaseexp)
-		strcat(atcmd_output, msg_txt(sd,1092)); // NoBaseEXP |
+		strcat(atcmd_output, " NoBaseEXP |");
 	if (map[m_id].flag.nojobexp)
-		strcat(atcmd_output, msg_txt(sd,1093)); // NoJobEXP |
+		strcat(atcmd_output, " NoJobEXP |");
 	if (map[m_id].flag.nomobloot)
-		strcat(atcmd_output, msg_txt(sd,1094)); // NoMobLoot |
+		strcat(atcmd_output, " NoMobLoot |");
 	if (map[m_id].flag.nomvploot)
-		strcat(atcmd_output, msg_txt(sd,1095)); // NoMVPLoot |
+		strcat(atcmd_output, " NoMVPLoot |");
 	if (map[m_id].flag.partylock)
-		strcat(atcmd_output, msg_txt(sd,1096)); // PartyLock |
+		strcat(atcmd_output, " PartyLock |");
 	if (map[m_id].flag.guildlock)
-		strcat(atcmd_output, msg_txt(sd,1097)); // GuildLock |
+		strcat(atcmd_output, " GuildLock |");
 	if (map[m_id].flag.loadevent)
-		strcat(atcmd_output, msg_txt(sd,1098)); // Loadevent |
+		strcat(atcmd_output, " Loadevent |");
 	if (map[m_id].flag.chmautojoin)
-		strcat(atcmd_output, msg_txt(sd,1100)); // Chmautojoin |
+		strcat(atcmd_output, " Chmautojoin |");
 	if (map[m_id].flag.nousecart)
-		strcat(atcmd_output, msg_txt(sd,1101)); // NoUsecart |
+		strcat(atcmd_output, " NoUsecart |");
 	if (map[m_id].flag.noitemconsumption)
-		strcat(atcmd_output, msg_txt(sd,1102)); // NoItemConsumption |
+		strcat(atcmd_output, " NoItemConsumption |");
 	if (map[m_id].flag.nosumstarmiracle)
-		strcat(atcmd_output, msg_txt(sd,1103)); // NoSumStarMiracle |
+		strcat(atcmd_output, " NoSumStarMiracle |");
 	if (map[m_id].flag.nomineeffect)
-		strcat(atcmd_output, msg_txt(sd,1104)); // NoMineEffect |
+		strcat(atcmd_output, " NoMineEffect |");
 	if (map[m_id].flag.nolockon)
-		strcat(atcmd_output, msg_txt(sd,1105)); // NoLockOn |
+		strcat(atcmd_output, " NoLockOn |");
 	if (map[m_id].flag.notomb)
-		strcat(atcmd_output, msg_txt(sd,1107)); // NoTomb |
+		strcat(atcmd_output, " NoTomb |");
 	clif_displaymessage(fd, atcmd_output);
 
 	switch (list) {
