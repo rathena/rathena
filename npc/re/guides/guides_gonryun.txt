@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First version, Renewal guide.
 //= 1.1 Optimized. [Euphy]
+//= 1.2 Navigation system update. [Euphy]
 //============================================================ 
 
 gonryun,163,60,4	script	Kunlun Guide#01gonryun	780,{
@@ -26,35 +27,36 @@ gonryun,163,60,4	script	Kunlun Guide#01gonryun	780,{
 	mes "I am responsible for helping you";
 	mes "with any questions you may have.";
 	mes "Please feel free to ask me anything.";
+	F_Navi("[He Yuen Zhe]");
 	while (1) {
 		next;
 		switch(select("[ Kafra Employee ]:[ Chief's Residence ]:[ Tool Dealer ]:[ Weapon Dealer ]:[ Armor Dealer ]:[ Wine Maker ]:[ Kunlun Envoy ]:Remove Marks from Mini-Map:Cancel")) {
 		case 1:
-			callsub L_Mark,"^0000FFKafra Employee";
+			callsub L_Mark, "^0000FFKafra Employee^000000";
 			viewpoint 1,159,122,0,0x0A82FF;
 			break;
 		case 2:
-			callsub L_Mark,"^006400Chief's Residence";
+			callsub L_Mark, F_Navi("Chief's Residence","gonryun,110,131","^006400");
 			viewpoint 1,110,131,1,0xAAFF00;
 			break;
 		case 3:
-			callsub L_Mark,"^D8BFD8Tool Dealer";
+			callsub L_Mark, F_Navi("Tool Dealer","gonryun,147,84","^D8BFD8");
 			viewpoint 1,147,84,2,0xD8BFD8;
 			break;
 		case 4:
-			callsub L_Mark,"^FF1493Weapon Dealer";
+			callsub L_Mark, F_Navi("Weapon Dealer","gonryun,174,101","^FF1493");
 			viewpoint 1,174,101,3,0xFF1493;
 			break;
 		case 5:
-			callsub L_Mark,"^8B4513Armor Dealer";
+			callsub L_Mark, F_Navi("Armor Dealer","gonryun,173,84","^8B4513");
 			viewpoint 1,173,84,4,0x8B4513;
 			break;
 		case 6:
-			callsub L_Mark,"^9400DWine Maker";
+			callsub L_Mark, F_Navi("Wine Maker","gonryun,213,115","^9400D3");
 			viewpoint 1,213,115,5,0x9400D3;
 			break;
 		case 7:
-			callsub L_Mark,"^00BFFFKunlun Envoy";
+			callsub L_Mark, F_Navi("Kunlun Envoy","gonryun,161,11","^00BFFF");
 			viewpoint 1,161,11,6,0x00BFFF;
 			break;
 		case 8:
@@ -78,7 +80,7 @@ gonryun,163,60,4	script	Kunlun Guide#01gonryun	780,{
 	end;
 L_Mark:
 	mes "[He Yuen Zhe]";
-	mes "The "+getarg(0)+"^000000 is";
+	mes "The "+getarg(0)+" is";
 	mes "marked on your mini-map.";
 	mes "Check your mini-map.";
 	mes "Is there anything else I can do for you?";

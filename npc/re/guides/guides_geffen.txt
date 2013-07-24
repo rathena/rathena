@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First version, Renewal guide.
 //= 1.1 Fixed and optimized. [Euphy]
+//= 1.2 Navigation system update. [Euphy]
 //============================================================ 
 
 geffen,203,116,4	script	Guide#01geffen::GuideGeffen	705,{
@@ -20,6 +21,7 @@ geffen,203,116,4	script	Guide#01geffen::GuideGeffen	705,{
 	mes "Welcome to ^8B4513Geffen^000000,";
 	mes "the City of Magic.";
 	mes "Do you need help navigating the city?";
+	F_Navi("[Geffen Guide]");
 	next;
 	while (1) {
 		switch(select("[ Main Facilities ]:[ Merchants & Helpers ]:Remove Marks from Mini-Map:Cancel")) {
@@ -29,7 +31,7 @@ geffen,203,116,4	script	Guide#01geffen::GuideGeffen	705,{
 				switch(select("[ Magic Academy ]:[ Geffen Tower ]:[ Fountain ]:[ Tool Shop ]:[ Buy & Repair Equipment ]:[ Inn ]:[ Tavern ]:[ Christopher's Forge ]:Previous Menu")) {
 				case 1:
 					mes "[Geffen Guide]";
-					mes "The ^B9062FMagic Academy^000000";
+					mes "The "+F_Navi("Magic Academy","geffen,61,180","^B9062F");
 					mes "handles all magic-related affairs,";
 					mes "including job changes.";
 					mes "Let me mark its location";
@@ -39,23 +41,24 @@ geffen,203,116,4	script	Guide#01geffen::GuideGeffen	705,{
 					next;
 					break;
 				case 2:
-					callsub L_Mark,"^0000FFGeffen Tower";
+					callsub L_Mark, F_Navi("Geffen Tower","geffen,120,114","^0000FF");
 					viewpoint 1,120,114,1,0x0000FF;
 					next;
 					break;
 				case 3:
-					callsub L_Mark,"^FF5400Fountain";
+					callsub L_Mark, F_Navi("Fountain","geffen,126,48","^FF5400");
 					viewpoint 1,126,48,2,0xFFB400;
 					next;
 					break;
 				case 4:
-					callsub L_Mark,"^006400Tool Shop";
+					callsub L_Mark, F_Navi("Tool Shop","geffen,44,86","^006400");
 					viewpoint 1,44,86,3,0xAAFF00;
 					next;
 					break;
 				case 5:
 					mes "[Geffen Guide]";
-					mes "If you'd like to ^7F3300Buy or Repair Equipment^000000";
+					mes "If you'd like to ";
+					mes F_Navi("Buy or Repair Equipment","geffen,99,140","^7F3300");
 					mes "then this is the place you'll want to visit.";
 					mes "Let me mark its location";
 					mes "on your mini-map.";
@@ -64,18 +67,18 @@ geffen,203,116,4	script	Guide#01geffen::GuideGeffen	705,{
 					next;
 					break;
 				case 6:
-					callsub L_Mark,"^800080Inn";
+					callsub L_Mark, F_Navi("Inn","geffen,172,174","^800080");
 					viewpoint 1,172,174,5,0xDA70D6;
 					next;
 					break;
 				case 7:
-					callsub L_Mark,"^B9062FTavern";
+					callsub L_Mark, F_Navi("Tavern","geffen,138,138","^B9062F");
 					viewpoint 1,138,138,6,0xFF0000;
 					next;
 					break;
 				case 8:
 					mes "[Geffen Guide]";
-					mes "^0000FFChristopher's Forge^000000 is";
+					mes F_Navi("Christopher's Forge","geffen,182,59","^0000FF")+" is";
 					mes "where you can purchase";
 					mes "Refining materials.";
 					mes "It used to be the old Blacksmith Guild.";
@@ -93,29 +96,29 @@ geffen,203,116,4	script	Guide#01geffen::GuideGeffen	705,{
 			while (.@loop) {
 				switch(select("[ Eden Teleport Officer ]:[ Kafra Employee ]:[ Pet Groomer ]:[ Chef Assistant ]:[ Dimensional Arcanist Guide ]:Previous Menu")) {
 				case 1:
-					callsub L_Mark,"^B9062FEden Teleport Officers";
+					callsub L_Mark, F_Navi("Eden Teleport Officers","geffen,132,66","^B9062F");
 					viewpoint 1,61,180,7,0xFF0000;
 					viewpoint 1,132,66,8,0xFF0000;
 					next;
 					break;
 				case 2:
-					callsub L_Mark,"^FF5400Kafra Employees";
+					callsub L_Mark, "^FF5400Kafra Employees^000000";
 					viewpoint 1,203,123,10,0xFFB400;
 					viewpoint 1,120,62,11,0xFFB400;
 					next;
 					break;
 				case 3:
-					callsub L_Mark,"^006400Pet Groomer";
+					callsub L_Mark, F_Navi("Pet Groomer","geffen,193,152","^006400");
 					viewpoint 1,193,152,12,0xAAFF00;
 					next;
 					break;
 				case 4:
-					callsub L_Mark,"^7F3300Chef Assistant";
+					callsub L_Mark, F_Navi("Chef Assistant","geffen,196,111","^7F3300");
 					viewpoint 1,196,111,13,0xD2691E;
 					next;
 					break;
 				case 5:
-					callsub L_Mark,"^800080Dimensional Arcanist Guide";
+					callsub L_Mark, F_Navi("Dimensional Arcanist Guide","geffen,140,196","^800080");
 					viewpoint 1,140,196,14,0xDA70D6;
 					next;
 					break;

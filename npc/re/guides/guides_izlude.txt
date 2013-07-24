@@ -3,82 +3,81 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
 //= [Official Conversion]
-//= Guides for the city of Izlude
+//= Guides for the city of Izlude.
 //===== Additional Comments: ================================= 
 //= 1.0 First version, Renewal guide.
 //= 1.1 Updated to match the new Izlude Map. [Masao]
 //= 1.2 Added Renewal Izlude viewpoint coordinates.
+//= 1.3 Navigation system update. [Euphy]
+//=     Optimized.
 //============================================================ 
 
--	script	Guide#01izlude::GuideIzlude	-1,{
+izlude,129,175,4	script	Guide#01izlude::GuideIzlude	105,{
 	cutin "prt_soldier",2;
 	mes "[Izlude Guide]";
 	mes "Welcome to ^8B4513Izlude^000000,";
 	mes "Prontera's satellite town.";
 	mes "Do you need help navigating the town?";
+	F_Navi("[Izlude Guide]");
 	next;
 	while (1) {
 		switch(select("[ Main Facilities ]:[ Merchants & Helpers ]:Remove Marks from Mini-Map:Cancel")) {
 		case 1:
 			set .@loop,1;
 			while (.@loop) {
-				switch(select("[ Marina ]:[ Airport ]:[ Arena ]:[ Tool Shop ]:[ Weapon & Armor Shop ]:[ Swordsman Guild ]:[ Swordsman Association ]:Previous Menu")) {
+				switch(select("[ Kelitula Academy ]:[ Marina ]:[ International Airship ]:[ Arena ]:[ Kit Shop ]:[ Swordsman Guild ]:[ Enchant Association ]:[ Forge ]:Previous Menu")) {
 				case 1:
 					mes "[Izlude Guide]";
-					mes "You can use the northeast ^B9062FMarina^000000";
+					mes "Novice adventurers should go to "+F_Navi("Kelitula Academy","iz_ac01,100,39")+" to receive more information and training!";
+					mes "Would you like to check any other locations?";
+					viewpoint 1,128,260,0,0xD2691E;
+					next;
+					break;
+				case 2:
+					mes "[Izlude Guide]";
+					mes "You can use the "+F_Navi("Marina","izlude_a,197,205","^B9062F");
 					mes "to go to ^8B4513Alberta^000000 or ^8B4513Byalan Island^000000.";
 					mes "Beware of ^8B4513Izlude Dungeon^000000";
 					mes "on Byalan Island since it is";
 					mes "filled with dreadful monsters.";
 					mes "Would you like to check any other locations?";
-					viewpoint 1,197,205,0,0xFF0000;
-					next;
-					break;
-				case 2:
-					mes "[Izlude Guide]";
-					mes "The ^0000FFInternational Airship^000000 to the southeast";
-					mes "goes to ^8B4513Juno^000000 and ^8B4513Rachel^000000.";
-					mes "Let me mark its location";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,204,75,1,0x0A82FF;
+					viewpoint 1,197,205,1,0xFF0000;
 					next;
 					break;
 				case 3:
 					mes "[Izlude Guide]";
-					mes "The ^FF5400Arena^000000 at the north";
+					mes "The "+F_Navi("International Airship","izlude,202,75","^0000FF");
+					mes "goes to ^8B4513Juno^000000 and ^8B4513Rachel^000000.";
+					mes "Let me mark its location";
+					mes "on your mini-map.";
+					mes "Would you like to check any other locations?";
+					viewpoint 1,210,73,2,0x0A82FF;
+					next;
+					break;
+				case 4:
+					mes "[Izlude Guide]";
+					mes "The "+F_Navi("Arena","izlude,213,161","^FF5400");
 					mes "is a perfect place to";
 					mes "test your combat capabilities.";
 					mes "Let me mark its location";
 					mes "on your mini-map.";
 					mes "Would you like to check any other locations?";
-					viewpoint 1,128,255,2,0xFF5400;
-					next;
-					break;
-				case 4:
-					mes "[Izlude Guide]";
-					mes "Let me mark the location of the ^006400Tool Shop^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,160,125,3,0xAAFF00;
+					viewpoint 1,213,161,3,0xFF5400;
 					next;
 					break;
 				case 5:
-					mes "[Izlude Guide]";
-					mes "Let me mark the location of the ^7F3300Weapon & Armor Shop^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,109,182,4,0xD2691E;
+					callsub L_Mark, F_Navi("Kit Shop","izlude,110,182","^006400");
+					viewpoint 1,108,179,4,0xAAFF00;
 					next;
 					break;
 				case 6:
 					mes "[Izlude Guide]";
-					mes "The Swordsman Guild is where you can ^800080change your job to Swordsman.^000000";
+					mes "The "+F_Navi("Swordsman Guild","izlude,51,172")+" is where you can ^800080change your job to Swordsman.^000000";
 					mes "Let me mark its location";
 					mes "on your mini-map.";
 					mes "Would you like to check any other locations?";
@@ -86,14 +85,16 @@
 					next;
 					break;
 				case 7:
-					mes "[Izlude Guide]";
-					mes "Let me mark the location of the ^B9062FSwordsman Association^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,212,161,6,0xFF0000;
+					callsub L_Mark, F_Navi("Enchant Association","izlude,97,125","^B9062F");
+					viewpoint 1,97,125,6,0xDA70D6;
 					next;
 					break;
 				case 8:
+					callsub L_Mark, F_Navi("Forge","izlude,153,126");
+					viewpoint 1,153,126,7,0xAAFF00;
+					next;
+					break;
+				case 9:
 					set .@loop,0;
 					break;
 				}
@@ -102,55 +103,48 @@
 		case 2:
 			set .@loop,1;
 			while (.@loop) {
-				switch(select("[ Eden Teleport Officer ]:[ Kafra Employee ]:[ Newlywed Helper ]:[ Bullet Merchant ]:[ Mercenary Guildsman ]:Previous Menu")) {
+				switch(select("[ Eden Teleport Officer ]:[ Kafra Employee ]:[ Hypnotist ]:[ Newlywed Helper ]:[ Mercenary Guildsman ]:[ Pet Groomer ]:Previous Menu")) {
 				case 1:
 					mes "[Izlude Guide]";
-					mes "The ^0000FFEden Teleport Officer^000000";
+					mes "The "+F_Navi("Eden Teleport Officer","izlude,131,148","^0000FF");
 					mes "is currently staying inside";
 					mes "the Swordsman Guild building.";
 					mes "Let me mark his location on your mini-map.";
 					mes "Would you like to check any other locations?";
-					viewpoint 1,131,148,7,0x0A82FF;
+					viewpoint 1,131,148,8,0x0A82FF;
 					next;
 					break;
 				case 2:
-					mes "[Izlude Guide]";
-					mes "Let me mark the location of the";
-					mes "^FF5400Kafra Employee^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,128,148,8,0xFF5400;
+					callsub L_Mark, F_Navi("Kafra Employee","izlude,128,148","^FF5400"),1;
+					viewpoint 1,128,148,9,0xFF5400;
 					next;
 					break;
 				case 3:
-					mes "[Izlude Guide]";
-					mes "If you'd like to go on a honeymoon to";
-					mes "^8B4513Jawaii^000000, the paradise of newlyweds,";
-					mes "please speak to the ^B9062FNewlywed Helper^000000.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,180,224,9,0xFF0000;
+					callsub L_Mark, F_Navi("Hypnotist","izlude,127,175"),1;
+					viewpoint 1,127,175,10,0x006400;
 					next;
 					break;
 				case 4:
 					mes "[Izlude Guide]";
-					mes "The ^7F3300Bullet Merchants^000000 for ^7F3300Gunslingers^000000";
-					mes "is located to the east.";
-					mes "Let me mark his location";
-					mes "on your mini-map.";
+					mes "If you'd like to go on a honeymoon to";
+					mes "^8B4513Jawaii^000000, the paradise of newlyweds,";
+					mes "please speak to the ";
+					mes F_Navi("Newlywed Helper","izlude,180,224","^B9062F")+".";
 					mes "Would you like to check any other locations?";
-					viewpoint 1,158,130,10,0xD2691E;
+					viewpoint 1,180,224,11,0xFF0000;
 					next;
 					break;
 				case 5:
-					mes "[Izlude Guide]";
-					mes "Let me mark the location of ^0000FFFencer Mercenary Manager^000000 and";
-					mes "^0000FFMercenary Goods Merchant^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,56,169,11,0xDA70D6;
+					callsub L_Mark, F_Navi("Mercenary Guildsman","izlude,47,170","^0000FF");
+					viewpoint 1,47,170,12,0xDA70D6;
 					next;
 					break;
 				case 6:
+					callsub L_Mark, F_Navi("Pet Groomer","izlude_in,72,98"),1;
+					viewpoint 1,108,179,13,0x006400;
+					next;
+					break;
+				case 7:
 					set .@loop,0;
 					break;
 				}
@@ -172,6 +166,8 @@
 			viewpoint 2,1,1,9,0xFFFF00;
 			viewpoint 2,1,1,10,0xFFFF00;
 			viewpoint 2,1,1,11,0xFFFF00;
+			viewpoint 2,1,1,12,0xFFFF00;
+			viewpoint 2,1,1,13,0xFFFF00;
 			next;
 			break;
 		case 4:
@@ -183,8 +179,17 @@
 			end;
 		}
 	}
+	end;
+L_Mark:
+	mes "[Izlude Guide]";
+	if (getarg(1,0)) {
+		mes "Let me mark the location of the";
+		mes getarg(0);
+	} else
+		mes "Let me mark the location of the "+getarg(0);
+	mes "on your mini-map.";
+	mes "Would you like to check any other locations?";
+	return;
 }
-
-izlude,129,175,4	duplicate(GuideIzlude)	Guide#02izlude	105
-izlude,133,113,4	duplicate(GuideIzlude)	Guide#03izlude	105
-izlude,120,206,4	duplicate(GuideIzlude)	Guide#04izlude	105
+izlude,133,113,4	duplicate(GuideIzlude)	Guide#02izlude	105
+//izlude,120,206,4	duplicate(GuideIzlude)	Guide#03izlude	105
