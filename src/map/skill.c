@@ -10445,6 +10445,10 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	 **/
 	case NC_NEUTRALBARRIER:
 	case NC_STEALTHFIELD:
+		if( (sc->data[SC_NEUTRALBARRIER_MASTER] && skill_id == NC_NEUTRALBARRIER) || (sc->data[SC_STEALTHFIELD_MASTER] && skill_id == NC_STEALTHFIELD) ) {
+			skill_clear_unitgroup(src);
+			return 0;
+		}
 		skill_clear_unitgroup(src); // To remove previous skills - cannot used combined
 		if( (sg = skill_unitsetting(src,skill_id,skill_lv,src->x,src->y,0)) != NULL ) {
 			sc_start2(src,src,skill_id == NC_NEUTRALBARRIER ? SC_NEUTRALBARRIER_MASTER : SC_STEALTHFIELD_MASTER,100,skill_lv,sg->group_id,skill_get_time(skill_id,skill_lv));
@@ -10461,7 +10465,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			if( md )
 			{
 				md->master_id = src->id;
-				md->special_state.ai = AI_FLORA;
+				md->special_state.ai = AI_FAW;
 				if( md->deletetimer != INVALID_TIMER )
 					delete_timer(md->deletetimer, mob_timer_delete);
 				md->deletetimer = add_timer (gettick() + skill_get_time(skill_id, skill_lv), mob_timer_delete, md->bl.id, 0);
@@ -12557,7 +12561,7 @@ int skill_unit_ondamaged (struct skill_unit *src, struct block_list *bl, int dam
 /*==========================================
  *
  *------------------------------------------*/
-static int skill_check_condition_char_sub (struct block_list *bl, va_list ap)
+int skill_check_condition_char_sub (struct block_list *bl, va_list ap)
 {
 	int *c, skill_id;
 	struct block_list *src;
@@ -15135,18 +15139,17 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 				skill_delunit(unit);
 				return 1;
 			}
-			if( !(skill_get_inf2(unit->group->skill_id)&(INF2_SONG_DANCE|INF2_TRAP)) || unit->group->skill_id == WZ_FIREPILLAR ) { //It deletes everything except songs/dances and traps
+			//It deletes everything except traps and barriers
+			if( !(skill_get_inf2(unit->group->skill_id)&(INF2_TRAP|INF2_NOLP)) || unit->group->skill_id == WZ_FIREPILLAR ) {
 				skill_delunit(unit);
 				return 1;
 			}
 			break;
 		case HW_GANBANTEIN:
 		case LG_EARTHDRIVE:
-			if( !(unit->group->state.song_dance&0x1) ) {// Don't touch song/dance.
-				skill_delunit(unit);
-				return 1;
-			}
-			break;
+			// Officially songs/dances are removed
+			skill_delunit(unit);
+			return 1;
 		case SA_VOLCANO:
 		case SA_DELUGE:
 		case SA_VIOLENTGALE:
@@ -15209,7 +15212,7 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 			break;
 	}
 
-	if (unit->group->skill_id == SA_LANDPROTECTOR && !(skill_get_inf2(skill_id)&(INF2_SONG_DANCE|INF2_TRAP))) {	//It deletes everything except songs/dances/traps
+	if (unit->group->skill_id == SA_LANDPROTECTOR && !(skill_get_inf2(skill_id)&(INF2_TRAP|INF2_NOLP))) { //It deletes everything except traps and barriers
 		(*alive) = 0;
 		return 1;
 	}
@@ -15844,7 +15847,7 @@ int skill_unit_timer_sub_onplace (struct block_list* bl, va_list ap) {
 
 	nullpo_ret(group);
 
-	if( !(skill_get_inf2(group->skill_id)&(INF2_SONG_DANCE|INF2_TRAP|INF2_NOLP)) && map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR) )
+	if( !(skill_get_inf2(group->skill_id)&(INF2_TRAP|INF2_NOLP)) && group->skill_id != NC_NEUTRALBARRIER && map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR) )
 		return 0; //AoE skills are ineffective. [Skotlex]
 
 	if( battle_check_target(&unit->bl,bl,group->target_flag) <= 0 )
@@ -17069,20 +17072,28 @@ int skill_magicdecoy(struct map_session_data *sd, int nameid) {
 	x = sd->sc.comet_x;
 	y = sd->sc.comet_y;
 	sd->sc.comet_x = sd->sc.comet_y = 0;
-	sd->menuskill_val = 0;
 
-	class_ = (nameid == 990 || nameid == 991) ? 2043 + nameid - 990 : (nameid == 992) ? 2046 : 2045;
-
+	// Item picked decides the mob class
+	switch(nameid) {
+		case 990: class_ = 2043; break;
+		case 991: class_ = 2044; break;
+		case 992: class_ = 2046; break;
+		default: class_ = 2045; break;
+	}
 
 	md =  mob_once_spawn_sub(&sd->bl, sd->bl.m, x, y, sd->status.name, class_, "", SZ_SMALL, AI_NONE);
 	if( md ) {
+		struct unit_data *ud = unit_bl2ud(&md->bl);
 		md->master_id = sd->bl.id;
-		md->special_state.ai = AI_FLORA;
+		md->special_state.ai = AI_FAW;
+		if(ud) {
+			ud->skill_id = NC_MAGICDECOY;
+			ud->skill_lv = skill;
+		}
 		if( md->deletetimer != INVALID_TIMER )
 			delete_timer(md->deletetimer, mob_timer_delete);
 		md->deletetimer = add_timer (gettick() + skill_get_time(NC_MAGICDECOY,skill), mob_timer_delete, md->bl.id, 0);
 		mob_spawn(md);
-		md->status.matk_min = md->status.matk_max = 250 + (50 * skill);
 	}
 
 	return 0;
@@ -17908,6 +17919,17 @@ int skill_disable_check(struct status_change *sc, uint16 skill_id)
 		case RA_CAMOUFLAGE:
 			if( sc->data[status_skill2sc(skill_id)] )
 				return 1;
+			break;
+
+		// These 2 skills contain a master and are not correctly pulled using skill2sc
+		case NC_NEUTRALBARRIER:
+			if( sc->data[SC_NEUTRALBARRIER_MASTER] )
+				return 1;
+			break;
+		case NC_STEALTHFIELD:
+			if( sc->data[SC_STEALTHFIELD_MASTER] )
+				return 1;
+			break;
 	}
 
 	return 0;

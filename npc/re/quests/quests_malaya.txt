@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 0.3
+//= 0.4
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -13,7 +13,3323 @@
 //= 0.1 Traders only. Adapted from Masao's conversion. [Euphy]
 //= 0.2 Added Tribe Blacksmith [DeadlySilence]
 //= 0.3 Added "Secret in the Woods" quest [DeadlySilence]
+//= 0.4 Added Cautious Village and subsequent 
+//=     quests [DeadlySilence]
 //============================================================
+
+// Cautious Village and subsequent :: malaya_hi
+//============================================================
+malaya,266,76,3	script	Rodel the Guard#malaya	570,4,4,{
+	if (MaxWeight - Weight < 1000 || checkweight(1201,1) == 0) {
+		mes "Cannot proceed with the quest. You are carrying too many items. -";
+		close;
+	}
+	if (malaya_hi == 0) {
+		mes "[Rodel the Guard]";
+		mes "Traveling at such confusing times?";
+		mes "Villagers have been feeling more threatened by evil spirits recently.";
+		mes "Villagers are scared and trembling with fear.";
+		next;
+		mes "[Rodel the Guard]";
+		mes "So... the citizens of Port Malaya will feel uncomfortable around you even though there are no hard feelings toward you.";
+		mes "Inns and stops may be closed to outsiders.";
+		next;
+		mes "[Rodel the Guard]";
+		mes "There is no definite solution to this, but you might want to meet Phong in Mumbaki first.";
+		mes "If the village leader gives his confirmation, other people might be less worried.";
+		next;
+		mes "[Rodel the Guard]";
+		mes "I will mark on the map the location of Phong in Mumbaki.";
+		mes "I welcome your visit though the times are harsh.";
+		viewpoint 1, 185, 358, 0, 0x0A82FF;
+		set malaya_hi, 1;
+		setquest 7350;
+		close;
+	} else if (malaya_hi == 1) {
+		mes "[Rodel the Guard]";
+		mes "Meet with Phong in Mumbaki first.";
+		mes "If you are proven to have a pure soul, other villagers will not avoid you.";
+		mes "If you are not sure of the location, I will mark it on your map.";
+		viewpoint 1, 185, 358, 0, 0x0A82FF;
+		close;
+	} else if (malaya_hi >= 20) {
+		if (BaseLevel < 100) {
+			mes "[Rodel the Guard]";
+			mes "How is the life here?";
+			mes "People aren't so bad are they?";
+			mes "If you were a little more skillful, there might be a job for you. Right now, you are little bit below the standard.";
+			next;
+			mes "[Rodel the Guard]";
+			mes "If you become stronger,";
+			mes "I was thinking of giving you the extermination mission that's being carried out in the city. What a shame. ";
+			close;
+		}
+		.@playtime = checkquest(7405, PLAYTIME);
+		if (.@playtime == 0) {
+			mes "[Rodel the Guard]";
+			mes "Whew, thanks to you, I have one less thing to worry about.";
+			mes "I will lose less of my things.";
+			mes "Job well done.";
+			next;
+			mes "[Rodel the Guard]";
+			mes "You can come back if you want.";
+			mes "You understand what I mean right?";
+			close;
+		} else if (.@playtime == 2) {
+			erasequest 7405;
+			mes "[Rodel the Guard]";
+			mes "Oh, about Jejeling that you hunted down before.";
+			mes "People traveling in and out of Baryo are happy about it.";
+			mes "If it's not much too much trouble, I'd like to ask for your help one more time.";
+			next;
+			mes "[Rodel the Guard]";
+			mes "You don't have to do it now, just whenever you are comfortable.";
+			mes "Come and find me when you decide.";
+			close;
+		} else {
+			.@hunting = checkquest(7404, HUNTING);
+			if (.@hunting == -1) {
+				mes "[Rodel the Guard]";
+				switch(rand(1, 6)) {
+				case 1:
+					mes "Recently, there have been a few that gained recognition for their bravery among the villagers." + $malayaNames$[0] + ", " + $malayaNames$[3] + ", " + $malayaNames$[5] + "... Isn't that amazing?";
+					break;
+				case 2:
+					mes "Yesterday, I saw someone who was carried off to the hospital after rolling down the stairs at the park. That person went by the name of " + $malayaNames$[1] + ". I wonder if that person is alright.";
+					break;
+				case 3:
+					mes "The one who contributed the most in the Jejeling hunt was " + $malayaNames$[1] + ".";
+					break;
+				case 4:
+					mes "If you are bored, how about you stand guard for me? This is a heck of a job. You have to keep standing like a statue even till the sun rises up above your head.";
+					break;
+				case 5:
+					mes "Have you been alone with a woman inside a Jeepney? Wow that was awkward...  I'm never going to get married at this rate...";
+					break;
+				case 6:
+					mes "Recently among visitors, one became a close friend to me. Do you know " + $malayaNames$[1] + "? Oh, of course you are a good friend as well.";
+					break;
+				}
+				mes "Oh yes, there is a job for you if you are not too busy. Are you interested?";
+				next;
+				mes "[Rodel the Guard]";
+				mes "We are going to organize an extensive Jejeling hunt this time.";
+				mes "Peddlers going in and out of Baryo are always complaining about Jejelings.";
+				next;
+				if (select("Join the Jejeling hunt.:Refuse.") == 2) {
+					mes "[Rodel the Guard]";
+					mes "Is that so? I'm sorry to hear that.";
+					mes "Things would be so much simpler if we had a person like you around.";
+					close;
+				}
+				mes "[Rodel the Guard]";
+				mes "You just have to hunt 20 jejelings each.";
+				mes "It would be a simple task for you.";
+				setquest 7404;
+				close;
+			} else if (.@hunting == 0) {
+				mes "[Rodel the Guard]";
+				mes "You have to get rid of 20 Jejelings.";
+				mes "20 should be enough to give those Jejelings a good scare.";
+				close;
+			} else if (.@hunting == 1) {
+				mes "[Rodel the Guard]";
+				mes "Oh, the hunt is over, but you haven't killed all the Jejelings.";
+				mes "Come again if you want another try.";
+				erasequest 7404;
+				close;
+			} else {
+				mes "[Rodel the Guard]";
+				mes "Oh, I have confirmed you got rid of 20 Jejelings.";
+				mes "Here, this is a reward for people who participated in the Jejeling hunt.";
+				next;
+				mes "[Rodel the Guard]";
+				mes "I think there will be more Jejeling hunts in the future. Please join us again next time.";
+//				if (IsPremiumPcCafe == 10)
+//					getitem 6497, 2; // Lesser_Agimat
+//				else
+					getitem 6497, 1; // Lesser_Agimat
+				getexp 200000,200000;
+				erasequest 7404;
+				setquest 7405;
+				if (rand(1))
+					$malayaNames$[1] = strcharinfo(0);
+//				SavePPL Jejellopy
+				close;
+			}
+		}
+	} else {
+		mes "[Rodel the Guard]";
+		mes "Please understand even if people look at you warily.";
+		mes "The ghost have been haunting the people around here.";
+		close;
+	}
+OnTouch:
+	emotion e_gasp;
+	end;
+
+OnInit:
+	// if there are no names set, set some default values
+	if (!getarraysize($malayaNames$)) {
+		$malayaNames$[0] = "unknown";
+		$malayaNames$[1] = "unknown";
+		$malayaNames$[2] = "unknown";
+		$malayaNames$[3] = "unknown";
+		$malayaNames$[4] = "unknown";
+		$malayaNames$[5] = "unknown";
+	}
+	end;
+}
+
+malaya,185,358,3	script	Leader Phong in Mumbaki	580,{
+	if (MaxWeight - Weight < 1000 || checkweight(1201,1) == 0) {
+		mes "- Cannot proceed with the quest. You are carrying too many items. -";
+		close;
+	}
+	if (malaya_hi < 2) {
+		mes "[Phong in Mumbaki]";
+		mes "Looks like this soul came across a big body of water.";
+		mes "Young friend.";
+		mes "The reason you found me... yes... I see.";
+		next;
+		mes "[Phong in Mumbaki]";
+		mes "You don't have to say it in words.";
+		mes "The people are overly cautious of you.";
+		mes "Rodel was probably concerned about it, so he sent you here.";
+		next;
+		if (malaya_hi == 0) {
+			mes "[Phong in Mumbaki]";
+			mes "No?";
+			mes "Well then maybe there was some kind of a Spiritual bond between us.";
+			next;
+		}
+		mes "[Phong in Mumbaki]";
+		mes "Nonetheless, good to meet you, young friend.";
+		mes "Don't blame the villagers too much for their attitudes toward you.";
+		next;
+		mes "[Phong in Mumbaki]";
+		mes "We are always surrounded by spirits.";
+		mes "We live with them, praying for peace.";
+		mes "But recently, there has been a problem.";
+		next;
+		mes "[Phong in Mumbaki]";
+		mes "For some unknown reason,";
+		mes "Spirits have been running amok, and evil sprits have been haunting the villagers.";
+		next;
+		mes "[Phong in Mumbaki]";
+		mes "This is the shadow that is cast on this beautiful town.";
+		mes "They are cautious because they don't know when the dark shadow will fall on them.";
+		mes "They visit without warning.";
+		next;
+		mes "^4d4dffPhong in Mumbaki turns his head and dark shadows appear.";
+		mes "People are in panic, everyone trembling with fear.^000000";
+		cutin "malaya_ghost01", 4;
+		next;
+		select("Step toward the shadow.:Draw weapon.");
+		mes "[Phong in Mumbaki]";
+		mes "They have followed the trace of the outsider. ";
+		mes "Don't get to close too them.";
+		mes "Your soul can get absorbed.";
+		next;
+		mes "[Phong in Mumbaki]";
+		mes "Hmm? They are responding.";
+		mes "I don't understand? They look scared as if facing a powerful soul.";
+		mes "This feeling... it can't be...";
+		cutin "malaya_ghost02", 4;
+		next;
+		mes "^4d4dffLike words of Phong in Mumbaki, spirits are responding to something, hesitating.";
+		mes "Observing their reaction, you get closer. The spirits are flustered.^000000";
+		next;
+		cutin "", 255;
+		mes "[Phong in Mumbaki]";
+		mes "Amazing. Holder of a soul so strong and pure...!";
+		mes "The dark spirits have disappeared because of your presence.";
+		next;
+		mes "[Phong in Mumbaki]";
+		mes "I think other villagers would treat you differently now...";
+		mes "Haven't we all witnessed this miracle?";
+		next;
+		mes "[Phong in Mumbaki]";
+		mes "Young friend. Your presence is welcomed anywhere.";
+		mes "The light from your pure soul will protect you from the darkness.";
+		set malaya_hi, 10;
+		if (checkquest(7350) > -1)
+			erasequest 7350;
+		close;
+	} else if (malaya_hi == 10) {
+		mes "[Phong in Mumbaki]";
+		mes "Everyone in the village witnessed how strong and pure your soul is.";
+		mes "Do not be afraid of the dark.";
+		close;
+	} else if (malaya_hi == 11) {
+		mes "[Phong in Mumbaki]";
+		mes "Is there something wrong?";
+		mes "You look disturbed.";
+		mes "Your clothes also look messed up. Was there some kind of trouble?";
+		next;
+		switch (select("Explain what happened.:There is nothing to talk about.")) {
+		case 1:
+			mes "[Phong in Mumbaki]";
+			mes "Is that so?";
+			mes "Ha ha... that is a big problem. ";
+			mes "You must've been concerned.";
+			next;
+			mes "[Phong in Mumbaki]";
+			mes "You know, we were preparing a spiritual protection for ";
+			mes "villagers who are afraid of evil spirits...";
+			mes "but preparation is not going well.";
+			next;
+			mes "[Phong in Mumbaki]";
+			mes "As a temporary solution, how about giving them what they want?";
+			mes "Just pick among the items you have that are unimportant and give them to them.";
+			next;
+			mes "[Phong in Mumbaki]";
+			mes "All they want is inner peace anyways.";
+			mes "They give meaning to little things and find peace within that behavior.";
+			next;
+			mes "[Phong in Mumbaki]";
+			mes "What is really important is the belief that you will be safe as long as you carry that item.";
+			mes "If people can stop being afraid by holding on to your old shirt button, then that button is a Spiritual Protection.";
+			next;
+			mes "^4d4dffAs Mumbaki said, giving out some items to serve as a Spiritual Protection would be a good idea.";
+			mes "What would be adequate as a Spiritual Protection..^000000";
+			next;
+			switch (select("Holy Water!:Holy magical item Blue Gemstone?!:Writing utensils or school supplies")) {
+			case 1:
+				mes "[Phong in Mumbaki]";
+				mes "The name itself suggests holiness.";
+				mes "It was blessed by the Holy Water, yes?";
+				mes "Not bad.";
+				mes "Is there another? Something more persuading would be nice.";
+				next;
+				select("Talk about Blue Gemstone.");
+				mes "[Phong in Mumbaki]";
+				mes "Aha... a stone that disappears after absorbing the curse or magical affect instead of the holder.";
+				mes "Used in holy magic?";
+				mes "Sounds good.";
+				next;
+				break;
+			case 2:
+				mes "[Phong in Mumbaki]";
+				mes "Aha... a stone that disappears after absorbing the curse or magical affect instead of the holder.";
+				mes "Used in holy magic?";
+				mes "But it does not sound so holy though.";
+				next;
+				select("Talk about the Holy Water.");
+				mes "[Phong in Mumbaki]";
+				mes "The name itself suggests holiness.";
+				mes "It was blessed by the Holy Water, yes?";
+				mes "Sounds good.";
+				next;
+				break;
+			case 3:
+				mes "[Phong in Mumbaki]";
+				mes "Hmm? It isn't too bad if you are always going to carry it around.";
+				mes "But I think something that looks more persuading would be better.";
+				next;
+				mes "[Phong in Mumbaki]";
+				mes "It would be better is there is a holy feel to it...";
+				mes "Do you have something that was blessed by your god?";
+				next;
+				select("Holy Water or Blue Gemstone?");
+				mes "[Phong in Mumbaki]";
+				mes "The name itself suggests holiness.";
+				mes "It was blessed by the Holy Water, yes?";
+				mes "Stone that protects the bearer...";
+				mes "Sounds perfect.";
+				next;
+				break;
+			}
+			mes "[Phong in Mumbaki]";
+			mes "Can you find Holy Water and Blue Gemstone that you spoke of?";
+			mes "While I'm working on the Spiritual Protection, you can give out the Holy Artifacts.";
+			next;
+			mes "[Phong in Mumbaki]";
+			mes "People's trust toward you will grow stronger if you do that.";
+			mes "They will trust and listen to you.";
+			mes "Yes, because you will become their heart's savior.";
+			next;
+			mes "^4d4dffListening to Phong in Mumbaki, you decided to give out Holy Water and Blue Gemstone to the villagers.";
+			set malaya_hi, 12;
+			erasequest 7358;
+			setquest 7351;
+			close;
+		case 2:
+			mes "[Phong in Mumbaki]";
+			mes "Is that so?";
+			mes "Tell me if anything happens.";
+			mes "For you, it'll be my pleasure to lend you a hand";
+			close;
+		}
+	} else if (malaya_hi == 12) {
+		mes "[Phong in Mumbaki]";
+		mes "Holy Water and Blue Gemstone you spoke of will function well. ";
+		mes "I hope they can set aside their fear and worries this way...";
+		close;
+	} else if (malaya_hi == 13) {
+		mes "[Phong in Mumbaki]";
+		mes "Did you give out your present to everyone?";
+		mes "By doing this, you made friends with everyone in the town.";
+		next;
+		mes "[Phong in Mumbaki]";
+		mes "I found ways to build Spiritual Protection.";
+		mes "My grandchild Imelda will create it.";
+		mes "So don't worry. You don't have to give out any more of your things.";
+		erasequest 7365;
+		set malaya_hi, 20;
+		getexp 200000, 200000;
+//		SavePPL Soul_Protection
+		close;
+	} else {
+		mes "[Phong in Mumbaki]";
+		switch(rand(1, 6)) {
+		case 1:
+			mes "There was a traveler who is as brave as you. The traveler went by the name of " + $malayaNames$[0] + ". Do you know that person?";
+			break;
+		case 2:
+			mes "There is a traveler recently that has been gaining popularity in the village. The traveler's name was " + $malayaNames$[0] + ". Outsiders seem to be very vigorous.";
+			break;
+		case 3:
+			mes "I have never in my life living as a Mumbaki seen a soul as pure and as strong as that of " + $malayaNames$[0] + "'s. Yes, even stronger and purer than yours.";
+			break;
+		case 4:
+			mes "I witnessed a traveler who flipped backward after stepping on a fruit peel. " + $malayaNames$[1] + ". He cried out 'Ouch! Somebody please help~'. We all had a good laugh.";
+			break;
+		case 5:
+			mes "Welcome! Welcome! You are always welcome around here.";
+			break;
+		case 6:
+			mes "I don't know if you are aware of this, but " + $malayaNames$[0] + " even aided Baryo. I feel good to know that there is a one more good soul around.";
+			break;
+		}
+		next;
+		switch (select("Ask for advice.:Bless flowers...")) {
+		case 1:
+			if (malaya_diwata == 2) {
+				mes "[Phong in Mumbaki]";
+				mes "Ferry at the Port?";
+				mes "So that has happened...";
+				mes "Important thing is to first find out why that child is so upset.";
+				next;
+				mes "[Phong in Mumbaki]";
+				mes "In this case, a bribe would work perfectly.";
+				mes "Flowers are always the best choice for seducing woman, right?";
+				next;
+				select("This is not a love consulting.");
+				mes "[Phong in Mumbaki]";
+				mes "I'm just saying.";
+				mes "Dead or alive, that poor soul is just a little girl.";
+				next;
+				mes "[Phong in Mumbaki]";
+				mes "Girls that age will smile even at the falling leaves.";
+				mes "Open her heart with an armful of flowers. ";
+				next;
+				mes "[Phong in Mumbaki]";
+				mes "Let's see...";
+				mes "^4d4dff3 Mystic Flowers, 3 Elegant Flowers, 3 Pretty Flowers^000000 would be enough to make a Bouquet.";
+				next;
+				mes "[Phong in Mumbaki]";
+				mes "Gather these flowers, and I'll make a Bouquet out of it and bless it.";
+				mes "Flowers can be found out side the village.";
+				set malaya_diwata, 3;
+				erasequest 7396;
+				setquest 7397;
+				close;
+			} else if (malaya_diwata == 3) {
+				if ((countitem(6509) < 3) || (countitem(6510) < 3) && (countitem(6511) < 3)) {
+					mes "[Phong in Mumbaki]";
+					mes "There are ^4d4dff3 Mystic Flowers, 3 Elegant Flowers, 3 Pretty Flowers^000000.";
+					mes "Do you understand?";
+					close;
+				}
+				mes "[Phong in Mumbaki]";
+				mes "Oh... I can smell the scent of flowers from here.";
+				mes "I'll gather these and bless them.";
+				next;
+				mes "-Phong in Mumbaki carries out a blessing ceremony after carefully tying flowers into a Bouquet.-";
+				mes "-Just by watching it, holiness overwhelms you.-";
+				next;
+				mes "[Phong in Mumbaki]";
+				mes "Isn't it a beauty?";
+				mes "Not bad for a old man huh?";
+				mes "I made so many Offering Bouquets in the past that I can make one with my eyes closed now.";
+				next;
+				mes "[Phong in Mumbaki]";
+				mes "Now, deliver this to that child.";
+				mes "I hope she opens her heart with this and becomes willing to talk to you.";
+				delitem 6509, 3; // Mysterious_Flower
+				delitem 6510, 3; // Elegant_Flower
+				delitem 6511, 3; // Beautiful_Flower
+				getitem 6506, 1; // Memorial_Bouquet
+				set malaya_diwata, 4;
+				erasequest 7397;
+				setquest 7398;
+				close;
+			} else if (malaya_diwata == 4) {
+				mes "[Phong in Mumbaki]";
+				mes "Take this Bouquet and talk to the spirit that has nested in the boat.";
+				close;
+			} else if (malaya_diwata > 5) {
+				mes "[Phong in Mumbaki]";
+				mes "It is a pity to see a misfortunate spirit... just as with that Ferry incident.";
+				mes "If you are going to offer a Bouquet for a spirit, I'm always willing to help.";
+				close;
+			} else {
+				mes "[Phong in Mumbaki]";
+				mes "There is nothing this old man can tell you.";
+				mes "Nothing can beat staying healthy, right?";
+				close;
+			}
+		case 2:
+			if (checkquest(7402) == -1) {
+				mes "[Phong in Mumbaki]";
+				mes "Who is the floral tribute for?";
+				mes "Don't tell me you're making one in advance cause you're lazy?";
+				mes "A tribute must be sincere. Don't forget that.";
+				close;
+			}
+			if (countitem(6506) > 0) {
+				mes "[Phong in Mumbaki]";
+				mes "Isn't it already made?";
+				mes "What is that in your hand?";
+				mes "Why are you standing around here? Go and give out those flowers.";
+				close;
+			}
+			if ((countitem(6509) < 3) || (countitem(6510) < 3) || (countitem(6511) < 3)) {
+				mes "[Phong in Mumbaki]";
+				mes "Going to Diwata?";
+				mes "You need Mysterious Flowers, Elegant Flowers and Beautiful Flowers, 3 of each, okay?";
+				mes "I'll make it when the flowers are ready.";
+				close;
+			}
+			mes "[Phong in Mumbaki]";
+			mes "Diwata is some woman.";
+			mes "And you going to her every day is something too.";
+			next;
+			mes "[Phong in Mumbaki]";
+			mes "Hey, here's the Bouquet.";
+			mes "Make offerings with your soul and wish for a fruitful day.";
+			delitem 6509, 3; // Mysterious_Flower
+			delitem 6510, 3; // Elegant_Flower
+			delitem 6511, 3; // Beautiful_Flower
+			getitem 6506, 1; // Memorial_Bouquet
+			close;
+		}
+	}
+}
+
+malaya,169,350,5	script	Imelda#malaya	475,{
+	if (MaxWeight - Weight < 1000 || checkweight(1201,1) == 0) {
+		mes "- Cannot proceed with the quest. You are carrying too many items. -";
+		close;
+	}
+	if (malaya_hi < 10) {
+		mes "[Imelda]";
+		mes ".... Hmm.";
+		close;
+	} else if (malaya_hi < 20) {
+		mes "[Imelda]";
+		mes "..........";
+		mes "Not bad.";
+		mes "I have my eyes on you. Let's see how you do in this town.. *chuckle*";
+		next;
+		mes "- She is a rather annoying little girl. -";
+		close;
+	} else if (malaya_hi == 20) {
+		mes "[Imelda]";
+		mes "Aren't you the hero who recently got on the villagers good side with the cheap foreign Holy Artifact?";
+		mes "What's up?";
+		next;
+		select ("You want to make a traditional Spiritual Protection?");
+		mes "[Imelda]";
+		mes "Yes. My grandfather found a way.";
+		mes "I'm going to make it.";
+		next;
+		mes "[Imelda]";
+		mes "This is my job and nobody else's.";
+		mes "Protecting traditions is my job.";
+		next;
+		switch (select("Is that so?:Good luck on your own!")) {
+		case 1:
+			if (BaseLevel < 100) {
+				mes "[Imelda]";
+				mes "Of course.";
+				mes "And to get help from someone as... weak as you is not such a good idea.";
+				next;
+				mes "[Imelda]";
+				mes "Getting the materials is not as easy as it sounds.";
+				mes "Maybe when you become stronger, yes, but not now. Never.";
+				close;
+			}
+			mes "[Imelda]";
+			mes "What then?";
+			mes "You're going to get the materials?";
+			mes "Fine I'll accept your proposal.";
+			next;
+			select ("....?!");
+			mes "[Imelda]";
+			mes "If you wanted to help me out so much, why didn't you say so from the beginning?";
+			mes "Or ask my grandfather?";
+			next;
+			mes "[Imelda]";
+			mes "If you are so enthusiastic about making a Spiritual Protection.";
+			mes "I'd have to give up, won't I?";
+			next;
+			mes "[Imelda]";
+			mes "Now, the needed materials are ^4d4dff6 Sharpened Bamboos, 6 Salt bags and 6 Silver Crosses^000000.";
+			next;
+			mes "[Imelda]";
+			mes "You'll have to manufacture the salt yourself at the north western beach.";
+			mes "You'll find the pits I've made there.";
+			next;
+			mes "[Imelda]";
+			mes "Go to Pandoi at the weapon shop for the Silver Crosses.";
+			mes "He promised to make me some.";
+			next;
+			mes "[Imelda]";
+			mes "Sharpened Bamboos you can get at Baryo or from a nearby forest.";
+			mes "You got all that?";
+			next;
+			mes "[Imelda]";
+			mes "Now's the time to prove your prowess!";
+			set malaya_hi, 21;
+			setquest 7366;
+			close;
+		case 2:
+			mes "[Imelda]";
+			mes "Indeed.";
+			mes "I will protect the village!";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Now I haven't seen any Spiritual Protections made with those!";
+			mes "Interesting~";
+			mes "I'm sure you'll do just fine~";
+			mes "Ha ha ha ha~";
+			next;
+			mes "[Imelda]";
+			mes "Stop annoying me and go away!";
+			close;
+		}
+	} else if (malaya_hi == 21) {
+		if ((countitem(6501) < 6) || (countitem(6500) < 6) || (countitem(6502) < 6)) {
+			mes "[Imelda]";
+			mes "I'll approve you as worthy if you bring all the materials for the Spiritual Protection!";
+			next;
+			mes "[Imelda]";
+			mes "Manufacture the salt at the north western beach and bamboos grow in Baryo Mahiwaga.";
+			mes "Ask Pandoi to make the Silver Crosses.";
+			mes "Don't forget to get 6 of each.";
+			close;
+		}
+		mes "[Imelda]";
+		mes "... Oh... My, you really did get them?";
+		mes "You're better than I thought.";
+		mes "That was not a compliment at all!";
+		next;
+		mes "[Imelda]";
+		mes "Now I'm going through the holy ritual to make a traditional Spiritual Protection.";
+		mes "Give them to me! And don't bother me during the process!";
+		set malaya_hi, 22;
+		delitem 6500, 6; // Sharp_Bamboo
+		delitem 6501, 6; // Salt_Bag
+		delitem 6502, 6; // Silver_Cross
+		erasequest 7366;
+		setquest 7367;
+		close;
+	} else if (malaya_hi == 22) {
+		.@playtime = checkquest(7367, PLAYTIME);
+		if (.@playtime == 0 || .@playtime == 1) {
+			mes "Imelda is in ritual with a devout aura, compared to when she streamed invectives.";
+			mes "Better not disturb her.";
+			close;
+		} else if (.@playtime == 2) {
+			mes "[Imelda]";
+			mes "Still here?";
+			mes "Of course, you want to see how much better my Spiritual Protection is compared to that cheap Holy Artifact.";
+			next;
+			mes "[Imelda]";
+			mes "Fine.";
+			mes "Now go and give these Spiritual Protections to the people!";
+			mes "You have all the rights to do so!";
+			mes "*Giggles*";
+			next;
+			mes "Took the Spiritual Protection, despite her ridiculous logic and vigor.";
+			mes "Let's give them to the villagers.";
+			set malaya_hi, 23;
+			getitem 6503, 6; // Soul_Protection
+			erasequest 7367;
+			setquest 7368;
+			setquest 7369;
+			setquest 7370;
+			setquest 7371;
+			setquest 7372;
+			setquest 7373;
+			setquest 7374;
+			close;
+		} else {
+			mes "[Imelda]";
+			mes "Don't disturb the ritual and go away.";
+			mes "Please wait while I make the Spiritual Protection.";
+			setquest 7367;
+			close;
+		}
+	} else if (malaya_hi == 23) {
+		mes "[Imelda]";
+		mes "The ones who gets the Spiritual Protections are on the list.";
+		mes "Go and give them the new Spiritual Protections";
+		next;
+		mes "[Imelda]";
+		mes "Such a kind person like yourself  will surely do it, won't you? ";
+		mes "*Smirk*";
+		close;
+	} else if (malaya_hi == 24) {
+		mes "[Imelda]";
+		mes "... You really did what I asked you?";
+		mes "You know what? I give up.";
+		mes "I thought you'd leave after getting something from this town with sweet talk...";
+		next;
+		mes "[Imelda]";
+		mes "I apologize for my rude behavior.";
+		mes "....This is something to go with the apology.";
+		next;
+		mes "[Imelda]";
+		mes "I'd be happy if you could help me, because the Spiritual Protections needs to be made every day.";
+		set malaya_hi, 25;
+		erasequest 7374;
+		erasequest 7379;
+		setquest 7375;
+//		if (IsPremiumPcCafe == 10)
+//			getitem 6497, 2; // Lesser_Agimat
+//		else
+			getitem 6497, 1; // Lesser_Agimat
+		getexp 200000,200000;
+		if (rand(1))
+			$malayaNames$[0] = strcharinfo(0);
+		close;
+	} else {
+		mes "[Imelda]";
+		mes "Hello there.";
+		mes "Did you enjoy the scenery of Malaya?";
+		mes "It's nice to have a chat with friends on a Jeepney.";
+		next;
+		switch (select("I'll help you making Spiritual Protections.:Love and Spiritual Protection for all.")) {
+		case 1:
+			if (checkquest(7380) > -1) {
+				if ((countitem(6501) < 6) || (countitem(6502) < 6) || (countitem(6500) < 6)) {
+					mes "[Imelda]";
+					mes "Materials for making a Spiritual Protection are";
+					mes "Salt Bags, Silver Crosses and Sharpened Bamboos, 6 of each.";
+					next;
+					mes "[Imelda]";
+					mes "Salt form the north western beach, Silver Crosses from Pandoi, and Sharpened Bamboos from near Baryo.";
+					close;
+				}
+				mes "[Imelda]";
+				mes "Yes, you got everything precisely.";
+				mes "Thanks for the help.";
+				next;
+				mes "[Imelda]";
+				mes "It'll be nice if you could help again tomorrow.";
+				mes "Here's something for your trouble.";
+				delitem 6500, 6; // Sharp_Bamboo
+				delitem 6501, 6; // Salt_Bag
+				delitem 6502, 6; // Silver_Cross
+				erasequest 7380;
+				setquest 7381;
+//				if (IsPremiumPcCafe == 10)
+//					getitem 6497, 2; // Lesser_Agimat
+//				else
+					getitem 6497, 1; // Lesser_Agimat
+				getexp 200000,200000;
+				close;
+			} else {
+				.@playtime = checkquest(7381, PLAYTIME);
+				if ((.@playtime == 0) || (.@playtime == 1)) {
+					mes "[Imelda]";
+					mes "I appreciate your kindness, but we have enough for today.";
+					mes "I'll ask for you when I need more materials.";
+					close;
+				} else if (.@playtime == 2) {
+					mes "[Imelda]";
+					mes "Very good timing.";
+					mes "I ran out of materials for today's Spiritual Protections.";
+					mes "Could you go for them now?";
+					erasequest 7381;
+					next;
+					switch (select("Sure.:I need some preparations.")) {
+					case 1:
+						mes "[Imelda]";
+						mes "As usual then.";
+						mes "6 Salt Bags. Silver Crosses and Sharpened Bamboos, please.";
+						setquest 7380;
+						close;
+					case 2:
+						mes "[Imelda]";
+						mes ".......I see.";
+						mes "I'll be waiting then.";
+						close;
+					}
+				} else {
+					mes "[Imelda]";
+					mes "That is great news indeed.";
+					mes "You know what you need for making Spiritual Protections?";
+					mes "Of course, it's not your first time...";
+					next;
+					mes "[Imelda]";
+					mes "I'll leave you to it then.";
+					mes "6 Salt Bags. Silver Crosses and Sharpened Bamboos, please.";
+					setquest 7380;
+					close;
+				}
+			}
+		case 2:
+			if (checkquest(7374) != -1) {
+				if (checkquest(7379) == -1) {
+					mes "[Imelda]";
+					mes "Please deliver these new Spiritual Protections to the villagers.";
+					mes "You know them, right?";
+					close;
+				}
+				mes "[Imelda]";
+				mes "They cannot rely on these Spiritual Protections forever...";
+				mes "It would be much better to have a strong mind such as yours.";
+				next;
+				mes "[Imelda]";
+				mes "Strong spirits are full of light.";
+				mes "Those of the dark cannot approach due the blinding light";
+				next;
+				mes "[Imelda]";
+				mes "I guess that's it for today.";
+				mes "Thank you very much.";
+				setquest 7375;
+				erasequest 7374;
+				erasequest 7379;
+//				if (IsPremiumPcCafe == 10)
+//					getitem 6497, 2; // Lesser_Agimat
+//				else
+					getitem 6497, 1; // Lesser_Agimat
+				getexp 200000,200000;
+				if (rand(1))
+					$malayaNames$[0] = strcharinfo(0);
+				close;
+			} else {
+				.@playtime = checkquest(7375, PLAYTIME);
+				if (.@playtime == 0 || .@playtime == 1) {
+					mes "[Imelda]";
+					mes "The Spiritual Protections given before will still be in effect";
+					mes "It's okay for now.";
+					close;
+				} else if (.@playtime == 2) {
+					mes "[Imelda]";
+					mes "I was wondering when you would drop by.";
+					mes "Could you deliver Spiritual Protections to the folks today?";
+					erasequest 7375;
+					next;
+					if (select("Of course.:Not today.") == 2) {
+						mes "[Imelda]";
+						mes "Yes.";
+						mes "Why not take a stroll in Malaya today?";
+						mes "Of course, you'll still encounter ghosts here and there.";
+						close;
+					}
+					if ((checkquest(7381) == 0) || (checkquest(7381) == 1)) {
+						mes "[Imelda]";
+						mes "Thank you very much.";
+						mes "Come back when you've given them all out.";
+						setquest 7374;
+						setquest 7368;
+						setquest 7369;
+						setquest 7370;
+						setquest 7371;
+						setquest 7372;
+						setquest 7373;
+						getitem 6503, 6; // Soul_Protection
+						close;
+					} else {
+						mes "[Imelda]";
+						mes "Thanks for your concern, but I couldn't make any because I ran out of materials.";
+						mes "Shame, is it not?";
+						mes "I do hope there's somebody willing to get them for me.";
+						close;
+					}
+				} else {
+					mes "[Imelda]";
+					mes "Are you at peace? I could feel your serenity all the way from here.";
+					mes "You want to spend that extra time for me?";
+					next;
+					mes "[Imelda]";
+					mes "Could you give out these Spiritual Protections to the villagers for me?";
+					next;
+					switch (select("Yes.:Not today.") == 2) {
+						mes "[Imelda]";
+						mes "Yes.";
+						mes "Why not take a stroll in Malaya today?";
+						mes "Of course, you'll still encounter ghosts here and there.";
+						close;
+					}
+					if ((checkquest(7381, PLAYTIME) == 0) || (checkquest(7381, PLAYTIME) == 1)) {
+						mes "[Imelda]";
+						mes "Thank you very much.";
+						mes "Come back when you've given them all out.";
+						setquest 7374;
+						setquest 7368;
+						setquest 7369;
+						setquest 7370;
+						setquest 7371;
+						setquest 7372;
+						setquest 7373;
+						getitem 6503, 6; // Soul_Protection
+						close;
+					} else {
+						mes "[Imelda]";
+						mes "Thanks for your concern, but I couldn't make any because I ran out of materials.";
+						mes "Shame, is it not?";
+						mes "I do hope there's somebody willing to get them for me.";
+						close;
+					}
+				}
+			}
+			break;
+		}
+	}
+	end;
+}
+
+malaya,181,353,5	script	Old Man Nardo#malaya	574,{
+	if (MaxWeight - Weight < 1000 || checkweight(1201,1) == 0) {
+		mes "- Cannot proceed with the quest. You are carrying too many items. -";
+		close;
+	}
+	if (malaya_hi < 10) {
+		mes "[Old Man Nardo]";
+		mes ".......";
+		mes "Not from around here, I see. I have nothing to say.";
+		close;
+	} else if (malaya_hi == 10) {
+		if (checkquest(7353) == 2) {
+			mes "[Old Man Nardo]";
+			mes "How about lending a hand for a poor old man?";
+			mes "I don't care if it's just a sleeve of your shirt, just give me something with your vigor.";
+			next;
+			mes "[Old Man Nardo]";
+			mes "You know, I've not long to go now...";
+			mes "Help me be at peace along the way.";
+			close;
+		} else {
+			mes "[Old Man Nardo]";
+			mes "Y... You!!";
+			mes "You're the young one with such strong spirit to fend off ghosts of darkness?!";
+			mes "Would it be... Possible to share some of your spirit with me?";
+			next;
+			mes "[Old Man Nardo]";
+			mes "I have trouble sleeping because of the mischievous ghosts around town, and my back hurts when it rains.";
+			next;
+			mes "[Old Man Nardo]";
+			mes "Please share that miraculous spirit of yours with me.";
+			mes "How about just a button of yours?";
+			next;
+			mes "-The troubled villagers desire your belongings because you fend off the ghosts. -";
+			setquest 7353;
+			completequest 7353;
+			if ((checkquest(7352) + checkquest(7353) + checkquest(7354) + checkquest(7355) + checkquest(7356) + checkquest(7357)) > 9) {
+				next;
+				mes "-So many have already asked you for this. Perhaps it will be better to speak with Phong in Mumbaki.-";
+				set malaya_hi, 11;
+				setquest 7358;
+			}
+			close;
+		}
+	} else if (malaya_hi == 11) {
+		mes "[" + strcharinfo(0) + "]";
+		mes "He'll rake off all my buttons if I talk to him now.";
+		mes "Must counsel with Mumbaki first!";
+		close;
+	} else if (malaya_hi == 12) {
+		if (checkquest(7360) != -1) {
+			mes "[Old Man Nardo]";
+			mes "To be honest, I do not believe that this Holy Artifact has any abilities.";
+			mes "It's just for the peace of mind.";
+			next;
+			mes "[Old Man Nardo]";
+			mes "Nevertheless, I see you differently now";
+			mes "To exclude just because someone's an outsider doesn't seem like a good idea anymore.";
+			mes "I'm sorry I ignored you.";
+			close;
+		}
+		if (!countitem(523) || !countitem(717)) {
+			mes "^4d4dffPrepare and give Blue Gemstone and Holy Water. ^000000";
+			close;
+		}
+		mes "[Old Man Nardo]";
+		mes "So, changed your mind about sharing your spirit?";
+		next;
+		select("Hand over the prepared items.");
+		mes "[Old Man Nardo]";
+		mes "Ahh... Thank you.";
+		mes "Now I can be at peace for some time...";
+		mes "...Peace is always good. Yes.";
+		next;
+		mes "- Gave Holy Water and Blue Gemstone to Old Man Nardo.-";
+		delitem 717, 1; //Blue_Gemstone
+		delitem 523, 1; //Holy_Water
+		setquest 7360;
+		completequest 7360;
+		if ((checkquest(7359) + checkquest(7360) + checkquest(7361) + checkquest(7362) + checkquest(7363) + checkquest(7364)) > 11) {
+			mes "-With the Old Man as last, enough Holy Artifacts have been given out.-";
+			set malaya_hi, 13;
+			erasequest 7351;
+			setquest 7365;
+		}
+		close;
+	} else if ((malaya_hi > 12) && (malaya_hi < 20)) {
+		mes "[Old Man Nardo]";
+		mes "To be honest, I do not believe that this Holy Artifact has any abilities.";
+		mes "It's just for the peace of mind.";
+		next;
+		mes "[Old Man Nardo]";
+		mes "When you have the time, could you help me out with something?";
+		mes "I'm fine now... I mean later.";
+		close;
+	} else {
+		mes "[Old Man Nardo]";
+		switch(rand(1, 6)) {
+		case 1:
+			mes "Do you know Capre? I hear " + $malayaNames$[1] + " travelers are helping out Capre... Anyhow...";
+			break;
+		case 2:
+			mes "There are plenty of Spiritual Protection these days. " + $malayaNames$[0] + " was keen at giving out Spiritual Protections. Is it a tradition where you come from?";
+			break;
+		case 3:
+			mes "I hear that, between merchants, " + $malayaNames$[1] + "? The name seems to pop up a lot. He seems to be talented in the business.";
+			break;
+		case 4:
+			mes "Once, I saw a traveler who slipped on a piece of fruit. 'Someone help " + $malayaNames$[1] + "~' he shouted, which gave me a good laugh.";
+			break;
+		case 5:
+			mes "Ah, you again? Thanks for the help back then.";
+			break;
+		case 6:
+			mes "I hear that " + $malayaNames$[2] + " is famous in Baryo. Why don't you try for some fame?";
+			break;
+		}
+		mes "What is it?";
+		next;
+		switch (select("Speak.:Give Spiritual Protection.:The Old Man and the Cast Iron Cauldron")) {
+		case 1:
+			mes "[Old Man Nardo]";
+			mes "Port Malaya is a beautiful city.";
+			mes "The old and new are in perfect harmony.";
+			next;
+			mes "[Old Man Nardo]";
+			mes "Of course there's the recent problem with ghosts wondering about...";
+			mes "It relieves me that you and other young people are working hard on it.";
+			mes "Thank you.";
+			close;
+		case 2:
+			if ((checkquest(7374) != -1) && (checkquest(7369) != -1)) {
+				if (!countitem(6503)) {
+					mes "^4d4dffThere's no Spiritual Protection to give to the Old Man.^000000";
+					close;
+				}
+				mes "[Old Man Nardo]";
+				mes "Is this a new Spiritual Protection made from traditional methods?";
+				mes "I am grateful that you'd replace mine with a new one.";
+				mes "I am always in your and Imelda's debt.";
+				next;
+				mes "-Delivered the Spiritual Protection to Old Man Nardo.-";
+				delitem 6503, 1; // Soul_Protection
+				erasequest 7369;
+				setquest 7383;
+				if ((checkquest(7382) + checkquest(7383) + checkquest(7384) + checkquest(7385) + checkquest(7386) + checkquest(7387)) > 5) {
+					mes "- With the Old Man as last, all Spiritual Protections have been delivered. Head back to Imelda.-";
+					if (malaya_hi == 23) {
+						set malaya_hi, 24;
+					}
+					setquest 7379;
+					erasequest 7382;
+					erasequest 7383;
+					erasequest 7384;
+					erasequest 7385;
+					erasequest 7386;
+					erasequest 7387;
+				}
+				close;
+			} else {
+				mes "[Old Man Nardo]";
+				mes "What? A new Spiritual Protection?";
+				mes "I'm okay. I still have the one you gave me before.";
+				mes "Could you give me a new one when this one wears out?";
+				close;
+			}
+			break;
+		case 3:
+			if (BaseLevel < 100) {
+				mes "[Old Man Nardo]";
+				mes "Hmm... You don't look strong enough to travel to Baryo.";
+				mes "I'm sorry but I can't let you carry the precious Cast Iron Cauldron.";
+				close;
+			}
+			if ((checkquest(7378, PLAYTIME) == 0) || (checkquest(7378, PLAYTIME) == 1)) {
+				mes "[Old Man Nardo]";
+				mes "You've delivered the Cast Iron Cauldron to Baryo, so that's enough for today.";
+				mes "No matter how strong a cauldron is, even with the toughest cast iron, it only lasts a day.";
+				next;
+				mes "[Old Man Nardo]";
+				mes "Help me out again tomorrow if you can.";
+				close;
+			} else if (checkquest(7378, PLAYTIME) == 2) {
+				mes "[Old Man Nardo]";
+				mes "Hey there!";
+				mes "So, are you well and well fed?";
+				mes "Come back again when you have the time.";
+				next;
+				mes "[Old Man Nardo]";
+				mes "It's about the Cast Iron Cauldron, but it can wait for after your current errand.";
+				erasequest 7378;
+				close;
+			 } else {
+				if (checkquest(7377) != -1) {
+					if (countitem(6503) < 5) {
+						mes "[Old Man Nardo]";
+						mes "Did you deliver the cauldron in one piece?";
+						mes "Kiko in Mumbaki should have given you a Spiritual Protection. Do you have it?";
+						mes "You must have left it somewhere. Go fetch it please.";
+						close;
+					}
+					mes "[Old Man Nardo]";
+					mes "Good. It's the Spiritual Protection promised by Kiko in Mumbaki in return.";
+					mes "I know Imelda makes them and you bring them every day, but more the Spiritual Protections, the better.";
+					next;
+					mes "[Old Man Nardo]";
+					mes "Please stop by again.";
+					mes "I always prepare the Cast Iron Cauldron needed at Baryo.";
+					delitem 6503, 5; // Soul_Protection
+					setquest 7378;
+					erasequest 7377;
+//					if (IsPremiumPcCafe == 10)
+//						getitem 6497, 2; // Lesser_Agimat
+//					else
+						getitem 6497, 1; // Lesser_Agimat
+					getexp 200000,200000;
+					if (!rand(3))
+						$malayaNames$[2] = strcharinfo(0);
+					close;
+				} else {
+					if (checkquest(7376) > -1) {
+						mes "[Old Man Nardo]";
+						mes "Go to Kiko in Mumbaki at Baryo Mahiwaga and deliver the Cast Iron Cauldron.";
+						mes "This should help against the Bakonawa troubles.";
+						close;
+					} else {
+						mes "[Old Man Nardo]";
+						mes "Yes, the Cast Iron Cauldron.";
+						mes "Go to Kiko in Mumbaki at Baryo Mahiwaga and deliver the Cast Iron Cauldron.";
+						mes "I'd like you to do it for me...";
+						next;
+						switch (select("Cast Iron Cauldron??:I'll do it.:I'm busy right now.")) {
+						case 1:
+							mes "[Old Man Nardo]";
+							mes "It's because of the Bakonawa.";
+							mes "Beat the cauldron and the surprised Bakonawa spits back out the moon.";
+							next;
+							mes "[Old Man Nardo]";
+							mes "Baryo Mahiwaga is close to where Bakonawa lives, so they are always prepared for trouble.";
+							next;
+							mes "[Old Man Nardo]";
+							mes "Enough Cast Iron Cauldrons must be prepared for beating.";
+							mes "But the forge is better here.";
+							mes "So I deliver them every day.";
+							close;
+						case 2:
+							mes "[Old Man Nardo]";
+							mes "This is the Cast Iron Cauldron. They have fine blacksmiths in Malaya.";
+							mes "Deliver this to Kiko in Mumbaki at the nearby town of Baryo Mahiwaga.";
+							setquest 7376;
+							getitem 6504, 5; // Cast_Iron_Caldron
+							close;
+						case 3:
+							mes "[Old Man Nardo]";
+							mes "Is that so.";
+							mes "I'm sorry, you must be very busy.";
+							close;
+						}
+					}
+				}
+			}
+			break;
+		}
+	}
+	end;
+}
+
+malaya,224,267,3	script	Romel#malaya	573,{
+	if (malaya_hi < 10) {
+		mes "[Romel]";
+		mes ".........";
+		mes " ";
+		mes "(He evades your gaze and ignores you.)";
+		close;
+	} else if (malaya_hi == 10) {
+		if (checkquest(7357) == 2) {
+			mes "[Romel]";
+			mes "....So cold-hearted.";
+			mes "And here we are, always trembling in anxiety...";
+			next;
+			mes "[Romel]";
+			mes "Not even allowed the peace of mind...";
+			close;
+		} else {
+			mes "[Romel]";
+			mes "Ahh....";
+			mes "... You..";
+			mes "I'm sorry I ignored you.";
+			mes "But... you must be the one they're talking about...";
+			next;
+			mes "[Romel]";
+			mes "Are you the one who fends off the ghosts?";
+			mes "If it's okay with you, can I have one of your belongings or some hair?";
+			next;
+			mes "[Romel]";
+			mes "I want to carry it... Like a charm of sort.";
+			next;
+			mes "-The troubled villagers desire your belongings because you fend off the ghosts. -";
+			setquest 7357;
+			completequest 7357;
+			if ((checkquest(7352) + checkquest(7353) + checkquest(7354) + checkquest(7355) + checkquest(7356) + checkquest(7357)) > 9) {
+				next;
+				mes "- So many have already asked you for this. Perhaps it will be better to speak with Phong in Mumbaki.-";
+				set malaya_hi, 11;
+				setquest 7358;
+			}
+			close;
+		}
+	} else if (malaya_hi == 11) {
+		mes "Romel looks in your way with a sad look.";
+		mes "He'll surely take a hair or pull a sleeve if he had his way!";
+		close;
+	} else if (malaya_hi == 12) {
+		if (checkquest(7364) != -1) {
+			mes "[Romel]";
+			mes "Frankly speaking, it's for the peace of mind.";
+			mes "With it, I could face them with more boldness.";
+			next;
+			mes "[Romel]";
+			mes "I mean, I'm relying on such items,";
+			mes "but I am braver with them.";
+			close;
+		}
+		if (!countitem(523) || !countitem(717)) {
+			mes "^4d4dffPrepare and give Blue Gemstone and Holy Water. ^000000";
+			close;
+		}
+		mes "[Romel]";
+		mes "...What is it?";
+		next;
+		select ("Hand him the prepared items");
+		mes "[Romel]";
+		mes "Oh... Thank you.";
+		mes "I can feel your spirit.";
+		mes "This will keep me safe.";
+		next;
+		mes "[Romel]";
+		mes "Hey... Could you give some for my daughter as well?";
+		next;
+		mes "- Gave Romel the prepared Holy Water and Blue Gemstone.-";
+		delitem 717, 1; //Blue_Gemstone
+		delitem 523, 1; //Holy_Water
+		setquest 7364;
+		completequest 7364;
+		if ((checkquest(7359) + checkquest(7360) + checkquest(7361) + checkquest(7362) + checkquest(7363) + checkquest(7364)) > 11) {
+			mes "-With Romel as last, I think enough Holy Artifacts have been given.-";
+			set malaya_hi, 13;
+			erasequest 7351;
+			setquest 7365;
+		}
+		close;
+	} else if (malaya_hi == 13) {
+		mes "[Romel]";
+		mes "The Holy Artifact is in good hands.";
+		mes "Same with my daughter.";
+		close;
+	} else {
+		mes "[Romel]";
+		mes "Hello there.";
+		switch(rand(1, 6)) {
+		case 1:
+			mes "Ha ha, I had a dream last night, you see, and there was " + $malayaNames$[0] + " in the dream. Ha ha... Strange indeed...";
+			break;
+		case 2:
+			mes "Sometimes, my wife makes these sounds in her sleep. " + $malayaNames$[0] + "... " + $malayaNames$[0] + "... she says. Who is it? Do you know?! Is she possessed by a ghost?";
+			break;
+		case 3:
+			mes  "It's all thanks to " + $malayaNames$[0] + " for changing the atmosphere of the house. It seems like we were saved by the Holy Artifact and Spiritual Protection.";
+			break;
+		case 4:
+			mes  "The people of the neighboring Baryo Mahiwaga are so strong. Even their children play in the forest. I can't imagine myself doing that.";
+			break;
+		case 5:
+			mes  "Without the slightest doubt, the most famous person in town is " + $malayaNames$[2] + ". Even famous in Baryo they say.";
+			break;
+		case 6:
+			mes  "Merchant Woeon says 'Our " + $malayaNames$[1] + " sir/ma'am' 'we " + $malayaNames$[1] + " sir/ma'am' during drinking. I wonder what happened between the two of them?";
+			break;
+		}
+		next;
+		if (select("Give Spiritual Protection:How are things?") == 2) {
+			mes "[Romel]";
+			mes "I am at peace these days.";
+			close;
+		}
+		if ((checkquest(7374) == -1) || (checkquest(7373) == -1)) {
+			mes "[Romel]";
+			mes "A new Spiritual Protection?";
+			mes "The one you gave me before still works fine.";
+			mes "I'm okay for now.";
+			close;
+		}
+		if (!countitem(6503)) {
+			mes "^4d4dffThere are no Spiritual Protections to give to Romel.^000000";
+			close;
+		}
+		mes "[Romel]";
+		mes "A new Spiritual Protection.";
+		mes "I was thinking this one had worn out... Thanks for coming.";
+		mes "This Spiritual Protection will also protect us.";
+		next;
+		mes "- Delivered Romel his Spiritual Protection.-";
+		delitem 6503, 1; // Soul_Protection
+		erasequest 7373;
+		setquest 7387;
+		if ((checkquest(7382) + checkquest(7383) + checkquest(7384) + checkquest(7385) + checkquest(7386) + checkquest(7387)) > 5) {
+			mes "- With Romel as last, all Spiritual Protections have been delivered. Head back to Imelda.-";
+			if (malaya_hi == 23) {
+				set malaya_hi, 24;
+			}
+			setquest 7379;
+			erasequest 7382;
+			erasequest 7383;
+			erasequest 7384;
+			erasequest 7385;
+			erasequest 7386;
+			erasequest 7387;
+		}
+		close;
+	}
+	end;
+}
+
+malaya,223,267,5	script	Talah#malaya	941,{
+	if (malaya_hi < 10) {
+		mes "[Talah]";
+		mes "..........gasp!";
+		mes " ";
+		mes "(When your eyes met with hers, she ran and hid behind her father.)";
+		close;
+	} else if (malaya_hi == 10) {
+		if (checkquest(7356) == 2) {
+			mes "[Talah]";
+			mes "Talah might be taken away tonight.";
+			mes "Scary kids might come to Talah.";
+			next;
+			mes "When Talah tugs at Romel's shirt, Romel looks at you with a sad gaze.";
+			mes "Better do something before they take a button from you...";
+			close;
+		} else {
+			mes "[Talah]";
+			mes "....I..umm... that.....";
+			mes ".........oh... Daddy....";
+			next;
+			mes "[Romel]";
+			mes "Hey, could you give my daughter a button or some hair of yours?";
+			mes "She has trouble sleeping at night .......";
+			next;
+			mes "[Romel]";
+			mes "Wouldn't she be able to sleep well if she had something from you as a lucky charm?";
+			next;
+			mes "- The troubled villagers desire your belongings because you fend off the ghosts. -";
+			setquest 7356;
+			completequest 7356;
+			if ((checkquest(7352) + checkquest(7353) + checkquest(7354) + checkquest(7355) + checkquest(7356) + checkquest(7357)) > 9) {
+				next;
+				mes "- So many have already asked you for this. Perhaps it will be better to speak with Phong in Mumbaki. -";
+				set malaya_hi, 11;
+				setquest 7358;
+			}
+			close;
+		}
+	} else if (malaya_hi == 11) {
+		mes "Talah looks from you to her father with inquisitive eyes.";
+		close;
+	} else if (malaya_hi == 12) {
+		if (checkquest(7363) != -1) {
+			mes "[Talah]";
+			mes "I dont know for sure";
+			mes "but I get a warm feel from them.";
+			mes "Daddy's braver now and that makes Talah stronger too.";
+			close;
+		}
+		if (!countitem(523) || !countitem(717)) {
+			mes "^4d4dffPrepare and give Blue Gemstone and Holy Water. ^000000";
+			close;
+		}
+		mes "[Talah]";
+		mes ".... Can I say hello?";
+		mes "Hello... there...";
+		next;
+		select("Give the prepared items.");
+		mes "[Talah]";
+		mes "Pretty blue stones...!";
+		mes "Oooooh~ They're beautiful!";
+		mes "Is this stone going to keep Talah safe?";
+		next;
+		mes "- Delivered the Holy Water and Blue Gemstone to Talah. -";
+		delitem 717, 1; //Blue_Gemstone
+		delitem 523, 1; //Holy_Water
+		setquest 7363;
+		completequest 7363;
+		if ((checkquest(7359) + checkquest(7360) + checkquest(7361) + checkquest(7362) + checkquest(7363) + checkquest(7364)) > 11) {
+			mes "-With Talah as last, I think enough Holy Artifacts have been given.-";
+			set malaya_hi, 13;
+			erasequest 7351;
+			setquest 7365;
+		}
+		close;
+	} else if (malaya_hi == 13) {
+		mes "[Talah]";
+		mes "Daddy told me to hold on to the Holy Artifact really tight.";
+		mes "So it keeps away bad ghosts...";
+		close;
+	} else {
+		mes "[Talah]";
+		mes "Hello...";
+		next;
+		if (select("Give Spiritual Protection.:Hi there?") == 2) {
+			mes "[Talah]";
+			mes "...Hey...Thank you.";
+			mes "You're keeping us safe aren't you?";
+			close;
+		}
+		if ((checkquest(7374) != -1) && (checkquest(7372) != -1)) {
+			if (!countitem(6503)) {
+				mes "^4d4dffThere is no Spiritual Protection to give to Talah.^000000";
+				close;
+			}
+			mes "[Talah]";
+			mes "Is this a new Spiritual Protection?";
+			mes "Thank you.";
+			mes "Talah can sleep well now with the Spiritual Protection.";
+			mes "Daddy likes it too.";
+			next;
+			mes "- Delivered new Spiritual Protection to Talah.-";
+			delitem 6503, 1; // Soul_Protection
+			erasequest 7372;
+			setquest 7386;
+			if ((checkquest(7382) + checkquest(7383) + checkquest(7384) + checkquest(7385) + checkquest(7386) + checkquest(7387)) > 5) {
+				mes "- With Talah as last, all Spiritual Protections have been delivered. Head back to Imelda. -";
+				if (malaya_hi == 23) {
+					set malaya_hi, 24;
+				}
+				setquest 7379;
+				erasequest 7382;
+				erasequest 7383;
+				erasequest 7384;
+				erasequest 7385;
+				erasequest 7386;
+				erasequest 7387;
+			}
+			close;
+		} else {
+			mes "[Talah]";
+			mes "Umm...";
+			mes "The one you gave before still keeps Talah safe.";
+			mes "I'm okay.";
+			close;
+		}
+	}
+	end;
+}
+
+malaya,62,274,0	script	Sand Trap#malaya	557,{
+	if (MaxWeight - Weight < 1000 || checkweight(1201,1) == 0) {
+		mes "- Cannot proceed with the quest. You are carrying too many items. -";
+		close;
+	}
+	if ((checkquest(7366) == -1) && (checkquest(7380) == -1)) {
+		mes "A device to evaporate sea water is buried in the sand...";
+		close;
+	}
+	if (countitem(6501) >= 6) {
+		mes "There's enough salt.";
+		close;
+	}
+	mes "A device to evaporate sea water is installed in the Sand Trap.";
+	next;
+	mes "Salt can be scraped off the dried leaves";
+	mes "someone scattered on the sea water.";
+	close2;
+	progressbar "0xffff00", 5;
+	disablenpc strnpcinfo(0);
+	initnpctimer;
+	getitem 6501, 1; // Salt_Bag
+	mes "[" + strcharinfo(0) + "]";
+	mes "This should be enough.";
+	close;
+
+OnTimer30000:
+	enablenpc strnpcinfo(0);
+	stopnpctimer;
+	end;
+}
+malaya,66,277,0	duplicate(Sand Trap#malaya)	Sand Trap#malaya01	557
+malaya,70,282,0	duplicate(Sand Trap#malaya)	Sand Trap#malaya02	557
+
+ma_fild01,178,206,0	script	Black Bamboo#malaya	844,4,4,{
+	if (MaxWeight - Weight < 1000 || checkweight(1201,1) == 0) {
+		mes "- Cannot proceed with the quest. You are carrying too many items. -";
+		close;
+	}
+	if ((checkquest(7366) == -1) && (checkquest(7380) == -1)) {
+		mes "There's a short and black bamboo tree.";
+		close;
+	}
+	if (countitem(6500) >= 6) {
+		mes "There's enough Sharpened Bamboos...";
+		close;
+	}
+	mes "There's bamboo here with black cane and leaves.";
+	mes "If some of it is cut off and sharpened, I think it will suffice for the Sharpened Bamboo Imelda wanted.";
+	close2;
+	progressbar "0xffff00", 3;
+	disablenpc strnpcinfo(0);
+	initnpctimer;
+	getitem 6500, 1; //Sharp_Bamboo
+	mes "[" + strcharinfo(0) + "]";
+	mes "I knew I could do this!";
+	close;
+OnTouch:
+	if ((checkquest(7366) != -1) || (checkquest(7380) != -1)) {
+		specialeffect EF_LEVEL99_4;
+	}
+	end;
+OnTimer30000:
+	enablenpc strnpcinfo(0);
+	stopnpctimer;
+	end;
+}
+ma_fild01,225,186,0	duplicate(Black Bamboo#malaya)	Black Bamboo#malaya01	844,4,4
+ma_fild01,230,244,0	duplicate(Black Bamboo#malaya)	Black Bamboo#malaya02	844,4,4
+ma_fild01,174,238,0	duplicate(Black Bamboo#malaya)	Black Bamboo#malaya03	844,4,4
+ma_fild01,180,273,0	duplicate(Black Bamboo#malaya)	Black Bamboo#malaya04	844,4,4
+ma_fild01,179,145,0	duplicate(Black Bamboo#malaya)	Black Bamboo#malaya05	844,4,4
+
+malaya,295,171,3	script	Collection Dealer Woeon	582,{
+	if (MaxWeight - Weight < 1000 || checkweight(1201,1) == 0) {
+		mes "- Cannot proceed with the quest. You are carrying too many items. -";
+		close;
+	}
+	if (malaya_hi < 10) {
+		mes "[Woeon]";
+		mes "Urghh... Urgh... I got a headache...";
+		mes "My headache must have been brought to me by you from out of town!";
+		mes "Go away. Shoo, leave!";
+		close;
+	} else if (malaya_hi == 10) {
+		if (checkquest(7355) == 2) {
+			mes "[Woeon]";
+			mes "Now, look here my friend...";
+			mes "This can all be solved by giving me a button.";
+			mes "It doesn't look so expensive either.";
+			close;
+		} else {
+			mes "[Woeon]";
+			mes "Aha! You're the one they're all talking about!";
+			mes "I was kinda rude right? Forget about it!";
+			mes "Yes, do forget...";
+			next;
+			mes "[Woeon]";
+			mes "If you're in dire need, I could get you a job around here you know..";
+			mes ".... Could you give me some of your things?";
+			next;
+			mes "[Woeon]";
+			mes "I heard the rumors about you shooing away the ghosts!";
+			mes "Can't you see my shaking hands from fear of them ghosts?";
+			mes "I'll feel much better if you could just give me a button off your sleeve...";
+			next;
+			mes "- The troubled villagers desire your belongings because you fend off the ghosts. -";
+			setquest 7355;
+			completequest 7355;
+			if ((checkquest(7352) + checkquest(7353) + checkquest(7354) + checkquest(7355) + checkquest(7356) + checkquest(7357)) > 9) {
+				next;
+				mes "- So many have already asked you for this. Perhaps it will be better to speak with Phong in Mumbaki.-";
+				set malaya_hi, 11;
+				setquest 7358;
+			}
+			close;
+		}
+	} else if (malaya_hi == 11) {
+		mes "[Woeon]";
+		mes "Sigh... Life is so tough these days.";
+		mes "Why did ghosts come along to bother me so.";
+		mes "I wish I had a lucky charm or something...";
+		next;
+		mes "[Woeon]";
+		mes "Why won't you give me one of your belongings so I could keep as a charm?";
+		mes "Come on, one sock could save a man's life, you know.";
+		mes "Cold hearted son of a...";
+		close;
+	} else if (malaya_hi == 12) {
+		if (checkquest(7362) != -1) {
+			mes "[Woeon]";
+			mes "Hmm. Look at my hands.";
+			mes "Less shaky, eh?";
+			mes "Isn't that so?";
+			close;
+		}
+		if (!countitem(523) || !countitem(717)) {
+			mes "^4d4dffPrepare and give Blue Gemstone and Holy Water. ^000000";
+			close;
+		}
+		mes "[Woeon]";
+		mes "Humph! What do you want?";
+		next;
+		select ("Give the prepared items.");
+		mes "[Woeon]";
+		mes "Oh dear... Forget about the thing back there.";
+		mes "You see, I was haunted by another ghost after you left...";
+		mes "No hard feelings..";
+		next;
+		mes "[Woeon]";
+		mes "Is this the source of your spirit?";
+		mes "It feels kinda cool!";
+		mes "Perhaps this will fend off some of them...";
+		next;
+		mes "[Woeon]";
+		mes "Anyway, thanks a lot.";
+		mes "I'll call for you first when a job opens up for you.";
+		next;
+		mes "- Gave Woeon the Holy Water and Blue Gemstone.-";
+		delitem 717, 1; //Blue_Gemstone
+		delitem 523, 1; //Holy_Water
+		setquest 7362;
+		completequest 7362;
+		if ((checkquest(7359) + checkquest(7360) + checkquest(7361) + checkquest(7362) + checkquest(7363) + checkquest(7364)) > 11) {
+			mes "-With Woeon as last, I think enough Holy Artifacts have been given.-";
+			set malaya_hi, 13;
+			erasequest 7351;
+			setquest 7365;
+		}
+		close;
+	} else if (malaya_hi == 13) {
+		mes "[Woeon]";
+		mes "Now... Let's get back to business.";
+		mes "Thanks to you, I don't see any of those darn ghosts.";
+		mes "Ha ha ha ha ha";
+		close;
+	} else {
+		mes "[Woeon]";
+		mes "Oh, hi there!";
+		next;
+		if (select("Give Spiritual Protection.:The Dealer and his Collection") == 1) {
+			if (((checkquest(7374) == 0) || (checkquest(7374) == 1)) && ((checkquest(7371) == 0) || (checkquest(7371) == 1))) {
+				if (!countitem(6503)) {
+					mes "^4d4dffThere is no Spiritual Protection to give to Woeon.^000000";
+					close;
+				}
+				mes "[Woeon]";
+				mes "Phew~ A new Spiritual Protection?";
+				mes "Is it an officially made protective charm? Imelda does some fine work.";
+				mes "I'm thankful to you as well, of course.";
+				next;
+				mes "-Delivered Spiritual Protection to Woeon.-";
+				delitem 6503, 1; // Soul_Protection
+				erasequest 7371;
+				setquest 7385;
+				if ((checkquest(7382) + checkquest(7383) + checkquest(7384) + checkquest(7385) + checkquest(7386) + checkquest(7387)) > 5) {
+					mes "-With Woeon as last, all Spiritual Protections have been delivered.-";
+					if (malaya_hi == 23) {
+						set malaya_hi, 24;
+					}
+					setquest 7379;
+					erasequest 7382;
+					erasequest 7383;
+					erasequest 7384;
+					erasequest 7385;
+					erasequest 7386;
+					erasequest 7387;
+				}
+				close;
+			} else {
+				mes "[Woeon]";
+				mes "Spiritual Protection?";
+				mes "Mine still works fine.";
+				mes "Very effective indeed.";
+				close;
+			}
+		} else {
+			if (BaseLevel < 100) {
+				mes "[Woeon]";
+				mes "Yes, I collect various by-products from monsters.";
+				mes "In fact, I'm collecting Jejellopys here...";
+				next;
+				mes "[Woeon]";
+				mes "It's too much for you.";
+				mes "Things can get pretty ugly around here, you see.";
+				mes "I'll let you have at it once you're stronger, my friend!";
+				close;
+			}
+			if ((checkquest(7392, PLAYTIME) == 0) || (checkquest(7392, PLAYTIME) == 1)) {
+				mes "[Woeon]";
+				mes "Oh, the Jejellopy collecting?";
+				mes "I have enough for today.";
+				mes "Come back again tomorrow.";
+				close;
+			} else if (checkquest(7392, PLAYTIME) == 2) {
+				mes "[Woeon]";
+				mes "Oh, yes yes.";
+				mes "You're going to collect Jejellopy today as well?";
+				mes "I know it's a difficult job... But you do it so well.";
+				erasequest 7392;
+				next;
+				if (select("I'm too busy today.:Leave it to me!") == 1) {
+					mes "[Woeon]";
+					mes "Is that so? So it is then.";
+					mes "Come stop by when you need some work.";
+					close;
+				}
+				mes "[Woeon]";
+				mes "As usual, bring me 30 Jejellopys, please.";
+				mes "You can get them from the Jejelings.";
+				setquest 7391;
+				close;
+			} else {
+				if ((checkquest(7391) == 0) || (checkquest(7391) == 1)) {
+					if (countitem(6498) < 30) {
+						mes "[Woeon]";
+						mes "Hmm? I don't think you have enough.";
+						mes "I asked you for 30 Jejellopys. Business is business I'm afraid.";
+						close;
+					}
+					mes "[Woeon]";
+					mes "Oh, you have the requested numbers?";
+					mes "I'll take them from here.";
+					mes "You have no need for them, right?";
+					next;
+					mes "[Woeon]";
+					mes "So I have all the Jejellopys...";
+					mes "Come back again!";
+					delitem 6498, countitem(6498); //Jejellopy
+					setquest 7392;
+					erasequest 7391;
+//					if (IsPremiumPcCafe == 10)
+//						getitem 6497, 2; // Lesser_Agimat
+//					else
+						getitem 6497, 1; // Lesser_Agimat
+					getexp 200000,200000;
+					set .@memo_name, rand(1,3);
+					if (!rand(3))
+						$malayaNames$[1] = strcharinfo(0);
+					close;
+				} else {
+					mes "[Woeon]";
+					mes "As you can see, I'm a Collection Dealer.";
+					mes "I trade all kinds of monster or animal by-products.";
+					next;
+					mes "[Woeon]";
+					mes "They're used as materials for manufactured goods.";
+					mes "Of course, the most preferred in Port Malaya is from the monster Jejeling..";
+					next;
+					mes "[Woeon]";
+					mes "Jejellopy can be acquired from the Jejeling.";
+					mes "Can you get me 30 Jejellopys?";
+					next;
+					if (select("Yeah, sure.:Nope.") == 2) {
+						mes "[Woeon]";
+						mes "Is that so. Such a shame.";
+						mes "Come back when you need some work.";
+						close;
+					}
+					mes "[Woeon]";
+					mes "Good, I trust you can do it.";
+					mes "Remember, 30 Jejellopys.";
+					setquest 7391;
+					close;
+				}
+			}
+		}
+	}
+	end;
+}
+
+malaya,119,217,3	script	Blacksmith Pandoi	538,{
+	if (MaxWeight - Weight < 1000 || checkweight(1201,1) == 0) {
+		mes "- Cannot proceed with the quest. You are carrying too many items. -";
+		close;
+	}
+	if (malaya_hi < 10) {
+		mes "[Pandoi]";
+		mes "...Gasp!";
+		mes "Go... Go away!";
+		close;
+	} else if (malaya_hi == 10) {
+		if (checkquest(7354) == 2) {
+			mes "[Pandoi]";
+			mes "Please..";
+			mes "Couldn't you help a guy out here, just for the sake of it?";
+			mes "Do you really think ignoring me is the best option?!";
+			next;
+			mes "[Pandoi]";
+			mes "Now look here.";
+			mes "Please give me just a peek..";
+			mes "It's just a button...";
+			close;
+		} else {
+			mes "[Pandoi]";
+			mes "Hello there!";
+			mes "I've heard of your prestige.";
+			mes "I was wondering if I could receive something to prove that I've met you in person...";
+			next;
+			mes "[Pandoi]";
+			mes "Oh... You're surprised because I'm suddenly so nice to you.";
+			mes "I heard the news you fought off the ghosts.";
+			mes "That's brilliant!";
+			next;
+			mes "[Pandoi]";
+			mes "With an item of your spirit, it would scare away the ghosts, wouldn't it?";
+			mes "Please, be generous, I beg you...";
+			next;
+			mes "-The troubled villagers desire your belongings because you fend off the ghosts. -";
+			setquest 7354;
+			completequest 7354;
+			if ((checkquest(7352) + checkquest(7353) + checkquest(7354) + checkquest(7355) + checkquest(7356) + checkquest(7357)) > 9) {
+				next;
+				mes "- So many have already asked you for this. Perhaps it will be better to speak with Phong in Mumbaki.-";
+				set malaya_hi, 11;
+				setquest 7358;
+			}
+			close;
+		}
+	} else if (malaya_hi == 11) {
+		mes "[Pandoi]";
+		mes "Phew... Life is so tough these days.";
+		mes "Why did ghosts come along to bother me so.";
+		mes "I wish I had a lucky charm or something...";
+		next;
+		mes "[Pandoi]";
+		mes "Please...";
+		mes "Couldn't you help a guy out here, just for the sake of it?";
+		mes "Do you really think ignoring me is the best option?!";
+		close;
+	} else if (malaya_hi == 12) {
+		if (checkquest(7361) != -1) {
+			mes "[Pandoi]";
+			mes "Now that I have confidence, the only thing left for me to do is charge to the hospital or field for material!";
+			mes "Bu... But, I'm too scared...";
+			close;
+		}
+		if (!countitem(523) || !countitem(717)) {
+			mes "^4d4dffPrepare and give Blue Gemstone and Holy Water. ^000000";
+			close;
+		}
+		mes "[Pandoi]";
+		mes "Wh, what, you've finally decided to help me?!";
+		mes "You're going to give Pandoi a gift of peace?!";
+		next;
+		select ("Give the prepared items.");
+		mes "[Pandoi]";
+		mes "Great! I knew you'd come back!";
+		mes "Yes... Now that I have some of your spirit, I can rest well at night.";
+		next;
+		mes "- Gave Pandoi the Holy Water and Blue Gemstone.-";
+		delitem 717, 1; //Blue_Gemstone
+		delitem 523, 1; //Holy_Water
+		setquest 7361;
+		completequest 7361;
+		if ((checkquest(7359) + checkquest(7360) + checkquest(7361) + checkquest(7362) + checkquest(7363) + checkquest(7364)) > 11) {
+			mes "-With Pandoi as last, I think I've given enough Holy Artifacts.-";
+			set malaya_hi, 13;
+			erasequest 7351;
+			setquest 7365;
+		}
+		close;
+	} else if (malaya_hi == 13) {
+		mes "[Pandoi]";
+		mes "Sil... Silver. I need silver, please.";
+		mes "I thought I could get the silver once the ghosts are gone, but I can't...";
+		close;
+	} else {
+		mes "[Pandoi]";
+		switch(rand(1, 6)) {
+		case 1:
+			mes "You know. " + $malayaNames$[1] + ". You are my hero for becoming stronger. I look up to you!";
+			break;
+		case 2:
+			mes "I've seen you, " + $malayaNames$[1] + " beating those Jejelings outside the town. The energy... I... I was so impressed!";
+			break;
+		case 3:
+			mes "You, " + $malayaNames$[0] + ", lit up my soul. It sparkles, you know. No? You don't?";
+			break;
+		case 4:
+			mes "As far as I can see, recently, " + $malayaNames$[1] + " is the most diligent person around. He's like a god of hard work.";
+			break;
+		case 5:
+			mes $malayaNames$[5] + "made a huge discovery. A dragon, they say.";
+			break;
+		case 6:
+			mes "Hello there?!";
+			break;
+		}
+		next;
+		switch (select("Give Spiritual Protection.:Silver Blade.:Silver Cross")) {
+		case 1:
+			if ((checkquest(7374) == -1) || (checkquest(7370) == -1)) {
+				mes "[Pandoi]";
+				mes "I appreciate you taking care of the expiration dates of my Spiritual Protection.";
+				mes "I think mine's good for now. ";
+				mes "When it wear's out, I'll ask you for another one!";
+				close;
+			}
+			if (!countitem(6503)) {
+				mes "^4d4dffThere is no Spiritual Protection to give to Pandoi.^000000";
+				close;
+			}
+			mes "[Pandoi]";
+			mes "Good. A new Spiritual Protection.";
+			mes "It's always good to know that you won't see those black things again!";
+			next;
+			mes "-Delivered Spiritual Protection to Pandoi.-";
+			delitem 6503, 1; // Soul_Protection
+			erasequest 7370;
+			setquest 7384;
+			if ((checkquest(7382) + checkquest(7383) + checkquest(7384) + checkquest(7385) + checkquest(7386) + checkquest(7387)) > 5) {
+				mes "-With Pandoi as last, all Spiritual Protections have been delivered.-";
+				if (malaya_hi == 23) {
+					set malaya_hi, 24;
+				}
+				setquest 7379;
+				erasequest 7382;
+				erasequest 7383;
+				erasequest 7384;
+				erasequest 7385;
+				erasequest 7386;
+				erasequest 7387;
+			}
+			close;
+		case 2:
+			if (BaseLevel < 100) {
+				mes "[Pandoi]";
+				mes "Hmm... To make a Silver Blade, you need silver.";
+				mes "I could melt Silver Bracelets to get silver.";
+				mes "Silver Bracelets can be acquired at the hospital.";
+				next;
+				mes "[Pandoi]";
+				mes "However, I don't think you can make it right now. I'm sorry, it's just too much for you!";
+				mes "If you go in there like that... You'll never make it out alive!";
+				close;
+			}
+			.@hunting = checkquest(7393, HUNTING);
+			if (.@hunting == 2) {
+				if (countitem(6508) < 10) {
+					mes "[Pandoi]";
+					mes "Where are the Silver Bracelets?";
+					mes "I know you're invincible...";
+					mes "But I must have a Silver Bracelet to make a Silver Blade.";
+					next;
+					mes "[Pandoi]";
+					mes "10 Silver Bracelets!";
+					mes "Regardless of how many of them you hinder, I need 10 Silver Bracelets!!";
+					mes "Now it is in your hands!";
+					close;
+				}
+				mes "[Pandoi]";
+				mes "Respect, all the way!";
+				mes "You fought them off and brought the Silver Bracelets as well.";
+				next;
+				mes "[Pandoi]";
+				mes "From this day on, I shall try to smelt a new silver weapon..!!";
+				mes "I will pound and beat at them until I am left with a fine silver blade in my hands...!!";
+				next;
+				mes "[Pandoi]";
+				mes "It's not much, but here's something for the troubles you went through to get the Silver Bracelets.";
+				mes "If I fail... I'll ask of you the task again!";
+				delitem 6508, 10; //Silver_Bracelet
+				setquest 7394;
+				erasequest 7393;
+//				if (IsPremiumPcCafe == 10)
+//					getitem 6497, 2; // Lesser_Agimat
+//				else
+					getitem 6497, 1; // Lesser_Agimat
+				getexp 200000,200000;
+				if (!rand(3))
+					$malayaNames$[1] = strcharinfo(0);
+				close;
+			} else if (.@hunting == 0 || .@hunting == 1) {
+				mes "[Pandoi]";
+				mes "The village hospital holds the most hideous things inside.";
+				mes "I'm not sure what exactly... Whatever's in there, I'm not willing to go near it...";
+				next;
+				mes "[Pandoi]";
+				mes "Please get rid of those rumored monsters and get those Silver Bracelets.";
+				mes "You're the only one I can trust!";
+				close;
+			} else {
+				.@playtime = checkquest(7394, PLAYTIME);
+				if (.@playtime == 0 || .@playtime == 1) {
+					mes "[Pandoi]";
+					mes "I still have some silver to smelt.";
+					mes "I'll request more if I fail again.";
+					close;
+				} else if (.@playtime == 2) {
+					erasequest 7394;
+					mes "[Pandoi]";
+					mes "Oh... what am I to do?";
+					mes "I've wasted the precious materials you brought back for me...";
+					next;
+					mes "[Pandoi]";
+					mes "Maybe I'm not supposed to be a blacksmith!";
+					mes "I'm good with crafting silver, though!";
+					next;
+					if (select("I'll get you the materials. Cheer up.:Give up. It's a lot easier when you do.") == 2) {
+						mes "[Pandoi]";
+						mes "... You're right...";
+						mes "I'll never be able to make a Silver Blade...";
+						mes "Give up... I thought you'd cheer me up.. I'm a little disappointed in you.";
+						close;
+					}
+					mes "[Pandoi]";
+					mes "I knew I could count on you!";
+					mes "I knew I could count on you!";
+					mes "10 Silver Bracelets, please.";
+					setquest 7393;
+					next;
+					mes "[Pandoi]";
+					mes "Pandoi will always smile at you~";
+					mes "*Grin*";
+					close;
+				} else {
+					mes "[Pandoi]";
+					mes "Silver Blade!";
+					mes "It's great. Wonderful! The holy blade to carve all evil with one stroke...!";
+					next;
+					mes "[Pandoi]";
+					mes "I want to be a noted blacksmith by making a Silver Blade.";
+					mes "However, I cannot get the materials.";
+					next;
+					mes "[Pandoi]";
+					mes "I heard that they wore silver bracelets as recognition at the hospital.";
+					mes "But when I got there, it was not the hospital that I used to know.";
+					next;
+					mes "[Pandoi]";
+					mes "Could you slay the horrible creepers and get me the Silver Bracelets?";
+					next;
+					if (select("Indeed!:No. Way.") == 2) {
+						mes "[Pandoi]";
+						mes "... You're right...";
+						mes "I'll never make a Silver Blade...";
+						mes "Such plain expression of disgust. You know what? I hate the idea now.";
+						close;
+					}
+					mes "[Pandoi]";
+					mes "I knew it!";
+					mes "Teach those things at the hospital some manners...";
+					mes "And bring back 10 Silver Bracelets, please.";
+					setquest 7393;
+					next;
+					mes "[Pandoi]";
+					mes "Pandoi will always smile at you~";
+					mes "*Grin*";
+					close;
+				}
+			}
+		case 3:
+			mes "[Pandoi]";
+			mes "You need Silver Crosses?";
+			mes "Pandoi will make them for you!";
+			mes "Still, I cannot create something out of the blue, so I'll be needing some silver.";
+			next;
+			mes "[Pandoi]";
+			mes "I could make one Silver Cross for ^4d4dff2 Silver Bracelets^000000 the monsters hold there...";
+			mes "If you have Silver Bracelets, I could make Silver Crosses with them.";
+			next;
+			switch(select("Make 1 Silver Cross:Make 6 Silver Crosses:Input Number:Quit.")) {
+			case 1:
+				set .@amount,1;
+			case 2:
+				if (!.@amount) set .@amount,6;
+				if (countitem(6508) < (.@amount * 2)) {
+					mes "[Pandoi]";
+					mes "You need at least " + (.@amount * 2) + " Silver Bracelets to make " + .@amount + " Silver " + ((.@amount == 1) ? "Cross" : "Crosses") + ".";
+					close;
+				}
+				set .@time,5;
+				break;
+			case 3:
+				mes "[Pandoi]";
+				mes "How many Silver Crosses do you need?";
+				mes "I can make up to 50 at a time.";
+				next;
+				input .@amount;
+				if (.@amount == 0) {
+					mes "[Pandoi]";
+					mes "Don't need Silver Crosses?";
+					mes "Well, I can take a rest then. Ha ha ha ha~";
+					close;
+				} else if (.@amount > 50) {
+					mes "[Pandoi]";
+					mes "A maximum of 50 at a time!";
+					close;
+				}
+				if (countitem(6508) < (2 * .@amount)) {
+					mes "[Pandoi]";
+					mes "To make " + .@amount + " Silver " + ((.@amount == 1) ? "Cross" : "Crosses") + ", I need at least " + (2 * .@amount) + " Silver Bracelets.";
+					close;
+				}
+				set .@time,15;
+				break;
+			case 4:
+				mes "[Pandoi]";
+				mes "I'll be here if you need me!";
+				close;
+			}
+			mes "[Pandoi]";
+			mes "It'll take just a second.";
+			mes "Pandoi can do it in a jiffy!";
+			close2;
+			progressbar "0xffff00", .@time;
+			delitem 6508, .@amount * 2; //Silver_Bracelet
+			getitem 6502, .@amount; // Silver_Cross
+			mes "[Pandoi]";
+			mes "Look at this!";
+			mes "Very nice indeed.";
+			mes "I should've been a craftsman, not a blacksmith!";
+			close;
+		}
+	}
+	end;
+}
+
+malaya,326,68,2	script	Pedro the Sailor	100,{
+	if (MaxWeight - Weight < 1000 || checkweight(1201,1) == 0) {
+		mes "- Cannot proceed with the quest. You are carrying too many items. -";
+		close;
+	}
+	if (malaya_hi < 10) {
+		mes "[Pedro the Sailor]";
+		mes "Oh... This ship's not in service.";
+		mes "Or rather, it can't set sail. *Snigger*";
+		mes "I'm seeing ghosts. I think it's my time to die.";
+		close;
+	} else if (malaya_hi == 10) {
+		if (checkquest(7352) == 2) {
+			mes "- Pedro the Sailor seems to have given up, but he can't take his gaze off of me.-";
+			close;
+		}
+		mes "[Pedro the Sailor]";
+		mes "Oh, you're th... The one who fends off ghosts at the wave of a hand?!";
+		mes "Could you stay for a bit and hear me out?!";
+		next;
+		if (select("Sorry.:Sure.") == 1) {
+			mes "[Pedro the Sailor]";
+			mes "Oh, a solid denial.";
+			mes "You just impaled my last glimpse of hope.";
+			mes "Maybe I wasn't persuasive enough...";
+			close;
+		}
+		mes "[Pedro the Sailor]";
+		mes "Straight to the point, this town is a den of ghosts!";
+		mes "Sigh... I've been a sailor for quite a while and went to a lot of places, but this I never experienced before.";
+		next;
+		mes "[Pedro the Sailor]";
+		mes "You see that ship there?";
+		mes "It's a small ferry, but it also stopped service because of these darn ghosts!";
+		next;
+		mes "[Pedro the Sailor]";
+		mes "It looks okay from the outside, but it's full of ghost, I tell ya.";
+		mes "But the way I heard it, they're afraid of you, right?";
+		next;
+		select ("Oh no, you too...:Not my buttons!");
+		mes "[Pedro the Sailor]";
+		mes "I see many have already asked you for some of your stuff for charms, huh.";
+		mes "Can I budge in that line too?";
+		next;
+		mes "[Pedro the Sailor]";
+		mes "I need to have some sincere conversations with that ghost over there.";
+		mes "But the spirit is too strong for me to approach.";
+		next;
+		mes "[Pedro the Sailor]";
+		mes "...........That was a lame story.";
+		mes "And it's not easy to give away your stuff to someone else.";
+		next;
+		mes "- Pedro the Sailor seems to have given up, but he can't take his gaze off of me.-";
+		setquest 7352;
+		completequest 7352;
+		if ((checkquest(7352) + checkquest(7353) + checkquest(7354) + checkquest(7355) + checkquest(7356) + checkquest(7357)) > 9) {
+			next;
+			mes "- So many have already asked you for this. Perhaps it will be better to speak with Phong in Mumbaki. -";
+			set malaya_hi, 11;
+			setquest 7358;
+		}
+		close;
+	} else if (malaya_hi == 11) {
+		mes "[Pedro the Sailor]";
+		mes "Sigh...";
+		mes "This is so awkward.";
+		close;
+	} else if (malaya_hi == 12) {
+		if (checkquest(7359) != -1) {
+			mes "[Pedro the Sailor]";
+			mes "Anyway, now that I have what they hate...";
+			mes "Now's the time to charge into my ship...!";
+			close;
+		}
+		if (!countitem(523) || !countitem(717)) {
+			mes "^4d4dffPrepare and give Blue Gemstone and Holy Water.^000000";
+			close;
+		}
+		mes "[Pedro the Sailor]";
+		mes "What? I can sense something refreshing in your hands. What is it?";
+		next;
+		mes "[Pedro the Sailor]";
+		mes "You're giving it to me?";
+		mes "Ghosts will hate it?";
+		mes "That's wonderful news!";
+		next;
+		mes "[Pedro the Sailor]";
+		mes "Pedro, at your service!";
+		mes "After you're finished with the ghosts here, I'll take on my ship to the end of the world!";
+		next;
+		mes "- Gave Pedro the Sailor the Holy Water and Blue Gemstone. -";
+		delitem 717, 1; //Blue_Gemstone
+		delitem 523, 1; //Holy_Water
+		setquest 7359;
+		completequest 7359;
+		if ((checkquest(7359) + checkquest(7360) + checkquest(7361) + checkquest(7362) + checkquest(7363) + checkquest(7364)) > 11) {
+			mes "-With Pedro the Sailor as last, I think I gave enough Holy Artifacts.-";
+			set malaya_hi, 13;
+			erasequest 7351;
+			setquest 7365;
+		}
+		close;
+	} else if (malaya_hi == 13) {
+		mes "[Pedro the Sailor]";
+		mes "Anyway, now that I have what they hate...";
+		mes "Now's the time to charge into my ship...!";
+		next;
+		mes "-Pedro the Sailor looks determined.-";
+		close;
+	} else {
+		mes "[Pedro the Sailor]";
+		mes "Whoa... Did you see that?";
+		mes "Those black souls just came up and disappeared.";
+		mes "Well, living the dream, eh?";
+		next;
+		if (select("Give Spiritual Protection.:About the Ferry Ride") == 1) {
+			if ((checkquest(7374) == -1) || (checkquest(7368) == -1)) {
+				mes "[Pedro the Sailor]";
+				mes "The Spiritual Protection you gave me before works fine.";
+				mes "I'm good for now.";
+				mes "It's still up for the fight!";
+				close;
+			}
+			if (!countitem(6503)) {
+				mes "^4d4dffThere is no Spiritual Protection to give to Pedro the Sailor.^000000";
+				close;
+			}
+			mes "[Pedro the Sailor]";
+			mes "A newly made Spiritual Protection.";
+			mes "Alright. I'll go at them with this one today.";
+			next;
+			mes "-Delivered the Spiritual Protection to Pedro the Sailor.-";
+			delitem 6503, 1; // Soul_Protection
+			erasequest 7368;
+			setquest 7382;
+			if ((checkquest(7382) + checkquest(7383) + checkquest(7384) + checkquest(7385) + checkquest(7386) + checkquest(7387)) > 5) {
+				mes "-With Pedro the Sailor as last, all Spiritual Protections have been delivered.-";
+				if (malaya_hi == 23) {
+					set malaya_hi, 24;
+				}
+				setquest 7379;
+				erasequest 7382;
+				erasequest 7383;
+				erasequest 7384;
+				erasequest 7385;
+				erasequest 7386;
+				erasequest 7387;
+			}
+			close;
+		}
+		if (BaseLevel < 100) {
+			mes "[Pedro the Sailor]";
+			mes "Hmm... Don't you remember me talking about ghosts?";
+			mes "The Ferry is full of ghosts.";
+			mes "Wait, was it one or many?";
+			next;
+			mes "[Pedro the Sailor]";
+			mes "Whatever. For you and your current condition, it's out of the question.";
+			mes "Yes. You can't do it. You'll be dragged out in a body bag.";
+			next;
+			mes "[Pedro the Sailor]";
+			mes "Now I'm not going to stand here and wait for that to happen. No way.";
+			close;
+		}
+		if (malaya_diwata == 0) {
+			mes "[Pedro the Sailor]";
+			mes "I'm sorry, but didn't I say something about ghosts over there?";
+			mes "It can't set sail because of that.";
+			next;
+			mes "[Pedro the Sailor]";
+			mes "So what's this whole ghost story about?";
+			mes "Hmmm..........";
+			mes "It's a long story...";
+			next;
+			if (select("I'm listening.:Maybe later.") == 2) {
+				mes "[Pedro the Sailor]";
+				mes "I knew it.";
+				mes "Though, it's not such a boring story.";
+				mes "After all, it is a ghost story.";
+				close;
+			}
+			mes "[Pedro the Sailor]";
+			mes "The story goes back to when I first made port here.";
+			mes "It was a nerve racking first time as a liner manager.";
+			next;
+			mes "[Pedro the Sailor]";
+			mes "I was ready to disembark when I saw something I simply could not believe.";
+			mes "Black haze was swarming to the port from all over town.";
+			next;
+			mes "[Pedro the Sailor]";
+			mes "At first, I thought it was just a very thick smog.";
+			mes "As the days went by, it became clear as to what it was.";
+			mes "It was a swarm of souls.";
+			next;
+			mes "[Pedro the Sailor]";
+			mes "A very unpleasant group of souls indeed.";
+			mes "Some were wailing some horrible cries around the Ferry about to set sail...";
+			next;
+			mes "[Pedro the Sailor]";
+			mes "After that incident, that ship stayed on that spot until this day.";
+			mes "Why? Because they took over the ship! It's haunted!";
+			next;
+			mes "[Pedro the Sailor]";
+			mes "If you don't believe me, see for yourself.";
+			mes "Then you'll believe me.";
+			set malaya_diwata, 1;
+			setquest 7395;
+			close;
+		} else if (malaya_diwata == 1) {
+			mes "[Pedro the Sailor]";
+			mes "If you want to know, go and see for yourself and get on it.";
+			close;
+		} else if (malaya_diwata == 2) {
+			mes "[Pedro the Sailor]";
+			mes "Soul of a Little Girl?";
+			mes "What about all them bullying ones?";
+			mes "They came and went?";
+			next;
+			mes "[Pedro the Sailor]";
+			mes "I don't understand.";
+			mes "Maybe the Leader Mumbaki will know what to do.";
+			close;
+		} else if (malaya_diwata == 3) {
+			mes "[Pedro the Sailor]";
+			mes "Hmm... A floral tribute to soothe the soul....";
+			mes "You want to hear its story after it calms down?";
+			mes "Well... Good luck.";
+			next;
+			mes "[Pedro the Sailor]";
+			mes "It can't be helped for the Ferry to set sail again.";
+			mes "I can't go near it because of those mean ones.";
+			next;
+			mes "[Pedro the Sailor]";
+			mes "Now I'm asking you to do this not because I can't be bothered,";
+			mes "but because I simply can't do it myself.";
+			close;
+		} else if (malaya_diwata == 4) {
+			mes "[Pedro the Sailor]";
+			mes "Did Mumbaki bless the flower?";
+			mes "I hope this works...";
+			mes "I wish you all the luck!!";
+			next;
+			mes "[Pedro the Sailor]";
+			mes "I hope you can negotiate with success!";
+			mes "I'll take care of those rude ones outside the ship the best I can.";
+			close;
+		} else if (malaya_diwata == 5) {
+			mes "[Pedro the Sailor]";
+			mes "I see.";
+			mes "Perhaps the Ferry can move again...";
+			mes "Thank you for all you've done for us.";
+			next;
+			mes "[Pedro the Sailor]";
+			mes "I'd better get ready to set sail then.";
+			mes "It's not much, but this is for you.";
+			mes "If we can get back in business, I'll take you to Izlude for just 1000z.";
+			set malaya_diwata, 6;
+			erasequest 7399;
+			setquest 7401;
+//			if (IsPremiumPcCafe == 10)
+//				getitem 6497, 2; // Lesser_Agimat
+//			else
+				getitem 6497, 1; // Lesser_Agimat
+			getexp 200000,200000;
+			if (!rand(3))
+				$malayaNames$[0] = strcharinfo(0);
+			close;
+		} else {
+			.@playtime = checkquest(7401, PLAYTIME);
+			if (.@playtime == 0 || .@playtime == 1) {
+				mes "[Pedro the Sailor]";
+				mes "If you want to go to Alberta, use the big ship over there.";
+				mes "This little one goes to Izlude.";
+				mes "That will be 1000z.";
+				next;
+				if (select("Use.:That's a rip off!") == 2) {
+					mes "[Pedro the Sailor]";
+					mes "What?!";
+					mes "How much do you pay for the Alberta Liner to get here!?";
+					mes "Call this a rip off... You think I'm doing charity?";
+					close;
+				}
+				if (Zeny < 1000) {
+					mes "[Pedro the Sailor]";
+					mes "The price is 1000 zeny.";
+					mes "I can't help you there~";
+					close;
+				}
+				mes "[Pedro the Sailor]";
+				mes "Thank you~";
+				mes "Let's go before the ghosts come back!";
+				set Zeny, Zeny - 1000;
+				close2;
+				warp "izlude",195,180;
+				end;
+			} else if (.@playtime == 2) {
+				erasequest 7401;
+				goto L_SetQuest;
+			} else {
+				if (checkquest(7403) == -1) {
+					if (checkquest(7402) == -1) {
+						goto L_SetQuest;
+					}
+					mes "[Pedro the Sailor]";
+					mes "You know what to do.";
+					mes "Gather the flowers and take it to Mumbaki to get an Offering Bouquet made.";
+					next;
+					mes "[Pedro the Sailor]";
+					mes "Give the Bouquet to Miss Diwata to cheer her up.";
+					mes "....Thank you.";
+					close;
+				}
+				mes "[Pedro the Sailor]";
+				mes "Diwata is calm!";
+				mes "I can even feel the difference out here.";
+				mes "I am always in your debt.";
+				next;
+				mes "[Pedro the Sailor]";
+				mes "You know what? Why don't you do this on a more regular basis?";
+				mes "I think you kind of like doing it.";
+				setquest 7401;
+				erasequest 7403;
+//				if (IsPremiumPcCafe == 10)
+//					getitem 6497, 2; // Lesser_Agimat
+//				else
+					getitem 6497, 1; // Lesser_Agimat
+				getexp 200000,200000;
+				if (!rand(3))
+					$malayaNames$[0] = strcharinfo(0);
+				close;
+			}
+		}
+	}
+	end;
+
+L_SetQuest:
+	mes "[Pedro the Sailor]";
+	mes "Ah, the thing is...";
+	mes "We can't go right now..";
+	mes "You see, the ghosts are back...";
+	mes "I'm fed up with nuisance.";
+	next;
+	mes "[Pedro the Sailor]";
+	mes "I mean... Miss Diwata... Isn't feeling very well and, even with the Spiritual Protection";
+	mes "a normal person can't stand it.";
+	next;
+	if (select("I see. Take care then.:How about a Floral Tribute?") == 1) {
+		mes "[Pedro the Sailor]";
+		mes "I'm glad you understand.";
+		mes "Sigh...";
+		close;
+	}
+	mes "[Pedro the Sailor]";
+	mes "Hmmm. That would be nice.";
+	mes "If she can be soothed with flowers...!";
+	mes "Good luck.";
+	setquest 7402;
+	close;
+}
+
+ma_in01,125,107,3	script	Ghost Diwata	1761,4,4,{
+	end;
+OnTouch:
+	if (malaya_diwata == 0) {
+		cutin "malaya_diwata01", 2;
+		mes "- A creepy Little Girl is standing.";
+		mes "As our eyes meet, a chill runs down my spine with goose bumps all over. -";
+		next;
+		mes "[Diwata]";
+		mes "Are you here to bully Diwata too?";
+		mes "I won't have it!";
+		next;
+		cutin "", 255;
+		mes "-I was thrown out after the Little Girl's low creepy voice and flash from her eyes.-";
+		close;
+		warp "malaya", 324, 66;
+		end;
+	} else if (malaya_diwata == 1) {
+		cutin "malaya_diwata01", 2;
+		mes "- A creepy Little Girl is standing.";
+		mes "As our eyes meet, a chill runs down my spine with goose bumps all over. -";
+		next;
+		mes "[Diwata]";
+		mes "Are you here to bully Diwata too?";
+		mes "I won't have it!";
+		next;
+		select ("Wait! I just want to talk!");
+		mes "[Diwata]";
+		mes "Then who are they behind you?";
+		mes "You're one of them!";
+		next;
+		cutin "malaya_ghost01", 4;
+		mes "- Familiar souls are approaching Diwata. -";
+		next;
+		if (select("It's a misunderstanding!:You're from that..!") == 2) {
+			cutin "malaya_ghost02", 4;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Just as I thought! You're afraid of me?!";
+			mes "Stand aside!";
+			mes "I need to talk to her.";
+			next;
+			cutin "malaya_diwata01", 2;
+			mes "[Diwata]";
+			mes "I don't know why they're backing away...";
+			mes "You get out of my sight too!";
+			next;
+			cutin "", 255;
+			mes "-I was thrown out after the Little Girl's annoyed cry and flash from her eyes.-";
+			set malaya_diwata, 2;
+			setquest 7396;
+			erasequest 7395;
+			close2;
+			warp "malaya", 324, 66;
+			end;
+		}
+		cutin "malaya_diwata01",2;
+		mes "[Diwata]";
+		mes "Enough!";
+		next;
+		cutin "", 255;
+		mes "-I was thrown out after the Little Girl's resolute cry and flash from her eyes.-";
+		set malaya_diwata, 2;
+		setquest 7396;
+		erasequest 7395;
+		close2;
+		warp "malaya", 324, 66;
+		end;
+	} else if ((malaya_diwata == 2) || (malaya_diwata == 3)) {
+		cutin "malaya_diwata01", 2;
+		mes "[Diwata]";
+		mes "You crawled back in?";
+		mes "Get out-!!!!!";
+		next;
+		cutin "", 255;
+		mes "-I was thrown out after the Little Girl's screeching cry and flash from her eyes.-";
+		close;
+		warp "malaya", 324, 66;
+		end;
+	} else if (malaya_diwata == 4) {
+		if (!countitem(6506)) {
+			cutin "malaya_diwata01", 2;
+			mes "- The soul of Little Girl Diwata is looking at me fiercely.";
+			mes "No Offering Bouquet...!!!";
+			next;
+			cutin "", 255;
+			mes "-I was thrown out with a remote look from her.-";
+			close;
+			warp "malaya", 324, 66;
+			end;
+		}
+		mes "- The soul of Little Girl Diwata is looking at me fiercely. -";
+		mes "- The Offering Bouquet... -";
+		cutin "malaya_diwata01", 2;
+		next;
+		if (select("Throw it to the Little Girl.:Slide it across on the floor.") == 1) {
+			mes "- I threw the bouquet before she could toss me out, and she catches in surprise...";
+			mes "She won't toss me... far, now that she has the flower.-";
+		} else {
+			mes "- I slid the flower across the floor to her. She looks puzzled. -";
+		}
+		next;
+		mes "[Diwata]";
+		mes "What is the meaning of this?";
+		mes "You're not an enemy?";
+		next;
+		mes "[Diwata]";
+		mes "What? You're an outsider too?";
+		mes "Ha, so live ones are allowed and I'm not?";
+		next;
+		mes "[Diwata]";
+		mes "Now there's the stereotype of countryside people over outsiders.";
+		mes "I am so annoyed. I feel like wiping them off the map.";
+		next;
+		mes "[Diwata]";
+		mes "What? I shouldn't?";
+		mes "Why should I not?";
+		mes "I'm stalling the ship?";
+		next;
+		mes "[Diwata]";
+		mes "I was going to hear you out because of the flowers";
+		mes "but you're telling me lies?!";
+		next;
+		mes "[Diwata]";
+		mes "So you're saying that I brought these hillbillies on this ship";
+		mes "and that fighting with them is causing the stall?";
+		next;
+		mes "[Diwata]";
+		mes "... Hmm... Humph. It wasn't what I was intending to do.";
+		mes "But they're the ones who're getting on my nerves!";
+		next;
+		mes "[Diwata]";
+		mes "... I can't get off anyway.";
+		mes "Which means that I could feel bad again. Got it?";
+		next;
+		mes "[Diwata]";
+		mes "... I'll try to keep it in today.";
+		mes "It's not because I like the flowers or because I like having company!";
+		mes "It's because I was treated the same way as those cheap ghosts!";
+		next;
+		mes "[Diwata]";
+		mes "Now if you'll excuse me.";
+		mes "And I'll be clear. I'm not going to hold my temper for so long.";
+		next;
+		mes "[Diwata]";
+		mes "Now, g... go away!";
+		set malaya_diwata, 5;
+		delitem 6506, 1; // Memorial_Boquet
+		erasequest 7398;
+		setquest 7399;
+		close;
+	} else if (malaya_diwata == 5) {
+		cutin "malaya_diwata02", 2;
+		mes "[Diwata]";
+		mes "I promise I'll be a good little girl if those hillbillies leave me alone.";
+		mes "If they bother me again, however, I won't be.";
+		close;
+	} else {
+		if (checkquest(7402) == -1) {
+			if (checkquest(7403) == -1) {
+				if ((checkquest(7401, PLAYTIME) == 0) || (checkquest(7401, PLAYTIME) == 1)) {
+					cutin "malaya_diwata02", 2;
+					mes "[Diwata]";
+					mes "Surprisingly enough, I'm doing fine.";
+					mes "Of course I'm tense for when they return,";
+					mes "but, as always, I'll win.";
+					next;
+					mes "[Diwata]";
+					mes "Then the poor crew will cry again";
+					mes "I just can't calm myself down after a fight.";
+					next;
+					mes "[Diwata]";
+					mes "The flowers you bring makes me calm down.";
+					mes "....";
+					mes ".. It's not because I miss people or I like the flowers. Don't take it the wrong way.";
+					close;
+				}
+				cutin "malaya_diwata01", 2;
+				mes "[Diwata]";
+				mes "Get lost!";
+				mes "What? Oh, it's you.";
+				mes "Those hillbillies came back again!";
+				mes "I'm going to kill them!";
+				close;
+			}
+			cutin "malaya_diwata02", 2;
+			mes "[Diwata]";
+			mes "It's good to look at flowers from abroad~";
+			mes "Do all flowers from the warm parts of the world smell so nice?";
+			next;
+			mes "[Diwata]";
+			mes "The flowers you bring makes me calm down.";
+			mes "....";
+			mes ".. It's not because I miss people or I like the flowers. Don't take it the wrong way.";
+			close;
+		}
+		cutin "malaya_diwata01", 2;
+		mes "[Diwata]";
+		mes "Darn it! Have you come for more?!";
+		mes "What?";
+		mes "Oh. It's you?";
+		mes "I'm really depressed right now.";
+		next;
+		mes "- Diwata reached her hands out as if expecting something. -";
+		next;
+		if (select("Give the Bouquet.:Hold her hand.") == 2) {
+			mes "[Diwata]";
+			mes "What do you think you're doing?!!??!?!!";
+			mes "Arghhhh - I have enough creeps around here, thank you!!";
+			next;
+			cutin "", 255;
+			mes "-I was tossed out with Diwata's thunderous cry.-";
+			close;
+			warp "malaya", 324, 66;
+			end;
+		}
+		if (!countitem(6506)) {
+			mes "[Diwata]";
+			mes "What? You want me to wave?";
+			mes "You didn't bring it?";
+			mes "You didn't?!?";
+			mes "Arghhh you just can't trust anybody! Anybody!";
+			next;
+			cutin "", 255;
+			mes "-I was tossed out with Diwata's thunderous cry.-";
+			close;
+			warp "malaya", 324, 66;
+			end;
+		}
+		cutin "malaya_diwata02", 2;
+		mes "[Diwata]";
+		mes "... Oh... Just as I thought!";
+		mes "My only happiness, my only peace of mind..!";
+		mes "Flowers from abroad~!";
+		next;
+		mes "-Diwata seems to feel better. The atmosphere shifts to a more refreshing ambience.-";
+		next;
+		mes "[Diwata]";
+		mes "Tell Pedro the Sailor!";
+		mes "Diwata will be a goddess of sea, so set sail in my generosity.";
+		delitem 6506, 1; // Memorial_Boquet
+		setquest 7403;
+		erasequest 7402;
+		close;
+	}
+	cutin "", 255;
+	end;
+}
+
+ma_fild01,261,208,2	script	Kiko in Mumbaki	580,{
+	if (MaxWeight - Weight < 1000 || checkweight(1201,1) == 0) {
+		mes "- Cannot proceed with the quest. You are carrying too many items. -";
+		close;
+	}
+	mes "[Kiko in Mumbaki]";
+	mes "Welcome to Baryo, stranger.";
+	mes "I am the soul guidance, protector of people and souls here at Baryo.";
+	mes "So, I'm a good leader Kiko in Mumbaki.";
+	next;
+	switch (select("Give Cast-Iron Caldron.:Request Purification Ritual.:Exchange Jellopy for gold.")) {
+		case 1:
+			if (checkquest(7376) == -1) {
+				if (checkquest(7377) == -1) {
+					mes "[Kiko in Mumbaki]";
+					mes "What cauldron?";
+					mes "As far as I know, you're not the one bringing it.";
+					next;
+					mes "[Kiko in Mumbaki]";
+					mes "Poor thing.";
+					mes "do not live a life of lies.";
+					close;
+				}
+				mes "[Kiko in Mumbaki]";
+				mes "Baryo is not a great place for smithy work.";
+				mes "So we always ask a favor to the forge of Malaya.";
+				next;
+				mes "[Kiko in Mumbaki]";
+				mes "Bakonawa does not like loud noises.";
+				mes "That's why we beat the sturdy Cast Iron Cauldrons.";
+				next;
+				mes "[Kiko in Mumbaki]";
+				mes "The Spiritual Protection is proof that I've got my cauldron,";
+				mes "so deliver it well. Okay? Good.";
+				close;
+			}
+			if (countitem(6504) < 5) {
+				mes "[Kiko in Mumbaki]";
+				mes "Oh, must be the cauldron I ordered.";
+				mes "But, where is it?";
+				mes "Are you mocking me?!";
+				close;
+			}
+			mes "[Kiko in Mumbaki]";
+			mes "Yes, excellent!";
+			mes "Very Good.";
+			mes "We can aggravate the Bakonawa more with this.";
+			next;
+			mes "[Kiko in Mumbaki]";
+			mes "I'll give you this for the cauldron.";
+			mes "I hear you're having some trouble with souls?";
+			mes "Take this. It will help you.";
+			delitem 6504, 5; // Cast_Iron_Caldron
+			getitem 6503, 5; // Soul_Protection
+			setquest 7377;
+			erasequest 7376;
+			close;
+		case 2:
+			if (checkquest(7406) == -1) {
+				if (checkquest(7407) == -1) {
+					mes "[Kiko in Mumbaki]";
+					mes "The only purification needed in this village is Vantai's food.";
+					mes "There are no rituals where an outsider, like yourself, can take part in.";
+					close;
+				}
+				mes "[Kiko in Mumbaki]";
+				mes "Vantai must be hungry.";
+				mes "Go give it to him.";
+				mes "Quickly now.";
+				close;
+			}
+			if ((countitem(523) < 10) || (countitem(6507) < 10)) {
+				mes "[Kiko in Mumbaki]";
+				mes "Purification of the bones the Guard Dog Vantai needs to gnaw on?";
+				mes "My work here just gets better and better.";
+				next;
+				mes "[Kiko in Mumbaki]";
+				mes "Go into the forest and fetch me ^4d4dff10 Evil Spirit Bones^000000 and ^4d4dff10 Holy Waters^000000 for the purification ritual.";
+				mes "I'll do the ritual myself.";
+				close;
+			}
+			mes "[Kiko in Mumbaki]";
+			mes "Bones from the animals of this forest all have bad spirits within.";
+			mes "Of course it cannot be helped due to the malignant spirits flailing about...";
+			next;
+			mes "[Kiko in Mumbaki]";
+			mes "You do this and do this here and there and...";
+			mes "There. The evil spirit has left and the bone is so pure that you can just chew on it.";
+			next;
+			mes "[Kiko in Mumbaki]";
+			mes "Now, take this back to Dong the Guard.";
+			mes "Vantai will become stronger after eating this purified Evil Spirit Bone.";
+			next;
+			mes "[Kiko in Mumbaki]";
+			mes "Moreover, holding on to Evil Spirit Bones will only do you harm,";
+			mes "so I'll take them all to purify.";
+			delitem 6507, countitem(6507); // Evil_Bone
+			delitem 523, 10; //Holy_Water
+			getitem 6505, 10; //Purified_Bone
+			setquest 7407;
+			erasequest 7406;
+			close;
+		case 3:
+			mes "[Kiko in Mumbaki]";
+			mes "Oh no you don't!";
+			mes "Don't you dare!";
+			close;
+	}
+	end;
+}
+
+ma_fild01,239,253,3	script	Dhong the Guard	570,{
+	if (MaxWeight - Weight < 1000 || checkweight(1201,1) == 0) {
+		mes "- Cannot proceed with the quest. You are carrying too many items. -";
+		close;
+	}
+	mes "[Dhong the Guard]";
+	mes "Hi there!";
+	mes "Welcome to Baryo.";
+	next;
+	if (select("You're job seems so hard~:Guard Dog Vantai") == 1) {
+		mes "[Dhong the Guard]";
+		mes "Not at all. I just watch who comes and goes from here.";
+		mes "Travelers are the ones who go through more hardship.";
+		close;
+	}
+	if (BaseLevel < 100) {
+		mes "[Dhong the Guard]";
+		mes "Vantai is a nice dog.";
+		mes "He's probably stronger than you.";
+		next;
+		mes "[Dhong the Guard]";
+		mes "No offense, but";
+		mes "you look weaker than the original owners of the bones Vantai chews on.";
+		next;
+		mes "[Dhong the Guard]";
+		mes "That means just about as strong as me!";
+		mes "Ha ha ha ha ha ha ha!";
+		close;
+	}
+	.@playtime = checkquest(7408, PLAYTIME);
+	if (.@playtime == 0 || .@playtime == 1) {
+		mes "[Dhong the Guard]";
+		mes "The bones you brought Vantai gave him a feast.";
+		mes "He'll be full and merry for a while now.";
+		mes "Nobody can beat Vantai in recon around here.";
+		next;
+		mes "[Dhong the Guard]";
+		mes "Though it is not nice to say a person is lesser than a dog,";
+		mes "but there are some who are lesser.";
+		close;
+	} else if (.@playtime == 2) {
+		erasequest 7408;
+		mes "[Dhong the Guard]";
+		mes "Vantai?";
+		mes "Always the same.";
+		mes "Now that you mention it, it's almost time for him to get hungry.";
+		next;
+		mes "[Dhong the Guard]";
+		mes "Of course, he eats normal dog food, but he can't go without those.";
+		mes "You know what I mean, right?";
+		mes "Smirk...";
+		next;
+		mes "[Dhong the Guard]";
+		mes "Me and Vantai are always waiting";
+		mes "for the hero to get us some Evil Spirit Bones from the forest.";
+		close;
+	} else {
+		if (checkquest(7406) != -1) {
+			mes "[Dhong the Guard]";
+			mes "What I'm saying is that, to be a good guard dog, he must be able to stand ground against evil spirits.";
+			mes "For that he needs to eat Evil Spirit Bones, but it must be purified before he can eat them.";
+			next;
+			mes "[Dhong the Guard]";
+			mes "You can get Evil Spirit Bones from monsters or animals in the forest.";
+			mes "Kiko in Mumbaki will purify them for you.";
+			close;
+		} else {
+			if (checkquest(7407) == 1) {
+				if (countitem(6505) < 10) {
+					mes "[Dhong the Guard]";
+					mes "Kiko in Mumbaki asked for 10 Purified Spirit Bones.";
+					mes "He needs to have at least 10 at a time. Which of course does not last a day...";
+					close;
+				}
+				mes "[Dhong the Guard]";
+				mes "Hey, Vantai will love these!";
+				mes "It's all in good condition...";
+				mes "An evil bone purified through holy ritual...";
+				next;
+				mes "[Dhong the Guard]";
+				mes "This is the perfect dog food!!";
+				mes "Now he can sense and detect evil spirits,";
+				mes "and since he ate purified ones, he'll get the ability to eradicate them.";
+				next;
+				mes "[Dhong the Guard]";
+				mes "I bet he's the strongest living thing in the village now.";
+				mes "Of course not me. I mean Vantai.";
+				next;
+				mes "[Dhong the Guard]";
+				mes "This is your reward.";
+				mes "It would be very nice if you could help us again tomorrow.";
+				delitem 6505, 10; // Purified_Bone
+				setquest 7408;
+				erasequest 7407;
+//				if (IsPremiumPcCafe == 10)
+//					getitem 6497, 2; // Lesser_Agimat
+//				else
+					getitem 6497, 1; // Lesser_Agimat
+				getexp 200000,200000;
+				if (!rand(0, 2))
+					$malayaNames$[2] = strcharinfo(0);
+				close;
+			} else {
+				mes "[Dhong the Guard]";
+				mes "Vantai is not only a guard dog, but he's also a great detector and recon scout.";
+				mes "But for him to do so, he needs to eat Purified Spirit Bones.";
+				next;
+				mes "[Dhong the Guard]";
+				mes "As you can see, I can't move from here,";
+				mes "so I was wondering if you can get the bones for Vantai...";
+				next;
+				if (select("Alright.:Sorry.") == 2) {
+					mes "[Dhong the Guard]";
+					mes "I see.";
+					mes "Vantai!";
+					mes "No treat for you today..!!";
+					next;
+					mes "- It seems like Vantai's eyes are more moist today. -";
+					close;
+				}
+				mes "[Dhong the Guard]";
+				mes "Bones can be acquired from animals or monsters around here.";
+				mes "Take them to Kiko in Mumbaki for purification, which, in turn, can be given to Vantai to eat.";
+				next;
+				mes "[Dhong the Guard]";
+				mes "Bring us 10 Purified Spirit Bones.";
+				mes "That reminds me. You'll need Holy Water for the purification ritual.";
+				next;
+				mes "[Dhong the Guard]";
+				mes "Take your time.";
+				mes "Look here. Vantai likes it too.";
+				setquest 7406;
+				close;
+			}
+		}
+	}
+	end;
+}
+
+ma_fild01,238,257,2	script	Guard Dog Vantai	972,{
+	mes "[Vantai]";
+	mes "Grrrrrrr...";
+	mes " ";
+	mes "(He is intimidated by you.)";
+	close;
+}
+
+ma_fild01,200,190,3	script	Maries#malaya	579,{
+	if (MaxWeight - Weight < 1000 || checkweight(1201,1) == 0) {
+		mes "- Cannot proceed with the quest. You are carrying too many items. -";
+		close;
+	}
+	if (BaseLevel < 100) {
+		mes "[Maries]";
+		mes "Umm... Hey...";
+		mes "Oh, no, sorry. You don't look so strong or bold.";
+		mes "I'm sorry. I'm just not quite myself...";
+		close;
+	}
+	if (malaya_hi < 20) {
+		mes "An anxious looking woman is stands.";
+		close;
+	}
+	.@playtime = checkquest(7390, PLAYTIME);
+	if (.@playtime == 0 || .@playtime == 1) {
+		mes "[Maries]";
+		mes "Now that the children know that they can get back home with an Inside-out Shirt,";
+		mes "they play out in the forest recklessly and timelessly.";
+		next;
+		mes "[Maries]";
+		mes "The children will surely get lost again in these conditions.";
+		mes "If it happens again, I'll seek your help again.";
+		close;
+	} else if (.@playtime == 2) {
+		mes "[Maries]";
+		mes "I'm missing a child... again.";
+		mes "Oh my goodness...";
+		erasequest 7390;
+		close;
+	} else {
+		if (checkquest(7389) != -1) {
+			mes "[Maries]";
+			mes "You came back.";
+			mes "Thanks to you, the child has returned home safely.";
+			next;
+			mes "[Maries]";
+			mes "Although the shirt is inside-out, it miraculously brings them back to where they should be.";
+			mes "Thank you for delivering those precious shirts to my children.";
+			setquest 7390;
+			erasequest 7389;
+//			if (IsPremiumPcCafe == 10)
+//				getitem 6497, 2; // Lesser_Agimat
+//			else
+				getitem 6497, 1; // Lesser_Agimat
+			getexp 200000,200000;
+			if (!rand(3))
+				$malayaNames$[2] = strcharinfo(0);
+			close;
+		} else {
+			if (checkquest(7388) != -1) {
+				mes "[Maries]";
+				mes "I'm sure they're lost in the woods because of mischievous spirits.";
+				mes "Please give the child the ^4d4dffInside-out Shirt^000000 when found.";
+				next;
+				mes "[Maries]";
+				mes "The Inside-out Shirts...";
+				mes "You can probably get them from the demons, since they ran away with them.";
+				close;
+			} else {
+				mes "[Maries]";
+				mes "Hello... I'm looking for my child...";
+				mes "My daughter did not return.";
+				mes "Please help, I think she's lost in the forest.";
+				next;
+				switch (select("Of course.:I'm too busy right now.:You have so many children.")) {
+				case 1:
+					mes "[Maries]";
+					mes "I'm sure she's lost in the woods because of mischievous spirits.";
+					next;
+					mes "[Maries]";
+					mes "If she's cursed, it will be difficult to get her out of there.";
+					mes "She'll drift around in the maze so mesmerizing, even for you, in fact.";
+					next;
+					mes "[Maries]";
+					mes "Acquire an ^4d4dffInside-out Shirt^000000 and give it to my daughter.";
+					mes "Although the shirt is inside-out, it miraculously brings them back to where they should be.";
+					next;
+					mes "[Maries]";
+					mes "The Inside-out Shirts...";
+					mes "You can probably get them from the demons, since they ran away with them.";
+					setquest 7388;
+					close;
+				case 2:
+					mes "[Maries]";
+					mes "... Yes... I see.";
+					mes "I'll have to ask someone else.";
+					mes "Alright.";
+					mes "Sigh...";
+					close;
+				case 3:
+					mes "[Maries]";
+					mes "...I ended up having triplets.";
+					mes "Even I sometimes get confused. *Chuckle*";
+					next;
+					mes "[Maries]";
+					mes "They seem to be under a curse because one of them always get's lost in the woods..";
+					mes "Sigh...";
+					close;
+				}
+			}
+		}
+	}
+	end;
+}
+
+ma_fild01,203,189,3	script	Little Girl#malaya	576,{
+	mes "[Little Girl]";
+	mes "He he, the forest is scary, but it's so much fun so I go there often to play~";
+	mes "Strange, how we always get lost.";
+	next;
+	mes "[Little Girl]";
+	mes "But it's okay because I'm not the only one getting lost~";
+	mes "We're triplets~ And we're missing the other two~ Giggle~";
+	close;
+}
+
+ma_fild01,251,93,3	script	Lost Child#malaya01	576,{
+	if (checkquest(7388) > -1) {
+		if (!countitem(12700)) {
+			mes "[Little Kid]";
+			mes "Sigh. Are you lost too?";
+			mes "They are so naughty.";
+			next;
+			mes "[Little Kid]";
+			mes "An Inside-out Shirt is just what I need.";
+			mes "*Chuckle*...";
+			close;
+		}
+		mes "[Little Kid]";
+		mes "Oh, darn them.";
+		mes "They must have tricked me into getting lost again!";
+		next;
+		select ("Do you want to go home?");
+		mes "[Little Kid]";
+		mes "If I don't get back soon, my mom will be worried sick.";
+		mes "Sigh... I wish I had an Inside-out Shirt to go back.";
+		next;
+		select ("Here you are.");
+		mes "[Little Kid]";
+		mes "Really?";
+		mes "It really is the shirt!";
+		mes "This will take me straight home!";
+		next;
+		mes "[Little Kid]";
+		mes "Did mom send you?";
+		mes "She must be worried..!";
+		mes "I'll go home now!";
+		mes "Thanks' a lot!";
+		delitem 12700, 1; // Insideout_Shirt
+		setquest 7389;
+		erasequest 7388;
+		close2;
+		disablenpc strnpcinfo(0);
+		if (strnpcinfo(0) == "Lost Child#malaya01") {
+			enablenpc "Lost Child#malaya02";
+		} else if (strnpcinfo(0) == "Lost Child#malaya01") {
+			enablenpc "Lost Child#malaya03";
+		} else {
+			enablenpc "Lost Child#malaya01";
+		}
+		end;
+	} else {
+		if (checkquest(7389) != -1) {
+			mes "[Little Kid]";
+			mes "I want to play some more.";
+			mes "I can always go back with this shirt.";
+			mes "Mom won't be concerned.";
+			close;
+		} else {
+			mes "[Little Kid]";
+			mes "Hmmm. Am I lost again?";
+			mes "Where am I...";
+			mes "I'm sure I have to head in the direction of sunrise from the third tree to get home... Huh?";
+			next;
+			mes "[Little Kid]";
+			mes "Why~ Do I always go in circles here?";
+			mes "Do you why, " + ((Sex) ? "mister" : "ma'am") + "?";
+			mes "What's with this road?";
+			mes "Is somebody trying to trick me?";
+			close;
+		}
+	}
+	end;
+	
+OnInit:
+	if (strnpcinfo(0) != "Lost Child#malaya01")
+		disablenpc strnpcinfo(0);
+}
+ma_fild01,114,141,3	duplicate(Lost Child#malaya01)	Lost Child#malaya02	576
+ma_fild01,130,314,3	duplicate(Lost Child#malaya01)	Lost Child#malaya03	576
+
+ma_fild02,241,39,5	script	Good Capre Budidai	572,{
+	mes "[Budidai]";
+	mes "Hey hey hey~";
+	mes "I am such a nice Capre~ Hey!";
+	mes "I am going to a fine cafe~YO!";
+	mes "I am better than yesterday~Hey!";
+	mes "I'm a fine rhyming Capre~Oh?";
+	next;
+	mes "[Budidai]";
+	mes "Hey buddy, You here to hear Budidai singing?";
+	next;
+	switch (select("You like songs?:A profound study of one eyed monsters.:See ya!")) {
+	case 1:
+		mes "[Budidai]";
+		mes "Yup, Budidai loves singing.";
+		mes "Cows, horses, goats, roosters, boars all love my songs.";
+		mes "They're all friends.";
+		next;
+		mes "[Budidai]";
+		mes "Except for that one eyed Bongisungisu.";
+		mes "He picks on my friends.";
+		mes "I am annoyed, but Budidai is weak.";
+		next;
+		mes "[Budidai]";
+		mes "I fear it's single gaze, but I fear more the club he flails.";
+		mes "I have to sing my friends some songs, but they don't come because of him.";
+		next;
+		mes "[Budidai]";
+		mes "So Budidai, sings here.";
+		mes "Lots of travelers pass by.";
+		mes "Capre is a wanderer's buddy.";
+		mes "You're a buddy too.";
+		close;
+	case 2:
+		if (BaseLevel < 100) {
+			mes "[Budidai]";
+			mes "You interested in that fiend, my friend?";
+			mes "It's just a bully of the forest!";
+			mes "It picks on my animal friends!";
+			next;
+			mes "[Budidai]";
+			mes "Sadly, singing is all that Budidai is skilled at.";
+			mes "I can't do anything about the scary gaze and the flailing club.";
+			next;
+			mes "[Budidai]";
+			mes "Bongisungisu! I get the chills just by being in the same forest with it...";
+			mes "But Budidai is weak.";
+			next;
+			mes "[Budidai]";
+			mes "You and me, wanderer.";
+			mes "We'll never make it.";
+			close;
+		}
+		.@playtime = checkquest(7410, PLAYTIME);
+		if (.@playtime == 0 || .@playtime == 1) {
+			mes "[Budidai]";
+			mes "Traveler, my friend!";
+			mes "Bongisungisu ran far far away.";
+			mes "Dogs, cows, horse, goat and rooster will come back to me, won't they?";
+			next;
+			mes "[Budidai]";
+			mes "But Budidai is worried.";
+			mes "The one eyed bully will return eventually.";
+			mes "Will you help me out again?";
+			next;
+			mes "[Budidai]";
+			mes "You, friend of Budidai";
+			mes "You won't turn you're back on a good Capre?";
+			close;
+		} else {
+			if (checkquest(7409) != -1) {
+				if (checkquest(7409, HUNTING) == 2) {
+					mes "[Budidai]";
+					mes "Astonishing, wanderer!";
+					mes "I could hear the pitiful wails of Bongisungisu all the way from here!";
+					mes "Budidai can sing again for his friends, yes?";
+					next;
+					mes "[Budidai]";
+					mes "Now, what can Budidai do for the kind wanderer, slayer of the one eyed monster?";
+					mes "Aha! Here's a talisman.";
+					mes "It will be good for you travelers.";
+					next;
+					mes "[Budidai]";
+					mes "Kind Capre is a friend of travelers.";
+					mes "I hope to see you again, wanderer.";
+					mes "This is a blessing for friends. Hey hey hey~";
+					setquest 7410;
+					erasequest 7409;
+//					if (IsPremiumPcCafe == 10)
+//						getitem 6497, 2; // Lesser_Agimat
+//					else
+						getitem 6497, 1; // Lesser_Agimat
+					getexp 200000,200000;
+					if (!rand(3))
+						$malayaNames$[1] = strcharinfo(0);
+					close;
+				} else {
+					mes "[Budidai]";
+					mes "Please slay the destructive libertine Bongisungisu.";
+					mes "For me, a Capre to sing again for one's friends.";
+					close;
+				}
+			} else {
+				if (.@playtime == 2) {
+					mes "[Budidai]";
+					mes "Hey, kind wanderer.";
+					mes "Bongisungisu, the one eyed debauchee is back!";
+					mes "What do I do? What should I do?";
+					next;
+					mes "[Budidai]";
+					mes "He gets angry when I sing.";
+					mes "But the horse, cow, goat, dog and boars love it.";
+					mes "It gives Budidai such a hard time.";
+					erasequest 7410;
+					close;
+				} else {
+					mes "[Budidai]";
+					mes "You interested in that fiend, my friend?";
+					mes "It's just a bully of the forest!";
+					mes "It picks on my animal friends!";
+					next;
+					mes "[Budidai]";
+					mes "Sadly, singing is all that Budidai is skilled at.";
+					mes "I can't do anything about the scary gaze and the flailing club.";
+					next;
+					mes "[Budidai]";
+					mes "Bongisungisu! I get the chills just by being in the same forest with it...";
+					mes "But Budidai is weak.";
+					next;
+					if (select("Shall I take care of it?:That does give the chills.") == 2) {
+						mes "[Budidai]";
+						mes "Don't remind me.";
+						mes "My friends can't come and listen to my songs because of that behemoth.";
+						mes "It is so frustrating.";
+						close;
+					}
+					mes "[Budidai]";
+					mes "You'd teach Bongisungisu a lesson?!";
+					mes "Kind wanderer!!";
+					mes "Kick some libertine butt!!";
+					setquest 7409;
+					close;
+				}
+			}
+		}
+		break;
+	case 3:
+		mes "[Budidai]";
+		mes "Leave me wanderer~";
+		mes "Capre Budidai will sing of wonders~";
+		mes "You best everyone else~";
+		mes "You bring all them beasts~";
+		mes "Just go back to Kafra~";
+		next;
+		mes "[Budidai]";
+		mes "Hey hey hey~";
+		mes "Blessing of the Kind and Good Capre~";
+		mes "A wanderer's friend the gift of Capre~";
+		mes "Hey hey hey~";
+		close;
+	}
+	end;
+}
 
 // Traders :: npc
 //============================================================
@@ -1365,7 +4681,7 @@ malaya,290,340,3	script	Guard Leader#buwaya	571,{
 			mes "There is no shame in rejecting this request.";
 			erasequest 2281;
 		} else if (.@hunting == 2) {
-//			if (IsPremiumPcCafe == 10) {
+//			if (IsPremiumPcCafe == 10)
 //				.@amount = 10;
 //			else
 				.@amount = 5;

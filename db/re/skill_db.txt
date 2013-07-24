@@ -841,8 +841,8 @@
 2270,0,6,4,0,0x3,7,1,1,yes,0,0,0,none,0,	NC_INFRAREDSCAN,Infrared Scan
 2271,9,6,1,0,0x1,0,3,1,yes,0,0,0,none,0,	NC_ANALYZE,Analyze
 2272,0,6,4,0,0x3,1:2:3,3,1,yes,0,0,0,none,0,	NC_MAGNETICFIELD,Magnetic Field
-2273,0,6,4,0,0x1,0,3,1,yes,0,0,0,none,0,	NC_NEUTRALBARRIER,Neutral Barrier
-2274,0,6,4,0,0x1,0,3,1,yes,0,0,0,none,0,	NC_STEALTHFIELD,Stealth Field
+2273,0,6,4,0,0x1,0,3,1,yes,0,0x2000,0,none,0,	NC_NEUTRALBARRIER,Neutral Barrier
+2274,0,6,4,0,0x1,0,3,1,yes,0,0x2000,0,none,0,	NC_STEALTHFIELD,Stealth Field
 2275,5,6,16,0,0x1,0,5,1,yes,0,0,0,magic,0,	NC_REPAIR,Repair
 2276,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		NC_TRAININGAXE,Axe Training
 2277,0,0,0,0,0,0,5,0,no,0,0,0,none,0,		NC_RESEARCHFE,Research Fire/Earth
