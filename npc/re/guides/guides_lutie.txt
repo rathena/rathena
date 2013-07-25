@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First version, Renewal guide.
 //= 1.1 Fixed and optimized. [Euphy]
+//= 1.2 Navigation system update. [Euphy]
 //============================================================ 
 
 xmas,140,137,3	script	Lutie Guide#xmas	717,{
@@ -19,31 +20,32 @@ xmas,140,137,3	script	Lutie Guide#xmas	717,{
 	mes "Welcome to ^8B4513Lutie^000000,";
 	mes "the Snow Village.";
 	mes "Do you need help navigating the village?";
+	F_Navi("[Lutie Guide]");
 	while (1) {
 		next;
 		switch(select("[ Gift Shop ]:[ Church ]:[ Weapon & Armor Shop ]:[ Tool Shop ]:[ Santa's House ]:[ Toy Factory ]:Remove Marks from Mini-Map:Cancel")) {
 		case 1:
-			callsub L_Mark,"^008080Gift Shop";
+			callsub L_Mark, F_Navi("Gift Shop","xmas,172,131","^008080");
 			viewpoint 1,172,131,2,0x008080;
 			break;
 		case 2:
-			callsub L_Mark,"^006400Church";
+			callsub L_Mark, F_Navi("Church","xmas,104,287","^006400");
 			viewpoint 1,104,287,1,0xAAFF00;
 			break;
 		case 3:
-			callsub L_Mark,"^FF1493Weapon & Armor Shop";
+			callsub L_Mark, F_Navi("Weapon & Armor Shop","xmas,171,158","^FF1493");
 			viewpoint 1,171,158,3,0xFF1493;
 			break;
 		case 4:
-			callsub L_Mark,"^8B4513Tool Shop";
+			callsub L_Mark, F_Navi("Tool Shop","xmas,122,131","^8B4513");
 			viewpoint 1,122,131,4,0x8B4513;
 			break;
 		case 5:
-			callsub L_Mark,"^B9062FSanta's House",1;
+			callsub L_Mark, F_Navi("Santa's House","xmas,149,237","^B9062F"),1;
 			viewpoint 1,149,237,5,0x9400D3;
 			break;
 		case 6:
-			callsub L_Mark,"^9400D3Toy Factory";
+			callsub L_Mark, F_Navi("Toy Factory","xmas,143,312","^9400D3");
 			viewpoint 1,143,312,6,0xFF0000;
 			break;
 		case 7:

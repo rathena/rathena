@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First version, Renewal guide.
 //= 1.1 Fixed and optimized. [Euphy]
+//= 1.2 Navigation system update. [Euphy]
 //============================================================ 
 
 morocc,153,286,6	script	Guide#01morocc::GuideMorroc	707,{
@@ -20,6 +21,7 @@ morocc,153,286,6	script	Guide#01morocc::GuideMorroc	707,{
 	mes "Welcome to ^8B4513Morroc^000000,";
 	mes "the Desert Town.";
 	mes "Do you need help navigating the town?";
+	F_Navi("[Morroc Guide]");
 	next;
 	while (1) {
 		switch(select("[ Main Facilities ]:[ Merchants & Helpers ]:Remove Marks from Mini-Map:Cancel")) {
@@ -29,7 +31,7 @@ morocc,153,286,6	script	Guide#01morocc::GuideMorroc	707,{
 				switch(select("[ Thief Guild ]:[ Sphinx Dungeon ]:[ Oasis Entrance ]:[ Forge ]:[ Weapon & Armor Shop ]:[ Inn ]:[ Tavern ]:Previous Menu")) {
 				case 1:
 					mes "[Morroc Guide]";
-					mes "The ^B9062FThief Guild^000000 is located";
+					mes "The "+F_Navi("Thief Guild","morocc,26,294","^B9062F")+" is located";
 					mes "inside the ^B9062FPyramids^000000";
 					mes "that is near the ^B9062FOasis^000000.";
 					mes "Would you like to check any other locations?";
@@ -38,7 +40,7 @@ morocc,153,286,6	script	Guide#01morocc::GuideMorroc	707,{
 					break;
 				case 2:
 					mes "[Morroc Guide]";
-					mes "The ^0000FFSphinx Dungeon^000000 is";
+					mes "The "+F_Navi("Sphinx Dungeon","morocc,26,164","^0000FF")+" is";
 					mes "right outside the western gate.";
 					mes "Would you like to check any other locations?";
 					viewpoint 1,26,164,1,0x0A82FF;
@@ -46,25 +48,25 @@ morocc,153,286,6	script	Guide#01morocc::GuideMorroc	707,{
 					break;
 				case 3:
 					mes "[Morroc Guide]";
-					mes "Let me mark the entrance to the ^FF5400Oasis^000000";
+					mes "Let me mark the entrance to the "+F_Navi("Oasis","morocc,26,294","^FF5400");
 					mes "on your mini-map.";
 					mes "Would you like to check any other locations?";
 					viewpoint 1,26,294,2,0xFFB400;
 					next;
 					break;
 				case 4:
-					callsub L_Mark,"^006400Forge";
+					callsub L_Mark, F_Navi("Forge","morocc,47,47","^006400");
 					viewpoint 1,47,47,3,0xAAFF00;
 					next;
 					break;
 				case 5:
-					callsub L_Mark,"^7F3300Weapon & Armor Shop";
+					callsub L_Mark, F_Navi("Weapon & Armor Shop","morocc,253,56","^7F3300");
 					viewpoint 1,253,56,4,0xD2691E;
 					next;
 					break;
 				case 6:
 					mes "[Morroc Guide]";
-					mes "Currently the ^800080Inn^000000";
+					mes "Currently the "+F_Navi("Inn","morocc,273,269","^800080");
 					mes "has been shut down until further notice,";
 					mes "but I'll mark its location";
 					mes "on your mini-map.";
@@ -73,7 +75,7 @@ morocc,153,286,6	script	Guide#01morocc::GuideMorroc	707,{
 					next;
 					break;
 				case 7:
-					callsub L_Mark,"^B9062FTavern";
+					callsub L_Mark, F_Navi("Tavern","morocc,52,259","^B9062F");
 					viewpoint 1,52,259,6,0xFF0000;
 					next;
 					break;
@@ -88,19 +90,19 @@ morocc,153,286,6	script	Guide#01morocc::GuideMorroc	707,{
 			while (.@loop) {
 				switch(select("[ Kafra Employee ]:[ Poison Herb Salesman ]:[ Dye Maker ]:[ Seiyablem ]:Previous Menu")) {
 				case 1:
-					callsub L_Mark,"^0000FFKafra Employees";
+					callsub L_Mark,"^0000FFKafra Employees^000000";
 					viewpoint 1,156,97,7,0x0A82FF;
 					viewpoint 1,160,258,8,0x0A82FF;
 					next;
 					break;
 				case 2:
-					callsub L_Mark,"^006400Poison Herb Salesman";
+					callsub L_Mark, F_Navi("Poison Herb Salesman","morocc,191,94","^006400");
 					viewpoint 1,190,96,9,0xAAFF00;
 					next;
 					break;
 				case 3:
 					mes "[Morroc Guide]";
-					mes "The ^7F3300Dye Maker^000000 is";
+					mes "The "+F_Navi("Dye Maker","morocc,273,269","^7F3300")+" is";
 					mes "currently staying";
 					mes "on the 1st floor of the Inn.";
 					mes "Let me mark his location";
@@ -111,7 +113,7 @@ morocc,153,286,6	script	Guide#01morocc::GuideMorroc	707,{
 					break;
 				case 4:
 					mes "[Morroc Guide]";
-					mes "^800080Seiyablem^000000";
+					mes F_Navi("Seiyablem","morocc,51,41","^800080");
 					mes "is a technician";
 					mes "who can create ^0000FFslots^000000 on weapons and armors,";
 					mes "but not all equipment";
@@ -156,15 +158,14 @@ morocc,153,286,6	script	Guide#01morocc::GuideMorroc	707,{
 L_Mark:
 	mes "[Morroc Guide]";
 	mes "Let me mark the location of the";
-	mes getarg(0)+"^000000";
+	mes getarg(0);
 	mes "on your mini-map.";
 	mes "Would you like to check any other locations?";
 	return;
 }
-
-morocc,154,38,6	duplicate(GuideMorroc)	Guide#02morocc	707,{
-morocc,296,213,4	duplicate(GuideMorroc)	Guide#03morocc	707,{
-morocc,28,170,5	duplicate(GuideMorroc)	Guide#04morocc	707,{
+morocc,154,38,6	duplicate(GuideMorroc)	Guide#02morocc	707
+morocc,296,213,4	duplicate(GuideMorroc)	Guide#03morocc	707
+morocc,28,170,5	duplicate(GuideMorroc)	Guide#04morocc	707
 
 moc_ruins,159,53,3	script	Guide#01ruins::GuideMocRuins	707,{
 	cutin "moc_soldier",2;
@@ -172,6 +173,7 @@ moc_ruins,159,53,3	script	Guide#01ruins::GuideMocRuins	707,{
 	mes "Welcome to ^8B4513Morroc^000000,";
 	mes "the Desert Town.";
 	mes "Do you need help navigating the town?";
+	F_Navi("[Morroc Guide]");
 	next;
 	while (1) {
 		switch(select("[ Main Facilities ]:[ Merchants & Helpers ]:Remove Marks from Mini-Map:Cancel")) {
@@ -181,7 +183,7 @@ moc_ruins,159,53,3	script	Guide#01ruins::GuideMocRuins	707,{
 				switch(select("[ Thief Guild ]:[ Sphinx Dungeon ]:[ Morroc Entrance ]:Previous Menu")) {
 				case 1:
 					mes "[Morroc Guide]";
-					mes "The ^B9062FThief Guild^000000 is located";
+					mes "The "+F_Navi("Thief Guild","moc_ruins,56,161","^B9062F")+" is located";
 					mes "inside the ^B9062FPyramids^000000.";
 					mes "Let me mark its location";
 					mes "on your mini-map.";
@@ -191,7 +193,7 @@ moc_ruins,159,53,3	script	Guide#01ruins::GuideMocRuins	707,{
 					break;
 				case 2:
 					mes "[Morroc Guide]";
-					mes "The ^0000FFSphinx Dungeon^000000";
+					mes "The "+F_Navi("Sphinx Dungeon","moc_ruins,71,19","^0000FF");
 					mes "is outside the south entrance of this Oasis.";
 					mes "Would you like to check any other locations?";
 					viewpoint 1,71,19,1,0x0A82FF;
@@ -199,7 +201,7 @@ moc_ruins,159,53,3	script	Guide#01ruins::GuideMocRuins	707,{
 					break;
 				case 3:
 					mes "[Morroc Guide]";
-					mes "^FF5400Morroc^000000 is";
+					mes F_Navi("Morroc","moc_ruins,158,40","^FF5400")+" is";
 					mes "right outside the southeast entrance of this Oasis.";
 					mes "Let me mark its location";
 					mes "on your mini-map.";
@@ -218,39 +220,44 @@ moc_ruins,159,53,3	script	Guide#01ruins::GuideMocRuins	707,{
 			while (.@loop) {
 				switch(select("[ Eden Teleport Officer ]:[ Tool Dealer ]:[ Kafra Employee ]:[ Repairman ]:[ Pet Groomer ]:[ Chef Assistant ]:[ Leablem ]:Previous Menu")) {
 				case 1:
-					callsub L_Mark,"^006400Eden Teleport Officer";
+					callsub L_Mark, F_Navi("Eden Teleport Officer","moc_ruins,68,164","^006400");
 					viewpoint 1,68,164,3,0xAAFF00;
 					next;
 					break;
 				case 2:
-					callsub L_Mark,"^800080Tool Dealers";
+					mes "[Morroc Guide]";
+					mes "Let me mark the location of the";
+					mes F_Navi("Northern Tool Dealer","moc_ruins,92,128","^800080");
+					mes "and "+F_Navi("Southern Tool Dealer","moc_ruins,114,63","^800080");
+					mes "on your mini-map.";
+					mes "Would you like to check any other locations?";
 					viewpoint 1,92,128,5,0xDA70D6;
 					viewpoint 1,114,63,6,0xDA70D6;
 					next;
 					break;
 				case 3:
-					callsub L_Mark,"^B9062FKafra Employee";
+					callsub L_Mark, "^B9062FKafra Employee^000000";
 					viewpoint 1,59,157,7,0xFF0000;
 					next;
 					break;
 				case 4:
-					callsub L_Mark,"^0000FFRepairman";
+					callsub L_Mark, F_Navi("Repairman","moc_ruins,107,94","^0000FF");
 					viewpoint 1,107,94,8,0x0A82FF;
 					next;
 					break;
 				case 5:
-					callsub L_Mark,"^FF5400Pet Groomer";
+					callsub L_Mark, F_Navi("Pet Groomer","moc_ruins,118,170","^FF5400");
 					viewpoint 1,118,170,9,0xFFB400;
 					next;
 					break;
 				case 6:
-					callsub L_Mark,"^006400Chef Assistant";
+					callsub L_Mark, F_Navi("Chef Assistant","moc_ruins,115,123","^006400");
 					viewpoint 1,115,123,10,0xAAFF00;
 					next;
 					break;
 				case 7:
 					mes "[Morroc Guide]";
-					mes "^7F3300Leablem^000000";
+					mes F_Navi("Leablem","moc_ruins,154,86","^7F3300");
 					mes "is a technician";
 					mes "who can create ^0000FFslots^000000 on weapons and armors,";
 					mes "but not all equipment";
@@ -295,11 +302,10 @@ moc_ruins,159,53,3	script	Guide#01ruins::GuideMocRuins	707,{
 L_Mark:
 	mes "[Morroc Guide]";
 	mes "Let me mark the location of the";
-	mes getarg(0)+"^000000";
+	mes getarg(0);
 	mes "on your mini-map.";
 	mes "Would you like to check any other locations?";
 	return;
 }
-
 moc_ruins,70,164,3	duplicate(GuideMocRuins)	Guide#02ruins	707
 moc_ruins,65,44,5	duplicate(GuideMocRuins)	Guide#03ruins	707

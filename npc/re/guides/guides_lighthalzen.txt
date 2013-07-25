@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First version, Renewal guide.
 //= 1.1 Optimized. [Euphy]
+//= 1.2 Navigation system update. [Euphy]
 //============================================================ 
 
 lighthalzen,207,310,5	script	Lighthalzen Guide#lhz01::GuideLighthazlen	852,{
@@ -31,6 +32,7 @@ lighthalzen,207,310,5	script	Lighthalzen Guide#lhz01::GuideLighthazlen	852,{
 	mes "of ^8B4513Lighthalzen^000000. Now, please";
 	mes "select the location that you'd";
 	mes "like to learn more about.";
+	F_Navi("[Lighthalzen Guide]");
 	next;
 	while (1) {
 		switch(select("[ Main Facilities ]:[ Merchants & Helpers ]:Remove Marks from Mini-Map:Cancel")) {
@@ -39,52 +41,52 @@ lighthalzen,207,310,5	script	Lighthalzen Guide#lhz01::GuideLighthazlen	852,{
 			while (.@loop) {
 				switch(select("[ Hotel ]:[ Bank ]:[ Airport ]:[ Weapon Shop ]:[ Department Store ]:[ Police Station ]:[ Jewelry Store ]:[ Cool Event Corp. ]:[ Somatology Laboratory ]:[ Alchemist Association ]:Previous Menu")) {
 				case 1:
-					callsub L_Mark,"^FF0000Hotel";
+					callsub L_Mark, F_Navi("Hotel","lighthalzen,159,133","^FF0000");
 					viewpoint 1,160,217,0,0xFF0000;
 					next;
 					break;
 				case 2:
-					callsub L_Mark,"^FF4500Bank";
+					callsub L_Mark, F_Navi("Bank","lighthalzen,203,257","^FF4500");
 					viewpoint 1,203,257,1,0xFF4500;
 					next;
 					break;
 				case 3:
-					callsub L_Mark,"^DAA520Airport";
+					callsub L_Mark, F_Navi("Airport","lighthalzen,262,75","^DAA520");
 					viewpoint 1,262,75,2,0xDAA520;
 					next;
 					break;
 				case 4:
-					callsub L_Mark,"^7B68EEWeapon Shop";
+					callsub L_Mark, F_Navi("Weapon Shop","lighthalzen,194,35","^7B68EE");
 					viewpoint 1,194,35,3,0x7B68EE;
 					next;
 					break;
 				case 5:
-					callsub L_Mark,"^B91A4DDepartment Store";
+					callsub L_Mark, F_Navi("Department Store","lighthalzen,199,164","^B91A4D");
 					viewpoint 1,202,106,4,0xB91A4D;
 					next;
 					break;
 				case 6:
-					callsub L_Mark,"^008000Police Station";
+					callsub L_Mark, F_Navi("Police Station","lighthalzen,234,276","^008000");
 					viewpoint 1,234,276,5,0x008000;
 					next;
 					break;
 				case 7:
-					callsub L_Mark,"^0000FFJewelry Store";
+					callsub L_Mark, F_Navi("Jewelry Store","lighthalzen,96,110","^0000FF");
 					viewpoint 1,96,110,6,0x0000FF;
 					next;
 					break;
 				case 8:
-					callsub L_Mark,"^000080Cool Event Corp.";
+					callsub L_Mark, F_Navi("Cool Event Corp.","lighthalzen,238,217","^000080");
 					viewpoint 1,238,217,7,0x000080;
 					next;
 					break;
 				case 9:
-					callsub L_Mark,"^800080Somatology Laboratory";
+					callsub L_Mark, F_Navi("Somatology Laboratory","lighthalzen,101,243","^800080");
 					viewpoint 1,101,243,8,0x800080;
 					next;
 					break;
 				case 10:
-					callsub L_Mark,"^0A9696Alchemist Association";
+					callsub L_Mark, F_Navi("Alchemist Association","lighthalzen,54,132","^0A9696");
 					viewpoint 1,54,132,9,0x0A9696;
 					next;
 					break;
@@ -105,7 +107,7 @@ lighthalzen,207,310,5	script	Lighthalzen Guide#lhz01::GuideLighthazlen	852,{
 					mes "on the 1st floor of the Weapon Shop.";
 					viewpoint 1,194,35,10,0x0A9696;
 					next;
-					callsub L_Mark,"^0A9696Armsmith";
+					callsub L_Mark, "^0A9696Armsmith^000000";
 					next;
 					break;
 				case 2:
@@ -116,22 +118,22 @@ lighthalzen,207,310,5	script	Lighthalzen Guide#lhz01::GuideLighthazlen	852,{
 					mes "of the Weapon Shop.";
 					viewpoint 1,194,35,11,0x4B0082;
 					next;
-					callsub L_Mark,"^4B0082Seiyablem",1;
+					callsub L_Mark, "^4B0082Seiyablem^000000",1;
 					next;
 					break;
 				case 3:
-					callsub L_Mark,"^FF4500Pet Groomer";
+					callsub L_Mark, F_Navi("Pet Groomer","lighthalzen,222,191","^FF4500");
 					viewpoint 1,222,191,12,0xFF4500;
 					next;
 					break;
 				case 4:
-					callsub L_Mark,"^008080Kafra Employees";
+					callsub L_Mark, "^008080Kafra Employees^000000";
 					viewpoint 1,164,99,13,0x008080;
 					viewpoint 1,164,99,14,0x008080;
 					next;
 					break;
 				case 5:
-					callsub L_Mark,"^FF1493Cool Event Corp. Staff";
+					callsub L_Mark, F_Navi("Cool Event Corp. Staff","lighthalzen,94,247","^FF1493");
 					viewpoint 1,94,247,15,0xFF1493;
 					next;
 					break;
@@ -175,12 +177,11 @@ lighthalzen,207,310,5	script	Lighthalzen Guide#lhz01::GuideLighthazlen	852,{
 L_Mark:
 	mes "[Lighthalzen Guide]";
 	mes "I will mark the location";
-	mes "of "+((getarg(1,0))?"":"the ")+getarg(0)+"^000000";
+	mes "of "+((getarg(1,0))?"":"the ")+getarg(0);
 	mes "on your mini-map.";
 	mes "Would you like to check any other locations?";
 	return;
 }
-
 lighthalzen,220,310,3	duplicate(GuideLighthazlen)	Lighthalzen Guide#lhz02	852
 lighthalzen,154,100,5	duplicate(GuideLighthazlen)	Lighthalzen Guide#lhz03	852
 lighthalzen,307,224,3	duplicate(GuideLighthazlen)	Lighthalzen Guide#lhz04	852

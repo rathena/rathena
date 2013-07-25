@@ -3,23 +3,27 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
-//= rAthena  SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Official Conversion]
-//= Guides for the city of Umbala
+//= Guides for the city of Umbala.
 //===== Additional Comments: ================================= 
 //= 1.0 First version, Renewal guides.
+//= 1.1 Navigation system update. [Euphy]
 //============================================================ 
 
 umbala,128,94,3	script	Umbala Guide#01umbala::GuideUmbala	702,{
+	mes "[Umbala Guide]";
 	mes "Welcome to ^8B4513Umbala^000000,";
 	mes "the Village of the Utan Tribe.";
 	next;
+	mes "[Umbala Guide]";
 	mes "Since I have been exploring here for several months.";
 	mes "I am familiar with this area's geography and the points of interest in this village.";
 	mes "Do you need help navigating the village?";
+	F_Navi("[Umbala Guide]");
 	while (1) {
 		next;
 		switch(select("[ Kafra Employee ]:[ Chief's House ]:[ Shaman's House ]:[ Weapon Shop ]:[ Tool Shop ]:[ Bungee Jump Area ]:[ Tree of Yggdrasil ]:Remove Marks from Mini-Map:Cancel")) {
@@ -33,21 +37,21 @@ umbala,128,94,3	script	Umbala Guide#01umbala::GuideUmbala	702,{
 			break;
 		case 2:
 			mes "[Umbala Guide]";
-			mes "Only the ^006400Chief^000000 knows the language of the outside world.";
+			mes "Only the "+F_Navi("Chief","umbala,68,251","^006400")+" knows the language of the outside world.";
 			mes "So you'd better visit him before anything else.";
 			mes "Would you like to check any other locations?";
 			viewpoint 1,68,251,1,0xAAFF00;
 			break;
 		case 3:
 			mes "[Umbala Guide]";
-			mes "The ^008080Shaman^000000 has some sort of mystic power.";
+			mes "The "+F_Navi("Shaman","umbala,219,188","^008080")+" has some sort of mystic power.";
 			mes "People say she can create rough enchanted stones, and divide a pure enchanted stone into rough ones.";
 			mes "Would you like to check any other locations?";
 			viewpoint 1,219,188,2,0x008080;
 			break;
 		case 4:
 			mes "[Umbala Guide]";
-			mes "The ^FF1493Weapon Shop^000000 inside Umbala";
+			mes "The "+F_Navi("Weapon Shop","umbala,125,155","^FF1493")+" inside Umbala";
 			mes "supplies the weapons";
 			mes "for defending against their enemies.";
 			mes "Would you like to check any other locations?";
@@ -56,14 +60,14 @@ umbala,128,94,3	script	Umbala Guide#01umbala::GuideUmbala	702,{
 		case 5:
 			mes "[Umbala Guide]";
 			mes "There are many useful things for";
-			mes "traveling in the ^8B4513Tool Shop^000000 in Umbala.";
+			mes "traveling in the "+F_Navi("Tool Shop","umbala,136,127","^8B4513")+" in Umbala.";
 			mes "Would you like to check any other locations?";
 			viewpoint 1,136,127,4,0x8B4513;
 			break;
 		case 6:
 			mes "[Umbala Guide]";
 			mes "Umbala has a unique locale called";
-			mes "the 'Bungee Jump Area'.";
+			mes "the "+F_Navi("Bungee Jump Area","umbala,138,198")+".";
 			mes "If you're interested in testing";
 			mes "your courage, why don't you try it.";
 			mes "Would you like to check any other locations?";
@@ -71,7 +75,7 @@ umbala,128,94,3	script	Umbala Guide#01umbala::GuideUmbala	702,{
 			break;
 		case 7:
 			mes "[Umbala Guide]";
-			mes "There's the Tree of Yggdrasil in the northern part of town.";
+			mes "There's the "+F_Navi("Tree of Yggdrasil","umbala,107,284")+" in the northern part of town.";
 			mes "You should pay it a visit since that's a place I recommend when you visit Umbala.";
 			mes "Would you like to check any other locations?";
 			viewpoint 1,107,284,6,0xA52A2A;
@@ -95,5 +99,4 @@ umbala,128,94,3	script	Umbala Guide#01umbala::GuideUmbala	702,{
 		}
 	}
 }
-
 umbala,99,158,3	duplicate(GuideUmbala)	Umbala Guide#02umbala	702
