@@ -20,6 +20,7 @@
 static DBMap* channel_db; // channels
 DBMap* channel_get_db(void){ return channel_db; }
 
+
 struct chan_banentry {
 	int char_id;
 	char char_name[NAME_LENGTH];

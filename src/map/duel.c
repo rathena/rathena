@@ -1,5 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
+// Duel organizing functions [LuzZza]
 
 #include "../common/cbasetypes.h"
 
@@ -13,12 +14,13 @@
 #include <string.h>
 #include <time.h>
 
-struct duel duel_list[MAX_DUEL];
-int duel_count = 0;
+//global var (extern)
+struct duel duel_list[MAX_DUEL]; //list of current duel
+int duel_count = 0; //number of duel active
 
-/*==========================================
- * Duel organizing functions [LuzZza]
- *------------------------------------------*/
+/*
+ * Save the current time of the duel in PC_LAST_DUEL_TIME
+ */
 void duel_savetime(struct map_session_data* sd)
 {
 	time_t timer;
@@ -30,6 +32,9 @@ void duel_savetime(struct map_session_data* sd)
 	pc_setglobalreg(sd, "PC_LAST_DUEL_TIME", t->tm_mday*24*60 + t->tm_hour*60 + t->tm_min);
 }
 
+/*
+ * Check if the time elapsed between last duel is enough to launch another.
+ */
 int duel_checktime(struct map_session_data* sd)
 {
 	int diff;
@@ -37,12 +42,16 @@ int duel_checktime(struct map_session_data* sd)
 	struct tm *t;
 
 	time(&timer);
-    t = localtime(&timer);
+	t = localtime(&timer);
 
 	diff = t->tm_mday*24*60 + t->tm_hour*60 + t->tm_min - pc_readglobalreg(sd, "PC_LAST_DUEL_TIME");
 
 	return !(diff >= 0 && diff < battle_config.duel_time_interval);
 }
+
+/*
+ * Display opponents name of sd
+ */
 static int duel_showinfo_sub(struct map_session_data* sd, va_list va)
 {
 	struct map_session_data *ssd = va_arg(va, struct map_session_data*);
@@ -56,6 +65,10 @@ static int duel_showinfo_sub(struct map_session_data* sd, va_list va)
 	return 1;
 }
 
+/*
+ * Display duel infos,
+ * Number of duely...
+ */
 void duel_showinfo(const unsigned int did, struct map_session_data* sd)
 {
 	int p=0;
@@ -77,6 +90,9 @@ void duel_showinfo(const unsigned int did, struct map_session_data* sd)
 	map_foreachpc(duel_showinfo_sub, sd, &p);
 }
 
+/*
+ * Create a new duel for sd
+ */
 int duel_create(struct map_session_data* sd, const unsigned int maxpl)
 {
 	int i=1;
@@ -100,6 +116,12 @@ int duel_create(struct map_session_data* sd, const unsigned int maxpl)
 	return i;
 }
 
+/*
+ * Invite opponent into the duel.
+ * @did = duel id
+ * @sd = inviting player
+ * @target_sd = invited player
+ */
 void duel_invite(const unsigned int did, struct map_session_data* sd, struct map_session_data* target_sd)
 {
 	char output[256];
@@ -116,6 +138,11 @@ void duel_invite(const unsigned int did, struct map_session_data* sd, struct map
 	clif_broadcast((struct block_list *)target_sd, output, strlen(output)+1, 0x10, SELF);
 }
 
+/*
+ * Sub function to loop trough all duely to remove invite for sd
+ * @sd = leaving player
+ * @va = list(only contain duel_id atm)
+ */
 static int duel_leave_sub(struct map_session_data* sd, va_list va)
 {
 	int did = va_arg(va, int);
@@ -124,6 +151,11 @@ static int duel_leave_sub(struct map_session_data* sd, va_list va)
 	return 0;
 }
 
+/*
+ * Make a player leave a duel
+ * @did = duel id
+ * @sd = leaving player
+ */
 void duel_leave(const unsigned int did, struct map_session_data* sd)
 {
 	char output[256];
@@ -145,6 +177,11 @@ void duel_leave(const unsigned int did, struct map_session_data* sd)
 	clif_maptypeproperty2(&sd->bl,SELF);
 }
 
+/*
+ * Make a player accept a duel
+ * @did = duel id
+ * @sd = player accepting duel
+ */
 void duel_accept(const unsigned int did, struct map_session_data* sd)
 {
 	char output[256];
@@ -163,6 +200,11 @@ void duel_accept(const unsigned int did, struct map_session_data* sd)
 	//clif_misceffect2(&sd->bl, 159);
 }
 
+/*
+ * Make a player decline a duel
+ * @did = duel id
+ * @sd = player refusing duel
+ */
 void duel_reject(const unsigned int did, struct map_session_data* sd)
 {
 	char output[256];
@@ -175,11 +217,17 @@ void duel_reject(const unsigned int did, struct map_session_data* sd)
 	sd->duel_invite = 0;
 }
 
+/*
+ * Destructor of duel module
+ * Put cleanup code here before server end
+ */
 void do_final_duel(void)
 {
 }
 
-void do_init_duel(void)
-{
+/*
+ * Initialisator of duel module
+ */
+void do_init_duel(void) {
 	memset(&duel_list[0], 0, sizeof(duel_list));
 }

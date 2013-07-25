@@ -5,9 +5,13 @@
 #define _CHAT_H_
 
 #include "map.h" // struct block_list, CHATROOM_TITLE_SIZE
+
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
 struct map_session_data;
 struct chat_data;
-
 
 struct chat_data {
 	struct block_list bl;            // data for this map object
@@ -26,7 +30,6 @@ struct chat_data {
 	DBMap* kick_list;				//DBMap of users who were kicked from this chat
 };
 
-
 int chat_createpcchat(struct map_session_data* sd, const char* title, const char* pass, int limit, bool pub);
 int chat_joinchat(struct map_session_data* sd, int chatid, const char* pass);
 int chat_leavechat(struct map_session_data* sd, bool kicked);
@@ -39,5 +42,9 @@ int chat_deletenpcchat(struct npc_data* nd);
 int chat_enableevent(struct chat_data* cd);
 int chat_disableevent(struct chat_data* cd);
 int chat_npckickall(struct chat_data* cd);
+
+#ifdef	__cplusplus
+}
+#endif
 
 #endif /* _CHAT_H_ */

@@ -1894,7 +1894,7 @@ static unsigned short status_base_atk(const struct block_list *bl, const struct 
 	// [Skotlex]
 #ifdef RENEWAL
 	if (bl->type == BL_HOM)
-		str = floor((rstr + dex + status->luk) / 3) + floor(((TBL_HOM*)bl)->homunculus.level / 10);
+		str = (int)(floor((rstr + dex + status->luk) / 3) + floor(((TBL_HOM*)bl)->homunculus.level / 10));
 #endif
 	dstr = str/10;
 	str += dstr*dstr;

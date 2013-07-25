@@ -14563,7 +14563,7 @@ void clif_parse_cashshop_buy(int fd, struct map_session_data *sd){
 		}
 	#if PACKETVER < 20130000
 		fail = npc_cashshop_buylist(sd,points,count,item_list);
-	#else PACKETVER >= 20130000
+	#elif PACKETVER >= 20130000
 		cashshop_buylist( sd, points, count, item_list);
 	#endif
 #endif

@@ -2342,7 +2342,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 {
 	struct Damage dmg;
 	struct status_data *sstatus, *tstatus;
-	struct status_change *sc;
+	struct status_change *tsc;
 	struct map_session_data *sd, *tsd;
 	int type,damage,rdamage=0;
 	int8 rmdamage=0;//magic reflected
@@ -2369,14 +2369,14 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	sstatus = status_get_status_data(src);
 	tstatus = status_get_status_data(bl);
-	sc= status_get_sc(bl);
-	if (sc && !sc->count) sc = NULL; //Don't need it.
+	tsc= status_get_sc(bl); 
+	if (tsc && !tsc->count) tsc = NULL; //Don't need it.
 
 	// Is this check really needed? FrostNova won't hurt you if you step right where the caster is?
 	if(skill_id == WZ_FROSTNOVA && dsrc->x == bl->x && dsrc->y == bl->y)
 		return 0;
 	 //Trick Dead protects you from damage, but not from buffs and the like, hence it's placed here.
-	if (sc && sc->data[SC_TRICKDEAD])
+	if (tsc && tsc->data[SC_TRICKDEAD])
 		return 0;
 	
 	dmg = battle_calc_attack(attack_type,src,bl,skill_id,skill_lv,flag&0xFFF);
@@ -2408,22 +2408,22 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			dsrc = tbl;
 			sd = BL_CAST(BL_PC, src);
 			tsd = BL_CAST(BL_PC, bl);
-			sc = status_get_sc(bl);
-			if (sc && !sc->count)
-				sc = NULL; //Don't need it.
+			tsc = status_get_sc(bl);
+			if (tsc && !tsc->count)
+				tsc = NULL; //Don't need it.
 			/* bugreport:2564 flag&2 disables double casting trigger */
 			flag |= 2;
 
 			//Spirit of Wizard blocks Kaite's reflection
-			if( type == 2 && sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_WIZARD )
+			if( type == 2 && tsc && tsc->data[SC_SPIRIT] && tsc->data[SC_SPIRIT]->val2 == SL_WIZARD )
 			{	//Consume one Fragment per hit of the casted skill? [Skotlex]
-			  	type = tsd?pc_search_inventory (tsd, 7321):0;
+				type = tsd?pc_search_inventory (tsd, 7321):0;
 				if (type >= 0) {
 					if ( tsd ) pc_delitem(tsd, type, 1, 0, 1, LOG_TYPE_CONSUME);
 					dmg.damage = dmg.damage2 = 0;
 					dmg.dmg_lv = ATK_MISS;
-					sc->data[SC_SPIRIT]->val3 = skill_id;
-					sc->data[SC_SPIRIT]->val4 = dsrc->id;
+					tsc->data[SC_SPIRIT]->val3 = skill_id;
+					tsc->data[SC_SPIRIT]->val4 = dsrc->id;
 				}
 			} else if( type != 2 ) /* Kaite bypasses */
 				additional_effects = false;
@@ -2444,7 +2444,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 				dmg.damage = battle_attr_fix(bl, bl, dmg.damage, s_ele, status_get_element(bl), status_get_element_level(bl));
 
-				if( sc && sc->data[SC_ENERGYCOAT] ) {
+				if( tsc && tsc->data[SC_ENERGYCOAT] ) {
 					struct status_data *status = status_get_status_data(bl);
 					int per = 100*status->sp / status->max_sp -1; //100% should be counted as the 80~99% interval
 					per /=20; //Uses 20% SP intervals.
@@ -2457,11 +2457,11 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		}
 		#endif
 		}
-		if(sc && sc->data[SC_MAGICROD] && src == dsrc) {
+		if(tsc && tsc->data[SC_MAGICROD] && src == dsrc) {
 			int sp = skill_get_sp(skill_id,skill_lv);
 			dmg.damage = dmg.damage2 = 0;
 			dmg.dmg_lv = ATK_MISS; //This will prevent skill additional effect from taking effect. [Skotlex]
-			sp = sp * sc->data[SC_MAGICROD]->val2 / 100;
+			sp = sp * tsc->data[SC_MAGICROD]->val2 / 100;
 			if(skill_id == WZ_WATERBALL && skill_lv > 1)
 				sp = sp/((skill_lv|1)*(skill_lv|1)); //Estimate SP cost of a single water-ball
 			status_heal(bl, 0, sp, 2);
@@ -2477,10 +2477,10 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	if( damage > 0 && (( dmg.flag&BF_WEAPON && src != bl && ( src == dsrc || ( dsrc->type == BL_SKILL &&
 		( skill_id == SG_SUN_WARM || skill_id == SG_MOON_WARM || skill_id == SG_STAR_WARM ) ) ))
-		|| ((sc && sc->data[SC_REFLECTDAMAGE]) && !(dmg.flag&(BF_MAGIC|BF_LONG)) && !(skill_get_inf2(skill_id)&INF2_TRAP)) ) )
+		|| ((tsc && tsc->data[SC_REFLECTDAMAGE]) && !(dmg.flag&(BF_MAGIC|BF_LONG)) && !(skill_get_inf2(skill_id)&INF2_TRAP)) ) )
 		rdamage = battle_calc_return_damage(bl,src, &damage, dmg.flag, skill_id);
 
-	if( damage && sc && sc->data[SC_GENSOU] && dmg.flag&BF_MAGIC ){
+	if( damage && tsc && tsc->data[SC_GENSOU] && dmg.flag&BF_MAGIC ){
 		struct block_list *nbl;
 		nbl = battle_getenemyarea(bl,bl->x,bl->y,2,BL_CHAR,bl->id);
 		if( nbl ){ // Only one target is chosen.
@@ -2520,8 +2520,11 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		break;
 	case SL_STIN:
 	case SL_STUN:
-		if (skill_lv >= 7 && !sd->sc.data[SC_SMA])
-			sc_start(src,src,SC_SMA,100,skill_lv,skill_get_time(SL_SMA, skill_lv));
+		if (skill_lv >= 7){ 
+			struct status_change *sc = status_get_sc(src);
+			if(sc && !sc->data[SC_SMA])
+				sc_start(src,src,SC_SMA,100,skill_lv,skill_get_time(SL_SMA, skill_lv));
+		}
 		break;
 	case GS_FULLBUSTER:
 		if(sd) //Can't attack nor use items until skill's delay expires. [Skotlex]
@@ -2640,7 +2643,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	if(damage > 0 && dmg.flag&BF_SKILL && tsd
 		&& pc_checkskill(tsd,RG_PLAGIARISM)
-		&& (!sc || !sc->data[SC_PRESERVE])
+		&& (!tsc || !tsc->data[SC_PRESERVE])
 		&& damage < tsd->battle_status.hp)
 	{	//Updated to not be able to copy skills if the blow will kill you. [Skotlex]
 		int copy_skill = skill_id;
@@ -2678,7 +2681,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			can_copy(tsd,copy_skill,bl))	// Split all the check into their own function [Aru]
 		{
 			int lv;
-			if( sc && sc->data[SC__REPRODUCE] && (lv = sc->data[SC__REPRODUCE]->val1) ) {
+			if( tsc && tsc->data[SC__REPRODUCE] && (lv = tsc->data[SC__REPRODUCE]->val1) ) {
 				//Level dependent and limitation.
 				lv = min(lv,skill_get_max(copy_skill));
 				if( tsd->reproduceskill_id && tsd->status.skill[tsd->reproduceskill_id].flag == SKILL_FLAG_PLAGIARIZED ) {
@@ -2730,7 +2733,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	if( !dmg.amotion ) {
 		//Instant damage
-		if( !sc || (!sc->data[SC_DEVOTION] && skill_id != CR_REFLECTSHIELD) )
+		if( !tsc || (!tsc->data[SC_DEVOTION] && skill_id != CR_REFLECTSHIELD) )
 			status_fix_damage(src,bl,damage,dmg.dmotion); //Deal damage before knockback to allow stuff like firewall+storm gust combo.
 		if( !status_isdead(bl) && additional_effects )
 			skill_additional_effect(src,bl,skill_id,skill_lv,dmg.flag,dmg.dmg_lv,tick);
@@ -2802,8 +2805,8 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	if (dmg.amotion)
 		battle_delay_damage(tick, dmg.amotion,src,bl,dmg.flag,skill_id,skill_lv,damage,dmg.dmg_lv,dmg.dmotion, additional_effects);
 
-	if( sc && sc->data[SC_DEVOTION] && skill_id != PA_PRESSURE ) {
-		struct status_change_entry *sce = sc->data[SC_DEVOTION];
+	if( tsc && tsc->data[SC_DEVOTION] && skill_id != PA_PRESSURE ) {
+		struct status_change_entry *sce = tsc->data[SC_DEVOTION];
 		struct block_list *d_bl = map_id2bl(sce->val1);
 
 		if( d_bl && (
@@ -2851,7 +2854,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	}
 
 	if( rdamage > 0 ) {
-		if( sc && sc->data[SC_REFLECTDAMAGE] ) {
+		if( tsc && tsc->data[SC_REFLECTDAMAGE] ) {
 			if( src != bl )// Don't reflect your own damage (Grand Cross)
 				map_foreachinshootrange(battle_damage_area,bl,skill_get_splash(LG_REFLECTDAMAGE,1),BL_CHAR,tick,bl,dmg.amotion,sstatus->dmotion,rdamage,tstatus->race);
 		} else {
@@ -2898,9 +2901,9 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		(
 			skill_id == MG_COLDBOLT || skill_id == MG_FIREBOLT || skill_id == MG_LIGHTNINGBOLT
 		) &&
-		(sc = status_get_sc(src)) &&
-		sc->data[SC_DOUBLECAST] &&
-		rnd() % 100 < sc->data[SC_DOUBLECAST]->val2)
+		(tsc = status_get_sc(src)) &&
+		tsc->data[SC_DOUBLECAST] &&
+		rnd() % 100 < tsc->data[SC_DOUBLECAST]->val2)
 	{
 //		skill_addtimerskill(src, tick + dmg.div_*dmg.amotion, bl->id, 0, 0, skill_id, skill_lv, BF_MAGIC, flag|2);
 		skill_addtimerskill(src, tick + dmg.amotion, bl->id, 0, 0, skill_id, skill_lv, BF_MAGIC, flag|2);
@@ -14042,9 +14045,9 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
 		case SL_STUN:
 		case SL_STIN:
 		{
-			int kaina_lv = pc_checkskill(sd,SL_KAINA);
+			int kaina_lv = sd?pc_checkskill(sd,SL_KAINA):skill_get_max(SL_KAINA);
 
-			if(kaina_lv==0 || sd->status.base_level<70)
+			if(kaina_lv==0 || !sd || sd->status.base_level<70)
 				break;
 			if(sd->status.base_level>=90)
 				req.sp -= req.sp*7*kaina_lv/100;
