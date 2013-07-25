@@ -1067,17 +1067,12 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 			skill_castend_damage_id(bl,src,MH_MAGMA_FLOW,sce->val1,gettick(),0);
 		}
 
-		if( (sce = sc->data[SC_STONEHARDSKIN]) && flag&BF_WEAPON && damage > 0 ) {
+		if( damage > 0 && ((flag&(BF_WEAPON|BF_SHORT))==(BF_WEAPON|BF_SHORT)) && (sce = sc->data[SC_STONEHARDSKIN]) ) {
 			sce->val2 -= damage;
-			if( src->type == BL_PC ) {
-				TBL_PC *ssd = BL_CAST(BL_PC, src);
-				if (ssd && ssd->status.weapon != W_BOW)
-					skill_break_equip(src,src, EQP_WEAPON, 3000, BCT_SELF);
-			} else
-				skill_break_equip(src,src, EQP_WEAPON, 3000, BCT_SELF);
-			// 30% chance to reduce monster's ATK by 25% for 10 seconds.
-			if( src->type == BL_MOB )
+			if( src->type == BL_MOB ) //using explicite call instead break_equip for duration
 				sc_start(src,src, SC_STRIPWEAPON, 30, 0, skill_get_time2(RK_STONEHARDSKIN, sce->val1));
+			else
+				skill_break_equip(src,src, EQP_WEAPON, 3000, BCT_SELF);
 			if( sce->val2 <= 0 )
 				status_change_end(bl, SC_STONEHARDSKIN, INVALID_TIMER);
 		}
