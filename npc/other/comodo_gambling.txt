@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Reddozen, Cypress, Zefris
 //===== Current Version: =====================================
-//= 1.4
+//= 1.4a
 //===== Compatible With: =====================================
 //= Any rAthena SVN
 //===== Description: =========================================
@@ -23,10 +23,15 @@
 //= 1.2 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 1.3 Added missing item. [Kisuka]
 //= 1.4 Updated Script to match AEGIS file. [Masao]
+//= 1.4a Minor script updates. [Euphy]
 //============================================================ 
 
 comodo,219,158,6	script	Kachua	91,{
 
+	if (checkweight(1201,1) == 0) {
+		mes "^3355FFWait a second! Right now, you're carrying too many items with you. Please come back after putting some of your things into Kafra Storage.^000000";
+		close;
+	}
 	cutin "katsua01.bmp",2;
 
 	mes "[Kachua]";
@@ -47,7 +52,7 @@ comodo,219,158,6	script	Kachua	91,{
 		cutin "katsua01.bmp",255;
 		end;
 	}
-	
+
 	if (countitem(732) == 0) {
 		cutin "katsua01.bmp",255;
 		cutin "katsua03.bmp",2;
@@ -59,7 +64,7 @@ comodo,219,158,6	script	Kachua	91,{
 		cutin "katsua03.bmp",255;
 		end;
 	}
-	
+
 	mes "[Kachua]";
 	mes "Are you sure you don't mind";
 	mes "giving this to me? Thank you";
@@ -69,7 +74,7 @@ comodo,219,158,6	script	Kachua	91,{
 	mes "collections~";
 	next;
 	
-	if (Weight >= MaxWeight/2) {
+	if (MaxWeight - Weight < 5500) {
 		cutin "katsua01.bmp",255;
 		cutin "katsua03.bmp",2;
 		mes "[Kachua]";
@@ -81,21 +86,21 @@ comodo,219,158,6	script	Kachua	91,{
 		cutin "katsua03.bmp",255;
 		end;
 	}
-	
+
 	if (countitem(732) == 0) { // anti-hack
 		logmes "Hack: Tried to bypass item check.";
 		cutin "katsua01.bmp",255;
 		close;
 	}
 	delitem 732,1;
-	
+
 	mes "[Kachua]";
 	mes "So what would";
 	mes "you like to have?";
 	next;
-	
+
 	switch (select("Weapon", "Armor", "Garment", "Helmet", "Shoes", "Shield")) {
-	
+
 	case 1: // Weapons
 			set .@gamble1,rand(1,1000);
 			if ((.@gamble1 > 920) && (.@gamble1 < 931)) {
@@ -488,9 +493,7 @@ comodo,210,154,2	script	Suspicious Guy#cmd	118,{
 
 mjolnir_02,85,362,3	script	Blacksmith Miner	726,{
 
-	if(checkweight(1201,1) == 0)
-	{
-		mes "[Kachua]";
+	if (checkweight(1201,1) == 0) {
 		mes "^3355FFWait a second! Right now, you're carrying too many items with you. Please come back after putting some of your things into Kafra Storage.^000000";
 		close;
 	}
@@ -503,7 +506,7 @@ mjolnir_02,85,362,3	script	Blacksmith Miner	726,{
 	mes "thousands of Diamonds,";
 	mes "all of them mine!";
 	mes "I'm rich!";
-	emotion 18;
+	emotion e_heh;
 	next;
 	switch(select("I want to buy some.:Congratulations.")){
 	case 1:

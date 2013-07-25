@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.3
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -34,6 +34,7 @@
 //= 2.0 Fixed broken else/if chaining. [Joseph]
 //= 2.1 Updated to match latest official script. [Euphy]
 //= 2.2 Instance system rewrite. [Euphy]
+//= 2.3 Added some missing announcements. [Euphy]
 //============================================================ 
 
 alberta,214,77,6	script	Captain Janssen	709,{
@@ -1201,6 +1202,15 @@ function	script	F_Tower_Warp	{
 	mapannounce instance_mapname("1@tower"), strcharinfo(0)+". You will be warped to the "+.@level$[.@i]+" Level.",bc_map,"0x00ff99";
 	warp instance_mapname(.@map$[.@i]),52,354;
 	close;
+
+OnInstanceInit:
+	initnpctimer;
+	end;
+
+OnTimer10000:
+	mapannounce instance_mapname("1@tower"), "Notice : Taming a monster does not count towards defeating them.",bc_map,"0xff0000";
+	stopnpctimer;
+	end;
 }
 
 1@tower,29,365,1	script	#1F Controller	844,{
@@ -1338,6 +1348,23 @@ OnEnable:
 
 OnTouch_:
 	warp instance_mapname("2@tower"),52,354;
+	end;
+}
+
+1@tower,71,4,0	script	#Broadcast Mode1	844,{
+	end;
+
+OnInstanceInit:
+	initnpctimer;
+	end;
+
+OnTimer15000:
+OnTimer60000:
+	mapannounce instance_mapname("1@tower"), "Notice : In any abnormal situation where you defeat a monster, you can't advance to the next level!",bc_map,"0xff0000";
+	end;
+OnTimer120000:
+	mapannounce instance_mapname("1@tower"), "Notice : In any abnormal situation where you defeat a monster, you can't advance to the next level!",bc_map,"0xff0000";
+	stopnpctimer;
 	end;
 }
 

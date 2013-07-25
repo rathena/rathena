@@ -4,16 +4,16 @@
 //= Muad Dib (1.0) Darkchild (1.1) Muad Dib (1.2)
 //= Darkchild (1.3) DracoRPG (1.5) L0ne_W0lf (2.1)
 //===== Current Version: ===================================== 
-//= 2.1b
+//= 2.1c
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
 //= Payon City Npcs
 //===== Additional Comments: ================================= 
 //= Most Credits To Muad Dib, Some Stuff By Me
-//= 1.4 - Corrected a few typos
-//= 1.5 - Rescripted old NPCs + scripted new ones (from iRO Sak) [DracoRPG]
-//= 1.5b - Used Dino9021's script for the Gemstone exchanger [DracoRPG]
+//= 1.4 Corrected a few typos
+//= 1.5 Rescripted old NPCs + scripted new ones (from iRO Sak) [DracoRPG]
+//= 1.5b Used Dino9021's script for the Gemstone exchanger [DracoRPG]
 //= 1.5b1 fixed Gemstone Exchanger NPC [Lupus]
 //= 1.5b2 added adv.classes/baby classes support [Lupus]
 //= 1.6 Fixed typos [Nexon]
@@ -22,9 +22,10 @@
 //= 1.9 Fixed missing next;'s [Evera]
 //= 2.0 fixed some bugs, optimized script, added missing msg [Lupus]
 //= 2.1 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
-//=	Moved Gemstone Trader "Jade" to /merchants/gemstone.txt
-//=	Moved Fortune Teller to /other/fortune.txt
+//=     Moved Gemstone Trader "Jade" to /merchants/gemstone.txt
+//=     Moved Fortune Teller to /other/fortune.txt
 //= 2.1b Added a missing close in the Monster Scholar. [L0ne_W0lf]
+//= 2.1c Minor bug fixes. [Euphy]
 //============================================================ 
 
 // Payon
@@ -252,9 +253,9 @@ payon,210,110,1	script	Drunkard#payon	120,{
 		mes "Buy me a drink?!";
 	}
 	next;
-	switch(select("Alright, but only one drink. :No thanks, pal.:Oh my God! Hell no! ")) {
+	switch(select("Alright, but only one drink.:No thanks, pal.:Oh my God! Hell no!")) {
 	case 1:
-		set zeny,zeny-100;
+		set Zeny, (Zeny < 100)?0:(Zeny - 100);
 		mes "[Drunkard]";
 		mes "Thanks...!";
 		mes "..Brother!";
@@ -955,6 +956,7 @@ OnTouch:
 		mes "I'd better rest.";
 		mes "Please, take care";
 		mes "of yourself.";
+		close;
 
 		//This actually never happens on iRO
 		//if (.@oldman_random == 2) {
@@ -965,7 +967,7 @@ OnTouch:
 		//	mes "coming back later?";
 		//}
 	}
-	close;
+	end;
 }
 
 payon_in03,102,185,5	script	Guard#payon	708,{
@@ -975,6 +977,7 @@ payon_in03,102,185,5	script	Guard#payon	708,{
 		mes "You're not";
 		mes "allowed here!";
 		mes "Go back outside!";
+		close;
 	}
 	if (Baselevel > 30) {
 		mes "[Guard]";
@@ -982,8 +985,9 @@ payon_in03,102,185,5	script	Guard#payon	708,{
 		mes "but you're";
 		mes "not allowed here.";
 		mes "Please leave.";
+		close;
 	}
-	close;
+	end;
 }
 
 // Payon Archer Village
@@ -1072,4 +1076,3 @@ pay_arche,77,131,2	script	Archer Joe#payon	88,{
 	}
 	close;
 }
-

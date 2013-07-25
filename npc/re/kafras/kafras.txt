@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Joseph
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: =========================================
@@ -21,6 +21,7 @@
 //= 1.0 Merged and cleaned up Kafras. [Euphy]
 //= 1.1 Added Dewata Kafra. [Lemongrass]
 //= 1.2 Added Port Malaya Kafras. [Euphy]
+//= 1.3 Added Eden Group Kafra. [Euphy]
 //============================================================ 
 
 // Brasilis
@@ -39,6 +40,17 @@ dewata,202,184,6	script	Kafra Employee::kaf_dewata	117,{
 	callfunc "F_Kafra",0,10,1,40,700;
 	savepoint "dewata",206,174;
 	callfunc "F_KafEnd",0,1,"on Dewata Island";
+}
+
+// Eden Group
+//============================================================
+moc_para01,10,185,4	script	Kafra Employee::kaf_eden	721,{
+	cutin "kafra_07",2;
+	mes "[Kafra Employee]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "I only offer Storage!";
+	callfunc "F_Kafra",5,2,0,80,0;
 }
 
 // Izlude

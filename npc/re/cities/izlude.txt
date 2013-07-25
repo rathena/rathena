@@ -10,24 +10,18 @@
 //= Izlude town NPCs.
 //===== Additional Comments: ================================= 
 //= 1.0 First Version. Still missing many new NPCs and their dialogues. [Masao]
-//= 1.1 Added bullet NPC duplicates. [Euphy]
+//= 1.1 Updated to match the official script. [Euphy]
 //============================================================
 
 izlude,197,205,1	duplicate(Sailor_izlude)	Sailor#izlude	100
 izlude,71,92,2	duplicate(Bonne_izlude)	Bonne#izlude	90
 izlude,172,215,4	duplicate(Charfri_izlude)	Charfri#izlude	91
-izlude,127,175,4	duplicate(Cuskoal_izlude)	Cuskoal#izlude	124
+izlude,174,164,4	duplicate(Cuskoal_izlude)	Cuskoal#izlude	124
 izlude,85,103,4	duplicate(Dega_izlude)	Dega#izlude	84
 izlude,140,186,4	duplicate(Kylick_izlude)	Kylick#izlude	97
-izlude,56,156,2	duplicate(Red_izlude)	Red#izlude	85
-izlude,58,156,2	duplicate(Cebalis_izlude)	Cebalis#izlude	98
+izlude,57,159,2	duplicate(Red_izlude)	Red#izlude	85
+izlude,55,159,2	duplicate(Cebalis_izlude)	Cebalis#izlude	98
 izlude,165,156,2	duplicate(Soldier_izlude)	Soldier#izlude	105
-izlude,158,130,3	duplicate(bdt)	Bullet Dealer Tony#iz	86
-izlude,155,132,3	duplicate(mdk)	Magazine Dealer Kenny	83
-
-izlude,147,131,6	script	Blacksmith#izlude	726,{
-	end;
-}
 
 prt_fild08,350,219,4	script	Guard#izlude	105,{
 	mes "[Izlude Guard]";

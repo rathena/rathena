@@ -4,7 +4,7 @@
 //= kobra_k88
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.8a
+//= 1.9a
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -29,6 +29,7 @@
 //= 1.9 Fixed a small problem with Dega. (Ne default case) [L0ne_W0lf]
 //=	Re-added NPC dialog for Cebalis. The dialog differs
 //=	(even if slightly,) after the five or so lines.
+//= 1.9a A part of Kylick's dialogue is Pre-Renewal only. [Euphy]
 //============================================================
 
 // Izlude
@@ -222,9 +223,18 @@
 }
 
 -	script	::Kylick_izlude	-1,{
-	mes "[Kylick]";
-	switch(rand(2)) {
-	case 1:
+	if (!checkre(0) && rand(2)) {
+		mes "[Kylick]";
+		mes "I was thinking, even though the people of Izlude live so close to the ocean...";
+		next;
+		mes "[Kylick]";
+		mes "There are other cultures that have completely developed by living off of the sea. Of course, I'm talking about Amatsu.";
+		next;
+		mes "[Kylick]";
+		mes "I hear the cuisine there is really good! Although the idea of eating raw fish is new to me, I would love to go there, and try it just once!";
+		close;
+	} else {
+		mes "[Kylick]";
 		mes "Don't you think Binoculars";
 		mes "are really COOL?! You can";
 		mes "see all sorts of places...!";
@@ -240,15 +250,6 @@
 		mes "prevention is worth";
 		mes "a pound of cure";
 		mes "after all, right?";
-		close;
-	Default:
-		mes "I was thinking, even though the people of Izlude live so close to the ocean...";
-		next;
-		mes "[Kylick]";
-		mes "There are other cultures that have completely developed by living off of the sea. Of course, I'm talking about Amatsu.";
-		next;
-		mes "[Kylick]";
-		mes "I hear the cuisine there is really good! Although the idea of eating raw fish is new to me, I would love to go there, and try it just once!";
 		close;
 	}
 }

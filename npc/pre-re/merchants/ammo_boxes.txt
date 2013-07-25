@@ -1,16 +1,15 @@
 //===== rAthena Script =======================================
-//= Jawaii Town Renewal
+//= Magazine Dealers
 //===== By: ==================================================
-//= Daegaladh, Masao
+//= Euphy
 //===== Current Version: =====================================
 //= 1.0
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= Jawaii town NPCs.
+//= Turns bullets into magazines/packs.
 //===== Additional Comments: =================================
-//= 1.0 First Version. Renewal coordinates by Masao.
-//= 1.1 Moved "Honeymoon Helper" NPC.
+//= 1.0 First version, Pre-Renewal duplicates.
 //============================================================
 
-izlude,180,224,3	duplicate(Honeymoon_Helper_Izlude)	Honeymoon Helper#Izlude	71
+izlude,171,127,3	duplicate(mdk)	Magazine Dealer Kenny#iz	83

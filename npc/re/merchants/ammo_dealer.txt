@@ -1,0 +1,16 @@
+//===== rAthena Script =======================================
+//= Bullet Dealers
+//===== By ===================================================
+//= Euphy
+//===== Version ==============================================
+//= 1.0
+//===== Compatible With ======================================
+//= rAthena SVN
+//===== Description ==========================================
+//= Bullet trader.
+//===== Comments =============================================
+//= 1.0 First version, Renewal duplicates.
+//============================================================
+
+que_ng,187,156,3	duplicate(bdt)	Bullet Dealer Tony#ng	86
+izlude,77,104,3	duplicate(bdt)	Bullet Dealer Tony#iz	86	//Official: (74,106) -> in the water

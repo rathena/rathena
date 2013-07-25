@@ -13,5 +13,5 @@
 //= 1.0 First version. [L0ne_W0lf]
 //============================================================
 
-izlude,47,169,5	duplicate(Mercenary Manager#main)	Mercenary Manager#Sword	734
-izlude,56,169,4	duplicate(MercMerchant)	Mercenary Merchant#Sword	892
+izlude,47,170,4	duplicate(Mercenary Manager#main)	Mercenary Manager#Sword	734
+izlude,55,170,4	duplicate(MercMerchant)	Mercenary Merchant#Sword	892

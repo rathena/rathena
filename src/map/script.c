@@ -11094,13 +11094,12 @@ static int buildin_maprespawnguildid_sub_mob(struct block_list *bl,va_list ap)
 }
 
 /*
- * Function to kickout guildies out of a map. (Put them back into thei save point)
- * (mob are being killed)
+ * Function to kick guild members out of a map and to their save points.
  * m : mapid
  * g_id : owner guild id
  * flag & 1 : Warp out owners
- * flag & 2 : Warp out outsider
- * flag & 4 : reserved for mob
+ * flag & 2 : Warp out outsiders
+ * flag & 4 : reserved for mobs
  * */
 BUILDIN_FUNC(maprespawnguildid)
 {

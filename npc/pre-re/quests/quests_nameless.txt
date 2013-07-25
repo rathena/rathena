@@ -1,16 +1,17 @@
 //===== rAthena Script ======================================= 
-//= Quest NPCs related to Izlude
+//= Nameless Island Quests
 //===== By: ================================================== 
-//= Daegaladh, Masao
+//= Euphy
 //===== Current Version: ===================================== 
 //= 1.0
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
+//= [Official Conversion]
 //= Contains:
-//= - Edgar's Offer
+//= - Muff's Loan
 //===== Additional Comments: ================================= 
-//= 1.0 Updated to match the new Izlude Map. [Masao]
-//============================================================
+//= 1.0 Moved Dorian to pre-re/re paths.
+//============================================================ 
 
-izlude,179,219,2	duplicate(Edgar_izlude)	Edgar#izlude	49
+izlude_in,110,64,3	duplicate(Dorian_izlude)	Dorian	878,2,2

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.3
+//= 2.4
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -61,6 +61,7 @@
 //=     - Z-Gang Quest
 //= 2.2a Fixed a few job constant typos. [Euphy]
 //= 2.3 Updated RE/Pre-RE EXP. [Euphy]
+//= 2.4 Moved Dorian to pre-re/re paths. [Euphy]
 //============================================================ 
 
 // Nameless Island and Cursed Monestary Access Quest
@@ -3645,7 +3646,7 @@ cmd_fild01,55,160,0	script	Heap of Earth	844,{
 	close;
 }
 
-izlude_in,110,64,3	script	Dorian	878,2,2,{
+-	script	::Dorian_izlude	-1,{
 	if (checkweight(907,200) == 0) {
 		mes "[Dorian]";
 		mes "Ugh, just like a member";

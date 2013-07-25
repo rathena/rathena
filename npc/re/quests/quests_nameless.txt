@@ -1,15 +1,17 @@
 //===== rAthena Script ======================================= 
-//= Izlude Kafras
+//= Nameless Island Quests
 //===== By: ================================================== 
-//= Daegaladh
+//= Euphy
 //===== Current Version: ===================================== 
 //= 1.0
 //===== Compatible With: ===================================== 
 //= rAthena SVN
-//===== Description: =========================================
-//= Izlude Kafras.
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Contains:
+//= - Muff's Loan
 //===== Additional Comments: ================================= 
-//= 1.0 First version.
+//= 1.0 Moved Dorian to pre-re/re paths.
 //============================================================ 
 
-izlude,134,87,3	duplicate(kaf_izlude)	Kafra Employee	117
+izlude_in,57,92,3	duplicate(Dorian_izlude)	Dorian	878,2,2

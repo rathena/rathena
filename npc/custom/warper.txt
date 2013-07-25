@@ -140,7 +140,7 @@ T12: Restrict("RE");
 T13: Go("geffen",119,59);
 T14: Go("gonryun",160,120);
 T15: Go("hugel",96,145);
-T16: Go("izlude",128,114);
+T16: Go("izlude",128,(checkre(3)?146:114));
 T17: Go("jawaii",251,132);
 T18: Go("lighthalzen",158,92);
 T19: Go("louyang",217,100);
@@ -148,7 +148,7 @@ T20: Go("xmas",147,134);
 T21: Restrict("RE");
 	Go("malangdo",140,114);
 T22: Restrict("RE");
-	Go("malaya",212,206);
+	Go("malaya",231,200);
 T23: Go("manuk",282,138);
 T24: Go("mid_camp",210,288);
 T25: Restrict("RE");
@@ -415,7 +415,7 @@ G6: Go("schg_dun01",200,124);
 
 menu	"Bakonawa Lake",I1, "Bangungot Hospital 2F",I2, "Buwaya Cave",I3,
 	"Endless Tower",I4, "Hazy Forest",I5, "Malangdo Culvert",I6, "Nidhoggur's Nest",I7,
-	"Octopus Cave",I8, "Old Glast Heim",I9, "Orc's Memory",I10, "Sealed Shrine",I111;
+	"Octopus Cave",I8, "Old Glast Heim",I9, "Orc's Memory",I10, "Sealed Shrine",I11;
 
 I1: Restrict("RE");
 	Go("ma_scene01",172,175);
@@ -470,7 +470,7 @@ glast_01,372,308,4	duplicate(Warper)	Warper#glh	811
 gonryun,162,122,4	duplicate(Warper)	Warper#gon	811
 hugel,101,151,4	duplicate(Warper)	Warper#hug	811
 izlu2dun,110,92,4	duplicate(Warper)	Warper#izd	811
-izlude,132,120,4	duplicate(Warper)	Warper#izl	811
+izlude,134,150,4	duplicate(Warper)	Warper#izl	811	//Pre-RE: (132,120)
 jawaii,253,138,4	duplicate(Warper)	Warper#jaw	811
 lighthalzen,162,102,4	duplicate(Warper)	Warper#lhz	811
 louyang,208,103,6	duplicate(Warper)	Warper#lou	811
@@ -502,5 +502,5 @@ dewata,204,186,6	duplicate(Warper)	Warper#dew	811
 dicastes01,194,194,6	duplicate(Warper)	Warper#dic	811
 ecl_in01,51,60,4	duplicate(Warper)	Warper#ecl	811
 malangdo,134,117,6	duplicate(Warper)	Warper#mal	811
-malaya,210,205,4	duplicate(Warper)	Warper#ma	811
+malaya,231,204,4	duplicate(Warper)	Warper#ma	811
 mora,57,152,4	duplicate(Warper)	Warper#mora	811
