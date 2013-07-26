@@ -578,6 +578,16 @@ int skillnotok (uint16 skill_id, struct map_session_data *sd)
 			break;
 		case MC_VENDING:
 		case ALL_BUYING_STORE:
+			if( map[sd->bl.m].flag.novending ) {
+				clif_displaymessage (sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+				return 1;
+			}
+			if( map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKNOVENDING) ) {
+				clif_displaymessage (sd->fd, msg_txt(sd,204)); // "You can't open a shop on this cell."
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+				return 1;
+			}
 			if( npc_isnear(&sd->bl) ) {
 				// uncomment to send msg_txt.
 				//char output[150];

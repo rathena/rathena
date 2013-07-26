@@ -473,14 +473,9 @@ int instance_destroy(short instance_id)
 		im->vars = NULL;
 	}
 
-	im->type = 0;
-	im->state = INSTANCE_FREE;
-	im->party_id = 0;
-	im->keep_limit = 0;
-	im->idle_limit = 0;
-	ShowInfo("[Instance] Destroyed %d.\n", instance_data[i].map);
+	ShowInfo("[Instance] Destroyed %d.\n", instance_id);
 
-	memset(instance_data[i].map, 0, sizeof(instance_data[i].map));
+	memset(&instance_data[instance_id], 0, sizeof(instance_data[instance_id]));
 
 	return 0;
 }
