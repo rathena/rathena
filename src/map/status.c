@@ -6941,11 +6941,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	case SC__STRIPACCESSORY:
 		if( sd ) {
 			int i = -1;
-			if( !(sd->bonus.unstripable_equip&EQI_ACC_L) ) {
+			if( !(sd->bonus.unstripable_equip&EQP_ACC_L) ) {
 				i = sd->equip_index[EQI_ACC_L];
 				if( i >= 0 && sd->inventory_data[i] && sd->inventory_data[i]->type == IT_ARMOR )
 					pc_unequipitem(sd,i,3); //L-Accessory
-			} if( !(sd->bonus.unstripable_equip&EQI_ACC_R) ) {
+			} if( !(sd->bonus.unstripable_equip&EQP_ACC_R) ) {
 				i = sd->equip_index[EQI_ACC_R];
 				if( i >= 0 && sd->inventory_data[i] && sd->inventory_data[i]->type == IT_ARMOR )
 					pc_unequipitem(sd,i,3); //R-Accessory

@@ -1387,7 +1387,8 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __heap Binary heap
 /// @param __val Value
 /// @param __topcmp Comparator
-#define BHEAP_PUSH(__heap,__val,__topcmp) \
+/// @param __swp Swapper
+#define BHEAP_PUSH(__heap,__val,__topcmp,__swp) \
 	do{ \
 		size_t _i_ = VECTOR_LENGTH(__heap); \
 		VECTOR_PUSH(__heap,__val); /* insert at end */ \
@@ -1396,7 +1397,7 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 			size_t _parent_ = (_i_-1)/2; \
 			if( __topcmp(VECTOR_INDEX(__heap,_parent_),VECTOR_INDEX(__heap,_i_)) < 0 ) \
 				break; /* done */ \
-			swap(VECTOR_INDEX(__heap,_parent_),VECTOR_INDEX(__heap,_i_)); \
+			__swp(VECTOR_INDEX(__heap,_parent_),VECTOR_INDEX(__heap,_i_)); \
 			_i_ = _parent_; \
 		} \
 	}while(0)
@@ -1413,8 +1414,8 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 ///
 /// @param __heap Binary heap
 /// @param __topcmp Comparator
-#define BHEAP_POP(__heap,__topcmp) BHEAP_POPINDEX(__heap,0,__topcmp)
-
+/// @param __swp Swapper
+#define BHEAP_POP(__heap,__topcmp,__swp) BHEAP_POPINDEX(__heap,0,__topcmp,__swp)
 
 
 /// Removes the target value of the heap. (using the '=' operator)
@@ -1428,16 +1429,19 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __heap Binary heap
 /// @param __idx Index
 /// @param __topcmp Comparator
-#define BHEAP_POPINDEX(__heap,__idx,__topcmp) \
+/// @param __swp Swapper
+#define BHEAP_POPINDEX(__heap,__idx,__topcmp,__swp) \
 	do{ \
 		size_t _i_ = __idx; \
 		VECTOR_INDEX(__heap,__idx) = VECTOR_POP(__heap); /* put last at index */ \
+		if( _i_ >= VECTOR_LENGTH(__heap)) /* removed last, nothing to do */ \
+			break; \
 		while( _i_ ) \
 		{ /* restore heap property in parents */ \
 			size_t _parent_ = (_i_-1)/2; \
 			if( __topcmp(VECTOR_INDEX(__heap,_parent_),VECTOR_INDEX(__heap,_i_)) < 0 ) \
 				break; /* done */ \
-			swap(VECTOR_INDEX(__heap,_parent_),VECTOR_INDEX(__heap,_i_)); \
+			__swp(VECTOR_INDEX(__heap,_parent_),VECTOR_INDEX(__heap,_i_)); \
 			_i_ = _parent_; \
 		} \
 		while( _i_ < VECTOR_LENGTH(__heap) ) \
@@ -1449,12 +1453,12 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 				break; /* done */ \
 			else if( _rchild_ >= VECTOR_LENGTH(__heap) || __topcmp(VECTOR_INDEX(__heap,_lchild_),VECTOR_INDEX(__heap,_rchild_)) <= 0 ) \
 			{ /* left child */ \
-				swap(VECTOR_INDEX(__heap,_i_),VECTOR_INDEX(__heap,_lchild_)); \
+				__swp(VECTOR_INDEX(__heap,_i_),VECTOR_INDEX(__heap,_lchild_)); \
 				_i_ = _lchild_; \
 			} \
 			else \
 			{ /* right child */ \
-				swap(VECTOR_INDEX(__heap,_i_),VECTOR_INDEX(__heap,_rchild_)); \
+				__swp(VECTOR_INDEX(__heap,_i_),VECTOR_INDEX(__heap,_rchild_)); \
 				_i_ = _rchild_; \
 			} \
 		} \
