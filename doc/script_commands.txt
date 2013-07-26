@@ -7214,7 +7214,7 @@ The command returns 0 upon success, and these values upon failure:
 
 ---------------------------------------
 
-*instance_npcname("<npc name>"{,<instance id>});
+*instance_npcname("<npc name>"{,<instance id>})
 
 Returns the unique name of the instanced script. If no ID is specified,
 the instance the script is attached to is used. If the script is not attached to
@@ -7223,7 +7223,7 @@ that fails, the script will come to a halt.
 
 ---------------------------------------
 
-*instance_mapname("<map name>"{,<instance id>});
+*instance_mapname("<map name>"{,<instance id>})
 
 Returns the unique name of the instanced map. If no instance ID is specified,
 the instance the script is attached to is used. If the script is not attached to
@@ -7232,7 +7232,7 @@ that fails, the command returns an empty string instead.
 
 ---------------------------------------
 
-*instance_id();
+*instance_id()
 
 Returns the unique instance id of the attached script. If the script is not
 attached to an instance, the instance of the currently attached player's party is
@@ -7250,7 +7250,7 @@ come to a halt.
 
 ---------------------------------------
 
-*instance_check_party(<party id>{,<amount>{,<min>{,<max>}}});
+*instance_check_party(<party id>{,<amount>{,<min>{,<max>}}})
 
 This function checks if a party meets certain requirements, returning 1 if all
 conditions are met and 0 otherwise. It will only check online characters.

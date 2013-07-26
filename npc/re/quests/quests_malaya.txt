@@ -17,7 +17,7 @@
 //=     quests [DeadlySilence]
 //============================================================
 
-// Cautious Village and subsequent :: malaya_hi
+// Cautious Village and subsequent quests :: malaya_hi
 //============================================================
 malaya,266,76,3	script	Rodel the Guard#malaya	570,4,4,{
 	if (MaxWeight - Weight < 1000 || checkweight(1201,1) == 0) {

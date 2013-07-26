@@ -21,7 +21,7 @@
 // Poison Herb Merchants (Guillotine Cross)
 //============================================================
 -	script	::phs	-1,{
-	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 20000) {
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
 		mes "- Wait a minute !! -";
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
@@ -87,7 +87,7 @@ lhz_in02,16,205,4	duplicate(phs)	Poison Herb Merchant#lhz	877
 // Rune Stone Merchants (Rune Knight)
 //============================================================
 -	script	::runesale	-1,{
-	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 20000) {
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
 		mes "- Wait a minute !! -";
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
@@ -218,7 +218,7 @@ job3_guil01,91,93,3	script	Rare Herb Collector	49,{
 // Point Merchants (Sorcerer)
 //============================================================
 -	script	::pss	-1,{
-	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 20000) {
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
 		mes "- Wait a minute !! -";
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";

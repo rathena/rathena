@@ -4,7 +4,7 @@
 //= kobra_k88
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
 //= [Official Conversion]
 //= rAthena 7.15 +
@@ -24,6 +24,7 @@
 //= 1.5 Removed a duplicate related to the Sign Quest. [SinSloth]
 //= 1.5 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 1.6 Commented out conflicting npcs. (bugreport:4093) [L0ne_W0lf]
+//= 1.7 Moved Izlude NPCs to Pre-RE path. [Euphy]
 //============================================================
 
 // Prontera
@@ -234,20 +235,6 @@ aldebaran,217,222,1	script	Sign#Alde5	111,{
 	mes "^993300- The Sign Reads -^000000";
 	mes "I saw Santa Claus in Lutie!";
 	mes "- The rest looks like scribble -";
-	close;
-}
-
-// Izlude
-//============================================================
-izlude,54,139,1	script	Sign#Iz1	111,{
-	mes "^993300- The Sign Reads -^000000";
-	mes "Welcome to the Swordsman Academy.";
-	close;
-}
-
-izlude,144,148,1	script	Sign#Iz2	111,{
-	mes "^993300- The Sign Reads -^000000";
-	mes "Welcome.";
 	close;
 }
 

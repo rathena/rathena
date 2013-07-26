@@ -1,0 +1,27 @@
+//===== rAthena Script =======================================
+//= Official scripts for beginners from iRO
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Additional Comments: =================================
+//= 1.0 Moved Izlude NPCs to Pre-RE path.
+//============================================================
+
+izlude,131,116,4	script	Bulletin Board#5	837,{
+	mes "[Izlude: The Satellite City]";
+	mes "Welcome to Izlude, the satellite of Prontera. Izlude was built to support Prontera's defense and to accommodate its burgeoning population";
+	next;
+	mes "[Izlude: The Satellite City]";
+	mes "Points of interest include the Swordsman Association building which allows adventurers to change their job to Swordsman, and the Battle Area that is North of Izlude.";
+	next;
+	mes "[Izlude: The Satellite City]";
+	mes "At the docks, you may take a ship and travel to ^123972Alberta^000000 or ^2F0400Byalan Island^000000.";
+	next;
+	mes "[Izlude: The Satellite City]";
+	mes "From Izlude, ^6D6FE0Prontera^000000 is located to the Northwest, and ^1F3A11Payon^000000 is located to the South.";
+	mes "Enjoy your travels in the Rune-Midgarts Kingdom.";
+	close;
+}

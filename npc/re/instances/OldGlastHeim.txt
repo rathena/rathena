@@ -233,7 +233,7 @@ OnEnable:
 		select("The Ymir's Heart. Himmelmez...");
 		mes "["+strcharinfo(0)+"]";
 		mes "Himmelmez, the Valkyrie of the dead is looking to get a piece of the Ymir's heart hidden in the castle!";
-		unittalk getcharid(3),"Himmelmez, the Valkyrie of the dead is looking to get a piece of the Ymir's heart hidden in the castle";
+		unittalk getcharid(3),"Himmelmez, the Valkyrie of the dead is looking to get a piece of the Ymir's heart hidden in the castle!";
 		next;
 		mes "[Heinrich]";
 		mes "Haha. That's a nice joke. Now tell me what brings you here.";

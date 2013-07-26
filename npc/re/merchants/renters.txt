@@ -10,9 +10,10 @@
 //= Renewal-specific breeder NPCs.
 //===== Additional Comments: ================================= 
 //= 2.1 Moved some renters to a separate renewal file. [Daegaladh]
+//= 2.2 Updated to match the official scripts. [Euphy]
 //============================================================ 
 
-// Dragon Breeder on the Rune Knight job change map, couldn't find NPC on iRO.
+// Dragon Breeder
 //============================================================
 job3_rune01,88,62,5	script	Dragon Breeder	105,{
 	mes "[Dragon Breeder]";
@@ -148,21 +149,35 @@ prontera,125,208,5	script	Peco Peco Remover	105,{
 
 // Magic Gear Renter
 //============================================================
-prontera,163,178,3	script	Magic Gear Master	105,{
+-	script	::mgm	-1,{
 	mes "[Magic Gear Master]";
 	if (Class == Job_Mechanic || Class == Job_Mechanic_T || Class == Job_Baby_Mechanic) {
-		mes "Welcome. Would you like to rent a Magic Gear?";
+		mes "Welcome, Mechanic.";
+		mes "Would you like to rent a Pushcart or";
+		mes "ride a Magic Gear?";
 		next;
-		switch(select("Yes:No")) {
+		switch(select("Rent a Pushcart:Ride a Magic Gear:Cancel")) {
 		case 1:
-			if (!getskilllv("NC_MADOLICENCE")) {
+			if (checkcart()) {
 				mes "[Magic Gear Master]";
-				mes "Please learn how to use a Magic Gear first.";
+				mes "I'm sorry, but you already";
+				mes "have a Pushcart.";
 				close;
 			}
-			else if (checkmadogear()) {
+			setcart;
+			mes "[Magic Gear Master]";
+			mes "There you go!";
+			close;
+		case 2:
+			if (checkmadogear()) {
 				mes "[Magic Gear Master]";
-				mes "You already have a Magic Gear.";
+				mes "I'm sorry, but you're already";
+				mes "riding a Magic Gear.";
+				close;
+			}
+			else if (!getskilllv("NC_MADOLICENCE")) {
+				mes "[Magic Gear Master]";
+				mes "Please learn the skill to get the Magic Gear License first.";
 				close;
 			}
 			else if(ismounting()) {
@@ -171,10 +186,10 @@ prontera,163,178,3	script	Magic Gear Master	105,{
 				close;
 			}
 			setmadogear;
-			close;
-		case 2:
 			mes "[Magic Gear Master]";
-			mes "I see. Then have a great day.";
+			mes "Have fun, and please come again!";
+			close;
+		case 3:
 			close;
 		}
 	}
@@ -182,3 +197,13 @@ prontera,163,178,3	script	Magic Gear Master	105,{
 	mes "Magic Gears are only available for Mechanics.";
 	close;
 }
+prontera,163,178,3	duplicate(mgm)	Magic Gear Master#prt	105
+geffen,103,55,5	duplicate(mgm)	Magic Gear Master#gef	105
+payon,166,106,5	duplicate(mgm)	Magic Gear Master#pay	105
+aldebaran,133,112,5	duplicate(mgm)	Magic Gear Master#alde	105
+yuno,167,187,3	duplicate(mgm)	Magic Gear Master#yuno	105
+rachel,106,134,5	duplicate(mgm)	Magic Gear Master#ra	105
+dicastes01,187,207,3	duplicate(mgm)	Magic Gear Master#dic	105
+manuk,273,212,5	duplicate(mgm)	Magic Gear Master#man	105
+splendide,180,174,5	duplicate(mgm)	Magic Gear Master#spl	105
+mid_camp,242,243,3	duplicate(mgm)	Magic Gear Master#mid	105
