@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.0a
+//= 1.1
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -12,7 +12,42 @@
 //===== Additional Comments: =================================
 //= 1.0 First Version.
 //= 1.0a Gathered remaining dialogues. [Euphy]
+//= 1.1 Added new warpers for Satan Morroc maps. [Euphy]
 //============================================================
+
+// Resurrection of Satan Morroc
+// ============================================================
+-	script	Continental Guard#man	-1,{
+	mes "[Continental Guard]";
+	mes "We've received orders from Headquarters to block access to this area since an unusual space-time phenomenon has been detected.";
+	next;
+	mes "[Continental Guard]";
+	mes "If you really want to go to the next area, you'll be responsible for your own safety.";
+	next;
+	switch(select("Nevermind.:Enter the Field.")) {
+	case 1:
+		mes "[Continental Guard]";
+		mes "Wise choice.";
+		mes "Have a safe journey.";
+		close;
+	case 2:
+		mes "[Continental Guard]";
+		mes "I see.";
+		mes "I'll send you to the field shortly.";
+		close2;
+		warp "moc_fild20",208,207;
+		end;
+	}
+}
+moc_fild07,380,202,1	duplicate(Continental Guard#man)	Continental Guard#man1	852
+moc_fild11,189,360,6	duplicate(Continental Guard#man)	Continental Guard#man2	852
+prt_fild10,263,23,1	duplicate(Continental Guard#man)	Continental Guard#man3	852
+prt_fild09,95,19,1	duplicate(Continental Guard#man)	Continental Guard#man4	852
+prt_fild09,246,17,1	duplicate(Continental Guard#man)	Continental Guard#man5	852
+moc_fild13,32,171,6	duplicate(Continental Guard#man)	Continental Guard#man6	852
+moc_fild16,124,381,4	duplicate(Continental Guard#man)	Continental Guard#man7	852
+moc_fild16,333,380,4	duplicate(Continental Guard#man)	Continental Guard#man8	852
+moc_fild01,84,19,1	duplicate(Continental Guard#man)	Continental Guard#man9	852
 
 // Pyramids Nightmare Mode
 //============================================================

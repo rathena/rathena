@@ -1,4 +1,4 @@
-//===== rAthena Documentation ================================
+﻿//===== rAthena Documentation ================================
 //= rAthena Script Commands
 //===== By: ==================================================
 //= rAthena Dev Team
@@ -3532,23 +3532,25 @@ or does not exist), and 1 upon success.
 
 -------------------------
 
-*addrid(<type> or <rid>{,<forced>{,<parameters>}})
+*addrid(<type>{,<flag>{,<parameters>}});
 
-Allows to attach multiple RIDs to one script at a time.
+This command will attach other RIDs to the current script without detaching the
+invoking RID. It returns 1 if successful and 0 upon failure.
 
-<type>:
-	Account ID -> attach player with acc_id if he's online. Returns 1 if player is offline, 0 if online
-	0 -> attach entire server
-	1 -> attach everyone currently on the map of the player if a player runs addrid/else of the npcs map
-	2 -> attach entire party(party id has to be entered at supportid)
-	3 -> attach entire guild(guild id has to be entered at supportid)
-	4 -> attach all players in an area at the map where the person running addrid is located/no person=use npcs map
-	Note: 4 uses addrid(4,Forced,x0,y0,x1,y1)
-	
+<type> determines what RIDs are attached:
+ 0: All players in the server.
+ 1: All players in the map of the invoking player, or the invoking NPC if no player is attached.
+ 2: Party members of a specified party ID.
+    [ Parameters: <party id> ]
+ 3: Guild members of a specified guild ID.
+    [ Parameters: <guild id> ]
+ 4: All players in a specified area of the map of the invoking player (or NPC).
+    [ Parameters: <x0>,<y0>,<x1>,<y1> ]
+ Account ID: The specified account ID.
 
-<forced>:
-	0 or left out -> force attachment of the player even if he runs a script already
-	1 -> don't attach if player is currently running a script(only needed when you use things like mes"" close next so it seems
+<flag> can prevent certain players from being attached:
+ 0: Players are always attached. (default)
+ 1: Players currently running another script will not be attached.
 
 ---------------------------------------
 

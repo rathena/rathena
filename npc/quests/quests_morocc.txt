@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 3.0
+//= 3.1
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -44,6 +44,7 @@
 //= 2.9 Fixed player dying/logging out during conversation could prevent
 //=     summoning of Satan Morroc until server reboot. [Gepard]
 //= 3.0 Updated RE/Pre-RE EXP. [Euphy]
+//= 3.1 Updated to match the latest official scripts. [Euphy]
 //============================================================ 
 
 // Stop Post Quest
@@ -4375,7 +4376,7 @@ prontera,153,353,4	script	Messenger#prince1	105,{
 }
 
 prt_castle,117,163,5	script	Inspector#prince	755,{
-	if (checkquest(10004) == 1) {
+	if (checkquest(10004) == 0 || checkquest(10004) == 1) {
 		mes "[Inspector]";
 		mes "Judge!";
 		mes "How goes it? I don't think it is easy to meet seven candidates and appraise them.";
@@ -4414,7 +4415,7 @@ prt_castle,117,163,5	script	Inspector#prince	755,{
 		setquest 10022;
 		close;
 	}
-	if (nk_prince == 1) {
+	if (nk_prince < 2) {
 		mes "[Inspector]";
 		mes "What's wrong with you?";
 		mes "This is not an open area!";
@@ -4427,6 +4428,12 @@ prt_castle,117,163,5	script	Inspector#prince	755,{
 			warp "prontera",155,353;
 			end;
 		case 2:
+			if (nk_prince == 0) {
+				mes "[Inspector]";
+				mes "I don't think";
+				mes "that he is an experienced appraiser...";
+				close;
+			}
 			mes "[Inspector]";
 			mes "......";
 			next;
@@ -5159,7 +5166,7 @@ prt_castle,117,163,5	script	Inspector#prince	755,{
 		mes "How is it going?";
 		mes "Grading someone is not a piece of cake. It's real hard work indeed. You do the hard work for our country.";
 		next;
-		if ((nkprince_eisen == 15) && (checkquest(10025) == 1)) {
+		if ((nkprince_eisen == 15) && (checkquest(10025) == 0 || checkquest(10025) == 1)) {
 			mes "-I tell him about the Ahrum and Ernst accident.-";
 			next;
 			mes "[Inspector]";
@@ -5219,19 +5226,49 @@ prt_castle,117,163,5	script	Inspector#prince	755,{
 		mes "[Inspector]";
 		mes "Hello, appraiser.";
 		mes "I hope you are able to finish your mission perfectly. Have you met with all the princes, like I told you to?";
+		if (nkprince_eisen != 10)
+			close;
 		next;
 		switch(select("Yes.:No.")) {
 		case 1:
-			mes "[Inspector]";
-			mes "Very well.";
-			mes "I like hearing about the princes.";
+			set .@prin1,checkquest(10005);
+			set .@prin2,checkquest(10006);
+			set .@prin3,checkquest(10007);
+			set .@prin4,checkquest(10008);
+			set .@prin5,checkquest(10009);
+			set .@prin6,checkquest(10010);
+			set .@prin7,checkquest(10011);
+			if (.@prin1 + .@prin2 + .@prin3 + .@prin4 + .@prin5 + .@prin6 + .@prin7 == 14) {
+				mes "[Inspector]";
+				mes "Very well.";
+				mes "I like hearing about the princes.";
+				completequest 10004;
+				setquest 10004;
+			} else {
+				mes "[Inspector]";
+				mes "Are you sure?";
+				mes "Please check on all the princes.";
+			}
 			close;
 		case 2:
-			mes "[Inspector]";
-			mes "Don't be coy. I'm sure you have done it already.";
+			set .@prin1,checkquest(10005);
+			set .@prin2,checkquest(10006);
+			set .@prin3,checkquest(10007);
+			set .@prin4,checkquest(10008);
+			set .@prin5,checkquest(10009);
+			set .@prin6,checkquest(10010);
+			set .@prin7,checkquest(10011);
+			if (.@prin1 + .@prin2 + .@prin3 + .@prin4 + .@prin5 + .@prin6 + .@prin7 == 14) {
+				mes "[Inspector]";
+				mes "Don't be coy. I'm sure you have done it already.";
+				completequest 10004;
+				setquest 10004;
+			} else {
+				mes "[Inspector]";
+				mes "My investigations on all the princes are done.";
+			}
 			close;
 		}
-		close;
 	}
 }
 
@@ -5247,7 +5284,7 @@ prt_castle,272,375,4	script	Prince	881,{
 		mes "But he insists me to be corrupted, knowing how it would be...";
 		close;
 	}
-	else if (checkquest(10020) == 1) {
+	else if (checkquest(10020) == 0 || checkquest(10020) == 1) {
 		mes "[Erich]";
 		mes "These days, I have bad luck... Only harrassments happen to me...";
 		close;
@@ -5313,7 +5350,7 @@ prt_castle,274,372,4	script	Servant#hans	48,{
 		mes "My prince didn't do anything wrong but, anyways, I apologize for anything to you!";
 		close;
 	}
-	else if (checkquest(10020) == 1) {
+	else if (checkquest(10020) == 0 || checkquest(10020) == 1) {
 		mes "Incessantly...-";
 		mes "-He has jitters whenever I react to him. His actions give me a feeling of pity.-";
 		close;
@@ -5401,7 +5438,7 @@ prt_castle,339,202,3	script	Prince#urgen	989,{
 		mes "My beautiful body isn't in perfect condition right now. I don't want to show it to anyone today.";
 		close;
 	}
-	else if (checkquest(10021) == 1) {
+	else if (checkquest(10021) == 0 || checkquest(10021) == 1) {
 		mes "[Urugen]";
 		mes "...What? What did you...";
 		mes "just say to me?... Huh?";
@@ -5502,7 +5539,7 @@ prt_castle,289,201,3	script	Prince#helmut	991,{
 		mes "How can I deal with this stress? Damn! Hell!";
 		close;
 	}
-	else if (checkquest(10022) == 1) {
+	else if (checkquest(10022) == 0 || checkquest(10022) == 1) {
 		mes "-He is so blushed,";
 		mes "evidently shown on his face.-";
 		close;
@@ -5697,7 +5734,7 @@ prt_castle,391,205,3	script	Prince#poe	993,{
 		mes "He gave up without any challenge. That's not what the man has to do. He is not as good as me. But okay. I am disappointed in him. Eigen Ahrum.";
 		close;
 	}
-	else if (checkquest(10018) == 1) {
+	else if (checkquest(10018) == 0 || checkquest(10018) == 1) {
 		mes "[Poe]";
 		mes "......";
 		close;
@@ -5918,10 +5955,32 @@ prt_castle,364,375,4	script	Prince#peter	987,{
 		next;
 		switch(select("Yes, I saw her for you.:No, I don't want to.")) {
 		case 1:
+			if (checkquest(10014) == 0 || checkquest(10014) == 1) {
+				mes "[Peter]";
+				mes "I am glad that the girl liked it. Once I got cured, I wanted to go meet with her.";
+				next;
+				mes "[Peter]";
+				mes "Anyhow, thanks for your good work. I really feel sorry about bothering you with trifle things. This is my sense of gratitude. Don't feel so much burden and take this.";
+				completequest 10014;
+				getitem 644,1; //Gift_Box
+				close;
+			}
 			mes "[Peter]";
 			mes "Thinking about the little girl calms me. I still can't believe my eyes. My prince Ahrum who just passed away...~";
 			close;
 		case 2:
+			if (checkquest(10014) == 0 || checkquest(10014) == 1) {
+				mes "[Peter]";
+				mes "As you said.";
+				mes "I've heard that her life is like a flower when I lost it.";
+				mes "I will go see her on my own.";
+				next;
+				mes "[Peter]";
+				mes "I really feel sorry about bothering you with trifle things. Please take this.";
+				completequest 10014;
+				getitem 644,1; //Gift_Box
+				close;
+			}
 			mes "[Peter]";
 			mes "Never mind.";
 			mes "I still can't believe my eyes. My prince Ahrum who just passed away...~~";
@@ -5933,19 +5992,20 @@ prt_castle,364,375,4	script	Prince#peter	987,{
 		mes "Child... What the heck happened to you?...";
 		close;
 	}
-	else if (checkquest(10019)== 1) {
+	else if (checkquest(10019) == 0 || checkquest(10019) == 1) {
 		mes "[Peter]";
 		mes "......";
 		close;
 	}
 	if (checkquest(10008) == 2) {
-		if (checkquest(10014) == 2) {
+		set .@quest, checkquest(10014);
+		if (.@quest == 2) {
 			mes "[Peter]";
 			mes "I really appreciate it.";
 			mes "You are so kind.";
 			close;
 		}
-		else if (checkquest(10014) == 1) {
+		else if (.@quest == 0 || .@quest == 1) {
 			mes "[Peter]";
 			mes "I am glad that the girl liked it. Once I got cured, I wanted to go meet with her.";
 			next;
@@ -6071,9 +6131,8 @@ prt_castle,364,375,4	script	Prince#peter	987,{
 }
 
 aldebaran,132,184,3	script	Girl#prince	96,{
-	if (checkquest(10013) == 1) {
+	if (checkquest(10013) == 0 || checkquest(10013) == 1) {
 		if (countitem(744) > 0) {
-			// Missed
 			mes "[Girl]";
 			mes "Wooah, Uncle Peter sent these flowers";
 			mes "for me?";
@@ -6317,12 +6376,13 @@ prt_castle,314,373,4	script	Prince#eisen	983,{
 			close;
 		}
 		else if (nkprince_eisen == 14) {
+			mes "[Ernst]";
 			mes "Bbb... Brother?... You... told me ";
 			mes "you would kill me... You just wanted to be killed";
 			mes "by me?... Bbb...brother?...";
 			next;
 			mes "[Ahrum]";
-			mes "Huhu... Not at all. I just wanted to kill you... That's it... Good job, Ern... This is legal, self-defense; killing a villain... right?";
+			mes "Huhu... Not at all. I just wanted to kill you... That's it... Good job, Ern... This is legal self-defense, killing a villain... right?";
 			next;
 			mes "[Ernst]";
 			mes "B..Brother... even now it is not too late! If you go to a medic, you can be restored!";
@@ -6568,7 +6628,7 @@ prt_castle,368,312,4	script	Prince#ern	985,{
 		mes "I don't want to see anyone.";
 		close;
 	}
-	else if (checkquest(01024) == 1) {
+	else if (checkquest(10024) == 0 || checkquest(10024) == 1) {
 		mes "[Ernst]";
 		mes "...Brother Ahrum...";
 		close;
@@ -6757,8 +6817,8 @@ prt_castle,163,319,0	script	#twonoble	-1,3,3,{
 //OnTouch2:
 OnTouch:
 	if (nkprince_eisen == 7) {
-		donpcevent "Aged Noble 1#valter::OnEnable";
-		donpcevent "Aged Noble 2#rihart::OnEnable";
+		donpcevent "Young Noble#valter::OnEnable";
+		donpcevent "Aged Noble#rihart::OnEnable";
 		mes "[Aged Noble]";
 		mes "You don't have to worry.";
 		mes "Once my Eigen Ahrum is chosen to be king, the Richard family will be a second magnate.";
@@ -6813,8 +6873,8 @@ OnTouch:
 		next;
 		mes "[A man of Riehart Family]";
 		mes "Never mind...";
-		donpcevent "Aged Noble 1#valter::OnDisable";
-		donpcevent "Aged Noble 2#rihart::OnDisable";
+		donpcevent "YoungNoble#valter::OnDisable";
+		donpcevent "Aged Noble#rihart::OnDisable";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "(Walter is the name of Ahrum.";
@@ -6828,41 +6888,41 @@ OnTouch:
 	}
 }
 
-prt_castle,156,325,4	script	Aged Noble 1#valter	86,{
-	mes "[Aged Noble]";
+prt_castle,156,325,4	script	Young Noble#valter	86,{
+	mes "[Young Noble Walter]";
 	mes "Step aside.";
 	mes "How dare you talk to him.";
 	close;
 
 OnInit:
-	disablenpc "Aged Noble 1#valter";
+	disablenpc "Young Noble#valter";
 	end;
 
 OnEnable:
-	enablenpc "Aged Noble 1#valter";
+	enablenpc "Young Noble#valter";
 	end;
 
 OnDisable:
-	disablenpc "Aged Noble 1#valter";
+	disablenpc "Young Noble#valter";
 	end;
 }
 
-prt_castle,157,323,3	script	Aged Noble 2#rihart	880,{
-	mes "[Aged Noble]";
+prt_castle,157,323,3	script	Aged Noble#rihart	880,{
+	mes "[Aged Noble Richard]";
 	mes "Hmm-hmm.";
 	mes "What an indecorous person!";
 	close;
 
 OnInit:
-	disablenpc "Aged Noble 2#rihart";
+	disablenpc "Aged Noble#rihart";
 	end;
 
 OnEnable:
-	enablenpc "Aged Noble 2#rihart";
+	enablenpc "Aged Noble#rihart";
 	end;
 
 OnDisable:
-	disablenpc "Aged Noble 2#rihart";
+	disablenpc "Aged Noble#rihart";
 	end;
 }
 
@@ -7600,7 +7660,7 @@ OnTouch:
 
 prt_castle,336,276,0	script	#ern	45,1,1,{
 OnTouch:
-	if (checkquest(10023) == 1) {
+	if (checkquest(10023) == 0 || checkquest(10023) == 1) {
 		donpcevent "Prince#eisen6::OnEnable";
 	}
 	warp "prt_castle",368,308;
@@ -7609,7 +7669,7 @@ OnTouch:
 
 prt_castle,300,276,0	script	#erich	45,1,1,{
 OnTouch:
-	if (checkquest(10020) == 1) {
+	if (checkquest(10020) == 0 || checkquest(10020) == 1) {
 		donpcevent "Prince#eisen1::OnEnable";
 	}
 	warp "prt_castle",274,368;
@@ -7618,7 +7678,7 @@ OnTouch:
 
 prt_castle,330,271,0	script	#helmut	45,1,1,{
 OnTouch:
-	if (checkquest(10022) == 1) {
+	if (checkquest(10022) == 0 || checkquest(10022) == 1) {
 		donpcevent "Prince#eisen3::OnEnable";
 	}
 	warp "prt_castle",290,208;
@@ -7627,7 +7687,7 @@ OnTouch:
 
 prt_castle,348,271,0	script	#poe	45,1,1,{
 OnTouch:
-	if (checkquest(10018) == 1) {
+	if (checkquest(10018) == 0 || checkquest(10018) == 1) {
 		donpcevent "Prince#eisen4::OnEnable";
 	}
 	warp "prt_castle",390,208;
@@ -7636,7 +7696,7 @@ OnTouch:
 
 prt_castle,354,276,0	script	#peter	45,1,1,{
 OnTouch:;
-	if (checkquest(10019) == 1) {
+	if (checkquest(10019) == 0 || checkquest(10019) == 1) {
 		donpcevent "Prince#eisen5::OnEnable";
 	}
 	warp "prt_castle",366,368;
@@ -7645,7 +7705,7 @@ OnTouch:;
 
 prt_castle,310,271,0	script	#urgen	45,1,1,{
 OnTouch:
-	if (checkquest(10021) == 1) {
+	if (checkquest(10021) == 0 || checkquest(10021) == 1) {
 		donpcevent "Prince#eisen2::OnEnable";
 	}
 	warp "prt_castle",340,208;

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Nana (1.0)
 //===== Current Version: =====================================
-//= 1.4b
+//= 1.5
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -15,11 +15,12 @@
 //= 1.4 Uncommented warp that shouldn't have been commented. [L0ne_W0lf]
 //= 1.4a Uncommented yet ANOTHER warp that was taken out. [L0ne_W0lf]
 //= 1.4b Uncommented ANOTHER warp! Yay! :D [L0ne_W0lf]
+//= 1.5 Commented moc_fild20 warps replaced with new NPCs. [Euphy]
 //============================================================
 
 //= Sograt Dessert ===========================================
 //moc_fild01,101,16,0	warp	mocf01-1	15,3,moc_fild04,317,376
-moc_fild01,101,16,0	warp	mocf01-1	15,3,moc_fild20,210,342
+//moc_fild01,101,16,0	warp	mocf01-1	15,3,moc_fild20,210,342
 moc_fild01,22,242,0	warp	mocf005	2,2,prt_fild09,380,237
 moc_fild01,239,382,0	warp	mocf006	12,1,prt_fild08,233,20
 moc_fild01,301,16,0	warp	mocf02	10,1,moc_fild02,77,338
@@ -64,7 +65,7 @@ moc_fild03,70,341,0	warp	mocf04-1	5,2,moc_fild02,332,23
 //moc_fild06,377,316,0	warp	mocf10-3	1,15,moc_fild05,24,153
 moc_fild07,198,21,0	warp	mocf001	2,2,morocc,160,294
 //moc_fild07,381,201,0	warp	mocf13-1	2,16,moc_fild06,28,201
-moc_fild07,380,201,0	warp	mocf13-1	2,16,moc_fild20,36,177
+//moc_fild07,380,201,0	warp	mocf13-1	2,16,moc_fild20,36,177
 //moc_fild08,16,207,0	warp	mocf15	2,4,moc_fild09,371,195
 //moc_fild08,170,383,0	warp	mocf08-1	3,2,moc_fild04,175,21
 //moc_fild08,204,16,0	warp	mocf16	4,2,moc_fild14,196,379
@@ -79,7 +80,7 @@ moc_fild07,380,201,0	warp	mocf13-1	2,16,moc_fild20,36,177
 //moc_fild10,208,298,0	warp	mocf14-1	10,2,moc_fild06,207,21
 //moc_fild10,384,258,0	warp	mocf19-1	2,3,moc_fild09,33,162
 //moc_fild11,189,363,0	warp	mocf20-1	3,2,moc_fild10,189,26
-moc_fild11,189,360,0	warp	mocf20-1	3,2,moc_fild20,197,24
+//moc_fild11,189,360,0	warp	mocf20-1	3,2,moc_fild20,197,24
 moc_fild11,212,29,0	warp	mocf21	4,2,moc_fild17,218,366
 moc_fild11,26,161,0	warp	mocf22	2,10,moc_fild12,286,168
 //moc_fild11,379,197,0	warp	mocf23	2,6,moc_fild15,41,105
@@ -89,7 +90,7 @@ moc_fild12,159,381,0	warp	mocf003	2,2,morocc,160,20
 moc_fild12,289,168,0	warp	mocf22-1	2,3,moc_fild11,29,161
 moc_fild13,146,368,0	warp	mocf05-1	5,2,moc_fild02,71,21
 //moc_fild13,29,171,0	warp	mocf17-1	2,4,moc_fild08,380,211
-moc_fild13,32,171,0	warp	mocf17-1	2,4,moc_fild20,349,179
+//moc_fild13,32,171,0	warp	mocf17-1	2,4,moc_fild20,349,179
 moc_fild13,298,370,0	warp	mocf03-1	4,2,moc_fild02,228,32
 moc_fild13,308,49,0	warp	mocf06-1	2,4,moc_fild03,20,37
 //moc_fild14,16,278,0	warp	mocf25	2,6,moc_fild15,364,276
@@ -101,10 +102,10 @@ moc_fild13,308,49,0	warp	mocf06-1	2,4,moc_fild03,20,37
 //moc_fild15,367,276,0	warp	mocf25-1	2,4,moc_fild14,19,278
 //moc_fild15,38,105,0	warp	mocf23-1	2,4,moc_fild11,376,197
 //moc_fild16,125,383,0	warp	mocf26-1	5,2,moc_fild15,104,19
-moc_fild16,124,381,0	warp	mocf26-1	5,2,moc_fild20,197,24
+//moc_fild16,124,381,0	warp	mocf26-1	5,2,moc_fild20,197,24
 moc_fild16,16,179,0	warp	mocf28	2,6,moc_fild17,366,272
 //moc_fild16,334,382,0	warp	mocf27-1	4,2,moc_fild15,348,21
-moc_fild16,333,380,0	warp	mocf27-1	4,2,moc_fild20,197,24
+//moc_fild16,333,380,0	warp	mocf27-1	4,2,moc_fild20,197,24
 moc_fild17,218,369,0	warp	mocf21-1	5,2,moc_fild11,212,32
 moc_fild17,30,300,0	warp	moc29	2,5,moc_fild18,379,305
 moc_fild17,369,272,0	warp	mocf28-1	2,3,moc_fild16,19,179

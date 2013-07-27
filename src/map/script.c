@@ -10570,27 +10570,27 @@ static void script_detach_rid(struct script_state* st)
 	}
 }
 
-/*	
-	Made by digitalhamster
-	addrid(parameter{,forced{,supportid}})
-	parameter:
-	account id -> attach player with acc_id if he's online /returns 1 if he's not online, 0 if he is
-	0 -> attach entire server
-	1 -> attach everyone currently on the map of the player if a player runs addrid/else of the npcs map
-	2 -> attach entire party(party id has to be entered at supportid)
-	3 -> attach entire guild(guild id has to be entered at supportid)
-	4 -> attach all players in an area at the map where the person running addrid is located/no person=use npcs map
-	Note: 4 uses addrid(4,Forced,x0,y0,x1,y1)
-	
 
-	forced:
-	0 or left out -> force attachment of the player even if he runs a script already
-	1 -> don't attach if player is currently running a script(only needed when you use things like mes"" close next so it seems
-
-	*/
+/*=========================================================================
+ * Attaches a set of RIDs to the current script. [digitalhamster]
+ * addrid(<type>{,<flag>{,<parameters>}});
+ * <type>:
+ *	0 : All players in the server.
+ *	1 : All players in the map of the invoking player, or the invoking NPC if no player is attached.
+ *	2 : Party members of a specified party ID.
+ *	    [ Parameters: <party id> ]
+ *	3 : Guild members of a specified guild ID.
+ *	    [ Parameters: <guild id> ]
+ *	4 : All players in a specified area of the map of the invoking player (or NPC).
+ *	    [ Parameters: <x0>,<y0>,<x1>,<y1> ]
+ *	Account ID: The specified account ID.
+ * <flag>:
+ *	0 : Players are always attached. (default)
+ *	1 : Players currently running another script will not be attached.
+ *-------------------------------------------------------------------------*/
 
 static int buildin_addrid_sub(struct block_list *bl,va_list ap)
-{	
+{
 	int forceflag;
 	struct map_session_data *sd = (TBL_PC *)bl;
 	struct script_state* st;
@@ -10604,17 +10604,17 @@ static int buildin_addrid_sub(struct block_list *bl,va_list ap)
 }
 
 BUILDIN_FUNC(addrid)
-{	
+{
 	struct s_mapiterator* iter;
 	struct block_list *bl;
 	TBL_PC *sd;
 	if(st->rid<1){
-		st->state = END; 
+		st->state = END;
 		bl=map_id2bl(st->oid);
-	} else 
+	} else
 		bl=map_id2bl(st->rid); //if run without rid it'd error,also oid if npc, else rid for map
 	iter = mapit_getallusers();
-	switch(script_getnum(st,2)){ 
+	switch(script_getnum(st,2)){
 		case 0:
 			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)){
 				if(!script_getnum(st,3)||!sd->st)
@@ -10622,7 +10622,6 @@ BUILDIN_FUNC(addrid)
 						run_script(st->script,st->pos,sd->status.account_id,st->oid);
 			}
 			break;
-
 		case 1:
 			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)){
 				if(!script_getnum(st,3)||!sd->st)
@@ -10630,10 +10629,9 @@ BUILDIN_FUNC(addrid)
 						run_script(st->script,st->pos,sd->status.account_id,st->oid);
 			}
 			break;
-	
 		case 2:
 			if(script_getnum(st,4)==0){
-				script_pushint(st,1);
+				script_pushint(st,0);
 				return 0;
 			}
 			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)){
@@ -10642,38 +10640,35 @@ BUILDIN_FUNC(addrid)
 						run_script(st->script,st->pos,sd->status.account_id,st->oid);
 			}
 			break;
-
 		case 3:
 			if(script_getnum(st,4)==0){
-				script_pushint(st,1); 
+				script_pushint(st,0);
 				return 0;
 			}
 			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)){
 				if(!script_getnum(st,3)||!sd->st)
 					if((sd->status.account_id!=st->rid)&&(sd->status.guild_id==script_getnum(st,4))) //attached player already runs.
 						run_script(st->script,st->pos,sd->status.account_id,st->oid);
-			}break;
-
+			}
+			break;
 		case 4:
 			map_foreachinarea(buildin_addrid_sub,
 			bl->m,script_getnum(st,4),script_getnum(st,5),script_getnum(st,6),script_getnum(st,7),BL_PC,
 			st,script_getnum(st,3));//4-x0 , 5-y0 , 6-x1, 7-y1
 			break;
-
 		default:
-			if((map_id2sd(script_getnum(st,2)))==NULL){
-				script_pushint(st,1);
+			if((map_id2sd(script_getnum(st,2)))==NULL){ // Player not found.
+				script_pushint(st,0);
 				return 0;
-			} //player not online.
+			}
 			if(!script_getnum(st,3)||!map_id2sd(script_getnum(st,2))->st) {
 				run_script(st->script,st->pos,script_getnum(st,2),st->oid);
-				script_pushint(st,0);
+				script_pushint(st,1);
 			}
 			return 0;
-	}  
-
+	}
 	mapit_free(iter);
-	script_pushint(st,0);
+	script_pushint(st,1);
 	return 0;
 }
 
@@ -16704,7 +16699,7 @@ BUILDIN_FUNC(instance_id)
 	instance_id = script_instancegetid(st);
 
 	if(!instance_id) {
-		ShowError("script:instance_id: No instance attached to NPC or player");
+		//ShowError("script:instance_id: No instance attached to NPC or player");
 		script_pushint(st, 0);
 		return 1;
 	}
