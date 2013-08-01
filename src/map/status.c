@@ -3735,14 +3735,6 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 				status->lhw.atk2= status_calc_watk(bl, sc, b_status->lhw.atk2);
 			}
 		}
-
-		if( bl->type&BL_HOM )
-		{
-			status->rhw.atk += (status->dex - b_status->dex);
-			status->rhw.atk2 += (status->str - b_status->str);
-			if( status->rhw.atk2 < status->rhw.atk )
-				status->rhw.atk2 = status->rhw.atk;
-		}
 	}
 
 	if(flag&SCB_HIT) {
@@ -6475,6 +6467,9 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			break;
 		case SC_PARALYSIS:
 			tick_def2 = (status->vit + status->luk)*50;
+			break;
+		case SC_VOICEOFSIREN:
+			tick_def2 = (status_get_lv(bl) * 100) + ((bl->type == BL_PC)?((TBL_PC*)bl)->status.job_level : 0);
 			break;
 		default:
 			//Effect that cannot be reduced? Likely a buff.

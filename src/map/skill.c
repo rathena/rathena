@@ -8694,16 +8694,20 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case WM_SIRCLEOFNATURE:
 		flag |= BCT_SELF|BCT_PARTY|BCT_GUILD;
 	case WM_VOICEOFSIREN:
-		if( skill_id != WM_SIRCLEOFNATURE )
+	{
+		int rate = 100;
+		if( skill_id != WM_SIRCLEOFNATURE ) {
+			rate = 6 * skill_lv + (sd ? pc_checkskill(sd,WM_LESSON)*2 + sd->status.job_level/2 : 0 );
 			flag &= ~BCT_SELF;
+		}
 		if( flag&1 ) {
-			sc_start2(src,bl,type,(skill_id==WM_VOICEOFSIREN)?20+10*skill_lv:100,skill_lv,(skill_id==WM_VOICEOFSIREN)?src->id:0,skill_get_time(skill_id,skill_lv));
+			sc_start2(src,bl,type,rate,skill_lv,(skill_id==WM_VOICEOFSIREN)?src->id:0,skill_get_time(skill_id,skill_lv));
 		} else {
 			map_foreachinrange(skill_area_sub, src, skill_get_splash(skill_id,skill_lv),(skill_id==WM_VOICEOFSIREN)?BL_CHAR|BL_SKILL:BL_PC, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		}
 		break;
-
+	}
 	case WM_GLOOMYDAY:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		if( dstsd && ( pc_checkskill(dstsd,KN_BRANDISHSPEAR) || pc_checkskill(dstsd,LK_SPIRALPIERCE) ||

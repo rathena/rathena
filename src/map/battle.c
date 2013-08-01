@@ -2411,7 +2411,6 @@ struct Damage battle_calc_damage_parts(struct Damage wd, struct block_list *src,
 	struct status_data *sstatus = status_get_status_data(src);
 	struct status_data *tstatus = status_get_status_data(target);
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
-	struct map_session_data *tsd = BL_CAST(BL_PC, target);
 
 	int right_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_R, false);
 	int left_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_L, false);
@@ -2447,17 +2446,6 @@ struct Damage battle_calc_damage_parts(struct Damage wd, struct block_list *src,
 	wd.equipAtk2 = battle_attr_fix(src, target, wd.equipAtk2, left_element, tstatus->def_ele, tstatus->ele_lv);
 
 	wd = battle_calc_attack_masteries(wd, src, target, skill_id, skill_lv);
-
-	if(tsd) {// Card Fix for target
-		wd.weaponAtk += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.weaponAtk, is_attack_left_handed(src, skill_id), wd.flag);
-		wd.weaponAtk2 += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.weaponAtk2, is_attack_left_handed(src, skill_id), wd.flag);
-
-		wd.equipAtk += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.equipAtk, is_attack_left_handed(src, skill_id), wd.flag);
-		wd.equipAtk2 += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.equipAtk2, is_attack_left_handed(src, skill_id), wd.flag);
-
-		wd.masteryAtk += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), ELE_NONE, ELE_NONE, wd.masteryAtk, is_attack_left_handed(src, skill_id), wd.flag);
-		wd.masteryAtk2 += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), ELE_NONE, ELE_NONE, wd.masteryAtk2, is_attack_left_handed(src, skill_id), wd.flag);
-	}
 
 	wd.damage = 0;
 	wd.damage2 = 0;
@@ -3253,7 +3241,8 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			skillratio += 270 + 30 * skill_lv;
 			break;
 		case SC_FEINTBOMB:
-			skillratio += 100 + 100 * skill_lv;
+			skillratio += (skill_lv + 1) * (sstatus->dex / 2) * (sd?(sd->status.job_level / 10):5);
+			RE_LVL_DMOD(120);
 			break;
 		case LG_CANNONSPEAR:// Stimated formula. Still need confirm it.
 			skillratio += -100 + (50  + sstatus->str) * skill_lv;
@@ -4327,23 +4316,10 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		}
 	
 #ifdef RENEWAL
-		//Card Fix for attacker (sd), 2 is added to the "left" flag meaning "attacker cards only"
-		wd.weaponAtk += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.weaponAtk, 2, wd.flag);
-		wd.equipAtk += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.equipAtk, 2, wd.flag);
-		if( is_attack_left_handed(src, skill_id )) {
-			wd.weaponAtk2 += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.weaponAtk2, 3, wd.flag);
-			wd.equipAtk2 += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.equipAtk2, 3, wd.flag);
-		}
-	
-		// final attack bonuses that aren't affected by cards
-		wd = battle_attack_sc_bonus(wd, src, skill_id);
-
 		if (sd) { //monsters, homuns and pets have their damage computed directly
 			wd.damage = wd.statusAtk + wd.weaponAtk + wd.equipAtk + wd.masteryAtk;
 			wd.damage2 = wd.statusAtk2 + wd.weaponAtk2 + wd.equipAtk2 + wd.masteryAtk2;
 		}
-#else 
-		wd = battle_attack_sc_bonus(wd, src, skill_id);
 #endif
 
 		// check if attack ignores DEF
@@ -4389,16 +4365,26 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 				ATK_ADD(wd.damage, wd.damage2, 10*sd->status.inventory[index].refine);
 		}
 
-#ifndef RENEWAL
 		//Card Fix for attacker (sd), 2 is added to the "left" flag meaning "attacker cards only"
 		wd.damage += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.damage, 2, wd.flag);
 		if( is_attack_left_handed(src, skill_id ))
 			wd.damage2 += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.damage2, 3, wd.flag);
-#endif
 	}
 
-	if(tsd) // Card Fix for target (tsd), 2 is not added to the "left" flag meaning "target cards only" 
-		wd.damage += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.damage, is_attack_left_handed(src, skill_id), wd.flag);
+	// final attack bonuses that aren't affected by cards
+	wd = battle_attack_sc_bonus(wd, src, skill_id);
+
+	if(tsd) { // Card Fix for target (tsd), 2 is not added to the "left" flag meaning "target cards only"
+		switch(skill_id) { // These skills will do a card fix later
+			case CR_ACIDDEMONSTRATION:
+			case NJ_ISSEN:
+			case ASC_BREAKER:
+			case KO_HAPPOKUNAI:
+				break;
+			default:
+				wd.damage += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.damage, is_attack_left_handed(src, skill_id), wd.flag);
+		}
+	}
 
 	// forced to neutral skills [helvetica]
 	// skills forced to neutral gain benefits from weapon element
@@ -4427,9 +4413,17 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 	wd = battle_calc_attack_left_right_hands(wd, src, target, skill_id, skill_lv);
 
-	wd = battle_calc_attack_gvg_bg(wd, src, target, skill_id, skill_lv);
-
 	wd = battle_calc_weapon_final_atk_modifiers(wd, src, target, skill_id, skill_lv);
+
+	switch(skill_id) { // These skills will do a GVG fix later
+		case CR_ACIDDEMONSTRATION:
+		case NJ_ISSEN:
+		case ASC_BREAKER:
+		case KO_HAPPOKUNAI:
+			return wd;
+		default:
+			wd = battle_calc_attack_gvg_bg(wd, src, target, skill_id, skill_lv);
+	}
 
 	return wd;
 }
@@ -4976,7 +4970,13 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			}
 		}
 #ifdef RENEWAL
-		ad.damage += battle_calc_cardfix(BF_MAGIC, src, target, nk, s_ele, 0, ad.damage, 0, ad.flag);
+		switch(skill_id) { // These skills will do a card fix later
+			case CR_ACIDDEMONSTRATION:
+			case ASC_BREAKER:
+				break;
+			default:
+				ad.damage += battle_calc_cardfix(BF_MAGIC, src, target, nk, s_ele, 0, ad.damage, 0, ad.flag);
+		}
 #endif
 		if(sd) {
 			//Damage bonuses
@@ -5078,11 +5078,17 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	if (flag.infdef && ad.damage)
 		ad.damage = ad.damage>0?1:-1;
 
-	ad.damage=battle_calc_damage(src,target,&ad,ad.damage,skill_id,skill_lv);
-	if( map_flag_gvg2(target->m) )
-		ad.damage=battle_calc_gvg_damage(src,target,ad.damage,ad.div_,skill_id,skill_lv,ad.flag);
-	else if( map[target->m].flag.battleground )
-		ad.damage=battle_calc_bg_damage(src,target,ad.damage,ad.div_,skill_id,skill_lv,ad.flag);
+	switch(skill_id) { // These skills will do a GVG fix later
+		case CR_ACIDDEMONSTRATION:
+		case ASC_BREAKER:
+			return ad;
+		default:
+			ad.damage=battle_calc_damage(src,target,&ad,ad.damage,skill_id,skill_lv);
+			if( map_flag_gvg2(target->m) )
+				ad.damage=battle_calc_gvg_damage(src,target,ad.damage,ad.div_,skill_id,skill_lv,ad.flag);
+			else if( map[target->m].flag.battleground )
+				ad.damage=battle_calc_bg_damage(src,target,ad.damage,ad.div_,skill_id,skill_lv,ad.flag);
+	}
 
 	switch( skill_id ) { /* post-calc modifiers */
 		case SO_VARETYR_SPEAR: { // Physical damage.
@@ -5224,7 +5230,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		{
 			struct Damage atk = battle_calc_weapon_attack(src, target, skill_id, skill_lv, 0);
 			struct Damage matk = battle_calc_magic_attack(src, target, skill_id, skill_lv, 0);
-			md.damage = 7 * ((atk.damage/skill_lv + matk.damage/skill_lv)  * tstatus->vit / 100 );
+			md.damage = 7 * ((atk.damage/skill_lv + matk.damage/skill_lv) * tstatus->vit / 100 );
 			
 			// AD benefits from endow/element but damage is forced back to neutral
 			battle_attr_fix(src, target, md.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
