@@ -4320,17 +4320,24 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	
 #ifdef RENEWAL
 		// In Renewal we only cardfix to the weapon and equip ATK
+		//Card Fix for attacker (sd), 2 is added to the "left" flag meaning "attacker cards only"
+		wd.weaponAtk += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.weaponAtk, 2, wd.flag);
+		wd.equipAtk += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.equipAtk, 2, wd.flag);
+		if( is_attack_left_handed(src, skill_id )) {
+			wd.weaponAtk2 += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.weaponAtk2, 3, wd.flag);
+			wd.equipAtk2 += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.equipAtk2, 3, wd.flag);
+		}
+
+		// final attack bonuses that aren't affected by cards
+		wd = battle_attack_sc_bonus(wd, src, skill_id);
+
 		if (sd) { //monsters, homuns and pets have their damage computed directly
-			//Card Fix for attacker (sd), 2 is added to the "left" flag meaning "attacker cards only"
-			wd.weaponAtk += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.weaponAtk, 2, wd.flag);
-			wd.equipAtk += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.equipAtk, 2, wd.flag);
-			if( is_attack_left_handed(src, skill_id )) {
-				wd.weaponAtk2 += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.weaponAtk2, 3, wd.flag);
-				wd.equipAtk2 += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.equipAtk2, 3, wd.flag);
-			}
 			wd.damage = wd.statusAtk + wd.weaponAtk + wd.equipAtk + wd.masteryAtk;
 			wd.damage2 = wd.statusAtk2 + wd.weaponAtk2 + wd.equipAtk2 + wd.masteryAtk2;
 		}
+#else
+		// final attack bonuses that aren't affected by cards
+		wd = battle_attack_sc_bonus(wd, src, skill_id);
 #endif
 
 		// check if attack ignores DEF
@@ -4383,9 +4390,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			wd.damage2 += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.damage2, 3, wd.flag);
 #endif
 	}
-
-	// final attack bonuses that aren't affected by cards
-	wd = battle_attack_sc_bonus(wd, src, skill_id);
 
 	if(tsd) { // Card Fix for target (tsd), 2 is not added to the "left" flag meaning "target cards only"
 		switch(skill_id) { // These skills will do a card fix later
