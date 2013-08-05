@@ -2,12 +2,14 @@
 //= Rachel Airport NPCs
 //===== By: ================================================== 
 //= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.0
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
 //= Rachel Airport NPCs
 //===== Additional Comments: ================================= 
-//= Official NPCs.
+//= 1.0 First version.
 //============================================================ 
 
 ra_fild12,295,208,0	script	toairplane#rachel	45,1,1,{

@@ -2,12 +2,14 @@
 //= Einbroch Airport Staff
 //===== By: ================================================== 
 //= L0ne_W0lf, Muad_Dib
+//===== Current Version: =====================================
+//= 1.0
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
 //= Einbroch Airport Staff
 //===== Additional Comments: ================================= 
-//= Official NPCs.
+//= 1.0 First version.
 //============================================================ 
 
 airport,143,43,5	script	Airport Staff#airport1a::airport1	90,{

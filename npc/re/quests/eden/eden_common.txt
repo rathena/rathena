@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -18,6 +18,7 @@
 //= 1.5 Added some missing Eden Group Teleport Officers. [Masao]
 //= 1.6 Added Izlude RE coordinates. [Euphy]
 //= 1.7 Added Malaya teleporter. [Euphy]
+//= 1.8 Updated to match the latest official script. [Euphy]
 //============================================================
 
 moc_para01,27,35,5	script	Secretary Lime Evenor	952,{
@@ -218,7 +219,7 @@ moc_ruins,68,164,3	duplicate(eto)	Eden Teleport Officer#2	729
 geffen,132,66,3	duplicate(eto)	Eden Teleport Officer#3	729
 alberta,124,67,3	duplicate(eto)	Eden Teleport Officer#4	729
 aldebaran,133,119,5	duplicate(eto)	Eden Teleport Officer#5	729
-izlude,131,148,4	duplicate(eto)	Eden Teleport Officer#6	729
+izlude_in,68,162,1	duplicate(eto)	Eden Teleport Officer#6	729
 prt_church,103,78,3	duplicate(eto)	Eden Teleport Officer#7	729
 geffen_in,160,104,5	duplicate(eto)	Eden Teleport Officer#8	729
 moc_prydb1,53,126,3	duplicate(eto)	Eden Teleport Officer#9	729
@@ -229,14 +230,26 @@ que_ng,33,73,3	duplicate(eto)	Eden Teleport Officer#13	729
 que_ng,144,161,5	duplicate(eto)	Eden Teleport Officer#14	729
 yuno,144,189,5	duplicate(eto)	Eden Teleport Officer#15	729
 rachel,125,144,3	duplicate(eto)	Eden Teleport Officer#16	729
-morocc,161,97,6	duplicate(eto)	Eden Teleport Officer#17	729
-comodo,202,151,4	duplicate(eto)	Eden Teleport Officer#18	729
-umbala,96,160,3	duplicate(eto)	Eden Teleport Officer#19	729
-veins,220,109,4	duplicate(eto)	Eden Teleport Officer#20	729
+comodo,202,151,4	duplicate(eto)	Eden Teleport Officer#17	729
+hugel,93,153,4	duplicate(eto)	Eden Teleport Officer#18	729
+veins,220,109,4	duplicate(eto)	Eden Teleport Officer#19	729
+einbroch,250,211,4	duplicate(eto)	Eden Teleport Officer#20	729
 lighthalzen,164,86,4	duplicate(eto)	Eden Teleport Officer#21	729
-einbroch,250,211,4	duplicate(eto)	Eden Teleport Officer#22	729
-hugel,93,153,4	duplicate(eto)	Eden Teleport Officer#23	729
-malaya,238,206,6	duplicate(eto)	Eden Teleport Officer#24	729
+amatsu,100,145,5	duplicate(eto)	Eden Teleport Officer#22	729
+ayothaya,221,191,3	duplicate(eto)	Eden Teleport Officer#23	729
+louyang,224,107,3	duplicate(eto)	Eden Teleport Officer#24	729
+gonryun,162,122,5	duplicate(eto)	Eden Teleport Officer#25	729
+moscovia,209,197,5	duplicate(eto)	Eden Teleport Officer#26	729
+brasilis,191,224,3	duplicate(eto)	Eden Teleport Officer#27	729
+dewata,192,193,5	duplicate(eto)	Eden Teleport Officer#28	729
+morocc,161,97,5	duplicate(eto)	Eden Teleport Officer#29	729
+izlude,131,148,4	duplicate(eto)	Eden Teleport Officer#30	729
+izlude_a,131,148,4	duplicate(eto)	Eden Teleport Officer#30::eto_iz_a	729
+izlude_b,131,148,4	duplicate(eto)	Eden Teleport Officer#30::eto_iz_b	729
+izlude_c,131,148,4	duplicate(eto)	Eden Teleport Officer#30::eto_iz_c	729
+izlude_d,131,148,4	duplicate(eto)	Eden Teleport Officer#30::eto_iz_d	729
+umbala,105,158,3	duplicate(eto)	Eden Teleport Officer#31	729
+malaya,238,206,6	duplicate(eto)	Eden Teleport Officer#32	729
 
 moc_para01,30,10,0	script	#eden_out	45,1,1,{
 OnTouch:
@@ -246,7 +259,7 @@ OnTouch:
 		case 3: warp "geffen",120,39; end;
 		case 4: warp "alberta",117,56; end;
 		case 5: warp "aldebaran",168,112; end;
-		case 6: if (checkre(0)) warp "izlude",134,118; else warp "izlude",127,142; end;
+		case 6: warp "izlude_in",73,165; end;
 		case 7: warp "prt_church",99,78; end;
 		case 8: warp "geffen_in",162,99; end;
 		case 9: warp "moc_prydb1",51,118; end;
@@ -257,14 +270,22 @@ OnTouch:
 		case 14: warp "que_ng",144,166; end;
 		case 15: warp "yuno",158,125; end;
 		case 16: warp "rachel",115,125; end;
-		case 17: warp "morocc",156,93; end;
-		case 18: warp "comodo",209,143; end;
-		case 19: warp "umbala",99,155; end;
-		case 20: warp "veins",216,123; end;
-		case 21: warp "lighthalzen",158,92; end;
-		case 22: warp "einbroch",245,210; end;
-		case 23: warp "hugel",95,145; end;
-		case 24: warp "malaya",234,199; end;
+		case 17: warp "comodo",192,145; end;
+		case 18: warp "hugel",88,148; end;
+		case 19: warp "veins",216,104; end;
+		case 20: warp "einbroch",246,204; end;
+		case 21: warp "lighthalzen",159,95; end;
+		case 22: warp "amatsu",110,150; end;
+		case 23: warp "ayothaya",217,178; end;
+		case 24: warp "louyang",217,103; end;
+		case 25: warp "gonryun",155,120; end;
+		case 26: warp "moscovia",218,198; end;
+		case 27: warp "brasilis",190,220; end;
+		case 28: warp "dewata",192,182; end;
+		case 29: warp "morocc",161,97; end;
+		case 30: warp "izlude",134,118; end;	// Old coordinates: (127,142)
+		case 31: warp "umbala",94,154; end;
+		case 32: warp "malaya",234,199; end;
 		default: warp "prontera",116,72; end;
 	}
 	end;

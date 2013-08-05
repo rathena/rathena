@@ -2,12 +2,14 @@
 //= Lighthalzen Airport Staff
 //===== By: ================================================== 
 //= L0ne_W0lf, Muad_Dib
+//===== Current Version: =====================================
+//= 1.0
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
 //= Lighthalzen Airport Staff
 //===== Additional Comments: ================================= 
-//= Official NPCs.
+//= 1.0 First version.
 //============================================================ 
 
 lhz_airport,143,43,5	script	Airport Staff#lhz_air1a::lhz_airport1	90,{

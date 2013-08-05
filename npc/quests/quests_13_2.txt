@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 2.7
+//= 2.7a
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -47,6 +47,7 @@
 //= 2.6 Fixed incorrect use of 'close'. [Joseph]
 //= 2.6a Disabled GM NPC. [Euphy]
 //= 2.7 Updated RE/Pre-RE EXP. [Euphy]
+//= 2.7a Added Izlude RE coordinates. [Euphy]
 //============================================================ 
 
 // Cat Hand Addition.
@@ -392,13 +393,14 @@ function Catwarp {
 	if (Zeny < getarg(0)) {
 		mes "[Cat Hand Agent]";
 		mes "Don't play with money.";
-		close; }
+		close;
+	}
 	close2;
 	set Zeny, Zeny-getarg(0);
 	switch(getarg(1)) {
 		case 1: warp "alberta",117,56; end;
 		case 2: warp "prontera",116,72; end;
-		case 3: warp "izlude",91,105; end;
+		case 3: if (checkre(0)) warp "izlude",128,98; else warp "izlude",91,105; end;
 		case 4: warp "geffen",120,39; end;
 		case 5: warp "payon",161,58; end;
 		case 6: warp "morocc",156,46; end;
@@ -412,7 +414,6 @@ function Catwarp {
 	}
 }
 }
-
 man_fild02,132,47,4	duplicate(Cat Hand Agent#spl)	Cat Hand Agent#man	421
 
 -	script	Mysterious Rock#30::manukrock2	-1,{
@@ -429,11 +430,13 @@ man_fild02,132,47,4	duplicate(Cat Hand Agent#spl)	Cat Hand Agent#man	421
 		else getitem 6048,1; //Unidentified_Mineral
 		initnpctimer;
 		disablenpc strnpcinfo(0);
-		end; }
+		end;
+	}
 	else {
 		mes "This rock contains unidentified minerals.";
 		mes "It's not possible to mine more than the limit.";
-		close; }
+		close;
+	}
 	end;
 
 OnTimer120000:

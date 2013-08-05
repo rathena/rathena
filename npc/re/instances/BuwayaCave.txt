@@ -419,6 +419,8 @@ OnDisable:
 	killmonster instance_mapname("1@ma_c"),instance_npcname("#exit_mob")+"::OnMyMobDead";
 	disablenpc instance_npcname("#exit_mob");
 	end;
+OnMyMobDead:
+	end;
 }
 
 1@ma_c,28,57,0	script	#cave_out	45,2,2,{

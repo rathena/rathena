@@ -3,14 +3,19 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
 //= Turns bullets into magazines/packs.
 //===== Additional Comments: =================================
 //= 1.0 First version, Renewal duplicates.
+//= 1.1 Added Izlude duplicates. [Euphy]
 //============================================================
 
 que_ng,187,149,3	duplicate(mdk)	Magazine Dealer Kenny#ng	83
 izlude,74,104,3	duplicate(mdk)	Magazine Dealer Kenny#iz	83
+izlude_a,74,104,3	duplicate(mdk)	Magazine Dealer Kenny#a	83
+izlude_b,74,104,3	duplicate(mdk)	Magazine Dealer Kenny#b	83
+izlude_c,74,104,3	duplicate(mdk)	Magazine Dealer Kenny#c	83
+izlude_d,74,104,3	duplicate(mdk)	Magazine Dealer Kenny#d	83

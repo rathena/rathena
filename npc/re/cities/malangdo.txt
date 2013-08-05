@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_Dib
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -15,6 +15,7 @@
 //= 1.2 Moved "Odgnalam" coordinates.
 //= 1.3 Fixed dialogues.
 //= 1.4 Dialogue edits, source iRO.
+//= 1.5 Added Izlude duplicates.
 //============================================================
 
 // Malangdo Transportation :: malangdo_go
@@ -158,9 +159,8 @@ rachel,121,126,4	duplicate(Dolangmal)	Dolangmal#7	553
 lighthalzen,254,83,5	duplicate(Dolangmal)	Dolangmal#8	553
 mora,57,150,4	duplicate(Dolangmal)	Dolangmal#9	553
 
-//Pre-RE: izlude (182,192)
-izlude,182,218,4	script	Odgnalam#Izlude	554,{
-	mes "This cat is sleeping in the warm "+strnpcinfo(2)+" sun.";
+-	script	::Odgnalam	-1,{
+	mes "This cat is sleeping in the warm "+((strnpcinfo(2) == "albe")?"Alberta":"Izlude")+" sun.";
 	next;
 	if(select("Let him sleep:Talk to him") == 1) close;
 	mes "[Odgnalam]";
@@ -207,7 +207,12 @@ izlude,182,218,4	script	Odgnalam#Izlude	554,{
 	warp "malangdo",217,85;
 	close;
 }
-alberta,200,151,4	duplicate(Odgnalam#Izlude)	Odgnalam#Alberta	554
+alberta,200,151,4	duplicate(Odgnalam)	Odgnalam#albe	554
+izlude,182,218,4	duplicate(Odgnalam)	Odgnalam#iz	554	// Old coordinates: (182,192)
+izlude_a,182,218,4	duplicate(Odgnalam)	Odgnalam#iz_a	554
+izlude_b,182,218,4	duplicate(Odgnalam)	Odgnalam#iz_b	554
+izlude_c,182,218,4	duplicate(Odgnalam)	Odgnalam#iz_c	554
+izlude_d,182,218,4	duplicate(Odgnalam)	Odgnalam#iz_d	554
 
 malangdo,219,86,4	script	Kong#malang	545,{
 	mes "[Kong]";
@@ -261,7 +266,7 @@ malangdo,219,86,4	script	Kong#malang	545,{
 	if (ep13_yong1 > 80) {
 		mes "Have a comfortable trip.";
 		if (.@i == 1)
-			warp "izlude",195,212;
+			warp "izlude",195,212; // Old coordinates: (194,180)
 		else
 			warp "alberta",192,150;
 		close;

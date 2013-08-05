@@ -3,14 +3,19 @@
 //===== By ===================================================
 //= Euphy
 //===== Version ==============================================
-//= 1.0
+//= 1.1
 //===== Compatible With ======================================
 //= rAthena SVN
 //===== Description ==========================================
 //= Bullet trader.
 //===== Comments =============================================
 //= 1.0 First version, Renewal duplicates.
+//= 1.1 Added Izlude duplicates. [Euphy]
 //============================================================
 
 que_ng,187,156,3	duplicate(bdt)	Bullet Dealer Tony#ng	86
 izlude,77,104,3	duplicate(bdt)	Bullet Dealer Tony#iz	86	//Official: (74,106) -> in the water
+izlude_a,77,104,3	duplicate(bdt)	Bullet Dealer Tony#a	86
+izlude_b,77,104,3	duplicate(bdt)	Bullet Dealer Tony#b	86
+izlude_c,77,104,3	duplicate(bdt)	Bullet Dealer Tony#c	86
+izlude_d,77,104,3	duplicate(bdt)	Bullet Dealer Tony#d	86

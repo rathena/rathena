@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Joseph
 //===== Current Version: ===================================== 
-//= 1.3a
+//= 1.4
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: =========================================
@@ -23,6 +23,7 @@
 //= 1.2 Added Port Malaya Kafras. [Euphy]
 //= 1.3 Added Eden Group Kafra. [Euphy]
 //= 1.3a Moved Rune Knight Kafra from job file. [Euphy]
+//= 1.4 Added Izlude duplicates. [Euphy]
 //============================================================ 
 
 // Brasilis
@@ -56,7 +57,11 @@ moc_para01,10,185,4	script	Kafra Employee::kaf_eden	721,{
 
 // Izlude
 //============================================================
-izlude,128,148,6	duplicate(kaf_izlude)	Kafra Employee	117
+izlude,128,148,6	duplicate(kaf_izlude)	Kafra Employee#iz	117
+izlude_a,128,148,6	duplicate(kaf_izlude)	Kafra Employee#iz_a	117
+izlude_b,128,148,6	duplicate(kaf_izlude)	Kafra Employee#iz_b	117
+izlude_c,128,148,6	duplicate(kaf_izlude)	Kafra Employee#iz_c	117
+izlude_d,128,148,6	duplicate(kaf_izlude)	Kafra Employee#iz_d	117
 
 // Port Malaya
 //============================================================

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= rAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.7
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //= 1.4 Moved Izlude merchants. [Streusel]
 //= 1.5 Added Dewata merchants. [Lemongrass]
 //= 1.6 Added Mora and Port Malaya merchants.
+//= 1.7 Added Izlude duplicates. [Euphy]
 //============================================================ 
 
 //=======================================================
@@ -46,9 +47,21 @@ dicastes01,207,200,6	shop	Points Merchant#dic	66,6360:-1,6361:-1,6362:-1,6363:-1
 //=======================================================
 // Izlude
 //=======================================================
-izlude,160,186,0	shop	Butcher#iz	54,517:-1
 izlude,124,165,4	shop	Fruit Gardener#iz	53,512:-1,513:-1,515:-1,516:-1
+izlude_a,124,165,4	duplicate(Fruit Gardener#iz)	Fruit Gardener#iz_a	53
+izlude_b,124,165,4	duplicate(Fruit Gardener#iz)	Fruit Gardener#iz_b	53
+izlude_c,124,165,4	duplicate(Fruit Gardener#iz)	Fruit Gardener#iz_c	53
+izlude_d,124,165,4	duplicate(Fruit Gardener#iz)	Fruit Gardener#iz_d	53
+izlude,160,186,0	shop	Butcher#iz	54,517:-1
+izlude_a,160,186,0	duplicate(Butcher#iz)	Butcher#iz_a	54
+izlude_b,160,186,0	duplicate(Butcher#iz)	Butcher#iz_b	54
+izlude_c,160,186,0	duplicate(Butcher#iz)	Butcher#iz_c	54
+izlude_d,160,186,0	duplicate(Butcher#iz)	Butcher#iz_d	54
 izlude,128,158,7	shop	Vendor from Milk Ranch#i	90,519:-1
+izlude_a,128,158,7	duplicate(Vendor from Milk Ranch#i)	Vendor from Milk Ranch#a	90
+izlude_b,128,158,7	duplicate(Vendor from Milk Ranch#i)	Vendor from Milk Ranch#b	90
+izlude_c,128,158,7	duplicate(Vendor from Milk Ranch#i)	Vendor from Milk Ranch#c	90
+izlude_d,128,158,7	duplicate(Vendor from Milk Ranch#i)	Vendor from Milk Ranch#d	90
 izlude_in,72,98,4	shop	Pet Groomer#iz	124,537:-1,643:-1,10013:-1,10014:-1,554:-1,6113:-1,6114:-1,6115:-1
 izlude_in,57,110,0	shop	Tool Dealer#iz	47,611:-1,501:-1,502:-1,503:-1,504:-1,506:-1,645:-1,656:-1,601:-1,602:-1,1065:-1,1750:-1
 izlude_in,72,110,3	shop	Trading Merchant#iz	900,13200:-1,13201:-1,13202:-1,13150:-1,13102:-1,13151:-1,13154:-1,13155:-1,13163:-1,13165:-1,13168:-1

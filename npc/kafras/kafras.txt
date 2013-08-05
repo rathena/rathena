@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Joseph
 //===== Current Version: ===================================== 
-//= 1.1a
+//= 1.1b
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: =========================================
@@ -21,6 +21,7 @@
 //= 1.0 Merged and cleaned up Kafras. [Joseph]
 //= 1.1 Added Izlude RE coordinates. [Euphy]
 //= 1.1a Fixed Pre-RE Call and some leftovers. [Lemongrass]
+//= 1.1b Enabled saving in Izlude duplicates (RE). [Euphy]
 //============================================================ 
 
 // Aldebaran
@@ -403,7 +404,7 @@ cmd_fild07,136,134,4	script	Kafra Employee::kaf_cmd_fild07	721,{
 
 // Izlude
 //============================================================
--	script	kaf_izlude	-1,{
+-	script	::kaf_izlude	-1,{
 	cutin "kafra_01",2;
 	callfunc "F_KafSet";
 	mes "[Kafra Employee]";
@@ -414,7 +415,7 @@ cmd_fild07,136,134,4	script	Kafra Employee::kaf_cmd_fild07	721,{
 	mes "How may I assist you?";
 	callfunc "F_Kafra",5,0,1,40,820;
 	if (checkre(0))
-		savepoint "izlude",129,97;
+		savepoint strnpcinfo(4),129,97;
 	else
 		savepoint "izlude",94,103;
 	callfunc "F_KafEnd",0,1,"in the city of Izlude";

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 3.3
+//= 3.3a
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -21,34 +21,11 @@
 //= Report from the New World
 //= Persuing Rayan Moore
 //===== Additional Comments: ================================= 
-//= 1.0 First Version. [L0ne_W0lf]
-//= 1.1 I missed an end in one of the lhz guards. [L0ne_W0lf]
-//= 1.2 Fixed missing ends, wrong label and some typos [Gepard]
-//= 1.3 Added the two remaining 13.1 quests. [L0ne_W0lf]
-//=     Cat Hand Agents no longer ignore you with 300+ points.
-//= 1.4 Changed killmonsterall -> killmonster. (bugreport:4131)
-//= 1.5 Removed a 'close;' which should have been 'close2'. (bugreport:4276)
-//= 1.6 Fixed check in cat hand agent.
-//= 1.7 Moved the close in Cat Hand Service Warps. (bugreport:4079) [L0ne_W0lf]
-//= 1.8 Added 13.2 Additions to Report from the New World NPCs
-//= 1.9 Upped success rates for Report from the New World drops.
-//= 2.0 Added Mid Camp Warper, translated from the Official [Slim]
-//= 2.1 Fixed some typos [tr0n]
-//= 2.2 A little optimization (-25kb). [Euphy]
-//= 2.3 Updated to match the new Izlude Map. [Masao]
-//= 2.4 More optimization (-32kb). [Euphy]
-//= 2.5 Yet more optimization (-22kb). [Euphy]
-//= 2.5a Minor fixes. [Euphy]
-//= 2.6 Disabled "Ash Vacuum Warper" as it's no longer in iRO. [Euphy]
-//= 2.6a Added 'npcskill' command. [Euphy]
-//= 2.7 Updated EXP rewards.
-//= 2.7a Added 'consumeitem' command. [Euphy]
-//= 2.8 Some optimization, and moved an Izlude NPC. [Euphy]
-//= 2.9 Fixed an invalid event label. [Joseph]
 //= 3.0 Fixed a missing variable check. [Joseph]
 //= 3.1 Updated RE/Pre-RE EXP. [Euphy]
 //= 3.2 Updated ep13_start and dialog to match official script. [Joseph]
 //= 3.3 Updated to match the latest official script. [Euphy]
+//= 3.3a Added Izlude RE coordinates. [Euphy]
 //============================================================ 
 
 // Onward to the New World
@@ -7972,13 +7949,14 @@ function Catwarp {
 	if (Zeny < getarg(0)) {
 		mes "[Cat Hand Agent]";
 		mes "Don't play with money.";
-		close; }
+		close;
+	}
 	close2;
 	set Zeny, Zeny-getarg(0);
 	switch(getarg(1)) {
 		case 1: warp "alberta",117,56; end;
 		case 2: warp "prontera",116,72; end;
-		case 3: warp "izlude",91,105; end;
+		case 3: if (checkre(0)) warp "izlude",128,98; else warp "izlude",91,105; end;
 		case 4: warp "geffen",120,39; end;
 		case 5: warp "payon",161,58; end;
 		case 6: warp "morocc",156,46; end;
@@ -8462,11 +8440,13 @@ mid_camp,88,100,55	script	Cat Hand Mining Agent	876,{
 		else getitem 6048,1; //Unidentified_Mineral
 		initnpctimer;
 		disablenpc strnpcinfo(0);
-		end; }
+		end;
+	}
 	else {
 		mes "This rock contains unidentified minerals.";
 		mes "It's not possible to mine more than the limit.";
-		close; }
+		close;
+	}
 	end;
 
 OnTimer120000:
@@ -8474,7 +8454,6 @@ OnTimer120000:
 	stopnpctimer;
 	end;
 }
-
 man_fild01,180,170,0	duplicate(manukrock)	Mysterious Rock#1	844
 man_fild01,147,157,0	duplicate(manukrock)	Mysterious Rock#2	844
 man_fild01,114,174,0	duplicate(manukrock)	Mysterious Rock#3	844
@@ -14014,3 +13993,32 @@ prontera,161,192,5	script	Ash Vacuum Warper	707,{
 	end;
 }
 */
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.0 First Version. [L0ne_W0lf]
+//= 1.1 I missed an end in one of the lhz guards. [L0ne_W0lf]
+//= 1.2 Fixed missing ends, wrong label and some typos [Gepard]
+//= 1.3 Added the two remaining 13.1 quests. [L0ne_W0lf]
+//=     Cat Hand Agents no longer ignore you with 300+ points.
+//= 1.4 Changed killmonsterall -> killmonster. (bugreport:4131)
+//= 1.5 Removed a 'close;' which should have been 'close2'. (bugreport:4276)
+//= 1.6 Fixed check in cat hand agent.
+//= 1.7 Moved the close in Cat Hand Service Warps. (bugreport:4079) [L0ne_W0lf]
+//= 1.8 Added 13.2 Additions to Report from the New World NPCs
+//= 1.9 Upped success rates for Report from the New World drops.
+//= 2.0 Added Mid Camp Warper, translated from the Official [Slim]
+//= 2.1 Fixed some typos [tr0n]
+//= 2.2 A little optimization (-25kb). [Euphy]
+//= 2.3 Updated to match the new Izlude Map. [Masao]
+//= 2.4 More optimization (-32kb). [Euphy]
+//= 2.5 Yet more optimization (-22kb). [Euphy]
+//= 2.5a Minor fixes. [Euphy]
+//= 2.6 Disabled "Ash Vacuum Warper" as it's no longer in iRO. [Euphy]
+//= 2.6a Added 'npcskill' command. [Euphy]
+//= 2.7 Updated EXP rewards.
+//= 2.7a Added 'consumeitem' command. [Euphy]
+//= 2.8 Some optimization, and moved an Izlude NPC. [Euphy]
+//= 2.9 Fixed an invalid event label. [Joseph]
+//============================================================

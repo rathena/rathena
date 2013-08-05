@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Ziu, Heris (translation)
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -11,11 +11,16 @@
 //===== Additional Comments: ================================= 
 //= 1.0 Updated to match the new Izlude Map. [Masao]
 //= 1.1 Added Somatology Laboratory F4 quest. [Euphy]
+//= 1.2 Added Izlude duplicates. [Euphy]
 //============================================================ 
 
 // Renewal split [Daegaladh]
 //============================================================
-izlude,172,73,6	duplicate(Scamp)	Scamp#2	853
+izlude,172,73,6	duplicate(Scamp)	Scamp#iz	853
+izlude_a,172,73,6	duplicate(Scamp)	Scamp#iz_a	853
+izlude_b,172,73,6	duplicate(Scamp)	Scamp#iz_b	853
+izlude_c,172,73,6	duplicate(Scamp)	Scamp#iz_c	853
+izlude_d,172,73,6	duplicate(Scamp)	Scamp#iz_d	853
 
 // Somatology Laboratory F4
 //============================================================
