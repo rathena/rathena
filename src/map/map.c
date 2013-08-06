@@ -2182,7 +2182,7 @@ int map_addinstancemap(const char *name, int id)
 	int src_m = map_mapname2mapid(name);
 	int dst_m = -1, i;
 	char iname[MAP_NAME_LENGTH];
-	size_t size;
+	size_t num_cell, size;
 
 	if(src_m < 0)
 		return -1;
@@ -2228,6 +2228,11 @@ int map_addinstancemap(const char *name, int id)
 
 	memset(map[dst_m].npc, 0, sizeof(map[dst_m].npc));
 	map[dst_m].npc_num = 0;
+
+	// Reallocate cells
+	num_cell = map[dst_m].xs * map[dst_m].ys;
+	CREATE( map[dst_m].cell, struct mapcell, num_cell );
+	memcpy( map[dst_m].cell, map[src_m].cell, num_cell * sizeof(struct mapcell) );
 
 	size = map[dst_m].bxs * map[dst_m].bys * sizeof(struct block_list*);
 	map[dst_m].block = (struct block_list **)aCalloc(1,size);
@@ -2291,9 +2296,7 @@ static int map_instancemap_clean(struct block_list *bl, va_list ap)
  *------------------------------------------*/
 int map_delinstancemap(int m)
 {
-	if(m < 0)
-		return 0;
-	if(map[m].instance_id == 0)
+	if(m < 0 || !map[m].instance_id)
 		return 0;
 
 	// Kick everyone out
@@ -2308,6 +2311,7 @@ int map_delinstancemap(int m)
 	mapindex_removemap( map[m].index );
 
 	// Free memory
+	aFree(map[m].cell);
 	aFree(map[m].block);
 	aFree(map[m].block_mob);
 
