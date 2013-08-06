@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Euphy
 //===== Current Version: ===================================== 
-//= 1.1a
+//= 1.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -11,9 +11,10 @@
 //= Adds enchantments to various items in exchange for
 //= Mora coins.
 //===== Additional Comments: ================================= 
-//= 1.0 First Version. [Euphy]
-//= 1.1 Optimized. [Euphy]
+//= 1.0  First Version. [Euphy]
+//= 1.1  Optimized. [Euphy]
 //= 1.1a Bug fixes. [Lemongrass]
+//= 1.2  Bug fixes (bugreport:7930) [DeadlySilence]
 //============================================================ 
 
 // Arch Bishop Enchants :: coin_arc
@@ -222,7 +223,7 @@ mora,96,74,5	script	Master of Relics#pa0829	495,{
 			if (.@i <= 1024) {
 				// Basic combinations
 				// (raw: .@i increments by 16, 4 repeats)
-				setarray .@enchant_slot2[0],4710,4720,4721,4240; //Inteligence2,Dexterity1,Dexterity2,Vitality1
+				setarray .@enchant_slot2[0],4711,4720,4721,4740; //Inteligence2,Dexterity1,Dexterity2,Vitality1
 				setarray .@enchant_slot3[0],.@sp,4799,4766,4788; //[sp],HP500,Atk2,Mdef6
 				setarray .@enchants[2],
 					.@enchant_slot2[rand(getarraysize(.@enchant_slot2))],

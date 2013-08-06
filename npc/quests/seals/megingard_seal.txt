@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= rAthena
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //= 1.8 Corrected how exp reward is applied. [L0ne_W0lf]
 //= 1.9 Fixed some input checks and variable types. [brianluau]
 //= 2.0 Updated RE/Pre-RE EXP. [Euphy]
+//= 2.1 Fixed minor bug with the Librarian Jekan
 //============================================================
 
 prt_castle,44,151,0	script	Rebarev Doug	56,{
@@ -803,8 +804,8 @@ prt_in,172,106,0	script	Librarian#megin	833,{
 			mes "[Librarian Jekan]";
 			mes "Darn it...!";
 			mes "I can't read anything when the light is this dim! It's bad enough my eyes have gone bad...";
-			next;
 			while(1) {
+				next;
 				switch(select("You have bad eyes?:I want to read some documents.:Let me help you find those files...:What kind of files are you looking for?")) {
 				case 1:
 					mes "[Librarian Jekan]";

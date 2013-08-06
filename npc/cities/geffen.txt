@@ -1,28 +1,29 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script ======================================================
 //= Geffen Town
-//===== By: ================================================== 
+//===== By: =================================================================
 //= Everybody mentioned in the comments
-//===== Current Version: ===================================== 
-//= 1.9
-//===== Compatible With: ===================================== 
+//===== Current Version: ====================================================
+//= 1.10
+//===== Compatible With: ====================================================
 //= rAthena SVN
-//===== Description: ========================================= 
+//===== Description: ========================================================
 //= [Official Conversion]
 //= Geffen Town NPCs
-//===== Additional Comments: ================================= 
+//===== Additional Comments: ================================================
 //= Fully working
-//= 1.1 - Spell Checked [massdriller]
-//= 1.2 Fixed more typos [Nexon]
-//= 1.3 added a Level 4 weapon quest related NPC [MasterOfMuppets]
-//= 1.4 Removed Duplicates [Silent]
-//= 1.5 Fixed some typos and coordinates [Musashiden]
+//= 1.1  - Spell Checked [massdriller]
+//= 1.2  Fixed more typos [Nexon]
+//= 1.3  added a Level 4 weapon quest related NPC [MasterOfMuppets]
+//= 1.4  Removed Duplicates [Silent]
+//= 1.5  Fixed some typos and coordinates [Musashiden]
 //= 1.5a Fixed a small typo [Evera]
-//= 1.6 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.6  Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 1.6a Small bug fix. (end -> next) care of Lesbian. [L0ne_W0lf]
-//= 1.7 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
-//= 1.8 Fixed character's name and swapped gender dialogues [Lupus]
-//= 1.9 Replaced effect numerics with constants. [Samuray22]
-//============================================================
+//= 1.7  Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
+//= 1.8  Fixed character's name and swapped gender dialogues [Lupus]
+//= 1.9  Replaced effect numerics with constants. [Samuray22]
+//= 1.10 Bug fixes (bugreport:7928) [DeadlySilence]
+//===========================================================================
 
 geffen,59,143,0	script	Meera	91,{
 	mes "[Meera]";
@@ -1204,6 +1205,7 @@ geffen_in,39,127,2	script	Psychic Advisor	704,{
 		mes "Well, in any case, concentrating on your studies is tough, but it can be rewarding. I hope you do well in whatever you choose to do~";
 		close;
 	case 5:
+		mes "[Psychic Advisor]";
 		mes "The future? I thought it was implied that any fortune I tell you is about the future in the specific field that you choose.";
 		next;
 		mes "[Psychic Advisor]";
@@ -1265,6 +1267,7 @@ geffen_in,39,127,2	script	Psychic Advisor	704,{
 		mes "That's my prediction. Can you really argue with the wisdom of the spirit world?";
 		close;
 	case 6:
+		mes "[Psychic Advisor]";
 		mes "Fashion...?";
 		mes "What does that have to do with matters of the supernatural? Well, um, let me contact the spirits. Ah! Here we go...";
 		next;
