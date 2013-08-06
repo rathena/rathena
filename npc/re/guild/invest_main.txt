@@ -58,7 +58,7 @@ $@vfund_*_extra
 
 // Investment Functions & Controller
 //============================================================
-// Note: The time in this section are almost entirely custom.
+// Note: The times in this section are almost entirely custom.
 
 -	script	#invest_timer	-1,{
 OnClock0000:	// Open investments on Wed (1 hour after WoE)

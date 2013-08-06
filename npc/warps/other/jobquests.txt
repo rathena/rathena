@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 2.0
+//= 2.1
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Version Ep4+
 //===== Description: =========================================
@@ -23,17 +23,42 @@
 //= 1.8 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 1.9 Added Gungslinger and Ninja warps. [L0ne_W0lf]
 //= 2.0 Updated Novice warps to use correct maps. [L0ne_W0lf]
+//= 2.1 Added Novice warp duplicates. [Euphy]
 //============================================================
 
 //==============================================================================
 //Novice
 //==============================================================================
-new_1-1,148,112,0	warp	newwarp6001	2,2,new_1-2,100,9
-new_1-2,100,6,0	warp	newwarp6002	2,2,new_1-1,144,112
-new_1-2,126,106,0	warp	newwarp6003	2,2,new_1-2,160,171
-new_1-2,156,171,0	warp	newwarp6004	2,2,new_1-2,123,106
-new_1-2,73,106,0	warp	newwarp6005	2,2,new_1-2,41,172
-new_1-2,46,172,0	warp	newwarp6006	2,2,new_1-2,78,106
+new_1-1,148,112,0	warp	newwarp6001a	2,2,new_1-2,100,9
+new_2-1,148,112,0	warp	newwarp6001b	2,2,new_2-2,100,9
+new_3-1,148,112,0	warp	newwarp6001c	2,2,new_3-2,100,9
+new_4-1,148,112,0	warp	newwarp6001d	2,2,new_4-2,100,9
+new_5-1,148,112,0	warp	newwarp6001e	2,2,new_5-2,100,9
+new_1-2,100,6,0	warp	newwarp6002a	2,2,new_1-1,144,112
+new_2-2,100,6,0	warp	newwarp6002b	2,2,new_2-1,144,112
+new_3-2,100,6,0	warp	newwarp6002c	2,2,new_3-1,144,112
+new_4-2,100,6,0	warp	newwarp6002d	2,2,new_4-1,144,112
+new_5-2,100,6,0	warp	newwarp6002e	2,2,new_5-1,144,112
+new_1-2,126,106,0	warp	newwarp6003a	2,2,new_1-2,160,171
+new_2-2,126,106,0	warp	newwarp6003b	2,2,new_2-2,160,171
+new_3-2,126,106,0	warp	newwarp6003c	2,2,new_3-2,160,171
+new_4-2,126,106,0	warp	newwarp6003d	2,2,new_4-2,160,171
+new_5-2,126,106,0	warp	newwarp6003e	2,2,new_5-2,160,171
+new_1-2,156,171,0	warp	newwarp6004a	2,2,new_1-2,123,106
+new_2-2,156,171,0	warp	newwarp6004b	2,2,new_2-2,123,106
+new_3-2,156,171,0	warp	newwarp6004c	2,2,new_3-2,123,106
+new_4-2,156,171,0	warp	newwarp6004d	2,2,new_4-2,123,106
+new_5-2,156,171,0	warp	newwarp6004e	2,2,new_5-2,123,106
+new_1-2,73,106,0	warp	newwarp6005a	2,2,new_1-2,41,172
+new_2-2,73,106,0	warp	newwarp6005b	2,2,new_2-2,41,172
+new_3-2,73,106,0	warp	newwarp6005c	2,2,new_3-2,41,172
+new_4-2,73,106,0	warp	newwarp6005d	2,2,new_4-2,41,172
+new_5-2,73,106,0	warp	newwarp6005e	2,2,new_5-2,41,172
+new_1-2,46,172,0	warp	newwarp6006a	2,2,new_1-2,78,106
+new_2-2,46,172,0	warp	newwarp6006b	2,2,new_2-2,78,106
+new_3-2,46,172,0	warp	newwarp6006c	2,2,new_3-2,78,106
+new_4-2,46,172,0	warp	newwarp6006d	2,2,new_4-2,78,106
+new_5-2,46,172,0	warp	newwarp6006e	2,2,new_5-2,78,106
 
 //==============================================================================
 //Thief
