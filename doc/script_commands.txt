@@ -5847,7 +5847,7 @@ A full example of a dynamic shop can be found in doc/sample/npc_dynamic_shop.txt
 
 ---------------------------------------
 
-*npcshopitem "<name>",<item id>,<price>{,<item id>,<price>{,<item id>,<price>{,...}}}
+*npcshopitem "<name>",<item id>,<price>{,<item id>,<price>{,<item id>,<price>{,...}}};
 
 This command lets you override the contents of an existing NPC shop or cashshop. The
 current sell list will be wiped, and only the items specified with the price
@@ -5859,7 +5859,7 @@ Note that you cannot use -1 to specify default selling price!
 
 ---------------------------------------
 
-*npcshopadditem "<name>",<item id>,<price>{,<item id>,<price>{,<item id>,<price>{,...}}}
+*npcshopadditem "<name>",<item id>,<price>{,<item id>,<price>{,<item id>,<price>{,...}}};
 
 This command will add more items at the end of the selling list for the
 specified NPC shop or cashshop. If you specify an item already for sell, that item will
@@ -5871,7 +5871,7 @@ Note that you cannot use -1 to specify default selling price!
 
 ---------------------------------------
 
-*npcshopdelitem "<name>",<item id>{,<item id>{,<item id>{,...}}}
+*npcshopdelitem "<name>",<item id>{,<item id>{,<item id>{,...}}};
 
 This command will remove items from the specified NPC shop or cashshop.
 If the item to remove exists more than once on the shop, all instances will be
@@ -5882,7 +5882,7 @@ value is only to confirm that the shop was indeed found.
 
 ---------------------------------------
 
-*npcshopattach "<name>"{,<flag>}
+*npcshopattach "<name>"{,<flag>};
 
 This command will attach the current script to the given NPC shop.
 When a script is attached to a shop, the events "OnBuyItem" and "OnSellItem"
@@ -5900,7 +5900,7 @@ The function returns 0 if the shop was not found, 1 otherwise.
 
 ---------------------------------------
 
-*waitingroom "<chatroom name>",<limit>{,<event label>,<trigger>,<required zeny>,<min lvl>,<max lvl>};
+*waitingroom "<chatroom name>",<limit>{,"<event label>"{,<trigger>{,<required zeny>{,<min lvl>{,<max lvl>}}}}};
 
 This command will create a chat room, owned by the NPC object running this 
 script and displayed above the NPC sprite.

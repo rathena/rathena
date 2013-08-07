@@ -11,10 +11,10 @@
 //= Adds enchantments to various items in exchange for
 //= Mora coins.
 //===== Additional Comments: ================================= 
-//= 1.0  First Version. [Euphy]
-//= 1.1  Optimized. [Euphy]
+//= 1.0 First Version. [Euphy]
+//= 1.1 Optimized. [Euphy]
 //= 1.1a Bug fixes. [Lemongrass]
-//= 1.2  Bug fixes (bugreport:7930) [DeadlySilence]
+//= 1.2 Bug fixes (bugreport:7930) [DeadlySilence]
 //============================================================ 
 
 // Arch Bishop Enchants :: coin_arc

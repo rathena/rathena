@@ -3,21 +3,27 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 0.4
+//= 0.5
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
 //= [Official Conversion]
-//= Quest NPCs related to Port Malaya.
+//= Quest NPCs related to Port Malaya:
+//== Cautious Village, Port Malaya Daily Quests,
+//== Secret in the Woods, Bakonawa Extermination
+//= Merchants:
+//== Traders, Upgrade Boss Equipment
+//= Not yet implemented:
+//== Nurse in Port Malaya, Pintados Festival
 //===== Additional Comments: =================================
 //= 0.1 Traders only. Adapted from Masao's conversion. [Euphy]
 //= 0.2 Added Tribe Blacksmith [DeadlySilence]
 //= 0.3 Added "Secret in the Woods" quest [DeadlySilence]
-//= 0.4 Added Cautious Village and subsequent 
-//=     quests [DeadlySilence]
+//= 0.4 Added "Cautious Village" and subsequent quests [DeadlySilence]
+//= 0.5 Added "Bakonawa Extermination" quest. [Euphy]
 //============================================================
 
-// Cautious Village and subsequent quests :: malaya_hi
+// Cautious Village & Daily Quests :: hi_malaya
 //============================================================
 malaya,266,76,3	script	Rodel the Guard#malaya	570,4,4,{
 	if (MaxWeight - Weight < 1000 || checkweight(1201,1) == 0) {
@@ -3592,8 +3598,8 @@ ma_fild01,238,198,4	script	Tikbalang Expert#malaya	582,{
 	}
 }
 
-// MVP Armors :: mvpitem
-// ============================================================
+// Upgrade Boss Equipment :: mvpitem
+//============================================================
 ma_fild01,158,243,6	script	Tribe Blacksmith#malaya	582,{
 	mes "[Bayani]";
 	mes "I will upgrade your armor if you bring one that holds enormous power.";
@@ -4795,5 +4801,1692 @@ ma_fild02,308,262,3	script	Guard#buwayacave	570,{
 	end;
 OnInit:
 	disablenpc "Guard#buwayacave";
+	end;
+}
+
+// Bakonawa Extermination :: bakonawa
+//============================================================
+malaya,280,331,4	script	Singing Man#bako1	578,{
+	if (malaya_bakona1 < 5) {
+		mes "[Singing Man]";
+		mes "Story of dragon that lives at a lake~";
+		mes "Story of an old lady";
+		mes "that became a dragon long ago~";
+		next;
+		mes "[Singing Man]";
+		mes "Waiting for the son that left for a foreign land,";
+		mes "my son will return";
+		mes "when that moon sets for the 90th time";
+		next;
+		mes "[Singing Man]";
+		mes "The moon sets for the 89th,";
+		mes "The moon sets for the 90th,";
+		mes "The moon sets for the 191st...";
+		next;
+		mes "[Singing Man]";
+		mes "That moon has taken my son away~";
+		mes "That horrible thing";
+		mes "has swallowed my son,";
+		mes "and I will punish that moon~";
+		next;
+		mes "[Singing Man]";
+		mes "The day the furious moon hides itself from sight,";
+		mes "the whole world will be flooded with rain";
+		mes "with all the villages and people facing death under water~";
+		next;
+		mes "[Singing Man]";
+		mes "The old lady's curse made the moon furious~";
+		mes "Get rid of the old lady to calm the moon~";
+		mes "If only the old lady wasn't here, If only the old lady wasn't here...";
+		next;
+		mes "[Singing Man]";
+		mes "I hear rumors~";
+		mes "The old lady threw herself into the lake~";
+		mes "the old lady, now turned into a dragon, will swallow the moon";
+		mes "and soon swallow the village too~";
+		close;
+	} else {
+		mes "[Singing Man]";
+		mes "You say the legend is all a lie?";
+		mes "You mean my ancestors are all liars";
+		mes "and swindlers?";
+		next;
+		mes "[Singing Man]";
+		mes "This village is built on an old legend";
+		mes "and history.";
+		mes "They are not the kind of people that will be shaken by";
+		mes "foolish words of an imbecile such as yourself.";
+		close;
+	}
+}
+
+malaya,275,333,5	script	Singing Woman#bako1	579,{
+	if (malaya_bakona1 < 5) {
+		mes "[Singing Woman]";
+		mes "Bakonawa that live at a lake,";
+		mes "story of an old lady that became a dragon.";
+		next;
+		mes "[Singing Woman]";
+		mes "The son that was suppose to return after the moon sets for the 90th time";
+		mes "never did come back even after the moon had set for a few hundred times~";
+		mes "The moon has swallowed the old lady's son~";
+		next;
+		mes "[Singing Woman]";
+		mes "The moon, the moon, you shall receive the old lady's curse~";
+		mes "The whole village was immersed in death";
+		mes "with rain and floods sent by the furious moon~";
+		next;
+		mes "[Singing Woman]";
+		mes "The moon, the moon, be still and be calm,";
+		mes "for the old lady is gone and she is no more~";
+		mes "The old lady has drowned in the lake~";
+		mes "She will transform into Bakonawa and come back...";
+		next;
+		mes "[Singing Woman]";
+		mes "...to swallow you and";
+		mes "punish the village soon~";
+		mes "The day the moon dies";
+		mes "is the day the village dies too~";
+		close;
+	} else {
+		mes "[Singing Woman]";
+		mes "The legends are all a lie?";
+		mes "Why do you say such nonsense?";
+		mes "Is there nothing";
+		mes "that is important for you to protect?";
+		next;
+		mes "[Singing Woman]";
+		mes "Poor Bakonawa...";
+		mes "I would be happy";
+		mes "if she took a big bite out of someone like you!";
+		close;
+	}
+}
+
+malaya,290,329,4	script	Frightened Boy#bako1	577,{
+	if (malaya_hi < 20) {
+		mes "- He seems cautious of you. -";
+		close;
+	}
+	if (malaya_bakona1 < 5) {
+		mes "[Frightened Boy]";
+		mes "The vicious monster Bakonawa will soon come";
+		mes "to swallow the moon and take vengeance upon the village.";
+		mes "I'm scared, please help...";
+		close;
+	} else {
+		mes "[Frightened Boy]";
+		mes "The legend of Bakonawa is all a lie?";
+		mes "So that means Bakonawa doesn't exist?";
+		mes "I'm going to play with my friends at the lake later.";
+		mes "You told me it was all a lie right?";
+		close;
+	}
+}
+
+malaya,264,338,4	script	Frightened Maiden#bako1	576,{
+	if (malaya_hi < 20) {
+		mes "- She seems cautious of you. -";
+		close;
+	}
+	if (malaya_bakona1 < 5) {
+		mes "[Frightened Maiden]";
+		mes "It is said that Bakonawa hates loud noises.";
+		mes "Pound the pot if you want to live!";
+		next;
+		switch(select("Hates loud noises?:What is Bakonawa?")) {
+		case 1:
+			mes "[Frightened Maiden]";
+			mes "You already heard that the old lady";
+			mes "died and became Bakonawa, right?";
+			next;
+			mes "[Frightened Maiden]";
+			mes "The legend has it that";
+			mes "the old lady had very keen hearing";
+			mes "because she was always focusing on";
+			mes "the returning of her traveling son.";
+			next;
+			mes "[Frightened Maiden]";
+			mes "So naturally, Bakonawa also";
+			mes "has very keen hearing.";
+			mes "The reason why everyone is banging";
+			mes "pots and pans is because of this.";
+			close;
+		case 2:
+			mes "[Frightened Maiden]";
+			mes "It is a terrible monster that lives at a lake.";
+			mes "We are all trembling with fear";
+			mes "because we don't know when it might attack the village.";
+			next;
+			mes "[Frightened Maiden]";
+			mes "Some say that it is more obsessed with swallowing the moon";
+			mes "than attacking the village.";
+			mes "if that's the case, I wish it would just swallow the moon";
+			mes "and leave us alone.";
+			close;
+		}
+	} else {
+		mes "[Frightened Maiden]";
+		mes "The villagers hate you now.";
+		mes "You've been saying that legend of Bakonawa";
+		mes "is a lie and they are saying you are more of a monster";
+		mes "than Bakonawa.";
+		close;
+	}
+}
+
+malaya,272,339,5	script	Old Fortune Teller#bako1	575,{
+	if (malaya_hi < 20) {
+		mes "- Old Fortune Teller seems cautious of you. -";
+		close;
+	}
+	if (malaya_bakona1 < 5) {
+		mes "[Old Fortune Teller]";
+		mes "You must not hate Bakonawa.";
+		mes "The hate against it is only feeding its rage";
+		mes "to grow bigger.";
+		next;
+		mes "[Old Fortune Teller]";
+		mes "To calm the dead lady's anger,";
+		mes "we annually hold a ceremony and prepare food.";
+		mes "But there seems to be no way to calm the";
+		mes "ever growing anger of the old lady.";
+		next;
+		mes "[Old Fortune Teller]";
+		mes "The day is nearing. I can sense it.";
+		mes "Bakonawa will soon swallow the moon";
+		mes "and come to punish the village.";
+		close;
+	} else {
+		mes "[Old Fortune Teller]";
+		mes "How can you say the legend is a lie!";
+		mes "Because of you, the fury of Bakonawa";
+		mes "grew even larger!";
+		mes "If the village perishes,";
+		mes "it is all your fault!";
+		close;
+	}
+}
+
+malaya,285,332,4	script	Old Legend Teller#bako1	574,{
+	if (checkweight(1301,3) == 0) {
+		mes "You cannot start the conversation. You are carrying too many items. -";
+		close;
+	}
+	if (BaseLevel < 120) {
+		mes "[Old Legend Teller]";
+		mes "There is something that needs to be done";
+		mes "but you look too fragile";
+		mes "to give me a hand.";
+		next;
+		mes "[Old Legend Teller]";
+		mes "Come back when";
+		mes "your strength grows strong enough";
+		mes "to match Incubus.";
+		close;
+	}
+	if (malaya_hi < 20) {
+		mes "- He seems cautious of you. -";
+		close;
+	}
+	if (malaya_bakona1 == 0) {
+		mes "[Old Legend Teller]";
+		mes "The old lady has come back";
+		mes "to life as Bakonawa.";
+		mes "Soon she will come to take vengeance on the village.";
+		mes "We must calm her";
+		mes "if to prevent further destruction...";
+		next;
+		switch(select("Calm Bakonawa?:Further destruction?")) {
+		case 1:
+			mes "[Old Legend Teller]";
+			mes "The old lady faced an unjust death";
+			mes "because of villagers' selfishness.";
+			mes "She was a caring mother who loved her";
+			mes "son dearly.";
+			next;
+			mes "[Old Legend Teller]";
+			mes "If we track the whereabouts of her son and hold a ritual";
+			mes "with her son's belongings,";
+			mes "her restless soul will be calmed";
+			mes "and she will spare us from destruction.";
+			next;
+			mes "[Villagers]";
+			mes "It is no use sir!!";
+			next;
+			mes "[Villagers]";
+			mes "You cannot stop the monster that way!";
+			next;
+			mes "[Old Legend Teller]";
+			mes "Of course, it will not be easy to track down the whereabouts of a person";
+			mes "who has been gone for a hundred years.";
+			mes "...";
+			next;
+			mes "[Old Legend Teller]";
+			mes "Still, don't you think";
+			mes "it is worth a try?";
+			mes "Please help us and save us from our misery.";
+			next;
+			switch(select("It is no use.:I'll help.")) {
+			case 1:
+				mes "[Old Legend Teller]";
+				mes "Yes, you are also right.";
+				mes "You are up against not a human,";
+				mes "but a monster.";
+				mes "Still, I trust in that old lady's";
+				mes "good heart.";
+				close;
+			case 2:
+				mes "[Old Legend Teller]";
+				mes "Will you do it?";
+				mes "According to the legend,";
+				mes "the old lady's son was limping";
+				mes "and was a traveling merchant that sold wooden dolls.";
+				next;
+				mes "[Old Legend Teller]";
+				mes "There is a ^FF0000Slate Piece^000000 he left.";
+				mes "But the piece is small and damaged,";
+				mes "its hard to identify it.";
+				next;
+				mes "[Old Legend Teller]";
+				mes "First, bring it to me.";
+				mes "Down along this path";
+				mes "you will meet my granddaughter near the port.";
+				mes "Get the Slate Piece from there.";
+				set malaya_bakona1,1;
+				setquest 1174;
+				close;
+			}
+		case 2:
+			mes "[Old Legend Teller]";
+			mes "The grudge against the people of";
+			mes "Bakonawa- I mean, the dead old lady.";
+			mes "The moon and this village...";
+			mes "She will try to destroy it.";
+			next;
+			select("Take vengeance? After all these years?");
+			mes "[Old Legend Teller]";
+			mes "For some time, she has";
+			mes "blamed the moon and";
+			mes "resented the villagers.";
+			mes "The feeling grew larger as the time passed.";
+			next;
+			mes "[Old Legend Teller]";
+			mes "Why do you think she became such a monster?";
+			mes "What do you think went through her head";
+			mes "for years and years?";
+			mes "Anger and vengeance.";
+			next;
+			mes "[Old Legend Teller]";
+			mes "Unforgettable grudge";
+			mes "that she was abandoned.";
+			mes "against the moon and the village.";
+			mes "This is why this grudge must be resolved.";
+			close;
+		}
+	} else if (malaya_bakona1 == 1) {
+		mes "[Old Legend Teller]";
+		mes "Please bring the ^FF0000Slate Piece^000000.";
+		mes "Down along this path";
+		mes "you will meet my granddaughter near the port.";
+		mes "Get the Slate Piece from there.";
+		close;
+	} else if (malaya_bakona1 == 2) {
+		mes "[Old Legend Teller]";
+		mes "Good, you have the Slate Piece.";
+		mes "Hold on to it and don't lose it.";
+		mes "It will be of helpful in tracking down the legend.";
+		next;
+		mes "[Old Legend Teller]";
+		mes "I heard there is a man that lives by himself";
+		mes "at the end of northwestern part of Forest Field.";
+		mes "I heard someone saw a wooden doll there.";
+		mes "It is such a remote place that people like us";
+		mes "simply cannot travel there.";
+		mes "Could you visit the place for us?";
+		next;
+		switch(select("Go there yourself!:Your explanation is too vague.:On my way!")) {
+		case 1:
+			mes "[Old Legend Teller]";
+			mes "You twisted youth!";
+			close;
+		case 2:
+			mes "[Old Legend Teller]";
+			mes "You have a point, but";
+			mes "this is the best I can do for now.";
+			mes "The place is at the end of northwestern part of the forest.";
+			mes "After you pass the bridge and travel west,";
+			mes "you will see a person.";
+			break;
+		case 3:
+			mes "[Old Legend Teller]";
+			mes "You have a good heart young man!";
+			mes "The place is at the end of northwestern part of the forest.";
+			mes "After you pass the bridge and travel west,";
+			mes "You will see a ^0000FFMalaya Immigrant^000000.";
+			break;
+		}
+		mes "Good luck to you... for our sake...";
+		erasequest 1175;
+		setquest 1176;
+		set malaya_bakona1,3;
+		close;
+	} else if (malaya_bakona1 == 3) {
+		mes "[Old Legend Teller]";
+		mes "The place is at the end of northwestern part of the forest.";
+		mes "After you pass the bridge and travel west,";
+		mes "you will see a person.";
+		mes "Good luck to you... for our sake...";
+		close;
+	} else if (malaya_bakona1 < 6) {
+		mes "[Old Legend Teller]";
+		mes "The track of the old lady's son";
+		mes "is connected all the way to";
+		mes "Baryo Mahiwaga?";
+		mes "There is a chance he wasn't a merchant...";
+		mes "I'm really curious about who he was...";
+		next;
+		mes "[Old Legend Teller]";
+		mes "Why did you come back here";
+		mes "instead of going straight to";
+		mes "Baryo Mahiwaga?";
+		close;
+	} else if (malaya_bakona1 == 6) {
+		mes "[Old Legend Teller]";
+		mes "Is that really true?";
+		mes "Bakonawa turning into an old lady";
+		mes "and fabricating the legend...";
+		mes "It seems all the villagers up until now";
+		mes "have been manipulated by that terrible monster.";
+		next;
+		mes "[Old Legend Teller]";
+		mes "There is no reason to hesitate then.";
+		mes "You must go into Bakonawa's lair";
+		mes "before it attacks first.";
+		mes "I believe we can trust you to do this, yes?";
+		next;
+		switch(select("Well...:Of course!")) {
+		case 1:
+			mes "[Old Legend Teller]";
+			mes "The atmosphere was really good";
+			mes "but suddenly it's all ruined.";
+			mes "I didn't expect you to be so shy...";
+			close;
+		case 2:
+			mes "[Old Legend Teller]";
+			mes "I will speak to";
+			mes "the village chief for you";
+			mes "so that you can enter the Bakonawa Lake.";
+			mes "Please get rid of this monster for us.";
+			erasequest 1179;
+			set malaya_bakona1,7;
+			getitem 6499,5; //Ancient_Grudge
+			getexp 500000,200000;
+			close;
+		}
+		close;
+	} else if (malaya_bakona1 == 7) {
+		if (malaya_bakona2 < 15) {
+			mes "[Old Legend Teller]";
+			mes "If you don't mind,";
+			mes "could you lend a hand to the Village Chief?";
+			mes "Nobody cares for each other anymore";
+			mes "because of Bakonawa...";
+			next;
+		}
+		mes "[Old Legend Teller]";
+		mes "The legend that";
+		mes "we believed for a hundred years,";
+		mes "all lies....";
+		mes "Please get rid of this monster for us.";
+		close;
+	}
+}
+
+ma_fild02,40,240,4	script	Malaya Immigrant#bako1	578,{
+	if (malaya_bakona1 < 3) {
+		mes "[Malaya Immigrant]";
+		mes "You must have a brave heart";
+		mes "to come to such a remote place.";
+		mes "How is Port Malaya these days?";
+		mes "I heard the monster that lives at the lake, Baknoawa";
+		mes "is threatening the villagers.";
+		mes "I am in the dark about what is going on because I'm here all the time.";
+		close;
+	} else if (malaya_bakona1 == 3) {
+		mes "[Malaya Immigrant]";
+		mes "You must have a brave heart";
+		mes "to come to such a remote place.";
+		mes "How is Port Malaya these days?";
+		mes "I heard the monster that lives at the lake, Baknoawa";
+		mes "is threatening the villagers.";
+		mes "I am in the dark about what is going on because I'm here all the time.";
+		next;
+		mes "[Malaya Immigrant]";
+		mes "Are you the traveling merchant who used to sell Wooden Doll, right?";
+		mes "I don't know about any traveling merchant, but by Wooden Doll";
+		mes "(going through things) do you mean this?";
+		mes "I don't know about the specifics, but";
+		mes "I think it's related to what I heard long time ago.";
+		next;
+		switch(select("What are you doing here?:Do you know about this Slate Piece?:Please tell me the story.:Who is the traveling merchant?")) {
+		case 1:
+			mes "[Malaya Immigrant]";
+			mes "I liked the environment here";
+			mes "so I decided to stay and live.";
+			mes "There is no obligation here.";
+			mes "To me, that's as good as heaven.";
+			close;
+		case 2:
+			mes "[Malaya Immigrant]";
+			mes "It is a very old Slate Piece.";
+			mes "I'm sorry but I never seen this before.";
+			mes "There is some kind of writing here";
+			mes "but I can't make it out.";
+			close;
+		case 3:
+			mes "[Malaya Immigrant]";
+			mes "It's a simple story.";
+			mes "^0000FFA wounded man who I had never seen before^000000";
+			mes "^0000FFcame to my house and asked for help.^000000";
+			mes "^0000FFOnce healed, he made a Wooden Doll^000000";
+			next;
+			mes "[Malaya Immigrant]";
+			mes "^0000FFthat is suppose to chase away evil spirits ^000000";
+			mes "^0000FFas a token of gratitude,^000000";
+			mes "^0000FFand left for Baryo Mahiwaga.^000000";
+			next;
+			select("He left for Baryo Mahiwaga?");
+			mes "[Malaya Immigrant]";
+			mes "According to what I've heard";
+			mes "that's correct. But the story has been";
+			mes "passed on from mouth to mouth for a";
+			mes "long time. I can't be sure.";
+			next;
+			mes "From Baryo Mahiwaga village, using keyword ^0000FFMalaya^000000,";
+			mes "or ^0000FFBakonawa^000000,";
+			mes "maybe I could find out the identity and whereabouts";
+			mes "of the traveling merchant.";
+			erasequest 1176;
+			setquest 1177;
+			set malaya_bakona1,4;
+			close;
+		case 4:
+			mes "[Malaya Immigrant]";
+			mes "Well, there is a lack of information";
+			mes "so I can't make say for sure but";
+			mes "I'm skeptical if he was in fact even a merchant.";
+			mes "Coming to a town with a";
+			mes "critical wound seems too suspicious...";
+			next;
+			mes "[Malaya Immigrant]";
+			mes "And craving a Wooden Doll";
+			mes "could be seen to have some kind of ritualistic meaning.";
+			mes "Protecting one from some evil force...";
+			mes "that kind of thing.";
+			next;
+			mes "Identity of the traveling merchant...";
+			mes "Looks like there is one more";
+			mes "mystery to be solved.";
+			mes "I suppose it will all come to light";
+			mes "soon enough.";
+			close;
+		}
+	} else {
+		mes "[Malaya Immigrant]";
+		mes "I will tell you again slowly";
+		mes "the story that has been passed on.";
+		mes "Listen carefully and repeat...";
+		mes "no, I mean, you don't have repeat it.";
+		next;
+		mes "[Orally Transmitted Story]";
+		mes "^0000FFA wounded man who I had never seen before^000000";
+		mes "^0000FFcame to my house and asked for help.^000000";
+		mes "^0000FFOnce healed, as a token of gratitude, he made a Wooden Doll^000000";
+		mes "^0000FFthat is suppose to chase away evil sprits.^000000";
+		mes "^0000FFThen he left for Baryo Mahiwaga.^000000";
+		next;
+		mes "From Baryo Mahiwaga village, using keyword ^0000FFMalaya^000000,";
+		mes "or ^0000FFBakonawa^000000,";
+		mes "maybe I could find out the identity and whereabouts";
+		mes "of the traveling merchant.";
+		close;
+	}
+}
+
+ma_fild01,165,237,4	script	Malaya Immigrant#bako2	582,{
+	if (malaya_bakona1 < 4) {
+		mes "[Malaya Immigrant]";
+		mes "Have you been to";
+		mes "Port Malaya?";
+		mes "I am curious to know";
+		mes "what is going on there";
+		mes "but I can't travel because there are monsters everywhere.";
+		close;
+	} else if (malaya_bakona1 == 4) {
+		mes "[Malaya Immigrant]";
+		mes "Wooden Doll?";
+		mes "There is a tale related to that,";
+		mes "but you didn't come all the way";
+		mes "just to hear some folktale right?";
+		next;
+		switch(select("I just came here to take a break.:Tell me the tale.")) {
+		case 1:
+			mes "[Malaya Immigrant]";
+			mes "You must have a lot of free time on your hands!";
+			mes "I'm no travel agent";
+			mes "so go bother someone else!";
+			close;
+		case 2:
+			mes "[Malaya Immigrant]";
+			mes "It's baloney";
+			mes "so I don't really remember the details.";
+			next;
+			mes "[Summary of the folktale]";
+			mes "Long time ago, 5 swordsmen fought";
+			mes "against the monster Bakonawa.";
+			mes "Four died and one left a critical wound";
+			mes "to the monster but in return";
+			mes "sustained a serious wound in his leg himself.";
+			next;
+			mes "[Summary of the folktale]";
+			mes "After escaping the scene, Bakonawa transformed into a human";
+			mes "and secretly pursued the swordsman.";
+			mes "The swordsman made a Wooden Doll that";
+			mes "can keep the monster from approaching.";
+			next;
+			mes "[Malaya Immigrant]";
+			mes "This is the end of story.";
+			mes "Without any conclusion...";
+			next;
+			mes "[Malaya Immigrant]";
+			mes "I heard there is a record that the swordsman left";
+			mes "but I don't understand why";
+			mes "he would leave it here in such a distant place";
+			mes "here instead of Malaya.";
+			next;
+			select("I wish to see the record.");
+			mes "[Malaya Immigrant]";
+			mes "The record is engraved on the stone ahead.";
+			mes "However, the stone is so badly";
+			mes "damaged and some pieces fell out that";
+			mes "it will be hard to make the words out.";
+			next;
+			mes "Investigate the stone ahead.";
+			erasequest 1177;
+			setquest 1178;
+			set malaya_bakona1,5;
+			close;
+		}
+	} else if (malaya_bakona1 == 5) {
+		mes "[Malaya Immigrant]";
+		mes "The stone ahead holds a record that";
+		mes "a swordsman from a long time ago left.";
+		next;
+		switch(select("Where did this swordsman go after?:Tell me the tale again.")) {
+		case 1:
+			mes "[Malaya Immigrant]";
+			mes "Well, there is no story after that so";
+			mes "I guess nobody would know what happened.";
+			close;
+		case 2:
+			mes "[Summary of the folktale]";
+			mes "Long time ago, 5 swordsmen fought";
+			mes "against the monster Bakonawa.";
+			mes "Four died and one left a critical wound";
+			mes "on the monster but in return";
+			mes "sustained a serious wound in his leg himself.";
+			next;
+			mes "[Summary of the folktale]";
+			mes "After escaping the scene, Bakonawa transformed into a human";
+			mes "and secretly pursued the swordsman.";
+			mes "The swordsman made a Wooden Doll that";
+			mes "can keep the monster from approaching.";
+			close;
+		}
+	} else {
+		mes "[Malaya Immigrant]";
+		mes "I suppose you wish to hear the story again right?";
+		mes "No problem! I can tell this story forever!";
+		next;
+		mes "[Summary of the folktale]";
+		mes "Long time ago, 5 swordsmen fought";
+		mes "against the monster Bakonawa.";
+		mes "Four died and one left a critical wound";
+		mes "on the monster but in return";
+		mes "sustained a serious wound in his leg himself.";
+		next;
+		mes "[Summary of the folktale]";
+		mes "After escaping the scene, Bakonawa transformed into a human";
+		mes "and secretly pursued the swordsman.";
+		mes "The swordsman made a Wooden Doll that";
+		mes "can keep the monster from approaching.";
+		close;
+	}
+}
+
+ma_fild01,171,235,0	script	#bako1	139,2,2,{
+	end;
+OnTouch:
+	if (malaya_bakona1 == 5) {
+		mes "The damage is so severe";
+		mes "that the record is unidentifiable.";
+		mes "When inserting the Slate Piece";
+		mes "to a hole on the wall, it fits perfectly like a piece of puzzle.";
+		mes "The letters are not clear but you can still read it.";
+		next;
+		callsub L_Record;
+		set malaya_bakona1,6;
+		erasequest 1178;
+		setquest 1179;
+		close;
+	} else if (malaya_bakona1 == 6) {
+		mes "Here is the record left by a swordsman";
+		mes "from a hundred years ago.";
+		next;
+		switch(select("I don't need to read it.:Read the record again.")) {
+		case 1:
+			mes "I remember the story clearly.";
+			mes "Let's tell the ^0000FFOld Legend Teller^000000 in Malaya";
+			mes "about what I discovered.";
+			close;
+		case 2:
+			callsub L_Record;
+			close;
+		}
+	}
+	end;
+
+L_Record:
+	mes "[Record left by a swordsman from a hundred years ago]";
+	mes "After fighting with Bakonawa, I sustained a critical wound";
+	mes "and came to this place.";
+	mes "Only thing I can do is";
+	mes "Place the Wooden Doll in one place";
+	mes "the monster would come.";
+	next;
+	mes "[Record left by a swordsman from a hundred years ago]";
+	mes "^0000FFSometimes transforming into a child, or even a old lady,^000000";
+	mes "I know that ^0000FFBakonawa^000000has been";
+	mes "chasing after me in secret to kill me.";
+	mes "Because of that critical injury the monster * sustained,";
+	next;
+	mes "[Record left by a swordsman from a hundred years ago]";
+	mes "** it will need nearly a hundred years";
+	mes "for Bakonawa to absorb the power of the moon";
+	mes "to fully recover its power.";
+	mes "Beware of the day the moon disappears.";
+	next;
+	mes "[Record left by a swordsman from a hundred years ago]";
+	mes "The day will come when Bakonawa";
+	mes "will run amuck.";
+	mes "But it will take nearly a hundred years to fully recover its power.";
+	mes "There will always be someone better than me";
+	mes "to defeat the vile creature.";
+	next;
+	mes "[Record left by a swordsman from a hundred years ago]";
+	mes "I will place my trust in the one that will replace me ages from now...";
+	next;
+	mes "How could this be...";
+	mes "Lie told by Bakonawa when it turned into an old lady";
+	mes "in order to take revenge on the swordsman";
+	mes "turned into a legend after all these years.";
+	next;
+	mes "I found out that Bakonawa";
+	mes "is nothing but a blood thirsty monster.";
+	mes "I must tell what I know to the ^0000FFOld Legend Teller^000000";
+	mes "in Malaya.";
+	return;
+}
+
+malaya,304,100,4	script	Old Man's Granddaughter	576,{
+	if (malaya_hi < 20) {
+		mes "- He seems cautious of you. -";
+		close;
+	}
+	if (malaya_bakona1 == 0) {
+		mes "[Old Man's Granddaughter]";
+		mes "Grandpa believes";
+		mes "Bakonawa can";
+		mes "turn good.";
+		mes "Do you think it's possible?";
+		close;
+	} else if (malaya_bakona1 == 1) {
+		mes "[Old Man's Granddaughter]";
+		mes "^FF0000Slate Piece^000000?";
+		mes "Why would you need something";
+		mes "that is barely recognizable?";
+		mes "I'll give it to you if you want.";
+		next;
+		mes "Let's go to the";
+		mes "^FF0000Old Legend Teller^000000";
+		mes "now that I have the Slate Piece.";
+		erasequest 1174;
+		setquest 1175;
+		set malaya_bakona1,2;
+		close;
+	} else if (malaya_bakona1 == 2) {
+		mes "[Old Man's Granddaughter]";
+		mes "Please take this Slate Piece";
+		mes "and deliver it to my grandpa.";
+		next;
+		mes "Let's go to the";
+		mes "^FF0000Old Legend Teller^000000";
+		mes "now that I have the Slate Piece.";
+		close;
+	} else {
+		mes "[Old Man's Granddaughter]";
+		mes "Because of Bakonawa,";
+		mes "the village is always unpeaceful.";
+		close;
+	}
+}
+
+malaya,286,269,4	script	Angry Man#bako2	578,{
+	if (malaya_hi < 20) {
+		mes "- He seems cautious of you. -";
+		close;
+	}
+	mes "[Angry Man]";
+	mes "Calm Bakonawa?";
+	mes "Do you know how many people have been";
+	mes "sacrificed by Bakonawa?";
+	mes "I will fight on my own if I have to!";
+	close;
+}
+
+malaya,276,269,5	script	Calm Woman#bako2	579,{
+	if (malaya_hi < 20) {
+		mes "- He seems cautious of you. -";
+		close;
+	}
+	mes "[Calm Little Girl]";
+	mes "It is too dangerous to fight against";
+	mes "Bakonawa. There is a chance";
+	mes "it will get more angry and put children and";
+	mes "elders in danger.";
+	close;
+}
+
+malaya,276,262,4	script	Angry Boy#bako2	577,{
+	if (malaya_hi < 20) {
+		mes "- He seems cautious of you. -";
+		close;
+	}
+	mes "[Angry Boy]";
+	mes "I lost my father and my friend";
+	mes "to that Bakonawa.";
+	mes "I will surely revenge them!";
+	close;
+}
+
+malaya,283,265,4	script	Village Chief#bako2	580,{
+	if (checkweight(1301,3) == 0) {
+		mes "You cannot start the conversation. You are carrying too many items. -";
+		close;
+	}
+	if (BaseLevel < 120) {
+		mes "[Village Chief]";
+		mes "I'm desperate for a helping hand";
+		mes "but you look";
+		mes "too weak and fragile.";
+		next;
+		mes "[Village Chief]";
+		mes "Please come back when";
+		mes "you grow strong enough";
+		mes "to match Incubus.";
+		close;
+	}
+	if (malaya_hi < 20) {
+		mes "- He seems cautious of you. -";
+		close;
+	}
+	if (malaya_bakona2 == 0) {
+		if (malaya_bakona1 <= 5) {
+			mes "[Village Chief]";
+			mes "I'm don't know what's the right decision.";
+			mes "To fight against Bakonawa,";
+			mes "or calm it by offering it a sacrificial gift.";
+		} else {
+			mes "[Village Chief]";
+			mes "The legend was all a lie?";
+			mes "It seems all the villagers up until now";
+			mes "were manipulated by that vile monster.";
+			next;
+			mes "[Village Chief]";
+		}
+		mes "Recently, there have been more people that have";
+		mes "been harmed by Bakonawa.";
+		next;
+		mes "[Village Chief]";
+		mes "There are some missing villagers";
+		mes "but I can't find out if";
+		mes "they are simply missing or if they have been";
+		mes "killed by Bakonawa.";
+		next;
+		mes "[Village Chief]";
+		mes "I heard that the belongings of the missing people";
+		mes "are being found at Baryo Mahiwaga Field.";
+		mes "Please go there to find ^0000FFLost Belongings^000000";
+		mes "and give them to the families of";
+		mes "the missing people";
+		mes "in whatever amount they want.";
+		next;
+		mes "[Village Chief]";
+		mes "^0000FFLost Belongings^000000";
+		mes "are said to be carried by";
+		mes "^FF0000Tiucknuc^000000 that roams Baryo Mahiwaga.";
+		next;
+		switch(select("Do it yourself.:I'm on my way.")) {
+		case 1:
+			mes "[Village Chief]";
+			mes "You give me a lot to think about.";
+			mes "Leave the village at once.";
+			close;
+		case 2:
+			mes "[Village Chief]";
+			mes "Let's start then. First,";
+			mes "retrieve two ^FF0000Lost Belongings^000000 from Tiucknuc";
+			mes "and take them to ^0000FFMissing Person's Father^000000";
+			mes "for me.";
+			set malaya_bakona2,1;
+			setquest 1180;
+			close;
+		}
+	} else if (malaya_bakona2 == 1) {
+		mes "[Village Chief]";
+		mes "From Tiucknuc that roams Baryo Mahiwaga Field,";
+		mes "retrieve two ^FF0000Lost Belongings^000000";
+		mes "and deliver them to ^0000FFMissing Person's Father^000000";
+		mes "for me.";
+		close;
+	} else if (malaya_bakona2 == 2) {
+		mes "[Village Chief]";
+		mes "Retrieve Seven ^FF0000Lost Belongings^000000 from Tiucknuc";
+		mes "and deliver them to ^0000FFMissing Person's Friend^000000";
+		mes "for me.";
+		close;
+	} else if (malaya_bakona2 == 3) {
+		mes "[Village Chief]";
+		mes "Retrieve three ^FF0000Lost Belongings^000000 from Tiucknuc";
+		mes "and deliver them to ^0000FFMissing Person's Son^000000";
+		mes "for me.";
+		close;
+	} else if (malaya_bakona2 == 4) {
+		mes "[Village Chief]";
+		mes "Retrieve five ^FF0000Lost Belongings^000000 from Tiucknuc";
+		mes "and deliver them to ^0000FFMissing Person's Mother^000000";
+		mes "for me.";
+		close;
+	} else if (malaya_bakona2 == 5) {
+		mes "[Village Chief]";
+		mes "So it's clear that all the missing people";
+		mes "have been killed by Bakonawa.";
+		next;
+		mes "[Villagers]";
+		mes "Kill Bakonawa!";
+		mes "Let's get rid of the monster ourselves!";
+		next;
+		mes "[Village Chief]";
+		mes "It seems we would no longer be able to";
+		mes "hold rituals to calm Bakonawa.";
+		next;
+		mes "[Village Chief]";
+		mes "Young Fortune Teller is looking for your help";
+		mes "saying that the energy of the moon seems strange.";
+		erasequest 1184;
+		setquest 1185;
+		set malaya_bakona2,6;
+		getitem 12700,7; //Insideout_Shirt
+		close;
+	} else if (malaya_bakona2 == 6) {
+		mes "[Village Chief]";
+		mes "Young Fortune Teller is looking for your help";
+		mes "saying that the energy of the moon seems strange.";
+		close;
+	} else if (malaya_bakona2 == 7) {
+		mes "[Village Chief]";
+		mes "I know that terrible things happened";
+		mes "long time ago when the moon disappeared.";
+		mes "I hope the moon recovers its strength";
+		mes "with your devoted effort.";
+		close;
+	} else if (malaya_bakona2 == 8) {
+		mes "[Village Chief]";
+		mes "I will tell the";
+		mes "Young Fortune Teller to help you.";
+		mes "But before that, there is";
+		mes "something you must do immediately.";
+		next;
+		mes "[Village Chief]";
+		mes "We never know when Bakonawa will attack";
+		mes "the village so we must set traps near the village";
+		mes "entrance and near the cave.";
+		next;
+		mes "[Village Chief]";
+		mes "I would be grateful if you help us.";
+		mes "I have dispatched workers";
+		mes "near where traps will be set up,";
+		mes "so you just have to visit about 5 places.";
+		next;
+		switch(select("Sounds like too much work.:Sure thing.")) {
+		case 1:
+			mes "[Village Chief]";
+			mes "This operation means life and death to us";
+			mes "yet you refuse it easily as if";
+			mes "it was some kind of a chore...";
+			next;
+			mes "[Village Chief]";
+			mes "What a hero!";
+			close;
+		case 2:
+			mes "[Village Chief]";
+			mes "The first trap will be set up at";
+			mes "Baryo Mahiwaga Field";
+			mes "near the village entrance. ^0000FFGruffy Worker^000000";
+			mes "will be waiting for you. He will be very helpful.";
+			erasequest 1187;
+			setquest 1188;
+			set malaya_bakona2,9;
+			close;
+		}
+	} else if (malaya_bakona2 == 9) {
+		mes "[Village Chief]";
+		mes "The first trap will be set up at";
+		mes "Baryo Mahiwaga Field";
+		mes "near the village entrance. ^0000FFGruffy Worker^000000";
+		mes "will be waiting for you. He will be very helpful.";
+		close;
+	} else if (malaya_bakona2 == 10) {
+		mes "[Village Chief]";
+		mes "The second trap will be set up";
+		mes "near a place where it connects from";
+		mes "Baryo Mahiwaga Field to Bakonawa Lake.";
+		mes "^0000FFGrumpy Worker^000000";
+		mes "will be waiting for you. He will be very helpful.";
+		close;
+	} else if (malaya_bakona2 == 11) {
+		mes "[Village Chief]";
+		mes "The third trap will be set up";
+		mes "near Bakonawa Lake Entrance.";
+		mes "^0000FFCowardly Worker^000000";
+		mes "will be waiting for you. He will be very helpful.";
+		close;
+	} else if (malaya_bakona2 == 12) {
+		mes "[Village Chief]";
+		mes "The fourth trap will be set up";
+		mes "near the entrance of Bakonawa Lake as well.";
+		mes "^0000FFGloomy Worker^000000 will be waiting for you.";
+		mes "He will be very helpful.";
+		close;
+	} else if (malaya_bakona2 == 13) {
+		mes "[Village Chief]";
+		mes "The fifth trap will be set up";
+		mes "near the entrance of Bakonawa Lake too.";
+		mes "^0000FFSentimental Worker^000000";
+		mes "will be waiting for you. He will be very helpful.";
+		close;
+	} else if (malaya_bakona2 == 14) {
+		mes "[Village Chief]";
+		mes "It looks like the traps are all set up.";
+		mes "We just finished our village meeting on";
+		mes "what to do about Bakonawa.";
+		next;
+		mes "[Village Chief]";
+		mes "We have concluded that";
+		mes "we will fight against Bakonawa.";
+		mes "Please help us by";
+		mes "attacking his lair.";
+		erasequest 1193;
+		set malaya_bakona2,15;
+		getexp 1000000,600000;
+		getitem 6497,7; //Lesser_Agimat
+		close;
+	} else if (malaya_bakona2 == 15) {
+		mes "[Village Chief]";
+		if (malaya_bakona1 < 7) {
+			mes "Would you visit ^0000FFOld Legend Teller^000000";
+			mes "when you have a chance?";
+			mes "I think you would be able to help him.";
+			next;
+			mes "[Village Chief]";
+			mes "Thank you.";
+		}
+		mes "Please think of the countless victims";
+		mes "and defeat Bakonawa";
+		mes "for their sake.";
+		close;
+	}
+}
+
+malaya,269,267,5	script	Missing Person's Father	582,{
+	if (malaya_hi < 20) {
+		mes "- He seems cautious of you. -";
+		close;
+	}
+	if (malaya_bakona2 == 0) {
+		mes "[Missing Person's Father]";
+		mes "Please find our";
+		mes "child.";
+		mes "Bakonawa would have not harmed our child.";
+		mes "He must be around here somewhere.";
+		close;
+	} else if (malaya_bakona2 == 1) {
+		if (countitem(6501) < 2) {
+			mes "[Missing Person's Father]";
+			mes "You are looking for two of his ^FF0000Lost Belongings^000000?";
+			mes "Are you confident that";
+			mes "he already died?";
+			close;
+		}
+		mes "[Missing Person's Father]";
+		mes "This... is our child's ^FF0000Lost Belongings^000000";
+		mes "for sure.";
+		mes "The monster got to him after all....";
+		next;
+		mes "The man is unable to continue as he tries to hold back his tears.";
+		mes "Let's continue to find the lost belongings of the missing people.";
+		mes "Let's retrieve them from Tiucknuc that roams Baryo Mahiwaga Field,";
+		mes "seven ^FF0000Lost Belongings^000000";
+		mes "and deliver them to ^0000FFMissing Person's Friend^000000.";
+		delitem 6501,2; //Lost_Belongings
+		erasequest 1180;
+		setquest 1181;
+		set malaya_bakona2,2;
+		close;
+	} else if (malaya_bakona2 == 2) {
+		mes "[Missing Person's Father]";
+		mes "My baby... my poor baby...";
+		next;
+		mes "The man is unable to continue as he tries to hold back his tears.";
+		mes "Let's continue to find the lost belongings of the missing people.";
+		mes "Retrieve seven ^FF0000Lost Belongings^000000 from Tiucknuc";
+		mes "and deliver them to ^0000FFMissing Person's Friend^000000.";
+		close;
+	} else {
+		mes "[Missing Person's Father]";
+		mes "My baby... my poor baby...";
+		close;
+	}
+}
+
+malaya,265,274,5	script	Missing Person's Friend	577,{
+	if (malaya_hi < 20) {
+		mes "- He seems cautious of you. -";
+		close;
+	}
+	if (malaya_bakona2 < 2) {
+		mes "[Missing Person's Friend]";
+		mes "Please find";
+		mes "my friend.";
+		mes "We were playing ball together";
+		mes "and suddenly my friend disappeared.";
+		next;
+		mes "[Missing Person's Friend]";
+		mes "I'm sure he is alive and well";
+		mes "somewhere.";
+		close;
+	} else if (malaya_bakona2 == 2) {
+		if (countitem(6501) < 7) {
+			mes "[Missing Person's Friend]";
+			mes "You are looking for seven ^FF0000Lost Belongings^000000";
+			mes "of my friend?";
+			mes "My friend is not dead!";
+			close;
+		}
+		mes "[Missing Person's Friend]";
+		mes "These are marbles and toys I gave him...";
+		mes "These are clearly ^FF0000Lost Belongings^000000";
+		mes "of my friend... Where is my friend?";
+		mes "Bring him here, bring him here now!";
+		callsub L_Quest;
+		delitem 6501,7; //Lost_Belongings
+		erasequest 1181;
+		setquest 1182;
+		set malaya_bakona2,3;
+		close;
+	} else {
+		mes "[Missing Person's Friend]";
+		mes "Bring back my friend!";
+		mes "Bring back my friend now!";
+		mes "My friend is alive,";
+		mes "It's all a lie, sob~";
+		if (malaya_bakona2 == 3)
+			callsub L_Quest;
+		close;
+	}
+
+L_Quest:
+	next;
+	mes "Leaving behind the crying boy,";
+	mes "let's continue to find the lost belongings of the missing people.";
+	mes "Retrieve three ^FF0000Lost Belongings^000000 from Tiucknuc";
+	mes "and deliver them to ^0000FFMissing Person's Son^000000.";
+	return;
+}
+
+malaya,270,278,4	script	Missing Person's Son	578,{
+	if (malaya_hi < 20) {
+		mes "- He seems cautious of you. -";
+		close;
+	}
+	if (malaya_bakona2 < 3) {
+		mes "[Missing Person's Son]";
+		mes "Bakonawa has hurt my father?";
+		mes "I can't believe this.";
+		mes "Please find my father!";
+		close;
+	} else if (malaya_bakona2 == 3) {
+		if (countitem(6501) < 3) {
+			mes "[Missing Person's Son]";
+			mes "You are looking for three ^FF0000Lost Belongings^000000";
+			mes "of my father? Why lost belongings and not my father?";
+			mes "No, that can't be it. He is alive somewhere!";
+			close;
+		}
+		mes "[Missing Person's Son]";
+		mes "These are clearly his clothes and shoes...";
+		mes "These are ^FF0000Lost Belongings^000000 of my father.";
+		mes "Oh dear lord... father!";
+		callsub L_Quest;
+		delitem 6501,3; //Lost_Belongings
+		erasequest 1182;
+		setquest 1183;
+		set malaya_bakona2,4;
+		close;
+	} else {
+		mes "[Missing Person's Son]";
+		mes "Why did such a thing happen....";
+		if (malaya_bakona2 == 4)
+			callsub L_Quest;
+		close;
+	}
+
+L_Quest:
+	next;
+	mes "Man crying in agony.";
+	mes "Let's continue to find the lost belongings of the missing people.";
+	mes "Retrieve five ^FF0000Lost Belongings^000000 from Tiucknuc";
+	mes "and deliver them to ^0000FFMissing Person's Mother^000000.";
+	return;
+}
+
+malaya,265,284,4	script	Missing Person's Mother	579,{
+	if (malaya_hi < 20) {
+		mes "- He seems cautious of you. -";
+		close;
+	}
+	if (malaya_bakona2 < 4) {
+		mes "[Missing Person's Mother]";
+		mes "Please find my child.";
+		mes "I sent her out to do a chore";
+		mes "and she still isn't back.";
+		close;
+	} else if (malaya_bakona2 == 4) {
+		if (countitem(6501) < 5) {
+			mes "[Missing Person's Mother]";
+			mes "You are looking for five ^FF0000Lost Belongings^000000 of my child?";
+			mes "What does this mean?";
+			mes "Are you saying my child is dead?";
+			close;
+		}
+		mes "[Missing Person's Mother]";
+		mes "This is my child's hair comb.";
+		mes "Why do you have five ^FF0000Lost Belongings^000000 of my child?";
+		mes "Why...? She's... dead?";
+		next;
+		mes "[Missing Person's Mother]";
+		mes "No wait... I think I hear her voice.";
+		mes "She's going to be home soon. I should go home now.";
+		mes "I should prepare a dinner for her. She must be starving.";
+		mes "Ha ha...";
+		next;
+		mes "A mother that has gone mad...";
+		mes "Now that I finished finding the missing people,";
+		mes "I should report back to the Village Chief.";
+		delitem 6501,5; //Lost_Belongings
+		erasequest 1183;
+		setquest 1184;
+		set malaya_bakona2,5;
+		close;
+	} else {
+		mes "[Missing Person's Mother]";
+		mes "Ha ha ha... I can hear my child's voice,";
+		mes "just listen closely.";
+		mes "Can't you hear her calling her mother?";
+		mes "Ha ha ha...";
+		next;
+		mes "A mother that has gone mad...";
+		if (malaya_bakona2 == 5) {
+			mes "Now that I finished finding the missing people,";
+			mes "I should report back to the Village Chief.";
+		}
+		close;
+	}
+}
+
+malaya,289,364,4	script	Young Fortune Teller	583,{
+	if (checkweight(1301,3) == 0) {
+		mes "You cannot start the conversation. You are carrying too many items. -";
+		close;
+	}
+	if (malaya_hi < 20) {
+		mes "- He seems cautious of you. -";
+		close;
+	}
+	if (malaya_bakona2 < 6) {
+		mes "[Young Fortune Teller]";
+		mes "The energy of the moon grew weak.";
+		mes "The reason there are more monsters,";
+		mes "and the reason there are more victims,";
+		mes "is all because of this.";
+		close;
+	} else if (malaya_bakona2 == 6) {
+		mes "[Young Fortune Teller]";
+		mes "The energy of the moon grew weak for a couple of days.";
+		mes "The reason there are more monsters,";
+		mes "and the reason there are more victims, is all because of this.";
+		next;
+		mes "[Young Fortune Teller]";
+		mes "I'm trying to hold a ritual";
+		mes "that will restore the moon's energy by sacrificing monsters' blood,";
+		mes "so I need you to hunt fifteen ^FF0000Tikbalang^000000";
+		mes "at Baryo Mahiwaga Field.";
+		next;
+		switch(select("It's none of my business.:You can count on me.")) {
+		case 1:
+			mes "[Young Fortune Teller]";
+			mes "You are so selfish!";
+			mes "During the ritual,";
+			mes "I will pray for your bad luck too.";
+			close;
+		case 2:
+			mes "[Young Fortune Teller]";
+			mes "Hurry.";
+			mes "If the moon completely disappears,";
+			mes "there will be a great disaster.";
+			erasequest 1185;
+			setquest 1186;
+			set malaya_bakona2,7;
+			close;
+		}
+	} else if (malaya_bakona2 == 7) {
+		if (checkquest(1186,HUNTING) == 2) {
+			mes "[Young Fortune Teller]";
+			mes "It looks like you took care of ^FF0000Tikbalang^000000";
+			mes "well enough.";
+			mes "I think I can start the ritual now.";
+			mes "There are some items that we need, please go to";
+			mes "the Village Chief for help.";
+			erasequest 1186;
+			setquest 1187;
+			set malaya_bakona2,8;
+			getitem 12699,7; //Tikbalang_Belt
+			close;
+		} else {
+			mes "[Young Fortune Teller]";
+			mes "I need you to hunt fifteen ^FF0000Tikbalang^000000";
+			mes "at Baryo Mahiwaga Field.";
+			next;
+			mes "[Young Fortune Teller]";
+			mes "Hurry.";
+			mes "If the moon completely disappears,";
+			mes "there will be a great disaster.";
+			close;
+		}
+	} else if (malaya_bakona2 == 8) {
+		mes "[Young Fortune Teller]";
+		mes "I think I can start the ritual now.";
+		mes "There are some items that we need, please go to";
+		mes "the Village Chief for help.";
+		close;
+	} else {
+		mes "[Young Fortune Teller]";
+		mes "On the day when the moon fully disappears,";
+		mes "the dragon will attack the village.";
+		mes "No one will be safe.";
+		close;
+	}
+	end;
+}
+
+ma_fild01,54,253,4	script	Gruffy Worker#bako2	582,{
+	if (malaya_bakona2 < 9) {
+		mes "[Gruffy Worker]";
+		mes "The Village Chief told me to";
+		mes "wait for you here.";
+		close;
+	} else if (malaya_bakona2 == 9) {
+		mes "[Gruffy Worker]";
+		mes "The trap will be set right in front.";
+		mes "Walk forward a little.";
+		close;
+	} else if (malaya_bakona2 == 10) {
+		mes "[Gruffy Worker]";
+		mes "You can find the";
+		mes "Grumpy Worker near where";
+		mes "Baryo Mahiwaga Field connects to Bakonawa Lake.";
+		mes "Go and set up the trap together.";
+		close;
+	} else {
+		mes "[Gruffy Worker]";
+		mes "Are you trying to advertise that";
+		mes "there is a trap here? Step aside.";
+		close;
+	}
+	end;
+}
+
+ma_fild01,54,244,0	script	#bako2	139,2,2,{
+	end;
+OnTouch:
+	if (malaya_bakona2 == 9) {
+		mes "I should set up the trap";
+		mes "right about here.";
+		next;
+		mes "[Gruffy Worker]";
+		mes "Using the tools like this";
+		mes "bang bang bang!";
+		next;
+		mes "bang bang bang!";
+		next;
+		mes "The trap is now set.";
+		next;
+		mes "[Gruffy Worker]";
+		mes "You can find the";
+		mes "Grumpy Worker near where";
+		mes "Baryo Mahiwaga Field connects to Bakonawa Lake.";
+		mes "Go and set up the trap together.";
+		erasequest 1188;
+		setquest 1189;
+		set malaya_bakona2,10;
+		close;
+	} else if (malaya_bakona2 == 10) {
+		mes "The trap has been set up here.";
+		next;
+		mes "[Gruffy Worker]";
+		mes "This trap is not meant to capture you,";
+		mes "so move.";
+		next;
+		mes "[Gruffy Worker]";
+		mes "You can find the";
+		mes "Grumpy Worker near where";
+		mes "Baryo Mahiwaga Field connects to Bakonawa Lake.";
+		mes "Go there to him.";
+		close;
+	}
+	end;
+}
+
+ma_fild01,236,119,5	script	Grumpy Worker#bako2	577,{
+	if (malaya_bakona2 < 10) {
+		mes "[Grumpy Worker]";
+		mes "Village Chief told me to";
+		mes "wait for you here.";
+		mes "Sooo boring!";
+		close;
+	} else if (malaya_bakona2 == 10) {
+		mes "[Grumpy Worker]";
+		mes "A hole needs to be dug up in front of here?";
+		mes "I have to dig too?";
+		mes "Says who?";
+		close;
+	} else if (malaya_bakona2 == 11) {
+		mes "[Grumpy Worker]";
+		mes "Go find the Cowardly Worker";
+		mes "near the entrance of Bakonawa Lake.";
+		mes "Come on, move it!";
+		close;
+	} else {
+		mes "[Grumpy Worker]";
+		mes "I set up the trap";
+		mes "and you are advertising that it's here.";
+		mes "Scram!";
+		close;
+	}
+}
+
+ma_fild01,242,116,0	script	#bako3	139,2,2,{
+	end;
+OnTouch:
+	if (malaya_bakona2 == 10) {
+		mes "I should set up the trap";
+		mes "right about here.";
+		next;
+		mes "[Grumpy Worker]";
+		mes "I really don't like it here!";
+		mes "...";
+		mes "With this pickax,";
+		mes "dig dig dig!";
+		next;
+		mes "dig dig dig!";
+		next;
+		mes "The trap is now set.";
+		next;
+		mes "[Grumpy Worker]";
+		mes "Go find the Cowardly Worker";
+		mes "near the entrance of Bakonawa Lake.";
+		mes "Come on, move it!";
+		erasequest 1189;
+		setquest 1190;
+		set malaya_bakona2,11;
+		close;
+	} else if (malaya_bakona2 == 11) {
+		mes "The trap has been set up here.";
+		next;
+		mes "[Grumpy Worker]";
+		mes "Are you trying to test";
+		mes "with your body if the trap works?";
+		mes "Move aside!";
+		next;
+		mes "[Grumpy Worker]";
+		mes "Go find the Cowardly Worker";
+		mes "near the entrance of Bakonawa Lake.";
+		mes "Come on, move it!";
+		close;
+	}
+	end;
+}
+
+ma_scene01,177,89,4	script	Cowardly Worker#bako2	578,{
+	if (malaya_bakona2 < 11) {
+		mes "[Cowardly Worker]";
+		mes "Village Chief told me to";
+		mes "wait for you here.";
+		mes "Why me? I have a bad feeling about this....";
+		close;
+	} else if (malaya_bakona2 == 11) {
+		mes "[Cowardly Worker]";
+		mes "set up a trap in front of here?";
+		mes "Village Chief said I have to help too?";
+		mes "Can you please do it by yourself?";
+		close;
+	} else if (malaya_bakona2 == 12) {
+		mes "[Cowardly Worker]";
+		mes "Go up and you will";
+		mes "find the Gloomy Worker.";
+		mes "Go! You scare me.";
+		mes "You look like you are going to beat me up.";
+		close;
+	} else {
+		mes "[Cowardly Worker]";
+		mes "Go away!";
+		mes "What if Bakonawa";
+		mes "appears because of you?";
+		mes "I'm scared to death!";
+		close;
+	}
+	end;
+}
+
+ma_scene01,179,85,0	script	#bako4	139,2,2,{
+	end;
+OnTouch:
+	if (malaya_bakona2 == 11) {
+		mes "I should set up the trap";
+		mes "right about here.";
+		next;
+		mes "[Cowardly Worker]";
+		mes "There is nothing weird";
+		mes "buried here right?";
+		mes "...";
+		mes "Using the shovel, dig dig dig!";
+		next;
+		mes "dig dig dig!";
+		next;
+		mes "The trap is now set.";
+		next;
+		mes "[Cowardly Worker]";
+		mes "Go up and you will";
+		mes "find the Gloomy Worker.";
+		erasequest 1190;
+		setquest 1191;
+		set malaya_bakona2,12;
+		close;
+	} else if (malaya_bakona2 == 12) {
+		mes "The trap has been set up here.";
+		next;
+		mes "[Cowardly Worker]";
+		mes "Step aside immediately!";
+		mes "Bakonawa might find out this is a trap";
+		mes "and come for us.";
+		next;
+		mes "[Cowardly Worker]";
+		mes "Go up and you will";
+		mes "find the Gloomy Worker.";
+		emotion e_swt,1;
+		close;
+	}
+	end;
+}
+
+ma_scene01,141,118,4	script	Gloomy Worker#bako2	582,{
+	if (malaya_bakona2 < 12) {
+		mes "[Gloomy Worker]";
+		mes "Village Chief told me to wait for you here.";
+		mes "He must want me to do something.";
+		mes "Whew...";
+		close;
+	} else if (malaya_bakona2 == 12) {
+		mes "[Gloomy Worker]";
+		mes "set up a trap on the left side?";
+		mes "I don't think it will be much use...";
+		mes "Whew, I should've moved away or something...";
+		close;
+	} else if (malaya_bakona2 == 13) {
+		mes "[Gloomy Worker]";
+		mes "We are all gonna die anyway by Bakonawa.";
+		mes "This is pointless.";
+		mes "Just go up the path and you will find";
+		mes "Sentimental Worker.";
+		close;
+	} else {
+		mes "[Gloomy Worker]";
+		mes "Bakonawa is going to attack us anyway.";
+		mes "What pointless work...";
+		close;
+	}
+	end;
+}
+
+ma_scene01,138,122,0	script	#bako5	139,2,2,{
+	end;
+OnTouch:
+	if (malaya_bakona2 == 12) {
+		mes "I should set up the trap";
+		mes "right about here.";
+		next;
+		mes "[Gloomy Worker]";
+		mes "Just catch this net,";
+		mes "throw throw!";
+		next;
+		mes "throw throw!";
+		next;
+		mes "The trap is now set.";
+		next;
+		mes "[Gloomy Worker]";
+		mes "Just go up the path and you will find";
+		mes "Sentimental Worker.";
+		mes "Though I doubt it will be much help.";
+		erasequest 1191;
+		setquest 1192;
+		set malaya_bakona2,13;
+		close;
+	} else if (malaya_bakona2 == 13) {
+		mes "The trap has been set up here.";
+		next;
+		mes "[Gloomy Worker]";
+		mes "The trap is meaningless.";
+		mes "See? It doesn't even work.";
+		close;
+	}
+	end;
+}
+
+ma_scene01,175,170,5	script	Sentimental Worker#bako2	578,{
+	if (malaya_bakona2 < 13) {
+		mes "[Sentimental Worker]";
+		mes "Village Chief told me to wait for you here.";
+		mes "Is there a some kind of surprise event?";
+		mes "My heart is beating faster~";
+		close;
+	} else if (malaya_bakona2 == 13) {
+		mes "[Sentimental Worker]";
+		mes "Wow! So we are going to work together";
+		mes "to set up a trap behind this place?";
+		mes "This is sooo cool!";
+		mes "This is the coolest thing in the world!";
+		close;
+	} else if (malaya_bakona2 == 14) {
+		mes "[Sentimental Worker]";
+		mes "Now that the trap is set,";
+		mes "Are we going to report back to Village Chief?";
+		mes "Oh what fun!";
+		mes "It sounds so exiting!";
+		close;
+	} else {
+		mes "[Sentimental Worker]";
+		mes "More I think about it, more exited I get.";
+		mes "I'm secretly guarding the trap!";
+		mes "I want to hear out loud.";
+		mes "I have a trap in front of me! Ha ha ha ha~";
+		emotion e_swt2,1;
+		close;
+	}
+	end;
+}
+
+ma_scene01,171,174,0	script	#bako6	139,2,2,{
+	end;
+OnTouch:
+	if (malaya_bakona2 == 13) {
+		mes "I should set up the trap";
+		mes "right about here.";
+		next;
+		mes "[Sentimental Worker]";
+		mes "Wow! This really is a perfect place";
+		mes "to set up a trap.";
+		mes "I'm going to throw the rope!";
+		mes "Here goes the rope!";
+		next;
+		mes "Here goes the rope!";
+		next;
+		mes "The trap is now set.";
+		mes "Let's go to the Village Chief";
+		mes "now that the trap is set.";
+		erasequest 1192;
+		setquest 1193;
+		set malaya_bakona2,14;
+		close;
+	} else if (malaya_bakona2 == 14) {
+		mes "The trap is set here.";
+		next;
+		mes "[Sentimental Worker]";
+		mes "Try out the trap first!";
+		mes "I'm so curious";
+		mes "what would happen!";
+		mes "It's going to be so much fun!";
+		close;
+	}
 	end;
 }

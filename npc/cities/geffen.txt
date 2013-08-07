@@ -1,29 +1,29 @@
-//===== rAthena Script ======================================================
+//===== rAthena Script =======================================
 //= Geffen Town
-//===== By: =================================================================
+//===== By: ==================================================
 //= Everybody mentioned in the comments
-//===== Current Version: ====================================================
-//= 1.10
-//===== Compatible With: ====================================================
+//===== Current Version: =====================================
+//= 2.0
+//===== Compatible With: =====================================
 //= rAthena SVN
-//===== Description: ========================================================
+//===== Description: =========================================
 //= [Official Conversion]
 //= Geffen Town NPCs
-//===== Additional Comments: ================================================
+//===== Additional Comments: =================================
 //= Fully working
-//= 1.1  - Spell Checked [massdriller]
-//= 1.2  Fixed more typos [Nexon]
-//= 1.3  added a Level 4 weapon quest related NPC [MasterOfMuppets]
-//= 1.4  Removed Duplicates [Silent]
-//= 1.5  Fixed some typos and coordinates [Musashiden]
+//= 1.1 Spell Checked [massdriller]
+//= 1.2 Fixed more typos [Nexon]
+//= 1.3 added a Level 4 weapon quest related NPC [MasterOfMuppets]
+//= 1.4 Removed Duplicates [Silent]
+//= 1.5 Fixed some typos and coordinates [Musashiden]
 //= 1.5a Fixed a small typo [Evera]
-//= 1.6  Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.6 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 1.6a Small bug fix. (end -> next) care of Lesbian. [L0ne_W0lf]
-//= 1.7  Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
-//= 1.8  Fixed character's name and swapped gender dialogues [Lupus]
-//= 1.9  Replaced effect numerics with constants. [Samuray22]
-//= 1.10 Bug fixes (bugreport:7928) [DeadlySilence]
-//===========================================================================
+//= 1.7 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
+//= 1.8 Fixed character's name and swapped gender dialogues [Lupus]
+//= 1.9 Replaced effect numerics with constants. [Samuray22]
+//= 2.0 Bug fixes (bugreport:7928) [DeadlySilence]
+//============================================================
 
 geffen,59,143,0	script	Meera	91,{
 	mes "[Meera]";

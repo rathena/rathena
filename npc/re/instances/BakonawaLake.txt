@@ -367,7 +367,7 @@ OnTimer60000:
 OnTimer120000:
 OnTimer180000:
 OnTimer240000:
-	donpcevent "#SummonPuppetsn1::OnStart";
+	donpcevent instance_npcname("#SummonPuppetsn1")+"::OnStart";
 	end;
 OnTimer300000:	callsub OnAnnounce,"5 minutes",15,1;
 OnTimer360000:	callsub OnAnnounce,"4 minutes",15,1;
