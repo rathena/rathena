@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= SinSloth
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -12,16 +12,17 @@
 //= 1.0 First version.
 //= 1.0a Fixed a typo.
 //= 1.1 Replaced effect numerics with constants. [Samuray22]
-//= 1.2 Fixed "OnMobDeath" doesn't work sometime. [Inkfish]
+//= 1.2 Fixed "OnMyMobDead" doesn't work sometime. [Inkfish]
 //= 1.3 Corrected donpcevent typo. (bugreport:4374) [L0ne_w0lf]
 //= 1.4 Label standardization and bug fixes. [Euphy]
+//= 1.5 Script updates, and removed a level restriction. [Euphy]
 //============================================================
 
 arena_room,162,88,3	script	Ponox	124,{
 	end;
 
 OnInit:
-	waitingroom "Party Mode - 5 Member Parties",11,"Ponox::OnStartArena",5,0,10,99;
+	waitingroom "Party Mode - 5 Member Parties",11,"Ponox::OnStartArena",5,0,10;
 	enablewaitingroomevent;
 	end;
 
@@ -40,9 +41,7 @@ OnStart:
 }
 
 prt_are_in,76,87,3	script	Helper#party	 67,4,4,{
-
-	if($arn_partywait == 0)
-	{
+	if($arn_partywait == 0) {
 		set $arn_partywait,1;
 		emotion e_gasp,0;
 		mes "[Helper Iriff]";
@@ -53,28 +52,26 @@ prt_are_in,76,87,3	script	Helper#party	 67,4,4,{
 		mes "Only one person at a time is allowed to stay in this waiting room.";
 		mes "Would you like to start a battle now?";
 		next;
-		switch( select( "No","Yes" ) )
-		{
-			case 1:
-				set $arn_partywait,0;
-				mes "[Helper Iriff]";
-				mes "I see.";
-				mes "However, please remember you have only a limited amount of time.";
-				close;
-
-			case 2:
-				mes "[Helper Iriff]";
-				mes "Thank you, let me start a battle.";
-				mes "A warp portal leading to the arena room will be open.";
-				mes "I hope you will survive until the end of the battle and engrave your name on the list of honor...";
-				close2;
-				donpcevent "toarena#party::OnEnter";
-				donpcevent "Helper#party::OnStop";
-				donpcevent "arena_p::OnStart";
-				end;
+		switch( select( "No","Yes" ) ) {
+		case 1:
+			set $arn_partywait,0;
+			mes "[Helper Iriff]";
+			mes "I see.";
+			mes "However, please remember you have only a limited amount of time.";
+			close;
+		case 2:
+			mes "[Helper Iriff]";
+			mes "Thank you, let me start a battle.";
+			mes "A warp portal leading to the arena room will be open.";
+			mes "I hope you will survive until the end of the battle and engrave your name on the list of honor...";
+			close2;
+			donpcevent "toarena#party::OnEnter";
+			donpcevent "Helper#party::OnStop";
+			donpcevent "arena_p::OnStart";
+			end;
 		}
 	}
-	else end;
+	end;
 
 OnEnter:
 	enablenpc "Helper#party";
@@ -90,15 +87,14 @@ OnInit:
 }
 
 prt_are_in,73,78,0	script	toarena#party	-1,20,20,{
-
 OnInit:
 	disablenpc "toarena#party";
 	end;
 
 OnTouch:
-	if(Zeny < 1000) warp "arena_room",100,75;
-	else
-	{
+	if(Zeny < 1000)
+		warp "arena_room",100,75;
+	else {
 		set Zeny,Zeny -1000;
 		set $arn_partywait,0;
 		donpcevent "toout#party::OnStop";
@@ -111,7 +107,6 @@ OnEnter:
 }
 
 prt_are_in,73,79,0	script	toout#party	-1,20,20,{
-
 OnInit:
 	disablenpc "toout#party";
 	end;
@@ -145,7 +140,6 @@ OnStop:
 }
 
 prt_are_in,73,74,0	script	arena_out	-1,1,1,{
-
 OnTouch:
 	set $arn_partywait,0;
 	warp "arena_room",100,75;
@@ -153,11 +147,6 @@ OnTouch:
 }
 
 force_1-2,99,31,4	script	Slipslowrun#party	124,{
-
-OnInit:
-	set $@mapcountpt,0;
-	end;
-
 OnStart:
 	initnpctimer;
 	set $arena_minptst,gettime(2);
@@ -166,7 +155,8 @@ OnStart:
 
 OnTimer2000:
 	mapannounce "force_1-2","Good day, my name is Slipslowrun! I am here to assist you in the party arena battles!",bc_all;
-	donpcevent "arena_compass::OnStart";
+	//Official "arena_compass" script is extremely buggy, so we aren't using it.
+	//donpcevent "arena_compass::OnStart";
 	end;
 
 OnTimer3000:
@@ -182,47 +172,56 @@ OnTimer5000:
 	end;
 
 OnTimer60000:
-	if(!getmapusers("force_1-2")) donpcevent "Slipslowrun#party::OnFail";
+	if (getmapusers("force_1-2") == 0)
+		donpcevent "Slipslowrun#party::OnFail";
 	mapannounce "force_1-2","Remaining Time : 9 minutes ",bc_all;
 	end;
 
 OnTimer120000:
-	if(!getmapusers("force_1-2")) donpcevent "Slipslowrun#party::OnFail";
+	if (getmapusers("force_1-2") == 0)
+		donpcevent "Slipslowrun#party::OnFail";
 	mapannounce "force_1-2","Remaining Time : 8 minutes ",bc_all;
 	end;
 
 OnTimer180000:
-	if(!getmapusers("force_1-2")) donpcevent "Slipslowrun#party::OnFail";
+	if (getmapusers("force_1-2") == 0)
+		donpcevent "Slipslowrun#party::OnFail";
 	mapannounce "force_1-2","Remaining Time : 7 minutes ",bc_all;
 	end;
 
 OnTimer240000:
-	if(!getmapusers("force_1-2")) donpcevent "Slipslowrun#party::OnFail";
+	if (getmapusers("force_1-2") == 0)
+		donpcevent "Slipslowrun#party::OnFail";
 	mapannounce "force_1-2","Remaining Time : 6 minutes ",bc_all;
 	end;
 
 OnTimer300000:
-	if(!getmapusers("force_1-2")) donpcevent "Slipslowrun#party::OnFail";
+	if (getmapusers("force_1-2") == 0)
+		donpcevent "Slipslowrun#party::OnFail";
 	mapannounce "force_1-2","Remaining Time : 5 minutes ",bc_all;
 	end;
 
 OnTimer360000:
-	if(!getmapusers("force_1-2")) donpcevent "Slipslowrun#party::OnFail";
+	if (getmapusers("force_1-2") == 0)
+		donpcevent "Slipslowrun#party::OnFail";
 	mapannounce "force_1-2","Remaining Time : 4 minutes ",bc_all;
 	end;
 
 OnTimer420000:
-	if(!getmapusers("force_1-2")) donpcevent "Slipslowrun#party::OnFail";
+	if (getmapusers("force_1-2") == 0)
+		donpcevent "Slipslowrun#party::OnFail";
 	mapannounce "force_1-2","Remaining Time : 3 minutes ",bc_all;
 	end;
 
 OnTimer480000:
-	if(!getmapusers("force_1-2")) donpcevent "Slipslowrun#party::OnFail";
+	if (getmapusers("force_1-2") == 0)
+		donpcevent "Slipslowrun#party::OnFail";
 	mapannounce "force_1-2","Remaining Time : 2 minutes ",bc_all;
 	end;
 
 OnTimer540000:
-	if(!getmapusers("force_1-2")) donpcevent "Slipslowrun#party::OnFail";
+	if (getmapusers("force_1-2") == 0)
+		donpcevent "Slipslowrun#party::OnFail";
 	mapannounce "force_1-2","Remaining Time : 1 minute ",bc_all;
 	end;
 
@@ -252,14 +251,14 @@ OnTimer614000:
 	end;
 
 OnFail:
-	donpcevent "Slipslowrun#party::OnTimeoff";
+	donpcevent "Slipslowrun#party::OnTimerOff";
 	mapwarp "force_1-2","prt_are_in",177,138;
 	donpcevent "arena_p::OnReset";
 	donpcevent "alloff#party::OnInit";
 	donpcevent "Ponox::OnStart";
 	end;
 
-OnTimeoff:
+OnTimerOff:
 	stopnpctimer;
 	end;
 
@@ -317,7 +316,6 @@ On10_End:
 }
 
 -	script	arena_p	-1,{
-
 OnStart:
 	mapwarp "force_1-2","prt_are_in",177,138;
 	disablenpc "force_01_00";
@@ -414,37 +412,18 @@ OnReset:
 	end;
 }
 
-force_1-2,85,26,0	warp	force_00_01	1,1,force_1-2,37,26
-force_1-2,114,26,0	warp	force_00_02	1,1,force_1-2,162,26
-force_1-2,99,40,0	warp	force_00_03	1,1,force_1-2,99,66
-force_1-2,41,26,0	warp	force_01_00	1,1,force_1-2,89,26
-force_1-2,158,26,0	warp	force_02_00	1,1,force_1-2,110,26
-force_1-2,99,63,0	warp	force_03_00	1,1,force_1-2,99,36
-force_1-2,84,78,0	warp	force_03_05	1,1,force_1-2,37,78
-force_1-2,115,78,0	warp	force_03_04	1,1,force_1-2,162,78
-force_1-2,158,77,0	warp	force_04_03	1,1,force_1-2,110,78
-force_1-2,41,77,0	warp	force_05_03	1,1,force_1-2,37,78
-force_1-2,25,93,0	warp	force_05_06	1,1,force_1-2,26,118
-force_1-2,49,130,0	warp	force_06_07	1,1,force_1-2,91,125
-force_1-2,107,145,0	warp	force_07_08	1,1,force_1-2,173,118
-force_1-2,158,178,0	warp	force_08_09	1,1,force_1-2,133,178
-force_1-2,55,178,0	warp	force_09_10	1,1,force_1-2,29,178
-force_1-2,33,178,0	warp	force_10_09	1,1,force_1-2,59,178
-
 force_1-2,95,187,0	script	force_09_exit	45,1,1,{
-
 OnTouch:
 	set $arena_minptend,gettime(2);
 	set $arena_secptend,gettime(1);
 	warp "prt_are_in",73,139;
 	donpcevent "#arn_timer_pt::OnEnter";
 	donpcevent "arena_p::OnReset";
-	donpcevent "Slipslowrun#party::OnTimeoff";
+	donpcevent "Slipslowrun#party::OnTimerOff";
 	end;
 }
 
 force_1-2,36,26,0	script	force_01start#party	-1,1,1,{
-
 OnTouch:
 	donpcevent "force_01mob#party::OnEnable";
 	disablenpc "force_01start#party";
@@ -452,50 +431,45 @@ OnTouch:
 }
 
 -	script	force_01mob#party	-1,{
-
 OnEnable:
-	monster "force_1-2",15,35,"Penomena",1441,1,"force_01mob#party::OnMobDeath";
-	monster "force_1-2",35,35,"Penomena",1441,1,"force_01mob#party::OnMobDeath";
-	monster "force_1-2",15,15,"Penomena",1441,1,"force_01mob#party::OnMobDeath";
-	monster "force_1-2",35,15,"Penomena",1441,1,"force_01mob#party::OnMobDeath";
-	monster "force_1-2",15,25,"Clock",1528,1,"force_01mob#party::OnMobDeath";
-	monster "force_1-2",17,25,"Clock",1528,1,"force_01mob#party::OnMobDeath";
-	monster "force_1-2",19,25,"Clock",1528,1,"force_01mob#party::OnMobDeath";
-	monster "force_1-2",21,25,"Clock",1528,1,"force_01mob#party::OnMobDeath";
-	monster "force_1-2",15,25,"Clock",1528,1,"force_01mob#party::OnMobDeath";
-	monster "force_1-2",17,25,"Clock",1528,1,"force_01mob#party::OnMobDeath";
-	monster "force_1-2",19,25,"Clock",1528,1,"force_01mob#party::OnMobDeath";
-	monster "force_1-2",21,25,"Clock",1528,1,"force_01mob#party::OnMobDeath";
-	monster "force_1-2",15,30,"Alarm",1476,1,"force_01mob#party::OnMobDeath";
-	monster "force_1-2",17,22,"Alarm",1476,1,"force_01mob#party::OnMobDeath";
-	monster "force_1-2",19,32,"Alarm",1476,1,"force_01mob#party::OnMobDeath";
-	monster "force_1-2",21,22,"Alarm",1476,1,"force_01mob#party::OnMobDeath";
-	monster "force_1-2",26,33,"Clock Tower Keeper",1527,1,"force_01mob#party::OnMobDeath";
-	monster "force_1-2",26,33,"Clock Tower Keeper",1527,1,"force_01mob#party::OnMobDeath";
-	monster "force_1-2",26,14,"Ancient Worm",1567,1,"force_01mob#party::OnMobDeath";
-	monster "force_1-2",30,27,"Ancient Worm",1567,1,"force_01mob#party::OnMobDeath";
-	monster "force_1-2",29,25,"Ancient Worm",1567,1,"force_01mob#party::OnMobDeath";
-	monster "force_1-2",26,14,"Ancient Worm",1567,1,"force_01mob#party::OnMobDeath";
-	monster "force_1-2",33,26,"Incubus",1580,1,"force_01mob#party::OnMobDeath";
-	monster "force_1-2",29,28,"Incubus",1580,1,"force_01mob#party::OnMobDeath";
-	monster "force_1-2",33,20,"Incubus",1580,1,"force_01mob#party::OnMobDeath";
-	monster "force_1-2",33,30,"Incubus",1580,1,"force_01mob#party::OnMobDeath";
-	set $force_01_pt,26;
+	monster "force_1-2",15,35,"Penomena",1441,1,"force_01mob#party::OnMyMobDead";
+	monster "force_1-2",35,35,"Penomena",1441,1,"force_01mob#party::OnMyMobDead";
+	monster "force_1-2",15,15,"Penomena",1441,1,"force_01mob#party::OnMyMobDead";
+	monster "force_1-2",35,15,"Penomena",1441,1,"force_01mob#party::OnMyMobDead";
+	monster "force_1-2",15,25,"Clock",1528,1,"force_01mob#party::OnMyMobDead";
+	monster "force_1-2",17,25,"Clock",1528,1,"force_01mob#party::OnMyMobDead";
+	monster "force_1-2",19,25,"Clock",1528,1,"force_01mob#party::OnMyMobDead";
+	monster "force_1-2",21,25,"Clock",1528,1,"force_01mob#party::OnMyMobDead";
+	monster "force_1-2",15,25,"Clock",1528,1,"force_01mob#party::OnMyMobDead";
+	monster "force_1-2",17,25,"Clock",1528,1,"force_01mob#party::OnMyMobDead";
+	monster "force_1-2",19,25,"Clock",1528,1,"force_01mob#party::OnMyMobDead";
+	monster "force_1-2",21,25,"Clock",1528,1,"force_01mob#party::OnMyMobDead";
+	monster "force_1-2",15,30,"Alarm",1476,1,"force_01mob#party::OnMyMobDead";
+	monster "force_1-2",17,22,"Alarm",1476,1,"force_01mob#party::OnMyMobDead";
+	monster "force_1-2",19,32,"Alarm",1476,1,"force_01mob#party::OnMyMobDead";
+	monster "force_1-2",21,22,"Alarm",1476,1,"force_01mob#party::OnMyMobDead";
+	monster "force_1-2",26,33,"Clock Tower Keeper",1527,1,"force_01mob#party::OnMyMobDead";
+	monster "force_1-2",26,33,"Clock Tower Keeper",1527,1,"force_01mob#party::OnMyMobDead";
+	monster "force_1-2",26,14,"Ancient Worm",1567,1,"force_01mob#party::OnMyMobDead";
+	monster "force_1-2",30,27,"Ancient Worm",1567,1,"force_01mob#party::OnMyMobDead";
+	monster "force_1-2",29,25,"Ancient Worm",1567,1,"force_01mob#party::OnMyMobDead";
+	monster "force_1-2",26,14,"Ancient Worm",1567,1,"force_01mob#party::OnMyMobDead";
+	monster "force_1-2",33,26,"Incubus",1580,1,"force_01mob#party::OnMyMobDead";
+	monster "force_1-2",29,28,"Incubus",1580,1,"force_01mob#party::OnMyMobDead";
+	monster "force_1-2",33,20,"Incubus",1580,1,"force_01mob#party::OnMyMobDead";
+	monster "force_1-2",33,30,"Incubus",1580,1,"force_01mob#party::OnMyMobDead";
 	end;
 
 OnReset:
-	killmonster "force_1-2","force_01mob#party::OnMobDeath";
+	killmonster "force_1-2","force_01mob#party::OnMyMobDead";
 	end;
 
-OnMobDeath:
-	set $force_01_pt,$force_01_pt -1;
-	if($force_01_pt < 1)
-	{
+OnMyMobDead:
+	if (mobcount("force_1-2","force_01mob#party::OnMyMobDead") < 1) {
 		enablenpc "force_01_00";
 		donpcevent "Slipslowrun#party::On01_End";
 		set $arn_partyc,$arn_partyc +1;
-		if($arn_partyc == 3)
-		{
+		if($arn_partyc == 3) {
 			donpcevent "Slipslowrun#party::On04_Start";
 			enablenpc "force_03_04";
 			enablenpc "force_04start#party";
@@ -505,7 +479,6 @@ OnMobDeath:
 }
 
 force_1-2,162,26,0	script	force_02start#party	-1,1,1,{
-
 OnTouch:
 	donpcevent "force_02mob#party::OnEnable";
 	disablenpc "force_02start#party";
@@ -513,54 +486,49 @@ OnTouch:
 }
 
 -	script	force_02mob#party	-1,{
-
 OnEnable:
-	monster "force_1-2",163,36,"Penomena",1441,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",184,36,"Penomena",1441,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",184,16,"Penomena",1441,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",163,16,"Penomena",1441,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",171,37,"Joker",1437,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",177,37,"Joker",1437,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",184,29,"Joker",1437,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",184,22,"Joker",1437,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",177,16,"Joker",1437,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",170,16,"Joker",1437,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",169,28,"Bathory",1525,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",171,28,"Bathory",1525,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",173,28,"Bathory",1525,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",175,28,"Bathory",1525,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",177,28,"Bathory",1525,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",177,23,"Bathory",1525,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",175,23,"Bathory",1525,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",173,23,"Bathory",1525,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",171,23,"Bathory",1525,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",169,23,"Bathory",1525,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",187,30,"Arclouse",1477,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",187,30,"Arclouse",1477,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",187,30,"Arclouse",1477,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",187,22,"Arclouse",1477,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",187,22,"Arclouse",1477,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",187,22,"Arclouse",1477,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",173,40,"Arclouse",1477,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",173,40,"Arclouse",1477,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",181,25,"Arclouse",1477,1,"force_02mob#party::OnMobDeath";
-	monster "force_1-2",181,25,"Arclouse",1477,1,"force_02mob#party::OnMobDeath";
-	set $force_02_pt,30;
+	monster "force_1-2",163,36,"Penomena",1441,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",184,36,"Penomena",1441,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",184,16,"Penomena",1441,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",163,16,"Penomena",1441,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",171,37,"Joker",1437,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",177,37,"Joker",1437,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",184,29,"Joker",1437,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",184,22,"Joker",1437,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",177,16,"Joker",1437,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",170,16,"Joker",1437,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",169,28,"Bathory",1525,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",171,28,"Bathory",1525,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",173,28,"Bathory",1525,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",175,28,"Bathory",1525,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",177,28,"Bathory",1525,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",177,23,"Bathory",1525,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",175,23,"Bathory",1525,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",173,23,"Bathory",1525,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",171,23,"Bathory",1525,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",169,23,"Bathory",1525,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",187,30,"Arclouse",1477,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",187,30,"Arclouse",1477,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",187,30,"Arclouse",1477,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",187,22,"Arclouse",1477,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",187,22,"Arclouse",1477,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",187,22,"Arclouse",1477,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",173,40,"Arclouse",1477,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",173,40,"Arclouse",1477,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",181,25,"Arclouse",1477,1,"force_02mob#party::OnMyMobDead";
+	monster "force_1-2",181,25,"Arclouse",1477,1,"force_02mob#party::OnMyMobDead";
 	end;
 
 OnReset:
-	killmonster "force_1-2","force_02mob#party::OnMobDeath";
+	killmonster "force_1-2","force_02mob#party::OnMyMobDead";
 	end;
 
-OnMobDeath:
-	set $force_02_pt,$force_02_pt -1;
-	if($force_02_pt < 1)
-	{
+OnMyMobDead:
+	if (mobcount("force_1-2","force_02mob#party::OnMyMobDead") < 1) {
 		enablenpc "force_02_00";
 		donpcevent "Slipslowrun#party::On02_End";
 		set $arn_partyc,$arn_partyc +1;
-		if($arn_partyc == 3)
-		{
+		if($arn_partyc == 3) {
 			donpcevent "Slipslowrun#party::On04_Start";
 			enablenpc "force_03_04";
 			enablenpc "force_04start#party";
@@ -570,7 +538,6 @@ OnMobDeath:
 }
 
 force_1-2,99,66,0	script	force_03start#party	-1,1,1,{
-
 OnTouch:
 	donpcevent "force_03mob#party::OnEnable";
 	disablenpc "force_03start#party";
@@ -578,50 +545,45 @@ OnTouch:
 }
 
 -	script	force_03mob#party	-1,{
-
 OnEnable:
-	monster "force_1-2",89,81,"Merman",1451,1,"force_03mob#party::OnMobDeath";
-	monster "force_1-2",90,81,"Merman",1451,1,"force_03mob#party::OnMobDeath";
-	monster "force_1-2",91,81,"Merman",1451,1,"force_03mob#party::OnMobDeath";
-	monster "force_1-2",92,81,"Merman",1451,1,"force_03mob#party::OnMobDeath";
-	monster "force_1-2",93,81,"Merman",1451,1,"force_03mob#party::OnMobDeath";
-	monster "force_1-2",96,85,"Wind Ghost",1450,1,"force_03mob#party::OnMobDeath";
-	monster "force_1-2",98,85,"Wind Ghost",1450,1,"force_03mob#party::OnMobDeath";
-	monster "force_1-2",100,85,"Wind Ghost",1450,1,"force_03mob#party::OnMobDeath";
-	monster "force_1-2",102,85,"Wind Ghost",1450,1,"force_03mob#party::OnMobDeath";
-	monster "force_1-2",104,85,"Wind Ghost",1450,1,"force_03mob#party::OnMobDeath";
-	monster "force_1-2",88,79,"Deviruchi",1433,1,"force_03mob#party::OnMobDeath";
-	monster "force_1-2",90,79,"Deviruchi",1433,1,"force_03mob#party::OnMobDeath";
-	monster "force_1-2",92,79,"Deviruchi",1433,1,"force_03mob#party::OnMobDeath";
-	monster "force_1-2",94,79,"Deviruchi",1433,1,"force_03mob#party::OnMobDeath";
-	monster "force_1-2",96,79,"Deviruchi",1433,1,"force_03mob#party::OnMobDeath";
-	monster "force_1-2",98,79,"Deviruchi",1433,1,"force_03mob#party::OnMobDeath";
-	monster "force_1-2",100,79,"Deviruchi",1433,1,"force_03mob#party::OnMobDeath";
-	monster "force_1-2",102,79,"Deviruchi",1433,1,"force_03mob#party::OnMobDeath";
-	monster "force_1-2",104,79,"Deviruchi",1433,1,"force_03mob#party::OnMobDeath";
-	monster "force_1-2",106,79,"Deviruchi",1433,1,"force_03mob#party::OnMobDeath";
-	monster "force_1-2",108,79,"Deviruchi",1433,1,"force_03mob#party::OnMobDeath";
-	monster "force_1-2",110,79,"Deviruchi",1433,1,"force_03mob#party::OnMobDeath";
-	monster "force_1-2",91,86,"Wanderer",1490,1,"force_03mob#party::OnMobDeath";
-	monster "force_1-2",108,86,"Wanderer",1490,1,"force_03mob#party::OnMobDeath";
-	monster "force_1-2",91,69,"Wanderer",1490,1,"force_03mob#party::OnMobDeath";
-	monster "force_1-2",108,69,"Wanderer",1490,1,"force_03mob#party::OnMobDeath";
-	set $force_03_pt,26;
+	monster "force_1-2",89,81,"Merman",1451,1,"force_03mob#party::OnMyMobDead";
+	monster "force_1-2",90,81,"Merman",1451,1,"force_03mob#party::OnMyMobDead";
+	monster "force_1-2",91,81,"Merman",1451,1,"force_03mob#party::OnMyMobDead";
+	monster "force_1-2",92,81,"Merman",1451,1,"force_03mob#party::OnMyMobDead";
+	monster "force_1-2",93,81,"Merman",1451,1,"force_03mob#party::OnMyMobDead";
+	monster "force_1-2",96,85,"Wind Ghost",1450,1,"force_03mob#party::OnMyMobDead";
+	monster "force_1-2",98,85,"Wind Ghost",1450,1,"force_03mob#party::OnMyMobDead";
+	monster "force_1-2",100,85,"Wind Ghost",1450,1,"force_03mob#party::OnMyMobDead";
+	monster "force_1-2",102,85,"Wind Ghost",1450,1,"force_03mob#party::OnMyMobDead";
+	monster "force_1-2",104,85,"Wind Ghost",1450,1,"force_03mob#party::OnMyMobDead";
+	monster "force_1-2",88,79,"Deviruchi",1433,1,"force_03mob#party::OnMyMobDead";
+	monster "force_1-2",90,79,"Deviruchi",1433,1,"force_03mob#party::OnMyMobDead";
+	monster "force_1-2",92,79,"Deviruchi",1433,1,"force_03mob#party::OnMyMobDead";
+	monster "force_1-2",94,79,"Deviruchi",1433,1,"force_03mob#party::OnMyMobDead";
+	monster "force_1-2",96,79,"Deviruchi",1433,1,"force_03mob#party::OnMyMobDead";
+	monster "force_1-2",98,79,"Deviruchi",1433,1,"force_03mob#party::OnMyMobDead";
+	monster "force_1-2",100,79,"Deviruchi",1433,1,"force_03mob#party::OnMyMobDead";
+	monster "force_1-2",102,79,"Deviruchi",1433,1,"force_03mob#party::OnMyMobDead";
+	monster "force_1-2",104,79,"Deviruchi",1433,1,"force_03mob#party::OnMyMobDead";
+	monster "force_1-2",106,79,"Deviruchi",1433,1,"force_03mob#party::OnMyMobDead";
+	monster "force_1-2",108,79,"Deviruchi",1433,1,"force_03mob#party::OnMyMobDead";
+	monster "force_1-2",110,79,"Deviruchi",1433,1,"force_03mob#party::OnMyMobDead";
+	monster "force_1-2",91,86,"Wanderer",1490,1,"force_03mob#party::OnMyMobDead";
+	monster "force_1-2",108,86,"Wanderer",1490,1,"force_03mob#party::OnMyMobDead";
+	monster "force_1-2",91,69,"Wanderer",1490,1,"force_03mob#party::OnMyMobDead";
+	monster "force_1-2",108,69,"Wanderer",1490,1,"force_03mob#party::OnMyMobDead";
 	end;
 
 OnReset:
-	killmonster "force_1-2","force_03mob#party::OnMobDeath";
+	killmonster "force_1-2","force_03mob#party::OnMyMobDead";
 	end;
 
-OnMobDeath:
-	set $force_03_pt,$force_03_pt -1;
-	if($force_03_pt < 1)
-	{
+OnMyMobDead:
+	if (mobcount("force_1-2","force_03mob#party::OnMyMobDead") < 1) {
 		enablenpc "force_03_00";
 		donpcevent "Slipslowrun#party::On03_End";
 		set $arn_partyc,$arn_partyc +1;
-		if($arn_partyc == 3)
-		{
+		if($arn_partyc == 3) {
 			donpcevent "Slipslowrun#party::On04_Start";
 			enablenpc "force_03_04";
 			enablenpc "force_04start#party";
@@ -631,7 +593,6 @@ OnMobDeath:
 }
 
 force_1-2,162,78,0	script	force_04start#party	-1,3,3,{
-
 OnTouch:
 	donpcevent "force_04mob#party::OnEnable";
 	disablenpc "force_04start#party";
@@ -639,41 +600,37 @@ OnTouch:
 }
 
 -	script	force_04mob#party	-1,{
-
 OnEnable:
-	monster "force_1-2",174,78,"Penomena",1441,1,"force_04mob#party::OnMobDeath";
-	monster "force_1-2",184,78,"Penomena",1441,1,"force_04mob#party::OnMobDeath";
-	monster "force_1-2",184,68,"Penomena",1441,1,"force_04mob#party::OnMobDeath";
-	monster "force_1-2",174,68,"Penomena",1441,1,"force_04mob#party::OnMobDeath";
-	monster "force_1-2",169,87,"Ride Word",1478,1,"force_04mob#party::OnMobDeath";
-	monster "force_1-2",170,87,"Ride Word",1478,1,"force_04mob#party::OnMobDeath";
-	monster "force_1-2",171,87,"Ride Word",1478,1,"force_04mob#party::OnMobDeath";
-	monster "force_1-2",172,87,"Ride Word",1478,1,"force_04mob#party::OnMobDeath";
-	monster "force_1-2",169,77,"Ride Word",1478,1,"force_04mob#party::OnMobDeath";
-	monster "force_1-2",170,77,"Ride Word",1478,1,"force_04mob#party::OnMobDeath";
-	monster "force_1-2",171,77,"Ride Word",1478,1,"force_04mob#party::OnMobDeath";
-	monster "force_1-2",172,77,"Ride Word",1478,1,"force_04mob#party::OnMobDeath";
-	monster "force_1-2",183,83,"Wraith Dead",1566,1,"force_04mob#party::OnMobDeath";
-	monster "force_1-2",183,80,"Wraith Dead",1566,1,"force_04mob#party::OnMobDeath";
-	monster "force_1-2",183,73,"Wraith Dead",1566,1,"force_04mob#party::OnMobDeath";
-	monster "force_1-2",183,70,"Wraith Dead",1566,1,"force_04mob#party::OnMobDeath";
-	monster "force_1-2",179,77,"Wraith Dead",1566,1,"force_04mob#party::OnMobDeath";
-	monster "force_1-2",169,72,"Assaulter",1364,1,"force_04mob#party::OnMobDeath";
-	monster "force_1-2",171,72,"Assaulter",1364,1,"force_04mob#party::OnMobDeath";
-	monster "force_1-2",173,72,"Assaulter",1364,1,"force_04mob#party::OnMobDeath";
-	monster "force_1-2",175,72,"Assaulter",1364,1,"force_04mob#party::OnMobDeath";
-	monster "force_1-2",177,72,"Assaulter",1364,1,"force_04mob#party::OnMobDeath";
-	set $force_04_pt,22;
+	monster "force_1-2",174,78,"Penomena",1441,1,"force_04mob#party::OnMyMobDead";
+	monster "force_1-2",184,78,"Penomena",1441,1,"force_04mob#party::OnMyMobDead";
+	monster "force_1-2",184,68,"Penomena",1441,1,"force_04mob#party::OnMyMobDead";
+	monster "force_1-2",174,68,"Penomena",1441,1,"force_04mob#party::OnMyMobDead";
+	monster "force_1-2",169,87,"Ride Word",1478,1,"force_04mob#party::OnMyMobDead";
+	monster "force_1-2",170,87,"Ride Word",1478,1,"force_04mob#party::OnMyMobDead";
+	monster "force_1-2",171,87,"Ride Word",1478,1,"force_04mob#party::OnMyMobDead";
+	monster "force_1-2",172,87,"Ride Word",1478,1,"force_04mob#party::OnMyMobDead";
+	monster "force_1-2",169,77,"Ride Word",1478,1,"force_04mob#party::OnMyMobDead";
+	monster "force_1-2",170,77,"Ride Word",1478,1,"force_04mob#party::OnMyMobDead";
+	monster "force_1-2",171,77,"Ride Word",1478,1,"force_04mob#party::OnMyMobDead";
+	monster "force_1-2",172,77,"Ride Word",1478,1,"force_04mob#party::OnMyMobDead";
+	monster "force_1-2",183,83,"Wraith Dead",1566,1,"force_04mob#party::OnMyMobDead";
+	monster "force_1-2",183,80,"Wraith Dead",1566,1,"force_04mob#party::OnMyMobDead";
+	monster "force_1-2",183,73,"Wraith Dead",1566,1,"force_04mob#party::OnMyMobDead";
+	monster "force_1-2",183,70,"Wraith Dead",1566,1,"force_04mob#party::OnMyMobDead";
+	monster "force_1-2",179,77,"Wraith Dead",1566,1,"force_04mob#party::OnMyMobDead";
+	monster "force_1-2",169,72,"Assaulter",1364,1,"force_04mob#party::OnMyMobDead";
+	monster "force_1-2",171,72,"Assaulter",1364,1,"force_04mob#party::OnMyMobDead";
+	monster "force_1-2",173,72,"Assaulter",1364,1,"force_04mob#party::OnMyMobDead";
+	monster "force_1-2",175,72,"Assaulter",1364,1,"force_04mob#party::OnMyMobDead";
+	monster "force_1-2",177,72,"Assaulter",1364,1,"force_04mob#party::OnMyMobDead";
 	end;
 
 OnReset:
-	killmonster "force_1-2","force_04mob#party::OnMobDeath";
+	killmonster "force_1-2","force_04mob#party::OnMyMobDead";
 	end;
 
-OnMobDeath:
-	set $force_04_pt,$force_04_pt -1;
-	if($force_04_pt < 1)
-	{
+OnMyMobDead:
+	if (mobcount("force_1-2","force_04mob#party::OnMyMobDead") < 1) {
 		enablenpc "force_04_03";
 		enablenpc "force_03_05";
 		enablenpc "force_05start#party";
@@ -683,7 +640,6 @@ OnMobDeath:
 }
 
 force_1-2,36,77,0	script	force_05start#party	-1,1,1,{
-
 OnTouch:
 	donpcevent "force_05mob#party::OnEnable";
 	disablenpc "force_05start#party";
@@ -691,43 +647,39 @@ OnTouch:
 }
 
 -	script	force_05mob#party	-1,{
-
 OnEnable:
-	monster "force_1-2",25,68,"Penomena",1441,1,"force_05mob#party::OnMobDeath";
-	monster "force_1-2",36,68,"Penomena",1441,1,"force_05mob#party::OnMobDeath";
-	monster "force_1-2",16,88,"Penomena",1441,1,"force_05mob#party::OnMobDeath";
-	monster "force_1-2",15,78,"Penomena",1441,1,"force_05mob#party::OnMobDeath";
-	monster "force_1-2",33,88,"Sting",1489,1,"force_05mob#party::OnMobDeath";
-	monster "force_1-2",29,87,"Sting",1489,1,"force_05mob#party::OnMobDeath";
-	monster "force_1-2",25,81,"Sting",1489,1,"force_05mob#party::OnMobDeath";
-	monster "force_1-2",25,78,"Sting",1489,1,"force_05mob#party::OnMobDeath";
-	monster "force_1-2",25,72,"Sting",1489,1,"force_05mob#party::OnMobDeath";
-	monster "force_1-2",29,70,"Sting",1489,1,"force_05mob#party::OnMobDeath";
-	monster "force_1-2",21,70,"Sting",1489,1,"force_05mob#party::OnMobDeath";
-	monster "force_1-2",19,76,"Sting",1489,1,"force_05mob#party::OnMobDeath";
-	monster "force_1-2",19,83,"Sting",1489,1,"force_05mob#party::OnMobDeath";
-	monster "force_1-2",23,89,"Sting",1489,1,"force_05mob#party::OnMobDeath";
-	monster "force_1-2",22,85,"Cramp",1570,1,"force_05mob#party::OnMobDeath";
-	monster "force_1-2",23,85,"Cramp",1570,1,"force_05mob#party::OnMobDeath";
-	monster "force_1-2",24,85,"Cramp",1570,1,"force_05mob#party::OnMobDeath";
-	monster "force_1-2",23,86,"Cramp",1570,1,"force_05mob#party::OnMobDeath";
-	monster "force_1-2",22,86,"Cramp",1570,1,"force_05mob#party::OnMobDeath";
-	monster "force_1-2",22,71,"Cramp",1570,1,"force_05mob#party::OnMobDeath";
-	monster "force_1-2",22,72,"Cramp",1570,1,"force_05mob#party::OnMobDeath";
-	monster "force_1-2",23,71,"Cramp",1570,1,"force_05mob#party::OnMobDeath";
-	monster "force_1-2",23,72,"Cramp",1570,1,"force_05mob#party::OnMobDeath";
-	monster "force_1-2",24,71,"Cramp",1570,1,"force_05mob#party::OnMobDeath";
-	set $force_05_pt,24;
+	monster "force_1-2",25,68,"Penomena",1441,1,"force_05mob#party::OnMyMobDead";
+	monster "force_1-2",36,68,"Penomena",1441,1,"force_05mob#party::OnMyMobDead";
+	monster "force_1-2",16,88,"Penomena",1441,1,"force_05mob#party::OnMyMobDead";
+	monster "force_1-2",15,78,"Penomena",1441,1,"force_05mob#party::OnMyMobDead";
+	monster "force_1-2",33,88,"Sting",1489,1,"force_05mob#party::OnMyMobDead";
+	monster "force_1-2",29,87,"Sting",1489,1,"force_05mob#party::OnMyMobDead";
+	monster "force_1-2",25,81,"Sting",1489,1,"force_05mob#party::OnMyMobDead";
+	monster "force_1-2",25,78,"Sting",1489,1,"force_05mob#party::OnMyMobDead";
+	monster "force_1-2",25,72,"Sting",1489,1,"force_05mob#party::OnMyMobDead";
+	monster "force_1-2",29,70,"Sting",1489,1,"force_05mob#party::OnMyMobDead";
+	monster "force_1-2",21,70,"Sting",1489,1,"force_05mob#party::OnMyMobDead";
+	monster "force_1-2",19,76,"Sting",1489,1,"force_05mob#party::OnMyMobDead";
+	monster "force_1-2",19,83,"Sting",1489,1,"force_05mob#party::OnMyMobDead";
+	monster "force_1-2",23,89,"Sting",1489,1,"force_05mob#party::OnMyMobDead";
+	monster "force_1-2",22,85,"Cramp",1570,1,"force_05mob#party::OnMyMobDead";
+	monster "force_1-2",23,85,"Cramp",1570,1,"force_05mob#party::OnMyMobDead";
+	monster "force_1-2",24,85,"Cramp",1570,1,"force_05mob#party::OnMyMobDead";
+	monster "force_1-2",23,86,"Cramp",1570,1,"force_05mob#party::OnMyMobDead";
+	monster "force_1-2",22,86,"Cramp",1570,1,"force_05mob#party::OnMyMobDead";
+	monster "force_1-2",22,71,"Cramp",1570,1,"force_05mob#party::OnMyMobDead";
+	monster "force_1-2",22,72,"Cramp",1570,1,"force_05mob#party::OnMyMobDead";
+	monster "force_1-2",23,71,"Cramp",1570,1,"force_05mob#party::OnMyMobDead";
+	monster "force_1-2",23,72,"Cramp",1570,1,"force_05mob#party::OnMyMobDead";
+	monster "force_1-2",24,71,"Cramp",1570,1,"force_05mob#party::OnMyMobDead";
 	end;
 
 OnReset:
-	killmonster "force_1-2","force_05mob#party::OnMobDeath";
+	killmonster "force_1-2","force_05mob#party::OnMyMobDead";
 	end;
 
-OnMobDeath:
-	set $force_05_pt,$force_05_pt -1;
-	if($force_05_pt < 1)
-	{
+OnMyMobDead:
+	if (mobcount("force_1-2","force_05mob#party::OnMyMobDead") < 1) {
 		donpcevent "arena_p::On06_Start";
 		donpcevent "Slipslowrun#party::On05_End2";
 	}
@@ -735,7 +687,6 @@ OnMobDeath:
 }
 
 force_1-2,26,118,0	script	force_06start#party	-1,1,1,{
-
 OnTouch:
 	donpcevent "force_06mob#party::OnEnable";
 	disablenpc "force_06start#party";
@@ -743,41 +694,37 @@ OnTouch:
 }
 
 -	script	force_06mob#party	-1,{
-
 OnEnable:
-	monster "force_1-2",19,135,"Cloud Hermit",1531,1,"force_06mob#party::OnMobDeath";
-	monster "force_1-2",24,135,"Cloud Hermit",1531,1,"force_06mob#party::OnMobDeath";
-	monster "force_1-2",28,135,"Cloud Hermit",1531,1,"force_06mob#party::OnMobDeath";
-	monster "force_1-2",32,135,"Cloud Hermit",1531,1,"force_06mob#party::OnMobDeath";
-	monster "force_1-2",24,127,"Shinobi",1560,1,"force_06mob#party::OnMobDeath";
-	monster "force_1-2",27,127,"Shinobi",1560,1,"force_06mob#party::OnMobDeath";
-	monster "force_1-2",24,128,"Shinobi",1560,1,"force_06mob#party::OnMobDeath";
-	monster "force_1-2",27,128,"Shinobi",1560,1,"force_06mob#party::OnMobDeath";
-	monster "force_1-2",24,129,"Shinobi",1560,1,"force_06mob#party::OnMobDeath";
-	monster "force_1-2",27,129,"Shinobi",1560,1,"force_06mob#party::OnMobDeath";
-	monster "force_1-2",16,140,"Tengu",1563,1,"force_06mob#party::OnMobDeath";
-	monster "force_1-2",16,136,"Tengu",1563,1,"force_06mob#party::OnMobDeath";
-	monster "force_1-2",16,132,"Tengu",1563,1,"force_06mob#party::OnMobDeath";
-	monster "force_1-2",16,128,"Tengu",1563,1,"force_06mob#party::OnMobDeath";
-	monster "force_1-2",16,124,"Tengu",1563,1,"force_06mob#party::OnMobDeath";
-	monster "force_1-2",16,120,"Tengu",1563,1,"force_06mob#party::OnMobDeath";
-	monster "force_1-2",16,140,"Wicked Nymph",1564,1,"force_06mob#party::OnMobDeath";
-	monster "force_1-2",16,136,"Wicked Nymph",1564,1,"force_06mob#party::OnMobDeath";
-	monster "force_1-2",16,132,"Wicked Nymph",1564,1,"force_06mob#party::OnMobDeath";
-	monster "force_1-2",16,128,"Wicked Nymph",1564,1,"force_06mob#party::OnMobDeath";
-	monster "force_1-2",16,124,"Wicked Nymph",1564,1,"force_06mob#party::OnMobDeath";
-	monster "force_1-2",16,120,"Wicked Nymph",1564,1,"force_06mob#party::OnMobDeath";
-	set $force_06_pt,22;
+	monster "force_1-2",19,135,"Cloud Hermit",1531,1,"force_06mob#party::OnMyMobDead";
+	monster "force_1-2",24,135,"Cloud Hermit",1531,1,"force_06mob#party::OnMyMobDead";
+	monster "force_1-2",28,135,"Cloud Hermit",1531,1,"force_06mob#party::OnMyMobDead";
+	monster "force_1-2",32,135,"Cloud Hermit",1531,1,"force_06mob#party::OnMyMobDead";
+	monster "force_1-2",24,127,"Shinobi",1560,1,"force_06mob#party::OnMyMobDead";
+	monster "force_1-2",27,127,"Shinobi",1560,1,"force_06mob#party::OnMyMobDead";
+	monster "force_1-2",24,128,"Shinobi",1560,1,"force_06mob#party::OnMyMobDead";
+	monster "force_1-2",27,128,"Shinobi",1560,1,"force_06mob#party::OnMyMobDead";
+	monster "force_1-2",24,129,"Shinobi",1560,1,"force_06mob#party::OnMyMobDead";
+	monster "force_1-2",27,129,"Shinobi",1560,1,"force_06mob#party::OnMyMobDead";
+	monster "force_1-2",16,140,"Tengu",1563,1,"force_06mob#party::OnMyMobDead";
+	monster "force_1-2",16,136,"Tengu",1563,1,"force_06mob#party::OnMyMobDead";
+	monster "force_1-2",16,132,"Tengu",1563,1,"force_06mob#party::OnMyMobDead";
+	monster "force_1-2",16,128,"Tengu",1563,1,"force_06mob#party::OnMyMobDead";
+	monster "force_1-2",16,124,"Tengu",1563,1,"force_06mob#party::OnMyMobDead";
+	monster "force_1-2",16,120,"Tengu",1563,1,"force_06mob#party::OnMyMobDead";
+	monster "force_1-2",16,140,"Wicked Nymph",1564,1,"force_06mob#party::OnMyMobDead";
+	monster "force_1-2",16,136,"Wicked Nymph",1564,1,"force_06mob#party::OnMyMobDead";
+	monster "force_1-2",16,132,"Wicked Nymph",1564,1,"force_06mob#party::OnMyMobDead";
+	monster "force_1-2",16,128,"Wicked Nymph",1564,1,"force_06mob#party::OnMyMobDead";
+	monster "force_1-2",16,124,"Wicked Nymph",1564,1,"force_06mob#party::OnMyMobDead";
+	monster "force_1-2",16,120,"Wicked Nymph",1564,1,"force_06mob#party::OnMyMobDead";
 	end;
 
 OnReset:
-	killmonster "force_1-2","force_06mob#party::OnMobDeath";
+	killmonster "force_1-2","force_06mob#party::OnMyMobDead";
 	end;
 
-OnMobDeath:
-	set $force_06_pt,$force_06_pt -1;
-	if($force_06_pt < 1)
-	{
+OnMyMobDead:
+	if (mobcount("force_1-2","force_06mob#party::OnMyMobDead") < 1) {
 		donpcevent "arena_p::On07_Start";
 		donpcevent "Slipslowrun#party::On06_End";
 		set $arn_partyc,$arn_partyc +1;
@@ -786,7 +733,6 @@ OnMobDeath:
 }
 
 force_1-2,92,124,0	script	force_07start#party	-1,1,1,{
-
 OnTouch:
 	donpcevent "force_07mob#party::OnEnable";
 	disablenpc "force_07start#party";
@@ -794,31 +740,27 @@ OnTouch:
 }
 
 -	script	force_07mob#party	-1,{
-
 OnEnable:
-	monster "force_1-2",104,134,"Greatest General",1541,1,"force_07mob#party::OnMobDeath";
-	monster "force_1-2",104,136,"Greatest General",1541,1,"force_07mob#party::OnMobDeath";
-	monster "force_1-2",104,137,"Greatest General",1541,1,"force_07mob#party::OnMobDeath";
-	monster "force_1-2",104,139,"Greatest General",1541,1,"force_07mob#party::OnMobDeath";
-	monster "force_1-2",111,134,"Greatest General",1541,1,"force_07mob#party::OnMobDeath";
-	monster "force_1-2",111,136,"Greatest General",1541,1,"force_07mob#party::OnMobDeath";
-	monster "force_1-2",111,137,"Greatest General",1541,1,"force_07mob#party::OnMobDeath";
-	monster "force_1-2",111,139,"Greatest General",1541,1,"force_07mob#party::OnMobDeath";
-	monster "force_1-2",98,122,"Khalitzburg",1438,1,"force_07mob#party::OnMobDeath";
-	monster "force_1-2",90,119,"Khalitzburg",1438,1,"force_07mob#party::OnMobDeath";
-	monster "force_1-2",98,122,"Executioner",1487,1,"force_07mob#party::OnMobDeath";
-	monster "force_1-2",108,140,"Chimera",1456,1,"force_07mob#party::OnMobDeath";
-	set $force_07_pt,12;
+	monster "force_1-2",104,134,"Greatest General",1541,1,"force_07mob#party::OnMyMobDead";
+	monster "force_1-2",104,136,"Greatest General",1541,1,"force_07mob#party::OnMyMobDead";
+	monster "force_1-2",104,137,"Greatest General",1541,1,"force_07mob#party::OnMyMobDead";
+	monster "force_1-2",104,139,"Greatest General",1541,1,"force_07mob#party::OnMyMobDead";
+	monster "force_1-2",111,134,"Greatest General",1541,1,"force_07mob#party::OnMyMobDead";
+	monster "force_1-2",111,136,"Greatest General",1541,1,"force_07mob#party::OnMyMobDead";
+	monster "force_1-2",111,137,"Greatest General",1541,1,"force_07mob#party::OnMyMobDead";
+	monster "force_1-2",111,139,"Greatest General",1541,1,"force_07mob#party::OnMyMobDead";
+	monster "force_1-2",98,122,"Khalitzburg",1438,1,"force_07mob#party::OnMyMobDead";
+	monster "force_1-2",90,119,"Khalitzburg",1438,1,"force_07mob#party::OnMyMobDead";
+	monster "force_1-2",98,122,"Executioner",1487,1,"force_07mob#party::OnMyMobDead";
+	monster "force_1-2",108,140,"Chimera",1456,1,"force_07mob#party::OnMyMobDead";
 	end;
 
 OnReset:
-	killmonster "force_1-2","force_07mob#party::OnMobDeath";
+	killmonster "force_1-2","force_07mob#party::OnMyMobDead";
 	end;
 
-OnMobDeath:
-	set $force_07_pt,$force_07_pt -1;
-	if($force_07_pt < 1)
-	{
+OnMyMobDead:
+	if (mobcount("force_1-2","force_07mob#party::OnMyMobDead") < 1) {
 		donpcevent "arena_p::On08_Start";
 		donpcevent "Slipslowrun#party::On07_End";
 		set $arn_partyc,$arn_partyc +1;
@@ -827,7 +769,6 @@ OnMobDeath:
 }
 
 force_1-2,173,118,0	script	force_08start#party	-1,1,1,{
-
 OnTouch:
 	donpcevent "force_08mob#party::OnEnable";
 	disablenpc "force_08start#party";
@@ -835,53 +776,34 @@ OnTouch:
 }
 
 -	script	force_08mob#party	-1,{
-
 OnEnable:
-	monster "force_1-2",172,154,"Khalitzburg",1438,1,"force_08mob#party::OnMobDeath";
-	monster "force_1-2",174,145,"Ghostring",1576,1,"force_08mob#party::OnMobDeath";
-	monster "force_1-2",174,145,"Chimera",1456,1,"force_08mob#party::OnMobDeath";
-	set $force_08_pt,4;
-	if(.arn_injustice != 5)
-	{
-		monster "force_1-2",rand(162,184),rand(122,185),"Injustice",1446,1,"force_08mob#party::OnMobDeath";
-		set .arn_injustice,.arn_injustice +1;
-		set $force_08_pt,$force_08_pt +1;
+	monster "force_1-2",172,154,"Khalitzburg",1438,1,"force_08mob#party::OnMyMobDead";
+	monster "force_1-2",174,145,"Ghostring",1576,1,"force_08mob#party::OnMyMobDead";
+	monster "force_1-2",174,145,"Chimera",1456,1,"force_08mob#party::OnMyMobDead";
+	for(set .@i,0; .@i<5; set .@i,.@i+1) {
+		monster "force_1-2",rand(162,184),rand(122,185),"Injustice",1446,1,"force_08mob#party::OnMyMobDead";
 	}
-	monster "force_1-2",rand(162,184),rand(122,185),"Raydric Archer",1453,1,"force_08mob#party::OnMobDeath";
-	if(.arn_terror != 5)
-	{
-		monster "force_1-2",rand(162,184),rand(122,185),"Nightmare Terror",1554,1,"force_08mob#party::OnMobDeath";
-		set .arn_terror,.arn_terror +1;
-		set $force_08_pt,$force_08_pt +1;
+	monster "force_1-2",rand(162,184),rand(122,185),"Raydric Archer",1453,1,"force_08mob#party::OnMyMobDead";
+	for(set .@i,0; .@i<5; set .@i,.@i+1) {
+		monster "force_1-2",rand(162,184),rand(122,185),"Nightmare Terror",1554,1,"force_08mob#party::OnMyMobDead";
 	}
-	if(.arn_mummy != 6)
-	{
-		monster "force_1-2",rand(162,184),rand(122,185),"Ancient Mummy",1522,1,"force_08mob#party::OnMobDeath";
-		set .arn_mummy,.arn_mummy +1;
-		set $force_08_pt,$force_08_pt +1;
+	for(set .@i,0; .@i<6; set .@i,.@i+1) {
+		monster "force_1-2",rand(162,184),rand(122,185),"Ancient Mummy",1522,1,"force_08mob#party::OnMyMobDead";
 	}
-	if(.arn_skel != 10)
-	{
-		monster "force_1-2",rand(162,184),rand(122,185),"Skel Prisoner",1479,1,"force_08mob#party::OnMobDeath";
-		set .arn_skel,.arn_skel +1;
-		set $force_08_pt,$force_08_pt +1;
+	for(set .@i,0; .@i<10; set .@i,.@i+1) {
+		monster "force_1-2",rand(162,184),rand(122,185),"Skel Prisoner",1479,1,"force_08mob#party::OnMyMobDead";
 	}
-	if(.arn_hunt != 5)
-	{
-		monster "force_1-2",rand(162,184),rand(122,185),"Hunter Fly",1422,1,"force_08mob#party::OnMobDeath";
-		set .arn_hunt,.arn_hunt +1;
-		set $force_08_pt,$force_08_pt +1;
+	for(set .@i,0; .@i<5; set .@i,.@i+1) {
+		monster "force_1-2",rand(162,184),rand(122,185),"Hunter Fly",1422,1,"force_08mob#party::OnMyMobDead";
 	}
 	end;
 
 OnReset:
-	killmonster "force_1-2","force_08mob#party::OnMobDeath";
+	killmonster "force_1-2","force_08mob#party::OnMyMobDead";
 	end;
 
-OnMobDeath:
-	set $force_08_pt,$force_08_pt -1;
-	if($force_08_pt < 1)
-	{
+OnMyMobDead:
+	if (mobcount("force_1-2","force_08mob#party::OnMyMobDead") < 1) {
 		donpcevent "arena_p::On09_Start";
 		donpcevent "Slipslowrun#party::On08_End";
 		set $arn_partyc,$arn_partyc +1;
@@ -890,7 +812,6 @@ OnMobDeath:
 }
 
 force_1-2,133,178,0	script	force_09start#party	-1,1,1,{
-
 OnTouch:
 	donpcevent "force_09mob#party::OnEnable";
 	disablenpc "force_09start#party";
@@ -898,34 +819,31 @@ OnTouch:
 }
 
 -	script	force_09mob#party	-1,{
-
 OnEnable:
-	monster "force_1-2",86,180,"Elder",1573,1,"force_09mob#party::OnMobDeath";
-	monster "force_1-2",86,176,"Elder",1573,1,"force_09mob#party::OnMobDeath";
-	monster "force_1-2",95,183,"Elder",1573,1,"force_09mob#party::OnMobDeath";
-	monster "force_1-2",94,175,"Elder",1573,1,"force_09mob#party::OnMobDeath";
-	monster "force_1-2",76,178,"Elder",1573,1,"force_09mob#party::OnMobDeath";
-	monster "force_1-2",84,179,"Explosion",1532,1,"force_09mob#party::OnMobDeath";
-	monster "force_1-2",74,181,"Explosion",1532,1,"force_09mob#party::OnMobDeath";
-	monster "force_1-2",73,176,"Explosion",1532,1,"force_09mob#party::OnMobDeath";
-	monster "force_1-2",62,178,"Explosion",1532,1,"force_09mob#party::OnMobDeath";
-	monster "force_1-2",68,177,"Explosion",1532,1,"force_09mob#party::OnMobDeath";
-	monster "force_1-2",122,177,"Lava Golem",1549,1,"force_09mob#party::OnMobDeath";
-	monster "force_1-2",112,179,"Lava Golem",1549,1,"force_09mob#party::OnMobDeath";
-	monster "force_1-2",122,178,"Anolian",1488,1,"force_09mob#party::OnMobDeath";
-	monster "force_1-2",121,177,"Anolian",1488,1,"force_09mob#party::OnMobDeath";
-	monster "force_1-2",122,177,"Anolian",1488,1,"force_09mob#party::OnMobDeath";
+	monster "force_1-2",86,180,"Elder",1573,1,"force_09mob#party::OnMyMobDead";
+	monster "force_1-2",86,176,"Elder",1573,1,"force_09mob#party::OnMyMobDead";
+	monster "force_1-2",95,183,"Elder",1573,1,"force_09mob#party::OnMyMobDead";
+	monster "force_1-2",94,175,"Elder",1573,1,"force_09mob#party::OnMyMobDead";
+	monster "force_1-2",76,178,"Elder",1573,1,"force_09mob#party::OnMyMobDead";
+	monster "force_1-2",84,179,"Explosion",1532,1,"force_09mob#party::OnMyMobDead";
+	monster "force_1-2",74,181,"Explosion",1532,1,"force_09mob#party::OnMyMobDead";
+	monster "force_1-2",73,176,"Explosion",1532,1,"force_09mob#party::OnMyMobDead";
+	monster "force_1-2",62,178,"Explosion",1532,1,"force_09mob#party::OnMyMobDead";
+	monster "force_1-2",68,177,"Explosion",1532,1,"force_09mob#party::OnMyMobDead";
+	monster "force_1-2",122,177,"Lava Golem",1549,1,"force_09mob#party::OnMyMobDead";
+	monster "force_1-2",112,179,"Lava Golem",1549,1,"force_09mob#party::OnMyMobDead";
+	monster "force_1-2",122,178,"Anolian",1488,1,"force_09mob#party::OnMyMobDead";
+	monster "force_1-2",121,177,"Anolian",1488,1,"force_09mob#party::OnMyMobDead";
+	monster "force_1-2",122,177,"Anolian",1488,1,"force_09mob#party::OnMyMobDead";
 	set $force_09_pt,15;
 	end;
 
 OnReset:
-	killmonster "force_1-2","force_09mob#party::OnMobDeath";
+	killmonster "force_1-2","force_09mob#party::OnMyMobDead";
 	end;
 
-OnMobDeath:
-	set $force_09_pt,$force_09_pt -1;
-	if($force_09_pt < 1)
-	{
+OnMyMobDead:
+	if (mobcount("force_1-2","force_09mob#party::OnMyMobDead") < 1) {
 		donpcevent "arena_p::On10_Start";
 		donpcevent "Slipslowrun#party::On09_End";
 		set $arn_partyc,$arn_partyc +1;
@@ -934,7 +852,6 @@ OnMobDeath:
 }
 
 force_1-2,29,178,0	script	force_10start#party	-1,1,1,{
-
 OnTouch:
 	donpcevent "force_10mob-1#party::OnEnable";
 	disablenpc "force_10start#party";
@@ -942,51 +859,43 @@ OnTouch:
 }
 
 -	script	force_10mob-1#party	-1,{
-
 OnEnable:
-	switch(rand(1,2))
-	{
-		case 1:
-			monster "force_1-2",16,179,"Evil Snake Lord",1529,1,"force_10mob-1#party::OnMobDeath";
-			break;
-
-		case 2:
-			monster "force_1-2",24,179,"Dracula",1530,1,"force_10mob-1#party::OnMobDeath";
-			break;
+	switch(rand(1,2)) {
+	case 1:
+		monster "force_1-2",16,179,"Evil Snake Lord",1529,1,"force_10mob-1#party::OnMyMobDead";
+		break;
+	case 2:
+		monster "force_1-2",24,179,"Dracula",1530,1,"force_10mob-1#party::OnMyMobDead";
+		break;
 	}
-	set $force_10_1_pt,1;
 	end;
 
 OnReset:
-	killmonster "force_1-2","force_10mob-1#party::OnMobDeath";
+	killmonster "force_1-2","force_10mob-1#party::OnMyMobDead";
 	end;
 
-OnMobDeath:
-	set $force_10_1_pt,$force_10_1_pt -1;
-	if($force_10_1_pt < 1) donpcevent "force_10mob-2#party::OnEnable";
+OnMyMobDead:
+	if (mobcount("force_1-2","force_10mob-1#party::OnMyMobDead") < 1)
+		donpcevent "force_10mob-2#party::OnEnable";
 	end;
 }
 
 -	script	force_10mob-2#party	-1,{
-
 OnEnable:
-	monster "force_1-2",16,179,"Samurai Spector",1542,1,"force_10mob-2#party::OnMobDeath";
-	monster "force_1-2",16,179,"Shinobi",1560,1,"force_10mob-2#party::OnMobDeath";
-	monster "force_1-2",16,179,"Shinobi",1560,1,"force_10mob-2#party::OnMobDeath";
-	monster "force_1-2",16,179,"Shinobi",1560,1,"force_10mob-2#party::OnMobDeath";
-	monster "force_1-2",16,179,"Shinobi",1560,1,"force_10mob-2#party::OnMobDeath";
-	monster "force_1-2",16,179,"Shinobi",1560,1,"force_10mob-2#party::OnMobDeath";
-	set $force_10_2_pt,6;
+	monster "force_1-2",16,179,"Samurai Spector",1542,1,"force_10mob-2#party::OnMyMobDead";
+	monster "force_1-2",16,179,"Shinobi",1560,1,"force_10mob-2#party::OnMyMobDead";
+	monster "force_1-2",16,179,"Shinobi",1560,1,"force_10mob-2#party::OnMyMobDead";
+	monster "force_1-2",16,179,"Shinobi",1560,1,"force_10mob-2#party::OnMyMobDead";
+	monster "force_1-2",16,179,"Shinobi",1560,1,"force_10mob-2#party::OnMyMobDead";
+	monster "force_1-2",16,179,"Shinobi",1560,1,"force_10mob-2#party::OnMyMobDead";
 	end;
 
 OnReset:
-	killmonster "force_1-2","force_10mob-2#party::OnMobDeath";
+	killmonster "force_1-2","force_10mob-2#party::OnMyMobDead";
 	end;
 
-OnMobDeath:
-	set $force_10_2_pt,$force_10_2_pt -1;
-	if($force_10_2_pt < 1)
-	{
+OnMyMobDead:
+	if (mobcount("force_1-2","force_10mob-2#party::OnMyMobDead") < 1) {
 		donpcevent "arena_p::OnExit";
 		donpcevent "Slipslowrun#party::On10_End";
 		set $arn_partyc,0;
@@ -995,7 +904,6 @@ OnMobDeath:
 }
 
 force_1-2,59,178,0	script	force_exit#party	-1,1,1,{
-
 OnTouch:
 	donpcevent "force_exitmob#party::OnEnable";
 	disablenpc "force_exit#party";
@@ -1003,46 +911,47 @@ OnTouch:
 }
 
 -	script	force_exitmob#party	-1,{
-
 OnEnable:
-	monster "force_1-2",95,177,"Farewell",1393,1,"force_exitmob#party::OnMobDeath";
-	monster "force_1-2",95,177,"I hate you",1543,1,"force_exitmob#party::OnMobDeath";
-	monster "force_1-2",95,177,"I like chocolate",1472,1,"force_exitmob#party::OnMobDeath";
-	monster "force_1-2",95,177,"You like it, huh?",1472,1,"force_exitmob-#party::OnMobDeath";
-	monster "force_1-2",95,177,"Sorry",1420,1,"force_exitmob#party::OnMobDeath";
-	monster "force_1-2",95,177,"Tristram II",1562,1,"force_exitmob#party::OnMobDeath";
-	monster "force_1-2",95,177,"I am hungry",1468,1,"force_exitmob#party::OnMobDeath";
-	monster "force_1-2",95,177,"Bye",1419,1,"force_exitmob#party::OnMobDeath";
-	monster "force_1-2",95,177,"Take care",1394,1,"force_exitmob#party::OnMobDeath";
-	monster "force_1-2",95,177,"Sexy Body",1578,1,"force_exitmob#party::OnMobDeath";
-	monster "force_1-2",95,177,"Pressure",1471,1,"force_exitmob#party::OnMobDeath";
-	monster "force_1-2",95,177,"Take it easy",1491,1,"force_exitmob#party::OnMobDeath";
-	monster "force_1-2",95,177,"Are you gonna hurt me?",1555,1,"force_exitmob#party::OnMobDeath";
-	monster "force_1-2",95,177,"Merchant",1428,1,"force_exitmob#party::OnMobDeath";
-	monster "force_1-2",95,177,"Ms. Kim",1472,1,"force_exitmob#party::OnMobDeath";
-	monster "force_1-2",95,177,"Martial Art",1472,1,"force_exitmob#party::OnMobDeath";
-	monster "force_1-2",95,177,"Part-timer",1420,1,"force_exitmob#party::OnMobDeath";
-	monster "force_1-2",95,177,"Boss",1562,1,"force_exitmob#party::OnMobDeath";
-	monster "force_1-2",95,177,"Old Yellow Box",1474,1,"force_exitmob#party::OnMobDeath";
-	monster "force_1-2",95,177,"Bat",1419,1,"force_exitmob#party::OnMobDeath";
-	monster "force_1-2",95,177,"Extra",1394,1,"force_exitmob#party::OnMobDeath";
-	monster "force_1-2",95,177,"Milk Merchant",1578,1,"force_exitmob#party::OnMobDeath";
-	monster "force_1-2",95,177,"Darling",1471,1,"force_exitmob#party::OnMobDeath";
-	monster "force_1-2",95,177,"Oh noes!",1491,1,"force_exitmob#party::OnMobDeath";
-	monster "force_1-2",95,177,"I am not a Wraith",1566,1,"force_exitmob#party::OnMobDeath";
-	monster "force_1-2",95,177,"Mom Wraith",1566,1,"force_exitmob#party::OnMobDeath";
-	monster "force_1-2",95,177,"Dad Wraith",1566,1,"force_exitmob#party::OnMobDeath";
-	monster "force_1-2",95,177,"Book[3]",1478,1,"force_exitmob#party::OnMobDeath";
-	monster "force_1-2",95,177,"Exchange Diary",1478,1,"force_exitmob#party::OnMobDeath";
+	monster "force_1-2",95,177,"Farewell",1393,1,"force_exitmob#party::OnMyMobDead";
+	monster "force_1-2",95,177,"I hate you",1543,1,"force_exitmob#party::OnMyMobDead";
+	monster "force_1-2",95,177,"I like chocolate",1472,1,"force_exitmob#party::OnMyMobDead";
+	monster "force_1-2",95,177,"You like it, huh?",1472,1,"force_exitmob#party::OnMyMobDead";
+	monster "force_1-2",95,177,"Sorry",1420,1,"force_exitmob#party::OnMyMobDead";
+	monster "force_1-2",95,177,"Tristram II",1562,1,"force_exitmob#party::OnMyMobDead";
+	monster "force_1-2",95,177,"I am hungry",1468,1,"force_exitmob#party::OnMyMobDead";
+	monster "force_1-2",95,177,"Bye",1419,1,"force_exitmob#party::OnMyMobDead";
+	monster "force_1-2",95,177,"Take care",1394,1,"force_exitmob#party::OnMyMobDead";
+	monster "force_1-2",95,177,"Sexy Body",1578,1,"force_exitmob#party::OnMyMobDead";
+	monster "force_1-2",95,177,"Pressure",1471,1,"force_exitmob#party::OnMyMobDead";
+	monster "force_1-2",95,177,"Take it easy",1491,1,"force_exitmob#party::OnMyMobDead";
+	monster "force_1-2",95,177,"Are you gonna hurt me?",1555,1,"force_exitmob#party::OnMyMobDead";
+	monster "force_1-2",95,177,"Merchant",1428,1,"force_exitmob#party::OnMyMobDead";
+	monster "force_1-2",95,177,"Ms. Kim",1472,1,"force_exitmob#party::OnMyMobDead";
+	monster "force_1-2",95,177,"Martial Art",1472,1,"force_exitmob#party::OnMyMobDead";
+	monster "force_1-2",95,177,"Part-timer",1420,1,"force_exitmob#party::OnMyMobDead";
+	monster "force_1-2",95,177,"Boss",1562,1,"force_exitmob#party::OnMyMobDead";
+	monster "force_1-2",95,177,"Old Yellow Box",1474,1,"force_exitmob#party::OnMyMobDead";
+	monster "force_1-2",95,177,"Bat",1419,1,"force_exitmob#party::OnMyMobDead";
+	monster "force_1-2",95,177,"Extra",1394,1,"force_exitmob#party::OnMyMobDead";
+	monster "force_1-2",95,177,"Milk Merchant",1578,1,"force_exitmob#party::OnMyMobDead";
+	monster "force_1-2",95,177,"Darling",1471,1,"force_exitmob#party::OnMyMobDead";
+	monster "force_1-2",95,177,"Oh noes!",1491,1,"force_exitmob#party::OnMyMobDead";
+	monster "force_1-2",95,177,"I am not a Wraith",1566,1,"force_exitmob#party::OnMyMobDead";
+	monster "force_1-2",95,177,"Mom Wraith",1566,1,"force_exitmob#party::OnMyMobDead";
+	monster "force_1-2",95,177,"Dad Wraith",1566,1,"force_exitmob#party::OnMyMobDead";
+	monster "force_1-2",95,177,"Book[3]",1478,1,"force_exitmob#party::OnMyMobDead";
+	monster "force_1-2",95,177,"Exchange Diary",1478,1,"force_exitmob#party::OnMyMobDead";
 	end;
 
 OnReset:
-	killmonster "force_1-2","force_exitmob#party::OnMobDeath";
+	killmonster "force_1-2","force_exitmob#party::OnMyMobDead";
+	end;
+
+OnMyMobDead:
 	end;
 }
 
 prt_are_in,181,135,3	script	Staff#party-1	67,{
-
 	mes "[Staff]";
 	mes "You did a good job.";
 	mes "Even if you have failed to clear a time attack battle, I will reward you with a small amount of arena points.";
@@ -1064,29 +973,19 @@ prt_are_in,181,135,3	script	Staff#party-1	67,{
 }
 
 prt_are_in,77,135,3	script	Staff#party-2	67,{
-
-	if($arena_minptend < $arena_minptst)
-	{
-		if($arena_secptend < $arena_secptst)
-		{
+	if($arena_minptend < $arena_minptst) {
+		if($arena_secptend < $arena_secptst) {
 			set @record_minpt,60 - $arena_minptst + $arena_minptend -1;
 			set @record_secpt,60 - $arena_secptst + $arena_secptend;
-		}
-		else
-		{
+		} else {
 			set @record_minpt,60 - $arena_minptst + $arena_minptend;
 			set @record_secpt,$arena_secptend - $arena_secptst;
 		}
-	}
-	else
-	{
-		if($arena_secptend < $arena_secptst)
-		{
+	} else {
+		if($arena_secptend < $arena_secptst) {
 			set @record_minpt,$arena_minptend - $arena_minptst -1;
 			set @record_secpt,60 - $arena_secptst + $arena_secptend;
-		}
-		else
-		{
+		} else {
 			set @record_minpt,$arena_minptend - $arena_minptst;
 			set @record_secpt,$arena_secptend - $arena_secptst;
 		}
@@ -1124,9 +1023,7 @@ prt_are_in,77,135,3	script	Staff#party-2	67,{
 			mes "I hope you had a good time and let me guide you to the entrance of arena.";
 			mes "Thank you.";
 			close2;
-		}
-		else
-		{
+		} else {
 			set arena_point, arena_point + 40;
 			mes "[Staff]";
 			mes "Let me reward you some arena points.";
@@ -1137,26 +1034,22 @@ prt_are_in,77,135,3	script	Staff#party-2	67,{
 			mes "See you later~";
 			close2;
 		}
-		if(getpartyleader(.arn_party,2) == getcharid(0))
-		{
+		if(getpartyleader(.arn_party,2) == getcharid(0)) {
 			donpcevent "#arn_timer_pt::OnStop";
 			donpcevent "alloff#pt::OnEnable";
 			donpcevent "Ponox::OnStart";
 		}
 		specialeffect2 EH_HIT5;
- 		donpcevent "cast#pt::Onnomal1";
+ 		donpcevent "cast#pt::OnNomal1";
 		warp "arena_room",100,75;
 		end;
-	}
-	else
-	{
+	} else {
 		emotion e_omg;
 		mes "[Staff]";
 		mes "Wow! You have renewed the record!";
 		mes "What a great job!";
 		next;
-		if(getpartyleader(.arn_party,2) == getcharid(0))
-		{
+		if(getpartyleader(.arn_party,2) == getcharid(0)) {
 			mes "[Staff]";
 			mes "You can record you and your party members on ^FF0000the hall of Arena Time Force Battle party ^000000.";
 			mes "When you enter a name, the name will be remained on the top unless someone make a new record.";
@@ -1164,41 +1057,33 @@ prt_are_in,77,135,3	script	Staff#party-2	67,{
 			mes "[Staff]";
 			mes "Please enter a name within 10 letters which can represent you and your party members.";
 			next;
-			switch( select( "Ok.","Let me think." ) ) 
-			{
+			switch( select( "Ok.","Let me think." ) )  {
+			case 1:
+				input .@arnparty$;
+				mes "[Staff]";
+				mes "You have entered ^3131FF"+.@arnparty$+"^000000. Is it correct?";
+				next;
+				switch( select( "Yes","No" ) ) {
 				case 1:
-					input .@arnparty$;
+					set $top_ptmin, @record_minpt;
+					set $top_ptsec, @record_secpt;
+					set $arena_pttopn$,.@arnparty$;
+					donpcevent "Vendigos::OnLineRec_pt";
 					mes "[Staff]";
-					mes "You have entered ^3131FF"+.@arnparty$+"^000000. Is it correct?";
+					mes "Your record has been entered.";
 					next;
-					switch( select( "Yes","No" ) )
-					{
-						case 1:
-							set $top_ptmin, @record_minpt;
-							set $top_ptsec, @record_secpt;
-							set $arena_pttopn$,.@arnparty$;
-							donpcevent "Vendigos::OnLineRec_pt";
-							mes "[Staff]";
-							mes "Your record has been entered.";
-							next;
-							break;
-
-						case 2:
-							mes "[Staff]";
-							mes "Please take your time and think up a nice name.";
-							close;
-
-					}
 					break;
-
 				case 2:
 					mes "[Staff]";
 					mes "Please take your time and think up a nice name.";
 					close;
-
+				}
+				break;
+			case 2:
+				mes "[Staff]";
+				mes "Please take your time and think up a nice name.";
+				close;
 			}
-
-
 		}
 		if (arena_point > 29900) {
 			mes "[Staff]";
@@ -1212,9 +1097,7 @@ prt_are_in,77,135,3	script	Staff#party-2	67,{
 			mes "I hope you had a good time and let me guide you to the entrance of arena.";
 			mes "Thank you.";
 			close2;
-		}
-		else
-		{
+		} else {
 			mes "[Staff]";
 			mes "Let me reward you with some arena points.";
 			mes "At the same time, since you have renewed the record you will receive an extra amount of the points this time.";
@@ -1229,8 +1112,7 @@ prt_are_in,77,135,3	script	Staff#party-2	67,{
 			mes "See you later~";
 			close2;
 		}
-		if(getpartyleader(.arn_party,2) == getcharid(0))
-		{
+		if(getpartyleader(.arn_party,2) == getcharid(0)) {
 			donpcevent "#arn_timer_pt::OnStop";
 			donpcevent "alloff#pt::OnEnable";
 			donpcevent "Ponox::OnStart";
@@ -1239,11 +1121,9 @@ prt_are_in,77,135,3	script	Staff#party-2	67,{
 		warp "arena_room",100,75;
 		end;
 	}
-
 }
 
 -	script	#arn_timer_pt	-1,{
-
 OnEnter:
 	initnpctimer;
 	end;
@@ -1261,8 +1141,8 @@ OnTimer4000:
 	end;
 
 OnTimer60000:
- 	donpcevent "cast#pt::Ontimeover2";
-	donpcevent "arn_warp_pt::Onout";
+ 	donpcevent "cast#pt::OnTimeOver2";
+	donpcevent "arn_warp_pt::OnOut";
 	donpcevent "#arn_timer_pt::OnStop";
 	donpcevent "alloff#pt::OnEnable";
 	donpcevent "Ponox::OnStart";
@@ -1274,33 +1154,30 @@ OnStop:
 }
 
 -	script	arn_warp_pt	-1,{
-
-Onout:
+OnOut:
 	areawarp "prt_are_in",66,143,81,126,"arena_room",100,75;
 	end;
 }
 
 -	script	cast#pt	-1,{
-
-Ontimeover1:
+OnTimeOver1:
 	mapannounce "force_2-1","Arena will be reactivated due to an error occurred during battle.",0,0xFFCE00;
 	end;
 
-Onnomal1:
+OnNomal1:
 	mapannounce "force_2-1","Arena will be reactivated.",0,0xFFCE00;
 	end;
 
-Onnomal2:
+OnNomal2:
 	mapannounce "force_2-1","Arena will be reactivated.",0,0xFFCE00;
 	end;
 
-Ontimeover2:
+OnTimeOver2:
 	mapannounce "force_2-1","Arena will be reactivated due to an error occurred in the waiting room.",0,0xFFCE00;
 	end;
 }
 
 -	script	alloff#pt	-1,{
-
 OnEnable:
 	mapwarp "force_1-2","prt_are_in",126,139,0,0;
 	donpcevent "force_01mob#party::OnReset";
@@ -1312,8 +1189,8 @@ OnEnable:
 	donpcevent "force_07mob#party::OnReset";
 	donpcevent "force_08mob#party::OnReset";
 	donpcevent "force_09mob#party::OnReset";
-	donpcevent "force_10-1mob#party::OnReset";
-	donpcevent "force_10-2mob#party::OnReset";
+	donpcevent "force_10mob-1#party::OnReset";
+	donpcevent "force_10mob-2#party::OnReset";
 	donpcevent "force_exitmob#party::OnReset";
 	//disablenpc "force_01mob#party";
 	//disablenpc "force_02mob#party";
@@ -1352,7 +1229,7 @@ OnEnable:
 	disablenpc "force_10_09";
 	disablenpc "force_09_exit";
 	disablenpc "arena_p";
-	donpcevent "Slipslowrun#party::Ontimeroff";
+	donpcevent "Slipslowrun#party::OnTimerOff";
 	disablenpc "Slipslowrun#party";
 	disablenpc "arn_warp_pt";
 	set $arn_partywait,0;
@@ -1365,5 +1242,4 @@ OnEnable:
 OnInit:
 	if(!$top_ptmin && !$top_ptsec) set $top_ptmin,10;
 	end;
-
 }

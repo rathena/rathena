@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= SinSloth
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -13,6 +13,7 @@
 //= 1.1 Fixed coordinate typo. (bugreport:1663) [L0ne_W0lf]
 //= 1.2 Replaced effect numerics with constants. [Samuray22]
 //= 1.3 Label standardization. [Euphy]
+//= 1.4 Script updates. [Euphy]
 //============================================================
 
 arena_room,38,88,5	script	Lv60 Waiting Room	124,{
@@ -37,10 +38,6 @@ OnStart:
 force_2-1,99,20,4	script	Minilover#arena	124,{
 	end;
 
-OnInit:
-	set $@mapcount60, 0;
-	end;
-
 OnStart:
 	initnpctimer;
 	set $arena_min60st,gettime(2);
@@ -60,40 +57,35 @@ OnTimer5000:
 	end;
 
 OnTimer60000:
-	set $@mapcount60, getmapusers ("force_2-1");
-	if ($@mapcount60 == 0) {
+	if (getmapusers("force_2-1") == 0) {
 		donpcevent "Minilover#arena::OnFailClearStage";
 	}
 	mapannounce "force_2-1","Remaining Time : 5 minutes ",0;
 	end;
 
 OnTimer120000:
-	set $@mapcount60, getmapusers ("force_2-1");
-	if ($@mapcount60 == 0) {
+	if (getmapusers("force_2-1") == 0) {
 		donpcevent "Minilover#arena::OnFailClearStage";
 	}
 	mapannounce "force_2-1","Remaining Time : 4 minutes ",0;
 	end;
 
 OnTimer180000:
-	set $@mapcount60, getmapusers ("force_2-1");
-	if ($@mapcount60 == 0) {
+	if (getmapusers("force_2-1") == 0) {
 		donpcevent "Minilover#arena::OnFailClearStage";
 	}
 	mapannounce "force_2-1","Remaining Time : 3 minutes ",0;
 	end;
 
 OnTimer240000:
-	set $@mapcount60, getmapusers ("force_2-1");
-	if ($@mapcount60 == 0) {
+	if (getmapusers("force_2-1") == 0) {
 		donpcevent "Minilover#arena::OnFailClearStage";
 	}
 	mapannounce "force_2-1","Remaining Time : 2 minutes ",0;
 	end;
 
 OnTimer300000:
-	set $@mapcount60, getmapusers ("force_2-1");
-	if ($@mapcount60 == 0) {
+	if (getmapusers("force_2-1") == 0) {
 		donpcevent "Minilover#arena::OnFailClearStage";
 	}
 	mapannounce "force_2-1","Remaining Time : 1 minute ",0;
@@ -201,11 +193,9 @@ On09_Start:
 On09_End:
 	mapannounce "force_2-1","Boss Clear! - North exit has opened. Thank you.",0;
 	end;
-
 }
 
 -	script	arena#60	-1,{
-
 OnReset_01:
 	donpcevent "force_01ex#60::OnReset";
 	donpcevent "force_01mob#60::OnReset";
@@ -277,14 +267,14 @@ OnStart:
 	donpcevent "force_05mob#60::OnReset";
 	donpcevent "force_06mob#60::OnReset";
 	donpcevent "force_07mob#60::OnReset";
-	donpcevent "force_08mob#60::OnReset";
+	//donpcevent "force_08mob#60::OnReset";
 	donpcevent "force_09mob#60::OnReset";
 	donpcevent "force_01ex#60::OnReset";
 	donpcevent "force_03ex#60::OnReset";
 	donpcevent "force_04ex#60::OnReset";
 	donpcevent "force_05ex#60::OnReset";
 	donpcevent "force_06ex#60::OnReset";
-	donpcevent "force_08ex#60::OnReset";
+	//donpcevent "force_08ex#60::OnReset";
 	donpcevent "force_09ex#60::OnReset";
 	enablenpc "force_08_01#60";
 	donpcevent "force_01start#60::OnEnable";
@@ -299,21 +289,19 @@ OnReset_All:
 	donpcevent "force_05mob#60::OnReset";
 	donpcevent "force_06mob#60::OnReset";
 	donpcevent "force_07mob#60::OnReset";
-	donpcevent "force_08mob#60::OnReset";
+	//donpcevent "force_08mob#60::OnReset";
 	donpcevent "force_09mob#60::OnReset";
 	donpcevent "force_01ex#60::OnReset";
 	donpcevent "force_03ex#60::OnReset";
 	donpcevent "force_04ex#60::OnReset";
 	donpcevent "force_05ex#60::OnReset";
 	donpcevent "force_06ex#60::OnReset";
-	donpcevent "force_08ex#60::OnReset";
+	//donpcevent "force_08ex#60::OnReset";
 	donpcevent "force_09ex#60::OnReset";
 	end;
-
 }
 
 force_2-1,62,26,1	script	force_08_01#60	45,1,1,{
-
 OnTouch:
 	donpcevent "Minilover#arena::On01_Start";
 	warp "force_2-1",40,26;
@@ -321,7 +309,6 @@ OnTouch:
 }
 
 force_2-1,25,44,1	script	force_01_02#60	45,1,1,{
-
 OnTouch:
 	donpcevent "Minilover#arena::On02_Start";
 	warp "force_2-1",25,69;
@@ -329,7 +316,6 @@ OnTouch:
 }
 
 force_2-1,25,134,1	script	force_02_03#60	45,1,1,{
-
 OnTouch:
 	donpcevent "arena#60::OnReset_02";
 	donpcevent "Minilover#arena::On03_Start";
@@ -338,7 +324,6 @@ OnTouch:
 }
 
 force_2-1,44,174,1	script	force_03_04#60	45,1,1,{
-
 OnTouch:
 	donpcevent "Minilover#arena::On04_Start";
 	warp "force_2-1",69,174;
@@ -346,7 +331,6 @@ OnTouch:
 }
 
 force_2-1,134,174,1	script	force_04_05#60	45,1,1,{
-
 OnTouch:
 	donpcevent "Minilover#arena::On05_Start";
 	warp "force_2-1",159,174;
@@ -354,7 +338,6 @@ OnTouch:
 }
 
 force_2-1,174,155,1	script	force_05_06#60	45,1,1,{
-
 OnTouch:
 	donpcevent "Minilover#arena::On06_Start";
 	warp "force_2-1",174,130;
@@ -362,7 +345,6 @@ OnTouch:
 }
 
 force_2-1,174,65,1	script	force_06_07#60	45,1,1,{
-
 OnTouch:
 	donpcevent "Minilover#arena::On07_Start";
 	warp "force_2-1",174,40;
@@ -370,7 +352,6 @@ OnTouch:
 }
 
 force_2-1,155,26,1	script	force_07_08#60	45,1,1,{
-
 OnTouch:
 	donpcevent "Minilover#arena::On08_Start";
 	warp "force_2-1",132,26;
@@ -379,7 +360,6 @@ OnTouch:
 }
 
 force_2-1,99,54,1	script	force_08_09#60	45,1,1,{
-
 OnTouch:
 	donpcevent "Minilover#arena::On09_Start";
 	warp "force_2-1",99,82;
@@ -387,7 +367,6 @@ OnTouch:
 }
 
 force_2-1,99,124,1	script	force_exit#60	45,1,1,{
-
 OnTouch:
 	donpcevent "Minilover#arena::OnTimerOff";
 	donpcevent "#arn_timer_60::OnEnable";
@@ -396,50 +375,45 @@ OnTouch:
 }
 
 -	script	force_01start#60	-1,{
-
 OnEnable:
 	donpcevent "force_01mob#60::OnEnable";
 	end;
 }
 
 -	script	force_01ex#60	-1,{
-
 OnReset:
-	killmonster "force_2-1","force_01ex#60::OnMobEx";
+	killmonster "force_2-1","force_01ex#60::OnMyMobDead";
 	end;
 
 OnEnable:
-	monster "force_2-1",25,25,"Rotar Zairo",1392,1,"force_01ex#60::OnMobEx";
+	monster "force_2-1",25,25,"Rotar Zairo",1392,1,"force_01ex#60::OnMyMobDead";
 	end;
 
-OnMobEx:
+OnMyMobDead:
 	end;
 }
 
 -	script	force_01mob#60	-1,{
-
 OnReset:
-	killmonster "force_2-1","force_01mob#60::OnMobDeath";
+	killmonster "force_2-1","force_01mob#60::OnMyMobDead";
 	end;
 
 OnEnable:
 	donpcevent "force_01ex#60::OnEnable";
-	monster "force_2-1",25,32,"Goblin Archer",1577,1,"force_01mob#60::OnMobDeath";
-	monster "force_2-1",21,26,"Goblin",1534,1,"force_01mob#60::OnMobDeath";
-	monster "force_2-1",25,36,"Goblin",1536,1,"force_01mob#60::OnMobDeath";
-	monster "force_2-1",25,15,"Goblin",1534,1,"force_01mob#60::OnMobDeath";
-	monster "force_2-1",40,30,"Goblin",1536,1,"force_01mob#60::OnMobDeath";
-	monster "force_2-1",25,24,"Goblin",1534,1,"force_01mob#60::OnMobDeath";
-	monster "force_2-1",25,9,"Goblin",1536,1,"force_01mob#60::OnMobDeath";
-	monster "force_2-1",28,15,"Goblin Archer",1577,1,"force_01mob#60::OnMobDeath";
-	monster "force_2-1",12,33,"Goblin",1536,1,"force_01mob#60::OnMobDeath";
-	monster "force_2-1",24,20,"Goblin",1535,1,"force_01mob#60::OnMobDeath";
-	set $force_01_60,5;
+	monster "force_2-1",25,32,"Goblin Archer",1577,1,"force_01mob#60::OnMyMobDead";
+	monster "force_2-1",21,26,"Goblin",1534,1,"force_01mob#60::OnMyMobDead";
+	monster "force_2-1",25,36,"Goblin",1536,1,"force_01mob#60::OnMyMobDead";
+	monster "force_2-1",25,15,"Goblin",1534,1,"force_01mob#60::OnMyMobDead";
+	monster "force_2-1",40,30,"Goblin",1536,1,"force_01mob#60::OnMyMobDead";
+	monster "force_2-1",25,24,"Goblin",1534,1,"force_01mob#60::OnMyMobDead";
+	monster "force_2-1",25,9,"Goblin",1536,1,"force_01mob#60::OnMyMobDead";
+	monster "force_2-1",28,15,"Goblin Archer",1577,1,"force_01mob#60::OnMyMobDead";
+	monster "force_2-1",12,33,"Goblin",1536,1,"force_01mob#60::OnMyMobDead";
+	monster "force_2-1",24,20,"Goblin",1535,1,"force_01mob#60::OnMyMobDead";
 	end;
 
-OnMobDeath:
-	set $force_01_60,$force_01_60 -1;
-	if ($force_01_60 < 1) {
+OnMyMobDead:
+	if (mobcount("force_2-1","force_01mob#60::OnMyMobDead") < 6) {
 		donpcevent "Minilover#arena::On01_End";
 		donpcevent "arena#60::OnReset_01";
 	}
@@ -447,102 +421,95 @@ OnMobDeath:
 }
 
 -	script	force_02start#60	-1,{
-
 OnEnable:
 	donpcevent "force_02mob#60::OnEnable";
 	end;
 }
 
 -	script	force_02mob#60	-1,{
-
 OnReset:
-	killmonster "force_2-1","force_02mob#60::OnMobEx";
+	killmonster "force_2-1","force_02mob#60::OnMyMobDead";
 	end;
 OnEnable:
-	monster "force_2-1",24,76,"Drainliar",1434,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",28,76,"Drainliar",1434,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",24,86,"Drainliar",1434,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",24,76,"Drainliar",1434,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",28,76,"Drainliar",1434,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",24,86,"Drainliar",1434,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",24,76,"Drainliar",1434,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",28,76,"Drainliar",1434,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",23,76,"Requiem",1468,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",27,76,"Requiem",1468,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",25,86,"Requiem",1468,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",26,86,"Ghoul",1423,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",25,100,"Ghoul",1423,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",26,118,"Ghoul",1423,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",25,100,"Ghoul",1423,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",26,118,"Ghoul",1423,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",28,79,"Zerom",1470,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",23,87,"Zerom",1470,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",28,99,"Zerom",1470,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",23,112,"Zerom",1470,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",28,128,"Matyr",1460,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",28,128,"Matyr",1460,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",28,128,"Matyr",1460,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",28,128,"Orc Zombie",1463,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",28,128,"Orc Zombie",1463,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",28,128,"Orc Zombie",1463,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",28,128,"Orc Zombie",1463,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",28,128,"Orc Zombie",1463,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",28,128,"Matyr",1460,1,"force_02mob#60::OnMobEx";
-	monster "force_2-1",28,128,"Matyr",1460,1,"force_02mob#60::OnMobEx";
+	monster "force_2-1",24,76,"Drainliar",1434,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",28,76,"Drainliar",1434,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",24,86,"Drainliar",1434,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",24,76,"Drainliar",1434,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",28,76,"Drainliar",1434,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",24,86,"Drainliar",1434,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",24,76,"Drainliar",1434,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",28,76,"Drainliar",1434,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",23,76,"Requiem",1468,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",27,76,"Requiem",1468,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",25,86,"Requiem",1468,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",26,86,"Ghoul",1423,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",25,100,"Ghoul",1423,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",26,118,"Ghoul",1423,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",25,100,"Ghoul",1423,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",26,118,"Ghoul",1423,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",28,79,"Zerom",1470,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",23,87,"Zerom",1470,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",28,99,"Zerom",1470,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",23,112,"Zerom",1470,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",28,128,"Matyr",1460,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",28,128,"Matyr",1460,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",28,128,"Matyr",1460,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",28,128,"Orc Zombie",1463,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",28,128,"Orc Zombie",1463,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",28,128,"Orc Zombie",1463,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",28,128,"Orc Zombie",1463,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",28,128,"Orc Zombie",1463,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",28,128,"Matyr",1460,1,"force_02mob#60::OnMyMobDead";
+	monster "force_2-1",28,128,"Matyr",1460,1,"force_02mob#60::OnMyMobDead";
 	end;
 
-OnMobEx:
+OnMyMobDead:
 	end;
 }
 
 -	script	force_03start#60	-1,{
-
 OnEnable:
 	donpcevent "force_03mob#60::OnEnable";
 	end;
 }
 
 -	script	force_03ex#60	-1,{
-
 OnReset:
-	killmonster "force_2-1","force_03ex#60::OnMobEx";
+	killmonster "force_2-1","force_03ex#60::OnMyMobDead";
 	end;
 
 OnEnable:
-	monster "force_2-1",26,173,"Hydra",1579,1,"force_03ex#60::OnMobEx";
-	monster "force_2-1",21,173,"Hydra",1579,1,"force_03ex#60::OnMobEx";
-	monster "force_2-1",31,173,"Hydra",1579,1,"force_03ex#60::OnMobEx";
-	monster "force_2-1",26,178,"Hydra",1579,1,"force_03ex#60::OnMobEx";
-	monster "force_2-1",21,178,"Hydra",1579,1,"force_03ex#60::OnMobEx";
-	monster "force_2-1",31,178,"Hydra",1579,1,"force_03ex#60::OnMobEx";
-	monster "force_2-1",19,174,"Obeaune",1425,1,"force_03ex#60::OnMobEx";
-	monster "force_2-1",26,161,"Obeaune",1425,1,"force_03ex#60::OnMobEx";
-	monster "force_2-1",13,173,"Obeaune",1425,1,"force_03ex#60::OnMobEx";
-	monster "force_2-1",38,173,"Obeaune",1425,1,"force_03ex#60::OnMobEx";
+	monster "force_2-1",26,173,"Hydra",1579,1,"force_03ex#60::OnMyMobDead";
+	monster "force_2-1",21,173,"Hydra",1579,1,"force_03ex#60::OnMyMobDead";
+	monster "force_2-1",31,173,"Hydra",1579,1,"force_03ex#60::OnMyMobDead";
+	monster "force_2-1",26,178,"Hydra",1579,1,"force_03ex#60::OnMyMobDead";
+	monster "force_2-1",21,178,"Hydra",1579,1,"force_03ex#60::OnMyMobDead";
+	monster "force_2-1",31,178,"Hydra",1579,1,"force_03ex#60::OnMyMobDead";
+	monster "force_2-1",19,174,"Obeaune",1425,1,"force_03ex#60::OnMyMobDead";
+	monster "force_2-1",26,161,"Obeaune",1425,1,"force_03ex#60::OnMyMobDead";
+	monster "force_2-1",13,173,"Obeaune",1425,1,"force_03ex#60::OnMyMobDead";
+	monster "force_2-1",38,173,"Obeaune",1425,1,"force_03ex#60::OnMyMobDead";
 	end;
 
-OnMobEx:
+OnMyMobDead:
 	end;
 }
 
 -	script	force_03mob#60	-1,{
-
 OnEnable:
 	donpcevent "force_03ex#60::OnEnable";
-	monster "force_2-1",23,174,"Mantis",1457,1,"force_03mob#60::OnMobDeath";
-	monster "force_2-1",18,173,"Mantis",1457,1,"force_03mob#60::OnMobDeath";
-	monster "force_2-1",33,173,"Mantis",1457,1,"force_03mob#60::OnMobDeath";
-	monster "force_2-1",26,181,"Mantis",1457,1,"force_03mob#60::OnMobDeath";
-	set $force_03_60,4;
+	monster "force_2-1",23,174,"Mantis",1457,1,"force_03mob#60::OnMyMobDead";
+	monster "force_2-1",18,173,"Mantis",1457,1,"force_03mob#60::OnMyMobDead";
+	monster "force_2-1",33,173,"Mantis",1457,1,"force_03mob#60::OnMyMobDead";
+	monster "force_2-1",26,181,"Mantis",1457,1,"force_03mob#60::OnMyMobDead";
 	end;
 
 OnReset:
-	killmonster "force_2-1","force_mob01#60::OnMobDeath";
+	killmonster "force_2-1","force_mob01#60::OnMyMobDead";
 	end;
 
-OnMobDeath:
-	set $force_03_60,$force_03_60 -1;
-	if ($force_03_60 < 1) {
+OnMyMobDead:
+	if (mobcount("force_2-1","force_03mob#60::OnMyMobDead") < 1) {
 		donpcevent "Minilover#arena::On03_End";
 		donpcevent "arena#60::OnReset_03";
 	}
@@ -550,48 +517,43 @@ OnMobDeath:
 }
 
 -	script	force_04start#60	-1,{
-
 OnEnable:
 	donpcevent "force_04mob#60::OnEnable";
 	end;
 }
 
 -	script	force_04ex#60	-1,{
-
 OnReset:
-	killmonster "force_2-1","force_04ex#60::OnMobEx";
+	killmonster "force_2-1","force_04ex#60::OnMyMobDead";
 	end;
 
 OnEnable:
-	monster "force_2-1",84,177,"Sasquatch",1442,1,"force_04ex#60::OnMobEx";
-	monster "force_2-1",125,170,"Sasquatch",1442,1,"force_04ex#60::OnMobEx";
-	monster "force_2-1",109,172,"Baby Leopard",1524,1,"force_04ex#60::OnMobEx";
-	monster "force_2-1",121,172,"Baby Leopard",1524,1,"force_04ex#60::OnMobEx";
-	monster "force_2-1",104,173,"Chepet",1444,1,"force_04ex#60::OnMobEx";
-	monster "force_2-1",75,174,"Dokebi",1491,1,"force_04ex#60::OnMobEx";
-	monster "force_2-1",102,176,"Dokebi",1491,1,"force_04ex#60::OnMobEx";
+	monster "force_2-1",84,177,"Sasquatch",1442,1,"force_04ex#60::OnMyMobDead";
+	monster "force_2-1",125,170,"Sasquatch",1442,1,"force_04ex#60::OnMyMobDead";
+	monster "force_2-1",109,172,"Baby Leopard",1524,1,"force_04ex#60::OnMyMobDead";
+	monster "force_2-1",121,172,"Baby Leopard",1524,1,"force_04ex#60::OnMyMobDead";
+	monster "force_2-1",104,173,"Chepet",1444,1,"force_04ex#60::OnMyMobDead";
+	monster "force_2-1",75,174,"Dokebi",1491,1,"force_04ex#60::OnMyMobDead";
+	monster "force_2-1",102,176,"Dokebi",1491,1,"force_04ex#60::OnMyMobDead";
 	end;
 
-OnMobEx:
+OnMyMobDead:
 	end;
 }
 
 -	script	force_04mob#60	-1,{
-
 OnReset:
-	killmonster "force_2-1","force_04mob#60::OnMobDeath";
+	killmonster "force_2-1","force_04mob#60::OnMyMobDead";
 	end;
 
 OnEnable:
 	donpcevent "force_04ex#60::OnEnable";
-	monster "force_2-1",79,174,"Golem",1540,1,"force_04mob#60::OnMobDeath";
-	monster "force_2-1",131,178,"Marse",1551,1,"force_04mob#60::OnMobDeath";
-	set $force_04_60,2;
+	monster "force_2-1",79,174,"Golem",1540,1,"force_04mob#60::OnMyMobDead";
+	monster "force_2-1",131,178,"Marse",1551,1,"force_04mob#60::OnMyMobDead";
 	end;
 
-OnMobDeath:
-	set $force_04_60,$force_04_60 -1;
-	if ($force_04_60 < 1) {
+OnMyMobDead:
+	if (mobcount("force_2-1","force_04mob#60::OnMyMobDead") < 1) {
 		donpcevent "force_04ex#60::OnReset";
 		donpcevent "Minilover#arena::On04_End";
 		donpcevent "arena#60::OnReset_04";
@@ -600,56 +562,51 @@ OnMobDeath:
 }
 
 -	script	force_05start#60	-1,{
-
 OnEnable:
 	donpcevent "force_05mob#60::OnEnable";
 	end;
 }
 
 -	script	force_05ex#60	-1,{
-
 OnReset:
-	killmonster "force_2-1","force_05ex#60::OnMobEx";
+	killmonster "force_2-1","force_05ex#60::OnMyMobDead";
 	end;
 
 OnSummonMob_05:
-	monster "force_2-1",168,177,"Hydra",1579,1,"force_05ex#60::OnMobEx";
-	monster "force_2-1",170,179,"Hydra",1579,1,"force_05ex#60::OnMobEx";
-	monster "force_2-1",177,179,"Hydra",1579,1,"force_05ex#60::OnMobEx";
-	monster "force_2-1",179,178,"Hydra",1579,1,"force_05ex#60::OnMobEx";
-	monster "force_2-1",179,170,"Hydra",1579,1,"force_05ex#60::OnMobEx";
-	monster "force_2-1",177,168,"Hydra",1579,1,"force_05ex#60::OnMobEx";
-	monster "force_2-1",170,168,"Hydra",1579,1,"force_05ex#60::OnMobEx";
-	monster "force_2-1",173,174,"Hydra",1579,1,"force_05ex#60::OnMobEx";
-	monster "force_2-1",174,174,"Hydra",1579,1,"force_05ex#60::OnMobEx";
-	monster "force_2-1",173,173,"Hydra",1579,1,"force_05ex#60::OnMobEx";
-	monster "force_2-1",174,173,"Hydra",1579,1,"force_05ex#60::OnMobEx";
-	monster "force_2-1",173,181,"Kapha",1543,1,"force_05ex#60::OnMobEx";
+	monster "force_2-1",168,177,"Hydra",1579,1,"force_05ex#60::OnMyMobDead";
+	monster "force_2-1",170,179,"Hydra",1579,1,"force_05ex#60::OnMyMobDead";
+	monster "force_2-1",177,179,"Hydra",1579,1,"force_05ex#60::OnMyMobDead";
+	monster "force_2-1",179,178,"Hydra",1579,1,"force_05ex#60::OnMyMobDead";
+	monster "force_2-1",179,170,"Hydra",1579,1,"force_05ex#60::OnMyMobDead";
+	monster "force_2-1",177,168,"Hydra",1579,1,"force_05ex#60::OnMyMobDead";
+	monster "force_2-1",170,168,"Hydra",1579,1,"force_05ex#60::OnMyMobDead";
+	monster "force_2-1",173,174,"Hydra",1579,1,"force_05ex#60::OnMyMobDead";
+	monster "force_2-1",174,174,"Hydra",1579,1,"force_05ex#60::OnMyMobDead";
+	monster "force_2-1",173,173,"Hydra",1579,1,"force_05ex#60::OnMyMobDead";
+	monster "force_2-1",174,173,"Hydra",1579,1,"force_05ex#60::OnMyMobDead";
+	monster "force_2-1",173,181,"Kapha",1543,1,"force_05ex#60::OnMyMobDead";
 	end;
 
-OnMobEx:
+OnMyMobDead:
 	end;
 }
 
 -	script	force_05mob#60	-1,{
-
 OnReset:
-	killmonster "force_2-1","force_05mob#60::OnMobDeath";
+	killmonster "force_2-1","force_05mob#60::OnMyMobDead";
 	end;
 
 OnEnable:
 	donpcevent "force_05ex#60::OnSummonMob_05";
-	monster "force_2-1",163,173,"Drainliar",1434,1,"force_05mob#60::OnMobDeath";
-	monster "force_2-1",173,173,"Myst",1553,1,"force_05mob#60::OnMobDeath";
-	monster "force_2-1",181,173,"Orc Skeleton",1462,1,"force_05mob#60::OnMobDeath";
-	monster "force_2-1",171,177,"Orc Skeleton",1462,1,"force_05mob#60::OnMobDeath";
-	monster "force_2-1",173,181,"Raggler",1445,1,"force_05mob#60::OnMobDeath";
-	set $force_05_60,5;
+	monster "force_2-1",163,173,"Drainliar",1434,1,"force_05mob#60::OnMyMobDead";
+	monster "force_2-1",173,173,"Myst",1553,1,"force_05mob#60::OnMyMobDead";
+	monster "force_2-1",181,173,"Orc Skeleton",1462,1,"force_05mob#60::OnMyMobDead";
+	monster "force_2-1",171,177,"Orc Skeleton",1462,1,"force_05mob#60::OnMyMobDead";
+	monster "force_2-1",173,181,"Raggler",1445,1,"force_05mob#60::OnMyMobDead";
 	end;
 
-OnMobDeath:
-	set $force_05_60,$force_05_60 -1;
-	if ($force_05_60 < 1) {
+OnMyMobDead:
+	if (mobcount("force_2-1","force_05mob#60::OnMyMobDead") < 1) {
 		donpcevent "Minilover#arena::On05_End";
 		donpcevent "arena#60::OnReset_05";
 	}
@@ -657,112 +614,101 @@ OnMobDeath:
 }
 
 -	script	force_06start#60	-1,{
-
 OnEnable:
 	donpcevent "force_06mob#60::OnEnable";
 	end;
 }
 
 -	script	force_06ex#60	-1,{
-
 OnReset:
-	killmonster "force_2-1","force_06ex#60::OnMobEx";
+	killmonster "force_2-1","force_06ex#60::OnMyMobDead";
 	end;
 
 OnEnable:
-	monster "force_2-1",169,130,"Greatest General",1541,1,"force_06ex#60::OnMobEx";
-	monster "force_2-1",178,130,"Greatest General",1541,1,"force_06ex#60::OnMobEx";
-	monster "force_2-1",169,125,"Greatest General",1541,1,"force_06ex#60::OnMobEx";
-	monster "force_2-1",178,125,"Greatest General",1541,1,"force_06ex#60::OnMobEx";
-	monster "force_2-1",169,120,"Greatest General",1541,1,"force_06ex#60::OnMobEx";
-	monster "force_2-1",178,120,"Greatest General",1541,1,"force_06ex#60::OnMobEx";
-	monster "force_2-1",169,115,"Greatest General",1541,1,"force_06ex#60::OnMobEx";
-	monster "force_2-1",178,115,"Greatest General",1541,1,"force_06ex#60::OnMobEx";
-	monster "force_2-1",169,110,"Greatest General",1541,1,"force_06ex#60::OnMobEx";
-	monster "force_2-1",178,110,"Greatest General",1541,1,"force_06ex#60::OnMobEx";
-	monster "force_2-1",169,105,"Greatest General",1541,1,"force_06ex#60::OnMobEx";
-	monster "force_2-1",178,105,"Greatest General",1541,1,"force_06ex#60::OnMobEx";
-	monster "force_2-1",169,100,"Greatest General",1541,1,"force_06ex#60::OnMobEx";
-	monster "force_2-1",178,100,"Greatest General",1541,1,"force_06ex#60::OnMobEx";
-	monster "force_2-1",169,95,"Greatest General",1541,1,"force_06ex#60::OnMobEx";
-	monster "force_2-1",178,95,"Greatest General",1541,1,"force_06ex#60::OnMobEx";
-	monster "force_2-1",169,90,"Greatest General",1541,1,"force_06ex#60::OnMobEx";
-	monster "force_2-1",178,90,"Greatest General",1541,1,"force_06ex#60::OnMobEx";
-	monster "force_2-1",169,85,"Greatest General",1541,1,"force_06ex#60::OnMobEx";
-	monster "force_2-1",178,85,"Greatest General",1541,1,"force_06ex#60::OnMobEx";
-	monster "force_2-1",169,80,"Greatest General",1541,1,"force_06ex#60::OnMobEx";
-	monster "force_2-1",178,80,"Greatest General",1541,1,"force_06ex#60::OnMobEx";
-	monster "force_2-1",169,75,"Greatest General",1541,1,"force_06ex#60::OnMobEx";
-	monster "force_2-1",178,75,"Greatest General",1541,1,"force_06ex#60::OnMobEx";
+	monster "force_2-1",169,130,"Greatest General",1541,1,"force_06ex#60::OnMyMobDead";
+	monster "force_2-1",178,130,"Greatest General",1541,1,"force_06ex#60::OnMyMobDead";
+	monster "force_2-1",169,125,"Greatest General",1541,1,"force_06ex#60::OnMyMobDead";
+	monster "force_2-1",178,125,"Greatest General",1541,1,"force_06ex#60::OnMyMobDead";
+	monster "force_2-1",169,120,"Greatest General",1541,1,"force_06ex#60::OnMyMobDead";
+	monster "force_2-1",178,120,"Greatest General",1541,1,"force_06ex#60::OnMyMobDead";
+	monster "force_2-1",169,115,"Greatest General",1541,1,"force_06ex#60::OnMyMobDead";
+	monster "force_2-1",178,115,"Greatest General",1541,1,"force_06ex#60::OnMyMobDead";
+	monster "force_2-1",169,110,"Greatest General",1541,1,"force_06ex#60::OnMyMobDead";
+	monster "force_2-1",178,110,"Greatest General",1541,1,"force_06ex#60::OnMyMobDead";
+	monster "force_2-1",169,105,"Greatest General",1541,1,"force_06ex#60::OnMyMobDead";
+	monster "force_2-1",178,105,"Greatest General",1541,1,"force_06ex#60::OnMyMobDead";
+	monster "force_2-1",169,100,"Greatest General",1541,1,"force_06ex#60::OnMyMobDead";
+	monster "force_2-1",178,100,"Greatest General",1541,1,"force_06ex#60::OnMyMobDead";
+	monster "force_2-1",169,95,"Greatest General",1541,1,"force_06ex#60::OnMyMobDead";
+	monster "force_2-1",178,95,"Greatest General",1541,1,"force_06ex#60::OnMyMobDead";
+	monster "force_2-1",169,90,"Greatest General",1541,1,"force_06ex#60::OnMyMobDead";
+	monster "force_2-1",178,90,"Greatest General",1541,1,"force_06ex#60::OnMyMobDead";
+	monster "force_2-1",169,85,"Greatest General",1541,1,"force_06ex#60::OnMyMobDead";
+	monster "force_2-1",178,85,"Greatest General",1541,1,"force_06ex#60::OnMyMobDead";
+	monster "force_2-1",169,80,"Greatest General",1541,1,"force_06ex#60::OnMyMobDead";
+	monster "force_2-1",178,80,"Greatest General",1541,1,"force_06ex#60::OnMyMobDead";
+	monster "force_2-1",169,75,"Greatest General",1541,1,"force_06ex#60::OnMyMobDead";
+	monster "force_2-1",178,75,"Greatest General",1541,1,"force_06ex#60::OnMyMobDead";
 	end;
 
-Onsubon:
-	set $@randmonster60,rand(1,3);
-	switch($@randmonster60) {
+OnSubOn:
+	switch(rand(1,3)) {
 	case 1:
-		monster "force_2-1",rand(170,177),rand(70,120),"Sidewinder",1424,1,"force_06ex#60::OnMobEx";
+		monster "force_2-1",rand(170,177),rand(70,120),"Sidewinder",1424,1,"force_06ex#60::OnMyMobDead";
 		break;
 	case 2:
-		monster "force_2-1",rand(170,177),rand(70,120),"Hermit Plant",1565,1,"force_06ex#60::OnMobEx";
+		monster "force_2-1",rand(170,177),rand(70,120),"Hermit Plant",1565,1,"force_06ex#60::OnMyMobDead";
 		break;
 	case 3:
-		monster "force_2-1",rand(170,177),rand(70,120),"Cruiser",1443,1,"force_06ex#60::OnMobEx";
+		monster "force_2-1",rand(170,177),rand(70,120),"Cruiser",1443,1,"force_06ex#60::OnMyMobDead";
 		break;
 	}
 	end;
 
-OnMobEx:
+OnMyMobDead:
 	end;
 }
 
 -	script	force_06mob#60	-1,{
-
 OnReset:
-	killmonster "force_2-1","force_06mob#60::OnMobDeath";
+	killmonster "force_2-1","force_06mob#60::OnMyMobDead";
 	end;
 
 OnEnable:
 	donpcevent "force_06ex#60::OnEnable";
-	monster "force_2-1",174,100,"Miyabi Doll",1552,1,"force_06mob#60::OnMobDeath";
-	monster "force_2-1",174,80,"Miyabi Doll",1552,1,"force_06mob#60::OnMobDeath";
-	set $force_06_60,2;
+	monster "force_2-1",174,100,"Miyabi Doll",1552,1,"force_06mob#60::OnMyMobDead";
+	monster "force_2-1",174,80,"Miyabi Doll",1552,1,"force_06mob#60::OnMyMobDead";
 	end;
 
-OnMobDeath:
-	set $force_06_60,$force_06_60 -1;
-	if ($force_06_60 < 1) {
-		set door, 1;
+OnMyMobDead:
+	if (mobcount("force_2-1","force_06mob#60::OnMyMobDead") < 1) {
 		donpcevent "Minilover#arena::On06_End";
 		donpcevent "arena#60::OnReset_06";
 	}
-	else donpcevent "force_06ex#60::Onsubon";
+	else donpcevent "force_06ex#60::OnSubOn";
 	end;
 }
 
 -	script	force_07start#60	-1,{
-
 OnEnable:
 	donpcevent "force_07mob#60::OnEnable";
 	end;
 }
 
 -	script	force_07mob#60	-1,{
-
 OnReset:
-	killmonster "force_2-1","force_07mob#60::OnMobDeath";
+	killmonster "force_2-1","force_07mob#60::OnMyMobDead";
 	end;
 
 OnEnable:
-	monster "force_2-1",170,25,"Jakk",1436,1,"force_07mob#60::OnMobDeath";
-	monster "force_2-1",170,25,"Jakk",1436,1,"force_07mob#60::OnMobDeath";
-	monster "force_2-1",175,25,"Myst",1553,1,"force_07mob#60::OnMobDeath";
-	monster "force_2-1",179,25,"Isis",1421,1,"force_07mob#60::OnMobDeath";
-	set $force_07_50,4;
+	monster "force_2-1",170,25,"Jakk",1436,1,"force_07mob#60::OnMyMobDead";
+	monster "force_2-1",170,25,"Jakk",1436,1,"force_07mob#60::OnMyMobDead";
+	monster "force_2-1",175,25,"Myst",1553,1,"force_07mob#60::OnMyMobDead";
+	monster "force_2-1",179,25,"Isis",1421,1,"force_07mob#60::OnMyMobDead";
 	end;
 
-OnMobDeath:
-	set $force_07_50,$force_07_50 -1;
-	if ($force_07_50 < 1) {
+OnMyMobDead:
+	if (mobcount("force_2-1","force_07mob#60::OnMyMobDead") < 1) {
 		donpcevent "Minilover#arena::On07_End";
 		donpcevent "arena#60::OnReset_07";
 	}
@@ -770,80 +716,73 @@ OnMobDeath:
 }
 
 -	script	force_08start#60	-1,{
-
 OnEnable:
 	donpcevent "force_08ex#60::OnEnable";
 	end;
 }
 
 -	script	force_08ex#60	-1,{
-
 OnEnable:
 	donpcevent "arena#60::OnReset_08";
 	end;
 }
 
 -	script	force_09start#60	-1,{
-
 OnEnable:
 	donpcevent "force_09mob#60::OnEnable";
 	end;
 }
 
 -	script	force_09ex#60	-1,{
-
 OnReset:
-	killmonster "force_2-1","force_09ex#60::OnMobEx";
+	killmonster "force_2-1","force_09ex#60::OnMyMobDead";
 	end;
 
 OnSummonMob_09:
-	monster "force_2-1",90,100,"Horong",1578,1,"force_09ex#60::OnMobEx";
-	monster "force_2-1",92,100,"Horong",1578,1,"force_09ex#60::OnMobEx";
-	monster "force_2-1",99,100,"Horong",1578,1,"force_09ex#60::OnMobEx";
-	monster "force_2-1",105,100,"Horong",1578,1,"force_09ex#60::OnMobEx";
-	monster "force_2-1",91,108,"Greatest General",1541,1,"force_09ex#60::OnMobEx";
-	monster "force_2-1",91,104,"Greatest General",1541,1,"force_09ex#60::OnMobEx";
-	monster "force_2-1",91,100,"Greatest General",1541,1,"force_09ex#60::OnMobEx";
-	monster "force_2-1",91,96,"Greatest General",1541,1,"force_09ex#60::OnMobEx";
-	monster "force_2-1",91,92,"Greatest General",1541,1,"force_09ex#60::OnMobEx";
-	monster "force_2-1",95,108,"Greatest General",1541,1,"force_09ex#60::OnMobEx";
-	monster "force_2-1",99,108,"Greatest General",1541,1,"force_09ex#60::OnMobEx";
-	monster "force_2-1",100,108,"Greatest General",1541,1,"force_09ex#60::OnMobEx";
-	monster "force_2-1",104,108,"Greatest General",1541,1,"force_09ex#60::OnMobEx";
-	monster "force_2-1",108,108,"Greatest General",1541,1,"force_09ex#60::OnMobEx";
-	monster "force_2-1",108,104,"Greatest General",1541,1,"force_09ex#60::OnMobEx";
-	monster "force_2-1",108,100,"Greatest General",1541,1,"force_09ex#60::OnMobEx";
-	monster "force_2-1",108,96,"Greatest General",1541,1,"force_09ex#60::OnMobEx";
-	monster "force_2-1",108,92,"Greatest General",1541,1,"force_09ex#60::OnMobEx";
-	monster "force_2-1",104,102,"Greatest General",1541,1,"force_09ex#60::OnMobEx";
-	monster "force_2-1",196,102,"Greatest General",1541,1,"force_09ex#60::OnMobEx";
-	monster "force_2-1",114,100,"Greatest General",1541,1,"force_09ex#60::OnMobEx";
-	monster "force_2-1",121,100,"Greatest General",1541,1,"force_09ex#60::OnMobEx";
-	monster "force_2-1",85,100,"Greatest General",1541,1,"force_09ex#60::OnMobEx";
-	monster "force_2-1",78,100,"Greatest General",1541,1,"force_09ex#60::OnMobEx";
-	monster "force_2-1",96,118,"Greatest General",1541,1,"force_09ex#60::OnMobEx";
-	monster "force_2-1",103,118,"Greatest General",1541,1,"force_09ex#60::OnMobEx";
+	monster "force_2-1",90,100,"Horong",1578,1,"force_09ex#60::OnMyMobDead";
+	monster "force_2-1",92,100,"Horong",1578,1,"force_09ex#60::OnMyMobDead";
+	monster "force_2-1",99,100,"Horong",1578,1,"force_09ex#60::OnMyMobDead";
+	monster "force_2-1",105,100,"Horong",1578,1,"force_09ex#60::OnMyMobDead";
+	monster "force_2-1",91,108,"Greatest General",1541,1,"force_09ex#60::OnMyMobDead";
+	monster "force_2-1",91,104,"Greatest General",1541,1,"force_09ex#60::OnMyMobDead";
+	monster "force_2-1",91,100,"Greatest General",1541,1,"force_09ex#60::OnMyMobDead";
+	monster "force_2-1",91,96,"Greatest General",1541,1,"force_09ex#60::OnMyMobDead";
+	monster "force_2-1",91,92,"Greatest General",1541,1,"force_09ex#60::OnMyMobDead";
+	monster "force_2-1",95,108,"Greatest General",1541,1,"force_09ex#60::OnMyMobDead";
+	monster "force_2-1",99,108,"Greatest General",1541,1,"force_09ex#60::OnMyMobDead";
+	monster "force_2-1",100,108,"Greatest General",1541,1,"force_09ex#60::OnMyMobDead";
+	monster "force_2-1",104,108,"Greatest General",1541,1,"force_09ex#60::OnMyMobDead";
+	monster "force_2-1",108,108,"Greatest General",1541,1,"force_09ex#60::OnMyMobDead";
+	monster "force_2-1",108,104,"Greatest General",1541,1,"force_09ex#60::OnMyMobDead";
+	monster "force_2-1",108,100,"Greatest General",1541,1,"force_09ex#60::OnMyMobDead";
+	monster "force_2-1",108,96,"Greatest General",1541,1,"force_09ex#60::OnMyMobDead";
+	monster "force_2-1",108,92,"Greatest General",1541,1,"force_09ex#60::OnMyMobDead";
+	monster "force_2-1",104,102,"Greatest General",1541,1,"force_09ex#60::OnMyMobDead";
+	monster "force_2-1",196,102,"Greatest General",1541,1,"force_09ex#60::OnMyMobDead";
+	monster "force_2-1",114,100,"Greatest General",1541,1,"force_09ex#60::OnMyMobDead";
+	monster "force_2-1",121,100,"Greatest General",1541,1,"force_09ex#60::OnMyMobDead";
+	monster "force_2-1",85,100,"Greatest General",1541,1,"force_09ex#60::OnMyMobDead";
+	monster "force_2-1",78,100,"Greatest General",1541,1,"force_09ex#60::OnMyMobDead";
+	monster "force_2-1",96,118,"Greatest General",1541,1,"force_09ex#60::OnMyMobDead";
+	monster "force_2-1",103,118,"Greatest General",1541,1,"force_09ex#60::OnMyMobDead";
 	end;
 
-OnMobEx:
+OnMyMobDead:
 	end;
 }
 
 -	script	force_09mob#60	-1,{
-
 OnEnable:
 	donpcevent "force_09ex#60::OnSummonMob_09";
-	monster "force_2-1",99,99,"Goblin Leader",1539,1,"force_09mob#60::OnMobDeath";
-	set $force_09_60,1;
+	monster "force_2-1",99,99,"Goblin Leader",1539,1,"force_09mob#60::OnMyMobDead";
 	end;
 
 OnReset:
-	killmonster "force_2-1","force_09mob#60::OnMobDeath";
+	killmonster "force_2-1","force_09mob#60::OnMyMobDead";
 	end;
 
-OnMobDeath:
-	set $force_09_60,$force_09_60 -1;
-	if ($force_09_60 < 1) {
+OnMyMobDead:
+	if (mobcount("force_2-1","force_09mob#60::OnMyMobDead") < 1) {
 		donpcevent "Minilover#arena::On09_End";
 		donpcevent "arena#60::OnReset_09";
 		donpcevent "arena#60::OnReset_All";
@@ -854,7 +793,6 @@ OnMobDeath:
 }
 
 prt_are_in,129,135,3	script	Staff#60-1	67,{
-
 	mes "[Staff]";
 	mes "You did a good job.";
 	mes "Even if you have failed to clear a time attack battle, I will reward you with a small amount of arena points.";
@@ -876,29 +814,19 @@ prt_are_in,129,135,3	script	Staff#60-1	67,{
 }
 
 prt_are_in,25,135,3	script	Staff#60-2	67,{
-
-	if($arena_min60end < $arena_min60st)
-	{
-		if($arena_sec60end < $arena_sec60st)
-		{
+	if($arena_min60end < $arena_min60st) {
+		if($arena_sec60end < $arena_sec60st) {
 			set @record_min60,60 - $arena_min60st + $arena_min60end -1;
 			set @record_sec60,60 - $arena_sec60st + $arena_sec60end;
-		}
-		else
-		{
+		} else {
 			set @record_min60,60 - $arena_min60st + $arena_min60end;
 			set @record_sec60,$arena_sec60end - $arena_sec60st;
 		}
-	}
-	else
-	{
-		if($arena_sec60end < $arena_sec60st)
-		{
+	} else {
+		if($arena_sec60end < $arena_sec60st) {
 			set @record_min60,$arena_min60end - $arena_min60st -1;
 			set @record_sec60,60 - $arena_sec60st + $arena_sec60end;
-		}
-		else
-		{
+		} else {
 			set @record_min60,$arena_min60end - $arena_min60st;
 			set @record_sec60,$arena_sec60end - $arena_sec60st;
 		}
@@ -935,9 +863,7 @@ prt_are_in,25,135,3	script	Staff#60-2	67,{
 			mes "I hope you had a good time and let me guide you to the entrance of arena.";
 			mes "Thank you.";
 			close2;
-		}
-		else
-		{
+		} else {
 			set arena_point, arena_point + 20;
 			mes "[Staff]";
 			mes "Let me reward you some arena points.";
@@ -955,9 +881,7 @@ prt_are_in,25,135,3	script	Staff#60-2	67,{
 		donpcevent "alloff#60::OnEnable";
 		donpcevent "Lv60 Waiting Room::OnStart";
 		end;
-	}
-	else
-	{
+	} else {
 		emotion e_omg;
 		mes "[Staff]";
 		mes "Wow! You have renewed the record!";
@@ -982,9 +906,7 @@ prt_are_in,25,135,3	script	Staff#60-2	67,{
 			mes "I hope you had a good time and let me guide you to the entrance of arena.";
 			mes "Thank you.";
 			close2;
-		}
-		else
-		{
+		} else {
 			mes "[Staff]";
 			mes "Let me reward you with some arena points.";
 			mes "At the same time, since you have renewed the record you will receive an extra amount of the points this time.";
@@ -1007,11 +929,9 @@ prt_are_in,25,135,3	script	Staff#60-2	67,{
 		donpcevent "Lv60 Waiting Room::OnStart";
 		end;
 	}
-
 }
 
 -	script	#arn_timer_60	-1,{
-
 OnEnable:
 	initnpctimer;
 	end;
@@ -1030,7 +950,7 @@ OnTimer4000:
 
 OnTimer60000:
  	donpcevent "cast#60::OnTimeOver2";
-	donpcevent "arn_warp_60::Onout";
+	donpcevent "arn_warp_60::OnOut";
 	donpcevent "#arn_timer_60::OnStop";
 	donpcevent "alloff#60::OnEnable";
 	donpcevent "Lv60 Waiting Room::OnStart";
@@ -1042,14 +962,12 @@ OnStop:
 }
 
 -	script	arn_warp_60	-1,{
-
-Onout:
+OnOut:
 	areawarp "prt_are_in",14,143,29,126,"arena_room",100,75;
 	end;
 }
 
 -	script	cast#60	-1,{
-
 OnTimeOver1:
 	mapannounce "force_2-1","Arena will be reactivated due to an error occurred during battle.",0,0xFFCE00;
 	end;
@@ -1068,7 +986,6 @@ OnTimeOver2:
 }
 
 -	script	alloff#60	-1,{
-
 OnEnable:
 	mapwarp "force_2-1","prt_are_in",126,139,0,0;
 	donpcevent "force_01mob#60::OnReset";
@@ -1078,14 +995,14 @@ OnEnable:
 	donpcevent "force_05mob#60::OnReset";
 	donpcevent "force_06mob#60::OnReset";
 	donpcevent "force_07mob#60::OnReset";
-	donpcevent "force_08mob#60::OnReset";
+	//donpcevent "force_08mob#60::OnReset";
 	donpcevent "force_09mob#60::OnReset";
 	donpcevent "force_01ex#60::OnReset";
 	donpcevent "force_03ex#60::OnReset";
 	donpcevent "force_04ex#60::OnReset";
 	donpcevent "force_05ex#60::OnReset";
 	donpcevent "force_06ex#60::OnReset";
-	donpcevent "force_08ex#60::OnReset";
+	//donpcevent "force_08ex#60::OnReset";
 	donpcevent "force_09ex#60::OnReset";
 	donpcevent "Minilover#arena::OnTimerOff";
 	disablenpc "Minilover#arena";
@@ -1107,5 +1024,4 @@ OnEnable:
 OnInit:
 	if(!$top_60min && !$top_60sec) set $top_60min,6;
 	end;
-
 }
