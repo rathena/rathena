@@ -1055,7 +1055,7 @@
 3009,9:10:11:12:13,8,2,-1,0x2,3,5,2,no,0,0,0,weapon,0,	KO_HUUMARANKA,Huuma Shuriken Ranka 
 3010,3,6,4,0,0x43,0,5,1,no,0,0x80,0,misc,0,	KO_MAKIBISHI,Makibishi
 3011,0,6,4,0,0x1,0,5,0,yes,0,0,0,none,0,	KO_MEIKYOUSISUI,Meikyo Shisui
-3012,0,6,4,0,0x1,0,5,0,no,0,0,1,none,7,		KO_ZANZOU,Zanzou
+3012,0,6,4,0,0x1,0,5,0,no,0,0,1,none,7,		KO_ZANZOU,Zanzou	//KO_KAGE
 3013,5,6,1,0,0x1,0,5,0,no,0,0,0,none,0,		KO_KYOUGAKU,Kyougaku
 3014,5,6,1,0,0x1,0,5,0,no,0,0,0,none,0,		KO_JYUSATSU,Jyusatsu
 3015,0,6,4,3,0x1,0,1,1,no,0,0,0,none,0,		KO_KAHU_ENTEN,Kahu Enten
