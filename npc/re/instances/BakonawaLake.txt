@@ -460,9 +460,9 @@ OnMobSpawn:
 		mes "[Taho]";
 		mes "This was found from Bakonawa's corpse. It would be better if you take this.";
 //		if (IsPremiumPcCafe == 10)
-//			getitem 6499,7; //Ancient_Grudge
+			getitem 6499,7; //Ancient_Grudge
 //		else
-			getitem 6499,5; //Ancient_Grudge
+//			getitem 6499,5; //Ancient_Grudge
 		getexp 0,100000;
 		next;
 	}
