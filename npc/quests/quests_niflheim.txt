@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= The rAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= rAthena 7.15 +
 //===== Description: ========================================= 
@@ -26,6 +26,7 @@
 //= 1.4 Fixed NPCs using ID 111 when it shoudl have been 139. [L0ne_W0lf]
 //= 1.5 Swapped NPC IDs back from last change (139 back to 111). [L0ne_W0lf]
 //=     Clicking will do nothing, you have to still "touch" the npc. 
+//= 1.6 Added questlog support. [Euphy]
 //============================================================ 
 
 // Piano Quest
@@ -355,6 +356,7 @@ prt_in,161,20,3	script	Erious#nif	92,{
 				mes "Thank you for your help,";
 				mes "and please take care.";
 				set nif_revive,1;
+				setquest 11038;
 				close;
 			}
 			mes "[Erious]";
@@ -434,6 +436,7 @@ prt_in,161,20,3	script	Erious#nif	92,{
 				if (checkweight(610,26)) {
 					set MISC_QUEST,MISC_QUEST | 16384;
 					set nif_revive,0;
+					completequest 11043;
 					getitem 607,2; //Yggdrasilberry
 					getitem 608,2; //Seed_Of_Yggdrasil
 					getitem 610,10; //Leaf_Of_Yggdrasil
@@ -478,6 +481,7 @@ prt_in,161,20,3	script	Erious#nif	92,{
 			if (checkweight(610,10)) {
 				set MISC_QUEST,MISC_QUEST | 16384;
 				set nif_revive,0;
+				completequest 11042;
 				getitem 610,10; //Leaf_Of_Yggdrasil
 				mes "[Erious]";
 				mes "Thank you for everything.";
@@ -541,6 +545,7 @@ umbala,215,181,3	script	Billik	733,{
 			mes "for him. That way, he'll know for";
 			mes "sure that I've sent you.";
 			set nif_revive,2;
+			changequest 11038,11039;
 			next;
 			mes "[Billik]";
 			mes "The town of the dead is located";
@@ -600,6 +605,7 @@ niflheim,153,215,3	script	Feylin	794,{
 		mes "you go back to where you came";
 		mes "from before it's too late.";
 		set nif_revive,3;
+		changequest 11039,11040;
 		close;
 	}
 	else if (nif_revive == 3) {
@@ -623,6 +629,7 @@ niflheim,153,215,3	script	Feylin	794,{
 			mes "you. Besides, speaking about";
 			mes "such things is taboo.";
 			set nif_revive,4;
+			changequest 11040,11041;
 			close;
 		}
 		mes "[Feylin]";
@@ -677,6 +684,7 @@ niflheim,153,215,3	script	Feylin	794,{
 								delitem 748,1; //Witherless_Rose
 								delitem 610,10; //Leaf_Of_Yggdrasil
 								set nif_revive,5;
+								changequest 11041,11042;
 								percentheal -99,0;
 								next;
 								mes "[Feylin]";
@@ -720,6 +728,7 @@ niflheim,153,215,3	script	Feylin	794,{
 								mes "with someone else. Oh, also let";
 								mes "him know that I forgive him.";
 								set nif_revive,6;
+								changequest 11040,11043;
 								getitem 934,1; //Mementos
 								next;
 								mes "[Elly]";

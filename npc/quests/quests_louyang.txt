@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera and The rAthena Dev Team
 //===== Current Version: ===================================== 
-//= 2.3
+//= 2.4
 //===== Compatible With: ===================================== 
 //= rAthena 1.0
 //===== Description: ========================================= 
@@ -34,6 +34,7 @@
 //= 2.1 Fixed guard tower warper ALWAYS warping. (bugreport:2377) [L0ne_W0lf]
 //= 2.2 Removed unused "name" variable. [L0ne_W0lf]
 //= 2.3 Updated RE/Pre-RE EXP. [Euphy]
+//= 2.4 Added questlog support. [Euphy]
 //============================================================ 
 
 // Soup Quest
@@ -1090,13 +1091,6 @@ louyang,174,150,5	script	Jiu Chi Ling#lou	815,{
 // Doctor Quest
 //============================================================
 lou_in02,265,69,5	script	Doctor#lyang	814,{
-	//Remove outdated variables and attempt to preserve prior quest progress.
-	if(QL_DOC1STTIME == 1 || QL_DOCQUEST == 1) set ch_par,2;
-	if (QL_DOCQUEST == 2) set ch_par,10;
-	if (QL_DOCQUEST == 3) set ch_par,17;
-	if (QL_GOTHERB) set ch_par,16;
-	set QL_DOC1STTIME,0; set QL_DOCQUEST,0; set QL_GOTHERB,0; set QL_BEENTOSTORAGE,0; set QL_GOTCOMPROP,0; set QL_TOOLMASTER,0;
-
 	if ((MaxWeight-Weight) < 2000 || checkweight(1201,1) == 0) {
 		mes "^3355FFWait a minute! Right now, you're over weight, so you cannot receive more items. Please store some of your things in Kafra Storage and try again.^000000";
 		close;
@@ -1202,6 +1196,7 @@ lou_in02,265,69,5	script	Doctor#lyang	814,{
 			mes "so much trouble, but if you'll excuse me, I have other patients waiting. Please hurry back with";
 			mes "the medicine!";
 			set ch_par,2;
+			setquest 11044;
 			close;
 		}
 		mes "[Hua Tuo]";
@@ -1291,6 +1286,7 @@ lou_in02,265,69,5	script	Doctor#lyang	814,{
 			mes "great, but it's an old family secret. I hope it will be useful to you if you find yourself in great danger.";
 			delitem 7252,1; //Herb_Medicine
 			set ch_par,10;
+			completequest 11056;
 			getitem 679,2; //Gold_Pill
 			getexp (checkre(3))?1000:10000,0;
 			next;
@@ -1330,6 +1326,7 @@ lou_in02,265,69,5	script	Doctor#lyang	814,{
 		mes "^3355FF10 Sprout^000000 and";
 		mes "^3355FF5 Honey Pot^000000.";
 		set ch_par,17;
+		changequest 11056,11057;
 		close;
 	}
 	else if (ch_par == 10) {
@@ -1408,6 +1405,7 @@ lou_in02,265,69,5	script	Doctor#lyang	814,{
 			mes "is an old family secret. I hope that it will be of use to you in dangerous situations.";
 			delitem 7252,1; //Herb_Medicine
 			set ch_par,10;
+			completequest 11056;
 			getitem 679,2; //Gold_Pill
 			getexp (checkre(3))?1000:10000,0;
 			next;
@@ -1462,6 +1460,7 @@ lou_in02,265,69,5	script	Doctor#lyang	814,{
 			delitem 7121,5; //Honey_Jar
 			delitem 7252,1; //Herb_Medicine
 			set ch_par,18;
+			completequest 11057;
 			getitem 679,5; //Gold_Pill
 			getexp (checkre(3))?10000:30000,0;
 			next;
@@ -1559,6 +1558,7 @@ lou_in02,248,166,2	script	Tool Shop Master#lou	824,{
 			mes "You can find the storage on";
 			mes "the opposite side of this building. There, you'll see a guy named Jiang Xiayou. Go ahead and ask him for the stuff you need.";
 			set ch_par,3;
+			changequest 11044,11045;
 			close;
 		}
 		mes "[Wang Chuiyi]";
@@ -1667,18 +1667,22 @@ lou_in02,201,166,4	script	Storage Keeper#lou	819,{
 				if (.@paper_j == 10) {
 					mes "When the guy asks what you need, you tell him: '^ff0000Residence Transfer Application^000000.' Just like that.";
 					set ch_par,5;
+					changequest 11045,11046;
 				}
 				else if (.@paper_j == 11) {
 					mes "When the guy asks what you need, you tell him: '^ff0000Summer SAT Class Application^000000.' Got it?";
 					set ch_par,6;
+					changequest 11045,11047;
 				}
 				else if (.@paper_j == 12) {
 					mes "When the guy asks what you need, you tell him: '^ff0000Sandy Dust Phenomenon Report^000000.' Easy, right?";
 					set ch_par,7;
+					changequest 11045,11048;
 				}
 				else if (.@paper_j == 13) {
 					mes "When the guy asks what you need, you tell him: '^ff0000Communication Proposal^000000.' Just like that?";
 					set ch_par,8;
+					changequest 11045,11049;
 				}
 				next;
 				mes "[Jiang Xiayou]";
@@ -1694,6 +1698,7 @@ lou_in02,201,166,4	script	Storage Keeper#lou	819,{
 			mes "The medicines you're looking for might be around here, so look around. If it weren't for the doctor, I wouldn't even let you hang around, you know that?";
 			emotion e_pif;
 			set ch_par,4;
+			changequest 11045,11050;
 			close;
 		}
 	}
@@ -1809,6 +1814,7 @@ lou_in02,201,166,4	script	Storage Keeper#lou	819,{
 		mes "Ah! Here you go. Even if it was kind of annoying to do, I guess";
 		mes "we gotta help each other, right? Alright then, I'll see ya around.";
 		set ch_par,16;
+		changequest 11055,11056;
 		getitem 7252,1; //Herb_Medicine
 		close;
 	}
@@ -1884,15 +1890,19 @@ lou_in02,210,47,0	script	City Hall Officer#lou	825,{
 					set zeny,zeny-.@input;
 					if (ch_par == 5) {
 						set ch_par,11;
+						changequest 11046,11051;
 					}
 					else if (ch_par == 6) {
 						set ch_par,12;
+						changequest 11047,11052;
 					}
 					else if (ch_par == 7) {
 						set ch_par,13;
+						changequest 11048,11053;
 					}
 					else if (ch_par == 8) {
 						set ch_par,14;
+						changequest 11049,11054;
 					}
 					close;
 				}
@@ -2118,6 +2128,11 @@ lou_in02,156,38,0	script	Studying Officer#lou	822,{
 			mes "Here it is. A few days ago, someone asked me for the same document,";
 			mes "so I was able to find it again pretty easily. I hope it's useful to you.";
 			set ch_par,15;
+			for(set .@i,11051; .@i<=11054; set .@i,.@i+1) {
+				if (checkquest(.@i) > -1 && checkquest(.@i < 2))
+					completequest .@i;
+			}
+			setquest 11055;
 			close;
 		}
 		mes "[Huang Zhishu]";
@@ -2158,6 +2173,7 @@ lou_in02,204,169,0	script	Supply Stack#1lou	111,{
 				mes "*Rummage rummage*";
 				mes "You found a medicine.^000000";
 				set ch_par,9;
+				changequest 11050,11056;
 				getitem 7252,1; //Herb_Medicine
 				next;
 				mes "[Jiang Xiayou]";
@@ -2208,6 +2224,7 @@ lou_in02,207,168,0	script	Supply Stack#5lou	111,{
 				mes "*Rummage rummage*";
 				mes "You found a medicine.^000000";
 				set ch_par,9;
+				changequest 11050,11056;
 				getitem 7252,1; //Herb_Medicine
 				next;
 				mes "[Jiang Xiayou]";
@@ -2260,6 +2277,7 @@ lou_in02,206,163,0	script	Supply Stack#4lou	111,{
 				mes "*Rummage rummage*";
 				mes "You found a medicine.^000000";
 				set ch_par,9;
+				changequest 11050,11056;
 				getitem 7252,1; //Herb_Medicine
 				next;
 				mes "[Jiang Xiayou]";
@@ -2312,6 +2330,7 @@ lou_in02,198,170,0	script	Supply Stack#3lou	111,{
 				mes "*Rummage rummage*";
 				mes "You found a medicine.^000000";
 				set ch_par,9;
+				changequest 11050,11056;
 				getitem 7252,1; //Herb_Medicine
 				next;
 				mes "[Jiang Xiayou]";
@@ -2364,6 +2383,7 @@ lou_in02,192,170,0	script	Supply Stack#2	111,{
 				mes "*Rummage rummage*";
 				mes "You found a medicine.^000000";
 				set ch_par,9;
+				changequest 11050,11056;
 				getitem 7252,1; //Herb_Medicine
 				next;
 				mes "[Jiang Xiayou]";
@@ -2902,6 +2922,7 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 					mes "Go find my last disciple,";
 					mes "^0000FFSong Zhi Du^000000, as he may tell you something useful. He's working at the doctor's office. If it weren't for him, I'd be starving now.";
 					set ch_poison,5;
+					setquest 11070;
 					close;
 				}
 				else {
@@ -3185,6 +3206,7 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 					mes "Will you excuse";
 					mes "me for a second...?";
 					set ch_poison,15;
+					changequest 11077,11078;
 					close;
 				}
 				mes "["+strcharinfo(0)+"]";
@@ -3270,6 +3292,7 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 		mes "as that of my disciple,";
 		mes "Louyang's leader must live...";
 		set ch_poison,16;
+		changequest 11078,11079;
 		close;
 	}
 	else if (ch_poison == 17) {
@@ -3300,6 +3323,7 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 		mes "^0000FFPoison King,";
 		mes "Nagash Arses' Jounal^000000.";
 		set ch_poison,18;
+		changequest 11080,11081;
 		close;
 	}
 	else if (ch_poison == 18) {
@@ -3341,6 +3365,7 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 		mes "^3355FFYou grow dizzy, but you also feel like you're becoming more powerful and gaining experience.^000000";
 		next;
 		set ch_poison,20;
+		changequest 11082,11083;
 		if (checkre(3)) {
 			if (BaseLevel < 56) getexp 1050,0;
 			else if (BaseLevel > 55 && BaseLevel < 61) getexp 1230,0;
@@ -3576,6 +3601,7 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 			mes "you were going to do.";
 			mes "I'm just disappointed...";
 			set ch_poison,6;
+			changequest 11070,11071;
 			close;
 		}
 		mes "[Song Zhi Du]";
@@ -3592,6 +3618,7 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 		mes "[Song Zhi Du]";
 		mes "Since my body is so frail, I can't bear the tension and rage of seeing my lifelong enemy face to face.";
 		set ch_poison,8;
+		changequest 11070,11073;
 		close;
 	}
 	else if (ch_par > 9 && ch_poison == 6) {
@@ -3620,6 +3647,7 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 			mes "10 Empty Potion,";
 			mes "30 Green Potion^000000.";
 			set ch_poison,7;
+			changequest 11071,11072;
 			next;
 			mes "[Song Zhi Du]";
 			mes "An apology is fine, but you must also show me that you are sorry and help me carry out my plan. Do you have any problem with this?";
@@ -3632,6 +3660,7 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 		specialeffect EF_ENDURE;
 		close2;
 		set ch_poison,6;
+		changequest 11070,11071;
 		end;
 	}
 	else if (ch_par > 9 && ch_poison == 7) {
@@ -3647,6 +3676,7 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 				delitem 1093,10; //Empty_Potion
 				delitem 506,30; //Green_Potion
 				set ch_poison,8;
+				changequest 11072,11073;
 				mes "[Song Zhi Du]";
 				mes "Ah...";
 				mes "With these, I accept your apology. Thank you for all the trouble you went through to get this stuff.";
@@ -3733,6 +3763,7 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 			mes "[Song Zhi Du]";
 			mes "No!! I failed again! ^666666*Sigh...*^000000 And I spent a long time preparing all of those materials...";
 			set ch_poison,10;
+			changequest 11074,11075;
 			close;
 		}
 		emotion e_gasp;
@@ -3918,6 +3949,7 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 		mes "Master, I did it!";
 		mes "Your disciple Song Zhi Du made the world's deadliest poison for you!";
 		set ch_poison,12;
+		changequest 11075,11076;
 		close;
 	}
 	else if (ch_par > 9 && ch_poison == 12) {
@@ -4050,6 +4082,7 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 		mes "take these, since I don't";
 		mes "need them any longer.";
 		set ch_poison,21;
+		completequest 11083;
 		getitem 678,5; //Poison_Bottle
 		next;
 		mes "[Song Zhi Du]";
@@ -4159,6 +4192,7 @@ lou_fild01,224,348,0	script	Lady#delivery	817,{
 					mes "Song Zhi Du.";
 					mes "Take care!";
 					set ch_poison,9;
+					changequest 11073,11074;
 					close;
 				}
 				mes "[Lady]";
@@ -4321,6 +4355,7 @@ lou_in01,107,163,0	script	 #lou_drink1	111,{
 		mes "^3355FFYou put the deadly poison into the bottle.^000000";
 		delitem 678,1; //Poison_Bottle
 		set ch_poison,13;
+		changequest 11076,11077;
 		close;
 	}
 	else if (ch_poison == 13) {
@@ -4333,6 +4368,7 @@ lou_in01,107,163,0	script	 #lou_drink1	111,{
 			delitem 938,1; //Sticky_Mucus
 			delitem 713,1; //Empty_Bottle
 			set ch_poison,17;
+			changequest 11079,11080;
 			close;
 		}
 		mes "^3355FFIt seems that you need switch Bai Long's drinking bottle with something else. Just taking the drink bottle would arouse suspicion.^000000";
@@ -4435,6 +4471,7 @@ lou_in01,99,158,4	script	Lord#bailong	821,{
 			mes "[Lord Bai Long]";
 			mes "Please, take this as a token of gratitute. And please deliver this letter to Nagash and Song Zhi Du for me.";
 			set ch_poison,19;
+			changequest 11081,11802;
 			getitem 603,1; //Old_Blue_Box
 			next;
 			mes "^3355FFYou obtained ^0000FFBai Long's letter^000000.";

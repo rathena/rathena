@@ -28,10 +28,10 @@ malangdo,213,167,4	script	Mayomayo#mal	555,{
 	mes "[Mayomayo]";
 	mes "Wow welcome. It is new Mayomayo refinement store~ I enchant some luxury weapons including level 4 weapons.";
 	next;
-	switch(select("Any store policy is changes?:Enhance high ranked weapons:Reset reinforcement capability")) {
+	switch(select("Any store policy changes?:Enchant High Ranked Weapon:Initialize Enchant (Need Silvervine Fruit)")) {
 	case 1:
 		mes "[Mayomayo]";
-		mes "When I enchanted weapons, the slotted cards or refined level sometimes dissipated. I hated it. However, one day I found how to do it without any extinction.";
+		mes "When I enchant weapons, the slotted cards or refined level are dissipated sometimes. I hated it. However, one day I found how to do it without any extinction.";
 		next;
 		mes "[Mayomayo]";
 		mes "Have you ever seen a building of person of reinforcement capacity association?";
@@ -42,7 +42,7 @@ malangdo,213,167,4	script	Mayomayo#mal	555,{
 			close;
 		}
 		mes "[Mayomayo]";
-		mes "If you go the place, there is someone who enchants the Archangel Wing. At that time that was amazing, because that was impossible ability by my own skill.";
+		mes "If you go to the place, there is someone who enchants the Archangel Wing. At that time that was amazing, because that was impossible ability by my own skill.";
 		next;
 		mes "[Mayomayo]";
 		mes "Every night I became his butler and did odd jobs. That is how I learned to enchant.";
@@ -305,7 +305,7 @@ malangdo,213,167,4	script	Mayomayo#mal	555,{
 	}
 	mes "[Mayomayo]";
 	if (@mal_enchant_select == 1)
-		mes "This is not suitable equipment for the enchant. Don't forget we only take care of high class weapons, including level 4 weapons~";
+		mes "This is not a suitable equipment for the enchant. Don't forget we only take care of high class weapons, including level 4 weapons~";
 	else
 		mes "This equipment can not be initialized. Don't forget we only handle some luxury weapons, including level 4 weapons~";
 	set @mal_equip_id,0;

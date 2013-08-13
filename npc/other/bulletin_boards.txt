@@ -1,11 +1,13 @@
 //===== rAthena Script =======================================
-//= Official scripts for beginners from iRO
+//= Bulletin Boards
 //===== By: ==================================================
 //= MasterOfMuppets
 //===== Current Version: =====================================
 //= 1.9
 //===== Compatible With: =====================================
 //= Any Athena Version
+//===== Description: ========================================= 
+//= Bulletin Boards for beginners.
 //===== Additional Comments: =================================
 //= 1.0 Added Alberta, Prontera, Izlude, Payon, Byalan Island,
 //=     Archer Village, Payon Cave and Coal Mine
@@ -167,7 +169,7 @@ prontera,148,49,5	script	Bulletin Board#09	837,{
 	mes "[Prontera: Capital of the]";
 	mes "[Rune-Midgards Kingdom]";
 	mes "From Prontera, ^5E5C69Izlude^000000 is located to the Southeast, ^1F3A11Payon^000000 to the far South, ^683C1FGeffen^000000 to the far West and ^2D3832Al De Baran^000000 to the far North.";
-	mes "Enjoy Your time in Prontera.";
+	mes "Enjoy your time in Prontera.";
 	close;
 }
 
@@ -450,7 +452,6 @@ moc_fild19,107,101,5	script	Bulletin Board#20	837,{
 }
 
 gef_tower,55,142,5	script	Bulletin Board#21	837,{
-
 	mes "[Geffen Dungeon]";
 	mes "^6B1312Caution!^000000"; 
 	mes "Geffen dungeon is consisted of 3 levels";
@@ -468,7 +469,6 @@ gef_tower,55,142,5	script	Bulletin Board#21	837,{
 }
 
 xmas_fild01,75,80,5	script	Bulletin Board#22	837,{
-
 	mes "[Winter Town, Lutie]";
 	mes "Welcome to Lutie, the town of snowfall.";
 	mes "Manufacturing toys in the toy factory is the main";
@@ -484,7 +484,6 @@ xmas_fild01,75,80,5	script	Bulletin Board#22	837,{
 }
 
 xmas,147,311,5	script	Bulletin Board#23	837,{
-
 	mes "[Toy Factory]";
 	mes "^6B1312Caution!^000000";
 	mes "Toy Factory is consisting of 2 levels.";
@@ -500,7 +499,6 @@ xmas,147,311,5	script	Bulletin Board#23	837,{
 }
 
 yuno_fild03,37,143,5	script	Bulletin Board#24	837,{
-
 	mes "[The Magma Dungeon, Nogg Road]";
 	mes "^6B1312Caution!^000000";
 	mes "Nogg Road is filled with very dangerous creatures.";
@@ -514,7 +512,6 @@ yuno_fild03,37,143,5	script	Bulletin Board#24	837,{
 }
 
 niflheim,200,191,5	script	Bulletin Board#25	837,{
-
 	mes "[City of the Dead, Nifflheim]";
 	mes "Welcome to Nifflheim, the City of the Dead.";
 	mes "Nifflheim was known as the other world where";
@@ -540,7 +537,6 @@ niflheim,200,191,5	script	Bulletin Board#25	837,{
 
 /*
 moc_fild15,267,264,5	script	Bulletin Board#26	837,{
-
 	mes "[Ant Hell]";
 	mes "^6B1312Caution!^000000";
 	mes "Ant Hell is consisting of 2 levels.";
@@ -557,7 +553,6 @@ moc_fild15,267,264,5	script	Bulletin Board#26	837,{
 */
 
 moc_ruins,61,164,5	script	Bulletin Board#27	837,{
-
 	mes "[Pyramids]";
 	mes "^6B1312Caution!^000000";
 	mes "Pyramids is consisting of total 7 levels as 4 levels on the earth and the rest under the ground.";
@@ -571,7 +566,6 @@ moc_ruins,61,164,5	script	Bulletin Board#27	837,{
 }
 
 glast_01,369,308,5	script	Bulletin Board#28	837,{
-
 	mes "[Glast Heim]";
 	mes "Glast Heim is an enormous dungeon with countless levels.";
 	mes "This dungeon is definately not for new or experienced adventurers";

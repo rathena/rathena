@@ -1,18 +1,20 @@
 //===== rAthena Script =======================================
-//= Official scripts for beginners from iRO
+//= Bulletin Boards
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
 //= 1.0
 //===== Compatible With: =====================================
 //= Any Athena Version
+//===== Description: ========================================= 
+//= Bulletin Boards for beginners.
 //===== Additional Comments: =================================
-//= 1.0 Moved Izlude NPCs to Pre-RE path.
+//= 1.0 Moved Izlude NPCs to Pre-RE/RE paths.
 //============================================================
 
 izlude,131,116,4	script	Bulletin Board#5	837,{
 	mes "[Izlude: The Satellite City]";
-	mes "Welcome to Izlude, the satellite of Prontera. Izlude was built to support Prontera's defense and to accommodate its burgeoning population";
+	mes "Welcome to Izlude, the satellite of Prontera. Izlude was built to support Prontera's defense and to accommodate its burgeoning population.";
 	next;
 	mes "[Izlude: The Satellite City]";
 	mes "Points of interest include the Swordsman Association building which allows adventurers to change their job to Swordsman, and the Battle Area that is North of Izlude.";

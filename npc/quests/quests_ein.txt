@@ -5969,6 +5969,7 @@ ein_in01,31,138,3	script	Calla#ein	90,{
 		mes "I'll always pray for";
 		mes "your safety on your";
 		mes "your adventures~";
+		completequest 8088;
 		close;
 	}
 	if ((EIN_LOVERQ == 5) && (countitem(712) > 0)) {
@@ -6008,6 +6009,7 @@ ein_in01,31,138,3	script	Calla#ein	90,{
 			mes "^333333*Sob Sob...*^000000";
 			delitem 712,1; //Flower
 			set EIN_LOVERQ,6;
+			changequest 8079,808;
 			close;
 		}
 		else {
@@ -6041,6 +6043,7 @@ ein_in01,31,138,3	script	Calla#ein	90,{
 		mes "this time? Thank you";
 		mes "for your help~";
 		set EIN_LOVERQ,3;
+		changequest 8078,8077;
 		getitem 1901,1; //Violin
 		close;
 	}
@@ -6083,6 +6086,7 @@ ein_in01,31,138,3	script	Calla#ein	90,{
 		mes "all the time...";
 		next;
 		set EIN_LOVERQ,3;
+		changequest 8076,8077;
 		getitem 1901,1; //Violin
 		mes "[Calla]";
 		mes "I'm sorry to trouble you,";
@@ -6173,6 +6177,7 @@ ein_in01,200,101,5	script	Klitzer#ein	854,{
 			mes "even be useful to you later~";
 			delitem 7170,1; //Tuxedo
 			set EIN_LOVERQ,16;
+			changequest 8087,8088;
 			switch(rand(1,7)) {
 			case 1:
 				getitem 7289,1; //Olivine
@@ -6270,6 +6275,7 @@ ein_in01,200,101,5	script	Klitzer#ein	854,{
 		mes "W-what should I do?";
 		next;
 		set EIN_LOVERQ,14;
+		changequest 8085,8086;
 		mes "[Klitzer]";
 		mes "This monkey suit";
 		mes "that I've got on just";
@@ -6318,6 +6324,7 @@ ein_in01,200,101,5	script	Klitzer#ein	854,{
 			mes "my regards if you help me.";
 			next;
 			set EIN_LOVERQ,7;
+			changequest 8080,8081;
 			mes "[Klitzer]";
 			mes "I feel so much";
 			mes "better now. Oh!";
@@ -6410,6 +6417,7 @@ ein_in01,200,101,5	script	Klitzer#ein	854,{
 		percentheal 100,0;
 		delitem 1901,1; //Violin
 		set EIN_LOVERQ,5;
+		changequest 8077,8079;
 		if (checkre(3)) {
 			if (BaseLevel < 41) getexp 61,0;
 			else if (BaseLevel < 61) getexp 600,0;
@@ -6472,6 +6480,7 @@ ein_in01,200,101,5	script	Klitzer#ein	854,{
 		mes "give anything to see her...";
 		next;
 		set EIN_LOVERQ,2;
+		setquest 8076;
 		mes "[Klitzer]";
 		mes "Just...";
 		mes "Just don't listen";
@@ -6550,6 +6559,7 @@ OnTouch:
 		mes "wakes up, it won't be today!";
 		delitem 1901,1; //Violin
 		set EIN_LOVERQ,4;
+		changequest 8077,8078;
 		percentheal -90,0;
 		close2;
 		warp "einbroch",112,245;
@@ -6664,6 +6674,7 @@ ein_in01,31,151,3	script	Satra#ein	850,{
 			next;
 			delitem 1003,10; //Coal
 			set EIN_LOVERQ,13;
+			changequest 8084,8085;
 			mes "[Satra]";
 			mes "Anyway, when you next";
 			mes "meet Klitzer, please tell";
@@ -6889,6 +6900,7 @@ ein_in01,31,151,3	script	Satra#ein	850,{
 		next;
 		delitem 1003,10; //Coal
 		set EIN_LOVERQ,10;
+		changequest 8083,8084;
 		mes "[Satra]";
 		mes "Well, I shall try to";
 		mes "find some use for these.";
@@ -7039,6 +7051,7 @@ ein_in01,31,151,3	script	Satra#ein	850,{
 		mes "this kind of task will require";
 		mes "some effort on your part.";
 		set EIN_LOVERQ,9;
+		changequest 8082,8083;
 		next;
 		mes "[Satra]";
 		mes "Tah tah,";
@@ -7113,6 +7126,7 @@ ein_in01,191,102,5	script	Kaijeta#ein	846,{
 		mes "He gets so nervous about it!";
 		next;
 		set EIN_LOVERQ,15;
+		changequest 8086,8087;
 		mes "[Kaijeta]";
 		mes "A man should wear nice";
 		mes "clothes, like a Formal Suit";
@@ -7127,6 +7141,7 @@ ein_in01,191,102,5	script	Kaijeta#ein	846,{
 		mes "petty hatred between our";
 		mes "two towns stop my son from";
 		mes "seeing the woman he loves...";
+		changequest 8081,8082;
 		close;
 	}
 	if (EIN_LOVERQ == 7) {

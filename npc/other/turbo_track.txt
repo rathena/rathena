@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Joseph
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -15,6 +15,7 @@
 //= 0.x Previous authors: L0ne_W0lf, Kisuka, Elias
 //= 1.0 Merged Turbo Track. [Joseph]
 //= 1.1 Updated RE/Pre-RE EXP. [Euphy]
+//= 1.2 Added Renewal features. [Euphy]
 //============================================================
 
 function	script	F_tt	{
@@ -1924,8 +1925,10 @@ OnTouch:
 	set .@w$,callfunc("F_tt");
 	if (.@w$ == "n1") set $@end_time,gettimetick(0);
 	mapannounce strnpcinfo(4),strcharinfo(0) +" has just arrived at the Finish Line! Congratulations!",bc_map,"0xFFFF00";
-	if (.@w$ != "n1") setd "$ttnames$["+GetNumber(.@w$)+"]",strcharinfo(0);
-	donpcevent "TBT_Guide#Broadcast::Onwin_"+.@w$;
+	if (.@w$ != "n1") {
+		setd "$ttnames$["+GetNumber(.@w$)+"]",strcharinfo(0);
+		donpcevent "Turbo Track Guide::OnWin_"+.@w$;
+	}
 	warp strnpcinfo(4),384,161;
 	if (.@w$ == "e4" || .@w$ == "n4" || .@w$ == "n1") {
 		if (.@w$ == "e4") {
@@ -2098,7 +2101,7 @@ turbo_n_1,114,190,0	duplicate(Flasher#tt_main)	Flasher_Exit_2#n1	45,1,1
 			mes "You are ranked as";
 			mes "the top player for";
 			mes "winning the most games!";
-			donpcevent "TBT_Guide#Broadcast::Onnew_top1";
+			donpcevent "Turbo Track Guide::OnNew_Top1";
 			if (tt_rank == 29999) {
 				if ($ttnames$[7] == "Breezy Havana") {
 					set $ttnames$[7],strcharinfo(0);
@@ -2122,7 +2125,7 @@ turbo_n_1,114,190,0	duplicate(Flasher#tt_main)	Flasher_Exit_2#n1	45,1,1
 			mes "You've ranked Second";
 			mes "among the Top Five Players";
 			mes "who've won the most games!";
-			donpcevent "TBT_Guide#Broadcast::Onnew_top2";
+			donpcevent "Turbo Track Guide::OnNew_Top2";
 			if (tt_rank == 29999) {
 				if ($ttnames$[7] == "Breezy Havana") {
 					set $ttnames$[7],strcharinfo(0);
@@ -2146,7 +2149,7 @@ turbo_n_1,114,190,0	duplicate(Flasher#tt_main)	Flasher_Exit_2#n1	45,1,1
 			mes "You've ranked Third";
 			mes "among the Top Five Players";
 			mes "who've won the most games!";
-			donpcevent "TBT_Guide#Broadcast::Onnew_top3";
+			donpcevent "Turbo Track Guide::OnNew_Top3";
 			if (tt_rank == 29999) {
 				if ($ttnames$[7] == "Breezy Havana") {
 					set $ttnames$[7],strcharinfo(0);
@@ -2170,7 +2173,7 @@ turbo_n_1,114,190,0	duplicate(Flasher#tt_main)	Flasher_Exit_2#n1	45,1,1
 			mes "You've ranked Fourth";
 			mes "among the Top Five Players";
 			mes "who've won the most games!";
-			donpcevent "TBT_Guide#Broadcast::Onnew_top4";
+			donpcevent "Turbo Track Guide::OnNew_Top4";
 			if (tt_rank == 29999) {
 				if ($ttnames$[7] == "Breezy Havana") {
 					set $ttnames$[7],strcharinfo(0);
@@ -2194,7 +2197,7 @@ turbo_n_1,114,190,0	duplicate(Flasher#tt_main)	Flasher_Exit_2#n1	45,1,1
 			mes "You've ranked Fifth";
 			mes "among the Top Five Players";
 			mes "who've won the most games!";
-			donpcevent "TBT_Guide#Broadcast::Onnew_top5";
+			donpcevent "Turbo Track Guide::OnNew_Top5";
 			if (tt_rank == 29999) {
 				if ($ttnames$[7] == "Breezy Havana") {
 					set $ttnames$[7],strcharinfo(0);
@@ -2761,7 +2764,7 @@ OnInit:
 OnTouch:
 	set .@w$,callfunc("F_tt");
 	mapannounce strnpcinfo(4),strcharinfo(0) +" is now entering the Small Cave! " + strcharinfo(0) +" is now in the lead!",bc_map,"0xFFFF00";
-	donpcevent "TBT_Guide#Broadcast::OnEnd_"+.@w$;
+	donpcevent "Turbo Track Guide::OnEnd_"+.@w$;
 	disablenpc "Notice_Maker1#TBT_"+.@w$;
 	end;
 	
@@ -3655,7 +3658,8 @@ turbo_room,130,92,3	script	Kafra Staff#tt	115,{
 
 turbo_room,124,86,0	shop	Turbo Track Merchant	90,501:-1,502:-1,503:-1,504:-1,645:-1,656:-1,1065:-1,1750:-1
 
-turbo_room,99,120,4	script	TBT_Guide#Broadcast	124,{
+// Official name: "TBT_Guide#Broadcast"
+turbo_room,99,120,4	script	Turbo Track Guide	124,{
 	mes "[Turbo Track Guide]";
 	mes "Good day~";
 	mes "Is there anything that";
@@ -3715,7 +3719,7 @@ turbo_room,99,120,4	script	TBT_Guide#Broadcast	124,{
 			mes "class or level requirements";
 			mes "to participate in the Turbo";
 			mes "Track. However, there is a";
-			mes "participation fee of 1,000 zeny. ^FFFFFFcobo^000000";
+			mes "participation fee of 1,000 zeny.";
 			next;
 			break;
 		case 2:
@@ -3730,7 +3734,7 @@ turbo_room,99,120,4	script	TBT_Guide#Broadcast	124,{
 			mes "The availability of specific";
 			mes "courses is determined by the";
 			mes "game mode. Would you like to";
-			mes "learn more about a certain course? ^FFFFFFcobo^000000";
+			mes "learn more about a certain course?";
 			next;
 			set .@exitloop,1;
 			while (.@exitloop) {
@@ -3925,47 +3929,47 @@ OnEnd_e16:
 	mapannounce "turbo_room","A [Expert Mode - 16 Person] game will end shortly.",bc_map,"0xadff2f";
 	end;
 
-Onnew_top1:
+OnNew_Top1:
 	mapannounce "turbo_room","Congratulations! " + $ttnames$[9] + " has ranked Number One in the Turbo Track Hall of Honor!",bc_map,"0x00ff00";
 	end;
 
-Onnew_top2:
+OnNew_Top2:
 	mapannounce "turbo_room","Congratulations! " + $ttnames$[10] + " has ranked Second in the Turbo Track Hall of Honor!",bc_map,"0x00ff00";
 	end;
 
-Onnew_top3:
+OnNew_Top3:
 	mapannounce "turbo_room","Congratulations! " + $ttnames$[11] + " has ranked Third in the Turbo Track Hall of Honor!",bc_map,"0x00ff00";
 	end;
 
-Onnew_top4:
+OnNew_Top4:
 	mapannounce "turbo_room","Congratulations! " + $ttnames$[12] + " has ranked Fourth in the Turbo Track Hall of Honor!",bc_map,"0x00ff00";
 	end;
 
-Onnew_top5:
+OnNew_Top5:
 	mapannounce "turbo_room","Congratulations! " + $ttnames$[13] + " has ranked Fifth in the Turbo Track Hall of Honor!",bc_map,"0x00ff00";
 	end;
 
-Onwin_n4:
+OnWin_n4:
 	mapannounce "turbo_room","Congratulations! " + $ttnames$[1] + " just won a [Normal Mode - 4 Person] game!",bc_map,"0x70DBDB";
 	end;
 
-Onwin_n8:
+OnWin_n8:
 	mapannounce "turbo_room","Congratulations! " + $ttnames$[2] + " just won a [Normal Mode - 8 Person] game!",bc_map,"0x70DBDB";
 	end;
 
-Onwin_n16:
+OnWin_n16:
 	mapannounce "turbo_room","Congratulations! " + $ttnames$[3] + " just won a [Normal Mode - 16 Person] game!",bc_map,"0x70DBDB";
 	end;
 
-Onwin_e4:
+OnWin_e4:
 	mapannounce "turbo_room","Congratulations! " + $ttnames$[4] + " just won an [Expert Mode - 4 Person] game!",bc_map,"0x70DBDB";
 	end;
 
-Onwin_e8:
+OnWin_e8:
 	mapannounce "turbo_room","Congratulations! " + $ttnames$[5] + " just won an [Expert Mode - 8 Person] game!",bc_map,"0x70DBDB";
 	end;
 
-Onwin_e16:
+OnWin_e16:
 	mapannounce "turbo_room","Congratulations! " + $ttnames$[6] + " just won an [Expert Mode - 16 Person] game!",bc_map,"0x70DBDB";
 	end;
 }
@@ -4204,7 +4208,7 @@ turbo_room,93,117,5	script	Point Exchange Helper	125,{
 					mes "I'm sorry, but your";
 					mes "request has exceeded the";
 					mes "maximum limit. You can only";
-					mes "request up to 50 scrolls at once. ^FFFFFFcobo^000000";
+					mes "request up to 50 scrolls at once.";
 					close;
 				}
 				else {
@@ -4597,27 +4601,70 @@ OnTouch:
 		mes "things using the Kafra Service.^000000";
 		close;
 	}
-	set .@now_weight,MaxWeight-Weight;
 	if ((BaseJob == Job_Knight || BaseJob == Job_Crusader) && checkriding()) {
-		if (.@now_weight < 20000) {
-			mes "[Helper]";
-			mes "Peco Pecos are prohibited";
-			mes "in the Turbo Track Arena.";
-			mes "Please dismount from your";
-			mes "Peco Peco and you will receive";
-			mes "a Free Ticket for Peco Ride";
-			mes "for retrieving your Peco Peco.";
+		if (MaxWeight-Weight < 20000) {
+			if (!(eaclass()&EAJL_THIRD)) {
+				set .@mount$,(BaseJob == Job_Knight)?"Peco Peco":"Grand Peco";
+				mes "[Helper]";
+				mes .@mount$+"s are prohibited";
+				mes "in the Turbo Track Arena.";
+				mes "Please dismount from your";
+				mes .@mount$+" and you will receive";
+				mes "a Free Ticket for Peco Ride";
+				mes "for retrieving your "+.@mount$+".";
+			} else {
+				set .@mount$,(BaseJob == Job_Knight)?"Dragon":"Gryphon";
+				mes "[Helper]";
+				mes .@mount$+"s are prohibited";
+				mes "in the Turbo Track Arena.";
+				mes "Please dismount from your";
+				mes .@mount$+". You can retrieve";
+				mes "it for free outside.";
+			}
 			close2;
 			warp "alde_gld",183,199;
 			end;
-		}
-		else {
-			setriding 0;
-			getitem 7310,1; //Free_Peco_Ticket
+		} else {
+			if (!(eaclass()&EAJL_THIRD)) {
+				setriding 0;
+				getitem 7310,1; //Free_Peco_Ticket
+			} else {
+				if (BaseJob == Job_Knight)
+					setdragon 0;
+				else
+					setriding 0;
+			}
 			warp "turbo_room",100,65;
 		}
-	}
-	else
+	} else if ((Class == Job_Ranger || Class == Job_Ranger_T || Class == Job_Baby_Ranger) && checkoption(Option_Wugrider)) {
+		if (MaxWeight-Weight < 20000) {
+			mes "[Helper]";
+			mes "Wargs are prohibited";
+			mes "in the Turbo Track Arena.";
+			mes "Please dismount from your Warg.";
+			close2;
+			warp "alde_gld",183,199;
+			end;
+		} else {
+			setoption Option_Wugrider,0;
+			warp "turbo_room",100,65;
+		}
+	} else if ((Class == Job_Mechanic || Class == Job_Mechanic_T || Class == Job_Baby_Mechanic) && checkmadogear()) {
+		if (MaxWeight-Weight < 20000) {
+			mes "[Helper]";
+			mes "Magic Gears are prohibited";
+			mes "in the Turbo Track Arena.";
+			mes "Please dismount from your";
+			mes "Magic Gear. You can retrieve";
+			mes "it for free outside.";
+			close2;
+			warp "alde_gld",183,199;
+			end;
+		} else {
+			setmadogear 0;
+			warp "turbo_room",100,65;
+		}
+	} else
 		warp "turbo_room",100,65;
 	end;
 }
@@ -4629,7 +4676,11 @@ alde_gld,186,199,3	script	Turbo Track Guide#Entran	845,{
 	mes "Turbo Track~";
 	next;
 	mes "[Guide]";
-	mes "Peco Pecos are prohibited inside the Turbo Track Arena. But anyone riding on a Peco Peco will receive a Free Peco Peco Mount Ticket at the Turbo Track Entrance and automatically dismount.";
+	if (checkre(0))
+		mes "Peco Pecos, Grand Pecos, Dragons, Gryphons, Wargs and Magic Gears are prohibited inside the Turbo Track Arena.";
+	else
+		mes "Peco Pecos are prohibited inside the Turbo Track Arena.";
+	mes "But anyone riding on a Peco Peco will receive a Free Peco Peco Mount Ticket at the Turbo Track Entrance and automatically dismount.";
 	next;
 	mes "[Guide]";
 	mes "Well then,";
@@ -4638,70 +4689,115 @@ alde_gld,186,199,3	script	Turbo Track Guide#Entran	845,{
 	close;
 }
 
-alde_gld,181,199,5	script	Peco Peco Manager	845,{
-	mes "[Peco Peco Manager]";
-	if (BaseJob == Job_Knight || BaseJob == Job_Crusader) {
-		mes "Welcome, would you like";
-		mes "to retrieve your Peco Peco?";
-		mes "Please show me your Free";
-		mes "Ticket for Peco Ride. You";
-		mes "may also pay a rental fee";
-		mes "of 2,500 zeny.";
-		next;
-		switch(select("Use:Cancel")) {
-		case 1:
-			if (getskilllv(63) == 0) {
-				mes "[Peco Peco Manager]";
-				mes "I'm sorry, but you're";
-				mes "not eligible for this";
-				mes "service. Please go learn";
-				mes "the Peco Peco Ride skill first.";
-				close;
-			}
-			else {
-				if (checkriding()) {
-					mes "[Peco Peco Manager]";
-					mes "You're already";
-					mes "mounted on a";
-					mes "Peco Peco.";
-					mes "Thank you~";
-					close;
-				}
-				else {
-					if (countitem(7310) < 1 && Zeny < 2500) {
-						mes "[Peco Peco Manager]";
-						mes "I'm sorry, but you";
-						mes "don't have a Free Ticket";
-						mes "for Peco Ride or 2,500 zeny.";
-						mes "to use the Peco rental service.";
-						close;
-					}
-					else {
-						if (countitem(7310) > 0)
-							delitem 7310,1; //Free_Peco_Ticket
-						else
-							set zeny,zeny-2500;
-						setriding;
-						mes "[Peco Peco Manager]";
-						mes "Thank you for";
-						mes "your patronage~";
-						close;
-					}
-				}
-			}
-		case 2:
-			mes "[Peco Peco Manager]";
-			mes "Are you going";
-			mes "back to race in";
-			mes "the Turbo Track?";
-			mes "Good luck!";
-			close;
-		}
+-	script	::MountManager_turbo	-1,{
+	set .@n$, "["+strnpcinfo(1)+"]";
+	mes .@n$;
+	if (ismounting()) {
+		mes "Please get off of that creature you're riding on.";
+		mes "Then talk to me again.";
+		close;
 	}
-	else {
+	if (BaseJob == Job_Knight || BaseJob == Job_Crusader) {
+		if (!(eaclass()&EAJL_THIRD)) {
+			if (BaseJob == Job_Knight) {
+				set .@zeny,2500;
+				set .@zeny$,"2,500";
+				set .@mount$,"Peco Peco";
+			} else {
+				set .@zeny,3500;
+				set .@zeny$,"3,500";
+				set .@mount$,"Grand Peco";
+			}
+			set .@skill,63;
+			set .@skill$,"Peco Peco Ride";
+			set .@riding, checkriding();
+			set .@i,1;
+		} else {
+			if (BaseJob == Job_Knight) {
+				set .@mount$,"Dragon";
+				set .@skill,63;
+				set .@skill$,"Dragon Training";
+				set .@riding, checkdragon();
+				set .@i,2;
+			} else {
+				set .@mount$,"Gryphon";
+				set .@skill,63;
+				set .@skill$,"Peco Peco Ride";
+				set .@riding, checkriding();
+				set .@i,1;
+			}
+		}
+	} else if (Class == Job_Mechanic || Class == Job_Mechanic_T || Class == Job_Baby_Mechanic) {
+		set .@mount$,"Magic Gear";
+		set .@skill,2255;
+		set .@skill$,"Magic Gear License";
+		set .@riding, checkmadogear();
+		set .@i,3;
+	} else {
 		mes "Thank you for";
 		mes "visiting Al De Baran's";
 		mes "Turbo Track~";
+		close;
+	}
+	mes "Welcome, would you like";
+	mes "to retrieve your "+.@mount$+"?";
+	if (.@zeny) {
+		mes "Please show me your Free";
+		mes "Ticket for Peco Ride. You";
+		mes "may also pay a rental fee";
+		mes "of "+.@zeny$+" zeny.";
+	}
+	next;
+	switch(select("Yes:Cancel")) {
+	case 1:
+		if (getskilllv(.@skill) == 0) {
+			mes .@n$;
+			mes "I'm sorry, but you're";
+			mes "not eligible for this";
+			mes "service. Please go learn";
+			mes "the "+.@skill$+" skill first.";
+			close;
+		} else {
+			if (.@riding) {
+				mes .@n$;
+				mes "You're already";
+				mes "mounted on a";
+				mes .@mount$+".";
+				mes "Thank you~";
+				close;
+			} else {
+				if (.@zeny) {
+					if (countitem(7310) < 1 && Zeny < .@zeny) {
+						mes .@n$;
+						mes "I'm sorry, but you";
+						mes "don't have a Free Ticket";
+						mes "for Peco Ride or "+.@zeny$+" zeny.";
+						mes "to use the Peco rental service.";
+						close;
+					} else {
+						if (countitem(7310) > 0)
+							delitem 7310,1; //Free_Peco_Ticket
+						else
+							set zeny,zeny-.@zeny;
+					}
+				}
+				switch(.@i) {
+					case 1: setriding; break;
+					case 2: setdragon; break;
+					case 3: setmadogear; break;
+				}
+				mes .@n$;
+				mes "Thank you for";
+				mes "your patronage~";
+				close;
+			}
+		}
+	case 2:
+		mes .@n$;
+		mes "Are you going";
+		mes "back to race in";
+		mes "the Turbo Track?";
+		mes "Good luck!";
 		close;
 	}
 }

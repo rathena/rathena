@@ -3,7 +3,7 @@
 //===== By ===================================================
 //= Fredzilla, MasterOfMuppets
 //===== Version ==============================================
-//= 2.4
+//= 2.5
 //===== Compatible With ======================================
 //= rAthena SVN
 //===== Description ==========================================
@@ -30,6 +30,7 @@
 //= 2.2 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 2.3 Replaced effect numerics with constants. [Samuray22]
 //= 2.4 Updated RE/Pre-RE EXP. [Euphy]
+//= 2.5 Added questlog support. [Euphy]
 //============================================================
 
 // Ayothaya Ring Quest
@@ -78,7 +79,7 @@ ayothaya,233,105,3	script	Powerful-Looking Woman	838,2,2,{
 	}
 	else if(thai_find == 2)
 	{
-		if(countitem(7288)) //Engagement Ring
+		if(countitem(7288))
 		{
 			mes "[Shuda]";
 			mes "Ah... Is it...?!!";
@@ -135,9 +136,7 @@ ayothaya,233,105,3	script	Powerful-Looking Woman	838,2,2,{
 				mes "(Why am I always";
 				mes "doing things for other";
 				mes "people anyway?!)";
-				delitem 7288,1; //Engagement Ring
-				set thai_find,3;
-				close;
+				break;
 			case 2:
 				mes "[Shuda]";
 				mes "Yes, I knew I could count on you! So find Annon! It's my destiny to make him ^660000mine^000000. Hoo ho ho ho ho!";
@@ -148,10 +147,12 @@ ayothaya,233,105,3	script	Powerful-Looking Woman	838,2,2,{
 				mes "[Shuda]";
 				mes "Will you please tell Annon that";
 				mes "I got my ring back so he can come back to me now? I hope you'll remember that for me, adventurer.";
-				delitem 7288,1; //Engagement Ring
-				set thai_find,3;
-				close;
+				break;
 			}
+			delitem 7288,1; //Thai_Ring
+			changequest 12030,12031;
+			set thai_find,3;
+			close;
 		}
 		else
 		{
@@ -171,6 +172,8 @@ ayothaya,233,105,3	script	Powerful-Looking Woman	838,2,2,{
 			mes "my ring. I'll be waiting";
 			mes "here for the good news.";
 			mes "Oho ho ho ho ho~!";
+			if (checkquest(12029) == -1)
+				setquest 12029;
 			close;
 		}
 	}
@@ -404,6 +407,8 @@ ayothaya,233,105,3	script	Powerful-Looking Woman	838,2,2,{
 					next;
 					mes "[Shuda]";
 					mes "So go and look under the water! There's no water current, so I'm sure it's still there! What are you waiting for, it's should be an easy swim for you! Oho ho ho ho ho!";
+					if (checkquest(12029) == -1)
+						setquest 12029;
 					set thai_find,1;
 					close;
 				}
@@ -452,7 +457,7 @@ OnTouch:
 	
 ayo_dun02,91,263,0	script	#Annonblood	111,2,3,{
 
-if(!$annonactive)
+if(!$@annonactive)
 {
 	if(thai_find == 13)
 	{
@@ -498,7 +503,7 @@ if(!$annonactive)
 				mes "^3355FFshrubbery, you find";
 				mes "a small burrow.^000000";
 				next;
-				set $annonactive,1;
+				set $@annonactive,1;
 				enablenpc "Haggard Man";
 				mes "[Haggard Man]";
 				mes "^666666*Cough cough!*^000000";
@@ -514,7 +519,7 @@ if(!$annonactive)
 					mes "Hey...";
 					mes "What are you doi--";
 					next;
-					set $annonactive,0;
+					set $@annonactive,0;
 					disablenpc "Haggard Man";
 					mes "^3355FFHe vanished!^000000";
 					close;
@@ -546,7 +551,7 @@ if(!$annonactive)
 			next;
 			if(!rand(0,2))
 			{
-				set $annonactive,1;
+				set $@annonactive,1;
 				enablenpc "Haggard Man";
 				mes "[?]";
 				mes "^666666*Cough cough*^000000";
@@ -576,11 +581,9 @@ if(!$annonactive)
 		close;
 	}
 
-	OnTouch:
-	if(thai_find == 12)
-	{
-		if(!rand(0,2))
-		{
+OnTouch:
+	if(thai_find == 12) {
+		if(!rand(0,2)) {
 			emotion e_gasp,1;
 			mes "[" +strcharinfo(0)+ "]";
 			mes "Huh...?";
@@ -599,16 +602,18 @@ if(!$annonactive)
 			mes "a blood stain in";
 			mes "this kind of place...";
 			set thai_find,13;
+			changequest 12033,12034;
 			close;
 		}
 	}
 
 }
-	
+
 }
-	
+
 ayo_dun02,91,264,3	script	Haggard Man	841,{
 
+	//completequest 12034;
 	if(thai_find == 13)
 	{
 		mes "[Haggard Man]";
@@ -752,6 +757,7 @@ ayo_dun02,91,264,3	script	Haggard Man	841,{
 				mes "^3355FFYou feel as though Annon";
 				mes "realigned every bone in your skeleton, placing them in the right spots. Strangely, you feel intense relaxation and refreshment instead of excruciating pain.";
 				set thai_find,14;
+				completequest 12034;
 				if (checkre(3)) {
 					if(BaseLevel < 56) getexp 900,0;
 					else if(BaseLevel > 55 && BaseLevel < 61) getexp 1050,0;
@@ -791,7 +797,7 @@ ayo_dun02,91,264,3	script	Haggard Man	841,{
 				mes "before others find me.";
 				mes "Good day~!";
 				close2;
-				set $annonactive,0;
+				set $@annonactive,0;
 				disablenpc "Haggard Man";
 				end;
 			}
@@ -819,7 +825,7 @@ ayo_dun02,91,264,3	script	Haggard Man	841,{
 				mes "me back inside!";
 				mes "Wahhhhhh~!";
 				next;
-				set $annonactive,0;
+				set $@annonactive,0;
 				disablenpc "Haggard Man";
 				mes "[" +strcharinfo(0)+ "]";
 				mes "Okay, it's time";
@@ -854,7 +860,7 @@ ayo_dun02,91,264,3	script	Haggard Man	841,{
 			mes "hide from Shuda.";
 			mes "^666666*Cries*^000000";
 			close2;
-			set $annonactive,0;
+			set $@annonactive,0;
 			disablenpc "Haggard Man";
 			end;
 		}
@@ -865,13 +871,13 @@ ayo_dun02,91,264,3	script	Haggard Man	841,{
 		mes "Huh? Who are you?";
 		mes "This isn't a safe place for a tourists! You should leave right away!";
 		close2;
-		set $annonactive,0;
+		set $@annonactive,0;
 		disablenpc "Haggard Man";
 		end;
 	}
 	
 OnInit:
-	set $annonactive,0;
+	set $@annonactive,0;
 	disablenpc "Haggard Man";
 	end;
 	
@@ -973,7 +979,8 @@ ayothaya,253,99,3	script	Fisherman	843,{
 					mes "engagement ring.^000000";
 					close2;
 					set thai_find,2;
-					getitem 7288,1; //Engagement ring
+					changequest 12029,12030;
+					getitem 7288,1; //Thai_Ring
 					end;
 				}
 			}
@@ -1030,7 +1037,7 @@ ayothaya,253,99,3	script	Fisherman	843,{
 	}
 	
 }
-	
+
 ayo_dun01,255,62,0	script	AyoFootprint1	139,2,0,{
 OnTouch:
 	if(thai_find == 4)
@@ -1040,12 +1047,13 @@ OnTouch:
 			emotion e_gasp,1;
 			mes "^3355FFYou find footprints heading to the ^5C3317North^3355FF. It looks like somebody was in quite a hurry, just like the villager said!^000000";
 			set thai_find,5;
+			changequest 12032,12033;
 			close;
 		}
 	}
 	
 }
-	
+
 ayo_dun01,74,142,0	script	AyoFootprint2	139,2,0,{
 OnTouch:
 	if(thai_find == 5)
@@ -1223,6 +1231,7 @@ OnTouch:
 		{
 			emotion e_gasp,1;
 			mes "^3355FFYou find traces of blood. Whoever was running in this direction may have been wounded. The trail of blood leads to the ^5C3317North^3355FF.^000000";
+			changequest 12032,12033;
 			set thai_find,12;
 			close;
 		}
@@ -1262,6 +1271,7 @@ ayothaya,193,171,3	script	Old Man#02	842,{
 		mes "[Tham]";
 		mes "Oh well, don't worry. All of our villagers aren't like that. Anyway, I hope you enjoy your travels in Ayotaya.";
 		set thai_find,4;
+		changequest 12031,12032;
 		close;
 	}
 	else
@@ -1401,6 +1411,7 @@ ayothaya,83,132,0	script	Dusit#thai	843,{
 			mes "[Dusit]";
 			mes "Ah well, you'll see what I'm talking about. I hope he'll help you learn more about that evil creature.";
 			set ayodunquest,1;
+			setquest 12035;
 			close;
 		}
 		mes "[Dusit]";
@@ -1551,6 +1562,7 @@ ayo_in01,181,193,4	script	Shaman#thai	840,{
 			mes "when you prepare all";
 			mes "the materials.";
 			set ayodunquest,2;
+			changequest 12035,12036;
 			close;
 		}
 		mes "[Boonthom]";
@@ -1590,6 +1602,7 @@ ayo_in01,181,193,4	script	Shaman#thai	840,{
 			delitem 7190,1; //Solid_Peeling
 			delitem 523,1; //Holy_Water
 			set ayodunquest,3;
+			changequest 12036,12037;
 			getitem 7285,1; //Thread_Skein
 			next;
 			mes "[Boonthom]";
@@ -1703,6 +1716,7 @@ ayo_in01,181,193,4	script	Shaman#thai	840,{
 		mes "^3366992 Needle Packet^000000 and";
 		mes "^3366992 Spool^000000.";
 		set ayodunquest,10;
+		changequest 12037,12038;
 		next;
 		mes "[Boonthom]";
 		mes "Return to me";
@@ -1739,6 +1753,7 @@ ayo_in01,181,193,4	script	Shaman#thai	840,{
 			delitem 523,2; //Holy_Water
 			set ayodunquest,11;
 			getitem 7287,1; //Thread_Skein_
+			changequest 12038,12039;
 			next;
 			mes "[Boonthom]";
 			mes "Even if you lose this, don't worry. Just bring me the materials, and";
@@ -1840,6 +1855,7 @@ ayo_in01,181,193,4	script	Shaman#thai	840,{
 		mes "[Boonthom]";
 		mes "If you wish to explore the building again, but you don't have any holy thread, feel free to ask me at anytime.";
 		set ayodunquest,13;
+		completequest 12039;
 		close;
 	}
 	else if (ayodunquest > 12) {
@@ -2136,6 +2152,7 @@ ayo_dun01,99,118,0	script	 #hun_thai_5	111,{
 ayo_dun01,16,188,0	script	 #hun_thai_6	111,{
 	if (ayodunquest == 8) {
 		set ayodunquest,9;
+		setquest 12036;
 		mes "^3355FFYou find a piece of a stone slate with letters etched on it. It seems to be the last part of the slate.^000000";
 		next;
 		mes "^3355FFIt reads '^0000FFOtherwise, it's impossible...^3355FF' You are unable to read the rest of the message.^000000";
@@ -2185,6 +2202,7 @@ ayo_dun02,268,108,0	script	 #reward_tiger	111,{
 		mes "^3355FFYou pick";
 		mes "up the box.^000000";
 		set ayodunquest,12;
+		completequest 12039;
 		getitem 603,1; //Old_Blue_Box
 		close;
 	}
@@ -2231,6 +2249,7 @@ ayothaya,196,265,3	script	Einon#ayo	842,{
 			next;
 			emotion e_no1;
 			set tomyumgoong,1;
+			setquest 8123;
 			mes "[Einon]";
 			mes "She is the best cook when it";
 			mes "comes to Tom Yum Goong!";
@@ -2323,6 +2342,7 @@ ayo_in01,145,163,3	script	Cook#ayo	839,{
 				mes "my name, that guy";
 				mes "might give you a discount.";
 				set tomyumgoong,2;
+				changequest 8123,8124;
 				next;
 				mes "[Mali the Spicy]";
 				mes "His name is ^3131FFThongpool^000000.";
@@ -2382,6 +2402,7 @@ ayo_in01,145,163,3	script	Cook#ayo	839,{
 				next;
 				if (select("Where can I find Lemons?:I hate sour food. I'd better quit!") == 1) {
 					set tomyumgoong,4;
+					changequest 8124,8125;
 					mes "[Mali the Spicy]";
 					mes "A few days ago, I saw a good";
 					mes "Lemon tree while taking a walk.";
@@ -2464,6 +2485,7 @@ ayo_in01,145,163,3	script	Cook#ayo	839,{
 				if (select("Okay, I'll be right back.:Ah, I'm tired now. Let me take a rest first...") == 1) {
 					delitem 568,10; //Lemon
 					set tomyumgoong,6;
+					changequest 8125,8126;
 					mes "[Mali the Spicy]";
 					mes "See you in a bit~";
 					close;
@@ -2564,6 +2586,7 @@ ayo_in01,145,163,3	script	Cook#ayo	839,{
 				mes " .........";
 				next;
 				set tomyumgoong,8;
+				completequest 8126;
 				getitem 566,10; //Tomyumkung
 				emotion e_no1;
 				mes "[Mali the Spicy]";
