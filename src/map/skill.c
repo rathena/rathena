@@ -396,7 +396,7 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 				hp = (status_get_lv(src) + status_get_int(src)) / 8 * (4 + ( (skill_id == AB_HIGHNESSHEAL ? (sd ? pc_checkskill(sd,AL_HEAL) : 10 ) : skill_lv) * 8));
 			#endif
 			if (skill_id == AB_HIGHNESSHEAL)
-				hp *= ( 17 + 3 * skill_lv ) / 10;
+				hp = hp * ( 17 + 3 * skill_lv ) / 10;
 			if( sd && ((skill = pc_checkskill(sd, HP_MEDITATIO)) > 0) )
 				hp += hp * skill * 2 / 100;
 			else if( src->type == BL_HOM && (skill = merc_hom_checkskill(((TBL_HOM*)src), HLIF_BRAIN)) > 0 )

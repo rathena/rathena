@@ -4172,7 +4172,7 @@ void status_calc_bl_(struct block_list* bl, enum scb_flag flag, bool first)
 
 		if(b_status.rhw.atk2 != status->rhw.atk2 || b_status.lhw.atk2 != status->lhw.atk2
 #ifdef RENEWAL
-		|| b_status.rhw.atk != status->rhw.atk || b_status.lhw.atk != status->lhw.atk
+		|| b_status.rhw.atk != status->rhw.atk || b_status.lhw.atk != status->lhw.atk || b_status.eatk != status->eatk
 #endif
 			)
 			clif_updatestatus(sd,SP_ATK2);

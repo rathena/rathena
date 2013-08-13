@@ -2173,6 +2173,8 @@ static int battle_calc_equip_attack(struct block_list *src, int skill_id)
 	if(src != NULL) {
 		struct status_data *status = status_get_status_data(src);
 		struct map_session_data *sd = BL_CAST(BL_PC, src);
+		if( sd->sc.data[SC_CAMOUFLAGE] )
+			status->eatk += 30 * min(10,sd->sc.data[SC_CAMOUFLAGE]->val3); //max +300atk
 		if(sd)
 			return is_skill_using_arrow(src, skill_id) ? sd->bonus.arrow_atk + status->eatk : status->eatk; // add arrow atk if using an applicable skill
 		else
@@ -2349,15 +2351,6 @@ static struct Damage battle_calc_attack_masteries(struct Damage wd, struct block
 	int skill, i, skillratio;
 
 	int t_class = status_get_class(target);
-
-	if (sc) {
-		if(sc->data[SC_CAMOUFLAGE]) {
-			ATK_ADD(wd.damage, wd.damage2, 30 * min(10,sc->data[SC_CAMOUFLAGE]->val3) ); //max +300atk
-#ifdef RENEWAL
-			ATK_ADD(wd.masteryAtk, wd.masteryAtk2, 30 * min(10,sc->data[SC_CAMOUFLAGE]->val3) ); //max +300atk
-#endif
-		}
-	}
 
 	if (sd && battle_skill_stacks_masteries_vvs(skill_id) &&
 		skill_id != MO_INVESTIGATE &&
@@ -3600,9 +3593,10 @@ static int battle_calc_skill_constant_addition(struct Damage wd, struct block_li
 			break;
 		case KO_SETSUDAN:
 			if( tsc && tsc->data[SC_SPIRIT] ){
-				atk = ((wd.damage) * (10*tsc->data[SC_SPIRIT]->val1)) / 100;// +10% custom value.
 #ifdef RENEWAL
 				atk = ((wd.equipAtk + wd.weaponAtk + wd.statusAtk + wd.masteryAtk) * (10*tsc->data[SC_SPIRIT]->val1)) / 100;// +10% custom value.
+#else
+				atk = ((wd.damage) * (10*tsc->data[SC_SPIRIT]->val1)) / 100;// +10% custom value.
 #endif
 				status_change_end(target,SC_SPIRIT,INVALID_TIMER);
 			}
@@ -3611,9 +3605,10 @@ static int battle_calc_skill_constant_addition(struct Damage wd, struct block_li
 			if( sd ){
 				ARR_FIND(1, 6, i, sd->talisman[i] > 0);
 				if( i < 5 ){
-					atk = ((wd.damage) * (10*tsc->data[SC_SPIRIT]->val1)) / 100;// +10% custom value.
 #ifdef RENEWAL
 					atk = ((wd.equipAtk + wd.weaponAtk + wd.statusAtk + wd.masteryAtk) * (100 * sd->talisman[i])) / 100;// +100% custom value.
+#else
+					atk = ((wd.damage) * (100 * sd->talisman[i])) / 100;// +100% custom value.
 #endif
 					pc_del_talisman(sd, sd->talisman[i], i);
 				}
@@ -5259,10 +5254,6 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			md.damage = 0;
 		if (tsd) md.damage>>=1;
 #endif
-		if (md.damage < 0 || md.damage > INT_MAX>>1)
-		//Overflow prevention, will anyone whine if I cap it to a few billion?
-		//Not capped to INT_MAX to give some room for further damage increase.
-			md.damage = INT_MAX>>1;
 		break;
 	case NJ_ZENYNAGE:
 	case KO_MUCHANAGE:
