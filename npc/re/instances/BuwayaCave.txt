@@ -9,6 +9,7 @@
 //===== Description: ========================================= 
 //= [Official Conversion]
 //= Defeat Buwaya in his cave.
+//= Part of the "Secret in the Woods" quest.
 //===== Additional Comments: ================================= 
 //= 1.0 First version. [Euphy]
 //============================================================ 

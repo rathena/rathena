@@ -1538,9 +1538,9 @@
 9172,0,0,0,0,0,0,0,"Enchanted Items"
 9173,72000,0,0,0,0,0,0,"Tutorial Timer Cooldown"
 
-9222,0,0,0,0,0,0,0,"Get Rid of Bangungot from Hospital 2F"
-9223,0,0,0,0,0,0,0,"Will there be Peace at the Hospital?"
-9224,0,0,0,0,0,0,0,"Explore Hospital 2F"
+9222,0,2327,1,0,0,0,0,"Get Rid of Bangungot from Hospital 2F"
+9223,604800,0,0,0,0,0,0,"Will there be Peace at the Hospital?"
+9224,3600,0,0,0,0,0,0,"Explore Hospital 2F"
 
 9225,0,0,0,0,0,0,0,"Mystery Robbery Incident 1"
 9226,0,0,0,0,0,0,0,"Mystery Robbery Incident 2"

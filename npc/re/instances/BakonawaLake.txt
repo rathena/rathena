@@ -9,6 +9,7 @@
 //===== Description: ========================================= 
 //= [Official Conversion]
 //= Defeat Bakonawa before he eats the moon.
+//= Part of the "Bakonawa Extermination" quest.
 //===== Additional Comments: ================================= 
 //= 1.0 First version. [Euphy]
 //============================================================ 

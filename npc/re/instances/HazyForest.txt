@@ -9,7 +9,7 @@
 //===== Description: ========================================= 
 //= [Official Conversion]
 //= Cross through the Hazy Forest to reach the Bifrost.
-//= Contains the Wandering Guardian quest.
+//= Contains the "Wandering Guardian" quest.
 //===== Additional Comments: ================================= 
 //= 1.0 First version. [Euphy]
 //= 1.1 Instance system rewrite. [Euphy]
