@@ -250,7 +250,7 @@ L_Third:
 
 -	script	Valerie#sign	-1,{
 	mes "^ff00ffI couldn't pay the office rent so I am temporarily relocating to the building across from the Prontera Refinery.^000000";
-	mes "";
+	mes " ";
 	mes "^ff00ffValerie^000000";
 	close;
 }

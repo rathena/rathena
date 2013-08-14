@@ -2064,7 +2064,11 @@ mora,117,66,3	script	Euridi#pa	521,{
 		mes "Euridi is standing staring blankly like someone who wasn't all there.";
 		mes "Let's go show the letter to Pitt.";
 		changequest 1112,1113;
-		delitem 6383,30; //Clue_Of_Lope
+
+		//delitem 6383,30; //Clue_Of_Lope
+		set .@count, countitem(6383);
+		if (.@count) delitem 6383,((.@count > 30)?30:.@count); //Clue_Of_Lope
+
 		set ep14_1_rope,5;
 		close;
 	} else if (ep14_1_rope == 5) {
@@ -2107,7 +2111,10 @@ mora,117,66,3	script	Euridi#pa	521,{
 			mes "She starts to sing in a strained voice, still crying.";
 			changequest 1116,1117;
 			set ep14_1_rope,10;
-			delitem 6384,1; //Ring_Of_Lope
+
+			//delitem 6384,1; //Ring_Of_Lope
+			if (countitem(6384)) delitem 6384,1; //Ring_Of_Lope
+
 			close;
 		}
 	} else if (ep14_1_rope > 9) {

@@ -4,7 +4,7 @@
 //= L0ne_W0lf
 //= Credits: Gepard
 //===== Current Version: =====================================
-//= 1.7a
+//= 1.8
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -22,6 +22,7 @@
 //= 1.6 Fixed bugs where players unable to continue the quest. [Joseph]
 //= 1.7 Updated script, many bugs fixed. [Euphy]
 //= 1.7a Moved warps to separate file. [Euphy]
+//= 1.8 Bug fixes and corrections. [Euphy]
 //============================================================
 
 prt_church,103,88,3	script	Praying Minister#arch	60,{
@@ -93,7 +94,7 @@ prt_church,103,88,3	script	Praying Minister#arch	60,{
 			mes "But, I recommend this.";
 			next;
 			mes "[Praying Minister]";
-			mes "Have you ever heard of a^3131FFHoly Pilgrimage^000000?";
+			mes "Have you ever heard of a ^3131FFHoly Pilgrimage^000000?";
 			mes "A Holy Pilgrimage means going to a holy place to pray to the God Odin for protection and grace.";
 			next;
 			mes "[Praying Minister]";
@@ -776,7 +777,10 @@ job3_arch01,29,34,3	script	Valkyrie#arch	403,{
 		mes "You can't progress without using all your skill points. Please use all of your skill points before progressing~";
 		close;
 	}
-	if (Class != Job_Arch_Bishop || Class != Job_Arch_Bishop_T || Class != Job_Baby_Bishop) {
+	if (Class != Job_Priest && Class != Job_High_Priest && Class != Job_Baby_Priest) {
+		warp "odin_tem02",282,263;
+		end;
+	} else if (Class != Job_Arch_Bishop && Class != Job_Arch_Bishop_T && Class != Job_Baby_Bishop) {
 		if (job_arch < 5) {
 			warp "odin_tem02",282,263;
 			end;
@@ -953,7 +957,7 @@ job3_arch01,29,34,3	script	Valkyrie#arch	403,{
 				mes "OK. now I'm going to send you there.";
 				mes "^FF0000When you go there, you have to summon my impersonation with the scroll^000000.";
 				mes "An impersonation will help when you move or attack as you want through ^FF0000ALT+click^000000.";
-				mes "But you have to be careful if an imeprsonation falls down.";
+				mes "But you have to be careful if an impersonation falls down.";
 				close2;
 				nude;
 				if (countitem(2798))
@@ -972,7 +976,7 @@ job3_arch01,29,34,3	script	Valkyrie#arch	403,{
 	end;
 OnBc:
 	set $@archbs,0;
-	mapannounce "job3_arch01","Valkyrie: I think someone fell down in the shrine. I can hear the devil's unpleasant laugh.",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
+	mapannounce "job3_arch01","Valkyrie: I think someone fell down in the shrine. I can hear the devil's unpleasant laugh.",bc_map,"0xFFCE00";
 	hideoffnpc "Valkyrie#arch";
 	end;
 }
@@ -981,8 +985,8 @@ job3_arch02,119,49,0	script	#arch_1_start	139,6,6,{
 OnTouch:
 	if (countitem(12381) == 0)
 		getitem 12381,1; //ValkyrieA_Scroll
-	mapannounce "job3_arch02","Whispering of an impersonation: I feel heavy! Set me free!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
-	hideonnpc "#arch_1_start";
+	mapannounce "job3_arch02","Whispering of an impersonation: I feel heavy! Set me free!",bc_map,"0xFFCE00";
+	disablenpc "#arch_1_start";
 	end;
 }
 
@@ -990,18 +994,18 @@ OnTouch:
 OnTouch:
 	if (countitem(12381)) {
 		delitem 12381,1; //ValkyrieA_Scroll
-		mapannounce "job3_arch02","Whispering of an impersonation: You can't do anything by yourself! Let's go back!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
-		mapwarp "job3_arch02","job3_arch01",29,29;
-	}
-	if (getmercinfo(1) == 2037) {
+		// fall through
+	} else if (getmercinfo(1) == 2037) {
+		if (strnpcinfo(0) == "#arch_1_10")
+			viewpoint 1,113,327,1,0xFF9900;
 		set .@randht, rand(1,10);
 		if (.@randht < 8)
-			mapannounce "job3_arch02","Whispering of an impersonation: I can feel the devil's spirits! Be careful!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
+			mapannounce "job3_arch02","Whispering of an impersonation: I can feel the devil's spirits! Be careful!",bc_map,"0xFFCE00";
 		else if ((.@randht == 8) || (.@randht == 9))
-			mapannounce "job3_arch02","Whispering of an impersonation: They are coming!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
+			mapannounce "job3_arch02","Whispering of an impersonation: They are coming!",bc_map,"0xFFCE00";
 		end;
 	}
-	mapannounce "job3_arch02","Whispering of an impersonation: You can't do anything by yourself! Let's go back!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
+	mapannounce "job3_arch02","Whispering of an impersonation: You can't do anything by yourself! Let's go back!",bc_map,"0xFFCE00";
 	mapwarp "job3_arch02","job3_arch01",29,29;
 	end;
 }
@@ -1022,17 +1026,14 @@ job3_arch02,203,286,0	script	#arch_1_boss	139,5,5,{
 OnTouch:
 	if (countitem(12381)) {
 		delitem 12381,1; //ValkyrieA_Scroll
-		mapannounce "job3_arch02","Whispering of an impersonation: You can't do anything by yourself! Let's go back!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
-		mapwarp "job3_arch02","job3_arch01",29,29;
+		// fall through
+	} else if (getmercinfo(1) == 2037) {
+		mapannounce "job3_arch02","Valkyrie's Nightmare: An incompetent illusion of Valkyrie came here with the assistance of humans. You wanna have that nightmare?",bc_map,"0xFF0000";
+		donpcevent "mob#arch_1::OnKill";
 		end;
 	}
-	if (getmercinfo(1) == 2037) {
-		mapannounce "job3_arch02","Valkyrie's Nightmare: An incompetent illusion of Valkyrie came here with the assistance of humans. You wanna have that nightmare?",bc_map,"0xFF0000"; //FW_NORMAL 12 0 0
-		donpcevent "mob#arch_1::OnKill";
-	} else {
-		mapannounce "job3_arch02","Whispering of an impersonation: You can't do anything by yourself! Let's go back!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
-		mapwarp "job3_arch02","job3_arch01",29,29;
-	}
+	mapannounce "job3_arch02","Whispering of an impersonation: You can't do anything by yourself! Let's go back!",bc_map,"0xFFCE00";
+	mapwarp "job3_arch02","job3_arch01",29,29;
 	end;
 }
 
@@ -1059,22 +1060,22 @@ OnEnable:
 OnMyMobDead:
 	if (mobcount("job3_arch02","#arch_val01::OnMyMobDead") < 1) {
 		donpcevent "#arch_redcell::OnGreen";
-		mapannounce "job3_arch02","Valkyrie's Nightmare: Your win is only a false image! hahahaha!",bc_map,"0xFF0000"; //FW_NORMAL 12 0 0
+		mapannounce "job3_arch02","Valkyrie's Nightmare: Your win is only a false image! hahahaha!",bc_map,"0xFF0000";
 		hideoffnpc "Valkyrie#arch_01";
-		hideonnpc "#arch_1_start";
-		hideonnpc "#arch_1_01";
-		hideonnpc "#arch_1_02";
-		hideonnpc "#arch_1_03";
-		hideonnpc "#arch_1_04";
-		hideonnpc "#arch_1_05";
-		hideonnpc "#arch_1_06";
-		hideonnpc "#arch_1_07";
-		hideonnpc "#arch_1_08";
-		hideonnpc "#arch_1_09";
-		hideonnpc "#arch_1_10";
-		hideonnpc "#arch_1_11";
-		hideonnpc "#arch_1_12";
-		hideonnpc "#arch_1_boss";
+		disablenpc "#arch_1_start";
+		disablenpc "#arch_1_01";
+		disablenpc "#arch_1_02";
+		disablenpc "#arch_1_03";
+		disablenpc "#arch_1_04";
+		disablenpc "#arch_1_05";
+		disablenpc "#arch_1_06";
+		disablenpc "#arch_1_07";
+		disablenpc "#arch_1_08";
+		disablenpc "#arch_1_09";
+		disablenpc "#arch_1_10";
+		disablenpc "#arch_1_11";
+		disablenpc "#arch_1_12";
+		disablenpc "#arch_1_boss";
 	}
 	end;
 OnKill:
@@ -1089,9 +1090,9 @@ OnEnable:
 	end;
 OnMyMobDead:
 	if (mobcount("job3_arch02","#arch_val02::OnMyMobDead") < 1) {
-		mapannounce "job3_arch02","Valkyrie's Nightmare: You are so childish. I invite you to a devil's party. I'll make sure you have a fun!",bc_map,"0xFF0000"; //FW_NORMAL 12 0 0
+		mapannounce "job3_arch02","Valkyrie's Nightmare: You are so childish. I invite you to a devil's party. I'll make sure you have a fun!",bc_map,"0xFF0000";
 		hideoffnpc "Valkyrie#arch_02";
-		hideonnpc "#arch_2_boss";
+		disablenpc "#arch_2_boss";
 		viewpoint 1,279,234,1,0xFFFF99;
 	}
 	end;
@@ -1300,7 +1301,7 @@ OnTouch:
 	jobchange roclass(eaclass()|EAJL_THIRD);
 	close;
 OnInit:
-	hideonnpc "#arch_end";
+	disablenpc "#arch_end";
 	end;
 }
 
@@ -1334,7 +1335,7 @@ job3_arch02,132,323,0	script	#arch_2_01	139,5,5,{
 	end;
 OnTouch:
 	if (countitem(12382))
-		mapannounce "job3_arch02","Whispering of Valkyrie: I see a new ancient scroll!",bc_map; //FW_NORMAL 12 0 0
+		mapannounce "job3_arch02","Whispering of Valkyrie: I see a new ancient scroll!",bc_map;
 	end;
 }
 
@@ -1342,21 +1343,18 @@ OnTouch:
 OnTouch:
 	if (countitem(12382)) {
 		delitem 12382,1; //ValkyrieB_Scroll
-		mapannounce "job3_arch02","Whispering of an impersonation: You can't do anything by yourself! Let's go back!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
-		mapwarp "job3_arch02","job3_arch01",29,29;
-		end;
-	}
-	if (getmercinfo(1) == 2038) {
+		// fall through
+	} else if (getmercinfo(1) == 2038) {
 		set .@randht, rand(1,10);
 		if (.@randht < 8)
-			mapannounce "job3_arch02","Whispering of an impersonation: I can feel the devil's spirits. Can you hear? The sound of gathering in crowds.",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
+			mapannounce "job3_arch02","Whispering of an impersonation: I can feel the devil's spirits. Can you hear? The sound of gathering in crowds.",bc_map,"0xFFCE00";
 		else if ((.@randht == 8) || (.@randht == 9))
-			mapannounce "job3_arch02","Whispering of an impersonation: Combat readiness!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
+			mapannounce "job3_arch02","Whispering of an impersonation: Combat readiness!",bc_map,"0xFFCE00";
 		else
-			mapannounce "job3_arch02","Whispering of an impersonation: I can't leave you. Die!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
+			mapannounce "job3_arch02","Whispering of an impersonation: I can't leave you. Die!",bc_map,"0xFFCE00";
 		end;
 	}
-	mapannounce "job3_arch02","Whispering of an impersonation: You can't do anything by yourself! Let's go back!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
+	mapannounce "job3_arch02","Whispering of an impersonation: You can't do anything by yourself! Let's go back!",bc_map,"0xFFCE00";
 	mapwarp "job3_arch02","job3_arch01",29,29;
 	end;
 }
@@ -1371,93 +1369,102 @@ job3_arch02,234,179,0	duplicate(archbjcq2)	#arch_2_09	139,5,5
 job3_arch02,227,169,0	duplicate(archbjcq2)	#arch_2_10	139,5,5
 job3_arch02,190,146,0	duplicate(archbjcq2)	#arch_2_11	139,5,5
 
+/*
+// Not in official script.
 job3_arch02,252,267,0	script	#arch_2_12	139,5,5,{
 OnTouch:
-	mapannounce "job3_arch02","Whispering of an impersonation: It's a crossroad. Let's go to the left side. I have to find my pipe.",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
+	mapannounce "job3_arch02","Whispering of an impersonation: It's a crossroad. Let's go to the left side. I have to find my pipe.",bc_map,"0xFFCE00";
 	end;
 }
 
 job3_arch02,250,290,0	script	#arch_2_13	139,5,5,{
 OnTouch:
-	mapannounce "job3_arch02","Whispering of an impersonation: I can see a ruined shrine. Take a rest in there.",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
+	mapannounce "job3_arch02","Whispering of an impersonation: I can see a ruined shrine. Take a rest in there.",bc_map,"0xFFCE00";
 	end;
 }
+*/
 
 job3_arch02,206,113,0	script	#arch_2_boss	139,5,5,{
 OnTouch:
 	if (countitem(12382)) {
 		delitem 12382,1; //ValkyrieB_Scroll
-		mapannounce "job3_arch02","Whispering of an impersonation: You can't do anything by yourself! Let's go back!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
-		mapwarp "job3_arch02","job3_arch01",29,29;
+		// fall through
+	} else if (getmercinfo(1) == 2038) {
+		mapannounce "job3_arch02","A shout of devil: You are so childish. I invite you a party of devil. I'll make you have a fun!",bc_map,"0xFF0000";
+		end;
 	}
-	if (getmercinfo(1) == 2038)
-		mapannounce "job3_arch02","A shout of devil: You are so childish. I invite you a party of devil. I'll make you have a fun!",bc_map,"0xFF0000"; //FW_NORMAL 12 0 0
-	else {
-		mapannounce "job3_arch02","Whispering of an impersonation: You can't do anything by yourself! Let's go back!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
-		mapwarp "job3_arch02","job3_arch01",29,29;
-	}
+	mapannounce "job3_arch02","Whispering of an impersonation: You can't do anything by yourself! Let's go back!",bc_map,"0xFFCE00";
+	mapwarp "job3_arch02","job3_arch01",29,29;
 	end;
 }
 
 job3_arch02,284,159,0	script	#arch_3_01	139,20,20,{
 OnTouch:
-	if (BaseJob != Job_Priest) {
-		mapannounce "job3_arch02","Frus: Do you want to see God? Okay, I'll send you to the land of the dead by myself!",bc_map,"0xFF0000"; //FW_NORMAL 12 0 0
-		areamonster "job3_arch02",242,44,246,48,"Frus",1762,1;
+	if (Class != Job_Priest) {
+		mapannounce "job3_arch02","Frus: Do you want to see God? Okay, I'll send you to the land of the dead by myself!",bc_map,"0xFF0000";
+		areamonster "job3_arch02",242,44,246,48,"Frus",1762,1,"#arch_3_01::OnMyMobDead";
 	}
-	hideonnpc "#arch_3_01";
+	disablenpc "#arch_3_01";
+	end;
+OnMyMobDead:
 	end;
 OnKill:
 	killmonster "job3_arch02","#arch_3_01::OnMyMobDead";
 	end;
-OnInit:
-	hideoffnpc "#arch_3_01";
-	end;
+//OnInit:
+//	enablenpc "#arch_3_01";
+//	end;
 }
 
 job3_arch02,307,200,0	script	#arch_3_02	139,5,5,{
 OnTouch:
 	if (BaseJob == Job_Priest) {
-		mapannounce "job3_arch02","Skogul: You are my guest!",bc_map,"0xFF0000"; //FW_NORMAL 12 0 0
-		monster "job3_arch02",307,200,"Skogul",1761,1;
+		mapannounce "job3_arch02","Skogul: You are my guest!",bc_map,"0xFF0000";
+		monster "job3_arch02",307,200,"Skogul",1761,1,"#arch_3_02::OnMyMobDead";
 	}
-	hideonnpc "#arch_3_02";
+	disablenpc "#arch_3_02";
+	end;
+OnMyMobDead:
 	end;
 OnKill:
 	killmonster "job3_arch02","#arch_3_02::OnMyMobDead";
 	end;
-OnInit:
-	hideoffnpc "#arch_3_02";
-	end;
+//OnInit:
+//	enablenpc "#arch_3_02";
+//	end;
 }
 
 job3_arch02,296,216,0	script	#arch_3_03	139,5,5,{
 OnTouch:
-	mapannounce "job3_arch02","Frus: I like your face... Can I steal it?",bc_map,"0xFF0000"; //FW_NORMAL 12 0 0
-	monster "job3_arch02",296,216,"Frus",1762,1;
-	hideonnpc "#arch_3_03";
+	mapannounce "job3_arch02","Frus: I like your face... Can I steal it?",bc_map,"0xFF0000";
+	monster "job3_arch02",296,216,"Frus",1762,1,"#arch_3_03::OnMyMobDead";
+	disablenpc "#arch_3_03";
+	end;
+OnMyMobDead:
 	end;
 OnKill:
 	killmonster "job3_arch02","#arch_3_03::OnMyMobDead";
 	end;
 OnInit:
-	hideonnpc "#arch_3_03";
+	disablenpc "#arch_3_03";
 	end;
 }
 
 job3_arch02,389,390,1	script	mob#arch_1	844,{
 	end;
 OnEnable:
-	monster "job3_arch02",100,102,"Shrine Invader",1394,2;
-	monster "job3_arch02",90,131,"Shrine Invader",1394,2;
-	monster "job3_arch02",91,170,"Shrine Invader",1427,1;
-	monster "job3_arch02",104,183,"Shrine Invader",1427,1;
-	monster "job3_arch02",138,205,"Shrine Invader",1394,2;
-	monster "job3_arch02",161,215,"Shrine Invader",1394,2;
-	monster "job3_arch02",165,215,"Shrine Invader",1427,1;
-	monster "job3_arch02",201,236,"Shrine Invader",1394,2;
-	monster "job3_arch02",218,250,"Shrine Invader",1427,1;
-	monster "job3_arch02",254,293,"Shrine Invader",1427,1;
+	monster "job3_arch02",100,102,"Shrine Invader",1394,2,"mob#arch_1::OnMyMobDead";
+	monster "job3_arch02",90,131,"Shrine Invader",1394,2,"mob#arch_1::OnMyMobDead";
+	monster "job3_arch02",91,170,"Shrine Invader",1427,1,"mob#arch_1::OnMyMobDead";
+	monster "job3_arch02",104,183,"Shrine Invader",1427,1,"mob#arch_1::OnMyMobDead";
+	monster "job3_arch02",138,205,"Shrine Invader",1394,2,"mob#arch_1::OnMyMobDead";
+	monster "job3_arch02",161,215,"Shrine Invader",1394,2,"mob#arch_1::OnMyMobDead";
+	monster "job3_arch02",165,215,"Shrine Invader",1427,1,"mob#arch_1::OnMyMobDead";
+	monster "job3_arch02",201,236,"Shrine Invader",1394,2,"mob#arch_1::OnMyMobDead";
+	monster "job3_arch02",218,250,"Shrine Invader",1427,1,"mob#arch_1::OnMyMobDead";
+	monster "job3_arch02",254,293,"Shrine Invader",1427,1,"mob#arch_1::OnMyMobDead";
+	end;
+OnMyMobDead:
 	end;
 OnKill:
 	killmonster "job3_arch02","mob#arch_1::OnMyMobDead";
@@ -1467,18 +1474,20 @@ OnKill:
 job3_arch02,389,389,1	script	mob#arch_2	844,{
 	end;
 OnEnable:
-	monster "job3_arch02",156,321,"Shrine Invader",1480,2;
-	monster "job3_arch02",170,305,"Shrine Invader",1480,2;
-	monster "job3_arch02",183,293,"Shrine Invader",1453,1;
-	monster "job3_arch02",200,287,"Shrine Invader",1453,1;
-	monster "job3_arch02",256,293,"Shrine Invader",1480,2;
-	monster "job3_arch02",286,284,"Shrine Invader",1480,2;
-	monster "job3_arch02",278,236,"Shrine Invader",1453,1;
-	monster "job3_arch02",292,185,"Shrine Invader",1480,2;
-	monster "job3_arch02",281,170,"Shrine Invader",1453,1;
-	monster "job3_arch02",227,166,"Shrine Invader",1453,1;
-	monster "job3_arch02",190,146,"Shrine Invader",1480,1;
-	monster "job3_arch02",204,177,"Shrine Invader",1453,1;
+	monster "job3_arch02",156,321,"Shrine Invader",1480,2,"mob#arch_2::OnMyMobDead";
+	monster "job3_arch02",170,305,"Shrine Invader",1480,2,"mob#arch_2::OnMyMobDead";
+	monster "job3_arch02",183,293,"Shrine Invader",1453,1,"mob#arch_2::OnMyMobDead";
+	monster "job3_arch02",200,287,"Shrine Invader",1453,1,"mob#arch_2::OnMyMobDead";
+	monster "job3_arch02",256,293,"Shrine Invader",1480,2,"mob#arch_2::OnMyMobDead";
+	monster "job3_arch02",286,284,"Shrine Invader",1480,2,"mob#arch_2::OnMyMobDead";
+	monster "job3_arch02",278,236,"Shrine Invader",1453,1,"mob#arch_2::OnMyMobDead";
+	monster "job3_arch02",292,185,"Shrine Invader",1480,2,"mob#arch_2::OnMyMobDead";
+	monster "job3_arch02",281,170,"Shrine Invader",1453,1,"mob#arch_2::OnMyMobDead";
+	monster "job3_arch02",227,166,"Shrine Invader",1453,1,"mob#arch_2::OnMyMobDead";
+	monster "job3_arch02",190,146,"Shrine Invader",1480,1,"mob#arch_2::OnMyMobDead";
+	monster "job3_arch02",204,177,"Shrine Invader",1453,1,"mob#arch_2::OnMyMobDead";
+	end;
+OnMyMobDead:
 	end;
 OnKill:
 	killmonster "job3_arch02","mob#arch_2::OnMyMobDead";
@@ -1488,43 +1497,43 @@ OnKill:
 job3_arch02,389,388,1	script	start#arch	844,{
 	end;
 OnInit:
-	mapwarp "job3_arch02","job3_arch02",29,29;
+	mapwarp "job3_arch02","job3_arch01",29,29;
 	end;
 OnEnable:
-	mapwarp "job3_arch02","job3_arch02",29,29;
-	hideoffnpc "#arch_1_start";
-	hideoffnpc "#arch_1_01";
-	hideoffnpc "#arch_1_02";
-	hideoffnpc "#arch_1_03";
-	hideoffnpc "#arch_1_04";
-	hideoffnpc "#arch_1_05";
-	hideoffnpc "#arch_1_06";
-	hideoffnpc "#arch_1_07";
-	hideoffnpc "#arch_1_08";
-	hideoffnpc "#arch_1_09";
-	hideoffnpc "#arch_1_10";
-	hideoffnpc "#arch_1_11";
-	hideoffnpc "#arch_1_12";
-	hideoffnpc "#arch_1_boss";
-	hideonnpc "#arch_2_01";
-	hideonnpc "#arch_2_02";
-	hideonnpc "#arch_2_03";
-	hideonnpc "#arch_2_04";
-	hideonnpc "#arch_2_05";
-	hideonnpc "#arch_2_06";
-	hideonnpc "#arch_2_07";
-	hideonnpc "#arch_2_08";
-	hideonnpc "#arch_2_09";
-	hideonnpc "#arch_2_10";
-	hideonnpc "#arch_2_11";
-	hideonnpc "#arch_2_boss";
-	hideonnpc "#arch_3_01";
-	hideonnpc "#arch_3_02";
-	hideonnpc "#arch_3_03";
+	mapwarp "job3_arch02","job3_arch01",29,29;
+	enablenpc "#arch_1_start";
+	enablenpc "#arch_1_01";
+	enablenpc "#arch_1_02";
+	enablenpc "#arch_1_03";
+	enablenpc "#arch_1_04";
+	enablenpc "#arch_1_05";
+	enablenpc "#arch_1_06";
+	enablenpc "#arch_1_07";
+	enablenpc "#arch_1_08";
+	enablenpc "#arch_1_09";
+	enablenpc "#arch_1_10";
+	enablenpc "#arch_1_11";
+	enablenpc "#arch_1_12";
+	enablenpc "#arch_1_boss";
+	disablenpc "#arch_2_01";
+	disablenpc "#arch_2_02";
+	disablenpc "#arch_2_03";
+	disablenpc "#arch_2_04";
+	disablenpc "#arch_2_05";
+	disablenpc "#arch_2_06";
+	disablenpc "#arch_2_07";
+	disablenpc "#arch_2_08";
+	disablenpc "#arch_2_09";
+	disablenpc "#arch_2_10";
+	disablenpc "#arch_2_11";
+	disablenpc "#arch_2_boss";
+	disablenpc "#arch_3_01";
+	disablenpc "#arch_3_02";
+	disablenpc "#arch_3_03";
 	donpcevent "#arch_3_01::OnKill";
 	donpcevent "#arch_3_02::OnKill";
 	donpcevent "#arch_3_03::OnKill";
-	hideonnpc "#arch_end";
+	disablenpc "#arch_end";
 	hideonnpc "Valkyrie#arch_01";
 	hideonnpc "Valkyrie#arch_02";
 	hideonnpc "Valkyrie Anguhilde#end";
@@ -1563,10 +1572,10 @@ OnTimer540000:
 	}
 	end;
 OnTimer600000:
-	mapannounce "job3_arch02","Valkyrie's Nightmare: I can't stand anymore!",bc_map,"0xFF0000"; //FW_NORMAL 12 0 0
+	mapannounce "job3_arch02","Valkyrie's Nightmare: I can't stand anymore!",bc_map,"0xFF0000";
 	end;
 OnTimer605000:
-	mapannounce "job3_arch02","Whispering of Valkyrie: No way! I can't let you guys do that. Go back!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
+	mapannounce "job3_arch02","Whispering of Valkyrie: No way! I can't let you guys do that. Go back!",bc_map,"0xFFCE00";
 	mapwarp "job3_arch02","job3_arch01",29,29;
 	donpcevent "Valkyrie#arch::OnBc";
 	stopnpctimer;
@@ -1576,32 +1585,32 @@ OnTimer605000:
 job3_arch02,390,388,1	script	#arch_2_start	844,{
 	end;
 OnInit:
-	hideonnpc "#arch_2_01";
-	hideonnpc "#arch_2_02";
-	hideonnpc "#arch_2_03";
-	hideonnpc "#arch_2_04";
-	hideonnpc "#arch_2_05";
-	hideonnpc "#arch_2_06";
-	hideonnpc "#arch_2_07";
-	hideonnpc "#arch_2_08";
-	hideonnpc "#arch_2_09";
-	hideonnpc "#arch_2_10";
-	hideonnpc "#arch_2_11";
-	hideonnpc "#arch_2_boss";
+	disablenpc "#arch_2_01";
+	disablenpc "#arch_2_02";
+	disablenpc "#arch_2_03";
+	disablenpc "#arch_2_04";
+	disablenpc "#arch_2_05";
+	disablenpc "#arch_2_06";
+	disablenpc "#arch_2_07";
+	disablenpc "#arch_2_08";
+	disablenpc "#arch_2_09";
+	disablenpc "#arch_2_10";
+	disablenpc "#arch_2_11";
+	disablenpc "#arch_2_boss";
 	end;
 OnEnable:
-	hideoffnpc "#arch_2_01";
-	hideoffnpc "#arch_2_02";
-	hideoffnpc "#arch_2_03";
-	hideoffnpc "#arch_2_04";
-	hideoffnpc "#arch_2_05";
-	hideoffnpc "#arch_2_06";
-	hideoffnpc "#arch_2_07";
-	hideoffnpc "#arch_2_08";
-	hideoffnpc "#arch_2_09";
-	hideoffnpc "#arch_2_10";
-	hideoffnpc "#arch_2_11";
-	hideoffnpc "#arch_2_boss";
+	enablenpc "#arch_2_01";
+	enablenpc "#arch_2_02";
+	enablenpc "#arch_2_03";
+	enablenpc "#arch_2_04";
+	enablenpc "#arch_2_05";
+	enablenpc "#arch_2_06";
+	enablenpc "#arch_2_07";
+	enablenpc "#arch_2_08";
+	enablenpc "#arch_2_09";
+	enablenpc "#arch_2_10";
+	enablenpc "#arch_2_11";
+	enablenpc "#arch_2_boss";
 	donpcevent "#arch_val02::OnEnable";
 	donpcevent "mob#arch_2::OnEnable";
 	end;
@@ -1610,11 +1619,11 @@ OnEnable:
 job3_arch02,390,386,1	script	#arch_3_start	844,{
 	end;
 OnEnable:
-	hideoffnpc "#arch_3_01";
-	hideoffnpc "#arch_3_02";
-	hideoffnpc "#arch_3_03";
-	hideoffnpc "#arch_end";
-	hideoffnpc "#arch_end_eff";
+	enablenpc "#arch_3_01";
+	enablenpc "#arch_3_02";
+	enablenpc "#arch_3_03";
+	enablenpc "#arch_end";
+	//enablenpc "#arch_end_eff";
 	end;
 }
 
@@ -1624,21 +1633,16 @@ OnTouch:
 	end;
 }
 
-odin_tem02,30,181,0	script	#wherearch01	139,10,10,{
-OnTouch:
-	if (job_arch == 5)
-		viewpoint 1,282,263,1,0xFFFF99;
-	end;
-}
-
-odin_tem02,30,335,0	script	#wherearch02	139,10,10,{
-OnTouch:
-	if (job_arch == 5)
-		viewpoint 1,282,263,1,0xFFFF99;
-	end;
-}
-
 /*
+job_arch01,26,25,0	script	#archremove	139,3,3,{
+OnTouch:
+	if (countitem(6154)) delitem 6154, countitem(6154); //Broken_Horn_Pipe
+	if (countitem(12381)) delitem 12381, countitem(12381); //ValkyrieA_Scroll
+	if (countitem(12382)) delitem 12382, countitem(12382); //ValkyrieB_Scroll
+	if (countitem(2798)) delitem 2798, countitem(2798); //Will_Of_Exhausted_Angel
+	end;
+}
+
 job3_arch01,1,1,1	script	control#arch	844,{
 	mes "[Troll]";
 	mes "Password please.";
@@ -1667,3 +1671,17 @@ job3_arch01,1,1,1	script	control#arch	844,{
 	}
 }
 */
+
+odin_tem02,30,181,0	script	#wherearch01	139,10,10,{
+OnTouch:
+	if (job_arch == 5)
+		viewpoint 1,282,263,1,0xFFFF99;
+	end;
+}
+
+odin_tem02,30,335,0	script	#wherearch02	139,10,10,{
+OnTouch:
+	if (job_arch == 5)
+		viewpoint 1,282,263,1,0xFFFF99;
+	end;
+}
