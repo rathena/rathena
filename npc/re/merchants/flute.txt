@@ -7,6 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
+//= [Official Conversion]
 //= Sells Falcon Flute and Wolf Flute.
 //===== Additional Comments: ================================= 
 //= 1.0 First Version. [Masao]

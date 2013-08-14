@@ -7,12 +7,13 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
+//= [Official Conversion]
 //= Turns arrows into Arrow Quivers.
-// Breakdown of Subroutine "S_BuyQuiver"
-// arg(0): Type of Arrow to be packaged (item ID).
-// arg(1): How many of each 'getarg(0)' arrow per quiver.
-// arg(2): The cost of making a 'getarg(0)' quiver.
-// arg(3): The quiver given by the NPC (item ID).
+//= Breakdown of Subroutine "S_BuyQuiver"
+//= arg(0): Type of Arrow to be packaged (item ID).
+//= arg(1): How many of each 'getarg(0)' arrow per quiver.
+//= arg(2): The cost of making a 'getarg(0)' quiver.
+//= arg(3): The quiver given by the NPC (item ID).
 //===== Additional Comments: =================================
 //= 1.0 Added Mora NPC. [Euphy]
 //= 1.1 Updated to match the official scripts. [Euphy]

@@ -7,6 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
+//= [Official Conversion]
 //= Expansion for War of Emperium FE.
 //= Invest in each realm to unlock new maps:
 //= - Guild Dungeon F2, total 20,000,000z.

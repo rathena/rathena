@@ -7,6 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: ========================================= 
+//= [Official Conversion]
 //= Renewal duplicates.
 //===== Additional Comments: =================================
 //= 1.0 Split Mount Manager NPC.

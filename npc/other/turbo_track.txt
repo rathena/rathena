@@ -7,6 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: ========================================= 
+//= [Official Conversion]
 //= Turbo Track Course: 
 //= - Solo Mode/Time Attack
 //= - Normal (Non-PVP) - 4/8/16 Person

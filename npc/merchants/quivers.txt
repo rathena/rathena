@@ -9,11 +9,11 @@
 //===== Description: =========================================
 //= [Official Conversion]
 //= Turns arrows into Arrow Quivers.
-// Breakdown of Subroutine "S_BuyQuiver"
-// arg(0): Type of Arrow to be packaged (item ID).
-// arg(1): How many of each 'getarg(0)' arrow per quiver.
-// arg(2): The cost of making a 'getarg(0)' quiver.
-// arg(3): The quiver given by the NPC (item ID).
+//= Breakdown of Subroutine "S_BuyQuiver"
+//= arg(0): Type of Arrow to be packaged (item ID).
+//= arg(1): How many of each 'getarg(0)' arrow per quiver.
+//= arg(2): The cost of making a 'getarg(0)' quiver.
+//= arg(3): The quiver given by the NPC (item ID).
 //===== Additional Comments: =================================
 //= 07/06/05 : Added 1st Version. [Muad_Dib]
 //= Converted to rAthena format by Dr.Evil
@@ -21,7 +21,7 @@
 //= Fixed a few spelling errors. [Nexon]
 //= 1.1 Added Holy Arrow Quivers [Playtester]
 //= 1.2 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
-//=	Removed "Holy Arrows" from the list.
+//=     Removed "Holy Arrows" from the list.
 //============================================================
 
 payon_in01,5,134,5	script	Inventor Jaax	89,{
