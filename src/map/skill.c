@@ -212,6 +212,7 @@ int	skill_get_weapontype( uint16 skill_id )        { skill_get (skill_db[skill_i
 int	skill_get_ammotype( uint16 skill_id )          { skill_get (skill_db[skill_id].ammo, skill_id, 1); }
 int	skill_get_ammo_qty( uint16 skill_id, uint16 skill_lv )  { skill_get (skill_db[skill_id].ammo_qty[skill_lv-1], skill_id, skill_lv); }
 int	skill_get_inf2( uint16 skill_id )              { skill_get (skill_db[skill_id].inf2, skill_id, 1); }
+int	skill_get_inf3( uint16 skill_id )              { skill_get (skill_db[skill_id].inf3, skill_id, 1); }
 int	skill_get_castcancel( uint16 skill_id )        { skill_get (skill_db[skill_id].castcancel, skill_id, 1); }
 int	skill_get_maxcount( uint16 skill_id ,uint16 skill_lv )  { skill_get (skill_db[skill_id].maxcount[skill_lv-1], skill_id, skill_lv); }
 int	skill_get_blewcount( uint16 skill_id ,uint16 skill_lv ) { skill_get (skill_db[skill_id].blewcount[skill_lv-1], skill_id, skill_lv); }
@@ -6425,60 +6426,61 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case AM_BERSERKPITCHER:
 	case AM_POTIONPITCHER: {
-			int i,hp = 0,sp = 0;
-			if( dstmd && dstmd->class_ == MOBID_EMPERIUM ) {
+		int i,hp = 0,sp = 0;
+		if( dstmd && dstmd->class_ == MOBID_EMPERIUM ) {
+			map_freeblock_unlock();
+			return 1;
+		}
+		if( sd ) {
+			int x,bonus=100;
+			struct skill_condition require = skill_get_requirement(sd, skill_id, skill_lv);
+			x = skill_lv%11 - 1;
+			i = pc_search_inventory(sd, require.itemid[x]);
+			if (i < 0 || require.itemid[x] <= 0) {
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				map_freeblock_unlock();
 				return 1;
 			}
-			if( sd ) {
-				int x,bonus=100;
-				x = skill_lv%11 - 1;
-				i = pc_search_inventory(sd,skill_db[skill_id].itemid[x]);
-				if( i < 0 || skill_db[skill_id].itemid[x] <= 0 ) {
+				if (sd->inventory_data[i] == NULL || sd->status.inventory[i].amount < require.amount[x]) {
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+				map_freeblock_unlock();
+				return 1;
+			}
+			if( skill_id == AM_BERSERKPITCHER ) {
+				if( dstsd && dstsd->status.base_level < (unsigned int)sd->inventory_data[i]->elv ) {
 					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 					map_freeblock_unlock();
 					return 1;
 				}
-				if(sd->inventory_data[i] == NULL || sd->status.inventory[i].amount < skill_db[skill_id].amount[x]) {
-					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-					map_freeblock_unlock();
-					return 1;
+			}
+			potion_flag = 1;
+			potion_hp = potion_sp = potion_per_hp = potion_per_sp = 0;
+			potion_target = bl->id;
+			run_script(sd->inventory_data[i]->script,0,sd->bl.id,0);
+			potion_flag = potion_target = 0;
+			if( sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_ALCHEMIST )
+				bonus += sd->status.base_level;
+			if( potion_per_hp > 0 || potion_per_sp > 0 ) {
+				hp = tstatus->max_hp * potion_per_hp / 100;
+				hp = hp * (100 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)*bonus/10000;
+				if( dstsd ) {
+					sp = dstsd->status.max_sp * potion_per_sp / 100;
+					sp = sp * (100 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)*bonus/10000;
 				}
-				if( skill_id == AM_BERSERKPITCHER ) {
-					if( dstsd && dstsd->status.base_level < (unsigned int)sd->inventory_data[i]->elv ) {
-						clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-						map_freeblock_unlock();
-						return 1;
-					}
+			} else {
+				if( potion_hp > 0 ) {
+					hp = potion_hp * (100 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)*bonus/10000;
+					hp = hp * (100 + (tstatus->vit<<1)) / 100;
+					if( dstsd )
+						hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10) / 100;
 				}
-				potion_flag = 1;
-				potion_hp = potion_sp = potion_per_hp = potion_per_sp = 0;
-				potion_target = bl->id;
-				run_script(sd->inventory_data[i]->script,0,sd->bl.id,0);
-				potion_flag = potion_target = 0;
-				if( sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_ALCHEMIST )
-					bonus += sd->status.base_level;
-				if( potion_per_hp > 0 || potion_per_sp > 0 ) {
-					hp = tstatus->max_hp * potion_per_hp / 100;
-					hp = hp * (100 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)*bonus/10000;
-					if( dstsd ) {
-						sp = dstsd->status.max_sp * potion_per_sp / 100;
-						sp = sp * (100 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)*bonus/10000;
-					}
-				} else {
-					if( potion_hp > 0 ) {
-						hp = potion_hp * (100 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)*bonus/10000;
-						hp = hp * (100 + (tstatus->vit<<1)) / 100;
-						if( dstsd )
-							hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10) / 100;
-					}
-					if( potion_sp > 0 ) {
-						sp = potion_sp * (100 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)*bonus/10000;
-						sp = sp * (100 + (tstatus->int_<<1)) / 100;
-						if( dstsd )
-							sp = sp * (100 + pc_checkskill(dstsd,MG_SRECOVERY)*10) / 100;
-					}
+				if( potion_sp > 0 ) {
+					sp = potion_sp * (100 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)*bonus/10000;
+					sp = sp * (100 + (tstatus->int_<<1)) / 100;
+					if( dstsd )
+						sp = sp * (100 + pc_checkskill(dstsd,MG_SRECOVERY)*10) / 100;
 				}
+			}
 
 				if (sd->itemgrouphealrate[IG_POTION]>0) {
 					hp += hp * sd->itemgrouphealrate[IG_POTION] / 100;
@@ -9664,9 +9666,11 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 
 		// SC_MAGICPOWER needs to switch states before any damage is actually dealt
 		skill_toggle_magicpower(src, ud->skill_id);
-		if( ud->skill_id != RA_CAMOUFLAGE ) // only normal attack and auto cast skills benefit from its bonuses
-			status_change_end(src,SC_CAMOUFLAGE, INVALID_TIMER);
 
+		// only normal attack and auto cast skills benefit from its bonuses
+		if(!(skill_get_inf3(ud->skill_id)&INF3_NOENDCAMOUFLAGE))
+			status_change_end(src,SC_CAMOUFLAGE, INVALID_TIMER);
+			
 		if (skill_get_casttype(ud->skill_id) == CAST_NODAMAGE)
 			skill_castend_nodamage_id(src,target,ud->skill_id,ud->skill_lv,tick,flag);
 		else
@@ -9874,7 +9878,8 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr_t data)
 //			}
 //		}
 		unit_set_walkdelay(src, tick, battle_config.default_walk_delay+skill_get_walkdelay(ud->skill_id, ud->skill_lv), 1);
-		status_change_end(src,SC_CAMOUFLAGE, INVALID_TIMER);// only normal attack and auto cast skills benefit from its bonuses
+		if(!(skill_get_inf3(ud->skill_id)&INF3_NOENDCAMOUFLAGE))
+			status_change_end(src,SC_CAMOUFLAGE, INVALID_TIMER);
 		map_freeblock_lock();
 		skill_castend_pos2(src,ud->skillx,ud->skilly,ud->skill_id,ud->skill_lv,tick,0);
 
@@ -10219,13 +10224,14 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			int summons[5] = { 1589, 1579, 1575, 1555, 1590 };
 			//int summons[5] = { 1020, 1068, 1118, 1500, 1368 };
 			int class_ = skill_id==AM_SPHEREMINE?1142:summons[skill_lv-1];
+			int ai = (skill_id == AM_SPHEREMINE) ? AI_SPHERE : AI_FLORA;
 			struct mob_data *md;
 
 			// Correct info, don't change any of this! [celest]
-			md = mob_once_spawn_sub(src, src->m, x, y, status_get_name(src), class_, "", SZ_SMALL, AI_NONE);
+			md = mob_once_spawn_sub(src, src->m, x, y, status_get_name(src), class_, "", SZ_SMALL, ai);
 			if (md) {
 				md->master_id = src->id;
-				md->special_state.ai = (skill_id == AM_SPHEREMINE) ? AI_SPHERE : AI_FLORA;
+				md->special_state.ai = ai;
 				if( md->deletetimer != INVALID_TIMER )
 					delete_timer(md->deletetimer, mob_timer_delete);
 				md->deletetimer = add_timer (gettick() + skill_get_time(skill_id,skill_lv), mob_timer_delete, md->bl.id, 0);
@@ -10237,9 +10243,11 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	// Slim Pitcher [Celest]
 	case CR_SLIMPITCHER:
 		if (sd) {
-			int i = skill_lv%11 - 1;
-			int j = pc_search_inventory(sd,skill_db[skill_id].itemid[i]);
-			if( j < 0 || skill_db[skill_id].itemid[i] <= 0 || sd->inventory_data[j] == NULL || sd->status.inventory[j].amount < skill_db[skill_id].amount[i] )
+		int i = 0, j = 0;
+		struct skill_condition require = skill_get_requirement(sd, skill_id, skill_lv);
+		i = skill_lv%11 - 1;
+		j = pc_search_inventory(sd, require.itemid[i]);
+		if (j < 0 || require.itemid[i] <= 0 || sd->inventory_data[j] == NULL || sd->status.inventory[j].amount < require.amount[i])
 			{
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				return 1;
@@ -12148,7 +12156,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			if( battle_check_target(&src->bl,bl,BCT_ENEMY) > 0 )
 				skill_attack(skill_get_type(GN_HELLS_PLANT_ATK), ss, &src->bl, bl, GN_HELLS_PLANT_ATK, sg->skill_lv, tick, 0);
 			if( ss != bl) //The caster is the only one who can step on the Plants, without destroying them
-				sg->limit = DIFF_TICK(tick, sg->tick) + 100;
+			skill_delunit(sg->unit); // deleting it directly to avoid extra hits
 			break;
 
 		case UNT_CLOUD_KILL:
@@ -13411,7 +13419,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_id
 		case SO_ELECTRICWALK:	// Can't be casted until you've walked all cells.
 			if( sc && sc->data[SC_PROPERTYWALK] &&
 			   sc->data[SC_PROPERTYWALK]->val3 < skill_get_maxcount(sc->data[SC_PROPERTYWALK]->val1,sc->data[SC_PROPERTYWALK]->val2) ) {
-				clif_skill_fail(sd,skill_id,0x0,0);
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				return 0;
 			}
 			break;
@@ -15149,7 +15157,7 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 				return 1;
 			}
 			//It deletes everything except traps and barriers
-			if( !(skill_get_inf2(unit->group->skill_id)&(INF2_TRAP|INF2_NOLP)) || unit->group->skill_id == WZ_FIREPILLAR ) {
+			if( (!(skill_get_inf2(unit->group->skill_id)&(INF2_TRAP)) && !(skill_get_inf3(unit->group->skill_id)&(INF2_NOLP)) ) || unit->group->skill_id == WZ_FIREPILLAR ) {
 				skill_delunit(unit);
 				return 1;
 			}
@@ -15221,7 +15229,7 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 			break;
 	}
 
-	if (unit->group->skill_id == SA_LANDPROTECTOR && !(skill_get_inf2(skill_id)&(INF2_TRAP|INF2_NOLP))) { //It deletes everything except traps and barriers
+	if (unit->group->skill_id == SA_LANDPROTECTOR && !(skill_get_inf2(skill_id)&(INF2_TRAP)) && !(skill_get_inf3(skill_id)&(INF3_NOLP) ) ) { //It deletes everything except traps and barriers
 		(*alive) = 0;
 		return 1;
 	}
@@ -15856,7 +15864,7 @@ int skill_unit_timer_sub_onplace (struct block_list* bl, va_list ap) {
 
 	nullpo_ret(group);
 
-	if( !(skill_get_inf2(group->skill_id)&(INF2_TRAP|INF2_NOLP)) && group->skill_id != NC_NEUTRALBARRIER && map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR) )
+	if( !(skill_get_inf2(group->skill_id)&(INF2_SONG_DANCE|INF2_TRAP)) && !(skill_get_inf3(group->skill_id)&(INF3_NOLP)) && group->skill_id != NC_NEUTRALBARRIER && map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR) )
 		return 0; //AoE skills are ineffective. [Skotlex]
 
 	if( battle_check_target(&unit->bl,bl,group->target_flag) <= 0 )
@@ -18028,8 +18036,9 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current)
 	else
 		skill_db[idx].skill_type = 0;
 	skill_split_atoi(split[14],skill_db[idx].blewcount);
-	safestrncpy(skill_db[idx].name, trim(split[15]), sizeof(skill_db[idx].name));
-	safestrncpy(skill_db[idx].desc, trim(split[16]), sizeof(skill_db[idx].desc));
+	skill_db[idx].inf3 = (int)strtol(split[15], NULL,0);
+	safestrncpy(skill_db[idx].name, trim(split[16]), sizeof(skill_db[idx].name));
+	safestrncpy(skill_db[idx].desc, trim(split[17]), sizeof(skill_db[idx].desc));
 	strdb_iput(skilldb_name2id, skill_db[idx].name, skill_id);
 
 	return true;
@@ -18404,7 +18413,7 @@ static void skill_readdb(void)
 	safestrncpy(skill_db[0].name, "UNKNOWN_SKILL", sizeof(skill_db[0].name));
 	safestrncpy(skill_db[0].desc, "Unknown Skill", sizeof(skill_db[0].desc));
 
-	sv_readdb(db_path, DBPATH"skill_db.txt"          , ',',  17, 17, MAX_SKILL_DB, skill_parse_row_skilldb);
+	sv_readdb(db_path, DBPATH"skill_db.txt"          , ',',  18, 18, MAX_SKILL_DB, skill_parse_row_skilldb);
 	sv_readdb(db_path, DBPATH"skill_require_db.txt"  , ',',  32, 32, MAX_SKILL_DB, skill_parse_row_requiredb);
 #ifdef RENEWAL_CAST
 	sv_readdb(db_path, "re/skill_cast_db.txt"     , ',',   8,  8, MAX_SKILL_DB, skill_parse_row_castdb);

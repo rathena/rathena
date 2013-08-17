@@ -1628,19 +1628,10 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, uin
 			} else if(sc->data[SC_LONGING]) { //Allow everything except dancing/re-dancing. [Skotlex]
 				if (skill_id == BD_ENCORE ||
 					skill_get_inf2(skill_id)&(INF2_SONG_DANCE|INF2_ENSEMBLE_SKILL)
-				)
+					)
 					return 0;
-			} else {
-				switch (skill_id) {
-					case BD_ADAPTATION:
-					case CG_LONGINGFREEDOM:
-					case BA_MUSICALSTRIKE:
-					case DC_THROWARROW:
-						break;
-					default:
-						return 0;
-				}
-			}
+			} else if(!(skill_get_inf3(skill_id)&INF3_USABLE_DANCE)) //skills that can be used in dancing state
+				return 0;
 			if ((sc->data[SC_DANCING]->val1&0xFFFF) == CG_HERMODE && skill_id == BD_ADAPTATION)
 				return 0;	//Can't amp out of Wand of Hermode :/ [Skotlex]
 		}
@@ -1681,21 +1672,8 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, uin
 	}
 
 	if (sc && sc->option) {
-		if (sc->option&OPTION_HIDE) {
-			switch (skill_id) { //Usable skills while hiding.
-				case TF_HIDING:
-				case AS_GRIMTOOTH:
-				case RG_BACKSTAP:
-				case RG_RAID:
-				case NJ_SHADOWJUMP:
-				case NJ_KIRIKAGE:
-				case KO_YAMIKUMO:
-					break;
-				default:
-					//Non players can use all skills while hidden.
-					if (!skill_id || src->type == BL_PC)
-						return 0;
-			}
+		if ((sc->option&OPTION_HIDE) && src->type == BL_PC &&( !skill_id || !(skill_get_inf3(skill_id)&INF3_USABLE_HIDING))){  //Non players can use all skills while hidden.
+			return 0;
 		}
 		if (sc->option&OPTION_CHASEWALK && skill_id != ST_CHASEWALK)
 			return 0;
@@ -4172,7 +4150,8 @@ void status_calc_bl_(struct block_list* bl, enum scb_flag flag, bool first)
 
 		if(b_status.rhw.atk2 != status->rhw.atk2 || b_status.lhw.atk2 != status->lhw.atk2
 #ifdef RENEWAL
-		|| b_status.rhw.atk != status->rhw.atk || b_status.lhw.atk != status->lhw.atk || b_status.eatk != status->eatk
+			|| b_status.rhw.atk != status->rhw.atk || b_status.lhw.atk != status->lhw.atk
+			|| b_status.eatk != status->eatk
 #endif
 			)
 			clif_updatestatus(sd,SP_ATK2);

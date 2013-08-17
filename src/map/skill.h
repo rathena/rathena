@@ -52,21 +52,32 @@ enum e_skill_nk {
 //A skill with 3 would be no damage + splash: area of effect.
 //Constants to identify a skill's inf2 value.
 enum e_skill_inf2 {
-	INF2_QUEST_SKILL    = 0x0001,
-	INF2_NPC_SKILL      = 0x0002, //NPC skills are those that players can't have in their skill tree.
-	INF2_WEDDING_SKILL  = 0x0004,
-	INF2_SPIRIT_SKILL   = 0x0008,
-	INF2_GUILD_SKILL    = 0x0010,
-	INF2_SONG_DANCE     = 0x0020,
-	INF2_ENSEMBLE_SKILL = 0x0040,
-	INF2_TRAP           = 0x0080,
-	INF2_TARGET_SELF    = 0x0100, //Refers to ground placed skills that will target the caster as well (like Grandcross)
-	INF2_NO_TARGET_SELF = 0x0200,
-	INF2_PARTY_ONLY     = 0x0400,
-	INF2_GUILD_ONLY     = 0x0800,
-	INF2_NO_ENEMY       = 0x1000,
-	INF2_NOLP           = 0x2000, // Spells that can ignore Land Protector
-	INF2_CHORUS_SKILL	= 0x4000, // Chorus skill
+	INF2_QUEST_SKILL    = 0x00001,
+	INF2_NPC_SKILL      = 0x00002, //NPC skills are those that players can't have in their skill tree.
+	INF2_WEDDING_SKILL  = 0x00004,
+	INF2_SPIRIT_SKILL   = 0x00008,
+	INF2_GUILD_SKILL    = 0x00010,
+	INF2_SONG_DANCE     = 0x00020,
+	INF2_ENSEMBLE_SKILL = 0x00040,
+	INF2_TRAP           = 0x00080,
+	INF2_TARGET_SELF    = 0x00100, //Refers to ground placed skills that will target the caster as well (like Grandcross)
+	INF2_NO_TARGET_SELF = 0x00200,
+	INF2_PARTY_ONLY     = 0x00400,
+	INF2_GUILD_ONLY     = 0x00800,
+	INF2_NO_ENEMY       = 0x01000,
+	INF2_NOLP           = 0x02000, // Spells that can ignore Land Protector
+	INF2_CHORUS_SKILL	= 0x04000, // Chorus skill
+	INF2_NO_BG_DMG		= 0x08000, // spell that ignore bg reduction
+	INF2_NO_GVG_DMG		= 0x10000, // spell that ignore gvg reduction
+};
+
+enum e_skill_inf3 {
+	INF3_NOLP			= 0x0001,	// Spells that can ignore Land Protector
+	INF3_NOENDCAMOUFLAGE		= 0x0002,	// spell that doesn't end camouflage
+	INF3_USABLE_HIDING		= 0x0004,	// spell that can be use in hiding
+	INF3_USABLE_DANCE		= 0x0008,	// spell that can be use while in dancing state
+	INF3_HIT_EMP			= 0x0010,	// spell that could hit emperium
+	//... add other spell list option here
 };
 
 //Walk intervals at which chase-skills are attempted to be triggered.
@@ -99,7 +110,7 @@ struct s_skill_db {
 #endif
 	int upkeep_time[MAX_SKILL_LEVEL],upkeep_time2[MAX_SKILL_LEVEL],cooldown[MAX_SKILL_LEVEL];
 	int castcancel,cast_def_rate;
-	int inf2,maxcount[MAX_SKILL_LEVEL],skill_type;
+	int inf2,maxcount[MAX_SKILL_LEVEL],skill_type,inf3;
 	int blewcount[MAX_SKILL_LEVEL];
 	int hp[MAX_SKILL_LEVEL],sp[MAX_SKILL_LEVEL],mhp[MAX_SKILL_LEVEL],hp_rate[MAX_SKILL_LEVEL],sp_rate[MAX_SKILL_LEVEL],zeny[MAX_SKILL_LEVEL];
 	int weapon,ammo,ammo_qty[MAX_SKILL_LEVEL],state,spiritball[MAX_SKILL_LEVEL];
@@ -269,6 +280,7 @@ int	skill_get_blewcount( uint16 skill_id ,uint16 skill_lv );
 int	skill_get_unit_flag( uint16 skill_id );
 int	skill_get_unit_target( uint16 skill_id );
 int	skill_tree_get_max( uint16 skill_id, int b_class );	// Celest
+int	skill_get_inf3( uint16 skill_id );
 const char*	skill_get_name( uint16 skill_id ); 	// [Skotlex]
 const char*	skill_get_desc( uint16 skill_id ); 	// [Skotlex]
 

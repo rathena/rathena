@@ -1061,7 +1061,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 		}
 		if(sc->data[SC_PAIN_KILLER]){
 			damage -= sc->data[SC_PAIN_KILLER]->val3;
-			damage = max(0,damage);
+			damage = max(1,damage);
 		}
 		if((sce=sc->data[SC_MAGMA_FLOW]) && (rnd()%100 <= sce->val2) ){
 			skill_castend_damage_id(bl,src,MH_MAGMA_FLOW,sce->val1,gettick(),0);
@@ -1273,41 +1273,29 @@ int battle_calc_bg_damage(struct block_list *src, struct block_list *bl, int dam
 	if( !damage )
 		return 0;
 
-	if( bl->type == BL_MOB )
-	{
+	if( bl->type == BL_MOB ) {
 		struct mob_data* md = BL_CAST(BL_MOB, bl);
 		if( map[bl->m].flag.battleground && (md->class_ == MOBID_BLUE_CRYST || md->class_ == MOBID_PINK_CRYST) && flag&BF_SKILL )
 			return 0; // Crystal cannot receive skill damage on battlegrounds
 	}
-
-	switch( skill_id )
-	{
-		case PA_PRESSURE:
-		case HW_GRAVITATION:
-		case NJ_ZENYNAGE:
-		case KO_MUCHANAGE:
-			break;
-		default:
-			if( flag&BF_SKILL )
-			{ //Skills get a different reduction than non-skills. [Skotlex]
-				if( flag&BF_WEAPON )
-					DAMAGE_RATE(battle_config.bg_weapon_damage_rate)
-				if( flag&BF_MAGIC )
-					DAMAGE_RATE(battle_config.bg_magic_damage_rate)
-				if(	flag&BF_MISC )
-					DAMAGE_RATE(battle_config.bg_misc_damage_rate)
-			}
-			else
-			{ //Normal attacks get reductions based on range.
-				if( flag&BF_SHORT )
-					DAMAGE_RATE(battle_config.bg_short_damage_rate)
-				if( flag&BF_LONG )
-					DAMAGE_RATE(battle_config.bg_long_damage_rate)
-			}
-
-			if( !damage ) damage = 1;
+	if(skill_get_inf2(skill_id)&INF2_NO_BG_DMG)
+		return damage;; //skill that ignore bg map reduction
+	if( flag&BF_SKILL ) { //Skills get a different reduction than non-skills. [Skotlex]
+		if( flag&BF_WEAPON )
+			DAMAGE_RATE(battle_config.bg_weapon_damage_rate)
+		if( flag&BF_MAGIC )
+			DAMAGE_RATE(battle_config.bg_magic_damage_rate)
+		if(	flag&BF_MISC )
+			DAMAGE_RATE(battle_config.bg_misc_damage_rate)
+	}
+	else { //Normal attacks get reductions based on range.
+		if( flag&BF_SHORT )
+			DAMAGE_RATE(battle_config.bg_short_damage_rate)
+		if( flag&BF_LONG )
+			DAMAGE_RATE(battle_config.bg_long_damage_rate)
 	}
 
+	damage = max(damage,1); //min 1 dammage
 	return damage;
 }
 
@@ -1323,17 +1311,8 @@ int battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int dama
 		return 0;
 
 	if(md && md->guardian_data) {
-		if(class_ == MOBID_EMPERIUM && flag&BF_SKILL) {
-		//Skill immunity.
-			switch (skill_id) {
-#ifndef RENEWAL
-			case MO_TRIPLEATTACK:
-#endif
-			case HW_GRAVITATION:
-				break;
-			default:
-				return 0;
-			}
+		if(class_ == MOBID_EMPERIUM && flag&BF_SKILL && !(skill_get_inf3(skill_id)&INF3_HIT_EMP)) { //Skill immunity.
+			return 0;
 		}
 		if(src->type != BL_MOB) {
 			struct guild *g = src->type == BL_PC ? ((TBL_PC *)src)->guild : guild_search(status_get_guild_id(src));
@@ -1345,36 +1324,27 @@ int battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int dama
 				return 0; // [MouseJstr]
 		}
 	}
-
-	switch (skill_id) {
-	//Skills with no damage reduction.
-	case PA_PRESSURE:
-	case HW_GRAVITATION:
-	case NJ_ZENYNAGE:
-	case KO_MUCHANAGE:
-	case RK_DRAGONBREATH:
-		break;
-	default:
-		/* Uncomment if you want god-mode Emperiums at 100 defense. [Kisuka]
-		if (md && md->guardian_data) {
-			damage -= damage * (md->guardian_data->castle->defense/100) * battle_config.castle_defense_rate/100;
-		}
-		*/
-		if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
-			if (flag&BF_WEAPON)
-				DAMAGE_RATE(battle_config.gvg_weapon_damage_rate)
-			if (flag&BF_MAGIC)
-				DAMAGE_RATE(battle_config.gvg_magic_damage_rate)
-			if (flag&BF_MISC)
-				DAMAGE_RATE(battle_config.gvg_misc_damage_rate)
-		} else { //Normal attacks get reductions based on range.
-			if (flag & BF_SHORT)
-				DAMAGE_RATE(battle_config.gvg_short_damage_rate)
-			if (flag & BF_LONG)
-				DAMAGE_RATE(battle_config.gvg_long_damage_rate)
-		}
-		if(!damage) damage  = 1;
+	if(skill_get_inf2(skill_id)&INF2_NO_GVG_DMG) //Skills with no gvg damage reduction.
+		return damage;
+	/* Uncomment if you want god-mode Emperiums at 100 defense. [Kisuka]
+	if (md && md->guardian_data) {
+		damage -= damage * (md->guardian_data->castle->defense/100) * battle_config.castle_defense_rate/100;
 	}
+	*/
+	if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
+		if (flag&BF_WEAPON)
+			DAMAGE_RATE(battle_config.gvg_weapon_damage_rate)
+		if (flag&BF_MAGIC)
+			DAMAGE_RATE(battle_config.gvg_magic_damage_rate)
+		if (flag&BF_MISC)
+			DAMAGE_RATE(battle_config.gvg_misc_damage_rate)
+	} else { //Normal attacks get reductions based on range.
+		if (flag & BF_SHORT)
+			DAMAGE_RATE(battle_config.gvg_short_damage_rate)
+		if (flag & BF_LONG)
+			DAMAGE_RATE(battle_config.gvg_long_damage_rate)
+	}
+	damage  = max(damage,1);
 	return damage;
 }
 
@@ -2171,14 +2141,17 @@ static bool battle_skill_stacks_masteries_vvs(uint16 skill_id)
 static int battle_calc_equip_attack(struct block_list *src, int skill_id)
 {
 	if(src != NULL) {
+		int eatk=0;
 		struct status_data *status = status_get_status_data(src);
+		struct status_change *sc = status_get_sc(src);
 		struct map_session_data *sd = BL_CAST(BL_PC, src);
-		if( sd->sc.data[SC_CAMOUFLAGE] )
-			status->eatk += 30 * min(10,sd->sc.data[SC_CAMOUFLAGE]->val3); //max +300atk
-		if(sd)
-			return is_skill_using_arrow(src, skill_id) ? sd->bonus.arrow_atk + status->eatk : status->eatk; // add arrow atk if using an applicable skill
-		else
-			return status->eatk;
+
+		if(sc){
+			if(sc->data[SC_CAMOUFLAGE] )
+				eatk += 30 * min(10,sc->data[SC_CAMOUFLAGE]->val3); //max +300atk
+		}
+		if(sd) eatk += is_skill_using_arrow(src, skill_id) ? sd->bonus.arrow_atk : 0; // add arrow atk if using an applicable skill
+		return eatk + status->eatk;
 	}
 	return 0; // shouldn't happen but just in case
 }
