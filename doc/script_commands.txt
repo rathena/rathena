@@ -2756,16 +2756,12 @@ invoking player belongs.
 
 *gettimetick(<tick type>)
 
-This function will return the system time in UNIX epoch time (if tick type is 2) 
-or the time since the start of the current day in seconds if tick type is 1.
-Passing 0 will make it return the server's tick, which is a measurement in
-milliseconds used by the server's timer system. The server's tick is an
-unsigned int which loops every ~50 days.
-
-Just in case you don't know, UNIX epoch time is the number of seconds elapsed 
-since 1st of January 1970, and is useful to see, for example, for how long the 
-character has been online with OnPCLoginEvent and OnPCLogoutEvent, which could allow 
-you to make an 'online time counted for conviction only' jail script.
+This function will return a tick depending on <tick type>:
+ 0: The server's tick, a measurement in milliseconds used by the server's timer
+    system. This tick is an unsigned int which loops every ~50 days.
+ 1: The time, in seconds, since the start of the current day.
+ 2: The system time in UNIX epoch time, or the number of seconds elapsed since
+    January 1st, 1970. Useful for reliably measuring time intervals.
 
 ---------------------------------------
 
@@ -3047,7 +3043,7 @@ mob database and return the info set by TYPE argument.
 It will return -1 if there is no such monster (or the type value is invalid),
 or "null" if you requested the monster's name.
 
-Valid types are listed in const.txt:
+Valid types are listed in 'db/const.txt':
 	MOB_NAME	0
 	MOB_LV	1
 	MOB_MAXHP	2
@@ -3072,7 +3068,7 @@ Valid types are listed in const.txt:
 	MOB_MODE	21
 	MOB_MVPEXP	22
 
-For more details, see the sample in doc/sample/getmonsterinfo.txt.
+For more details, see the sample in 'doc/sample/getmonsterinfo.txt'.
 
 ---------------------------------------
 
@@ -3179,7 +3175,7 @@ account ID.
 *isloggedin(<account id>{,<char id>})
 
 This function returns 1 if the specified account is logged in and 0 if they 
-aren't. You can also pass the char_id to check for both account and char id.
+aren't. You can also pass the char id to check for both account and char id.
 
 ---------------------------------------
 
@@ -3455,9 +3451,10 @@ more:
 
 *checkre(<type>)
 
-Checks if a renewal feature is enabled or not in renewal.h, and returns 1 if enabled and 0 for disabled.
-The renewal feature to check is determined by type.
+Checks if a renewal feature is enabled or not in renewal.h, and returns 1 if
+enabled and 0 for disabled.
 
+The renewal feature to check is determined by type.
  0 - RENEWAL (game renewal server mode)
  1 - RENEWAL_CAST (renewal cast time)
  2 - RENEWAL_DROP (renewal drop rate algorithms)
@@ -3465,6 +3462,34 @@ The renewal feature to check is determined by type.
  4 - RENEWAL_LVDMG (renewal level modifier on damage)
  5 - RENEWAL_EDP (renewal enchant deadly poison algorithm)
  6 - RENEWAL_ASPD (renewal ASPD)
+
+---------------------------------------
+
+*is_clientver(<type>,<value>{,<char id>})
+
+Checks a character's client version against a specified value. If no char id is
+given, the command will run for the invoking character. The function will return
+1 if the player's version is greater than or equal to the value, and 0 otherwise.
+
+Available types are:
+ 0 - version number (packet_db_ver)
+ 1 - client date (YYYYMMDD)
+
+---------------------------------------
+
+*getserverdef(<type>)
+
+Returns a server definition. Valid types are listed in 'db/const.txt':
+	VAR_PACKETVER	0
+	VAR_MAX_LEVEL	1
+	VAR_MAX_STORAGE	2
+	VAR_MAX_INVENTORY	3
+	VAR_MAX_ZENY	4
+	VAR_MAX_PARTY	5
+	VAR_MAX_GUILD	6
+	VAR_MAX_GUILDLEVEL	7
+	VAR_MAX_GUILD_STORAGE	8
+	VAR_MAX_BG_MEMBERS	9
 
 ---------------------------------------
 \\
@@ -3661,7 +3686,7 @@ close;
 
 ---------------------------------------
 
-*warpchar "<map name>",<x>,<y>,<char_id>;
+*warpchar "<map name>",<x>,<y>,<char id>;
 
 Warps another player to specified map and coordinate given the char id, which you can get with
 getcharid(0,<player_name>). Obviously this is useless if you want to warp the same player that
@@ -7269,6 +7294,17 @@ coordinates. If no ID is specified, the instance the script is attached to
 is used. If the script is not attached to an instance, the instance of the
 currently attached player's party is used. If that fails, the script will
 come to a halt.
+
+---------------------------------------
+
+*instance_announce <instance id>,"<text>",<flag>{,<fontColor>{,<fontType>{,<fontSize>{,<fontAlign>{,<fontY>}}}}};
+
+Broadcasts a message to all players in the instance <instance id> currently
+residing on an instance map. If -1 is specified for <instance id>, the instance
+the script is attached to is used. If the script is not attached to an instance,
+the instance of the currently attached player's party is used.
+
+For details on the other parameters, see 'announce'.
 
 ---------------------------------------
 

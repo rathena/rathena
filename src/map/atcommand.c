@@ -1117,18 +1117,19 @@ ACMD_FUNC(heal)
 }
 
 /*==========================================
- * @item command (usage: @item <name/id_of_item> <quantity>) (modified by [Yor] for pet_egg)
+ * @item command (usage: @item <itemdid1:itemid2:itemname:..> <quantity>) (modified by [Yor] for pet_egg)
  * @itembound command (usage: @itembound <name/id_of_item> <quantity> <bound_type>)
  *------------------------------------------*/
 ACMD_FUNC(item)
 {
 	char item_name[100];
-	int number = 0, item_id, flag = 0, bound = 0;
+	int number = 0, flag = 0, bound = 0;
 	struct item item_tmp;
-	struct item_data *item_data;
-	int get_count, i;
-	nullpo_retr(-1, sd);
+	struct item_data *item_data[10];
+	int get_count, i, j=0;
+	char *itemlist;
 
+	nullpo_retr(-1, sd);
 	memset(item_name, '\0', sizeof(item_name));
 
 	if (!strcmpi(command+1,"itembound") && (!message || !*message || (
@@ -1144,15 +1145,15 @@ ACMD_FUNC(item)
 		clif_displaymessage(fd, msg_txt(sd,983)); // Please enter an item name or ID (usage: @item <item name/ID> <quantity>).
 		return -1;
 	}
-
-	if (number <= 0)
-		number = 1;
-
-	if ((item_data = itemdb_searchname(item_name)) == NULL &&
-	    (item_data = itemdb_exists(atoi(item_name))) == NULL)
-	{
-		clif_displaymessage(fd, msg_txt(sd,19)); // Invalid item ID or name.
-		return -1;
+	itemlist = strtok(item_name, ":");
+	while (itemlist != NULL && j<10) {
+		if ((item_data[j] = itemdb_searchname(itemlist)) == NULL &&
+		    (item_data[j] = itemdb_exists(atoi(itemlist))) == NULL){
+			clif_displaymessage(fd, msg_txt(sd,19)); // Invalid item ID or name.
+			return -1;
+		}
+		itemlist = strtok(NULL, ":"); //next itemline
+		j++;
 	}
 
 	if( bound < 0 || bound > 4 ) {
@@ -1160,22 +1161,27 @@ ACMD_FUNC(item)
 		return -1;
 	}
 
-	item_id = item_data->nameid;
+	if (number <= 0)
+		number = 1;
 	get_count = number;
-	//Check if it's stackable.
-	if (!itemdb_isstackable2(item_data))
-		get_count = 1;
 
-	for (i = 0; i < number; i += get_count) {
-		// if not pet egg
-		if (!pet_create_egg(sd, item_id)) {
-			memset(&item_tmp, 0, sizeof(item_tmp));
-			item_tmp.nameid = item_id;
-			item_tmp.identify = 1;
-			item_tmp.bound = bound;
+	for(j--; j>=0; j--){ //produce items in list
+		int16 item_id = item_data[j]->nameid;
+		//Check if it's stackable.
+		if (!itemdb_isstackable2(item_data[j]))
+			get_count = 1;
 
-			if ((flag = pc_additem(sd, &item_tmp, get_count, LOG_TYPE_COMMAND)))
-				clif_additem(sd, 0, 0, flag);
+		for (i = 0; i < number; i += get_count) {
+			// if not pet egg
+			if (!pet_create_egg(sd, item_id)) {
+				memset(&item_tmp, 0, sizeof(item_tmp));
+				item_tmp.nameid = item_id;
+				item_tmp.identify = 1;
+				item_tmp.bound = bound;
+
+				if ((flag = pc_additem(sd, &item_tmp, get_count, LOG_TYPE_COMMAND)))
+					clif_additem(sd, 0, 0, flag);
+			}
 		}
 	}
 
@@ -3856,7 +3862,7 @@ ACMD_FUNC(mapinfo) {
 	if (map[m_id].flag.gvg)
 		strcat(atcmd_output, " GvG ON |");
 	if (map[m_id].flag.gvg_dungeon)
-		strcat(atcmd_output, " GvG Dungeon |"); 
+		strcat(atcmd_output, " GvG Dungeon |");
 	if (map[m_id].flag.gvg_castle)
 		strcat(atcmd_output, " GvG Castle |");
 	if (map[m_id].flag.gvg_noparty)
@@ -3875,7 +3881,7 @@ ACMD_FUNC(mapinfo) {
 	if (map[m_id].flag.noreturn)
 		strcat(atcmd_output, " NoReturn |");
 	if (map[m_id].flag.nogo)
-		strcat(atcmd_output, " NoGo |"); // 
+		strcat(atcmd_output, " NoGo |"); //
 	if (map[m_id].flag.nomemo)
 		strcat(atcmd_output, "  NoMemo |");
 	clif_displaymessage(fd, atcmd_output);
@@ -3923,9 +3929,9 @@ ACMD_FUNC(mapinfo) {
 	if (map[m_id].flag.notrade)
 		strcat(atcmd_output, " NoTrade |");
 	if (map[m_id].flag.novending)
-		strcat(atcmd_output, " NoVending |"); 
+		strcat(atcmd_output, " NoVending |");
 	if (map[m_id].flag.nodrop)
-		strcat(atcmd_output, " NoDrop |"); 
+		strcat(atcmd_output, " NoDrop |");
 	if (map[m_id].flag.noskill)
 		strcat(atcmd_output, " NoSkill |");
 	if (map[m_id].flag.noicewall)
@@ -3933,7 +3939,7 @@ ACMD_FUNC(mapinfo) {
 	if (map[m_id].flag.allowks)
 		strcat(atcmd_output, " AllowKS |");
 	if (map[m_id].flag.reset)
-		strcat(atcmd_output, " Reset |"); 
+		strcat(atcmd_output, " Reset |");
 	clif_displaymessage(fd, atcmd_output);
 
 	strcpy(atcmd_output,msg_txt(sd,1051)); // Other Flags2:
@@ -7676,7 +7682,7 @@ ACMD_FUNC(mapflag) {
 		return 1;
 	}
 	for (i = 0; flag_name[i]; i++) flag_name[i] = (char)tolower(flag_name[i]); //lowercase
-	
+
 	setflag(town);				setflag(autotrade);			setflag(allowks);				setflag(nomemo);
 	setflag(noteleport);		setflag(noreturn);			setflag(monster_noteleport);	setflag(nosave);
 	setflag(nobranch);			setflag(noexppenalty);		setflag(pvp);					setflag(pvp_noparty);

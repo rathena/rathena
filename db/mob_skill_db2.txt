@@ -51,7 +51,7 @@
 // Note: if a negative MobID is provided, the skill will be treated as 'global':
 //	-1: added for all boss types.
 //	-2: added for all normal types.
-//	-4: added for all mobs.
+//	-3: added for all mobs.
 
 // rAthena Dev Team
 //1900,Valaris@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,,

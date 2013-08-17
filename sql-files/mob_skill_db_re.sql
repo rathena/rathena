@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `mob_skill_db` (
 # Note: if a negative MobID is provided, the skill will be treated as 'global':
 #	-1: added for all boss types.
 #	-2: added for all normal types.
-#	-4: added for all mobs.
+#	-3: added for all mobs.
 
 REPLACE INTO `mob_skill_db` VALUES (1001,'Scorpion@NPC_FIREATTACK','attack',186,1,2000,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1001,'Scorpion@NPC_POISON','attack',176,3,500,800,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);

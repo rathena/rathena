@@ -16744,6 +16744,38 @@ BUILDIN_FUNC(instance_warpall)
 }
 
 /*==========================================
+ * Broadcasts to all maps inside an instance
+ *
+ * instance_announce <instance id>,"<text>",<flag>{,<fontColor>{,<fontType>{,<fontSize>{,<fontAlign>{,<fontY>}}}}};
+ * Using -1 for <instance id> will auto-detect the id.
+ *------------------------------------------*/
+BUILDIN_FUNC(instance_announce) {
+	int         instance_id = script_getnum(st,2);
+	const char *mes         = script_getstr(st,3);
+	int         flag        = script_getnum(st,4);
+	const char *fontColor   = script_hasdata(st,5) ? script_getstr(st,5) : NULL;
+	int         fontType    = script_hasdata(st,6) ? script_getnum(st,6) : 0x190; // default fontType (FW_NORMAL)
+	int         fontSize    = script_hasdata(st,7) ? script_getnum(st,7) : 12;    // default fontSize
+	int         fontAlign   = script_hasdata(st,8) ? script_getnum(st,8) : 0;     // default fontAlign
+	int         fontY       = script_hasdata(st,9) ? script_getnum(st,9) : 0;     // default fontY
+
+	int i;
+
+	if( instance_id == -1 ) {
+		instance_id = script_instancegetid(st);
+	}
+
+	if( !instance_id && &instance_data[instance_id] != NULL)
+		return true;
+
+	for( i = 0; i < instance_data[instance_id].cnt_map; i++ )
+		map_foreachinmap(buildin_announce_sub, instance_data[instance_id].map[i].m, BL_PC,
+						 mes, strlen(mes)+1, flag&0xf0, fontColor, fontType, fontSize, fontAlign, fontY);
+
+	return true;
+}
+
+/*==========================================
  * instance_check_party [malufett]
  * Values:
  * party_id : Party ID of the invoking character. [Required Parameter]
@@ -17893,6 +17925,65 @@ BUILDIN_FUNC(party_destroy)
 	return 0;
 }
 
+/*==========================================
+* Checks if a player's client version meets a required version or date.
+* @type :
+*  0 - check by version number
+*  1 - check by date
+* @return true/false
+ *------------------------------------------*/
+BUILDIN_FUNC(is_clientver){
+	TBL_PC *sd = NULL;
+	int type = script_getnum(st,2);
+	int data = script_getnum(st,3);
+	int ret = 0;
+
+	if (script_hasdata(st,4))
+		sd = map_charid2sd(script_getnum(st,4));
+	else
+		sd = script_rid2sd(st);
+	if (sd == NULL) {
+		script_pushint(st,0);
+		return 0;
+	}
+
+	switch(type){
+		case 0:
+			ret = (sd->packet_ver >= data)?1:0;
+			break;
+		case 1:
+			ret = (sd->packet_ver >= date2version(data))?1:0;
+			break;
+	}
+	script_pushint(st,ret);
+	return 0;
+}
+
+/*==========================================
+* Retrieves server definitions.
+* (see @type in const.txt)
+ *------------------------------------------*/
+BUILDIN_FUNC(getserverdef){
+	int type = script_getnum(st,2);
+	switch(type){
+		case 0: script_pushint(st,PACKETVER); break;
+		case 1: script_pushint(st,MAX_LEVEL); break;
+		case 2: script_pushint(st,MAX_STORAGE); break;
+		case 3: script_pushint(st,MAX_INVENTORY); break;
+		case 4: script_pushint(st,MAX_ZENY); break;
+		case 5: script_pushint(st,MAX_PARTY); break;
+		case 6: script_pushint(st,MAX_GUILD); break;
+		case 7: script_pushint(st,MAX_GUILDLEVEL); break;
+		case 8: script_pushint(st,MAX_GUILD_STORAGE); break;
+		case 9: script_pushint(st,MAX_BG_MEMBERS); break;
+		default:
+			ShowWarning("buildin_getserverdef: unknown type %d.\n", type);
+			script_pushint(st,0);
+			break;
+	}
+	return 0;
+}
+
 // declarations that were supposed to be exported from npc_chat.c
 #ifdef PCRE_SUPPORT
 BUILDIN_FUNC(defpattern);
@@ -18314,6 +18405,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_npcname,"s?"),
 	BUILDIN_DEF(instance_mapname,"s?"),
 	BUILDIN_DEF(instance_warpall,"sii?"),
+	BUILDIN_DEF(instance_announce,"isi?????"),
 	BUILDIN_DEF(instance_check_party,"i???"),
 	/**
 	 * 3rd-related
@@ -18367,5 +18459,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(party_changeleader,"ii"),
 	BUILDIN_DEF(party_changeoption,"iii"),
 	BUILDIN_DEF(party_destroy,"i"),
+	
+	BUILDIN_DEF(is_clientver,"ii?"),
+	BUILDIN_DEF(getserverdef,"i"),
 	{NULL,NULL,NULL},
 };
