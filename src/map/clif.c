@@ -2520,7 +2520,7 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 		WBUFW(buf,0)=0x2ea;
 #else
 		WBUFW(buf,0)=0x995;
-		memset((char*)WBUFP(buf,6),0,24); //storename
+		memset((char*)WBUFP(buf,4),0,24); //storename
 #endif
 		WBUFW(buf,2)=n*s+sidx;
 		clif_send(buf, WBUFW(buf,2), &sd->bl, SELF);
@@ -2533,7 +2533,7 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 		WBUFW(bufe,0)=0x2d1;
 #else
 		WBUFW(bufe,0)=0x996;
-		memset((char*)WBUFP(bufe,6),0,24); //storename
+		memset((char*)WBUFP(bufe,4),0,24); //storename
 #endif
 		WBUFW(bufe,2)=ne*se+sidxe;
 		clif_send(bufe, WBUFW(bufe,2), &sd->bl, SELF);
@@ -5647,8 +5647,8 @@ void clif_maptypeproperty2(struct block_list *bl,enum send_target t) {
 	WBUFW(buf,0)=0x99b; //2
 	WBUFW(buf,2)=0x28; //2
 
-	WBUFB(buf,4) = ((map[bl->m].flag.partylock)?0:0x01); //party
-	WBUFB(buf,4) |= ((map[bl->m].flag.guildlock)?0:0x02); //guild
+	WBUFB(buf,4) = ((map_flag_vs(bl->m))?0x01:0); //tvt ?
+	WBUFB(buf,4) |= ((map_flag_gvg(bl->m))?0x02:0); //gvg
 	WBUFB(buf,4) |= ((map_flag_gvg2(bl->m))?0x04:0); //siege
 	WBUFB(buf,4) |= ((map[bl->m].flag.nomineeffect)?0:0x08); //mineffect @FIXME what this do
 	WBUFB(buf,4) |= ((map[bl->m].flag.nolockon)?0x10:0); //nolockon 0x10 @FIXME what this do
@@ -14458,6 +14458,73 @@ void clif_parse_Auction_buysell(int fd, struct map_session_data* sd)
 /// CASH/POINT SHOP
 ///
 
+void clif_cashshop_open( struct map_session_data* sd ){
+	WFIFOHEAD( sd->fd, 10 );
+	WFIFOW( sd->fd, 0 ) = 0x845;
+	WFIFOL( sd->fd, 2 ) = sd->cashPoints;
+	WFIFOL( sd->fd, 6 ) = sd->kafraPoints;
+	WFIFOSET( sd->fd, 10 );
+}
+
+void clif_parse_cashshop_open_request( int fd, struct map_session_data* sd ){
+	sd->npc_shopid = -1; // Set npc_shopid when using cash shop from "cash shop" button [Aelys|Susu] bugreport:96
+	clif_cashshop_open( sd );
+}
+
+void clif_parse_cashshop_close( int fd, struct map_session_data* sd ){
+	sd->npc_shopid = 0; // Reset npc_shopid when using cash shop from "cash shop" button [Aelys|Susu] bugreport:96
+	// No need to do anything here
+}
+
+//0846 <tabid>.W (CZ_REQ_SE_CASH_TAB_CODE))
+//08c0 <len>.W <openIdentity>.L <itemcount>.W (ZC_ACK_SE_CASH_ITEM_LIST2)
+void clif_parse_CashShopReqTab(int fd, struct map_session_data *sd) {
+	short tab = RFIFOW(fd, packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
+	int j;
+
+	if( tab < 0 || tab > CASHSHOP_TAB_SEARCH )
+		return;
+
+	WFIFOHEAD(fd, 10 + ( cash_shop_items[tab].count * 6 ) );
+	WFIFOW(fd, 0) = 0x8c0;
+	WFIFOW(fd, 2) = 10 + ( cash_shop_items[tab].count * 6 );
+	WFIFOL(fd, 4) = tab;
+	WFIFOW(fd, 8) = cash_shop_items[tab].count;
+
+	for( j = 0; j < cash_shop_items[tab].count; j++ ) {
+		WFIFOW(fd, 10 + ( 6 * j ) ) = cash_shop_items[tab].item[j]->nameid;
+		WFIFOL(fd, 12 + ( 6 * j ) ) = cash_shop_items[tab].item[j]->price;
+	}
+
+	WFIFOSET(fd, 10 + ( cash_shop_items[tab].count * 6 ));
+}
+
+//08ca <len>.W <itemcount> W <tabcode>.W (ZC_ACK_SCHEDULER_CASHITEM)
+void clif_cashshop_list( int fd ){
+	int tab;
+
+	for( tab = CASHSHOP_TAB_NEW; tab < CASHSHOP_TAB_SEARCH; tab++ ){
+		int length = 8 + cash_shop_items->count * 6;
+		int i, offset;
+
+		WFIFOHEAD( fd, length );
+		WFIFOW( fd, 0 ) = 0x8ca;
+		WFIFOW( fd, 2 ) = length;
+		WFIFOW( fd, 4 ) = cash_shop_items[tab].count;
+		WFIFOW( fd, 6 ) = tab;
+
+		for( i = 0, offset = 8; i < cash_shop_items[tab].count; i++, offset += 6 ){
+			WFIFOW( fd, offset ) = cash_shop_items[tab].item[i]->nameid;
+			WFIFOL( fd, offset + 2 ) = cash_shop_items[tab].item[i]->price;
+		}
+
+		WFIFOSET( fd, length );
+	}
+}
+
+void clif_parse_cashshop_list_request( int fd, struct map_session_data* sd ){
+	clif_cashshop_list( fd );
+}
 /// List of items offered in a cash shop (ZC_PC_CASH_POINT_ITEMLIST).
 /// 0287 <packet len>.W <cash point>.L { <sell price>.L <discount price>.L <item type>.B <name id>.W }*
 /// 0287 <packet len>.W <cash point>.L <kafra point>.L { <sell price>.L <discount price>.L <item type>.B <name id>.W }* (PACKETVER >= 20070711)
@@ -14523,6 +14590,16 @@ void clif_cashshop_ack(struct map_session_data* sd, int error)
 	WFIFOSET(fd, packet_len(0x289));
 }
 
+void clif_cashshop_result( struct map_session_data *sd, uint16 item_id, uint16 result ){
+	WFIFOHEAD( sd->fd, 16 );
+	WFIFOW( sd->fd, 0 ) = 0x849;
+	WFIFOL( sd->fd, 2 ) = item_id;
+	WFIFOW( sd->fd, 6 ) = result;
+	WFIFOL( sd->fd, 8 ) = sd->cashPoints;
+	WFIFOL( sd->fd, 12 ) = sd->kafraPoints;
+	WFIFOSET( sd->fd, 16 );
+}
+
 /// Request to buy item(s) from cash shop (CZ_PC_BUY_CASH_POINT_ITEM).
 /// 0288 <name id>.W <amount>.W
 /// 0288 <name id>.W <amount>.W <kafra points>.L (PACKETVER >= 20070711)
@@ -14532,10 +14609,11 @@ void clif_parse_cashshop_buy(int fd, struct map_session_data *sd){
 
 	int fail = 0;
 	struct s_packet_db* info;
+	int cmd = RFIFOW(fd,0);
 
 	nullpo_retv(sd);
 
-	info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
+	info = &packet_db[sd->packet_ver][cmd];
 
 	if( sd->state.trading || !sd->npc_shopid )
 		fail = 1;
@@ -14546,29 +14624,25 @@ void clif_parse_cashshop_buy(int fd, struct map_session_data *sd){
 		int points   = RFIFOL(fd,info->pos[2]);
 
 		fail = npc_cashshop_buy(sd, nameid, amount, points);
+		clif_cashshop_ack(sd,fail);
 #else
-	#if PACKETVER < 20130000 //found accurate date
-		int s_itl = 6;
-	#else
-		int s_itl = 4;//item _list size
-	#endif
+		int s_itl = (cmd==0x848)?10:4; //item _list size (depend on cmd even for 2013+)
 		int len    = RFIFOW(fd,info->pos[0]);
 		int points = RFIFOL(fd,info->pos[1]);
 		int count  = RFIFOW(fd,info->pos[2]);
 		unsigned short* item_list = (unsigned short*)RFIFOP(fd,info->pos[3]);
-	
+
 		if( len < 10 || len != 10 + count * s_itl){
 			ShowWarning("Player %u sent incorrect cash shop buy packet (len %u:%u)!\n", sd->status.char_id, len, 10 + count * s_itl);
 			return;
 		}
-	#if PACKETVER < 20130000
-		fail = npc_cashshop_buylist(sd,points,count,item_list);
-	#elif PACKETVER >= 20130000
-		cashshop_buylist( sd, points, count, item_list);
-	#endif
+		if(cmd==0x848){
+			cashshop_buylist( sd, points, count, item_list);
+		} else {
+			fail = npc_cashshop_buylist(sd,points,count,item_list);
+		}
 #endif
 	}
-
 	clif_cashshop_ack(sd,fail);
 }
 
@@ -16447,84 +16521,6 @@ void clif_monster_hp_bar( struct mob_data* md, int fd ) {
 #endif
 }
 
-void clif_cashshop_open( struct map_session_data* sd ){
-	WFIFOHEAD( sd->fd, 10 );
-	WFIFOW( sd->fd, 0 ) = 0x845;
-	WFIFOL( sd->fd, 2 ) = sd->cashPoints;
-	WFIFOL( sd->fd, 6 ) = sd->kafraPoints;
-	WFIFOSET( sd->fd, 10 );
-}
-
-void clif_parse_cashshop_open_request( int fd, struct map_session_data* sd ){
-	clif_cashshop_open( sd );
-}
-
-void clif_parse_cashshop_close( int fd, struct map_session_data* sd ){
-	// No need to do anything here
-}
-
-//0846 <tabid>.W (CZ_REQ_SE_CASH_TAB_CODE))
-//08c0 <len>.W <openIdentity>.L <itemcount>.W (ZC_ACK_SE_CASH_ITEM_LIST2)
-void clif_parse_CashShopReqTab(int fd, struct map_session_data *sd) {
-	short tab = RFIFOW(fd, packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
-	int j;
-
-	if( tab < 0 || tab > CASHSHOP_TAB_SEARCH )
-		return;
-
-	WFIFOHEAD(fd, 10 + ( cash_shop_items[tab].count * 6 ) );
-	WFIFOW(fd, 0) = 0x8c0;
-	WFIFOW(fd, 2) = 10 + ( cash_shop_items[tab].count * 6 );
-	WFIFOL(fd, 4) = tab;
-	WFIFOW(fd, 8) = cash_shop_items[tab].count;
-
-	for( j = 0; j < cash_shop_items[tab].count; j++ ) {
-		WFIFOW(fd, 10 + ( 6 * j ) ) = cash_shop_items[tab].item[j]->nameid;
-		WFIFOL(fd, 12 + ( 6 * j ) ) = cash_shop_items[tab].item[j]->price;
-	}
-
-	WFIFOSET(fd, 10 + ( cash_shop_items[tab].count * 6 ));
-}
-
-//08ca <len>.W <itemcount> W <tabcode>.W (ZC_ACK_SCHEDULER_CASHITEM)
-void clif_cashshop_list( int fd ){
-	int tab;
-
-	for( tab = CASHSHOP_TAB_NEW; tab < CASHSHOP_TAB_SEARCH; tab++ ){
-		int length = 8 + cash_shop_items->count * 6;
-		int i, offset;
-
-		WFIFOHEAD( fd, length );
-		WFIFOW( fd, 0 ) = 0x8ca;
-		WFIFOW( fd, 2 ) = length;
-		WFIFOW( fd, 4 ) = cash_shop_items[tab].count;
-		WFIFOW( fd, 6 ) = tab;
-
-		for( i = 0, offset = 8; i < cash_shop_items[tab].count; i++, offset += 6 ){
-			WFIFOW( fd, offset ) = cash_shop_items[tab].item[i]->nameid;
-			WFIFOL( fd, offset + 2 ) = cash_shop_items[tab].item[i]->price;
-		}
-
-		WFIFOSET( fd, length );
-	}
-}
-
-void clif_parse_cashshop_list_request( int fd, struct map_session_data* sd ){
-	clif_cashshop_list( fd );
-}
-
-
-
-void clif_cashshop_result( struct map_session_data *sd, uint16 item_id, uint16 result ){
-	WFIFOHEAD( sd->fd, 16 );
-	WFIFOW( sd->fd, 0 ) = 0x849;
-	WFIFOL( sd->fd, 2 ) = item_id;
-	WFIFOW( sd->fd, 6 ) = result;
-	WFIFOL( sd->fd, 8 ) = sd->cashPoints;
-	WFIFOL( sd->fd, 12 ) = sd->kafraPoints;
-	WFIFOSET( sd->fd, 16 );
-}
-
 /// Ack world info (ZC_ACK_BEFORE_WORLD_INFO)
 /// 0979 <world name>.24B <char name>.24B
 void clif_ackworldinfo(struct map_session_data* sd) {
@@ -16560,6 +16556,97 @@ void clif_parse_blocking_playcancel(int fd,struct map_session_data *sd){
 void clif_parse_client_version(int fd,struct map_session_data *sd){
 	//if(sd)
 	;
+}
+
+/// Ranking list
+
+/// ranking pointlist  { <name>.24B <point>.L }*10
+void clif_sub_ranklist(unsigned char *buf,int idx,struct map_session_data* sd, int16 rankingtype){
+	const char* name;
+	struct fame_list* list;
+	int i, skip=0;
+
+	switch(rankingtype+1) //to keep the same case as char.c
+	{
+	case 1: list = smith_fame_list; break;
+	case 2: list = chemist_fame_list; break;
+	case 3: list = taekwon_fame_list; break;
+	default: skip=1; break;
+	}
+
+	if(!skip){
+		//Packet size limits this list to 10 elements. [Skotlex]
+		for (i = 0; i < 10 && i < MAX_FAME_LIST; i++) {
+			if (list[i].id > 0) {
+				if (strcmp(list[i].name, "-") == 0 &&
+					(name = map_charid2nick(list[i].id)) != NULL)
+				{
+					strncpy((char *)(WBUFP(buf,idx + 24 * i)), name, NAME_LENGTH);
+				} else {
+					strncpy((char *)(WBUFP(buf,idx + 24 * i)), list[i].name, NAME_LENGTH);
+				}
+			} else {
+				strncpy((char *)(WBUFP(buf, idx + 24 * i)), "None", 5);
+			}
+			WBUFL(buf, idx+24*10 + i * 4) = list[i].fame; //points
+		}
+		for(;i < 10; i++) { //In case the MAX is less than 10.
+			strncpy((char *)(WBUFP(buf, idx + 24 * i)), "Unavailable", 12);
+			WBUFL(buf, idx+24*10 + i * 4) = 0;
+		}
+	}
+}
+
+/// 097d <RankingType>.W {<CharName>.24B <point>L}*10 <mypoint>L (ZC_ACK_RANKING)
+void clif_ranklist(struct map_session_data *sd, int16 rankingType){
+	unsigned char buf[MAX_FAME_LIST * sizeof(struct fame_list)];
+	int mypoint=0;
+
+	WBUFW(buf,0) = 0x97d;
+	WBUFW(buf,2) = rankingType;
+	clif_sub_ranklist(buf,4,sd,rankingType);
+
+	switch(sd->class_&MAPID_UPPERMASK){ //mypoint (checking if valid type)
+		case MAPID_BLACKSMITH:
+		case MAPID_ALCHEMIST:
+		case MAPID_TAEKWON:
+			mypoint = sd->status.fame;
+	}
+	WBUFL(buf,284) = mypoint; //mypoint
+	clif_send(buf, 288, &sd->bl, SELF);
+}
+
+/*
+ *  097c <type> (CZ_REQ_RANKING)
+ * type
+ *  0: /blacksmith
+ *  1: /alchemist
+ *  2: /taekwon
+ *  3: /pk
+ * */
+void clif_parse_ranklist(int fd,struct map_session_data *sd){
+	struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
+	int16 rankingtype = RFIFOW(fd,info->pos[0]); //type
+	if(rankingtype != 3) clif_ranklist(sd,rankingtype); // pk_list unsuported atm
+}
+
+// 097e <RankingType>.W <point>.L <TotalPoint>.L (ZC_UPDATE_RANKING_POINT)
+void clif_update_rankingpoint(struct map_session_data *sd, int rankingtype, int point){
+#if PACKETVER < 20130710
+	switch(rankingtype){
+		case 0: clif_fame_blacksmith(sd,point); break;  // Blacksmith
+		case 1: clif_fame_alchemist(sd,point); break; //Alchemist
+		case 2: clif_fame_taekwon(sd,point); break; // Taekwon
+	}
+#else
+	int fd=sd->fd;
+	WFIFOHEAD(fd,14);
+	WFIFOW(fd,0) = 0x97e;
+	WFIFOW(fd,2) = rankingtype;
+	WFIFOL(fd,4) = point;
+	WFIFOL(fd,8) = sd->status.fame;
+	WFIFOSET(fd,12);
+#endif
 }
 
 #ifdef DUMP_UNKNOWN_PACKET
@@ -16947,7 +17034,7 @@ void packetdb_readdb(void)
 #if PACKETVER < 20130000
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 #else
-	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  19,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  16,  0,  19,  0,  0,  0,  0,
 #endif
 	    0,  0,  0,  0,  0,  0, -1, -1, -1, -1,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -17190,6 +17277,7 @@ void packetdb_readdb(void)
 		{ clif_parse_reqworldinfo, "reqworldinfo"},
 		{ clif_parse_client_version, "clientversion"},
 		{ clif_parse_blocking_playcancel, "booking_playcancel"},
+		{ clif_parse_ranklist, "ranklist"},
 		{NULL,NULL}
 	};
 

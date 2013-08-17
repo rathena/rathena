@@ -35,7 +35,7 @@ struct party_booking_ad_info;
 enum
 {// packet DB
 	MAX_PACKET_DB  = 0xf00,
-	MAX_PACKET_VER = 39,
+	MAX_PACKET_VER = 44,
 	MAX_PACKET_POS = 20,
 };
 
@@ -784,5 +784,7 @@ void clif_channel_msg(struct Channel *channel, struct map_session_data *sd, char
 
 #define clif_menuskill_clear(sd) (sd)->menuskill_id = (sd)->menuskill_val = (sd)->menuskill_val2 = 0;
 
+void clif_ranklist(struct map_session_data *sd, int16 rankingType);
+void clif_update_rankingpoint(struct map_session_data *sd, int rankingtype, int point);
 
 #endif /* _CLIF_H_ */

@@ -353,21 +353,19 @@ int pc_banding(struct map_session_data *sd, uint16 skill_lv) {
 // Increases a player's fame points and displays a notice to him
 void pc_addfame(struct map_session_data *sd,int count)
 {
+	int ranktype=-1;
 	nullpo_retv(sd);
 	sd->status.fame += count;
 	if(sd->status.fame > MAX_FAME)
 		sd->status.fame = MAX_FAME;
+
 	switch(sd->class_&MAPID_UPPERMASK){
-		case MAPID_BLACKSMITH: // Blacksmith
-			clif_fame_blacksmith(sd,count);
-			break;
-		case MAPID_ALCHEMIST: // Alchemist
-			clif_fame_alchemist(sd,count);
-			break;
-		case MAPID_TAEKWON: // Taekwon
-			clif_fame_taekwon(sd,count);
-			break;
+		case MAPID_BLACKSMITH: ranktype=0; break;
+		case MAPID_ALCHEMIST:  ranktype=1; break;
+		case MAPID_TAEKWON: ranktype=2; break;
 	}
+
+	clif_update_rankingpoint(sd,ranktype,count);
 	chrif_updatefamelist(sd);
 }
 
@@ -3981,7 +3979,7 @@ int pc_delitem(struct map_session_data *sd,int n,int amount,int type, short reas
 {
 	nullpo_retr(1, sd);
 
-	if(sd->status.inventory[n].nameid==0 || amount <= 0 || sd->status.inventory[n].amount<amount || sd->inventory_data[n] == NULL)
+	if(n < 0 || sd->status.inventory[n].nameid==0 || amount <= 0 || sd->status.inventory[n].amount<amount || sd->inventory_data[n] == NULL)
 		return 1;
 
 	log_pick_pc(sd, log_type, -amount, &sd->status.inventory[n]);
@@ -4293,6 +4291,8 @@ int pc_useitem(struct map_session_data *sd,int n)
 	unsigned int tick = gettick();
 	int amount, nameid;
 	struct script_code *script;
+	struct item item;
+	struct item_data *id;
 
 	nullpo_ret(sd);
 
@@ -4305,15 +4305,17 @@ int pc_useitem(struct map_session_data *sd,int n)
 			return 0;
 #endif
 	}
+	item = sd->status.inventory[n];
+	id = sd->inventory_data[n];
 
-	if( sd->status.inventory[n].nameid <= 0 || sd->status.inventory[n].amount <= 0 )
+	if( item.nameid <= 0 || sd->status.inventory[n].amount <= 0 )
 		return 0;
 
 	if( !pc_isUseitem(sd,n) )
 		return 0;
 
 	// Store information for later use before it is lost (via pc_delitem) [Paradox924X]
-	nameid = sd->inventory_data[n]->nameid;
+	nameid = id->nameid;
 
 	if (nameid != ITEMID_NAUTHIZ && sd->sc.opt1 > 0 && sd->sc.opt1 != OPT1_STONEWAIT && sd->sc.opt1 != OPT1_BURNING)
 		return 0;
@@ -4337,8 +4339,8 @@ int pc_useitem(struct map_session_data *sd,int n)
 		return 0;
 
 	/* Items with delayed consume are not meant to work while in mounts except reins of mount(12622) */
-	if( sd->inventory_data[n]->flag.delay_consume && nameid != ITEMID_REINS_OF_MOUNT ) {
-		if( sd->sc.option&OPTION_MOUNTING )
+	if( id->flag.delay_consume ) {
+		if( nameid != ITEMID_REINS_OF_MOUNT && sd->sc.option&OPTION_MOUNTING )
 			return 0;
 		else if( pc_issit(sd) )
 			return 0;
@@ -4347,10 +4349,10 @@ int pc_useitem(struct map_session_data *sd,int n)
 	//perform a skill-use check before going through. [Skotlex]
 	//resurrection was picked as testing skill, as a non-offensive, generic skill, it will do.
 	//FIXME: Is this really needed here? It'll be checked in unit.c after all and this prevents skill items using when silenced [Inkfish]
-	if( sd->inventory_data[n]->flag.delay_consume && ( sd->ud.skilltimer != INVALID_TIMER /*|| !status_check_skilluse(&sd->bl, &sd->bl, ALL_RESURRECTION, 0)*/ ) )
+	if( id->flag.delay_consume && ( sd->ud.skilltimer != INVALID_TIMER /*|| !status_check_skilluse(&sd->bl, &sd->bl, ALL_RESURRECTION, 0)*/ ) )
 		return 0;
 
-	if( sd->inventory_data[n]->delay > 0 ) {
+	if( id->delay > 0 ) {
 		int i;
 		ARR_FIND(0, MAX_ITEMDELAYS, i, sd->item_delay[i].nameid == nameid );
 			if( i == MAX_ITEMDELAYS ) /* item not found. try first empty now */
@@ -4362,11 +4364,11 @@ int pc_useitem(struct map_session_data *sd,int n)
 					char e_msg[100];
 					if( e_tick > 99 )
 						sprintf(e_msg,msg_txt(sd,379), //Item Failed. [%s] is cooling down. Wait %.1f minutes.
-										itemdb_jname(sd->status.inventory[n].nameid),
+										itemdb_jname(item.nameid),
 										(double)e_tick / 60);
 					else
 						sprintf(e_msg,msg_txt(sd,380), //Item Failed. [%s] is cooling down. Wait %d seconds.
-										itemdb_jname(sd->status.inventory[n].nameid),
+										itemdb_jname(item.nameid),
 										e_tick+1);
 					clif_colormes(sd,color_table[COLOR_RED],e_msg);
 					return 0; // Delay has not expired yet
@@ -4390,38 +4392,41 @@ int pc_useitem(struct map_session_data *sd,int n)
 
 	/* on restricted maps the item is consumed but the effect is not used */
 	if (
-		(!map_flag_vs(sd->bl.m) && sd->inventory_data[n]->flag.no_equip&1) || // Normal
-		(map[sd->bl.m].flag.pvp && sd->inventory_data[n]->flag.no_equip&2) || // PVP
-		(map_flag_gvg(sd->bl.m) && sd->inventory_data[n]->flag.no_equip&4) || // GVG
-		(map[sd->bl.m].flag.battleground && sd->inventory_data[n]->flag.no_equip&8) || // Battleground
-		(map[sd->bl.m].flag.restricted && sd->inventory_data[n]->flag.no_equip&(8*map[sd->bl.m].zone)) // Zone restriction
+		(!map_flag_vs(sd->bl.m) && id->flag.no_equip&1) || // Normal
+		(map[sd->bl.m].flag.pvp && id->flag.no_equip&2) || // PVP
+		(map_flag_gvg(sd->bl.m) && id->flag.no_equip&4) || // GVG
+		(map[sd->bl.m].flag.battleground && id->flag.no_equip&8) || // Battleground
+		(map[sd->bl.m].flag.restricted && id->flag.no_equip&(8*map[sd->bl.m].zone)) // Zone restriction
 		) {
 		if( battle_config.item_restricted_consumption_type ) {
-			clif_useitemack(sd,n,sd->status.inventory[n].amount-1,true);
+			clif_useitemack(sd,n,item.amount-1,true);
 			pc_delitem(sd,n,1,1,0,LOG_TYPE_CONSUME);
 		}
 		return 0;/* regardless, effect is not run */
 	}
 
-	sd->itemid = sd->status.inventory[n].nameid;
+	sd->itemid = item.nameid;
 	sd->itemindex = n;
 	if(sd->catch_target_class != -1) //Abort pet catching.
 		sd->catch_target_class = -1;
 
-	amount = sd->status.inventory[n].amount;
-	script = sd->inventory_data[n]->script;
+	amount = item.amount;
+	script = id->script;
 	//Check if the item is to be consumed immediately [Skotlex]
-	if( sd->inventory_data[n]->flag.delay_consume )
-		clif_useitemack(sd,n,amount,true);
-	else {
-		if( sd->status.inventory[n].expire_time == 0 ) {
-			clif_useitemack(sd,n,amount-1,true);
-			pc_delitem(sd,n,1,1,0,LOG_TYPE_CONSUME); // Rental Usable Items are not deleted until expiration
-		} else
-			clif_useitemack(sd,n,0,false);
+	if (id->flag.delay_consume)
+		clif_useitemack(sd, n, amount, true);
+	else
+	{
+		if (item.expire_time == 0)
+		{
+			clif_useitemack(sd, n, amount - 1, true);
+			pc_delitem(sd, n, 1, 1, 0, LOG_TYPE_CONSUME); // Rental Usable Items are not deleted until expiration
+		}
+		else
+			clif_useitemack(sd, n, 0, false);
 	}
-	if(sd->status.inventory[n].card[0]==CARD0_CREATE &&
-		pc_famerank(MakeDWord(sd->status.inventory[n].card[2],sd->status.inventory[n].card[3]), MAPID_ALCHEMIST))
+	if(item.card[0]==CARD0_CREATE &&
+		pc_famerank(MakeDWord(item.card[2],item.card[3]), MAPID_ALCHEMIST))
 	{
 	    potion_flag = 2; // Famous player's potions have 50% more efficiency
 		 if (sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_ROGUE)
