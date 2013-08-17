@@ -5,117 +5,145 @@
 inst_launch_workaround
 
 PATH=./:$PATH
+
 print_start() {
-  #    more << EOF
-  echo "Athena Starting..."
-  echo "            (c) 2013 rAthena Project"
-  echo ""
-  echo ""
-  echo "checking..."
-  #EOF
+	#    more << EOF
+	echo "Athena Starting..."
+	echo "            (c) 2013 rAthena Project"
+	echo ""
+	echo ""
+	echo "checking..."
+	#EOF
 }
 
 get_status(){
-   PIDFILE=.$1.pid
-   if [ -e ${PIDFILE} ]; then
-    ISRUN=$(ps ax | grep $(cat ${PIDFILE}) | grep $1)
-    PSRUN=$(echo "$ISRUN" | awk '{ print substr( $0, 0, 7) }')
-   fi
-   return $PSRUN
+	PIDFILE=.$1.pid
+	if [ -e ${PIDFILE} ]; then
+		ISRUN=$(ps ax | grep $(cat ${PIDFILE}) | grep $1)
+		PSRUN=$(echo "$ISRUN" | awk '{ print substr( $0, 0, 7) }')
+	fi
+	return $PSRUN
 }
 
 #cheking if already started, launch and mark in log
 start_serv(){ 
-  LOGFILE="log/$1.log"
-  get_status $1
-  echo "My logfile=${LOGFILE}"
-  if [ -z ${PSRUN} ]; then
-    exec ./$1&
-    echo $! > .$1.pid
-    echo "Server '$1' started at `date +"%m-%d-%H:%M-%S"`"
-    echo "Server '$1' started at `date +"%m-%d-%H:%M-%S"`" >> ${LOGFILE}
-  else
-    echo "Can't start '$1', cause is already running p${PSRUN}"
-    echo "Can't start '$1', cause is already running p${PSRUN}" >> ${LOGFILE}
-  fi
+	get_status $1
+	if [ $2 ]; then #is logging on ?
+		LOGFILE="log/$1.launch.log"
+		LOGRUN="log/$1.log"
+		FIFO="$1_fifo"
+		echo "stat_serv, log is enabled"
+		echo "My logfile=${LOGFILE}"
+		if [ -z ${PSRUN} ]; then
+		if [ -e ./${FIFO} ]; then rm "$FIFO"; fi
+			mkfifo "$FIFO"; tee "$LOGRUN" < "$FIFO" & "./$1" > "$FIFO" 2>&1 & PID=$!
+			#"./$1" > >(tee "$LOGRUN") 2>&1 & PID=$! #bash only
+			echo "$PID" > .$1.pid
+			echo "Server '$1' started at `date +"%m-%d-%H:%M-%S"`" | tee ${LOGFILE}
+		else
+			echo "Can't start '$1', cause is already running p${PSRUN}" | tee ${LOGFILE}
+		fi
+	else
+		if [ -z ${PSRUN} ]; then
+			./$1&
+			echo "$!" > .$1.pid
+			echo "Server '$1' started at `date +"%m-%d-%H:%M-%S"`"
+		else
+			echo "Can't start '$1', cause is already running p${PSRUN}"
+		fi
+	fi
 }
 
 #experimental
 watch_serv(){
-  LOGFILE=./log/$1.log
-  ulimit -Sc unlimited
+	LOGFILE="log/$1.launch.log"
+	LOGRUN="log/$1.log"
+	FIFO="$1_fifo"
+	ulimit -Sc unlimited
 
-  while true; do
-   get_status $1
-   if [ -z ${PSRUN} ]; then
-     $count=$count+1
-     echo "server '$1' is down" >> ${LOGFILE}
-     echo "restarting server at time at `date +"%m-%d-%H:%M-%S"`">> ${LOGFILE}
-     exec ./$1&
-     echo $! > .$1.pid   
-     if [ $3 ] && [ $3 -lt $count ]; then break; fi
-   else sleep $2    
-   fi
-  done
+	while true; do
+		get_status $1
+		if [ -z ${PSRUN} ]; then
+			$count=$count+1
+			echo "server '$1' is down" | tee ${LOGFILE}
+			echo "restarting server at time at `date +"%m-%d-%H:%M-%S"`" | tee ${LOGFILE}
+			if [ -e ./${FIFO} ]; then rm "$FIFO"; fi
+			mkfifo "$FIFO"; tee "$LOGRUN" < "$FIFO" & "./$1" > "$FIFO" 2>&1 & PID=$!
+			echo "$PID" > .$1.pid
+			if [ $3 ] && [ $3 -lt $count ]; then break; fi
+		else sleep $2    
+		fi
+	done
 }
 
 restart(){
-  $0 stop
-  for i in ${L_SRV} ${C_SRV} ${M_SRV}
-    do
-    while true; do
-	get_status ${i}
-	if [ ${PSRUN} ]; then echo "'${i}' is still running p${PSRUN} waiting end"; sleep 2;
-        else break; fi
-    done
-  done
+	$0 stop
+	for i in ${L_SRV} ${C_SRV} ${M_SRV}
+	do
+		FIFO="$1_fifo"
+		while true; do
+			get_status ${i}
+			if [ ${PSRUN} ]; then echo "'${i}' is still running p${PSRUN} waiting end"; sleep 2;
+			else 
+				if [ -e ./${FIFO} ]; then rm "$FIFO"; fi
+				break
+			fi
+		done
+	done
   $0 start
 }
 
 case $1 in
     'start')
-        print_start
-        check_files
-	echo "Check complete."
-	echo "Looks good, a nice Athena!"
-	for i in ${L_SRV} ${C_SRV} ${M_SRV}
-	    do
-		start_serv $i
-	    done
-        echo "Now Started Athena."
-;;
-    'watch')
-	for i in ${L_SRV} ${C_SRV} ${M_SRV}
-	    do		
-		watch_serv $i 10 3
-	    done
- 	echo "Now watching Athena."
-;;	
-    'stop')
-	for i in ${L_SRV} ${C_SRV} ${M_SRV}
-	    do
-		PIDFILE=.${i}.pid
-		if [ -e ./${PIDFILE} ]; then
-		    kill $(cat ${PIDFILE})
-		    rm ${PIDFILE}
+		print_start
+		check_files
+		echo "Check complete."
+		echo "Looks good, a nice Athena!"
+		if [ "$2" = "--enlog" ]; then
+		 ENLOG=1
+		 echo "Logging is enable"
+		else
+		 echo "Logging is disable"
 		fi
-	    done
-;;
-    'restart')
-         restart
-;;
-    'status')
+		for i in ${L_SRV} ${C_SRV} ${M_SRV}
+		do
+			start_serv $i $ENLOG
+		done
+		echo "Now Started Athena."
+	;;
+    'watch')
+		for i in ${L_SRV} ${C_SRV} ${M_SRV}
+		 do
+			watch_serv $i 10 3
+		done
+		echo "Now watching Athena."
+	;;	
+	'stop')
+		for i in ${L_SRV} ${C_SRV} ${M_SRV}
+		do
+			PIDFILE=.${i}.pid
+			if [ -e ./${PIDFILE} ]; then
+				kill $(cat ${PIDFILE})
+				rm ${PIDFILE}
+			fi
+		done
+	;;
+	'restart')
+		 restart
+	;;
+	'status')
 	for i in ${L_SRV} ${C_SRV} ${M_SRV}
 	do
 		get_status ${i}
 		if [ ${PSRUN} ]; then echo "'${i}' is running p${PSRUN}"; else echo "'${i}' seem down"; fi
 	done
-;;	
-    *)
-        echo "Usage: athena-start { start | stop | restart | status | watch }"
-        read -p "Enter a valid option: " readEnterKey
+	;;
+	*)
+		echo "Usage: athena-start { start | stop | restart | status | watch }"
+		echo "option --enlog will tee output into a logfile"
+		read -p "Enter a valid option: " readEnterKey
 		$0 $readEnterKey
-;;
+	;;
 esac
 
 

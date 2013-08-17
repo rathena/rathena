@@ -17,17 +17,10 @@ MAP_OBJ = map.o chrif.o clif.o pc.o status.o npc.o \
 	storage.o skill.o atcommand.o battle.o battleground.o \
 	intif.o trade.o party.o vending.o guild.o pet.o \
 	log.o mail.o date.o unit.o homunculus.o mercenary.o quest.o instance.o \
-	buyingstore.o searchstore.o duel.o pc_groups.o elemental.o cashshop.o channel.o
-MAP_SQL_OBJ = $(MAP_OBJ:%=obj_sql/%) \
-	obj_sql/mapreg_sql.o
-MAP_H = map.h chrif.h clif.h pc.h status.h npc.h \
-	chat.h itemdb.h mob.h script.h path.h \
-	storage.h skill.h atcommand.h battle.h battleground.h \
-	intif.h trade.h party.h vending.h guild.h pet.h \
-	log.h mail.h date.h unit.h homunculus.h mercenary.h quest.h instance.h mapreg.h \
-	buyingstore.h searchstore.h duel.h pc_groups.h elemental.h cashshop.h channel.h\
-	../config/core.h ../config/renewal.h ../config/secure.h ../config/const.h \
-	../config/classes/general.h
+	buyingstore.o searchstore.o duel.o pc_groups.o elemental.o cashshop.o channel.o mapreg_sql.o
+MAP_SQL_OBJ = $(MAP_OBJ:%=obj_sql/%)
+MAP_H = $(shell ls ../map/*.h) \
+	$(shell ls ../config/*.h) 
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)

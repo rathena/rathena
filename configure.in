@@ -649,9 +649,11 @@ case $enable_debug in
 		;;
 	"yes")
 		CFLAGS="$CFLAGS -g -DDEBUG"
+		LDFLAGS="$LDFLAGS -g"
 		;;
 	"gdb")
 		CFLAGS="$CFLAGS -ggdb -DDEBUG"
+		LDFLAGS="$LDFLAGS -g"
 		;;
 esac
 
@@ -915,8 +917,10 @@ else
 	AC_MSG_RESULT([no])
 fi
 
+AC_MSG_NOTICE([Configure finish, CFLAGS= $CFLAGS])
+AC_MSG_NOTICE([LDFLAGS=$LDFLAGS])
 #AC_MSG_NOTICE([PROD_WARN= $PROD_WARN])
 #AC_MSG_NOTICE([EXTRA_WARN= $EXTRA_WARN])
-AC_MSG_NOTICE([Configure finish, CFLAG= $CFLAGS])
+
 ###############################################################################
 AC_OUTPUT
