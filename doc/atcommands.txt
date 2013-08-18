@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 20130626
+//= 20130817
 //===== Description: =========================================
 //= List of available atcommands and their functions.
 //============================================================
@@ -628,10 +628,10 @@ Spawns a clone of the specified player.
 
 ---------------------------------------
 
-@item <item name/ID> {<amount>}
+@item <item name/ID>{:<item name/ID>:...} {<amount>}
 /item <item name>
 
-Creates an item.
+Creates an item (or multiple items).
 
 ---------------------------------------
 
@@ -643,7 +643,7 @@ attribute: 0 = not broken, 1 = broken
 
 ---------------------------------------
 
-@itembound <item name/ID> <amount> <bound type>
+@itembound <item name/ID>{:<item name/ID>:...} <amount> <bound type>
 @itembound2 <item name/ID> <quantity> <identify_flag> <refine> <attribute> <card1> <card2> <card3> <card4> <bound type>
 
 Creates an item bounded to the character.

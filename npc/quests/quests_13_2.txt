@@ -7306,8 +7306,8 @@ OnTouch:
 nyd_dun01,255,142,0	warp	nynm_dun1f_to_2f	1,1,nyd_dun02,61,265
 nyd_dun02,56,264,0	warp	nynm_dun2f_to_1f	1,1,nyd_dun01,249,143
 
-/*
 nyd_dun02,1,1,0	script	ep13_nd2f_mng	844,{
+/*
 	mes "Enter password.";
 	next;
 	input .@input; //,0,4000;
@@ -7329,6 +7329,7 @@ nyd_dun02,1,1,0	script	ep13_nd2f_mng	844,{
 		mes "Invalid.";
 		close;
 	}
+*/
 	end;
 
 OnReset:
@@ -7398,4 +7399,3 @@ OnReset:
 	donpcevent "ep13_warp_85_2::OnDisable";
 	end;
 }
-*/

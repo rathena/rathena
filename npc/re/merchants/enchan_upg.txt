@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Skorm
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -11,249 +11,256 @@
 //= Adds enchantments to Upgrade weapons.
 //===== Additional Comments: =================================
 //= 1.0 First version.
+//= 1.1 Standardizing, grammar and bug fixes. [Euphy]
 //============================================================
+
 prt_in,28,73,3	script	Devil Enchant Master#prq	63,{
-	set .@eq_loc, EQI_HAND_R;
-	set .@eq_id, getequipid(.@eq_loc);
-	set .@eq_refine, getequiprefinerycnt(.@eq_loc);
-	set .@enc_book, 6484;
-	set .@item$, "1292, 1394, 1491, 1585, 2015, 13071, 13115, 16019, 18112, 21000";
-
-	if (!checkweight(1201,1)) callsub (S_Dialogue,1); //Checking the weight of knife?
-	if (MaxWeight - Weight < 10000) callsub (S_Dialogue,2); //Weight Check.
-	disable_items; //Do we really need this?
-
-	callsub (S_Dialogue,3);
-	switch (select("This is the first time to see you!:I heard that you are the best!:Please initialize the enchant.")) {
-		case 1:
-			callsub (S_Dialogue,4);
-			callsub (S_Dialogue,5);
-			callsub (S_Dialogue,6);
-			callsub (S_Dialogue,7,.@enc_book);
-			callsub (S_Dialogue,8);
-
-		case 2:
-			if (!countitem(.@enc_book)) callsub (S_Dialogue,9,.@enc_book);
-			set (.@select,@menu);
-			break;
-
-		case 3:
-			if (Zeny < 100000) callsub (S_Dialogue,10);
-			callsub (S_Dialogue,11); set (.@select,@menu);
-			if (select("Let me think about it.:Initialize it now!")==1)
-					callsub (S_Dialogue,12);
+	disable_items;
+	if (checkweight(1201,1) == 0) {
+		mes "You are carrying too many items, please reduce it and come back again!";
+		close;
 	}
+	if (MaxWeight - Weight < 10000) {
+		mes "You are over the weight limit, please reduce it and come back again!";
+		close;
+	}
+	mes "[Devil Enchant Master]";
+	mes "Yes?";
+	mes "You are looking for me?";
+	next;
+	switch(select("This is the first time seeing you!:I heard that you are the best!:Please initialize the enchant.")) {
+	case 1:
+		mes "[Devil Enchant Master]";
+		mes "Ha ha ha~ Of course, I am not the kind of person that simply deals with people.";
+		next;
+		mes "[Devil Enchant Master]";
+		mes "Including you! Even if you offer me plenty of money, I will not simply enchant for you!!";
+		next;
+		mes "[Devil Enchant Master]";
+		mes "Have you seen my title? Very few people have this title for a reason!";
+		next;
+		mes "[Devil Enchant Master]";
+		mes "I will only enchant if you bring an ^0000ffEnchant Book^000000 along!";
+		next;
+		mes "[Devil Enchant Master]";
+		mes "Else, I will not enchant for you....";
+		close;
+	case 2:
+		if (!countitem(6484)) {
+			mes "[Devil Enchant Master]";
+			mes "Are you listening to me? I will only do for you if you bring the Enchant Book!";
+			close;
+		}
+		set .@select,1;
+		break;
+	case 3:
+		mes "[Devil Enchant Master]";
+		if (Zeny < 100000) {
+			mes "Initializing will cost 100,000 zeny. It seems you do not have enough zeny...";
+			close;
+		}
+		mes "Initializing will cost 100,000 zeny and confirming whether the weapon is enchanted!";
+		next;
+		if (select("Let me think about it.:Initialize it now!") == 1) {
+			mes "[Devil Enchant Master]";
+			mes "Come back after you have confirmed!";
+			close;
+		}
+		set .@select,2;
+		break;
+	}
+	set .@part, EQI_HAND_R;
 
+	mes "[Devil Enchant Master]";
+	if (!getequipisequiped(.@part)) {
+		mes "Are you trying to remove the enchanted equipment?";
+		close;
+	}
+	setarray .@equip_card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
+	if (!getequipisequiped(.@part)) {
+		mes "It is dangerous to remove equipment during enchant process!";
+		close;
+	}
+	set .@equip_id, getequipid(.@part);
+	set .@item$, "|1292|1394|1491|1585|2015|13071|13115|16019|18112|21000|";
+	if (!compare(.@item$,"|"+.@equip_id+"|")) {
+		mes "I don't want to touch your equipment now!";
+		close;
+	}
+	set .@equip_refine, getequiprefinerycnt(.@part);
 
-//-
-	if (!getequipisequiped(.@eq_loc)) callsub (S_Dialogue,13);  //Checking if the item was removed.
-	setarray .@eq_card, getequipcardid(.@eq_loc,0), getequipcardid(.@eq_loc,1), getequipcardid(.@eq_loc,2), getequipcardid(.@eq_loc,3);
-
-
-//---
-	if (!getequipisequiped(.@eq_loc)) callsub (S_Dialogue,14);  //Checking if the item was removed.
-
-
-//----
-	if (!compare(.@item$,""+.@eq_id)) callsub (S_Dialogue,15);
-
-
-//-----------
-	if (.@select==2) {
-		if (!countitem(.@enc_book)) callsub (S_Dialogue,16,.@enc_book);
-
-
-//--------------
-		callsub(S_Dialogue,17);
-		if (select("Let me think about it.:Physical Series:Magical Series")==1)
-				callsub (S_Dialogue,18);
-		set(.@select,@menu);
-
-
-// -------------
-		if (!.@eq_card[3]) {
-			callsub (S_Dialogue,19);
-			if (select("Next Time!:Start now!")==1)
-				callsub (S_Dialogue,20);
-		} else callsub (S_Dialogue,21);
-
-
-//------------------------
-		if (.@select==2) {
-			if (.@eq_card[3]) callsub(S_Dialogue,22);
-			set .@rand, rand(1,1300);
-			     if (.@rand < 51)    set .@enc_id, 4734; //Agility5
-			else if (.@rand < 76)    set .@enc_id, 4735; //Agility6
-			else if (.@rand < 88)    set .@enc_id, 4736; //Agility7
-			else if (.@rand < 93)    set .@enc_id, 4737; //Agility8
-			else if (.@rand < 95)    set .@enc_id, 4738; //Agility9
-			else if (.@rand < 96)    set .@enc_id, 4739; //Agility10
-			else if (.@rand < 146)   set .@enc_id, 4724; //Dexterity5
-			else if (.@rand < 171)   set .@enc_id, 4725; //Dexterity6
-			else if (.@rand < 183)   set .@enc_id, 4726; //Dexterity7
-			else if (.@rand < 188)   set .@enc_id, 4727; //Dexterity8
-			else if (.@rand < 190)   set .@enc_id, 4728; //Dexterity9
-			else if (.@rand < 191)   set .@enc_id, 4729; //Dexterity10
-			else if (.@rand < 291)   set .@enc_id, 4704; //Strength5
-			else if (.@rand < 341)   set .@enc_id, 4705; //Strength6
-			else if (.@rand < 366)   set .@enc_id, 4706; //Strength7
-			else if (.@rand < 378)   set .@enc_id, 4707; //Strength8
-			else if (.@rand < 383)   set .@enc_id, 4708; //Strength9
-			else if (.@rand < 384)   set .@enc_id, 4709; //Strength10
-			else if (.@rand < 434)   set .@enc_id, 4754; //Luck5
-			else if (.@rand < 459)   set .@enc_id, 4755; //Luck6
-			else if (.@rand < 471)   set .@enc_id, 4756; //Luck7
-			else if (.@rand < 476)   set .@enc_id, 4757; //Luck8
-			else if (.@rand < 478)   set .@enc_id, 4758; //Luck9
-			else if (.@rand < 479)   set .@enc_id, 4759; //Luck10
-			else if (.@rand < 679)   set .@enc_id, 4744; //Vitality5
-			else if (.@rand < 779)   set .@enc_id, 4745; //Vitality6
-			else if (.@rand < 829)   set .@enc_id, 4746; //Vitality7
-			else if (.@rand < 854)   set .@enc_id, 4747; //Vitality8
-			else if (.@rand < 866)   set .@enc_id, 4748; //Vitality9
-			else if (.@rand < 867)   set .@enc_id, 4749; //Vitality10
-			else if (.@rand < 967)   set .@enc_id, 4808; //Fighting_Spirit4
-			else if (.@rand < 992)   set .@enc_id, 4820; //Fighting_Spirit5
-			else if (.@rand < 1092)  set .@enc_id, 4835; //Expert_Archer4
-			else if (.@rand < 1117)  set .@enc_id, 4836; //Expert_Archer5
-			else if (.@rand < 1217)  set .@enc_id, 4835; //Expert_Archer4
-			else if (.@rand < 1242)  set .@enc_id, 4836; //Expert_Archer5
-			else set .@enc_id, 0;    //Failure Rate
-
-
-//----------------------------
-		} else if (.@select==3) {
-			if (.@eq_card[3]) callsub (S_Dialogue,23);
-			set .@rand, rand(1,1200);
-				 if (.@rand < 51)    set .@enc_id, 4714; //Inteligence5
-			else if (.@rand < 76)    set .@enc_id, 4715; //Inteligence6
-			else if (.@rand < 88)    set .@enc_id, 4716; //Inteligence7
-			else if (.@rand < 93)    set .@enc_id, 4717; //Inteligence8
-			else if (.@rand < 95)    set .@enc_id, 4718; //Inteligence9
-			else if (.@rand < 96)    set .@enc_id, 4719; //Inteligence10
-			else if (.@rand < 146)   set .@enc_id, 4724; //Dexterity5
-			else if (.@rand < 171)   set .@enc_id, 4725; //Dexterity6
-			else if (.@rand < 183)   set .@enc_id, 4726; //Dexterity7
-			else if (.@rand < 188)   set .@enc_id, 4727; //Dexterity8
-			else if (.@rand < 190)   set .@enc_id, 4728; //Dexterity9
-			else if (.@rand < 191)   set .@enc_id, 4729; //Dexterity10
-			else if (.@rand < 291)   set .@enc_id, 4734; //Agility5
-			else if (.@rand < 341)   set .@enc_id, 4735; //Agility6
-			else if (.@rand < 366)   set .@enc_id, 4736; //Agility7
-			else if (.@rand < 378)   set .@enc_id, 4737; //Agility8
-			else if (.@rand < 383)   set .@enc_id, 4738; //Agility9
-			else if (.@rand < 384)   set .@enc_id, 4739; //Agility10
-			else if (.@rand < 484)   set .@enc_id, 4754; //Luck5
-			else if (.@rand < 534)   set .@enc_id, 4755; //Luck6
-			else if (.@rand < 559)   set .@enc_id, 4756; //Luck7
-			else if (.@rand < 571)   set .@enc_id, 4757; //Luck8
-			else if (.@rand < 576)   set .@enc_id, 4758; //Luck9
-			else if (.@rand < 577)   set .@enc_id, 4759; //Luck10
-			else if (.@rand < 777)   set .@enc_id, 4744; //Vitality5
-			else if (.@rand < 877)   set .@enc_id, 4745; //Vitality6
-			else if (.@rand < 927)   set .@enc_id, 4746; //Vitality7
-			else if (.@rand < 952)   set .@enc_id, 4747; //Vitality8
-			else if (.@rand < 964)   set .@enc_id, 4748; //Vitality9
-			else if (.@rand < 969)   set .@enc_id, 4749; //Vitality10
-			else if (.@rand < 1069)  set .@enc_id, 4812; //Spell4
-			else if (.@rand < 1094)  set .@enc_id, 4826; //Spell5
-			else if (.@rand < 1119)  set .@enc_id, 4761; //Matk2
-			else if (.@rand < 1124)  set .@enc_id, 4806; //Matk3
-			else set .@enc_id, 0;    //Failure Rate
+	if (.@select == 1) {
+		if (!countitem(6484)) {
+			mes "Are you listening to me? I will only do for you if you bring the Enchant Book!";
+			close;
+		}
+		mes "Which type of effect do you want to enchant?";
+		next;
+		switch(select("Let me think about it.:Physical Series:Magical Series")) {
+		case 1:
+			mes "[Devil Enchant Master]";
+			mes "Come back again after you change your mind!";
+			close;
+		case 2:
+			set .@enc_type,1;
+			break;
+		case 3:
+			set .@enc_type,2;
+			break;
+		}
+		mes "[Devil Enchant Master]";
+		if (.@equip_card[3]) {
+			mes "This equipment has been enchanted! You need to initialize first before you want to enchant it again.";
+			close;
+		}
+		mes "The enchant process might fail, and ^ff0000it will reduce partial refine level^000000, but the slotted card and weapon will not be broken! Are you sure you want to continue?";
+		next;
+		if (select("Next time!:Start now!") == 1) {
+			mes "[Devil Enchant Master]";
+			mes "Come back again after you have decided!";
+			close;
+		}
+		if (.@equip_card[3]) {
+			mes "[Devil Enchant Master]";
+			mes "It seems there's a problem, let me take a look.";
+			close;
 		}
 
+		if (.@enc_type == 1) { // Physical Series
+			set .@i, rand(1,1300);
+			     if (.@i < 51)    set .@enchant,4734; //Agility5
+			else if (.@i < 76)    set .@enchant,4735; //Agility6
+			else if (.@i < 88)    set .@enchant,4736; //Agility7
+			else if (.@i < 93)    set .@enchant,4737; //Agility8
+			else if (.@i < 95)    set .@enchant,4738; //Agility9
+			else if (.@i < 96)    set .@enchant,4739; //Agility10
+			else if (.@i < 146)   set .@enchant,4724; //Dexterity5
+			else if (.@i < 171)   set .@enchant,4725; //Dexterity6
+			else if (.@i < 183)   set .@enchant,4726; //Dexterity7
+			else if (.@i < 188)   set .@enchant,4727; //Dexterity8
+			else if (.@i < 190)   set .@enchant,4728; //Dexterity9
+			else if (.@i < 191)   set .@enchant,4729; //Dexterity10
+			else if (.@i < 291)   set .@enchant,4704; //Strength5
+			else if (.@i < 341)   set .@enchant,4705; //Strength6
+			else if (.@i < 366)   set .@enchant,4706; //Strength7
+			else if (.@i < 378)   set .@enchant,4707; //Strength8
+			else if (.@i < 383)   set .@enchant,4708; //Strength9
+			else if (.@i < 384)   set .@enchant,4709; //Strength10
+			else if (.@i < 434)   set .@enchant,4754; //Luck5
+			else if (.@i < 459)   set .@enchant,4755; //Luck6
+			else if (.@i < 471)   set .@enchant,4756; //Luck7
+			else if (.@i < 476)   set .@enchant,4757; //Luck8
+			else if (.@i < 478)   set .@enchant,4758; //Luck9
+			else if (.@i < 479)   set .@enchant,4759; //Luck10
+			else if (.@i < 679)   set .@enchant,4744; //Vitality5
+			else if (.@i < 779)   set .@enchant,4745; //Vitality6
+			else if (.@i < 829)   set .@enchant,4746; //Vitality7
+			else if (.@i < 854)   set .@enchant,4747; //Vitality8
+			else if (.@i < 866)   set .@enchant,4748; //Vitality9
+			else if (.@i < 867)   set .@enchant,4749; //Vitality10
+			else if (.@i < 967)   set .@enchant,4808; //Fighting_Spirit4
+			else if (.@i < 992)   set .@enchant,4820; //Fighting_Spirit5
+			else if (.@i < 1092)  set .@enchant,4835; //Expert_Archer4
+			else if (.@i < 1117)  set .@enchant,4836; //Expert_Archer5
+			else if (.@i < 1217)  set .@enchant,4835; //Expert_Archer4
+			else if (.@i < 1242)  set .@enchant,4836; //Expert_Archer5
+			else set .@enchant,0;
+		} else if (.@enc_type == 2) { // Magical Series
+			set .@i, rand(1,1200);
+			     if (.@i < 51)    set .@enchant,4714; //Inteligence5
+			else if (.@i < 76)    set .@enchant,4715; //Inteligence6
+			else if (.@i < 88)    set .@enchant,4716; //Inteligence7
+			else if (.@i < 93)    set .@enchant,4717; //Inteligence8
+			else if (.@i < 95)    set .@enchant,4718; //Inteligence9
+			else if (.@i < 96)    set .@enchant,4719; //Inteligence10
+			else if (.@i < 146)   set .@enchant,4724; //Dexterity5
+			else if (.@i < 171)   set .@enchant,4725; //Dexterity6
+			else if (.@i < 183)   set .@enchant,4726; //Dexterity7
+			else if (.@i < 188)   set .@enchant,4727; //Dexterity8
+			else if (.@i < 190)   set .@enchant,4728; //Dexterity9
+			else if (.@i < 191)   set .@enchant,4729; //Dexterity10
+			else if (.@i < 291)   set .@enchant,4734; //Agility5
+			else if (.@i < 341)   set .@enchant,4735; //Agility6
+			else if (.@i < 366)   set .@enchant,4736; //Agility7
+			else if (.@i < 378)   set .@enchant,4737; //Agility8
+			else if (.@i < 383)   set .@enchant,4738; //Agility9
+			else if (.@i < 384)   set .@enchant,4739; //Agility10
+			else if (.@i < 484)   set .@enchant,4754; //Luck5
+			else if (.@i < 534)   set .@enchant,4755; //Luck6
+			else if (.@i < 559)   set .@enchant,4756; //Luck7
+			else if (.@i < 571)   set .@enchant,4757; //Luck8
+			else if (.@i < 576)   set .@enchant,4758; //Luck9
+			else if (.@i < 577)   set .@enchant,4759; //Luck10
+			else if (.@i < 777)   set .@enchant,4744; //Vitality5
+			else if (.@i < 877)   set .@enchant,4745; //Vitality6
+			else if (.@i < 927)   set .@enchant,4746; //Vitality7
+			else if (.@i < 952)   set .@enchant,4747; //Vitality8
+			else if (.@i < 964)   set .@enchant,4748; //Vitality9
+			else if (.@i < 969)   set .@enchant,4749; //Vitality10
+			else if (.@i < 1069)  set .@enchant,4812; //Spell4
+			else if (.@i < 1094)  set .@enchant,4826; //Spell5
+			else if (.@i < 1119)  set .@enchant,4761; //Matk2
+			else if (.@i < 1124)  set .@enchant,4806; //Matk3
+			else set .@enchant,0;
+		} else {
+			mes "[Devil Enchant Master]";
+			mes "Hmm! This item is having a problem, please check it again!";
+			close;
+		}
+		mes "[Devil Enchant Master]";
+		if (.@equip_card[3]) {
+			mes "This item has been enchanted!";
+			close;
+		}
+		if (!countitem(6484)) {
+			mes "Are you listening to me? I will only do for you if you bring the Enchant Book!";
+			close;
+		}
+		if (.@enchant == 0) {
+			specialeffect EF_SHIELDCHARGE;
+			mes "Oh! Unbelievable!! It failed!! Please come again!";
+			set .@lost_refine, rand(0,.@equip_refine);
+			set .@equip_refine, .@equip_refine - .@lost_refine;
+		} else {
+			specialeffect EF_REPAIRWEAPON;
+			mes "The slot ^9900004^000000 has been enchanted!";
+		}
+		delitem 6484,1; //Enchant_Book
+		delequip .@part;
 
-//-------------
-		else callsub (S_Dialogue,24);
+//		GetNonSlotItemSock2 .@equip_refine .@equip_id .@equip_card[0] .@equip_card[1] .@equip_card[2] .@enchant
+		getitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@enchant;
 
-
-//-------------
-		if (.@eq_card[3]) callsub (S_Dialogue,25);
-		set .@eq_card[3], .@enc_id;
-
-
-//----------------
-		if (countitem(.@enc_book)) {
-			if (!.@enc_id) {
-				if (.@eq_refine) set .@neq_refine,.@eq_refine-rand(2);
-				misceffect EF_SHIELDCHARGE;
-				callsub (S_Dialogue,26);
-				delitem (.@enc_book,1);
-				delequip (.@eq_loc);
-				getitem2 (.@eq_id,1,1,.@neq_refine,0,.@eq_card[0],.@eq_card[1],.@eq_card[2],.@eq_card[3]);
-				if (.@neq_refine<.@eq_refine) { next; callsub (S_Dialogue,27,.@neq_refine); }
-				close;
-			} else {
-				misceffect EF_REPAIRWEAPON;
-				callsub (S_Dialogue,28,4);
-				delitem (.@enc_book,1);
-				delequip (.@eq_loc);
-				getitem2 (.@eq_id,1,1,.@eq_refine,0,.@eq_card[0],.@eq_card[1],.@eq_card[2],.@eq_card[3]);
-				close;
-			}
-		} else callsub(S_Dialogue,29,.@enc_book);
-
-
-//--------	
-	} else if (.@select==3) {
-		if (!.@eq_card[3]) callsub (S_Dialogue,30); //Checking if the item is enchanted. 
-		if (!getequipisequiped(.@eq_loc)) callsub (S_Dialogue,31); //Checking if the item was removed. 
-		set .@eq_card[3], 0; //Remove card.
-		misceffect EF_REPAIRWEAPON;
-		callsub (S_Dialogue,32);
-		if (Zeny < 100000) callsub (S_Dialogue,33); //Money check.
-		set Zeny, Zeny - 100000;
-		delequip (.@eq_loc);
-		getitem2 (.@eq_id,1,1,.@eq_refine,0,.@eq_card[0],.@eq_card[1],.@eq_card[2],.@eq_card[3]);
+		if (.@lost_refine) {
+			next;
+			mes "[Devil Enchant Master]";
+			mes "The failure has reduced the refine by "+.@lost_refine+" level"+((.@lost_refine == 1)?"":"s")+"! Don't be depressed!";
+		}
 		close;
-	} else callsub (S_Dialogue,34);
+	} else if (.@select == 2) {
+		if (Zeny < 100000) {
+			mes "You need to bring some money to initialize!!";
+			close;
+		}
+		if (.@equip_card[3] < 4700) { // Armor Enchant System
+			mes "This item is not enchanted!";
+			close;
+		}
+		if (!getequipisequiped(.@part)) {
+			mes "Are you unequipping now?";
+			close;
+		}
+		specialeffect EF_REPAIRWEAPON;
+		mes "I initialized the enchant effects.";
+		set Zeny, Zeny - 100000;
+		delequip .@part;
 
+//		GetNonSlotItemSock2 .@equip_refine .@equip_id .@equip_card[0] .@equip_card[1] .@equip_card[2] 0
+		getitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],0;
 
-//--------	
-S_Dialogue:
-	mes "[Devil Enchant Master]";
-	switch( getarg(0) ) {
-		case 1:  /*mes "You are carrying too many item, please reduce it and come back again!";*/ //Small Change. ::Changed
-		         mes "You are carrying too many items, please reduce it and come back again!"; close;
-		case 2:  mes "You are over the weight limit, please reduce it and come back again!"; close;
-		case 3:  mes "Yes?";
-		         /*mes "You are looking me for?";*/ //Small Change ::Changed
-		         mes "You are looking for me?"; next; return; 
-		case 4:  mes "Ha ha ha~ Of course, I would not the kind of person that simply deal with people."; next; return;
-		case 5:  mes "Including you! Even to tame plenty money to ask me, I will not simply enchant for you!!"; next; return;
-		case 6:  /*mes "Have you seen my title? Only a little person can get this title!";*/ //Do I even have to say it? ::Changed
-		         mes "Have you seen my title? Very few people have this title for a reason!"; next; return;
-		case 7:  mes "I will only enchant if you bring the ^0000ff"+getitemname(getarg(1))+"^000000 along!"; next; return;
-		case 8:  mes "Else, I will not enchant for you...."; close;
-		case 9:  mes "Are you listen to me? I will only do for you if you bring the "+getitemname(getarg(1))+"!"; close;
-		case 10: mes "Initialize will need 100,000 zeny, it seem you do not have enough zeny.."; close;
-		case 11: mes "Initialize will need 100,000 zeny and confirm whether the weapon is enchanted!"; next; return;
-		case 12: mes "Come back after you have confirmed!"; close;
-		case 13: /*mes "Are you try to remove the enchant equipment?"; close;*/ //Checks for removed equipment... Doesn't make much sense given the context. ::Changed
-		         mes "Please equip a UPG Weapon!"; close;
-		case 14: mes "It is dangerous to remove equipment during enchant process!"; close; //...
-		case 15: /*mes "I don't want to touch your equipment now!";*/ //Doesn't really work. ::Changed
-		         mes "I cannot work on that equipment!"; close;
-		case 16: mes "Are you listen to me? I will only do for you if you bring the "+getitemname(getarg(1))+"!"; close;
-		case 17: mes "Which type of effect you want to enchant?"; next; return;
-		case 18: mes "Come back again after you change the mind!"; close;
-		case 19: mes "The enchant process might fail, and ^ff0000it will reduce partial refine level^000000, but the slotted card and weapon will not broken! Are you sure to continue?"; next; return;
-		case 20: mes "Come back again after you have decide!"; close;
-		case 21: mes "This equipment has been enchanted! You need to initialize first before you want to enchant it again."; close;
-		case 22: mes "It seem having problem, let me take a look."; close;
-		case 23: mes "It seem having problem, let me take a look."; close;
-		case 24: mes "Hmm! This item seem having problem, please check it again!"; close;
-		case 25: mes "This item has been enchanted!"; close;
-		case 26: mes "Oh! Unbelievable!! It's failed!! Please come again!"; return;
-		case 27: /*mes "The failure has reduce refine " + getarg(1) + " level! Don't depress!";*/ //Wait what? ::Changed
-		         mes "Your refine level has reduced to "+ getarg(1) +"! Please don't despair!"; return;
-		case 28: mes "The slot ^990000" + getarg(1) + " has been ^000000enchanted!"; return;
-		case 29: mes "Are you listen to me? I will only do for you if you bring the "+getitemname(getarg(1))+"!"; close;
-		case 30: mes "This item is not enchanted!"; close;
-		case 31: mes "Are you unequipping now?"; close;
-		case 32: /*mes "You need to initialize the enchant effect!";*/ //What I thought we just did that? ::Changed
-		         mes "Item enchantment effect initialized!"; return;
-		case 33: mes "You need to bring some money to initialize!!"; close;
-		case 34: mes "It seem you have chosen the wrong job??"; close;
+		close;
+	} else {
+		mes "It seems you have chosen the wrong job??";
+		close;
 	}
 }
