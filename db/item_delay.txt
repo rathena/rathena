@@ -22,3 +22,8 @@
 11523,2000	// Yellow_Raffle_Sap
 11524,3000	// White_Raffle_Sap
 11525,5000	// Mora_Hip_Tea
+
+// FIXE ME! I assume the delay like GD_ITEMEMERGENCYCALL cooldown time
+12968,300000	// Emergency_Scroll1
+12969,300000	// Emergency_Scroll2
+12970,300000	// Emergency_Scroll3

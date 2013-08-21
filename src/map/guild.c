@@ -515,7 +515,7 @@ int guild_recv_info(struct guild *sg)
 			//If the guild master is online the first time the guild_info is received,
 			//that means he was the first to join, so apply guild skill blocking here.
 			if( battle_config.guild_skill_relog_delay )
-				guild_block_skill(sd, 300000);
+				guild_block_skill(sd, battle_config.guild_skill_relog_delay);
 
 			//Also set the guild master flag.
 			sd->guild = g;
@@ -720,7 +720,7 @@ void guild_member_joined(struct map_session_data *sd)
 		sd->state.gmaster_flag = g;
 		// prevent Guild Skills from being used directly after relog
 		if( battle_config.guild_skill_relog_delay )
-			guild_block_skill(sd, 300000);
+			guild_block_skill(sd, battle_config.guild_skill_relog_delay);
 	}
 	i = guild_getindex(g, sd->status.account_id, sd->status.char_id);
 	if (i == -1)
@@ -1818,8 +1818,9 @@ int guild_gm_changed(int guild_id, int account_id, int char_id)
 	if (g->member[0].sd && g->member[0].sd->fd) {
 		clif_displaymessage(g->member[0].sd->fd, msg_txt(g->member[pos].sd,679)); //"You have become the Guild Master!"
 		g->member[0].sd->state.gmaster_flag = g;
-		//Block his skills for 5 minutes to prevent abuse.
-		guild_block_skill(g->member[0].sd, 300000);
+		//Block his skills to prevent abuse.
+		if (battle_config.guild_skill_relog_delay)
+			guild_block_skill(g->member[0].sd, battle_config.guild_skill_relog_delay);
 	}
 
 	// announce the change to all guild members
@@ -2144,7 +2145,6 @@ void guild_flag_remove(struct npc_data *nd) {
 
 		cursor++;
 	}
-
 }
 
 /**
