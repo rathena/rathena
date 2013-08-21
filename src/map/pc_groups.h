@@ -45,6 +45,7 @@ enum e_pc_permission {
 	PC_PERM_DISABLE_CMD_DEAD    = 0x100000,
 	PC_PERM_CHANNEL_ADMIN       = 0x200000,
 	PC_PERM_TRADE_BOUNDED       = 0x400000,
+	PC_PERM_ITEM_UNCONDITIONAL  = 0x800000,
 };
 
 static const struct {
@@ -74,6 +75,7 @@ static const struct {
 	{ "disable_commands_when_dead", PC_PERM_DISABLE_CMD_DEAD },
 	{ "channel_admin", PC_PERM_CHANNEL_ADMIN },
 	{ "can_trade_bounded", PC_PERM_TRADE_BOUNDED },
+	{ "item_unconditional", PC_PERM_ITEM_UNCONDITIONAL },
 };
 
 #endif // _PC_GROUPS_H_

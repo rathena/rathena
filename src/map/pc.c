@@ -842,6 +842,53 @@ bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd,
 
 	return false; // Job Change Fail
 }
+ 
+/*==========================================
+ * Check if player can use/equip selected item. Used by pc_isUseitem and pc_isequip
+   Returns:
+		false : Cannot use/equip
+		true  : Can use/equip
+ * Credits:
+		[Inkfish] for first idea
+		[Haru] for third-classes extension
+		[Cydh] finishing :D
+ *------------------------------------------*/
+bool pc_isItemClass (struct map_session_data *sd, struct item_data* item) {
+	while (1) {
+		if (item->class_upper&ITEMJ_NORMAL && !(sd->class_&(JOBL_UPPER|JOBL_THIRD|JOBL_BABY)))	//normal classes (no upper, no baby, no third)
+			break;
+#ifndef RENEWAL
+		//allow third classes to use trans. class items
+		if (item->class_upper&ITEMJ_UPPER && sd->class_&(JOBL_UPPER|JOBL_THIRD))	//trans. classes
+			break;
+		//third-baby classes can use same item too
+		if (item->class_upper&ITEMJ_BABY && sd->class_&JOBL_BABY)	//baby classes
+			break;
+		//don't need to decide specific rules for third-classes?
+		//items for third classes can be used for all third classes
+		if (item->class_upper&(ITEMJ_THIRD|ITEMJ_THIRD_TRANS|ITEMJ_THIRD_BABY) && sd->class_&JOBL_THIRD)
+			break;
+#else
+		//trans. classes (exl. third-trans.)
+		if (item->class_upper&ITEMJ_UPPER && sd->class_&JOBL_UPPER && !(sd->class_&JOBL_THIRD))
+			break;
+		//baby classes (exl. third-baby)
+		if (item->class_upper&ITEMJ_BABY && sd->class_&JOBL_BABY && !(sd->class_&JOBL_THIRD))
+			break;
+		//third classes (exl. third-trans. and baby-third)
+		if (item->class_upper&ITEMJ_THIRD && sd->class_&JOBL_THIRD && !(sd->class_&(JOBL_UPPER|JOBL_BABY)))
+			break;
+		//trans-third classes
+		if (item->class_upper&ITEMJ_THIRD_TRANS && sd->class_&JOBL_THIRD && sd->class_&JOBL_UPPER)
+			break;
+		//third-baby classes
+		if (item->class_upper&ITEMJ_THIRD_BABY && sd->class_&JOBL_THIRD && sd->class_&JOBL_BABY)
+			break;
+#endif
+		return false;
+	}
+	return true;
+}
 
 /*=================================================
  * Checks if the player can equip the item at index n in inventory.
@@ -903,14 +950,9 @@ int pc_isequip(struct map_session_data *sd,int n)
 	//Not equipable by class. [Skotlex]
 	if (!(1<<(sd->class_&MAPID_BASEMASK)&item->class_base[(sd->class_&JOBL_2_1)?1:((sd->class_&JOBL_2_2)?2:0)]))
 		return 0;
-	//Not usable by upper class. [Inkfish]
-	while( 1 ) {
-		if( item->class_upper&1 && !(sd->class_&(JOBL_UPPER|JOBL_THIRD|JOBL_BABY)) ) break;
-		if( item->class_upper&2 && sd->class_&(JOBL_UPPER|JOBL_THIRD) ) break;
-		if( item->class_upper&4 && sd->class_&JOBL_BABY ) break;
-		if( item->class_upper&8 && sd->class_&JOBL_THIRD ) break;
+	
+	if (!pc_isItemClass(sd,item))
 		return 0;
-	}
 
 	return 1;
 }
@@ -4139,9 +4181,16 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 	//Not consumable item
 	if( item->type != IT_HEALING && item->type != IT_USABLE && item->type != IT_CASH )
 		return 0;
-	else if(map[sd->bl.m].flag.noitemconsumption) //consumable but mapflag prevent it
-		return 0;
 	if( !item->script ) //if it has no script, you can't really consume it!
+		return 0;
+	if (pc_has_permission(sd,PC_PERM_ITEM_UNCONDITIONAL))
+		return 1;
+	if(map[sd->bl.m].flag.noitemconsumption) //consumable but mapflag prevent it
+		return 0;
+	//Prevent mass item usage. [Skotlex]
+	if( DIFF_TICK(sd->canuseitem_tick,gettick()) > 0 ||
+		(itemdb_iscashfood(nameid) && DIFF_TICK(sd->canusecashfood_tick,gettick()) > 0)
+	)
 		return 0;
 
 	if( (item->item_usage.flag&NOUSE_SITTING) && (pc_issit(sd) == 1) && (pc_get_group_level(sd) < item->item_usage.override) ) {
@@ -4263,14 +4312,21 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 		(item->class_base[sd->class_&JOBL_2_1?1:(sd->class_&JOBL_2_2?2:0)])
 	))
 		return 0;
-	//Not usable by upper class. [Inkfish]
-	while( 1 ) {
-		if( item->class_upper&1 && !(sd->class_&(JOBL_UPPER|JOBL_THIRD|JOBL_BABY)) ) break;
-		if( item->class_upper&2 && sd->class_&(JOBL_UPPER|JOBL_THIRD) ) break;
-		if( item->class_upper&4 && sd->class_&JOBL_BABY ) break;
-		if( item->class_upper&8 && sd->class_&JOBL_THIRD ) break;
+	
+	if (sd->sc.count && (
+		sd->sc.data[SC_BERSERK] || sd->sc.data[SC_SATURDAYNIGHTFEVER] ||
+		(sd->sc.data[SC_GRAVITATION] && sd->sc.data[SC_GRAVITATION]->val3 == BCT_SELF) ||
+		sd->sc.data[SC_TRICKDEAD] ||
+		sd->sc.data[SC_HIDING] ||
+		sd->sc.data[SC__SHADOWFORM] ||
+		sd->sc.data[SC__MANHOLE] ||
+		sd->sc.data[SC_KAGEHUMI] ||
+		(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOITEM)
+	    ))
 		return 0;
-	}
+	
+	if (!pc_isItemClass(sd,item))
+		return 0;
 
 	//Dead Branch & Bloody Branch & Porings Box
 	// FIXME: outdated, use constants or database
@@ -4320,24 +4376,6 @@ int pc_useitem(struct map_session_data *sd,int n)
 	if (nameid != ITEMID_NAUTHIZ && sd->sc.opt1 > 0 && sd->sc.opt1 != OPT1_STONEWAIT && sd->sc.opt1 != OPT1_BURNING)
 		return 0;
 
-	if (sd->sc.count && (
-		sd->sc.data[SC_BERSERK] || sd->sc.data[SC_SATURDAYNIGHTFEVER] ||
-		(sd->sc.data[SC_GRAVITATION] && sd->sc.data[SC_GRAVITATION]->val3 == BCT_SELF) ||
-		sd->sc.data[SC_TRICKDEAD] ||
-		sd->sc.data[SC_HIDING] ||
-		sd->sc.data[SC__SHADOWFORM] ||
-		sd->sc.data[SC__MANHOLE] ||
-		sd->sc.data[SC_KAGEHUMI] ||
-		(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOITEM)
-	    ))
-		return 0;
-
-	//Prevent mass item usage. [Skotlex]
-	if( DIFF_TICK(sd->canuseitem_tick, tick) > 0 ||
-		(itemdb_iscashfood(nameid) && DIFF_TICK(sd->canusecashfood_tick, tick) > 0)
-	)
-		return 0;
-
 	/* Items with delayed consume are not meant to work while in mounts except reins of mount(12622) */
 	if( id->flag.delay_consume ) {
 		if( nameid != ITEMID_REINS_OF_MOUNT && sd->sc.option&OPTION_MOUNTING )
@@ -4352,7 +4390,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 	if( id->flag.delay_consume && ( sd->ud.skilltimer != INVALID_TIMER /*|| !status_check_skilluse(&sd->bl, &sd->bl, ALL_RESURRECTION, 0)*/ ) )
 		return 0;
 
-	if( id->delay > 0 ) {
+	if( id->delay > 0 && !pc_has_permission(sd,PC_PERM_ITEM_UNCONDITIONAL) ) {
 		int i;
 		ARR_FIND(0, MAX_ITEMDELAYS, i, sd->item_delay[i].nameid == nameid );
 			if( i == MAX_ITEMDELAYS ) /* item not found. try first empty now */
@@ -4391,13 +4429,13 @@ int pc_useitem(struct map_session_data *sd,int n)
 	}
 
 	/* on restricted maps the item is consumed but the effect is not used */
-	if (
+	if (!pc_has_permission(sd,PC_PERM_ITEM_UNCONDITIONAL) && (
 		(!map_flag_vs(sd->bl.m) && id->flag.no_equip&1) || // Normal
 		(map[sd->bl.m].flag.pvp && id->flag.no_equip&2) || // PVP
 		(map_flag_gvg(sd->bl.m) && id->flag.no_equip&4) || // GVG
 		(map[sd->bl.m].flag.battleground && id->flag.no_equip&8) || // Battleground
 		(map[sd->bl.m].flag.restricted && id->flag.no_equip&(8*map[sd->bl.m].zone)) // Zone restriction
-		) {
+		)) {
 		if( battle_config.item_restricted_consumption_type ) {
 			clif_useitemack(sd,n,item.amount-1,true);
 			pc_delitem(sd,n,1,1,0,LOG_TYPE_CONSUME);

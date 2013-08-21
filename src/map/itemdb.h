@@ -73,6 +73,15 @@ enum {
 	NOUSE_SITTING = 0x01,
 } item_nouse_list;
 
+enum e_item_job {
+	ITEMJ_NORMAL      = 0x01,
+	ITEMJ_UPPER       = 0x02,
+	ITEMJ_BABY        = 0x04,
+	ITEMJ_THIRD       = 0x08,
+	ITEMJ_THIRD_TRANS = 0x10,
+	ITEMJ_THIRD_BABY  = 0x20,
+};
+
 //The only item group required by the code to be known. See const.txt for the full list.
 #define IG_FINDINGORE 6
 #define IG_POTION 37
@@ -118,7 +127,7 @@ struct item_data {
 //Lupus: I rearranged order of these fields due to compatibility with ITEMINFO script command
 //		some script commands should be revised as well...
 	unsigned int class_base[3];	//Specifies if the base can wear this item (split in 3 indexes per type: 1-1, 2-1, 2-2)
-	unsigned class_upper : 4; //Specifies if the upper-type can equip it (bitfield, 1: normal, 2: upper, 3: baby,4:third)
+	unsigned class_upper : 6; //Specifies if the class-type can equip it (0x01: normal, 0x02: trans, 0x04: baby, 0x08:third, 0x10:trans-third, 0x20-third-baby)
 	struct {
 		unsigned short chance;
 		int id;
