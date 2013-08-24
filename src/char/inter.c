@@ -667,7 +667,7 @@ static int inter_config_read(const char* cfgName)
 			strcpy(default_codepage,w2);
 		}
 		else if(!strcmpi(w1,"party_share_level"))
-			party_share_level = atoi(w2);
+			party_share_level = (unsigned int)atof(w2);
 		else if(!strcmpi(w1,"log_inter"))
 			log_inter = atoi(w2);
 		else if(!strcmpi(w1,"import"))

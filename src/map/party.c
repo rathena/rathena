@@ -987,8 +987,9 @@ int party_exp_share(struct party_data* p, struct block_list* src, unsigned int b
 {
 	struct map_session_data* sd[MAX_PARTY];
 	unsigned int i, c;
+#ifdef RENEWAL_EXP
 	uint32 base_exp_bonus, job_exp_bonus;
-
+#endif
 	nullpo_ret(p);
 
 	// count the number of players eligible for exp sharing
@@ -1014,10 +1015,10 @@ int party_exp_share(struct party_data* p, struct block_list* src, unsigned int b
 		if (zeny)
 			zeny = (unsigned int) cap_value(zeny * bonus/100, INT_MIN, INT_MAX);
 	}
-
+#ifdef RENEWAL_EXP
 	base_exp_bonus = base_exp;
 	job_exp_bonus = job_exp;
-
+#endif
 	for (i = 0; i < c; i++) {
 #ifdef RENEWAL_EXP
 		if( !(src && src->type == BL_MOB && ((TBL_MOB*)src)->db->mexp) ){

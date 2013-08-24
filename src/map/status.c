@@ -3924,7 +3924,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 		if( bl->type&BL_PC ){
 			int wMatk = 0;
 			int variance = 0;
-			
+
 			//  Any +MATK you get from skills and cards, including cards in weapon, is added here.
 			if( sd->bonus.ematk > 0 ){
 				status->matk_max += sd->bonus.ematk;
@@ -3933,7 +3933,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			status->matk_min = status_calc_ematk(bl, sc, status->matk_min);
 			status->matk_max = status_calc_ematk(bl, sc, status->matk_max);
 			//This is the only portion in MATK that varies depending on the weapon level and refinement rate.
-			
+
 			if(b_status->lhw.matk) {
 				if (sd) {
 					sd->state.lr_flag = 1;
@@ -3943,21 +3943,21 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 					status->lhw.matk = b_status->lhw.matk;
 				}
 			}
-						
+
 			if(b_status->rhw.matk) {
 				status->rhw.matk = b_status->rhw.matk;
 			}
-			
+
 			if(status->rhw.matk) {
 				wMatk += status->rhw.matk;
 				variance += wMatk * status->rhw.wlv / 10;
 			}
-			
+
 			if(status->lhw.matk) {
 				wMatk += status->lhw.matk;
 				variance += status->lhw.matk * status->lhw.wlv / 10;
 			}
-			
+
 			status->matk_min += wMatk - variance;
 			status->matk_max += wMatk + variance;
 		}
@@ -5723,7 +5723,7 @@ static unsigned int status_calc_maxsp(struct block_list *bl, struct status_chang
 static unsigned char status_calc_element(struct block_list *bl, struct status_change *sc, int element)
 {
 	if(!sc || !sc->count)
-		return element;
+		return cap_value(element, 0, UCHAR_MAX);
 
 	if(sc->data[SC_FREEZE])
 		return ELE_WATER;
@@ -5744,7 +5744,7 @@ static unsigned char status_calc_element(struct block_list *bl, struct status_ch
 static unsigned char status_calc_element_lv(struct block_list *bl, struct status_change *sc, int lv)
 {
 	if(!sc || !sc->count)
-		return lv;
+		return cap_value(lv, 1, 4);
 
 	if(sc->data[SC_FREEZE])
 		return 1;
@@ -5768,20 +5768,20 @@ static unsigned char status_calc_element_lv(struct block_list *bl, struct status
 unsigned char status_calc_attack_element(struct block_list *bl, struct status_change *sc, int element)
 {
 	if(!sc || !sc->count)
-		return element;
+		return cap_value(element, 0, UCHAR_MAX);
 	if(sc->data[SC_ENCHANTARMS])
 		return sc->data[SC_ENCHANTARMS]->val2;
 	if(sc->data[SC_WATERWEAPON]
-                || (sc->data[SC_WATER_INSIGNIA] && sc->data[SC_WATER_INSIGNIA]->val1 == 2) )
+		|| (sc->data[SC_WATER_INSIGNIA] && sc->data[SC_WATER_INSIGNIA]->val1 == 2) )
 		return ELE_WATER;
 	if(sc->data[SC_EARTHWEAPON]
-                || (sc->data[SC_EARTH_INSIGNIA] && sc->data[SC_EARTH_INSIGNIA]->val1 == 2) )
+		|| (sc->data[SC_EARTH_INSIGNIA] && sc->data[SC_EARTH_INSIGNIA]->val1 == 2) )
 		return ELE_EARTH;
 	if(sc->data[SC_FIREWEAPON]
-                || (sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 2) )
+		|| (sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 2) )
 		return ELE_FIRE;
 	if(sc->data[SC_WINDWEAPON]
-                || (sc->data[SC_WIND_INSIGNIA] && sc->data[SC_WIND_INSIGNIA]->val1 == 2) )
+		|| (sc->data[SC_WIND_INSIGNIA] && sc->data[SC_WIND_INSIGNIA]->val1 == 2) )
 		return ELE_WIND;
 	if(sc->data[SC_ENCPOISON])
 		return ELE_POISON;
@@ -5793,15 +5793,15 @@ unsigned char status_calc_attack_element(struct block_list *bl, struct status_ch
 		return ELE_GHOST;
 	if(sc->data[SC_TIDAL_WEAPON_OPTION] || sc->data[SC_TIDAL_WEAPON] )
 		return ELE_WATER;
-    if(sc->data[SC_PYROCLASTIC])
-        return ELE_FIRE;
+	if(sc->data[SC_PYROCLASTIC])
+		return ELE_FIRE;
 	return (unsigned char)cap_value(element,0,UCHAR_MAX);
 }
 
 static unsigned short status_calc_mode(struct block_list *bl, struct status_change *sc, int mode)
 {
 	if(!sc || !sc->count)
-		return mode;
+		return cap_value(mode, 0, USHRT_MAX);
 	if(sc->data[SC_MODECHANGE]) {
 		if (sc->data[SC_MODECHANGE]->val2)
 			mode = sc->data[SC_MODECHANGE]->val2; //Set mode

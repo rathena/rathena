@@ -4363,8 +4363,8 @@ int pc_useitem(struct map_session_data *sd,int n)
 	}
 	item = sd->status.inventory[n];
 	id = sd->inventory_data[n];
-
-	if( item.nameid <= 0 || sd->status.inventory[n].amount <= 0 )
+	
+	if (item.nameid <= 0 || item.amount <= 0)
 		return 0;
 
 	if( !pc_isUseitem(sd,n) )

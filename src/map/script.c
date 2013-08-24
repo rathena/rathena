@@ -7769,8 +7769,10 @@ BUILDIN_FUNC(delequip)
 	if (num > 0 && num <= ARRAYLENGTH(equip))
 		i=pc_checkequip(sd,equip[num-1]);
 	if(i >= 0) {
+		int ret;
 		pc_unequipitem(sd,i,3); //recalculate bonus
-		pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
+		ret=pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
+		script_pushint(st,ret==0);
 	}
 
 	return 0;
@@ -8809,11 +8811,11 @@ BUILDIN_FUNC(guildchangegm)
 BUILDIN_FUNC(monster)
 {
 	const char* mapn	= script_getstr(st,2);
-	int x			= script_getnum(st,3);
-	int y			= script_getnum(st,4);
+	int x				= script_getnum(st,3);
+	int y				= script_getnum(st,4);
 	const char* str		= script_getstr(st,5);
-	int class_		= script_getnum(st,6);
-	int amount		= script_getnum(st,7);
+	int class_			= script_getnum(st,6);
+	int amount			= script_getnum(st,7);
 	const char* event	= "";
 	unsigned int size	= SZ_SMALL;
 	unsigned int ai		= AI_NONE;
@@ -8927,7 +8929,7 @@ BUILDIN_FUNC(areamonster)
 
 	if (script_hasdata(st, 12)) {
 		ai = script_getnum(st, 12);
-		if (ai > 4) {
+		if (ai >= AI_MAX) {
 			ShowWarning("buildin_monster: Attempted to spawn non-existing ai %d for monster class %d\n", ai, class_);
 			return 1;
 		}

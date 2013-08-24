@@ -769,7 +769,7 @@ int pc_search_inventory(struct map_session_data *sd,int item_id);
 int pc_payzeny(struct map_session_data*,int, enum e_log_pick_type type, struct map_session_data*);
 int pc_additem(struct map_session_data*,struct item*,int,e_log_pick_type);
 int pc_getzeny(struct map_session_data*,int, enum e_log_pick_type, struct map_session_data*);
-int pc_delitem(struct map_session_data*,int,int,int,short,e_log_pick_type);
+int pc_delitem(struct map_session_data *sd,int n,int amount,int type, short reason, e_log_pick_type log_type);
 
 //Bound items
 int pc_bound_chk(TBL_PC *sd,int type,int *idxlist);

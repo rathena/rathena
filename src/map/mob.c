@@ -3126,7 +3126,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 				case MSC_MYHPLTMAXRATE:		// HP< maxhp%
 					flag = get_percentage(md->status.hp, md->status.max_hp);
 					flag = (flag <= c2);
-				  	break;
+					break;
 				case MSC_MYHPINRATE:
 					flag = get_percentage(md->status.hp, md->status.max_hp);
 					flag = (flag >= c2 && flag <= ms[i].val[0]);

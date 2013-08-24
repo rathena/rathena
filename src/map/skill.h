@@ -77,6 +77,16 @@ enum e_skill_inf3 {
 	INF3_USABLE_HIDING		= 0x0004,	// spell that can be use in hiding
 	INF3_USABLE_DANCE		= 0x0008,	// spell that can be use while in dancing state
 	INF3_HIT_EMP			= 0x0010,	// spell that could hit emperium
+	INF3_STATIS_BL			= 0x0020,	// spell blocked by statis
+	INF3_KAGEHUMI_BL		= 0x0040,	// spell blocked by kagehumi
+	INF3_EFF_VULTURE		= 0x0080,	// spell range affected by AC_VULTURE
+	INF3_EFF_SNAKEEYE		= 0x0100,	// spell range affected by GS_SNAKEEYE
+	INF3_EFF_SHADOWJUMP		= 0x0200,	// spell range affected by NJ_SHADOWJUMP
+	INF3_EFF_RADIUS			= 0x0400,	// spell range affected by WL_RADIUS
+	INF3_EFF_RESEARCHTRAP		= 0x0800,	// spell range affected by RA_RESEARCHTRAP
+	INF3_DIS_PLAGIA			= 0x1000,	// spell that can't be copied
+	INF3_USABLE_WARG		= 0x2000,	// spell that can be use while riding warg
+	INF3_DIS_MADO			= 0x4000,	// spell that can't be used while in mado
 	//... add other spell list option here
 };
 

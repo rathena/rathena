@@ -16267,9 +16267,6 @@ int clif_magicdecoy_list(struct map_session_data *sd, uint16 skill_lv, short x, 
 
 	return 1;
 }
-/**
- * Guilotine Cross
- **/
 /*==========================================
  * Guillotine Cross Poisons List
  *------------------------------------------*/
