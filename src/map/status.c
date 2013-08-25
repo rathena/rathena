@@ -1117,10 +1117,10 @@ int status_set_sp(struct block_list *bl, unsigned int sp, int flag)
 	return status_zap(bl, 0, status->sp - sp);
 }
 
-int status_charge(struct block_list* bl, int hp, int sp)
+int status_charge(struct block_list* bl, int64 hp, int64 sp)
 {
 	if(!(bl->type&BL_CONSUME))
-		return hp+sp; //Assume all was charged so there are no 'not enough' fails.
+		return (int)hp+sp; //Assume all was charged so there are no 'not enough' fails.
 	return status_damage(NULL, bl, hp, sp, 0, 3);
 }
 
@@ -1129,10 +1129,14 @@ int status_charge(struct block_list* bl, int hp, int sp)
 //If flag&2, fail if target does not has enough to substract.
 //If flag&4, if killed, mob must not give exp/loot.
 //flag will be set to &8 when damaging sp of a dead character
-int status_damage(struct block_list *src,struct block_list *target,int hp, int sp, int walkdelay, int flag)
+int status_damage(struct block_list *src,struct block_list *target,int64 hp, int64 sp, int walkdelay, int flag)
 {
 	struct status_data *status;
 	struct status_change *sc;
+
+	// here onwards we consider it a 32-type, the client does not support higher and from here onwards the value doesn't get thru percentage modifiers
+	hp = cap_value(hp,INT_MIN,INT_MAX);
+	sp = cap_value(sp,INT_MIN,INT_MAX);
 
 	if(sp && !(target->type&BL_CONSUME))
 		sp = 0; //Not a valid SP target.
@@ -1250,7 +1254,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 	if( status->hp || (flag&8) ) { //Still lives or has been dead before this damage.
 		if (walkdelay)
 			unit_set_walkdelay(target, gettick(), walkdelay, 0);
-		return hp+sp;
+		return (int)(hp+sp);
 	}
 
 	status->hp = 0;
@@ -1271,7 +1275,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 	}
 
 	if(!flag) //Death cancelled.
-		return hp+sp;
+		return (int)(hp+sp);
 
 	//Normal death
 	if (battle_config.clear_unit_ondeath &&
@@ -1303,7 +1307,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		if( target->type == BL_MOB )
 			((TBL_MOB*)target)->state.rebirth = 1;
 
-		return hp+sp;
+		return (int)(hp+sp);
 	}
 	if(target->type == BL_PC) {
 		TBL_PC *sd = BL_CAST(BL_PC,target);
@@ -1313,7 +1317,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 			clif_skillcasting(&hd->bl, hd->bl.id, target->id, 0,0, MH_LIGHT_OF_REGENE, skill_get_ele(MH_LIGHT_OF_REGENE, 1), 10); //just to display usage
 			clif_skill_nodamage(&sd->bl, target, ALL_RESURRECTION, 1, status_revive(&sd->bl,hd->sc.data[SC_LIGHT_OF_REGENE]->val2,0));
 			status_change_end(&sd->hd->bl,SC_LIGHT_OF_REGENE,INVALID_TIMER);
-			return hp + sp;
+			return (int)(hp+sp);
 		}
 	}
 	if (target->type == BL_MOB && sc && sc->data[SC_REBIRTH] && !((TBL_MOB*) target)->state.rebirth) { // Ensure the monster has not already rebirthed before doing so.
@@ -1321,7 +1325,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		status_change_clear(target,0);
 		((TBL_MOB*)target)->state.rebirth = 1;
 
-		return hp+sp;
+		return (int)(hp+sp);
 	}
 
 	status_change_clear(target,0);
@@ -1351,12 +1355,12 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		npc_script_event(sd,NPCE_DIE);
 	}
 
-	return hp+sp;
+	return (int)(hp+sp);
 }
 
 //Heals a character. If flag&1, this is forced healing (otherwise stuff like Berserk can block it)
 //If flag&2, when the player is healed, show the HP/SP heal effect.
-int status_heal(struct block_list *bl,int hp,int sp, int flag)
+int status_heal(struct block_list *bl,int64 hp,int64 sp, int flag)
 {
 	struct status_data *status;
 	struct status_change *sc;
@@ -1365,6 +1369,10 @@ int status_heal(struct block_list *bl,int hp,int sp, int flag)
 
 	if (status == &dummy_status || !status->hp)
 		return 0;
+
+	// here onwards we consider it a 32-type, the client does not support higher and from here onwards the value doesn't get thru percentage modifiers
+	hp = cap_value(hp,INT_MIN,INT_MAX);
+	sp = cap_value(sp,INT_MIN,INT_MAX);
 
 	sc = status_get_sc(bl);
 	if (sc && !sc->count)
@@ -1414,14 +1422,14 @@ int status_heal(struct block_list *bl,int hp,int sp, int flag)
 
 	// send hp update to client
 	switch(bl->type) {
-	case BL_PC:  pc_heal((TBL_PC*)bl,hp,sp,flag&2?1:0); break;
-	case BL_MOB: mob_heal((TBL_MOB*)bl,hp); break;
-	case BL_HOM: merc_hom_heal((TBL_HOM*)bl); break;
-	case BL_MER: mercenary_heal((TBL_MER*)bl,hp,sp); break;
-	case BL_ELEM: elemental_heal((TBL_ELEM*)bl,hp,sp); break;
+		case BL_PC:  pc_heal((TBL_PC*)bl,hp,sp,flag&2?1:0); break;
+		case BL_MOB: mob_heal((TBL_MOB*)bl,hp); break;
+		case BL_HOM: merc_hom_heal((TBL_HOM*)bl); break;
+		case BL_MER: mercenary_heal((TBL_MER*)bl,hp,sp); break;
+		case BL_ELEM: elemental_heal((TBL_ELEM*)bl,hp,sp); break;
 	}
 
-	return hp+sp;
+	return (int)hp+sp;
 }
 
 //Does percentual non-flinching damage/heal. If mob is killed this way,

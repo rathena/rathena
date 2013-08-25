@@ -4201,7 +4201,7 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 
 //Modifies the type of damage according to status changes [Skotlex]
 //Aegis data specifies that: 4 endure against single hit sources, 9 against multi-hit.
-static inline int clif_calc_delay(int type, int div, int damage, int delay)
+static inline int clif_calc_delay(int type, int div, int64 damage, int delay)
 {
 	return ( delay == 0 && damage > 0 ) ? ( div > 1 ? 9 : 4 ) : type;
 }
@@ -4209,7 +4209,7 @@ static inline int clif_calc_delay(int type, int div, int damage, int delay)
 /*==========================================
  * Estimates walk delay based on the damage criteria. [Skotlex]
  *------------------------------------------*/
-static int clif_calc_walkdelay(struct block_list *bl,int delay, int type, int damage, int div_)
+static int clif_calc_walkdelay(struct block_list *bl,int delay, int type, int64 damage, int div_)
 {
 	if (type == 4 || type == 9 || damage <=0)
 		return 0;
@@ -4245,7 +4245,7 @@ static int clif_calc_walkdelay(struct block_list *bl,int delay, int type, int da
 ///     10 = critical hit
 ///     11 = lucky dodge
 ///     12 = (touch skill?)
-int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tick, int sdelay, int ddelay, int damage, int div, int type, int damage2)
+int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tick, int sdelay, int ddelay, int64 damage, int div, int type, int64 damage2)
 {
 	unsigned char buf[33];
 	struct status_change *sc;
@@ -4257,6 +4257,9 @@ int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tic
 
 	nullpo_ret(src);
 	nullpo_ret(dst);
+
+	damage = cap_value(damage,INT_MIN,INT_MAX);
+	damage2 = cap_value(damage2,INT_MIN,INT_MAX);
 
 	type = clif_calc_delay(type,div,damage+damage2,ddelay);
 	sc = status_get_sc(dst);
@@ -4944,13 +4947,15 @@ void clif_skill_cooldown(struct map_session_data *sd, uint16 skill_id, unsigned 
 /// Skill attack effect and damage.
 /// 0114 <skill id>.W <src id>.L <dst id>.L <tick>.L <src delay>.L <dst delay>.L <damage>.W <level>.W <div>.W <type>.B (ZC_NOTIFY_SKILL)
 /// 01de <skill id>.W <src id>.L <dst id>.L <tick>.L <src delay>.L <dst delay>.L <damage>.L <level>.W <div>.W <type>.B (ZC_NOTIFY_SKILL2)
-int clif_skill_damage(struct block_list *src,struct block_list *dst,unsigned int tick,int sdelay,int ddelay,int damage,int div,uint16 skill_id,uint16 skill_lv,int type)
+int clif_skill_damage(struct block_list *src,struct block_list *dst,unsigned int tick,int sdelay,int ddelay,int64 damage,int div,uint16 skill_id,uint16 skill_lv,int type)
 {
 	unsigned char buf[64];
 	struct status_change *sc;
 
 	nullpo_ret(src);
 	nullpo_ret(dst);
+
+	damage = cap_value(damage,INT_MIN,INT_MAX);
 
 	type = clif_calc_delay(type,div,damage,ddelay);
 	sc = status_get_sc(dst);

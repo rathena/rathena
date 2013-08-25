@@ -2039,7 +2039,7 @@ int unit_counttargeted(struct block_list* bl)
 /*==========================================
  *
  *------------------------------------------*/
-int unit_fixdamage(struct block_list *src,struct block_list *target,unsigned int tick,int sdelay,int ddelay,int damage,int div,int type,int damage2)
+int unit_fixdamage(struct block_list *src,struct block_list *target,unsigned int tick,int sdelay,int ddelay,int64 damage,int div,int type,int64 damage2)
 {
 	nullpo_ret(target);
 

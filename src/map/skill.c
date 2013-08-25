@@ -2305,7 +2305,8 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	struct status_data *sstatus, *tstatus;
 	struct status_change *tsc;
 	struct map_session_data *sd, *tsd;
-	int type,damage,rdamage=0;
+	int64 damage,rdamage=0;
+	int type;
 	int8 rmdamage=0;//magic reflected
 	bool additional_effects = true;
 
@@ -12505,7 +12506,7 @@ static int skill_unit_effect (struct block_list* bl, va_list ap)
 /*==========================================
  *
  *------------------------------------------*/
-int skill_unit_ondamaged (struct skill_unit *src, struct block_list *bl, int damage, unsigned int tick)
+int skill_unit_ondamaged (struct skill_unit *src, struct block_list *bl, int64 damage, unsigned int tick)
 {
 	struct skill_unit_group *sg;
 
