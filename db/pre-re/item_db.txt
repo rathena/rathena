@@ -891,7 +891,7 @@
 1643,Dead_Tree_Cane,Dead Tree Cane,4,20,,100,100,,1,0,0x00818314,7,2,2,4,70,1,10,{ bonus bMatk,15; bonus bInt,4; if(getrefine()>5) { bonus bInt,getrefine()-5; bonus bMaxHP,-200; bonus bMaxSP,-100; } },{},{}
 1644,Piercing_Staff_M,Staff of Piercing,4,20,,500,80,,1,0,0x00018314,2,2,2,3,70,1,10,{ bonus bInt,4; bonus bMatkRate,15; bonus bIgnoreMdefRate,10+getrefine(); },{},{}
 1645,Lich_Bone_Wand_M,Lich's Bone Wand,4,20,,800,60,,1,2,0x00018314,2,2,2,3,70,1,10,{ bonus bInt,1; bonus bDex,1; bonus bAtkEle,Ele_Undead; bonus bMatkRate,20; bonus3 bAutoSpellWhenHit,"NPC_WIDECURSE",5,10+getrefine(); if(getrefine()>=9){ bonus bMatkRate,3; bonus bMaxSP,300; } },{},{}
-1646,La'cryma_Stick,La'cryma Stick,4,20,,500,30,,1,2,0x00010204,2,2,2,3,50,1,10,{ bonus bInt,4; bonus bMatkRate,15; bonus bMdef,1; bonus2 bSkillAtk,"WZ_STORMGUST",getrefine(); if(getrefine()>9) bonus2 bCastrate,"WZ_STORMGUST",-8; },{},{}
+1646,La'cryma_Stick,La'cryma Stick,4,20,,500,30,,1,2,0x00010204,2,2,2,3,50,1,10,{ bonus bInt,4; bonus bMatkRate,15; bonus bMdef,getrefine(); bonus2 bSkillAtk,"WZ_STORMGUST",getrefine(); if(getrefine()>9) bonus2 bCastrate,"WZ_STORMGUST",-8; },{},{}
 1647,Croce_Staff,Croce Staff,4,20,,500,30,,1,1,0x00008110,2,2,2,3,50,1,10,{ bonus bAtkEle,Ele_Holy; bonus bMatkRate,15; bonus bInt,4; bonus4 bAutoSpellOnSkill,"AL_HEAL","AL_BLESSING",getskilllv("AL_BLESSING")>1?getskilllv("AL_BLESSING"):1,20; },{},{}
 1648,Staff_Of_Bordeaux,Staff Of Bordeaux,4,20,,500,30,,1,0,0x00010204,2,2,2,4,50,1,10,{ bonus bMatkRate,15; bonus bInt,2; bonus bDex,1; if(getskilllv("SA_DRAGONOLOGY")==5) { bonus bUseSPrate,-15; bonus bInt,3; } },{},{}
 // Bows

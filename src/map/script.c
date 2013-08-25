@@ -17445,13 +17445,6 @@ BUILDIN_FUNC(checkre)
 			#endif
 			break;
 		case 5:
-			#ifdef RENEWAL_EDP
-				script_pushint(st, 1);
-			#else
-				script_pushint(st, 0);
-			#endif
-			break;
-		case 6:
 			#ifdef RENEWAL_ASPD
 				script_pushint(st, 1);
 			#else

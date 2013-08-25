@@ -3642,14 +3642,15 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, u
 			// Pre-Renewal only: Soul Breaker and Meteor Assault ignores EDP 
 			// Renewal only: Grimtooth and Venom Knife ignore EDP
 			// Both: Venom Splasher ignores EDP [helvetica]
-#ifndef RENEWAL_EDP 
+#ifndef RENEWAL
 					case ASC_BREAKER:       case ASC_METEORASSAULT:
 #else
 					case AS_GRIMTOOTH:	case AS_VENOMKNIFE:
 #endif
 						break; // skills above have no effect with edp
 
-#if defined RENEWAL && defined RENEWAL_EDP // renewal EDP mode requires renewal enabled as well
+#ifdef RENEWAL
+					// renewal EDP mode requires renewal enabled as well
 					// Renewal EDP: damage gets a half modifier on top of EDP bonus for skills [helvetica]
 					// * Sonic Blow
 					// * Soul Breaker
@@ -6910,11 +6911,10 @@ void rAthena_report(char* date, char *time_c) {
 		C_RENEWAL_DROP          = 0x0080,
 		C_RENEWAL_EXP           = 0x0100,
 		C_RENEWAL_LVDMG         = 0x0200,
-		C_RENEWAL_EDP           = 0x0400,
-		C_RENEWAL_ASPD          = 0x0800,
-		C_SECURE_NPCTIMEOUT     = 0x1000,
-		C_SQL_DBS               = 0x2000,
-		C_SQL_LOGS              = 0x4000,
+		C_RENEWAL_ASPD          = 0x0400,
+		C_SECURE_NPCTIMEOUT     = 0x0800,
+		C_SQL_DBS               = 0x1000,
+		C_SQL_LOGS              = 0x2000,
 	};
 
 	if( (rev_str = get_svn_revision()) != 0 )
@@ -6963,10 +6963,6 @@ void rAthena_report(char* date, char *time_c) {
 
 #ifdef RENEWAL_LVDMG
 	config |= C_RENEWAL_LVDMG;
-#endif
-
-#ifdef RENEWAL_EDP
-	config |= C_RENEWAL_EDP;
 #endif
 
 #ifdef RENEWAL_ASPD

@@ -978,7 +978,7 @@ void initChangeTables(void) {
 	StatusChangeFlagTable[SC_VITATA_500] |= SCB_REGEN;
 	StatusChangeFlagTable[SC_EXTRACT_SALAMINE_JUICE] |= SCB_ASPD;
 
-#ifdef RENEWAL_EDP
+#ifdef RENEWAL
 	// renewal EDP increases your weapon atk
 	StatusChangeFlagTable[SC_EDP] |= SCB_WATK;
 #endif
@@ -7401,7 +7401,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_EDP:	// [Celest]
 			val2 = val1 + 2; //Chance to Poison enemies.
-#ifndef RENEWAL_EDP
+#ifndef RENEWAL
 			val3 = 50*(val1+1); //Damage increase (+50 +50*lv%)
 #endif
 			if( sd )//[Ind] - iROwiki says each level increases its duration by 3 seconds
