@@ -12,14 +12,13 @@ LIBCONFIG_H = ../../3rdparty/libconfig/libconfig.h ../../3rdparty/libconfig/gram
 	../../3rdparty/libconfig/strbuf.h ../../3rdparty/libconfig/wincompat.h
 LIBCONFIG_INCLUDE = -I../../3rdparty/libconfig
 
-LOGIN_OBJ = login.o
-LOGIN_SQL_OBJ = $(LOGIN_OBJ:%=obj_sql/%) \
-	obj_sql/account_sql.o obj_sql/ipban_sql.o obj_sql/loginlog_sql.o
+LOGIN_OBJ = login.o account_sql.o ipban_sql.o loginlog_sql.o
+LOGIN_SQL_OBJ = $(LOGIN_OBJ:%=obj_sql/%)
 LOGIN_H = login.h account.h ipban.h loginlog.h
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
-	SQL_DEPENDS=login-server_sql
+	SQL_DEPENDS=login-server
 else
 	SQL_DEPENDS=needs_mysql
 endif
@@ -36,7 +35,7 @@ sql: $(SQL_DEPENDS)
 
 clean:
 	@echo "	CLEAN	login"
-	@rm -rf *.o obj_sql ../../login-server_sql@EXEEXT@
+	@rm -rf *.o obj_sql ../../@OLOG@@EXEEXT@
 
 help:
 	@echo "possible targets are 'sql' 'all' 'clean' 'help'"
@@ -59,9 +58,9 @@ obj_sql:
 
 #executables
 
-login-server_sql: obj_sql $(LOGIN_SQL_OBJ) ../common/obj_sql/common_sql.a ../common/obj_all/common.a  $(MT19937AR_OBJ)
-	@echo "	LD	$@"
-	@@CC@ @LDFLAGS@ -o ../../login-server_sql@EXEEXT@ $(LOGIN_SQL_OBJ) ../common/obj_sql/common_sql.a ../common/obj_all/common.a $(MT19937AR_OBJ) $(LIBCONFIG_OBJ) @LIBS@ @MYSQL_LIBS@
+login-server: obj_sql $(LOGIN_SQL_OBJ) ../common/obj_sql/common_sql.a ../common/obj_all/common.a  $(MT19937AR_OBJ)
+	@echo "	LD	@OLOG@@EXEEXT@"
+	@@CC@ @LDFLAGS@ -o ../../@OLOG@@EXEEXT@ $(LOGIN_SQL_OBJ) ../common/obj_sql/common_sql.a ../common/obj_all/common.a $(MT19937AR_OBJ) $(LIBCONFIG_OBJ) @LIBS@ @MYSQL_LIBS@
 	    
 
 # login object files

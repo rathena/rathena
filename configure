@@ -635,6 +635,9 @@ HAVE_MYSQL
 MYSQL_CONFIG_HOME
 AR
 SET_MAKE
+OMAP
+OCHR
+OLOG
 EGREP
 GREP
 CPP
@@ -689,6 +692,7 @@ enable_option_checking
 enable_manager
 enable_packetver
 enable_debug
+enable_prere
 enable_warn
 enable_buildbot
 enable_rdtsc
@@ -696,6 +700,9 @@ enable_profiler
 enable_64bit
 enable_lto
 with_maxconn
+with_outputlogin
+with_outputchar
+with_outputmap
 with_mysql
 with_MYSQL_CFLAGS
 with_MYSQL_LIBS
@@ -1324,6 +1331,8 @@ Optional Features:
                           src/map/clif.h)
   --enable-debug[=ARG]    Compiles extra debug code. (disabled by default)
                           (available options: yes, no, gdb)
+  --enable-prere[=ARG]    Compiles serv in prere mode. (disabled by default)
+                          (available options: yes, no)
   --enable-warn[=ARG]     Compiles with warnings. (disabled by default)
                           (available options: yes, no, extra)
   --enable-buildbot[=ARG] (available options: yes, no)
@@ -1345,6 +1354,13 @@ Optional Packages:
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
   --with-maxconn[=ARG]    optionally set the maximum connections the core can
                           handle (default: 16384) NOT USED YET - EXPERIMENTAL
+  --with-outputlogin[=ARG]
+                          Specify the login-serv output name (defaults to
+                          login-server)
+  --with-outputchar[=ARG] Specify the char-serv output name (defaults to
+                          char-server)
+  --with-outputmap[=ARG]  Specify the map-serv output name (defaults to
+                          map-server)
   --with-mysql[=ARG]      optionally specify the path to the mysql_config
                           executable
   --with-MYSQL_CFLAGS=ARG specify MYSQL_CFLAGS manually (instead of using
@@ -3469,6 +3485,27 @@ else
 fi
 
 
+
+#
+# renewal
+#
+# Check whether --enable-prere was given.
+if test "${enable_prere+set}" = set; then :
+  enableval=$enable_prere;
+		enable_prere="$enableval"
+		case $enableval in
+			"no");;
+			"yes");;
+			*) as_fn_error $? "invalid argument --enable-prere=$enableval... stopping" "$LINENO" 5;;
+		esac
+
+else
+  enable_prere="no"
+
+fi
+
+
+
 #
 # warn
 #
@@ -3607,6 +3644,46 @@ else
 
 
 fi
+
+
+
+#
+# output bin name
+#
+
+# Check whether --with-outputlogin was given.
+if test "${with_outputlogin+set}" = set; then :
+  withval=$with_outputlogin; output_login="$withval"
+else
+  output_login="login-server"
+
+fi
+
+OLOG=$output_login
+
+
+
+# Check whether --with-outputchar was given.
+if test "${with_outputchar+set}" = set; then :
+  withval=$with_outputchar; output_char="$withval"
+else
+  output_char="char-server"
+
+fi
+
+OCHR=$output_char
+
+
+
+# Check whether --with-outputmap was given.
+if test "${with_outputmap+set}" = set; then :
+  withval=$with_outputmap; output_map="$withval"
+else
+  output_map="map-server"
+
+fi
+
+OMAP=$output_map
 
 
 
@@ -5196,6 +5273,19 @@ case $enable_debug in
 esac
 
 #
+# Renewal
+#
+case $enable_prere in
+	"no")
+		# default value
+		CFLAGS="$CFLAGS"
+		;;
+	"yes")
+		CFLAGS="$CFLAGS -DPRERE"
+		;;
+esac
+
+#
 # Warnings
 #
 case $enable_warn in
@@ -6156,6 +6246,8 @@ $as_echo "$as_me: Configure finish, CFLAGS= $CFLAGS" >&6;}
 $as_echo "$as_me: LDFLAGS=$LDFLAGS" >&6;}
 #AC_MSG_NOTICE([PROD_WARN= $PROD_WARN])
 #AC_MSG_NOTICE([EXTRA_WARN= $EXTRA_WARN])
+{ $as_echo "$as_me:${as_lineno-$LINENO}: output name =  $output_login, $output_char, $output_map" >&5
+$as_echo "$as_me: output name =  $output_login, $output_char, $output_map" >&6;}
 
 ###############################################################################
 cat >confcache <<\_ACEOF

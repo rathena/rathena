@@ -1,9 +1,10 @@
 @SET_MAKE@
 
 HAVE_MYSQL=@HAVE_MYSQL@
+OMAP=@OMAP@
 ifeq ($(HAVE_MYSQL),yes)
 	ALL_DEPENDS=sql tools
-	SQL_DEPENDS=common_sql login_sql char_sql map_sql import
+	SQL_DEPENDS=common_sql login char map import
 	COMMON_SQL_DEPENDS=mt19937ar libconfig
 	LOGIN_SQL_DEPENDS=mt19937ar libconfig common_sql
 	CHAR_SQL_DEPENDS=mt19937ar libconfig common_sql
@@ -22,9 +23,9 @@ endif
 .PHONY: all sql  \
 	common_sql \
 	mt19937ar \
-	login_sql \
-	char_sql \
-	map_sql \
+	login \
+	char \
+	map \
 	tools \
 	import \
 	test \
@@ -38,13 +39,13 @@ sql: $(SQL_DEPENDS)
 common_sql: $(COMMON_SQL_DEPENDS)
 	@$(MAKE) -C src/common sql
 
-login_sql: $(LOGIN_SQL_DEPENDS)
+login: $(LOGIN_SQL_DEPENDS)
 	@$(MAKE) -C src/login sql
 
-char_sql: $(CHAR_SQL_DEPENDS)
+char: $(CHAR_SQL_DEPENDS)
 	@$(MAKE) -C src/char
 
-map_sql: $(MAP_SQL_DEPENDS)
+map: $(MAP_SQL_DEPENDS)
 	@$(MAKE) -C src/map sql
 
 mt19937ar:
@@ -87,14 +88,13 @@ help:
 	@echo "'common_sql'  - builds object files used in SQL servers"
 	@echo "'mt19937ar'   - builds object file of Mersenne Twister MT19937"
 	@echo "'libconfig'   - builds object files of libconfig"
-	@echo "'login_sql'   - builds login server (SQL version)"
-	@echo "'char_sql'    - builds char server (SQL version)"
-	@echo "'map_sql'     - builds map server (SQL version)"
+	@echo "'login'       - builds login server"
+	@echo "'char'        - builds char server"
+	@echo "'map'        - builds map server"
 	@echo "'tools'       - builds all the tools in src/tools"
 	@echo "'import'      - builds conf/import folder from the template conf/import-tmpl"
 	@echo "'all'         - builds all the above targets"
-	@echo "'sql'         - builds sql servers (targets 'common_sql' 'login_sql' 'char_sql'"
-	@echo "                'map_sql' and 'import')"
+	@echo "'sql'         - builds servers (targets 'common_sql' 'login' 'char' 'map' and 'import')"
 	@echo "'test'        - builds tests"
 	@echo "'clean'       - cleans builds and objects"
 	@echo "'install'     - run installer wich setup rathena in /opt/"

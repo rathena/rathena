@@ -3,10 +3,14 @@
 #ifndef _CONFIG_RENEWAL_H_
 #define _CONFIG_RENEWAL_H_
 
+//quick option to disable all renewal option, used by ./configure
+//#define PRERE
+#ifndef PRERE
 /**
  * rAthena configuration file (http://rathena.org)
  * For detailed guidance on these check http://rathena.org/wiki/SRC/config/
  **/
+
 
 /**
  * @INFO: This file holds general-purpose renewal settings, for class-specific ones check /src/config/classes folder
@@ -58,5 +62,7 @@
 /// - there is a change in how skills/items give ASPD
 /// - some skill/item ASPD bonuses won't stack
 #define RENEWAL_ASPD
+
+#endif
 
 #endif // _CONFIG_RENEWAL_H_

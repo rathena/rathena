@@ -76,6 +76,31 @@ AC_ARG_ENABLE(
 	[enable_debug="no"]
 )
 
+
+#
+# renewal
+#
+AC_ARG_ENABLE(
+	[prere],
+	AC_HELP_STRING(
+		[--enable-prere@<:@=ARG@:>@],
+		[
+			Compiles serv in prere mode. (disabled by default)
+			(available options: yes, no)
+		]
+	),
+	[
+		enable_prere="$enableval"
+		case $enableval in
+			"no");;
+			"yes");;
+			*) AC_MSG_ERROR([[invalid argument --enable-prere=$enableval... stopping]]);;
+		esac
+	],
+	[enable_prere="no"]
+)
+
+
 #
 # warn
 #
@@ -130,9 +155,7 @@ AC_ARG_ENABLE(
 		[
 			Uses rdtsc as timing source (disabled by default)
 			Enable it when you've timing issues.
-
 			(For example:  in conjunction with XEN or Other Virtualization mechanisms)
-
 			Note:
 				Please ensure that you've disabled dynamic CPU-Frequencys, such as power saving options.
 				(On the most modern Dedicated Servers cpufreq is preconfigured, see your distribution's manual
@@ -238,6 +261,43 @@ AC_ARG_WITH(
 		CFLAGS="$CFLAGS -DMAXCONN=16384"
 	]
 )
+
+
+#
+# output bin name
+#
+AC_ARG_WITH(
+	[outputlogin],
+	AC_HELP_STRING(
+		[--with-outputlogin@<:@=ARG@:>@],
+		[Specify the login-serv output name (defaults to login-server)]
+	),
+	[output_login="$withval"],
+	[output_login="login-server"]
+)
+AC_SUBST([OLOG],$output_login)
+
+AC_ARG_WITH(
+	[outputchar],
+	AC_HELP_STRING(
+		[--with-outputchar@<:@=ARG@:>@],
+		[Specify the char-serv output name (defaults to char-server)]
+	),
+	[output_char="$withval"],
+	[output_char="char-server"]
+)
+AC_SUBST([OCHR],$output_char)
+
+AC_ARG_WITH(
+	[outputmap],
+	AC_HELP_STRING(
+		[--with-outputmap@<:@=ARG@:>@],
+		[Specify the map-serv output name (defaults to map-server)]
+	),
+	[output_map="$withval"],
+	[output_map="map-server"]
+)
+AC_SUBST([OMAP],$output_map)
 
 
 #
@@ -658,6 +718,19 @@ case $enable_debug in
 esac
 
 #
+# Renewal
+#
+case $enable_prere in
+	"no")
+		# default value
+		CFLAGS="$CFLAGS"
+		;;
+	"yes")
+		CFLAGS="$CFLAGS -DPRERE"
+		;;
+esac
+
+#
 # Warnings
 #
 case $enable_warn in
@@ -921,6 +994,7 @@ AC_MSG_NOTICE([Configure finish, CFLAGS= $CFLAGS])
 AC_MSG_NOTICE([LDFLAGS=$LDFLAGS])
 #AC_MSG_NOTICE([PROD_WARN= $PROD_WARN])
 #AC_MSG_NOTICE([EXTRA_WARN= $EXTRA_WARN])
+AC_MSG_NOTICE([output name =  $output_login, $output_char, $output_map])
 
 ###############################################################################
 AC_OUTPUT

@@ -24,7 +24,7 @@ MAP_H = $(shell ls ../map/*.h) \
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
-	SQL_DEPENDS=map-server_sql
+	SQL_DEPENDS=map-server
 else
 	SQL_DEPENDS=needs_mysql
 endif
@@ -48,10 +48,10 @@ sql: $(SQL_DEPENDS)
 
 clean:
 	@echo "	CLEAN	map"
-	@rm -rf *.o obj_txt obj_sql ../../map-server@EXEEXT@ ../../map-server_sql@EXEEXT@
+	@rm -rf *.o obj_sql ../../@OMAP@@EXEEXT@
 
 help:
-	@echo "possible targets are 'sql' 'txt' 'all' 'clean' 'help'"
+	@echo "possible targets are 'sql' 'all' 'clean' 'help'"
 	@echo "'sql'   - map server (SQL version)"
 	@echo "'all'   - builds all above targets"
 	@echo "'clean' - cleans builds and objects"
@@ -71,9 +71,10 @@ obj_sql:
 
 # executables
 
-map-server_sql: obj_sql $(MAP_SQL_OBJ) ../common/obj_sql/common_sql.a ../common/obj_all/common.a
-	@echo "	LD	$@"
-	@@CC@ @LDFLAGS@ -o ../../map-server_sql@EXEEXT@ $(MAP_SQL_OBJ) ../common/obj_sql/common_sql.a ../common/obj_all/common.a $(MT19937AR_OBJ) $(LIBCONFIG_OBJ) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
+map-server: obj_sql $(MAP_SQL_OBJ) ../common/obj_sql/common_sql.a ../common/obj_all/common.a
+	@echo "	LD	@OMAP@@EXEEXT@"
+	@@CC@ @LDFLAGS@ -o ../../@OMAP@@EXEEXT@ $(MAP_SQL_OBJ) ../common/obj_sql/common_sql.a ../common/obj_all/common.a $(MT19937AR_OBJ) $(LIBCONFIG_OBJ) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
+
 
 # map object files
 
