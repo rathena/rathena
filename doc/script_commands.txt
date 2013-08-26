@@ -7216,7 +7216,7 @@ same as NPC sprite facing directions: 0=north, 1=northwest, 2=west, etc.
 
 *readbook <book id>,<page>;
 
-This will open a book item at the specified page
+This command will open a book item at the specified page.
 
 ---------------------------------------
 
