@@ -5529,7 +5529,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 				mes "me like that! Saying";
 				mes "it like that is kind of";
 				mes "overdoing it, isn't it?";
-				emotion 54,1;
+				emotion e_sigh,1;
 				next;
 				mes "[High Priest Zhed]";
 				mes "Not at all. In fact, I'm";
@@ -5539,7 +5539,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 				mes "by the Valkyries. Now, how";
 				mes "may I help you, my friend?";
 				next;
-				select("Mysterious Building in the Volcano:");
+				select("Mysterious Building in the Volcano");
 				mes "["+strcharinfo(0)+"]";
 				mes "Actually, I was wondering";
 				mes "if you knew of anything about";

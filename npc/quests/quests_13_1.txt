@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 3.3a
+//= 3.4
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -26,6 +26,7 @@
 //= 3.2 Updated ep13_start and dialog to match official script. [Joseph]
 //= 3.3 Updated to match the latest official script. [Euphy]
 //= 3.3a Added Izlude RE coordinates. [Euphy]
+//= 3.4 Added GM management function and NPC. [Euphy]
 //============================================================ 
 
 // Onward to the New World
@@ -1921,23 +1922,25 @@ moc_ruins,137,89,5	script	Time-Space Gap Guard	707,{
 	close;
 }
 
-/*
 moc_fild22b,370,370,3	script	Allied Manager#gm	100,{
+	callfunc "F_GM_NPC";
 	mes "[Manager]";
 	mes "Please enter the password.";
 	next;
-	input .@input;
-	if ((.@input < 0) || (.@input > 9000) ) {
+	set .@i, callfunc("F_GM_NPC",8028,0,0,9000);
+	if (.@i == -2) {
 		mes "[Manager]";
 		mes "Incorrect password.";
 		close;
-	}
-	else if (.@input == 0) {
+	} else if (.@i == -1) {
 		mes "[Manager]";
 		mes "Please enter a password other then 0.";
 		close;
-	}
-	else if (.@input == 8028) {
+	} else if (.@i == 0) {
+		mes "[Manager]";
+		mes "Nevermind then.";
+		close;
+	} else {
 		mes "[Manager]";
 		mes "What would you like to do?";
 		next;
@@ -1954,13 +1957,7 @@ moc_fild22b,370,370,3	script	Allied Manager#gm	100,{
 			close;
 		}
 	}
-	else {
-		mes "[Manager]";
-		mes "Nevermind then.";
-		close;
-	}
 }
-*/
 
 // New Surroundings
 //============================================================ 
@@ -6951,11 +6948,13 @@ OnTimer300000:
 // Part Time Work
 //============================================================ 
 mid_camp,1,1,0	script	#timer_alba01	844,{
-	/*
+	callfunc "F_GM_NPC";
 	mes "Please enter the password";
 	next;
-	input .@input;
-	if (.@input == "1854") {
+	if (callfunc("F_GM_NPC",1854,0) < 1) {
+		mes "Wrong password.";
+		close;
+	} else {
 		mes "Current Status:";
 		if ($@PartTimeOn == 1) {
 			mes "Recruiting.";
@@ -6963,7 +6962,7 @@ mid_camp,1,1,0	script	#timer_alba01	844,{
 		else {
 			mes "Not Recruiting.";
 		}
-		mes "Recruited part-timers" + $@PartTimeSlots + "part-timers.";
+		mes "Recruited " + $@PartTimeSlots + " part-timers.";
 		mes "What do you want to do?";
 		next;
 		switch(select("Reset the recruiting.:Cancel.")) {
@@ -6985,12 +6984,6 @@ mid_camp,1,1,0	script	#timer_alba01	844,{
 			close;
 		}
 	}
-	else {
-		mes "Wrong password.";
-		close;
-	}
-	end;
-	*/
 
 OnInit:
 	set $@PartTimeOn,0;
@@ -8472,6 +8465,21 @@ man_fild03,98,226,0	duplicate(manukrock)	Mysterious Rock#15	844
 man_fild03,104,248,0	duplicate(manukrock)	Mysterious Rock#16	844
 man_fild03,91,272,0	duplicate(manukrock)	Mysterious Rock#17	844
 man_fild03,95,301,0	duplicate(manukrock)	Mysterious Rock#18	844
+
+sec_in02,80,171,0	script	Piece of crack#sec	406,{
+	callfunc "F_GM_NPC";
+	mes "1~3000";
+	input .@input;
+	next;
+	if (.@input < 1 || .@input > 3000) {
+		mes "Cat trading Point adjust";
+		mes "You can enter the number between 1~3000.";
+		close;
+	} else {
+		set ep13_yong1,.@input;
+		close;
+	}
+}
 
 // Report from the New World
 //============================================================ 
@@ -13963,8 +13971,8 @@ que_dan02,102,42,3	script	Disfigured Corpse#moc2	457,{
 }
 
 /*
-//Mid Camp Warper (gogoash), Translated from the Official [Slim]
-prontera,161,192,5	script	Ash Vacuum Warper	707,{
+// Event NPC (gogoash), now disabled on official servers.
+prontera,161,192,5	script	Ash-Vacuum Warper	707,{
 	mes "[Warp Soldier]";
 	mes "For a limited period.";
 	mes "I can send you to Ash-Vacuum without any fee.";
@@ -13972,25 +13980,22 @@ prontera,161,192,5	script	Ash Vacuum Warper	707,{
 	mes "[Warp Soldier]";
 	mes "Do you want to go to Ash-Vacuum right now?";
 	next;
-	switch(select("Yes, please","Not yet")) {
-
-		case 1:
-			mes "[Warp Soldier]";
-			mes "Ok. I hope you";
-			mes "enjoy your trip.";
-			close2;
-			set ep13_ryu,100;
-			warp "mid_camp",210,291;
-			break;
-		case 2:
-			mes "[Warp Soldier]";
-			mes "No problem. I understand.";
-			mes "Tell me when you change your mind.";
-			mes "See you.";
-			close;
-			break;
+	switch(select("Yes, please:Not yet")) {
+	case 1:
+		mes "[Warp Soldier]";
+		mes "Ok. I hope you";
+		mes "enjoy your trip.";
+		close2;
+		set ep13_ryu,100;
+		warp "mid_camp",210,291;
+		end;
+	case 2:
+		mes "[Warp Soldier]";
+		mes "No problem. I understand.";
+		mes "Tell me when you change your mind.";
+		mes "See you.";
+		close;
 	}
-	end;
 }
 */
 

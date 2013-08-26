@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //===== Additional Comments: ================================= 
 //= 1.1 Fixed a small bug in Dandelion's Request. [SinSloth]
 //= 1.2 Moved Dandelion's Request to its own file.
+//= 1.3 Added GM management function. [Euphy]
 //============================================================ 
 
 izlude,103,106,3	script	Guildsman#1	48,3,3,{
@@ -10229,9 +10230,7 @@ que_job01,68,88,5	script	Simon#mao	881,{
 que_job01,70,84,1	duplicate(Simon#mao)	Kimmie	882,0,0
 
 sec_in02,38,162,0	script	Morroc Invasion Manager	882,{
-
-	if(getgmlevel() < 80) end;
-
+	callfunc "F_GM_NPC";
 	mes "A total of " + $maoattack + " users completed";
 	mes "the Satan Morroc: Lin Quest.";
 	mes "There are 2 requirements to";

@@ -1,11 +1,11 @@
 //===== rAthena Script ======================================= 
-//= Brisingamen seal unlocking NPCs.
+//= God Item Quest - Brisingamen Seal
 //===== By: ================================================== 
 //= SinSloth
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
-//= rAthena
+//= rAthena SVN
 //===== Description: ========================================= 
 //= Quest for breaking the seal of Brisingamen.
 //===== Additional Comments: =================================
@@ -18,12 +18,13 @@
 //= 1.4 Replaced effect numerics with constants. [Samuray22]
 //= 1.5 Corrected serverwide announcement. [L0ne_W0lf]
 //= 1.6 Updated RE/Pre-RE EXP. [Euphy]
+//= 1.7 Renewal script update. [Euphy]
 //============================================================
 
 prt_fild08,175,374,3	script	Bard#brising	51,{
 	cutin "god_nelluad01",2;
-	if (($God2 > 49) && ($God3 < 100)){
-		if (god_brising > 49){
+	if ($God2 >= $@god_check1 && $God3 < $@god_check2) {
+		if (god_brising > 49) {
 			mes "[Nelliorde]";
 			mes "Oh, I guess all is going well for you. So how has everything else been?";
 			next;
@@ -247,7 +248,7 @@ prt_fild08,175,374,3	script	Bard#brising	51,{
 				break;
 			}
 		}
-		else if((god_brising > 0) && (god_brising < 50)){
+		else if ((god_brising > 0) && (god_brising < 50)){
 			mes "[Nelliorde]";
 			mes "So, have you";
 			mes "met Mr. Kaili?";
@@ -846,7 +847,7 @@ yuno_in04,47,113,1	script	Studying Scholar#1	749,{
 		mes "^3355FFWait a second! Right now, you're carrying too many items with you. Please come back after putting some of your things into Kafra Storage.^000000";
 		close;
 	}
-	if ($God3 == 100) {
+	if ($God3 == $@god_check2) {
 		mes "[Studying Scholar]";
 		mes "Hmmm...";
 		mes "The highest quality Red Potion ever...";
@@ -855,7 +856,7 @@ yuno_in04,47,113,1	script	Studying Scholar#1	749,{
 		mes "If only I could figure a way to balance the consistency of the ground Red Herbs mixed with the water. That part is most crucial...";
 		close;
 	}
-	if ($God2 > 49) {
+	if ($God2 >= $@god_check1) {
 		if (god_brising == 50) {
 			mes "[Enrico Kaili]";
 			mes "Ah, " + strcharinfo(0) + ",";
@@ -877,40 +878,36 @@ yuno_in04,47,113,1	script	Studying Scholar#1	749,{
 			mes "[Enrico Kaili]";
 			mes "Oh! I'm so excited! I don't know what to do first! Should I report to His Majesty or publish my findings or...";
 			next;
-			switch(select("^333333*Ahem!*^000000 My reward!")) {
-			case 1:
-				mes "[Enrico Kaili]";
-				mes "Oh, right.";
-				mes "Thank you for all the trouble you have endured for my sake. You are truly one of the best researchers I've ever met.";
-				next;
-				mes "[Enrico Kaili]";
-				mes "Then as promised...";
-				mes "I will give you something from my precious collection! Now, let me see what we have here...";
-				next;
-				mes "[Enrico Kaili]";
-				mes "Please...";
-				mes "Take this.";
-				set god_brising,50;
-				getitem 616,1; // Old_Card_Album
-				getexp 600000,0; //unconfirmed
-				next;
-				mes "[Enrico Kaili]";
-				mes "Please accept this as my way of thanking you for assisting in my";
-				mes "research. If the opportunity arises, I would like to ask you for your help once again. Now please, take care.";
-				if ($God3 < 100) set $God3,$God3 +1;
-					if ($God3 == 50) {
-						announce "The 3rd Seal of [Brisingamen] has appeared.",bc_all;
-					}
-					else if ($God3 == 100) {
-						if ($God1 == 100 && $God2 == 100 && $God3 == 100 && $God4 == 100) {
-							announce "Four seals have been released at the same time with the seal of [Brisingamen].",bc_all;
-						}
-						else {
-							announce "The 3rd seal of [Brisingamen] has been released.",bc_all;
-						}
-					}
-				}
-				close;
+			select("^333333*Ahem!*^000000 My reward!");
+			mes "[Enrico Kaili]";
+			mes "Oh, right.";
+			mes "Thank you for all the trouble you have endured for my sake. You are truly one of the best researchers I've ever met.";
+			next;
+			mes "[Enrico Kaili]";
+			mes "Then as promised...";
+			mes "I will give you something from my precious collection! Now, let me see what we have here...";
+			next;
+			mes "[Enrico Kaili]";
+			mes "Please...";
+			mes "Take this.";
+			set god_brising,50;
+			getitem 616,1; // Old_Card_Album
+			getexp (checkre(3))?60000:600000,0;
+			next;
+			mes "[Enrico Kaili]";
+			mes "Please accept this as my way of thanking you for assisting in my";
+			mes "research. If the opportunity arises, I would like to ask you for your help once again. Now please, take care.";
+			if ($God3 < $@god_check2)
+				set $God3,$God3 +1;
+			if ($God3 == $@god_check1)
+				announce "The 3rd Seal of [Brisingamen] has appeared.",bc_all;
+			else if ($God3 == $@god_check2) {
+				if ($God1 == $@god_check2 && $God2 == $@god_check2 && $God3 == $@god_check2 && $God4 == $@god_check2)
+					announce "Four seals have been released at the same time with the seal of [Brisingamen].",bc_all;
+				else
+					announce "The 3rd seal of [Brisingamen] has been released.",bc_all;
+			}
+			close;
 		}
 		else if (god_brising == 48) {
 			mes "[Enrico Kaili]";
@@ -1262,7 +1259,7 @@ yuno_in04,47,113,1	script	Studying Scholar#1	749,{
 			mes "If she'll let you look at her records, you can probably find out where he lives. Now why don't you talk to that lady towards the left part of this room?";
 			close;
 		}
-		else if(god_brising == 2) {
+		else if (god_brising == 2) {
 			mes "[Enrico Kaili]";
 			mes "So, have you";
 			mes "considered my proposal?";
@@ -1400,7 +1397,7 @@ yuno_in04,47,113,1	script	Studying Scholar#1	749,{
 }
 
 prt_church,113,103,1	script	Praying Man	798,{
- 	if ($God2 < 50) {
+ 	if ($God2 < $@god_check1) {
 		mes "[Praying Man]";
 		mes "Let everyone live a life";
 		mes "of happiness. Let there be";
@@ -1412,7 +1409,7 @@ prt_church,113,103,1	script	Praying Man	798,{
 		mes "month's paycheck on...";
 		close;
 	}
-	if ($God3 > 99) {
+	if ($God3 >= $@god_check2) {
 		mes "[Praying Man]";
 		mes "Now is the time to reflect upon the past to prepare for the future.";
 		next;
@@ -1544,9 +1541,9 @@ prt_church,113,103,1	script	Praying Man	798,{
 		mes "to Lowen.";
 		close;
 	}
-	else if(god_brising == 5) {
+	else if (god_brising == 5) {
 		set @brising_try,rand(1,4);
-		if(@brising_try == 1) {
+		if (@brising_try == 1) {
 			mes "[Hermite Charles]";
 			mes "You're still here.";
 			mes "Does that mean you";
@@ -2087,13 +2084,13 @@ prt_church,113,103,1	script	Praying Man	798,{
 }
 
 prt_castle,80,52,0	script	Personnel Record#book1	111,{
-	if ($God2 < 50) {
+	if ($God2 < $@god_check1) {
 		mes "[Librarian]";
 		mes "What are you doing?";
 		mes "Don't touch anything!";
 		close;
 	}
-	if ($God3 > 99) {
+	if ($God3 >= $@god_check2) {
 		mes "[Librarian]";
 		mes "What are you doing?";
 		mes "Don't touch anything!";
@@ -2270,13 +2267,13 @@ prt_castle,80,52,0	script	Personnel Record#book1	111,{
 
 //-----------librarian----------------------------------------------------------
 prt_castle,84,51,5	script	Librarian#2	105,{
-	if ($God2 < 50) {
+	if ($God2 < $@god_check1) {
 		mes "[Librarian]";
 		mes "What are you doing here?";
 		mes "Don't touch anything!";
 		close;
 	}
- 	if ($God3 > 99) {
+ 	if ($God3 >= $@god_check2) {
 		mes "[Librarian]";
 		mes "What are you doing here?";
 		mes "Don't touch anything!";
@@ -2444,7 +2441,7 @@ prt_castle,84,51,5	script	Librarian#2	105,{
 }
 
 prontera,260,354,4	script	Woman#Rosa Ellenen	101,{
-	if ($God2 < 50){ 
+	if ($God2 < $@god_check1){ 
 		mes "[Woman]";
 		mes "Hm?";
 		mes "What brings";
@@ -2454,7 +2451,7 @@ prontera,260,354,4	script	Woman#Rosa Ellenen	101,{
 		mes "take a walk.";
 		close;
 	}
-	if ($God3 > 99) {
+	if ($God3 >= $@god_check2) {
 		mes "[Woman]";
 		mes "Hm?";
 		mes "What brings";
@@ -2464,7 +2461,7 @@ prontera,260,354,4	script	Woman#Rosa Ellenen	101,{
 		mes "take a walk.";
 		close;
 	}
-	if(god_brising > 33) {
+	if (god_brising > 33) {
 		mes "[Rosa Ellenen]";
 		mes "Are you the one";
 		mes "who visited me before?";
@@ -2570,7 +2567,7 @@ prontera,260,354,4	script	Woman#Rosa Ellenen	101,{
 }
 
 prontera,262,353,0	script	Gravestone	111,{
-	if($God2 > 49) {
+	if ($God2 > $@god_check1) {
 		if (god_brising > 33) {
 			mes "Lowen Ellenen";
 			mes " ";
@@ -2586,7 +2583,7 @@ prontera,262,353,0	script	Gravestone	111,{
 			close;
 		}
 	}
-	else	{
+	else {
 		mes "^3355FFIt's just an";
 		mes "ordinary gravestone.^000000";
 		next;
@@ -2597,12 +2594,12 @@ prontera,262,353,0	script	Gravestone	111,{
 }
  
 gef_dun01,89,192,0	script	#lowentrace	111,3,3,{
-	if($God2 < 50) {
+	if ($God2 < $@god_check1) {
 		mes "^3355FFIt's just an old,";
 		mes "dry piece of wood.^000000";
 		close;
 	}
-	if($God3 > 99) {
+	if ($God3 >= $@god_check2) {
 		mes "^3355FFIt's just an old,";
 		mes "dry piece of wood.^000000";
 		close;
@@ -2614,7 +2611,7 @@ gef_dun01,89,192,0	script	#lowentrace	111,3,3,{
 		switch(select("Yes:No")) {
 		case 1:
 			input @lowenstring$;
-			if(@lowenstring$ == "Lowen") {
+			if (@lowenstring$ == "Lowen") {
 				if (god_brising == 30) {
 					mes "[Lowen Ellenen]";
 					mes "^6E7B8B...Y-you're...";
@@ -2713,21 +2710,19 @@ gef_dun01,89,192,0	script	#lowentrace	111,3,3,{
 	}
 
 OnTouch:
-	if((god_brising > 9) && (god_brising < 34)) {
+	if ((god_brising > 9) && (god_brising < 34)) {
 		emotion e_gasp;
 	}
 	end;
 }
 
 gef_dun01,203,48,0	script	#lowentrace1	111,3,3,{
-
-	if ($God2 < 50) {
+	if ($God2 < $@god_check1) {
 		mes "^3355FFIt's just an old,";
 		mes "dry piece of wood.^000000";
 		close;
 	}
-
-	if( $God3 > 99) {
+	if ($God3 >= $@god_check2) {
 		mes "^3355FFIt's just an old,";
 		mes "dry piece of wood.^000000";
 		close;
@@ -2739,8 +2734,8 @@ gef_dun01,203,48,0	script	#lowentrace1	111,3,3,{
 		switch(select("Yes:No")) {
 		case 1:
 			input @lowenstring$;
-				if(@lowenstring$ == "Lowen") {
-					if(god_brising == 31) {
+				if (@lowenstring$ == "Lowen") {
+					if (god_brising == 31) {
 					mes "[Lowen Ellenen]";
 					mes "^6E7B8BYou came back!";
 					mes "You'll be with me";
@@ -2761,7 +2756,7 @@ gef_dun01,203,48,0	script	#lowentrace1	111,3,3,{
 						mes "care of yourself...^000000";
 						close;
 					}
-				} else if(god_brising == 30) {
+				} else if (god_brising == 30) {
 					mes "[Lowen Ellenen]";
 					mes "^6E7B8BAh yes. This is it.";
 					mes "You look very curious about me, yet I am amazed that you can hear my voice. Please let me tell you an old story.^000000";
@@ -2847,7 +2842,7 @@ gef_dun01,203,48,0	script	#lowentrace1	111,3,3,{
 	}
 
 OnTouch:
-	if((god_brising > 9) && (god_brising < 34)) {
+	if ((god_brising > 9) && (god_brising < 34)) {
 		emotion e_gasp;
 	}
 	end;
@@ -3135,7 +3130,7 @@ OnSummon:
 
 OnMobDeath:
 	set .brisinmobdead,.brisinmobdead -1;
-	if(.brisinmobdead > 0) end;
+	if (.brisinmobdead > 0) end;
 	set god_brising,31;
 	hideoffnpc "Valkyrie#1";
 	end;
@@ -3156,29 +3151,12 @@ OnReset:
 	end;
 }
 
-que_god02,173,58,4	script	#doppelganger1	739,{
-	end;
-}
-
-que_god02,175,55,4	script	#doppelganger2	739,{
-	end;
-}
-
-que_god02,175,54,1	script	#lowen	745,{
-	end;
-}
-
-que_god02,178,49,1	script	#knight1	751,{
-	end;
-}
-
-que_god02,168,53,7	script	#knight2	734,{
-	end;
-}
-
-que_god02,167,58,4	script	#knight3	752,{
-	end;
-}
+que_god02,173,58,4	script	#doppelganger1	739,{ end; }
+que_god02,175,55,4	script	#doppelganger2	739,{ end; }
+que_god02,175,54,1	script	#lowen	745,{ end; }
+que_god02,178,49,1	script	#knight1	751,{ end; }
+que_god02,168,53,7	script	#knight2	734,{ end; }
+que_god02,167,58,4	script	#knight3	752,{ end; }
 
 que_god02,174,49,0	script	#lowenone	139,0,0,{
 
@@ -3534,13 +3512,13 @@ que_god02,178,127,3	script	Valkyrie#1	811,{
 }
 
 xmas,38,105,0	script	#brisindwarf1	111,3,3,{
-	if ($God2 < 50) {
+	if ($God2 < $@god_check1) {
 		mes "^3355FFA lot of snow";
 		mes "is heavily piled";
 		mes "here on the ground.^000000";
 		close;
 	}
-	if ($God3 > 99) {
+	if ($God3 >= $@god_check2) {
 		mes "^3355FFA lot of snow";
 		mes "is heavily piled";
 		mes "here on the ground.^000000";
@@ -3701,7 +3679,7 @@ xmas,38,105,0	script	#brisindwarf1	111,3,3,{
 	}
 
 OnTouch:
-	if(god_brising > 39) {
+	if (god_brising > 39) {
 		emotion e_gasp,1;
 	}
 	end;
@@ -4001,12 +3979,12 @@ OnInit:
 }
 
 prt_fild02,185,269,0	script	#brisindwarf2	111,3,3,{
-	if ($God2 < 50) {
+	if ($God2 < $@god_check1) {
 		mes "^3355FFIt's just an";
 		mes "ordinary rock.^000000";
 		close;
 	}
-	if ($God3 > 99) {
+	if ($God3 >= $@god_check2) {
 		mes "^3355FFIt's just an";
 		mes "ordinary rock.^000000";
 		close;
@@ -4168,7 +4146,7 @@ prt_fild02,185,269,0	script	#brisindwarf2	111,3,3,{
 	}
 
 OnTouch:
-	if(god_brising > 41) {
+	if (god_brising > 41) {
 		emotion e_gasp,1;
 	}
 	end;
@@ -4193,7 +4171,7 @@ prt_fild02,185,270,3	script	Dvalin#1	826,{
 		hideonnpc "Dvalin#1";
 		end;
 	}
-	else if(god_brising == 42) {
+	else if (god_brising == 42) {
 		mes "[Dvalin]";
 		mes "Wah, it's not Alfrik?";
 		mes "Who are you to wake Dvalin?";
@@ -4278,7 +4256,7 @@ prt_fild02,185,270,3	script	Dvalin#1	826,{
 			end;
 		}
 	}
-	else if(god_brising == 43) {
+	else if (god_brising == 43) {
 		mes "[Dvalin]";
 		mes "Why do you keep calling me? I did everything I can do for you. I even gave you the key to the question.";
 		next;
@@ -4298,11 +4276,11 @@ OnInit:
 }
 
 mjolnir_09,85,129,0	script	#brisindwarf3	111,3,3,{
-	if ($God2 < 50) {
+	if ($God2 < $@god_check1) {
 		mes "^3355FFThe sight of this bubbling stream refreshes you just by looking at it.^000000";
 		close;
 	}
-	if ($God3 > 99) {
+	if ($God3 >= $@god_check2) {
 		mes "^3355FFThe sight of this bubbling stream refreshes you just by looking at it.^000000";
 		close;
 	}
@@ -4362,14 +4340,14 @@ mjolnir_09,85,129,0	script	#brisindwarf3	111,3,3,{
 	}
 
 OnTouch:
-	if(god_brising > 42) {
+	if (god_brising > 42) {
 		emotion e_gasp,1;
 	}
 	end;
 }
 
 mjolnir_09,87,129,3	script	Berling#1	826,{
-	if(god_brising > 44) {
+	if (god_brising > 44) {
 		mes "[Berling]";
 		mes "You're the one that's awakened us? Hahaha, perhaps that's a sign we may see Freya again! Hahahaha!";
 		next;
@@ -4379,7 +4357,7 @@ mjolnir_09,87,129,3	script	Berling#1	826,{
 		hideonnpc "OnBerling#1";
 		end;
 	}
-	else if(god_brising == 43) {
+	else if (god_brising == 43) {
 		mes "[Berling]";
 		mes "What the...?";
 		mes "It's a human?!";
@@ -4484,7 +4462,7 @@ mjolnir_09,87,129,3	script	Berling#1	826,{
 			end;
 		}
 	}
-	else if(god_brising == 44) {
+	else if (god_brising == 44) {
 		mes "[Berling]";
 		mes "Did you already forget the lyrics? Let me tell them to you again, so don't forget this time.";
 		next;
@@ -4513,12 +4491,12 @@ OnInit:
 }
 
 mjo_dun02,126,36,0	script	#brisindwarf4	111,3,3,{
-	if ($God2 < 50) {
+	if ($God2 < $@god_check1) {
 		mes "[" + strcharinfo(0) + "]";
 		mes "Bah, no way out.";
 		close;
 	}
-	if ($God3 > 99) {
+	if ($God3 >= $@god_check2) {
 		mes "[" + strcharinfo(0) + "]";
 		mes "Bah, no way out.";
 		close;
@@ -4536,35 +4514,35 @@ mjo_dun02,126,36,0	script	#brisindwarf4	111,3,3,{
 		mes "What was the first line...?";
 		next;
 		input @dwarfsong1$;
-		if(@dwarfsong1$ == "No jewel in the world can compare.") set @point,@point +1;
-		mes	"[" + strcharinfo(0) + "]";
+		if (@dwarfsong1$ == "No jewel in the world can compare.") set @point,@point +1;
+		mes "[" + strcharinfo(0) + "]";
 		mes " " + @dwarfsong1$ + "";
 		mes "Then...ummm..";
 		mes "The second line?";
 		next;
 		input @dwarfsong2$;
-		if(@dwarfsong2$ == "Our masterpiece made from love.") set @point,@point +1;
+		if (@dwarfsong2$ == "Our masterpiece made from love.") set @point,@point +1;
 		mes "[" + strcharinfo(0) + "]";
 		mes " " + @dwarfsong2$ + "";
 		mes "Now, what was";
 		mes "the third line...?";
 		next;
 		input @dwarfsong3$;
-		if(@dwarfsong3$ == "She wanted the dazzling necklace.") set @point,@point +1;
+		if (@dwarfsong3$ == "She wanted the dazzling necklace.") set @point,@point +1;
 		mes "[" + strcharinfo(0) + "]";
 		mes " " + @dwarfsong3$ + "";
 		mes "Now, the fourth";
 		mes "line after that...";
 		next;
 		input @dwarfsong4$;
-		if(@dwarfsong4$ == "We wanted the goddess of beauty.") set @point,@point +1;
+		if (@dwarfsong4$ == "We wanted the goddess of beauty.") set @point,@point +1;
 		mes "[" + strcharinfo(0) + "]";
 		mes " " + @dwarfsong4$ + "";
 		mes "Alright, now";
 		mes "for the last line...";
 		next;
 		input @dwarfsong5$;
-		if(@dwarfsong5$ == "Our happiest times were with her.") set @point,@point +1;
+		if (@dwarfsong5$ == "Our happiest times were with her.") set @point,@point +1;
 		mes "[" + strcharinfo(0) + "]";
 		mes " " + @dwarfsong5$ + "";
 		mes "Alright, let's give it a try.";
@@ -4602,12 +4580,12 @@ mjo_dun02,126,36,0	script	#brisindwarf4	111,3,3,{
 	}
 
 OnTouch:
-	if ($God2 < 50) {
+	if ($God2 < $@god_check1) {
 		mes "[" + strcharinfo(0) + "]";
 		mes "Beh, no way out.";
 		close;
 	}
-	if ($God3 > 99) {
+	if ($God3 >= $@god_check2) {
 		mes "[" + strcharinfo(0) + "]";
 		mes "Beh, no way out.";
 		close;
@@ -4679,7 +4657,7 @@ mjo_dun02,126,34,1	script	Grer#1	826,{
 		hideonnpc "Grer#1";
 		end;
 	}
-	else if(god_brising == 46) {
+	else if (god_brising == 46) {
 		mes "[Grer]";
 		mes "My name is Grer.";
 		mes "I should have been";

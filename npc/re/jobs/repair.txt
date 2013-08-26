@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //= Removes potentially conflicting job data.
 //===== Additional Comments: ================================= 
 //= 1.0 First version.
+//= 1.1 Added GM management function. [Euphy]
 //============================================================ 
 
 /*
@@ -277,12 +278,11 @@ in_rogue,376,104,4	duplicate(Valerie#sign)	Valerie#sc	837
 ve_in,244,122,4	duplicate(Valerie#sign)	Valerie#shu	837
 xmas,166,209,4	duplicate(Valerie#sign)	Valerie#wan	837
 
-/*
 sec_in02,12,40,5	script	Job Repair	57,1,1,{
+	callfunc "F_GM_NPC";
 	mes "Please input your password.";
 	next;
-	input .@inputstr$;
-	if (.@inputstr$ == "1854") {
+	if (callfunc("F_GM_NPC","1854",1) == 1) {
 		set job_arch,100;
 		set job_3rd_gc,100;
 		set job__mechanic,100;
@@ -313,4 +313,3 @@ sec_in02,12,40,5	script	Job Repair	57,1,1,{
 	}
 	close;
 }
-*/

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Euphy
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //= Part of the "Bakonawa Extermination" quest.
 //===== Additional Comments: ================================= 
 //= 1.0 First version. [Euphy]
+//= 1.1 Added GM management NPC. [Euphy]
 //============================================================ 
 
 ma_scene01,174,179,4	script	Taho	541,{
@@ -102,6 +103,19 @@ ma_scene01,174,179,4	script	Taho	541,{
 		erasequest 12278;
 		close;
 	}
+}
+
+sec_in02,26,26,4	script	Bakonawa's Rage	541,{
+	callfunc "F_GM_NPC";
+	mes "[Taho]";
+	mes "My name is Minky.";
+	if (callfunc("F_GM_NPC",1854,0) == 1) {
+		erasequest 12278;
+		erasequest 12279;
+		set malaya_bakona1,7;
+		set malaya_bakona2,15;
+	}
+	close;
 }
 
 1@ma_b,62,52,4	script	Taho#nf	541,{

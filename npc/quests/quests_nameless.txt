@@ -40,7 +40,7 @@
 //= 1.1a Touch up to other Gaebolg fail-points. [L0ne_W0lf]
 //= 1.2 Some final tuning to Nameless Island quest. [Koca]
 //= 1.3 Should fix any more issues with "Creature" npc. [L0ne_W0lf]
-//= 1.4 Changed the way aru_warp works slightly. [L0ne_W0lf]
+//= 1.4 Changed the way Out_from_Monastery works slightly. [L0ne_W0lf]
 //= 1.5 added a next to stop double npc message [Yommy]
 //= 1.6 Updated the Nameless Island Access quest
 //=     Added Quest: Peace for Arunafeltz
@@ -62,16 +62,17 @@
 //= 2.2a Fixed a few job constant typos. [Euphy]
 //= 2.3 Updated RE/Pre-RE EXP. [Euphy]
 //= 2.4 Moved Dorian to pre-re/re paths. [Euphy]
+//= 2.5 Updated Nameless Island quests and added questlog support. [Euphy]
 //============================================================ 
 
-// Nameless Island and Cursed Monestary Access Quest
+// Nameless Island and Cursed Monestary Access Quest :: aru_monas
 //============================================================
-airplane_01,95,61,3	script	QuestTrigger#Aru	-1,3,3,{
+airplane_01,90,63,0	script	Event Switch#pc	-1,3,3,{
 	end;
 
 OnTouch:
 	if ((prt_curse == 36 || prt_curse == 45 || prt_curse == 56 || prt_curse == 61) && (aru_monas < 1)) {
-		hideoffnpc "Agent#Aru";
+		hideoffnpc "Agent#pc1";
 		mes "[????]";
 		mes "Are you "+strcharinfo(0)+"?";
 		mes "I've been waiting for you.";
@@ -79,18 +80,19 @@ OnTouch:
 		mes "your arrival at ^6B8E23Prontera";
 		mes "Church^000000. Please visit him";
 		mes "as soon as you can.";
-		close2;
 		set aru_monas,1;
-		hideonnpc "Agent#Aru";
+		setquest 17000;
+		close2;
+		hideonnpc "Agent#pc1";
 	}
 	end;
 }
 
-airplane_01,95,61,3	script	Agent#Aru	899,5,5,{
+airplane_01,95,61,3	script	Agent#pc1	899,{
 	end;
 
 OnInit:
-	hideonnpc "Agent#Aru";
+	hideonnpc "Agent#pc1";
 	end;
 }
 
@@ -194,6 +196,7 @@ cmd_in02,111,52,3	script	Ordinary Man#pc2	97,{
 		mes "Arunafeltz so I wasn't able";
 		mes "to investigate any further.";
 		set aru_monas,4;
+		changequest 17001,17002;
 		close;
 	}
 	else {
@@ -206,7 +209,7 @@ cmd_in02,111,52,3	script	Ordinary Man#pc2	97,{
 	}
 }
 
-ra_in01,308,59,1	script	Waiter#Aru	930,{
+ra_in01,308,59,1	script	Waiter#pc	930,{
 	if (aru_monas < 7) {
 		mes "[Waiter]";
 		mes "Welcome to";
@@ -234,8 +237,12 @@ ra_in01,308,59,1	script	Waiter#Aru	930,{
 				mes "Right this way.";
 				close2;
 				set aru_monas,7;
-				warp "ra_in01",303,43;
-				end;
+				switch(rand(1,4)) {
+					case 1: warp "ra_in01",303,43; end;
+					case 2: warp "ra_in01",304,43; end;
+					case 3: warp "ra_in01",304,39; end;
+					case 4: warp "ra_in01",303,39; end;
+				}
 			}
 			mes "[Waiter]";
 			mes "Hm, okay. Well, whatever";
@@ -283,7 +290,7 @@ ra_in01,297,50,7	script	Suspicious-Looking Man	926,{
 	close;
 }
 
-ra_in01,301,43,0	script	#Aru_conv	-1,3,3,{
+ra_in01,301,43,0	script	MealConversation Trigger	-1,3,3,{
 	end;
 
 OnTouch:
@@ -429,11 +436,12 @@ OnTouch:
 		mes "I've never tasted anything";
 		mes "like it! It's almost like";
 		mes "a dessert. God, it's good!";
-		if (Zeny >= 3000) {
+		set aru_monas,8;
+		changequest 17003,17004;
+		if (Zeny > 3000) {
 			set Zeny,Zeny-3000;
 			getitem 12052,4; //Vit_Dish02
 		}
-		set aru_monas,8;
 		close;
 	}
 	end;
@@ -466,6 +474,7 @@ ve_in,78,314,5	script	Magistrate#Aru	945,{
 		mes "comfortable talking to complete";
 		mes "strangers about my problems.";
 		set aru_monas,9;
+		changequest 17004,17005;
 		close;
 	}
 	else if (aru_monas == 9) {
@@ -509,9 +518,10 @@ ve_in,78,314,5	script	Magistrate#Aru	945,{
 		mes "Oh, and you're prohibited";
 		mes "asking anyone else, so behave.";
 		set aru_monas,11;
+		changequest 17006,17007;
 		close;
 	}
-	else if (aru_monas == 11) {
+	else if (aru_monas < 13) {
 		mes "[Al Hamad]";
 		mes "I don't blame you for";
 		mes "being curious, but getting";
@@ -603,6 +613,8 @@ ve_in,78,314,5	script	Magistrate#Aru	945,{
 		mes "we have to capture the";
 		mes "smugglers again? I don't";
 		mes "know what's going on...";
+		set aru_monas,14;
+		changequest 17009,17010;
 		next;
 		mes "[Al Hamad]";
 		mes "Even if I could make headway";
@@ -619,10 +631,9 @@ ve_in,78,314,5	script	Magistrate#Aru	945,{
 		mes "learn more, your only choice";
 		mes "would be to find out on your";
 		mes "own. Fat chance, right?";
-		set aru_monas,14;
 		close;
 	}
-	else if (aru_monas >= 14) {
+	else {
 		mes "[Al Hamad]";
 		mes "I've suffered enough";
 		mes "already! Why can't this";
@@ -673,6 +684,7 @@ ve_in,81,296,3	script	Soldier#Aru	946,{
 		mes "interrogating the smugglers.";
 		mes "I'm not sure if he did since the smugglers were taken away.";
 		set aru_monas,10;
+		changequest 17005,17006;
 		close;
 	}
 	else if (aru_monas == 10) {
@@ -692,6 +704,824 @@ ve_in,81,296,3	script	Soldier#Aru	946,{
 	}
 }
 
+ve_in,239,115,0	script	Drunkard#Aru	943,{
+	if (aru_monas < 14) {
+		mes "[Drunkard]";
+		mes "Man, I feel great! Hah hah!";
+		mes "Hey, gimme one more drink!";
+		close;
+	}
+	if (aru_monas == 14) {
+		if (rachel_camel == 25) {
+			mes "[Drunkard]";
+			mes "So--*Hic* What I was...";
+			mes "Oog, dizzy... I say sayin',";
+			mes "that guy that ^32CD32snuck out to";
+			mes "sea on a boat^000000? You know";
+			mes "*Hic* why he came back";
+			mes "so early? You won't believe it!";
+			next;
+			mes "[Drunkard]";
+			mes "Hah hah! He--*Hic*";
+			mes "He thought he saw a ^DBDB70ghost^000000!";
+			mes "Bwah hah hah! Oooog... Hey...";
+			set aru_monas,15;
+			changequest 17010,17011;
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "That's right!";
+			mes "Maybe I should check";
+			mes "on ^32CD32Kurdi's father since";
+			mes "he's a fisherman^000000";
+			close;
+		}
+		else {
+			mes "[Drunkard]";
+			mes "Zzzz...";
+			mes "Umm... Zzz...";
+			close;
+		}
+	}
+	else {
+		mes "[Drunkard]";
+		mes "Why?! Why can't I take";
+		mes "my boat out to sea? I hafta";
+		mes "catch fish to make a living!";
+		mes "What, they expect me to starve";
+		mes "to death or something?! Huh?!";
+		close;
+	}
+}
+
+ve_in,238,120,4	script	Drunkard#Aru1	940,{
+	mes "[Drunkard]";
+	mes "Hohohoho~";
+	mes "Oh~ Hohohoho~";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "She's kind of strange...";
+	close;
+}
+
+ve_fild07,125,128,0	script	Boat#Aru	111,{
+	if (aru_monas < 16) {
+		mes "^3355FFThis boat seems to ";
+		mes "be in decent condition.";
+		mes "Who could its owner be?^000000";
+		close;
+	}
+	else if (aru_monas == 16) {
+		mes "^3355FFThis must be the boat that";
+		mes "Karyn was talking about.";
+		mes "It seems to be in pretty";
+		mes "good shape. Now, the";
+		mes "monastery should be";
+		mes "southwest from here...^000000";
+		next;
+		hideoffnpc "Secret Agent#Aru";
+		next;
+		mes "[Larjes]";
+		mes "Long time no see,";
+		mes ""+strcharinfo(0)+".";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Larjes!";
+		next;
+		mes "[Larjes]";
+		mes "I had a tough time following";
+		mes "you, you know? I actually";
+		mes "almost lost you once. You";
+		mes "must be wondering why";
+		mes "I'm here. If you'll listen,";
+		mes "I'll explain everything.";
+		next;
+		mes "[Larjes]";
+		mes "According to our investigation, Arunafeltz is definitely involved";
+		mes "in this case. We've been watching you since you're somehow related";
+		mes "to that high ranked official from Arunafeltz. I apologize for that.";
+		next;
+		mes "[Larjes]";
+		mes "This is an international";
+		mes "incident, so to prevent any";
+		mes "intel leaks to Arunafeltz,";
+		mes "we've had to be much stricter";
+		mes "with securing and protecting";
+		mes "all information for this case.";
+		next;
+		mes "[Larjes]";
+		mes "Anyway, I've decided to";
+		mes "reveal myself to you since";
+		mes "I'm the only one that can help";
+		mes "you right now. You're thinking";
+		mes "of using that boat, aren't you?";
+		next;
+		mes "[Larjes]";
+		mes "If you don't have the skills,";
+		mes "knowledge, and preparation";
+		mes "to sail those waters ahead,";
+		mes "you'll probably wreck the";
+		mes "boat. You'll make it if you're lucky but... That's a lot of luck.";
+		next;
+		mes "[Larjes]";
+		mes "I'll help you sail this";
+		mes "boat to get where you're";
+		mes "going. But if you fail, there's";
+		mes "a chance you might have to";
+		mes "sail this boat on your own if I'm not here. So, you ready to go?";
+		next;
+		switch(select("Yes, I'm ready.:Give me more time.")) {
+		case 1:
+			mes "[Larjes]";
+			mes "Alright, let's go.";
+			mes "Hold on to something:";
+			mes "this will probably be";
+			mes "a pretty rocky ride...";
+			set aru_monas,17;
+			changequest 17012,17013;
+			close2;
+			hideonnpc "Secret Agent#Aru";
+			warp "nameless_i",257,217;
+			end;
+		case 2:
+			mes "[Larjes]";
+			mes "Alright. Just let me know";
+			mes "whenever you're ready.";
+			close;
+		}
+	}
+	else if (aru_monas < 20) {
+		mes "^3355FFThis is the boat that";
+		mes "can take you to the";
+		mes "monastery.^000000";
+		next;
+		switch(select("Go to Monastery:Cancel")) {
+		case 1:
+			mes "^3355FFYou set sail for";
+			mes "the monastery...^000000";
+			close2;
+			warp "nameless_i",257,217;
+			end;
+		case 2:
+			mes "^3355FFYou decide to";
+			mes "stay ashore.^000000";
+			close;
+		}
+	}
+	else {
+		mes "^3355FFThis is the boat that";
+		mes "can take you to the";
+		mes "monastery.^000000";
+		next;
+		switch(select("Go to Monastery:Cancel")) {
+		case 1:
+			mes "^3355FFYou set sail for";
+			mes "the monastery...^000000";
+			close2;
+			warp "nameless_n",257,217;
+			end;
+		case 2:
+			mes "^3355FFYou decide to";
+			mes "stay ashore.^000000";
+			close;
+		}
+	}
+}
+
+ve_fild07,128,130,1	script	Secret Agent#Aru	97,{
+	if (aru_monas == 16) {
+		mes "[Larjes]";
+		mes "Are you ready to go";
+		mes "aboard? I'll help you";
+		mes "sail to that monastery,";
+		mes "but if you fail while you're";
+		mes "there, I might not be here";
+		mes "when you come back.";
+		next;
+		switch(select("Yes, I'm ready.:Give me more time.")) {
+		case 1:
+			mes "[Larjes]";
+			mes "Alright, let's go.";
+			mes "Hold on to something:";
+			mes "this will probably be";
+			mes "a pretty rocky ride...";
+			set aru_monas,17;
+			changequest 17012,17013;
+			close2;
+			hideonnpc "Secret Agent#Aru";
+			warp "nameless_i",257,217;
+			end;
+		case 2:
+			mes "[Larjes]";
+			mes "Alright. Just let me know";
+			mes "whenever you're ready.";
+			close;
+		}
+	}
+	end;
+
+OnInit:
+	hideonnpc "Secret Agent#Aru";
+	end;
+}
+
+nameless_i,212,184,0	script	Outside Island#Aru	-1,2,3,{
+	end;
+
+OnTouch:
+	if (aru_monas == 17) {
+		mes "^3355FFThe village is totally";
+		mes "silent, as if all life had";
+		mes "abandoned it. You look";
+		mes "around and see that something";
+		mes "was here a few hours ago, but";
+		mes "it's somewhere else now.^000000";
+		next;
+		mes "^3355FFWhatever it was,";
+		mes "it definitely wasn't";
+		mes "human. What kind of";
+		mes "creature could it be?^000000";
+		close;
+	}
+	end;
+}
+
+nameless_in,21,176,0	script	Inside Island#Aru	-1,2,2,{
+	end;
+
+OnTouch:
+	if (aru_monas == 17) {
+		mes "^3355FFThere are traces of";
+		mes "humans around here,";
+		mes "along with some kind";
+		mes "of creature that you";
+		mes "can't clearly identify.^000000";
+		close;
+	}
+	end;
+}
+
+nameless_i,129,218,0	script	Grass Behind#Aru	-1,4,3,{
+	end;
+
+OnTouch:
+	if (aru_monas == 17) {
+		mes "^3355FFA strange scent strikes";
+		mes "you as you enter this field of";
+		mes "grass. A few ^32CD32animal corpses^3355FF";
+		mes "are strewn around the ground.^000000";
+		close;
+	}
+	end;
+}
+
+nameless_i,127,207,0	script	Dead Crow#Aru	111,{
+	if (aru_monas < 17) { 
+		mes "^3355FFThere is a dead crow on the ground.";
+		close;
+	}
+	else if (aru_monas == 17) {
+		mes "^3355FFThe sight of this ^32CD32dead";
+		mes "crow^3355FF makes you feel";
+		mes "uneasy for some reason.^000000";
+		next;
+		if (select("Ignore:Investigate") == 1) {
+			mes "^3355FFYou decide not to touch";
+			mes "the animal's carcass.^000000";
+			close;
+		}
+		mes "^3355FFYou notice some grass sap";
+		mes "on the crow's beak, so it";
+		mes "must have been nibbling on";
+		mes "some grass. Some feathers";
+		mes "are missing, revealing";
+		mes "scaly, snake-like skin.^000000";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Wait...";
+		mes "Did this grass...?";
+		next;
+		mes "^3355FFThis grass must be the";
+		mes "main ingredient of the";
+		mes "poison used to kill the";
+		mes "Gaebolg family princes.^000000";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Looks like I just hit";
+		mes "the jackpot. Huh?";
+		mes "Someone behi--";
+		next;
+		mes "^3355FFA sharp, throbbing pain";
+		mes "assails the back of your";
+		mes "head as you fall into";
+		mes "unconsciousness...^000000";
+		set aru_monas,18;
+		close2;
+		warp "nameless_in",15,60;
+		end;
+	}
+	end;
+}
+
+nameless_in,15,61,0	script	Pass Out#Aru	-1,2,3,{
+	end;
+
+OnTouch:
+	if (aru_monas == 18) {
+		disablenpc "Out_from_Monastery";
+		sc_start SC_Blind,600000,0,10000;
+		mes "^3355FFThe pressure on your";
+		mes "stomach and the blood";
+		mes "rushing to your head tells";
+		mes "you someone is carrying you";
+		mes "over his shoulder. He stops,";
+		mes "and you hear a faint voice.^000000";
+		next;
+		mes "^3355FFThe faint voice steadily";
+		mes "grows stronger and more";
+		mes "distinct--someone's calling";
+		mes "your name. You feel cold water";
+		mes "trickle through your lips, and";
+		mes "then you regain your senses.^000000";
+		next;
+		sc_end SC_BLIND;
+		hideoffnpc "Larjes#Monastery";
+		next;
+		mes "That was too close...";
+		mes "For a second there,";
+		mes "I thought I lost you.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Larjes...? What...";
+		mes "What happened?";
+		mes "Ugh, my head...";
+		next;
+		mes "[Larjes]";
+		mes "Try not to move for a while.";
+		mes "I had a bad feeling waiting";
+		mes "for you on the boat. Lucky";
+		mes "thing. When I found you,";
+		mes "these strange creatures";
+		mes "were savagely attacking you!";
+		next;
+		mes "[" +strcharinfo(0)+ "]";
+		mes "You saved me?";
+		mes "Thank you. Do you";
+		mes "happen to know what";
+		mes "those creatures were?";
+		next;
+		mes "[Larjes]";
+		mes "No clue. They looked";
+		mes "like humans, but... They";
+		mes "definitely weren't. Once";
+		mes "I killed them, they all";
+		mes "turned into sand.";
+		next;
+		hideoffnpc "Creature#Monas";
+		emotion e_omg,1;
+		emotion e_omg,0,"Larjes#Monastery";
+		mes "[Larjes]";
+		mes "?!?!?!!!!!";
+		next;
+		mes "[" +strcharinfo(0)+ "]";
+		mes "!!!!?!?!!!!!!";
+		mes "Isn't... Isn't that...?";
+		next;
+		mes "[Larjes]";
+		mes "It seems it's just like the";
+		mes "creatures that kidnapped";
+		mes "you, but... I wonder why";
+		mes "he's not attacking us.";
+		next;
+		mes "[" +strcharinfo(0)+ "]";
+		mes "I guess you'll have to go";
+		mes "right up to him and ask.";
+		set aru_monas,19;
+		close;
+	}
+}
+
+nameless_in,13,58,6	script	Larjes#Monastery	97,{
+	mes "[Larjes]";
+	mes "Be careful. That guy";
+	mes "looks pretty dangerous.";
+	close;
+
+OnInit:
+	hideonnpc "Larjes#Monastery";
+	end;
+}
+
+nameless_in,13,53,1	script	Creature#Monas	1864,3,1,{
+	end;
+
+OnInit:
+	hideonnpc "Creature#Monas";
+	end;
+
+OnTouch:
+	if (aru_monas == 19 && mobcount("nameless_in","Creature#Monas::OnMyMobDead") < 1 && !@aru_monas_kill) {
+		mes "[???????]";
+		mes "Grrr~!!!";
+		close2;
+		monster "nameless_in",13,53,"Zombie",1864,1,"Creature#Monas::OnMyMobDead";
+		hideonnpc "Creature#Monas";
+	}
+	end;
+
+OnMyMobDead:
+	set @aru_monas_kill,1;
+	enablenpc "Out_from_Monastery";
+	end;
+}
+
+nameless_in,12,37,0	script	Out_from_Monastery	45,1,1,{
+	end;
+
+OnTouch:
+	if (aru_monas == 19) {
+		set aru_monas,20;
+		warp "nameless_n",168,252;
+		end;
+	}
+
+OnInit:
+	disablenpc "Out_from_Monastery";
+	end;
+}
+
+
+
+nameless_i,168,257,0	script	outtoin_01#mo	45,1,1,{
+	end;
+
+OnTouch:
+	if (aru_monas == 18 || aru_monas == 19) {
+		warp "nameless_in",12,41;
+		end;
+	}
+	mes "^3355FFThe door won't budge:";
+	mes "you can't go through.^000000";
+	close;
+}
+
+nameless_n,169,254,0	script	Night#Aru2	-1,3,3,{
+	end;
+
+OnTouch:
+	if(aru_monas == 20) {
+		hideoffnpc "Larjes#Monastery2";
+		mes "[" +strcharinfo(0)+ "]";
+		mes "What the hell...!?";
+		next;
+		mes "[Larjes]";
+		mes "So... This is the";
+		mes "island's true nature.";
+		next;
+		mes "[Larjes]";
+		mes "Someone like me won't";
+		mes "survive long in a place";
+		mes "like this. I'm going to wait";
+		mes "for you in the boat. Learn";
+		mes "what you need to learn, and then come back safe, "+strcharinfo(0)+".";
+		set aru_monas,21;
+		changequest 17013,17014;
+		close2;
+		hideonnpc "Larjes#Monastery2";
+	}
+	end;
+}
+
+nameless_n,166,254,0	script	Larjes#Monastery2	97,{
+	end;
+
+OnInit:
+	hideonnpc "Larjes#Monastery2";
+	end;
+}
+
+nameless_i,259,218,3	script	Larjes#Aru	97,{
+	if (aru_monas < 18) {
+		mes "[Larjes]";
+		mes "I don't like this place.";
+		mes "You'd be better be careful";
+		mes "around here with those weird";
+		mes "creatures running around.";
+		close;
+	}
+	else if (aru_monas < 24) {
+		mes "[Larjes]";
+		mes "Good, you're back";
+		mes "I know that there's still";
+		mes "things on this island that";
+		mes "you want to investigate,";
+		mes "but did you want to leave";
+		mes "this place for a while?";
+		next;
+		if(select("Yes:No")==1) {
+			mes "[Larjes]";
+			mes "Alight, let's go.";
+			close2;
+			warp "ve_fild07",130,130;
+			end;
+		}
+		mes "[Larjes]";
+		mes "Alright, but becareful.";
+		mes "Those creatures almost";
+		mes "got you once, you know.";
+		close;
+	}
+	else {
+		mes "[Larjes]";
+		mes "Did you still want to";
+		mes "investigate the island?";
+		next;
+		if (select("No:Yes") == 1) {
+			mes "[Larjes]";
+			mes "Alright, let's go.";
+			close2;
+			warp "ve_fild07",130,130;
+			end;
+		}
+		mes "[Larjes]";
+		mes "Alright, but be careful.";
+		mes "Those creatures almost";
+		mes "got you once, you know.";
+		close;
+	}
+}
+
+nameless_n,259,218,3	script	Larjes#Boat1	97,{
+	if (aru_monas == 24) {
+		if (countitem(7726) < 1) {
+			mes "[Larjes]";
+			mes "Good, you're back.";
+			mes "I know that there's still";
+			mes "things on this island that";
+			mes "you want to investigate,";
+			mes "but did you want to leave";
+			mes "this place for a while?";
+			next;
+			switch(select("Yes:No")) {
+			case 1:
+				mes "[Larjes]";
+				mes "Alright, let's go.";
+				close2;
+				warp "ve_fild07",130,130;
+				end;
+			case 2:
+				mes "[Larjes]";
+				mes "Alright, but becareful.";
+				mes "Those creatures almost";
+				mes "got you once, you know.";
+				close;
+			}
+		} else {
+			mes "[Larjes]";
+			mes "I don't believe it...";
+			mes "That guy was Tristam III?!";
+			mes "This explains a lot, I suppose.";
+			mes "I'll report this along with the";
+			mes "voucher. So Arunafeltz was";
+			mes "behind that poison grass too...";
+			next;
+			mes "[Larjes]";
+			mes "I'm shocked over this";
+			mes "whole debacle. I'm sure";
+			mes "the Rune-Midgarts royal family";
+			mes "will be in an uproar over this.";
+			mes "To think that we're involved";
+			mes "in something this huge...";
+			next;
+			mes "[Larjes]";
+			mes "Anyway, we better get";
+			mes "going... This is huge!";
+			delitem 7726,1; //Token_Of_King
+			set aru_monas,25;
+			changequest 17016,17017;
+			getexp (checkre(3))?100000:1000000,0;
+			close;
+		}
+	}
+	mes "[Larjes]";
+	mes "Did you still want to";
+	mes "investigate the island?";
+	next;
+	switch(select("No:Yes")) {
+	case 1:
+		mes "[Larjes]";
+		mes "Alright, let's go.";
+		close2;
+		warp "ve_fild07",130,130;
+		end;
+	case 2:
+		mes "[Larjes]";
+		mes "Alright, but becareful.";
+		mes "Those creatures almost";
+		mes "got you once, you know.";
+		close;
+	}
+}
+
+abbey02,224,70,0	script	Books#Mona1	111,{
+	if (checkweight(7766,1) == 0) {
+		mes "^3355FFWait a second!";
+		mes "Right now, you're carrying";
+		mes "too many things with you.";
+		mes "Please come back after";
+		mes "using the Kafra Service";
+		mes "to store some of your items.^000000";
+		close;
+	}
+	if (aru_monas < 21) {
+		mes "^3355FFIt's just a bunch";
+		mes "of old, moldy books.^000000";
+		close;
+	}
+	else if (aru_monas == 21) {
+		mes "^3355FFThere's a book stained";
+		mes "with blood amongst all";
+		mes "these old, moldy books.^000000";
+		next;
+		if(select("Examine Book:Ignore")==1) {
+			set aru_monas,22;
+			changequest 17014,17015;
+			getitem 7755,1; // Reasearch_Note
+			readbook 7755,1;
+			close;
+		}
+		mes "^3355FFThat book was probably";
+		mes "worthless to you anyway.^000000";
+		close;
+	}
+	else {
+		mes "^3355FFThere are old books";
+		mes "scattered all over here.^000000";
+		close;
+	}
+}
+
+abbey03,232,233,4	script	Man#King	956,{
+	if (aru_monas < 22) {
+		mes "^3355FFYou find a man lying on";
+		mes "the floor, wearing torn";
+		mes "yet luxurious clothing.";
+		mes "He doesn't seem to be";
+		mes "breathing at all...^000000.";
+		next;
+		mes "^3355FFHe's dead.^000000";
+		close;
+	}
+	if (aru_monas == 22 || aru_monas == 23) {
+		mes "^3355FFYou find a man lying on";
+		mes "the floor, wearing torn";
+		mes "yet luxurious clothing.";
+		mes "He doesn't seem to be";
+		mes "breathing at all...^000000.";
+		next;
+		mes "^3355FFYou bring your ears more";
+		mes "closely to his mouth: it";
+		mes "seems that he really is";
+		mes "still barely alive.^000000";
+		next;
+		if (select("Touch Him:Ignore Him") == 1) {
+			mes "["+strcharinfo(0)+"]";
+			mes "This man...";
+			mes "He's so familiar";
+			mes "for some reason.";
+			next;
+			mes "^3355FFAs you touch him, the";
+			mes "man suddenly jumps";
+			mes "up with a crazed yowl.^000000";
+			set aru_monas,23;
+			monster "abbey03",232,232,"Dead King",1875,1,"Man#King::OnMyMobDead";
+			initnpctimer;
+			hideonnpc "Man#King";
+			close;
+		}
+		mes "^3355FFYou don't feel";
+		mes "comfortable enough";
+		mes "to touch this man.^000000";
+		close;
+	}
+	else {
+		mes "^3355FFHe's dead... Now...^000000";
+		close;
+	}
+
+OnMyMobDead:
+	stopnpctimer;
+	donpcevent "Dead Man#King::OnEnable";
+	end;
+
+OnTimer300000:
+	stopnpctimer;
+	hideonnpc "Dead Man#King";
+	hideoffnpc "Man#King";
+	end;
+}
+
+abbey03,232,232,4	script	Dead Man#King	956,{
+	if (checkweight(7766,1) == 0) {
+		mes "^3355FFWait a second!";
+		mes "Right now, you're carrying";
+		mes "too many things with you.";
+		mes "Please come back after";
+		mes "using the Kafra Service";
+		mes "to store some of your items.^000000";
+		close;
+	}
+	if (aru_monas == 23) {
+		mes "^3355FFYou have no idea why";
+		mes "this dead man is moving";
+		mes "around, so you decided to";
+		mes "examine him. In his jacket,";
+		mes "you find a shining medal...^000000";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "This medal...";
+		mes "This means that";
+		mes "this man is...!";
+		set aru_monas,24;
+		getitem 7726,1; //Token_of_King
+		changequest 17015,17016;
+		hideonnpc "Dead Man#King";
+		hideoffnpc "Man#King";
+		stopnpctimer;
+		close;
+	}
+	end;
+
+OnEnable:
+	initnpctimer;
+	hideoffnpc "Dead Man#King";
+	end;
+
+OnInit:
+	hideonnpc "Dead Man#King";
+	end;
+
+OnTimer150000:
+	hideonnpc "Dead Man#King";
+	hideoffnpc "Man#King";
+	stopnpctimer;
+	end;
+}
+
+nameless_n,145,162,0	script	AideAmi#Aru	139,2,2,{
+	end;
+OnTouch:
+	if (aru_monas == 26) {
+		mes "[" + strcharinfo(0) + "]";
+		mes "There is a low wall here against the other wall, if I climb it I could reach the resting place of Tristan III...";
+		next;
+		switch(select("Stay here:Climb the wall")) {
+		case 1:
+			warp "nameless_n",158,169;
+			end;
+		case 2:
+			warp "abbey01",51,15;
+			end;
+		}
+	}
+	else {
+		warp "nameless_n",158,169;
+		end;
+	}
+}
+
+sec_in02,15,15,4	script	boss::boss_aru_monas	809,{
+	callfunc "F_GM_NPC";
+	mes "[Patch]";
+	mes "Input.";
+	next;
+	switch(select("Now:How much?:P- How much?:Others")) {
+	case 1:
+		mes " ";
+		mes ""+aru_monas;
+		close;
+	case 2:
+		input .@input,0,1000;
+		set aru_monas, .@input;
+		mes " ";
+		mes ""+aru_monas;
+		close;
+	case 3:
+		input .@input,0,1000;
+		set prt_curse, .@input;
+		mes " ";
+		mes ""+prt_curse;
+		close;
+	case 4:
+		set prt_curse,61;
+		set ra_tem_q,12; //TODO: Doesn't match Athena's current script.
+		set rachel_camel,25;
+		set lost_boy,0;
+		close;
+	}
+}
+
+// Rachel Addition :: aruna_nir
+//============================================================
 ra_temple,165,57,5	script	Niren#ss	915,{
 	if (checkweight(907,200) == 0) {
 		mes "^3355FFWait a second!";
@@ -709,7 +1539,7 @@ ra_temple,165,57,5	script	Niren#ss	915,{
 	mes "I can spare a moment or two.";
 	mes "What would you like to ask?";
 	next;
-	switch(select("Ask About Veins Smugglers:As About Zhed")) {
+	switch(select("Ask About Veins Smugglers:Ask About Zhed")) {
 	case 1:
 		if (aru_monas == 12) {
 			mes "[Niren]";
@@ -814,6 +1644,7 @@ ra_temple,165,57,5	script	Niren#ss	915,{
 			mes "come back and tell me if";
 			mes "you learn anything there.";
 			set aru_monas,13;
+			changequest 17008,17009;
 			next;
 			mes "[Niren]";
 			mes "I'll send a message to the";
@@ -881,6 +1712,7 @@ ra_temple,165,57,5	script	Niren#ss	915,{
 				mes "comes from that place.";
 				delitem 7755,1; //Research_Note
 				set aru_monas,26;
+				completequest 17017;
 				getexp (checkre(3))?50000:500000,0;
 				close2;
 			}
@@ -969,6 +1801,7 @@ ra_temple,165,57,5	script	Niren#ss	915,{
 			mes "For now, you'd better talk";
 			mes "to High Priest Zhed.^000000";
 			set aru_em,11;
+			changequest 2132,2133;
 			close2;
 		}
 		else if ((aru_em == 11) || (aru_em == 12)) {
@@ -1119,6 +1952,7 @@ ra_temple,165,57,5	script	Niren#ss	915,{
 				mes "can count on me!";
 				emotion e_no1,1;
 				set aru_em,15;
+				changequest 2134,2135;
 				close2;
 			}
 			else {
@@ -1165,13 +1999,13 @@ ra_temple,165,57,5	script	Niren#ss	915,{
 			mes "just to see my family. Even";
 			mes "just once a year would be nice.";
 			next;
-			emotion 5;
+			emotion e_ic;
 			mes "[High Priestess Niren]";
 			mes "...............................";
 			mes "You're absolutely right.";
 			mes "That gives me an idea.";
 			next;
-			emotion 2;
+			emotion e_ho;
 			mes "[Sippie]";
 			mes "Huh? What is it?";
 			next;
@@ -1232,6 +2066,7 @@ ra_temple,165,57,5	script	Niren#ss	915,{
 			mes "I hope she'll help us...";
 			set aru_em,17;
 			getitem 7343,1; //File02
+			changequest 2136,2137;
 			close2;
 		}
 		else if (aru_em == 17) {
@@ -1300,6 +2135,7 @@ ra_temple,165,57,5	script	Niren#ss	915,{
 				mes "what we are doing.";
 				delitem 7343,1; //File02
 				set aru_em,20;
+				changequest 2139,2140;
 				close2;
 			}
 			else {
@@ -1351,6 +2187,7 @@ ra_temple,165,57,5	script	Niren#ss	915,{
 			mes "expression on her face.^000000";
 			set aru_em,23;
 			getexp (checkre(3))?100000:1000000,0;
+			changequest 2141,2142;
 			close2;
 		}
 		else if (aru_em > 21) {
@@ -1370,717 +2207,6 @@ ra_temple,165,57,5	script	Niren#ss	915,{
 		}
 	}
 	cutin "ra_gwoman",255;
-	end;
-}
-
-ve_in,239,115,1	script	Drunkard#Aru	943,{
-	if (aru_monas < 14) {
-		mes "[Drunkard]";
-		mes "Man, I feel great! Hah hah!";
-		mes "Hey, gimme one more drink!";
-		close;
-	}
-	if (aru_monas == 14) {
-		if (rachel_camel == 25) {
-			mes "[Drunkard]";
-			mes "So--*Hic* What I was...";
-			mes "Oog, dizzy... I say sayin',";
-			mes "that guy that ^32CD32snuck out to";
-			mes "sea on a boat^000000? You know";
-			mes "*Hic* why he came back";
-			mes "so early? You won't believe it!";
-			next;
-			mes "[Drunkard]";
-			mes "Hah hah! He--*Hic*";
-			mes "He thought he saw a ^DBDB70ghost^000000!";
-			mes "Bwah hah hah! Oooog... Hey...";
-			next;
-			mes "["+strcharinfo(0)+"]";
-			mes "That's right!";
-			mes "Maybe I should check";
-			mes "on ^32CD32Kurdi's father since";
-			mes "he's a fisherman^000000";
-			set aru_monas,15;
-			close;
-		}
-		else {
-			mes "[Drunkard]";
-			mes "Zzzz...";
-			mes "Umm... Zzz...";
-			close;
-		}
-	}
-	else {
-		mes "[Drunkard]";
-		mes "Why?! Why can't I take";
-		mes "my boat out to sea? I hafta";
-		mes "catch fish to make a living!";
-		mes "What, they expect me to starve";
-		mes "to death or something?! Huh?!";
-		close;
-	}
-}
-
-ve_fild07,125,128,0	script	Boat#Aru	111,{
-	if (aru_monas < 16) {
-		mes "^3355FFThis boat seems to ";
-		mes "be in decent condition.";
-		mes "Who could its owner be?^000000";
-		close;
-	}
-	if (aru_monas == 16) {
-		mes "^3355FFThis must be the boat that";
-		mes "Karyn was talking about.";
-		mes "It seems to be in pretty";
-		mes "good shape. Now, the";
-		mes "monastery should be";
-		mes "southwest from here...^000000";
-		next;
-		hideoffnpc "Secret Agent#Aru";
-		next;
-		mes "[Larjes]";
-		mes "Long time no see,";
-		mes ""+strcharinfo(0)+".";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "Larjes!";
-		next;
-		mes "[Larjes]";
-		mes "I had a tough time following";
-		mes "you, you know? I actually";
-		mes "almost lost you once. You";
-		mes "must be wondering why";
-		mes "I'm here. If you'll listen,";
-		mes "I'll explain everything.";
-		next;
-		mes "[Larjes]";
-		mes "According to our investigation, Arunafeltz is definitely involved";
-		mes "in this case. We've been watching you since you're somehow related";
-		mes "to that high ranked official from Arunafeltz. I apologize for that.";
-		next;
-		mes "[Larjes]";
-		mes "This is an international";
-		mes "incident, so to prevent any";
-		mes "intel leaks to Arunafeltz,";
-		mes "we've had to be much stricter";
-		mes "with securing and protecting";
-		mes "all information for this case.";
-		next;
-		mes "[Larjes]";
-		mes "Anyway, I've decided to";
-		mes "reveal myself to you since";
-		mes "I'm the only one that can help";
-		mes "you right now. You're thinking";
-		mes "of using that boat, aren't you?";
-		next;
-		mes "[Larjes]";
-		mes "If you don't have the skills,";
-		mes "knowledge, and preparation";
-		mes "to sail those waters ahead,";
-		mes "you'll probably wreck the";
-		mes "boat. You'll make it if you're lucky but... That's a lot of luck.";
-		next;
-		mes "[Larjes]";
-		mes "I'll help you sail this";
-		mes "boat to get where you're";
-		mes "going. But if you fail, there's";
-		mes "a chance you might have to";
-		mes "sail this boat on your own if I'm not here. So, you ready to go?";
-		next;
-		switch(select("Yes, I'm ready.:Give me more time.")) {
-		case 1:
-			mes "[Larjes]";
-			mes "Alright, let's go.";
-			mes "Hold on to something:";
-			mes "this will probably be";
-			mes "a pretty rocky ride...";
-			set aru_monas,17;
-			close2;
-			hideonnpc "Secret Agent#Aru";
-			warp "nameless_i",257,217;
-			end;
-		case 2:
-			mes "[Larjes]";
-			mes "Alright. Just let me know";
-			mes "whenever you're ready.";
-			close;
-		}
-	}
-	if (aru_monas < 20) {
-		mes "^3355FFThis is the boat that";
-		mes "can take you to the";
-		mes "monastery.^000000";
-		next;
-		switch(select("Go to Monastery:Cancel")) {
-		case 1:
-			mes "^3355FFYou set sail for";
-			mes "the monastery...^000000";
-			close2;
-			warp "nameless_i",257,217;
-			end;
-		case 2:
-			mes "^3355FFYou decide to";
-			mes "stay ashore.^000000";
-			close;
-		}
-	}
-	else {
-		mes "^3355FFThis is the boat that";
-		mes "can take you to the";
-		mes "monastery.^000000";
-		next;
-		switch(select("Go to Monastery:Cancel")) {
-		case 1:
-			mes "^3355FFYou set sail for";
-			mes "the monastery...^000000";
-			close2;
-			warp "nameless_n",257,217;
-			end;
-		case 2:
-			mes "^3355FFYou decide to";
-			mes "stay ashore.^000000";
-			close;
-		}
-	}
-}
-
-ve_fild07,128,130,1	script	Secret Agent#Aru	97,{
-	if (aru_monas == 16) {
-		mes "[Larjes]";
-		mes "Are you ready to go";
-		mes "aboard? I'll help you";
-		mes "sail to that monastery,";
-		mes "but if you fail while you're";
-		mes "there, I might not be here";
-		mes "when you come back.";
-		next;
-		switch(select("Yes, I'm ready.:Give me more time.")) {
-		case 1:
-			mes "[Larjes]";
-			mes "Alright, let's go.";
-			mes "Hold on to something:";
-			mes "this will probably be";
-			mes "a pretty rocky ride...";
-			set aru_monas,17;
-			close2;
-			hideonnpc "Secret Agent#Aru";
-			warp "nameless_i",257,217;
-			end;
-		case 2:
-			mes "[Larjes]";
-			mes "Alright. Just let me know";
-			mes "whenever you're ready.";
-			close;
-		}
-	}
-	end;
-
-OnInit:
-	hideonnpc "Secret Agent#Aru";
-	end;
-}
-
-nameless_i,259,218,3	script	Larjes#Aru	97,{
-	if(aru_monas < 18) {
-		mes "[Larjes]";
-		mes "I don't like this place.";
-		mes "You'd be better be careful";
-		mes "around here with those weird";
-		mes "creatures running around.";
-		close;
-	}
-	else if (aru_monas > 24) {
-		mes "[Larjes]";
-		mes "Good, you're back";
-		mes "I know that there's still";
-		mes "things on this island that";
-		mes "you want to investigate,";
-		mes "but did you want to leave";
-		mes "this place for a while?";
-		next;
-		if(select("Yes:No")==1) {
-			mes "[Larjes]";
-			mes "Alight, let's go.";
-			close2;
-			warp "ve_fild07",130,130;
-			end;
-		}
-		mes "[Larjes]";
-		mes "Alright, but becareful.";
-		mes "Those creatures almost";
-		mes "got you once, you know.";
-		close;
-	}
-	else {
-		mes "[Larjes]";
-		mes "Did you still want to";
-		mes "investigate the island?";
-		next;
-		if (select("No:Yes") == 1) {
-			mes "[Larjes]";
-			mes "Alright, let's go.";
-			close2;
-			warp "ve_fild07",130,130;
-			end;
-		}
-		mes "[Larjes]";
-		mes "Alright, but be careful.";
-		mes "Those creatures almost";
-		mes "got you once, you know.";
-		close;
-	}
-}
-
-nameless_i,212,184,0	script	#aru_clue1	-1,2,3,{
-	end;
-
-OnTouch:
-	if (aru_monas == 17) {
-		mes "^3355FFThe village is totally";
-		mes "silent, as if all life had";
-		mes "abandoned it. You look";
-		mes "around and see that something";
-		mes "was here a few hours ago, but";
-		mes "it's somewhere else now.^000000";
-		next;
-		mes "^3355FFWhatever it was,";
-		mes "it definitely wasn't";
-		mes "human. What kind of";
-		mes "creature could it be?^000000";
-		close;
-	}
-	end;
-}
-
-nameless_in,21,176,0	script	#aru_clue2	-1,2,2,{
-	end;
-
-OnTouch:
-	if (aru_monas == 17) {
-		mes "^3355FFThere are traces of";
-		mes "humans around here,";
-		mes "along with some kind";
-		mes "of creature that you";
-		mes "can't clearly identify.^000000";
-		close;
-	}
-	end;
-}
-
-nameless_i,129,218,0	script	#aru_clue3	-1,4,3,{
-	end;
-
-OnTouch:
-	if (aru_monas == 17) {
-		mes "^3355FFA strange scent strikes";
-		mes "you as you enter this field of";
-		mes "grass. A few ^32CD32animal corpses^3355FF";
-		mes "are strewn around the ground.^000000";
-		close;
-	}
-	end;
-}
-
-nameless_i,127,207,0	script	Dead Crow#Aru	111,{
-	if (aru_monas < 17) { 
-		mes "^3355FFThere is a dead crow on the ground.";
-		close;
-	}
-	else if (aru_monas == 17) {
-		mes "^3355FFThe sight of this ^32CD32dead";
-		mes "crow^3355FF makes you feel";
-		mes "uneasy for some reason.^000000";
-		next;
-		if (select("Ignore:Investigate") == 1) {
-			mes "^3355FFYou decide not to touch";
-			mes "the animal's carcass.^000000";
-			close;
-		}
-		mes "^3355FFYou notice some grass sap";
-		mes "on the crow's beak, so it";
-		mes "must have been nibbling on";
-		mes "some grass. Some feathers";
-		mes "are missing, revealing";
-		mes "scaly, snake-like skin.^000000";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "Wait...";
-		mes "Did this grass...?";
-		next;
-		mes "^3355FFThis grass must be the";
-		mes "main ingredient of the";
-		mes "poison used to kill the";
-		mes "Gaebolg family princes.^000000";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "Looks like I just hit";
-		mes "the jackpot. Huh?";
-		mes "Someone behi--";
-		next;
-		mes "^3355FFA sharp, throbbing pain";
-		mes "assails the back of your";
-		mes "head as you fall into";
-		mes "unconsciousness...^000000";
-		close2;
-		set aru_monas,18;
-		warp "nameless_in",15,60;
-		end;
-	}
-	end;
-}
-
-nameless_i,168,257,0	script	Aru_LockedDoor	45,1,1,{
-	end;
-
-OnTouch:
-	if (aru_monas == 18 || aru_monas == 19) {
-		warp "nameless_in",12,41;
-		end;
-	}
-	mes "^3355FFThe door won't budge:";
-	mes "you can't go through.^000000";
-	close;
-}
-
-nameless_in,15,60,0	script	#Aru_Trigger	-1,1,1,{
-	end;
-
-OnTouch:
-	if (aru_monas == 18) {
-		disablenpc "aru_warp";
-		sc_start SC_Blind,600000,0,10000;
-		mes "^3355FFThe pressure on your";
-		mes "stomach and the blood";
-		mes "rushing to your head tells";
-		mes "you someone is carrying you";
-		mes "over his shoulder. He stops,";
-		mes "and you hear a faint voice.^000000";
-		next;
-		mes "^3355FFThe faint voice steadily";
-		mes "grows stronger and more";
-		mes "distinct--someone's calling";
-		mes "your name. You feel cold water";
-		mes "trickle through your lips, and";
-		mes "then you regain your senses.^000000";
-		sc_end SC_BLIND;
-		next;
-		hideoffnpc "Larjes#Aru2";
-		mes "That was too close.";
-		mes "For a second there,";
-		mes "I thought I lost you.";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "Larjes...? What...";
-		mes "What happened?";
-		mes "Ugh, my head...";
-		next;
-		mes "[Larjes]";
-		mes "Try not to move for a while.";
-		mes "I had a bad feeling waiting";
-		mes "for you on the boat. Lucky";
-		mes "thing. When I found you,";
-		mes "these strange creatures";
-		mes "were savagely attacking you!";
-		next;
-		mes "[" +strcharinfo(0)+ "]";
-		mes "You saved me?";
-		mes "Thank you. Do you";
-		mes "happen to know what";
-		mes "those creatures were?";
-		next;
-		mes "[Larjes]";
-		mes "No clue. They looked";
-		mes "like humans, but... They";
-		mes "definitely weren't. Once";
-		mes "I killed them, they all";
-		mes "turned into sand.";
-		next;
-		hideoffnpc "Creature#Aru";
-		emotion e_omg,1;
-		emotion e_omg;
-		mes "[Larjes]";
-		mes "?!?!?!!!!!";
-		next;
-		mes "[" +strcharinfo(0)+ "]";
-		mes "!!!!?!?!!!!!!";
-		mes "Isn't... Isn't that...?";
-		next;
-		mes "[Larjes]";
-		mes "It seems it's just like the";
-		mes "creatures that kidnapped";
-		mes "you, but... I wonder why";
-		mes "he's not attacking us.";
-		next;
-		mes "[" +strcharinfo(0)+ "]";
-		mes "I guess you'll have to go";
-		mes "right up to him and ask.";
-		set aru_monas,19;
-		close;
-	}
-}
-
-nameless_in,13,58,6	script	Larjes#Aru2	97,{
-	mes "[Larjes]";
-	mes "Be careful. That guy";
-	mes "looks pretty dangerous.";
-	close;
-}
-
-nameless_in,13,53,0	script	Creature#Aru	1864,{
-	end;
-
-OnInit:
-	hideonnpc "Creature#Aru";
-	end;
-
-OnMyMobDead:
-	enablenpc "aru_warp";
-	end;
-}
-
-nameless_in,13,53,0	script	#Aru_Trigger2	-1,3,1,{
-	end;
-
-OnTouch:
-	if (aru_monas == 19 && !@mymobcount) {
-		mes "[???????]";
-		mes "Grrr~!!!";
-		close2;
-		hideonnpc "Creature#Aru";
-		set @mymobcount,1;
-		monster "nameless_in",13,53,"Zombie",1864,1,"Creature#Aru::OnMyMobDead";
-		end;
-	}
-	end;
-}
-
-nameless_in,12,37,0	script	aru_warp	45,1,1,{
-	end;
-
-OnTouch:
-	if (aru_monas == 19) {
-		set aru_monas,20;
-		warp "nameless_n",168,252;
-		end;
-	}
-
-OnInit:
-	disablenpc "aru_warp";
-	end;
-}
-
-nameless_n,169,254,0	script	#Aru_Trigger3	-1,3,3,{
-	end;
-
-OnTouch:
-	if(aru_monas == 20) {
-		hideoffnpc "Larjes#Aru3";
-		mes "[" +strcharinfo(0)+ "]";
-		mes "What the hell...!?";
-		next;
-		mes "[Larjes]";
-		mes "So... This is the";
-		mes "island's true nature.";
-		next;
-		mes "[Larjes]";
-		mes "Someone like me won't";
-		mes "survive long in a place";
-		mes "like this. I'm going to wait";
-		mes "for you in the boat. Learn";
-		mes "what you need to learn, and";
-		mes "then come back safe, "+strcharinfo(0)+".";
-		set aru_monas,21;
-		hideonnpc "Larjes#Aru3";
-		close;
-	}
-	end;
-}
-
-nameless_n,166,254,7	script	Larjes#Aru3	97,{
-	end;
-
-OnInit:
-	hideonnpc "Larjes#Aru3";
-	end;
-}
-
-nameless_n,259,218,3	script	Larjes#Boat1	97,{
-	if ((aru_monas == 23) && (countitem(7726))) {
-		mes "[Larjes]";
-		mes "I don't believe it...";
-		mes "That guy was Tristam III?!";
-		mes "This explains a lot, I suppose.";
-		mes "I'll report this along with the";
-		mes "voucher. So Arunafeltz was";
-		mes "behind that poison grass too.";
-		next;
-		mes "[Larjes]";
-		mes "I'm shocked over this";
-		mes "whole debacle. I'm sure";
-		mes "the Rune-Midgarts royal family";
-		mes "will be in an uproar over this.";
-		mes "To think that we're involved";
-		mes "in something this huge...";
-		next;
-		mes "[Larjes]";
-		mes "Anyway, we better get...";
-		mes "This is huge!";
-		set aru_monas,24;
-		delitem 7726,1; //Token_Of_King
-		getexp (checkre(3))?100000:1000000,0;
-		close;
-	}
-	mes "[Larjes]";
-	mes "Did you still want to";
-	mes "investigate the island?";
-	next;
-	if(select("No:yes")==1) {
-		mes "[Larjes]";
-		mes "Alright, let's go.";
-		close2;
-		warp "ve_fild07",130,130;
-		end;
-	}
-	mes "[Larjes]";
-	mes "Alright, but becareful.";
-	mes "Those creatures almost";
-	mes "got you once, you know.";
-	close;
-}
-
-abbey02,224,70,0	script	Book#Aru	111,{
-	if (checkweight(7766,1) == 0) {
-		mes "^3355FFWait a second!";
-		mes "Right now, you're carrying";
-		mes "too many things with you.";
-		mes "Please come back after";
-		mes "using the Kafra Service";
-		mes "to store some of your items.^000000";
-		close;
-	}
-	if (aru_monas < 21) {
-		mes "^3355FFIt's just a bunch";
-		mes "of old, moldy books.^000000";
-		close;
-	}
-	else if (aru_monas == 21) {
-		mes "^3355FFThere's a book stained";
-		mes "with blood amongst all";
-		mes "these old, moldy books.^000000";
-		next;
-		if(select("Examine Book:Ignore")==1) {
-			Readbook 7755,1;
-			getitem 7755,1; // Reasearch_Note
-			set aru_monas,22;
-			close;
-		}
-		mes "^3355FFThat book was probably";
-		mes "worthless to you anyway.^000000";
-		close;
-	}
-	else {
-		mes "^3355FFThere are old books";
-		mes "scattered all over here.^000000";
-		close;
-	}
-}
-
-abbey03,232,233,4	script	Man#Aru	956,{
-	if (aru_monas < 22) {
-		mes "^3355FFYou find a man lying on";
-		mes "the floor, wearing torn";
-		mes "yet luxurious clothing.";
-		mes "He doesn't seem to be";
-		mes "breathing at all...^000000.";
-		next;
-		mes "^3355FFHe's dead.^000000";
-		close;
-	}
-	if (aru_monas == 22) {
-		mes "^3355FFYou find a man lying on";
-		mes "the floor, wearing torn";
-		mes "yet luxurious clothing.";
-		mes "He doesn't seem to be";
-		mes "breathing at all...^000000.";
-		next;
-		mes "^3355FFYou bring your ears more";
-		mes "closely to his mouth: it";
-		mes "seems that he really is";
-		mes "still barely alive.^000000";
-		next;
-		if (select("Touch Him:Ignore Him") == 1) {
-			mes "["+strcharinfo(0)+"]";
-			mes "This man...";
-			mes "He's so familiar";
-			mes "for some reason.";
-			next;
-			mes "^3355FFAs you touch him, the";
-			mes "man suddenly jumps";
-			mes "up with a crazed yowl.^000000";
-			initnpctimer;
-			hideonnpc "Man#Aru";
-			monster "abbey03",232,232,"Dead King",1875,1,"Man#Aru::OnMyMobDead";
-			close;
-		}
-		mes "^3355FFYou don't feel";
-		mes "comfortable enough";
-		mes "to touch this man.^000000";
-		close;
-	}
-	if (aru_monas > 22) {
-		mes "^3355FFHe's dead... Now...^000000";
-		close;
-	}
-
-OnMyMobDead:
-	stopnpctimer;
-	hideoffnpc "Dead Man#Aru";
-	donpcevent "Dead Man#Aru::OnEnable";
-	end;
-
-OnTimer300000:
-	stopnpctimer;
-	hideonnpc "Dead Man#Aru";
-	hideoffnpc "Man#Aru";
-	end;
-}
-
-abbey03,232,232,4	script	Dead Man#Aru	956,{
-	if (checkweight(7766,1) == 0) {
-		mes "^3355FFWait a second!";
-		mes "Right now, you're carrying";
-		mes "too many things with you.";
-		mes "Please come back after";
-		mes "using the Kafra Service";
-		mes "to store some of your items.^000000";
-		close;
-	}
-	if (aru_monas == 22) {
-		mes "^3355FFYou have no idea why";
-		mes "this dead man is moving";
-		mes "around, so you decided to";
-		mes "examine him. In his jacket,";
-		mes "you find a shining medal...^000000";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "This medal...";
-		mes "This means that";
-		mes "this man is...!";
-		set aru_monas,23;
-		getitem 7726,1; //Token_of_King
-		hideonnpc "Dead Man#Aru";
-		hideoffnpc "Man#Aru";
-		stopnpctimer;
-		close;
-	}
-	end;
-
-OnEnable:
-	initnpctimer;
-	end;
-
-OnInit:
-	hideonnpc "Dead Man#Aru";
 	end;
 }
 
@@ -2131,7 +2257,7 @@ ra_temple,168,54,3	script	Sippie#ss	917,{
 	}
 }
 
-// Peace to the Arunafeltz
+// Peace to the Arunafeltz :: aruna_em
 //============================================================
 moc_ruins,77,167,4	script	Foreign Merchant#aru1	880,5,5,{
 	if (aru_vol == 27) {
@@ -2181,6 +2307,7 @@ moc_ruins,77,167,4	script	Foreign Merchant#aru1	880,5,5,{
 			mes "of Morroc? Before I leave,";
 			mes "I want to taste that drink...";
 			set aru_em,1;
+			setquest 2129;
 			close;
 		}
 		else if ((aru_em > 0) && (aru_em < 7)) {
@@ -2278,6 +2405,7 @@ moc_ruins,77,167,4	script	Foreign Merchant#aru1	880,5,5,{
 				mes "speak to him now?";
 				mes "Good luck!";
 				set aru_em,8;
+				changequest 2130,2131;
 				close;
 			case 2:
 				mes "[Foreign Merchant]";
@@ -2428,6 +2556,7 @@ moc_ruins,101,133,7	script	Foreign Merchant#aru2	929,{
 		mes "guy's pretty nice!^000000";
 		set aru_em,7;
 		hideonnpc "Foreign Merchant#aru2";
+		changequest 2129,2130;
 		close;
 	}
 	else {
@@ -2618,6 +2747,7 @@ ra_fild03,139,355,5	script	Ishmael#em	914,{
 				mes "she's been so good to us...";
 				set aru_em,18;
 				delitem 7343,1; //File02
+				changequest 2137,2138;
 				close;
 			}
 			else {
@@ -2705,6 +2835,7 @@ ra_fild03,139,355,5	script	Ishmael#em	914,{
 				delitem 725,1; //Red_Jewel
 				set aru_em,19;
 				getitem 7343,1; //File02
+				changequest 2138,2139;
 				close;
 			}
 		}
@@ -3014,6 +3145,7 @@ OnTouch:
 		mes "aura of warmth and kindness";
 		mes "permeate your entire being.^000000";
 		set aru_em,22;
+		changequest 2140,2141;
 		close2;
 		warp "rachel",142,136;
 	}
@@ -3081,7 +3213,7 @@ OnTimer53000:
 
 que_temsky,99,7,0	warp	quetemskyout	1,1,ra_temin,276,231
 
-// Muff's Loan
+// Muff's Loan :: zdan_total_edq
 //============================================================ 
 comodo,224,187,3	script	Muff	86,{
 	if (checkweight(907,200) == 0) {

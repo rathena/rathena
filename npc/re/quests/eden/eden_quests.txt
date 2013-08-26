@@ -3,11 +3,11 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.4b
+//= 1.5
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= Eden Group Headquarter NPC's.
+//= Eden Group Headquarter NPCs.
 //===== Additional Comments: =================================
 //= 1.0 First Version.
 //= 1.1 Removed unencoded comments (Korean -> Gibberish)
@@ -18,6 +18,7 @@
 //= 1.4 Partial cleaning and bug fixing. [Euphy]
 //= 1.4a Added 'npcskill' command. [Euphy]
 //= 1.4b Added 'disable_items' command. [Euphy]
+//= 1.5 Added GM management function. [Euphy]
 //============================================================
 
 moc_para01,25,35,4	script	Instructor Boya#para01	469,{
@@ -5120,32 +5121,22 @@ L_GetWeapon:
 	return;
 }
 
-/*
-sec_in02,25,33,4	script	Assistant	422,{
+sec_in02,25,33,4	script	Assistant#para_suvquest	422,{
+	callfunc "F_GM_NPC";
 	mes "Password";
 	next;
-	input .@input;
-	if (.@input == 1854) {
+	if (callfunc("F_GM_NPC",1854,0) == 1) {
 		mes "Please select the variable you want to modify.";
 		next;
-		switch (select("para_suv01:para_suv02")) {
-		case 1:
-			mes "Enter the modified value";
-			next;
-			input .@input;
-			mes "Value of para_suv01 has been changed to "+.@input+".";
-			set para_suv01,.@input;
-			close;
-		case 2:
-			mes "Enter the modified value";
-			next;
-			input .@input;
-			mes "Value of para_suv02 has been changed to "+.@input+".";
-			set para_suv02,.@input;
-			close;
-		}
+		set .@var, select("para_suv01:para_suv02");
+		mes "Enter the modified value";
+		next;
+		input .@input,0,9999;
+		mes "Value of para_suv0"+.@var+" has been changed to "+.@input+".";
+		setd "para_suv0"+.@var,.@input;
+		close;
+	} else {
+		mes "......meow wee.";
+		close;
 	}
-	mes "......meow wee.";
-	close;
 }
-*/

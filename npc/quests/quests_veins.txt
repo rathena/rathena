@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.4
+//= 2.5
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -48,6 +48,7 @@
 //= 2.2 Moved "Wincing Old Man" to pre-re/re coordinates. [Euphy]
 //= 2.3 Fixed incorrect use of 'close'. [Joseph]
 //= 2.4 Updated RE/Pre-RE EXP. [Euphy]
+//= 2.5 Added GM management NPC. [Euphy]
 //============================================================ 
 
 // Stone Quest
@@ -2649,6 +2650,20 @@ comodo,135,299,0	script	Young Man#sch2	809,{
 	}
 }
 
+sec_in02,10,43,4	script	Extra Story Patch	809,{
+	callfunc "F_GM_NPC";
+	mes "[Patch]";
+	mes "Yeah, you can try.";
+	next;
+	if(select("Now:How many?") == 2) {
+		input .@input,0,1000;
+		set que_sch, .@input;
+	}
+	mes " ";
+	mes ""+que_sch;
+	close;
+}
+
 // Siblings Quest
 //============================================================ 
 veins,327,185,3	script	Kid#camelcamel	944,{
@@ -3132,6 +3147,7 @@ veins,327,185,3	script	Kid#camelcamel	944,{
 				mes "I'm happy that";
 				mes "I can help you too!";
 				set aru_monas,16;
+				changequest 17011,17012;
 				close;
 			}
 			else if (aru_monas < 26) {

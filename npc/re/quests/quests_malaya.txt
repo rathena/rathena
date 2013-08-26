@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -21,6 +21,7 @@
 //= 0.4 Added "Cautious Village" and subsequent quests [DeadlySilence]
 //= 0.5 Added "Bakonawa Extermination" quest. [Euphy]
 //= 1.0 Added "Nurse in Port Malaya" and "Pintados Festival" quests. [Euphy]
+//= 1.1 Added GM management function and NPC. [Euphy]
 //============================================================
 
 // Cautious Village & Daily Quests :: hi_malaya
@@ -6503,6 +6504,63 @@ OnTouch:
 	end;
 }
 
+// Original name: "Bakonawa Introduction Quest Helper#bako1"
+sec_in02,10,16,5	script	Bakonawa Intro Helper	543,{
+	if (callfunc("F_GM_NPC",1854,0) < 1) {
+		mes "Seafood and Black Bean Sauce Noodle!";
+		close;
+	}
+	mes "[Briquet Scheme]";
+	mes "Just boldly tell me";
+	mes "what is it that you want!";
+	next;
+	switch(select("Reset all quests:Just before the end of first quest:Reset secondary quest:Distribution of lost belongings:Just after hunting")) {
+	case 1:
+		mes "Here you go!";
+		set malaya_bakona1,0;
+		set malaya_bakona2,0;
+		for(set .@i,1174; .@i<=1193; set .@i,.@i+1) {
+			if (checkquest(.@i) > -1)
+				erasequest .@i;
+		}
+		close;
+	case 2:
+		mes "[Briquet Scheme]";
+		mes "Here you go!";
+		set malaya_bakona1,6;
+		for(set .@i,1174; .@i<=1178; set .@i,.@i+1) {
+			if (checkquest(.@i) > -1)
+				erasequest .@i;
+		}
+		setquest 1179;
+		close;
+	case 3:
+		mes "[Briquet Scheme]";
+		mes "Here you go!";
+		set malaya_bakona2,0;
+		for(set .@i,1180; .@i<=1193; set .@i,.@i+1) {
+			if (checkquest(.@i) > -1)
+				erasequest .@i;
+		}
+		close;
+	case 4:
+		mes "[Briquet Scheme]";
+		mes "Here you go!";
+		getitem 6520,17; //Lost_Belongings
+		close;
+	case 5:
+		mes "[Briquet Scheme]";
+		mes "Here you go!";
+		set malaya_bakona2,8;
+		setquest 1187;
+		for(set .@i,1178; .@i<=1193; set .@i,.@i+1) {
+			if (checkquest(.@i) > -1)
+				erasequest .@i;
+		}
+		close;
+	}
+}
+
 // Nurse in Port Malaya :: bang
 //============================================================
 function	script	F_Malaya_Nurse	{
@@ -8159,11 +8217,7 @@ $malaya_pintados_04$ - Last player to create a tattoo.
 */
 
 ma_fild01,1,1,4	script	Pintados Manager#pin	894,{
-
-	if (!getgmlevel()) end;
-
-	input .@input;
-	if (.@input == 1854) {
+	if (callfunc("F_GM_NPC",1854,0) == 1) {
 		mes "Bingo!";
 		next;
 	} else {

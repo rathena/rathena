@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 3.1
+//= 3.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -45,6 +45,7 @@
 //=     summoning of Satan Morroc until server reboot. [Gepard]
 //= 3.0 Updated RE/Pre-RE EXP. [Euphy]
 //= 3.1 Updated to match the latest official scripts. [Euphy]
+//= 3.2 Added GM management NPC and variable $@re_moc_time$. [Euphy]
 //============================================================ 
 
 // Stop Post Quest
@@ -1862,9 +1863,10 @@ morocc,159,113,3	script	Chief Balrog	752,{
 }
 
 moc_fild21,38,193,0	script	Morocc Timer#edq	-1,6,6,{
-OnInit:
-	set $@re_moc,0;
-	end;
+//OnInit:
+//	set $@re_moc,0;
+//	set $@re_moc_time$,"";
+//	end;
 
 OnTouch:
 	if ($@re_moc == 0) {
@@ -1930,6 +1932,7 @@ OnInit:
 
 OnEnable:
 	enablenpc "Group of Evil#edq";
+	set $@re_moc_time$,"";
 	end;
 
 OnDisable:
@@ -2004,6 +2007,7 @@ OnDisable:
 
 OnMyMobDead:
 	set $@re_moc,3;
+	set $@re_moc_time$, gettimestr("%H%M%S",7);
 	mapannounce "moc_fild21","I'll let live just a little longer. You'll never find me through this time-space gap!",bc_map,"0xFFFF00";
 	donpcevent "Time-Space Gap#edq::OnEnable";
 	donpcevent "Satan Broadcast#edq::OnDisable";
@@ -2023,6 +2027,84 @@ OnTimer5415000:
 	donpcevent "Satan Summon#edq::OnDisable";
 	end;
 }
+
+sec_in02,14,43,5	script	Morroc GlobalVar Admin::MorrocAdmin_sec	971,{
+	callfunc "F_GM_NPC";
+	mes "[Helper]";
+	mes "Please enter the password and # button.";
+	next;
+	if (callfunc("F_GM_NPC",1854,0) < 1) {
+		mes "[Helper]";
+		mes "Please press the numbers we always sing about.";
+		close;
+	} else {
+		mes "[Helper]";
+		mes "Hello. I am a post office.";
+		mes "I am currently checking Morroc status.";
+		next;
+		mes "=============";
+		mes "Current State";
+		mes "=============";
+		mes "^3131FF<Morroc>^000000";
+		if ($@re_moc == 0) {
+			mes "Reset. Enable to summon Morroc.";
+			mes "^3131FF<Continental Guards>^000000";
+			mes "Enable to enter to moc_fild21 field.";
+		} else if ($@re_moc == 1) {
+			mes "^3131FF<Morroc>^000000";
+			mes "Some warrior entered after the reset. However, the warrior hasn't started the quest yet.";
+			mes "The warrior who has rebirth_moc_edq 4 and 7 is now enabled to summon Morroc.";
+			mes "^3131FF<Continental Guards>^000000";
+			mes "The warrior who has rebirth_moc_edq 4 ~ 7 is now enabled to enter to moc_fild21.";
+		} else if ($@re_moc == 2) {
+			mes "^3131FF<Morroc>^000000";
+			mes "Morroc has been summoned. After 90 minutes has passed, it will revert back to reset status.";
+			mes "^3131FF<Continental Guards>^000000";
+			mes "The warrior who has rebirth_moc_edq 4 ~ 7 is now enabled to enter to moc_fild21.";
+		} else if ($@re_moc == 3) {
+			mes "^3131FF<Morroc>^000000";
+			mes "Morroc has been killed. Death time is "+$@re_moc_time$+"(00 hr/00 min/00 sec).";
+			mes "After 6 hours later since the death time, it will be reset.";
+			mes "The warriors whom has remained in the field can continue the quest via Time Space Gap.";
+			mes "^3131FF<Continental Guards>^000000";
+			mes "Disabled to enter to moc_fild21 from outside of the field.";
+		} else {
+			mes "^3131FF<Morroc>^000000";
+			mes "Morroc has been killed. Death time is "+$@re_moc_time$+"(00 hr/00 min/00 sec).";
+			mes "After 6 hours later since the death time, it will be reset.";
+			mes "It has been already passed 30 minutes after Morroc's death, so warriors can not continue the quest even if they click the Time Space Gap.";
+			mes "^3131FF<Continental Guards>^000000";
+			mes "Disabled to enter to moc_fild21 from outside of the field.";
+		}
+		next;
+		mes "[Helper]";
+		mes "What do you want?";
+		next;
+		switch(select("Cancel.:Reset")) {
+		case 1:
+			mes "[Helper]";
+			mes "Alright.";
+			close;
+		case 2:
+			if (strnpcinfo(4) == "sec_in02")
+				mes "You can reset at moc_fild21 5 5.";
+			else {
+				mes "Reset starts.";
+				next;
+				donpcevent "Group of Evil#edq::OnEnable";
+				mes "Group of Evil NPC is appeared.";
+				mes "Time-Space Gap NPC is disappeared.";
+				mes "6 hours term timer is stopped.";
+				donpcevent "Satan Summon#edq::OnDisable";
+				mes "Morroc 90 minutes survival timer is stopped.";
+				mes "Morroc is being killed.";
+				mes "Now, Continental Guards will let players enter.";
+			}
+			close;
+		}
+	}
+}
+moc_fild21,5,5,5	duplicate(MorrocAdmin_sec)	Morroc GlobalVar Admin::MorrocAdmin_moc	971
 
 // The Crow of the Fate
 // ============================================================

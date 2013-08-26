@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.3
+//= 2.4
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -35,6 +35,7 @@
 //= 2.1 Updated to match latest official script. [Euphy]
 //= 2.2 Instance system rewrite. [Euphy]
 //= 2.3 Added some missing announcements. [Euphy]
+//= 2.4 Added GM management function. [Euphy]
 //============================================================ 
 
 alberta,214,77,6	script	Captain Janssen	709,{
@@ -316,18 +317,20 @@ L_Enter:
 }
 
 e_tower,30,30,2	script	Huge Vortex	844,2,2,{
+	end;
 OnTouch:
 	mapannounce "e_tower","[ " + strcharinfo(0) + " ], seems to be engulfed by a huge vortex",bc_map,"0x00ff99",FW_NORMAL,12;
 	warp "alberta",223,36;
 	end;
 }
 
-/*
-e_tower,1,1,2	script	#102Administrator Mode104	844,{
+// Original name: "#102Administrator Mode104"
+e_tower,1,1,2	script	#102Administrator Mode	844,{
+	callfunc "F_GM_NPC";
 	mes "Please enter the password";
-	input .@inputstr$;
+	set .@i, callfunc("F_GM_NPC","dmc2008",1);
 	next;
-	if (.@inputstr$ == "dmc2008") {
+	if (.@i == 1) {
 		switch(select("Generate Purification Stone:Remove Purification Stone:Cancel")) {
 		case 1:
 			mes "Create the Purification Stone that stays for 30 minutes.";
@@ -342,8 +345,7 @@ e_tower,1,1,2	script	#102Administrator Mode104	844,{
 			break;
 		}
 		close;
-	}
-	else {
+	} else {
 		mes "Enter the password exactly.";
 		close;
 	}
@@ -381,13 +383,13 @@ OnTimer1800000:
 }
 
 e_tower,151,185,4	script	Purification Stone#et2	844,{
+	callfunc "F_GM_NPC";
 	set etower_timer,0;
 	mes "^0000ffThe records and aftereffects related to the Endless Tower have been removed. You can generate and enter the Endless Tower again.^000000";
-	close;
+	close2;
 	warp "e_tower",75,108;
 	end;
 }
-*/
 
 // Core Functions
 //============================================================
@@ -1368,12 +1370,12 @@ OnTimer120000:
 	end;
 }
 
-/*
 1@tower,71,1,0	script	#Manager Mode1	844,{
+	callfunc "F_GM_NPC";
 	mes "Please enter the password.";
-	input .@inputstr$;
+	set .@i, callfunc("F_GM_NPC","dmc2008",1);
 	next;
-	if (.@inputstr$ == "dmc2008") {
+	if (.@i == 1) {
 		mes "This NPC manages the tower from the 1st to the 25th Level.";
 		mes "Please enter the Level number to open.";
 		mes "(i.g.: 1F->1, 25F->25)";
@@ -1388,7 +1390,6 @@ OnTimer120000:
 	}
 	close;
 }
-*/
 
 // Levels 26-50
 //============================================================
@@ -1485,12 +1486,12 @@ OnTouch_:
 	end;
 }
 
-/*
 2@tower,71,1,0	script	#Manager Mode2	844,{
+	callfunc "F_GM_NPC";
 	mes "Please enter the password.";
-	input .@inputstr$;
+	set .@i, callfunc("F_GM_NPC","dmc2008",1);
 	next;
-	if (.@inputstr$ == "dmc2008") {
+	if (.@i == 1) {
 		mes "This NPC manages the tower from the 26st to the 50th Level.";
 		mes "Please enter the Level number to open.";
 		mes "(i.g.: 26F->26, 50F->50)";
@@ -1505,7 +1506,6 @@ OnTouch_:
 	}
 	close;
 }
-*/
 
 // Levels 51-75
 //============================================================
@@ -1602,12 +1602,12 @@ OnTouch_:
 	end;
 }
 
-/*
 3@tower,71,1,0	script	#Manager Mode3	844,{
+	callfunc "F_GM_NPC";
 	mes "Please enter the password.";
-	input .@inputstr$;
+	set .@i, callfunc("F_GM_NPC","dmc2008",1);
 	next;
-	if (.@inputstr$ == "dmc2008") {
+	if (.@i == 1) {
 		mes "This NPC manages the tower from the 51st to the 75th Level.";
 		mes "Please enter the Level number to open.";
 		mes "(i.g.: 51F->51, 75F->75)";
@@ -1622,7 +1622,6 @@ OnTouch_:
 	}
 	close;
 }
-*/
 
 // Levels 76-99
 //============================================================
@@ -1718,12 +1717,12 @@ OnTouch_:
 	end;
 }
 
-/*
 4@tower,71,1,0	script	#Manager Mode4	844,{
+	callfunc "F_GM_NPC";
 	mes "Please enter the password.";
-	input .@inputstr$;
+	set .@i, callfunc("F_GM_NPC","dmc2008",1);
 	next;
-	if (.@inputstr$ == "dmc2008") {
+	if (.@i == 1) {
 		mes "This NPC manages the tower from the 76th to the 99th Level.";
 		mes "Please enter the Level number to open.";
 		mes "(i.g.: 76F->76, 99F->99)";
@@ -1738,7 +1737,6 @@ OnTouch_:
 	}
 	close;
 }
-*/
 
 // Level 100
 //============================================================
@@ -1911,19 +1909,18 @@ OnEnable:
 	end;
 }
 
-/*
 5@tower,71,1,0	script	#Manager Mode5	844,{
+	callfunc "F_GM_NPC";
 	mes "This NPC manages the crystal on the 100th Level. Please enter the password.";
-	input .@inputstr$;
+	set .@i, callfunc("F_GM_NPC","dmc2008",1);
 	next;
-	if (.@inputstr$ == "dmc2008") {
+	if (.@i == 1) {
 		donpcevent instance_npcname("Lucid Crystal#102")+"::OnEnable";
 		mes "The 100th Level's crystal has been activated.";
-	}
-	else
+	} else
 		mes "Please enter the correct password.";
 	close;
-} */
+}
 
 // Level 101
 //============================================================

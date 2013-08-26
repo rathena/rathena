@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera
 //===== Current Version: ===================================== 
-//= 2.8
+//= 2.9
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: =========================================
@@ -53,6 +53,7 @@
 //= 2.6 Moved Morroc NPCs to Morroc Ruins. [L0ne_W0lf]
 //= 2.7 Fixed a typo, a - to a +. Not sure how that happened. [L0ne_w0lf]
 //= 2.8 Corrected another typo this time in a variable.
+//= 2.9 Added GM management function. [Euphy]
 //============================================================ 
 
 einbroch,246,70,0	script	Vote Timer#ein	-1,{
@@ -1175,12 +1176,13 @@ OnTimer15000:
 
 /*
 // GM only NPC used for modifying values related to the DTS system.
+// Disabled in official script.
 sec_in02,17,160,4	script	Vote Globalvar Girl#yuno	864,{
+	callfunc "F_GM_NPC";
 	mes "[Christy's Maid]";
 	mes "Lady Christy!";
 	next;
-	input .@input,0,9000;
-	if (.@input == 1854) {
+	if (callfunc("F_GM_NPC",1854,0) == 1) {
 		mes "[Christy's Maid]";
 		mes "I am Lady Christy's Maid.";
 		next;

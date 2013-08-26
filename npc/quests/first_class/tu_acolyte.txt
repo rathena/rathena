@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Fix up by Jukka
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.9
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //= 1.6a Added 'npcskill' command. [Euphy]
 //= 1.7 Fixed exp, texts, and requirements in pre-renewal [Daegaladh]
 //= 1.8 Updated to match the official script. [Euphy]
+//= 1.9 Added GM management function. [Euphy]
 //============================================================ 
 
 // Priest Praupin
@@ -1779,8 +1780,8 @@ prt_monk,223,123,3	script	Eavesdrop#tu	111,{
 	}
 }
 
-/*
 sec_in02,17,156,3	script	1st Job Quest Reset	726,{
+	callfunc "F_GM_NPC";
 	mes "[1st Job Quest]";
 	mes "Which would you like to reset?";
 	next;
@@ -1808,4 +1809,3 @@ sec_in02,17,156,3	script	1st Job Quest Reset	726,{
 	mes "Completed.";
 	close;
 }
-*/

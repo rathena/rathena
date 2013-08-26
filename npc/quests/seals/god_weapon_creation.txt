@@ -1,21 +1,22 @@
 //===== rAthena Script ======================================= 
-//= God items creation NPCs
+//= God Item Quest - Item Creation
 //===== By: ================================================== 
 //= SinSloth
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
-//= rAthena
+//= rAthena SVN
 //===== Description: ========================================= 
-//= 
+//= Craft god items after the four seals are broken.
 //===== Additional Comments: =================================
 //= 1.0 First version. Thanks to SinSloth for scripting it. [MasterOfMuppets]
 //= 1.1 Updated several aspects of the script. [L0ne_W0lf]
 //= 1.2 Corrected several incorrect item IDs. [L0ne_W0lf]
+//= 1.3 Renewal script update. [Euphy]
+//=     Added GM management function.
 //============================================================
 
 gld_dun01,28,85,0	script	Grunburti#1::GodDwarf	826,{
-	set .@GID,getcharid(2);
 	mes "[Dwarf Grunburti]";
 	mes "A human?!";
 	mes "This land is full";
@@ -69,8 +70,9 @@ gld_dun01,28,85,0	script	Grunburti#1::GodDwarf	826,{
 		mes "At least I was fortunate enough to find this cave. We Dwarves are most cozy living underground, after all.";
 		close;
 	case 3:
-		if (($God1 < 100) || ($God2 < 100) || ($God3 < 100) || ($God4 < 100)){
-			if (($God1 > 49) && ($God2 > 49) && ($God3 > 49) && ($God4 > 49) && (strcharinfo(0) == getguildmaster(.@GID))) {
+		set .@GID,getcharid(2);
+		if (($God1 < $@god_check2) || ($God2 < $@god_check2) || ($God3 < $@god_check2) || ($God4 < $@god_check2)){
+			if (($God1 >= $@god_check1) && ($God2 >= $@god_check1) && ($God3 >= $@god_check1) && ($God4 >= $@god_check1) && (strcharinfo(0) == getguildmaster(.@GID))) {
 				mes "[Dwarf Grunburti]";
 				mes "Hmm...";
 				mes "I'll need some things to make a weapon for you. What exactly were you interested in having?";
@@ -340,7 +342,6 @@ gld_dun01,28,85,0	script	Grunburti#1::GodDwarf	826,{
 		close;
 	}
 }
-
 gld_dun02,85,84,0	duplicate(GodDwarf)	Grunburti#2	826
 gld_dun03,92,105,0	duplicate(GodDwarf)	Grunburti#3	826
 gld_dun04,268,230,0	duplicate(GodDwarf)	Grunburti#4	826
@@ -376,7 +377,7 @@ que_god01,215,128,0	duplicate(GodEntrance)	 #que_godnpc2	111
 que_god01,213,128,0	duplicate(GodEntrance)	 #que_godnpc3	111
 
 que_god01,154,112,4	script	Grunburti#god	826,{
-	if (($God1 < 100) || ($God2 < 100) || ($God3 < 100) || ($God4 < 100)){
+	if (($God1 < $@god_check2) || ($God2 < $@god_check2) || ($God3 < $@god_check2) || ($God4 < $@god_check2)){
 		mes "[Dwarf Grunburti]";
 		mes "One of the godly";
 		mes "items has been created,";
@@ -463,7 +464,7 @@ que_god01,154,112,4	script	Grunburti#god	826,{
 				mes "Never in my wildest";
 				mes "imaginings have I thought that I'd be crafting this masterpiece for a mere human. Give me a moment.";
 				next;
-				if (($God1 < 100) || ($God2 < 100) || ($God3 < 100) || ($God4 < 100)){
+				if (($God1 < $@god_check2) || ($God2 < $@god_check2) || ($God3 < $@god_check2) || ($God4 < $@god_check2)){
 					mes "[Dwarf Grunburti]";
 					mes "But...";
 					mes "The seals";
@@ -543,7 +544,7 @@ que_god01,154,112,4	script	Grunburti#god	826,{
 				mes "I'd never believe that";
 				mes "something so powerful and dangerous as Megingjard would end up in the hands of a human...";
 				next;
-				if (($God1 < 100) || ($God2 < 100) || ($God3 < 100) || ($God4 < 100)){
+				if (($God1 < $@god_check2) || ($God2 < $@god_check2) || ($God3 < $@god_check2) || ($God4 < $@god_check2)){
 					mes "[Dwarf Grunburti]";
 					mes "But...";
 					mes "The seals";
@@ -630,7 +631,7 @@ que_god01,154,112,4	script	Grunburti#god	826,{
 				mes "used by a human.";
 				mes "Give me a moment...";
 				next;
-				if (($God1 < 100) || ($God2 < 100) || ($God3 < 100) || ($God4 < 100)){
+				if (($God1 < $@god_check2) || ($God2 < $@god_check2) || ($God3 < $@god_check2) || ($God4 < $@god_check2)){
 					mes "[Dwarf Grunburti]";
 					mes "But...";
 					mes "The seals";
@@ -718,7 +719,7 @@ que_god01,154,112,4	script	Grunburti#god	826,{
 				mes "or you will regret it.";
 				mes "Mark my words...";
 				next;
-				if (($God1 < 100) || ($God2 < 100) || ($God3 < 100) || ($God4 < 100)){
+				if (($God1 < $@god_check2) || ($God2 < $@god_check2) || ($God3 < $@god_check2) || ($God4 < $@god_check2)){
 					mes "[Dwarf Grunburti]";
 					mes "But...";
 					mes "The seals";
@@ -787,12 +788,7 @@ OnTimer610000:
 	end;
 
 OnTimer612000:
-	areawarp "que_god01",154,67,4,7,"prontera",156,324;
-	areawarp "que_god01",154,82,4,7,"prontera",156,324;
-	areawarp "que_god01",145,99,9,9,"prontera",156,324;
-	areawarp "que_god01",164,99,9,9,"prontera",156,324;
-	areawarp "que_god01",145,118,9,9,"prontera",156,324;
-	areawarp "que_god01",164,118,9,9,"prontera",156,324;
+	donpcevent "god_wep_warpmaster::OnEnable";
 	end;
 
 OnTimer615000:
@@ -802,24 +798,50 @@ OnTimer615000:
 	end;
 }
 
-/*
-que_god01,293,3,0	script	Godly Item Quests Related#god	90,{
+que_god01,169,82,0	script	god_wep_warpmaster	-1,{
+OnEnable:
+	for(set .@i,1; .@i<=6; set .@i,.@i+1)
+		enablenpc "god_failwarp#"+.@i;
+	end;
+OnDisable:
+	for(set .@i,1; .@i<=6; set .@i,.@i+1)
+		disablenpc "god_failwarp#"+.@i;
+	end;
+}
+
+que_god01,154,67,0	script	god_failwarp#1	-1,4,7,{
+OnInit:
+	disablenpc strnpcinfo(0);
+	end;
+OnTouch:
+	warp "prontera",156,324;
+	end;
+}
+que_god01,154,82,0	duplicate(god_failwarp#1)	god_failwarp#2	-1,4,7
+que_god01,145,99,0	duplicate(god_failwarp#1)	god_failwarp#3	-1,9,9
+que_god01,164,99,0	duplicate(god_failwarp#1)	god_failwarp#4	-1,9,9
+que_god01,145,118,0	duplicate(god_failwarp#1)	god_failwarp#5	-1,9,9
+que_god01,164,118,0	duplicate(god_failwarp#1)	god_failwarp#6	-1,9,9
+
+// Original name: "Godly Item Quests Related#god"
+que_god01,293,3,0	script	Godly Item Quests#god	90,{
+	callfunc "F_GM_NPC";
 	mes "[Use in case of emergency]";
 	mes "Please enter password.";
 	mes "If you wish to cancel, please enter 0.";
 	next;
-	input .@input,0,4001;
-	if (.@input < 0 || .@input > 4000) {
+	set .@i, callfunc("F_GM_NPC",1854,0,0,4000);
+	if (.@i == -2) {
 		mes "[Use in case of emergency]";
 		mes "Password is incorrect.";
 		close;
-	}
-	else if(.@input == 0) {
+	} else if (.@i == -1) {
 		mes "[Use in case of emergency]";
 		mes "You have canceled your request.";
 		close;
-	}
-	else if(.@input == 1854) {
+	} else if (.@i == 0) {
+		close;
+	} else {
 		mes "[Use in case of emergency]";
 		mes "What services would you like to use?";
 		next;
@@ -828,12 +850,7 @@ que_god01,293,3,0	script	Godly Item Quests Related#god	90,{
 			mes "[Use in case of emergency]";
 			mes "Press the 'Next' button to turn off warps.";
 			next;
-			areawarp "que_god01",154,67,4,7,"prontera",156,324;
-			areawarp "que_god01",154,82,4,7,"prontera",156,324;
-			areawarp "que_god01",145,99,9,9,"prontera",156,324;
-			areawarp "que_god01",164,99,9,9,"prontera",156,324;
-			areawarp "que_god01",145,118,9,9,"prontera",156,324;
-			areawarp "que_god01",164,118,9,9,"prontera",156,324;
+			donpcevent "god_wep_warpmaster::OnDisable";
 			mes "[Use in case of emergency]";
 			mes "You have successfully turned off warps.";
 			close;
@@ -856,4 +873,3 @@ que_god01,293,3,0	script	Godly Item Quests Related#god	90,{
 		}
 	}
 }
-*/

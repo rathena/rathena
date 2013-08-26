@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera and The rAthena Dev Team
 //===== Current Version: ===================================== 
-//= 2.6
+//= 2.7
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -50,6 +50,7 @@
 //=     - Factory Quest
 //=     - Murder Quest
 //= 2.6 Updated RE/Pre-RE EXP. [Euphy]
+//= 2.7 Added GM management function. [Euphy]
 //============================================================ 
 
 // Oridecon Stone OR Mineral Stone Quest
@@ -4168,21 +4169,24 @@ ein_in01,95,239,3	script	Conveyor#ins2	111,{
 }
 
 // Administrator NPC used to rig the invasion in Einbroch.
-/**/
 sec_in02,127,86,3	script	Factory Quest Test	851,{
-	input .@input; //,0,9000;
-	if ((.@input < 0) || (.@input > 9000)) {
+	set .@i, callfunc("F_GM_NPC",8028,0,0,9000);
+	if (.@i == -2) {
 		mes "[Test1]";
 		mes "Boo~ya.";
 		close;
-	}
-	else if (.@input == 0) {
+	} else if (.@i == -1) {
 		mes "[Test1]";
 		mes "Do you want";
 		mes "to cancel~?";
 		close;
-	}
-	else if (.@input == 8028) {
+	} else if (.@i == 0) {
+		mes "[Test1]";
+		mes "Whoa...";
+		mes "That is";
+		mes "sooo wrong!";
+		close;
+	} else {
 		mes "[Test1]";
 		mes "The current value";
 		mes "of the global variable";
@@ -4210,15 +4214,7 @@ sec_in02,127,86,3	script	Factory Quest Test	851,{
 			close;
 		}
 	}
-	else {
-		mes "[Test1]";
-		mes "Whoa...";
-		mes "That is";
-		mes "sooo wrong!";
-		close;
-	}
 }
-/**/
 
 // Murder Quest
 //============================================================ 

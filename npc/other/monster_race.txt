@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.9
+//= 2.0
 //===== Compatible With: =====================================
 //= rAthena SVN (Trunk, r12752+)
 //===== Description: =========================================
@@ -23,6 +23,7 @@
 //= 1.8 Optimized.
 //=     Fixed Medal Distributor (Dual Race) disappears accordingly. [Joseph] 
 //= 1.9 Updated RE/Pre-RE EXP. [Euphy]
+//= 2.0 Added GM management NPC. [Euphy]
 //============================================================
 
 // Monstrer Race - Single Monster Race
@@ -735,7 +736,13 @@ hugel,58,72,6	script	Eckar Ellebird#single	798,{
 	mes "which the winners can claim";
 	mes "their Prize Medals. The gate";
 	mes "will open soon, so please wait.";
-	close;				
+	close;
+OnEnable:
+	enablenpc "Eckar Ellebird#single";
+	end;
+OnDisable:
+	disablenpc "Eckar Ellebird#single";
+	end;
 }
 
 p_track01,39,49,3	script	Game Guide#single	845,{
@@ -1348,7 +1355,7 @@ hugel,62,69,1	script	Eckar Erenes#double	798,{
 		mes "I'm sorry, but you don't";
 		mes "have enough money to pay";
 		mes "the 500 zeny spectator fee.";
-		close;		
+		close;
 	}
 	mes "[Eckar Erenes]";
 	mes "I'm sorry, but a monster";
@@ -1358,6 +1365,12 @@ hugel,62,69,1	script	Eckar Erenes#double	798,{
 	mes "their Prize Medals. The gate";
 	mes "will open soon, so please wait.";
 	close;
+OnEnable:
+	enablenpc "Eckar Erenes#double";
+	end;
+OnDisable:
+	disablenpc "Eckar Erenes#double";
+	end;
 }
 
 p_track02,73,22,1	script	Ticket Helper#2	899,{
@@ -3053,4 +3066,55 @@ p_track01,45,42,3	script	Absent Minded Man#single	881,{
 	mes "I should win at least once,";
 	mes "right? What's going on?!";
 	close;
+}
+
+hugel,5,5,3	script	Monster Race Manager	868,{
+	callfunc "F_GM_NPC";
+	mes "[Monster Race Manager]";
+	mes "I can activate and";
+	mes "deactivate the Arena";
+	mes "Entry NPCs for the Single";
+	mes "and Dual Monster Races.";
+	next;
+	set .@select, select("Single Race Entry - ON:Dual Race Entry - ON:Single Race Entry - OFF:Dual Race Entry - OFF");
+	mes "[Monster Race Manager]";
+	mes "Please enter";
+	mes "the password.";
+	next;
+	set .@i, callfunc("F_GM_NPC",1854,0,0,2000);
+	if (.@i == -2) {
+		mes "[Monster Race Manager]";
+		mes "Error.";
+		close;
+	} else if (.@i == -1) {
+		mes "[Monster Race Manager]";
+		mes "Incorrect password.";
+		close;
+	} else if (.@i == 0) {
+		close;
+	} else {
+		mes "[Monster Race Manager]";
+		switch(.@select) {
+		case 1:
+			mes "The Single Monster";
+			mes "Race Entry NPC is ON.";
+			donpcevent "Eckar Ellebird#single::OnEnable";
+			close;
+		case 2:
+			mes "The Dual Monster";
+			mes "Race Entry NPC is ON.";
+			donpcevent "Eckar Erenes#double::OnEnable";
+			close;
+		case 3:
+			mes "The Single Monster";
+			mes "Race Entry NPC is OFF.";
+			donpcevent "Eckar Ellebird#single::OnDisable";
+			close;
+		case 4:
+			mes "The Dual Monster";
+			mes "Race Entry NPC is OFF.";
+			donpcevent "Eckar Erenes#double::OnDisable";
+			close;
+		}
+	}
 }

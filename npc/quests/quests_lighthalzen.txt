@@ -4,7 +4,7 @@
 //= Persian, Vicious_Pucca, aoa00, Evera, MasterOfMupppets,
 //= Lupus, Lord Gywall
 //===== Current Version: ===================================== 
-//= 5.0
+//= 5.1
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -28,6 +28,7 @@
 //= 4.8 Fixed Cursed Spirit Quest EXP reward. [Euphy]
 //= 4.9 Fixed incorrect use of 'close'. [Joseph]
 //= 5.0 Updated RE/Pre-RE EXP. [Euphy]
+//= 5.1 Added GM management NPCs. [Euphy]
 //============================================================ 
 
 // Gangster Alert [Official Conversion]
@@ -10315,6 +10316,27 @@ lhz_dun02,282,278,0	script	Broken Machine	111,{
 	}
 }
 
+sec_in02,17,170,4	script	boss::lght_boss_admin	809,{
+	callfunc "F_GM_NPC";
+	mes "[Patch]";
+	mes "Tell me what you want.";
+	next;
+	switch(select("Current Variables:How Many:Shinokas - Quest Complete")) {
+	case 1:
+		break;
+	case 2:
+		input .@input,0,1000;
+		set lght_boss,.@input;
+		break;
+	case 3:
+		set Shinokas_Quest,11;
+		close;
+	}
+	mes " ";
+	mes ""+lght_boss;
+	close;
+}
+
 lhz_in02,19,274,2	script	Maintenance Guy	851,{
 
 	mes "[Kudiuu]";
@@ -11989,6 +12011,48 @@ OnTouch:
 		close;
 	}
 	end;
+}
+
+airplane_01,10,10,3	script	#LyozienSwitch	111,{
+	callfunc "F_GM_NPC";
+	mes "[Lyozien Switch]";
+	mes "Input password.";
+	mes "Enter 0 to cancel.";
+	next;
+	set .@i, callfunc("F_GM_NPC",1028,0,0,4000);
+	if (.@i == -2) {
+		mes "[Lyozien Switch]";
+		mes "Incorrect.";
+		close;
+	} else if (.@i == -1) {
+		mes "[Lyozien Switch]";
+		mes "Canceled.";
+		close;
+	} else if (.@i == 0) {
+		close;
+	} else {
+		mes "[Lyozien Switch]";
+		mes "Do you want to";
+		mes "turn the Lyozien";
+		mes "NPC ON or OFF?";
+		next;
+		switch(select("On:OFF")) {
+		case 1:
+			set .@str$,"activated";
+			donpcevent "Man#Lyozien::OnEnable";
+			break;
+		case 2:
+			set .@str$,"deactivated";
+			donpcevent "Man#Lyozien::OnDisable";
+			break;
+		}
+		mes "[Lyozien Switch]";
+		mes "Lyozien NPC is";
+		mes "now "+.@str$+".";
+		mes " ";
+		mes "/mm airplane_01.gat 96 48";
+		close;
+	}
 }
 
 //============================================================ 

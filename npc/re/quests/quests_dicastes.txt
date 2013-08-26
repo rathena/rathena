@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Gennosuke Kouga, Muad_Dib
 //===== Current Version: =====================================
-//= 2.2
+//= 2.3
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -32,6 +32,7 @@
 //= 2.0 Fixed variables. [Joseph]
 //= 2.1 Added reset option to "Kareka". [Euphy]
 //= 2.2 Added Izlude duplicates. [Euphy]
+//= 2.3 Added GM management NPCs. [Euphy]
 //============================================================
 
 // Entrance
@@ -173,6 +174,20 @@ dic_dun01,266,113,5	script	Curious Sapha#ep13_3_	449,{
 			close;
 		}
 	}
+}
+
+sec_in02,16,43,5	script	Scaraba Dungeon Entrance	449,{
+	callfunc "F_GM_NPC";
+	mes "Setting you for dungeon entry.";
+	mes "You will be able to go through if the password is correct.";
+	if (callfunc("F_GM_NPC",1854,0) == 1) {
+		set ep13_3_secret,6;
+		getitem 2782,1; //Ring_Of_Wise_King
+		getitem 6437,2; //Scaraba_Perfume
+		mes "Setting Complete";
+	} else
+		mes "Wrong Password";
+	close;
 }
 
 // Vigilantes
@@ -421,6 +436,19 @@ dic_in01,254,119,0	script	Item Storage#01	844,{
 	close2;
 	openstorage;
 	end;
+}
+
+sec_in02,10,42,1	script	13.3 Related Reset	449,{
+	callfunc "F_GM_NPC";
+	mes "[Reset]";
+	mes "Resets all quest windows including daily and map quests for 13.3.";
+	freeloop(1);
+	for(set .@i,12099; .@i<=12216; set .@i,.@i+1) {
+		if (checkquest(.@i) > -1)
+			erasequest .@i;
+	}
+	freeloop(0);
+	close;
 }
 
 // Civil Services

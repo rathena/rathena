@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_Dib
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First Version. [brAthena]
 //= 1.1 Updated script. [Euphy]
+//= 1.2 Added GM management function. [Euphy]
 //============================================================
 
 prt_castle,48,161,3	script	Middle-aged Gentleman#rg	57,{
@@ -497,8 +498,8 @@ OnTouch:
 	end;
 }
 
-/*
 sec_in02,12,43,3	script	sorcereryal	57,1,1,{
+	callfunc "F_GM_NPC";
 	switch(select("Royal Guard:Rune Knight:Sorcerer")) {
 	case 1:
 		mes "1~5";
@@ -538,4 +539,3 @@ sec_in02,12,43,3	script	sorcereryal	57,1,1,{
 		close;
 	}
 }
-*/

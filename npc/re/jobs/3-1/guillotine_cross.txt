@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_Dib
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= rAthena SVN r16945+
 //===== Description: ========================================= 
@@ -17,6 +17,7 @@
 //= 1.2 Moved "Girl" NPC off ve_fild05. [Euphy]
 //= 1.3 Added missing OnMyMobDead labels. [Euphy]
 //= 1.4 Added missing labels. [Joseph]
+//= 1.5 Added GM management function. [Euphy]
 //============================================================
 
 que_job01,75,96,3	script	Guild Member#3rdgc01	997,{
@@ -3833,12 +3834,11 @@ OnTouch:
 	end;
 }
 
-/*
 job3_guil02,1,3,0	script	#GMhelper01_gc	844,{
+	callfunc "F_GM_NPC";
 	mes "What can I do for you?";
 	next;
-	input .@input;
-	if (.@input == 1854) {
+	if (callfunc("F_GM_NPC",1854,0) == 1) {
 		set .@room01, $@3rdgc_room01;
 		mes "I check the recent situation.";
 		mes "The battle situation of storage: "+.@room01+"";
@@ -3867,16 +3867,17 @@ job3_guil02,1,3,0	script	#GMhelper01_gc	844,{
 			mes "A management for mansion is in mansion.";
 			close;
 		}
+	} else {
+		mes "-_-.";
+		close;
 	}
-	mes "-_-.";
-	close;
 }
 
 job3_guil03,1,8,0	script	#GMhelper02_gc	844,{
+	callfunc "F_GM_NPC";
 	mes "What can I do for you?";
 	next;
-	input .@input;
-	if (.@input == 1854) {
+	if (callfunc("F_GM_NPC",1854,0) == 1) {
 		set .@room02, $@3rdgc_room02;
 		mes "Check the recent situation.";
 		mes "The battle situation of the mansion is: "+.@room02+"";
@@ -3937,8 +3938,8 @@ job3_guil03,1,8,0	script	#GMhelper02_gc	844,{
 			mes "The management of storage is in a storage.";
 			close;
 		}
+	} else {
+		mes "-_-.";
+		close;
 	}
-	mes "-_-.";
-	close;
 }
-*/

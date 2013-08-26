@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= SinSloth
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -14,6 +14,7 @@
 //= 1.2 Label standardization, disabled GM NPCs. [Euphy]
 //= 1.2a Added Renewal level checksk. [Euphy]
 //= 1.3 Script updates. [Euphy]
+//= 1.4 Added GM management function. [Euphy]
 //============================================================
 
 arena_room,94,93,5	script	Vendigos	97,{
@@ -393,15 +394,15 @@ arena_room,158,82,1	script	Helper Lonik	828,{
 }
 
 sec_in02,72,180,3	script	Arena Manager#arena	802,{
-
-	if (!getgmlevel()) end;
-
-	input .@arena;
-	if (.@arena == 0) {
+	set .@i, callfunc("F_GM_NPC",1357,0);
+	if (.@i == -1) {
 		mes "[Arena Manager]";
 		mes "Command has been canceled.";
 		close;
-	} else if (.@arena == 1357) {
+	} else if (.@i == 0) {
+		mes "Password is incorrect.";
+		close;
+	} else {
 		mes "[Arena Manager]";
 		mes "Select an option.";
 		next;
@@ -471,83 +472,60 @@ sec_in02,72,180,3	script	Arena Manager#arena	802,{
 			case 2:
 				switch(select("Lv 50:Lv 60:Lv 70:Lv 80:Party Mode")) {
 				case 1:
-					mes "[Arena Manager]";
-					mes "Please enter 0 to cancel.";
-					mes "If not, please enter a value for minutes first and then seconds.";
-					next;
-					input .@arenamin;
-					set $top_50min,.@arenamin;
-					input .@arenasec;
-					set $top_50sec,.@arenasec;
-					mes "[Arena Manager]";
-					mes "Current Lv 50 ranker's play time has been rearranged to ^FF0000"+$top_50min+"^000000 minutes and ^FF0000"+$top_50sec+"^000000 seconds.";
-					close;
+					set .@min$,"$top50min";
+					set .@sec$,"$top50sec";
+					set .@mode$,"Lv 50";
+					break;
 				case 2:
-					mes "[Arena Manager]";
-					mes "Please enter 0 to cancel.";
-					mes "If not, please enter a value for minutes first and then seconds.";
-					next;
-					input .@arenamin;
-					set $top_60min,.@arenamin;
-					input .@arenasec;
-					set $top_60sec,.@arenasec;
-					mes "[Arena Manager]";
-					mes "Current Lv 60 ranker's play time has been rearranged to ^FF0000"+$top_60min+"^000000 minutes and ^FF0000"+$top_60sec+"^000000 seconds.";
-					close;
+					set .@min$,"$top60min";
+					set .@sec$,"$top60sec";
+					set .@mode$,"Lv 60";
+					break;
 				case 3:
-					mes "[Arena Manager]";
-					mes "Please enter 0 to cancel.";
-					mes "If not, please enter a value for minutes first and then seconds.";
-					next;
-					input .@arenamin;
-					set $top_70min,.@arenamin;
-					input .@arenasec;
-					set $top_70sec,.@arenasec;
-					mes "[Arena Manager]";
-					mes "Current Lv 70 ranker's play time has been rearranged to ^FF0000"+$top_70min+"^000000 minutes and ^FF0000"+$top_70sec+"^000000 seconds.";
-					close;
+					set .@min$,"$top70min";
+					set .@sec$,"$top70sec";
+					set .@mode$,"Lv 70";
+					break;
 				case 4:
-					mes "[Arena Manager]";
-					mes "Please enter 0 to cancel.";
-					mes "If not, please enter a value for minutes first and then seconds.";
-					next;
-					input .@arenamin;
-					set $top_80min,.@arenamin;
-					input .@arenasec;
-					set $top_80sec,.@arenasec;
-					mes "[Arena Manager]";
-					mes "Current Lv 80 ranker's play time has been rearranged to ^FF0000"+$top_80min+"^000000 minutes and ^FF0000"+$top_80sec+"^000000 seconds.";
-					close;
+					set .@min$,"$top80min";
+					set .@sec$,"$top80sec";
+					set .@mode$,"Lv 80";
+					break;
 				case 5:
-					mes "[Arena Manager]";
-					mes "Please enter 0 to cancel.";
-					mes "If not, please enter a value for minutes first and then seconds.";
-					next;
-					input .@arenamin;
-					set $top_ptmin,.@arenamin;
-					input .@arenasec;
-					set $top_ptsec,.@arenasec;
-					mes "[Arena Manager]";
-					mes "Current party ranker's play time has been rearranged to ^FF0000"+$top_ptmin+"^000000 minutes and ^FF0000"+$top_ptsec+"^000000 seconds.";
-					close;
+					set .@min$,"$top_ptmin";
+					set .@sec$,"$top_ptsec";
+					set .@mode$,"party";
+					break;
 				}
+				mes "[Arena Manager]";
+				// Doesn't work with Athena's implementation.
+				//mes "Please enter 0 to cancel.";
+				//mes "If not, please enter a value for minutes first and then seconds.";
+				mes "Please enter a value for minutes first and then seconds.";
+				next;
+				input .@arenamin;
+				setd .@min$,.@arenamin;
+				input .@arenasec;
+				setd .@sec$,.@arenasec;
+				mes "[Arena Manager]";
+				mes "Current "+.@mode$+" ranker's play time has been rearranged to ^FF0000"+getd(.@min$)+"^000000 minutes and ^FF0000"+getd(.@sec$)+"^000000 seconds.";
+				close;
 			}
 		}
 	}
-	mes "Password is incorrect.";
-	close;
 }
 
 sec_in02,79,171,3	script	Reward Manager#arena	802,{
-
-	if (!getgmlevel()) end;
-
-	input .@arena;
-	if (.@arena == 0) {
+	set .@i, callfunc("F_GM_NPC",1357,0);
+	if (.@i == -1) {
 		mes "[Reward Manager]";
 		mes "Command has been canceled.";
 		close;
-	} else if (.@arena == 1357) {
+	} else if (.@i == 0) {
+		mes "[Reward Manager]";
+		mes "Password is incorrect.";
+		close;
+	} else {
 		mes "[Reward Manager]";
 		mes "You have chosen to hide the teleporter NPC.";
 		next;
@@ -558,7 +536,7 @@ sec_in02,79,171,3	script	Reward Manager#arena	802,{
 			close;
 		case 2:
 			mes "[Reward Manager]";
-			mes "NPC has been hidden";
+			mes "NPC has been hidden.";
 			disablenpc "Teleporter#arena";
 			close;
 		case 3:
@@ -568,9 +546,6 @@ sec_in02,79,171,3	script	Reward Manager#arena	802,{
 			close;
 		}
 	}
-	mes "[Reward Manager]";
-	mes "Password is incorrect.";
-	close;
 }
 
 arena_room,105,93,5	script	Teleporter#arena	55,{
@@ -972,14 +947,18 @@ OnTimer62000:
 	stopnpctimer;
 	end;
 }
-/*
+
 sec_in02,72,171,3	script	Picture Manager#arena	802,{
-	input .@arena;
-	if (.@arena == 0) {
+	set .@i, callfunc("F_GM_NPC",1357,0);
+	if (.@i == -1) {
 		mes "[Picture Manager]";
 		mes "Command has been canceled.";
 		close;
-	} else if (.@arena == 1357) {
+	} else if (.@i == 0) {
+		mes "[Picture Manager]";
+		mes "Password is incorrect.";
+		close;
+	} else {
 		mes "[Picture Manager]";
 		mes "Would you like to reset Picture Reward variable to 0?";
 		next;
@@ -995,12 +974,10 @@ sec_in02,72,171,3	script	Picture Manager#arena	802,{
 			close;
 		}
 	}
-	mes "[Picture Manager]";
-	mes "Password is incorrect.";
-	close;
 }
 
 sec_in02,76,176,5	script	Live Broadcast#arena	802,{
+	callfunc "F_GM_NPC";
 	mes "[Live Broadcast]";
 	mes "Currently there are "+getmapusers("force_1-1")+" people in Lv 50s map.";
 	mes "Currently there are "+getmapusers("force_2-1")+" people in Lv 60s map.";
@@ -1010,7 +987,6 @@ sec_in02,76,176,5	script	Live Broadcast#arena	802,{
 	mes "Currently there are "+getmapusers("arena_room")+" people in the waiting room.";
 	close;
 }
-*/
 
 function	script	Func_Are_Rew	{
 	mes "[Givu]";

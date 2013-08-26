@@ -4,7 +4,7 @@
 //= L0ne_W0lf
 //= Credits: Gepard
 //===== Current Version: =====================================
-//= 1.8
+//= 1.9
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -23,6 +23,7 @@
 //= 1.7 Updated script, many bugs fixed. [Euphy]
 //= 1.7a Moved warps to separate file. [Euphy]
 //= 1.8 Bug fixes and corrections. [Euphy]
+//= 1.9 Added GM management function. [Euphy]
 //============================================================
 
 prt_church,103,88,3	script	Praying Minister#arch	60,{
@@ -1642,16 +1643,17 @@ OnTouch:
 	if (countitem(2798)) delitem 2798, countitem(2798); //Will_Of_Exhausted_Angel
 	end;
 }
+*/
 
 job3_arch01,1,1,1	script	control#arch	844,{
+	callfunc "F_GM_NPC";
 	mes "[Troll]";
 	mes "Password please.";
 	next;
-	input .@input;
-	if (.@input == 1854) {
+	if (callfunc("F_GM_NPC",1854,0) == 1) {
 		mes "[Transit]";
 		mes "The GlobalVar is";
-		mes "" + $@archbs + ".";
+		mes $@archbs + ".";
 		mes "Do you want to change it?";
 		next;
 		switch(select("0:1")) {
@@ -1670,7 +1672,6 @@ job3_arch01,1,1,1	script	control#arch	844,{
 		close;
 	}
 }
-*/
 
 odin_tem02,30,181,0	script	#wherearch01	139,10,10,{
 OnTouch:

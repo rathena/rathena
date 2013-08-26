@@ -3,25 +3,26 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
 //= [Official Conversion]
 //= Post-God Item SE Creation Summoning Event 
-//= Second Sister is a cusotm translation.
+//= Second Sister is a custom translation.
 //===== Additional Comments: ================================= 
 //= 1.0 First version. [L0ne_W0lf]
+//= 1.1 Added GM management function. [Euphy]
 //============================================================ 
 
-/*
-yuno,1,1,0	script	Festival Manager#gq_fes00	891,{
+// Original name: "Festival Manager#god_se_fes00"
+yuno,1,1,0	script	Festival Manager#gq_fes0	891,{
+	callfunc "F_GM_NPC";
 	mes "[Festival Manager]";
 	mes "I am the festival NPC manager for the God SE quest.";
 	mes "Please enter your password.";
 	next;
-	input .@input$;
-	if (.@input$ != "07godsefes") {
+	if (callfunc("F_GM_NPC","07godsefes",1) == 0) {
 		mes "[Festival Manager]";
 		mes "Password is incorrect.";
 		close;
@@ -44,7 +45,6 @@ yuno,1,1,0	script	Festival Manager#gq_fes00	891,{
 		close;
 	}
 }
-*/
 
 yuno,118,192,5	script	Rmimi Ravies#gq_fes01	891,{
 	set .@GID, getcharid(2);
@@ -392,14 +392,15 @@ OnTimer3900000:
 	end;
 }
 
-/*
-rachel,1,1,0	script	Festival Manager#god_se_fes02	891,{
+
+// Original name: "Festival Manager#god_se_fes02"
+rachel,1,1,0	script	Festival Manager#gq_fes2	891,{
+	callfunc "F_GM_NPC";
 	mes "[Festival Manager]";
 	mes "I am the festival NPC manager for the God SE quest.";
 	mes "Please enter your password.";
 	next;
-	input .@input$;
-	if (.@input$ != "07godsefes") {
+	if (callfunc("F_GM_NPC","07godsefes",1) == 0) {
 		mes "[Festival Manager]";
 		mes "Password is incorrect.";
 		close;
@@ -422,7 +423,6 @@ rachel,1,1,0	script	Festival Manager#god_se_fes02	891,{
 		close;
 	}
 }
-*/
 
 rachel,132,117,3	script	Rhehe Ravies#gq_fes03	891,{
 	set .@GID, getcharid(2);

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_Dib
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //= 1.3a Little beauty fix, changed break; to next; . [Masao]
 //= 1.4 Some optimization. [Euphy]
 //= 1.5 Updated script, optimized. [Euphy]
+//= 1.6 Added GM management function. [Euphy]
 //============================================================
 
 tur_dun01,156,36,5	script	Survival Instructor#jr01	59,{
@@ -1757,8 +1758,8 @@ job3_rang01,90,43,3	script	Ranger Master#jr_29	832,{
 	}
 }
 
-/*
 job3_rang01,58,1,0	script	Worker#job_ranger	88,{
+	callfunc "F_GM_NPC";
 	switch(select("Enable Waiting Room:Disable Waiting Room:Enable 1st Test:Disable 1st Test:Enable 2nd Test:Disable 2nd Test:Enable 3rd Test:Disable 3rd Test:Cancel")) {
 	case 1:
 		mes "Enabled Waiting Room";
@@ -1803,4 +1804,3 @@ job3_rang01,58,1,0	script	Worker#job_ranger	88,{
 		close;
 	}
 }
-*/

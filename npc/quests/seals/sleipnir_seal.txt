@@ -1,11 +1,11 @@
 //===== rAthena Script ======================================= 
-//= Sleipnir seal unlocking NPCs.
+//= God Item Quest - Sleipnir Seal
 //===== By: ================================================== 
 //= MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
-//= rAthena
+//= rAthena SVN
 //===== Description: ========================================= 
 //= Quest for breaking the seal of Sleipnir.
 //===== Additional Comments: =================================
@@ -13,6 +13,7 @@
 //= 1.1 Updated several aspects of the script. [L0ne_W0lf]
 //= 1.2 Minor Touchups to quest. [L0ne_W0lf]
 //= 1.3 Fixed a typo with a variable. [L0ne_W0lf]
+//= 1.4 Renewal script update. [Euphy]
 //============================================================
 
 yuno,164,200,4	script	Noyee#G	101,{
@@ -31,7 +32,7 @@ yuno,164,200,4	script	Noyee#G	101,{
 		close;
 	}
 	else {
-		if ($God1 > 99) {
+		if ($God1 >= $@god_check2) {
 			mes "[Noyee]";
 			mes "Did you know that there's a difference between the armor you can buy from NPC shops and the kinds you obtain from hunting monsters?";
 			next;
@@ -73,10 +74,10 @@ que_god01,98,98,4	script	Manager#G	69,{
 		mes "Wait...!";
 		mes "I can't even remember the last";
 		mes "time I went out with a guy! At this rate, I might retire before I can find a boyfriend. Noooo, I'm still in my prime~!";
-		Emotion ET_PROFUSELY_SWAT;
+		emotion e_swt2;
 		close;
 	}
-	if ($God1 < 100) {
+	if ($God1 < $@god_check2) {
 		if (god_sl_1 == 0) {
 			mes "[Cukure]";
 			mes "I can't believe how busy I am at work nowadays. I don't even have time to see any of my friends or go shopping.";
@@ -196,305 +197,239 @@ que_god01,98,98,4	script	Manager#G	69,{
 			mes "[Cukure]";
 			mes "Ah, there it is.";
 			mes "It might not be much, but I hope you accept it as a token of my gratitude. Good luck on your travels!";
-			if ($God1 < 100)set $God1,$God1+1;
-			if ($God1 == 50) {
+			if ($God1 < $@god_check2)
+				set $God1,$God1+1;
+			if ($God1 == $@god_check1)
 				announce "The 1st seal of [Sleipnir] has appeared.",bc_all;
-			}
-			else if ($God1 == 100) {
-				if ($God1 == 100 && $God2 == 100 && $God3 == 100 && $God4 == 100) {
+			else if ($God1 == $@god_check2) {
+				if ($God1 == $@god_check2 && $God2 == $@god_check2 && $God3 == $@god_check2 && $God4 == $@god_check2)
 					announce "our seals have been released at the same time with the seal of [Sleipnir].",bc_all;
-				}
-				else {
+				else
 					announce "The 1st seal of [Sleipnir] has been released.",bc_all;
-				}
 			}
 			set god_sl_1,51;
 			set .@god_treasure,rand(1,900);
 			set .@god_treasure1,rand(1,1000);
-			if (.@god_treasure < 101) {
-				if (.@god_treasure1 < 210) {
-					getitem 2102,1; // Guard_
+			if (checkre(0)) {
+				if (.@god_treasure < 101) {
+					     if (.@god_treasure1 < 210) getitem 2102,1; //Guard_
+					else if (.@god_treasure1 < 420) getitem 2104,1; //Buckler_
+					else if (.@god_treasure1 < 630) getitem 2106,1; //Shield_
+					else if (.@god_treasure1 < 840) getitem 2108,1; //Mirror_Shield_
+					else getitem 2109,1; //Memorize_Book
 				}
-				else if (.@god_treasure1 < 420) {
-					getitem 2104,1; // Buckler_
+				else if (.@god_treasure < 201) {
+					     if (.@god_treasure1 < 48) getitem 2207,1; //Fancy_Flower
+					else if (.@god_treasure1 < 96) getitem 2210,1; //Hair_Band
+					else if (.@god_treasure1 < 150) getitem 2213,1; //Cat_Hairband
+					else if (.@god_treasure1 < 190) getitem 2215,1; //Flower_Hairband
+					else if (.@god_treasure1 < 238) getitem 2217,1; //Biretta_
+					else if (.@god_treasure1 < 290) getitem 2223,1; //Turban_
+					else if (.@god_treasure1 < 340) getitem 2227,1; //Cap_
+					else if (.@god_treasure1 < 348) getitem 2229,1; //Helm_
+					else if (.@god_treasure1 < 400) getitem 2231,1; //Gemmed_Sallet_
+					else if (.@god_treasure1 < 448) getitem 2233,1; //Circlet_
+					else if (.@god_treasure1 < 496) getitem 2236,1; //Santa's_Hat
+					else if (.@god_treasure1 < 544) getitem 2244,1; //Big_Sis'_Ribbon
+					else if (.@god_treasure1 < 592) getitem 2245,1; //Sweet_Gents
+					else if (.@god_treasure1 < 640) getitem 2247,1; //Oldman's_Romance
+					else if (.@god_treasure1 < 688) getitem 2248,1; //Western_Grace
+					else if (.@god_treasure1 < 736) getitem 2250,1; //Fillet
+					else if (.@god_treasure1 < 784) getitem 2251,1; //Holy_Bonnet
+					else if (.@god_treasure1 < 832) getitem 2252,1; //Star_Sparkling
+					else if (.@god_treasure1 < 880) getitem 2253,1; //Sunflower
+					else if (.@god_treasure1 < 940) getitem 2257,1; //Snowy_Horn
+					else getitem 2259,1; //Mini_Propeller
 				}
-				else if (.@god_treasure1 < 630) {
-					getitem 2106,1; // Shield_
+				else if (.@god_treasure < 301) {
+					     if (.@god_treasure1 < 160) getitem 2267,1; //Cigar
+					else if (.@god_treasure1 < 320) getitem 2262,1; //Pierrot_Nose
+					else if (.@god_treasure1 < 480) getitem 2263,1; //Gangster_Patch
+					else if (.@god_treasure1 < 540) getitem 2265,1; //Ganster_Mask
+					else if (.@god_treasure1 < 700) getitem 2266,1; //Iron_Cane
+					else if (.@god_treasure1 < 800) getitem 2260,1; //Mini_Glasses
+					else if (.@god_treasure1 < 900) getitem 2269,1; //Centimental_Flower
+					else getitem 2270,1; //Centimental_Leaf
 				}
-				else if (.@god_treasure1 < 840) {
-					getitem 2108,1; // Mirror_Shield_
+				else if (.@god_treasure < 401) {
+					     if (.@god_treasure1 < 70) getitem 2298,1; //Green_Feeler
+					else if (.@god_treasure1 < 140) getitem 2275,1; //Red_Bandana
+					else if (.@god_treasure1 < 210) getitem 2276,1; //Eagle_Eyes
+					else if (.@god_treasure1 < 280) getitem 2277,1; //Nurse_Cap
+					else if (.@god_treasure1 < 350) getitem 2279,1; //Bomb_Wick
+					else if (.@god_treasure1 < 420) getitem 2282,1; //Spirit_Chain
+					else if (.@god_treasure1 < 490) getitem 2299,1; //Viking_Helm
+					else if (.@god_treasure1 < 560) getitem 2287,1; //Pirate_Bandana
+					else if (.@god_treasure1 < 630) getitem 2289,1; //Poo_Poo_Hat
+					else if (.@god_treasure1 < 700) getitem 2290,1; //Funeral_Costume
+					else if (.@god_treasure1 < 770) getitem 2291,1; //Masquerade
+					else if (.@god_treasure1 < 840) getitem 2294,1; //Star_Dust
+					else if (.@god_treasure1 < 900) getitem 2295,1; //Blinker
+					else if (.@god_treasure1 < 950) getitem 2271,1; //Jack_A_Dandy
+					else getitem 2285,1; //Apple_Of_Archer
 				}
-				else {
-					getitem 2109,1; // Memorize_Book
+				else if (.@god_treasure < 501) {
+					     if (.@god_treasure1 < 80) getitem 2306,1; //Adventurere's_Suit_
+					else if (.@god_treasure1 < 160) getitem 2308,1; //Mantle_
+					else if (.@god_treasure1 < 240) getitem 2310,1; //Coat_
+					else if (.@god_treasure1 < 320) getitem 2311,1; //Mink_Coat
+					else if (.@god_treasure1 < 400) getitem 2313,1; //Padded_Armor_
+					else if (.@god_treasure1 < 480) getitem 2315,1; //Chain_Mail_
+					else if (.@god_treasure1 < 560) getitem 2329,1; //Wooden_Mail_
+					else if (.@god_treasure1 < 630) getitem 2320,1; //Formal_Suit
+					else if (.@god_treasure1 < 700) getitem 2322,1; //Silk_Robe_
+					else if (.@god_treasure1 < 760) getitem 2324,1; //Scapulare_
+					else if (.@god_treasure1 < 810) getitem 2326,1; //Saint_Robe_
+					else if (.@god_treasure1 < 850) getitem 2342,1; //Full_Plate_Armor_
+					else if (.@god_treasure1 < 900) getitem 2331,1; //Tights_
+					else if (.@god_treasure1 < 950) getitem 2333,1; //Silver_Robe_
+					else getitem 2336,1; //Thief_Clothes_
 				}
-			}
-			else if (.@god_treasure < 201) {
-				if (.@god_treasure1 < 48) {
-					getitem 2254,1; // Angelic_Chain
+				else if (.@god_treasure < 601) {
+					     if (.@god_treasure1 < 200) getitem 2402,1; //Sandals_
+					else if (.@god_treasure1 < 400) getitem 2404,1; //Shoes_
+					else if (.@god_treasure1 < 600) getitem 2406,1; //Boots_
+					else if (.@god_treasure1 < 800) getitem 2407,1; //Chrystal_Pumps
+					else getitem 2409,1; //Spiky_Heel
 				}
-				else if (.@god_treasure1 < 96) {
-					getitem 2210,1; // Hair_Band
+				else if (.@god_treasure < 701) {
+					     if (.@god_treasure1 < 300) getitem 2502,1; //Hood_
+					else if (.@god_treasure1 < 550) getitem 2504,1; //Muffler_
+					else if (.@god_treasure1 < 750) getitem 2506,1; //Manteau_
+					else getitem 2508,1; //Ragamuffin_Cape
 				}
-				else if (.@god_treasure1 < 150) {
-					getitem 2213,1; // Cat_Hairband
-				}
-				else if (.@god_treasure1 < 190) {
-					getitem 2255,1; // Satanic_Chain
-				}
-				else if (.@god_treasure1 < 238) {
-					getitem 2217,1; // Biretta_
-				}
-				else if (.@god_treasure1 < 290) {
-					getitem 2223,1; // Turban_
-				}
-				else if (.@god_treasure1 < 340) {
-					getitem 2227,1; // Cap_
-				}
-				else if (.@god_treasure1 < 348) {
-					getitem 2229,1; // Helm_
-				}
-				else if (.@god_treasure1 < 400) {
-					getitem 2231,1; // Gemmed_Sallet_
-				}
-				else if (.@god_treasure1 < 448) {
-					getitem 2233,1; // Circlet_
-				}
-				else if (.@god_treasure1 < 496) {
-					getitem 5053,1; // Spinx_Helm
-				}
-				else if (.@god_treasure1 < 544) {
-					getitem 5019,1; // Corsair
-				}
-				else if (.@god_treasure1 < 592) {
-					getitem 2245,1; // Sweet_Gents
-				}
-				else if (.@god_treasure1 < 640) {
-					getitem 2247,1; // Oldman's_Romance
-				}
-				else if (.@god_treasure1 < 688) {
-					getitem 2248,1; // Western_Grace
-				}
-				else if (.@god_treasure1 < 736) {
-					getitem 5166,1; // Spinx_Helm_
-				}
-				else if (.@god_treasure1 < 784) {
-					getitem 5158,1; // Holy_Bonnet_
-				}
-				else if (.@god_treasure1 < 832) {
-					getitem 2249,1; // Coronet
-				}
-				else if (.@god_treasure1 < 880) {
-					getitem 5157,1; // Viking_Helm_
-				}
-				else if (.@god_treasure1 < 940) {
-					getitem 2285,1; // Apple_Of_Archer
-				}
-				else {
-					getitem 5093,1; // Blue_Coif_
-				}
-			}
-			else if (.@god_treasure < 301) {
-				if (.@god_treasure1 < 160) {
-					getitem 5014,1; // Fin_Helm
-				}
-				else if (.@god_treasure1 < 320) {
-					getitem 5005,1; // Gas_Mask
-				}
-				else if (.@god_treasure1 < 480) {
-					getitem 5054,1; // Assasin_Mask
-				}
-				else if (.@god_treasure1 < 540) {
-					getitem 2265,1; // Ganster_Mask
-				}
-				else if (.@god_treasure1 < 700) {
-					getitem 2266,1; // Iron_Cane
-				}
-				else if (.@god_treasure1 < 800) {
-					getitem 2260,1; // Mini_Glasses
-				}
-				else if (.@god_treasure1 < 900) {
-					getitem 5113,1; // Angry_Mouth
+				else if (.@god_treasure < 801) {
+					     if (.@god_treasure1 < 110) getitem 2601,1; //Ring
+					else if (.@god_treasure1 < 220) getitem 2602,1; //Earring
+					else if (.@god_treasure1 < 330) getitem 2603,1; //Necklace
+					else if (.@god_treasure1 < 440) getitem 2604,1; //Glove
+					else if (.@god_treasure1 < 550) getitem 2605,1; //Brooch
+					else if (.@god_treasure1 < 660) getitem 2607,1; //Clip
+					else if (.@god_treasure1 < 770) getitem 2608,1; //Rosary
+					else if (.@god_treasure1 < 880) getitem 2617,1; //Mitten_Of_Presbyter
+					else getitem 2618,1; //Matyr's_Flea_Guard
 				}
 				else {
-					// Pirate Dagger is iRO only, and requires extra files in client.
-					getitem 2270,1; // Centimental_Leaf
-					//getitem 5305,1 // Pirate_Dagger
+					     if (.@god_treasure1 < 150) getitem 2288,1; //Mr_Scream
+					else if (.@god_treasure1 < 260) getitem 2297,1; //Goblini_Mask
+					else if (.@god_treasure1 < 370) getitem 5087,1; //Goblin_Mask_01
+					else if (.@god_treasure1 < 480) getitem 5088,1; //Goblin_Mask_02
+					else if (.@god_treasure1 < 590) getitem 5089,1; //Goblin_Mask_03
+					else if (.@god_treasure1 < 700) getitem 5090,1; //Goblin_Mask_04
+					else if (.@god_treasure1 < 810) getitem 5046,1; //Bongun_Hat
+					else if (.@god_treasure1 < 920) getitem 2264,1; //Munak_Turban
+					else getitem 2225,1; //Goggle_
 				}
-			}
-			else if (.@god_treasure < 401) {
-				if (.@god_treasure1 < 70) {
-					getitem 2286,1; // Elven_Ears
+			} else {
+				if (.@god_treasure < 101) {
+					     if (.@god_treasure1 < 210) getitem 2102,1; //Guard_
+					else if (.@god_treasure1 < 420) getitem 2104,1; //Buckler_
+					else if (.@god_treasure1 < 630) getitem 2106,1; //Shield_
+					else if (.@god_treasure1 < 840) getitem 2108,1; //Mirror_Shield_
+					else getitem 2109,1; //Memorize_Book
 				}
-				else if (.@god_treasure1 < 140) {
-					getitem 5002,1; // Gemmed_Crown
+				else if (.@god_treasure < 201) {
+					     if (.@god_treasure1 < 48) getitem 2254,1; //Angelic_Chain
+					else if (.@god_treasure1 < 96) getitem 2210,1; //Hair_Band
+					else if (.@god_treasure1 < 150) getitem 2213,1; //Cat_Hairband
+					else if (.@god_treasure1 < 190) getitem 2255,1; //Satanic_Chain
+					else if (.@god_treasure1 < 238) getitem 2217,1; //Biretta_
+					else if (.@god_treasure1 < 290) getitem 2223,1; //Turban_
+					else if (.@god_treasure1 < 340) getitem 2227,1; //Cap_
+					else if (.@god_treasure1 < 348) getitem 2229,1; //Helm_
+					else if (.@god_treasure1 < 400) getitem 2231,1; //Gemmed_Sallet_
+					else if (.@god_treasure1 < 448) getitem 2233,1; //Circlet_
+					else if (.@god_treasure1 < 496) getitem 5053,1; //Spinx_Helm
+					else if (.@god_treasure1 < 544) getitem 5019,1; //Corsair
+					else if (.@god_treasure1 < 592) getitem 2245,1; //Sweet_Gents
+					else if (.@god_treasure1 < 640) getitem 2247,1; //Oldman's_Romance
+					else if (.@god_treasure1 < 688) getitem 2248,1; //Western_Grace
+					else if (.@god_treasure1 < 736) getitem 5166,1; //Spinx_Helm_
+					else if (.@god_treasure1 < 784) getitem 5158,1; //Holy_Bonnet_
+					else if (.@god_treasure1 < 832) getitem 2249,1; //Coronet
+					else if (.@god_treasure1 < 880) getitem 5157,1; //Viking_Helm_
+					else if (.@god_treasure1 < 940) getitem 2285,1; //Apple_Of_Archer
+					else getitem 5093,1; //Blue_Coif_
 				}
-				else if (.@god_treasure1 < 210) {
-					getitem 5147,1; // Baseball_Cap
+				else if (.@god_treasure < 301) {
+					     if (.@god_treasure1 < 160) getitem 5014,1; //Fin_Helm
+					else if (.@god_treasure1 < 320) getitem 5005,1; //Gas_Mask
+					else if (.@god_treasure1 < 480) getitem 5054,1; //Assasin_Mask
+					else if (.@god_treasure1 < 540) getitem 2265,1; //Ganster_Mask
+					else if (.@god_treasure1 < 700) getitem 2266,1; //Iron_Cane
+					else if (.@god_treasure1 < 800) getitem 2260,1; //Mini_Glasses
+					else if (.@god_treasure1 < 900) getitem 5113,1; //Angry_Mouth
+					else {
+						// Pirate Dagger is iRO only, and requires extra files in client.
+						//getitem 5305,1 //Pirate_Dagger
+						getitem 2270,1; //Centimental_Leaf
+					}
 				}
-				else if (.@god_treasure1 < 280) {
-					getitem 2217,1; // Biretta_
+				else if (.@god_treasure < 401) {
+					     if (.@god_treasure1 < 70) getitem 2286,1; //Elven_Ears
+					else if (.@god_treasure1 < 140) getitem 5002,1; //Gemmed_Crown
+					else if (.@god_treasure1 < 210) getitem 5147,1; //Baseball_Cap
+					else if (.@god_treasure1 < 280) getitem 2217,1; //Biretta_
+					else if (.@god_treasure1 < 350) getitem 5120,1; //Fedora_
+					else if (.@god_treasure1 < 420) getitem 2261,1; //Prontera_Army_Cap
+					else if (.@god_treasure1 < 490) getitem 5162,1; //Bone_Helm_
+					else if (.@god_treasure1 < 560) getitem 5030,1; //Panda_Cap
+					else if (.@god_treasure1 < 630) getitem 5109,1; //Red_Bonnet
+					else if (.@god_treasure1 < 700) getitem 5084,1; //Lazy_Raccoon
+					else if (.@god_treasure1 < 770) getitem 5168,1; //Bongun_Hat_
+					else if (.@god_treasure1 < 840) getitem 2214,1; //Bunny_Band
+					else if (.@god_treasure1 < 900) getitem 2295,1; //Blinker
+					else if (.@god_treasure1 < 950) getitem 5167,1; //Munak_Turban_
+					else getitem 5018,1; //Feather_Bonnet
+				} else if (.@god_treasure < 501) {
+					     if (.@god_treasure1 < 85) getitem 2310,1; //Coat_
+					else if (.@god_treasure1 < 170) getitem 2311,1; //Mink_Coat
+					else if (.@god_treasure1 < 255) getitem 2313,1; //Padded_Armor_
+					else if (.@god_treasure1 < 340) getitem 2317,1; //Plate_Armor_
+					else if (.@god_treasure1 < 425) getitem 2319,1; //Glittering_Clothes
+					else if (.@god_treasure1 < 510) getitem 2320,1; //Formal_Suit
+					else if (.@god_treasure1 < 595) getitem 2322,1; //Silk_Robe_
+					else if (.@god_treasure1 < 680) getitem 2359,1; //Ninja_Suit_
+					else if (.@god_treasure1 < 765) getitem 2326,1; //Saint_Robe_
+					else if (.@god_treasure1 < 850) getitem 2342,1; //Full_Plate_Armor_
+					else if (.@god_treasure1 < 935) getitem 2331,1; //Tights_
+					else getitem 2336,1; //Thief_Clothes_
 				}
-				else if (.@god_treasure1 < 350) {
-					getitem 5120,1; // Fedora_
+				else if (.@god_treasure < 601) {
+					     if (.@god_treasure1 < 200) getitem 2422,1; //High_Fashion_Sandals
+					else if (.@god_treasure1 < 400) getitem 2404,1; //Shoes_
+					else if (.@god_treasure1 < 600) getitem 2406,1; //Boots_
+					else if (.@god_treasure1 < 800) getitem 2407,1; //Chrystal_Pumps
+					else getitem 2412,1; //Grave_
 				}
-				else if (.@god_treasure1 < 420) {
-					getitem 2261,1; // Prontera_Army_Cap
+				else if (.@god_treasure < 701) {
+					     if (.@god_treasure1 < 200) getitem 2513,1; //Celestial_Robe
+					else if (.@god_treasure1 < 400) getitem 2504,1; //Muffler_
+					else if (.@god_treasure1 < 600) getitem 2506,1; //Manteau_
+					else if (.@god_treasure1 < 800) getitem 2514,1; //Pauldron
+					else getitem 2508,1; //Ragamuffin_Cape
 				}
-				else if (.@god_treasure1 < 490) {
-					getitem 5162,1; // Bone_Helm_
-				}
-				else if (.@god_treasure1 < 560) {
-					getitem 5030,1; // Panda_Cap
-				}
-				else if (.@god_treasure1 < 630) {
-					getitem 5109,1; // Red_Bonnet
-				}
-				else if (.@god_treasure1 < 700) {
-					getitem 5084,1; // Lazy_Raccoon
-				}
-				else if (.@god_treasure1 < 770) {
-					getitem 5168,1; // Bongun_Hat_
-				}
-				else if (.@god_treasure1 < 840) {
-					getitem 2214,1; // Bunny_Band
-				}
-				else if (.@god_treasure1 < 900) {
-					getitem 2295,1; // Blinker
-				}
-				else if (.@god_treasure1 < 950) {
-					getitem 5167,1; // Munak_Turban_
-				}
-				else {
-					getitem 5018,1; // Feather_Bonnet
-				}
-			} else if (.@god_treasure < 501) {
-				if (.@god_treasure1 < 85) {
-					getitem 2310,1; // Coat_
-				}
-				else if (.@god_treasure1 < 170) {
-					getitem 2311,1; // Mink_Coat
-				}
-				else if (.@god_treasure1 < 255) {
-					getitem 2313,1; // Padded_Armor_
-				}
-				else if (.@god_treasure1 < 340) {
-					getitem 2317,1; // Plate_Armor_
-				}
-				else if (.@god_treasure1 < 425) {
-					getitem 2319,1; // Glittering_Clothes
-				}
-				else if (.@god_treasure1 < 510) {
-					getitem 2320,1; // Formal_Suit
-				}
-				else if (.@god_treasure1 < 595) {
-					getitem 2322,1; // Silk_Robe_
-				}
-				else if (.@god_treasure1 < 680) {
-					getitem 2359,1; // Ninja_Suit_
-				}
-				else if (.@god_treasure1 < 765) {
-					getitem 2326,1; // Saint_Robe_
-				}
-				else if (.@god_treasure1 < 850) {
-					getitem 2342,1; // Full_Plate_Armor_
-				}
-				else if (.@god_treasure1 < 935) {
-					getitem 2331,1; // Tights_
-				}
-				else {
-					getitem 2336,1; // Thief_Clothes_
-				}
-			}
-			else if (.@god_treasure < 601) {
-				if (.@god_treasure1 < 200) {
-					getitem 2422,1; // High_Fashion_Sandals
-				}
-				else if (.@god_treasure1 < 400) {
-					getitem 2404,1; // Shoes_
-				}
-				else if (.@god_treasure1 < 600) {
-					getitem 2406,1; // Boots_
-				}
-				else if (.@god_treasure1 < 800) {
-					getitem 2407,1; // Chrystal_Pumps
-				}
-				else {
-					getitem 2412,1; // Grave_
-				}
-			}
-			else if (.@god_treasure < 701) {
-				if (.@god_treasure1 < 200) {
-					getitem 2513,1; // Celestial_Robe
-				}
-				else if (.@god_treasure1 < 400) {
-					getitem 2504,1; // Muffler_
-				}
-				else if (.@god_treasure1 < 600) {
-					getitem 2506,1; // Manteau_
-				}
-				else if (.@god_treasure1 < 800) {
-					getitem 2514,1; // Pauldron
+				else if (.@god_treasure < 801) {
+					     if (.@god_treasure1 < 110) getitem 1122,1; //Ring_
+					else if (.@god_treasure1 < 220) getitem 2622,1; //Earring_
+					else if (.@god_treasure1 < 330) getitem 2623,1; //Necklace_
+					else if (.@god_treasure1 < 440) getitem 2624,1; //Glove_
+					else if (.@god_treasure1 < 550) getitem 2625,1; //Brooch_
+					else if (.@god_treasure1 < 660) getitem 2607,1; //Clip
+					else if (.@god_treasure1 < 770) getitem 2626,1; //Rosary_
+					else if (.@god_treasure1 < 880) getitem 2617,1; //Mitten_Of_Presbyter
+					else getitem 2671,1; //Thimble_Of_Archer_
 				}
 				else {
-					getitem 2508,1; // Ragamuffin_Cape
-				}
-			}
-			else if (.@god_treasure < 801) {
-				if (.@god_treasure1 < 110) {
-					getitem 1122,1; // Ring_
-				}
-				else if (.@god_treasure1 < 220) {
-					getitem 2622,1; // Earring_
-				}
-				else if (.@god_treasure1 < 330) {
-					getitem 2623,1; // Necklace_
-				}
-				else if (.@god_treasure1 < 440) {
-					getitem 2624,1; // Glove_
-				}
-				else if (.@god_treasure1 < 550) {
-					getitem 2625,1; // Brooch_
-				}
-				else if (.@god_treasure1 < 660) {
-					getitem 2607,1; // Clip
-				}
-				else if (.@god_treasure1 < 770) {
-					getitem 2626,1; // Rosary_
-				}
-				else if (.@god_treasure1 < 880) {
-					getitem 2617,1; // Mitten_Of_Presbyter
-				}
-				else {
-					getitem 2671,1; // Thimble_Of_Archer_
-				}
-			}
-			else {
-				if (.@god_treasure1 < 150) {
-					getitem 2281,1; // Phantom_Of_Opera
-				}
-				else if (.@god_treasure1 < 260) {
-					getitem 2297,1; // Goblini_Mask
-				}
-				else if (.@god_treasure1 < 370) {
-					getitem 5087,1; // Goblin_Mask_01
-				}
-				else if (.@god_treasure1 < 480) {
-					getitem 5088,1; // Goblin_Mask_02
-				}
-				else if (.@god_treasure1 < 590) {
-					getitem 5089,1; // Goblin_Mask_03
-				}
-				else if (.@god_treasure1 < 700) {
-					getitem 5090,1; // Goblin_Mask_04
-				}
-				else if (.@god_treasure1 < 810) {
-					getitem 5086,1; // Alarm_Mask
-				}
-				else if (.@god_treasure1 < 920) {
-					getitem 2292,1; // Welding_Mask
-				}
-				else {
-					getitem 5006,1; // Machoman_Glasses
+					     if (.@god_treasure1 < 150) getitem 2281,1; //Phantom_Of_Opera
+					else if (.@god_treasure1 < 260) getitem 2297,1; //Goblini_Mask
+					else if (.@god_treasure1 < 370) getitem 5087,1; //Goblin_Mask_01
+					else if (.@god_treasure1 < 480) getitem 5088,1; //Goblin_Mask_02
+					else if (.@god_treasure1 < 590) getitem 5089,1; //Goblin_Mask_03
+					else if (.@god_treasure1 < 700) getitem 5090,1; //Goblin_Mask_04
+					else if (.@god_treasure1 < 810) getitem 5086,1; //Alarm_Mask
+					else if (.@god_treasure1 < 920) getitem 2292,1; //Welding_Mask
+					else getitem 5006,1; //Machoman_Glasses
 				}
 			}
 			next;
@@ -573,7 +508,7 @@ que_god01,98,98,4	script	Manager#G	69,{
 }
 
 que_god01,66,125,6	script	Researcher#G1	89,{
-	if ($God1 < 100) {
+	if ($God1 < $@god_check2) {
 		if (god_sl_1 == 2) {
 			set god_sl_1,11;
 		}
@@ -739,7 +674,7 @@ que_god01,66,125,6	script	Researcher#G1	89,{
 }
 
 que_god01,11,136,6	script	Researcher#G2	742,{
-	if ($God1 < 100) {
+	if ($God1 < $@god_check2) {
 		if (god_sl_1 == 2) {
 			set god_sl_1,21;
 		}
@@ -958,7 +893,7 @@ que_god01,11,136,6	script	Researcher#G2	742,{
 }
 
 que_god01,55,47,3	script	Researcher#G3	803,{
-	if (god_sl2 < 100) {
+	if ($God1 < $@god_check2) {
 		if (god_sl_1 == 2) {
 			set god_sl_1,31;
 		}
@@ -1224,7 +1159,7 @@ que_god01,55,47,3	script	Researcher#G3	803,{
 }
 
 que_god01,14,47,3	script	Researcher#G4	713,{
-	if ($God1 < 100) {
+	if ($God1 < $@god_check2) {
 		if (god_sl_1 == 2) {
 			set god_sl_1,41;
 		}
@@ -1330,7 +1265,7 @@ que_god01,14,47,3	script	Researcher#G4	713,{
 }
 
 que_god01,20,48,0	script	Slab#G	111,{
-	if ($God1 < 100) {
+	if ($God1 < $@god_check2) {
 		if ((god_sl_1 == 41) || (god_sl_1 == 12) || (god_sl_1 == 23) || (god_sl_1 == 34)) {
 			if ((god_sl_2 == 1) || (god_sl_2 == 2)) {
 				mes "....whgks ^ff00ffdirdnl^000000sjs wkrdjswhgks whdtnfb";
@@ -1476,7 +1411,7 @@ que_god01,20,48,0	script	Slab#G	111,{
 }
 
 payon,79,171,4	script	Friar#G5	95,{
-	if ($God1 < 100) {
+	if ($God1 < $@god_check2) {
 		if ((god_sl_1 == 21) || (god_sl_1 == 32) || (god_sl_1 == 43) || (god_sl_1 == 14)) {
 			if ((god_sl_2 == 1) || (god_sl_2 == 3)) {
 				mes "[Lania]";

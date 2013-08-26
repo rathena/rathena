@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -15,6 +15,7 @@
 //===== Additional Comments: =================================
 //= 0.1 NPCs are currently placeholders. [Euphy]
 //= 1.0 Implemented all official quests. [Euphy]
+//= 1.1 Added GM management function and NPCs. [Euphy]
 //============================================================
 
 // Theore's Request :: bs
@@ -509,12 +510,11 @@ spl_fild02,183,1,0	duplicate(#mora_bush_timer)	Bush4Timer	440
 spl_fild02,184,1,0	duplicate(#mora_bush_timer)	Bush5Timer	440
 spl_fild02,186,1,0	duplicate(#mora_bush_timer)	Bush6Timer	440
 
-/*
 spl_fild02,187,1,0	script	Field Bush Switch	440,{
+	callfunc "F_GM_NPC";
 	donpcevent "Bush#ep14_1_bs1::OnEnable";
 	end;
 }
-*/
 
 splendide,183,117,4	script	Tired-looking Fairy	438,{
 	if (!isequipped(2782)) {
@@ -1442,6 +1442,22 @@ splendide,121,260,4	script	Daphrer#ep14_1_bs	435,{
 	mes "[Daphrer]";
 	mes "For me, a drop of water to make a flower blossom is more important than a sword for war.";
 	close;
+}
+
+sec_in02,35,175,0	script	Theore Set Guid	436,{
+	callfunc "F_GM_NPC";
+	switch(select("Set0:Set33:Set2_0")) {
+	case 1:
+		set ep14_1_bs,0;
+		end;
+	case 2:
+		set ep4_1_bs,3;
+		setquest 11183;
+		end;
+	case 3:
+		set ep14_1_bs2,0;
+		end;
+	}
 }
 
 // Chesire's New Day :: cheshir2
@@ -5060,6 +5076,26 @@ mora,104,172,7	script	Victim#pa0829	520,{
 	next;
 	mes "^990099 It seems that he has gotten a great deal of damage from the art dealer.^000000";
 	close;
+}
+
+sec_in02,29,34,5	script	Initializing Mora Sanjo	453,{
+	callfunc "F_GM_NPC";
+	mes "Enter your password";
+	if (callfunc("F_GM_NPC","1854",1) == 0) {
+		mes "Hehe";
+		close;
+	} else {
+		mes "[Initialization]";
+		mes "14.1 Initializing all quest window include related daily quest and map and so on";
+		freeloop(1);
+		for(set .@i,12225; .@i<=12353; set .@i,.@i+1) {
+			if (checkquest(.@i) > -1)
+				erasequest .@i;
+		}
+		freeloop(0);
+		set ep14_1_mistwoods,10;
+		close;
+	}
 }
 
 // Mora Daily Quests - Souls :: md_cadaver_in

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -14,6 +14,7 @@
 //= 1.2 Updated 'waitingroom' to support required zeny/lvl. [Kisuka]
 //= 1.3 Label standardization. [Euphy]
 //= 1.4 Script updates, and removed two level restrictions. [Euphy]
+//= 1.5 Added GM management function. [Euphy]
 //============================================================
 
 arena_room,114,102,0	script	onlyaco#arena	45,1,1,{
@@ -1709,14 +1710,14 @@ arena_room,140,136,3	script	Guide Alias	729,{
 	close;
 }
 
-/*
 arena_room,195,5,3	script	log-on-aco#arena	802,{
-	input .@input; //,0,2000;
-	if (.@input == 0) {
+	set .@i, callfunc("F_GM_NPC",1357,0);
+	if (.@i == -1) {
 		mes "^3355FFIncorrect Password.^000000";
 		close;
-	}
-	else if (.@input == 1357) {
+	} else if (.@i == 0) {
+		end;
+	} else {
 		mes "[!!CAUTION!!]";
 		mes "^3355FFThe following menu";
 		mes "the record for that";
@@ -1754,13 +1755,14 @@ arena_room,195,5,3	script	log-on-aco#arena	802,{
 }
 
 arena_room,195,10,3	script	acolink#arena	802,{
-	input .@input; //,0,2000;
-	if (.@input == 0) {
+	set .@i, callfunc("F_GM_NPC",1357,0);
+	if (.@i == -1) {
 		mes "Command has";
 		mes "been canceled.";
 		close;
-	}
-	else if (.@input == 1357) {
+	} else if (.@i == 0) {
+		end;
+	} else {
 		mes "This NPC opens and";
 		mes "closes the Warp Portal";
 		mes "to the Arena's Acolyte";
@@ -1785,4 +1787,3 @@ arena_room,195,10,3	script	acolink#arena	802,{
 		}
 	}
 }
-*/

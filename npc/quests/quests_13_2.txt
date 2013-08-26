@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 2.7a
+//= 2.8
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -48,6 +48,7 @@
 //= 2.6a Disabled GM NPC. [Euphy]
 //= 2.7 Updated RE/Pre-RE EXP. [Euphy]
 //= 2.7a Added Izlude RE coordinates. [Euphy]
+//= 2.8 Added GM management function. [Euphy]
 //============================================================ 
 
 // Cat Hand Addition.
@@ -4584,73 +4585,64 @@ OnTimer300000:
 	end;
 }
 
-/*
 mid_camp,7,3,0	script	Translator Preparation#1	708,{
-	mes "[Plot13 Translator Quest Preparation]";
-	mes "Input password.";
+	callfunc "F_GM_NPC";
+	mes "[EP13 Translator Quest Preparation]";
+	mes "First, you must confirm that you are my master.";
 	next;
-	input .@input; //,0,2000;
-	if (.@input == 0) {
+	set .@i, callfunc("F_GM_NPC",1854,0);
+	if (.@i == -1) {
 		mes "[EP 13 Translator Quest Preparation]";
 		mes "Cancelled";
 		close;
-	}
-	else if (.@input == 1854) {
+	} else if (.@i == 0) {
 		mes "[EP 13 Translator Quest Preparation]";
-		mes "I'm the provider of ep13.2 Translator Quest's quest item's NPC" <--Not my fault, they used bad chinese grammar in first place;
+		mes "Try again.";
+		close;
+	} else {
+		mes "[EP 13 Translator Quest Preparation]";
+		mes "I'm the NPC who gives the Episode 13.2 Translator Quest's Linked-Quest Items.";
 		next;
-		mes "What you want?";
+		mes "What would you like to do?";
 		next;
-		switch(select("Finish quest:Accept fairy / giant meetup quest")) {
+		switch(select("Receive EP13.1 Quest:Receive Quest Window - Meeting with Fairy and Giant")) {
 		case 1:
 			mes "[EP 13 Translator Quest Preparation]";
-			mes "Acquired the report's quest completion item";
+			mes "Episode 13.1 - The Report Quest Reward Item Received.";
 			next;
 			mes "[EP 13 Translator Quest Preparation]";
-			mes "Current report quest's item is "+ ep13_1_edq +" ";
-			mes "Start Quest?";
+			mes "Currently the Report Quest's Set Item is "+ep13_1_edq+".";
+			mes "Do you want to proceed?";
 			next;
-			switch(select("Yes:No")) {
-			case 1:
+			if(select("No:Yes") == 1) {
 				mes "[EP 13 Translator Quest Preparation]";
 				mes "Cancelled";
 				close;
-			case 2:
-				break;
 			}
 			mes "[EP 13 Translator Quest Preparation]";
-			mes "Acquired the report's quest completion item";
+			mes "Episode 13.1 - The Report Quest Reward Item Received.";
 			set ep13_1_edq,14;
 			close;
 		case 2:
 			mes "[EP 13 Translator Quest Preparation]";
-			mes "Accept the fairy / giant meetup quest";
+			mes "Episode 13.1 - Receiving the Quest window - Meeting with Fairy and Giant.";
 			next;
 			mes "[EP 13 Translator Quest Preparation]";
-			mes "Start Quest?";
+			mes "Do you want to proceed?";
 			next;
-			switch(select("Yes:No")) {
-			case 1:
+			if(select("No:Yes") == 1) {
 				mes "[EP 13 Translator Quest Preparation]";
 				mes "Cancelled";
 				close;
-			case 2:
-				break;
 			}
 			mes "[EP 13 Translator Quest Preparation]";
-			mes "Acquired the report's quest completion item";
+			mes "Episode 13.1 - The Report Quest Reward Item Received.";
 			setquest 2158;
 			setquest 2159;
 			close;
 		}
 	}
-	else {
-		mes "[EP 13 Translator Quest Preparation]";
-		mes "Please try again";
-		close;
-	}
 }
-*/
 
 // Daily Quests
 // - Midgard Ore
@@ -7307,30 +7299,26 @@ nyd_dun01,255,142,0	warp	nynm_dun1f_to_2f	1,1,nyd_dun02,61,265
 nyd_dun02,56,264,0	warp	nynm_dun2f_to_1f	1,1,nyd_dun01,249,143
 
 nyd_dun02,1,1,0	script	ep13_nd2f_mng	844,{
-/*
+	callfunc "F_GM_NPC";
 	mes "Enter password.";
 	next;
-	input .@input; //,0,4000;
-	if (.@input == 1854) {
-		mes "Reset Puzzle?";
+	if (callfunc("F_GM_NPC",1854,0) == 1) {
+		mes "Reset Control devices?";
 		next;
 		switch(select("Yes:No")) {
 		case 1:
 			donpcevent "ep13_nd2f_mng::OnReset";
 			set $@08_ep13nydun02_in,0;
-			mes "Puzzle reset";
+			mes "Done.";
 			close;
 		case 2:
 			mes "Canceled.";
 			close;
 		}
-	}
-	else {
+	} else {
 		mes "Invalid.";
 		close;
 	}
-*/
-	end;
 
 OnReset:
 	donpcevent "ep13_warp_s1::OnEnable";

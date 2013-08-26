@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Muad_Dib
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -21,6 +21,7 @@
 //= 1.4a Dialogue edits, source iRO.
 //= 1.5 Added Cat Gamers.
 //=     Added "Investment Cat Helper" and "Storekeeper" NPCs.
+//= 1.6 Added GM management function.
 //============================================================
 
 // Utility NPCs :: cat_merchant
@@ -3512,10 +3513,8 @@ malangdo,129,146,3	script	Crime Prevention Staff	545,{
 	close;
 }
 
-/*
 malangdo,3,1,3	script	Guidance for quest#ml	543,{
-	input .@input,1,9999;
-	if (.@input != 1854) {
+	if (callfunc("F_GM_NPC",1854,0) < 1) {
 		mes "[Helper]";
 		mes "What is this security code?";
 		mes "Go away!";
@@ -3560,7 +3559,6 @@ malangdo,3,1,3	script	Guidance for quest#ml	543,{
 		close;
 	}
 }
-*/
 
 // Clean the Ship :: mal_day_qook
 //============================================================

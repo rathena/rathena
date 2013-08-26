@@ -1,11 +1,11 @@
 //===== rAthena Script ======================================= 
-//= Mjolnir seal unlocking NPCs.
+//= God Item Quest - Mjolnir Seal
 //===== By: ================================================== 
 //= SinSloth
 //===== Current Version: ===================================== 
-//= 1.8a
+//= 1.9
 //===== Compatible With: ===================================== 
-//= rAthena
+//= rAthena SVN
 //===== Description: ========================================= 
 //= Quest for breaking the seal of Mjolnir.
 //===== Additional Comments: =================================
@@ -21,10 +21,15 @@
 //= 1.7 Fixed a copy/paste error in Nordri. [L0ne_W0lf]
 //= 1.8 Fixed item check for Oridecon. [L0ne_W0lf]
 //= 1.8a Added 'disable_items' command. [Euphy]
+//= 1.9 Renewal script update. [Euphy]
 //============================================================
 
 prontera,124,297,3	script	Tialfi	706,{
-	if ($God3 < 50) {
+	if (checkweight(1301,3) == 0) {
+		mes "- You are carrying too many items! -";
+		close;
+	}
+	if ($God3 < $@god_check1) {
 		cutin "god_tialpi01",2;
 		mes "[Tialfi]";
 		mes "Hmmm...";
@@ -36,12 +41,12 @@ prontera,124,297,3	script	Tialfi	706,{
 		mes "going on!";
 	}
 	else {
-		if(god_mjo_0 == 11) {
+		if (god_mjo_0 == 11) {
 			cutin "god_tialpi01",2;
 			mes "[Tialfi]";
 			mes "I'm waiting for the day when I'll finally get to see Thor's thunder for myself. I believe that one of these days, my dream will become reality.";
 		}
-		else if(god_mjo_1 == 2 && god_mjo_2 == 2 && god_mjo_3 == 2 && god_mjo_4 == 2) {
+		else if (god_mjo_1 == 2 && god_mjo_2 == 2 && god_mjo_3 == 2 && god_mjo_4 == 2) {
 			if (god_mjo_0 == 10) {
 				if ((countitem(756) > 49) && (countitem(757) > 49)) {
 					set .@gift,0;
@@ -63,7 +68,7 @@ prontera,124,297,3	script	Tialfi	706,{
 					else if (BaseJob == Job_Assassin){
 						set .@gift,6;
 					}
-					else if(BaseJob == Job_Crusader){
+					else if (BaseJob == Job_Crusader){
 						set .@gift,7;
 					}
 					else if (BaseJob == Job_Monk){
@@ -81,7 +86,7 @@ prontera,124,297,3	script	Tialfi	706,{
 					else if (BaseJob == Job_Bard){
 						set .@gift,12;
 					}
-					else if(BaseJob == Job_Hunter){
+					else if (BaseJob == Job_Hunter){
 						set .@gift,13;
 					}
 					else {
@@ -123,46 +128,46 @@ prontera,124,297,3	script	Tialfi	706,{
 					mes "It must be around--Ah!";
 					mes "Here we are~";
 					next;
-					delitem 756,50;  //Oridecon_Stone
-					delitem 757,50;  //Elunium_Stone
+					delitem 756,50; //Oridecon_Stone
+					delitem 757,50; //Elunium_Stone
 					set god_mjo_0,11;
 					if (.@gift == 1) {
 						getitem 1471,1; // Hell_Fire
 					}
-					else if(.@gift == 2) {
+					else if (.@gift == 2) {
 						getitem 1526,1; // Slash
 					}
-					else if(.@gift == 3) {
+					else if (.@gift == 3) {
 						getitem 1231,1; // Bazerald
 					}
-					else if(.@gift == 4) {
+					else if (.@gift == 4) {
 						getitem 1367,1; // Slaughter
 					}
-					else if(.@gift == 5) {
+					else if (.@gift == 5) {
 						getitem 1722,1; // Balistar
 					}
-					else if(.@gift == 6) {
+					else if (.@gift == 6) {
 						getitem 1230,1; // House_Auger
 					}
-					else if(.@gift == 7) {
+					else if (.@gift == 7) {
 						getitem 1141,1; // Immaterial_Sword
 					}
-					else if(.@gift == 8) {
+					else if (.@gift == 8) {
 						getitem 1813,1; // Kaiser_Knuckle
 					}
-					else if(.@gift == 9) {
+					else if (.@gift == 9) {
 						getitem 1557,1; // Book_Of_The_Apocalypse
 					}
-					else if(.@gift == 10) {
+					else if (.@gift == 10) {
 						getitem 1235,1; // Azoth
 					}
-					else if(.@gift == 11) {
+					else if (.@gift == 11) {
 						getitem 1227,1; // Weeder_Knife
 					}
-					else if(.@gift == 12) {
+					else if (.@gift == 12) {
 						getitem 1913,1; // Electronic_Guitar
 					}
-					else if(.@gift == 13) {
+					else if (.@gift == 13) {
 						getitem 1963,1; // Rapture_Rose
 					}
 					else {
@@ -190,7 +195,7 @@ prontera,124,297,3	script	Tialfi	706,{
 				}
 			}
 			else {
-				if ($God4 > 99) {
+				if ($God4 >= $@god_check2) {
 					mes "[Tialfi]";
 					mes "I sense a strange energy growing more powerful somewhere on this continent...";
 					next;
@@ -203,14 +208,13 @@ prontera,124,297,3	script	Tialfi	706,{
 				}
 				else {
 					set $God4,$God4 +1;
-					if($God4 == 50) {
+					if ($God4 == $@god_check1)
 						announce "The 4th seal of [Mjolnir] has appeared.",bc_all;
-					}
-					else if($God4 == 100 && $God2 == 100 && $God3 == 100 && $God1 == 100) {
-						announce "Four seals have been released at the same time with the seal of [Mjolnir].",bc_all;
-					}
-					else if($God4 == 100) {
-						announce "The 4th seal of [Mjolnir] has been released.",bc_all;
+					else if ($God4 == $@god_check2) {
+						if ($God4 == $@god_check2 && $God2 == $@god_check2 && $God3 == $@god_check2 && $God1 == $@god_check2)
+							announce "Four seals have been released at the same time with the seal of [Mjolnir].",bc_all;
+						else
+							announce "The 4th seal of [Mjolnir] has been released.",bc_all;
 					}
 					set god_mjo_0,10;
 					mes "[Tialfi]";
@@ -237,7 +241,7 @@ prontera,124,297,3	script	Tialfi	706,{
 				}
 			}
 		}
-		else if(god_mjo_1 == 3 || god_mjo_2 == 3 || god_mjo_3 == 3 || god_mjo_4 == 3) {
+		else if (god_mjo_1 == 3 || god_mjo_2 == 3 || god_mjo_3 == 3 || god_mjo_4 == 3) {
 			mes "[Tialfi]";
 			mes "Hmm...";
 			mes "The Dwarven Blacksmiths";
@@ -260,7 +264,7 @@ prontera,124,297,3	script	Tialfi	706,{
 			mes "You should be okay now.";
 			mes "By this time, they've probably forgotten the insult. But make sure you speak to my sister for advice first.";
 		}
-		else if(god_mjo_0 == 2 || god_mjo_0 == 1) {
+		else if (god_mjo_0 == 2 || god_mjo_0 == 1) {
 			cutin "god_tialpi01",2;
 			mes "[Tialfi]";
 			mes "Sorry for the trouble.";
@@ -268,8 +272,8 @@ prontera,124,297,3	script	Tialfi	706,{
 			mes "in finding the Dwarves!";
 			mes "Just... Don't insult them!";
 		}
-		else if(god_mjo_0 == 0) {
-			if($God4 > 99) {
+		else if (god_mjo_0 == 0) {
+			if ($God4 >= $@god_check2) {
 				cutin "god_tialpi01",2;
 				mes "[Tialfi]";
 				mes "I sense a strange energy growing more powerful somewhere on this continent...";
@@ -282,7 +286,7 @@ prontera,124,297,3	script	Tialfi	706,{
 				mes "I think we'd better wait and see what's happening. Someone will deliver the news to us. Though, I am unsure of whether or not it will be good news or bad...";
 				close;
 			}
-			else if(BaseLevel < 70) {
+			else if (BaseLevel < 70) {
 				cutin "god_tialpi02",2;
 				mes "[Tialfi]";
 				mes "One of my ancestors supposedly was a servant of Thor. Still, I find it difficult to believe.";
@@ -366,7 +370,7 @@ prontera,124,297,3	script	Tialfi	706,{
 }
 
 prt_fild01,196,47,3	script	Roskva	703,{
-	if(god_mjo_0 == 1) {
+	if (god_mjo_0 == 1) {
 		mes "[Roskva]";
 		mes "You should know that Dwarven Blacksmiths are extremely offended if you do not speak to them with the utmost respect.";
 		next;
@@ -385,7 +389,7 @@ prt_fild01,196,47,3	script	Roskva	703,{
 		mes "If you happen to speak to them in the wrong order, please go talk to my brother Tialfi again.";
 		close;
 	}
-	else if(god_mjo_0 == 2) {
+	else if (god_mjo_0 == 2) {
 		mes "[Roskva]";
 		mes "You should know that Dwarven Blacksmiths are extremely offended if you do not speak to them with the utmost respect.";
 		next;
@@ -419,18 +423,18 @@ prt_fild01,196,47,3	script	Roskva	703,{
 }
 
 mjolnir_11,149,247,5	script	Dwarf Blacksmith#east	826,{
-	if ($God3 < 50) {
+	if ($God3 < $@god_check1) {
 		mes "[Austri]";
 		mes "Something is happening somewhere on this continent. You might not believe me, but I keep getting visions of the Fenrir-Wolf.";
 		close;
 	}
 	else {
-		if($God4 > 99) {
+		if ($God4 >= $@god_check2) {
 			mes "[Austri]";
 			mes "Something is happening somewhere on this continent. You might not believe me, but I keep getting visions of the Fenrir-Wolf.";
 			close;
 		}
-		else if(god_mjo_0 == 11) {
+		else if (god_mjo_0 == 11) {
 			mes "[Austri]";
 			mes "When my people finally retrieve the memories of their past, we will be able to grant the power of the gods to humans.";
 			next;
@@ -439,19 +443,19 @@ mjolnir_11,149,247,5	script	Dwarf Blacksmith#east	826,{
 			mes "time is coming...";
 			close;
 		}
-		else if(god_mjo_0 == 10) {
+		else if (god_mjo_0 == 10) {
 			mes "[Austri]";
 			mes "Hm? I sense that you were asked to do a favor for that human. If I were you, I'd finish that task as soon as I could. Somehow, that human's fate, as well as that of the Dwarves, are intertwined...";
 			close;
 		}
-		else if(god_mjo_0 == 1) {
+		else if (god_mjo_0 == 1) {
 			if (god_mjo_1 == 3 || god_mjo_2 == 3 || god_mjo_3 == 3 || god_mjo_4 == 3) {
 				mes "[Austri]";
 				mes "What is it?! I refuse to speak to human as rude and contemptible";
 				mes "as you! Now, get out of my sight!";
 				close;
 			}
-			else if(god_mjo_1 == 2) {
+			else if (god_mjo_1 == 2) {
 				mes "[Austri]";
 				mes "What...?";
 				mes "I have nothing";
@@ -479,7 +483,7 @@ mjolnir_11,149,247,5	script	Dwarf Blacksmith#east	826,{
 					close;
 				}
 			}
-			else if(god_mjo_1 == 1) {
+			else if (god_mjo_1 == 1) {
 				mes "[Austri]";
 				mes "What has made";
 				mes "you come to me?";
@@ -509,7 +513,7 @@ mjolnir_11,149,247,5	script	Dwarf Blacksmith#east	826,{
 									break;
 								}
 							}
-							else if(.@talk_to == 1) {
+							else if (.@talk_to == 1) {
 								mes "[Austri]";
 								mes "Mjolnir...?";
 								mes "Thor's legendary weapon?";
@@ -529,7 +533,7 @@ mjolnir_11,149,247,5	script	Dwarf Blacksmith#east	826,{
 									break;
 								}
 							}
-							else if(.@talk_to == 2) {
+							else if (.@talk_to == 2) {
 								mes "[Austri]";
 								mes "One day, Loki came to our village and showed off his treasures. He boasted that we couldn't possibly create something to surpass their quality.";
 								next;
@@ -545,7 +549,7 @@ mjolnir_11,149,247,5	script	Dwarf Blacksmith#east	826,{
 									break;
 								}
 							}
-							else if(.@talk_to == 3) {
+							else if (.@talk_to == 3) {
 								mes "[Austri]";
 								mes "Of the three treasures my ancestors created, Mjolnir was the last and greatest.";
 								next;
@@ -563,7 +567,7 @@ mjolnir_11,149,247,5	script	Dwarf Blacksmith#east	826,{
 									break;
 								}
 							}
-							else if(.@talk_to == 4) {
+							else if (.@talk_to == 4) {
 								mes "[Austri]";
 								mes "Despite this minor flaw, Mjolnir is still considered the greatest of legendary weapons.";
 								next;
@@ -581,7 +585,7 @@ mjolnir_11,149,247,5	script	Dwarf Blacksmith#east	826,{
 									break;
 								}
 							}
-							else if(.@talk_to == 5) {
+							else if (.@talk_to == 5) {
 								mes "[Austri]";
 								mes "The reason this mountain is called Mount Mjolnir is because it was actually created by the hammer.";
 								next;
@@ -601,7 +605,7 @@ mjolnir_11,149,247,5	script	Dwarf Blacksmith#east	826,{
 									break;
 								}
 							}
-							else if(.@talk_to == 6) {
+							else if (.@talk_to == 6) {
 								mes "[Austri]";
 								mes "Hmm... But perhaps an ambitious dwarf can forge something similar to Mjolnir so that it can actually be used by humans. It would have less power, but it'd be perfectly crafted.";
 								next;
@@ -617,7 +621,7 @@ mjolnir_11,149,247,5	script	Dwarf Blacksmith#east	826,{
 									break;
 								}
 							}
-							else if(.@talk_to == 7) {
+							else if (.@talk_to == 7) {
 								mes "[Austri]";
 								mes "Well, I happened to speak much longer than I intended. But I hope you learned what you wished to";
 								mes "know about Mjolnir.";
@@ -638,7 +642,7 @@ mjolnir_11,149,247,5	script	Dwarf Blacksmith#east	826,{
 									break;
 								}
 							}
-							else if(.@talk_to == 8) {
+							else if (.@talk_to == 8) {
 								set god_mjo_1,2;
 								mes "[Austri]";
 								mes "Alright then...";
@@ -670,7 +674,7 @@ mjolnir_11,149,247,5	script	Dwarf Blacksmith#east	826,{
 					}
 				}
 			}
-			else if(god_mjo_1 == 0) {
+			else if (god_mjo_1 == 0) {
 				mes "[Austri]";
 				mes "What has made";
 				mes "you come to me?";
@@ -704,21 +708,21 @@ mjolnir_11,149,247,5	script	Dwarf Blacksmith#east	826,{
 				close;
 			}
 		}
-		else if(god_mjo_0 == 2) {
-			if(god_mjo_1 == 3 || god_mjo_2 == 3 || god_mjo_3 == 3 || god_mjo_4 == 3) {
+		else if (god_mjo_0 == 2) {
+			if (god_mjo_1 == 3 || god_mjo_2 == 3 || god_mjo_3 == 3 || god_mjo_4 == 3) {
 				mes "[Austri]";
 				mes "What is it?! I refuse to speak to human as rude and contemptible";
 				mes "as you! Now, get out of my sight!";
 				close;
 			}
-			else if(god_mjo_4 == 2) {
+			else if (god_mjo_4 == 2) {
 				mes "[Austri]";
 				mes "What is it...?";
 				mes "I have nothing";
 				mes "to say to you.";
 				close;
 			}
-			else if(god_mjo_1 == 0 || god_mjo_1 == 1 || god_mjo_2 == 0 || god_mjo_2 == 1 || god_mjo_3 == 0 || god_mjo_3 == 1) {
+			else if (god_mjo_1 == 0 || god_mjo_1 == 1 || god_mjo_2 == 0 || god_mjo_2 == 1 || god_mjo_3 == 0 || god_mjo_3 == 1) {
 				mes "[Austri]";
 				mes "What made you come to me?";
 				next;
@@ -735,7 +739,7 @@ mjolnir_11,149,247,5	script	Dwarf Blacksmith#east	826,{
 					close;
 				}
 			}
-			else if(god_mjo_4 == 1) {
+			else if (god_mjo_4 == 1) {
 				mes "[Austri]";
 				mes "What has made";
 				mes "you come to me?";
@@ -928,7 +932,7 @@ mjolnir_11,149,247,5	script	Dwarf Blacksmith#east	826,{
 					}
 				}
 			}
-			else if(god_mjo_4 == 0) {
+			else if (god_mjo_4 == 0) {
 				mes "[Austri]";
 				mes "What made you come to me?";
 				next;
@@ -961,7 +965,7 @@ mjolnir_11,149,247,5	script	Dwarf Blacksmith#east	826,{
 				close;
 			}
 		}
-		else if(god_mjo_0 == 0) {
+		else if (god_mjo_0 == 0) {
 			mes "[Austri]";
 			mes "Ah...";
 			mes "It feels like today's going to be a great day.";
@@ -979,7 +983,7 @@ mjolnir_11,149,247,5	script	Dwarf Blacksmith#east	826,{
 }
 
 mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
-	if ($God3 < 50) {
+	if ($God3 < $@god_check1) {
 		mes "[Sudri]";
 		mes "I want to compete";
 		mes "and fight with stronger and stronger opponents!";
@@ -989,7 +993,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 		close;
 	}
 	else {
-		if ($God4 > 99) {
+		if ($God4 >= $@god_check2) {
 			mes "[Sudri]";
 			mes "Wait, this is";
 			mes "not the right time";
@@ -999,7 +1003,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 			mes "Something that has been hidden is about to be born out of the sweat of determination and tears of sacrifice. We must wait until then.";
 			close;
 		}
-		else if(god_mjo_0 == 11) {
+		else if (god_mjo_0 == 11) {
 			mes "[Sudri]";
 			mes "I want to compete with a stronger one!";
 			mes "I will be stronger and stronger,";
@@ -1008,12 +1012,12 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 			mes "Muhahahaha...!";
 			close;
 		}
-		else if(god_mjo_10 == 10) {
+		else if (god_mjo_10 == 10) {
 			mes "[Sudri]";
 			mes "I must admit that you're a really strong human. Let us fight again when we have a chance. The next time, you may not be so lucky!";
 			close;
 		}
-		else if(god_mjo_0 == 1) {
+		else if (god_mjo_0 == 1) {
 			if (god_mjo_1 == 3 || god_mjo_2 == 3 || god_mjo_3 == 3 || god_mjo_4 == 3) {
 				mes "[Sudri]";
 				mes "Go back to where you belong before I beat you to death!";
@@ -1022,13 +1026,13 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 				mes "All you can gain here are a few herbs.";
 				close;
 			}
-			else if(god_mjo_2 == 2) {
+			else if (god_mjo_2 == 2) {
 				mes "[Sudri]";
 				mes "That was a great fight!";
 				mes "Mwahahaha! I'm satisfied with the results. I may have lost, but we fought honorably with everything we had.";
 				close;
 			}
-			else if(god_mjo_1 == 0 || god_mjo_1 == 1 || god_mjo_3 != 0 || god_mjo_4 != 0) {
+			else if (god_mjo_1 == 0 || god_mjo_1 == 1 || god_mjo_3 != 0 || god_mjo_4 != 0) {
 				mes "[Sudri]";
 				mes "So...";
 				mes "What brings";
@@ -1054,7 +1058,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 					close;
 				}
 			}
-			else if(god_mjo_2 == 1) {
+			else if (god_mjo_2 == 1) {
 				set .@n_vit,200;
 				set .@p_vit,100;
 				while(1) {
@@ -1088,15 +1092,15 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 						mes "" + strcharinfo(0) + "";
 						mes "attacks Sudri's head!";
 					}
-					else if(.@p_atk == 2) {
+					else if (.@p_atk == 2) {
 						mes "" + strcharinfo(0) + "";
 						mes "strikes Sudri's chest!";
 					}
-					else if(.@p_atk == 3) {
+					else if (.@p_atk == 3) {
 						mes "" + strcharinfo(0) + "";
 						mes "aims for Sudri's legs!";
 					}
-					else if(.@p_atk == 4) {
+					else if (.@p_atk == 4) {
 						mes "" + strcharinfo(0) + "";
 						mes "requests a break!";
 					}
@@ -1114,7 +1118,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 							mes "--------------------";
 							mes "" + strcharinfo(0) + " misses!";
 						}
-						else if(.@n_def == 2) {
+						else if (.@n_def == 2) {
 							mes "--------------------";
 							mes "Sudri blocks your";
 							mes "attack by crossing";
@@ -1122,7 +1126,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 							mes "--------------------";
 							mes "" + strcharinfo(0) + "'s attack is blocked!";
 						}
-						else if(.@n_def == 3) {
+						else if (.@n_def == 3) {
 							mes "--------------------";
 							mes "Sudri dodges your";
 							mes "attack with a graceful";
@@ -1131,14 +1135,14 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 							mes "" + strcharinfo(0) + " misses!";
 						}
 					}
-					else if(.@p_atk == 4) {
+					else if (.@p_atk == 4) {
 						specialeffect2 EF_HEAL;
 						set .@p_vit,.@p_vit + 10;
 						mes "--------------------";
 						mes "" + strcharinfo(0) + "";
 						mes "has gained 10 HP!";
 					}
-					else if(.@p_atk == 1) {
+					else if (.@p_atk == 1) {
 						specialeffect EF_HIT5;
 						set .@n_vit,.@n_vit - .@damage;
 						mes "--------------------";
@@ -1147,7 +1151,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 						mes "--------------------";
 						mes "Sudri has lost " + .@damage + " HP!";
 					}
-					else if(.@p_atk == 2) {
+					else if (.@p_atk == 2) {
 						specialeffect EF_HIT2;
 						set .@n_vit,.@n_vit - .@damage;
 						mes "--------------------";
@@ -1157,7 +1161,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 						mes "Sudri has";
 						mes "lost " + .@damage + " HP!";
 					}
-					else if(.@p_atk == 3) {
+					else if (.@p_atk == 3) {
 						specialeffect EF_HIT4;
 						set .@n_vit,.@n_vit - .@damage;
 						mes "--------------------";
@@ -1167,7 +1171,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 						mes "Sudri has";
 						mes "lost " + .@damage + " HP!";
 					}
-					else if(.@p_atk == 0) {
+					else if (.@p_atk == 0) {
 						specialeffect2 EF_HIT5;
 						set .@p_vit,.@p_vit - 10;
 						mes "--------------------";
@@ -1220,7 +1224,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 					if (.@n_atk == 1) {
 						mes "Sudri aims for the head!";
 					}
-					else if(.@n_atk == 2) {
+					else if (.@n_atk == 2) {
 						mes "Sudri strikes the chest!";
 					}
 					else {
@@ -1237,7 +1241,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 							mes "--------------------";
 							mes "Sudri has failed to attack.";
 						}
-						else if(.@p_def == 2) {
+						else if (.@p_def == 2) {
 							mes "--------------------";
 							mes "" + strcharinfo(0) + "";
 							mes "barely blocked";
@@ -1245,7 +1249,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 							mes "--------------------";
 							mes "Sudri has failed to attack.";
 						}
-						else if(.@p_def == 3) {
+						else if (.@p_def == 3) {
 							mes "--------------------";
 							mes "" + strcharinfo(0) + " jumped,";
 							mes "dodged Sudri's attack at ease.";
@@ -1253,7 +1257,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 							mes "Sudri has failed to attack.";
 						}
 					}
-					else if(.@p_def == 4) {
+					else if (.@p_def == 4) {
 						set .@count,rand(1,4);
 						mes "--------------------";
 						mes "" + strcharinfo(0) + "";
@@ -1282,7 +1286,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 							mes "" + strcharinfo(0) + " has lost 30 HP!";
 						}
 					}
-					else if(.@n_atk == 1) {
+					else if (.@n_atk == 1) {
 						specialeffect2 EF_HIT5;
 						set .@p_vit,.@p_vit - .@damage;
 						mes "--------------------";
@@ -1292,7 +1296,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 						mes "--------------------";
 						mes "" + strcharinfo(0) + " has lost " + .@damage + " HP!";
 					}
-					else if(.@n_atk == 2) {
+					else if (.@n_atk == 2) {
 						specialeffect2 EF_HIT2;
 						set .@p_vit,.@p_vit - .@damage;
 						mes "--------------------";
@@ -1302,7 +1306,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 						mes "--------------------";
 						mes "" + strcharinfo(0) + " has lost " + .@damage + " HP!";
 					}
-					else if(.@n_atk == 3) {
+					else if (.@n_atk == 3) {
 						specialeffect2 EF_HIT4;
 						set .@p_vit,.@p_vit - .@damage;
 						mes "--------------------";
@@ -1312,7 +1316,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 						mes "--------------------";
 						mes "" + strcharinfo(0) + " has lost " + .@damage + " HP!";
 					}
-					else if(.@n_atk == 0) {
+					else if (.@n_atk == 0) {
 						specialeffect2 EF_HIT5;
 						set .@p_vit,.@p_vit - .@damage;
 						mes "--------------------";
@@ -1346,7 +1350,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 					mes "Go out, train some and get stronger before you even think about coming back!";
 					close;
 				}
-				else if(.@n_vit < p_vit) {
+				else if (.@n_vit < p_vit) {
 					set god_mjo_2,2;
 					mes "[Sudri]";
 					mes "You're stronger than me. I never thought I'd meet a human as strong as you.";
@@ -1361,7 +1365,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 					close;
 				}
 			}
-			else if(god_mjo_2 == 0) {
+			else if (god_mjo_2 == 0) {
 				mes "[Sudri]";
 				mes "So...";
 				mes "What brings";
@@ -1422,14 +1426,14 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 				close;
 			}
 		}
-		else if(god_mjo_0 == 2) {
+		else if (god_mjo_0 == 2) {
 			if (god_mjo_1 == 3 || god_mjo_2 == 3 || god_mjo_3 == 3 || god_mjo_4 == 3) {
 				mes "[Sudri]";
 				mes "[Sudri]";
 				mes "Get out of here before I beat you to death! All you can gain over here is a few herbs, anyway!";
 				close;
 			}
-			else if(god_mjo_3 == 2) {
+			else if (god_mjo_3 == 2) {
 				mes "[Sudri]";
 				mes "That was a great fight!";
 				mes "Hahahahahahahahahaah!";
@@ -1459,7 +1463,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 					close;
 				}
 			}
-			else if(god_mjo_3 == 1) {
+			else if (god_mjo_3 == 1) {
 				mes "[Sudri]";
 				mes "Cool, let's fight!";
 				next;
@@ -1496,15 +1500,15 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 						mes "" + strcharinfo(0) + "";
 						mes "attacks Sudri's head!";
 					}
-					else if(.@p_atk == 2) {
+					else if (.@p_atk == 2) {
 						mes "" + strcharinfo(0) + "";
 						mes "strikes Sudri's chest!";
 					}
-					else if(.@p_atk == 3) {
+					else if (.@p_atk == 3) {
 						mes "" + strcharinfo(0) + "";
 						mes "aims for Sudri's legs!";
 					}
-					else if(.@p_atk == 4) {
+					else if (.@p_atk == 4) {
 						mes "" + strcharinfo(0) + "";
 						mes "requests a break!";
 					}
@@ -1522,7 +1526,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 							mes "--------------------";
 							mes "" + strcharinfo(0) + " misses!";
 						}
-						else if(.@n_def == 2) {
+						else if (.@n_def == 2) {
 							mes "--------------------";
 							mes "Sudri blocks your";
 							mes "attack by crossing";
@@ -1530,7 +1534,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 							mes "--------------------";
 							mes "" + strcharinfo(0) + "'s attack is blocked!";
 						}
-						else if(.@n_def == 3) {
+						else if (.@n_def == 3) {
 							mes "--------------------";
 							mes "Sudri dodges your";
 							mes "attack with a graceful";
@@ -1539,14 +1543,14 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 							mes "" + strcharinfo(0) + " misses!";
 						}
 					}
-					else if(.@p_atk == 4) {
+					else if (.@p_atk == 4) {
 						specialeffect2 EF_HEAL;
 						set .@p_vit,.@p_vit + 10;
 						mes "--------------------";
 						mes "" + strcharinfo(0) + "";
 						mes "has gained 10 HP!";
 					}
-					else if(.@p_atk == 1) {
+					else if (.@p_atk == 1) {
 						specialeffect EF_HIT5;
 						set .@n_vit,.@n_vit - .@damage;
 						mes "--------------------";
@@ -1555,7 +1559,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 						mes "--------------------";
 						mes "Sudri has lost " + .@damage + " HP!";
 					}
-					else if(.@p_atk == 2) {
+					else if (.@p_atk == 2) {
 						specialeffect EF_HIT2;
 						set .@n_vit,.@n_vit - .@damage;
 						mes "--------------------";
@@ -1565,7 +1569,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 						mes "Sudri has";
 						mes "lost " + .@damage + " HP!";
 					}
-					else if(.@p_atk == 3) {
+					else if (.@p_atk == 3) {
 						specialeffect EF_HIT4;
 						set .@n_vit,.@n_vit - .@damage;
 						mes "--------------------";
@@ -1575,7 +1579,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 						mes "Sudri has";
 						mes "lost " + .@damage + " HP!";
 					}
-					else if(.@p_atk == 0) {
+					else if (.@p_atk == 0) {
 						specialeffect2 EF_HIT5;
 						set .@p_vit,.@p_vit - 10;
 						mes "--------------------";
@@ -1628,7 +1632,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 					if (.@n_atk == 1) {
 						mes "Sudri aims for the head!";
 					}
-					else if(.@n_atk == 2) {
+					else if (.@n_atk == 2) {
 						mes "Sudri strikes the chest!";
 					}
 					else {
@@ -1644,7 +1648,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 							mes "--------------------";
 							mes "Sudri has failed to attack.";
 						}
-						else if(.@p_def == 2) {
+						else if (.@p_def == 2) {
 							mes "--------------------";
 							mes "" + strcharinfo(0) + "";
 							mes "barely blocked";
@@ -1652,7 +1656,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 							mes "--------------------";
 							mes "Sudri has failed to attack.";
 						}
-						else if(.@p_def == 3) {
+						else if (.@p_def == 3) {
 							mes "--------------------";
 							mes "" + strcharinfo(0) + " jumped,";
 							mes "dodged Sudri's attack at ease.";
@@ -1660,7 +1664,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 							mes "Sudri has failed to attack.";
 						}
 					}
-					else if(.@p_def == 4) {
+					else if (.@p_def == 4) {
 						set .@count,rand(1,4);
 						mes "--------------------";
 						mes "" + strcharinfo(0) + "";
@@ -1689,7 +1693,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 							mes "" + strcharinfo(0) + " has lost 30 HP!";
 						}
 					}
-					else if(.@n_atk == 1) {
+					else if (.@n_atk == 1) {
 						specialeffect2 EF_HIT5;
 						set .@p_vit,.@p_vit - .@damage;
 						mes "--------------------";
@@ -1699,7 +1703,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 						mes "--------------------";
 						mes "" + strcharinfo(0) + " has lost " + .@damage + " HP!";
 					}
-					else if(.@n_atk == 2) {
+					else if (.@n_atk == 2) {
 						specialeffect2 EF_HIT2;
 						set .@p_vit,.@p_vit - .@damage;
 						mes "--------------------";
@@ -1709,7 +1713,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 						mes "--------------------";
 						mes "" + strcharinfo(0) + " has lost " + .@damage + " HP!";
 					}
-					else if(.@n_atk == 3) {
+					else if (.@n_atk == 3) {
 						specialeffect2 EF_HIT4;
 						set .@p_vit,.@p_vit - .@damage;
 						mes "--------------------";
@@ -1719,7 +1723,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 						mes "--------------------";
 						mes "" + strcharinfo(0) + " has lost " + .@damage + " HP!";
 					}
-					else if(.@n_atk == 0) {
+					else if (.@n_atk == 0) {
 						specialeffect2 EF_HIT5;
 						set .@p_vit,.@p_vit - .@damage;
 						mes "--------------------";
@@ -1753,7 +1757,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 					mes "Go out, train some and get stronger before you even think about coming back!";
 					close;
 				}
-				else if(.@n_vit < .@p_vit) {
+				else if (.@n_vit < .@p_vit) {
 					set god_mjo_3,2;
 					mes "[Sudri]";
 					mes "You're stronger than me. I never thought I'd meet a human as strong as you.";
@@ -1768,7 +1772,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 					close;
 				}
 			}
-			else if(god_mjo_3 == 0) {
+			else if (god_mjo_3 == 0) {
 				mes "[Sudri]";
 				mes "What made you come to me?";
 				next;
@@ -1829,7 +1833,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 				close;
 			}
 		}
-		else if(god_mjo_0 == 0) {
+		else if (god_mjo_0 == 0) {
 			mes "[Sudri]";
 			mes "In a one on one fight, you put everything on the line to show your might to your opponent.";
 			next;
@@ -1846,7 +1850,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 }
 
 mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
-	if($God3 < 50) {
+	if ($God3 < $@god_check1) {
 		mes "[Vestri]";
 		mes "If you want something, you should earn it through your own efforts.";
 		next;
@@ -1859,7 +1863,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 		close;
 	}
 	else {
-		if($God4 > 99) {
+		if ($God4 >= $@god_check2) {
 			mes "[Vestri]";
 			mes "I don't feel";
 			mes "like doing anything";
@@ -1872,7 +1876,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 			mes "Yeah, I think I need a break! Don't you think I need a break, human?";
 			close;
 		}
-		else if(god_mjo_0 == 11) {
+		else if (god_mjo_0 == 11) {
 			mes "[Vestri]";
 			mes "There's nothing like taking a relaxing break after putting your heart into your work.";
 			next;
@@ -1882,7 +1886,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 			mes "of life's simple pleasures?";
 			close;
 		}
-		else if(god_mjo_0 == 10) {
+		else if (god_mjo_0 == 10) {
 			mes "[Vestri]";
 			mes "If you want something, you should earn it through your own efforts.";
 			next;
@@ -1894,13 +1898,13 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 			mes "Kids these days...";
 			close;
 		}
-		else if(god_mjo_0 == 1) {
-			if(god_mjo_1 == 3 || god_mjo_2 == 3 || god_mjo_3 == 3 || god_mjo_4 == 3) {
+		else if (god_mjo_0 == 1) {
+			if (god_mjo_1 == 3 || god_mjo_2 == 3 || god_mjo_3 == 3 || god_mjo_4 == 3) {
 				mes "[Vestri]";
 				mes "I really hope I meet a decent human being next time. So far, I haven't met one useful human.";
 				close;
 			}
-			else if(god_mjo_3 == 2) {
+			else if (god_mjo_3 == 2) {
 				mes "[Vestri]";
 				mes "Perfect preparation does not always result in success. There's a point when you've got to just go out and do it.";
 				next;
@@ -1912,7 +1916,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 				mes "plan to accomplish in life.";
 				close;
 			}
-			else if(god_mjo_1 == 0 || god_mjo_1 == 1 || god_mjo_2 == 0 || god_mjo_2 == 1 || god_mjo_4 != 0) {
+			else if (god_mjo_1 == 0 || god_mjo_1 == 1 || god_mjo_2 == 0 || god_mjo_2 == 1 || god_mjo_4 != 0) {
 				mes "[Vestri]";
 				mes "What do you want?";
 				next;
@@ -1934,7 +1938,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					close;
 				}
 			}
-			else if(god_mjo_3 == 1) {
+			else if (god_mjo_3 == 1) {
 				disable_items;
 				mes "[Vestri]";
 				mes "Great...!";
@@ -1943,11 +1947,9 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 
 				setarray .@position$[1], "Head","Body","Left hand","Right hand","Robe","Shoes","Accessory 1","Accessory 2","Head 2","Head 3";
 				set .@menu$,"";
-				for( set .@i,1; .@i <= 10; set .@i,.@i+1 )
-				{
-					if( getequipisequiped(.@i) )
+				for(set .@i,1; .@i <= 10; set .@i,.@i+1) {
+					if (getequipisequiped(.@i))
 						set .@menu$, .@menu$ + .@position$[.@i] + "-" + "[" + getequipname(.@i) + "]";
-
 					set .@menu$, .@menu$ + ":";
 				}
 				set .@part,select(.@menu$);
@@ -2011,8 +2013,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 				mes "If you understand,";
 				mes "then let's get on with it!";
 				next;
-				if( select("Sure, let's do it!:N-no, I changed my mind!") == 2 )
-				{
+				if(select("Sure, let's do it!:N-no, I changed my mind!") == 2) {
 					mes "[Vestri]";
 					mes "Bah...!";
 					mes "How do you survive";
@@ -2076,7 +2077,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 				mes "Take care.";
 				close;
 			}
-			else if(god_mjo_3 == 0) {
+			else if (god_mjo_3 == 0) {
 				mes "[Vestri]";
 				mes "What do you want?";
 				next;
@@ -2114,13 +2115,13 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 				close;
 			}
 		}
-		else if(god_mjo_0 == 2) {
+		else if (god_mjo_0 == 2) {
 			if (god_mjo_1 == 3 || god_mjo_2 == 3 || god_mjo_3 == 3 || god_mjo_4 == 3) {
 				mes "[Vestri]";
 				mes "I really hope I meet a decent human being next time. So far, I haven't met one useful human.";
 				close;
 			}
-			else if(god_mjo_2 == 2) {
+			else if (god_mjo_2 == 2) {
 				mes "[Vestri]";
 				mes "Perfect preparation does not always result in success. There's a point when you've got to just go out and do it.";
 				next;
@@ -2155,7 +2156,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					close;
 				}
 			}
-			else if(god_mjo_2 == 1) {
+			else if (god_mjo_2 == 1) {
 				disable_items;
 				mes "[Vestri]";
 				mes "Great...!";
@@ -2164,11 +2165,9 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 				
 				setarray .@position$[1], "Head","Body","Left hand","Right hand","Robe","Shoes","Accessory 1","Accessory 2","Head 2","Head 3";
 				set .@menu$,"";
-				for( set .@i,1; .@i <= 10; set .@i,.@i+1 )
-				{
-					if( getequipisequiped(.@i) )
+				for(set .@i,1; .@i <= 10; set .@i,.@i+1) {
+					if (getequipisequiped(.@i))
 						set .@menu$, .@menu$ + .@position$[.@i] + "-" + "[" + getequipname(.@i) + "]";
-
 					set .@menu$, .@menu$ + ":";
 				}
 				set .@part,select(.@menu$);
@@ -2227,8 +2226,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 				mes "If you understand,";
 				mes "then let's get on with it!";
 				next;
-				if( select("Sure, let's do it!:...no, I am out.") == 2 )
-				{
+				if(select("Sure, let's do it!:...no, I am out.") == 2) {
 					mes "[Vestri]";
 					mes "Bah...!";
 					mes "How do you survive";
@@ -2291,7 +2289,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 				mes "Take care.";
 				close;
 			}
-			else if(god_mjo_2 == 0) {
+			else if (god_mjo_2 == 0) {
 				mes "[Vestri]";
 				mes "What do you want?";
 				next;
@@ -2329,7 +2327,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 				close;
 			}
 		}
-		else if(god_mjo_0 == 0) {
+		else if (god_mjo_0 == 0) {
 			mes "[Vestri]";
 			mes "It's always a pleasure to engage myself in hard work, especially smithing.";
 			next;
@@ -2347,7 +2345,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 }
 
 mjolnir_12,18,18,7	script	Dwarf Blacksmith#north	826,{
-	if ($God3 < 50) {
+	if ($God3 < $@god_check1) {
 		mes "[Nordri]";
 		mes "What...?";
 		mes "I don't have any";
@@ -2358,7 +2356,7 @@ mjolnir_12,18,18,7	script	Dwarf Blacksmith#north	826,{
 		close;
 	}
 	else {
-		if ($God4 > 99) {
+		if ($God4 >= $@god_check2) {
 			mes "[Nordri]";
 			mes "What's happening?";
 			mes "I sense change in the winds, but what that change may be, I cannot tell.";
@@ -2458,7 +2456,7 @@ mjolnir_12,18,18,7	script	Dwarf Blacksmith#north	826,{
 								break;
 							}
 						}
-						else if(.@talk_to == 1) {
+						else if (.@talk_to == 1) {
 							mes "[Nordri]";
 							mes "Yes, only a Blaze could have effortlessly consumed meat, bones and plates by burning. Of course!";
 							mes "I remember now!";
@@ -2478,7 +2476,7 @@ mjolnir_12,18,18,7	script	Dwarf Blacksmith#north	826,{
 								break;
 							}
 						}
-						else if(.@talk_to == 2) {
+						else if (.@talk_to == 2) {
 							mes "[Nordri]";
 							mes "Yes, right! Tialfi was racing 'thoughts!' Nothing can move faster than the speed of thought, so it's no wonder Tialfi would always lose.";
 							next;
@@ -2497,7 +2495,7 @@ mjolnir_12,18,18,7	script	Dwarf Blacksmith#north	826,{
 								break;
 							}
 						}
-						else if(.@talk_to == 3) {
+						else if (.@talk_to == 3) {
 							mes "[Nordri]";
 							mes "Yes, Thor was wrestling with 'Old Age!' No matter how strong anybody is, you can't fight against aging.";
 							next;
@@ -2544,7 +2542,7 @@ mjolnir_12,18,18,7	script	Dwarf Blacksmith#north	826,{
 					close;
 				}
 			}
-			else if(god_mjo_4 == 0) {
+			else if (god_mjo_4 == 0) {
 				mes "[Nordri]";
 				mes "What business";
 				mes "do you have with";
@@ -2573,7 +2571,7 @@ mjolnir_12,18,18,7	script	Dwarf Blacksmith#north	826,{
 				close2;
 			}
 		}
-		else if(god_mjo_0 == 2) {
+		else if (god_mjo_0 == 2) {
 			if ((god_mjo_1 == 3) || (god_mjo_2 == 3) || (god_mjo_3 == 3) || (god_mjo_4 == 3)){
 				mes "[Nordri]";
 				mes "Eh heh heh~";
@@ -2611,7 +2609,7 @@ mjolnir_12,18,18,7	script	Dwarf Blacksmith#north	826,{
 					close;
 				}
 			}
-			else if(god_mjo_1 == 1) {
+			else if (god_mjo_1 == 1) {
 				if (countitem(501) > 0) {
 
 					delitem 501,1;  //Red_Potion
@@ -2676,7 +2674,7 @@ mjolnir_12,18,18,7	script	Dwarf Blacksmith#north	826,{
 								break;
 							}
 						}
-						else if(.@talk_to == 3) {
+						else if (.@talk_to == 3) {
 							mes "[Nordri]";
 							mes "Yes! Gods refer to the";
 							mes "moon as the 'false sun.'";

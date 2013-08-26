@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= ????, L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= rAthena 1.0
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //= 1.1 Updated several NPCs to Official.
 //= 1.2 Updated Repairman NPC
 //= 1.3 Optimized "Erundek" NPC. [Euphy]
+//= 1.4 Added GM management function. [Euphy]
 //============================================================
 
 // Generals
@@ -322,17 +323,17 @@ bat_room,138,144,4	script	Repairman#bg	86,{
 	end;
 }
 
-/*
 // GM Management NPC
 //============================================================
 bat_room,1,151,3	script	Switch#batgnd	81,{
-	input .@input,0,2000;
-	if (.@input == 0) {
+	set .@i, callfunc("F_GM_NPC",1854,0);
+	if (.@i == -1) {
 		mes "The command has been cancelled.";
 		close;
-	}
-	else if (.@input == 1854) {
-		mes "May I help ypu?";
+	} else if (.@i == 0) {
+		end;
+	} else {
+		mes "May I help you?";
 		next;
 		switch(select("Close Battlefield:Open Battlefield:Reset a01:Reset b01:Reset a02:Reset b02")) {
 		case 1:
@@ -372,7 +373,6 @@ bat_room,1,151,3	script	Switch#batgnd	81,{
 		close;
 	}
 }
-*/
 
 // Badges Exchange
 //============================================================

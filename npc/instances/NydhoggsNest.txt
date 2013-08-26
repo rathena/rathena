@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf, various sources
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -17,6 +17,7 @@
 //=     the invoking party meets the requirements to join the Memorial Dungeon.
 //= 1.4 Cleaning. [Euphy]
 //= 1.5 Instance system rewrite. [Euphy]
+//= 1.6 Added GM management NPCs. [Euphy]
 //============================================================ 
 
 nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
@@ -2172,5 +2173,110 @@ OnMyDarkshaDead:
 
 OnMyPingDead:
 	areamonster instance_mapname("2@nyd"),200,92,180,80,"Dark Pinguicula",2015,1,instance_npcname("ins_nyd2_spawn_mobs")+"::OnMyPingDead";
+	end;
+}
+
+// GM Management NPCs
+//============================================================
+sec_in02,36,167,3	script	Nidhoggur Manager	447,1,1,{
+	callfunc "F_GM_NPC";
+	mes "Enter the password.";
+	next;
+	if (callfunc("F_GM_NPC","1854",1) == 0) {
+		mes "Incorrect password.";
+		close;
+	}
+	mes "What do you need to do?";
+	next;
+	switch(select("Reset variables to allow entrance to Nidhoggur:change variable 'ins_nyd':Remove 3 day timer 3135:Confirm variable number")) {
+	case 1:
+		set ins_nyd,200;
+		set ins_nyd2,0;
+		erasequest 3135;
+		mes "ins_nyd set to 200 ins_nyd2 set to 0";
+		mes "quest 3135 erased.";
+		close;
+	case 2:
+		mes "Which variable do you want to change?";
+		next;
+		switch(select("ins_nyd:ins_nyd2")) {
+			case 1: set .@var$,"ins_nyd"; break;
+			case 2: set .@var$,"ins_nyd2"; break;
+		}
+		mes "Input the variable number";
+		next;
+		input .@input;
+		setd .@var$, .@input;
+		mes .@var$+" has been set to "+.@input+" .";
+		close;
+	case 3:
+		mes "The 3 day timer will be removed when you close this dialog.";
+		next;
+		erasequest 3135;
+		mes "Finished removing Quest Timer.";
+		close;
+	case 4:
+		mes "ins_nyd is at "+ins_nyd+".";
+		mes "ins_nyd2 is at "+ins_nyd2+".";
+		close;
+	}
+}
+
+nyd_dun02,7,7,2	script	Purification Admin#nyd2	844,2,0,{
+	callfunc "F_GM_NPC";
+	mes "Please enter the password";
+	set .@i, callfunc("F_GM_NPC","dragonslayer",1);
+	next;
+	if (.@i == 0) {
+		mes "Enter the password exactly.";
+		close;
+	}
+	switch(select("Generate Purification Stone:Remove Purification Stone:Turn Entrance NPC OFF:Turn Entrance NPC On:Cancel")) {
+	case 1:
+		mes "Purification stone has been created and will stay on for 30 minutes.";
+		donpcevent "Purification Stone#nyd2::OnEnable";
+		close;
+	case 2:
+		mes "The Purification Stone has been destroyed.";
+		donpcevent "Purification Stone#nyd2::OnDisable";
+		close;
+	case 3:
+		mes "The Yggdrasil Gatekeeper at nyd_dun02 100 201 is now OFF.";
+		disablenpc "Yggdrasil Gatekeeper";
+		close;
+	case 4:
+		mes "The Yggdrasil Gatekeeper at nyd_dun02 100 201 is now On.";
+		enablenpc "Yggdrasil Gatekeeper";
+		close;
+	case 5:
+		close;
+	}
+}
+
+nyd_dun02,88,195,4	script	Purification Stone#nyd2	406,{
+	erasequest 3135;
+	erasequest 3136;
+	set ins_nyd,200;
+	set ins_nyd2,0;
+	mes "^0000FFThe records and after-effect related to the Nidhoggur's Nest have been removed. You can generate and enter the dungeon again.^000000";
+	close;
+OnInit:
+	disablenpc "Purification Stone#nyd2";
+	end;
+OnEnable:
+	initnpctimer;
+	end;
+OnDisable:
+	stopnpctimer;
+	disablenpc "Purification Stone#nyd2";
+	end;
+OnTimer1000:
+	enablenpc "Purification Stone#nyd2";
+	end;
+OnTimer1740000:
+	mapannounce "nyd_dun02","The Purification Stone will be destroyed in one minute.",bc_map,"0x00FF99",FW_NORMAL,12;
+	end;
+OnTimer1800000:
+	disablenpc "Purification Stone#nyd2";
 	end;
 }

@@ -236,7 +236,7 @@ prontera,78,150,3	script	Dairenne#pront	90,{
 // inside Prontera
 //============================================================
 /*
-//This NPC has been disabled officiall.
+//This NPC has been disabled officially.
 prt_in,178,92,0	script	Curator of Library#pront	57,{
 	mes "[Curator Guiss]";
 	mes "Here, in the Western branch of the Prontera Library, ";
