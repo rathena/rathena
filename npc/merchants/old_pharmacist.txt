@@ -36,7 +36,7 @@ alberta_in,16,28,4	script	Pharmacist	61,{
 	mes "[Old Pharmacist]";
 	mes "Ummmm...";
 	mes "What brings you here...?";
-	switch(select("Make Potion:"Talk.:Mixing Information:Cancel")) {
+	switch(select("Make Potion:Talk.:Mixing Information:Cancel")) {
 	case 1:
 		next;
 		if (MaxWeight - Weight < 5000) {

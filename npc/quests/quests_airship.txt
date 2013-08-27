@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Samuray22
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -29,15 +29,18 @@
 //=     - How the Airship Works
 //= 1.9 Fixed missing checks for How the Airship Works quest. [Joseph]
 //= 2.0 Updated RE/Pre-RE EXP. [Euphy]
+//= 2.1 Updated Airship Ticket Quest with some missing parts. [Euphy]
 //============================================================ 
 
 // Airship Ticket Quest :: ein_tre
 //============================================================
 
+/* Note: this is an iRO conversion, and does not exactly match the official script. */
+
 //----------------------------------------------------------------------------
 // Kain Himere
 //----------------------------------------------------------------------------
-airplane,47,61,1	script	Crewman	833,{
+airplane,47,61,7	script	Crewman	833,{
 	if (kain_ticket == 4) {
 		mes "[Kain Himere]";
 		mes "Ah...";
@@ -91,15 +94,22 @@ airplane,47,61,1	script	Crewman	833,{
 			mes "it to the higher ups.";
 			mes "To cancel, press '0'.";
 			next;
-			input @comment$;
-			if (@comment$ == "0") {
+			input .@comment$;
+			if (.@comment$ == "kafra") {
+				mes "[Kain Himere]";
+				mes "K-Kafra...?";
+				mes "Hmm, maybe I better";
+				mes "not send this up after all...";
+				emotion e_an;
+				close;
+			} else if (.@comment$ == "0") {
 				mes "[Kain Himere]";
 				mes "Ah, well, if you";
 				mes "have any helpful criticism about our service, feel free to leave me with your comments at any time.";
 				close;
 			} else {
 				mes "["+strcharinfo(0)+"]";
-				mes @comment$+".";
+				mes .@comment$+".";
 				next;
 				mes "[Kain Himere]";
 				mes "Hmmmm...";
@@ -134,15 +144,22 @@ airplane,47,61,1	script	Crewman	833,{
 			mes "it to the higher ups.";
 			mes "To cancel, press '0'.";
 			next;
-			input @comment$;
-			if (@comment$=="0") {
+			input .@comment$;
+			if (.@comment$ == "kafra") {
+				mes "[Kain Himere]";
+				mes "K-Kafra...?";
+				mes "Hmm, maybe I better";
+				mes "not send this up after all...";
+				emotion e_an;
+				close;
+			} else if (.@comment$ == "0") {
 				mes "[Kain Himere]";
 				mes "Ah, well, if you";
 				mes "have any helpful criticism about our service, feel free to leave me with your comments at any time.";
 				close;
 			} else {
 				mes "["+strcharinfo(0)+"]";
-				mes @comment$+".";
+				mes .@comment$+".";
 				next;
 				mes "[Kain Himere]";
 				mes "Hmmmm...";
@@ -433,7 +450,7 @@ airplane,47,61,1	script	Crewman	833,{
 //----------------------------------------------------------------------------
 // Empty Room 201
 //----------------------------------------------------------------------------
-ein_in01,227,279,5	script	door_ein	-1,5,5,{
+ein_in01,227,279,3	script	#door_ein	-1,5,5,{
 OnTouch:
 	if (kain_ticket == 5) {
 		set kain_ticket, 6;
@@ -459,7 +476,7 @@ OnTouch:
 //----------------------------------------------------------------------------
 // Elle Cherno
 //----------------------------------------------------------------------------
-ein_in01,261,241,5	script	Elle Cherno	703,3,3,{
+ein_in01,261,241,3	script	Elle Cherno	703,3,3,{
 OnTouch:
 	mes "[Elle Cherno]";
 	mes "Let's get to work";
@@ -515,8 +532,11 @@ OnTouch:
 		close;
 	} else if (kain_ticket == 13) {
 		next;
-		//Check if you can carry the Picture Letter.
-		 if (checkweight(7276,1)) {
+		if (checkweight(7276,1) == 0) {
+			mes "[Elle Cherno]";
+			mes "Hey! I have something to give you, but you have too much stuff already. Will you come back later?";
+			close;
+		} else {
 			mes "[Elle Cherno]";
 			mes "You saw my grandpa?";
 			mes "You're his friend,";
@@ -531,11 +551,7 @@ OnTouch:
 			mes "in your hand.^000000";
 			changequest 2084,2085;
 			set kain_ticket, 14;
-			getitem 7276, 1; //Picture Letter,
-			close;
-		} else {
-			mes "[Elle Cherno]";
-			mes "Hey! I have something to give you, but you have too much stuff already. Will you come back later?";
+			getitem 7276, 1; //Picture_Letter
 			close;
 		}
 	}
@@ -547,7 +563,7 @@ OnTouch:
 //----------------------------------------------------------------------------
 ein_in01,123,94,1	script	Theo Cherno	851,{
 	if (kain_ticket == 7) {
-		callfunc "cherno";
+		callfunc "F_Cherno";
 		set kain_ticket, 8;
 		close;
 	} else if (kain_ticket > 7 && kain_ticket < 10) {
@@ -562,7 +578,7 @@ ein_in01,123,94,1	script	Theo Cherno	851,{
 		mes "You're a godsend!";
 		close;
 	} else if (kain_ticket > 12) {
-		emotion e_heh, "Theo Cherno";
+		emotion e_heh;
 		mes "[Theo Cherno]";
 		mes "I'm so happy";
 		mes "for my wife.";
@@ -585,7 +601,7 @@ ein_in01,123,94,1	script	Theo Cherno	851,{
 //----------------------------------------------------------------------------
 ein_in01,125,99,3	script	Tarsha Cherno	850,{
 	if (kain_ticket == 7) {
-		callfunc "cherno";
+		callfunc "F_Cherno";
 		set kain_ticket, 8;
 		close;
 	} else if (kain_ticket == 8) {
@@ -627,7 +643,7 @@ ein_in01,125,99,3	script	Tarsha Cherno	850,{
 		mes "such a robust song";
 		mes "for men! Haha, this";
 		mes "is all your fault, Tarsha.";
-		emotion e_gg, "Theo Cherno";
+		emotion e_gg;
 		next;
 		mes "[Tarsha Cherno]";
 		mes "Hoho.";
@@ -680,7 +696,7 @@ ein_in01,125,99,3	script	Tarsha Cherno	850,{
 			mes "Touching another";
 			mes "man's wife...?!";
 			next;
-			specialeffect2 EF_EARTHHIT;
+			specialeffect2 EF_PIERCE;
 			percentheal -30,0;
 			close;
 		case 2:
@@ -734,7 +750,7 @@ ein_in01,125,99,3	script	Tarsha Cherno	850,{
 			mes "Touching another";
 			mes "man's wife...?!";
 			next;
-			specialeffect2 EF_EARTHHIT;
+			specialeffect2 EF_PIERCE;
 			percentheal -20,0;
 			close;
 		case 4:
@@ -746,7 +762,7 @@ ein_in01,125,99,3	script	Tarsha Cherno	850,{
 			mes "Touching another";
 			mes "man's wife...?!";
 			next;
-			specialeffect2 EF_EARTHHIT;
+			specialeffect2 EF_PIERCE;
 			percentheal -10,0;
 			close;
 		}
@@ -767,17 +783,19 @@ ein_in01,125,99,3	script	Tarsha Cherno	850,{
 	}
 }
 
-function	script	cherno	{
-	misceffect 2;
+ein_in01,127,94,3	script	#exp_ein	111,{ end; }
+
+function	script	F_Cherno	{
+	specialeffect EF_COMBOATTACK1,AREA,"#exp_ein";
 	mes "^33355F*Bang*^000000";
 	next;
-	misceffect 3;
+	specialeffect EF_COMBOATTACK2,AREA,"#exp_ein";
 	mes "^33355F*Bang*^000000";
 	next;
-	misceffect 4;
+	specialeffect EF_COMBOATTACK3,AREA,"#exp_ein";
 	mes "^33355F*Bang*^000000";
 	next;
-	misceffect 20;
+	specialeffect EF_POISONATTACK,AREA,"#exp_ein";
 	mes "^33355F*Crash!*^000000";
 	mes "....."; 
 	emotion e_swt,0,"Theo Cherno";
@@ -798,7 +816,7 @@ function	script	cherno	{
 	mes "it a day and finish";
 	mes "this tomorrow.";
 	next;
-	emotion e_what, "Tarsha Cherno";
+	emotion e_what,0,"Tarsha Cherno";
 	mes "[Tarsha Cherno]";
 	mes "Elle is playing outside.";
 	mes "Oh, I didn't know we had";
@@ -813,8 +831,8 @@ function	script	cherno	{
 		mes "will you please leave us alone?";
 		close;
 	case 2:
-		emotion e_swt, "Tarsha Cherno";
-		emotion e_swt, "Theo Cherno";
+		emotion e_swt,0,"Tarsha Cherno";
+		emotion e_swt,0,"Theo Cherno";
 		mes "[Tarsha Cherno]";
 		mes "Excuse me?";
 		mes "What did she say?";
@@ -826,7 +844,7 @@ function	script	cherno	{
 		mes "was sick or sad";
 		mes "...Or something?";
 		next;
-		emotion e_omg, "Tarsha Cherno";
+		emotion e_omg,0,"Tarsha Cherno";
 		mes "[Tarsha Cherno]";
 		mes "Oh my god...!";
 		mes "What is she";
@@ -873,15 +891,9 @@ function	script	cherno	{
 }
 
 //----------------------------------------------------------------------------
-// Unidentified Machine #1 and #2
+// Unidentified Machine
 //----------------------------------------------------------------------------
-ein_in01,127,94,5	script	Unidentified Machine#mac	111,{
-	callfunc "Machine";
-}
-ein_in01,122,103,5	script	Unidentified Machine	111,{
-	callfunc "Machine";
-}
-function	script	Machine	{
+ein_in01,122,103,5	script	Unidentified Machine#ein	111,{
 	mes "^3355FFIt's...";
 	mes "It's a really";
 	mes "strange looking";
@@ -893,17 +905,117 @@ function	script	Machine	{
 //----------------------------------------------------------------------------
 // Mirror
 //----------------------------------------------------------------------------
-ein_in01,121,99,5	script	Mirror	111,{
+ein_in01,121,99,3	script	Mirror#ein	111,{
 	if (kain_ticket == 8) {
 		mes "^3355FFIt's a mirror.";
 		mes "So, of course the";
 		mes "first thing you'll";
 		mes "see is yourself.";
 		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "Man...";
-		mes "I didn't know";
-		mes "I was so good looking!";
+		if (Sex) {
+			switch(rand(1,5)) {
+			case 1:
+				mes "["+strcharinfo(0)+"]";
+				mes "Man...";
+				mes "I didn't know";
+				mes "I was so good";
+				mes "looking! Ooh yah~";
+				break;
+			case 2:
+				mes "["+strcharinfo(0)+"]";
+				mes "Whoa...";
+				mes "So that's why the";
+				mes "ladies keep looking";
+				mes "at me. I'm a walking";
+				mes "free gun show!";
+				break;
+			case 3:
+				mes "["+strcharinfo(0)+"]";
+				mes "It's a shame I can't job";
+				mes "change to Male Model.";
+				mes "Clearly, I'd be like, Job";
+				mes "Level 87 or something.";
+				mes "Man, I'm beautiful...";
+				break;
+			case 4:
+				mes "["+strcharinfo(0)+"]";
+				mes "This is my reflection?!";
+				mes "No one can be this good";
+				mes "looking, not without special";
+				mes "effects! I mean, it's not";
+				mes "fair to everyone else...";
+				break;
+			case 5:
+				mes "["+strcharinfo(0)+"]";
+				mes "Oh wow...";
+				mes "I look pretty good.";
+				mes "No wait. Really, really";
+				mes "good. So this must be";
+				mes "why I get such great";
+				mes "service at restaurants...";
+				break;
+			}
+		} else {
+			switch(rand(1,5)) {
+			case 1:
+				mes "["+strcharinfo(0)+"]";
+				mes "Oh. Wow.";
+				mes "I never realized...";
+				mes "Everything is in";
+				mes "perfect proportion!";
+				mes "No wonder people";
+				mes "want to party with me~";
+				break;
+			case 2:
+				mes "["+strcharinfo(0)+"]";
+				mes "Oh my gosh~";
+				mes "How can I look this";
+				mes "good without any makeup?";
+				mes "I-It isn't fair to all the other";
+				mes "girls... Wow, is this really me?";
+				break;
+			case 3:
+				mes "["+strcharinfo(0)+"]";
+				mes "Am I going crazy?";
+				mes "Is that girl in the";
+				mes "mirror really me...?";
+				mes "How did I not realize";
+				mes "how gorgeous I look?";
+				break;
+			case 4:
+				mes "["+strcharinfo(0)+"]";
+				mes "So...";
+				mes "What did you do with";
+				mes "this mirror? Because I'm";
+				mes "looking at my reflection";
+				mes "and I can't seem to find";
+				mes "any flaws with my figure...";
+				next;
+				emotion e_swt2,0,"Tarsha Cherno";
+				mes "[Tarsha Cherno]";
+				mes "Actually...";
+				mes "That's not one";
+				mes "of our inventions.";
+				mes "It's just a normal mirror...";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Well now...!";
+				mes "Are you sure?";
+				mes "Because my face looks";
+				mes "freakin' immaculate! And";
+				mes "it's like, I'm almost too sexy!";
+				break;
+			case 5:
+				mes "["+strcharinfo(0)+"]";
+				mes "Oh wow...";
+				mes "I look pretty good.";
+				mes "No wait. Really, really";
+				mes "good. So this must be";
+				mes "why I get such great";
+				mes "service at restaurants...";
+				break;
+			}
+		}
 		next;
 		mes "^3355FFAfter enjoying that little epiphany, you see a reflection of Tarsha's neck as you set the mirror back down.^000000";
 		next;
@@ -930,30 +1042,31 @@ einbech,45,113,5	script	Tree#t1-1::Tree	111,{
 		mes "......";
 		mes ".........";
 		next;
-		set @find_diary,rand(1,100);
-		if (@find_diary > 10) {
+		set .@find_diary,rand(1,100);
+		if (.@find_diary > 10) {
 			mes "^3355ffUnfortunately,";
 			mes "you weren't able";
 			mes "to find anything.^000000";
 			close;
 		} else {
-			callfunc "diary";
+			mes "^3355ffYou have found a ^3131FFJournal^3355ff among some other articles buried for safekeeping.^000000";
+			next;
+			callsub L_Diary;
+			next;
+			mes "...";
+			mes "......";
+			next;
+			mes "^3355FFThat was the last page of the journal. You picked it up so that you can bring it over to ^3131FFTarsha.^000000";
 			changequest 2082,2083;
 			set kain_ticket, 12;
 			close;
 		}
 	} else if (kain_ticket == 12) {
-		callfunc "diary";
+		callsub L_Diary;
 		close;
 	}
-}
-einbech,36,100,5	duplicate(Tree)	Tree#t1-2	111
-einbech,44,90,5	duplicate(Tree)	Tree#t1-3	111
-einbech,53,94,5	duplicate(Tree)	Tree#t1-4	111
 
-function	script	diary	{
-	mes "^3355ffYou have found a ^3131FFJournal^3355ff among some other articles buried for safekeeping.^000000";
-	next;
+L_Diary:
 	mes "^3355FFYou open";
 	mes "the journal";
 	mes "and begin to read...^000000";
@@ -1025,13 +1138,11 @@ function	script	diary	{
 	mes "^333333Lately Tarsha cries a lot. My poor baby loves her father so much, but he's always so cold. Sometimes I see him smile at Tarsha.^000000";
 	next;
 	mes "^333333But those moments grow fewer the more he drinks. When will he finally overcome his pain?^000000";
-	next;
-	mes "...";
-	mes "......";
-	next;
-	mes "^3355FFThat was the last page of the journal. You picked it up so that you can bring it over to ^3131FFTarsha.^000000";
 	return;
 }
+einbech,36,100,5	duplicate(Tree)	Tree#t1-2	111
+einbech,44,90,5	duplicate(Tree)	Tree#t1-3	111
+einbech,53,94,5	duplicate(Tree)	Tree#t1-4	111
 
 //----------------------------------------------------------------------------
 // Expert Repairman
