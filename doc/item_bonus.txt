@@ -422,3 +422,5 @@ bonus2 bSkillFixedCast,s,x;		Increases fixed cast time of skill s by x milliseco
 bonus2 bSkillVariableCast,s,x;		Increases variable cast time of skill s by x milliseconds. (supports skill names.)
 bonus2 bVariableCastrate,s,x;		Increases variable cast time of skill s by x%. (supports skill names.)
 bonus2 bFixedCastrate,s,x;		Increases fixed cast time of skill s by x%. (supports skill names.)
+bonus4 bSetDefRace,n,x,r,y;		Set DEF to y of an enemy of race n at x% for r milliseconds with normal attack.
+bonus4 bSetMDefRace,n,x,r,y;		Set MDEF to y of an enemy of race n at x% for r milliseconds with normal attack.

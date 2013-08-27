@@ -314,6 +314,10 @@ struct map_session_data {
 		short flag, rate;
 		unsigned char ele;
 	} subele2[MAX_PC_BONUS];
+	struct {
+		short value;
+		int rate, tick;
+	} def_set_race[RC_MAX], mdef_set_race[RC_MAX];
 	// zeroed structures end here
 	// manually zeroed structures start here.
 	struct s_autobonus autobonus[MAX_PC_BONUS], autobonus2[MAX_PC_BONUS], autobonus3[MAX_PC_BONUS]; //Auto script on attack, when attacked, on skill usage

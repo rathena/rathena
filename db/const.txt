@@ -603,6 +603,9 @@ bMagicAtkEle 2056
 bFixedCast	2057
 bVariableCast	2058
 
+bSetDefRace	2059
+bSetMDefRace	2060
+
 EQI_HEAD_TOP	1
 EQI_ARMOR	2
 EQI_HAND_L	3

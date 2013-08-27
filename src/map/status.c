@@ -977,6 +977,8 @@ void initChangeTables(void) {
 	StatusChangeFlagTable[SC_EXTRACT_WHITE_POTION_Z] |= SCB_REGEN;
 	StatusChangeFlagTable[SC_VITATA_500] |= SCB_REGEN;
 	StatusChangeFlagTable[SC_EXTRACT_SALAMINE_JUICE] |= SCB_ASPD;
+	StatusChangeFlagTable[SC_DEFSET] |= SCB_DEF;
+	StatusChangeFlagTable[SC_MDEFSET] |= SCB_MDEF;
 
 #ifdef RENEWAL
 	// renewal EDP increases your weapon atk
@@ -1117,7 +1119,7 @@ int status_set_sp(struct block_list *bl, unsigned int sp, int flag)
 	return status_zap(bl, 0, status->sp - sp);
 }
 
-int status_charge(struct block_list* bl, int64 hp, int64 sp)
+int64 status_charge(struct block_list* bl, int64 hp, int64 sp)
 {
 	if(!(bl->type&BL_CONSUME))
 		return (int)hp+sp; //Assume all was charged so there are no 'not enough' fails.
@@ -1129,14 +1131,12 @@ int status_charge(struct block_list* bl, int64 hp, int64 sp)
 //If flag&2, fail if target does not has enough to substract.
 //If flag&4, if killed, mob must not give exp/loot.
 //flag will be set to &8 when damaging sp of a dead character
-int status_damage(struct block_list *src,struct block_list *target,int64 hp, int64 sp, int walkdelay, int flag)
+int status_damage(struct block_list *src,struct block_list *target,int64 dhp, int64 dsp, int walkdelay, int flag)
 {
 	struct status_data *status;
 	struct status_change *sc;
-
-	// here onwards we consider it a 32-type, the client does not support higher and from here onwards the value doesn't get thru percentage modifiers
-	hp = cap_value(hp,INT_MIN,INT_MAX);
-	sp = cap_value(sp,INT_MIN,INT_MAX);
+	int hp = (int)cap_value(dhp,INT_MIN,INT_MAX);
+	int sp = (int)cap_value(dsp,INT_MIN,INT_MAX);
 
 	if(sp && !(target->type&BL_CONSUME))
 		sp = 0; //Not a valid SP target.
@@ -1152,7 +1152,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 hp, int
 	}
 
 	if (target->type == BL_SKILL)
-		return skill_unit_ondamaged((struct skill_unit *)target, src, hp, gettick());
+		return (int)skill_unit_ondamaged((struct skill_unit *)target, src, hp, gettick());
 
 	status = status_get_status_data(target);
 	if( status == &dummy_status )
@@ -1360,19 +1360,17 @@ int status_damage(struct block_list *src,struct block_list *target,int64 hp, int
 
 //Heals a character. If flag&1, this is forced healing (otherwise stuff like Berserk can block it)
 //If flag&2, when the player is healed, show the HP/SP heal effect.
-int status_heal(struct block_list *bl,int64 hp,int64 sp, int flag)
+int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int flag)
 {
 	struct status_data *status;
 	struct status_change *sc;
+	int hp = (int)cap_value(hhp,INT_MIN,INT_MAX);
+	int sp = (int)cap_value(hsp,INT_MIN,INT_MAX);
 
 	status = status_get_status_data(bl);
 
 	if (status == &dummy_status || !status->hp)
 		return 0;
-
-	// here onwards we consider it a 32-type, the client does not support higher and from here onwards the value doesn't get thru percentage modifiers
-	hp = cap_value(hp,INT_MIN,INT_MAX);
-	sp = cap_value(sp,INT_MIN,INT_MAX);
 
 	sc = status_get_sc(bl);
 	if (sc && !sc->count)
@@ -4959,7 +4957,9 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 
 	if(!sc || !sc->count)
 		return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);
-
+	
+	if(sc->data[SC_DEFSET]) //FIXME: Find out if this really overrides all other SCs
+		return sc->data[SC_DEFSET]->val1;
 	if(sc->data[SC_BERSERK])
 		return 0;
 	if(sc->data[SC_SKA])
@@ -5099,7 +5099,9 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 
 	if(!sc || !sc->count)
 		return (defType)cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX);
-
+	
+	if(sc->data[SC_MDEFSET]) //FIXME: Find out if this really overrides all other SCs
+		return sc->data[SC_MDEFSET]->val1;
 	if(sc->data[SC_BERSERK])
 		return 0;
 	if(sc->data[SC_BARRIER])
