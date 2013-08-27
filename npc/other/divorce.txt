@@ -18,7 +18,7 @@
 //= 1.1 Added check if the patner's online, added effects [Lupus]
 //= 1.2 Updated to Aegis 10.3 standards. [L0ne_W0lf]
 //= 1.2a Commented out check of 'wedding_sign' to let
-//=		old married players divorcing, optimized, fixed a bug [Lupus]
+//=     old married players divorcing, optimized, fixed a bug [Lupus]
 //= 1.3 Wedding variable 'wedding_sign' is now unset on divorce. [L0ne_W0lf]
 //= 1.4 Removed ifpartneron check, fixed typo in percentheal. [L0ne_W0lf]
 //= 1.5 Replaced effect numerics with constants. [L0ne_W0lf]
@@ -44,7 +44,7 @@ nif_in,190,112,5	script	Deviruchi#divorce	738,{
   	if (!getpartnerid()) {
 		mes "Bwah hah hah~!";
 		mes "That look in your eyes~!";
-		if (sex) {
+		if (Sex) {
 			mes "Those are definitely the eyes";
 			mes "of a lonely male bachelor.";
 			mes "I'm almost 100 percent sure";
@@ -76,7 +76,7 @@ nif_in,190,112,5	script	Deviruchi#divorce	738,{
 	mes "I sense that you carry a";
 	mes "tiresome burden...";
 	mes "If I'm not wrong, you're";
-	if (sex)
+	if (Sex)
 		mes "a married man, aren't you?";
 	else
 		mes "a married woman, aren't you?";
@@ -99,7 +99,7 @@ nif_in,190,112,5	script	Deviruchi#divorce	738,{
 	mes "At the end of the day, you and";
 	mes "your partner fight, and you feel";
 	mes "totally totally miserable.";
-	if (sex)
+	if (Sex)
 		mes "...all because of HER.";
 	else
 		mes "...all because of HIM.";
@@ -123,7 +123,7 @@ nif_in,190,112,5	script	Deviruchi#divorce	738,{
 	mes "[Deviruchi]";
 	mes "*whispers*";
 	mes "^555555It's not like you're breaking^000000";
-	if (sex) {
+	if (Sex) {
 		mes "^555555any promises, and it's not";
 		mes "like your wife will care if she";
 		mes "doesn't know... Don't you";
@@ -171,7 +171,7 @@ nif_in,190,112,5	script	Deviruchi#divorce	738,{
 		mes "[Deviruchi]";
 		mes "I understand. But if you think";
 		mes "about anything, think about";
-		if (sex) {
+		if (Sex) {
 			mes "your wife's nagging, and";
 			mes "how great it would be to";
 			mes "finally free yourself of the";
@@ -196,7 +196,7 @@ nif_in,190,112,5	script	Deviruchi#divorce	738,{
 		specialeffect EF_MAGICROD;
 		specialeffect2 EF_DEVIL;
 		set wedding_sign,0;
-		set zeny,zeny-2500000;
+		set Zeny, Zeny-2500000;
 		percentheal -100,-100;
 		divorce;
 		mes "[Deviruchi]";

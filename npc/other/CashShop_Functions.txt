@@ -14,7 +14,7 @@
 //= - Dungeon Teleport Scroll
 //===== Additional Comments: ================================= 
 //= 1.0 First version. [L0ne_W0lf]
-//=	F_CashPartyCall Optimized by Trancid.
+//=     F_CashPartyCall Optimized by Trancid.
 //= 1.1 Updated Dungeon Teleport Scroll. [L0ne_W0lf]
 //=     Added Town Teleport Scroll Function
 //=     Added Seige Teleport Scroll Function

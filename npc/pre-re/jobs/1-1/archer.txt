@@ -17,8 +17,8 @@
 //= 1.5 Now saves/restores all quest skills [Lupus]
 //= 1.6 Merged back JFunc [Lupus]
 //= 1.7 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
-//=	Arrow reward is now equal to the type sof trunks brought.
-//=	No longer uses function "F_ToHigh"
+//=     Arrow reward is now equal to the type sof trunks brought.
+//=     No longer uses function "F_ToHigh"
 //= 1.7a Fixed minor dialogue bug at Grade==25 [Lupus]
 //= 1.8 Fixed mistake in condition check. [L0ne_W0lf]
 //= 1.9 Added Quest Log commands. [L0ne_W0lf]

@@ -42,8 +42,7 @@ OnEffect2:
 }
 
 prontera,164,69,3	script	Cool Devi#06_hw	738,{
-	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 2000 || checkweight(1201,1) == 0) {
+	if (MaxWeight - Weight < 2000 || checkweight(1201,1) == 0) {
 		mes "^3355FFWait a second!";
 		mes "Right now, you're carrying";
 		mes "too many things with you.";
@@ -239,8 +238,7 @@ prontera,164,69,3	script	Cool Devi#06_hw	738,{
 
 
 geffen,145,132,3	script	Hoirin#06_hw	729,{
-	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 2000 || checkweight(1201,1) == 0) {
+	if (MaxWeight - Weight < 2000 || checkweight(1201,1) == 0) {
 		mes "^3355FFWait a second!";
 		mes "Right now, you're carrying";
 		mes "too many things with you.";
@@ -395,8 +393,7 @@ OnTouch:
 }
 
 nif_in,19,32,3	script	Deviruchi#06_hw	738,{
-	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 2000 || checkweight(1201,1) == 0) {
+	if (MaxWeight - Weight < 2000 || checkweight(1201,1) == 0) {
 		mes "^3355FFWait a second!";
 		mes "Right now, you're carrying";
 		mes "too many things with you.";
@@ -488,8 +485,7 @@ nif_in,19,32,3	script	Deviruchi#06_hw	738,{
 // Creation of Pumpkin Pie (Event 2)
 //============================================================
 nif_fild01,165,115,3	script	Chicken Masta#06_hw	794,{
-	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 2000 || checkweight(1201,1) == 0) {
+	if (MaxWeight - Weight < 2000 || checkweight(1201,1) == 0) {
 		mes "^3355FFWait a second!";
 		mes "Right now, you're carrying";
 		mes "too many things with you.";

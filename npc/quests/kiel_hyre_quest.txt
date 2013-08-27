@@ -414,7 +414,7 @@ yuno_in01,35,179,4	script	Pub Master#kh	46,5,5,{
 			mes "Thank you so much";
 			mes "for helping me out~";
 			getitem 7487,1; //Tavern_Wine
-			set zeny,zeny+1000;
+			set Zeny, Zeny+1000;
 			close;
 		}
 		else {
@@ -2124,10 +2124,6 @@ kh_vila,191,14,0	script	Wall#kh	139,1,1,{
 			close;
 		}
 	}
-
-OnOpenDoor:
-	misceffect 316;
-	end;
 }
 
 //----------------------------------------------------------------------------
@@ -2148,8 +2144,8 @@ kh_vila,184,20,0	script	Book#kh1::BookKHQ1	111,{
 			mes "pull it towards you, the";
 			mes "wall slides opens open";
 			mes "to reveal a secret path.^000000";
-			donpcevent "Wall#kh::OnOpenDoor";
 			set KielHyreQuest,28;
+			specialeffect EF_READYPORTAL2,AREA,"Wall#kh";
 			close;
 		}
 		else {
@@ -2162,11 +2158,8 @@ kh_vila,184,20,0	script	Book#kh1::BookKHQ1	111,{
 	}
 
 }
-
 kh_vila,181,20,0	duplicate(BookKHQ1)	Book#kh2	111
-
 kh_vila,178,20,0	duplicate(BookKHQ1)	Book#kh3	111
-
 kh_vila,175,19,0	duplicate(BookKHQ1)	Book#kh4	111
 
 //----------------------------------------------------------------------------
@@ -2215,7 +2208,7 @@ kh_vila,16,175,0	script	Box#khp1	111,{
 	next;
 	switch(select("Buy!:Cancel")) {
 	case 1:
-		if (zeny < 1100) {
+		if (Zeny < 1100) {
 			mes "^3355FFUnfortunately, you";
 			mes "don't have enough";
 			mes "zeny to insert into";
@@ -2235,7 +2228,7 @@ kh_vila,16,175,0	script	Box#khp1	111,{
 			mes "special about it";
 			mes "at all! It's just";
 			mes "normal Pet Food!";
-			set zeny,zeny-1100;
+			set Zeny, Zeny-1100;
 			getitem 537,1;	//Pet_Food
 			close;
 		}
@@ -4662,7 +4655,7 @@ kh_mansion,22,28,4	script	Kiel Hyre#kh	903,{
 		getitem 7509,1; //Fancy_Key_Card
 		set KielHyreQuest,108;
 		next;
-		if (sex == 0) {
+		if (Sex == 0) {
 			if (getpartnerid() == 0) set .@KHTitle$,"Miss";
 			else set .@KHSTitle$,"Mrs";
 		}
@@ -5172,12 +5165,12 @@ OnTouch:
 
 OnEnable:
 	initnpctimer;
-	misceffect 215;
+	specialeffect EF_SUMMONSLAVE;
 	end;
 
 OnTimer30000:
 	stopnpctimer;
-	misceffect 215;
+	specialeffect EF_SUMMONSLAVE;
 	disablenpc "Kiehl_Room_Warp";
 	end;
 
@@ -6081,7 +6074,7 @@ kh_kiehl01,44,33,0	script	Big Door#BigDoorKHQ1	111,{
 kh_kiehl01,43,33,0	script	Big_Door_1_Warp	45,1,1,{
 OnEnable:
 	initnpctimer;
-	misceffect 215;
+	specialeffect EF_SUMMONSLAVE;
 	end;
 
 OnInit:
@@ -6090,7 +6083,7 @@ OnInit:
 
 OnTimer30000:
 	stopnpctimer;
-	misceffect 215;
+	specialeffect EF_SUMMONSLAVE;
 	disablenpc "Big_Door_1_Warp";
 	set getvariableofnpc(.KHDoor1Opened,"Big Door#BigDoorKHQ1"),0;
 	end;
@@ -6141,7 +6134,7 @@ kh_kiehl01,174,40,0	script	Big Door#BigDoorKHQ2	111,{
 kh_kiehl01,174,39,0	script	Big_Door_2_Warp	45,1,1,{
 OnEnable:
 	initnpctimer;
-	misceffect 215;
+	specialeffect EF_SUMMONSLAVE;
 	end;
 
 OnInit:
@@ -6150,7 +6143,7 @@ OnInit:
 
 OnTimer30000:
 	stopnpctimer;
-	misceffect 215;
+	specialeffect EF_SUMMONSLAVE;
 	disablenpc "Big_Door_2_Warp";
 	set getvariableofnpc(.KHDoor2Opened,"Big Door#BigDoorKHQ2"),0;
 	end;
@@ -6201,7 +6194,7 @@ kh_kiehl01,77,108,0	script	Big Door#BigDoorKHQ3	111,{
 kh_kiehl01,78,108,0	script	Big_Door_3_Warp	45,1,1,{
 OnEnable:
 	initnpctimer;
-	misceffect 215;
+	specialeffect EF_SUMMONSLAVE;
 	end;
 
 OnInit:
@@ -6210,7 +6203,7 @@ OnInit:
 
 OnTimer30000:
 	stopnpctimer;
-	misceffect 215;
+	specialeffect EF_SUMMONSLAVE;
 	disablenpc "Big_Door_3_Warp";
 	set getvariableofnpc(.KHDoor3Opened,"Big Door#BigDoorKHQ3"),0;
 	end;
@@ -6261,7 +6254,7 @@ kh_kiehl01,42,177,0	script	Big Door#BigDoorKHQ4	111,{
 kh_kiehl01,41,177,0	script	Big_Door_4_Warp	45,1,1,{
 OnEnable:
 	initnpctimer;
-	misceffect 215;
+	specialeffect EF_SUMMONSLAVE;
 	end;
 
 OnInit:
@@ -6270,7 +6263,7 @@ OnInit:
 
 OnTimer30000:
 	stopnpctimer;
-	misceffect 215;
+	specialeffect EF_SUMMONSLAVE;
 	disablenpc "Big_Door_4_Warp";
 	set getvariableofnpc(.KHDoor4Opened,"Big Door#BigDoorKHQ4"),0;
 	end;
@@ -6472,12 +6465,12 @@ kh_kiehl01,166,186,0	script	Big_Door_5_Warp	45,1,1,{
 
 OnEnable:
 	initnpctimer;
-	misceffect 215;
+	specialeffect EF_SUMMONSLAVE;
 	end;
 
 OnTimer30000:
 	stopnpctimer;
-	misceffect 215;
+	specialeffect EF_SUMMONSLAVE;
 	disablenpc "Big_Door_5_Warp";
 	set getvariableofnpc(.KHDoor5Opened,"Big Door#BigDoorKHQ5"),0;
 	end;
@@ -6705,9 +6698,13 @@ kh_kiehl02,50,52,4	script	Kiehl#Original	902,{
 		mes "jobs--sort of like robots-- but";
 		mes "don't worry, they won't be hurt.";
 		next;
-		donpcevent "::OnKHSpiderWeb";
 		mes "[Mitchell]";
 		mes "Nooooo!";
+		specialeffect PF_FOGWALL,AREA,"Mitchell#KiehlRoom";
+		specialeffect PF_FOGWALL,AREA,"Agent#KHAgent1";
+		specialeffect PF_FOGWALL,AREA,"Agent#KHAgent2";
+		specialeffect PF_FOGWALL,AREA,"Agent#KHAgent3";
+		specialeffect PF_FOGWALL,AREA,"Agent#KHAgent4";
 		next;
 		cutin "kh_kiel03",2;
 		mes "[Kiehl]";
@@ -7071,63 +7068,18 @@ OnReset:
 }
 
 //----------------------------------------------------------------------------
-// Kiehl's Room; Mitchell and Agents. (Floating NPC + Duplicates)
+// Kiehl's Room; Mitchell and Agents.
 //----------------------------------------------------------------------------
 kh_kiehl02,49,55,6	script	Mitchell#KiehlRoom	727,{
 	end;
 OnInit:
-	hideonnpc "Mitchell#KiehlRoom";
-	end;
-
-OnKHSpiderWeb:
-	misceffect 404;
+	hideonnpc strnpcinfo(0);
 	end;
 }
-
-kh_kiehl02,53,52,4	script	Agent#KHAgent1	880,{
-	end;
-OnInit:
-	hideonnpc "Agent#KHAgent1";
-	end;
-
-OnKHSpiderWeb:
-	misceffect 404;
-	end;
-}
-
-kh_kiehl02,51,49,1	script	Agent#KHAgent2	880,{
-	end;
-OnInit:
-	hideonnpc "Agent#KHAgent2";
-	end;
-
-OnKHSpiderWeb:
-	misceffect 404;
-	end;
-}
-
-kh_kiehl02,47,50,0	script	Agent#KHAgent3	880,{
-	end;
-OnInit:
-	hideonnpc "Agent#KHAgent3";
-	end;
-
-OnKHSpiderWeb:
-	misceffect 404;
-	end;
-}
-
-kh_kiehl02,46,53,6	script	Agent#KHAgent4	880,{
-	end;
-OnInit:
-	hideonnpc "Agent#KHAgent4";
-	end;
-
-OnKHSpiderWeb:
-	misceffect 404;
-	end;
-}
-
+kh_kiehl02,53,52,4	duplicate(Mitchell#KiehlRoom)	Agent#KHAgent1	880
+kh_kiehl02,51,49,1	duplicate(Mitchell#KiehlRoom)	Agent#KHAgent2	880
+kh_kiehl02,47,50,0	duplicate(Mitchell#KiehlRoom)	Agent#KHAgent3	880
+kh_kiehl02,46,53,6	duplicate(Mitchell#KiehlRoom)	Agent#KHAgent4	880
 
 //----------------------------------------------------------------------------
 // Kiehl's Room; Copy of Kiehl.
@@ -7151,7 +7103,7 @@ OnTouch:
 	end;
 
 OnEnable:
-	misceffect 215;
+	specialeffect EF_SUMMONSLAVE;
 	end;
 
 OnInit:
@@ -7164,55 +7116,55 @@ OnInit:
 //============================================================ 
 //= 1.0 First version, needs testing [Playtester]
 //= 1.1 Copied over some changes made by -Tsuyuki- [L0ne_W0lf]
-//=	Reworked variables slightly so that the permenents ones aside from the 
-//=	main tracking variable, are deleted when no longer needed. Renamed
-//=	several variables that handle strings to @KHInput$. [L0ne_W0lf]
+//=     Reworked variables slightly so that the permenents ones aside from the 
+//=     main tracking variable, are deleted when no longer needed. Renamed
+//=     several variables that handle strings to @KHInput$. [L0ne_W0lf]
 //= 1.2 Removed duplicate NPCs. [Toms]
 //= 1.3 More Bug fixes, fixed typo. Updated Additional comments. [L0ne_W0lf]
 //= 1.4 Fixed doors not resetting in kh_kiehl01 after 30 second timer is up. [L0ne_W0lf]
 //= 1.5 Another bug fixed (&& instead of ||). [L0ne_W0lf]
 //= 1.6 More squashed bugs with if checking. [L0ne_W0lf]
 //= 1.7 Corrected some spelling mistakes. [Balish]
-//	Corrected Exploit with the pub man, giving infinite wine and money.
-//	Corrected pool and map not showing text for some states of the quest.
-//	Corrected Elly showing cutin but not text for some states of the quest (causing players to log off to continue).
-//	Let fisherman talk to you when you have 10 fishes OR MORE.
-//	Corrected not letting you enter the tombstone after finishing the quest.
+//=     Corrected Exploit with the pub man, giving infinite wine and money.
+//=     Corrected pool and map not showing text for some states of the quest.
+//=     Corrected Elly showing cutin but not text for some states of the quest (causing players to log off to continue).
+//=     Let fisherman talk to you when you have 10 fishes OR MORE.
+//=     Corrected not letting you enter the tombstone after finishing the quest.
 //= 1.8 Elly now deletes the Iron_Box, and Kiel Hyre deletes the Pin. [L0ne_W0lf]
-//= 	More security on the 5th Big Door, now makes sure no one outside of who-
-//=	acticated it initially can use it. Resets after 10 minutes to make it.
-//=	Made it so that you need to be at least step 84 to activate the final door.
-//=	Corrected not deleting Allysia's Ring from inventory.
+//=     More security on the 5th Big Door, now makes sure no one outside of who-
+//=     acticated it initially can use it. Resets after 10 minutes to make it.
+//=     Made it so that you need to be at least step 84 to activate the final door.
+//=     Corrected not deleting Allysia's Ring from inventory.
 //= 1.9 Exit will now enable if you are just retrieving the Ring, keeps you from getting stuck. [L0ne_W0lf]
-//=	Corrected "KH_Kielh02", was setting off a debug, invalid map index. Should have been "kh_Kiehl02"
-//=	Made .KHQuestBusy$ into a temp global variable. $@KHQuestBusy$. 
+//=     Corrected "KH_Kielh02", was setting off a debug, invalid map index. Should have been "kh_Kiehl02"
+//=     Made .KHQuestBusy$ into a temp global variable. $@KHQuestBusy$. 
 //= 2.0 Changed the labels on the "Big Doors" to "Identifier Names" to prevent an error with using getvariableofnpc [L0ne_W0lf]
 //= 2.1 Fifth door now checks for a variable HIGHER or EQUAL to 74 not 84, as pointed out by Stollen. [L0ne_W0lf]
 //= 2.2 Another fix for Elly, no longer RESETS to 26 when you talk to her. [L0ne_W0lf]
 //= 2.3 Should NOT have been setting .KHQuestBusy at all. It's not used or accessed anymore. Removed. [L0ne_W0lf]
 //= 2.4 Lots of fixes (4ish) from Valandi. [L0ne_W0lf]
-//=	Added a getmapuser check to the mapwarp in KHTimerEnd so it's not trying to warp out 0 users. [L0ne_W0lf]
+//=     Added a getmapuser check to the mapwarp in KHTimerEnd so it's not trying to warp out 0 users. [L0ne_W0lf]
 //= 2.5 Fixed several small issues (and large one) such as typos in cutins, typos in dialog, etc. [L0ne_W0lf]
-//=	Added some of the missing dialogs for several NPCs, and fixed a few NPC locations.
-//=	ALL books can now trigger the wall.
-//=	Allysia will now summon 4 (was 2) G_CONSTANTS instead of REGULAR constants.
-//=	Fixed where Golden_Key and Kiel_Button are deleted.
-//=	Removed KHTimerEnd, and instead use OnReset.
-//=	Fixed typo in the second NPC that gives Black Keycards.
-//=	Added Monster Warps. (Keeps monsters from being in dungeon quest area.) [Non-functional]
+//=     Added some of the missing dialogs for several NPCs, and fixed a few NPC locations.
+//=     ALL books can now trigger the wall.
+//=     Allysia will now summon 4 (was 2) G_CONSTANTS instead of REGULAR constants.
+//=     Fixed where Golden_Key and Kiel_Button are deleted.
+//=     Removed KHTimerEnd, and instead use OnReset.
+//=     Fixed typo in the second NPC that gives Black Keycards.
+//=     Added Monster Warps. (Keeps monsters from being in dungeon quest area.) [Non-functional]
 //= 2.6 Stupid mistake, accidentally had 4 copies of the same script in 1... [L0ne_W0lf the bonehead]
 //= 2.7 Fixed the wrong name being displayed for Kiel Hyre in one dialog. 
-//=	Removed $@KH_DoorInvoker entirely. The quest is now working like it should according to iRO.
-//=	Fixed up a few more NPC headers. Facing direction fixes mostly this time.
-//=	More progression changes to Kiehl Hyre. He no longer stops dialog after the agents appear.
+//=     Removed $@KH_DoorInvoker entirely. The quest is now working like it should according to iRO.
+//=     Fixed up a few more NPC headers. Facing direction fixes mostly this time.
+//=     More progression changes to Kiehl Hyre. He no longer stops dialog after the agents appear.
 //= 2.8 Fixed the weight checking in Vandt, and added official dialog. [L0ne_W0lf]
-//=	Added weight checks for all NPCs that give items. Semi-official dialog.
-//=	Got the missing portion of dialog for Mills'.
-//=	Will add further proper dialogs as I get to them on the second runthrough of the quest.
+//=     Added weight checks for all NPCs that give items. Semi-official dialog.
+//=     Got the missing portion of dialog for Mills'.
+//=     Will add further proper dialogs as I get to them on the second runthrough of the quest.
 //= 2.8a minor optimization with extra goto, else or empty switch [Lupus]
 //= 2.9 Fixed the "enablenpc" problem with the missing spaces. No idea how it happened. [L0ne_W0lf]
 //= 3.0 Fixed a typo in Elly, in her room. (was <= should have been <) [L0ne_W0lf]
-//=	Added an 'end;' to the cookie basket. Kiel Hyre's final dialog will now delete all quest-related items.
+//=     Added an 'end;' to the cookie basket. Kiel Hyre's final dialog will now delete all quest-related items.
 //= 3.1 Moved the "delitem" for all related quest items to the proper NPC. [L0ne_W0lf]
 //= 3.2 Fixed error with Allysia teling you to "Go away." maybe. [L0ne_W0lf]
 //= 3.2b Fixed some typos and grammar mistakes. [SinSloth]
@@ -7222,7 +7174,7 @@ OnInit:
 //=     for items, should be used bitwise methods in a single variable. So let's fix the rest possible bugs (if they exist) and then optimize ^_-
 //= 3.5 Changed the way the Black Keycard distibuting NPCs work slighty. [L0ne_W0lf]
 //= 3.6 Keil Hyre removes ALL outstanding quest items when he is talked [L0ne_W0lf]
-//=	to after finishing the quest.
+//=     to after finishing the quest.
 //= 3.7 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 3.8 Corrected some delitems. (bugreport:690) [Samuray22]
 //= 3.9 Fixed a cutin not being erased. (bugreport:1539) [L0ne_W0lf]

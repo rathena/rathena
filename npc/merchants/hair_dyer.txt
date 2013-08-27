@@ -23,7 +23,7 @@ prt_in,243,168,4	script	Jovovich	91,{
 	mes "How may I help you?";
 	next;
 	mes "[Hairdresser Jovovich]";
-	if (sex) mes "Oh, no! Your hair is damaged. It seems as if you may need professional treatment. Come sit over here, please. Come.";
+	if (Sex) mes "Oh, no! Your hair is damaged. It seems as if you may need professional treatment. Come sit over here, please. Come.";
 	else {
 		if (rand(20) > 11) {
 			mes "Eh!? Oh my! Oh no no no no! Your hair is sooo damaged! It's not good if you leave your hair like this.";
@@ -95,7 +95,7 @@ prt_in,243,168,4	script	Jovovich	91,{
 						case 7: callsub S_NoDye,983,"black"; break;
 						case 8: callsub S_NoDye,975,"red"; break;
 						}
-						if (zeny < 1000) {
+						if (Zeny < 1000) {
 							mes "[Hairdresser Jovovich]";
 							mes "The fee is 1000 zeny. Do you not have enough...?";
 							close;
@@ -111,7 +111,7 @@ prt_in,243,168,4	script	Jovovich	91,{
 						case 7: delitem 983,1; break; //Black_Dyestuffs
 						case 8: delitem 975,1; break; //Scarlet_Dyestuffs
 						}
-						set Zeny,Zeny-1000;
+						set Zeny, Zeny-1000;
 						setlook VAR_HEADPALETTE,.@headpalette;
 						set .@choose_success,1;
 						break;
@@ -369,7 +369,7 @@ lhz_in02,100,134,3	script	Hair Dyer#lich	850,{
 						else if (.@headpalette == 5) delitem 978,1; //Cobaltblue_Dyestuffs
 						else if (.@headpalette == 6) delitem 982,1; //White_Dyestuffs
 						else if (.@headpalette == 7) delitem 983,1; //Black_Dyestuffs
-						set zeny,zeny-1000;
+						set Zeny, Zeny-1000;
 						setlook VAR_HEADPALETTE,.@headpalette;
 						set .@choose_success,1;
 						break;

@@ -146,7 +146,7 @@ alberta,214,77,6	script	Captain Janssen	709,{
 			mes "Sure, no problem. I'll be waiting for your return.";
 			close;
 		case 2:
-			if (zeny < 10000) {
+			if (Zeny < 10000) {
 				mes "[Captain Janssen]";
 				mes "I'm sorry, but you don't have enough money. I need at least 10,000 Zeny to restock our supplies...";
 				close;
@@ -154,7 +154,7 @@ alberta,214,77,6	script	Captain Janssen	709,{
 			else {
 				mes "[Captain Janssen]";
 				mes "Excellent! Now we're good to go. Let's pull up the anchor again!";
-				set zeny,zeny-10000;
+				set Zeny, Zeny-10000;
 				close2;
 				warp "e_tower",70,114;
 				end;
@@ -182,7 +182,7 @@ alberta,214,77,6	script	Captain Janssen	709,{
 			mes "[Captain Janssen]";
 			mes "Huh? Are you sure that you don't mind giving me that much money? Wow, thank you so much!";
 			next;
-			if (zeny < 10000) {
+			if (Zeny < 10000) {
 				mes "[Captain Janssen]";
 				mes "...I'm sorry, but I don't think you have 10,000 Zeny. Thank you for your kindness, but I need more than that.";
 				close;
@@ -194,7 +194,7 @@ alberta,214,77,6	script	Captain Janssen	709,{
 				next;
 				mes "[Captain Janssen]";
 				mes "Thank you so much! Now I can stock up on food and materials for my ship. You're kind, very kind!";
-				set zeny,zeny-10000;
+				set Zeny, Zeny-10000;
 				set in_102tower,1;
 				close;
 			}

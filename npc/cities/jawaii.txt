@@ -27,9 +27,9 @@
 //= 2.02 Fixed Classic Suite NPC warping directly above a warp [Evera]
 //= 3.0 Rescripted to Aegis 10.3 standard. Contains all Jawaii-related NPCs. [L0ne_W0lf]
 //= 3.1 Fixed bugs with getpartnerid() (it never returns 1), fixed some conditons,
-//=		replaced getpartnerid() with ispartneron() at some tri-forks [Lupus]
+//=     replaced getpartnerid() with ispartneron() at some tri-forks [Lupus]
 //= 3.2 Reverted ispartneron() BACK to getpartnerid(). [L0ne_W0lf]
-//=	None of the NPCs need the player's partner to be online.
+//=     None of the NPCs need the player's partner to be online.
 //= 3.3 Just a small fix up on the Bartender. [L0ne_W0lf]
 //= 3.3a Just a little typo error. [Samuray22]
 //= 3.4 Added missing checkweights. [L0ne_W0lf]
@@ -241,13 +241,13 @@ jawaii,141,200,3	script	Employee#sroom	798,{
 	next;
 	if (select("Use.:Cancel.") == 1) {
 		mes "[Alowa]";
-		if (zeny > 999) {
+		if (Zeny > 999) {
 			mes "T-Thank you ssso much!";
 			mes "L-Let open the room door";
 			mes "ffffor you. Thank y-you.";
 			mes "Ha-have a good time.";
 			close2;
-			set zeny,zeny-1000;
+			set Zeny, Zeny-1000;
 			warp "jawaii_in",116,64;
 			end;
 		}
@@ -260,7 +260,7 @@ jawaii,141,200,3	script	Employee#sroom	798,{
 	mes "[Alowa]";
 	mes "^666666*Sniff*^000000";
 	mes "B-but I promise th-that this room is the nicest and cl-cleanest room! P-Please! C-come back!";
-	Emotion e_sob;
+	emotion e_sob;
 	close;
 }
 
@@ -288,7 +288,7 @@ jawaii,108,199,5	script	Employee#antroom	74,{
 	next;
 	if (select("Use.:Cancel.") == 1) {
 		mes "[Pine Oran]";
-		if (zeny > 999) {
+		if (Zeny > 999) {
 			mes "Thank you";
 			mes "for using";
 			mes "our services.";
@@ -296,7 +296,7 @@ jawaii,108,199,5	script	Employee#antroom	74,{
 			mes "Make yourself";
 			mes "comfortable.";
 			close2;
-			set zeny,zeny-1000;
+			set Zeny, Zeny-1000;
 			warp "jawaii_in",129,110;
 			end;
 		}
@@ -323,11 +323,11 @@ jawaii,107,189,5	script	Employee#horoom	93,{
 	next;
 	if (select("Use.:Cancel.") == 1) {
 		mes "[Sharkie Rania]";
-		if (zeny > 999) {
+		if (Zeny > 999) {
 			mes "Eh, alright.";
 			mes "Let's get going.";
 			close2;
-			set zeny,zeny-1000;
+			set Zeny, Zeny-1000;
 			warp "jawaii_in",86,117;
 			end;
 		}
@@ -366,11 +366,11 @@ jawaii,112,173,7	script	Employee#villroom	93,{
 	next;
 	if (select("Use.:Cancel.") == 1) {
 		mes "[Larks Rania]";
-		if (zeny > 999) {
+		if (Zeny > 999) {
 			mes "Thank you~";
 			mes "Enjoy your stay.";
 			close2;
-			set zeny,zeny-1000;
+			set Zeny, Zeny-1000;
 			warp "jawaii_in",87,75;
 			end;
 		}
@@ -414,8 +414,8 @@ jawaii,214,168,5	script	Honeymoon Helper#Jawaii	71,{
 	next;
 	if (select("I shall buy it.:No, thanks.") == 1) {
 		mes "[Helper]";
-		if (zeny > 49999) {
-			set zeny,zeny-50000;
+		if (Zeny > 49999) {
+			set Zeny, Zeny-50000;
 			getitem 681,1; //Memory_Of_Wedding 
 			mes "Thank you very much~!";
 			mes "Please remember, you";
@@ -457,10 +457,10 @@ jawaii_in,25,94,0	script	Employee#jaw1	724,{
 	close;
 
 OnWelcome:
-	Emotion e_kis;
+	emotion e_kis;
 	end;
 OnSolo:
-	Emotion e_omg;
+	emotion e_omg;
 	end;
 }
 
@@ -487,10 +487,10 @@ jawaii_in,25,96,0	script	Employee#jaw2	724,{
 	close;
 
 OnWelcome:
-	Emotion e_kis;
+	emotion e_kis;
 	end;
 OnSolo:
-	Emotion e_omg;
+	emotion e_omg;
 	end;
 }
 
@@ -503,7 +503,7 @@ jawaii_in,25,98,0	script	Employee#jaw3	724,{
 		mes "Oh~";
 		mes "Look at you...";
 		mes "You look perfect";
-		if (sex)
+		if (Sex)
 			mes "for your wife~";
 		else
 			mes "with your husband~";
@@ -517,7 +517,7 @@ jawaii_in,25,98,0	script	Employee#jaw3	724,{
 		mes "Hmm...?";
 		mes "You don't look like";
 		mes "you're married, are you?";
-		if (sex) {
+		if (Sex) {
 			next;
 			mes "[Employee Buffy]";
 			mes "I'm pretty good";
@@ -531,10 +531,10 @@ jawaii_in,25,98,0	script	Employee#jaw3	724,{
 	close;
 
 OnWelcome:
-	Emotion e_kis;
+	emotion e_kis;
 	end;
 OnSolo:
-	Emotion e_omg;
+	emotion e_omg;
 	end;
 }
 
@@ -570,10 +570,10 @@ jawaii_in,25,100,0	script	Employee#jaw4	724,{
 	close;
 
 OnWelcome:
-	Emotion e_kis;
+	emotion e_kis;
 	end;
 OnSolo:
-	Emotion e_omg;
+	emotion e_omg;
 	end;
 }
 
@@ -603,10 +603,10 @@ jawaii_in,30,94,4	script	Employee#jaw5	724,{
 	close;
 
 OnWelcome:
-	Emotion e_kis;
+	emotion e_kis;
 	end;
 OnSolo:
-	Emotion e_omg;
+	emotion e_omg;
 	end;
 }
 
@@ -628,10 +628,10 @@ jawaii_in,30,96,4	script	Employee#jaw6	724,{
 	close;
 	
 OnWelcome:
-	Emotion e_kis;
+	emotion e_kis;
 	end;
 OnSolo:
-	Emotion e_omg;
+	emotion e_omg;
 	end;
 }
 
@@ -662,10 +662,10 @@ jawaii_in,30,98,4	script	Employee#jaw7	724,{
 	close;
 
 OnWelcome:
-	Emotion e_kis;
+	emotion e_kis;
 	end;
 OnSolo:
-	Emotion e_omg;
+	emotion e_omg;
 	end;
 }
 
@@ -686,10 +686,10 @@ jawaii_in,30,100,4	script	Employee#jaw8	724,{
 	close;
 
 OnWelcome:
-	Emotion e_kis;
+	emotion e_kis;
 	end;
 OnSolo:
-	Emotion e_omg;
+	emotion e_omg;
 	end;
 }
 
@@ -727,7 +727,7 @@ jawaii_in,15,104,0	script	Waitress#jawaii	80,{
 		mes "[Waitress]";
 		mes "Hello,";
 		mes "how can I help you?";
-		Emotion e_kis;
+		emotion e_kis;
 		next;
 		switch(select("Give me food.:Bring me drink.:Where's the bar?")) {
 		case 1:
@@ -738,8 +738,8 @@ jawaii_in,15,104,0	script	Waitress#jawaii	80,{
 			next;
 			if (select("Yes.:Wha--! It's too expensive!") == 1) {
 				mes "[Waitress]";
-				if (zeny > 999) {
-					set zeny,zeny-1000;
+				if (Zeny > 999) {
+					set Zeny, Zeny-1000;
 					getitem 517,1; //Meat
 					mes "There you go~";
 					mes "Enjoy your meal~!";
@@ -764,8 +764,8 @@ jawaii_in,15,104,0	script	Waitress#jawaii	80,{
 			next;
 			if (select("Yes.:Wha--! It's too expensive!") == 1) {
 				mes "[Waitress]";
-				if (zeny > 999) {
-					set zeny,zeny-1000;
+				if (Zeny > 999) {
+					set Zeny, Zeny-1000;
 					getitem 503,1; //Yelow_Potion
 					mes "There you go~";
 					mes "Enjoy your meal~!";
@@ -789,7 +789,7 @@ jawaii_in,15,104,0	script	Waitress#jawaii	80,{
 			close;
 		}
 	}
-	Emotion e_omg;
+	emotion e_omg;
 	mes "[Waitress]";
 	mes "Hey, hey...!";
 	mes "I have no idea";
@@ -838,7 +838,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 	mes "What would you";
 	mes "like to drink?";
 	next;
-	if (zeny < 99) {
+	if (Zeny < 99) {
 		set .@r_jaw,rand(1,100);
 		mes "[Bartender]";
 		if (.@r_jaw > 29) {
@@ -897,7 +897,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 				percentheal -100,0;
 				end;
 			}
-			if (zeny > 99) set zeny,zeny-100;
+			if (Zeny > 99) set Zeny, Zeny-100;
 			switch(rand(4)) {
 			case 1:
 				mes "[Bartender]";
@@ -1107,7 +1107,7 @@ S_KillChar:
 		percentheal -100,0;
 		end;
 	}
-	if (zeny > 99) set zeny,zeny-100;
+	if (Zeny > 99) set Zeny, Zeny-100;
 	set .@roof_jaw,.@roof_jaw+getarg(0);
 	mes "[Bartender]";
 	mes "There you go.";
@@ -1118,7 +1118,7 @@ S_KillChar:
 	
 jawaii_in,43,115,0	script	Customer#jaw_1	97,{
 	if (!getpartnerid()) {
-		if (zeny > 99) {
+		if (Zeny > 99) {
 			mes "[Buchi]";
 			mes "Grrrr...";
 			mes "Damn! I don't";
@@ -1176,7 +1176,7 @@ jawaii_in,41,106,3	script	Customer#Cage	98,{
 		mes "After all, everyone knows marriage is a sham for desperate, lonely people!";
 		next;
 		mes "[Cage]";
-		if (sex) {
+		if (Sex) {
 			mes "I don't trust anybody!";
 			mes "You're a fool for chaining";
 			mes "yourself to some gorgeous";
@@ -1359,7 +1359,7 @@ prt_in,173,13,4	script	Customer#SoloHan	86,{
 		mes "...Wha!?";
 		mes "Oh man!";
 		mes "Get outta my face!";
-		if (sex) {
+		if (Sex) {
 			mes "You smell like,";
 			mes "whupped boyfriend";
 			mes "or something!";
@@ -1432,8 +1432,8 @@ prt_in,170,14,0	script	Customer#Bachewcca	89,{
 			mes "Unfortunately, singles are not allowed on the island. Why don't you go forget your loneliness in the Prontera pub?";
 			close;
 		}
-		else if (zeny > 99999) {
-			set zeny,zeny-100000;
+		else if (Zeny > 99999) {
+			set Zeny, Zeny-100000;
 			mes "Bon Voyage...!!";
 			mes "Let me guide";
 			mes "you to 'Jawaii!'";

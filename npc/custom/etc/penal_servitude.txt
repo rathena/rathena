@@ -18,8 +18,8 @@
 
 sec_pri,36,58,1	script	Chief Warder	105,{ 
 	mes "[Saddeus]";
-	emotion 1;
-	if(sex) {
+	emotion e_what;
+	if (Sex) {
 		mes "Mr. Prisoner #"+BaseLevel+JobLevel+",";
 	} else {
 		mes "Ms. Prisoner #"+BaseLevel+JobLevel+",";
@@ -125,7 +125,7 @@ M_NO_THANKS:
 	mes "[Saddeus]";  
 	if (rand(2)) mes "Is today X-Mas time, huh?";
 	mes "Now shut up and back off!";
-	if (rand(2)) emotion 23;
+	if (rand(2)) emotion e_omg;
 	close;  
 }
 

@@ -11,7 +11,7 @@
 //= Job quest for Alchemist classes
 //===== Additional Comments: ================================= 
 //= 2.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
-//=	No longer uses function "F_BlockHigh"
+//=     No longer uses function "F_BlockHigh"
 //= 2.6 Corrected a bug in advanced class checking. [L0ne_W0lf]
 //= 2.7 Added missing checkweights. [L0ne_W0lf]
 //= 2.8 Fixed minor typo in test section. [L0ne_W0lf]
@@ -177,7 +177,7 @@ alde_alche,27,185,5	script	Alchemist Guildsman#am	744,{
 					mes "Come back to me when you have 50,000 Zeny, otherwise we can't process your application.";
 					close;
 				}
-				set zeny,zeny-50000;
+				set Zeny, Zeny-50000;
 				mes "[Parmy Gianino]";
 				mes "Let's see.";
 				mes "" + strcharinfo(0);
@@ -442,7 +442,7 @@ alde_alche,175,107,3	script	Fastidious Alchemist#am	749,{
 				mes "Wait...";
 				mes "Maybe I've";
 				mes "misjudged you.";
-				if (sex == 1) {
+				if (Sex) {
 					mes "You might be a pretty boy,";
 					mes "but I can tell you're smart";
 					mes "from your eyes.";
@@ -1890,8 +1890,7 @@ alde_alche,145,19,1	script	Chief Researcher#am	57,{
 		}
 	}
 	else if (ALCH_Q == 22) {
-		set .@now_weight,MaxWeight-Weight;
-		if (.@now_weight < 1370) {
+		if (MaxWeight - Weight < 1370) {
 			mes "[Nicholas Flamel]";
 			mes "Whoa...";
 			mes "You're carrying too much stuff! First, put some of your things in Kafra Storage.";
@@ -1983,20 +1982,21 @@ alde_alche,145,19,1	script	Chief Researcher#am	57,{
 //============================================================ 
 // Old changelog
 //============================================================ 
-//= v1.0 Working.
-//= npc/quests/counteragent_mixture.txt Also Needed
-//= npc/quests/quests_yuno.txt Also Needed [Darkchild]
-//= v1.1 Fixed some minor bugs.  Optimized some lines. Re-organized the script a bit. 
-//= Giving Parmry NPC, Hammer and Old Book now waves the 50000 fee. (based of mRO website)
-//= Having a joblvl of 50 allows you to skip Rasputin's test. (based of mRO website) [kobra_k88]
+//= 1.0 Working.
+//=     npc/quests/counteragent_mixture.txt Also Needed
+//=     npc/quests/quests_yuno.txt Also Needed [Darkchild]
+//= 1.1 Fixed some minor bugs.  Optimized some lines. Re-organized the script a bit. 
+//=     Giving Parmry NPC, Hammer and Old Book now waves the 50000 fee. (based of mRO website)
+//=     Having a joblvl of 50 allows you to skip Rasputin's test. (based of mRO website) [kobra_k88]
 //= 1.2 fixed a few typos (have to hunt more) [Lupus]
 //= 1.3 Added Baby Class Support [Lupus]
 //= 1.6 Added a func which prevent advanced classes passing
-//= 2nd Job Quests again. It also guides adv classes where
-//= to go. [Lupus]
+//=     2nd Job Quests again. It also guides adv classes where
+//=     to go. [Lupus]
 //= 1.6a fixed some wrong answers, thanks to zlider for info [Lupus]
 //= 2.0 Changed numbers to constants. [Vicious]
 //= 2.2 Got rid of 'al_morgen' var. Now uses (MISC_QUEST & 4) [Lupus]
 //= 2.3 Optimized, changed job numbers to constants. Fixed some spelling [Lupus]
 //= 2.4 Added alternative prizes according to JobLevel [Lupus]
 //= 2.4a Fixed 2 wrong answers in Rasputin's test [Lupus]
+//============================================================ 

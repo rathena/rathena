@@ -27,14 +27,14 @@ yuno_in01,124,164,6	script	Guild Leader	108,{
 	mes "Umm... Well that is all you need to do. Hahaha.";
 	next;
 	menu "Pay ^FF000025,000z^000000.",-,"Thats way to high!!",N_HighPrice;
-	if (zeny < 25000) goto N_NoZeny;
+	if (Zeny < 25000) goto N_NoZeny;
 	set Zeny,Zeny-25000;
 	//getitem 7950, 1;
 	//getitem 7951, 1;
 	set Event_THQS,1;
 	mes "[Keegan]";
 	mes "Congratulations!";
-	emotion 46;
+	emotion e_grat;
 	next;
 	mes "[Keegan]";
 	mes "Welcome to the Guild of Treasure Hunters.";

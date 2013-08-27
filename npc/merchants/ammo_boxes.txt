@@ -19,7 +19,7 @@
 //============================================================
 
 alberta,118,157,3	script	Magazine Dealer Kenny::mdk	83,{
-	if(BaseJob == Job_Gunslinger) {
+	if (BaseJob == Job_Gunslinger) {
 		mes "[Kenny]";
 		mes "Welcome to my Magazine Shop.";
 		mes "As you may know, large numbers";
@@ -82,7 +82,7 @@ function	script	Func_Casing	{
 	mes "want to receive. If you want to cancel, then just enter ''0.''";
 	next;
 	input .@amount;
-	if(.@amount > 50 || .@amount == 0) {
+	if (.@amount > 50 || .@amount == 0) {
 		mes "[Kenny]";
 		mes "Hey, I can't give you";
 		mes "that many Magazines.";
@@ -114,7 +114,7 @@ function	script	Func_Casing	{
 				getitem getarg(1),.@amount;
 				close;
 			}
-		}else{
+		} else {
 			mes "[Kenny]";
 			mes "Sorry, but you don't";
 			mes "have enough zeny for";
@@ -124,7 +124,7 @@ function	script	Func_Casing	{
 			mes "some more money.";
 			close;
 		}
-	}else{
+	} else {
 		mes "[Kenny]";
 		mes "Sorry, but you don't";
 		mes "have enough bullets for";

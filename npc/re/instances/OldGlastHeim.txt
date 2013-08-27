@@ -1876,16 +1876,16 @@ OnTalk3:
 	npctalk "Even if you defile my body, I won't let you take my soul, Himmelmez!";
 	end;
 OnEffect1:
-	misceffect EF_BARRIER;
+	specialeffect EF_BARRIER;
 	end;
 OnEffect2:
-	misceffect EF_CHAINCOMBO;
+	specialeffect EF_CHAINCOMBO;
 	end;
 OnEffect3:
-	misceffect EF_MAPPILLAR2;
+	specialeffect EF_MAPPILLAR2;
 	end;
 OnEffect4:
-	misceffect EF_MAPPILLAR;
+	specialeffect EF_MAPPILLAR;
 	end;
 OnEffect5:
 	specialeffect EF_LORD;

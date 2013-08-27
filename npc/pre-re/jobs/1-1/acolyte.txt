@@ -19,8 +19,8 @@
 //= 1.5 Now saves/restores all quest skills [Lupus]
 //= 1.6 Merged back JFunc [Lupus]
 //= 1.7 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
-//=	No longer uses function "F_ToHigh"
-//=	Proper dialog for Priest job quest is unused (for now.)
+//=     No longer uses function "F_ToHigh"
+//=     Proper dialog for Priest job quest is unused (for now.)
 //= 1.7a Functions now make use of proper priest quest dialog [L0ne_W0lf]
 //= 1.8 Removed an Unnecessary "set job_acolyte_q,0;" [Samuray22]
 //= 1.8a More bug fixes care of Crashy. [L0ne_W0lf]

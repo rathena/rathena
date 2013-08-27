@@ -51,7 +51,7 @@ prontera,73,140,0	script	Milk Vendor	86,{
 		set .@bottles,countitem(713);
 		set .@total_weight,.@bottles * 50;
 		set .@total_cost,.@bottles * 15;
-		if (zeny < .@Total_cost) {
+		if (Zeny < .@Total_cost) {
 			mes "[Milk Vendor]";
 			mes "Oh, whoa~!";
 			mes "You don't have enough";
@@ -61,7 +61,7 @@ prontera,73,140,0	script	Milk Vendor	86,{
 			mes "at least " + .@total_cost + " zeny.";
 			close;
 		}
-		if ((maxweight-weight) < .@total_weight) {
+		if (MaxWeight - Weight < .@total_weight) {
 			mes "[Milk Vendor]";
 			mes "Hmm...";
 			mes "Would you make";
@@ -71,7 +71,7 @@ prontera,73,140,0	script	Milk Vendor	86,{
 			mes "all of this milk?";
 			close;
 		}
-		set zeny,zeny-.@total_cost;
+		set Zeny, Zeny-.@total_cost;
 		delitem 713,.@bottles; //Empty Bottles
 		getitem 519,.@bottles; //Milk
 		close;

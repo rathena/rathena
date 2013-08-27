@@ -9,13 +9,12 @@
 //===== Description: =========================================
 //= Warp Points for Lighthalzen Dungeon
 //===== Additional Comments: =================================
-//= No Comment!
 //= 1.1 Added temp restriction by Azazel [Lupus]
 //= 1.2 Optimized [Lupus]
-//= and fixed 005 and 005a warps coords, thanks to Justin84 
+//=     and fixed 005 and 005a warps coords, thanks to Justin84 
 //= 1.3 Fixed entrance condition check, thanx2Daegaladh [Lupus]
 //= 1.4 Added coords of secret dungeon entrance, thanks to Justin84
-//= proved with screenshots [Lupus]
+//=     proved with screenshots [Lupus]
 //= 1.5a thx2 Justin84, some additions and fixes [Lupus]
 //= 1.5b re-enabled main entrance warp [Lupus] <-reverted 1.5c
 //= 1.6 Updated entrances, added Cube room warps, thanx 2 Justin84
@@ -26,8 +25,8 @@
 //= 1.9 Removed duplicates [Toms]
 //= 2.0 Now use MISC_QUEST&512 instead of 'hzdun' [Lupus]
 //= 2.1 Updated all standard dungeon warps. [L0ne_W0lf]
-//=	Updated Sewer pipe dungeon entrance.
-//=	Removed dialog from level 3 entrance warp.
+//=     Updated Sewer pipe dungeon entrance.
+//=     Removed dialog from level 3 entrance warp.
 //= 2.1a Updated 3rd floor warp. Again... [L0ne_W0lf]
 //= 2.1b Fixed reverse level requirement in 3rd floor warp. [L0ne_W0lf]
 //============================================================

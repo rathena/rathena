@@ -12,7 +12,7 @@
 //= Job quest for Dancer classes
 //===== Additional Comments: ================================= 
 //= 3.2 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
-//=	No longer uses function "F_BlockHigh"
+//=     No longer uses function "F_BlockHigh"
 //= 3.2a Deleted unused variables. [Samuray22]
 //= 3.3 Updated waiting room. (Removes global var) [L0ne_W0lf]
 //= 3.4 Fixed bad variables, bugreport:1685 [Brainstorm]
@@ -133,7 +133,7 @@ job_duncer,43,93,4	script	Aile#da	724,{
 		cutin "",255;
 		end;
 	}
-	if (DANC_Q == 0 && sex == 0 && BaseJob == Job_Archer) {
+	if (DANC_Q == 0 && Sex == 0 && BaseJob == Job_Archer) {
 		cutin "job_dancer_eir01",2;
 		mes "[Aile]";
 		mes "Welcome~!";
@@ -209,7 +209,7 @@ job_duncer,43,93,4	script	Aile#da	724,{
 		cutin "",255;
 		end;
 	}
-	else if (sex == 1) {
+	else if (Sex == 1) {
 		cutin "job_dancer_eir03",2;
 		mes "[Aile]";
 		mes "Welco--Mmm?";
@@ -318,7 +318,7 @@ job_duncer,43,93,4	script	Aile#da	724,{
 			mes "tuition fee.";
 			next;
 			cutin "job_dancer_eir01",2;
-			set zeny,zeny-10000;
+			set Zeny, Zeny-10000;
 			mes "[Aile]";
 			mes "Next, go to ^CD6889Bijou^000000, who is in charge of the interviewing process. She will have a couple of things she'll need to ask you.";
 			set DANC_Q,5;
@@ -1328,14 +1328,14 @@ job_duncer,63,110,4	script	Backdancer#1	724,{
 	end;
 
 OnSmile:
-	Emotion e_no1;
+	emotion e_no1;
 	donpcevent "Backdancer#2::OnSmile";
 	donpcevent "Backdancer#3::OnSmile";
 	donpcevent "Backdancer#4::OnSmile";
 	end;
 
 OnOmg:
-	Emotion e_omg;
+	emotion e_omg;
 	donpcevent "Backdancer#2::OnOmg";
 	donpcevent "Backdancer#3::OnOmg";
 	donpcevent "Backdancer#4::OnOmg";
@@ -1346,11 +1346,11 @@ job_duncer,66,113,4	script	Backdancer#2	724,{
 	end;
 
 OnSmile:
-	Emotion e_no1;
+	emotion e_no1;
 	end;
 
 OnOmg:
-	Emotion e_omg;
+	emotion e_omg;
 	end;
 }
 
@@ -1358,11 +1358,11 @@ job_duncer,72,113,4	script	Backdancer#3	724,{
 	end;
 
 OnSmile:
-	Emotion e_no1;
+	emotion e_no1;
 	end;
 
 OnOmg:
-	Emotion e_omg;
+	emotion e_omg;
 	end;
 }
 
@@ -1370,11 +1370,11 @@ job_duncer,75,110,4	script	Backdancer#4	724,{
 	end;
 
 OnSmile:
-	Emotion e_no1;
+	emotion e_no1;
 	end;
 
 OnOmg:
-	Emotion e_omg;
+	emotion e_omg;
 	end;
 }
 
@@ -1390,15 +1390,15 @@ OnOmg:
 //=     along with some optimization. [Fredzilla]
 //= 1.5 Added Baby Class Support [Fredzilla]
 //= 1.6 Added a func which prevent advanced classes passing
-//= 2nd Job Quests again. It also guides adv classes where
-//= to go. [Lupus]
+//=     2nd Job Quests again. It also guides adv classes where
+//=     to go. [Lupus]
 //= 2.0 Changed numbers to constants. [Vicious]
 //= 2.1 Script check #1. [Lance]
 //= 2.2 Fixed unpassable part, thx2 Alis [Lupus]
 //= 2.3 Updated initnpctimer to attach player to jobDq script [Skotlex]
 //= 2.4 Attached chrid to be able obtain player's SP on mobs death, optimized a bit [Lupus]
 //= 2.5 Final fix of chrid issues, changed 'Improved
-//=	Concentration' to 'Attention Concentrate' [Lupus]
+//=     Concentration' to 'Attention Concentrate' [Lupus]
 //= 3.0 Some optimization, typos, added missing dialogues (4Kb lighter) [Lupus]
 //= 3.1 Implemented JOBLVL as in other quests [Lupus]
 //============================================================

@@ -3338,7 +3338,7 @@ ma_fild02,241,39,5	script	Good Capre Budidai	572,{
 	end;
 }
 
-// Traders :: npc
+// Traders :: malaya_npc
 //============================================================
 ma_fild01,166,214,6	script	Old Man in Dilemma#GA	575,{
 	if (MaxWeight - Weight < 600 || checkweight(1201,1) == 0) {
@@ -3599,7 +3599,7 @@ ma_fild01,238,198,4	script	Tikbalang Expert#malaya	582,{
 	}
 }
 
-// Upgrade Boss Equipment :: mvpitem
+// Upgrade Boss Equipment :: malaya_mvpitem
 //============================================================
 ma_fild01,158,243,6	script	Tribe Blacksmith#malaya	582,{
 	mes "[Bayani]";
@@ -3829,7 +3829,7 @@ ma_fild01,158,243,6	script	Tribe Blacksmith#malaya	582,{
 	close;
 }
 
-// Secret in the Woods :: buwaya
+// Secret in the Woods :: malaya_buwaya
 //============================================================
 malaya,305,281,3	script	Guard#buwaya	570,7,7,{
 	if (malaya_hi < 10) {
@@ -4805,7 +4805,7 @@ OnInit:
 	end;
 }
 
-// Bakonawa Extermination :: bakonawa
+// Bakonawa Extermination :: malaya_bakonawa
 //============================================================
 malaya,280,331,4	script	Singing Man#bako1	578,{
 	if (malaya_bakona1 < 5) {
@@ -6561,7 +6561,7 @@ sec_in02,10,16,5	script	Bakonawa Intro Helper	543,{
 	}
 }
 
-// Nurse in Port Malaya :: bang
+// Nurse in Port Malaya :: malaya_bang
 //============================================================
 function	script	F_Malaya_Nurse	{
 	if (malaya_bang == 30) {
@@ -8198,7 +8198,7 @@ malaya,276,367,4	script	Bent Shaman#ma	782,{
 	close;
 }
 
-// Pintados Festival :: pintados
+// Pintados Festival :: malaya_pintados
 //============================================================
 /*
 Description

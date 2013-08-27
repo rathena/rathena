@@ -28,10 +28,10 @@
 //= 2.5 Fixed a stuck bug [Lupus]
 //= 2.6a Adding proper dialogues [Lupus]
 //= 2.7 Rescripted to Aegis 10.3 standards. [L0ne_W0;f]
-//=	Removed all functions as they are no longer required.
-//=	Correct job level requirements for 1-1 -> 2-x.
+//=     Removed all functions as they are no longer required.
+//=     Correct job level requirements for 1-1 -> 2-x.
 //= 2.7a Added Function "F_BlockHigh" back in until rewriteing of the 2-x [L0ne_W0lf]
-//=	scripts are comepleted.
+//=     scripts are comepleted.
 //= 2.7b Removed function "F_BlockHigh" as it's no longer used. [L0ne_W0lf]
 //= 2.8 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 2.9 Corrected Valkyrie case spicifying where to warp after rebirthing. [L0ne_W0lf]
@@ -54,7 +54,7 @@ valkyrie,48,86,4	script	Valkyrie#	811,{
 		mes "Honor to the warriors!";
 		close;
 	}
-	else if (Baselevel > 98 && JobLevel > 49 && Class >= Job_Knight && Class <= Job_Crusader2) {
+	else if (BaseLevel > 98 && JobLevel > 49 && Class >= Job_Knight && Class <= Job_Crusader2) {
 		mes "[Valkyrie]";
 		mes "Welcome";
 		mes "to Valhalla,";
@@ -213,7 +213,7 @@ valkyrie,48,86,4	script	Valkyrie#	811,{
 }
 
 yuno_in02,88,164,5	script	Metheus Sylphe#Library	742,{
-	if (Baselevel > 98 && JobLevel > 49 && Class >= Job_Knight && Class <= Job_Crusader2) {
+	if (BaseLevel > 98 && JobLevel > 49 && Class >= Job_Knight && Class <= Job_Crusader2) {
 		if (valkyrie_Q == 0) {
 			mes "[Metheus Sylphe]";
 			mes "Welcome to the Library of the Schweicherbil Magic Academy.";
@@ -233,7 +233,7 @@ yuno_in02,88,164,5	script	Metheus Sylphe#Library	742,{
 			next;
 			if (select("Donate.:Cancel.") == 1) {
 				if (Zeny >= 1285000) {
-					set zeny,zeny-1285000;
+					set Zeny, Zeny-1285000;
 					set valkyrie_Q,1;
 					mes "[Metheus Sylphe]";
 					mes "Thank you, your donation will be used for a good cause. You may";
@@ -278,7 +278,7 @@ yuno_in02,93,207,1	script	Book of Ymir	111,{
 		warp "valkyrie",48,8;
 		end;
 	}
-	else if (Baselevel > 98 && JobLevel > 49 && Class >= Job_Knight && Class <= Job_Crusader2) {
+	else if (BaseLevel > 98 && JobLevel > 49 && Class >= Job_Knight && Class <= Job_Crusader2) {
 		if (valkyrie_Q != 0) {
 			mes "[The Book of Ymir]";
 			mes "...Therefore, ancient heroes were";
@@ -346,7 +346,7 @@ yuno_in02,93,207,1	script	Book of Ymir	111,{
 }
 
 yuno_in05,49,43,1	script	Heart of Ymir	111,{
-	if (Baselevel > 98 && JobLevel > 49 && Class >= Job_Knight && Class <= Job_Crusader2) {
+	if (BaseLevel > 98 && JobLevel > 49 && Class >= Job_Knight && Class <= Job_Crusader2) {
 		if (valkyrie_Q == 2) warp "valkyrie",48,8;
 	}
 	end;

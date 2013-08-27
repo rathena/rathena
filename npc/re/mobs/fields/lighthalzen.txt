@@ -1,7 +1,7 @@
 //===== rAthena Script =======================================
 //= Lighthalzen Fields Monster Spawn Script
 //===== By: ==================================================
-//= Muad_Dib, rAthena dev team
+//= Muad_Dib, rAthena Dev Team
 //===== Current Version: =====================================
 //= 1.6
 //===== Compatible With: =====================================
@@ -10,7 +10,7 @@
 //= 1.0 by Muad_Dib (Prometheus Project)
 //= 1.1 Added Porcellio by MasterOfMuppets
 //= 1.2 Corrected monsters. Many thanks to vicious_pucca for
-//=	the information [MasterOfMuppets]
+//=     the information [MasterOfMuppets]
 //= 1.3 Updated acordingly to Episode 10.4 [Poki#3]
 //= 1.4 Fully updated X.4 spawns [Playtester]
 //= 1.5 More accurate spawns [Playtester]

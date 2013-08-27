@@ -15,7 +15,7 @@
 //= 1.1a Redo back. It wasn't a bug [Lupus]
 //= 1.2 Added Rachel Cool Event Corp. Staff [Playtester]
 //= 1.3 Added cutins, closed Kafra Password exploit
-//=	until we got a client/packet based password support [Lupus]
+//=     until we got a client/packet based password support [Lupus]
 //= 1.4 Added Veins Cool Event Corp. Staff. [L0ne_W0lf]
 //= 1.5 Cool Event Corp staff is now more iRO like. [L0ne_W0lf]
 //============================================================ 

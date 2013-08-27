@@ -71,7 +71,7 @@ lou_fild01,240,354,4	script	Mantis Researcher	878,{
 			next;
 			switch(select("Sure:Cancel")) {
 			case 1:
-				if(BaseLevel > 70){
+				if (BaseLevel > 70) {
 					mes "[Mantis Researcher]";
 					mes "Thank you for your great help with the Mantis!";
 					mes "Currently the Situation is stable and i'm not in need of your help anymore to kill them.";

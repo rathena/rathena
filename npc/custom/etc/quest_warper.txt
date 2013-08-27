@@ -546,8 +546,10 @@ stampcard:
 	mes "Let me check what Towns you have.";
 	callfunc "QWS_TownStamps";
 	mes "You collected^00FF00 "+@Tstamp+" of "+@MaxTstamp+" ^000000Towns.";
-	if (@Tstamp == 15) mes "They say there is an island you can only get to when married...";
-	if (@Tstamp == 15) emotion 18;
+	if (@Tstamp == 15) {
+		mes "They say there is an island you can only get to when married...";
+		emotion e_heh;
+	}
 	next;
 	mes "Let me check what dungeons you have.";
 	callfunc "QWS_DungeonStamps";

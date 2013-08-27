@@ -29,7 +29,7 @@
 //= 3.4 Added GM management function and NPC. [Euphy]
 //============================================================ 
 
-// Onward to the New World
+// Onward to the New World :: ep13_gogo
 //============================================================ 
 function	script	Promotional_Staff	{
 	mes "[Promotional Staff]";
@@ -1959,7 +1959,7 @@ moc_fild22b,370,370,3	script	Allied Manager#gm	100,{
 	}
 }
 
-// New Surroundings
+// New Surroundings :: ep13_newbs
 //============================================================ 
 mid_camp,222,283,4	script	Marian#ep13bs	727,{
 	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 1000) {
@@ -2664,7 +2664,7 @@ mid_camp,261,284,4	script	Instructor#ep13bs	405,{
 			mes "Hehe, don't mention it.";
 			mes "And Otto said that he";
 			mes "would come to see you.";
-			emotion 40,1;
+			emotion e_shy,1;
 			next;
 			mes "[Instructor Lugen]";
 			mes "Did he?";
@@ -2936,7 +2936,7 @@ mid_camp,264,263,4	script	Diego#ep13bs	931,{
 		case 1:
 			mes "[Diego]";
 			mes "Thanks.";
-			emotion 15;
+			emotion e_thx;
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "What do you need?";
@@ -3200,12 +3200,12 @@ mid_camp,160,298,4	script	Jan#ep13bs	865,{
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "Yes...";
-			emotion 4,1;
+			emotion e_swt,1;
 			next;
 			mes "[Jan]";
 			mes "Ahhh, it's exciting~";
 			mes "I love it.";
-			emotion 38;
+			emotion e_awsm;
 			next;
 			mes "[Jan]";
 			mes "I want to unwrap it right now~";
@@ -3279,7 +3279,7 @@ mid_camp,30,168,4	script	Gerard#ep13bs	939,{
 			mes "I was considering";
 			mes "going back to the camp.";
 			mes "I really appreciate this.";
-			emotion 37;
+			emotion e_rice;
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "...";
@@ -3347,7 +3347,7 @@ man_fild01,80,248,4	script	Alberto#ep13bs	934,{
 			mes "I finally got it.";
 			mes "My coat...sniff.";
 			mes "It's freezing here.";
-			emotion 28;
+			emotion e_sob;
 			next;
 			mes "[Alberto]";
 			mes "Sniff...";
@@ -3387,7 +3387,7 @@ man_fild01,80,248,4	script	Alberto#ep13bs	934,{
 			mes "[Alberto]";
 			mes "It's so cold here~~";
 			mes "the wind chills me to the bones~";
-			emotion 28;
+			emotion e_sob;
 			close;
 		}
 	}
@@ -3435,7 +3435,7 @@ mid_camp,166,248,4	script	Sorcerer#ep13bs	937,{
 	next;
 	mes "[Biolay]";
 	mes "I want to go back to my house.";
-	emotion 28;
+	emotion e_sob;
 	close;
 }
 
@@ -3646,7 +3646,7 @@ mid_camp,267,258,0	script	Post#ep13bs2	111,{
 	}
 }
 
-// Attitude to the New
+// Attitude to the New :: ep13_ecology
 //============================================================ 
 mid_camp,188,254,3	script	Monster Scholar#ep13	883,{
 	if (ep13_ryu < 100 && ep13_start < 100) {
@@ -4336,7 +4336,7 @@ mid_camp,240,270,3	script	Botanist#ep13	750,{
 		mes "Undiscovered life!";
 		mes "Everything about this world excites me.";
 		next;
-		emotion 14;
+		emotion e_lv2;
 		mes "[Botanist]";
 		mes "Oh, okay... Ah-hah!";
 		mes "This is how it goes...";
@@ -4349,7 +4349,7 @@ mid_camp,240,270,3	script	Botanist#ep13	750,{
 			mes "Undiscovered life!";
 			mes "Everything about this world excites me.";
 			next;
-			emotion 14;
+			emotion e_lv2;
 			mes "[Botanist]";
 			mes "Oh, okay... Ah-hah!";
 			mes "This is how it goes...";
@@ -4360,7 +4360,7 @@ mid_camp,240,270,3	script	Botanist#ep13	750,{
 			mes "Undiscovered life!";
 			mes "Everything about this world excites me.";
 			next;
-			emotion 14;
+			emotion e_lv2;
 			emotion e_dots,1;
 			mes "[Botanist]";
 			mes "Oh, okay... Ah-hah!";
@@ -4378,7 +4378,7 @@ mid_camp,240,270,3	script	Botanist#ep13	750,{
 				next;
 				break;
 			case 2:
-				emotion 14,1;
+				emotion e_lv2,1;
 				mes "["+strcharinfo(0)+"]";
 				mes "I agree. There's so much to see around here!";
 				next;
@@ -4426,7 +4426,7 @@ mid_camp,240,270,3	script	Botanist#ep13	750,{
 			mes "[Botanist]";
 			mes "Usually twins share the same feelings and ideas, I can see what he does or thinks if I try hard.";
 			next;
-			emotion 54;
+			emotion e_sigh;
 			mes "[Botanist]";
 			mes "Let me see what Rumis is doing right now... Oh, he's picking his nose with his left hand and eating a slice of bread with his right.";
 			mes "God, how disgusting!";
@@ -4446,7 +4446,7 @@ mid_camp,240,270,3	script	Botanist#ep13	750,{
 				next;
 				break;
 			case 2:
-				emotion 54;
+				emotion e_sigh;
 				mes "[Botanist]";
 				mes "Oh,";
 				mes "won't you cut me some slack? I was just joking to melt the ice.";
@@ -4977,7 +4977,7 @@ mid_camp,212,237,5	script	Camp Guard Captain#man1	852,{
 	}
 }
 
-// The Tripartite Union's Feud
+// The Tripartite Union's Feud :: ep13_1_rhea
 //============================================================ 
 mid_campin,376,120,0	script	Research Official#ep131	754,3,3,{
 OnTouch:
@@ -6945,7 +6945,7 @@ OnTimer300000:
 	end;
 }
 
-// Part Time Work
+// Part Time Work :: ep13_alba
 //============================================================ 
 mid_camp,1,1,0	script	#timer_alba01	844,{
 	callfunc "F_GM_NPC";
@@ -7553,7 +7553,7 @@ OnMyMobDead:
 	end;
 }
 
-// Cat Hand Trading Post
+// Cat Hand Trading Post :: cat_yong
 //============================================================ 
 mid_camp,62,125,4	script	Cat Hand Agent	421,{
 function Catwarp;
@@ -7663,7 +7663,7 @@ function Catwarp;
 				close;
 			}
 			else if (Zeny >= 60) {
-				set zeny,zeny-60;
+				set Zeny, Zeny-60;
 				mes "[Cat Hand Agent]";
 				mes "Thank you.";
 				mes "Your storage will";
@@ -7710,7 +7710,7 @@ function Catwarp;
 				close;
 			}
 			else if (Zeny >= 60) {
-				set zeny,zeny-60;
+				set Zeny, Zeny-60;
 				mes "[Cat Hand Agent]";
 				mes "Thank you.";
 				mes "Your storage will";
@@ -7832,7 +7832,7 @@ function Catwarp;
 				close;
 			}
 			else if (Zeny >= 60) {
-				set zeny,zeny-60;
+				set Zeny, Zeny-60;
 				mes "[Cat Hand Agent]";
 				mes "Thank you.";
 				mes "Your storage will";
@@ -8481,7 +8481,7 @@ sec_in02,80,171,0	script	Piece of crack#sec	406,{
 	}
 }
 
-// Report from the New World
+// Report from the New World :: ep13_1_edq
 //============================================================ 
 mid_campin,90,121,5	script	Hibba Agip	459,{
 	cutin "ep13_captin_edq",2;
@@ -10428,7 +10428,7 @@ OnMyMobDead:
 	end;
 }
 
-// Persuing Rayan Moore
+// Persuing Rayan Moore :: ep13_moc2
 //============================================================ 
 mid_campin,68,185,3	script	Pursuit Party Leader#1	803,{
 	if (checkweight(714,3) == 0) {
@@ -12066,7 +12066,7 @@ que_job01,82,95,3	script	Bar Master#moc2_01	46,{
 						mes "Here, drink up.";
 						mes "This drink is mainly made of fruit juice,";
 						mes "but you still shouldn't drink too much.";
-						set zeny,zeny-800;
+						set Zeny, Zeny-800;
 						getitem 12112,1; //Tropical_Sograt
 					}
 					close;
@@ -12084,15 +12084,14 @@ que_job01,82,95,3	script	Bar Master#moc2_01	46,{
 						mes "There you go.";
 						mes "This drink is mainly made of fruit juice,";
 						mes "but you still shouldn't drink too much.";
-						set zeny,zeny-1000;
+						set Zeny, Zeny-1000;
 						getitem 12112,1; //Tropical_Sograt
 						close;
 					}
 				}
 			}
 		case 2:
-			set .@now_weight,MaxWeight-Weight;
-			if (.@now_weight < 2000) {
+			if (MaxWeight - Weight < 2000) {
 				mes "[Karred]";
 				mes "Are you sure you can even hold a glass of alcohol?";
 				mes "You're carrying too many things on you already.";
@@ -12111,7 +12110,7 @@ que_job01,82,95,3	script	Bar Master#moc2_01	46,{
 						mes "[Karred]";
 						mes "I'll give you a special discount.";
 						mes "Here, enjoy.";
-						set zeny,zeny-800;
+						set Zeny, Zeny-800;
 						getitem 12113,1; //Vermilion_The_Beach
 					}
 					close;
@@ -12128,7 +12127,7 @@ que_job01,82,95,3	script	Bar Master#moc2_01	46,{
 						mes "[Karred]";
 						mes "There you go.";
 						mes "Don't drink too much, alright?";
-						set zeny,zeny-1000;
+						set Zeny, Zeny-1000;
 						getitem 12113,1; //Vermilion_The_Beach
 						close;
 					}
@@ -12276,7 +12275,7 @@ OnTouch:
 					mes "Hey, bartender! Gimme";
 					mes "the usual! I like your";
 					mes "style, adventurer...";
-					set zeny,zeny-1000;
+					set Zeny, Zeny-1000;
 					next;
 					mes "[Litheron]";
 					mes "Alright, you can come";
@@ -13970,8 +13969,10 @@ que_dan02,102,42,3	script	Disfigured Corpse#moc2	457,{
 	close;
 }
 
+// Ash-Vacuum Warper :: gogoash
+//============================================================ 
 /*
-// Event NPC (gogoash), now disabled on official servers.
+// Event NPC, now disabled on official servers.
 prontera,161,192,5	script	Ash-Vacuum Warper	707,{
 	mes "[Warp Soldier]";
 	mes "For a limited period.";

@@ -460,7 +460,7 @@ OnTouch:
 // ep13_spl_extra
 spl_in01,172,225,3	script	Wandering Poet#ep13	51,{
 	cutin "god_nelluad02",2;
-	mes "[Poet Nell]"	;
+	mes "[Poet Nell]";
 	mes "Hi~~ do you hear the beautiful music comeing from afar~?";
 	next;
 	select("Who are you?");
@@ -540,7 +540,7 @@ spl_in01,172,225,3	script	Wandering Poet#ep13	51,{
 			next;
 			mes "^4d4dff Alberich swears with the last of his breath, that his treasured ring will curse it's wearer till death.";
 			next;
-			mes "^4d4dff Forever will the bearer be, cursed with Rocky's jealousy."				;
+			mes "^4d4dff Forever will the bearer be, cursed with Rocky's jealousy.";
 			break;
 		}
 		break;
@@ -559,7 +559,7 @@ spl_in01,172,225,3	script	Wandering Poet#ep13	51,{
 		next;
 		mes "[Poet Nell]";
 		mes "Yes, I look quite common...";
-		mes "But I doubt we've ever met before."		;
+		mes "But I doubt we've ever met before.";
 		next;
 		cutin "god_nelluad01",255;
 		mes "- Nell seems embarrassed, then starts playing very complicated music -";

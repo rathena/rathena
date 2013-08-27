@@ -40,7 +40,7 @@ bra_in01,27,24,3	script	Hotel Keeper#bra1	478,{
 			mes "[Hotel Keeper]";
 			mes "I will show you a great room.";
 			close2;
-			set zeny,zeny-5000;
+			set Zeny, Zeny-5000;
 			percentheal 100,100;
 			warp "bra_in01",144,69;
 			end;

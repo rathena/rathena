@@ -95,7 +95,7 @@ S_EnchantArmor:
 			close;
 		}
 		progressbar "ffff00",7;
-		set zeny,zeny-400000;
+		set Zeny, Zeny-400000;
 		delitem .@itemid,1;
 		switch (rand(1,.@failrate)) {
 			case 1: set .@addpart,4702;break;

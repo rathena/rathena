@@ -26,7 +26,7 @@
 //= 2.0 Added GM management NPC. [Euphy]
 //============================================================
 
-// Monstrer Race - Single Monster Race
+// Monster Race - Single Monster Race
 //============================================================
 hugel,51,61,0	script	#race_timer1-1	-1,{
 OnInit:
@@ -659,7 +659,7 @@ hugel,58,72,6	script	Eckar Ellebird#single	798,{
 			mes "that you enjoy the race~";
 			mes "Let me guide you inside";
 			mes "the Monster Race Arena now.";
-			set zeny,zeny-2000;
+			set Zeny, Zeny-2000;
 			set monster_race_1,0;
 			close2;
 			warp "p_track01",75,41;
@@ -680,7 +680,7 @@ hugel,58,72,6	script	Eckar Ellebird#single	798,{
 			mes "you enjoy this race.";
 			mes "Let me guide you now";
 			mes "to the Monster Race Arena.";
-			set zeny,zeny-2000;
+			set Zeny, Zeny-2000;
 			set monster_race_1,0;
 			close2;
 			warp "p_track01",75,41;
@@ -717,7 +717,7 @@ hugel,58,72,6	script	Eckar Ellebird#single	798,{
 			mes "Thank you~";
 			mes "I hope you enjoy";
 			mes "watching this race!";
-			set zeny,zeny-500;
+			set Zeny, Zeny-500;
 			set monster_race_1,0;
 			close2;
 			warp "p_track01",75,41;
@@ -1002,7 +1002,7 @@ p_track01,55,28,0	duplicate(Tire_1)	Tire6#4	-1,0,0
 p_track01,51,28,0	duplicate(Tire_1)	Tire6#5	-1,0,0
 p_track01,47,28,0	duplicate(Tire_1)	Tire6#6	-1,0,0
 
-// Monstrer Race - Dual Monster Race
+// Monster Race - Dual Monster Race
 //============================================================
 hugel,47,56,0	script	#race_timer2-1	-1,{
 OnEnable:
@@ -1283,7 +1283,7 @@ hugel,62,69,1	script	Eckar Erenes#double	798,{
 			mes "that you enjoy the race~";
 			mes "Let me guide you inside";
 			mes "the Monster Race Arena now.";
-			set zeny,zeny-2000;
+			set Zeny, Zeny-2000;
 			set monster_race_2_1,0;
 			set monster_race_2_2,0;
 			close2;
@@ -1306,7 +1306,7 @@ hugel,62,69,1	script	Eckar Erenes#double	798,{
 			mes "you enjoy this race.";
 			mes "Let me guide you now";
 			mes "to the Monster Race Arena.";
-			set zeny,zeny-2000;
+			set Zeny, Zeny-2000;
 			set monster_race_2_1,0;
 			set monster_race_2_2,0;
 			close2;
@@ -1344,7 +1344,7 @@ hugel,62,69,1	script	Eckar Erenes#double	798,{
 			mes "Thank you~";
 			mes "I hope you enjoy";
 			mes "watching this race!";
-			set zeny,zeny-500;
+			set Zeny, Zeny-500;
 			set monster_race_2_1,0;
 			set monster_race_2_2,0;
 			close2;
@@ -2868,7 +2868,7 @@ hugel,71,83,4	script	Wayne	900,{
 	}
 }
 
-// Monstrer Race Affiliated NPCs
+// Monster Race Affiliated NPCs
 //============================================================
 airplane,246,47,1	script	Eocatt#decoy01	878,{
 	mes "[Eocatt]";

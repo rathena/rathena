@@ -29,7 +29,7 @@
 //= 2.3 Added GM management NPC. [Euphy]
 //============================================================ 
 
-// The Moving Island
+// The Moving Island :: mos_whale_edq
 //============================================================
 
 //----------------------------------------------------------------------------
@@ -1511,7 +1511,7 @@ mosk_fild01,86,104,3	script	Aged Stranger#npc	963,{
 		mes "Are you ready to learn the Gusli?";
 		mes "Please equip the Gusli.";
 		next;
-		if(getequipid(EQI_ACC_L) || getequipid(EQI_ACC_R) == 2707) {
+		if (getequipid(EQI_ACC_L) || getequipid(EQI_ACC_R) == 2707) {
 			mes "[Aged Stranger]";
 			mes "Hm... Very well.";
 			mes "At first, look at me how I play,";
@@ -1554,7 +1554,7 @@ mosk_fild01,86,104,3	script	Aged Stranger#npc	963,{
 		mes "[Aged Stranger]";
 		mes "Are you ready to learn the Gusli?";
 		next;
-		if(getequipid(EQI_ACC_L) || getequipid(EQI_ACC_R) == 2707) {
+		if (getequipid(EQI_ACC_L) || getequipid(EQI_ACC_R) == 2707) {
 			mes "[Aged Stranger]";
 			mes "Um... You did well.";
 			next;
@@ -1635,7 +1635,7 @@ mosk_fild01,86,104,3	script	Aged Stranger#npc	963,{
 			warp "mosk_fild02",204,54;
 			end;
 		}
-	}else{
+	} else {
 		mes "[Aged Stranger]";
 		mes "Long time, no see!";
 		mes "You probably like the island, don't you?";
@@ -2498,7 +2498,7 @@ OnTouch:
 			mes "island...!!! Someday, I hope to go there! Hahaha.";
 			next;
 			warp "mosk_fild01",95,93;
-		}else{
+		} else {
 			mes "["+strcharinfo(0)+"]";
 			mes "Oh my goodness... Slipped right out";
 			mes "of my mind... to forget equipping the Gusli.";
@@ -2626,7 +2626,7 @@ mosk_ship,3,3,4	duplicate(Baehideun#main)	Baehideun2#ship	-1
 mosk_ship,5,5,4	duplicate(Baehideun#main)	Baehideun3#ship	-1
 mosk_ship,15,15,4	duplicate(Baehideun#main)	Baehideun4#ship	-1
 
-// Help Mikhail
+// Help Mikhail :: mos_swan & mos_swan_pt2
 //============================================================
 
 //----------------------------------------------------------------------------
@@ -3199,12 +3199,12 @@ mosk_in,135,191,5	script	Landlord#mos	961,{
 			case 3:
 				mes "[Landlord]";
 				emotion e_lv;
-				mes "Oh~! You look great! Look at the "+((sex)?"solid muscle":"fair skin")+"!";
+				mes "Oh~! You look great! Look at the "+((Sex)?"solid muscle":"fair skin")+"!";
 				mes "But you look tired. Is it because of a long journey?";
 				next;
 				mes "[Landlord]";
-				mes "We've got a room available just for you. "+((sex)?"It's the best in town. How about staying the night?":"It's like a princess' room.");
-				mes (sex)?"I'll charge you at reasonable price for you, handsome guy.":"How about staying the night? I'll mark down the price for you, beautiful lady.";
+				mes "We've got a room available just for you. "+((Sex)?"It's the best in town. How about staying the night?":"It's like a princess' room.");
+				mes (Sex)?"I'll charge you at reasonable price for you, handsome guy.":"How about staying the night? I'll mark down the price for you, beautiful lady.";
 				next;
 				mes "["+strcharinfo(0)+"]";
 				mes "Oh, I'm sorry but I didn't come to stay here.";
@@ -3940,7 +3940,7 @@ mosk_in,211,259,5	script	Larissa#mos_01	960,{
 	close;
 }
 
-// Acorn Exchange
+// Acorn Exchange :: mos_squirrel
 //============================================================
 
 //----------------------------------------------------------------------------
@@ -4122,7 +4122,7 @@ S_BS_1:
 mosk_fild01,113,108,3	duplicate(Squirrel#mos_main)	Big Squirrel#mos	111
 mosk_fild01,113,108,5	duplicate(Squirrel#mos_main)	#mos_sq	1104,2,2
 
-// Banish Winter
+// Banish Winter :: mos_nowinter
 //============================================================
 
 //----------------------------------------------------------------------------
@@ -6479,7 +6479,7 @@ mosk_in,131,92,3	script	#Csar	-1,7,7,{
 	end;
 }
 
-// Shafka Hat
+// Shafka Hat :: mos_whale_edq
 //============================================================
 moscovia,211,93,3	script	Irina#edq	958,{
 	if (!checkweight(1201,1)) {
@@ -6588,7 +6588,7 @@ moscovia,211,93,3	script	Irina#edq	958,{
 	close;
 }
 
-// Koshei the Immortal
+// Koshei the Immortal :: mos_request
 //============================================================
 
 //----------------------------------------------------------------------------
@@ -6972,8 +6972,8 @@ mosk_dun01,45,259,0	script	Wall#rus04	111,{
 		close;
 	} else if (rhea_rus_main == 8) {
 		if (rhea_rus_quiz < 3) {
-			if(getequipid(EQI_SHOES) != 2429) {
-				if(getequipid(EQI_SHOES) != 2430) {
+			if (getequipid(EQI_SHOES) != 2429) {
+				if (getequipid(EQI_SHOES) != 2430) {
 					mes "["+ strcharinfo(0) +"]";
 					mes "...Hmm, did I forget to wear something...?";
 					close;
@@ -7584,8 +7584,8 @@ moscovia,178,127,0	script	The Blacksmith#rus06	63,{
 	} else if (rhea_rus_main == 8) {
 		if (countitem(724) > 1 && countitem(969) > 2 && countitem(7877) && countitem(7878) > 1 && countitem(7879) > 9) {
 			if (rhea_rus_ring > 8 && rhea_rus_hair > 8 && rhea_rus_quiz > 29) {
-				if(getequipid(EQI_SHOES) != 2429) {
-					if(getequipid(EQI_SHOES) != 2430) {
+				if (getequipid(EQI_SHOES) != 2429) {
+					if (getequipid(EQI_SHOES) != 2430) {
 						mes "["+ strcharinfo(0) +"]";
 						mes "...Hmm, did I forget to wear something...?";
 						close;
@@ -7740,8 +7740,8 @@ moscovia,206,81,0	script	Vassili Grandpapa#rus07	712,{
 		close;
 	} else if (rhea_rus_main == 8) {
 		if (rhea_rus_ring < 1) {
-			if(getequipid(EQI_SHOES) != 2429) {
-				if(getequipid(EQI_SHOES) != 2430) {
+			if (getequipid(EQI_SHOES) != 2429) {
+				if (getequipid(EQI_SHOES) != 2430) {
 					mes "["+ strcharinfo(0) +"]";
 					mes "...Hmm, did I forget to wear something...?";
 					close;
@@ -7813,8 +7813,8 @@ moscovia,206,81,0	script	Vassili Grandpapa#rus07	712,{
 			mes "She disappeared soon... after Now all I have is Ryubaba. She is also pretty and smart but nothing can relieve the sadnesss in my heart from losing Mashenka...";
 			close;
 		} else if (rhea_rus_ring == 8) {
-			if(getequipid(EQI_SHOES) != 2429) {
-				if(getequipid(EQI_SHOES) != 2430) {
+			if (getequipid(EQI_SHOES) != 2429) {
+				if (getequipid(EQI_SHOES) != 2430) {
 					mes "["+ strcharinfo(0) +"]";
 					mes "...Hmm, did I forget to wear something...?";
 					close;
@@ -8011,8 +8011,8 @@ moscovia,213,216,3	script	Ryubaba#rus08	960,{
 			emotion e_heh;
 			close;
 		} else if (rhea_rus_ring == 1) {
-			if(getequipid(EQI_SHOES) != 2429) {
-				if(getequipid(EQI_SHOES) != 2430) {
+			if (getequipid(EQI_SHOES) != 2429) {
+				if (getequipid(EQI_SHOES) != 2430) {
 					mes "["+ strcharinfo(0) +"]";
 					mes "...Hmm, did I forget to wear something...?";
 					close;
@@ -8139,8 +8139,8 @@ moscovia,213,216,3	script	Ryubaba#rus08	960,{
 			mes "Right... Let me finish talking. We tried searching for her but we couldn't find her. She must have been wearing the ring when she disappeared around the marsh.";
 			close;
 		} else if (rhea_rus_ring == 7) {
-			if(getequipid(EQI_SHOES) != 2429) {
-				if(getequipid(EQI_SHOES) != 2430) {
+			if (getequipid(EQI_SHOES) != 2429) {
+				if (getequipid(EQI_SHOES) != 2430) {
 					mes "["+ strcharinfo(0) +"]";
 					mes "...Hmm, did I forget to wear something...?";
 					close;
@@ -8223,7 +8223,7 @@ moscovia,213,216,3	script	Ryubaba#rus08	960,{
 					mes "...Mmmm, what should I do...";
 					mes "Ok, I will do it.";
 					next;
-				}else{
+				} else {
 					mes "["+ strcharinfo(0) +"]";
 					mes "...Mmmm, what should I do...";
 					mes "No, I can't do it!";
@@ -8396,8 +8396,8 @@ mosk_fild02,157,233,0	script	Shepherdess#rus10	69,{
 			mes "I wish that I could listen to music all the time.";
 			close;
 		} else if (rhea_rus_ring == 5) {
-			if(getequipid(EQI_SHOES) != 2429) {
-				if(getequipid(EQI_SHOES) != 2430) {
+			if (getequipid(EQI_SHOES) != 2429) {
+				if (getequipid(EQI_SHOES) != 2430) {
 					mes "["+ strcharinfo(0) +"]";
 					mes "...Hmm, did I forget to wear something...?";
 					close;
@@ -8427,8 +8427,8 @@ mosk_fild02,157,233,0	script	Shepherdess#rus10	69,{
 			close;
 		} else if (rhea_rus_ring == 6) {
 			if (countitem(7882) > 24) {
-				if(getequipid(EQI_SHOES) != 2429) {
-					if(getequipid(EQI_SHOES) != 2430) {
+				if (getequipid(EQI_SHOES) != 2429) {
+					if (getequipid(EQI_SHOES) != 2430) {
 						mes "["+ strcharinfo(0) +"]";
 						mes "...Hmm, did I forget to wear something...?";
 						close;
@@ -8568,8 +8568,8 @@ moscovia,166,145,1	script	Worried Mother#rus19	961,{
 		close;
 	} else if (rhea_rus_main == 8) {
 		if (rhea_rus_hair < 1) {
-			if(getequipid(EQI_SHOES) != 2429) {
-				if(getequipid(EQI_SHOES) != 2430) {
+			if (getequipid(EQI_SHOES) != 2429) {
+				if (getequipid(EQI_SHOES) != 2430) {
 					mes "["+ strcharinfo(0) +"]";
 					mes "...Hmm, did I forget to wear something...?";
 					close;
@@ -8767,8 +8767,8 @@ mosk_fild02,124,202,3	script	Lusalka#rus23	971,{
 				mes "What are you doing here...?";
 				close;
 			} else if (rhea_rus_hair == 2) {
-				if(getequipid(EQI_SHOES) != 2429) {
-					if(getequipid(EQI_SHOES) != 2430) {
+				if (getequipid(EQI_SHOES) != 2429) {
+					if (getequipid(EQI_SHOES) != 2430) {
 						mes "["+ strcharinfo(0) +"]";
 						mes "...Hmm, did I forget to wear something...?";
 						close;
@@ -8857,8 +8857,8 @@ mosk_fild02,124,202,3	script	Lusalka#rus23	971,{
 				mes "And please, tell him to stop suffering and to be happy. This is my request.";
 				close;
 			} else if (rhea_rus_hair == 7) {
-				if(getequipid(EQI_SHOES) != 2429) {
-					if(getequipid(EQI_SHOES) != 2430) {
+				if (getequipid(EQI_SHOES) != 2429) {
+					if (getequipid(EQI_SHOES) != 2430) {
 						mes "["+ strcharinfo(0) +"]";
 						mes "...Hmm, did I forget to wear something...?";
 						close;
@@ -8996,8 +8996,8 @@ prontera,228,279,3	script	Wanderer#rus24	968,{
 			mes "In your free time, come to see me! The weather here is even more favorable than our the best summer back home.";
 			close;
 		} else if (rhea_rus_hair == 3) {
-			if(getequipid(EQI_SHOES) != 2429) {
-				if(getequipid(EQI_SHOES) != 2430) {
+			if (getequipid(EQI_SHOES) != 2429) {
+				if (getequipid(EQI_SHOES) != 2430) {
 					mes "["+ strcharinfo(0) +"]";
 					mes "...Hmm, did I forget to wear something...?";
 					close;
@@ -9101,8 +9101,8 @@ morocc,165,82,0	script	Morroc Villager#rus25	48,{
 			mes "But natives, like me, can tell the difference.";
 			close;
 		} else if (rhea_rus_hair == 4) {
-			if(getequipid(EQI_SHOES) != 2429) {
-				if(getequipid(EQI_SHOES) != 2430) {
+			if (getequipid(EQI_SHOES) != 2429) {
+				if (getequipid(EQI_SHOES) != 2430) {
 					mes "["+ strcharinfo(0) +"]";
 					mes "...Hmm, did I forget to wear something...?";
 					close;
@@ -9168,8 +9168,8 @@ moc_pryd04,126,120,0	script	Soldier#rus26	967,{
 			mes "............................";
 			close;
 		} else if (rhea_rus_hair == 4 || rhea_rus_hair == 5) {
-			if(getequipid(EQI_SHOES) != 2429) {
-				if(getequipid(EQI_SHOES) != 2430) {
+			if (getequipid(EQI_SHOES) != 2429) {
+				if (getequipid(EQI_SHOES) != 2430) {
 					mes "["+ strcharinfo(0) +"]";
 					mes "...Hmm, did I forget to wear something...?";
 					close;
@@ -9245,8 +9245,8 @@ moc_pryd04,126,120,0	script	Soldier#rus26	967,{
 			set rhea_rus_hair,6;
 			close;
 		} else if (rhea_rus_hair == 6) {
-			if(getequipid(EQI_SHOES) != 2429) {
-				if(getequipid(EQI_SHOES) != 2430) {
+			if (getequipid(EQI_SHOES) != 2429) {
+				if (getequipid(EQI_SHOES) != 2430) {
 					mes "["+ strcharinfo(0) +"]";
 					mes "...Hmm, did I forget to wear something...?";
 					close;
@@ -9375,8 +9375,8 @@ OnTouch:
 mosk_que,45,131,0	script	Stone Furnace#rus28	111,{
 	if (rhea_rus_main == 8) {
 		if (rhea_rus_quiz == 1) {
-			if(getequipid(EQI_SHOES) != 2429) {
-				if(getequipid(EQI_SHOES) != 2430) {
+			if (getequipid(EQI_SHOES) != 2429) {
+				if (getequipid(EQI_SHOES) != 2430) {
 					mes "["+ strcharinfo(0) +"]";
 					mes "...Hmm, did I forget to wear something...?";
 					close;
@@ -9446,8 +9446,8 @@ OnTimer300000:
 mosk_que,56,202,0	script	Occult Apple Tree#rus29	111,{
 	if (rhea_rus_main == 8) {
 		if (rhea_rus_quiz == 2) {
-			if(getequipid(EQI_SHOES) != 2429) {
-				if(getequipid(EQI_SHOES) != 2430) {
+			if (getequipid(EQI_SHOES) != 2429) {
+				if (getequipid(EQI_SHOES) != 2430) {
 					mes "["+ strcharinfo(0) +"]";
 					mes "...Hmm, did I forget to wear something...?";
 					close;
@@ -9497,8 +9497,8 @@ mosk_fild02,243,270,0	script	Marozka#rus31	866,{
 			mes "...........................";
 			close;
 		} else if (rhea_rus_quiz == 3) {
-			if(getequipid(EQI_SHOES) != 2429) {
-				if(getequipid(EQI_SHOES) != 2430) {
+			if (getequipid(EQI_SHOES) != 2429) {
+				if (getequipid(EQI_SHOES) != 2430) {
 					mes "["+ strcharinfo(0) +"]";
 					mes "...Hmm, did I forget to wear something...?";
 					close;
@@ -9564,8 +9564,8 @@ mosk_fild02,243,270,0	script	Marozka#rus31	866,{
 			set rhea_rus_quiz,29;
 			close;
 		} else if (rhea_rus_quiz == 29) {
-			if(getequipid(EQI_SHOES) != 2429) {
-				if(getequipid(EQI_SHOES) != 2430) {
+			if (getequipid(EQI_SHOES) != 2429) {
+				if (getequipid(EQI_SHOES) != 2430) {
 					mes "["+ strcharinfo(0) +"]";
 					mes "...Hmm, did I forget to wear something...?";
 					close;

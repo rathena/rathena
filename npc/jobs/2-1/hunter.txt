@@ -22,8 +22,8 @@
 //= 1.3 Added Baby Class support [Lupus]
 //= 1.5 Fixed possible EXP abuse [Lupus]
 //= 1.6 Added a func which prevent advanced classes passing
-//= 2nd Job Quests again. It also guides adv classes where
-//= to go. [Lupus]
+//=     2nd Job Quests again. It also guides adv classes where
+//=     to go. [Lupus]
 //= 1.6a Infinite Arrows exploit fix (thanx to Lorky, that
 //= reported the bug) [Lupus]
 //= 1.7 Moved the Job QUest to Hugel [Poki#3]
@@ -46,10 +46,10 @@
 //= 3.0a Corrected a Typo error ";;". [Samuray22]
 //= 3.1 Now uses enable and disable waitingroomevent. [L0ne_W0lf]
 //= 3.2 Fixes a bug where the timer was stopped causing the [L0ne_W0lf]
-//=	test to freeze. (bugreport:1099)
+//=     test to freeze. (bugreport:1099)
 //= 3.3 Added missing next. [L0ne_W0lf]
 //= 3.4 Corrected some Issues with the Waiting Room. (bugreport:1890) [Samuray22]
-//=	-Deleted a Unnecesary Next; on Hunter Guildsman#hnt. (bugreports:1665,2239,2179)
+//=     Deleted a Unnecesary Next; on Hunter Guildsman#hnt. (bugreports:1665,2239,2179)
 //= 3.5 Added Quest Log commands. [Kisuka]
 //= 3.6 Removed the need for use of 'goto.' [L0ne_W0lf]
 //= 3.7 Modified the quest to renewal. [Vali] (Thanks to Muad_Dib for the necessary info).
@@ -125,7 +125,7 @@ hu_in01,386,373,4	script	Hunter Guildsman#hnt	727,{
 		mes "Oh, a person who serves God! Nice to meet you. There aren't many people like you that visit this place~ Hehe.";
 		close;
 	}
-	else if (Baseclass == Job_Merchant) {
+	else if (BaseClass == Job_Merchant) {
 		mes "[Hunter Guildsman]";
 		mes "Oh...";
 		mes "How's your business coming along?";
@@ -182,7 +182,7 @@ hu_in01,386,373,4	script	Hunter Guildsman#hnt	727,{
 			mes "[Hunter Sherin]";
 			mes "Tada~ Congratulations!";
 			mes "You look great as a Hunter!!";
-			set .@joblvl,joblevel;
+			set .@joblvl, JobLevel;
 			completequest 4013;
 			callfunc "Job_Change",Job_Hunter;
 			callfunc "F_ClearJobVar";		// clears all job variables for the current player
@@ -438,7 +438,7 @@ hu_in01,386,373,4	script	Hunter Guildsman#hnt	727,{
 			mes "Just give the item to the Demon Hunter, the guy who's all the way to the left in this area~";
 			next;
 			mes "[Hunter Sherin]";
-			if (sex)
+			if (Sex)
 				mes "If you decide to become a Hunter, promise to come visit me. I want to see you as a Hunter. You would look great!!";
 			else
 				mes "If you decide to become a Hunter, come and visit me, okay? You're pretty, but... You'd be even prettier as a Hunter. Hehe~";

@@ -142,7 +142,7 @@ L_HuntingQuest:
 	end;
 
 L_Details:
-	switch(getarg(0)){
+	switch(getarg(0)) {
 	case 3250:
 		mes "This mission is assigned by the Rekenber corporation from Lighthalzen. Below are the details.";
 		next;

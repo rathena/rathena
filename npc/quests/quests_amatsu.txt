@@ -1,7 +1,7 @@
 //===== rAthena Script ======================================= 
 //= Quest NPCs related to Amatsu
 //===== By: ================================================== 
-//= rAthena team & others? & MasterOfMuppets
+//= rAthena Dev Team & MasterOfMuppets
 //===== Current Version: ===================================== 
 //= 1.5
 //===== Compatible With: ===================================== 
@@ -18,7 +18,7 @@
 //= 1.5 Added questlog support. [Euphy]
 //============================================================ 
 
-// Momotaro Event
+// Momotaro Event :: japan_momo_q
 //============================================================ 
 amatsu,223,236,3	script	Publisher#ama	763,{
 	if (checkweight(1201,1) == 0) {
@@ -789,11 +789,10 @@ OnTouch:
 	end;
 }
 
-// Sushi Quest
+// Sushi Quest :: japan_sushi
 //============================================================ 
 ama_in01,162,17,1	script	Sushi Master#ama	765,{
-	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 5000) {
+	if (MaxWeight - Weight < 5000) {
 		mes "[Magumagu]";
 		mes "Hey. You look really heavy.";
 		mes "Don't you have trouble walking?";
@@ -1130,7 +1129,7 @@ ama_in01,162,17,1	script	Sushi Master#ama	765,{
 				mes "If you want to eat delicious fish slices, you better bring more money.";
 				close;
 			}
-			set zeny,zeny-700;
+			set Zeny, Zeny-700;
 			getitem 551,10; //Shusi
 			mes "[Magumagu]";
 			mes "There you go. If you like the taste, please order some more.";
@@ -1143,7 +1142,7 @@ ama_in01,162,17,1	script	Sushi Master#ama	765,{
 				mes "you better bring more money.";
 				close;
 			}
-			set zeny,zeny-74;
+			set Zeny, Zeny-74;
 			getitem 551,1; //Shusi
 			mes "[Magumagu]";
 			mes "There you go. If you like the taste, please order some more.";
@@ -1171,7 +1170,7 @@ ama_in01,162,17,1	script	Sushi Master#ama	765,{
 				mes "If you want to eat delicious fish slices, you better bring more money.";
 				close;
 			}
-			set zeny,zeny-350;
+			set Zeny, Zeny-350;
 			getitem 544,10; //Fish_Slice
 			mes "[Magumagu]";
 			mes "There you go. If you like the taste, please order some more.";
@@ -1184,7 +1183,7 @@ ama_in01,162,17,1	script	Sushi Master#ama	765,{
 				mes "";
 				close;
 			}
-			set zeny,zeny-37;
+			set Zeny, Zeny-37;
 			getitem 544,1; //Fish_Slice
 			mes "[Magumagu]";
 			mes "There you go. If you like the taste, please order some more.";
@@ -1306,7 +1305,7 @@ ama_in01,162,17,1	script	Sushi Master#ama	765,{
 	}
 }
 
-// Dungeon Quest
+// Dungeon Quest :: japan_mono
 //============================================================ 
 amatsu,112,164,4	script	Gate Soldier#ama1	767,{
 	mes "[Gate Soldier]";
@@ -1477,7 +1476,7 @@ ama_in02,170,62,4	script	Soldier#ama2	767,{
 			mes "to issue another Transit Permit.";
 			next;
 			if (select("Issue one:Talk to you later") == 1) {
-				set zeny,zeny-10000;
+				set Zeny, Zeny-10000;
 				getitem 7160,1; //Lord's_Passable_Ticket
 				mes "[Jiro]";
 				mes "There you go.";
@@ -2205,8 +2204,8 @@ ama_in01,180,173,3	script	Kitsune Mask#ama	762,{
 // Old changelog
 //============================================================ 
 //= 1.0 Rewrote parts of other/momotaro.txt to make it work.
-//=	I'm sorry for the mess, I couldn't do much better with
-//=	the current code I had.
+//=     I'm sorry for the mess, I couldn't do much better with
+//=     the current code I had.
 //= 1.1 Added Sushi Quest and Amatsu Event from cities/ [Evera]
 //= 1.2 Fixed Momotaro Quest, thanks to .~Abism0~. [Lupus]
 //============================================================ 

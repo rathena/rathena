@@ -82,7 +82,7 @@ comodo,226,123,5	script	Wandering Bard	741,{
 			mes "Always full of happy moments~";
 			next;
 			mes "[Lalo]";
-			if (sex) {
+			if (Sex) {
 				mes "Forget about your worries~";
 				mes "And enjoy everything~";
 			}
@@ -96,7 +96,7 @@ comodo,226,123,5	script	Wandering Bard	741,{
 	else if(BARD_Q == 0) {
 		cutin "job_bard_aiolo01",2;
 		mes "[Lalo]";
-		if (sex) mes "Hi! Delightful Archer.";
+		if (Sex) mes "Hi! Delightful Archer.";
 		else mes "Hello! Beautiful Archer Lady.";
 		mes "How can a wanderer like me help you?";
 		next;
@@ -948,5 +948,6 @@ S_ChangeJob:
 //= 1.2 Fixed wrong item ID, added missing commands [Lupus]
 //= 1.3 Updated flower sub-quest according to official [Lupus]
 //= 1.4 Changed priority for the gifts. Now you can win the 1st
-//= prize, too. Added Izidor flower [Lupus]
+//=     prize, too. Added Izidor flower [Lupus]
 //= 2.0 Changed numbers to constants. [Vicious]
+//============================================================ 

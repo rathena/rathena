@@ -35,9 +35,9 @@ OnEnterBG:
 bat_c02,54,123,0	script	#bat_c02a	111,{
 	end;
 
-OnKvM02LightA: misceffect 54; end;
-OnKvM02LightB: misceffect 55; end;
-OnKvM02LightC: misceffect 56; end;
+OnKvM02LightA: specialeffect EF_BEGINSPELL2; end;
+OnKvM02LightB: specialeffect EF_BEGINSPELL3; end;
+OnKvM02LightC: specialeffect EF_BEGINSPELL4; end;
 }
 
 bat_c02,56,125,0	duplicate(#bat_c02a)	#bat_c02b	111

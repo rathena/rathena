@@ -78,7 +78,7 @@ payon,157,146,6	script	Suhnbi#cash	85,{
 		mes "Clink! Clank! Clunk!";
 		SuccessRefItem .@part;
 		next;
-		Emotion e_no1;
+		emotion e_no1;
 		mes "[Suhnbi]";
 		mes "Here you are! It's done.";
 		mes "It's been a while since I've made such a fine weapon. You must be happy because it has become stronger!";
@@ -89,9 +89,9 @@ payon,157,146,6	script	Suhnbi#cash	85,{
 	FailedRefItem .@part;
 	next;
 	if (rand(5) == 1){
-		Emotion e_cash;
+		emotion e_cash;
 	} else {
-		Emotion e_omg;
+		emotion e_omg;
 	}
 	mes "[Suhnbi]";
 	mes "Cough!!!!";

@@ -18,7 +18,7 @@
 //= 1.5 Now saves/restores all quest skills [Lupus]
 //= 1.6 Merged back JFunc, CHANGED NUMBERS TO CONSTANTS [Lupus]
 //= 1.7 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
-//=	No longer uses function "F_ToHigh"
+//=     No longer uses function "F_ToHigh"
 //= 1.7a Fixed a "If" in the quest. (bugreport:489) [Samuray22]
 //= 1.8 Added Quest Log commands. [L0ne_W0lf]
 //= 1.9 Fixed an issue with completequest by adding checkquest. [Kisuka]
@@ -87,7 +87,7 @@ geffen_in,164,124,4	script	Mage Guildsman	123,{
 		}
 		if (job_magician_q == 0) {
 			mes "Wanna be a Mage, eh...?";
-			if (sex)
+			if (Sex)
 				mes "Hey, look at you! You're kinda cute~! Not my type though...";
 			else {
 				mes "Oooh, you're such a hot babe~!";
@@ -232,7 +232,7 @@ geffen_in,164,124,4	script	Mage Guildsman	123,{
 	case 2:
 		mes "[Mage Guildsman]";
 		mes "Wanna be a Mage, eh?";
-		if (sex)
+		if (Sex)
 			mes "For a cutie like you, I'd be happy to explain the requirements!";
 		else
 			mes "I'd be happy to explain the requirements for a pretty girl like you!";

@@ -280,7 +280,7 @@ prt_monk,261,91,3	script	Rust Blackhand#edq	826,{
 			delitem 2256,1; //Magestic_Goat
 			delitem 7799,30; //Dark_Crystal
 			delitem 7798,50; //Dark_Debris
-			set zeny,zeny-990000;
+			set Zeny, Zeny-990000;
 			completequest 3043;
 			getitem 5374,1; //L_Magestic_Goat
 			mes "[Rust Blackhand]";

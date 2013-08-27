@@ -109,7 +109,7 @@ nif_fild02,332,327,4	script	Deadman	795,{
 			next;
 			switch(select("Disguise:Loli Ruri:Cancel")) {
 			case 1:
-				if(BaseLevel > 90){
+				if (BaseLevel > 90) {
 					mes "[Deadman]";
 					mes "Thank you for your great help with the Disguise!";
 					mes "Currently the Situation is stable and i'm not in need of your help anymore to kill them.";
@@ -120,7 +120,7 @@ nif_fild02,332,327,4	script	Deadman	795,{
 				setquest 60173;
 				close;
 			case 2:
-				if(BaseLevel > 98){
+				if (BaseLevel > 98) {
 					mes "[Deadman]";
 					mes "Thank you for your great help with the Loli Ruri!";
 					mes "Currently the Situation is stable and i'm not in need of your help anymore to kill them.";

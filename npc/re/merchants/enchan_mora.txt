@@ -1228,7 +1228,7 @@ mora,124,82,4	script	Artifact Collector#blan	522,{
 		mes "[Artifact Collector]";
 		mes "+1, +2, +3, +4, +5, +6 those refinements are not strong enough to work on my craft.";
 		next;
-		emotion 57,0;
+		emotion e_otl,0;
 		mes "[Artifact Collector]";
 		mes "But +7! +7 is rare and just barely strong enough to work in my crafting attempts.";
 		next;

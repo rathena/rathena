@@ -453,7 +453,7 @@ comodo,140,86,5	script	Cheerless Maestro	479,{
 			mes "[" + strcharinfo(0) + "]";
 			mes "It felt like hearing mommy's lullaby~ It was so beautiful and moving... You are the best artist of our time.";
 			next;
-			specialeffect 18;
+			specialeffect EF_STEAL;
 			mes "[Guitar Song]";
 			mes "Ha ha ha. I know that well, but it feels good to hear a compliment from you!";
 			next;

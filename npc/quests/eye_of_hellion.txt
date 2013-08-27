@@ -15,7 +15,7 @@
 //= is the one that remained active on main servers.
 //===== Additional Comments: =================================
 //= 1.5 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
-//=	Tracking variable is not backwards compatable meaning
+//=     Tracking variable is not backwards compatable meaning
 //=     you can again repeat this quest from the start.
 //= 1.6 Fixed issue with #prt_key-1-1. [L0ne_W0lf]
 //= 1.7 Corrected remnants from Official Conversion. [L0ne_W0lf]
@@ -1373,7 +1373,7 @@ payon,182,132,3	script	Grout'he Tuccok#hellion	48,{
 					mes "clean and pure Skirt of Virgin.";
 					mes "If you got any more questions,";
 					mes "I guess you can ask me later~";
-					set zeny,zeny-10000;
+					set Zeny, Zeny-10000;
 					set HELLIONQ,48;
 					getitem 953,1; //Stone_Heart
 					getitem 511,1; //Green_Herb

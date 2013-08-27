@@ -15,14 +15,14 @@
 //= 0.4a Added exp bonus for the factory quest, borrowed from a Korean fansite.
 //= 0.4b Added missing close [Komurka]
 //= 0.5 Added Temporal Locations of Gunslinger Job Change map.
-//=	Info provided by RockmanEXE [erKURITA]
+//=     Info provided by RockmanEXE [erKURITA]
 //= 0.6 Implemented a crap quest [MasterOfMuppets]
 //= 0.7 Implemented an inn NPC [MasterOfMuppets]
 //= 0.8 Implemented the Shinokas quest, thanks to [MasterOfMuppets]
-//= 	Dj-Yhn for scripting it.
+//=      Dj-Yhn for scripting it.
 //= 0.9 Removed Duplicates [Silent]
 //= 1.0 Implemented the Lover's quest. [MasterOfMuppets]
-//= 1.1	Split quests into quests/cities_einbroch.txt [Evera]
+//= 1.1 Split quests into quests/cities_einbroch.txt [Evera]
 //= 1.2 Split more quests into above file [Evera]
 //= 1.3 Added (finally) the Garrison quest npc [erKURITA]
 //= 1.4 Implemented the polution script. [MasterOfMuppets]
@@ -130,7 +130,7 @@ function	script	EinTower	{
 			mes "using our services.";
 			mes "Let me guide you to";
 			mes "the tower right away.";
-			set zeny,zeny-10;
+			set Zeny, Zeny-10;
 			close2;
 			warp "einbroch",181,196;
 			end;
@@ -157,7 +157,7 @@ function	script	EinTower	{
 				mes "using our services.";
 				mes "Let me guide you to";
 				mes "the tower right away.";
-				set zeny,zeny-20;
+				set Zeny, Zeny-20;
 				getitem 512,1; //Apple
 				close2;
 				warp "einbroch",174,204;
@@ -205,7 +205,7 @@ einbroch,232,272,3	script	Train Station Staff#ein1::EinbrochTrain	852,{
 			mes "Have a safe trip.";
 			mes "^333333*Ahem*^000000 All aboard!";
 			close2;
-			set zeny,zeny-200;
+			set Zeny, Zeny-200;
 			warp "einbech",43,215;
 			end;
 		}
@@ -836,7 +836,7 @@ ein_in01,206,224,3	script	Hotel Employee#ein	855,{
 				mes "Please enjoy";
 				mes "your rest~";
 				close2;
-				set zeny,zeny-5000;
+				set Zeny, Zeny-5000;
 				percentheal 100,100;
 				warp "ein_in01",272,167;
 				end;

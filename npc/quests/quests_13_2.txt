@@ -51,7 +51,7 @@
 //= 2.8 Added GM management function. [Euphy]
 //============================================================ 
 
-// Cat Hand Addition.
+// Cat Hand Addition :: cat_enhance
 //============================================================ 
 spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 	function Catwarp;
@@ -108,7 +108,7 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 				close;
 			}
 			else if (Zeny >= 60) {
-				set zeny,zeny-60;
+				set Zeny, Zeny-60;
 				mes "[Cat Hand Agent]";
 				mes "Thank you.";
 				mes "Your storage will be opened shortly.";
@@ -155,7 +155,7 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 				close;
 			}
 			else if (Zeny >= 60) {
-				set zeny,zeny-60;
+				set Zeny, Zeny-60;
 				mes "[Cat Hand Agent]";
 				mes "Thank you.";
 				mes "Your storage will be opened shortly.";
@@ -276,7 +276,7 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 				close;
 			}
 			else if (Zeny >= 60) {
-				set zeny,zeny-60;
+				set Zeny, Zeny-60;
 				mes "[Cat Hand Agent]";
 				mes "Thank you.";
 				mes "Your storage will be opened shortly.";
@@ -531,7 +531,7 @@ spl_fild01,55,269,0	duplicate(FishingHole_spl3)	School of Fish#12	844
 spl_fild01,332,131,0	duplicate(FishingHole_spl3)	School of Fish#13	844
 spl_fild01,170,74,0	duplicate(FishingHole_spl3)	School of Fish#14	844
 
-// Two Tribes
+// Two Tribes :: ep13_2_msg
 //============================================================
 spl_in01,32,306,3	script	Splendide Guard#ep13md01	447,2,2,{
 	if (checkweight(1201,2) == 0) {
@@ -2703,7 +2703,7 @@ spl_fild01,329,29,0	script	???#ep13mdf03	844,{
 	}
 }
 
-// Monster Suppression
+// Monster Suppression :: ep13_2_dayquest
 //============================================================
 manuk,252,116,3	script	Manuk Galtun#ep13_2day	450,{
 	if (checkweight(1201,2) == 0) {
@@ -2816,7 +2816,7 @@ manuk,252,116,3	script	Manuk Galtun#ep13_2day	450,{
 	close;
 }
 
-// Daily Quests
+// Daily Quests :: ep13_2_dayquest
 // - Bradium Collection
 // - Laphine Craftsman
 // - Draco Egg Collection (NPC includes 'Wanted' quest)
@@ -3516,7 +3516,7 @@ OnTimer300000:
 	end;
 }
 
-// Otherworld language
+// Otherworld language :: ep13_2_rhea
 //============================================================ 
 mid_camp,197,237,3	script	Schwartzvalt Mechanic#1	869,{
 	if (ep13_1_edq > 2 || ep13_start == 100) {
@@ -4644,7 +4644,7 @@ mid_camp,7,3,0	script	Translator Preparation#1	708,{
 	}
 }
 
-// Daily Quests
+// Daily Quests :: ep13_2_tre
 // - Midgard Ore
 // - Alfheim Perfume
 //============================================================ 
@@ -6222,7 +6222,7 @@ OnTimer60000:
 	end;
 }
 
-// Secret note of Bazett
+// Secret note of Bazett :: ep13_2_dailybs
 //============================================================ 
 mid_camp,283,198,5	script	Bazett Teablack#ep13bs	883,{
 	if (checkweight(1201,1) == 0) {
@@ -6888,7 +6888,7 @@ manuk,193,135,0	script	Worker#ep13bs	454,{
 	}
 }
 
-// Yggdrasil Dungeon Floor 2 puzzle.
+// Yggdrasil Dungeon Floor 2 puzzle :: ny_dun02_puzzle
 //============================================================ 
 nyd_dun02,178,255,0	script	Strange Device#ep13_out	844,3,3,{
 	mes "There's something strange here.";

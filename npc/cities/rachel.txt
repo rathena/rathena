@@ -276,7 +276,7 @@ rachel,206,30,3	script	Freya's Priest#play	920,{
 	mes "[Freya's Priest]";
 	mes "You!";
 	mes "Entertain me!";
-	Emotion e_ag;
+	emotion e_ag;
 	next;
 	if (select("What? You can't tell me what to do!:You got it.") == 1) {
 		mes "[Freya's Priest]";
@@ -342,7 +342,7 @@ rachel,197,137,3	script	Bard#aru	51,{
 	mes ".........";
 	mes ".........";
 	mes ".........";
-	Emotion e_sob;
+	emotion e_sob;
 	close;
 }
 

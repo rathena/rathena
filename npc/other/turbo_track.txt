@@ -4779,7 +4779,7 @@ alde_gld,186,199,3	script	Turbo Track Guide#Entran	845,{
 						if (countitem(7310) > 0)
 							delitem 7310,1; //Free_Peco_Ticket
 						else
-							set zeny,zeny-.@zeny;
+							set Zeny, Zeny-.@zeny;
 					}
 				}
 				switch(.@i) {

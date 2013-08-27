@@ -17,7 +17,7 @@
 gef_fild05,80,149,3	script	Myu#08_hat	877,{
 	mes "[Myu]";
 	mes "Meow...";
-	emotion 23;
+	emotion e_omg;
 	next;
 	if(hatcat2008 == 0) {
 		mes "[Myu]";

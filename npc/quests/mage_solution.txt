@@ -29,7 +29,7 @@ pay_arche,122,100,0	script	Dollshoi	88,{
 			close;
 		}
 		delitem 1092,1; //Empty_Cylinder
-		set zeny,zeny-50;
+		set Zeny, Zeny-50;
 		getitem 1089,1; //Payon_Potion
 	}
 	close;
@@ -41,7 +41,7 @@ moc_ruins,91,150,0	script	Ponka-Hontas	93,{
 	next;
 	if (select("Alright, Deal.:Nah, forget it.") == 1) {
 		mes "[Mage Guildsman]";
-		if (zeny < 50) {
+		if (Zeny < 50) {
 			mes "I'm sorry, but you don't have enough money to cover the 50 Zeny fee.";
 			close;
 		}
@@ -50,7 +50,7 @@ moc_ruins,91,150,0	script	Ponka-Hontas	93,{
 			close;
 		}
 		delitem 1092,1; //Empty_Cylinder
-		set zeny,zeny-50;
+		set Zeny, Zeny-50;
 		getitem 1088,1; //Morocc_Potion
 	}
 	close;

@@ -26,26 +26,26 @@
 // the "Vote Globalvar Girl#yuno" NPC at the end of the file.
 // Character Variable in use: lhz_vote (how many times player has voted, keeps htem from re-voting.)
 //===== Additional Comments: ================================= 
-//= 1.0	Initial release [Evera]
-//= 1.1	SVN release, removed from major town (found true info after research),
-//=	put more arg(2) parameters, fixed a few bugs [Evera]
+//= 1.0 Initial release [Evera]
+//= 1.1 SVN release, removed from major town (found true info after research),
+//=     put more arg(2) parameters, fixed a few bugs [Evera]
 //= 1.2 Mushed some variables together, optimized a bit [Evera]
 //= 1.3 Removed selfconfig [Evera]
 //= 1.4 Changed global variables to read from 3 global variables, updated names,
-//= 	fixed array bug [Evera]
+//=      fixed array bug [Evera]
 //= 1.5 Mushed voting varialbes into 1 variable. [Evera]
 //= 1.6 Removed Duplicates [Silent]
-//= 1.7	Fixed bug of DTS_Admin not running by itself [Evera]
-//= 1.8	Changed requirement to lvl 60 [Evera]
+//= 1.7 Fixed bug of DTS_Admin not running by itself [Evera]
+//= 1.8 Changed requirement to lvl 60 [Evera]
 //= 1.9 Removed global eligibility option [Evera]
 //= 2.0 Fixed zeny bug [Evera]
 //= 2.1 Fixed headers with and updated with newer information [Evera]
 //= 2.2 Changed dtseligible 2 to MISC_QUEST|128, to clean up variable usage. [Evera]
-//=	Also added F_ClearGarbage function to the scripts. [Evera]
-//= 2.3	Changed dtseligible to be $dtsday when MISC_QUEST|128
-//=	Added $dtsday for vote session counter
-//=	Fixed bug that involved having both warpers enabled at the same time. [Evera]
-//=	New $dtsday system and bug fix[Evera]
+//=     Also added F_ClearGarbage function to the scripts. [Evera]
+//= 2.3 Changed dtseligible to be $dtsday when MISC_QUEST|128
+//=     Added $dtsday for vote session counter
+//=     Fixed bug that involved having both warpers enabled at the same time. [Evera]
+//=     New $dtsday system and bug fix[Evera]
 //= 2.3a fixed 2 bugs with comparision [Lupus]
 //= 2.3b corrected Glast warp coords [Lupus] 2.3c Bailand -> Bayalan
 //= 2.4 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
@@ -536,7 +536,7 @@ function	script	F_VoteKafra	{
 				case 1:
 					if (Zeny >= 4000) {
 						cutin "",255;
-						set zeny,zeny-4000;
+						set Zeny, Zeny-4000;
 						warp "xmas_dun02",130,123;
 						end;
 					}
@@ -560,7 +560,7 @@ function	script	F_VoteKafra	{
 				switch(select("Toy Factory, Level 2 -> 4,000 z:Clock Tower, Level 3 -> 4,000 z:Cancel")) {
 				case 1:
 					if (Zeny >= 4000) {
-						set zeny,zeny-4000;
+						set Zeny, Zeny-4000;
 						cutin "kafra_09",255;
 						warp "xmas_dun02",130,123;
 						end;
@@ -576,7 +576,7 @@ function	script	F_VoteKafra	{
 					break;
 				case 2:
 					if (Zeny >= 4000) {
-						set zeny,zeny-4000;
+						set Zeny, Zeny-4000;
 						cutin "kafra_09",255;
 						warp "alde_dun03",265,22;
 						end;
@@ -601,7 +601,7 @@ function	script	F_VoteKafra	{
 				switch(select("Toy Factory, Level 2 -> 4,000 z:Clock Tower, Level 3 -> 4,000 z:Lava Dungeon, Level 2 -> 4,000 z:Cancel")) {
 				case 1:
 					if (Zeny >= 4000) {
-						set zeny,zeny-4000;
+						set Zeny, Zeny-4000;
 						cutin "kafra_09",255;
 						warp "xmas_dun02",130,123;
 						end;
@@ -617,7 +617,7 @@ function	script	F_VoteKafra	{
 					break;
 				case 2:
 					if (Zeny >= 4000) {
-						set zeny,zeny-4000;
+						set Zeny, Zeny-4000;
 						cutin "kafra_09",255;
 						warp "alde_dun03",265,22;
 						end;
@@ -633,7 +633,7 @@ function	script	F_VoteKafra	{
 					break;
 				case 3:
 					if (Zeny >= 4000) {
-						set zeny,zeny-4000;
+						set Zeny, Zeny-4000;
 						cutin "kafra_09",255;
 						warp "mag_dun02",47,40;
 						end;
@@ -935,7 +935,7 @@ lighthalzen,163,60,4	script	Kafra Voting Staff#lght	861,{
 				switch(select("Byalan Dungeon, Level 3 -> 4,000 z:Cancel")) {
 				case 1:
 					if (Zeny >= 4000) {
-						set zeny,zeny-4000;
+						set Zeny, Zeny-4000;
 						cutin "zonda_01",255;
 						warp "iz_dun02",234,206;
 						end;
@@ -963,7 +963,7 @@ lighthalzen,163,60,4	script	Kafra Voting Staff#lght	861,{
 				switch(select("Byalan Dungeon, Level 3 -> 4,000 z:Clock Tower, 3rd Floor -> 4,000 z:Cancel")) {
 				case 1:
 					if (Zeny >= 4000) {
-						set zeny,zeny-4000;
+						set Zeny, Zeny-4000;
 						cutin "zonda_01",255;
 						warp "iz_dun02",234,206;
 						end;
@@ -978,7 +978,7 @@ lighthalzen,163,60,4	script	Kafra Voting Staff#lght	861,{
 					break;
 				case 2:
 					if (Zeny >= 4000) {
-						set zeny,zeny-4000;
+						set Zeny, Zeny-4000;
 						cutin "zonda_01",255;
 						warp "c_tower3",64,143;
 						end;
@@ -1013,7 +1013,7 @@ lighthalzen,163,60,4	script	Kafra Voting Staff#lght	861,{
 				switch(select("Byalan Dungeon, Level 3 -> 4,000 z:Clock Tower, 3rd Floor -> 4,000 z:Glast Heim Entrance -> 4,000 z:Cancel")) {
 				case 1:
 					if (Zeny >= 4000) {
-						set zeny,zeny-4000;
+						set Zeny, Zeny-4000;
 						cutin "zonda_01",255;
 						warp "iz_dun02",234,206;
 						end;
@@ -1028,7 +1028,7 @@ lighthalzen,163,60,4	script	Kafra Voting Staff#lght	861,{
 					break;
 				case 2:
 					if (Zeny >= 4000) {
-						set zeny,zeny-4000;
+						set Zeny, Zeny-4000;
 						cutin "zonda_01",255;
 						warp "c_tower3",64,143;
 						end;
@@ -1043,7 +1043,7 @@ lighthalzen,163,60,4	script	Kafra Voting Staff#lght	861,{
 					break;
 				case 3:
 					if (Zeny >= 4000) {
-						set zeny,zeny-4000;
+						set Zeny, Zeny-4000;
 						cutin "zonda_01",255;
 						warp "glast_01",368,303;
 						end;

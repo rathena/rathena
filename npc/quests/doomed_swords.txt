@@ -19,7 +19,7 @@
 //= 1.1 Fixed items count check. For all 3 swords... [Lupus]
 //= 1.3 Fixed exploit [Lupus]
 //= 1.4 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
-//=	Moved all non-related NPCs to their repsective files.
+//=     Moved all non-related NPCs to their repsective files.
 //= 1.5 Added missing checkweight. [L0ne_W0lf]
 //============================================================
 

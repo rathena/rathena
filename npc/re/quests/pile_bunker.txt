@@ -95,7 +95,7 @@ yuno,179,174,4	script	Gomer	851,{
 		} else {
 			mes "[Gomer]";
 			mes "Oh, I've been waiting. You didn't come on time, so I was wondering if you forgot about it. Please wait there a little bit.";
-			specialeffect 101;
+			specialeffect EF_REPAIRWEAPON;
 			next;
 			mes "[Gomer]";
 			mes "It's done. What do you think? Not bad, eh? Although I made it myself, I have to say it's pretty decently done.";

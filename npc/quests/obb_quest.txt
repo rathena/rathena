@@ -457,8 +457,7 @@ alberta,43,244,0	script	Tourist#thai	99,{
 			next;
 			mes "[Tourist]";
 			mes "Hopefully, it'll be useful.";
-			set .@now_weight,MaxWeight-Weight;
-			if (.@now_weight < 500) {
+			if (MaxWeight - Weight < 500) {
 				mes "Umm...it seems you're carrying too much stuff with you.";
 				mes "Doncha want me to help you?";
 				close;

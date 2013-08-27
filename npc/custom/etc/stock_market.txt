@@ -279,15 +279,15 @@ S_Sell:
 	set @sellamount,0;
 	input @sellamount;
 	if (@sellamount < 1) goto S_SellInv;
-	if (zeny < $S_Trans) goto S_NoZeny;
-	set zeny,zeny-$S_Trans;
+	if (Zeny < $S_Trans) goto S_NoZeny;
+	set Zeny, Zeny-$S_Trans;
 
 SELLS1:
 	if (@sellname$ != $S1N$) goto SELLS2;
 	if (@sellamount > #S1) goto S_SellTooHigh;
 	set @price,@sellamount*$S1;
 	set #S1,#S1-@sellamount;
-	set zeny,zeny+@price;
+	set Zeny, Zeny+@price;
 	next;
 	mes "Sold " + @sellamount + " " + $S1N$ + " shares.";
 	mes "Earned ^0000FF"+@price+"z^000000.";
@@ -299,7 +299,7 @@ SELLS2:
 	if (@sellamount > #S2) goto S_SellTooHigh;
 	set @price,@sellamount*$S2;
 	set #S2,#S2-@sellamount;
-	set zeny,zeny+@price;
+	set Zeny, Zeny+@price;
 	next;
 	mes "Sold " + @sellamount + " " + $S2N$ + " shares.";
 	mes "Earned ^0000FF"+@price+"z^000000.";
@@ -311,7 +311,7 @@ SELLS3:
 	if (@sellamount > #S3) goto S_SellTooHigh;
 	set @price,@sellamount*$S3;
 	set #S3,#S3-@sellamount;
-	set zeny,zeny+@price;
+	set Zeny, Zeny+@price;
 	next;
 	mes "Sold " + @sellamount + " " + $S3N$ + " shares.";
 	mes "Earned ^0000FF"+@price+"z^000000.";
@@ -323,7 +323,7 @@ SELLS4:
 	if (@sellamount > #S4) goto S_SellTooHigh;
 	set @price,@sellamount*$S4;
 	set #S4,#S4-@sellamount;
-	set zeny,zeny+@price;
+	set Zeny, Zeny+@price;
 	next;
 	mes "Sold " + @sellamount + " " + $S4N$ + " shares.";
 	mes "Earned ^0000FF"+@price+"z^000000.";
@@ -335,7 +335,7 @@ SELLS5:
 	if (@sellamount > #S5) goto S_SellTooHigh;
 	set @price,@sellamount*$S5;
 	set #S5,#S5-@sellamount;
-	set zeny,zeny+@price;
+	set Zeny, Zeny+@price;
 	next;
 	mes "Sold " + @sellamount + " " + $S5N$ + " shares.";
 	mes "Earned ^0000FF"+@price+"z^000000.";
@@ -347,7 +347,7 @@ SELLS6:
 	if (@sellamount > #S6) goto S_SellTooHigh;
 	set @price,@sellamount*$S6;
 	set #S6,#S6-@sellamount;
-	set zeny,zeny+@price;
+	set Zeny, Zeny+@price;
 	next;
 	mes "Sold " + @sellamount + " " + $S6N$ + " shares.";
 	mes "Earned ^0000FF"+@price+"z^000000.";
@@ -359,7 +359,7 @@ SELLS7:
 	if (@sellamount > #S7) goto S_SellTooHigh;
 	set @price,@sellamount*$S7;
 	set #S7,#S7-@sellamount;
-	set zeny,zeny+@price;
+	set Zeny, Zeny+@price;
 	next;
 	mes "Sold " + @sellamount + " " + $S7N$ + " shares.";
 	mes "Earned ^0000FF"+@price+"z^000000.";
@@ -371,7 +371,7 @@ SELLS8:
 	if (@sellamount > #S8) goto S_SellTooHigh;
 	set @price,@sellamount*$S8;
 	set #S8,#S8-@sellamount;
-	set zeny,zeny+@price;
+	set Zeny, Zeny+@price;
 	next;
 	mes "Sold " + @sellamount + " " + $S8N$ + " shares.";
 	mes "Earned ^0000FF"+@price+"z^000000.";
@@ -383,7 +383,7 @@ SELLS9:
 	if (@sellamount > #S9) goto S_SellTooHigh;
 	set @price,@sellamount*$S9;
 	set #S9,#S9-@sellamount;
-	set zeny,zeny+@price;
+	set Zeny, Zeny+@price;
 	next;
 	mes "Sold " + @sellamount + " " + $S9N$ + " shares.";
 	mes "Earned ^0000FF"+@price+"z^000000.";
@@ -395,7 +395,7 @@ SELLS10:
 	if (@sellamount > #S10) goto S_SellTooHigh;
 	set @price,@sellamount*$S10;
 	set #S10,#S10-@sellamount;
-	set zeny,zeny+@price;
+	set Zeny, Zeny+@price;
 	next;
 	mes "Sold " + @sellamount + " " + $S10N$ + " shares.";
 	mes "Earned ^0000FF"+@price+"z^000000.";
@@ -444,18 +444,18 @@ S_Buy:
 	// Checks valid number //
 	if (@buyamount < $S_BuyMin) goto S_TooLow;
 	if (@buyamount > $S_BuyMax) goto S_TooHigh;
-	if (zeny < $S_Trans) goto S_NoZeny;
-	set zeny,zeny-$S_Trans;
+	if (Zeny < $S_Trans) goto S_NoZeny;
+	set Zeny, Zeny-$S_Trans;
 
 	// Purchases the shares //
 
 PURS1:
 	if (@buyname$ != $S1N$) goto PURS2;
 	set @price,@buyamount*$S1;
-	if (zeny < @price) goto S_NoZeny;
+	if (Zeny < @price) goto S_NoZeny;
 	set #S1,#S1+@buyamount;
 	set @price,@buyamount*$S1;
-	set zeny,zeny-@price;
+	set Zeny, Zeny-@price;
 	mes "Bought " + @buyamount + " " + $S1N$ + " shares.";
 	mes "Lost ^0000FF"+@price+"z^000000.";
 	next;
@@ -464,9 +464,9 @@ PURS1:
 PURS2:
 	if (@buyname$ != $S2N$) goto PURS3;
 	set @price,@buyamount*$S2;
-	if (zeny < @price) goto S_NoZeny;
+	if (Zeny < @price) goto S_NoZeny;
 	set #S2,#S2+@buyamount;
-	set zeny,zeny-@price;
+	set Zeny, Zeny-@price;
 	mes "Bought " + @buyamount + " " + $S2N$ + " shares.";
 	mes "Lost ^0000FF"+@price+"z^000000.";
 	next;
@@ -475,9 +475,9 @@ PURS2:
 PURS3:
 	if (@buyname$ != $S3N$) goto PURS4;
 	set @price,@buyamount*$S3;
-	if (zeny < @price) goto S_NoZeny;
+	if (Zeny < @price) goto S_NoZeny;
 	set #S3,#S3+@buyamount;
-	set zeny,zeny-@price;
+	set Zeny, Zeny-@price;
 	mes "Bought " + @buyamount + " " + $S3N$ + " shares.";
 	mes "Lost ^0000FF"+@price+"z^000000.";
 	next;
@@ -486,9 +486,9 @@ PURS3:
 PURS4:
 	if (@buyname$ != $S4N$) goto PURS5;
 	set @price,@buyamount*$S4;
-	if (zeny < @price) goto S_NoZeny;
+	if (Zeny < @price) goto S_NoZeny;
 	set #S4,#S4+@buyamount;
-	set zeny,zeny-@price;
+	set Zeny, Zeny-@price;
 	mes "Bought " + @buyamount + " " + $S4N$ + " shares.";
 	mes "Lost ^0000FF"+@price+"z^000000.";
 	next;
@@ -497,9 +497,9 @@ PURS4:
 PURS5:
 	if (@buyname$ != $S5N$) goto PURS6;
 	set @price,@buyamount*$S5;
-	if (zeny < @price) goto S_NoZeny;
+	if (Zeny < @price) goto S_NoZeny;
 	set #S5,#S5+@buyamount;
-	set zeny,zeny-@price;
+	set Zeny, Zeny-@price;
 	mes "Bought " + @buyamount + " " + $S5N$ + " shares.";
 	mes "Lost ^0000FF"+@price+"z^000000.";
 	next;
@@ -508,9 +508,9 @@ PURS5:
 PURS6:
 	if (@buyname$ != $S6N$) goto PURS7;
 	set @price,@buyamount*$S6;
-	if (zeny < @price) goto S_NoZeny;
+	if (Zeny < @price) goto S_NoZeny;
 	set #S6,#S6+@buyamount;
-	set zeny,zeny-@price;
+	set Zeny, Zeny-@price;
 	mes "Bought " + @buyamount + " " + $S6N$ + " shares.";
 	mes "Lost ^0000FF"+@price+"z^000000.";
 	next;
@@ -519,9 +519,9 @@ PURS6:
 PURS7:
 	if (@buyname$ != $S7N$) goto PURS8;
 	set @price,@buyamount*$S7;
-	if (zeny < @price) goto S_NoZeny;
+	if (Zeny < @price) goto S_NoZeny;
 	set #S7,#S7+@buyamount;
-	set zeny,zeny-@price;
+	set Zeny, Zeny-@price;
 	mes "Bought " + @buyamount + " " + $S7N$ + " shares.";
 	mes "Lost ^0000FF"+@price+"z^000000.";
 	next;
@@ -530,9 +530,9 @@ PURS7:
 PURS8:
 	if (@buyname$ != $S8N$) goto PURS9;
 	set @price,@buyamount*$S8;
-	if (zeny < @price) goto S_NoZeny;
+	if (Zeny < @price) goto S_NoZeny;
 	set #S8,#S8+@buyamount;
-	set zeny,zeny-@price;
+	set Zeny, Zeny-@price;
 	mes "Bought " + @buyamount + " " + $S8N$ + " shares.";
 	mes "Lost ^0000FF"+@price+"z^000000.";
 	next;
@@ -541,9 +541,9 @@ PURS8:
 PURS9:
 	if (@buyname$ != $S9N$) goto PURS10;
 	set @price,@buyamount*$S9;
-	if (zeny < @price) goto S_NoZeny;
+	if (Zeny < @price) goto S_NoZeny;
 	set #S9,#S9+@buyamount;
-	set zeny,zeny-@price;
+	set Zeny, Zeny-@price;
 	mes "Bought " + @buyamount + " " + $S9N$ + " shares.";
 	mes "Lost ^0000FF"+@price+"z^000000.";
 	next;
@@ -552,9 +552,9 @@ PURS9:
 PURS10:
 	if (@buyname$ != $S10N$) goto PURS11;
 	set @price,@buyamount*$S10;
-	if (zeny < @price) goto S_NoZeny;
+	if (Zeny < @price) goto S_NoZeny;
 	set #S10,#S10+@buyamount;
-	set zeny,zeny-@price;
+	set Zeny, Zeny-@price;
 	mes "Bought " + @buyamount + " " + $S10N$ + " shares.";
 	mes "Lost ^0000FF"+@price+"z^000000.";
 	next;

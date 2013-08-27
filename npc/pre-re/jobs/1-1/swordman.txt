@@ -27,8 +27,8 @@
 //= 1.7 changed location from its clone to the original [Lupus]
 //= 1.7.1 Fixed warp on timeout [KarLaeda]
 //= 1.8 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
-//=	Removed "green" traps, quest is no longer timed.
-//=	No longer uses function "F_ToHigh"
+//=     Removed "green" traps, quest is no longer timed.
+//=     No longer uses function "F_ToHigh"
 //= 1.9 Dialog is official, but the Script is now custom as far as maps go. [L0ne_W0lf]
 //= 1.9b Fixed usage of wrong jobchange func messing up baby classes [ultramage]
 //= 2.0 Corrected NPC names to fall within proper resctrictions. [L0ne_W0lf]

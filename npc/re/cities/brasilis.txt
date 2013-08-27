@@ -33,7 +33,7 @@ alberta,246,82,3	script	Crewman#bra2	100,{
 		if (Zeny > 9999) {
 			mes "[Crewman]";
 			mes "Cool~!! Let's go~!";
-			set zeny,zeny-10000;
+			set Zeny, Zeny-10000;
 			close2;
 			warp "brasilis",314,60;
 			end;
@@ -147,7 +147,7 @@ brasilis,137,77,5	script	Ice-Cream Maker	85,{
 			mes "Lighten your pack before buying this.";
 			close;
 		}
-		set zeny,zeny-.@icecream_hap;
+		set Zeny, Zeny-.@icecream_hap;
 		getitem 536,.@input; //Ice_Cream
 		close;
 	case 2:

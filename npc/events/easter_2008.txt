@@ -93,7 +93,7 @@ prontera,111,99,5	script	Egg Salesman#prt::EggVendor	98,{
 				}
 				else {
 					set .@egg_zeny,.@input*500;
-					if (zeny < .@egg_zeny) {
+					if (Zeny < .@egg_zeny) {
 						mes "[Egg Salesman]";
 						mes "You don't have enough Zeny.";
 						next;
@@ -120,7 +120,7 @@ prontera,111,99,5	script	Egg Salesman#prt::EggVendor	98,{
 							mes "them, but I don't know anything";
 							mes "about that. Well, have a good";
 							mes "time, and I'll see you again!";
-							set zeny,zeny-.@egg_zeny;
+							set Zeny, Zeny-.@egg_zeny;
 							getitem 7605,.@input; //Chicken_Egg
 							close;
 						}

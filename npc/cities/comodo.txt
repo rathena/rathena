@@ -351,12 +351,12 @@ cmd_fild07,299,83,4	script	Zain#cmd	100,{
 	switch(select("Alberta - 600 Zeny:Izlude - 800 Zeny:Cancel")) {
 	case 1:
 		if (Zeny < 600) break;
-		set zeny,zeny-600;
+		set Zeny, Zeny-600;
 		warp "alberta",192,169;
 		end;
 	case 2:
 		if (Zeny < 800) break;
-		set zeny,zeny-800;
+		set Zeny, Zeny-800;
 		if(checkre(0))
 			warp "izlude",195,212;
 		else

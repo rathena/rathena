@@ -90,7 +90,7 @@ prt_in,28,73,4	script	Wise Old Woman#eAcustom	78,{
 		}
 		mes "[Wise Old Woman]";
 		mes "Very well. I shall begin.";
-		set zeny,zeny - (.zenycost+(.@cardcount * .percardcost));
+		set Zeny, Zeny - (.zenycost+(.@cardcount * .percardcost));
 		delitem 1000,1;
 		delitem 715,1;
 		

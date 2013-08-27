@@ -27,7 +27,7 @@
 //= 2.03 Added Gunslinger vars to F_ClearJobVar [Lupus]
 //= 2.04 Added dtseligible 2 (becomes MISC_QUEST|128) to F_ClearGarbage [Evera]
 //= 2.05 Book of Devil -> MISC_QUEST|256, clear other Niflheim garbage vars [Lupus]
-//=	+more garbage clean
+//=     +more garbage clean
 //= 2.06 Pass to Bio-Lab -> MISC_QUEST|512 [Lupus]
 //= 2.07 Added TK_Q variable clear. 2.08 Added NINJ_Q variable clear [Lupus]
 //= 2.09 Cleared F_ClearGarbage [Lupus]

@@ -18,7 +18,7 @@
 //= 1.0 Added the last of the town npcs, [MasterOfMuppets]
 //=     all credits to muad_dib for scripting them.
 //= 1.1 Made some changes according to the Shinokas quest, [MasterOfMuppets]
-//=	thanks to Dj-Yhn for scripting them.
+//=     thanks to Dj-Yhn for scripting them.
 //= 1.2 Removed Duplicates [Silent]
 //= 1.3 Implemented the Lover's quest. [MasterOfMuppets]
 //= 1.4 Moved quests to quests/quests_ein.txt [Evera]
@@ -214,7 +214,7 @@ einbech,39,215,5	script	Train Station Staff#ein3	852,{
 			mes "we hope you enjoy";
 			mes "the ride. All aboard!";
 			close2;
-			set zeny,zeny-200;
+			set Zeny, Zeny-200;
 			warp "einbroch",226,276;
 			end;
 		}
@@ -989,7 +989,7 @@ einbech,148,246,5	script	Franz#ein	851,{
 			mes "Now those aggressive teddy";
 			mes "bears are scattered all over";
 			mes "the place and the government";
-			mes "	has classified them as monsters. Kill with extreme prejudice!";
+			mes "has classified them as monsters. Kill with extreme prejudice!";
 			next;
 			mes "[Franz]";
 			mes "According to adventurers";

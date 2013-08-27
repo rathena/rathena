@@ -433,7 +433,7 @@ aldebaran,54,238,5	script	Kafra Employee#sn	117,{
 				}
 				if (Zeny >= 1899) {
 					set RESRVPTS, RESRVPTS + 190;
-					set zeny,zeny-1900;
+					set Zeny, Zeny-1900;
 					if (getskilllv("MC_PUSHCART") > 0) setcart;
 					mes "[Kafra Employee]";
 					mes "Thank you for using my service.";
@@ -474,9 +474,9 @@ aldebaran,54,238,5	script	Kafra Employee#sn	117,{
 //============================================================ 
 //= Dialogs From Some Other Scripts (Most Of It)
 //= 1.3-1.5 Added Baby class support (and to the Kafta SN Cart
-//= renter, too) [Lupus]
+//=     renter, too) [Lupus]
 //= 1.6 Added a fix which prevent High Novices passing
-//= this Job Quests again. [Lupus]
+//=     this Job Quests again. [Lupus]
 //= 1.7 Fixed Baby Class Support. [Lupus]
 //= 1.8 Now a Baby can become a Super Baby [Lupus]
 //============================================================ 

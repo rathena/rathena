@@ -53,10 +53,10 @@
 //= 2.7 Added GM management function. [Euphy]
 //============================================================ 
 
-// Oridecon Stone OR Mineral Stone Quest
+// Oridecon Stone OR Mineral Stone Quest :: ein_amano
 //============================================================ 
 einbech,97,167,5	script	Cavitar	847,{
-	if (ein_gear1 == 2){
+	if (ein_gear1 == 2) {
 		mes "[Cavitar]";
 		mes "It's been a long";
 		mes "time, my friend. With";
@@ -71,7 +71,7 @@ einbech,97,167,5	script	Cavitar	847,{
 		mes "come visit my town.";
 		close;
 	}
-	else if(ein_gear1 == 1){
+	else if (ein_gear1 == 1) {
 		mes "[Cavitar]";
 		mes "Oh, welcome.";
 		mes "So did you bring";
@@ -472,7 +472,7 @@ einbech,97,167,5	script	Cavitar	847,{
 	}
 }
 
-// Uwe Kleine
+// Uwe Kleine :: ein_anoz
 //============================================================
 einbroch,215,180,6	script	Uwe Kleine#ein	85,{
 	set EinUwe,0;
@@ -2311,7 +2311,7 @@ einbroch,215,180,6	script	Uwe Kleine#ein	85,{
 					mes "In fact, I still use the old knife I used back when I was just";
 					mes "a little novice chef~";
 					next;
-					mes "[Uwe]"							;
+					mes "[Uwe]";
 					mes "Well, that was";
 					mes "a fun talk. Come";
 					mes "back and visit, 'kay?";
@@ -2544,7 +2544,7 @@ einbroch,215,180,6	script	Uwe Kleine#ein	85,{
 						mes "In fact, I still use the old knife I used back when I was just";
 						mes "a little novice chef~";
 						next;
-						mes "[Uwe]"							;
+						mes "[Uwe]";
 						mes "Well, that was";
 						mes "a fun talk. Come";
 						mes "back and visit, 'kay?";
@@ -2820,7 +2820,7 @@ einbroch,215,180,6	script	Uwe Kleine#ein	85,{
 						mes "In fact, I still use the old knife I used back when I was just";
 						mes "a little novice chef~";
 						next;
-						mes "[Uwe]"							;
+						mes "[Uwe]";
 						mes "Well, that was";
 						mes "a fun talk. Come";
 						mes "back and visit, 'kay?";
@@ -3211,7 +3211,7 @@ einbroch,215,180,6	script	Uwe Kleine#ein	85,{
 	}
 }
 
-// Factory Quest
+// Factory Quest :: ein_factory
 //============================================================
 einbroch,1,1,0	script	Einbroch Smog Alert	-1,{
 	end;
@@ -3562,7 +3562,7 @@ ein_in01,67,242,3	script	Zelmeto	851,{
 				else if (BaseLevel < 51) getexp 307,0;
 				else if (BaseLevel < 61) getexp 660,0;
 				else if (BaseLevel < 71) getexp 1850,0;
-				else if( BaseLevel < 81) getexp 3206,0;
+				else if (BaseLevel < 81) getexp 3206,0;
 				else if (BaseLevel < 91) getexp 7602,0;
 				else getexp 29067,0;
 			} else {
@@ -3570,7 +3570,7 @@ ein_in01,67,242,3	script	Zelmeto	851,{
 				else if (BaseLevel < 51) getexp 3075,0;
 				else if (BaseLevel < 61) getexp 6604,0;
 				else if (BaseLevel < 71) getexp 18508,0;
-				else if( BaseLevel < 81) getexp 32066,0;
+				else if (BaseLevel < 81) getexp 32066,0;
 				else if (BaseLevel < 91) getexp 76026,0;
 				else getexp 290675,0;
 			}
@@ -4216,7 +4216,7 @@ sec_in02,127,86,3	script	Factory Quest Test	851,{
 	}
 }
 
-// Murder Quest
+// Murder Quest :: ein_main_tre
 //============================================================ 
 einbech,165,105,7	script	Buender Hikeman#ein	847,{
 	cutin "ein_hicman",2;
@@ -4999,7 +4999,7 @@ ein_in01,231,163,7	script	Sick Old Man#ein	849,{
 		mes "anything from the";
 		mes "Kapellthaines?";
 		next;
-		mes "["+strcharinfo(0)+"]"	;
+		mes "["+strcharinfo(0)+"]";
 		mes "Well, Mr. Kapellthaine";
 		mes "is kind of violent, but";
 		mes "I didn't find anything";
@@ -5673,7 +5673,8 @@ einbech,57,210,3	script	Young Man#Shinokas_Quest	855,{
 	close;
 }
 
-
+// Typing Test :: ein_main_ma1
+//============================================================ 
 einbroch,51,52,0	script	Security#ein	45,1,1,{
 	end;
 
@@ -5826,7 +5827,7 @@ OnTouch:
 	}
 }
 
-// Lovers Quest
+// Lovers Quest :: ein_ryu
 //============================================================ 
 ein_in01,31,138,3	script	Calla#ein	90,{
 	if (checkweight(908,70) == 0) {
@@ -6782,7 +6783,7 @@ ein_in01,31,151,3	script	Satra#ein	850,{
 		mes "here for sight seeing,";
 		mes "or perhaps you're running";
 		mes "some sort of adventurer's";
-		mes "errand. Am I right?"	;
+		mes "errand. Am I right?";
 		next;
 		mes "[Satra]";
 		mes "I know you well enough";

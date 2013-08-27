@@ -472,7 +472,7 @@ alberta_in,55,142,7	script	Hair Dresser	91,{
 				mes "- *snip snip snip snip* -";
 				mes "- *bzzzzzzz bzzzzzzz bzzzzzzz bzzzzzzz* -";
 				next;
-				set Zeny,Zeny-99800;
+				set Zeny, Zeny-99800;
 				delitem 973,3;	// Counteragent
 				delitem 974,3;	// Mixture
 				delitem 901,100;	// Danggie
@@ -658,7 +658,7 @@ alberta,33,141,7	script	Roving Hair Dresser	87,{
 			mes "Once more I've outdone myself.";
 			mes "It's such a unique and talented";
 			mes "style! Yes, I am the best! Wooohahahahahaha!";
-			set Zeny,Zeny-199800;
+			set Zeny, Zeny-199800;
 			setlook 1,rand(1,19);
 			setlook 6,rand(1,8);
 			close;
@@ -1044,7 +1044,7 @@ lhz_in02,100,143,3	script	Hair Dresser#li	122,{
 				mes "*Clip clip clip clip*";
 				mes "*Bzzzzzzzzzzzzzzzzzzzz*^000000";
 				next;
-				set zeny,zeny-99800;
+				set Zeny, Zeny-99800;
 				delitem 973,3; //Counteragent
 				delitem 974,3; //Mixture
 				delitem 901,100; //Danggie
@@ -1251,7 +1251,7 @@ lhz_in02,91,155,5	script	Assistant Beautician#li	862,{
 				mes "[Assistant Beautician]";
 				mes "^333333*Pant Pant Pant*^000000";
 				next;
-				set zeny,zeny-250000;
+				set Zeny, Zeny-250000;
 				setlook VAR_HEAD,.@style_r;
 				setlook VAR_HEADPALETTE,.@color_r;
 				mes "[Assistant Beautician]";

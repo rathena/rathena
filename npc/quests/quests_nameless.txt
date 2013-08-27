@@ -439,7 +439,7 @@ OnTouch:
 		set aru_monas,8;
 		changequest 17003,17004;
 		if (Zeny > 3000) {
-			set Zeny,Zeny-3000;
+			set Zeny, Zeny-3000;
 			getitem 12052,4; //Vit_Dish02
 		}
 		close;
@@ -1880,7 +1880,7 @@ ra_temple,165,57,5	script	Niren#ss	915,{
 				mes "High Priestess Niren,";
 				mes "you must be really tired.";
 				mes "You look pale for some reason.";
-				emotion 19;
+				emotion e_swt2;
 				next;
 				mes "[High Priestess Niren]";
 				mes "I do feel rather drained.";
@@ -2344,7 +2344,7 @@ moc_ruins,77,167,4	script	Foreign Merchant#aru1	880,5,5,{
 				mes "^3355FF*Gulp Gulp Gulp Gulp*^000000";
 				mes "^3355FF*Gulp Gulp Gulp Gulp*^000000";
 				next;
-				emotion 3;
+				emotion e_lv;
 				mes "[Foreign Merchant]";
 				mes "Ahhh! That hit the spot!";
 				mes "It's so refreshing and so";
@@ -2382,7 +2382,7 @@ moc_ruins,77,167,4	script	Foreign Merchant#aru1	880,5,5,{
 				mes "You're not really a";
 				mes "merchant, are you?";
 				next;
-				emotion 39;
+				emotion e_meh;
 				mes "^3355FFThe merchant quietly";
 				mes "looks at you with a";
 				mes "mischievous grin.^000000";
@@ -2519,13 +2519,13 @@ moc_ruins,101,133,7	script	Foreign Merchant#aru2	929,{
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "Oh, no...";
-		emotion 57,1;
+		emotion e_otl,1;
 		next;
 		mes "[Foreign Merchant]";
 		mes "...............................";
 		mes "...............................";
 		mes "...............................";
-		emotion 19;
+		emotion e_swt2;
 		next;
 		emotion e_omg,1;
 		mes "[Foreign Merchant]";
@@ -2548,7 +2548,7 @@ moc_ruins,101,133,7	script	Foreign Merchant#aru2	929,{
 		mes "keep an extra bottle in case";
 		mes "you want more next time. Take";
 		mes "care, and I'll see you later!";
-		emotion 13;
+		emotion e_korea;
 		next;
 		mes "^3355FFYou received a bottle";
 		mes "of the famous fruit wine";
@@ -2685,7 +2685,7 @@ ra_fild03,139,355,5	script	Ishmael#em	914,{
 		mes "just step away? I... I don't";
 		mes "like being too close to";
 		mes "other people. Please!";
-		emotion 19;
+		emotion e_swt2;
 		close;
 	}
 	else if (aru_em == 17) {
@@ -2695,7 +2695,7 @@ ra_fild03,139,355,5	script	Ishmael#em	914,{
 		mes "just step away? Wait, you";
 		mes "don't have something you";
 		mes "need from me, do you?";
-		emotion 19;
+		emotion e_swt2;
 		next;
 		switch(select("Give Her Niren's File:Leave Her Alone")) {
 		case 1:
@@ -2709,7 +2709,7 @@ ra_fild03,139,355,5	script	Ishmael#em	914,{
 				mes "Just toss the file over";
 				mes "to me. I-I don't want";
 				mes "you coming any closer.";
-				emotion 19;
+				emotion e_swt2;
 				next;
 				mes "[Ishmael]";
 				mes "I'll be glad to help out";
@@ -2783,7 +2783,7 @@ ra_fild03,139,355,5	script	Ishmael#em	914,{
 			mes "I still... Uh... I don't mean";
 			mes "to be rude... It's just...";
 			mes "I'm just not good with...";
-			emotion 19;
+			emotion e_swt2;
 			next;
 			mes "[Ishmael]";
 			mes "If you just toss the";
@@ -6116,7 +6116,7 @@ in_rogue,366,46,3	script	Rogue Investigator	828,{
 		switch(select("Sounds good!:Never mind, I'll find it myself...")) {
 		case 1:
 			if (Zeny > 9999) {
-				set zeny,zeny-10000;
+				set Zeny, Zeny-10000;
 				mes "[Investigator]";
 				mes "Thanks for the money~";
 				mes "Of course, if you became";
@@ -6194,7 +6194,7 @@ in_rogue,366,46,3	script	Rogue Investigator	828,{
 		switch(select("Sounds good!:Forget it...")) {
 		case 1:
 			if (Zeny > 9999) {
-				set zeny,zeny-10000;
+				set Zeny, Zeny-10000;
 				mes "[Investigator]";
 				mes "Right on, right on.";
 				mes "Alright, I didn't charge";
@@ -7392,7 +7392,7 @@ payon,244,62,3	script	Moonho Ahn	897,{
 		switch(select("Yes, let's play!:How does this game work again?")) {
 		case 1:
 			if (Zeny > 500) {
-				set zeny,zeny-500;
+				set Zeny, Zeny-500;
 				mes "[Moonho Ahn]";
 				mes "Good, let's get started!";
 				mes "I'll let you go first~";
@@ -9382,7 +9382,7 @@ morocc,143,63,3	script	Ragged Man#nd	929,{
 						close;
 					}
 					else {
-						set zeny,zeny-1200;
+						set Zeny, Zeny-1200;
 						mes "[Ragged Man]";
 						mes "Let's see... I just need";
 						mes "1,200 zeny. That's enough";
@@ -9461,7 +9461,7 @@ morocc,143,63,3	script	Ragged Man#nd	929,{
 				mes "up the funds. I'll be waiting.";
 				close;			}
 			else {
-				set zeny,zeny-1200;
+				set Zeny, Zeny-1200;
 				mes "[Ragged Man]";
 				mes "Remember that hidden";
 				mes "treasure I was looking for?";
@@ -10501,7 +10501,7 @@ alberta_in,70,109,5	script	Shaman	788,{
 			mes "If all goes well, you'll be";
 			mes "free of your curse, and I can";
 			mes "buy some Prontera real estate.";
-			set zeny,zeny-200000;
+			set Zeny, Zeny-200000;
 			set jewel_nd,14;
 			next;
 			mes "[Shaman]";
@@ -10552,7 +10552,7 @@ alberta_in,70,109,5	script	Shaman	788,{
 			mes "Hopefully, the";
 			mes "spirits will be more";
 			mes "cooperative this time.";
-			set zeny,zeny-100000;
+			set Zeny, Zeny-100000;
 			set jewel_nd,16;
 			next;
 			mes "[Shaman]";

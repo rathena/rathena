@@ -100,7 +100,7 @@ S_BuyQuiver:
 					mes "[Inventor Jaax]";
 					mes "There you go!";
 					mes "Just remember, ^FF0000you won't be able to use the Quiver when your carried weight is 90% of your maximum weight limit^000000.";
-					set zeny,zeny-.@arrow_zeny01;
+					set Zeny, Zeny-.@arrow_zeny01;
 					delitem getarg(0),.@arrows_used; //Arrow
 					getitem getarg(3),.@quiver; //Quiver
 					next;
@@ -126,11 +126,11 @@ S_BuyQuiver:
 			mes "a quiver is so close?";
 			close;
 		case 2:
-			if (zeny > getarg(2)) {
+			if (Zeny > getarg(2)) {
 				mes "[Inventor Jaax]";
 				mes "There you go!";
 				mes "Just remember, ^FF0000you won't be able to use the Quiver when your carried weight is 90% of your maximum weight limit^000000.";
-				set zeny,zeny-getarg(2);
+				set Zeny, Zeny-getarg(2);
 				delitem getarg(0),getarg(1); //Arrow
 				getitem getarg(3),1; //Quiver
 				next;

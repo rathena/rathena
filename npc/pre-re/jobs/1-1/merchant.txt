@@ -20,7 +20,7 @@
 //= 1.6 Merged back JFunc, CHANGED NUMBERS TO CONSTANTS [Lupus]
 //= 1.7 Updated to use Free Ticket for Kafra [Lupus]
 //= 1.8 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
-//=	No longer uses function "F_ToHigh"
+//=     No longer uses function "F_ToHigh"
 //= 1.9 Bugfixes, thanks to Barron-Monster. [L0ne_W0lf]
 //= 1.9a Added a missing next; (Barron-Monster) [L0ne_W0lf]
 //= 1.9b Typo. "nextl" -> "next;" (Barron-Monster) [L0ne_W0lf]
@@ -135,7 +135,7 @@ alberta_in,53,43,6	script	Merchant#mer	86,{
 					mes "Please return when you have earned the 500 zeny that you need to become a Merchant.";
 					close;
 				}
-				set zeny,zeny-500;
+				set Zeny, Zeny-500;
 				mes "Ah yes...!";
 				mes "Now your";
 				mes "membership";
@@ -171,7 +171,7 @@ alberta_in,53,43,6	script	Merchant#mer	86,{
 			mes "[Chief Mahnsoo]";
 			mes "*Ahem* Aaaaand let me give you a little bit of money for delivering that message to Blossom for me.";
 			mes "I hope you'll help me again next time~";
-			set zeny,zeny+200;
+			set Zeny, Zeny+200;
 			set quest_alb_01,2;
 		}
 		else {
@@ -343,7 +343,7 @@ alberta_in,53,43,6	script	Merchant#mer	86,{
 					mes "[Chief Mahnsoo]";
 					if (Zeny >= 1000) {
 						set job_merchant_q,2;
-						set zeny,zeny-1000;
+						set Zeny, Zeny-1000;
 						mes "Alright~";
 						mes "That's 1,000 zeny.";
 						mes "Excellent, excellent.";
@@ -357,7 +357,7 @@ alberta_in,53,43,6	script	Merchant#mer	86,{
 					mes "[Chief Mahnsoo]";
 					if (Zeny >= 500) {
 						set job_merchant_q,1;
-						set zeny,zeny-500;
+						set Zeny, Zeny-500;
 						mes "Let's see...";
 						mes "That's 500 Zeny. Although I don't think splitting payment is a good idea for any Merchant, it's alright since you're still learning.";
 					}
@@ -1060,7 +1060,7 @@ prontera,248,42,0	script	Kafra Employee#mer	116,{
 				cutin "",255;
 				end;
 			}
-			set zeny,zeny-600;
+			set Zeny, Zeny-600;
 			set RESRVPTS, RESRVPTS + 37;
 			cutin "",255;
 			warp "izlude",94,103;

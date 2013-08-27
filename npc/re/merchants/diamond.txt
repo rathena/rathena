@@ -10,12 +10,12 @@
 //= [Official Conversion]
 //= Exchanges 17 Carat Diamond
 //===== Additional Comments: =================================
-//= v1.0 First / Optimized Version
-//= v1.1 Adjusted for Missing ; on Line #271 (#15425)
-//= v1.2 Removed Comments per Request (#15426)
-//= v1.3 Changed Emotion # to Const Definition (#15427)
-//= v1.4 Removed Double Space on Line #148 (#15428)
-//= v1.5 Added This Version History (#15429)
+//= 1.0 First / Optimized Version
+//= 1.1 Adjusted for Missing ; on Line #271 (#15425)
+//= 1.2 Removed Comments per Request (#15426)
+//= 1.3 Changed Emotion # to Const Definition (#15427)
+//= 1.4 Removed Double Space on Line #148 (#15428)
+//= 1.5 Added This Version History (#15429)
 //============================================================
 
 -	script	RareDiamondMerchant	58,{

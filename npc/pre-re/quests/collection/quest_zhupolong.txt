@@ -71,7 +71,7 @@ lou_dun02,161,264,4	script	Dragon Hunter	732,{
 			next;
 			switch(select("Sure:Cancel")) {
 			case 1:
-				if(BaseLevel > 90){
+				if (BaseLevel > 90) {
 					mes "[Dragon Hunter]";
 					mes "Thank you for your great help with the Zhu Po Long!";
 					mes "Currently the Situation is stable and i'm not in need of your help anymore to kill them.";

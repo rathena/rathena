@@ -8,15 +8,15 @@
 //= Any Athena Version
 //===== Additional Comments: =================================
 //= 1.1 correct spawn maps, but not yet exact amount of
-//= monsters [Lupus]
-//= maps, marked with * are correct
+//=     monsters [Lupus]
+//=     maps, marked with * are correct
 //= 1.2 Updated to correct mobs. Many thanks to vicious_pucca
 //=    again for providing the information [MasterOfMuppets]
 //= 1.2a Fixed missing tabs [Lupus]
 //= 1.3 Updated after Episode 10.4 - Hugel [Poki#3]
-//=	Mob quantity is custom.
+//=     Mob quantity is custom.
 //= 1.3b Changed the spawn numbers a bit. [Poki#3]
-//=	Thanks to Playtester and Emperium.org
+//=     Thanks to Playtester and Emperium.org
 //= 1.4 Updated by using Tharis' Homun AI, by Tharis [Vicious]
 //= 1.5 Adjusted some spawns according to official info [Playtester]
 //= 1.6 More accurate spawns [Playtester]

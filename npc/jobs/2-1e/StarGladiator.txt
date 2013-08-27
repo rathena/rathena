@@ -15,7 +15,7 @@
 //= 1.1b Corrected NPC name length warning. [L0ne_W0lf]
 //= 1.1c Changed item names to item IDs. [Samuray22]
 //= 1.2 Another round of updates to the script. [L0ne_W0lf]
-//=	Removes the use of labels, and correcets other errors.
+//=     Removes the use of labels, and correcets other errors.
 //= 1.3 Added Quest Log commands. [Kisuka]
 //============================================================
 

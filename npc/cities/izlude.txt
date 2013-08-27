@@ -16,19 +16,19 @@
 //= 1.2 Fixed a lot of typos [Nexon]
 //= 1.3 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
 //= 1.4 Added a Jawaii related npc. 1.4a Fixed a small bug to
-//=	the Jawaii warper, thanks to reddozen and Silent [MasterOfMuppets]
+//=     the Jawaii warper, thanks to reddozen and Silent [MasterOfMuppets]
 //= 1.5 Replaced iz_move_alberta with MISC_QUEST & 16 [Lupus]
 //= 1.6 Removed Duplicates [Silent]
 //= 1.7 Split quest to quests/quests_izlude.txt [Evera]
 //= 1.71 Optimized. Also thanks to CAHTEXHuK [Lupus]
 //= 1.72 Small bugfix [Paradox924X]
 //= 1.8 Rescripted to Aegis 10.3 standard. [L0ne_W0lf]
-//=	Removed Honeymoon Helper, as she is a Jawaii NPC.
-//=	Moved Signs to the msg_boards file.
+//=     Removed Honeymoon Helper, as she is a Jawaii NPC.
+//=     Moved Signs to the msg_boards file.
 //= 1.8a Made Red/Cebalis as a single NPC + duplicate [Lupus]
 //= 1.9 Fixed a small problem with Dega. (Ne default case) [L0ne_W0lf]
-//=	Re-added NPC dialog for Cebalis. The dialog differs
-//=	(even if slightly,) after the five or so lines.
+//=     Re-added NPC dialog for Cebalis. The dialog differs
+//=     (even if slightly,) after the five or so lines.
 //= 1.9a A part of Kylick's dialogue is Pre-Renewal only. [Euphy]
 //============================================================
 

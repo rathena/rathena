@@ -57,7 +57,7 @@ bat_room,151,144,3	script	KVM Logistic Officer#a	734,{
 		mes "points. So, be carefull when";
 		mes "selecting a reward.";
 		close2;
-		ReadBook 11017,1;
+		readbook 11017,1;
 		end;
 	case 2:
 		mes "[Logistics]";

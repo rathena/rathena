@@ -16,7 +16,7 @@
 //= 1.1 Updated to 10.3 standard. [L0ne_W0lf]
 //============================================================
 
-// Edgar's Offer
+// Edgar's Offer :: iz_npc
 //============================================================
 -	script	::Edgar_izlude	-1,{
 	if (MISC_QUEST & 16) {
@@ -34,7 +34,7 @@
 				mes "get some more cash?";
 				close ;
 			}
-			set zeny,zeny-250;
+			set Zeny, Zeny-250;
 			warp "alberta",195,164;
 			end;
 		}
@@ -43,7 +43,7 @@
 		close;
 	}
 	mes "[Edgar]";
-	mes "My town, Izlude,  is connected to Alberta by the harbor in the West. There is so much traffic between us, I almost become an Albertian.  Hehehe~";
+	mes "My town, Izlude, is connected to Alberta by the harbor in the West. There is so much traffic between us, I almost become an Albertian.  Hehehe~";
 	next;
 	mes "[Edgar]";
 	mes "There's this guy I know pretty well, Phelix, who lives in Alberta. That guy is really stingy... He charges for everything!";
@@ -81,7 +81,7 @@
 				mes "some more.";
 				close;
 			}
-			set zeny,zeny-250;
+			set Zeny, Zeny-250;
 			warp "alberta",195,164;
 			end;
 		}

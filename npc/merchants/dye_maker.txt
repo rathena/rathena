@@ -8,6 +8,7 @@
 //= rAthena SVN
 //===== Description: ========================================= 
 //= [Official Conversion]
+//= Quests to create the eight colored Dyestuffs.
 //===== Additional Comments: ================================= 
 //= 1.0 Fully working [kobra_k88]
 //= 1.1 Spell Checked [Nexon] 
@@ -183,7 +184,7 @@ S_MakeDye:
 		// delete items
 		for (set .@i, 0; .@i < .@size ; set .@i, .@i+1)
 			delitem .@item[.@i], .@count[.@i];
-		set zeny,zeny-.@cost;
+		set Zeny, Zeny-.@cost;
 		// get dyestuff
 		getitem .@dyestuff,1;
 		

@@ -20,13 +20,13 @@
 //= 1.3 Fixed item ID 7031 -> 7013
 //= 1.4 Fixed a bug, Fixed Exploits, Optimized [Lupus]
 //= 1.6 TEMPESTRA quest uses common quests variable MISC_QUEST 
-//=	Condition if done: (MISC_QUEST & 2) [Lupus]
+//=     Condition if done: (MISC_QUEST & 2) [Lupus]
 //= 1.7 Moved quest from cities/albera.txt [Evera]
 //= 1.8 Re-made the Doll Quest, now with official dialogs. [DZeroX]
 //= 1.8a Removed .GATs [Lupus]
 //= 1.9 Updated Turtle Quest to official. [L0ne_W0lf]
 //= 2.0 Turtle Island quest now clears TURTLE var and set 
-//= MISC_QUEST bit (MISC_QUEST & 65536) [Lupus]
+//=     MISC_QUEST bit (MISC_QUEST & 65536) [Lupus]
 //= 2.1 Added missing close. [L0ne_W0lf]
 //= 2.2 Updated Gotan to be compliant with misc_quiest var. [L0ne_W0lf]
 //= 2.3 Updated heardgear Quest NPCs. [L0ne_W0lf]
@@ -54,337 +54,336 @@ alberta,117,135,0	script	Elin	96,{
 	mes "[Elin]";
 	mes "You know, I really really want a new doll! I hope my daddy will give me one on my birthday...!";
 	next;
-	switch(select("Um, I hope your daddy gives you one too.","How about I give you one now?")) {
-		case 1:
-			mes "[Elin]";
-			mes "Yeah, I'm hoping";
-			mes "he gives me a Yoyo";
-			mes "doll. They're so cute!";
-			close;
-		case 2:
-			set .@weight,MaxWeight-Weight;
-			if ((.@weight) < 1000) {
-				mes "[Elin]";
-				if (Sex == 1) {
-					mes "Maybe you should put some of your stuff away first, you look like you're carrying too much, hee hee~";
-				} else {
-					mes "Do you always carry so much with you? Put some of your things away first, okay?";
-				}
-				close;
-			}
+	switch(select("Um, I hope your daddy gives you one too.:How about I give you one now?")) {
+	case 1:
+		mes "[Elin]";
+		mes "Yeah, I'm hoping";
+		mes "he gives me a Yoyo";
+		mes "doll. They're so cute!";
+		close;
+	case 2:
+		if (MaxWeight - Weight < 1000) {
 			mes "[Elin]";
 			if (Sex == 1) {
-				mes "Oh my goodness!";
-				mes "Really? You're";
-				mes "such a sweetie~!";
+				mes "Maybe you should put some of your stuff away first, you look like you're carrying too much, hee hee~";
 			} else {
-				mes "Will you really?";
-				mes "You're gonna give";
-				mes "me a doll? Yaaaay~";
+				mes "Do you always carry so much with you? Put some of your things away first, okay?";
 			}
+			close;
+		}
+		mes "[Elin]";
+		if (Sex == 1) {
+			mes "Oh my goodness!";
+			mes "Really? You're";
+			mes "such a sweetie~!";
+		} else {
+			mes "Will you really?";
+			mes "You're gonna give";
+			mes "me a doll? Yaaaay~";
+		}
+		next;
+		mes "[Elin]";
+		mes "What kind of doll are you going to give me? Are you really gonna give me one?";
+		next;
+		switch(select("Poring Doll:Chonchon Doll:Puppet:Rocker Doll:Spore Doll:Osiris Doll:Baphomet Doll:Raccoon Doll:Yoyo Doll:I'm as adorable as a doll.")) {
+		case 1:
+			if (countitem(741) >= 1) {
+				delitem 741,1; //Poring_Doll
+				mes "[Elin]";
+				mes "Aww...";
+				mes "I have a lot";
+				mes "of Poring dolls...";
+				next;
+				mes "[Elin]";
+				if (Sex == 1) {
+					mes "But since a cute boy is giving it to me, I'll happily take it! Hee hee, soft and fluffy Poring doll~";
+				} else {
+					mes "But since a nice girl is giving it to me, I'll take it! Hee he, soft and fluffy Poring doll~";
+				}
+				next;
+				mes "[Elin]";
+				mes "Ooh, let me give you something as a little thank you. You see, I hid some candy so I can eat it without telling mommy.";
+				next;
+				getitem 529,1; //Candy
+				mes "[Elin]";
+				if (Sex == 1) {
+					mes "I don't know if you're too old to like candy, but I guess it's okay.";
+				} else {
+					mes "So, try not to eat too much, okay? Otherwise, you might get in trouble!";
+				}
+				next;
+				mes "[Elin]";
+				mes "Thank you";
+				mes "so much for";
+				mes "the Poring doll!";
+				close;
+			} else {
+				mes "[Elin]";
+				if (Sex == 1) {
+					mes "Aww...?";
+					mes "Were you only teasing me?";
+				} else {
+					mes "Aww...";
+					mes "You're not making fun of me are you?";
+				}
+				next;
+				mes "[Elin]";
+				mes "I guess you forgot it somewhere...";
+				close;
+			}
+		case 2:
+			if (countitem(742) >= 1) {
+				delitem 742,1; //Chonchon_Doll
+				mes "[Elin]";
+				mes "Agh--!";
+				mes "A Ch-Ch, Chonchon doll?!";
+				next;
+				mes "[Elin]";
+				if (Sex == 1) {
+					mes "But since... You're... Such a nice guy... I better take it...!";
+				} else {
+					mes "But since... Since it's a gift... I guess I'll take it...";
+				}
+				next;
+				mes "[Elin]";
+				mes "Mmm~";
+				mes "Let me give you";
+				mes "something in return...";
+				next;
+				getitem 530,1; //Candy_Striper
+				mes "[Elin]";
+				mes "If you eat too much, your teeth will start to rot... at least, that's what Mommy says.";
+				next;
+				mes "[Elin]";
+				mes "And..";
+				mes "Uh...";
+				mes "Thank you";
+				mes "for the doll?";
+				close;
+			} else {
+				mes "[Elin]";
+				mes "Chonchon dolls are ugly anyways, but you still lied to me! How can you be so mean?!";
+				next;
+				mes "[Elin]";
+				mes "Waaaaaaaaah~~";
+				close;
+			}
+		case 3:
+			if (countitem(740) >= 1) {
+				delitem 740,1; //Stuffed_Doll
+				mes "[Elin]";
+				mes "Wow...!";
+				mes "It looks like a bunny!";
+				next;
+				mes "[Elin]";
+				mes "I really like this Puppet~ Heh hehe! Thank you so much~";
+				next;
+				mes "[Elin]";
+				mes "Ooh ooh!";
+				mes "I have something";
+				mes "for you too!";
+				mes "Um, where";
+				mes "did it... Ah!";
+				next;
+				getitem 530,1; //Candy_Striper
+				mes "[Elin]";
+				mes "Here it is! It's some of the candy Santa gave me. Go ahead and try some! Oh, and thank you so much for the doll!";
+				close;
+			} else {
+				mes "[Elin]";
+				mes "Awww, you were only kidding? W-W-Why are you teasing me like that?";
+				next;
+				mes "[Elin]";
+				mes "^666666*Sniff...*^000000";
+				next;
+				mes "[Elin]";
+				mes "Waaaaaaaaah~~";
+				close;
+			}
+		case 4:
+			if (countitem(752) >= 1) {
+				delitem 752,1; //Grasshopper_Doll
+				mes "[Elin]";
+				mes "Ooh! Rocker Doll!";
+				mes "It's the Rocker that likes singing and dancing! I don't like grasshoppers, but I like this because it's cute~";
+				next;
+				mes "[Elin]";
+				mes "Hmmm, I should give you something too, huh? Let's see, I have what my grandpa gave me...";
+				next;
+				getitem 532,7; //Banana_Juice
+				mes "[Elin]";
+				mes "Here you go! We have a lot of this at home, so I'll give it to you, okay? Oh, and thank you so much for the doll~ I love cute dolls!";
+				close;
+			} else {
+				mes "[Elin]";
+				mes "Awww...";
+				next;
+				mes "[Elin]";
+				mes "You don't";
+				mes "really have a doll...?";
+				mes "I was so excited about it, too...";
+				close;
+			}
+		case 5:
+			if (countitem(743) >= 1) {
+				delitem 743,1; //Spore_Doll
+				mes "[Elin]";
+				mes "It's a mushroom?";
+				mes "Ewwwwwwwww, yucky!";
+				mes "Mommy made me eat";
+				mes "mushrooms today, too...";
+				next;
+				mes "[Elin]";
+				mes "But this doll is cute, so I'll take it. But I'm still not gonna eat mushrooms! Heh heh~";
+				next;
+				getitem 538,5; //Well_Baked_Cookie
+				mes "[Elin]";
+				mes "Hehe~ My mommy made this! It's really yummy. I love cookies, too. So try it, you'll like it! Hee hee!";
+				next;
+				mes "[Elin]";
+				mes "Thanks for";
+				mes "the doll! I'll";
+				mes "take good care of it!";
+				close;
+			} else {
+				mes "[Elin]";
+				mes "Eh...?";
+				mes "You don't";
+				mes "have a doll?";
+				next;
+				mes "[Elin]";
+				mes "Awww...";
+				mes "It's not nice";
+				mes "to tease people";
+				mes "like that. ^666666*Sniff, sniff*^000000";
+				close;
+			}
+		case 6:
+			if (countitem(751) >= 1) {
+				delitem 751,1; //Osiris_Doll
+				mes "[Elin]";
+				mes "Ahhhhh!";
+				mes "What is this";
+				mes "thing?! It's so scary!";
+				next;
+				mes "[Elin]";
+				mes "I've never seen a doll like this before. Where it's from? Hmm? Since I've never seen this kind of doll before, I'm gonna show it to my daddy, too. Hehe~! He'll be surprised!";
+				next;
+				mes "[Elin]";
+				mes "Here, since you gave me such a nicely made doll, I better give you something good too.";
+				next;
+				getitem 522,2; //Fruit_Of_Mastela
+				mes "[Elin]";
+				mes "I found it when I secretly went to the forest. I took it because it has pretty colors!";
+				if (Sex == 1) {
+					mes "Since there's two, you can share it with your girlfriend. Hee hee~!";
+				} else {
+					mes "Since there's two, you can share it with your boyfriend. Hee hee~!";
+				}
+				close;
+			} else {
+				mes "[Elin]";
+				mes "Awww...";
+				mes "Why do you have";
+				mes "to make fun of me?";
+				close;
+			}
+		case 7:
+			if (countitem(750) >= 1) {
+				delitem 750,1; //Baphomet_Doll
+				mes "[Elin]";
+				mes "Huh?";
+				mes "It's a little goat...";
+				next;
+				mes "[Elin]";
+				mes "It's so weird. It's cute but it's also scary at the same time. Well, since you gave me a pretty doll, I wanna give you something, too.";
+				next;
+				getitem 525,5; //Panacea
+				mes "[Elin]";
+				mes "My daddy gave me this when I was really sick. I'm not sick anymore so you can use it when you need to. Hehehe~";
+				next;
+				mes "[Elin]";
+				mes "Hee hee~";
+				mes "Thank you for";
+				mes "the doll. I won't lose it!";
+				close;
+			} else {
+				mes "[Elin]";
+				mes "You big liar! Why are you pretending to be nice?!";
+				close;
+			}
+		case 8:
+			if (countitem(754) >= 1) {
+				delitem 754,1; //Raccoondog_Doll
+				mes "[Elin]";
+				mes "Hehe, it's a";
+				mes "raccoon doll.";
+				mes "It's very very cute~";
+				next;
+				mes "[Elin]";
+				mes "I don't like";
+				mes "Smokies in real life,";
+				mes "but this doll is nice!";
+				next;
+				getitem 539,3; //Piece_Of_Cake
+				mes "[Elin]";
+				mes "Here, let me give you some cake my grandma made. It's really yummy. I don't know if you like sweets or not, but it's really good! Please try some!";
+				next;
+				mes "[Elin]";
+				mes "Hee hee~";
+				mes "Thanks for the doll.";
+				mes "I'm gonna keep it";
+				mes "in my room!";
+				close;
+			} else {
+				mes "[Elin]";
+				mes "Hey! How come you have to say things like that? Are you making fun of me?!";
+				close;
+			}
+		case 9:
+			if (countitem(753) >= 1) {
+				delitem 753,1; //Monkey_Doll
+				mes "[Elin]";
+				mes "Woooooooow~!";
+				next;
+				mes "[Elin]";
+				mes "A Yoyo doll! It's so pretty! You're really gonna give it to me?! Yay! Thank you so much! I really like it! Hee hee!";
+				next;
+				mes "[Elin]";
+				mes "Since you gave";
+				mes "me such a pretty doll,";
+				mes "I wanna give you";
+				mes "something, too!";
+				next;
+				getitem 608,1; //Seed_Of_Yggdrasil
+				mes "[Elin]";
+				mes "My daddy picked it up on his way to another town. It looks like some kind of seed. I tried planting it in front of our house but it won't grow. Do you want to try?";
+				next;
+				mes "[Elin]";
+				mes "Hehe~";
+				mes "Thanks for";
+				mes "the doll. I'll hug";
+				mes "it before I go";
+				mes "to sleep!";
+				close;
+			} else {
+				mes "[Elin]";
+				mes "Hey...";
+				mes "How come you're making fun of me?!";
+				close;
+			}
+		case 10:
+			mes "["+strcharinfo(0)+"]";
+			mes "I'm as adorable as a doll...";
 			next;
 			mes "[Elin]";
-			mes "What kind of doll are you going to give me? Are you really gonna give me one?";
+			mes "Whaaaaaaaaaaat...?";
 			next;
-			switch(select("Poring Doll","Chonchon Doll","Puppet","Rocker Doll","Spore Doll","Osiris Doll","Baphomet Doll","Raccoon Doll","Yoyo Doll","I'm as adorable as a doll.")) {
-				case 1:
-					if (countitem(741) >= 1) {
-						delitem 741,1;	// Poring_Doll
-						mes "[Elin]";
-						mes "Aww...";
-						mes "I have a lot";
-						mes "of Poring dolls...";
-						next;
-						mes "[Elin]";
-						if (Sex == 1) {
-							mes "But since a cute boy is giving it to me, I'll happily take it! Hee hee, soft and fluffy Poring doll~";
-						} else {
-							mes "But since a nice girl is giving it to me, I'll take it! Hee he, soft and fluffy Poring doll~";
-						}
-						next;
-						mes "[Elin]";
-						mes "Ooh, let me give you something as a little thank you. You see, I hid some candy so I can eat it without telling mommy.";
-						next;
-						getitem 529,1;	// Candy
-						mes "[Elin]";
-						if (Sex == 1) {
-							mes "I don't know if you're too old to like candy, but I guess it's okay.";
-						} else {
-							mes "So, try not to eat too much, okay? Otherwise, you might get in trouble!";
-						}
-						next;
-						mes "[Elin]";
-						mes "Thank you";
-						mes "so much for";
-						mes "the Poring doll!";
-						close;
-					} else {
-						mes "[Elin]";
-						if (Sex == 1) {
-							mes "Aww...?";
-							mes "Were you only teasing me?";
-						} else {
-							mes "Aww...";
-							mes "You're not making fun of me are you?";
-						}
-						next;
-						mes "[Elin]";
-						mes "I guess you forgot it somewhere...";
-						close;
-					}
-				case 2:
-					if (countitem(742) >= 1) {
-						delitem 742,1;	// Chonchon_Doll
-						mes "[Elin]";
-						mes "Agh--!";
-						mes "A Ch-Ch, Chonchon doll?!";
-						next;
-						mes "[Elin]";
-						if (Sex == 1) {
-							mes "But since... You're... Such a nice guy... I better take it...!";
-						} else {
-							mes "But since... Since it's a gift... I guess I'll take it...";
-						}
-						next;
-						mes "[Elin]";
-						mes "Mmm~";
-						mes "Let me give you";
-						mes "something in return..."	;
-						next;
-						getitem 530,1;	// Candy_Striper
-						mes "[Elin]";
-						mes "If you eat too much, your teeth will start to rot... at least, that's what Mommy says.";
-						next;
-						mes "[Elin]";
-						mes "And..";
-						mes "Uh...";
-						mes "Thank you";
-						mes "for the doll?";
-						close;
-					} else {
-						mes "[Elin]";
-						mes "Chonchon dolls are ugly anyways, but you still lied to me! How can you be so mean?!";
-						next;
-						mes "[Elin]";
-						mes "Waaaaaaaaah~~";
-						close;
-					}
-				case 3:
-					if (countitem(740) >= 1) {
-						delitem 740,1;	// Stuffed_Doll
-						mes "[Elin]";
-						mes "Wow...!";
-						mes "It looks like a bunny!";
-						next;
-						mes "[Elin]";
-						mes "I really like this Puppet~ Heh hehe! Thank you so much~";
-						next;
-						mes "[Elin]";
-						mes "Ooh ooh!";
-						mes "I have something";
-						mes "for you too!";
-						mes "Um, where";
-						mes "did it... Ah!";
-						next;
-						getitem 530,1;	// Candy_Striper
-						mes "[Elin]";
-						mes "Here it is! It's some of the candy Santa gave me. Go ahead and try some! Oh, and thank you so much for the doll!";
-						close;
-					} else {
-						mes "[Elin]";
-						mes "Awww, you were only kidding? W-W-Why are you teasing me like that?";
-						next;
-						mes "[Elin]";
-						mes "^666666*Sniff...*^000000";
-						next;
-						mes "[Elin]";
-						mes "Waaaaaaaaah~~";
-						close;
-					}
-				case 4:
-					if (countitem(752) >= 1) {
-						delitem 752,1;	// Grasshopper_Doll
-						mes "[Elin]";
-						mes "Ooh! Rocker Doll!";
-						mes "It's the Rocker that likes singing and dancing! I don't like grasshoppers, but I like this because it's cute~";
-						next;
-						mes "[Elin]";
-						mes "Hmmm, I should give you something too, huh? Let's see, I have what my grandpa gave me...";
-						next;
-						getitem 532,7;	// Banana_Juice
-						mes "[Elin]";
-						mes "Here you go! We have a lot of this at home, so I'll give it to you, okay? Oh, and thank you so much for the doll~ I love cute dolls!";
-						close;
-					} else {
-						mes "[Elin]";
-						mes "Awww...";
-						next;
-						mes "[Elin]";
-						mes "You don't";
-						mes "really have a doll...?";
-						mes "I was so excited about it, too...";
-						close;
-					}
-				case 5:
-					if (countitem(743) >= 1) {
-						delitem 743,1;	// Spore_Doll
-						mes "[Elin]";
-						mes "It's a mushroom?";
-						mes "Ewwwwwwwww, yucky!";
-						mes "Mommy made me eat";
-						mes "mushrooms today, too...";
-						next;
-						mes "[Elin]";
-						mes "But this doll is cute, so I'll take it. But I'm still not gonna eat mushrooms! Heh heh~";
-						next;
-						getitem 538,5;	// Well_Baked_Cookie
-						mes "[Elin]";
-						mes "Hehe~ My mommy made this! It's really yummy. I love cookies, too. So try it, you'll like it! Hee hee!";
-						next;
-						mes "[Elin]";
-						mes "Thanks for";
-						mes "the doll! I'll";
-						mes "take good care of it!";
-						close;
-					} else {
-						mes "[Elin]";
-						mes "Eh...?";
-						mes "You don't";
-						mes "have a doll?";
-						next;
-						mes "[Elin]";
-						mes "Awww...";
-						mes "It's not nice";
-						mes "to tease people";
-						mes "like that. ^666666*Sniff, sniff*^000000";
-						close;
-					}
-				case 6:
-					if (countitem(751) >= 1) {
-						delitem 751,1;	// Osiris_Doll
-						mes "[Elin]";
-						mes "Ahhhhh!";
-						mes "What is this";
-						mes "thing?! It's so scary!";
-						next;
-						mes "[Elin]";
-						mes "I've never seen a doll like this before. Where it's from? Hmm? Since I've never seen this kind of doll before, I'm gonna show it to my daddy, too. Hehe~! He'll be surprised!";
-						next;
-						mes "[Elin]";
-						mes "Here, since you gave me such a nicely made doll, I better give you something good too.";
-						next;
-						getitem 522,2;	// Fruit_Of_Mastela
-						mes "[Elin]";
-						mes "I found it when I secretly went to the forest. I took it because it has pretty colors!";
-						if (Sex == 1) {
-							mes "Since there's two, you can share it with your girlfriend. Hee hee~!";
-						} else {
-							mes "Since there's two, you can share it with your boyfriend. Hee hee~!";
-						}
-						close;
-					} else {
-						mes "[Elin]";
-						mes "Awww...";
-						mes "Why do you have";
-						mes "to make fun of me?";
-						close;
-					}
-				case 7:
-					if (countitem(750) >= 1) {
-						delitem 750,1;	// Baphomet_Doll
-						mes "[Elin]";
-						mes "Huh?";
-						mes "It's a little goat...";
-						next;
-						mes "[Elin]";
-						mes "It's so weird. It's cute but it's also scary at the same time. Well, since you gave me a pretty doll, I wanna give you something, too.";
-						next;
-						getitem 525,5;	// Panacea
-						mes "[Elin]";
-						mes "My daddy gave me this when I was really sick. I'm not sick anymore so you can use it when you need to. Hehehe~";
-						next;
-						mes "[Elin]";
-						mes "Hee hee~";
-						mes "Thank you for";
-						mes "the doll. I won't lose it!";
-						close;
-					} else {
-						mes "[Elin]";
-						mes "You big liar! Why are you pretending to be nice?!";
-						close;
-					}
-				case 8:
-					if (countitem(754) >= 1) {
-						delitem 754,1;	// Raccoondog_Doll
-						mes "[Elin]";
-						mes "Hehe, it's a";
-						mes "raccoon doll.";
-						mes "It's very very cute~";
-						next;
-						mes "[Elin]";
-						mes "I don't like";
-						mes "Smokies in real life,";
-						mes "but this doll is nice!";
-						next;
-						getitem 539,3;	// Piece_Of_Cake
-						mes "[Elin]";
-						mes "Here, let me give you some cake my grandma made. It's really yummy. I don't know if you like sweets or not, but it's really good! Please try some!";
-						next;
-						mes "[Elin]";
-						mes "Hee hee~";
-						mes "Thanks for the doll.";
-						mes "I'm gonna keep it";
-						mes "in my room!";
-						close;
-					} else {
-						mes "[Elin]";
-						mes "Hey! How come you have to say things like that? Are you making fun of me?!";
-						close;
-					}
-				case 9:
-					if (countitem(753) >= 1) {
-						delitem 753,1;	// Monkey_Doll
-						mes "[Elin]";
-						mes "Woooooooow~!";
-						next;
-						mes "[Elin]";
-						mes "A Yoyo doll! It's so pretty! You're really gonna give it to me?! Yay! Thank you so much! I really like it! Hee hee!";
-						next;
-						mes "[Elin]";
-						mes "Since you gave";
-						mes "me such a pretty doll,";
-						mes "I wanna give you";
-						mes "something, too!";
-						next;
-						getitem 608,1;	// Seed_Of_Yggdrasil
-						mes "[Elin]";
-						mes "My daddy picked it up on his way to another town. It looks like some kind of seed. I tried planting it in front of our house but it won't grow. Do you want to try?";
-						next;
-						mes "[Elin]";
-						mes "Hehe~";
-						mes "Thanks for";
-						mes "the doll. I'll hug";
-						mes "it before I go";
-						mes "to sleep!";
-						close;
-					} else {
-						mes "[Elin]";
-						mes "Hey...";
-						mes "How come you're making fun of me?!";
-						close;
-					}
-				case 10:
-					mes "["+strcharinfo(0)+"]";
-					mes "I'm as adorable as a doll...";
-					next;
-					mes "[Elin]";
-					mes "Whaaaaaaaaaaat...?";
-					next;
-					mes "[Elin]";
-					mes "^3355FFWhat did^000000";
-					mes "^3355FFyou just say?!^000000";
-					close;
-			}
+			mes "[Elin]";
+			mes "^3355FFWhat did^000000";
+			mes "^3355FFyou just say?!^000000";
+			close;
+		}
 	}
 }
 
@@ -717,14 +716,14 @@ alberta,136,79,1	script	Hat store girl#new30	71,{
 							next;
 							mes "^3355FF*Beeeeeeeh~~~*^000000";
 							next;
-							delitem 1059,250;  //Transparent_Cloth
-							delitem 2221,1;  //Hat_
-							delitem 2227,1;  //Cap_
-							delitem 7063,600;  //Soft_Feather
+							delitem 1059,250; //Transparent_Cloth
+							delitem 2221,1; //Hat_
+							delitem 2227,1; //Cap_
+							delitem 7063,600; //Soft_Feather
 							mes "[Tempestra]";
 							mes "Here it is, tee hee~";
 							mes "How about that? Do you like it?";
-							getitem 5032,1; // Picnic_Hat
+							getitem 5032,1; //Picnic_Hat
 							next;
 							mes "[Tempestra]";
 							mes "Once again, thank you for your favour. I'll see you later~";
@@ -781,15 +780,15 @@ alberta,136,79,1	script	Hat store girl#new30	71,{
 							next;
 							mes "^3355FF*Beeeeeeeh~~~*^000000";
 							next;
-							delitem 2252,1;  //Star_Sparkling
-							delitem 1036,400;  //Dragon_Scale
-							delitem 4052,1;  //Elder_Wilow_Card
-							delitem 7001,50;  //Mould_Powder
+							delitem 2252,1; //Star_Sparkling
+							delitem 1036,400; //Dragon_Scale
+							delitem 4052,1; //Elder_Wilow_Card
+							delitem 7001,50; //Mould_Powder
 							mes "[Tempestra]";
 							mes "Here it is, tee hee~";
 							mes "How about that?";
 							mes "Do you like it?";
-							getitem 5027,1; // Wizardry_Hat
+							getitem 5027,1; //Wizardry_Hat
 							next;
 							mes "[Tempestra]";
 							mes "Once again, thank you for your favour. I'll see you later~";
@@ -846,14 +845,14 @@ alberta,136,79,1	script	Hat store girl#new30	71,{
 							next;
 							mes "^3355FF*Beeeeeeeh~~~*^000000";
 							next;
-							delitem 2252,1;  //Star_Sparkling
-							delitem 1054,450;  //Lip_Of_Ancient_Fish
-							delitem 943,1200;  //Solid_Shell
+							delitem 2252,1; //Star_Sparkling
+							delitem 1054,450; //Lip_Of_Ancient_Fish
+							delitem 943,1200; //Solid_Shell
 							mes "[Tempestra]";
 							mes "Here it is, tee hee~";
 							mes "How about that?";
 							mes "Do you like it?";
-							getitem 5045,1; // Magician_Hat
+							getitem 5045,1; //Magician_Hat
 							next;
 							mes "[Tempestra]";
 							mes "Once again, thank you for your favour. I'll see you later~";
@@ -899,11 +898,11 @@ alberta,136,79,1	script	Hat store girl#new30	71,{
 					mes "Heh heh...";
 					mes "I think I'll make you a Hat of the Sun God~";
 					next;
-					delitem 7086,1;  //Symbol_Of_Sun
-					delitem 969,10;  //Gold
-					delitem 999,40;  //Steel
-					delitem 1003,50;  //Coal
-					delitem 984,2;  //Oridecon
+					delitem 7086,1; //Symbol_Of_Sun
+					delitem 969,10; //Gold
+					delitem 999,40; //Steel
+					delitem 1003,50; //Coal
+					delitem 984,2; //Oridecon
 					mes "[Tempestra]";
 					mes "See! Here it is!!";
 					mes "Haha, I made this quicker than the speed of light!";
@@ -1199,7 +1198,7 @@ alberta_in,23,104,4	script	Grandpa Turtle#tur	120,{
 					mes "You've made your choice! With my experience, we will arrive without fail! I appreciate your spirit!";
 					next;
 					mes "^3355FF*Choo Choo*^000000";
-					set zeny,zeny-10000;
+					set Zeny, Zeny-10000;
 					warp "tur_dun01",157,39;
 					close;
 				}

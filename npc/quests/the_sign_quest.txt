@@ -1,4 +1,4 @@
-//===== rAthena Script ======================================= 
+﻿//===== rAthena Script ======================================= 
 //= The Sign Quest
 //===== By: ================================================== 
 //= SinSloth, MasterOfMuppets, Kargha
@@ -4440,7 +4440,7 @@ cmd_in02,88,51,4	script	Strange Guy#sign	806,{
 		else {
 			mes "me. It also looks like you got zeny to spare! I think I'll help myself and borrow some of your cash!";
 			mes "^FF0000Yoink!^000000";
-			set zeny,zeny-10000;
+			set Zeny, Zeny-10000;
 			specialeffect EF_COIN;
 			close;
 		}
@@ -4522,7 +4522,7 @@ cmd_in02,88,51,4	script	Strange Guy#sign	806,{
 				mes "to me tomorrow night and";
 				mes "we'll start your test...";
 				set sign_q,27;
-				set zeny,zeny-30000;
+				set Zeny, Zeny-30000;
 			}
 			close;
 		case 2:
@@ -4770,7 +4770,7 @@ cmd_in02,88,51,4	script	Strange Guy#sign	806,{
 			mes "um, ''Bakerlan'' in Alberta.";
 			set sign_q,35;
 			getitem 7177,1; //Part_Of_Star's_Sob
-			set zeny,zeny+20000;
+			set Zeny, Zeny+20000;
 			if (checkre(3)) {
 				if (BaseLevel < 60) getexp 300,0;
 				else if (BaseLevel < 70) getexp 700,0;
@@ -4815,7 +4815,7 @@ cmd_in02,88,51,4	script	Strange Guy#sign	806,{
 			mes "me. It also looks like you got zeny to spare! I think I'll help myself and borrow some of your cash!";
 			mes "^FF0000Yoink!^000000";
 			mes "Giggle giggle..";
-			set zeny,zeny-10000;
+			set Zeny, Zeny-10000;
 			close;
 		}
 	}
@@ -4828,7 +4828,7 @@ cmd_in02,88,51,4	script	Strange Guy#sign	806,{
 			mes "cash. You know, for old";
 			mes "time's sake. ^FF0000Yoink!^000000";
 			emotion e_gg;
-			set zeny,zeny-10000;
+			set Zeny, Zeny-10000;
 		}
 		else {
 			mes "I got nothin' for you and";
@@ -6341,7 +6341,7 @@ alde_alche,169,162,7	script	Alchemist#sign	749,{
 						mes "just one bottle, but this";
 						mes "stuff is extremely potent!";
 						next;
-						set zeny,zeny-10000;
+						set Zeny, Zeny-10000;
 						delitem 526,10; //Royal_Jelly
 						delitem 518,20; //Honey
 						delitem 948,30; //Bear's_Foot
@@ -11372,7 +11372,7 @@ niflheim,102,54,4	script	Mad Man#s	739,{
 						mes "Heh heh!";
 						close;
 					}
-					set zeny,zeny-40000;
+					set Zeny, Zeny-40000;
 					close;
 				case 2:
 					mes "[Laichin]";
@@ -11391,7 +11391,7 @@ niflheim,102,54,4	script	Mad Man#s	739,{
 						mes "crawling back when";
 						mes "you can't figure out";
 						mes "where the soul pieces are!";
-						set zeny,zeny-40000;
+						set Zeny, Zeny-40000;
 						if (.@select_s == 1) set sign_q,97;
 						else if (.@select_s == 2) set sign_q,98;
 						else if (.@select_s == 3) set sign_q,99;
@@ -11427,7 +11427,7 @@ niflheim,102,54,4	script	Mad Man#s	739,{
 							mes "than the borders of the map.";
 							mes "For very small, you gotta";
 							mes "look near the center. Got it?";
-							set zeny,zeny-60000;
+							set Zeny, Zeny-60000;
 							if (.@select_s == 1) set sign_q,101;
 							else if (.@select_s == 2) set sign_q,102;
 							else if (.@select_s == 3) set sign_q,103;
@@ -11488,7 +11488,7 @@ niflheim,102,54,4	script	Mad Man#s	739,{
 				mes "than the borders of the map.";
 				mes "For very small, you gotta";
 				mes "look near the center. Got it?";
-				set zeny,zeny-20000;
+				set Zeny, Zeny-20000;
 				if (sign_q == 97) set sign_q,101;
 				else if (sign_q == 98) set sign_q,102;
 				else if (sign_q == 99) set sign_q,103;

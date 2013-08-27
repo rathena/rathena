@@ -18,7 +18,7 @@
 //= 1.2 Updated to match the official script. [Lemongrass/Euphy]
 //============================================================
 
-// Dewata Legend Quest
+// Dewata Legend Quest :: dewata_legend
 //============================================================
 dew_fild01,57,274,0	script	#hideout_legend	111,6,6,{
 OnTouch:
@@ -742,7 +742,7 @@ dewata,78,192,6	script	Borobudur Temple Manager	536,{
 	close;
 }
 
-// Help Out the Old Man
+// Help Out the Old Man :: dewata_drink
 //============================================================
 dewata,109,262,4	script	Memo#dew_drink	534,{
 	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 5000) {
@@ -1664,7 +1664,7 @@ dew_fild01,209,137,0	duplicate(DewataPalm)	Palm Tree#drink38	844
 dew_fild01,206,156,0	duplicate(DewataPalm)	Palm Tree#drink39	844
 dew_fild01,209,201,0	duplicate(DewataPalm)	Palm Tree#drink40	844
 
-// Traditional Weapon Quest
+// Traditional Weapon Quest :: dewata_weapon
 //============================================================
 dew_fild01,127,240,4	script	Gatti#weapon	813,{
 	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 10000) {

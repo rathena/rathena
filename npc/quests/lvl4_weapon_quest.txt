@@ -12,7 +12,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First Version, Credits goes to Vicious_Pucca for converting [MasterOfMuppets]
 //=     the quest from aegis format to eA format. Also thanks to 
-//=	reddozen for fixing bugs.
+//=     reddozen for fixing bugs.
 //= 1.1 Many fixes to spelling, grammar, and sentence order. [Silent]
 //= 1.2 A small fix, thanks to vicious_pucca [MasterOfMuppets]
 //= 1.21 Fixing MoM's typos (Citrin -> Citrine) [erKURITA]
@@ -2139,8 +2139,7 @@ niflheim,240,193,3	script	Kayron#lv4	794,{
 }
 
 niflheim,99,268,5	script	Reyghema#lv4	794,{
-	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 3000) {
+	if (MaxWeight - Weight < 3000) {
 		mes "^3355FFWait a second! Right now, you're carrying too many items with you. Please come back after putting some of your things into Kafra Storage.^000000";
 		close;
 	}

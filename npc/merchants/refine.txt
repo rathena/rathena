@@ -9,39 +9,39 @@
 //===== Description: =========================================
 //= Refining NPCs and Metal Salesmen.
 //===== Additional Comments: =================================
-//= 1.0 - by A bunch of people!
-//=       Syrus22 - Completely redid the script using functions... also
-//=       added the option for auto safe refining and multiple refining.
-//= 1.1 - Negative input bug fixed [Lupus]
-//= 1.2 - Added additional reparimen in morroc and payon. Added
-//=       Christopher the blacksmith in Geffen. Edited some dialogue [kobra_k88]
-//= 1.3 - New Payon Locations [Darkchild]
-//=       Corrected zeny subtraction thx to jpnmania77.[kobra_k88]
-//= 1.3a - Temporary corrected an exploit. Need to check sources
-//=        to fully fix bug [Shinigami]
-//=        Fixed repairman prices [shadowlady]
-//=        Fixed bug that skips requirements thanks to sir_loon [massdriller]
-//=        Fixed itemid error thanks to -Vitamin- [massdriller]
-//= 1.4 - check again item in refining procedure to avoid
-//=        hacker that can change item [dafide18]
-//= 1.5 - Fixed crashing due to badly used callfunc's [Skotlex]
-//        Lupus, don't rollback this important fix again! >.<
-//= 1.5a - Corrected an unneeded callfunc, fixed the anti-bot 
-//=       exploit ruining the safe refine loop. [Skotlex]
-//= 1.5b - Fixed Spelling mistakes. [Nexon] 
-//= 1.6	- Replaced all breaks for ends as per the new script engine [Skotlex]
-//= 1.7 - Added Einbroch Refiners (Custom names ^^;) and a duplicated BS Shop. [Poki#3]
-//= 1.8 - Added Lighthalzen Refiners (Custom names again ^^;) [Poki#3]
-//= 1.8a - Fixed wrong indication thanks to NeoSaro [Lupus]
-//= 1.9 - Rewrote repairman, removed the Steel from repair cost [DracoRPG]
-//= 2.0 - Fixed missed equppment presence check. Thx2 Coltaro [Lupus]
-//= 2.0a - Added weight checks thanks to Neouni [Playtester]
-//= 2.0b - Fixed the names of Lighthalzen and Einbroch refiners thanks to Maud_Dib [Kargha]
-//= 2.1 - Removed Duplicates [Silent]
-//= 2.2 - Changed name from "Emvertacon" to "Emveretarcon". [Samuray22]
-//	- Thanks to Barron-Monster.
-//= 2.2b - Changed name from "Pharacon" to "Phracon". [Samuray22]
-//	- Thanks to Barron-Monster.
+//= 1.0 by A bunch of people!
+//=     Syrus22 - Completely redid the script using functions... also
+//=     added the option for auto safe refining and multiple refining.
+//= 1.1 Negative input bug fixed [Lupus]
+//= 1.2 Added additional reparimen in morroc and payon. Added
+//=     Christopher the blacksmith in Geffen. Edited some dialogue [kobra_k88]
+//= 1.3 New Payon Locations [Darkchild]
+//=     Corrected zeny subtraction thx to jpnmania77.[kobra_k88]
+//= 1.3a Temporary corrected an exploit. Need to check sources
+//=     to fully fix bug [Shinigami]
+//=     Fixed repairman prices [shadowlady]
+//=     Fixed bug that skips requirements thanks to sir_loon [massdriller]
+//=     Fixed itemid error thanks to -Vitamin- [massdriller]
+//= 1.4 check again item in refining procedure to avoid
+//=     hacker that can change item [dafide18]
+//= 1.5 Fixed crashing due to badly used callfunc's [Skotlex]
+//=     Lupus, don't rollback this important fix again! >.<
+//= 1.5a Corrected an unneeded callfunc, fixed the anti-bot 
+//=     exploit ruining the safe refine loop. [Skotlex]
+//= 1.5b Fixed Spelling mistakes. [Nexon] 
+//= 1.6 Replaced all breaks for ends as per the new script engine [Skotlex]
+//= 1.7 Added Einbroch Refiners (Custom names ^^;) and a duplicated BS Shop. [Poki#3]
+//= 1.8 Added Lighthalzen Refiners (Custom names again ^^;) [Poki#3]
+//= 1.8a Fixed wrong indication thanks to NeoSaro [Lupus]
+//= 1.9 Rewrote repairman, removed the Steel from repair cost [DracoRPG]
+//= 2.0 Fixed missed equppment presence check. Thx2 Coltaro [Lupus]
+//= 2.0a Added weight checks thanks to Neouni [Playtester]
+//= 2.0b Fixed the names of Lighthalzen and Einbroch refiners thanks to Maud_Dib [Kargha]
+//= 2.1 Removed Duplicates [Silent]
+//= 2.2 Changed name from "Emvertacon" to "Emveretarcon". [Samuray22]
+//=     Thanks to Barron-Monster.
+//= 2.2b Changed name from "Pharacon" to "Phracon". [Samuray22]
+//=     Thanks to Barron-Monster.
 //= 2.3 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 2.4 Updated Refiner function. cleaner, and less dated. [L0ne_w0lf]
 //= 2.5 Rather large update to the refiner and merchants. :D [L0ne_W0lf]
@@ -56,7 +56,7 @@
 //= 2.8a Small bugfix. (bugreport:2418) [Paradox924X]
 //= 2.9 Moved Morroc repairman to Morroc Ruins. [L0ne_W0lf]
 //= 3.0 Updated several NPC names and locations. [Xantara]
-//		Added WoE map Refiners.
+//=     Added WoE map Refiners.
 //= 3.1 Added the new refinement & Ore creation NPC's for +11 and above Refinement. [Masao]
 //= 3.2 Moved some scripts to Renewal file, other minor changes. [Euphy]
 //= 3.2a Added 'disable_items' command. [Euphy]
@@ -82,7 +82,7 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 				close;
 			}
 			getitem 986,1; // Anvil
-			set Zeny,Zeny-30000;
+			set Zeny, Zeny-30000;
 			mes "[Christopher Guillenrow]";
 			mes "This is the cheapest one, but efficient enough to forge most items. Thank ye fer shopping at me workshop.  Feel free to come anytime, whenever ye need.";
 			close;
@@ -93,7 +93,7 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 				close;
 			}
 			getitem 987,1; // Oridecon_Anvil
-			set Zeny,Zeny-120000;
+			set Zeny, Zeny-120000;
 			mes "[Christopher Guillenrow]";
 			mes "Aye, friend ye have an eye for the anvil. This must be the proper anvil for a Blacksmith, eh? Thank ye fer shopping at me workshop.  Feel free to come anytime, whenever ye need.";
 			close;
@@ -104,7 +104,7 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 				close;
 			}
 			getitem 988,1; // Golden_Anvil
-			set Zeny,Zeny-300000;
+			set Zeny, Zeny-300000;
 			mes "[Christopher Guillenrow]";
 			mes "This one is the best among all me stuffs in me workshop! With this, ye can rule the Blacksmith world! Thank ye fer shopping at me workshop.  Feel free to come anytime, whenever ye need.";
 			close;
@@ -157,7 +157,7 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 				close;
 			}
 			getitem 612,.@input; // Portable_Furnace
-			set Zeny,Zeny-.@sell;
+			set Zeny, Zeny-.@sell;
 			mes "[Christopher Guillenrow]";
 			mes "Thank ye fer shopping at me workshop. Feel free to come anytime, whenever ye need.";
 			close;
@@ -168,7 +168,7 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 				close;
 			}
 			getitem 613,1; // Iron_Hammer
-			set Zeny,Zeny-1000;
+			set Zeny, Zeny-1000;
 			mes "[Christopher Guillenrow]";
 			mes "Thank ye fer shopping at me workshop. Feel free to come anytime, whenever ye need.";
 			close;
@@ -179,7 +179,7 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 				close;
 			}
 			getitem 614,1; // Golden_Hammer
-			set Zeny,Zeny-3000;
+			set Zeny, Zeny-3000;
 			mes "[Christopher Guillenrow]";
 			mes "Thank ye fer shopping at me workshop. Feel free to come anytime, whenever ye need.";
 			close;
@@ -190,7 +190,7 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 				close;
 			}
 			getitem 615,1; // Oridecon_Hammer
-			set Zeny,Zeny-5000;
+			set Zeny, Zeny-5000;
 			mes "[Christopher Guillenrow]";
 			mes "Thank ye fer shopping at me workshop. Feel free to come anytime, whenever ye need.";
 			close;
@@ -238,7 +238,7 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 				close;
 			}
 			getitem 1010,.@input; // Phracon
-			set Zeny,Zeny-.@sell;
+			set Zeny, Zeny-.@sell;
 			mes "[Christopher Guillenrow]";
 			mes "Thank ye fer shopping at me workshop. Feel free to come anytime, whenever ye need.";
 			close;
@@ -276,7 +276,7 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 				close;
 			}
 			getitem 1011,.@input; // Emveretarcon
-			set Zeny,Zeny-.@sell;
+			set Zeny, Zeny-.@sell;
 			mes "[Christopher Guillenrow]";
 			mes "Thank ye fer shopping at me workshop. Feel free to come anytime, whenever ye need, whenever ye want.";
 			close;
@@ -352,37 +352,37 @@ ein_in01,38,29,0	script	Paul Spanner	63,{
 		next;
 		switch(select("Anvil - 30,000z.:Oridecon Anvil - 120,000z.:Golden Anvil - 300,000z.:I need a better anvil.:Cancel.")) {
 		case 1:
-			if (zeny < 30000) {
+			if (Zeny < 30000) {
 				mes "[Paul Spanner]";
 				mes "With that much of money, you cannot even buy a toy anvil!";
 				close;
 			}
 			getitem 986,1; //Anvil
-			set zeny,zeny-30000;
+			set Zeny, Zeny-30000;
 			mes "[Paul Spanner]";
 			mes "It is the cheapest anvil which has the most basic ability.";
 			mes "Thank you for using my shop. If you need anything, just let me know.";
 			close;
 		case 2:
-			if (zeny < 120000) {
+			if (Zeny < 120000) {
 				mes "[Paul Spanner]";
 				mes "With that much of money, you cannot even buy a toy anvil!";
 				close;
 			}
 			getitem 987,1; //Oridecon_Anvil
-			set zeny,zeny-120000;
+			set Zeny, Zeny-120000;
 			mes "[Paul Spanner]";
 			mes "Ah, you have an eye for anvil. A Blacksmith needs an anvil at least as good as this.";
 			mes "Thank you for using my shop. If you need anything, just let me know.";
 			close;
 		case 3:
-			if (zeny < 300000) {
+			if (Zeny < 300000) {
 				mes "[Paul Spanner]";
 				mes "With that much of money, you cannot even buy a toy anvil!";
 				close;
 			}
 			getitem 988,1; //Golden_Anvil
-			set zeny,zeny-300000;
+			set Zeny, Zeny-300000;
 			mes "[Paul Spanner]";
 			mes "I can tell your ambition to become a good Blacksmith just by looking at you to choose this Golden Anvil!";
 			mes "This anvil will surely aid you in creating the best weapons.";
@@ -451,7 +451,7 @@ ein_in01,38,29,0	script	Paul Spanner	63,{
 			}
 		}
 		set .@sell,.@input * .@item_cost;
-		if (zeny < .@sell) {
+		if (Zeny < .@sell) {
 			mes "[Paul Spanner]";
 			mes "You don't have enough money. Sorry, I cannot sell them at a loss.";
 			close;
@@ -461,7 +461,7 @@ ein_in01,38,29,0	script	Paul Spanner	63,{
 			mes "Hey, you look pale. Why don't you go lighten your weight first.";
 			close;
 		}
-		set zeny,zeny-.@sell;
+		set Zeny, Zeny-.@sell;
 		getitem .@item,.@input;
 		mes "[Paul Spanner]";
 		mes "Thank you for using my shop. If you need anything, just let me know.";
@@ -505,7 +505,7 @@ ein_in01,38,29,0	script	Paul Spanner	63,{
 			}
 		}
 		set .@sell,.@input * .@item_price;
-		if (zeny < .@sell) {
+		if (Zeny < .@sell) {
 			mes "[Paul Spanner]";
 			mes "You don't have enough money. Sorry, I cannot sell them at a loss.";
 			close;
@@ -516,7 +516,7 @@ ein_in01,38,29,0	script	Paul Spanner	63,{
 			close;
 		}
 		getitem .@item,.@input;
-		set zeny,zeny-.@sell;
+		set Zeny, Zeny-.@sell;
 		mes "[Paul Spanner]";
 		mes "Thank you for using my shop. If you need anything, just let me know.";
 		close;
@@ -728,7 +728,7 @@ function	script	refinemain	{
 			mes "here all day if you need me.";
 			close;
 		}
-		set Zeny,Zeny-.@price;
+		set Zeny, Zeny-.@price;
 		delitem .@material,1;
 		if(getequipisequiped(.@part) == 0) { // hacker has removed the item (not changed, why?)
 			mes "[" + getarg(0) + "]";
@@ -846,7 +846,7 @@ function	script	refinemain	{
 		mes "Is that all you got? Unfortunately I can't work for you at a lower price. Try putting yourself in my shoes.";
 		close;
 	}
-	set Zeny,Zeny - .@fullprice;
+	set Zeny, Zeny - .@fullprice;
 	delitem .@material,.@refinecnt;
 	while(.@refinecnt){
 		if (getequipisequiped(.@part) == 0) {
@@ -872,7 +872,7 @@ function	script	refinemain	{
 			mes "Here's the unused Zeny and materials back...";
 			getitem .@material,.@refinecnt;
 			set .@fullprice,.@refinecnt * .@price;
-			set Zeny,Zeny + .@fullprice;
+			set Zeny, Zeny + .@fullprice;
 			close;
 		}
 		successrefitem .@part;
@@ -990,7 +990,7 @@ function	script	phramain	{
 		close;
 	}
 	getitem .@material,.@input;
-	set Zeny,Zeny-.@sell;
+	set Zeny, Zeny-.@sell;
 	mes "[" + getarg(0) + "]";
 	mes "Here you are!";
 	mes "Thank you for";
@@ -1228,7 +1228,7 @@ function	script	repairmain	{
 			}
 			set .@checkitem2,.@checkitem2-1;
 			if (.@checkitem == .@checkitem2) {
-				set zeny,zeny-.@totalcost;
+				set Zeny, Zeny-.@totalcost;
 				while (.@checkitem) {
 					repair(.@checkitem);
 					set .@checkitem,.@checkitem-1;

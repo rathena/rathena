@@ -12,7 +12,7 @@
 //= 1.1 Added official Kiel Dungeon entrance [Playtester]
 //= 1.2 Changed warps because of Kiel quest [Playtester]
 //= 1.3 Added second floor exit. [L0ne_W0lf]
-//=	Corrected coordinated for some of the other warps.
+//=     Corrected coordinated for some of the other warps.
 //============================================================
 
 //= Kiel Dungeon =============================================

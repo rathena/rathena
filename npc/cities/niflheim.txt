@@ -11,10 +11,10 @@
 //===== Description: ========================================= 
 //= Official NPC's for Niflheim
 //= 1.01 Splitted file(guides, shops). Fixed rand() bugs,
-//= missing labels bugs, optimization [Lupus]
+//=      missing labels bugs, optimization [Lupus]
 //= 1.03 fixed end; -> close;
 //= 1.04-1.05 fixed several bugs with missing CLOSE button, wrong var name
-//=	in Piano Keys quest
+//=     in Piano Keys quest
 //=     fixed zeny/item, exploit in Sairin, some optimizations [Lupus]
 //= 1.06 some typos in some variables fixed (thx 2 Dr.Evil) [Lupus]
 //= 1.07 Fixed typos [Nexon]
@@ -24,7 +24,7 @@
 //= 1.2 Removed Duplicates [Silent]
 //= 1.3 Moved Book of Devil and Piano quest to quests/quests_niflheim.txt [Evera]
 //= 1.4 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
-//=	Removed Cursed Spirits as they were custom.
+//=     Removed Cursed Spirits as they were custom.
 //= 1.5 Added dummy "OnMyMobDead" event to Cursed Spirit. [L0ne_W0lf]
 //============================================================ 
 

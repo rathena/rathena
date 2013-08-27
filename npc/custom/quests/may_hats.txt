@@ -19,7 +19,7 @@ gonryun,187,140,4	script	Yakima	850,{
 	mes callfunc("F_Hi");
 	mes "I can make some items for you.";
 	mes "They are quite rare novadays...";
-	specialeffect 417;
+	specialeffect EF_HITBODY;
 	next;
 	menu "Bird Nest",-,"Lion Mask",M_2,"Skeleton Manteau",M_3,"Fashion Hip Sack",M_4,"Sales Banner",M_5,"Leave",M_EXIT;
 

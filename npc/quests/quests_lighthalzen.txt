@@ -20,7 +20,7 @@
 //=     Tube just makes sure you have 1 or more permits.
 //= 4.4 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 4.5 Corrected an Incorrect check of the Shinokas_Quest. (bugreport:2276) [Samuray22]
-//=	  Replaced effect numerics with constants.
+//=     Replaced effect numerics with constants.
 //= 4.5 Official Gangster Alert script. [Gepard]
 //= 4.6 Added quest log entries for:
 //=     - Cursed Spirit Quest
@@ -1721,8 +1721,8 @@ OnTouch:
 	case 1:
 		mes "^3355FF*SHHHHHHUK!*^000000";
 		specialeffect EF_STEAL;
-		if (zeny >= 100) {
-			set zeny,zeny-100;
+		if (Zeny >= 100) {
+			set Zeny, Zeny-100;
 		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -1737,8 +1737,8 @@ OnTouch:
 	case 2:
 		mes "^3355FF*SHHHHHHUK!*^000000";
 		specialeffect EF_STEAL;
-		if (zeny >= 200) {
-			set zeny,zeny-200;
+		if (Zeny >= 200) {
+			set Zeny, Zeny-200;
 		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -1754,8 +1754,8 @@ OnTouch:
 	case 3:
 		mes "^3355FF*SHHHHHHUK!*^000000";
 		specialeffect EF_STEAL;
-		if (zeny >= 10) {
-			set zeny,zeny-10;
+		if (Zeny >= 10) {
+			set Zeny, Zeny-10;
 		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -1794,8 +1794,8 @@ OnTouch:
 	case 1:
 		mes "^3355FF*SHHHHHHUK!*^000000";
 		specialeffect EF_STEAL;
-		if (zeny >= 100) {
-			set zeny,zeny-100;
+		if (Zeny >= 100) {
+			set Zeny, Zeny-100;
 		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -1810,8 +1810,8 @@ OnTouch:
 	case 2:
 		mes "^3355FF*SHHHHHHUK!*^000000";
 		specialeffect EF_STEAL;
-		if (zeny >= 200) {
-			set zeny,zeny-200;
+		if (Zeny >= 200) {
+			set Zeny, Zeny-200;
 		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -1827,8 +1827,8 @@ OnTouch:
 	case 3:
 		mes "^3355FF*SHHHHHHUK!*^000000";
 		specialeffect EF_STEAL;
-		if (zeny >= 10) {
-			set zeny,zeny-10;
+		if (Zeny >= 10) {
+			set Zeny, Zeny-10;
 		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -1867,8 +1867,8 @@ OnTouch:
 	case 2:
 		mes "^3355FF*SHHHHHHUK!*^000000";
 		specialeffect EF_STEAL;
-		if (zeny >= 100) {
-			set zeny,zeny-100;
+		if (Zeny >= 100) {
+			set Zeny, Zeny-100;
 		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -1884,8 +1884,8 @@ OnTouch:
 	case 4:
 		mes "^3355FF*SHHHHHHUK!*^000000";
 		specialeffect EF_STEAL;
-		if (zeny >= 200) {
-			set zeny,zeny-200;
+		if (Zeny >= 200) {
+			set Zeny, Zeny-200;
 		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -1901,8 +1901,8 @@ OnTouch:
 	case 5:
 		mes "^3355FF*SHHHHHHUK!*^000000";
 		specialeffect EF_STEAL;
-		if (zeny >= 10) {
-			set zeny,zeny-10;
+		if (Zeny >= 10) {
+			set Zeny, Zeny-10;
 		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -2019,7 +2019,7 @@ OnTouch:
 						mes "but I hope we never bump";
 						mes "into each other ever again!";
 					}
-					set zeny,zeny-.@price;
+					set Zeny, Zeny-.@price;
 					getitem 12016,.@number; //Speed_Up_Potion
 				}
 			}
@@ -12067,11 +12067,11 @@ airplane_01,10,10,3	script	#LyozienSwitch	111,{
 //= 1.0a fixed rand(1,10) + comparision. There just can't be 'X < 1' [Lupus]
 //= 1.1 Changed the mobster spawn to g_mobster to prevent exploits [MasterOfMuppets]
 //= 1.2 Added the cube room quest by DeNy, translated by vicious_pucca. [MasterOfMuppets]
-//=	Thanks to Linuxwolf for a grammar check as well =).
+//=     Thanks to Linuxwolf for a grammar check as well =).
 //= 1.2a Moved Biolab entrance to lhz_dun warps. [Vicious]
 //= 1.3 Fixed password bug, fixed endless item exploit, some typos [Lupus]
 //= 1.4 Fixed password abuse. When people don't read the password under the picture
-//= 	and enter Zero shit 8) (TODO: I saw some "Sticks" abuses, too.. where you could skip a part of quest...)
+//=     and enter Zero shit 8) (TODO: I saw some "Sticks" abuses, too.. where you could skip a part of quest...)
 //= 1.5 Fixed Mobster's OnDead event(it has to start with "On"!) [Playtester]
 //= 1.5a Fixed "free stick" bug, thx 2 Neouni [Lupus]
 //= 1.6 Added Gywall's Pickpocket Quest
@@ -12081,29 +12081,29 @@ airplane_01,10,10,3	script	#LyozienSwitch	111,{
 //= 2.0 Removed Duplicates [Silent]
 //= 2.1 Added first part of Bio Ethics Quest [Evera]
 //= 2.2 Added bit to say Bio Ethics is unfinished, and if a player attempts, it warps them
-//= 	out after finished part... Don't want players getting stuck ;_; [Evera]
+//=     out after finished part... Don't want players getting stuck ;_; [Evera]
 //= 2.3 Finished Bio Ethics Quest. Need bug testers before moving to trunk, my
-//=	mind was somewhere else when writing @_@ [Evera]
-//= 2.4	Fixed the bug where a str&int debug was shown in the console for
-//=	test tube in bio labs quest. [Evera]
-//= 2.5	Fixed Kellasus giving you extra skills in Bio Ethics quest [Evera]
-//= 2.6	Fixed exploit letting any class get homunculus from Bio Ethics Quest [Evera]
+//=     mind was somewhere else when writing @_@ [Evera]
+//= 2.4 Fixed the bug where a str&int debug was shown in the console for
+//=     test tube in bio labs quest. [Evera]
+//= 2.5 Fixed Kellasus giving you extra skills in Bio Ethics quest [Evera]
+//= 2.6 Fixed exploit letting any class get homunculus from Bio Ethics Quest [Evera]
 //= 2.6a Moved Bio Ethics Quest to Alchemist SKILL QUESTS [Lupus]
 //= 2.7 fixed bugs that let people bypass some quest parts V_V [Lupus]
-//=	reused cubekey var for 4 Cube Room key vars
+//=     reused cubekey var for 4 Cube Room key vars
 //= 2.8 More optimization. Also fixed bug with "2x short sticks -> long" [Lupus]
-//=	Now uses MISC_QUEST&512 instead of 'hzdun'. WIP
+//=     Now uses MISC_QUEST&512 instead of 'hzdun'. WIP
 //= 2.9 Fixed Friendship Quest levelup exploit (u could get EXP twice) [Lupus]
 //= 3.0 Added Cursed Spirit Quest. [SinSloth]
-//=	Moved a book non-related to Lighthalzen quests.
+//=     Moved a book non-related to Lighthalzen quests.
 //= 3.1 Added Schwartzvalt Trilogy Quest. [SinSloth]
 //= 3.2 Updated some NPCs regarding Hugel Rebellion Quest. [SinSloth]
 //= 3.2 Removed the NPC "#kiz03-4" as I couldn't find any [L0ne_W0lf]
-//=	reference to it in the Aegis script.
+//=     reference to it in the Aegis script.
 //= 3.3 Fixed a wrong negative value checking in Schwartzvalt Trilogy quest. [SinSloth]
 //= 3.4 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //= 3.5 Touch-ups to the Friendship quest. Added EXP reward. [L0ne_W0lf]
-//=	Added cutins for "Maku" npc, and changed "set HP" to percentheal.
+//=     Added cutins for "Maku" npc, and changed "set HP" to percentheal.
 //= 3.5a Adjusted EXP given by "Benkasttein" to be the same as that given by Maku. [L0ne_W0lf]
 //= 3.6 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 3.7 Counter-fixed negative value checking to now look for both positive and negative values

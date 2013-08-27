@@ -24,7 +24,7 @@ prontera,149,193,4	script	WOE Information	835,{
 	end;
 OnAgitStart:
 	while(agitcheck()) {
-		misceffect EF_BEGINSPELL6;
+		specialeffect EF_BEGINSPELL6;
 		sleep 425;
 	}
 	end;

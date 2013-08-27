@@ -23,7 +23,7 @@
 //=
 //= This Quest has relation with brisingamen_seal.txt (Seals)
 //= 1.2 Changed variable to "gef_bards_q" to avoid job quest conflict. [L0ne_W0lf]
-//=	Progress prior to the 5th+ step will be lost. Job quest takes priority.
+//=     Progress prior to the 5th+ step will be lost. Job quest takes priority.
 //= 1.3 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //= 1.4 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 1.5 Updated RE/Pre-RE EXP. [Euphy]
@@ -515,7 +515,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "At Nine, love is reborn.";
 		mes "At Ten, my Love is gone.";
 		mes "At Eleven I find out why.";
-		if (sex)
+		if (Sex)
 			mes "At Twelve I see his new girlfriend?";
 		else
 			mes "At Twelve I see her new boyfriend?";
@@ -849,7 +849,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "At Nine, love is reborn.";
 		mes "At Ten, my Love is gone.";
 		mes "At Eleven I find out why.";
-		if (sex)
+		if (Sex)
 			mes "At Twelve I see her new boyfriend?";
 		else
 			mes "At Twelve I see his new girlfriend?";
@@ -1128,8 +1128,8 @@ S_StorySong:
 
 		case 1:
 			mes "[Errende]";
-			if (zeny > 499) {
-				set zeny,zeny-500;
+			if (Zeny > 499) {
+				set Zeny, Zeny-500;
 				cutin "bard_eland03",2;
 				mes "Alright.";
 				mes "Here we go~";
@@ -1253,7 +1253,7 @@ S_StorySong:
 				// For 3 and 4 cases we set more chance earlier on .@random
 				if(getarg(0) == 3 || getarg(0) == 4){
 					mes "[Errende]";
-					if (sex)
+					if (Sex)
 						mes "Heroic warrior,";
 					else
 						mes "My fair lady,";
@@ -2040,7 +2040,7 @@ morocc,134,111,3	script	Bard#3	741,{
 				}
 
 			} else {
-				if (sex) {
+				if (Sex) {
 					mes "[Kino Kitty]";
 					mes "You're such a nice young man. I will remember your name. I would much appreciate it if you would also remember mine.";
 					next;
@@ -2906,7 +2906,7 @@ yuno_in04,33,119,3	script	Adventurer#1	828,{
 	mes "Err...?";
 	mes "What is it?";
 	next;
-	if (!sex) {
+	if (!Sex) {
 		emotion e_heh;
 		mes "[Energetic Young Man]";
 		mes "Oh...!";

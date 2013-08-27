@@ -50,7 +50,7 @@ L_NoIncomeToday:
 
 	if(@kafrabank<1000) goto L_LESS_1000;
 	if(@kafrabank>zeny) goto L_NOT_ENOUGH;
-	set zeny,zeny-@kafrabank;
+	set Zeny, Zeny-@kafrabank;
 	set #kafrabank,#kafrabank+@kafrabank;
 	mes"[Maniss]";
 	mes "You've made a deposit of ^135445" + @kafrabank + "z^000000.";
@@ -69,7 +69,7 @@ M_WITHDRAW:
 	if(@kafrabank<1) goto B_EXIT2;
 	if(@kafrabank>#kafrabank) goto L_NOT_ENOUGH;
 	set #kafrabank,#kafrabank-@kafrabank;
-	set zeny,zeny+@kafrabank;
+	set Zeny, Zeny+@kafrabank;
 	mes"[Maniss]";
 	mes "Here is your ^135445" + @kafrabank + "z^000000, put your sign here...";
 	//we log these zeny operations into the log db

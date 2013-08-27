@@ -12,10 +12,10 @@
 //===== Additional Comments: =================================
 //= 0.1a added missing L_No: to 2 funcs [Lupus]
 //= 0.1b Removed duplicates [Toms]
-//= 0.2	Added missing next;'s [Evera]
+//= 0.2 Added missing next;'s [Evera]
 //= 0.3 Fixed Zweihander[+] id [Lupus]
 //= 1.0 Fixed ingredients check [Lupus]
-//= 1.1	Updated to official. [SinSloth]
+//= 1.1 Updated to official. [SinSloth]
 //= 1.1b Optimized/cleaned [ultramage]
 //= 1.2 Fixed some typos and a nasty bug. [SinSloth]
 //= 1.3 Fixed a wrong item ID with Sphinx Hat. [SinSloth]

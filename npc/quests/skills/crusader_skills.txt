@@ -426,7 +426,7 @@ gef_fild13,297,242,3	script	Soldier#277	751,{
 		}
 		else if (CRUS_SK == 5) {
 			mes "[Sloutii]";
-			if (upper == 1) {
+			if (Upper == 1) {
 				mes "Eeearrrgh--!";
 				mes "My l-legs! Everything";
 				mes "is starting to h-hurt!";

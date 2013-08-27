@@ -26,12 +26,12 @@ cmd_in02,182,126,2	script	Crazy Boris	85,{
 
 WIN:
 	mes "Damnit, You Win!";
-	emotion 19;
+	emotion e_swt2;
 	next;
 	goto OPPPULL;
 
 LOSE:
-	emotion 18;
+	emotion e_heh;
 	mes "Boorah! You Lose!";
 	next;
 	goto YOUPULL;
@@ -43,9 +43,9 @@ PLAY:
 
 ROCK:
   	if (@lastchoice == 1) set @opp,rand (1,3);
-  	if (@opp == 1) emotion 11;
-  	if (@opp == 2) emotion 10;
-  	if (@opp == 3) emotion 12;
+  	if (@opp == 1) emotion e_rock;
+  	if (@opp == 2) emotion e_scissors;
+  	if (@opp == 3) emotion paper;
   	set @lastchoice,1;
 	if (@opp == 1) goto SAME;
 	if (@opp == 2) goto WIN;
@@ -53,9 +53,9 @@ ROCK:
 
 SCISSORS:
 	if (@lastchoice == 2) set @opp,rand (1,2);
-  	if (@opp == 1) emotion 11;
-  	if (@opp == 2) emotion 10;
-  	if (@opp == 3) emotion 12;
+  	if (@opp == 1) emotion e_rock;
+  	if (@opp == 2) emotion e_scissors;
+  	if (@opp == 3) emotion paper;
   	set @lastchoice,2;
 	if (@opp == 1) goto LOSE;
 	if (@opp == 2) goto SAME;
@@ -63,9 +63,9 @@ SCISSORS:
 
 PAPER:
 	if (@lastchoice == 3) set @opp,rand (2,3);
-  	if (@opp == 1) emotion 11;
-  	if (@opp == 2) emotion 10;
-  	if (@opp == 3) emotion 12;
+  	if (@opp == 1) emotion e_rock;
+  	if (@opp == 2) emotion e_scissors;
+  	if (@opp == 3) emotion paper;
   	set @lastchoice,3;
 	if (@opp == 1) goto WIN;
 	if (@opp == 2) goto LOSE;
@@ -185,21 +185,21 @@ SIXa:
 	if (@pull != 1) goto SAFE;
 
 SAFE:
-	emotion 32;
+	emotion e_pif;
 	mes "*^0000FFClick^000000* whew...";
 	goto PLAY;
 
 DIE:
-	specialeffect2 183;
-	emotion 29;
+	specialeffect2 EF_SUI_EXPLOSION;
+	emotion e_gg;
 	percentheal -100,-100;
 	mes "*^0000FFClick^000000* *^FF0000BANG^000000*";
 	mes "You're dead!";
 	close;
 
 KILL:
-	specialeffect 183;
-	emotion 23;
+	specialeffect EF_SUI_EXPLOSION;
+	emotion e_omg;
 	mes "*^0000FFClick^000000* *^FF0000BANG^000000*";
 	mes "OWWW @#$%^!! THAT HURT LIKE HELL!!";
 	next;

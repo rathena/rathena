@@ -11,10 +11,10 @@
 //= Job quest for Rogue classes
 //===== Additional Comments: ================================= 
 //= 2.4 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
-//=	No longer uses function "F_BlockHigh"
+//=     No longer uses function "F_BlockHigh"
 //= 2.4a Deleted unused variables. [Samuray22]
 //= 2.4b Changed a Problem with JobLevel what made 
-//=	impossible get a Gladius [3]. (bugreport:481) [Samuray22]
+//=     impossible get a Gladius [3]. (bugreport:481) [Samuray22]
 //= 2.4c Corrected a Typo error ";;" and a typo error with "rouge". (bugreport:909) [Samuray22]
 //= 2.5 Added dummy "OnMyMobDead" labels. (bugreport:1100) [L0ne_W0lf]
 //= 2.6 Fixed a few bugs in the Rogue Guildsman. [L0ne_W0lf]
@@ -84,7 +84,7 @@ in_rogue,363,122,4	script	Rogue Guildsman#rg	747,{
 				mes "[Rogue Guildsman]";
 				mes "So what's a kid";
 				mes "like you doin' here?";
-				if (sex == 1) {
+				if (Sex) {
 					mes "Oh, I get it now...";
 					mes "The widdle boy wants";
 				}
@@ -656,14 +656,14 @@ in_rogue,376,23,1	script	Mr. Smith#rg	57,{
 		else if (ROGUE_Q == 4) callsub S_CheckItems,511,10,910,10,926,10,964,10;
 		else if (ROGUE_Q == 5) callsub S_CheckItems,508,10,948,10,935,10,940,10;
 		else if (ROGUE_Q == 6) {
-			if (zeny > 9999 && countitem(915) > 4 && countitem(713) > 4 && countitem(1002) > 4 &&
+			if (Zeny > 9999 && countitem(915) > 4 && countitem(713) > 4 && countitem(1002) > 4 &&
 			countitem(953) > 4 && countitem(507) > 4 && countitem(919) > 4 && countitem(715) > 4 &&
 			countitem(913) > 4 && countitem(904) > 4 && countitem(942) > 4 && countitem(528) > 4 &&
 			countitem(914) > 4 && countitem(705) > 4 && countitem(916) > 4 && countitem(917) > 4 &&
 			countitem(908) > 4 && countitem(945) > 4) {
 				mes "[Mr. Smith]";
 				mes "Ummm...let's see...";
-				set zeny,zeny-10000;
+				set Zeny, Zeny-10000;
 				delitem 915,5; //Chrysalis
 				delitem 713,5; //Empty_Bottle
 				delitem 1002,5; //Iron_Ore
@@ -976,7 +976,7 @@ S_CheckItems:
 	if (Zeny > 9999 && countitem(getarg(0)) >= getarg(1) && countitem(getarg(2)) >= getarg(3) && countitem(getarg(4)) >= getarg(5) && countitem(getarg(6)) >= getarg(7)) {
 		mes "[Mr. Smith]";
 		mes "Okay, we've got the application fee, ^FF000010,000 zeny^000000, "+getarg(1)+" "+getitemname(getarg(0))+", "+getarg(3)+" "+getitemname(getarg(2))+", "+getarg(5)+" "+getitemname(getarg(4))+" and "+getarg(7)+" "+getitemname(getarg(6))+"...";
-		set zeny,zeny-10000;
+		set Zeny, Zeny-10000;
 		delitem getarg(0),getarg(1);
 		delitem getarg(2),getarg(3);
 		delitem getarg(4),getarg(5);
@@ -2019,12 +2019,13 @@ in_rogue,399,286,1	script	switch#rogreset	88,{
 //= 1.3 Baby Class Support + 40/50 JobLevel Item fix [Lupus]
 //= 1.5 Fixed possible EXP abuse [Lupus]
 //= 1.6 Added a func which prevent advanced classes passing
-//= 2nd Job Quests again. It also guides adv classes where
-//= to go. [Lupus]
+//=     2nd Job Quests again. It also guides adv classes where
+//=     to go. [Lupus]
 //= 2.0 Changed numbers to constants. [Vicious]
 //= 2.1 Removed Duplicates [Silent]
 //= 2.2 Merged JFunc [Lupus]
 //= 2.3 Added a possibility for players doing Meginjyard quest
-//= to enter Rogue guild as there's a NPC inside [SinSloth]
+//=     to enter Rogue guild as there's a NPC inside [SinSloth]
 //= 2.3a fixed test4 person interaction, let BABY thieves pass
-//=	the test, too [Lupus]
+//=     the test, too [Lupus]
+//============================================================ 

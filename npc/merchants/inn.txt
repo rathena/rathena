@@ -23,7 +23,7 @@
 //= to arguments.[kobra_k88]
 //= 1.2 Rewrote inn script [Playtester]
 //= 1.3 Added (finally) Rachel Inn Maid. Official warp
-//=	  and save points[erKURITA]
+//=     and save points[erKURITA]
 //= 1.4 Added Hugel inn [erKurita]
 //= 1.5 Added "end;" after warping the player. [L0ne_W0lf]
 //=	- Small corrections to the prontera Inns.

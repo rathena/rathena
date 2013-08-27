@@ -127,7 +127,7 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 					mes "Train yourself more as a Swordsman and wait for your calling. I understand your intent, but as of now, you cannot join us.";
 					close;
 				} 
-				if (Skillpoint) {
+				if (SkillPoint) {
 					mes "[Michael Halig]";
 					mes "You haven't finished learning everything as a Swordsman. Use all of your remaining skill points, and then return to me.";
 					close;
@@ -207,7 +207,7 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 			close;
 		}
 		mes "[Michael Halig]";
-		if (sex) mes "If you, too, are a man of the sword, constantly train and prepare yourself. No one knows when the Holy War may begin.";
+		if (Sex) mes "If you, too, are a man of the sword, constantly train and prepare yourself. No one knows when the Holy War may begin.";
 		else mes "As a woman of the sword, you must train diligently and constantly. Prepare yourself, for no one knows when the Holy War may be coming.";
 		close;
 	}
@@ -295,7 +295,7 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 		mes "[Michael Halig]";
 		mes "Now you are";
 		mes "one of us!";
-		if (sex) mes "...Brother.";
+		if (Sex) mes "...Brother.";
 		else mes "...Comrade.";
 		next;
 		if(.@JobLevel != 50) getitem 504, 6;
@@ -346,7 +346,7 @@ prt_castle,164,32,1	script	Man in Anguish	733,{
 	else if(CRUS_Q == 4) {
 		mes "What is it...?";
 		mes "Do you have business";
-		if (sex) mes "with me, man of the sword?";
+		if (Sex) mes "with me, man of the sword?";
 		else mes "with me, woman of the sword?";
 		next;
 		if (select("I'd like to take the Crusader test.:Nothing.") == 1) {
@@ -1478,4 +1478,5 @@ OnStop:
 //=     Hand of God allow to skip item gathering [DracoRPG]
 //= 2.0 Changed numbers to constants. [Vicious]
 //= 2.1 Fixed endless loop, wrong condition check [Lupus]
-//=	also changed all job numbers to constants, fixed logic
+//=     also changed all job numbers to constants, fixed logic
+//============================================================ 

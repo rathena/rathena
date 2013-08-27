@@ -16,7 +16,7 @@
 //= 1.4 Added attachnpctimer to the initnpctimer calls. [Skotlex]
 //= 1.5 Implemented a part of the Juperos quest [MasterOfMuppets]
 //= 1.6 Removed area1 and area2 warps. These are event warps. [L0ne_W0lf]
-//=	Added static warps for gate -> area1/2/elevator.
+//=     Added static warps for gate -> area1/2/elevator.
 //= 1.6a COrrected new warps [L0ne_W0lf]
 //= 1.7 Removed duplicated quest warp portal [Brainstorm]
 //============================================================

@@ -18,7 +18,7 @@
 //= 1.1 Added GM management function and NPCs. [Euphy]
 //============================================================
 
-// Theore's Request :: bs
+// Theore's Request :: ep14_1_bs
 //============================================================
 mid_camp,148,222,4	script	Theore#ep14_1_bs	982,3,3,{
 	if (BaseLevel < 100) {
@@ -1460,7 +1460,7 @@ sec_in02,35,175,0	script	Theore Set Guid	436,{
 	}
 }
 
-// Chesire's New Day :: cheshir2
+// Chesire's New Day :: ep14_1_cheshir2
 //============================================================
 dic_in01,262,191,0	script	#ep14_1_xq02	139,0,3,{
 	end;
@@ -1952,7 +1952,7 @@ OnTimer600000:
 	end;
 }
 
-// Helping Lope and Euridi :: rofe
+// Helping Lope and Euridi :: ep14_1_rofe
 //============================================================
 mora,117,66,3	script	Euridi#pa	521,{
 	if (BaseLevel < 100) {
@@ -2506,7 +2506,7 @@ OnTouch:
 	}
 }
 
-// Find the Research Tools :: muk
+// Find the Research Tools :: ep14_1_muk
 //============================================================
 mora,31,138,6	script	Raffle Researcher#ep14	522,{
 	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 500) {
@@ -4356,7 +4356,7 @@ bif_fild02,65,109,0	duplicate(#mora_puddle)	Puddle#ep14_muk02	844
 bif_fild02,223,71,0	duplicate(#mora_puddle)	Puddle#ep14_muk03	844
 bif_fild02,113,340,0	duplicate(#mora_puddle)	Puddle#ep14_muk04	844
 
-// Mora Daily Quests :: dealer
+// Mora Daily Quests :: ep14_1_dealer
 //============================================================
 mora,133,80,6	script	Elephantine#pa0829	509,{
 	if (checkweight(1201,1) == 0) {
@@ -5136,7 +5136,7 @@ function	script	mora_remains	{
 1@mist,170,54,0	script	Tsaihokin's Remains#33	844,{ callfunc "mora_remains",12251,"Tsaihokin",2,929,5; }	//Immortal_Heart
 1@mist,118,43,0	script	Tuar's Remains#33	844,{ callfunc "mora_remains",12252,"Tuar",3,6380,20; }	//Mora_Coin
 
-// Knights of the Neighborhood :: mora_knight
+// Knights of the Neighborhood :: ep14_1_mora_knight
 //============================================================
 mora,118,166,6	script	Knights Chief#mo	525,{
 	mes "[Order of the Knights Chief]";

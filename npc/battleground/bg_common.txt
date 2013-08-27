@@ -507,7 +507,7 @@ bat_room,160,150,3	script	Erundek	109,{
 		mes "[Erundek]";
 		mes "We have many items, so please take a look and purchase deliberately.";
 		close2;
-		ReadBook 11010,1;
+		readbook 11010,1;
 		end;
 	}
 	set .@menu$,"";

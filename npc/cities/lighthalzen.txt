@@ -22,19 +22,19 @@
 //= 1.0a added constants to emotions, minor optimization [Lupus]
 //= 1.0b npcid fix [KarLaeda]
 //= 1.1 Added new NPC by $ephiroth and merged other NPCs
-//=	from npc\other\lighthalzen_???.txt [Lupus]
+//=     from npc\other\lighthalzen_???.txt [Lupus]
 //= 1.2 Moved some NPCs to Lighthalzen quests. [SinSloth]
-//= 1.3	Moved some other NPCs for quests purposes. [SinSloth]
+//= 1.3 Moved some other NPCs for quests purposes. [SinSloth]
 //= 1.4 Corrected NPC names to fall within proper resctrictions. [L0ne_W0lf]
 //= 1.5 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //= 1.6 Massive NPC clean up, includes corrected dialogs and [L0ne_W0lf]
-//=	added missing dialogs, fixed indentation, corrected some NPC
-//=	facing positions, NPC names are more unique now. Removed 
-//=	whitespace (empty lines after header and before end curly)
-//=	reduced usage of the command "goto", grammatical corrections.
-//=	Added additional missing NPCs.
+//=     added missing dialogs, fixed indentation, corrected some NPC
+//=     facing positions, NPC names are more unique now. Removed 
+//=     whitespace (empty lines after header and before end curly)
+//=     reduced usage of the command "goto", grammatical corrections.
+//=     Added additional missing NPCs.
 //= 1.7 Removed Auciton Staff as the offical auction file has been added. [L0ne_W0lf]
-//=	Corrected Lucius so he checks the donation variable. (bugreport:1103) [L0ne_W0lf]
+//=     Corrected Lucius so he checks the donation variable. (bugreport:1103) [L0ne_W0lf]
 //= 1.7a Another fix to Lucius. (bugreport:1118) [L0ne_W0lf]
 //= 1.7b Another fix to Lucius (trivial). (bugreport:1125)
 //= 1.8 Replaced effect numerics with constants. [L0ne_W0lf]
@@ -595,7 +595,7 @@ lighthalzen,182,102,3	script	Lucius#zen5	866,{
 				mes "as much as you possibly can...";
 				close;
 			}
-			set zeny,zeny-.@input;
+			set Zeny, Zeny-.@input;
 			set $donatedzeny,$donatedzeny + .@input;
 			mes "[Lucius]";
 			mes "So far, I've received";
@@ -1052,7 +1052,7 @@ OnTouch:
 		mes "[" + strcharinfo(0) + "]";
 		mes "Here you go,";
 		mes "take this.";
-		set zeny,zeny-50;
+		set Zeny, Zeny-50;
 		next;
 		mes "[Beggar]";
 		mes "Thank you so much.";

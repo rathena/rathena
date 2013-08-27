@@ -1,7 +1,7 @@
 //===== rAthena Script ======================================= 
 //= Lutie Town
 //===== By: ================================================== 
-//= rAthena dev team
+//= rAthena Dev Team
 //===== Current Version: ===================================== 
 //= 1.7
 //===== Compatible With: ===================================== 
@@ -10,7 +10,7 @@
 //= Lutie - City NPCs
 //===== Additional Comments: ================================= 
 //= 1.1 Edited some text and updated/enabled some triggers
-//= for the quest.[kobra_k88]
+//=     for the quest.[kobra_k88]
 //= 1.2 Fixed exploit. Checked for Bard Job Quest compatibility [Lupus]
 //= 1.3 Fixed typos [Nexon] 
 //= 1.4 Fixed exploit [Lupus]
@@ -29,42 +29,42 @@ aldebaran,223,222,4	script	Mr. Claus	718,{
 	mes "and Christmas cheer!";
 	next;
 	switch(select("Info about Lutie:Move to 'Lutie':Cancel")) {
-		case 1:
-			mes "[Mr. Claus]";
-			mes "^3355FFLutie^000000, the fantastic Christmas Town! Always filled with the spirit of giving, Lutie is filled with appetizing cakes, tiny toy soldiers, and all sorts of wonderful things~!";
-			next;
-			mes "[Mr. Claus]";
-			mes "Ho Ho Ho~";
-			mes "It's an amazing land blessed with the beauty of winter, and a year round atmosphere of festivity!";
-			next;
-			mes "[Mr. Claus]";
-			mes "I'm a Santa that will guide people to Lutie, the Christmas Town. Ask me at any time, and I'll magically send you there~";
-			close;
-		case 2:
-			mes "[Mr. Claus]";
-			mes "Ho Ho Ho~";
-			mes "The only way to get to Lutie is here in Al de Baran!";
-			next;
-			mes "[Mr. Claus]";
-			mes "I keep this place and personally transport people who want to visit Lutie. Please ask Santa Claus over there if you want to leave town. He will let you know the way out of Lutie.";
-			next;
-			mes "[Mr. Claus]";
-			mes "Ho Ho Ho~";
-			mes "Well, are you ready?";
-			mes "Have a nice trip!";
-			mes "Meeeeerry Christmas!";
-			close2;
-			warp "xmas_fild01",78,68;
-			end;
-		case 3:
-			mes "[Mr. Claus]";
-			mes "Ho Ho Ho~";
-			mes "Whenever you want to visit Lutie, be my guest. Just let me know when you want to leave.";
-			next;
-			mes "[Mr. Claus]";
-			mes "Ho ho hooooo!!";
-			mes "Haaaaappy Holidays!";
-			close;
+	case 1:
+		mes "[Mr. Claus]";
+		mes "^3355FFLutie^000000, the fantastic Christmas Town! Always filled with the spirit of giving, Lutie is filled with appetizing cakes, tiny toy soldiers, and all sorts of wonderful things~!";
+		next;
+		mes "[Mr. Claus]";
+		mes "Ho Ho Ho~";
+		mes "It's an amazing land blessed with the beauty of winter, and a year round atmosphere of festivity!";
+		next;
+		mes "[Mr. Claus]";
+		mes "I'm a Santa that will guide people to Lutie, the Christmas Town. Ask me at any time, and I'll magically send you there~";
+		close;
+	case 2:
+		mes "[Mr. Claus]";
+		mes "Ho Ho Ho~";
+		mes "The only way to get to Lutie is here in Al de Baran!";
+		next;
+		mes "[Mr. Claus]";
+		mes "I keep this place and personally transport people who want to visit Lutie. Please ask Santa Claus over there if you want to leave town. He will let you know the way out of Lutie.";
+		next;
+		mes "[Mr. Claus]";
+		mes "Ho Ho Ho~";
+		mes "Well, are you ready?";
+		mes "Have a nice trip!";
+		mes "Meeeeerry Christmas!";
+		close2;
+		warp "xmas_fild01",78,68;
+		end;
+	case 3:
+		mes "[Mr. Claus]";
+		mes "Ho Ho Ho~";
+		mes "Whenever you want to visit Lutie, be my guest. Just let me know when you want to leave.";
+		next;
+		mes "[Mr. Claus]";
+		mes "Ho ho hooooo!!";
+		mes "Haaaaappy Holidays!";
+		close;
 	}
 }
 
@@ -92,7 +92,7 @@ xmas_in,100,96,4	script	Santa Claus	718,{
 }
 
 xmas_in,167,173,4	script	Duffle	711,{
-	if(xmas_npc == 1) {
+	if (xmas_npc == 1) {
 		mes "[Duffle]";
 		mes "Merry Christmas!";
 		mes "Welcome to Lutie!";
@@ -152,7 +152,7 @@ xmas_in,167,173,4	script	Duffle	711,{
 }
 
 xmas_in,27,103,4	script	Lenient Aunt	701,{
-switch (xmas_npc) {
+	switch (xmas_npc) {
 	case 5:
 		mes "[Thachentze]";
 		mes "Hmm? The Hairy guy";
@@ -277,7 +277,7 @@ switch (xmas_npc) {
 // Lutie
 //============================================================
 xmas,117,304,4	script	Poze	713,{
-	if(xmas_npc == 3 || xmas_npc == 4) {
+	if (xmas_npc == 3 || xmas_npc == 4) {
 		mes "[Poze]";
 		mes "You've gone to";
 		mes "^3355FFSnowysnow^000000 and he";
@@ -300,7 +300,7 @@ xmas,117,304,4	script	Poze	713,{
 		mes "But that's pretty much all I know. For the actual details, you should ask ^3355FFUncle Hairy Cantata^000000.";
 		set xmas_npc,4;
 		close;
-	}else{
+	} else {
 		mes "[Poze]";
 		mes "Welcome to Lutie,";
 		mes "the town which blesses";
@@ -321,13 +321,13 @@ xmas,117,304,4	script	Poze	713,{
 }
 
 xmas,176,236,4	script	Uncle Hairy	712,{
-	if(xmas_npc == 4) {
-		if(countitem(1024) > 0 && countitem(938) > 0) {
+	if (xmas_npc == 4) {
+		if (countitem(1024) > 0 && countitem(938) > 0) {
 			mes "[Cantata]";
 			mes "Oh? Y-y-you've got the stuff? Goooooooood. It's been so long since I've been able to have some of this... G-give it to me!";
 			next;
-			delitem 1024,1;	// Chinese_Ink
-			delitem 938,1;	// Sticky_Mucus
+			delitem 1024,1; // Chinese_Ink
+			delitem 938,1; // Sticky_Mucus
 			mes "^3355FFYou quickly handed him the Squid Ink and Sticky Mucus and watched with a little disgust as he relished the flavor.^000000";
 			next;
 			mes "[Cantata]";
@@ -385,7 +385,7 @@ xmas,176,236,4	script	Uncle Hairy	712,{
 			mes "^3355FFThachentze^000000, that lovely pickle maker, knows more about it. So if you're curious, you should go talk to her. Alrighty then, Merry Christmas!";
 			set xmas_npc,5;
 			close;
-		}else{
+		} else {
 			mes "[Cantata]";
 			mes "Oh yeah? Heard about me from Poze, did you? Haw haw haw! Yeah, I know a little bit about Snowysnow. In fact, I may even be his weak point, since...";
 			next;
@@ -461,7 +461,9 @@ xmas,134,112,4	script	Snowman	710,{
 		mes "- too many items with you. -";
 		mes "- Please try again -";
 		mes "- after you loose some weight. -";
-		close2;	cutin "",255;	end;
+		close2;
+		cutin "",255;
+		end;
 	}
 	cutin "rutie_snownow03.bmp",2;
 	mes "[Snowysnow]";
@@ -507,8 +509,10 @@ xmas,134,112,4	script	Snowman	710,{
 			next;
 			mes "[Snowysnow]";
 			mes "So will you be my friend? If you do, I'll be your friend too~";
-			close2;	cutin "",255;	end;
-		}else{
+			close2;
+			cutin "",255;
+			end;
+		} else {
 			switch(xmas_npc) {
 			case 2:
 				cutin "rutie_snownow01.bmp",2;
@@ -537,7 +541,9 @@ xmas,134,112,4	script	Snowman	710,{
 				mes "^3355FFSnowysnow is immersed in his deep thoughts, and seems^000000";
 				mes "^3355FFfixated on Poze's memento.^000000";
 				set xmas_npc,3;
-				close2;	cutin "",255; end;
+				close2;
+				cutin "",255;
+				end;
 			case 3:
 				cutin "rutie_snownow01.bmp",2;
 				mes "[Snowysnow]";
@@ -545,7 +551,9 @@ xmas,134,112,4	script	Snowman	710,{
 				next;
 				mes "^3355FFSnowysnow is immersed in his deep thoughts, and seems^000000";
 				mes "^3355FFfixated on Poze's memento.^000000";
-				close2;	cutin "",255;	end;
+				close2;
+				cutin "",255;
+				end;
 			case 4:
 				cutin "rutie_snownow01.bmp",2;
 				mes "[Snowysnow]";
@@ -565,7 +573,9 @@ xmas,134,112,4	script	Snowman	710,{
 				next;
 				mes "[Snowysnow]";
 				mes "But I know that's because she likes him a whole whole lot! Hee hee hee!";
-				close2;	cutin "",255;	end;
+				close2;
+				cutin "",255;
+				end;
 			case 5:
 				cutin "rutie_snownow01.bmp",2;
 				mes "[Snowysnow]";
@@ -579,7 +589,9 @@ xmas,134,112,4	script	Snowman	710,{
 				next;
 				mes "[Snowysnow]";
 				mes "Of course, he still enjoys drinking strange things. They say it's a miracle that he doesn't have a tummyache. Hee hee~! Oh, I love that guy!";
-				close2;	cutin "",255;	end;
+				close2;
+				cutin "",255;
+				end;
 			case 6:
 				cutin "rutie_snownow01.bmp",2;
 				mes "[Snowysnow]";
@@ -595,14 +607,18 @@ xmas,134,112,4	script	Snowman	710,{
 				next;
 				mes "[Snowysnow]";
 				mes "I like her cooking because it's soooo delicious! Sometimes, she gives me grape syrup on snow flakes. Anyway, please deliver that salt for me, buddy~!";
-				close2;	cutin "",255;	end;
+				close2;
+				cutin "",255;
+				end;
 			case 7:
 				cutin "rutie_snownow01.bmp",2;
 				mes "[Snowysnow]";
 				mes "'^3355FFThe roughest";
 				mes "salt in the world^000000...'";
 				mes "Wow. Now, that's rough! Aunt Tachentze is always making pickles, so she sure could use it soon!";
-				close2;	cutin "",255;	end;
+				close2;
+				cutin "",255;
+				end;
 			case 8:
 				cutin "rutie_snownow01.bmp",2;
 				mes "[Snowysnow]";
@@ -610,7 +626,9 @@ xmas,134,112,4	script	Snowman	710,{
 				next;
 				mes "[Snowysnow]";
 				mes "He's always trying his best to make those two orphans laugh and forget their troubles...";
-				close2;	cutin "",255;	end;
+				close2;
+				cutin "",255;
+				end;
 			case 9:
 				cutin "rutie_snownow01.bmp",2;
 				mes "[Snowysnow]";
@@ -620,7 +638,9 @@ xmas,134,112,4	script	Snowman	710,{
 				mes "[Snowysnow]";
 				mes "I'm sure of it!";
 				mes "Hee hee hee~!";
-				close2;	cutin "",255;	end;
+				close2;
+				cutin "",255;
+				end;
 			case 10:
 				cutin "rutie_snownow01.bmp",2;
 				mes "[Snowysnow]";
@@ -642,7 +662,7 @@ xmas,134,112,4	script	Snowman	710,{
 				switch(.@snownow) {
 				case 1:
 					set xmas_npc,11;
-					getitem 529,5;	// Candy
+					getitem 529,5; // Candy
 					cutin "rutie_snownow02.bmp",2;
 					mes "[Snowysnow]";
 					mes "Wow~!";
@@ -651,7 +671,7 @@ xmas,134,112,4	script	Snowman	710,{
 					break;
 				case 2:
 					set xmas_npc,11;
-					getitem 529,10;	// Candy
+					getitem 529,10; // Candy
 					cutin "rutie_snownow02.bmp",2;
 					mes "[Snowysnow]";
 					mes "Ooh~!";
@@ -659,7 +679,7 @@ xmas,134,112,4	script	Snowman	710,{
 					break;
 				case 3:
 					set xmas_npc,11;
-					getitem 530,5;	// Candy_Striper
+					getitem 530,5; // Candy_Striper
 					cutin "rutie_snownow02.bmp",2;
 					mes "[Snowysnow]";
 					mes "Hoooraaaay~!";
@@ -667,7 +687,7 @@ xmas,134,112,4	script	Snowman	710,{
 					break;
 				case 4:
 					set xmas_npc,11;
-					getitem 530,10;	// Candy_Striper
+					getitem 530,10; // Candy_Striper
 					cutin "rutie_snownow02.bmp",2;
 					mes "[Snowysnow]";
 					mes "Wow, that's so great!";
@@ -675,7 +695,7 @@ xmas,134,112,4	script	Snowman	710,{
 					break;
 				case 5:
 					set xmas_npc,11;
-					getitem 539,1;	// Piece_Of_Cake
+					getitem 539,1; // Piece_Of_Cake
 					cutin "rutie_snownow02.bmp",2;
 					mes "[Snowysnow]";
 					mes "Aren't you lucky!";
@@ -683,7 +703,7 @@ xmas,134,112,4	script	Snowman	710,{
 					break;
 				case 6:
 					set xmas_npc,11;
-					getitem 539,2;	// Piece_Of_Cake
+					getitem 539,2; // Piece_Of_Cake
 					cutin "rutie_snownow02.bmp",2;
 					mes "[Snowysnow]";
 					mes "Now, isn't that nice?";
@@ -691,7 +711,7 @@ xmas,134,112,4	script	Snowman	710,{
 					break;
 				case 7:
 					set xmas_npc,11;
-					getitem 538,5;	// Well_Baked_Cookie
+					getitem 538,5; // Well_Baked_Cookie
 					cutin "rutie_snownow02.bmp",2;
 					mes "[Snowysnow]";
 					mes "Oh woooooow~!";
@@ -699,7 +719,7 @@ xmas,134,112,4	script	Snowman	710,{
 					break;
 				case 8:
 					set xmas_npc,11;
-					getitem 538,10;	// Well_Baked_Cookie
+					getitem 538,10; // Well_Baked_Cookie
 					cutin "rutie_snownow02.bmp",2;
 					mes "[Snowysnow]";
 					mes "*Gasp!* Ooh~";
@@ -709,7 +729,9 @@ xmas,134,112,4	script	Snowman	710,{
 				next;
 				mes "[Snowysnow]";
 				mes "My dear friend, please visit me from time to time, so that we can chitchat, okay? See you soon! And Merry Christmas!";
-				close2;	cutin "",255;	end;
+				close2;
+				cutin "",255;
+				end;
 			case 11:
 				cutin "rutie_snownow02.bmp",2;
 				mes "[Snowysnow]";
@@ -717,7 +739,9 @@ xmas,134,112,4	script	Snowman	710,{
 				next;
 				mes "[Snowysnow]";
 				mes "You're always welcome in Lutie, especially by me, Snowysnow! Happy Kwanza, Happy Hannukah and Merry Christmas~!";
-				close2;	cutin "",255;	end;
+				close2;
+				cutin "",255;
+				end;
 			}
 		}
 		case 2:
@@ -731,14 +755,18 @@ xmas,134,112,4	script	Snowman	710,{
 			cutin "rutie_snownow01.bmp",2;
 			mes "[Snowysnow]";
 			mes "Isn't that soooo exciting?! *Sigh* Even if it is a dungeon, I would like to go inside just to look. If only I was a real boy, or even had legs...";
-			close2;	cutin "",255;	end;
+			close2;
+			cutin "",255;
+			end;
 		case 3:
 			cutin "rutie_snownow03.bmp",2;
 			mes "[Snowysnow]";
 			mes "Bye bye, friend~!";
 			mes "Thank you for listening me~";
 			mes "I'll see you again, someday! You'll always be in my heart~";
-			close2;	cutin "",255;	end;
+			close2;
+			cutin "",255;
+			end;
 		}
 }
 
@@ -787,7 +815,7 @@ xmas,146,136,4	script	Hashokii	715,{
 			mes "Why don't you go meet those 2 children? They might tell you the story we've never got the chance to hear. Okay then, good luck~! Bye bye!";
 			set xmas_npc,9;
 			close;
-		}else{
+		} else {
 			mes "[Hashokii]";
 			mes "Ah... ^3355FFSnowysnow^000000?";
 			mes "Of course I know him! Anyone who doesn't know Snowysnow is a total stranger around here! Sometimes, he and I share a nice chat...";
@@ -827,7 +855,7 @@ xmas,206,168,4	script	Little Boy	706,{
 		mes "He's a nice snowman!";
 		mes "You want to know more about Snowysnow? Ummm, I'm not that smart! Ask Marcell!";
 		close;
-	}else{
+	} else {
 		mes "[Charu Charu]";
 		mes "Merry Merry Christmas!";
 		mes "Heheheheheh~!";
@@ -898,7 +926,7 @@ xmas,208,168,4	script	Little Girl	703,{
 			mes "More than anybody else, you know the most about Snowysnow! Please talk to Mr.Snowysnow, he'll be happy to know you care about him. Merry Christmas!";
 			close;
 		}
-	}else{
+	} else {
 		mes "[Marcell]";
 		mes "Merry Christmas~!";
 		next;

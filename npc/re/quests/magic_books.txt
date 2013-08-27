@@ -205,7 +205,7 @@ geffen_in,176,105,4	script	Master Velofos	64,{
 			close;
 		case 6:
 			if ((BaseLevel > 139) && (getskilllv(2217) > 0) || (getskilllv(2213) > 0)) {
-				if(mac_book < 1){
+				if (mac_book < 1) {
 					mes "[Master Velofos]";
 					mes "I'm sorry, but could you ask someone else? I'm kind of busy right now.";
 					close;

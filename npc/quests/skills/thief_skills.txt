@@ -503,12 +503,12 @@ payon,91,77,3	script	Bag Seller	99,{
 //============================================================ 
 // Old changelog
 //============================================================ 
-//= v1.0 Fully working
-//= v1.1 Changed Sand Attack requirements from 5 Grit to 5 Fine Grit and a
-//= Leather Bag of Infinity.  These are the official RO requirements
-//= Added npc RuRumuni, maker of Leather Bag of Infinity. [kobra_k88]
-//= v1.1a Now using functions found in "Global_Functions.txt" for
-//= class checks.[kobra_k88]
+//= 1.0 Fully working
+//= 1.1 Changed Sand Attack requirements from 5 Grit to 5 Fine Grit and a
+//=     Leather Bag of Infinity.  These are the official RO requirements
+//=     Added npc RuRumuni, maker of Leather Bag of Infinity. [kobra_k88]
+//= 1.1a Now using functions found in "Global_Functions.txt" for
+//=     class checks.[kobra_k88]
 //= 1.2 Added Baby Class Support [Lupus]
 //= 1.3 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
 //= 1.4 Fixed exploit [Lupus]

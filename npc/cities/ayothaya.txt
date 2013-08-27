@@ -58,7 +58,7 @@
 				mes "Let us be off! Back to my";
 				mes "beautiful Ayotaya!";
 				close2;
-				set zeny,zeny-10000;
+				set Zeny, Zeny-10000;
 				warp "ayothaya",149,71;
 				end;
 			}
@@ -304,8 +304,8 @@ ayothaya,241,264,5	script	Young Man#5ayothaya2	843,{
 //= 0.1 Added a Sailor NPC to get back to Alberta [ZoDIaC]
 //= 0.2 fixed coords, dialogues
 //= 0.3 Fixed Warp name, ayotaya doesn't exist, even though iRO 
-//= 	decided to call it Ayotaya, it really is Ayothaya, like 
-//=	that Yuno/Juno thing
+//=     decided to call it Ayotaya, it really is Ayothaya, like 
+//=     that Yuno/Juno thing
 //= 0.4 Added the official warp npc for Ayothaya. [MasterOfMuppets]
 //= 1.0 Added most of the official npcs. The following quests were added: [MasterOfMuppets]
 //=     Tom Yum Goong quest, Holy Threads quest and Holier threads quest.

@@ -290,8 +290,8 @@ gon_test,52,103,6	script	Monster Trainer	87,{
 	next;
 	menu "Yes",-,"No",L_Exit;
 
-	if (zeny < 1000) goto L_NoZeny;
-	set zeny,zeny-1000;
+	if (Zeny < 1000) goto L_NoZeny;
+	set Zeny, Zeny-1000;
 	set #monster,10;
 	mes "[Monster Trainer]";
 	mes "Congratulations!";
@@ -329,7 +329,7 @@ L_Sell:
 	if (@sellexp > #monpoints) goto L_NoExp;
 	set #monpoints,#monpoints-@sellexp;
 	set @sellearn,100*@sellexp; // Price of exp
-	set zeny,zeny+@sellearn;
+	set Zeny, Zeny+@sellearn;
 	mes "[Monster Trainer]";
 	mes "You earned ^0000FF" + @sellearn + "^000000z.";
 	close;

@@ -18,8 +18,8 @@
 //= 2.3 Removed 2nd entrance to Novice Castle Geffen [Lupus]
 //= 2.4 Added Warps between Juno and it's new Castle Satelite map. [L0ne_W0lf]
 //= 2.4a Added more warps between Juno Satellite and Castle Interiors. [L0ne_W0lf]
-//=	castle 1, 4 and 5 entrances are questionable, and will be updated
-//=	as I get more information.
+//=     castle 1, 4 and 5 entrances are questionable, and will be updated
+//=     as I get more information.
 //= 2.4b Corrected Warp points for Juno castles 1, 4 and 5. [L0ne_W0lf]
 //= 2.5 Updated Schwaltzvalt warps and added Arunafeltz. [L0ne_W0lf]
 //= 2.6 Fixed warp position between Juno and Schwaltzvalt Realm. [Gepard]

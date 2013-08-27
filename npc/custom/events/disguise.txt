@@ -175,7 +175,7 @@ OnTimer30000:
 	set .Change,0;
 	setnpcdisplay "Disguise Event",795;
 	npctalk "You took too long to guess what I was. Please wait 10 seconds while I disguise again.";
-	specialeffect 725;
+	specialeffect EF_DETECT2;
 	set $MonsterName$,"";
 	deletepset 1;
 	stopnpctimer;

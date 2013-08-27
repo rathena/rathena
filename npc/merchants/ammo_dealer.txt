@@ -99,7 +99,7 @@ function	script	Bullet_Trade	{
 			mes "available. Try putting some of";
 			mes "your things into Kafra Storage.";
 			close;
-		}else{
+		} else {
 			mes "[Tony]";
 			mes "Great, everything seems";
 			mes "to be in order. Let me take";
@@ -112,7 +112,7 @@ function	script	Bullet_Trade	{
 			getitem getarg(2),.@amount * 30;
 			close;
 		}
-	}else{
+	} else {
 		mes "[Tony]";
 		mes "Huh. It looks like you";
 		mes "don't have enough materials";

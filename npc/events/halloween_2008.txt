@@ -18,8 +18,7 @@
 //============================================================
 
 payon,162,176,4	script	Halloween Magician#iRO08	704,{
-	
-	if(Hallow08 < 1) {
+	if (Hallow08 < 1) {
 		mes "[Halloween Magician]";
 		mes "Kkkkkkkkk!";
 		mes "I have a special event this Halloween that tests your luck and agility.";
@@ -32,7 +31,6 @@ payon,162,176,4	script	Halloween Magician#iRO08	704,{
 		next;
 		goto MainMenu;
 	}
-
 	if (Hallow08Kill == 1) {
 		mes "[Halloween Magician]";
 		mes "You a 'fraidy cat or something?!";
@@ -45,7 +43,6 @@ payon,162,176,4	script	Halloween Magician#iRO08	704,{
 		}
 		goto Participate;
 	}
-
 	if (Hallow08Kill == 2) {
 		mes "[Halloween Magician]";
 		mes "Oh, well done! You are alright!";
@@ -61,14 +58,13 @@ payon,162,176,4	script	Halloween Magician#iRO08	704,{
 		mes "You can get Halloween tickets for cool items.";
 		close;
 	}
-
-	if(Hallow08 > 0) {
+	if (Hallow08 > 0) {
 		mes "[Halloween Magician]";
 		mes "Well, do you want to hear the rules again or, just get back to it...";
 		next;
 		goto MainMenu2;
 	}
-	
+
 		Rules:
 			mes "[Halloween Magician]";
 			mes "This village is like a virtual Payon.";
@@ -98,10 +94,10 @@ payon,162,176,4	script	Halloween Magician#iRO08	704,{
 				mes "Hey...";
 				mes "Come back once you're ready.";
 				close;
-			}else{
+			} else {
 				goto MainMenu;
 			}
-			
+
 		Participate:
 			mes "[Halloween Magician]";
 			mes "Ok, you are ready.";
@@ -116,7 +112,7 @@ payon,162,176,4	script	Halloween Magician#iRO08	704,{
 				mes "You think I wouldn't notice that your weight is above '0'?";
 				mes "You're overweight...";
 				close;
-			}else{
+			} else {
 				mes "[Halloween Magician]";
 				mes "You seem good to go, and your weight is just right.";
 				next;
@@ -140,7 +136,7 @@ payon,162,176,4	script	Halloween Magician#iRO08	704,{
 				warp "evt_zombie",155,246;
 				end;
 			}
-			
+
 		TicketExchange:
 			mes "[Halloween Magician]";
 			mes "You want to exchange tickets for prizes?";
@@ -160,52 +156,52 @@ payon,162,176,4	script	Halloween Magician#iRO08	704,{
 			mes "What would you like to exchange for?";
 			next;
 			switch(select("Pumpkin Pie:Pumpkin-Head:Old Blue Box:Old Purple Box:Old Card Album")) {
-				case 1:
-					if(countitem(7941) < 5) {
-						goto NotEnough;
-					}else{
-						delitem 7941,5;
-						getitem 12192,1;
-						goto Enough;
-					}
-					break;
-				case 2:
-					if(countitem(7941) < 20) {
-						goto NotEnough;
-					}else{
-						delitem 7941,20;
-						getitem 5134,1;
-						goto Enough;
-					}
-					break;
-				case 3:
-					if(countitem(7941) < 50) {
-						goto NotEnough;
-					}else{
-						delitem 7941,50;
-						getitem 603,1;
-						goto Enough;
-					}
-					break;
-				case 4:
-					if(countitem(7941) < 70) {
-						goto NotEnough;
-					}else{
-						delitem 7941,70;
-						getitem 617,1;
-						goto Enough;
-					}
-					break;
-				case 5:
-					if(countitem(7941) < 200) {
-						goto NotEnough;
-					}else{
-						delitem 7941,200;
-						getitem 616,1;
-						goto Enough;
-					}
+			case 1:
+				if (countitem(7941) < 5) {
+					goto NotEnough;
+				} else {
+					delitem 7941,5;
+					getitem 12192,1;
+					goto Enough;
+				}
+				break;
+			case 2:
+				if (countitem(7941) < 20) {
+					goto NotEnough;
+				} else {
+					delitem 7941,20;
+					getitem 5134,1;
+					goto Enough;
+				}
+				break;
+			case 3:
+				if (countitem(7941) < 50) {
+					goto NotEnough;
+				} else {
+					delitem 7941,50;
+					getitem 603,1;
+					goto Enough;
+				}
+				break;
+			case 4:
+				if (countitem(7941) < 70) {
+					goto NotEnough;
+				} else {
+					delitem 7941,70;
+					getitem 617,1;
+					goto Enough;
+				}
+				break;
+			case 5:
+				if (countitem(7941) < 200) {
+					goto NotEnough;
+				} else {
+					delitem 7941,200;
+					getitem 616,1;
+					goto Enough;
+				}
 			}
-					
+
 		NextTime:
 			mes "[Halloween Magician]";
 			mes "Ok, see you then.";
@@ -233,7 +229,7 @@ payon,162,176,4	script	Halloween Magician#iRO08	704,{
 		next;
 		if (Hallow08 == 1) {
 			goto MainMenu2;
-		}else{
+		} else {
 			goto MainMenu;
 		}
 }
@@ -242,7 +238,7 @@ evt_zombie,16,142,1	script	zombiewarp001	45,2,2,{
 OnTouch:
 	if (@Hallow08Warp == 1) {
 		set Hallow08Kill,2;
-		specialeffect 16;
+		specialeffect EF_BASH;
 		warp "payon",28,142;
 	}
 	end;
@@ -252,7 +248,7 @@ evt_zombie,122,27,1	script	zombiewarp002	45,2,2,{
 OnTouch:
 	if (@Hallow08Warp == 2) {
 		set Hallow08Kill,2;
-		specialeffect 16;
+		specialeffect EF_BASH;
 		warp "payon",121,40;
 	}
 	end;
@@ -262,7 +258,7 @@ evt_zombie,267,89,1	script	zombiewarp003	45,2,2,{
 OnTouch:
 	if (@Hallow08Warp == 3) {
 		set Hallow08Kill,2;
-		specialeffect 16;
+		specialeffect EF_BASH;
 		warp "payon",253,95;
 	}
 	end;

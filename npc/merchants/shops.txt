@@ -11,10 +11,10 @@
 //===== Additional Comments: ================================= 
 //= For earlier update notes see the bottom.
 //= 2.0 updated several shop npcs. [L0ne_W0lf]
-//=	Added proper Venom Knife dealer, and consiquently removed wenom Knives from weapon dealers.
-//=	Moved all Cooking related NPCs to their own section.
-//=	Re-alphabetized sections. Some of them were out of place.
-//=	Removed commented out shops.
+//=     Added proper Venom Knife dealer, and consiquently removed wenom Knives from weapon dealers.
+//=     Moved all Cooking related NPCs to their own section.
+//=     Re-alphabetized sections. Some of them were out of place.
+//=     Removed commented out shops.
 //= 2.0b Einbech tool dealer got lost somewhere along the way, re-added. [L0ne_W0lf]
 //= 2.1 Fixed missing item from "Fresh Fish" from cooking addition shops. [L0ne_W0lf]
 //= 2.1a Fixed the second "Line" selling in Comodo Weapon shop. (Should have been Whip) [L0ne_W0lf]
@@ -329,7 +329,7 @@ niflheim,209,180,5	shop	Chef Assistant#nif	83,581:-1
 //= 1.3a Fixed Louyang map name. Added additional shops in Yuno. [kobra_k88]
 //= 1.4 Added Niflheim Shops
 //= 1.5 New Payon Locations [Darkchild]
-//= Moved shops in Umbala.txt here. Commented out the duplicate ones.[kobra_k88]
+//=     Moved shops in Umbala.txt here. Commented out the duplicate ones.[kobra_k88]
 //= 1.6 Removed GRAPE ID 514 from shops (caused exploits)
 //= 1.7 Removed juices from custom amatsu shops (it's a quest item + levelup exploit)
 //= 1.8 Corrected Niflheim Shops and Morroc Jewel Merchant [celest]
@@ -352,13 +352,13 @@ niflheim,209,180,5	shop	Chef Assistant#nif	83,581:-1
 //=   -  Guys, I suggest we crop these comments and put them at the bottom soon
 //= 1.22 Thx8) Removed Berserk Potions from all shops but Comodo [Lupus]
 //= 1.3 Added Gunslinger shops. Credits goes to RockmanEXE for the info [erKURITA]
-//=	Added Bucket Hat to Flu Mask dealer and modified it's name to a more logical one :P [erKURITA]
+//=     Added Bucket Hat to Flu Mask dealer and modified it's name to a more logical one :P [erKURITA]
 //= 1.4 Added an ingredient seller to Morroc, thanks to Muad_Dib [MasterOfMuppets]
 //= a Removed doubled Morocc Ing.Seller, arranged the rest Ing.Sellers according to the city names [Lupus]
 //= 1.4b Commented out temp Gunslinger shops. [Lupus]
 //= 1.5 Removed Temp gunslinger shops and moved up the official ones. [erKURITA]
-//=	  Added Official Ninja shops in their correct location and commented a few
-//=	  shops. Thanks to RockmanEXE and Muad_Dib [erKURITA]
+//=     Added Official Ninja shops in their correct location and commented a few
+//=     shops. Thanks to RockmanEXE and Muad_Dib [erKURITA]
 //= 1.6 Implemented a missing Tool Shop in Lighthalzen [MasterOfMuppets]
 //= 1.7 Added some missing iRO - Lighthalzen NPCs [Musashiden]
 //= 1.8 Added Rachel Official shops. Special Thanks to RockmanEXE. [erKURITA]

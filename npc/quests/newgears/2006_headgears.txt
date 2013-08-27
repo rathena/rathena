@@ -13,18 +13,19 @@
 //===== Additional Comments: =================================
 //= NPC id's and dialog are custom, please replace
 //= 1.0a fixed typos, added missing names, more cleaned and
-//= standartized stuff a bit [Lupus]
+//=     standartized stuff a bit [Lupus]
 //= 1.0b fixed Helm of Valkyries ingredients
 //= 1.0c corrected item names according to item_db [Lupus]
 //= 1.1 Full update. EuRO (?) dialogs, and positions. [L0ne_W0lf]
 //= 1.2 Fixed bugs in the Hahoe/Lion/Bride Mask NPC. [L0ne_W0lf]
-//=	Fixed some of the names to iRO.
+//=     Fixed some of the names to iRO.
 //= 1.3 Fixed some color code bugs in Ghenirhemin. Thanks to yyCC. [L0ne_W0lf]
 //= 1.3a Fixed wrong item names (due to copy/paste) [Lupus]
 //= 1.4 Chungwolmang now checks if the last item set should be deleted. (bugreport:4719) [L0ne_W0lf]
 //============================================================
 
-//===================== Censor Bar =====================================================
+// Censor Bar
+//============================================================
 rachel,91,273,8	script	?	930,{
 	if (countitem(983) > 0 && countitem(7111) > 99 && countitem(938) > 98 && Zeny > 99999) {
 		mes "[?]";
@@ -91,7 +92,8 @@ rachel,91,273,8	script	?	930,{
 	close;
 }
 
-//======================== Feather Beret ================================================
+// Feather Beret
+//============================================================
 rachel,152,131,3	script	Sakjul	928,{
 	if (countitem(5172) > 0 && countitem(7063) > 99 && countitem(982) > 0) {
 		mes "[Sakjul]";
@@ -206,12 +208,13 @@ rachel,152,131,3	script	Sakjul	928,{
 	close;
 }
 
-//============================ Valkyrie Helm =====================================================
+// Valkyrie Helm
+//============================================================
 hugel,147,103,3	script	Ghenirhemin	897,{
 	if (moza_valkylie == 5) {
 		set .@val2,rand(1,10);
 		if (.@val2 == 3) {
-			misceffect 348; //EF_LIGHTSPHERE
+			specialeffect EF_LIGHTSPHERE;
 			mes "[Ghenirhemin]";
 			mes "The materials are still being fused.";
 			next;
@@ -219,7 +222,7 @@ hugel,147,103,3	script	Ghenirhemin	897,{
 			mes "Umm?! Oh...oh?! Isn't this...";
 			mes "Isn't this...?!";
 			next;
-			misceffect 322; //EF_FORESTLIGHT2
+			specialeffect EF_FORESTLIGHT2;
 			mes "[Ghenirhemin]";
 			mes "Ah...ahahaha, we've made it! We've made it!";
 			mes "Valkyre's Helm...We've recreated Valkyre's Helm,";
@@ -251,7 +254,7 @@ hugel,147,103,3	script	Ghenirhemin	897,{
 			mes "who is now heading toward the new history.";
 			close;
 		}
-		misceffect 348; //EF_LIGHTSPHERE
+		specialeffect EF_LIGHTSPHERE;
 		mes "[Ghenirhemin]";
 		mes "The materials are still being fused.";
 		close;
@@ -262,7 +265,7 @@ hugel,147,103,3	script	Ghenirhemin	897,{
 			mes "[Ghenirhemin]";
 			mes "............";
 			next;
-			misceffect 348; //EF_LIGHTSPHERE
+			specialeffect EF_LIGHTSPHERE;
 			mes "[Ghenirhemin]";
 			mes "Oh...oh? They....they just have started being fused!";
 			mes "Look at this shining light!";
@@ -562,7 +565,8 @@ hugel,147,103,3	script	Ghenirhemin	897,{
 	mes "when you show me your money. Hahahaha!";
 	close;
 }
-//======================= Hahoe Mask / Mythical Lion Mask / Bride Mask ===============================
+// Hahoe Mask / Mythical Lion Mask / Bride Mask
+//============================================================
 payon,135,320,3	script	Chungwolmang	97,{
 	if (moza_tal == 2) {
 		if (countitem(7015) > 19 && countitem(952) > 99 && countitem(1028) > 99) {
@@ -804,7 +808,8 @@ S_MakeMask:
 }
 
 
-//====================== Magistrate Hat / Ayam =============================================
+// Magistrate Hat / Ayam
+//============================================================
 payon_in03,139,124,3	script	Han Garam	88,{
 	if (moza_korea == 2 && countitem(954) > 299 && countitem(733) > 4 && countitem(975) > 0 && countitem(7166) > 49) {
 		mes "[Han Garam]";
@@ -969,7 +974,7 @@ payon_in03,139,124,3	script	Han Garam	88,{
 		mes "He is waving his tail, and showing me future!";
 		mes "Aaaaaahhhhhhh!";
 		next;
-		misceffect 90; //EF_LORD;
+		specialeffect EF_LORD;
 		mes "[Han Garam]";
 		mes "Waaaahhhh!";
 		next;
@@ -1001,7 +1006,7 @@ payon_in03,139,124,3	script	Han Garam	88,{
 		mes "Anyone who brings these, I will create hat for him!";
 		mes "Ahhh~ Dragon God!";
 		next;
-		misceffect 7; //EF_EXIT;
+		specialeffect EF_EXIT;
 		mes "[Han Garam]";
 		mes ".............";
 		next;

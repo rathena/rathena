@@ -50,14 +50,14 @@ M_Buy:
 	if ($ninja_avail < 1) goto NoNinjas;
 	if ($ninja_avail < @buy) goto NotEnoughNinjas;
 	set @price,@buy*$ninja_price;
-	if (zeny < @price ) goto NoZeny;
+	if (Zeny < @price) goto NoZeny;
 
 	mes "[Shifty Assassin]";
 	mes "That will cost you ^0000FF" + @price + " zeny^000000.";
 	next;
 	menu "Continue",-,"Cancel",M_Exit;
 
-	set zeny,zeny-@price;
+	set Zeny, Zeny-@price;
 	set #ninjas,#ninjas+@buy;
 	set $ninja_avail,$ninja_avail-@buy;
 

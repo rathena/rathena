@@ -30,7 +30,7 @@
 //= 2.3 Several bugfixes with the help of Barron-Monster. [L0ne_W0lf]
 //= 2.4 Minor fixes to timer#knt. [L0ne_W0lf]
 //= 2.5 Fixes a small bug with making claymores. [L0ne_W0lf]
-//=	Corrected usages of killmonster and killmonsterall.
+//=     Corrected usages of killmonster and killmonsterall.
 //= 2.6 Corrected an improper areawarp destination. [L0ne_W0lf]
 //= 2.7 Deleted unused variables. [Samuray22]
 //= 2.7a Corrected a Typo error ";;". [Samuray22]
@@ -373,7 +373,7 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 		mes "to Amy's opinion.";
 		next;
 		mes "[Lady Amy]";
-		if (sex) {
+		if (Sex) {
 			mes "Mmm~ He's so polite!";
 			mes "He'll grow to be a wonderful Knight. And he's got such cute widdle cheeeeks~ Hee hee!";
 		}
@@ -392,7 +392,7 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 		mes "your mind.";
 		next;
 		mes "[Sir Edmond]";
-		if (sex) {
+		if (Sex) {
 			mes "He seems a little rough, but something bright shines within him. With polish and refinement, his true value will shine forth";
 			mes "as the sun.";
 		}
@@ -694,7 +694,7 @@ prt_in,71,91,0	script	Sir Siracuse#knt	65,{
 			mes "If you catch any of the new guys acting in a way unbecoming of a Knight, scold them for me please?";
 			close;
 		}
-		else if (Baseclass == Job_Novice) {
+		else if (BaseClass == Job_Novice) {
 			mes "Oh?";
 			mes "What is a Novice";
 			mes "doing here?";
@@ -2028,8 +2028,7 @@ prt_in,87,92,4	script	Sir Gray#knt	119,{
 				mes "1 ^3355FFSteel^000000 because of the Claymore's characteristics. If you like, I can create one for you. For the honor of the Prontera Chivalry!";
 				close;
 			case 2:
-				set .@now_weight,MaxWeight-Weight;
-				if (.@now_weight < 1800) {
+				if (MaxWeight - Weight < 1800) {
 					mes "[Sir Gray]";
 					mes "Oh no...";
 					mes "It seems that you are carrying too many things. You don't have enough space for a heavy Claymore in your inventory.";

@@ -9,11 +9,11 @@
 //===== Description: ========================================= 
 //= Card and Points Trader
 //===== Additional Comments: ================================= 
-//= v1.0 Translated from the Official [Elias]
-//= v1.1 Fixed variables and optimized script [Elias]
-//= v1.2 Fixed char being stuck with breaks [Elias] (bugreport:5374)
-//= v1.3 Optimized: reduced from 123kb to 7kb! [Euphy]
-//= v1.4 Variables don't need to load OnInit. [Euphy]
+//= 1.0 Translated from the Official [Elias]
+//= 1.1 Fixed variables and optimized script [Elias]
+//= 1.2 Fixed char being stuck with breaks [Elias] (bugreport:5374)
+//= 1.3 Optimized: reduced from 123kb to 7kb! [Euphy]
+//= 1.4 Variables don't need to load OnInit. [Euphy]
 //============================================================ 
 
 prontera,115,90,0	script	Putty	90,{

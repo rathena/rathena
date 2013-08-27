@@ -56,11 +56,11 @@ bat_room,225,211,0	warp	#kvm702	2,2,bat_room,154,150
 	end;
 
 OnKvM03One: 
-	misceffect EF_CHANGECOLD;
+	specialeffect EF_CHANGECOLD;
 	end;
 
 OnKvM03Two: 
-	misceffect EF_CHANGEPOISON;
+	specialeffect EF_CHANGEPOISON;
 	end;
 }
 

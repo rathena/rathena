@@ -10,18 +10,18 @@
 //- [Official Conversion]
 //= Umbala Town Npcs
 //===== Additional Comments: =================================
-//= 1.0 - Done By jAthena (dunno Who)
-//= 1.1 - Translated by Fusion Dev Team
-//= 1.2 - Fixed Something by Muad Dib
-//= 1.3 - Fixed up For eA by Darkchild
-//= 1.4 - Fixed some wrong item names [Lupus]
-//= 1.5 - Spell Checked [massdriller]
-//= 1.6 - Fixed item names, added a chance to get to Niflheim via Jumping Bungy Area [Lupus]
-//= 1.7 - Fixed bugs and exploits [Lupus]
-//= 1.8 - Warps you to Niff with 1HP [Lance]
-//= 1.9 - Moved Umbala Event, Create Essence/Dismantle Stone, and Skeletal Gate to npc/quests/quests_umbala.txt [Evera]
-//= 2.0 - Removed duplicates, max NPC name length is 23, so Utan Tribe Young Adult#1, the 1 is skipped [Toms]
-//= 2.1 - Updated to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.0 Done By jAthena (dunno Who)
+//= 1.1 Translated by Fusion Dev Team
+//= 1.2 Fixed Something by Muad Dib
+//= 1.3 Fixed up For eA by Darkchild
+//= 1.4 Fixed some wrong item names [Lupus]
+//= 1.5 Spell Checked [massdriller]
+//= 1.6 Fixed item names, added a chance to get to Niflheim via Jumping Bungy Area [Lupus]
+//= 1.7 Fixed bugs and exploits [Lupus]
+//= 1.8 Warps you to Niff with 1HP [Lance]
+//= 1.9 Moved Umbala Event, Create Essence/Dismantle Stone, and Skeletal Gate to npc/quests/quests_umbala.txt [Evera]
+//= 2.0 Removed duplicates, max NPC name length is 23, so Utan Tribe Young Adult#1, the 1 is skipped [Toms]
+//= 2.1 Updated to Aegis 10.3 standards. [L0ne_W0lf]
 //============================================================
 
 comodo,170,137,7	script	La Ed#um	84,{
@@ -78,7 +78,7 @@ comodo,171,137,1	script	Haith#um	92,{
 	next;
 	if (select("Pay 1,000 zeny:Refuse to pay") == 1) {
 		if (Zeny > 999) {
-			set zeny,zeny-1000;
+			set Zeny, Zeny-1000;
 			mes "[Haith]";
 			mes "Hahahaha! You the man!";
 			next;
@@ -274,8 +274,8 @@ umbala,70,106,3	script	Utan Kid#um	781,{
 			mes "Whoaaaa!!";
 			mes "You the man~!";
 			mes "Thank you so much, yay~!";
-			if (zeny > 1000) {
-				set zeny,zeny-1000;
+			if (Zeny > 1000) {
+				set Zeny, Zeny-1000;
 				if (checkweight(517,1)) {
 					getitem 517,1; //Meat
 				}
@@ -335,8 +335,8 @@ umbala,70,106,3	script	Utan Kid#um	781,{
 			mes "Umbaumbah!!";
 			mes "Um~bahumbah~ Um~baumbah~";
 			mes "Um~baumbah~ um~baumbah~";
-			if (zeny > 1000) {
-				set zeny,zeny-1000;
+			if (Zeny > 1000) {
+				set Zeny, Zeny-1000;
 				if (checkweight(517,1)) {
 					getitem 517,1; //Meat
 				}

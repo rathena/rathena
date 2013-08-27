@@ -1579,7 +1579,7 @@ comodo,187,153,4	script	Hullaris#cmd	701,{
 		mes "Love together~";
 		mes "Love! Love!";
 		mes "Love togeth-hm?";
-		if (sex) {
+		if (Sex) {
 			mes "Boy, you're ruining";
 			mes "my groove! Now beat it!";
 		}

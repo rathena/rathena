@@ -31,14 +31,14 @@
 //= 2.0 Updated RE/Pre-RE EXP. [Euphy]
 //============================================================ 
 
-//=======================================================================================================//
-//					Airship Ticket Quest
-//=======================================================================================================//
+// Airship Ticket Quest :: ein_tre
+//============================================================
 
-//====================Kain Himere=============================
-
+//----------------------------------------------------------------------------
+// Kain Himere
+//----------------------------------------------------------------------------
 airplane,47,61,1	script	Crewman	833,{
-	if(kain_ticket==4) {
+	if (kain_ticket == 4) {
 		mes "[Kain Himere]";
 		mes "Ah...";
 		mes "Here it is!";
@@ -60,8 +60,8 @@ airplane,47,61,1	script	Crewman	833,{
 	mes "[Kain Himere]";
 	mes "Welcome to the Airship. If you have any questions or need any assistnace, please don't hesisitate to let me or one of the other crewman know.";
 	next;
-	if(kain_ticket==0) {
-		switch( select( "About the Airship...", "Leave a Comment" )) {
+	if (kain_ticket == 0) {
+		switch(select("About the Airship...:Leave a Comment")) {
 		case 1:
 			set kain_ticket, 1;
 			mes "[Kain Himere]";
@@ -111,8 +111,8 @@ airplane,47,61,1	script	Crewman	833,{
 				close;
 			}
 		}
-	} else if(kain_ticket==1) {
-		switch( select( "About the Airship...", "Make a remark" )) {
+	} else if (kain_ticket == 1) {
+		switch(select("About the Airship...:Make a remark")) {
 		case 1:
 			set kain_ticket, 2;
 			mes "[Kain Himere]";
@@ -154,7 +154,7 @@ airplane,47,61,1	script	Crewman	833,{
 				close;
 			}
 		}
-	} else if(kain_ticket==2) {
+	} else if (kain_ticket == 2) {
 		mes "["+strcharinfo(0)+"]";
 		mes "About the Airship...";
 		next;
@@ -169,7 +169,7 @@ airplane,47,61,1	script	Crewman	833,{
 		mes "E-excuse me...";
 		mes "^666666*Sniff*^000000";
 		next;
-		switch( select( "What the hell...?", "What's wrong?" )) {
+		switch(select("What the hell...?:What's wrong?")) {
 		case 1:
 			mes "[Kain Himere]";
 			mes "Oh, no there's no";
@@ -252,7 +252,7 @@ airplane,47,61,1	script	Crewman	833,{
 			mes "[Kain Himere]";
 			mes "By the way, where are you heading to?";
 			next;
-			switch( select( "Einbroch", "Juno" )) {
+			switch(select("Einbroch:Juno")) {
 			case 1:
 				set kain_ticket, 4;
 				mes "["+strcharinfo(0)+"]";
@@ -277,12 +277,12 @@ airplane,47,61,1	script	Crewman	833,{
 				close;
 			}
 		}
-	} else if(kain_ticket==3) {
+	} else if (kain_ticket == 3) {
 		mes "[Kain Himere]";
 		mes "Oh, how are you?";
 		mes "Right, there's a favor I have to ask of you. Where are you heading?";
 		next;
-		switch( select( "Einbroch", "Juno" )) {
+		switch(select("Einbroch:Juno")) {
 		case 1:
 			set kain_ticket, 4;
 			mes "["+strcharinfo(0)+"]";
@@ -294,7 +294,6 @@ airplane,47,61,1	script	Crewman	833,{
 			mes "Now, let me find";
 			mes "that thing. Hold on...";
 			close;
-
 		case 2:
 			mes "["+strcharinfo(0)+"]";
 			mes "I am heading to Juno.";
@@ -305,14 +304,14 @@ airplane,47,61,1	script	Crewman	833,{
 			mes "I needed sent to Einbroch. If you're not going there, then don't worry about it.";
 			close;
 		}
-	} else if(kain_ticket > 4 && kain_ticket < 10) {
+	} else if (kain_ticket > 4 && kain_ticket < 10) {
 		mes "[Kain Himere]";
 		mes "Oh hello!";
 		mes "Things are a little busy right now, but did you delive-- Oh! Wait, mister!";
 		next;
 		mes "^3355FFKain seems too busy to speak to you right now...^000000";
 		close;
-	} else if(kain_ticket== 10) {
+	} else if (kain_ticket == 10) {
 		mes "[Kain Himere]";
 		mes "Welcome back to the Airship. So did you deliver that little box safely?";
 		next;
@@ -323,7 +322,7 @@ airplane,47,61,1	script	Crewman	833,{
 		mes "Oh...";
 		mes "What should I do now? Oh well, sorry for putting you through so much trouble.";
 		next;
-		switch( select( "Do you know 'Miner's Song?'", "Do you remember 'Tarsha?'" )) {
+		switch(select("Do you know 'Miner's Song?':Do you remember 'Tarsha?'")) {
 		case 1:
 			mes "[Kain Himere]";
 			mes "'Miner's Song...'";
@@ -378,14 +377,14 @@ airplane,47,61,1	script	Crewman	833,{
 			set kain_ticket, 11;
 			close;
 		}
-	} else if(kain_ticket == 11 || kain_ticket == 12) {
+	} else if (kain_ticket == 11 || kain_ticket == 12) {
 		mes "[Kain Himere]";
 		mes "My wife's journal is buried ^3131FFunderneath a tree in Einbech^000000. Please find it and see if Tarsha is my daughter.";
 		close;
-	} else if(kain_ticket == 13) {
+	} else if (kain_ticket == 13) {
 		mes "^3355FFYou better fulfill Kain's request to find his wife's journal in Einbech before you speak to him again.^000000";
 		close;
-	} else if(kain_ticket == 14) {
+	} else if (kain_ticket == 14) {
 		if (countitem(7276)==1) {
 			mes "^3355FFYou gave Kain his wife's journal and told him that Tarsha really is is daughter, and currently has a job in Einbech.^000000";
 			next;
@@ -419,7 +418,7 @@ airplane,47,61,1	script	Crewman	833,{
 			mes "It would be better if you approached Kain and bring the Doodled Letter that you received.^000000";
 			close;
 		}
-	} else if(kain_ticket >= 15) {
+	} else if (kain_ticket >= 15) {
 		mes "[Kain Himere]";
 		mes "Oh, how are you";
 		mes "lately, my friend?";
@@ -431,8 +430,9 @@ airplane,47,61,1	script	Crewman	833,{
 	}
 }
 
-//====================Empty Room 201==========================
-
+//----------------------------------------------------------------------------
+// Empty Room 201
+//----------------------------------------------------------------------------
 ein_in01,227,279,5	script	door_ein	-1,5,5,{
 OnTouch:
 	if (kain_ticket == 5) {
@@ -456,8 +456,9 @@ OnTouch:
 	}
 }
 
-//====================Elle Cherno=============================
-
+//----------------------------------------------------------------------------
+// Elle Cherno
+//----------------------------------------------------------------------------
 ein_in01,261,241,5	script	Elle Cherno	703,3,3,{
 OnTouch:
 	mes "[Elle Cherno]";
@@ -465,9 +466,9 @@ OnTouch:
 	mes "fear-less comraaades~!";
 	mes "Do our best! Nothing";
 	mes "can stop us, lads~!";
-	if(kain_ticket == 6) {
+	if (kain_ticket == 6) {
 		next;
-		switch( select( "Hello!", "What are you singing?")) {
+		switch(select("Hello!:What are you singing?")) {
 		case 1:
 			mes "[Elle Cherno]";
 			mes "Let's get to work";
@@ -503,7 +504,7 @@ OnTouch:
 			mes "Our house is behind the Hotel. So can see my mommy and tell me if she's not feeling good?";
 			close;
 		}
-	} else if(kain_ticket == 7) {
+	} else if (kain_ticket == 7) {
 		next;
 		mes "[Elle Cherno]";
 		mes "Our house is";
@@ -512,7 +513,7 @@ OnTouch:
 		mes "you go and see";
 		mes "my mommy for me?";
 		close;
-	} else if(kain_ticket == 13) {
+	} else if (kain_ticket == 13) {
 		next;
 		//Check if you can carry the Picture Letter.
 		 if (checkweight(7276,1)) {
@@ -541,26 +542,27 @@ OnTouch:
 	close;
 }
 
-//====================Theo Cherno=============================
-
+//----------------------------------------------------------------------------
+// Theo Cherno
+//----------------------------------------------------------------------------
 ein_in01,123,94,1	script	Theo Cherno	851,{
-	if(kain_ticket == 7) {
+	if (kain_ticket == 7) {
 		callfunc "cherno";
 		set kain_ticket, 8;
 		close;
-	} else if(kain_ticket > 7 && kain_ticket < 10) {
+	} else if (kain_ticket > 7 && kain_ticket < 10) {
 		mes "[Theo Cherno]";
 		mes "You are very kind.";
 		close;
-	} else if(kain_ticket > 9 && kain_ticket < 13) {
+	} else if (kain_ticket > 9 && kain_ticket < 13) {
 		mes "[Theo Cherno]";
 		mes "Are you sure";
 		mes "that you can find";
 		mes "her father? Oh...!";
 		mes "You're a godsend!";
 		close;
-	} else if(kain_ticket > 12) {
-		Emotion 18, "Theo Cherno";
+	} else if (kain_ticket > 12) {
+		emotion e_heh, "Theo Cherno";
 		mes "[Theo Cherno]";
 		mes "I'm so happy";
 		mes "for my wife.";
@@ -578,18 +580,19 @@ ein_in01,123,94,1	script	Theo Cherno	851,{
 	}
 }
 
-//====================Tarsha Cherno===========================
-
+//----------------------------------------------------------------------------
+// Tarsha Cherno
+//----------------------------------------------------------------------------
 ein_in01,125,99,3	script	Tarsha Cherno	850,{
-	if(kain_ticket == 7) {
+	if (kain_ticket == 7) {
 		callfunc "cherno";
 		set kain_ticket, 8;
 		close;
-	} else if(kain_ticket == 8) {
+	} else if (kain_ticket == 8) {
 		mes "[Tarsha Cherno]";
 		mes "Although these contraptions aren't worth showing off, we've put a lot of work into inventing these machines.";
 		close;
-	} else if(kain_ticket == 9) {
+	} else if (kain_ticket == 9) {
 		mes "["+strcharinfo(0)+"]";
 		mes "Ma'am, you have a scar on your shoulder. Is that from an accident?";
 		next;
@@ -624,7 +627,7 @@ ein_in01,125,99,3	script	Tarsha Cherno	850,{
 		mes "such a robust song";
 		mes "for men! Haha, this";
 		mes "is all your fault, Tarsha.";
-		Emotion 29, "Theo Cherno";
+		emotion e_gg, "Theo Cherno";
 		next;
 		mes "[Tarsha Cherno]";
 		mes "Hoho.";
@@ -654,11 +657,11 @@ ein_in01,125,99,3	script	Tarsha Cherno	850,{
 		changequest 2080,2081;
 		set kain_ticket, 10;
 		close;
-	} else if(kain_ticket == 10 || kain_ticket == 11) {
+	} else if (kain_ticket == 10 || kain_ticket == 11) {
 		mes "["+strcharinfo(0)+"]";
 		mes "I know someone who might be your father! Just wait for me, hopefully I'll bering good news soon!";
 		close;
-	} else if(kain_ticket == 12) {
+	} else if (kain_ticket == 12) {
 		mes "[Tarsha Cherno]";
 		mes "Oh, welcome back.";
 		mes "So did you bring";
@@ -667,7 +670,7 @@ ein_in01,125,99,3	script	Tarsha Cherno	850,{
 		mes "["+strcharinfo(0)+"]";
 		mes "Yes, speaking of which, allow me to... Check something.";
 		next;
-		switch( select( "Check her neck.", "Check her hands.", "Check her legs.", "Check her forehead.")) {
+		switch(select("Check her neck.:Check her hands.:Check her legs.:Check her forehead.")) {
 		case 1:
 			mes "^3355FFUh oh...";
 			mes "Nothing's there!^000000";
@@ -747,7 +750,7 @@ ein_in01,125,99,3	script	Tarsha Cherno	850,{
 			percentheal -10,0;
 			close;
 		}
-	} else if(kain_ticket > 12) {
+	} else if (kain_ticket > 12) {
 		mes "[Tarsha Cherno]";
 		mes "I've been feeling";
 		mes "great after all you've";
@@ -777,8 +780,8 @@ function	script	cherno	{
 	misceffect 20;
 	mes "^33355F*Crash!*^000000";
 	mes "....."; 
-	emotion 4,0,"Theo Cherno";
-	Emotion 4,0,"Tarsha Cherno";
+	emotion e_swt,0,"Theo Cherno";
+	emotion e_swt,0,"Tarsha Cherno";
 	next;
 	mes "[Theo Cherno]";
 	mes "Honey...";
@@ -795,13 +798,13 @@ function	script	cherno	{
 	mes "it a day and finish";
 	mes "this tomorrow.";
 	next;
-	Emotion 1, "Tarsha Cherno";
+	emotion e_what, "Tarsha Cherno";
 	mes "[Tarsha Cherno]";
 	mes "Elle is playing outside.";
 	mes "Oh, I didn't know we had";
 	mes "a guest? Hello, how are you?";
 	next;
-	switch( select( "Nothing.", "Your daughter asked me to visit you.")) {
+	switch(select("Nothing.:Your daughter asked me to visit you.")) {
 	case 1:
 		mes "[Theo Cherno]";
 		mes "As you see, my wife and I are pretty";
@@ -810,8 +813,8 @@ function	script	cherno	{
 		mes "will you please leave us alone?";
 		close;
 	case 2:
-		Emotion 4, "Tarsha Cherno";
-		Emotion 4, "Theo Cherno";
+		emotion e_swt, "Tarsha Cherno";
+		emotion e_swt, "Theo Cherno";
 		mes "[Tarsha Cherno]";
 		mes "Excuse me?";
 		mes "What did she say?";
@@ -823,7 +826,7 @@ function	script	cherno	{
 		mes "was sick or sad";
 		mes "...Or something?";
 		next;
-		Emotion 23, "Tarsha Cherno";
+		emotion e_omg, "Tarsha Cherno";
 		mes "[Tarsha Cherno]";
 		mes "Oh my god...!";
 		mes "What is she";
@@ -869,8 +872,9 @@ function	script	cherno	{
 	}
 }
 
-//========Unidentified Machine #1 and #2=======================
-
+//----------------------------------------------------------------------------
+// Unidentified Machine #1 and #2
+//----------------------------------------------------------------------------
 ein_in01,127,94,5	script	Unidentified Machine#mac	111,{
 	callfunc "Machine";
 }
@@ -886,10 +890,11 @@ function	script	Machine	{
 	close;
 }
 
-//====================Mirror=============================
-
+//----------------------------------------------------------------------------
+// Mirror
+//----------------------------------------------------------------------------
 ein_in01,121,99,5	script	Mirror	111,{
-	if(kain_ticket==8) {
+	if (kain_ticket == 8) {
 		mes "^3355FFIt's a mirror.";
 		mes "So, of course the";
 		mes "first thing you'll";
@@ -908,10 +913,11 @@ ein_in01,121,99,5	script	Mirror	111,{
 	}
 }
 
-//====================Tree from Einbech=============================
-
+//----------------------------------------------------------------------------
+// Tree from Einbech
+//----------------------------------------------------------------------------
 einbech,45,113,5	script	Tree#t1-1::Tree	111,{
-	if(kain_ticket==11) {
+	if (kain_ticket == 11) {
 		mes "^3355FFYou crouch down";
 		mes "under the tree and";
 		mes "begin digging into";
@@ -925,7 +931,7 @@ einbech,45,113,5	script	Tree#t1-1::Tree	111,{
 		mes ".........";
 		next;
 		set @find_diary,rand(1,100);
-		if(@find_diary > 10) {
+		if (@find_diary > 10) {
 			mes "^3355ffUnfortunately,";
 			mes "you weren't able";
 			mes "to find anything.^000000";
@@ -936,11 +942,14 @@ einbech,45,113,5	script	Tree#t1-1::Tree	111,{
 			set kain_ticket, 12;
 			close;
 		}
-	} else if(kain_ticket == 12) {
+	} else if (kain_ticket == 12) {
 		callfunc "diary";
 		close;
 	}
 }
+einbech,36,100,5	duplicate(Tree)	Tree#t1-2	111
+einbech,44,90,5	duplicate(Tree)	Tree#t1-3	111
+einbech,53,94,5	duplicate(Tree)	Tree#t1-4	111
 
 function	script	diary	{
 	mes "^3355ffYou have found a ^3131FFJournal^3355ff among some other articles buried for safekeeping.^000000";
@@ -1024,17 +1033,18 @@ function	script	diary	{
 	return;
 }
 
-//====================Expert Repairman=============================
-
+//----------------------------------------------------------------------------
+// Expert Repairman
+//----------------------------------------------------------------------------
 ein_in01,117,80,5	script	Unidentified Machine#as	111,{
-	if(kain_ticket > 12) {
+	if (kain_ticket > 12) {
 		mes "["+strcharinfo(0)+"]";
 		mes "This is the";
 		mes "^FF0000Expert Repairman^000000?!";
 		mes "It looks like it";
 		mes "needs repairs itself...";
 		next;
-		if(getbrokenid(1)==NULL) {
+		if (getbrokenid(1) == 0) {
 			mes "[Expert Repairman]";
 			mes "*Beep-*";
 			mes "Please check";
@@ -1049,7 +1059,7 @@ ein_in01,117,80,5	script	Unidentified Machine#as	111,{
 			mes "You're gonna repair " + getitemname(getbrokenid(@choice)) + ".";
 			mes "Continue?";
 			next;
-			switch( select("Yes","No")) {
+			switch(select("Yes:No")) {
 			case 1:
 				repair(@choice);
 				next;
@@ -1069,18 +1079,13 @@ ein_in01,117,80,5	script	Unidentified Machine#as	111,{
 		close;
 	}
 }
-//===================Trees From Einbech==========================
-//Tree of the Diary
-einbech,36,100,5	duplicate(Tree)	Tree#t1-2	111
-einbech,44,90,5	duplicate(Tree)	Tree#t1-3	111
-einbech,53,94,5	duplicate(Tree)	Tree#t1-4	111
 
-//=======================================================================================================//
-//				"How Does The Airship Work" Quest
-//=======================================================================================================//
+// "How Does The Airship Work" Quest :: lght_air & lght_ymir
+//============================================================
 
-
-//=============Monsters Attack======================
+//----------------------------------------------------------------------------
+// Monsters Attack :: lght_air
+//----------------------------------------------------------------------------
 airplane_01,1,1,0	script	Airship#airplane02	-1,{
 	end;
 OnEnable:
@@ -1488,7 +1493,9 @@ airplane_01,252,63,0	script	boom8#airplane	139,{ end; }
 airplane_01,234,65,0	script	boom9#airplane	139,{ end; }
 airplane_01,227,67,0	script	boom10#airplane	139,{ end; }
 
-//========Captain Tarlock (Inside the Captain Cabin)=======================
+//----------------------------------------------------------------------------
+// Captain Tarlock :: lght_air
+//----------------------------------------------------------------------------
 airplane_01,238,154,3	script	Airship Captain#01	873,{
 	cutin "fly_felrock",2;
 	mes "[Tarlock]";
@@ -1499,11 +1506,11 @@ airplane_01,238,154,3	script	Airship Captain#01	873,{
 	next;
 	if (lght_air >= 0 && lght_air <= 3 || lght_air == 7) {
 		set .@question$, "How does this Airship fly?";
-	} else if(lght_air == 4) {
+	} else if (lght_air == 4) {
 		set .@question$, "I handed the letter to Captain Ferlock.";
-	} else if(lght_air == 5) {
+	} else if (lght_air == 5) {
 		set .@question$, "You finished reading the letter?";
-	} else if(lght_air == 6) {
+	} else if (lght_air == 6) {
 		set .@question$, "Already finished reading?";
 	}
 	switch (select("Y-you're a reindeer?!", .@question$, "No, not really.")) {
@@ -1769,38 +1776,26 @@ airplane_01,238,154,3	script	Airship Captain#01	873,{
 	}
 }
 
-
-//===========Captain Ferlock=======================
-
+//----------------------------------------------------------------------------
+// Captain Ferlock :: lght_ymir
+//----------------------------------------------------------------------------
 airplane,236,163,5	script	Airship Captain#03	873,{
 	cutin "fly_trock.bmp",2;
-	if(hg_ma1 == 3 || hg_ma1 == 4)
-	{
+	if (hg_ma1 == 3 || hg_ma1 == 4) {
 		mes "[Ferlock]";
 		mes "Welcome to the airship. I am Ferlock, captain of this airship. What do you want from me? ";
 		next;
-		switch( select( "Ask him about Thierry" ) )
-		{
-			case 1:
-				break;
-		}
+		select("Ask him about Thierry");
 		mes "[Ferlock]";
 		mes "Hmm, this is the first time I hear of this name. I'm sure he's not the employee of this place.";
 		next;
-		switch( select( "Request for the passenger list. " ) )
-		{
-			case 1:
-				break;
-		}
+		select("Request for the passenger list.");
 		mes "[Ferlock]";
 		mes "The passenger list is not opened to public unfortunately. Sorry I couldn't help you. ";
-		if(hg_ma1 == 3) close;
+		if (hg_ma1 == 3)
+			close;
 		next;
-		switch( select( "Follow Kaci's request and tell him the story." ) )
-		{
-			case 1:
-				break;
-		}
+		select("Follow Kaci's request and tell him the story.");
 		mes "^3355FFWhen you tell him why you need to find Thierry, the captain listens to you quietly and nods his head.^000000";
 		next;
 		mes "[Ferlock]";
@@ -1847,17 +1842,14 @@ airplane,236,163,5	script	Airship Captain#03	873,{
 		close2;
 		cutin "",255;
 		end;
-	}
-	else if(hg_ma1 == 5)
-	{
+	} else if (hg_ma1 == 5) {
 		mes "[Ferlock]";
 		mes "You better get going and send the news to the fiance.";
 		close2;
 		cutin "",255;
 		end;
 	}
-	if (lght_air == 7 && lhz_heart == 11)
-	{
+	if (lght_air == 7 && lhz_heart == 11) {
 		mes "[Ferlock]";
 		mes "Ah, thank you for coming.";
 		mes "Now, I wanted to ask you";
@@ -1866,127 +1858,115 @@ airplane,236,163,5	script	Airship Captain#03	873,{
 		mes "merely curious, or did you";
 		mes "have some special reason?";
 		next;
-		switch( select( "Just curious...","Well, there's someone I need to help..." ) )
-		{
-			case 1:
-				mes "[Ferlock]";
-				mes "Just curious...?";
-				mes "I don't know if satisfying";
-				mes "your curiosity is worth the";
-				mes "risks that you have already";
-				mes "taken. You should be more ";
-				mes "careful in the future...";
-				close2;
-				cutin "",255;
-				end;
-			
-			case 2:
-				mes "[Ferlock]";
-				mes "Well, I shouldn't be";
-				mes "trusting you this much,";
-				mes "but since you've helped";
-				mes "me and my brother, I feel";
-				mes "that you must be one of those altruistic adventurers. Very well.";
-				next;
-				mes "[Ferlock]";
-				mes "If you promise that you'll";
-				mes "never tell what I reveal to";
-				mes "you, then I suppose I can";
-				mes "tell you know about the Rune";
-				mes "Stone and Ymir's Heart Piece.";
-				next;
-				switch( select( "I promise..." ) )
-				{
-					case 1:
-						break;
-				}
-				mes "[Ferlock]";
-				mes "Alright, then. I expect you";
-				mes "to keep your word. Now, you";
-				mes "already know that the Airships";
-				mes "are powered by Rune Stones, imitations of Ymir's Heart pieces.";
-				next;
-				mes "[Ferlock]";
-				mes "Although Rune Stones are";
-				mes "inferior to true Ymir Heart";
-				mes "pieces, we can make as many";
-				mes "as want. As for true Ymir Heart";
-				mes "Pieces, they're difficult to find or effectively reproduce.";
-				next;
-				mes "[Ferlock]";
-				mes "You may have already";
-				mes "figured this out, but all";
-				mes "Rune Stones are produced";
-				mes "in the Einbroch Laboratory";
-				mes "for use in the Airships. So";
-				mes "you see what's going on?";
-				next;
-				switch( select( "Wait, what's the Varmunt Project?" ) )
-				{
-					case 1:
-						break;
-				}
-				mes "[Ferlock]";
-				mes "The Varmunt Project is";
-				mes "a continuation of one of";
-				mes "the projects started by the";
-				mes "great Sage, Varmunt. Even as";
-				mes "a child, he was renown as an";
-				mes "incredible genius, a prodigy.";
-				next;
-				mes "[Ferlock]";
-				mes "However, no matter how";
-				mes "much academic success he";
-				mes "enjoyed--he even became a";
-				mes "tenured professor at Juno";
-				mes "University--Varmunt was never able to finance his own research.";
-				next;
-				mes "[Ferlock]";
-				mes "Eventually, he accepted an";
-				mes "offer from Rekenber Co. to";
-				mes "develop an energy source in";
-				mes "exchange for funding. The";
-				mes "result of his work for them is the invention of the Rune Stone.";
-				next;
-				mes "[Ferlock]";
-				mes "However, the public isn't";
-				mes "supposed to know that Varmunt";
-				mes "invented the Rune Stones. Now,";
-				mes "Varmunt disappeared before he";
-				mes "could perfect the Rune Stone";
-				mes "creation process.";
-				next;
-				mes "[Ferlock]";
-				mes "Therefore, the Rune Stones";
-				mes "we have now are unstable and";
-				mes "become useless after a while.";
-				mes "The Varmunt Project aims to";
-				mes "correct these flaws and perfect";
-				mes "the Ymir Heart replication...";
-				next;
-				mes "[Ferlock]";
-				mes "Er, anyway, that's why";
-				mes "I was at the Einbroch";
-				mes "Laboratory today. My Rune";
-				mes "Stone was close to empty,";
-				mes "so I went there to pick up";
-				mes "a fully charged one.";
-				next;
-				mes "[Ferlock]";
-				mes "^333333*Phew...*^000000";
-				mes "Would you give me";
-				mes "a moment to catch";
-				mes "my breath before";
-				mes "I continue? Yes,";
-				mes "there's a little more...";
-				set lhz_heart,12;
-				close2;
-				cutin "",255;
-				end;
+		switch(select("Just curious...:Well, there's someone I need to help...")) {
+		case 1:
+			mes "[Ferlock]";
+			mes "Just curious...?";
+			mes "I don't know if satisfying";
+			mes "your curiosity is worth the";
+			mes "risks that you have already";
+			mes "taken. You should be more ";
+			mes "careful in the future...";
+			close2;
+			cutin "",255;
+			end;
+		case 2:
+			mes "[Ferlock]";
+			mes "Well, I shouldn't be";
+			mes "trusting you this much,";
+			mes "but since you've helped";
+			mes "me and my brother, I feel";
+			mes "that you must be one of those altruistic adventurers. Very well.";
+			next;
+			mes "[Ferlock]";
+			mes "If you promise that you'll";
+			mes "never tell what I reveal to";
+			mes "you, then I suppose I can";
+			mes "tell you know about the Rune";
+			mes "Stone and Ymir's Heart Piece.";
+			next;
+			select("I promise...");
+			mes "[Ferlock]";
+			mes "Alright, then. I expect you";
+			mes "to keep your word. Now, you";
+			mes "already know that the Airships";
+			mes "are powered by Rune Stones, imitations of Ymir's Heart pieces.";
+			next;
+			mes "[Ferlock]";
+			mes "Although Rune Stones are";
+			mes "inferior to true Ymir Heart";
+			mes "pieces, we can make as many";
+			mes "as want. As for true Ymir Heart";
+			mes "Pieces, they're difficult to find or effectively reproduce.";
+			next;
+			mes "[Ferlock]";
+			mes "You may have already";
+			mes "figured this out, but all";
+			mes "Rune Stones are produced";
+			mes "in the Einbroch Laboratory";
+			mes "for use in the Airships. So";
+			mes "you see what's going on?";
+			next;
+			select("Wait, what's the Varmunt Project?");
+			mes "[Ferlock]";
+			mes "The Varmunt Project is";
+			mes "a continuation of one of";
+			mes "the projects started by the";
+			mes "great Sage, Varmunt. Even as";
+			mes "a child, he was renown as an";
+			mes "incredible genius, a prodigy.";
+			next;
+			mes "[Ferlock]";
+			mes "However, no matter how";
+			mes "much academic success he";
+			mes "enjoyed--he even became a";
+			mes "tenured professor at Juno";
+			mes "University--Varmunt was never able to finance his own research.";
+			next;
+			mes "[Ferlock]";
+			mes "Eventually, he accepted an";
+			mes "offer from Rekenber Co. to";
+			mes "develop an energy source in";
+			mes "exchange for funding. The";
+			mes "result of his work for them is the invention of the Rune Stone.";
+			next;
+			mes "[Ferlock]";
+			mes "However, the public isn't";
+			mes "supposed to know that Varmunt";
+			mes "invented the Rune Stones. Now,";
+			mes "Varmunt disappeared before he";
+			mes "could perfect the Rune Stone";
+			mes "creation process.";
+			next;
+			mes "[Ferlock]";
+			mes "Therefore, the Rune Stones";
+			mes "we have now are unstable and";
+			mes "become useless after a while.";
+			mes "The Varmunt Project aims to";
+			mes "correct these flaws and perfect";
+			mes "the Ymir Heart replication...";
+			next;
+			mes "[Ferlock]";
+			mes "Er, anyway, that's why";
+			mes "I was at the Einbroch";
+			mes "Laboratory today. My Rune";
+			mes "Stone was close to empty,";
+			mes "so I went there to pick up";
+			mes "a fully charged one.";
+			next;
+			mes "[Ferlock]";
+			mes "^333333*Phew...*^000000";
+			mes "Would you give me";
+			mes "a moment to catch";
+			mes "my breath before";
+			mes "I continue? Yes,";
+			mes "there's a little more...";
+			set lhz_heart,12;
+			close2;
+			cutin "",255;
+			end;
 		}
-	}
-	else if(lght_air == 7 && lhz_heart == 12)
-	{
+	} else if (lght_air == 7 && lhz_heart == 12) {
 		mes "[Ferlock]";
 		mes "Now, "+strcharinfo(0)+",";
 		mes "you must be wondering";
@@ -2072,9 +2052,7 @@ airplane,236,163,5	script	Airship Captain#03	873,{
 			getexp 700000,400000;
 		cutin "",255;
 		end;
-	}
-	else if(lght_air == 7 && lhz_heart == 13)
-	{
+	} else if (lght_air == 7 && lhz_heart == 13) {
 		mes "[Ferlock]";
 		mes "I'll be quite busy with my";
 		mes "captaining duties and my";
@@ -2092,16 +2070,16 @@ airplane,236,163,5	script	Airship Captain#03	873,{
 	mes "on this flight. How can";
 	mes "I be of service to you?";
 	next;
-	if(lght_air == 2) {
+	if (lght_air == 2) {
 		set .@question2$, "Give him Tarlock's Letter.";
 		set .@question3$, "Cancel.";
-	} else if(lght_air == 3) {
+	} else if (lght_air == 3) {
 		set .@question2$, "Here are the items I've found.";
 		set .@question3$, "Cancel.";
 	} else {
 		set .@question2$, "Cancel.";
 	}
-	switch( select( "How does this Airship fly?", .@question2$, .@question3$)) {
+	switch(select("How does this Airship fly?", .@question2$, .@question3$)) {
 	case 1:
 		mes "[Ferlock]";
 		mes "I'm sorry, but I can't";
@@ -2113,7 +2091,6 @@ airplane,236,163,5	script	Airship Captain#03	873,{
 		close2;
 		cutin "",255;
 		end;
-		
 	case 2:
 		if (lght_air == 2) {
 			changequest 8032,8033;
@@ -2178,7 +2155,7 @@ airplane,236,163,5	script	Airship Captain#03	873,{
 			close2;
 			cutin "",255;
 			end;
-		} else if(lght_air == 3) {
+		} else if (lght_air == 3) {
 			if (countitem(7340) >= 2 && countitem(576) >= 2) {
 				delitem 7340, 2;
 				delitem 576, 2;
@@ -2234,32 +2211,23 @@ airplane,236,163,5	script	Airship Captain#03	873,{
 	}
 }
 
-//=======================================================================================================//
-//				Heart Fragment Quest
-//=======================================================================================================//
-
+// Heart Fragment Quest :: lght_ymir
+//============================================================
 airplane,236,63,4	script	Hallen	706,{
-
-	if(hg_ma1 == 3)
-	{
+	if (hg_ma1 == 3) {
 		mes "[Hallen]";
 		mes "Sha Sha~ ";
 		next;
 		mes "[Hallen]";
 		mes "Just let me handle this! Hehe. ";
 		next;
-		switch( select( "Ask whether he knows Thierry" ) )
-		{
-			case 1:
-				break;
-		}
+		select("Ask whether he knows Thierry");
 		mes "[Hallen]";
 		mes "Hmm?! Thierry?! I'm not sure. Why don't you ask the crew of the airship.";
 		mes "Kaci might know this person.";
 		close;
 	}
-	if(BaseLevel < 60)
-	{
+	if (BaseLevel < 60) {
 		mes "[Hallen]";
 		mes "If you need me to";
 		mes "do anything, just";
@@ -2267,57 +2235,50 @@ airplane,236,63,4	script	Hallen	706,{
 		mes "Bweh heh... hollah~";
 		close;
 	}
-	if(!lhz_heart)
-	{
+	if (!lhz_heart) {
 		mes "[Hallen]";
 		mes "Howdy, howdy~";
 		mes "Welcome to the Airship.";
 		next;
-		switch( select( "I'm not a passenger.","Hey kid, what are you doing?" ) )
-		{
-			case 1:
-				emotion e_what,0;
-				mes "[Hallen]";
-				mes "Does that mean you're";
-				mes "one of the crewmen, then?";
-				mes "I don't think we've met before,";
-				mes "and I should be familiar with";
-				mes "everyone working here by now...";
-				next;
-				emotion e_gasp,0;
-				mes "[Hallen]";
-				mes "Hey...!";
-				mes "If you're on duty,";
-				mes "shouldn't you be in";
-				mes "uniform? I guess you";
-				mes "don't work here after all!";
-				mes "Heh, figured it out myself~";
-				next;
-				mes "[Hallen]";
-				mes "Eh, I need to finish";
-				mes "sweeping this deck. Then,";
-				mes "on my break, I can play a";
-				mes "little game for Apples with";
-				mes "Kaci. That's how I roll, yo.";
-				next;
-				break;
-				
-			case 2:
-				mes "[Hallen]";
-				mes "Ummm... Isn't it obvious?";
-				mes "I'm sweeping the deck. I'm";
-				mes "the youngest crewman, so";
-				mes "I get stuck with the lamest";
-				mes "jobs. But once I'm done, it's";
-				mes "Dice time with Kaci. Oh yeah~";
-				next;
-				break;
+		switch(select("I'm not a passenger.:Hey kid, what are you doing?")) {
+		case 1:
+			emotion e_what,0;
+			mes "[Hallen]";
+			mes "Does that mean you're";
+			mes "one of the crewmen, then?";
+			mes "I don't think we've met before,";
+			mes "and I should be familiar with";
+			mes "everyone working here by now...";
+			next;
+			emotion e_gasp,0;
+			mes "[Hallen]";
+			mes "Hey...!";
+			mes "If you're on duty,";
+			mes "shouldn't you be in";
+			mes "uniform? I guess you";
+			mes "don't work here after all!";
+			mes "Heh, figured it out myself~";
+			next;
+			mes "[Hallen]";
+			mes "Eh, I need to finish";
+			mes "sweeping this deck. Then,";
+			mes "on my break, I can play a";
+			mes "little game for Apples with";
+			mes "Kaci. That's how I roll, yo.";
+			next;
+			break;
+		case 2:
+			mes "[Hallen]";
+			mes "Ummm... Isn't it obvious?";
+			mes "I'm sweeping the deck. I'm";
+			mes "the youngest crewman, so";
+			mes "I get stuck with the lamest";
+			mes "jobs. But once I'm done, it's";
+			mes "Dice time with Kaci. Oh yeah~";
+			next;
+			break;
 		}
-		switch( select( "Kaci?" ) )
-		{
-			case 1:
-				break;
-		}
+		select("Kaci?");
 		mes "[Hallen]";
 		mes "Kaci... You know, the";
 		mes "dealer of the Dice game?";
@@ -2336,9 +2297,7 @@ airplane,236,63,4	script	Hallen	706,{
 		close2;
 		set lhz_heart,1;
 		end;
-	}
-	else if(lhz_heart == 1)
-	{
+	} else if (lhz_heart == 1) {
 		mes "[Hallen]";
 		mes "Oh hey, it's you~";
 		mes "We talked earlier,";
@@ -2356,49 +2315,45 @@ airplane,236,63,4	script	Hallen	706,{
 		mes "me a favor since I can't";
 		mes "really leave this joint?";
 		next;
-		switch( select( "Sorry, but I'm busy...","What is it?" ) )
-		{
-			case 1:
-				mes "[Hallen]";
-				mes "Eh, alright. I guess";
-				mes "I can understand. But";
-				mes "still, I coulda made it";
-				mes "worth your while, if you";
-				mes "know what I mean~";
-				close;
-
-			case 2:
-				mes "[Hallen]";
-				mes "Don't worry, it's not much";
-				mes "work. I'm supposed to deliver";
-				mes "letters from Juno Airport to";
-				mes "the other crewmen, but I don't";
-				mes "got the time. Now, I have";
-				mes "this letter for Kaci here...";
-				next;
-				mes "[Hallen]";
-				mes "Would you go and";
-				mes "deliver this letter";
-				mes "to her for me? It's";
-				mes "from some guy named";
-				mes "Mr. Mawong, her mentor";
-				mes "or something like that.";
-				next;
-				mes "^3355FFHallen gave you";
-				mes "Mawong's letter to";
-				mes "be delivered to Kaci.^000000";
-				setquest 8036;
-				set lhz_heart,2;
-				next;
-				mes "[Hallen]";
-				mes "Hey, thanks a lot, pal~";
-				mes "You can find Kaci hosting";
-				mes "the Dice game in the Airship.";
-				close;
+		switch(select("Sorry, but I'm busy...:What is it?")) {
+		case 1:
+			mes "[Hallen]";
+			mes "Eh, alright. I guess";
+			mes "I can understand. But";
+			mes "still, I coulda made it";
+			mes "worth your while, if you";
+			mes "know what I mean~";
+			close;
+		case 2:
+			mes "[Hallen]";
+			mes "Don't worry, it's not much";
+			mes "work. I'm supposed to deliver";
+			mes "letters from Juno Airport to";
+			mes "the other crewmen, but I don't";
+			mes "got the time. Now, I have";
+			mes "this letter for Kaci here...";
+			next;
+			mes "[Hallen]";
+			mes "Would you go and";
+			mes "deliver this letter";
+			mes "to her for me? It's";
+			mes "from some guy named";
+			mes "Mr. Mawong, her mentor";
+			mes "or something like that.";
+			next;
+			mes "^3355FFHallen gave you";
+			mes "Mawong's letter to";
+			mes "be delivered to Kaci.^000000";
+			setquest 8036;
+			set lhz_heart,2;
+			next;
+			mes "[Hallen]";
+			mes "Hey, thanks a lot, pal~";
+			mes "You can find Kaci hosting";
+			mes "the Dice game in the Airship.";
+			close;
 		}
-	}
-	else if(lhz_heart == 2)
-	{
+	} else if (lhz_heart == 2) {
 		mes "[Hallen]";
 		mes "^333333*Sigh...*^000000";
 		mes "I'm so sick and";
@@ -2415,9 +2370,7 @@ airplane,236,63,4	script	Hallen	706,{
 		mes "important, so try not";
 		mes "to take too long, okay?";
 		close;
-	}
-	else if(lhz_heart == 3)
-	{
+	} else if (lhz_heart == 3) {
 		mes "[Hallen]";
 		mes "^333333*Sigh...*^000000";
 		mes "I'm so sick and";
@@ -2426,9 +2379,7 @@ airplane,236,63,4	script	Hallen	706,{
 		mes "kinda lame cabin boy.";
 		mes "But... I guess I am!";
 		close;
-	}
-	else if(lhz_heart == 4)
-	{
+	} else if (lhz_heart == 4) {
 		mes "[Hallen]";
 		mes "Hey, thanks for delivering";
 		mes "that letter to Kaci for me.";
@@ -2443,49 +2394,44 @@ airplane,236,63,4	script	Hallen	706,{
 		mes "help each other in";
 		mes "times of crisis?";
 		next;
-		switch( select( "Not at all. Every man for himself!","Yes, I do." ) )
-		{
-			case 1:
+		switch(select("Not at all. Every man for himself!:Yes, I do.")) {
+		case 1:
+			mes "[Hallen]";
+			mes "Wh-what...?";
+			mes "I can't think";
+			mes "that you really";
+			mes "believe that...";
+			set lhz_heart,5;
+			close;
+		case 2:
+			mes "[Hallen]";
+			mes "Aww, really?";
+			mes "I knew that you'd";
+			mes "feel the same way";
+			mes "I do. You and me, we're";
+			mes "on the same wavelength~";
+			next;
+			if (checkweight(501,1) != 1) {
 				mes "[Hallen]";
-				mes "Wh-what...?";
-				mes "I can't think";
-				mes "that you really";
-				mes "believe that...";
-				set lhz_heart,5;
+				mes "Oh... Hey, I was";
+				mes "going to give you";
+				mes "a little something,";
+				mes "but you're carrying";
+				mes "too much stuff right now...";
 				close;
-
-			case 2:
-				mes "[Hallen]";
-				mes "Aww, really?";
-				mes "I knew that you'd";
-				mes "feel the same way";
-				mes "I do. You and me, we're";
-				mes "on the same wavelength~";
-				next;
-				if(checkweight(501,1) != 1)
-				{
-					mes "[Hallen]";
-					mes "Oh... Hey, I was";
-					mes "going to give you";
-					mes "a little something,";
-					mes "but you're carrying";
-					mes "too much stuff right now...";
-					close;
-				}
-				set lhz_heart,5;
-				getitem 501,1;
-				mes "[Hallen]";
-				mes "I know this isn't";
-				mes "much, but I'd like you";
-				mes "to have it. Besides, you";
-				mes "never know what'll come in";
-				mes "handy during an emergency.";
-				mes "Alright then, see you later~";
-				close;
+			}
+			set lhz_heart,5;
+			getitem 501,1;
+			mes "[Hallen]";
+			mes "I know this isn't";
+			mes "much, but I'd like you";
+			mes "to have it. Besides, you";
+			mes "never know what'll come in";
+			mes "handy during an emergency.";
+			mes "Alright then, see you later~";
+			close;
 		}
-	}
-	else if(lhz_heart == 5)
-	{
+	} else if (lhz_heart == 5) {
 		mes "[Hallen]";
 		mes "Hey, hey~ How's it going?";
 		mes "I know, I know, I'm supposed";
@@ -2518,11 +2464,7 @@ airplane,236,63,4	script	Hallen	706,{
 		mes "course, I doubt I can compare";
 		mes "to the great Sage Varmunt.";
 		next;
-		switch( select( "Sage Varmunt?" ) )
-		{
-			case 1:
-				break;
-		}
+		select("Sage Varmunt?");
 		mes "[Hallen]";
 		mes "Yeah, Varmunt... He's like";
 		mes "one of the greatest Sages in";
@@ -2554,22 +2496,15 @@ airplane,236,63,4	script	Hallen	706,{
 		changequest 8038,8039;
 		set lhz_heart,6;
 		close;
-	}
-	else if(lhz_heart == 6)
-	{
+	} else if (lhz_heart == 6) {
 		mes "[Hallen]";
 		mes "Hey, have you learned";
 		mes "what makes such a big,";
 		mes "heavy Airship like this fly";
 		mes "for so long in the sky?";
 		next;
-		if(lght_air == 7)
-		{
-			switch( select( "Umm, yeah, kind of." ) )
-			{
-				case 1:
-					break;
-			}
+		if (lght_air == 7) {
+			select("Umm, yeah, kind of.");
 			mes "[Hallen]";
 			mes "Really...?";
 			mes "Are you serious?";
@@ -2589,11 +2524,7 @@ airplane,236,63,4	script	Hallen	706,{
 			mes "No way, it can't be that simple. Besides, steam has its limits.";
 			mes "Are you sure that's everything?";
 			next;
-			switch( select( "Actually, there's another power source." ) )
-			{
-				case 1:
-					break;
-			}
+			select("Actually, there's another power source.");
 			mes "^3355FFYou reveal what you";
 			mes "learn about the Rune Stone,";
 			mes "an imitation of Ymir's Heart";
@@ -2617,14 +2548,8 @@ airplane,236,63,4	script	Hallen	706,{
 			changequest 8039,8040;
 			set lhz_heart,7;
 			close;
-		}
-		else
-		{
-			switch( select( "Actually..." ) )
-			{
-				case 1:
-					break:;
-			}
+		} else {
+			select("Actually...");
 			mes "[Hallen]";
 			mes "You didn't learn anything";
 			mes "about the Airship yet, huh?";
@@ -2641,9 +2566,7 @@ airplane,236,63,4	script	Hallen	706,{
 			mes "it'll be one of you adventurers. So please help me out here...";
 			close;
 		}
-	}
-	else if(lhz_heart == 7)
-	{
+	} else if (lhz_heart == 7) {
 		mes "[Hallen]";
 		mes "So the Rune Stone";
 		mes "is an imitation of just";
@@ -2660,8 +2583,7 @@ airplane,236,63,4	script	Hallen	706,{
 		mes "when he plays the Dice";
 		mes "game for Apples!";
 		next;
-		if(Shinokas_Quest > 9)
-		{
+		if (Shinokas_Quest > 9) {
 			mes "["+strcharinfo(0)+"]";
 			mes "(^333333Wait, I met that guy when";
 			mes "I was helping Shinokas. He";
@@ -2678,8 +2600,7 @@ airplane,236,63,4	script	Hallen	706,{
 		mes "the trouble of learning that";
 		mes "secret information for me...";
 		next;
-		if(checkweight(501,1) != 1)
-		{
+		if (checkweight(501,1) != 1) {
 			mes "[Hallen]";
 			mes "Aw, nuts...";
 			mes "You don't have";
@@ -2689,7 +2610,7 @@ airplane,236,63,4	script	Hallen	706,{
 			mes "in your inventory for me, okay?";
 			close;
 		}
-		if(Shinokas_Quest > 9) set lhz_heart,9;
+		if (Shinokas_Quest > 9) set lhz_heart,9;
 		else set lhz_heart,8;
 		changequest 8040,8041;
 		getitem 501,1;
@@ -2701,9 +2622,7 @@ airplane,236,63,4	script	Hallen	706,{
 		mes "but hey... It's my thought that";
 		mes "counts, right? See you later~";
 		close;
-	}
-	else if(lhz_heart == 8)
-	{
+	} else if (lhz_heart == 8) {
 		mes "[Hallen]";
 		mes "Hey, why don't you";
 		mes "ask Kaci about that";
@@ -2712,9 +2631,7 @@ airplane,236,63,4	script	Hallen	706,{
 		mes "You might learn more about";
 		mes "Ymir's Heart Piece, you know?";
 		close;
-	}
-	else
-	{
+	} else {
 		mes "[Hallen]";
 		mes "Thanks for helping me";
 		mes "out that last time. I guess";
@@ -2726,17 +2643,11 @@ airplane,236,63,4	script	Hallen	706,{
 }
 
 airplane,33,69,4	script	Kaci	73,{
-
-	if(hg_ma1 == 3)
-	{
+	if (hg_ma1 == 3) {
 		mes "[Kaci]";
 		mes "Hello there. My name is Kaci. If you feel bored boarding the airship, why don't you play a game of dice with me.";
 		next;
-		switch( select( "Ask whether she knows Thierry" ) )
-		{
-			case 1:
-				break;
-		}
+		select("Ask whether she knows Thierry");
 		mes "[Kaci]";
 		mes "Thierry ....That name sounds familiar...";
 		next;
@@ -2789,26 +2700,18 @@ airplane,33,69,4	script	Kaci	73,{
 		changequest 8044,8045;
 		set hg_ma1,4;
 		close;
-	}
-	else if(hg_ma1 == 4)
-	{
+	} else if (hg_ma1 == 4) {
 		mes "[Kaci]";
 		mes "You can ask the captain for the whereabouts of Thierry. I am sure that the captain will be willing to help if you tell him what happened.";
 		close;
-	}
-	else if(lhz_heart == 2)
-	{
+	} else if (lhz_heart == 2) {
 		mes "[Kaci]";
 		mes "You must be sooo";
 		mes "bored, adventurer~";
 		mes "How would you like";
 		mes "to play a game of Dice?";
 		next;
-		switch( select( "Give her the letter from Hallen." ) )
-		{
-			case 1:
-				break;
-		}
+		select("Give her the letter from Hallen.");
 		mes "[Kaci]";
 		mes "Oh, Hallen must have";
 		mes "asked you to deliver this.";
@@ -2826,9 +2729,7 @@ airplane,33,69,4	script	Kaci	73,{
 		mes "me, feel free to ask me,";
 		mes "alright? See you later~";
 		close;
-	}
-	else if(lhz_heart == 3)
-	{
+	} else if (lhz_heart == 3) {
 		mes "[Kaci]";
 		mes "Oh, hello. Thanks for";
 		mes "delivering that letter from";
@@ -2838,80 +2739,77 @@ airplane,33,69,4	script	Kaci	73,{
 		mes "letter really made my day~";
 		next;
 L_Ask:
-		switch( select( "Ask about Hallen","Ask about Mawong","Ask about the Airship" ) )
-		{
-			case 1:
-				set .@mesa,1;
-				mes "[Kaci]";
-				mes "Hallen? Well, he and I are";
-				mes "pretty close. Did you know";
-				mes "that we're cousins? In fact,";
-				mes "his dad, my uncle, brought";
-				mes "me as a child after my father";
-				mes "passed away 20 years ago.";
-				next;
-				mes "[Kaci]";
-				mes "There was some kind of";
-				mes "mine explosion accident in";
-				mes "Einbech. I don't remember.";
-				mes "Anyway, me and Hallen are";
-				mes "like sister and brother, and";
-				mes "we always stick together.";
-				next;
-				mes "[Kaci]";
-				mes "When Captain Ferlock saw me";
-				mes "host a Dice game by coincidence";
-				mes "and then hired me to work on his Airship, Hallen insisted on coming";
-				mes "along. He's stubborn like that,";
-				mes "but he's also very sweet.";
-				next;
-				break;
-				
-			case 2:
-				set .@mesb,1;
-				mes "[Kaci]";
-				mes "Mr. Mawong? Oh, don't get";
-				mes "the wrong idea! He's my";
-				mes "mentor, the one who taught";
-				mes "me how to play all of these";
-				mes "wonderful games. He's pretty";
-				mes "famous around Juno, you know.";
-				next;
-				mes "[Kaci]";
-				mes "I used to be so depressed,";
-				mes "not caring about the world";
-				mes "at all, after my father died.";
-				mes "Then, I ran into Mr. Mawong,";
-				mes "and he taught me how to find";
-				mes "the joy in life once again.";
-				next;
-				mes "[Kaci]";
-				mes "Because of him, I decided";
-				mes "to learn his games and to";
-				mes "help people forget their";
-				mes "worries and just enjoy";
-				mes "themselves, even if it's";
-				mes "just for a little while.";
-				next;
-				break;
-				
-			case 3:
-				set .@mesc,1;
-				mes "[Kaci]";
-				mes "The Airship? It's so";
-				mes "huge and beautiful, and";
-				mes "I'm always amazed that it";
-				mes "can fly so gracefully through";
-				mes "the air. I've always wanted to live someplace close to the sky...";
-				next;
-				mes "[Kaci]";
-				mes "A place where I can see";
-				mes "the clouds and bask in the";
-				mes "sun. So, when Captain Ferlock";
-				mes "invited me to work here, it was";
-				mes "like a dream come true~";
-				next;
-				break;
+		switch(select("Ask about Hallen:Ask about Mawong:Ask about the Airship")) {
+		case 1:
+			set .@mesa,1;
+			mes "[Kaci]";
+			mes "Hallen? Well, he and I are";
+			mes "pretty close. Did you know";
+			mes "that we're cousins? In fact,";
+			mes "his dad, my uncle, brought";
+			mes "me as a child after my father";
+			mes "passed away 20 years ago.";
+			next;
+			mes "[Kaci]";
+			mes "There was some kind of";
+			mes "mine explosion accident in";
+			mes "Einbech. I don't remember.";
+			mes "Anyway, me and Hallen are";
+			mes "like sister and brother, and";
+			mes "we always stick together.";
+			next;
+			mes "[Kaci]";
+			mes "When Captain Ferlock saw me";
+			mes "host a Dice game by coincidence";
+			mes "and then hired me to work on his Airship, Hallen insisted on coming";
+			mes "along. He's stubborn like that,";
+			mes "but he's also very sweet.";
+			next;
+			break;
+		case 2:
+			set .@mesb,1;
+			mes "[Kaci]";
+			mes "Mr. Mawong? Oh, don't get";
+			mes "the wrong idea! He's my";
+			mes "mentor, the one who taught";
+			mes "me how to play all of these";
+			mes "wonderful games. He's pretty";
+			mes "famous around Juno, you know.";
+			next;
+			mes "[Kaci]";
+			mes "I used to be so depressed,";
+			mes "not caring about the world";
+			mes "at all, after my father died.";
+			mes "Then, I ran into Mr. Mawong,";
+			mes "and he taught me how to find";
+			mes "the joy in life once again.";
+			next;
+			mes "[Kaci]";
+			mes "Because of him, I decided";
+			mes "to learn his games and to";
+			mes "help people forget their";
+			mes "worries and just enjoy";
+			mes "themselves, even if it's";
+			mes "just for a little while.";
+			next;
+			break;
+		case 3:
+			set .@mesc,1;
+			mes "[Kaci]";
+			mes "The Airship? It's so";
+			mes "huge and beautiful, and";
+			mes "I'm always amazed that it";
+			mes "can fly so gracefully through";
+			mes "the air. I've always wanted to live someplace close to the sky...";
+			next;
+			mes "[Kaci]";
+			mes "A place where I can see";
+			mes "the clouds and bask in the";
+			mes "sun. So, when Captain Ferlock";
+			mes "invited me to work here, it was";
+			mes "like a dream come true~";
+			next;
+			break;
 		}
 		mes "[Kaci]";
 		mes "Please don't hesitate";
@@ -2920,7 +2818,7 @@ L_Ask:
 		mes "or if you're just curious";
 		mes "about me in general~";
 		next;
-		if(!.@mesa || !.@mesb || !.@mesc) goto L_Ask;
+		if (!.@mesa || !.@mesb || !.@mesc) goto L_Ask;
 		mes "[Kaci]";
 		mes "By the way, if Hallen";
 		mes "bothers you with another";
@@ -2937,20 +2835,14 @@ L_Ask:
 		changequest 8037,8038;
 		set lhz_heart,4;
 		close;
-	}
-	else if(lhz_heart == 8)
-	{
+	} else if (lhz_heart == 8) {
 		mes "[Kaci]";
 		mes "Hello, "+strcharinfo(0)+".";
 		mes "It's nice to see you again.";
 		mes "So is there anything I can";
 		mes "help you with today?";
 		next;
-		switch( select( "Who's that drunk over there?" ) )
-		{
-			case 1:
-				break;
-		}
+		select("Who's that drunk over there?");
 		mes "[Kaci]";
 		mes "Oh, him? He's one of my";
 		mes "regulars, some guy who's";
@@ -3001,9 +2893,9 @@ L_Ask:
 }
 
 ein_in01,279,25,0	script	#lab01_heart	139,1,1,{
-
+	end;
 OnTouch:
-	if(lhz_heart == 9)
+	if (lhz_heart == 9)
 	{
 		mes "["+strcharinfo(0)+"]";
 		mes "(^333333I've... I've just";
@@ -3016,9 +2908,9 @@ OnTouch:
 }
 
 ein_in01,264,17,0	script	#lab02_heart	139,1,1,{
-
+	end;
 OnTouch:
-	if(lhz_heart == 9)
+	if (lhz_heart == 9)
 	{
 		mes "["+strcharinfo(0)+"]";
 		mes "What the...";
@@ -3056,17 +2948,16 @@ OnTimer120000:
 }
 
 ein_in01,261,35,0	script	lab03#heart	139,1,1,{
-
+	end;
 OnTouch:
-	if(lhz_heart == 9) {
+	if (lhz_heart == 9) {
 		mes "[Security System]";
 		mes "^FF0000Unauthorized person";
 		mes "detected. Password";
 		mes "Checker not detected.";
 		mes "Access denied.^000000";
 		close;
-	}
-	else if(lhz_heart == 10) {
+	} else if (lhz_heart == 10) {
 		mes "[Security System]";
 		mes "^FF0000Enter the 3 digit password.";
 		mes "You will be allowed 5 tries";

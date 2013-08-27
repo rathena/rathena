@@ -53,7 +53,7 @@ xmas_in,89,92,5	script	Louise Kim#designer	714,{
 	mes "";
 	emotion e_lv;
 	next;
-	if(countitem(2236) > 0) {
+	if (countitem(2236) > 0) {
 		if (select("Here.:It's ok.") == 1) {
 			mes "[Designer Louise Kim]";
 			mes "Nice choice!!";
@@ -296,7 +296,7 @@ prontera,155,285,3	script	Enjoy#enjoy	753,{
 			end;
 		}
 	}
-	else if((christ_solo05 > 0) && (christ_solo05 < 5)){
+	else if ((christ_solo05 > 0) && (christ_solo05 < 5)){
 		mes "[Enjoy]";
 		mes "Each should have one person's phone number.";
 		mes "We must keep it secret before we put in action.";
@@ -397,7 +397,7 @@ prontera,155,285,3	script	Enjoy#enjoy	753,{
 			donpcevent "Christ#christ02::OnCommandEmotion";
 			donpcevent "Mas#mas02::OnCommandEmotion";
 			donpcevent "Event#event02::OnCommandEmotion";
-			misceffect 376; //_HITLINE2
+			misceffect EF_HITLINE2;
 			delitem 604,5; //Branch_of_Dead_Tree
 			set christ_solo05,6;
 			donpcevent "Happymerry#happymerry02::OnCommandOff";
@@ -721,7 +721,7 @@ prontera,62,339,3	script	Christ#christ	875,{
 		set christ_solo05,3;
 		close;
 	}
-	else if(christ_solo05 > 2) {
+	else if (christ_solo05 > 2) {
 		mes "[Christ]";
 		mes "Than,see you there!!";
 		mes "I'll go meet Enjoy!";
@@ -757,7 +757,7 @@ prontera,62,339,3	script	Christ#christ	875,{
 }
 
 prontera,163,66,7	script	Mas#mas	748,{
-	if(christ_solo05 == 3) {
+	if (christ_solo05 == 3) {
 		mes "[Mas]";
 		mes "Herds!!!!!How long does it take!";
 		mes "Somebody know the regenerating time of Herb?!!";
@@ -812,7 +812,7 @@ prontera,163,66,7	script	Mas#mas	748,{
 		set christ_solo05,4;
 		close;
 	}
-	else if(christ_solo05 > 3) {
+	else if (christ_solo05 > 3) {
 		mes "[Mas]";
 		mes "If you excuse me, I'll go ahead and meat Enjoy.";
 		mes "And don't forget to tell ^0000FFEvent^000000 about this.";
@@ -839,7 +839,7 @@ prontera,163,66,7	script	Mas#mas	748,{
 }
 
 prontera,35,209,5	script	Event#event	881,{
-	if(christ_solo05 == 4) {
+	if (christ_solo05 == 4) {
 		mes "[Event]";
 		mes "........................";
 		next;
@@ -893,7 +893,7 @@ prontera,35,209,5	script	Event#event	881,{
 		set christ_solo05,5;
 		close;
 	}
-	else if(christ_solo05 > 4) {
+	else if (christ_solo05 > 4) {
 		mes "[Event]";
 		mes "Wait for me miss Kafra~~~";
 		mes "Don't be so lonely~.";
@@ -1106,7 +1106,7 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 			close;
 		}
 	}
-	else if(christ_carol05 == 1) {
+	else if (christ_carol05 == 1) {
 		mes "[Oholy]";
 		mes "He should not be able to escape";
 		mes "from the town. Please find the";
@@ -1115,8 +1115,8 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 		mes "Punish the wicked devil who is ruining Christmas!!!";
 		close;
 	}
-	else if(christ_carol05 == 2) {
-		if(!checkweight(1201,1)) {
+	else if (christ_carol05 == 2) {
+		if (!checkweight(1201,1)) {
 			mes "^3355FFWait a second!";
 			mes "Right now, you're carrying";
 			mes "too many things with you.";
@@ -1125,8 +1125,7 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 			mes "to store some of your items.^000000";
 			close;
 		}
-		set .@now_weight,MaxWeight-Weight;
-		if(.@now_weight < 2000) {
+		if (MaxWeight - Weight < 2000) {
 			mes "^3355FFWait a second!";
 			mes "Right now, you're carrying";
 			mes "too many things with you.";

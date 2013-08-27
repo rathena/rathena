@@ -14,7 +14,7 @@
 //= 1.2 Moved Alberta NPC to pre-re/re paths. [Euphy]
 //============================================================
 
-// Moscovia Transportation
+// Moscovia Transportation :: mosk_trans
 //============================================================
 -	script	::PR_Officer_moscovia	-1,{
 	mes "[Moscovia P.R. Officer]";
@@ -75,7 +75,7 @@
 				mes "to go to Moscovia";
 				mes "Thank you.";
 				close;
-			}else{
+			} else {
 				mes "[Moscovia P.R. Officer]";
 				mes "Ok then, we're leaving now.";
 				close2;
@@ -116,7 +116,8 @@ moscovia,166,53,4	script	Moscovia P.R. Officer#2	960,{
 	end;
 }
 
-// Generic Moscovia NPCs
+
+// Moscovia Palace :: mos_swan
 //============================================================
 moscovia,253,166,4	script	Soldier#mosk1	966,{
 	mes "[Soldier]";
@@ -126,14 +127,11 @@ moscovia,253,166,4	script	Soldier#mosk1	966,{
 	close;
 }
 
-// Moscovia Palace
-//============================================================
 -	script	Soldier#mosk::MoscSoldier	966,{
 	mes "[Soldier]";
 	mes "Please be silent or the Csar will be angry.";
 	close;
 }
-
 mosk_in,118,66,5	duplicate(MoscSoldier)	Soldier#mosk02	966
 mosk_in,133,110,3	duplicate(MoscSoldier)	Soldier#mosk03	966
 mosk_in,133,73,3	duplicate(MoscSoldier)	Soldier#mosk04	966

@@ -10,11 +10,12 @@
 //= [Official Conversion]
 //= Guides for the City of Comodo
 //===== Additional Comments: =================================
-//= Fully working v1.1 Now using duplicate command.
+//= Fully working
+//= 1.1 Now using duplicate command.
 //= 1.2 Optimized, updated common guide names [Lupus]
 //= 1.3 Updated the guide according to how it is on iRO, thanks
-//=	to Muad_Dib [MasterOfMuppets]
-//= 1.4	Removed 3 guides, and converted to use functions.
+//=     to Muad_Dib [MasterOfMuppets]
+//= 1.4 Removed 3 guides, and converted to use functions.
 //= 1.5 Rescripted to official 10.3 standards. [L0ne_W0lf]
 //============================================================
 

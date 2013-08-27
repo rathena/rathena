@@ -13,7 +13,7 @@
 //= Condition if done: (MISC_QUEST & 1)
 //===== Additional Comments: =================================
 //= 1.9 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
-//=	Added tracking variables in, which are unset when complete.
+//=     Added tracking variables in, which are unset when complete.
 //= 2.0 Added missing checkweight. [L0ne_W0lf]
 //= 2.1 Fixed dialog for if your missing the needed items (He always said the dialog for grape juice). [Kisuka]
 //============================================================
@@ -271,7 +271,7 @@ payon_in03,188,146,5	script	Marx Hansen#juice	86,{
 			}
 			delitem .@fruit,.@make;
 			delitem 713,.@make;
-			set zeny,zeny-.@total_zeny;
+			set Zeny, Zeny-.@total_zeny;
 			getitem .@juice,.@make;
 
 			mes "[Merchant Marx Hansen]";
@@ -343,10 +343,10 @@ payon_in03,188,146,5	script	Marx Hansen#juice	86,{
 //= 1.2 fixed misplaced Grape<->Carrot juices [Lupus]
 //= 1.3 added a loopless menu 'as many as possible' [Lupus]
 //= 1.3a Turned the juice making part of the Juicer npc into a
-//= subfunc.  Changed fruit amount needed to 1.[kobra_k88]
-//= Fixed exploits [Lupus]
+//=     subfunc.  Changed fruit amount needed to 1.[kobra_k88]
+//=     Fixed exploits [Lupus]
 //= 1.6 fixed typo (where did @ipnut came from?) [Lance]
 //= 1.8 got rid of vars: 'MEAT',"MARIANNE","MORRISON"
-//= 	From now, all common quests start using bits of the
-//=	same variable MISC_QUEST [Lupus]
+//=     From now, all common quests start using bits of the
+//=     same variable MISC_QUEST [Lupus]
 //============================================================ 

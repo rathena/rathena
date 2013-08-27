@@ -8,7 +8,7 @@
 //= rAthena SVN
 //===== Description: ========================================= 
 //= [Official Conversion]
-//= Poring War
+//= Join a team in battle between Angeling and Deviling.
 //===== Additional Comments: ================================= 
 //= 1.0 First version. [Kisuka][5511]
 //= 1.1 Fixed some typos/bugs. [CalciumKid]
@@ -47,7 +47,7 @@ prt_fild08,159,371,3	script	Poring War Recruiter#wop	909,{
 			close2;
 			warp "poring_w01",112,138;
 			end;
-		}else{
+		} else {
 			mes "[Poring]";
 			mes "Oh, and there's an entrance fee of 500 zeny, ring.";
 			mes "...........";
@@ -125,7 +125,7 @@ poring_w01,100,97,3	script	Poring Vending Machine#w	909,{
 					mes "1 of 7 diffeent kinds of figures will be selected.";
 					next;
 					if(select("Draw:Cancel") == 1) {
-						if(countitem(7539) >= 50) {
+						if (countitem(7539) >= 50) {
 							mes "Insert the Poring coin and pull the lever.";
 							mes "Click~ The item came out of the mouth of the Poring with a rumbling sound.";
 							mes "What could it be?";
@@ -143,7 +143,7 @@ poring_w01,100,97,3	script	Poring Vending Machine#w	909,{
 							delitem 7539,50; // Poring_Coin
 							getitem .@Random_Figure,1;
 							close;
-						}else{
+						} else {
 							mes "Not enough coins.";
 							close;
 						}
@@ -210,11 +210,11 @@ poring_w01,100,97,3	script	Poring Vending Machine#w	909,{
 	end;
 
 S_PoringVending:
-	if(countitem(7539) >= getarg(1)) {
+	if (countitem(7539) >= getarg(1)) {
 		mes "Click~ The item came out of the mouth of the Poring with a rumbling sound.";
 		delitem 7539,getarg(1); // Poring_Coin
 		getitem getarg(0),1;
-	}else{
+	} else {
 		mes "Not enough coins.";
 	}
 	close;
@@ -291,7 +291,7 @@ poring_w01,96,97,3	script	Sweet Devi#wop	738,{
 		mes "Oh, Alright. I can help.";
 		mes "I'll send you back to your savepoint.";
 		close2;
-		if(WoP_SaveMap$ != "") {
+		if (WoP_SaveMap$ != "") {
 			savepoint WoP_SaveMap$,WoP_SaveMap_X,WoP_SaveMap_Y;
 			set WoP_SaveMap$,"";
 			set WoP_SaveMap_X,0;
@@ -304,7 +304,7 @@ poring_w01,96,97,3	script	Sweet Devi#wop	738,{
 OnPCLogoutEvent:
 	getmapxy .@map$,.@x,.@y,0;
 	if (.@map$ == "poring_w02") {
-		if(WoP_SaveMap$ != "") {
+		if (WoP_SaveMap$ != "") {
 			savepoint WoP_SaveMap$,WoP_SaveMap_X,WoP_SaveMap_Y;
 			set WoP_SaveMap$,"";
 			set WoP_SaveMap_X,0;
@@ -318,7 +318,7 @@ OnPCLogoutEvent:
 OnPCDieEvent:
 	getmapxy .@map$,.@x,.@y,0;
 	if (.@map$ == "poring_w02" && wop_team) {
-		if(getsavepoint(0) != "poring_w02" && WoP_SaveMap$ == "") {
+		if (getsavepoint(0) != "poring_w02" && WoP_SaveMap$ == "") {
 			set WoP_SaveMap$,getsavepoint(0);
 			set WoP_SaveMap_X,getsavepoint(1);
 			set WoP_SaveMap_Y,getsavepoint(2);
@@ -390,12 +390,12 @@ OnInit:
 OnStartArena:
 	warpwaitingpc "poring_w02",26,175;
 	disablewaitingroomevent;
-	if($@wop_teamcount == 0) {
+	if ($@wop_teamcount == 0) {
 		set $@wop_teamcount,1;
 		donpcevent "Poring#wop_door_d::OnDevilingStart";
 		donpcevent "#wop_warp_rtry::OnStop";
 	}
-	else if($@wop_teamcount == 1) {
+	else if ($@wop_teamcount == 1) {
 		donpcevent "#wop_master::OnStart";
 		donpcevent "Poring#wop_door_d::OnStop";
 		stopnpctimer;
@@ -482,12 +482,12 @@ OnInit:
 OnStartArena:
 	warpwaitingpc "poring_w02",170,175;
 	disablewaitingroomevent;
-	if($@wop_teamcount == 0) {
+	if ($@wop_teamcount == 0) {
 		set $@wop_teamcount,1;
 		donpcevent "Poring#wop_door_a::OnAngelingStart";
 		donpcevent "#wop_warp_rtry::OnStop";
 	}
-	else if($@wop_teamcount == 1) {
+	else if ($@wop_teamcount == 1) {
 		donpcevent "#wop_master::OnStart";
 		donpcevent "Poring#wop_door_a::OnStop";
 		stopnpctimer;
@@ -631,7 +631,7 @@ poring_w02,26,181,3	script	Mr. Doppel#wop_team_a	739,{
 	}
 	set .@a_tname$,getpartyname($@wop_team_a);
 	set .@pname$,getpartyname(getcharid(1));
-	if($@wop_team_a != 0 && $@wop_team_a == getcharid(1)) {
+	if ($@wop_team_a != 0 && $@wop_team_a == getcharid(1)) {
 		mes "[Mr. Doppel]";
 		mes "So, everyone joined the party?";
 		mes "The name of the party is... " + .@pname$ + ", right?";
@@ -648,7 +648,7 @@ poring_w02,26,181,3	script	Mr. Doppel#wop_team_a	739,{
 			mes "If you don't get there in time, you won't make it to the battle.";
 			close;
 		case 2:
-			if((getpartyleader(getcharid(1),2) == getcharid(0))) {
+			if ((getpartyleader(getcharid(1),2) == getcharid(0))) {
 				mes "[Mr. Doppel]";
 				mes "So, you are the leader. Before going to the battlefield, you should check all your members.";
 				next;
@@ -680,8 +680,8 @@ poring_w02,26,181,3	script	Mr. Doppel#wop_team_a	739,{
 		}
 	}
 	else {
-		if((getpartyleader(getcharid(1),2) == getcharid(0))) {
-			if($@wop_team_a == 0) {
+		if ((getpartyleader(getcharid(1),2) == getcharid(0))) {
+			if ($@wop_team_a == 0) {
 				mes "[Mr. Doppel]";
 				mes "So, you are the party leader of Angeling Team.";
 				mes "Are you sure all the members are in your party?";
@@ -762,7 +762,7 @@ poring_w02,170,181,3	script	Mr. Doppel#wop_team_d	739,{
 	}
 	set .@d_tname$,getpartyname($@wop_team_d);
 	set .@pname$,getpartyname(getcharid(1));
-	if($@wop_team_d != 0 && $@wop_team_d == getcharid(1)) {
+	if ($@wop_team_d != 0 && $@wop_team_d == getcharid(1)) {
 		mes "[Mr. Doppel]";
 		mes "So, everyone joined the party?";
 		mes "The name of the party is... " + .@pname$ + ", right?";
@@ -779,7 +779,7 @@ poring_w02,170,181,3	script	Mr. Doppel#wop_team_d	739,{
 			mes "If you don't get there in time, you won't make it to the battle.";
 			close;
 		case 2:
-			if((getpartyleader(getcharid(1),2) == getcharid(0))) {
+			if ((getpartyleader(getcharid(1),2) == getcharid(0))) {
 				mes "[Mr. Doppel]";
 				mes "So, you are the leader. Before going to the battlefield, you should check all your members.";
 				next;
@@ -797,7 +797,7 @@ poring_w02,170,181,3	script	Mr. Doppel#wop_team_d	739,{
 					warp "poring_w02",153,82;
 					end;
 				}
-			}else{
+			} else {
 				mes "[Mr. Doppel]";
 				mes "Right. I'm gonna send you to the battle staging area.";
 				mes "Wait for all the other party members there.";
@@ -808,9 +808,9 @@ poring_w02,170,181,3	script	Mr. Doppel#wop_team_d	739,{
 				end;
 			}
 		}
-	}else{
-		if((getpartyleader(getcharid(1),2) == getcharid(0))) {
-			if($@wop_team_d == 0) {
+	} else {
+		if ((getpartyleader(getcharid(1),2) == getcharid(0))) {
+			if ($@wop_team_d == 0) {
 				mes "[Mr. Doppel]";
 				mes "So, you are the party leader of Deviling Team.";
 				mes "Are you sure all the members are in your party?";
@@ -842,7 +842,7 @@ poring_w02,170,181,3	script	Mr. Doppel#wop_team_d	739,{
 					mes "The clock is ticking. Make up your mind and register as soon as you can.";
 					close;
 				}
-			}else{
+			} else {
 				mes "[Mr. Doppel]";
 				mes "So, you are the leader of the party.";
 				mes "Haven't you finished the party registration yet?";
@@ -854,7 +854,7 @@ poring_w02,170,181,3	script	Mr. Doppel#wop_team_d	739,{
 				mes "Please, confirm.";
 				close;
 			}
-		}else{
+		} else {
 			mes "[Mr. Doppel]";
 			mes "If you aren't a registered member of the party, you can't join the battle.";
 			next;
@@ -1089,7 +1089,7 @@ OnAngelingSpawn:
 
 OnMyMobDead:
 	set $@wop_deadcount_a,$@wop_deadcount_a + 1;
-	if($@wop_deadcount_a == 1) {
+	if ($@wop_deadcount_a == 1) {
 		mapannounce "poring_w02","Mr. Doppel: The Angeling on the 1st base has been killed! 1 point lost!!",0,0x00ff00;
 		initnpctimer;
 	}
@@ -1123,7 +1123,7 @@ OnAngelingSpawn:
 
 OnMyMobDead:
 	set $@wop_deadcount_a,$@wop_deadcount_a + 1;
-	if($@wop_deadcount_a == 1) {
+	if ($@wop_deadcount_a == 1) {
 		mapannounce "poring_w02","Mr. Doppel: The Angeling on the 2nd base has been killed! 1 point lost!!",0,0x00ff00;
 		initnpctimer;
 	}
@@ -1158,7 +1158,7 @@ OnDevilingSpawn:
 
 OnMyMobDead:
 	set $@wop_deadcount_d,$@wop_deadcount_d + 1;
-	if($@wop_deadcount_d == 1) {
+	if ($@wop_deadcount_d == 1) {
 		mapannounce "poring_w02","Mr. Doppel: The Deviling on the 1st base has been killed! 1 point lost!!",0,0x00ff00;
 		initnpctimer;
 	}
@@ -1193,7 +1193,7 @@ OndevilingSpawn:
 
 OnMyMobDead:
 	set $@wop_deadcount_d,$@wop_deadcount_d + 1;
-	if($@wop_deadcount_d == 1) {
+	if ($@wop_deadcount_d == 1) {
 		mapannounce "poring_w02","Mr. Doppel: The deviling on the 2nd base has been killed! 1 point lost!!",0,0x00ff00;
 		initnpctimer;
 	}
@@ -1226,14 +1226,14 @@ poring_w02,99,201,3	script	Deviruchi#wop_endmaster	738,{
 	}
 	set .@a_point,$@wop_deadcount_a;
 	set .@d_point,$@wop_deadcount_d;
-	if(getcharid(1) == $@wop_team_a) {
-		if(.@a_point < .@d_point) {
+	if (getcharid(1) == $@wop_team_a) {
+		if (.@a_point < .@d_point) {
 			mes "[Devi]";
 			mes "Good work!";
 			mes "Thanks to you, we increased our chances of victory.";
 			mes "Please, accept these Poring Coins as a sign of our appreciation.";
 			next;
-			if(wop_team == 1) {
+			if (wop_team == 1) {
 				mes "[Devi]";
 				mes "Goodbye, my human friend.";
 				close2;
@@ -1253,13 +1253,13 @@ poring_w02,99,201,3	script	Deviruchi#wop_endmaster	738,{
 				end;
 			}
 		}
-		else if(.@a_point == .@d_point) {
+		else if (.@a_point == .@d_point) {
 			mes "[Devi]";
 			mes "You did the best you could.";
 			mes "I' ts a shame the battle was tied...";
 			mes "Even so, thanks for coming to fight for us. Please, accept this Poring Coin.";
 			next;
-			if(wop_team == 1) {
+			if (wop_team == 1) {
 				mes "[Devi]";
 				mes "Goodbye, my human friend.";
 				close2;
@@ -1281,7 +1281,7 @@ poring_w02,99,201,3	script	Deviruchi#wop_endmaster	738,{
 			}
 		}
 		else {
-			if(wop_team == 1) {
+			if (wop_team == 1) {
 				mes "[Devi]";
 				mes "Well, I guess we had bad luck...";
 				mes "I cant give you anything, since we lost and everything...";
@@ -1307,7 +1307,7 @@ poring_w02,99,201,3	script	Deviruchi#wop_endmaster	738,{
 			}
 		}
 	}
-	else if(getcharid(1) == $@wop_team_d) {
+	else if (getcharid(1) == $@wop_team_d) {
 		if (.@a_point > .@d_point) {
 			mes "[Devi]";
 			mes "Good work!";
@@ -1334,13 +1334,13 @@ poring_w02,99,201,3	script	Deviruchi#wop_endmaster	738,{
 				end;
 			}
 		}
-		else if(.@a_point == .@d_point) {
+		else if (.@a_point == .@d_point) {
 			mes "[Devi]";
 			mes "You did the best you could.";
 			mes "It's a shame the battle was tied...";
 			mes "Even so, thanks for coming to fight for us. Please, accept this Poring Coin.";
 			next;
-			if(wop_team == 2) {
+			if (wop_team == 2) {
 				mes "[Devi]";
 				mes "Goodbye, my human friend.";
 				close2;
@@ -1362,7 +1362,7 @@ poring_w02,99,201,3	script	Deviruchi#wop_endmaster	738,{
 			}
 		}
 		else {
-			if(wop_team == 2) {
+			if (wop_team == 2) {
 				mes "[Devi]";
 				mes "Well, I guess we had bad luck...";
 				mes "I cant give you anything, since we lost and everything...";
@@ -1452,20 +1452,20 @@ OnTimer68100:
 //============================================================
 poring_w02,99,52,0	script	Angeling Guardian#wop_da	111,{
 	cutin "wop_emb0" + $@wop_doorcount_a,1;
-	if($@wop_doorcount_a < 4) {
+	if ($@wop_doorcount_a < 4) {
 		if (wop_team == 2) {
 			mes "There is a device to equip the War Badges.";
 			mes "I can see the empty slots to equip the Badges.";
 			next;
 			switch(select("Equip War Badge.:Cancel.")) {
 			case 1:
-				if(countitem(7773)) {
-					if($@wop_doorcount_a < 4) {
+				if (countitem(7773)) {
+					if ($@wop_doorcount_a < 4) {
 						mes "War Badge equipped.";
 						delitem 7773,1; // War_Badge
 						set $@wop_doorcount_a,$@wop_doorcount_a + 1;
 						cutin "wop_emb0" + $@wop_doorcount_a,1;
-						if($@wop_doorcount_a == 4) {
+						if ($@wop_doorcount_a == 4) {
 							next;
 							mes "Gate Activated.";
 							donpcevent "#aroom_ingate_wop::OnEnable";
@@ -1549,20 +1549,20 @@ OnTouch:
 
 poring_w02,98,113,0	script	Deviling Guardian#wop_dd	111,{
 	cutin "wop_emb0" + $@wop_doorcount_d,1;
-	if($@wop_doorcount_d < 4) {
+	if ($@wop_doorcount_d < 4) {
 		if (wop_team == 1) {
 			mes "There is a device to equip the War Badges.";
 			mes "I can see the empty slots to equip the Badges.";
 			next;
 			switch(select("Equip War Badge.:Cancel.")) {
 			case 1:
-				if(countitem(7773)) {
-					if($@wop_doorcount_d < 4) {
+				if (countitem(7773)) {
+					if ($@wop_doorcount_d < 4) {
 						mes "War Badge equipped.";
 						delitem 7773,1; // War_Badge
 						set $@wop_doorcount_d,$@wop_doorcount_d + 1;
 						cutin "wop_emb0" + $@wop_doorcount_d,1;
-						if($@wop_doorcount_d == 4) {
+						if ($@wop_doorcount_d == 4) {
 							next;
 							mes "Gate Activated.";
 							donpcevent "#droom_ingate_wop::OnEnable";
@@ -1683,14 +1683,14 @@ OnTouch:
 	emotion e_go,0,"Angeling Side Poring#wa4";
 	emotion e_go,0,"Angeling Side Poring#wa5";
 	next;
-	if(wop_team == 1) {
+	if (wop_team == 1) {
 		mes "[Porings]";
 		mes "Ohhhhhh, there he is, the warrior that fought for us!!";
 		mes "Oh my god... Nice, ring!";
 		mes "Poring~ Poring~ Poooooo~";
 		mes "Party of Angeling~ Popopo, Poring!";
 	}
-	else if(wop_team == 2) {
+	else if (wop_team == 2) {
 		mes "[Porings]";
 		mes "Wait, YOU! Aren't you on the side of the Devilings?!";
 		mes "Get out now! Leave!!";
@@ -1736,13 +1736,13 @@ OnTouch:
 	emotion e_go,0,"Deviling Side Marin#wd4";
 	emotion e_go,0,"Deviling Side Marin#wd5";
 	next;
-	if(wop_team == 2) {
+	if (wop_team == 2) {
 		mes "[Marins]";
 		mes "Ohhhh... Here is the warrior that fought for us!!";
 		mes "Amazing!";
 		mes "This proves that humans recognize us as true monsters!!";
 	}
-	else if(wop_team == 1) {
+	else if (wop_team == 1) {
 		mes "[Marins]";
 		mes "Wait, YOU! Aren't you on the side of the Angelings?!";
 		mes "Get out now! Leave!!";

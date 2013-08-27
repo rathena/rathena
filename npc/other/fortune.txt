@@ -47,7 +47,7 @@ payon_in03,117,128,5	script	Fortune Teller	704,{
 			else {
 				mes "[Lhimetorra]";
 				mes "I accept your heart and your devotion with my gratitude. Thoughts are more important than the amount when paying a fortune teller.";
-				set zeny,zeny-.@input;
+				set Zeny, Zeny-.@input;
 			}
 			next;
 			mes "[Lhimetorra]";
@@ -2755,7 +2755,7 @@ payon_in03,75,129,5	script	Poring Fortune Teller	704,{
 				mes "Nope!";
 				close;
 			}
-			set zeny,zeny-1000;
+			set Zeny, Zeny-1000;
 			mes "[Chocarle]";
 			mes " Thank you~! Then we shall look into your fortune! ";
 			mes " First, clear your mind! Just like washing when you wash dishes! ";

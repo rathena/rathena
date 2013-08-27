@@ -10,9 +10,9 @@
 //= Spawns for hu_fild05 and hu_fild04, numbers may not be correct [MasterOfMuppets]
 //= 0.2 Fixed Petit ID
 //= 0.3 Updated the spawns using kRO's website as info,  [MasterOfMuppets]
-//= 	thanks to battousai90
+//=      thanks to battousai90
 //= 0.4 Updated after Episode 10.4 - Hugel [Poki#3]
-//=	Mob quantity is custom.
+//=     Mob quantity is custom.
 //= 1.0 Updated by using Tharis' Homun AI, by Tharis [Vicious]
 //= 1.1 Official X.3 spawns [Playtester]
 //= 1.2 Some 11.1 spawn updates [Playtester]

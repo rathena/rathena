@@ -20,13 +20,13 @@
 //= - Part 3: Found in Doomed_Swords.txt
 //= - Variable in use dmdswrd_Q (Max 45)
 //===== Additional Comments: ================================= 
-//= v1.1 Re-did the text and re-organized the script.  Corrected some items. [kobra_k88]
-//= v1.2 Added part to Bro's for alchemist quest [Darkchild]
+//= 1.1 Re-did the text and re-organized the script.  Corrected some items. [kobra_k88]
+//= 1.2 Added part to Bro's for alchemist quest [Darkchild]
 //= 1.3 fixed that part of Alch Job Quest. [Lupus]
 //= 1.4 Fixed exploit [Lupus]
 //= 1.5 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
-//=	Merged metto_quest.txt into Juno quest file.
-//=	Added the Juno portion of the Doomed Swords quest.
+//=     Merged metto_quest.txt into Juno quest file.
+//=     Added the Juno portion of the Doomed Swords quest.
 //= 1.6 Fixed various errors in the Bajin NPC. [L0ne_W0lf]
 //= 1.7 Changed ALCH_Q check and set to corrispond to new alchemist job quest. [L0ne_W0lf]
 //= 1.8 Fixed metto_q never reaching 2. Made some names more unique. [L0ne_W0lf]
@@ -35,7 +35,7 @@
 //= 2.0a Fixed several typos (bugreport:1786) [akrus]
 //============================================================ 
 
-// Metto Quest
+// Metto Quest :: yuno_ryusei
 //============================================================
 yuno_in03,26,39,3	script	Metto#juno	709,{
 	mes "[Metto]";
@@ -229,8 +229,7 @@ yuno_in01,17,30,5	script	Wagan#juno	85,{
 		next;
 		mes "[Wagan]";
 		if (Class == Job_Sage) {
-			set .@now_weight,maxweight - weight;
-			if (.@now_weight < 300) {
+			if (MaxWeight - Weight < 300) {
 				mes "Oh no, it seems that you are carrying too much stuff! Would you make some room?";
 				close;
 			}
@@ -239,8 +238,7 @@ yuno_in01,17,30,5	script	Wagan#juno	85,{
 			getitem 715,10; //Yellow_Gemstone
 			close;
 		}
-		set .@now_weight,maxweight - weight;
-		if (.@now_weight < 150) {
+		if (MaxWeight - Weight < 150) {
 			mes "Oh no, it seems that you are carrying too much! Would you make some room?";
 			close;
 		}
@@ -424,7 +422,7 @@ yuno_in03,178,43,0	script	CiCi#juno	121,{
 	}
 }
 
-// Alchemist Brothers Quest
+// Alchemist Brothers Quest :: yuno_ryusei
 //============================================================
 yuno_in01,103,157,3	script	Bain#juno	98,{
 	if (checkweight(1201,1) == 0) {
@@ -533,7 +531,7 @@ S_DelItems:
 	delitem 7043,5; //Fine_Sand
 	delitem 757,3; //Elunium_Stone
 	delitem 756,3; //Oridecon_Stone
-	set zeny,zeny-2000;
+	set Zeny, Zeny-2000;
 	getitem getarg(0),getarg(1); //Gold
 	mes "[Bain]";
 	mes "AHHH, it is a success!";
@@ -661,7 +659,7 @@ S_DelItems:
 	delitem 7043,5; //Fine_Sand
 	delitem 757,3; //Elunium_Stone
 	delitem 756,3; //Oridecon_Stone
-	set zeny,zeny-2000;
+	set Zeny, Zeny-2000;
 	getitem getarg(0),getarg(1); //Gold
 	mes "[Bajin]";
 	mes "AHHH, it is a success!";
@@ -686,7 +684,7 @@ S_DelItems:
 	close;
 }
 
-// Doomed Swords - Juno Portion
+// Doomed Swords - Juno Portion :: matnani_yuno
 //============================================================ 
 yuno,157,87,4	script	A Citizen of Juno#juno	102,{
 	mes "[Shalima]";
@@ -1098,7 +1096,7 @@ yuno,213,298,4	script	Sage Esklah#juno	735,{
 			mes "^3355FF5 Decayed Nail^000000.";
 			next;
 			mes "[Esklah]";
-			mes "For someone seeking the doomed sword, this should be a relatively simple task. Now go, and bring me what I have asked."			;
+			mes "For someone seeking the doomed sword, this should be a relatively simple task. Now go, and bring me what I have asked.";
 			set dmdswrd_Q,28;
 			close;
 		case 28:

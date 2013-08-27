@@ -53,7 +53,7 @@ alberta,30,65,3	script	Akagi	730,{
 					warp "amatsu",178,176;
 					end;
 			}
-		}else{
+		} else {
 			mes "[Akagi]";
 			mes "Hm? I cannot be";
 			mes "of any service to";
@@ -61,7 +61,7 @@ alberta,30,65,3	script	Akagi	730,{
 			mes "a little stronger...";
 			close;
 		}
-	}else{
+	} else {
 		mes "[Akagi]";
 		mes "Hmm...";
 		mes "You and I...";
@@ -192,7 +192,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 			setquest 6015;
 			close;
 		}
-		else if(NINJ_Q == 1) {
+		else if (NINJ_Q == 1) {
 			mes "[Cougar]";
 			mes "Even if this task";
 			mes "isn't that urgent,";
@@ -201,7 +201,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 			mes "my letter to Wildcat Joe.";
 			close;
 		}
-		else if(NINJ_Q == 2) {
+		else if (NINJ_Q == 2) {
 			mes "[Cougar]";
 			mes "Did you deliver that";
 			mes "letter to Wildcat Joe?";
@@ -211,7 +211,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 			mes "if you can needle him for it.";
 			close;
 		}
-		else if(NINJ_Q == 3) {
+		else if (NINJ_Q == 3) {
 			mes "[Cougar]";
 			mes "Ah, you've returned.";
 			mes "So did Wildcat Joe send";
@@ -259,7 +259,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 			changequest 6017,6018;
 			close;
 		}
-		else if(NINJ_Q == 4) {
+		else if (NINJ_Q == 4) {
 			if (countitem(7053) < 5 || countitem(1010) < 1) {
 				mes "[Cougar]";
 				mes "Hurry and bring";
@@ -270,7 +270,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 				mes "against Wildcat Joe!";
 				close;
 			}
-			if (Skillpoint != 0) {
+			if (SkillPoint != 0) {
 				mes "[Cougar]";
 				mes "Whoa, whoa...";
 				mes "You still have some";
@@ -350,7 +350,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 			mes "the respect of any Ninja~";
 			close;
 		}
-	}else{
+	} else {
 		if (Class == Job_Ninja) {
 			mes "[Cougar]";
 			mes "How have you been?";
@@ -360,7 +360,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 			mes "can do that, you'll get";
 			mes "the respect of any Ninja~";
 			close;
-		}else{
+		} else {
 			mes "[Cougar]";
 			mes "What...?";
 			mes "How were you able";
@@ -436,7 +436,7 @@ einbroch,184,194,3	script	Suspicious Man#nq	 	881,{
 		changequest 6015,6016;
 		close;
 	}
-	else if(NINJ_Q == 2) {
+	else if (NINJ_Q == 2) {
 		if (countitem(7053) < 5 || countitem(1010) < 1) {
 			mes "[Suspicious Man]";
 			mes "Please bring";
@@ -532,7 +532,7 @@ einbroch,184,194,3	script	Suspicious Man#nq	 	881,{
 		warp "amatsu",113,127;
 		end;
 	}
-	else if(NINJ_Q == 3) {
+	else if (NINJ_Q == 3) {
 		mes "[Red Leopard Joe]";
 		mes "Eh? I'm not sure what";
 		mes "happened, but it seems";
@@ -555,7 +555,7 @@ einbroch,184,194,3	script	Suspicious Man#nq	 	881,{
 		warp "amatsu",113,127;
 		end;
 	}
-	else if(NINJ_Q == 4) {
+	else if (NINJ_Q == 4) {
 		mes "[Red Leopard Joe]";
 		mes "Cougar asked you to";
 		mes "gather some materials";
@@ -565,7 +565,7 @@ einbroch,184,194,3	script	Suspicious Man#nq	 	881,{
 		mes "to beat him in a fair fight~";
 		close;
 	}
-	else if(NINJ_Q == 5 && Class == Job_Ninja) {
+	else if (NINJ_Q == 5 && Class == Job_Ninja) {
 		mes "[Red Leopard Joe]";
 		mes "Oh, you're a Ninja~";
 		mes "I hope you continue to";

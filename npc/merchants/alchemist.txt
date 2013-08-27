@@ -80,7 +80,7 @@ alde_alche,24,188,3	script	Guild Dealer	740,{
 				mes "in your inventory.";
 				close;
 			}
-			set zeny,zeny-.@sell;
+			set Zeny, Zeny-.@sell;
 			getitem 7134,.@input; //Medicine_Bowl
 			mes "[Gever Al Sharp]";
 			mes "Thank you.";
@@ -153,7 +153,7 @@ S_SellManual:
 	mes "That'll be "+getarg(1)+" zeny.";
 	next;
 	if (select("Purchase.:Quit.") == 1) {
-		set zeny,zeny-getarg(1);
+		set Zeny, Zeny-getarg(1);
 		getitem getarg(0),1;
 		mes "[Gever Al Sharp]";
 		mes "Thank you for";

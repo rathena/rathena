@@ -71,7 +71,7 @@ ecl_fild01,110,316,2	script	Tourist#ep14_2f7	896,{
 	next;
 	mes "[Tourist]";
 	mes "Perhaps you could consider it as the weight of life?";
-	emotion 38,0;
+	emotion e_awsm,0;
 	close;
 }
 

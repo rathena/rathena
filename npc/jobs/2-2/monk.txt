@@ -11,7 +11,7 @@
 //= Job quest for Monk classes
 //===== Additional Comments: ================================= 
 //= 2.2 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
-//=	No longer uses function "F_BlockHigh"
+//=     No longer uses function "F_BlockHigh"
 //= 2.3 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 2.3a Deleted unused variables. [Samuray22]
 //= 2.4 Added Quest Log commands. [Kisuka]
@@ -2615,10 +2615,12 @@ job_monk,0,0,0,0	monster	Thief Bug Larva	1051,20,0,0,0
 //= 1.3 Added Baby Class Support [Lupus]
 //= 1.5 Fixed possible EXP abuse [Lupus]
 //= 1.6 Added a func which prevent advanced classes passing
-//= 2nd Job Quests again. It also guides adv classes where
-//= to go. [Lupus] 1.7 Fixed warps19/20 [Yor]
+//=     2nd Job Quests again. It also guides adv classes where
+//=     to go. [Lupus]
+//= 1.7 Fixed warps19/20 [Yor]
 //= 1.8 Fixed bugs. Fixed Green Potion exploit. Getting rid of Jfunc mess [Lupus]
 //= 1.9 Added a missing check in Fuhai and fixed a LOT of Engrish. [Zephiris]
 //= 1.9b Fixed another bug in Fuhai. [Zephiris]
 //= 2.0 Changed numbers to constants. [Vicious]
 //= 2.1 Removed Duplicates [Silent]
+//============================================================ 
