@@ -258,6 +258,10 @@ static jmp_buf     error_jump;
 static char*       error_msg;
 static const char* error_pos;
 static int         error_report; // if the error should produce output
+// Used by disp_warning_message
+static const char* parser_current_src;
+static const char* parser_current_file;
+static int         parser_current_line;
 
 // for advanced scripting support ( nested if, switch, while, for, do-while, function, etc )
 // [Eoe / jA 1080, 1081, 1094, 1164]
@@ -639,6 +643,10 @@ static void disp_error_message2(const char *mes,const char *pos,int report)
 }
 #define disp_error_message(mes,pos) disp_error_message2(mes,pos,1)
 
+static void disp_warning_message(const char *mes, const char *pos) {
+	script_warning(parser_current_src,parser_current_file,parser_current_line,mes,pos);
+}
+
 /// Checks event parameter validity
 static void check_event(struct script_state *st, const char *evt)
 {
@@ -892,8 +900,10 @@ const char* skip_space(const char* p)
 			p += 2;
 			for(;;)
 			{
-				if( *p == '\0' )
-					return p;//disp_error_message("script:skip_space: end of file while parsing block comment. expected "CL_BOLD"*/"CL_NORM, p);
+				if( *p == '\0' ) {
+					disp_warning_message("script:script->skip_space: end of file while parsing block comment. expected "CL_BOLD"*/"CL_NORM, p);
+					return p;
+				}
 				if( *p == '*' && p[1] == '/' )
 				{// end of block comment
 					p += 2;
@@ -1225,7 +1235,7 @@ const char* parse_variable(const char* p) {
  *------------------------------------------*/
 const char* parse_simpleexpr(const char *p)
 {
-	int i;
+	long long i;
 	p=skip_space(p);
 
 	if(*p==';' || *p==',')
@@ -1250,8 +1260,15 @@ const char* parse_simpleexpr(const char *p)
 	} else if(ISDIGIT(*p) || ((*p=='-' || *p=='+') && ISDIGIT(p[1]))){
 		char *np;
 		while(*p == '0' && ISDIGIT(p[1])) p++;
-		i=strtoul(p,&np,0);
-		add_scripti(i);
+		i=strtoll(p,&np,0);
+		if( i < INT_MIN ) {
+			i = INT_MIN;
+			disp_warning_message("parse_simpleexpr: underflow detected, capping value to INT_MIN",p);
+		} else if( i > INT_MAX ) {
+			i = INT_MAX;
+			disp_warning_message("parse_simpleexpr: overflow detected, capping value to INT_MAX",p);
+		}
+		add_scripti((int)i);
 		p=np;
 	} else if(*p=='"'){
 		add_scriptc(C_STR);
@@ -2254,14 +2271,12 @@ static const char* script_print_line(StringBuf* buf, const char* p, const char* 
 	return p+i+(p[i] == '\n' ? 1 : 0);
 }
 
-void script_error(const char* src, const char* file, int start_line, const char* error_msg, const char* error_pos)
-{
+void script_errorwarning_sub(StringBuf *buf, const char* src, const char* file, int start_line, const char* error_msg, const char* error_pos) {
 	// Find the line where the error occurred
 	int j;
 	int line = start_line;
 	const char *p;
 	const char *linestart[5] = { NULL, NULL, NULL, NULL, NULL };
-	StringBuf buf;
 
 	for(p=src;p && *p;line++){
 		const char *lineend=strchr(p,'\n');
@@ -2275,18 +2290,37 @@ void script_error(const char* src, const char* file, int start_line, const char*
 		p=lineend+1;
 	}
 
+	StringBuf_Printf(buf, "script error on %s line %d\n", file, line);
+	StringBuf_Printf(buf, "    %s\n", error_msg);
+	for(j = 0; j < 5; j++ ) {
+		script_print_line(buf, linestart[j], NULL, line + j - 5);
+	}
+	p = script_print_line(buf, p, error_pos, -line);
+	for(j = 0; j < 5; j++) {
+		p = script_print_line(buf, p, NULL, line + j + 1 );
+	}
+}
+
+void script_error(const char* src, const char* file, int start_line, const char* error_msg, const char* error_pos) {
+	StringBuf buf;
+
 	StringBuf_Init(&buf);
 	StringBuf_AppendStr(&buf, "\a\n");
-	StringBuf_Printf(&buf, "script error on %s line %d\n", file, line);
-	StringBuf_Printf(&buf, "    %s\n", error_msg);
-	for(j = 0; j < 5; j++ ) {
-		script_print_line(&buf, linestart[j], NULL, line + j - 5);
-	}
-	p = script_print_line(&buf, p, error_pos, -line);
-	for(j = 0; j < 5; j++) {
-		p = script_print_line(&buf, p, NULL, line + j + 1 );
-	}
+
+	script_errorwarning_sub(&buf, src, file, start_line, error_msg, error_pos);
+
 	ShowError("%s", StringBuf_Value(&buf));
+	StringBuf_Destroy(&buf);
+}
+
+void script_warning(const char* src, const char* file, int start_line, const char* error_msg, const char* error_pos) {
+	StringBuf buf;
+
+	StringBuf_Init(&buf);
+
+	script_errorwarning_sub(&buf, src, file, start_line, error_msg, error_pos);
+
+	ShowWarning("%s", StringBuf_Value(&buf));
 	StringBuf_Destroy(&buf);
 }
 
@@ -2301,6 +2335,10 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	static int first=1;
 	char end;
 	bool unresolved_names = false;
+
+	parser_current_src = src;
+	parser_current_file = file;
+	parser_current_line = line;
 
 	if( src == NULL )
 		return NULL;// empty script

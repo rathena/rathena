@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 20130817
+//= 20130827
 //===== Description: =========================================
 //= List of available atcommands and their functions.
 //============================================================
@@ -866,9 +866,11 @@ Resets a Star Gladiator's marked maps.
 
 ---------------------------------------
 
-@jobchange <job name/ID>
+@jobchange <job name>
+@jobchange <job ID> {<upper>}
 
 Changes your job.
+An 'upper' value can be specified with a job ID to produce its normal (0), advanced (1), or baby (2) version.
 If no job is given, a list of all available jobs will be returned.
 Note that jobs 22 (Wedding), 26 (Summer), 27 (Christmas), and 28 (Hanbok) are not available via @job.
 

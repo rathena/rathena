@@ -80,7 +80,7 @@ lighthalzen,207,310,5	script	Guide#lhz::LhzGuide	852,{
 					mes "activity, or if you have any";
 					mes "problems whatsoever.";
 					if (.@compass_check)
-						viewpoint 1,236,276,4,0x99FFFFF;
+						viewpoint 1,236,276,4,0x99FFFF;
 					break;
 				case 4:
 					mes "[Lighthalzen Guide]";

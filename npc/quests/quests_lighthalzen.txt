@@ -4435,10 +4435,10 @@ lighthalzen,346,263,3	script	Elder#lhz	846,{
 				mes "you must search should";
 				mes "be clear to you now! Don't";
 				mes "forget these placemarks!";
-				viewpoint 1,104,282,1,0xFF99FF33;
-				viewpoint 1,105,282,2,0xFF99FF33;
-				viewpoint 1,104,281,3,0xFF99FF33;
-				viewpoint 1,105,281,4,0xFF99FF33;
+				viewpoint 1,104,282,1,0x99FF33;
+				viewpoint 1,105,282,2,0x99FF33;
+				viewpoint 1,104,281,3,0x99FF33;
+				viewpoint 1,105,281,4,0x99FF33;
 				next;
 				mes "[Elder]";
 				mes "Good luck, youngster.";

@@ -398,7 +398,9 @@ identical. Writing a number like '0x<hex digits>' will make it recognized as a
 hexadecimal value. Notice that 0x10 is equal to 16. Also notice that if you try 
 to 'mes 0x10' it will print '16'.
 
-This is not used much, but it pays to know about it.
+Number values can't exceed the limits of an integer variable: Any number
+greater than INT_MAX (2147483647) or smaller than INT_MIN (-2147483648) will
+be capped to those values and will cause a warning to be reported.
 
 Variables
 ---------
