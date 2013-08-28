@@ -3,13 +3,14 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: ========================================= 
 //= Maps where Neuralizer (12213) can be used.
 //===== Additional Comments: ================================= 
 //= 1.0 Renewal split. [Euphy]
+//= 1.1 Added Izlude duplicates. [Euphy]
 //============================================================
 
 brasilis	mapflag	reset
@@ -17,6 +18,10 @@ dewata	mapflag	reset
 dicastes01	mapflag	reset
 dicastes02	mapflag	reset
 eclage	mapflag	reset
+izlude_a	mapflag	reset
+izlude_b	mapflag	reset
+izlude_c	mapflag	reset
+izlude_d	mapflag	reset
 malangdo	mapflag	reset
 malaya	mapflag	reset
 mora	mapflag	reset
