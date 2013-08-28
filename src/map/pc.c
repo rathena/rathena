@@ -947,6 +947,16 @@ int pc_isequip(struct map_session_data *sd,int n)
 				}
 		}
 	}
+		
+	/* restricted equip */
+	if ((!map_flag_vs(sd->bl.m) && item->flag.no_equip&1) || // Normal
+		(map[sd->bl.m].flag.pvp && item->flag.no_equip&2) || // PVP
+		(map_flag_gvg(sd->bl.m) && item->flag.no_equip&4) || // GVG
+		(map[sd->bl.m].flag.battleground && item->flag.no_equip&8) || // Battleground
+		(map[sd->bl.m].flag.restricted && item->flag.no_equip&(8*map[sd->bl.m].zone)) // Zone restriction
+		)
+		return 0;
+
 	//Not equipable by class. [Skotlex]
 	if (!(1<<(sd->class_&MAPID_BASEMASK)&item->class_base[(sd->class_&JOBL_2_1)?1:((sd->class_&JOBL_2_2)?2:0)]))
 		return 0;
