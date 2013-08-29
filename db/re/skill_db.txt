@@ -378,20 +378,20 @@
 //314,0,0,0,0,0,0,1,1,no,0,0x40,0,misc,0,0x0,	BD_RAGNAROK,Ragnarok
 315,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,0x0,		BA_MUSICALLESSON,Music Lessons
 316,9,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x8,		BA_MUSICALSTRIKE,Melody Strike
-317,0,8,4,0,0x41,0,5,1,no,0,0x20,0,misc,0,0x0,	BA_DISSONANCE,Unchained Serenade
+317,0,8,4,0,0x41,0,5,1,no,0,0x20,0,misc,0,0x1,	BA_DISSONANCE,Unchained Serenade
 318,0,6,4,0,0x3,-1,5,1,no,0,0,0,misc,0,0x0,		BA_FROSTJOKER,Unbarring Octave
-319,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0,0x0,	BA_WHISTLE,Perfect Tablature
-320,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0,0x0,	BA_ASSASSINCROSS,Impressive Riff
-321,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0,0x0,	BA_POEMBRAGI,Magic Strings
-322,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0,0x0,	BA_APPLEIDUN,Song of Lutie
+319,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0,0x1,	BA_WHISTLE,Perfect Tablature
+320,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0,0x1,	BA_ASSASSINCROSS,Impressive Riff
+321,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0,0x1,	BA_POEMBRAGI,Magic Strings
+322,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0,0x1,	BA_APPLEIDUN,Song of Lutie
 323,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,0x0,		DC_DANCINGLESSON,Dance Lessons
 324,9,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x8,		DC_THROWARROW,Slinging Arrow
-325,0,8,4,0,0x1,0,5,1,no,0,0x20,0,misc,0,0x0,	DC_UGLYDANCE,Hip Shaker
+325,0,8,4,0,0x1,0,5,1,no,0,0x20,0,misc,0,0x1,	DC_UGLYDANCE,Hip Shaker
 326,0,6,4,0,0x3,-1,5,1,no,0,0,0,misc,0,0x0,		DC_SCREAM,Dazzler
-327,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0,0x0,	DC_HUMMING,Focus Ballet
-328,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0,0x0,	DC_DONTFORGETME,Slow Grace
-329,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0,0x0,	DC_FORTUNEKISS,Lady Luck
-330,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0,0x0,	DC_SERVICEFORYOU,Gypsy's Kiss
+327,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0,0x1,	DC_HUMMING,Focus Ballet
+328,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0,0x1,	DC_DONTFORGETME,Slow Grace
+329,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0,0x1,	DC_FORTUNEKISS,Lady Luck
+330,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0,0x1,	DC_SERVICEFORYOU,Gypsy's Kiss
 331,0,6,4,0,0x1,0,10,0,no,0,0x2,0,none,0,0x0,	NPC_RANDOMMOVE,Random Move
 332,0,6,4,0,0x1,0,10,0,no,0,0x2,0,none,0,0x0,	NPC_SPEEDUP,Speed UP
 333,0,6,4,0,0x1,0,1,0,no,0,0x2,0,none,0,0x0,		NPC_REVENGE,Revenge
@@ -549,7 +549,7 @@
 485,-2,6,1,-1,0x8,0,10,1,no,0,0,0,weapon,0,0x4000,	WS_CARTTERMINATION,Cart Termination
 486,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0,0x4000,		WS_OVERTHRUSTMAX,Maximum Power Thrust
 487,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x8,		CG_LONGINGFREEDOM,Longing for Freedom
-488,0,6,4,0,0x1,1,5,1,no,0,0x40,0,misc,0,0x0,	CG_HERMODE,Wand of Hermode
+488,0,6,4,0,0x1,1,5,1,no,0,0x20,0,misc,0,0x1,	CG_HERMODE,Wand of Hermode
 489,9,6,1,0,0x41,0,5,1,no,0,0,0,misc,0,0x0,		CG_TAROTCARD,Tarot Card of Fate
 490,9,8,1,-1,0x60,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,misc,0,0x0,	CR_ACIDDEMONSTRATION,Acid Demonstration
 491,1,6,2,0,0x1,0,2,1,no,0,0,0,none,0,0x0,		CR_CULTIVATION,Plant Cultivation
