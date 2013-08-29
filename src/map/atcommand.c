@@ -65,6 +65,7 @@ struct AtCommandInfo {
 	AtCommandFunc func;
 	char* at_groups;/* quick @commands "can-use" lookup */
 	char* char_groups;/* quick @charcommands "can-use" lookup */
+	int restriction; //prevent : 1 console, 2 script...
 };
 
 struct AliasInfo {
@@ -9042,14 +9043,18 @@ ACMD_FUNC(langtype)
 /**
  * Fills the reference of available commands in atcommand DBMap
  **/
-#define ACMD_DEF(x) { #x, atcommand_ ## x, NULL, NULL }
-#define ACMD_DEF2(x2, x) { x2, atcommand_ ## x, NULL, NULL }
+#define ACMD_DEF(x) { #x, atcommand_ ## x, NULL, NULL, 0 }
+#define ACMD_DEF2(x2, x) { x2, atcommand_ ## x, NULL, NULL, 0 }
+//define with restriction
+#define ACMD_DEFR(x, r) { #x, atcommand_ ## x, NULL, NULL, r }
+#define ACMD_DEF2R(x2, x, r) { x2, atcommand_ ## x, NULL, NULL, r }
 void atcommand_basecommands(void) {
 	/**
 	 * Command reference list, place the base of your commands here
+	 * TODO : all restricted command are crashing case, please look into it
 	 **/
 	AtCommandInfo atcommand_base[] = {
-		ACMD_DEF2("warp", mapmove),
+		ACMD_DEF2R("warp", mapmove, 1),
 		ACMD_DEF(where),
 		ACMD_DEF(jumpto),
 		ACMD_DEF(jump),
@@ -9067,7 +9072,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(guildstorage),
 		ACMD_DEF(option),
 		ACMD_DEF(hide), // + /hide
-		ACMD_DEF(jobchange),
+		ACMD_DEFR(jobchange, 1),
 		ACMD_DEF(kill),
 		ACMD_DEF(alive),
 		ACMD_DEF(kami),
@@ -9083,7 +9088,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(clearstorage),
 		ACMD_DEF(cleargstorage),
 		ACMD_DEF(clearcart),
-		ACMD_DEF2("blvl", baselevelup),
+		ACMD_DEF2R("blvl", baselevelup, 1),
 		ACMD_DEF2("jlvl", joblevelup),
 		ACMD_DEF(help),
 		ACMD_DEF(pvpoff),
@@ -9091,7 +9096,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(gvgoff),
 		ACMD_DEF(gvgon),
 		ACMD_DEF(model),
-		ACMD_DEF(go),
+		ACMD_DEFR(go, 1),
 		ACMD_DEF(monster),
 		ACMD_DEF2("monstersmall", monster),
 		ACMD_DEF2("monsterbig", monster),
@@ -9140,11 +9145,11 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(broadcast), // + /b and /nb
 		ACMD_DEF(localbroadcast), // + /lb and /nlb
 		ACMD_DEF(recallall),
-		ACMD_DEF(reload),
+		ACMD_DEFR(reload,2),
 		ACMD_DEF2("reloaditemdb", reload),
 		ACMD_DEF2("reloadmobdb", reload),
 		ACMD_DEF2("reloadskilldb", reload),
-		ACMD_DEF2("reloadscript", reload),
+		ACMD_DEF2R("reloadscript", reload,2),
 		ACMD_DEF2("reloadatcommand", reload),
 		ACMD_DEF2("reloadbattleconf", reload),
 		ACMD_DEF2("reloadstatusdb", reload),
@@ -9323,6 +9328,7 @@ void atcommand_basecommands(void) {
 		CREATE(atcommand, AtCommandInfo, 1);
 		safestrncpy(atcommand->command, atcommand_base[i].command, sizeof(atcommand->command));
 		atcommand->func = atcommand_base[i].func;
+		atcommand->restriction = atcommand_base[i].restriction;
 		strdb_put(atcommand_db, atcommand->command, atcommand);
 	}
 	return;
@@ -9423,7 +9429,14 @@ static void atcommand_get_suggestions(struct map_session_data* sd, const char *n
 	dbi_destroy(alias_iter);
 }
 
-/// Executes an at-command.
+/*
+ *  Executes an at-command
+ * \param type :
+ *  0 : script call (atcommand)
+ *  1 : normal player @atcommand
+ *  2 : console
+ *  3 : script call (useatcmd)
+ */
 bool is_atcommand(const int fd, struct map_session_data* sd, const char* message, int type)
 {
 	char charname[NAME_LENGTH], params[100];
@@ -9455,9 +9468,8 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	if ( *message != atcommand_symbol && *message != charcommand_symbol )
 		return false;
 
-	// type value 0 = server invoked: bypass restrictions
-	// 1 = player invoked
-	if ( type == 1) {
+	// type value 0|2 = script|console invoked: bypass restrictions
+	if ( type == 1 || type == 3) {
 		//Commands are disabled on maps flagged as 'nocommand'
 		if ( map[sd->bl.m].nocommand && pc_get_group_level(sd) < map[sd->bl.m].nocommand ) {
 			clif_displaymessage(fd, msg_txt(sd,143));
@@ -9524,7 +9536,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 		params[0] = '\0';
 
 	// @commands (script based)
-	if(type == 1 && atcmd_binding_count > 0) {
+	if((type == 1 || type == 3) && atcmd_binding_count > 0) {
 		struct atcmd_binding_data * binding;
 
 		// Check if the command initiated is a character command
@@ -9560,6 +9572,14 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 			return true;
 		} else
 			return false;
+	}
+
+	//check restriction
+	if(info->restriction){
+		if(info->restriction&1 && type == 2) //console prevent
+			return true;
+		if(info->restriction&2 && (type == 0 || type == 3) ) //scripts prevent
+			return true;
 	}
 
 	// type == 1 : player invoked

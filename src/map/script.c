@@ -6117,22 +6117,22 @@ BUILDIN_FUNC(countitem)
 	} else { // For countitem2() function
 		int nameid, iden, ref, attr, c1, c2, c3, c4;
 
-		nameid = id->nameid; 
-		iden = script_getnum(st,3); 
-		ref  = script_getnum(st,4); 
-		attr = script_getnum(st,5); 
-		c1 = (short)script_getnum(st,6); 
-		c2 = (short)script_getnum(st,7); 
-		c3 = (short)script_getnum(st,8); 
+		nameid = id->nameid;
+		iden = script_getnum(st,3);
+		ref  = script_getnum(st,4);
+		attr = script_getnum(st,5);
+		c1 = (short)script_getnum(st,6);
+		c2 = (short)script_getnum(st,7);
+		c3 = (short)script_getnum(st,8);
 		c4 = (short)script_getnum(st,9);
 
 		for(i = 0; i < MAX_INVENTORY; i++)
-			if (sd->status.inventory[i].nameid > 0 && sd->inventory_data[i] != NULL && 
-				sd->status.inventory[i].amount > 0 && sd->status.inventory[i].nameid == nameid && 
-				sd->status.inventory[i].identify == iden && sd->status.inventory[i].refine == ref && 
-				sd->status.inventory[i].attribute == attr && sd->status.inventory[i].card[0] == c1 && 
-				sd->status.inventory[i].card[1] == c2 && sd->status.inventory[i].card[2] == c3 && 
-				sd->status.inventory[i].card[3] == c4 ) 
+			if (sd->status.inventory[i].nameid > 0 && sd->inventory_data[i] != NULL &&
+				sd->status.inventory[i].amount > 0 && sd->status.inventory[i].nameid == nameid &&
+				sd->status.inventory[i].identify == iden && sd->status.inventory[i].refine == ref &&
+				sd->status.inventory[i].attribute == attr && sd->status.inventory[i].card[0] == c1 &&
+				sd->status.inventory[i].card[1] == c2 && sd->status.inventory[i].card[2] == c3 &&
+				sd->status.inventory[i].card[3] == c4 )
 	 	                        count += sd->status.inventory[i].amount;
 	}
 
@@ -12760,11 +12760,7 @@ BUILDIN_FUNC(nude)
 	return 0;
 }
 
-/*==========================================
- * gmcommand [MouseJstr]
- *------------------------------------------*/
-BUILDIN_FUNC(atcommand)
-{
+int atcommand_sub(struct script_state* st,int type){
 	TBL_PC dummy_sd;
 	TBL_PC* sd;
 	int fd;
@@ -12789,13 +12785,20 @@ BUILDIN_FUNC(atcommand)
 		}
 	}
 
-	if (!is_atcommand(fd, sd, cmd, 0)) {
+	if (!is_atcommand(fd, sd, cmd, type)) {
 		ShowWarning("script: buildin_atcommand: failed to execute command '%s'\n", cmd);
 		script_reportsrc(st);
 		return 1;
 	}
 
 	return 0;
+}
+
+/*==========================================
+ * gmcommand [MouseJstr]
+ *------------------------------------------*/
+BUILDIN_FUNC(atcommand) {
+	return atcommand_sub(st,0);
 }
 
 /*==========================================
@@ -12950,7 +12953,7 @@ BUILDIN_FUNC(recovery)
 /*==========================================
  * Get your pet info: getpetinfo(n)
  * n -> 0:pet_id 1:pet_class 2:pet_name
- * 3:friendly 4:hungry, 5: rename flag.
+ * 3:friendly 4:hungry, 5: rename flag.6:level
  *------------------------------------------*/
 BUILDIN_FUNC(getpetinfo)
 {
@@ -12973,6 +12976,7 @@ BUILDIN_FUNC(getpetinfo)
 		case 3: script_pushint(st,pd->pet.intimate); break;
 		case 4: script_pushint(st,pd->pet.hungry); break;
 		case 5: script_pushint(st,pd->pet.rename_flag); break;
+		case 6: script_pushint(st,(int)pd->pet.level); break;
 		default:
 			script_pushint(st,0);
 			break;
@@ -14922,35 +14926,6 @@ BUILDIN_FUNC(getd)
 	return 0;
 }
 
-// <--- [zBuffer] List of dynamic var commands
-// Pet stat [Lance]
-BUILDIN_FUNC(petstat)
-{
-	TBL_PC *sd = NULL;
-	struct pet_data *pd;
-	int flag = script_getnum(st,2);
-	sd = script_rid2sd(st);
-	if(!sd || !sd->status.pet_id || !sd->pd){
-		if(flag == 2)
-			script_pushconststr(st, "");
-		else
-			script_pushint(st,0);
-		return 0;
-	}
-	pd = sd->pd;
-	switch(flag){
-		case 1: script_pushint(st,(int)pd->pet.class_); break;
-		case 2: script_pushstrcopy(st, pd->pet.name); break;
-		case 3: script_pushint(st,(int)pd->pet.level); break;
-		case 4: script_pushint(st,(int)pd->pet.hungry); break;
-		case 5: script_pushint(st,(int)pd->pet.intimate); break;
-		default:
-			script_pushint(st,0);
-			break;
-	}
-	return 0;
-}
-
 BUILDIN_FUNC(callshop)
 {
 	TBL_PC *sd = NULL;
@@ -16596,7 +16571,7 @@ BUILDIN_FUNC(bg_get_data)
 //Checks NPC first, then if player is attached we check party
 int script_instancegetid(struct script_state* st)
 {
-	short instance_id = 0;	
+	short instance_id = 0;
 
 	struct npc_data *nd;
 	if( (nd = map_id2nd(st->oid)) && nd->instance_id > 0 )
@@ -16745,7 +16720,7 @@ BUILDIN_FUNC(instance_id)
 	}
 
 	script_pushint(st, instance_id);
-		
+
 	return 0;
 }
 
@@ -17400,45 +17375,8 @@ BUILDIN_FUNC(unbindatcmd) {
 	return 0;
 }
 
-BUILDIN_FUNC(useatcmd)
-{
-	TBL_PC dummy_sd;
-	TBL_PC* sd;
-	int fd;
-	const char* cmd;
-
-	cmd = script_getstr(st,2);
-
-	if( st->rid )
-	{
-		sd = script_rid2sd(st);
-		fd = sd->fd;
-	}
-	else
-	{ // Use a dummy character.
-		sd = &dummy_sd;
-		fd = 0;
-
-		memset(&dummy_sd, 0, sizeof(TBL_PC));
-		if( st->oid )
-		{
-			struct block_list* bl = map_id2bl(st->oid);
-			memcpy(&dummy_sd.bl, bl, sizeof(struct block_list));
-			if( bl->type == BL_NPC )
-				safestrncpy(dummy_sd.status.name, ((TBL_NPC*)bl)->name, NAME_LENGTH);
-		}
-	}
-
-	// compatibility with previous implementation (deprecated!)
-	if( cmd[0] != atcommand_symbol )
-	{
-		cmd += strlen(sd->status.name);
-		while( *cmd != atcommand_symbol && *cmd != 0 )
-			cmd++;
-	}
-
-	is_atcommand(fd, sd, cmd, 1);
-	return 0;
+BUILDIN_FUNC(useatcmd) {
+	return atcommand_sub(st,3);
 }
 
 BUILDIN_FUNC(checkre)
@@ -17742,7 +17680,7 @@ BUILDIN_FUNC(countbound)
 			j += sd->status.inventory[i].amount;
 		}
 	}
-	
+
 	script_pushint(st,j);
 	return 0;
 }
@@ -18336,8 +18274,6 @@ struct script_function buildin_func[] = {
 	// [zBuffer] List of dynamic var commands --->
 	BUILDIN_DEF(getd,"s"),
 	BUILDIN_DEF(setd,"sv"),
-	// <--- [zBuffer] List of dynamic var commands
-	BUILDIN_DEF(petstat,"i"),
 	BUILDIN_DEF(callshop,"s?"), // [Skotlex]
 	BUILDIN_DEF(npcshopitem,"sii*"), // [Lance]
 	BUILDIN_DEF(npcshopadditem,"sii*"),
@@ -18492,7 +18428,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(party_changeleader,"ii"),
 	BUILDIN_DEF(party_changeoption,"iii"),
 	BUILDIN_DEF(party_destroy,"i"),
-	
+
 	BUILDIN_DEF(is_clientver,"ii?"),
 	BUILDIN_DEF(getserverdef,"i"),
 	{NULL,NULL,NULL},

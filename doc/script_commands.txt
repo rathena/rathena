@@ -6514,8 +6514,8 @@ character belonged to an account which had GM level 99.
     input @player$;
     atcommand "@nuke "+@player$;
 
-This command has a lot of good uses, I am sure you can have some fun with this 
-one.
+Note that for atcommands bound using 'bindatcmd', this command will execute the
+original atcommand, not the script-bound atcommand.
 
 ---------------------------------------
 
@@ -6532,7 +6532,7 @@ The commands can also run without an attached rid.
 
 ---------------------------------------
 
-*bindatcmd "command","<NPC object name>::<event label>"{,<atcommand level>,<charcommand level>};
+*bindatcmd "<command>","<NPC object name>::<event label>"{,<atcommand level>,<charcommand level>};
 
 This command will bind a NPC event label to an atcommand. Upon execution of the
 atcommand, the user will invoke the NPC event label. Each atcommand is only allowed
@@ -6558,16 +6558,20 @@ OnAtcommand:
 
 ---------------------------------------
 
-*unbindatcmd "command";
+*unbindatcmd "<command>";
 
 This command will unbind a NPC event label from an atcommand.
 
 ---------------------------------------
 
-*useatcmd "command";
+*useatcmd "<command>";
 
-This command will execute an atcommand binding on the attached RID from a script. 
-The three .@atcmd_***** variables will NOT be set when invoking scripts-atcommands this way.
+This command will execute a script-bound atcommand for the attached RID. If the
+supplied command is not bound to any script, this command will act like 'atcommand'
+and attempt to execute a source-defined command.
+
+The three .@atcmd_***** variables will NOT be set when invoking script-bound atcommands
+in this way.
 
 ---------------------------------------
 \\
@@ -7604,23 +7608,8 @@ currently has active. Valid types are:
  3 - Pet friendly level (intimacy score). 1000 is full loyalty.
  4 - Pet hungry level. 100 is completely full.
  5 - Pet rename flag. 0 means this pet has not been named yet.
+ 6 - Pet level
 
----------------------------------------
-
-*petstat(<flag>)
-
-Returns current pet status, all are integers except name.
-Returns 0 or "" if the player doesn't have pets.
-
-Flags usable:
-- PET_CLASS
-- PET_NAME
-- PET_LEVEL
-- PET_HUNGRY
-- PET_INTIMATE
-
-Example:
-	set @i, petstat(PET_CLASS);
 
 ---------------------------------------
 

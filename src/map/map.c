@@ -3302,7 +3302,7 @@ int parse_console(const char* buf){
 				sd.bl.y = y;
 			ShowNotice("Now at: '%s' Coords: %d %d\n", map, x, y);
 		}
-		else if( !is_atcommand(sd.fd, &sd, command, 0) )
+		else if( !is_atcommand(sd.fd, &sd, command, 2) )
 			ShowInfo("Console: Invalid atcommand.\n");
 	}
 	else if( n == 2 && strcmpi("server", type) == 0 ){

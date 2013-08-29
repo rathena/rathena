@@ -1,6 +1,6 @@
-L_SRV=login-server_sql
-C_SRV=char-server_sql
-M_SRV=map-server_sql
+L_SRV=login-server
+C_SRV=char-server
+M_SRV=map-server
 INST_PATH=/opt
 PKG=rathena
 PKG_PATH=$INST_PATH/$PKG
