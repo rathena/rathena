@@ -2446,7 +2446,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 	if( damage > 0 && (( dmg.flag&BF_WEAPON && src != bl && ( src == dsrc || ( dsrc->type == BL_SKILL &&
 		( skill_id == SG_SUN_WARM || skill_id == SG_MOON_WARM || skill_id == SG_STAR_WARM ) ) ))
 		|| ((tsc && tsc->data[SC_REFLECTDAMAGE]) && !(dmg.flag&(BF_MAGIC|BF_LONG)) && !(skill_get_inf2(skill_id)&INF2_TRAP)) ) )
-		rdamage = battle_calc_return_damage(bl,src, &damage, dmg.flag, skill_id);
+		rdamage = battle_calc_return_damage(bl,src, &damage, dmg.flag, skill_id, 1);
 
 	if( damage && tsc && tsc->data[SC_GENSOU] && dmg.flag&BF_MAGIC ){
 		struct block_list *nbl;

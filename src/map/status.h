@@ -1627,6 +1627,7 @@ struct status_data {
 		batk,
 #ifdef RENEWAL
 		watk,
+		watk2,
 		eatk,
 #endif
 		matk_min, matk_max,

@@ -1895,12 +1895,12 @@ static unsigned short status_base_atk(const struct block_list *bl, const struct 
 #ifdef RENEWAL
 unsigned int status_weapon_atk(struct weapon_atk wa, struct status_data *status)
 {
-	short str = status->str;
+	float str = status->str;
 
 	if (wa.range > 1)
 		str = status->dex;
 
-	return wa.atk + wa.atk2 + wa.atk * (str/200);
+	return wa.atk + wa.atk2 + (int)(wa.atk * (str/200));
 }
 #endif
 
@@ -2724,7 +2724,8 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	if((skill=pc_checkskill(sd,BS_HILTBINDING))>0)
 		status->batk += 4;
 #else
-	status->watk = (status_weapon_atk(status->lhw, status) >= 0) ? status_weapon_atk(status->lhw, status) : 0;
+	status->watk = status_weapon_atk(status->rhw, status);
+	status->watk2 = status_weapon_atk(status->lhw, status);
 	status->eatk = (sd->bonus.eatk >= 0) ? sd->bonus.eatk : 0;
 #endif
 

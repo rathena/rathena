@@ -1513,7 +1513,7 @@ static int battle_calc_status_attack(struct status_data *status, short hand)
 static int battle_calc_base_weapon_attack(struct block_list *src, struct status_data *tstatus, struct weapon_atk *wa, struct map_session_data *sd)
 {
 	struct status_data *status = status_get_status_data(src);
-	unsigned short atkmax = status_weapon_atk(*wa,status);
+	unsigned short atkmax = (wa == &status->lhw)?status->watk2:status->watk;
 	unsigned short atkmin = atkmax;
 	unsigned short weapon_perfection = 0;
 	int damage;
@@ -4003,8 +4003,46 @@ struct Damage battle_calc_attack_left_right_hands(struct Damage wd, struct block
  */
 struct Damage battle_calc_attack_gvg_bg(struct Damage wd, struct block_list *src,struct block_list *target,uint16 skill_id,uint16 skill_lv)
 {
-	if( wd.damage + wd.damage2 )
-	{	//There is a total damage value
+	if( wd.damage + wd.damage2 ) { //There is a total damage value
+		if( src != target &&
+			(!skill_id || skill_id ||
+			( src->type == BL_SKILL && ( skill_id == SG_SUN_WARM || skill_id == SG_MOON_WARM || skill_id == SG_STAR_WARM ) )) ){
+				int64 damage = wd.damage + wd.damage2, rdamage = 0;
+				struct map_session_data *tsd = BL_CAST(BL_PC, target);
+				struct status_change *tsc = status_get_sc(target);
+				struct status_data *sstatus = status_get_status_data(src);
+				int tick = gettick(), rdelay = 0;
+
+				rdamage = battle_calc_return_damage(target, src, &damage, wd.flag, skill_id, 0);
+
+				// Item reflect gets calculated first
+				if( rdamage > 0 ) {
+					//Use Reflect Shield to signal this kind of skill trigger. [Skotlex]
+					rdelay = clif_damage(src, src, tick, wd.amotion, sstatus->dmotion, rdamage, 1, 4, 0);
+					if( tsd && src != target )
+						battle_drain(tsd, src, rdamage, rdamage, sstatus->race, is_boss(src));
+					battle_delay_damage(tick, wd.amotion,target,src,0,CR_REFLECTSHIELD,0,rdamage,ATK_DEF,rdelay,true);
+					skill_additional_effect(target, src, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL,ATK_DEF,tick);
+				}
+
+				// Calculate skill reflect damage separately
+				if( tsc ) {
+					struct status_data *tstatus = status_get_status_data(target);
+					rdamage = battle_calc_return_damage(target, src, &damage, wd.flag, skill_id, 1);
+					if( rdamage > 0 ) {
+						rdelay = clif_damage(src, src, tick, wd.amotion, sstatus->dmotion, rdamage, 1, 4, 0);
+						if( tsc->data[SC_REFLECTDAMAGE] && src != target ) // Don't reflect your own damage (Grand Cross)
+							map_foreachinshootrange(battle_damage_area,target,skill_get_splash(LG_REFLECTDAMAGE,1),BL_CHAR,tick,target,wd.amotion,sstatus->dmotion,rdamage,tstatus->race);
+						else {
+							if( tsd && src != target )
+								battle_drain(tsd, src, rdamage, rdamage, sstatus->race, is_boss(src));
+							// It appears that official servers give skill reflect damage a longer delay
+							battle_delay_damage(tick, wd.amotion,target,src,0,CR_REFLECTSHIELD,0,rdamage,ATK_DEF,rdelay,true);
+							skill_additional_effect(target, src, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL,ATK_DEF,tick);
+						}
+					}
+				}
+		}
 		if(!wd.damage2)
 		{
 			wd.damage = battle_calc_damage(src,target,&wd,wd.damage,skill_id,skill_lv);
@@ -5529,7 +5567,7 @@ struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct bl
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
-int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, int64 *dmg, int flag, uint16 skill_id){
+int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, int64 *dmg, int flag, uint16 skill_id, bool status_reflect){
 	struct map_session_data* sd;
 	int64 rdamage = 0, damage = *dmg;
 	int max_damage = status_get_max_hp(bl);
@@ -5538,7 +5576,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 	sd = BL_CAST(BL_PC, bl);
 	sc = status_get_sc(bl);
 
-	if( sc && sc->data[SC_REFLECTDAMAGE] ) {
+	if( status_reflect && sc && sc->data[SC_REFLECTDAMAGE] ) {
 		if( rnd()%100 <= sc->data[SC_REFLECTDAMAGE]->val1*10 + 30 ){
 			max_damage = (int64)max_damage * status_get_lv(bl) / 100;
 			rdamage = (*dmg) * sc->data[SC_REFLECTDAMAGE]->val2 / 100;
@@ -5550,7 +5588,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 			rdamage += damage * sd->bonus.short_weapon_damage_return / 100;
 			if(rdamage < 1) rdamage = 1;
 		}
-		if( sc && sc->count ) {
+		if( status_reflect && sc && sc->count ) {
 			if ( sc->data[SC_REFLECTSHIELD] && skill_id != WS_CARTTERMINATION ) {
 				rdamage += damage * sc->data[SC_REFLECTSHIELD]->val2 / 100;
 				if (rdamage < 1) rdamage = 1;
@@ -5680,7 +5718,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	struct status_data *sstatus, *tstatus;
 	struct status_change *sc, *tsc;
 	int64 damage;
-	int rdamage=0,rdelay=0,skillv;
+	int skillv;
 	struct Damage wd;
 
 	nullpo_retr(ATK_NONE, src);
@@ -5874,18 +5912,6 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				skill_id = AB_DUPLELIGHT_MAGIC;
 			skill_attack(skill_get_type(skill_id), src, src, target, skill_id, sc->data[SC_DUPLELIGHT]->val1, tick, SD_LEVEL);
 		}
-
-		rdamage = (int)battle_calc_return_damage(target,src, &damage, wd.flag, 0);
-		if( rdamage > 0 ) {
-			if( tsc && tsc->data[SC_REFLECTDAMAGE] ) {
-				if( src != target )// Don't reflect your own damage (Grand Cross)
-					map_foreachinshootrange(battle_damage_area,target,skill_get_splash(LG_REFLECTDAMAGE,1),BL_CHAR,tick,target,wd.amotion,wd.dmotion,rdamage,tstatus->race,0);
-			} else {
-				rdelay = clif_damage(src, src, tick, wd.amotion, sstatus->dmotion, rdamage, 1, 4, 0);
-				//Use Reflect Shield to signal this kind of skill trigger. [Skotlex]
-				skill_additional_effect(target,src,CR_REFLECTSHIELD,1,BF_WEAPON|BF_SHORT|BF_NORMAL,ATK_DEF,tick);
-			}
-		}
 	}
 
 	wd.dmotion = clif_damage(src, target, tick, wd.amotion, wd.dmotion, wd.damage, wd.div_ , wd.type, wd.damage2);
@@ -6024,11 +6050,6 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			else
 				battle_drain(sd, target, wd.damage, wd.damage2, tstatus->race, is_boss(target));
 		}
-	}
-	if (rdamage > 0 && !(tsc && tsc->data[SC_REFLECTDAMAGE])) { //By sending attack type "none" skill_additional_effect won't be invoked. [Skotlex]
-		if(tsd && src != target)
-			battle_drain(tsd, src, rdamage, rdamage, sstatus->race, is_boss(src));
-		battle_delay_damage(tick, wd.amotion, target, src, 0, CR_REFLECTSHIELD, 0, rdamage, ATK_DEF, rdelay, true);
 	}
 
 	if (tsc) {
