@@ -5291,8 +5291,8 @@ REPLACE INTO `item_db_re` VALUES (11058,'Novice_Combi_Book','Novice Combi Book',
 REPLACE INTO `item_db_re` VALUES (11500,'Light_Yellow_Pot','Light Yellow Potion',0,550,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(175,235),0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (11501,'Light_White_Pot','Light White Potion',0,1200,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(325,405),0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (11502,'Light_Blue_Pot','Light Blue Potion',0,5000,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal 0,rand(40,60);',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (11503,'WoE_White_Potion','WoE White Potion',0,0,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(400,500),0;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (11504,'WoE_Blue_Potion','WoE Blue Potion',0,0,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal 0,rand(50,70);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (11503,'Siege_White_Potion','WoE White Potion',0,0,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(400,500),0;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (11504,'Siege_Blue_Potion','WoE Blue Potion',0,0,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal 0,rand(50,70);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (11505,'Iris','Iris',0,0,NULL,30,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal 0,150;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (11506,'Fanta_Orange','Fanta Orange',0,800,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(50,70),rand(10,12);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (11507,'Fanta_Grape','Fanta Grape',0,800,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(50,70),rand(10,12);',NULL,NULL);
@@ -8136,8 +8136,8 @@ REPLACE INTO `item_db_re` VALUES (18555,'General_Helmet','General Helmet',5,20,N
 REPLACE INTO `item_db_re` VALUES (18556,'Angel_Helmet','Angel Helmet',5,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,512,NULL,'0',0,3,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18557,'Devil_Helmet','Devil Helmet',5,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,512,NULL,'0',0,12,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18558,'Sinsuncho_Hat','Sinsuncho Hat',5,20,NULL,1000,NULL,0,NULL,0,0xFFFFFFFF,63,2,256,NULL,'10',0,730,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (18559,'Fafnir_Skin','Fafnir Skin',5,20,NULL,100,NULL,3,NULL,0,0xFFFFFFFF,63,2,512,NULL,'50',0,152,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (18560,'Fafnir_Mask','Fafnir Mask',5,20,NULL,300,NULL,2,NULL,0,0xFFFFFFFF,63,2,1,NULL,'50',0,180,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (18559,'Fafnir_Skin','Fafnir Skin',5,20,NULL,100,NULL,3,NULL,0,0xFFFFFFFF,63,2,512,NULL,'50',0,152,'bonus bCritical,3; bonus bHPrecovRate,-100;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (18560,'Fafnir_Mask','Fafnir Mask',5,20,NULL,300,NULL,2,NULL,0,0xFFFFFFFF,63,2,1,NULL,'50',0,180,'bonus bCritical,2;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18561,'B_Feather_Beret','B Feather Beret',5,20,NULL,300,NULL,5,NULL,1,0xFFFFFFFF,63,2,256,NULL,'40',1,731,'bonus bVit,2; bonus bMdef,3; bonus2 bSubRace,RC_DemiHuman,10;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18562,'Bone_Hat','Bone Hat',5,20,NULL,200,NULL,3,NULL,1,0xFFFFFFFF,63,2,256,NULL,'10',1,732,'bonus bMdef,3;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18563,'Heart_Wing_Hairband','Heart Wing Hairband',5,20,NULL,300,NULL,0,NULL,1,0xFFFFFFFF,63,2,256,NULL,'50',1,733,NULL,NULL,NULL);
@@ -8331,6 +8331,7 @@ REPLACE INTO `item_db_re` VALUES (18815,'Devil_School_Cap','Devil School Cap',5,
 REPLACE INTO `item_db_re` VALUES (18816,'Adv_Angel_School_Cap','Evoked Angel School Cap',5,20,NULL,100,NULL,4,NULL,1,0xFFFFFFFE,63,2,256,NULL,'0',1,929,'bonus bInt,2; bonus bVit,2; bonus bLuk,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18817,'Adv_Devil_School_Cap','Evoked Devil School Cap',5,20,NULL,100,NULL,4,NULL,1,0xFFFFFFFE,63,2,256,NULL,'0',1,930,'bonus bStr,2; bonus bVit,2; bonus bLuk,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18818,'Red_Pencil_In_Mouth','Red Pencil In Mouth',5,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,63,2,1,NULL,'0',0,931,'bonus bUnbreakableHelm,0;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (18819,'Blue_Pencil_In_Mouth','Red Pencil In Mouth',5,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,63,2,1,NULL,'0',0,932,'bonus bUnbreakableHelm,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18821,'Rainbow_Feather_Deco','Rainbow Feather Deco',5,20,NULL,300,NULL,5,NULL,1,0xFFFFFFFF,63,2,256,NULL,'1',1,934,'bonus bAtkRate,1; bonus bMatkRate,1;',NULL,NULL);
 #
 REPLACE INTO `item_db_re` VALUES (18828,'2012RMSCNO1','2012RMSCNO1',5,0,NULL,1000,NULL,20,NULL,1,0xFFFFFFFF,63,2,256,NULL,'95',0,942,'bonus bAllStats,5; bonus bMdef,5;',NULL,NULL);

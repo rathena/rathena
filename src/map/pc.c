@@ -947,14 +947,9 @@ int pc_isequip(struct map_session_data *sd,int n)
 				}
 		}
 	}
-		
-	/* restricted equip */
-	if ((!map_flag_vs(sd->bl.m) && item->flag.no_equip&1) || // Normal
-		(map[sd->bl.m].flag.pvp && item->flag.no_equip&2) || // PVP
-		(map_flag_gvg(sd->bl.m) && item->flag.no_equip&4) || // GVG
-		(map[sd->bl.m].flag.battleground && item->flag.no_equip&8) || // Battleground
-		(map[sd->bl.m].flag.restricted && item->flag.no_equip&(8*map[sd->bl.m].zone)) // Zone restriction
-		)
+
+	//fail to equip if item is restricted
+	if (itemdb_isNoEquip(item, sd->bl.m) && !battle_config.allow_equip_restricted_item)
 		return 0;
 
 	//Not equipable by class. [Skotlex]
@@ -4463,14 +4458,8 @@ int pc_useitem(struct map_session_data *sd,int n)
 	}
 
 	/* on restricted maps the item is consumed but the effect is not used */
-	if (!pc_has_permission(sd,PC_PERM_ITEM_UNCONDITIONAL) && (
-		(!map_flag_vs(sd->bl.m) && id->flag.no_equip&1) || // Normal
-		(map[sd->bl.m].flag.pvp && id->flag.no_equip&2) || // PVP
-		(map_flag_gvg(sd->bl.m) && id->flag.no_equip&4) || // GVG
-		(map[sd->bl.m].flag.battleground && id->flag.no_equip&8) || // Battleground
-		(map[sd->bl.m].flag.restricted && id->flag.no_equip&(8*map[sd->bl.m].zone)) // Zone restriction
-		)) {
-		if( battle_config.item_restricted_consumption_type ) {
+	if (!pc_has_permission(sd,PC_PERM_ITEM_UNCONDITIONAL) && itemdb_isNoEquip(id,sd->bl.m)) {
+		if( battle_config.allow_consume_restricted_item ) {
 			clif_useitemack(sd,n,item.amount-1,true);
 			pc_delitem(sd,n,1,1,0,LOG_TYPE_CONSUME);
 		}
@@ -8648,6 +8637,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 
 	if(battle_config.battle_log)
 		ShowInfo("equip %d(%d) %x:%x\n",sd->status.inventory[n].nameid,n,id?id->equip:0,req_pos);
+
 	if(!pc_isequip(sd,n) || !(pos&req_pos) || sd->status.inventory[n].equip != 0 || sd->status.inventory[n].attribute==1 ) { // [Valaris]
 		// FIXME: pc_isequip: equip level failure uses 2 instead of 0
 		clif_equipitemack(sd,n,0,0);	// fail
@@ -8806,7 +8796,8 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 
 	//OnEquip script [Skotlex]
 	if (id) {
-		if (id->equip_script)
+		//only run the script if item isn't restricted
+		if (id->equip_script && (!id->flag.no_equip || (id->flag.no_equip && itemdb_isNoEquip(id, sd->bl.m) && pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT))))
 			run_script(id->equip_script,0,sd->bl.id,fake_nd->bl.id);
 		if(itemdb_isspecial(sd->status.inventory[n].card[0]))
 			; //No cards
@@ -8816,7 +8807,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 				if (!sd->status.inventory[n].card[i])
 					continue;
 				if ( ( data = itemdb_exists(sd->status.inventory[n].card[i]) ) != NULL ) {
-					if( data->equip_script )
+					if( data->equip_script && (!data->flag.no_equip || (data->flag.no_equip && itemdb_isNoEquip(data, sd->bl.m) && pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT))))
 						run_script(data->equip_script,0,sd->bl.id,fake_nd->bl.id);
 				}
 			}

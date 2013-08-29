@@ -5260,8 +5260,8 @@
 11500,Light_Yellow_Pot,Light Yellow Potion,0,550,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(175,235),0; },{},{}
 11501,Light_White_Pot,Light White Potion,0,1200,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(325,405),0; },{},{}
 11502,Light_Blue_Pot,Light Blue Potion,0,5000,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal 0,rand(40,60); },{},{}
-11503,WoE_White_Potion,WoE White Potion,0,0,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(400,500),0; },{},{}
-11504,WoE_Blue_Potion,WoE Blue Potion,0,0,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal 0,rand(50,70); },{},{}
+11503,Siege_White_Potion,WoE White Potion,0,0,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(400,500),0; },{},{}
+11504,Siege_Blue_Potion,WoE Blue Potion,0,0,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal 0,rand(50,70); },{},{}
 11505,Iris,Iris,0,0,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal 0,150; },{},{}
 11506,Fanta_Orange,Fanta Orange,0,800,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(50,70),rand(10,12); },{},{}
 11507,Fanta_Grape,Fanta Grape,0,800,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(50,70),rand(10,12); },{},{}
@@ -8105,8 +8105,8 @@
 18556,Angel_Helmet,Angel Helmet,5,0,,0,,0,,0,0xFFFFFFFF,63,2,512,,0,0,3,{},{},{}
 18557,Devil_Helmet,Devil Helmet,5,0,,0,,0,,0,0xFFFFFFFF,63,2,512,,0,0,12,{},{},{}
 18558,Sinsuncho_Hat,Sinsuncho Hat,5,20,,1000,,0,,0,0xFFFFFFFF,63,2,256,,10,0,730,{},{},{}
-18559,Fafnir_Skin,Fafnir Skin,5,20,,100,,3,,0,0xFFFFFFFF,63,2,512,,50,0,152,{},{},{}
-18560,Fafnir_Mask,Fafnir Mask,5,20,,300,,2,,0,0xFFFFFFFF,63,2,1,,50,0,180,{},{},{}
+18559,Fafnir_Skin,Fafnir Skin,5,20,,100,,3,,0,0xFFFFFFFF,63,2,512,,50,0,152,{ bonus bCritical,3; bonus bHPrecovRate,-100; },{},{}
+18560,Fafnir_Mask,Fafnir Mask,5,20,,300,,2,,0,0xFFFFFFFF,63,2,1,,50,0,180,{ bonus bCritical,2; },{},{}
 18561,B_Feather_Beret,B Feather Beret,5,20,,300,,5,,1,0xFFFFFFFF,63,2,256,,40,1,731,{ bonus bVit,2; bonus bMdef,3; bonus2 bSubRace,RC_DemiHuman,10; },{},{}
 18562,Bone_Hat,Bone Hat,5,20,,200,,3,,1,0xFFFFFFFF,63,2,256,,10,1,732,{ bonus bMdef,3; },{},{}
 18563,Heart_Wing_Hairband,Heart Wing Hairband,5,20,,300,,0,,1,0xFFFFFFFF,63,2,256,,50,1,733,{},{},{}
@@ -8300,6 +8300,7 @@
 18816,Adv_Angel_School_Cap,Evoked Angel School Cap,5,20,,100,,4,,1,0xFFFFFFFE,63,2,256,,0,1,929,{ bonus bInt,2; bonus bVit,2; bonus bLuk,1; },{},{}
 18817,Adv_Devil_School_Cap,Evoked Devil School Cap,5,20,,100,,4,,1,0xFFFFFFFE,63,2,256,,0,1,930,{ bonus bStr,2; bonus bVit,2; bonus bLuk,1; },{},{}
 18818,Red_Pencil_In_Mouth,Red Pencil In Mouth,5,20,,100,,0,,0,0xFFFFFFFF,63,2,1,,0,0,931,{ bonus bUnbreakableHelm,0; },{},{}
+18819,Blue_Pencil_In_Mouth,Red Pencil In Mouth,5,20,,100,,0,,0,0xFFFFFFFF,63,2,1,,0,0,932,{ bonus bUnbreakableHelm,0; },{},{}
 18821,Rainbow_Feather_Deco,Rainbow Feather Deco,5,20,,300,,5,,1,0xFFFFFFFF,63,2,256,,1,1,934,{ bonus bAtkRate,1; bonus bMatkRate,1; },{},{}
 //
 18828,2012RMSCNO1,2012RMSCNO1,5,0,,1000,,20,,1,0xFFFFFFFF,63,2,256,,95,0,942,{ bonus bAllStats,5; bonus bMdef,5; },{},{}

@@ -3,13 +3,14 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: ========================================= 
 //= Same as 'noexppenalty' and 'nozenypenalty' combined.
 //===== Additional Comments: ================================= 
 //= 1.0 Renewal split. [Euphy]
+//= 1.1 Added Izlude duplicates. [Euphy]
 //============================================================
 
 // Towns ====================
@@ -22,6 +23,10 @@ s_atelier	mapflag	nopenalty
 mora	mapflag	nopenalty
 dewata	mapflag	nopenalty
 dew_in01	mapflag	nopenalty
+izlude_a	mapflag	nopenalty
+izlude_b	mapflag	nopenalty
+izlude_c	mapflag	nopenalty
+izlude_d	mapflag	nopenalty
 malangdo	mapflag	nopenalty
 mal_in01	mapflag	nopenalty
 mal_in02	mapflag	nopenalty

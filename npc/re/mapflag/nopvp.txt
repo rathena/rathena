@@ -3,13 +3,14 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: ========================================= 
 //= Prevents PvP mode on a map.
 //===== Additional Comments: ================================= 
 //= 1.0 Renewal split. [Euphy]
+//= 1.1 Added Izlude duplicates. [Euphy]
 //============================================================
 
 // Instances ===================
@@ -43,6 +44,10 @@ s_atelier	mapflag	pvp	off
 mora	mapflag	pvp	off
 dewata	mapflag	pvp	off
 dew_in01	mapflag	pvp	off
+izlude_a	mapflag	pvp	off
+izlude_b	mapflag	pvp	off
+izlude_c	mapflag	pvp	off
+izlude_d	mapflag	pvp	off
 malangdo	mapflag	pvp	off
 mal_in01	mapflag	pvp	off
 mal_in02	mapflag	pvp	off

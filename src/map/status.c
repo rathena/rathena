@@ -2461,18 +2461,8 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		if(!sd->inventory_data[index])
 			continue;
 
-		if(sd->inventory_data[index]->flag.no_equip) { // Items may be equipped, their effects however are nullified.
-			if(map[sd->bl.m].flag.restricted && sd->inventory_data[index]->flag.no_equip&(8*map[sd->bl.m].zone))
-				continue;
-			if(!map_flag_vs(sd->bl.m) && sd->inventory_data[index]->flag.no_equip&1)
-				continue;
-			if(map[sd->bl.m].flag.pvp && sd->inventory_data[index]->flag.no_equip&2)
-				continue;
-			if(map_flag_gvg(sd->bl.m) && sd->inventory_data[index]->flag.no_equip&4)
-				continue;
-			if(map[sd->bl.m].flag.battleground && sd->inventory_data[index]->flag.no_equip&8)
-				continue;
-		}
+		if(!pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && sd->inventory_data[index]->flag.no_equip && itemdb_isNoEquip(sd->inventory_data[index], sd->bl.m)) // Items may be equipped, their effects however are nullified.
+			continue;
 
 		status->def += sd->inventory_data[index]->def;
 
@@ -2615,18 +2605,8 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 				}
 				if(!data->script)
 					continue;
-				if(data->flag.no_equip) { //Card restriction checks.
-					if(map[sd->bl.m].flag.restricted && data->flag.no_equip&(8*map[sd->bl.m].zone))
-						continue;
-					if(!map_flag_vs(sd->bl.m) && data->flag.no_equip&1)
-						continue;
-					if(map[sd->bl.m].flag.pvp && data->flag.no_equip&2)
-						continue;
-					if(map_flag_gvg(sd->bl.m) && data->flag.no_equip&4)
-						continue;
-					if(map[sd->bl.m].flag.battleground && data->flag.no_equip&8)
-						continue;
-				}
+				if(!pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && data->flag.no_equip && itemdb_isNoEquip(data, sd->bl.m)) //Card restriction checks.
+					continue;
 				if(i == EQI_HAND_L && sd->status.inventory[index].equip == EQP_HAND_L)
 				{	//Left hand status.
 					sd->state.lr_flag = 1;

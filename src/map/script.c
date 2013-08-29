@@ -3322,7 +3322,8 @@ void op_2(struct script_state *st, int op)
 
 		if (leftref.type != C_NOP)
 		{
-			aFree(left->u.str);
+			if (left->type == C_STR) // don't free C_CONSTSTR
+				aFree(left->u.str);
 			*left = leftref;
 		}
 	}

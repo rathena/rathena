@@ -52,7 +52,7 @@ help:
 
 char-server: obj_sql $(CHAR_SQL_OBJ) ../common/obj_sql/common_sql.a ../common/obj_all/common.a
 	@echo "	LD	@OCHR@@EXEEXT@"
-	@@CC@ @LDFLAGS@ -o ../../@OCHR@@EXEEXT@ $(CHAR_OBJ) ../common/obj_sql/common_sql.a ../common/obj_all/common.a $(MT19937AR_OBJ) $(LIBCONFIG_OBJ) @LIBS@ @MYSQL_LIBS@
+	@@CC@ @LDFLAGS@ -o ../../@OCHR@@EXEEXT@ $(CHAR_SQL_OBJ) ../common/obj_sql/common_sql.a ../common/obj_all/common.a $(MT19937AR_OBJ) $(LIBCONFIG_OBJ) @LIBS@ @MYSQL_LIBS@
 
 needs_mysql:
 	@echo "MySQL not found or disabled by the configure script"

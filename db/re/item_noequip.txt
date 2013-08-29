@@ -25,36 +25,84 @@
 // you can even mix modes
 //519,322 (256+64+2) you can't use Milk on PVP, and maps marked as 'restricted zone 2' and 'restricted zone 4'
 
-//PVP
-14529,2 //Greed Scroll
+//----------------------------------------------------------------------------
+// Normal maps
+//----------------------------------------------------------------------------
+2483,1	//Siege_Greave
+2484,1	//Siege_Boots
+2485,1	//Siege_Shoes
+2586,1	//Siege_Manteau
+2587,1	//Siege_Muffler
+15046,1	//Siege_Plate
+15047,1	//Siege_Suits
+15048,1	//Siege_Robe
+1776,1	//Siege_Arrow_S
+1775,1	//Siege_Arrow_A
+1293,1	//Velum_Jamadhar
+1294,1	//Velum_Scare
+1395,1	//Velum_Buster
+1492,1	//Velum_Glaive
+2016,1	//Velum_Arc_Wand
+21001,1	//Velum_Claymore
+21002,1	//Velum_Katzbalger
+18113,1	//Velum_Arbalest
+18114,1	//Velum_CrossBow
+1586,1	//Velum_Bible
+1587,1	//Velum_Encyclopedia
+1832,1	//Velum_Claw
+13072,1	//Velum_Damascus
+16020,1	//Velum_Stunner
+16021,1	//Velum_Flail
+1436,1	//Velum_Spear
+1396,1	//Velum_Guillotine
+11548,1	//Woe_White_Potion
+11549,1	//Woe_Blue_Potion
+11547,1	//Woe_Violet_Potion
+12600,1	//Treasure_Box_Scroll
 
-//GVG
-12218,4 //LV5 Assumptio Scroll
-14529,4 //Greed Scroll
-14590,4 //Party Assumptio 5 Scroll
+//----------------------------------------------------------------------------
+// PVP
+//----------------------------------------------------------------------------
+14529,2	//Greed_Scroll
 
-//BATTLEGROUND
-12218,8 //LV5 Assumptio Scroll
-14590,8 //Party Assumptio 5 Scroll
+//----------------------------------------------------------------------------
+// GVG
+//----------------------------------------------------------------------------
+12218,4	//Assumptio_5_Scroll
+14529,4	//Greed_Scroll
+14590,4	//Pty_Assumptio_Scroll
 
+//----------------------------------------------------------------------------
+// Battlegrounds
+//----------------------------------------------------------------------------
+12218,8	//Assumptio_5_Scroll
+14590,8	//Pty_Assumptio_Scroll
 
-//Zone 1 - Aldebaran Turbo Track
-601,32 //Fly Wing
-605,32 //Anodyne
-506,32 //Green Potion
-525,32 //Panacea
+//----------------------------------------------------------------------------
+// Zone 1 - Aldebaran Turbo Track
+//----------------------------------------------------------------------------
+601,32	//Wing_Of_Fly
+605,32	//Anodyne
+506,32	//Green_Potion
+525,32	//Panacea
 
-//Zone 2 - Jail
-601,64 //Fly Wing - not really needed here but ...
-602,64 //Butterfly Wing - also not needed
-12212,64 //Giant Fly Wing
-14582,64
-14583,64
-14584,64
-14585,64
+//----------------------------------------------------------------------------
+// Zone 2 - Jail
+//----------------------------------------------------------------------------
+601,64	//Wing_Of_Fly
+602,64	//Wing_Of_Butterfly
+12212,64	//Giant_Fly_Wing
+14582,64	//WOB_Rune
+14583,64	//WOB_Schwaltz
+14584,64	//WOB_Rachel
+14585,64	//WOB_Local
 
-//Zone 3 - Izlude Battle Arena
-601,128 //Fly Wing
+//----------------------------------------------------------------------------
+// Zone 3 - Izlude Battle Arena
+//----------------------------------------------------------------------------
+601,128	//Wing_Of_Fly
 
-//Zone 7 - Towns
-14529,2048 //Greed Scroll
+//----------------------------------------------------------------------------
+// Zone 7 - Towns
+//----------------------------------------------------------------------------
+14529,2048	//Greed_Scroll

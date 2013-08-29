@@ -7646,7 +7646,7 @@ payon,244,62,3	script	Moonho Ahn	897,{
 						if (((.@input$ == "Odd") && (.@number == 1)) || ((.@input$ == "Even") && (.@number == 2))) {
 							set .@number_right_3,.@number_right_3+1;
 							mes "[Moonho Ahn]";
-							mes "^0000FF"+.@input+"^000000?";
+							mes "^0000FF"+.@input$+"^000000?";
 							mes "Okay, you won.";
 							next;
 							if ((.@number_right_3 < 2) && (.@number_false_3 < 2)) {
@@ -7659,7 +7659,7 @@ payon,244,62,3	script	Moonho Ahn	897,{
 						else if (((.@input$ == "Odd") && (.@number == 2)) || ((.@input$ == "Even") && (.@number == 1))) {
 							set .@number_false_3,.@number_false_3+1;
 							mes "[Moonho Ahn]";
-							mes "Well, it's ^0000FF"+.@input+"^000000.";
+							mes "Well, it's ^0000FF"+.@input$+"^000000.";
 							mes "Looks like I won.";
 							next;
 							if ((.@number_right_3 < 2) && (.@number_false_3 <2)) {
