@@ -133,6 +133,9 @@ struct s_skill_db {
 	int unit_interval;
 	int unit_target;
 	int unit_flag;
+#ifdef ADJUST_SKILL_DAMAGE
+	struct s_skill_damage damage;
+#endif
 };
 extern struct s_skill_db skill_db[MAX_SKILL_DB];
 
@@ -1923,5 +1926,20 @@ int skill_get_elemental_type(uint16 skill_id, uint16 skill_lv);
 
 void skill_combo_toogle_inf(struct block_list* bl, uint16 skill_id, int inf);
 void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_list *bl, uint16 skill_id, uint16 skill_lv, int tick);
+
+/**
+ * Skill Damage target
+ **/
+#ifdef ADJUST_SKILL_DAMAGE
+enum e_skill_damage_caster {
+	SDC_PC   = 0x01,
+	SDC_MOB  = 0x02,
+	SDC_PET  = 0x04,
+	SDC_HOM  = 0x08,
+	SDC_MER  = 0x10,
+	SDC_ELEM = 0x20,
+	SDC_ALL  = SDC_PC|SDC_MOB|SDC_PET|SDC_HOM|SDC_MER|SDC_ELEM,
+};
+#endif
 
 #endif /* _SKILL_H_ */

@@ -414,7 +414,8 @@ enum {
 	MF_SUMSTARTMIRACLE,
 	MF_NOMINEEFFECT,
 	MF_NOLOCKON,
-	MF_NOTOMB
+	MF_NOTOMB,
+	MF_SKILL_DAMAGE	//60
 };
 
 const char* script_op2name(int op)
@@ -10780,11 +10781,12 @@ BUILDIN_FUNC(setmapflagnosave)
 
 BUILDIN_FUNC(getmapflag)
 {
-	int16 m,i;
+	int16 m,i,type=0;
 	const char *str;
 
 	str=script_getstr(st,2);
 	i=script_getnum(st,3);
+	FETCH(4,type);
 
 	m = map_mapname2mapid(str);
 	if(m >= 0) {
@@ -10826,8 +10828,8 @@ BUILDIN_FUNC(getmapflag)
 			case MF_RESTRICTED:			script_pushint(st,map[m].flag.restricted); break;
 			case MF_NOCOMMAND:			script_pushint(st,map[m].nocommand); break;
 			case MF_NODROP:				script_pushint(st,map[m].flag.nodrop); break;
-			case MF_JEXP:				script_pushint(st,map[m].jexp); break;
-			case MF_BEXP:				script_pushint(st,map[m].bexp); break;
+			case MF_JEXP:				script_pushint(st,map[m].adjust.jexp); break;
+			case MF_BEXP:				script_pushint(st,map[m].adjust.bexp); break;
 			case MF_NOVENDING:			script_pushint(st,map[m].flag.novending); break;
 			case MF_LOADEVENT:			script_pushint(st,map[m].flag.loadevent); break;
 			case MF_NOCHAT:				script_pushint(st,map[m].flag.nochat); break;
@@ -10847,6 +10849,21 @@ BUILDIN_FUNC(getmapflag)
 			case MF_NOMINEEFFECT:		script_pushint(st,map[m].flag.nomineeffect); break;
 			case MF_NOLOCKON:			script_pushint(st,map[m].flag.nolockon); break;
 			case MF_NOTOMB:				script_pushint(st,map[m].flag.notomb); break;
+#ifdef ADJUST_SKILL_DAMAGE
+			case MF_SKILL_DAMAGE:
+				{
+					int ret_val = 0;
+					switch (type) {
+						case 1: ret_val = map[m].adjust.damage.pc; break;
+						case 2: ret_val = map[m].adjust.damage.mob; break;
+						case 3: ret_val = map[m].adjust.damage.boss; break;
+						case 4: ret_val = map[m].adjust.damage.other; break;
+						case 5: ret_val = map[m].adjust.damage.caster; break;
+						default: ret_val = map[m].flag.skill_damage; break;
+					}
+					script_pushint(st,ret_val); break;
+				} break;
+#endif
 		}
 	}
 
@@ -10869,15 +10886,14 @@ static int script_mapflag_pvp_sub(struct block_list *bl,va_list ap) {
 }
 BUILDIN_FUNC(setmapflag)
 {
-	int16 m,i;
+	int16 m,i,type=0;
 	const char *str;
 	int val=0;
 
 	str=script_getstr(st,2);
 	i=script_getnum(st,3);
-	if(script_hasdata(st,4)){
-		val=script_getnum(st,4);
-	}
+	FETCH(4,val);
+	FETCH(5,type);
 	m = map_mapname2mapid(str);
 	if(m >= 0) {
 		switch(i) {
@@ -10934,8 +10950,8 @@ BUILDIN_FUNC(setmapflag)
 				break;
 			case MF_NOCOMMAND:			map[m].nocommand = (val <= 0) ? 100 : val; break;
 			case MF_NODROP:				map[m].flag.nodrop = 1; break;
-			case MF_JEXP:				map[m].jexp = (val <= 0) ? 100 : val; break;
-			case MF_BEXP:				map[m].bexp = (val <= 0) ? 100 : val; break;
+			case MF_JEXP:				map[m].adjust.jexp = (val <= 0) ? 100 : val; break;
+			case MF_BEXP:				map[m].adjust.bexp = (val <= 0) ? 100 : val; break;
 			case MF_NOVENDING:			map[m].flag.novending = 1; break;
 			case MF_LOADEVENT:			map[m].flag.loadevent = 1; break;
 			case MF_NOCHAT:				map[m].flag.nochat = 1; break;
@@ -10955,6 +10971,19 @@ BUILDIN_FUNC(setmapflag)
 			case MF_NOMINEEFFECT:		map[m].flag.nomineeffect = 1 ; break;
 			case MF_NOLOCKON:			map[m].flag.nolockon = 1 ; break;
 			case MF_NOTOMB:				map[m].flag.notomb = 1; break;
+#ifdef ADJUST_SKILL_DAMAGE
+			case MF_SKILL_DAMAGE:
+				{
+					switch (type) {
+						case 1: map[m].adjust.damage.pc = val; break;
+						case 2: map[m].adjust.damage.mob = val; break;
+						case 3: map[m].adjust.damage.boss = val; break;
+						case 4: map[m].adjust.damage.other = val; break;
+						case 5: map[m].adjust.damage.caster = val; break;
+					}
+					map[m].flag.skill_damage = 1;
+				} break;
+#endif
 		}
 	}
 
@@ -10969,9 +10998,7 @@ BUILDIN_FUNC(removemapflag)
 
 	str=script_getstr(st,2);
 	i=script_getnum(st,3);
-	if(script_hasdata(st,4)){
-		val=script_getnum(st,4);
-	}
+	FETCH(4,val);
 	m = map_mapname2mapid(str);
 	if(m >= 0) {
 		switch(i) {
@@ -11033,8 +11060,8 @@ BUILDIN_FUNC(removemapflag)
 				break;
 			case MF_NOCOMMAND:			map[m].nocommand = 0; break;
 			case MF_NODROP:				map[m].flag.nodrop = 0; break;
-			case MF_JEXP:				map[m].jexp = 0; break;
-			case MF_BEXP:				map[m].bexp = 0; break;
+			case MF_JEXP:				map[m].adjust.jexp = 0; break;
+			case MF_BEXP:				map[m].adjust.bexp = 0; break;
 			case MF_NOVENDING:			map[m].flag.novending = 0; break;
 			case MF_LOADEVENT:			map[m].flag.loadevent = 0; break;
 			case MF_NOCHAT:				map[m].flag.nochat = 0; break;
@@ -11054,6 +11081,13 @@ BUILDIN_FUNC(removemapflag)
 			case MF_NOMINEEFFECT:		map[m].flag.nomineeffect = 0 ; break;
 			case MF_NOLOCKON:			map[m].flag.nolockon = 0 ; break;
 			case MF_NOTOMB:				map[m].flag.notomb = 0; break;
+#ifdef ADJUST_SKILL_DAMAGE
+			case MF_SKILL_DAMAGE:
+				{
+					map[m].flag.skill_damage = 0;
+					memset(&map[m].adjust.damage,0,sizeof(map[m].adjust.damage));
+				} break;
+#endif
 		}
 	}
 
@@ -18143,8 +18177,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(detachrid,""),
 	BUILDIN_DEF(isloggedin,"i?"),
 	BUILDIN_DEF(setmapflagnosave,"ssii"),
-	BUILDIN_DEF(getmapflag,"si"),
-	BUILDIN_DEF(setmapflag,"si?"),
+	BUILDIN_DEF(getmapflag,"si?"),
+	BUILDIN_DEF(setmapflag,"si??"),
 	BUILDIN_DEF(removemapflag,"si?"),
 	BUILDIN_DEF(pvpon,"s"),
 	BUILDIN_DEF(pvpoff,"s"),

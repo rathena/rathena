@@ -1,0 +1,46 @@
+// Manage skill damage database
+// ----------------------------------------------
+// rAthena dev team
+// ----------------------------------------------
+// Credits:
+//		[Lilith]
+//		[Cydh]
+// ----------------------------------------------
+// <SkillName>,<Caster>,<Map>,<Damage against Players>{,<Damage against Mobs>{,<Damage against Bosses>{,<Damage against Other>}}}
+// ----------------------------------------------
+// Caster: The adjustment only works if the caster is (bitmask)
+//		 1 = Player
+//		 2 = Monster
+//		 4 = Pet
+//		 8 = Homunculus
+//		16 = Mercenary
+//		32 = Elemental
+// Map:
+// 		1    - Normal (the maps that aren't classified as these maps below)
+// 		2    - PVP
+// 		4    - GVG
+// 		8    - Battlegrounds
+// 		16   - 'skill_damage' mapflag
+// 		Restricted zones - they're configured by 'restricted <numberCastermapflag
+// 		32   - Zone 1
+// 		64   - Zone 2
+// 		128  - Zone 3
+// 		256  - Zone 4
+// 		512  - Zone 5
+// 		1024 - Zone 6
+// 		2048 - Zone 7
+// Damage adjustments:
+// 		Using value between -100 and 100000
+//  	minus value that mean normal damage will be decreased, and positive is
+// 		otherwise. 0 = no additional rate
+// ----------------------------------------------
+// Examples:
+// 1. Mammonite: Normal maps, +50% player vs players, nothing else
+//MC_MAMMONITE,1,1,50
+// 2. Adoramus: PvP & GvG maps, if the caster is player: +50% vs player, +0% vs
+//	  mob, +10% vs boss mob, +15% vs other
+//AB_ADORAMUS,1,6,50,0,10,15
+// 3. Asura Strike: Only deals half damage (-50%) if player vs player at PvP &
+//	  GvG maps
+//MO_EXTREMITYFIST,1,6,-50
+// ----------------------------------------------

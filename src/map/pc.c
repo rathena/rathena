@@ -949,7 +949,7 @@ int pc_isequip(struct map_session_data *sd,int n)
 	}
 
 	//fail to equip if item is restricted
-	if (itemdb_isNoEquip(item, sd->bl.m) && !battle_config.allow_equip_restricted_item)
+	if (!battle_config.allow_equip_restricted_item && itemdb_isNoEquip(item, sd->bl.m))
 		return 0;
 
 	//Not equipable by class. [Skotlex]
@@ -4888,10 +4888,10 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 			status_change_end(&sd->bl, SC_CLOAKING, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
 		}
-		for( i = 0; i < EQI_MAX; i++ ) {
-			if( sd->equip_index[ i ] >= 0 )
-				if( !pc_isequip( sd , sd->equip_index[ i ] ) )
-					pc_unequipitem( sd , sd->equip_index[ i ] , 2 );
+		for (i = 0; i < EQI_MAX; i++) {
+			if (sd->equip_index[i] >= 0)
+				if (!pc_isequip(sd,sd->equip_index[i]))
+					pc_unequipitem(sd,sd->equip_index[i],2);
 		}
 		if (battle_config.clear_unit_onwarp&BL_PC)
 			skill_clear_unitgroup(&sd->bl);
@@ -8797,7 +8797,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 	//OnEquip script [Skotlex]
 	if (id) {
 		//only run the script if item isn't restricted
-		if (id->equip_script && (!id->flag.no_equip || (id->flag.no_equip && itemdb_isNoEquip(id, sd->bl.m) && pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT))))
+		if (id->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(id,sd->bl.m)))
 			run_script(id->equip_script,0,sd->bl.id,fake_nd->bl.id);
 		if(itemdb_isspecial(sd->status.inventory[n].card[0]))
 			; //No cards
@@ -8807,7 +8807,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 				if (!sd->status.inventory[n].card[i])
 					continue;
 				if ( ( data = itemdb_exists(sd->status.inventory[n].card[i]) ) != NULL ) {
-					if( data->equip_script && (!data->flag.no_equip || (data->flag.no_equip && itemdb_isNoEquip(data, sd->bl.m) && pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT))))
+					if (data->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(data,sd->bl.m)))
 						run_script(data->equip_script,0,sd->bl.id,fake_nd->bl.id);
 				}
 			}

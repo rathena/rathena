@@ -1687,10 +1687,10 @@ int map_quit(struct map_session_data *sd) {
 		}
 	}
 
-	for( i = 0; i < EQI_MAX; i++ ) {
-		if( sd->equip_index[ i ] >= 0 )
-			if( !pc_isequip( sd , sd->equip_index[ i ] ) )
-				pc_unequipitem( sd , sd->equip_index[ i ] , 2 );
+	for (i = 0; i < EQI_MAX; i++) {
+		if (sd->equip_index[i] >= 0)
+			if (!pc_isequip(sd,sd->equip_index[i]))
+				pc_unequipitem(sd,sd->equip_index[i],2);
 	}
 
 	// Return loot to owner
@@ -3050,11 +3050,17 @@ void map_flags_init(void)
 		memset(&map[i].flag, 0, sizeof(map[i].flag));
 
 		// additional mapflag data
-		map[i].zone      = 0;  // restricted mapflag zone
-		map[i].nocommand = 0;  // nocommand mapflag level
-		map[i].bexp      = 100;  // per map base exp multiplicator
-		map[i].jexp      = 100;  // per map job exp multiplicator
+		map[i].zone        = 0;  // restricted mapflag zone
+		map[i].nocommand   = 0;  // nocommand mapflag level
+		map[i].adjust.bexp = 100;  // per map base exp multiplicator
+		map[i].adjust.jexp = 100;  // per map job exp multiplicator
 		memset(map[i].drop_list, 0, sizeof(map[i].drop_list));  // pvp nightmare drop list
+
+		// skill damage
+#ifdef ADJUST_SKILL_DAMAGE
+		memset(map[i].skill_damage, 0, sizeof(map[i].skill_damage));
+		memset(&map[i].adjust.damage, 0, sizeof(map[i].adjust.damage));
+#endif
 
 		// adjustments
 		if( battle_config.pk_mode )

@@ -283,6 +283,39 @@ Notes:
 
 ---------------------------------------
 
+*skill_damage	{<skill_name>,<caster>,<damage1>,<damage2>,<damage3>,<damage4>}
+
+Enable skill damage adjustment on this map that used for 'Map' field on
+skill_damage_db.txt.
+
+For advanced settings, this mapflag can be used to adjust damage of 'skill' if the caster
+is 'caster', the damage will be added or reduced 'damage'% from normal damage.
+
+<skill> is name of skill, look at skill_db.txt, not the skill id. Example SM_BASH.
+<caster> is to decide who can trigger this adjustment, the invoker not only for player.
+		Using bitmask, and the available casters are:
+		 1 = Player
+		 2 = Monster
+		 4 = Pet
+		 8 = Homunculus
+		16 = Mercenary
+		32 = Elemental
+<damage1> addition rate to against player
+<damage2> addition rate to against normal monster
+<damage3> addition rate to against boss monster
+<damage4> addition rate to against other (homunculus, mercenary, pet, and elemetal)
+
+Notes:
+- If you want to adjust X skill, you need at least define 'skill' (skill name), 'caster',
+  and 'damage1'
+- This mapflag can be used to adjust all skill damages, put "all" (without quotes) at
+  'skill' column
+- Please put the damages value between -100 and 100000. 0 means no addition.
+- One map can contains up to 5 skills adjustment
+  (max. value is defined on map.h, MAX_MAP_SKILL_MODIFIER)
+
+---------------------------------------
+
 ==================
 | 3. Map Effects |
 ==================
@@ -327,7 +360,7 @@ Allows usage of item Neuralizer (ID 12213).
 *jexp	<rate>
 
 Changes the base and job experience rates on a map.
-<rate> is given as a percentage (i.e. 100 = 1x EXP). This takes into account the modifiers
+<ratecasters given as a percentage (i.e. 100 = 1x EXP). This takes into account the modifiers
 'base_exp_rate' and 'job_exp_rate' in '/conf/battle/exp.conf'.
 
 ---------------------------------------

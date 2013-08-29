@@ -3846,6 +3846,38 @@ ACMD_FUNC(mapinfo) {
 		sprintf(atcmd_output, msg_txt(sd,1045),map[m_id].flag.battleground); // Battlegrounds ON (type %d)
 		clif_displaymessage(fd, atcmd_output);
 	}
+
+	/* Skill damage adjustment info [Cydh] */
+#ifdef ADJUST_SKILL_DAMAGE
+	if (map[m_id].flag.skill_damage) {
+		int j;
+		clif_displaymessage(fd,msg_txt(sd,1052));	// Skill Damage Adjustments:
+		sprintf(atcmd_output," > [Map] %d%%, %d%%, %d%%, %d%% | Caster:%d"
+			,map[m_id].adjust.damage.pc
+			,map[m_id].adjust.damage.mob
+			,map[m_id].adjust.damage.boss
+			,map[m_id].adjust.damage.other
+			,map[m_id].adjust.damage.caster);
+		clif_displaymessage(fd, atcmd_output);
+		if (map[m_id].skill_damage[0].skill_id) {
+			clif_displaymessage(fd," > [Map Skill] Name : Player, Monster, Boss Monster, Other | Caster");
+			for (j = 0; j < MAX_MAP_SKILL_MODIFIER; j++) {
+				if (map[m_id].skill_damage[j].skill_id) {
+					sprintf(atcmd_output,"     %d. %s : %d%%, %d%%, %d%%, %d%% | %d"
+						,j+1
+						,skill_db[skill_get_index(map[m_id].skill_damage[j].skill_id)].name
+						,map[m_id].skill_damage[j].pc
+						,map[m_id].skill_damage[j].mob
+						,map[m_id].skill_damage[j].boss
+						,map[m_id].skill_damage[j].other
+						,map[m_id].skill_damage[j].caster);
+					clif_displaymessage(fd,atcmd_output);
+				}
+			}
+		}
+	}
+#endif
+
 	strcpy(atcmd_output,msg_txt(sd,1046)); // PvP Flags:
 	if (map[m_id].flag.pvp)
 		strcat(atcmd_output, " Pvp ON |");
@@ -7677,6 +7709,9 @@ ACMD_FUNC(mapflag) {
 		checkflag(partylock);			checkflag(guildlock);			checkflag(reset);				checkflag(chmautojoin);
 		checkflag(nousecart);			checkflag(noitemconsumption);	checkflag(nosumstarmiracle);	checkflag(nomineeffect);
 		checkflag(nolockon);			checkflag(notomb);
+#ifdef ADJUST_SKILL_DAMAGE
+		checkflag(skill_damage);
+#endif
 		clif_displaymessage(sd->fd," ");
 		clif_displaymessage(sd->fd,msg_txt(sd,1312)); // Usage: "@mapflag monster_noteleport 1" (0=Off | 1=On)
 		clif_displaymessage(sd->fd,msg_txt(sd,1313)); // Type "@mapflag available" to list the available mapflags.
@@ -7698,6 +7733,9 @@ ACMD_FUNC(mapflag) {
 	setflag(partylock);			setflag(guildlock);			setflag(reset);					setflag(chmautojoin);
 	setflag(nousecart);			setflag(noitemconsumption);	setflag(nosumstarmiracle);		setflag(nomineeffect);
 	setflag(nolockon);			setflag(notomb);
+#ifdef ADJUST_SKILL_DAMAGE
+	setflag(skill_damage);
+#endif
 
 	clif_displaymessage(sd->fd,msg_txt(sd,1314)); // Invalid flag name or flag.
 	clif_displaymessage(sd->fd,msg_txt(sd,1312)); // Usage: "@mapflag monster_noteleport 1" (0=Off | 1=On)
@@ -7710,6 +7748,9 @@ ACMD_FUNC(mapflag) {
 	clif_displaymessage(sd->fd,"fog, fireworks, sakura, leaves, nogo, nobaseexp, nojobexp, nomobloot, nomvploot,");
 	clif_displaymessage(sd->fd,"nightenabled, restricted, nodrop, novending, loadevent, nochat, partylock, guildlock,");
 	clif_displaymessage(sd->fd,"reset, chmautojoin, nousecart, noitemconsumption, nosumstarmiracle, nolockon, notomb");
+#ifdef ADJUST_SKILL_DAMAGE
+	clif_displaymessage(sd->fd,"skill_damage");
+#endif
 
 #undef checkflag
 #undef setflag

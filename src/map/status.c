@@ -2461,7 +2461,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		if(!sd->inventory_data[index])
 			continue;
 
-		if(!pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && sd->inventory_data[index]->flag.no_equip && itemdb_isNoEquip(sd->inventory_data[index], sd->bl.m)) // Items may be equipped, their effects however are nullified.
+		if(!pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(sd->inventory_data[index],sd->bl.m)) // Items may be equipped, their effects however are nullified.
 			continue;
 
 		status->def += sd->inventory_data[index]->def;
@@ -2605,7 +2605,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 				}
 				if(!data->script)
 					continue;
-				if(!pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && data->flag.no_equip && itemdb_isNoEquip(data, sd->bl.m)) //Card restriction checks.
+				if(!pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(data,sd->bl.m)) //Card restriction checks.
 					continue;
 				if(i == EQI_HAND_L && sd->status.inventory[index].equip == EQP_HAND_L)
 				{	//Left hand status.

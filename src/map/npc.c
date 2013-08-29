@@ -3417,14 +3417,14 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 		}
 	}
 	else if (!strcmpi(w3,"jexp")) {
-		map[m].jexp = (state) ? atoi(w4) : 100;
-		if( map[m].jexp < 0 ) map[m].jexp = 100;
-		map[m].flag.nojobexp = (map[m].jexp==0)?1:0;
+		map[m].adjust.jexp = (state) ? atoi(w4) : 100;
+		if( map[m].adjust.jexp < 0 ) map[m].adjust.jexp = 100;
+		map[m].flag.nojobexp = (map[m].adjust.jexp==0)?1:0;
 	}
 	else if (!strcmpi(w3,"bexp")) {
-		map[m].bexp = (state) ? atoi(w4) : 100;
-		if( map[m].bexp < 0 ) map[m].bexp = 100;
-		 map[m].flag.nobaseexp = (map[m].bexp==0)?1:0;
+		map[m].adjust.bexp = (state) ? atoi(w4) : 100;
+		if( map[m].adjust.bexp < 0 ) map[m].adjust.bexp = 100;
+		 map[m].flag.nobaseexp = (map[m].adjust.bexp==0)?1:0;
 	}
 	else if (!strcmpi(w3,"loadevent"))
 		map[m].flag.loadevent=state;
@@ -3450,6 +3450,49 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 		map[m].flag.nolockon = state;
 	else if (!strcmpi(w3,"notomb"))
 		map[m].flag.notomb = state;
+	else if (!strcmpi(w3,"skill_damage")) {
+#ifdef ADJUST_SKILL_DAMAGE
+		char skill[NAME_LENGTH];
+		int pc = 0, mob = 0, boss = 0, other = 0, caster = 0;
+
+		memset(skill,0,sizeof(skill));
+		map[m].flag.skill_damage = state;	//set the mapflag
+
+		if (sscanf(w4,"%24[^,],%d,%d,%d,%d,%d[^\n]",skill,&caster,&pc,&mob,&boss,&other) >= 3) {
+			caster = (!caster) ? SDC_ALL : caster;
+			pc = cap_value(pc,-100,MAX_SKILL_DAMAGE_RATE);
+			mob = cap_value(mob,-100,MAX_SKILL_DAMAGE_RATE);
+			boss = cap_value(boss,-100,MAX_SKILL_DAMAGE_RATE);
+			other = cap_value(other,-100,MAX_SKILL_DAMAGE_RATE);
+
+			if (strcmp(skill,"all") == 0) {	//adjust damages for all skills
+				map[m].adjust.damage.caster = caster;
+				map[m].adjust.damage.pc = pc;
+				map[m].adjust.damage.mob = mob;
+				map[m].adjust.damage.boss = boss;
+				map[m].adjust.damage.other = other;
+			}
+			else if (skill_name2id(skill) <= 0)
+				ShowWarning("npc_parse_mapflag: skill_damage: Invalid skill name '%s'. Skipping (file '%s', line '%d')\n",skill,filepath,strline(buffer,start-buffer));
+			else {	//damages for specified skill
+				int i;
+				ARR_FIND(0,MAX_MAP_SKILL_MODIFIER,i,map[m].skill_damage[i].skill_id <= 0);
+				if (i >= MAX_SKILL)
+					ShowWarning("npc_parse_mapflag: skill_damage: Skill damage for map '%s' is overflow.\n",map[m].name);
+				else {
+					map[m].skill_damage[i].skill_id = skill_name2id(skill);
+					map[m].skill_damage[i].caster = caster;
+					map[m].skill_damage[i].pc = pc;
+					map[m].skill_damage[i].mob = mob;
+					map[m].skill_damage[i].boss = boss;
+					map[m].skill_damage[i].other = other;
+				}
+			}
+		}
+#else
+		ShowInfo("npc_parse_mapflag: skill_damage: ADJUST_SKILL_DAMAGE is inactive (core.h). Skipping this mapflag..\n");
+#endif
+	}
 	else
 		ShowError("npc_parse_mapflag: unrecognized mapflag '%s' (file '%s', line '%d').\n", w3, filepath, strline(buffer,start-buffer));
 
