@@ -27,7 +27,7 @@
 // 		2048 - Zone 7
 //
 // Notes:
-// 		Damage is percentage between -100 and 100000.
+//  	Damage is percentage between -100 and 100000.
 //  	Negative values decrease damage and positive values increase it (0 = no change).
 //
 // Examples:

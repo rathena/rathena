@@ -967,6 +967,7 @@ OnInit:
 		mes "5 Red Gemstones";
 		next;
 		mes "^3355FFDo you want to continue?^000000";
+		next;
 		if(select("No:Continue") == 1) {
 			mes "^3355FFWork canceled.^000000";
 			close;
@@ -1504,8 +1505,9 @@ OnGuardianStoneDied:
 	end;
 
 OnTimer300000:
+	set .@num, atoi(charat(strnpcinfo(1),2));
 	set .@str$,substr(strnpcinfo(2),0,1)+substr(strnpcinfo(2),8,9);
-	donpcevent "1st Guardian Stone#"+.@str$+"::OnEnable";
+	donpcevent ((.@num == 1)?"1st":"2nd")+" Guardian Stone#"+.@str$+"::OnEnable";
 	setd "$agit_"+.@str$+"["+(atoi(charat(strnpcinfo(1),2))-1)+"]",2;
 	stopnpctimer;
 	end;
