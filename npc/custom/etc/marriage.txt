@@ -719,7 +719,7 @@ function SF_TryRegister {
 		close;
 	}
 	set Zeny,Zeny-@cost;
-	sc_start SC_Wedding,3600000000,1; //Start Wedding Effect (SC_WEDDING)
+	sc_start SC_Wedding,3600000,1; //Start Wedding Effect (SC_WEDDING)
 	if (@bride) {
 		set $wed_bride_progress,1;
 		set $wed_bride$,strcharinfo(0);
