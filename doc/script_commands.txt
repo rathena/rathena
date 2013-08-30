@@ -6072,7 +6072,7 @@ specified.
 
 ---------------------------------------
 
-*setmapflag "<map name>",<flag>{,<zone>};
+*setmapflag "<map name>",<flag>{,<zone>{,<type>}};
 
 This command marks a specified map with the given map flag, which will alter the 
 behavior of the map. A full list of mapflags is located in 'db/const.txt' with
@@ -6087,7 +6087,15 @@ skills or open up trade deals (mf_notrade, mf_novending, mf_noskill, mf_noicewal
 current weather effects (mf_snow, mf_fog, mf_sakura, mf_leaves, mf_rain, mf_clouds, 
 mf_fireworks) and whether night will be in effect on this map (mf_nightenabled).
 
-The zone optional parameter is used to set the zone for restricted mapflags.
+The optional parameter 'zone' is used to set the zone for restricted mapflags.
+
+For the 'skill_damage' mapflag, 'zone' functions as 'value' (-100 to 100000) and
+'type' can be:
+ 1: damage against players
+ 2: damage against mobs
+ 3: damage against bosses
+ 4: damage against other
+ 5: caster type
 
 ---------------------------------------
 
@@ -6096,14 +6104,22 @@ The zone optional parameter is used to set the zone for restricted mapflags.
 This command removes a mapflag from a specified map. 
 See 'setmapflag' for a list of mapflags.
 
-The zone optional parameter is used to remove the zone from restricted mapflags.
+The optional parameter 'zone' is used to remove the zone from restricted mapflags.
 
 ---------------------------------------
 
-*getmapflag("<map name>",<flag>)
+*getmapflag("<map name>",<flag>{,<type>})
 
 This command checks the status of a given mapflag and returns the mapflag's state. 
 0 means OFF, and 1 means ON. See 'setmapflag' for a list of mapflags.
+
+The optional parameter 'type' is used in the 'skill_damage' mapflag:
+ 0: if mapflag is set (default)
+ 1: damage against players
+ 2: damage against mobs
+ 3: damage against bosses
+ 4: damage against other
+ 5: caster type
 
 ---------------------------------------
 

@@ -59,12 +59,12 @@
 /// Uncomment to enable real-time server stats (in and out data and ram usage).
 //#define SHOW_SERVER_STATS
 
-/// Uncomment to enable skill's damage adjustments [Cydh]
-/// By enabling this, db/skill_damage.txt and skill_damage mapflag will be active to add
-/// damage rate of specified skill againts player, monster, boss-monster, or other.
-/// skill_damage mapflag is used to adjust damage of specified skill at specified map
+/// Uncomment to enable skills damage adjustments
+/// By enabling this, db/skill_damage.txt and the skill_damage mapflag will adjust the
+/// damage rate of specified skills.
 //#define ADJUST_SKILL_DAMAGE
-/// This MAX_SKILL_DAMAGE_RATE is used to cap max the rate
+
+/// The skill damage adjustment rate is capped at 100000.
 #ifdef ADJUST_SKILL_DAMAGE
 #define MAX_SKILL_DAMAGE_RATE 100000
 #endif

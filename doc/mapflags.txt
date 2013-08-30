@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 20130706
+//= 20130830
 //===== Description: =========================================
 //= List of available mapflags and their functions.
 //============================================================
@@ -283,36 +283,31 @@ Notes:
 
 ---------------------------------------
 
-*skill_damage	{<skill_name>,<caster>,<damage1>,<damage2>,<damage3>,<damage4>}
+*skill_damage	{<skill_name>,<caster>,<damage1>,{<damage2>,{<damage3>,{<damage4>}}}}
 
-Enable skill damage adjustment on this map that used for 'Map' field on
-skill_damage_db.txt.
+Enables skill damage adjustment on a map. All adjustments in 'db/skill_damage_db.txt'
+for 'Map' type 16 will be applied.
 
-For advanced settings, this mapflag can be used to adjust damage of 'skill' if the caster
-is 'caster', the damage will be added or reduced 'damage'% from normal damage.
-
-<skill> is name of skill, look at skill_db.txt, not the skill id. Example SM_BASH.
-<caster> is to decide who can trigger this adjustment, the invoker not only for player.
-		Using bitmask, and the available casters are:
-		 1 = Player
-		 2 = Monster
-		 4 = Pet
-		 8 = Homunculus
-		16 = Mercenary
-		32 = Elemental
-<damage1> addition rate to against player
-<damage2> addition rate to against normal monster
-<damage3> addition rate to against boss monster
-<damage4> addition rate to against other (homunculus, mercenary, pet, and elemetal)
+This mapflag can also be used to adjust the damage of one skill by a percentage:
+ - skill_name:
+	Name of the skill in 'db/(pre-)re/skill_db.txt' (ex. SM_BASH).
+	To adjust all skill damage, write "all" (without quotes).
+ - caster: the groups for which the adjustment takes effect. (bitmask)
+	 1 = Player
+	 2 = Monster
+	 4 = Pet
+	 8 = Homunculus
+	16 = Mercenary
+	32 = Elemental
+ - damage: percent adjustment rate (between -100 and 100000).
+	1 = against player
+	2 = against normal monster
+	3 = against boss monster
+	4 = against other (homunculus, mercenary, pet, elemental)
 
 Notes:
-- If you want to adjust X skill, you need at least define 'skill' (skill name), 'caster',
-  and 'damage1'
-- This mapflag can be used to adjust all skill damages, put "all" (without quotes) at
-  'skill' column
-- Please put the damages value between -100 and 100000. 0 means no addition.
-- One map can contains up to 5 skills adjustment
-  (max. value is defined on map.h, MAX_MAP_SKILL_MODIFIER)
+ - You MUST enable ADJUST_SKILL_DAMAGE in 'src/config/core.h' for this mapflag to take effect.
+ - Each map can contain up to 5 adjustments (MAX_MAP_SKILL_MODIFIER in 'src/map/map.h').
 
 ---------------------------------------
 
@@ -360,7 +355,7 @@ Allows usage of item Neuralizer (ID 12213).
 *jexp	<rate>
 
 Changes the base and job experience rates on a map.
-<ratecasters given as a percentage (i.e. 100 = 1x EXP). This takes into account the modifiers
+<rate> is given as a percentage (i.e. 100 = 1x EXP). This takes into account the modifiers
 'base_exp_rate' and 'job_exp_rate' in '/conf/battle/exp.conf'.
 
 ---------------------------------------
