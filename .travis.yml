@@ -1,0 +1,19 @@
+language: c
+compiler:
+  - clang
+  - gcc
+  
+before_script:
+  - uname -a  
+
+script: 
+  - ./configure && make sql
+  - make clean
+  - ./configure --enable-prere && make sql
+  
+notifications:
+  email: false
+  
+branches:
+  only:
+    - master 
