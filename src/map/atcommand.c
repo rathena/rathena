@@ -9081,7 +9081,6 @@ ACMD_FUNC(langtype)
 	return -1;
 }
 
-
 #include "../custom/atcommand.inc"
 
 /**
@@ -9361,7 +9360,6 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(channel),
 		ACMD_DEF(fontcolor),
 		ACMD_DEF(langtype),
-
 	};
 	AtCommandInfo* atcommand;
 	int i;

@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Eclage Dungeon Warp Script
+//= Bifrost Tower Warp Script
 //===== By: ==================================================
 //= Chilly
 //===== Current Version: =====================================
@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= Warp Points for Eclage Dungeon
+//= Warp Points for Bifrost Tower
 //===== Additional Comments: =================================
 //= 1.0 First Version.
 //============================================================

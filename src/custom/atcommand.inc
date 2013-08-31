@@ -11,9 +11,9 @@
  *	}
  **/
 
-ACMD_FUNC(newcommand)
-{
-	clif_displaymessage(fd, "It works!");
-	clif_specialeffect(&sd->bl, 343, AREA);
-	return 0;
-}
+//ACMD_FUNC(newcommand)
+//{
+//	clif_displaymessage(fd, "It works!");
+//	clif_specialeffect(&sd->bl, 343, AREA);
+//	return 0;
+//}

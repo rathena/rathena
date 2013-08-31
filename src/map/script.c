@@ -10781,12 +10781,11 @@ BUILDIN_FUNC(setmapflagnosave)
 
 BUILDIN_FUNC(getmapflag)
 {
-	int16 m,i,type=0;
+	int16 m,i;
 	const char *str;
 
 	str=script_getstr(st,2);
 	i=script_getnum(st,3);
-	FETCH(4,type);
 
 	m = map_mapname2mapid(str);
 	if(m >= 0) {
@@ -10852,7 +10851,8 @@ BUILDIN_FUNC(getmapflag)
 #ifdef ADJUST_SKILL_DAMAGE
 			case MF_SKILL_DAMAGE:
 				{
-					int ret_val = 0;
+					int ret_val=0, type=0;
+					FETCH(4,type);
 					switch (type) {
 						case 1: ret_val = map[m].adjust.damage.pc; break;
 						case 2: ret_val = map[m].adjust.damage.mob; break;
@@ -10886,14 +10886,13 @@ static int script_mapflag_pvp_sub(struct block_list *bl,va_list ap) {
 }
 BUILDIN_FUNC(setmapflag)
 {
-	int16 m,i,type=0;
+	int16 m,i;
 	const char *str;
 	int val=0;
 
 	str=script_getstr(st,2);
 	i=script_getnum(st,3);
 	FETCH(4,val);
-	FETCH(5,type);
 	m = map_mapname2mapid(str);
 	if(m >= 0) {
 		switch(i) {
@@ -10974,6 +10973,8 @@ BUILDIN_FUNC(setmapflag)
 #ifdef ADJUST_SKILL_DAMAGE
 			case MF_SKILL_DAMAGE:
 				{
+					int type=0;
+					FETCH(5,type);
 					switch (type) {
 						case 1: map[m].adjust.damage.pc = val; break;
 						case 2: map[m].adjust.damage.mob = val; break;

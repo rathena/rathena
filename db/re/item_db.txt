@@ -8051,7 +8051,7 @@
 18502,Cheer_Scarf10,Cheer Scarf10,5,0,,0,,0,,0,0xFFFFFFFF,63,2,1,,1,0,369,{ bonus2 bExpAddRace,RC_Boss,100; bonus2 bExpAddRace,RC_NonBoss,100; },{},{}
 18503,Majestic_Devil,Small Devil Horns,5,20,,100,,2,,0,0xFFFFFFFF,63,2,512,,1,0,562,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bMaxHPrate,10; bonus bMaxSPrate,10; },{},{}
 18504,Anubis_Helm_J,Anubis Helm J,5,20,,1000,,0,,0,0xFFFFFFFF,63,2,769,,70,0,485,{ bonus bMdefRate,-50; bonus bDefRate,-50; bonus5 bAutoSpellWhenHit,"NPC_WIDESTONE",2,10,BF_WEAPON|BF_MAGIC,0; },{},{}
-18505,Umbala_Spirit,Umbala Spirit,5,0,,200,,1,,1,0xFFFFFFFF,63,2,1,,30,0,675,{ bonus bVit,1; bonus bMaxHPrate,1; bonus2 bAddMonsterDropItem,517,500; bonus2 bAddItemHealRate,517,25; },{},{}
+18505,Umbala_Spirit,Umbala Spirit,5,0,,200,,1,,0,0xFFFFFFFF,63,2,1,,30,0,675,{ bonus bVit,1; bonus bMaxHPrate,1; bonus2 bAddMonsterDropItem,517,500; bonus2 bAddItemHealRate,517,25; },{},{}
 18506,Hattah_Black,Hattah Black,5,12000,,4000,,2,,1,0xFFFFFFFF,63,2,769,,1,1,676,{},{},{}
 18507,Elven_Ears_,Elven Ears,5,20,,100,,0,,1,0xFFFFFFFE,63,2,512,,70,0,73,{},{},{}
 18508,Garuda_Hat,Garuda Hat,5,20,,100,,4,,1,0xFFFFFFFE,63,2,256,,30,1,677,{ bonus bLuk,5; bonus bMdef,3; bonus2 bSubEle,Ele_Neutral,5; bonus2 bSubEle,Ele_Fire,5; bonus2 bSubEle,Ele_Water,5; bonus2 bSubEle,Ele_Wind,5; bonus2 bSubEle,Ele_Earth,5; bonus2 bSubEle,Ele_Dark,5; bonus2 bSubEle,Ele_Holy,5; bonus2 bSubEle,Ele_Ghost,5; bonus bHit,10; bonus bDelayRate,-5; if(getrefine()>=7) bonus2 bAddMonsterDropItem,522,100*(getrefine()-6); },{},{}

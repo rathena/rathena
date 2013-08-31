@@ -11,9 +11,9 @@
  *	}
  **/
 
-BUILDIN_FUNC(example)
-{
-	ShowInfo("buildin_example: It works!\n");
-	script_pushint(st,1);
-	return 0;
-}
+//BUILDIN_FUNC(example)
+//{
+//	ShowInfo("buildin_example: It works!\n");
+//	script_pushint(st,1);
+//	return 0;
+//}
