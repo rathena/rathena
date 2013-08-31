@@ -255,8 +255,8 @@ F28: Restrict("Pre-RE",5,10);
 	Dungeons:
 // --------------------------------------------------
 menu	"Abyss Lakes",D1, "Amatsu Dungeon",D2, "Anthell",D3,
-	"Ayothaya Dungeon",D4, "Beach Dungeon",D5, "Bio Labs",D6,
-	"Brasilis Dungeon",D7, "Byalan Dungeon",D8, "Clock Tower",D9,
+	"Ayothaya Dungeon",D4, "Beach Dungeon",D5, "Bifrost Tower",D41,
+	"Bio Labs",D6, "Brasilis Dungeon",D7, "Byalan Dungeon",D8, "Clock Tower",D9,
 	"Coal Mines",D10, "Culvert",D11, "Cursed Abbey",D12, "Dewata Dungeon",D13,
 	"Einbroch Dungeon",D14, "Gefenia",D15, "Geffen Dungeon",D16,
 	"Glast Heim",D17, "Gonryun Dungeon",D18, "Hidden Dungeon",D19,
@@ -335,8 +335,10 @@ D29: setarray @c[2],32,170,21,185;
 	Disp("Orc Dungeon",1,2); Pick("orcsdun");
 D30: setarray @c[0],21,183,19,33,19,63,155,159,201,204;
 	Disp("Payon Dungeon",1,5); Pick("pay_dun",1);
-D31: setarray @c[2],192,9,10,192,100,92,181,11,94,96,192,8;
-	Disp("Pyramids 1:Pyramids 2:Pyramids 3:Pyramids 4:Basement 1:Basement 2"); Pick("moc_pryd");
+D31: Restrict("RE",7,8);
+	setarray @c[2],192,9,10,192,100,92,181,11,94,96,192,8,94,96,192,8;
+	Disp("Pyramids 1:Pyramids 2:Pyramids 3:Pyramids 4:Basement 1:Basement 2:Basement 1 - Nightmare Mode:Basement 2 - Nightmare Mode");
+	Pick("","moc_pryd01","moc_pryd02","moc_pryd03","moc_pryd04","moc_pryd05","moc_pryd06","moc_prydn1","moc_prydn2");
 D32: setarray @c[2],140,11,32,21,4,149,204,218,150,9;
 	Disp("Rachel Sanctuary",1,5); Pick("ra_san");
 D33: Restrict("RE");
@@ -358,6 +360,9 @@ D40: Restrict("Pre-RE",1,2);
 	setarray @c[2],42,31,48,30,204,78;
 	Disp("Carpenter's Shop in the Tree:Passage to a Foreign World:Hvergermil's Fountain");
 	Pick("","um_dun01","um_dun02","yggdrasil01");
+D41: Restrict("RE");
+	setarray @c[2],57,13,64,88,45,14,26,23;
+	Disp("Bifrost Tower",1,4); Pick("ecl_tdun");
 
 // --------------------------------------------------
 	Castles:
