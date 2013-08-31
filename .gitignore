@@ -57,6 +57,9 @@
 /src/common/obj_sql
 /src/common/svnversion.h
 
+# /src/custom/
+/src/custom
+
 # /src/login/
 /src/login/Makefile
 /src/login/obj_sql

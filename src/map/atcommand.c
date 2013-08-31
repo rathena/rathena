@@ -9081,6 +9081,9 @@ ACMD_FUNC(langtype)
 	return -1;
 }
 
+
+#include "../custom/atcommand.inc"
+
 /**
  * Fills the reference of available commands in atcommand DBMap
  **/
@@ -9095,6 +9098,7 @@ void atcommand_basecommands(void) {
 	 * TODO : all restricted command are crashing case, please look into it
 	 **/
 	AtCommandInfo atcommand_base[] = {
+#include "../custom/atcommand_def.inc"
 		ACMD_DEF2R("warp", mapmove, 1),
 		ACMD_DEF(where),
 		ACMD_DEF(jumpto),
@@ -9357,6 +9361,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(channel),
 		ACMD_DEF(fontcolor),
 		ACMD_DEF(langtype),
+
 	};
 	AtCommandInfo* atcommand;
 	int i;

@@ -17990,6 +17990,8 @@ BUILDIN_FUNC(getserverdef){
 	return 0;
 }
 
+#include "../custom/script.inc"
+
 // declarations that were supposed to be exported from npc_chat.c
 #ifdef PCRE_SUPPORT
 BUILDIN_FUNC(defpattern);
@@ -18466,5 +18468,8 @@ struct script_function buildin_func[] = {
 
 	BUILDIN_DEF(is_clientver,"ii?"),
 	BUILDIN_DEF(getserverdef,"i"),
+
+#include "../custom/script_def.inc"
+
 	{NULL,NULL,NULL},
 };
