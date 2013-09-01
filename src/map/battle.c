@@ -3504,7 +3504,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			// ATK [( Skill Level x 50 ) + ( Cart Weight / ( 150 - Caster Base STR ))] + ( Cart Remodeling Skill Level x 50 )] %
 			skillratio = 50 * skill_lv;
 			if( sd && sd->cart_weight)
-					skillratio += sd->cart_weight/10 / max(150-sstatus->str,1) + pc_checkskill(sd, GN_REMODELING_CART) * 50;
+					skillratio += sd->cart_weight/10 / max(150-sd->status.str,1) + pc_checkskill(sd, GN_REMODELING_CART) * 50;
 			break;
 		case GN_CARTCANNON:
 			// ATK [{( Cart Remodeling Skill Level x 50 ) x ( INT / 40 )} + ( Cart Cannon Skill Level x 60 )] %
@@ -4152,10 +4152,10 @@ struct Damage battle_calc_attack_gvg_bg(struct Damage wd, struct block_list *src
 					struct status_data *tstatus = status_get_status_data(target);
 					rdamage = battle_calc_return_damage(target, src, &damage, wd.flag, skill_id, 1);
 					if( rdamage > 0 ) {
-						rdelay = clif_damage(src, src, tick, wd.amotion, sstatus->dmotion, rdamage, 1, 4, 0);
 						if( tsc->data[SC_REFLECTDAMAGE] && src != target ) // Don't reflect your own damage (Grand Cross)
 							map_foreachinshootrange(battle_damage_area,target,skill_get_splash(LG_REFLECTDAMAGE,1),BL_CHAR,tick,target,wd.amotion,sstatus->dmotion,rdamage,tstatus->race);
 						else {
+							rdelay = clif_damage(src, src, tick, wd.amotion, sstatus->dmotion, rdamage, 1, 4, 0);
 							if( tsd && src != target )
 								battle_drain(tsd, src, rdamage, rdamage, sstatus->race, is_boss(src));
 							// It appears that official servers give skill reflect damage a longer delay
@@ -5723,33 +5723,36 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 	sd = BL_CAST(BL_PC, bl);
 	sc = status_get_sc(bl);
 
-	if( status_reflect && sc && sc->data[SC_REFLECTDAMAGE] ) {
-		if( rnd()%100 <= sc->data[SC_REFLECTDAMAGE]->val1*10 + 30 ){
-			max_damage = (int64)max_damage * status_get_lv(bl) / 100;
-			rdamage = (*dmg) * sc->data[SC_REFLECTDAMAGE]->val2 / 100;
-			if( --(sc->data[SC_REFLECTDAMAGE]->val3) < 1)
-				status_change_end(bl,SC_REFLECTDAMAGE,INVALID_TIMER);
-		}
-	} else if (flag & BF_SHORT) {//Bounces back part of the damage.
+	if (flag & BF_SHORT) {//Bounces back part of the damage.
 		if ( !status_reflect && sd && sd->bonus.short_weapon_damage_return ) {
 			rdamage += damage * sd->bonus.short_weapon_damage_return / 100;
 			if(rdamage < 1) rdamage = 1;
 		} else if( status_reflect && sc && sc->count ) {
-			if ( sc->data[SC_REFLECTSHIELD] && skill_id != WS_CARTTERMINATION ) {
-				rdamage += damage * sc->data[SC_REFLECTSHIELD]->val2 / 100;
-				if (rdamage < 1) rdamage = 1;
-			}
-			if(sc->data[SC_DEATHBOUND] && skill_id != WS_CARTTERMINATION && !(src->type == BL_MOB && is_boss(src)) ) {
-				uint8 dir = map_calc_dir(bl,src->x,src->y),
+			if( sc->data[SC_REFLECTDAMAGE] && !(skill_get_inf2(skill_id)&INF2_TRAP)) {
+				if( rnd()%100 <= sc->data[SC_REFLECTDAMAGE]->val1*10 + 30 ){
+					max_damage = (int64)max_damage * status_get_lv(bl) / 100;
+					rdamage = (*dmg) * sc->data[SC_REFLECTDAMAGE]->val2 / 100;
+					if( --(sc->data[SC_REFLECTDAMAGE]->val3) < 1)
+						status_change_end(bl,SC_REFLECTDAMAGE,INVALID_TIMER);
+				}
+			} else {
+				if ( sc->data[SC_REFLECTSHIELD] && skill_id != WS_CARTTERMINATION ) {
+					rdamage += damage * sc->data[SC_REFLECTSHIELD]->val2 / 100;
+					if (rdamage < 1) rdamage = 1;
+				}
+
+				if(sc->data[SC_DEATHBOUND] && skill_id != WS_CARTTERMINATION && !(src->type == BL_MOB && is_boss(src)) ) {
+					uint8 dir = map_calc_dir(bl,src->x,src->y),
 					t_dir = unit_getdir(bl);
 
-				if( distance_bl(src,bl) <= 0 || !map_check_dir(dir,t_dir) ) {
-					int64 rd1 = 0;
-					rd1 = min(damage,status_get_max_hp(bl)) * sc->data[SC_DEATHBOUND]->val2 / 100; // Amplify damage.
-					*dmg = rd1 * 30 / 100; // Received damage = 30% of amplifly damage.
-					clif_skill_damage(src,bl,gettick(), status_get_amotion(src), 0, -30000, 1, RK_DEATHBOUND, sc->data[SC_DEATHBOUND]->val1,6);
-					status_change_end(bl,SC_DEATHBOUND,INVALID_TIMER);
-					rdamage += rd1 * 70 / 100; // Target receives 70% of the amplified damage. [Rytech]
+					if( distance_bl(src,bl) <= 0 || !map_check_dir(dir,t_dir) ) {
+						int64 rd1 = 0;
+						rd1 = min(damage,status_get_max_hp(bl)) * sc->data[SC_DEATHBOUND]->val2 / 100; // Amplify damage.
+						*dmg = rd1 * 30 / 100; // Received damage = 30% of amplifly damage.
+						clif_skill_damage(src,bl,gettick(), status_get_amotion(src), 0, -30000, 1, RK_DEATHBOUND, sc->data[SC_DEATHBOUND]->val1,6);
+						status_change_end(bl,SC_DEATHBOUND,INVALID_TIMER);
+						rdamage += rd1 * 70 / 100; // Target receives 70% of the amplified damage. [Rytech]
+					}
 				}
 			}
 		}
