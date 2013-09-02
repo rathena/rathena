@@ -184,9 +184,9 @@ que_qsch05,345,23,0	warp	Gate02#gq_sch05	1,1,schg_cas05,369,306
 			} else {
 				setarray .@n, 7830,1,7831,1,7832,1,7833,1,7834,1,2357,1,7510,100,969,10,985,20;
 			}
-			for (set .@i, 0; .@i < getarraysize(.@n); set .@i, .@i + 1) {
+			for (set .@i, 0; .@i < getarraysize(.@n); set .@i, .@i + 2) {
 				if (countitem(.@n[.@i]) >= .@n[.@i+1])
-				set .@check, .@check + 1;
+					set .@check, .@check + 1;
 			}
 			if (.@check >= 9) {
 				cutin "wish_maiden11",1;
@@ -1478,7 +1478,7 @@ OnEnable:
 	set .@sub$,callfunc("F_Okolnir");
 	set .@c, 1;
 	while (.@c <= 4) {
-		for (set .@i, 0; .@i < getarraysize(getd(".@mob_"+.@c)); set .@i, .@i + 1)
+		for (set .@i, 0; .@i < getarraysize(getd(".@mob_"+.@c)); set .@i, .@i + 2)
 			monster "que_q"+.@sub$,getd(".@mob_"+.@c+"["+.@i+"]"),getd(".@mob_"+.@c+"["+(.@i+1)+"]"),getd(".@mob_"+.@c+"$"),atoi(getd(".@mob_"+.@c+"$[1]")),1,"#gd_"+.@sub$+"_mobctrl::OnMyMobDead";
 		set .@c, .@c + 1;
 	}
@@ -1493,7 +1493,7 @@ OnMyMobDead:
 	set .@sub$,callfunc("F_Okolnir");
 	if (mobcount("que_q"+.@sub$,"#gd_"+.@sub$+"_mobctrl::OnMyMobDead") < 7) {
 		setarray .@n, 107,152,109,135,113,116,157,107,163,133,149,156;
-		for (set .@i, 0; .@i < getarraysize(.@n); set .@i, .@i + 1)
+		for (set .@i, 0; .@i < getarraysize(.@n); set .@i, .@i + 2)
 			monster "que_q"+.@sub$,.@n[.@i],.@n[.@i+1],"Ball of Piamette",1738,1,"#gd_"+.@sub$+"_mobctrl::OnMyMobDead";
 	}
 	end;
@@ -1804,28 +1804,28 @@ OnTimer5000:
 	set .@sub$,callfunc("F_Okolnir");
 	mapannounce "que_q"+.@sub$,"The Northern magic formation is working to summon Keeper of the Temple.",bc_map,"0x4d4dff";
 	setarray .@xy, 247,329,249,329,251,329,253,329,255,329,243,339,245,337,247,335,247,333,254,333,256,335,258,337,260,339;
-	for (set .@i, 0; .@i < getarraysize(.@xy); set .@i, .@i + 1)
+	for (set .@i, 0; .@i < getarraysize(.@xy); set .@i, .@i + 2)
 		monster "que_q"+.@sub$,.@xy[.@i],.@xy[.@i+1],"Keeper Of The Temple",1933,1,"#nmsom"+.@sub$+"_jin03::OnMyMobDead";
 	end;
 
 OnTimer120000:
 	set .@sub$,callfunc("F_Okolnir");
 	setarray .@xy2, 251,343,252,343,255,341,255,340,254,337,253,336,250,336,249,337,248,340,248,341;
-	for (set .@i, 0; .@i < getarraysize(.@xy); set .@i, .@i + 1)
+	for (set .@i, 0; .@i < getarraysize(.@xy); set .@i, .@i + 2)
 		monster "que_q"+.@sub$,.@xy2[.@i],.@xy2[.@i+1],"Keeper Of The Temple",1933,1,"#nmsom"+.@sub$+"_jin03::OnMyMobDead";
 	end;
 
 OnTimer240000:
 	set .@sub$,callfunc("F_Okolnir");
 	setarray .@xy3, 250,343,252,343,254,342,255,340,255,338,253,336,250,336,248,338,248,340,249,342;
-	for (set .@i, 0; .@i < getarraysize(.@xy); set .@i, .@i + 1)
+	for (set .@i, 0; .@i < getarraysize(.@xy); set .@i, .@i + 2)
 		monster "que_q"+.@sub$,.@xy2[.@i],.@xy2[.@i+1],"Keeper Of The Temple",1933,1,"#nmsom"+.@sub$+"_jin03::OnMyMobDead";
 	end;
 
 OnTimer360000:
 	set .@sub$,callfunc("F_Okolnir");
 	setarray .@xy4, 250,343,252,343,254,342,255,340,255,338,253,336,251,336,249,337,248,339,248,341;
-	for (set .@i, 0; .@i < getarraysize(.@xy); set .@i, .@i + 1)
+	for (set .@i, 0; .@i < getarraysize(.@xy); set .@i, .@i + 2)
 		monster "que_q"+.@sub$,.@xy2[.@i],.@xy2[.@i+1],"Keeper Of The Temple",1933,1,"#nmsom"+.@sub$+"_jin03::OnMyMobDead";
 	stopnpctimer;
 	end;
@@ -1850,7 +1850,7 @@ que_qsch05,251,340,0	duplicate(#nmsommain_jin03)	#nmsomsch05_jin03	-1
 OnEnable:
 	set .@sub$,callfunc("F_Okolnir");
 	setarray .@xy, 251,343,252,343,255,341,255,340,254,337,253,336,250,336,249,337,248,340,248,341;
-	for (set .@i, 0; .@i < getarraysize(.@xy); set .@i, .@i + 1)
+	for (set .@i, 0; .@i < getarraysize(.@xy); set .@i, .@i + 2)
 		monster "que_q"+.@sub$,.@xy[.@i],.@xy[.@i+1],"Northern Magic Guardian",1933,1,"#"+.@sub$+"_stone03::OnMyMobDead";
 	end;
 
@@ -2155,7 +2155,7 @@ que_qsch05,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#sch05_boss	193
 			}
 			for (set .@i, 0; .@i < getarraysize(.@n); set .@i, .@i + 2) {
 				if (countitem(.@n[.@i]) >= .@n[.@i+1])
-				set .@check, .@check + 1;
+					set .@check, .@check + 1;
 			}
 			if (.@check >= 9) {
 				cutin "wish_maiden12",1;
