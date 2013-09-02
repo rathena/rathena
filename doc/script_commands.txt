@@ -926,7 +926,7 @@ This special label triggers when a player kills another player. The variable
 OnNPCKillEvent:
 
 This special label triggers when a player kills a monster. The variable
-'killedrid' is set to the Class of the monster killed.
+'killedrid' is set to the Class (mob ID) of the monster killed.
 
 OnPCLoadMapEvent:
 

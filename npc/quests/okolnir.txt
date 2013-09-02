@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Joseph
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //===== Additional Comments: ================================= 
 //= 0.x Previous author: L0ne_W0lf
 //= 1.0 Merged Okolnir. [Joseph]
+//= 1.1 Some bug fixes. [Toshiro90/Euphy]
 //============================================================ 
 
 function	script	F_Okolnir	{
@@ -407,10 +408,10 @@ OnTouch:
 			case 18: setarray .@n, 57,255,57,258,19; break;
 			case 19: setarray .@n, 84,277,84,280,20; break;
 		}
-			SMonster(.@sub$,.@n[0],.@n[1]);
-			setd "$@gqse_"+.@sub$+"_miro",.@n[4];
-			warp "que_q"+.@sub$,.@n[2],.@n[3];
-			end;
+		SMonster(.@sub$,.@n[0],.@n[1]);
+		setd "$@gqse_"+.@sub$+"_miro",.@n[4];
+		warp "que_q"+.@sub$,.@n[2],.@n[3];
+		end;
 	}
 	else {
 		mes "There are too many people, you can't enter.";
@@ -1645,7 +1646,7 @@ OnTimer55000:
 OnTimer85000:
 OnTimer120000:
 	set .@sub$,callfunc("F_Okolnir");
-	setarray .xy2, 226,294,227,294,228,294,229,294,230,295,231,296,231,297,231,298,231,299,230,300,229,301,228,301,227,301,226,301,225,300,224,299,224,298,224,297,224,296,225,295;
+	setarray .@xy2, 226,294,227,294,228,294,229,294,230,295,231,296,231,297,231,298,231,299,230,300,229,301,228,301,227,301,226,301,225,300,224,299,224,298,224,297,224,296,225,295;
 	for (set .@i, 0; .@i < getarraysize(.@xy2); set .@i, .@i + 2)
 		monster "que_q"+.@sub$,.@xy2[.@i],.@xy2[.@i+1],"Guard of Shadow",1752,1,"#nmsom"+.@sub$+"_jin01::OnMyMobDead";	
 	end;
@@ -1811,22 +1812,22 @@ OnTimer5000:
 OnTimer120000:
 	set .@sub$,callfunc("F_Okolnir");
 	setarray .@xy2, 251,343,252,343,255,341,255,340,254,337,253,336,250,336,249,337,248,340,248,341;
-	for (set .@i, 0; .@i < getarraysize(.@xy); set .@i, .@i + 2)
+	for (set .@i, 0; .@i < getarraysize(.@xy2); set .@i, .@i + 2)
 		monster "que_q"+.@sub$,.@xy2[.@i],.@xy2[.@i+1],"Keeper Of The Temple",1933,1,"#nmsom"+.@sub$+"_jin03::OnMyMobDead";
 	end;
 
 OnTimer240000:
 	set .@sub$,callfunc("F_Okolnir");
 	setarray .@xy3, 250,343,252,343,254,342,255,340,255,338,253,336,250,336,248,338,248,340,249,342;
-	for (set .@i, 0; .@i < getarraysize(.@xy); set .@i, .@i + 2)
-		monster "que_q"+.@sub$,.@xy2[.@i],.@xy2[.@i+1],"Keeper Of The Temple",1933,1,"#nmsom"+.@sub$+"_jin03::OnMyMobDead";
+	for (set .@i, 0; .@i < getarraysize(.@xy3); set .@i, .@i + 2)
+		monster "que_q"+.@sub$,.@xy3[.@i],.@xy3[.@i+1],"Keeper Of The Temple",1933,1,"#nmsom"+.@sub$+"_jin03::OnMyMobDead";
 	end;
 
 OnTimer360000:
 	set .@sub$,callfunc("F_Okolnir");
 	setarray .@xy4, 250,343,252,343,254,342,255,340,255,338,253,336,251,336,249,337,248,339,248,341;
-	for (set .@i, 0; .@i < getarraysize(.@xy); set .@i, .@i + 2)
-		monster "que_q"+.@sub$,.@xy2[.@i],.@xy2[.@i+1],"Keeper Of The Temple",1933,1,"#nmsom"+.@sub$+"_jin03::OnMyMobDead";
+	for (set .@i, 0; .@i < getarraysize(.@xy4); set .@i, .@i + 2)
+		monster "que_q"+.@sub$,.@xy4[.@i],.@xy4[.@i+1],"Keeper Of The Temple",1933,1,"#nmsom"+.@sub$+"_jin03::OnMyMobDead";
 	stopnpctimer;
 	end;
 
@@ -2148,10 +2149,10 @@ que_qsch05,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#sch05_boss	193
 		if (strcharinfo(0) == getguildmaster(.@GID)) {
 			if (compare(.@sub$,"aru")) {
 				setarray .@n, 7835,1,7836,1,7837,1,7838,1,2513,1,7291,10,7293,10,7063,100,985,20;
-				set .@rwd, 2541;
+				set .@rwd, 2541; //Asprika
 			} else {
 				setarray .@n, 7830,1,7831,1,7832,1,7833,1,7834,1,2357,1,7510,100,969,10,985,20;
-				set .@rwd, 2383;
+				set .@rwd, 2383; //Brynhild
 			}
 			for (set .@i, 0; .@i < getarraysize(.@n); set .@i, .@i + 2) {
 				if (countitem(.@n[.@i]) >= .@n[.@i+1])
@@ -2180,7 +2181,7 @@ que_qsch05,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#sch05_boss	193
 				for (set .@i, 0; .@i < getarraysize(.@n); set .@i, .@i + 2)
 					delitem .@n[.@i],.@n[.@i+1];
 				getitem .@rwd,1;
-				getitem 7840,1;
+				getitem 7840,1; //Valkyrie_Gift
 				announce "["+ strcharinfo(0) +"], of guild ["+ GetGuildName(.@GID) +"] has brought a "+getitemname(.@rwd)+" into this world.",bc_all,"0x70dbdb";
 				close2;
 				cutin "wish_maiden11",255;
