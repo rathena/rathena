@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Syrus22 (1.1) dafide18 (1.4) Skotlex (1.5)
 //===== Current Version: =====================================
-//= 3.2a
+//= 3.3
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -60,6 +60,7 @@
 //= 3.1 Added the new refinement & Ore creation NPC's for +11 and above Refinement. [Masao]
 //= 3.2 Moved some scripts to Renewal file, other minor changes. [Euphy]
 //= 3.2a Added 'disable_items' command. [Euphy]
+//= 3.3 Some official script updates. [Euphy]
 //============================================================
 
 // Christopher: Geffen Blacksmith
@@ -336,7 +337,7 @@ ein_in01,38,29,0	script	Paul Spanner	63,{
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
 		mes "- Please try again -";
-		mes "- after you loose some weight. -";
+		mes "- after you lose some weight. -";
 		close;
 	}
 	mes "[Paul Spanner]";
@@ -615,12 +616,20 @@ function	script	refinemain	{
 	setarray .@position$[1], "Head","Body","Left hand","Right hand","Robe","Shoes","Accessory 1","Accessory 2","Head 2","Head 3";
 	set .@menu$,"";
 	for(set .@i,1; .@i<=10; set .@i,.@i+1) {
-		if(getequipisequiped(.@i))
+		if(getequipisequiped(.@i)) {
 			set .@menu$, .@menu$ + .@position$[.@i] + "-" + "[" + getequipname(.@i) + "]";
+			set .@equipped,1;
+		}
 		set .@menu$, .@menu$ + ":";
 	}
-	set .@part,select(.@menu$);
-	if(!getequipisequiped(.@part)) {
+	if (.@equipped == 0) {
+		mes "[" + getarg(0) + "]";
+		mes "I don't think I can refine any items you have...";
+		close;
+	}
+	set .@part, select(.@menu$);
+
+	if(!getequipisequiped(.@part)) { //custom check
 		mes "[" + getarg(0) + "]";
 		mes "You're not wearing";
 		mes "anything there that";
@@ -730,6 +739,8 @@ function	script	refinemain	{
 		}
 		set Zeny, Zeny-.@price;
 		delitem .@material,1;
+
+		//custom checks
 		if(getequipisequiped(.@part) == 0) { // hacker has removed the item (not changed, why?)
 			mes "[" + getarg(0) + "]";
 			mes "Look here... you don't have any Items on...";
@@ -743,6 +754,7 @@ function	script	refinemain	{
 			mes "You switched the item while I wasn't looking! Get out of here!";
 			close;
 		}
+
 		if(getequippercentrefinery(.@part) <= rand(100)) {
 			failedrefitem .@part;
 			mes "[" + getarg(0) + "]";
@@ -924,7 +936,7 @@ function	script	phramain	{
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
 		mes "- Please try again -";
-		mes "- after you loose some weight. -";
+		mes "- after you lose some weight. -";
 		close;
 	}
 	mes "[" + getarg(0) + "]";
@@ -1037,7 +1049,7 @@ function	script	orimain	{
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
 		mes "- Please try again -";
-		mes "- after you loose some weight. -";
+		mes "- after you lose some weight. -";
 		close;
 	}
 	mes "[" + getarg(0) + "]";

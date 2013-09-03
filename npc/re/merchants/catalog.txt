@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= skyiing, Scriptor
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -12,10 +12,11 @@
 //= and to buy/sell directly from the catalog interface.
 //===== Additional Comments: =================================
 //= 1.0 Moved from root directory. [Euphy]
+//= 1.1 Updated dialogue. [Euphy]
 //============================================================ 
 
 moc_para01,22,16,5	script	Catalog Magician#catal01	704,{
-	if (!checkweight(1201,2)) {
+	if (!checkweight(1301,3)) {
 		mes "- You have too many items. Please make space. -";
 		close;
 	}
@@ -28,24 +29,23 @@ moc_para01,22,16,5	script	Catalog Magician#catal01	704,{
 	next;
 	mes "He is looking at the words";
 	mes "written on his hand.";
-	mes "Seems like he's too busy";
+	mes "He seems too busy";
 	mes "to look at you.";
 	next;
 	mes "[Catalog Magician]";
 	mes "A brand new catalog";
 	mes "has just come out!";
-	mes "You can check what";
-	mes "items can be traded";
-	mes "and what items are on";
-	mes "sale from the vendor.";
+	mes "You can check";
+	mes "what items you can trade";
+	mes "and what items are on sale";
+	mes "from the vendor.";
 	next;
 	mes "[Catalog Magician]";
-	mes "^007777Universal Catalog Silver^000000~";
-	mes "It costs only 200z each!";
-	mes "You can buy it up to 50";
-	mes "pieces at once!";
+	mes "The ^007777Universal Catalog Silver^000000";
+	mes "costs only 200z!";
+	mes "You can buy up to 50 pieces at once!";
 	next;
-	switch(select("Buy ^007777Universal Catalog Silver^000000:I don't need it!:You don't look like a vendor...")) {
+	switch(select("Buy a ^007777Universal Catalog Silver^000000:I don't need it!:You don't look like a vendor!")) {
 	case 1:
 		mes "[Catalog Magician]";
 		mes "You... want all 50 pieces?";
@@ -55,7 +55,7 @@ moc_para01,22,16,5	script	Catalog Magician#catal01	704,{
 			input .@input;
 			mes "[Catalog Magician]";
 			if (.@input == 0) {
-				mes "Trade has been stopped!";
+				mes "The trade has been stopped!";
 				mes "I don't know what to do next...";
 				mes "What should I do?";
 				emotion e_swt2,1;
@@ -67,16 +67,15 @@ moc_para01,22,16,5	script	Catalog Magician#catal01	704,{
 				break;
 		}
 		set .@sell, .@ticket_cost * .@input;
-		mes "Total number of catalog(s) that";
-		mes "you're trying to purchase is";
-		mes .@input + " pieces and it costs " + .@sell + " z.";
+		mes "The total number of catalog(s) that you're trying to purchase is " + .@input + " pieces.";
+		mes "It costs " + .@sell + " z.";
 		if (Zeny < .@sell) {
 			mes "It seems you don't have enough money.";
-			mes "You can sell your equips";
+			mes "You can sell your equipment";
 			mes "to make more money... if you want.";
 			close;
 		}
-		mes "Okie, here you go.";
+		mes "Ok, here you go.";
 		set Zeny, Zeny - .@sell;
 		getitem 12580,.@input; //Vending_Search_Scroll
 		close;
@@ -100,9 +99,9 @@ moc_para01,22,16,5	script	Catalog Magician#catal01	704,{
 		next;
 		mes "[Catalog Magician]";
 		mes "There are many adventurers";
-		mes "here coming and going. I'm";
-		mes "pretty sure that I can sell them";
-		mes "all soon. Don't you think so?";
+		mes "here who come and go.";
+		mes "I'm pretty sure that I can sell to all of them soon.";
+		mes "Don't you think so?";
 		mes "So... let's start!! Buy more of them, please! PLEASE...!";
 		close;
 	}
