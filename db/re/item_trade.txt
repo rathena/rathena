@@ -1432,7 +1432,7 @@
 16394,457,100	// HD Oridecon 10 Box
 16395,457,100	// HD Elunium 5 Box
 16396,457,100	// HD Elunium 10 Box
-16421,395,100	// Adventurer Pack
+16420,395,100	// Adventurer Pack
 16422,499,100	// Baphomet Horns Box
 16461,73,100	// Red Wing Hat Box
 16555,73,100	// Pr Reset Stone Box
