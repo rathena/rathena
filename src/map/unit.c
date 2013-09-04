@@ -114,7 +114,11 @@ int unit_walktoxy_sub(struct block_list *bl)
 }
 
 
-
+/**
+ * Retrieve the direct master of a bl if he have one.
+ * @param bl: char to get his master
+ * @return map_session_data of master or NULL
+ */
 TBL_PC* unit_get_master(struct block_list *bl){
 	if(bl)
 	switch(bl->type){

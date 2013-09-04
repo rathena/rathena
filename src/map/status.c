@@ -4699,8 +4699,6 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 		watk -= watk * 25/100;
 	if(sc->data[SC_STRIPWEAPON]  && bl->type != BL_PC)
 		watk -= watk * sc->data[SC_STRIPWEAPON]->val2/100;
-	if(sc->data[SC__ENERVATION])
-		watk -= watk * sc->data[SC__ENERVATION]->val2 / 100;
 	if((sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 2)
 	   || (sc->data[SC_WATER_INSIGNIA] && sc->data[SC_WATER_INSIGNIA]->val1 == 2)
 	   || (sc->data[SC_WIND_INSIGNIA] && sc->data[SC_WIND_INSIGNIA]->val1 == 2)
@@ -4957,7 +4955,7 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 
 	if(!sc || !sc->count)
 		return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);
-	
+
 	if(sc->data[SC_DEFSET]) //FIXME: Find out if this really overrides all other SCs
 		return sc->data[SC_DEFSET]->val1;
 	if(sc->data[SC_BERSERK])
@@ -5099,7 +5097,7 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 
 	if(!sc || !sc->count)
 		return (defType)cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX);
-	
+
 	if(sc->data[SC_MDEFSET]) //FIXME: Find out if this really overrides all other SCs
 		return sc->data[SC_MDEFSET]->val1;
 	if(sc->data[SC_BERSERK])
@@ -8418,7 +8416,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			// bypasses coating protection and MADO
 			sc_start(src,bl,SC_STRIPWEAPON,100,val1,tick);
 			sc_start(src,bl,SC_STRIPSHIELD,100,val1,tick);
-			break;
 			break;
 		case SC_GN_CARTBOOST:
 			if( val1 < 3 )

@@ -123,6 +123,7 @@ sub EnableCoredump {
 	$sJump=1 if(GetValidAnwser("y|o|n") =~ /n/i);
     }
     system("sudo echo \"ulimit -c unlimited\" >> $sCurfile") unless $sJump==1;
+    #FIXME centos need to alter /etc/security/limits.conf
 
     $sCurfile = "/etc/sysctl.conf";
     @lines = ();
@@ -140,6 +141,7 @@ sub EnableCoredump {
 	system('sudo su root -c "echo \"echo kernel.core_uses_pid = 1 >> /etc/sysctl.conf\" | sudo bash"');
 	system('sudo su root -c "echo \"echo kernel.core_pattern = /tmp/core-%e-%s-%u-%g-%p-%t >> /etc/sysctl.conf\" | sudo bash"');
 	system('sudo su root -c "echo \"echo fs.suid_dumpable = 1 >> /etc/sysctl.conf\" | sudo bash"');
+	system('sudo su root -c "sysctl -p"');
     }
 }
 
