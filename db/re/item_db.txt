@@ -7723,9 +7723,9 @@
 16413,FIce_Wing_Ear_Box,FIce Wing Ear Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 5610,1; },{},{}
 16414,Turtle_Hat_Box,Turtle Hat Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 5611,1; },{},{}
 16415,FTurtle_Hat_Box,FTurtle Hat Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 5611,1; },{},{}
-//16418,Giant_Fly_Wing_Box_500
-//16419,Greed_Scroll_30_Box
-//16420,Adventurer_Pack
+16418,Giant_Fly_Wing_Box_500,Giant Fly Wing Box 500,2,20,10,1,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12212,500; },{},{}
+16419,Greed_Scroll_Box_30,Greed Scroll Box 30,2,20,10,1,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14529,30; },{},{}
+16420,Adventurer_Pack,Adventurer Pack,2,20,10,1,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12208,10; getitem 12210,10; getitem 12216,20; getitem 12215,20; getitem 7621,10; getitem 12209,10; getitem 12211,5;  getitem 12450,10; getitem 12448,10;  getitem 12446,10;  getitem 12206,10; getitem 12445,10; getitem 12447,10; },{},{}
 //16421,Written_Oath_Of_Marriage_Box
 //16422,Baphomet_Horns_Box
 //16423,Episode_13.1_Key_Package
