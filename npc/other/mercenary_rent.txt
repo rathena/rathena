@@ -22,10 +22,10 @@
 	setarray .@name$, 	"Spear", 			"Sword", 			"Bow";
 	setarray .@faith$, 	"SPEAR_MERC_GUILD",	"SWORD_MERC_GUILD",	"ARCH_MERC_GUILD";
 	setarray .@item, 	12182,				12172,				12162;
-	set .@faith_lancer, mercenary_get_faith(getd(.@faith$[.@type]));
 	set .@npc$, strnpcinfo(2);
 	for (set .@size, getarraysize(.@name$); .@i < .@size; set .@i, .@i + 1)
 		if (.@npc$ == .@name$[.@i]) set .@type, .@i;
+	set .@faith_merc, mercenary_get_faith(getd(.@faith$[.@type]));
 	mes "[Mercenary Manager]";
 	mes "Welcome to the";
 	mes .@npc$ + " Mercenary Guild.";
@@ -64,7 +64,7 @@
 				mes "free to come back if your";
 				mes "needs change. Thank you~";
 			}
-			else if(.@FaithCost && .@faith_lancer < .@FaithCost) {
+			else if(.@FaithCost && .@faith_merc < .@FaithCost) {
 				mes "[Mercenary Manager]";
 				mes "Oh... Your Loyalty rating";
 				mes "with the " + .@npc$ + " Mercenary";
@@ -178,7 +178,7 @@
 				mes "Mercenary. Have you considered";
 				mes "hiring a lower grade Mercenary?";
 			}
-			else if (.@faith_lancer < 500) {
+			else if (.@faith_merc < 500) {
 				mes "[Mercenary Manager]";
 				mes "I'm sorry, but your";
 				mes "Loyalty rating is too";
