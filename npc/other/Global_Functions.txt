@@ -144,7 +144,7 @@ function	script	Job_Change	{
 //returns random string
 // Example: check F_Bye or F_Hi functions
 // READ AND THINK: You can use it to pick a random number form list:
-// set @itemIDfromList, callfunc("F_RandMes",8,1129,1222,1163,1357,1360,1522,1811,1410);
+// set @itemIDfromList, callfunc("F_RandMes",1129,1222,1163,1357,1360,1522,1811,1410);
 
 function	script	F_RandMes	{
 	return getarg(rand(1,getarg(0)));
@@ -168,7 +168,7 @@ function	script	F_SexMes	{
 //returns random HELLO message
 
 function	script	F_Hi	{
-	return callfunc("F_RandMes",5,"Hi!","Hello!","Good day!","How are you?","Hello there.");
+	return callfunc("F_RandMes","Hi!","Hello!","Good day!","How are you?","Hello there.");
 }
 
 
@@ -178,7 +178,7 @@ function	script	F_Hi	{
 //returns random BYE message
 
 function	script	F_Bye	{
-	return callfunc("F_RandMes",6,"Bye. See you again.","Later.","Goodbye.","Good luck!","Have a nice day!","Byebye!!!");
+	return callfunc("F_RandMes","Bye. See you again.","Later.","Goodbye.","Good luck!","Have a nice day!","Byebye!!!");
 }
 
 
