@@ -7702,7 +7702,7 @@
 16371,Tw_Aug_Scroll,Tw Aug Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 16372,F_Clover_Box_Mouth,F Clover Box Mouth,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 16374,Mouth_Bubble_Gum_Box,Mouth Bubble Gum Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-16381,_Teleport_Scroll_100_Box,WoE Teleport Scroll 100 Box,2,20,10,1,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12444,100; },{},{}
+16381,WoE_Teleport_Scroll_100_Box,WoE Teleport Scroll 100 Box,2,20,10,1,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12444,100; },{},{}
 16385,F_Clover_Box_Mouth2,F Clover Box Mouth2,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 16386,F_Clover_Box_Mouth4,F Clover Box Mouth4,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 16389,BGum_Box_In_Mouth2,BGum Box In Mouth2,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
