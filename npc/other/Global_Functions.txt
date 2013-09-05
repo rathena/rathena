@@ -147,7 +147,7 @@ function	script	Job_Change	{
 // set @itemIDfromList, callfunc("F_RandMes",1129,1222,1163,1357,1360,1522,1811,1410);
 
 function	script	F_RandMes	{
-	return getarg(rand(1,getarg(0)));
+	return getarg(rand(getargcount()));
 }
 
 
