@@ -4894,7 +4894,7 @@
 7801,Girl_Fan_Letter,Girl's Letter,3,0,,0,,,,,,,,,,,,,{},{},{}
 7802,Autograph_Book,Signature Notebook,3,0,,0,,,,,,,,,,,,,{},{},{}
 7803,Battle_Manual_TW,Beginner's Field Manual,3,0,,10,,,,,,,,,,,,,{},{},{}
-//7804,????_???,????_???,3,,,10,,,,,,,,,,,,,{},{},{}
+//7804
 7805,Brown_Ring,Brown Jenoss's Family Ring,3,0,,10,,,,,,,,,,,,,{},{},{}
 7806,Black_Anvil,God Anvil,3,0,,10,,,,,,,,,,,,,{},{},{}
 7807,Ore,God Mineral,3,0,,10,,,,,,,,,,,,,{},{},{}
@@ -5764,18 +5764,18 @@
 12436,Vitata_500,Vitata 500,0,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_VITATA_500,500000,0; itemheal 0,200; },{},{}
 12437,Concentrated_Ceromain_Soup,Concentrated Ceromain Soup,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_EXTRACT_SALAMINE_JUICE,500000,10; },{},{}
 12438,F_Giant_Fly_Wing,F Giant Fly Wing,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12439,F_Battle_Manual,F Battle Manual,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+12439,F_Old_Battle_Manual,F Old Battle Manual,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12440,F_Insurance,F Insurance,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12441,F_Bubble_Gum,F Bubble Gum,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+12441,F_Old Bubble_Gum,F Old Bubble Gum,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12442,F_Kafra_Card,F Kafra Card,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12443,F_Neuralizer,F Neuralizer,2,2,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12444,F_Dun_Tele_Scroll1,F Dun Tele Scroll1,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12445,F_Str_Dish10_,F Str Dish10,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12446,F_Agi_Dish10_,F Agi Dish10,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12447,F_Int_Dish10_,F Int Dish10,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12448,F_Dex_Dish10_,F Dex Dish10,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12449,F_Luk_Dish10_,F Luk Dish10,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12450,F_Vit_Dish10_,F Vit Dish10,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+12444,WoE_Telport_Scroll,WoE Telport Scroll,2,20,10,1,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc "F_CashSeigeTele"; },{},{}
+12445,F_Str_Dish10_,F Str Dish10,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12446,F_Agi_Dish10_,F Agi Dish10,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12447,F_Int_Dish10_,F Int Dish10,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12448,F_Dex_Dish10_,F Dex Dish10,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12449,F_Luk_Dish10_,F Luk Dish10,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12450,F_Vit_Dish10_,F Vit Dish10,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12451,F_WOB_Rune,F WOB Rune,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12452,F_WOB_Schwaltz,F WOB Schwaltz,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12453,F_WOB_Rachel,F WOB Rachel,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
@@ -7645,12 +7645,12 @@
 16259,HD_Carnium_5_Box,HD Carnium 5 Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 6225,5; },{},{}
 16260,HD_Bradium_10_Box,HD Bradium 10 Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 6226,10; },{},{}
 16261,HD_Carnium_10_Box,HD Carnium 10 Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 6225,10; },{},{}
-//16262,HD_Bradium_5_Box,
-//16263,HD_Carnium_5_Box,
-//16264,HD_Bradium_10_Box,
-//16265,HD_Carnium_10_Box,
-//16267,HE_Battle_Manual_Box
-//16268,HE_Bubble_Gum_Box
+16262,U_HD_Bradium_5_Box,U HD Bradium 5 Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 6226,5; },{},{}
+16263,U_HD_Carnium_5_Box,U HD Carnium 5 Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 6225,5; },{},{}
+16264,U_HD_Bradium_10_Box,U HD Bradium 10 Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 6226,10; },{},{}
+16265,U_HD_Carnium_10_Box,U HD Carnium 10 Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 6225,10; },{},{}
+16267,HE_Battle_Manual_Box,HE_Battle Manual Box,2,20,10,1,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12411,10; },{},{}
+16268,HE_Bubble_Gum_Box,HE Bubble Gum Box,2,20,10,1,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12412,10; },{},{}
 16269,Cancer_Diadem_Box,Cancer Diadem Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 5581,1; },{},{}
 16270,Cancer_Crown_Box,Cancer Crown Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 5582,1; },{},{}
 16304,Evil_Incarnation,Evil Incarnation,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
@@ -7702,7 +7702,7 @@
 16371,Tw_Aug_Scroll,Tw Aug Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 16372,F_Clover_Box_Mouth,F Clover Box Mouth,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 16374,Mouth_Bubble_Gum_Box,Mouth Bubble Gum Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-//16381,WoE_Teleport_Scroll_100_Box
+16381,_Teleport_Scroll_100_Box,WoE Teleport Scroll 100 Box,2,20,10,1,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12444,100; },{},{}
 16385,F_Clover_Box_Mouth2,F Clover Box Mouth2,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 16386,F_Clover_Box_Mouth4,F Clover Box Mouth4,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 16389,BGum_Box_In_Mouth2,BGum Box In Mouth2,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
@@ -7785,9 +7785,10 @@
 16585,F_Sloth_Hat_Box,F Sloth Hat Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 5761,1; },{},{}
 16586,Duneyrr_Helm_Box,Duneyrr Helm Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 5762,1; },{},{}
 16587,F_Duneyrr_Helm_Box,F Duneyrr Helm Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 5762,1; },{},{}
-//16588,Thoughtful_Hat_Box
-//16589,Thoughtful_Hat_Box
-//16590,Thoughtful_Hat_Box
+16588,Thoughtful_Hat_Box,Thoughtful Hat Box,2,20,10,1,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc "F_CreateBox",5336,1,5337,1,5338,1,5346,1,5339,1,5474,1; },{},{}
+16589,Thoughtful_Hat_Box,Thoughtful Hat Box,2,20,10,1,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc "F_CreateBox",5336,1,5337,1,5338,1,5346,1,5339,1,5474,1; },{},{}
+16590,Thoughtful_Hat_Box,Thoughtful Hat Box,2,20,10,1,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc "F_CreateBox",5336,1,5337,1,5338,1,5346,1,5339,1,5474,1; },{},{}
+//
 16600,Spring_Flower_Scr_Tw,Spring Flower Scr Tw,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 16601,Blue_Arara_Hat_Box,Blue Arara Hat Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 5778,1; },{},{}
 16602,F_Blue_Arara_Hat_Box,F Blue Arara Hat Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 5778,1; },{},{}
