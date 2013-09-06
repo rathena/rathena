@@ -39,6 +39,7 @@
 //= 2.14 Added old novice variables to F_ClearGarbage. [L0ne_W0lf]
 //= 2.15 Added no unused DTS variables to F_ClearGarbage. [L0ne_W0lf]
 //= 2.16 Added F_GetWeaponType, and F_GetArmorType. [L0ne_W0lf]
+//= 2.17 Added F_CreateBox as Const has no more ID's Free for Boxes.  [SkittleNugget]
 //============================================================ 
 
 
@@ -161,6 +162,16 @@ function	script	F_SexMes	{
 	return getarg(Sex);
 }
 
+//////////////////////////////////////////////////////////////////////////////////
+//= SkittleNugget
+//= Callfunc F_CreateBox,<ID>,<AMOUNT>...
+//= Will only choose one from list similiar to box
+/////////////////////////////////////////////////////////////////////////////////
+
+function	script	F_CreateBox	{
+ .@i = rand(0, getargcount() / 2 - 1);
+ getitem getarg(.@i * 2), getarg(.@i * 2 + 1);
+}
 
 //////////////////////////////////////////////////////////////////////////////////
 // *** Function "F_Hi"
