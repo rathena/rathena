@@ -35,7 +35,7 @@ prontera,165,60,2	script	Apprentice Craftsman	73,{
 		mes "[Apprentice Craftsman]";
 		mes "I'm not responsible for what would happen if you have more than one of the same kind in your inventory.";
 		next;
-		switch(select("Armor with no Slots:Armor with Slots:High Grade Armor:Maybe next time")) {
+		switch(select("Non Slotted Armor.:Slotted Armor.:High Grade Armor.:Maybe next time.")) {
 		case 1:
 			setarray .@Items[0],2307,2309,2314,2316,2321,2325,2327,2328,2330,2332,2334,2335,2341,2344,2346,2348,2350,2337,2386,2394,2395,2396;
 			set .@j,50;
@@ -70,7 +70,7 @@ S_EnchantArmor:
 	set .@itemid,getarg(0);
 	set .@failrate,getarg(1);
 	mes "[Apprentice Craftsman]";
-	if ((countitem(.@itemid) > 0) && (countitem(.@itemid) < 2)) {
+	if (countitem(.@itemid) == 1) {
 		mes "Socket enchant will cost you 400,000 zeny. And there will be a random option enchanted. Of course, there is a chance of breaking your armor.";
 		next;
 		mes "[Apprentice Craftsman]";
@@ -79,7 +79,7 @@ S_EnchantArmor:
 		mes "and Cards will be GONE.^000000";
 		mes "Do you still want to try an Enchant?";
 		next;
-		if(select("Hmm... Let me think it over.:I've made up my mind already. Give it a shot.")==1) {
+		if(select("Hmm... Let me think it over.:Go ahead.") == 1) {
 			mes "[Apprentice Craftsman]";
 			mes "Well, I can't blame you. Safety first, eh?";
 			mes "Now you have a nice day.";

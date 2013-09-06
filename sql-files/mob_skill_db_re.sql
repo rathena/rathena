@@ -7084,7 +7084,7 @@ REPLACE INTO `mob_skill_db` VALUES (2196,'Deep Sea Strouf@AL_HEAL','attack',28,7
 REPLACE INTO `mob_skill_db` VALUES (2196,'Deep Sea Strouf@AL_HEAL','attack',28,7,10000,500,5000,'yes','self','myhpltmaxrate','60',NULL,NULL,NULL,NULL,NULL,'0',NULL);
 REPLACE INTO `mob_skill_db` VALUES (2196,'Deep Sea Strouf@WZ_FROSTNOVA','chase',88,7,3000,1000,10000,'no','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (2197,'Red Eruma@NPC_WATERATTACK','attack',184,1,2000,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `mob_skill_db` VALUES (2198,'King Dramoh@SM_ENDURE','chase',8,1,5000,0,10000,'yes','target','longrangeattacked',NULL,NULL,NULL,NULL,NULL,NULL,'6',NULL);
+REPLACE INTO `mob_skill_db` VALUES (2198,'King Dramoh@SM_ENDURE','chase',8,1,5000,0,10000,'yes','self','longrangeattacked',NULL,NULL,NULL,NULL,NULL,NULL,'6',NULL);
 REPLACE INTO `mob_skill_db` VALUES (2198,'King Dramoh@NPC_DEFENDER','attack',205,1,500,0,5000,'yes','target','longrangeattacked',NULL,NULL,NULL,NULL,NULL,NULL,'36',NULL);
 REPLACE INTO `mob_skill_db` VALUES (2198,'King Dramoh@NPC_STOP','attack',342,1,500,0,30000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,'38',NULL);
 REPLACE INTO `mob_skill_db` VALUES (2198,'King Dramoh@NPC_STUNATTACK','attack',179,4,500,1500,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);

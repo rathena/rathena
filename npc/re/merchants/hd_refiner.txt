@@ -151,7 +151,6 @@ ein_in01,22,82,3	duplicate(MightyHammer)	Mighty Hammer#ein	826
 lhz_in02,280,19,3	duplicate(MightyHammer)	Mighty Hammer#lhz	826
 
 // iRO NPC locations:
-// moc_para01,38,185,4	duplicate(MightyHammer)	Mighty Hammer#ed	826
 // payon,174,133,4	duplicate(MightyHammer)	Mighty Hammer#im	826
 
 // Basta (+10 and up)
