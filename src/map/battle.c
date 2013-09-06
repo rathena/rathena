@@ -1671,7 +1671,12 @@ void battle_consume_ammo(TBL_PC*sd, int skill, int lv)
 static int battle_range_type(
 	struct block_list *src, struct block_list *target,
 	uint16 skill_id, uint16 skill_lv)
-{	//Skill Range Criteria
+{	
+	// [Akinari] , [Xynvaroth]: Traps are always short range.
+	if( skill_get_inf2( skill_id ) & INF2_TRAP )
+		return BF_SHORT;
+
+	//Skill Range Criteria
 	if (battle_config.skillrange_by_distance &&
 		(src->type&battle_config.skillrange_by_distance)
 	) { //based on distance between src/target [Skotlex]
