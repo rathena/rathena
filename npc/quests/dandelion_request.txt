@@ -2726,16 +2726,12 @@ que_job01,49,49,5	script	Tao	877,{
 
 que_job01,51,55,1	script	#roombar1	45,1,1,{
 
-OnInit:
-	set $maobar_room,0;
-	end;
-	
 OnTouch:
 	if(mao_request == 2 || mao_request == 24 || mao_request == 28 || mao_request == 29 || mao_request == 123 || mao_request == 126 || mao_request == 127 || prt_curse == 24)
 	{
-		if(!$maobar_room)
+		if(!$@maobar_room)
 		{
-			set $maobar_room,1;
+			set $@maobar_room,1;
 			donpcevent "#maobartimer1::OnEnter";
 			if(mao_request == 2 || mao_request == 28 || mao_request == 29 || mao_request == 126 || mao_request == 127)
 			{
@@ -2848,10 +2844,6 @@ OnTouch:
 
 que_job01,51,44,1	script	#roombar2	45,1,1,{
 
-OnInit:
-	set $maobar_room2,0;
-	end;
-	
 OnTouch:
 	if(mao_request == 25 || (mao_request > 102 && mao_request < 123))
 	{
@@ -2866,9 +2858,9 @@ OnTouch:
 			warp "que_job01",52,50;
 			end;
 		}
-		if(!$maobar_room2)
+		if(!$@maobar_room2)
 		{
-			set $maobar_room2,1;
+			set $@maobar_room2,1;
 			donpcevent "#maobartimer2::OnEnter";
 			if(mao_request == 25)
 			{

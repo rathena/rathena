@@ -3197,8 +3197,7 @@ hu_in01,317,312,0	script	Book	111,{
 			mes "- The book owner must want to -";
 			mes "- keep it secret. -";
 			next;
-			set @whilevar,1;
-			while(@whilevar) {
+			while(1) {
 				switch(select("Page 1:Page 2:Page 3:Page 4:Page 5:Page 6:Page 7:Page 8:Page 9:Stop Reading.")) {
 				case 1:
 					mes "- You started reading the 1st page of the book. -";
@@ -3412,7 +3411,6 @@ hu_in01,317,312,0	script	Book	111,{
 					next;
 					break;
 				case 10:
-					set @whilevar,0;
 					mes "- You closed the book. -";
 					close2;
 					cutin "",255;
@@ -7521,12 +7519,13 @@ hugel,68,99,3	script	Booboo the Cow	889,{
 		switch(select("Attempt to Milk Booboo:It's not the right time!")) {
 		case 1:
 			if (countitem(645) > 2) {
-				set @cowsong1,rand(1,5);
-				if (@cowsong1 == 1) callfunc "Func_MilkCow","cow_01.wav",3;
-				else if (@cowsong1 == 2) callfunc "Func_MilkCow","cow_02.wav",5;
-				else if (@cowsong1 == 3) callfunc "Func_MilkCow","cow_03.wav",10;
-				else if (@cowsong1 == 4) callfunc "Func_MilkCow","cow_04.wav",0;
-				else if (@cowsong1 == 5) callfunc "Func_MilkCow","cow_05.wav",1;
+				switch(rand(1,5)) {
+					case 1: callsub L_MilkCow,"cow_01.wav",3; break;
+					case 2: callsub L_MilkCow,"cow_02.wav",5; break;
+					case 3: callsub L_MilkCow,"cow_03.wav",10; break;
+					case 4: callsub L_MilkCow,"cow_04.wav",0; break;
+					case 5: callsub L_MilkCow,"cow_05.wav",1; break;
+				}
 				end;
 			}
 			mes "^3355FFTo use this comb to";
@@ -7549,9 +7548,8 @@ hugel,68,99,3	script	Booboo the Cow	889,{
 	mes "Boobooboo Booo~~~";
 	mes "Booboo Boop~";
 	close;
-}
-					
-function	script	Func_MilkCow	{
+
+L_MilkCow:
 	mes "^3355FFThis giant magic comb was";
 	mes "specially ordered from Geffen's";
 	mes "Magic Academy. It is designed";
@@ -7564,7 +7562,7 @@ function	script	Func_MilkCow	{
 	mes "into the comb, it begins";
 	mes "to chime, and Booboo the";
 	mes "cow beings to express her^FFFFFF ^3355FF feelings in the center of Hugel.^000000";
-	delitem 645,3;
+	delitem 645,3; //Center_Potion
 	soundeffect ""+getarg(0)+"",0;
 	next;
 	soundeffect ""+getarg(0)+"",0;
@@ -7574,8 +7572,8 @@ function	script	Func_MilkCow	{
 	mes "you need to brush her a";
 	mes "certain number of times.^000000";
 	next;
-	input @cowbrush;
-	if (@cowbrush != getarg(1)) {
+	input .@cowbrush;
+	if (.@cowbrush != getarg(1)) {
 		soundeffect "taming_fail.wav",0;
 		mes "^3355FFAwwww...";
 		mes "Booboo the cow looks";
@@ -7591,50 +7589,62 @@ function	script	Func_MilkCow	{
 	mes "and is singing a serenade.^000000";
 	next;
 	soundeffect "cow_06.wav",0;
-	set @cowsong2,rand(1,6);
 	mes "[Mrs. Booboo]";
-	if (@cowsong2 == 1) {
+	switch(rand(1,6)) {
+	case 1:
+		set .@cowsong$,"Brrbrr";
 		mes "^ff0000Brr~ Brrboo~ Boobooboo~^000000";
 		mes "^0000ffBrrrrrr~ Booboo~ Boorrboo~^000000";
 		mes "^ff0000Booruboorubrr~ Rrrrboo~^000000";
 		mes "^0000ffRrrr~ Booboorrrr~ Boobooru~^000000";
 		mes "^ff0000Boobooboo~ Rururu~ Booruboorub~^000000";
 		mes "^0000ffBoo! B! Boo~~~^000000";
-	} else if (@cowsong2 == 2) {
+		break;
+	case 2:
+		set .@cowsong$,"Brrrrrr";
 		mes "^ff0000Brr~ Brrboo~ Boobooboo~^000000";
 		mes "^0000ffRrrururu~ Booboo~ Boorrboo~^000000";
 		mes "^ff0000Booruboorubrr~ Rrrrboo~^000000";
 		mes "^0000ffRrrr~ Booboorrrr~ Boobooru~^000000";
 		mes "^ff0000Boobooboo~ Rururu~ Booruboorub~^000000";
 		mes "^0000ffBoo! B! Boo~~~^000000";
-	} else if (@cowsong2 == 3) {
+		break;
+	case 3:
+		set .@cowsong$,"Rrrrboo";
 		mes "^ff0000Brr~ Brrbrr~ Boobooboo~^000000";
 		mes "^0000ffBrrrrrr~ Booboo~ Boorrboo~^000000";
 		mes "^ff0000Booruboorubrr~ Rurub~^000000";
 		mes "^0000ffRrrr~ Booboorrrr~ Boobooru~^000000";
 		mes "^ff0000Boobooboo~ Rururu~ Booruboorub~^000000";
 		mes "^0000ffBoo! B! Boo~^000000";
-	} else if (@cowsong2 == 4) {
+		break;
+	case 4:
+		set .@cowsong$,"Boobooru";
 		mes "^ff0000Brr~ Brrbrr~ Boobooboo~^000000";
 		mes "^0000ffBrrrrrr~ Booboo~ Boorrboo~^000000";
 		mes "^ff0000Booruboorubrr~ Rrrrboo~^000000";
 		mes "^0000ffRrrr~ Booboorrrr~ Bbrrrr~^000000";
 		mes "^ff0000Boobooboo~ Rururu~ Booruboorub~^000000";
 		mes "^0000ffBoo! B! Boo~^000000";
-	} else if (@cowsong2 == 5) {
+		break;
+	case 5:
+		set .@cowsong$,"Boobooboo";
 		mes "^ff0000Brr~ Brrbrr~ Boobooboo~^000000";
 		mes "^0000ffBrrrrrr~ Booboo~ Boorrboo~^000000";
 		mes "^ff0000Booruboorubrr~ Rrrrboo~^000000";
 		mes "^0000ffRrrr~ Booboorrrr~ Boobooru~^000000";
 		mes "^ff0000Bbb~ Rururu~ Booruboorub~^000000";
 		mes "^0000ffBoo! B! Boo~^000000";
-	} else if (@cowsong2 == 6) {
+		break;
+	case 6:
+		set .@cowsong$,"B";
 		mes "^ff0000Brr~ Brrbrr~ Boobooboo~^000000";
 		mes "^0000ffBrrrrrr~ Booboo~ Boorrboo~^000000";
 		mes "^ff0000Booruboorubrr~ Rrrrboo~^000000";
 		mes "^0000ffRrrr~ Booboorrrr~ Boobooru~^000000";
 		mes "^ff0000Boobooboo~ Rururu~ Booruboorub~^000000";
 		mes "^0000ffBoo! Boo! Boo~^000000";
+		break;
 	}
 	next;
 	mes "^3355FFHurry, respond to Booboo's song! Look for the word that is slightly";
@@ -7642,14 +7652,8 @@ function	script	Func_MilkCow	{
 	mes "song in Burupu's notes, and then tell her the correct world without";
 	mes "the tilde character (''~'').^000000";
 	next;
-	if (@cowsong2 == 1) set @cowsong$,"Brrbrr";
-	else if (@cowsong2 == 2) set @cowsong$,"Brrrrrr";
-	else if (@cowsong2 == 3) set @cowsong$,"Rrrrboo";
-	else if (@cowsong2 == 4) set @cowsong$,"Boobooru";
-	else if (@cowsong2 == 5) set @cowsong$,"Boobooboo";
-	else if (@cowsong2 == 6) set @cowsong$,"B";
-	input @cowanswer$;
-	if (@cowanswer$ == @cowsong$) {
+	input .@cowanswer$;
+	if (.@cowanswer$ == .@cowsong$) {
 		soundeffect "tming_success.wav",0;
 		mes "^3355FFSuccess!";
 		mes "Booboo the cow";

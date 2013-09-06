@@ -25,22 +25,20 @@ c_tower2,273,26,0	warp	clt005	1,1,c_tower1,235,223
 //= Level 2 ==================================================
 //= Random 2-1 ===============================================
 c_tower2,13,288,4	script	clt006r	45,1,1,{
-	set @r,rand(3);
-	if(@r==1) goto w2;
-	if(@r==2) goto w3;
-		warp "c_tower2",13,282; end;
-	w2:	warp "alde_dun03",175,131; end;
-	w3:	warp "c_tower3",235,7; end;
+	switch(rand(3)) {
+		case 0: warp "c_tower2",13,282; end;
+		case 1: warp "alde_dun03",175,131; end;
+		case 2: warp "c_tower3",235,7; end;
+	}
 }
 //============================================================
 //= Random 2-2 ===============================================
 c_tower2,223,267,4	script	clt007r	45,1,1,{
-	set @r,rand(3);
-	if(@r==1) goto w2;
-	if(@r==2) goto w3;
-		warp "c_tower2",288,267; end;
-	w2:	warp "alde_dun03",130,130; end;
-	w3:	warp "c_tower3",252,29; end;
+	switch(rand(3)) {
+		case 0: warp "c_tower2",288,267; end;
+		case 1: warp "alde_dun03",130,130; end;
+		case 2: warp "c_tower3",252,29; end;
+	}
 }
 //============================================================
 //= Level 3 ==================================================
@@ -52,32 +50,29 @@ c_tower3,146,8,0	warp	clt013	1,1,c_tower1,235,223
 //============================================================
 //= Random 3-1 ===============================================
 c_tower3,163,252,4	script	clt014r	45,1,1,{
-	if(rand(2)) {
+	if (rand(2))
 		warp "c_tower3",168,252;
-	} else {
+	else
 		warp "alde_dun02",262,41;
-	}
 	end;
 }
 //============================================================
 //= Random 3-2 ===============================================
 c_tower3,240,7,4	script	clt015r	45,1,1,{
-	set @r,rand(3);
-	if(@r==1) goto w2;
-	if(@r==2) goto w3;
-		warp "c_tower2",13,282; end;
-	w2:	warp "alde_dun03",175,131; end;
-	w3:	warp "c_tower3",235,7; end;
+	switch(rand(3)) {
+		case 0: warp "c_tower2",13,282; end;
+		case 1: warp "alde_dun03",175,131; end;
+		case 2: warp "c_tower3",235,7; end;
+	}
 }
 //============================================================
 //= Random 3-3 ===============================================
 c_tower3,252,24,4	script	clt016r	45,1,1,{
-	set @r,rand(3);
-	if(@r==1) goto w2;
-	if(@r==2) goto w3;
-		warp "c_tower2",228,267; end;
-	w2:	warp "alde_dun03",130,130; end;
-	w3:	warp "c_tower3",252,29; end;
+	switch(rand(3)) {
+		case 0: warp "c_tower2",228,267; end;
+		case 1: warp "alde_dun03",130,130; end;
+		case 2: warp "c_tower3",252,29; end;
+	}
 }
 //============================================================
 //= Level 4 ==================================================
@@ -94,60 +89,50 @@ c_tower4,204,57,0	warp	clt026	1,1,c_tower4,65,77
 //============================================================
 //= Random 4-1 ===============================================
 c_tower4,75,156,4	script	clt027r	45,0,0,{
-	set @r,rand(4);
-	if(@r==1) goto w2;
-	if(@r==2) goto w3;
-	if(@r==3) goto w4;
-		warp "c_tower3",168,252; end;
-	w2:	warp "alde_dun02",262,41; end;
-	w3:	warp "c_tower4",73,154; end;
-	w4:	warp "c_tower4",140,149; end;
+	switch(rand(4)) {
+		case 0: warp "c_tower3",168,252; end;
+		case 1: warp "alde_dun02",262,41; end;
+		case 2: warp "c_tower4",73,154; end;
+		case 3: warp "c_tower4",140,149; end;
+	}
 }
 //============================================================
 //= Random 4-2 ===============================================
 c_tower4,68,79,4	script	clt028r	45,0,0,{
-	set @r,rand(4);
-	if(@r==1) goto w2;
-	if(@r==2) goto w3;
-	if(@r==3) goto w4;
-		warp "c_tower2",13,282; end;
-	w2:	warp "alde_dun03",175,131; end;
-	w3:	warp "c_tower3",235,7; end;
-	w4:	warp "c_tower4",65,77; end;
+	switch(rand(4)) {
+		case 0: warp "c_tower2",13,282; end;
+		case 1: warp "alde_dun03",175,131; end;
+		case 2: warp "c_tower3",235,7; end;
+		case 3: warp "c_tower4",65,77; end;
+	}
 }
 //============================================================
 //= Random 4-3 ===============================================
 c_tower4,142,151,4	script	clt029r	45,0,0,{
-	set @r,rand(4);
-	if(@r==1) goto w2;
-	if(@r==2) goto w3;
-	if(@r==3) goto w4;
-		warp "c_tower3",168,252; end;
-	w2:	warp "alde_dun02",262,41; end;
-	w3:	warp "c_tower4",73,154; end;
-	w4: warp "c_tower4",140,149; end;
+	switch(rand(4)) {
+		case 0: warp "c_tower3",168,252; end;
+		case 1: warp "alde_dun02",262,41; end;
+		case 2: warp "c_tower4",73,154; end;
+		case 3: warp "c_tower4",140,149; end;
+	}
 }
 //============================================================
 //= Random 4-4 ===============================================
 c_tower4,151,96,4	script	clt030r	45,0,0,{
-	set @r,rand(4);
-	if(@r==1) goto w2;
-	if(@r==2) goto w3;
-	if(@r==3) goto w4;
-		warp "c_tower2",228,267; end;
-	w2:	warp "alde_dun03",130,130; end;
-	w3:	warp "c_tower3",252,29; end;
-	w4:	warp "c_tower4",152,95; end;
+	switch(rand(4)) {
+		case 0: warp "c_tower2",228,267; end;
+		case 1: warp "alde_dun03",130,130; end;
+		case 2: warp "c_tower3",252,29; end;
+		case 3: warp "c_tower4",152,95; end;
+	}
 }
 //============================================================
 //= Random 4-5 ===============================================
 c_tower4,189,40,4	script	clt031r	45,2,2,{
-	set @r,rand(4);
-	if(@r==1) goto w2;
-	if(@r==2) goto w3;
-	if(@r==3) goto w4;
-		warp "c_tower2",228,267; end;
-	w2:	warp "alde_dun03",130,130; end;
-	w3:	warp "c_tower3",252,29; end;
-	w4:	warp "c_tower4",152,95; end;
+	switch(rand(4)) {
+		case 0: warp "c_tower2",228,267; end;
+		case 1: warp "alde_dun03",130,130; end;
+		case 2: warp "c_tower3",252,29; end;
+		case 3: warp "c_tower4",152,95; end;
+	}
 }

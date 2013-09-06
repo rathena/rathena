@@ -163,16 +163,16 @@ gon_test,42,89,4	script	Summoner#gnp	774,{
 	mes "Welcome.";
 	mes "Which monster will you recall?";
 	next;
-	set @gnpGroup,select("Group 1:Group 2:Group 3:Group 4:Group 5:Group 6:Group 7:Group 8:Group 9:Group 10:Group 11");
-	set @gnpGroupMob$,.gnpMobsName$[(@gnpGroup-1)*6];
-	for (set @i,1; @i < 6; set @i, @i+1)
-		set @gnpGroupMob$, @gnpGroupMob$ + ":" + .gnpMobsName$[(@gnpGroup-1)*6 + @i];
-	set @gnpMob,select(@gnpGroupMob$);
+	set .@gnpGroup, select("Group 1:Group 2:Group 3:Group 4:Group 5:Group 6:Group 7:Group 8:Group 9:Group 10:Group 11");
+	set .@gnpGroupMob$,.gnpMobsName$[(.@gnpGroup-1)*6];
+	for (set .@i,1; .@i < 6; set .@i, .@i+1)
+		set .@gnpGroupMob$, .@gnpGroupMob$ + ":" + .gnpMobsName$[(.@gnpGroup-1)*6 + .@i];
+	set .@gnpMob, select(.@gnpGroupMob$);
 	mes "[SongYeunWoo]";
 	mes "Let the fight begin!";
 	close2;
 	set in_battle,2;
-	if (getnpctimer(0) < 180000) monster "gon_test",56,86,.gnpMobsName$[(@gnpGroup-1)*6 + @gnpMob - 1],.gnpMobsId[(@gnpGroup-1)*6 + @gnpMob - 1],1,"Summoner#gnp::OnGnpMobDead";
+	if (getnpctimer(0) < 180000) monster "gon_test",56,86,.gnpMobsName$[(.@gnpGroup-1)*6 + .@gnpMob - 1],.gnpMobsId[(.@gnpGroup-1)*6 + .@gnpMob - 1],1,"Summoner#gnp::OnGnpMobDead";
 	end;
 OnInit:
 	initnpctimer;

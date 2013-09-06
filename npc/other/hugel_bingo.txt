@@ -3,33 +3,32 @@
 //===== By: ==================================================
 //= SinSloth
 //===== Current Version: =====================================
-//= 1.8
+//= 1.9
 //===== Compatible With: =====================================
 //= Any rAthena Version
 //===== Description: =========================================
 //= Hugel Bingo game
 //===== Additional Comments: =================================
-//= 1.0 - First version. Please report bugs you find out. [SinSloth]
-//= 1.1 - Fixed a minor bug. [SinSloth]
-//= 1.2 - Added some Bingo Staff NPCs. [SinSloth]
-//= 1.3 - Fixed a bug where an AFK-player wasn't warped out of the game,
-//= preventing players from launching another. [SinSloth]
-//= 1.4 - Fixed a minor bug added in the last revision. [SinSloth]
-//= 1.5 - Applied a fix to players locations which were not rotating properly. [SinSloth]
-//= 1.6 - Removed nescesity to win to proceed with quest [Yommy]
-//= 1.7 - Replaced effect numerics with constants. [Samuray22]
+//= 1.0 First version. Please report bugs you find out. [SinSloth]
+//= 1.1 Fixed a minor bug. [SinSloth]
+//= 1.2 Added some Bingo Staff NPCs. [SinSloth]
+//= 1.3 Fixed a bug where an AFK-player wasn't warped out of the game,
+//=     preventing players from launching another. [SinSloth]
+//= 1.4 Fixed a minor bug added in the last revision. [SinSloth]
+//= 1.5 Applied a fix to players locations which were not rotating properly. [SinSloth]
+//= 1.6 Removed nescesity to win to proceed with quest [Yommy]
+//= 1.7 Replaced effect numerics with constants. [Samuray22]
 //= 1.8 Updated 'waitingroom' to support required zeny/lvl. [Kisuka]
+//= 1.9 Some optimization/standardization. [Euphy]
 //============================================================
 
 que_bingo,48,84,5	script	Bingo Waiting Room	124,{
 	end;
 
 OnInit:
-	set $hu_bingoa,0;
-	set $hu_bingob,0;
 	waitingroom "Bingo Waiting Room - 5 People",50,"Bingo Waiting Room::OnWarp",5,1000;
 	end;
-	
+
 OnWarp:
 	warpwaitingpc "que_bingo",46,141;
 	donpcevent "start#bingo::OnStart";
@@ -40,7 +39,7 @@ OnWarp:
 	enablenpc "plate5#bingo";
 	disablewaitingroomevent;
 	end;
-	
+
 OnStart:
 	enablewaitingroomevent;
 	end;
@@ -85,16 +84,13 @@ OnTouch:
 	set @bingo_case,1;
 L_Fill:
 	set @bingo_fill,callfunc("Func_Bingo",@bingo_case);
-	if(!@bingo_fill)
-	{
+	if (!@bingo_fill) {
 		mes "The numbers you have entered";
   		mes "exceed the limit, or you have";
 		mes "already entered these numbers.";
 		mes "Please enter your numbers again.";
 		next;
-	}
-	else if(@bingo_fill)
-	{
+	} else if (@bingo_fill) {
 		if(@bingoplate[25] < 10) set @bingo_e5$,"0"+@bingoplate[25]+""; else set @bingo_e5$,@bingoplate[25];
 		donpcevent "start#bingo::OnEnter";
 		mes "["+@bingo_a1$+"] ["+@bingo_a2$+"] ["+@bingo_a3$+"] ["+@bingo_a4$+"] ["+@bingo_a5$+"]";
@@ -106,7 +102,6 @@ L_Fill:
 
 	}
 	goto L_Fill;
-	
 }
 
 que_bingo,53,121,0	duplicate(plate1#bingo)	plate2#bingo	139,1,1
@@ -119,38 +114,37 @@ que_bingo,51,51,0	script	start#bingo	139,{
 OnStart:
 	initnpctimer;
 	end;
-	
+
 OnEnter:
-	if($hu_bingoa == 4)
-	{
-		set $hu_bingoa,5;
+	if ($@hu_bingoa == 4) {
+		set $@hu_bingoa,5;
 		donpcevent "start2#bingo::OnStart";
 		stopnpctimer;
 		end;
 	}
-	set $hu_bingoa,$hu_bingoa +1;
+	set $@hu_bingoa,$@hu_bingoa +1;
 	end;
-	
+
 OnTimer1000:
 	mapannounce "que_bingo","Eukran: Hello, everyone! I'm Eukran, your Bingo Guide~",1,0xFFAB54;
 	end;
-	
+
 OnTimer6000:
 	mapannounce "que_bingo","Eukran: Game participants, please enter the Warp Portal at the bottom of your screen and choose a Bingo Plate by entering a number.",1,0xFFAB54;
 	end;
-	
+
 OnTimer11000:
 	mapannounce "que_bingo","Eukran: All participants must choose their Bingo Plates within 3 minutes, or the game will be canceled.",1,0xFFAB54;
 	end;
-	
+
 OnTimer192000:
 	mapannounce "que_bingo","Eukran: Please enter a number in 5 seconds, or the game will be canceled.",1,0xFFAB54;
 	end;
-	
+
 OnTimer200000:
 	mapannounce "que_bingo","Eukran: I'm sorry, but the game has been canceled. Please come again and enjoy a game of Bingo with us!",1,0xFFAB54;
 	end;
-	
+
 OnTimer202000:
 	disablenpc "plate1#bingo";
 	disablenpc "plate2#bingo";
@@ -158,7 +152,7 @@ OnTimer202000:
 	disablenpc "plate4#bingo";
 	disablenpc "plate5#bingo";
 	end;
-	
+
 OnTimer203000:
 	areawarp "que_bingo",44,115,54,126,"que_bingo",40,124;
 	enablenpc "out3#bingo";
@@ -167,8 +161,8 @@ OnTimer203000:
 OnTimer204000:
 	areawarp "que_bingo",44,115,54,126,"que_bingo",40,121;
 	disablenpc "out3#bingo";
-	set $hu_bingoa,0;
-	set $hu_bingob,0;
+	set $@hu_bingoa,0;
+	set $@hu_bingob,0;
 	donpcevent "Bingo Waiting Room::OnStart";
 	end;
 }
@@ -178,11 +172,11 @@ que_bingo,52,52,0	script	start2#bingo	139,{
 OnStop:
 	stopnpctimer;
 	end;
-	
+
 OnStart:
 	initnpctimer;
 	end;
-	
+
 OnTimer2000:
 	mapannounce "que_bingo","Eukran: Great, everyone seems to be ready~",1,0xFFAB54;
 	disablenpc "plate1#bingo";
@@ -191,234 +185,95 @@ OnTimer2000:
 	disablenpc "plate4#bingo";
 	disablenpc "plate5#bingo";
 	end;
-	
+
 OnTimer5000:
 	mapannounce "que_bingo","Eukran: Now, let the game begin!",1,0xFFAB54;
 	setarray $@bingoarray[0],1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25;
 	set .@max_index, 24;
-	for(set .@i,0; .@i < 25; set .@i,.@i +1)
-	{
+	for(set .@i,0; .@i < 25; set .@i,.@i +1) {
 		set $@bingo0,rand(0,.@max_index);
 		set $bingo[.@i],$@bingoarray[$@bingo0];
 		set $@bingoarray[$@bingo0], $@bingoarray[.@max_index];
 		set .@max_index, .@max_index - 1;
 	}
 	end;
-	
+
 OnTimer8000:
 	mapannounce "que_bingo","Eukran: I'll announce the Bingo Numbers. If you get 5 lines by matching 5 Bingo Numbers in a straight line on your Bingo Plate, yell out ''Bingo'' to win~",1,0xFFAB54;
 	end;
-	
+
 OnTimer10000:
 	set $@bingoresult,1;
 	callfunc "Func_BingoResult",$@bingoresult;
 	end;
-	
+
 OnTimer15000:
+OnTimer25000:
+OnTimer35000:
+OnTimer45000:
+OnTimer55000:
+OnTimer65000:
+OnTimer75000:
+OnTimer85000:
+OnTimer95000:
+OnTimer105000:
+OnTimer115000:
+OnTimer125000:
+OnTimer135000:
+OnTimer145000:
+OnTimer155000:
+OnTimer179000:
+OnTimer199000:
+OnTimer219000:
+OnTimer239000:
+OnTimer259000:
+OnTimer279000:
+OnTimer299000:
+OnTimer319000:
+OnTimer339000:
 	donpcevent "1a#bingo::OnInit";
 	end;
 
 OnTimer20000:
-	callfunc "Func_BingoResult",$@bingoresult;
-	end;
-	
-OnTimer25000:
-	donpcevent "1a#bingo::OnInit";
-	end;
-	
 OnTimer30000:
-	callfunc "Func_BingoResult",$@bingoresult;
-	end;
-	
-OnTimer35000:
-	donpcevent "1a#bingo::OnInit";
-	end;
-	
 OnTimer40000:
-	callfunc "Func_BingoResult",$@bingoresult;
-	end;
-	
-OnTimer45000:
-	donpcevent "1a#bingo::OnInit";
-	end;
-	
 OnTimer50000:
-	callfunc "Func_BingoResult",$@bingoresult;
-	end;
-	
-OnTimer55000:
-	donpcevent "1a#bingo::OnInit";
-	end;
-	
 OnTimer60000:
-	callfunc "Func_BingoResult",$@bingoresult;
-	end;
-	
-OnTimer65000:
-	donpcevent "1a#bingo::OnInit";
-	end;
-	
 OnTimer70000:
-	callfunc "Func_BingoResult",$@bingoresult;
-	end;
-	
-OnTimer75000:
-	donpcevent "1a#bingo::OnInit";
-	end;
-	
 OnTimer80000:
-	callfunc "Func_BingoResult",$@bingoresult;
-	end;
-	
-OnTimer85000:
-	donpcevent "1a#bingo::OnInit";
-	end;
-	
 OnTimer90000:
-	callfunc "Func_BingoResult",$@bingoresult;
-	end;
-	
-OnTimer95000:
-	donpcevent "1a#bingo::OnInit";
-	end;
-	
 OnTimer100000:
-	callfunc "Func_BingoResult",$@bingoresult;
-	end;
-
-OnTimer105000:
-	donpcevent "1a#bingo::OnInit";
-	end;
-	
 OnTimer110000:
-	callfunc "Func_BingoResult",$@bingoresult;
-	end;
-	
-OnTimer115000:
-	donpcevent "1a#bingo::OnInit";
-	end;
-	
 OnTimer120000:
-	callfunc "Func_BingoResult",$@bingoresult;
-	end;
-	
-OnTimer125000:
-	donpcevent "1a#bingo::OnInit";
-	end;
-	
 OnTimer130000:
-	callfunc "Func_BingoResult",$@bingoresult;
-	end;
-	
-OnTimer135000:
-	donpcevent "1a#bingo::OnInit";
-	end;
-	
 OnTimer140000:
-	callfunc "Func_BingoResult",$@bingoresult;
-	end;
-
-OnTimer145000:
-	donpcevent "1a#bingo::OnInit";
-	end;
-	
 OnTimer150000:
-	callfunc "Func_BingoResult",$@bingoresult;
-	end;
-	
-OnTimer155000:
-	donpcevent "1a#bingo::OnInit";
-	end;
-	
 OnTimer160000:
-	callfunc "Func_BingoResult",$@bingoresult;
-	end;
-	
-OnTimer179000:
-	donpcevent "1a#bingo::OnInit";
-	end;
-	
 OnTimer180000:
-	callfunc "Func_BingoResult",$@bingoresult;
-	end;
-	
-OnTimer199000:
-	donpcevent "1a#bingo::OnInit";
-	end;
-	
 OnTimer200000:
-	callfunc "Func_BingoResult",$@bingoresult;
-	end;
-	
-OnTimer219000:
-	donpcevent "1a#bingo::OnInit";
-	end;
-	
 OnTimer220000:
-	callfunc "Func_BingoResult",$@bingoresult;
-	end;
-	
-OnTimer239000:
-	donpcevent "1a#bingo::OnInit";
-	end;
-	
 OnTimer240000:
-	callfunc "Func_BingoResult",$@bingoresult;
-	end;
-	
-OnTimer259000:
-	donpcevent "1a#bingo::OnInit";
-	end;
-	
 OnTimer260000:
-	callfunc "Func_BingoResult",$@bingoresult;
-	end;
-	
-OnTimer279000:
-	donpcevent "1a#bingo::OnInit";
-	end;
-	
 OnTimer280000:
-	callfunc "Func_BingoResult",$@bingoresult;
-	end;
-	
-OnTimer299000:
-	donpcevent "1a#bingo::OnInit";
-	end;
-	
 OnTimer300000:
-	callfunc "Func_BingoResult",$@bingoresult;
-	end;
-	
-OnTimer319000:
-	donpcevent "1a#bingo::OnInit";
-	end;
-	
 OnTimer320000:
-	callfunc "Func_BingoResult",$@bingoresult;
-	end;
-	
-OnTimer339000:
-	donpcevent "1a#bingo::OnInit";
-	end;
-	
 OnTimer340000:
 	callfunc "Func_BingoResult",$@bingoresult;
 	end;
-	
+
 OnTimer440000:
 	mapannounce "que_bingo","Eukran: I've announced all of the selected numbers, but I haven't heard anyone yell ''Bingo.''",1,0xFFAB54;
 	end;
-	
+
 OnTimer445000:
 	mapannounce "que_bingo","Eukran: I'll give you all 10 seconds to check if any of you have won. If no one can yell ''Bingo'' in 10 seconds, this game will end without a winner.",1,0xFFAB54;
 	end;
-	
+
 OnTimer460000:
 	mapannounce "que_bingo","Eukran: I'm sorry, but this game has ended without a winner. Thanks for playing, everyone~",1,0xFFAB54;
 	donpcevent "1a#bingo::OnInit";
 	areawarp "que_bingo",44,115,54,126,"que_bingo",40,121;
-	set $hu_bingoa,0;
+	set $@hu_bingoa,0;
 	donpcevent "Bingo Waiting Room::OnStart";
 	end;
 }
@@ -603,10 +458,8 @@ OnTouch:
 	mes "["+@bingo_d1$+"] ["+@bingo_d2$+"] ["+@bingo_d3$+"] ["+@bingo_d4$+"] ["+@bingo_d5$+"]";
 	mes "["+@bingo_e1$+"] ["+@bingo_e2$+"] ["+@bingo_e3$+"] ["+@bingo_e4$+"] ["+@bingo_e5$+"]";
 	mes "[Currently Finished Lines - "+@bingowin+" ]";
-	if($@bingoresult > 15)
-	{
-		if(@bingowin > 4)
-		{
+	if ($@bingoresult > 15) {
+		if (@bingowin > 4) {
 			next;
 			mes "We just have made 5 lines!";
 			mes "Say ^ff0000Bingo^000000!";
@@ -616,19 +469,15 @@ OnTouch:
 			mes "Remember, you'll only";
 			mes "have one chance to say it!";
 			input @bingoyell$;
-			if(@bingoyell$ == "Bingo")
-			{
-				if($hu_bingoa == 5)
-				{
-					set $hu_bingoa,6;
+			if (@bingoyell$ == "Bingo") {
+				if ($@hu_bingoa == 5) {
+					set $@hu_bingoa,6;
 					donpcevent "start2#bingo::OnStop";
 					set $@bingowinner$,strcharinfo(0);
 					donpcevent "win1a#bingo::OnWin";
 					close;
 
-				}
-				else if($hu_bingoa == 6)
-				{
+				} else if ($@hu_bingoa == 6) {
 					next;
 					mes "Oh no! I'm sorry, but";
 					mes "someone already yelled";
@@ -638,9 +487,7 @@ OnTouch:
 					mes "next time, alright?";
 					close;
 				}
-			}
-			else
-			{
+			} else {
 				next;
 				mes "I'm sorry, but you";
 				mes "said it wrong. Next time,";
@@ -779,14 +626,13 @@ que_bingo,45,121,0	duplicate(1a#bingo)	23e#bingo	139,1,1
 que_bingo,45,121,0	duplicate(1a#bingo)	24e#bingo	139,1,1
 que_bingo,45,121,0	duplicate(1a#bingo)	25e#bingo	139,1,1
 
-
 que_bingo,79,19,0	script	win1a#bingo	139,4,4,{
 	end;
 
 OnWin:
 	initnpctimer;
 	end;
-	
+
 OnTimer1000:
 	donpcevent "1a#bingo::OnInit";
 	enablenpc "win2a#bingo";
@@ -809,10 +655,10 @@ OnInit:
 	end;
 
 OnTouch:
-	if($@bingowinner$ != strcharinfo(0)) end;
+	if ($@bingowinner$ != strcharinfo(0)) end;
 	specialeffect EF_SUI_EXPLOSION;
 	soundeffect "tming_success.wav",1;
-	if($@bingoresult == 16) getitem 7515,50;
+	if ($@bingoresult == 16) getitem 7515,50;
 	else getitem 7515,1;
 	initnpctimer;
 	end;
@@ -826,8 +672,10 @@ OnTimer5000:
 	end;
 
 OnTimer10000:
-	if($@bingoresult == 16) mapannounce "que_bingo","Eukran: Congratulations, "+$@bingowinner$+"! You will be rewarded with 50 Marvelous Medals.",1,0xFFAB54;
-	else mapannounce "que_bingo","Eukran: Congratulations, "+$@bingowinner$+"! You will be rewarded with 1 Marvelous Medal.",1,0xFFAB54;
+	if ($@bingoresult == 16)
+		mapannounce "que_bingo","Eukran: Congratulations, "+$@bingowinner$+"! You will be rewarded with 50 Marvelous Medals.",1,0xFFAB54;
+	else
+		mapannounce "que_bingo","Eukran: Congratulations, "+$@bingowinner$+"! You will be rewarded with 1 Marvelous Medal.",1,0xFFAB54;
 	end;
 
 OnTimer15000:
@@ -867,7 +715,7 @@ OnTimer5000:
 	disablenpc "end1d#bingo";
 	disablenpc "end1e#bingo";
 	areawarp "que_bingo",44,115,54,126,"que_bingo",40,121;
-	set $hu_bingoa,0;
+	set $@hu_bingoa,0;
 	donpcevent "Bingo Waiting Room::OnStart";
 	end;
 }
@@ -898,7 +746,7 @@ que_bingo,50,138,1	script	out3#bingo	139,5,8,{
 OnInit:
 	disablenpc "out3#bingo";
 	end;
-	
+
 OnTouch:
 	warp "que_bingo",40,121;
 	end;
@@ -907,34 +755,28 @@ OnTouch:
 que_bingo,49,136,0	script	go3#bingo	45,1,1,{
 
 OnTouch:
-	switch($hu_bingob)
-	{
-		case 0:	warp "que_bingo",49,125; break;
-		case 1:	warp "que_bingo",53,121; break;
-		case 2:	warp "que_bingo",51,116; break;
-		case 3:	warp "que_bingo",46,116; break;
-		case 4:	warp "que_bingo",45,121; break;
+	switch($@hu_bingob) {
+		case 0: warp "que_bingo",49,125; break;
+		case 1: warp "que_bingo",53,121; break;
+		case 2: warp "que_bingo",51,116; break;
+		case 3: warp "que_bingo",46,116; break;
+		case 4: warp "que_bingo",45,121; break;
 	}
-	set $hu_bingob,$hu_bingob +1;
-	if($hu_bingob == 5) set $hu_bingob,0;
+	set $@hu_bingob,$@hu_bingob +1;
+	if ($@hu_bingob == 5) set $@hu_bingob,0;
 	end;
 }
 
 function	script	Func_Bingo	{
-
-
-	for( set .@i,getarg(0); .@i < 26; set .@i,.@i +1)
-	{
+	for(set .@i,getarg(0); .@i < 26; set .@i,.@i +1) {
 		if(@bingoplate[1] < 10) set @bingo_a1$,"0"+@bingoplate[1]+""; else set @bingo_a1$,@bingoplate[1];
 		if(@bingoplate[2] < 10) set @bingo_a2$,"0"+@bingoplate[2]+""; else set @bingo_a2$,@bingoplate[2];
 		if(@bingoplate[3] < 10) set @bingo_a3$,"0"+@bingoplate[3]+""; else set @bingo_a3$,@bingoplate[3];
 		if(@bingoplate[4] < 10) set @bingo_a4$,"0"+@bingoplate[4]+""; else set @bingo_a4$,@bingoplate[4];
 		if(@bingoplate[5] < 10) set @bingo_a5$,"0"+@bingoplate[5]+""; else set @bingo_a5$,@bingoplate[5];
 		if(.@i > 5) mes "["+@bingo_a1$+"] ["+@bingo_a2$+"] ["+@bingo_a3$+"] ["+@bingo_a4$+"] ["+@bingo_a5$+"]";
-		else
-		{
-			switch(.@i)
-			{
+		else {
+			switch(.@i) {
 				case 1: mes "^ff0000[__]^000000 [   ] [   ] [   ] [   ]"; break;
 				case 2: mes "["+@bingo_a1$+"] ^ff0000[__]^000000 [   ] [   ] [   ]"; break;
 				case 3:	mes "["+@bingo_a1$+"] ["+@bingo_a2$+"] ^ff0000[__]^000000 [   ] [   ]"; break;
@@ -949,10 +791,8 @@ function	script	Func_Bingo	{
 		if(@bingoplate[10] < 10) set @bingo_b5$,"0"+@bingoplate[10]+""; else set @bingo_b5$,@bingoplate[10];
 		if(.@i > 10) mes "["+@bingo_b1$+"] ["+@bingo_b2$+"] ["+@bingo_b3$+"] ["+@bingo_b4$+"] ["+@bingo_b5$+"]";
 		else if(.@i < 6) mes "[   ] [   ] [   ] [   ] [   ]";
-		else
-		{
-			switch(.@i)
-			{
+		else {
+			switch(.@i) {
 				case 6: mes "^ff0000[__]^000000 [   ] [   ] [   ] [   ]"; break;
 				case 7: mes "["+@bingo_b1$+"] ^ff0000[__]^000000 [   ] [   ] [   ]"; break;
 				case 8:	mes "["+@bingo_b1$+"] ["+@bingo_b2$+"] ^ff0000[__]^000000 [   ] [   ]"; break;
@@ -967,10 +807,8 @@ function	script	Func_Bingo	{
 		if(@bingoplate[15] < 10) set @bingo_c5$,"0"+@bingoplate[15]+""; else set @bingo_c5$,@bingoplate[15];
 		if(.@i > 15) mes "["+@bingo_c1$+"] ["+@bingo_c2$+"] ["+@bingo_c3$+"] ["+@bingo_c4$+"] ["+@bingo_c5$+"]";
 		else if(.@i < 11) mes "[   ] [   ] [   ] [   ] [   ]";
-		else
-		{
-			switch(.@i)
-			{
+		else {
+			switch(.@i) {
 				case 11: mes "^ff0000[__]^000000 [   ] [   ] [   ] [   ]"; break;
 				case 12: mes "["+@bingo_c1$+"] ^ff0000[__]^000000 [   ] [   ] [   ]"; break;
 				case 13: mes "["+@bingo_c1$+"] ["+@bingo_c2$+"] ^ff0000[__]^000000 [   ] [   ]"; break;
@@ -985,10 +823,8 @@ function	script	Func_Bingo	{
 		if(@bingoplate[20] < 10) set @bingo_d5$,"0"+@bingoplate[20]+""; else set @bingo_d5$,@bingoplate[20];
 		if(.@i > 20) mes "["+@bingo_d1$+"] ["+@bingo_d2$+"] ["+@bingo_d3$+"] ["+@bingo_d4$+"] ["+@bingo_d5$+"]";
 		else if(.@i < 16) mes "[   ] [   ] [   ] [   ] [   ]";
-		else
-		{
-			switch(.@i)
-			{
+		else {
+			switch(.@i) {
 				case 16: mes "^ff0000[__]^000000 [   ] [   ] [   ] [   ]"; break;
 				case 17: mes "["+@bingo_d1$+"] ^ff0000[__]^000000 [   ] [   ] [   ]"; break;
 				case 18: mes "["+@bingo_d1$+"] ["+@bingo_d2$+"] ^ff0000[__]^000000 [   ] [   ]"; break;
@@ -1001,10 +837,8 @@ function	script	Func_Bingo	{
 		if(@bingoplate[23] < 10) set @bingo_e3$,"0"+@bingoplate[23]+""; else set @bingo_e3$,@bingoplate[23];
 		if(@bingoplate[24] < 10) set @bingo_e4$,"0"+@bingoplate[24]+""; else set @bingo_e4$,@bingoplate[24];
 		if(.@i < 21) mes "[   ] [   ] [   ] [   ] [   ]";
-		else
-		{
-			switch(.@i)
-			{
+		else {
+			switch(.@i) {
 				case 21: mes "^ff0000[__]^000000 [   ] [   ] [   ] [   ]"; break;
 				case 22: mes "["+@bingo_e1$+"] ^ff0000[__]^000000 [   ] [   ] [   ]"; break;
 				case 23: mes "["+@bingo_e1$+"] ["+@bingo_e2$+"] ^ff0000[__]^000000 [   ] [   ]"; break;
@@ -1015,10 +849,8 @@ function	script	Func_Bingo	{
 		next;
 		input .@bingoinput;
 		if(.@bingoinput < 1 || .@bingoinput > 25) { set @bingo_case,.@i; return 0; }
-		if(.@i > 1)
-		{
-			for(set .@j,.@i; .@j > 0; set .@j,.@j -1)
-			{
+		if(.@i > 1) {
+			for(set .@j,.@i; .@j > 0; set .@j,.@j -1) {
 				if(.@bingoinput == @bingoplate[.@j -1]) { set @bingo_case,.@i; return 0; }
 			}
 		}
@@ -1028,11 +860,11 @@ function	script	Func_Bingo	{
 }
 
 function	script	Func_BingoResult	{
-
-	if(getarg(0) == 1 || getarg(0) == 21) mapannounce "que_bingo","Eukran: The "+getarg(0)+"st number is "+$bingo[getarg(0) -1]+". Please check your Bingo Plate.",4,0xFFAB54;
-	else if(getarg(0) == 2 || getarg(0) == 22) mapannounce "que_bingo","Eukran: The "+getarg(0)+"nd number is "+$bingo[getarg(0) -1]+". Please check your Bingo Plate.",4,0xFFAB54;
-	else if(getarg(0) == 3 || getarg(0) == 23) mapannounce "que_bingo","Eukran: The "+getarg(0)+"rd number is "+$bingo[getarg(0) -1]+". Please check your Bingo Plate.",4,0xFFAB54;
-	else mapannounce "que_bingo","Eukran: The "+getarg(0)+"th number is "+$bingo[getarg(0) -1]+". Please check your Bingo Plate.",4,0xFFAB54;
+	if (getarg(0) == 1 || getarg(0) == 21) set .@str$,"st";
+	else if (getarg(0) == 2 || getarg(0) == 22) set .@str$,"nd";
+	else if (getarg(0) == 3 || getarg(0) == 23) set .@str$,"rd";
+	else set .@str$,"th";
+	mapannounce "que_bingo","Eukran: The "+getarg(0)+.@str$+" number is "+$bingo[getarg(0) -1]+". Please check your Bingo Plate.",4,0xFFAB54;
 	enablenpc ""+getarg(0)+"a#bingo";
 	enablenpc ""+getarg(0)+"b#bingo";
 	enablenpc ""+getarg(0)+"c#bingo";
@@ -1043,26 +875,15 @@ function	script	Func_BingoResult	{
 }
 
 que_bingo,49,31,4	script	Arcade Helper#1	47,{
-
 	mes "[Helper]";
 	mes "If you'd like to play";
 	mes "a game of bingo, then";
 	mes "please proceed this way.";
 	close;
 }
-
-que_bingo,42,31,4	script	Arcade Helper#2	66,{
-
-	mes "[Helper]";
-	mes "If you'd like to spectate";
-	mes "a game of bingo, then";
-	mes "please proceed this way.";
-	close;
-	
-}
+que_bingo,42,31,4	duplicate(Arcade Helper#1)	Arcade Helper#2	66
 
 que_bingo,54,17,5	script	Arcade Owner	712,{
-
 	mes "[Arcade Owner]";
 	mes "Welcome to the";
 	mes "Bingo Game Arcade.";
@@ -1070,8 +891,7 @@ que_bingo,54,17,5	script	Arcade Owner	712,{
 	mes "bingo? If you have any";
 	mes "questions, feel free to ask.";
 	next;
-	switch( select( "Rules for Bingo:Bingo Room:Marvelous Medals" ) )
-	{
+	switch(select("Rules for Bingo:Bingo Room:Marvelous Medals")) {
 	case 1:
 		mes "[Arcade Owner]";
 		mes "The rules for playing bingo";
@@ -1111,7 +931,6 @@ que_bingo,54,17,5	script	Arcade Owner	712,{
 		mes "Anyway, it costs 1,000 zeny";
 		mes "to play each bingo game~";
 		close;
-	break;
 	case 2:
 		mes "[Arcade Owner]";
 		mes "Ah, if you want to join a";
@@ -1128,7 +947,6 @@ que_bingo,54,17,5	script	Arcade Owner	712,{
 		mes "left door as a spectator";
 		mes "in the Bingo Room.";
 		close;
-	break;
 	case 3:
 		mes "[Arcade Owner]";
 		mes "When you win a bingo";
@@ -1151,7 +969,5 @@ que_bingo,54,17,5	script	Arcade Owner	712,{
 		mes "them for products in the Monster^FFFFFF ^000000 Racing Arena. I hear there's also";
 		mes "a place in Einbroch where you can^FFFFFF ^000000 use them, but I wouldn't know.";
 		close;
-	break;
 	}
-	
 }

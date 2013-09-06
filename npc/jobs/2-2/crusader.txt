@@ -34,8 +34,8 @@
 //= 3.3 Removed the need for use of 'goto.' [L0ne_W0lf]
 //============================================================
 
-
-//=============== Senior Crusader: 1st Collect Items Test============================
+// Senior Crusader: 1st Collect Items Test
+//============================================================
 prt_castle,45,169,5	script	Senior Crusader	752,{
 	mes "[Michael Halig]";
 	if (Upper == 1) { //the baby classes were totally blocked... due to missing == 1
@@ -216,25 +216,25 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 		next;
 		switch(CRUS_Q) {
 		case 1:
-			set @item1, 957;
-			set @item2, 959;
-			set @item3, 1099;
-			set @item4, 901;
+			set .@item1, 957;
+			set .@item2, 959;
+			set .@item3, 1099;
+			set .@item4, 901;
 			break;
 		case 2:
-			set @item1, 932;
-			set @item2, 1043;
-			set @item3, 1098;
-			set @item4, 1094;
+			set .@item1, 932;
+			set .@item2, 1043;
+			set .@item3, 1098;
+			set .@item4, 1094;
 			break;
 		case 3:
-			set @item1, 958;
-			set @item2, 930;
-			set @item3, 1041;
-			set @item4, 1062;
+			set .@item1, 958;
+			set .@item2, 930;
+			set .@item3, 1041;
+			set .@item4, 1062;
 			break;
 		}
-		if (countitem(@item1) > 9 && countitem(@item2) > 9 && countitem(@item3) > 9 && countitem(@item4) > 9) {
+		if (countitem(.@item1) > 9 && countitem(.@item2) > 9 && countitem(.@item3) > 9 && countitem(.@item4) > 9) {
 			mes "[Michael Halig]";
 			mes "Ah, well done.";
 			mes "I must acknowledge your efforts and determination. You may now proceed to take the next test.";
@@ -242,10 +242,10 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 			mes "[Michael Halig]";
 			mes "Meet with Moorenak Miyol who is training in the underground dungeon of the Prontera Castle. Go, and speak with him first.";
 			next;
-			delitem @item1, 10;
-			delitem @item2, 10;
-			delitem @item3, 10;
-			delitem @item4, 10;
+			delitem .@item1, 10;
+			delitem .@item2, 10;
+			delitem .@item3, 10;
+			delitem .@item4, 10;
 			set CRUS_Q, 4;
 			if(checkquest(3006) != -1) {
 				changequest 3006,3009;
@@ -264,10 +264,10 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 		mes "Ah, you still have not completed the task I have given to you. Bring me the following items, and prove your will to become a Crusader to me...";
 		next;
 		mes "[Michael Halig]";
-		mes "10 ^3355FF"+getitemname(@item1)+"^000000";
-		mes "10 ^3355FF"+getitemname(@item2)+"^000000";
-		mes "10 ^3355FF"+getitemname(@item3)+"^000000";
-		mes "10 ^3355FF"+getitemname(@item4)+"^000000";
+		mes "10 ^3355FF"+getitemname(.@item1)+"^000000";
+		mes "10 ^3355FF"+getitemname(.@item2)+"^000000";
+		mes "10 ^3355FF"+getitemname(.@item3)+"^000000";
+		mes "10 ^3355FF"+getitemname(.@item4)+"^000000";
 		next;
 		mes "[Michael Halig]";
 		mes "If you put forth the effort, you'll be able to accomplish this task. May Odin protect you on your journeys.";
@@ -314,7 +314,8 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 	close;
 }
 
-//===================== Suffering Man: 2nd Endurance Test ===============================================
+// Suffering Man: 2nd Endurance Test
+//============================================================
 prt_castle,164,32,1	script	Man in Anguish	733,{
 	mes "[Murnak Mijoul]";
 	if(BaseJob != Job_Swordman) {
@@ -447,7 +448,8 @@ prt_castle,164,32,1	script	Man in Anguish	733,{
 	close;
 }
 
-//===================== Gabriel Valentine: 3rd Knowledge Test =================================
+// Gabriel Valentine: 3rd Knowledge Test
+//============================================================
 prt_church,95,127,3	script	Crusader	745,{
 	mes "[Gabriel Valentine]";
 	if(BaseJob != Job_Swordman) {
@@ -795,7 +797,8 @@ prt_church,95,127,3	script	Crusader	745,{
 	close;
 }
 
-//===================== Crusader: 4th Purification Test =====================================================
+// Crusader: 4th Purification Test
+//============================================================
 prt_castle,35,151,5	script	Patron Knight	751,{
 	mes "[Bliant Piyord]";
 	mes "Welcome.";
@@ -970,8 +973,12 @@ prt_castle,35,151,5	script	Patron Knight	751,{
 
 
 
-//=== Actual tests ========================================
-//=== Endurance Test ======================================
+// Actual tests
+//============================================================
+
+//----------------------------------------------------------------------------
+// Endurance Test
+//----------------------------------------------------------------------------
 job_cru,1,1,1	script	Summoner#cr1	-1,{
 OnTimer300000:
 	donpcevent "Summoner#cr1::OnReset";
@@ -1205,7 +1212,9 @@ OnTouch:
 	end;
 }
 
-//=== Purification Test ===================================
+//----------------------------------------------------------------------------
+// Purification Test
+//----------------------------------------------------------------------------
 job_cru,24,187,4	script	Patron Knight#2	751,{
 	mes "[Bliant Piyord]";
 	mes "Welcome.";

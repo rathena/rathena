@@ -865,46 +865,46 @@ ayothaya,253,99,3	script	Fisherman	843,{
 				next;
 				delitem 528,1; //Monster's_Feed
 				set Zeny, Zeny-50;
-				set @randfish,rand(1,100);
-				if (@randfish > 0 && @randfish < 40) {
+				set .@randfish,rand(1,100);
+				if (.@randfish > 0 && .@randfish < 40) {
 					mes "^3355FFWhile cooking the Phen, you";
 					mes "find that it's swallowed a Stone.^000000";
 					close2;
 					getitem 7049,1; //Stone
 					end;
-				} else if (@randfish > 39 && @randfish < 60) {
+				} else if (.@randfish > 39 && .@randfish < 60) {
 					mes "^3355FFInside of the Phen,";
 					mes "you find a Red Potion.^000000";
 					close2;
 					getitem 501,1; //Red_Potion
 					end;
-				} else if (@randfish > 59 && @randfish < 70) {
+				} else if (.@randfish > 59 && .@randfish < 70) {
 					mes "^3355FFInside of the Phen,";
 					mes "you find a Yellow Potion.^000000";
 					close2;
 					getitem 503,1; //Yellow_Potion
 					end;
-				} else if (@randfish > 69 && @randfish < 80) {
+				} else if (.@randfish > 69 && .@randfish < 80) {
 					mes "^3355FFThere's nothing inside...";
 					mes "But now you can eat Sushi!^000000";
 					close2;
 					getitem 551,1; //Shusi
 					end;
-				} else if (@randfish > 79 && @randfish < 90) {
+				} else if (.@randfish > 79 && .@randfish < 90) {
 					mes "^3355FFYou find";
 					mes "a Flower Ring";
 					mes "inside the Phen.^000000";
 					close2;
 					getitem 2612,1; //Flower_Ring
 					end;
-				} else if (@randfish == 90) {
+				} else if (.@randfish == 90) {
 					mes "^3355FFYou find";
 					mes "a Diamond Ring";
 					mes "inside the Phen.^000000";
 					close2;
 					getitem 2613,1; //Diamond_Ring
 					end;
-				} else if (@randfish > 90 && @randfish < 101) {
+				} else if (.@randfish > 90 && .@randfish < 101) {
 					mes "^3355FFYou find a ring";
 					mes "with a name engraved";
 					mes "inside the band.^000000";

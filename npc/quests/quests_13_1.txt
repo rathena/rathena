@@ -12423,7 +12423,6 @@ que_job01,49,49,5	script	Tao#dan_09	877,{
 
 que_job01,51,55,0	script	que_job01#room_1	45,1,1,{
 OnInit:
-	if ($maobar_room) set $maobar_room,0;
 OnReset:
 	set $@moc_mao_room1,0; //Global Variable
 	end;

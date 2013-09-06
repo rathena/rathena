@@ -1542,8 +1542,7 @@ prt_church,113,103,1	script	Praying Man	798,{
 		close;
 	}
 	else if (god_brising == 5) {
-		set @brising_try,rand(1,4);
-		if (@brising_try == 1) {
+		if (rand(1,4) == 1) {
 			mes "[Hermite Charles]";
 			mes "You're still here.";
 			mes "Does that mean you";

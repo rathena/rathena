@@ -1162,17 +1162,17 @@ ein_in01,117,80,5	script	Unidentified Machine#as	111,{
 			mes "your items again.";
 			close;
 		} else {
-			set @choice,select(getitemname(getbrokenid(1)),getitemname(getbrokenid(2)),
+			set .@choice, select(getitemname(getbrokenid(1)),getitemname(getbrokenid(2)),
 			getitemname(getbrokenid(3)),getitemname(getbrokenid(4)),getitemname(getbrokenid(5)),
 			getitemname(getbrokenid(6)),getitemname(getbrokenid(7)),getitemname(getbrokenid(8)),
 			getitemname(getbrokenid(9)),getitemname(getbrokenid(10)));
 			mes "[Expert Repairman]";
-			mes "You're gonna repair " + getitemname(getbrokenid(@choice)) + ".";
+			mes "You're gonna repair " + getitemname(getbrokenid(.@choice)) + ".";
 			mes "Continue?";
 			next;
 			switch(select("Yes:No")) {
 			case 1:
-				repair(@choice);
+				repair(.@choice);
 				next;
 				mes "[Expert Repairman]";
 				mes "*Beep-*";

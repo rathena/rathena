@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 2.x
 //===== Description: =========================================
@@ -12,6 +12,7 @@
 //= Split off npc_warp.txt, 1.1 added gl18-2 [Lupus]
 //= optimized random warp [Lupus] fixed looped warps
 //= 1.4 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 1.5 Fixed random warp coordinates. [Euphy]
 //============================================================
 
 //Glastheim
@@ -52,10 +53,13 @@ gl_knt02,10,138,0	warp	gl14-1	1,1,gl_knt01,7,148
 gl_knt02,157,292,0	warp	gl16-1	1,1,gl_knt01,150,286
 gl_knt02,289,138,0	warp	gl17-1	1,1,gl_knt01,292,144
 gl_prison,149,183,0	warp	gl18-1	1,1,gl_prison1,150,14
-gl_prison,10,70,4	script	gl18-2	45,1,1,{
-if(rand(2)==1) goto w2;
-	warp "gl_cas01",236,192; end;
-w2: warp "gl_cas01",164,191; end;
+gl_prison,11,70,0	script	gl18-2	45,1,1,{
+	switch(rand(4)) {
+		case 0: warp "gl_cas01",163,193; end;
+		case 1: warp "gl_cas01",238,192; end;
+		case 2: warp "gl_cas01",144,314; end;
+		case 3: warp "gl_cas01",367,301; end;
+	}
 }
 gl_prison1,150,10,0	warp	gl18	1,1,gl_prison,149,178
 gl_prison1,62,187,0	warp	gl10	1,1,gl_sew01,258,255

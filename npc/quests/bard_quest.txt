@@ -2560,8 +2560,8 @@ payon,181,172,3	script	Bard#4	51,{
 			next;
 			switch(select("A song:A story:Maybe some other time")) {
 			case 1:
-				set @song_random,rand(1,3);
-				if (@song_random == 1) {
+				switch(rand(1,3)) {
+				case 1:
 					mes "[Gunther Doubleharmony]";
 					mes "Gunther sings!";
 					mes "Gunther dances!";
@@ -2611,7 +2611,7 @@ payon,181,172,3	script	Bard#4	51,{
 					mes "That's a very old story about rich Mr. Kim, and his rise from rags to riches to rags to riches. Is it true or is it fiction? Oh, please don't ask me! I've no clue!";
 					close;
 
-				} else if (@song_random == 2) {
+				case 2:
 					mes "[Gunther Doubleharmony]";
 					mes "*Ahem*";
 					mes "Gunther sings ";
@@ -2665,7 +2665,7 @@ payon,181,172,3	script	Bard#4	51,{
 					mes "Is it truth or fiction? But please don't ask me, I have no idea~!";
 					close;
 
-				} else {
+				case 3:
 					mes "[Gunther Doubleharmony]";
 					mes "I will sing one of Luke's songs, you know, Luke, one of the greatest Bards of his time? But I changed the words a little bit.";
 					next;
@@ -2699,8 +2699,8 @@ payon,181,172,3	script	Bard#4	51,{
 				}
 
 			case 2:
-				set @story,rand(1,3);
-				if (story == 1) {
+				switch(rand(1,3)) {
+				case 1:
 					mes "[Gunther Doubleharmony]";
 					mes "Um, have you ever";
 					mes "tasted Comodo cheese?";
@@ -2715,7 +2715,7 @@ payon,181,172,3	script	Bard#4	51,{
 					mes "Why don't you go taste it if you haven't yet? I tried to taste it once. It was kind of yummy, but then I fainted. Hahahaha~!";
 					close;
 
-				} else if (story == 2) {
+				case 2:
 					mes "[Gunther Doubleharmony]";
 					mes "I was passing Prontera the other day at the place where it used to be the Swordman training ground.";
 					next;
@@ -2729,7 +2729,7 @@ payon,181,172,3	script	Bard#4	51,{
 					mes "I got bored watching him do the same thing over and over and over again, but I think the Monster Research Organization would like him if I introduced him.";
 					close;
 
-				} else {
+				case 3:
 					mes "[Gunther Doubleharmony]";
 					mes "Have you ever been in Lutie,";
 					mes "land of year round snow?";

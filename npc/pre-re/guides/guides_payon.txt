@@ -246,7 +246,7 @@ pay_arche,85,30,2	script	Guide#2pay	708,{
 				case 4:
 					mes "[Payon Guide]";
 					mes "If you'd like to erase the marks on the mini-map, select menu, 'Wipe all indicators on the mini-map'.";
-					set @loop2,0;
+					set .@loop2,0;
 					break;
 				}
 			}
