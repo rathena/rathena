@@ -13429,6 +13429,12 @@ int skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_id
 				return 0;
 			}
 			break;
+		case ST_CART:
+			if(!pc_iscarton(sd)) {
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+				return 0;
+			}
+			break;
 		case ST_SHIELD:
 			if(sd->status.shield <= 0) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
@@ -17984,6 +17990,7 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	if(      strcmpi(split[10],"hidden")              == 0 ) skill_db[idx].require.state = ST_HIDDEN;
 	else if( strcmpi(split[10],"riding")              == 0 ) skill_db[idx].require.state = ST_RIDING;
 	else if( strcmpi(split[10],"falcon")              == 0 ) skill_db[idx].require.state = ST_FALCON;
+	else if( strcmpi(split[10],"cart")                == 0 ) skill_db[idx].require.state = ST_CART;
 	else if( strcmpi(split[10],"shield")              == 0 ) skill_db[idx].require.state = ST_SHIELD;
 	else if( strcmpi(split[10],"recover_weight_rate") == 0 ) skill_db[idx].require.state = ST_RECOV_WEIGHT_RATE;
 	else if( strcmpi(split[10],"move_enable")         == 0 ) skill_db[idx].require.state = ST_MOVE_ENABLE;
@@ -17999,9 +18006,9 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	//Status requirements
 	skill_db[idx].require.status_count = 0;
 	p = strtok(split[11],":");
-	for( j = 0; j < MAX_ITEMS_PER_COMBO && p != NULL; j++ ) {
+	for( j = 0; j < MAX_SKILL_STATUS_REQUIRE && p != NULL; j++ ) {
 		int status = SC_NONE;
-		script_get_constant(p, &status);		
+		script_get_constant(trim(p), &status);		
 		if (status > SC_NONE) {
 			skill_db[idx].require.status[skill_db[idx].require.status_count] = (enum sc_type)status;
 			skill_db[idx].require.status_count++;

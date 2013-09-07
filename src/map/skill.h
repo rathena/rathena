@@ -103,6 +103,7 @@ enum e_skill_display {
 };
 
 #define MAX_SKILL_ITEM_REQUIRE	10
+#define MAX_SKILL_STATUS_REQUIRE 3
 struct skill_condition {
 	int hp,
 		mhp,
@@ -116,7 +117,7 @@ struct skill_condition {
 		itemid[MAX_SKILL_ITEM_REQUIRE],
 		amount[MAX_SKILL_ITEM_REQUIRE];
 	uint8 status_count;
-	enum sc_type status[MAX_SKILL_ITEM_REQUIRE];
+	enum sc_type status[MAX_SKILL_STATUS_REQUIRE];
 };
 
 struct s_skill_require {
@@ -134,7 +135,7 @@ struct s_skill_require {
 		itemid[MAX_SKILL_ITEM_REQUIRE],
 		amount[MAX_SKILL_ITEM_REQUIRE];
 	uint8 status_count;
-	enum sc_type status[MAX_SKILL_ITEM_REQUIRE];
+	enum sc_type status[MAX_SKILL_STATUS_REQUIRE];
 };
 
 /// Database skills
@@ -440,6 +441,7 @@ enum e_require_state {
 	ST_HIDDEN,
 	ST_RIDING,
 	ST_FALCON,
+	ST_CART,
 	ST_SHIELD,
 	ST_RECOV_WEIGHT_RATE,
 	ST_MOVE_ENABLE,
