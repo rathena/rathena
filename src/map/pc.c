@@ -4888,11 +4888,10 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 			status_change_end(&sd->bl, SC_CLOAKING, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
 		}
-		for (i = 0; i < EQI_MAX; i++) {
+		for (i = 0; i < EQI_MAX; i++)
 			if (sd->equip_index[i] >= 0)
 				if (!pc_isequip(sd,sd->equip_index[i]))
 					pc_unequipitem(sd,sd->equip_index[i],2);
-		}
 		if (battle_config.clear_unit_onwarp&BL_PC)
 			skill_clear_unitgroup(&sd->bl);
 		party_send_dot_remove(sd); //minimap dot fix [Kevin]
@@ -9033,8 +9032,7 @@ int pc_checkitem(struct map_session_data *sd)
 	}
 
 	for( i = 0; i < MAX_INVENTORY; i++) {
-
-		if( sd->status.inventory[i].nameid == 0 )
+		if( !(&sd->status.inventory[i]) || sd->status.inventory[i].nameid == 0 )
 			continue;
 
 		if( !sd->status.inventory[i].equip )
@@ -9046,6 +9044,11 @@ int pc_checkitem(struct map_session_data *sd)
 			continue;
 		}
 
+		if( !pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && !battle_config.allow_equip_restricted_item && itemdb_isNoEquip(sd->inventory_data[i], sd->bl.m) ) {
+			pc_unequipitem(sd, i, 2);
+			calc_flag = 1;
+			continue;
+		}
 	}
 
 	if( calc_flag && sd->state.active ) {
