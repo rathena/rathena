@@ -348,17 +348,19 @@ moc_para01,182,48,3	script	Eden's Chief#eden	886,{
 	close;
 }
 
-moc_para01,172,28,5	script	Eden's Intern#eden	883,{
-	mes "[Eden's Intern]";
-	mes "Actually, I realized that.";
+moc_para01,172,28,5	script	Eden Group Intern#eden	883,{
+	mes "[Eden Group Intern]";
+	mes "Actually, I realized that...";
 	next;
-	mes "[Eden's Intern]";
-	mes "We have to work really hard unless you want to fail.";
+	mes "[Eden Group Intern]";
+	mes "You have to work really hard unless you want to fail.";
 	next;
-	mes "[Eden's Intern]";
+	mes "[Eden Group Intern]";
+	emotion e_desp;
 	mes "But, I have never learned about pharmaceuticals yet.";
 	next;
-	mes "[Eden's Intern]";
+	mes "[Eden Group Intern]";
+	emotion e_sob;
 	mes "I'm going to fail. I can't do this.";
 	close;
 }
