@@ -1,4 +1,3 @@
-
 //===== rAthena Script =======================================
 //= Rock Scissors Roulette
 //===== By: ==================================================
@@ -107,20 +106,20 @@ KILL:
 	next;
 	mes "Congratulations! You have won...";
 	switch( rand( 1,10 ) ) {
-		case 1: setarray .@reward, 10,984; break;
-		case 3: setarray .@reward,100,601; break;	// 100x Fly Wings
-		case 4: setarray .@reward,  8,603; break;	// 8x Old Blue Box
-		case 5: setarray .@reward,  4,617; break;	// 4x Old Violet Box
-		case 6: setarray .@reward,  1,616; break;	// 1x Old Card Album
-		case 7: setarray .@reward, 10,604; break;	// 10x Dead Branch
-		case 8: setarray .@reward,  3,969; break;	// 3x Gold
-		case 10: setarray .@reward,20,505; break;	// 20x Blue Potion
+		case 1: setarray .@reward[0], 10,984; break;
+		case 3: setarray .@reward[0],100,601; break;	// 100x Fly Wings
+		case 4: setarray .@reward[0],  8,603; break;	// 8x Old Blue Box
+		case 5: setarray .@reward[0],  4,617; break;	// 4x Old Violet Box
+		case 6: setarray .@reward[0],  1,616; break;	// 1x Old Card Album
+		case 7: setarray .@reward[0], 10,604; break;	// 10x Dead Branch
+		case 8: setarray .@reward[0],  3,969; break;	// 3x Gold
+		case 10: setarray .@reward[0],20,505; break;	// 20x Blue Potion
 		case 2:
 		case 9:
-			setarray .@reward, 10,985;
+			setarray .@reward[0], 10,985;
 	}
-	mes .@reward +"x "+ getitemname( .@reward[1] ) +"!";
-	getitem .@reward[1], .@reward;
+	mes .@reward[0] +"x "+ getitemname( .@reward[1] ) +"!";
+	getitem .@reward[1], .@reward[0];
 	close;
 
 LEAVE:
