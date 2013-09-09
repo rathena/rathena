@@ -8384,7 +8384,6 @@
 19574,C_Lord_of_Death,Costume Lord of Death,5,0,,0,,0,,0,0xFFFFFFFF,63,2,3072,,0,1,742,{ bonus bUnbreakableHelm,0; },{},{} 
 19587,C_King_Poring_Hat,Costume King Poring Hat,5,0,,100,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,905,{ bonus bUnbreakableHelm,0; },{},{}
 19589,C_Fallen_Angel_Lost_J,C Fallen Angel Lost J,5,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,0,0,907,{},{},{}
-19619,C_Corsair,Costume Corsair,5,0,,0,,,,,0xFFFFFFFF,63,2,1024,,0,0,105,{ bonus bVit,1; },{},{}
 19650,C_Rainbow_Feather_Deco,Costume Rainbow Feather Deco,5,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,1,934,{},{},{}
 19655,C_Tiraya_Bonnet,C Tiraya Bonnet,5,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,0,0,398,{},{},{}
 19707,C_Polar_Bear_Cap,Costume Polar Bear Cap,5,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,0,0,966,{ bonus bUnbreakableHelm,0; },{},{}
