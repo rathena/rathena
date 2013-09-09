@@ -318,7 +318,8 @@ moc_para01,50,39,4	script	Eve Natalia	882,{
 			mes "You don't even have 1... stop wasting my time.";
 			close;
 		}
-		//FIXME: missing dialogue
+		mes "[Eve Natalia]";
+		mes "Oh perfect, you get ^CC0000" + .@amount + "^000000 Safe to 7 Certificates!";
 		delitem .@item,1;
 		for(set .@i,0; .@i<.@amount; set .@i,.@i+1) {
 			// Note: iRO lists item 6235 as "Safe to 7 Headgear Certificate", but it's Guarantee_Armor_6Up in our database.
