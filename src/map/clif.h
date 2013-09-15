@@ -321,6 +321,8 @@ enum clif_messages {
 	SKILL_CANT_USE_AREA = 0x536,
 	VIEW_EQUIP_FAIL = 0x54d,
 	USAGE_FAIL = 0x783,
+	ADDITEM_TO_CART_FAIL_WEIGHT = 0x0,
+	ADDITEM_TO_CART_FAIL_COUNT = 0x1,
 };
 
 int clif_setip(const char* ip);
@@ -486,6 +488,7 @@ void clif_inventorylist(struct map_session_data *sd);
 void clif_equiplist(struct map_session_data *sd);
 
 void clif_cart_additem(struct map_session_data *sd,int n,int amount,int fail);
+void clif_cart_additem_ack(struct map_session_data *sd, int flag);
 void clif_cart_delitem(struct map_session_data *sd,int n,int amount);
 void clif_cartlist(struct map_session_data *sd);
 void clif_clearcart(int fd);

@@ -6124,6 +6124,19 @@ void clif_cart_additem(struct map_session_data *sd,int n,int amount,int fail)
 #endif
 }
 
+// [Ind/Hercules] - Data Thanks to Yommy
+void clif_cart_additem_ack(struct map_session_data *sd, int flag)
+{
+	int fd;
+	unsigned char *buf;
+	nullpo_retv(sd);
+
+	fd = sd->fd;
+	buf = WFIFOP(fd,0);
+	WBUFW(buf,0) = 0x12c;
+	WBUFL(buf,2) = flag;
+	clif_send(buf,packet_len(0x12c),&sd->bl,SELF);
+}
 
 /// Deletes an item from character's cart (ZC_DELETE_ITEM_FROM_CART).
 /// 0125 <index>.W <amount>.L
@@ -10671,12 +10684,15 @@ void clif_parse_StopAttack(int fd,struct map_session_data *sd)
 void clif_parse_PutItemToCart(int fd,struct map_session_data *sd)
 {
 	struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
+	short flag = 0;
 	if (pc_istrading(sd))
 		return;
 	if (!pc_iscarton(sd))
 		return;
-	pc_putitemtocart(sd,RFIFOW(fd,info->pos[0])-2,
-		RFIFOL(fd,info->pos[1]));
+	if ((flag = pc_putitemtocart(sd,RFIFOW(fd,info->pos[0])-2,RFIFOL(fd,info->pos[1])))) {
+		clif_dropitem(sd,RFIFOW(fd,info->pos[0])-2,0);
+		clif_cart_additem_ack(sd,(flag==1)?ADDITEM_TO_CART_FAIL_WEIGHT:ADDITEM_TO_CART_FAIL_COUNT);
+	}
 }
 
 
