@@ -7520,6 +7520,13 @@
 14616,STR_Biscuit_Stick,Bar of Strength,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 14617,VIT_Biscuit_Stick,Bar of Fitness,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 14618,AGI_Biscuit_Stick,Bar of Agility,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+//14626,Indigo_Scroll
+//14643,Violet_Scroll
+//14664,Bi_Hwang_Scroll		
+//14665,Jung_Bi_Scroll		
+//14666,Je_Un_Scroll		
+//14667,Yong_Kwang_Scroll
+
 // More Armors
 15000,Bone_Plate,Bone Plate,5,20,,1000,,60,,1,0x000654E2,18,2,16,,85,1,0,{ bonus bStr,1; bonus bMdef,3; bonus2 bIgnoreDefRate,RC_DemiHuman,10; bonus2 bIgnoreDefRate,RC_Brute,10; bonus3 bAutoSpellWhenHit,"NPC_WIDEBLEEDING",1,10; },{},{}
 15001,Odin's_Blessing_I,Odin's Blessing,5,0,,0,,10,,0,0xFFFFFFFE,63,2,16,,0,0,0,{},{},{}

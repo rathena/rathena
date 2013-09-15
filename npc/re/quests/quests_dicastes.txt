@@ -1139,6 +1139,7 @@ function	script	unknown_d	{
 	}
 	close;
 }
+prt_fild03,144,95,0	script	Tree Roots	844,{ unknown_d(12166,902); }
 prt_fild09,371,255,0	script	Reptile Tongues	844,{ unknown_d(12167,903); }
 prt_fild09,352,241,0	script	Scorpion Tails	844,{ unknown_d(12168,904); }
 pay_fild02,177,108,0	script	Stems	844,{ unknown_d(12169,905); }
@@ -7373,24 +7374,26 @@ dic_fild01,259,172,3	duplicate(dic_enc#main)	Mancho#pa0829	495
 dic_in01,353,37,5	duplicate(dic_enc#main)	Kareka#pa0829	454
 
 dic_fild01,228,159,4	script	Jahbong#pa0829	496,{
-	mes "[Jahbong]";
 	if (countitem(6304) < 1) {
+		mes "[Jahbong]";
 		mes "You haven't received a Sapha Certification yet?";
 		next;
 		mes "[Jahbong]";
 		mes "Come back to me once you have one. I'll give you something good in exchange.";
 		close; 
 	}
-	set .@cattalkj,rand(1,9);
-	if (.@cattalkj == 1) mes "Don't touch my back! I might bite you unconsciously.";
-	else if (.@cattalkj == 2) mes "Pub owner Shay carried something away to make something strange! Be careful!";
-	else if (.@cattalkj == 3) mes "We cats can jump 5 times our size. Isn't it cool? But then, don't ask me to jump from here now.";
-	else if (.@cattalkj == 4) mes "I have to be diligent with my grooming to maintain beautiful fur.";
-	else if (.@cattalkj == 5) mes "I have to groom myself everyday to maintain shiny fluffy fur. But I don't have very nice fur in the first place. Very sad.";
-	else if (.@cattalkj == 6) mes "You should receive a Sapha Certification with both paws as a sign of respect. No cat deserves a certification if they don't!";
-	else if (.@cattalkj == 7) mes "I don't really talk that much! Ahat looks like... meow meow meooow... sorry.";
-	else if (.@cattalkj == 8) mes "Meow~~~~~~~~~~";
-	else mes "Yarn is a great way to calm a cat.";
+	mes "[Jahbong]";
+	switch (rand(1,9)) {	
+		case 1:	mes "Don't touch my back! I might bite you unconsciously.";
+		case 2: mes "Pub owner Shay carried something away to make something strange! Be careful!";
+		case 3: mes "We cats can jump 5 times our size. Isn't it cool? But then, don't ask me to jump from here now.";
+		case 4: mes "I have to be diligent with my grooming to maintain beautiful fur.";
+		case 5: mes "I have to groom myself everyday to maintain shiny fluffy fur. But I don't have very nice fur in the first place. Very sad.";
+		case 6: mes "You should receive a Sapha Certification with both paws as a sign of respect. No cat deserves a certification if they don't!";
+		case 7: mes "I don't really talk that much! Ahat looks like... meow meow meooow... sorry.";
+		case 8: mes "Meow~~~~~~~~~~";
+		case 9:	mes "Yarn is a great way to calm a cat.";
+	}
 	next;
 	mes "[Jahbong]";
 	mes "Why are you here?";
