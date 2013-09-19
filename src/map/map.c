@@ -1727,6 +1727,9 @@ int map_quit(struct map_session_data *sd) {
 		}
 	}
 
+	if (sd->state.vending)
+		idb_remove(vending_db, sd->status.char_id);
+
 	pc_damage_log_clear(sd,0);
 	party_booking_delete(sd); // Party Booking [Spiria]
 	pc_makesavestatus(sd);

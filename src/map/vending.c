@@ -294,7 +294,7 @@ void vending_openvending(struct map_session_data* sd, const char* message, const
 	clif_openvending(sd,sd->bl.id,sd->vending);
 	clif_showvendingboard(&sd->bl,message,0);
 
-	idb_put(vending_db, sd->vender_id, sd);
+	idb_put(vending_db, sd->status.char_id, sd);
 }
 
 
