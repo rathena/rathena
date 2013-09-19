@@ -49,6 +49,7 @@
 #include "mail.h"
 #include "cashshop.h"
 #include "channel.h"
+#include "vending.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1728,7 +1729,7 @@ int map_quit(struct map_session_data *sd) {
 	}
 
 	if (sd->state.vending)
-		idb_remove(vending_db, sd->status.char_id);
+		idb_remove(vending_getdb(), sd->status.char_id);
 
 	pc_damage_log_clear(sd,0);
 	party_booking_delete(sd); // Party Booking [Spiria]
