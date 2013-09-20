@@ -3805,10 +3805,8 @@ static bool mob_parse_dbrow(char** str)
 		id = itemdb_search(db->dropitem[i].nameid);
 		type = id->type;
 		rate = atoi(str[k+1]);
-		#ifndef RENEWAL_DROP
-			if (battle_config.drop_rateincrease)
-				if (rate < 5000) rate++;
-		#endif
+		if (battle_config.drop_rateincrease)
+			if (rate < 5000) rate++;
 		if( (class_ >= 1324 && class_ <= 1363) || (class_ >= 1938 && class_ <= 1946) )
 		{	//Treasure box drop rates [Skotlex]
 			rate_adjust = battle_config.item_rate_treasure;
