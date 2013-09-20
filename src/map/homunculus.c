@@ -265,7 +265,7 @@ int merc_hom_calc_skilltree(struct homun_data *hd, int flag_evolve)
 int merc_hom_checkskill(struct homun_data *hd,uint16 skill_id)
 {
 	int i = skill_id - HM_SKILLBASE;
-	if(!hd)
+	if(!hd || !&hd->homunculus)
 		return 0;
 
 	if(hd->homunculus.hskill[i].id == skill_id)
