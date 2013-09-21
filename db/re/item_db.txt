@@ -8034,7 +8034,7 @@
 18103,Mystic_Bow,Mystic Bow,4,0,,1700,75,,5,0,0x00080800,56,2,34,3,105,1,11,{ bonus bMatk,100; bonus bInt,4; bonus2 bSkillUseSP,"WM_SEVERE_RAINSTORM",10; },{},{}
 18104,Adventure_Bow,Adventure Bow,4,0,,0,60,,1,0,0x00080800,63,2,34,1,1,0,11,{ bonus bUnbreakableWeapon,0; },{},{}
 18105,Academy_Bow,Academy Bow,4,0,,1200,90,,5,1,0x00080800,63,2,34,1,1,1,11,{},{},{}
-18106,P_Bow3,Eden Bow III,4,0,,0,140,,5,0,0x00080800,63,2,34,3,60,0,11,{},{},{}
+18106,P_Bow3,Eden Bow III,4,0,,0,140,,5,0,0x000A0848,63,2,34,3,60,0,11,{},{},{}
 18107,Malang_Snow_Crab,Malangdo Crab,4,0,,0,120,,5,0,0x000A0848,63,2,34,1,50,0,11,{ bonus bUnbreakableWeapon,0; bonus bLuk,3; bonus bCritAtkRate,50; if(BaseLevel>99) { bonus bLongAtkRate,10; } },{},{}
 18108,Brindle_Eel,Zebra Eel,4,0,,0,180,,5,0,0x00080800,63,2,34,1,50,0,11,{ bonus bUnbreakableWeapon,0; bonus bAgi,3; autobonus "{ bonus bAspd,2; }",10,7000,BF_WEAPON,"{ specialeffect2 EF_HASTEUP; }"; if(BaseLevel>99) { bonus bLongAtkRate,10; } },{},{}
 18109,Catapult,Thief Crossbow,4,56000,,1100,150,,5,2,0x00020000,63,2,34,4,100,1,11,{ bonus2 bSkillAtk,"SC_TRIANGLESHOT",(getrefine()*2); bonus2 bSkillUseSP,"SC_TRIANGLESHOT",(getrefine()*2); },{},{}
