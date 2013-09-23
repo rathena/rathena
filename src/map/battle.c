@@ -6123,9 +6123,11 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		int i = rnd()%100;
 		if (sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_SAGE)
 			i = 0; //Max chance, no skill_lv reduction. [Skotlex]
-		if (i >= 50) skill_lv -= 2;
-		else if (i >= 15) skill_lv--;
-		if (skill_lv < 1) skill_lv = 1;
+		//reduction only for skill_lv > 1
+		if (skill_lv > 1) {
+			if (i >= 50) skill_lv -= 2;
+			else if (i >= 15) skill_lv--;
+		}
 		sp = skill_get_sp(skill_id,skill_lv) * 2 / 3;
 
 		if (status_charge(src, 0, sp)) {
