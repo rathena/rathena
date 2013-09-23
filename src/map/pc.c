@@ -1246,20 +1246,20 @@ int pc_reg_received(struct map_session_data *sd)
 	}
 
 	if ((i = pc_checkskill(sd,RG_PLAGIARISM)) > 0) {
-		sd->cloneskill_id = pc_readglobalreg(sd,"CLONE_SKILL");
+		sd->cloneskill_id = pc_readglobalreg(sd,SKILL_VAR_PLAGIARISM);
 		if (sd->cloneskill_id > 0) {
 			sd->status.skill[sd->cloneskill_id].id = sd->cloneskill_id;
-			sd->status.skill[sd->cloneskill_id].lv = pc_readglobalreg(sd,"CLONE_SKILL_LV");
+			sd->status.skill[sd->cloneskill_id].lv = pc_readglobalreg(sd,SKILL_VAR_PLAGIARISM_LV);
 			if (sd->status.skill[sd->cloneskill_id].lv > i)
 				sd->status.skill[sd->cloneskill_id].lv = i;
 			sd->status.skill[sd->cloneskill_id].flag = SKILL_FLAG_PLAGIARIZED;
 		}
 	}
 	if ((i = pc_checkskill(sd,SC_REPRODUCE)) > 0) {
-		sd->reproduceskill_id = pc_readglobalreg(sd,"REPRODUCE_SKILL");
+		sd->reproduceskill_id = pc_readglobalreg(sd,SKILL_VAR_REPRODUCE);
 		if( sd->reproduceskill_id > 0) {
 			sd->status.skill[sd->reproduceskill_id].id = sd->reproduceskill_id;
-			sd->status.skill[sd->reproduceskill_id].lv = pc_readglobalreg(sd,"REPRODUCE_SKILL_LV");
+			sd->status.skill[sd->reproduceskill_id].lv = pc_readglobalreg(sd,SKILL_VAR_REPRODUCE_LV);
 			if( i < sd->status.skill[sd->reproduceskill_id].lv)
 				sd->status.skill[sd->reproduceskill_id].lv = i;
 			sd->status.skill[sd->reproduceskill_id].flag = SKILL_FLAG_PLAGIARIZED;
@@ -7550,8 +7550,8 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 			clif_deleteskill(sd,sd->cloneskill_id);
 		}
 		sd->cloneskill_id = 0;
-		pc_setglobalreg(sd, "CLONE_SKILL", 0);
-		pc_setglobalreg(sd, "CLONE_SKILL_LV", 0);
+		pc_setglobalreg(sd,SKILL_VAR_PLAGIARISM, 0);
+		pc_setglobalreg(sd,SKILL_VAR_PLAGIARISM_LV, 0);
 	}
 
 	if(sd->reproduceskill_id) {
@@ -7562,8 +7562,8 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 			clif_deleteskill(sd,sd->reproduceskill_id);
 		}
 		sd->reproduceskill_id = 0;
-		pc_setglobalreg(sd, "REPRODUCE_SKILL",0);
-		pc_setglobalreg(sd, "REPRODUCE_SKILL_LV",0);
+		pc_setglobalreg(sd,SKILL_VAR_REPRODUCE,0);
+		pc_setglobalreg(sd,SKILL_VAR_REPRODUCE_LV,0);
 	}
 
 	// Give or reduce transcendent status points

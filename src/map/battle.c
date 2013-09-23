@@ -3701,7 +3701,7 @@ static int battle_calc_skill_constant_addition(struct Damage wd, struct block_li
 #ifdef RENEWAL
 				atk = ((wd.equipAtk + wd.weaponAtk + wd.statusAtk + wd.masteryAtk) * (10*tsc->data[SC_SPIRIT]->val1)) / 100;// +10% custom value.
 #else
-				atk = ((wd.damage) * (10*tsc->data[SC_SPIRIT]->val1)) / 100;// +10% custom value.
+				atk = (int) ((wd.damage) * (10*tsc->data[SC_SPIRIT]->val1)) / 100;// +10% custom value.
 #endif
 				status_change_end(target,SC_SPIRIT,INVALID_TIMER);
 			}
@@ -3713,7 +3713,7 @@ static int battle_calc_skill_constant_addition(struct Damage wd, struct block_li
 #ifdef RENEWAL
 					atk = ((wd.equipAtk + wd.weaponAtk + wd.statusAtk + wd.masteryAtk) * (100 * sd->talisman[i])) / 100;// +100% custom value.
 #else
-					atk = ((wd.damage) * (100 * sd->talisman[i])) / 100;// +100% custom value.
+					atk = (int) ((wd.damage) * (100 * sd->talisman[i])) / 100;// +100% custom value.
 #endif
 					pc_del_talisman(sd, sd->talisman[i], i);
 				}
@@ -6965,7 +6965,6 @@ static const struct _battle_data {
 	{ "display_hallucination",              &battle_config.display_hallucination,           1,      0,      1,              },
 	{ "use_statpoint_table",                &battle_config.use_statpoint_table,             1,      0,      1,              },
 	{ "ignore_items_gender",                &battle_config.ignore_items_gender,             1,      0,      1,              },
-	{ "copyskill_restrict",                 &battle_config.copyskill_restrict,              2,      0,      2,              },
 	{ "berserk_cancels_buffs",              &battle_config.berserk_cancels_buffs,           0,      0,      1,              },
 	{ "debuff_on_logout",                   &battle_config.debuff_on_logout,                1|2,    0,      1|2,            },
 	{ "monster_ai",                         &battle_config.mob_ai,                          0x000,  0x000,  0x77F,          },
