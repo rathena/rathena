@@ -1100,7 +1100,8 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 
 	//temp: used to signal combo-skills right now.
 	if (sc && sc->data[SC_COMBO] && (sc->data[SC_COMBO]->val1 == skill_id ||
-		(sd?skill_check_condition_castbegin(sd,skill_id,skill_lv):0) )) {
+		(sd?skill_check_condition_castbegin(sd,skill_id,skill_lv):0) ))
+	{
 		if (sc->data[SC_COMBO]->val2)
 			target_id = sc->data[SC_COMBO]->val2;
 		else
@@ -1109,8 +1110,8 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		if( skill_get_inf(skill_id)&INF_SELF_SKILL && skill_get_nk(skill_id)&NK_NO_DAMAGE )// exploit fix
 			target_id = src->id;
 		combo = 1;
-	} else
-	if ( target_id == src->id &&
+	}
+	else if ( target_id == src->id &&
 		skill_get_inf(skill_id)&INF_SELF_SKILL &&
 		skill_get_inf2(skill_id)&INF2_NO_TARGET_SELF )
 	{
@@ -1120,53 +1121,51 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 
 	if (sd) {
 		//Target_id checking.
-		if(skillnotok(skill_id, sd)) // [MouseJstr]
+		if(skill_isNotOk(skill_id, sd)) // [MouseJstr]
 			return 0;
 
-		switch(skill_id)
-		{	//Check for skills that auto-select target
-		case MO_CHAINCOMBO:
-			if (sc && sc->data[SC_BLADESTOP]){
-				if ((target=map_id2bl(sc->data[SC_BLADESTOP]->val4)) == NULL)
+		switch(skill_id) {	//Check for skills that auto-select target
+			case MO_CHAINCOMBO:
+				if (sc && sc->data[SC_BLADESTOP]) {
+					if ((target=map_id2bl(sc->data[SC_BLADESTOP]->val4)) == NULL)
+						return 0;
+				}
+				break;
+			case WE_MALE:
+			case WE_FEMALE:
+				if (!sd->status.partner_id)
 					return 0;
-			}
-			break;
-		case WE_MALE:
-		case WE_FEMALE:
-			if (!sd->status.partner_id)
-				return 0;
-			target = (struct block_list*)map_charid2sd(sd->status.partner_id);
-			if (!target) {
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-				return 0;
-			}
-			break;
+				target = (struct block_list*)map_charid2sd(sd->status.partner_id);
+				if (!target) {
+					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+					return 0;
+				}
+				break;
 		}
 		if (target)
 			target_id = target->id;
 	}
 	else if (src->type==BL_HOM)
-	switch(skill_id)
-	{ //Homun-auto-target skills.
-		case HLIF_HEAL:
-		case HLIF_AVOID:
-		case HAMI_DEFENCE:
-		case HAMI_CASTLE:
-			target = battle_get_master(src);
-			if (!target) return 0;
-			target_id = target->id;
-			break;
-		case MH_SONIC_CRAW:
-		case MH_TINDER_BREAKER: {
-			int skill_id2 = ((skill_id==MH_SONIC_CRAW)?MH_MIDNIGHT_FRENZY:MH_EQC);
-			if(sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == skill_id2){ //it,s a combo
-				target_id = sc->data[SC_COMBO]->val2;
-				combo = 1;
-				casttime = -1;
+		switch(skill_id) { //Homun-auto-target skills.
+			case HLIF_HEAL:
+			case HLIF_AVOID:
+			case HAMI_DEFENCE:
+			case HAMI_CASTLE:
+				target = battle_get_master(src);
+				if (!target) return 0;
+				target_id = target->id;
+				break;
+			case MH_SONIC_CRAW:
+			case MH_TINDER_BREAKER: {
+				int skill_id2 = ((skill_id==MH_SONIC_CRAW)?MH_MIDNIGHT_FRENZY:MH_EQC);
+				if(sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == skill_id2){ //it,s a combo
+					target_id = sc->data[SC_COMBO]->val2;
+					combo = 1;
+					casttime = -1;
+				}
+				break;
 			}
-			break;
 		}
-	}
 
 	if( !target ) // choose default target
 		target = map_id2bl(target_id);
@@ -1187,44 +1186,50 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	if(!status_check_skilluse(src, target, skill_id, 0))
 		return 0;
 
+	//fail if the targetted skill is near NPC [Cydh]
+	if(skill_get_inf2(skill_id)&INF2_NO_NEARNPC && skill_isNotOk_npcRange(src,target,skill_id,skill_lv,target->x,target->y)) {
+		if (sd)
+			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+		return 0;
+	}
+
 	tstatus = status_get_status_data(target);
 	// Record the status of the previous skill)
 	if(sd) {
-		switch(skill_id){
-		case SA_CASTCANCEL:
-			if(ud->skill_id != skill_id){
-				sd->skill_id_old = ud->skill_id;
-				sd->skill_lv_old = ud->skill_lv;
-			}
-			break;
-		case BD_ENCORE:
-			//Prevent using the dance skill if you no longer have the skill in your tree.
-			if(!sd->skill_id_dance || pc_checkskill(sd,sd->skill_id_dance)<=0){
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-				return 0;
-			}
-			sd->skill_id_old = skill_id;
-			break;
-		case WL_WHITEIMPRISON:
-			if( battle_check_target(src,target,BCT_SELF|BCT_ENEMY) < 0 ) {
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_TOTARGET,0);
-				return 0;
-			}
-			break;
-		case MG_FIREBOLT:
-		case MG_LIGHTNINGBOLT:
-		case MG_COLDBOLT:
-			sd->skill_id_old = skill_id;
-			sd->skill_lv_old = skill_lv;
-			break;
+		switch(skill_id) {
+			case SA_CASTCANCEL:
+				if(ud->skill_id != skill_id) {
+					sd->skill_id_old = ud->skill_id;
+					sd->skill_lv_old = ud->skill_lv;
+				}
+				break;
+			case BD_ENCORE:
+				//Prevent using the dance skill if you no longer have the skill in your tree.
+				if(!sd->skill_id_dance || pc_checkskill(sd,sd->skill_id_dance)<=0) {
+					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+					return 0;
+				}
+				sd->skill_id_old = skill_id;
+				break;
+			case WL_WHITEIMPRISON:
+				if( battle_check_target(src,target,BCT_SELF|BCT_ENEMY) < 0 ) {
+					clif_skill_fail(sd,skill_id,USESKILL_FAIL_TOTARGET,0);
+					return 0;
+				}
+				break;
+			case MG_FIREBOLT:
+			case MG_LIGHTNINGBOLT:
+			case MG_COLDBOLT:
+				sd->skill_id_old = skill_id;
+				sd->skill_lv_old = skill_lv;
+				break;
 		}
 		if (!skill_check_condition_castbegin(sd, skill_id, skill_lv))
 			return 0;
 	}
 
 	if( src->type == BL_MOB )
-		switch( skill_id )
-		{
+		switch( skill_id ) {
 			case NPC_SUMMONSLAVE:
 			case NPC_SUMMONMONSTER:
 			case AL_TELEPORT:
@@ -1261,79 +1266,79 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	//temp: Used to signal force cast now.
 	combo = 0;
 
-	switch(skill_id){
-	case ALL_RESURRECTION:
-		if(battle_check_undead(tstatus->race,tstatus->def_ele)) {
-			combo = 1;
-		} else if (!status_isdead(target))
-			return 0; //Can't cast on non-dead characters.
-	break;
-	case MO_FINGEROFFENSIVE:
-		if(sd)
-			casttime += casttime * min(skill_lv, sd->spiritball);
-	break;
-	case MO_EXTREMITYFIST:
-		if (sc && sc->data[SC_COMBO] &&
-		   (sc->data[SC_COMBO]->val1 == MO_COMBOFINISH ||
-			sc->data[SC_COMBO]->val1 == CH_TIGERFIST ||
-			sc->data[SC_COMBO]->val1 == CH_CHAINCRUSH))
-			casttime = -1;
-		combo = 1;
-	break;
-	case SR_GATEOFHELL:
-	case SR_TIGERCANNON:
-		if (sc && sc->data[SC_COMBO] &&
-		   sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE)
-			casttime = -1;
-		combo = 1;
-	break;
-	case SA_SPELLBREAKER:
-		combo = 1;
-	break;
-	case ST_CHASEWALK:
-		if (sc && sc->data[SC_CHASEWALK])
-			casttime = -1;
-	break;
-	case TK_RUN:
-		if (sc && sc->data[SC_RUN])
-			casttime = -1;
-	break;
-	case HP_BASILICA:
-		if( sc && sc->data[SC_BASILICA] )
-			casttime = -1; // No Casting time on basilica cancel
-	break;
-	case KN_CHARGEATK:
-		{
-		unsigned int k = (distance_bl(src,target)-1)/3; //+100% every 3 cells of distance
-		if( k > 2 ) k = 2; // ...but hard-limited to 300%.
-		casttime += casttime * k;
-		}
-	break;
-	case GD_EMERGENCYCALL: //Emergency Call double cast when the user has learned Leap [Daegaladh]
-		if( sd && pc_checkskill(sd,TK_HIGHJUMP) )
-			casttime *= 2;
+	switch(skill_id) {
+		case ALL_RESURRECTION:
+			if(battle_check_undead(tstatus->race,tstatus->def_ele)) {
+				combo = 1;
+			} else if (!status_isdead(target))
+				return 0; //Can't cast on non-dead characters.
 		break;
-	case RA_WUGDASH:
-		if (sc && sc->data[SC_WUGDASH])
-			casttime = -1;
+		case MO_FINGEROFFENSIVE:
+			if(sd)
+				casttime += casttime * min(skill_lv, sd->spiritball);
 		break;
-	case EL_WIND_SLASH:
-	case EL_HURRICANE:
-	case EL_TYPOON_MIS:
-	case EL_STONE_HAMMER:
-	case EL_ROCK_CRUSHER:
-	case EL_STONE_RAIN:
-	case EL_ICE_NEEDLE:
-	case EL_WATER_SCREW:
-	case EL_TIDAL_WEAPON:
-		if( src->type == BL_ELEM ){
-			sd = BL_CAST(BL_PC, battle_get_master(src));
-			if( sd && sd->skill_id_old == SO_EL_ACTION ){
+		case MO_EXTREMITYFIST:
+			if (sc && sc->data[SC_COMBO] &&
+			   (sc->data[SC_COMBO]->val1 == MO_COMBOFINISH ||
+				sc->data[SC_COMBO]->val1 == CH_TIGERFIST ||
+				sc->data[SC_COMBO]->val1 == CH_CHAINCRUSH))
 				casttime = -1;
-				sd->skill_id_old = 0;
-			}
-		}
+			combo = 1;
 		break;
+		case SR_GATEOFHELL:
+		case SR_TIGERCANNON:
+			if (sc && sc->data[SC_COMBO] &&
+			   sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE)
+				casttime = -1;
+			combo = 1;
+		break;
+		case SA_SPELLBREAKER:
+			combo = 1;
+		break;
+		case ST_CHASEWALK:
+			if (sc && sc->data[SC_CHASEWALK])
+				casttime = -1;
+		break;
+		case TK_RUN:
+			if (sc && sc->data[SC_RUN])
+				casttime = -1;
+		break;
+		case HP_BASILICA:
+			if( sc && sc->data[SC_BASILICA] )
+				casttime = -1; // No Casting time on basilica cancel
+		break;
+		case KN_CHARGEATK:
+			{
+			unsigned int k = (distance_bl(src,target)-1)/3; //+100% every 3 cells of distance
+			if( k > 2 ) k = 2; // ...but hard-limited to 300%.
+			casttime += casttime * k;
+			}
+		break;
+		case GD_EMERGENCYCALL: //Emergency Call double cast when the user has learned Leap [Daegaladh]
+			if( sd && pc_checkskill(sd,TK_HIGHJUMP) )
+				casttime *= 2;
+			break;
+		case RA_WUGDASH:
+			if (sc && sc->data[SC_WUGDASH])
+				casttime = -1;
+			break;
+		case EL_WIND_SLASH:
+		case EL_HURRICANE:
+		case EL_TYPOON_MIS:
+		case EL_STONE_HAMMER:
+		case EL_ROCK_CRUSHER:
+		case EL_STONE_RAIN:
+		case EL_ICE_NEEDLE:
+		case EL_WATER_SCREW:
+		case EL_TIDAL_WEAPON:
+			if( src->type == BL_ELEM ){
+				sd = BL_CAST(BL_PC, battle_get_master(src));
+				if( sd && sd->skill_id_old == SO_EL_ACTION ){
+					casttime = -1;
+					sd->skill_id_old = 0;
+				}
+			}
+			break;
 	}
 
 	// moved here to prevent Suffragium from ending if skill fails
@@ -1344,40 +1349,37 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	casttime = skill_vfcastfix(src, casttime, skill_id, skill_lv);
 #endif
 
-	if (src->type == BL_NPC) { // NPC-objects do not have cast time
+	if (src->type == BL_NPC) // NPC-objects do not have cast time
 		casttime = 0;
-	}
 
 	if(!ud->state.running) //need TK_RUN or WUGDASH handler to be done before that, see bugreport:6026
 		unit_stop_walking(src,1);// eventhough this is not how official works but this will do the trick. bugreport:6829
 	// in official this is triggered even if no cast time.
 	clif_skillcasting(src, src->id, target_id, 0,0, skill_id, skill_get_ele(skill_id, skill_lv), casttime);
-	if( casttime > 0 || combo )
-	{
-		if (sd && target->type == BL_MOB)
-		{
+	if( casttime > 0 || combo ) {
+		if (sd && target->type == BL_MOB) {
 			TBL_MOB *md = (TBL_MOB*)target;
 			mobskill_event(md, src, tick, -1); //Cast targetted skill event.
 			if (tstatus->mode&(MD_CASTSENSOR_IDLE|MD_CASTSENSOR_CHASE) &&
 				battle_check_target(target, src, BCT_ENEMY) > 0)
 			{
 				switch (md->state.skillstate) {
-				case MSS_RUSH:
-				case MSS_FOLLOW:
-					if (!(tstatus->mode&MD_CASTSENSOR_CHASE))
+					case MSS_RUSH:
+					case MSS_FOLLOW:
+						if (!(tstatus->mode&MD_CASTSENSOR_CHASE))
+							break;
+						md->target_id = src->id;
+						md->state.aggressive = (tstatus->mode&MD_ANGRY)?1:0;
+						md->min_chase = md->db->range3;
 						break;
-					md->target_id = src->id;
-					md->state.aggressive = (tstatus->mode&MD_ANGRY)?1:0;
-					md->min_chase = md->db->range3;
-					break;
-				case MSS_IDLE:
-				case MSS_WALK:
-					if (!(tstatus->mode&MD_CASTSENSOR_IDLE))
+					case MSS_IDLE:
+					case MSS_WALK:
+						if (!(tstatus->mode&MD_CASTSENSOR_IDLE))
+							break;
+						md->target_id = src->id;
+						md->state.aggressive = (tstatus->mode&MD_ANGRY)?1:0;
+						md->min_chase = md->db->range3;
 						break;
-					md->target_id = src->id;
-					md->state.aggressive = (tstatus->mode&MD_ANGRY)?1:0;
-					md->min_chase = md->db->range3;
-					break;
 				}
 			}
 		}
@@ -1388,13 +1390,11 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 
 	if( !sd || sd->skillitem != skill_id || skill_get_cast(skill_id,skill_lv) )
 		ud->canact_tick = tick + casttime + 100;
-	if( sd )
-	{
-		switch( skill_id )
-		{
-		case CG_ARROWVULCAN:
-			sd->canequip_tick = tick + casttime;
-			break;
+	if( sd ) {
+		switch( skill_id ) {
+			case CG_ARROWVULCAN:
+				sd->canequip_tick = tick + casttime;
+				break;
 		}
 	}
 	ud->skilltarget  = target_id;
@@ -1464,9 +1464,8 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 	if (sc && !sc->count)
 		sc = NULL;
 
-	if( sd )
-	{
-		if( skillnotok(skill_id, sd) || !skill_check_condition_castbegin(sd, skill_id, skill_lv) )
+	if( sd ) {
+		if( skill_isNotOk(skill_id, sd) || !skill_check_condition_castbegin(sd, skill_id, skill_lv) )
 			return 0;
 		/**
 		 * "WHY IS IT HEREE": pneuma cannot be cancelled past this point, the client displays the animation even,
@@ -1486,8 +1485,14 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 	if (!status_check_skilluse(src, NULL, skill_id, 0))
 		return 0;
 
-	if( map_getcell(src->m, skill_x, skill_y, CELL_CHKWALL) )
-	{// can't cast ground targeted spells on wall cells
+	//fail if the targetted skill is near NPC [Cydh]
+	if(skill_get_inf2(skill_id)&INF2_NO_NEARNPC && skill_isNotOk_npcRange(src,NULL,skill_id,skill_lv,skill_x,skill_y)) {
+		if (sd)
+			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+		return 0;
+	}
+
+	if( map_getcell(src->m, skill_x, skill_y, CELL_CHKWALL) ) {// can't cast ground targeted spells on wall cells
 		if (sd) clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 		return 0;
 	}
@@ -1520,9 +1525,8 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 	casttime = skill_vfcastfix(src, casttime, skill_id, skill_lv );
 #endif
 
-	if (src->type == BL_NPC) { // NPC-objects do not have cast time
+	if (src->type == BL_NPC) // NPC-objects do not have cast time
 		casttime = 0;
-	}
 
 	ud->state.skillcastcancel = castcancel&&casttime>0?1:0;
 	if( !sd || sd->skillitem != skill_id || skill_get_cast(skill_id,skill_lv) )

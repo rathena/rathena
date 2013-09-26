@@ -23,27 +23,30 @@
 // 10 Cast interrupted when hit?
 // 11 defense-reduction rate during cast.
 // 12 inf2 (skill information 2):
-//    0x0001- quest skill
-//    0x0002- npc skill
-//    0x0004- wedding skill
-//    0x0008- spirit skill
-//    0x0010- guild skill
-//    0x0020- song/dance
-//    0x0040- ensemble skill
-//    0x0080- trap
-//    0x0100- skill that damages/targets yourself
-//    0x0200- cannot be casted on self (if inf = 4, auto-select target skill)
-//    0x0400- usable only on party-members (and enemies if skill is offensive)
-//    0x0800- usable only on guild-mates (and enemies if skill is offensive)
-//    0x1000- disable usage on enemies (for non-offensive skills).
-//    0x2000- free
-//    0x4000- chorus skill
+//    0x00001- quest skill
+//    0x00002- npc skill
+//    0x00004- wedding skill
+//    0x00008- spirit skill
+//    0x00010- guild skill
+//    0x00020- song/dance
+//    0x00040- ensemble skill
+//    0x00080- trap
+//    0x00100- skill that damages/targets yourself
+//    0x00200- cannot be casted on self (if inf = 4, auto-select target skill)
+//    0x00400- usable only on party-members (and enemies if skill is offensive)
+//    0x00800- usable only on guild-mates (and enemies if skill is offensive)
+//    0x01000- disable usage on enemies (for non-offensive skills).
+//    0x02000- free
+//    0x04000- chorus skill
+//    0x08000- spell that ignore bg reduction
+//    0x10000- spell that ignore gvg reduction
+//    0x20000- makes 'self'/'place' skill cannot be casted/placed when near NPC (see 'db/skill_nonearnpc_db.txt' for more options)
 // 13 maxcount: max amount of skill instances to place on the ground when
 //    player_land_skill_limit/monster_land_skill_limit is enabled. For skills
 //    that attack using a path, this is the path length to be used.
 // 14 attack type (none, weapon, magic, misc)
 // 15 Blowcount (amount of tiles skill knockbacks)
-// 16 inf3 (skill option)
+// 16 inf3 (skill information 3):
 //    0x0001- skill ignores land protector (e.g. arrow shower)
 //    0x0002- spell that doesn't end camouflage
 //    0x0004- usable skills while hiding
@@ -1036,8 +1039,8 @@
 2298,3,6,1,0,0x1,0,5,1,yes,0,0,0,weapon,0,0x20,	SC_STRIPACCESSARY,Strip Accessory //CHECK Is weapon attack type needed?
 2299,7,6,2,0,0x1,0,3,1,yes,0,0,3,none,0,0x0,	SC_MANHOLE,Man Hole
 2300,7,6,2,0,0x1,0,3,1,yes,0,0,1,none,0,0x0,	SC_DIMENSIONDOOR,Dimension Door
-2301,7,6,2,0,0x1,0,3,1,yes,0,0,0,none,0,0x0,	SC_CHAOSPANIC,Chaos Panic
-2302,7,6,2,0,0x1,0,3,1,yes,0,0,0,none,0,0x0,	SC_MAELSTROM,Maelstrom
+2301,7,6,2,0,0x1,0,3,1,yes,0,0x20000,0,none,0,0x0,	SC_CHAOSPANIC,Chaos Panic
+2302,7,6,2,0,0x1,0,3,1,yes,0,0x20000,0,none,0,0x0,	SC_MAELSTROM,Maelstrom
 2303,7,6,2,0,0x1,0,3,1,yes,0,0,0,none,0,0x0,	SC_BLOODYLUST,Bloody Lust
 2304,0,6,4,-1,0,0,3,1,no,0,0,0,weapon,0,0x0,	SC_FEINTBOMB,Feint Bomb
 

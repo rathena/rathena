@@ -40,6 +40,7 @@
 //    0x04000- chorus skill
 //    0x08000- spell that ignore bg reduction
 //    0x10000- spell that ignore gvg reduction
+//    0x20000- makes 'self'/'place' skill cannot be casted/placed when near NPC (see 'db/skill_nonearnpc_db.txt' for more options)
 // 13 maxcount: max amount of skill instances to place on the ground when
 //    player_land_skill_limit/monster_land_skill_limit is enabled. For skills
 //    that attack using a path, this is the path length to be used.
@@ -1049,8 +1050,8 @@
 2298,3,6,1,0,0x1,0,5,1,yes,0,0,0,weapon,0,0x20,	SC_STRIPACCESSARY,Strip Accessory //CHECK Is weapon attack type needed?
 2299,7,6,2,0,0x1,0,3,1,yes,0,0,3,none,0,0x0,	SC_MANHOLE,Man Hole
 2300,7,6,2,0,0x1,0,3,1,yes,0,0,1,none,0,0x0,	SC_DIMENSIONDOOR,Dimension Door
-2301,7,6,2,0,0x1,0,3,1,yes,0,0,0,none,0,0x0,	SC_CHAOSPANIC,Chaos Panic
-2302,7,6,2,0,0x1,0,3,1,yes,0,0,0,none,0,0x0,	SC_MAELSTROM,Maelstrom
+2301,7,6,2,0,0x1,0,3,1,yes,0,0x20000,0,none,0,0x0,	SC_CHAOSPANIC,Chaos Panic
+2302,7,6,2,0,0x1,0,3,1,yes,0,0x20000,0,none,0,0x0,	SC_MAELSTROM,Maelstrom
 2303,7,6,2,0,0x1,3,3,1,yes,0,0,1,none,0,0x0,	SC_BLOODYLUST,Bloody Lust
 2304,0,6,4,-1,0,0,3,1,no,0,0,0,weapon,0,0x0,	SC_FEINTBOMB,Feint Bomb
 

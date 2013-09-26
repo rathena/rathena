@@ -136,6 +136,7 @@ int npc_enable(const char* name, int flag);
 void npc_setdisplayname(struct npc_data* nd, const char* newname);
 void npc_setclass(struct npc_data* nd, short class_);
 struct npc_data* npc_name2id(const char* name);
+int npc_isnear_sub(struct block_list* bl, va_list args);
 bool npc_isnear(struct block_list * bl);
 
 int npc_get_new_npc_id(void);

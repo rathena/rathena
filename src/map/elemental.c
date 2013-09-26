@@ -562,7 +562,7 @@ int elemental_skillnotok(uint16 skill_id, struct elemental_data *ed) {
 	if (idx == 0)
 		return 1; // invalid skill id
 
-	return skillnotok(skill_id, ed->master);
+	return skill_isNotOk(skill_id,ed->master);
 }
 
 struct skill_condition elemental_skill_get_requirements(uint16 skill_id, uint16 skill_lv){

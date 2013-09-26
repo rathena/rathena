@@ -69,6 +69,7 @@ enum e_skill_inf2 {
 	INF2_CHORUS_SKILL	= 0x04000, // Chorus skill
 	INF2_NO_BG_DMG		= 0x08000, // spell that ignore bg reduction
 	INF2_NO_GVG_DMG		= 0x10000, // spell that ignore gvg reduction
+	INF2_NO_NEARNPC     = 0x20000, // disable cast skill if near with NPC [Cydh]
 };
 
 /// Skill info type 3
@@ -163,6 +164,8 @@ struct s_skill_db {
 	int unit_interval;
 	int unit_target;
 	int unit_flag;
+	uint8 unit_nonearnpc_range;	//additional range for UF_NONEARNPC or INF2_NO_NEARNPC [Cydh]
+	uint8 unit_nonearnpc_type;	//type of NPC [Cydh]
 #ifdef ADJUST_SKILL_DAMAGE
 	struct s_skill_damage damage;
 #endif
@@ -361,7 +364,6 @@ int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int li
 int skill_clear_unitgroup(struct block_list *src);
 int skill_clear_group(struct block_list *bl, int flag);
 void ext_skill_unit_onplace(struct skill_unit *src, struct block_list *bl, unsigned int tick);
-
 int64 skill_unit_ondamaged(struct skill_unit *src,struct block_list *bl,int64 damage,unsigned int tick);
 
 int skill_castfix( struct block_list *bl, uint16 skill_id, uint16 skill_lv);
@@ -408,9 +410,11 @@ bool skill_check_cloaking(struct block_list *bl, struct status_change_entry *sce
 
 // Abnormal status
 int skill_enchant_elemental_end(struct block_list *bl, int type);
-int skillnotok(uint16 skill_id, struct map_session_data *sd);
-int skillnotok_hom(uint16 skill_id, struct homun_data *hd);
-int skillnotok_mercenary(uint16 skill_id, struct mercenary_data *md);
+bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd);
+bool skill_isNotOk_hom(uint16 skill_id, struct homun_data *hd);
+bool skill_isNotOk_mercenary(uint16 skill_id, struct mercenary_data *md);
+
+bool skill_isNotOk_npcRange(struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, int pos_x, int pos_y);
 
 int skill_chastle_mob_changetarget(struct block_list *bl,va_list ap);
 

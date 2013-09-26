@@ -10783,7 +10783,7 @@ static void clif_parse_UseSkillToId_homun(struct homun_data *hd, struct map_sess
 
 	if( !hd )
 		return;
-	if( skillnotok_hom(skill_id, hd) )
+	if( skill_isNotOk_hom(skill_id, hd) )
 		return;
 	if( hd->bl.id != target_id && skill_get_inf(skill_id)&INF_SELF_SKILL )
 		target_id = hd->bl.id;
@@ -10806,7 +10806,7 @@ static void clif_parse_UseSkillToPos_homun(struct homun_data *hd, struct map_ses
 	int lv;
 	if( !hd )
 		return;
-	if( skillnotok_hom(skill_id, hd) )
+	if( skill_isNotOk_hom(skill_id, hd) )
 		return;
 	if( hd->ud.skilltimer != INVALID_TIMER ) {
 		if( skill_id != SA_CASTCANCEL && skill_id != SO_SPELLFIST ) return;
@@ -10828,7 +10828,7 @@ static void clif_parse_UseSkillToId_mercenary(struct mercenary_data *md, struct 
 
 	if( !md )
 		return;
-	if( skillnotok_mercenary(skill_id, md) )
+	if( skill_isNotOk_mercenary(skill_id, md) )
 		return;
 	if( md->bl.id != target_id && skill_get_inf(skill_id)&INF_SELF_SKILL )
 		target_id = md->bl.id;
@@ -10851,7 +10851,7 @@ static void clif_parse_UseSkillToPos_mercenary(struct mercenary_data *md, struct
 	int lv;
 	if( !md )
 		return;
-	if( skillnotok_mercenary(skill_id, md) )
+	if( skill_isNotOk_mercenary(skill_id, md) )
 		return;
 	if( md->ud.skilltimer != INVALID_TIMER )
 		return;
@@ -10920,7 +10920,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 	if( pc_issit(sd) )
 		return;
 
-	if( skillnotok(skill_id, sd) )
+	if( skill_isNotOk(skill_id, sd) )
 		return;
 
 	if( sd->bl.id != target_id && tmp&INF_SELF_SKILL )
@@ -11002,7 +11002,7 @@ static void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, uin
 	//Whether skill fails or not is irrelevant, the char ain't idle. [Skotlex]
 	sd->idletime = last_tick;
 
-	if( skillnotok(skill_id, sd) )
+	if( skill_isNotOk(skill_id, sd) )
 		return;
 	if( skillmoreinfo != -1 ) {
 		if( pc_issit(sd) ) {
