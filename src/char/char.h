@@ -81,6 +81,7 @@ extern char homunculus_db[256];
 extern char skill_homunculus_db[256];
 extern char mercenary_db[256];
 extern char mercenary_owner_db[256];
+extern char elemental_db[256];
 extern char ragsrvinfo_db[256];
 
 extern int db_use_sqldbs; // added for sql item_db read for char server [Valaris]
