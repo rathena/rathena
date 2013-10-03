@@ -15147,7 +15147,7 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 				return 1;
 			}
 			//It deletes everything except traps and barriers
-			if( (!(skill_get_inf2(unit->group->skill_id)&(INF2_TRAP)) && !(skill_get_inf3(unit->group->skill_id)&(INF2_NOLP)) ) || unit->group->skill_id == WZ_FIREPILLAR ) {
+			if( (!(skill_get_inf2(unit->group->skill_id)&(INF2_TRAP)) && !(skill_get_inf3(unit->group->skill_id)&(INF3_NOLP)) ) || unit->group->skill_id == WZ_FIREPILLAR ) {
 				skill_delunit(unit);
 				return 1;
 			}
@@ -17973,6 +17973,8 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current)
 	skill_split_atoi(split[1],skill_db[idx].range);
 	skill_db[idx].hit = atoi(split[2]);
 	skill_db[idx].inf = atoi(split[3]);
+	if (skill_db[idx].inf&0x02000)
+		printf("skill_id:%d\n",skill_id);
 	skill_split_atoi(split[4],skill_db[idx].element);
 	skill_db[idx].nk = (int)strtol(split[5], NULL, 0);
 	skill_split_atoi(split[6],skill_db[idx].splash);
