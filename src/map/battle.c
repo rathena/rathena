@@ -809,19 +809,19 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			//uint16 skill_id = sc->data[SC_SAFETYWALL]->val2; (safetywall or steinwand)
 			if (group) {
 			//in RE, SW possesses a lifetime equal to group val2, (3x caster hp, or homon formula)
-			#ifdef RENEWAL
+#ifdef RENEWAL
 				d->dmg_lv = ATK_BLOCK;
 				if ( ( group->val2 - damage) > 0 ) {
 					group->val2 -= (int)cap_value(damage,INT_MIN,INT_MAX);
 				} else
 					skill_delunitgroup(group);
 				return 0;
-			#else
+#else
 				if (--group->val2<=0)
 					skill_delunitgroup(group);
 				d->dmg_lv = ATK_BLOCK;
 				return 0;
-			#endif
+#endif
 			}
 			status_change_end(bl, SC_SAFETYWALL, INVALID_TIMER);
 		}
@@ -4131,63 +4131,21 @@ struct Damage battle_calc_attack_left_right_hands(struct Damage wd, struct block
 struct Damage battle_calc_attack_gvg_bg(struct Damage wd, struct block_list *src,struct block_list *target,uint16 skill_id,uint16 skill_lv)
 {
 	if( wd.damage + wd.damage2 ) { //There is a total damage value
-		if( src != target &&
-			(!skill_id || skill_id ||
-			( src->type == BL_SKILL && ( skill_id == SG_SUN_WARM || skill_id == SG_MOON_WARM || skill_id == SG_STAR_WARM ) )) ){
-				int64 damage = wd.damage + wd.damage2, rdamage = 0;
-				struct map_session_data *tsd = BL_CAST(BL_PC, target);
-				struct status_change *tsc = status_get_sc(target);
-				struct status_data *sstatus = status_get_status_data(src);
-				int tick = gettick(), rdelay = 0;
-
-				rdamage = battle_calc_return_damage(target, src, &damage, wd.flag, skill_id, 0);
-
-				// Item reflect gets calculated first
-				if( rdamage > 0 ) {
-					//Use Reflect Shield to signal this kind of skill trigger. [Skotlex]
-					rdelay = clif_damage(src, src, tick, wd.amotion, sstatus->dmotion, rdamage, 1, 4, 0);
-					if( tsd && src != target )
-						battle_drain(tsd, src, rdamage, rdamage, sstatus->race, is_boss(src));
-					battle_delay_damage(tick, wd.amotion,target,src,0,CR_REFLECTSHIELD,0,rdamage,ATK_DEF,rdelay,true);
-					skill_additional_effect(target, src, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL,ATK_DEF,tick);
-				}
-
-				// Calculate skill reflect damage separately
-				if( tsc ) {
-					struct status_data *tstatus = status_get_status_data(target);
-					rdamage = battle_calc_return_damage(target, src, &damage, wd.flag, skill_id, 1);
-					if( rdamage > 0 ) {
-						if( tsc->data[SC_REFLECTDAMAGE] && src != target ) // Don't reflect your own damage (Grand Cross)
-							map_foreachinshootrange(battle_damage_area,target,skill_get_splash(LG_REFLECTDAMAGE,1),BL_CHAR,tick,target,wd.amotion,sstatus->dmotion,rdamage,tstatus->race);
-						else {
-							rdelay = clif_damage(src, src, tick, wd.amotion, sstatus->dmotion, rdamage, 1, 4, 0);
-							if( tsd && src != target )
-								battle_drain(tsd, src, rdamage, rdamage, sstatus->race, is_boss(src));
-							// It appears that official servers give skill reflect damage a longer delay
-							battle_delay_damage(tick, wd.amotion,target,src,0,CR_REFLECTSHIELD,0,rdamage,ATK_DEF,rdelay,true);
-							skill_additional_effect(target, src, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL,ATK_DEF,tick);
-						}
-					}
-				}
-		}
-		if(!wd.damage2)
-		{
+		if(!wd.damage2) {
 			wd.damage = battle_calc_damage(src,target,&wd,wd.damage,skill_id,skill_lv);
 			if( map_flag_gvg2(target->m) )
 				wd.damage=battle_calc_gvg_damage(src,target,wd.damage,wd.div_,skill_id,skill_lv,wd.flag);
 			else if( map[target->m].flag.battleground )
 				wd.damage=battle_calc_bg_damage(src,target,wd.damage,wd.div_,skill_id,skill_lv,wd.flag);
 		}
-		else if(!wd.damage)
-		{
+		else if(!wd.damage) {
 			wd.damage2 = battle_calc_damage(src,target,&wd,wd.damage2,skill_id,skill_lv);
 			if( map_flag_gvg2(target->m) )
 				wd.damage2 = battle_calc_gvg_damage(src,target,wd.damage2,wd.div_,skill_id,skill_lv,wd.flag);
 			else if( map[target->m].flag.battleground )
 				wd.damage2 = battle_calc_bg_damage(src,target,wd.damage2,wd.div_,skill_id,skill_lv,wd.flag);
 		}
-		else
-		{
+		else {
 			int64 d1 = wd.damage + wd.damage2,d2 = wd.damage2;
 			wd.damage = battle_calc_damage(src,target,&wd,d1,skill_id,skill_lv);
 			if( map_flag_gvg2(target->m) )
@@ -4277,16 +4235,22 @@ struct Damage battle_calc_weapon_final_atk_modifiers(struct Damage wd, struct bl
 		}
 		status_change_end(src,SC_CAMOUFLAGE, INVALID_TIMER);
 	}
-	if( skill_id == LG_RAYOFGENESIS ) {
-		struct Damage md = battle_calc_magic_attack(src, target, skill_id, skill_lv, wd.miscflag);
-		wd.damage += md.damage;
-	}
+	switch (skill_id) {
+		case LG_RAYOFGENESIS:
+			{
+				struct Damage md = battle_calc_magic_attack(src, target, skill_id, skill_lv, wd.miscflag);
+				wd.damage += md.damage;
+			}
+			break;
 #ifndef RENEWAL
-	else if(skill_id == ASC_BREAKER) {	//Breaker's int-based damage (a misc attack?)
-		struct Damage md = battle_calc_misc_attack(src, target, skill_id, skill_lv, wd.miscflag);
-		wd.damage += md.damage;
-	}
+		case ASC_BREAKER:
+			{	//Breaker's int-based damage (a misc attack?)
+				struct Damage md = battle_calc_misc_attack(src, target, skill_id, skill_lv, wd.miscflag);
+				wd.damage += md.damage;
+			}
+			break;
 #endif
+	}
 	return wd;
 }
 
@@ -4538,16 +4502,19 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			wd.damage2 += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.damage2, 3, wd.flag);
 #endif
 	}
-
+	
 	if(tsd) { // Card Fix for target (tsd), 2 is not added to the "left" flag meaning "target cards only"
 		switch(skill_id) { // These skills will do a card fix later
-			case CR_ACIDDEMONSTRATION:
+#ifdef RENEWAL
 			case NJ_ISSEN:
 			case ASC_BREAKER:
+#endif
+			case CR_ACIDDEMONSTRATION:
 			case KO_HAPPOKUNAI:
 				break;
 			default:
 				wd.damage += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.damage, is_attack_left_handed(src, skill_id), wd.flag);
+				break;
 		}
 	}
 
@@ -4577,17 +4544,19 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		return battle_calc_attack_plant(wd, src, target, skill_id, skill_lv);
 
 	wd = battle_calc_attack_left_right_hands(wd, src, target, skill_id, skill_lv);
-
 	wd = battle_calc_weapon_final_atk_modifiers(wd, src, target, skill_id, skill_lv);
 
-	switch(skill_id) { // These skills will do a GVG fix later
-		case CR_ACIDDEMONSTRATION:
+	switch (skill_id) { // These skills will do a GVG fix later
+#ifdef RENEWAL
 		case NJ_ISSEN:
 		case ASC_BREAKER:
+#endif
+		case CR_ACIDDEMONSTRATION:
 		case KO_HAPPOKUNAI:
 			return wd;
 		default:
 			wd = battle_calc_attack_gvg_bg(wd, src, target, skill_id, skill_lv);
+			break;
 	}
 
 	/* Skill damage adjustment */
@@ -4595,6 +4564,48 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	if ((skill_damage = battle_skill_damage(src, target, skill_id)) != 0)
 		ATK_ADDRATE(wd.damage, wd.damage2, skill_damage);
 #endif
+	
+	// Do reflect calculation after all atk modifier
+	if( wd.damage + wd.damage2 && src != target &&
+		(src->type != BL_SKILL ||
+		(src->type == BL_SKILL && ( skill_id == SG_SUN_WARM || skill_id == SG_MOON_WARM || skill_id == SG_STAR_WARM ))) )
+	{
+		int64 damage = wd.damage + wd.damage2, rdamage = 0;
+		struct map_session_data *tsd = BL_CAST(BL_PC, target);
+		struct status_change *tsc = status_get_sc(target);
+		struct status_data *sstatus = status_get_status_data(src);
+		int tick = gettick(), rdelay = 0;
+
+		rdamage = battle_calc_return_damage(target, src, &damage, wd.flag, skill_id, 0);
+
+		// Item reflect gets calculated first
+		if( rdamage > 0 ) {
+			//Use Reflect Shield to signal this kind of skill trigger. [Skotlex]
+			rdelay = clif_damage(src, src, tick, wd.amotion, sstatus->dmotion, rdamage, 1, 4, 0);
+			if( tsd )
+				battle_drain(tsd, src, rdamage, rdamage, sstatus->race, is_boss(src));
+			battle_delay_damage(tick, wd.amotion,target,src,0,CR_REFLECTSHIELD,0,rdamage,ATK_DEF,rdelay,true);
+			skill_additional_effect(target, src, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL,ATK_DEF,tick);
+		}
+
+		// Calculate skill reflect damage separately
+		if( tsc ) {
+			struct status_data *tstatus = status_get_status_data(target);
+			rdamage = battle_calc_return_damage(target, src, &damage, wd.flag, skill_id, 1);
+			if( rdamage > 0 ) {
+				if( tsc->data[SC_REFLECTDAMAGE] ) // Don't reflect your own damage (Grand Cross)
+					map_foreachinshootrange(battle_damage_area,target,skill_get_splash(LG_REFLECTDAMAGE,1),BL_CHAR,tick,target,wd.amotion,sstatus->dmotion,rdamage,tstatus->race);
+				else {
+					rdelay = clif_damage(src, src, tick, wd.amotion, sstatus->dmotion, rdamage, 1, 4, 0);
+					if( tsd )
+						battle_drain(tsd, src, rdamage, rdamage, sstatus->race, is_boss(src));
+					// It appears that official servers give skill reflect damage a longer delay
+					battle_delay_damage(tick, wd.amotion,target,src,0,CR_REFLECTSHIELD,0,rdamage,ATK_DEF,rdelay,true);
+					skill_additional_effect(target, src, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL,ATK_DEF,tick);
+				}
+			}
+		}
+	}
 
 	return wd;
 }
@@ -5256,8 +5267,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		ad.damage = ad.damage>0?1:-1;
 
 	switch(skill_id) { // These skills will do a GVG fix later
-		case CR_ACIDDEMONSTRATION:
+#ifdef RENEWAL
 		case ASC_BREAKER:
+#endif
+		case CR_ACIDDEMONSTRATION:
 			return ad;
 		default:
 			ad.damage=battle_calc_damage(src,target,&ad,ad.damage,skill_id,skill_lv);
@@ -5440,7 +5453,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 				md.damage=md.damage/2;
 		break;
 #ifdef RENEWAL
-	case NJ_ISSEN: 
+	case NJ_ISSEN:
 		// Official Renewal formula [helvetica] 
 		// base damage = currenthp + ((atk * currenthp * skill level) / maxhp) 
 		// final damage = base damage + ((mirror image count + 1) / 5 * base damage) - (edef + sdef)
@@ -5461,7 +5474,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			md.damage -= totaldef;
 		}
 		break;
-#endif			
+#endif
 	case GS_FLING:
 		md.damage = sd?sd->status.job_level:status_get_lv(src);
 		break;
@@ -5484,14 +5497,14 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		{
 			short totaldef, totalmdef;
 			struct Damage atk, matk;
-			
+
 			atk = battle_calc_weapon_attack(src, target, skill_id, skill_lv, 0);
 			nk|=NK_NO_ELEFIX; // atk part takes on weapon element, matk part is non-elemental
 			matk = battle_calc_magic_attack(src, target, skill_id, skill_lv, 0);
-						
+
 			// (atk + matk) * (3 + (.5 * skill level))
 			md.damage = ((30 + (5 * skill_lv)) * (atk.damage + matk.damage)) / 10;
-			
+
 			// modified def reduction, final damage = base damage - (edef + sdef + emdef + smdef)
 			totaldef = tstatus->def2 + (short)status_get_def(target);
 			totalmdef = tstatus->mdef + tstatus->mdef2;

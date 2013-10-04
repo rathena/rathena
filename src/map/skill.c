@@ -452,6 +452,7 @@ static short skill_isCopyable (struct map_session_data *sd, uint16 skill_id, str
 		return 0;
 
 	// Added so plagarize can't copy agi/bless if you're undead since it damages you
+	// NOTE: Is this still needed since we use skill_copyable_db now?
 	if (skill_get_inf3(skill_id)&INF3_DIS_PLAGIA)
 		return 0;
 
