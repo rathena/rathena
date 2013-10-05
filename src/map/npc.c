@@ -123,7 +123,7 @@ int npc_isnear_sub(struct block_list* bl, va_list args) {
 	int skill_id = va_arg(args, int);
 	uint16 idx = -1;
 
-	//Check the NPC type if is used by INF2_NO_NEARNPC or UF_NONEARNPC [Cydh]
+	//Check the NPC type if is used by INF2_NO_NEARNPC (skill_id is not null) [Cydh]
 	if (skill_id && (idx = skill_get_index(skill_id)) && skill_db[idx].unit_nonearnpc_type) {
 		while (1) {
 			if (skill_db[idx].unit_nonearnpc_type&1 && nd->subtype == WARP) break;

@@ -841,6 +841,12 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 				if( sd->addeff3[i].target&ATF_SELF )
 					status_change_start(src,src,type,sd->addeff3[i].rate,7,0,0,0,skill,0);
 			}
+			//"While the damage can be blocked by Pneuma, the chance to break armor remains", irowiki. [Cydh]
+			if (dmg_lv == ATK_BLOCK && skill_id == AM_ACIDTERROR) {
+				sc_start2(src,bl,SC_BLEEDING,(skill_lv*3),skill_lv,src->id,skill_get_time2(skill_id,skill_lv));
+				if (skill_break_equip(src,bl, EQP_ARMOR, 100*skill_get_time(skill_id,skill_lv), BCT_ENEMY))
+					clif_emotion(bl,E_OMG);
+			}
 		}
 	}
 
@@ -848,69 +854,70 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 		return 0;
 
 	switch(skill_id) {
-		case 0: { // Normal attacks (no skill used)
-		if( attack_type&BF_SKILL )
-			break; // If a normal attack is a skill, it's splash damage. [Inkfish]
-		if(sd) {
-			// Automatic trigger of Blitz Beat
-			if (pc_isfalcon(sd) && sd->status.weapon == W_BOW && (skill=pc_checkskill(sd,HT_BLITZBEAT))>0 &&
-				rnd()%1000 <= sstatus->luk*10/3+1 ) {
-				rate=(sd->status.job_level+9)/10;
-				skill_castend_damage_id(src,bl,HT_BLITZBEAT,(skill<rate)?skill:rate,tick,SD_LEVEL);
-			}
-			// Automatic trigger of Warg Strike [Jobbie]
-			if( pc_iswug(sd) && (sd->status.weapon == W_BOW || sd->status.weapon == W_FIST) && (skill=pc_checkskill(sd,RA_WUGSTRIKE)) > 0 && rnd()%1000 <= sstatus->luk*10/3+1 )
-				skill_castend_damage_id(src,bl,RA_WUGSTRIKE,skill,tick,0);
-			// Gank
-			if(dstmd && sd->status.weapon != W_BOW &&
-				(skill=pc_checkskill(sd,RG_SNATCHER)) > 0 &&
-				(skill*15 + 55) + pc_checkskill(sd,TF_STEAL)*10 > rnd()%1000) {
-				if(pc_steal_item(sd,bl,pc_checkskill(sd,TF_STEAL)))
-					clif_skill_nodamage(src,bl,TF_STEAL,skill,1);
-				else
-					clif_skill_fail(sd,RG_SNATCHER,USESKILL_FAIL_LEVEL,0);
-			}
-			// Chance to trigger Taekwon kicks [Dralnu]
-			if(sc && !sc->data[SC_COMBO]) {
-				if(sc->data[SC_READYSTORM] &&
-					sc_start(src,src,SC_COMBO, 15, TK_STORMKICK,
-						(2000 - 4*sstatus->agi - 2*sstatus->dex)))
-					; //Stance triggered
-				else if(sc->data[SC_READYDOWN] &&
-					sc_start(src,src,SC_COMBO, 15, TK_DOWNKICK,
-						(2000 - 4*sstatus->agi - 2*sstatus->dex)))
-					; //Stance triggered
-				else if(sc->data[SC_READYTURN] &&
-					sc_start(src,src,SC_COMBO, 15, TK_TURNKICK,
-						(2000 - 4*sstatus->agi - 2*sstatus->dex)))
-					; //Stance triggered
-				else if (sc->data[SC_READYCOUNTER]) { //additional chance from SG_FRIEND [Komurka]
-					rate = 20;
-					if (sc->data[SC_SKILLRATE_UP] && sc->data[SC_SKILLRATE_UP]->val1 == TK_COUNTER) {
-						rate += rate*sc->data[SC_SKILLRATE_UP]->val2/100;
-						status_change_end(src, SC_SKILLRATE_UP, INVALID_TIMER);
+		case 0:
+			{ // Normal attacks (no skill used)
+				if( attack_type&BF_SKILL )
+					break; // If a normal attack is a skill, it's splash damage. [Inkfish]
+				if(sd) {
+					// Automatic trigger of Blitz Beat
+					if (pc_isfalcon(sd) && sd->status.weapon == W_BOW && (skill=pc_checkskill(sd,HT_BLITZBEAT))>0 &&
+						rnd()%1000 <= sstatus->luk*10/3+1 ) {
+						rate=(sd->status.job_level+9)/10;
+						skill_castend_damage_id(src,bl,HT_BLITZBEAT,(skill<rate)?skill:rate,tick,SD_LEVEL);
 					}
-					sc_start2(src,src, SC_COMBO, rate, TK_COUNTER, bl->id,
-						(2000 - 4*sstatus->agi - 2*sstatus->dex));
+					// Automatic trigger of Warg Strike [Jobbie]
+					if( pc_iswug(sd) && (sd->status.weapon == W_BOW || sd->status.weapon == W_FIST) && (skill=pc_checkskill(sd,RA_WUGSTRIKE)) > 0 && rnd()%1000 <= sstatus->luk*10/3+1 )
+						skill_castend_damage_id(src,bl,RA_WUGSTRIKE,skill,tick,0);
+					// Gank
+					if(dstmd && sd->status.weapon != W_BOW &&
+						(skill=pc_checkskill(sd,RG_SNATCHER)) > 0 &&
+						(skill*15 + 55) + pc_checkskill(sd,TF_STEAL)*10 > rnd()%1000) {
+						if(pc_steal_item(sd,bl,pc_checkskill(sd,TF_STEAL)))
+							clif_skill_nodamage(src,bl,TF_STEAL,skill,1);
+						else
+							clif_skill_fail(sd,RG_SNATCHER,USESKILL_FAIL_LEVEL,0);
+					}
+					// Chance to trigger Taekwon kicks [Dralnu]
+					if(sc && !sc->data[SC_COMBO]) {
+						if(sc->data[SC_READYSTORM] &&
+							sc_start(src,src,SC_COMBO, 15, TK_STORMKICK,
+								(2000 - 4*sstatus->agi - 2*sstatus->dex)))
+							; //Stance triggered
+						else if(sc->data[SC_READYDOWN] &&
+							sc_start(src,src,SC_COMBO, 15, TK_DOWNKICK,
+								(2000 - 4*sstatus->agi - 2*sstatus->dex)))
+							; //Stance triggered
+						else if(sc->data[SC_READYTURN] &&
+							sc_start(src,src,SC_COMBO, 15, TK_TURNKICK,
+								(2000 - 4*sstatus->agi - 2*sstatus->dex)))
+							; //Stance triggered
+						else if (sc->data[SC_READYCOUNTER]) { //additional chance from SG_FRIEND [Komurka]
+							rate = 20;
+							if (sc->data[SC_SKILLRATE_UP] && sc->data[SC_SKILLRATE_UP]->val1 == TK_COUNTER) {
+								rate += rate*sc->data[SC_SKILLRATE_UP]->val2/100;
+								status_change_end(src, SC_SKILLRATE_UP, INVALID_TIMER);
+							}
+							sc_start2(src,src, SC_COMBO, rate, TK_COUNTER, bl->id,
+								(2000 - 4*sstatus->agi - 2*sstatus->dex));
+						}
+					}
+					if(sc && sc->data[SC_PYROCLASTIC] && ((rnd()%100)<=sc->data[SC_PYROCLASTIC]->val3) )
+						skill_castend_pos2(src, bl->x, bl->y, BS_HAMMERFALL,sc->data[SC_PYROCLASTIC]->val1, tick, 0);
 				}
-			}
-			if(sc && sc->data[SC_PYROCLASTIC] && ((rnd()%100)<=sc->data[SC_PYROCLASTIC]->val3) )
-				skill_castend_pos2(src, bl->x, bl->y, BS_HAMMERFALL,sc->data[SC_PYROCLASTIC]->val1, tick, 0);
-		}
 
-		if (sc) {
-			struct status_change_entry *sce;
-			// Enchant Poison gives a chance to poison attacked enemies
-			if((sce=sc->data[SC_ENCPOISON])) //Don't use sc_start since chance comes in 1/10000 rate.
-				status_change_start(src,bl,SC_POISON,sce->val2, sce->val1,src->id,0,0,
-					skill_get_time2(AS_ENCHANTPOISON,sce->val1),0);
-			// Enchant Deadly Poison gives a chance to deadly poison attacked enemies
-			if((sce=sc->data[SC_EDP]))
-				sc_start4(src,bl,SC_DPOISON,sce->val2, sce->val1,src->id,0,0,
-					skill_get_time2(ASC_EDP,sce->val1));
+				if (sc) {
+					struct status_change_entry *sce;
+					// Enchant Poison gives a chance to poison attacked enemies
+					if((sce=sc->data[SC_ENCPOISON])) //Don't use sc_start since chance comes in 1/10000 rate.
+						status_change_start(src,bl,SC_POISON,sce->val2, sce->val1,src->id,0,0,
+							skill_get_time2(AS_ENCHANTPOISON,sce->val1),0);
+					// Enchant Deadly Poison gives a chance to deadly poison attacked enemies
+					if((sce=sc->data[SC_EDP]))
+						sc_start4(src,bl,SC_DPOISON,sce->val2, sce->val1,src->id,0,0,
+							skill_get_time2(ASC_EDP,sce->val1));
+				}
 		}
-	}
-	break;
+		break;
 
 	case SM_BASH:
 		if( sd && skill_lv > 5 && pc_checkskill(sd,SM_FATALBLOW)>0 ){
@@ -1100,15 +1107,15 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 		sc_start2(src,bl,SC_BLEEDING,(20*skill_lv),skill_lv,src->id,skill_get_time2(skill_id,skill_lv));
 		break;
 	case NPC_MENTALBREAKER:
-	{	//Based on observations by Tharis, Mental Breaker should do SP damage
-		//equal to Matk*skLevel.
-		rate = sstatus->matk_min;
-		if (rate < sstatus->matk_max)
-			rate += rnd()%(sstatus->matk_max - sstatus->matk_min);
-		rate*=skill_lv;
-		status_zap(bl, 0, rate);
-		break;
-	}
+		{	//Based on observations by Tharis, Mental Breaker should do SP damage
+			//equal to Matk*skLevel.
+			rate = sstatus->matk_min;
+			if (rate < sstatus->matk_max)
+				rate += rnd()%(sstatus->matk_max - sstatus->matk_min);
+			rate*=skill_lv;
+			status_zap(bl, 0, rate);
+			break;
+		}
 	// Equipment breaking monster skills [Celest]
 	case NPC_WEAPONBRAKER:
 		skill_break_equip(src,bl, EQP_WEAPON, 150*skill_lv, BCT_ENEMY);
@@ -1185,8 +1192,8 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case TK_JUMPKICK:
-		if( dstsd && dstsd->class_ != MAPID_SOUL_LINKER && !tsc->data[SC_PRESERVE] )
-		{// debuff the following statuses
+		// debuff the following statuses
+		if( dstsd && dstsd->class_ != MAPID_SOUL_LINKER && !tsc->data[SC_PRESERVE] ) {
 			status_change_end(bl, SC_SPIRIT, INVALID_TIMER);
 			status_change_end(bl, SC_ADRENALINE2, INVALID_TIMER);
 			status_change_end(bl, SC_KAITE, INVALID_TIMER);
@@ -1271,8 +1278,8 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 		sc_start(src,bl, (skill_id == RA_FIRINGTRAP) ? SC_BURNING:SC_FREEZING, 40 + 10 * skill_lv, skill_lv, skill_get_time2(skill_id, skill_lv));
 		break;
 	case NC_PILEBUNKER:
-		if( rnd()%100 < 5 + 15*skill_lv )
-		{ //Deactivatable Statuses: Kyrie Eleison, Auto Guard, Steel Body, Assumptio, and Millennium Shield
+		//Deactivatable Statuses: Kyrie Eleison, Auto Guard, Steel Body, Assumptio, and Millennium Shield
+		if( rnd()%100 < 5 + 15*skill_lv ) {
 			status_change_end(bl, SC_KYRIE, INVALID_TIMER);
 			status_change_end(bl, SC_AUTOGUARD, INVALID_TIMER);
 			status_change_end(bl, SC_STEELBODY, INVALID_TIMER);
@@ -1447,12 +1454,13 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 	case MH_SILVERVEIN_RUSH:
 		sc_start4(src,bl,SC_STUN,20 + (5*skill_lv),skill_lv,src->id,0,0,skill_get_time(skill_id,skill_lv));
 		break;
-	case MH_MIDNIGHT_FRENZY: {
-		TBL_HOM *hd = BL_CAST(BL_HOM,src);
-		int spiritball = (hd?hd->homunculus.spiritball:1);
-		sc_start4(src,bl,SC_FEAR,spiritball*(10+2*skill_lv),skill_lv,src->id,0,0,skill_get_time(skill_id,skill_lv));
+	case MH_MIDNIGHT_FRENZY:
+		{
+			TBL_HOM *hd = BL_CAST(BL_HOM,src);
+			int spiritball = (hd?hd->homunculus.spiritball:1);
+			sc_start4(src,bl,SC_FEAR,spiritball*(10+2*skill_lv),skill_lv,src->id,0,0,skill_get_time(skill_id,skill_lv));
+		}
 		break;
-	}
 	case MH_XENO_SLASHER:
 		sc_start4(src,bl,SC_BLEEDING,skill_lv,skill_lv,src->id,0,0,skill_get_time2(skill_id,skill_lv)); //@TODO need real duration
 		break;
