@@ -4443,7 +4443,18 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	}
 	else if(wd.div_ < 0) //Since the attack missed...
 		wd.div_ *= -1;
-	
+
+	//WS_CARTTERMINATION never be missed because of flee, deals damage from BS_WEAPONRESEARCH [Cydh]
+	//NOTE: Idk the official behavior, if this damage can be reflected/adjusted or not
+	if (sd && skill_id == WS_CARTTERMINATION && wd.dmg_lv == ATK_FLEE && pc_checkskill(sd,BS_WEAPONRESEARCH)) {
+		wd.dmg_lv = ATK_DEF;
+		if(target_has_infinite_defense(target, skill_id))
+			return battle_calc_attack_plant(wd, src, target, skill_id, skill_lv);
+		wd.damage = pc_checkskill(sd,BS_WEAPONRESEARCH) * 2;
+		wd.damage2 = 0;
+		return wd;
+	}
+
 #ifdef RENEWAL
 	if(!sd) // monsters only have a single ATK for element, in pre-renewal we also apply element to entire ATK on players [helvetica]
 #endif
