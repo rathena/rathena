@@ -234,6 +234,8 @@ int storage_storageadd(struct map_session_data* sd, int index, int amount)
 
 	if( storage_additem(sd,&sd->status.inventory[index],amount) == 0 )
 		pc_delitem(sd,index,amount,0,4,LOG_TYPE_STORAGE);
+	else
+		clif_dropitem(sd,index,0);
 
 	return 1;
 }
