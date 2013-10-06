@@ -1297,31 +1297,39 @@ int64 battle_calc_bg_damage(struct block_list *src, struct block_list *bl, int64
 	return damage;
 }
 
+bool battle_can_hit_gvg_target(struct block_list *src,struct block_list *bl,uint16 skill_id,int flag)
+{
+	struct mob_data* md = BL_CAST(BL_MOB, bl);
+	int class_ = status_get_class(bl);
+
+	if(md && md->guardian_data) {
+		if(class_ == MOBID_EMPERIUM && flag&BF_SKILL && !(skill_get_inf3(skill_id)&INF3_HIT_EMP)) //Skill immunity.
+			return false;
+		if(src->type != BL_MOB) {
+			struct guild *g = src->type == BL_PC ? ((TBL_PC *)src)->guild : guild_search(status_get_guild_id(src));
+
+			if (class_ == MOBID_EMPERIUM && (!g || guild_checkskill(g,GD_APPROVAL) <= 0 ))
+				return false;
+
+			if (g && battle_config.guild_max_castles && guild_checkcastles(g)>=battle_config.guild_max_castles)
+				return false; // [MouseJstr]
+		}
+	}
+	return true;
+}
+
 /*==========================================
  * Calculates GVG related damage adjustments.
  *------------------------------------------*/
 int64 battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int64 damage,int div_,uint16 skill_id,uint16 skill_lv,int flag)
 {
-	struct mob_data* md = BL_CAST(BL_MOB, bl);
-	int class_ = status_get_class(bl);
-
 	if (!damage) //No reductions to make.
 		return 0;
 
-	if(md && md->guardian_data) {
-		if(class_ == MOBID_EMPERIUM && flag&BF_SKILL && !(skill_get_inf3(skill_id)&INF3_HIT_EMP)) //Skill immunity.
-			return 0;
-		if(src->type != BL_MOB) {
-			struct guild *g = src->type == BL_PC ? ((TBL_PC *)src)->guild : guild_search(status_get_guild_id(src));
+	if (!battle_can_hit_gvg_target(src,bl,skill_id,flag))
+		return 0;
 
-			if (class_ == MOBID_EMPERIUM && (!g || guild_checkskill(g,GD_APPROVAL) <= 0 ))
-				return 0;
-
-			if (g && battle_config.guild_max_castles && guild_checkcastles(g)>=battle_config.guild_max_castles)
-				return 0; // [MouseJstr]
-		}
-	}
-	if(skill_get_inf2(skill_id)&INF2_NO_GVG_DMG) //Skills with no gvg damage reduction.
+	if (skill_get_inf2(skill_id)&INF2_NO_GVG_DMG) //Skills with no gvg damage reduction.
 		return damage;
 	/* Uncomment if you want god-mode Emperiums at 100 defense. [Kisuka]
 	if (md && md->guardian_data) {
@@ -4029,12 +4037,17 @@ struct Damage battle_calc_attack_plant(struct Damage wd, struct block_list *src,
 		wd.damage2 = wd.div_;
 	if (is_attack_right_handed(src, skill_id) && is_attack_left_handed(src, skill_id)) // force left hand to 1 damage while dual wielding [helvetica]
 		wd.damage2 = 1;
+
 	if( attack_hits && class_ == MOBID_EMPERIUM ) {
-		if(wd.damage2 > 0) {
+		if(target && map_flag_gvg2(target->m) && !battle_can_hit_gvg_target(src,target,skill_id,(skill_id)?BF_SKILL:0)) {
+			wd.damage = wd.damage2 = 0;
+			return wd;
+		}
+		if( wd.damage2 > 0 ) {
 			wd.damage2 = battle_attr_fix(src, target, wd.damage2, left_element, tstatus->def_ele, tstatus->ele_lv);
 			wd.damage2 = battle_calc_gvg_damage(src, target, wd.damage2, wd.div_, skill_id, skill_lv, wd.flag);
 		}
-		else if(wd.damage > 0) {
+		else if( wd.damage > 0 ) {
 			wd.damage = battle_attr_fix(src, target, wd.damage, right_element, tstatus->def_ele, tstatus->ele_lv);
 			wd.damage = battle_calc_gvg_damage(src,target,wd.damage,wd.div_,skill_id,skill_lv,wd.flag);
 		}
@@ -4377,7 +4390,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	
 	// on official check for multi hit first so we can override crit on double attack [helvetica]
 	wd = battle_calc_multi_attack(wd, src, target, skill_id, skill_lv);
-
+	
 	// crit check is next since crits always hit on official [helvetica]
 	if (is_attack_critical(wd, src, target, skill_id, skill_lv, true))
 		wd.type = 0x0a;
@@ -5698,15 +5711,16 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct block_list *target,uint16 skill_id,uint16 skill_lv,int count)
 {
 	struct Damage d;
+
 	switch(attack_type) {
-	case BF_WEAPON: d = battle_calc_weapon_attack(bl,target,skill_id,skill_lv,count); break;
-	case BF_MAGIC:  d = battle_calc_magic_attack(bl,target,skill_id,skill_lv,count);  break;
-	case BF_MISC:   d = battle_calc_misc_attack(bl,target,skill_id,skill_lv,count);   break;
-	default:
-		ShowError("battle_calc_attack: unknown attack type! %d\n",attack_type);
-		memset(&d,0,sizeof(d));
-		break;
-	}
+		case BF_WEAPON: d = battle_calc_weapon_attack(bl,target,skill_id,skill_lv,count); break;
+		case BF_MAGIC:  d = battle_calc_magic_attack(bl,target,skill_id,skill_lv,count);  break;
+		case BF_MISC:   d = battle_calc_misc_attack(bl,target,skill_id,skill_lv,count);   break;
+		default:
+			ShowError("battle_calc_attack: unknown attack type! %d\n",attack_type);
+			memset(&d,0,sizeof(d));
+			break;
+		}
 	if( d.damage + d.damage2 < 1 )
 	{	//Miss/Absorbed
 		//Weapon attacks should go through to cause additional effects.
