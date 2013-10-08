@@ -856,14 +856,15 @@ int guild_member_withdraw(int guild_id, int account_id, int char_id, int flag, c
 	if( i == -1 )
 		return 0; // not a member (inconsistency!)
 
-	online_member_sd = guild_getavailablesd(g);
-	if(online_member_sd == NULL)
-		return 0; // noone online to inform
-
 #ifdef BOUND_ITEMS
 	//Guild bound item check
 	guild_retrieveitembound(char_id,account_id,guild_id);
 #endif
+
+	online_member_sd = guild_getavailablesd(g);
+	if(online_member_sd == NULL)
+		return 0; // noone online to inform
+
 
 	if(!flag)
 		clif_guild_leave(online_member_sd, name, mes);
@@ -912,15 +913,15 @@ void guild_retrieveitembound(int char_id,int aid,int guild_id)
 	}
 	else { //Character is offline, ask char server to do the job
 		struct guild_storage* stor = guild2storage2(guild_id);
+		struct guild *g = guild_search(guild_id);
+		int i;
+		nullpo_retv(g);
 		if(stor && stor->storage_status == 1) { //Someone is in guild storage, close them
-			struct s_mapiterator* iter = mapit_getallusers();
-			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) ) {
-				if(sd->status.guild_id == guild_id && sd->state.storage_flag == 2) {
+			for(i=0; i<g->max_member; i++){
+				TBL_PC *pl_sd = g->member[i].sd;
+				if(pl_sd && pl_sd->state.storage_flag == 2)
 					storage_guild_storageclose(sd);
-					break;
-				}
 			}
-			mapit_free(iter);
 		}
 		intif_itembound_req(char_id,aid,guild_id);
 	}
@@ -1398,7 +1399,7 @@ void guild_block_skill(struct map_session_data *sd, int time)
 	uint16 skill_id[] = { GD_BATTLEORDER, GD_REGENERATION, GD_RESTORE, GD_EMERGENCYCALL };
 	int i;
 	for (i = 0; i < 4; i++)
-		skill_blockpc_start_(sd, skill_id[i], time , true);
+		skill_blockpc_start(sd, skill_id[i], time);
 }
 
 /*====================================================

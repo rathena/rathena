@@ -2370,6 +2370,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				duel_reject(sd->duel_invite, sd);
 
 			channel_pcquit(sd,0xF); //leave all chan
+			skill_blockpc_clear(sd); //clear all skill cooldown related
 
 			// Notify friends that this char logged out. [Skotlex]
 			map_foreachpc(clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, 0);

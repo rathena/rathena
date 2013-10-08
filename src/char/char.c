@@ -39,6 +39,7 @@ static char* msg_table[CHAR_MAX_MSG]; // Login Server messages_conf
 
 char char_db[256] = "char";
 char scdata_db[256] = "sc_data";
+char skillcooldown_db[256] = "skillcooldown";
 char cart_db[256] = "cart_inventory";
 char inventory_db[256] = "inventory";
 char charlog_db[256] = "charlog";
@@ -2923,6 +2924,51 @@ int parse_frommap(int fd)
 		}
 		break;
 
+		case 0x2b0a: //Request skillcooldown data
+			if (RFIFOREST(fd) < 10)
+				return 0;
+		{
+			int aid, cid;
+			aid = RFIFOL(fd,2);
+			cid = RFIFOL(fd,6);
+			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT skill, tick FROM `%s` WHERE `account_id` = '%d' AND `char_id`='%d'",
+				skillcooldown_db, aid, cid) )
+			{
+				Sql_ShowDebug(sql_handle);
+				break;
+			}
+			if( Sql_NumRows(sql_handle) > 0 )
+			{
+				int count;
+				char* data;
+				struct skill_cooldown_data scd;
+
+				WFIFOHEAD(fd,14 + MAX_SKILLCOOLDOWN * sizeof(struct skill_cooldown_data));
+				WFIFOW(fd,0) = 0x2b0b;
+				WFIFOL(fd,4) = aid;
+				WFIFOL(fd,8) = cid;
+				for( count = 0; count < MAX_SKILLCOOLDOWN && SQL_SUCCESS == Sql_NextRow(sql_handle); ++count )
+				{
+					Sql_GetData(sql_handle, 0, &data, NULL); scd.skill_id = atoi(data);
+					Sql_GetData(sql_handle, 1, &data, NULL); scd.tick = atoi(data);
+					memcpy(WFIFOP(fd,14+count*sizeof(struct skill_cooldown_data)), &scd, sizeof(struct skill_cooldown_data));
+				}
+				if( count >= MAX_SKILLCOOLDOWN )
+					ShowWarning("Too many skillcooldowns for %d:%d, some of them were not loaded.\n", aid, cid);
+				if( count > 0 )
+				{
+					WFIFOW(fd,2) = 14 + count * sizeof(struct skill_cooldown_data);
+					WFIFOW(fd,12) = count;
+					WFIFOSET(fd,WFIFOW(fd,2));
+					//Clear the data once loaded.
+					if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%d' AND `char_id`='%d'", skillcooldown_db, aid, cid) )
+						Sql_ShowDebug(sql_handle);
+				}
+			}
+			Sql_FreeResult(sql_handle);
+			RFIFOSKIP(fd, 10);
+		}
+		break;
 		case 0x2afe: //set MAP user count
 			if (RFIFOREST(fd) < 4)
 				return 0;
@@ -3394,6 +3440,37 @@ int parse_frommap(int fd)
 				StringBuf_Destroy(&buf);
 			}
 #endif
+			RFIFOSKIP(fd, RFIFOW(fd, 2));
+		}
+		break;
+
+		case 0x2b15: //Request to save skill cooldown data
+			if( RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2) )
+				return 0;
+		{
+			int count, aid, cid;
+			aid = RFIFOL(fd,4);
+			cid = RFIFOL(fd,8);
+			count = RFIFOW(fd,12);
+			if( count > 0 )
+			{
+				struct skill_cooldown_data data;
+				StringBuf buf;
+				int i;
+
+				StringBuf_Init(&buf);
+				StringBuf_Printf(&buf, "INSERT INTO `%s` (`account_id`, `char_id`, `skill`, `tick`) VALUES ", skillcooldown_db);
+				for( i = 0; i < count; ++i )
+				{
+					memcpy(&data,RFIFOP(fd,14+i*sizeof(struct skill_cooldown_data)),sizeof(struct skill_cooldown_data));
+					if( i > 0 )
+						StringBuf_AppendStr(&buf, ", ");
+					StringBuf_Printf(&buf, "('%d','%d','%d','%d')", aid, cid, data.skill_id, data.tick);
+				}
+				if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
+					Sql_ShowDebug(sql_handle);
+				StringBuf_Destroy(&buf);
+			}
 			RFIFOSKIP(fd, RFIFOW(fd, 2));
 		}
 		break;

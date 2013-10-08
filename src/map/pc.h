@@ -115,6 +115,11 @@ struct s_autobonus {
 	unsigned short pos;
 };
 
+struct skill_cooldown_entry {
+    unsigned short skill_id;
+    int timer;
+};
+
 enum npc_timeout_type {
 	NPCT_INPUT = 0,
 	NPCT_MENU  = 1,
@@ -244,7 +249,7 @@ struct map_session_data {
 	uint16 skill_id_old,skill_lv_old;
 	uint16 skill_id_dance,skill_lv_dance;
 	short cook_mastery; // range: [0,1999] [Inkfish]
-	unsigned char blockskill[MAX_SKILL];
+    struct skill_cooldown_entry * scd[MAX_SKILLCOOLDOWN]; // Skill Cooldown
 	int cloneskill_id, reproduceskill_id;
 	int menuskill_id, menuskill_val, menuskill_val2;
 
@@ -321,6 +326,10 @@ struct map_session_data {
 		short flag, rate;
 		unsigned char ele;
 	} subele2[MAX_PC_BONUS];
+	struct {
+		int id;
+		int val;
+	} cooldown[MAX_PC_BONUS];
 	struct {
 		short value;
 		int rate, tick;

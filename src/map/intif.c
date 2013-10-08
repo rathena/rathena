@@ -2182,16 +2182,13 @@ void intif_itembound_req(int char_id,int aid,int guild_id) {
 	WFIFOL(inter_fd,6) = aid;
 	WFIFOW(inter_fd,10) = guild_id;
 	WFIFOSET(inter_fd,12);
-	if(gstor)
-		gstor->lock = 1; //Lock for retrieval process
+	if(gstor) gstor->lock = 1; //Lock for retrieval process
 }
 
 //3856
 void intif_parse_itembound_ack(int fd) {
-	struct guild_storage *gstor;
-	int guild_id = RFIFOW(char_fd,6);
-
-	gstor = guild2storage2(guild_id);
+	int guild_id = RFIFOW(fd,6);
+	struct guild_storage *gstor = guild2storage2(guild_id);
 	if(gstor) gstor->lock = 0; //Unlock now that operation is completed
 }
 #endif

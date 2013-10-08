@@ -64,20 +64,6 @@ static DBMap* bowling_db = NULL; // int mob_id -> struct mob_data*
 DBMap* skillunit_db = NULL; // int id -> struct skill_unit*
 
 /**
- * Skill Cool Down Delay Saving
- * Struct skill_cd is not a member of struct map_session_data
- * to keep cooldowns in memory between player log-ins.
- * All cooldowns are reset when server is restarted.
- **/
-DBMap* skillcd_db = NULL; // char_id -> struct skill_cd
-struct skill_cd {
-	int duration[MAX_SKILL_TREE];//milliseconds
-	short skidx[MAX_SKILL_TREE];//the skill index entries belong to
-	short nameid[MAX_SKILL_TREE];//skill id
-	unsigned char cursor;
-};
-
-/**
  * Skill Unit Persistency during endack routes (mostly for songs see bugreport:4574)
  **/
 DBMap* skillusave_db = NULL; // char_id -> struct skill_usave
@@ -255,6 +241,27 @@ int skill_tree_get_max(uint16 skill_id, int b_class)
 		return skill_tree[b_class][i].max;
 	else
 		return skill_get_max(skill_id);
+}
+
+int skill_get_cooldown_(struct map_session_data *sd, int id, int lv) {
+	int i, cooldown;
+	int idx = skill_get_index (id);
+	if (!idx) return 0;
+
+	cooldown = 0;
+	if (skill_db[idx].cooldown[lv - 1])
+		cooldown = skill_db[idx].cooldown[lv - 1];
+
+	for (i = 0; i < ARRAYLENGTH(sd->cooldown) && sd->cooldown[i].id; i++) {
+		if (sd->cooldown[i].id == id) {
+			cooldown += sd->cooldown[i].val;
+			if (cooldown < 0)
+				cooldown = 0;
+			break;
+		}
+	}
+
+	return cooldown;
 }
 
 int skill_frostjoke_scream(struct block_list *bl,va_list ap);
@@ -446,7 +453,7 @@ static short skill_isCopyable (struct map_session_data *sd, uint16 skill_id, str
 	// Only copy skill that player doesn't have or the skill is old clone
 	if (sd->status.skill[skill_id].id != 0 && sd->status.skill[skill_id].flag != SKILL_FLAG_PLAGIARIZED)
 		return 0;
-	
+
 	// Never copy NPC/Wedding Skills
 	if (skill_get_inf2(skill_id)&(INF2_NPC_SKILL|INF2_WEDDING_SKILL))
 		return 0;
@@ -510,7 +517,7 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 		return true;
 	}
 
-	if (sd->blockskill[idx] > 0) {
+	if (skill_blockpc_get(sd, skill_id) != -1){
 		clif_skill_fail(sd,skill_id,USESKILL_FAIL_SKILLINTERVAL,0);
 		return true;
 	}
@@ -711,7 +718,7 @@ bool skill_isNotOk_npcRange(struct block_list *src, struct block_list *target, u
 
 	if (src->type == BL_PC && pc_has_permission(BL_CAST(BL_PC,src),PC_PERM_SKILL_UNCONDITIONAL))
 		return false;
-	
+
 	inf = skill_get_inf(skill_id);
 	//if self skill
 	if (inf&INF_SELF_SKILL) {
@@ -9650,15 +9657,8 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 		if( !sd || sd->skillitem != ud->skill_id || skill_get_delay(ud->skill_id,ud->skill_lv) )
 			ud->canact_tick = tick + skill_delayfix(src, ud->skill_id, ud->skill_lv); //Tests show wings don't overwrite the delay but skill scrolls do. [Inkfish]
 		if (sd) { //Cooldown application
-			int i, cooldown = skill_get_cooldown(ud->skill_id, ud->skill_lv);
-			for (i = 0; i < ARRAYLENGTH(sd->skillcooldown) && sd->skillcooldown[i].id; i++) { // Increases/Decreases cooldown of a skill by item/card bonuses.
-				if (sd->skillcooldown[i].id == ud->skill_id){
-					cooldown += sd->skillcooldown[i].val;
-					break;
-				}
-			}
-			if(cooldown)
-			skill_blockpc_start(sd, ud->skill_id, cooldown);
+			int cooldown = skill_get_cooldown_(sd,ud->skill_id, ud->skill_lv); // Increases/Decreases cooldown of a skill by item/card bonuses.
+			if(cooldown) skill_blockpc_start(sd, ud->skill_id, cooldown);
 		}
 		if( battle_config.display_status_timers && sd )
 			clif_status_change(src, SI_ACTIONDELAY, 1, skill_delayfix(src, ud->skill_id, ud->skill_lv), 0, 0, 0);
@@ -17337,86 +17337,81 @@ static int skill_destroy_trap( struct block_list *bl, va_list ap ) {
 	return 0;
 }
 /*==========================================
- *
- *------------------------------------------*/
+*
+*------------------------------------------*/
+int skill_blockpc_get(struct map_session_data *sd, int skillid) {
+	int i;
+	nullpo_retr(-1, sd);
+
+	ARR_FIND(0, MAX_SKILLCOOLDOWN, i, sd->scd[i] && sd->scd[i]->skill_id == skillid);
+	return (i >= MAX_SKILLCOOLDOWN) ? -1 : i;
+}
+
 int skill_blockpc_end(int tid, unsigned int tick, int id, intptr_t data) {
 	struct map_session_data *sd = map_id2sd(id);
-	struct skill_cd * cd = NULL;
+	int i = (int) data;
 
-	if (data <= 0 || data >= MAX_SKILL)
+	if (!sd || data < 0 || data >= MAX_SKILLCOOLDOWN)
 		return 0;
-	if (!sd) return 0;
-	if (sd->blockskill[data] != (0x1|(tid&0xFE))) return 0;
 
-	if( ( cd = idb_get(skillcd_db,sd->status.char_id) ) ) {
-		int i,cursor;
-		ARR_FIND( 0, cd->cursor+1, cursor, cd->skidx[cursor] == data );
-		cd->duration[cursor] = 0;
-		cd->skidx[cursor] = 0;
-		cd->nameid[cursor] = 0;
-		// compact the cool down list
-		for( i = 0, cursor = 0; i < cd->cursor; i++ ) {
-			if( cd->duration[i] == 0 )
-				continue;
-			if( cursor != i ) {
-				cd->duration[cursor] = cd->duration[i];
-				cd->skidx[cursor] = cd->skidx[i];
-				cd->nameid[cursor] = cd->nameid[i];
-			}
-			cursor++;
-		}
-		if( cursor == 0 )
-			idb_remove(skillcd_db,sd->status.char_id);
-		else
-			cd->cursor = cursor;
+	if (!sd->scd[i] || sd->scd[i]->timer != tid) {
+		ShowWarning("skill_blockpc_end: Invalid Timer or not Skill Cooldown.\n");
+		return 0;
 	}
 
-	sd->blockskill[data] = 0;
-	return 1;
+	aFree(sd->scd[i]);
+	sd->scd[i] = NULL;
+		return 1;
 }
 
 /**
- * flags a singular skill as being blocked from persistent usage.
- * @param   sd        the player the skill delay affects
- * @param   skill_id   the skill which should be delayed
- * @param   tick      the length of time the delay should last
- * @param   load      whether this assignment is being loaded upon player login
- * @return  0 if successful, -1 otherwise
- */
-int skill_blockpc_start_(struct map_session_data *sd, uint16 skill_id, int tick, bool load)
-{
-	int oskill_id = skill_id;
-	struct skill_cd* cd = NULL;
-	uint16 idx = skill_get_index(skill_id);
-
-	nullpo_retr (-1, sd);
-
-	if (idx == 0)
+* flags a singular skill as being blocked from persistent usage.
+* @param   sd        the player the skill delay affects
+* @param   skill_id   the skill which should be delayed
+* @param   tick      the length of time the delay should last
+* @param   load      whether this assignment is being loaded upon player login
+* @return  0 if successful, -1 otherwise
+*/
+int skill_blockpc_start(struct map_session_data *sd, int skillid, int tick) {
+	int i;
+	nullpo_retr(-1, sd);
+	if (skillid == 0 || tick < 1)
 		return -1;
 
-	if (tick < 1) {
-		sd->blockskill[idx] = 0;
-		return -1;
+	ARR_FIND(0, MAX_SKILLCOOLDOWN, i, sd->scd[i] && sd->scd[i]->skill_id == skillid);
+	if (i < MAX_SKILLCOOLDOWN) { // Skill already with cooldown
+		delete_timer(sd->scd[i]->timer, skill_blockpc_end);
+		aFree(sd->scd[i]);
+		sd->scd[i] = NULL;
 	}
 
-	if( battle_config.display_status_timers )
-		clif_skill_cooldown(sd, idx, tick);
+	ARR_FIND(0, MAX_SKILLCOOLDOWN, i, !sd->scd[i]);
+	if (i < MAX_SKILLCOOLDOWN) { // Free Slot found
+		CREATE(sd->scd[i], struct skill_cooldown_entry, 1);
+		sd->scd[i]->skill_id = skillid;
+		sd->scd[i]->timer = add_timer(gettick() + tick, skill_blockpc_end, sd->bl.id, i);
 
-	if( !load ) {// not being loaded initially so ensure the skill delay is recorded
-		if( !(cd = idb_get(skillcd_db,sd->status.char_id)) ) {// create a new skill cooldown object for map storage
-			CREATE( cd, struct skill_cd, 1 );
-			idb_put( skillcd_db, sd->status.char_id, cd );
-		}
+		if (battle_config.display_status_timers && tick > 0)
+			clif_skill_cooldown(sd, skillid, tick);
 
-		// record the skill duration in the database map
-		cd->duration[cd->cursor] = tick;
-		cd->skidx[cd->cursor] = idx;
-		cd->nameid[cd->cursor] = oskill_id;
-		cd->cursor++;
+		return 1;
+	} else {
+		ShowWarning("skill_blockpc_start: Too many skillcooldowns, increase MAX_SKILLCOOLDOWN.\n");
+		return 0;
 	}
+}
 
-	sd->blockskill[idx] = 0x1|(0xFE&add_timer(gettick()+tick,skill_blockpc_end,sd->bl.id,idx));
-	return 0;
+int skill_blockpc_clear(struct map_session_data *sd) {
+	int i;
+	nullpo_ret(sd);
+	for (i = 0; i < MAX_SKILLCOOLDOWN; i++) {
+		if (!sd->scd[i])
+			continue;
+		delete_timer(sd->scd[i]->timer, skill_blockpc_end);
+		aFree(sd->scd[i]);
+		sd->scd[i] = NULL;
+	}
+	return 1;
 }
 
 int skill_blockhomun_end(int tid, unsigned int tick, int id, intptr_t data)	//[orn]
@@ -17936,29 +17931,6 @@ int skill_get_elemental_type( uint16 skill_id , uint16 skill_lv ) {
 	type += skill_lv - 1;
 
 	return type;
-}
-
-/**
- * reload stored skill cooldowns when a player logs in.
- * @param   sd     the affected player structure
- */
-void skill_cooldown_load(struct map_session_data * sd)
-{
-	int i;
-	struct skill_cd* cd = NULL;
-
-	// always check to make sure the session properly exists
-	nullpo_retv(sd);
-
-	if( !(cd = idb_get(skillcd_db, sd->status.char_id)) ) {// no skill cooldown is associated with this character
-		return;
-	}
-
-	// process each individual cooldown associated with the character
-	for( i = 0; i < cd->cursor; i++ ) {
-		// block the skill from usage but ensure it is not recorded (load = true)
-		skill_blockpc_start_( sd, cd->nameid[i], cd->duration[i], true );
-	}
 }
 
 /*==========================================
@@ -18492,7 +18464,6 @@ int do_init_skill (void)
 
 	group_db = idb_alloc(DB_OPT_BASE);
 	skillunit_db = idb_alloc(DB_OPT_BASE);
-	skillcd_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	skillusave_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	bowling_db = idb_alloc(DB_OPT_BASE);
 	skill_unit_ers = ers_new(sizeof(struct skill_unit_group),"skill.c::skill_unit_ers",ERS_OPT_NONE);
@@ -18514,7 +18485,6 @@ int do_final_skill(void)
 	db_destroy(skilldb_name2id);
 	db_destroy(group_db);
 	db_destroy(skillunit_db);
-	db_destroy(skillcd_db);
 	db_destroy(skillusave_db);
 	db_destroy(bowling_db);
 	ers_destroy(skill_unit_ers);

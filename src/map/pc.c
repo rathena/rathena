@@ -1148,11 +1148,6 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	}
 
 	/**
-	 * Check if player have any cool downs on
-	 **/
-	skill_cooldown_load(sd);
-
-	/**
 	 * Check if player have any item cooldowns on
 	 **/
 	pc_itemcd_do(sd,true);
@@ -1296,7 +1291,7 @@ int pc_reg_received(struct map_session_data *sd)
 
 	status_calc_pc(sd,1);
 	chrif_scdata_request(sd->status.account_id, sd->status.char_id);
-
+	chrif_skillcooldown_request(sd->status.account_id, sd->status.char_id);
 	intif_Mail_requestinbox(sd->status.char_id, 0); // MAIL SYSTEM - Request Mail Inbox
 	intif_request_questlog(sd);
 

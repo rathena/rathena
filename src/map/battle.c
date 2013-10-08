@@ -2021,9 +2021,10 @@ static int is_attack_piercing(struct Damage wd, struct block_list *src, struct b
 				sd->left_weapon.def_ratio_atk_race & (1<<tstatus->race) ||
 				sd->left_weapon.def_ratio_atk_race & (1<<(is_boss(target)?RC_BOSS:RC_NONBOSS))) )
 			{ //Pass effect onto right hand if configured so. [Skotlex]
-				if (battle_config.left_cardfix_to_right && is_attack_right_handed(src, skill_id))
+				if (battle_config.left_cardfix_to_right && is_attack_right_handed(src, skill_id)){
 					if (weapon_position == EQI_HAND_R)
 						return 1;
+				}
 				else if (weapon_position == EQI_HAND_L)
 					return 1;
 			}

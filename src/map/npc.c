@@ -963,7 +963,7 @@ int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y)
 	}
 	switch(map[m].npc[i]->subtype) {
 		case WARP:
-			if (pc_ishiding(sd) || sd->sc.count && sd->sc.data[SC_CAMOUFLAGE] || pc_isdead(sd))
+			if (pc_ishiding(sd) || (sd->sc.count && sd->sc.data[SC_CAMOUFLAGE]) || pc_isdead(sd))
 				break; // hidden or dead chars cannot use warps
 			pc_setpos(sd,map[m].npc[i]->u.warp.mapindex,map[m].npc[i]->u.warp.x,map[m].npc[i]->u.warp.y,CLR_OUTSIGHT);
 			break;
@@ -2725,7 +2725,7 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 
 		if(!imap)
 			imap = map_mapname2mapid(map[dm].name);
-	
+
 		if( imap == -1 ) {
 			ShowError("npc_duplicate4instance: warp (%s) leading to instanced map (%s), but instance map is not attached to current instance.\n", map[dm].name, snd->exname);
 			return 1;
