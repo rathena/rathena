@@ -338,6 +338,9 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 		case ELE_WATER:
 			if(sc->data[SC_DELUGE]) ratio += enchant_eff[sc->data[SC_DELUGE]->val1-1];
 			break;
+		case ELE_GHOST:
+			if(sc->data[SC_TELEKINESIS_INTENSE]) ratio += (sc->data[SC_TELEKINESIS_INTENSE]->val1*40)/100;
+			break;
 		}
 	}
 	if( target && target->type == BL_SKILL ) {
@@ -1073,6 +1076,12 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		if(sc->data[SC_PAIN_KILLER]){
 			damage -= sc->data[SC_PAIN_KILLER]->val3;
 			damage = max(1,damage);
+		}
+		if( sc->data[SC_DARKCROW] && ((flag&(BF_WEAPON|BF_SHORT))==(BF_WEAPON|BF_SHORT)) ) {
+			DAMAGE_ADDRATE(30 * sc->data[SC_DARKCROW]->val1);
+		}
+		if( sc->data[SC_UNLIMIT] && (flag&(BF_WEAPON|BF_SHORT))==(BF_WEAPON|BF_LONG) ) {
+			 DAMAGE_ADDRATE(50 * sc->data[SC_UNLIMIT]->val1);
 		}
 		if((sce=sc->data[SC_MAGMA_FLOW]) && (rnd()%100 <= sce->val2) ){
 			skill_castend_damage_id(bl,src,MH_MAGMA_FLOW,sce->val1,gettick(),0);
@@ -2844,7 +2853,11 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 #endif
 	}
 
-	switch( skill_id ) {
+	switch( skill_id )
+	{
+		case GC_DARKCROW:
+			skillratio += 100 * (skill_lv - 1);
+			break;
 		case SM_BASH:
 		case MS_BASH:
 			skillratio += 30*skill_lv;
@@ -3808,6 +3821,10 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, u
 			if(sc->data[SC_STYLE_CHANGE]){
 				TBL_HOM *hd = BL_CAST(BL_HOM,src);
 				if (hd) ATK_ADD(wd.damage, wd.damage2, hd->homunculus.spiritball * 3);
+			}
+			if(sc->data[SC_FLASHCOMBO]) {
+				ATK_ADD(wd.damage, wd.damage2, sc->data[SC_FLASHCOMBO]->val2);
+				RE_ALLATK_ADD(wd, sc->data[SC_FLASHCOMBO]->val2);
 			}
 		}
 	return wd;
@@ -5393,6 +5410,9 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 
 	switch( skill_id )
 	{
+	case NC_MAGMA_ERUPTION:
+		md.damage = 1200 + 400 * skill_lv;
+		break;
 #ifdef RENEWAL
 	case HT_LANDMINE:
 	case MA_LANDMINE:
@@ -6432,6 +6452,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			if( skill_get_inf2(su->group->skill_id)&INF2_TRAP ) { //Only a few skills can target traps...
 				switch( battle_getcurrentskill(src) ) {
 					case RK_DRAGONBREATH:// it can only hit traps in pvp/gvg maps
+					case RK_DRAGONBREATH_WATER:
 						if( !map[m].flag.pvp && !map[m].flag.gvg )
 							break;
 					case 0://you can hit them without skills

@@ -420,6 +420,8 @@
 12732,24,2010,3,1035,1,7221,1,7938,1,7939,1
 //-- Runstone Hagalas <-- RK_RUNEMASTERY Lv4, 1 Round Shell, 1 Dragon's Skin, 1 Elder Branch
 12733,24,2010,4,1096,1,7123,1,7939,1
+//-- Runstone Lux Anima <-- RK_RUNEMASTERY Lv10, 3 Gold, 3 Light Granule
+22540,24,2010,10,969,3,7938,3
 //==============================================
 
 //===== Guillotine Cross Poisons === ItemLv=25 =

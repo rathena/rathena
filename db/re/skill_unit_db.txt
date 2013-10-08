@@ -28,7 +28,7 @@
  12,0x7e,    ,  0, 0,  -1,all,   0x003	//MG_SAFETYWALL
  18,0x7f,    , -1, 0,  20,enemy, 0x010	//MG_FIREWALL
  21,0x86,    ,  0, 2,1000,enemy, 0x018	//MG_THUNDERSTORM
- 25,0x85,    ,  1, 0,  -1,all,   0x003	//AL_PNEUMA
+ 25,0x85,    ,  1, 0,  -1,all,   0x2003	//AL_PNEUMA
  27,0x81,0x80,  0, 0,  -1,all,   0x00E	//AL_WARP
  47,0x86,    ,  0, 2,1000,enemy, 0x080	//AC_SHOWER
  70,0x83,    , -1, 1,1000,all,   0x018	//PR_SANCTUARY
@@ -160,12 +160,14 @@
 3009,0x86,    ,  0, 3, 500,enemy, 0x018	//KO_HUUMARANKA
 3020,0xf8,    ,  0, 3, 100,all, 0x018	//KO_ZENKAI
 3010,0xfc,    ,  0, 1,1000,enemy, 0x020	//KO_MAKIBISHI
+5006,0x101,   ,  0, 3,2000,enemy, 0x018	//NC_MAGMA_ERUPTION
+5010,0xfe,    ,  0, 2,  -1,enemy, 0x000	//SC_ESCAPE
 
 8020,0xf5,    ,  3, 0,2300:2100:1900:1700:1500,enemy,   0x018	//MH_POISON_MIST
 8033,0x7e,    ,  0, 0,  -1,all,   0x003	//MH_STEINWAND
 8025,0x86,    ,  0, 2:2:3:3:4,1000,enemy, 0x018	//MH_XENO_SLASHER
 8041,0xf6,    ,  1:1:2:2:3, 0,2000,enemy,   0x01A	//MH_LAVA_SLIDE
-8043,0xf7,    ,  1, 0,-1,enemy,   0x2018	//MH_VOLCANIC_ASH
+8043,0xf7,    ,  1, 0,-1,all,   0x2018	//MH_VOLCANIC_ASH
 
 8208,0x86,    ,  0, 2,1000,enemy, 0x080	//MA_SHOWER
 8209,0x90,    ,  0, 1,1000,enemy, 0x006	//MA_SKIDTRAP

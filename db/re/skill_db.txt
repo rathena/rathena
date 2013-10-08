@@ -1260,26 +1260,25 @@
 3034,7,6,16,0,0x1,0,1,1,no,0,0,0,none,0,0x0,	ECL_SEQUOIADUST,Sequoia Dust
 3035,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,0x0,		ECLAGE_RECALL,Return To Eclage
 
-//****
 // EP 14.3 Part 2 3rd Job Skills
-//5001,1,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,	GC_DARKCROW,Dark Claw
-//5002,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0,		RA_UNLIMIT,Unlimited
-//5003,7,6,1,-1,0x2,4:5:6:7:8,5,1,no,0,0,0,weapon,0,0x0,	GN_ILLUSIONDOPING,Illusion Doping
-//5004,9,6,2,1,0x2,1:1:1:2:2:2:3:3:4:4,10,1,no,0,0,0,weapon,0,0x0,	RK_DRAGONBREATH_WATER,Dragon Breath - Water
-//5005,0,6,4,0,0x3,3,1,1,no,0,0,0,none,0,0x0,		RK_LUXANIMA,Lux Anima
-//5006,1,6,2,3,0,0,5,1,no,0,0,3,misc,0,0x0,		NC_MAGMA_ERUPTION,Magma Eruption
-//5007,0,6,4,0,0x3,5:6:7:8:9,5,1,no,0,0,0,none,0,0x0,	WM_FRIGG_SONG,Frigg's Song
-//5008,0,6,4,0,0x3,15,5,1,no,0,0,0,none,0,0x0,	SO_ELEMENTAL_SHIELD,Elemental Shield
-//5009,1,6,1,0,0x1,0,5,1,no,0,0,0,none,0,0x0,		SR_FLASHCOMBO,Flash Combo//I can mark this as a no damage skill right?
-//5010,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0,		SC_ESCAPE,Emergency Escape//Said places a ankle snare trap. Must confirm before I remove the no damage thing.
-//5011,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0,		AB_OFFERTORIUM,Offertorium
-//5012,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0,		WL_TELEKINESIS_INTENSE,Intense Telekinesis
-//5013,0,6,4,0,0x3,5,5,1,no,0,0,0,none,0,0x0,		LG_KINGS_GRACE,King's Grace//Need to know the splash AoE
-//5014,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0,		ALL_FULL_THROTTLE,Full Throttle
-//5015,-2,8,4,-1,0,0,10,-2,no,0,0x200,0,weapon,0,0x0,	SR_FLASHCOMBO_ATK_STEP1,Flash Combo Attack Step 1//Dragon Combo
-//5016,-2,8,4,-1,0,0,5,-2,no,0,0x200,0,weapon,0,0x0,	SR_FLASHCOMBO_ATK_STEP2,Flash Combo Attack Step 2//Fallen Empire
-//5017,-2,6,4,-1,0x42,1:1:1:1:1:2:2:2:2:2,10,1,no,0,0x200,0,weapon,0,0x0,	SR_FLASHCOMBO_ATK_STEP3,Flash Combo Attack Step 3//Tiger Cannon
-//5018,0,8,4,-1,0x2,2,5,-3,no,0,0,0,weapon,0,0x0,	SR_FLASHCOMBO_ATK_STEP4,Flash Combo Attack Step 4//Skynet Blow
+//5001,1,8,1,-1,0,0,5,3,no,0,0,0,weapon,0,0, GC_DARKCROW,Dark Claw
+//5002,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0, RA_UNLIMIT,Unlimited
+//5003,7,6,1,-1,0x2,4:5:6:7:8,5,1,no,0,0,0,weapon,0,0, GN_ILLUSIONDOPING,Illusion Doping
+//5004,9,6,2,1,0x42,1:1:1:2:2:2:3:3:4:4,10,1,no,0,0,0,weapon,0,0, RK_DRAGONBREATH_WATER,Dragon Breath - Water
+//5005,0,6,4,0,0x3,3,1,1,no,0,0,0,none,0,0, RK_LUXANIMA,Lux Anima
+//5006,1,6,2,3,0,0,5,1,no,0,0,3,misc,0,0, NC_MAGMA_ERUPTION,Magma Eruption
+//5007,0,6,4,0,0x3,5:6:7:8:9,5,1,no,0,0,0,none,0,0, WM_FRIGG_SONG,Frigg's Song
+//5008,0,6,4,0,0x3,15,5,1,no,0,0,0,none,0,0, SO_ELEMENTAL_SHIELD,Elemental Shield
+//5009,1,6,1,0,0x1,0,5,1,no,0,0,0,none,0,0, SR_FLASHCOMBO,Flash Combo
+//5010,0,6,2,0,0x1,0,5,1,no,0,0,0,none,0,0, SC_ESCAPE,Emergency Escape
+//5011,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0, AB_OFFERTORIUM,Offertorium
+//5012,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0, WL_TELEKINESIS_INTENSE,Intense Telekinesis
+//5013,0,6,4,0,0x3,5,5,1,no,0,0,0,none,0,0, LG_KINGS_GRACE,King's Grace
+//5014,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0, ALL_FULL_THROTTLE,Full Throttle
+//5015,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0, SR_FLASHCOMBO_ATK_STEP1,Flash Combo Attack Step 1
+//5016,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0, SR_FLASHCOMBO_ATK_STEP2,Flash Combo Attack Step 2
+//5017,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0, SR_FLASHCOMBO_ATK_STEP3,Flash Combo Attack Step 3
+//5018,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0, SR_FLASHCOMBO_ATK_STEP4,Flash Combo Attack Step 4
 
 //****
 // Homunculus S
