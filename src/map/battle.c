@@ -4390,7 +4390,7 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 	if( (wd->damage + wd->damage2) && src && target && src != target &&
 		(src->type != BL_SKILL ||
 		(src->type == BL_SKILL && ( skill_id == SG_SUN_WARM || skill_id == SG_MOON_WARM || skill_id == SG_STAR_WARM )) )
-	){ //don't reflect to ourself
+	){ //don't reflect to yourself
 		int64 damage = wd->damage + wd->damage2, rdamage = 0;
 		struct map_session_data *tsd = BL_CAST(BL_PC, target);
 		struct status_change *tsc = status_get_sc(target);
@@ -5349,7 +5349,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		MATK_ADDRATE(skill_damage);
 #endif
 
-	battle_do_reflect(BF_MAGIC,&ad, src, target, skill_id, skill_lv); //WIP [lighta]
+	//battle_do_reflect(BF_MAGIC,&ad, src, target, skill_id, skill_lv); //WIP [lighta]
 	return ad;
 }
 
@@ -5750,7 +5750,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	if(tstatus->mode&MD_IGNOREMISC && md.flag&(BF_MISC) )	//misc @TODO optimize me
 		md.damage = md.damage2 = 1;
 
-	battle_do_reflect(BF_MISC,&md, src, target, skill_id, skill_lv); //WIP [lighta]
+	//battle_do_reflect(BF_MISC,&md, src, target, skill_id, skill_lv); //WIP [lighta]
 
 	return md;
 }
