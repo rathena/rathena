@@ -275,6 +275,7 @@ int mapif_parse_itembound_retrieve(int fd)
 		SqlStmt_ShowDebug(stmt);
 		SqlStmt_Free(stmt);
 		StringBuf_Destroy(&buf);
+		mapif_itembound_ack(fd,aid,guild_id);
 		return 1;
 	}
 
@@ -297,10 +298,11 @@ int mapif_parse_itembound_retrieve(int fd)
 		}
 	}
 	Sql_FreeResult(sql_handle);
-	
+
 	if(!i) { //No items found - No need to continue
 		StringBuf_Destroy(&buf);
 		SqlStmt_Free(stmt);
+		mapif_itembound_ack(fd,aid,guild_id);
 		return 0;
 	}
 
@@ -321,6 +323,7 @@ int mapif_parse_itembound_retrieve(int fd)
 		SqlStmt_ShowDebug(stmt);
 		SqlStmt_Free(stmt);
 		StringBuf_Destroy(&buf);
+		mapif_itembound_ack(fd,aid,guild_id);
 		return 1;
 	}
 
@@ -351,6 +354,7 @@ int mapif_parse_itembound_retrieve(int fd)
 		SqlStmt_ShowDebug(stmt);
 		SqlStmt_Free(stmt);
 		StringBuf_Destroy(&buf);
+		mapif_itembound_ack(fd,aid,guild_id);
 		return 1;
 	}
 
