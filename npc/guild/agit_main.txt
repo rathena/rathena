@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.9a
+//= 2.0
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -52,6 +52,7 @@
 //= 1.8 Fixed a possible exploit in guild castle investment. [Brian]
 //= 1.9 Partially rewrote Script. [Masao]
 //= 1.9a Fixed incorrect setcastledata parameter. [Euphy]
+//= 2.0 Fixed an issue where Castle Manager couldn't be fired. [Joseph]
 //============================================================
 
 // WoE : Main Functions
@@ -836,12 +837,13 @@ OnRecvCastle:
 					mes "Oh, my goodness! This is nonsense!";
 					next;
 					cutin "",255;
-					close;
+					break;
 				case 2:
 					mes "[ Hired Kafra Employee ]";
 					mes "I'll work hard for you... Thank you!";
 					close;
 				}
+				break;
 			case 2:
 				mes "["+strnpcinfo(1)+"]";
 				mes "She worked hard in my opinion. It was a good decision to keep her.";
