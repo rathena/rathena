@@ -5178,6 +5178,22 @@ int pc_checkequip(struct map_session_data *sd,int pos)
 }
 
 /*==========================================
+ * Check if sd as nameid equiped somewhere
+ * -return true,false
+ *------------------------------------------*/
+int pc_checkequip2(struct map_session_data *sd,int nameid){
+	int i;
+	for(i=0;i<EQI_MAX;i++){
+		if(equip_pos[i]){
+			int idx = sd->equip_index[i];
+			if (sd->status.inventory[idx].nameid == nameid)
+				return true;
+		}
+	}
+	return false;
+}
+
+/*==========================================
  * Convert's from the client's lame Job ID system
  * to the map server's 'makes sense' system. [Skotlex]
  *------------------------------------------*/

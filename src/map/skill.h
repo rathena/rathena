@@ -118,7 +118,8 @@ struct skill_condition {
 		state,
 		spiritball,
 		itemid[MAX_SKILL_ITEM_REQUIRE],
-		amount[MAX_SKILL_ITEM_REQUIRE];
+		amount[MAX_SKILL_ITEM_REQUIRE],
+		eqItem[10]; //max eq_item
 	uint8 status_count;
 	enum sc_type status[MAX_SKILL_STATUS_REQUIRE];
 };
@@ -136,7 +137,8 @@ struct s_skill_require {
 		state,
 		spiritball[MAX_SKILL_LEVEL],
 		itemid[MAX_SKILL_ITEM_REQUIRE],
-		amount[MAX_SKILL_ITEM_REQUIRE];
+		amount[MAX_SKILL_ITEM_REQUIRE],
+		eqItem[10]; //max eq_item
 	uint8 status_count;
 	enum sc_type status[MAX_SKILL_STATUS_REQUIRE];
 };

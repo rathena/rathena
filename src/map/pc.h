@@ -771,6 +771,7 @@ int pc_setinventorydata(struct map_session_data *sd);
 int pc_checkskill(struct map_session_data *sd,uint16 skill_id);
 int pc_checkallowskill(struct map_session_data *sd);
 int pc_checkequip(struct map_session_data *sd,int pos);
+int pc_checkequip2(struct map_session_data *sd,int nameid);
 
 int pc_calc_skilltree(struct map_session_data *sd);
 int pc_calc_skilltree_normalize_job(struct map_session_data *sd);

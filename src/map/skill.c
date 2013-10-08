@@ -1021,8 +1021,8 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case TF_THROWSTONE:
-		sc_start(src,bl,SC_STUN,3,skill_lv,skill_get_time(skill_id,skill_lv));
-		sc_start(src,bl,SC_BLIND,3,skill_lv,skill_get_time2(skill_id,skill_lv));
+		if (!sc_start(src,bl,SC_STUN,3,skill_lv,skill_get_time(skill_id,skill_lv))) //only blind if success
+			sc_start(src,bl,SC_BLIND,3,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 
 	case NPC_DARKCROSS:
@@ -1528,10 +1528,10 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 				skill_break_equip(src,bl, EQP_ARMOR, rate, BCT_ENEMY);
 		}
 		if( sd && sd->def_set_race[tstatus->race].rate )
-				status_change_start(src,bl, SC_DEFSET, sd->def_set_race[tstatus->race].rate, sd->def_set_race[tstatus->race].value, 
+				status_change_start(src,bl, SC_DEFSET, sd->def_set_race[tstatus->race].rate, sd->def_set_race[tstatus->race].value,
 				0, 0, 0, sd->def_set_race[tstatus->race].tick, 2);
 		if( sd && sd->def_set_race[tstatus->race].rate )
-				status_change_start(src,bl, SC_MDEFSET, sd->mdef_set_race[tstatus->race].rate, sd->mdef_set_race[tstatus->race].value, 
+				status_change_start(src,bl, SC_MDEFSET, sd->mdef_set_race[tstatus->race].rate, sd->mdef_set_race[tstatus->race].value,
 				0, 0, 0, sd->mdef_set_race[tstatus->race].tick, 2);
 	}
 
@@ -1720,14 +1720,14 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, uint1
 		if( skill_isNotOk((skill > 0) ? skill : skill*-1, sd) )
 			continue;
 
-		sd->state.autocast = 0;		
+		sd->state.autocast = 0;
 
 		if( skill >= 0 && bl == NULL )
 			continue; // No target
 		if( rnd()%1000 >= sd->autospell3[i].rate )
 			continue;
-		
-		skill_lv = sd->autospell3[i].lv ? sd->autospell3[i].lv : 1;	
+
+		skill_lv = sd->autospell3[i].lv ? sd->autospell3[i].lv : 1;
 		if( skill < 0 ) {
 			tbl = &sd->bl;
 			skill *= -1;
@@ -2358,6 +2358,92 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 	}
 }
 
+
+void skill_do_copy(struct block_list* src,struct block_list *bl, struct Damage *dmg, int64 damage, uint16 skill_id, uint16 skill_lv){
+	TBL_PC *tsd = BL_CAST(BL_PC,bl);
+	struct status_change *tsc = status_get_sc(bl);
+
+	//Check for copying skill
+	if (damage > 0 && dmg->flag&BF_SKILL && tsd
+		&& damage < tsd->battle_status.hp	//Updated to not be able to copy skills if the blow will kill you. [Skotlex]
+		&& (pc_checkskill(tsd, RG_PLAGIARISM) || pc_checkskill(tsd, SC_REPRODUCE)))
+	{
+		uint16 copy_skill = skill_id;
+		short copy_flag;
+
+		// Copy Referal: dummy skills should point to their source upon copying
+		switch (skill_id) {
+			case AB_DUPLELIGHT_MELEE:
+			case AB_DUPLELIGHT_MAGIC:
+				copy_skill = AB_DUPLELIGHT;
+				break;
+			case WL_CHAINLIGHTNING_ATK:
+				copy_skill = WL_CHAINLIGHTNING;
+				break;
+			case WM_REVERBERATION_MELEE:
+			case WM_REVERBERATION_MAGIC:
+				copy_skill = WM_REVERBERATION;
+				break;
+			case WM_SEVERE_RAINSTORM_MELEE:
+				copy_skill = WM_SEVERE_RAINSTORM;
+			break;
+			case GN_CRAZYWEED_ATK:
+				copy_skill = GN_CRAZYWEED;
+				break;
+			case GN_HELLS_PLANT_ATK:
+				copy_skill = GN_HELLS_PLANT;
+				break;
+			case LG_OVERBRAND_BRANDISH:
+			case LG_OVERBRAND_PLUSATK:
+				copy_skill = LG_OVERBRAND;
+				break;
+		}
+
+		if ((copy_flag = skill_isCopyable(tsd,copy_skill,bl))) {
+			int lv;
+			if (copy_flag == 2 && (lv = tsc->data[SC__REPRODUCE]->val1)) {
+				//Level dependent and limitation.
+				lv = min(lv,skill_get_max(copy_skill));
+				if( tsd->reproduceskill_id && tsd->status.skill[tsd->reproduceskill_id].flag == SKILL_FLAG_PLAGIARIZED ) {
+					tsd->status.skill[tsd->reproduceskill_id].id = 0;
+					tsd->status.skill[tsd->reproduceskill_id].lv = 0;
+					tsd->status.skill[tsd->reproduceskill_id].flag = SKILL_FLAG_PERMANENT;
+					clif_deleteskill(tsd,tsd->reproduceskill_id);
+				}
+
+				tsd->reproduceskill_id = copy_skill;
+				pc_setglobalreg(tsd,SKILL_VAR_REPRODUCE,copy_skill);
+				pc_setglobalreg(tsd,SKILL_VAR_REPRODUCE_LV,lv);
+
+				tsd->status.skill[copy_skill].id = copy_skill;
+				tsd->status.skill[copy_skill].lv = lv;
+				tsd->status.skill[copy_skill].flag = SKILL_FLAG_PLAGIARIZED;
+				clif_addskill(tsd,copy_skill);
+			} else if (copy_flag == 1) {
+				int type;
+				lv = skill_lv;
+				if (tsd->cloneskill_id && tsd->status.skill[tsd->cloneskill_id].flag == SKILL_FLAG_PLAGIARIZED) {
+					tsd->status.skill[tsd->cloneskill_id].id = 0;
+					tsd->status.skill[tsd->cloneskill_id].lv = 0;
+					tsd->status.skill[tsd->cloneskill_id].flag = SKILL_FLAG_PERMANENT;
+					clif_deleteskill(tsd,tsd->cloneskill_id);
+				}
+
+				if ((type = pc_checkskill(tsd,RG_PLAGIARISM)) < lv)
+					lv = type;
+
+				tsd->cloneskill_id = copy_skill;
+				pc_setglobalreg(tsd,SKILL_VAR_PLAGIARISM,copy_skill);
+				pc_setglobalreg(tsd,SKILL_VAR_PLAGIARISM_LV,lv);
+
+				tsd->status.skill[skill_id].id = copy_skill;
+				tsd->status.skill[skill_id].lv = lv;
+				tsd->status.skill[skill_id].flag = SKILL_FLAG_PLAGIARIZED;
+				clif_addskill(tsd,skill_id);
+			}
+		}
+	}
+}
 /*
  * =========================================================================
  * Does a skill attack with the given properties.
@@ -2381,14 +2467,13 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 	int64 damage;
 	int8 rmdamage=0;//magic reflected
 	int type;
-	int idx;
 	bool additional_effects = true;
 
 	if(skill_id > 0 && !skill_lv) return 0;
 
 	nullpo_ret(src);	//Source is the master behind the attack (player/mob/pet)
-	nullpo_ret(dsrc); //dsrc is the actual originator of the damage, can be the same as src, or a skill casted by src.
-	nullpo_ret(bl); //Target to be attacked.
+	nullpo_ret(dsrc);	//dsrc is the actual originator of the damage, can be the same as src, or a skill casted by src.
+	nullpo_ret(bl);		//Target to be attacked.
 
 	if (src != dsrc) {
 		//When caster is not the src of attack, this is a ground skill, and as such, do the relevant target checking. [Skotlex]
@@ -2672,86 +2757,8 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 
 	map_freeblock_lock();
 
-	idx = skill_get_index(skill_id);
-	//Check for copying skill
-	if (damage > 0 && dmg.flag&BF_SKILL && tsd
-		&& damage < tsd->battle_status.hp	//Updated to not be able to copy skills if the blow will kill you. [Skotlex]
-		&& (pc_checkskill(tsd, RG_PLAGIARISM) || pc_checkskill(tsd, SC_REPRODUCE)))
-	{
-		uint16 copy_skill = skill_id;
-		short copy_flag;
+	skill_do_copy(src,bl,&dmg,damage,skill_id,skill_lv); //try to copy a skill
 
-		// Copy Referal: dummy skills should point to their source upon copying
-		switch (skill_id) {
-			case AB_DUPLELIGHT_MELEE:
-			case AB_DUPLELIGHT_MAGIC:
-				copy_skill = AB_DUPLELIGHT;
-				break;
-			case WL_CHAINLIGHTNING_ATK:
-				copy_skill = WL_CHAINLIGHTNING;
-				break;
-			case WM_REVERBERATION_MELEE:
-			case WM_REVERBERATION_MAGIC:
-				copy_skill = WM_REVERBERATION;
-				break;
-			case WM_SEVERE_RAINSTORM_MELEE:
-				copy_skill = WM_SEVERE_RAINSTORM;
-			break;
-			case GN_CRAZYWEED_ATK:
-				copy_skill = GN_CRAZYWEED;
-				break;
-			case GN_HELLS_PLANT_ATK:
-				copy_skill = GN_HELLS_PLANT;
-				break;
-			case LG_OVERBRAND_BRANDISH:
-			case LG_OVERBRAND_PLUSATK:
-				copy_skill = LG_OVERBRAND;
-				break;
-		}
-
-		if ((copy_flag = skill_isCopyable(tsd,copy_skill,bl))) {
-			int lv;
-			if (copy_flag == 2 && (lv = tsc->data[SC__REPRODUCE]->val1)) {
-				//Level dependent and limitation.
-				lv = min(lv,skill_get_max(copy_skill));
-				if( tsd->reproduceskill_id && tsd->status.skill[tsd->reproduceskill_id].flag == SKILL_FLAG_PLAGIARIZED ) {
-					tsd->status.skill[tsd->reproduceskill_id].id = 0;
-					tsd->status.skill[tsd->reproduceskill_id].lv = 0;
-					tsd->status.skill[tsd->reproduceskill_id].flag = SKILL_FLAG_PERMANENT;
-					clif_deleteskill(tsd,tsd->reproduceskill_id);
-				}
-
-				tsd->reproduceskill_id = copy_skill;
-				pc_setglobalreg(tsd,SKILL_VAR_REPRODUCE,copy_skill);
-				pc_setglobalreg(tsd,SKILL_VAR_REPRODUCE_LV,lv);
-
-				tsd->status.skill[copy_skill].id = copy_skill;
-				tsd->status.skill[copy_skill].lv = lv;
-				tsd->status.skill[copy_skill].flag = SKILL_FLAG_PLAGIARIZED;
-				clif_addskill(tsd,copy_skill);
-			} else if (copy_flag == 1) {
-				lv = skill_lv;
-				if (tsd->cloneskill_id && tsd->status.skill[tsd->cloneskill_id].flag == SKILL_FLAG_PLAGIARIZED) {
-					tsd->status.skill[tsd->cloneskill_id].id = 0;
-					tsd->status.skill[tsd->cloneskill_id].lv = 0;
-					tsd->status.skill[tsd->cloneskill_id].flag = SKILL_FLAG_PERMANENT;
-					clif_deleteskill(tsd,tsd->cloneskill_id);
-				}
-
-				if ((type = pc_checkskill(tsd,RG_PLAGIARISM)) < lv)
-					lv = type;
-
-				tsd->cloneskill_id = copy_skill;
-				pc_setglobalreg(tsd,SKILL_VAR_PLAGIARISM,copy_skill);
-				pc_setglobalreg(tsd,SKILL_VAR_PLAGIARISM_LV,lv);
-
-				tsd->status.skill[skill_id].id = copy_skill;
-				tsd->status.skill[skill_id].lv = lv;
-				tsd->status.skill[skill_id].flag = SKILL_FLAG_PLAGIARIZED;
-				clif_addskill(tsd,skill_id);
-			}
-		}
-	}
 
 	if (dmg.dmg_lv >= ATK_MISS && (type = skill_get_walkdelay(skill_id, skill_lv)) > 0)
 	{	//Skills with can't walk delay also stop normal attacking for that
@@ -5551,11 +5558,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if (sd) {
 			int bonus = 25 + 10 * skill_lv;
 			bonus += (pc_checkskill(sd, SA_FLAMELAUNCHER)+pc_checkskill(sd, SA_FROSTWEAPON)+pc_checkskill(sd, SA_LIGHTNINGLOADER)+pc_checkskill(sd, SA_SEISMICWEAPON))*5;
+
 			clif_skill_nodamage( src, bl, skill_id, skill_lv,
-								battle_check_target(src,bl,BCT_PARTY) ?
-								sc_start2(src,bl, type, 100, skill_lv, bonus, skill_get_time(skill_id,skill_lv)) :
-								0
-				);
+				battle_check_target(src,bl,BCT_PARTY|BCT_SELF)>0 ? //only on self or party member
+				sc_start2(src,bl, type, 100, skill_lv, bonus, skill_get_time(skill_id,skill_lv)) :
+				0
+			);
 		}
 		break;
 
@@ -9360,19 +9368,21 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		    skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 		}
 		break;
-	case MH_STYLE_CHANGE: {
-	    struct status_change_entry *sce;
-	    if(hd && (sce=hd->sc.data[SC_STYLE_CHANGE])){ //in preparation for other bl usage
-		if(sce->val1 == MH_MD_FIGHTING) sce->val1 = MH_MD_GRAPPLING;
-		else sce->val1 = MH_MD_FIGHTING;
-		if(hd->master && hd->sc.data[SC_STYLE_CHANGE]) {
-		    char output[128];
-		    safesnprintf(output,sizeof(output),msg_txt(sd,378),(sce->val1==MH_MD_FIGHTING?"fighthing":"grappling"));
-		    clif_colormes(hd->master,color_table[COLOR_RED],output);
+	case MH_STYLE_CHANGE:
+		if(hd){
+			struct status_change_entry *sce;
+			if((sce=hd->sc.data[SC_STYLE_CHANGE])!=NULL){ //in preparation for other bl usage
+				if(sce->val1 == MH_MD_FIGHTING) sce->val1 = MH_MD_GRAPPLING;
+				else sce->val1 = MH_MD_FIGHTING;
+				if(hd->master && hd->sc.data[SC_STYLE_CHANGE]) {
+					char output[128];
+					safesnprintf(output,sizeof(output),msg_txt(sd,378),(sce->val1==MH_MD_FIGHTING?"fighthing":"grappling"));
+					clif_colormes(hd->master,color_table[COLOR_RED],output);
+				}
+			}
+			else sc_start(&hd->bl,&hd->bl, SC_STYLE_CHANGE, 100, MH_MD_FIGHTING, -1);
 		}
-	    }
-	    break;
-	}
+		break;
 	case MH_MAGMA_FLOW:
 	case MH_PAIN_KILLER:
 	   sc_start(src,bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
@@ -10523,7 +10533,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case SC_FEINTBOMB:
 		clif_skill_nodamage(src,src,skill_id,skill_lv,1);
 		skill_unitsetting(src,skill_id,skill_lv,x,y,0); // Set bomb on current Position
-		if( skill_blown(src,src,6,unit_getdir(src),0) )
+		if( skill_blown(src,src,3*skill_lv,unit_getdir(src),0) )
 			skill_castend_nodamage_id(src,src,TF_HIDING,1,tick,0);
 		break;
 
@@ -10681,8 +10691,7 @@ int skill_castend_map (struct map_session_data *sd, uint16 skill_id, const char 
 		(sd->sc.data[SC_STASIS] && skill_block_check(&sd->bl, SC_STASIS, skill_id)) ||
 		(sd->sc.data[SC_KAGEHUMI] && skill_block_check(&sd->bl, SC_KAGEHUMI, skill_id)) ||
 		sd->sc.data[SC_OBLIVIONCURSE] ||
-		sd->sc.data[SC__MANHOLE] ||
-		(sd->sc.data[SC_ASH] && rnd()%2) //50% fail chance under ASH
+		sd->sc.data[SC__MANHOLE]
 	 )) {
 		skill_failed(sd);
 		return 0;
@@ -11411,8 +11420,11 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 
 	sc = status_get_sc(bl);
 
-	if (sc && sc->option&OPTION_HIDE && sg->skill_id != WZ_HEAVENDRIVE && sg->skill_id != WL_EARTHSTRAIN )
+	if (sc && (sc->data[SC_HOVERING]
+		|| (sc->option&OPTION_HIDE && sg->skill_id != WZ_HEAVENDRIVE && sg->skill_id != WL_EARTHSTRAIN )
+		))
 		return 0; //Hidden characters are immune to AoE skills except to these. [Skotlex]
+			//Under hovering characters are immune to trap and ground target skills.
 
 	type = status_skill2sc(sg->skill_id);
 	sce = (sc && type != -1)?sc->data[type]:NULL;
@@ -13581,6 +13593,19 @@ int skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_id
 		}
 	}
 
+	//check if equiped item
+	for (i = 0; i < 10; i++) {
+		int reqeqit = require.eqItem[i];
+		if(!reqeqit) break; //no more required item get out of here
+		if (!pc_checkequip2(sd,reqeqit)) {
+			char output[128];
+			//clif_skill_fail(sd, skill_id, USESKILL_FAIL_NEED_EQUIPMENT, reqeqit);
+			sprintf(output,"need to put on [%d] in order to use.",reqeqit);
+			clif_colormes(sd,color_table[COLOR_RED],output);
+			return 0;
+		}
+	}
+
 	if(require.mhp > 0 && get_percentage(status->hp, status->max_hp) > require.mhp) {
 		//mhp is the max-hp-requirement, that is,
 		//you must have this % or less of HP to cast it.
@@ -13940,6 +13965,8 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
 	req.status_count = skill_db[idx].require.status_count;
 	memset(req.status,SC_NONE,sizeof(req.status));
 	memcpy(req.status,skill_db[idx].require.status,sizeof(skill_db[idx].require.status));
+	memset(req.eqItem,0,sizeof(req.eqItem));
+	memcpy(req.eqItem,skill_db[idx].require.eqItem,sizeof(skill_db[idx].require.eqItem));
 
 	for( i = 0; i < MAX_SKILL_ITEM_REQUIRE; i++ ) {
 		if( (skill_id == AM_POTIONPITCHER || skill_id == CR_SLIMPITCHER || skill_id == CR_CULTIVATION) && i != skill_lv%11 - 1 )
@@ -18054,11 +18081,12 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	else skill_db[idx].require.state = ST_NONE;	// Unknown or no state
 
 	//Status requirements
+	memset(skill_db[idx].require.status,SC_NONE,sizeof(skill_db[idx].require.status));
 	skill_db[idx].require.status_count = 0;
 	p = strtok(split[11],":");
 	for( i = 0; i < MAX_SKILL_STATUS_REQUIRE && p != NULL; i++ ) {
 		int status = SC_NONE;
-		script_get_constant(trim(p), &status);		
+		script_get_constant(trim(p), &status);
 		if (status > SC_NONE) {
 			skill_db[idx].require.status[skill_db[idx].require.status_count] = (enum sc_type)status;
 			skill_db[idx].require.status_count++;
@@ -18071,6 +18099,20 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	for( i = 0; i < MAX_SKILL_ITEM_REQUIRE; i++ ) {
 		skill_db[idx].require.itemid[i] = atoi(split[13+ 2*i]);
 		skill_db[idx].require.amount[i] = atoi(split[14+ 2*i]);
+	}
+
+	//require equiped
+	memset(skill_db[idx].require.eqItem,0,sizeof(skill_db[idx].require.eqItem));
+	p = strtok(split[33],":");
+	for( i = 0; i < 10 && p != NULL; i++ ) {
+		int itid = atoi(p);
+		p = strtok(NULL,":"); //for easy continue don,t read p after this
+		if(itid <= 0) continue; //silent
+		if(itemdb_exists(itid)== NULL) {
+			ShowWarning("Invalid reqIt=%d specified for skillid=%d\n",itid,skill_id);
+			continue; //invalid id
+		}
+		skill_db[idx].require.eqItem[i] = itid;
 	}
 
 	return true;
@@ -18414,7 +18456,7 @@ static void skill_readdb(void)
 	safestrncpy(skill_db[0].desc, "Unknown Skill", sizeof(skill_db[0].desc));
 
 	sv_readdb(db_path, DBPATH"skill_db.txt"          , ',',  18, 18, MAX_SKILL_DB, skill_parse_row_skilldb);
-	sv_readdb(db_path, DBPATH"skill_require_db.txt"  , ',',  33, 33, MAX_SKILL_DB, skill_parse_row_requiredb);
+	sv_readdb(db_path, DBPATH"skill_require_db.txt"  , ',',  34, 34, MAX_SKILL_DB, skill_parse_row_requiredb);
 #ifdef RENEWAL_CAST
 	sv_readdb(db_path, "re/skill_cast_db.txt"        , ',',   8,  8, MAX_SKILL_DB, skill_parse_row_castdb);
 #else
