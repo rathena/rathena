@@ -114,7 +114,7 @@ static int pc_invincible_timer(int tid, unsigned int tick, int id, intptr_t data
 
 	if( (sd=(struct map_session_data *)map_id2sd(id)) == NULL || sd->bl.type!=BL_PC )
 		return 1;
-
+		
 	if(sd->invincible_timer != tid){
 		ShowError("invincible_timer %d != %d\n",sd->invincible_timer,tid);
 		return 0;
@@ -5217,6 +5217,7 @@ int pc_jobid2mapid(unsigned short b_class)
 		case JOB_STAR_GLADIATOR:        return MAPID_STAR_GLADIATOR;
 		case JOB_KAGEROU:
 		case JOB_OBORO:                 return MAPID_KAGEROUOBORO;
+		case JOB_REBELLION:             return MAPID_REBELLION;
 		case JOB_DEATH_KNIGHT:          return MAPID_DEATH_KNIGHT;
 	//2-2 Jobs
 		case JOB_CRUSADER:              return MAPID_CRUSADER;
@@ -5358,6 +5359,7 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_ASSASSIN:              return JOB_ASSASSIN;
 		case MAPID_STAR_GLADIATOR:        return JOB_STAR_GLADIATOR;
 		case MAPID_KAGEROUOBORO:          return sex?JOB_KAGEROU:JOB_OBORO;
+		case MAPID_REBELLION:             return JOB_REBELLION;
 		case MAPID_DEATH_KNIGHT:          return JOB_DEATH_KNIGHT;
 	//2-2 Jobs
 		case MAPID_CRUSADER:              return JOB_CRUSADER;
@@ -5677,7 +5679,8 @@ const char* job_name(int class_)
 	case JOB_KAGEROU:
 	case JOB_OBORO:
 		return msg_txt(NULL,653 - JOB_KAGEROU+class_);
-
+	case JOB_REBELLION:
+		return msg_txt(NULL,694);
 	default:
 		return msg_txt(NULL,655);
 	}

@@ -259,7 +259,10 @@ static void itemdb_jobid2mapid(unsigned int *bclass, unsigned int jobmask)
 	if (jobmask & 1<<23) //Soul Linker
 		bclass[2] |= 1<<MAPID_TAEKWON;
 	if (jobmask & 1<<JOB_GUNSLINGER)
+	{//Rebellion job can equip Gunslinger equips. [Rytech]
 		bclass[0] |= 1<<MAPID_GUNSLINGER;
+		bclass[1] |= 1<<MAPID_GUNSLINGER;
+	}
 	if (jobmask & 1<<JOB_NINJA)
 		{bclass[0] |= 1<<MAPID_NINJA;
 		bclass[1] |= 1<<MAPID_NINJA;}//Kagerou/Oboro jobs can equip Ninja equips. [Rytech]
@@ -271,6 +274,8 @@ static void itemdb_jobid2mapid(unsigned int *bclass, unsigned int jobmask)
 		bclass[2] |= 1<<MAPID_GANGSI;
 	if (jobmask & 1<<29) //Kagerou / Oboro
 		bclass[1] |= 1<<MAPID_NINJA;
+	if (jobmask & 1<<30) //Rebellion
+		bclass[1] |= 1<<MAPID_GUNSLINGER;
 }
 
 static void create_dummy_data(void)

@@ -2256,6 +2256,8 @@ static unsigned int status_base_pc_maxhp(struct map_session_data* sd, struct sta
 {
 	uint32 val = job_info[pc_class2idx(sd->status.class_)].hp_table[sd->status.base_level-1];
 
+	if((sd->class_&MAPID_UPPERMASK) == MAPID_NINJA || (sd->class_&MAPID_UPPERMASK) == MAPID_GUNSLINGER || (sd->class_&MAPID_UPPERMASK) == MAPID_REBELLION)
+		val += 100; //Since their HP can't be approximated well enough without this.
 	if((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && pc_famerank(sd->status.char_id, MAPID_TAEKWON))
 		val *= 3; //Triple max HP for top ranking Taekwons over level 90.
 	if((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.base_level >= 99)
