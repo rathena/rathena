@@ -1027,7 +1027,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			(flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON))
 			DAMAGE_SUBRATE(20)
 
-		if(sc->data[SC_FOGWALL] && skill_id != RK_DRAGONBREATH) {
+		if(sc->data[SC_FOGWALL] && skill_id != RK_DRAGONBREATH && skill_id != RK_DRAGONBREATH_WATER) {
 			if(flag&BF_SKILL) //25% reduction
 				DAMAGE_SUBRATE(25)
 			else if ((flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON))
@@ -2260,7 +2260,7 @@ static bool battle_skill_stacks_masteries_vvs(uint16 skill_id)
 #ifndef RENEWAL
 		skill_id == PA_SHIELDCHAIN || skill_id == CR_SHIELDBOOMERANG ||
 #endif
-		skill_id == LG_SHIELDPRESS || skill_id == LG_EARTHDRIVE)
+		skill_id == LG_SHIELDPRESS || skill_id == LG_EARTHDRIVE || skill_id == RK_DRAGONBREATH_WATER)
 			return false;
 
 	return true;
@@ -2524,19 +2524,14 @@ struct Damage battle_calc_damage_parts(struct Damage wd, struct block_list *src,
 	wd.statusAtk += battle_calc_status_attack(sstatus, EQI_HAND_R);
 	wd.statusAtk2 += battle_calc_status_attack(sstatus, EQI_HAND_L);
 
-	if (!skill_id) { // status atk is considered neutral on normal attacks [helvetica]
-		if(sd && sd->sc.data[SC_SEVENWIND]) { // Mild Wind applies element to status ATK as well as weapon ATK [helvetica]
-			wd.statusAtk = (int)battle_attr_fix(src, target, wd.statusAtk, right_element, tstatus->def_ele, tstatus->ele_lv);
-			wd.statusAtk2 = (int)battle_attr_fix(src, target, wd.statusAtk, left_element, tstatus->def_ele, tstatus->ele_lv);
-		}
-		else {
-			wd.statusAtk = (int)battle_attr_fix(src, target, wd.statusAtk, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
-			wd.statusAtk2 = (int)battle_attr_fix(src, target, wd.statusAtk, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
-		}
-	}
-	else {
+	if (skill_id || (sd && sd->sc.data[SC_SEVENWIND])) {
+		 // Mild Wind applies element to status ATK as well as weapon ATK [helvetica]
 		wd.statusAtk = (int)battle_attr_fix(src, target, wd.statusAtk, right_element, tstatus->def_ele, tstatus->ele_lv);
 		wd.statusAtk2 = (int)battle_attr_fix(src, target, wd.statusAtk, left_element, tstatus->def_ele, tstatus->ele_lv);
+	}
+	else { // status atk is considered neutral on normal attacks [helvetica]
+		wd.statusAtk = (int)battle_attr_fix(src, target, wd.statusAtk, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
+		wd.statusAtk2 = (int)battle_attr_fix(src, target, wd.statusAtk, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 	}
 
 	wd.weaponAtk += battle_calc_base_weapon_attack(src, tstatus, &sstatus->rhw, sd);
@@ -5579,6 +5574,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	case NPC_EVILLAND:
 		md.damage = skill_calc_heal(src,target,skill_id,skill_lv,false);
 		break;
+	case RK_DRAGONBREATH_WATER:
 	case RK_DRAGONBREATH:
 		md.damage = ((status_get_hp(src) / 50) + (status_get_max_sp(src) / 4)) * skill_lv;
 		RE_LVL_MDMOD(150);

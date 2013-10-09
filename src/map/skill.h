@@ -1908,10 +1908,6 @@ enum {
 void skill_usave_add(struct map_session_data * sd, uint16 skill_id, uint16 skill_lv);
 void skill_usave_trigger(struct map_session_data *sd);
 /**
- * Skill Cool Downs - load from pc.c when the character logs in
- **/
-void skill_cooldown_load(struct map_session_data * sd);
-/**
  * Warlock
  **/
 #define MAX_SKILL_SPELLBOOK_DB	17

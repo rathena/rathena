@@ -230,6 +230,8 @@ int skill_get_status_count( uint16 skill_id )               { skill_get (skill_d
 int skill_get_spiritball( uint16 skill_id, uint16 skill_lv ){ skill_get2 (skill_db[skill_id].require.spiritball[skill_lv-1], skill_id, skill_lv); }
 int skill_get_itemid( uint16 skill_id, int idx )            { skill_get3 (skill_db[skill_id].require.itemid[idx], skill_id, idx); }
 int skill_get_itemqty( uint16 skill_id, int idx )           { skill_get3 (skill_db[skill_id].require.amount[idx], skill_id, idx); }
+int skill_get_itemeq( uint16 skill_id, int idx )            { skill_get3 (skill_db[skill_id].require.eqItem[idx], skill_id, idx); }
+
 
 int skill_tree_get_max(uint16 skill_id, int b_class)
 {
@@ -764,7 +766,7 @@ struct s_skill_unit_layout* skill_get_unit_layout (uint16 skill_id, uint16 skill
 }
 
 /*==========================================
- *
+ * Add effect to skill when hit succesfully target
  *------------------------------------------*/
 int skill_additional_effect (struct block_list* src, struct block_list *bl, uint16 skill_id, uint16 skill_lv, int attack_type, int dmg_lv, unsigned int tick)
 {
@@ -1492,7 +1494,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 		if( sc_start(src,bl,SC_ILLUSIONDOPING,10 * skill_lv,skill_lv,skill_get_time(skill_id, skill_lv)) ) //Custom rate
 			sc_start(src,bl,SC_HALLUCINATION,100,skill_lv,skill_get_time(skill_id, skill_lv));
 		break;
-	}
+	} //end switch skill_id
 
 	if (md && battle_config.summons_trigger_autospells && md->master_id && md->special_state.ai)
 	{	//Pass heritage to Master for status causing effects. [Skotlex]
@@ -2901,7 +2903,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		dmg.flag |= BF_WEAPON;
 
 	if( sd && src != bl && damage > 0 && ( dmg.flag&BF_WEAPON ||
-		(dmg.flag&BF_MISC && (skill_id == RA_CLUSTERBOMB || skill_id == RA_FIRINGTRAP || skill_id == RA_ICEBOUNDTRAP || skill_id == RK_DRAGONBREATH)) ) )
+		(dmg.flag&BF_MISC && (skill_id == RA_CLUSTERBOMB || skill_id == RA_FIRINGTRAP || skill_id == RA_ICEBOUNDTRAP || skill_id == RK_DRAGONBREATH || skill_id == RK_DRAGONBREATH_WATER)) ) )
 	{
 		if (battle_config.left_cardfix_to_right)
 			battle_drain(sd, bl, dmg.damage, dmg.damage, tstatus->race, tstatus->mode&MD_BOSS);

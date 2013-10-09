@@ -1915,10 +1915,9 @@ static unsigned short status_base_atk(const struct block_list *bl, const struct 
 unsigned int status_weapon_atk(struct weapon_atk wa, struct status_data *status)
 {
 	float str = status->str;
-
 	if (wa.range > 1)
 		str = status->dex;
-
+	//wa.at2 = refinement, wa.atk = base equip atk, wa.atk*str/200 = bonus str
 	return wa.atk + wa.atk2 + (int)(wa.atk * (str/200));
 }
 #endif
@@ -3724,7 +3723,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 	}
 
 	if(flag&SCB_WATK) {
-
+#ifndef RENEWAL
 		status->rhw.atk = status_calc_watk(bl, sc, b_status->rhw.atk);
 		if (!sd) //Should not affect weapon refine bonus
 			status->rhw.atk2 = status_calc_watk(bl, sc, b_status->rhw.atk2);
@@ -3739,6 +3738,13 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 				status->lhw.atk2= status_calc_watk(bl, sc, b_status->lhw.atk2);
 			}
 		}
+#else
+		if(!b_status->watk){ //we only have left hand weapon
+			status->watk = 0;
+			status->watk2 = status_calc_watk(bl, sc, b_status->watk2);
+		}
+		else status->watk = status_calc_watk(bl, sc, b_status->watk);
+#endif
 	}
 
 	if(flag&SCB_HIT) {
@@ -4174,10 +4180,12 @@ void status_calc_bl_(struct block_list* bl, enum scb_flag flag, bool first)
 #endif
 		}
 
-		if(b_status.rhw.atk2 != status->rhw.atk2 || b_status.lhw.atk2 != status->lhw.atk2
+		if(
 #ifdef RENEWAL
-			|| b_status.rhw.atk != status->rhw.atk || b_status.lhw.atk != status->lhw.atk
+			b_status.watk != status->watk || b_status.watk2 != status->watk2
 			|| b_status.eatk != status->eatk
+#else
+			b_status.rhw.atk2 != status->rhw.atk2 || b_status.lhw.atk2 != status->lhw.atk2
 #endif
 			)
 			clif_updatestatus(sd,SP_ATK2);
@@ -4196,7 +4204,7 @@ void status_calc_bl_(struct block_list* bl, enum scb_flag flag, bool first)
 		if(b_status.matk_max != status->matk_max)
 			clif_updatestatus(sd,SP_MATK1);
 		if(b_status.matk_min != status->matk_min)
-            clif_updatestatus(sd,SP_MATK2);
+			clif_updatestatus(sd,SP_MATK2);
 #else
 		if(b_status.matk_max != status->matk_max || b_status.matk_min != status->matk_min){
 			clif_updatestatus(sd,SP_MATK2);
@@ -6999,6 +7007,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	break;
 	case SC_SATURDAYNIGHTFEVER:
 		if (sc->data[SC_BERSERK] || sc->data[SC_INSPIRATION])
+			return 0;
+		break;
+	case SC_MAGNETICFIELD: //This skill does not affect players using Hover. [Lighta]
+		if(sc->data[SC_HOVERING])
 			return 0;
 		break;
 	}
