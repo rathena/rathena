@@ -254,9 +254,9 @@ int skill_get_cooldown_(struct map_session_data *sd, int id, int lv) {
 	if (skill_db[idx].cooldown[lv - 1])
 		cooldown = skill_db[idx].cooldown[lv - 1];
 
-	for (i = 0; i < ARRAYLENGTH(sd->cooldown) && sd->cooldown[i].id; i++) {
-		if (sd->cooldown[i].id == id) {
-			cooldown += sd->cooldown[i].val;
+	for (i = 0; i < ARRAYLENGTH(sd->skillcooldown) && sd->skillcooldown[i].id; i++) {
+		if (sd->skillcooldown[i].id == id) {
+			cooldown += sd->skillcooldown[i].val;
 			if (cooldown < 0)
 				cooldown = 0;
 			break;
@@ -10065,15 +10065,8 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr_t data)
 		if( !sd || sd->skillitem != ud->skill_id || skill_get_delay(ud->skill_id,ud->skill_lv) )
 			ud->canact_tick = tick + skill_delayfix(src, ud->skill_id, ud->skill_lv);
 		if (sd) { //Cooldown application
-			int i, cooldown = skill_get_cooldown(ud->skill_id, ud->skill_lv);
-			for (i = 0; i < ARRAYLENGTH(sd->skillcooldown) && sd->skillcooldown[i].id; i++) { // Increases/Decreases cooldown of a skill by item/card bonuses.
-				if (sd->skillcooldown[i].id == ud->skill_id){
-					cooldown += sd->skillcooldown[i].val;
-					break;
-				}
-			}
-			if(cooldown)
-			skill_blockpc_start(sd, ud->skill_id, cooldown);
+			int cooldown = skill_get_cooldown_(sd,ud->skill_id, ud->skill_lv);
+			if(cooldown) skill_blockpc_start(sd, ud->skill_id, cooldown);
 		}
 		if( battle_config.display_status_timers && sd )
 			clif_status_change(src, SI_ACTIONDELAY, 1, skill_delayfix(src, ud->skill_id, ud->skill_lv), 0, 0, 0);

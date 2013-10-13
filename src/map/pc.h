@@ -249,7 +249,7 @@ struct map_session_data {
 	uint16 skill_id_old,skill_lv_old;
 	uint16 skill_id_dance,skill_lv_dance;
 	short cook_mastery; // range: [0,1999] [Inkfish]
-    struct skill_cooldown_entry * scd[MAX_SKILLCOOLDOWN]; // Skill Cooldown
+	struct skill_cooldown_entry * scd[MAX_SKILLCOOLDOWN]; // Skill Cooldown
 	int cloneskill_id, reproduceskill_id;
 	int menuskill_id, menuskill_val, menuskill_val2;
 
@@ -326,10 +326,6 @@ struct map_session_data {
 		short flag, rate;
 		unsigned char ele;
 	} subele2[MAX_PC_BONUS];
-	struct {
-		int id;
-		int val;
-	} cooldown[MAX_PC_BONUS];
 	struct {
 		short value;
 		int rate, tick;

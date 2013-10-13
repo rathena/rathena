@@ -4884,10 +4884,11 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 			status_change_end(&sd->bl, SC_CLOAKING, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
 		}
-		for (i = 0; i < EQI_MAX; i++)
-			if (sd->equip_index[i] >= 0)
-				if (!pc_isequip(sd,sd->equip_index[i]))
-					pc_unequipitem(sd,sd->equip_index[i],2);
+		for( i = 0; i < EQI_MAX; i++ ) {
+			if( sd->equip_index[ i ] >= 0 )
+				if( !pc_isequip( sd , sd->equip_index[ i ] ) )
+					pc_unequipitem( sd , sd->equip_index[ i ] , 2 );
+		}
 		if (battle_config.clear_unit_onwarp&BL_PC)
 			skill_clear_unitgroup(&sd->bl);
 		party_send_dot_remove(sd); //minimap dot fix [Kevin]
