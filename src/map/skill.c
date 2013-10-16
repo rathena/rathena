@@ -5667,8 +5667,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SM_ENDURE:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		if (sd)
-			skill_blockpc_start (sd, skill_id, skill_get_time2(skill_id,skill_lv));
 		break;
 
 	case AS_ENCHANTPOISON: // Prevent spamming [Valaris]
@@ -11635,7 +11633,9 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 			if (sg->src_id == bl->id)
 				break; //Does not affect the caster.
 			if( !sce && sc_start4(ss, bl,type,100,sg->skill_lv,0,SC__BLOODYLUST,0,sg->limit) )
-				sc_start(ss, bl,SC__BLOODYLUST,100,sg->skill_lv,sg->limit);
+				// Dirty fix to add extra time to Bloody Lust so it doesn't end before
+				// Berserk, causing HP to drop to 100 when we don't want it to [Akinari]
+				sc_start(ss, bl,SC__BLOODYLUST,100,sg->skill_lv,sg->limit+100);
 			break;
 
 		case UNT_PNEUMA:
