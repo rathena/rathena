@@ -276,8 +276,8 @@ int instance_create(int party_id, const char *name)
 
 	// Searching a Free Instance
 	// 0 is ignored as this mean "no instance" on maps
-	ARR_FIND(1, MAX_INSTANCE_DB, i, instance_data[i].state == INSTANCE_FREE);
-	if( i >= MAX_INSTANCE_DB )
+	ARR_FIND(1, MAX_INSTANCE_DATA, i, instance_data[i].state == INSTANCE_FREE);
+	if( i >= MAX_INSTANCE_DATA )
 		return -4;
 
 	instance_data[i].type = db->type;

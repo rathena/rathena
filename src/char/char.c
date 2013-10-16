@@ -1900,7 +1900,7 @@ int mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 	offset += MAP_NAME_LENGTH_EXT;
 #endif
 #if PACKETVER >= 20100803
-	WBUFL(buf,124) = (p->delete_date?TOL(p->delete_date)-time(NULL):0);
+	WBUFL(buf,124) = (p->delete_date?TOL(p->delete_date-time(NULL)):0);
 	offset += 4;
 #endif
 #if PACKETVER >= 20110111
@@ -3670,7 +3670,7 @@ void char_delete2_ack(int fd, int char_id, uint32 result, time_t delete_date)
 	WFIFOL(fd,2) = char_id;
 	WFIFOL(fd,6) = result;
 #if PACKETVER > 20130000
-	WFIFOL(fd,10) = TOL(delete_date) - time(NULL);
+	WFIFOL(fd,10) = TOL(delete_date - time(NULL));
 #else
 	WFIFOL(fd,10) = TOL(delete_date);
 #endif

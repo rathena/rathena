@@ -9243,8 +9243,8 @@ BUILDIN_FUNC(addtimercount)
 	int tick;
 	TBL_PC* sd;
 
-	event=script_getstr(st, 2);
-	tick=script_getnum(st,3);
+	tick=script_getnum(st,2);
+	event=script_getstr(st,3);
 	sd = script_rid2sd(st);
 	if( sd == NULL )
 		return 0;
@@ -12909,8 +12909,7 @@ int recovery_sub(struct map_session_data* sd, int revive)
  *-------------------------------------------------------------------------*/
 BUILDIN_FUNC(recovery)
 {
-	TBL_PC *sd = script_rid2sd(st);
-
+	TBL_PC *sd;
 	int map = 0, type = 0, revive = 1;
 
 	type = script_getnum(st,2);
@@ -12922,8 +12921,8 @@ BUILDIN_FUNC(recovery)
 		case 0:
 			if(script_hasdata(st,3))
 				sd=map_charid2sd(script_getnum(st,3));
-			if(sd == NULL) //If we don't have sd by now, bail out
-				return 0;
+			else if((sd = script_rid2sd(st)) == NULL)
+				return 0; //If we don't have sd by now, bail out
 			recovery_sub(sd, revive);
 			break;
 		case 1:
@@ -12931,7 +12930,7 @@ BUILDIN_FUNC(recovery)
 			struct party_data* p;
 			struct map_session_data* pl_sd;
 			//When no party given, we use invoker party
-			int p_id, i;
+			int p_id = 0, i;
 			if(script_hasdata(st,5)) {//Bad maps shouldn't cause issues
 				map = map_mapname2mapid(script_getstr(st,5));
 				if(map < 1) { //But we'll check anyways
@@ -12941,8 +12940,8 @@ BUILDIN_FUNC(recovery)
 			}
 			if(script_hasdata(st,3))
 				p_id = script_getnum(st,3);
-			else
-				p_id = (sd)?sd->status.party_id:0;
+			else if((sd = script_rid2sd(st)))
+				p_id = sd->status.party_id;
 			p = party_search(p_id);
 			if(p == NULL)
 				return 0;
@@ -12959,7 +12958,7 @@ BUILDIN_FUNC(recovery)
 			struct guild* g;
 			struct map_session_data* pl_sd;
 			//When no guild given, we use invoker guild
-			int g_id, i;
+			int g_id = 0, i;
 			if(script_hasdata(st,5)) {//Bad maps shouldn't cause issues
 				map = map_mapname2mapid(script_getstr(st,5));
 				if(map < 1) { //But we'll check anyways
@@ -12969,8 +12968,8 @@ BUILDIN_FUNC(recovery)
 			}
 			if(script_hasdata(st,3))
 				g_id = script_getnum(st,3);
-			else
-				g_id = (sd)?sd->status.guild_id:0;
+			else if((sd = script_rid2sd(st)))
+				g_id = sd->status.guild_id;
 			g = guild_search(g_id);
 			if(g == NULL)
 				return 0;
@@ -12985,10 +12984,10 @@ BUILDIN_FUNC(recovery)
 		case 3:
 			if(script_hasdata(st,3))
 				map = map_mapname2mapid(script_getstr(st,3));
-			else
-				map = (sd)?sd->bl.m:0; //No sd and no map given - return
+			else if((sd = script_rid2sd(st)))
+				map = sd->bl.m;
 			if(map < 1)
-				return 1;
+				return 1; //No sd and no map given - return
 		case 4:
 		{
 			struct s_mapiterator *iter;
@@ -18155,7 +18154,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(cmdothernpc,"ss"),
 	BUILDIN_DEF(addtimer,"is"),
 	BUILDIN_DEF(deltimer,"s"),
-	BUILDIN_DEF(addtimercount,"si"),
+	BUILDIN_DEF(addtimercount,"is"),
 	BUILDIN_DEF(initnpctimer,"??"),
 	BUILDIN_DEF(stopnpctimer,"??"),
 	BUILDIN_DEF(startnpctimer,"??"),
