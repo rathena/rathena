@@ -9464,11 +9464,18 @@ void pc_overheat(struct map_session_data *sd, int val) {
  */
 bool pc_isautolooting(struct map_session_data *sd, int nameid)
 {
-	int i;
-	if( !sd->state.autolooting )
+	uint8 i;
+	bool j = false;
+
+	if (!sd->state.autolooting && !sd->state.autolootingtype)
 		return false;
-	ARR_FIND(0, AUTOLOOTITEM_SIZE, i, sd->state.autolootid[i] == nameid);
-	return (i != AUTOLOOTITEM_SIZE);
+
+	if (sd->state.autolooting)
+		ARR_FIND(0, AUTOLOOTITEM_SIZE, i, sd->state.autolootid[i] == nameid);
+	if (sd->state.autolootingtype && sd->state.autoloottype&(1<<itemdb_type(nameid)))
+		j = true;
+
+	return (i != AUTOLOOTITEM_SIZE || j );
 }
 
 /**

@@ -356,6 +356,15 @@ By default, 10 items can be autolooted at one time.
 
 ---------------------------------------
 
+@autoloottype <+/- type name/ID>
+@autoloottype reset
+
+Starts or stops autolooting a specified item type.
+Type List: healing = 0, usable = 2, etc = 3, weapon = 4, armor = 5, card = 6, petegg = 7, petarmor = 8, ammo = 10
+Typing "reset" will clear the autoloot item list.
+
+---------------------------------------
+
 @mobsearch <monster name>
 
 Locates and displays the position of a certain mob on the current map.

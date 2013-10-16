@@ -5851,6 +5851,8 @@ ACMD_FUNC(autolootitem)
 	int i;
 	int action = 3; // 1=add, 2=remove, 3=help+list (default), 4=reset
 
+	nullpo_retr(-1, sd);
+
 	if (message && *message) {
 		if (message[0] == '+') {
 			message++;
@@ -5937,6 +5939,117 @@ ACMD_FUNC(autolootitem)
 	}
 	return 0;
 }
+
+/*==========================================
+ * @autoloottype
+ * Flags:
+ * 1:   IT_HEALING,  2:   IT_UNKNOWN,  4:    IT_USABLE, 8:    IT_ETC,
+ * 16:  IT_WEAPON,   32:  IT_ARMOR,    64:   IT_CARD,   128:  IT_PETEGG,
+ * 256: IT_PETARMOR, 512: IT_UNKNOWN2, 1024: IT_AMMO,   2048: IT_DELAYCONSUME
+ * 262144: IT_CASH
+ *------------------------------------------
+ * Credits:
+ *    chriser
+ *    Aleos
+ *------------------------------------------*/
+ACMD_FUNC(autoloottype)
+{
+	uint8 i = 0, action = 3; // 1=add, 2=remove, 3=help+list (default), 4=reset
+	enum item_types type;
+	int ITEM_NONE = 0, ITEM_MAX = 1533;
+
+	nullpo_retr(-1, sd);
+
+	if (message && *message) {
+		if (message[0] == '+') {
+			message++;
+			action = 1;
+		}
+		else if (message[0] == '-') {
+			message++;
+			action = 2;
+		}
+		else if (!strcmp(message,"reset"))
+			action = 4;
+	}
+
+	if (action < 3) { // add or remove
+		if ((strncmp(message, "healing", 3) == 0) || (atoi(message) == 0))
+			type = IT_HEALING;
+		else if ((strncmp(message, "usable", 3) == 0) || (atoi(message) == 2))
+			type = IT_USABLE;
+		else if ((strncmp(message, "etc", 3) == 0) || (atoi(message) == 3))
+			type = IT_ETC;
+		else if ((strncmp(message, "weapon", 3) == 0) || (atoi(message) == 4))
+			type = IT_WEAPON;
+		else if ((strncmp(message, "armor", 3) == 0) || (atoi(message) == 5))
+			type = IT_ARMOR;
+		else if ((strncmp(message, "card", 3) == 0) || (atoi(message) == 6))
+			type = IT_CARD;
+		else if ((strncmp(message, "petegg", 4) == 0) || (atoi(message) == 7))
+			type = IT_PETEGG;
+		else if ((strncmp(message, "petarmor", 4) == 0) || (atoi(message) == 8))
+			type = IT_PETARMOR;
+		else if ((strncmp(message, "ammo", 3) == 0) || (atoi(message) == 10))
+			type = IT_AMMO;
+		else {
+			clif_displaymessage(fd, msg_txt(sd,1480)); // Item type not found.
+			return -1;
+		}
+	}
+
+	switch (action) {
+		case 1:
+			if (sd->state.autoloottype&(1<<type)) {
+				clif_displaymessage(fd, msg_txt(sd,1481)); // You're already autolooting this item type.
+				return -1;
+			}
+			if (sd->state.autoloottype == ITEM_MAX) {
+				clif_displaymessage(fd, msg_txt(sd,1482)); // Your autoloottype list has all item types. You can remove some items with @autoloottype -<type name or ID>.
+				return -1;
+			}
+			sd->state.autolootingtype = 1; // Autoloot Activated
+			sd->state.autoloottype |= (1<<type); // Stores the type
+			sprintf(atcmd_output, msg_txt(sd,1483), itemdb_typename(type), type); // Autolooting item type: '%s' {%d}
+			clif_displaymessage(fd, atcmd_output);
+			break;
+		case 2:
+			if (!(sd->state.autoloottype&(1<<type))) {
+				clif_displaymessage(fd, msg_txt(sd,1484)); // You're currently not autolooting this item type.
+				return -1;
+			}
+			sd->state.autoloottype &= ~(1<<type);
+			sprintf(atcmd_output, msg_txt(sd,1485), itemdb_typename(type), type); // Removed item type: '%s' {%d} from your autoloottype list.
+			clif_displaymessage(fd, atcmd_output);
+			if (sd->state.autoloottype == ITEM_NONE)
+				sd->state.autolootingtype = 0;
+			break;
+		case 3:
+			clif_displaymessage(fd, msg_txt(sd,1486)); // To add an item type to the list, use "@aloottype +<type name or ID>". To remove an item type, use "@aloottype -<type name or ID>".
+			clif_displaymessage(fd, msg_txt(sd,1487)); // Type List: healing = 0, usable = 2, etc = 3, weapon = 4, armor = 5, card = 6, petegg = 7, petarmor = 8, ammo = 10
+			clif_displaymessage(fd, msg_txt(sd,1488)); // "@aloottype reset" will clear your autoloottype list.
+			if (sd->state.autoloottype == ITEM_NONE)
+				clif_displaymessage(fd, msg_txt(sd,1489)); // Your autoloottype list is empty.
+			else {
+				clif_displaymessage(fd, msg_txt(sd,1490)); // Item types on your autoloottype list:
+				while (i < IT_MAX) {
+					if (sd->state.autoloottype&(1<<i)) {
+						sprintf(atcmd_output, "  '%s' {%d}", itemdb_typename(i), i);
+						clif_displaymessage(fd, atcmd_output);
+					}
+					i++;
+				}
+			}
+			break;
+		case 4:
+			sd->state.autoloottype = ITEM_NONE;
+			sd->state.autolootingtype = 0;
+			clif_displaymessage(fd, msg_txt(sd,1491)); // Your autoloottype list has been reset.
+			break;
+	}
+	return 0;
+}
+
 /**
  * No longer available, keeping here just in case it's back someday. [Ind]
  **/
@@ -9284,6 +9397,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(changelook),
 		ACMD_DEF(autoloot),
 		ACMD_DEF2("alootid", autolootitem),
+		ACMD_DEF(autoloottype),
 		ACMD_DEF(mobinfo),
 		ACMD_DEF(exp),
 		ACMD_DEF(version),
