@@ -8473,9 +8473,18 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val_flag |= 1|2|4;
 			break;
 		case SC__UNLUCKY:
+		{
+			short rand_eff; 
+			switch(rand() % 3) {
+				case 1: rand_eff = SC_BLIND; break;
+				case 2: rand_eff = SC_SILENCE; break;
+				default: rand_eff = SC_POISON; break;
+			}
 			val2 = 10 * val1; // Crit and Flee2 Reduction
 			val_flag |= 1|2|4;
+			status_change_start(src,bl,rand_eff,10000,val1,0,0,0,tick,10);
 			break;
+		}
 		case SC__WEAKNESS:
 			val2 = 10 * val1;
 			val_flag |= 1|2;

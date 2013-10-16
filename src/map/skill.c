@@ -8596,9 +8596,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				- status_get_lv(bl)/10 - tstatus->luk/10 - (dstsd?(dstsd->max_weight-dstsd->weight)/10000:0) - rnd_value(tstatus->agi/6,tstatus->agi/3);
 			rate = cap_value(rate, skill_lv+sstatus->dex/20, 100);
 			if (clif_skill_nodamage(src,bl,skill_id,0,sc_start(src,bl,type,rate,skill_lv,skill_get_time(skill_id,skill_lv)))) {
-				int sp = 200 * skill_lv;
+				int sp = 100 * skill_lv;
 				if( dstmd ) sp = dstmd->level * 2;
-				if( status_zap(bl,0,sp) )
+				if( !dstmd && status_zap(bl,0,sp) )
 					status_heal(src,0,sp/2,3);
 			}
 			else if( sd ) clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
@@ -14125,8 +14125,12 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
 
 	req.zeny = skill_db[idx].require.zeny[skill_lv-1];
 
-	if( sc && sc->data[SC__UNLUCKY] )
-		req.zeny += sc->data[SC__UNLUCKY]->val1 * 500;
+	if( sc && sc->data[SC__UNLUCKY] ) {
+		if(sc->data[SC__UNLUCKY]->val1 < 3)
+			req.zeny += sc->data[SC__UNLUCKY]->val1 * 250;
+		else
+			req.zeny += 1000;
+	}
 
 	req.spiritball = skill_db[idx].require.spiritball[skill_lv-1];
 	req.state = skill_db[idx].require.state;
