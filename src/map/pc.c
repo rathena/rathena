@@ -9464,7 +9464,7 @@ void pc_overheat(struct map_session_data *sd, int val) {
  */
 bool pc_isautolooting(struct map_session_data *sd, int nameid)
 {
-	uint8 i;
+	uint8 i = 0;
 	bool j = false;
 
 	if (!sd->state.autolooting && !sd->state.autolootingtype)
@@ -9776,6 +9776,9 @@ static bool pc_readdb_levelpenalty(char* fields[], int columns, int current)
 static bool pc_readdb_job1(char* fields[], int columns, int current){
 	int idx, class_;
 	unsigned int i;
+#ifndef HP_SP_TABLES
+	unsigned int k = 0, val;
+#endif
 
 	class_ = atoi(fields[0]);
 
@@ -9798,6 +9801,20 @@ static bool pc_readdb_job1(char* fields[], int columns, int current){
 	{
 		job_info[idx].aspd_base[i] = atoi(fields[i+5]);
 	}
+
+#ifndef HP_SP_TABLES
+	for(i = 0; i <= MAX_LEVEL; i++) {
+		k += (job_info[idx].hp_factor*(i+1) + 50) / 100;
+		val = 35 + ((i+1)*job_info[idx].hp_multiplicator)/100 + k;
+		val = min(INT_MAX,val);
+		job_info[idx].hp_table[i] = val;
+	}
+	for(i = 0; i <= MAX_LEVEL; i++) {
+		val = 10 + ((i+1)*job_info[idx].sp_factor)/100;
+		val = min(INT_MAX,val);
+		job_info[idx].sp_table[i] = val;
+	}
+#endif
 	return true;
 }
 
@@ -9824,6 +9841,7 @@ static bool pc_readdb_job2(char* fields[], int columns, int current)
 
 //Reading job_maxhpsp.txt line
 //startlvl,maxlvl,class,type,values...
+#ifdef HP_SP_TABLES
 static bool pc_readdb_job_maxhpsp(char* fields[], int columns, int current)
 {
 	int idx, i,j, maxlvl, startlvl;
@@ -9849,6 +9867,7 @@ static bool pc_readdb_job_maxhpsp(char* fields[], int columns, int current)
 		ShowError("pc_readdb_job_maxhpsp: Invalid type %d specified.\n", type);
 		return false;
 	}
+
 	job_count = pc_split_atoi(fields[2],jobs,':',CLASS_COUNT);
 	if (job_count < 1)
 		return false;
@@ -9860,8 +9879,7 @@ static bool pc_readdb_job_maxhpsp(char* fields[], int columns, int current)
 		}
 		idx = pc_class2idx(job_id);
 		if(type == 0) {	//hp type
-			unsigned int k = 0;
-			unsigned int val, oldval=0;
+			unsigned int k = 0, val, oldval=0;
 			short level = 0;
 			for(i = 0; i <= MAX_LEVEL; i++) {
 				val = 0;
@@ -9908,6 +9926,7 @@ static bool pc_readdb_job_maxhpsp(char* fields[], int columns, int current)
 	}
 	return true;
 }
+#endif
 
 //Reading job_exp.txt line
 //Max Level,Class list,Type (0 - Base Exp; 1 - Job Exp),Exp/lvl...
@@ -10057,7 +10076,9 @@ int pc_readdb(void)
 	sv_readdb(db_path, "pre-re/job_db1.txt",',',5+MAX_WEAPON_TYPE,5+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1);
 #endif
 	sv_readdb(db_path, "job_db2.txt",',',1,1+MAX_LEVEL,CLASS_COUNT,&pc_readdb_job2);
+#ifdef HP_SP_TABLES
 	sv_readdb(db_path, DBPATH"job_maxhpsp_db.txt", ',', 4, 4+MAX_LEVEL, CLASS_COUNT*2, &pc_readdb_job_maxhpsp);
+#endif
 	sv_readdb(db_path, DBPATH"job_exp.txt",',',4,1000+3,CLASS_COUNT*2,&pc_readdb_job_exp); //support till 1000lvl
 	
 	//Checking if all class have their data

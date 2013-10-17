@@ -5955,7 +5955,7 @@ ACMD_FUNC(autolootitem)
 ACMD_FUNC(autoloottype)
 {
 	uint8 i = 0, action = 3; // 1=add, 2=remove, 3=help+list (default), 4=reset
-	enum item_types type;
+	enum item_types type = -1;
 	int ITEM_NONE = 0, ITEM_MAX = 1533;
 
 	nullpo_retr(-1, sd);

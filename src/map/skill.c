@@ -18524,7 +18524,9 @@ static bool skill_parse_row_copyabledb(char* split[], int column, int current) {
 
 /// Reads additional range [Cydh]
 static bool skill_parse_row_nonearnpcrangedb(char* split[], int column, int current) {
-	uint16 skill_id = skill_name2id(split[0]), idx;
+	int idx;
+	uint16 skill_id = skill_name2id(split[0]);
+
 	if ((idx = skill_get_index(skill_id)) < 0) { // invalid skill id
 		ShowError("skill_parse_row_nonearnpcrangedb: Invalid skill '%s'\n",split[0]);
 		return false;

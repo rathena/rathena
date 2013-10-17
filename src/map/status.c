@@ -6378,8 +6378,6 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 		sc = NULL;
 	switch (type) {
 		case SC_POISON:
-			if( sc && sc->data[SC__UNLUCKY] )
-				return tick;
 		case SC_DPOISON:
 			sc_def = status->vit*100;
 			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
@@ -6394,8 +6392,6 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			}
 			break;
 		case SC_STUN:
-			if( sc && sc->data[SC__UNLUCKY] )
-				return tick;
 		case SC_SILENCE:
 		case SC_BLEEDING:
 			sc_def = status->vit*100;
@@ -6427,8 +6423,6 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			tick_def2 = status->luk*10;
 			break;
 		case SC_BLIND:
-			if( sc && sc->data[SC__UNLUCKY] )
-				return tick;
 			sc_def = (status->vit + status->int_)*50;
 			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
 			tick_def2 = status->luk*10;
@@ -10666,14 +10660,10 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		break;
 
 	case SC__INVISIBILITY:
-		if( --(sce->val4) >= 0 )
-		{
-			if( !status_charge(bl, 0, (status->sp * 6 - sce->val1) / 100) )// 6% - skill_lv.
-				break;
-			sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
-			return 0;
-		}
-		break;
+		if( !status_charge(bl, 0, (12 - 2 * sce->val1) * status->max_sp / 100) )// 6% - skill_lv.
+			break;
+		sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
+		return 0;
 
 	case SC_STRIKING:
 		if( --(sce->val4) >= 0 )

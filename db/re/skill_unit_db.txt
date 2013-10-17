@@ -157,8 +157,8 @@
 
 3006,0x86,    ,  0, 2,1000,enemy, 0x018	//KO_BAKURETSU
 3008,0x86,    ,  0, 2,1000,enemy, 0x018	//KO_MUCHANAGE
-3009,0x86,    ,  0, 3, 500,enemy, 0x018	//KO_HUUMARANKA
-3020,0xf8,    ,  0, 3,1000,all,   0x018	//KO_ZENKAI
+3009,0x86,    ,  0, 3,1000,enemy, 0x018	//KO_HUUMARANKA
+3020,0xf8,    ,  0, 3, 100,all,   0x018	//KO_ZENKAI
 3010,0xfc,    ,  0, 1,1000,enemy, 0x020	//KO_MAKIBISHI
 5006,0x101,   ,  0, 3,2000,enemy, 0x018	//NC_MAGMA_ERUPTION
 5010,0xfe,    ,  0, 2,  -1,enemy, 0x000	//SC_ESCAPE

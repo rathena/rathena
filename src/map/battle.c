@@ -637,9 +637,6 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 					}
 				}
 
-				if( flag&BF_LONG )
-					cardfix = cardfix * ( 100 + sd->bonus.long_attack_atk_rate ) / 100;
-
 				if( (left&1) && cardfix_ != 1000 )
 					bccDAMAGE_RATE(cardfix_)
 				else if( cardfix != 1000 )
@@ -4529,6 +4526,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		if (sd) { //monsters, homuns and pets have their damage computed directly
 			wd.damage = wd.statusAtk + wd.weaponAtk + wd.equipAtk + wd.masteryAtk;
 			wd.damage2 = wd.statusAtk2 + wd.weaponAtk2 + wd.equipAtk2 + wd.masteryAtk2;
+
+			if( wd.flag&BF_LONG ) // Long damage rate addition doesn't use weapon + equip attack, what about others?
+				wd.damage = wd.damage * ( 100 + sd->bonus.long_attack_atk_rate ) / 100;
 		}
 #else
 		// final attack bonuses that aren't affected by cards
