@@ -30,7 +30,7 @@ M_PAY:
 	if (.@MUSTPAY<1000000) set .@MUSTPAY,1000000;
 	if (.@MUSTPAY>100000000) set .@MUSTPAY,100000000;
 	if (PRISON==0) mes "I can't remember you. Is it your 1st time?";
-	if (PRISON>1) mes "You again? Somebody hasn't grown wiser from the very first visit...";
+	if (PRISON>0) mes "You again? Somebody hasn't grown wiser from the very first visit...";
 	mes "OK, we could release you for ^FF0000"+.@MUSTPAY+"z^000000.";
 	next;
 	menu "I pay cash!",M_PAYCASH,"Do you accept cheques?",M_PAYBANK,"I've changed my mind.",-;
