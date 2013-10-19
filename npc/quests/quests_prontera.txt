@@ -2896,7 +2896,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 					mes "to cover your Airship fee.";
 					mes "Thank you, and good luck.";
 					set aru_monas,6;
-					set Zeny, Zeny + (checkre(0))?5000:1500;
+					set Zeny, Zeny + (checkre(0)?5000:1500);
 					changequest 17002,17003;
 					close;
 				}

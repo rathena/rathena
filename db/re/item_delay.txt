@@ -1,0 +1,29 @@
+// Item Delay Database
+// There is a max concurrent number of entries modifiable in src/map/itemdb.h as MAX_ITEMDELAYS
+//
+// Structure:
+// Item ID,Delay in Milliseconds
+
+//12202,60000	//Str_Dish10_
+//12203,60000	//Agi_Dish10_
+//12204,60000	//Int_Dish10_
+//12205,60000	//Dex_Dish10_
+//12206,60000	//Luk_Dish10_
+//12207,60000	//Vit_Dish10_
+12208,60000	//Battle_Manual
+12210,60000	//Bubble_Gum
+14538,300000	//Glass_Of_Illusion
+14586,180000	//Spark_Candy
+607,5000	// Yggdrasil_Berry
+608,3000	// Yggdrasil_Seed
+
+// Bifrost Items
+11522,1000	// Red_Raffle_Sap
+11523,2000	// Yellow_Raffle_Sap
+11524,3000	// White_Raffle_Sap
+11525,5000	// Mora_Hip_Tea
+
+// FIX ME! Delays need confirmation.
+12968,300000	// Emergency_Scroll1
+12969,300000	// Emergency_Scroll2
+12970,300000	// Emergency_Scroll3
