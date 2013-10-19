@@ -225,7 +225,7 @@ L_High:
 	close2;
 	savepoint "gon_test",56,99;
 	set @battle,1;
-	atcommand strcharinfo(0) + "@option 64 0 64";
+	atcommand "@option 64 0 64";
 	warp "gon_test",72,87;
 	end;
 
@@ -233,7 +233,7 @@ L_4to6:
 	close2;
 	savepoint "gon_test",56,99;
 	set @battle,1;
-	atcommand strcharinfo(0) + "@option 64 0 64";
+	atcommand "@option 64 0 64";
 	warp "gon_test",57,86;
 	end;
 
@@ -241,7 +241,7 @@ L_1to3:
 	close2;
 	savepoint "gon_test",56,99;
 	set @battle,1;
-	atcommand strcharinfo(0) + "@option 64 0 64";
+	atcommand "@option 64 0 64";
 	warp "gon_test",43,87;
 	end;
 
@@ -249,7 +249,7 @@ L_Exit:
 	close2;
 	savepoint "prontera",149,186;
 	set @battle,0;
-	atcommand strcharinfo(0) + "@option 0 0 0";
+	atcommand "@option 0 0 0";
 	warp "prontera",149,186;
 	end;
 
@@ -257,7 +257,7 @@ L_Spec:
 	close2;
 	savepoint "gon_test",56,99;
 	set @battle,0;
-	atcommand strcharinfo(0) + "@option 0 0 0";
+	atcommand "@option 0 0 0";
 	warp "gon_test",57,99;
 	end;
 
@@ -325,13 +325,13 @@ L_Sell:
 	mes "You have: ^FF0000" + #monpoints + "^000000 experience points";
 	mes "How many would you like to sell?";
 	next;
-	input @sellexp;
-	if (@sellexp > #monpoints) goto L_NoExp;
-	set #monpoints,#monpoints-@sellexp;
-	set @sellearn,100*@sellexp; // Price of exp
-	set Zeny, Zeny+@sellearn;
+	input .@sellexp;
+	if (.@sellexp > #monpoints) goto L_NoExp;
+	set #monpoints,#monpoints-.@sellexp;
+	set .@sellearn,100*.@sellexp; // Price of exp
+	set Zeny, Zeny+.@sellearn;
 	mes "[Monster Trainer]";
-	mes "You earned ^0000FF" + @sellearn + "^000000z.";
+	mes "You earned ^0000FF" + .@sellearn + "^000000z.";
 	close;
 
 
@@ -716,9 +716,7 @@ gon_test,56,91,6	script	OnSpecialKilled	-1,{
 }
 
 function	script	duelkill	{
-	if (strcharinfo(0) == $@duelist1$ || strcharinfo(0) == $@duelist2$) goto L_Heal;
-	end;
-L_Heal:
+	if (strcharinfo(0) != $@duelist1$ && strcharinfo(0) != $@duelist2$) end;
 	announce strcharinfo(0) + " won the Duel",1;
 	set @fighting,0;
 	set #heal,0;
@@ -744,8 +742,8 @@ gon_test,55,103,6	script	Nurse	90,{
 	end;
 
 L_Heal:
-	set @healrate,140 / #monster; //Rate of heal per click
-	set @healing,@healing + @healrate;
+	set .@healrate,140 / #monster; //Rate of heal per click
+	set @healing,@healing + .@healrate;
 	end;
 
 L_NoHeal:
@@ -770,8 +768,7 @@ gon_test	mapflag	noskill
 
 // Duel Arena //
 gon_test,58,103,5	script	Duel Master#01	92,{
-	if ($@duelist1$ == "") set @duel,0;
-	if ($@monster1 == "") set @duel,0;
+	if ($@duelist1$ == "" || $@monster1 == 0) set $@duel,0;
 	set @marena,1;
 	if (#monster == 0) goto L_NoMon;
 	mes "[Duel Master]";
@@ -799,7 +796,7 @@ gon_test,58,103,5	script	Duel Master#01	92,{
 	set $@duelist1$,strcharinfo(0);
 	set @battle,1;
 	announce strcharinfo(0) + " [Monster Level: " + $@monster1 + "] is waiting for a duel",1;
-	atcommand strcharinfo(0) + "@option 64 0 64";
+	atcommand "@option 64 0 64";
 	warp "gon_test",49,5;
 	close;
 
@@ -827,7 +824,7 @@ L_Duel2:
 	set $@duelist2$,strcharinfo(0);
 	set @battle,1;
 	announce strcharinfo(0) + " [Monster Level: " + $@monster2 + "] has joined the duel",1;
-	atcommand strcharinfo(0) + "@option 64 0 64";
+	atcommand "@option 64 0 64";
 	warp "gon_test",49,5;
 	close;
 
@@ -840,7 +837,7 @@ L_Dueling:
 
 L_Spec:
 	set @battle,0;
-	atcommand strcharinfo(0) + "@option 64 0 64";
+	atcommand "@option 64 0 64";
 	warp "gon_test",49,5;
 	close;
 
@@ -873,14 +870,14 @@ L_Leave:
 	if ($@duelist2$ == strcharinfo(0)) goto L_Leave2;
 
 L_Leave3:
-	atcommand strcharinfo(0) + "@option 0 0 0";
+	atcommand "@option 0 0 0";
 	set @battle,0;
 	warp "gon_test",57,99;
 	close;
 
 L_Leave1:
-	set $@duelist1$,$@duelist2$;
-	set $@monster1,$@monster2;
+	set $@duelist1$,"";
+	set $@monster1,0;
 	set $@duel,$@duel-1;
 	announce strcharinfo(0) + " stopped dueling",1;
 	goto L_Leave3;

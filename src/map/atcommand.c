@@ -8698,6 +8698,35 @@ static void atcommand_commands_sub(struct map_session_data* sd, const int fd, At
 	dbi_destroy(iter);
 	clif_displaymessage(fd,line_buff);
 
+	if ( atcmd_binding_count ) {
+		int i, count_bind, gm_lvl = pc_get_group_level(sd);
+		for( i = count_bind = 0; i < atcmd_binding_count; i++ ) {
+			if ( gm_lvl >= ( type -1 ? atcmd_binding[i]->level2 : atcmd_binding[i]->level ) ) {
+				unsigned int slen = strlen(atcmd_binding[i]->command);
+				if ( count_bind == 0 ) {
+					cur = line_buff;
+					memset(line_buff,' ',CHATBOX_SIZE);
+					line_buff[CHATBOX_SIZE-1] = 0;
+					clif_displaymessage(fd, "-----------------");
+					clif_displaymessage(fd, "Customs commands :");
+				}
+				if (slen + cur - line_buff >= CHATBOX_SIZE) {
+					clif_displaymessage(fd,line_buff);
+					cur = line_buff;
+					memset(line_buff,' ',CHATBOX_SIZE);
+					line_buff[CHATBOX_SIZE-1] = 0;
+				}
+				memcpy(cur,atcmd_binding[i]->command,slen);
+				cur += slen+(10-slen%10);
+				count_bind++;
+			}
+		}
+		if ( count_bind )
+			clif_displaymessage(fd,line_buff);// last one
+		count += count_bind;
+		
+	}
+
 	sprintf(atcmd_output, msg_txt(sd,274), count); // "%d commands found."
 	clif_displaymessage(fd, atcmd_output);
 

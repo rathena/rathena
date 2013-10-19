@@ -19,23 +19,19 @@
 sec_pri,36,58,1	script	Chief Warder	105,{ 
 	mes "[Saddeus]";
 	emotion e_what;
-	if (Sex) {
-		mes "Mr. Prisoner #"+BaseLevel+JobLevel+",";
-	} else {
-		mes "Ms. Prisoner #"+BaseLevel+JobLevel+",";
-	}
+	mes (Sex?"Mr.":"Ms.")+". Prisoner #"+BaseLevel+JobLevel+",";
 	mes "what's the noise over there?";
 	next;
 	menu "Let me free, I'll pay!",-, "Let me to work off my freedom!",M_Q1, "Nothing",M_NO_THANKS;
 
 M_PAY:
 	mes "[Saddeus]";
-	set @MUSTPAY,(PRISON+1)*1000000;
-	if (@MUSTPAY<1000000) set @MUSTPAY,1000000;
-	if (@MUSTPAY>100000000) set @MUSTPAY,100000000;
-	if (PRISON==1) mes "I can't remember you. Is it your 1st time?";
-	if (PRISON>1) mes "You again? Sombody hasn't grown wiser from the very first visit...";
-	mes "OK, we could release you for ^FF0000"+@MUSTPAY+"z^000000.";
+	set .@MUSTPAY,(PRISON+1)*1000000;
+	if (.@MUSTPAY<1000000) set .@MUSTPAY,1000000;
+	if (.@MUSTPAY>100000000) set .@MUSTPAY,100000000;
+	if (PRISON==0) mes "I can't remember you. Is it your 1st time?";
+	if (PRISON>1) mes "You again? Somebody hasn't grown wiser from the very first visit...";
+	mes "OK, we could release you for ^FF0000"+.@MUSTPAY+"z^000000.";
 	next;
 	menu "I pay cash!",M_PAYCASH,"Do you accept cheques?",M_PAYBANK,"I've changed my mind.",-;
 
@@ -44,8 +40,8 @@ M_PAY:
 	close;
 
 M_PAYCASH:
-	if (@MUSTPAY>Zeny) goto L_NOCASH;
-	set Zeny,Zeny-@MUSTPAY;
+	if (.@MUSTPAY>Zeny) goto L_NOCASH;
+	set Zeny,Zeny-.@MUSTPAY;
 	mes "[Saddeus]";
 	mes "OK, sing here and there.";
 	goto L_RELEASE;
@@ -56,8 +52,8 @@ L_NOCASH:
 	close;
 
 M_PAYBANK:
-	if (@MUSTPAY>#kafrabank) goto L_NOBANK;
-	set #kafrabank,#kafrabank-@MUSTPAY;
+	if (.@MUSTPAY>#kafrabank) goto L_NOBANK;
+	set #kafrabank,#kafrabank-.@MUSTPAY;
 	mes "[Saddeus]";
 	mes "OK, sign your cheque. And put down your name in my book.";
 	goto L_RELEASE;
@@ -96,10 +92,10 @@ M_Q1:
 
 	nude;
 
-	set @rw,rand(1,4);
-	if (@rw==2) goto L_W2;
-	if (@rw==3) goto L_W3;
-	if (@rw==4) goto L_W4;
+	set .@rw,rand(1,4);
+	if (.@rw==2) goto L_W2;
+	if (.@rw==3) goto L_W3;
+	if (.@rw==4) goto L_W4;
 
 L_W1:
 	savepoint "sec_in02",179,76;

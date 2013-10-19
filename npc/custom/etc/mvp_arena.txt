@@ -51,19 +51,19 @@ quiz_00,49,31,4	script	MVP Arena Guide	778,{
 
 // Keepers
 function	script	Keeper	{
+	set .@arg, getarg(0);
 	mes "[ ^0065DF"+strnpcinfo(1)+"^000000 ]";
 	mes "Which arena would you";
 	mes "like to enter?";
-	set .@menu$,"";
 	for(set .@i,1; .@i<9; set .@i,.@i+1)
-		set .@menu$, .@menu$+"Arena "+.@i+" ["+getmapusers("pvp_n_"+.@i+"-"+getarg(0))+"/20]:";
+		set .@menu$, .@menu$+"Arena "+.@i+" ["+getmapusers("pvp_n_"+.@i+"-"+.@arg)+"/20]:";
 	set .@i, select(.@menu$);
-	if (getmapusers("pvp_n_"+.@i+"-"+getarg(0))>19) {
+	if (getmapusers("pvp_n_"+.@i+"-"+ .@arg)>19) {
 		mes "[ ^0065DF"+strnpcinfo(1)+"^000000 ]";
 		mes "Sorry, this arena is full!";
 		close;
 	}
-	warp "pvp_n_"+.@i+"-"+getarg(0),102,102;
+	warp "pvp_n_"+.@i+"-"+ .@arg,102,102;
 	close;
 }
 quiz_00,56,31,4	script	Alpha MVP	770,{ callfunc "Keeper",2; }
