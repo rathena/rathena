@@ -150,8 +150,8 @@ dicastes01,271,152,0	script	Training Galten#e	450,{
         	close;
 	}
 	mes "[Training Galten]";
-	dialog "¡ø¢²¡û ¡ô ¢£¢³¡ô";
-	dialog "¡ü¡ô";
+	mes "¡ø¢²¡û ¡ô ¢£¢³¡ô";
+	mes "¡ü¡ô";
 	close;
 }
 
@@ -329,7 +329,7 @@ dic_in01,341,113,3	script	Tired Piom#a	491,{
 		mes "But mining does seem to suit me.";
 		next;
 		mes "[Tired Piom]";
-		mes "..."
+		mes "...";
 		next;
 		emotion e_swt;
 		mes "[Tired Piom]";
