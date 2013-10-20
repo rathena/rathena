@@ -340,7 +340,7 @@ moc_para01,50,39,4	script	Eve Natalia	882,{
 // Bubble Gum & Battle Manual Exchanger
 //============================================================
 moc_para01,48,184,2	script	Gum & Manual Exchanger	562,{
-	if(Weight < MaxWeight / 2) {
+	if (Weight < MaxWeight / 2) {
 		mes "You're carrying too many items right now.";
 		close;	
 	}
@@ -356,12 +356,18 @@ moc_para01,48,184,2	script	Gum & Manual Exchanger	562,{
 	mes "What would you like to exchange for?";
 	next;
 	switch(select("HE Bubble Gum:HE Battle Manual:1 Battle Manual X3:2 Battle Manual X3:1 Costume Corsair:Nothing")) {
-	//CallSub L_Exchange,<Insert Item>,<Amount>,<Return Item>,<Amount>
-	case 1:	callsub L_Exchange,12210,2,12412,1;	
-	case 2:	callsub L_Exchange,12208,2,12411,1;
-	case 3:	callsub L_Exchange,12411,4,14545,1;
-	case 4:	callsub L_Exchange,12312,3,14545,2;
-
+	case 1:
+		callsub L_Exchange,12210,2,12412,1;
+		break;
+	case 2:
+		callsub L_Exchange,12208,2,12411,1;
+		break;
+	case 3:
+		callsub L_Exchange,12411,4,14545,1;
+		break;
+	case 4:
+		callsub L_Exchange,12312,3,14545,2;
+		break;
 	case 5:
 		mes "[Trader Machine]";
 		mes "I can give you 1 Battle Manual X3 for 1 Costume Corsair.";
@@ -374,19 +380,20 @@ moc_para01,48,184,2	script	Gum & Manual Exchanger	562,{
 		next;
 		if(select("Yes, give it to me!:No, wait not yet.") == 2)
 			close;
-		//Dialogue below not official.
+		// Unofficial dialogue.
 		mes "[Trader Machine]";
-		mes "You place the required items into the machine..";
+		mes "You place the required items into the machine...";
 		next;
 		mes "[Trader Machine]";
-		mes "Bump... The Machine has given you an Item in return";
-		delitem 19619,1; //Costume Corsair
-		getitem 14545,1; //Battle Manual X3
+		mes "The Machine has given you an item in return!";
+		delitem 19619,1; //C_Corsair
+		getitem 14545,1; //Battle_Manual_X3
 		close;
-	case 6:	
+	case 6:
 		close;
 	}
 
+//callsub L_Exchange,<Insert Item>,<Amount>,<Return Item>,<Amount>
 L_Exchange:
 	mes "[Trader Machine]";
 	mes "How many "+getitemname(getarg(2))+" do you want?";
@@ -450,8 +457,7 @@ moc_para01,41,169,2	script	Kafra Stacker#eden	749,{
 }
 
 // Code Redeemer
-// Used to purchase Items for In-Game use through other sites officially.
-//========================================================================
+//============================================================
 moc_para01,38,162,2	script	Code the Redeemer#Give1	405,{
 	mes "[Code the Redeemer]";
 	mes "Welcome, "+strcharinfo(0)+"!";

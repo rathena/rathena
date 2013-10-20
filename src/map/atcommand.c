@@ -8708,7 +8708,7 @@ static void atcommand_commands_sub(struct map_session_data* sd, const int fd, At
 					memset(line_buff,' ',CHATBOX_SIZE);
 					line_buff[CHATBOX_SIZE-1] = 0;
 					clif_displaymessage(fd, "-----------------");
-					clif_displaymessage(fd, "Customs commands :");
+					clif_displaymessage(fd, msg_txt(sd,509)); // Script-bound commands:
 				}
 				if (slen + cur - line_buff >= CHATBOX_SIZE) {
 					clif_displaymessage(fd,line_buff);

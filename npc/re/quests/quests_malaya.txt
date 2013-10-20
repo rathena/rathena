@@ -4404,6 +4404,7 @@ malaya,290,152,5	script	Master of Hunting#buwaya	578,{
 		mes "Argh! That's so foul.";
 		mes "You've really brought back the samples.";
 		mes "Ho! Leave it there and come back after washing your hands. Even god won't smile down at you with that stench.";
+		delitem 6519,10; //Collected_Sample
 		set malaya_buwaya,8;
 		erasequest 2274;
 		setquest 2275;

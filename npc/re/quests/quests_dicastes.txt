@@ -6030,7 +6030,7 @@ dic_in01,349,129,5	script	Bouy#13_3	449,{
 				mes "I've been waiting for the Galtens to return because I'm not accustomed to battle since I'm Venknick. Thank you very much.";
 				next;
 				mes "[Bouy]";
-				mes "Handwork is much faster to refine pieces of Bradium instead of using a machine. I will only need an hour to finish.";
+				mes "Handwork is much faster to refine pieces of Bradium instead of using a machine. I will only need two hours to finish."; //Official: "an hour", but gives 2-hour quest.
 				next;
 				mes "[Bouy]";
 				mes "Please go rest while I get to work.";
@@ -7374,26 +7374,24 @@ dic_fild01,259,172,3	duplicate(dic_enc#main)	Mancho#pa0829	495
 dic_in01,353,37,5	duplicate(dic_enc#main)	Kareka#pa0829	454
 
 dic_fild01,228,159,4	script	Jahbong#pa0829	496,{
+	mes "[Jahbong]";
 	if (countitem(6304) < 1) {
-		mes "[Jahbong]";
 		mes "You haven't received a Sapha Certification yet?";
 		next;
 		mes "[Jahbong]";
 		mes "Come back to me once you have one. I'll give you something good in exchange.";
 		close; 
 	}
-	mes "[Jahbong]";
-	switch (rand(1,9)) {	
-		case 1:	mes "Don't touch my back! I might bite you unconsciously.";
-		case 2: mes "Pub owner Shay carried something away to make something strange! Be careful!";
-		case 3: mes "We cats can jump 5 times our size. Isn't it cool? But then, don't ask me to jump from here now.";
-		case 4: mes "I have to be diligent with my grooming to maintain beautiful fur.";
-		case 5: mes "I have to groom myself everyday to maintain shiny fluffy fur. But I don't have very nice fur in the first place. Very sad.";
-		case 6: mes "You should receive a Sapha Certification with both paws as a sign of respect. No cat deserves a certification if they don't!";
-		case 7: mes "I don't really talk that much! Ahat looks like... meow meow meooow... sorry.";
-		case 8: mes "Meow~~~~~~~~~~";
-		case 9:	mes "Yarn is a great way to calm a cat.";
-	}
+	set .@cattalkj,rand(1,9);
+	if (.@cattalkj == 1) mes "Don't touch my back! I might bite you unconsciously.";
+	else if (.@cattalkj == 2) mes "Pub owner Shay carried something away to make something strange! Be careful!";
+	else if (.@cattalkj == 3) mes "We cats can jump 5 times our size. Isn't it cool? But then, don't ask me to jump from here now.";
+	else if (.@cattalkj == 4) mes "I have to be diligent with my grooming to maintain beautiful fur.";
+	else if (.@cattalkj == 5) mes "I have to groom myself everyday to maintain shiny fluffy fur. But I don't have very nice fur in the first place. Very sad.";
+	else if (.@cattalkj == 6) mes "You should receive a Sapha Certification with both paws as a sign of respect. No cat deserves a certification if they don't!";
+	else if (.@cattalkj == 7) mes "I don't really talk that much! Ahat looks like... meow meow meooow... sorry.";
+	else if (.@cattalkj == 8) mes "Meow~~~~~~~~~~";
+	else mes "Yarn is a great way to calm a cat.";
 	next;
 	mes "[Jahbong]";
 	mes "Why are you here?";
