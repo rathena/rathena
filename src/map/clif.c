@@ -14119,7 +14119,7 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd)
 	}
 
 	if (body_len)
-		safestrncpy(msg.body, (char*)RFIFOP(fd,RFIFOW(fd,info->pos[4])), body_len + 1);
+		safestrncpy(msg.body, (char*)RFIFOP(fd,info->pos[4]), body_len + 1);
 	else
 		memset(msg.body, 0x00, MAIL_BODY_LENGTH);
 

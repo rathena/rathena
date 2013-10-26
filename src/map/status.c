@@ -1212,7 +1212,6 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 			status_change_end(target, SC_CLOAKING, INVALID_TIMER);
 			status_change_end(target, SC_CHASEWALK, INVALID_TIMER);
 			status_change_end(target, SC_CAMOUFLAGE, INVALID_TIMER);
-			status_change_end(target, SC__INVISIBILITY, INVALID_TIMER);
 			status_change_end(target, SC_DEEPSLEEP, INVALID_TIMER);
 			if ((sce=sc->data[SC_ENDURE]) && !sce->val4) {
 				//Endure count is only reduced by non-players on non-gvg maps.
