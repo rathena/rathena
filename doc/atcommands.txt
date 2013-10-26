@@ -705,9 +705,25 @@ Repairs all broken items in your inventory.
 
 ---------------------------------------
 
-@dropall
+@dropall {<item type>}
 
-Drops all inventory and equipped items onto the floor.
+Drops all items based on the item type.
+
+Valid item types:
+    -1 = All Items (default)
+     0 = Healing Items
+     2 = Useable Items
+     3 = Etc Items
+     4 = Weapons
+     5 = Armors
+     6 = Cards
+     7 = Pet Eggs
+     8 = Pet Armors
+     10 = Ammunition Items
+
+Example:
+To drop all weapons in inventory.
+@dropall 4
 
 ---------------------------------------
 
