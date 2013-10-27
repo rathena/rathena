@@ -750,6 +750,8 @@ enum {
 	JOB_KAGEROU = 4211,
 	JOB_OBORO,
 
+	JOB_REBELLION = 4215,
+
 	JOB_MAX,
 };
 

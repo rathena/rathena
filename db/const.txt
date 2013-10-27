@@ -166,6 +166,8 @@ Job_Super_Baby_E	4191
 Job_Kagerou	4211
 Job_Oboro	4212
 
+Job_Rebellion  4215
+
 EAJL_2_1	0x100
 EAJL_2_2	0x200
 EAJL_2	0x300

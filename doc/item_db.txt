@@ -99,6 +99,7 @@ Job: Equippable jobs. Uses the following bitmask table:
 	Death Knight   (2^27): 0x08000000
 	Dark Collector (2^28): 0x10000000
 	Kagerou/Oboro  (2^29): 0x20000000
+	Rebellion      (2^30): 0x40000000
 
 	Novice + Swordman + Magician + Archer = 0x0000000F, why?
 	Because: 10 = A, 11 = B, 12 = C, 13 = D, 14 = E, and 15 = F

@@ -2277,6 +2277,8 @@ static unsigned int status_base_pc_maxhp(struct map_session_data* sd, struct sta
 		val *= 3; //Triple max HP for top ranking Taekwons over level 90.
 	if((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.base_level >= 99)
 		val += 2000; //Supernovice lvl99 hp bonus.
+	if((sd->class_&MAPID_UPPERMASK) == MAPID_REBELLION)
+		val += 100; //Since Rebellion's HP can't be approximated well enough without this.
 
 	val += val * status->vit/100; // +1% per each point of VIT
 
