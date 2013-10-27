@@ -8364,9 +8364,9 @@ REPLACE INTO `item_db_re` VALUES (18730,'Cryptura_Academy_Hat','Cryptura Academy
 REPLACE INTO `item_db_re` VALUES (18737,'Fortier_Mask','Fortier Masque',5,20,NULL,200,NULL,0,NULL,0,0xFFFFFFFF,63,2,512,NULL,'10',0,876,'bonus bUnbreakableHelm,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18739,'Carnation_Hairband','Carnation Hairband',5,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,63,2,256,NULL,'0',1,878,'bonus bLuk,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18740,'Hair_Of_The_Strong','Hair Of The Strong',5,20,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'0',0,879,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (18742,'C_MoonStar_Accessory','Moon and Stars',5,20,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'0',0,0,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (18742,'C_MoonStar_Accessory','Moon and Stars',5,20,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'0',0,881,NULL,'sc_start SC_MOONSTAR,-1,0;','sc_end SC_MOONSTAR;');
 REPLACE INTO `item_db_re` VALUES (18743,'Spirit_Of_Chung_E','Spirit Of Chung E',5,20,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'0',0,882,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (18744,'C_World_Star','Twilight',5,20,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'0',0,0,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (18744,'C_World_Star','Twilight',5,20,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'0',0,883,NULL,'sc_start SC_SUPER_STAR,-1,0;','sc_end SC_SUPER_STAR;');
 REPLACE INTO `item_db_re` VALUES (18745,'Choco_Stick_In_Mouth','Choco Stick In Mouth',5,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,63,2,1,NULL,'10',0,884,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18746,'Chilly_Breath','Chilly Breath',5,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,63,2,1,NULL,'10',0,885,'bonus bInt,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18747,'Eyes_Of_Ifrit','Eyes Of Ifrit',5,20,NULL,100,NULL,1,NULL,1,0xFFFFFFFF,63,2,512,NULL,'0',0,886,'bonus bDex,1;',NULL,NULL);

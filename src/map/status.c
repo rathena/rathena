@@ -750,6 +750,8 @@ void initChangeTables(void) {
 	set_sc( OB_OBOROGENSOU			, SC_GENSOU		, SI_GENSOU		, SCB_NONE );
 
 	set_sc( ALL_FULL_THROTTLE		, SC_FULL_THROTTLE	, SI_FULL_THROTTLE	, SCB_SPEED|SCB_STR|SCB_AGI|SCB_VIT|SCB_INT|SCB_DEX|SCB_LUK );
+	set_sc_with_vfx( SC_MOONSTAR		, SC_MOONSTAR		, SI_MOONSTAR		, SCB_NONE );
+	set_sc_with_vfx( SC_SUPER_STAR		, SC_SUPER_STAR		, SI_SUPER_STAR		, SCB_NONE );
 
 	// Storing the target job rather than simply SC_SPIRIT simplifies code later on.
 	SkillStatusChangeTable[SL_ALCHEMIST]	= (sc_type)MAPID_ALCHEMIST,
@@ -909,6 +911,8 @@ void initChangeTables(void) {
 	StatusIconChangeTable[SC_PUSH_CART] = SI_ON_PUSH_CART;
 	StatusIconChangeTable[SC_REBOUND] = SI_REBOUND;
 	StatusIconChangeTable[SC_MONSTER_TRANSFORM] = SI_MONSTER_TRANSFORM;
+	StatusIconChangeTable[SC_MOONSTAR] = SI_MOONSTAR;
+	StatusIconChangeTable[SC_SUPER_STAR] = SI_SUPER_STAR;
 
 	//Other SC which are not necessarily associated to skills.
 	StatusChangeFlagTable[SC_ASPDPOTION0] = SCB_ASPD;
@@ -993,6 +997,8 @@ void initChangeTables(void) {
 	StatusChangeFlagTable[SC_EXTRACT_SALAMINE_JUICE] |= SCB_ASPD;
 	StatusChangeFlagTable[SC_DEFSET] |= SCB_DEF;
 	StatusChangeFlagTable[SC_MDEFSET] |= SCB_MDEF;
+	StatusChangeFlagTable[SC_MOONSTAR] |= SCB_NONE;
+	StatusChangeFlagTable[SC_SUPER_STAR] |= SCB_NONE;
 
 #ifdef RENEWAL
 	// renewal EDP increases your weapon atk
