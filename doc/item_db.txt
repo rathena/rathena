@@ -136,6 +136,7 @@ Loc: Equipment's placement. Values are (hexadecimal):
 	2^11 2048 = Costume Mid Headgear
 	2^12 4096 = Costume Low Headgear
 	2^13 8192 = Costume Garment/Robe
+	2^15 32768 = Ammo
 
 ---------------------------------------
 

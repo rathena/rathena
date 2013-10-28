@@ -2028,7 +2028,7 @@ packet_ver: 39
 0x093A,5,hommenu,2:4
 0x0964,36,storagepassword,2:4:20
 
-//2013-06-18 Ragexe (Shaktoh)
+//2013-06-18 Ragexe (Shakto)
 packet_ver: 40
 0x0889,7,actionrequest,2:6
 0x0951,10,useskilltoid,2:4:6

@@ -847,6 +847,13 @@
 //718,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_DEATHSUMMON,Death Summon
 //719,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_HELLBURNING,Hell Burning
 //720,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_JACKFROST,Jack Frost 2
+//721,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_WIDEWEB,Wide Web
+//722,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_WIDESUCK,Wide Suck
+//723,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_STORMGUST2,Storm Gust 2
+//724,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_FIRESTORM,Fire Storm
+//725,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_REVERBERATION,Reverberation 2
+//726,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_REVERBERATION_ATK,Reverberation Attack
+//727,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_LEX_AETERNA,Lex Aeterna 2
 
 //****
 // 2nd Quest Skills
@@ -1286,6 +1293,10 @@
 3033,7,6,16,0,0x1,0,1,1,no,0,0,0,none,0,0x0,	ECL_SADAGUI,Sadagui
 3034,7,6,16,0,0x1,0,1,1,no,0,0,0,none,0,0x0,	ECL_SEQUOIADUST,Sequoia Dust
 3035,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,0x0,		ECLAGE_RECALL,Return To Eclage
+
+// Copied Bard / Dancer Skills
+//3036,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,	BA_POEMBRAGI2,Poem of Bragi 2
+//3037,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,	DC_FORTUNEKISS2,Fortune Kiss 2
 
 //****
 // EP 14.3 Part 2 3rd Job Skills
