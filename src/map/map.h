@@ -638,6 +638,9 @@ struct map_data {
 
 	/* rAthena Local Chat */
 	struct Channel *channel;
+	
+	/* speeds up clif_updatestatus processing by causing hpmeter to run only when someone with the permission can view it */
+	unsigned short hpmeter_visible;
 };
 
 /// Stores information about a remote map (for multi-mapserver setups).

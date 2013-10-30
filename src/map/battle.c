@@ -637,6 +637,11 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 					}
 				}
 
+#ifndef RENEWAL
+				if( flag&BF_LONG )
+					cardfix = cardfix * ( 100 + sd->bonus.long_attack_atk_rate ) / 100;
+#endif
+
 				if( (left&1) && cardfix_ != 1000 )
 					bccDAMAGE_RATE(cardfix_)
 				else if( cardfix != 1000 )

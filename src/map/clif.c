@@ -2804,7 +2804,8 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 	case SP_HP:
 		WFIFOL(fd,4)=sd->battle_status.hp;
 		// TODO: Won't these overwrite the current packet?
-		clif_hpmeter(sd);
+		if( map[sd->bl.m].hpmeter_visible )
+			clif_hpmeter(sd);
 		if( !battle_config.party_hp_mode && sd->status.party_id )
 			clif_party_hp(sd);
 		if( sd->bg_id )
@@ -9395,6 +9396,11 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			char output[128];
 			sprintf(output, "[ Kill Steal Protection Disable. KS is allowed in this map ]");
 			clif_broadcast(&sd->bl, output, strlen(output) + 1, 0x10, SELF);
+		}
+
+		if( pc_has_permission(sd,PC_PERM_VIEW_HPMETER) ) {
+			map[sd->bl.m].hpmeter_visible++;
+			sd->state.hpmeter_visible = 1;
 		}
 
 		map_iwall_get(sd); // Updates Walls Info on this Map to Client

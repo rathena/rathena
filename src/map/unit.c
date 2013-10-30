@@ -2227,6 +2227,10 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			{// decrement the number of active pvp players on the map
 				--map[bl->m].users_pvp;
 			}
+			if( sd->state.hpmeter_visible ) {
+				map[bl->m].hpmeter_visible--;
+				sd->state.hpmeter_visible = 0;
+			}
 			sd->state.debug_remove_map = 1; // temporary state to track double remove_map's [FlavioJS]
 			sd->debug_file = file;
 			sd->debug_line = line;

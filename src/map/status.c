@@ -8610,7 +8610,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = 1000; // [GodLesZ] tick time
 			break;
 		case SC_FORCEOFVANGUARD: // This is not the official way to handle it but I think we should use it. [pakpil]
-			val2 = 20 + 12 * (val1 - 1); // Chance
+			val2 = 8 + (12 * val1); // Chance
 			val3 = 5 + (2 * val1); // Max rage counters
 			tick = -1; //endless duration in the client
 			tick_time = 6000; // [GodLesZ] tick time
@@ -10773,9 +10773,9 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		break;
 
 	case SC_FORCEOFVANGUARD:
-		if( !status_charge(bl,0,20) )
+		if( !status_charge(bl,0,24 - (4 * sce->val1)) )
 			break;
-		sc_timer_next(6000 + tick, status_change_timer, bl->id, data);
+		sc_timer_next(10000 + tick, status_change_timer, bl->id, data);
 		return 0;
 
 	case SC_BANDING:
