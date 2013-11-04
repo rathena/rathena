@@ -20,8 +20,8 @@ struct status_change_entry;
 #define MAX_ARROW_RESOURCE		5
 #define MAX_SKILL_ABRA_DB		350
 #define MAX_SKILL_IMPROVISE_DB 50
-
 #define MAX_SKILL_LEVEL 100
+#define MAX_SKILL_CRIMSON_MARKER 3
 
 DBMap* skilldb_name2id;
 
@@ -1924,6 +1924,7 @@ enum {
 	UNT_HELLBURNING,
 	UNT_MAGMA_ERUPTION,
 	UNT_KINGS_GRACE,
+
 	UNT_GLITTERING_GREED,
 	UNT_B_TRAP,
 	UNT_FIRE_RAIN,

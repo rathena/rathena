@@ -1115,7 +1115,8 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	}
 	else if ( target_id == src->id &&
 		skill_get_inf(skill_id)&INF_SELF_SKILL &&
-		skill_get_inf2(skill_id)&INF2_NO_TARGET_SELF )
+		(skill_get_inf2(skill_id)&INF2_NO_TARGET_SELF ||
+		(skill_id == RL_QD_SHOT && sc && sc->data[SC_QD_SHOT_READY])) )
 	{
 		target_id = ud->target; //Auto-select target. [Skotlex]
 		combo = 1;
@@ -1847,6 +1848,9 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 #endif
 	   )
 		return 0; // can't attack under these conditions
+
+	if (sd && &sd->sc && sd->sc.count && sd->sc.data[SC_HEAT_BARREL_AFTER])
+		return 0;
 
 	if( src->m != target->m )
 	{

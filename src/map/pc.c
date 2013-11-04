@@ -4348,8 +4348,8 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 		sd->sc.data[SC__INVISIBILITY] ||
 		sd->sc.data[SC__MANHOLE] ||
 		sd->sc.data[SC_KAGEHUMI] ||
-		(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOITEM)
-	    ))
+		(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOITEM) ||
+		sd->sc.data[SC_HEAT_BARREL_AFTER]))
 		return 0;
 	
 	if (!pc_isItemClass(sd,item))
@@ -8655,7 +8655,11 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 		return 0;
 	}
 
-	if( sd->sc.count && sd->sc.data[SC_PYROCLASTIC] && sd->inventory_data[n]->type == IT_WEAPON ) {
+	if( sd->sc.count && (
+		(sd->sc.data[SC_PYROCLASTIC] && sd->inventory_data[n]->type == IT_WEAPON) ||
+		sd->sc.data[SC_BERSERK] || 
+		sd->sc.data[SC_SATURDAYNIGHTFEVER]) )
+	{
 		clif_equipitemack(sd,0,0,0);
 		return 0;
 	}
@@ -8673,11 +8677,6 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 
 	if(!pc_isequip(sd,n) || !(pos&req_pos) || sd->status.inventory[n].equip != 0 || sd->status.inventory[n].attribute==1 ) { // [Valaris]
 		// FIXME: pc_isequip: equip level failure uses 2 instead of 0
-		clif_equipitemack(sd,n,0,0);	// fail
-		return 0;
-	}
-
-	if (sd->sc.data[SC_BERSERK] || sd->sc.data[SC_SATURDAYNIGHTFEVER]) {
 		clif_equipitemack(sd,n,0,0);	// fail
 		return 0;
 	}
@@ -8878,6 +8877,12 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag) {
 	{
 		clif_unequipitemack(sd,n,0,0);
 		return 0;
+	}
+	if (&sd->sc) {
+		if (sd->sc.data[SC_HEAT_BARREL])
+			status_change_end(&sd->bl,SC_HEAT_BARREL,INVALID_TIMER);
+		if (sd->sc.data[SC_P_ALTER] && (sd->inventory_data[n]->type == IT_WEAPON || sd->inventory_data[n]->type == IT_AMMO))
+			status_change_end(&sd->bl,SC_P_ALTER,INVALID_TIMER);
 	}
 
 	if(battle_config.battle_log)
@@ -10284,6 +10289,19 @@ void pc_damage_log_clear(struct map_session_data *sd, int id)
 		ARR_FIND(0,DAMAGELOG_SIZE_PC,i,sd->dmglog[i].id == id);	// find the id position
 		if( i < DAMAGELOG_SIZE_PC )
 			sd->dmglog[i].id = 0;
+	}
+}
+
+void pc_crimson_marker_clear(struct map_session_data *sd) {
+	uint8 i;
+
+	if (!sd || !(&sd->c_marker) || !sd->c_marker.target)
+		return;
+
+	for (i = 0; i < MAX_SKILL_CRIMSON_MARKER; i++) {
+		struct block_list *bl = NULL;
+		if (sd->c_marker.target[i] && (bl = map_id2bl(sd->c_marker.target[i])))
+			status_change_end(bl,SC_C_MARKER,INVALID_TIMER);
 	}
 }
 

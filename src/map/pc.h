@@ -545,6 +545,11 @@ struct map_session_data {
 		int id;
 	} dmglog[DAMAGELOG_SIZE_PC];
 
+	struct s_crimson_marker {
+		int target[MAX_SKILL_CRIMSON_MARKER]; //Target id storage
+		uint8 count; //Count of target for skill like RL_D_TAIL
+	} c_marker;
+	bool flicker;
 };
 
 
@@ -1011,6 +1016,8 @@ void pc_baselevelchanged(struct map_session_data *sd);
 
 void pc_damage_log_add(struct map_session_data *sd, int id);
 void pc_damage_log_clear(struct map_session_data *sd, int id);
+
+void pc_crimson_marker_clear(struct map_session_data *sd);
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_race, uint32 mob_mode, int type);
