@@ -6867,7 +6867,7 @@ static const struct _battle_data {
 	{ "max_heal_lv",                        &battle_config.max_heal_lv,                     11,     1,      INT_MAX,        },
 	{ "max_heal",                           &battle_config.max_heal,                        9999,   0,      INT_MAX,        },
 	{ "combo_delay_rate",                   &battle_config.combo_delay_rate,                100,    0,      INT_MAX,        },
-	{ "item_check",                         &battle_config.item_check,                      0,      0,      1,              },
+	{ "item_check",                         &battle_config.item_check,                      0,      0,      7,              },
 	{ "item_use_interval",                  &battle_config.item_use_interval,               100,    0,      INT_MAX,        },
 	{ "cashfood_use_interval",              &battle_config.cashfood_use_interval,           60000,  0,      INT_MAX,        },
 	{ "wedding_modifydisplay",              &battle_config.wedding_modifydisplay,           0,      0,      1,              },
