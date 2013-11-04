@@ -147,7 +147,7 @@ int unit_teleport_timer(int tid, unsigned int tick, int id, intptr_t data){
 
 	if(tid == INVALID_TIMER || mast_tid == NULL)
 		return 0;
-	else if(*mast_tid != tid)
+	else if(*mast_tid != tid || bl == NULL)
 		return 0;
 	else {
 		TBL_PC *msd = unit_get_master(bl);
@@ -155,6 +155,8 @@ int unit_teleport_timer(int tid, unsigned int tick, int id, intptr_t data){
 			*mast_tid = INVALID_TIMER;
 			unit_warp(bl, msd->bl.id, msd->bl.x, msd->bl.y, CLR_TELEPORT );
 		}
+		else // No timer needed
+			*mast_tid = INVALID_TIMER;
 	}
 	return 0;
 }
