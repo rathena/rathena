@@ -2190,7 +2190,6 @@ packet_ver: 44
 0x0863,26,friendslistadd,2
 0x088A,5,hommenu,2:4
 0x095B,36,storagepassword,2:4:20
-<<<<<<< HEAD
 0x09A6,12,ZC_BANKING_CHECK,2:10
 0x09A7,10,bankdeposit,2:6
 0x09A8,16,ZC_ACK_BANKING_DEPOSIT,2:4:12
@@ -2201,18 +2200,6 @@ packet_ver: 44
 0x09B7,4,ZC_ACK_OPEN_BANKING,2
 0x09B8,6,bankclose,2
 0x09B9,4,ZC_ACK_CLOSE_BANKING,2
-=======
-0x09A6,12 // ZC_BANKING_CHECK
-0x09A7,10,bankdeposit,2:6
-0x09A8,14 // ZC_ACK_BANKING_DEPOSIT
-0x09A9,10,bankwithdrawal,2:6
-0x09AA,14 // ZC_ACK_BANKING_WITHDRAW
-0x09AB,6,bankcheck,2
-0x09B6,6,bankopen,2
-0x09B7,4 // ZC_ACK_OPEN_BANKING
-0x09B8,6,bankclose,2
-0x09B9,4 // ZC_ACK_CLOSE_BANKING
->>>>>>> master
 
 //2013-08-07Ragexe (Shakto)
 packet_ver: 45
