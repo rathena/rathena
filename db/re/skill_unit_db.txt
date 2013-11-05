@@ -155,6 +155,9 @@
 2488,0xe9,    ,  0, 3,1000,enemy, 0x000	//GN_FIRE_EXPANSION_TEAR_GAS
 2490,0xea,    ,  0, 1,1000,enemy, 0x002	//GN_HELLS_PLANT
 
+2555,0x104,   ,  0, 1:2:2:3:3,500,enemy,0x006	//RL_B_TRAP
+2567,0x105,   ,  2, 2,1000,enemy, 0x0	//RL_FIRE_RAIN
+
 3006,0x86,    ,  0, 2,1000,enemy, 0x018	//KO_BAKURETSU
 3008,0x86,    ,  0, 2,1000,enemy, 0x018	//KO_MUCHANAGE
 3009,0x86,    ,  0, 3,1000,enemy, 0x018	//KO_HUUMARANKA

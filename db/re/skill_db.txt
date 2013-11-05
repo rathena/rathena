@@ -1,4 +1,4 @@
-//id,range,hit,inf,element,nk,splash,max,list_num,castcancel,cast_defence_rate,inf2,maxcount,skill_type,blow_count,name,description
+//id,range,hit,inf,element,nk,splash,max,list_num,castcancel,cast_defence_rate,inf2,maxcount,skill_type,blow_count,inf3,name,description
 // 01 ID
 // 02 range (combo skills do not check for range when used,
 //           if range is < 5, the skill is considered melee-range)
@@ -847,6 +847,13 @@
 //718,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_DEATHSUMMON,Death Summon
 //719,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_HELLBURNING,Hell Burning
 //720,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_JACKFROST,Jack Frost 2
+//721,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_WIDEWEB,Wide Web
+//722,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_WIDESUCK,Wide Suck
+//723,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_STORMGUST2,Storm Gust 2
+//724,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_FIRESTORM,Fire Storm
+//725,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_REVERBERATION,Reverberation 2
+//726,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_REVERBERATION_ATK,Reverberation Attack
+//727,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_LEX_AETERNA,Lex Aeterna 2
 
 //****
 // 2nd Quest Skills
@@ -1221,6 +1228,33 @@
 //2548,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,0x0,	GM_ITEM_MATKMIN,Minimize Magic Attack
 
 //****
+// Rebellion
+//2551,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0,	RL_GLITTERING_GREED,Flip The Coin Greed
+2552,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,0x0,	RL_RICHS_COIN,Rich's Coin
+2553,15,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,	RL_MASS_SPIRAL,Mass Spiral
+2554,9,6,1,-1,0x2,2,5,1,no,0,0,0,weapon,0,0x0,	RL_BANISHING_BUSTER,Banishing Buster
+2555,3,6,2,0,0x1,1,5,1,no,0,0,1,misc,0,0x0,	RL_B_TRAP,Bind Trap
+2556,0,6,4,0,0x3,-1,1,1,no,0,0,0,none,0,0x0,	RL_FLICKER,Flicker
+2557,9,6,1,-1,0x2,2,5,1,no,0,0,0,weapon,0,0x0,	RL_S_STORM,Shatter Storm
+2558,0,6,4,0,0x1,0,10,1,no,0,0,0,none,0,0x0,	RL_E_CHAIN,Eternal Chain
+2559,-9,6,4,-1,0x3,21,1,1,no,0,0x0,0,weapon,0,0x0,	RL_QD_SHOT,Quick Draw Shot
+2560,11,6,1,0,0x1,0,1,1,no,0,0,3,none,0,0x0,	RL_C_MARKER,Crimson Marker
+2561,0,6,4,-1,0x2,3,5,1,no,0,0,0,weapon,0,0x0,	RL_FIREDANCE,Fire Dance
+2562,7:8:9:10:11,6,1,-1,0x2,2,5,1,no,0,0,0,weapon,0,0x0,	RL_H_MINE,Howling Mine
+2563,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0,	RL_P_ALTER,Platinum Alter
+2564,9,6,2,0,0x1,0,5,1,no,0,0,0,none,0,0x0,	RL_FALLEN_ANGEL,Fallen Angel
+2565,0,6,4,-1,0x2,2:2:2:2:3,5,1,no,0,0,0,weapon,3,0x0,	RL_R_TRIP,Round Trip
+2566,0,6,4,-1,0x3,-1,5,1,no,0,0,0,weapon,0,0x0,	RL_D_TAIL,Dragon Tail
+2567,3,6,1,-1,0x2,5,5,1,no,0,0,0,weapon,0,0,	RL_FIRE_RAIN,Fire Rain
+2568,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0,	RL_HEAT_BARREL,Heat Barrel
+2569,9,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,	RL_AM_BLAST,Anti-Material Blast
+2570,9,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,	RL_SLUGSHOT,Slug Shot
+2571,7:8:9:10:11,6,2,-1,0x2,2,5,1,no,0,0,0,weapon,0,0x0,	RL_HAMMER_OF_GOD,Hammer of God
+//2572,0,6,1,-1,0x40,0,5,1,no,0,0,0,weapon,0,0,	RL_R_TRIP_PLUSATK,Round Trip Plus Attack
+//2573,0,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0,	RL_B_FLICKER_ATK,Bind Flicker Attack
+//2574,0,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,0,	RL_GLITTERING_GREED_ATK,Flip The Coin Greed Attack
+
+//****
 // Kagerou & Oboro
 3001,0,6,4,0,0,0,1,1,no,0,0,0,none,0,0x4,		KO_YAMIKUMO,Yamikumo
 3002,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0,0x0,		KO_RIGHT,Right Hand Mastery
@@ -1259,6 +1293,10 @@
 3033,7,6,16,0,0x1,0,1,1,no,0,0,0,none,0,0x0,	ECL_SADAGUI,Sadagui
 3034,7,6,16,0,0x1,0,1,1,no,0,0,0,none,0,0x0,	ECL_SEQUOIADUST,Sequoia Dust
 3035,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,0x0,		ECLAGE_RECALL,Return To Eclage
+
+// Copied Bard / Dancer Skills
+//3036,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,	BA_POEMBRAGI2,Poem of Bragi 2
+//3037,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,	DC_FORTUNEKISS2,Fortune Kiss 2
 
 //****
 // EP 14.3 Part 2 3rd Job Skills

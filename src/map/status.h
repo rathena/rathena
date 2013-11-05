@@ -663,6 +663,21 @@ typedef enum sc_type {
 	SC_ANGEL_PROTECT,
 	SC_ILLUSIONDOPING,
 	SC_FLASHCOMBO,
+	SC_MOONSTAR,
+	SC_SUPER_STAR,
+
+	/**
+	 * Rebellion [Cydh]
+	 **/
+	SC_HEAT_BARREL,
+	SC_HEAT_BARREL_AFTER,
+	SC_P_ALTER,
+	SC_E_CHAIN,
+	SC_C_MARKER,
+	SC_ANTI_M_BLAST,
+	SC_B_TRAP,
+	SC_H_MINE,
+	SC_QD_SHOT_READY,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2,
@@ -1400,9 +1415,51 @@ enum si_type {
 	SI_2013_VALENTINE2 = 732,
 	SI_2013_VALENTINE3 = 733,
 	SI_ILLUSIONDOPING = 734,
-//	SI_ = 735,
+	SI_WIDEWEB = 735,
 	SI_CHILL = 736,
 	SI_BURNT = 737,
+	SI_PCCAFE_PLAY_TIME = 738,
+	SI_TWISTED_TIME = 739,
+	SI_FLASHCOMBO = 740,
+	SI_JITTER_BUFF1 = 741,
+	SI_JITTER_BUFF2 = 742,
+	SI_JITTER_BUFF3 = 743,
+	SI_JITTER_BUFF4 = 744,
+	SI_JITTER_BUFF5 = 745,
+	SI_JITTER_BUFF6 = 746,
+	SI_JITTER_BUFF7 = 747,
+	SI_JITTER_BUFF8 = 748,
+	SI_JITTER_BUFF9 = 749,
+	SI_JITTER_BUFF10 = 750,
+	SI_CUP_OF_BOZA = 751,
+	SI_B_TRAP = 752,
+	SI_E_CHAIN = 753,
+	SI_E_QD_SHOT_READY = 754,
+	SI_C_MARKER = 755,
+	SI_H_MINE = 756,
+	SI_H_MINE_SPLASH = 757,
+	SI_P_ALTER = 758,
+	SI_HEAT_BARREL = 759,
+	SI_ANTI_M_BLAST = 760,
+	SI_SLUGSHOT = 761,
+	SI_SWORDCLAN = 762,
+	SI_ARCWANDCLAN = 763,
+	SI_GOLDENMACECLAN = 764,
+	SI_CROSSBOWCLAN = 765,
+	SI_PACKING_ENVELOPE1 = 766,
+	SI_PACKING_ENVELOPE2 = 767,
+	SI_PACKING_ENVELOPE3 = 768,
+	SI_PACKING_ENVELOPE4 = 769,
+	SI_PACKING_ENVELOPE5 = 770,
+	SI_PACKING_ENVELOPE6 = 771,
+	SI_PACKING_ENVELOPE7 = 772,
+	SI_PACKING_ENVELOPE8 = 773,
+	SI_PACKING_ENVELOPE9 = 774,
+	SI_PACKING_ENVELOPE10 = 775,
+	SI_GLASTHEIM_TRANS = 776,
+	SI_ZONGZI_POUCH_TRANS = 777,
+	SI_HEAT_BARREL_AFTER = 778,
+	SI_DECORATION_OF_MUSIC = 779,
 	SI_MAX,
 };
 
@@ -1453,7 +1510,7 @@ enum e_mode
 //who were not on your field of sight when it happened)
 
 //opt1: Non stackable status changes.
-enum {
+enum sc_opt1 {
 	OPT1_STONE = 1, //Petrified
 	OPT1_FREEZE,
 	OPT1_STUN,
@@ -1466,7 +1523,7 @@ enum {
 };
 
 //opt2: Stackable status changes.
-enum {
+enum sc_opt2 {
 	OPT2_POISON		= 0x0001,
 	OPT2_CURSE		= 0x0002,
 	OPT2_SILENCE		= 0x0004,
@@ -1479,7 +1536,7 @@ enum {
 };
 
 //opt3: (SHOW_EFST_*)
-enum {
+enum sc_opt3 {
 	OPT3_NORMAL		= 0x00000000,
 	OPT3_QUICKEN		= 0x00000001,
 	OPT3_OVERTHRUST		= 0x00000002,
@@ -1501,7 +1558,7 @@ enum {
 	OPT3_CONTRACT		= 0x00020000,
 };
 
-enum {
+enum e_option {
 	OPTION_NOTHING		= 0x00000000,
 	OPTION_SIGHT		= 0x00000001,
 	OPTION_HIDE		= 0x00000002,
@@ -1556,14 +1613,14 @@ enum manner_flags
 /* Status Change State Flags */
 enum scs_flag {
 	SCS_NOMOVECOND		= 0x00000001, /* cond flag for nomove */
-	SCS_NOMOVE		= 0x00000002, /* unit unable to move */
+	SCS_NOMOVE			= 0x00000002, /* unit unable to move */
 	SCS_NOPICKITEMCOND	= 0x00000004, /* cond flag for nopickitem */
 	SCS_NOPICKITEM		= 0x00000008, /* player unable to pick up items */
 	SCS_NODROPITEMCOND	= 0x00000010, /* cond flag for nodropitem */
 	SCS_NODROPITEM		= 0x00000020, /* player unable to drop items */
 	SCS_NOCASTCOND		= 0x00000040, /* cond flag for nocast */
-	SCS_NOCAST		= 0x00000080, /* unit unable to cast skills */
-	SCS_NOCHAT		= 0x00000100, /* unit can't talk */
+	SCS_NOCAST			= 0x00000080, /* unit unable to cast skills */
+	SCS_NOCHAT			= 0x00000100, /* unit can't talk */
 	SCS_NOCHATCOND		= 0x00000200, /* cond flag for notalk */
 };
 

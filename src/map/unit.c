@@ -147,7 +147,7 @@ int unit_teleport_timer(int tid, unsigned int tick, int id, intptr_t data){
 
 	if(tid == INVALID_TIMER || mast_tid == NULL)
 		return 0;
-	else if(*mast_tid != tid)
+	else if(*mast_tid != tid || bl == NULL)
 		return 0;
 	else {
 		TBL_PC *msd = unit_get_master(bl);
@@ -155,6 +155,8 @@ int unit_teleport_timer(int tid, unsigned int tick, int id, intptr_t data){
 			*mast_tid = INVALID_TIMER;
 			unit_warp(bl, msd->bl.id, msd->bl.x, msd->bl.y, CLR_TELEPORT );
 		}
+		else // No timer needed
+			*mast_tid = INVALID_TIMER;
 	}
 	return 0;
 }
@@ -1113,7 +1115,8 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	}
 	else if ( target_id == src->id &&
 		skill_get_inf(skill_id)&INF_SELF_SKILL &&
-		skill_get_inf2(skill_id)&INF2_NO_TARGET_SELF )
+		(skill_get_inf2(skill_id)&INF2_NO_TARGET_SELF ||
+		(skill_id == RL_QD_SHOT && sc && sc->data[SC_QD_SHOT_READY])) )
 	{
 		target_id = ud->target; //Auto-select target. [Skotlex]
 		combo = 1;
@@ -1846,6 +1849,9 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 	   )
 		return 0; // can't attack under these conditions
 
+	if (sd && &sd->sc && sd->sc.count && sd->sc.data[SC_HEAT_BARREL_AFTER])
+		return 0;
+
 	if( src->m != target->m )
 	{
 		if( src->type == BL_MOB && mob_warpchase((TBL_MOB*)src, target) )
@@ -2226,6 +2232,10 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			if( !(sd->sc.option&OPTION_INVISIBLE) )
 			{// decrement the number of active pvp players on the map
 				--map[bl->m].users_pvp;
+			}
+			if( sd->state.hpmeter_visible ) {
+				map[bl->m].hpmeter_visible--;
+				sd->state.hpmeter_visible = 0;
 			}
 			sd->state.debug_remove_map = 1; // temporary state to track double remove_map's [FlavioJS]
 			sd->debug_file = file;

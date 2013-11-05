@@ -750,6 +750,21 @@ void initChangeTables(void) {
 	set_sc( OB_OBOROGENSOU			, SC_GENSOU		, SI_GENSOU		, SCB_NONE );
 
 	set_sc( ALL_FULL_THROTTLE		, SC_FULL_THROTTLE	, SI_FULL_THROTTLE	, SCB_SPEED|SCB_STR|SCB_AGI|SCB_VIT|SCB_INT|SCB_DEX|SCB_LUK );
+	set_sc_with_vfx( SC_MOONSTAR		, SC_MOONSTAR		, SI_MOONSTAR		, SCB_NONE );
+	set_sc_with_vfx( SC_SUPER_STAR		, SC_SUPER_STAR		, SI_SUPER_STAR		, SCB_NONE );
+
+	/**
+	 * Rebellion
+	 **/
+	add_sc( RL_MASS_SPIRAL,   SC_BLEEDING );
+	add_sc( RL_HAMMER_OF_GOD, SC_STUN );
+	set_sc( RL_B_TRAP,      SC_B_TRAP,         SI_B_TRAP,       SCB_SPEED );
+	set_sc( RL_E_CHAIN,     SC_E_CHAIN,        SI_E_CHAIN,      SCB_NONE );
+	set_sc( RL_C_MARKER,    SC_C_MARKER,       SI_C_MARKER,     SCB_SPEED );
+	set_sc( RL_P_ALTER,     SC_P_ALTER,        SI_P_ALTER,      SCB_BATK );
+	set_sc( RL_SLUGSHOT,    SC_STUN,           SI_SLUGSHOT,     SCB_NONE );
+	set_sc( RL_AM_BLAST,    SC_ANTI_M_BLAST,   SI_ANTI_M_BLAST, SCB_DEF_ELE );
+	set_sc( RL_HEAT_BARREL, SC_HEAT_BARREL,    SI_HEAT_BARREL,  SCB_BATK|SCB_ASPD|SCB_HIT );
 
 	// Storing the target job rather than simply SC_SPIRIT simplifies code later on.
 	SkillStatusChangeTable[SL_ALCHEMIST]	= (sc_type)MAPID_ALCHEMIST,
@@ -906,9 +921,17 @@ void initChangeTables(void) {
 	StatusIconChangeTable[SC_PETROLOGY] = SI_PETROLOGY;
 	StatusIconChangeTable[SC_CURSED_SOIL] = SI_CURSED_SOIL;
 	StatusIconChangeTable[SC_UPHEAVAL] = SI_UPHEAVAL;
+
 	StatusIconChangeTable[SC_PUSH_CART] = SI_ON_PUSH_CART;
 	StatusIconChangeTable[SC_REBOUND] = SI_REBOUND;
 	StatusIconChangeTable[SC_MONSTER_TRANSFORM] = SI_MONSTER_TRANSFORM;
+	StatusIconChangeTable[SC_MOONSTAR] = SI_MOONSTAR;
+	StatusIconChangeTable[SC_SUPER_STAR] = SI_SUPER_STAR;
+	StatusIconChangeTable[SC_BURNING] = SI_BURNT;
+	
+	StatusIconChangeTable[SC_H_MINE] = SI_H_MINE;
+	StatusIconChangeTable[SC_QD_SHOT_READY] = SI_E_QD_SHOT_READY;
+	StatusIconChangeTable[SC_HEAT_BARREL_AFTER] = SI_HEAT_BARREL_AFTER;
 
 	//Other SC which are not necessarily associated to skills.
 	StatusChangeFlagTable[SC_ASPDPOTION0] = SCB_ASPD;
@@ -993,6 +1016,8 @@ void initChangeTables(void) {
 	StatusChangeFlagTable[SC_EXTRACT_SALAMINE_JUICE] |= SCB_ASPD;
 	StatusChangeFlagTable[SC_DEFSET] |= SCB_DEF;
 	StatusChangeFlagTable[SC_MDEFSET] |= SCB_MDEF;
+	StatusChangeFlagTable[SC_MOONSTAR] |= SCB_NONE;
+	StatusChangeFlagTable[SC_SUPER_STAR] |= SCB_NONE;
 
 #ifdef RENEWAL
 	// renewal EDP increases your weapon atk
@@ -1061,6 +1086,7 @@ void initChangeTables(void) {
 	StatusChangeStateTable[SC_CURSEDCIRCLE_TARGET]	|= SCS_NOCAST;
 	StatusChangeStateTable[SC_SILENCE]		|= SCS_NOCAST;
 	StatusChangeStateTable[SC_KINGS_GRACE]		|= SCS_NOCAST;
+	StatusChangeStateTable[SC_HEAT_BARREL_AFTER]	|= SCS_NOCAST;
 
 	/* StatusChangeState (SCS_) NOCHAT (skills) */
 	StatusChangeStateTable[SC_BERSERK]		|= SCS_NOCHAT;
@@ -2277,6 +2303,8 @@ static unsigned int status_base_pc_maxhp(struct map_session_data* sd, struct sta
 		val *= 3; //Triple max HP for top ranking Taekwons over level 90.
 	if((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.base_level >= 99)
 		val += 2000; //Supernovice lvl99 hp bonus.
+	if((sd->class_&MAPID_UPPERMASK) == MAPID_REBELLION)
+		val += 100; //Since Rebellion's HP can't be approximated well enough without this.
 
 	val += val * status->vit/100; // +1% per each point of VIT
 
@@ -4887,6 +4915,8 @@ static signed short status_calc_hit(struct block_list *bl, struct status_change 
 		hit -= (hit * sc->data[SC_ASH]->val2) / 100;
 	if(sc->data[SC_ILLUSIONDOPING])
 		hit -= hit * (5 + sc->data[SC_ILLUSIONDOPING]->val1) / 100; //Custom
+	if(sc->data[SC_HEAT_BARREL])
+		hit -= sc->data[SC_HEAT_BARREL]->val4;
 
 	return (short)cap_value(hit,1,SHRT_MAX);
 }
@@ -5313,6 +5343,10 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 					val = max( val, sc->data[SC_POWER_OF_GAIA]->val2 );
 				if( sc->data[SC_MELON_BOMB] )
 					val = max( val, sc->data[SC_MELON_BOMB]->val1 );
+				if( sc->data[SC_C_MARKER] )
+					val = max( val, 10 );
+				if( sc->data[SC_B_TRAP] )
+					val = max( val, sc->data[SC_B_TRAP]->val3 );
 
 				if( sd && sd->bonus.speed_rate + sd->bonus.speed_add_rate > 0 ) // permanent item-based speedup
 					val = max( val, sd->bonus.speed_rate + sd->bonus.speed_add_rate );
@@ -5511,6 +5545,8 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, s
 		skills2 += sc->data[SC_EXTRACT_SALAMINE_JUICE]->val1;
 	if( sc->data[SC_INCASPDRATE] )
 		skills2 += sc->data[SC_INCASPDRATE]->val1;
+	if( sc->data[SC_HEAT_BARREL] )
+		skills2 += sc->data[SC_HEAT_BARREL]->val3;
 
 	return ( flag&1? (skills1 + pots) : skills2 );
 }
@@ -7005,6 +7041,16 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	case SC_MAGNETICFIELD: //This skill does not affect players using Hover. [Lighta]
 		if(sc->data[SC_HOVERING])
 			return 0;
+		break;
+	case SC_C_MARKER:
+		if (src == bl)
+			return 0;
+		else {
+			struct status_change *tsc = status_get_sc(bl);
+			//Failed if the target is already marked and the new marker that isn't same marker
+			if (tsc && tsc->data[type] && tsc->data[type]->val2 != src->id)
+				return 0;
+		}
 		break;
 	}
 
@@ -8602,7 +8648,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = 1000; // [GodLesZ] tick time
 			break;
 		case SC_FORCEOFVANGUARD: // This is not the official way to handle it but I think we should use it. [pakpil]
-			val2 = 20 + 12 * (val1 - 1); // Chance
+			val2 = 8 + (12 * val1); // Chance
 			val3 = 5 + (2 * val1); // Max rage counters
 			tick = -1; //endless duration in the client
 			tick_time = 6000; // [GodLesZ] tick time
@@ -8914,6 +8960,44 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val1 = 1002; //Default poring
 			val_flag |= 1;
 			break;
+
+		/**
+		 * Rebellion
+		 **/
+		case SC_HEAT_BARREL_AFTER:
+		case SC_QD_SHOT_READY:
+			break;
+
+		case SC_B_TRAP:
+			val3 = val1 * 25; //-movespeed (custom)
+		case SC_C_MARKER:
+		case SC_H_MINE:
+			val2 = src->id;
+			break;
+
+		case SC_HEAT_BARREL:
+			if (sd) {
+				uint8 n = (uint8)sd->spiritball_old;
+				val2 = val1 * n * 4; //+atk (custom)
+				val3 = val1 * n / 5; //+aspd (custom)
+				val4 = val1 * n * 2; //-hit (custom)
+			}
+			break;
+		case SC_P_ALTER:
+			if (sd) {
+				uint8 n = (uint8)sd->spiritball_old;
+				val2 = val1 * n * 2; //+atk (custom)
+				val3 = val1 * 15; //+def (custom)
+			}
+			break;
+		case SC_E_CHAIN:
+			if (sd)
+				val2 = (uint8)sd->spiritball_old;
+			break;
+		case SC_ANTI_M_BLAST:
+			val2 = val1 * 10;
+			break;
+
 		default:
 			if( calc_flag == SCB_NONE && StatusSkillChangeTable[type] == 0 && StatusIconChangeTable[type] == 0 )
 			{	//Status change with no calc, no icon, and no skill associated...?
@@ -8986,6 +9070,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_WEIGHT90:
 		case SC_CAMOUFLAGE:
 		case SC_VOICEOFSIREN:
+		case SC_HEAT_BARREL_AFTER:
 			unit_stop_attack(bl);
 		break;
 		case SC_SILENCE:
@@ -9347,6 +9432,7 @@ int status_change_clear(struct block_list* bl, int type) {
 			case SC_L_LIFEPOTION:
 			case SC_PUSH_CART:
 			case SC_STYLE_CHANGE:
+			case SC_HEAT_BARREL_AFTER:
 				continue;
 		}
 
@@ -9401,7 +9487,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	struct status_change_entry *sce;
 	struct status_data *status;
 	struct view_data *vd;
-	int opt_flag=0, calc_flag;
+	int opt_flag=0, calc_flag,temp_n = 0;
 
 	nullpo_ret(bl);
 
@@ -9423,30 +9509,35 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		if (sce->timer != INVALID_TIMER) //Could be a SC with infinite duration
 			delete_timer(sce->timer,status_change_timer);
 		if (sc->opt1)
-		switch (type) {
-			//"Ugly workaround"  [Skotlex]
-			//delays status change ending so that a skill that sets opt1 fails to
-			//trigger when it also removed one
-			case SC_STONE:
-				sce->val3 = 0; //Petrify time counter.
-			case SC_FREEZE:
-			case SC_STUN:
-			case SC_SLEEP:
-			if (sce->val1) {
-				//Removing the 'level' shouldn't affect anything in the code
-				//since these SC are not affected by it, and it lets us know
-				//if we have already delayed this attack or not.
-				sce->val1 = 0;
-				sce->timer = add_timer(gettick()+10, status_change_timer, bl->id, type);
-				return 1;
+			switch (type) {
+				//"Ugly workaround"  [Skotlex]
+				//delays status change ending so that a skill that sets opt1 fails to
+				//trigger when it also removed one
+				case SC_STONE:
+					sce->val3 = 0; //Petrify time counter.
+				case SC_FREEZE:
+				case SC_STUN:
+				case SC_SLEEP:
+					if (sce->val1) {
+						//Removing the 'level' shouldn't affect anything in the code
+						//since these SC are not affected by it, and it lets us know
+						//if we have already delayed this attack or not.
+						sce->val1 = 0;
+						sce->timer = add_timer(gettick()+10, status_change_timer, bl->id, type);
+						return 1;
+					}
 			}
-		}
 	}
 
 	(sc->count)--;
 
 	if ( StatusChangeStateTable[type] )
 		status_calc_state(bl,sc,( enum scs_flag ) StatusChangeStateTable[type],false);
+
+	switch (type) {
+		case SC_H_MINE:		temp_n = sc->data[type]->val3;	break;	//If ended by RL_FLICKER, don't drop the trap
+		case SC_C_MARKER:	temp_n = sc->data[type]->val2;	break;	//Player who gave mark
+	}
 
 	sc->data[type] = NULL;
 
@@ -9867,9 +9958,40 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_INTRAVISION:
 			calc_flag = SCB_ALL;/* required for overlapping */
 			break;
-
 		case SC_FULL_THROTTLE:
 			sc_start(bl, bl, SC_REBOUND, 100, sce->val1, skill_get_time2(ALL_FULL_THROTTLE, sce->val1));
+			break;
+		case SC_HEAT_BARREL:
+			if (sd)
+				sc_start(bl,bl,SC_HEAT_BARREL_AFTER,100,sce->val1,skill_get_time2(RL_HEAT_BARREL, sce->val1));
+			break;
+		case SC_C_MARKER:
+			{
+				//Remove mark data from caster
+				struct map_session_data *caster = map_id2sd(temp_n);
+				uint8 i = 0;
+
+				if (!caster || !&caster->c_marker || !caster->c_marker.target)
+					break;
+				ARR_FIND(0,MAX_SKILL_CRIMSON_MARKER,i,caster->c_marker.target[i] == bl->id);
+				if (i < MAX_SKILL_CRIMSON_MARKER)
+					caster->c_marker.target[i] = 0;
+			}
+			break;
+		case SC_H_MINE:
+			{
+				//Drop the material from target if expired
+				struct item it;
+				if (temp_n)
+					break;
+				if (!itemdb_exists(skill_get_itemid(RL_H_MINE,0)))
+					break;
+				memset(&it,0,sizeof(it));
+				it.nameid = skill_get_itemid(RL_H_MINE,0);
+				it.amount = max(skill_get_itemqty(RL_H_MINE,0),1);
+				it.identify = 1;
+				map_addflooritem(&it,it.amount,bl->m,bl->x,bl->y,0,0,0,4);
+			}
 			break;
 	}
 
@@ -10765,9 +10887,9 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		break;
 
 	case SC_FORCEOFVANGUARD:
-		if( !status_charge(bl,0,20) )
+		if( !status_charge(bl,0,24 - (4 * sce->val1)) )
 			break;
-		sc_timer_next(6000 + tick, status_change_timer, bl->id, data);
+		sc_timer_next(10000 + tick, status_change_timer, bl->id, data);
 		return 0;
 
 	case SC_BANDING:
@@ -11099,6 +11221,7 @@ int status_change_clear_buffs (struct block_list* bl, int type)
 			case SC_CURSEDCIRCLE_TARGET:
 			case SC_PUSH_CART:
 			case SC_STYLE_CHANGE:
+			case SC_HEAT_BARREL_AFTER:
 				continue;
 
 		 //Debuffs that can be removed.

@@ -39,6 +39,7 @@
 #include "script.h" // script_config
 #include "skill.h"
 #include "status.h" // struct status_data
+#include "storage.h"
 #include "pc.h"
 #include "pc_groups.h"
 #include "quest.h"
@@ -1287,6 +1288,7 @@ int pc_reg_received(struct map_session_data *sd)
 	if (!chrif_auth_finished(sd))
 		ShowError("pc_reg_received: Failed to properly remove player %d:%d from logging db!\n", sd->status.account_id, sd->status.char_id);
 
+	pc_check_available_item(sd); // Check for invalid(ated) items.
 	pc_load_combo(sd);
 
 	status_calc_pc(sd,1);
@@ -4347,8 +4349,8 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 		sd->sc.data[SC__INVISIBILITY] ||
 		sd->sc.data[SC__MANHOLE] ||
 		sd->sc.data[SC_KAGEHUMI] ||
-		(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOITEM)
-	    ))
+		(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOITEM) ||
+		sd->sc.data[SC_HEAT_BARREL_AFTER]))
 		return 0;
 	
 	if (!pc_isItemClass(sd,item))
@@ -5231,6 +5233,7 @@ int pc_jobid2mapid(unsigned short b_class)
 		case JOB_STAR_GLADIATOR:        return MAPID_STAR_GLADIATOR;
 		case JOB_KAGEROU:
 		case JOB_OBORO:                 return MAPID_KAGEROUOBORO;
+		case JOB_REBELLION:             return MAPID_REBELLION;
 		case JOB_DEATH_KNIGHT:          return MAPID_DEATH_KNIGHT;
 	//2-2 Jobs
 		case JOB_CRUSADER:              return MAPID_CRUSADER;
@@ -5372,6 +5375,7 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_ASSASSIN:              return JOB_ASSASSIN;
 		case MAPID_STAR_GLADIATOR:        return JOB_STAR_GLADIATOR;
 		case MAPID_KAGEROUOBORO:          return sex?JOB_KAGEROU:JOB_OBORO;
+		case MAPID_REBELLION:             return JOB_REBELLION;
 		case MAPID_DEATH_KNIGHT:          return JOB_DEATH_KNIGHT;
 	//2-2 Jobs
 		case MAPID_CRUSADER:              return JOB_CRUSADER;
@@ -5691,6 +5695,9 @@ const char* job_name(int class_)
 	case JOB_KAGEROU:
 	case JOB_OBORO:
 		return msg_txt(NULL,653 - JOB_KAGEROU+class_);
+
+	case JOB_REBELLION:
+		return msg_txt(NULL,695);
 
 	default:
 		return msg_txt(NULL,655);
@@ -8649,7 +8656,11 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 		return 0;
 	}
 
-	if( sd->sc.count && sd->sc.data[SC_PYROCLASTIC] && sd->inventory_data[n]->type == IT_WEAPON ) {
+	if( sd->sc.count && (
+		(sd->sc.data[SC_PYROCLASTIC] && sd->inventory_data[n]->type == IT_WEAPON) ||
+		sd->sc.data[SC_BERSERK] || 
+		sd->sc.data[SC_SATURDAYNIGHTFEVER]) )
+	{
 		clif_equipitemack(sd,0,0,0);
 		return 0;
 	}
@@ -8667,11 +8678,6 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 
 	if(!pc_isequip(sd,n) || !(pos&req_pos) || sd->status.inventory[n].equip != 0 || sd->status.inventory[n].attribute==1 ) { // [Valaris]
 		// FIXME: pc_isequip: equip level failure uses 2 instead of 0
-		clif_equipitemack(sd,n,0,0);	// fail
-		return 0;
-	}
-
-	if (sd->sc.data[SC_BERSERK] || sd->sc.data[SC_SATURDAYNIGHTFEVER]) {
 		clif_equipitemack(sd,n,0,0);	// fail
 		return 0;
 	}
@@ -8873,6 +8879,12 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag) {
 		clif_unequipitemack(sd,n,0,0);
 		return 0;
 	}
+	if (&sd->sc) {
+		if (sd->sc.data[SC_HEAT_BARREL])
+			status_change_end(&sd->bl,SC_HEAT_BARREL,INVALID_TIMER);
+		if (sd->sc.data[SC_P_ALTER] && (sd->inventory_data[n]->type == IT_WEAPON || sd->inventory_data[n]->type == IT_AMMO))
+			status_change_end(&sd->bl,SC_P_ALTER,INVALID_TIMER);
+	}
 
 	if(battle_config.battle_log)
 		ShowInfo("unequip %d %x:%x\n",n,pc_equippoint(sd,n),sd->status.inventory[n].equip);
@@ -9014,46 +9026,26 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag) {
 }
 
 /*==========================================
- * Checking if player (sd) have unauthorize, invalide item
- * on inventory, cart, equiped for the map (item_noequip)
+ * Checking if player (sd) has an invalid item
+ * and is unequiped on map load (item_noequip)
  *------------------------------------------*/
-int pc_checkitem(struct map_session_data *sd)
-{
-	int i,id,calc_flag = 0;
+int pc_checkitem(struct map_session_data *sd) {
+	int i, calc_flag = 0;
+	struct item it;
 
 	nullpo_ret(sd);
 
 	if( sd->state.vending ) //Avoid reorganizing items when we are vending, as that leads to exploits (pointed out by End of Exam)
 		return 0;
 
-	if( battle_config.item_check ) {// check for invalid(ated) items
-		for( i = 0; i < MAX_INVENTORY; i++ ) {
-			id = sd->status.inventory[i].nameid;
+	for( i = 0; i < MAX_INVENTORY; i++ ) {
+		it = sd->status.inventory[i];
 
-			if( id && !itemdb_available(id) ) {
-				ShowWarning("Removed invalid/disabled item id %d from inventory (amount=%d, char_id=%d).\n", id, sd->status.inventory[i].amount, sd->status.char_id);
-				pc_delitem(sd, i, sd->status.inventory[i].amount, 0, 0, LOG_TYPE_OTHER);
-			}
-		}
-
-		for( i = 0; i < MAX_CART; i++ ) {
-			id = sd->status.cart[i].nameid;
-
-			if( id && !itemdb_available(id) ) {
-				ShowWarning("Removed invalid/disabled item id %d from cart (amount=%d, char_id=%d).\n", id, sd->status.cart[i].amount, sd->status.char_id);
-				pc_cart_delitem(sd, i, sd->status.cart[i].amount, 0, LOG_TYPE_OTHER);
-			}
-		}
-	}
-
-	for( i = 0; i < MAX_INVENTORY; i++) {
-		if( !(&sd->status.inventory[i]) || sd->status.inventory[i].nameid == 0 )
+		if( it.nameid == 0 )
 			continue;
-
-		if( !sd->status.inventory[i].equip )
+		if( !it.equip )
 			continue;
-
-		if( sd->status.inventory[i].equip&~pc_equippoint(sd,i) ) {
+		if( it.equip&~pc_equippoint(sd,i) ) {
 			pc_unequipitem(sd, i, 2);
 			calc_flag = 1;
 			continue;
@@ -9069,6 +9061,57 @@ int pc_checkitem(struct map_session_data *sd)
 	if( calc_flag && sd->state.active ) {
 		pc_checkallowskill(sd);
 		status_calc_pc(sd,0);
+	}
+
+	return 0;
+}
+
+/*==========================================
+ * Checks for unavailable items and removes them.
+ *------------------------------------------*/
+int pc_check_available_item(struct map_session_data *sd) {
+	int i, it;
+	char output[256];
+
+	nullpo_ret(sd);
+
+	if( battle_config.item_check&1 ) { // Check for invalid(ated) items in inventory.
+		for( i = 0; i < MAX_INVENTORY; i++ ) {
+			it = sd->status.inventory[i].nameid;
+
+			if( it && !itemdb_available(it) ) {
+				sprintf(output, msg_txt(sd, 681), it); // Item %d has been removed from your inventory.
+				clif_displaymessage(sd->fd, output);
+				ShowWarning("Removed invalid/disabled item id %d from inventory (amount=%d, char_id=%d).\n", it, sd->status.inventory[i].amount, sd->status.char_id);
+				pc_delitem(sd, i, sd->status.inventory[i].amount, 0, 0, LOG_TYPE_OTHER);
+			}
+		}
+	}
+
+	if( battle_config.item_check&2 ) { // Check for invalid(ated) items in cart.
+		for( i = 0; i < MAX_CART; i++ ) {
+			it = sd->status.cart[i].nameid;
+
+			if( it && !itemdb_available(it) ) {
+				sprintf(output, msg_txt(sd, 682), it); // Item %d has been removed from your cart.
+				clif_displaymessage(sd->fd, output);
+				ShowWarning("Removed invalid/disabled item id %d from cart (amount=%d, char_id=%d).\n", it, sd->status.cart[i].amount, sd->status.char_id);
+				pc_cart_delitem(sd, i, sd->status.cart[i].amount, 0, LOG_TYPE_OTHER);
+			}
+		}
+	}
+
+	if( battle_config.item_check&4 ) { // Check for invalid(ated) items in storage.
+		for( i = 0; i < MAX_STORAGE; i++ ) {
+			it = sd->status.storage.items[i].nameid;
+
+			if( it && !itemdb_available(it) ) {
+				sprintf(output, msg_txt(sd, 683), it); // Item %d has been removed from your storage.
+				clif_displaymessage(sd->fd, output);
+				ShowWarning("Removed invalid/disabled item id %d from storage (amount=%d, char_id=%d).\n", it, sd->status.storage.items[i].amount, sd->status.char_id);
+				storage_delitem(sd, i, sd->status.storage.items[i].amount);
+			}
+ 		}
 	}
 
 	return 0;
@@ -10250,6 +10293,7 @@ void pc_damage_log_clear(struct map_session_data *sd, int id)
 	}
 }
 
+
 enum e_BANKING_DEPOSIT_ACK pc_bank_deposit(struct map_session_data *sd, int money) {
 	unsigned int limit_check = money+sd->status.bank_vault;
 	
@@ -10277,7 +10321,7 @@ enum e_BANKING_WITHDRAW_ACK pc_bank_withdraw(struct map_session_data *sd, int mo
 		return BWA_NO_MONEY;
 	} else if ( limit_check > MAX_ZENY ) {
 		/* no official response for this scenario exists. */
-		clif_colormes(sd,COLOR_RED,msg_txt(sd,1482));
+		clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,1495)); //You can't withdraw that much money
 		return BWA_UNKNOWN_ERROR;
 	}
 	
@@ -10288,6 +10332,19 @@ enum e_BANKING_WITHDRAW_ACK pc_bank_withdraw(struct map_session_data *sd, int mo
 	if( save_settings&256 )
 		chrif_save(sd,0);
 	return BWA_SUCCESS;
+}
+
+void pc_crimson_marker_clear(struct map_session_data *sd) {
+	uint8 i;
+
+	if (!sd || !(&sd->c_marker) || !sd->c_marker.target)
+		return;
+
+	for (i = 0; i < MAX_SKILL_CRIMSON_MARKER; i++) {
+		struct block_list *bl = NULL;
+		if (sd->c_marker.target[i] && (bl = map_id2bl(sd->c_marker.target[i])))
+			status_change_end(bl,SC_C_MARKER,INVALID_TIMER);
+	}
 }
 
 /*==========================================

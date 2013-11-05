@@ -114,6 +114,7 @@ enum {
 	MAPID_BLACKSMITH,
 	MAPID_ASSASSIN,
 	MAPID_STAR_GLADIATOR,
+	MAPID_REBELLION = JOBL_2_1 | 0x09,
 	MAPID_KAGEROUOBORO = JOBL_2_1|0x0A,
 	MAPID_DEATH_KNIGHT = JOBL_2_1|0x0E,
 //2-2 Jobs
@@ -637,6 +638,9 @@ struct map_data {
 
 	/* rAthena Local Chat */
 	struct Channel *channel;
+	
+	/* speeds up clif_updatestatus processing by causing hpmeter to run only when someone with the permission can view it */
+	unsigned short hpmeter_visible;
 };
 
 /// Stores information about a remote map (for multi-mapserver setups).

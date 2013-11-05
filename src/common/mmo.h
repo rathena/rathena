@@ -49,7 +49,7 @@
 #ifndef PACKETVER
 	#define PACKETVER 20130724
 	//#define PACKETVER 20130320
-	//#define PACKETVER 20111116
+	//#define PACKETVER 20120410
 #endif
 
 //Remove/Comment this line to disable sc_data saving. [Skotlex]
@@ -751,6 +751,8 @@ enum {
 
 	JOB_KAGEROU = 4211,
 	JOB_OBORO,
+
+	JOB_REBELLION = 4215,
 
 	JOB_MAX,
 };
