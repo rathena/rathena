@@ -47,7 +47,7 @@
 // 20120307 - 2012-03-07aRagexeRE+ - 0x970
 
 #ifndef PACKETVER
-	#define PACKETVER 20120410
+	#define PACKETVER 20130724
 	//#define PACKETVER 20130320
 	//#define PACKETVER 20111116
 #endif
@@ -79,6 +79,7 @@
 //Max amount of a single stacked item
 #define MAX_AMOUNT 30000
 #define MAX_ZENY 1000000000
+#define MAX_BANK_ZENY SINT32_MAX
 #define MAX_FAME 1000000000
 #define MAX_CART 100
 #define MAX_SKILL 5020
@@ -351,6 +352,7 @@ struct mmo_charstatus {
 
 	unsigned int base_exp,job_exp;
 	int zeny;
+	int bank_vault;
 
 	short class_;
 	unsigned int status_point,skill_point;

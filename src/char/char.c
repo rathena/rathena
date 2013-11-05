@@ -143,6 +143,7 @@ struct char_session_data {
 	time_t pincode_change;
 	uint16 pincode_try;
 	// Addon system
+	int bank_vault;
 	unsigned int char_moves[MAX_CHARS]; // character moves left
 };
 
@@ -188,6 +189,12 @@ bool char_moves_unlimited = false;
 
 void moveCharSlot( int fd, struct char_session_data* sd, unsigned short from, unsigned short to );
 void moveCharSlotReply( int fd, struct char_session_data* sd, unsigned short index, short reason );
+
+int loginif_BankingReq(int32 account_id, int8 type, int32 data);
+int loginif_parse_BankingAck(int fd);
+int mapif_BankingAck(int32 account_id, int32 bank_vault);
+int mapif_parse_UpdBankInfo(int fd);
+int mapif_parse_ReqBankInfo(int fd);
 
 //Custom limits for the fame lists. [Skotlex]
 int fame_list_size_chemist = MAX_FAME_LIST;
@@ -552,7 +559,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 		} else
 			strcat(save_status, " status");
 	}
-
+	
 	//Values that will seldom change (to speed up saving)
 	if (
 		(p->hair != cp->hair) || (p->hair_color != cp->hair_color) || (p->clothes_color != cp->clothes_color) ||
@@ -591,7 +598,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 		else
 			errors++;
 	}
-
+	
 	//memo points
 	if( memcmp(p->memo_point, cp->memo_point, sizeof(p->memo_point)) )
 	{
@@ -2146,6 +2153,83 @@ static void char_auth_ok(int fd, struct char_session_data *sd)
 int send_accounts_tologin(int tid, unsigned int tick, int id, intptr_t data);
 void mapif_server_reset(int id);
 
+/*
+ * HA 0x2740<aid>L <type>B <data>L
+ * type:
+ *  0 = select
+ *  1 = update
+ */
+int loginif_BankingReq(int32 account_id, int8 type, int32 data){
+	if (login_fd > 0 && session[login_fd] && !session[login_fd]->flag.eof){
+		WFIFOHEAD(login_fd,11);
+		WFIFOW(login_fd,0) = 0x2740;
+		WFIFOL(login_fd,2) = account_id;
+		WFIFOB(login_fd,6) = type;
+		WFIFOL(login_fd,7) = data;
+		WFIFOSET(login_fd,11);
+		return 1;
+	}
+	return 0;
+}
+
+/*
+ * Received the banking data from login and transmit it to all map-serv
+ * AH 0x2741<aid>L <bank_vault>L <not_fw>B
+ * HZ 0x2b29 <aid>L <bank_vault>L 
+ */
+int loginif_parse_BankingAck(int fd){
+	if (RFIFOREST(fd) < 11)
+		return 0;
+	uint32 aid = RFIFOL(fd,2);
+	int32 bank_vault = RFIFOL(fd,6);
+	char not_fw = RFIFOB(fd,10);
+	RFIFOSKIP(fd,11);
+	
+	if(!not_fw) mapif_BankingAck(aid, bank_vault);
+	return 1;
+}
+
+//HZ 0x2b29 <aid>L <bank_vault>L
+int mapif_BankingAck(int32 account_id, int32 bank_vault){
+	unsigned char buf[14];
+	WBUFW(buf,0) = 0x2b29;
+	WBUFL(buf,2) = account_id;
+	WBUFL(buf,6) = bank_vault;
+	mapif_sendall(buf, 10); //inform all maps-attached
+	return 1;
+}
+
+/*
+ *  Receive a map request to save banking
+ * Fowarding it to login-serv
+ * ZH 0x2b28 <aid>L <money>L
+ * HA 0x2740<aid>L <type>B <money>L
+ */
+int mapif_parse_UpdBankInfo(int fd){
+	if( RFIFOREST(fd) < 10 )
+		return 0;
+	uint32 aid = RFIFOL(fd,2);
+	int money = RFIFOL(fd,6);
+	RFIFOSKIP(fd,10);
+	loginif_BankingReq(aid, 2, money);
+	return 1;
+}
+
+/*
+ *  Receive a map request to get banking info
+ * Fowarding it to login-serv
+ * ZH 0x2b2a <aid>L
+ * HA 0x2740<aid>L <type>B <money>L
+ */
+int mapif_parse_ReqBankInfo(int fd){
+	if( RFIFOREST(fd) < 6 )
+		return 0;
+	uint32 aid = RFIFOL(fd,2);
+	RFIFOSKIP(fd,6);
+	loginif_BankingReq(aid, 1, 0);
+	return 1;
+}
+
 
 /// Resets all the data.
 void loginif_reset(void)
@@ -2230,6 +2314,7 @@ int parse_fromlogin(int fd) {
 
 		switch( command )
 		{
+		case 0x2741: loginif_parse_BankingAck(fd); break;
 
 		// acknowledgement of connect-to-loginserver request
 		case 0x2711:
@@ -2289,7 +2374,7 @@ int parse_fromlogin(int fd) {
 		break;
 
 		case 0x2717: // account data
-			if (RFIFOREST(fd) < 72)
+			if (RFIFOREST(fd) < 76)
 				return 0;
 
 			// find the authenticated session with this account id
@@ -2309,6 +2394,7 @@ int parse_fromlogin(int fd) {
 				safestrncpy(sd->birthdate, (const char*)RFIFOP(fd,52), sizeof(sd->birthdate));
 				safestrncpy(sd->pincode, (const char*)RFIFOP(fd,63), sizeof(sd->pincode));
 				sd->pincode_change = (time_t)RFIFOL(fd,68);
+				sd->bank_vault = RFIFOL(fd,72);
 				ARR_FIND( 0, ARRAYLENGTH(server), server_id, server[server_id].fd > 0 && server[server_id].map[0] );
 				// continued from char_auth_ok...
 				if( server_id == ARRAYLENGTH(server) || //server not online, bugreport:2359
@@ -2355,7 +2441,7 @@ int parse_fromlogin(int fd) {
 #endif
 				}
 			}
-			RFIFOSKIP(fd,72);
+			RFIFOSKIP(fd,76);
 		break;
 
 		// login-server alive packet
@@ -3579,6 +3665,9 @@ int parse_frommap(int fd)
 				RFIFOSKIP(fd, RFIFOW(fd,2) );/* skip this packet */
 		}
 		break;
+		
+		case 0x2b28: mapif_parse_UpdBankInfo(fd); break;
+		case 0x2b2a: mapif_parse_ReqBankInfo(fd); break; 
 
 		default:
 		{

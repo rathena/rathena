@@ -35,8 +35,16 @@ struct party_booking_ad_info;
 enum
 {// packet DB
 	MAX_PACKET_DB  = 0xf00,
-	MAX_PACKET_VER = 44,
+	MAX_PACKET_VER = 45,
 	MAX_PACKET_POS = 20,
+};
+
+enum e_packet_ack {
+    ZC_ACK_OPEN_BANKING = 0,
+    ZC_ACK_BANKING_DEPOSIT,
+    ZC_ACK_BANKING_WITHDRAW,
+    ZC_BANKING_CHECK,
+    MAX_ACK_FUNC //auto upd len
 };
 
 struct s_packet_db {
@@ -45,10 +53,24 @@ struct s_packet_db {
 	short pos[MAX_PACKET_POS];
 };
 
+enum e_BANKING_DEPOSIT_ACK {
+	BDA_SUCCESS  = 0x0,
+	BDA_ERROR    = 0x1,
+	BDA_NO_MONEY = 0x2,
+	BDA_OVERFLOW = 0x3,
+};
+ 
+enum e_BANKING_WITHDRAW_ACK {
+	BWA_SUCCESS       = 0x0,
+	BWA_NO_MONEY      = 0x1,
+	BWA_UNKNOWN_ERROR = 0x2,
+};
+
 // packet_db[SERVER] is reserved for server use
 #define SERVER 0
 #define packet_len(cmd) packet_db[SERVER][cmd].len
 extern struct s_packet_db packet_db[MAX_PACKET_VER+1][MAX_PACKET_DB+1];
+extern int packet_db_ack[MAX_PACKET_VER + 1][MAX_ACK_FUNC + 1];
 
 // local define
 typedef enum send_target {
@@ -58,7 +80,7 @@ typedef enum send_target {
 	AREA_WOS,			// area, without self
 	AREA_WOC,			// area, without chatrooms
 	AREA_WOSC,			// area, without own chatroom
-	AREA_CHAT_WOC,		// hearable area, without chatrooms
+	AREA_CHAT_WOC,			// hearable area, without chatrooms
 	CHAT,				// current chatroom
 	CHAT_WOS,			// current chatroom, without self
 	PARTY,
@@ -488,7 +510,7 @@ void clif_inventorylist(struct map_session_data *sd);
 void clif_equiplist(struct map_session_data *sd);
 
 void clif_cart_additem(struct map_session_data *sd,int n,int amount,int fail);
-void clif_cart_additem_ack(struct map_session_data *sd, int flag);
+void clif_cart_additem_ack(struct map_session_data *sd, uint8 flag);
 void clif_cart_delitem(struct map_session_data *sd,int n,int amount);
 void clif_cartlist(struct map_session_data *sd);
 void clif_clearcart(int fd);
@@ -714,6 +736,15 @@ void clif_PartyBookingSearchAck(int fd, struct party_booking_ad_info** results, 
 void clif_PartyBookingUpdateNotify(struct map_session_data* sd, struct party_booking_ad_info* pb_ad);
 void clif_PartyBookingDeleteNotify(struct map_session_data* sd, int index);
 void clif_PartyBookingInsertNotify(struct map_session_data* sd, struct party_booking_ad_info* pb_ad);
+
+/* Bank System [Yommy/Hercules] */
+void clif_bank_deposit (struct map_session_data *sd, enum e_BANKING_DEPOSIT_ACK reason);
+void clif_bank_withdraw (struct map_session_data *sd,enum e_BANKING_WITHDRAW_ACK reason);
+void clif_parse_BankDeposit (int fd, struct map_session_data *sd);
+void clif_parse_BankWithdraw (int fd, struct map_session_data *sd);
+void clif_parse_BankCheck (int fd, struct map_session_data *sd);
+void clif_parse_BankOpen (int fd, struct map_session_data *sd);
+void clif_parse_BankClose (int fd, struct map_session_data *sd);
 
 void clif_showdigit(struct map_session_data* sd, unsigned char type, int value);
 

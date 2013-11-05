@@ -567,6 +567,7 @@ int parse_fromchar(int fd){
 				char birthdate[10+1] = "";
 				char pincode[PINCODE_LENGTH+1];
 				int account_id = RFIFOL(fd,2);
+				int bank_vault = 0;
 
 				memset(pincode,0,PINCODE_LENGTH+1);
 
@@ -581,9 +582,10 @@ int parse_fromchar(int fd){
 					char_slots = acc.char_slots;
 					safestrncpy(birthdate, acc.birthdate, sizeof(birthdate));
 					safestrncpy(pincode, acc.pincode, sizeof(pincode));
+					bank_vault = acc.bank_vault;
 				}
 
-				WFIFOHEAD(fd,72);
+				WFIFOHEAD(fd,76);
 				WFIFOW(fd,0) = 0x2717;
 				WFIFOL(fd,2) = account_id;
 				safestrncpy((char*)WFIFOP(fd,6), email, 40);
@@ -593,7 +595,8 @@ int parse_fromchar(int fd){
 				safestrncpy((char*)WFIFOP(fd,52), birthdate, 10+1);
 				safestrncpy((char*)WFIFOP(fd,63), pincode, 4+1 );
 				WFIFOL(fd,68) = (uint32)acc.pincode_change;
-				WFIFOSET(fd,72);
+				WFIFOL(fd,72) = bank_vault;
+				WFIFOSET(fd,76);
 			}
 		break;
 
@@ -907,13 +910,11 @@ int parse_fromchar(int fd){
 				return 0;
 			else{
 				struct mmo_account acc;
-
 				if( accounts->load_num(accounts, &acc, RFIFOL(fd,2) ) ){
 					strncpy( acc.pincode, (char*)RFIFOP(fd,6), 5 );
 					acc.pincode_change = time( NULL );
 					accounts->save(accounts, &acc);
 				}
-
 				RFIFOSKIP(fd,11);
 			}
 		break;
@@ -938,6 +939,35 @@ int parse_fromchar(int fd){
 				remove_online_user(acc.account_id);
 
 				RFIFOSKIP(fd,6);
+			}
+		break;
+
+		case 0x2740: // req upd bank_vault
+			if( RFIFOREST(fd) < 11 )
+				return 0;
+			else{
+				struct mmo_account acc;
+
+				int account_id = RFIFOL(fd,2);
+				char type = RFIFOB(fd,6);
+				int32 data = RFIFOL(fd,7);
+				RFIFOSKIP(fd,11);
+
+				if( !accounts->load_num(accounts, &acc, account_id) )
+					ShowNotice("Char-server '%s': Error on banking  (account: %d not found, ip: %s).\n", server[id].name, account_id, ip);
+				else{
+					unsigned char buf[11];
+					if(type==2){ // upd and Save
+						acc.bank_vault = data;
+						accounts->save(accounts, &acc);
+						WBUFB(buf,10) = 1;
+					}
+					// announce to other servers
+					WBUFW(buf,0) = 0x2741;
+					WBUFL(buf,2) = account_id;
+					WBUFL(buf,6) = acc.bank_vault;
+					charif_sendallwos(-1, buf, 11);
+				}
 			}
 		break;
 
@@ -996,6 +1026,7 @@ int mmo_auth_new(const char* userid, const char* pass, const char sex, const cha
 	acc.pincode_change = 0;
 
 	acc.char_slots = 0;
+	acc.bank_vault = 0;
 
 	if( !accounts->create(accounts, &acc) )
 		return 0;

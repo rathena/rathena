@@ -7138,6 +7138,7 @@ static const struct _battle_data {
 	{ "item_flooritem_check",               &battle_config.item_onfloor,                    1,      0,      1,              },
 	{ "bowling_bash_area",                  &battle_config.bowling_bash_area,               0,      0,      20,             },
 	{ "drop_rateincrease",                  &battle_config.drop_rateincrease,               0,      0,      1,              },
+	{ "feature.banking",                    &battle_config.feature_banking,                 1,      0,      1,              },
 };
 #ifndef STATS_OPT_OUT
 /**
@@ -7349,6 +7350,13 @@ void battle_adjust_conf()
 	if( battle_config.feature_search_stores ) {
 		ShowWarning("conf/battle/feature.conf search_stores is enabled but it requires PACKETVER 2010-08-03 or newer, disabling...\n");
 		battle_config.feature_search_stores = 0;
+	}
+#endif
+
+#if PACKETVER < 20130724
+	if( battle_config.feature_banking ) {
+		ShowWarning("conf/battle/feature.conf banking is enabled but it requires PACKETVER 2013-07-24 or newer, disabling...\n");
+		battle_config.feature_banking = 0;
 	}
 #endif
 

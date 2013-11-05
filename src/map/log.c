@@ -73,6 +73,7 @@ static char log_picktype2char(e_log_pick_type type)
 		case LOG_TYPE_AUCTION:          return 'I';  // Auct(I)on
 		case LOG_TYPE_BUYING_STORE:     return 'B';  // (B)uying Store
 		case LOG_TYPE_LOOT:             return 'L';  // (L)oot (consumed monster pick/drop)
+		case LOG_TYPE_BANK:             return 'K';  // Ban(K) Transactions
 		case LOG_TYPE_OTHER:			return 'X';  // Other
 		case LOG_TYPE_CASH:				return '$';  // Cash
 	}

@@ -494,6 +494,7 @@ extern struct Battle_Config
 	int item_onfloor; // Whether to drop an undroppable item on the map or destroy it if inventory is full.
 	int bowling_bash_area;
 	int drop_rateincrease;
+	int feature_banking;
 
 } battle_config;
 

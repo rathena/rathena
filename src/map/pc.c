@@ -1292,6 +1292,7 @@ int pc_reg_received(struct map_session_data *sd)
 	status_calc_pc(sd,1);
 	chrif_scdata_request(sd->status.account_id, sd->status.char_id);
 	chrif_skillcooldown_request(sd->status.account_id, sd->status.char_id);
+	chrif_bankdata_request(sd->status.account_id, sd->status.char_id);
 	intif_Mail_requestinbox(sd->status.char_id, 0); // MAIL SYSTEM - Request Mail Inbox
 	intif_request_questlog(sd);
 
@@ -4343,6 +4344,7 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 		sd->sc.data[SC_TRICKDEAD] ||
 		sd->sc.data[SC_HIDING] ||
 		sd->sc.data[SC__SHADOWFORM] ||
+		sd->sc.data[SC__INVISIBILITY] ||
 		sd->sc.data[SC__MANHOLE] ||
 		sd->sc.data[SC_KAGEHUMI] ||
 		(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOITEM)
@@ -10246,6 +10248,46 @@ void pc_damage_log_clear(struct map_session_data *sd, int id)
 		if( i < DAMAGELOG_SIZE_PC )
 			sd->dmglog[i].id = 0;
 	}
+}
+
+enum e_BANKING_DEPOSIT_ACK pc_bank_deposit(struct map_session_data *sd, int money) {
+	unsigned int limit_check = money+sd->status.bank_vault;
+	
+	if( money <= 0 || limit_check > MAX_BANK_ZENY ) {
+		return BDA_OVERFLOW;
+	} else if ( money > sd->status.zeny ) {
+		return BDA_NO_MONEY;
+	}
+
+	if( pc_payzeny(sd,money, LOG_TYPE_BANK, NULL) )
+		return BDA_NO_MONEY;
+
+	sd->status.bank_vault += money;
+	if( save_settings&256 )
+		chrif_save(sd,0);
+	return BDA_SUCCESS;
+}
+
+enum e_BANKING_WITHDRAW_ACK pc_bank_withdraw(struct map_session_data *sd, int money) {
+	unsigned int limit_check = money+sd->status.zeny;
+	
+	if( money <= 0 ) {
+		return BWA_UNKNOWN_ERROR;
+	} else if ( money > sd->status.bank_vault ) {
+		return BWA_NO_MONEY;
+	} else if ( limit_check > MAX_ZENY ) {
+		/* no official response for this scenario exists. */
+		clif_colormes(sd,COLOR_RED,msg_txt(sd,1482));
+		return BWA_UNKNOWN_ERROR;
+	}
+	
+	if( pc_getzeny(sd,money, LOG_TYPE_BANK, NULL) )
+		return BWA_NO_MONEY;
+	
+	sd->status.bank_vault -= money;
+	if( save_settings&256 )
+		chrif_save(sd,0);
+	return BWA_SUCCESS;
 }
 
 /*==========================================
