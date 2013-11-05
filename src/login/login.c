@@ -956,12 +956,14 @@ int parse_fromchar(int fd){
 				if( !accounts->load_num(accounts, &acc, account_id) )
 					ShowNotice("Char-server '%s': Error on banking  (account: %d not found, ip: %s).\n", server[id].name, account_id, ip);
 				else{
-					unsigned char buf[11];
+					unsigned char buf[12];
 					if(type==2){ // upd and Save
 						acc.bank_vault = data;
 						accounts->save(accounts, &acc);
 						WBUFB(buf,10) = 1;
-					}
+					} else {
+                                                WBUFB(buf,10) = 0;
+                                        }
 					// announce to other servers
 					WBUFW(buf,0) = 0x2741;
 					WBUFL(buf,2) = account_id;

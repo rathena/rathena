@@ -6140,7 +6140,10 @@ void clif_cart_additem_ack(struct map_session_data *sd, uint8 flag)
 
 // 09B7 <unknow data> (ZC_ACK_OPEN_BANKING) 
 void clif_bank_open(struct map_session_data *sd){
-	int fd = sd->fd;
+	int fd;
+        
+        nullpo_retv(sd);
+        fd = sd->fd;
 	
 	WFIFOHEAD(fd,4);
 	WFIFOW(fd,0) = 0x09b7;
@@ -6155,6 +6158,7 @@ void clif_bank_open(struct map_session_data *sd){
 void clif_parse_BankOpen(int fd, struct map_session_data* sd) {
 	//TODO check if preventing trade or stuff like that
 	//also mark something in case char ain't available for saving, should we check now ?
+        nullpo_retv(sd);
 	if( !battle_config.feature_banking ) {
 		clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,1496)); //Banking is disabled
 		return;
@@ -6162,19 +6166,24 @@ void clif_parse_BankOpen(int fd, struct map_session_data* sd) {
 	else {
 		struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
 		int aid = RFIFOL(fd,info->pos[0]); //unused should we check vs fd ?
+                if(sd->status.account_id == aid){
 			sd->state.banking = 1;
+                        //request save ?
+                        //chrif_bankdata_request(sd->status.account_id, sd->status.char_id); 
+                        //on succes open bank ?
+                        clif_bank_open(sd);
+                }
 	}
-	//request save ?
-//      chrif_bankdata_request(sd->status.account_id, sd->status.char_id); 
-	//on succes open bank ?
-	clif_bank_open(sd);
 }
 
 // 09B9 <unknow data> (ZC_ACK_CLOSE_BANKING) 
 
 void clif_bank_close(struct map_session_data *sd){
-	int fd = sd->fd;
-	
+	int fd;
+        
+	nullpo_retv(sd);
+        fd = sd->fd;
+        
 	WFIFOHEAD(fd,4);
 	WFIFOW(fd,0) = 0x09B9;
 	WFIFOW(fd,2) = 0;
@@ -6188,12 +6197,16 @@ void clif_bank_close(struct map_session_data *sd){
 void clif_parse_BankClose(int fd, struct map_session_data* sd) {       
 	struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
 	int aid = RFIFOL(fd,info->pos[0]); //unused should we check vs fd ?
+        
+        nullpo_retv(sd);
 	if( !battle_config.feature_banking ) {
 		clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,1496)); //Banking is disabled
 		//still allow to go trough to not stuck player if we have disable it while they was in
 	}
-	sd->state.banking = 0;
-	clif_bank_close(sd);
+        if(sd->status.account_id == aid){
+            sd->state.banking = 0;
+            clif_bank_close(sd);
+        }
 }
 
 /*
@@ -6269,6 +6282,7 @@ void clif_bank_deposit(struct map_session_data *sd, enum e_BANKING_DEPOSIT_ACK r
  * 09A7 <AID>L <Money>L (PACKET_CZ_REQ_BANKING_DEPOSIT)
  */
 void clif_parse_BankDeposit(int fd, struct map_session_data* sd) {
+        nullpo_retv(sd);
 	if( !battle_config.feature_banking ) {
 		clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,1496)); //Banking is disabled
 		return;
@@ -6315,7 +6329,8 @@ void clif_bank_withdraw(struct map_session_data *sd,enum e_BANKING_WITHDRAW_ACK 
  * Request Withdrawing some money from bank
  * 09A9 <AID>L <Money>L (PACKET_CZ_REQ_BANKING_WITHDRAW)
  */
-void clif_parse_BankWithdraw(int fd, struct map_session_data* sd) {	
+void clif_parse_BankWithdraw(int fd, struct map_session_data* sd) {
+        nullpo_retv(sd);
 	if( !battle_config.feature_banking ) {
 		clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,1496)); //Banking is disabled
 		return;

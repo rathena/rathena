@@ -2167,7 +2167,7 @@ int loginif_BankingReq(int32 account_id, int8 type, int32 data){
 		WFIFOB(login_fd,6) = type;
 		WFIFOL(login_fd,7) = data;
 		WFIFOSET(login_fd,11);
-		return 1;
+  		return 1;
 	}
 	return 0;
 }
@@ -2184,18 +2184,18 @@ int loginif_parse_BankingAck(int fd){
 	int32 bank_vault = RFIFOL(fd,6);
 	char not_fw = RFIFOB(fd,10);
 	RFIFOSKIP(fd,11);
-	
-	if(!not_fw) mapif_BankingAck(aid, bank_vault);
+ 	
+	if(not_fw==0) mapif_BankingAck(aid, bank_vault);
 	return 1;
 }
 
 //HZ 0x2b29 <aid>L <bank_vault>L
 int mapif_BankingAck(int32 account_id, int32 bank_vault){
-	unsigned char buf[14];
+	unsigned char buf[11];
 	WBUFW(buf,0) = 0x2b29;
 	WBUFL(buf,2) = account_id;
 	WBUFL(buf,6) = bank_vault;
-	mapif_sendall(buf, 10); //inform all maps-attached
+  	mapif_sendall(buf, 10); //inform all maps-attached
 	return 1;
 }
 
@@ -2226,7 +2226,7 @@ int mapif_parse_ReqBankInfo(int fd){
 		return 0;
 	uint32 aid = RFIFOL(fd,2);
 	RFIFOSKIP(fd,6);
-	loginif_BankingReq(aid, 1, 0);
+   	loginif_BankingReq(aid, 1, 0);  
 	return 1;
 }
 

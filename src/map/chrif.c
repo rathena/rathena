@@ -1198,7 +1198,7 @@ int chrif_bankdata_request(int account_id, int char_id) {
 	WFIFOW(char_fd,0) = 0x2b2a;
 	WFIFOL(char_fd,2) = account_id;
 	WFIFOSET(char_fd,6);
-	return 0;
+ 	return 0;
 }
 
 int chrif_load_bankdata(int fd){
@@ -1215,7 +1215,7 @@ int chrif_load_bankdata(int fd){
 		return -1;
 	}
 	sd->status.bank_vault = bank_vault;
-	return 1;
+ 	return 1;
 }
 
 int chrif_save_bankdata(struct map_session_data *sd){
@@ -1226,7 +1226,7 @@ int chrif_save_bankdata(struct map_session_data *sd){
 	WFIFOL(char_fd,2) = sd->status.account_id;
 	WFIFOL(char_fd,6) = sd->status.bank_vault;
 	WFIFOSET(char_fd,10);
-	return 1;
+ 	return 1;
 }
 
 int chrif_save_scdata(struct map_session_data *sd) { //parses the sc_data of the player and sends it to the char-server for saving. [Skotlex]
