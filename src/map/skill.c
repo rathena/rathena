@@ -15411,7 +15411,6 @@ int skill_check_target_c_marker(struct block_list *bl, va_list ap) {
 	struct block_list *src;
 	struct status_change *tsc;
 	struct map_session_data *sd;
-	uint16 skill_id;
 
 	nullpo_ret(bl);
 	nullpo_ret(src = va_arg(ap,struct block_list*));
@@ -15420,8 +15419,6 @@ int skill_check_target_c_marker(struct block_list *bl, va_list ap) {
 		return 0;
 	if (!(sd = (struct map_session_data *)src) || !(&sd->c_marker) || !sd->c_marker.target)
 		return 0;
-
-	skill_id = va_arg(ap,int);
 
 	//Skip target with no Crimson Marker
 	tsc = status_get_sc(bl);

@@ -3663,7 +3663,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 				if (sd->equip_index[EQI_AMMO] > 0) {
 					uint16 idx = sd->equip_index[EQI_AMMO];
 					struct item_data *id = NULL;
-					if (id = itemdb_exists(sd->status.inventory[idx].nameid))
+					if ((id = itemdb_exists(sd->status.inventory[idx].nameid)))
 						w = id->weight;
 				}
 				w /= 10;
