@@ -920,7 +920,7 @@ void guild_retrieveitembound(int char_id,int aid,int guild_id)
 			for(i=0; i<g->max_member; i++){
 				TBL_PC *pl_sd = g->member[i].sd;
 				if(pl_sd && pl_sd->state.storage_flag == 2)
-					storage_guild_storageclose(sd);
+					storage_guild_storageclose(pl_sd);
 			}
 		}
 		intif_itembound_req(char_id,aid,guild_id);

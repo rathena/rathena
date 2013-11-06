@@ -1345,6 +1345,15 @@ int clif_spawn(struct block_list *bl)
 		#endif
 			if (sd->status.robe)
 				clif_refreshlook(bl,bl->id,LOOK_ROBE,sd->status.robe,AREA);
+
+			if( sd->sc.data[SC_CAMOUFLAGE] )
+				clif_status_load(bl,SI_CAMOUFLAGE,1);
+			if( sd->sc.data[SC_MONSTER_TRANSFORM] )
+				clif_status_change(bl,SI_MONSTER_TRANSFORM,1,0,sd->sc.data[SC_MONSTER_TRANSFORM]->val1,0,0);
+			if( sd->sc.data[SC_MOONSTAR] )
+				clif_status_load(bl,SI_MOONSTAR,1);
+			if( sd->sc.data[SC_SUPER_STAR] )
+				clif_status_load(bl,SI_SUPER_STAR,1);
 		}
 		break;
 	case BL_MOB:
@@ -4156,10 +4165,17 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 				clif_specialeffect_single(bl,421,sd->fd);
 			if( tsd->bg_id && map[tsd->bl.m].flag.battleground )
 				clif_sendbgemblem_single(sd->fd,tsd);
-			if( tsd->sc.data[SC_CAMOUFLAGE] )
-				clif_status_load(bl,SI_CAMOUFLAGE,1);
 			if ( tsd->status.robe )
 				clif_refreshlook(&sd->bl,bl->id,LOOK_ROBE,tsd->status.robe,SELF);
+			
+			if( tsd->sc.data[SC_CAMOUFLAGE] )
+				clif_status_load(bl,SI_CAMOUFLAGE,1);
+			if( tsd->sc.data[SC_MONSTER_TRANSFORM] )
+				clif_status_change(bl,SI_MONSTER_TRANSFORM,1,0,tsd->sc.data[SC_MONSTER_TRANSFORM]->val1,0,0);
+			if( tsd->sc.data[SC_MOONSTAR] )
+				clif_status_load(bl,SI_MOONSTAR,1);
+			if( tsd->sc.data[SC_SUPER_STAR] )
+				clif_status_load(bl,SI_SUPER_STAR,1);
 		}
 		break;
 	case BL_MER: // Devotion Effects
@@ -9655,6 +9671,11 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if (sd->sc.opt2) //Client loses these on warp.
 		clif_changeoption(&sd->bl);
 
+	if (battle_config.mon_trans_disable_in_gvg && map_flag_gvg2(sd->bl.m)) {
+		status_change_end(&sd->bl, SC_MONSTER_TRANSFORM, INVALID_TIMER);
+		clif_displaymessage(sd->fd, msg_txt(sd,1500)); // Transforming into monster is not allowed in Guild Wars.
+	}
+
 	clif_weather_check(sd);
 
 	// For automatic triggering of NPCs after map loading (so you don't need to walk 1 step first)
@@ -9670,10 +9691,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	// If player is dead, and is spawned (such as @refresh) send death packet. [Valaris]
 	if(pc_isdead(sd))
 		clif_clearunit_area(&sd->bl, CLR_DEAD);
-	else {
+	else
 		skill_usave_trigger(sd);
-		clif_changed_dir(&sd->bl, SELF);
-	}
 
 // Trigger skill effects if you appear standing on them
 	if(!battle_config.pc_invincible_time)
@@ -16564,6 +16583,7 @@ int clif_autoshadowspell_list(struct map_session_data *sd) {
 
 	return 1;
 }
+
 /*===========================================
  * Skill list for Four Elemental Analysis
  * and Change Material skills.

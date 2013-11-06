@@ -18015,6 +18015,82 @@ BUILDIN_FUNC(getserverdef){
 	return 0;
 }
 
+/*==========================================
+ * Turns a player into a monster and grants SC attribute effect. [malufett/Hercules]
+ * montransform <monster name/ID>, <duration>, <sc type>, <val1>, <val2>, <val3>, <val4>;
+ *------------------------------------------*/
+BUILDIN_FUNC(montransform) {
+
+	TBL_PC *sd;
+	enum sc_type type;
+	char msg[CHAT_SIZE_MAX];
+	int tick, mob_id, val1, val2, val3, val4;
+
+	if( (sd = script_rid2sd(st)) == NULL )
+		return 1;
+
+	if( script_isstring(st, 2) )
+		mob_id = mobdb_searchname(script_getstr(st, 2));
+	else
+		mob_id = mobdb_checkid(script_getnum(st, 2));
+
+	tick = script_getnum(st, 3);
+	type = (sc_type)script_getnum(st, 4);
+	val1 = val2 = val3 = val4 = 0;
+
+	if (mob_id == 0) {
+		if( script_isstring(st,2) )
+			ShowWarning("buildin_montransform: Attempted to use non-existing monster '%s'.\n", script_getstr(st, 2));
+		else
+			ShowWarning("buildin_montransform: Attempted to use non-existing monster of ID '%d'.\n", script_getnum(st, 2));
+		return 0;
+	}
+
+	if (mob_id == MOBID_EMPERIUM) {
+		ShowWarning("buildin_montransform: Monster 'Emperium' cannot be used.\n");
+		return 0;
+	}
+
+	if (!(type > SC_NONE && type < SC_MAX)) {
+		ShowWarning("buildin_montransform: Unsupported status change id %d\n", type);
+		return 0;
+	}
+
+	if (script_hasdata(st, 5))
+		val1 = script_getnum(st, 5);
+
+	if (script_hasdata(st, 6))
+		val2 = script_getnum(st, 6);
+
+	if (script_hasdata(st, 7))
+		val3 = script_getnum(st, 7);
+
+	if (script_hasdata(st, 8))
+		val4 = script_getnum(st, 8);
+
+	if (tick != 0) {
+		struct mob_db *monster =  mob_db(mob_id);
+
+		if (battle_config.mon_trans_disable_in_gvg && map_flag_gvg2(sd->bl.m)) {
+			clif_displaymessage(sd->fd, msg_txt(sd,1500)); // Transforming into monster is not allowed in Guild Wars.
+			return 0;
+		}
+
+		if (sd->disguise){
+			clif_displaymessage(sd->fd, msg_txt(sd,1498)); // Cannot transform into monster while in disguise.
+			return 0;
+		}
+
+		sprintf(msg, msg_txt(sd,1497), monster->name); // Traaaansformation-!! %s form!!
+		clif_disp_overhead(&sd->bl, msg);
+		status_change_end(&sd->bl, SC_MONSTER_TRANSFORM, INVALID_TIMER); // Clear previous
+		sc_start2(NULL, &sd->bl, SC_MONSTER_TRANSFORM, 100, mob_id, type, tick);
+		sc_start4(NULL, &sd->bl, type, 100, val1, val2, val3, val4, tick);
+	}
+
+	return 0;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -18494,6 +18570,8 @@ struct script_function buildin_func[] = {
 
 	BUILDIN_DEF(is_clientver,"ii?"),
 	BUILDIN_DEF(getserverdef,"i"),
+
+	BUILDIN_DEF2(montransform, "transform", "vii????"), // Monster Transform [malufett/Hercules]
 
 #include "../custom/script_def.inc"
 

@@ -47,8 +47,7 @@
 // 20120307 - 2012-03-07aRagexeRE+ - 0x970
 
 #ifndef PACKETVER
-	#define PACKETVER 20130724
-	//#define PACKETVER 20130320
+	#define PACKETVER 20130807
 	//#define PACKETVER 20120410
 #endif
 

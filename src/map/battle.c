@@ -3896,6 +3896,11 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, u
 				ATK_ADD(wd.damage, wd.damage2, sc->data[SC_P_ALTER]->val2);
 				RE_ALLATK_ADD(wd, sc->data[SC_P_ALTER]->val2);
 			}
+			// Monster Transformation bonus
+			if(wd.flag&BF_LONG && sc->data[SC_MTF_RANGEATK]) {
+				ATK_ADD(wd.damage, wd.damage2, 25);
+				RE_ALLATK_ADD(wd, 25);
+			}
 		}
 	return wd;
 }
@@ -4646,8 +4651,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 #ifdef RENEWAL
 	if(is_attack_critical(wd, src, target, skill_id, skill_lv, false)) {
-		if(sd) // check for player so we don't crash out, monsters don't have bonus crit rates [helvetica]
+		if(sd) { // check for player so we don't crash out, monsters don't have bonus crit rates [helvetica]
 			wd.damage = (int)floor((double)(wd.damage * 1.4 * (100 + sd->bonus.crit_atk_rate)) / 100);
+			if (sc && sc->data[SC_MTF_CRIDAMAGE]) // Monster Transformation Bonus
+				wd.damage *= (int)1.25;
+		}
 		else
 			wd.damage = (int)floor((double)wd.damage * 1.4);
 	}
@@ -6180,6 +6188,8 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				return ATK_DEF;
 			return ATK_MISS;
 		}
+		if (tsc && tsc->data[SC_MTF_MLEATKED] && rnd()%100 < 20)
+			clif_skill_nodamage(target, target, SM_ENDURE, 5, sc_start(src, target, SC_ENDURE, 100, 5, skill_get_time(SM_ENDURE, 5)));
 	}
 
 	if(tsc && tsc->data[SC_KAAHI] && tsc->data[SC_KAAHI]->val4 == INVALID_TIMER && tstatus->hp < tstatus->max_hp)
@@ -7224,6 +7234,7 @@ static const struct _battle_data {
 	{ "bowling_bash_area",                  &battle_config.bowling_bash_area,               0,      0,      20,             },
 	{ "drop_rateincrease",                  &battle_config.drop_rateincrease,               0,      0,      1,              },
 	{ "feature.banking",                    &battle_config.feature_banking,                 1,      0,      1,              },
+	{ "mon_trans_disable_in_gvg",           &battle_config.mon_trans_disable_in_gvg,        0,      0,      1,              },
 };
 #ifndef STATS_OPT_OUT
 /**

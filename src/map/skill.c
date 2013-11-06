@@ -6882,6 +6882,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				case SC_HEAT_BARREL:	case SC_HEAT_BARREL_AFTER:	case SC_P_ALTER:
 				case SC_E_CHAIN:		case SC_C_MARKER:		case SC_B_TRAP:
 				case SC_H_MINE:
+				case SC_MTF_ASPD:		case SC_MTF_RANGEATK:	case SC_MTF_MATK:
+				case SC_MTF_MLEATKED:	case SC_MTF_CRIDAMAGE:
 #ifdef RENEWAL
 				case SC_EXTREMITYFIST2:
 #endif
@@ -8365,6 +8367,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				case SC_HEAT_BARREL:	case SC_HEAT_BARREL_AFTER:	case SC_P_ALTER:
 				case SC_E_CHAIN:		case SC_C_MARKER:		case SC_B_TRAP:
 				case SC_H_MINE:
+				case SC_MTF_ASPD:		case SC_MTF_RANGEATK:	case SC_MTF_MATK:
+				case SC_MTF_MLEATKED:	case SC_MTF_CRIDAMAGE:
 #ifdef RENEWAL
 				case SC_EXTREMITYFIST2:
 #endif

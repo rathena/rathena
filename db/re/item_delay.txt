@@ -23,6 +23,14 @@
 11524,3000	// White_Raffle_Sap
 11525,5000	// Mora_Hip_Tea
 
+12658, 10000 // Transformation Scroll(Deviruchi)
+12659, 10000 // Transformation Scroll(Raydric)
+12660, 10000 // Transformation Scroll(Mavka)
+12661, 10000 // Transformation Scroll(Marduk)
+12662, 10000 // Transformation Scroll(Banshee)
+12663, 10000 // Transformation Scroll(Poring)
+12664, 10000 // Transformation Scroll(Golem)
+
 // FIX ME! Delays need confirmation.
 12968,300000	// Emergency_Scroll1
 12969,300000	// Emergency_Scroll2

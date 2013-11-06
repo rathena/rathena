@@ -495,6 +495,7 @@ extern struct Battle_Config
 	int bowling_bash_area;
 	int drop_rateincrease;
 	int feature_banking;
+	int mon_trans_disable_in_gvg;
 
 } battle_config;
 

@@ -4828,6 +4828,11 @@ ACMD_FUNC(disguise)
 		return -1;
 	}
 
+	if (sd->sc.data[SC_MONSTER_TRANSFORM]) {
+		clif_displaymessage(fd, msg_txt(sd,1499)); // Character cannot be disguised while in monster transform.
+		return -1;
+	}
+
 	pc_disguise(sd, id);
 	clif_displaymessage(fd, msg_txt(sd,122)); // Disguise applied.
 
