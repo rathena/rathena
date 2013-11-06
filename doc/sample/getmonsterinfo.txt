@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Lupus
 //===== Current Version: =====================================
-//= 20121003
+//= 20131106
 //===== Description: ========================================= 
 //= Demonstrates the 'getmonsterinfo' command.
 //============================================================
@@ -11,13 +11,13 @@
 prontera,156,179,6	script	test_getmonsterinfo	117,{
 	mes "Please enter a monster ID.";
 	input .@value;
-	if(getmonsterinfo(.@value,MOB_LV)<0 || getmonsterinfo(.@value,MOB_NAME)=="Dummy") {
+	if (getmonsterinfo(.@value, MOB_LV) < 0 || getmonsterinfo (.@value, MOB_NAME) == "null") {
 		mes "Invalid monster ID.";
 		close;
 	}
 	mes "Monster ID: "+.@value+" '"+getmonsterinfo(.@value,MOB_NAME)+"'";
 	mes "Current Monster info:";
-	for(set .@id,0; .@id<23; set .@id,.@id+1)
-		mes " getmonsterinfo("+.@value+","+@id+") = "+getmonsterinfo(.@value,@id);
+	for(set .@i,0; .@i<23; set .@i,.@i+1)
+		mes " getmonsterinfo("+.@value+","+.@i+") = "+getmonsterinfo(.@value,.@i);
 	close;
 }

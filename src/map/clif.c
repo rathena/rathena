@@ -17654,7 +17654,7 @@ void packetdb_readdb(void)
                         if( j < ARRAYLENGTH(clif_ack_func)) {
                                 int fidx = clif_ack_func[j].funcidx;
                                 packet_db_ack[packet_ver][fidx] = cmd;
-                                ShowInfo("Added %s, <=> %X i=%d for v=%d\n",clif_ack_func[j].name,cmd,fidx,packet_ver);
+                                //ShowInfo("Added %s, <=> %X i=%d for v=%d\n",clif_ack_func[j].name,cmd,fidx,packet_ver);
                         }
                 }
                 

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -15,6 +15,7 @@
 //= 1.2 Added official success calculation, thanks to Helvetica.
 //=     The safe/multiple refine feature is now functional. [Euphy]
 //= 1.3 Updated to match the latest official script. [Euphy]
+//= 1.4 Added correct safe refines. [Haruna]
 //============================================================
 
 // +11 and above Refiners
@@ -103,12 +104,7 @@ function	script	refinenew	{
 		set .@type$,"weapon";
 		set .@material,6224; //Bradium
 		set .@price,100000;
-		switch(getequipweaponlv(.@part)) {
-			case 1: set .@safe,17; break;
-			case 2: set .@safe,16; break;
-			case 3: set .@safe,15; break;
-			case 4: set .@safe,14; break;
-		}
+		set .@safe,10;
 		mes "["+ getarg(0) +"]";
 		mes "Hmm a weapon, is that ok?";
 		mes "If you want to refine this weapon,";
@@ -117,7 +113,7 @@ function	script	refinenew	{
 		set .@type$,"armor";
 		set .@material,6223; //Carnium
 		set .@price,100000;
-		set .@safe,14;
+		set .@safe,10;
 		mes "["+ getarg(0) +"]";
 		mes "Hmm an armor, is that ok?";
 		mes "If you want to refine this armor,";
@@ -189,7 +185,7 @@ function	script	refinenew	{
 			if (rand(100) < 80) {
 				mes "["+ getarg(0) +"]";
 				mes "Clang! Clang! Clang! Clang!";
-				downrefitem .@part;
+				downrefitem .@part,3; // Failed refine attempts decrease the item's refine level by 3
 				next;
 				emotion (!rand(5))?e_cash:e_omg;
 				mes "["+ getarg(0) +"]";
@@ -298,7 +294,7 @@ function	script	refinenew	{
 			if (rand(100) < 80) {
 				mes "["+ getarg(0) +"]";
 				mes "Clang! Clang! Clang! Clang!";
-				downrefitem .@part;
+				downrefitem .@part,3; // Failed refine attempts decrease the item's refine level by 3
 				next;
 				emotion (!rand(5))?e_cash:e_omg;
 				mes "["+ getarg(0) +"]";
