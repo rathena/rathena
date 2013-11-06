@@ -2178,11 +2178,11 @@ int loginif_BankingReq(int32 account_id, int8 type, int32 data){
  * HZ 0x2b29 <aid>L <bank_vault>L 
  */
 int loginif_parse_BankingAck(int fd){
-	if (RFIFOREST(fd) < 11)
-		return 0;
 	uint32 aid = RFIFOL(fd,2);
 	int32 bank_vault = RFIFOL(fd,6);
 	char not_fw = RFIFOB(fd,10);
+	if (RFIFOREST(fd) < 11)
+		return 0;
 	RFIFOSKIP(fd,11);
  	
 	if(not_fw==0) mapif_BankingAck(aid, bank_vault);
@@ -2206,11 +2206,11 @@ int mapif_BankingAck(int32 account_id, int32 bank_vault){
  * HA 0x2740<aid>L <type>B <money>L
  */
 int mapif_parse_UpdBankInfo(int fd){
-	if( RFIFOREST(fd) < 10 )
-		return 0;
 	uint32 aid = RFIFOL(fd,2);
 	int money = RFIFOL(fd,6);
 	RFIFOSKIP(fd,10);
+	if( RFIFOREST(fd) < 10 )
+		return 0;
 	loginif_BankingReq(aid, 2, money);
 	return 1;
 }
@@ -2222,9 +2222,9 @@ int mapif_parse_UpdBankInfo(int fd){
  * HA 0x2740<aid>L <type>B <money>L
  */
 int mapif_parse_ReqBankInfo(int fd){
+	uint32 aid = RFIFOL(fd,2);
 	if( RFIFOREST(fd) < 6 )
 		return 0;
-	uint32 aid = RFIFOL(fd,2);
 	RFIFOSKIP(fd,6);
    	loginif_BankingReq(aid, 1, 0);  
 	return 1;

@@ -6293,8 +6293,8 @@ void clif_parse_BankDeposit(int fd, struct map_session_data* sd) {
 		int money = RFIFOL(fd,info->pos[1]);
                 
 		if(sd->status.account_id == aid){
-			money = max(0,money);
 			enum e_BANKING_DEPOSIT_ACK reason = pc_bank_deposit(sd,money);
+			money = max(0,money);
 			clif_bank_deposit(sd,reason);
 		}
 	}
@@ -6340,8 +6340,8 @@ void clif_parse_BankWithdraw(int fd, struct map_session_data* sd) {
 		int aid = RFIFOL(fd,info->pos[0]); //unused should we check vs fd ?
 		int money = RFIFOL(fd,info->pos[1]);
 		if(sd->status.account_id == aid){
-			money = max(0,money);
 			enum e_BANKING_WITHDRAW_ACK reason = pc_bank_withdraw(sd,money);
+			money = max(0,money);
 			clif_bank_withdraw(sd,reason);
 		}
 	}
