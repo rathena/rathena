@@ -109,28 +109,28 @@ static __inline uint64 _rdtsc(){
 	} t;
 
 	asm volatile("rdtsc":"=a"(t.dw[0]), "=d"(t.dw[1]) );
-	
+
 	return t.qw;
 }
 
 static void rdtsc_calibrate(){
 	uint64 t1, t2;
 	int32 i;
-	
+
 	ShowStatus("Calibrating Timer Source, please wait... ");
-	
+
 	RDTSC_CLOCK = 0;
-	
+
 	for(i = 0; i < 5; i++){
 		t1 = _rdtsc();
 		usleep(1000000); //1000 MS
 		t2 = _rdtsc();
-		RDTSC_CLOCK += (t2 - t1) / 1000; 
+		RDTSC_CLOCK += (t2 - t1) / 1000;
 	}
 	RDTSC_CLOCK /= 5;
-	
+
 	RDTSC_BEGINTICK = _rdtsc();
-	
+
 	ShowMessage(" done. (Frequency: %u Mhz)\n", (uint32)(RDTSC_CLOCK/1000) );
 }
 
@@ -243,7 +243,7 @@ static int acquire_timer(void)
 int add_timer(unsigned int tick, TimerFunc func, int id, intptr_t data)
 {
 	int tid;
-	
+
 	tid = acquire_timer();
 	timer_data[tid].tick     = tick;
 	timer_data[tid].func     = func;
@@ -267,7 +267,7 @@ int add_timer_interval(unsigned int tick, TimerFunc func, int id, intptr_t data,
 		ShowError("add_timer_interval: invalid interval (tick=%u %p[%s] id=%d data=%d diff_tick=%d)\n", tick, func, search_timer_func_list(func), id, data, DIFF_TICK(tick, gettick()));
 		return INVALID_TIMER;
 	}
-	
+
 	tid = acquire_timer();
 	timer_data[tid].tick     = tick;
 	timer_data[tid].func     = func;
@@ -320,7 +320,7 @@ int addtick_timer(int tid, unsigned int tick)
 int settick_timer(int tid, unsigned int tick)
 {
 	size_t i;
-	
+
 	// search timer position
 	ARR_FIND(0, BHEAP_LENGTH(timer_heap), i, BHEAP_DATA(timer_heap)[i] == tid);
 	if( i == BHEAP_LENGTH(timer_heap) )
@@ -404,6 +404,78 @@ int do_timer(unsigned int tick)
 unsigned long get_uptime(void)
 {
 	return (unsigned long)difftime(time(NULL), start_time);
+}
+
+/*
+ * Split given time into year, month, day, hour, minute, second
+ */
+void split_time(int timein, int* year, int* month, int* day, int* hour, int* minute, int *second) {
+	struct tm now_tm;
+	struct tm then_tm;
+	time_t now = time(NULL);
+	time_t then = now + timein; // Add time in seconds to the current time
+	now_tm = *localtime(&now);
+	then_tm = *localtime(&then);
+	mktime(&now_tm);
+	mktime(&then_tm);
+
+	*year = max(then_tm.tm_year - now_tm.tm_year,0);
+	*month = max(then_tm.tm_mon - now_tm.tm_mon,0);
+	*day = max(then_tm.tm_mday - now_tm.tm_mday,0);
+	*hour = max(then_tm.tm_hour - now_tm.tm_hour,0);
+	*minute = max(then_tm.tm_min - now_tm.tm_min,0);
+	*second = max(then_tm.tm_sec - now_tm.tm_sec,0);
+}
+
+/*
+ * Create a "timestamp" with the given argument
+ */
+int solve_time(char * modif_p) {
+	int totaltime = 0, value = 0;
+	struct tm then_tm;
+	time_t now = time(NULL);
+	time_t then = now;
+	then_tm = *localtime(&then);
+
+	while (modif_p[0] != '\0') {
+		value = atoi(modif_p);
+		if (value == 0)
+			modif_p++;
+		else {
+			if (modif_p[0] == '-' || modif_p[0] == '+')
+				modif_p++;
+			while (modif_p[0] >= '0' && modif_p[0] <= '9')
+				modif_p++;
+			if (modif_p[0] == 's') {
+				then_tm.tm_sec += value;
+				modif_p++;
+			} else if (modif_p[0] == 'n') {
+				then_tm.tm_min += value;
+				modif_p++;
+			} else if (modif_p[0] == 'm' && modif_p[1] == 'n') {
+				then_tm.tm_min += value;
+				modif_p = modif_p + 2;
+			} else if (modif_p[0] == 'h') {
+				then_tm.tm_hour += value;
+				modif_p++;
+			} else if (modif_p[0] == 'd' || modif_p[0] == 'j') {
+				then_tm.tm_yday += value;
+				modif_p++;
+			} else if (modif_p[0] == 'm') {
+				then_tm.tm_mon += value;
+				modif_p++;
+			} else if (modif_p[0] == 'y' || modif_p[0] == 'a') {
+				then_tm.tm_year += value;
+				modif_p++;
+			} else if (modif_p[0] != '\0') {
+				modif_p++;
+			}
+		}
+	}
+	then = mktime(&then_tm);
+	totaltime = difftime(then,now);
+
+	return totaltime;
 }
 
 void timer_init(void)
