@@ -406,32 +406,47 @@ unsigned long get_uptime(void)
 	return (unsigned long)difftime(time(NULL), start_time);
 }
 
+void time2str(char *timestr, char *format, int timein) {
+	time_t timeout = time(NULL) + timein;
+	strftime(timestr, 24, format, localtime(&timeout));
+}
+
 /*
- * Split given time into year, month, day, hour, minute, second
+ * Split given timein into year, month, day, hour, minute, second
  */
 void split_time(int timein, int* year, int* month, int* day, int* hour, int* minute, int *second) {
-	struct tm now_tm;
-	struct tm then_tm;
-	time_t now = time(NULL);
-	time_t then = now + timein; // Add time in seconds to the current time
-	now_tm = *localtime(&now);
-	then_tm = *localtime(&then);
-	mktime(&now_tm);
-	mktime(&then_tm);
+	const int factor_min = 60;
+	const int factor_hour = factor_min*60;
+	const int factor_day = factor_hour*24;
+	const int factor_month = factor_day*30; // Approx
+	const int factor_year = factor_month*12; // Even worse approx
 
-	*year = max(then_tm.tm_year - now_tm.tm_year,0);
-	*month = max(then_tm.tm_mon - now_tm.tm_mon,0);
-	*day = max(then_tm.tm_mday - now_tm.tm_mday,0);
-	*hour = max(then_tm.tm_hour - now_tm.tm_hour,0);
-	*minute = max(then_tm.tm_min - now_tm.tm_min,0);
-	*second = max(then_tm.tm_sec - now_tm.tm_sec,0);
+	*year = timein/factor_year;
+	timein -= *year*factor_year;
+	*month = timein/factor_month;
+	timein -= *month*factor_month;
+	*day = timein/factor_day;
+	timein -= *day*factor_day;
+	*hour = timein/factor_hour;
+	timein -= *hour*factor_hour;
+	*minute = timein/factor_min;
+	timein -= *minute*factor_min;
+	*second = timein;
+
+	*year = max(0,*year);
+	*month = max(0,*month);
+	*day = max(0,*day);
+	*hour = max(0,*hour);
+	*minute = max(0,*minute);
+	*second = max(0,*second);
 }
 
 /*
  * Create a "timestamp" with the given argument
  */
-int solve_time(char * modif_p) {
-	int totaltime = 0, value = 0;
+double solve_time(char* modif_p) {
+	double totaltime = 0;
+	int value = 0;
 	struct tm then_tm;
 	time_t now = time(NULL);
 	time_t then = now;
@@ -459,7 +474,7 @@ int solve_time(char * modif_p) {
 				then_tm.tm_hour += value;
 				modif_p++;
 			} else if (modif_p[0] == 'd' || modif_p[0] == 'j') {
-				then_tm.tm_yday += value;
+				then_tm.tm_mday += value;
 				modif_p++;
 			} else if (modif_p[0] == 'm') {
 				then_tm.tm_mon += value;

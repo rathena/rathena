@@ -4618,8 +4618,7 @@ ACMD_FUNC(unjail)
 ACMD_FUNC(jailfor)
 {
 	struct map_session_data *pl_sd = NULL;
-	int year = 0, month = 0, day = 0, hour = 0, minute = 0, second = 0;
-	char * modif_p, output[CHAT_SIZE_MAX];
+	char * modif_p;
 	int jailtime = 0,x,y;
 	short m_index = 0;
 	nullpo_retr(-1, sd);
@@ -4632,14 +4631,11 @@ ACMD_FUNC(jailfor)
 	atcmd_output[sizeof(atcmd_output)-1] = '\0';
 
 	modif_p = atcmd_output;
-	jailtime = solve_time(modif_p)/60; // Change to minutes
-
-	split_time(jailtime*60,&year,&month,&day,&hour,&minute,&second);
-	sprintf(output,msg_txt(sd,402),msg_txt(sd,1137),year,month,day,hour,minute); // %s in jail for %d years, %d months, %d days, %d hours and %d minutes
-	clif_displaymessage(fd, output);
+	jailtime = (int)solve_time(modif_p)/60; // Change to minutes
 
 	if (jailtime == 0) {
 		clif_displaymessage(fd, msg_txt(sd,1136)); // Invalid time for jail command.
+		clif_displaymessage(fd, msg_txt(sd,702)); // Time parameter format is +/-<value> to alter. y/a = Year, m = Month, d/j = Day, h = Hour, n/mn = Minute, s = Second.
 		return -1;
 	}
 
@@ -4661,11 +4657,17 @@ ACMD_FUNC(jailfor)
 			clif_displaymessage(pl_sd->fd, msg_txt(sd,120)); // GM has discharge you.
 			clif_displaymessage(fd, msg_txt(sd,121)); // Player unjailed
 		} else {
-			get_jail_time(jailtime,&year,&month,&day,&hour,&minute);
+			int year = 0, month = 0, day = 0, hour = 0, minute = 0, second = 0;
+			char timestr[CHAT_SIZE_MAX];
+			split_time(jailtime*60,&year,&month,&day,&hour,&minute,&second);
 			sprintf(atcmd_output,msg_txt(sd,402),msg_txt(sd,1137),year,month,day,hour,minute); // %s in jail for %d years, %d months, %d days, %d hours and %d minutes
 	 		clif_displaymessage(pl_sd->fd, atcmd_output);
 			sprintf(atcmd_output,msg_txt(sd,402),msg_txt(sd,1138),year,month,day,hour,minute); // This player is now in jail for %d years, %d months, %d days, %d hours and %d minutes
 	 		clif_displaymessage(fd, atcmd_output);
+			time2str(timestr,"%Y-%m-%d %H:%M",jailtime*60);
+			sprintf(atcmd_output,"Release date is: %s",timestr);
+			clif_displaymessage(pl_sd->fd, atcmd_output);
+			clif_displaymessage(fd, atcmd_output);
 		}
 	} else if (jailtime < 0) {
 		clif_displaymessage(fd, msg_txt(sd,1136));
@@ -4692,6 +4694,7 @@ ACMD_FUNC(jailfor)
 ACMD_FUNC(jailtime)
 {
 	int year, month, day, hour, minute, second;
+	char timestr[CHAT_SIZE_MAX];
 
 	nullpo_retr(-1, sd);
 
@@ -4714,6 +4717,8 @@ ACMD_FUNC(jailtime)
 	split_time(sd->sc.data[SC_JAILED]->val1*60,&year,&month,&day,&hour,&minute,&second);
 	sprintf(atcmd_output,msg_txt(sd,402),msg_txt(sd,1142),year,month,day,hour,minute); // You will remain in jail for %d years, %d months, %d days, %d hours and %d minutes
 	clif_displaymessage(fd, atcmd_output);
+	time2str(timestr,"%Y-%m-%d %H:%M",sd->sc.data[SC_JAILED]->val1*60);
+	sprintf(atcmd_output,"Release date is: %s",timestr);
 
 	return 0;
 }
