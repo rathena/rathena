@@ -2602,7 +2602,7 @@ REPLACE INTO `item_db` VALUES (5400,'Fox_Hat','Fox Hat',5,20,NULL,200,NULL,0,NUL
 REPLACE INTO `item_db` VALUES (5401,'Black_Glasses','Black Frame Glasses',5,20,NULL,200,NULL,1,NULL,0,0xFFFFFFFF,7,2,512,NULL,70,0,404,'bonus bInt,1; bonus bMdef,2; bonus bUnbreakableHelm, 0;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5402,'Mischievous_Fairy','Mischievous Fairy',5,10,NULL,200,NULL,1,NULL,0,0xFFFFFFFF,7,2,512,NULL,70,0,405,'bonus bUnbreakableHelm, 0; bonus bFlee2, 3;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5403,'Fish_In_Mouth','Fish In Mouth',5,10,NULL,200,NULL,0,NULL,0,0xFFFFFFFF,7,2,1,NULL,30,0,406,'bonus2 bAddMonsterDropItem,579,500; bonus2 bAddItemHealRate,579,25;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (5404,'Blue_Ribbon','Blue Ribbon',5,10,NULL,100,NULL,1,NULL,1,0xFFFFFFFF,7,2,256,NULL,45,1,407,'bonus4 bAutoSpellWhenHit, AC_CONCENTRATION, 2, 7, 0;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (5404,'Blue_Ribbon','Blue Ribbon',5,10,NULL,100,NULL,1,NULL,1,0xFFFFFFFF,7,2,256,NULL,45,1,407,'bonus4 bAutoSpellWhenHit,"AC_CONCENTRATION",2,7,0;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5405,'Filir_Hat','Filir Hat',5,10,NULL,200,NULL,0,NULL,0,0xFFFFFFFF,7,2,256,NULL,80,0,408,'bonus bShortWeaponDamageReturn, 1;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5406,'Academy_Freshman_Hat','Academy Freshman Hat',5,0,NULL,500,NULL,2,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,1,409,'bonus bMaxHP,80; bonus bMaxSP,10;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5407,'Academy_Graduating_Cap','Academy Completion Hat',5,0,NULL,200,NULL,2,NULL,1,0xFFFFFFFF,7,2,256,NULL,0,1,410,'bonus bMaxSP,30;',NULL,NULL);
@@ -2612,7 +2612,7 @@ REPLACE INTO `item_db` VALUES (5410,'Bread_Bag2','Brown Paperbag Hat',5,20,NULL,
 REPLACE INTO `item_db` VALUES (5411,'White_Snake_Hat','White Snake Hat',5,20,NULL,500,NULL,2,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,1,413,'bonus bDex,2;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5412,'Sweet_Candy','Sweet Candy',5,20,NULL,100,NULL,1,NULL,0,0xFFFFFFFF,7,2,1,NULL,0,0,414,'bonus bUnbreakableHelm, 0;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5413,'Popcorn_Hat','Pop Corn Hat',5,20,NULL,300,NULL,2,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,0,415,'bonus2 bSubEle,Ele_Wind, 10;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (5414,'Campfire_Hat','Camp Fire Hat',5,20,NULL,300,NULL,2,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,0,416,'bonus2 bSubEle,Ele_Fire, 10; bonus4 bAutoSpellWhenHit, MG_FIREBALL, 5, 100, 1;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (5414,'Campfire_Hat','Camp Fire Hat',5,20,NULL,300,NULL,2,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,0,416,'bonus2 bSubEle,Ele_Fire,10; bonus4 bAutoSpellWhenHit,"MG_FIREBALL",5,100,1;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5415,'Poring_Cake_Cap','Poring Cake Hat',5,20,NULL,1000,NULL,5,NULL,0,0xFFFFFFFF,7,2,256,NULL,40,1,417,'bonus bMdef,5; bonus bCritical,5; bonus bFlee,5; bonus bFlee2,5; bonus bAspdRate,5; bonus bCastrate,-5; bonus bDelayRate,-5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5416,'Beer_Cap','Beer Hat',5,20,NULL,600,NULL,2,NULL,0,0xFFFFFFFE,7,2,256,NULL,18,1,418,'bonus bFlee2,5; skill "SM_RECOVERY",3; skill "MG_SRECOVERY",3;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5417,'Crown_Parrot','Crown Parrots',5,20,NULL,200,NULL,1,NULL,1,0xFFFFFFFF,7,2,256,NULL,0,0,419,'bonus bInt,1; bonus2 bResEff,Eff_Silence,10000; bonus3 bAutoSpell,"DC_SCREAM",1,50;',NULL,NULL);

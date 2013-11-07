@@ -2571,7 +2571,7 @@
 5401,Black_Glasses,Black Frame Glasses,5,20,,200,,1,,0,0xFFFFFFFF,7,2,512,,70,0,404,{ bonus bInt,1; bonus bMdef,2; bonus bUnbreakableHelm, 0; },{},{}
 5402,Mischievous_Fairy,Mischievous Fairy,5,10,,200,,1,,0,0xFFFFFFFF,7,2,512,,70,0,405,{ bonus bUnbreakableHelm, 0; bonus bFlee2, 3; },{},{}
 5403,Fish_In_Mouth,Fish In Mouth,5,10,,200,,0,,0,0xFFFFFFFF,7,2,1,,30,0,406,{ bonus2 bAddMonsterDropItem,579,500; bonus2 bAddItemHealRate,579,25; },{},{}
-5404,Blue_Ribbon,Blue Ribbon,5,10,,100,,1,,1,0xFFFFFFFF,7,2,256,,45,1,407,{ bonus4 bAutoSpellWhenHit, AC_CONCENTRATION, 2, 7, 0; },{},{}
+5404,Blue_Ribbon,Blue Ribbon,5,10,,100,,1,,1,0xFFFFFFFF,7,2,256,,45,1,407,{ bonus4 bAutoSpellWhenHit,"AC_CONCENTRATION",2,7,0; },{},{}
 5405,Filir_Hat,Filir Hat,5,10,,200,,0,,0,0xFFFFFFFF,7,2,256,,80,0,408,{ bonus bShortWeaponDamageReturn, 1; },{},{}
 5406,Academy_Freshman_Hat,Academy Freshman Hat,5,0,,500,,2,,0,0xFFFFFFFF,7,2,256,,0,1,409,{ bonus bMaxHP,80; bonus bMaxSP,10; },{},{}
 5407,Academy_Graduating_Cap,Academy Completion Hat,5,0,,200,,2,,1,0xFFFFFFFF,7,2,256,,0,1,410,{ bonus bMaxSP,30; },{},{}
@@ -2581,7 +2581,7 @@
 5411,White_Snake_Hat,White Snake Hat,5,20,,500,,2,,0,0xFFFFFFFF,7,2,256,,0,1,413,{ bonus bDex,2; },{},{}
 5412,Sweet_Candy,Sweet Candy,5,20,,100,,1,,0,0xFFFFFFFF,7,2,1,,0,0,414,{ bonus bUnbreakableHelm, 0; },{},{}
 5413,Popcorn_Hat,Pop Corn Hat,5,20,,300,,2,,0,0xFFFFFFFF,7,2,256,,0,0,415,{ bonus2 bSubEle,Ele_Wind, 10; },{},{}
-5414,Campfire_Hat,Camp Fire Hat,5,20,,300,,2,,0,0xFFFFFFFF,7,2,256,,0,0,416,{ bonus2 bSubEle,Ele_Fire, 10; bonus4 bAutoSpellWhenHit, MG_FIREBALL, 5, 100, 1; },{},{}
+5414,Campfire_Hat,Camp Fire Hat,5,20,,300,,2,,0,0xFFFFFFFF,7,2,256,,0,0,416,{ bonus2 bSubEle,Ele_Fire,10; bonus4 bAutoSpellWhenHit,"MG_FIREBALL",5,100,1; },{},{}
 5415,Poring_Cake_Cap,Poring Cake Hat,5,20,,1000,,5,,0,0xFFFFFFFF,7,2,256,,40,1,417,{ bonus bMdef,5; bonus bCritical,5; bonus bFlee,5; bonus bFlee2,5; bonus bAspdRate,5; bonus bCastrate,-5; bonus bDelayRate,-5; },{},{}
 5416,Beer_Cap,Beer Hat,5,20,,600,,2,,0,0xFFFFFFFE,7,2,256,,18,1,418,{ bonus bFlee2,5; skill "SM_RECOVERY",3; skill "MG_SRECOVERY",3; },{},{}
 5417,Crown_Parrot,Crown Parrots,5,20,,200,,1,,1,0xFFFFFFFF,7,2,256,,0,0,419,{ bonus bInt,1; bonus2 bResEff,Eff_Silence,10000; bonus3 bAutoSpell,"DC_SCREAM",1,50; },{},{}
