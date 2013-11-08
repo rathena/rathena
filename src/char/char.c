@@ -33,8 +33,8 @@
 #include <stdlib.h>
 #include <malloc.h>
 
-#define MAX_STARTITEM 32
-#define CHAR_MAX_MSG 300
+#define MAX_STARTITEM 32	//max number of items a new players can start with
+#define CHAR_MAX_MSG 300	//max number of msg_conf
 static char* msg_table[CHAR_MAX_MSG]; // Login Server messages_conf
 
 char char_db[256] = "char";
@@ -231,6 +231,7 @@ struct auth_node {
 	time_t expiration_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
 	int group_id;
 	unsigned changing_mapservers : 1;
+	uint8 version;
 };
 
 static DBMap* auth_db; // int account_id -> struct auth_node*
@@ -1969,24 +1970,20 @@ void char_parse_req_charlist(int fd, struct char_session_data* sd){
 //----------------------------------------
 int mmo_char_send006b(int fd, struct char_session_data* sd){
 	int j, offset = 0;
-	//bool newvers = (sd->version >= date2version(20100413) );
-#if PACKETVER >= 20100413
-	//if(newvers) //20100413
+	bool newvers = (sd->version >= date2version(20100413) );
+	if(newvers) //20100413
 		offset += 3;
-#endif
 	if (save_log)
 		ShowInfo("Loading Char Data ("CL_BOLD"%d"CL_RESET")\n",sd->account_id);
 
 	j = 24 + offset; // offset
 	WFIFOHEAD(fd,j + MAX_CHARS*MAX_CHAR_BUF);
 	WFIFOW(fd,0) = 0x6b;
-#if PACKETVER >= 20100413
-//	if(newvers){ //20100413
+	if(newvers){ //20100413
 		WFIFOB(fd,4) = MAX_CHARS; // Max slots.
 		WFIFOB(fd,5) = sd->char_slots; // Available slots. (PremiumStartSlot)
 		WFIFOB(fd,6) = MAX_CHARS; // Premium slots. (Any existent chars past sd->char_slots but within MAX_CHARS will show a 'Premium Service' in red)
-//	}
-#endif
+	}
 	memset(WFIFOP(fd,4 + offset), 0, 20); // unknown bytes
 	j+=mmo_chars_fromsql(sd, WFIFOP(fd,j));
 	WFIFOW(fd,2) = j; // packet len
@@ -2015,13 +2012,11 @@ void mmo_char_send082d(int fd, struct char_session_data* sd) {
 
 void mmo_char_send(int fd, struct char_session_data* sd){
 	//ShowInfo("sd->version = %d\n",sd->version);
-#if PACKETVER >= 20130000
-	//if(sd->version > date2version(20130000) ){
+	if(sd->version > date2version(20130000) ){
 		mmo_char_send082d(fd,sd);
 		char_charlist_notify(fd,sd);
 		char_block_character(fd,sd);
-#endif
-	//}
+	}
 	//@FIXME dump from kro doesn't show 6b transmission
 	mmo_char_send006b(fd,sd);
 }
@@ -2178,11 +2173,11 @@ int loginif_BankingReq(int32 account_id, int8 type, int32 data){
  * HZ 0x2b29 <aid>L <bank_vault>L 
  */
 int loginif_parse_BankingAck(int fd){
+	if (RFIFOREST(fd) < 11)
+		return 0;
 	uint32 aid = RFIFOL(fd,2);
 	int32 bank_vault = RFIFOL(fd,6);
 	char not_fw = RFIFOB(fd,10);
-	if (RFIFOREST(fd) < 11)
-		return 0;
 	RFIFOSKIP(fd,11);
  	
 	if(not_fw==0) mapif_BankingAck(aid, bank_vault);
@@ -2206,11 +2201,11 @@ int mapif_BankingAck(int32 account_id, int32 bank_vault){
  * HA 0x2740<aid>L <type>B <money>L
  */
 int mapif_parse_UpdBankInfo(int fd){
+	if( RFIFOREST(fd) < 10 )
+		return 0;
 	uint32 aid = RFIFOL(fd,2);
 	int money = RFIFOL(fd,6);
 	RFIFOSKIP(fd,10);
-	if( RFIFOREST(fd) < 10 )
-		return 0;
 	loginif_BankingReq(aid, 2, money);
 	return 1;
 }
@@ -2222,9 +2217,9 @@ int mapif_parse_UpdBankInfo(int fd){
  * HA 0x2740<aid>L <type>B <money>L
  */
 int mapif_parse_ReqBankInfo(int fd){
-	uint32 aid = RFIFOL(fd,2);
 	if( RFIFOREST(fd) < 6 )
 		return 0;
+	uint32 aid = RFIFOL(fd,2);
 	RFIFOSKIP(fd,6);
    	loginif_BankingReq(aid, 1, 0);  
 	return 1;
@@ -2277,6 +2272,34 @@ void loginif_on_ready(void)
 		ShowStatus("Awaiting maps from map-server.\n");
 }
 
+int logif_parse_reqpincode(int fd, struct char_session_data *sd){
+#if PACKETVER >=  20110309
+    if( pincode_enabled ){
+            // PIN code system enabled
+            if( strlen( sd->pincode ) <= 0 ){
+                // No PIN code has been set yet
+                if( pincode_force ) pincode_sendstate( fd, sd, PINCODE_NEW );
+                else pincode_sendstate( fd, sd, PINCODE_PASSED );
+            } else {
+                    if( !pincode_changetime || ( sd->pincode_change + pincode_changetime ) > time(NULL) ){
+                            struct online_char_data* node = (struct online_char_data*)idb_get( online_char_db, sd->account_id );
+
+                            if( node != NULL && node->pincode_success ){ // User has already passed the check                    
+                                    pincode_sendstate( fd, sd, PINCODE_PASSED );
+                            }else{
+                                    // Ask user for his PIN code
+                                    pincode_sendstate( fd, sd, PINCODE_ASK );
+                            }
+                    }else{ // User hasnt changed his PIN code too long
+                            pincode_sendstate( fd, sd, PINCODE_EXPIRED );
+                    }
+            }
+    } else { // PIN code system disabled 
+            pincode_sendstate( fd, sd, PINCODE_OK );
+    }
+#endif
+    return 0;
+}
 
 int parse_fromlogin(int fd) {
 	struct char_session_data* sd = NULL;
@@ -2357,6 +2380,10 @@ int parse_fromlogin(int fd) {
 				int client_fd = request_id;
 				sd->version = version;
 				sd->clienttype = clienttype;
+				if(sd->version != date2version(PACKETVER))
+					ShowWarning("s aid=%d has an incorect version=%d in clientinfo. Server compiled for %d\n",
+						sd->account_id,sd->version,date2version(PACKETVER));
+				
 				switch( result )
 				{
 				case 0:// ok
@@ -2408,37 +2435,7 @@ int parse_fromlogin(int fd) {
 				} else {
 					// send characters to player
 					mmo_char_send(i, sd);
-#if PACKETVER >=  20110309
-					if( pincode_enabled ){
-						// PIN code system enabled
-						if( strlen( sd->pincode ) <= 0 ){
-							// No PIN code has been set yet
-							if( pincode_force ){
-								pincode_sendstate( i, sd, PINCODE_NEW );
-							}else{
-								pincode_sendstate( i, sd, PINCODE_PASSED );
-							}
-						}else{
-							if( !pincode_changetime || ( sd->pincode_change + pincode_changetime ) > time(NULL) ){
-								struct online_char_data* node = (struct online_char_data*)idb_get( online_char_db, sd->account_id );
-
-								if( node != NULL && node->pincode_success ){
-									// User has already passed the check
-									pincode_sendstate( i, sd, PINCODE_PASSED );
-								}else{
-									// Ask user for his PIN code
-									pincode_sendstate( i, sd, PINCODE_ASK );
-								}
-							}else{
-								// User hasnt changed his PIN code too long
-								pincode_sendstate( i, sd, PINCODE_EXPIRED );
-							}
-						}
-					}else{
-						// PIN code system disabled
-						pincode_sendstate( i, sd, PINCODE_OK );
-					}
-#endif
+					logif_parse_reqpincode(i, sd);
 				}
 			}
 			RFIFOSKIP(fd,76);
@@ -3133,14 +3130,15 @@ int parse_frommap(int fd)
 		break;
 
 		case 0x2b02: // req char selection
-			if( RFIFOREST(fd) < 18 )
+			if( RFIFOREST(fd) < 19 )
 				return 0;
 			else{
 				int account_id = RFIFOL(fd,2);
 				uint32 login_id1 = RFIFOL(fd,6);
 				uint32 login_id2 = RFIFOL(fd,10);
 				uint32 ip = RFIFOL(fd,14);
-				RFIFOSKIP(fd,18);
+				uint8 version = RFIFOB(fd,18);
+				RFIFOSKIP(fd,19);
 
 				if( runflag != CHARSERVER_ST_RUNNING ){
 					WFIFOHEAD(fd,7);
@@ -3159,13 +3157,13 @@ int parse_frommap(int fd)
 					node->login_id2 = login_id2;
 					//node->sex = 0;
 					node->ip = ntohl(ip);
+					node->version = version; //upd version for mapserv
 					//node->expiration_time = 0; // unlimited/unknown time by default (not display in map-server)
 					//node->gmlevel = 0;
 					idb_put(auth_db, account_id, node);
 
 					//Set char to "@ char select" in online db [Kevin]
 					set_char_charselect(account_id);
-
 					{
 						struct online_char_data* character = (struct online_char_data*)idb_get(online_char_db, account_id);
 
@@ -4061,6 +4059,7 @@ int parse_char(int fd)
 				node->login_id2  == login_id2 /*&&
 				node->ip         == ipl*/ )
 			{// authentication found (coming from map server)
+				sd->version = node->version;
 				idb_remove(auth_db, account_id);
 				char_auth_ok(fd, sd);
 			}

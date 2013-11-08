@@ -292,11 +292,14 @@ int date2version(int date){
 	else if(date < 20130529) return 36;
 	else if(date < 20130605) return 37;
 	else if(date < 20130612) return 38;
-	else if(date >= 20130612) return 39;
-//	else if(date < 20040920) return 40;
-//	else if(date < 20040920) return 41;
-//	else if(date < 20040920) return 42;
-//	else if(date < 20040920) return 43;
+	else if(date < 20130618) return 39;
+	else if(date < 20130626) return 40;
+	else if(date < 20130703) return 41;
+	else if(date < 20130710) return 42;
+	else if(date < 20130717) return 43;
+	else if(date < 20130807) return 44;
+	else if(date >= 20130807) return 45;
+
 	else return 30; //default
 }
 
