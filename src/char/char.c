@@ -1970,7 +1970,7 @@ void char_parse_req_charlist(int fd, struct char_session_data* sd){
 //----------------------------------------
 int mmo_char_send006b(int fd, struct char_session_data* sd){
 	int j, offset = 0;
-	bool newvers = (sd->version >= date2version(20100413) );
+	bool newvers = (sd->version >= (uint32)date2version(20100413));
 	if(newvers) //20100413
 		offset += 3;
 	if (save_log)
@@ -2012,7 +2012,7 @@ void mmo_char_send082d(int fd, struct char_session_data* sd) {
 
 void mmo_char_send(int fd, struct char_session_data* sd){
 	//ShowInfo("sd->version = %d\n",sd->version);
-	if(sd->version > date2version(20130000) ){
+	if(sd->version > (uint32)date2version(20130000) ){
 		mmo_char_send082d(fd,sd);
 		char_charlist_notify(fd,sd);
 		char_block_character(fd,sd);
@@ -2175,12 +2175,14 @@ int loginif_BankingReq(int32 account_id, int8 type, int32 data){
 int loginif_parse_BankingAck(int fd){
 	if (RFIFOREST(fd) < 11)
 		return 0;
-	uint32 aid = RFIFOL(fd,2);
-	int32 bank_vault = RFIFOL(fd,6);
-	char not_fw = RFIFOB(fd,10);
-	RFIFOSKIP(fd,11);
+	else {
+		uint32 aid = RFIFOL(fd,2);
+		int32 bank_vault = RFIFOL(fd,6);
+		char not_fw = RFIFOB(fd,10);
+		RFIFOSKIP(fd,11);
  	
-	if(not_fw==0) mapif_BankingAck(aid, bank_vault);
+		if(not_fw==0) mapif_BankingAck(aid, bank_vault);
+	}
 	return 1;
 }
 
@@ -2203,10 +2205,12 @@ int mapif_BankingAck(int32 account_id, int32 bank_vault){
 int mapif_parse_UpdBankInfo(int fd){
 	if( RFIFOREST(fd) < 10 )
 		return 0;
-	uint32 aid = RFIFOL(fd,2);
-	int money = RFIFOL(fd,6);
-	RFIFOSKIP(fd,10);
-	loginif_BankingReq(aid, 2, money);
+	else {
+		uint32 aid = RFIFOL(fd,2);
+		int money = RFIFOL(fd,6);
+		RFIFOSKIP(fd,10);
+		loginif_BankingReq(aid, 2, money);
+	}
 	return 1;
 }
 
@@ -2219,9 +2223,11 @@ int mapif_parse_UpdBankInfo(int fd){
 int mapif_parse_ReqBankInfo(int fd){
 	if( RFIFOREST(fd) < 6 )
 		return 0;
-	uint32 aid = RFIFOL(fd,2);
-	RFIFOSKIP(fd,6);
-   	loginif_BankingReq(aid, 1, 0);  
+	else {
+		uint32 aid = RFIFOL(fd,2);
+		RFIFOSKIP(fd,6);
+   		loginif_BankingReq(aid, 1, 0);  
+	}
 	return 1;
 }
 
