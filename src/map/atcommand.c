@@ -7498,14 +7498,7 @@ ACMD_FUNC(whereis)
 
 ACMD_FUNC(version)
 {
-	const char * revision;
-
-	if ((revision = get_svn_revision()) != 0) {
-		sprintf(atcmd_output,msg_txt(sd,1295),revision); // rAthena Version SVN r%s
-		clif_displaymessage(fd,atcmd_output);
-	} else
-		clif_displaymessage(fd,msg_txt(sd,1296)); // Cannot determine SVN revision.
-
+	pc_show_version(sd);
 	return 0;
 }
 

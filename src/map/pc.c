@@ -1113,19 +1113,8 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 
 	if( !changing_mapservers ) {
 
-		if (battle_config.display_version == 1) {
-			const char* svn = get_svn_revision();
-			const char* git = get_git_hash();
-			char buf[256];
-
-			if( svn[0] != UNKNOWN_VERSION )
-				sprintf(buf,"SVN Revision: %s", svn);
-			else if( git[0] != UNKNOWN_VERSION )
-				sprintf(buf,"Git Hash: %s", git);
-			else
-				sprintf(buf,"Unknown Version");
-			clif_displaymessage(sd->fd, buf);
-		}
+		if (battle_config.display_version == 1)
+			pc_show_version(sd);
 
 		// Message of the Day [Valaris]
 		for(i=0; motd_text[i][0] && i < MOTD_LINE_SIZE; i++) {
@@ -10345,6 +10334,20 @@ void pc_crimson_marker_clear(struct map_session_data *sd) {
 		if (sd->c_marker.target[i] && (bl = map_id2bl(sd->c_marker.target[i])))
 			status_change_end(bl,SC_C_MARKER,INVALID_TIMER);
 	}
+}
+
+void pc_show_version(struct map_session_data *sd) {
+	const char* svn = get_svn_revision();
+	const char* git = get_git_hash();
+	char buf[CHAT_SIZE_MAX];
+
+	if( svn[0] != UNKNOWN_VERSION )
+		sprintf(buf,msg_txt(sd,1295),"SVN: r",svn); //rAthena Version SVN: r%s
+	else if( git[0] != UNKNOWN_VERSION )
+		sprintf(buf,msg_txt(sd,1295),"Git Hash: ",git); //rAthena Version Git Hash: %s
+	else
+		sprintf(buf,msg_txt(sd,1296)); //Cannot determine SVN/Git version.
+	clif_displaymessage(sd->fd,buf);
 }
 
 /*==========================================

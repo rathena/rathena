@@ -1023,6 +1023,8 @@ enum e_BANKING_WITHDRAW_ACK pc_bank_withdraw(struct map_session_data *sd, int mo
 
 void pc_crimson_marker_clear(struct map_session_data *sd);
 
+void pc_show_version(struct map_session_data *sd);
+
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_race, uint32 mob_mode, int type);
 #endif
