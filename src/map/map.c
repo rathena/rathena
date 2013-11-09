@@ -1716,7 +1716,7 @@ int map_quit(struct map_session_data *sd) {
 		elemental_clean_effect(sd->ed);
 		unit_remove_map(&sd->ed->bl,CLR_RESPAWN);
 	}
-
+	
 	unit_remove_map_pc(sd,CLR_RESPAWN);
 
 	if( map[sd->bl.m].instance_id ) { // Avoid map conflicts and warnings on next login

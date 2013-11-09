@@ -24,6 +24,7 @@
 #define MAX_PC_SKILL_REQUIRE 5
 #define MAX_PC_FEELHATE 3
 #define DAMAGELOG_SIZE_PC 100	// Any idea for this value?
+#define MAX_PC_BONUS_SCRIPT 10
 
 //Update this max as necessary. 55 is the value needed for Super Baby currently
 //Raised to 84 since Expanded Super Novice needs it.
@@ -551,8 +552,17 @@ struct map_session_data {
 		uint8 count; //Count of target for skill like RL_D_TAIL
 	} c_marker;
 	bool flicker;
-};
 
+	//Timed bonus 'bonus_script' struct [Cydh]
+	struct s_script {
+		struct script_code *script;
+		const char *script_str; //Used for comparing and storing on table
+		uint32 tick;
+		uint8 flag;
+		bool isBuff; //Can be used for deciding which bonus that buff or debuff
+		int tid;
+	} bonus_script[MAX_PC_BONUS_SCRIPT];
+};
 
 enum weapon_type {
 	W_FIST,	//Bare hands
@@ -1024,6 +1034,11 @@ enum e_BANKING_WITHDRAW_ACK pc_bank_withdraw(struct map_session_data *sd, int mo
 void pc_crimson_marker_clear(struct map_session_data *sd);
 
 void pc_show_version(struct map_session_data *sd);
+
+int pc_bonus_script_timer(int tid, unsigned int tick, int id, intptr_t data);
+void pc_bonus_script_remove(struct map_session_data *sd, uint8 i);
+void pc_bonus_script_check(struct map_session_data *sd, enum e_bonus_script_flag flag);
+void pc_bonus_script_clear(struct map_session_data *sd);
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_race, uint32 mob_mode, int type);

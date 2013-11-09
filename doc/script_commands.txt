@@ -5059,6 +5059,30 @@ autobonus and autobonus3).
 
 ---------------------------------------
 
+*bonus_script "<script code>",<duration>{,<flag>{,<type>{,<char_id>}}};
+
+This command attachs script to player within specified 'duration' in second.
+
+flag:
+&1: Remove when dead
+&2: Removable by dispell
+&4: Removable by clearance
+[TODO] &8: Save script when player logout and continue when player login back
+
+type:
+0 = Buff
+1 = Debuff
+
+NOTE:
+- Cannot stack same bonus
+- Max. bonus_script for a player is 10 (pc.h MAX_PC_BONUS_SCRIPT)
+
+Example:
+- Apple gives you +5 Str bonus for 1 minute when it's consumed.
+  512,Apple,Apple,0,15,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "{ bonus bStr,5; }",60; },{},{}
+
+---------------------------------------
+
 *skill <skill id>,<level>{,<flag>};
 *skill "<skill name>",<level>{,<flag>};
 *addtoskill <skill id>,<level>{,<flag>};

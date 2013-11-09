@@ -17966,7 +17966,7 @@ BUILDIN_FUNC(party_destroy)
 *  1 - check by date
 * @return true/false
  *------------------------------------------*/
-BUILDIN_FUNC(is_clientver){
+BUILDIN_FUNC(is_clientver) {
 	TBL_PC *sd = NULL;
 	int type = script_getnum(st,2);
 	int data = script_getnum(st,3);
@@ -17997,7 +17997,7 @@ BUILDIN_FUNC(is_clientver){
 * Retrieves server definitions.
 * (see @type in const.txt)
  *------------------------------------------*/
-BUILDIN_FUNC(getserverdef){
+BUILDIN_FUNC(getserverdef) {
 	int type = script_getnum(st,2);
 	switch(type){
 		case 0: script_pushint(st,PACKETVER); break;
@@ -18091,6 +18091,70 @@ BUILDIN_FUNC(montransform) {
 		sc_start4(NULL, &sd->bl, type, 100, val1, val2, val3, val4, tick);
 	}
 
+	return 0;
+}
+
+/** [Cydh]
+ * bonus_script "<script code>",<duration>{,<flag>{,<type>{,<char_id>}}};
+ * @param "script code"
+ * @param duration
+ * @param flag
+ * @param char_id
+ **/
+BUILDIN_FUNC(bonus_script) {
+	uint8 i, flag = 0;
+	uint32 dur;
+	bool isBuff = true;
+	TBL_PC* sd;
+	const char *script_str = NULL;
+	struct script_code *script = NULL;
+
+	if (script_hasdata(st,6))
+		sd = map_charid2sd(script_getnum(st,6));
+	else
+		sd = script_rid2sd(st);
+
+	if (sd == NULL)
+		return 0;
+	
+	script_str = script_getstr(st,2);
+	dur = 1000 * abs(script_getnum(st,3));
+	FETCH(4,flag);
+	if (script_getnum(st,5) == 1)
+		isBuff = false;
+
+	if (!strlen(script_str) || !dur) {
+		//ShowWarning("buildin_bonus_script: Invalid value(s). Skipping...\n");
+		return 0;
+	}
+
+	//Skip duplicate entry
+	ARR_FIND(0,MAX_PC_BONUS_SCRIPT,i,&sd->bonus_script[i] && sd->bonus_script[i].script_str && strcmp(sd->bonus_script[i].script_str,script_str) == 0);
+	if (i < MAX_PC_BONUS_SCRIPT) {
+		//ShowWarning("buildin_bonus_script: Duplicate entry with bonus '%d'. Skipping...\n",i);
+		return 0;
+	}
+
+	if (!(script = parse_script(script_str,"bonus_script",0,1))) {
+		//ShowWarning("buildin_bonus_script: Failed to parse script '%s'. Skipping...\n",script_str);
+		return 0;
+	}
+
+	//Find the empty slot
+	ARR_FIND(0,MAX_PC_BONUS_SCRIPT,i,!sd->bonus_script[i].script);
+	if (i >= MAX_PC_BONUS_SCRIPT) {
+		ShowWarning("buildin_itemscript: Maximum script_bonus is reached (max: %d). Skipping...\n",MAX_PC_BONUS_SCRIPT);
+		return 0;
+	}
+
+	//Add the script data
+	sd->bonus_script[i].script_str = script_str;
+	sd->bonus_script[i].script = script;
+	sd->bonus_script[i].tick = gettick() + dur;
+	sd->bonus_script[i].flag = flag;
+	sd->bonus_script[i].isBuff = isBuff;
+
+	status_calc_pc(sd,false);
 	return 0;
 }
 
@@ -18543,9 +18607,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(breakequip,"i"),
 	BUILDIN_DEF(sit,"?"),
 	BUILDIN_DEF(stand,"?"),
-	/**
-	 * @commands (script based)
-	 **/
+	//@commands (script based)
 	BUILDIN_DEF(bindatcmd, "ss??"),
 	BUILDIN_DEF(unbindatcmd, "s"),
 	BUILDIN_DEF(useatcmd, "s"),
@@ -18573,8 +18635,8 @@ struct script_function buildin_func[] = {
 
 	BUILDIN_DEF(is_clientver,"ii?"),
 	BUILDIN_DEF(getserverdef,"i"),
-
 	BUILDIN_DEF2(montransform, "transform", "vii????"), // Monster Transform [malufett/Hercules]
+	BUILDIN_DEF(bonus_script,"si???"),
 
 #include "../custom/script_def.inc"
 

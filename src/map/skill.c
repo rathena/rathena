@@ -6822,7 +6822,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				break;
 			}
-			if(status_isimmune(bl) || !tsc || !tsc->count)
+			if(status_isimmune(bl))
+				break;
+
+			//Remove bonus_script when dispelled
+			if (dstsd)
+				pc_bonus_script_check(dstsd,BSF_REM_ON_DISPELL);
+
+			if(!tsc || !tsc->count)
 				break;
 
 			if( sd && dstsd && !map_flag_vs(sd->bl.m) && sd->status.guild_id == dstsd->status.guild_id ) {
@@ -6830,8 +6837,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				break;
 			}
 
-			for(i=0;i<SC_MAX;i++)
-			{
+			for(i=0;i<SC_MAX;i++) {
 				if (!tsc->data[i])
 					continue;
 				switch (i) {
@@ -6912,6 +6918,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			}
 			break;
 		}
+
 		//Affect all targets on splash area.
 		map_foreachinrange(skill_area_sub, bl, i, BL_CHAR,
 			src, skill_id, skill_lv, tick, flag|1,
@@ -8316,7 +8323,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				break;
 			}
-			if(status_isimmune(bl) || !tsc || !tsc->count)
+			
+			if(status_isimmune(bl))
+				break;
+
+			//Remove bonus_script when cleared
+			if (dstsd)
+				pc_bonus_script_check(dstsd,BSF_REM_ON_CLEARANCE);
+
+			if(!tsc || !tsc->count)
 				break;
 			for( i = 0; i < SC_MAX; i++ ) {
 				if (!tsc->data[i])
@@ -8383,6 +8398,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			}
 			break;
 		}
+
 		map_foreachinrange(skill_area_sub, bl, i, BL_CHAR, src, skill_id, skill_lv, tick, flag|1, skill_castend_damage_id);
 		break;
 

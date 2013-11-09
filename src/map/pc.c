@@ -6920,6 +6920,9 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		item_tmp.card[3]=GetWord(sd->status.char_id,1);
 		map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 	}
+	
+	//Remove bonus_script when dead
+	pc_bonus_script_check(sd,BSF_REM_ON_DEAD);
 
 	// changed penalty options, added death by player if pk_mode [Valaris]
 	if(battle_config.death_penalty_type
@@ -7043,7 +7046,6 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			return 1|8;
 		}
 	}
-
 
 	//Reset "can log out" tick.
 	if( battle_config.prevent_logout )
@@ -10224,65 +10226,79 @@ void pc_itemcd_do(struct map_session_data *sd, bool load) {
 	return;
 }
 
+/**
+* Clear the dmglog data from player
+* @param sd
+* @param md
+**/
 void pc_clear_log_damage_sub(int char_id, struct mob_data *md)
 {
-	int i;
+	uint8 i;
 	ARR_FIND(0,DAMAGELOG_SIZE,i,md->dmglog[i].id == char_id);
-	if( i < DAMAGELOG_SIZE )
-	{
+	if (i < DAMAGELOG_SIZE) {
 		md->dmglog[i].id=0;
 		md->dmglog[i].dmg=0;
 		md->dmglog[i].flag=0;
 	}
 }
 
+/**
+* Add log to player's dmglog
+* @param sd
+* @param id Monster's id
+**/
 void pc_damage_log_add(struct map_session_data *sd, int id)
 {
-	int i = 0;
+	uint8 i = 0;
 
-	if( !sd )
+	if (!sd)
 		return;
 
-	for(i = 0; i < DAMAGELOG_SIZE_PC && sd->dmglog[i].id != id; i++)
-		if( !sd->dmglog[i].id )
-		{
+	for (i = 0; i < DAMAGELOG_SIZE_PC && sd->dmglog[i].id != id; i++)
+		if (!sd->dmglog[i].id) {
 			sd->dmglog[i].id = id;
 			break;
 		}
 	return;
 }
 
+/**
+* Clear dmglog data from player
+* @param sd
+* @param id Monster's id
+**/
 void pc_damage_log_clear(struct map_session_data *sd, int id)
 {
-	int i;
+	uint8 i;
 	struct mob_data *md = NULL;
-	if( !sd )
+	if (!sd)
 		return;
 
-	if( !id )
-	{
-		for(i = 0; i < DAMAGELOG_SIZE_PC; i++)	// track every id
-		{
+	if (!id) {
+		for (i = 0; i < DAMAGELOG_SIZE_PC; i++) {
 			if( !sd->dmglog[i].id )	//skip the empty value
 				continue;
 
-			if( (md = map_id2md(sd->dmglog[i].id)) )
+			if ((md = map_id2md(sd->dmglog[i].id)))
 				pc_clear_log_damage_sub(sd->status.char_id,md);
 		}
 		memset(sd->dmglog,0,sizeof(sd->dmglog));	// clear all
 	}
-	else
-	{
-		if( (md = map_id2md(id)) )
+	else {
+		if ((md = map_id2md(id)))
 			pc_clear_log_damage_sub(sd->status.char_id,md);
 
 		ARR_FIND(0,DAMAGELOG_SIZE_PC,i,sd->dmglog[i].id == id);	// find the id position
-		if( i < DAMAGELOG_SIZE_PC )
+		if (i < DAMAGELOG_SIZE_PC)
 			sd->dmglog[i].id = 0;
 	}
 }
 
-
+/**
+* Deposit some money to bank
+* @param sd
+* @param money Amount of money to deposit
+**/
 enum e_BANKING_DEPOSIT_ACK pc_bank_deposit(struct map_session_data *sd, int money) {
 	unsigned int limit_check = money+sd->status.bank_vault;
 	
@@ -10301,6 +10317,11 @@ enum e_BANKING_DEPOSIT_ACK pc_bank_deposit(struct map_session_data *sd, int mone
 	return BDA_SUCCESS;
 }
 
+/**
+* Withdraw money from bank
+* @param sd
+* @param money Amount of money that will be withdrawn
+**/
 enum e_BANKING_WITHDRAW_ACK pc_bank_withdraw(struct map_session_data *sd, int money) {
 	unsigned int limit_check = money+sd->status.zeny;
 	
@@ -10323,6 +10344,10 @@ enum e_BANKING_WITHDRAW_ACK pc_bank_withdraw(struct map_session_data *sd, int mo
 	return BWA_SUCCESS;
 }
 
+/**
+* Clear Cirmson Marker data from caster
+* @param sd
+**/
 void pc_crimson_marker_clear(struct map_session_data *sd) {
 	uint8 i;
 
@@ -10336,6 +10361,10 @@ void pc_crimson_marker_clear(struct map_session_data *sd) {
 	}
 }
 
+/**
+* Show version to player
+* @param sd
+**/
 void pc_show_version(struct map_session_data *sd) {
 	const char* svn = get_svn_revision();
 	const char* git = get_git_hash();
@@ -10348,6 +10377,83 @@ void pc_show_version(struct map_session_data *sd) {
 	else
 		sprintf(buf,msg_txt(sd,1296)); //Cannot determine SVN/Git version.
 	clif_displaymessage(sd->fd,buf);
+}
+
+/** [Cydh]
+* Timer for bonus_script
+* @param tid
+* @param tick
+* @param id
+* @param data
+**/
+int pc_bonus_script_timer(int tid, unsigned int tick, int id, intptr_t data) {
+	uint8 i = (uint8)data;
+	struct map_session_data *sd;
+
+	sd = map_id2sd(id);
+	if (!sd) {
+		ShowDebug("pc_bonus_script_timer: Null pointer id: %d data: %d\n",id,data);
+		return 0;
+	}
+
+	if (i > MAX_PC_BONUS_SCRIPT|| !(&sd->bonus_script[i]) || !sd->bonus_script[i].script) {
+		ShowDebug("pc_bonus_script_timer: Invalid index %d\n",i);
+		return 0;
+	}
+
+	pc_bonus_script_remove(sd,i);
+	status_calc_pc(sd,false);
+	return 0;
+}
+
+/** [Cydh]
+* Remove bonus_script data from sd
+* @param sd target
+* @param i script index
+**/
+void pc_bonus_script_remove(struct map_session_data *sd, uint8 i) {
+	if (!sd || i < 0 || i >= MAX_PC_BONUS_SCRIPT)
+		return;
+
+	memset(&sd->bonus_script[i].script,0,sizeof(sd->bonus_script[i].script));
+	sd->bonus_script[i].script_str = NULL;
+	sd->bonus_script[i].tick = 0;
+	sd->bonus_script[i].tid = 0;
+	sd->bonus_script[i].flag = 0;
+}
+
+/** [Cydh]
+* Clear all active timer(s) of bonus_script data from sd
+* @param sd target
+* @param flag reason to remove the bonus_script
+**/
+void pc_bonus_script_check(struct map_session_data *sd, enum e_bonus_script_flag flag) {
+	uint8 i, count = 0;
+	if (!sd)
+		return;
+
+	for (i = 0; i < MAX_PC_BONUS_SCRIPT; i++) {
+		if (&sd->bonus_script[i] && sd->bonus_script[i].script && sd->bonus_script[i].flag&flag) {
+			delete_timer(sd->bonus_script[i].tid,pc_bonus_script_timer);
+			pc_bonus_script_remove(sd,i);
+			count++;
+		}
+	}
+	if (count)
+		status_calc_pc(sd,false);
+}
+
+/** [Cydh]
+* Clear all active timer(s) of bonus_script data from sd
+* @param sd target
+**/
+void pc_bonus_script_clear(struct map_session_data *sd) {
+	uint8 i;
+	if (!sd)
+		return;
+	for (i = 0; i < MAX_PC_BONUS_SCRIPT; i++)
+		if (&sd->bonus_script[i] && sd->bonus_script[i].tid)
+			delete_timer(sd->bonus_script[i].tid,pc_bonus_script_timer);
 }
 
 /*==========================================

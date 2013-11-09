@@ -2787,6 +2787,14 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 			run_script(data->script,0,sd->bl.id,0);
 	}
 
+	for (i = 0; i < MAX_PC_BONUS_SCRIPT; i++) { // Script Bonus
+		if (!(&sd->bonus_script[i]) || !sd->bonus_script[i].script)
+			continue;
+		if (!sd->bonus_script[i].tid) //Just add timer only for new attached script
+			sd->bonus_script[i].tid = add_timer(sd->bonus_script[i].tick,pc_bonus_script_timer,sd->bl.id,i);
+		run_script(sd->bonus_script[i].script,0,sd->bl.id,0);
+	}
+
 	if( sd->pd ) { // Pet Bonus
 		struct pet_data *pd = sd->pd;
 		if( pd && pd->petDB && pd->petDB->equip_script && pd->pet.intimate >= battle_config.pet_equip_min_friendly )
