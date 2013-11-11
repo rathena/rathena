@@ -9877,7 +9877,6 @@ void clif_parse_QuitGame(int fd, struct map_session_data *sd)
 	{
 		set_eof(fd);
 		pc_damage_log_clear(sd,0);
-		pc_bonus_script_clear(sd);
 		clif_disconnect_ack(sd, 0);
 	} else {
 		clif_disconnect_ack(sd, 1);
@@ -10248,7 +10247,6 @@ void clif_parse_Restart(int fd, struct map_session_data *sd)
 			(!battle_config.prevent_logout || DIFF_TICK(gettick(), sd->canlog_tick) > battle_config.prevent_logout) )
 		{	//Send to char-server for character selection.
 			pc_damage_log_clear(sd,0);
-			pc_bonus_script_clear(sd);
 			chrif_charselectreq(sd, session[fd]->client_addr);
 		} else {
 			clif_disconnect_ack(sd, 1);

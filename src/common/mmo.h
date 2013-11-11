@@ -249,6 +249,13 @@ struct status_change_data {
 	long val1, val2, val3, val4, tick; //Remaining duration.
 };
 
+#define MAX_BONUS_SCRIPT_LENGTH 1024
+struct bonus_script_data {
+	char script[MAX_BONUS_SCRIPT_LENGTH];
+	long tick;
+	short type, flag;
+};
+
 struct skill_cooldown_data {
 	unsigned short skill_id;
 	long tick;

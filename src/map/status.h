@@ -1671,17 +1671,17 @@ enum scb_flag
 };
 
 ///Enum for bonus_script's flag
-enum e_bonus_script_flag {
-	BSF_REM_ON_DEAD			= 0x1,
-	BSF_REM_ON_DISPELL		= 0x2,
-	BSF_REM_ON_CLEARANCE	= 0x4,
-	//BSF_DB_SAVE				= 0x8, //TODO!
+enum e_bonus_script_flags {
+	BONUS_FLAG_REM_ON_DEAD		= 0x1,	//Remove bonus when dead
+	BONUS_FLAG_REM_ON_DISPELL	= 0x2,	//Removable by Dispell
+	BONUS_FLAG_REM_ON_CLEARANCE	= 0x4,	//Removable by Clearance
+	BONUS_FLAG_REM_ON_LOGOUT	= 0x8,	//Remove bonus when player logged out
 };
 
 ///Enum for bonus_script's type
-enum e_bonus_script_type {
-	BST_BUFF	= 0,
-	BST_DEBUFF	= 1,
+enum e_bonus_script_types {
+	BONUS_TYPE_BUFF		= 0,
+	BONUS_TYPE_DEBUFF	= 1,
 };
 
 //Define to determine who gets HP/SP consumed on doing skills/etc. [Skotlex]

@@ -18148,7 +18148,7 @@ BUILDIN_FUNC(bonus_script) {
 	}
 
 	//Add the script data
-	sd->bonus_script[i].script_str = script_str;
+	memcpy(sd->bonus_script[i].script_str,script_str,strlen(script_str)+1);
 	sd->bonus_script[i].script = script;
 	sd->bonus_script[i].tick = gettick() + dur;
 	sd->bonus_script[i].flag = flag;

@@ -1284,6 +1284,7 @@ int pc_reg_received(struct map_session_data *sd)
 	chrif_scdata_request(sd->status.account_id, sd->status.char_id);
 	chrif_skillcooldown_request(sd->status.account_id, sd->status.char_id);
 	chrif_bankdata_request(sd->status.account_id, sd->status.char_id);
+	chrif_bsdata_request(sd->status.char_id);
 	intif_Mail_requestinbox(sd->status.char_id, 0); // MAIL SYSTEM - Request Mail Inbox
 	intif_request_questlog(sd);
 
@@ -6922,7 +6923,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	}
 	
 	//Remove bonus_script when dead
-	pc_bonus_script_check(sd,BSF_REM_ON_DEAD);
+	pc_bonus_script_check(sd,BONUS_FLAG_REM_ON_DEAD);
 
 	// changed penalty options, added death by player if pk_mode [Valaris]
 	if(battle_config.death_penalty_type
@@ -10407,7 +10408,7 @@ int pc_bonus_script_timer(int tid, unsigned int tick, int id, intptr_t data) {
 }
 
 /** [Cydh]
-* Remove bonus_script data from sd
+* Remove bonus_script data from sd (not deleting timer)
 * @param sd target
 * @param i script index
 **/
@@ -10416,7 +10417,7 @@ void pc_bonus_script_remove(struct map_session_data *sd, uint8 i) {
 		return;
 
 	memset(&sd->bonus_script[i].script,0,sizeof(sd->bonus_script[i].script));
-	sd->bonus_script[i].script_str = NULL;
+	memset(sd->bonus_script[i].script_str,'\0',sizeof(sd->bonus_script[i].script_str));
 	sd->bonus_script[i].tick = 0;
 	sd->bonus_script[i].tid = 0;
 	sd->bonus_script[i].flag = 0;
@@ -10427,7 +10428,7 @@ void pc_bonus_script_remove(struct map_session_data *sd, uint8 i) {
 * @param sd target
 * @param flag reason to remove the bonus_script
 **/
-void pc_bonus_script_check(struct map_session_data *sd, enum e_bonus_script_flag flag) {
+void pc_bonus_script_check(struct map_session_data *sd, enum e_bonus_script_flags flag) {
 	uint8 i, count = 0;
 	if (!sd)
 		return;
@@ -10439,21 +10440,8 @@ void pc_bonus_script_check(struct map_session_data *sd, enum e_bonus_script_flag
 			count++;
 		}
 	}
-	if (count)
+	if (count && flag != BONUS_FLAG_REM_ON_LOGOUT) //Don't need do this if log out
 		status_calc_pc(sd,false);
-}
-
-/** [Cydh]
-* Clear all active timer(s) of bonus_script data from sd
-* @param sd target
-**/
-void pc_bonus_script_clear(struct map_session_data *sd) {
-	uint8 i;
-	if (!sd)
-		return;
-	for (i = 0; i < MAX_PC_BONUS_SCRIPT; i++)
-		if (&sd->bonus_script[i] && sd->bonus_script[i].tid)
-			delete_timer(sd->bonus_script[i].tid,pc_bonus_script_timer);
 }
 
 /*==========================================

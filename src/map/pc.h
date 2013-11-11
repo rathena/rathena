@@ -556,7 +556,7 @@ struct map_session_data {
 	//Timed bonus 'bonus_script' struct [Cydh]
 	struct s_script {
 		struct script_code *script;
-		const char *script_str; //Used for comparing and storing on table
+		char script_str[MAX_BONUS_SCRIPT_LENGTH]; //Used for comparing and storing on table
 		uint32 tick;
 		uint8 flag;
 		bool isBuff; //Can be used for deciding which bonus that buff or debuff
@@ -1037,8 +1037,7 @@ void pc_show_version(struct map_session_data *sd);
 
 int pc_bonus_script_timer(int tid, unsigned int tick, int id, intptr_t data);
 void pc_bonus_script_remove(struct map_session_data *sd, uint8 i);
-void pc_bonus_script_check(struct map_session_data *sd, enum e_bonus_script_flag flag);
-void pc_bonus_script_clear(struct map_session_data *sd);
+void pc_bonus_script_check(struct map_session_data *sd, enum e_bonus_script_flags flag);
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_race, uint32 mob_mode, int type);
