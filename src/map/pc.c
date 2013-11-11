@@ -10412,7 +10412,7 @@ int pc_bonus_script_timer(int tid, unsigned int tick, int id, intptr_t data) {
 * @param i script index
 **/
 void pc_bonus_script_remove(struct map_session_data *sd, uint8 i) {
-	if (!sd || i < 0 || i >= MAX_PC_BONUS_SCRIPT)
+	if (!sd || i >= MAX_PC_BONUS_SCRIPT)
 		return;
 
 	memset(&sd->bonus_script[i].script,0,sizeof(sd->bonus_script[i].script));
