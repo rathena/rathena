@@ -609,6 +609,7 @@ bVariableCast	2058
 
 bSetDefRace	2059
 bSetMDefRace	2060
+bHPVanishRate	2061
 
 EQI_HEAD_TOP	1
 EQI_ARMOR	2

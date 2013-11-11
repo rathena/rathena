@@ -151,6 +151,7 @@ bonus2 bIgnoreMdefRate,n,x;		Disregard x% of the target's MDEF if the target bel
 bonus2 bHPDrainRate,n,x;		n/10 % probability to drain x% HP when attacking
 bonus2 bSPDrainRate,n,x;		n/10 % probability to drain x% SP when attacking
 bonus2 bSPVanishRate,n,x;		Add the (n/10)% chance of decreasing enemy's SP (player) amount by x% when attacking
+bonus2 bHPVanishRate,n,x;		Add the (n/10)% chance of decreasing enemy's HP (player) amount by x% when attacking
 bonus2 bAddMonsterDropItem,n,x;		Adds a x/100% chance for item n to be dropped, when killing any monster.
 					If 'x' is negative value, then it's a part of formula
 						chance = -x*(killed_mob_level/10)+1

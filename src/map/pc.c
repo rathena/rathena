@@ -2939,6 +2939,12 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->bonus.sp_vanish_per += val;
 		}
 		break;
+	case SP_HP_VANISH_RATE:
+		if(sd->state.lr_flag != 2) {
+			sd->bonus.hp_vanish_rate += type2;
+			sd->bonus.hp_vanish_per += val;
+		}
+		break;
 	case SP_GET_ZENY_NUM:
 		if(sd->state.lr_flag != 2 && sd->bonus.get_zeny_rate < val) {
 			sd->bonus.get_zeny_rate = val;
