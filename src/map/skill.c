@@ -679,22 +679,28 @@ bool skill_isNotOk_hom(uint16 skill_id, struct homun_data *hd)
 			if(hd->sc.data[SC_GOLDENE_FERSE]) return true;
 			break;
 		case MH_TINDER_BREAKER: //must be in grappling mode
-			if(!(hd->sc.data[SC_STYLE_CHANGE] && hd->sc.data[SC_STYLE_CHANGE]->val1 == MH_MD_GRAPPLING)) return true;
+			if(!(hd->sc.data[SC_STYLE_CHANGE] && hd->sc.data[SC_STYLE_CHANGE]->val1 == MH_MD_GRAPPLING)
+				|| !hd->homunculus.spiritball) return true;
 			break;
 		case MH_SONIC_CRAW: //must be in fighting mode
-			if(!(hd->sc.data[SC_STYLE_CHANGE] && hd->sc.data[SC_STYLE_CHANGE]->val1 == MH_MD_FIGHTING)) return true;
+			if(!(hd->sc.data[SC_STYLE_CHANGE] && hd->sc.data[SC_STYLE_CHANGE]->val1 == MH_MD_FIGHTING)
+				|| !hd->homunculus.spiritball) return true;
 			break;
 		case MH_SILVERVEIN_RUSH:
-			if(!(hd->sc.data[SC_COMBO] && hd->sc.data[SC_COMBO]->val1 == MH_SONIC_CRAW)) return true;
+			if(!(hd->sc.data[SC_COMBO] && hd->sc.data[SC_COMBO]->val1 == MH_SONIC_CRAW)
+				|| hd->homunculus.spiritball < 2) return true;
 			break;
 		case MH_MIDNIGHT_FRENZY:
-			if(!(hd->sc.data[SC_COMBO] && hd->sc.data[SC_COMBO]->val1 == MH_SILVERVEIN_RUSH)) return true;
+			if(!(hd->sc.data[SC_COMBO] && hd->sc.data[SC_COMBO]->val1 == MH_SILVERVEIN_RUSH)
+				|| !hd->homunculus.spiritball) return true;
 			break;
 		case MH_CBC:
-			if(!(hd->sc.data[SC_COMBO] && hd->sc.data[SC_COMBO]->val1 == MH_TINDER_BREAKER)) return true;
+			if(!(hd->sc.data[SC_COMBO] && hd->sc.data[SC_COMBO]->val1 == MH_TINDER_BREAKER)
+				|| !hd->homunculus.spiritball) return true;
 			break;
 		case MH_EQC:
-			if(!(hd->sc.data[SC_COMBO] && hd->sc.data[SC_COMBO]->val1 == MH_CBC)) return true;
+			if(!(hd->sc.data[SC_COMBO] && hd->sc.data[SC_COMBO]->val1 == MH_CBC)
+				|| !hd->homunculus.spiritball) return true;
 			break;
 	}
 
@@ -5003,15 +5009,19 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 	case MH_STAHL_HORN:
 	case MH_NEEDLE_OF_PARALYZE:
-	case MH_SONIC_CRAW:
 		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
 	case MH_MIDNIGHT_FRENZY:
 	case MH_SILVERVEIN_RUSH:
+	case MH_SONIC_CRAW:
 		{
 			TBL_HOM *hd = BL_CAST(BL_HOM,src);
-			hom_delspiritball(hd,skill_id==MH_SILVERVEIN_RUSH?1:2,0);
+			short remove_sphere = (skill_id==MH_SILVERVEIN_RUSH?1:2);
+
+			if(skill_id == MH_SONIC_CRAW)
+				remove_sphere = hd->homunculus.spiritball;
 			skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
+			hom_delspiritball(hd,remove_sphere,0);
 		}
 		break;
 	case MH_TINDER_BREAKER:

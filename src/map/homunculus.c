@@ -312,7 +312,7 @@ void merc_hom_skillup(struct homun_data *hd,uint16 skill_id)
 int merc_hom_levelup(struct homun_data *hd)
 {
 	struct s_homunculus *hom;
-	struct h_stats *min, *max;
+	struct h_stats *min = NULL, *max = NULL;
 	int growth_str, growth_agi, growth_vit, growth_int, growth_dex, growth_luk ;
 	int growth_max_hp, growth_max_sp ;
 	int m_class;
@@ -320,6 +320,21 @@ int merc_hom_levelup(struct homun_data *hd)
 	if((m_class = hom_class2mapid(hd->homunculus.class_)) == -1) {
 		ShowError("merc_hom_levelup: Invalid class %d. \n", hd->homunculus.class_);
 		return 0;
+	}
+
+	/// When homunculus is homunculus S, we check to see if we need to apply previous class stats
+	if(m_class&HOM_S && hd->homunculus.level < battle_config.hom_S_growth_level) {
+		int i;
+		if(!hd->homunculus.prev_class) {
+			/// We also need to be sure that the previous class exists, otherwise give it something to work with
+			hd->homunculus.prev_class = 6001;
+		}
+		// Give the homunculus the level up stats database it needs
+		i = search_homunculusDB_index(hd->homunculus.prev_class,HOMUNCULUS_CLASS);
+		if(i < 0) // Nothing should go wrong here, but check anyways
+			return 0;
+		max = &homunculus_db[i].gmax;
+		min = &homunculus_db[i].gmin;
 	}
 
 	if(((m_class&HOM_REG) && hd->homunculus.level >= battle_config.hom_max_level)
@@ -335,8 +350,10 @@ int merc_hom_levelup(struct homun_data *hd)
 	hom->exp -= hd->exp_next ;
 	hd->exp_next = hexptbl[hom->level - 1] ;
 
-	max  = &hd->homunculusDB->gmax;
-	min  = &hd->homunculusDB->gmin;
+	if(!max) {
+		max  = &hd->homunculusDB->gmax;
+		min  = &hd->homunculusDB->gmin;
+	}
 
 	growth_max_hp = rnd_value(min->HP, max->HP);
 	growth_max_sp = rnd_value(min->SP, max->SP);
@@ -1022,7 +1039,7 @@ int merc_hom_shuffle(struct homun_data *hd)
 	for (i = 1; i < lv && hd->exp_next; i++){
 		hd->homunculus.exp += hd->exp_next;
 		// Should never happen, but who knows
-		if( !merc_hom_levelup(hd) ){
+		if( !merc_hom_levelup(hd) ) {
 			break;
 		}
 	}
