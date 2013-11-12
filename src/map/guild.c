@@ -500,7 +500,6 @@ int guild_recv_info(struct guild *sg)
 	DBData data;
 	struct map_session_data *sd;
 	bool guild_new = false;
-	struct Channel *channel;
 
 	nullpo_ret(sg);
 
@@ -545,10 +544,8 @@ int guild_recv_info(struct guild *sg)
 	}
 
 	if(Channel_Config.ally_enable){
-		channel = g->channel;
-		if(!channel){
-			channel = channel_create(Channel_Config.ally_chname,NULL,Channel_Config.ally_chcolor,CHAN_TYPE_ALLY,g->guild_id);
-			g->channel = channel;
+		if(!g->channel){
+			g->channel = channel_create(Channel_Config.ally_chname,NULL,Channel_Config.ally_chcolor,CHAN_TYPE_ALLY,g->guild_id);
 			channel_ajoin(g);
 		}
 	}
