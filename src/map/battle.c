@@ -1075,22 +1075,16 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			//Reduction: 6% + 6% every 20%
 			DAMAGE_SUBRATE(6 * (1+per))
 		}
-		if(sc->data[SC_GRANITIC_ARMOR]){
+		if(sc->data[SC_GRANITIC_ARMOR])
 			DAMAGE_SUBRATE(sc->data[SC_GRANITIC_ARMOR]->val2)
-		}
 		if(sc->data[SC_PAIN_KILLER]){
 			damage -= sc->data[SC_PAIN_KILLER]->val3;
 			damage = max(1,damage);
 		}
-		if( sc->data[SC_DARKCROW] && ((flag&(BF_WEAPON|BF_SHORT))==(BF_WEAPON|BF_SHORT)) ) {
-			DAMAGE_ADDRATE(30 * sc->data[SC_DARKCROW]->val1);
-		}
-		if( sc->data[SC_UNLIMIT] && (flag&(BF_WEAPON|BF_SHORT))==(BF_WEAPON|BF_LONG) ) {
-			 DAMAGE_ADDRATE(50 * sc->data[SC_UNLIMIT]->val1);
-		}
-		if((sce=sc->data[SC_MAGMA_FLOW]) && (rnd()%100 <= sce->val2) ){
+		if( sc->data[SC_DARKCROW] && ((flag&(BF_WEAPON|BF_SHORT))==(BF_WEAPON|BF_SHORT)) )
+			DAMAGE_ADDRATE(sc->data[SC_DARKCROW]->val2);
+		if( (sce=sc->data[SC_MAGMA_FLOW]) && (rnd()%100 <= sce->val2) )
 			skill_castend_damage_id(bl,src,MH_MAGMA_FLOW,sce->val1,gettick(),0);
-		}
 
 		if( damage > 0 && ((flag&(BF_WEAPON|BF_SHORT))==(BF_WEAPON|BF_SHORT)) && (sce = sc->data[SC_STONEHARDSKIN]) ) {
 			sce->val2 -= (int)cap_value(damage,INT_MIN,INT_MAX);;
@@ -1185,7 +1179,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			}
 		}
 
-	}
+	} //End of target SC_ check
 
 	//SC effects from caster side.
 	sc = status_get_sc(src);
@@ -1224,7 +1218,9 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			TBL_HOM *hd = BL_CAST(BL_HOM,src); //when attacking
 			if (hd && (rnd()%100<50) ) hom_addspiritball(hd, 10); // According to WarpPortal, this is a flat 50% chance
 		}
-	}
+		if( sc->data[SC_UNLIMIT] && (flag&(BF_WEAPON|BF_LONG))==(BF_WEAPON|BF_LONG) )
+			DAMAGE_ADDRATE(sc->data[SC_UNLIMIT]->val2);
+	} //End of caster SC_ check
 
 	//PK damage rates
 	if (battle_config.pk_mode && sd && bl->type == BL_PC && damage && map[bl->m].flag.pvp) {

@@ -8775,8 +8775,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = 3000; // [GodLesZ] tick time
 			break;
 		case SC_CLOAKINGEXCEED:
-			val2 = ( val1 + 1 ) / 2; // Hits
-			val3 = 90 + val1 * 10; // Walk speed
+			val2 = (val1 + 1) / 2; // Hits
+			val3 = (val1 - 1) * 10; // Walk speed
 			if (bl->type == BL_PC)
 				val4 |= battle_config.pc_cloak_check_type&7;
 			else
@@ -9275,6 +9275,12 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_FLASHCOMBO:
 			val2 = (20 * val1) + 20; // atk bonus
+			break;
+		case SC_DARKCROW:
+			val2 = 30 * val1;
+			break;
+		case SC_UNLIMIT:
+			val2 = 50 * val1;
 			break;
 		case SC_MONSTER_TRANSFORM:
 			if( !mobdb_checkid(val1) )
