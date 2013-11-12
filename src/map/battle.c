@@ -3617,21 +3617,19 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			skillratio += -100 + 70 * skill_lv;
 			break;
 		case MH_SONIC_CRAW:
-			skillratio += -100 + 40 * skill_lv * status_get_lv(src);
-			skillratio = skillratio/100; //@TODO uv1 factor need to be confirmed
+			skillratio = 40 * skill_lv;
 			break;
 		case MH_SILVERVEIN_RUSH:
-			skillratio += -100 + (150 * skill_lv * status_get_lv(src)) / 100;
+			skillratio = 150 * skill_lv;
 			break;
 		case MH_MIDNIGHT_FRENZY:
-			skillratio += -100 + (300 * skill_lv * status_get_lv(src)) / 150;
+			skillratio = 300 * skill_lv;
 			break;
 		case MH_TINDER_BREAKER:
-			skillratio += -100 + (100 * skill_lv + status_get_str(src));
-			skillratio = (skillratio * status_get_lv(src)) / 120;
+			skillratio = 100 * skill_lv;
 			break;
 		case MH_CBC:
-			skillratio += 300 * skill_lv + 4 * status_get_lv(src);
+			skillratio = 400 * skill_lv; //! TODO: This doesn't seem to be a ratio, but straight damage?
 			break;
 		case MH_MAGMA_FLOW:
 			skillratio += -100 + 100 * skill_lv + 3 * status_get_lv(src);

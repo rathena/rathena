@@ -696,11 +696,11 @@ bool skill_isNotOk_hom(uint16 skill_id, struct homun_data *hd)
 			break;
 		case MH_CBC:
 			if(!(hd->sc.data[SC_COMBO] && hd->sc.data[SC_COMBO]->val1 == MH_TINDER_BREAKER)
-				|| !hd->homunculus.spiritball) return true;
+				|| !hd->homunculus.spiritball < 2) return true;
 			break;
 		case MH_EQC:
 			if(!(hd->sc.data[SC_COMBO] && hd->sc.data[SC_COMBO]->val1 == MH_CBC)
-				|| !hd->homunculus.spiritball) return true;
+				|| !hd->homunculus.spiritball < 3) return true;
 			break;
 	}
 
@@ -5009,19 +5009,15 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 	case MH_STAHL_HORN:
 	case MH_NEEDLE_OF_PARALYZE:
+	case MH_SONIC_CRAW:
 		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
 	case MH_MIDNIGHT_FRENZY:
 	case MH_SILVERVEIN_RUSH:
-	case MH_SONIC_CRAW:
 		{
 			TBL_HOM *hd = BL_CAST(BL_HOM,src);
-			short remove_sphere = (skill_id==MH_SILVERVEIN_RUSH?1:2);
-
-			if(skill_id == MH_SONIC_CRAW)
-				remove_sphere = hd->homunculus.spiritball;
 			skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
-			hom_delspiritball(hd,remove_sphere,0);
+			hom_delspiritball(hd,skill_id==MH_SILVERVEIN_RUSH?1:2,0);
 		}
 		break;
 	case MH_TINDER_BREAKER:
@@ -5031,7 +5027,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			int duration=0;
 			TBL_HOM *hd = BL_CAST(BL_HOM,src);
 			duration = max(skill_lv,(status_get_str(src)/7 - status_get_str(bl)/10))*1000; //Yommy formula
-			hom_delspiritball(hd,skill_id==MH_EQC?2:1,0); //only EQC consume 2 in grp 2
+			hom_delspiritball(hd,skill_id==MH_EQC?3:2,0); //only EQC consume 3 in grp 2
 			skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,
 				sc_start4(src,bl,status_skill2sc(skill_id),100,skill_lv,src->id,0,0,duration));

@@ -75,7 +75,7 @@ struct Channel* channel_create(char *name, char *pass, unsigned char color, enum
 int channel_delete(struct Channel *channel) {
 	if(!channel)
 		return -1;
-	if(channel->type == CHAN_TYPE_PUBLIC && runflag != MAPSERVER_ST_RUNNING) //only delete those serv stop
+	if(channel->type == CHAN_TYPE_PUBLIC && runflag == MAPSERVER_ST_RUNNING) //only delete those serv stop
 		return -2;
 	if( db_size(channel->users)) {
 		struct map_session_data *sd;
@@ -101,7 +101,6 @@ int channel_delete(struct Channel *channel) {
 	}
 	default:
 		strdb_remove(channel_db, channel->name);
-                aFree(channel);
 		break;
 	}
 	return 0;
