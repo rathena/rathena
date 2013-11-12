@@ -2,7 +2,7 @@
 //= Sample: Guild Storage Test
 //===== By: ==================================================
 //= rAthena Dev Team
-//===== Current Version: =====================================
+//===== Last Updated: ========================================
 //= 20130325
 //===== Description: ========================================= 
 //= Contains commands needed for a guild warehouse NPC.

@@ -2,7 +2,7 @@
 //= Packet Structure Notation
 //===== By: ==================================================
 //= Ai4rei
-//===== Current Version: =====================================
+//===== Last Updated: ========================================
 //= 20120810
 //===== Description: =========================================
 //= Explanation how packets are and should be documented.

@@ -2,7 +2,7 @@
 //= WoE Time Explanation
 //===== By: ==================================================
 //= erKURITA
-//===== Current Version: =====================================
+//===== Last Updated: ========================================
 //= 20120717
 //===== Description: =========================================
 //= Details on the behavior of the default WoE controller.

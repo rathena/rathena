@@ -2,7 +2,7 @@
 //= NPC Whisper System
 //===== By: ==================================================
 //= lordalfa
-//===== Current Version: =====================================
+//===== Last Updated: ========================================
 //= 20120904
 //===== Description: =========================================
 //= A description of rAthena's NPC whispering system.

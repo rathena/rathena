@@ -1,11 +1,9 @@
 //===== rAthena Script ======================================= 
-//= Sample localized NPC
+//= Sample: Localized NPC
 //===== By: ================================================== 
 //= rAthena Dev Team
-//===== Current Version: ===================================== 
-//= v1.0
-//===== Compatible With: ===================================== 
-//= rAthena with setd, getd
+//===== Last Updated: ========================================
+//= 20070315
 //===== Description: ========================================= 
 //= Example of a localized NPC.
 //= 

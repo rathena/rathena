@@ -2,7 +2,7 @@
 //= Sample: Class Constants
 //===== By: ==================================================
 //= rAthena Dev Team
-//===== Current Version: =====================================
+//===== Last Updated: ========================================
 //= 20110123
 //===== Description: ========================================= 
 //= Outputs the values of class constants.

@@ -2,7 +2,7 @@
 //= rAthena Item Bonuses List
 //===== By: ==================================================
 //= rAthena Dev Team
-//===== Current Version: =====================================
+//===== Last Updated: ========================================
 //= 20130711
 //===== Description: =========================================
 //= List of script instructions used in item bonuses,

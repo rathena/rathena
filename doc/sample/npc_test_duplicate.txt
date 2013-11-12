@@ -2,7 +2,7 @@
 //= Sample: Duplicate Test
 //===== By: ==================================================
 //= rAthena Dev Team
-//===== Current Version: =====================================
+//===== Last Updated: ========================================
 //= 20070915
 //===== Description: ========================================= 
 //= An example of how duplicate NPCs are handled:

@@ -14,24 +14,27 @@
 12210,60000	//Bubble_Gum
 14538,300000	//Glass_Of_Illusion
 14586,180000	//Spark_Candy
-607,5000	// Yggdrasil_Berry
-608,3000	// Yggdrasil_Seed
+607,5000	//Yggdrasil_Berry
+608,3000	//Yggdrasil_Seed
 
 // Bifrost Items
-11522,1000	// Red_Raffle_Sap
-11523,2000	// Yellow_Raffle_Sap
-11524,3000	// White_Raffle_Sap
-11525,5000	// Mora_Hip_Tea
+11522,1000	//Red_Raffle_Sap
+11523,2000	//Yellow_Raffle_Sap
+11524,3000	//White_Raffle_Sap
+11525,5000	//Mora_Hip_Tea
 
-12658, 10000 // Transformation Scroll(Deviruchi)
-12659, 10000 // Transformation Scroll(Raydric)
-12660, 10000 // Transformation Scroll(Mavka)
-12661, 10000 // Transformation Scroll(Marduk)
-12662, 10000 // Transformation Scroll(Banshee)
-12663, 10000 // Transformation Scroll(Poring)
-12664, 10000 // Transformation Scroll(Golem)
+12658,10000	//Transformation Scroll(Deviruchi)
+12659,10000	//Transformation Scroll(Raydric)
+12660,10000	//Transformation Scroll(Mavka)
+12661,10000	//Transformation Scroll(Marduk)
+12662,10000	//Transformation Scroll(Banshee)
+12663,10000	//Transformation Scroll(Poring)
+12664,10000	//Transformation Scroll(Golem)
 
 // FIX ME! Delays need confirmation.
-12968,300000	// Emergency_Scroll1
-12969,300000	// Emergency_Scroll2
-12970,300000	// Emergency_Scroll3
+12968,300000	//Emergency_Scroll1
+12969,300000	//Emergency_Scroll2
+12970,300000	//Emergency_Scroll3
+
+12596,300000	//Magic_Candy
+14586,300000	//Spark_Candy

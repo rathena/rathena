@@ -2,7 +2,7 @@
 //= Atcommand List
 //===== By: ==================================================
 //= rAthena Dev Team
-//===== Current Version: =====================================
+//===== Last Updated: ========================================
 //= 20130827
 //===== Description: =========================================
 //= List of available atcommands and their functions.

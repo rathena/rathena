@@ -2,7 +2,7 @@
 //= Mapflag List
 //===== By: ==================================================
 //= rAthena Dev Team
-//===== Current Version: =====================================
+//===== Last Updated: ========================================
 //= 20130830
 //===== Description: =========================================
 //= List of available mapflags and their functions.

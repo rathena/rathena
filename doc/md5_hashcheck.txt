@@ -2,7 +2,7 @@
 //= MD5 Hash Check
 //===== By: ==================================================
 //= rAthena Dev Team
-//===== Current Version: =====================================
+//===== Last Updated: ========================================
 //= 20120921
 //===== Description: =========================================
 //= This file outlines the login server's MD5 hash check.

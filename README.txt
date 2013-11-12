@@ -2,10 +2,8 @@
 //= rAthena Readme File
 //===== By: ==================================================
 //= rAthena Dev Team
-//===== Current Version: =====================================
-//= $Revision$
 //===== Last Updated: ========================================
-//= $LastChangedDate$
+//= 20131112
 //===== Description: =========================================
 //= Basic information and installation guide with links to
 //= various forum posts and Wiki articles.
@@ -45,9 +43,8 @@ Windows
 	* MySQL (http://www.mysql.com/downloads/mysql/)
 	* MySQL Workbench (http://www.mysql.com/downloads/workbench/)
 	* MS Visual C++ (http://www.microsoft.com/visualstudio/en-us/products/2010-editions/visual-cpp-express)
-	* [svn] TortoiseSVN (http://tortoisesvn.net/downloads.html)
-	* [git] TortoiseGIT (http://code.google.com/p/tortoisegit/)
-	* [git] MSysGit (http://code.google.com/p/msysgit/downloads/)
+	* TortoiseGIT (http://code.google.com/p/tortoisegit/)
+	* MSysGit (http://code.google.com/p/msysgit/downloads/)
 
 Linux (names of packages may require specific version numbers on certain distributions)
 	* gcc
@@ -57,8 +54,7 @@ Linux (names of packages may require specific version numbers on certain distrib
 	* mysql-server
 	* pcre-devel
 	* zlib-devel
-	* [svn] subversion
-	* [git] git
+	* git
 
 
 ============================
@@ -70,12 +66,9 @@ relevant to your Operation System, please refer to the Wiki (links at the end of
 Windows
 	* Install prerequisites
 	* Create a folder to download rAthena into (e.g. C:\rAthena)
-	* Right click this folder and select:
-		[svn] "SVN Checkout"
-		[git] "Git Clone"
-	* Paste the SVN URL into the box:
-		[svn] https://rathena.svn.sourceforge.net/svnroot/rathena/trunk/
-		[git] https://github.com/rathena/rathena.git
+	* Right click this folder and select "Git Clone"
+	* Paste the GitHub URL into the box:
+		https://github.com/rathena/rathena.git
 	* Open MySQL Workbench and create an instance to connect to your MySQL Server
 	* Create a database (rathena), a user (rathena), give permissions (GRANT SELECT,INSERT,UPDATE,DELETE)
 		and then login using the new user
@@ -84,25 +77,27 @@ Windows
 Linux
 	* Type:
 	(For CentOS)
-		[svn] yum install gcc make mysql mysql-devel mysql-server pcre-devel subversion zlib-devel
-		[git]
-		      yum install gcc make mysql mysql-devel mysql-server pcre-devel zlib-devel
-		      rpm -Uvhhttp://repo.webtatic.com/yum/centos/5/latest.rpm
-		      yum install --enablerepo=webtatic git-all
-		      yum install --enablerepo=webtatic --disableexcludes=main git-all
+		yum install gcc make mysql mysql-devel mysql-server pcre-devel zlib-devel
+		rpm -Uvhhttp://repo.webtatic.com/yum/centos/5/latest.rpm
+		yum install --enablerepo=webtatic git-all
+		yum install --enablerepo=webtatic --disableexcludes=main git-all
 	(For Debian)
-		[svn] apt-get install subversion make gcc libmysqlclient-dev zlib1g-dev libpcre3-dev
-		[git] apt-get install git make gcc libmysqlclient-dev zlib1g-dev libpcre3-dev
-	* Type: mysql_secure_installation
-	* Start your MySQL server
-	* Setup a MySQL user: CREATE USER 'rathena'@'localhost' IDENTIFIED BY 'password';
-	* Assign permissions: GRANT SELECT,INSERT,UPDATE,DELETE ON `rathena\_rag`.* TO 'rathena'@'localhost';
+		apt-get install git make gcc libmysqlclient-dev zlib1g-dev libpcre3-dev
 	* Type:
-		[svn] svn checkout https://rathena.svn.sourceforge.net/svnroot/rathena/trunk/ ~/trunk
-		[git] git clone https://github.com/rathena/rathena.git ~/rathena
-	* Insert SQL files: mysql --user=root -p rathena_rag < trunk/sql-files/main.sql (and others)
-	* Type: cd trunk && ./configure && make clean && make sql
-	* When you're ready, type: ./athena-start start
+		mysql_secure_installation
+	* Start your MySQL server
+	* Setup a MySQL user:
+		CREATE USER 'rathena'@'localhost' IDENTIFIED BY 'password';
+	* Assign permissions:
+		GRANT SELECT,INSERT,UPDATE,DELETE ON `rathena\_rag`.* TO 'rathena'@'localhost';
+	* Clone a GIT repository:
+		git clone https://github.com/rathena/rathena.git ~/rathena
+	* Insert SQL files:
+		mysql --user=root -p rathena_rag < trunk/sql-files/main.sql (and others)
+	* Configure and compile:
+		./configure && make clean && make sql
+	* When you're ready, start the servers:
+		./athena-start start
 
 
 ============================
@@ -153,14 +148,8 @@ Examples:
 ============================
 || 5. Helpful Links       ||
 ============================
-The following list of links point to various help files within the SVN, articles or
-pages on the Wiki or topics within the rAthena forum.
-
 * rAthena Forums
 	http://rathena.org/
-
-* SVN Repository
-	https://rathena.svn.sourceforge.net/svnroot/rathena/trunk/
 
 * GIT Repository
 	https://github.com/rathena/rathena

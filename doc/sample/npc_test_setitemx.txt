@@ -2,7 +2,7 @@
 //= Sample: Setiteminfo & Setitemscript
 //===== By: ==================================================
 //= Lupus
-//===== Current Version: =====================================
+//===== Last Updated: ========================================
 //= 20121003
 //===== Description: ========================================= 
 //= Demonstrates 'setiteminfo' and 'setitemscript' commands.

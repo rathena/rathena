@@ -2,7 +2,7 @@
 //= eAthena Job System
 //===== By: ==================================================
 //= Skotlex
-//===== Current Version: =====================================
+//===== Last Updated: ========================================
 //= 20130209
 //===== Description: =========================================
 //= A reference description of eA's inner job system (for use 

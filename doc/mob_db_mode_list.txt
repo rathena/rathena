@@ -2,7 +2,7 @@
 //= rAthena Monster Modes Reference
 //===== By: ==================================================
 //= rAthena Dev Team
-//===== Current Version: =====================================
+//===== Last Updated: ========================================
 //= 20120630
 //===== Description: =========================================
 //= A reference description of rAthena's mob_db 'mode' field.

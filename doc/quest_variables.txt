@@ -2,7 +2,7 @@
 //= Permanent Quest Variables
 //===== By: ==================================================
 //= Lupus
-//===== Current Version: =====================================
+//===== Last Updated: ========================================
 //= 20120826
 //===== Description: =========================================
 //= This file should help to understand and manage bit-wise 

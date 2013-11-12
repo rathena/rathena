@@ -2,7 +2,7 @@
 //= Item Database
 //===== By: ==================================================
 //= rAthena Dev Team
-//===== Current Version: =====================================
+//===== Last Updated: ========================================
 //= 20130819
 //===== Description: =========================================
 //= Explanation of the item_db.txt file and structure.
