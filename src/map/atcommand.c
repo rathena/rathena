@@ -4691,8 +4691,7 @@ ACMD_FUNC(jailfor)
 }
 
 //By Coltaro
-ACMD_FUNC(jailtime)
-{
+ACMD_FUNC(jailtime){
 	int year, month, day, hour, minute, second;
 	char timestr[CHAT_SIZE_MAX];
 
@@ -4719,6 +4718,7 @@ ACMD_FUNC(jailtime)
 	clif_displaymessage(fd, atcmd_output);
 	time2str(timestr,"%Y-%m-%d %H:%M",sd->sc.data[SC_JAILED]->val1*60);
 	sprintf(atcmd_output,"Release date is: %s",timestr);
+	clif_displaymessage(fd, atcmd_output);
 
 	return 0;
 }

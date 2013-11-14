@@ -6318,7 +6318,7 @@ void clif_parse_BankDeposit(int fd, struct map_session_data* sd) {
 		struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
 		int aid = RFIFOL(fd,info->pos[0]); //unused should we check vs fd ?
 		int money = RFIFOL(fd,info->pos[1]);
-                
+
 		if(sd->status.account_id == aid){
 			enum e_BANKING_DEPOSIT_ACK reason = pc_bank_deposit(sd,max(0,money));
 			clif_bank_deposit(sd,reason);
@@ -17613,7 +17613,7 @@ void packetdb_readdb(void)
 				// copy from previous version into new version and continue
 				// - indicating all following packets should be read into the newer version
 				memcpy(&packet_db[packet_ver], &packet_db[prev_ver], sizeof(packet_db[0]));
-                                memcpy(&packet_db_ack[packet_ver], &packet_db_ack[prev_ver], sizeof(packet_db_ack[0]));
+				memcpy(&packet_db_ack[packet_ver], &packet_db_ack[prev_ver], sizeof(packet_db_ack[0]));
 				continue;
 			} else if(strcmpi(w1,"packet_db_ver")==0) {
 				if(strcmpi(w2,"default")==0) //This is the preferred version.
@@ -17660,15 +17660,15 @@ void packetdb_readdb(void)
 		ARR_FIND( 0, ARRAYLENGTH(clif_parse_func), j, clif_parse_func[j].name != NULL && strcmp(str[2],clif_parse_func[j].name)==0 );
 		if( j < ARRAYLENGTH(clif_parse_func) )
 			packet_db[packet_ver][cmd].func = clif_parse_func[j].func;
-                else { //search if it's a mapped ack func
-                        ARR_FIND( 0, ARRAYLENGTH(clif_ack_func), j, clif_ack_func[j].name != NULL && strcmp(str[2],clif_ack_func[j].name)==0 );
-                        if( j < ARRAYLENGTH(clif_ack_func)) {
-                                int fidx = clif_ack_func[j].funcidx;
-                                packet_db_ack[packet_ver][fidx] = cmd;
-                                //ShowInfo("Added %s, <=> %X i=%d for v=%d\n",clif_ack_func[j].name,cmd,fidx,packet_ver);
-                        }
-                }
-                
+		else { //search if it's a mapped ack func
+			ARR_FIND( 0, ARRAYLENGTH(clif_ack_func), j, clif_ack_func[j].name != NULL && strcmp(str[2],clif_ack_func[j].name)==0 );
+			if( j < ARRAYLENGTH(clif_ack_func)) {
+				int fidx = clif_ack_func[j].funcidx;
+				packet_db_ack[packet_ver][fidx] = cmd;
+				//ShowInfo("Added %s, <=> %X i=%d for v=%d\n",clif_ack_func[j].name,cmd,fidx,packet_ver);
+			}
+		}
+
 		// set the identifying cmd for the packet_db version
 		if (strcmp(str[2],"wanttoconnection")==0)
 			clif_config.connect_cmd[packet_ver] = cmd;

@@ -962,8 +962,8 @@ int parse_fromchar(int fd){
 						accounts->save(accounts, &acc);
 						WBUFB(buf,10) = 1;
 					} else {
-                                                WBUFB(buf,10) = 0;
-                                        }
+						WBUFB(buf,10) = 0;
+					}
 					// announce to other servers
 					WBUFW(buf,0) = 0x2741;
 					WBUFL(buf,2) = account_id;

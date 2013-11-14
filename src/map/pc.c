@@ -1002,18 +1002,9 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	// Checks and fixes to character status data, that are required
 	// in case of configuration change or stuff, which cannot be
 	// checked on char-server.
-	if( sd->status.hair < MIN_HAIR_STYLE || sd->status.hair > MAX_HAIR_STYLE )
-	{
-		sd->status.hair = MIN_HAIR_STYLE;
-	}
-	if( sd->status.hair_color < MIN_HAIR_COLOR || sd->status.hair_color > MAX_HAIR_COLOR )
-	{
-		sd->status.hair_color = MIN_HAIR_COLOR;
-	}
-	if( sd->status.clothes_color < MIN_CLOTH_COLOR || sd->status.clothes_color > MAX_CLOTH_COLOR )
-	{
-		sd->status.clothes_color = MIN_CLOTH_COLOR;
-	}
+	sd->status.hair = cap_value(sd->status.hair,MIN_HAIR_STYLE,MAX_HAIR_STYLE);
+	sd->status.hair_color = cap_value(sd->status.hair_color,MIN_HAIR_COLOR,MAX_HAIR_COLOR);
+	sd->status.clothes_color = cap_value(sd->status.clothes_color,MIN_CLOTH_COLOR,MAX_CLOTH_COLOR);
 
 	//Initializations to null/0 unneeded since map_session_data was filled with 0 upon allocation.
 	if(!sd->status.hp) pc_setdead(sd);
@@ -10384,7 +10375,7 @@ void pc_show_version(struct map_session_data *sd) {
 	else if( git[0] != UNKNOWN_VERSION )
 		sprintf(buf,msg_txt(sd,1295),"Git Hash: ",git); //rAthena Version Git Hash: %s
 	else
-		sprintf(buf,msg_txt(sd,1296)); //Cannot determine SVN/Git version.
+		sprintf(buf,"%s",msg_txt(sd,1296)); //Cannot determine SVN/Git version.
 	clif_displaymessage(sd->fd,buf);
 }
 
