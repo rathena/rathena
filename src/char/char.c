@@ -5042,7 +5042,7 @@ void bonus_script_get(int fd) {
 }
 
 /** [Cydh]
-* Svae bonus_script data(s) to the table
+* Save bonus_script data(s) to the table
 * @param fd
 */
 void bonus_script_save(int fd) {

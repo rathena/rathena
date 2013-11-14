@@ -179,6 +179,7 @@ static char map_ip_str[128];
 static uint32 map_ip;
 static uint32 bind_ip = INADDR_ANY;
 static uint16 map_port = 5121;
+static bool clif_ally_only = false;
 int map_fd;
 
 static int clif_parse (int fd);
@@ -307,7 +308,7 @@ static int clif_send_sub(struct block_list *bl, va_list ap)
 	break;
 	case AREA_WOSC:
 	{
-		if(src_bl->type == BL_PC){
+		if(src_bl->type == BL_PC) {
 			struct map_session_data *ssd = (struct map_session_data *)src_bl;
 			if (ssd && sd->chatID && (sd->chatID == ssd->chatID))
 			return 0;
@@ -322,6 +323,10 @@ static int clif_send_sub(struct block_list *bl, va_list ap)
 	}
 
 	if (session[fd] == NULL)
+		return 0;
+
+	/* unless visible, hold it here */
+	if (clif_ally_only && !sd->special_state.intravision && battle_check_target(src_bl,&sd->bl,BCT_ENEMY) > 0)
 		return 0;
 
 	WFIFOHEAD(fd, len);
@@ -1559,6 +1564,10 @@ static void clif_move2(struct block_list *bl, struct view_data *vd, struct unit_
 {
 	uint8 buf[128];
 	int len;
+	struct status_change *sc = NULL;
+
+	if ((sc = status_get_sc(bl)) && sc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_INVISIBLE|OPTION_CHASEWALK))
+		clif_ally_only = true;
 
 	len = clif_set_unit_walking(bl,ud,buf);
 	clif_send(buf,len,bl,AREA_WOS);
@@ -1568,8 +1577,7 @@ static void clif_move2(struct block_list *bl, struct view_data *vd, struct unit_
 	if(vd->cloth_color)
 		clif_refreshlook(bl,bl->id,LOOK_CLOTHES_COLOR,vd->cloth_color,AREA_WOS);
 
-	switch(bl->type)
-	{
+	switch(bl->type) {
 	case BL_PC:
 		{
 			TBL_PC *sd = ((TBL_PC*)bl);
@@ -1590,12 +1598,11 @@ static void clif_move2(struct block_list *bl, struct view_data *vd, struct unit_
 		}
 		break;
 	case BL_PET:
-		if( vd->head_bottom )
-		{// needed to display pet equip properly
+		if(vd->head_bottom) // needed to display pet equip properly
 			clif_pet_equip_area((TBL_PET*)bl);
-		}
 		break;
 	}
+	clif_ally_only = false;
 }
 
 
@@ -1607,6 +1614,7 @@ void clif_move(struct unit_data *ud)
 	unsigned char buf[16];
 	struct view_data* vd;
 	struct block_list* bl = ud->bl;
+	struct status_change *sc = NULL;
 
 	vd = status_get_viewdata(bl);
 	if (!vd || vd->class_ == INVISIBLE_CLASS)
@@ -1626,16 +1634,19 @@ void clif_move(struct unit_data *ud)
 		return;
 	}
 
+	if ((sc = status_get_sc(bl)) && sc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_INVISIBLE|OPTION_CHASEWALK))
+		clif_ally_only = true;
+
 	WBUFW(buf,0)=0x86;
 	WBUFL(buf,2)=bl->id;
 	WBUFPOS2(buf,6,bl->x,bl->y,ud->to_x,ud->to_y,8,8);
 	WBUFL(buf,12)=gettick();
 	clif_send(buf, packet_len(0x86), bl, AREA_WOS);
-	if (disguised(bl))
-	{
+	if (disguised(bl)) {
 		WBUFL(buf,2)=-bl->id;
 		clif_send(buf, packet_len(0x86), bl, SELF);
 	}
+	clif_ally_only = false;
 }
 
 
