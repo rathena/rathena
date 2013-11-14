@@ -7235,6 +7235,8 @@ static const struct _battle_data {
 	{ "feature.banking",                    &battle_config.feature_banking,                 1,      0,      1,              },
 	{ "mon_trans_disable_in_gvg",           &battle_config.mon_trans_disable_in_gvg,        0,      0,      1,              },
 	{ "homunculus_S_growth_level",          &battle_config.hom_S_growth_level,              99,     0,      MAX_LEVEL,      },
+	{ "emblem_woe_change",                  &battle_config.emblem_woe_change,                0,     0,      1,              },
+	{ "emblem_transparency_limit",          &battle_config.emblem_transparency_limit,       80,     0,    100,              },
 };
 #ifndef STATS_OPT_OUT
 /**
