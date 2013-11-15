@@ -8528,10 +8528,8 @@ int pc_checkcombo(struct map_session_data *sd, struct item_data *data ) {
 		}
 
 		/* means we broke out of the count loop w/o finding all ids, we can move to the next combo */
-		if( j < data->combos[i]->count ) {
-			aFree(pair);
+		if( j < data->combos[i]->count )
 			continue;
-		}
 
 		/* we got here, means all items in the combo are matching */
 		idx = sd->combos.count;
