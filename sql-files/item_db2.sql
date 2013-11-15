@@ -18,7 +18,7 @@ CREATE TABLE `item_db2` (
   `equip_jobs` int(12) unsigned default NULL,
   `equip_upper` tinyint(8) unsigned default NULL,
   `equip_genders` tinyint(2) unsigned default NULL,
-  `equip_locations` smallint(4) unsigned default NULL,
+  `equip_locations` mediumint(7) unsigned default NULL,
   `weapon_level` tinyint(2) unsigned default NULL,
   `equip_level` tinyint(3) unsigned default NULL,
   `refineable` tinyint(1) unsigned default NULL,
