@@ -53,7 +53,7 @@ struct Channel* channel_create(char *name, char *pass, unsigned char color, enum
 	else
 		safestrncpy(channel->pass, pass, CHAN_NAME_LENGTH);
 
-	//ShowInfo("Create channel %s\n",channel->name);
+	//ShowInfo("Create channel %s type=%d, val=%d\n",channel->name,chantype,val);
 	switch(channel->type){
 	case CHAN_TYPE_MAP: channel->m = val; break;
 	case CHAN_TYPE_ALLY: channel->gid = val; break;
@@ -413,7 +413,7 @@ struct Channel* channel_name2channel(char *chname, struct map_session_data *sd, 
 	else if(sd && (strcmpi(chname + 1,Channel_Config.ally_chname) == 0) && sd->guild){
 		channel = sd->guild->channel;
 		if(flag&1 && !channel) {
-			channel = channel_create(Channel_Config.map_chname,NULL,Channel_Config.map_chcolor,CHAN_TYPE_ALLY,sd->guild->guild_id);
+			channel = channel_create(Channel_Config.ally_chname,NULL,Channel_Config.ally_chcolor,CHAN_TYPE_ALLY,sd->guild->guild_id);
 			if(flag&2) channel_gjoin(sd,3);
 			sd->guild->channel = channel;
 		}

@@ -177,9 +177,6 @@ static bool guild_read_castledb(char* str[], int columns, int current)
 	safestrncpy(gc->castle_event, str[3], sizeof(gc->castle_event));
 
 	idb_put(castle_db,gc->castle_id,gc);
-
-	//intif_guild_castle_info(gc->castle_id);
-
 	return true;
 }
 
@@ -523,7 +520,7 @@ int guild_recv_info(struct guild *sg)
 			clif_guild_masterormember(sd);
 		}
 	} else {
-		before=*g;
+		before=*g;		
 	}
 	memcpy(g,sg,sizeof(struct guild));
 
@@ -543,12 +540,6 @@ int guild_recv_info(struct guild *sg)
 			bm++;
 	}
 
-	if(Channel_Config.ally_enable){
-		if(!g->channel){
-			g->channel = channel_create(Channel_Config.ally_chname,NULL,Channel_Config.ally_chcolor,CHAN_TYPE_ALLY,g->guild_id);
-			channel_ajoin(g);
-		}
-	}
 	for (i = 0; i < g->max_member; i++) { //Transmission of information at all members
 		sd = g->member[i].sd;
 		if( sd==NULL )
