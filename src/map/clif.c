@@ -14524,7 +14524,7 @@ void clif_parse_Auction_setitem(int fd, struct map_session_data *sd){
 		return;
 	}
 
-	if( (item = itemdb_exists(sd->status.inventory[idx].nameid)) != NULL && !(item->type == IT_ARMOR || item->type == IT_PETARMOR || item->type == IT_WEAPON || item->type == IT_CARD || item->type == IT_ETC) )
+	if( (item = itemdb_exists(sd->status.inventory[idx].nameid)) != NULL && !(item->type == IT_ARMOR || item->type == IT_PETARMOR || item->type == IT_WEAPON || item->type == IT_CARD || item->type == IT_ETC || item->type == IT_SHADOWGEAR) )
 	{ // Consumable or pets are not allowed
 		clif_Auction_setitem(sd->fd, idx, true);
 		return;

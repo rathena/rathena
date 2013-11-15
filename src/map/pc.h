@@ -50,6 +50,12 @@ enum equip_index {
 	EQI_COSTUME_LOW,
 	EQI_COSTUME_GARMENT,
 	EQI_AMMO,
+	EQI_SHADOW_ARMOR,
+	EQI_SHADOW_WEAPON,
+	EQI_SHADOW_SHIELD,
+	EQI_SHADOW_SHOES,
+	EQI_SHADOW_ACC_R,
+	EQI_SHADOW_ACC_L,
 	EQI_MAX
 };
 
@@ -219,7 +225,7 @@ struct map_session_data {
 	struct registry save_reg;
 
 	struct item_data* inventory_data[MAX_INVENTORY]; // direct pointers to itemdb entries (faster than doing item_id lookups)
-	short equip_index[EQI_MAX];
+	int equip_index[EQI_MAX];
 	unsigned int weight,max_weight;
 	int cart_weight,cart_num,cart_weight_max;
 	int fd;
@@ -613,28 +619,28 @@ enum ammo_type {
 
 //Equip position constants
 enum equip_pos {
-	EQP_HEAD_LOW         = 0x0001,
-	EQP_HEAD_MID         = 0x0200, //512
-	EQP_HEAD_TOP         = 0x0100, //256
-	EQP_HAND_R           = 0x0002, //2
-	EQP_HAND_L           = 0x0020, //32
-	EQP_ARMOR            = 0x0010, //16
-	EQP_SHOES            = 0x0040, //64
-	EQP_GARMENT          = 0x0004, //4
-	EQP_ACC_L            = 0x0008, //8
-	EQP_ACC_R            = 0x0080, //128
-	EQP_COSTUME_HEAD_TOP = 0x0400, //1024
-	EQP_COSTUME_HEAD_MID = 0x0800, //2048
-	EQP_COSTUME_HEAD_LOW = 0x1000, //4096
-	EQP_COSTUME_GARMENT  = 0x2000, //8192
-	EQP_AMMO             = 0x8000, //32768
-	//EQP_COSTUME_FLOOR  = 0x4000,
-	//EQP_SHADOW_ARMOR   = 0x10000,//Shadow equip slots will be left disabled until client's supporting them are usable. [Rytech]
-	//EQP_SHADOW_WEAPON  = 0x20000,
-	//EQP_SHADOW_SHIELD  = 0x40000,
-	//EQP_SHADOW_SHOES   = 0x80000,
-	//EQP_SHADOW_ACC_R   = 0x100000,
-	//EQP_SHADOW_ACC_L   = 0x200000,
+	EQP_HEAD_LOW           = 0x000001,
+	EQP_HEAD_MID           = 0x000200, // 512
+	EQP_HEAD_TOP           = 0x000100, // 256
+	EQP_HAND_R             = 0x000002, // 2
+	EQP_HAND_L             = 0x000020, // 32
+	EQP_ARMOR              = 0x000010, // 16
+	EQP_SHOES              = 0x000040, // 64
+	EQP_GARMENT            = 0x000004, // 4
+	EQP_ACC_L              = 0x000008, // 8
+	EQP_ACC_R              = 0x000080, // 128
+	EQP_COSTUME_HEAD_TOP   = 0x000400, // 1024
+	EQP_COSTUME_HEAD_MID   = 0x000800, // 2048
+	EQP_COSTUME_HEAD_LOW   = 0x001000, // 4096
+	EQP_COSTUME_GARMENT    = 0x002000, // 8192
+	//EQP_COSTUME_FLOOR    = 0x004000, // 16384
+	EQP_AMMO               = 0x008000, // 32768
+	EQP_SHADOW_ARMOR       = 0x010000, // 65536
+	EQP_SHADOW_WEAPON      = 0x020000, // 131072
+	EQP_SHADOW_SHIELD      = 0x040000, // 262144
+	EQP_SHADOW_SHOES       = 0x080000, // 524288
+	EQP_SHADOW_ACC_R       = 0x100000, // 1048576
+	EQP_SHADOW_ACC_L       = 0x200000, // 2097152
 };
 
 struct {
@@ -660,6 +666,7 @@ struct {
 #define EQP_ACC (EQP_ACC_L|EQP_ACC_R)
 #define EQP_COSTUME (EQP_COSTUME_HEAD_TOP|EQP_COSTUME_HEAD_MID|EQP_COSTUME_HEAD_LOW|EQP_COSTUME_GARMENT)
 //#define EQP_SHADOW_GEAR (EQP_SHADOW_ARMOR|EQP_SHADOW_WEAPON|EQP_SHADOW_SHIELD|EQP_SHADOW_SHOES|EQP_SHADOW_ACC_R|EQP_SHADOW_ACC_L)
+#define EQP_SHADOW_ACC (EQP_SHADOW_ACC_R|EQP_SHADOW_ACC_L)
 
 /// Equip positions that use a visible sprite
 #if PACKETVER < 20110111

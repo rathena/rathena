@@ -1214,3 +1214,7 @@
 69,4429,32	// Salamander Card
 69,4431,32	// Kasa Card
 69,4432,33	// Magmaring Card
+// Flamel Card
+70,545,1		// Condensed Red Potion
+70,546,1		// Condensed Yellow Potion
+70,547,1		// Condensed White Potion

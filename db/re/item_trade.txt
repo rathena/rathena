@@ -1416,6 +1416,7 @@
 14605,475,100	// Orc Lord Scroll
 14606,475,100	// JOB Battle Manual
 14608,73,100	// Manchu-Han Imperial Feast
+14696,475,100	// Sealed Gloom Under Night Gachapon
 16002,507,100	// Stunner
 16134,475,100	// Frog King Hat Box
 16135,457,100	// Satanic Bone Helm Box
@@ -2011,8 +2012,11 @@
 12630,475,100	// Teddy Bear Scroll
 12778,473,100	// Bapho Jr Scroll
 12779,473,100	// Galapago Scroll
+17338,457,100	// Ore Box V
+17339,457,100	// Ore Box V(10)
 
 // Sealed Cards
+4485,457,100	// Sealed Gloom Under Night Card
 4489,457,100	// Sealed Pharaoh Card
 4490,457,100	// Sealed Moonlight Flower Card
 4491,457,100	// Sealed Sniper Card

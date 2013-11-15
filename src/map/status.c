@@ -2682,6 +2682,11 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 					return 1;
 			}
 		}
+		else if( sd->inventory_data[index]->type == IT_SHADOWGEAR ) { // Shadow System
+			run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
+			if( !calculating )
+				return 1;
+		}
 	}
 
 	if(sd->equip_index[EQI_AMMO] >= 0) {

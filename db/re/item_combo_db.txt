@@ -230,3 +230,31 @@
 15088:18817:18819,{ bonus bBaseAtk,BaseLevel/3; bonus2 bExpAddRace,RC_NonBoss,5; bonus2 bExpAddRace,RC_Boss,5; }
 18507:18539,{ bonus bUseSPrate,-3; }
 18559:18560,{ bonus bCritAtkRate,5; }
+
+4606:4605,{ bonus2 bSubEle,0,20; bonus bFlee,20; bonus2 bHPLossRate,100,6000; bonus2 bSPLossRate,6,6000; }
+24072:24075,{ bonus bMaxHPrate,1; bonus bMaxSPrate,1; }
+24073:24076,{ bonus bMaxHPrate,1; bonus bMaxSPrate,1; }
+24074:24077,{ bonus bMaxHPrate,1; bonus bMaxSPrate,1; }
+24018:24019:24020,{ if(getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_ACC_L) + getequiprefinerycnt(EQI_SHADOW_WEAPON) >= 23) { bonus bAtkRate,1; } }
+24021:24022:24023,{ if(getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_ACC_L) + getequiprefinerycnt(EQI_SHADOW_WEAPON) >= 23) { bonus bMatkRate,1; } }
+24025:24028,{ set .@i,getequiprefinerycnt(EQI_SHADOW_ARMOR) + getequiprefinerycnt(EQI_SHADOW_SHOES); bonus bMaxHP,.@i; bonus bMaxSP,.@i; if(.@i >= 15) { bonus bMaxHPrate,1; } }
+24026:24027,{ set .@i,getequiprefinerycnt(EQI_SHADOW_ARMOR) + getequiprefinerycnt(EQI_SHADOW_SHIELD); bonus bDef,.@i; if(.@i >= 15) { bonus2 bSubEle,0,1; } }
+24029:24031,{ set .@i,getequiprefinerycnt(EQI_SHADOW_ARMOR) + getequiprefinerycnt(EQI_SHADOW_WEAPON); bonus bAtk,.@i; if(.@i >= 15) { bonus bLongAtkRate,1; } }
+24030:24032,{ set .@i,getequiprefinerycnt(EQI_SHADOW_ARMOR) + getequiprefinerycnt(EQI_SHADOW_WEAPON); bonus bCritical,.@i; bonus bAtk,.@i; if(.@i >= 15) { bonus bCritAtkRate,1; } }
+24034:24040,{ bonus bLuk,1; }
+24035:24041,{ bonus bStr,1; }
+24036:24042,{ bonus bInt,1; }
+24037:24043,{ bonus bDex,1; }
+24038:24044,{ bonus bVit,1; }
+24039:24045,{ bonus bAgi,1; }
+24046:24051,{ bonus2 bSubEle,0,1; if(getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_ACC_L)) { bonus2 bSubEle,0,1; } }
+24052:24062,{ bonus2 bExpAddRace,7,3; }
+24053:24063,{ bonus2 bAddRace,10,5; bonus2 bMagicAddRace,10,5; }
+24054:24065,{ bonus2 bExpAddRace,2,3; }
+24055:24066,{ bonus2 bExpAddRace,4,3; }
+24056:24067,{ bonus2 bExpAddRace,5,3; }
+24057:24071,{ bonus2 bExpAddRace,9,3; }
+24058:24068,{ bonus2 bExpAddRace,8,3; }
+24059:24069,{ bonus2 bExpAddRace,0,3; }
+24060:24070,{ bonus2 bExpAddRace,1,3; }
+24061:24064,{ bonus2 bExpAddRace,3,3; }

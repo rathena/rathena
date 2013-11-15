@@ -2359,6 +2359,13 @@ EQI_COSTUME_HEAD_LOW (11) - Lower Costume Headgear
 EQI_COSTUME_HEAD_MID (12) - Middle Costume Headgear
 EQI_COSTUME_HEAD_TOP (13) - Upper Costume Headgear
 EQI_COSTUME_GARMENT (14)  - Costume Garment
+EQI_AMMO (15)    		  - Arrow/Ammunition
+EQI_SHADOW_ARMOR (16)     - Shadow Armor
+EQI_SHADOW_WEAPON (17)    - Shadow Weapon
+EQI_SHADOW_SHIELD (18)    - Shadow Shield
+EQI_SHADOW_SHOES (19)     - Shadow Shoes
+EQI_SHADOW_ACC_R (20)     - Shadow Accessory 2
+EQI_SHADOW_ACC_L (21)     - Shadow Accessory 1
 
 Notice that a few items occupy several equipment slots, and if the character is 
 wearing such an item, 'getequipid' will return its ID number for either slot.

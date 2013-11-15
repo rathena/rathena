@@ -180,6 +180,7 @@ enum item_types {
 	IT_UNKNOWN2,//9
 	IT_AMMO,    //10
 	IT_DELAYCONSUME,//11
+	IT_SHADOWGEAR,  //12
 	IT_CASH = 18,
 	IT_MAX
 };
@@ -199,7 +200,7 @@ struct item {
 	int id;
 	short nameid;
 	short amount;
-	unsigned short equip; // location(s) where item is equipped (using enum equip_pos for bitmasking)
+	unsigned int equip; // location(s) where item is equipped (using enum equip_pos for bitmasking)
 	char identify;
 	char refine;
 	char attribute;

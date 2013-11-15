@@ -6456,7 +6456,7 @@ BUILDIN_FUNC(getitem2)
 		item_data=itemdb_exists(nameid);
 		if (item_data == NULL)
 			return -1;
-		if(item_data->type==IT_WEAPON || item_data->type==IT_ARMOR){
+		if(item_data->type==IT_WEAPON || item_data->type==IT_ARMOR || item_data->type==IT_SHADOWGEAR ) {
 			if(ref > MAX_REFINE) ref = MAX_REFINE;
 		}
 		else if(item_data->type==IT_PETEGG) {
@@ -6471,7 +6471,7 @@ BUILDIN_FUNC(getitem2)
 		item_tmp.nameid=nameid;
 		if(!flag)
 			item_tmp.identify=iden;
-		else if(item_data->type==IT_WEAPON || item_data->type==IT_ARMOR)
+		else if(item_data->type==IT_WEAPON || item_data->type==IT_ARMOR || item_data->type==IT_SHADOWGEAR )
 			item_tmp.identify=0;
 		item_tmp.refine=ref;
 		item_tmp.attribute=attr;
@@ -7378,7 +7378,7 @@ BUILDIN_FUNC(strnpcinfo)
 
 
 // aegis->athena slot position conversion table
-static unsigned int equip[] = {EQP_HEAD_TOP,EQP_ARMOR,EQP_HAND_L,EQP_HAND_R,EQP_GARMENT,EQP_SHOES,EQP_ACC_L,EQP_ACC_R,EQP_HEAD_MID,EQP_HEAD_LOW,EQP_COSTUME_HEAD_LOW,EQP_COSTUME_HEAD_MID,EQP_COSTUME_HEAD_TOP,EQP_COSTUME_GARMENT};
+static unsigned int equip[] = {EQP_HEAD_TOP,EQP_ARMOR,EQP_HAND_L,EQP_HAND_R,EQP_GARMENT,EQP_SHOES,EQP_ACC_L,EQP_ACC_R,EQP_HEAD_MID,EQP_HEAD_LOW,EQP_COSTUME_HEAD_LOW,EQP_COSTUME_HEAD_MID,EQP_COSTUME_HEAD_TOP,EQP_COSTUME_GARMENT,EQP_AMMO,EQP_SHADOW_ARMOR,EQP_SHADOW_WEAPON,EQP_SHADOW_SHIELD,EQP_SHADOW_SHOES,EQP_SHADOW_ACC_R,EQP_SHADOW_ACC_L};
 
 /*==========================================
  * GetEquipID(Pos);     Pos: 1-14

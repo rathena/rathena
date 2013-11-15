@@ -198,6 +198,7 @@ const char* itemdb_typename(int type)
 		case IT_PETARMOR:       return "Pet Accessory";
 		case IT_AMMO:           return "Arrow/Ammunition";
 		case IT_DELAYCONSUME:   return "Delay-Consume Usable";
+		case IT_SHADOWGEAR:     return "Shadow Equipment";
 		case IT_CASH:           return "Cash Usable";
 	}
 	return "Unknown Type";
@@ -352,6 +353,7 @@ int itemdb_isequip(int nameid)
 		case IT_WEAPON:
 		case IT_ARMOR:
 		case IT_AMMO:
+		case IT_SHADOWGEAR:
 			return 1;
 		default:
 			return 0;
@@ -368,6 +370,7 @@ int itemdb_isequip2(struct item_data *data)
 		case IT_WEAPON:
 		case IT_ARMOR:
 		case IT_AMMO:
+		case IT_SHADOWGEAR:
 			return 1;
 		default:
 			return 0;
@@ -385,6 +388,7 @@ int itemdb_isstackable(int nameid)
 	  case IT_ARMOR:
 	  case IT_PETEGG:
 	  case IT_PETARMOR:
+	  case IT_SHADOWGEAR:
 		  return 0;
 	  default:
 		  return 1;
@@ -402,6 +406,7 @@ int itemdb_isstackable2(struct item_data *data)
 	  case IT_ARMOR:
 	  case IT_PETEGG:
 	  case IT_PETARMOR:
+	  case IT_SHADOWGEAR:
 		  return 0;
 	  default:
 		  return 1;
@@ -477,6 +482,7 @@ int itemdb_isidentified(int nameid)
 		case IT_WEAPON:
 		case IT_ARMOR:
 		case IT_PETARMOR:
+		case IT_SHADOWGEAR:
 			return 0;
 		default:
 			return 1;
@@ -1006,7 +1012,7 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 
 	id->type = atoi(str[3]);
 
-	if( id->type < 0 || id->type == IT_UNKNOWN || id->type == IT_UNKNOWN2 || ( id->type > IT_DELAYCONSUME && id->type < IT_CASH ) || id->type >= IT_MAX )
+	if( id->type < 0 || id->type == IT_UNKNOWN || id->type == IT_UNKNOWN2 || ( id->type > IT_SHADOWGEAR && id->type < IT_CASH ) || id->type >= IT_MAX )
 	{// catch invalid item types
 		ShowWarning("itemdb_parse_dbrow: Invalid item type %d for item %d. IT_ETC will be used.\n", id->type, nameid);
 		id->type = IT_ETC;
