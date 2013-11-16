@@ -2704,27 +2704,24 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 
 	// We've got combos to process and check
 	if( sd->combos.count ) {
+		DBMap *combo_db = itemdb_get_combodb();
 		for (i = 0; i < sd->combos.count; i++) {
-			uint8 j;
+			uint8 j = 0;
 			bool no_run = false;
-			struct s_combo_pair *ids;
+			struct item_combo *combo = (struct item_combo *)idb_get(combo_db,sd->combos.id[i]);
+
 			if (!sd->combos.bonus[i])
 				continue;
 			// Check combo items
-			CREATE(ids,struct s_combo_pair,1);
-			memcpy(ids, &sd->combos.pair[i], sizeof(ids));
-			for (j = 0; j < MAX_ITEMS_PER_COMBO; j++) {
-				uint16 nameid = ids->nameid[j];
-				struct item_data *id = NULL;
-				if (!nameid || !(id = itemdb_exists(nameid)))
-					continue;
-				// Don't run the script if the items has restriction
-				if (!pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(id, sd->bl.m)) {
+			while (j < combo->count) {
+				struct item_data *id = itemdb_exists(combo->nameid[j]);
+				// Don't run the script if at least one of combo's pair has restriction
+				if (id && !pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(id, sd->bl.m)) {
 					no_run = true;
 					break;
 				}
+				j++;
 			}
-			aFree(ids);
 			if (no_run)
 				continue;
 			run_script(sd->combos.bonus[i],0,sd->bl.id,0);

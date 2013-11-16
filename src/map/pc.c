@@ -8462,15 +8462,18 @@ int pc_cleareventtimer(struct map_session_data *sd)
 		}
 	return 0;
 }
-/* called when a item with combo is worn */
-int pc_checkcombo(struct map_session_data *sd, struct item_data *data ) {
+
+/**
+* Called when an item with combo is worn
+* @param *sd
+* @param *data struct item_data
+* @return success numbers of succeed combo
+*/
+int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 	int i, j, k, z;
 	int index, idx, success = 0;
 
 	for( i = 0; i < data->combos_count; i++ ) {
-		struct s_combo_pair *pair;
-		uint8 pair_idx = 0;
-
 		/* ensure this isn't a duplicate combo */
 		if( sd->combos.bonus != NULL ) {
 			int x;
@@ -8481,7 +8484,6 @@ int pc_checkcombo(struct map_session_data *sd, struct item_data *data ) {
 				continue;
 		}
 
-		CREATE(pair,struct s_combo_pair,1);
 		for( j = 0; j < data->combos[i]->count; j++ ) {
 			int id = data->combos[i]->nameid[j];
 			bool found = false;
@@ -8499,30 +8501,19 @@ int pc_checkcombo(struct map_session_data *sd, struct item_data *data ) {
 				if ( itemdb_type(id) != IT_CARD ) {
 					if ( sd->inventory_data[index]->nameid != id )
 						continue;
-
 					found = true;
-					pair->nameid[pair_idx] = id;
-					pair_idx ++;
 					break;
 				} else { //Cards
 					if ( sd->inventory_data[index]->slot == 0 || itemdb_isspecial(sd->status.inventory[index].card[0]) )
 						continue;
-
 					for (z = 0; z < sd->inventory_data[index]->slot; z++) {
-
 						if (sd->status.inventory[index].card[z] != id)
 							continue;
-
-						// We have found a match
 						found = true;
-						pair->nameid[pair_idx] = id;
-						pair_idx ++;
 						break;
 					}
 				}
-
 			}
-
 			if( !found )
 				break;/* we haven't found all the ids for this combo, so we can return */
 		}
@@ -8530,33 +8521,31 @@ int pc_checkcombo(struct map_session_data *sd, struct item_data *data ) {
 		/* means we broke out of the count loop w/o finding all ids, we can move to the next combo */
 		if( j < data->combos[i]->count )
 			continue;
-
 		/* we got here, means all items in the combo are matching */
 		idx = sd->combos.count;
 		if( sd->combos.bonus == NULL ) {
 			CREATE(sd->combos.bonus, struct script_code *, 1);
 			CREATE(sd->combos.id, unsigned short, 1);
 			sd->combos.count = 1;
-			CREATE(sd->combos.pair, struct s_combo_pair *, 1);
 		} else {
 			RECREATE(sd->combos.bonus, struct script_code *, ++sd->combos.count);
 			RECREATE(sd->combos.id, unsigned short, sd->combos.count);
-			RECREATE(sd->combos.pair, struct s_combo_pair *, sd->combos.count);
 		}
 		/* we simply copy the pointer */
 		sd->combos.bonus[idx] = data->combos[i]->script;
 		/* save this combo's id */
 		sd->combos.id[idx] = data->combos[i]->id;
-		/* store the items id that trigger this combo */
-		memcpy(&sd->combos.pair[idx], pair, sizeof(pair));
-		aFree(pair);
-
 		success++;
 	}
 	return success;
 }
 
-/* called when a item with combo is removed */
+/**
+* Called when an item with combo is removed
+* @param *sd
+* @param *data struct item_data
+* @return retval numbers of removed combo
+*/
 int pc_removecombo(struct map_session_data *sd, struct item_data *data ) {
 	int i, retval = 0;
 
@@ -8572,7 +8561,6 @@ int pc_removecombo(struct map_session_data *sd, struct item_data *data ) {
 
 		sd->combos.bonus[x] = NULL;
 		sd->combos.id[x] = 0;
-		sd->combos.pair[x] = NULL;
 		retval++;
 
 		/* move next value to empty slot */
@@ -8583,7 +8571,6 @@ int pc_removecombo(struct map_session_data *sd, struct item_data *data ) {
 			if( cursor != j ) {
 				sd->combos.bonus[cursor] = sd->combos.bonus[j];
 				sd->combos.id[cursor]    = sd->combos.id[j];
-				sd->combos.pair[cursor]  = sd->combos.pair[j];
 			}
 			cursor++;
 		}
@@ -8596,16 +8583,20 @@ int pc_removecombo(struct map_session_data *sd, struct item_data *data ) {
 		if( (sd->combos.count = cursor) == 0 ) {
 			aFree(sd->combos.bonus);
 			aFree(sd->combos.id);
-			aFree(sd->combos.pair);
 			sd->combos.bonus = NULL;
 			sd->combos.id = NULL;
-			sd->combos.pair = NULL;
 			return retval; /* we also can return at this point for we have no more combos to check */
 		}
 	}
 
 	return retval;
 }
+
+/**
+* Load combo data(s) of player
+* @param *sd
+* @return ret numbers of succeed combo
+*/
 int pc_load_combo(struct map_session_data *sd) {
 	int i, ret = 0;
 	for( i = 0; i < EQI_MAX; i++ ) {
@@ -8659,7 +8650,8 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 		return 0;
 	}
 
-	id = sd->inventory_data[n];
+	if (!(id = sd->inventory_data[n]))
+		return 0;
 	pos = pc_equippoint(sd,n); //With a few exceptions, item should go in all specified slots.
 
 	if(battle_config.battle_log)
@@ -8800,20 +8792,18 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 	iflag = sd->npc_item_flag;
 
 	/* check for combos (MUST be before status_calc_pc) */
-	if ( id ) {
-		if( id->combos_count )
-			pc_checkcombo(sd,id);
-		if(itemdb_isspecial(sd->status.inventory[n].card[0]))
-			; //No cards
-		else {
-			for( i = 0; i < id->slot; i++ ) {
-				struct item_data *data;
-				if (!sd->status.inventory[n].card[i])
-					continue;
-				if ( ( data = itemdb_exists(sd->status.inventory[n].card[i]) ) != NULL ) {
-					if( data->combos_count )
-						pc_checkcombo(sd,data);
-				}
+	if( id->combos_count )
+		pc_checkcombo(sd,id);
+	if(itemdb_isspecial(sd->status.inventory[n].card[0]))
+		; //No cards
+	else {
+		for( i = 0; i < id->slot; i++ ) {
+			struct item_data *data;
+			if (!sd->status.inventory[n].card[i])
+				continue;
+			if ( ( data = itemdb_exists(sd->status.inventory[n].card[i]) ) != NULL ) {
+				if( data->combos_count )
+					pc_checkcombo(sd,data);
 			}
 		}
 	}
@@ -10419,6 +10409,7 @@ void pc_bonus_script_remove(struct map_session_data *sd, uint8 i) {
 	if (!sd || i >= MAX_PC_BONUS_SCRIPT)
 		return;
 
+	script_free_code(sd->bonus_script[i].script);
 	memset(&sd->bonus_script[i].script,0,sizeof(sd->bonus_script[i].script));
 	memset(sd->bonus_script[i].script_str,'\0',sizeof(sd->bonus_script[i].script_str));
 	sd->bonus_script[i].tick = 0;

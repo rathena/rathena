@@ -25,6 +25,12 @@ static struct item_group itemgroup_db[MAX_ITEMGROUP];
 
 struct item_data dummy_item; //This is the default dummy item used for non-existant items. [Skotlex]
 
+static DBMap *itemdb_combo;
+
+DBMap * itemdb_get_combodb(){
+	return itemdb_combo;
+}
+
 /**
  * Search for item name
  * name = item alias, so we should find items aliases first. if not found then look for "jname" (full name)
@@ -924,9 +930,8 @@ void itemdb_read_combos() {
 				/* we flag this way to ensure we don't double-dealloc same data */
 				it->combos[index]->isRef = true;
 			}
-
+			idb_put(itemdb_combo,id->combos[idx]->id,id->combos[idx]);
 		}
-
 		count++;
 	}
 
@@ -1380,7 +1385,7 @@ static void itemdb_read(void) {
  *------------------------------------------*/
 
 /// Destroys the item_data.
-static void destroy_item_data(struct item_data* self, int free_self)
+static void destroy_item_data(struct item_data* self, bool free_self)
 {
 	if( self == NULL )
 		return;
@@ -1419,7 +1424,7 @@ static int itemdb_final_sub(DBKey key, DBData *data, va_list ap)
 	struct item_data *id = db_data2ptr(data);
 
 	if( id != &dummy_item )
-		destroy_item_data(id, 1);
+		destroy_item_data(id, true);
 
 	return 0;
 }
@@ -1434,9 +1439,10 @@ void itemdb_reload(void)
 	// clear the previous itemdb data
 	for( i = 0; i < ARRAYLENGTH(itemdb_array); ++i )
 		if( itemdb_array[i] )
-			destroy_item_data(itemdb_array[i], 1);
+			destroy_item_data(itemdb_array[i], true);
 
 	itemdb_other->clear(itemdb_other, itemdb_final_sub);
+	db_clear(itemdb_combo);
 
 	memset(itemdb_array, 0, sizeof(itemdb_array));
 
@@ -1499,15 +1505,17 @@ void do_final_itemdb(void)
 
 	for( i = 0; i < ARRAYLENGTH(itemdb_array); ++i )
 		if( itemdb_array[i] )
-			destroy_item_data(itemdb_array[i], 1);
+			destroy_item_data(itemdb_array[i], true);
 
 	itemdb_other->destroy(itemdb_other, itemdb_final_sub);
-	destroy_item_data(&dummy_item, 0);
+	destroy_item_data(&dummy_item, false);
+	db_destroy(itemdb_combo);
 }
 
 int do_init_itemdb(void) {
 	memset(itemdb_array, 0, sizeof(itemdb_array));
 	itemdb_other = idb_alloc(DB_OPT_BASE);
+	itemdb_combo = idb_alloc(DB_OPT_BASE);
 	create_dummy_data(); //Dummy data item.
 	itemdb_read();
 

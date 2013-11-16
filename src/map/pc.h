@@ -24,7 +24,7 @@
 #define MAX_PC_SKILL_REQUIRE 5
 #define MAX_PC_FEELHATE 3
 #define DAMAGELOG_SIZE_PC 100	// Any idea for this value?
-#define MAX_PC_BONUS_SCRIPT 10
+#define MAX_PC_BONUS_SCRIPT 20
 
 //Update this max as necessary. 55 is the value needed for Super Baby currently
 //Raised to 84 since Expanded Super Novice needs it.
@@ -131,13 +131,6 @@ enum npc_timeout_type {
 	NPCT_INPUT = 0,
 	NPCT_MENU  = 1,
 	NPCT_WAIT  = 2,
-};
-
-/*
- * Combo's items
- */
-struct s_combo_pair {
-	uint16 nameid[MAX_ITEMS_PER_COMBO];
 };
 
 struct map_session_data {
@@ -527,7 +520,6 @@ struct map_session_data {
 		struct script_code **bonus;/* the script */
 		unsigned short *id;/* array of combo ids */
 		unsigned char count;
-		struct s_combo_pair **pair;
 	} combos;
 
 	/**

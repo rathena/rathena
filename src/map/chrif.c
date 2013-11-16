@@ -1760,6 +1760,7 @@ int chrif_save_bsdata(struct map_session_data *sd) {
 		
 		memcpy(WFIFOP(char_fd,10+count*sizeof(struct bonus_script_data)),&bs,sizeof(struct bonus_script_data));
 		delete_timer(sd->bonus_script[i].tid,pc_bonus_script_timer);
+		pc_bonus_script_remove(sd,i);
 		count++;
 	}
 

@@ -242,6 +242,8 @@ int itemdb_isstackable2(struct item_data *);
 uint64 itemdb_unique_id(int8 flag, int64 value); // Unique Item ID
 bool itemdb_isNoEquip(struct item_data *id, uint16 m);
 
+DBMap * itemdb_get_combodb();
+
 void itemdb_reload(void);
 
 void do_final_itemdb(void);

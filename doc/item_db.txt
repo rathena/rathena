@@ -35,6 +35,7 @@ Type:
 	10	Ammo (Arrows/Bullets/etc)
 	11	Usable with delayed consumption (item is lost from inventory
 		after selecting a target, for use with skills and pet lures)
+	12	Shadow Equipment
 	18	Another delayed consume that requires user confirmation before
 		using item.
 
@@ -132,17 +133,17 @@ Loc: Equipment's placement. Values are (hexadecimal):
 	2^6  064 = Footgear
 	2^3  008 = Accessory 1
 	2^7  128 = Accessory 2
-	2^10 1024 = Costume Top Headgear
-	2^11 2048 = Costume Mid Headgear
-	2^12 4096 = Costume Low Headgear
-	2^13 8192 = Costume Garment/Robe
+	2^10 1024  = Costume Top Headgear
+	2^11 2048  = Costume Mid Headgear
+	2^12 4096  = Costume Low Headgear
+	2^13 8192  = Costume Garment/Robe
 	2^15 32768 = Ammo
-	2^16 65536 = Shadow Armor 
-	2^17 131072 = Shadow Weapon 
-	2^18 262144 = Shadow Shield 
-	2^18 524288 = Shadow Shoes 
-	2^20 1048576 = Shadow Accessory 2 
-	2^21 2097152 = Shadow Accessory 1 
+	2^16 65536   = Shadow Armor
+	2^17 131072  = Shadow Weapon
+	2^18 262144  = Shadow Shield
+	2^18 524288  = Shadow Shoes
+	2^20 1048576 = Shadow Accessory 2
+	2^21 2097152 = Shadow Accessory 1
 
 ---------------------------------------
 
