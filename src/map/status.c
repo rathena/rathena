@@ -4605,6 +4605,10 @@ static unsigned short status_calc_vit(struct block_list *bl, struct status_chang
 		vit -= vit * sc->data[SC_STRIPARMOR]->val2/100;
 	if(sc->data[SC_FULL_THROTTLE])
 		vit += vit * 20 / 100;
+#ifdef RENEWAL
+	if(sc->data[SC_DEFENCE])
+		vit += sc->data[SC_DEFENCE]->val2;
+#endif
 
 	return (unsigned short)cap_value(vit,0,USHRT_MAX);
 }
@@ -5272,8 +5276,10 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 		def += sc->data[SC_ARMORCHANGE]->val2;
 	if(sc->data[SC_DRUMBATTLE])
 		def += sc->data[SC_DRUMBATTLE]->val3;
+#ifndef RENEWAL
 	if(sc->data[SC_DEFENCE])
 		def += sc->data[SC_DEFENCE]->val2 ;
+#endif
 	if(sc->data[SC_INCDEFRATE])
 		def += def * sc->data[SC_INCDEFRATE]->val1/100;
 	if(sc->data[SC_EARTH_INSIGNIA] && sc->data[SC_EARTH_INSIGNIA]->val1 == 2)
@@ -8560,7 +8566,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			// val2 = 10*val1; // Speed change rate.
 			break;
 		case SC_DEFENCE:
+#ifdef RENEWAL
+			val2 = 5 + (val1 * 5); // Vit bonus
+#else
 			val2 = 2*val1; // Def bonus
+#endif
 			break;
 		case SC_BLOODLUST:
 			val2 = 20+10*val1; // Atk rate change.
