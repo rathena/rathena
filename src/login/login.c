@@ -13,6 +13,9 @@
 #include "../common/msg_conf.h"
 #include "../common/cli.h"
 #include "../common/ers.h"
+#include "../common/utils.h"
+#include "../common/mmo.h"
+#include "../config/core.h"
 #include "account.h"
 #include "ipban.h"
 #include "login.h"
@@ -294,11 +297,16 @@ bool check_password(const char* md5key, int passwdenc, const char* passwd, const
 }
 
 
-//-----------------------------------------------------
-// custom timestamp formatting (from eApp)
-//-----------------------------------------------------
-const char* timestamp2string(char* str, size_t size, time_t timestamp, const char* format)
-{
+/**
+ * Converting a timestamp is a srintf according to format
+ * safefr then strftime as it ensure \0 at end of string
+ * @param str, pointer to the destination string
+ * @param size, max length of the string
+ * @param timestamp, see unix epoch
+ * @param format, format to convert timestamp on, see strftime format
+ * @return the string of timestamp
+ */
+const char* timestamp2string(char* str, size_t size, time_t timestamp, const char* format){
 	size_t len = strftime(str, size, format, localtime(&timestamp));
 	memset(str + len, '\0', size - len);
 	return str;
@@ -428,6 +436,132 @@ int parse_console(const char* buf){
 	return 0;
 }
 
+int chrif_send_accdata(int fd, uint32 aid) {
+	struct mmo_account acc;
+	time_t expiration_time = 0;
+	char email[40] = "";
+	int group_id = 0;
+	char birthdate[10+1] = "";
+	char pincode[PINCODE_LENGTH+1];
+	int bank_vault = 0;
+	char isvip = false;
+	uint8 char_slots = MIN_CHARS, char_vip = 0;
+
+	memset(pincode,0,PINCODE_LENGTH+1);
+	if( !accounts->load_num(accounts, &acc, aid) )
+		return -1;
+	else {
+		safestrncpy(email, acc.email, sizeof(email));
+		expiration_time = acc.expiration_time;
+		group_id = acc.group_id;
+
+		safestrncpy(birthdate, acc.birthdate, sizeof(birthdate));
+		safestrncpy(pincode, acc.pincode, sizeof(pincode));
+		bank_vault = acc.bank_vault;
+#ifdef VIP_ENABLE
+		char_vip = login_config.vip_sys.char_increase;
+		if( acc.vip_time > time(NULL) ) {
+			isvip=true;
+			char_slots = login_config.char_per_account + char_vip;
+		} else
+			char_slots = login_config.char_per_account;
+#endif
+	}
+
+	WFIFOHEAD(fd,79);
+	WFIFOW(fd,0) = 0x2717;
+	WFIFOL(fd,2) = aid;
+	safestrncpy((char*)WFIFOP(fd,6), email, 40);
+	WFIFOL(fd,46) = (uint32)expiration_time;
+	WFIFOB(fd,50) = (unsigned char)group_id;
+	WFIFOB(fd,51) = char_slots;
+	safestrncpy((char*)WFIFOP(fd,52), birthdate, 10+1);
+	safestrncpy((char*)WFIFOP(fd,63), pincode, 4+1 );
+	WFIFOL(fd,68) = (uint32)acc.pincode_change;
+	WFIFOL(fd,72) = bank_vault;
+	WFIFOB(fd,76) = isvip;
+	WFIFOB(fd,77) = char_vip;
+	WFIFOB(fd,78) = MAX_CHAR_BILLING; //TODO create a config for this
+	WFIFOSET(fd,79);
+	return 0;
+}
+
+int chrif_parse_reqaccdata(int fd, int cid, char *ip) {
+	if( RFIFOREST(fd) < 6 )
+		return 0;
+	else {
+		uint32 aid = RFIFOL(fd,2);
+		RFIFOSKIP(fd,6);
+		if( chrif_send_accdata(fd,aid) < 0 )
+			ShowNotice("Char-server '%s': account %d NOT found (ip: %s).\n", server[cid].name, aid, ip);
+	}
+	return 0;
+}
+
+
+int chrif_sendvipdata(int fd, struct mmo_account acc, char isvip) {
+#ifdef VIP_ENABLE
+	uint8 buf[16];
+
+	WBUFW(buf,0) = 0x2743;
+	WBUFL(buf,2) = acc.account_id;
+	WBUFL(buf,6) = acc.vip_time;
+	WBUFB(buf,10) = isvip;
+	WBUFL(buf,11) = acc.group_id; //new group id
+	charif_sendallwos(-1,buf,15); //inform all char-servs of result
+
+	chrif_send_accdata(fd,acc.account_id); //refresh char with new setting
+#endif
+	return 1;
+}
+
+/**
+ * Received a vip data reqest from char
+ * type is the query to perform
+ *  &1 : Select info and update old_groupid
+ *  &2 : Update vip time
+ * @param fd link to charserv
+ * @return 0 missing data, 1 succeed
+ */
+int chrif_parse_reqvipdata(int fd) {
+#ifdef VIP_ENABLE
+	if( RFIFOREST(fd) < 11 )
+		return 0;
+	else { //request vip info
+		struct mmo_account acc;
+		int aid = RFIFOL(fd,2);
+		int8 type = RFIFOB(fd,6);
+		uint32 req_duration = RFIFOL(fd,7);
+		RFIFOSKIP(fd,11);
+
+		if( accounts->load_num(accounts, &acc, aid ) ){
+			time_t now = time(NULL);
+			time_t vip_time = acc.vip_time;
+			bool isvip = false;
+
+			if( type&2 ) vip_time = now + req_duration; // set new duration
+			if( now < vip_time ) { //isvip
+				if(acc.group_id != login_config.vip_sys.group) //only upd this if we're not vip already
+					acc.old_group = acc.group_id;
+				acc.group_id = login_config.vip_sys.group;
+				acc.char_slots = login_config.char_per_account + login_config.vip_sys.char_increase;
+				isvip = true;
+			} else { //expired
+				vip_time = 0;
+				acc.group_id = acc.old_group;
+				acc.old_group = 0;
+				acc.char_slots = login_config.char_per_account;
+			}
+			acc.vip_time = (int)vip_time;
+			accounts->save(accounts,&acc);
+			
+			chrif_sendvipdata(fd,acc,isvip);
+		}
+	}
+#endif
+	return 1;
+}
+
 
 //--------------------------------
 // Packet parsing for char-servers
@@ -555,54 +689,10 @@ int parse_fromchar(int fd){
 			}
 		break;
 
-		case 0x2716: // request account data
-			if( RFIFOREST(fd) < 6 )
-				return 0;
-			else{
-				struct mmo_account acc;
-				time_t expiration_time = 0;
-				char email[40] = "";
-				uint8 char_slots = 0;
-				int group_id = 0;
-				char birthdate[10+1] = "";
-				char pincode[PINCODE_LENGTH+1];
-				int account_id = RFIFOL(fd,2);
-				int bank_vault = 0;
-
-				memset(pincode,0,PINCODE_LENGTH+1);
-
-				RFIFOSKIP(fd,6);
-
-				if( !accounts->load_num(accounts, &acc, account_id) )
-					ShowNotice("Char-server '%s': account %d NOT found (ip: %s).\n", server[id].name, account_id, ip);
-				else{
-					safestrncpy(email, acc.email, sizeof(email));
-					expiration_time = acc.expiration_time;
-					group_id = acc.group_id;
-					char_slots = acc.char_slots;
-					safestrncpy(birthdate, acc.birthdate, sizeof(birthdate));
-					safestrncpy(pincode, acc.pincode, sizeof(pincode));
-					bank_vault = acc.bank_vault;
-				}
-
-				WFIFOHEAD(fd,76);
-				WFIFOW(fd,0) = 0x2717;
-				WFIFOL(fd,2) = account_id;
-				safestrncpy((char*)WFIFOP(fd,6), email, 40);
-				WFIFOL(fd,46) = (uint32)expiration_time;
-				WFIFOB(fd,50) = (unsigned char)group_id;
-				WFIFOB(fd,51) = char_slots;
-				safestrncpy((char*)WFIFOP(fd,52), birthdate, 10+1);
-				safestrncpy((char*)WFIFOP(fd,63), pincode, 4+1 );
-				WFIFOL(fd,68) = (uint32)acc.pincode_change;
-				WFIFOL(fd,72) = bank_vault;
-				WFIFOSET(fd,76);
-			}
-		break;
+		case 0x2716: chrif_parse_reqaccdata(fd,id,ip); break; // request account data
 
 		case 0x2719: // ping request from charserver
 			RFIFOSKIP(fd,2);
-
 			WFIFOHEAD(fd,2);
 			WFIFOW(fd,0) = 0x2718;
 			WFIFOSET(fd,2);
@@ -973,6 +1063,8 @@ int parse_fromchar(int fd){
 			}
 		break;
 
+		case 0x2742: chrif_parse_reqvipdata(fd); break; //Vip sys
+
 		default:
 			ShowError("parse_fromchar: Unknown packet 0x%x from a char-server! Disconnecting!\n", command);
 			set_eof(fd);
@@ -1026,10 +1118,12 @@ int mmo_auth_new(const char* userid, const char* pass, const char sex, const cha
 	safestrncpy(acc.birthdate, "0000-00-00", sizeof(acc.birthdate));
 	safestrncpy(acc.pincode, "", sizeof(acc.pincode));
 	acc.pincode_change = 0;
-
-	acc.char_slots = 0;
+	acc.char_slots = MIN_CHARS;
 	acc.bank_vault = 0;
-
+#ifdef VIP_ENABLE
+	acc.vip_time = 0;
+	acc.old_group = 0;
+#endif
 	if( !accounts->create(accounts, &acc) )
 		return 0;
 
@@ -1638,8 +1732,7 @@ int parse_login(int fd)
 }
 
 
-void login_set_defaults()
-{
+void login_set_defaults() {
 	login_config.login_ip = INADDR_ANY;
 	login_config.login_port = 6900;
 	login_config.ipban_cleanup_interval = 60;
@@ -1666,6 +1759,11 @@ void login_set_defaults()
 
 	login_config.client_hash_check = 0;
 	login_config.client_hash_nodes = NULL;
+	login_config.char_per_account = MAX_CHARS - MAX_CHAR_VIP - MAX_CHAR_BILLING;
+#ifdef VIP_ENABLE
+	login_config.vip_sys.char_increase = MAX_CHAR_VIP;
+	login_config.vip_sys.group = 5;
+#endif
 }
 
 //-----------------------------------
@@ -1767,14 +1865,31 @@ int login_config_read(const char* cfgName)
 
 				login_config.client_hash_nodes = nnode;
 			}
+		} else if(strcmpi(w1, "chars_per_account") == 0) { //maxchars per account [Sirius]
+			login_config.char_per_account = atoi(w2);
+			if( login_config.char_per_account <= 0 || login_config.char_per_account > MAX_CHARS ) {
+				if( login_config.char_per_account > MAX_CHARS ) {
+					ShowWarning("Max chars per account '%d' exceeded limit. Defaulting to '%d'.\n", login_config.char_per_account, MAX_CHARS);
+					login_config.char_per_account = MAX_CHARS;
+				}
+				login_config.char_per_account = MIN_CHARS;
+			}
 		}
+#ifdef VIP_ENABLE
+		else if(strcmpi(w1,"vip_group")==0)
+			login_config.vip_sys.group = cap_value(atoi(w2),0,99);
+		else if(strcmpi(w1,"vip_char_increase")==0) {
+			if(login_config.vip_sys.char_increase > (unsigned int) MAX_CHARS-login_config.char_per_account)
+				ShowWarning("vip_char_increase too high, can only go up to %d, according to your char_per_account config %d\n",
+					MAX_CHARS-login_config.char_per_account,login_config.char_per_account);
+			login_config.vip_sys.char_increase =  cap_value(atoi(w2),0,MAX_CHARS-login_config.char_per_account);
+		}
+#endif
 		else if(!strcmpi(w1, "import"))
 			login_config_read(w2);
-		else
-		if(!strcmpi(w1, "account.engine"))
+		else if(!strcmpi(w1, "account.engine"))
 			safestrncpy(login_config.account_engine, w2, sizeof(login_config.account_engine));
-		else
-		{// try the account engines
+		else {// try the account engines
 			int i;
 			for( i = 0; account_engines[i].constructor; ++i )
 			{

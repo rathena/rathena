@@ -2191,7 +2191,7 @@ int unit_skillcastcancel(struct block_list *bl,int type)
 			return 0;
 
 		if (sd && (sd->special_state.no_castcancel2 ||
-                ((sd->sc.data[SC_UNLIMITEDHUMMINGVOICE] || sd->special_state.no_castcancel) && !map_flag_gvg(bl->m) && !map[bl->m].flag.battleground))) // fixed flags being read the wrong way around [blackhole89]
+			((sd->sc.data[SC_UNLIMITEDHUMMINGVOICE] || sd->special_state.no_castcancel) && !map_flag_gvg(bl->m) && !map[bl->m].flag.battleground))) // fixed flags being read the wrong way around [blackhole89]
 			return 0;
 	}
 

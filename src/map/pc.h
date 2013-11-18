@@ -201,7 +201,7 @@ struct map_session_data {
 		unsigned int no_castcancel : 1;
 		unsigned int no_castcancel2 : 1;
 		unsigned int no_sizefix : 1;
-		unsigned int no_gemstone : 1;
+		unsigned int no_gemstone : 2;
 		unsigned int intravision : 1; // Maya Purple Card effect [DracoRPG]
 		unsigned int perfect_hiding : 1; // [Valaris]
 		unsigned int no_knockback : 1;
@@ -213,7 +213,7 @@ struct map_session_data {
 	unsigned int permissions;/* group permissions */
 
 	int langtype;
-	int packet_ver;  // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 ... 18
+	uint32 packet_ver;  // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 ... 18
 	struct mmo_charstatus status;
 	struct registry save_reg;
 
@@ -551,6 +551,14 @@ struct map_session_data {
 	} c_marker;
 	bool flicker;
 
+	int storage_size; // Holds player storage size (VIP system).
+#ifdef VIP_ENABLE
+	struct {
+		unsigned int enabled;
+		unsigned int time;
+	} vip;
+#endif
+
 	//Timed bonus 'bonus_script' struct [Cydh]
 	struct s_script {
 		struct script_code *script;
@@ -683,7 +691,11 @@ struct {
 #define pc_ishiding(sd)       ( (sd)->sc.option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK) )
 #define pc_iscloaking(sd)     ( !((sd)->sc.option&OPTION_CHASEWALK) && ((sd)->sc.option&OPTION_CLOAK) )
 #define pc_ischasewalk(sd)    ( (sd)->sc.option&OPTION_CHASEWALK )
-
+#ifdef VIP_ENABLE
+	#define pc_isvip(sd)      ( sd->vip.enabled ? 1 : 0 )
+#else
+	#define pc_isvip(sd)      ( 0 )
+#endif
 #ifdef NEW_CARTS
 	#define pc_iscarton(sd)       ( (sd)->sc.data[SC_PUSH_CART] )
 #else

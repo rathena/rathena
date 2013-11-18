@@ -4,6 +4,9 @@
 #ifndef _BATTLE_H_
 #define _BATTLE_H_
 
+#include "../common/mmo.h"
+#include "../config/core.h"
+
 // state of a single attack attempt; used in flee/def penalty calculations when mobbed
 typedef enum damage_lv {
 	ATK_NONE,    // not an attack
@@ -496,6 +499,16 @@ extern struct Battle_Config
 	int bowling_bash_area;
 	int drop_rateincrease;
 	int feature_banking;
+	int vip_storage_increase;
+	int vip_base_exp_increase;
+	int vip_job_exp_increase;
+	int vip_bm_increase;
+	int vip_drop_increase;
+	int vip_gemstone;
+	int vip_exp_penalty_base_normal;
+	int vip_exp_penalty_base;
+	int vip_exp_penalty_job_normal;
+	int vip_exp_penalty_job;
 	int mon_trans_disable_in_gvg;
 	int emblem_woe_change;
 	int emblem_transparency_limit;

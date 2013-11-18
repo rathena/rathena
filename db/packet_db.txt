@@ -1761,6 +1761,7 @@ packet_ver: 30
 0x0977,14 //Monster HP Bar
 0x0916,26,guildinvite2,2
 0x091d,18,bookingregreq,2:4:6
+//0x08cb,10,ZC_PERSONAL_INFOMATION,2:4:6:8:10:11:13:15 // Disabled until further information is found.
 
 //2012-04-18aRagexeRE [Special Thanks to Judas!]
 packet_ver:31
@@ -1855,6 +1856,8 @@ packet_ver: 34
 0x0977,14 //Monster HP Bar
 0x0978,6,reqworldinfo,2
 0x0979,50 //ackworldinfo
+//0x097b,16,ZC_PERSONAL_INFOMATION,2:4:8:12:16:17:21:25 // Disabled until further information is found.
+//0x0981,12,ZC_PERSONAL_INFOMATION_CHN,2:4:6:8:12:13:15:17:10 // Disabled until further information is found.
 0x0990,31 //additem
 0x0991,-1 //inv itemlist normal
 0x0992,-1 //inv itemlist equip

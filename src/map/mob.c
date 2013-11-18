@@ -2249,13 +2249,23 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 			if (map[m].flag.nobaseexp || !md->db->base_exp)
 				base_exp = 0;
-			else
-				base_exp = (unsigned int)cap_value(md->db->base_exp * per * bonus/100. * map[m].adjust.bexp/100., 1, UINT_MAX);
+			else {
+				int vip_bonus = 0;
+				// Increase base EXP rate for VIP.
+				if (battle_config.vip_base_exp_increase && (sd && pc_isvip(sd)))
+					vip_bonus += battle_config.vip_base_exp_increase;
+				base_exp = (unsigned int)cap_value(md->db->base_exp * per * (bonus+vip_bonus)/100. * map[m].adjust.bexp/100., 1, UINT_MAX);
+			}
 
 			if (map[m].flag.nojobexp || !md->db->job_exp || md->dmglog[i].flag == MDLF_HOMUN) //Homun earned job-exp is always lost.
 				job_exp = 0;
-			else
-				job_exp = (unsigned int)cap_value(md->db->job_exp * per * bonus/100. * map[m].adjust.jexp/100., 1, UINT_MAX);
+			else {
+				int vip_bonus = 0;
+				// Increase job EXP rate for VIP.
+				if (battle_config.vip_job_exp_increase && (sd && pc_isvip(sd)))
+					vip_bonus += battle_config.vip_job_exp_increase;
+				job_exp = (unsigned int)cap_value(md->db->job_exp * per * (bonus+vip_bonus)/100. * map[m].adjust.jexp/100., 1, UINT_MAX);
+			}
 
 			if ( ( temp = tmpsd[i]->status.party_id)>0 ) {
 				int j;
@@ -2371,6 +2381,11 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			// Increase drop rate if user has SC_ITEMBOOST
 			if (sd && sd->sc.data[SC_ITEMBOOST]) // now rig the drop rate to never be over 90% unless it is originally >90%.
 				drop_rate = max(drop_rate,cap_value((int)(0.5+drop_rate*(sd->sc.data[SC_ITEMBOOST]->val1)/100.),0,9000));
+			// Increase item drop rate for VIP.
+			if (battle_config.vip_drop_increase && (sd && pc_isvip(sd))) {
+				drop_rate += (int)(0.5 + (drop_rate * battle_config.vip_drop_increase) / 10000.);
+				drop_rate = min(drop_rate,10000); //cap it to 100%
+			}
 #ifdef RENEWAL_DROP
 			if( drop_modifier != 100 ) {
 				drop_rate = drop_rate * drop_modifier / 100;

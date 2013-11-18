@@ -2636,10 +2636,10 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 				wa->atk2 = refine_info[wlv].bonus[r-1] / 100;
 
 #ifdef RENEWAL
-            wa->matk += sd->inventory_data[index]->matk;
-            wa->wlv = wlv;
-            if( r ) // Renewal magic attack refine bonus
-                wa->matk += refine_info[wlv].bonus[r-1] / 100;
+			wa->matk += sd->inventory_data[index]->matk;
+			wa->wlv = wlv;
+			if( r ) // Renewal magic attack refine bonus
+				wa->matk += refine_info[wlv].bonus[r-1] / 100;
 #endif
 
 			// Overrefine bonus.
@@ -4988,7 +4988,7 @@ static unsigned short status_calc_ematk(struct block_list *bl, struct status_cha
 		matk += 40 + 30 * sc->data[SC_ODINS_POWER]->val1; // 70 lvl1, 100lvl2
 	if(sc->data[SC_IZAYOI])
 		matk += 50 * sc->data[SC_IZAYOI]->val1;
-    return (unsigned short)cap_value(matk,0,USHRT_MAX);
+	return (unsigned short)cap_value(matk,0,USHRT_MAX);
 }
 #endif
 /**

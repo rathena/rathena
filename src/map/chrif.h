@@ -67,6 +67,9 @@ int chrif_divorce(int partner_id1, int partner_id2);
 int chrif_removefriend(int char_id, int friend_id);
 int chrif_send_report(char* buf, int len);
 
+void chrif_parse_ack_vipActive(int fd);
+int chrif_req_vipActive(struct map_session_data *sd, int8 req_duration, int8 type);
+
 int chrif_bsdata_request(int char_id);
 int chrif_save_bsdata(struct map_session_data *sd);
 int chrif_load_bsdata(int fd);

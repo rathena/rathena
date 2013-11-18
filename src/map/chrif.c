@@ -46,7 +46,7 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 	11,10,10, 0,11, -1,266,10,	// 2b10-2b17: U->2b10, U->2b11, U->2b12, F->2b13, U->2b14, U->2b15, U->2b16, U->2b17
 	 2,10, 2,-1,-1,-1, 2, 7,	// 2b18-2b1f: U->2b18, U->2b19, U->2b1a, U->2b1b, U->2b1c, U->2b1d, U->2b1e, U->2b1f
 	-1,10, 8, 2, 2,14,19,19,	// 2b20-2b27: U->2b20, U->2b21, U->2b22, U->2b23, U->2b24, U->2b25, U->2b26, U->2b27
-	10,10, 6, 0, 0, 6, -1, -1,	// 2b28-2b2f: U->2b28, U->2b29, U->2b2a, F->2b2b, F->2b2c, U->2b2d, U->2b2e, U->2b2f
+	10,10, 6,15,11, 6,-1,-1,	// 2b28-2b2f: U->2b28, U->2b29, U->2b2a, U->2b2b, U->2b2c, U->2b2d, U->2b2e, U->2b2f
  };
 
 //Used Packets:
@@ -101,8 +101,8 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 //2b28: Outgoing, chrif_save_bankdata -> 'send bank data to be saved'
 //2b29: Incoming, chrif_load_bankdata -> 'received bank data for playeer to be loaded'
 //2b2a: Outgoing, chrif_bankdata_request -> 'request bank data for charid'
-//2b2b: FREE
-//2b2c: FREE
+//2b2b: Incoming, chrif_parse_ack_vipActive -> vip info result
+//2b2c: Outgoing, chrif_req_vipActive -> request vip info
 //2b2d: Outgoing, chrif_bsdata_request -> request bonus_script for pc_authok'ed char.
 //2b2e: Outgoing, chrif_save_bsdata -> Send bonus_script of player for saving.
 //2b2f: Incoming, chrif_load_bsdata -> received bonus_script of player for loading.
@@ -1513,6 +1513,49 @@ void chrif_keepalive(int fd) {
 void chrif_keepalive_ack(int fd) {
 	session[fd]->flag.ping = 0;/* reset ping state, we received a packet */
 }
+
+void chrif_parse_ack_vipActive(int fd) {
+#ifdef VIP_ENABLE
+	int aid = RFIFOL(char_fd,2);
+	uint32 vip_time = RFIFOL(char_fd,6);
+	bool isvip = RFIFOB(char_fd,10);
+	uint32 groupid = RFIFOL(char_fd,11);
+	TBL_PC *sd = map_id2sd(aid);
+
+	if (sd && isvip) {
+		sd->vip.enabled = 1;
+		sd->vip.time = vip_time;
+		sd->group_id = groupid;
+		pc_group_pc_load(sd);
+
+		// Increase storage size for VIP.
+		sd->storage_size = battle_config.vip_storage_increase + MIN_STORAGE;
+		if (sd->storage_size > MAX_STORAGE) {
+			ShowError("intif_parse_ack_vipActive: Storage size for player %s (%d:%d) is larger than MAX_STORAGE. Storage size has been set to MAX_STORAGE.\n", sd->status.name, sd->status.account_id, sd->status.char_id);
+			sd->storage_size = MAX_STORAGE;
+		}
+		// Magic Stone requirement avoidance for VIP.
+		if (battle_config.vip_gemstone && pc_isvip(sd))
+			sd->special_state.no_gemstone = 2; // need to be done after status_calc_bl(bl,first);
+	}
+#endif
+}
+
+int chrif_req_vipActive(TBL_PC *sd, int8 req_duration, int8 type) {
+#ifdef VIP_ENABLE
+	if (CheckForCharServer() || sd == NULL)
+		return 0;
+
+	WFIFOHEAD(char_fd,11);
+	WFIFOW(char_fd,0) = 0x2b2c;
+	WFIFOL(char_fd,2) = sd->bl.id; // AID
+	WFIFOB(char_fd,6) = type; // type&1 - SQL SELECT, type&2 - SQL UPDATE
+	WFIFOL(char_fd,7) = req_duration;
+	WFIFOSET(char_fd,11);
+#endif
+	return 0;
+}
+
 /*==========================================
  *
  *------------------------------------------*/
@@ -1590,6 +1633,7 @@ int chrif_parse(int fd) {
 			case 0x2b25: chrif_deadopt(RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10)); break;
 			case 0x2b27: chrif_authfail(fd); break;
 			case 0x2b29: chrif_load_bankdata(fd); break;
+			case 0x2b2b: chrif_parse_ack_vipActive(fd); break;
 			case 0x2b2f: chrif_load_bsdata(fd); break;
 			default:
 				ShowError("chrif_parse : unknown packet (session #%d): 0x%x. Disconnecting.\n", fd, cmd);

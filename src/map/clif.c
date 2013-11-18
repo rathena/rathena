@@ -6252,6 +6252,7 @@ void clif_Bank_Check(struct map_session_data* sd) {
 	if(!cmd) cmd = 0x09A6; //default
 	info = &packet_db[sd->packet_ver][cmd]; 
 	len = info->len;
+	if(!len) return; //version as packet disable
 //        sd->state.banking = 1; //mark opening and closing
 
 	WBUFW(buf,0) = cmd;
@@ -6274,8 +6275,8 @@ void clif_parse_BankCheck(int fd, struct map_session_data* sd) {
 	else {
 		struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
 		int aid = RFIFOL(fd,info->pos[0]); //unused should we check vs fd ?
-                if(sd->status.account_id == aid) //since we have it let check it for extra security
-                        clif_Bank_Check(sd);
+		if(sd->status.account_id == aid) //since we have it let check it for extra security
+			clif_Bank_Check(sd);
 	}
 }
 
@@ -6295,6 +6296,7 @@ void clif_bank_deposit(struct map_session_data *sd, enum e_BANKING_DEPOSIT_ACK r
 	if(!cmd) cmd = 0x09A8;
 	info = &packet_db[sd->packet_ver][cmd]; 
 	len = info->len;
+	if(!len) return; //version as packet disable
 	
 	WBUFW(buf,0) = cmd;
 	WBUFW(buf,info->pos[0]) = (short)reason;	
@@ -6309,7 +6311,7 @@ void clif_bank_deposit(struct map_session_data *sd, enum e_BANKING_DEPOSIT_ACK r
  * 09A7 <AID>L <Money>L (PACKET_CZ_REQ_BANKING_DEPOSIT)
  */
 void clif_parse_BankDeposit(int fd, struct map_session_data* sd) {
-        nullpo_retv(sd);
+	nullpo_retv(sd);
 	if( !battle_config.feature_banking ) {
 		clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,1496)); //Banking is disabled
 		return;
@@ -6337,14 +6339,15 @@ void clif_bank_withdraw(struct map_session_data *sd,enum e_BANKING_WITHDRAW_ACK 
 	int cmd;
 
 	nullpo_retv(sd);
-        
+
 	cmd = packet_db_ack[sd->packet_ver][ZC_ACK_BANKING_WITHDRAW];
 	if(!cmd) cmd = 0x09AA;
 	info = &packet_db[sd->packet_ver][cmd]; 
 	len = info->len;
+	if(!len) return; //version as packet disable
 
 	WBUFW(buf,0) = cmd;
-	WBUFW(buf,info->pos[0]) = (short)reason;	
+	WBUFW(buf,info->pos[0]) = (short)reason;
 	WBUFQ(buf,info->pos[1]) = sd->status.bank_vault;/* money in the bank */
 	WBUFL(buf,info->pos[2]) = sd->status.zeny;/* how much zeny char has after operation */
 
@@ -9606,6 +9609,10 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 #if PACKETVER >= 20070918
 		clif_partyinvitationstate(sd);
 		clif_equipcheckbox(sd);
+#endif
+#ifdef VIP_ENABLE
+		clif_display_pinfo(sd,ZC_PERSONAL_INFOMATION);
+		//clif_vip_display_info(sd,ZC_PERSONAL_INFOMATION_CHN);
 #endif
 		if( (battle_config.bg_flee_penalty != 100 || battle_config.gvg_flee_penalty != 100) &&
 			(map_flag_gvg(sd->state.pmap) || map_flag_gvg(sd->bl.m) || map[sd->state.pmap].flag.battleground || map[sd->bl.m].flag.battleground) )
@@ -16933,6 +16940,68 @@ void clif_update_rankingpoint(struct map_session_data *sd, int rankingtype, int 
 #endif
 }
 
+/**
+ * Transmit personal information to player. (rates)
+ *  08cb <packet len>.W <exp>.W <death>.W <drop>.W <DETAIL_EXP_INFO>7B (ZC_PERSONAL_INFOMATION)
+ * <InfoType>.B <Exp>.W <Death>.W <Drop>.W (DETAIL_EXP_INFO 0x8cb) 
+ * 097b <packet len>.W <exp>.L <death>.L <drop>.L <DETAIL_EXP_INFO>13B (ZC_PERSONAL_INFOMATION2)
+ * 0981 <packet len>.W <exp>.W <death>.W <drop>.W <activity rate>.W <DETAIL_EXP_INFO>13B (ZC_PERSONAL_INFOMATION_CHN)
+ * <InfoType>.B <Exp>.L <Death>.L <Drop>.L (DETAIL_EXP_INFO 0x97b|0981)
+ * InfoType: 0 PCRoom, 1 Premium, 2 Server, 3 TPlus
+*/
+void clif_display_pinfo(struct map_session_data *sd, int cmdtype) {
+	if (sd) {
+		struct s_packet_db* info;
+		int16 len, szdetails = 13, maxinfotype = PINFO_MAX;
+		int cmd = 0, fd, i = 0, details_prem_penalty = 0;
+		int tot_baseexp = 0, total_penalty = 0, tot_drop = 0, factor = 1000;
+		int details_bexp[PINFO_MAX]= {map[sd->bl.m].adjust.bexp,battle_config.vip_base_exp_increase,battle_config.base_exp_rate,0 }; //TODO move me ?
+		int details_penalty[PINFO_MAX]= {0,0,battle_config.death_penalty_base,0 };
+		int details_drop[PINFO_MAX]= {0,battle_config.vip_drop_increase,battle_config.item_rate_common,0 };
+
+		cmd = packet_db_ack[sd->packet_ver][cmdtype];
+		info = &packet_db[sd->packet_ver][cmd];
+		len = info->len; //this is the base len without details
+		if(!len) return; //version as packet disable
+
+		if (cmdtype == ZC_PERSONAL_INFOMATION && len == 10) { //8cb version
+			szdetails = 7;
+			maxinfotype = 3;
+			factor = 1;
+		}
+
+		// Need to alter penalty data for VIP whether the system is enabled or not.
+		details_prem_penalty = battle_config.death_penalty_base;
+#ifdef VIP_ENABLE
+		details_prem_penalty = battle_config.death_penalty_base * (battle_config.vip_exp_penalty_base_normal - 1);
+		if (pc_isvip(sd)) details_prem_penalty = battle_config.death_penalty_base * (battle_config.vip_exp_penalty_base - 1);
+		details_prem_penalty = max(0,details_prem_penalty);
+#endif
+		details_penalty[PINFO_PREMIUM] = details_prem_penalty;
+		fd = sd->fd;
+		WFIFOHEAD(fd,len+maxinfotype*szdetails);
+		WFIFOW(fd,0) = cmd;
+
+		for (i = 0; i < maxinfotype; i++) {
+			WFIFOB(fd,info->pos[4]+(i*szdetails)) = i; //infotype //0 PCRoom, 1 Premium, 2 Server, 3 TPlus
+			WFIFOW(fd,info->pos[5]+(i*szdetails)) = 0;
+			tot_baseexp += details_bexp[i]*factor;
+			WFIFOW(fd,info->pos[6]+(i*szdetails)) = details_penalty[i]*factor;
+			total_penalty += details_penalty[i]*factor;
+			WFIFOW(fd,info->pos[7]+(i*szdetails)) = details_drop[i]*factor;
+			tot_drop += details_drop[i]*factor;
+			len += szdetails;
+		}
+		WFIFOW(fd,info->pos[0])  = len; //packetlen
+		WFIFOW(fd,info->pos[1])  = tot_baseexp;
+		WFIFOW(fd,info->pos[2])  = total_penalty; //6 8
+		WFIFOW(fd,info->pos[3])  = tot_drop; //8 12
+		if (cmdtype == ZC_PERSONAL_INFOMATION_CHN) 
+			WFIFOW(fd,info->pos[8])  = 0; //activity rate case of event ??
+		WFIFOSET(fd,len);
+	}
+}
+
 #ifdef DUMP_UNKNOWN_PACKET
 void DumpUnknow(int fd,TBL_PC *sd,int cmd,int packet_len){
 	const char* packet_txt = "save/packet.txt";
@@ -17570,15 +17639,18 @@ void packetdb_readdb(void)
 		{ clif_parse_ranklist, "ranklist"},
 		{NULL,NULL}
 	};
-        struct {
+	struct {
 		char *name; //function name
-                int funcidx; //
+		int funcidx; //
 	} clif_ack_func[]={ //hash
-            { "ZC_ACK_OPEN_BANKING", ZC_ACK_OPEN_BANKING},
-            { "ZC_ACK_BANKING_DEPOSIT", ZC_ACK_BANKING_DEPOSIT},
-            { "ZC_ACK_BANKING_WITHDRAW", ZC_ACK_BANKING_WITHDRAW},
-            { "ZC_BANKING_CHECK", ZC_BANKING_CHECK},
-        };
+		{ "ZC_ACK_OPEN_BANKING", ZC_ACK_OPEN_BANKING},
+		{ "ZC_ACK_BANKING_DEPOSIT", ZC_ACK_BANKING_DEPOSIT},
+		{ "ZC_ACK_BANKING_WITHDRAW", ZC_ACK_BANKING_WITHDRAW},
+		{ "ZC_BANKING_CHECK", ZC_BANKING_CHECK},
+		{ "ZC_BANKING_CHECK", ZC_BANKING_CHECK},
+		{ "ZC_PERSONAL_INFOMATION", ZC_PERSONAL_INFOMATION},
+		{ "ZC_PERSONAL_INFOMATION_CHN", ZC_PERSONAL_INFOMATION_CHN},
+	};
 
 	// initialize packet_db[SERVER] from hardcoded packet_len_table[] values
 	memset(packet_db,0,sizeof(packet_db));

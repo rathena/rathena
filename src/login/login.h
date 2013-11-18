@@ -6,6 +6,7 @@
 
 #include "../common/mmo.h" // NAME_LENGTH,SEX_*
 #include "../common/core.h" // CORE_ST_LAST
+#include "../config/core.h"
 
 enum E_LOGINSERVER_ST
 {
@@ -58,7 +59,6 @@ struct client_hash_node {
 };
 
 struct Login_Config {
-
 	uint32 login_ip;                                // the address to bind to
 	uint16 login_port;                              // the port to bind to
 	unsigned int ipban_cleanup_interval;            // interval (in seconds) to clean up expired IP bans
@@ -86,6 +86,13 @@ struct Login_Config {
 
 	int client_hash_check;							// flags for checking client md5
 	struct client_hash_node *client_hash_nodes;		// linked list containg md5 hash for each gm group
+	int char_per_account;                           // number of characters an account can have
+#ifdef VIP_ENABLE
+	struct {
+		unsigned int group;
+		unsigned int char_increase;
+	} vip_sys;
+#endif
 };
 
 #define sex_num2str(num) ( (num ==  SEX_FEMALE  ) ? 'F' : (num ==  SEX_MALE  ) ? 'M' : 'S' )
@@ -100,7 +107,7 @@ const char* login_msg_txt(int msg_number);
 void login_do_final_msg(void);
 
 
-#define MAX_SERVERS 30
+#define MAX_SERVERS 30 //number of charserv loginserv can handle
 extern struct mmo_char_server server[MAX_SERVERS];
 extern struct Login_Config login_config;
 

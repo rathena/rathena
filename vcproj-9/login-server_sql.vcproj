@@ -405,7 +405,7 @@
 			<File
 				RelativePath="..\src\common\cli.c"
 				>
-			</File>						
+			</File>	
 			<File
 				RelativePath="..\src\common\msg_conf.h"
 				>
@@ -413,7 +413,7 @@
 			<File
 				RelativePath="..\src\common\msg_conf.c"
 				>
-			</File>				
+			</File>
 			
 		</Filter>
 		<Filter

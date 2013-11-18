@@ -29,6 +29,6 @@ extern uint16 GetWord(uint32 val, int idx);
 extern uint16 MakeWord(uint8 byte0, uint8 byte1);
 extern uint32 MakeDWord(uint16 word0, uint16 word1);
 
-int date2version(int date);
+uint32 date2version(int date);
 
 #endif /* _UTILS_H_ */

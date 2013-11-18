@@ -18010,6 +18010,7 @@ BUILDIN_FUNC(getserverdef) {
 		case 7: script_pushint(st,MAX_GUILDLEVEL); break;
 		case 8: script_pushint(st,MAX_GUILD_STORAGE); break;
 		case 9: script_pushint(st,MAX_BG_MEMBERS); break;
+		case 10: script_pushint(st,VIP_SCRIPT); break;
 		default:
 			ShowWarning("buildin_getserverdef: unknown type %d.\n", type);
 			script_pushint(st,0);
@@ -18017,6 +18018,74 @@ BUILDIN_FUNC(getserverdef) {
 	}
 	return 0;
 }
+
+#ifdef VIP_ENABLE
+/* Returns various information about a player's VIP status.
+ * vip_status <type>,{"<character name>"};
+ * Note: VIP System needs to be enabled.
+ */
+BUILDIN_FUNC(vip_status) {
+	TBL_PC *sd;
+	char *vip_str = (char *)aMalloc(24*sizeof(char));
+	time_t now = time(NULL);
+	int type = script_getnum(st, 2);
+
+	if (script_hasdata(st, 3))
+		sd = map_nick2sd(script_getstr(st, 3));
+	else
+		sd = script_rid2sd(st);
+
+	if (sd == NULL)
+		return 0;
+
+	switch(type) {
+		case 0: // Get VIP status.
+			script_pushint(st, pc_isvip(sd));
+			break;
+		case 1: // Get VIP expire date.
+			if (pc_isvip(sd)) {
+				time_t viptime = (time_t)sd->vip.time;
+				strftime(vip_str, 24, "%Y-%m-%d %H:%M", localtime(&viptime));
+				vip_str[24] = '\0';
+				script_pushstr(st, vip_str);
+			} else
+				script_pushint(st, 0);
+			break;
+		case 2: // Get remaining time.
+			if (pc_isvip(sd)) {
+				time_t viptime = (time_t)sd->vip.time;
+				strftime(vip_str, 24, "%Y-%m-%d %H:%M", localtime(&viptime - now));
+				vip_str[24] = '\0';
+				script_pushstr(st, vip_str);
+			} else
+				script_pushint(st, 0);
+			break;
+	}
+	return 0;
+}
+
+/* Adds or removes VIP time in minutes.
+ * vip_time <time>,{"<character name>"};
+ * If time < 0 remove time, else add time.
+ * Note: VIP System needs to be enabled. 
+ */
+BUILDIN_FUNC(vip_time) {
+	TBL_PC *sd;
+	int time = script_getnum(st, 2) * 60; // Convert since it's given in minutes.
+
+	if (script_hasdata(st, 3))
+		sd = map_nick2sd(script_getstr(st, 3));
+	else
+		sd = script_rid2sd(st);
+
+	if (sd == NULL)
+		return 0;
+
+	chrif_req_vipActive(sd, time, 2);
+
+	return 0;
+}
+#endif
 
 /*==========================================
  * Turns a player into a monster and grants SC attribute effect. [malufett/Hercules]
@@ -18636,6 +18705,10 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(is_clientver,"ii?"),
 	BUILDIN_DEF(getserverdef,"i"),
 	BUILDIN_DEF2(montransform, "transform", "vii????"), // Monster Transform [malufett/Hercules]
+#ifdef VIP_ENABLE
+	BUILDIN_DEF(vip_status,"i?"),
+	BUILDIN_DEF(vip_time,"i?"),
+#endif
 	BUILDIN_DEF(bonus_script,"si???"),
 
 #include "../custom/script_def.inc"

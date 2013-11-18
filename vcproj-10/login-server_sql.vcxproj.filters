@@ -82,6 +82,11 @@
     <ClCompile Include="..\src\common\raconf.c">
       <Filter>common</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\common\msg_conf.c" />
+    <ClCompile Include="..\src\common\cli.c" />
+    <ClCompile Include="..\src\common\conf.c">
+      <Filter>common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\login\account.h">
@@ -178,6 +183,11 @@
       <Filter>common</Filter>
     </ClInclude>
     <ClInclude Include="..\src\common\raconf.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\msg_conf.h" />
+    <ClInclude Include="..\src\common\cli.h" />
+    <ClInclude Include="..\src\common\conf.h">
       <Filter>common</Filter>
     </ClInclude>
   </ItemGroup>

@@ -40,11 +40,14 @@ enum
 };
 
 enum e_packet_ack {
-    ZC_ACK_OPEN_BANKING = 0,
-    ZC_ACK_BANKING_DEPOSIT,
-    ZC_ACK_BANKING_WITHDRAW,
-    ZC_BANKING_CHECK,
-    MAX_ACK_FUNC //auto upd len
+	ZC_ACK_OPEN_BANKING = 0,
+	ZC_ACK_BANKING_DEPOSIT,
+	ZC_ACK_BANKING_WITHDRAW,
+	ZC_BANKING_CHECK,
+	ZC_PERSONAL_INFOMATION,
+	ZC_PERSONAL_INFOMATION_CHN,
+	//add otehr here
+	MAX_ACK_FUNC //auto upd len
 };
 
 struct s_packet_db {
@@ -346,6 +349,14 @@ enum clif_messages {
 	USAGE_FAIL = 0x783,
 	ADDITEM_TO_CART_FAIL_WEIGHT = 0x0,
 	ADDITEM_TO_CART_FAIL_COUNT = 0x1,
+};
+
+enum e_personalinfo {
+ PINFO_BASIC = 0,
+ PINFO_PREMIUM,
+ PINFO_SERVER,
+ PINFO_CAFE,
+ PINFO_MAX,
 };
 
 int clif_setip(const char* ip);
@@ -772,6 +783,8 @@ void clif_search_store_info_click_ack(struct map_session_data* sd, short x, shor
 /// Cash Shop
 void clif_cashshop_result( struct map_session_data* sd, uint16 item_id, uint16 result );
 void clif_cashshop_open( struct map_session_data* sd );
+
+void clif_display_pinfo(struct map_session_data *sd, int type);
 
 /**
  * 3CeAM

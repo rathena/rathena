@@ -111,7 +111,6 @@ char unknown_char_name[NAME_LENGTH] = "Unknown"; // Name to use when the request
 #define TRIM_CHARS "\255\xA0\032\t\x0A\x0D " //The following characters are trimmed regardless because they cause confusion and problems on the servers. [Skotlex]
 char char_name_letters[1024] = ""; // list of letters/symbols allowed (or not) in a character name. by [Yor]
 
-int char_per_account = 0; //Maximum chars per account (default unlimited) [Sirius]
 int char_del_level = 0; //From which level u can delete character [Lupus]
 int char_del_delay = 86400;
 
@@ -133,7 +132,9 @@ struct char_session_data {
 	char email[40]; // e-mail (default: a@a.com) by [Yor]
 	time_t expiration_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
 	int group_id; // permission
-	uint8 char_slots;
+	uint8 char_slots; // total number of characters that can be created
+	uint8 chars_vip;
+	uint8 chars_billing;
 	uint32 version;
 	uint8 clienttype;
 	char new_name[NAME_LENGTH];
@@ -146,6 +147,7 @@ struct char_session_data {
 	// Addon system
 	int bank_vault;
 	unsigned int char_moves[MAX_CHARS]; // character moves left
+	uint8 isvip;
 };
 
 struct startitem {
@@ -182,6 +184,11 @@ void pincode_notifyLoginPinUpdate( int account_id, char* pin );
 void pincode_notifyLoginPinError( int account_id );
 void pincode_decrypt( uint32 userSeed, char* pin );
 int pincode_compare( int fd, struct char_session_data* sd, char* pin );
+
+int mapif_parse_vipactive(int fd);
+int mapif_vipack(uint32 aid, uint32 vip_time, uint8 isvip, uint32 groupid);
+int logif_reqviddata(uint32 aid, uint8 type, uint32 add_vip_time);
+int logif_parse_vipack(int fd);
 
 // Addon system
 bool char_move_enabled = true;
@@ -1441,8 +1448,6 @@ int mmo_char_sql_init(void)
 {
 	char_db_= idb_alloc(DB_OPT_RELEASE_DATA);
 
-	ShowStatus("Characters per Account: '%d'.\n", char_per_account);
-
 	//the 'set offline' part is now in check_login_conn ...
 	//if the server connects to loginserver
 	//it will dc all off players
@@ -1581,9 +1586,9 @@ int make_new_char_sql(struct char_session_data* sd, char* name_, int str, int ag
 
 	//check other inputs
 #if PACKETVER >= 20120307
-	if(slot >= sd->char_slots)
+	if(slot < 0 || slot >= sd->char_slots)
 #else
-	if((slot >= sd->char_slots) // slots
+	if((slot < 0 || slot >= sd->char_slots) // slots
 	|| (str + agi + vit + int_ + dex + luk != 6*5 ) // stats
 	|| (str < 1 || str > 9 || agi < 1 || agi > 9 || vit < 1 || vit > 9 || int_ < 1 || int_ > 9 || dex < 1 || dex > 9 || luk < 1 || luk > 9) // individual stat values
 	|| (str + int_ != 10 || agi + luk != 10 || vit + dex != 10) ) // pairs
@@ -1596,12 +1601,10 @@ int make_new_char_sql(struct char_session_data* sd, char* name_, int str, int ag
 
 
 	// check the number of already existing chars in this account
-	if( char_per_account != 0 ) {
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `account_id` = '%d'", char_db, sd->account_id) )
-			Sql_ShowDebug(sql_handle);
-		if( Sql_NumRows(sql_handle) >= char_per_account )
-			return -2; // character account limit exceeded
-	}
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `account_id` = '%d'", char_db, sd->account_id) )
+		Sql_ShowDebug(sql_handle);
+	if( Sql_NumRows(sql_handle) >= sd->char_slots )
+		return -2; // character account limit exceeded
 
 	// check char slot
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `account_id` = '%d' AND `char_num` = '%d' LIMIT 1", char_db, sd->account_id, slot) )
@@ -1979,7 +1982,7 @@ void char_parse_req_charlist(int fd, struct char_session_data* sd){
 //----------------------------------------
 int mmo_char_send006b(int fd, struct char_session_data* sd){
 	int j, offset = 0;
-	bool newvers = (sd->version >= (uint32)date2version(20100413));
+	bool newvers = (sd->version >= date2version(20100413));
 	if(newvers) //20100413
 		offset += 3;
 	if (save_log)
@@ -1989,11 +1992,16 @@ int mmo_char_send006b(int fd, struct char_session_data* sd){
 	WFIFOHEAD(fd,j + MAX_CHARS*MAX_CHAR_BUF);
 	WFIFOW(fd,0) = 0x6b;
 	if(newvers){ //20100413
-		WFIFOB(fd,4) = MAX_CHARS; // Max slots.
-		WFIFOB(fd,5) = sd->char_slots; // Available slots. (PremiumStartSlot)
-		WFIFOB(fd,6) = MAX_CHARS; // Premium slots. (Any existent chars past sd->char_slots but within MAX_CHARS will show a 'Premium Service' in red)
+		WFIFOB(fd,4) = MAX_CHARS; // Max slots
+		WFIFOB(fd,5) = MAX_CHARS - sd->chars_billing - sd->chars_vip; // PremiumStartSlot
+		WFIFOB(fd,6) = MAX_CHARS - sd->chars_billing; // PremiumEndSlot
+		/* this+0x7  char dummy1_beginbilling */
+		/* this+0x8  unsigned long code */
+		/* this+0xc  unsigned long time1 */
+		/* this+0x10  unsigned long time2 */
+		/* this+0x14  char dummy2_endbilling[7] */
 	}
-	memset(WFIFOP(fd,4 + offset), 0, 20); // unknown bytes
+	memset(WFIFOP(fd,4 + offset), 0, 20); // unknown bytes 4-24 7-27
 	j+=mmo_chars_fromsql(sd, WFIFOP(fd,j));
 	WFIFOW(fd,2) = j; // packet len
 	WFIFOSET(fd,j);
@@ -2010,18 +2018,18 @@ void mmo_char_send082d(int fd, struct char_session_data* sd) {
 	WFIFOHEAD(fd,29);
 	WFIFOW(fd,0) = 0x82d;
 	WFIFOW(fd,2) = 29;
-	WFIFOB(fd,4) = sd->char_slots;
-	WFIFOB(fd,5) = MAX_CHARS - sd->char_slots;
-	WFIFOB(fd,6) = MAX_CHARS - sd->char_slots;
-	WFIFOB(fd,7) = sd->char_slots;
-	WFIFOB(fd,8) = sd->char_slots;
+	WFIFOB(fd,4) = MAX_CHARS - sd->chars_billing - sd->chars_vip; //NormalSlotNum
+	WFIFOB(fd,5) = sd->chars_vip; //PremiumSlotNum
+	WFIFOB(fd,6) = sd->chars_billing; //BillingSlotNum
+	WFIFOB(fd,7) = sd->char_slots; //ProducibleSlotNum
+	WFIFOB(fd,8) = sd->char_slots; //ValidSlotNum
 	memset(WFIFOP(fd,9), 0, 20); // unused bytes
 	WFIFOSET(fd,29);
 }
 
 void mmo_char_send(int fd, struct char_session_data* sd){
 	//ShowInfo("sd->version = %d\n",sd->version);
-	if(sd->version > (uint32)date2version(20130000) ){
+	if(sd->version > date2version(20130000) ){
 		mmo_char_send082d(fd,sd);
 		char_charlist_notify(fd,sd);
 		char_block_character(fd,sd);
@@ -2170,7 +2178,7 @@ int loginif_BankingReq(int32 account_id, int8 type, int32 data){
 		WFIFOB(login_fd,6) = type;
 		WFIFOL(login_fd,7) = data;
 		WFIFOSET(login_fd,11);
-  		return 1;
+		return 1;
 	}
 	return 0;
 }
@@ -2239,6 +2247,76 @@ int mapif_parse_ReqBankInfo(int fd){
 	return 1;
 }
 
+/*
+ * ZH 0x2b2c
+ * HA 0x2742
+ * We received a request vip_info from map-server.
+ * Transmit it to login-serv as it's the one knowing the info
+ */
+int mapif_parse_vipactive(int fd) {
+#ifdef VIP_ENABLE
+	uint32 aid = RFIFOL(fd,2); //aid
+	uint8 type = RFIFOB(fd,6); //type
+	uint32 adddur = RFIFOL(fd,7); //req_inc_duration
+	RFIFOSKIP(fd,11);
+	logif_reqviddata(aid, type, adddur);
+#endif
+	return 0;
+}
+
+/*
+ * HZ 0x2b2b
+ * Transmist vip data to mapserv
+ */
+int mapif_vipack(uint32 aid, uint32 vip_time, uint8 isvip, uint32 groupid) {
+#ifdef VIP_ENABLE
+	uint8 buf[16];
+	WBUFW(buf,0) = 0x2b2b;
+	WBUFL(buf,2) = aid;
+	WBUFL(buf,6) = vip_time;
+	WBUFB(buf,10) = isvip;
+	WBUFL(buf,11) = groupid;
+	mapif_sendall(buf,15);  // inform all map-servers attached.
+#endif
+	return 0;
+}
+
+/*
+ * HZ 0x2b2b
+ * Request vip data from loginserv
+ */
+int logif_reqviddata(uint32 aid, uint8 type, uint32 add_vip_time) {
+#ifdef VIP_ENABLE
+	WFIFOHEAD(login_fd,11);
+	WFIFOW(login_fd,0) = 0x2742;
+	WFIFOL(login_fd,2) =  aid; //aid
+	WFIFOB(login_fd,6) = type; //type
+	WFIFOL(login_fd,7) =  add_vip_time; //req_inc_duration
+	WFIFOSET(login_fd,11);
+#endif
+	return 0;
+}
+
+/*
+ * AH 0x2743
+ * We received the info from login-serv, transmit it to map
+ */
+int logif_parse_vipack(int fd) {
+#ifdef VIP_ENABLE
+	if (RFIFOREST(fd) < 15)
+		return 0;
+	else {
+		uint32 aid = RFIFOL(fd,2); //aid
+		uint32 vip_time = RFIFOL(fd,6); //vip_time
+		uint8 isvip = RFIFOB(fd,10); //isvip
+		uint32 groupid = RFIFOL(fd,11); //new group id
+		RFIFOSKIP(fd,15);
+		mapif_vipack(aid,vip_time,isvip,groupid);
+	}
+#endif
+	return 1;
+}
+
 
 /// Resets all the data.
 void loginif_reset(void)
@@ -2288,31 +2366,30 @@ void loginif_on_ready(void)
 
 int logif_parse_reqpincode(int fd, struct char_session_data *sd){
 #if PACKETVER >=  20110309
-    if( pincode_enabled ){
-            // PIN code system enabled
-            if( strlen( sd->pincode ) <= 0 ){
-                // No PIN code has been set yet
-                if( pincode_force ) pincode_sendstate( fd, sd, PINCODE_NEW );
-                else pincode_sendstate( fd, sd, PINCODE_PASSED );
-            } else {
-                    if( !pincode_changetime || ( sd->pincode_change + pincode_changetime ) > time(NULL) ){
-                            struct online_char_data* node = (struct online_char_data*)idb_get( online_char_db, sd->account_id );
-
-                            if( node != NULL && node->pincode_success ){ // User has already passed the check                    
-                                    pincode_sendstate( fd, sd, PINCODE_PASSED );
-                            }else{
-                                    // Ask user for his PIN code
-                                    pincode_sendstate( fd, sd, PINCODE_ASK );
-                            }
-                    }else{ // User hasnt changed his PIN code too long
-                            pincode_sendstate( fd, sd, PINCODE_EXPIRED );
-                    }
-            }
-    } else { // PIN code system disabled 
-            pincode_sendstate( fd, sd, PINCODE_OK );
-    }
+	if( pincode_enabled ){
+		// PIN code system enabled
+		if( strlen( sd->pincode ) <= 0 ){
+			// No PIN code has been set yet
+			if( pincode_force ) pincode_sendstate( fd, sd, PINCODE_NEW );
+			else pincode_sendstate( fd, sd, PINCODE_PASSED );
+		} else {
+			if( !pincode_changetime || ( sd->pincode_change + pincode_changetime ) > time(NULL) ){
+				struct online_char_data* node = (struct online_char_data*)idb_get( online_char_db, sd->account_id );
+				if( node != NULL && node->pincode_success ){ // User has already passed the check
+					pincode_sendstate( fd, sd, PINCODE_PASSED );
+				}else{
+					// Ask user for his PIN code
+					pincode_sendstate( fd, sd, PINCODE_ASK );
+				}
+			}else{ // User hasnt changed his PIN code too long
+				pincode_sendstate( fd, sd, PINCODE_EXPIRED );
+			}
+		}
+	} else { // PIN code system disabled 
+		pincode_sendstate( fd, sd, PINCODE_OK );
+	}
 #endif
-    return 0;
+	return 0;
 }
 
 int parse_fromlogin(int fd) {
@@ -2352,6 +2429,7 @@ int parse_fromlogin(int fd) {
 		switch( command )
 		{
 		case 0x2741: loginif_parse_BankingAck(fd); break;
+		case 0x2743: logif_parse_vipack(fd); break;
 
 		// acknowledgement of connect-to-loginserver request
 		case 0x2711:
@@ -2415,7 +2493,7 @@ int parse_fromlogin(int fd) {
 		break;
 
 		case 0x2717: // account data
-			if (RFIFOREST(fd) < 76)
+			if (RFIFOREST(fd) < 79)
 				return 0;
 
 			// find the authenticated session with this account id
@@ -2431,11 +2509,14 @@ int parse_fromlogin(int fd) {
 					ShowError("Account '%d' `character_slots` column is higher than supported MAX_CHARS (%d), update MAX_CHARS in mmo.h! capping to MAX_CHARS...\n",sd->account_id,sd->char_slots);
 					sd->char_slots = MAX_CHARS;/* cap to maximum */
 				} else if ( !sd->char_slots )/* no value aka 0 in sql */
-					sd->char_slots = MAX_CHARS;/* cap to maximum */
+					sd->char_slots = MIN_CHARS;/* cap to minimum */
 				safestrncpy(sd->birthdate, (const char*)RFIFOP(fd,52), sizeof(sd->birthdate));
 				safestrncpy(sd->pincode, (const char*)RFIFOP(fd,63), sizeof(sd->pincode));
 				sd->pincode_change = (time_t)RFIFOL(fd,68);
 				sd->bank_vault = RFIFOL(fd,72);
+				sd->isvip = RFIFOB(fd,76);
+				sd->chars_vip = RFIFOB(fd,77);
+				sd->chars_billing = RFIFOB(fd,78);
 				ARR_FIND( 0, ARRAYLENGTH(server), server_id, server[server_id].fd > 0 && server[server_id].map[0] );
 				// continued from char_auth_ok...
 				if( server_id == ARRAYLENGTH(server) || //server not online, bugreport:2359
@@ -2452,7 +2533,7 @@ int parse_fromlogin(int fd) {
 					logif_parse_reqpincode(i, sd);
 				}
 			}
-			RFIFOSKIP(fd,76);
+			RFIFOSKIP(fd,79);
 		break;
 
 		// login-server alive packet
@@ -3680,7 +3761,7 @@ int parse_frommap(int fd)
 		
 		case 0x2b28: mapif_parse_UpdBankInfo(fd); break;
 		case 0x2b2a: mapif_parse_ReqBankInfo(fd); break;
-			
+		case 0x2b2c: mapif_parse_vipactive(fd); break;
 		case 0x2b2d: //Load data
 			if (RFIFOREST(fd) < 6)
 				return 0;
@@ -5382,13 +5463,6 @@ int char_config_read(const char* cfgName)
 			char_name_option = atoi(w2);
 		} else if (strcmpi(w1, "char_name_letters") == 0) {
 			safestrncpy(char_name_letters, w2, sizeof(char_name_letters));
-		} else if (strcmpi(w1, "chars_per_account") == 0) { //maxchars per account [Sirius]
-			char_per_account = atoi(w2);
-			if( char_per_account == 0 || char_per_account > MAX_CHARS ) {
-				if( char_per_account > MAX_CHARS )
-					ShowWarning("Max chars per account '%d' exceeded limit. Defaulting to '%d'.\n", char_per_account, MAX_CHARS);
-				char_per_account = MAX_CHARS;
-			}
 		} else if (strcmpi(w1, "char_del_level") == 0) { //disable/enable char deletion by its level condition [Lupus]
 			char_del_level = atoi(w2);
 		} else if (strcmpi(w1, "char_del_delay") == 0) {

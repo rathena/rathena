@@ -1276,6 +1276,8 @@ int pc_reg_received(struct map_session_data *sd)
 	chrif_skillcooldown_request(sd->status.account_id, sd->status.char_id);
 	chrif_bankdata_request(sd->status.account_id, sd->status.char_id);
 	chrif_bsdata_request(sd->status.char_id);
+	sd->storage_size = MIN_STORAGE; //default to min
+	chrif_req_vipActive(sd, 0, 1); // request VIP informations
 	intif_Mail_requestinbox(sd->status.char_id, 0); // MAIL SYSTEM - Request Mail Inbox
 	intif_request_questlog(sd);
 
@@ -2489,7 +2491,7 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			sd->special_state.no_misc_damage = cap_value(val,0,100);
 			break;
 		case SP_NO_GEMSTONE:
-			if(sd->state.lr_flag != 2)
+			if(sd->state.lr_flag != 2 && sd->special_state.no_gemstone != 2)
 				sd->special_state.no_gemstone = 1;
 			break;
 		case SP_INTRAVISION: // Maya Purple Card effect allowing to see Hiding/Cloaking people [DracoRPG]
@@ -5877,8 +5879,11 @@ static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsi
 		(int)(status_get_lv(src) - sd->status.base_level) >= 20)
 		bonus += 15; // pk_mode additional exp if monster >20 levels [Valaris]
 
-	if (sd->sc.data[SC_EXPBOOST])
-		bonus += sd->sc.data[SC_EXPBOOST]->val1;
+	if (sd->sc.data[SC_EXPBOOST]) {	
+ 		bonus += sd->sc.data[SC_EXPBOOST]->val1;
+		if( battle_config.vip_bm_increase && pc_isvip(sd) ) // Increase Battle Manual EXP rate for VIP.
+			bonus += ( sd->sc.data[SC_EXPBOOST]->val1 / battle_config.vip_bm_increase );
+	}
 
 	*base_exp = (unsigned int) cap_value(*base_exp + (double)*base_exp * bonus/100., 1, UINT_MAX);
 
@@ -6928,37 +6933,38 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		&& !map[sd->bl.m].flag.noexppenalty && !map_flag_gvg(sd->bl.m)
 		&& !sd->sc.data[SC_BABY] && !sd->sc.data[SC_LIFEINSURANCE])
 	{
-		unsigned int base_penalty =0;
-		if (battle_config.death_penalty_base > 0) {
+		unsigned int base_penalty = battle_config.death_penalty_base, job_penalty = battle_config.death_penalty_job;
+#ifdef VIP_ENABLE
+		if(pc_isvip(sd)){
+			base_penalty = base_penalty*battle_config.vip_exp_penalty_base;
+			job_penalty = job_penalty*battle_config.vip_exp_penalty_job;
+		}
+		else {
+			base_penalty = base_penalty*battle_config.vip_exp_penalty_base_normal;
+			job_penalty = job_penalty*battle_config.vip_exp_penalty_job_normal;
+		}
+#endif
+		if (base_penalty > 0) {
 			switch (battle_config.death_penalty_type) {
-				case 1:
-					base_penalty = (unsigned int) ((double)pc_nextbaseexp(sd) * (double)battle_config.death_penalty_base/10000);
-				break;
-				case 2:
-					base_penalty = (unsigned int) ((double)sd->status.base_exp * (double)battle_config.death_penalty_base/10000);
-				break;
+				case 1: base_penalty = (uint32) ((double)(pc_nextbaseexp(sd) * base_penalty)/10000); break;
+				case 2: base_penalty = (uint32) ((double)(sd->status.base_exp * base_penalty)/10000); break;
 			}
-			if(base_penalty) {
+			if (base_penalty > 0){ //recheck after altering to speedup
 				if (battle_config.pk_mode && src && src->type==BL_PC)
 					base_penalty*=2;
 				sd->status.base_exp -= min(sd->status.base_exp, base_penalty);
 				clif_updatestatus(sd,SP_BASEEXP);
 			}
 		}
-		if(battle_config.death_penalty_job > 0) {
-			base_penalty = 0;
+		if(job_penalty > 0) {
 			switch (battle_config.death_penalty_type) {
-				case 1:
-					base_penalty = (unsigned int) ((double)pc_nextjobexp(sd) * (double)battle_config.death_penalty_job/10000);
-				break;
-				case 2:
-					base_penalty = (unsigned int) ((double)sd->status.job_exp * (double)battle_config.death_penalty_job/10000);
-				break;
+				case 1: job_penalty = (uint32) ((double)(pc_nextjobexp(sd) * job_penalty)/10000); break;
+				case 2: job_penalty = (uint32) ((double)(sd->status.job_exp * job_penalty)/10000); break;
 			}
-			if(base_penalty) {
+			if(job_penalty) {
 				if (battle_config.pk_mode && src && src->type==BL_PC)
-					base_penalty*=2;
-				sd->status.job_exp -= min(sd->status.job_exp, base_penalty);
+					job_penalty*=2;
+				sd->status.job_exp -= min(sd->status.job_exp, job_penalty);
 				clif_updatestatus(sd,SP_JOBEXP);
 			}
 		}
@@ -9087,7 +9093,7 @@ int pc_check_available_item(struct map_session_data *sd) {
 	}
 
 	if( battle_config.item_check&4 ) { // Check for invalid(ated) items in storage.
-		for( i = 0; i < MAX_STORAGE; i++ ) {
+		for( i = 0; i < sd->storage_size; i++ ) {
 			it = sd->status.storage.items[i].nameid;
 
 			if( it && !itemdb_available(it) ) {

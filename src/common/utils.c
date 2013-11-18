@@ -259,7 +259,7 @@ uint32 MakeDWord(uint16 word0, uint16 word1)
 		( (uint32)(word1 << 0x10) );
 }
 
-int date2version(int date){
+uint32 date2version(int date){
 	if(date < 20040906) return 5;
 	else if(date < 20040920) return 10;
 	else if(date < 20041005) return 11;
