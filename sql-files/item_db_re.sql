@@ -183,7 +183,7 @@ REPLACE INTO `item_db_re` VALUES (644,'Gift_Box','Gift Box',2,1000,NULL,200,NULL
 #ASPD in RE they give a fixed +4/+6/+9 ASPD
 REPLACE INTO `item_db_re` VALUES (645,'Center_Potion','Concentration Potion',2,800,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_ASPDPOTION0,1800000,4;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (656,'Awakening_Potion','Awakening Potion',2,1500,NULL,150,NULL,NULL,NULL,NULL,0xFFF7FEEF,63,2,NULL,NULL,'40',NULL,NULL,'sc_start SC_ASPDPOTION1,1800000,6;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (657,'Berserk_Potion','Berserk Potion',2,3000,NULL,200,NULL,NULL,NULL,NULL,0x01E646A6,63,2,NULL,NULL,'85',NULL,NULL,'sc_start SC_ASPDPOTION2,1800000,9;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (657,'Berserk_Potion','Berserk Potion',2,3000,NULL,200,NULL,NULL,NULL,NULL,0x41E646A6,63,2,NULL,NULL,'85',NULL,NULL,'sc_start SC_ASPDPOTION2,1800000,9;',NULL,NULL);
 
 REPLACE INTO `item_db_re` VALUES (658,'Union_Of_Tribe','Union of Tribe',2,2,NULL,500,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'guildgetexp rand(600000,1200000);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (659,'Heart_Of_Her','Her Heart',2,500,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'pet 1188;',NULL,NULL);
@@ -1136,8 +1136,8 @@ REPLACE INTO `item_db_re` VALUES (1928,'Berserk_Guitar_I','Spirited Guitar',4,0,
 REPLACE INTO `item_db_re` VALUES (1929,'Guitar_C','Guitar',4,0,NULL,0,'177',NULL,1,0,0x00080000,63,1,2,3,'1',0,13,'bonus2 bAddSize,Size_Small,40; bonus2 bAddSize,Size_Medium,40; bonus2 bAddSize,Size_Large,40;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1930,'Green_Whistle','Green Whistle',4,20,NULL,800,'170:50',NULL,1,1,0x00080000,63,1,2,3,'102',1,13,'if(getrefine()>5) { bonus2 bSkillUseSP,"MI_RUSH_WINDMILL",(getrefine()-5)*4; bonus2 bSkillUseSP,"WM_LULLABY_DEEPSLEEP",(getrefine()-5)*4; } bonus2 bSkillVariableCast,"MI_RUSH_WINDMILL",-2000; bonus2 bSkillVariableCast,"WM_LULLABY_DEEPSLEEP",-2000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1931,'P_Guitar1','Eden Guitar I',4,0,NULL,0,'125',NULL,1,0,0x00080000,63,1,2,3,'60',0,13,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (1934,'Contrabass','Contrabass',4,20,NULL,250,'180:120',NULL,1,2,0x00080000,63,1,2,3,'130',1,0,'bonus2 bSkillCooldown,"WM_RANDOMIZESPELL",-20;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (1935,'Ozs_New_Ukulele','Oz\'s New Ukulele',4,20,NULL,2000,'160',NULL,1,2,0x00080000,63,1,2,4,'130',1,0,'bonus2 bSkillUseSP,"MI_RUSH_WINDMILL",-20;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (1934,'Contrabass','Contrabass',4,20,NULL,250,'180:120',NULL,1,2,0x00080000,63,1,2,3,'130',1,13,'bonus2 bSkillCooldown,"WM_RANDOMIZESPELL",-20;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (1935,'Ozs_New_Ukulele','Oz\'s New Ukulele',4,20,NULL,2000,'160',NULL,1,2,0x00080000,63,1,2,4,'130',1,13,'bonus2 bSkillUseSP,"MI_RUSH_WINDMILL",-20;',NULL,NULL);
 # Whips
 REPLACE INTO `item_db_re` VALUES (1950,'Rope','Rope',4,2500,NULL,400,'45',NULL,2,3,0x00080000,63,0,2,1,'3',1,14,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1951,'Rope_','Rope',4,2500,NULL,400,'45',NULL,2,4,0x00080000,63,0,2,1,'3',1,14,NULL,NULL,NULL);
@@ -1177,8 +1177,8 @@ REPLACE INTO `item_db_re` VALUES (1984,'Stem_Whip','Stem Whip',4,20,NULL,800,'17
 REPLACE INTO `item_db_re` VALUES (1985,'Rosebine','Rosebine',4,20,NULL,1000,'100:130',NULL,1,0,0x00080000,63,0,2,4,'110',1,14,'bonus bInt,2; bonus bAgi,-2; bonus3 bAutoSpell,"WM_VOICEOFSIREN",1,20;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1986,'P_Tail1','Eden Tail I',4,0,NULL,0,'125',NULL,2,0,0x00080000,63,0,2,3,'60',0,14,NULL,NULL,NULL);
 #
-REPLACE INTO `item_db_re` VALUES (1989,'Rhythmic_Gymnastics_Ribbon','Rhythmic Gymnastics Ribbon',4,20,NULL,300,'150:120',NULL,2,2,0x00080000,63,0,2,3,'130',1,0,'bonus bAspdRate,20;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (1990,'Bloody_Floral_Decoration_Microphone','Bloody Floral Decoration Microphone',4,20,NULL,1000,'160',NULL,2,2,0x00080000,63,0,2,4,'130',1,0,'bonus2 bSkillUseSP,"CG_MOONLIT",-20;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (1989,'Rhythmic_Gymnastics_Ribbon','Rhythmic Gymnastics Ribbon',4,20,NULL,300,'150:120',NULL,2,2,0x00080000,63,0,2,3,'130',1,13,'bonus bAspdRate,20;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (1990,'Bloody_Floral_Decoration_Microphone','Bloody Floral Decoration Microphone',4,20,NULL,1000,'160',NULL,2,2,0x00080000,63,0,2,4,'130',1,13,'bonus2 bSkillUseSP,"CG_MOONLIT",-20;',NULL,NULL);
 # Additional 2-Handed Staffs
 REPLACE INTO `item_db_re` VALUES (2000,'Destruction_Rod','Staff of Destruction',4,20,NULL,2500,'130:280',NULL,1,1,0x00000200,18,2,34,4,'80',1,23,'bonus bMatkRate,getrefine()/2; bonus bInt,3; bonus bAgi,10; bonus bUseSPrate,(getrefine()*2); bonus3 bAutoSpellWhenHit,"WZ_JUPITEL",5,(getrefine()*20); bonus2 bVariableCastrate,"HW_MAGICPOWER",-50;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2001,'Divine_Cross','Divine Cross',4,20,NULL,1500,'120:210',NULL,1,0,0x00008100,63,2,34,4,'70',1,23,'bonus bAtkEle,Ele_Holy; bonus bDex,4; bonus2 bSubRace,RC_Demon,15; bonus2 bSubRace,RC_Undead,15;',NULL,NULL);
@@ -8275,8 +8275,8 @@ REPLACE INTO `item_db_re` VALUES (18114,'Velum_CrossBow','Vellum CrossBow',4,20,
 REPLACE INTO `item_db_re` VALUES (18115,'Orc_Archer_Bow_','Orc Archer Bow',4,20,NULL,1600,'120',NULL,5,1,0x000A0848,63,2,34,3,'65',1,11,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18116,'Metal_Bow','Metal Bow',4,20,NULL,0,'50',NULL,5,1,0x00080800,63,2,34,3,'1',1,11,'if(BaseJob==Job_Hunter && Upper!=2) bonus bBaseAtk,10; bonus bBaseAtk,(getrefine()*3); bonus bLongAtkRate,getrefine(); set .@i,((BaseLevel/10)>12)?12:(BaseLevel/10); if(.@i>2) bonus bBaseAtk,((.@i-2)*5);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18117,'Royal_Bow','Royal Bow',4,200000,NULL,1500,'80',NULL,5,1,0x000A0808,63,2,34,4,'105',1,11,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (18122,'Giant_Bow','Giant Bow',4,20,NULL,3000,'195',NULL,5,1,0x00000800,63,2,NULL,4,'130',1,0,'bonus bLongAtkRate,40; bonus bAspdRate,-15; bonus bHit,50;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (18123,'Bow_of_Storms','Bow of Storms',4,20,NULL,1500,'160',NULL,5,1,0x00000800,63,2,NULL,4,'130',1,0,'bonus bLongAtkRate,30; bonus2 bSkillCooldown,"RA_ARROWSTORM",-20; bonus2 bSkillUseSP,"RA_ARROWSTORM",15;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (18122,'Giant_Bow','Giant Bow',4,20,NULL,3000,'195',NULL,5,1,0x00000800,63,2,34,4,'130',1,11,'bonus bLongAtkRate,40; bonus bAspdRate,-15; bonus bHit,50;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (18123,'Bow_of_Storms','Bow of Storms',4,20,NULL,1500,'160',NULL,5,1,0x00000800,63,2,34,4,'130',1,11,'bonus bLongAtkRate,30; bonus2 bSkillCooldown,"RA_ARROWSTORM",-20; bonus2 bSkillUseSP,"RA_ARROWSTORM",15;',NULL,NULL);
 # More Headgears
 REPLACE INTO `item_db_re` VALUES (18500,'Cheer_Scarf6','Cheer Scarf6',5,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1,NULL,'1',0,369,'bonus2 bExpAddRace,RC_Boss,60; bonus2 bExpAddRace,RC_NonBoss,60;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18501,'Cheer_Scarf8','Cheer Scarf8',5,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1,NULL,'1',0,369,'bonus2 bExpAddRace,RC_Boss,80; bonus2 bExpAddRace,RC_NonBoss,80;',NULL,NULL);

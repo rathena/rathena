@@ -11045,9 +11045,11 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			uint8 skill_use_lv = pc_checkskill(sd,skill_use);
 			clif_slide(src,x,y);
 			if (skill_check_condition_castbegin(sd,skill_use,skill_use_lv)) {
+				sd->skill_id_old = RL_FALLEN_ANGEL;
 				skill_castend_pos2(src,src->x,src->y,skill_use,skill_use_lv,tick,SD_LEVEL|SD_ANIMATION|SD_SPLASH);
-				skill_consume_requirement(sd,skill_use,skill_use_lv,1);
+				skill_consume_requirement(sd,skill_use,skill_use_lv,1); //Consume Desperado ammunitions
 			}
+			sd->skill_id_old = 0;
 		}
 		else if (sd)
 			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
@@ -14254,6 +14256,10 @@ int skill_consume_requirement( struct map_session_data *sd, uint16 skill_id, uin
 			case MC_IDENTIFY:
 			case RL_D_TAIL:
 				req.sp = 0;
+				break;
+			case GS_DESPERADO:
+				if (sd->skill_id_old == RL_FALLEN_ANGEL)
+					req.sp = 0;
 				break;
 			default:
 				if(sd->state.autocast)

@@ -150,7 +150,7 @@
 644,Gift_Box,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getrandgroupitem(IG_GiftBox),1; },{},{}
 645,Center_Potion,Concentration Potion,2,800,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ASPDPOTION0,1800000,0; },{},{}
 656,Awakening_Potion,Awakening Potion,2,1500,,150,,,,,0xFFF7FEEF,7,2,,,40,,,{ sc_start SC_ASPDPOTION1,1800000,0; },{},{}
-657,Berserk_Potion,Berserk Potion,2,3000,,200,,,,,0x01E646A6,7,2,,,85,,,{ sc_start SC_ASPDPOTION2,1800000,0; },{},{}
+657,Berserk_Potion,Berserk Potion,2,3000,,200,,,,,0x41E646A6,7,2,,,85,,,{ sc_start SC_ASPDPOTION2,1800000,0; },{},{}
 658,Union_Of_Tribe,Union of Tribe,2,2,,500,,,,,0xFFFFFFFF,7,2,,,,,,{ guildgetexp rand(600000,1200000); },{},{}
 659,Heart_Of_Her,Her Heart,2,500,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1188; },{},{}
 660,Prohibition_Red_Candle,Forbidden Red Candle,2,20000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1200; },{},{}
