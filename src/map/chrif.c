@@ -42,7 +42,7 @@ static DBMap* auth_db; // int id -> struct auth_node*
 static const int packet_len_table[0x3d] = { // U - used, F - free
 	60, 3,-1,27,10,-1, 6,-1,	// 2af8-2aff: U->2af8, U->2af9, U->2afa, U->2afb, U->2afc, U->2afd, U->2afe, U->2aff
 	 6,-1,19, 7,-1,39,30, 10,	// 2b00-2b07: U->2b00, U->2b01, U->2b02, U->2b03, U->2b04, U->2b05, U->2b06, U->2b07
-	 6,30, 10, -1,86, 7,44,34,	// 2b08-2b0f: U->2b08, U->2b09, U->2b0a, U->2b0b, U->2b0c, U->2b0d, U->2b0e, U->2b0f
+	 6,30, 10, -1,86, 7,36,34,	// 2b08-2b0f: U->2b08, U->2b09, U->2b0a, U->2b0b, U->2b0c, U->2b0d, U->2b0e, U->2b0f
 	11,10,10, 0,11, -1,266,10,	// 2b10-2b17: U->2b10, U->2b11, U->2b12, F->2b13, U->2b14, U->2b15, U->2b16, U->2b17
 	 2,10, 2,-1,-1,-1, 2, 7,	// 2b18-2b1f: U->2b18, U->2b19, U->2b1a, U->2b1b, U->2b1c, U->2b1d, U->2b1e, U->2b1f
 	-1,10, 8, 2, 2,14,19,19,	// 2b20-2b27: U->2b20, U->2b21, U->2b22, U->2b23, U->2b24, U->2b25, U->2b26, U->2b27
@@ -814,43 +814,36 @@ int chrif_changeemail(int id, const char *actual_email, const char *new_email) {
 }
 
 /*==========================================
- * S 2b0e <accid>.l <name>.24B <type>.w { <year>.w <month>.w <day>.w <hour>.w <minute>.w <second>.w }
+ * S 2b0e <accid>.l <name>.24B <operation_type>.w <timediff>L
  * Send an account modification request to the login server (via char server).
  * type of operation:
- *   1: block, 2: ban, 3: unblock, 4: unban, 5: changesex (use next function for 5)
+ *   1: block, 2: ban, 3: unblock, 4: unban, 5: changesex (use next function for 5), 6: charban, 7: charunban 
  *------------------------------------------*/
-int chrif_char_ask_name(int acc, const char* character_name, unsigned short operation_type, int year, int month, int day, int hour, int minute, int second) {
-
+int chrif_ask_char_operation(int acc, const char* character_name, unsigned short operation_type, int timediff) {
 	chrif_check(-1);
 
-	WFIFOHEAD(char_fd,44);
+	WFIFOHEAD(char_fd,36);
 	WFIFOW(char_fd,0) = 0x2b0e;
 	WFIFOL(char_fd,2) = acc;
 	safestrncpy((char*)WFIFOP(char_fd,6), character_name, NAME_LENGTH);
 	WFIFOW(char_fd,30) = operation_type;
 
-	if ( operation_type == 2 ) {
-		WFIFOW(char_fd,32) = year;
-		WFIFOW(char_fd,34) = month;
-		WFIFOW(char_fd,36) = day;
-		WFIFOW(char_fd,38) = hour;
-		WFIFOW(char_fd,40) = minute;
-		WFIFOW(char_fd,42) = second;
-	}
+	if ( operation_type == 2 || operation_type == 6)
+		WFIFOL(char_fd,32) = timediff;
 
-	WFIFOSET(char_fd,44);
+	WFIFOSET(char_fd,36);
 	return 0;
 }
 
 int chrif_changesex(struct map_session_data *sd) {
 	chrif_check(-1);
 
-	WFIFOHEAD(char_fd,44);
+	WFIFOHEAD(char_fd,36);
 	WFIFOW(char_fd,0) = 0x2b0e;
 	WFIFOL(char_fd,2) = sd->status.account_id;
 	safestrncpy((char*)WFIFOP(char_fd,6), sd->status.name, NAME_LENGTH);
 	WFIFOW(char_fd,30) = 5;
-	WFIFOSET(char_fd,44);
+	WFIFOSET(char_fd,36);
 
 	clif_displaymessage(sd->fd, msg_txt(sd,408)); //"Need disconnection to perform change-sex request..."
 
@@ -865,12 +858,13 @@ int chrif_changesex(struct map_session_data *sd) {
  * R 2b0f <accid>.l <name>.24B <type>.w <answer>.w
  * Processing a reply to chrif_char_ask_name() (request to modify an account).
  * type of operation:
- *   1: block, 2: ban, 3: unblock, 4: unban, 5: changesex
+ *   1: block, 2: ban, 3: unblock, 4: unban, 5: changesex, 6: charban, 7: charunban
  * type of answer:
  *   0: login-server request done
  *   1: player not found
  *   2: gm level too low
  *   3: login-server offline
+ *   4: char-server request done
  *------------------------------------------*/
 static void chrif_char_ask_name_answer(int acc, const char* player_name, uint16 type, uint16 answer) {
 	struct map_session_data* sd;
@@ -886,14 +880,17 @@ static void chrif_char_ask_name_answer(int acc, const char* player_name, uint16 
 
 	if( type > 0 && type <= 5 )
 		snprintf(action,25,"%s",msg_txt(sd,427+type)); //block|ban|unblock|unban|change the sex of
+	else if( type==6) snprintf(action,25,"%s","charban"); //TODO make some place for those type in msg_conf
+	else if( type==7) snprintf(action,25,"%s","charunban");
 	else
 		snprintf(action,25,"???");
 
 	switch( answer ) {
-		case 0 : sprintf(output, msg_txt(sd,424), action, NAME_LENGTH, player_name); break;
+		case 0 : sprintf(output, msg_txt(sd,424), "login-serv", action, NAME_LENGTH, player_name); break; //%s has been asked to %s the player '%.*s'.
 		case 1 : sprintf(output, msg_txt(sd,425), NAME_LENGTH, player_name); break;
 		case 2 : sprintf(output, msg_txt(sd,426), action, NAME_LENGTH, player_name); break;
 		case 3 : sprintf(output, msg_txt(sd,427), action, NAME_LENGTH, player_name); break;
+		case 4 : sprintf(output, msg_txt(sd,424), "char-serv", action, NAME_LENGTH, player_name); break;
 		default: output[0] = '\0'; break;
 	}
 
@@ -1026,10 +1023,11 @@ int chrif_deadopt(int father_id, int mother_id, int child_id) {
  * Disconnection of a player (account has been banned of has a status, from login-server) by [Yor]
  *------------------------------------------*/
 int chrif_accountban(int fd) {
-	int acc;
+	int acc, res=0;
 	struct map_session_data *sd;
 
 	acc = RFIFOL(fd,2);
+	res = RFIFOB(fd,6); // 0: change of statut, 1: ban, 2 charban
 
 	if ( battle_config.etc_log )
 		ShowNotice("chrif_accountban %d.\n", acc);
@@ -1042,7 +1040,7 @@ int chrif_accountban(int fd) {
 	}
 
 	sd->login_id1++; // change identify, because if player come back in char within the 5 seconds, he can change its characters
-	if (RFIFOB(fd,6) == 0) { // 0: change of statut, 1: ban
+	if (res == 0) { 
 		int ret_status = RFIFOL(fd,7); // status or final date of a banishment
 		if(0<ret_status && ret_status<=9)
 			clif_displaymessage(sd->fd, msg_txt(sd,411+ret_status));
@@ -1050,12 +1048,13 @@ int chrif_accountban(int fd) {
 			clif_displaymessage(sd->fd, msg_txt(sd,421));
 		 else
 			clif_displaymessage(sd->fd, msg_txt(sd,420)); //"Your account has not more authorised."
-	} else if (RFIFOB(fd,6) == 1) { // 0: change of statut, 1: ban
+	} else if (res == 1 || res == 2) {
 		time_t timestamp;
-		char tmpstr[2048];
+		char tmpstr[256];
+		char strtime[25];
 		timestamp = (time_t)RFIFOL(fd,7); // status or final date of a banishment
-		strcpy(tmpstr, msg_txt(sd,423)); //"Your account has been banished until "
-		strftime(tmpstr + strlen(tmpstr), 24, "%d-%m-%Y %H:%M:%S", localtime(&timestamp));
+		strftime(strtime, 24, "%d-%m-%Y %H:%M:%S", localtime(&timestamp));
+		safesnprintf(tmpstr,sizeof(tmpstr),msg_txt(sd,423),res==2?"char":"account",strtime); //"Your %s has been banished until %s "
 		clif_displaymessage(sd->fd, tmpstr);
 	}
 

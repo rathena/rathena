@@ -403,6 +403,7 @@ struct mmo_charstatus {
 	short rename;
 
 	time_t delete_date;
+	time_t unban_time;
 
 	// Char server addon system
 	unsigned int character_moves;

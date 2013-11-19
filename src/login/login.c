@@ -297,22 +297,6 @@ bool check_password(const char* md5key, int passwdenc, const char* passwd, const
 }
 
 
-/**
- * Converting a timestamp is a srintf according to format
- * safefr then strftime as it ensure \0 at end of string
- * @param str, pointer to the destination string
- * @param size, max length of the string
- * @param timestamp, see unix epoch
- * @param format, format to convert timestamp on, see strftime format
- * @return the string of timestamp
- */
-const char* timestamp2string(char* str, size_t size, time_t timestamp, const char* format){
-	size_t len = strftime(str, size, format, localtime(&timestamp));
-	memset(str + len, '\0', size - len);
-	return str;
-}
-
-
 //--------------------------------------------
 // Test to know if an IP come from LAN or WAN.
 //--------------------------------------------
@@ -766,37 +750,24 @@ int parse_fromchar(int fd){
 		break;
 
 		case 0x2725: // Receiving of map-server via char-server a ban request
-			if (RFIFOREST(fd) < 18)
+			if (RFIFOREST(fd) < 10)
 				return 0;
 			else{
 				struct mmo_account acc;
 
 				int account_id = RFIFOL(fd,2);
-				int year = (short)RFIFOW(fd,6);
-				int month = (short)RFIFOW(fd,8);
-				int mday = (short)RFIFOW(fd,10);
-				int hour = (short)RFIFOW(fd,12);
-				int min = (short)RFIFOW(fd,14);
-				int sec = (short)RFIFOW(fd,16);
-				RFIFOSKIP(fd,18);
+				int timediff = RFIFOL(fd,6);
+				RFIFOSKIP(fd,10);
 
 				if( !accounts->load_num(accounts, &acc, account_id) )
 					ShowNotice("Char-server '%s': Error of ban request (account: %d not found, ip: %s).\n", server[id].name, account_id, ip);
 				else{
 					time_t timestamp;
-					struct tm *tmtime;
 					if (acc.unban_time == 0 || acc.unban_time < time(NULL))
 						timestamp = time(NULL); // new ban
 					else
 						timestamp = acc.unban_time; // add to existing ban
-					tmtime = localtime(&timestamp);
-					tmtime->tm_year = tmtime->tm_year + year;
-					tmtime->tm_mon  = tmtime->tm_mon + month;
-					tmtime->tm_mday = tmtime->tm_mday + mday;
-					tmtime->tm_hour = tmtime->tm_hour + hour;
-					tmtime->tm_min  = tmtime->tm_min + min;
-					tmtime->tm_sec  = tmtime->tm_sec + sec;
-					timestamp = mktime(tmtime);
+					timestamp += timediff;
 					if (timestamp == -1)
 						ShowNotice("Char-server '%s': Error of ban request (account: %d, invalid date, ip: %s).\n", server[id].name, account_id, ip);
 					else if( timestamp <= time(NULL) || timestamp == 0 )
