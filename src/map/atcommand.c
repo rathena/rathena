@@ -2787,10 +2787,11 @@ ACMD_FUNC(char_block)
 ACMD_FUNC(char_ban)
 {
 	char * modif_p;
-	nullpo_retr(-1, sd);
 	int timediff=0;
 	int bantype=2; //2=account block, 6=char specific
 	char output[256];
+
+	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));

@@ -7233,7 +7233,11 @@ static const struct _battle_data {
 	{ "bowling_bash_area",                  &battle_config.bowling_bash_area,               0,      0,      20,             },
 	{ "drop_rateincrease",                  &battle_config.drop_rateincrease,               0,      0,      1,              },
 	{ "feature.banking",                    &battle_config.feature_banking,                 1,      0,      1,              },
+#ifdef VIP_ENABLE
 	{ "vip_storage_increase",               &battle_config.vip_storage_increase,            0,      0,      MAX_STORAGE-MIN_STORAGE, },
+#else
+	{ "vip_storage_increase",               &battle_config.vip_storage_increase,            0,      0,      MAX_STORAGE, },
+#endif
 	{ "vip_base_exp_increase",              &battle_config.vip_base_exp_increase,           0,      0,      INT_MAX,        },
 	{ "vip_job_exp_increase",               &battle_config.vip_job_exp_increase,            0,      0,      INT_MAX,        },
 	{ "vip_exp_penalty_base_normal",        &battle_config.vip_exp_penalty_base_normal,     0,      0,      INT_MAX,        },
