@@ -14,7 +14,7 @@ bool pc_group_has_permission(int group_id, int permission);
 bool pc_group_should_log_commands(int group_id);
 const char* pc_group_id2name(int group_id);
 int pc_group_id2level(int group_id);
-void pc_group_pc_load(struct map_session_data *);
+void pc_group_pc_load(struct map_session_data *sd);
 
 void do_init_pc_groups(void);
 void do_final_pc_groups(void);
@@ -22,30 +22,32 @@ void pc_groups_reload(void);
 
 enum e_pc_permission {
 	PC_PERM_NONE                = 0,
-	PC_PERM_TRADE               = 0x000001,
-	PC_PERM_PARTY               = 0x000002,
-	PC_PERM_ALL_SKILL           = 0x000004,
-	PC_PERM_USE_ALL_EQUIPMENT   = 0x000008,
-	PC_PERM_SKILL_UNCONDITIONAL = 0x000010,
-	PC_PERM_JOIN_ALL_CHAT       = 0x000020,
-	PC_PERM_NO_CHAT_KICK        = 0x000040,
-	PC_PERM_HIDE_SESSION        = 0x000080,
-	PC_PERM_WHO_DISPLAY_AID     = 0x000100,
-	PC_PERM_RECEIVE_HACK_INFO   = 0x000200,
-	PC_PERM_WARP_ANYWHERE       = 0x000400,
-	PC_PERM_VIEW_HPMETER        = 0x000800,
-	PC_PERM_VIEW_EQUIPMENT      = 0x001000,
-	PC_PERM_USE_CHECK           = 0x002000,
-	PC_PERM_USE_CHANGEMAPTYPE   = 0x004000,
-	PC_PERM_USE_ALL_COMMANDS    = 0x008000,
-	PC_PERM_RECEIVE_REQUESTS    = 0x010000,
-	PC_PERM_SHOW_BOSS           = 0x020000,
-	PC_PERM_DISABLE_PVM         = 0x040000,
-	PC_PERM_DISABLE_PVP         = 0x080000,
-	PC_PERM_DISABLE_CMD_DEAD    = 0x100000,
-	PC_PERM_CHANNEL_ADMIN       = 0x200000,
-	PC_PERM_TRADE_BOUNDED       = 0x400000,
-	PC_PERM_ITEM_UNCONDITIONAL  = 0x800000,
+	PC_PERM_TRADE               = 0x00000001,
+	PC_PERM_PARTY               = 0x00000002,
+	PC_PERM_ALL_SKILL           = 0x00000004,
+	PC_PERM_USE_ALL_EQUIPMENT   = 0x00000008,
+	PC_PERM_SKILL_UNCONDITIONAL = 0x00000010,
+	PC_PERM_JOIN_ALL_CHAT       = 0x00000020,
+	PC_PERM_NO_CHAT_KICK        = 0x00000040,
+	PC_PERM_HIDE_SESSION        = 0x00000080,
+	PC_PERM_WHO_DISPLAY_AID     = 0x00000100,
+	PC_PERM_RECEIVE_HACK_INFO   = 0x00000200,
+	PC_PERM_WARP_ANYWHERE       = 0x00000400,
+	PC_PERM_VIEW_HPMETER        = 0x00000800,
+	PC_PERM_VIEW_EQUIPMENT      = 0x00001000,
+	PC_PERM_USE_CHECK           = 0x00002000,
+	PC_PERM_USE_CHANGEMAPTYPE   = 0x00004000,
+	PC_PERM_USE_ALL_COMMANDS    = 0x00008000,
+	PC_PERM_RECEIVE_REQUESTS    = 0x00010000,
+	PC_PERM_SHOW_BOSS           = 0x00020000,
+	PC_PERM_DISABLE_PVM         = 0x00040000,
+	PC_PERM_DISABLE_PVP         = 0x00080000,
+	PC_PERM_DISABLE_CMD_DEAD    = 0x00100000,
+	PC_PERM_CHANNEL_ADMIN       = 0x00200000,
+	PC_PERM_TRADE_BOUNDED       = 0x00400000,
+	PC_PERM_ITEM_UNCONDITIONAL  = 0x00800000,
+	//.. add other here
+	PC_PERM_ALLPERMISSION       = 0xFFFFFFFF,
 };
 
 static const struct {
@@ -76,6 +78,7 @@ static const struct {
 	{ "channel_admin", PC_PERM_CHANNEL_ADMIN },
 	{ "can_trade_bounded", PC_PERM_TRADE_BOUNDED },
 	{ "item_unconditional", PC_PERM_ITEM_UNCONDITIONAL },
+	{ "all_permission", PC_PERM_ALLPERMISSION },
 };
 
 #endif // _PC_GROUPS_H_

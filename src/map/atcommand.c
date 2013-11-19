@@ -5228,7 +5228,7 @@ ACMD_FUNC(storeall)
 	nullpo_retr(-1, sd);
 
 	if (sd->state.storage_flag != 1)
-  	{	//Open storage.
+	{	//Open storage.
 		if( storage_storageopen(sd) == 1 ) {
 			clif_displaymessage(fd, msg_txt(sd,1161)); // You currently cannot open your storage.
 			return -1;
@@ -9212,6 +9212,29 @@ ACMD_FUNC(vip) {
 }
 #endif
 
+ACMD_FUNC(fullstrip) {
+	int i;
+	TBL_PC *tsd;
+	
+	nullpo_retr(-1,sd);
+	
+	if (!message || !*message) {
+		clif_displaymessage(fd, msg_txt(sd,349)); // Please enter a player name (usage: @fullstrip/@warpto/@goto <char name/ID>).
+		return -1;
+	}
+
+	if((tsd=map_nick2sd((char *)message)) == NULL && (tsd=map_id2sd(atoi(message))) == NULL){
+		clif_displaymessage(fd, msg_txt(sd,3)); // Character not found.
+		return -1;
+	}
+	
+	for( i = 0; i < EQI_MAX; i++ ) {
+		if( tsd->equip_index[ i ] >= 0 )
+			pc_unequipitem( tsd , tsd->equip_index[ i ] , 2 );
+	}
+	return 0;
+}
+
 #include "../custom/atcommand.inc"
 
 /**
@@ -9497,6 +9520,7 @@ void atcommand_basecommands(void) {
 #ifdef VIP_ENABLE
 		ACMD_DEF(vip),
 #endif
+		ACMD_DEF(fullstrip),
 	};
 	AtCommandInfo* atcommand;
 	int i;

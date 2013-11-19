@@ -1451,7 +1451,7 @@ packet_ver: 25
 //0x07f4,3
 
 //2009-10-27aRagexeRE
-0x07f5,6,gmreqaccname,2
+0x07f5,6,gmfullstrip,2
 0x07f6,14
 
 //2009-11-03aRagexeRE

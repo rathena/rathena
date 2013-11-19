@@ -9642,7 +9642,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		if( map[sd->bl.m].flag.allowks && !map_flag_ks(sd->bl.m) )
 		{
 			char output[128];
-			sprintf(output, "[ Kill Steal Protection Disable. KS is allowed in this map ]");
+			safesnprintf(output,sizeof(output),"[ Kill Steal Protection Disable. KS is allowed in this map ]");
 			clif_broadcast(&sd->bl, output, strlen(output) + 1, 0x10, SELF);
 		}
 
@@ -10026,7 +10026,7 @@ void clif_parse_MapMove(int fd, struct map_session_data *sd)
 
 	map_name = (char*)RFIFOP(fd,info->pos[0]);
 	map_name[MAP_NAME_LENGTH_EXT-1]='\0';
-	sprintf(command, "%cmapmove %s %d %d", atcommand_symbol, map_name,
+	safesnprintf(command,sizeof(command),"%cmapmove %s %d %d", atcommand_symbol, map_name,
 	    RFIFOW(fd,info->pos[1]), //x
 	    RFIFOW(fd,info->pos[2])); //y
 	is_atcommand(fd, sd, command, 1);
@@ -10337,11 +10337,11 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 			}
 
 			for( i = 0; i < NUM_WHISPER_VAR; ++i ) {
-				sprintf(output, "@whispervar%d$", i);
+				safesnprintf(output,sizeof(output),"@whispervar%d$", i);
 				set_var(sd,output,(char *) split_data[i]);
 			}
 
-			sprintf(output, "%s::OnWhisperGlobal", npc->exname);
+			safesnprintf(output,sizeof(output),"%s::OnWhisperGlobal", npc->exname);
 			npc_event(sd,output,0); // Calls the NPC label
 
 			return;
@@ -10390,7 +10390,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 	// if player is autotrading
 	if (dstsd->state.autotrade == 1) {
 		char output[256];
-		sprintf(output, "%s is in autotrade mode and cannot receive whispered messages.", dstsd->status.name);
+		safesnprintf(output,sizeof(output),"%s is in autotrade mode and cannot receive whispered messages.", dstsd->status.name);
 		clif_wis_message(fd, wisp_server_name, output, strlen(output) + 1);
 		return;
 	}
@@ -10424,7 +10424,7 @@ void clif_parse_Broadcast(int fd, struct map_session_data* sd) {
 	// as the length varies depending on the command used, just block unreasonably long strings
 	mes_len_check(msg, len, CHAT_SIZE_MAX);
 
-	sprintf(command, "%ckami %s", atcommand_symbol, msg);
+	safesnprintf(command,sizeof(command),"%ckami %s", atcommand_symbol, msg);
 	is_atcommand(fd, sd, command, 1);
 }
 
@@ -11662,9 +11662,9 @@ void clif_parse_ResetChar(int fd, struct map_session_data *sd) {
 	char cmd[15];
 
 	if( RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]) )
-		sprintf(cmd,"%cresetskill",atcommand_symbol);
+		safesnprintf(cmd,sizeof(cmd),"%cresetskill",atcommand_symbol);
 	else
-		sprintf(cmd,"%cresetstat",atcommand_symbol);
+		safesnprintf(cmd,sizeof(cmd),"%cresetstat",atcommand_symbol);
 
 	is_atcommand(fd, sd, cmd, 1);
 }
@@ -11683,7 +11683,7 @@ void clif_parse_LocalBroadcast(int fd, struct map_session_data* sd)
 	// as the length varies depending on the command used, just block unreasonably long strings
 	mes_len_check(msg, len, CHAT_SIZE_MAX);
 
-	sprintf(command, "%clkami %s", atcommand_symbol, msg);
+	safesnprintf(command,sizeof(command),"%clkami %s", atcommand_symbol, msg);
 	is_atcommand(fd, sd, command, 1);
 }
 
@@ -12830,7 +12830,7 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 	case BL_PC:
 	{
 		char command[NAME_LENGTH+6];
-		sprintf(command, "%ckick %s", atcommand_symbol, status_get_name(target));
+		safesnprintf(command,sizeof(command),"%ckick %s", atcommand_symbol, status_get_name(target));
 		is_atcommand(fd, sd, command, 1);
 	}
 	break;
@@ -12845,7 +12845,7 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 			clif_GM_kickack(sd, 0);
 			return;
 		}
-		sprintf(command, "/kick %s (%d)", status_get_name(target), status_get_class(target));
+		safesnprintf(command,sizeof(command),"/kick %s (%d)", status_get_name(target), status_get_class(target));
 		log_atcommand(sd, command);
 		status_percent_damage(&sd->bl, target, 100, 0, true); // can invalidate 'target'
 	}
@@ -12873,7 +12873,7 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 /// 00ce
 void clif_parse_GMKickAll(int fd, struct map_session_data* sd) {
 	char cmd[15];
-	sprintf(cmd,"%ckickall",atcommand_symbol);
+	safesnprintf(cmd,sizeof(cmd),"%ckickall",atcommand_symbol);
 	is_atcommand(fd, sd, cmd, 1);
 }
 
@@ -12893,7 +12893,7 @@ void clif_parse_GMShift(int fd, struct map_session_data *sd)
 	player_name = (char*)RFIFOP(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
 	player_name[NAME_LENGTH-1] = '\0';
 
-	sprintf(command, "%cjumpto %s", atcommand_symbol, player_name);
+	safesnprintf(command,sizeof(command),"%cjumpto %s", atcommand_symbol, player_name);
 	is_atcommand(fd, sd, command, 1);
 }
 
@@ -12909,7 +12909,7 @@ void clif_parse_GMRemove2(int fd, struct map_session_data* sd)
 	account_id = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
 	if( (pl_sd = map_id2sd(account_id)) != NULL ) {
 		char command[NAME_LENGTH+8];
-		sprintf(command, "%cjumpto %s", atcommand_symbol, pl_sd->status.name);
+		safesnprintf(command,sizeof(command),"%cjumpto %s", atcommand_symbol, pl_sd->status.name);
 		is_atcommand(fd, sd, command, 1);
 	}
 }
@@ -12930,7 +12930,7 @@ void clif_parse_GMRecall(int fd, struct map_session_data *sd)
 	player_name = (char*)RFIFOP(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
 	player_name[NAME_LENGTH-1] = '\0';
 
-	sprintf(command, "%crecall %s", atcommand_symbol, player_name);
+	safesnprintf(command,sizeof(command),"%crecall %s", atcommand_symbol, player_name);
 	is_atcommand(fd, sd, command, 1);
 }
 
@@ -12946,7 +12946,7 @@ void clif_parse_GMRecall2(int fd, struct map_session_data* sd)
 	account_id = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
 	if( (pl_sd = map_id2sd(account_id)) != NULL ) {
 		char command[NAME_LENGTH+8];
-		sprintf(command, "%crecall %s", atcommand_symbol, pl_sd->status.name);
+		safesnprintf(command,sizeof(command),"%crecall %s", atcommand_symbol, pl_sd->status.name);
 		is_atcommand(fd, sd, command, 1);
 	}
 }
@@ -12966,7 +12966,7 @@ void clif_parse_GM_Monster_Item(int fd, struct map_session_data *sd)
 	// FIXME: Should look for item first, then for monster.
 	// FIXME: /monster takes mob_db Sprite_Name as argument
 	if( mobdb_searchname(monster_item_name) ) {
-		snprintf(command, sizeof(command)-1, "%cmonster %s", atcommand_symbol, monster_item_name);
+		safesnprintf(command, sizeof(command)-1, "%cmonster %s", atcommand_symbol, monster_item_name);
 		is_atcommand(fd, sd, command, 1);
 		return;
 	}
@@ -12974,7 +12974,7 @@ void clif_parse_GM_Monster_Item(int fd, struct map_session_data *sd)
 	// FIXME: Equips are supposed to be unidentified.
 
 	if( itemdb_searchname(monster_item_name) ) {
-		snprintf(command, sizeof(command)-1, "%citem %s", atcommand_symbol, monster_item_name);
+		safesnprintf(command, sizeof(command)-1, "%citem %s", atcommand_symbol, monster_item_name);
 		is_atcommand(fd, sd, command, 1);
 		return;
 	}
@@ -12989,8 +12989,7 @@ void clif_parse_GMHide(int fd, struct map_session_data *sd) {
 	char cmd[6];
 	//int eff_st = RFIFOL(packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
 
-	sprintf(cmd,"%chide",atcommand_symbol);
-
+	safesnprintf(cmd,sizeof(cmd),"%chide",atcommand_symbol);
 	is_atcommand(fd, sd, cmd, 1);
 }
 
@@ -13025,7 +13024,7 @@ void clif_parse_GMReqNoChat(int fd,struct map_session_data *sd)
 	if( dstsd == NULL )
 		return;
 
-	sprintf(command, "%cmute %d %s", atcommand_symbol, value, dstsd->status.name);
+	safesnprintf(command,sizeof(command),"%cmute %d %s", atcommand_symbol, value, dstsd->status.name);
 	is_atcommand(fd, sd, command, 1);
 }
 
@@ -13039,7 +13038,7 @@ void clif_parse_GMRc(int fd, struct map_session_data* sd)
 	char *name = (char*)RFIFOP(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
 
 	name[NAME_LENGTH-1] = '\0';
-	sprintf(command, "%cmute %d %s", atcommand_symbol, 60, name);
+	safesnprintf(command,sizeof(command),"%cmute %d %s", atcommand_symbol, 60, name);
 	is_atcommand(fd, sd, command, 1);
 }
 
@@ -13062,10 +13061,13 @@ void clif_account_name(struct map_session_data* sd, int account_id, const char* 
 /// 01df <account id>.L
 void clif_parse_GMReqAccountName(int fd, struct map_session_data *sd)
 {
+	char command[30];
 	int account_id = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
 
-	//TODO: find out if this works for any player or only for authorized GMs
-	clif_account_name(sd, account_id, ""); // insert account name here >_<
+	//tmp get all display
+	safesnprintf(command,sizeof(command),"%caccinfo %d", atcommand_symbol, account_id);
+	is_atcommand(fd, sd, command, 1); 
+	//clif_account_name(sd, account_id, ""); //! TODO request to login-serv
 }
 
 
@@ -13080,7 +13082,7 @@ void clif_parse_GMChangeMapType(int fd, struct map_session_data *sd)
 	int x,y,type;
 	struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
 
-	if( pc_has_permission(sd, PC_PERM_USE_CHANGEMAPTYPE) )
+	if(! pc_has_permission(sd, PC_PERM_USE_CHANGEMAPTYPE) )
 		return;
 
 	x = RFIFOW(fd,info->pos[0]);
@@ -14109,7 +14111,7 @@ void clif_Mail_refreshinbox(struct map_session_data *sd)
 
 	if( md->full ) {// TODO: is this official?
 		char output[100];
-		sprintf(output, "Inbox is full (Max %d). Delete some mails.", MAIL_MAX_INBOX);
+		safesnprintf(output,sizeof(output),"Inbox is full (Max %d). Delete some mails.", MAIL_MAX_INBOX);
 		clif_disp_onlyself(sd, output, strlen(output));
 	}
 }
@@ -17002,6 +17004,13 @@ void clif_display_pinfo(struct map_session_data *sd, int cmdtype) {
 	}
 }
 
+void clif_parse_GMFullStrip(int fd, struct map_session_data *sd) {
+	char cmd[30];
+	int t_aid = RFIFOL(fd,2);
+	safesnprintf(cmd,sizeof(cmd),"%cfullstrip %d",atcommand_symbol,t_aid);
+	is_atcommand(fd, sd, cmd, 1);
+}
+
 #ifdef DUMP_UNKNOWN_PACKET
 void DumpUnknow(int fd,TBL_PC *sd,int cmd,int packet_len){
 	const char* packet_txt = "save/packet.txt";
@@ -17547,6 +17556,7 @@ void packetdb_readdb(void)
 		{clif_parse_GMRc,"rc"},
 		{clif_parse_GMRecall2,"recall2"},
 		{clif_parse_GMRemove2,"remove2"},
+		{clif_parse_GMFullStrip,"gmfullstrip"},
 
 		{clif_parse_NoviceDoriDori,"sndoridori"},
 		{clif_parse_NoviceExplosionSpirits,"snexplosionspirits"},
