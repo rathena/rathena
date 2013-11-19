@@ -3,64 +3,19 @@
 //===== By: ==================================================
 //= Syrus22 (1.1) dafide18 (1.4) Skotlex (1.5)
 //===== Current Version: =====================================
-//= 3.3
+//= 3.4
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
 //= Refining NPCs and Metal Salesmen.
 //===== Additional Comments: =================================
-//= 1.0 by A bunch of people!
-//=     Syrus22 - Completely redid the script using functions... also
-//=     added the option for auto safe refining and multiple refining.
-//= 1.1 Negative input bug fixed [Lupus]
-//= 1.2 Added additional reparimen in morroc and payon. Added
-//=     Christopher the blacksmith in Geffen. Edited some dialogue [kobra_k88]
-//= 1.3 New Payon Locations [Darkchild]
-//=     Corrected zeny subtraction thx to jpnmania77.[kobra_k88]
-//= 1.3a Temporary corrected an exploit. Need to check sources
-//=     to fully fix bug [Shinigami]
-//=     Fixed repairman prices [shadowlady]
-//=     Fixed bug that skips requirements thanks to sir_loon [massdriller]
-//=     Fixed itemid error thanks to -Vitamin- [massdriller]
-//= 1.4 check again item in refining procedure to avoid
-//=     hacker that can change item [dafide18]
-//= 1.5 Fixed crashing due to badly used callfunc's [Skotlex]
-//=     Lupus, don't rollback this important fix again! >.<
-//= 1.5a Corrected an unneeded callfunc, fixed the anti-bot 
-//=     exploit ruining the safe refine loop. [Skotlex]
-//= 1.5b Fixed Spelling mistakes. [Nexon] 
-//= 1.6 Replaced all breaks for ends as per the new script engine [Skotlex]
-//= 1.7 Added Einbroch Refiners (Custom names ^^;) and a duplicated BS Shop. [Poki#3]
-//= 1.8 Added Lighthalzen Refiners (Custom names again ^^;) [Poki#3]
-//= 1.8a Fixed wrong indication thanks to NeoSaro [Lupus]
-//= 1.9 Rewrote repairman, removed the Steel from repair cost [DracoRPG]
-//= 2.0 Fixed missed equppment presence check. Thx2 Coltaro [Lupus]
-//= 2.0a Added weight checks thanks to Neouni [Playtester]
-//= 2.0b Fixed the names of Lighthalzen and Einbroch refiners thanks to Maud_Dib [Kargha]
-//= 2.1 Removed Duplicates [Silent]
-//= 2.2 Changed name from "Emvertacon" to "Emveretarcon". [Samuray22]
-//=     Thanks to Barron-Monster.
-//= 2.2b Changed name from "Pharacon" to "Phracon". [Samuray22]
-//=     Thanks to Barron-Monster.
-//= 2.3 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
-//= 2.4 Updated Refiner function. cleaner, and less dated. [L0ne_w0lf]
-//= 2.5 Rather large update to the refiner and merchants. :D [L0ne_W0lf]
-//= 2.6 Fixed a few bugs with creating pure stones. [L0ne_W0lf]
-//= 2.7 Refiner function accepts additional paramater. [L0ne_W0lf]
-//=     0 = No special features; 1 = new refining features
-//=     Updated Repairmen and function. No longer shows menu.
-//= 2.7a A couple touch-ups to the repairman function. [L0ne_w0lf]
-//= 2.8 Changed the nonexistent variable .@matname$ for getitemname(.@material). (bugreport:2340) [Samuray22]
-//= 2.8 Added proper Blacksmith Supplier to Einroch. [L0ne_W0lf]
-//=     Updated dated features comment to reflect new usage.
-//= 2.8a Small bugfix. (bugreport:2418) [Paradox924X]
-//= 2.9 Moved Morroc repairman to Morroc Ruins. [L0ne_W0lf]
 //= 3.0 Updated several NPC names and locations. [Xantara]
 //=     Added WoE map Refiners.
 //= 3.1 Added the new refinement & Ore creation NPC's for +11 and above Refinement. [Masao]
 //= 3.2 Moved some scripts to Renewal file, other minor changes. [Euphy]
 //= 3.2a Added 'disable_items' command. [Euphy]
 //= 3.3 Some official script updates. [Euphy]
+//= 3.4 Added VIP features. [Euphy]
 //============================================================
 
 // Christopher: Geffen Blacksmith
@@ -657,35 +612,48 @@ function	script	refinemain	{
 	switch(getequipweaponlv(.@part)){
 	case 0: 	//Refine Armor
 		set .@price,2000;
-		set .@material,985;
+		set .@material,985; //Elunium
 		set .@safe,4;
 		break;
 	case 1: 	//Refine Level 1 Weapon
 		set .@price,50;
-		set .@material,1010;
-		set .@safe,7; 
+		set .@material,1010; //Phracon
+		set .@safe,7;
 		break;
 	case 2: 	//Refine Level 2 Weapon
 		set .@price,200;
-		set .@material,1011;
-		set .@safe,6; 
+		set .@material,1011; //Emveretarcon
+		set .@safe,6;
 		break;
 	case 3: 	//Refine Level 3 Weapon
 		set .@price,5000;
-		set .@material,984;
-		set .@safe,5; 
+		set .@material,984; //Oridecon
+		set .@safe,5;
 		break;
 	case 4: 	//Refine Level 4 Weapon
 		set .@price,20000;
-		set .@material,984;
-		set .@safe,4; 
+		set .@material,984; //Oridecon
+		set .@safe,4;
 		break;
 	case 5: 	//Refine other stuff?
 		set .@price,2000;
-		set .@material,985;
-		set .@safe,4; 
+		set .@material,985; //Elunium
+		set .@safe,4;
 		break;
 	}
+
+	// If the VIP system is enabled, the prices for non-VIP players are considerably higher.
+	if (getserverdef(VAR_VIP_SCRIPT) && !vip_status(1)) {
+		switch(getequipweaponlv(.@part)) {
+			case 0: set .@price, .@price * 10; break;
+			case 1: set .@price, .@price * 40; break;
+			case 2: set .@price, .@price * 50; break;
+			case 3: set .@price, .@price * 2; break;
+			case 4: set .@price, .@price * 2; break;
+			case 5: set .@price, .@price * 10; break;
+		}
+	}
+
 	if(.@features != 1) {
 		mes "[" + getarg(0) + "]";
 		mes "To refine this I need";
@@ -1269,3 +1237,54 @@ function	script	repairmain	{
 		close;
 	}
 }
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.0 by A bunch of people!
+//=     Syrus22 - Completely redid the script using functions... also
+//=     added the option for auto safe refining and multiple refining.
+//= 1.1 Negative input bug fixed [Lupus]
+//= 1.2 Added additional reparimen in morroc and payon. Added
+//=     Christopher the blacksmith in Geffen. Edited some dialogue [kobra_k88]
+//= 1.3 New Payon Locations [Darkchild]
+//=     Corrected zeny subtraction thx to jpnmania77.[kobra_k88]
+//= 1.3a Temporary corrected an exploit. Need to check sources
+//=     to fully fix bug [Shinigami]
+//=     Fixed repairman prices [shadowlady]
+//=     Fixed bug that skips requirements thanks to sir_loon [massdriller]
+//=     Fixed itemid error thanks to -Vitamin- [massdriller]
+//= 1.4 check again item in refining procedure to avoid
+//=     hacker that can change item [dafide18]
+//= 1.5 Fixed crashing due to badly used callfunc's [Skotlex]
+//=     Lupus, don't rollback this important fix again! >.<
+//= 1.5a Corrected an unneeded callfunc, fixed the anti-bot 
+//=     exploit ruining the safe refine loop. [Skotlex]
+//= 1.5b Fixed Spelling mistakes. [Nexon] 
+//= 1.6 Replaced all breaks for ends as per the new script engine [Skotlex]
+//= 1.7 Added Einbroch Refiners (Custom names ^^;) and a duplicated BS Shop. [Poki#3]
+//= 1.8 Added Lighthalzen Refiners (Custom names again ^^;) [Poki#3]
+//= 1.8a Fixed wrong indication thanks to NeoSaro [Lupus]
+//= 1.9 Rewrote repairman, removed the Steel from repair cost [DracoRPG]
+//= 2.0 Fixed missed equppment presence check. Thx2 Coltaro [Lupus]
+//= 2.0a Added weight checks thanks to Neouni [Playtester]
+//= 2.0b Fixed the names of Lighthalzen and Einbroch refiners thanks to Maud_Dib [Kargha]
+//= 2.1 Removed Duplicates [Silent]
+//= 2.2 Changed name from "Emvertacon" to "Emveretarcon". [Samuray22]
+//=     Thanks to Barron-Monster.
+//= 2.2b Changed name from "Pharacon" to "Phracon". [Samuray22]
+//=     Thanks to Barron-Monster.
+//= 2.3 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 2.4 Updated Refiner function. cleaner, and less dated. [L0ne_w0lf]
+//= 2.5 Rather large update to the refiner and merchants. :D [L0ne_W0lf]
+//= 2.6 Fixed a few bugs with creating pure stones. [L0ne_W0lf]
+//= 2.7 Refiner function accepts additional paramater. [L0ne_W0lf]
+//=     0 = No special features; 1 = new refining features
+//=     Updated Repairmen and function. No longer shows menu.
+//= 2.7a A couple touch-ups to the repairman function. [L0ne_w0lf]
+//= 2.8 Changed the nonexistent variable .@matname$ for getitemname(.@material). (bugreport:2340) [Samuray22]
+//= 2.8 Added proper Blacksmith Supplier to Einroch. [L0ne_W0lf]
+//=     Updated dated features comment to reflect new usage.
+//= 2.8a Small bugfix. (bugreport:2418) [Paradox924X]
+//= 2.9 Moved Morroc repairman to Morroc Ruins. [L0ne_W0lf]
+//============================================================

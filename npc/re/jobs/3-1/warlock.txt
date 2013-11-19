@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_Dib, Gepard & L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //= 1.3a Added temporary coordinate fix #distorted_space_1-1. [Euphy]
 //= 1.3b Added official coordinates. [Euphy]
 //= 1.4 Added GM management function. [Euphy]
+//= 1.5 Added VIP features. [Euphy]
 //============================================================
 
 -	script	#distorted_space_	-1,{
@@ -162,6 +163,12 @@ function	script	F_Warlock	{
 			next;
 			switch(select("What do I need to do?:Cancel.")) {
 			case 1:
+				if (getserverdef(VAR_VIP_SCRIPT)) {
+					callfunc "VIP_Third_Class";
+					set job_wl,2;
+					setquest 11106;
+					next;
+				}
 				mes "[Master Egnoloria]";
 				mes "Are you serious?";
 				mes "You hunger for power don't you human.";
@@ -580,6 +587,12 @@ spl_in02,80,108,5	script	Guild Master#Warlock	465,{
 		next;
 		switch(select("How can I be a Warlock?:Cancel.")) {
 		case 1:
+			if (getserverdef(VAR_VIP_SCRIPT)) {
+				callfunc "VIP_Third_Class";
+				set job_wl,2;
+				setquest 11106;
+				next;
+			}
 			mes "[Master Egnoloria]";
 			mes "Are you serious?";
 			mes "You hunger for power don't you human.";

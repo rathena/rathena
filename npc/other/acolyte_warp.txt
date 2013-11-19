@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,8 @@
 //===== Additional Comments: =================================
 //= 1.0 First version. [Euphy]
 //=     Unsure if this is on kRO, so disabled for now.
+//= 1.1 Added iRO VIP features. [Euphy]
+//=     The function is located in re/quests/eden/eden_vip.txt.
 //============================================================
 
 prontera,98,121,4	script	Acolyte#Prtclear	90,{
@@ -19,6 +21,10 @@ prontera,98,121,4	script	Acolyte#Prtclear	90,{
 	mes "Hello there, adventurer.";
 	mes "I've been studying magic from all over Rune-Midgard to upgrade what I believe to be one of the greatest skills available to the acolyte class.";
 	next;
+
+	if (is_function("VIP_iRO_Acolyte"))
+		callfunc "VIP_iRO_Acolyte","[Keiki]","Juno";
+
 	mes "[Keiki]";
 	mes "I am the one and only Acolyte that has attained the Level 10 Warp Portal skill!";
 	emotion e_dots,1;
@@ -40,7 +46,6 @@ prontera,98,121,4	script	Acolyte#Prtclear	90,{
 		next;
 
 		setarray .@towns$[0], "Izlude", "Geffen", "Payon", "Morroc", "Alberta", "Al De Baran", "Comodo", "Umbala", "Juno";
-		setarray .@maps$[0],  "izlude", "geffen", "payon", "morocc", "alberta",   "aldebaran", "comodo", "umbala", "yuno";
 		setarray .@cost[0],        600,     1200,    1200,     1200,      1800,          2200,     2200,     2200,   1800;
 
 		set .@size, getarraysize(.@towns$);
@@ -84,6 +89,10 @@ yuno,142,184,6	script	Acolyte#Junoclear	90,{
 	mes "Hello, adventurer.";
 	mes "My companion Keiki and I have discovered a way to increase our warp portal abilities.";
 	next;
+
+	if (is_function("VIP_iRO_Acolyte"))
+		callfunc "VIP_iRO_Acolyte","[Isalei]","Prontera";
+
 	mes "[Isalei]";
 	mes "Though I have not mastered up to the level that she has, I have been able to attain Level 5.";
 	emotion e_dots,1;
@@ -103,7 +112,6 @@ yuno,142,184,6	script	Acolyte#Junoclear	90,{
 		next;
 
 		setarray .@towns$[0], "Einbroch", "Lighthalzen", "Hugel", "Rachel", "Prontera";
-		setarray .@maps$[0],  "einbroch", "lighthalzen", "hugel", "rachel", "prontera";
 		setarray .@cost[0],         2200,          2200,    2200,     2200,       1800;
 
 		set .@size, getarraysize(.@towns$);
@@ -113,7 +121,7 @@ yuno,142,184,6	script	Acolyte#Junoclear	90,{
 		if (.@i == .@size)
 			close;
 		if (Zeny < .@cost[.@i]) {
-				mes "[Isalei]";
+			mes "[Isalei]";
 			mes "I'm sorry, but you don't have";
 			mes "enough zeny for the Teleport";
 			mes "Service. The fee to teleport";

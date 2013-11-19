@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Masao
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //= 1.0 Converted from the official script.
 //= 1.1 Optimized. [Euphy]
 //= 1.2 Moved spawns and warps (by Masao) to this file. [Euphy]
+//= 1.3 Added VIP features. [Euphy]
 //============================================================ 
 
 // Entrance NPCs
@@ -62,26 +63,66 @@ prontera,132,125,4	script	Bossnia Staff#1	908,{
 	mes "Although you know the place, you want to go in...";
 	mes "Good, I will send you there.";
 	mes "But after you went there, don't hold";
-	mes "a grudge against me. Also it costs 5,000 zeny.";
-	next;
-	if (Zeny > 4999) {
-		mes "[Riss]";
-		mes "Would you really like to take the challenge?";
-		mes "Ok, just choose the course.";
+
+	// If the VIP system is enabled, players pay a Reset Stone for 5 entrances (with a choice of warps).
+	// If it's disabled, players pay 5,000z per entrance.
+	if (getserverdef(VAR_VIP_SCRIPT)) {
+		mes "a grudge against me. It'll cost you 1 Reset Stone for 5 access.";
 		next;
-		set .@i, select("First","Second","Third","Fourth");
 		mes "[Riss]";
-		mes "Take care, boy~";
-		mes "Don't hold a grudge against me.";
-		close2;
-		set Zeny, Zeny - 5000;
-		warp "bossnia_0"+.@i,rand(202,204),rand(202,204);
-		end;
+		if (bossnia_event > 0) {
+			set .@type,1;
+			mes "Remaining access: "+bossnia_event;
+		} else if (countitem(6320)) {
+			set .@type,2;
+			mes "Do you want to go?";
+		} else {
+			mes "You don't have a ticket now.....";
+			mes "So come to me again with a Reset Stone later.";
+			close;
+		}
+		next;
+		if(select("Enter:Leave") == 2)
+			close;
+		set .@i, select("First:Second:Third:Fourth");
+		switch(select("Warp 1:Warp 2:Warp 3:Warp 4")) {
+			case 1: set .@x,31; set .@y,208; break;
+			case 2: set .@x,31; set .@y,31; break;
+			case 3: set .@x,208; set .@y,31; break;
+			case 4: set .@x,208; set .@y,208; break;
+		}
+		if (.@type == 1)
+			set bossnia_event, bossnia_event-1;
+		else {
+			delitem 6320,1; //Premium_Reset_Stone
+			set bossnia_event,4;
+		}
+		specialeffect2 EF_MAXPOWER;
+		warp "bossnia_0"+.@i,.@x,.@y;
+		close;
+	} else {
+		mes "a grudge against me. Also it costs 5,000 zeny.";
+		next;
+		if (Zeny > 4999) {
+			mes "[Riss]";
+			mes "Would you really like to take the challenge?";
+			mes "Ok, just choose the course.";
+			next;
+			set .@i, select("First:Second:Third:Fourth");
+			mes "[Riss]";
+			mes "Take care, boy~";
+			mes "Don't hold a grudge against me.";
+			close2;
+			set Zeny, Zeny - 5000;
+			warp "bossnia_0"+.@i,rand(202,204),rand(202,204);
+			end;
+		} else {
+			mes "[Riss]";
+			mes "You don't have enough money...";
+			mes "Come back when you have at least 5,000 zeny.";
+			close;
+		}
 	}
-	mes "[Riss]";
-	mes "You don't have enough money...";
-	mes "Come back when you have at least 5,000 zeny.";
-	close;
 }
 geffen,124,169,4	duplicate(Bossnia Staff#1)	Bossnia Staff#2	908
 payon,165,150,4	duplicate(Bossnia Staff#1)	Bossnia Staff#3	908

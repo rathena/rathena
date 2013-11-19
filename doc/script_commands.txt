@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20131112
+//= 20131118
 //===== Description: =========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -2334,6 +2334,28 @@ Examples:
 	mes "Silver's IP: " + getcharip("Silver");
 
 ---------------------------------------
+
+*vip_status(<type>,{"<character name>"})
+
+Returns various information about a player's VIP status.
+
+Valid types:
+ 1 - VIP status. (1 if VIP, 0 if non-VIP)
+ 2 - VIP expire date. (timestamp string if VIP, 0 if non-VIP)
+ 3 - VIP time remaining. (timestamp string if VIP, 0 if non-VIP)
+
+NOTE: This command is only available if the VIP System is enabled.
+
+---------------------------------------
+
+*vip_time <time>,{"<character name>"};
+
+Changes a player's VIP time (in minutes). A positive value will increase time, and a
+negative value will decrease time.
+
+NOTE: This command is only available if the VIP System is enabled.
+
+---------------------------------------
 \\
 2,2 Item-related commands
 \\
@@ -3496,6 +3518,8 @@ Returns a server definition. Valid types are listed in 'db/const.txt':
 	VAR_MAX_GUILDLEVEL	7
 	VAR_MAX_GUILD_STORAGE	8
 	VAR_MAX_BG_MEMBERS	9
+	VAR_VIP_SCRIPT	10
+	VAR_MIN_STORAGE	11
 
 ---------------------------------------
 \\

@@ -74,6 +74,13 @@
 
 /// Uncomment to enable VIP system.
 //#define VIP_ENABLE
+
+/// Enable VIP script changes? (requires VIP_ENABLE)
+/// The primary effects of this are restrictions on non-VIP players, such as requiring
+/// a Reset Stone to change into third classes, paying more for equipment upgrades, and
+/// so forth. Note that the changes are based on euRO, not iRO.
+#define VIP_SCRIPT 0
+
 #ifdef VIP_ENABLE
 	#define MIN_STORAGE 300 // Default number of storage slots.
 	#define MIN_CHARS 3 // Default number of characters per account.
@@ -88,7 +95,6 @@
 #if (MIN_CHARS + MAX_CHAR_VIP + MAX_CHAR_BILLING) > MAX_CHARS
 	#error "Config of MAX_CHARS is invalid"
 #endif
-#define VIP_SCRIPT 0 //enable or disable scripts (require vip_enable)
 
 /**
  * No settings past this point

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Kisuka
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -19,6 +19,7 @@
 //= 1.4 Fixed checkquest to check quest accordingly. [Joseph]
 //= 1.4a Added 'npcskill' command. [Euphy]
 //= 1.5 Replaced with the official kRO scripts. [Euphy]
+//= 1.6 Added VIP features. [Euphy]
 //============================================================
 
 // Main NPCs
@@ -948,19 +949,20 @@ L_Services:
 		next;
 
 		// VIP System messages.
-		mes "[Kafra Employee]";
-		mes "There are a maximum of 600 Inventory Slots in Kafra Storage, meaning you can have up to 600 different kinds of items in Storage.";
-		next;
-/*
-		mes "[Kafra Employee]";
-		mes "There are a maximum of 300 Inventory Slots in Kafra Storage, meaning you can have up to 300 different kinds of items in Storage.";
-		next;
-		mes "[Kafra Employee]";
-		mes "If you have a Premium Subscription, the maximum Inventory Slots in Kafra Storage is 600!";
-		mes "Remember though, that in the case of Equipment, each item takes up one Inventory Slot.";
-		mes "The maximum number of items that can be placed in Kafra Storage is 30,000.";
-		next;
-*/
+		if (getserverdef(VAR_MIN_STORAGE) != getserverdef(VAR_MAX_STORAGE)) {
+			mes "[Kafra Employee]";
+			mes "There are a maximum of "+getserverdef(VAR_MIN_STORAGE)+" Inventory Slots in Kafra Storage, meaning you can have up to "+getserverdef(VAR_MIN_STORAGE)+" different kinds of items in Storage.";
+			next;
+			mes "[Kafra Employee]";
+			mes "If you have a Premium Subscription, the maximum Inventory Slots in Kafra Storage is "+getserverdef(VAR_MAX_STORAGE)+"!";
+			mes "Remember though, that in the case of Equipment, each item takes up one Inventory Slot.";
+			mes "The maximum number of items that can be placed in Kafra Storage is 30,000.";
+			next;
+		} else {
+			mes "[Kafra Employee]";
+			mes "There are a maximum of "+getserverdef(VAR_MAX_STORAGE)+" Inventory Slots in Kafra Storage, meaning you can have up to "+getserverdef(VAR_MAX_STORAGE)+" different kinds of items in Storage.";
+			next;
+		}
 
 		mes "[Kafra Employee]";
 		mes "This Storage is shared by every character on one account.";

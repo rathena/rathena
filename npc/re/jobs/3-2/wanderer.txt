@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_Dib, Meyraw
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -15,6 +15,7 @@
 //= 1.2 Fixed an endless loop in dialogue.
 //= 1.3 Fixed a typo and added checkquest. [Joseph]
 //= 1.4 Updated script, optimized. [Euphy]
+//= 1.5 Added VIP features. [Euphy]
 //============================================================
 
 xmas,162,209,5	script	Aspiring Wanderer, Soy	714,{
@@ -264,6 +265,12 @@ xmas,132,143,5	script	Performance Manager#wnd	713,{
 			mes "[Performance Manager]";
 			mes "You are so cold-hearted....";
 			close;
+		}
+		if (getserverdef(VAR_VIP_SCRIPT)) {
+			callfunc "VIP_Third_Class";
+			set job_wan,2;
+			setquest 2218;
+			next;
 		}
 		mes "[Performance Manager]";
 		mes "I would grab them by their collars if I could!";

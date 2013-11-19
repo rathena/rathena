@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Euphy
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First version. [Euphy]
 //= 1.1 Added GM management NPC. [Euphy]
+//= 1.2 Added VIP features. [Euphy]
 //============================================================ 
 
 ma_scene01,174,179,4	script	Taho	541,{
@@ -474,10 +475,10 @@ OnMobSpawn:
 		erasequest 12279;
 		mes "[Taho]";
 		mes "This was found from Bakonawa's corpse. It would be better if you take this.";
-//		if (IsPremiumPcCafe == 10)
+		if (!getserverdef(VAR_VIP_SCRIPT) || vip_status(1))
 			getitem 6499,7; //Ancient_Grudge
-//		else
-//			getitem 6499,5; //Ancient_Grudge
+		else
+			getitem 6499,5; //Ancient_Grudge
 		getexp 0,100000;
 		next;
 	}

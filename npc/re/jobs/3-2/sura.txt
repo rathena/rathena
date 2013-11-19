@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_Dib, Gepard
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -14,10 +14,20 @@
 //= 1.1 Removed disablenpc which causes players stucked in waitingroom. [Joseph]
 //= 1.2 Updated script, optimized. [Euphy]
 //= 1.3 Added GM management function. [Euphy]
+//= 1.4 Added VIP features. [Euphy]
 //============================================================
 
 ve_in,237,125,0	script	King Crab#job_shu	107,{
 	if (job_shu == 0) {
+		if (BaseJob == Job_Monk && BaseLevel >= 99 && JobLevel >= 50) {
+			set .@job_check,1;
+			if (getserverdef(VAR_VIP_SCRIPT)) {
+				callfunc "VIP_Third_Class";
+				set job_shu,1;
+				setquest 11155;
+				next;
+			}
+		}
 		mes "[King Crab]";
 		mes "Khh ha ha ha ha ha ha.";
 		mes "That little rookie was knocked out by my one blow!";
@@ -26,7 +36,7 @@ ve_in,237,125,0	script	King Crab#job_shu	107,{
 		mes "Those arrogant fellows deserve a bitter lesson.";
 		mes "How dare a little rookie attack you, boss!";
 		next;
-		if (BaseJob != Job_Monk || BaseLevel < 99 || JobLevel < 50) {
+		if (.@job_check) {
 			mes "[King Crab]";
 			mes "Khhha ha ha ha ha ha!!!!";
 			mes "One more cup of beer, here!!!";

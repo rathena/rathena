@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_Dib
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -21,6 +21,7 @@
 //= 1.4 Some optimization. [Euphy]
 //= 1.5 Updated script, optimized. [Euphy]
 //= 1.6 Added GM management function. [Euphy]
+//= 1.7 Added VIP features. [Euphy]
 //============================================================
 
 tur_dun01,156,36,5	script	Survival Instructor#jr01	59,{
@@ -66,6 +67,12 @@ tur_dun01,156,36,5	script	Survival Instructor#jr01	59,{
 			mes "It looks like you have";
 			mes "enough experience.";
 			next;
+			if (getserverdef(VAR_VIP_SCRIPT)) {
+				callfunc "VIP_Third_Class";
+				set job_ranger01,1;
+				setquest 8254;
+				next;
+			}
 			mes "[Survival Instructor, Rescue]";
 			mes "Good.";
 			mes "First of all, let me tell you the job change qualifications to be a Ranger.";

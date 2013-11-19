@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_Dib, Aeomin
 //===== Current Version: ===================================== 
-//= 1.3a
+//= 1.4
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -15,6 +15,7 @@
 //= 1.2 Updated dialogue. Credits to Muad_Dib. [Joseph]
 //= 1.3 Updated script, optimized. [Euphy]
 //= 1.3a Moved warps to separate file. [Euphy]
+//= 1.4 Added VIP features. [Euphy]
 //============================================================
 
 alde_alche,35,186,5	script	Alchemist Union Member	805,{
@@ -52,6 +53,12 @@ alde_alche,35,186,5	script	Alchemist Union Member	805,{
 				next;
 				switch(select("Of course, I want to meet a Geneticist.:I don't want to meet a Geneticist.")) {
 				case 1:
+					if (getserverdef(VAR_VIP_SCRIPT)) {
+						callfunc "VIP_Third_Class";
+						set job_gen,1;
+						setquest 2215;
+						next;
+					}
 					mes "[Alchemist Union Member]";
 					mes "Wise choice!";
 					mes "The infamous Geneticist 'Devries'.";

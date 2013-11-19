@@ -3,7 +3,7 @@
 //===== By ===================================================
 //= L0ne_W0lf
 //===== Version ==============================================
-//= 1.2a
+//= 1.3
 //===== Compatible With ======================================
 //= rAthena SVN
 //===== Description ==========================================
@@ -19,6 +19,7 @@
 //= 1.1 Hydra Ball (12408)
 //= 1.2 Optimization. [Euphy]
 //= 1.2a Added 'consumeitem' command. [Euphy]
+//= 1.3 Added VIP features and fixed some EXP values. [Euphy]
 //============================================================
 
 // Lost Puppies :: dogdog.sc
@@ -50,7 +51,10 @@ brasilis,297,307,5	script	Angelo#br	50,{
 		mes "Oh, thank you. You found all of 3 puppies.";
 		mes "Thanks a lot.";
 		mes "I hope this is useful to you. hoho.";
-		getexp 50000,0;
+		if (getserverdef(VAR_VIP_SCRIPT) && vip_status(1))
+			getexp 75000,0;
+		else
+			getexp 50000,0;
 		erasequest 9031;
 		setquest 9032;
 		specialeffect2 EF_ASSUMPTIO;
@@ -451,7 +455,10 @@ brasilis,187,162,5	script	Candy Maker	476,{
 		set brazil_gua,11;
 		completequest 2200;
 		getitem 12414,1; //Guarana_Candy
-		getexp 700000,100000;
+		if (getserverdef(VAR_VIP_SCRIPT) && vip_status(1))
+			getexp 105000,15000;
+		else
+			getexp 70000,10000;
 		close;
 	}
 	else if (brazil_gua == 11) {
@@ -1089,7 +1096,10 @@ brasilis,203,286,3	script	Botanist Karmen#bra	893,{
 		mes "The water lily must truly be a lucky flower. hahaha";
 		set brazil_regia,10;
 		completequest 2207;
-		getexp 500000,100000;
+		if (getserverdef(VAR_VIP_SCRIPT) && vip_status(1))
+			getexp 75000,15000;
+		else
+			getexp 50000,10000;
 		close;
 	}
 	else {
@@ -2797,7 +2807,10 @@ bra_in01,206,188,1	script	Open Manhole#todunbra	844,{
 		set brazil_ghost,8;
 		//completequest 2208;
 		completequest 60355;
-		getexp 900000,0;
+		if (getserverdef(VAR_VIP_SCRIPT) && vip_status(1))
+			getexp 135000,0;
+		else
+			getexp 90000,0;
 		disablenpc "Ghost#bra_end";
 		close;
 	}

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= -SkittleNugget-
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -12,6 +12,7 @@
 //===== Additional Comments: =================================
 //= 1.0 First version.
 //= 1.1 Edited and added more NPCs, lots of placeholders. [Euphy]
+//= 1.2 Added VIP NPCs and features. [Euphy]
 //============================================================
 
 // Acolyte Warper (part of other/acolyte_warp.txt)
@@ -21,6 +22,10 @@ moc_para01,14,32,5	script	Aperture#acolytewarp	90,{
 	mes "Hello there, adventurer.";
 	mes "I've been studying magic from all over Rune-Midgard to upgrade what I believe to be one of the greatest skills available to the acolyte class.";
 	next;
+
+	if (is_function("VIP_iRO_Acolyte"))
+		callfunc "VIP_iRO_Acolyte","[Aperture]","Prontera";
+
 	mes "[Aperture]";
 	mes "I am the one and only Acolyte that has attained the Level 10 Warp Portal skill!";
 	emotion e_dots,1;
@@ -88,6 +93,131 @@ moc_para01,14,32,5	script	Aperture#acolytewarp	90,{
 		mes "Come back when you need a warp.";
 		close;
 	}
+}
+
+function	script	VIP_iRO_Acolyte	{
+	if (!vip_status(1)) {
+		mes getarg(0);
+		mes "But, my full powers are only available to those who have are VIPs.";
+		mes "I can still offer you a warp to "+getarg(1)+" though.";
+		next;
+		switch(select(getarg(0)+" -> 1800z:Cancel")) {
+		case 1:
+			if (Zeny < 1800) {
+				mes getarg(0);
+				mes "I'm sorry, but you don't have";
+				mes "enough zeny for the Teleport";
+				mes "Service. The fee to teleport";
+				mes "to "+getarg(1)+" is 1,800 zeny.";
+				close;
+			}
+			specialeffect2 EF_READYPORTAL;
+			specialeffect2 EF_TELEPORTATION;
+			specialeffect2 EF_PORTAL;
+			next;
+			set Zeny, Zeny - 1800;
+			if (getarg(1) == "Juno")
+				warp "yuno",158,125;
+			else
+				warp "prontera",116,72;
+			close;
+		case 2:
+			close;
+		}
+	}
+	return;
+}
+
+
+// Primo d'Buffer, VIP stat bonuses
+//============================================================
+moc_para01,26,15,3	script	Primo d'Buffer	790,{
+	mes "[Primo d'Buffer]";
+	mes "Hello adventurer, you look like you are itching to get out there and save the world!";
+	if (!vip_status(1)) {
+		mes "I can also tell that you haven't been blessed with '^6666ffVIP Status^000000'.";
+		next;
+		mes "[Primo d'Buffer]";
+		mes "My orders are to help out any Adventurer marked as VIP with special Buffs!";
+		mes "Currently I will give you ^ff0000+7 to all of your Stats for 30 minutes^000000 if you are VIP.";
+		close;
+	}
+	mes "I can also tell that you have been blessed with '^007FFFVIP Status^000000'.";
+	next;
+	mes "[Primo d'Buffer]";
+	mes "That is awesome!";
+	mes "Here is +7 to all your stats for 30 minutes to help you on your journey. Just come back when you need to refill your stats!";
+	close2;
+	sc_start SC_FOOD_STR_CASH,1200000,7;
+	sc_start SC_FOOD_AGI_CASH,1200000,7;
+	sc_start SC_FOOD_VIT_CASH,1200000,7;
+	sc_start SC_FOOD_DEX_CASH,1200000,7;
+	sc_start SC_FOOD_INT_CASH,1200000,7;
+	sc_start SC_FOOD_LUK_CASH,1200000,7;
+	end;
+}
+
+// Clearchus, VIP mercenary rentals
+//============================================================
+moc_para01,53,30,3	script	Clearchus	470,{
+	if (checkquest(62238,PLAYTIME) > -1 && checkquest(62238,PLAYTIME) < 2) {
+		mes "You must wait for the timer to finish before you can hire a new mercenary.";
+		close;	
+	}
+	mes "[Clearchus]";
+	mes "Greetings young adventurer! I represent the Midgardian Mercenary Mission.";
+	next;
+	mes "[Clearchus]";
+	mes "We provide training to aspiring mercenaries by pairing them with adventurers such as yourself.";
+	next;
+	mes "[Clearchus]";
+	mes "Our organization is 10,000 strong! Now let me see if you are registered for this service.";
+	next;
+	if (!vip_status(1)) {
+		mes "[Clearchus]";
+		mes "Unfortunately it appears that you are not VIP, please get VIP so that you can use this service. You can get a temporary VIP access by talking to Gramps at the Eden Group Headquarters.";
+		next;
+		mes "[Clearchus]";
+		mes "Vip is a very useful tool for adventurers to have, giving access to extra Kafra Services, discounted warps, exclusive content, and use of Primo d'Buffer. If an adventurer has full vip they even get an Exp, Drops, and storage boost!";
+		close;
+	}
+	mes "[Clearchus]";
+	mes "Your name is on the list.";
+	next;
+	mes "[Clearchus]";
+	mes "What kind of skill set are you looking for in a mercenary?";
+	next;
+
+	switch(select("Swordsman:Archer:Lancer")) {
+	case 1:
+		set .@base_id,12163; //SwordMercenary_Scroll
+		break;
+	case 2:
+		set .@base_id,12153; //Bow_Mercenary_Scroll
+		break;
+	case 3:
+		set .@base_id,12173; //SpearMercenary_Scroll
+		break;
+	}
+	     if (BaseLevel < 11) set .@i,0;
+	else if (BaseLevel < 21) set .@i,1;
+	else if (BaseLevel < 31) set .@i,2;
+	else if (BaseLevel < 41) set .@i,3;
+	else if (BaseLevel < 51) set .@i,4;
+	else if (BaseLevel < 61) set .@i,5;
+	else if (BaseLevel < 71) set .@i,6;
+	else if (BaseLevel < 81) set .@i,7;
+	else if (BaseLevel < 91) set .@i,8;
+	else set .@i,9;
+
+	mes "[Clearchus]";
+	mes "I have just the mercenary in mind!";
+	next;
+	mes "[Clearchus]";
+	mes "Have fun now, ya hear?";
+	getitem .@base_id + .@i,1;
+	setquest 62238;
+	close;
 }
 
 // Carrot & Red Potion Traders

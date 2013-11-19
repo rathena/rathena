@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -22,10 +22,26 @@
 //= 1.3 Changed permanent global variables to temporary ones. [Euphy]
 //=     Added GM NPCs (commented).
 //= 1.4 Added GM management function. [Euphy]
+//= 1.5 Added Marriage Covenant item and VIP features. [Euphy]
 //============================================================
 
 prt_church,97,100,4	script	Wedding Staff#w	71,{
 	cutin "wedding_marry01",2;
+	if (countitem(6026) == 0) {
+
+		// If the VIP system is enabled:
+		// - Non-VIP players must use a Marriage Covenant to get married.
+		// - VIP players may either pay the Zeny fee or use a Marriage Covenant.
+		if (getserverdef(VAR_VIP_SCRIPT) && !vip_status(1)) {
+			mes "[Marry Happy]";
+			mes "Sorry but you can't get married right now.";
+			mes "The wedding is only available for subscribed players.";
+			mes "But if you have a ^FF0000Marriage Covenant^000000, then you'll be able to get married!";
+			goto L_End;
+		}
+
+	} else
+		set .@covenant,1;
 	if (Upper == 2) {
 		mes "[Marry Happy]";
 		mes "Hello~";
@@ -93,7 +109,6 @@ prt_church,97,100,4	script	Wedding Staff#w	71,{
 		mes "life with, you might want to pop the question. I hope everyone";
 		mes "finds their perfect match~";
 		break;
-
 	case 2:
 		mes "[Marry Happy]";
 		mes "The first part of the";
@@ -115,7 +130,7 @@ prt_church,97,100,4	script	Wedding Staff#w	71,{
 		mes "speak to the Bishop and tell";
 		mes "him the name of her groom.";
 		mes "If these names are correctly";
-		mes "told to the Biship, they will";
+		mes "told to the Bishop, they will";
 		mes "be able to exchange rings.";
 		next;
 		mes "[Marry Happy]";
@@ -181,24 +196,40 @@ prt_church,97,100,4	script	Wedding Staff#w	71,{
 		mes "submit your application.";
 		mes "I'll see you later, adventurer~";
 		break;
-
 	case 3:
 		cutin "wedding_marry02",2;
+		if (getserverdef(VAR_VIP_SCRIPT)) {
+			mes "[Marry Happy]";
+			mes "^FF0000Wait!^000000";
+			mes "^FF0000If your account in not a premium, you must have a Marriage Covenant to get married.^000000";
+			mes "^FF0000Please check the current state of your account, and the one of your lover, before register for a wedding.^000000";
+			next;
+		}
 		if (Sex) {
 			mes "[Marry Happy]";
 			mes "So you'd like to get married?";
 			mes "As a groom, you need to prepare";
-			mes "^3377FF1 Tuxedo^000000 and pay ^3377FF1,300,000 zeny^000000.";
-			mes "Brides have to provide their own Wedding Dresses and pay a fee";
-			mes "of 1,200,000 zeny.";
-		}
-		else {
+			if (.@covenant) {
+				mes "^3377FF1 Tuxedo^000000 and give me your ^3377FF1 Marriage Covenant^000000.";
+				mes "Brides have to provide their own Wedding Dresses and pay a fee";
+				mes "of 1,200,000 zeny or also bring a Marriage Covenant.";
+			} else {
+				mes "^3377FF1 Tuxedo^000000 and pay ^3377FF1,300,000 zeny^000000.";
+				mes "Brides have to provide their own Wedding Dresses and pay a fee";
+				mes "of 1,200,000 zeny.";
+			}
+		} else {
 			mes "[Marry Happy]";
 			mes "So you'd like to get married?";
 			mes "As a bride, you need to prepare";
-			mes "1 Wedding Dress and pay a fee";
-			mes "of 1,200,000 zeny. Grooms must";
-			mes "bring a Tuxedo and pay 1,300,000 zeny to get married.";
+			if (.@covenant) {
+				mes "^3377FF1 Wedding Dress^000000 and give me your ^3377FFMarriage Covenant^000000.";
+				mes "Grooms must bring a Tuxedo and pay";
+				mes "1,300,000 zeny or also bring a Marriage Covenant.";
+			} else {
+				mes "^3377FF1 Wedding Dress^000000 and pay a fee of 1,200,000 zeny. Grooms must";
+				mes "bring a Tuxedo and pay 1,300,000 zeny to get married.";
+			}
 		}
 		next;
 		mes "[Marry Happy]";
@@ -259,33 +290,13 @@ prt_church,97,100,4	script	Wedding Staff#w	71,{
 				mes "back after you find it, okay?";
 				goto L_End;
 			}
-			else if (Sex) {
-				if (Zeny < 1300000) {
-					mes "[Marry Happy]";
-					mes "I'm sorry, but you don't";
-					mes "have the 1,300,000 zeny";
-					mes "that all grooms must pay";
-					mes "for the wedding ceremony.";
-					mes "Did you misplace your money?";
-					goto L_End;
-				}
-				else if (countitem(7170) < 1) {
-					mes "[Marry Happy]";
-					mes "Where's your Tuxedo?";
-					mes "You absolutely have to";
-					mes "wear it during the wedding";
-					mes "ceremony! Find it, bring it";
-					mes "to me, and then we can finally";
-					mes "begin the wedding, okay?";
-					goto L_End;
-				}
-			}
 			else if (Sex == 0) {
-				if (Zeny < 1200000) {
+				if (countitem(6026) == 0 && Zeny < 1200000) {
 					mes "[Marry Happy]";
 					mes "I'm sorry, but all brides";
 					mes "must pay the 1,200,000";
-					mes "zeny fee to proceed with the";
+					mes "zeny fee or bring a Marriage";
+					mes "Covenant to proceed with the";
 					mes "wedding ceremony. Perhaps";
 					mes "you could ask your partner";
 					mes "to help you with the funds?";
@@ -299,6 +310,28 @@ prt_church,97,100,4	script	Wedding Staff#w	71,{
 					mes "bring it to me-- you";
 					mes "absolutely need it";
 					mes "for the wedding!";
+					goto L_End;
+				}
+			}
+			else if (Sex == 1) {
+				if (countitem(6026) == 0 && Zeny < 1300000) {
+					mes "[Marry Happy]";
+					mes "I'm sorry, but you don't";
+					mes "have the 1,300,000 zeny";
+					mes "or the Marriage Covenant";
+					mes "that all grooms must pay";
+					mes "for the wedding ceremony.";
+					mes "Did you misplace your money?";
+					goto L_End;
+				}
+				else if (countitem(7170) < 1) {
+					mes "[Marry Happy]";
+					mes "Where's your Tuxedo?";
+					mes "You absolutely have to";
+					mes "wear it during the wedding";
+					mes "ceremony! Find it, bring it";
+					mes "to me, and then we can finally";
+					mes "begin the wedding, okay?";
 					goto L_End;
 				}
 			}
@@ -346,25 +379,31 @@ prt_church,97,100,4	script	Wedding Staff#w	71,{
 			emotion e_lv;
 			next;
 			mes "[Marry Happy]";
-			if (Sex) {
-				mes "Since you're the groom,";
-				mes "you need to speak to the";
-				mes "Bishop first. When you're";
-				mes "finished, it will be your";
-				mes "bride's turn to speak to";
-				mes "Bishop Vomars.";
-				set Zeny, Zeny-1300000;
-				delitem 7170,1; //Tuxedo
-			}
-			else {
+			if (Sex == 0) {
 				mes "Since you're the bride,";
 				mes "you need to wait for the";
 				mes "groom to speak to Bishop";
 				mes "Vomars first. When he's";
 				mes "finished, it'll be your turn";
 				mes "to speak to Bishop Vomars.";
-				set Zeny, Zeny-1200000;
+				if (.@covenant)
+					delitem 6026,1; //Marriage_Covenant
+				else
+					set Zeny, Zeny-1200000;
 				delitem 2338,1; //Wedding_Dress
+			}
+			else {
+				mes "Since you're the groom,";
+				mes "you need to speak to the";
+				mes "Bishop first. When you're";
+				mes "finished, it will be your";
+				mes "bride's turn to speak to";
+				mes "Bishop Vomars.";
+				if (.@covenant)
+					delitem 6026,1; //Marriage_Covenant
+				else
+					set Zeny, Zeny-1300000;
+				delitem 7170,1; //Tuxedo
 			}
 			delitem 2613,1; //Diamond_Ring
 			set wedding_sign,1;
@@ -378,7 +417,6 @@ prt_church,97,100,4	script	Wedding Staff#w	71,{
 		mes "me so that you can apply,";
 		mes "okay? Have a good day~";
 		break;
-
 	case 4:
 		cutin "wedding_marry02",2;
 		donpcevent "Single Army#Prontera::OnEnable";

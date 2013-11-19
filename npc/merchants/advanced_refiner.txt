@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -25,6 +25,7 @@
 //= 1.4a Added 'disable_items' command. [Euphy]
 //= 1.4b Fixed coordinates. [Euphy]
 //= 1.5 Some official script updates. [Euphy]
+//= 1.6 Added VIP features. [Euphy]
 //============================================================
 
 payon,157,146,6	script	Suhnbi#cash	85,{
@@ -100,10 +101,23 @@ payon,157,146,6	script	Suhnbi#cash	85,{
 	close;
 
 S_RefineValidate:
+	set .@price, getarg(2);
+
+	// If the VIP system is enabled, the prices for non-VIP players are considerably higher.
+	if (getserverdef(VAR_VIP_SCRIPT) && !vip_status(1)) {
+		switch(getarg(0)){
+			case 0: set .@price, .@price * 10; break;
+			case 1: set .@price, .@price * 40; break;
+			case 2: set .@price, .@price * 50; break;
+			case 3: set .@price, .@price * 2; break;
+			case 4: set .@price, .@price * 2; break;
+		}
+	}
+
 	mes "[Suhnbi]";
 	if (getarg(0))
 		mes "You want to refine a level " + getarg(0) + " weapon?";
-	mes "To refine that, you'll need to have one ^ff9999" + getitemname(getarg(1)) + "^000000 and " + getarg(2) + " zeny.";
+	mes "To refine that, you'll need to have one ^ff9999" + getitemname(getarg(1)) + "^000000 and " + .@price + " zeny.";
 	mes "Would you like to continue?";
 	next;
 	if(select("Yes:No") == 1) {
@@ -147,9 +161,9 @@ S_RefineValidate:
 				}
 			}
 		}
-		if (countitem(getarg(1)) > 0 && Zeny > getarg(2)) {
+		if (countitem(getarg(1)) > 0 && Zeny > .@price) {
 			delitem getarg(1),1;
-			set Zeny, Zeny - getarg(2);
+			set Zeny, Zeny - .@price;
 			return;
 		}
 		mes "[Suhnbi]";

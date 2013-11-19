@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_Dib
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= 1.0 First Version. [Masao]
 //= 1.1 Fixed the Door NPC [JayPee].
 //= 1.2 Updated script. [Euphy]
+//= 1.3 Added VIP features. [Euphy]
 //============================================================ 
 
 yuno,129,156,3	script	Chainheart	923,{
@@ -217,6 +218,12 @@ yuno,129,156,3	script	Chainheart	923,{
 	}
 	if (BaseJob == Job_Blacksmith) {
 		if (BaseLevel > 98 && JobLevel > 49 && SkillPoint == 0) {
+			if (getserverdef(VAR_VIP_SCRIPT)) {
+				callfunc "VIP_Third_Class";
+				set job__mechanic,1;
+				setquest 10090;
+				next;
+			}
 			mes "At a glance, you, seem to be a very versatile person on dealing with various things.";
 			mes "You look quite skilled.";
 			mes "You can be the one.";

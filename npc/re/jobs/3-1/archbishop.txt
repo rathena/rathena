@@ -4,7 +4,7 @@
 //= L0ne_W0lf
 //= Credits: Gepard
 //===== Current Version: =====================================
-//= 1.9
+//= 2.0
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -24,6 +24,7 @@
 //= 1.7a Moved warps to separate file. [Euphy]
 //= 1.8 Bug fixes and corrections. [Euphy]
 //= 1.9 Added GM management function. [Euphy]
+//= 2.0 Added VIP features. [Euphy]
 //============================================================
 
 prt_church,103,88,3	script	Praying Minister#arch	60,{
@@ -59,6 +60,12 @@ prt_church,103,88,3	script	Praying Minister#arch	60,{
 			if (SkillPoint) {
 				mes "You can't change jobs without using all your skill points. Please use all of your skill points before applying to change jobs~";
 				close;
+			}
+			if (getserverdef(VAR_VIP_SCRIPT)) {
+				callfunc "VIP_Third_Class";
+				set job_arch,1;
+				setquest 2187;
+				next;
 			}
 			mes "[Praying Minister]";
 			mes "In front of the Almighty God Odin,";

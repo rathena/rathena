@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= ????, L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= rAthena 1.0
 //===== Description: ========================================= 
@@ -12,7 +12,7 @@
 //= - Generals and Aides
 //= - Battleground Warper
 //= - Kafra and Repairman.
-//= - GM Management NPC (disabled by default)
+//= - GM Management NPC
 //= - Badge Exchanger (Tierra and Flavius)
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
@@ -20,6 +20,7 @@
 //= 1.2 Updated Repairman NPC
 //= 1.3 Optimized "Erundek" NPC. [Euphy]
 //= 1.4 Added GM management function. [Euphy]
+//= 1.5 Added VIP features and created a reward function. [Euphy]
 //============================================================
 
 // Generals
@@ -561,4 +562,58 @@ bat_room,160,150,3	script	Erundek	109,{
 		break;
 	}
 	close;
+}
+
+// Badge Reward Function
+//============================================================
+function	script	F_BG_Badge	{
+
+	if (getarg(2) == "Tierra") {
+		set .@badge,7828; //BF_Badge1
+		set .@amount_win,3;
+		set .@amount_lose,1;
+	} else if (getarg(2) == "Flavius") {
+		set .@badge,7829; //BF_Badge2
+		set .@amount_win,9;
+		set .@amount_lose,3;
+	} else
+		return;
+
+	if (getarg(0) == 1) {
+		set .@amount, .@amount_win;
+		if (getarg(1) == "Guillaume") {
+			mes "[Axl Rose]";
+			mes "Blessed Guillaume!";
+		} else if (getarg(1) == "Croix") {
+			mes "[Swandery]";
+			mes "Blessed Croix!";
+		}
+		mes "Let's enjoy our glorious victory!";
+		mes strcharinfo(0)+", it's a sign reflecting victory.";
+	} else {
+		set .@amount, .@amount_lose;
+		if (getarg(1) == "Guillaume") {
+			mes "[Axl Rose]";
+			mes "You lost, but you're dedicated to this battle.";
+			mes "This is a reward for your great dedication by Guillaume Marollo!";
+			mes "Just take this defeat as a lesson, and next time you will definitely win.";
+		} else if (getarg(1) == "Croix") {
+			mes "[Swandery]";
+			mes "Oh, "+strcharinfo(0)+" Don't be sad.";
+			mes "Even though we didn't win, we did our best.";
+			mes "This is a Royal gift from Croix, and please don't forget this battle. We will win the next one.";
+		}
+	}
+	close2;
+
+	// If the VIP system is enabled, VIP players receive an extra 2 badges.
+	if (getserverdef(VAR_VIP_SCRIPT) && vip_status(1))
+		set .@amount, .@amount+2;
+
+	set .@medal_gap, 500 - countitem(.@badge);
+	if (.@medal_gap >= .@amount)
+		getitem .@badge,.@amount;
+	else
+		getitem .@badge,.@medal_gap;
+	return;
 }

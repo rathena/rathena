@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf, Muad_Dib
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -17,6 +17,7 @@
 //= 1.4 Fixed a few bugs. [Euphy]
 //= 1.4a Moved Kafra to main file. [Euphy]
 //= 1.5 Added GM management function. [Euphy]
+//= 1.6 Added VIP features. [Euphy]
 //============================================================
 
 prt_in,162,24,3	script	Splendid-Looking Knight	470,2,2,{
@@ -78,6 +79,12 @@ prt_in,162,24,3	script	Splendid-Looking Knight	470,2,2,{
 					mes "Of course, I would only accept you if you are one hundred percent sure of your conviction to become a Rune Knight.";
 					close;
 				case 2:
+					if (getserverdef(VAR_VIP_SCRIPT)) {
+						callfunc "VIP_Third_Class";
+						set job_rune_edq,1;
+						setquest 3200;
+						next;
+					}
 					mes "[Rune Knight Manuel]";
 					mes "You're sure now?";
 					mes "Let me send a dispatch to my comrades that you are willing to join our ranks.";

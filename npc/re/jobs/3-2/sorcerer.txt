@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_Dib
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= 1.0 First Version. [Masao]
 //= 1.1 Cleaning. [Euphy]
 //= 1.2 Updated script, optimized. [Euphy]
+//= 1.3 Added VIP features. [Euphy]
 //============================================================
 
 gef_tower,102,34,5	script	Merito	742,{
@@ -110,6 +111,12 @@ gef_tower,102,34,5	script	Merito	742,{
 		next;
 		switch(select("I will take the test.:I'll do it later.")) {
 		case 1:
+			if (getserverdef(VAR_VIP_SCRIPT)) {
+				callfunc "VIP_Third_Class";
+				set job_soc,2;
+				setquest 12096;
+				next;
+			}
 			mes "[Merito]";
 			mes "Okay. ";
 			mes "Then I'll hand it over to Karacas who is on the 4th floor. He will guide you through the process of the test.";
