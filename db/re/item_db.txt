@@ -8640,7 +8640,7 @@
 // New Items
 22045,Summer_Sandals,Summer Sandals,5,10,,200,,5,,0,0xFFFFFFFF,63,2,64,,0,1,0,{ /*bonus bFlee,5; bonus3 bAutoSpellWhenHit,"AL_INCAGI",10,50;*/},{},{}
 22514,Candy_Holder,Candy Holder,11,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-22540,Lux_Anima_Runestone,Lux Anima Runestone,11,2,,100,,,,,0xFFFFFFFF,56,2,,,,,,{ itemskill "RK_LUXANIMA",1; },{},{}
+22540,Runstone_Luxanima,Lux Anima Runestone,11,2,,100,,,,,0xFFFFFFFF,56,2,,,,,,{ itemskill "RK_LUXANIMA",1; },{},{}
 22558,Lucky_Bag,Lucky Bag,11,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 22559,Mock_Strawberry,Mock Strawberry,11,20,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 50,50; itemskill "SM_ENDURE",3; },{},{}
 22566,Last_Years_Frost,Last Year's Frost,3,20,,0,,,,,,,,,,,,,{},{},{}
