@@ -530,7 +530,7 @@ int chrif_parse_reqvipdata(int fd) {
 				acc.group_id = login_config.vip_sys.group;
 				acc.char_slots = login_config.char_per_account + login_config.vip_sys.char_increase;
 				isvip = true;
-			} else { //expired
+			} else if (vip_time) { //expired
 				vip_time = 0;
 				acc.group_id = acc.old_group;
 				acc.old_group = 0;
