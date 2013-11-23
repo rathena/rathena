@@ -643,6 +643,7 @@ int storage_guild_storageaddfromcart(struct map_session_data* sd, int index, int
  *------------------------------------------*/
 int storage_guild_storagegettocart(struct map_session_data* sd, int index, int amount)
 {
+	short flag;
 	struct guild_storage *stor;
 
 	nullpo_ret(sd);
@@ -660,8 +661,12 @@ int storage_guild_storagegettocart(struct map_session_data* sd, int index, int a
 	if(amount < 1 || amount > stor->items[index].amount)
 		return 0;
 
-	if(pc_cart_additem(sd,&stor->items[index],amount,LOG_TYPE_GSTORAGE)==0)
+	if((flag = pc_cart_additem(sd,&stor->items[index],amount,LOG_TYPE_GSTORAGE)) == 0)
 		guild_storage_delitem(sd,stor,index,amount);
+	else {
+		clif_dropitem(sd,index,0);
+		clif_cart_additem_ack(sd,(flag==1)?ADDITEM_TO_CART_FAIL_WEIGHT:ADDITEM_TO_CART_FAIL_COUNT);
+	}
 
 	return 1;
 }
