@@ -36,7 +36,7 @@ ve_in,237,125,0	script	King Crab#job_shu	107,{
 		mes "Those arrogant fellows deserve a bitter lesson.";
 		mes "How dare a little rookie attack you, boss!";
 		next;
-		if (.@job_check) {
+		if (!.@job_check) {
 			mes "[King Crab]";
 			mes "Khhha ha ha ha ha ha!!!!";
 			mes "One more cup of beer, here!!!";
