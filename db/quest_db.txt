@@ -295,7 +295,7 @@
 2289,0,2355,20,0,0,0,0,"Verit Hunting (Nightmare)"
 2290,82800,0,0,0,0,0,0,"Verit Hunting - Cooldown"
 2291,82800,0,0,0,0,0,0,"Mummy Hunting - Cooldown"
-2292,0,2354,20,0,0,0,0,"Mummy Hunting (Nightmare)"
+2292,0,2360,20,0,0,0,0,"Mummy Hunting (Nightmare)"
 
 // New Novice Ground
 2299,0,0,0,0,0,0,0,"Training Center: Talk to Lisa"
