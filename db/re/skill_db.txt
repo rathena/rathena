@@ -1072,7 +1072,7 @@
 2312,5,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,	LG_PINPOINTATTACK,Pinpoint Attack
 2313,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0,0x0,	LG_FORCEOFVANGUARD,Force of Vanguard
 2314,1,6,1,-1,0,0,1,1,no,0,0,0,weapon,0,0x0,	LG_RAGEBURST,Rage Burst
-2315,0,6,4,0,0x2,3,3,1,yes,0,0,0,none,2,0x0,	LG_SHIELDSPELL,Shield Spell
+2315,0,6,4,0:6:0,0x2,3,3,1,yes,0,0,0,none,2,0x0,	LG_SHIELDSPELL,Shield Spell
 2316,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0,0x0,	LG_EXEEDBREAK,Exceed Break
 2317,0,6,2,-1,0x2,0,5,1,yes,0,0,0,none,3:4:5:6:7,0x0,	LG_OVERBRAND,Over Brand
 2318,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0,0x0,	LG_PRESTIGE,Prestige

@@ -1206,8 +1206,13 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 					if (((TBL_MOB*)bl)->class_==mob_splendide[i]) {
 						DAMAGE_ADDRATE(sce->val1)
 						break;
-					}
 		}
+		/* Self Buff that destroys the armor of any target hit with melee or ranged physical attacks */
+		if( sc->data[SC_SHIELDSPELL_REF] && sc->data[SC_SHIELDSPELL_REF]->val1 == 1 && flag&BF_WEAPON ) {
+			skill_break_equip(src,bl, EQP_ARMOR, 10000, BCT_ENEMY); // 100% chance (http://irowiki.org/wiki/Shield_Spell#Level_3_spells_.28refine_based.29)
+			status_change_end(src,SC_SHIELDSPELL_REF,INVALID_TIMER);
+		}
+	}
 		if( sc->data[SC_POISONINGWEAPON]
 			&& ((flag&BF_WEAPON) && (!skill_id || skill_id == GC_VENOMPRESSURE)) //chk skill type poison_smoke is a unit
 			&& (damage > 0 && rnd()%100 < sc->data[SC_POISONINGWEAPON]->val3 )) //did some dammage and chance ok (why no additional effect ??
@@ -3396,7 +3401,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 				if( shield_data )
 					skillratio += shield_data->def * 10;
 			} else
-				skillratio += 2400;	//2500%
+				skillratio = 0; // Prevent damage since level 2 is MATK. [Aleos]
 			break;
 		case LG_MOONSLASHER:
 			skillratio += -100 + (120 * skill_lv + ((sd) ? pc_checkskill(sd,LG_OVERBRAND) : 5) * 80);
@@ -5917,6 +5922,11 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 						rdamage += rd1 * 70 / 100; // Target receives 70% of the amplified damage. [Rytech]
 					}
 				}
+
+                if( sc->data[SC_SHIELDSPELL_DEF] && sc->data[SC_SHIELDSPELL_DEF]->val1 == 2 && !(src->type == BL_MOB && is_boss(src)) ){
+						rdamage += damage * sc->data[SC_SHIELDSPELL_DEF]->val2 / 100;
+						if (rdamage < 1) rdamage = 1;
+                }
 			}
 		}
 	} else {
