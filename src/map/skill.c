@@ -8823,6 +8823,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 								splash = 2;
 							else
 								splash = 3;
+							if( sc_start(src,bl,SC_SHIELDSPELL_DEF,100,opt,INVALID_TIMER) )
+								status_change_end(bl,SC_SHIELDSPELL_DEF,INVALID_TIMER);
 							clif_skill_damage(src,bl,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, 6);
 							map_foreachinrange(skill_area_sub,src,splash,BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
 							break;
@@ -8852,15 +8854,19 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 					switch( opt ) {
 						case 1: // Deals Holy property magic damage around Self.
+							if( sc_start(src,bl,SC_SHIELDSPELL_MDEF,100,opt,INVALID_TIMER) )
+								status_change_end(bl,SC_SHIELDSPELL_MDEF,INVALID_TIMER);
 							clif_skill_damage(src,bl,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, 6);
-							map_foreachinrange(skill_area_sub,src,splash,BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|2,skill_castend_damage_id);
+							map_foreachinrange(skill_area_sub, src, splash, BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|2, skill_castend_damage_id);
 							break;
 						case 2: // Casts Lex Divina around Self.
-							//sc_start(src,bl,SC_SHIELDSPELL_MDEF,100,opt,INVALID_TIMER);
-							clif_skill_damage(src,bl,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, 6);
+							if( sc_start(src,bl,SC_SHIELDSPELL_MDEF,100,opt,INVALID_TIMER) )
+								status_change_end(bl,SC_SHIELDSPELL_MDEF,INVALID_TIMER);
 							map_foreachinrange(skill_area_sub,src,splash,BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_nodamage_id);
 							break;
 						case 3: // Casts Magnificat.
+							if( sc_start(src,bl,SC_SHIELDSPELL_MDEF,100,opt,INVALID_TIMER) )
+								status_change_end(bl,SC_SHIELDSPELL_MDEF,INVALID_TIMER);
 							clif_skill_nodamage(src,bl,PR_MAGNIFICAT,skill_lv,sc_start(src,bl,SC_MAGNIFICAT,100,1,sd->bonus.shieldmdef * 30000));
 							break;
 					}
@@ -8883,6 +8889,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 								sc_start4(src,bl,SC_SHIELDSPELL_REF,100,opt,val,splash,0,shield->refine * 20000);
 								break;
 							case 3: // Recovers HP depending on Shield refine rate.
+								if( sc_start(src,bl,SC_SHIELDSPELL_REF,100,opt,INVALID_TIMER) )
+									status_change_end(bl,SC_SHIELDSPELL_REF,INVALID_TIMER);
 								val = sstatus->max_hp * (status_get_lv(src) / 10 + shield->refine) / 100;
 								status_heal(bl,val,0,2);
 								break;
