@@ -307,7 +307,7 @@ prontera (x= 165, y= 198) 01 00 00 00 00
 Displays monster information (rates, stats, drops, MVP data).
 
 Example:
-@monsterinfo Poring
+@mobinfo Poring
 
 Output:
 Monster: 'Poring'/'Poring'/'PORING' (1002)
@@ -875,9 +875,9 @@ Changes unused status or skill points by the specified amount.
 
 ---------------------------------------
 
-@streset
+@resetstat
 /resetstate
-@skreset
+@resetskill
 /resetskill
 @reset
 
@@ -1037,6 +1037,32 @@ Displays the message above the NPC's head (like the 'npctalk' script command).
 
 ---------------------------------------
 
+@vip <+/- time> <player name>
+
+Set a player in VIP mode for a limited time.
+Time could be reduced and if below now VIP mode is removed
+Time elements: y/a, m, d/j, h, mn, s
+
+Example:
+@vip +2h mychar
+-> set mychar's account as VIP for 2 hours.
+
+---------------------------------------
+
+@fullstrip <player name>
+
+Unequip all item from a player.
+
+---------------------------------------
+
+@cart <0-%d>
+
+Give or remove a cart to a player and also change the cart skin.
+0 = remove cart
+x = cart color
+
+---------------------------------------
+
 ==============================
 | 5. Administrative Commands |
 ==============================
@@ -1168,7 +1194,7 @@ Disconnects a user or all users from the server.
 @ban <+/- time> <player name>
 @unban <player name>
 
-Bans or unbans a player for a limited time.
+Bans or unbans a player account for a limited time.
 Time elements: y/a, m, d/j, h, mn, s
 
 Example:
@@ -1181,6 +1207,19 @@ Example:
 @unblock <player name>
 
 Blocks or unblocks a player from logging in indefinitely.
+
+---------------------------------------
+
+@charban <+/- time> <player name>
+@charunban <player name>
+
+Bans or unbans a player for a limited time. 
+(Very similar to @ban and but for 1 character only)
+Time elements: y/a, m, d/j, h, mn, s
+
+Example:
+@ban +2d Char2
+-> bans Char2's for 2 days.
 
 ---------------------------------------
 

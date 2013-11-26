@@ -8938,7 +8938,7 @@ ACMD_FUNC(cart) {
 	clif_displaymessage(fd, msg_txt(sd,1392)); // Cart Added
 
 	return 0;
-	#undef MC_CART_MDFY
+#undef MC_CART_MDFY
 }
 
 /* Channel System [Ind] */

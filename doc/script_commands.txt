@@ -4642,7 +4642,7 @@ storage or cart.
 ---------------------------------------
 
 *equip <item id>;
-*autoEquip <item id>,<option>;
+*autoequip <item id>,<option>;
 
 These commands are to equip a equipment on the attached character. 
 The equip function will equip the item ID given when the player has

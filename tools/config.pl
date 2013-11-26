@@ -159,17 +159,17 @@ sub InstallSoft {
     }
     if($sOS eq "quit"){ print "Skipping Software installation\n"; return; }
     elsif($sOS =~ /Ubuntu|Debian/i) { #tested on ubuntu 12.10
-	my @aListSoft = ("gcc","gdb","zlibc","zlib1g-dev","make","subversion","mysql-client","mysql-server","mysql-common","libmysqlclient-dev","phpmyadmin","libpcre3-dev");
+	my @aListSoft = ("gcc","gdb","zlibc","zlib1g-dev","make","git","mysql-client","mysql-server","mysql-common","libmysqlclient-dev","phpmyadmin","libpcre3-dev");
 	print "Going to install: @aListSoft\n";
 	system("sudo apt-get install @aListSoft");
     }
-    elsif($sOS =~ /Fedora|CentOs/i){ #tested on fedora 18
-	my @aListSoft = ("gcc","gdb","zlib","zlib-devel","make","subversion","mysql-server","mysql-devel","phpmyadmin","pcre-devel");
+    elsif($sOS =~ /Fedora|CentOs/i){ #tested on fedora 18 /centos 6
+	my @aListSoft = ("gcc","gdb","zlib","zlib-devel","make","git","mysql-server","mysql-devel","phpmyadmin","pcre-devel");
 	system("sudo yum install @aListSoft");
     }
     elsif($sOS =~ /FreeBSD/i){ #tested on FreeBSD 9.01
 	system("portsnap fetch extract && portsnap update"); #fetch port lib and extract
-	my @aDevel = ("binutils","subversion","autoconf","pcre","gmake","gdb");
+	my @aDevel = ("binutils","git","autoconf","pcre","gmake","gdb");
 	foreach(@aDevel){
 	    system("cd /usr/ports/devel/$_ && make install clean"); #install devels
 	}
