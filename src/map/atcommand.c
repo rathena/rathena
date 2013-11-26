@@ -9197,13 +9197,15 @@ ACMD_FUNC(vip) {
 		char timestr[21];
 		time_t now=time(NULL);
 		split_time(pl_sd->vip.time*60,&year,&month,&day,&hour,&minute,&second);
-		sprintf(atcmd_output,msg_txt(sd,705),pl_sd->status.name,year,month,day,hour,minute); //%s is VIP for %d years, %d months, %d days, %d hours and %d minutes.
+		sprintf(atcmd_output,msg_txt(sd,705),pl_sd->status.name,year,month,day,hour,minute); // %s is VIP for %d years, %d months, %d days, %d hours and %d minutes.
 		clif_displaymessage(pl_sd->fd, atcmd_output);
-		sprintf(atcmd_output,msg_txt(sd,706),year,month,day,hour,minute); //This player is now VIP for %d years, %d months, %d days, %d hours and %d minutes.
+		sprintf(atcmd_output,msg_txt(sd,706),year,month,day,hour,minute); // This player is now VIP for %d years, %d months, %d days, %d hours and %d minutes.
 		clif_displaymessage(fd, atcmd_output);
 		timestamp2string(timestr,20,now+pl_sd->vip.time*60,"%Y-%m-%d %H:%M");
-		sprintf(atcmd_output,"%s : %s",msg_txt(sd,707),timestr); //You are VIP until :
+		sprintf(atcmd_output,"%s : %s",msg_txt(sd,707),timestr); // You are VIP until : %s
 		clif_displaymessage(pl_sd->fd, atcmd_output);
+		sprintf(atcmd_output, msg_txt(sd,708), pl_sd->status.name); // Player '%s' is now VIP until : %s
+		strcat(atcmd_output, timestr);
 		clif_displaymessage(fd, atcmd_output);
 	}
 	chrif_req_vipActive(pl_sd, viptime, 3);

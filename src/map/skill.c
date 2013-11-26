@@ -8798,110 +8798,104 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case LG_SHIELDSPELL:
-		if( flag&1 ) {
-			int duration = (sd) ? sd->bonus.shieldmdef * 2000 : 10000;
-			sc_start(src,bl,SC_SILENCE,100,skill_lv,duration);
-		} else if( sd ) {
-			int opt = skill_lv;
-			int rate = rnd()%100;
-			int val, brate;
+		if( flag&1 )
+			sc_start(src,bl,SC_SILENCE,100,skill_lv,(sd)?sd->bonus.shieldmdef * 2000 : 10000);
+		else if( sd ) {
+			int opt = rnd()%3 + 1;
+			int val = 0, splash = 0;
+			struct item_data *shield_data = sd->inventory_data[sd->equip_index[EQI_HAND_L]];
+			if( !shield_data || shield_data->type != IT_ARMOR ) {	// No shield?
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+				break;
+			}
 			switch( skill_lv ) {
-				case 1:
-					{
-						struct item_data *shield_data = sd->inventory_data[sd->equip_index[EQI_HAND_L]];
-						if( !shield_data || shield_data->type != IT_ARMOR ) {	// No shield?
-							clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
-							break;
-						}
-						brate = shield_data->def * 10;
-						if( rate < 50 )
-							opt = 1;
-						else if( rate < 75 )
-							opt = 2;
-						else
-							opt = 3;
-
-						switch( opt ) {
-							case 1:
-								sc_start(src,bl,SC_SHIELDSPELL_DEF,100,opt,-1);
-								clif_skill_damage(src,bl,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, 6);
-								if( rate < brate )
-									map_foreachinrange(skill_area_sub,src,skill_get_splash(skill_id,skill_lv),BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
-								status_change_end(bl,SC_SHIELDSPELL_DEF,INVALID_TIMER);
-								break;
-							case 2:
-								val = shield_data->def / 10; // % Reflected damage.
-								sc_start2(src,bl,SC_SHIELDSPELL_DEF,brate,opt,val,shield_data->def * 1000);
-								break;
-							case 3:
-								val = shield_data->def; // Attack increase.
-								sc_start2(src,bl,SC_SHIELDSPELL_DEF,brate,opt,val,shield_data->def * 3000);
-								break;
-						}
-					}
-					break;
-
-				case 2:
-					brate = sd->bonus.shieldmdef * 20;
-					if( rate < 30 )
-						opt = 1;
-					else if( rate < 60 )
-						opt = 2;
-					else
-						opt = 3;
-					switch( opt ) {
-						case 1:
-							sc_start(src,bl,SC_SHIELDSPELL_MDEF,100,opt,-1);
-							clif_skill_damage(src,bl,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, 6);
-							if( rate < brate )
-								map_foreachinrange(skill_area_sub,src,skill_get_splash(skill_id,skill_lv),BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|2,skill_castend_damage_id);
-							status_change_end(bl,SC_SHIELDSPELL_MDEF,INVALID_TIMER);
-							break;
-						case 2:
-							sc_start(src,bl,SC_SHIELDSPELL_MDEF,100,opt,-1);
-							clif_skill_damage(src,bl,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, 6);
-							if( rate < brate )
-								map_foreachinrange(skill_area_sub,src,skill_get_splash(skill_id,skill_lv),BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_nodamage_id);
-							break;
-						case 3:
-							if( sc_start(src,bl,SC_SHIELDSPELL_MDEF,brate,opt,sd->bonus.shieldmdef * 30000) )
-								clif_skill_nodamage(src,bl,PR_MAGNIFICAT,skill_lv,
-								sc_start(src,bl,SC_MAGNIFICAT,100,1,sd->bonus.shieldmdef * 30000));
-							break;
-					}
-					break;
-
-				case 3:
-				{
-					struct item *it = &sd->status.inventory[sd->equip_index[EQI_HAND_L]];
-					if( !it ) {	// No shield?
-						clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+				case 1: // DEF based
+					val = shield_data->def;
+					if( !val ) {
+						clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
 						break;
 					}
-					brate = it->refine * 5;
-					if( rate < 25 )
-						opt = 1;
-					else if( rate < 50 )
-						opt = 2;
-					else
-						opt = 3;
 					switch( opt ) {
-						case 1:
-							val = 105 * it->refine / 10;
-							sc_start2(src,bl,SC_SHIELDSPELL_REF,brate,opt,val,skill_get_time(skill_id,skill_lv));
+						case 1: // Deals Neutral property damage around Self. Knocks them back 2 cells.
+							if( val < 41 )
+								splash = 1;
+							else if( val < 81 )
+								splash = 2;
+							else
+								splash = 3;
+							if( sc_start(src,bl,SC_SHIELDSPELL_DEF,100,opt,INVALID_TIMER) )
+								status_change_end(bl,SC_SHIELDSPELL_DEF,INVALID_TIMER);
+							clif_skill_damage(src,bl,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, 6);
+							map_foreachinrange(skill_area_sub,src,splash,BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
 							break;
-						case 2: case 3:
-							if( rate < brate )
-							{
-								val = sstatus->max_hp * (11 + it->refine) / 100;
-								status_heal(bl, val, 0, 3);
-							}
+						case 2: // Reflects melee attacks. (Does not work against Bosses).
+							val = shield_data->def / 10;
+							sc_start2(src,bl,SC_SHIELDSPELL_DEF,100,opt,val,shield_data->def * 1000);
 							break;
-						/*case 3:
-							// Full protection. I need confirm what effect should be here. Moved to case 2 to until we got it.
-							break;*/
+						case 3: // Increases ATK for the spell duration.
+							val = shield_data->def;
+							sc_start2(src,bl,SC_SHIELDSPELL_DEF,100,opt,val,shield_data->def * 3000);
+							break;
 					}
-				}
+					break;
+
+				case 2: // MDEF based
+					val = sd->bonus.shieldmdef;
+					if( !val ) {
+						clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+						break;
+					}
+					if( val < 4 )
+						splash = 1;
+					else if( val < 6 )
+						splash = 2;
+					else
+						splash = 3;
+
+					switch( opt ) {
+						case 1: // Deals Holy property magic damage around Self.
+							if( sc_start(src,bl,SC_SHIELDSPELL_MDEF,100,opt,INVALID_TIMER) )
+								status_change_end(bl,SC_SHIELDSPELL_MDEF,INVALID_TIMER);
+							clif_skill_damage(src,bl,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, 6);
+							map_foreachinrange(skill_area_sub, src, splash, BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|2, skill_castend_damage_id);
+							break;
+						case 2: // Casts Lex Divina around Self.
+							if( sc_start(src,bl,SC_SHIELDSPELL_MDEF,100,opt,INVALID_TIMER) )
+								status_change_end(bl,SC_SHIELDSPELL_MDEF,INVALID_TIMER);
+							map_foreachinrange(skill_area_sub,src,splash,BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_nodamage_id);
+							break;
+						case 3: // Casts Magnificat.
+							if( sc_start(src,bl,SC_SHIELDSPELL_MDEF,100,opt,INVALID_TIMER) )
+								status_change_end(bl,SC_SHIELDSPELL_MDEF,INVALID_TIMER);
+							clif_skill_nodamage(src,bl,PR_MAGNIFICAT,skill_lv,sc_start(src,bl,SC_MAGNIFICAT,100,1,sd->bonus.shieldmdef * 30000));
+							break;
+					}
+					break;
+
+				case 3: // refine based
+					{
+						struct item *shield = &sd->status.inventory[sd->equip_index[EQI_HAND_L]];
+						if( !shield || !shield->refine ) {
+							clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+							break;
+						}
+						switch( opt ) {
+							case 1: // Allows you to break armor at a 100% rate when you do damage.
+								sc_start(src,bl,SC_SHIELDSPELL_REF,100,opt,min(shield->refine * 1500,30000)); // 30 sec duration on +20 shield.
+								break;
+							case 2: // Increases DEF and Status Effect resistance depending on Shield refine rate.
+								val = (10 * shield->refine) + (status_get_lv(src) / 100);
+								splash = (2 * shield->refine) + (status_get_luk(src) / 10);
+								sc_start4(src,bl,SC_SHIELDSPELL_REF,100,opt,val,splash,0,shield->refine * 20000);
+								break;
+							case 3: // Recovers HP depending on Shield refine rate.
+								if( sc_start(src,bl,SC_SHIELDSPELL_REF,100,opt,INVALID_TIMER) )
+									status_change_end(bl,SC_SHIELDSPELL_REF,INVALID_TIMER);
+								val = sstatus->max_hp * (status_get_lv(src) / 10 + shield->refine) / 100;
+								status_heal(bl,val,0,2);
+								break;
+						}
+					}
 				break;
 			}
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);

@@ -87,6 +87,13 @@
 /tools/*.ilk
 /tools/*.pdb
 
+# /vcproj-13/
+/vcproj-13/char-server_sql
+/vcproj-13/login-server_sql
+/vcproj-13/mapcache
+/vcproj-13/map-server_sql
+/vcproj-13/*.user
+
 # /vcproj-12/
 /vcproj-12/char-server_sql
 /vcproj-12/login-server_sql
