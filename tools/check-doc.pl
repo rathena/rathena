@@ -32,6 +32,7 @@ sub GetArgs {
 	print "Incorect option specified, available option are:\n"
 	    ."\t --atcf filename => file (specify atcommand doc to use)\n"
 	    ."\t --scriptf filename => file (specify script doc to use)\n"
+	    ."\t --leftover=0|1 => should we run reverse chk for leftover in documentation ?\n"
 	    ."\t --target => target (specify wich check to run [$sValidTarget])\n";
 	exit;
     }
@@ -119,6 +120,8 @@ sub Script_Chk {
 		}
 		print "}\n\n";
 	}
+	else { print "All script command in Src are documented, no issues found\n"; }
+	
 	if($sLeftOverChk){
 		my $raLeftover_sct = Chk(\@aDoc_sct,\@aDef_sct); #we just inverse the chk for leftover
 		if(scalar(@$raLeftover_sct)){
@@ -128,6 +131,7 @@ sub Script_Chk {
 			}
 			print "}\n\n";
 		}
+		else { print "All script command in documentation match a source BUILDIN, no leftover found\n"; }
 	}
 }
 
@@ -180,6 +184,8 @@ sub Atc_Chk {
 		}
 		print "}\n\n";
 	}
+	else { print "All atcommand in Src are documented, no issues found\n"; }
+	
 	if($sLeftOverChk){
 		my $raLeftover_sct = Chk(\@aDoc_act,\@aDef_act); #we just inverse the chk for leftover
 		if(scalar(@$raLeftover_sct)){
@@ -189,5 +195,6 @@ sub Atc_Chk {
 			}
 			print "}\n\n";
 		}
+		else { print "All atcommand in documentation match a source ATCMD, no leftover found\n"; }
 	}
 }

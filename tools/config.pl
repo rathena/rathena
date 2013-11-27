@@ -42,6 +42,7 @@ my $sForce      = 0;
 my $sClean	= 0;
 my $sTarget	= "All";
 my $sHelp	= 0;
+my $sOS;
 GetArgs();
 Main();
 
@@ -107,14 +108,18 @@ sub Main {
 }
 
 
-sub EnableCoredump {
+sub EnableCoredump { 
     print "\n Starting Enabling coredump \n";
     my $sCurfile = "~/.bashrc";
     my @lines = ();
     my $sJump = .0;
     open PIPE,"sudo less $sCurfile |" or die $!;
     foreach(<PIPE>){
-	push(@lines,$_) if /ulimit/;
+		if($_ =~ /ulimit -c unlimited/){
+			$sJump = 1; #already in here nothing to do
+			last; 
+		}
+		push(@lines,$_) if /ulimit/;
     }
     if(scalar(@lines)>0){
 	print "ulimit instruction found in file=$sCurfile\n"
@@ -122,14 +127,33 @@ sub EnableCoredump {
 	    ."are you sure you want to continue ? [y/n] \n";
 	$sJump=1 if(GetValidAnwser("y|o|n") =~ /n/i);
     }
-    system("sudo echo \"ulimit -c unlimited\" >> $sCurfile") unless $sJump==1;
-    #FIXME centos need to alter /etc/security/limits.conf
+    system("sudo echo \"ulimit -c unlimited\" >> $sCurfile") if $sJump==0;
+    $sJump=0;
+    
+    $sOS = GetOS() unless($sOS);
+    if($sOS =~ /Fedora|CentOs/i){;
+		open FILE, "</etc/security/limits.conf" || die;
+		open FILE_TMP, ">tmp_limits.conf" || die;
+		while(<FILE>){
+			@lines=split(' ',$_);
+			if($lines[2] eq "core" && $lines[3] eq "0"){
+				$lines[3]="unlimited";
+				print FILE_TMP "*    hard    core   unlimited\n";
+				$sJump=1; #mark we have found it
+			}
+			else { print FILE_TMP $_; }
+		}
+		close FILE;
+		close FILE_TMP;
+		system("sudo mv tmp_limits.conf /etc/security/limits.conf") if $sJump==1; #don't overwritte if some config was already in there
+		unlink "tmp_limits.conf";
+	}
 
     $sCurfile = "/etc/sysctl.conf";
     @lines = ();
     open PIPE,"sudo less $sCurfile |" or die $!;
     foreach(<PIPE>){
-	push(@lines,$_) if /kernel.core/;
+	push(@lines,$_) if /^kernel.core/;
     }
     if(scalar(@lines)>0){
 	print "ulimit instruction found in file=$sCurfile\n"
@@ -145,18 +169,22 @@ sub EnableCoredump {
     }
 }
 
+sub GetOS {
+	#yes we could $^0 or uname -r but $^0 only give perl binary build OS and uname hmm...
+	my @aSupportedOS = ("Debian","Ubuntu","Fedora","CentOs","FreeBSD");
+    my $sOSregex = join("|",@aSupportedOS); 
+    until($sOS =~ /$sOSregex/i){
+		print "Please enter your OS:[$sOSregex] or enter 'quit' to exit\n";
+		$sOS = <>; chomp($sOS);
+		last if($sOS eq "quit");
+    }
+	return $sOS;
+}
+
 sub InstallSoft {
     print "\n Starting InstallSoft \n";
     print "This autoinstall feature is experimental, package name varies from distri and version, couldn't support them all\n";
-    #yes we could $^0 or uname -r but $^0 only give perl binary build OS and uname hmm...
-    my @aSupportedOS = ("Debian","Ubuntu","Fedora","CentOs","FreeBSD");
-    my $sOSregex = join("|",@aSupportedOS);
-    my $sOS;
-    until($sOS =~ /$sOSregex/i){
-	print "Please enter your OS:[$sOSregex] or enter 'quit' to exit\n";
-	$sOS = <>; chomp($sOS);
-	last if($sOS eq "quit");
-    }
+    $sOS = GetOS();
     if($sOS eq "quit"){ print "Skipping Software installation\n"; return; }
     elsif($sOS =~ /Ubuntu|Debian/i) { #tested on ubuntu 12.10
 	my @aListSoft = ("gcc","gdb","zlibc","zlib1g-dev","make","git","mysql-client","mysql-server","mysql-common","libmysqlclient-dev","phpmyadmin","libpcre3-dev");
