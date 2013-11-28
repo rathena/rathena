@@ -174,6 +174,8 @@
 
 /// Maximum amount of elements in script arrays
 #define SCRIPT_MAX_ARRAYSIZE 128
+#define SCRIPT_CMD_SUCCESS 0 ///when a buildin cmd was correctly done
+#define SCRIPT_CMD_FAILURE 1 ///when an errors appear in cmd, show_debug will follow
 
 #define SCRIPT_BLOCK_SIZE 512
 enum { LABEL_NEXTLINE=1,LABEL_START };
@@ -4408,7 +4410,7 @@ BUILDIN_FUNC(mes)
 	}
 
 	st->mes_active = 1; // Invoking character has a NPC dialog box open.
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Displays the button 'next' in the npc dialog.
@@ -4427,7 +4429,7 @@ BUILDIN_FUNC(next)
 #endif
 	st->state = STOP;
 	clif_scriptnext(sd, st->oid);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Ends the script and displays the button 'close' on the npc dialog.
@@ -4452,7 +4454,7 @@ BUILDIN_FUNC(close)
 	}
 
 	clif_scriptclose(sd, st->oid);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Displays the button 'close' on the npc dialog.
@@ -4473,7 +4475,7 @@ BUILDIN_FUNC(close2)
 		st->mes_active = 0;
 
 	clif_scriptclose(sd, st->oid);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Counts the number of valid and total number of options in 'str'
@@ -4552,7 +4554,7 @@ BUILDIN_FUNC(menu)
 		{// argument count is not even (1st argument is at index 2)
 			ShowError("script:menu: illegal number of arguments (%d).\n", (script_lastdata(st) - 1));
 			st->state = END;
-			return 1;
+			return SCRIPT_CMD_FAILURE;
 		}
 
 		StringBuf_Init(&buf);
@@ -4570,7 +4572,7 @@ BUILDIN_FUNC(menu)
 				ShowError("script:menu: argument #%d (from 1) is not a label or label not found.\n", i);
 				script_reportdata(data);
 				st->state = END;
-				return 1;
+				return SCRIPT_CMD_FAILURE;
 			}
 
 			// append option(s)
@@ -4620,7 +4622,7 @@ BUILDIN_FUNC(menu)
 		{
 			ShowDebug("script:menu: unexpected selection (%d)\n", sd->npc_menu);
 			st->state = END;
-			return 1;
+			return SCRIPT_CMD_FAILURE;
 		}
 
 		// get target label
@@ -4635,20 +4637,20 @@ BUILDIN_FUNC(menu)
 		{// Invalid selection
 			ShowDebug("script:menu: selection is out of range (%d pairs are missing?) - please report this\n", sd->npc_menu);
 			st->state = END;
-			return 1;
+			return SCRIPT_CMD_FAILURE;
 		}
 		if( !data_islabel(script_getdata(st, i + 1)) )
 		{// TODO remove this temporary crash-prevention code (fallback for multiple scripts requesting user input)
 			ShowError("script:menu: unexpected data in label argument\n");
 			script_reportdata(script_getdata(st, i + 1));
 			st->state = END;
-			return 1;
+			return SCRIPT_CMD_FAILURE;
 		}
 		pc_setreg(sd, add_str("@menu"), menu);
 		st->pos = script_getnum(st, i + 1);
 		st->state = GOTO;
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Displays a menu with options and returns the selected option.
@@ -4725,7 +4727,7 @@ BUILDIN_FUNC(select)
 		script_pushint(st, menu);
 		st->state = RUN;
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Displays a menu with options and returns the selected option.
@@ -4812,7 +4814,7 @@ BUILDIN_FUNC(prompt)
 		script_pushint(st, menu);
 		st->state = RUN;
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -4834,7 +4836,7 @@ BUILDIN_FUNC(goto)
 
 	st->pos = script_getnum(st,2);
 	st->state = GOTO;
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -4885,8 +4887,9 @@ BUILDIN_FUNC(callfunc)
 	st->stack->defsp = st->stack->sp;
 	st->state = GOTO;
 	st->stack->var_function = idb_alloc(DB_OPT_RELEASE_DATA);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
+
 /*==========================================
  * subroutine call
  *------------------------------------------*/
@@ -4933,7 +4936,7 @@ BUILDIN_FUNC(callsub)
 	st->stack->defsp = st->stack->sp;
 	st->state = GOTO;
 	st->stack->var_function = idb_alloc(DB_OPT_RELEASE_DATA);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Retrieves an argument provided to callfunc/callsub.
@@ -4965,7 +4968,7 @@ BUILDIN_FUNC(getarg)
 		st->state = END;
 		return 1;
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Returns from the current function, optionaly returning a value from the functions.
@@ -4999,7 +5002,7 @@ BUILDIN_FUNC(return)
 		script_pushnil(st);
 	}
 	st->state = RETFUNC;
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Returns a random number from 0 to <range>-1.
@@ -5031,7 +5034,7 @@ BUILDIN_FUNC(rand)
 	else
 		script_pushint(st, rnd()%range + min);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -5064,7 +5067,7 @@ BUILDIN_FUNC(warp)
 		return 1;
 	}
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
  * Warp a specified area
@@ -5139,7 +5142,7 @@ BUILDIN_FUNC(areawarp)
 		return 0;
 
 	map_foreachinarea(buildin_areawarp_sub, m,x0,y0,x1,y1, BL_PC, index,x2,y2,x3,y3);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -5172,7 +5175,7 @@ BUILDIN_FUNC(areapercentheal)
 		return 0;
 
 	map_foreachinarea(buildin_areapercentheal_sub,m,x0,y0,x1,y1,BL_PC,hp,sp);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -5204,7 +5207,7 @@ BUILDIN_FUNC(warpchar)
 	else
 		pc_setpos(sd, mapindex_name2id(str), x, y, CLR_TELEPORT);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
  * Warpparty - [Fredzilla] [Paradox924X]
@@ -5294,7 +5297,7 @@ BUILDIN_FUNC(warpparty)
 		}
 	}
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -5356,7 +5359,7 @@ BUILDIN_FUNC(warpguild)
 	}
 	mapit_free(iter);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -5373,7 +5376,7 @@ BUILDIN_FUNC(heal)
 	hp=script_getnum(st,2);
 	sp=script_getnum(st,3);
 	status_heal(&sd->bl, hp, sp, 1);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -5396,7 +5399,7 @@ BUILDIN_FUNC(itemheal)
 	sd = script_rid2sd(st);
 	if (!sd) return 0;
 	pc_itemheal(sd,sd->itemid,hp,sp);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -5424,7 +5427,7 @@ BUILDIN_FUNC(percentheal)
 		sp = 0;
 #endif
 	pc_percentheal(sd,hp,sp);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -5449,7 +5452,7 @@ BUILDIN_FUNC(jobchange)
 		pc_jobchange(sd, job, upper);
 	}
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -5459,7 +5462,7 @@ BUILDIN_FUNC(jobname)
 {
 	int class_=script_getnum(st,2);
 	script_pushconststr(st, (char*)job_name(class_));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Get input from the player.
@@ -5524,7 +5527,7 @@ BUILDIN_FUNC(input)
 		}
 		st->state = RUN;
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 // declare the copyarray method here for future reference
@@ -5603,7 +5606,7 @@ BUILDIN_FUNC(set)
 	// return a copy of the variable reference
 	script_pushcopy(st,2);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -5693,7 +5696,7 @@ BUILDIN_FUNC(setarray)
 		for( i = 3; start < end; ++start, ++i )
 			set_reg(st, sd, reference_uid(id, start), name, (void*)__64BPRTSIZE(script_getnum(st,i)), reference_getref(data));
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Sets count values of an array, from the starting index.
@@ -5748,7 +5751,7 @@ BUILDIN_FUNC(cleararray)
 
 	for( ; start < end; ++start )
 		set_reg(st, sd, reference_uid(id, start), name, v, script_getref(st,2));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Copies data from one array to another.
@@ -5841,7 +5844,7 @@ BUILDIN_FUNC(copyarray)
 				set_reg(st, sd, reference_uid(id1, idx1 + i), name1, (is_string_variable(name1)?(void*)"":(void*)0), reference_getref(data1));
 		}
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Returns the size of the array.
@@ -5875,7 +5878,7 @@ BUILDIN_FUNC(getarraysize)
 	}
 
 	script_pushint(st, getarraysize(st, reference_getid(data), reference_getindex(data), is_string_variable(name), reference_getref(data)));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Deletes count or all the elements in an array, from the starting index.
@@ -5952,7 +5955,7 @@ BUILDIN_FUNC(deletearray)
 		for( ; start < end; ++start )
 			set_reg(st, sd, reference_uid(id, start), name, (void*)0, reference_getref(data));
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Returns a reference to the target index of the array variable.
@@ -5998,7 +6001,7 @@ BUILDIN_FUNC(getelementofarray)
 	}
 
 	push_val2(st->stack, C_NAME, reference_uid(id, i), reference_getref(data));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -6022,7 +6025,7 @@ BUILDIN_FUNC(setlook)
 
 	pc_changelook(sd,type,val);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(changelook)
@@ -6039,7 +6042,7 @@ BUILDIN_FUNC(changelook)
 
 	clif_changelook(&sd->bl,type,val);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -6054,7 +6057,7 @@ BUILDIN_FUNC(cutin)
 		return 0;
 
 	clif_cutin(sd,script_getstr(st,2),script_getnum(st,3));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -6077,7 +6080,7 @@ BUILDIN_FUNC(viewpoint)
 
 	clif_viewpoint(sd,st->oid,type,x,y,id,color);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -6141,7 +6144,7 @@ BUILDIN_FUNC(countitem)
 	}
 
 	script_pushint(st,count);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 int checkweight_sub(TBL_PC *sd,int nbargs,int32 *eitemid,int32 *eamount)
@@ -6233,7 +6236,7 @@ BUILDIN_FUNC(checkweight)
 	}
 
 	script_pushint(st,checkweight_sub(sd,(nbargs-2)/2,nameid,amount));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(checkweight2){
@@ -6294,7 +6297,7 @@ BUILDIN_FUNC(checkweight2){
 	} //end loop DO NOT break it prematurly we need to depop all stack
 
 	script_pushint(st,checkweight_sub(sd,nb_it,nameid,amount)); //push result of sub to script
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -6391,7 +6394,7 @@ BUILDIN_FUNC(getitem)
 			}
 		}
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -6501,7 +6504,7 @@ BUILDIN_FUNC(getitem2)
 			}
 		}
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -6560,7 +6563,7 @@ BUILDIN_FUNC(rentitem)
 		clif_additem(sd, 0, 0, flag);
 		return 1;
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -6629,7 +6632,7 @@ BUILDIN_FUNC(getnameditem)
 	}
 
 	script_pushint(st,1);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -6642,7 +6645,7 @@ BUILDIN_FUNC(grouprandomitem)
 
 	group = script_getnum(st,2);
 	script_pushint(st,itemdb_searchrandomid(group));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -6697,7 +6700,7 @@ BUILDIN_FUNC(makeitem)
 
 		map_addflooritem(&item_tmp,amount,m,x,y,0,0,0,4);
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 
@@ -6903,14 +6906,14 @@ BUILDIN_FUNC(delitem)
 
 	if( buildin_delitem_search(sd, &it, false) )
 	{// success
-		return 0;
+		return SCRIPT_CMD_SUCCESS;
 	}
 
 	ShowError("script:delitem: failed to delete %d items (AID=%d item_id=%d).\n", it.amount, sd->status.account_id, it.nameid);
 	st->state = END;
 	st->mes_active = 0;
 	clif_scriptclose(sd, st->oid);
-	return 1;
+	return SCRIPT_CMD_FAILURE;
 }
 
 /// Deletes items from the target/attached player.
@@ -6980,14 +6983,14 @@ BUILDIN_FUNC(delitem2)
 
 	if( buildin_delitem_search(sd, &it, true) )
 	{// success
-		return 0;
+		return SCRIPT_CMD_SUCCESS;
 	}
 
 	ShowError("script:delitem2: failed to delete %d items (AID=%d item_id=%d).\n", it.amount, sd->status.account_id, it.nameid);
 	st->state = END;
 	st->mes_active = 0;
 	clif_scriptclose(sd, st->oid);
-	return 1;
+	return SCRIPT_CMD_FAILURE;
 }
 
 /*==========================================
@@ -6999,7 +7002,7 @@ BUILDIN_FUNC(enableitemuse)
 	sd=script_rid2sd(st);
 	if (sd)
 		st->npc_item_flag = sd->npc_item_flag = 1;
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(disableitemuse)
@@ -7008,7 +7011,7 @@ BUILDIN_FUNC(disableitemuse)
 	sd=script_rid2sd(st);
 	if (sd)
 		st->npc_item_flag = sd->npc_item_flag = 0;
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -7030,10 +7033,8 @@ BUILDIN_FUNC(readparam)
 		script_pushint(st,-1);
 		return 0;
 	}
-
 	script_pushint(st,pc_readparam(sd,type));
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -7072,8 +7073,7 @@ BUILDIN_FUNC(getcharid)
 		script_pushint(st,0);
 		break;
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
  * returns the GID of an NPC
@@ -7102,8 +7102,7 @@ BUILDIN_FUNC(getnpcid)
 			script_pushint(st,0);
 			return 1;
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -7125,7 +7124,7 @@ BUILDIN_FUNC(getpartyname)
 	{
 		script_pushconststr(st,"null");
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -7164,8 +7163,7 @@ BUILDIN_FUNC(getpartymember)
 		}
 	}
 	mapreg_setreg(add_str("$@partymembercount"),j);
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -7179,7 +7177,7 @@ BUILDIN_FUNC(getpartyleader)
 
 	party_id=script_getnum(st,2);
 	if( script_hasdata(st,3) )
- 		type=script_getnum(st,3);
+		type=script_getnum(st,3);
 
 	p=party_search(party_id);
 
@@ -7202,7 +7200,7 @@ BUILDIN_FUNC(getpartyleader)
 		case 5: script_pushint(st,p->party.member[i].lv); break;
 		default: script_pushstrcopy(st,p->party.member[i].name); break;
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -7215,16 +7213,11 @@ BUILDIN_FUNC(getguildname)
 	struct guild* g;
 
 	guild_id = script_getnum(st,2);
-
 	if( ( g = guild_search(guild_id) ) != NULL )
-	{
 		script_pushstrcopy(st,g->name);
-	}
-	else
-	{
+	else 
 		script_pushconststr(st,"null");
-	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -7237,16 +7230,11 @@ BUILDIN_FUNC(getguildmaster)
 	struct guild* g;
 
 	guild_id = script_getnum(st,2);
-
 	if( ( g = guild_search(guild_id) ) != NULL )
-	{
 		script_pushstrcopy(st,g->member[0].name);
-	}
-	else
-	{
+	else 
 		script_pushconststr(st,"null");
-	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(getguildmasterid)
@@ -7255,16 +7243,11 @@ BUILDIN_FUNC(getguildmasterid)
 	struct guild* g;
 
 	guild_id = script_getnum(st,2);
-
 	if( ( g = guild_search(guild_id) ) != NULL )
-	{
 		script_pushint(st,g->member[0].char_id);
-	}
 	else
-	{
 		script_pushint(st,0);
-	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -7316,7 +7299,7 @@ BUILDIN_FUNC(strcharinfo)
 			break;
 	}
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -7370,7 +7353,7 @@ BUILDIN_FUNC(strnpcinfo)
 	else
 		script_pushconststr(st, "");
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 
@@ -7411,7 +7394,7 @@ BUILDIN_FUNC(getequipid)
 	else
 		script_pushint(st,0);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -7449,7 +7432,7 @@ BUILDIN_FUNC(getequipname)
 	else
 		script_pushconststr(st,"");
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -7477,7 +7460,7 @@ BUILDIN_FUNC(getbrokenid)
 
 	script_pushint(st,id);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -7507,7 +7490,7 @@ BUILDIN_FUNC(repair)
 		}
 	}
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -7538,7 +7521,7 @@ BUILDIN_FUNC(repairall)
 		clif_equiplist(sd);
 	}
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -7561,7 +7544,7 @@ BUILDIN_FUNC(getequipisequiped)
 		script_pushint(st,1);
 	else
 		 script_pushint(st,0);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -7588,7 +7571,7 @@ BUILDIN_FUNC(getequipisenableref)
 	else
 		script_pushint(st,0);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -7614,7 +7597,7 @@ BUILDIN_FUNC(getequiprefinerycnt)
 	else
 		script_pushint(st,0);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -7641,7 +7624,7 @@ BUILDIN_FUNC(getequipweaponlv)
 	else
 		script_pushint(st,0);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -7667,7 +7650,7 @@ BUILDIN_FUNC(getequippercentrefinery)
 	else
 		script_pushint(st,0);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -7705,9 +7688,9 @@ BUILDIN_FUNC(successrefitem)
 		clif_misceffect(&sd->bl,3);
 		if(sd->status.inventory[i].refine == MAX_REFINE &&
 			sd->status.inventory[i].card[0] == CARD0_FORGE &&
-		  	sd->status.char_id == (int)MakeDWord(sd->status.inventory[i].card[2],sd->status.inventory[i].card[3])
+			sd->status.char_id == (int)MakeDWord(sd->status.inventory[i].card[2],sd->status.inventory[i].card[3])
 		){ // Fame point system [DracoRPG]
-	 		switch (sd->inventory_data[i]->wlv){
+			switch (sd->inventory_data[i]->wlv){
 				case 1:
 					pc_addfame(sd,1); // Success to refine to +10 a lv1 weapon you forged = +1 fame point
 					break;
@@ -7717,11 +7700,11 @@ BUILDIN_FUNC(successrefitem)
 				case 3:
 					pc_addfame(sd,1000); // Success to refine to +10 a lv3 weapon you forged = +1000 fame point
 					break;
-	 	 	 }
+			 }
 		}
 	}
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -7749,7 +7732,7 @@ BUILDIN_FUNC(failedrefitem)
 		clif_misceffect(&sd->bl,2); 	// display failure effect
 	}
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -7790,7 +7773,7 @@ BUILDIN_FUNC(downrefitem)
 		clif_misceffect(&sd->bl,2);
 	}
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -7814,7 +7797,7 @@ BUILDIN_FUNC(delequip)
 	}
 
 	script_pushint(st,ret);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -7840,7 +7823,7 @@ BUILDIN_FUNC(breakequip)
 	} else
 		script_pushint(st,0);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -7858,7 +7841,7 @@ BUILDIN_FUNC(statusup)
 
 	pc_statusup(sd,type);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
  *
@@ -7876,7 +7859,7 @@ BUILDIN_FUNC(statusup2)
 
 	pc_statusup2(sd,type,val);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// See 'doc/item_bonus.txt'
@@ -7965,7 +7948,7 @@ BUILDIN_FUNC(bonus)
 			break;
 	}
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(autobonus)
@@ -8002,7 +7985,7 @@ BUILDIN_FUNC(autobonus)
 			script_add_autobonus(other_script);
 	}
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(autobonus2)
@@ -8039,7 +8022,7 @@ BUILDIN_FUNC(autobonus2)
 			script_add_autobonus(other_script);
 	}
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(autobonus3)
@@ -8074,7 +8057,7 @@ BUILDIN_FUNC(autobonus3)
 			script_add_autobonus(other_script);
 	}
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Changes the level of a player skill.
@@ -8104,7 +8087,7 @@ BUILDIN_FUNC(skill)
 		flag = script_getnum(st,4);
 	pc_skill(sd, id, level, flag);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Changes the level of a player skill.
@@ -8133,7 +8116,7 @@ BUILDIN_FUNC(addtoskill)
 		flag = script_getnum(st,4);
 	pc_skill(sd, id, level, flag);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Increases the level of a guild skill.
@@ -8156,7 +8139,7 @@ BUILDIN_FUNC(guildskill)
 	for( i=0; i < level; i++ )
 		guild_skillup(sd, id);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Returns the level of the player skill.
@@ -8175,7 +8158,7 @@ BUILDIN_FUNC(getskilllv)
 	id = ( script_isstring(st,2) ? skill_name2id(script_getstr(st,2)) : script_getnum(st,2) );
 	script_pushint(st, pc_checkskill(sd,id));
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Returns the level of the guild skill.
@@ -8196,7 +8179,7 @@ BUILDIN_FUNC(getgdskilllv)
 	else
 		script_pushint(st, guild_checkskill(g,skill_id));
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Returns the 'basic_skill_check' setting.
@@ -8207,7 +8190,7 @@ BUILDIN_FUNC(getgdskilllv)
 BUILDIN_FUNC(basicskillcheck)
 {
 	script_pushint(st, battle_config.basic_skill_check);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Returns the GM level of the player.
@@ -8220,10 +8203,8 @@ BUILDIN_FUNC(getgmlevel)
 	sd = script_rid2sd(st);
 	if( sd == NULL )
 		return 0;// no player attached, report source
-
 	script_pushint(st, pc_get_group_level(sd));
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Returns the group ID of the player.
@@ -8237,8 +8218,7 @@ BUILDIN_FUNC(getgroupid)
 	if (sd == NULL)
 		return 1; // no player attached, report source
 	script_pushint(st, pc_get_group_id(sd));
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Terminates the execution of this script instance.
@@ -8258,7 +8238,7 @@ BUILDIN_FUNC(end)
 	if( sd )
 		clif_scriptclose(sd, st->oid); // If a menu/select/prompt is active, close it.
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Checks if the player has that effect state (option).
@@ -8279,7 +8259,7 @@ BUILDIN_FUNC(checkoption)
 	else
 		script_pushint(st, 0);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Checks if the player is in that body state (opt1).
@@ -8300,7 +8280,7 @@ BUILDIN_FUNC(checkoption1)
 	else
 		script_pushint(st, 0);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Checks if the player has that health state (opt2).
@@ -8321,7 +8301,7 @@ BUILDIN_FUNC(checkoption2)
 	else
 		script_pushint(st, 0);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Changes the effect state (option) of the player.
@@ -8358,7 +8338,7 @@ BUILDIN_FUNC(setoption)
 	} else// Remove option
 		pc_setoption(sd, sd->sc.option&~option);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Returns if the player has a cart.
@@ -8379,7 +8359,7 @@ BUILDIN_FUNC(checkcart)
 	else
 		script_pushint(st, 0);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Sets the cart of the player.
@@ -8406,7 +8386,7 @@ BUILDIN_FUNC(setcart)
 		type = script_getnum(st,2);
 	pc_setcart(sd, type);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Returns if the player has a falcon.
@@ -8427,7 +8407,7 @@ BUILDIN_FUNC(checkfalcon)
 	else
 		script_pushint(st, 0);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Sets if the player has a falcon or not.
@@ -8449,7 +8429,7 @@ BUILDIN_FUNC(setfalcon)
 
 	pc_setfalcon(sd, flag);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Returns if the player is riding.
@@ -8470,7 +8450,7 @@ BUILDIN_FUNC(checkriding)
 	else
 		script_pushint(st, 0);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Sets if the player is riding.
@@ -8491,7 +8471,7 @@ BUILDIN_FUNC(setriding)
 		flag = script_getnum(st,2);
 	pc_setriding(sd, flag);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Returns if the player has a warg.
@@ -8511,7 +8491,7 @@ BUILDIN_FUNC(checkwug)
 	else
 		script_pushint(st, 0);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Returns if the player is wearing MADO Gear.
@@ -8531,7 +8511,7 @@ BUILDIN_FUNC(checkmadogear)
 	else
 		script_pushint(st, 0);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Sets if the player is riding MADO Gear.
@@ -8552,7 +8532,7 @@ BUILDIN_FUNC(setmadogear)
 		flag = script_getnum(st,2);
 	pc_setmadogear(sd, flag);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Sets the save point of the player.
@@ -8578,7 +8558,7 @@ BUILDIN_FUNC(savepoint)
 	if( map )
 		pc_setsavepoint(sd, map, x, y);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -8610,7 +8590,7 @@ BUILDIN_FUNC(gettimetick)	/* Asgard Version */
 		script_pushint(st,gettick());
 		break;
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -8659,7 +8639,7 @@ BUILDIN_FUNC(gettime)	/* Asgard Version */
 		script_pushint(st,-1);
 		break;
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -8680,7 +8660,7 @@ BUILDIN_FUNC(gettimestr)
 	tmpstr[maxlen]='\0';
 
 	script_pushstr(st,tmpstr);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -8695,7 +8675,7 @@ BUILDIN_FUNC(openstorage)
 		return 0;
 
 	storage_storageopen(sd);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(guildopenstorage)
@@ -8709,7 +8689,7 @@ BUILDIN_FUNC(guildopenstorage)
 
 	ret = storage_guild_storageopen(sd);
 	script_pushint(st,ret);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -8733,7 +8713,7 @@ BUILDIN_FUNC(itemskill)
 	sd->skillitem=id;
 	sd->skillitemlv=lv;
 	clif_item_skill(sd,id,lv);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
  * Attempt to create an item
@@ -8749,7 +8729,7 @@ BUILDIN_FUNC(produce)
 
 	trigger=script_getnum(st,2);
 	clif_skill_produce_mix_list(sd, -1, trigger);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
  *
@@ -8765,7 +8745,7 @@ BUILDIN_FUNC(cooking)
 
 	trigger=script_getnum(st,2);
 	clif_cooking_list(sd, trigger, AM_PHARMACY, 1, 1);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
  * Create a pet
@@ -8793,7 +8773,7 @@ BUILDIN_FUNC(makepet)
 			100, 0, 1, pet_db[pet_id].jname);
 	}
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
  * Give player exp base,job * quest_exp_rate/100
@@ -8820,7 +8800,7 @@ BUILDIN_FUNC(getexp)
 
 	pc_gainexp(sd, NULL, base, job, true);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -8841,7 +8821,7 @@ BUILDIN_FUNC(guildgetexp)
 	if(sd && sd->status.guild_id > 0)
 		guild_getexp (sd, exp);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -8862,7 +8842,7 @@ BUILDIN_FUNC(guildchangegm)
 	else
 		script_pushint(st,guild_gm_change(guild_id, sd));
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -8922,7 +8902,7 @@ BUILDIN_FUNC(monster)
 		m = map_mapname2mapid(mapn);
 
 	mob_once_spawn(sd, m, x, y, str, class_, amount, event, size, ai);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
  * Request List of Monster Drops
@@ -8957,7 +8937,7 @@ BUILDIN_FUNC(getmobdrops)
 	mapreg_setreg(add_str("$@MobDrop_count"), j);
 	script_pushint(st, 1);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
  * Same as monster but randomize location in x0,x1,y0,y1 area
@@ -9008,7 +8988,7 @@ BUILDIN_FUNC(areamonster)
 		m = map_mapname2mapid(mapn);
 
 	mob_once_spawn_area(sd, m, x0, y0, x1, y1, str, class_, amount, event, size, ai);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
  * KillMonster subcheck, verify if mob to kill ain't got an even to handle, could be force kill by allflag
@@ -9031,6 +9011,7 @@ BUILDIN_FUNC(areamonster)
 	md->state.npc_killmonster = 0;
 	return 0;
 }
+
 static int buildin_killmonster_sub(struct block_list *bl,va_list ap)
 {
 	TBL_MOB* md = (TBL_MOB*)bl;
@@ -9046,6 +9027,7 @@ static int buildin_killmonster_sub(struct block_list *bl,va_list ap)
 	}
 	return 0;
 }
+
 BUILDIN_FUNC(killmonster)
 {
 	const char *mapname,*event;
@@ -9070,7 +9052,7 @@ BUILDIN_FUNC(killmonster)
 	map_freeblock_lock();
 	map_foreachinmap(buildin_killmonster_sub_strip, m, BL_MOB, event ,allflag);
 	map_freeblock_unlock();
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 static int buildin_killmonsterall_sub_strip(struct block_list *bl,va_list ap)
@@ -9106,7 +9088,7 @@ BUILDIN_FUNC(killmonsterall)
 	}
 
 	map_foreachinmap(buildin_killmonsterall_sub_strip,m,BL_MOB);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -9157,8 +9139,9 @@ BUILDIN_FUNC(clone)
 	else //Failed to create clone.
 		script_pushint(st,0);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
+
 /*==========================================
  *------------------------------------------*/
 BUILDIN_FUNC(doevent)
@@ -9173,8 +9156,9 @@ BUILDIN_FUNC(doevent)
 
 	check_event(st, event);
 	npc_event(sd, event, 0);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
+
 /*==========================================
  *------------------------------------------*/
 BUILDIN_FUNC(donpcevent)
@@ -9187,7 +9171,7 @@ BUILDIN_FUNC(donpcevent)
 		script_pushint(st, 0);
 	} else
 		script_pushint(st, 1);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// for Aegis compatibility
@@ -9200,7 +9184,7 @@ BUILDIN_FUNC(cmdothernpc)	// Added by RoVeRT
 	snprintf(event, sizeof(event), "%s::OnCommand%s", npc, command);
 	check_event(st, event);
 	npc_event_do(event);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -9217,8 +9201,9 @@ BUILDIN_FUNC(addtimer)
 		return 0;
 
 	pc_addeventtimer(sd,tick,event);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
+
 /*==========================================
  *------------------------------------------*/
 BUILDIN_FUNC(deltimer)
@@ -9233,7 +9218,7 @@ BUILDIN_FUNC(deltimer)
 
 	check_event(st, event);
 	pc_deleventtimer(sd,event);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
  *------------------------------------------*/
@@ -9251,7 +9236,7 @@ BUILDIN_FUNC(addtimercount)
 
 	check_event(st, event);
 	pc_addeventtimercount(sd,event,tick);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -9300,8 +9285,9 @@ BUILDIN_FUNC(initnpctimer)
 	nd->u.scr.timertick = 0;
 	npc_settimerevent_tick(nd,0);
 	npc_timerevent_start(nd, st->rid);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
+
 /*==========================================
  *------------------------------------------*/
 BUILDIN_FUNC(startnpctimer)
@@ -9346,7 +9332,7 @@ BUILDIN_FUNC(startnpctimer)
 	}
 
 	npc_timerevent_start(nd, st->rid);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
  *------------------------------------------*/
@@ -9387,8 +9373,9 @@ BUILDIN_FUNC(stopnpctimer)
 		nd->u.scr.rid = 0;
 
 	npc_timerevent_stop(nd);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
+
 /*==========================================
  *------------------------------------------*/
 BUILDIN_FUNC(getnpctimer)
@@ -9431,8 +9418,9 @@ BUILDIN_FUNC(getnpctimer)
 	}
 
 	script_pushint(st,val);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
+
 /*==========================================
  *------------------------------------------*/
 BUILDIN_FUNC(setnpctimer)
@@ -9455,7 +9443,7 @@ BUILDIN_FUNC(setnpctimer)
 
 	npc_settimerevent_tick(nd,tick);
 	script_pushint(st,0);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -9487,7 +9475,7 @@ BUILDIN_FUNC(attachnpctimer)
 
 	nd->u.scr.rid = sd->bl.id;
 	script_pushint(st,0);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -9511,7 +9499,7 @@ BUILDIN_FUNC(detachnpctimer)
 
 	nd->u.scr.rid = 0;
 	script_pushint(st,0);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -9525,7 +9513,7 @@ BUILDIN_FUNC(playerattached)
 		script_pushint(st,0);
 	else
 		script_pushint(st,st->rid);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -9564,8 +9552,9 @@ BUILDIN_FUNC(announce)
 		else
 			intif_broadcast(mes, (int)strlen(mes)+1, flag&0xf0);
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
+
 /*==========================================
  *------------------------------------------*/
 static int buildin_announce_sub(struct block_list *bl, va_list ap)
@@ -9602,8 +9591,9 @@ BUILDIN_FUNC(mapannounce)
 
 	map_foreachinmap(buildin_announce_sub, m, BL_PC,
 			mes, strlen(mes)+1, flag&0xf0, fontColor, fontType, fontSize, fontAlign, fontY);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
+
 /*==========================================
  *------------------------------------------*/
 BUILDIN_FUNC(areaannounce)
@@ -9627,7 +9617,7 @@ BUILDIN_FUNC(areaannounce)
 
 	map_foreachinarea(buildin_announce_sub, m, x0, y0, x1, y1, BL_PC,
 		mes, strlen(mes)+1, flag&0xf0, fontColor, fontType, fontSize, fontAlign, fontY);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -9667,8 +9657,9 @@ BUILDIN_FUNC(getusers)
 	}
 
 	script_pushint(st,val);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
+
 /*==========================================
  * Works like @WHO - displays all online users names in window
  *------------------------------------------*/
@@ -9695,9 +9686,9 @@ BUILDIN_FUNC(getusersname)
 		clif_scriptmes(sd,st->oid,pl_sd->status.name);
 	}
 	mapit_free(iter);
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
+
 /*==========================================
  * getmapguildusers("mapname",guild ID) Returns the number guild members present on a map [Reddozen]
  *------------------------------------------*/
@@ -9725,8 +9716,9 @@ BUILDIN_FUNC(getmapguildusers)
 	}
 
 	script_pushint(st,c);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
+
 /*==========================================
  *------------------------------------------*/
 BUILDIN_FUNC(getmapusers)
@@ -9739,7 +9731,7 @@ BUILDIN_FUNC(getmapusers)
 		return 0;
 	}
 	script_pushint(st,map[m].users);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
  *------------------------------------------*/
@@ -9749,6 +9741,7 @@ static int buildin_getareausers_sub(struct block_list *bl,va_list ap)
 	(*users)++;
 	return 0;
 }
+
 BUILDIN_FUNC(getareausers)
 {
 	const char *str;
@@ -9765,7 +9758,7 @@ BUILDIN_FUNC(getareausers)
 	map_foreachinarea(buildin_getareausers_sub,
 		m,x0,y0,x1,y1,BL_PC,&users);
 	script_pushint(st,users);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -9812,8 +9805,9 @@ BUILDIN_FUNC(getareadropitem)
 	map_foreachinarea(buildin_getareadropitem_sub,
 		m,x0,y0,x1,y1,BL_ITEM,item,&amount);
 	script_pushint(st,amount);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
+
 /*==========================================
  *------------------------------------------*/
 BUILDIN_FUNC(enablenpc)
@@ -9821,8 +9815,9 @@ BUILDIN_FUNC(enablenpc)
 	const char *str;
 	str=script_getstr(st,2);
 	npc_enable(str,1);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
+
 /*==========================================
  *------------------------------------------*/
 BUILDIN_FUNC(disablenpc)
@@ -9830,7 +9825,7 @@ BUILDIN_FUNC(disablenpc)
 	const char *str;
 	str=script_getstr(st,2);
 	npc_enable(str,0);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -9840,7 +9835,7 @@ BUILDIN_FUNC(hideoffnpc)
 	const char *str;
 	str=script_getstr(st,2);
 	npc_enable(str,2);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
  *------------------------------------------*/
@@ -9849,7 +9844,7 @@ BUILDIN_FUNC(hideonnpc)
 	const char *str;
 	str=script_getstr(st,2);
 	npc_enable(str,4);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /* Starts a status effect on the target unit or on the attached player.
@@ -9925,8 +9920,7 @@ BUILDIN_FUNC(sc_start)
 			status_change_start(bl, bl, type, rate, val1, val2, val3, val4, tick, flag);
 			break;
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Ends one or all status effects on the target unit or on the attached player.
@@ -9977,7 +9971,7 @@ BUILDIN_FUNC(sc_end)
 	else
 		status_change_clear(bl, 3); // remove all effects
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -9999,7 +9993,7 @@ BUILDIN_FUNC(getscrate)
 		rate = status_get_sc_def(NULL,bl, (sc_type)type, 10000, 10000, 0);
 
 	script_pushint(st,rate);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -10049,7 +10043,7 @@ BUILDIN_FUNC(getstatus)
 		default: script_pushint(st, 1); break;
 	}
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -10060,7 +10054,7 @@ BUILDIN_FUNC(debugmes)
 	const char *str;
 	str=script_getstr(st,2);
 	ShowDebug("script debug : %d %d : %s\n",st->rid,st->oid,str);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -10076,7 +10070,7 @@ BUILDIN_FUNC(catchpet)
 		return 0;
 
 	pet_catch_process1(sd,pet_id);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -10097,7 +10091,7 @@ BUILDIN_FUNC(homunculus_evolution)
 		else
 			clif_emotion(&sd->hd->bl, E_SWT);
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -10138,7 +10132,7 @@ BUILDIN_FUNC(homunculus_mutate)
 
 	script_pushint(st, 0);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -10178,7 +10172,7 @@ BUILDIN_FUNC(morphembryo)
 
 	script_pushint(st, 0);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 // [Zephyrus]
@@ -10193,7 +10187,7 @@ BUILDIN_FUNC(homunculus_shuffle)
 	if(merc_is_hom_active(sd->hd))
 		merc_hom_shuffle(sd->hd);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -10218,7 +10212,7 @@ BUILDIN_FUNC(checkhomcall)
 	else
 		script_pushint(st, hd->homunculus.vaporize);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 //These two functions bring the eA MAPID_* class functionality to scripts.
@@ -10237,7 +10231,7 @@ BUILDIN_FUNC(eaclass)
 		class_ = sd->status.class_;
 	}
 	script_pushint(st,pc_jobid2mapid(class_));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(roclass)
@@ -10254,7 +10248,7 @@ BUILDIN_FUNC(roclass)
 			sex = 1; //Just use male when not found.
 	}
 	script_pushint(st,pc_mapid2jobid(class_, sex));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -10273,7 +10267,7 @@ BUILDIN_FUNC(birthpet)
 	}
 
 	clif_sendegg(sd);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -10295,7 +10289,7 @@ BUILDIN_FUNC(resetlvl)
 		return 0;
 
 	pc_resetlvl(sd,type);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
  * Reset a player status point
@@ -10305,7 +10299,7 @@ BUILDIN_FUNC(resetstatus)
 	TBL_PC *sd;
 	sd=script_rid2sd(st);
 	pc_resetstate(sd);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -10316,7 +10310,7 @@ BUILDIN_FUNC(resetskill)
 	TBL_PC *sd;
 	sd=script_rid2sd(st);
 	pc_resetskill(sd,1);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -10327,7 +10321,7 @@ BUILDIN_FUNC(skillpointcount)
 	TBL_PC *sd;
 	sd=script_rid2sd(st);
 	script_pushint(st,sd->status.skill_point + pc_resetskill(sd,2));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -10364,8 +10358,7 @@ BUILDIN_FUNC(changebase)
 			clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
 		clif_skillinfoblock(sd);
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -10382,7 +10375,7 @@ BUILDIN_FUNC(changesex)
 	for( i=0; i<EQI_MAX; i++ )
 		if( sd->equip_index[i] >= 0 ) pc_unequipitem(sd, sd->equip_index[i], 3);
 	chrif_changesex(sd);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -10404,8 +10397,7 @@ BUILDIN_FUNC(globalmes)
 	}
 
 	npc_globalmessage(name,mes);	// broadcast  to all players connected
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -10431,7 +10423,7 @@ BUILDIN_FUNC(waitingroom)
 	if( nd != NULL )
 		chat_createnpcchat(nd, title, limit, pub, trigger, ev, zeny, minLvl, maxLvl);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Removes the waiting room of the current or target npc.
@@ -10447,7 +10439,7 @@ BUILDIN_FUNC(delwaitingroom)
 		nd = (struct npc_data *)map_id2bl(st->oid);
 	if( nd != NULL )
 		chat_deletenpcchat(nd);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Kicks all the players from the waiting room of the current or target npc.
@@ -10466,7 +10458,7 @@ BUILDIN_FUNC(waitingroomkickall)
 
 	if( nd != NULL && (cd=(struct chat_data *)map_id2bl(nd->chat_id)) != NULL )
 		chat_npckickall(cd);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Enables the waiting room event of the current or target npc.
@@ -10485,7 +10477,7 @@ BUILDIN_FUNC(enablewaitingroomevent)
 
 	if( nd != NULL && (cd=(struct chat_data *)map_id2bl(nd->chat_id)) != NULL )
 		chat_enableevent(cd);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Disables the waiting room event of the current or target npc.
@@ -10504,7 +10496,7 @@ BUILDIN_FUNC(disablewaitingroomevent)
 
 	if( nd != NULL && (cd=(struct chat_data *)map_id2bl(nd->chat_id)) != NULL )
 		chat_disableevent(cd);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Returns info on the waiting room of the current or target npc.
@@ -10552,7 +10544,7 @@ BUILDIN_FUNC(getwaitingroomstate)
 	case 33: script_pushint(st, (cd->users >= cd->trigger)); break;
 	default: script_pushint(st, -1); break;
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Warps the trigger or target amount of players to the target map and position.
@@ -10618,7 +10610,7 @@ BUILDIN_FUNC(warpwaitingpc)
 			pc_setpos(sd, mapindex_name2id(map_name), x, y, CLR_OUTSIGHT);
 	}
 	mapreg_setreg(add_str("$@warpwaitingpcnum"), i);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -10736,7 +10728,7 @@ BUILDIN_FUNC(addrid)
 	}
 	mapit_free(iter);
 	script_pushint(st,1);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -10754,7 +10746,7 @@ BUILDIN_FUNC(attachrid)
 		script_pushint(st,1);
 	} else
 		script_pushint(st,0);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
  * Detach script to rid
@@ -10762,7 +10754,7 @@ BUILDIN_FUNC(attachrid)
 BUILDIN_FUNC(detachrid)
 {
 	script_detach_rid(st);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
  * Chk if account connected, (and charid from account if specified)
@@ -10774,7 +10766,7 @@ BUILDIN_FUNC(isloggedin)
 		sd->status.char_id != script_getnum(st,3))
 		sd = NULL;
 	push_val(st->stack,C_INT,sd!=NULL);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 
@@ -10800,8 +10792,7 @@ BUILDIN_FUNC(setmapflagnosave)
 		map[m].save.x=x;
 		map[m].save.y=y;
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(getmapflag)
@@ -10891,8 +10882,7 @@ BUILDIN_FUNC(getmapflag)
 #endif
 		}
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /* pvp timer handling */
 static int script_mapflag_pvp_sub(struct block_list *bl,va_list ap) {
@@ -10909,6 +10899,7 @@ static int script_mapflag_pvp_sub(struct block_list *bl,va_list ap) {
 	clif_maptypeproperty2(&sd->bl,SELF);
 	return 0;
 }
+
 BUILDIN_FUNC(setmapflag)
 {
 	int16 m,i;
@@ -11012,8 +11003,7 @@ BUILDIN_FUNC(setmapflag)
 #endif
 		}
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(removemapflag)
@@ -11116,8 +11106,7 @@ BUILDIN_FUNC(removemapflag)
 #endif
 		}
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(pvpon)
@@ -11156,8 +11145,7 @@ BUILDIN_FUNC(pvpon)
 		sd->pvp_lost = 0;
 	}
 	mapit_free(iter);
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 static int buildin_pvpoff_sub(struct block_list *bl,va_list ap)
@@ -11192,7 +11180,7 @@ BUILDIN_FUNC(pvpoff)
 		return 0;
 
 	map_foreachinmap(buildin_pvpoff_sub, m, BL_PC);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(gvgon)
@@ -11210,9 +11198,9 @@ BUILDIN_FUNC(gvgon)
 		bl.m = m;
 		clif_maptypeproperty2(&bl,ALL_SAMEMAP);
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
+
 BUILDIN_FUNC(gvgoff)
 {
 	int16 m;
@@ -11228,8 +11216,7 @@ BUILDIN_FUNC(gvgoff)
 		bl.m = m;
 		clif_maptypeproperty2(&bl,ALL_SAMEMAP);
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
  *	Shows an emoticon on top of the player/npc
@@ -11265,7 +11252,7 @@ BUILDIN_FUNC(emotion)
 		}
 		else
 			clif_emotion(map_id2bl(st->oid),type);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 
@@ -11319,39 +11306,39 @@ BUILDIN_FUNC(maprespawnguildid)
 	map_foreachpc(buildin_maprespawnguildid_sub_pc,m,g_id,flag);
 	if (flag&4) //Remove script mobs.
 		map_foreachinmap(buildin_maprespawnguildid_sub_mob,m,BL_MOB);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(agitstart)
 {
-	if(agit_flag==1) return 0;      // Agit already Start.
+	if(agit_flag==1) return SCRIPT_CMD_SUCCESS;      // Agit already Start.
 	agit_flag=1;
 	guild_agit_start();
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(agitend)
 {
-	if(agit_flag==0) return 0;      // Agit already End.
+	if(agit_flag==0) return SCRIPT_CMD_SUCCESS;      // Agit already End.
 	agit_flag=0;
 	guild_agit_end();
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(agitstart2)
 {
-	if(agit2_flag==1) return 0;      // Agit2 already Start.
+	if(agit2_flag==1) return SCRIPT_CMD_SUCCESS;      // Agit2 already Start.
 	agit2_flag=1;
 	guild_agit2_start();
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(agitend2)
 {
-	if(agit2_flag==0) return 0;      // Agit2 already End.
+	if(agit2_flag==0) return SCRIPT_CMD_SUCCESS;      // Agit2 already End.
 	agit2_flag=0;
 	guild_agit2_end();
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -11360,7 +11347,7 @@ BUILDIN_FUNC(agitend2)
 BUILDIN_FUNC(agitcheck)
 {
 	script_pushint(st,agit_flag);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -11369,7 +11356,7 @@ BUILDIN_FUNC(agitcheck)
 BUILDIN_FUNC(agitcheck2)
 {
 	script_pushint(st,agit2_flag);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Sets the guild_id of this npc.
@@ -11397,7 +11384,7 @@ BUILDIN_FUNC(flagemblem)
 		else if( changed ) /* removing a flag */
 			guild_flag_remove(nd);
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(getcastlename)
@@ -11406,7 +11393,7 @@ BUILDIN_FUNC(getcastlename)
 	struct guild_castle* gc = guild_mapname2gc(mapname);
 	const char* name = (gc) ? gc->castle_name : "";
 	script_pushstrcopy(st,name);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(getcastledata)
@@ -11449,7 +11436,7 @@ BUILDIN_FUNC(getcastledata)
 			ShowWarning("buildin_setcastledata: index = '%d' is out of allowed range\n", index);
 			return 1;
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(setcastledata)
@@ -11470,7 +11457,7 @@ BUILDIN_FUNC(setcastledata)
 	}
 
 	guild_castledatasave(gc->castle_id, index, value);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /* =====================================================================
@@ -11487,7 +11474,7 @@ BUILDIN_FUNC(requestguildinfo)
 
 	if(guild_id>0)
 		guild_npc_request_info(guild_id,event);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Returns the number of cards that have been compounded onto the specified equipped item.
@@ -11520,7 +11507,7 @@ BUILDIN_FUNC(getequipcardcnt)
 			count++;
 
 	script_pushint(st,count);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Removes all cards from the item found in the specified equipment slot of the invoking character,
@@ -11581,7 +11568,7 @@ BUILDIN_FUNC(successremovecards) {
 
 		clif_misceffect(&sd->bl,3);
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Removes all cards from the item found in the specified equipment slot of the invoking character.
@@ -11656,8 +11643,7 @@ BUILDIN_FUNC(failedremovecards) {
 		}
 		clif_misceffect(&sd->bl,2);
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /* ================================================================
@@ -11714,8 +11700,7 @@ BUILDIN_FUNC(mapwarp)	// Added by RoVeRT
 			map_foreachinmap(buildin_areawarp_sub,m,BL_PC,index,x,y,0,0);
 			break;
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 static int buildin_mobcount_sub(struct block_list *bl,va_list ap)	// Added by RoVeRT
@@ -11724,7 +11709,7 @@ static int buildin_mobcount_sub(struct block_list *bl,va_list ap)	// Added by Ro
 	struct mob_data *md = ((struct mob_data *)bl);
 	if( md->status.hp > 0 && (!event || strcmp(event,md->npc_event) == 0) )
 		return 1;
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(mobcount)	// Added by RoVeRT
@@ -11754,8 +11739,7 @@ BUILDIN_FUNC(mobcount)	// Added by RoVeRT
 	}
 
 	script_pushint(st,map_foreachinmap(buildin_mobcount_sub, m, BL_MOB, event));
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(marriage)
@@ -11769,8 +11753,9 @@ BUILDIN_FUNC(marriage)
 		return 0;
 	}
 	script_pushint(st,1);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
+
 BUILDIN_FUNC(wedding_effect)
 {
 	TBL_PC *sd=script_rid2sd(st);
@@ -11781,8 +11766,9 @@ BUILDIN_FUNC(wedding_effect)
 	} else
 		bl=&sd->bl;
 	clif_wedding_effect(bl);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
+
 BUILDIN_FUNC(divorce)
 {
 	TBL_PC *sd=script_rid2sd(st);
@@ -11791,7 +11777,7 @@ BUILDIN_FUNC(divorce)
 		return 0;
 	}
 	script_pushint(st,1);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(ispartneron)
@@ -11799,61 +11785,61 @@ BUILDIN_FUNC(ispartneron)
 	TBL_PC *sd=script_rid2sd(st);
 
 	if(sd==NULL || !pc_ismarried(sd) ||
-            map_charid2sd(sd->status.partner_id) == NULL) {
-		script_pushint(st,0);
-		return 0;
+		map_charid2sd(sd->status.partner_id) == NULL) {
+			script_pushint(st,0);
+			return 0;
 	}
 
 	script_pushint(st,1);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(getpartnerid)
 {
-    TBL_PC *sd=script_rid2sd(st);
-    if (sd == NULL) {
-        script_pushint(st,0);
-        return 0;
-    }
+	TBL_PC *sd=script_rid2sd(st);
+	if (sd == NULL) {
+		script_pushint(st,0);
+		return 0;
+	}
 
-    script_pushint(st,sd->status.partner_id);
-    return 0;
+	script_pushint(st,sd->status.partner_id);
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(getchildid)
 {
-    TBL_PC *sd=script_rid2sd(st);
-    if (sd == NULL) {
-        script_pushint(st,0);
-        return 0;
-    }
+	TBL_PC *sd=script_rid2sd(st);
+	if (sd == NULL) {
+		script_pushint(st,0);
+		return 0;
+	}
 
-    script_pushint(st,sd->status.child);
-    return 0;
+	script_pushint(st,sd->status.child);
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(getmotherid)
 {
-    TBL_PC *sd=script_rid2sd(st);
-    if (sd == NULL) {
-        script_pushint(st,0);
-        return 0;
-    }
+	TBL_PC *sd=script_rid2sd(st);
+	if (sd == NULL) {
+		script_pushint(st,0);
+		return 0;
+	}
 
-    script_pushint(st,sd->status.mother);
-    return 0;
+	script_pushint(st,sd->status.mother);
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(getfatherid)
 {
-    TBL_PC *sd=script_rid2sd(st);
-    if (sd == NULL) {
-        script_pushint(st,0);
-        return 0;
-    }
+	TBL_PC *sd=script_rid2sd(st);
+	if (sd == NULL) {
+		script_pushint(st,0);
+		return 0;
+	}
 
-    script_pushint(st,sd->status.father);
-    return 0;
+	script_pushint(st,sd->status.father);
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(warppartner)
@@ -11865,7 +11851,7 @@ BUILDIN_FUNC(warppartner)
 	TBL_PC *p_sd=NULL;
 
 	if(sd==NULL || !pc_ismarried(sd) ||
-   	(p_sd=map_charid2sd(sd->status.partner_id)) == NULL) {
+	(p_sd=map_charid2sd(sd->status.partner_id)) == NULL) {
 		script_pushint(st,0);
 		return 0;
 	}
@@ -11880,7 +11866,7 @@ BUILDIN_FUNC(warppartner)
 		script_pushint(st,1);
 	} else
 		script_pushint(st,0);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*================================================
@@ -11913,7 +11899,7 @@ BUILDIN_FUNC(strmobinfo)
 		script_pushint(st,0);
 		break;
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -11957,9 +11943,9 @@ BUILDIN_FUNC(guardian)
 
 	check_event(st, evt);
 	script_pushint(st, mob_spawn_guardian(map,x,y,str,class_,evt,guardian,has_index));
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
+
 /*==========================================
  * Invisible Walls [Zephyrus]
  *------------------------------------------*/
@@ -11981,14 +11967,14 @@ BUILDIN_FUNC(setwall)
 		return 0; // Invalid Map
 
 	map_iwall_set(m, x, y, size, dir, shootable, name);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
+
 BUILDIN_FUNC(delwall)
 {
 	const char *name = script_getstr(st,2);
 	map_iwall_remove(name);
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Retrieves various information about the specified guardian.
@@ -12028,8 +12014,7 @@ BUILDIN_FUNC(guardianinfo)
 		else
 			script_pushint(st,-1);
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -12063,8 +12048,9 @@ BUILDIN_FUNC(getitemname)
 
 	memcpy(item_name, i_data->jname, ITEM_NAME_LENGTH);
 	script_pushstr(st,item_name);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
+
 /*==========================================
  * Returns number of slots an item has. [Skotlex]
  *------------------------------------------*/
@@ -12081,7 +12067,7 @@ BUILDIN_FUNC(getitemslots)
 		script_pushint(st,i_data->slot);
 	else
 		script_pushint(st,-1);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 // TODO: add matk here if needed/once we get rid of RENEWAL
@@ -12123,7 +12109,7 @@ BUILDIN_FUNC(getiteminfo)
 		script_pushint(st,item_arr[n]);
 	} else
 		script_pushint(st,-1);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -12166,7 +12152,7 @@ BUILDIN_FUNC(setiteminfo)
 		script_pushint(st,value);
 	} else
 		script_pushint(st,-1);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -12195,8 +12181,7 @@ BUILDIN_FUNC(getequipcardid)
 		script_pushint(st,sd->status.inventory[i].card[slot]);
 	else
 		script_pushint(st,0);
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -12232,8 +12217,7 @@ BUILDIN_FUNC(petskillbonus)
 		pd->bonus->timer = INVALID_TIMER;
 	else
 		pd->bonus->timer = add_timer(gettick()+pd->bonus->delay*1000, pet_skill_bonus_timer, sd->bl.id, 0);
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -12269,8 +12253,7 @@ BUILDIN_FUNC(petloot)
 	pd->loot->max=max;
 	pd->loot->count = 0;
 	pd->loot->weight = 0;
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
  * Set arrays with info of all sd inventory :
@@ -12305,7 +12288,7 @@ BUILDIN_FUNC(getinventorylist)
 		}
 	}
 	pc_setreg(sd,add_str("@inventorylist_count"),j);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(getskilllist)
@@ -12322,7 +12305,7 @@ BUILDIN_FUNC(getskilllist)
 		}
 	}
 	pc_setreg(sd,add_str("@skilllist_count"),j);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(clearitem)
@@ -12335,7 +12318,7 @@ BUILDIN_FUNC(clearitem)
 			pc_delitem(sd, i, sd->status.inventory[i].amount, 0, 0, LOG_TYPE_SCRIPT);
 		}
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -12354,8 +12337,7 @@ BUILDIN_FUNC(disguise)
 		script_pushint(st,id);
 	} else
 		script_pushint(st,0);
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -12372,7 +12354,7 @@ BUILDIN_FUNC(undisguise)
 	} else {
 		script_pushint(st,1);
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -12389,7 +12371,7 @@ BUILDIN_FUNC(classchange)
 	_class=script_getnum(st,2);
 	type=script_getnum(st,3);
 	clif_class_change(bl,_class,type);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -12409,7 +12391,7 @@ BUILDIN_FUNC(misceffect)
 		if(sd)
 			clif_specialeffect(&sd->bl,type,AREA);
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
  * Play a BGM on a single client [Rikter/Yommy]
@@ -12419,29 +12401,23 @@ BUILDIN_FUNC(playBGM)
 	const char* name;
 	struct map_session_data* sd;
 
-	if( ( sd = script_rid2sd(st) ) != NULL )
-	{
+	if( ( sd = script_rid2sd(st) ) != NULL ) {
 		name = script_getstr(st,2);
-
 		clif_playBGM(sd, name);
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 static int playBGM_sub(struct block_list* bl,va_list ap)
 {
 	const char* name = va_arg(ap,const char*);
-
 	clif_playBGM(BL_CAST(BL_PC, bl), name);
-
 	return 0;
 }
 
 static int playBGM_foreachpc_sub(struct map_session_data* sd, va_list args)
 {
 	const char* name = va_arg(args, const char*);
-
 	clif_playBGM(sd, name);
 	return 0;
 }
@@ -12452,11 +12428,9 @@ static int playBGM_foreachpc_sub(struct map_session_data* sd, va_list args)
 BUILDIN_FUNC(playBGMall)
 {
 	const char* name;
-
 	name = script_getstr(st,2);
 
-	if( script_hasdata(st,7) )
-	{// specified part of map
+	if( script_hasdata(st,7) ) {// specified part of map
 		const char* map = script_getstr(st,3);
 		int x0 = script_getnum(st,4);
 		int y0 = script_getnum(st,5);
@@ -12465,18 +12439,15 @@ BUILDIN_FUNC(playBGMall)
 
 		map_foreachinarea(playBGM_sub, map_mapname2mapid(map), x0, y0, x1, y1, BL_PC, name);
 	}
-	else if( script_hasdata(st,3) )
-	{// entire map
+	else if( script_hasdata(st,3) ) {// entire map
 		const char* map = script_getstr(st,3);
 
 		map_foreachinmap(playBGM_sub, map_mapname2mapid(map), BL_PC, name);
 	}
-	else
-	{// entire server
+	else {// entire server
 		map_foreachpc(&playBGM_foreachpc_sub, name);
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -12488,11 +12459,10 @@ BUILDIN_FUNC(soundeffect)
 	const char* name = script_getstr(st,2);
 	int type = script_getnum(st,3);
 
-	if(sd)
-	{
+	if(sd) {
 		clif_soundeffect(sd,&sd->bl,name,type);
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 int soundeffect_sub(struct block_list* bl,va_list ap)
@@ -12548,8 +12518,7 @@ BUILDIN_FUNC(soundeffectall)
 	{
 		ShowError("buildin_soundeffectall: insufficient arguments for specific area broadcast.\n");
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
  * pet status recovery [Valaris] / Rewritten by [Skotlex]
@@ -12574,8 +12543,7 @@ BUILDIN_FUNC(petrecovery)
 	pd->recovery->type = (sc_type)script_getnum(st,2);
 	pd->recovery->delay = script_getnum(st,3);
 	pd->recovery->timer = INVALID_TIMER;
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -12614,8 +12582,7 @@ BUILDIN_FUNC(petheal)
 		pd->s_skill->timer = INVALID_TIMER;
 	else
 		pd->s_skill->timer = add_timer(gettick()+pd->s_skill->delay*1000,pet_heal_timer,sd->bl.id,0);
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -12640,8 +12607,7 @@ BUILDIN_FUNC(petskillattack)
 	pd->a_skill->div_ = 0;
 	pd->a_skill->rate=script_getnum(st,4);
 	pd->a_skill->bonusrate=script_getnum(st,5);
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -12666,8 +12632,7 @@ BUILDIN_FUNC(petskillattack2)
 	pd->a_skill->div_ = script_getnum(st,4);
 	pd->a_skill->rate=script_getnum(st,5);
 	pd->a_skill->bonusrate=script_getnum(st,6);
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -12707,8 +12672,7 @@ BUILDIN_FUNC(petskillsupport)
 		pd->s_skill->timer = INVALID_TIMER;
 	else
 		pd->s_skill->timer = add_timer(gettick()+pd->s_skill->delay*1000,pet_skill_support_timer,sd->bl.id,0);
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -12725,8 +12689,7 @@ BUILDIN_FUNC(skilleffect)
 	sd=script_rid2sd(st);
 
 	clif_skill_nodamage(&sd->bl,&sd->bl,skill_id,skill_lv,1);
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -12745,8 +12708,7 @@ BUILDIN_FUNC(npcskilleffect)
 
 	if (bl)
 		clif_skill_poseffect(bl,skill_id,skill_lv,x,y,gettick());
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -12777,8 +12739,7 @@ BUILDIN_FUNC(specialeffect)
 			clif_specialeffect(bl, type, target);
 		}
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(specialeffect2)
@@ -12792,8 +12753,7 @@ BUILDIN_FUNC(specialeffect2)
 
 	if (sd)
 		clif_specialeffect(&sd->bl, type, target);
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -12817,8 +12777,7 @@ BUILDIN_FUNC(nude)
 
 	if( calcflag )
 		status_calc_pc(sd,0);
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 int atcommand_sub(struct script_state* st,int type){
@@ -12851,8 +12810,7 @@ int atcommand_sub(struct script_state* st,int type){
 		script_reportsrc(st);
 		return 1;
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -12872,7 +12830,7 @@ BUILDIN_FUNC(dispbottom)
 	message=script_getstr(st,2);
 	if(sd)
 		clif_disp_onlyself(sd,message,(int)strlen(message));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*===================================
@@ -12888,7 +12846,7 @@ int recovery_sub(struct map_session_data* sd, int revive)
 		status_percent_heal(&sd->bl, 100, 100);
 		clif_displaymessage(sd->fd,msg_txt(sd,680)); // You have been recovered!
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*=========================================================================
@@ -13008,7 +12966,7 @@ BUILDIN_FUNC(recovery)
 			return 1;
 	}
 	script_pushint(st,1); //Successfully executed without errors
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
  * Get your pet info: getpetinfo(n)
@@ -13041,7 +12999,7 @@ BUILDIN_FUNC(getpetinfo)
 			script_pushint(st,0);
 			break;
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -13077,7 +13035,7 @@ BUILDIN_FUNC(gethominfo)
 			script_pushint(st,0);
 			break;
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Retrieves information about character's mercenary
@@ -13133,7 +13091,7 @@ BUILDIN_FUNC(getmercinfo)
 			return 1;
 	}
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -13163,7 +13121,7 @@ BUILDIN_FUNC(checkequipedcard)
 		}
 	}
 	script_pushint(st,0);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(jump_zero)
@@ -13182,7 +13140,7 @@ BUILDIN_FUNC(jump_zero)
 		st->pos=pos;
 		st->state=GOTO;
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -13204,7 +13162,7 @@ BUILDIN_FUNC(movenpc)
 	if (script_hasdata(st,5))
 		nd->ud.dir = script_getnum(st,5) % 8;
 	npc_movenpc(nd, x, y);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -13222,7 +13180,7 @@ BUILDIN_FUNC(message)
 		return 0;
 	clif_displaymessage(pl_sd->fd, msg);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -13243,8 +13201,7 @@ BUILDIN_FUNC(npctalk)
 		safesnprintf(message, sizeof(message), "%s : %s", name, str);
 		clif_disp_overhead(&nd->bl, message);
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 // change npc walkspeed [Valaris]
@@ -13256,13 +13213,12 @@ BUILDIN_FUNC(npcspeed)
 	speed = script_getnum(st,2);
 	nd =(struct npc_data *)map_id2bl(st->oid);
 
-	if( nd )
-	{
+	if( nd ) {
 		nd->speed = speed;
 		nd->ud.state.speed_changed = 1;
 	}
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 // make an npc walk to a position [Valaris]
 BUILDIN_FUNC(npcwalkto)
@@ -13281,9 +13237,9 @@ BUILDIN_FUNC(npcwalkto)
 		}
 		unit_walktoxy(&nd->bl,x,y,0);
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
+
 // stop an npc's movement [Valaris]
 BUILDIN_FUNC(npcstop)
 {
@@ -13292,8 +13248,7 @@ BUILDIN_FUNC(npcstop)
 	if(nd) {
 		unit_stop_walking(&nd->bl,1|4);
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 
@@ -13322,7 +13277,7 @@ BUILDIN_FUNC(getlook)
 	}
 
 	script_pushint(st,val);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -13349,7 +13304,7 @@ BUILDIN_FUNC(getsavepoint)
 			script_pushint(st,0);
 			break;
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -13512,7 +13467,7 @@ BUILDIN_FUNC(getmapxy)
 
 	//Return Success value
 	script_pushint(st,0);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -13529,7 +13484,7 @@ BUILDIN_FUNC(logmes)
 
 	str = script_getstr(st,2);
 	log_npc(sd,str);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(summon)
@@ -13565,7 +13520,7 @@ BUILDIN_FUNC(summon)
 		clif_specialeffect(&md->bl,344,AREA);
 		sc_start4(NULL,&md->bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE, 0, 60000);
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -13574,13 +13529,13 @@ BUILDIN_FUNC(summon)
 BUILDIN_FUNC(isnight)
 {
 	script_pushint(st,(night_flag == 1));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(isday)
 {
 	script_pushint(st,(night_flag == 0));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*================================================
@@ -13630,7 +13585,7 @@ BUILDIN_FUNC(isequippedcnt)
 	}
 
 	script_pushint(st,ret);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*================================================
@@ -13716,7 +13671,7 @@ BUILDIN_FUNC(isequipped)
 		sd->bonus.setitem_hash2 = setitem_hash2;
 	}
 	script_pushint(st,ret);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*================================================
@@ -13757,7 +13712,7 @@ BUILDIN_FUNC(cardscnt)
 	}
 	script_pushint(st,ret);
 //	script_pushint(st,current_equip_item_index);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*=======================================================
@@ -13771,7 +13726,7 @@ BUILDIN_FUNC(getrefine)
 		script_pushint(st,sd->status.inventory[current_equip_item_index].refine);
 	else
 		script_pushint(st,0);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*=======================================================
@@ -13780,12 +13735,12 @@ BUILDIN_FUNC(getrefine)
 BUILDIN_FUNC(night)
 {
 	if (night_flag != 1) map_night_timer(night_timer_tid, 0, 0, 1);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 BUILDIN_FUNC(day)
 {
 	if (night_flag != 0) map_day_timer(day_timer_tid, 0, 0, 1);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 //=======================================================
@@ -13805,7 +13760,7 @@ BUILDIN_FUNC(unequip)
 		if (i >= 0)
 			pc_unequipitem(sd,i,1|2);
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(equip)
@@ -13826,7 +13781,7 @@ BUILDIN_FUNC(equip)
 	if( i < MAX_INVENTORY )
 		pc_equipitem(sd,i,item_data->equip);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(autoequip)
@@ -13839,17 +13794,17 @@ BUILDIN_FUNC(autoequip)
 	if( ( item_data = itemdb_exists(nameid) ) == NULL )
 	{
 		ShowError("buildin_autoequip: Invalid item '%d'.\n", nameid);
-		return 1;
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	if( !itemdb_isequip2(item_data) )
 	{
 		ShowError("buildin_autoequip: Item '%d' cannot be equipped.\n", nameid);
-		return 1;
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	item_data->flag.autoequip = flag>0?1:0;
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(setbattleflag)
@@ -13864,7 +13819,7 @@ BUILDIN_FUNC(setbattleflag)
 	else
 		ShowInfo("buildin_setbattleflag: battle_config flag '%s' is now set to '%s'.\n",flag,value);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(getbattleflag)
@@ -13872,7 +13827,7 @@ BUILDIN_FUNC(getbattleflag)
 	const char *flag;
 	flag = script_getstr(st,2);
 	script_pushint(st,battle_get_value(flag));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 //=======================================================
@@ -13885,7 +13840,7 @@ BUILDIN_FUNC(getstrlen)
 	int len = (str) ? (int)strlen(str) : 0;
 
 	script_pushint(st,len);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 //=======================================================
@@ -13899,7 +13854,7 @@ BUILDIN_FUNC(charisalpha)
 	int val = ( str && pos >= 0 && (unsigned int)pos < strlen(str) ) ? ISALPHA( str[pos] ) != 0 : 0;
 
 	script_pushint(st,val);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 //=======================================================
@@ -13913,7 +13868,7 @@ BUILDIN_FUNC(charisupper)
 	int val = ( str && pos >= 0 && (unsigned int)pos < strlen(str) ) ? ISUPPER( str[pos] ) : 0;
 
 	script_pushint(st,val);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 //=======================================================
@@ -13927,7 +13882,7 @@ BUILDIN_FUNC(charislower)
 	int val = ( str && pos >= 0 && (unsigned int)pos < strlen(str) ) ? ISLOWER( str[pos] ) : 0;
 
 	script_pushint(st,val);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 //=======================================================
@@ -13944,7 +13899,7 @@ BUILDIN_FUNC(charat) {
 		script_pushstrcopy(st, output);
 	} else
 		script_pushconststr(st, "");
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 //=======================================================
@@ -13961,7 +13916,7 @@ BUILDIN_FUNC(setchar)
 		output[index] = *c;
 
 	script_pushstr(st, output);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 //=======================================================
@@ -13988,7 +13943,7 @@ BUILDIN_FUNC(insertchar)
 	output[len+1] = '\0';
 
 	script_pushstr(st, output);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 //=======================================================
@@ -14014,7 +13969,7 @@ BUILDIN_FUNC(delchar)
 	memcpy(&output[index], &str[index+1], len - index);
 
 	script_pushstr(st, output);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 //=======================================================
@@ -14032,7 +13987,7 @@ BUILDIN_FUNC(strtoupper)
 	}
 
 	script_pushstr(st, output);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 //=======================================================
@@ -14050,7 +14005,7 @@ BUILDIN_FUNC(strtolower)
 	}
 
 	script_pushstr(st, output);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 //=======================================================
@@ -14075,7 +14030,7 @@ BUILDIN_FUNC(substr)
 	output[len] = '\0';
 
 	script_pushstr(st, output);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 //=======================================================
@@ -14150,7 +14105,7 @@ BUILDIN_FUNC(explode)
 	set_reg(st, sd, reference_uid(id, start), name, (void*)temp, reference_getref(data));
 
 	aFree(temp);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 //=======================================================
@@ -14207,10 +14162,10 @@ BUILDIN_FUNC(implode)
 	array_size = getarraysize(st, id, reference_getindex(data), is_string_variable(name), reference_getref(data)) - 1;
 
 	if(array_size == -1) //empty array check (AmsTaff)
-    {
-        ShowWarning("script:implode: array length = 0\n");
-        output = (char*)aMalloc(sizeof(char)*5);
-        sprintf(output,"%s","NULL");
+	{
+		ShowWarning("script:implode: array length = 0\n");
+		output = (char*)aMalloc(sizeof(char)*5);
+		sprintf(output,"%s","NULL");
 	} else {
 		for(i = 0; i <= array_size; ++i) {
 			temp = (char*) get_val2(st, reference_uid(id, i), reference_getref(data));
@@ -14248,7 +14203,7 @@ BUILDIN_FUNC(implode)
 	}
 
 	script_pushstr(st, output);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 //=======================================================
@@ -14258,130 +14213,130 @@ BUILDIN_FUNC(implode)
 //-------------------------------------------------------
 BUILDIN_FUNC(sprintf)
 {
-    unsigned int len, argc = 0, arg = 0, buf2_len = 0;
-    const char* format;
-    char* p;
-    char* q;
-    char* buf  = NULL;
-    char* buf2 = NULL;
-    struct script_data* data;
-    StringBuf final_buf;
+	unsigned int len, argc = 0, arg = 0, buf2_len = 0;
+	const char* format;
+	char* p;
+	char* q;
+	char* buf  = NULL;
+	char* buf2 = NULL;
+	struct script_data* data;
+	StringBuf final_buf;
 
-    // Fetch init data
-    format = script_getstr(st, 2);
-    argc = script_lastdata(st)-2;
-    len = strlen(format);
+	// Fetch init data
+	format = script_getstr(st, 2);
+	argc = script_lastdata(st)-2;
+	len = strlen(format);
 
-    // Skip parsing, where no parsing is required.
-    if(len==0){
-        script_pushconststr(st,"");
-        return 0;
-    }
+	// Skip parsing, where no parsing is required.
+	if(len==0){
+		script_pushconststr(st,"");
+		return 0;
+	}
 
-    // Pessimistic alloc
-    CREATE(buf, char, len+1);
+	// Pessimistic alloc
+	CREATE(buf, char, len+1);
 
-    // Need not be parsed, just solve stuff like %%.
-    if(argc==0){
+	// Need not be parsed, just solve stuff like %%.
+	if(argc==0){
 		memcpy(buf,format,len+1);
-        script_pushstrcopy(st, buf);
-        aFree(buf);
-        return 0;
-    }
+		script_pushstrcopy(st, buf);
+		aFree(buf);
+		return 0;
+	}
 
-    safestrncpy(buf, format, len+1);
+	safestrncpy(buf, format, len+1);
 
-    // Issue sprintf for each parameter
-    StringBuf_Init(&final_buf);
-    q = buf;
-    while((p = strchr(q, '%'))!=NULL){
-        if(p!=q){
-            len = p-q+1;
-            if(buf2_len<len){
-                RECREATE(buf2, char, len);
-                buf2_len = len;
-            }
-            safestrncpy(buf2, q, len);
-            StringBuf_AppendStr(&final_buf, buf2);
-            q = p;
-        }
-        p = q+1;
-        if(*p=='%'){  // %%
-            StringBuf_AppendStr(&final_buf, "%");
-            q+=2;
-            continue;
-        }
-        if(*p=='n'){  // %n
-            ShowWarning("buildin_sprintf: Format %%n not supported! Skipping...\n");
-            script_reportsrc(st);
-            q+=2;
-            continue;
-        }
-        if(arg>=argc){
-            ShowError("buildin_sprintf: Not enough arguments passed!\n");
-            if(buf) aFree(buf);
-            if(buf2) aFree(buf2);
-            StringBuf_Destroy(&final_buf);
-            script_pushconststr(st,"");
-            return 1;
-        }
-        if((p = strchr(q+1, '%'))==NULL){
-            p = strchr(q, 0);  // EOS
-        }
-        len = p-q+1;
-        if(buf2_len<len){
-            RECREATE(buf2, char, len);
-            buf2_len = len;
-        }
-        safestrncpy(buf2, q, len);
-        q = p;
+	// Issue sprintf for each parameter
+	StringBuf_Init(&final_buf);
+	q = buf;
+	while((p = strchr(q, '%'))!=NULL){
+		if(p!=q){
+			len = p-q+1;
+			if(buf2_len<len){
+				RECREATE(buf2, char, len);
+				buf2_len = len;
+			}
+			safestrncpy(buf2, q, len);
+			StringBuf_AppendStr(&final_buf, buf2);
+			q = p;
+		}
+		p = q+1;
+		if(*p=='%'){  // %%
+			StringBuf_AppendStr(&final_buf, "%");
+			q+=2;
+			continue;
+		}
+		if(*p=='n'){  // %n
+			ShowWarning("buildin_sprintf: Format %%n not supported! Skipping...\n");
+			script_reportsrc(st);
+			q+=2;
+			continue;
+		}
+		if(arg>=argc){
+			ShowError("buildin_sprintf: Not enough arguments passed!\n");
+			if(buf) aFree(buf);
+			if(buf2) aFree(buf2);
+			StringBuf_Destroy(&final_buf);
+			script_pushconststr(st,"");
+			return 1;
+		}
+		if((p = strchr(q+1, '%'))==NULL){
+			p = strchr(q, 0);  // EOS
+		}
+		len = p-q+1;
+		if(buf2_len<len){
+			RECREATE(buf2, char, len);
+			buf2_len = len;
+		}
+		safestrncpy(buf2, q, len);
+		q = p;
 
-        // Note: This assumes the passed value being the correct
-        // type to the current format specifier. If not, the server
-        // probably crashes or returns anything else, than expected,
-        // but it would behave in normal code the same way so it's
-        // the scripter's responsibility.
-        data = script_getdata(st, arg+3);
-        if(data_isstring(data)){  // String
-            StringBuf_Printf(&final_buf, buf2, script_getstr(st, arg+3));
-        }else if(data_isint(data)){  // Number
-            StringBuf_Printf(&final_buf, buf2, script_getnum(st, arg+3));
-        }else if(data_isreference(data)){  // Variable
-            char* name = reference_getname(data);
-            if(name[strlen(name)-1]=='$'){  // var Str
-                StringBuf_Printf(&final_buf, buf2, script_getstr(st, arg+3));
-            }else{  // var Int
-                StringBuf_Printf(&final_buf, buf2, script_getnum(st, arg+3));
-            }
-        }else{  // Unsupported type
-            ShowError("buildin_sprintf: Unknown argument type!\n");
-            if(buf) aFree(buf);
-            if(buf2) aFree(buf2);
-            StringBuf_Destroy(&final_buf);
-            script_pushconststr(st,"");
-            return 1;
-        }
-        arg++;
-    }
+		// Note: This assumes the passed value being the correct
+		// type to the current format specifier. If not, the server
+		// probably crashes or returns anything else, than expected,
+		// but it would behave in normal code the same way so it's
+		// the scripter's responsibility.
+		data = script_getdata(st, arg+3);
+		if(data_isstring(data)){  // String
+			StringBuf_Printf(&final_buf, buf2, script_getstr(st, arg+3));
+		}else if(data_isint(data)){  // Number
+			StringBuf_Printf(&final_buf, buf2, script_getnum(st, arg+3));
+		}else if(data_isreference(data)){  // Variable
+			char* name = reference_getname(data);
+			if(name[strlen(name)-1]=='$'){  // var Str
+				StringBuf_Printf(&final_buf, buf2, script_getstr(st, arg+3));
+			}else{  // var Int
+				StringBuf_Printf(&final_buf, buf2, script_getnum(st, arg+3));
+			}
+		}else{  // Unsupported type
+			ShowError("buildin_sprintf: Unknown argument type!\n");
+			if(buf) aFree(buf);
+			if(buf2) aFree(buf2);
+			StringBuf_Destroy(&final_buf);
+			script_pushconststr(st,"");
+			return 1;
+		}
+		arg++;
+	}
 
-    // Append anything left
-    if(*q){
-        StringBuf_AppendStr(&final_buf, q);
-    }
+	// Append anything left
+	if(*q){
+		StringBuf_AppendStr(&final_buf, q);
+	}
 
-    // Passed more, than needed
-    if(arg<argc){
-        ShowWarning("buildin_sprintf: Unused arguments passed.\n");
-        script_reportsrc(st);
-    }
+	// Passed more, than needed
+	if(arg<argc){
+		ShowWarning("buildin_sprintf: Unused arguments passed.\n");
+		script_reportsrc(st);
+	}
 
-    script_pushstrcopy(st, StringBuf_Value(&final_buf));
+	script_pushstrcopy(st, StringBuf_Value(&final_buf));
 
-    if(buf) aFree(buf);
-    if(buf2) aFree(buf2);
-    StringBuf_Destroy(&final_buf);
+	if(buf) aFree(buf);
+	if(buf2) aFree(buf2);
+	StringBuf_Destroy(&final_buf);
 
-    return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 //=======================================================
@@ -14389,99 +14344,99 @@ BUILDIN_FUNC(sprintf)
 // Implements C sscanf.
 //-------------------------------------------------------
 BUILDIN_FUNC(sscanf){
-    unsigned int argc, arg = 0, len;
-    struct script_data* data;
-    struct map_session_data* sd = NULL;
-    const char* str;
-    const char* format;
-    const char* p;
-    const char* q;
-    char* buf = NULL;
-    char* buf_p;
-    char* ref_str = NULL;
-    int ref_int;
+	unsigned int argc, arg = 0, len;
+	struct script_data* data;
+	struct map_session_data* sd = NULL;
+	const char* str;
+	const char* format;
+	const char* p;
+	const char* q;
+	char* buf = NULL;
+	char* buf_p;
+	char* ref_str = NULL;
+	int ref_int;
 
-    // Get data
-    str = script_getstr(st, 2);
-    format = script_getstr(st, 3);
-    argc = script_lastdata(st)-3;
+	// Get data
+	str = script_getstr(st, 2);
+	format = script_getstr(st, 3);
+	argc = script_lastdata(st)-3;
 
-    len = strlen(format);
-    CREATE(buf, char, len*2+1);
+	len = strlen(format);
+	CREATE(buf, char, len*2+1);
 
-    // Issue sscanf for each parameter
-    *buf = 0;
-    q = format;
-    while((p = strchr(q, '%'))){
-        if(p!=q){
-            strncat(buf, q, (size_t)(p-q));
-            q = p;
-        }
-        p = q+1;
-        if(*p=='*' || *p=='%'){  // Skip
-            strncat(buf, q, 2);
-            q+=2;
-            continue;
-        }
-        if(arg>=argc){
-            ShowError("buildin_sscanf: Not enough arguments passed!\n");
-            script_pushint(st, -1);
-            if(buf) aFree(buf);
-            if(ref_str) aFree(ref_str);
-            return 1;
-        }
-        if((p = strchr(q+1, '%'))==NULL){
-            p = strchr(q, 0);  // EOS
-        }
-        len = p-q;
-        strncat(buf, q, len);
-        q = p;
+	// Issue sscanf for each parameter
+	*buf = 0;
+	q = format;
+	while((p = strchr(q, '%'))){
+		if(p!=q){
+			strncat(buf, q, (size_t)(p-q));
+			q = p;
+		}
+		p = q+1;
+		if(*p=='*' || *p=='%'){  // Skip
+			strncat(buf, q, 2);
+			q+=2;
+			continue;
+		}
+		if(arg>=argc){
+			ShowError("buildin_sscanf: Not enough arguments passed!\n");
+			script_pushint(st, -1);
+			if(buf) aFree(buf);
+			if(ref_str) aFree(ref_str);
+			return 1;
+		}
+		if((p = strchr(q+1, '%'))==NULL){
+			p = strchr(q, 0);  // EOS
+		}
+		len = p-q;
+		strncat(buf, q, len);
+		q = p;
 
-        // Validate output
-        data = script_getdata(st, arg+4);
-        if(!data_isreference(data) || !reference_tovariable(data)){
-            ShowError("buildin_sscanf: Target argument is not a variable!\n");
-            script_pushint(st, -1);
-            if(buf) aFree(buf);
-            if(ref_str) aFree(ref_str);
-            return 1;
-        }
-        buf_p = reference_getname(data);
-        if(not_server_variable(*buf_p) && (sd = script_rid2sd(st))==NULL){
-            script_pushint(st, -1);
-            if(buf) aFree(buf);
-            if(ref_str) aFree(ref_str);
-            return 0;
-        }
+		// Validate output
+		data = script_getdata(st, arg+4);
+		if(!data_isreference(data) || !reference_tovariable(data)){
+			ShowError("buildin_sscanf: Target argument is not a variable!\n");
+			script_pushint(st, -1);
+			if(buf) aFree(buf);
+			if(ref_str) aFree(ref_str);
+			return 1;
+		}
+		buf_p = reference_getname(data);
+		if(not_server_variable(*buf_p) && (sd = script_rid2sd(st))==NULL){
+			script_pushint(st, -1);
+			if(buf) aFree(buf);
+			if(ref_str) aFree(ref_str);
+			return 0;
+		}
 
-        // Save value if any
-        if(buf_p[strlen(buf_p)-1]=='$'){  // String
-            if(ref_str==NULL){
-                CREATE(ref_str, char, strlen(str)+1);
-            }
-            if(sscanf(str, buf, ref_str)==0){
-                break;
-            }
+		// Save value if any
+		if(buf_p[strlen(buf_p)-1]=='$'){  // String
+			if(ref_str==NULL){
+				CREATE(ref_str, char, strlen(str)+1);
+			}
+			if(sscanf(str, buf, ref_str)==0){
+				break;
+			}
 			set_reg(st, sd, reference_uid( reference_getid(data), reference_getindex(data) ), buf_p, (void *)(ref_str), reference_getref(data));
-        } else {  // Number
-            if(sscanf(str, buf, &ref_int)==0){
-                break;
-            }
+		} else {  // Number
+			if(sscanf(str, buf, &ref_int)==0){
+				break;
+			}
 			set_reg(st, sd, reference_uid( reference_getid(data), reference_getindex(data) ), buf_p, (void *)__64BPRTSIZE(ref_int), reference_getref(data));
-        }
-        arg++;
+		}
+		arg++;
 
-        // Disable used format (%... -> %*...)
-        buf_p = strchr(buf, 0);
-        memmove(buf_p-len+2, buf_p-len+1, len);
-        *(buf_p-len+1) = '*';
-    }
+		// Disable used format (%... -> %*...)
+		buf_p = strchr(buf, 0);
+		memmove(buf_p-len+2, buf_p-len+1, len);
+		*(buf_p-len+1) = '*';
+	}
 
-    script_pushint(st, arg);
-    if(buf) aFree(buf);
-    if(ref_str) aFree(ref_str);
+	script_pushint(st, arg);
+	if(buf) aFree(buf);
+	if(ref_str) aFree(ref_str);
 
-    return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 //=======================================================
@@ -14524,7 +14479,7 @@ BUILDIN_FUNC(strpos) {
 		}
 	}
 	script_pushint(st, -1);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 //===============================================================
@@ -14610,7 +14565,7 @@ BUILDIN_FUNC(replacestr)
 
 	script_pushstrcopy(st, StringBuf_Value(&output));
 	StringBuf_Destroy(&output);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 //========================================================
@@ -14666,7 +14621,7 @@ BUILDIN_FUNC(countstr)
 		}
 	}
 	script_pushint(st, numFinds);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 
@@ -14730,7 +14685,7 @@ BUILDIN_FUNC(setnpcdisplay)
 	}
 
 	script_pushint(st,0);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(atoi)
@@ -14738,7 +14693,7 @@ BUILDIN_FUNC(atoi)
 	const char *value;
 	value = script_getstr(st,2);
 	script_pushint(st,atoi(value));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 // case-insensitive substring search [lordalfa]
@@ -14749,7 +14704,7 @@ BUILDIN_FUNC(compare)
 	message = script_getstr(st,2);
 	cmpstring = script_getstr(st,3);
 	script_pushint(st,(stristr(message,cmpstring) != NULL));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 // [zBuffer] List of mathematics commands --->
@@ -14759,7 +14714,7 @@ BUILDIN_FUNC(sqrt)
 	i = script_getnum(st,2);
 	a = sqrt(i);
 	script_pushint(st,(int)a);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(pow)
@@ -14769,7 +14724,7 @@ BUILDIN_FUNC(pow)
 	b = script_getnum(st,3);
 	i = pow(a,b);
 	script_pushint(st,(int)i);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(distance)
@@ -14782,7 +14737,7 @@ BUILDIN_FUNC(distance)
 	y1 = script_getnum(st,5);
 
 	script_pushint(st,distance_xy(x0,y0,x1,y1));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 // <--- [zBuffer] List of mathematics commands
@@ -14796,7 +14751,7 @@ BUILDIN_FUNC(md5)
 	md5str = (char *)aMalloc((32+1)*sizeof(char));
 	MD5_String(tmpstr, md5str);
 	script_pushstr(st, md5str);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 // [zBuffer] List of dynamic var commands --->
@@ -14828,7 +14783,7 @@ BUILDIN_FUNC(setd)
 		setd_sub(st, sd, varname, elem, (void *)__64BPRTSIZE(script_getnum(st, 3)), NULL);
 	}
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 int buildin_query_sql_sub(struct script_state* st, Sql* handle)
@@ -14915,8 +14870,7 @@ int buildin_query_sql_sub(struct script_state* st, Sql* handle)
 	// Free data
 	Sql_FreeResult(handle);
 	script_pushint(st, i);
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(query_sql) {
@@ -14966,7 +14920,7 @@ BUILDIN_FUNC(escape_sql)
 	esc_str = (char*)aMalloc(len*2+1);
 	Sql_EscapeStringLen(mmysql_handle, esc_str, str, len);
 	script_pushstr(st, esc_str);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(getd)
@@ -14983,7 +14937,7 @@ BUILDIN_FUNC(getd)
 	// Push the 'pointer' so it's more flexible [Lance]
 	push_val(st->stack, C_NAME, reference_uid(add_str(varname), elem));
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(callshop)
@@ -15025,7 +14979,7 @@ BUILDIN_FUNC(callshop)
 
 	sd->npc_shopid = nd->bl.id;
 	script_pushint(st,1);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(npcshopitem)
@@ -15054,7 +15008,7 @@ BUILDIN_FUNC(npcshopitem)
 	nd->u.shop.count = n;
 
 	script_pushint(st,1);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(npcshopadditem)
@@ -15083,7 +15037,7 @@ BUILDIN_FUNC(npcshopadditem)
 	nd->u.shop.count = n;
 
 	script_pushint(st,1);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(npcshopdelitem)
@@ -15121,7 +15075,7 @@ BUILDIN_FUNC(npcshopdelitem)
 	nd->u.shop.count = size;
 
 	script_pushint(st,1);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 //Sets a script to attach to a shop npc.
@@ -15146,7 +15100,7 @@ BUILDIN_FUNC(npcshopattach)
 		nd->master_nd = NULL;
 
 	script_pushint(st,1);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -15191,7 +15145,7 @@ BUILDIN_FUNC(setitemscript)
 
 	*dstscript = script[0] ? parse_script(script, "script_setitemscript", 0, 0) : NULL;
 	script_pushint(st,1);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*=======================================================
@@ -15244,8 +15198,7 @@ BUILDIN_FUNC(addmonsterdrop)
 		ShowWarning("addmonsterdrop: bad mob id given %d\n",script_getnum(st,2));
 		return 1;
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 
 }
 
@@ -15289,8 +15242,7 @@ BUILDIN_FUNC(delmonsterdrop)
 		ShowWarning("delmonsterdrop: bad mob id given %d\n",script_getnum(st,2));
 		return 1;
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 
@@ -15340,7 +15292,7 @@ BUILDIN_FUNC(getmonsterinfo)
 		case 22: script_pushint(st,mob->mexp); break;
 		default: script_pushint(st,-1); //wrong Index
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(checkvending) // check vending [Nab4]
@@ -15356,8 +15308,7 @@ BUILDIN_FUNC(checkvending) // check vending [Nab4]
 		script_pushint(st, sd->state.autotrade ? 2 : sd->state.vending);
 	else
 		script_pushint(st,0);
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 
@@ -15374,8 +15325,7 @@ BUILDIN_FUNC(checkchatting) // check chatting [Marka]
 		script_pushint(st,(sd->chatID != 0));
 	else
 		script_pushint(st,0);
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(checkidle)
@@ -15391,8 +15341,7 @@ BUILDIN_FUNC(checkidle)
 		script_pushint(st, DIFF_TICK(last_tick, sd->idletime));
 	else
 		script_pushint(st, 0);
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(searchitem)
@@ -15461,7 +15410,7 @@ BUILDIN_FUNC(searchitem)
 	}
 
 	script_pushint(st, count);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 int axtoi(const char *hexStg)
@@ -15502,7 +15451,7 @@ BUILDIN_FUNC(axtoi)
 {
 	const char *hex = script_getstr(st,2);
 	script_pushint(st,axtoi(hex));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 // [zBuffer] List of player cont commands --->
@@ -15528,7 +15477,7 @@ BUILDIN_FUNC(rid2name)
 		ShowError("buildin_rid2name: invalid RID\n");
 		script_pushconststr(st,"(null)");
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(pcblockmove)
@@ -15546,8 +15495,7 @@ BUILDIN_FUNC(pcblockmove)
 
 	if(sd)
 		sd->state.blockedmove = flag > 0;
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(pcfollow)
@@ -15567,7 +15515,7 @@ BUILDIN_FUNC(pcfollow)
 	if(sd)
 		pc_follow(sd, targetid);
 
-    return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(pcstopfollow)
@@ -15586,7 +15534,7 @@ BUILDIN_FUNC(pcstopfollow)
 	if(sd)
 		pc_stop_following(sd);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 // <--- [zBuffer] List of player cont commands
 // [zBuffer] List of mob control commands --->
@@ -15619,7 +15567,7 @@ BUILDIN_FUNC(unitwalk)
 			add_timer(gettick()+50, unit_delay_walktobl_timer, bl->id, tbl->id); // Need timer to avoid mismatches
 	}
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Kills the unit
@@ -15631,7 +15579,7 @@ BUILDIN_FUNC(unitkill)
 	if( bl != NULL )
 		status_kill(bl);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Warps the unit to the target position in the target map
@@ -15667,7 +15615,7 @@ BUILDIN_FUNC(unitwarp)
 	else
 		script_pushint(st, 0);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Makes the unit attack the target.
@@ -15729,7 +15677,7 @@ BUILDIN_FUNC(unitattack)
 		return 1;
 	}
 	script_pushint(st, unit_walktobl(unit_bl, target_bl, 65025, 2));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Makes the unit stop attacking and moving
@@ -15751,7 +15699,7 @@ BUILDIN_FUNC(unitstop)
 			((TBL_MOB*)bl)->target_id = 0;
 	}
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Makes the unit say the message
@@ -15776,7 +15724,7 @@ BUILDIN_FUNC(unittalk)
 		StringBuf_Destroy(&sbuf);
 	}
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Makes the unit do an emotion
@@ -15796,7 +15744,7 @@ BUILDIN_FUNC(unitemote)
 	if( bl != NULL )
 		clif_emotion(bl, emotion);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Makes the unit cast the skill on the target or self if no target is specified
@@ -15820,7 +15768,7 @@ BUILDIN_FUNC(unitskilluseid)
 	if( bl != NULL )
 		unit_skilluse_id(bl, target_id, skill_id, skill_lv);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Makes the unit cast the skill on the target position.
@@ -15846,7 +15794,7 @@ BUILDIN_FUNC(unitskillusepos)
 	if( bl != NULL )
 		unit_skilluse_pos(bl, skill_x, skill_y, skill_id, skill_lv);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 // <--- [zBuffer] List of mob control commands
@@ -15876,7 +15824,7 @@ BUILDIN_FUNC(sleep)
 		st->state = RUN;
 		st->sleep.tick = 0;
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Pauses the execution of the script, keeping the player attached
@@ -15904,7 +15852,7 @@ BUILDIN_FUNC(sleep2)
 		st->sleep.tick = 0;
 		script_pushint(st, (map_id2sd(st->rid)!=NULL));
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Awakes all the sleep timers of the target npc
@@ -15951,7 +15899,7 @@ BUILDIN_FUNC(awake)
 			node = node->next;
 		}
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Returns a reference to a variable of the target NPC.
@@ -15994,7 +15942,7 @@ BUILDIN_FUNC(getvariableofnpc)
 	}
 
 	push_val2(st->stack, C_NAME, reference_getuid(data), &nd->u.scr.script->script_vars );
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Opens a warp portal.
@@ -16036,7 +15984,7 @@ BUILDIN_FUNC(warpportal)
 	group->val2 = (tpx<<16) | tpy;
 	group->val3 = mapindex;
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(openmail)
@@ -16049,7 +15997,7 @@ BUILDIN_FUNC(openmail)
 
 	mail_openmail(sd);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(openauction)
@@ -16062,7 +16010,7 @@ BUILDIN_FUNC(openauction)
 
 	clif_Auction_openwindow(sd);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Retrieves the value of the specified flag of the specified cell.
@@ -16079,7 +16027,7 @@ BUILDIN_FUNC(checkcell)
 
 	script_pushint(st, map_getcell(m, x, y, type));
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Modifies flags of cells in the specified area.
@@ -16106,7 +16054,7 @@ BUILDIN_FUNC(setcell)
 		for( x = x1; x <= x2; ++x )
 			map_setcell(m, x, y, type, flag);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -16127,7 +16075,7 @@ BUILDIN_FUNC(mercenary_create)
 
 	contract_time = script_getnum(st,3);
 	merc_create(sd, class_, contract_time);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(mercenary_heal)
@@ -16141,7 +16089,7 @@ BUILDIN_FUNC(mercenary_heal)
 	sp = script_getnum(st,3);
 
 	status_heal(&sd->md->bl, hp, sp, 0);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(mercenary_sc_start)
@@ -16158,7 +16106,7 @@ BUILDIN_FUNC(mercenary_sc_start)
 	val1 = script_getnum(st,4);
 
 	status_change_start(NULL, &sd->md->bl, type, 10000, val1, 0, 0, 0, tick, 2);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(mercenary_get_calls)
@@ -16185,8 +16133,7 @@ BUILDIN_FUNC(mercenary_get_calls)
 			script_pushint(st,0);
 			break;
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(mercenary_set_calls)
@@ -16217,8 +16164,7 @@ BUILDIN_FUNC(mercenary_set_calls)
 
 	*calls += value;
 	*calls = cap_value(*calls, 0, INT_MAX);
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(mercenary_get_faith)
@@ -16245,8 +16191,7 @@ BUILDIN_FUNC(mercenary_get_faith)
 			script_pushint(st,0);
 			break;
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(mercenary_set_faith)
@@ -16280,7 +16225,7 @@ BUILDIN_FUNC(mercenary_set_faith)
 	if( mercenary_get_guild(sd->md) == guild )
 		clif_mercenary_updatestatus(sd,SP_MERCFAITH);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*------------------------------------------
@@ -16298,7 +16243,7 @@ BUILDIN_FUNC(readbook)
 	page = script_getnum(st,3);
 
 	clif_readbook(sd->fd, book_id, page);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /******************
@@ -16311,7 +16256,7 @@ BUILDIN_FUNC(setquest)
 	nullpo_ret(sd);
 
 	quest_add(sd, script_getnum(st, 2));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(erasequest)
@@ -16320,7 +16265,7 @@ BUILDIN_FUNC(erasequest)
 	nullpo_ret(sd);
 
 	quest_delete(sd, script_getnum(st, 2));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(completequest)
@@ -16329,7 +16274,7 @@ BUILDIN_FUNC(completequest)
 	nullpo_ret(sd);
 
 	quest_update_status(sd, script_getnum(st, 2), Q_COMPLETE);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(changequest)
@@ -16338,7 +16283,7 @@ BUILDIN_FUNC(changequest)
 	nullpo_ret(sd);
 
 	quest_change(sd, script_getnum(st, 2),script_getnum(st, 3));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(checkquest)
@@ -16353,7 +16298,7 @@ BUILDIN_FUNC(checkquest)
 
 	script_pushint(st, quest_check(sd, script_getnum(st, 2), type));
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(showevent)
@@ -16371,7 +16316,7 @@ BUILDIN_FUNC(showevent)
 	color = 0; // set default color
 
 	clif_quest_show_event(sd, &nd->bl, state, color);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -16429,7 +16374,7 @@ BUILDIN_FUNC(waitingroom2bg)
 
 	mapreg_setreg(add_str("$@arenamembersnum"), i);
 	script_pushint(st,bg_id);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(waitingroom2bg_single)
@@ -16463,7 +16408,7 @@ BUILDIN_FUNC(waitingroom2bg_single)
 	else
 		script_pushint(st,0);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(bg_team_setxy)
@@ -16477,7 +16422,7 @@ BUILDIN_FUNC(bg_team_setxy)
 
 	bg->x = script_getnum(st,3);
 	bg->y = script_getnum(st,4);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(bg_warp)
@@ -16492,7 +16437,7 @@ BUILDIN_FUNC(bg_warp)
 	x = script_getnum(st,4);
 	y = script_getnum(st,5);
 	bg_team_warp(bg_id, mapindex, x, y);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(bg_monster)
@@ -16509,7 +16454,7 @@ BUILDIN_FUNC(bg_monster)
 	if( script_hasdata(st,8) ) evt = script_getstr(st,8);
 	check_event(st, evt);
 	script_pushint(st, mob_spawn_bg(map,x,y,str,class_,evt,bg_id));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(bg_monster_set_team)
@@ -16529,7 +16474,7 @@ BUILDIN_FUNC(bg_monster_set_team)
 	md->target_id = md->attacked_id = 0;
 	clif_charnameack(0, &md->bl);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(bg_leave)
@@ -16539,14 +16484,14 @@ BUILDIN_FUNC(bg_leave)
 		return 0;
 
 	bg_team_leave(sd,0);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(bg_destroy)
 {
 	int bg_id = script_getnum(st,2);
 	bg_team_delete(bg_id);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(bg_getareausers)
@@ -16582,7 +16527,7 @@ BUILDIN_FUNC(bg_getareausers)
 	}
 
 	script_pushint(st,c);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(bg_updatescore)
@@ -16598,7 +16543,7 @@ BUILDIN_FUNC(bg_updatescore)
 	map[m].bgscore_eagle = script_getnum(st,4);
 
 	clif_bg_updatescore(m);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(bg_get_data)
@@ -16621,7 +16566,7 @@ BUILDIN_FUNC(bg_get_data)
 			break;
 	}
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -16658,7 +16603,7 @@ BUILDIN_FUNC(instance_create)
 		return -1;
 
 	script_pushint(st,instance_create(sd->status.party_id, script_getstr(st, 2)));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -16682,7 +16627,7 @@ BUILDIN_FUNC(instance_destroy)
 	}
 
 	instance_destroy(instance_id);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -16701,7 +16646,7 @@ BUILDIN_FUNC(instance_enter)
 		script_pushint(st,instance_enter(sd,script_getstr(st, 2)));
 	else
 		return 1;
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 
 }
 
@@ -16727,14 +16672,14 @@ BUILDIN_FUNC(instance_npcname)
 	if( instance_id && (nd = npc_name2id(str)) != NULL ) {
 		static char npcname[NAME_LENGTH];
 		snprintf(npcname, sizeof(npcname), "dup_%d_%d", instance_id, nd->bl.id);
- 		script_pushconststr(st,npcname);
+		script_pushconststr(st,npcname);
 	} else {
 		ShowError("script:instance_npcname: invalid instance NPC (instance_id: %d, NPC name: \"%s\".)\n", instance_id, str);
 		st->state = END;
 		return 1;
 	}
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -16748,7 +16693,7 @@ BUILDIN_FUNC(instance_mapname)
 	int16 m;
 	short instance_id = 0;
 
- 	str = script_getstr(st,2);
+	str = script_getstr(st,2);
 
 	if( script_hasdata(st,3) )
 		instance_id = script_getnum(st,3);
@@ -16761,7 +16706,7 @@ BUILDIN_FUNC(instance_mapname)
 	else
 		script_pushconststr(st, map[m].name);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -16778,10 +16723,8 @@ BUILDIN_FUNC(instance_id)
 		script_pushint(st, 0);
 		return 1;
 	}
-
 	script_pushint(st, instance_id);
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -16815,7 +16758,7 @@ BUILDIN_FUNC(instance_warpall)
 	for( i = 0; i < MAX_PARTY; i++ )
 		if( (pl_sd = p->data[i].sd) && map[pl_sd->bl.m].instance_id == instance_id ) pc_setpos(pl_sd,map_id2index(m),x,y,CLR_TELEPORT);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -16847,7 +16790,7 @@ BUILDIN_FUNC(instance_announce) {
 		map_foreachinmap(buildin_announce_sub, instance_data[instance_id].map[i].m, BL_PC,
 						 mes, strlen(mes)+1, flag&0xf0, fontColor, fontType, fontSize, fontAlign, fontY);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -16905,7 +16848,7 @@ BUILDIN_FUNC(instance_check_party)
 	else
 		script_pushint(st, 1);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -16924,7 +16867,7 @@ BUILDIN_FUNC(setfont)
 		sd->user_font = 0;
 
 	clif_font(sd);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
@@ -16964,7 +16907,7 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 
 	clif_emotion(&md->bl, emotion);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
  * areamobuseskill "Map Name",<x>,<y>,<range>,<Mob ID>,"Skill Name"/<Skill ID>,<Skill Lv>,<Cast Time>,<Cancelable>,<Emotion>,<Target Type>;
@@ -16995,7 +16938,7 @@ BUILDIN_FUNC(areamobuseskill)
 	target = script_getnum(st,12);
 
 	map_foreachinrange(buildin_mobuseskill_sub, &center, range, BL_MOB, mobid, skill_id, skill_lv, casttime, cancel, emotion, target);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 
@@ -17017,7 +16960,7 @@ BUILDIN_FUNC(progressbar)
 	sd->progressbar.timeout = gettick() + second*1000;
 
 	clif_progressbar(sd, strtol(color, (char **)NULL, 0), second);
-    return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(pushpc)
@@ -17056,7 +16999,7 @@ BUILDIN_FUNC(pushpc)
 	dy = diry[dir];
 
 	unit_blown(&sd->bl, dx, dy, cells, 0);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 
@@ -17079,7 +17022,7 @@ BUILDIN_FUNC(buyingstore)
 	}
 
 	buyingstore_setup(sd, script_getnum(st,2));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 
@@ -17112,7 +17055,7 @@ BUILDIN_FUNC(searchstores)
 	}
 
 	searchstore_open(sd, uses, effect);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /// Displays a number as large digital clock.
 /// showdigit <value>[,<type>];
@@ -17141,7 +17084,7 @@ BUILDIN_FUNC(showdigit)
 	}
 
 	clif_showdigit(sd, (unsigned char)type, value);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /**
  * Rune Knight
@@ -17152,7 +17095,7 @@ BUILDIN_FUNC(makerune) {
 		return 0;
 	clif_skill_produce_mix_list(sd,RK_RUNEMASTERY,24);
 	sd->itemid = script_getnum(st,2);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /**
  * checkdragon() returns 1 if mounting a dragon or 0 otherwise.
@@ -17165,7 +17108,7 @@ BUILDIN_FUNC(checkdragon) {
 		script_pushint(st,1);
 	else
 		script_pushint(st,0);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /**
  * setdragon({optional Color}) returns 1 on success or 0 otherwise
@@ -17204,7 +17147,7 @@ BUILDIN_FUNC(setdragon) {
 		pc_setoption(sd, sd->sc.option|option);
 		script_pushint(st,1);
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /**
@@ -17218,7 +17161,7 @@ BUILDIN_FUNC(ismounting) {
 		script_pushint(st,1);
 	else
 		script_pushint(st,0);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /**
@@ -17240,7 +17183,7 @@ BUILDIN_FUNC(setmounting) {
 			pc_setoption(sd, sd->sc.option|OPTION_MOUNTING);//mount
 		script_pushint(st,1);//in both cases, return 1.
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /**
  * Retrieves quantity of arguments provided to callfunc/callsub.
@@ -17257,8 +17200,7 @@ BUILDIN_FUNC(getargcount) {
 	ri = st->stack->stack_data[st->stack->defsp - 1].u.ri;
 
 	script_pushint(st, ri->nargs);
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /**
  * getcharip(<account ID>/<character ID>/<character name>)
@@ -17301,8 +17243,7 @@ BUILDIN_FUNC(getcharip)
 		ip_addr = ip2str(ip, NULL);
 		script_pushstrcopy(st, ip_addr);
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /**
  * is_function(<function name>) -> 1 if function exists, 0 otherwise
@@ -17314,8 +17255,7 @@ BUILDIN_FUNC(is_function) {
 		script_pushint(st,1);
 	else
 		script_pushint(st,0);
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /**
  * get_revision() -> retrieves the current svn revision (if available)
@@ -17327,8 +17267,7 @@ BUILDIN_FUNC(get_revision) {
 		script_pushint(st,atoi(svn));
 	else
 		script_pushint(st,-1); //unknown
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 /**
  * freeloop(<toggle>) -> toggles this script instance's looping-check ability
@@ -17341,8 +17280,7 @@ BUILDIN_FUNC(freeloop) {
 		st->freeloop = 0;
 
 	script_pushint(st, st->freeloop);
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /**
@@ -17390,8 +17328,7 @@ BUILDIN_FUNC(bindatcmd) {
 		atcmd_binding[i]->level = level;
 		atcmd_binding[i]->level2 = level2;
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(unbindatcmd) {
@@ -17432,7 +17369,7 @@ BUILDIN_FUNC(unbindatcmd) {
 	} else
 		script_pushint(st, 0);/* not found */
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(useatcmd) {
@@ -17491,7 +17428,7 @@ BUILDIN_FUNC(checkre)
 			ShowWarning("buildin_checkre: unknown parameter.\n");
 			break;
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /* getrandgroupitem <group_id>,<quantity> */
@@ -17532,7 +17469,7 @@ BUILDIN_FUNC(getrandgroupitem) {
 		}
 	}
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /* cleanmap <map_name>;
@@ -17542,19 +17479,19 @@ static int atcommand_cleanfloor_sub(struct block_list *bl, va_list ap)
 	nullpo_ret(bl);
 	map_clearflooritem(bl);
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(cleanmap)
 {
-    const char *map;
-    int16 m = -1;
-    int16 x0 = 0, y0 = 0, x1 = 0, y1 = 0;
+	const char *map;
+	int16 m = -1;
+	int16 x0 = 0, y0 = 0, x1 = 0, y1 = 0;
 
-    map = script_getstr(st, 2);
-    m = map_mapname2mapid(map);
-    if (!m)
-        return 1;
+	map = script_getstr(st, 2);
+	m = map_mapname2mapid(map);
+	if (!m)
+		return 1;
 
 	if ((script_lastdata(st) - 2) < 4) {
 		map_foreachinmap(atcommand_cleanfloor_sub, m, BL_ITEM);
@@ -17570,9 +17507,9 @@ BUILDIN_FUNC(cleanmap)
 			return 1;
 		}
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
+
 /* Cast a skill on the attached player.
  * npcskill <skill id>, <skill lvl>, <stat point>, <NPC level>;
  * npcskill "<skill name>", <skill lvl>, <stat point>, <NPC level>; */
@@ -17618,8 +17555,7 @@ BUILDIN_FUNC(npcskill)
 	} else {
 		unit_skilluse_id(&nd->bl, sd->bl.id, skill_id, skill_level);
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /* Consumes an item.
@@ -17658,8 +17594,7 @@ BUILDIN_FUNC(consumeitem)
 	}
 
 	run_script( item_data->script, 0, sd->bl.id, nd->bl.id );
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*=======================================================
@@ -17686,9 +17621,9 @@ BUILDIN_FUNC(sit)
 		skill_sit(sd, 1);
 		clif_sitting(&sd->bl);
 	}
-
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
+
 BUILDIN_FUNC(stand)
 {
 	TBL_PC *sd;
@@ -17701,14 +17636,13 @@ BUILDIN_FUNC(stand)
 	if( sd == NULL)
 		return 0;
 
-
 	if( pc_issit(sd) ) {
 		pc_setstand(sd);
 		skill_sit(sd, 0);
 		clif_standing(&sd->bl);
 	}
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -17742,7 +17676,7 @@ BUILDIN_FUNC(countbound)
 	}
 
 	script_pushint(st,j);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -17785,7 +17719,7 @@ BUILDIN_FUNC(party_create)
 
 	party_create_byscript = 1;
 	script_pushint(st,party_create(sd,party_name,item1,item2));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -17826,7 +17760,7 @@ BUILDIN_FUNC(party_addmember)
 	}
 	sd->party_invite = party_id;
 	script_pushint(st,party_add_member(party_id,sd));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -17852,7 +17786,7 @@ BUILDIN_FUNC(party_delmember)
 		script_pushint(st,party_removemember2(sd,0,0));
 	else
 		script_pushint(st,party_removemember2(NULL,script_getnum(st,2),script_getnum(st,3)));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -17899,7 +17833,7 @@ BUILDIN_FUNC(party_changeleader)
 	}
 
 	script_pushint(st,party_changeleader(sd,tsd,party));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -17918,7 +17852,7 @@ BUILDIN_FUNC(party_changeoption)
 		return 0;
 	}
 	script_pushint(st,party_setoption(party,script_getnum(st,3),script_getnum(st,4)));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -17951,9 +17885,9 @@ BUILDIN_FUNC(party_destroy)
 		party_broken(party->party.party_id);
 		script_pushint(st,1);
 	}
-	else	//leader leave = party broken
+	else //leader leave = party broken
 		script_pushint(st,party_leave(party->data[i].sd));
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -17987,7 +17921,7 @@ BUILDIN_FUNC(is_clientver) {
 			break;
 	}
 	script_pushint(st,ret);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -18014,7 +17948,7 @@ BUILDIN_FUNC(getserverdef) {
 			script_pushint(st,0);
 			break;
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /* Returns various information about a player's VIP status.
@@ -18063,16 +17997,17 @@ BUILDIN_FUNC(vip_status) {
 #else
 	script_pushint(st, 0);
 #endif
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
-#ifdef VIP_ENABLE
+
 /* Adds or removes VIP time in minutes.
  * vip_time <time in mn>,{"<character name>"};
  * If time < 0 remove time, else add time.
  * Note: VIP System needs to be enabled. 
  */
 BUILDIN_FUNC(vip_time) {
+#ifdef VIP_ENABLE //would be a pain for scripting npc otherwise
 	TBL_PC *sd;
 	int viptime = script_getnum(st, 2) * 60; // Convert since it's given in minutes.
 
@@ -18085,10 +18020,10 @@ BUILDIN_FUNC(vip_time) {
 		return 0;
 
 	chrif_req_login_operation(sd->status.account_id, sd->status.name, 6, viptime, 7, 0); 
-
-	return 0;
-}
 #endif
+	return SCRIPT_CMD_SUCCESS;
+}
+
 
 /*==========================================
  * Turns a player into a monster and grants SC attribute effect. [malufett/Hercules]
@@ -18163,7 +18098,7 @@ BUILDIN_FUNC(montransform) {
 		sc_start4(NULL, &sd->bl, type, 100, val1, val2, val3, val4, tick);
 	}
 
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /** [Cydh]
@@ -18227,7 +18162,7 @@ BUILDIN_FUNC(bonus_script) {
 	sd->bonus_script[i].isBuff = isBuff;
 
 	status_calc_pc(sd,false);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 #include "../custom/script.inc"
