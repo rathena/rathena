@@ -554,8 +554,8 @@ struct map_session_data {
 	int storage_size; // Holds player storage size (VIP system).
 #ifdef VIP_ENABLE
 	struct {
-		unsigned int enabled;
-		unsigned int time;
+		unsigned int enabled : 1;
+		time_t time;
 	} vip;
 #endif
 

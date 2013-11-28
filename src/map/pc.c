@@ -1274,10 +1274,14 @@ int pc_reg_received(struct map_session_data *sd)
 	status_calc_pc(sd,1);
 	chrif_scdata_request(sd->status.account_id, sd->status.char_id);
 	chrif_skillcooldown_request(sd->status.account_id, sd->status.char_id);
-	chrif_bankdata_request(sd->status.account_id, sd->status.char_id);
 	chrif_bsdata_request(sd->status.char_id);
 	sd->storage_size = MIN_STORAGE; //default to min
-	chrif_req_vipActive(sd, 0, 1); // request VIP informations
+	chrif_req_login_operation(sd->status.account_id, sd->status.name, 7, 0, 1, 0); //request Bank data
+#ifdef VIP_ENABLE
+	sd->vip.time = 0;
+	sd->vip.enabled = 0;
+	chrif_req_login_operation(sd->status.account_id, sd->status.name, 6, 0, 1, 0);  // request VIP informations
+#endif	
 	intif_Mail_requestinbox(sd->status.char_id, 0); // MAIL SYSTEM - Request Mail Inbox
 	intif_request_questlog(sd);
 

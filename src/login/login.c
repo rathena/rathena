@@ -483,17 +483,16 @@ int chrif_parse_reqaccdata(int fd, int cid, char *ip) {
 }
 
 
-int chrif_sendvipdata(int fd, struct mmo_account acc, char isvip) {
+int chrif_sendvipdata(int fd, struct mmo_account acc, char isvip, int mapfd) {
 #ifdef VIP_ENABLE
-	uint8 buf[16];
-
-	WBUFW(buf,0) = 0x2743;
-	WBUFL(buf,2) = acc.account_id;
-	WBUFL(buf,6) = acc.vip_time;
-	WBUFB(buf,10) = isvip;
-	WBUFL(buf,11) = acc.group_id; //new group id
-	charif_sendallwos(-1,buf,15); //inform all char-servs of result
-
+	WFIFOHEAD(fd,19);
+	WFIFOW(fd,0) = 0x2743;
+	WFIFOL(fd,2) = acc.account_id;
+	WFIFOL(fd,6) = acc.vip_time;
+	WFIFOB(fd,10) = isvip;
+	WFIFOL(fd,11) = acc.group_id; //new group id
+	WFIFOL(fd,15) = mapfd; //link to mapserv
+	WFIFOSET(fd,19);
 	chrif_send_accdata(fd,acc.account_id); //refresh char with new setting
 #endif
 	return 1;
@@ -509,15 +508,16 @@ int chrif_sendvipdata(int fd, struct mmo_account acc, char isvip) {
  */
 int chrif_parse_reqvipdata(int fd) {
 #ifdef VIP_ENABLE
-	if( RFIFOREST(fd) < 11 )
+	if( RFIFOREST(fd) < 15 )
 		return 0;
 	else { //request vip info
 		struct mmo_account acc;
 		int aid = RFIFOL(fd,2);
 		int8 type = RFIFOB(fd,6);
-		uint32 req_duration = RFIFOL(fd,7);
-		RFIFOSKIP(fd,11);
-
+		int req_duration = RFIFOL(fd,7);
+		int mapfd =  RFIFOL(fd,11);
+		RFIFOSKIP(fd,15);
+		
 		if( accounts->load_num(accounts, &acc, aid ) ){
 			time_t now = time(NULL);
 			time_t vip_time = acc.vip_time;
@@ -530,16 +530,16 @@ int chrif_parse_reqvipdata(int fd) {
 				acc.group_id = login_config.vip_sys.group;
 				acc.char_slots = login_config.char_per_account + login_config.vip_sys.char_increase;
 				isvip = true;
-			} else if (vip_time) { //expired
+			} else if (vip_time) { //expired or @vip -xx
 				vip_time = 0;
-				acc.group_id = acc.old_group;
+				if(acc.group_id == login_config.vip_sys.group) //prevent alteration in case we wasn't registered vip yet
+					acc.group_id = acc.old_group;
 				acc.old_group = 0;
 				acc.char_slots = login_config.char_per_account;
 			}
-			acc.vip_time = (int)vip_time;
+			acc.vip_time = vip_time;
 			accounts->save(accounts,&acc);
-			
-			chrif_sendvipdata(fd,acc,isvip);
+			if( type&1 ) chrif_sendvipdata(fd,acc,isvip,mapfd);
 		}
 	}
 #endif
@@ -1233,6 +1233,10 @@ int mmo_auth(struct login_session_data* sd, bool isServer) {
 	timestamp2string(acc.lastlogin, sizeof(acc.lastlogin), time(NULL), "%Y-%m-%d %H:%M:%S");
 	safestrncpy(acc.last_ip, ip, sizeof(acc.last_ip));
 	acc.unban_time = 0;
+#ifdef VIP_ENABLE
+	acc.vip_time = 0;
+	acc.old_group = 0;
+#endif	
 	acc.logincount++;
 
 	accounts->save(accounts, &acc);

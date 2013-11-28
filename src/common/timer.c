@@ -429,8 +429,8 @@ void split_time(int timein, int* year, int* month, int* day, int* hour, int* min
 	const int factor_min = 60;
 	const int factor_hour = factor_min*60;
 	const int factor_day = factor_hour*24;
-	const int factor_month = factor_day*30; // Approx
-	const int factor_year = factor_month*12; // Even worse approx
+	const int factor_month = 2629743; // Approx  (30.44 days) 
+	const int factor_year = 31556926; // Approx (365.24 days)
 
 	*year = timein/factor_year;
 	timein -= *year*factor_year;

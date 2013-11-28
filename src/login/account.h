@@ -55,7 +55,7 @@ struct mmo_account {
 	int bank_vault;
 #ifdef VIP_ENABLE
 	int old_group;
-	int vip_time;
+	time_t vip_time;
 #endif
 	struct global_reg account_reg2[ACCOUNT_REG2_NUM]; // account script variables (stored on login server)
 };

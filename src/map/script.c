@@ -4408,7 +4408,6 @@ BUILDIN_FUNC(mes)
 	}
 
 	st->mes_active = 1; // Invoking character has a NPC dialog box open.
-
 	return 0;
 }
 
@@ -4886,7 +4885,6 @@ BUILDIN_FUNC(callfunc)
 	st->stack->defsp = st->stack->sp;
 	st->state = GOTO;
 	st->stack->var_function = idb_alloc(DB_OPT_RELEASE_DATA);
-
 	return 0;
 }
 /*==========================================
@@ -4935,7 +4933,6 @@ BUILDIN_FUNC(callsub)
 	st->stack->defsp = st->stack->sp;
 	st->state = GOTO;
 	st->stack->var_function = idb_alloc(DB_OPT_RELEASE_DATA);
-
 	return 0;
 }
 
@@ -4968,7 +4965,6 @@ BUILDIN_FUNC(getarg)
 		st->state = END;
 		return 1;
 	}
-
 	return 0;
 }
 
@@ -5065,7 +5061,7 @@ BUILDIN_FUNC(warp)
 
 	if( ret ) {
 		ShowError("buildin_warp: moving player '%s' to \"%s\",%d,%d failed.\n", sd->status.name, str, x, y);
-		script_reportsrc(st);
+		return 1;
 	}
 
 	return 0;
@@ -5106,6 +5102,7 @@ static int buildin_areawarp_sub(struct block_list *bl,va_list ap)
 		pc_setpos((TBL_PC *)bl,index,x2,y2,CLR_OUTSIGHT);
 	return 0;
 }
+
 BUILDIN_FUNC(areawarp)
 {
 	int16 m, x0,y0,x1,y1, x2,y2,x3=0,y3=0;
@@ -5156,6 +5153,7 @@ static int buildin_areapercentheal_sub(struct block_list *bl,va_list ap)
 	pc_percentheal((TBL_PC *)bl,hp,sp);
 	return 0;
 }
+
 BUILDIN_FUNC(areapercentheal)
 {
 	int hp,sp,m;
@@ -5298,6 +5296,7 @@ BUILDIN_FUNC(warpparty)
 
 	return 0;
 }
+
 /*==========================================
  * Warpguild - [Fredzilla]
  * Syntax: warpguild "mapname",x,y,Guild_ID;
@@ -5359,6 +5358,7 @@ BUILDIN_FUNC(warpguild)
 
 	return 0;
 }
+
 /*==========================================
  * Force Heal a player (hp and sp)
  *------------------------------------------*/
@@ -5375,6 +5375,7 @@ BUILDIN_FUNC(heal)
 	status_heal(&sd->bl, hp, sp, 1);
 	return 0;
 }
+
 /*==========================================
  * Heal a player by item (get vit bonus etc)
  *------------------------------------------*/
@@ -5397,6 +5398,7 @@ BUILDIN_FUNC(itemheal)
 	pc_itemheal(sd,sd->itemid,hp,sp);
 	return 0;
 }
+
 /*==========================================
  *
  *------------------------------------------*/
@@ -6135,7 +6137,7 @@ BUILDIN_FUNC(countitem)
 				sd->status.inventory[i].attribute == attr && sd->status.inventory[i].card[0] == c1 &&
 				sd->status.inventory[i].card[1] == c2 && sd->status.inventory[i].card[2] == c3 &&
 				sd->status.inventory[i].card[3] == c4 )
-	 	                        count += sd->status.inventory[i].amount;
+					count += sd->status.inventory[i].amount;
 	}
 
 	script_pushint(st,count);
@@ -6292,7 +6294,6 @@ BUILDIN_FUNC(checkweight2){
 	} //end loop DO NOT break it prematurly we need to depop all stack
 
 	script_pushint(st,checkweight_sub(sd,nb_it,nameid,amount)); //push result of sub to script
-
 	return 0;
 }
 
@@ -6390,7 +6391,6 @@ BUILDIN_FUNC(getitem)
 			}
 		}
 	}
-
 	return 0;
 }
 
@@ -6501,7 +6501,6 @@ BUILDIN_FUNC(getitem2)
 			}
 		}
 	}
-
 	return 0;
 }
 
@@ -6561,7 +6560,6 @@ BUILDIN_FUNC(rentitem)
 		clif_additem(sd, 0, 0, flag);
 		return 1;
 	}
-
 	return 0;
 }
 
@@ -6699,7 +6697,6 @@ BUILDIN_FUNC(makeitem)
 
 		map_addflooritem(&item_tmp,amount,m,x,y,0,0,0,4);
 	}
-
 	return 0;
 }
 
@@ -16850,7 +16847,7 @@ BUILDIN_FUNC(instance_announce) {
 		map_foreachinmap(buildin_announce_sub, instance_data[instance_id].map[i].m, BL_PC,
 						 mes, strlen(mes)+1, flag&0xf0, fontColor, fontType, fontSize, fontAlign, fontY);
 
-	return true;
+	return 0;
 }
 
 /*==========================================
@@ -18027,7 +18024,7 @@ BUILDIN_FUNC(getserverdef) {
 BUILDIN_FUNC(vip_status) {
 #ifdef VIP_ENABLE
 	TBL_PC *sd;
-	char *vip_str = (char *)aMalloc(24*sizeof(char));
+	char vip_str[26];
 	time_t now = time(NULL);
 	int type = script_getnum(st, 2);
 
@@ -18045,19 +18042,20 @@ BUILDIN_FUNC(vip_status) {
 			break;
 		case 2: // Get VIP expire date.
 			if (pc_isvip(sd)) {
-				time_t viptime = (time_t)sd->vip.time;
+				time_t viptime = sd->vip.time;
 				strftime(vip_str, 24, "%Y-%m-%d %H:%M", localtime(&viptime));
-				vip_str[24] = '\0';
-				script_pushstr(st, vip_str);
+				vip_str[25] = '\0';
+				script_pushstrcopy(st, vip_str);
 			} else
 				script_pushint(st, 0);
 			break;
 		case 3: // Get remaining time.
 			if (pc_isvip(sd)) {
-				time_t viptime = (time_t)sd->vip.time;
-				strftime(vip_str, 24, "%Y-%m-%d %H:%M", localtime(&viptime - now));
-				vip_str[24] = '\0';
-				script_pushstr(st, vip_str);
+				time_t viptime_remain = sd->vip.time - now;
+				int year=0,month=0,day=0,hour=0,min=0,sec=0;
+				split_time(viptime_remain,&year,&month,&day,&hour,&min,&sec);
+				safesnprintf(vip_str,sizeof(vip_str),"%d-%d-%d %d:%d",year,month,day,hour,min);
+				script_pushstrcopy(st, vip_str);
 			} else
 				script_pushint(st, 0);
 			break;
@@ -18070,13 +18068,13 @@ BUILDIN_FUNC(vip_status) {
 
 #ifdef VIP_ENABLE
 /* Adds or removes VIP time in minutes.
- * vip_time <time>,{"<character name>"};
+ * vip_time <time in mn>,{"<character name>"};
  * If time < 0 remove time, else add time.
  * Note: VIP System needs to be enabled. 
  */
 BUILDIN_FUNC(vip_time) {
 	TBL_PC *sd;
-	int time = script_getnum(st, 2) * 60; // Convert since it's given in minutes.
+	int viptime = script_getnum(st, 2) * 60; // Convert since it's given in minutes.
 
 	if (script_hasdata(st, 3))
 		sd = map_nick2sd(script_getstr(st, 3));
@@ -18086,7 +18084,7 @@ BUILDIN_FUNC(vip_time) {
 	if (sd == NULL)
 		return 0;
 
-	chrif_req_vipActive(sd, time, 2);
+	chrif_req_login_operation(sd->status.account_id, sd->status.name, 6, viptime, 7, 0); 
 
 	return 0;
 }
