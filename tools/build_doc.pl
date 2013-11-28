@@ -126,10 +126,12 @@ sub UpdDoxyConf { my ($repoversion) = @_;
 		if(($chked&1)==0 && $_ =~ /^PROJECT_NUMBER/) {
 			chomp($_);
 			@line = split('=',$_);
-			my $old_version = $line[1];
+			@line = split('/',$line[1]);
+			my $old_version = $line[scalar(@line)-1];
+			print "old_version found=$old_version, current version=$repoversion \n";
 			if($old_version == $repoversion) { $sSkipBuild=1; }
 			elsif($sNoUpd==0) { print "Updated project number\n"; }
-			print FHOUT "PROJECT_NUMBER  = $repoversion\n";
+			print FHOUT "PROJECT_NUMBER  = http://github.com/rathena/rathena/commit/$repoversion\n";
 			$chked &=1;
 		}
 		elsif(($chked&2)==0 && $_ =~ /^OUTPUT_DIRECTORY/){

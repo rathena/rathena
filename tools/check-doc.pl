@@ -15,7 +15,7 @@ my $sTarget	= "All";
 my $sValidTarget = "All|Script|Atc";
 
 my($filename, $dir, $suffix) = fileparse($0);
-chdir $dir; #put ourself like was called in main folder
+chdir $dir; #put ourself like was called in tool folder
 GetArgs();
 Main($sTarget);
 
