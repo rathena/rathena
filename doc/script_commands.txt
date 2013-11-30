@@ -268,10 +268,16 @@ normally mean it's pointless since it can't do anything, but there are
 exceptions, mostly related to running scripts at specified time, which is what 
 these floating NPC objects are for. More on that below.
 
-** Define a shop/cashshop NPC.
+** Define a shop/cashshop/itemshop/pointshop NPC.
 
 -%TAB%shop%TAB%<NPC Name>%TAB%<sprite id>,<itemid>:<price>{,<itemid>:<price>...}
 <map name>,<x>,<y>,<facing>%TAB%shop%TAB%<NPC Name>%TAB%<sprite id>,<itemid>:<price>{,<itemid>:<price>...}
+
+-%TAB%itemshop%TAB%<NPC Name>%TAB%<sprite id>,<costitemid>,<itemid>:<price>{,<itemid>:<price>...}
+<map name>,<x>,<y>,<facing>%TAB%itemshop%TAB%<NPC Name>%TAB%<sprite id>,<costitemid>,<itemid>:<price>{,<itemid>:<price>...}
+
+-%TAB%pointshop%TAB%<NPC Name>%TAB%<sprite id>,<costvariable>,<itemid>:<price>{,<itemid>:<price>...}
+<map name>,<x>,<y>,<facing>%TAB%pointshop%TAB%<NPC Name>%TAB%<sprite id>,<costvariable>,<itemid>:<price>{,<itemid>:<price>...}
 
 This will define a shop NPC, which, when triggered (which can only be done by 
 clicking) will cause a shop window to come up. No code whatsoever runs in shop 
@@ -291,17 +297,24 @@ This type of shop will not allow you to sell items at it, you may only
 purchase items here. The layout used to define sale items still count, and
 "<price>" refers to how many points will be spent purchasing the them.
 
-** Define an warp/shop/cashshop/NPC duplicate.
+Since trunk rX you can alternatively use "itemshop" or "pointshop" in place
+of "shop" to use the Shop interface, allowing you to buy items with a specific
+item or special points from a variable. 'pointshop' only supported variable types
+are permanent character variables, temporary character variables, permanent
+local account variables, or permanent global account variables. These variables
+must be of integer type, not string.
+
+** Define an warp/shop/cashshop/itemshop/pointshop/NPC duplicate.
 
 warp: <map name>,<x>,<y>,<facing>%TAB%duplicate(<label>)%TAB%<NPC Name>%TAB%<spanx>,<spany>
-shop/cashshop/npc: -%TAB%duplicate(<label>)%TAB%<NPC Name>%TAB%<sprite id>
-shop/cashshop/npc: <map name>,<x>,<y>,<facing>%TAB%duplicate(<label>)%TAB%<NPC Name>%TAB%<sprite id>
+shop/cashshop/itemshop/pointshop/npc: -%TAB%duplicate(<label>)%TAB%<NPC Name>%TAB%<sprite id>
+shop/cashshop/itemshop/pointshop/npc: <map name>,<x>,<y>,<facing>%TAB%duplicate(<label>)%TAB%<NPC Name>%TAB%<sprite id>
 npc: -%TAB%duplicate(<label>)%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>
 npc: <map name>,<x>,<y>,<facing>%TAB%duplicate(<label>)%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>
 
-This will duplicate an warp/shop/cashshop/NPC referred to by 'label'.
+This will duplicate an warp/shop/cashshop/itemshop/pointshop/NPC referred to by 'label'.
 Warp duplicates inherit the target location.
-Shop/cashshop duplicates inherit the item list.
+Shop/cashshop/itemshop/pointshop duplicates inherit the item list.
 NPC duplicates inherit the script code.
 The rest (name, location, facing, sprite ID, span/trigger area)
 is obtained from the definition of the duplicate (not inherited).
