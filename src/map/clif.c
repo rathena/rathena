@@ -1777,6 +1777,7 @@ void clif_npcbuysell(struct map_session_data* sd, int id)
 void clif_buylist(struct map_session_data *sd, struct npc_data *nd)
 {
 	int fd,i,c;
+	bool discount;
 
 	nullpo_retv(sd);
 	nullpo_retv(nd);
@@ -1786,6 +1787,7 @@ void clif_buylist(struct map_session_data *sd, struct npc_data *nd)
 	WFIFOW(fd,0) = 0xc6;
 
 	c = 0;
+	discount = npc_shop_discount(nd->subtype,nd->u.shop.discount);
 	for( i = 0; i < nd->u.shop.count; i++ )
 	{
 		struct item_data* id = itemdb_exists(nd->u.shop.shop_item[i].nameid);
@@ -1793,7 +1795,7 @@ void clif_buylist(struct map_session_data *sd, struct npc_data *nd)
 		if( id == NULL )
 			continue;
 		WFIFOL(fd, 4+c*11) = val;
-		WFIFOL(fd, 8+c*11) = pc_modifybuyvalue(sd,val);
+		WFIFOL(fd, 8+c*11) = (discount) ? pc_modifybuyvalue(sd,val) : val;
 		WFIFOB(fd,12+c*11) = itemtype(id->type);
 		WFIFOW(fd,13+c*11) = ( id->view_id > 0 ) ? id->view_id : id->nameid;
 		c++;

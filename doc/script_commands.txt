@@ -273,11 +273,11 @@ these floating NPC objects are for. More on that below.
 -%TAB%shop%TAB%<NPC Name>%TAB%<sprite id>,<itemid>:<price>{,<itemid>:<price>...}
 <map name>,<x>,<y>,<facing>%TAB%shop%TAB%<NPC Name>%TAB%<sprite id>,<itemid>:<price>{,<itemid>:<price>...}
 
--%TAB%itemshop%TAB%<NPC Name>%TAB%<sprite id>,<costitemid>,<itemid>:<price>{,<itemid>:<price>...}
-<map name>,<x>,<y>,<facing>%TAB%itemshop%TAB%<NPC Name>%TAB%<sprite id>,<costitemid>,<itemid>:<price>{,<itemid>:<price>...}
+-%TAB%itemshop%TAB%<NPC Name>%TAB%<sprite id>,<costitemid>{:<discount>},<itemid>:<price>{,<itemid>:<price>...}
+<map name>,<x>,<y>,<facing>%TAB%itemshop%TAB%<NPC Name>%TAB%<sprite id>,<costitemid>{:<discount>},<itemid>:<price>{,<itemid>:<price>...}
 
--%TAB%pointshop%TAB%<NPC Name>%TAB%<sprite id>,<costvariable>,<itemid>:<price>{,<itemid>:<price>...}
-<map name>,<x>,<y>,<facing>%TAB%pointshop%TAB%<NPC Name>%TAB%<sprite id>,<costvariable>,<itemid>:<price>{,<itemid>:<price>...}
+-%TAB%pointshop%TAB%<NPC Name>%TAB%<sprite id>,<costvariable>{:<discount>},<itemid>:<price>{,<itemid>:<price>...}
+<map name>,<x>,<y>,<facing>%TAB%pointshop%TAB%<NPC Name>%TAB%<sprite id>,<costvariable>{:<discount>},<itemid>:<price>{,<itemid>:<price>...}
 
 This will define a shop NPC, which, when triggered (which can only be done by 
 clicking) will cause a shop window to come up. No code whatsoever runs in shop 
@@ -302,7 +302,8 @@ of "shop" to use the Shop interface, allowing you to buy items with a specific
 item or special points from a variable. 'pointshop' only supported variable types
 are permanent character variables, temporary character variables, permanent
 local account variables, or permanent global account variables. These variables
-must be of integer type, not string.
+must be of integer type, not string. 'discount' flag is an option, makes the price
+at that shop is affected by discount skill.
 
 ** Define an warp/shop/cashshop/itemshop/pointshop/NPC duplicate.
 

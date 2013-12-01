@@ -60,6 +60,7 @@ struct npc_data {
 			int count;
 			int itemshop_nameid; // Item Shop cost item ID
 			char pointshop_str[32]; // Point Shop cost variable name
+			bool discount;
 		} shop;
 		struct {
 			short xs,ys; // OnTouch area radius
@@ -175,6 +176,7 @@ int npc_cashshop_buy(struct map_session_data *sd, int nameid, int amount, int po
 extern struct npc_data* fake_nd;
 
 int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, unsigned short* item_list);
+bool npc_shop_discount(enum npc_subtype type, bool discount);
 
 #ifdef SECURE_NPCTIMEOUT
 	int npc_rr_secure_timeout_timer(int tid, unsigned int tick, int id, intptr_t data);

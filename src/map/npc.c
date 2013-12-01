@@ -1583,7 +1583,8 @@ int npc_buylist(struct map_session_data* sd, int n, unsigned short* item_list)
 				return 2;
 		}
 
-		value = pc_modifybuyvalue(sd,value);
+		if (npc_shop_discount(nd->subtype,nd->u.shop.discount))
+			value = pc_modifybuyvalue(sd,value);
 
 		z += (double)value * amount;
 		w += itemdb_weight(nameid) * amount;
@@ -1656,8 +1657,6 @@ int npc_buylist(struct map_session_data* sd, int n, unsigned short* item_list)
 					pc_setglobalreg(sd, nd->u.shop.pointshop_str, count - (int)z);
 					break;
 			}
-			sprintf(output,msg_txt(sd,716),nd->u.shop.pointshop_str,count - (int)z); // Your '%s' now: %d
-			clif_disp_onlyself(sd,output,strlen(output)+1);
 			break;
 	}
 
@@ -1692,6 +1691,11 @@ int npc_buylist(struct map_session_data* sd, int n, unsigned short* item_list)
 				z = 1;
 			pc_gainexp(sd,NULL,0,(int)z, false);
 		}
+	}
+
+	if (nd->subtype == POINTSHOP) {
+		sprintf(output,msg_txt(sd,716),nd->u.shop.pointshop_str,count - (int)z); // Your '%s' now: %d
+		clif_disp_onlyself(sd,output,strlen(output)+1);
 	}
 
 	return 0;
@@ -2275,7 +2279,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	#define MAX_SHOPITEM 100
 	struct npc_item_list items[MAX_SHOPITEM];
 	char *p, point_str[32];
-	int x, y, dir, m, i, nameid = 0;
+	int x, y, dir, m, i, nameid = 0, is_discount = 0;
 	struct npc_data *nd;
 	enum npc_subtype type;
 
@@ -2316,7 +2320,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	switch(type) {
 		case ITEMSHOP: {
 			struct item_data* tmp;
-			if (sscanf(p,",%d,",&nameid) < 1) {
+			if (sscanf(p,",%d:%d,",&nameid,&is_discount) < 1) {
 				ShowError("npc_parse_shop: Invalid item cost definition in file '%s', line '%d'. Ignoring the rest of the line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 				return strchr(start,'\n'); // skip and continue
 			}
@@ -2328,7 +2332,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 			break;
 		}
 		case POINTSHOP: {
-			if (sscanf(p, ",%32[^,],",point_str) < 1) {
+			if (sscanf(p, ",%32[^,:]:%d,",point_str,&is_discount) < 1) {
 				ShowError("npc_parse_shop: Invalid item cost definition in file '%s', line '%d'. Ignoring the rest of the line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 				return strchr(start,'\n'); // skip and continue
 			}
@@ -2347,6 +2351,9 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 			p = strchr(p+1,',');
 			break;
 		}
+		default:
+			is_discount = 1;
+			break;
 	}
 
 	for( i = 0; i < ARRAYLENGTH(items) && p; ++i ) {
@@ -2395,6 +2402,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	nd->u.shop.count = i;
 	nd->u.shop.itemshop_nameid = nameid; // Item shop currency
 	safestrncpy(nd->u.shop.pointshop_str,point_str,strlen(point_str)+1); // Point shop currency
+	nd->u.shop.discount = is_discount;
 	nd->bl.prev = nd->bl.next = NULL;
 	nd->bl.m = m;
 	nd->bl.x = x;
@@ -2423,6 +2431,22 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	}
 	strdb_put(npcname_db, nd->exname, nd);
 	return strchr(start,'\n');// continue
+}
+
+/** [Cydh]
+* Check if the shop is affected by discount or not
+* @param type Type of NPC shop (enum npc_subtype)
+* @param discount Discount flag of NPC shop
+* @return bool 'true' is discountable, 'false' otherwise
+*/
+bool npc_shop_discount(enum npc_subtype type, bool discount) {
+	if (type == SHOP || (type != SHOP && discount))
+		return true;
+
+	if( (type == ITEMSHOP && battle_config.discount_item_point_shop&1) ||
+		(type == POINTSHOP && battle_config.discount_item_point_shop&2) )
+		return true;
+	return false;
 }
 
 /**
