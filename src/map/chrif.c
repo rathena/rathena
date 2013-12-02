@@ -894,15 +894,16 @@ static void chrif_ack_login_req(int aid, const char* player_name, uint16 type, u
 		snprintf(action,25,"???");
 
 	switch( answer ) {
-		case 0 : sprintf(output, msg_txt(sd,424), action, NAME_LENGTH, player_name); break; //%s has been asked to %s the player '%.*s'.
+		case 0 : if(battle_config.feature_banking) sprintf(output, msg_txt(sd,424), action, NAME_LENGTH, player_name); else output[0] = '\0'; break; //%s has been asked to %s the player '%.*s'.
 		case 1 : sprintf(output, msg_txt(sd,425), NAME_LENGTH, player_name); break;
 		case 2 : sprintf(output, msg_txt(sd,426), action, NAME_LENGTH, player_name); break;
 		case 3 : sprintf(output, msg_txt(sd,427), action, NAME_LENGTH, player_name); break;
-		case 4 : sprintf(output, msg_txt(sd,424), action, NAME_LENGTH, player_name); break;
+		case 4 : if(battle_config.feature_banking) sprintf(output, msg_txt(sd,424), action, NAME_LENGTH, player_name); else output[0] = '\0'; break;
 		default: output[0] = '\0'; break;
 	}
 
-	clif_displaymessage(sd->fd, output);
+	if (output)
+		clif_displaymessage(sd->fd, output);
 }
 
 /*==========================================
