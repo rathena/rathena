@@ -844,12 +844,12 @@ int chrif_req_login_operation(int aid, const char* character_name, unsigned shor
 int chrif_changesex(struct map_session_data *sd) {
 	chrif_check(-1);
 
-	WFIFOHEAD(char_fd,36);
+	WFIFOHEAD(char_fd,44);
 	WFIFOW(char_fd,0) = 0x2b0e;
 	WFIFOL(char_fd,2) = sd->status.account_id;
 	safestrncpy((char*)WFIFOP(char_fd,6), sd->status.name, NAME_LENGTH);
 	WFIFOW(char_fd,30) = 5;
-	WFIFOSET(char_fd,36);
+	WFIFOSET(char_fd,44);
 
 	clif_displaymessage(sd->fd, msg_txt(sd,408)); //"Need disconnection to perform change-sex request..."
 
@@ -894,16 +894,14 @@ static void chrif_ack_login_req(int aid, const char* player_name, uint16 type, u
 		snprintf(action,25,"???");
 
 	switch( answer ) {
-		case 0 : if(battle_config.feature_banking) sprintf(output, msg_txt(sd,424), action, NAME_LENGTH, player_name); else output[0] = '\0'; break; //%s has been asked to %s the player '%.*s'.
+		case 0 : sprintf(output, msg_txt(sd,424), action, NAME_LENGTH, player_name); break; //%s has been asked to %s the player '%.*s'.
 		case 1 : sprintf(output, msg_txt(sd,425), NAME_LENGTH, player_name); break;
 		case 2 : sprintf(output, msg_txt(sd,426), action, NAME_LENGTH, player_name); break;
 		case 3 : sprintf(output, msg_txt(sd,427), action, NAME_LENGTH, player_name); break;
-		case 4 : if(battle_config.feature_banking) sprintf(output, msg_txt(sd,424), action, NAME_LENGTH, player_name); else output[0] = '\0'; break;
+		case 4 : sprintf(output, msg_txt(sd,424), action, NAME_LENGTH, player_name); break;
 		default: output[0] = '\0'; break;
 	}
-
-	if (output)
-		clif_displaymessage(sd->fd, output);
+	clif_displaymessage(sd->fd, output);
 }
 
 /*==========================================

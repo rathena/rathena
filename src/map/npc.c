@@ -1771,7 +1771,8 @@ int npc_selllist(struct map_session_data* sd, int n, unsigned short* item_list)
 	nullpo_retr(1, sd);
 	nullpo_retr(1, item_list);
 
-	if( ( nd = npc_checknear(sd, map_id2bl(sd->npc_shopid)) ) == NULL || nd->subtype != SHOP && nd->subtype != ITEMSHOP && nd->subtype != POINTSHOP )
+	if( ( nd = npc_checknear(sd, map_id2bl(sd->npc_shopid)) ) == NULL 
+			|| ( nd->subtype != SHOP && nd->subtype != ITEMSHOP && nd->subtype != POINTSHOP ) )
 	{
 		return 1;
 	}

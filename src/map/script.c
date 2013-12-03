@@ -8847,6 +8847,7 @@ BUILDIN_FUNC(guildchangegm)
 
 /*==========================================
  * Spawn a monster :
+ * *monster "<map name>",<x>,<y>,"<name to show>",<mob id>,<amount>{,"<event label>",<size>,<ai>};
  @mapn,x,y : location
  @str : monster name
  @class_ : mob_id
@@ -8867,6 +8868,7 @@ BUILDIN_FUNC(monster)
 
 	struct map_session_data* sd;
 	int16 m;
+	int i;
 
 	if (script_hasdata(st, 8)) {
 		event = script_getstr(st, 8);
@@ -8901,7 +8903,10 @@ BUILDIN_FUNC(monster)
 	else
 		m = map_mapname2mapid(mapn);
 
-	mob_once_spawn(sd, m, x, y, str, class_, amount, event, size, ai);
+	for(i=0; i<amount; i++){ //not optimised
+		int mobid = mob_once_spawn(sd, m, x, y, str, class_, 1, event, size, ai);
+		mapreg_setreg(reference_uid(add_str("$@mobid"), i),mobid);
+	}
 	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
@@ -10884,6 +10889,7 @@ BUILDIN_FUNC(getmapflag)
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
+
 /* pvp timer handling */
 static int script_mapflag_pvp_sub(struct block_list *bl,va_list ap) {
 	TBL_PC* sd = (TBL_PC*)bl;
