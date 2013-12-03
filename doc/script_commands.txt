@@ -2370,6 +2370,24 @@ negative value will decrease time.
 NOTE: This command is only available if the VIP System is enabled.
 
 ---------------------------------------
+
+*addspiritball <amount>{,<char_id>};
+
+Adds amount of spirit ball to player.
+
+---------------------------------------
+
+*delspiritball <amount>{,<char_id>};
+
+Deletes amount of spirit ball from player.
+
+---------------------------------------
+
+*delspiritball {,<char_id>};
+
+Counts amount of spirit ball that player has.
+
+---------------------------------------
 \\
 2,2 Item-related commands
 \\
