@@ -2371,9 +2371,9 @@ NOTE: This command is only available if the VIP System is enabled.
 
 ---------------------------------------
 
-*addspiritball <amount>{,<char_id>};
+*addspiritball <amount>,<duration>{,<char_id>};
 
-Adds spirit ball(s) to player.
+Adds a spirit ball to player for 'duration' in second.
 
 ---------------------------------------
 
@@ -2385,7 +2385,7 @@ Deletes the spirit ball(s) from player.
 
 *delspiritball {,<char_id>};
 
-Counts the spirit ball that player has
+Counts the spirit ball that player has.
 
 ---------------------------------------
 \\

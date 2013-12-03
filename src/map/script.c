@@ -18171,20 +18171,26 @@ BUILDIN_FUNC(bonus_script) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/** Adds spirit ball(s) to player
-* addspiritball <amount>{,<char_id>};
+/** Adds a spirit ball to player for 'duration' in second
+* addspiritball <amount>,<duration>{,<char_id>};
 */
 BUILDIN_FUNC(addspiritball) {
-	uint8 amount = script_getnum(st,2);
+	uint8 i, amount = script_getnum(st,2);
+	uint16 tick = script_getnum(st,3);
 	struct map_session_data *sd;
 
-	if (script_getnum(st,3))
-		sd = map_charid2sd(script_getnum(st,3));
+	if (script_getnum(st,4))
+		sd = map_charid2sd(script_getnum(st,4));
 	else
 		sd = script_rid2sd(st);
 	if (!sd)
 		return SCRIPT_CMD_FAILURE;
-	pc_addspiritball(sd,max(amount,1),10);
+
+	if (amount == 0)
+		return SCRIPT_CMD_SUCCESS;
+
+	for (i = 0; i < amount; i++)
+		pc_addspiritball(sd,tick*1000,10);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -18201,7 +18207,10 @@ BUILDIN_FUNC(delspiritball) {
 		sd = script_rid2sd(st);
 	if (!sd)
 		return SCRIPT_CMD_FAILURE;
-	pc_delspiritball(sd,max(amount,1),10);
+
+	if (amount == 0)
+		return SCRIPT_CMD_SUCCESS;
+	pc_delspiritball(sd,max(amount,1),1);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -18704,7 +18713,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(vip_time,"i?"),
 #endif
 	BUILDIN_DEF(bonus_script,"si???"),
-	BUILDIN_DEF(addspiritball,"i?"),
+	BUILDIN_DEF(addspiritball,"ii?"),
 	BUILDIN_DEF(delspiritball,"i?"),
 	BUILDIN_DEF(countspiritball,"?"),
 
