@@ -6558,6 +6558,9 @@ REPLACE INTO `item_db_re` VALUES (13180,'Novice_Rifle','Novice Rifle',4,0,NULL,5
 REPLACE INTO `item_db_re` VALUES (13181,'Novice_Shotgun','Novice Shotgun',4,0,NULL,1000,'80',NULL,9,0,0x41000000,1,2,34,4,'1',0,20,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13182,'Novice_Gatling','Novice Gatling',4,0,NULL,1500,'40',NULL,9,0,0x41000000,1,2,34,4,'1',0,19,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13183,'Novice_Grenade_Launcher','Novice Grenade Launcher',4,0,NULL,1500,'40',NULL,9,0,0x41000000,1,2,34,4,'1',0,21,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (13194,'Peace_Breaker','Peace Breaker,',4,1,NULL,1400,'250',NULL,NULL,NULL,0x41000000,63,2,2,3,'120',0,20,'bonus bHit,-25; bonus bAspdRate,25;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (13196,'Peace_Breaker','Peace Breaker,',4,1,NULL,1400,'250',NULL,NULL,NULL,0x41000000,63,2,2,3,'120',0,20,'bonus bHit,-25; bonus bAspdRate,25;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (13197,'Mini_Mei','Mini Mei,',4,1,NULL,2500,'220',NULL,NULL,NULL,0x41000000,63,2,2,2,'106',0,19,NULL,NULL,NULL);
 # Bullets
 REPLACE INTO `item_db_re` VALUES (13200,'Bullet','Bullet',10,1,NULL,2,'10',NULL,NULL,NULL,0x41000000,63,2,32768,NULL,'1',NULL,3,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13201,'Silver_Bullet','Silver Bullet',10,15,NULL,2,'15',NULL,NULL,NULL,0x41000000,63,2,32768,NULL,'1',NULL,3,'bonus bAtkEle,Ele_Holy;',NULL,NULL);
