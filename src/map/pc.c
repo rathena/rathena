@@ -8496,6 +8496,7 @@ int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 				continue;
 		}
 
+		int *combo_idx = aMalloc(data->combos[i]->count);
 		for( j = 0; j < data->combos[i]->count; j++ ) {
 			int id = data->combos[i]->nameid[j];
 			bool found = false;
