@@ -8495,11 +8495,13 @@ int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 				continue;
 		}
 
+		int *combo_idx = aMalloc(data->combos[i]->count);
 		for( j = 0; j < data->combos[i]->count; j++ ) {
 			int id = data->combos[i]->nameid[j];
 			bool found = false;
-
+			
 			for( k = 0; k < EQI_MAX; k++ ) {
+				bool do_continue = false; //used to continue that specific loop with some check that also use some loop
 				index = sd->equip_index[k];
 				if( index < 0 ) continue;
 				if( k == EQI_HAND_R   &&  sd->equip_index[EQI_HAND_L] == index ) continue;
@@ -8508,10 +8510,19 @@ int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 
 				if(!sd->inventory_data[index])
 					continue;
+				if(j>0){
+					for (z = 0; z < data->combos[i]->count; z++)
+						if(combo_idx[z] == index) //we already have that index recorded
+							do_continue=true;
+					if(do_continue)
+						continue;
+				}
+				
 
 				if ( itemdb_type(id) != IT_CARD ) {
 					if ( sd->inventory_data[index]->nameid != id )
 						continue;
+					combo_idx[j] = index;
 					found = true;
 					break;
 				} else { //Cards
@@ -8520,6 +8531,7 @@ int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 					for (z = 0; z < sd->inventory_data[index]->slot; z++) {
 						if (sd->status.inventory[index].card[z] != id)
 							continue;
+						combo_idx[j] = index;
 						found = true;
 						break;
 					}
@@ -8528,6 +8540,7 @@ int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 			if( !found )
 				break;/* we haven't found all the ids for this combo, so we can return */
 		}
+		aFree(combo_idx);
 
 		/* means we broke out of the count loop w/o finding all ids, we can move to the next combo */
 		if( j < data->combos[i]->count )
