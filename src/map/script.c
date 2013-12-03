@@ -18171,7 +18171,7 @@ BUILDIN_FUNC(bonus_script) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/** Adds amount of spirit ball to player
+/** Adds spirit ball(s) to player
 * addspiritball <amount>{,<char_id>};
 */
 BUILDIN_FUNC(addspiritball) {
@@ -18188,7 +18188,7 @@ BUILDIN_FUNC(addspiritball) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/** Deletes amount of spirit ball from player
+/** Deletes the spirit ball(s) from player
 * delspiritball <amount>{,<char_id>};
 */
 BUILDIN_FUNC(delspiritball) {
@@ -18205,7 +18205,7 @@ BUILDIN_FUNC(delspiritball) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/** Counts amount of spirit ball that player has
+/** Counts the spirit ball that player has
 * delspiritball {,<char_id>};
 */
 BUILDIN_FUNC(countspiritball) {
@@ -18704,8 +18704,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(vip_time,"i?"),
 #endif
 	BUILDIN_DEF(bonus_script,"si???"),
-	BUILDIN_DEF(addspiritball,"??"),
-	BUILDIN_DEF(delspiritball,"??"),
+	BUILDIN_DEF(addspiritball,"i?"),
+	BUILDIN_DEF(delspiritball,"i?"),
 	BUILDIN_DEF(countspiritball,"?"),
 
 #include "../custom/script_def.inc"

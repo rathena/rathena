@@ -2373,19 +2373,19 @@ NOTE: This command is only available if the VIP System is enabled.
 
 *addspiritball <amount>{,<char_id>};
 
-Adds amount of spirit ball to player.
+Adds spirit ball(s) to player.
 
 ---------------------------------------
 
 *delspiritball <amount>{,<char_id>};
 
-Deletes amount of spirit ball from player.
+Deletes the spirit ball(s) from player.
 
 ---------------------------------------
 
 *delspiritball {,<char_id>};
 
-Counts amount of spirit ball that player has.
+Counts the spirit ball that player has
 
 ---------------------------------------
 \\
