@@ -6283,6 +6283,7 @@
 12852,Wisdom_Scroll,Wisdom Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12853,Patron_Scroll,Patron Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12860,Mommy_Day_Cake,Mommy Day Cake,2,0,,200,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 50,50; skilleffect "HP_ASSUMPTIO",0; sc_start SC_ASSUMPTIO,100000,5; },{},{}
+12863,Treasure_Chest_Summoned_II,Treasure Chest Summoned II,3,10,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12887,C_Wing_Of_Fly,C Wing Of Fly,11,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "AL_TELEPORT",1; },{},{}
 //
 12900,Battle_Manual_Box,Battle Manual Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12208,10; },{},{}
@@ -8651,8 +8652,8 @@
 22568,Nidhoggur_Summon_Scroll,Nidhoggur Summon Scroll,0,20,,100,,,,,0xFFFFFFFF,,,,,,,,{},{},{}
 22571,Easter_Egg,Easter Egg,11,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 //22611,Packed_Envelope,Packed Envelope,11,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
-//22612,Corrupt_Reagents,Corrupt Reagents,11,10,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
-//22613,Contaminated_Reagents,Contaminated Reagents,11,10,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
+22612,Corrupt_Reagents,Corrupt Reagents,11,10,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
+22613,Contaminated_Reagents,Contaminated Reagents,11,10,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
 22652,Briliant_Hat_Box,Brilliant Hat Box,2,10,,200,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
 22675,Mysterious_Scroll,Mysterious Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INTFOOD,3600000,30; },{},{}
 22676,Hangul_Day_Event_Box,Hangul Day Event Box,2,20,,0,,,,,0xFFFFFFFF,63,2,,,0,,,{ getitem 22675,10; getitem 607,9; },{},{}
