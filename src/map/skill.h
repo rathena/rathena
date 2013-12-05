@@ -105,6 +105,7 @@ enum e_skill_display {
 
 #define MAX_SKILL_ITEM_REQUIRE	10
 #define MAX_SKILL_STATUS_REQUIRE 3
+#define MAX_SKILL_EQUIP_REQUIRE 10
 struct skill_condition {
 	int hp,
 		mhp,
@@ -119,7 +120,7 @@ struct skill_condition {
 		spiritball,
 		itemid[MAX_SKILL_ITEM_REQUIRE],
 		amount[MAX_SKILL_ITEM_REQUIRE],
-		eqItem[10]; //max eq_item
+		eqItem[MAX_SKILL_EQUIP_REQUIRE]; //max eq_item
 	uint8 status_count;
 	enum sc_type status[MAX_SKILL_STATUS_REQUIRE];
 };
@@ -138,7 +139,7 @@ struct s_skill_require {
 		spiritball[MAX_SKILL_LEVEL],
 		itemid[MAX_SKILL_ITEM_REQUIRE],
 		amount[MAX_SKILL_ITEM_REQUIRE],
-		eqItem[10]; //max eq_item
+		eqItem[MAX_SKILL_EQUIP_REQUIRE]; //max eq_item
 	uint8 status_count;
 	enum sc_type status[MAX_SKILL_STATUS_REQUIRE];
 };

@@ -10,31 +10,32 @@
 //    SkillName,Option{,JobAllowed{,RequirementRemoved}}
 // ====================================================
 // Option is using bitmask of skill that can be copied by:
-//    1 = Plagiarism
-//    2 = Reproduce
+//	1 = Plagiarism
+//	2 = Reproduce
 // JobAllowed, the skill only can be copied by:
-//    (0 or the default value makes all jobs can copy the skill)
-//    1    = Rogue
-//    2    = Stalker
-//    4    = Shadow Chaser
-//    8    = Trans. Shadow Chaser
-//    16   = Baby Rouge
-//    32   = Baby Shadow Chaser
+//	(0 or the default value makes all jobs can copy the skill)
+//	1	= Rogue
+//	2	= Stalker
+//	4	= Shadow Chaser
+//	8	= Trans. Shadow Chaser
+//	16	= Baby Rouge
+//	32	= Baby Shadow Chaser
 // RequirementRemoved, decide which requirement(s) that will be removed while checking.
-//    0    = makes the requirement(s) same like original requirement(s)
-//    1    = hp
-//    2    = maxhptrigger
-//    4    = sp
-//    8    = hprate
-//    16   = sprate
-//    32   = zeny
-//    64   = weapon type
-//    128  = ammo (with the amount)
-//    256  = state
-//    512  = statuses
-//    1024 = spirit sphere
-//    2048 = items (with the amount)
-//    (see 'skill_require_db.txt' for requirement(s) detail)
+//	   0 = makes the requirement(s) same like original requirement(s)
+//	   1 = hp
+//	   2 = maxhptrigger
+//	   4 = sp
+//	   8 = hprate
+//	  16 = sprate
+//	  32 = zeny
+//	  64 = weapon type
+//	 128 = ammo (with the amount)
+//	 256 = state
+//	 512 = statuses
+//	1024 = spirit sphere
+//	2048 = items (with the amount)
+//  4096 = equipments
+// (see 'skill_require_db.txt' for requirement(s) detail)
 // ====================================================
 // Example of advanced usage:
 //AS_SONICBLOW,2,63,64
