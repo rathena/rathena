@@ -46,7 +46,7 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 	11,10,10, 0,11, -1,266,10,	// 2b10-2b17: U->2b10, U->2b11, U->2b12, F->2b13, U->2b14, U->2b15, U->2b16, U->2b17
 	 2,10, 2,-1,-1,-1, 2, 7,	// 2b18-2b1f: U->2b18, U->2b19, U->2b1a, U->2b1b, U->2b1c, U->2b1d, U->2b1e, U->2b1f
 	-1,10, 8, 2, 2,14,19,19,	// 2b20-2b27: U->2b20, U->2b21, U->2b22, U->2b23, U->2b24, U->2b25, U->2b26, U->2b27
-	10,10, 6,15, 0, 6,-1,-1,	// 2b28-2b2f: U->2b28, U->2b29, U->2b2a, U->2b2b, F->2b2c, U->2b2d, U->2b2e, U->2b2f
+	-1,10, 6,15, 0, 6,-1,-1,	// 2b28-2b2f: U->2b28, U->2b29, U->2b2a, U->2b2b, F->2b2c, U->2b2d, U->2b2e, U->2b2f
  };
 
 //Used Packets:
@@ -816,8 +816,8 @@ int chrif_changeemail(int id, const char *actual_email, const char *new_email) {
 /**
  * S 2b0e <accid>.l <name>.24B <operation_type>.w <timediff>L <val1>L <val2>L
  * Send an account modification request to the login server (via char server).
- * @aid : Player account id
- * @character_name : Player name
+ * @aid : Player requesting operation account id
+ * @character_name : Target of operation Player name
  * @operation_type : 1: block, 2: ban, 3: unblock, 4: unban, 5: changesex (use next function for 5), 6 vip, 7 bank 
  * @timediff : tick to add or remove to unixtimestamp
  * @val1 : extra data value to transfer for operation
@@ -1029,7 +1029,8 @@ int chrif_deadopt(int father_id, int mother_id, int child_id) {
 /*==========================================
  * Disconnection of a player (account has been banned of has a status, from login/char-server) by [Yor]
  *------------------------------------------*/
-int chrif_accountban(int fd) {
+int chrif_ban(int fd) {
+	ShowInfo("chrif_ban \n");
 	int acc, res=0;
 	struct map_session_data *sd;
 
@@ -1037,12 +1038,12 @@ int chrif_accountban(int fd) {
 	res = RFIFOB(fd,6); // 0: change of statut, 1: ban, 2 charban
 
 	if ( battle_config.etc_log )
-		ShowNotice("chrif_accountban %d.\n", acc);
+		ShowNotice("chrif_ban %d.type = %s \n", acc, res==1?"account":"char");
 
 	sd = map_id2sd(acc);
 
 	if ( acc < 0 || sd == NULL ) {
-		ShowError("chrif_accountban failed - player not online.\n");
+		//nothing to do on map if player not connected
 		return 0;
 	}
 
@@ -1064,20 +1065,23 @@ int chrif_accountban(int fd) {
 		safesnprintf(tmpstr,sizeof(tmpstr),msg_txt(sd,423),res==2?"char":"account",strtime); //"Your %s has been banished until %s "
 		clif_displaymessage(sd->fd, tmpstr);
 	}
+	if(res == 2 && !map_charid2sd(sd->status.char_id)) //only disconect if char is online
+		return 0;
 
 	set_eof(sd->fd); // forced to disconnect for the change
 	map_quit(sd); // Remove leftovers (e.g. autotrading) [Paradox924X]
 	return 0;
 }
 
-int chrif_req_charban(int cid, int timediff){
+int chrif_req_charban(int aid, const char* character_name, int timediff){
 	chrif_check(-1);
 	
-	WFIFOHEAD(char_fd,10);
+	WFIFOHEAD(char_fd,10+NAME_LENGTH);
 	WFIFOW(char_fd,0) = 0x2b28;
-	WFIFOL(char_fd,2) = cid;
+	WFIFOL(char_fd,2) = aid;
 	WFIFOL(char_fd,6) = timediff;
-	WFIFOSET(char_fd,10);
+	safestrncpy((char*)WFIFOP(char_fd,10), character_name, NAME_LENGTH);
+	WFIFOSET(char_fd,10+NAME_LENGTH); //default 34
 	return 0;
 }
 
@@ -1610,7 +1614,7 @@ int chrif_parse(int fd) {
 			case 0x2b0d: chrif_changedsex(fd); break;
 			case 0x2b0f: chrif_ack_login_req(RFIFOL(fd,2), (char*)RFIFOP(fd,6), RFIFOW(fd,30), RFIFOW(fd,32)); break;
 			case 0x2b12: chrif_divorceack(RFIFOL(fd,2), RFIFOL(fd,6)); break;
-			case 0x2b14: chrif_accountban(fd); break;
+			case 0x2b14: chrif_ban(fd); break;
 			case 0x2b1b: chrif_recvfamelist(fd); break;
 			case 0x2b1d: chrif_load_scdata(fd); break;
 			case 0x2b1e: chrif_update_ip(fd); break;

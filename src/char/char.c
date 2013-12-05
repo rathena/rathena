@@ -1087,6 +1087,7 @@ int mmo_chars_fromsql(struct char_session_data* sd, uint8* buf)
 
 	for( i = 0; i < MAX_CHARS; i++ ){
 		sd->found_char[i] = -1;
+		sd->unban_time[i] = 0;
 	}
 
 	// read char data
@@ -1147,7 +1148,10 @@ int mmo_chars_fromsql(struct char_session_data* sd, uint8* buf)
 	{
 		p.last_point.map = mapindex_name2id(last_map);
 		sd->found_char[p.slot] = p.char_id;
-		sd->unban_time[p.slot] = p.unban_time;
+		if(p.unban_time > time(NULL))
+			sd->unban_time[p.slot] = p.unban_time;
+		else if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `unban_time`='0' WHERE `char_id`='%d' LIMIT 1", char_db, p.char_id) )
+			Sql_ShowDebug(sql_handle);
 		j += mmo_char_tobuf(WBUFP(buf, j), &p);
 
 		// Addon System
@@ -1967,18 +1971,17 @@ void char_charlist_notify( int fd, struct char_session_data* sd ){
  */
 void char_block_character( int fd, struct char_session_data* sd ){
 	int i=0, len=4;
-	char szExpireDate[20];
 	time_t now = time(NULL);
 
 	ARR_FIND(0, MAX_CHARS, i, sd->unban_time[i] > now); //should we use MAX_CHARS or sd->charslot
-	if(i < MAX_CHARS){
-		memset(szExpireDate,'\0',20);
+	if(i < MAX_CHARS){	
 		WFIFOHEAD(fd, 4+MAX_CHARS*24);
 		WFIFOW(fd, 0) = 0x20d;
 
 		for(i=0; i<MAX_CHARS; i++){
 			if( sd->unban_time[i] > now ) {
-				WFIFOL(fd, 4+i*24) = sd->found_char[i]; //gid
+				char szExpireDate[21];
+				WFIFOL(fd, 4+i*24) = sd->found_char[i];
 				timestamp2string(szExpireDate, 20, sd->unban_time[i], "%Y-%m-%d %H:%M:%S");
 				memcpy(WFIFOP(fd,8+i*24),szExpireDate,20);
 				len+=24;
@@ -2010,7 +2013,7 @@ int mmo_char_send006b(int fd, struct char_session_data* sd){
 	if(newvers) //20100413
 		offset += 3;
 	if (save_log)
-		ShowInfo("Loading Char Data ("CL_BOLD"%d"CL_RESET")\n",sd->account_id);
+		ShowInfo("Loading Char Data 6b ("CL_BOLD"%d"CL_RESET")\n",sd->account_id);
 
 	j = 24 + offset; // offset
 	WFIFOHEAD(fd,j + MAX_CHARS*MAX_CHAR_BUF);
@@ -2038,7 +2041,7 @@ int mmo_char_send006b(int fd, struct char_session_data* sd){
 //----------------------------------------
 void mmo_char_send082d(int fd, struct char_session_data* sd) {
 	if (save_log)
-		ShowInfo("Loading Char Data ("CL_BOLD"%d"CL_RESET")\n",sd->account_id);
+		ShowInfo("Loading Char Data 82d ("CL_BOLD"%d"CL_RESET")\n",sd->account_id);
 	WFIFOHEAD(fd,29);
 	WFIFOW(fd,0) = 0x82d;
 	WFIFOW(fd,2) = 29;
@@ -2056,11 +2059,12 @@ void mmo_char_send(int fd, struct char_session_data* sd){
 	if(sd->version > date2version(20130000) ){
 		mmo_char_send082d(fd,sd);
 		char_charlist_notify(fd,sd);
-		char_block_character(fd,sd);
 	}
 	//else
 	//@FIXME dump from kro doesn't show 6b transmission
 	mmo_char_send006b(fd,sd);
+	if(sd->version > date2version(20060819) )
+		char_block_character(fd,sd);
 }
 
 int char_married(int pl1, int pl2)
@@ -2950,14 +2954,15 @@ void mapif_on_disconnect(int id)
 }
 
 int mapif_parse_reqcharban(int fd){
-	if (RFIFOREST(fd) < 10)
+	if (RFIFOREST(fd) < 10+NAME_LENGTH)
 		return 0;
-	else {	
-		int cid = RFIFOL(fd,2);
+	else {
+		int aid = RFIFOL(fd,2);
 		int timediff = RFIFOL(fd,6);
-		RFIFOSKIP(fd,10);
+		const char* name = (char*)RFIFOP(fd,10); // name of the target character
+		RFIFOSKIP(fd,10+NAME_LENGTH);
 
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id` `unban_time` FROM `%s` WHERE `char_id` = '%d'", char_db, cid) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`char_id`,`unban_time` FROM `%s` WHERE `name` = '%s'", char_db, name) )
 			Sql_ShowDebug(sql_handle);
 		else if( Sql_NumRows(sql_handle) == 0 ){
 			return -1; // 1-player not found
@@ -2967,45 +2972,46 @@ int mapif_parse_reqcharban(int fd){
 			Sql_FreeResult(sql_handle);
 			return -1;
 		} else {
-			int aid;
+			int t_cid=0,t_aid=0;
 			char* data;
 			time_t unban_time;
+			time_t now = time(NULL);
+			SqlStmt* stmt = SqlStmt_Malloc(sql_handle);
 
-			Sql_GetData(sql_handle, 0, &data, NULL); aid = atoi(data);
-			Sql_GetData(sql_handle, 1, &data, NULL); unban_time = atol(data);
+			Sql_GetData(sql_handle, 0, &data, NULL); t_aid = atoi(data);
+			Sql_GetData(sql_handle, 1, &data, NULL); t_cid = atoi(data);
+			Sql_GetData(sql_handle, 2, &data, NULL); unban_time = atol(data);
 			Sql_FreeResult(sql_handle);
 
-
 			if(timediff<0 && unban_time==0) return 0; //attemp to reduce time of a non banned account ?!?
-			else if(unban_time==0) unban_time=time(NULL); //new entry
-			unban_time += timediff;
-			// condition applies; send to all map-servers to disconnect the player
-			if( unban_time > time(NULL) ) {
-				unsigned char buf[11];
-				SqlStmt* stmt = SqlStmt_Malloc(sql_handle);
-				if( SQL_SUCCESS != SqlStmt_Prepare(stmt,
-						  "UPDATE `%s` SET `unban_time` = ? WHERE `char_id` = ? LIMIT 1",
-						  char_db)
-					|| SQL_SUCCESS != SqlStmt_BindParam(stmt,  0, SQLDT_LONG,   (void*)&unban_time,   sizeof(unban_time))
-					|| SQL_SUCCESS != SqlStmt_BindParam(stmt,  1, SQLDT_INT,    (void*)&cid,     sizeof(cid))
-					|| SQL_SUCCESS != SqlStmt_Execute(stmt)
+			else if(unban_time<now) unban_time=now; //new entry
+			unban_time += timediff; //alterate the time
+			if( unban_time < now ) unban_time=0; //we have totally reduce the time
+			
+			if( SQL_SUCCESS != SqlStmt_Prepare(stmt,
+					  "UPDATE `%s` SET `unban_time` = ? WHERE `char_id` = ? LIMIT 1",
+					  char_db)
+				|| SQL_SUCCESS != SqlStmt_BindParam(stmt,  0, SQLDT_LONG,   (void*)&unban_time,   sizeof(unban_time))
+				|| SQL_SUCCESS != SqlStmt_BindParam(stmt,  1, SQLDT_INT,    (void*)&t_cid,     sizeof(t_cid))
+				|| SQL_SUCCESS != SqlStmt_Execute(stmt)
 
-					) {
-					SqlStmt_ShowDebug(stmt);
-					SqlStmt_Free(stmt);
-					return -1;
-				}
-				else {
+				) {
+				SqlStmt_ShowDebug(stmt);
+				SqlStmt_Free(stmt);
+				return -1;
+			}
+			SqlStmt_Free(stmt);
+			
+			// condition applies; send to all map-servers to disconnect the player
+			if( unban_time > now ) { 
+					unsigned char buf[11];
 					WBUFW(buf,0) = 0x2b14;
-					WBUFL(buf,2) = aid;
+					WBUFL(buf,2) = t_aid;
 					WBUFB(buf,6) = 2;
 					WBUFL(buf,7) = (unsigned int)unban_time;
 					mapif_sendall(buf, 11);
-
 					// disconnect player if online on char-server
 					disconnect_player(aid);
-				}
-				SqlStmt_Free(stmt);
 			}
 		}
 	}
@@ -3015,7 +3021,7 @@ int mapif_parse_reqcharban(int fd){
 int mapif_parse_reqcharunban(int fd){
 	if (RFIFOREST(fd) < 6)
 		return 0;
-	else {	
+	else {
 		int cid = RFIFOL(fd,2);
 		RFIFOSKIP(fd,6);
 		

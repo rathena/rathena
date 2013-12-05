@@ -18650,9 +18650,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getserverdef,"i"),
 	BUILDIN_DEF2(montransform, "transform", "vii????"), // Monster Transform [malufett/Hercules]
 	BUILDIN_DEF(vip_status,"i?"),
-#ifdef VIP_ENABLE
 	BUILDIN_DEF(vip_time,"i?"),
-#endif
 	BUILDIN_DEF(bonus_script,"si???"),
 
 #include "../custom/script_def.inc"
