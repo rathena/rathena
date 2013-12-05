@@ -5446,7 +5446,7 @@
 11551,Savory_Herb_Salad,Savory Herb Salad,0,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal rand(20,30),0; sc_start SC_STRFOOD,180000,1; },{},{}
 11552,Apple_Carrot_Salad,Apple Carrot Salad,0,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal rand(20,30),0; sc_start SC_AGIFOOD,180000,1; },{},{}
 11553,Casual_Stew,Casual Stew,0,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal rand(20,30),0; sc_start SC_VITFOOD,180000,1; },{},{}
-11554,Golden_Roasted_Apple,Golden Roasted Apple,0,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal rand(20,30),0; sc_start SC_DEXFOOD,180000,1; },{},{}
+ 11554,Golden_Roasted_Apple,Golden Roasted Apple,0,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal rand(20,30),0; sc_start SC_DEXFOOD,180000,1; },{},{}
 11589,Cold_Snow_Cone,Cold Snow Cone,2,10,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 5,5; },{},{}
 11590,Skewer_No.5,Skewer No.5,3,10,,300,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 //
