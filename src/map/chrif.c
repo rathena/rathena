@@ -1030,7 +1030,6 @@ int chrif_deadopt(int father_id, int mother_id, int child_id) {
  * Disconnection of a player (account has been banned of has a status, from login/char-server) by [Yor]
  *------------------------------------------*/
 int chrif_ban(int fd) {
-	ShowInfo("chrif_ban \n");
 	int acc, res=0;
 	struct map_session_data *sd;
 
