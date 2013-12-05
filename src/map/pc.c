@@ -8485,7 +8485,8 @@ int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 	int index, idx, success = 0;
 
 	for( i = 0; i < data->combos_count; i++ ) {
-		int *combo_idx = aMalloc(data->combos[i]->count);
+		int *combo_idx = NULL;
+		
 		/* ensure this isn't a duplicate combo */
 		if( sd->combos.bonus != NULL ) {
 			int x;
@@ -8496,6 +8497,7 @@ int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 				continue;
 		}
 
+		combo_idx = CREATE(combo_idx,int,data->combos[i]->count);
 		for( j = 0; j < data->combos[i]->count; j++ ) {
 			int id = data->combos[i]->nameid[j];
 			bool found = false;
