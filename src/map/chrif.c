@@ -1030,18 +1030,19 @@ int chrif_deadopt(int father_id, int mother_id, int child_id) {
  * Disconnection of a player (account has been banned of has a status, from login/char-server) by [Yor]
  *------------------------------------------*/
 int chrif_ban(int fd) {
-	int acc, res=0;
+	int id, res=0;
 	struct map_session_data *sd;
 
-	acc = RFIFOL(fd,2);
+	id = RFIFOL(fd,2);
 	res = RFIFOB(fd,6); // 0: change of statut, 1: ban, 2 charban
 
 	if ( battle_config.etc_log )
-		ShowNotice("chrif_ban %d.type = %s \n", acc, res==1?"account":"char");
+		ShowNotice("chrif_ban %d.type = %s \n", id, res==1?"account":"char");
 
-	sd = map_id2sd(acc);
+	if(res==2)  sd = map_charid2sd(id);
+	else sd = map_id2sd(id);
 
-	if ( acc < 0 || sd == NULL ) {
+	if ( id < 0 || sd == NULL ) {
 		//nothing to do on map if player not connected
 		return 0;
 	}
@@ -1064,8 +1065,6 @@ int chrif_ban(int fd) {
 		safesnprintf(tmpstr,sizeof(tmpstr),msg_txt(sd,423),res==2?"char":"account",strtime); //"Your %s has been banished until %s "
 		clif_displaymessage(sd->fd, tmpstr);
 	}
-	if(res == 2 && !map_charid2sd(sd->status.char_id)) //only disconect if char is online
-		return 0;
 
 	set_eof(sd->fd); // forced to disconnect for the change
 	map_quit(sd); // Remove leftovers (e.g. autotrading) [Paradox924X]
