@@ -18177,7 +18177,10 @@ BUILDIN_FUNC(bonus_script) {
 BUILDIN_FUNC(addspiritball) {
 	uint8 i, amount = script_getnum(st,2);
 	uint16 tick = script_getnum(st,3);
-	struct map_session_data *sd;
+	struct map_session_data *sd = NULL;
+	
+	if (amount == 0)
+		return SCRIPT_CMD_SUCCESS;
 
 	if (script_getnum(st,4))
 		sd = map_charid2sd(script_getnum(st,4));
@@ -18185,9 +18188,6 @@ BUILDIN_FUNC(addspiritball) {
 		sd = script_rid2sd(st);
 	if (!sd)
 		return SCRIPT_CMD_FAILURE;
-
-	if (amount == 0)
-		return SCRIPT_CMD_SUCCESS;
 
 	for (i = 0; i < amount; i++)
 		pc_addspiritball(sd,tick*1000,10);
@@ -18199,8 +18199,11 @@ BUILDIN_FUNC(addspiritball) {
 */
 BUILDIN_FUNC(delspiritball) {
 	uint8 amount = script_getnum(st,2);
-	struct map_session_data *sd;
-
+	struct map_session_data *sd = NULL;
+	
+	if (amount == 0)
+		return SCRIPT_CMD_SUCCESS;
+	
 	if (script_getnum(st,3))
 		sd = map_charid2sd(script_getnum(st,3));
 	else
@@ -18208,14 +18211,12 @@ BUILDIN_FUNC(delspiritball) {
 	if (!sd)
 		return SCRIPT_CMD_FAILURE;
 
-	if (amount == 0)
-		return SCRIPT_CMD_SUCCESS;
 	pc_delspiritball(sd,max(amount,1),1);
 	return SCRIPT_CMD_SUCCESS;
 }
 
 /** Counts the spirit ball that player has
-* delspiritball {,<char_id>};
+* countspiritball {,<char_id>};
 */
 BUILDIN_FUNC(countspiritball) {
 	struct map_session_data *sd;
