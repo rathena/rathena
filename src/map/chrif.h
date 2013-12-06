@@ -67,7 +67,7 @@ int chrif_send_report(char* buf, int len);
 
 void chrif_parse_ack_vipActive(int fd);
 
-int chrif_req_charban(int aid, int timediff);
+int chrif_req_charban(int aid, const char* character_name, int timediff);
 int chrif_req_charunban(int cid);
 
 int chrif_load_bankdata(int fd);

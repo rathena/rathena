@@ -2826,8 +2826,8 @@ ACMD_FUNC(char_ban)
 	
 	if(bantype==2) 
 		chrif_req_login_operation(sd->status.account_id, atcmd_player_name, 2, timediff, 0, 0); // type: 2 - ban
-	else
-		chrif_req_charban(sd->status.char_id,timediff);
+	else 
+		chrif_req_charban(sd->status.account_id, atcmd_player_name,timediff);
 	
 	safesnprintf(output,sizeof(output),msg_txt(sd,88),bantype==6?"char":"login"); // Sending request to %s server...
 	clif_displaymessage(fd, output);

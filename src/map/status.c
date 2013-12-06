@@ -6988,7 +6988,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 		else if (sc->data[SC_SIEGFRIED])
 			sc_def += sc->data[SC_SIEGFRIED]->val3*100; // Status resistance.
 		else if (sc->data[SC_SHIELDSPELL_REF] && sc->data[SC_SHIELDSPELL_REF]->val1 == 2)
-			sc_def += sc->data[SC_SIEGFRIED]->val3*100;
+			sc_def += sc->data[SC_SHIELDSPELL_REF]->val3*100;
 	}
 
 	// When tick def not set, reduction is the same for both.

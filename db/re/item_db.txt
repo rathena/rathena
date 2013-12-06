@@ -6527,6 +6527,9 @@
 13181,Novice_Shotgun,Novice Shotgun,4,0,,1000,80,,9,0,0x41000000,1,2,34,4,1,0,20,{},{},{}
 13182,Novice_Gatling,Novice Gatling,4,0,,1500,40,,9,0,0x41000000,1,2,34,4,1,0,19,{},{},{}
 13183,Novice_Grenade_Launcher,Novice Grenade Launcher,4,0,,1500,40,,9,0,0x41000000,1,2,34,4,1,0,21,{},{},{}
+13194,Peace_Breaker,Peace Breaker,4,1,,1400,250,,,,0x41000000,63,2,2,3,120,,20,{ bonus bHit,-25; bonus bAspdRate,25; },{},{}
+13196,Peace_Breaker,Peace Breaker,4,1,,1400,250,,,,0x41000000,63,2,2,3,120,,20,{ bonus bHit,-25; bonus bAspdRate,25; },{},{}
+13197,Mini_Mei,Mini Mei,4,1,,2500,220,,,,0x41000000,63,2,2,2,106,,19,{},{},{}
 // Bullets
 13200,Bullet,Bullet,10,1,,2,10,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
 13201,Silver_Bullet,Silver Bullet,10,15,,2,15,,,,0x41000000,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Holy; },{},{}
