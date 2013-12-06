@@ -411,8 +411,8 @@ bonus3 bAddClassDropItem,s,x,n;		Adds an n/100% chance of dropping item s when k
 bonus2 bHPGainRaceAttack,x,n;		Heals n HP when attacking x Race on every hit
 bonus2 bSPGainRaceAttack,x,n;		Heals n SP when attacking x Race on every hit
 
-bonus2 bSkillUseSPrate,s,x;		Reduces SP consumption of skill s by x%. (supports skill names.)
-bonus2 bSkillUseSP,s,x;			Reduces SP consumption of skill s by x. (supports skill names.)
+bonus2 bSkillUseSPrate,s,x;		Increases SP consumption of skill s by x%. (supports skill names.)
+bonus2 bSkillUseSP,s,x;			Increases SP consumption of skill s by x. (supports skill names.)
 bonus2 bSkillCooldown,s,x;		Increases cooldown of skill s by x milliseconds. (supports skill names.)
 
 bonus bFixedCastrate,x;			Increases fixed cast time of all skills by x%.

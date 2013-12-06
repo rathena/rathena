@@ -2020,6 +2020,7 @@ REPLACE INTO `item_db_re` VALUES (2990,'Pendant_of_Harmony','Pendant of Harmony'
 REPLACE INTO `item_db_re` VALUES (2991,'Pendant_of_Chaos','Pendant of Chaos',5,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,63,2,136,NULL,'130',NULL,NULL,'bonus bAtkRate,6; bonus2 bSubEle,Ele_Water,5; bonus2 bSubEle,Ele_Earth,5; bonus2 bSubEle,Ele_Fire,5; bonus2 bSubEle,Ele_Wind,5; bonus2 bSubEle,Ele_Poison,5; bonus2 bSubEle,Ele_Ghost,5; bonus2 bSubEle,Ele_Undead,5; bonus2 bResEff,Eff_Confusion,10000; bonus2 bAddEff,Eff_Confusion,500; bonus4 bAutoSpellWhenHit,"SC_CHAOSPANIC",1,100,1; bonus bInt,-5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2992,'Pendant_of_Maelstrom','Pendant of Maelstrom',5,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,63,2,136,NULL,'130',NULL,NULL,'bonus bAtkRate,6; bonus bMatkRate,6; bonus bAllStats,1; bonus5 bAutoSpellWhenHit,"SC_MAELSTROM",1,100,BF_MAGIC,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2995,'DEX_Complement','DEX Complement',5,20,NULL,100,NULL,0,NULL,1,0x00000400,56,2,136,NULL,'100',0,0,'bonus bUseSPrate,-10; bonus bDelayrate,-10; bonus bVariableCastrate,-10; bonus2 bSkillVariableCast,"NC_AXEBOOMERANG",-2000; if(getequipid(EQI_HAND_R) == 1368) { bonus bAtkRate,100; }',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2996,'Reinforced_Parts_Gun_Barrel','Reinforced Parts - Gun Barrel',5,10,NULL,500,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,136,NULL,'100',NULL,NULL,'bonus bAtkRate,4; bonus bHit,10; bonus2 bSkillAtk,"NC_BOOSTKNUCKLE",30;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2997,'RWC_Gold_Brooch','RWC Gold Brooch',5,10,NULL,200,NULL,0,NULL,1,0xFFFFFFFF,63,2,136,NULL,'0',1,16,'bonus bAtk,25; bonus bMatk,20;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2999,'RWC_Brooch','RWC Brooch',5,10,NULL,200,NULL,0,NULL,1,0xFFFFFFFF,63,2,136,NULL,'0',1,16,'bonus bMaxHP,300; bonus bMaxSP,30;',NULL,NULL);
 
@@ -4272,7 +4273,13 @@ REPLACE INTO `item_db_re` VALUES (6714,'Sheenas_Soul','Sheena\'s Soul',3,20,NULL
 REPLACE INTO `item_db_re` VALUES (6715,'Gods_Soul_Piece','God\'s Soul Piece',3,20,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (6746,'Iron_Artifacts','Iron Artifacts',3,10,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (6747,'Steel_Workpiece','Steel Workpiece',3,10,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#
+REPLACE INTO `item_db_re` VALUES (6748,'Daily_Report_He_And_His_Team','Daily Report He And His Team',3,10,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (6749,'Operation_Control_Device','Operation Control Device',3,10,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (6750,'Failed_Engine','Failed Engine',3,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (6751,'Crushed_Can_Iron_Plate','Crushed Can Iron Plate',3,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (6752,'Charleston_Parts','Charleston Parts',3,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (6753,'Token_Of_Destruction','Token Of Destruction',3,10,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (6754,'Collected_Medicinal_Herbs','Collected Medicinal Herbs',3,10,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (6755,'Contaminated_Magic','Contaminated Magic',3,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (6766,'Tickets_Ice_Kingdom','Tickets Ice Kingdom',3,10,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (6767,'Summer_Festival_Coins','Summer Festival Coins',3,10,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
@@ -8701,6 +8708,7 @@ REPLACE INTO `item_db_re` VALUES (20700,'Egir_Manteau','Egir Manteau',5,200000,N
 REPLACE INTO `item_db_re` VALUES (20707,'Kirin_Wing','Kirin Wing',5,20,NULL,0,NULL,18,NULL,0,0xFFFFFFFF,63,2,4,NULL,'0',1,6,'bonus bAllStats,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20711,'Manteau_Of_Diego','Manteau Of Diego',5,20,NULL,600,NULL,15,NULL,1,0xFFFFFFFF,63,2,4,NULL,'0',1,0,'bonus bInt,1; bonus bDex,1; bonus bMdef,3;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20724,'Love_Dad_Wings_2012','Love Dad Wings 2012',5,0,NULL,100,NULL,15,NULL,1,0xFFFFFFFF,63,2,4,NULL,'1',1,5,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (20732,'STR_Complement','STR Complement',5,10,NULL,500,NULL,20,NULL,NULL,0x00000400,56,2,4,NULL,'100',1,NULL,'bonus bMaxHPrate,6+(getrefine()/2); if(getrefine()>=9){bonus bHPrecovRate,50;}',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20733,'Reinforced_Parts_Engine','Reinforced Parts - Engine',5,10,NULL,1500,NULL,25,NULL,NULL,0x00000400,56,2,4,NULL,'100',1,NULL,'bonus bDelayrate,-10; if(getrefine()>=7) {bonus2 bSubEle,0,10}; if(getrefine()>=9) {bonus bDelayrate,-10;}',NULL,NULL);
 
 # More 2-Handed Swords
@@ -8712,6 +8720,8 @@ REPLACE INTO `item_db_re` VALUES (21004,'Alca_Bringer_','Alca Bringer',4,20,NULL
 REPLACE INTO `item_db_re` VALUES (21005,'Metal_Two_Hand_Sword','Metal Two Hand Sword',4,20,NULL,0,'95',NULL,1,1,0x00004082,63,2,34,3,'1',1,3,'bonus bBaseAtk,(getrefine()*6); bonus bMatk,(getrefine()*2); set .@i,((BaseLevel/10)>12)?12:(BaseLevel/10); if(.@i>2) bonus bBaseAtk,((.@i-2)*5);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (21011,'Gigantic_Blade','Gigantic Blade',3,10,NULL,5000,'300',NULL,NULL,NULL,0xFFFFFFFF,56,2,2,4,'130',1,3,'bonus bUnbreakableWeapon,1; bonus bAspdRate,-5; if(readparam(bStr)<=110){ bonus bAtk,-250; }',NULL,NULL);
 # New Items
+REPLACE INTO `item_db_re` VALUES (22043,'AGI_Complement','AGI Complement',5,10,NULL,350,NULL,25,NULL,NULL,0x00000400,56,2,64,NULL,'100',1,NULL,'bonus bAspdRate,5+(getrefine()/4);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22044,'Reinforced_Parts_Booster','Reinforced Parts - Booster',5,10,NULL,1000,NULL,23,NULL,NULL,0x00000400,56,2,64,NULL,'100',1,NULL,'bonus2 bSkillUseSP,"NC_HOVERING",15; if(getrefine()>=7){bonus2 bSkillUseSP,"NC_HOVERING",-20;}',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22045,'Summer_Sandals','Summer Sandals',5,10,NULL,200,NULL,5,NULL,0,0xFFFFFFFF,63,2,64,NULL,'0',1,0,'bonus bFlee,5; bonus3 bAutoSpellWhenHit,"AL_INCAGI",10,50;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22514,'Candy_Holder','Candy Holder',11,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22540,'Runstone_Luxanima','Lux Anima Runestone',11,2,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,56,2,NULL,NULL,NULL,NULL,NULL,'itemskill "RK_LUXANIMA",1;',NULL,NULL);
@@ -8721,6 +8731,7 @@ REPLACE INTO `item_db_re` VALUES (22566,'Last_Years_Frost','Last Year\'s Frost',
 REPLACE INTO `item_db_re` VALUES (22567,'Expedition_Award_Box','Expedition Award Box',0,20,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22568,'Nidhoggur_Summon_Scroll','Nidhoggur Summon Scroll',0,20,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22571,'Easter_Egg','Easter Egg',11,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22610,'New_Beginnings_Box','New Beginnings Box',2,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 #REPLACE INTO `item_db_re` VALUES (22611,'Packed_Envelope','Packed Envelope',11,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/* TODO */',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22612,'Corrupt_Reagents','Corrupt Reagents',11,10,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/* TODO */',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22613,'Contaminated_Reagents','Contaminated Reagents',11,10,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/* TODO */',NULL,NULL);
@@ -8788,4 +8799,5 @@ REPLACE INTO `item_db_re` VALUES (24074,'Small_Shadow_Armor','Small Shadow Armor
 REPLACE INTO `item_db_re` VALUES (24075,'Large_Shadow_Weapon','Large Shadow Weapon',12,10,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,131072,NULL,'1',1,0,'bonus2 bAddSize,2,2; if(getrefine()>=7) { bonus2 bAddSize,2,1; } if(getrefine()>=9) { bonus2 bAddSize,2,2; }',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (24076,'Medium_Shadow_Weapon','Medium Shadow Weapon',12,10,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,131072,NULL,'1',1,0,'bonus2 bAddSize,1,2; if(getrefine()>=7) { bonus2 bAddSize,1,1; } if(getrefine()>=9) { bonus2 bAddSize,1,2; }',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (24077,'Small_Shadow_Weapon','Small Shadow Weapon',12,10,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,131072,NULL,'1',1,0,'bonus2 bAddSize,0,2; if(getrefine()>=7) { bonus2 bAddSize,0,1; } if(getrefine()>=9) { bonus2 bAddSize,0,2; }',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (28101,'Axe_Tornado','Axe Tornado',4,10,NULL,4000,'320',NULL,NULL,NULL,0x00000400,56,2,2,4,'130',NULL,6,'bonus bAtkEle,4; bonus2 bSkillCooldown,"NC_AXETORNADO",-1000;',NULL,NULL);
 
