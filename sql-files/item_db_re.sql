@@ -7775,7 +7775,7 @@ REPLACE INTO `item_db_re` VALUES (15101,'Hardened_Breastplate','Hardened Breastp
 #
 REPLACE INTO `item_db_re` VALUES (15105,'Kaftan','Kaftan',5,20,NULL,400,NULL,13,NULL,1,0xFFFFFFFF,63,2,16,NULL,'0',1,0,'bonus bMdef,3; bonus2 bSubRace,RC_Demon,5; bonus2 bSubRace,RC_Undead,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (15110,'Strength_Supplement_Equipment','Strength Supplement Equipment',5,10,NULL,2000,NULL,80,NULL,NULL,0x00000400,56,2,16,NULL,'100',1,NULL,'bonus bAtkRate,5+(getrefine()/4);',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (15111,'Reinforced_Parts_Gloves','Reinforced Parts - Gloves',5,10,NULL,3000,NULL,110,NULL,NULL,0x00000400,56,2,16,NULL,'100',1,NULL,'bonus bUnbreakableArmor,1; bonus2 bSubSize,0,10; bonus2 bSubSize,1,10; if(getrefine>=7){ bonus2 bSubSize,2,10; }; if(getrefine()>=9){ bonus2 bSubSize,0,5; bonus2 bSubSize,1,5; }',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (15111,'Reinforced_Parts_Gloves','Reinforced Parts - Gloves',5,10,NULL,3000,NULL,110,NULL,NULL,0x00000400,56,2,16,NULL,'100',1,NULL,'bonus bUnbreakableArmor,1; bonus2 bSubSize,0,10; bonus2 bSubSize,1,10; if(getrefine()>=7){ bonus2 bSubSize,2,10; }; if(getrefine()>=9){ bonus2 bSubSize,0,5; bonus2 bSubSize,1,5; }',NULL,NULL);
 
 # More Maces
 REPLACE INTO `item_db_re` VALUES (16000,'Erde','Erde',4,20,NULL,500,'130',NULL,1,2,0x0004C5B2,18,2,2,4,'50',1,8,'bonus2 bSkillAtk,"AM_ACIDTERROR",20; bonus2 bSkillAtk,"AM_DEMONSTRATION",20; bonus bMaxSP,50; bonus bHealPower,10;',NULL,NULL);
@@ -8701,7 +8701,7 @@ REPLACE INTO `item_db_re` VALUES (20700,'Egir_Manteau','Egir Manteau',5,200000,N
 REPLACE INTO `item_db_re` VALUES (20707,'Kirin_Wing','Kirin Wing',5,20,NULL,0,NULL,18,NULL,0,0xFFFFFFFF,63,2,4,NULL,'0',1,6,'bonus bAllStats,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20711,'Manteau_Of_Diego','Manteau Of Diego',5,20,NULL,600,NULL,15,NULL,1,0xFFFFFFFF,63,2,4,NULL,'0',1,0,'bonus bInt,1; bonus bDex,1; bonus bMdef,3;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20724,'Love_Dad_Wings_2012','Love Dad Wings 2012',5,0,NULL,100,NULL,15,NULL,1,0xFFFFFFFF,63,2,4,NULL,'1',1,5,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (20733,'Reinforced_Parts_Engine','Reinforced Parts - Engine',5,10,NULL,1500,NULL,25,NULL,NULL,0x00000400,56,2,4,NULL,'100',1,NULL,'bonus bDelayrate,-10; if(getrefine()>=7) {bonus2 bSubEle,0,10}; if(getrefine()>=9) {bonus bDelayrate,-10;}',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (20733,'Reinforced_Parts_Engine','Reinforced Parts - Engine',5,10,NULL,1500,NULL,25,NULL,NULL,0x00000400,56,2,4,NULL,'100',1,NULL,'bonus bDelayrate,-10; if(getrefine()>=7) {bonus2 bSubEle,0,10;}; if(getrefine()>=9) {bonus bDelayrate,-10;}',NULL,NULL);
 
 # More 2-Handed Swords
 REPLACE INTO `item_db_re` VALUES (21000,'Upg_Twohand_Sword','Upg Two-Handed Sword',4,20,NULL,1500,'100',NULL,1,1,0x00004082,63,2,34,3,'1',1,3,'bonus bBaseAtk,(getrefine()*12); bonus bMatk,(getrefine()*5); if(BaseLevel>70) bonus bBaseAtk,(((BaseLevel-70)/10)*10);',NULL,NULL);
