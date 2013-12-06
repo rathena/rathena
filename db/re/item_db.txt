@@ -7743,6 +7743,9 @@
 15101,Hardened_Breastplate,Hardened Breastplate,5,20,,1500,,20,,1,0xFFFFFFFF,63,2,16,,130,1,0,{},{},{}
 //
 15105,Kaftan,Kaftan,5,20,,400,,13,,1,0xFFFFFFFF,63,2,16,,0,1,0,{ bonus bMdef,3; bonus2 bSubRace,RC_Demon,5; bonus2 bSubRace,RC_Undead,5; },{},{}
+15110,Strength_Supplement_Equipment,Strength Supplement Equipment,5,10,,2000,,80,,,0x00000400,56,2,16,,100,1,,{ bonus bAtkRate,5+(getrefine()/4); },{},{}
+15111,Reinforced_Parts_Gloves,Reinforced Parts - Gloves,5,10,,3000,,110,,,0x00000400,56,2,16,,100,1,,{ bonus bUnbreakableArmor,1; bonus2 bSubSize,0,10; bonus2 bSubSize,1,10; if(getrefine>=7){ bonus2 bSubSize,2,10; }; if(getrefine()>=9){ bonus2 bSubSize,0,5; bonus2 bSubSize,1,5; } },{},{}
+
 // More Maces
 16000,Erde,Erde,4,20,,500,130,,1,2,0x0004C5B2,18,2,2,4,50,1,8,{ bonus2 bSkillAtk,"AM_ACIDTERROR",20; bonus2 bSkillAtk,"AM_DEMONSTRATION",20; bonus bMaxSP,50; bonus bHealPower,10; },{},{}
 16001,Red_Square_Bag,Red Square Bag,4,20,,500,130,,1,2,0x0004C5B2,18,2,2,3,50,1,8,{ bonus bMaxHP,200; bonus2 bSkillAtk,"AM_ACIDTERROR",20; bonus2 bSkillAtk,"AM_DEMONSTRATION",20; bonus2 bAddMonsterDropItem,501,50; bonus2 bAddMonsterDropItem,502,20; bonus2 bAddMonsterDropItem,503,20; bonus2 bAddMonsterDropItem,504,20; bonus2 bAddMonsterDropItem,505,10; if(readparam(bStr)>=95) bonus2 bAddEff,Eff_Stun,500; },{},{}
@@ -7769,6 +7772,11 @@
 16022,Nemesis_,Nemesis ,4,20,,900,120,,1,2,0x00008110,63,2,2,4,60,1,8,{ bonus bUnbreakableWeapon,0; bonus bAtkEle,Ele_Holy; },{},{}
 16023,Metal_Mace,Metal Mace,4,20,,0,80,,1,1,0x0004C5B3,63,2,2,3,1,1,8,{ bonus bUnbreakableWeapon,0; bonus bBaseAtk,(getrefine()*5); set .@i,((BaseLevel/10)>12)?12:(BaseLevel/10); if(.@i>2) bonus bBaseAtk,((.@i-2)*5); },{},{}
 16026,RWC_Memory_Mace,RWC Memory Mace,4,20,,800,100,,1,1,0x0004C5B2,63,2,2,3,1,1,8,{ bonus bUnbreakableWeapon,0; bonus bBaseAtk,(getrefine()/30)*30; if(getrefine()>=9){ set .@i,1; bonus3 bAutoSpellWhenHit,"BS_WEAPONPERFECT",1,10; } if(getrefine()>=6){ set .@rate,5*(.@i+1); bonus2 bAddRace,RC_Boss,5; bonus2 bAddRace,RC_NonBoss,5; } },{},{}
+16030,Pile_Bunker_S,Pile Bunker S,4,20,,3000,400,,1,,0x00000400,56,2,2,4,130,1,8,{ bonus bAspdRate,getrefine()/2; },{},{}
+16031,Pile_Bunker_P,Pile Bunker P,4,20,,4000,450,,1,,0x00000400,56,2,2,4,130,1,8,{ bonus bAtk,getrefine()*5; },{},{}
+16032,Pile_Bunker_T,Pile Bunker T,4,20,,3500,400,,1,,0x00000400,56,2,2,4,130,1,8,{ bonus bUseSPrate,getrefine()*-1; },{},{}
+16033,Robots_Mechanical_Arm,Robot's Mechanical Arm,4,20,,3000,195,,1,,0x00000400,56,2,2,4,130,1,8,{ bonus bUnbreakableWeapon,1; bonus bCritical,20; },{},{}
+
 // More Rental Boxes
 16131,Lady_Tanee_Doll_Box,Lady Tanee Doll Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 5526,1; },{},{}
 16132,Lunatic_Hat_Box,Lunatic Hat Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 5527,1; },{},{}
@@ -8662,6 +8670,8 @@
 20707,Kirin_Wing,Kirin Wing,5,20,,0,,18,,0,0xFFFFFFFF,63,2,4,,0,1,6,{ bonus bAllStats,1; },{},{}
 20711,Manteau_Of_Diego,Manteau Of Diego,5,20,,600,,15,,1,0xFFFFFFFF,63,2,4,,0,1,0,{ bonus bInt,1; bonus bDex,1; bonus bMdef,3; },{},{}
 20724,Love_Dad_Wings_2012,Love Dad Wings 2012,5,0,,100,,15,,1,0xFFFFFFFF,63,2,4,,1,1,5,{},{},{}
+20733,Reinforced_Parts_Engine,Reinforced Parts - Engine,5,10,,1500,,25,,,0x00000400,56,2,4,,100,1,,{ bonus bDelayrate,-10; if(getrefine()>=7) {bonus2 bSubEle,0,10}; if(getrefine()>=9) {bonus bDelayrate,-10;} },{},{}
+
 // More 2-Handed Swords
 21000,Upg_Twohand_Sword,Upg Two-Handed Sword,4,20,,1500,100,,1,1,0x00004082,63,2,34,3,1,1,3,{ bonus bBaseAtk,(getrefine()*12); bonus bMatk,(getrefine()*5); if(BaseLevel>70) bonus bBaseAtk,(((BaseLevel-70)/10)*10); },{},{}
 21001,Velum_Claymore,Vellum Claymore,4,20,,3500,260,,1,0,0x00004082,63,2,34,4,95,1,3,{ bonus2 bAddRace,RC_DemiHuman,80; bonus2 bIgnoreDefRate,RC_DemiHuman,30; if(getrefine()>=6) { bonus2 bAddRace,RC_DemiHuman,40; } if(getrefine()>=9) { autobonus2 "{ bonus bShortWeaponDamageReturn,20; bonus bMagicDamageReturn,20; }",200,1000,BF_WEAPON,"{ specialeffect2 EF_REFLECTSHIELD; }"; } },{},{}
@@ -8669,6 +8679,7 @@
 21003,Muramasa_,Muramasa,4,20,,1000,155,,1,2,0x00004082,63,2,34,4,48,1,3,{},{},{}
 21004,Alca_Bringer_,Alca Bringer,4,20,,3400,280,,2,2,0x00004082,63,2,34,3,100,1,3,{},{},{}
 21005,Metal_Two_Hand_Sword,Metal Two Hand Sword,4,20,,0,95,,1,1,0x00004082,63,2,34,3,1,1,3,{ bonus bBaseAtk,(getrefine()*6); bonus bMatk,(getrefine()*2); set .@i,((BaseLevel/10)>12)?12:(BaseLevel/10); if(.@i>2) bonus bBaseAtk,((.@i-2)*5); },{},{}
+21011,Gigantic_Blade,Gigantic Blade,3,10,,5000,300,,,,0xFFFFFFFF,56,2,2,4,130,1,3,{ bonus bUnbreakableWeapon,1; bonus bAspdRate,-5; if(readparam(bStr)<=110){ bonus bAtk,-250; } },{},{}
 // New Items
 22045,Summer_Sandals,Summer Sandals,5,10,,200,,5,,0,0xFFFFFFFF,63,2,64,,0,1,0,{ bonus bFlee,5; bonus3 bAutoSpellWhenHit,"AL_INCAGI",10,50; },{},{}
 22514,Candy_Holder,Candy Holder,11,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
