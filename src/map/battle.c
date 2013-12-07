@@ -339,7 +339,7 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 			if(sc->data[SC_DELUGE]) ratio += enchant_eff[sc->data[SC_DELUGE]->val1-1];
 			break;
 		case ELE_GHOST:
-			if(sc->data[SC_TELEKINESIS_INTENSE]) ratio += (sc->data[SC_TELEKINESIS_INTENSE]->val1*40)/100;
+			if(sc->data[SC_TELEKINESIS_INTENSE]) ratio += (sc->data[SC_TELEKINESIS_INTENSE]->val3);
 			break;
 		}
 	}

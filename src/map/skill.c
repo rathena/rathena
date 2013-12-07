@@ -1495,7 +1495,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 		sc_start(src, bl, SC_STUN, 10 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
 	case GC_DARKCROW:
-		sc_start(src,bl,SC_DARKCROW,10 * skill_lv,skill_lv,skill_get_time(skill_id,skill_lv));
+		sc_start(src,bl,SC_DARKCROW,100,skill_lv,skill_get_time(skill_id,skill_lv));
 		break;
 	case GN_ILLUSIONDOPING:
 		if( sc_start(src,bl,SC_ILLUSIONDOPING,10 * skill_lv,skill_lv,skill_get_time(skill_id, skill_lv)) ) //Custom rate

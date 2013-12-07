@@ -9269,7 +9269,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val4 = tick / tick_time;
 			break;
 		case SC_KINGS_GRACE:
-			val2 = 3 + val1;
+			val2 = 3 + val1; //HP Recover rate
 			tick_time = 1000;
 			val4 = tick / tick_time;
 			break;
