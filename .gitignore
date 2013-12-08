@@ -5,6 +5,7 @@
 .DS_Store
 
 # /
+/*_fifo
 /*.exe
 /*.ilk
 /*.log
