@@ -7230,8 +7230,7 @@ Each of these can be 'on' or 'off'. Together they define a cell's behavior.
 
 This command lets you alter these flags for all map cells in the specified
 (x1,y1)-(x2,y2) rectangle. The 'flag' can be 0 or 1 (0:clear flag, 1:set flag).
-The 'type' defines which flag to modify. Possible options include cell_walkable,
-cell_shootable, cell_basilica. For a full list, see const.txt.
+The 'type' defines which flag to modify. Possible options see const.txt.
 
 Example:
 

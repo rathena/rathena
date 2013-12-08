@@ -4990,6 +4990,7 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 		sd->md->ud.dir = sd->ud.dir;
 	}
 
+	pc_cell_basilica(sd);
 	return 0;
 }
 
@@ -10461,6 +10462,22 @@ void pc_bonus_script_check(struct map_session_data *sd, enum e_bonus_script_flag
 	}
 	if (count && flag != BONUS_FLAG_REM_ON_LOGOUT) //Don't need do this if log out
 		status_calc_pc(sd,false);
+}
+
+/** [Cydh]
+ * Gives/removes SC_BASILICA when player steps in/out the cell with 'cell_basilica'
+ * @param sd player
+ */
+void pc_cell_basilica(struct map_session_data *sd) {
+	if (!sd)
+		return;
+	
+	if (!map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKBASILICA)) {
+		if (&sd->sc && sd->sc.data[SC_BASILICA])
+			status_change_end(&sd->bl,SC_BASILICA,INVALID_TIMER);
+	}
+	else if (!(&sd->sc) || !sd->sc.data[SC_BASILICA])
+		sc_start(&sd->bl,&sd->bl,SC_BASILICA,100,0,-1);
 }
 
 /*==========================================

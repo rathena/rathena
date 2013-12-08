@@ -228,8 +228,8 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	int i;
 	int x,y,dx,dy;
 	uint8 dir;
-	struct block_list       *bl;
-	struct unit_data        *ud;
+	struct block_list *bl;
+	struct unit_data *ud;
 	TBL_PC *sd;
 	TBL_MOB *md;
 	TBL_MER *mrd;
@@ -301,10 +301,12 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 		} else
 			sd->areanpc_id=0;
 
-		if( sd->md) unit_check_start_teleport_timer(&sd->md->bl);
-		if( sd->ed) unit_check_start_teleport_timer(&sd->ed->bl);
-		if( sd->hd) unit_check_start_teleport_timer(&sd->hd->bl);
-		if( sd->pd) unit_check_start_teleport_timer(&sd->pd->bl);
+		if(sd->md) unit_check_start_teleport_timer(&sd->md->bl);
+		if(sd->ed) unit_check_start_teleport_timer(&sd->ed->bl);
+		if(sd->hd) unit_check_start_teleport_timer(&sd->hd->bl);
+		if(sd->pd) unit_check_start_teleport_timer(&sd->pd->bl);
+		
+		pc_cell_basilica(sd);
 	} else if (md) {
 		if( map_getcell(bl->m,x,y,CELL_CHKNPC) ) {
 			if( npc_touch_areanpc2(md) )
@@ -326,10 +328,10 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 			clif_move(ud);
 		}
 	}
-	else if( hd) unit_check_start_teleport_timer(&hd->bl);
-	else if( ed) unit_check_start_teleport_timer(&ed->bl);
-	else if( pd) unit_check_start_teleport_timer(&pd->bl);
-	else if( mrd) unit_check_start_teleport_timer(&mrd->bl);
+	else if (hd) unit_check_start_teleport_timer(&hd->bl);
+	else if (ed) unit_check_start_teleport_timer(&ed->bl);
+	else if (pd) unit_check_start_teleport_timer(&pd->bl);
+	else if (mrd) unit_check_start_teleport_timer(&mrd->bl);
 
 	if(tid == INVALID_TIMER) // A directly invoked timer is from battle_stop_walking, therefore the rest is irrelevant.
 		return 0;
