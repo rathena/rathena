@@ -380,6 +380,7 @@ mf_nolockon	58
 mf_notomb	59
 mf_skill_damage	60
 
+//'setcell' types
 cell_walkable	0
 cell_shootable	1
 cell_water	2
@@ -388,6 +389,8 @@ cell_basilica	4
 cell_landprotector	5
 cell_novending	6
 cell_nochat	7
+cell_malestrom	8
+cell_icewall	9
 
 //cell_gettype	0
 cell_chkwall	1
@@ -403,6 +406,8 @@ cell_chkbasilica	10
 cell_chklandprotector	11
 cell_chknovending	12
 cell_chknochat	13
+cell_chkmaelstrom	14
+cell_chkicewall	15
 
 StatusPoint	9	1
 BaseLevel	11	1

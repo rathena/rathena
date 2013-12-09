@@ -1277,13 +1277,11 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 		break;
 	case WL_EARTHSTRAIN:
 		{
-			int rate = 0, i;
+			int i;
 			const int pos[5] = { EQP_WEAPON, EQP_HELM, EQP_SHIELD, EQP_ARMOR, EQP_ACC };
-			rate = 6 * skill_lv + sstatus->dex / 10 + (sd? sd->status.job_level / 4 : 0) - tstatus->dex /5;// The tstatus->dex / 5 part is unofficial, but players gotta have some kind of way to have resistance. [Rytech]
-			//rate -= rate * tstatus->dex / 200; // Disabled until official resistance is found.
 
 			for( i = 0; i < skill_lv; i++ )
-				skill_strip_equip(src,bl,pos[i],rate,skill_lv,skill_get_time2(skill_id,skill_lv));
+				skill_strip_equip(src,bl,pos[i],(5 + skill_lv) * skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
 		}
 		break;
 	case WL_JACKFROST:
@@ -1495,7 +1493,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 		sc_start(src, bl, SC_STUN, 10 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
 	case GC_DARKCROW:
-		sc_start(src,bl,SC_DARKCROW,10 * skill_lv,skill_lv,skill_get_time(skill_id,skill_lv));
+		sc_start(src,bl,SC_DARKCROW,100,skill_lv,skill_get_time(skill_id,skill_lv));
 		break;
 	case GN_ILLUSIONDOPING:
 		if( sc_start(src,bl,SC_ILLUSIONDOPING,10 * skill_lv,skill_lv,skill_get_time(skill_id, skill_lv)) ) //Custom rate

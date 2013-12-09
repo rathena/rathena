@@ -1050,6 +1050,8 @@ int pc_bonus_script_timer(int tid, unsigned int tick, int id, intptr_t data);
 void pc_bonus_script_remove(struct map_session_data *sd, uint8 i);
 void pc_bonus_script_check(struct map_session_data *sd, enum e_bonus_script_flags flag);
 
+void pc_cell_basilica(struct map_session_data *sd);
+
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_race, uint32 mob_mode, int type);
 #endif
