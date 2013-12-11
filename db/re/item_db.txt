@@ -4240,6 +4240,7 @@
 6713,Heart_of_Soul,Heart of Soul,3,0,,0,,,,,,,,,,,,,{},{},{}
 6714,Sheenas_Soul,Sheena's Soul,3,20,,0,,,,,,,,,,,,,{},{},{}
 6715,Gods_Soul_Piece,God's Soul Piece,3,20,,0,,,,,,,,,,,,,{},{},{}
+6745,Recovery_Stone(Low),Recovery Stone(Low),6,20,,10,,,,,,,,16,,,,,{ bonus bSPGainValue,1; bonus bMagicHPGainValue,1; },{},{}
 6746,Iron_Artifacts,Iron Artifacts,3,10,,0,,,,,,,,,,,,,{},{},{}
 6747,Steel_Workpiece,Steel Workpiece,3,10,,0,,,,,,,,,,,,,{},{},{}
 6748,Daily_Report_He_And_His_Team,Daily Report He And His Team,3,10,,0,,,,,,,,,,,,,{},{},{}
@@ -4250,6 +4251,8 @@
 6753,Token_Of_Destruction,Token Of Destruction,3,10,,0,,,,,,,,,,,,,{},{},{}
 6754,Collected_Medicinal_Herbs,Collected Medicinal Herbs,3,10,,0,,,,,,,,,,,,,{},{},{}
 6755,Contaminated_Magic,Contaminated Magic,3,20,,10,,,,,,,,,,,,,{},{},{}
+6756,Cohesive_Energy,Cohesive Energy,3,20,,0,,,,,,,,,,,,,{},{},{}
+6757,The_Memory_Recorder,The Memory Recorder,3,20,,0,,,,,,,,,,,,,{},{},{}
 6766,Tickets_Ice_Kingdom,Tickets Ice Kingdom,3,10,,0,,,,,,,,,,,,,{},{},{}
 6767,Summer_Festival_Coins,Summer Festival Coins,3,10,,0,,,,,,,,,,,,,{},{},{}
 6768,Shaved_Ice_For_Red_Beans,Shaved Ice For Red Beans,3,10,,0,,,,,,,,,,,,,{},{},{}
@@ -6317,7 +6320,7 @@
 12852,Wisdom_Scroll,Wisdom Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12853,Patron_Scroll,Patron Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12860,Mommy_Day_Cake,Mommy Day Cake,2,0,,200,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 50,50; skilleffect "HP_ASSUMPTIO",0; sc_start SC_ASSUMPTIO,100000,5; },{},{}
-12863,Treasure_Chest_Summoned_II,Treasure Chest Summoned II,3,10,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+12863,Treasure_Chest_Summoned_II,Treasure Chest Summoned II,3,10,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ monster "this",-1,-1,"--ja--",rand(1324,1363),1,""; },{},{}
 12887,C_Wing_Of_Fly,C Wing Of Fly,11,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "AL_TELEPORT",1; },{},{}
 //
 12900,Battle_Manual_Box,Battle Manual Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12208,10; },{},{}
@@ -8655,6 +8658,7 @@
 19730,C_Snake_Hat,C Snake Hat,5,20,,10,,0,,0,0xFFFFFFFF,63,2,1024,,0,0,986,{},{},{}
 19746,C_Executioner_Hood,Executioner Hood,5,20,,0,,0,,0,0xFFFFFFFF,63,2,2048,,0,0,0,{},{},{}
 19829,C_Straw_Hat,C Straw Hat,5,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,0,0,146,{},{},{}
+19853,C_Filir Wings,C Filir Wings,5,20,,0,,0,,0,0xFFFFFFFF,63,2,2048,,1,0,595,{ for (set .@i,0; .@i <= 12; set .@i,.@i+1) { bonus2 bExpAddRace,.@i,5; } },{},{}
 19856,Costume_Snow_Cone_Hat,Costume Snow Cone Hat,5,10,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,0,{ bonus2 bAddEle,Ele_Fire,5; bonus2 bMagicAddEle,Ele_Fire,5; bonus2 bAddMonsterDropItem,11589,5; },{},{}
 19857,Costume_Crayfish_Hat,Costume Crayfish Hat,5,10,,10,,0,,,0xFFFFFFFF,63,2,1024,,1,,,{},{},{}
 19859,C_Flying_Angel,Flying Angel,5,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,0,0,264,{},{},{}
@@ -8701,9 +8705,10 @@
 22568,Nidhoggur_Summon_Scroll,Nidhoggur Summon Scroll,0,20,,100,,,,,0xFFFFFFFF,,,,,,,,{},{},{}
 22571,Easter_Egg,Easter Egg,11,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 22610,New_Beginnings_Box,New Beginnings Box,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
-//22611,Packed_Envelope,Packed Envelope,11,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
+22611,Packed_Envelope,Packed Envelope,11,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
 22612,Corrupt_Reagents,Corrupt Reagents,11,10,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
 22613,Contaminated_Reagents,Contaminated Reagents,11,10,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
+22614,Premium_Manual,Premium Manual,2,2,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_EXPBOOST,8640000,50; sc_start SC_ITEMBOOST,8640000,200; },{},{}
 22619,Ghost_Scroll,Ghost Scroll,3,10,,0,,,,,,,,,,,,,{},{},{}
 22620,Box_Of_Memories,Box Of Memories,3,10,,0,,,,,,,,,,,,,{},{},{}
 22621,Barbecued_Squid,Barbecued Squid,3,10,,250,,,,,,,,,,,,,{},{},{}

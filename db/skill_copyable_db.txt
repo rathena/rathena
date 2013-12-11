@@ -34,7 +34,7 @@
 //	 512 = statuses
 //	1024 = spirit sphere
 //	2048 = items (with the amount)
-//  4096 = equipments
+//	4096 = equipments
 // (see 'skill_require_db.txt' for requirement(s) detail)
 // ====================================================
 // Example of advanced usage:
