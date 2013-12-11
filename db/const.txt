@@ -389,7 +389,7 @@ cell_basilica	4
 cell_landprotector	5
 cell_novending	6
 cell_nochat	7
-cell_malestrom	8
+cell_maelstrom	8
 cell_icewall	9
 
 //cell_gettype	0
