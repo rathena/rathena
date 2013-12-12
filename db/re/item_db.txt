@@ -8536,7 +8536,7 @@
 18759,Stretched_Nose_M,Wood Goblin's Nose,5,20,,200,,0,,0,0xFFFFFFFF,63,2,512,,50,0,737,{ bonus bUnbreakableHelm,0; },{},{}
 //
 18766,Improved_Helm_of_Angel,Improved Helm of Angel,5,10,,1600,,10,,1,0x7CCFDF80,63,2,256,,99,1,,{ bonus bAgi,(getrefine()>=7?2:1); bonus bLuk,(getrefine()>=7?2:1); bonus bMdef,3; if(getrefine()>=9){bonus bAspd,1;}},{},{}
-18767,Improved_Helm_Of_Sun,Improved Hat of the Sun God,5,10,,2400,,4,,1,0x7CCFDF80,63,2,768,,99,1,,{ bonus bStr,3; bonus bInt,2; bonus bAtk,10; bonus bMatk,10; if(getrefine()>=7){bonus bAtk,15;bonus bMatk,15;}; if(getrefine()>=9){bonus bAtk,15;bonus bMatk,15;}; },{},{}
+18767,Improved_Helm_Of_Sun,Improved Hat of the Sun God,5,10,,2400,,4,,1,0x7CCFDF80,63,2,768,,99,1,,{ bonus bStr,3; bonus bInt,2; bonus bAtk,10; bonus bMatk,10; if(getrefine()>=7){bonus bAtk,15;bonus bMatk,15;} if(getrefine()>=9){bonus bAtk,15;bonus bMatk,15;} },{},{}
 //
 18779,RWC_Champ_Crown_First_Place,RWC Champ Crown First Place,5,20,,500,,12,,,0xFFFFFFFF,63,2,256,,1,,902,{ bonus2 bResEff,Eff_Stun,10000; bonus2 bResEff,Eff_Curse,10000; bonus bUnbreakableHelm,0; bonus bAllStats,7; bonus bMdef,5; },{},{}
 18780,RWC_Champ_Crown_Second_Place,RWC Champ Crown Second Place,5,20,,500,,12,,,0xFFFFFFFF,63,2,256,,1,,903,{ bonus2 bResEff,Eff_Curse,10000; bonus bUnbreakableHelm,0; bonus bAllStats,7; bonus bMdef,5; },{},{}
