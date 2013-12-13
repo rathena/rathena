@@ -1141,6 +1141,9 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	}
 #endif
 
+	// Player has not yet received the CashShop list
+	sd->status.cashshop_sent = false;
+
 	// Request all registries (auth is considered completed whence they arrive)
 	intif_request_registry(sd,7);
 	return true;
@@ -7931,9 +7934,6 @@ int pc_setcart(struct map_session_data *sd,int type) {
 
 	if( pc_checkskill(sd,MC_PUSHCART) <= 0 && type != 0 )
 		return 1;// Push cart is required
-
-	if( type == 0 && pc_iscarton(sd) )
-		status_change_end(&sd->bl,SC_GN_CARTBOOST,INVALID_TIMER);
 
 #ifdef NEW_CARTS
 
