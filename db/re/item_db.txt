@@ -8274,6 +8274,8 @@
 17338,Ore_Box_V,Ore Box V,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 7619,5; getitem 7620,5; getitem 14696,1; },{},{}
 17339,Ore_Box_V(10),Ore Box V(10),18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 7619,50; getitem 7620,50; getitem 14696,11; },{},{}
 //17394,Event_Old_Headgear_Box,Event Old Headgear Box,2,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
+17429,11_Anniversary_Shadow_Box,11 Anniversary Shadow Box,3,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
+17430,11_Anniversary_Shadow_Package,11 Anniversary Shadow Package,3,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
 17449,Cookies_Bar_Set,Set Bar Cookies,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ for (set .@i,14616; .@i <= 14621; set .@i,.@i+1) getitem .@i,1; },{},{}
 // Mechanic/Genetic Cannonballs
 18000,Cannon_Ball,Cannon Ball,10,100,,10,100,,,,0x00040400,56,2,32768,,99,,8,{},{},{}
@@ -8668,6 +8670,7 @@
 19746,C_Executioner_Hood,Executioner Hood,5,20,,0,,0,,0,0xFFFFFFFF,63,2,2048,,0,0,0,{},{},{}
 19777,C_Shiny_Small_Star,Shiny Small Star,5,20,,10,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,0,{},{},{}
 19829,C_Straw_Hat,C Straw Hat,5,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,0,0,146,{},{},{}
+19830,C_Sunglasses,Costume Sunglasses,5,10,,0,,,,,0xFFFFFFFF,63,2,2048,,1,,,{},{},{}
 19853,C_Filir Wings,C Filir Wings,5,20,,0,,0,,0,0xFFFFFFFF,63,2,2048,,1,0,595,{ bonus2 bExpAddRace,RC_Boss,5; bonus2 bExpAddRace,RC_NonBoss,5; },{},{}
 19856,Costume_Snow_Cone_Hat,Costume Snow Cone Hat,5,10,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,0,{ bonus2 bAddEle,Ele_Fire,5; bonus2 bMagicAddEle,Ele_Fire,5; bonus2 bAddMonsterDropItem,11589,5; },{},{}
 19857,Costume_Crayfish_Hat,Costume Crayfish Hat,5,10,,10,,0,,,0xFFFFFFFF,63,2,1024,,1,0,0,{},{},{}
@@ -8678,6 +8681,11 @@
 19863,C_Incubus_Horn,Incubus Horn,5,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,0,0,156,{},{},{}
 19864,C_Dokebi's_Wig,Dokebi's Wig,5,20,,0,,0,,0,0xFFFFFFFF,63,2,3072,,0,0,307,{},{},{}
 19865,C_Joker_Jester,Joker Jester,5,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,0,0,89,{},{},{}
+19884,C_Vanargand_Helm,Costume Vanargand Helm,5,10,,0,,,,,0xFFFFFFFF,63,2,1024,,1,,,{},{},{}
+19885,C_Blinker,Costume Blinker,5,10,,0,,,,,0xFFFFFFFF,63,2,2048,,1,,,{},{},{}
+19886,C_Purple_Glasses,Costume Purple Glasses,5,10,,0,,,,,0xFFFFFFFF,63,2,2048,,1,,,{},{},{}
+19887,C_Cyclops_Glasses,Costume Cyclops Glasses,5,10,,0,,,,,0xFFFFFFFF,63,2,2048,,1,,,{},{},{}
+19888,C_Glasses,Costume Glasses,5,10,,0,,,,,0xFFFFFFFF,63,2,2048,,1,,,{},{},{}
 //
 19903,Costume_Witch's_Hat,Costume Witch's Hat,5,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,717,{ /*bonus bVariableCastrate,-10;*/ },{},{}
 19917,Costume_Pumpkin_Hat,Costume Pumpkin Hat,5,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,691,{ /*bonus bSpeedRate,10;*/ },{},{}
@@ -8786,4 +8794,11 @@
 24075,Large_Shadow_Weapon,Large Shadow Weapon,12,10,,0,,0,,0,0xFFFFFFFF,63,2,131072,,1,1,0,{ bonus2 bAddSize,2,2; if(getrefine()>=7) { bonus2 bAddSize,2,1; } if(getrefine()>=9) { bonus2 bAddSize,2,2; } },{},{}
 24076,Medium_Shadow_Weapon,Medium Shadow Weapon,12,10,,0,,0,,0,0xFFFFFFFF,63,2,131072,,1,1,0,{ bonus2 bAddSize,1,2; if(getrefine()>=7) { bonus2 bAddSize,1,1; } if(getrefine()>=9) { bonus2 bAddSize,1,2; } },{},{}
 24077,Small_Shadow_Weapon,Small Shadow Weapon,12,10,,0,,0,,0,0xFFFFFFFF,63,2,131072,,1,1,0,{ bonus2 bAddSize,0,2; if(getrefine()>=7) { bonus2 bAddSize,0,1; } if(getrefine()>=9) { bonus2 bAddSize,0,2; } },{},{}
+24078,Spiritual_Shadow_Weapon,Spiritual Shadow Weapon,12,10,,0,,,,,0xFFFFFFFF,63,2,131072,,1,1,0,{ bonus bUseSPrate,-5; if(getrefine()>=7){bonus bSPrecovRate,5;} },{},{}
+24079,Spiritual_Shadow_Earring,Spiritual Shadow Earring,12,10,,0,,,,,0xFFFFFFFF,63,2,3145728,,1,,8,{ bonus bMaxSP,50; },{},{}
+24080,Spiritual_Shadow_Pendant,Spiritual Shadow Pendant,12,10,,0,,,,,0xFFFFFFFF,63,2,3145728,,1,,8,{ bonus bMaxSPrate,(getrefine()>=7?2:1); },{},{}
+24081,Mali_Shas_Shadow_Armor,Mali Shas Shadow Armor,12,10,,0,,,,,0xFFFFFFFF,63,2,65536,,1,1,,{ bonus bMaxHP,100; if(getrefine()>=7){bonus bMaxHPrate,1;} },{},{}
+24082,Mali_Shas_Shadow_Shoes,Mali Shas Shadow Shoes,12,10,,0,,,,,0xFFFFFFFF,63,2,524288,,1,1,,{ bonus bMaxHPrate,(getrefine()>=7?2:1); },{},{}
+24083,Mali_Shas_Shadow_Shield,Mali Shas Shadow Shield,12,10,,0,,,,,0xFFFFFFFF,63,2,262144,,1,1,,{ bonus bHPrecovRate,(getrefine()>=7?10:5); },{},{}
+//
 28101,Axe_Tornado,Axe Tornado,4,10,,4000,320,,,,0x00000400,56,2,2,4,130,,6,{ bonus bAtkEle,4; bonus2 bSkillCooldown,"NC_AXETORNADO",-1000; },{},{}
