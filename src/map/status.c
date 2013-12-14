@@ -9279,7 +9279,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_OFFERTORIUM:
 			val2 = 30 * val1; // heal power bonus
-			val3 = 20 * val1; // sp cost inc
+			val3 = 100 + (20 * val1); // sp cost inc
 			break;
 		case SC_FRIGG_SONG:
 			val2 = 5 * val1; // maxhp bonus

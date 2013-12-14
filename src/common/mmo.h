@@ -407,6 +407,8 @@ struct mmo_charstatus {
 
 	// Char server addon system
 	unsigned int character_moves;
+
+	bool cashshop_sent; // Whether the player has received the CashShop list
 };
 
 typedef enum mail_status {

@@ -789,6 +789,7 @@ IG_CardAlbum_Shoes	66
 IG_CardAlbum_Shield	67
 IG_CardAlbum_Weapon	68
 IG_CardAlbum_Garment	69
+IG_Flamel_Card	70
 
 SC_ALL	-1
 SC_STONE	0

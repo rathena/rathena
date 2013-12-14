@@ -23,7 +23,7 @@ typedef struct AccountDB_SQL
 	Sql* accounts;       // SQL accounts storage
 
 	// global sql settings
-	char   global_db_hostname[32];
+	char   global_db_hostname[64]; // Doubled for long hostnames (bugreport:8003)
 	uint16 global_db_port;
 	char   global_db_username[32];
 	char   global_db_password[32];
