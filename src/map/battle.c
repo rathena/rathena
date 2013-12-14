@@ -5551,8 +5551,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		md.damage=3;
 		break;
 	case NPC_DARKBREATH:
-		md.damage = 500 + (skill_lv-1)*1000 + rnd()%1000;
-		if(md.damage > 9999) md.damage = 9999;
+		md.damage = tstatus->max_hp * (skill_lv * 10) / 100;
 		break;
 	case PA_PRESSURE:
 		md.damage=500+300*skill_lv;
