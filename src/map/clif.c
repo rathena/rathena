@@ -326,7 +326,8 @@ static int clif_send_sub(struct block_list *bl, va_list ap)
 		return 0;
 
 	/* unless visible, hold it here */
-	if (clif_ally_only && !sd->special_state.intravision && battle_check_target(src_bl,&sd->bl,BCT_ENEMY) > 0)
+	if (!battle_config.update_enemy_position && clif_ally_only && !sd->special_state.intravision &&
+		!sd->sc.data[SC_INTRAVISION] && battle_check_target(src_bl,&sd->bl,BCT_ENEMY) > 0)
 		return 0;
 
 	WFIFOHEAD(fd, len);

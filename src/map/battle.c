@@ -7262,6 +7262,7 @@ static const struct _battle_data {
 	{ "emblem_woe_change",                  &battle_config.emblem_woe_change,               0,      0,      1,              },
 	{ "emblem_transparency_limit",          &battle_config.emblem_transparency_limit,      80,      0,      100,            },
 	{ "discount_item_point_shop",			&battle_config.discount_item_point_shop,		0,		0,		3,				},
+	{ "update_enemy_position",				&battle_config.update_enemy_position,			0,		0,		1,				},
 };
 #ifndef STATS_OPT_OUT
 /**
