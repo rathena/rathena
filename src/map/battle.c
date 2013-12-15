@@ -4694,7 +4694,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			case KO_HAPPOKUNAI:
 				break;
 			default:
-				wd.damage += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.damage, is_attack_left_handed(src, skill_id), wd.flag);
+				wd.damage += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.damage, 0, wd.flag);
+				if(is_attack_left_handed(src, skill_id))
+					wd.damage2 += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.damage2, 1, wd.flag);
 				break;
 		}
 	}
@@ -5551,8 +5553,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		md.damage=3;
 		break;
 	case NPC_DARKBREATH:
-		md.damage = 500 + (skill_lv-1)*1000 + rnd()%1000;
-		if(md.damage > 9999) md.damage = 9999;
+		md.damage = tstatus->max_hp * (skill_lv * 10) / 100;
 		break;
 	case PA_PRESSURE:
 		md.damage=500+300*skill_lv;
@@ -7262,6 +7263,7 @@ static const struct _battle_data {
 	{ "emblem_woe_change",                  &battle_config.emblem_woe_change,               0,      0,      1,              },
 	{ "emblem_transparency_limit",          &battle_config.emblem_transparency_limit,      80,      0,      100,            },
 	{ "discount_item_point_shop",			&battle_config.discount_item_point_shop,		0,		0,		3,				},
+	{ "update_enemy_position",				&battle_config.update_enemy_position,			0,		0,		1,				},
 };
 #ifndef STATS_OPT_OUT
 /**
