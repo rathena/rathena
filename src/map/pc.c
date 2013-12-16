@@ -1979,8 +1979,8 @@ int pc_delautobonus(struct map_session_data* sd, struct s_autobonus *autobonus,c
 				if( autobonus[i].bonus_script )
 				{
 					int j;
-					ARR_FIND( 0, EQI_MAX-1, j, sd->equip_index[j] >= 0 && sd->status.inventory[sd->equip_index[j]].equip == autobonus[i].pos );
-					if( j < EQI_MAX-1 )
+					ARR_FIND( 0, EQI_MAX, j, sd->equip_index[j] >= 0 && sd->status.inventory[sd->equip_index[j]].equip == autobonus[i].pos );
+					if( j < EQI_MAX )
 						script_run_autobonus(autobonus[i].bonus_script,sd->bl.id,sd->equip_index[j]);
 				}
 				continue;
@@ -2010,8 +2010,8 @@ int pc_exeautobonus(struct map_session_data *sd,struct s_autobonus *autobonus)
 	if( autobonus->other_script )
 	{
 		int j;
-		ARR_FIND( 0, EQI_MAX-1, j, sd->equip_index[j] >= 0 && sd->status.inventory[sd->equip_index[j]].equip == autobonus->pos );
-		if( j < EQI_MAX-1 )
+		ARR_FIND( 0, EQI_MAX, j, sd->equip_index[j] >= 0 && sd->status.inventory[sd->equip_index[j]].equip == autobonus->pos );
+		if( j < EQI_MAX )
 			script_run_autobonus(autobonus->other_script,sd->bl.id,sd->equip_index[j]);
 	}
 
