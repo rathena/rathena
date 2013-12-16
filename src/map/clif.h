@@ -392,6 +392,7 @@ void clif_selllist(struct map_session_data *sd);	//self
 void clif_scriptmes(struct map_session_data *sd, int npcid, const char *mes);	//self
 void clif_scriptnext(struct map_session_data *sd,int npcid);	//self
 void clif_scriptclose(struct map_session_data *sd, int npcid);	//self
+void clif_scriptclear(struct map_session_data *sd, int npcid);	//self
 void clif_scriptmenu(struct map_session_data* sd, int npcid, const char* mes);	//self
 void clif_scriptinput(struct map_session_data *sd, int npcid);	//self
 void clif_scriptinputstr(struct map_session_data *sd, int npcid);	// self

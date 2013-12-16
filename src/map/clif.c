@@ -1919,6 +1919,22 @@ void clif_scriptclose(struct map_session_data *sd, int npcid)
 	WFIFOSET(fd,packet_len(0xb6));
 }
 
+/// [Ind/Hercules]
+/// Close script when player is idle
+/// 08d6 <npc id>.L
+void clif_scriptclear(struct map_session_data *sd, int npcid)
+{
+	int fd;
+
+	nullpo_retv(sd);
+
+	fd=sd->fd;
+	WFIFOHEAD(fd, packet_len(0x8d6));
+	WFIFOW(fd,0)=0x8d6;
+	WFIFOL(fd,2)=npcid;
+	WFIFOSET(fd,packet_len(0x8d6));
+ }
+ 
 /*==========================================
  *
  *------------------------------------------*/
@@ -17541,7 +17557,7 @@ void packetdb_readdb(void)
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	//#0x08C0
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 10,
-		9,  7, 10,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+		9,  7, 10,  0,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	//#0x0900
