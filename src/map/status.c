@@ -2587,10 +2587,11 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	pc_delautobonus(sd,sd->autobonus3,ARRAYLENGTH(sd->autobonus3),true);
 
 	// Parse equipment
-	for(i=0;i<EQI_MAX-1;i++) {
+	for(i=0;i<EQI_MAX;i++) {
 		current_equip_item_index = index = sd->equip_index[i]; // We pass INDEX to current_equip_item_index - for EQUIP_SCRIPT (new cards solution) [Lupus]
 		if(index < 0)
 			continue;
+		if(i == EQI_AMMO) continue;
 		if(i == EQI_HAND_R && sd->equip_index[EQI_HAND_L] == index)
 			continue;
 		if(i == EQI_HEAD_MID && sd->equip_index[EQI_HEAD_LOW] == index)
@@ -2737,10 +2738,11 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	status->def += (refinedef+50)/100;
 
 	// Parse Cards
-	for(i=0;i<EQI_MAX-1;i++) {
+	for(i=0;i<EQI_MAX;i++) {
 		current_equip_item_index = index = sd->equip_index[i]; // We pass INDEX to current_equip_item_index - for EQUIP_SCRIPT (new cards solution) [Lupus]
 		if(index < 0)
 			continue;
+		if(i == EQI_AMMO) continue;
 		if(i == EQI_HAND_R && sd->equip_index[EQI_HAND_L] == index)
 			continue;
 		if(i == EQI_HEAD_MID && sd->equip_index[EQI_HEAD_LOW] == index)
@@ -9279,7 +9281,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_OFFERTORIUM:
 			val2 = 30 * val1; // heal power bonus
-			val3 = 20 * val1; // sp cost inc
+			val3 = 100 + (20 * val1); // sp cost inc
 			break;
 		case SC_FRIGG_SONG:
 			val2 = 5 * val1; // maxhp bonus

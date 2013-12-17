@@ -513,6 +513,7 @@ extern struct Battle_Config
 	int emblem_woe_change;
 	int emblem_transparency_limit;
 	int discount_item_point_shop;
+	int update_enemy_position;
 } battle_config;
 
 void do_init_battle(void);

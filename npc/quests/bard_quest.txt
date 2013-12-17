@@ -1929,7 +1929,7 @@ morocc,134,111,3	script	Bard#3	741,{
 				mes "There's no reason to be afraid of this riffraff, your Uncle Kino is here, okay?";
 			} else if (BaseClass == Job_Assassin) {
 				mes "There's no reason to be afraid. I know that person looks scary, but you're a good girl, so you'll be okay.";
-			} else if (BaeClass == Job_Blacksmith) {
+			} else if (BaseClass == Job_Blacksmith) {
 				mes "There's no reason to be scared, honey. It's just a Blacksmith.";
 			} else {
 				mes "There's no reason to be scared. See...? That person won't hurt you.";
