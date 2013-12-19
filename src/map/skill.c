@@ -2657,7 +2657,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 					//Reduction: 6% + 6% every 20%
 					dmg.damage -= dmg.damage * (6 * (1+per)) / 100;
 				}
-		}
+			}
 		#endif
 		}
 		if(tsc && tsc->data[SC_MAGICROD] && src == dsrc) {
@@ -5952,7 +5952,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				mer->devotion_flag = 1; // Mercenary Devoting Owner
 
 			clif_skill_nodamage(src, bl, skill_id, skill_lv,
-				sc_start4(src,bl, type, 100, src->id, i, skill_get_range2(src,skill_id,skill_lv),0, skill_get_time2(skill_id, skill_lv)));
+				sc_start4(src, bl, type, 100, src->id, i, skill_get_range2(src,skill_id,skill_lv),0, skill_get_time2(skill_id, skill_lv)));
 			clif_devotion(src, NULL);
 		}
 		break;
