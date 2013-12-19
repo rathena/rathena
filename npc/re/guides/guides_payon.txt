@@ -178,8 +178,8 @@ payon,163,64,3	script	Guide#01payon::GuidePayon	708,{
 		case 4:
 			mes "[Payon Guide]";
 			mes "Enjoy your stay.";
-			close;
-			cutin "pay_soldier",255;
+			close2;
+			cutin "",255;
 			end;
 		}
 	}
@@ -287,7 +287,7 @@ pay_arche,86,33,4	script	Guide#05payon	708,{
 			mes "[Payon Guide]";
 			mes "Enjoy your stay.";
 			close2;
-			cutin "pay_soldier",255;
+			cutin "",255;
 			end;
 		}
 	}
