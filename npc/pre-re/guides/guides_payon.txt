@@ -186,7 +186,7 @@ payon,162,67,4	script	Guide#pay	708,{
 			break;
 		}
 	}
-	cutin "pay_soldier",255;
+	cutin "",255;
 	end;
 }
 
@@ -291,6 +291,6 @@ pay_arche,85,30,2	script	Guide#2pay	708,{
 			break;
 		}
 	}
-	cutin "pay_soldier",255;
+	cutin "",255;
 	end;
 }
