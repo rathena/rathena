@@ -6124,7 +6124,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			skill_get_splash(skill_id, skill_lv), splash_target(src),
 			src, skill_id, skill_lv, tick, flag|i,
 			skill_castend_damage_id);
-		map_addblock(src);
+		if(map_addblock(src))
+			return 1;
 		status_damage(src, src, sstatus->max_hp,0,0,1);
 		break;
 
@@ -15985,7 +15986,8 @@ struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int 
 
 	idb_put(skillunit_db, unit->bl.id, unit);
 	map_addiddb(&unit->bl);
-	map_addblock(&unit->bl);
+	if(map_addblock(&unit->bl))
+		return NULL;
 
 	// perform oninit actions
 	switch (group->skill_id) {

@@ -2567,7 +2567,7 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 		WBUFW(bufn,0)=0x995;
 		memset((char*)WBUFP(buf,4),0,24); //storename
 #endif
-		WBUFW(bufn,2)=4+nn*s;
+		WBUFW(bufn,2)=sidx+nn*s;
 		clif_send(bufn, WBUFW(bufn,2), &sd->bl, SELF);
 	}
 	for (i = 0; i < ne;) // Loop through equipable items
@@ -2583,7 +2583,7 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 		WBUFW(bufn,0)=0x996;
 		memset((char*)WBUFP(bufn,4),0,24); //storename
 #endif
-		WBUFW(bufn,2)=4+nn*se;
+		WBUFW(bufn,2)=sidxe+nn*se;
 		clif_send(bufn, WBUFW(bufn,2), &sd->bl, SELF);
 	}
 
@@ -9482,7 +9482,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	// reset the callshop flag if the player changes map
 	sd->state.callshop = 0;
 
-	map_addblock(&sd->bl);
+	if(map_addblock(&sd->bl))
+		return;
 	clif_spawn(&sd->bl);
 
 	// Party
@@ -9524,7 +9525,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			clif_displaymessage(sd->fd, msg_txt(sd,666));
 			pet_menu(sd, 3); //Option 3 is return to egg.
 		} else {
-			map_addblock(&sd->pd->bl);
+			if(map_addblock(&sd->pd->bl))
+				return;
 			clif_spawn(&sd->pd->bl);
 			clif_send_petdata(sd,sd->pd,0,0);
 			clif_send_petstatus(sd);
@@ -9534,7 +9536,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	//homunculus [blackhole89]
 	if( merc_is_hom_active(sd->hd) ) {
-		map_addblock(&sd->hd->bl);
+		if(map_addblock(&sd->hd->bl))
+			return;
 		clif_spawn(&sd->hd->bl);
 		clif_send_homdata(sd,SP_ACK,0);
 		clif_hominfo(sd,sd->hd,1);
@@ -9547,7 +9550,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	}
 
 	if( sd->md ) {
-		map_addblock(&sd->md->bl);
+		if(map_addblock(&sd->md->bl))
+			return;
 		clif_spawn(&sd->md->bl);
 		clif_mercenary_info(sd);
 		clif_mercenary_skillblock(sd);

@@ -280,6 +280,12 @@ void merc_contract_init(struct mercenary_data *md)
 	md->regen.state.block = 0;
 }
 
+/**
+ * Received mercenary data from char-serv
+ * @param merc : mercenary datas
+ * @param flag : if inter-serv request was sucessfull
+ * @return 0:failure, 1:sucess
+ */
 int merc_data_received(struct s_mercenary *merc, bool flag)
 {
 	struct map_session_data *sd;
@@ -336,7 +342,8 @@ int merc_data_received(struct s_mercenary *merc, bool flag)
 
 	if( md && md->bl.prev == NULL && sd->bl.prev != NULL )
 	{
-		map_addblock(&md->bl);
+		if(map_addblock(&md->bl))
+			return 0;
 		clif_spawn(&md->bl);
 		clif_mercenary_info(sd);
 		clif_mercenary_skillblock(sd);
