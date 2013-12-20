@@ -6481,11 +6481,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case MC_IDENTIFY:
 		if(sd) {
 			clif_item_identify_list(sd);
-			if( sd->menuskill_id != MC_IDENTIFY ) {/* failed, dont consume anything, return */
+			if( sd->menuskill_id != MC_IDENTIFY ) {// failed, dont consume anything
 				map_freeblock_unlock();
 				return 1;
 			}
-			status_zap(src,0,skill_get_sp(skill_id,skill_lv)); // consume sp only if succeeded
+			else { // consume sp only if succeeded
+				struct skill_condition req = skill_get_requirement(sd,skill_id,skill_lv);
+				status_zap(src,0,req.sp);
+			}
 		}
 		break;
 
@@ -11527,11 +11530,22 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, uint16 skill
 			val1 += pc_checkskill(sd,BA_MUSICALLESSON);
 		break;
 	case DC_SERVICEFORYOU:
-		val1 = 15+skill_lv+(status->int_/10); // MaxSP percent increase TO-DO: this INT bonus value is guessed
-		val2 = 20+3*skill_lv+(status->int_/10); // SP cost reduction
 		if(sd){
-			val1 += pc_checkskill(sd,DC_DANCINGLESSON); //TO-DO This bonus value is guessed
-			val2 += pc_checkskill(sd,DC_DANCINGLESSON); //TO-DO Should be half this value
+			//val1: MaxSP percent increase
+			val1 = 15+skill_lv;
+			val1 = status->int_/10; //Bonus rate by Dancer's INT
+			
+			//val2: SP cost reduction
+			val2 = 20+3*skill_lv;
+			switch (pc_checkskill(sd,DC_DANCINGLESSON)) { //Bonus rate by DC_DANCINGLESSON
+				//LOL, looks so weird!
+				case 1: case 2: val2 += 1; break;
+				case 3: case 4: val2 += 2; break;
+				case 5: case 6: val2 += 3; break;
+				case 7: case 8: val2 += 4; break;
+				case 9: case 10: val2 += 5; break;
+			}
+			val2 += status->int_/10; //Bonus rate by Dancer's INT
 		}
 		break;
 	case BA_ASSASSINCROSS:
@@ -14327,6 +14341,13 @@ int skill_consume_requirement( struct map_session_data *sd, uint16 skill_id, uin
 	return 1;
 }
 
+/**
+* Get skill requirements and return the value after some additional/reduction condition (such item bonus and status change)
+* @param sd Player's that will be checked
+* @param skill_id Skill that's being used
+* @param skill_lv Skill level of used skill
+* @return skill_condition Struct 'skill_condition' that store the modified skill requirements
+*/
 struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16 skill_id, uint16 skill_lv)
 {
 	struct skill_condition req;
