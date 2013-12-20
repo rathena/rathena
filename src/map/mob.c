@@ -122,9 +122,13 @@ static int mobdb_searchname_array_sub(struct mob_db* mob, const char *str)
 	return strcmpi(mob->jname,str);
 }
 
-/*==========================================
- *              MvP Tomb [GreenBox]
- *------------------------------------------*/
+/**
+ * Create and display a tombstone on the map
+ * @author [GreenBox]
+ * @param md : the mob to create a tombstone for
+ * @param killer : name of who has killed the mob
+ * @param time : time at wich the killed happen
+ */
 void mvptomb_create(struct mob_data *md, char *killer, time_t time)
 {
 	struct npc_data *nd;
@@ -157,7 +161,8 @@ void mvptomb_create(struct mob_data *md, char *killer, time_t time)
 		nd->u.tomb.killer_name[0] = '\0';
 
 	map_addnpc(nd->bl.m, nd);
-	map_addblock(&nd->bl);
+	if(map_addblock(&nd->bl))
+		return;
 	status_set_viewdata(&nd->bl, nd->class_);
 	status_change_init(&nd->bl);
 	unit_dataset(&nd->bl);
@@ -894,9 +899,11 @@ int mob_count_sub(struct block_list *bl, va_list ap) {
     return 1; //backward compatibility
 }
 
-/*==========================================
- * Mob spawning. Initialization is also variously here.
- *------------------------------------------*/
+/**
+ * Mob spawning. Initialization is also variously here. (Spawn a mob in a map)
+ * @param md : mob data to spawn
+ * @return 0:spawned, 1:delayed, 2:error
+ */
 int mob_spawn (struct mob_data *md)
 {
 	int i=0;
@@ -981,7 +988,8 @@ int mob_spawn (struct mob_data *md)
 	if ( md->tomb_nid )
 		mvptomb_destroy(md);
 
-	map_addblock(&md->bl);
+	if(map_addblock(&md->bl))
+		return 2;
 	if( map[md->bl.m].users )
 		clif_spawn(&md->bl);
 	skill_unit_move(&md->bl,tick,1);
@@ -2598,7 +2606,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			else if( sd->avail_quests )
 				quest_update_objective(sd, md->class_);
 
-			if( sd->md && src && src->type != BL_HOM && mob_db(md->class_)->lv > sd->status.base_level/2 )
+			if( sd->md && src && src->type == BL_MER && mob_db(md->class_)->lv > sd->status.base_level/2 )
 				mercenary_kills(sd->md);
 		}
 
@@ -2656,6 +2664,11 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	return 3; //Remove from map.
 }
 
+/**
+ * Resurect a mob with x hp (reset value and respawn on map)
+ * @param md : mob pointer
+ * @param hp : hp to resurect him with, @FIXME unused atm
+ */
 void mob_revive(struct mob_data *md, unsigned int hp)
 {
 	unsigned int tick = gettick();
@@ -2666,8 +2679,10 @@ void mob_revive(struct mob_data *md, unsigned int hp)
 	md->last_pcneartime = 0;
 	memset(md->dmglog, 0, sizeof(md->dmglog));	// Reset the damage done on the rebirthed monster, otherwise will grant full exp + damage done. [Valaris]
 	md->tdmg = 0;
-	if (!md->bl.prev)
-		map_addblock(&md->bl);
+	if (!md->bl.prev){
+		if(map_addblock(&md->bl))
+			return;
+	}
 	clif_spawn(&md->bl);
 	skill_unit_move(&md->bl,tick,1);
 	mobskill_use(md, tick, MSC_SPAWN);

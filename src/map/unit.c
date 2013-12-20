@@ -199,7 +199,8 @@ int unit_check_start_teleport_timer(struct block_list *sbl)
 		case BL_PET : max_dist = AREA_SIZE; break;
 		case BL_MER : max_dist = MAX_MER_DISTANCE; break;
 	}
-	if(msd && max_dist){ // If there is a master and it's a valid type
+	// If there is a master and it's a valid type 
+	if(msd && (msd->bl.type&BL_PC) && max_dist){ ///TODO the bl.type is an hotfix please dig it to remove it
 		int *msd_tid = unit_get_masterteleport_timer(sbl);
 		if(msd_tid == NULL) return 0;
 		if (!check_distance_bl(&msd->bl, sbl, max_dist)) {
@@ -941,7 +942,7 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag)
 * @param x: Destination cell X
 * @param y: Destination cell Y
 * @param type: Clear type used in clif_clearunit_area()
-* @return Success(0); Failed(1); Error(2); unit_remove_map() Failed(3)
+* @return Success(0); Failed(1); Error(2); unit_remove_map() Failed(3); map_addblock Failed(4)
 **/
 int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
 {
@@ -1001,7 +1002,8 @@ int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
 	bl->y=ud->to_y=y;
 	bl->m=m;
 
-	map_addblock(bl);
+	if(map_addblock(bl))
+		return 4; //error on adding bl to map
 	clif_spawn(bl);
 	skill_unit_move(bl,gettick(),1);
 

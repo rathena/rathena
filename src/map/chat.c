@@ -167,7 +167,10 @@ int chat_joinchat(struct map_session_data* sd, int chatid, const char* pass)
 
 
 /*==========================================
- * leave a chatroom
+ * Make player *sd leave a chatroom
+ * @param *sd : player pointer
+ * @param kicked : for clif notification, kicked=1 or regular leave
+ * @return 0:sucess, 1:failed
  *------------------------------------------*/
 int chat_leavechat(struct map_session_data* sd, bool kicked)
 {
@@ -229,8 +232,8 @@ int chat_leavechat(struct map_session_data* sd, bool kicked)
 		map_delblock( &cd->bl );
 		cd->bl.x=cd->usersd[0]->bl.x;
 		cd->bl.y=cd->usersd[0]->bl.y;
-		map_addblock( &cd->bl );
-
+		if(map_addblock( &cd->bl ))
+			return 1;
 		clif_dispchat(cd,0);
 	}
 	else
@@ -241,6 +244,9 @@ int chat_leavechat(struct map_session_data* sd, bool kicked)
 
 /*==========================================
  * change a chatroom's owner
+ * @param *sd : player pointer
+ * @param *nextownername : string of new owner (name should be in chatroom)
+ * @return 0:sucess, 1:failure
  *------------------------------------------*/
 int chat_changechatowner(struct map_session_data* sd, const char* nextownername)
 {
@@ -274,7 +280,8 @@ int chat_changechatowner(struct map_session_data* sd, const char* nextownername)
 	map_delblock( &cd->bl );
 	cd->bl.x = cd->owner->x;
 	cd->bl.y = cd->owner->y;
-	map_addblock( &cd->bl );
+	if(map_addblock( &cd->bl ))
+		return 1;
 
 	// and display again
 	clif_dispchat(cd,0);

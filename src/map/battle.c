@@ -4477,11 +4477,20 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 		// Item reflect gets calculated first
 		rdamage = battle_calc_return_damage(target, src, &damage, wd->flag, skill_id, 0);
 		if( rdamage > 0 ) {
-			//Use Reflect Shield to signal this kind of skill trigger. [Skotlex]
-			rdelay = clif_damage(src, src, tick, wd->amotion, sstatus->dmotion, rdamage, 1, 4, 0);
+			bool isDevotRdamage = false;
+			//Get info if the attacker has Devotion from other player
+			struct status_change *ssc = NULL;
+			struct block_list *d_bl = NULL;
+			if (battle_config.devotion_rdamage && battle_config.devotion_rdamage > rand()%100) {
+				ssc = status_get_sc(src);;
+				if (ssc && ssc->data[SC_DEVOTION] && (d_bl = map_id2bl(ssc->data[SC_DEVOTION]->val1)))
+					isDevotRdamage = true;
+			}
+			rdelay = clif_damage(src, (!isDevotRdamage) ? src : d_bl, tick, wd->amotion, sstatus->dmotion, rdamage, 1, 4, 0);
 			if( tsd ) battle_drain(tsd, src, rdamage, rdamage, sstatus->race, is_boss(src));
-			battle_delay_damage(tick, wd->amotion,target,src,0,CR_REFLECTSHIELD,0,rdamage,ATK_DEF,rdelay,true);
-			skill_additional_effect(target, src, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL,ATK_DEF,tick);
+			//Use Reflect Shield to signal this kind of skill trigger. [Skotlex]
+			battle_delay_damage(tick, wd->amotion,target,(!isDevotRdamage) ? src : d_bl,0,CR_REFLECTSHIELD,0,rdamage,ATK_DEF,rdelay,true);
+			skill_additional_effect(target, (!isDevotRdamage) ? src : d_bl, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL,ATK_DEF,tick);
 		}
 
 		// Calculate skill reflect damage separately
@@ -4489,6 +4498,15 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 			struct status_data *tstatus = status_get_status_data(target);
 			rdamage = battle_calc_return_damage(target, src, &damage, wd->flag, skill_id, 1);
 			if( rdamage > 0 ) {
+				bool isDevotRdamage = false;
+				//Get info if the attacker has Devotion from other player
+				struct status_change *ssc = NULL;
+				struct block_list *d_bl = NULL;
+				if (battle_config.devotion_rdamage && battle_config.devotion_rdamage > rand()%100) {
+					ssc = status_get_sc(src);;
+					if (ssc && ssc->data[SC_DEVOTION] && (d_bl = map_id2bl(ssc->data[SC_DEVOTION]->val1)))
+						isDevotRdamage = true;
+				}
 				//if(tsc->data[SC__SHADOWFORM]) {
 				//	struct block_list *s_bl = map_id2bl(tsc->data[SC__SHADOWFORM]->val2);
 				//	if(s_bl)
@@ -4500,11 +4518,11 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 				if(attack_type == BF_WEAPON && tsc->data[SC_REFLECTDAMAGE] ) // Don't reflect your own damage (Grand Cross)
 					map_foreachinshootrange(battle_damage_area,target,skill_get_splash(LG_REFLECTDAMAGE,1),BL_CHAR,tick,target,wd->amotion,sstatus->dmotion,rdamage,tstatus->race);
 				else if(attack_type == BF_WEAPON || attack_type == BF_MISC) {
-					rdelay = clif_damage(src, src, tick, wd->amotion, sstatus->dmotion, rdamage, 1, 4, 0);
+					rdelay = clif_damage(src, (!isDevotRdamage) ? src : d_bl, tick, wd->amotion, sstatus->dmotion, rdamage, 1, 4, 0);
 					if( tsd ) battle_drain(tsd, src, rdamage, rdamage, sstatus->race, is_boss(src));
 					// It appears that official servers give skill reflect damage a longer delay
-					battle_delay_damage(tick, wd->amotion,target,src,0,CR_REFLECTSHIELD,0,rdamage,ATK_DEF,rdelay,true);
-					skill_additional_effect(target, src, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL,ATK_DEF,tick);
+					battle_delay_damage(tick, wd->amotion,target,(!isDevotRdamage) ? src : d_bl,0,CR_REFLECTSHIELD,0,rdamage,ATK_DEF,rdelay,true);
+					skill_additional_effect(target, (!isDevotRdamage) ? src : d_bl, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL,ATK_DEF,tick);
 				}
 			}
 		}
@@ -4694,7 +4712,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			case KO_HAPPOKUNAI:
 				break;
 			default:
-				wd.damage += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.damage, is_attack_left_handed(src, skill_id), wd.flag);
+				wd.damage += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.damage, 0, wd.flag);
+				if(is_attack_left_handed(src, skill_id))
+					wd.damage2 += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.damage2, 1, wd.flag);
 				break;
 		}
 	}
@@ -5551,8 +5571,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		md.damage=3;
 		break;
 	case NPC_DARKBREATH:
-		md.damage = 500 + (skill_lv-1)*1000 + rnd()%1000;
-		if(md.damage > 9999) md.damage = 9999;
+		md.damage = tstatus->max_hp * (skill_lv * 10) / 100;
 		break;
 	case PA_PRESSURE:
 		md.damage=500+300*skill_lv;
@@ -7262,6 +7281,8 @@ static const struct _battle_data {
 	{ "emblem_woe_change",                  &battle_config.emblem_woe_change,               0,      0,      1,              },
 	{ "emblem_transparency_limit",          &battle_config.emblem_transparency_limit,      80,      0,      100,            },
 	{ "discount_item_point_shop",			&battle_config.discount_item_point_shop,		0,		0,		3,				},
+	{ "update_enemy_position",				&battle_config.update_enemy_position,			0,		0,		1,				},
+	{ "devotion_rdamage",					&battle_config.devotion_rdamage,				0,		0,		100,			},
 };
 #ifndef STATS_OPT_OUT
 /**

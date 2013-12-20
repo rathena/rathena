@@ -222,6 +222,12 @@ void elemental_summon_init(struct elemental_data *ed) {
 	ed->regen.state.block = 0;
 }
 
+/**
+ * Inter-serv has sent us the elemental data from sql, fill it in map-serv memory
+ * @param ele : The elemental data received from char-serv
+ * @param flag : 0:not created, 1:was saved/loaded
+ * @return 0:failed, 1:sucess
+ */
 int elemental_data_received(struct s_elemental *ele, bool flag) {
 	struct map_session_data *sd;
 	struct elemental_data *ed;
@@ -271,7 +277,8 @@ int elemental_data_received(struct s_elemental *ele, bool flag) {
 	sd->status.ele_id = ele->elemental_id;
 
 	if( ed->bl.prev == NULL && sd->bl.prev != NULL ) {
-		map_addblock(&ed->bl);
+		if(map_addblock(&ed->bl))
+			return 0;
 		clif_spawn(&ed->bl);
 		clif_elemental_info(sd);
 		clif_elemental_updatestatus(sd,SP_HP);

@@ -2657,7 +2657,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 					//Reduction: 6% + 6% every 20%
 					dmg.damage -= dmg.damage * (6 * (1+per)) / 100;
 				}
-		}
+			}
 		#endif
 		}
 		if(tsc && tsc->data[SC_MAGICROD] && src == dsrc) {
@@ -5952,7 +5952,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				mer->devotion_flag = 1; // Mercenary Devoting Owner
 
 			clif_skill_nodamage(src, bl, skill_id, skill_lv,
-				sc_start4(src,bl, type, 100, src->id, i, skill_get_range2(src,skill_id,skill_lv),0, skill_get_time2(skill_id, skill_lv)));
+				sc_start4(src, bl, type, 100, src->id, i, skill_get_range2(src,skill_id,skill_lv),0, skill_get_time2(skill_id, skill_lv)));
 			clif_devotion(src, NULL);
 		}
 		break;
@@ -6124,7 +6124,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			skill_get_splash(skill_id, skill_lv), splash_target(src),
 			src, skill_id, skill_lv, tick, flag|i,
 			skill_castend_damage_id);
-		map_addblock(src);
+		if(map_addblock(src))
+			return 1;
 		status_damage(src, src, sstatus->max_hp,0,0,1);
 		break;
 
@@ -15985,7 +15986,8 @@ struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int 
 
 	idb_put(skillunit_db, unit->bl.id, unit);
 	map_addiddb(&unit->bl);
-	map_addblock(&unit->bl);
+	if(map_addblock(&unit->bl))
+		return NULL;
 
 	// perform oninit actions
 	switch (group->skill_id) {

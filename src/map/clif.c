@@ -326,7 +326,8 @@ static int clif_send_sub(struct block_list *bl, va_list ap)
 		return 0;
 
 	/* unless visible, hold it here */
-	if (clif_ally_only && !sd->special_state.intravision && battle_check_target(src_bl,&sd->bl,BCT_ENEMY) > 0)
+	if (!battle_config.update_enemy_position && clif_ally_only && !sd->special_state.intravision &&
+		!sd->sc.data[SC_INTRAVISION] && battle_check_target(src_bl,&sd->bl,BCT_ENEMY) > 0)
 		return 0;
 
 	WFIFOHEAD(fd, len);
@@ -1918,6 +1919,22 @@ void clif_scriptclose(struct map_session_data *sd, int npcid)
 	WFIFOSET(fd,packet_len(0xb6));
 }
 
+/// [Ind/Hercules]
+/// Close script when player is idle
+/// 08d6 <npc id>.L
+void clif_scriptclear(struct map_session_data *sd, int npcid)
+{
+	int fd;
+
+	nullpo_retv(sd);
+
+	fd=sd->fd;
+	WFIFOHEAD(fd, packet_len(0x8d6));
+	WFIFOW(fd,0)=0x8d6;
+	WFIFOL(fd,2)=npcid;
+	WFIFOSET(fd,packet_len(0x8d6));
+ }
+ 
 /*==========================================
  *
  *------------------------------------------*/
@@ -2485,10 +2502,12 @@ void clif_equiplist(struct map_session_data *sd)
 
 void clif_storagelist(struct map_session_data* sd, struct item* items, int items_length)
 {
+	static const int client_buf = 0x5000; // Max buffer to send
 	struct item_data *id;
-	int i,n,ne;
+	int i,n,ne,nn;
 	unsigned char *buf;
 	unsigned char *bufe;
+	unsigned char *bufn;
 #if PACKETVER < 5
 	const int s = 10; //Entry size.normal item
 	const int sidx=4; //start itemlist idx
@@ -2533,33 +2552,39 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 			n++;
 		}
 	}
-	if( n )
+	for (i = 0; i < n;) // Loop through non-equipable items
 	{
+		nn = n - i < (client_buf - 4)/s ? n - i : (client_buf - 4)/s; // Split up non-equipable items 
+		bufn = buf + i*s; // Update buffer to new index range
+		i += nn;
 #if PACKETVER < 5
-		WBUFW(buf,0)=0xa5;
+		WBUFW(bufn,0)=0xa5;
 #elif PACKETVER < 20080102
-		WBUFW(buf,0)=0x1f0;
+		WBUFW(bufn,0)=0x1f0;
 #elif PACKETVER < 20120925
-		WBUFW(buf,0)=0x2ea;
+		WBUFW(bufn,0)=0x2ea;
 #else
-		WBUFW(buf,0)=0x995;
+		WBUFW(bufn,0)=0x995;
 		memset((char*)WBUFP(buf,4),0,24); //storename
 #endif
-		WBUFW(buf,2)=n*s+sidx;
-		clif_send(buf, WBUFW(buf,2), &sd->bl, SELF);
+		WBUFW(bufn,2)=sidx+nn*s;
+		clif_send(bufn, WBUFW(bufn,2), &sd->bl, SELF);
 	}
-	if( ne )
+	for (i = 0; i < ne;) // Loop through equipable items
 	{
+		nn = ne - i < (client_buf - 4)/se ? ne - i : (client_buf - 4)/se; // Split up equipable items
+		bufn = bufe + i*se; // Update buffer to new index range
+		i += nn;
 #if PACKETVER < 20071002
-		WBUFW(bufe,0)=0xa6;
+		WBUFW(bufn,0)=0xa6;
 #elif PACKETVER < 20120925
-		WBUFW(bufe,0)=0x2d1;
+		WBUFW(bufn,0)=0x2d1;
 #else
-		WBUFW(bufe,0)=0x996;
-		memset((char*)WBUFP(bufe,4),0,24); //storename
+		WBUFW(bufn,0)=0x996;
+		memset((char*)WBUFP(bufn,4),0,24); //storename
 #endif
-		WBUFW(bufe,2)=ne*se+sidxe;
-		clif_send(bufe, WBUFW(bufe,2), &sd->bl, SELF);
+		WBUFW(bufn,2)=sidxe+nn*se;
+		clif_send(bufn, WBUFW(bufn,2), &sd->bl, SELF);
 	}
 
 	if( buf ) aFree(buf);
@@ -9457,7 +9482,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	// reset the callshop flag if the player changes map
 	sd->state.callshop = 0;
 
-	map_addblock(&sd->bl);
+	if(map_addblock(&sd->bl))
+		return;
 	clif_spawn(&sd->bl);
 
 	// Party
@@ -9499,7 +9525,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			clif_displaymessage(sd->fd, msg_txt(sd,666));
 			pet_menu(sd, 3); //Option 3 is return to egg.
 		} else {
-			map_addblock(&sd->pd->bl);
+			if(map_addblock(&sd->pd->bl))
+				return;
 			clif_spawn(&sd->pd->bl);
 			clif_send_petdata(sd,sd->pd,0,0);
 			clif_send_petstatus(sd);
@@ -9509,7 +9536,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	//homunculus [blackhole89]
 	if( merc_is_hom_active(sd->hd) ) {
-		map_addblock(&sd->hd->bl);
+		if(map_addblock(&sd->hd->bl))
+			return;
 		clif_spawn(&sd->hd->bl);
 		clif_send_homdata(sd,SP_ACK,0);
 		clif_hominfo(sd,sd->hd,1);
@@ -9522,7 +9550,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	}
 
 	if( sd->md ) {
-		map_addblock(&sd->md->bl);
+		if(map_addblock(&sd->md->bl))
+			return;
 		clif_spawn(&sd->md->bl);
 		clif_mercenary_info(sd);
 		clif_mercenary_skillblock(sd);
@@ -14801,7 +14830,7 @@ void clif_cashshop_list( int fd ){
 	int tab;
 
 	for( tab = CASHSHOP_TAB_NEW; tab < CASHSHOP_TAB_SEARCH; tab++ ){
-		int length = 8 + cash_shop_items->count * 6;
+		int length = 8 + cash_shop_items[tab].count * 6;
 		int i, offset;
 
 		WFIFOHEAD( fd, length );
@@ -14820,7 +14849,10 @@ void clif_cashshop_list( int fd ){
 }
 
 void clif_parse_cashshop_list_request( int fd, struct map_session_data* sd ){
-	clif_cashshop_list( fd );
+	if( !sd->status.cashshop_sent ) {
+		clif_cashshop_list( fd );
+		sd->status.cashshop_sent = true;
+	}
 }
 /// List of items offered in a cash shop (ZC_PC_CASH_POINT_ITEMLIST).
 /// 0287 <packet len>.W <cash point>.L { <sell price>.L <discount price>.L <item type>.B <name id>.W }*
@@ -17529,7 +17561,7 @@ void packetdb_readdb(void)
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	//#0x08C0
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 10,
-		9,  7, 10,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+		9,  7, 10,  0,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	//#0x0900

@@ -2158,7 +2158,19 @@ static void npc_parsename(struct npc_data* nd, const char* name, const char* sta
 	}
 }
 
-//Add then display an npc warp on map
+/**
+ * Add then display an npc warp on map
+ * @param name : warp unique name
+ * @param from_mapid : mapid to warp from
+ * @param from_x : x coordinate of warp
+ * @param from_y : y coordinate of warp
+ * @param xs : x lenght of warp (for trigger activation)
+ * @param ys : y lenght of warp (for trigger activation)
+ * @param to_mapindex : mapid to warp to
+ * @param to_x : x coordinate to warp to
+ * @param to_y : y coordinate to warp to
+ * @return NULL:failed creation, npc_data* new warp
+ */
 struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short from_y, short xs, short ys, unsigned short to_mapindex, short to_x, short to_y)
 {
 	int i, flag = 0;
@@ -2197,7 +2209,8 @@ struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short 
 	nd->bl.type = BL_NPC;
 	nd->subtype = WARP;
 	npc_setcells(nd);
-	map_addblock(&nd->bl);
+	if(map_addblock(&nd->bl))
+		return NULL;
 	status_set_viewdata(&nd->bl, nd->class_);
 	status_change_init(&nd->bl);
 	unit_dataset(&nd->bl);
@@ -2208,7 +2221,18 @@ struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short 
 	return nd;
 }
 
-/// Parses a warp npc.
+/**
+ * Parses a warp npc.
+ * Line definition <from mapname>,<fromX>,<fromY>,<facing>%TAB%warp%TAB%<warp name>%TAB%<spanx>,<spany>,<to mapname>,<toX>,<toY>
+ * @param w1 : word 1 before tab (<from map name>,<fromX>,<fromY>,<facing>)
+ * @param w2 : word 2 before tab (warp), keyword that sent us in this parsing
+ * @param w3 : word 3 before tab (<warp name>)
+ * @param w4 : word 4 before tab (<spanx>,<spany>,<to mapname>,<toX>,<toY>)
+ * @param start : index to start parsing
+ * @param buffer : lines to parses
+ * @param filepath : filename with path wich we are parsing
+ * @return new index for next parsing
+ */
 static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
 	int x, y, xs, ys, to_x, to_y, m;
@@ -2262,7 +2286,8 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 	nd->bl.type = BL_NPC;
 	nd->subtype = WARP;
 	npc_setcells(nd);
-	map_addblock(&nd->bl);
+	if(map_addblock(&nd->bl)) //couldn't add on map
+		return strchr(start,'\n');
 	status_set_viewdata(&nd->bl, nd->class_);
 	status_change_init(&nd->bl);
 	unit_dataset(&nd->bl);
@@ -2273,7 +2298,22 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 	return strchr(start,'\n');// continue
 }
 
-/// Parses a shop/cashshop npc.
+/**
+ * Parses a shop/cashshop npc.
+ * Line definition :
+ * <map name>,<x>,<y>,<facing>%TAB%shop%TAB%<NPC Name>%TAB%<sprite id>,<itemid>:<price>{,<itemid>:<price>...}
+ * <map name>,<x>,<y>,<facing>%TAB%itemshop%TAB%<NPC Name>%TAB%<sprite id>,<costitemid>{:<discount>},<itemid>:<price>{,<itemid>:<price>...}
+ * <map name>,<x>,<y>,<facing>%TAB%pointshop%TAB%<NPC Name>%TAB%<sprite id>,<costvariable>{:<discount>},<itemid>:<price>{,<itemid>:<price>...}
+ * @TODO missing cashshop line definition
+ * @param w1 : word 1 before tab (<from map name>,<x>,<y>,<facing>)
+ * @param w2 : word 2 before tab (shop|cashshop|itemshop|pointshop), keyword that sent us in this parsing
+ * @param w3 : word 3 before tab (<NPC Name>)
+ * @param w4 : word 4 before tab (<sprited id>,<shop definition...>)
+ * @param start : index to start parsing
+ * @param buffer : lines to parses
+ * @param filepath : filename with path wich we are parsing
+ * @return new index for next parsing
+ */
 static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
 	//TODO: could be rewritten to NOT need this temp array [ultramage]
@@ -2419,7 +2459,8 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	if( m >= 0 )
 	{// normal shop npc
 		map_addnpc(m,nd);
-		map_addblock(&nd->bl);
+		if(map_addblock(&nd->bl))
+			return strchr(start,'\n');
 		status_set_viewdata(&nd->bl, nd->class_);
 		status_change_init(&nd->bl);
 		unit_dataset(&nd->bl);
@@ -2555,11 +2596,20 @@ static const char* npc_skip_script(const char* start, const char* buffer, const 
 	return p+1;// return after the last '}'
 }
 
-/// Parses a npc script.
-///
-/// -%TAB%script%TAB%<NPC Name>%TAB%-1,{<code>}
-/// <map name>,<x>,<y>,<facing>%TAB%script%TAB%<NPC Name>%TAB%<sprite id>,{<code>}
-/// <map name>,<x>,<y>,<facing>%TAB%script%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>,{<code>}
+/**
+ * Parses a npc script.
+ * Line definition :
+ * <map name>,<x>,<y>,<facing>%TAB%script%TAB%<NPC Name>%TAB%<sprite id>,{<code>}
+ * <map name>,<x>,<y>,<facing>%TAB%script%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>,{<code>} * @TODO missing cashshop line definition
+ * @param w1 : word 1 before tab (<from map name>,<x>,<y>,<facing>)
+ * @param w2 : word 2 before tab (script), keyword that sent us in this parsing
+ * @param w3 : word 3 before tab (<NPC Name>)
+ * @param w4 : word 4 before tab (<sprited id>,<code>)
+ * @param start : index to start parsing
+ * @param buffer : lines to parses
+ * @param filepath : filename with path wich we are parsing
+ * @return new index for next parsing
+ */
 static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath, bool runOnInit) {
 	int x, y, dir = 0, m, xs = 0, ys = 0, class_ = 0;	// [Valaris] thanks to fov
 	char mapname[32];
@@ -2648,7 +2698,8 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 		unit_dataset(&nd->bl);
 		nd->ud.dir = dir;
 		npc_setcells(nd);
-		map_addblock(&nd->bl);
+		if(map_addblock(&nd->bl))
+			return NULL;
 		if( class_ >= 0 )
 		{
 			status_set_viewdata(&nd->bl, nd->class_);
@@ -2808,7 +2859,8 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 		unit_dataset(&nd->bl);
 		nd->ud.dir = dir;
 		npc_setcells(nd);
-		map_addblock(&nd->bl);
+		if(map_addblock(&nd->bl))
+			return end;
 		if( class_ >= 0 ) {
 			status_set_viewdata(&nd->bl, nd->class_);
 			if( map[nd->bl.m].users )
@@ -2892,7 +2944,8 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 		wnd->bl.type = BL_NPC;
 		wnd->subtype = WARP;
 		npc_setcells(wnd);
-		map_addblock(&wnd->bl);
+		if(map_addblock(&wnd->bl))
+			return 1;
 		status_set_viewdata(&wnd->bl, wnd->class_);
 		status_change_init(&wnd->bl);
 		unit_dataset(&wnd->bl);
