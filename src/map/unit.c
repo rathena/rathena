@@ -199,7 +199,7 @@ int unit_check_start_teleport_timer(struct block_list *sbl)
 		case BL_PET : max_dist = AREA_SIZE; break;
 		case BL_MER : max_dist = MAX_MER_DISTANCE; break;
 	}
-	// If there is a master and it's a valid type 
+	// If there is a master and it's a valid type
 	if(msd && (msd->bl.type&BL_PC) && max_dist){ ///TODO the bl.type is an hotfix please dig it to remove it
 		int *msd_tid = unit_get_masterteleport_timer(sbl);
 		if(msd_tid == NULL) return 0;

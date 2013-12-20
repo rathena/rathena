@@ -2788,7 +2788,7 @@ ACMD_FUNC(char_block)
 ACMD_FUNC(char_ban)
 {
 	char * modif_p;
-	int timediff=0;
+	int32 timediff=0; //don't set this as uint as we may want to decrease banned time
 	int bantype=2; //2=account block, 6=char specific
 	char output[256];
 
@@ -2807,7 +2807,7 @@ ACMD_FUNC(char_ban)
 	
 
 	modif_p = atcmd_output;
-	timediff = (int)solve_time(modif_p); //discard seconds
+	timediff = (int32)solve_time(modif_p); //discard seconds
 
 	if (timediff == 0) { //allow negative ?
 		char output[256];
@@ -9160,7 +9160,7 @@ ACMD_FUNC(langtype)
 ACMD_FUNC(vip) {
 	struct map_session_data *pl_sd = NULL;
 	char * modif_p;
-	int vipdifftime = 0;
+	int32 vipdifftime = 0;
 	time_t now=time(NULL);
 	
 	nullpo_retr(-1, sd);
@@ -9175,7 +9175,7 @@ ACMD_FUNC(vip) {
 	atcmd_output[sizeof(atcmd_output)-1] = '\0';
 
 	modif_p = atcmd_output;
-	vipdifftime = (int)solve_time(modif_p);
+	vipdifftime = (int32)solve_time(modif_p);
 	if (vipdifftime == 0) {
 		clif_displaymessage(fd, msg_txt(sd,701)); // Invalid time for vip command.
 		clif_displaymessage(fd, msg_txt(sd,702)); // Time parameter format is +/-<value> to alter. y/a = Year, m = Month, d/j = Day, h = Hour, n/mn = Minute, s = Second.
