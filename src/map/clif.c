@@ -1931,6 +1931,7 @@ void clif_scriptclear(struct map_session_data *sd, int npcid)
 	struct s_packet_db* info;
 	int16 len;
 	int cmd = 0;
+	int fd;
 
 	nullpo_retv(sd);
 
@@ -1938,6 +1939,7 @@ void clif_scriptclear(struct map_session_data *sd, int npcid)
 	if(!cmd) cmd = 0x8d6; //default
 	info = &packet_db[sd->packet_ver][cmd];
 	len = info->len;
+	fd = sd->fd;
 
 	WFIFOHEAD(fd, len);
 	WFIFOW(fd,0)=0x8d6;

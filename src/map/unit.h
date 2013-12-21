@@ -14,9 +14,12 @@ struct map_session_data;
 #include "path.h" // struct walkpath_data
 #include "skill.h" // struct skill_timerskill, struct skill_unit_group, struct skill_unit_group_tickset
 
+extern const short dirx[8]; ///lookup to know where will move to x according dir
+extern const short diry[8]; ///lookup to know where will move to y according dir
+
 struct unit_data {
-	struct block_list *bl;
-	struct walkpath_data walkpath;
+	struct block_list *bl; ///link to owner object BL_CHAR (BL_PC|BL_HOM|BL_PET|BL_ELE|BL_MER)
+	struct walkpath_data walkpath; 
 	struct skill_timerskill *skilltimerskill[MAX_SKILLTIMERSKILL];
 	struct skill_unit_group *skillunit[MAX_SKILLUNITGROUP];
 	struct skill_unit_group_tickset skillunittick[MAX_SKILLUNITGROUPTICKSET];
@@ -78,6 +81,9 @@ int unit_calc_pos(struct block_list *bl, int tx, int ty, uint8 dir);
 int unit_delay_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data);
 int unit_delay_walktobl_timer(int tid, unsigned int tick, int id, intptr_t data);
 
+// Ranger
+int unit_wugdash(struct block_list *bl, struct map_session_data *sd);
+
 // Causes the target object to stop moving.
 int unit_stop_walking(struct block_list *bl,int type);
 int unit_can_move(struct block_list *bl);
@@ -130,10 +136,5 @@ int unit_changeviewsize(struct block_list *bl,short size);
 int do_init_unit(void);
 int do_final_unit(void);
 
-// Ranger
-int unit_wugdash(struct block_list *bl, struct map_session_data *sd);
-
-extern const short dirx[8];
-extern const short diry[8];
 
 #endif /* _UNIT_H_ */

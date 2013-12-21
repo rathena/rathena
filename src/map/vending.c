@@ -20,21 +20,29 @@
 #include <stdio.h>
 #include <string.h>
 
-static int vending_nextid = 0;
-static DBMap *vending_db;
+static int vending_nextid = 0; ///Vending_id counter
+static DBMap *vending_db; ///Db holder the vender : charid -> map_session_data
 
+/**
+ * Lookup to get the vending_db outside module
+ * @return the vending_db
+ */
 DBMap * vending_getdb(){
 	return vending_db;
 }
-/// Returns an unique vending shop id.
-static int vending_getuid(void)
-{
+
+/**
+ * Create an unique vending shop id.
+ * @return the next vending_id
+ */
+static int vending_getuid(void){
 	return ++vending_nextid;
 }
 
-/*==========================================
- * Close shop
- *------------------------------------------*/
+/**
+ * Make a player close his shop
+ * @param sd : player session
+ */
 void vending_closevending(struct map_session_data* sd)
 {
 	nullpo_retv(sd);
@@ -46,9 +54,11 @@ void vending_closevending(struct map_session_data* sd)
 	}
 }
 
-/*==========================================
- * Request a shop's item list
- *------------------------------------------*/
+/**
+ * Player request a shop's item list (a player shop)
+ * @param sd : player requestion the list
+ * @param id : vender account id (gid)
+ */
 void vending_vendinglistreq(struct map_session_data* sd, int id)
 {
 	struct map_session_data* vsd;
@@ -70,9 +80,15 @@ void vending_vendinglistreq(struct map_session_data* sd, int id)
 	clif_vendinglist(sd, id, vsd->vending);
 }
 
-/*==========================================
+/**
  * Purchase item(s) from a shop
- *------------------------------------------*/
+ * @param sd : buyer player session
+ * @param aid : account id of vender
+ * @param uid : shop unique id
+ * @param data : items data who would like to purchase \n
+ *	data := {<index>.w <amount>.w }[count]
+ * @param count : number of different items he's trying to buy
+ */
 void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const uint8* data, int count)
 {
 	int i, j, cursor, w, new_ = 0, blank, vend_list[MAX_VENDING];
@@ -226,10 +242,14 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 	}
 }
 
-/*==========================================
- * Open shop
- * data := {<index>.w <amount>.w <value>.l}[count]
- *------------------------------------------*/
+/**
+ * Player setup a new shop
+ * @param sd : player opening the shop
+ * @param message : shop title
+ * @param data : itemlist data \n
+ *	data := {<index>.w <amount>.w <value>.l}[count]
+ * @param count : number of different items
+ */
 void vending_openvending(struct map_session_data* sd, const char* message, const uint8* data, int count) {
 	int i, j;
 	int vending_skill_lvl;
@@ -297,8 +317,12 @@ void vending_openvending(struct map_session_data* sd, const char* message, const
 	idb_put(vending_db, sd->status.char_id, sd);
 }
 
-
-/// Checks if an item is being sold in given player's vending.
+/**
+ * Checks if an item is being sold in given player's vending.
+ * @param sd : vender session (player)
+ * @param nameid : item id
+ * @return 0:not selling it, 1: yes
+ */
 bool vending_search(struct map_session_data* sd, unsigned short nameid) {
 	int i;
 
@@ -315,8 +339,13 @@ bool vending_search(struct map_session_data* sd, unsigned short nameid) {
 }
 
 
-/// Searches for all items in a vending, that match given ids, price and possible cards.
-/// @return Whether or not the search should be continued.
+
+/**
+ * Searches for all items in a vending, that match given ids, price and possible cards.
+ * @param sd : The vender session to search into
+ * @param s : parameter of the search (see s_search_store_search)
+ * @return Whether or not the search should be continued.
+ */
 bool vending_searchall(struct map_session_data* sd, const struct s_search_store_search* s) {
 	int i, c, slot;
 	unsigned int idx, cidx;
@@ -367,10 +396,19 @@ bool vending_searchall(struct map_session_data* sd, const struct s_search_store_
 
 	return true;
 }
+
+/**
+ * Initialise the vending module
+ * called in map::do_init
+ */
 void do_final_vending(void) {
 	db_destroy(vending_db);
 }
 
+/**
+ * Destory the vending module
+ * called in map::do_final
+ */
 void do_init_vending(void) {
 	vending_db = idb_alloc(DB_OPT_BASE);
 	vending_nextid = 0;

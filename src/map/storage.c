@@ -24,11 +24,15 @@
 #include <string.h>
 
 
-static DBMap* guild_storage_db; // int guild_id -> struct guild_storage*
+static DBMap* guild_storage_db; ///Databases of guild_storage : int guild_id -> struct guild_storage*
 
-/*==========================================
- * Sort items in the warehouse
- *------------------------------------------*/
+/**
+ * Storage item comparator (for qsort)
+ * sort by itemid and amount
+ * @param _i1 : item a
+ * @param _i2 : item b
+ * @return i1<=>i2
+ */
 static int storage_comp_item(const void *_i1, const void *_i2)
 {
 	struct item *i1 = (struct item *)_i1;
@@ -43,7 +47,12 @@ static int storage_comp_item(const void *_i1, const void *_i2)
 	return i1->nameid - i2->nameid;
 }
 
-//Sort item by storage_comp_item (nameid)
+/**
+ * Sort item by storage_comp_item (nameid)
+ * used when we open up our storage or guild_storage
+ * @param items : list of items to sort
+ * @param size : number of item in list
+ */
 static void storage_sortitem(struct item* items, unsigned int size)
 {
 	nullpo_retv(items);
@@ -54,22 +63,32 @@ static void storage_sortitem(struct item* items, unsigned int size)
 	}
 }
 
-/*==========================================
- * Init/Terminate
- *------------------------------------------*/
-int do_init_storage(void) // Called from map.c::do_init()
+/**
+ * Initiate storage module
+ * Called from map.c::do_init()
+ * @return 1
+ */
+int do_init_storage(void) // 
 {
 	guild_storage_db=idb_alloc(DB_OPT_RELEASE_DATA);
 	return 1;
 }
-void do_final_storage(void) // by [MC Cameri]
+
+/**
+ * Destroy storage module
+ * @author : [MC Cameri]
+ * Called from map.c::do_final()
+ */
+void do_final_storage(void)
 {
 	guild_storage_db->destroy(guild_storage_db,NULL);
 }
 
 /**
- * Parses storage and saves 'dirty' ones upon reconnect. [Skotlex]
+ * Parses storage and saves 'dirty' ones upon reconnect.
+ * @author [Skotlex]
  * @see DBApply
+ * @return 0
  */
 static int storage_reconnect_sub(DBKey key, DBData *data, va_list ap)
 {
@@ -80,17 +99,20 @@ static int storage_reconnect_sub(DBKey key, DBData *data, va_list ap)
 	return 0;
 }
 
-//Function to be invoked upon server reconnection to char. To save all 'dirty' storages [Skotlex]
+/**
+ * Function to be invoked upon server reconnection to char. To save all 'dirty' storages
+ * @author [Skotlex]
+ */
 void do_reconnect_storage(void)
 {
 	guild_storage_db->foreach(guild_storage_db, storage_reconnect_sub);
 }
 
-/*==========================================
- * Opens a storage. Returns:
- * 0 - success
- * 1 - fail
- *------------------------------------------*/
+/**
+ * Player attempt tp open his storage.
+ * @param sd : player
+ * @return  0:success, 1:fail
+ */
 int storage_storageopen(struct map_session_data *sd)
 {
 	nullpo_ret(sd);
@@ -111,8 +133,11 @@ int storage_storageopen(struct map_session_data *sd)
 	return 0;
 }
 
-/* helper function
- * checking if 2 item structure are identique
+/**
+ * check if 2 item a and b have same values
+ * @param a : item 1
+ * @param b : item 2
+ * @return 1:same, 0:are different
  */
 int compare_item(struct item *a, struct item *b)
 {
@@ -130,9 +155,13 @@ int compare_item(struct item *a, struct item *b)
 	return 0;
 }
 
-/*==========================================
- * Internal add-item function.
- *------------------------------------------*/
+/**
+ * Make a player add an item to his storage
+ * @param sd : player
+ * @param item_data : item to add
+ * @param amount : quantity of items
+ * @return 0:success, 1:failed
+ */
 static int storage_additem(struct map_session_data* sd, struct item* item_data, int amount)
 {
 	struct storage_data* stor = &sd->status.storage;
@@ -190,9 +219,13 @@ static int storage_additem(struct map_session_data* sd, struct item* item_data, 
 	return 0;
 }
 
-/*==========================================
- * Internal del-item function
- *------------------------------------------*/
+/**
+ * Make a player delete an item from his storage
+ * @param sd : player
+ * @param n : idx on storage to remove the item from
+ * @param amount :number of item to remove
+ * @return 0:sucess, 1:fail
+ */
 int storage_delitem(struct map_session_data* sd, int n, int amount)
 {
 	if( sd->status.storage.items[n].nameid == 0 || sd->status.storage.items[n].amount < amount )
@@ -209,13 +242,13 @@ int storage_delitem(struct map_session_data* sd, int n, int amount)
 	return 0;
 }
 
-/*==========================================
+/**
  * Add an item to the storage from the inventory.
- * @index : inventory idx
- * return
- *	0 : fail
- *	1 : success
- *------------------------------------------*/
+ * @param sd : player
+ * @param index : inventory index to take the item from
+ * @param amount : number of item to take
+ * @return 0:fail, 1:success
+ */
 int storage_storageadd(struct map_session_data* sd, int index, int amount)
 {
 	nullpo_ret(sd);
@@ -242,13 +275,13 @@ int storage_storageadd(struct map_session_data* sd, int index, int amount)
 	return 1;
 }
 
-/*==========================================
+/**
  * Retrieve an item from the storage into inventory
- * @index : storage idx
- * return
- *	0 : fail
- *	1 : success
- *------------------------------------------*/
+ * @param sd : player
+ * @param index : storage index to take the item from
+ * @param amount : number of item to take
+ * @return 0:fail, 1:success
+ */
 int storage_storageget(struct map_session_data* sd, int index, int amount)
 {
 	int flag;
@@ -270,13 +303,13 @@ int storage_storageget(struct map_session_data* sd, int index, int amount)
 	return 1;
 }
 
-/*==========================================
+/**
  * Move an item from cart to storage.
- * @index : cart inventory index
- * return
- *	0 : fail
- *	1 : success
- *------------------------------------------*/
+ * @param sd : player
+ * @param index : cart index to take the item from
+ * @param amount : number of item to take
+ * @return 0:fail, 1:success
+ */
 int storage_storageaddfromcart(struct map_session_data* sd, int index, int amount)
 {
 	nullpo_ret(sd);
@@ -299,13 +332,13 @@ int storage_storageaddfromcart(struct map_session_data* sd, int index, int amoun
 	return 1;
 }
 
-/*==========================================
+/**
  * Get from Storage to the Cart inventory
- * @index : storage index
- * return
- *	0 : fail
- *	1 : success
- *------------------------------------------*/
+ * @param sd : player
+ * @param index : storage index to take the item from
+ * @param amount : number of item to take
+ * @return 0:fail, 1:success
+ */
 int storage_storagegettocart(struct map_session_data* sd, int index, int amount)
 {
 	short flag;
@@ -331,9 +364,11 @@ int storage_storagegettocart(struct map_session_data* sd, int index, int amount)
 }
 
 
-/*==========================================
- * Modified By Valaris to save upon closing [massdriller]
- *------------------------------------------*/
+/**
+ * Make player close his storage
+ * @author : [massdriller] / modified by [Valaris]
+ * @param sd : player
+ */
 void storage_storageclose(struct map_session_data* sd)
 {
 	nullpo_retv(sd);
@@ -346,9 +381,14 @@ void storage_storageclose(struct map_session_data* sd)
 	sd->state.storage_flag = 0;
 }
 
-/*==========================================
- * When quitting the game.
- *------------------------------------------*/
+/**
+ * Force closing the storage for player without displaying result
+ * (exemple when quitting the game)
+ * @param sd : player to close storage
+ * @param flag : \n
+ *  1: Character is quitting \n
+ *	2(x): Character is changing map-servers 
+ */
 void storage_storage_quit(struct map_session_data* sd, int flag)
 {
 	nullpo_retv(sd);
@@ -360,7 +400,11 @@ void storage_storage_quit(struct map_session_data* sd, int flag)
 }
 
 /**
+ * Create a guild_storage stucture and add it into the db
  * @see DBCreateData
+ * @param key
+ * @param args
+ * @return 
  */
 static DBData create_guildstorage(DBKey key, va_list args)
 {
@@ -370,6 +414,12 @@ static DBData create_guildstorage(DBKey key, va_list args)
 	return db_ptr2data(gs);
 }
 
+/**
+ * Retrieve the guild_storage of a guild
+ * will create a new storage if none found for the guild
+ * @param guild_id : id of the guild
+ * @return guild_storage
+ */
 struct guild_storage *guild2storage(int guild_id)
 {
 	struct guild_storage *gs = NULL;
@@ -378,25 +428,33 @@ struct guild_storage *guild2storage(int guild_id)
 	return gs;
 }
 
-//For just locating a storage without creating one. [Skotlex]
+/**
+ * See if the guild_storage exist in db and fetch it if it,s the case
+ * @author : [Skotlex]
+ * @param guild_id : guild_id to search the storage
+ * @return guild_storage or NULL
+ */
 struct guild_storage *guild2storage2(int guild_id)
 {
 	return (struct guild_storage*)idb_get(guild_storage_db,guild_id);
 }
 
+/**
+ * Delete a guild_storage and remove it from db
+ * @param guild_id : guild to remove the storage from
+ * @return 0
+ */
 int guild_storage_delete(int guild_id)
 {
 	idb_remove(guild_storage_db,guild_id);
 	return 0;
 }
 
-/*==========================================
-* Attempt to open guild storage for sd
-* return
-* 	0 : success (open or req to create a new one)
-* 	1 : fail
-*	2 : no guild for sd
- *------------------------------------------*/
+/**
+ * Attempt to open guild storage for player
+ * @param sd : player
+ * @return * 	0 : success, 1 : fail, 2 : no guild found
+ */
 int storage_guild_storageopen(struct map_session_data* sd)
 {
 	struct guild_storage *gstor;
@@ -432,12 +490,14 @@ int storage_guild_storageopen(struct map_session_data* sd)
 	return 0;
 }
 
-/*==========================================
-* Attempt to add an item in guild storage, then refresh it
-* return
-* 	0 : success
-* 	1 : fail
- *------------------------------------------*/
+/**
+ * Attempt to add an item in guild storage, then refresh it
+ * @param sd : player attempting to open the guild_storage
+ * @param stor : guild_storage
+ * @param item_data : item to add
+ * @param amount : number of item to add
+ * @return 0 : success, 1 : fail
+ */
 int guild_storage_additem(struct map_session_data* sd, struct guild_storage* stor, struct item* item_data, int amount)
 {
 	struct item_data *data;
@@ -495,12 +555,14 @@ int guild_storage_additem(struct map_session_data* sd, struct guild_storage* sto
 	return 0;
 }
 
-/*==========================================
-* Attempt to delete an item in guild storage, then refresh it
-* return
-* 	0 : success
-* 	1 : fail
- *------------------------------------------*/
+/**
+ * Attempt to delete an item in guild storage, then refresh it
+ * @param sd : player
+ * @param stor : guild_storage
+ * @param n : index of item in guild storage
+ * @param amount : number of item to delete
+ * @return 0 : success, 1 : fail
+ */
 int guild_storage_delitem(struct map_session_data* sd, struct guild_storage* stor, int n, int amount)
 {
 	nullpo_retr(1, sd);
@@ -520,13 +582,12 @@ int guild_storage_delitem(struct map_session_data* sd, struct guild_storage* sto
 	return 0;
 }
 
-/*==========================================
-* Attempt to add an item in guild storage from inventory, then refresh it
-* @index : inventory idx
-* return
-* 	0 : fail
-* 	1 : succes
- *------------------------------------------*/
+/**
+ * Attempt to add an item in guild storage from inventory, then refresh it
+ * @param sd : player
+ * @param amount : number of item to delete
+ * @return 1:success, 0:fail
+ */
 int storage_guild_storageadd(struct map_session_data* sd, int index, int amount)
 {
 	struct guild_storage *stor;
@@ -561,13 +622,13 @@ int storage_guild_storageadd(struct map_session_data* sd, int index, int amount)
 	return 1;
 }
 
-/*==========================================
-* Attempt to retrieve an item from guild storage to inventory, then refresh it
-* @index : storage idx
-* return
-* 	0 : fail
-* 	1 : succes
- *------------------------------------------*/
+/**
+ * Attempt to retrieve an item from guild storage to inventory, then refresh it
+ * @param sd : player
+ * @param index : index of item in storage
+ * @param amount : number of item to get
+ * @return 1:success, 0:fail
+ */
 int storage_guild_storageget(struct map_session_data* sd, int index, int amount)
 {
 	struct guild_storage *stor;
@@ -595,20 +656,22 @@ int storage_guild_storageget(struct map_session_data* sd, int index, int amount)
 
 	if((flag = pc_additem(sd,&stor->items[index],amount,LOG_TYPE_GSTORAGE)) == 0)
 		guild_storage_delitem(sd,stor,index,amount);
-	else //inform fail
+	else {//inform fail
 		clif_additem(sd,0,0,flag);
+		return 0;
+	}
 //	log_fromstorage(sd, index, 1);
 
-	return 0;
+	return 1;
 }
 
-/*==========================================
-* Attempt to add an item in guild storage from cart, then refresh it
-* @index : cart inventory idx
-* return
-* 	0 : fail
-* 	1 : succes
- *------------------------------------------*/
+/**
+ * Attempt to add an item in guild storage from cart, then refresh it
+ * @param sd : player
+ * @param index : index of item in cart
+ * @param amount : number of item to transfer
+ * @return 1:fail, 0:success
+ */
 int storage_guild_storageaddfromcart(struct map_session_data* sd, int index, int amount)
 {
 	struct guild_storage *stor;
@@ -634,13 +697,13 @@ int storage_guild_storageaddfromcart(struct map_session_data* sd, int index, int
 	return 1;
 }
 
-/*==========================================
-* Attempt to retrieve an item from guild storage to cart, then refresh it
-* @index : storage idx
-* return
-* 	0 : fail
-* 	1 : succes
- *------------------------------------------*/
+/**
+ * Attempt to retrieve an item from guild storage to cart, then refresh it
+ * @param sd : player
+ * @param index : index of item in storage
+ * @param amount : number of item to transfert
+ * @return 1:fail, 0:success
+ */
 int storage_guild_storagegettocart(struct map_session_data* sd, int index, int amount)
 {
 	short flag;
@@ -666,17 +729,19 @@ int storage_guild_storagegettocart(struct map_session_data* sd, int index, int a
 	else {
 		clif_dropitem(sd,index,0);
 		clif_cart_additem_ack(sd,(flag==1)?ADDITEM_TO_CART_FAIL_WEIGHT:ADDITEM_TO_CART_FAIL_COUNT);
+		return 0;
 	}
 
 	return 1;
 }
 
-/*==========================================
-* Request to save guild storage
-* return
-* 	0 : fail (no storage)
-* 	1 : succes
- *------------------------------------------*/
+/**
+ * Request to save guild storage
+ * @param account_id : account requesting the save
+ * @param guild_id : guild to take the guild_storage
+ * @param flag : ?
+ * @return 0 : fail (no storage), 1 : success (requested)
+ */
 int storage_guild_storagesave(int account_id, int guild_id, int flag)
 {
 	struct guild_storage *stor = guild2storage2(guild_id);
@@ -692,12 +757,11 @@ int storage_guild_storagesave(int account_id, int guild_id, int flag)
 	return 0;
 }
 
-/*==========================================
-* ACK save of guild storage
-* return
-* 	0 : fail (no storage)
-* 	1 : succes
- *------------------------------------------*/
+/**
+ * ACK save of guild storage
+ * @param guild_id : guild to use the storage
+ * @return 0 : fail (no storage), 1 : succes
+ */
 int storage_guild_storagesaved(int guild_id)
 {
 	struct guild_storage *stor;
@@ -712,7 +776,11 @@ int storage_guild_storagesaved(int guild_id)
 	return 0;
 }
 
-//Close storage for sd and save it
+/**
+ * Close storage for player then save it
+ * @param sd : player
+ * @return 0
+ */
 int storage_guild_storageclose(struct map_session_data* sd)
 {
 	struct guild_storage *stor;
@@ -734,6 +802,12 @@ int storage_guild_storageclose(struct map_session_data* sd)
 	return 0;
 }
 
+/**
+ * Close storage for player then save it
+ * @param sd
+ * @param flag
+ * @return 
+ */
 int storage_guild_storage_quit(struct map_session_data* sd, int flag)
 {
 	struct guild_storage *stor;
