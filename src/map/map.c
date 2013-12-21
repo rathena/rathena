@@ -89,14 +89,14 @@ char log_db_db[32] = "log";
 Sql* logmysql_handle;
 
 // DBMap declaartion
-static DBMap* id_db=NULL; // int id -> struct block_list*
-static DBMap* pc_db=NULL; // int id -> struct map_session_data*
-static DBMap* mobid_db=NULL; // int id -> struct mob_data*
-static DBMap* bossid_db=NULL; // int id -> struct mob_data* (MVP db)
-static DBMap* map_db=NULL; // unsigned int mapindex -> struct map_data*
-static DBMap* nick_db=NULL; // int char_id -> struct charid2nick* (requested names of offline characters)
-static DBMap* charid_db=NULL; // int char_id -> struct map_session_data*
-static DBMap* regen_db=NULL; // int id -> struct block_list* (status_natural_heal processing)
+static DBMap* id_db=NULL; /// int id -> struct block_list*
+static DBMap* pc_db=NULL; /// int id -> struct map_session_data*
+static DBMap* mobid_db=NULL; /// int id -> struct mob_data*
+static DBMap* bossid_db=NULL; /// int id -> struct mob_data* (MVP db)
+static DBMap* map_db=NULL; /// unsigned int mapindex -> struct map_data*
+static DBMap* nick_db=NULL; /// int char_id -> struct charid2nick* (requested names of offline characters)
+static DBMap* charid_db=NULL; /// int char_id -> struct map_session_data*
+static DBMap* regen_db=NULL; /// int id -> struct block_list* (status_natural_heal processing)
 static DBMap* map_msg_db=NULL;
 
 static int map_users=0;
@@ -328,7 +328,7 @@ int map_delblock(struct block_list* bl)
 	int pos;
 	nullpo_ret(bl);
 
-    // blocklist (2ways chainlist)
+	// blocklist (2ways chainlist)
 	if (bl->prev == NULL) {
 		if (bl->next != NULL) {
 			// can't delete block (already at the begining of the chain)
@@ -361,11 +361,16 @@ int map_delblock(struct block_list* bl)
 	return 0;
 }
 
-/*==========================================
+/**
  * Moves a block a x/y target position. [Skotlex]
  * Pass flag as 1 to prevent doing skill_unit_move checks
  * (which are executed by default on BL_CHAR types)
- *------------------------------------------*/
+ * @param bl : block(object) to move
+ * @param x1 : new x position
+ * @param y1 : new y position
+ * @param tick : when this was scheduled
+ * @return 0:sucess, 1:fail
+ */
 int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 {
 	int x0 = bl->x, y0 = bl->y;
@@ -404,7 +409,10 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 #endif
 	bl->x = x1;
 	bl->y = y1;
-	if (moveblock) map_addblock(bl);
+	if (moveblock) {
+		if(map_addblock(bl))
+			return 1;
+	}
 #ifdef CELL_NOSTACK
 	else map_addblcell(bl);
 #endif
@@ -677,7 +685,7 @@ int map_foreachinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x0
 	int blockcount = bl_list_count, i;
 	va_list ap;
 
-	if ( m < 0 )
+	if ( m < 0 || m >= map_num)
 		return 0;
 
 	if ( x1 < x0 )
@@ -1417,13 +1425,18 @@ int map_search_freecell(struct block_list *src, int16 m, int16 *x,int16 *y, int1
 }
 
 /*==========================================
- * Add an item to location (m,x,y)
- * Parameters
- * @item_data item attributes
- * @amount quantity
- * @m, @x, @y mapid,x,y
- * @first_charid, @second_charid, @third_charid, looting priority
- * @flag: &1 MVP item. &2 do stacking check. &4 bypass droppable check.
+ * Add an item in floor to location (m,x,y) and add restriction for those who could pickup later
+ * NB : If charids are null their no restriction for pickup
+ * @param item_data : item attributes
+ * @param amount : items quantity
+ * @param m : mapid
+ * @param x : x coordinates
+ * @param y : y coordinates
+ * @param first_charid : 1st player that could loot the item (only charid that could loot for first_get_tick duration)
+ * @param second_charid :  2nd player that could loot the item (2nd charid that could loot for second_get_charid duration)
+ * @param third_charid : 3rd player that could loot the item (3rd charid that could loot for third_get_charid duration)
+ * @param flag: &1 MVP item. &2 do stacking check. &4 bypass droppable check.
+ * @return 0:failure, x:item_gid [MIN_FLOORITEM;MAX_FLOORITEM]==[2;START_ACCOUNT_NUM]
  *------------------------------------------*/
 int map_addflooritem(struct item *item_data,int amount,int16 m,int16 x,int16 y,int first_charid,int second_charid,int third_charid,int flags)
 {
@@ -1465,7 +1478,8 @@ int map_addflooritem(struct item *item_data,int amount,int16 m,int16 x,int16 y,i
 	fitem->cleartimer=add_timer(gettick()+battle_config.flooritem_lifetime,map_clearflooritem_timer,fitem->bl.id,0);
 
 	map_addiddb(&fitem->bl);
-	map_addblock(&fitem->bl);
+	if(map_addblock(&fitem->bl))
+		return 0;
 	clif_dropflooritem(fitem);
 
 	return fitem->bl.id;
@@ -4049,7 +4063,7 @@ int do_init(int argc, char *argv[])
 	add_timer_func_list(map_clearflooritem_timer, "map_clearflooritem_timer");
 	add_timer_func_list(map_removemobs_timer, "map_removemobs_timer");
 	add_timer_interval(gettick()+1000, map_freeblock_timer, 0, 0, 60*1000);
-
+	
 	map_do_init_msg();
 	do_init_atcommand();
 	do_init_battle();

@@ -463,6 +463,7 @@ packet_ver: 5
 //0x020b,-1
 //0x020c,-1
 0x020d,-1
+0x8d6,6,ZC_CLEAR_DIALOG,2
 
 //2004-07-05aSakexe
 packet_ver: 6

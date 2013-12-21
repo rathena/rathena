@@ -9415,7 +9415,10 @@ int pc_autosave(int tid, unsigned int tick, int id, intptr_t data)
 		//Save char.
 		last_save_id = sd->bl.id;
 		save_flag = 2;
-
+#ifdef VIP_ENABLE
+		if(sd->vip.enabled) //check if we're still vip
+			chrif_req_login_operation(1, sd->status.name, 6, 0, 1, 0);
+#endif
 		chrif_save(sd,0);
 		break;
 	}

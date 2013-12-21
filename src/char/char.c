@@ -2309,14 +2309,14 @@ int mapif_vipack(int mapfd, uint32 aid, uint32 vip_time, uint8 isvip, uint32 gro
  * @param mapfd: link to mapserv for ack
  * @return 0 if succes
  */
-int loginif_reqviddata(uint32 aid, uint8 type, int add_vip_time, int mapfd) {
+int loginif_reqviddata(uint32 aid, uint8 type, int32 timediff, int mapfd) {
 	loginif_check(-1);
 #ifdef VIP_ENABLE
 	WFIFOHEAD(login_fd,15);
 	WFIFOW(login_fd,0) = 0x2742;
 	WFIFOL(login_fd,2) =  aid; //aid
 	WFIFOB(login_fd,6) = type; //type
-	WFIFOL(login_fd,7) =  add_vip_time; //req_inc_duration
+	WFIFOL(login_fd,7) =  timediff; //req_inc_duration
 	WFIFOL(login_fd,11) =  mapfd; //req_inc_duration
 	WFIFOSET(login_fd,15);
 #endif
@@ -3091,7 +3091,7 @@ int mapif_parse_req_alter_acc(int fd){
 		int aid = RFIFOL(fd,2); // account_id of who ask (-1 if server itself made this request)
 		const char* name = (char*)RFIFOP(fd,6); // name of the target character
 		int operation = RFIFOW(fd,30); // type of operation: 1-block, 2-ban, 3-unblock, 4-unban,  5 changesex, 6 vip, 7 bank
-		int timediff = RFIFOL(fd,32);
+		int32 timediff = RFIFOL(fd,32);
 		int val1 = RFIFOL(fd,36);
 		int val2 = RFIFOL(fd,40);
 		RFIFOSKIP(fd,44);
@@ -3157,7 +3157,7 @@ int mapif_parse_req_alter_acc(int fd){
 				break;
 				case 6: 
 					anwser=(val1&4); // vip_req val1=type, &1 login send return, &2 upd timestamp &4 map send awnser
-					loginif_reqviddata(aid, val1, timediff, fd); 
+					loginif_reqviddata(account_id, val1, timediff, fd); 
 					break; 
 				case 7: 
 					anwser=(val1&1); //val&1 request anwser, val1&2 save data

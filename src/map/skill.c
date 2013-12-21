@@ -6124,7 +6124,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			skill_get_splash(skill_id, skill_lv), splash_target(src),
 			src, skill_id, skill_lv, tick, flag|i,
 			skill_castend_damage_id);
-		map_addblock(src);
+		if(map_addblock(src))
+			return 1;
 		status_damage(src, src, sstatus->max_hp,0,0,1);
 		break;
 
@@ -6480,11 +6481,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case MC_IDENTIFY:
 		if(sd) {
 			clif_item_identify_list(sd);
-			if( sd->menuskill_id != MC_IDENTIFY ) {/* failed, dont consume anything, return */
+			if( sd->menuskill_id != MC_IDENTIFY ) {// failed, dont consume anything
 				map_freeblock_unlock();
 				return 1;
 			}
-			status_zap(src,0,skill_get_sp(skill_id,skill_lv)); // consume sp only if succeeded
+			else { // consume sp only if succeeded
+				struct skill_condition req = skill_get_requirement(sd,skill_id,skill_lv);
+				status_zap(src,0,req.sp);
+			}
 		}
 		break;
 
@@ -11526,12 +11530,12 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, uint16 skill
 			val1 += pc_checkskill(sd,BA_MUSICALLESSON);
 		break;
 	case DC_SERVICEFORYOU:
-		val1 = 15+skill_lv+(status->int_/10); // MaxSP percent increase TO-DO: this INT bonus value is guessed
-		val2 = 20+3*skill_lv+(status->int_/10); // SP cost reduction
-		if(sd){
-			val1 += pc_checkskill(sd,DC_DANCINGLESSON); //TO-DO This bonus value is guessed
-			val2 += pc_checkskill(sd,DC_DANCINGLESSON); //TO-DO Should be half this value
-		}
+			//val1: MaxSP percent increase
+			val1 = 15+skill_lv+(status->int_/10); //Bonus rate by Dancer's INT 
+			//val2: SP cost reduction
+			val2 = 20+3*skill_lv;
+			if(sd) val2 += (pc_checkskill(sd,DC_DANCINGLESSON)+1)/2; //Bonus rate by DC_DANCINGLESSON
+			val2 += status->int_/10; //Bonus rate by Dancer's INT
 		break;
 	case BA_ASSASSINCROSS:
 		val1 = 100+(10*skill_lv)+status->agi; // ASPD increase
@@ -14326,6 +14330,13 @@ int skill_consume_requirement( struct map_session_data *sd, uint16 skill_id, uin
 	return 1;
 }
 
+/**
+* Get skill requirements and return the value after some additional/reduction condition (such item bonus and status change)
+* @param sd Player's that will be checked
+* @param skill_id Skill that's being used
+* @param skill_lv Skill level of used skill
+* @return skill_condition Struct 'skill_condition' that store the modified skill requirements
+*/
 struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16 skill_id, uint16 skill_lv)
 {
 	struct skill_condition req;
@@ -15985,7 +15996,8 @@ struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int 
 
 	idb_put(skillunit_db, unit->bl.id, unit);
 	map_addiddb(&unit->bl);
-	map_addblock(&unit->bl);
+	if(map_addblock(&unit->bl))
+		return NULL;
 
 	// perform oninit actions
 	switch (group->skill_id) {

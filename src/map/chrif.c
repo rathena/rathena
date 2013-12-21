@@ -823,7 +823,7 @@ int chrif_changeemail(int id, const char *actual_email, const char *new_email) {
  * @val1 : extra data value to transfer for operation
  * @val2 : extra data value to transfer for operation
  */
-int chrif_req_login_operation(int aid, const char* character_name, unsigned short operation_type, int timediff, int val1, int val2) {
+int chrif_req_login_operation(int aid, const char* character_name, unsigned short operation_type, int32 timediff, int val1, int val2) {
 	chrif_check(-1);
 
 	WFIFOHEAD(char_fd,44);
@@ -1071,7 +1071,7 @@ int chrif_ban(int fd) {
 	return 0;
 }
 
-int chrif_req_charban(int aid, const char* character_name, int timediff){
+int chrif_req_charban(int aid, const char* character_name, int32 timediff){
 	chrif_check(-1);
 	
 	WFIFOHEAD(char_fd,10+NAME_LENGTH);
@@ -1520,20 +1520,25 @@ void chrif_keepalive_ack(int fd) {
 	session[fd]->flag.ping = 0;/* reset ping state, we received a packet */
 }
 
+/**
+ * Received vip-data from char-serv, fill map-serv data
+ * @param fd : char-serv file descriptor (link to char-serv)
+ */
 void chrif_parse_ack_vipActive(int fd) {
 #ifdef VIP_ENABLE
-	int aid = RFIFOL(char_fd,2);
-	uint32 vip_time = RFIFOL(char_fd,6);
-	bool isvip = RFIFOB(char_fd,10);
-	uint32 groupid = RFIFOL(char_fd,11);
+	int aid = RFIFOL(fd,2);
+	uint32 vip_time = RFIFOL(fd,6);
+	bool isvip = RFIFOB(fd,10);
+	uint32 groupid = RFIFOL(fd,11);
 	TBL_PC *sd = map_id2sd(aid);
 
-	if (sd && isvip) {
+	if(sd == NULL) return ;
+
+	sd->group_id = groupid;
+	pc_group_pc_load(sd);
+	if(isvip) {
 		sd->vip.enabled = 1;
 		sd->vip.time = vip_time;
-		sd->group_id = groupid;
-		pc_group_pc_load(sd);
-
 		// Increase storage size for VIP.
 		sd->storage_size = battle_config.vip_storage_increase + MIN_STORAGE;
 		if (sd->storage_size > MAX_STORAGE) {
@@ -1541,8 +1546,15 @@ void chrif_parse_ack_vipActive(int fd) {
 			sd->storage_size = MAX_STORAGE;
 		}
 		// Magic Stone requirement avoidance for VIP.
-		if (battle_config.vip_gemstone && pc_isvip(sd))
+		if (battle_config.vip_gemstone)
 			sd->special_state.no_gemstone = 2; // need to be done after status_calc_bl(bl,first);
+	}
+	else if (sd->vip.enabled){
+		sd->vip.enabled = 0;
+		sd->vip.time = 0;
+		sd->storage_size = MIN_STORAGE;
+		sd->special_state.no_gemstone = 0;
+		clif_displaymessage(sd->fd,"You're no longer a VIP_Member");
 	}
 #endif
 }
