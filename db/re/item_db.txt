@@ -6150,7 +6150,7 @@
 12680,Sg_Blue_Potion_Box,Siege Blue Potion Box,2,20,,200,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 11549,10; },{},{}
 12681,Nestea_Lemon,Nestea Lemon,2,0,,50,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12682,Nestea_Blacktea,Nestea Black Tea,2,0,,30,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12683,Sg_Vi_Potion_Box200,Siege Violet Potion Box (200),2,20,,200,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 11547,50; },{},{}
+12683,Sg_Vi_Potion_Box200,Siege Violet Potion Box (200),2,20,,200,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 11547,200; },{},{}
 12684,ASPD_Potion,ASPD Potion,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12685,Gryphon_Egg_Scroll,Gryphon Egg Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12686,Str_Dish20,Str Dish20,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
