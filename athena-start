@@ -23,7 +23,7 @@ get_status(){
 		ISRUN=$(ps ax | grep $(cat ${PIDFILE}) | grep $1)
 		PSRUN=$(echo "$ISRUN" | awk '{ print substr( $0, 0, 7) }')
 	fi
-	return $PSRUN
+	#return ${PSRUN} #seem to cause issue for some os
 }
 
 #cheking if already started, launch and mark in log
