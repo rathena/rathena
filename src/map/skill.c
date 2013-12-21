@@ -11537,14 +11537,7 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, uint16 skill
 			
 			//val2: SP cost reduction
 			val2 = 20+3*skill_lv;
-			switch (pc_checkskill(sd,DC_DANCINGLESSON)) { //Bonus rate by DC_DANCINGLESSON
-				//LOL, looks so weird!
-				case 1: case 2: val2 += 1; break;
-				case 3: case 4: val2 += 2; break;
-				case 5: case 6: val2 += 3; break;
-				case 7: case 8: val2 += 4; break;
-				case 9: case 10: val2 += 5; break;
-			}
+			val2 += (pc_checkskill(sd,DC_DANCINGLESSON)+1)/2; //Bonus rate by DC_DANCINGLESSON
 			val2 += status->int_/10; //Bonus rate by Dancer's INT
 		}
 		break;
