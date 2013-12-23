@@ -6637,14 +6637,11 @@ BUILDIN_FUNC(getnameditem)
 
 /*==========================================
  * gets a random item ID from an item group [Skotlex]
- * groupranditem group_num
+ * groupranditem <group_num>{,<sub_group>};
  *------------------------------------------*/
 BUILDIN_FUNC(grouprandomitem)
 {
-	int group;
-
-	group = script_getnum(st,2);
-	script_pushint(st,itemdb_searchrandomid(group));
+	script_pushint(st,itemdb_searchrandomid(script_getnum(st,2),script_getnum(st,3)));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -17510,42 +17507,70 @@ BUILDIN_FUNC(checkre)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/* getrandgroupitem <group_id>,<quantity> */
+/* getrandgroupitem <group_id>,<quantity>{,<sub_group>} */
 BUILDIN_FUNC(getrandgroupitem) {
 	TBL_PC* sd;
-	int i, get_count = 0, flag, nameid, group = script_getnum(st, 2), qty = script_getnum(st,3);
+	int i, get_count = 0, flag;
+	uint16 nameid, group = script_getnum(st,2), qty = script_getnum(st,3);
+	uint8 sub_group = script_getnum(st,4);
 	struct item item_tmp;
 
-	if( !( sd = script_rid2sd(st) ) )
-		return 0;
+	if (!( sd = script_rid2sd(st)))
+		return SCRIPT_CMD_SUCCESS;
 
-	if( qty <= 0 ) {
-		ShowError("getrandgroupitem: qty is <= 0!\n");
-		return 1;
+	if (!group) {
+		ShowError("getrandgroupitem: Invalid group id (%d)!\n",script_getnum(st,2));
+		return SCRIPT_CMD_FAILURE;
 	}
-	if( (nameid = itemdb_searchrandomid(group)) == UNKNOWN_ITEM_ID ) {
-		return 1; //ensure valid itemid
+
+	if ((nameid = itemdb_searchrandomid(group,sub_group)) == UNKNOWN_ITEM_ID) {
+		return SCRIPT_CMD_FAILURE; //ensure valid itemid
 	}
 
 	memset(&item_tmp,0,sizeof(item_tmp));
 	item_tmp.nameid   = nameid;
 	item_tmp.identify = itemdb_isidentified(nameid);
 
-	//Check if it's stackable.
-	if (!itemdb_isstackable(nameid))
-		get_count = 1;
-	else
-		get_count = qty;
+	if (!qty)
+		qty = itemdb_get_randgroupitem_count(group,sub_group,nameid);
 
-	for (i = 0; i < qty; i += get_count) {
+	//Check if it's stackable.
+	if (!itemdb_isstackable(nameid)) {
+		item_tmp.amount = 1;
+		get_count = qty;
+	}
+	else {
+		item_tmp.amount = qty;
+		get_count = 1;
+	}
+
+	for (i = 0; i < get_count; i++) {
 		// if not pet egg
 		if (!pet_create_egg(sd, nameid)) {
-			if ((flag = pc_additem(sd, &item_tmp, get_count, LOG_TYPE_SCRIPT))) {
-				clif_additem(sd, 0, 0, flag);
-				if( pc_candrop(sd,&item_tmp) )
-					map_addflooritem(&item_tmp,get_count,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
+			if ((flag = pc_additem(sd,&item_tmp,item_tmp.amount,LOG_TYPE_SCRIPT))) {
+				clif_additem(sd,0,0,flag);
+				if (pc_candrop(sd,&item_tmp))
+					map_addflooritem(&item_tmp,item_tmp.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 			}
 		}
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/* getgroupitem <group_id>;
+ * Gives item(s) to the attached player based on item group contents
+ */
+BUILDIN_FUNC(getgroupitem) {
+	TBL_PC *sd;
+	int group_id = script_getnum(st,2);
+	
+	if (!(sd = script_rid2sd(st)))
+		return SCRIPT_CMD_SUCCESS;
+	
+	if (itemdb_pc_get_itemgroup(group_id,sd->itemid,sd)) {
+		ShowError("getgroupitem: Invalid group id '%d' specified.",group_id);
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	return SCRIPT_CMD_SUCCESS;
@@ -18298,7 +18323,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(rentitem,"vi"),
 	BUILDIN_DEF(getitem2,"viiiiiiii?"),
 	BUILDIN_DEF(getnameditem,"vv"),
-	BUILDIN_DEF2(grouprandomitem,"groupranditem","i"),
+	BUILDIN_DEF2(grouprandomitem,"groupranditem","i?"),
 	BUILDIN_DEF(makeitem,"visii"),
 	BUILDIN_DEF(delitem,"vi?"),
 	BUILDIN_DEF(delitem2,"viiiiiiii?"),
@@ -18690,7 +18715,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(is_function,"s"),
 	BUILDIN_DEF(get_revision,""),
 	BUILDIN_DEF(freeloop,"i"),
-	BUILDIN_DEF(getrandgroupitem,"ii"),
+	BUILDIN_DEF(getrandgroupitem,"ii?"),
 	BUILDIN_DEF(cleanmap,"s"),
 	BUILDIN_DEF2(cleanmap,"cleanarea","siiii"),
 	BUILDIN_DEF(npcskill,"viii"),
@@ -18731,6 +18756,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(vip_status,"i?"),
 	BUILDIN_DEF(vip_time,"i?"),
 	BUILDIN_DEF(bonus_script,"si???"),
+	BUILDIN_DEF(getgroupitem,"i"),
 
 #include "../custom/script_def.inc"
 

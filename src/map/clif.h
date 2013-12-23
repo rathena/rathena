@@ -353,11 +353,11 @@ enum clif_messages {
 };
 
 enum e_personalinfo {
- PINFO_BASIC = 0,
- PINFO_PREMIUM,
- PINFO_SERVER,
- PINFO_CAFE,
- PINFO_MAX,
+	PINFO_BASIC = 0,
+	PINFO_PREMIUM,
+	PINFO_SERVER,
+	PINFO_CAFE,
+	PINFO_MAX,
 };
 
 int clif_setip(const char* ip);
@@ -836,5 +836,7 @@ void clif_channel_msg(struct Channel *channel, struct map_session_data *sd, char
 
 void clif_ranklist(struct map_session_data *sd, int16 rankingType);
 void clif_update_rankingpoint(struct map_session_data *sd, int rankingtype, int point);
+
+//void clif_broadcast_obtain_special_item(); ///TODO!
 
 #endif /* _CLIF_H_ */

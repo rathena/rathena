@@ -17176,6 +17176,9 @@ void clif_parse_GMFullStrip(int fd, struct map_session_data *sd) {
 	is_atcommand(fd, sd, cmd, 1);
 }
 
+///TODO: Special item that obtained, must be broadcasted by this packet
+//void clif_broadcast_obtain_special_item() {}
+
 #ifdef DUMP_UNKNOWN_PACKET
 void DumpUnknow(int fd,TBL_PC *sd,int cmd,int packet_len){
 	const char* packet_txt = "save/packet.txt";
