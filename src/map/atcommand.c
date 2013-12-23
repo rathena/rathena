@@ -5877,7 +5877,7 @@ ACMD_FUNC(autolootitem)
  * @autoloottype
  * Flags:
  * 1:   IT_HEALING,  2:   IT_UNKNOWN,  4:    IT_USABLE, 8:    IT_ETC,
- * 16:  IT_WEAPON,   32:  IT_ARMOR,    64:   IT_CARD,   128:  IT_PETEGG,
+ * 16:  IT_ARMOR,    32:  IT_WEAPON,   64:   IT_CARD,   128:  IT_PETEGG,
  * 256: IT_PETARMOR, 512: IT_UNKNOWN2, 1024: IT_AMMO,   2048: IT_DELAYCONSUME
  * 262144: IT_CASH
  *------------------------------------------
@@ -5913,10 +5913,10 @@ ACMD_FUNC(autoloottype)
 			type = IT_USABLE;
 		else if ((strncmp(message, "etc", 3) == 0) || (atoi(message) == 3))
 			type = IT_ETC;
-		else if ((strncmp(message, "weapon", 3) == 0) || (atoi(message) == 4))
-			type = IT_WEAPON;
-		else if ((strncmp(message, "armor", 3) == 0) || (atoi(message) == 5))
+		else if ((strncmp(message, "armor", 3) == 0) || (atoi(message) == 4))
 			type = IT_ARMOR;
+		else if ((strncmp(message, "weapon", 3) == 0) || (atoi(message) == 5))
+			type = IT_WEAPON;
 		else if ((strncmp(message, "card", 3) == 0) || (atoi(message) == 6))
 			type = IT_CARD;
 		else if ((strncmp(message, "petegg", 4) == 0) || (atoi(message) == 7))
@@ -5959,7 +5959,7 @@ ACMD_FUNC(autoloottype)
 			break;
 		case 3:
 			clif_displaymessage(fd, msg_txt(sd,1486)); // To add an item type to the list, use "@aloottype +<type name or ID>". To remove an item type, use "@aloottype -<type name or ID>".
-			clif_displaymessage(fd, msg_txt(sd,1487)); // Type List: healing = 0, usable = 2, etc = 3, weapon = 4, armor = 5, card = 6, petegg = 7, petarmor = 8, ammo = 10
+			clif_displaymessage(fd, msg_txt(sd,1487)); // Type List: healing = 0, usable = 2, etc = 3, armor = 4, weapon = 5, card = 6, petegg = 7, petarmor = 8, ammo = 10
 			clif_displaymessage(fd, msg_txt(sd,1488)); // "@aloottype reset" will clear your autoloottype list.
 			if (sd->state.autoloottype == ITEM_NONE)
 				clif_displaymessage(fd, msg_txt(sd,1489)); // Your autoloottype list is empty.
