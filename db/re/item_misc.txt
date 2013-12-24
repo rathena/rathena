@@ -1,5 +1,7 @@
+//
+// Structure of Database:
 // GroupID,ItemID,Rate
-// 
+//
 // Cookie Bag
 7,529,5		//Candy
 7,530,5		//Candy Cane

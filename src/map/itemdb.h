@@ -11,7 +11,8 @@
 // 32k array entries in array (the rest goes to the db)
 #define MAX_ITEMDB 0x8000
 
-#define MAX_RANDITEM	11000
+//Use apple for unknown items.
+#define UNKNOWN_ITEM_ID 512
 
 // The maximum number of item delays
 #define MAX_ITEMDELAYS	10
@@ -21,6 +22,24 @@
 /* maximum amount of items a combo may require */
 #define MAX_ITEMS_PER_COMBO 6
 
+//The only item group required by the code to be known. See const.txt for the full list.
+#define IG_FINDINGORE 6
+#define IG_POTION 37
+
+#define MAX_ITEMGROUP 390 ///The max. item group count (increase this when needed).
+
+#define MAX_ITEMGROUP_RAND 11000 ///Max item slots for random item group
+#define MAX_ITEMGROUP_MUST 20 ///Max item slots for 'must' item group
+#define MAX_ITEMGROUP_RANDGROUP 5	///Max group for random item
+
+#define CARD0_FORGE 0x00FF
+#define CARD0_CREATE 0x00FE
+#define CARD0_PET ((short)0xFF00)
+
+//Marks if the card0 given is "special" (non-item id used to mark pets/created items. [Skotlex]
+#define itemdb_isspecial(i) (i == CARD0_FORGE || i == CARD0_CREATE || i == CARD0_PET)
+
+///Enum of item id (for hardcoded purpose)
 enum item_itemid {
 	ITEMID_EMPERIUM = 714,
 	ITEMID_YELLOW_GEMSTONE = 715,
@@ -82,22 +101,6 @@ enum e_item_job {
 	ITEMJ_THIRD_TRANS = 0x10,
 	ITEMJ_THIRD_BABY  = 0x20,
 };
-
-//The only item group required by the code to be known. See const.txt for the full list.
-#define IG_FINDINGORE 6
-#define IG_POTION 37
-//The max. item group count (increase this when needed).
-#define MAX_ITEMGROUP 71
-
-#define CARD0_FORGE 0x00FF
-#define CARD0_CREATE 0x00FE
-#define CARD0_PET ((short)0xFF00)
-
-//Marks if the card0 given is "special" (non-item id used to mark pets/created items. [Skotlex]
-#define itemdb_isspecial(i) (i == CARD0_FORGE || i == CARD0_CREATE || i == CARD0_PET)
-
-//Use apple for unknown items.
-#define UNKNOWN_ITEM_ID 512
 
 struct item_data {
 	uint16 nameid;
@@ -162,9 +165,21 @@ struct item_data {
 	unsigned char combos_count;
 };
 
-struct item_group {
-	int nameid[MAX_RANDITEM];
-	int qty; //Counts amount of items in the group.
+/* Struct of item group */
+struct s_item_group {
+	uint16 nameid, ///item id
+		duration; ///duration if item as rental item
+	uint16 amount; ///amount of item will be obtained
+	bool isAnnounced, ///broadcast if player get this item
+		isNamed; ///named the item (if possible)
+	char bound; ///makes the item as bound item (according to bound type)
+};
+
+/* Struct of item group that will be used for db */
+struct s_item_group_db {
+	struct s_item_group must[MAX_ITEMGROUP_MUST];
+	struct s_item_group random[MAX_ITEMGROUP_RANDGROUP][MAX_ITEMGROUP_RAND]; ///NOTE: Is this good?
+	uint16 must_qty, random_qty[MAX_ITEMGROUP_RANDGROUP];
 };
 
 struct item_combo {
@@ -208,7 +223,7 @@ struct item_data* itemdb_exists(int nameid);
 const char* itemdb_typename(int type);
 
 int itemdb_group_bonus(struct map_session_data* sd, int itemid);
-int itemdb_searchrandomid(int flags);
+int itemdb_searchrandomid(int group_id, uint8 sub_group);
 
 #define itemdb_value_buy(n) itemdb_search(n)->value_buy
 #define itemdb_value_sell(n) itemdb_search(n)->value_sell
@@ -241,6 +256,9 @@ int itemdb_isstackable(int);
 int itemdb_isstackable2(struct item_data *);
 uint64 itemdb_unique_id(int8 flag, int64 value); // Unique Item ID
 bool itemdb_isNoEquip(struct item_data *id, uint16 m);
+
+uint8 itemdb_pc_get_itemgroup(uint16 group_id, uint16 nameid, struct map_session_data *sd);
+uint16 itemdb_get_randgroupitem_count(uint16 group_id, uint8 sub_group, uint16 nameid);
 
 DBMap * itemdb_get_combodb();
 

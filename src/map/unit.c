@@ -42,30 +42,43 @@
 #include <string.h>
 
 
-const short dirx[8]={0,-1,-1,-1,0,1,1,1};
-const short diry[8]={1,1,0,-1,-1,-1,0,1};
+// Directions values
+// 1 0 7
+// 2 . 6
+// 3 4 5
+const short dirx[8]={0,-1,-1,-1,0,1,1,1}; ///lookup to know where will move to x according dir
+const short diry[8]={1,1,0,-1,-1,-1,0,1}; ///lookup to know where will move to y according dir
 
-struct unit_data* unit_bl2ud(struct block_list *bl)
-{
-	if( bl == NULL) return NULL;
-	if( bl->type == BL_PC)  return &((struct map_session_data*)bl)->ud;
-	if( bl->type == BL_MOB) return &((struct mob_data*)bl)->ud;
-	if( bl->type == BL_PET) return &((struct pet_data*)bl)->ud;
-	if( bl->type == BL_NPC) return &((struct npc_data*)bl)->ud;
-	if( bl->type == BL_HOM) return &((struct homun_data*)bl)->ud;
-	if( bl->type == BL_MER) return &((struct mercenary_data*)bl)->ud;
-	if( bl->type == BL_ELEM) return &((struct elemental_data*)bl)->ud;
-	return NULL;
-}
-
+//early declaration
 static int unit_attack_timer(int tid, unsigned int tick, int id, intptr_t data);
 static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data);
 
 /**
-* Tells a unit to walk to a specific coordinate
-* @param bl: Unit to walk [ALL]
-* @return 1: Success 0: Fail
-**/
+ * Get the unit_data related to the bl
+ * @param bl : Object to get the unit_data from \n
+ *	valid type are : BL_PC|BL_MOB|BL_PET|BL_NPC|BL_HOM|BL_MER|BL_ELEM
+ * @return unit_data of bl or NULL
+ */
+struct unit_data* unit_bl2ud(struct block_list *bl)
+{
+	if( bl == NULL) return NULL;
+	switch(bl->type){
+	case BL_PC: return &((struct map_session_data*)bl)->ud;
+	case BL_MOB: return &((struct mob_data*)bl)->ud;
+	case BL_PET: return &((struct pet_data*)bl)->ud;
+	case BL_NPC: return &((struct npc_data*)bl)->ud;
+	case BL_HOM: return &((struct homun_data*)bl)->ud;
+	case BL_MER: return &((struct mercenary_data*)bl)->ud;
+	case BL_ELEM: return &((struct elemental_data*)bl)->ud;
+	default : return NULL;
+	}
+}
+
+/**
+ * Tells a unit to walk to a specific coordinate
+ * @param bl: Unit to walk [ALL]
+ * @return 1: Success 0: Fail
+ */
 int unit_walktoxy_sub(struct block_list *bl)
 {
 	int i;
@@ -120,10 +133,10 @@ int unit_walktoxy_sub(struct block_list *bl)
 
 
 /**
-* Retrieve the direct master of a bl if one exists.
-* @param bl: char to get his master [HOM|ELEM|PET|MER]
-* @return map_session_data of master or NULL
-**/
+ * Retrieve the direct master of a bl if one exists.
+ * @param bl: char to get his master [HOM|ELEM|PET|MER]
+ * @return map_session_data of master or NULL
+ */
 TBL_PC* unit_get_master(struct block_list *bl)
 {
 	if(bl)
@@ -137,10 +150,10 @@ TBL_PC* unit_get_master(struct block_list *bl)
 }
 
 /**
-* Retrieve a unit's master's teleport timer
-* @param bl: char to get his master's teleport timer [HOM|ELEM|PET|MER]
-* @return timer or NULL
-**/
+ * Retrieve a unit's master's teleport timer
+ * @param bl: char to get his master's teleport timer [HOM|ELEM|PET|MER]
+ * @return timer or NULL
+ */
 int* unit_get_masterteleport_timer(struct block_list *bl)
 {
 	if(bl)
@@ -154,14 +167,14 @@ int* unit_get_masterteleport_timer(struct block_list *bl)
 }
 
 /**
-* Warps a unit to its master master has gone out of site (3 second default) \n
-* Can be any object with a master [MOB|PET|HOM|MER|ELEM]
-* @param tid: Timer
-* @param tick: tick (unused)
-* @param id: Unit to warp
-* @param data: Data transferred from timer call
-* @return 0
-**/
+ * Warps a unit to its master master has gone out of site (3 second default) \n
+ * Can be any object with a master [MOB|PET|HOM|MER|ELEM]
+ * @param tid: Timer
+ * @param tick: tick (unused)
+ * @param id: Unit to warp
+ * @param data: Data transferred from timer call
+ * @return 0
+ */
 int unit_teleport_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct block_list *bl = map_id2bl(id);
@@ -184,11 +197,11 @@ int unit_teleport_timer(int tid, unsigned int tick, int id, intptr_t data)
 }
 
 /**
-* Checks if a slave unit is outside their max distance from master \n
-* If so, starts a timer for (default: 3 seconds) which will teleport the unit back to master
-* @param sbl: Object with a master [MOB|PET|HOM|MER|ELEM]
-* @return 0
-**/
+ * Checks if a slave unit is outside their max distance from master \n
+ * If so, starts a timer for (default: 3 seconds) which will teleport the unit back to master
+ * @param sbl: Object with a master [MOB|PET|HOM|MER|ELEM]
+ * @return 0
+ */
 int unit_check_start_teleport_timer(struct block_list *sbl)
 {
 	TBL_PC *msd = unit_get_master(sbl);
@@ -217,13 +230,13 @@ int unit_check_start_teleport_timer(struct block_list *sbl)
 }
 
 /**
-* Defines when to refresh the walking character to object and restart the timer if applicable \n
-* Also checks for speed update, target location, and slave teleport timers
-* @param tid: Timer ID
-* @param tick: Current tick to decide next timer update
-* @param data: Data used in timer calls
-* @return 0 or unit_walktoxy_sub()
-**/
+ * Defines when to refresh the walking character to object and restart the timer if applicable \n
+ * Also checks for speed update, target location, and slave teleport timers
+ * @param tid: Timer ID
+ * @param tick: Current tick to decide next timer update
+ * @param data: Data used in timer calls
+ * @return 0 or unit_walktoxy_sub()
+ */
 static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	int i;
@@ -388,13 +401,13 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 }
 
 /**
-* Delays an xy timer
-* @param tid: Timer ID
-* @param tick: Unused
-* @param id: ID of bl to delay timer on
-* @param data: Data used in timer calls
-* @return 1: Success 0: Fail (No valid bl)
-**/
+ * Delays an xy timer
+ * @param tid: Timer ID
+ * @param tick: Unused
+ * @param id: ID of bl to delay timer on
+ * @param data: Data used in timer calls
+ * @return 1: Success 0: Fail (No valid bl)
+ */
 int unit_delay_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct block_list *bl = map_id2bl(id);
@@ -406,13 +419,13 @@ int unit_delay_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data)
 }
 
 /**
-* Delays an walk-to-bl timer
-* @param tid: Timer ID
-* @param tick: Unused
-* @param id: ID of bl to delay timer on
-* @param data: Data used in timer calls (target bl)
-* @return 1: Success 0: Fail (No valid bl or target)
-**/
+ * Delays an walk-to-bl timer
+ * @param tid: Timer ID
+ * @param tick: Unused
+ * @param id: ID of bl to delay timer on
+ * @param data: Data used in timer calls (target bl)
+ * @return 1: Success 0: Fail (No valid bl or target)
+ */
 int unit_delay_walktobl_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct block_list *bl = map_id2bl(id), *tbl = map_id2bl(data);
@@ -428,17 +441,17 @@ int unit_delay_walktobl_timer(int tid, unsigned int tick, int id, intptr_t data)
 }
 
 /**
-* Begins the function of walking a unit to an x,y location \n
-* This is where the path searches and unit can_move checks are done
-* @param bl: Object to send to x,y coordinate
-* @param x: X coordinate where the object will be walking to
-* @param y: Y coordinate where the object will be walking to
-* @param flag: Parameter to decide how to walk \n
-*	&1: Easy walk (fail if CELL_CHKNOPASS is in direct path) \n
-*	&2: Force walking (override can_move) \n
-*	&4: Delay walking for can_move
-* @return 1: Success 0: Fail or unit_walktoxy_sub()
-**/
+ * Begins the function of walking a unit to an x,y location \n
+ * This is where the path searches and unit can_move checks are done
+ * @param bl: Object to send to x,y coordinate
+ * @param x: X coordinate where the object will be walking to
+ * @param y: Y coordinate where the object will be walking to
+ * @param flag: Parameter to decide how to walk \n
+ *	&1: Easy walk (fail if CELL_CHKNOPASS is in direct path) \n
+ *	&2: Force walking (override can_move) \n
+ *	&4: Delay walking for can_move
+ * @return 1: Success 0: Fail or unit_walktoxy_sub()
+ */
 int unit_walktoxy( struct block_list *bl, short x, short y, int flag)
 {
 	struct unit_data* ud = NULL;
@@ -496,11 +509,11 @@ int unit_walktoxy( struct block_list *bl, short x, short y, int flag)
 }
 
 /**
-* Sets a mob's CHASE/FOLLOW state \n
-* This should not be done if there's no path to reach
-* @param bl: Mob to set state on
-* @param flag: Whether to set state or not
-**/
+ * Sets a mob's CHASE/FOLLOW state \n
+ * This should not be done if there's no path to reach
+ * @param bl: Mob to set state on
+ * @param flag: Whether to set state or not
+ */
 static inline void set_mobstate(struct block_list* bl, int flag)
 {
 	struct mob_data* md = BL_CAST(BL_MOB,bl);
@@ -510,13 +523,13 @@ static inline void set_mobstate(struct block_list* bl, int flag)
 }
 
 /**
-* Timer to walking a unit to another unit's location \n
-* Calls unit_walktoxy_sub once determined the unit can move
-* @param tid: Object's timer ID
-* @param id: Object's ID
-* @param data: Data passed through timer function (target)
-* @return 0
-**/
+ * Timer to walking a unit to another unit's location \n
+ * Calls unit_walktoxy_sub once determined the unit can move
+ * @param tid: Object's timer ID
+ * @param id: Object's ID
+ * @param data: Data passed through timer function (target)
+ * @return 0
+ */
 static int unit_walktobl_sub(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct block_list *bl = map_id2bl(id);
@@ -534,15 +547,15 @@ static int unit_walktobl_sub(int tid, unsigned int tick, int id, intptr_t data)
 }
 
 /**
-* Tells a unit to walk to a target's location (chase)
-* @param bl: Object that is walking to target
-* @param tbl: Target object
-* @param range: How close to get to target (or attack range if flag&2)
-* @param flag: Extra behaviour \n
-*	&1: Use hard path seek (obstacles will be walked around if possible) \n
-*	&2: Start attacking upon arrival within range, otherwise just walk to target
-* @return 1: Started walking or set timer 0: Failed
-**/
+ * Tells a unit to walk to a target's location (chase)
+ * @param bl: Object that is walking to target
+ * @param tbl: Target object
+ * @param range: How close to get to target (or attack range if flag&2)
+ * @param flag: Extra behaviour \n
+ *	&1: Use hard path seek (obstacles will be walked around if possible) \n
+ *	&2: Start attacking upon arrival within range, otherwise just walk to target
+ * @return 1: Started walking or set timer 0: Failed
+ */
 int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, int flag)
 {
 	struct unit_data *ud = NULL;
@@ -601,10 +614,10 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, int 
 }
 
 /**
-* Set a unit to run, checking for obstacles
-* @param bl: Object that is running
-* @return 1: Success 0: Fail
-**/
+ * Set a unit to run, checking for obstacles
+ * @param bl: Object that is running
+ * @return 1: Success 0: Fail
+ */
 int unit_run(struct block_list *bl)
 {
 	struct status_change *sc = status_get_sc(bl);
@@ -675,12 +688,13 @@ int unit_run(struct block_list *bl)
 	return 1;
 }
 
-/** [Jobbie/3CeAM] \n
-* Exclusive function used for Wug Dash
-* @param bl: Object that is dashing
-* @param sd: Player
-* @return 1: Success 0: Fail
-**/
+/**
+ * Char movement with wugdash
+ * @author [Jobbie/3CeAM]
+ * @param bl: Object that is dashing
+ * @param sd: Player
+ * @return 1: Success 0: Fail
+ */
 int unit_wugdash(struct block_list *bl, struct map_session_data *sd)
 {
 	struct status_change *sc = status_get_sc(bl);
@@ -690,7 +704,7 @@ int unit_wugdash(struct block_list *bl, struct map_session_data *sd)
 	if (!(sc && sc->data[SC_WUGDASH]))
 		return 0;
 
-	nullpo_ret(sd);
+	nullpo_ret(sd); //FIXME do we really need that check since we rechecking afterward
 	nullpo_ret(bl);
 
 	if (!unit_can_move(bl)) {
@@ -746,12 +760,12 @@ int unit_wugdash(struct block_list *bl, struct map_session_data *sd)
 }
 
 /**
-* Makes unit attempt to run away from target using hard paths
-* @param bl: Object that is running away from target
-* @param target: Target
-* @param dist: How far bl should run
-* @return 1: Success 0: Fail
-**/
+ * Makes unit attempt to run away from target using hard paths
+ * @param bl: Object that is running away from target
+ * @param target: Target
+ * @param dist: How far bl should run
+ * @return 1: Success 0: Fail
+ */
 int unit_escape(struct block_list *bl, struct block_list *target, short dist)
 {
 	uint8 dir = map_calc_dir(target, bl->x, bl->y);
@@ -761,14 +775,14 @@ int unit_escape(struct block_list *bl, struct block_list *target, short dist)
 }
 
 /**
-* Instant warps a unit to x,y coordinate
-* @param bl: Object to instant warp
-* @param dst_x: X coordinate to warp to
-* @param dst_y: Y coordinate to warp to
-* @param easy: Easy(1) or Hard(0) path check (hard attempts to go around obstacles)
-* @param checkpath: Whether or not to do a cell and path check for NOPASS and NOREACH
-* @return 1: Success 0: Fail
-**/
+ * Instant warps a unit to x,y coordinate
+ * @param bl: Object to instant warp
+ * @param dst_x: X coordinate to warp to
+ * @param dst_y: Y coordinate to warp to
+ * @param easy: Easy(1) or Hard(0) path check (hard attempts to go around obstacles)
+ * @param checkpath: Whether or not to do a cell and path check for NOPASS and NOREACH
+ * @return 1: Success 0: Fail
+ */
 int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool checkpath)
 {
 	short dx,dy;
@@ -833,11 +847,11 @@ int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool
 }
 
 /**
-* Sets direction of a unit
-* @param bl: Object to set direction
-* @param dir: Direction (0-7)
-* @return 0
-**/
+ * Sets direction of a unit
+ * @param bl: Object to set direction
+ * @param dir: Direction (0-7)
+ * @return 0
+ */
 int unit_setdir(struct block_list *bl,unsigned char dir)
 {
 	struct unit_data *ud;
@@ -852,10 +866,10 @@ int unit_setdir(struct block_list *bl,unsigned char dir)
 }
 
 /**
-* Gets direction of a unit
-* @param bl: Object to get direction
-* @return direction (0-7)
-**/
+ * Gets direction of a unit
+ * @param bl: Object to get direction
+ * @return direction (0-7)
+ */
 uint8 unit_getdir(struct block_list *bl)
 {
 	struct unit_data *ud;
@@ -866,15 +880,15 @@ uint8 unit_getdir(struct block_list *bl)
 }
 
 /**
-* Pushes a unit in a direction by a given amount of cells \n
-* There is no path check, only map cell restrictions are respected
-* @param bl: Object to push
-* @param dx: Destination cell X
-* @param dy: Destination cell Y
-* @param count: How many cells to push bl
-* @param flag: Whether or not to send position packet updates
-* @return count (can be modified due to map cell restrictions)
-**/
+ * Pushes a unit in a direction by a given amount of cells \n
+ * There is no path check, only map cell restrictions are respected
+ * @param bl: Object to push
+ * @param dx: Destination cell X
+ * @param dy: Destination cell Y
+ * @param count: How many cells to push bl
+ * @param flag: Whether or not to send position packet updates
+ * @return count (can be modified due to map cell restrictions)
+ */
 int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag)
 {
 	if(count) {
@@ -934,16 +948,16 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag)
 }
 
 /**
-* Warps a unit to a map/position \n
-* pc_setpos is used for player warping \n
-* This function checks for "no warp" map flags, so it's safe to call without doing nowarpto/nowarp checks
-* @param bl: Object to warp
-* @param m: Map ID from bl structure (NOT index)
-* @param x: Destination cell X
-* @param y: Destination cell Y
-* @param type: Clear type used in clif_clearunit_area()
-* @return Success(0); Failed(1); Error(2); unit_remove_map() Failed(3); map_addblock Failed(4)
-**/
+ * Warps a unit to a map/position \n
+ * pc_setpos is used for player warping \n
+ * This function checks for "no warp" map flags, so it's safe to call without doing nowarpto/nowarp checks
+ * @param bl: Object to warp
+ * @param m: Map ID from bl structure (NOT index)
+ * @param x: Destination cell X
+ * @param y: Destination cell Y
+ * @param type: Clear type used in clif_clearunit_area()
+ * @return Success(0); Failed(1); Error(2); unit_remove_map() Failed(3); map_addblock Failed(4)
+ */
 int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
 {
 	struct unit_data *ud;
@@ -1011,15 +1025,15 @@ int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
 }
 
 /**
-* Stops a unit from walking
-* @param bl: Object to stop walking
-* @param type: Options \n
-*	&0x1: Issue a fixpos packet afterwards \n
-*	&0x2: Force the unit to move one cell if it hasn't yet \n
-*	&0x4: Enable moving to the next cell when unit was already half-way there \n
-*		(may cause on-touch/place side-effects, such as a scripted map change)
-* @return Success(1); Failed(0);
-**/
+ * Stops a unit from walking
+ * @param bl: Object to stop walking
+ * @param type: Options \n
+ *	&0x1: Issue a fixpos packet afterwards \n
+ *	&0x2: Force the unit to move one cell if it hasn't yet \n
+ *	&0x4: Enable moving to the next cell when unit was already half-way there \n
+ *		(may cause on-touch/place side-effects, such as a scripted map change)
+ * @return Success(1); Failed(0);
+ */
 int unit_stop_walking(struct block_list *bl,int type)
 {
 	struct unit_data *ud;
@@ -1064,13 +1078,13 @@ int unit_stop_walking(struct block_list *bl,int type)
 }
 
 /**
-* Initiates a skill use by a unit
-* @param src: Source object initiating skill use
-* @param target_id: Target ID (bl->id)
-* @param skill_id: Skill ID
-* @param skill_lv: Skill Level
-* @return unit_skilluse_id2()
-**/
+ * Initiates a skill use by a unit
+ * @param src: Source object initiating skill use
+ * @param target_id: Target ID (bl->id)
+ * @param skill_id: Skill ID
+ * @param skill_lv: Skill Level
+ * @return unit_skilluse_id2()
+ */
 int unit_skilluse_id(struct block_list *src, int target_id, uint16 skill_id, uint16 skill_lv)
 {
 	return unit_skilluse_id2(
@@ -1081,10 +1095,10 @@ int unit_skilluse_id(struct block_list *src, int target_id, uint16 skill_id, uin
 }
 
 /**
-* Checks if a unit is walking
-* @param bl: Object to check walk status
-* @return Walking(1); Not Walking(0)
-**/
+ * Checks if a unit is walking
+ * @param bl: Object to check walk status
+ * @return Walking(1); Not Walking(0)
+ */
 int unit_is_walking(struct block_list *bl)
 {
 	struct unit_data *ud = unit_bl2ud(bl);
@@ -1093,13 +1107,14 @@ int unit_is_walking(struct block_list *bl)
 	return (ud->walktimer != INVALID_TIMER);
 }
 
-/** [Skotlex] \n
-* Checks if a unit is able to move based on status changes \n
-* View the StatusChangeStateTable in status.c for a list of statuses \n
-* Some statuses are still checked here due too specific variables
-* @param bl: Object to check
-* @return Can move(1); Can't move(0)
-**/
+/** 
+ * Checks if a unit is able to move based on status changes \n
+ * View the StatusChangeStateTable in status.c for a list of statuses \n
+ * Some statuses are still checked here due too specific variables
+ * @author [Skotlex]
+ * @param bl: Object to check
+ * @return Can move(1); Can't move(0)
+ */
 int unit_can_move(struct block_list *bl) {
 	struct map_session_data *sd;
 	struct unit_data *ud;
@@ -1150,12 +1165,12 @@ int unit_can_move(struct block_list *bl) {
 }
 
 /**
-* Resumes running (RA_WUGDASH or TK_RUN) after a walk delay
-* @param tid: Timer ID
-* @param id: Object ID
-* @param data: Data passed through timer function (unit_data)
-* @return 0
-**/
+ * Resumes running (RA_WUGDASH or TK_RUN) after a walk delay
+ * @param tid: Timer ID
+ * @param id: Object ID
+ * @param data: Data passed through timer function (unit_data)
+ * @return 0
+ */
 int unit_resume_running(int tid, unsigned int tick, int id, intptr_t data)
 {
 
@@ -1176,15 +1191,15 @@ int unit_resume_running(int tid, unsigned int tick, int id, intptr_t data)
 }
 
 /**
-* Applies a walk delay to a unit
-* @param bl: Object to apply walk delay to
-* @param tick: Current tick
-* @param delay: Amount of time to set walk delay
-* @param type: Type of delay \n
-*	0: Damage induced delay; Do not change previous delay \n
-*	1: Skill induced delay; Walk delay can only be increased, not decreased
-* @return Success(1); Fail(0);
-**/
+ * Applies a walk delay to a unit
+ * @param bl: Object to apply walk delay to
+ * @param tick: Current tick
+ * @param delay: Amount of time to set walk delay
+ * @param type: Type of delay \n
+ *	0: Damage induced delay; Do not change previous delay \n
+ *	1: Skill induced delay; Walk delay can only be increased, not decreased
+ * @return Success(1); Fail(0);
+ */
 int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int type)
 {
 	struct unit_data *ud = unit_bl2ud(bl);
@@ -1221,15 +1236,15 @@ int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int 
 }
 
 /**
-* Performs checks for a unit using a skill and executes after cast time completion
-* @param src: Object using skill
-* @param target_id: Target ID (bl->id)
-* @param skill_id: Skill ID
-* @param skill_lv: Skill Level
-* @param casttime: Initial cast time before cast time reductions
-* @param castcancel: Whether or not the skill can be cancelled by interuption (hit)
-* @return Success(1); Fail(0);
-**/
+ * Performs checks for a unit using a skill and executes after cast time completion
+ * @param src: Object using skill
+ * @param target_id: Target ID (bl->id)
+ * @param skill_id: Skill ID
+ * @param skill_lv: Skill Level
+ * @param casttime: Initial cast time before cast time reductions
+ * @param castcancel: Whether or not the skill can be cancelled by interuption (hit)
+ * @return Success(1); Fail(0);
+ */
 int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, uint16 skill_lv, int casttime, int castcancel)
 {
 	struct unit_data *ud;
@@ -1584,14 +1599,14 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 }
 
 /**
-* Initiates a placement (ground/non-targeted) skill
-* @param src: Object using skill
-* @param skill_x: X coordinate where skill is being casted (center)
-* @param skill_y: Y coordinate where skill is being casted (center)
-* @param skill_id: Skill ID
-* @param skill_lv: Skill Level
-* @return unit_skilluse_pos2()
-**/
+ * Initiates a placement (ground/non-targeted) skill
+ * @param src: Object using skill
+ * @param skill_x: X coordinate where skill is being casted (center)
+ * @param skill_y: Y coordinate where skill is being casted (center)
+ * @param skill_id: Skill ID
+ * @param skill_lv: Skill Level
+ * @return unit_skilluse_pos2()
+ */
 int unit_skilluse_pos(struct block_list *src, short skill_x, short skill_y, uint16 skill_id, uint16 skill_lv)
 {
 	return unit_skilluse_pos2(
@@ -1602,16 +1617,16 @@ int unit_skilluse_pos(struct block_list *src, short skill_x, short skill_y, uint
 }
 
 /**
-* Performs checks for a unit using a skill and executes after cast time completion
-* @param src: Object using skill
-* @param skill_x: X coordinate where skill is being casted (center)
-* @param skill_y: Y coordinate where skill is being casted (center)
-* @param skill_id: Skill ID
-* @param skill_lv: Skill Level
-* @param casttime: Initial cast time before cast time reductions
-* @param castcancel: Whether or not the skill can be cancelled by interuption (hit)
-* @return Success(1); Fail(0);
-**/
+ * Performs checks for a unit using a skill and executes after cast time completion
+ * @param src: Object using skill
+ * @param skill_x: X coordinate where skill is being casted (center)
+ * @param skill_y: Y coordinate where skill is being casted (center)
+ * @param skill_id: Skill ID
+ * @param skill_lv: Skill Level
+ * @param casttime: Initial cast time before cast time reductions
+ * @param castcancel: Whether or not the skill can be cancelled by interuption (hit)
+ * @return Success(1); Fail(0);
+ */
 int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, uint16 skill_id, uint16 skill_lv, int casttime, int castcancel)
 {
 	struct map_session_data *sd = NULL;
@@ -1747,11 +1762,11 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 }
 
 /**
-* Update a unit's attack target
-* @param ud: Unit data
-* @param target_id: Target ID (bl->id)
-* @return 0
-**/
+ * Update a unit's attack target
+ * @param ud: Unit data
+ * @param target_id: Target ID (bl->id)
+ * @return 0
+ */
 int unit_set_target(struct unit_data* ud, int target_id)
 {
 	struct unit_data * ux;
@@ -1771,10 +1786,10 @@ int unit_set_target(struct unit_data* ud, int target_id)
 }
 
 /**
-* Stop a unit's attacks
-* @param bl: Object to stop
-* @return 0
-**/
+ * Stop a unit's attacks
+ * @param bl: Object to stop
+ * @return 0
+ */
 int unit_stop_attack(struct block_list *bl)
 {
 	struct unit_data *ud = unit_bl2ud(bl);
@@ -1790,10 +1805,10 @@ int unit_stop_attack(struct block_list *bl)
 }
 
 /**
-* Removes a unit's target due to being unattackable
-* @param bl: Object to unlock target
-* @return 0
-**/
+ * Removes a unit's target due to being unattackable
+ * @param bl: Object to unlock target
+ * @return 0
+ */
 int unit_unattackable(struct block_list *bl)
 {
 	struct unit_data *ud = unit_bl2ud(bl);
@@ -1810,12 +1825,12 @@ int unit_unattackable(struct block_list *bl)
 }
 
 /**
-* Requests a unit to attack a target
-* @param src: Object initiating attack
-* @param target_id: Target ID (bl->id)
-* @param continuous: Whether or not the attack is ongoing
-* @return Success(0); Fail(1);
-**/
+ * Requests a unit to attack a target
+ * @param src: Object initiating attack
+ * @param target_id: Target ID (bl->id)
+ * @param continuous: Whether or not the attack is ongoing
+ * @return Success(0); Fail(1);
+ */
 int unit_attack(struct block_list *src,int target_id,int continuous)
 {
 	struct block_list *target;
@@ -1867,12 +1882,13 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 	return 0;
 }
 
-/** [Skotlex] \n
-* Cancels an ongoing combo, resets attackable time, and restarts the \n
-* attack timer to resume attack after amotion time
-* @param bl: Object to cancel combo
-* @return Success(1); Fail(0);
-**/
+/** 
+ * Cancels an ongoing combo, resets attackable time, and restarts the \n
+ * attack timer to resume attack after amotion time
+ * @author [Skotlex]
+ * @param bl: Object to cancel combo
+ * @return Success(1); Fail(0);
+ */
 int unit_cancel_combo(struct block_list *bl)
 {
 	struct unit_data  *ud;
@@ -1894,13 +1910,13 @@ int unit_cancel_combo(struct block_list *bl)
 }
 
 /**
-* Does a path_search to check if a position can be reached
-* @param bl: Object to check path
-* @param x: X coordinate that will be path searched
-* @param y: Y coordinate that will be path searched
-* @param easy: Easy(1) or Hard(0) path check (hard attempts to go around obstacles)
-* @return true or false
-**/
+ * Does a path_search to check if a position can be reached
+ * @param bl: Object to check path
+ * @param x: X coordinate that will be path searched
+ * @param y: Y coordinate that will be path searched
+ * @param easy: Easy(1) or Hard(0) path check (hard attempts to go around obstacles)
+ * @return true or false
+ */
 bool unit_can_reach_pos(struct block_list *bl,int x,int y, int easy)
 {
 	nullpo_retr(false, bl);
@@ -1912,15 +1928,15 @@ bool unit_can_reach_pos(struct block_list *bl,int x,int y, int easy)
 }
 
 /**
-* Does a path_search to check if a unit can be reached
-* @param bl: Object to check path
-* @param tbl: Target to be checked for available path
-* @param range: The number of cells away from bl that the path should be checked
-* @param easy: Easy(1) or Hard(0) path check (hard attempts to go around obstacles)
-* @param x: Pointer storing a valid X coordinate around tbl that can be reached
-* @param y: Pointer storing a valid Y coordinate around tbl that can be reached
-* @return true or false
-**/
+ * Does a path_search to check if a unit can be reached
+ * @param bl: Object to check path
+ * @param tbl: Target to be checked for available path
+ * @param range: The number of cells away from bl that the path should be checked
+ * @param easy: Easy(1) or Hard(0) path check (hard attempts to go around obstacles)
+ * @param x: Pointer storing a valid X coordinate around tbl that can be reached
+ * @param y: Pointer storing a valid Y coordinate around tbl that can be reached
+ * @return true or false
+ */
 bool unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int range, int easy, short *x, short *y)
 {
 	int i;
@@ -1956,13 +1972,13 @@ bool unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int range, 
 }
 
 /**
-* Calculates position of Pet/Mercenary/Homunculus/Elemental
-* @param bl: Object to calculate position
-* @param tx: X coordinate to go to
-* @param ty: Y coordinate to go to
-* @param dir: Direction which to be 2 cells from master's position
-* @return Success(0); Fail(1);
-**/
+ * Calculates position of Pet/Mercenary/Homunculus/Elemental
+ * @param bl: Object to calculate position
+ * @param tx: X coordinate to go to
+ * @param ty: Y coordinate to go to
+ * @param dir: Direction which to be 2 cells from master's position
+ * @return Success(0); Fail(1);
+ */
 int unit_calc_pos(struct block_list *bl, int tx, int ty, uint8 dir)
 {
 	int dx, dy, x, y, i, k;
@@ -2014,12 +2030,12 @@ int unit_calc_pos(struct block_list *bl, int tx, int ty, uint8 dir)
 }
 
 /**
-* Function timer to continuously attack
-* @param src: Object to continuously attack
-* @param tid: Timer ID
-* @param tick: Current tick
-* @return Attackable(1); Unattackable(0);
-**/
+ * Function timer to continuously attack
+ * @param src: Object to continuously attack
+ * @param tid: Timer ID
+ * @param tick: Current tick
+ * @return Attackable(1); Unattackable(0);
+ */
 static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int tick)
 {
 	struct block_list *target;
@@ -2153,13 +2169,13 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 }
 
 /**
-* Timer function to cancel attacking if unit has become unattackable
-* @param tid: Timer ID
-* @param tick: Current tick
-* @param id: Object to cancel attack if applicable
-* @param data: Data passed from timer call
-* @return 0
-**/
+ * Timer function to cancel attacking if unit has become unattackable
+ * @param tid: Timer ID
+ * @param tick: Current tick
+ * @param id: Object to cancel attack if applicable
+ * @param data: Data passed from timer call
+ * @return 0
+ */
 static int unit_attack_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct block_list *bl;
@@ -2170,13 +2186,13 @@ static int unit_attack_timer(int tid, unsigned int tick, int id, intptr_t data)
 }
 
 /**
-* Cancels a skill's cast
-* @param bl: Object to cancel cast
-* @param type: Cancel check flag \n
-*	&1: Cast-Cancel invoked \n
-*	&2: Cancel only if skill is cancellable
-* @return Success(1); Fail(0);
-**/
+ * Cancels a skill's cast
+ * @param bl: Object to cancel cast
+ * @param type: Cancel check flag \n
+ *	&1: Cast-Cancel invoked \n
+ *	&2: Cancel only if skill is cancellable
+ * @return Success(1); Fail(0);
+ */
 int unit_skillcastcancel(struct block_list *bl,int type)
 {
 	struct map_session_data *sd = NULL;
@@ -2233,9 +2249,9 @@ int unit_skillcastcancel(struct block_list *bl,int type)
 }
 
 /**
-* Initialized data on a unit
-* @param bl: Object to initialize data on
-**/
+ * Initialized data on a unit
+ * @param bl: Object to initialize data on
+ */
 void unit_dataset(struct block_list *bl)
 {
 	struct unit_data *ud;
@@ -2252,10 +2268,10 @@ void unit_dataset(struct block_list *bl)
 }
 
 /**
-* Gets the number of units attacking another unit
-* @param bl: Object to check amount of targets
-* @return number of targets or 0
-**/
+ * Gets the number of units attacking another unit
+ * @param bl: Object to check amount of targets
+ * @return number of targets or 0
+ */
 int unit_counttargeted(struct block_list* bl)
 {
 	struct unit_data* ud;
@@ -2265,24 +2281,11 @@ int unit_counttargeted(struct block_list* bl)
 }
 
 /**
-* Is this even used?  Why is it a function?
-**/
-int unit_fixdamage(struct block_list *src,struct block_list *target,unsigned int tick,int sdelay,int ddelay,int64 damage,int div,int type,int64 damage2)
-{
-	nullpo_ret(target);
-
-	if(damage+damage2 <= 0)
-		return 0;
-
-	return status_fix_damage(src,target,damage+damage2,clif_damage(target,target,tick,sdelay,ddelay,damage,div,type,damage2));
-}
-
-/**
-* Changes the size of a unit
-* @param bl: Object to change size [PC|MOB]
-* @param size: New size of bl
-* @return 0
-**/
+ * Changes the size of a unit
+ * @param bl: Object to change size [PC|MOB]
+ * @param size: New size of bl
+ * @return 0
+ */
 int unit_changeviewsize(struct block_list *bl,short size)
 {
 	nullpo_ret(bl);
@@ -2301,15 +2304,15 @@ int unit_changeviewsize(struct block_list *bl,short size)
 }
 
 /**
-* Removes a bl/ud from the map \n
-* On kill specifics are not performed here, check status_damage()
-* @param bl: Object to remove from map
-* @param clrtype: How bl is being removed \n
-*	0: Assume bl is being warped \n
-*	1: Death, appropriate cleanup performed
-* @param file, line, func: Call information for debug purposes
-* @return Success(1); Couldn't be removed or bl was free'd(0)
-**/
+ * Removes a bl/ud from the map \n
+ * On kill specifics are not performed here, check status_damage()
+ * @param bl: Object to remove from map
+ * @param clrtype: How bl is being removed \n
+ *	0: Assume bl is being warped \n
+ *	1: Death, appropriate cleanup performed
+ * @param file, line, func: Call information for debug purposes
+ * @return Success(1); Couldn't be removed or bl was free'd(0)
+ */
 int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, int line, const char* func)
 {
 	struct unit_data *ud = unit_bl2ud(bl);
@@ -2537,12 +2540,12 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 }
 
 /**
-* Removes units of a master when the master is removed from map
-* @param sd: Player
-* @param clrtype: How bl is being removed \n
-*	0: Assume bl is being warped \n
-*	1: Death, appropriate cleanup performed
-**/
+ * Removes units of a master when the master is removed from map
+ * @param sd: Player
+ * @param clrtype: How bl is being removed \n
+ *	0: Assume bl is being warped \n
+ *	1: Death, appropriate cleanup performed
+ */
 void unit_remove_map_pc(struct map_session_data *sd, clr_type clrtype)
 {
 	unit_remove_map(&sd->bl,clrtype);
@@ -2560,9 +2563,10 @@ void unit_remove_map_pc(struct map_session_data *sd, clr_type clrtype)
 }
 
 /**
-* Frees units of a master when the master is removed from map
-* @param sd: Player
-**/
+ * Frees units of a player when is removed from map
+ * Also free his pets/homon/mercenary/elemental/etc if he have any
+ * @param sd: Player
+ */
 void unit_free_pc(struct map_session_data *sd)
 {
 	if (sd->pd) unit_free(&sd->pd->bl,CLR_OUTSIGHT);
@@ -2573,13 +2577,13 @@ void unit_free_pc(struct map_session_data *sd)
 }
 
 /**
-* Frees all related resources to the unit
-* @param bl: Object being removed from map
-* @param clrtype: How bl is being removed \n
-*	0: Assume bl is being warped \n
-*	1: Death, appropriate cleanup performed
-* @return 0
-**/
+ * Frees all related resources to the unit
+ * @param bl: Object being removed from map
+ * @param clrtype: How bl is being removed \n
+ *	0: Assume bl is being warped \n
+ *	1: Death, appropriate cleanup performed
+ * @return 0
+ */
 int unit_free(struct block_list *bl, clr_type clrtype)
 {
 	struct unit_data *ud = unit_bl2ud( bl );
@@ -2803,8 +2807,9 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 }
 
 /**
-* Initialization function for unit on map start
-**/
+ * Initialization function for unit on map start
+ * called in map::do_init
+ */
 int do_init_unit(void)
 {
 	add_timer_func_list(unit_attack_timer,  "unit_attack_timer");
@@ -2816,6 +2821,11 @@ int do_init_unit(void)
 	return 0;
 }
 
+/**
+ * Unit module destructor, (thing to do before closing the module)
+ * called in map::do_final
+ * @return 0
+ */
 int do_final_unit(void)
 {
 	// Nothing to do

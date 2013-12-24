@@ -20,13 +20,13 @@
 #include <stdio.h>
 #include <string.h>
 
+#define TRADE_DISTANCE 2 ///Max distance from traders to enable a trade to take place.
 
-//Max distance from traders to enable a trade to take place.
-#define TRADE_DISTANCE 2
-
-/*==========================================
- * Initiates a trade request.
- *------------------------------------------*/
+/**
+ * Player initiates a trade request.
+ * @param sd : player requesting the trade
+ * @param target_sd : player requested
+ */
 void trade_traderequest(struct map_session_data *sd, struct map_session_data *target_sd)
 {
 	nullpo_retv(sd);
@@ -88,17 +88,19 @@ void trade_traderequest(struct map_session_data *sd, struct map_session_data *ta
 	clif_traderequest(target_sd, sd->status.name);
 }
 
-/*==========================================
+
+/**
  * Reply to a trade-request.
- * Type values:
- * 0: Char is too far
- * 1: Character does not exist
- * 2: Trade failed
- * 3: Accept
- * 4: Cancel
- * Weird enough, the client should only send 3/4
+ * @param sd : player receiving the trade request answer
+ * @param type : answer code \n
+ *  0: Char is too far \n
+ *  1: Character does not exist \n
+ *  2: Trade failed \n
+ *  3: Accept \n
+ *  4: Cancel \n
+ * Weird enough, the client should only send 3/4 \n
  * and the server is the one that can reply 0~2
- *------------------------------------------*/
+ */
 void trade_tradeack(struct map_session_data *sd, int type)
 {
 	struct map_session_data *tsd;
@@ -165,11 +167,14 @@ void trade_tradeack(struct map_session_data *sd, int type)
 	clif_tradestart(sd, type);
 }
 
-/*==========================================
+/**
  * Check here hacker for duplicate item in trade
  * normal client refuse to have 2 same types of item (except equipment) in same trade window
  * normal client authorise only no equiped item and only from inventory
- *------------------------------------------*/
+ * This function could end player connection if too much hack is detected
+ * @param sd : player to check
+ * @return -1:zeny hack, 0:all fine, 1:item hack
+ */
 int impossible_trade_check(struct map_session_data *sd)
 {
 	struct item inventory[MAX_INVENTORY];
@@ -229,9 +234,12 @@ int impossible_trade_check(struct map_session_data *sd)
 	return 0;
 }
 
-/*==========================================
+/**
  * Checks if trade is possible (against zeny limits, inventory limits, etc)
- *------------------------------------------*/
+ * @param sd : player 1 trading
+ * @param tsd : player 2 trading
+ * @return 0:error, 1:success
+ */
 int trade_check(struct map_session_data *sd, struct map_session_data *tsd)
 {
 	struct item inventory[MAX_INVENTORY];
@@ -316,9 +324,12 @@ int trade_check(struct map_session_data *sd, struct map_session_data *tsd)
 	return 1;
 }
 
-/*==========================================
+/**
  * Adds an item/qty to the trade window
- *------------------------------------------*/
+ * @param sd : Player requesting to add stuff to the trade
+ * @param index : index of item in inventory
+ * @param amount : amount of item to add from index
+ */
 void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 {
 	struct map_session_data *target_sd;
@@ -409,9 +420,13 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 	clif_tradeadditem(sd, target_sd, index+2, amount);
 }
 
-/*==========================================
+/**
  * Adds the specified amount of zeny to the trade window
- *------------------------------------------*/
+ * This function will check if the player have enough money to do so
+ * And if the target player have enough space for that money
+ * @param sd : Player who's adding zeny
+ * @param amount : zeny amount
+ */
 void trade_tradeaddzeny(struct map_session_data* sd, int amount)
 {
 	struct map_session_data* target_sd;
@@ -436,9 +451,10 @@ void trade_tradeaddzeny(struct map_session_data* sd, int amount)
 	clif_tradeadditem(sd, target_sd, 0, amount);
 }
 
-/*==========================================
+/**
  * 'Ok' button on the trade window is pressed.
- *------------------------------------------*/
+ * @param sd : Player that pressed the button
+ */
 void trade_tradeok(struct map_session_data *sd)
 {
 	struct map_session_data *target_sd;
@@ -456,9 +472,10 @@ void trade_tradeok(struct map_session_data *sd)
 	clif_tradedeal_lock(target_sd, 1);
 }
 
-/*==========================================
+/**
  * 'Cancel' is pressed. (or trade was force-cancelled by the code)
- *------------------------------------------*/
+ * @param sd : Player that pressed the button
+ */
 void trade_tradecancel(struct map_session_data *sd)
 {
 	struct map_session_data *target_sd;
@@ -515,9 +532,11 @@ void trade_tradecancel(struct map_session_data *sd)
 	clif_tradecancelled(target_sd);
 }
 
-/*==========================================
+/**
+ * Execute the trade
  * lock sd and tsd trade data, execute the trade, clear, then save players
- *------------------------------------------*/
+ * @param sd : Player that has click on trade button
+ */
 void trade_tradecommit(struct map_session_data *sd)
 {
 	struct map_session_data *tsd;

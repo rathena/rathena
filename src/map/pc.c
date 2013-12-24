@@ -10474,8 +10474,7 @@ void pc_bonus_script_check(struct map_session_data *sd, enum e_bonus_script_flag
  * @param sd player
  */
 void pc_cell_basilica(struct map_session_data *sd) {
-	if (!sd)
-		return;
+	nullpo_retv(sd);
 	
 	if (!map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKBASILICA)) {
 		if (&sd->sc && sd->sc.data[SC_BASILICA])

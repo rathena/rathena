@@ -1931,6 +1931,7 @@ void clif_scriptclear(struct map_session_data *sd, int npcid)
 	struct s_packet_db* info;
 	int16 len;
 	int cmd = 0;
+	int fd;
 
 	nullpo_retv(sd);
 
@@ -1938,6 +1939,7 @@ void clif_scriptclear(struct map_session_data *sd, int npcid)
 	if(!cmd) cmd = 0x8d6; //default
 	info = &packet_db[sd->packet_ver][cmd];
 	len = info->len;
+	fd = sd->fd;
 
 	WFIFOHEAD(fd, len);
 	WFIFOW(fd,0)=0x8d6;
@@ -17173,6 +17175,9 @@ void clif_parse_GMFullStrip(int fd, struct map_session_data *sd) {
 	safesnprintf(cmd,sizeof(cmd),"%cfullstrip %d",atcommand_symbol,t_aid);
 	is_atcommand(fd, sd, cmd, 1);
 }
+
+///TODO: Special item that obtained, must be broadcasted by this packet
+//void clif_broadcast_obtain_special_item() {}
 
 #ifdef DUMP_UNKNOWN_PACKET
 void DumpUnknow(int fd,TBL_PC *sd,int cmd,int packet_len){
