@@ -28,9 +28,9 @@
 
 #define MAX_ITEMGROUP 390 ///The max. item group count (increase this when needed).
 
-#define MAX_ITEMGROUP_RAND 11000 ///Max item slots for random item group
-#define MAX_ITEMGROUP_MUST 20 ///Max item slots for 'must' item group
-#define MAX_ITEMGROUP_RANDGROUP 5	///Max group for random item
+#define MAX_ITEMGROUP_RAND 11000 ///Max item slots for random item group (increase this when needed).
+#define MAX_ITEMGROUP_MUST 15 ///Max item for 'must' item group (increase this when needed).
+#define MAX_ITEMGROUP_RANDGROUP 4	///Max group for random item (increase this when needed).
 
 #define CARD0_FORGE 0x00FF
 #define CARD0_CREATE 0x00FE

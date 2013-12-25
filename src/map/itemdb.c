@@ -143,45 +143,53 @@ int itemdb_searchname_array(struct item_data** data, int size, const char *str)
 
 /**
 * Return a random item id from group. (takes into account % chance giving/tot group)
+* NOTE: Sub group 0 will be set to default 1, since 0 isn't random group
 * @param group_id
 * @param sub_group: Default is 1
 * @return nameid
 */
 int itemdb_searchrandomid(int group_id, uint8 sub_group)
 {
-	if (sub_group == 0)
-		sub_group = 1;
-	if (group_id < 1 || group_id >= MAX_ITEMGROUP) {
+	if (sub_group)
+		sub_group -= 1;
+	if (group_id < 1 || group_id >= MAX_ITEMGROUP || !&itemgroup_db[group_id]) {
 		ShowError("itemdb_searchrandomid: Invalid group id %d\n", group_id);
 		return UNKNOWN_ITEM_ID;
 	}
-	if (sub_group >= MAX_ITEMGROUP_RANDGROUP) {
-		ShowError("itemdb_searchrandomid: Invalid sub_group %d\n", sub_group);
+	if (sub_group > MAX_ITEMGROUP_RANDGROUP) {
+		ShowError("itemdb_searchrandomid: Invalid sub_group %d\n", sub_group+1);
 		return UNKNOWN_ITEM_ID;
 	}
-	if (itemgroup_db[group_id].random_qty[sub_group-1])
-		return itemgroup_db[group_id].random[sub_group-1][rnd()%itemgroup_db[group_id].random_qty[sub_group-1]].nameid;
+	if (itemgroup_db[group_id].random_qty[sub_group])
+		return itemgroup_db[group_id].random[sub_group][rnd()%itemgroup_db[group_id].random_qty[sub_group]].nameid;
 
-	ShowError("itemdb_searchrandomid: No item entries for group id %d and sub group %d\n", group_id, sub_group);
+	ShowError("itemdb_searchrandomid: No item entries for group id %d and sub group %d\n", group_id, sub_group+1);
 	return UNKNOWN_ITEM_ID;
 }
 
 /** [Cydh]
-* Return a number of item's amount that will be obtained for 'getrandgroupitem id,0;'
+* Return a number of item's amount that will be obtained for 'getrandgroupitem id,1;'
+* NOTE: Sub group 0 will be set to default 1, since 0 isn't random group
 * @param group_id
 * @param sub_group
-* @param nameid: The target item
+* @param nameid: The target item will be found
 * @return amount
 */
 uint16 itemdb_get_randgroupitem_count(uint16 group_id, uint8 sub_group, uint16 nameid) {
 	uint16 i, amt = 1;
-	if (group_id < 1 || group_id >= MAX_ITEMGROUP_RAND || sub_group > MAX_ITEMGROUP_RANDGROUP)
+	if (sub_group)
+		sub_group -= 1;
+	if (group_id < 1 || group_id >= MAX_ITEMGROUP || !&itemgroup_db[group_id]) {
+		ShowError("itemdb_get_randgroupitem_count: Invalid group id %d\n", group_id);
 		return amt;
-	if (!sub_group)
-		sub_group = 1;
-	ARR_FIND(0,itemgroup_db[group_id].random_qty[sub_group-1],i,itemgroup_db[group_id].random[sub_group-1][i].nameid == nameid);
+	}
+	if (sub_group > MAX_ITEMGROUP_RANDGROUP) {
+		ShowError("itemdb_get_randgroupitem_count: Invalid sub_group id %d\n", group_id+1);
+		return amt;
+	}
+	ARR_FIND(0,itemgroup_db[group_id].random_qty[sub_group],i,itemgroup_db[group_id].random[sub_group][i].nameid == nameid);
 	if (i < MAX_ITEMGROUP_RAND)
-		amt = itemgroup_db[group_id].random[sub_group-1][i].amount;
+		amt = itemgroup_db[group_id].random[sub_group][i].amount;
 	return amt;
 }
 
@@ -218,7 +226,7 @@ void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, uint16 group_id, u
 			clif_additem(sd,0,0,flag);
 		else if (!flag && group->isAnnounced) { ///TODO: Move this broadcast to proper behavior (it should on at different packet)
 			char output[CHAT_SIZE_MAX];
-			sprintf(output,msg_txt(sd,717),sd->status.name,itemdb_jname(group->nameid),itemdb_jname(nameid_from));
+			sprintf(output,msg_txt(NULL,717),sd->status.name,itemdb_jname(group->nameid),itemdb_jname(nameid_from));
 			clif_broadcast(&sd->bl,output,strlen(output),0,ALL_CLIENT);
 			//clif_broadcast_obtain_special_item();
 		}
@@ -240,19 +248,19 @@ uint8 itemdb_pc_get_itemgroup(uint16 group_id, uint16 nameid, struct map_session
 	nullpo_retr(1,sd);
 	
 	if (!group_id || group_id >= MAX_ITEMGROUP) {
-		ShowError("getgroupitem: Invalid group id '%d' specified.",group_id);
+		ShowError("itemdb_pc_get_itemgroup: Invalid group id '%d' specified.",group_id);
 		return 2;
 	}
 	
 	//Get the 'must' item(s)
 	for (i = 0; i < itemgroup_db[group_id].must_qty; i++) {
-		if (itemdb_exists(itemgroup_db[group_id].must[i].nameid))
+		if (&itemgroup_db[group_id].must[i] && itemdb_exists(itemgroup_db[group_id].must[i].nameid))
 			itemdb_pc_get_itemgroup_sub(sd,group_id,nameid,&itemgroup_db[group_id].must[i]);
 	}
 
 	//Get the 'random' item each random group
 	for (i = 0; i < MAX_ITEMGROUP_RANDGROUP; i++) {
-		uint16 rand, j = 0;
+		uint16 rand;
 		if (!itemgroup_db[group_id].random_qty[i]) //Skip empty random group
 			continue;
 		rand = rnd()%itemgroup_db[group_id].random_qty[i];
@@ -689,8 +697,14 @@ static void itemdb_read_itemgroup_sub(const char* filename)
 			script_get_constant(trim(str[0]),&group_id);
 		else
 			group_id = atoi(str[0]);
-		if (!group_id || group_id >= MAX_ITEMGROUP || group >= MAX_ITEMGROUP_RANDGROUP) {
-			ShowWarning("itemdb_read_itemgroup: Invalid group (id:%d sub:%d) in %s:%d\n", group_id, group, filename, ln);
+		if (!group_id || group_id >= MAX_ITEMGROUP) {
+			ShowWarning("itemdb_read_itemgroup: Invalid group id '%s' in %s:%d\n", str[0], filename, ln);
+			continue;
+		}
+
+		//Checking sub group
+		if (group > MAX_ITEMGROUP_RANDGROUP) {
+			ShowWarning("itemdb_read_itemgroup: Invalid sub group %d for group id %d in %s:%d\n", group, group_id, filename, ln);
 			continue;
 		}
 
@@ -702,7 +716,7 @@ static void itemdb_read_itemgroup_sub(const char* filename)
 		else if ((nameid = atoi(str[1])) && itemdb_exists(nameid))
 			found = true;
 		if (!found) {
-			ShowWarning("itemdb_read_itemgroup: Non-existant item %d in %s:%d\n", nameid, filename, ln);
+			ShowWarning("itemdb_read_itemgroup: Non-existant item '%s' in %s:%d\n", str[1], filename, ln);
 			continue;
 		}
 
@@ -714,28 +728,31 @@ static void itemdb_read_itemgroup_sub(const char* filename)
 			continue;
 		}
 
+		amt = cap_value(amt,1,MAX_AMOUNT);
+		dur = cap_value(dur,1,UINT16_MAX);
+		bound = cap_value(bound,0,4);
+
 		if (!group) {
 			uint16 idx = itemgroup_db[group_id].must_qty;
 			itemgroup_db[group_id].must[idx].nameid = nameid;
-			itemgroup_db[group_id].must[idx].amount = min(amt,MAX_AMOUNT);
-			itemgroup_db[group_id].must[idx].isAnnounced = (announced) ? true : false;
-			itemgroup_db[group_id].must[idx].duration = min(dur,UINT16_MAX);
-			itemgroup_db[group_id].must[idx].isNamed = (named) ? true : false;
-			itemgroup_db[group_id].must[idx].bound = cap_value(bound,0,4);
+			itemgroup_db[group_id].must[idx].amount = amt;
+			itemgroup_db[group_id].must[idx].isAnnounced = announced;
+			itemgroup_db[group_id].must[idx].duration = dur;
+			itemgroup_db[group_id].must[idx].isNamed = named;
+			itemgroup_db[group_id].must[idx].bound = bound;
 			itemgroup_db[group_id].must_qty++;
 		}
 		for (j = 0; j < prob; j++) {
 			uint16 idx;
-			if (!group)
-				group = 1;
-			idx = itemgroup_db[group_id].random_qty[group-1];
-			itemgroup_db[group_id].random[group-1][idx].nameid = nameid;
-			itemgroup_db[group_id].random[group-1][idx].amount = min(amt,MAX_AMOUNT);
-			itemgroup_db[group_id].random[group-1][idx].isAnnounced = (announced) ? true : false;
-			itemgroup_db[group_id].random[group-1][idx].duration = min(dur,UINT16_MAX);
-			itemgroup_db[group_id].random[group-1][idx].isNamed = (named) ? true : false;
-			itemgroup_db[group_id].random[group-1][idx].bound = cap_value(bound,0,4);
-			itemgroup_db[group_id].random_qty[group-1]++;
+			if (group > 0) group -= 1;
+			idx = itemgroup_db[group_id].random_qty[group];
+			itemgroup_db[group_id].random[group][idx].nameid = nameid;
+			itemgroup_db[group_id].random[group][idx].amount = amt;
+			itemgroup_db[group_id].random[group][idx].isAnnounced = announced;
+			itemgroup_db[group_id].random[group][idx].duration = dur;
+			itemgroup_db[group_id].random[group][idx].isNamed = named;
+			itemgroup_db[group_id].random[group][idx].bound = bound;
+			itemgroup_db[group_id].random_qty[group]++;
 		}
 		entries++;
 	}
