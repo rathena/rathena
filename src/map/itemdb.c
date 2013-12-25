@@ -729,7 +729,7 @@ static void itemdb_read_itemgroup_sub(const char* filename)
 		}
 
 		amt = cap_value(amt,1,MAX_AMOUNT);
-		dur = cap_value(dur,1,UINT16_MAX);
+		dur = cap_value(dur,0,UINT16_MAX);
 		bound = cap_value(bound,0,4);
 
 		if (!group) {
