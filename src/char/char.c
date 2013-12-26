@@ -3811,11 +3811,12 @@ int parse_frommap(int fd)
 				node->sex == sex /*&&
 				node->ip == ip*/ )
 			{// auth ok
+				uint32 mmo_charstatus_len = sizeof(struct mmo_charstatus) + 25;
 				cd->sex = sex;
 
-				WFIFOHEAD(fd,25 + sizeof(struct mmo_charstatus));
+				WFIFOHEAD(fd,mmo_charstatus_len);
 				WFIFOW(fd,0) = 0x2afd;
-				WFIFOW(fd,2) = 25 + sizeof(struct mmo_charstatus);
+				WFIFOW(fd,2) = mmo_charstatus_len;
 				WFIFOL(fd,4) = account_id;
 				WFIFOL(fd,8) = node->login_id1;
 				WFIFOL(fd,12) = node->login_id2;

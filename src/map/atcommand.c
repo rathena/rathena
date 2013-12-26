@@ -5185,7 +5185,7 @@ ACMD_FUNC(follow)
 ACMD_FUNC(dropall)
 {
 	int8 type = -1;
-	uint16 i, count = 0;
+	uint16 i, count = 0, count2 = 0;
 	struct item_data *item_data = NULL;
 
 	nullpo_retr(-1, sd);
@@ -5213,12 +5213,13 @@ ACMD_FUNC(dropall)
 			if( type == -1 || type == (uint8)item_data->type ) {
 				if( sd->status.inventory[i].equip != 0 )
 					pc_unequipitem(sd, i, 3);
-				count += sd->status.inventory[i].amount;
-				pc_dropitem(sd, i, sd->status.inventory[i].amount);
+				if(pc_dropitem(sd, i, sd->status.inventory[i].amount))
+					count += sd->status.inventory[i].amount;
+				else count2 += sd->status.inventory[i].amount;
 			}
 		}
 	}
-	sprintf(atcmd_output, msg_txt(sd,1494), count); // %d items are dropped!
+	sprintf(atcmd_output, msg_txt(sd,1494), count,count2); // %d items are dropped (%d skipped)!
 	clif_displaymessage(fd, atcmd_output); 
 	return 0;
 }

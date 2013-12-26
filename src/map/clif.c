@@ -2519,32 +2519,39 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 	int i,n,ne,nn;
 	unsigned char *buf;
 	unsigned char *bufe;
-	unsigned char *bufn;
 #if PACKETVER < 5
 	const int s = 10; //Entry size.normal item
 	const int sidx=4; //start itemlist idx
+	const int cmd = 0xa5;
 #elif PACKETVER < 20080102
 	const int s = 18;
 	const int sidx=4;
+	const int cmd = 0x1f0;
 #elif PACKETVER < 20120925
 	const int s = 22;
 	const int sidx=4;
+	const int cmd = 0x2ea;
 #else
 	const int s = 24;
 	const int sidx = 4+24;
+	const int cmd = 0x995;
 #endif
 #if PACKETVER < 20071002
 	const int se = 20; //entry size equip
 	const int sidxe = 4; //start itemlist idx
+	const int cmde = 0xa6;
 #elif PACKETVER < 20100629
 	const int se = 26;
 	const int sidxe = 4;
+	const int cmde = 0xa6;
 #elif PACKETVER < 20120925
 	const int se = 28;
 	const int sidxe = 4;
+	const int cmde = 0x2d1;
 #else
 	const int se = 31;
 	const int sidxe = 4+24;
+	const int cmde = 0x996;
 #endif
 
 	buf = (unsigned char*)aMalloc(items_length * s + sidx);
@@ -2564,39 +2571,29 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 			n++;
 		}
 	}
-	for (i = 0; i < n;) // Loop through non-equipable items
+	for (i = 0; i < n; i += nn) // Loop through non-equipable items
 	{
-		nn = n - i < (client_buf - 4)/s ? n - i : (client_buf - 4)/s; // Split up non-equipable items
-		bufn = buf + i*s; // Update buffer to new index range
-		i += nn;
-#if PACKETVER < 5
-		WBUFW(bufn,0)=0xa5;
-#elif PACKETVER < 20080102
-		WBUFW(bufn,0)=0x1f0;
-#elif PACKETVER < 20120925
-		WBUFW(bufn,0)=0x2ea;
-#else
-		WBUFW(bufn,0)=0x995;
-		memset((char*)WBUFP(buf,4),0,24); //storename
+		nn = n - i < (client_buf - sidx)/s ? n - i : (client_buf - sidx)/s; // Split up non-equipable items
+		WFIFOHEAD(sd->fd,sidx+nn*s);
+		WFIFOW(sd->fd,0)=cmd;
+		WFIFOW(sd->fd,2)=sidx+nn*s;
+#if PACKETVER >= 20120925
+		memset((char*)WFIFOP(sd->fd,4),0,24); //storename
 #endif
-		WBUFW(bufn,2)=sidx+nn*s;
-		clif_send(bufn, WBUFW(bufn,2), &sd->bl, SELF);
+		memcpy(WFIFOP(sd->fd,sidx),buf + sidx + i*s,nn*s);
+		WFIFOSET(sd->fd,WFIFOW(sd->fd,2));
 	}
-	for (i = 0; i < ne;) // Loop through equipable items
+	for (i = 0; i < ne; i += nn) // Loop through equipable items
 	{
-		nn = ne - i < (client_buf - 4)/se ? ne - i : (client_buf - 4)/se; // Split up equipable items
-		bufn = bufe + i*se; // Update buffer to new index range
-		i += nn;
-#if PACKETVER < 20071002
-		WBUFW(bufn,0)=0xa6;
-#elif PACKETVER < 20120925
-		WBUFW(bufn,0)=0x2d1;
-#else
-		WBUFW(bufn,0)=0x996;
-		memset((char*)WBUFP(bufn,4),0,24); //storename
+		nn = ne - i < (client_buf - sidxe)/se ? ne - i : (client_buf - sidxe)/se; // Split up equipable items
+		WFIFOHEAD(sd->fd,sidxe+nn*se);
+		WFIFOW(sd->fd,0)=cmde;
+		WFIFOW(sd->fd,2)=sidxe+nn*se;
+#if PACKETVER >= 20120925
+		memset((char*)WFIFOP(sd->fd,4),0,24); //storename
 #endif
-		WBUFW(bufn,2)=sidxe+nn*se;
-		clif_send(bufn, WBUFW(bufn,2), &sd->bl, SELF);
+		memcpy(WFIFOP(sd->fd,sidxe),bufe + sidxe + i*se,nn*se);
+		WFIFOSET(sd->fd,WFIFOW(sd->fd,2));
 	}
 
 	if( buf ) aFree(buf);
