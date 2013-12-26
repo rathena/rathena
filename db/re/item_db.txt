@@ -5879,7 +5879,7 @@
 12402,29Fruit,29Fruit,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 5,5; },{},{}
 12403,Lucky_Egg_C2,Lucky Egg C2,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Lucky_Egg_C2); },{},{}
 12404,Acti_Potion,Acti Potion,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12405,Underripe_Yggseed,Underripe Yggseed,2,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+12405,Underripe_Yggseed,Underripe Yggseed,2,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 30,30; skilleffect "AL_BLESSING",0; sc_start SC_BLESSING,140000,5; },{},{}
 12406,Psychic_ArmorS,Psychic ArmorS,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12407,PCBang_Coupon_Box,PC Cafe Coupon Box,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12408,Hydra_Ball,Hydra Ball,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ pet 2081; },{},{}
