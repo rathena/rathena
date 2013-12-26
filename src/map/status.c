@@ -1412,7 +1412,9 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 	}
 
 	// Always run NPC scripts for players last
-	if(target->type == BL_PC) {
+	//FIXME those ain't always run if a player die if he was resurect meanwhile
+	//cf SC_REBIRTH, SC_LIGHT_OF_REGENE, SC_KAIZEL, pc_dead...
+	if(target->type == BL_PC) { 
 		TBL_PC *sd = BL_CAST(BL_PC,target);
 		if( sd->bg_id ) {
 			struct battleground_data *bg;
@@ -1431,7 +1433,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 * @param bl: Object to heal [PC|MOB|HOM|MER|ELEM]
 * @param hhp: How much HP to heal
 * @param hsp: How much SP to heal
-* @param flag:	Whether it's Forced(&1) or gives HP/SP(&2) heal effect
+* @param flag:	Whether it's Forced(&1) or gives HP/SP(&2) heal effect \n
 *		Forced healing overrides heal impedement statuses (Berserk)
 * @return hp+sp
 **/
@@ -1512,7 +1514,8 @@ int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int flag)
 * @param target: Object to modify HP/SP
 * @param hp_rate: Percentage of HP to modify
 * @param sp_rate: Percentage of SP to modify
-* @param flag:	0: Heal target
+* @param flag: \n
+*		0: Heal target \n 
 *		2: Target must not die from subtraction
 * @return hp+sp through status_heal()
 **/

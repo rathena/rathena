@@ -173,8 +173,8 @@ enum item_types {
 	IT_UNKNOWN, //1
 	IT_USABLE,  //2
 	IT_ETC,     //3
-	IT_WEAPON,  //4
-	IT_ARMOR,   //5
+	IT_ARMOR,   //4
+	IT_WEAPON,  //5
 	IT_CARD,    //6
 	IT_PETEGG,  //7
 	IT_PETARMOR,//8

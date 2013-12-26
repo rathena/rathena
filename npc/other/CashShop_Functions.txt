@@ -236,7 +236,7 @@ function	script	F_CashTele	{
 //============================================================ 
 // - Warp player to selected guild castle.
 // - No arguments.
-function	script	F_CashSeigeTele	{
+function	script	F_CashSiegeTele	{
 	switch(select("Neuschwanstein (aldeg_cas01):Hohenschwangau (aldeg_cas02):Nuernberg (aldeg_cas03):Wuerzburg (aldeg_cas04):Rothenburg (aldeg_cas05):Repherion (gefg_cas01):Eeyorbriggar (gefg_cas02):Yesnelph (gefg_cas03):Bergel (gefg_cas04):Mersetzdeitz (gefg_cas05):Bright Arbor (payg_cas01):Sacred Altar (payg_cas02):Holy Shadow (payg_cas03):Scarlet Palace (payg_cas04):Bamboo Grove Hill (payg_cas05):Kriemhild (prtg_cas01):Swanhild (prtg_cas02):Fadhgridh (prtg_cas03):Skoegul (prtg_cas04):Gondul (prtg_cas05)")) {
 	case 1: warp "alde_gld",48,91; end;
 	case 2: warp "alde_gld",103,245; end;

@@ -123,9 +123,16 @@ struct s_autobonus {
 };
 
 struct skill_cooldown_entry {
-    unsigned short skill_id;
-    int timer;
+	unsigned short skill_id;
+	int timer;
 };
+
+#ifdef VIP_ENABLE
+	struct vip_info {
+		unsigned int enabled : 1;
+		time_t time;
+	};
+#endif
 
 enum npc_timeout_type {
 	NPCT_INPUT = 0,
@@ -553,12 +560,8 @@ struct map_session_data {
 
 	int storage_size; // Holds player storage size (VIP system).
 #ifdef VIP_ENABLE
-	struct {
-		unsigned int enabled : 1;
-		time_t time;
-	} vip;
+	struct vip_info  vip;
 #endif
-
 	//Timed bonus 'bonus_script' struct [Cydh]
 	struct s_script {
 		struct script_code *script;

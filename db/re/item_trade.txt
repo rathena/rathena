@@ -2,7 +2,7 @@
 //Specify here special rules for item trading.
 //Item ID, TradeMask, Group-Level Override
 //Trading mask values:
-//1:Item can't be droped
+//1:Item can't be dropped
 //2:Item can't be traded (nor vended)
 //4:Wedded partner can override restriction 2.
 //8:Item can't be sold to npcs

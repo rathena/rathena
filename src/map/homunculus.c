@@ -889,7 +889,7 @@ int merc_call_homunculus(struct map_session_data *sd)
 
 /**
  * Receive homunculus data from char server
- * @param account_id : owner account_id of the homon 
+ * @param account_id : owner account_id of the homon
  * @param sh : homonculus data from char-serv
  * @param flag : does the creation in inter-serv was a success (0:no,1:yes)
  * @return 0:failure, 1:sucess
