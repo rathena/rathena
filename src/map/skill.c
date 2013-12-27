@@ -696,11 +696,11 @@ bool skill_isNotOk_hom(uint16 skill_id, struct homun_data *hd)
 			break;
 		case MH_CBC:
 			if(!(hd->sc.data[SC_COMBO] && hd->sc.data[SC_COMBO]->val1 == MH_TINDER_BREAKER)
-				|| !hd->homunculus.spiritball < 2) return true;
+				|| hd->homunculus.spiritball < 2) return true;
 			break;
 		case MH_EQC:
 			if(!(hd->sc.data[SC_COMBO] && hd->sc.data[SC_COMBO]->val1 == MH_CBC)
-				|| !hd->homunculus.spiritball < 3) return true;
+				|| hd->homunculus.spiritball < 3) return true;
 			break;
 	}
 
