@@ -1677,7 +1677,7 @@ int map_quit(struct map_session_data *sd) {
 		status_change_end(&sd->bl, SC_SATURDAYNIGHTFEVER, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_KYOUGAKU, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_C_MARKER, INVALID_TIMER);
-		if (battle_config.debuff_on_logout&1) {
+		if (battle_config.debuff_on_logout&1) { //Remove negative buffs
 			status_change_end(&sd->bl, SC_ORCISH, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_STRIPWEAPON, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_STRIPARMOR, INVALID_TIMER);
@@ -1697,7 +1697,7 @@ int map_quit(struct map_session_data *sd) {
 			status_change_end(&sd->bl, SC_ANTI_M_BLAST, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_B_TRAP, INVALID_TIMER);
 		}
-		if (battle_config.debuff_on_logout&2) {
+		if (battle_config.debuff_on_logout&2) { //Remove positive buffs
 			status_change_end(&sd->bl, SC_MAXIMIZEPOWER, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_MAXOVERTHRUST, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_STEELBODY, INVALID_TIMER);

@@ -6835,7 +6835,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 			//Remove bonus_script when dispelled
 			if (dstsd)
-				pc_bonus_script_check(dstsd,BONUS_FLAG_REM_ON_DISPELL);
+				pc_bonus_script_clear(dstsd,BONUS_FLAG_REM_ON_DISPELL);
 
 			if(!tsc || !tsc->count)
 				break;
@@ -8337,7 +8337,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 			//Remove bonus_script when cleared
 			if (dstsd)
-				pc_bonus_script_check(dstsd,BONUS_FLAG_REM_ON_CLEARANCE);
+				pc_bonus_script_clear(dstsd,BONUS_FLAG_REM_ON_CLEARANCE);
 
 			if(!tsc || !tsc->count)
 				break;

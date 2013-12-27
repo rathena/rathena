@@ -552,23 +552,24 @@ struct map_session_data {
 		int id;
 	} dmglog[DAMAGELOG_SIZE_PC];
 
-	struct s_crimson_marker {
+	struct s_crimson_marker { ///Store target that marked by Crimson Marker [Cydh]
 		int target[MAX_SKILL_CRIMSON_MARKER]; //Target id storage
 		uint8 count; //Count of target for skill like RL_D_TAIL
 	} c_marker;
-	bool flicker;
+	bool flicker; ///Is Flicker Skill skill as player's last action? [Cydh]
 
-	int storage_size; // Holds player storage size (VIP system).
+	int storage_size; /// Holds player storage size (VIP system).
 #ifdef VIP_ENABLE
 	struct vip_info  vip;
 #endif
-	//Timed bonus 'bonus_script' struct [Cydh]
+	///Timed bonus 'bonus_script' struct [Cydh]
 	struct s_script {
 		struct script_code *script;
 		char script_str[MAX_BONUS_SCRIPT_LENGTH]; //Used for comparing and storing on table
 		uint32 tick;
 		uint8 flag;
-		bool isBuff; //Can be used for deciding which bonus that buff or debuff
+		char type; //0 - Ignore; 1 - Buff; 2 - Debuff
+		int16 icon;
 		int tid;
 	} bonus_script[MAX_PC_BONUS_SCRIPT];
 };
@@ -1051,7 +1052,7 @@ void pc_show_version(struct map_session_data *sd);
 
 int pc_bonus_script_timer(int tid, unsigned int tick, int id, intptr_t data);
 void pc_bonus_script_remove(struct map_session_data *sd, uint8 i);
-void pc_bonus_script_check(struct map_session_data *sd, enum e_bonus_script_flags flag);
+void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag);
 
 void pc_cell_basilica(struct map_session_data *sd);
 

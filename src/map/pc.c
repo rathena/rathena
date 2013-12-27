@@ -6936,7 +6936,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	}
 	
 	//Remove bonus_script when dead
-	pc_bonus_script_check(sd,BONUS_FLAG_REM_ON_DEAD);
+	pc_bonus_script_clear(sd,BONUS_FLAG_REM_ON_DEAD);
 
 	// changed penalty options, added death by player if pk_mode [Valaris]
 	if(battle_config.death_penalty_type
@@ -10371,7 +10371,7 @@ enum e_BANKING_WITHDRAW_ACK pc_bank_withdraw(struct map_session_data *sd, int mo
 
 /**
 * Clear Cirmson Marker data from caster
-* @param sd
+* @param sd: Player
 **/
 void pc_crimson_marker_clear(struct map_session_data *sd) {
 	uint8 i;
@@ -10388,7 +10388,7 @@ void pc_crimson_marker_clear(struct map_session_data *sd) {
 
 /**
 * Show version to player
-* @param sd
+* @param sd: Player
 **/
 void pc_show_version(struct map_session_data *sd) {
 	const char* svn = get_svn_revision();
@@ -10433,8 +10433,8 @@ int pc_bonus_script_timer(int tid, unsigned int tick, int id, intptr_t data) {
 
 /** [Cydh]
 * Remove bonus_script data from sd (not deleting timer)
-* @param sd target
-* @param i script index
+* @param sd: Target player
+* @param i: Bonus script index
 **/
 void pc_bonus_script_remove(struct map_session_data *sd, uint8 i) {
 	if (!sd || i >= MAX_PC_BONUS_SCRIPT)
@@ -10446,32 +10446,39 @@ void pc_bonus_script_remove(struct map_session_data *sd, uint8 i) {
 	sd->bonus_script[i].tick = 0;
 	sd->bonus_script[i].tid = 0;
 	sd->bonus_script[i].flag = 0;
+	clif_status_change(&sd->bl,sd->bonus_script[i].icon,0,0,0,0,0);
+	sd->bonus_script[i].icon = SI_BLANK;
 }
 
 /** [Cydh]
-* Clear all active timer(s) of bonus_script data from sd
-* @param sd target
-* @param flag reason to remove the bonus_script
+* Check then clear all active timer(s) of bonus_script data from player based on reason
+* @param sd: Target player
+* @param flag: Reason to remove the bonus_script. e_bonus_script_flags or e_bonus_script_types
 **/
-void pc_bonus_script_check(struct map_session_data *sd, enum e_bonus_script_flags flag) {
+void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag) {
 	uint8 i, count = 0;
 	if (!sd)
 		return;
 
 	for (i = 0; i < MAX_PC_BONUS_SCRIPT; i++) {
-		if (&sd->bonus_script[i] && sd->bonus_script[i].script && sd->bonus_script[i].flag&flag) {
+		if (&sd->bonus_script[i] && sd->bonus_script[i].script &&
+			(sd->bonus_script[i].flag&flag || //Remove bonus script based on e_bonus_script_flags
+			(sd->bonus_script[i].type &&
+			(flag&BONUS_FLAG_REM_BUFF && sd->bonus_script[i].type == 1) || //Remove bonus script based on buff type
+			(flag&BONUS_FLAG_REM_DEBUFF && sd->bonus_script[i].type == 2)))) //Remove bonus script based on debuff type
+		{
 			delete_timer(sd->bonus_script[i].tid,pc_bonus_script_timer);
 			pc_bonus_script_remove(sd,i);
 			count++;
 		}
 	}
-	if (count && flag != BONUS_FLAG_REM_ON_LOGOUT) //Don't need do this if log out
+	if (count && !(flag&BONUS_FLAG_REM_ON_LOGOUT)) //Don't need to do this if log out
 		status_calc_pc(sd,false);
 }
 
 /** [Cydh]
  * Gives/removes SC_BASILICA when player steps in/out the cell with 'cell_basilica'
- * @param sd player
+ * @param sd: Target player
  */
 void pc_cell_basilica(struct map_session_data *sd) {
 	nullpo_retv(sd);
