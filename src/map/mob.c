@@ -2310,7 +2310,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				if(base_exp || job_exp) {
 					if( md->dmglog[i].flag != MDLF_PET || battle_config.pet_attack_exp_to_master ) {
 #ifdef RENEWAL_EXP
-						int rate = pc_level_penalty_mod(tmpsd[i], md->level, md->status.race, md->status.mode, 1);
+						int rate = pc_level_penalty_mod(tmpsd[i], md->level, md->status.class_, 1);
 						base_exp = (unsigned int)cap_value(base_exp * rate / 100, 1, UINT_MAX);
 						job_exp = (unsigned int)cap_value(job_exp * rate / 100, 1, UINT_MAX);
 #endif
@@ -2341,9 +2341,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		struct item_data* it = NULL;
 		int drop_rate;
 #ifdef RENEWAL_DROP
-		int drop_modifier = mvp_sd    ? pc_level_penalty_mod(mvp_sd, md->level, md->status.race, md->status.mode, 2)   :
-							second_sd ? pc_level_penalty_mod(second_sd, md->level, md->status.race, md->status.mode, 2):
-							third_sd  ? pc_level_penalty_mod(third_sd, md->level, md->status.race, md->status.mode, 2) :
+		int drop_modifier = mvp_sd    ? pc_level_penalty_mod(mvp_sd, md->level, md->status.class_, 2)   :
+							second_sd ? pc_level_penalty_mod(second_sd, md->level, md->status.class_, 2):
+							third_sd  ? pc_level_penalty_mod(third_sd, md->level, md->status.class_, 2) :
 							100;/* no player was attached, we dont use any modifier (100 = rates are not touched) */
 #endif
 		dlist->m = md->bl.m;
@@ -2437,7 +2437,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				if ( sd->add_drop[i].race == -md->class_ ||
 					( sd->add_drop[i].race > 0 && (
 						sd->add_drop[i].race & (1<<status->race) ||
-						sd->add_drop[i].race & (1<<(status->mode&MD_BOSS?RC_BOSS:RC_NONBOSS))
+						sd->add_drop[i].class_ & (1<<status->class_)
 					)))
 				{
 					//check if the bonus item drop rate should be multiplied with mob level/10 [Lupus]
@@ -3758,6 +3758,13 @@ static bool mob_parse_dbrow(char** str)
 	status->mode = (int)strtol(str[25], NULL, 0);
 	if (!battle_config.monster_active_enable)
 		status->mode &= ~MD_AGGRESSIVE;
+
+	if( status->mode&MD_BOSS )
+		status->class_ = CLASS_BOSS;
+	else if( mob_is_guardian(class_) )
+		status->class_ = CLASS_GUARDIAN;
+	else
+		status->class_ = CLASS_NORMAL;
 
 	status->speed = atoi(str[26]);
 	status->aspd_rate = 1000;

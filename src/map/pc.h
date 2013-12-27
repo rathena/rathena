@@ -68,10 +68,13 @@ struct weapon_data {
 	int star;
 	int ignore_def_ele;
 	int ignore_def_race;
+	int ignore_def_class;
 	int def_ratio_atk_ele;
 	int def_ratio_atk_race;
+	int def_ratio_atk_class;
 	int addele[ELE_MAX];
 	int addrace[RC_MAX];
+	int addclass[CLASS_MAX];
 	int addrace2[RC2_MAX];
 	int addsize[3];
 
@@ -80,7 +83,7 @@ struct weapon_data {
 		short per;
 		short value;
 		unsigned type:1;
-	} hp_drain[RC_MAX], sp_drain[RC_MAX];
+	} hp_drain_race[RC_MAX], sp_drain_race[RC_MAX], hp_drain_class[CLASS_MAX], sp_drain_class[CLASS_MAX];
 
 	struct {
 		short class_, rate;
@@ -111,7 +114,7 @@ struct s_addeffectonskill {
 
 struct s_add_drop {
 	short id, group;
-	int race, rate;
+	int race, rate, class_;
 };
 
 struct s_autobonus {
@@ -288,28 +291,40 @@ struct map_session_data {
 	int param_bonus[6],param_equip[6]; //Stores card/equipment bonuses.
 	int subele[ELE_MAX];
 	int subrace[RC_MAX];
+	int subclass[CLASS_MAX];
 	int subrace2[RC2_MAX];
 	int subsize[3];
 	int reseff[SC_COMMON_MAX-SC_COMMON_MIN+1];
 	int weapon_coma_ele[ELE_MAX];
 	int weapon_coma_race[RC_MAX];
+	int weapon_coma_class[CLASS_MAX];
 	int weapon_atk[16];
 	int weapon_atk_rate[16];
 	int arrow_addele[ELE_MAX];
 	int arrow_addrace[RC_MAX];
+	int arrow_addclass[CLASS_MAX];
 	int arrow_addsize[3];
 	int magic_addele[ELE_MAX];
 	int magic_addrace[RC_MAX];
+	int magic_addclass[CLASS_MAX];
 	int magic_addsize[3];
 	int magic_atk_ele[ELE_MAX];
 	int critaddrace[RC_MAX];
+	int critaddclass[CLASS_MAX];
 	int expaddrace[RC_MAX];
-	int ignore_mdef[RC_MAX];
-	int ignore_def[RC_MAX];
+	int expaddclass[CLASS_MAX];
+	int ignore_mdef;
+	int ignore_mdef_by_race[RC_MAX];
+	int ignore_mdef_by_class[CLASS_MAX];
+	int ignore_def_by_race[RC_MAX];
+	int ignore_def_by_class[CLASS_MAX];
 	int itemgrouphealrate[MAX_ITEMGROUP];
 	short sp_gain_race[RC_MAX];
+	short sp_gain_class[CLASS_MAX];
 	short sp_gain_race_attack[RC_MAX];
 	short hp_gain_race_attack[RC_MAX];
+	short sp_gain_class_attack[CLASS_MAX];
+	short hp_gain_class_attack[CLASS_MAX];
 	// zeroed arrays end here.
 	// zeroed structures start here
 	struct s_autospell autospell[15], autospell2[15], autospell3[15];
@@ -355,6 +370,7 @@ struct map_session_data {
 		int near_attack_def_rate,long_attack_def_rate,magic_def_rate,misc_def_rate;
 		int ignore_mdef_ele;
 		int ignore_mdef_race;
+		int ignore_mdef_class;
 		int perfect_hit;
 		int perfect_hit_add;
 		int get_zeny_rate;
@@ -1057,6 +1073,6 @@ void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag);
 void pc_cell_basilica(struct map_session_data *sd);
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
-int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_race, uint32 mob_mode, int type);
+int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_class, int type);
 #endif
 #endif /* _PC_H_ */

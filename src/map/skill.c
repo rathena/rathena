@@ -1570,7 +1570,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 		{
 			rate  = sd->weapon_coma_ele[tstatus->def_ele];
 			rate += sd->weapon_coma_race[tstatus->race];
-			rate += sd->weapon_coma_race[tstatus->mode&MD_BOSS?RC_BOSS:RC_NONBOSS];
+			rate += sd->weapon_coma_class[tstatus->class_];
 			if (rate)
 				status_change_start(src,bl, SC_COMA, rate, 0, 0, src->id, 0, 0, 0);
 		}
@@ -1961,7 +1961,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		if( (attack_type&(BF_WEAPON|BF_SHORT)) == (BF_WEAPON|BF_SHORT) ) {
 			sp += sd->bonus.sp_gain_value;
 			sp += sd->sp_gain_race[status_get_race(bl)];
-			sp += sd->sp_gain_race[is_boss(bl)?RC_BOSS:RC_NONBOSS];
+			sp += sd->sp_gain_class[status_get_class_(bl)];
 			hp += sd->bonus.hp_gain_value;
 		}
 		if( attack_type&BF_MAGIC ) {

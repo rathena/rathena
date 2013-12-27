@@ -66,8 +66,7 @@ bonus bMagicAtkDef,n;			Adds n% damage reduction against magical attacks
 bonus bMiscAtkDef,n;			Adds n% damage reduction against MISC attacks (traps, falcon, ...)
 bonus bIgnoreDefRace,n;			Disregard DEF against enemies of race n
 					n: 	0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
-						5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
-						10=Boss monster, 11=Other than (normal monster) boss monster
+						5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon
 bonus bIgnoreDefEle,n;			Disregard DEF against enemies of element n
 					n: 0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison, 6=Holy, 7=Dark, 8=Spirit, 9=Undead
 bonus bIgnoreMDefRace,n;		Disregard MDEF against enemies of race n
@@ -79,8 +78,7 @@ bonus bIgnoreMDefEle,n;			Disregard MDEF against enemies of element n
 bonus bIgnoreMdefRate,n;		Disregard n% of the target's MDEF
 bonus bDefRatioAtkRace,n;		Does more damage depending on monster Defense against race n (defense disregard)
 					n: 	0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
-						5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
-						10=Boss monster, 11=Other than (normal monster) boss monster
+						5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon
 bonus bDefRatioAtkEle,n;		n attribute if defensive power is high the high extent big damage is given, (defense disregard)
 					n:	0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison, 6=Holy, 7=Dark, 8=Spirit, 9=Undead
 bonus bAtkEle,n;			Gives the player's attacks element n
@@ -117,16 +115,13 @@ bonus2 bSubSize,n,x;			x% Damage reduction against size n.
 					n:	0=Small  1=Medium  2=Large
 bonus2 bAddRace,n,x;			+x% physical damage against race n
 					n: 	0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
-						5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
-						10=Boss monster, 11=Other than (normal monster) boss monster
+						5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon
 bonus2 bMagicAddRace,n,x;		+x% magical damage against race n
 					n: 	0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
-						5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
-						10=Boss monster, 11=Other than (normal monster) boss monster
+						5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon
 bonus2 bSubRace,n,x;			+x% damage reduction against race n
 					n: 	0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
-						5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
-						10=Boss monster, 11=Other than (normal monster) boss monster
+						5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon
 bonus2 bAddEle,n,x;			+x% physical damage against element n
 					n: 	0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison,
 						6=Holy, 7=Dark, 8=Spirit, 9=Undead
@@ -187,8 +182,7 @@ bonus bHPGainValue,n;			When killing a monster by physical attack, you gain n HP
 bonus2 bCriticalAddRace,r,n;		Critical + n vs. enemies of race r
 					r:
 						0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
-						5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
-						10=Boss monster, 11=Other than (normal monster) boss monster
+						5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon
 bonus2 bHPRegenRate,n,x;		Gain n HP every x milliseconds
 bonus2 bHPLossRate,n,x;			Lose n HP every x milliseconds
 bonus2 bAddEffWhenHit,n,x;		x/100% chance to cause n state to the enemy when being hit by physical damage
@@ -299,8 +293,7 @@ bonus3 bAddMonsterDropItemGroup,n,x,y;	Adds a y/100% chance to get an item of gr
 
 bonus2 bWeaponComaRace,x,y;		y/100% chance to cause Coma when attacking a monster of race x with a normal attack
 						0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
-						5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
-						10=Boss monster, 11=Other than (normal monster) boss monster
+						5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon
 
 bonus bAddStealRate,n;			n/100% increase to Steal skill success chance
 
@@ -425,3 +418,39 @@ bonus2 bVariableCastrate,s,x;		Increases variable cast time of skill s by x%. (s
 bonus2 bFixedCastrate,s,x;		Increases fixed cast time of skill s by x%. (supports skill names.)
 bonus4 bSetDefRace,n,x,r,y;		Set DEF to y of an enemy of race n at x% for r milliseconds with normal attack.
 bonus4 bSetMDefRace,n,x,r,y;		Set MDEF to y of an enemy of race n at x% for r milliseconds with normal attack.
+
+
+bonus bIgnoreDefClass,n;		Disregard DEF against enemies of class n
+									n: 	0=Normal, 1=Boss, 2=Guardian
+bonus bIgnoreMdefRaceRate,n;		Disregard MDEF against enemies of class n
+									n: 	0=Normal, 1=Boss, 2=Guardian	
+bonus bDefRatioAtkClass,n;		Does more damage depending on monster Defense against class n (defense disregard)
+			
+bonus2 bIgnoreDefRaceRate,n,x;	Disregard x% of the target's DEF if the target belongs to class n	
+									n: 	0=Normal, 1=Boss, 2=Guardian			
+bonus2 bAddClass,n,x;			+x% physical damage against class n
+									n: 	0=Normal, 1=Boss, 2=Guardian
+bonus2 bSubClass,n,x;			+x% damage reduction against class n
+									n: 	0=Normal, 1=Boss, 2=Guardian
+bonus2 bMagicAddClass,n,x;		+x% magical damage against class n
+									n: 	0=Normal, 1=Boss, 2=Guardian
+bonus2 bWeaponComaClass,n,y;	y/100% chance to cause Coma when attacking a monster of class x with a normal attack
+									n: 	0=Normal, 1=Boss, 2=Guardian
+bonus2 bCriticalAddClass,n,x;	Critical + x vs. enemies of class n
+									n: 	0=Normal, 1=Boss, 2=Guardian
+bonus2 bExpAddClass,n,x;		Increase exp gained by x% vs. enemies of class n
+									n: 	0=Normal, 1=Boss, 2=Guardian
+bonus2 bSpGainClass,n,x;		When killing a monster of class n by physical attack gain x amount of sp
+										n: 	0=Normal, 1=Boss, 2=Guardian
+bonus2 bHpDrainValueClass,n,x;		Heals +x HP when attacking a monster of class n with normal attack.
+										n: 	0=Normal, 1=Boss, 2=Guardian
+bonus2 bSpDrainValueClass,n,x;		Heals +x SP when attacking a monster of class n with normal attack.
+										n: 	0=Normal, 1=Boss, 2=Guardian
+bonus2 bIgnoreMdefClassRate,n,x;	Disregard x% of the target's MDEF if the target belongs to class n
+										n: 	0=Normal, 1=Boss, 2=Guardian
+bonus2 bIgnoreDefClassRate,n,x;		Disregard x% of the target's DEF if the target belongs to class n
+										n: 	0=Normal, 1=Boss, 2=Guardian
+bonus2 bSpGainClassAttack,n,x;		Heals x SP when attacking n class on every hit
+										n: 	0=Normal, 1=Boss, 2=Guardian
+bonus2 bHpGainClassAttack,n,x;		Heals x HP when attacking n class on every hit
+										n: 	0=Normal, 1=Boss, 2=Guardian

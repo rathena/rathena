@@ -2500,28 +2500,39 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		+ sizeof(sd->param_equip)
 		+ sizeof(sd->subele)
 		+ sizeof(sd->subrace)
+		+ sizeof(sd->subclass)
 		+ sizeof(sd->subrace2)
 		+ sizeof(sd->subsize)
 		+ sizeof(sd->reseff)
 		+ sizeof(sd->weapon_coma_ele)
 		+ sizeof(sd->weapon_coma_race)
+		+ sizeof(sd->weapon_coma_class)
 		+ sizeof(sd->weapon_atk)
 		+ sizeof(sd->weapon_atk_rate)
 		+ sizeof(sd->arrow_addele)
 		+ sizeof(sd->arrow_addrace)
+		+ sizeof(sd->arrow_addclass)
 		+ sizeof(sd->arrow_addsize)
 		+ sizeof(sd->magic_addele)
 		+ sizeof(sd->magic_addrace)
+		+ sizeof(sd->magic_addclass)
 		+ sizeof(sd->magic_addsize)
 		+ sizeof(sd->magic_atk_ele)
 		+ sizeof(sd->critaddrace)
+		+ sizeof(sd->critaddclass)
 		+ sizeof(sd->expaddrace)
-		+ sizeof(sd->ignore_mdef)
-		+ sizeof(sd->ignore_def)
+		+ sizeof(sd->expaddclass)
+		+ sizeof(sd->ignore_def_by_race)
+		+ sizeof(sd->ignore_def_by_class)
+		+ sizeof(sd->ignore_mdef_by_race)
+		+ sizeof(sd->ignore_mdef_by_class)
 		+ sizeof(sd->itemgrouphealrate)
 		+ sizeof(sd->sp_gain_race)
+		+ sizeof(sd->sp_gain_class)
 		+ sizeof(sd->sp_gain_race_attack)
+		+ sizeof(sd->sp_gain_class_attack)
 		+ sizeof(sd->hp_gain_race_attack)
+		+ sizeof(sd->hp_gain_class_attack)
 		);
 
 	memset (&sd->right_weapon.overrefine, 0, sizeof(sd->right_weapon) - sizeof(sd->right_weapon.atkmods));
@@ -2551,6 +2562,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	status->aspd_rate = 1000;
 	status->ele_lv = 1;
 	status->race = RC_DEMIHUMAN;
+	status->class_ = CLASS_NORMAL;
 
 	// Zero up structures...
 	memset(&sd->autospell,0,sizeof(sd->autospell)
@@ -3307,6 +3319,7 @@ int status_calc_mercenary_(struct mercenary_data *md, bool first)
 
 	if( first ) {
 		memcpy(status, &md->db->status, sizeof(struct status_data));
+		status->class_ = CLASS_NORMAL;
 		status->mode = MD_CANMOVE|MD_CANATTACK;
 		status->hp = status->max_hp;
 		status->sp = status->max_sp;
@@ -3347,6 +3360,7 @@ int status_calc_homunculus_(struct homun_data *hd, bool first)
 		status->def_ele =  db->element;
 		status->ele_lv = 1;
 		status->race = db->race;
+		status->class_ = CLASS_NORMAL;
 		status->size = (hom->class_ == db->evo_class)?db->evo_size:db->base_size;
 		status->rhw.range = 1 + status->size;
 		status->mode = MD_CANMOVE|MD_CANATTACK;
@@ -3441,6 +3455,7 @@ int status_calc_elemental_(struct elemental_data *ed, bool first)
 		else
 			status->mode = ele->mode;
 
+		status->class_ = CLASS_NORMAL;
 		status_calc_misc(&ed->bl, status, 0);
 
 		status->max_hp = ele->max_hp;
@@ -3490,6 +3505,7 @@ int status_calc_npc_(struct npc_data *nd, bool first)
 		status->def_ele = ELE_NEUTRAL;
 		status->ele_lv = 1;
 		status->race = RC_DEMIHUMAN;
+		status->class_ = CLASS_NORMAL;
 		status->size = nd->size;
 		status->rhw.range = 1 + status->size;
 		status->mode = (MD_CANMOVE|MD_CANATTACK);
