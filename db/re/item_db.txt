@@ -4243,7 +4243,7 @@
 6714,Sheenas_Soul,Sheena's Soul,3,20,,0,,,,,,,,,,,,,{},{},{}
 6715,Gods_Soul_Piece,God's Soul Piece,3,20,,0,,,,,,,,,,,,,{},{},{}
 //
-6732,Monster_Coin,Monster Coin,3,10,,,,,,,,,,,,,,,{},{},{}
+6732,Monster_Coin,Monster Coin,3,10,,0,,,,,,,,,,,,,{},{},{}
 6745,Recovery_Stone(Low),Recovery Stone(Low),6,20,,10,,,,,,,,16,,,,,{ bonus bSPGainValue,1; bonus bMagicHPGainValue,1; },{},{}
 6746,Iron_Artifacts,Iron Artifacts,3,10,,0,,,,,,,,,,,,,{},{},{}
 6747,Steel_Workpiece,Steel Workpiece,3,10,,0,,,,,,,,,,,,,{},{},{}
