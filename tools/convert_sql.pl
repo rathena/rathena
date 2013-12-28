@@ -1,16 +1,25 @@
 #!/usr/bin/perl
 
 # Item Database:
-#     --i=../db/pre-re/item_db.txt --o=../sql-files/item_db.sql --t=pre --m=item
-#     --i=../db/re/item_db.txt --o=../sql-files/item_db_re.sql --t=re --m=item
+#     --i=../db/pre-re/item_db.txt --o=../sql-files/item_db.sql --t=pre --m=item --table=item_db
+#     --i=../db/re/item_db.txt --o=../sql-files/item_db_re.sql --t=re --m=item --table=item_db_re
+#
+#     --i=../db/item_db2.txt --o=../sql-files/item_db2.sql --t=pre --m=item --table=item_db2
+#     --i=../db/item_db2.txt --o=../sql-files/item_db2_re.sql --t=re --m=item --table=item_db2_re
 #
 # Mob Database:
-#     --i=../db/pre-re/mob_db.txt --o=../sql-files/mob_db.sql --t=pre --m=mob
-#     --i=../db/re/mob_db.txt --o=../sql-files/mob_db_re.sql --t=re --m=mob
+#     --i=../db/pre-re/mob_db.txt --o=../sql-files/mob_db.sql --t=pre --m=mob --table=mob_db
+#     --i=../db/re/mob_db.txt --o=../sql-files/mob_db_re.sql --t=re --m=mob --table=mob_db_re
+#
+#     --i=../db/mob_db2.txt --o=../sql-files/mob_db2.sql --t=pre --m=mob --table=mob_db2
+#     --i=../db/mob_db2.txt --o=../sql-files/mob_db2_re.sql --t=re --m=mob --table=mob_db2_re
 #
 # Mob Skill Database:
-#     --i=../db/pre-re/mob_skill_db.txt --o=../sql-files/mob_skill_db.sql --t=pre --m=mob_skill
-#     --i=../db/re/mob_skill_db.txt --o=../sql-files/mob_skill_db_re.sql --t=re --m=mob_skill
+#     --i=../db/pre-re/mob_skill_db.txt --o=../sql-files/mob_skill_db.sql --t=pre --m=mob_skill --table=mob_skill_db
+#     --i=../db/re/mob_skill_db.txt --o=../sql-files/mob_skill_db_re.sql --t=re --m=mob_skill --table=mob_skill_db_re
+#
+#     --i=../db/mob_skill_db2.txt --o=../sql-files/mob_skill_db2.sql --t=pre --m=mob_skill --table=mob_skill_db2
+#     --i=../db/mob_skill_db2.txt --o=../sql-files/mob_skill_db2_re.sql --t=re --m=mob_skill --table=mob_skill_db2_re
 #
 # List of options:
 #   item_db.pl --help
@@ -186,7 +195,7 @@ sub BuildDataForType{ my($sTarget,$sType) = @_;
 			$db = $sTable;
 			$db = "item_db" unless($db);
 			$nb_columns = 22;
-			@str_col = (1,2,19,20,21);
+			@str_col = (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21);
 			@str_col2 = (19,20,21);
 			$line_format = "([^\,]*),"x($nb_columns-3)."(\{.*\}),"x(2)."(\{.*\})"; #Last 3 columns are scripts.
 			$create_table =
@@ -196,39 +205,39 @@ sub BuildDataForType{ my($sTarget,$sType) = @_;
 
 DROP TABLE IF EXISTS `$db`;
 CREATE TABLE `$db` (
-  `id` smallint(5) unsigned NOT NULL default '0',
-  `name_english` varchar(50) NOT NULL default '',
-  `name_japanese` varchar(50) NOT NULL default '',
-  `type` tinyint(2) unsigned NOT NULL default '0',
-  `price_buy` mediumint(10) unsigned default NULL,
-  `price_sell` mediumint(10) unsigned default NULL,
-  `weight` smallint(5) unsigned NOT NULL default '0',
-  `attack` smallint(3) unsigned default NULL,
-  `defence` smallint(5) NULL default NULL,
-  `range` tinyint(2) unsigned default NULL,
-  `slots` tinyint(2) unsigned default NULL,
-  `equip_jobs` int(12) unsigned default NULL,
-  `equip_upper` tinyint(8) unsigned default NULL,
-  `equip_genders` tinyint(2) unsigned default NULL,
-  `equip_locations` mediumint(7) unsigned default NULL,
-  `weapon_level` tinyint(2) unsigned default NULL,
-  `equip_level` tinyint(3) unsigned default NULL,
-  `refineable` tinyint(1) unsigned default NULL,
-  `view` smallint(3) unsigned default NULL,
+  `id` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `name_english` varchar(50) NOT NULL DEFAULT '',
+  `name_japanese` varchar(50) NOT NULL DEFAULT '',
+  `type` varchar(2) NOT NULL DEFAULT '0',
+  `price_buy` varchar(11) NOT NULL DEFAULT '0',
+  `price_sell` varchar(11) NOT NULL DEFAULT '0',
+  `weight` varchar(5) NOT NULL DEFAULT '0',
+  `attack` varchar(11) NOT NULL DEFAULT '0',
+  `defence` varchar(5) NOT NULL DEFAULT '0',
+  `range` varchar(2) NOT NULL DEFAULT '0',
+  `slots` varchar(2) NOT NULL DEFAULT '0',
+  `equip_jobs` varchar(11) NOT NULL DEFAULT '0',
+  `equip_upper` varchar(2) NOT NULL DEFAULT '0',
+  `equip_genders` char(1) NOT NULL DEFAULT '0',
+  `equip_locations` varchar(8) NOT NULL DEFAULT '0',
+  `weapon_level` char(1) NOT NULL DEFAULT '0',
+  `equip_level` varchar(4) NOT NULL DEFAULT '0',
+  `refineable` char(1) NOT NULL DEFAULT '0',
+  `view` varchar(5) NOT NULL DEFAULT '0',
   `script` text,
   `equip_script` text,
   `unequip_script` text,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 ";
 		#NOTE: These do not match the table struct defaults.
-		@defaults = ('0','\'\'','\'\'','0','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL');
+		@defaults = ('0','\'\'','\'\'','0','\'\'','\'\'','\'\'','\'\'','\'\'','\'\'','\'\'','\'\'','\'\'','\'\'','\'\'','\'\'','\'\'','\'\'','\'\'','NULL','NULL','NULL');
 		}
 		elsif($sTarget =~ /Re/i){
 			$db = $sTable;
 			$db = "item_db_re" unless($db);
 			$nb_columns = 22;
-			@str_col = (1,2,7,16,19,20,21);
+			@str_col = (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21);
 			@str_col2 = (19,20,21);
 			$line_format = "([^\,]*),"x($nb_columns-3)."(\{.*\}),"x(2)."(\{.*\})"; #Last 3 columns are scripts.
 			$create_table =
@@ -238,36 +247,37 @@ CREATE TABLE `$db` (
 
 DROP TABLE IF EXISTS `$db`;
 CREATE TABLE `$db` (
- `id` smallint(5) unsigned NOT NULL default '0',
- `name_english` varchar(50) NOT NULL default '',
- `name_japanese` varchar(50) NOT NULL default '',
- `type` tinyint(2) unsigned NOT NULL default '0',
- `price_buy` mediumint(10) unsigned default NULL,
- `price_sell` mediumint(10) unsigned default NULL,
- `weight` smallint(5) unsigned NOT NULL default '0',
- `atk:matk` varchar(11) default '',
- `defence` smallint(5) NULL default NULL,
- `range` tinyint(2) unsigned default NULL,
- `slots` tinyint(2) unsigned default NULL,
- `equip_jobs` int(12) unsigned default NULL,
- `equip_upper` tinyint(8) unsigned default NULL,
- `equip_genders` tinyint(2) unsigned default NULL,
- `equip_locations` mediumint(7) unsigned default NULL,
- `weapon_level` tinyint(2) unsigned default NULL,
- `equip_level` varchar(10) default '',
- `refineable` tinyint(1) unsigned default NULL,
- `view` smallint(3) unsigned default NULL,
- `script` text,
- `equip_script` text,
- `unequip_script` text,
- PRIMARY KEY (`id`)
+  `id` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `name_english` varchar(50) NOT NULL DEFAULT '',
+  `name_japanese` varchar(50) NOT NULL DEFAULT '',
+  `type` varchar(2) NOT NULL DEFAULT '0',
+  `price_buy` varchar(11) NOT NULL DEFAULT '0',
+  `price_sell` varchar(11) NOT NULL DEFAULT '0',
+  `weight` varchar(5) NOT NULL DEFAULT '0',
+  `atk:matk` varchar(11) NOT NULL DEFAULT '0',
+  `defence` varchar(5) NOT NULL DEFAULT '0',
+  `range` varchar(2) NOT NULL DEFAULT '0',
+  `slots` varchar(2) NOT NULL DEFAULT '0',
+  `equip_jobs` varchar(11) NOT NULL DEFAULT '0',
+  `equip_upper` varchar(2) NOT NULL DEFAULT '0',
+  `equip_genders` char(1) NOT NULL DEFAULT '0',
+  `equip_locations` varchar(8) NOT NULL DEFAULT '0',
+  `weapon_level` char(1) NOT NULL DEFAULT '0',
+  `equip_level` varchar(4) NOT NULL DEFAULT '0',
+  `refineable` char(1) NOT NULL DEFAULT '0',
+  `view` varchar(5) NOT NULL DEFAULT '0',
+  `script` text,
+  `equip_script` text,
+  `unequip_script` text,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 ";
 		#NOTE: These do not match the table struct defaults.
-		@defaults = ('0','\'\'','\'\'','0','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL');
+		@defaults = ('0','\'\'','\'\'','0','\'\'','\'\'','\'\'','\'\'','\'\'','\'\'','\'\'','\'\'','\'\'','\'\'','\'\'','\'\'','\'\'','\'\'','\'\'','NULL','NULL','NULL');
 		}
 	}
 	elsif($sType =~ /mob_skill/i) { #Same format for Pre-Renewal and Renewal.
+		$db = $sTable;
 		$db = "mob_skill_db" unless($db);
 		$nb_columns = 19;
 		@str_col = (1,2,8,9,10,11,17,18);
@@ -302,6 +312,7 @@ CREATE TABLE IF NOT EXISTS `$db` (
 ";
 	}
 	elsif($sType =~ /mob/i) { #Same format for Pre-Renewal and Renewal.
+		$db = $sTable;
 		$db = "mob_db" unless($db);
 		$nb_columns = 57;
 		@str_col = (1,2,3);
@@ -375,4 +386,3 @@ CREATE TABLE `$db` (
 ";
 	}
 }
-

@@ -3944,7 +3944,13 @@ static void mob_readdb(void)
  *------------------------------------------*/
 static int mob_read_sqldb(void)
 {
-	const char* mob_db_name[] = { mob_db_db, mob_db2_db };
+	const char* mob_db_name[] = {
+#ifndef RENEWAL
+		mob_db_db,
+#else
+		mob_db_re_db,
+#endif
+		mob_db2_db };
 	int fi;
 
 	for( fi = 0; fi < ARRAYLENGTH(mob_db_name); ++fi ) {
@@ -4447,7 +4453,13 @@ static void mob_readskilldb(void) {
  */
 static int mob_read_sqlskilldb(void)
 {
-	const char* mob_skill_db_name[] = { mob_skill_db_db, mob_skill_db2_db };
+	const char* mob_skill_db_name[] = {
+#ifndef RENEWAL
+		mob_skill_db_db,
+#else
+		mob_skill_db_re_db,
+#endif
+		mob_skill_db2_db };
 	int fi;
 
 	if( battle_config.mob_skill_rate == 0 ) {
