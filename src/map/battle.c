@@ -550,7 +550,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 				{ // Melee attack
 					if( !battle_config.left_cardfix_to_right )
 					{
-						t_cf += sd->right_weapon.addrace[tstatus->race]+sd->right_weapon.addrace[RC_ALL];
+						t_cf += sd->right_weapon.addrace[tstatus->race] + sd->right_weapon.addrace[RC_ALL];
 						if (!(nk&NK_NO_ELEFIX)) {
 							int ele_fix = sd->right_weapon.addele[tstatus->def_ele] + sd->right_weapon.addele[ELE_ALL];
 							for (i = 0; ARRAYLENGTH(sd->right_weapon.addele2) > i && sd->right_weapon.addele2[i].rate != 0; i++) {
@@ -569,7 +569,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 
 						if( left&1 )
 						{
-							t_cf += sd->left_weapon.addrace[tstatus->race]+sd->left_weapon.addrace[RC_ALL];
+							t_cf += sd->left_weapon.addrace[tstatus->race] + sd->left_weapon.addrace[RC_ALL];
 							if (!(nk&NK_NO_ELEFIX))	{
 								int ele_fix_lh = sd->left_weapon.addele[tstatus->def_ele] + sd->left_weapon.addele[ELE_ALL];
 								for (i = 0; ARRAYLENGTH(sd->left_weapon.addele2) > i && sd->left_weapon.addele2[i].rate != 0; i++) {
@@ -607,14 +607,14 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 							ele_fix += sd->left_weapon.addele2[i].rate;
 						}
 
-						t_cf += sd->right_weapon.addrace[tstatus->race]+sd->left_weapon.addrace[tstatus->race]
-								+ sd->right_weapon.addrace[RC_ALL]+sd->left_weapon.addrace[RC_ALL];
+						t_cf += sd->right_weapon.addrace[tstatus->race] + sd->left_weapon.addrace[tstatus->race]
+								+ sd->right_weapon.addrace[RC_ALL] + sd->left_weapon.addrace[RC_ALL];
 						t_cf += ele_fix;
-						t_cf += sd->right_weapon.addsize[tstatus->size]+sd->left_weapon.addsize[tstatus->size]
-								+ sd->right_weapon.addsize[SZ_ALL]+sd->left_weapon.addsize[SZ_ALL];
-						t_cf += sd->right_weapon.addrace2[t_race2]+sd->left_weapon.addrace2[t_race2];
-						t_cf += sd->right_weapon.addclass[tstatus->class_]+sd->left_weapon.addclass[tstatus->class_]
-								+ sd->right_weapon.addclass[CLASS_ALL]+sd->left_weapon.addclass[CLASS_ALL];
+						t_cf += sd->right_weapon.addsize[tstatus->size] + sd->left_weapon.addsize[tstatus->size]
+								+ sd->right_weapon.addsize[SZ_ALL] + sd->left_weapon.addsize[SZ_ALL];
+						t_cf += sd->right_weapon.addrace2[t_race2] + sd->left_weapon.addrace2[t_race2];
+						t_cf += sd->right_weapon.addclass[tstatus->class_] + sd->left_weapon.addclass[tstatus->class_]
+								+ sd->right_weapon.addclass[CLASS_ALL] + sd->left_weapon.addclass[CLASS_ALL];
 						
 					}
 					if (sd->status.weapon == W_KATAR && (skill=pc_checkskill(sd,ASC_KATAR)) > 0) { // Adv. Katar Mastery functions similar to a +%ATK card on official [helvetica]
@@ -714,7 +714,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 			// misc damage reduction from equipment
 				if (!(nk&NK_NO_ELEFIX))
 				{
-					int ele_fix = tsd->subele[s_ele] = tsd->subele[ELE_ALL];
+					int ele_fix = tsd->subele[s_ele] + tsd->subele[ELE_ALL];
 					for (i = 0; ARRAYLENGTH(tsd->subele2) > i && tsd->subele2[i].rate != 0; i++)
 					{
 						if(tsd->subele2[i].ele != s_ele) continue;
