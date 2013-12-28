@@ -2131,7 +2131,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 			if (sstatus->mode&MD_ASSIST && DIFF_TICK(md->last_linktime, tick) < MIN_MOBLINKTIME) { 
 				// Link monsters nearby [Skotlex]
 				md->last_linktime = tick;
-				map_foreachinrange(mob_linksearch, src, md->db->range2, BL_MOB, md->class_, target, tick);
+				map_foreachinrange(mob_linksearch, src, md->db->range2, BL_MOB, md->mob_id, target, tick);
 			}
 		}
 		if(src->type == BL_PET && pet_attackskill((TBL_PET*)src, target->id))
@@ -2740,7 +2740,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				aFree(md->base_status);
 				md->base_status = NULL;
 			}
-			if( mob_is_clone(md->class_) )
+			if( mob_is_clone(md->mob_id) )
 				mob_clone_delete(md);
 			if( md->tomb_nid )
 				mvptomb_destroy(md);

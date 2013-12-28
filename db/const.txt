@@ -616,6 +616,24 @@ bSetDefRace	2059
 bSetMDefRace	2060
 bHPVanishRate	2061
 
+bIgnoreDefClass	2062
+bIgnoreMdefRaceRate	2063
+bIgnoreDefRaceRate	2064
+bDefRatioAtkClass	2065
+bAddClass	2066
+bSubClass	2067
+bMagicAddClass	2068
+bWeaponComaClass	2069
+bCriticalAddClass	2070
+bExpAddClass	2071
+bSpGainClass	2072
+bHpDrainValueClass	2073
+bSpDrainValueClass	2074
+bIgnoreMdefClassRate	2075
+bIgnoreDefClassRate	2076
+bSpGainClassAttack	2077
+bHpGainClassAttack	 2078
+
 EQI_HEAD_TOP	1
 EQI_ARMOR	2
 EQI_HAND_L	3
@@ -687,9 +705,10 @@ RC_Demon	6
 RC_DemiHuman	7
 RC_Angel	8
 RC_Dragon	9
-RC_Boss	10
-RC_NonBoss	11
-RC_NonDemiHuman	12
+
+Class_Normal	0
+Class_Boss	1
+Class_Guardian	2
 
 RC2_None	0
 RC2_Goblin	1

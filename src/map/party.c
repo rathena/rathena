@@ -1028,7 +1028,7 @@ int party_exp_share(struct party_data* p, struct block_list* src, unsigned int b
 			if (!md)
 				return 0;
 
-			rate = pc_level_penalty_mod(sd[i], md->db->lv, md->db->status.race, md->db->status.mode, 1);
+			rate = pc_level_penalty_mod(sd[i], md->db->lv, md->db->status.class_, 1);
 			base_exp = (unsigned int)cap_value(base_exp_bonus * rate / 100, 1, UINT_MAX);
 			job_exp = (unsigned int)cap_value(job_exp_bonus * rate / 100, 1, UINT_MAX);
 		}
