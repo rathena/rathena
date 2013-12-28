@@ -832,8 +832,8 @@ int read_elementaldb(void) {
 		ele = atoi(str[21]);
 		status->def_ele = ele%10;
 		status->ele_lv = ele/20;
-		if( status->def_ele >= ELE_MAX ) {
-			ShowWarning("Elemental %d has invalid element type %d (max element is %d)\n", db->class_, status->def_ele, ELE_MAX - 1);
+		if( status->def_ele >= ELE_ALL ) {
+			ShowWarning("Elemental %d has invalid element type %d (max element is %d)\n", db->class_, status->def_ele, ELE_ALL - 1);
 			status->def_ele = ELE_NEUTRAL;
 		}
 		if( status->ele_lv < 1 || status->ele_lv > 4 ) {

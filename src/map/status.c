@@ -7997,7 +7997,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			// val1 : Element Lvl (if called by skill lvl 1, takes random value between 1 and 4)
 			// val2 : Element (When no element, random one is picked)
 			// val3 : 0 = called by skill 1 = called by script (fixed level)
-			if( !val2 ) val2 = rnd()%ELE_MAX;
+			if( !val2 ) val2 = rnd()%ELE_ALL;
 
 			if( val1 == 1 && val3 == 0 )
 				val1 = 1 + rnd()%4;
@@ -8662,10 +8662,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			// end previous enchants
 			skill_enchant_elemental_end(bl,type);
 			// Make sure the received element is valid.
-			if (val2 >= ELE_MAX)
-				val2 = val2%ELE_MAX;
+			if (val2 >= ELE_ALL)
+				val2 = val2%ELE_ALL;
 			else if (val2 < 0)
-				val2 = rnd()%ELE_MAX;
+				val2 = rnd()%ELE_ALL;
 			break;
 		case SC_CRITICALWOUND:
 			val2 = 20*val1; // Heal effectiveness decrease
@@ -12076,13 +12076,13 @@ static bool status_readdb_attrfix()
 		lv=atoi(split[0]);
 		n=atoi(split[1]);
 
-		for(i=0;i<n && i<ELE_MAX;) {
+		for(i=0;i<n && i<ELE_ALL;) {
 			if( !fgets(line, sizeof(line), fp) )
 				break;
 			if(line[0]=='/' && line[1]=='/')
 				continue;
 
-			for(j=0,p=line;j<n && j<ELE_MAX && p;j++) {
+			for(j=0,p=line;j<n && j<ELE_ALL && p;j++) {
 				while(*p==32 && *p>0)
 					p++;
 				attr_fix_table[lv-1][i][j]=atoi(p);
@@ -12131,8 +12131,8 @@ int status_readdb(void)
 	}
 	// attr_fix.txt
 	for(i=0;i<4;i++)
-		for(j=0;j<ELE_MAX;j++)
-			for(k=0;k<ELE_MAX;k++)
+		for(j=0;j<ELE_ALL;j++)
+			for(k=0;k<ELE_ALL;k++)
 				attr_fix_table[i][j][k]=100;
 
 	// read databases

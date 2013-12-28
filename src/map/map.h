@@ -279,14 +279,14 @@ enum {
 	RC_DEMIHUMAN,
 	RC_ANGEL,
 	RC_DRAGON,
-	RC_MAX
+	RC_ALL
 };
 
 enum {
 	CLASS_NORMAL = 0,
 	CLASS_BOSS,
 	CLASS_GUARDIAN,
-	CLASS_MAX
+	CLASS_ALL
 };
 
 enum {
@@ -311,7 +311,7 @@ enum {
 	ELE_DARK,
 	ELE_GHOST,
 	ELE_UNDEAD,
-	ELE_MAX,
+	ELE_ALL,
 	ELE_NONE
 };
 

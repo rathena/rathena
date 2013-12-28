@@ -55,7 +55,7 @@ int pc_split_atoui(char* str, unsigned int* val, char sep, int max);
 
 static unsigned int statp[MAX_LEVEL+1];
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
-static unsigned int level_penalty[3][CLASS_MAX][MAX_LEVEL*2+1];
+static unsigned int level_penalty[3][CLASS_ALL][MAX_LEVEL*2+1];
 #endif
 
 // h-files are for declarations, not for implementations... [Shinomori]
@@ -2216,7 +2216,7 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 				sd->bonus.arrow_cri += val*10;
 			break;
 		case SP_ATKELE:
-			if(val >= ELE_MAX) {
+			if(val > ELE_ALL) {
 				ShowError("pc_bonus: SP_ATKELE: Invalid element %d\n", val);
 				break;
 			}
@@ -2247,7 +2247,7 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			}
 			break;
 		case SP_DEFELE:
-			if(val >= ELE_MAX) {
+			if(val > ELE_ALL) {
 				ShowError("pc_bonus: SP_DEFELE: Invalid element %d\n", val);
 				break;
 			}
@@ -2361,7 +2361,7 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 				sd->matk_rate += val;
 			break;
 		case SP_IGNORE_DEF_ELE:
-			if(val >= ELE_MAX) {
+			if(val > ELE_ALL) {
 				ShowError("pc_bonus: SP_IGNORE_DEF_ELE: Invalid element %d\n", val);
 				break;
 			}
@@ -2400,7 +2400,7 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			}
 			break;
 		case SP_IGNORE_MDEF_ELE:
-			if(val >= ELE_MAX) {
+			if(val > ELE_ALL) {
 				ShowError("pc_bonus: SP_IGNORE_MDEF_ELE: Invalid element %d\n", val);
 				break;
 			}
@@ -2424,7 +2424,7 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 				sd->critical_rate+=val;
 			break;
 		case SP_DEF_RATIO_ATK_ELE:
-			if(val >= ELE_MAX) {
+			if(val > ELE_ALL) {
 				ShowError("pc_bonus: SP_DEF_RATIO_ATK_ELE: Invalid element %d\n", val);
 				break;
 			}
@@ -2434,7 +2434,7 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 				sd->left_weapon.def_ratio_atk_ele |= 1<<val;
 			break;
 		case SP_DEF_RATIO_ATK_RACE:
-			if(val >= RC_MAX) {
+			if(val > RC_ALL) {
 				ShowError("pc_bonus: SP_DEF_RATIO_ATK_RACE: Invalid race %d\n", val);
 				break;
 			}
@@ -2444,7 +2444,7 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 				sd->left_weapon.def_ratio_atk_race |= 1<<val;
 			break;
 		case SP_DEF_RATIO_ATK_CLASS:
-			if(val >= CLASS_MAX) {
+			if(val > CLASS_ALL) {
 				ShowError("pc_bonus: SP_DEF_RATIO_ATK_CLASS: Invalid race %d\n", val);
 				break;
 			}
@@ -2738,7 +2738,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 
 	switch(type){
 	case SP_ADDELE:
-		if(type2 >= ELE_MAX) {
+		if(type2 > ELE_ALL) {
 			ShowError("pc_bonus2: SP_ADDELE: Invalid element %d\n", type2);
 			break;
 		}
@@ -2774,7 +2774,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->arrow_addsize[type2]+=val;
 		break;
 	case SP_SUBELE:
-		if(type2 >= ELE_MAX) {
+		if(type2 > ELE_ALL) {
 			ShowError("pc_bonus2: SP_SUBELE: Invalid element %d\n", type2);
 			break;
 		}
@@ -2816,7 +2816,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		sd->reseff[type2-SC_COMMON_MIN]= cap_value(i, 0, 10000);
 		break;
 	case SP_MAGIC_ADDELE:
-		if(type2 >= ELE_MAX) {
+		if(type2 > ELE_ALL) {
 			ShowError("pc_bonus2: SP_MAGIC_ADDELE: Invalid element %d\n", type2);
 			break;
 		}
@@ -2990,7 +2990,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		}
 		break;
 	case SP_WEAPON_COMA_ELE:
-		if(type2 >= ELE_MAX) {
+		if(type2 > ELE_ALL) {
 			ShowError("pc_bonus2: SP_WEAPON_COMA_ELE: Invalid element %d\n", type2);
 			break;
 		}
@@ -3494,7 +3494,7 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 		break;
 
 	case SP_ADDELE:
-		if (type2 > ELE_MAX) {
+		if (type2 > ELE_ALL) {
 			ShowWarning("pc_bonus3 (SP_ADDELE): element %d is out of range.\n", type2);
 			break;
 		}
@@ -3503,7 +3503,7 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 		break;
 
 	case SP_SUBELE:
-		if (type2 > ELE_MAX) {
+		if (type2 > ELE_ALL) {
 			ShowWarning("pc_bonus3 (SP_SUBELE): element %d is out of range.\n", type2);
 			break;
 		}
@@ -3554,7 +3554,7 @@ int pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type4
 		break;
 
 	case SP_DEF_SET: //bonus4 bSetDefRace,n,x,r,y;
-		if( type2 > RC_MAX ) {
+		if( type2 > RC_ALL ) {
 			ShowWarning("pc_bonus4 (DEF_SET): %d is not supported.\n", type2);
 			break;
 		}
@@ -3566,7 +3566,7 @@ int pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type4
 		break;
 
 	case SP_MDEF_SET: //bonus4 bSetMDefRace,n,x,r,y;
-		if( type2 > RC_MAX ) {
+		if( type2 > RC_ALL ) {
 			ShowWarning("pc_bonus4 (MDEF_SET): %d is not supported.\n", type2);
 			break;
 		}
@@ -9757,7 +9757,7 @@ int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_
 	if( diff < 0 )
 		diff = MAX_LEVEL + ( ~diff + 1 );
 
-	for( i = 0; i < CLASS_MAX; i++ ) {
+	for( i = 0; i < CLASS_ALL; i++ ) {
 		int tmp;
 
 		if( ( tmp = level_penalty[type][i][diff] ) > 0 ) {
@@ -9891,7 +9891,7 @@ static bool pc_readdb_levelpenalty(char* fields[], int columns, int current)
 		return false;
 	}
 
-	if( class_ < 0 || class_ > CLASS_MAX ){
+	if( class_ < 0 || class_ > CLASS_ALL ){
 		ShowWarning("pc_readdb_levelpenalty: Invalid class %d specified.\n", class_);
 		return false;
 	}
@@ -10157,7 +10157,7 @@ int pc_readdb(void)
 	sv_readdb(db_path, "re/level_penalty.txt", ',', 4, 4, -1, &pc_readdb_levelpenalty);
 	for( k=1; k < 3; k++ ){ // fill in the blanks
 		int j;
-		for( j = 0; j < CLASS_MAX; j++ ){
+		for( j = 0; j < CLASS_ALL; j++ ){
 			int tmp = 0;
 			for( i = 0; i < MAX_LEVEL*2; i++ ){
 				if( i == MAX_LEVEL+1 )

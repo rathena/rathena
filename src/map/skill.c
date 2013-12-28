@@ -2643,7 +2643,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 				else if (s_ele == -2) //Use status element
 					s_ele = status_get_attack_sc_element(src,status_get_sc(src));
 				else if( s_ele == -3 ) //Use random element
-					s_ele = rnd()%ELE_MAX;
+					s_ele = rnd()%ELE_ALL;
 
 				dmg.damage = battle_attr_fix(bl, bl, dmg.damage, s_ele, status_get_element(bl), status_get_element_level(bl));
 
@@ -2968,9 +2968,9 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		(dmg.flag&BF_MISC && (skill_id == RA_CLUSTERBOMB || skill_id == RA_FIRINGTRAP || skill_id == RA_ICEBOUNDTRAP || skill_id == RK_DRAGONBREATH || skill_id == RK_DRAGONBREATH_WATER)) ) )
 	{
 		if (battle_config.left_cardfix_to_right)
-			battle_drain(sd, bl, dmg.damage, dmg.damage, tstatus->race, tstatus->mode&MD_BOSS);
+			battle_drain(sd, bl, dmg.damage, dmg.damage, tstatus->race, tstatus->class_);
 		else
-			battle_drain(sd, bl, dmg.damage, dmg.damage2, tstatus->race, tstatus->mode&MD_BOSS);
+			battle_drain(sd, bl, dmg.damage, dmg.damage2, tstatus->race, tstatus->class_);
 	}
 
 	if( damage > 0 ) {

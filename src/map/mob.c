@@ -3746,8 +3746,8 @@ static bool mob_parse_dbrow(char** str)
 	i = atoi(str[24]); //Element
 	status->def_ele = i%10;
 	status->ele_lv = i/20;
-	if (status->def_ele >= ELE_MAX) {
-		ShowError("mob_parse_dbrow: Invalid element type %d for monster ID %d (max=%d).\n", status->def_ele, mob_id, ELE_MAX-1);
+	if (status->def_ele >= ELE_ALL) {
+		ShowError("mob_parse_dbrow: Invalid element type %d for monster ID %d (max=%d).\n", status->def_ele, mob_id, ELE_ALL-1);
 		return false;
 	}
 	if (status->ele_lv < 1 || status->ele_lv > 4) {
