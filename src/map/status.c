@@ -683,7 +683,7 @@ void initChangeTables(void)
 	set_sc( SO_EARTH_INSIGNIA	, SC_EARTH_INSIGNIA	, SI_EARTH_INSIGNIA	, SCB_MDEF|SCB_DEF|SCB_MAXHP|SCB_MAXSP|SCB_WATK | SCB_ATK_ELE | SCB_REGEN );
 
 	/* Genetic */
-	set_sc( GN_CARTBOOST			, SC_GN_CARTBOOST	, SI_CARTSBOOST			, SCB_SPEED );
+	set_sc( GN_CARTBOOST			, SC_GN_CARTBOOST	, SI_GN_CARTBOOST			, SCB_SPEED );
 	set_sc( GN_THORNS_TRAP			, SC_THORNSTRAP		, SI_THORNTRAP			, SCB_NONE );
 	set_sc_with_vfx( GN_BLOOD_SUCKER	, SC_BLOODSUCKER	, SI_BLOODSUCKER		, SCB_NONE );
 	add_sc( GN_WALLOFTHORN			, SC_STOP		);
@@ -740,14 +740,14 @@ void initChangeTables(void)
 	set_sc_with_vfx( SC_SUPER_STAR		, SC_SUPER_STAR		, SI_SUPER_STAR		, SCB_NONE );
 
 	/* Rebellion */
-	add_sc( RL_MASS_SPIRAL		, SC_BLEEDING		);
-	add_sc( RL_HAMMER_OF_GOD	, SC_STUN		);
+	add_sc( RL_MASS_SPIRAL		, SC_BLEEDING );
+	add_sc( RL_HAMMER_OF_GOD	, SC_STUN );
 	set_sc( RL_B_TRAP		, SC_B_TRAP		, SI_B_TRAP		, SCB_SPEED );
-	set_sc( RL_E_CHAIN		, SC_E_CHAIN		, SI_E_CHAIN		, SCB_NONE );
-	set_sc( RL_C_MARKER		, SC_C_MARKER		, SI_C_MARKER		, SCB_SPEED );
-	set_sc( RL_P_ALTER		, SC_P_ALTER		, SI_P_ALTER		, SCB_BATK );
+	set_sc( RL_E_CHAIN			, SC_E_CHAIN		, SI_E_CHAIN		, SCB_NONE );
+	set_sc_with_vfx( RL_C_MARKER	, SC_C_MARKER	, SI_C_MARKER		, SCB_SPEED );
+	set_sc( RL_P_ALTER			, SC_P_ALTER		, SI_P_ALTER		, SCB_BATK );
 	set_sc( RL_SLUGSHOT		, SC_STUN		, SI_SLUGSHOT		, SCB_NONE );
-	set_sc( RL_AM_BLAST		, SC_ANTI_M_BLAST	, SI_ANTI_M_BLAST	, SCB_DEF_ELE );
+	set_sc( RL_AM_BLAST			, SC_ANTI_M_BLAST	, SI_ANTI_M_BLAST	, SCB_DEF_ELE );
 	set_sc( RL_HEAT_BARREL		, SC_HEAT_BARREL	, SI_HEAT_BARREL	, SCB_BATK|SCB_ASPD|SCB_HIT );
 
 	/* Storing the target job rather than simply SC_SPIRIT simplifies code later on */
@@ -879,14 +879,14 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_DROCERA_HERB_STEAMED] = SI_DROCERA_HERB_STEAMED;
 	StatusIconChangeTable[SC_PUTTI_TAILS_NOODLES] = SI_PUTTI_TAILS_NOODLES;
 
-	StatusIconChangeTable[SC_BOOST500] |= SI_BOOST500;
-	StatusIconChangeTable[SC_FULL_SWING_K] |= SI_FULL_SWING_K;
-	StatusIconChangeTable[SC_MANA_PLUS] |= SI_MANA_PLUS;
-	StatusIconChangeTable[SC_MUSTLE_M] |= SI_MUSTLE_M;
-	StatusIconChangeTable[SC_LIFE_FORCE_F] |= SI_LIFE_FORCE_F;
-	StatusIconChangeTable[SC_EXTRACT_WHITE_POTION_Z] |= SI_EXTRACT_WHITE_POTION_Z;
-	StatusIconChangeTable[SC_VITATA_500] |= SI_VITATA_500;
-	StatusIconChangeTable[SC_EXTRACT_SALAMINE_JUICE] |= SI_EXTRACT_SALAMINE_JUICE;
+	StatusIconChangeTable[SC_BOOST500] = SI_BOOST500;
+	StatusIconChangeTable[SC_FULL_SWING_K] = SI_FULL_SWING_K;
+	StatusIconChangeTable[SC_MANA_PLUS] = SI_MANA_PLUS;
+	StatusIconChangeTable[SC_MUSTLE_M] = SI_MUSTLE_M;
+	StatusIconChangeTable[SC_LIFE_FORCE_F] = SI_LIFE_FORCE_F;
+	StatusIconChangeTable[SC_EXTRACT_WHITE_POTION_Z] = SI_EXTRACT_WHITE_POTION_Z;
+	StatusIconChangeTable[SC_VITATA_500] = SI_VITATA_500;
+	StatusIconChangeTable[SC_EXTRACT_SALAMINE_JUICE] = SI_EXTRACT_SALAMINE_JUICE;
 
 	/* Elemental Spirit's 'side' status change icons */
 	StatusIconChangeTable[SC_CIRCLE_OF_FIRE] = SI_CIRCLE_OF_FIRE;
@@ -962,8 +962,8 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_BATKFOOD] |= SCB_BATK;
 	StatusChangeFlagTable[SC_WATKFOOD] |= SCB_WATK;
 	StatusChangeFlagTable[SC_MATKFOOD] |= SCB_MATK;
-	StatusChangeFlagTable[SC_ARMOR_ELEMENT] |= SCB_ALL;
-	StatusChangeFlagTable[SC_ARMOR_RESIST] |= SCB_ALL;
+	StatusChangeFlagTable[SC_ARMOR_ELEMENT] |= SCB_DEF_ELE;
+	StatusChangeFlagTable[SC_ARMOR_RESIST] |= SCB_DEF_ELE;
 	StatusChangeFlagTable[SC_SPCOST_RATE] |= SCB_ALL;
 	StatusChangeFlagTable[SC_WALKSPEED] |= SCB_SPEED;
 	StatusChangeFlagTable[SC_ITEMSCRIPT] |= SCB_ALL;
@@ -1079,7 +1079,6 @@ void initChangeTables(void)
 	StatusChangeStateTable[SC_DEEPSLEEP]		|= SCS_NOCAST;
 	StatusChangeStateTable[SC_SATURDAYNIGHTFEVER]	|= SCS_NOCAST;
 	StatusChangeStateTable[SC_CURSEDCIRCLE_TARGET]	|= SCS_NOCAST;
-	StatusChangeStateTable[SC_SILENCE]		|= SCS_NOCAST;
 	StatusChangeStateTable[SC_KINGS_GRACE]		|= SCS_NOCAST;
 	StatusChangeStateTable[SC_HEAT_BARREL_AFTER]	|= SCS_NOCAST;
 
@@ -9496,11 +9495,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_POISON:       sc->opt2 |= OPT2_POISON;		break;
 		case SC_CURSE:        sc->opt2 |= OPT2_CURSE;		break;
 		case SC_SILENCE:      sc->opt2 |= OPT2_SILENCE;		break;
-
-		case SC_SIGNUMCRUCIS:
-			sc->opt2 |= OPT2_SIGNUMCRUCIS;
-			break;
-
+		case SC_SIGNUMCRUCIS: sc->opt2 |= OPT2_SIGNUMCRUCIS; break;
 		case SC_BLIND:        sc->opt2 |= OPT2_BLIND;		break;
 		case SC_ANGELUS:      sc->opt2 |= OPT2_ANGELUS;		break;
 		case SC_BLEEDING:     sc->opt2 |= OPT2_BLEEDING;	break;

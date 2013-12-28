@@ -532,10 +532,10 @@
 373,0,6,4,0,0x1,0,5,1,no,0,0,0,magic,0,0x20,	PF_HPCONVERSION,Indulge
 374,9,6,1,0,0x1,0,1,1,yes,0,0xE00,0,none,0,0x20,	PF_SOULCHANGE,Soul Exhale
 375,9,6,1,0,0x98,0,5,1,yes,0,0,0,magic,0,0x0,	PF_SOULBURN,Soul Siphon
-376,0,0,0,0,0x1,0,5,1,no,0,0,0,weapon,0,0x0,		ASC_KATAR,Advanced Katar Mastery
 
 //****
 // Asassin Cross
+376,0,0,0,0,0x1,0,5,1,no,0,0,0,weapon,0,0x0,		ASC_KATAR,Advanced Katar Mastery
 //377,0,0,4,0,0x1,0,10,1,no,0,0,0,misc,0,0x0,	ASC_HALLUCINATION,Hallucination Walk
 378,0,6,4,5,0x1,0,5,1,no,0,0,0,weapon,0,0x0,		ASC_EDP,Enchant Deadly Poison
 379,7,6,1,-1,0x68,0,10,1,yes,0,0,0,misc,0,0x0,	ASC_BREAKER,Soul Destroyer
@@ -643,7 +643,6 @@
 442,0,0,0,0,0,0,3,0,no,0,0,0,none,0,0x0,		SG_FRIEND,Friend of the Sun Moon and Stars
 443,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,		SG_KNOWLEDGE,Knowledge of the Sun Moon and Stars
 444,0,6,4,0,0x1,0,1,1,no,0,0,0,misc,0,0x0,		SG_FUSION,Union of the Sun Moon and Stars
-445,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0,0x0,	SL_ALCHEMIST,Spirit of the Alchemist
 
 //****
 // Alchemist
@@ -651,6 +650,7 @@
 
 //****
 // Soul Linker
+445,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0,0x0,	SL_ALCHEMIST,Spirit of the Alchemist
 447,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0,0x0,	SL_MONK,Spirit of the Monk
 448,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0,0x0,	SL_STAR,Spirit of the Star Gladiator
 449,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0,0x0,	SL_SAGE,Spirit of the Sage
