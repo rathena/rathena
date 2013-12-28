@@ -6221,7 +6221,7 @@ ACMD_FUNC(mobsearch)
 
 		if( md->bl.m != sd->bl.m )
 			continue;
-		if( mob_id != -1 && md->class_ != mob_id )
+		if( mob_id != -1 && md->mob_id != mob_id )
 			continue;
 
 		++number;
@@ -6978,7 +6978,7 @@ ACMD_FUNC(showmobs)
 
 		if( md->bl.m != sd->bl.m )
 			continue;
-		if( mob_id != -1 && md->class_ != mob_id )
+		if( mob_id != -1 && md->mob_id != mob_id )
 			continue;
 		if( md->special_state.ai || md->master_id )
 			continue; // hide slaves and player summoned mobs

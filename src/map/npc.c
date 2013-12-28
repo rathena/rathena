@@ -3295,7 +3295,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 
 	mob.num = (unsigned short)num;
 	mob.active = 0;
-	mob.class_ = (short) class_;
+	mob.id = (short) class_;
 	mob.x = (unsigned short)x;
 	mob.y = (unsigned short)y;
 	mob.xs = (signed short)xs;
