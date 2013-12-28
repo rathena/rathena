@@ -1091,7 +1091,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case BD_LULLABY:
-		sc_start(src,bl,SC_SLEEP,15,skill_lv,skill_get_time2(skill_id,skill_lv));
+		sc_start(src,bl,SC_SLEEP,15+sstatus->int_/3,skill_lv,skill_get_time2(skill_id,skill_lv)); //(custom chance) "Chance is increased with INT", iRO Wiki
 		break;
 
 	case DC_UGLYDANCE:
