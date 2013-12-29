@@ -2552,7 +2552,8 @@ int parse_fromlogin(int fd) {
 				// continued from char_auth_ok...
 				if( server_id == ARRAYLENGTH(server) || //server not online, bugreport:2359
 					(max_connect_user == 0 && sd->group_id != gm_allow_group) ||
-					( max_connect_user > 0 && count_users() >= max_connect_user && sd->group_id != gm_allow_group ) ) {
+					( max_connect_user > 0 && count_users() >= max_connect_user && sd->group_id != gm_allow_group ) ||
+					(char_maintenance && sd->group_id < gm_allow_group) ) {
 					// refuse connection (over populated)
 					WFIFOHEAD(i,3);
 					WFIFOW(i,0) = 0x6c;

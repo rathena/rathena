@@ -8500,6 +8500,7 @@ int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 		}
 
 		CREATE(combo_idx,int16,data->combos[i]->count);
+		memset(combo_idx,0,data->combos[i]->count);
 		for( j = 0; j < data->combos[i]->count; j++ ) {
 			int id = data->combos[i]->nameid[j];
 			bool found = false;
@@ -10463,9 +10464,10 @@ void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag) {
 	for (i = 0; i < MAX_PC_BONUS_SCRIPT; i++) {
 		if (&sd->bonus_script[i] && sd->bonus_script[i].script &&
 			(sd->bonus_script[i].flag&flag || //Remove bonus script based on e_bonus_script_flags
-			(sd->bonus_script[i].type &&
-			(flag&BONUS_FLAG_REM_BUFF && sd->bonus_script[i].type == 1) || //Remove bonus script based on buff type
-			(flag&BONUS_FLAG_REM_DEBUFF && sd->bonus_script[i].type == 2)))) //Remove bonus script based on debuff type
+			(sd->bonus_script[i].type && (
+				(flag&BONUS_FLAG_REM_BUFF && sd->bonus_script[i].type == 1) || //Remove bonus script based on buff type
+				(flag&BONUS_FLAG_REM_DEBUFF && sd->bonus_script[i].type == 2)) //Remove bonus script based on debuff type
+			))) 
 		{
 			delete_timer(sd->bonus_script[i].tid,pc_bonus_script_timer);
 			pc_bonus_script_remove(sd,i);

@@ -3485,11 +3485,11 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 					break;
 				case SC_FATALMENACE:
 					if( src == target ) // Casters Part
-						unit_warp(src, -1, skl->x, skl->y, 3);
+						unit_warp(src, -1, skl->x, skl->y, CLR_TELEPORT);
 					else { // Target's Part
 						short x = skl->x, y = skl->y;
 						map_search_freecell(NULL, target->m, &x, &y, 2, 2, 1);
-						unit_warp(target,-1,x,y,3);
+						unit_warp(target,-1,x,y,CLR_TELEPORT);
 					}
 					break;
 				case LG_MOONSLASHER:
@@ -12550,7 +12550,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			if( tsd && !map[bl->m].flag.noteleport )
 				pc_randomwarp(tsd,3);
 			else if( bl->type == BL_MOB && battle_config.mob_warp&8 )
-				unit_warp(bl,-1,-1,-1,3);
+				unit_warp(bl,-1,-1,-1,CLR_TELEPORT);
 			break;
 
 		case UNT_REVERBERATION:
