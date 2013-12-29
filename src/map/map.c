@@ -3547,11 +3547,11 @@ int inter_config_read(char *cfgName)
 			strcpy(mob_db_re_db,w2);
 		else if(strcmpi(w1,"mob_db2_db")==0)
 			strcpy(mob_db2_db,w2);
-		else if(strcmpi(w1,"mob_skill_db")==0)
+		else if(strcmpi(w1,"mob_skill_db_db")==0)
 			strcpy(mob_skill_db_db,w2);
-		else if(strcmpi(w1,"mob_skill_db_re")==0)
+		else if(strcmpi(w1,"mob_skill_db_re_db")==0)
 			strcpy(mob_skill_db_re_db,w2);
-		else if(strcmpi(w1,"mob_skill_db2")==0)
+		else if(strcmpi(w1,"mob_skill_db2_db")==0)
 			strcpy(mob_skill_db2_db,w2);
 		else if( strcmpi( w1, "item_cash_db_db" ) == 0 )
 			strcpy( item_cash_db_db, w2 );
