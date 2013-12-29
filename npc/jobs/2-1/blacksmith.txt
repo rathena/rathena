@@ -7,7 +7,7 @@
 //= Optimized and further edited by kobra_k88.
 //= Further bugfixed and tested by Lupus
 //===== Current Version: =====================================
-//= 2.8
+//= 2.9
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -40,6 +40,7 @@
 //= 2.6a Typo fix [Yommy]
 //= 2.7 Added Quest Log commands. [Kisuka]
 //= 2.8 Removed the need for use of 'goto.' [L0ne_W0lf]
+//= 2.9 Updated with some extra conditions. [Euphy]
 //==============================================================
 
 ein_in01,18,28,4	script	Guildsman#BLS	731,{
@@ -72,20 +73,29 @@ ein_in01,18,28,4	script	Guildsman#BLS	731,{
 	mes "and passion of our souls into";
 	mes "our craft. Our skills of melting metal into new weapons";
 	mes "and tools is truly a form of art!";
+	if (BaseClass >= Job_Thief) close;	// Custom expanded class check.
 	next;
+
+	// Third class check - precedes other BaseClass dialogue.
+	if (Class >= Job_Rune_Knight && Class <= Job_Baby_Mechanic2) {
+		mes "[Altiregen]";
+		mes "You... look like a stranger. But somehow it seems that you're related to our guild. Haha~";
+		mes "Am I right?";
+		close;
+	}
+
 	if (BaseClass == Job_Novice) {
+		mes "[Altiregen]";
 		if (Sex == 0) {
-			mes "[Altiregen]";
 			mes "Oh~";
 			mes "what a very";
 			mes "pretty lady!";
-			mes "Are you interested in";
-			mes "becoming a Blacksmith?";
-			next;
-			mes "[Altiregen]";
-			mes "First, you must become a Merchant before you can become a Blacksmith. Go to the city of Alberta to learn the Merchant trade.";
-			close;
 		}
+		mes "Are you interested in";
+		mes "becoming a Blacksmith?";
+		next;
+		mes "[Altiregen]";
+		mes "First, you must become a Merchant before you can become a Blacksmith. Go to the city of Alberta to learn the Merchant trade.";
 		close;
 	}
 	else if (BaseClass == Job_Swordman) {
@@ -249,6 +259,11 @@ ein_in01,18,28,4	script	Guildsman#BLS	731,{
 		}
 		else if (BSMITH_Q == 17 && countitem(1005) > 0 && JobLevel > 39) {
 			mes "[Altiregen]";
+			if (ismounting()) {
+				mes "You are on a riding pet, so you cannot change your job.";
+				mes "Please unequip your riding pet and try again!";
+				close;
+			}
 			mes "Excellent, I can tell by the twinkle in your eye that you were successful. I can now bestow upon you the gift of the smithing, the art of the Blacksmith.";
 			if (checkquest(2015) != -1) {
 				changequest 2015,2016;

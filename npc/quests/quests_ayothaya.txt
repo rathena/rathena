@@ -3,7 +3,7 @@
 //===== By ===================================================
 //= Fredzilla, MasterOfMuppets
 //===== Version ==============================================
-//= 2.5
+//= 2.6
 //===== Compatible With ======================================
 //= rAthena SVN
 //===== Description ==========================================
@@ -31,6 +31,7 @@
 //= 2.3 Replaced effect numerics with constants. [Samuray22]
 //= 2.4 Updated RE/Pre-RE EXP. [Euphy]
 //= 2.5 Added questlog support. [Euphy]
+//= 2.6 Added Renewal quest items. [Euphy]
 //============================================================
 
 // Ayothaya Ring Quest :: ayo_ring
@@ -1329,6 +1330,15 @@ ayothaya,83,132,0	script	Dusit#thai	843,{
 }
 
 ayo_in01,181,193,4	script	Shaman#thai	840,{
+
+	// For both parts of the quest:
+	// - Pre-Renewal requires Needle Packet and Spool.
+	// - Renewal requires Fabric and Nine Tails.
+	if (checkre(0))
+		setarray .@items[0],7213,7217; //Needle_Pouch, Spool
+	else
+		setarray .@items[0],1059,1022; //Transparent_Cloth, Fox_Tail
+
 	if (ayodunquest == 1) {
 		mes "[Boonthom]";
 		mes "You...!";
@@ -1443,8 +1453,8 @@ ayo_in01,181,193,4	script	Shaman#thai	840,{
 			mes "containing this holy power if you wish. In order to make it, I will need some materials.";
 			next;
 			mes "[Boonthom]";
-			mes "^3366991 Needle Packet^000000,";
-			mes "^3366991 Spool^000000,";
+			mes "^3366991 "+getitemname(.@items[0])+"^000000,";
+			mes "^3366991 "+getitemname(.@items[1])+"^000000,";
 			mes "^3366991 Solid Husk^000000 and";
 			mes "^3366991 Holy Water^000000...";
 			mes "That's all I need.";
@@ -1467,7 +1477,7 @@ ayo_in01,181,193,4	script	Shaman#thai	840,{
 		mes "............";
 		close;
 	} else if (ayodunquest == 2) {
-		if (countitem(7213) > 0 && countitem(7217) > 0 && countitem(7190) > 0 && countitem(523) > 0) {
+		if (countitem(.@items[0]) > 0 && countitem(.@items[1]) > 0 && countitem(7190) > 0 && countitem(523) > 0) {
 			mes "[Boonthom]";
 			mes "Excellent!";
 			mes "Now you have brought";
@@ -1488,8 +1498,8 @@ ayo_in01,181,193,4	script	Shaman#thai	840,{
 			mes "Here you go.";
 			mes "Please take these holy threads.";
 			mes "With this, you will be able to enter the ruins with less worry.";
-			delitem 7213,1; //Needle_Pouch
-			delitem 7217,1; //Spool
+			delitem .@items[0],1;
+			delitem .@items[1],1;
 			delitem 7190,1; //Solid_Peeling
 			delitem 523,1; //Holy_Water
 			set ayodunquest,3;
@@ -1510,8 +1520,8 @@ ayo_in01,181,193,4	script	Shaman#thai	840,{
 		mes "carefully this time.";
 		next;
 		mes "[Boonthom]";
-		mes "^3366991 Needle Packet^000000,";
-		mes "^3366991 Spool^000000,";
+		mes "^3366991 "+getitemname(.@items[0])+"^000000,";
+		mes "^3366991 "+getitemname(.@items[1])+"^000000,";
 		mes "^3366991 Solid Husk^000000 and";
 		mes "^3366991 Holy Water^000000.";
 		next;
@@ -1519,7 +1529,7 @@ ayo_in01,181,193,4	script	Shaman#thai	840,{
 		mes "See you later.";
 		close;
 	} else if (ayodunquest == 3) {
-		if (countitem(7213) > 0 && countitem(7217) > 0 && countitem(7190) > 0 && countitem(523) > 0) {
+		if (countitem(.@items[0]) > 0 && countitem(.@items[1]) > 0 && countitem(7190) > 0 && countitem(523) > 0) {
 			mes "[Boonthom]";
 			mes "Excellent! Now you have brought everything I need, let me make the thing for you as I promised...";
 			next;
@@ -1537,8 +1547,8 @@ ayo_in01,181,193,4	script	Shaman#thai	840,{
 			mes "Here you go.";
 			mes "Please take these holy threads.";
 			mes "With this, you will be able to enter the ruins with less worry.";
-			delitem 7213,1; //Needle_Pouch
-			delitem 7217,1; //Spool
+			delitem .@items[0],1;
+			delitem .@items[1],1;
 			delitem 7190,1; //Solid_Peeling
 			delitem 523,1; //Holy_Water
 			getitem 7285,1; //Thread_Skein
@@ -1551,8 +1561,8 @@ ayo_in01,181,193,4	script	Shaman#thai	840,{
 		mes "If you lose the holy threads, don't worry. I can make some more for you. Just gather the following items.";
 		next;
 		mes "[Boonthom]";
-		mes "^3366991 Needle Packet^000000,";
-		mes "^3366991 Spool^000000,";
+		mes "^3366991 "+getitemname(.@items[0])+"^000000,";
+		mes "^3366991 "+getitemname(.@items[1])+"^000000,";
 		mes "^3366991 Solid Husk^000000 and";
 		mes "^3366991 Holy Water^000000.";
 		next;
@@ -1601,8 +1611,8 @@ ayo_in01,181,193,4	script	Shaman#thai	840,{
 		mes "[Boonthom]";
 		mes "^3366992 Holy Water^000000,";
 		mes "^3366991 Yggdrasil Leaf^000000,";
-		mes "^3366992 Needle Packet^000000 and";
-		mes "^3366992 Spool^000000.";
+		mes "^3366992 "+getitemname(.@items[0])+"^000000 and";
+		mes "^3366992 "+getitemname(.@items[0])+"^000000.";
 		set ayodunquest,10;
 		changequest 12037,12038;
 		next;
@@ -1612,7 +1622,7 @@ ayo_in01,181,193,4	script	Shaman#thai	840,{
 		mes "gathered everything.";
 		close;
 	} else if (ayodunquest == 10) {
-		if (countitem(523) > 1 && countitem(610) > 0 && countitem(7213) > 1 && countitem(7217) > 1) {
+		if (countitem(523) > 1 && countitem(610) > 0 && countitem(.@items[0]) > 1 && countitem(.@items[1]) > 1) {
 			mes "[Boonthom]";
 			mes "Hmm~";
 			mes "You've brought";
@@ -1634,8 +1644,8 @@ ayo_in01,181,193,4	script	Shaman#thai	840,{
 			mes "Here you go.";
 			mes "Please take these holy threads.";
 			mes "With this, you will be able to enter the ruins with less worry.";
-			delitem 7213,2; //Needle_Pouch
-			delitem 7217,2; //Spool
+			delitem .@items[0],2;
+			delitem .@items[1],2;
 			delitem 610,1; //Leaf_Of_Yggdrasil
 			delitem 523,2; //Holy_Water
 			set ayodunquest,11;
@@ -1657,8 +1667,8 @@ ayo_in01,181,193,4	script	Shaman#thai	840,{
 		mes "[Boonthom]";
 		mes "^3366992 Holy Water^000000,";
 		mes "^3366991 Yggdrasil Leaf^000000,";
-		mes "^3366992 Needle Packet^000000 and";
-		mes "^3366992 Spool^000000.";
+		mes "^3366992 "+getitemname(.@items[0])+"^000000 and";
+		mes "^3366992 "+getitemname(.@items[1])+"^000000.";
 		next;
 		mes "[Boonthom]";
 		mes "Return to me";
@@ -1677,7 +1687,7 @@ ayo_in01,181,193,4	script	Shaman#thai	840,{
 			mes "to you to defend yourself";
 			mes "from monster attacks, okay?";
 			close;
-		} else if (countitem(523) > 1 && countitem(610) > 0 && countitem(7213) > 1 && countitem(7217) > 1 && countitem(7287) == 0) {
+		} else if (countitem(523) > 1 && countitem(610) > 0 && countitem(.@items[0]) > 1 && countitem(.@items[1]) > 1 && countitem(7287) == 0) {
 			mes "[Boonthom]";
 			mes "Ooooohmmmmm...";
 			next;
@@ -1692,8 +1702,8 @@ ayo_in01,181,193,4	script	Shaman#thai	840,{
 			mes "Here you go.";
 			mes "Please take these holy threads.";
 			mes "With this, you will be able to enter the ruins with less worry.";
-			delitem 7213,2; //Needle_Pouch
-			delitem 7217,2; //Spool
+			delitem .@items[0],2;
+			delitem .@items[1],2;
 			delitem 610,1; //Leaf_Of_Yggdrasil
 			delitem 523,2; //Holy_Water
 			getitem 7287,1; //Thread_Skein_
@@ -1709,8 +1719,8 @@ ayo_in01,181,193,4	script	Shaman#thai	840,{
 		mes "[Boonthom]";
 		mes "^3366992 Holy Water^000000,";
 		mes "^3366991 Yggdrasil Leaf^000000,";
-		mes "^3366992 Needle Packet^000000 and";
-		mes "^3366992 Spool^000000.";
+		mes "^3366992 "+getitemname(.@items[0])+"^000000 and";
+		mes "^3366992 "+getitemname(.@items[1])+"^000000.";
 		close;
 	} else if (ayodunquest == 12) {
 		mes "[Boonthom]";
@@ -1748,7 +1758,7 @@ ayo_in01,181,193,4	script	Shaman#thai	840,{
 			mes "expeditions, brave";
 			mes "adventurer~";
 			close;
-		} else if (countitem(523) > 1 && countitem(610) > 0 && countitem(7213) > 1 && countitem(7217) > 1 && countitem(7287) == 0) {
+		} else if (countitem(523) > 1 && countitem(610) > 0 && countitem(.@items[0]) > 1 && countitem(.@items[1]) > 1 && countitem(7287) == 0) {
 			mes "[Boonthom]";
 			mes "Lost the";
 			mes "holy threads";
@@ -1771,8 +1781,8 @@ ayo_in01,181,193,4	script	Shaman#thai	840,{
 			mes "Here you go.";
 			mes "Please take these holy threads.";
 			mes "With this, you will be able to enter the ruins with less worry.";
-			delitem 7213,2; //Needle_Pouch
-			delitem 7217,2; //Spool
+			delitem .@items[0],2;
+			delitem .@items[1],2;
 			delitem 610,1; //Leaf_Of_Yggdrasil
 			delitem 523,2; //Holy_Water
 			getitem 7287,1; //Thread_Skein_
@@ -1788,8 +1798,8 @@ ayo_in01,181,193,4	script	Shaman#thai	840,{
 		mes "[Boonthom]";
 		mes "^3366992 Holy Water^000000,";
 		mes "^3366991 Yggdrasil Leaf^000000,";
-		mes "^3366992 Needle Packet^000000 and";
-		mes "^3366992 Spool^000000.";
+		mes "^3366992 "+getitemname(.@items[0])+"^000000 and";
+		mes "^3366992 "+getitemname(.@items[1])+"^000000.";
 		close;
 	}
 	mes "[Boonthom]";
