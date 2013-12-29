@@ -5898,9 +5898,9 @@
 12419,Mana_Plus,Mana Plus,2,100,,50,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12420,Stamina_Up_M,Stamina Up M,2,100,,50,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12421,Falmons_F,Falmons F,3,10,,10,,,,,,,,,,,,,{},{},{}
-12422,HP_Increase_Potion_(Small),HP Increase Potion (Small),0,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INCMHP,500000,(500+(10/3)*BaseLevel); percentheal 1,0; },{},{}
-12423,HP_Increase_Potion_(Medium),HP Increase Potion (Medium),0,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INCMHP,500000,(1500+(10/3)*BaseLevel); percentheal 2,0; },{},{}
-12424,HP_Increase_Potion_(Large),HP Increase Potion (Large),0,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INCMHP,500000,(2500+(10/3)*BaseLevel); percentheal 5,0; },{},{}
+12422,HP_Increase_Potion_(Small),HP Increase Potion (Small),0,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INCMHP,500000,(500+(BaseLevel*10/3)); percentheal 1,0; },{},{}
+12423,HP_Increase_Potion_(Medium),HP Increase Potion (Medium),0,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INCMHP,500000,(1500+(BaseLevel*10/3)); percentheal 2,0; },{},{}
+12424,HP_Increase_Potion_(Large),HP Increase Potion (Large),0,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INCMHP,500000,(2500+(BaseLevel*10/3)); percentheal 5,0; },{},{}
 12425,SP_Increase_Potion_(Small),SP Increase Potion (Small),0,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INCMSPRATE,500000,((BaseLevel/10)-5); percentheal 0,2; },{},{}
 12426,SP_Increase_Potion_(Medium),SP Increase Potion (Medium),0,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INCMSPRATE,500000,(BaseLevel/10); percentheal 0,4; },{},{}
 12427,SP_Increase_Potion_(Large),SP Increase Potion (Large),0,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INCMSPRATE,500000,((BaseLevel/10)+5); percentheal 0,8; },{},{}
@@ -8636,8 +8636,8 @@
 19536,C_Rose_Corsage,Costume Rose Corsage,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,533,{ bonus bUnbreakableHelm,0; bonus bInt,1; },{},{}
 19537,C_Gryphon_Hat,Costume Gryphon Hat,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,591,{ bonus bUnbreakableHelm,0; },{},{}
 19538,Full_Moon,Full Moon,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,780,{ bonus bUnbreakableHelm,0; },{},{}
-19539,C_Reginleif_Hairband,Hairband Of Reginleif,4,20,,0,,0,,0,0xFFFFFFFF,63,2,256,,1,0,468,{ bonus bAllStats,1; },{},{}
-19540,C_Rabbit_Earplug,Costume Rabbit Earplugs,4,20,,0,,0,,0,0xFFFFFFFF,63,2,768,,1,0,515,{ bonus bAgi,1; bonus bFlee,2; },{},{}
+19539,C_Reginleif_Hairband,Hairband Of Reginleif,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,468,{ bonus bAllStats,1; },{},{}
+19540,C_Rabbit_Earplug,Costume Rabbit Earplugs,4,20,,0,,0,,0,0xFFFFFFFF,63,2,7168,,1,0,515,{ bonus bAgi,1; bonus bFlee,2; },{},{}
 19541,C_Romantic_White_Flower,Costume Romantic White Flower,4,20,,0,,0,,0,0xFFFFFFFF,63,2,4096,,1,0,259,{ bonus bUnbreakableHelm,0; },{},{}
 19542,C_Devil_Whisper,Costume Devil Whisper,4,20,,0,,0,,0,0xFFFFFFFF,63,2,2048,,1,0,712,{ bonus bUnbreakableHelm,0; bonus2 bSubRace,RC_Angel,1; bonus2 bSubRace,RC_Demon,1; bonus3 bAddMonsterDropItem,12020,RC_Angel,400; bonus3 bAddMonsterDropItem,523,RC_Demon,400; },{},{}
 19543,Oliver_Wolf_Hood,Oliver Wolf Hood,4,20,,300,,0,,1,0xFFFFFFFF,63,2,1024,,70,0,849,{ bonus bUnbreakableHelm,0; },{},{}
