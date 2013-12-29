@@ -2,19 +2,18 @@
 //
 // Structure of Database:
 // SkillID,CastingTime,AfterCastActDelay,AfterCastWalkDelay,Duration1,Duration2,Cool Down
-//== Explained:
-// CastingTime : time to cast this skill, in miliseconds
-// AfterCastActDelay : "normal" delay, character cannot use skills, in miliseconds
-// AfterCastWalkDleay : amount of time before character can move again, in miliseconds
-// Duration1 / Duration2 : usually the durations used by the skill, at special cases it is used to hold special data
-// Cool Down : amount of time until character can re-use this skill, in miliseconds
-//== Extra
-// On all fields you can use ':' as a delimiter to level-specific values,
-// - Example using SM_PROVOKE
-// - Original:6,0,0,0,30000,0,1000
-// - ModifiedTo:6,0,0,0,30000,0,1000:2500:3000:etc
-// - Makes lvl 1 have 1000 (1s) cool down, lvl 2 2500 (2.5s), lvl 3 3000, and so on.
-//==========================================
+//
+// CastingTime: time to cast this skill, in milliseconds
+// AfterCastActDelay: "normal" delay, character cannot use skills, in milliseconds
+// AfterCastWalkDleay: amount of time before character can move again, in milliseconds
+// Duration1/Duration2: usually the durations used by the skill, at special cases it is used to hold special data
+// Cool Down: amount of time until character can re-use this skill, in milliseconds
+//
+// On all fields you can use ':' as a delimiter for level-specific values.
+// For example:
+// - Original: 6,0,0,0,30000,0,1000
+// - Modified: 6,0,0,0,30000,0,1000:2500:3000:...
+// Gives Level 1 1000ms cool down, Level 2 2500ms, Level 3 3000ms, and so on.
 
 
 //===== Swordman ===========================

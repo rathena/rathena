@@ -1,7 +1,8 @@
-// Elemental attribute damage adjustment tables
+// Elemental Attribute Damage Adjustment Tables
 //
-// Row: target's defense element
-// Column: attacker's weapon element
+// Structure of Database:
+// Columns - attacker's weapon element
+// Rows    - target's defense element
 
 1,10	// lv1 Attribute table
 //Neut Watr Erth Fire Wind Pois Holy Shdw Gho  Und

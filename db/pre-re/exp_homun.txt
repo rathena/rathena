@@ -1,4 +1,4 @@
-//Homunculus LvUp experience value table
+// Homunculus Experience Tables
 50
 110
 180

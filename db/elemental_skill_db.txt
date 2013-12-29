@@ -3,7 +3,8 @@
 // Structure of Database:
 // ElementalID,SkillID,SkillLevel,ReqMode
 //
-// Spirit Modes: 1 = Passive, 2 = Defensive, 4 = Aggressive
+// Spirit Modes:
+//	1 = Passive, 2 = Defensive, 4 = Aggressive
 
 // EL_AGNI_S
 2114,8413,1,1	//EL_PYROTECHNIC,Pyrotechnic

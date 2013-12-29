@@ -1,18 +1,15 @@
-// Maximum parameters for specific job!
-// ====================================================
+// Max Parameter Database
+// Sets maximum stat parameters for specific jobs.
+//
 // Structure of Database:
-//	JobID,MaxParam
-//		or
-//	JobID,MaxStr,MaxAgi,MaxVit,MaxInt,MaxDex,MaxLuk
-// ====================================================
-// JobID: Using Job constanta on 'db/const.txt'
+// JobID,MaxParam
+//	OR
+// JobID,MaxStr,MaxAgi,MaxVit,MaxInt,MaxDex,MaxLuk
+//
+// JobID: Job constants in 'db/const.txt'
 // MaxParams: Value between 10 ~ 32767 (SHRT_MAX)
-// ====================================================
+//
 // Examples:
-//Job_Novice,60
-//	Normally, Novice's max. param is using 'max_parameter' on conf/battle/player.conf.
-//	By with this config, Novice's max. param will be 60, for all params.
-//Job_Swordman,90
-//	Normally, Swordman's max. param is using 'max_parameter' on conf/battle/player.conf.
-//	By with this config, Swordman's max. param will be 90, for all params.
-// ====================================================
+// Job_Novice,60
+//	Normally, Novice's max. param uses 'max_parameter' in 'conf/battle/player.conf'.
+//	With this config, Novice's max. param will be 60 (for all stats).

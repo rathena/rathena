@@ -1,24 +1,30 @@
-// Database of Additional Range and NPC Type that used by INF2_NO_NEARNPC
-// <skill_name>,<additional_range>{,<npc_type>}
-// ====================================================
-// additional_range: If this value is 0, splash range value will be used from skill_db,
-//      or if it is 0, range+layout's range from skill_unit_db. Otherwise, the range
-//      will be added.
-// npc_type (bitmask): 1 = warp portal, 2 = shop NPC, 4 = normal NPC script, 8 = tomb
-// ====================================================
-// Example:
-//MG_SAFETYWALL,2
-// MG_SAFETYWALL can't be placed if the ground's target is near from NPC by 2 cells
-// (MG_SAFETYWALL doesn't have splash, layout range, and range value, so must add the
-// 'additional_range', or it will be pointless)
+// Skill Distance-to-NPC Database
+// Prevents skills from being used near NPC types using INF2_NO_NEARNPC.
 //
-//GS_DESPERADO,2
-// GS_DESPERADO can't be casted if the caster is standing near from NPC within range
-// 5 cells. (Why? GS_DESPERADO has 3 cells of splash range +2 'additional_range' here)
+// Structure of Database:
+// SkillName,AdditionalRange{,NPC Type}
 //
-//SC_CHAOSPANIC,0,1
-// SC_CHAOSPANIC can't be placed on the ground that near the warp portal with range 2
-// cells. (Because SC_CHAOSPANIC doens't have splash range, it uses layout range)
+// AdditionalRange:
+//	Number of cells from an NPC where the skill can be cast.
+//	If zero, this will read the splash range value from skill_db;
+//	if that is also zero, range+layout's range from skill_unit_db will be used.
+//
+// NPC Type (bitmask):
+//	1 = warp portal, 2 = shop NPC, 4 = normal NPC script, 8 = tomb
+//
+// Examples:
+// MG_SAFETYWALL,2
+//	Safety Wall can't be placed within 2 ground cells of an NPC.
+//	(MG_SAFETYWALL doesn't have splash, layout range, and range value,
+//	so we must add the 'additional_range', or it will be pointless.)
+//
+// GS_DESPERADO,2
+//	Desperado can't be casted if the caster is standing within 5 cells of an NPC.
+//	(Why? GS_DESPERADO has 3 cells of splash range +2 'additional_range' here.)
+//
+// SC_CHAOSPANIC,0,1
+//	Chaos Panic can't be placed within 2 ground cells of a warp portal.
+//	(Because SC_CHAOSPANIC doesn't have splash range, it uses layout range.)
 
 SC_CHAOSPANIC,0,1
 SC_MAELSTROM,0,1
