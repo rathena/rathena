@@ -51,7 +51,7 @@
 1732:1756,{ bonus bLongAtkRate,25; bonus2 bAddEff,Eff_Stone,1000; }
 1733:1755,{ bonus bLongAtkRate,25; bonus3 bAutoSpell,"NJ_HUUJIN",5,100; if(readparam(bInt)>39) bonus3 bAutoSpell,"NJ_HUUJIN",5,200; }
 1734:1753,{ bonus bLongAtkRate,50; }
-1741:2748,{ bonus bAtk,25; bonus3 bAddEff,Eff_Curse,200,ATF_WEAPON|ATF_LONG|ATF_TARGET; }
+1741:2748,{ bonus bBaseAtk,25; bonus3 bAddEff,Eff_Curse,200,ATF_WEAPON|ATF_LONG|ATF_TARGET; }
 1746:1773,{ bonus bLongAtkRate,50; }
 1775:18114,{ bonus bLongAtkRate,40; }
 1776:18114,{ bonus bLongAtkRate,70; }
@@ -239,8 +239,8 @@
 24021:24022:24023,{ if(getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_ACC_L) + getequiprefinerycnt(EQI_SHADOW_WEAPON) >= 23) { bonus bMatkRate,1; } }
 24025:24028,{ set .@i,getequiprefinerycnt(EQI_SHADOW_ARMOR) + getequiprefinerycnt(EQI_SHADOW_SHOES); bonus bMaxHP,.@i; bonus bMaxSP,.@i; if(.@i >= 15) { bonus bMaxHPrate,1; } }
 24026:24027,{ set .@i,getequiprefinerycnt(EQI_SHADOW_ARMOR) + getequiprefinerycnt(EQI_SHADOW_SHIELD); bonus bDef,.@i; if(.@i >= 15) { bonus2 bSubEle,0,1; } }
-24029:24031,{ set .@i,getequiprefinerycnt(EQI_SHADOW_ARMOR) + getequiprefinerycnt(EQI_SHADOW_WEAPON); bonus bAtk,.@i; if(.@i >= 15) { bonus bLongAtkRate,1; } }
-24030:24032,{ set .@i,getequiprefinerycnt(EQI_SHADOW_ARMOR) + getequiprefinerycnt(EQI_SHADOW_WEAPON); bonus bCritical,.@i; bonus bAtk,.@i; if(.@i >= 15) { bonus bCritAtkRate,1; } }
+24029:24031,{ set .@i,getequiprefinerycnt(EQI_SHADOW_ARMOR) + getequiprefinerycnt(EQI_SHADOW_WEAPON); bonus bBaseAtk,.@i; if(.@i >= 15) { bonus bLongAtkRate,1; } }
+24030:24032,{ set .@i,getequiprefinerycnt(EQI_SHADOW_ARMOR) + getequiprefinerycnt(EQI_SHADOW_WEAPON); bonus bCritical,.@i; bonus bBaseAtk,.@i; if(.@i >= 15) { bonus bCritAtkRate,1; } }
 24034:24040,{ bonus bLuk,1; }
 24035:24041,{ bonus bStr,1; }
 24036:24042,{ bonus bInt,1; }

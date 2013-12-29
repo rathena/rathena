@@ -4284,7 +4284,7 @@ OnTouch:
 	end;
 }
 
-izlude_in,113,66,0	script	Strange Machine	111,{
+-	script	::StrangeMachine_izlude	-1,{
 	if (checkweight(907,200) == 0) {
 		mes "[Dorian]";
 		mes "Ugh, just like a member";
