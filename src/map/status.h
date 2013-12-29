@@ -1680,6 +1680,12 @@ enum e_bonus_script_flags {
 	BONUS_FLAG_REM_DEBUFF		= 0x20,	//Remove bonus when player logged out
 };
 
+///Enum for status_get_hpbonus and status_get_spbonus
+enum e_status_bonus {
+	STATUS_BONUS_FIX = 0,
+	STATUS_BONUS_RATE = 1,
+};
+
 //Define to determine who gets HP/SP consumed on doing skills/etc. [Skotlex]
 #define BL_CONSUME (BL_PC|BL_HOM|BL_MER|BL_ELEM)
 //Define to determine who has regen

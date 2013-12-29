@@ -347,6 +347,7 @@ struct map_session_data {
 	// manually zeroed structures end here.
 	// zeroed vars start here.
 	struct {
+		int hp, sp;
 		int atk_rate;
 		int arrow_atk,arrow_ele,arrow_cri,arrow_hit;
 		int nsshealhp,nsshealsp;
@@ -648,10 +649,8 @@ enum equip_pos {
 };
 
 struct {
-	int hp_table[MAX_LEVEL];
-	int sp_table[MAX_LEVEL];
-	int hp_factor, hp_multiplicator;
-	int sp_factor;
+	unsigned int base_hp[MAX_LEVEL], base_sp[MAX_LEVEL]; //Storage for the first calculation with hp/sp factor and multiplicator
+	int hp_factor, hp_multiplicator, sp_factor;
 	int max_weight_base;
 	char job_bonus[MAX_LEVEL];
 #ifdef RENEWAL_ASPD
@@ -661,6 +660,9 @@ struct {
 #endif
 	uint32 exp_table[2][MAX_LEVEL];
 	uint32 max_level[2];
+	struct s_params {
+		uint16 str, agi, vit, int_, dex, luk;
+	} max_param;
 } job_info[CLASS_COUNT];
 
 #define EQP_WEAPON EQP_HAND_R
@@ -711,7 +713,19 @@ struct {
 #define pc_isinvisible(sd)    ( (sd)->sc.option&OPTION_INVISIBLE )
 #define pc_is50overweight(sd) ( (sd)->weight*100 >= (sd)->max_weight*battle_config.natural_heal_weight_rate )
 #define pc_is90overweight(sd) ( (sd)->weight*10 >= (sd)->max_weight*9 )
-#define pc_maxparameter(sd)   ( ((((sd)->class_&MAPID_UPPERMASK) == MAPID_KAGEROUOBORO) || ((sd)->class_&MAPID_UPPERMASK) == MAPID_REBELLION || (sd)->class_&JOBL_THIRD ? ((sd)->class_&JOBL_BABY ? battle_config.max_baby_third_parameter : battle_config.max_third_parameter) : ((sd)->class_&JOBL_BABY ? battle_config.max_baby_parameter : battle_config.max_parameter)) )
+
+/// Enum of Player's Parameter
+enum e_params {
+	PARAM_STR = 0,
+	PARAM_AGI,
+	PARAM_VIT,
+	PARAM_INT,
+	PARAM_DEX,
+	PARAM_LUK,
+	PARAM_MAX
+};
+short pc_maxparameter(int class_, int sex, enum e_params param);
+
 /**
  * Ranger
  **/
@@ -1055,6 +1069,9 @@ void pc_bonus_script_remove(struct map_session_data *sd, uint8 i);
 void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag);
 
 void pc_cell_basilica(struct map_session_data *sd);
+
+unsigned int pc_get_maxhp(uint16 level, uint16 class_, uint16 vit, int bonus, int bonus_rate);
+unsigned int pc_get_maxsp(uint16 level, uint16 class_, uint16 int_, int bonus, int bonus_rate);
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_race, uint32 mob_mode, int type);
