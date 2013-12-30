@@ -53,7 +53,7 @@ const char* mapindex_getmapname_ext(const char* string, char* output) {
 	size_t len;
 
 	strcpy(buf,string);
-	sscanf(string,"%*[^#]%*[#]%s",buf);
+	sscanf(string,"%*[^#]%*[#]%15s",buf);
 
 	len = safestrnlen(buf, MAP_NAME_LENGTH);
 
@@ -149,7 +149,7 @@ void mapindex_init(void) {
 		if(line[0] == '/' && line[1] == '/')
 			continue;
 
-		switch (sscanf(line, "%12s\t%d", map_name, &index)) {
+		switch (sscanf(line, "%11s\t%d", map_name, &index)) {
 			case 1: //Map with no ID given, auto-assign
 				index = last_index+1;
 			case 2: //Map with ID given

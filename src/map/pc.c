@@ -285,9 +285,7 @@ static int pc_check_banding( struct block_list *bl, va_list ap ) {
 int pc_banding(struct map_session_data *sd, uint16 skill_lv) {
 	int c;
 	int b_sd[MAX_PARTY]; // In case of a full Royal Guard party.
-	int i, j, hp, extra_hp = 0, tmp_qty = 0, tmp_hp;
-	struct map_session_data *bsd;
-	struct status_change *sc;
+	int i, j, hp, extra_hp = 0, tmp_qty = 0;
 	int range = skill_get_splash(LG_BANDING,skill_lv);
 
 	nullpo_ret(sd);
@@ -298,6 +296,7 @@ int pc_banding(struct map_session_data *sd, uint16 skill_lv) {
 
 	if( c < 1 ) //just recalc status no need to recalc hp
 	{	// No more Royal Guards in Banding found.
+		struct status_change *sc;
 		if( (sc = status_get_sc(&sd->bl)) != NULL  && sc->data[SC_BANDING] )
 		{
 			sc->data[SC_BANDING]->val2 = 0; // Reset the counter
@@ -311,9 +310,8 @@ int pc_banding(struct map_session_data *sd, uint16 skill_lv) {
 	i++;
 
 	// Get total HP of all Royal Guards in party.
-	for( j = 0; j < i; j++ )
-	{
-		bsd = map_id2sd(b_sd[j]);
+	for( j = 0; j < i; j++ ){
+		struct map_session_data *bsd = map_id2sd(b_sd[j]);
 		if( bsd != NULL )
 			hp += status_get_hp(&bsd->bl);
 	}
@@ -324,9 +322,9 @@ int pc_banding(struct map_session_data *sd, uint16 skill_lv) {
 	// If a Royal Guard have full HP, give more HP to others that haven't full HP.
 	for( j = 0; j < i; j++ )
 	{
-		bsd = map_id2sd(b_sd[j]);
-		if( bsd != NULL && (tmp_hp = hp - status_get_max_hp(&bsd->bl)) > 0 )
-		{
+		int tmp_hp=0;
+		struct map_session_data *bsd = map_id2sd(b_sd[j]);
+		if( bsd != NULL && (tmp_hp = hp - status_get_max_hp(&bsd->bl)) > 0 ){
 			extra_hp += tmp_hp;
 			tmp_qty++;
 		}
@@ -335,11 +333,11 @@ int pc_banding(struct map_session_data *sd, uint16 skill_lv) {
 	if( extra_hp > 0 && tmp_qty > 0 )
 		hp += extra_hp / tmp_qty;
 
-	for( j = 0; j < i; j++ )
-	{
-		bsd = map_id2sd(b_sd[j]);
+	for( j = 0; j < i; j++ ){
+		struct map_session_data *bsd = map_id2sd(b_sd[j]);
 		if( bsd != NULL )
 		{
+			struct status_change *sc;
 			status_set_hp(&bsd->bl,hp,0);	// Set hp
 			if( (sc = status_get_sc(&bsd->bl)) != NULL  && sc->data[SC_BANDING] )
 			{
@@ -615,14 +613,18 @@ int pc_equippoint(struct map_session_data *sd,int n){
 	return ep;
 }
 
+/**
+ * Fill inventory_data with struct *item_data trough inventory (fill with struct *item)
+ * @param sd : player session
+ * @return 0 sucess, 1:invalid sd
+ */
 int pc_setinventorydata(struct map_session_data *sd)
 {
-	int i,id;
-
-	nullpo_ret(sd);
+	int i;
+	nullpo_retr(1,sd);
 
 	for(i=0;i<MAX_INVENTORY;i++) {
-		id = sd->status.inventory[i].nameid;
+		int id = sd->status.inventory[i].nameid;
 		sd->inventory_data[i] = id?itemdb_search(id):NULL;
 	}
 	return 0;
@@ -729,27 +731,35 @@ int pc_setequipindex(struct map_session_data *sd)
 //	return( i < s ) ? 0 : 1;
 //}
 
+
+/**
+ * Check if an item is equiped by player
+ * (Check if the itemid is equiped then search if that match the index in inventory (should be))
+ * @param sd : player session
+ * @param nameid : itemid
+ * @return 1:yes, 0:no
+ */
 bool pc_isequipped(struct map_session_data *sd, int nameid)
 {
-	int i, j, index;
+	int i, j;
 
 	for( i = 0; i < EQI_MAX; i++ )
 	{
-		index = sd->equip_index[i];
+		int index = sd->equip_index[i];
 		if( index < 0 ) continue;
 
 		if( i == EQI_HAND_R && sd->equip_index[EQI_HAND_L] == index ) continue;
 		if( i == EQI_HEAD_MID && sd->equip_index[EQI_HEAD_LOW] == index ) continue;
 		if( i == EQI_HEAD_TOP && (sd->equip_index[EQI_HEAD_MID] == index || sd->equip_index[EQI_HEAD_LOW] == index) ) continue;
 
-		if( !sd->inventory_data[index] ) continue;
-
+		if( !sd->inventory_data[index] ) 
+			continue;
 		if( sd->inventory_data[index]->nameid == nameid )
 			return true;
-
-		for( j = 0; j < sd->inventory_data[index]->slot; j++ )
+		for( j = 0; j < sd->inventory_data[index]->slot; j++ ){
 			if( sd->status.inventory[index].card[j] == nameid )
 				return true;
+		}
 	}
 
 	return false;
@@ -1109,7 +1119,7 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 			pc_show_version(sd);
 
 		// Message of the Day [Valaris]
-		for(i=0; motd_text[i][0] && i < MOTD_LINE_SIZE; i++) {
+		for(i=0; i < MOTD_LINE_SIZE && motd_text[i][0]; i++) {
 			if (battle_config.motd_type)
 				clif_disp_onlyself(sd,motd_text[i],strlen(motd_text[i]));
 			else
@@ -1159,7 +1169,13 @@ void pc_authfail(struct map_session_data *sd)
 	return;
 }
 
-//Attempts to set a mob.
+/**
+ * Player register a bl as hatred
+ * @param sd : player session
+ * @param pos : hate position [0;2]
+ * @param bl : target bl
+ * @return 0:failed, 1:success
+ */
 int pc_set_hate_mob(struct map_session_data *sd, int pos, struct block_list *bl)
 {
 	int class_;
@@ -1190,7 +1206,7 @@ int pc_set_hate_mob(struct map_session_data *sd, int pos, struct block_list *bl)
  *------------------------------------------*/
 int pc_reg_received(struct map_session_data *sd)
 {
-	int i,j;
+	int i;
 
 	sd->change_level_2nd = pc_readglobalreg(sd,"jobchange_level");
 	sd->change_level_3rd = pc_readglobalreg(sd,"jobchange_level_3rd");
@@ -1215,6 +1231,7 @@ int pc_reg_received(struct map_session_data *sd)
 	//SG map and mob read [Komurka]
 	for(i=0;i<MAX_PC_FEELHATE;i++) //for now - someone need to make reading from txt/sql
 	{
+		int j;
 		if ((j = pc_readglobalreg(sd,sg_info[i].feel_var))!=0) {
 			sd->feel_map[i].index = j;
 			sd->feel_map[i].m = map_mapindex2mapid(j);
@@ -1317,12 +1334,12 @@ int pc_reg_received(struct map_session_data *sd)
 
 static int pc_calc_skillpoint(struct map_session_data* sd)
 {
-	int  i,skill_lv,inf2,skill_point=0;
-
+	int  i,inf2,skill_point=0;
 	nullpo_ret(sd);
 
 	for(i=1;i<MAX_SKILL;i++){
-		if( (skill_lv = pc_checkskill(sd,i)) > 0) {
+		int skill_lv = pc_checkskill(sd,i);
+		if( skill_lv > 0) {
 			inf2 = skill_get_inf2(i);
 			if((!(inf2&INF2_QUEST_SKILL) || battle_config.quest_skill_learn) &&
 				!(inf2&(INF2_WEDDING_SKILL|INF2_SPIRIT_SKILL)) //Do not count wedding/link skills. [Skotlex]
@@ -1548,15 +1565,12 @@ static void pc_check_skilltree(struct map_session_data *sd, int skill)
 		flag = 0;
 		for( i = 0; i < MAX_SKILL_TREE && (id=skill_tree[c][i].id)>0; i++ )
 		{
-			int j, f = 1, k;
-
+			int j, f = 1;
 			if( sd->status.skill[id].id ) //Already learned
 				continue;
-
-			for( j = 0; j < MAX_PC_SKILL_REQUIRE; j++ )
-			{
-				if( (k = skill_tree[c][i].need[j].id) )
-				{
+			for( j = 0; j < MAX_PC_SKILL_REQUIRE; j++ ){
+				int k = skill_tree[c][i].need[j].id;
+				if( k != 0 ){
 					if( sd->status.skill[k].id == 0 || sd->status.skill[k].flag == SKILL_FLAG_TEMPORARY || sd->status.skill[k].flag == SKILL_FLAG_PLAGIARIZED )
 						k = 0; //Not learned.
 					else
@@ -4117,7 +4131,6 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 {
 	int flag=0;
 	unsigned int tick = gettick();
-	struct map_session_data *first_sd = NULL,*second_sd = NULL,*third_sd = NULL;
 	struct party_data *p=NULL;
 
 	nullpo_ret(sd);
@@ -4134,6 +4147,7 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 
 	if(fitem->first_get_charid > 0 && fitem->first_get_charid != sd->status.char_id)
 	{
+		struct map_session_data *first_sd = NULL,*second_sd = NULL,*third_sd = NULL;
 		first_sd = map_charid2sd(fitem->first_get_charid);
 		if(DIFF_TICK(tick,fitem->first_get_tick) < 0) {
 			if (!(p && p->party.item&1 &&
@@ -5105,12 +5119,12 @@ int pc_checkskill(struct map_session_data *sd,uint16 skill_id)
 	return 0;
 }
 
-/*==========================================
+/**
  * Chk if we still have the correct weapon to continue the skill (actually status)
  * If not ending it
- * Return
- *	0 - No status found or all done
- *------------------------------------------*/
+ * @param sd
+ * @return 0:error, 1:check done
+ */
 int pc_checkallowskill(struct map_session_data *sd)
 {
 	const enum sc_type scw_list[] = {
@@ -5124,12 +5138,6 @@ int pc_checkallowskill(struct map_session_data *sd)
 		SC_DANCING,
 		SC_GATLINGFEVER,
 		SC_FEARBREEZE
-	};
-	const enum sc_type scs_list[] = {
-		SC_AUTOGUARD,
-		SC_DEFENDER,
-		SC_REFLECTSHIELD,
-		SC_REFLECTDAMAGE
 	};
 	int i;
 	nullpo_ret(sd);
@@ -5151,11 +5159,17 @@ int pc_checkallowskill(struct map_session_data *sd)
 		status_change_end(&sd->bl, SC_SPURT, INVALID_TIMER);
 
 	if(sd->status.shield <= 0) { // Skills requiring a shield
+		const enum sc_type scs_list[] = {
+			SC_AUTOGUARD,
+			SC_DEFENDER,
+			SC_REFLECTSHIELD,
+			SC_REFLECTDAMAGE
+		};
 		for (i = 0; i < ARRAYLENGTH(scs_list); i++)
 			if(sd->sc.data[scs_list[i]])
 				status_change_end(&sd->bl, scs_list[i], INVALID_TIMER);
 	}
-	return 0;
+	return 1;
 }
 
 /*==========================================
@@ -5180,11 +5194,15 @@ int pc_checkequip(struct map_session_data *sd,int pos)
 
 /*==========================================
  * Check if sd as nameid equiped somewhere
+ * @sd : the player session
+ * @nameid : id of the item to check
+ * @min : : see pc.h enum equip_index from ? to @max
+ * @max : see pc.h enum equip_index for @min to ?
  * -return true,false
  *------------------------------------------*/
-int pc_checkequip2(struct map_session_data *sd,int nameid){
+int pc_checkequip2(struct map_session_data *sd,int nameid, int min, int max){
 	int i;
-	for(i=0;i<EQI_MAX;i++){
+	for(i=min;i<max;i++){
 		if(equip_pos[i]){
 			int idx = sd->equip_index[i];
 			if (sd->status.inventory[idx].nameid == nameid)
@@ -5997,22 +6015,17 @@ unsigned int pc_maxjoblv(struct map_session_data *sd){
  *------------------------------------------*/
 
 //Base exp needed for next level.
-unsigned int pc_nextbaseexp(struct map_session_data *sd)
-{
+unsigned int pc_nextbaseexp(struct map_session_data *sd){
 	nullpo_ret(sd);
-
-	if(sd->status.base_level>=pc_maxbaselv(sd) || sd->status.base_level<=0)
+	if(sd->status.base_level>=pc_maxbaselv(sd) || sd->status.base_level==0)
 		return 0;
-
 	return job_info[pc_class2idx(sd->status.class_)].exp_table[0][sd->status.base_level-1];
 }
 
 //Base exp needed for this level.
-unsigned int pc_thisbaseexp(struct map_session_data *sd)
-{
+unsigned int pc_thisbaseexp(struct map_session_data *sd){
 	if(sd->status.base_level>pc_maxbaselv(sd) || sd->status.base_level<=1)
 		return 0;
-
 	return job_info[pc_class2idx(sd->status.class_)].exp_table[0][sd->status.base_level-2];
 }
 
@@ -6025,18 +6038,15 @@ unsigned int pc_thisbaseexp(struct map_session_data *sd)
  *------------------------------------------*/
 
 //Job exp needed for next level.
-unsigned int pc_nextjobexp(struct map_session_data *sd)
-{
+unsigned int pc_nextjobexp(struct map_session_data *sd){
 	nullpo_ret(sd);
-
-	if(sd->status.job_level>=pc_maxjoblv(sd) || sd->status.job_level<=0)
+	if(sd->status.job_level>=pc_maxjoblv(sd) || sd->status.job_level==0)
 		return 0;
 	return job_info[pc_class2idx(sd->status.class_)].exp_table[1][sd->status.job_level-1];
 }
 
 //Job exp needed for this level.
-unsigned int pc_thisjobexp(struct map_session_data *sd)
-{
+unsigned int pc_thisjobexp(struct map_session_data *sd){
 	if(sd->status.job_level>pc_maxjoblv(sd) || sd->status.job_level<=1)
 		return 0;
 	return job_info[pc_class2idx(sd->status.class_)].exp_table[1][sd->status.job_level-2];
@@ -6283,7 +6293,7 @@ int pc_skillup(struct map_session_data *sd,uint16 skill_id)
  *------------------------------------------*/
 int pc_allskillup(struct map_session_data *sd)
 {
-	int i,id;
+	int i;
 
 	nullpo_ret(sd);
 
@@ -6312,9 +6322,9 @@ int pc_allskillup(struct map_session_data *sd)
 			}
 		}
 	} else {
-		int inf2;
+		int id;
 		for(i=0;i < MAX_SKILL_TREE && (id=skill_tree[pc_class2idx(sd->status.class_)][i].id)>0;i++){
-			inf2 = skill_get_inf2(id);
+			int inf2 = skill_get_inf2(id);
 			if (
 				(inf2&INF2_QUEST_SKILL && !battle_config.quest_skill_learn) ||
 				(inf2&(INF2_WEDDING_SKILL|INF2_SPIRIT_SKILL)) ||
@@ -6494,7 +6504,7 @@ int pc_resetstate(struct map_session_data* sd)
  *------------------------------------------*/
 int pc_resetskill(struct map_session_data* sd, int flag)
 {
-	int i, lv, inf2, skill_point=0;
+	int i, skill_point=0;
 	nullpo_ret(sd);
 
 	if( flag&4 && (sd->class_&MAPID_UPPERMASK) != MAPID_BARDDANCER )
@@ -6541,7 +6551,8 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 
 	for( i = 1; i < MAX_SKILL; i++ )
 	{
-		lv = sd->status.skill[i].lv;
+		int lv = sd->status.skill[i].lv;
+		int inf2;
 		if (lv < 1) continue;
 
 		inf2 = skill_get_inf2(i);
@@ -6784,7 +6795,7 @@ void pc_close_npc(struct map_session_data *sd,int flag)
  *------------------------------------------*/
 int pc_dead(struct map_session_data *sd,struct block_list *src)
 {
-	int i=0,j=0,k=0;
+	int i=0,k=0;
 	unsigned int tick = gettick();
 
 	// Activate Steel body if a super novice dies at 99+% exp [celest]
@@ -6862,14 +6873,14 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	pc_setparam(sd, SP_KILLERRID, src?src->id:0);
 
 	//Reset menu skills/item skills
-	if (sd->skillitem)
+	if ((sd->skillitem) != 0)
 		sd->skillitem = sd->skillitemlv = 0;
-	if (sd->menuskill_id)
+	if ((sd->menuskill_id) != 0)
 		sd->menuskill_id = sd->menuskill_val = 0;
 	//Reset ticks.
 	sd->hp_loss.tick = sd->sp_loss.tick = sd->hp_regen.tick = sd->sp_regen.tick = 0;
 
-	if ( sd && sd->spiritball )
+	if ( sd && (sd->spiritball)!=0 )
 		pc_delspiritball(sd,sd->spiritball,0);
 
 	for(i = 1; i < 5; i++)
@@ -7007,6 +7018,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	}
 
 	if(map[sd->bl.m].flag.pvp_nightmaredrop) { // Moved this outside so it works when PVP isn't enabled and during pk mode [Ancyker]
+		int j;
 		for(j=0;j<MAX_DROP_PER_MAP;j++){
 			int id = map[sd->bl.m].drop_list[j].drop_id;
 			int type = map[sd->bl.m].drop_list[j].drop_type;
@@ -7257,10 +7269,7 @@ int pc_readparam(struct map_session_data* sd,int type)
 /*==========================================
  * script set pc status registry
  *------------------------------------------*/
-int pc_setparam(struct map_session_data *sd,int type,int val)
-{
-	int i = 0;
-
+int pc_setparam(struct map_session_data *sd,int type,int val){
 	nullpo_ret(sd);
 
 	switch(type){
@@ -7268,6 +7277,7 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 		if ((unsigned int)val > pc_maxbaselv(sd)) //Capping to max
 			val = pc_maxbaselv(sd);
 		if ((unsigned int)val > sd->status.base_level) {
+			int i = 0;
 			int stat=0;
 			for (i = 0; i < (int)((unsigned int)val - sd->status.base_level); i++)
 				stat += pc_gets_status_point(sd->status.base_level + i);
@@ -8435,7 +8445,7 @@ int pc_deleventtimer(struct map_session_data *sd,const char *name)
 
 	nullpo_ret(sd);
 
-	if (sd->eventcount <= 0)
+	if (sd->eventcount == 0)
 		return 0;
 
 	// find the named event timer
@@ -8449,7 +8459,8 @@ int pc_deleventtimer(struct map_session_data *sd,const char *name)
 
 	delete_timer(sd->eventtimer[i],pc_eventtimer);
 	sd->eventtimer[i] = INVALID_TIMER;
-	sd->eventcount--;
+	if(sd->eventcount > 0)
+		sd->eventcount--;
 	aFree(p);
 
 	return 1;
@@ -8483,17 +8494,19 @@ int pc_cleareventtimer(struct map_session_data *sd)
 
 	nullpo_ret(sd);
 
-	if (sd->eventcount <= 0)
+	if (sd->eventcount == 0)
 		return 0;
 
-	for(i=0;i<MAX_EVENTTIMER;i++)
+	for(i=0;i<MAX_EVENTTIMER;i++){
 		if( sd->eventtimer[i] != INVALID_TIMER ){
 			char *p = (char *)(get_timer(sd->eventtimer[i])->data);
 			delete_timer(sd->eventtimer[i],pc_eventtimer);
 			sd->eventtimer[i] = INVALID_TIMER;
-			sd->eventcount--;
+			if(sd->eventcount > 0) //avoid looping to max val
+				sd->eventcount--;
 			if (p) aFree(p);
 		}
+	}
 	return 0;
 }
 
@@ -9314,7 +9327,6 @@ struct map_session_data *pc_get_mother (struct map_session_data *sd)
 	if (sd && sd->class_&JOBL_BABY && sd->status.mother > 0)
 		// charid2sd returns NULL if not found
 		return map_charid2sd(sd->status.mother);
-
 	return NULL;
 }
 
@@ -9748,8 +9760,8 @@ int pc_split_atoui(char* str, unsigned int* val, char sep, int max)
 {
 	static int warning=0;
 	int i,j;
-	double f;
 	for (i=0; i<max; i++) {
+		double f;
 		if (!str) break;
 		f = atof(str);
 		if (f < 0)
@@ -10121,7 +10133,7 @@ static bool pc_readdb_job_param(char* fields[], int columns, int current)
  *------------------------------------------*/
 int pc_readdb(void)
 {
-	int i, k, entries;
+	int i, k;
 	FILE *fp;
 	char line[24000];
 
@@ -10160,7 +10172,7 @@ int pc_readdb(void)
 		ShowWarning("Can't read '"CL_WHITE"%s"CL_RESET"'... Generating DB.\n",line);
 		//return 1;
 	} else {
-		entries=0;
+		int entries=0;
 		while(fgets(line, sizeof(line), fp))
 		{
 			int stat;
@@ -10216,57 +10228,43 @@ int pc_readdb(void)
 int pc_read_motd(void)
 {
 	FILE* fp;
-
 	// clear old MOTD
 	memset(motd_text, 0, sizeof(motd_text));
 
 	// read current MOTD
-	if( ( fp = fopen(motd_txt, "r") ) != NULL )
-	{
-		char* buf, * ptr;
+	if( ( fp = fopen(motd_txt, "r") ) != NULL ){
 		unsigned int lines = 0, entries = 0;
 		size_t len;
 
 		while( entries < MOTD_LINE_SIZE && fgets(motd_text[entries], sizeof(motd_text[entries]), fp) )
 		{
+			char* buf = motd_text[entries];
 			lines++;
-
-			buf = motd_text[entries];
-
-			if( buf[0] == '/' && buf[1] == '/' )
-			{
+			if( buf[0] == '/' && buf[1] == '/' ) {
 				continue;
 			}
-
 			len = strlen(buf);
-
-			while( len && ( buf[len-1] == '\r' || buf[len-1] == '\n' ) )
-			{// strip trailing EOL characters
+			while( len && ( buf[len-1] == '\r' || buf[len-1] == '\n' ) ) {// strip trailing EOL characters
 				len--;
 			}
-
-			if( len )
-			{
+			if( len ) {
+				char * ptr;
 				buf[len] = 0;
-
 				if( ( ptr = strstr(buf, " :") ) != NULL && ptr-buf >= NAME_LENGTH )
 				{// crashes newer clients
 					ShowWarning("Found sequence '"CL_WHITE" :"CL_RESET"' on line '"CL_WHITE"%u"CL_RESET"' in '"CL_WHITE"%s"CL_RESET"'. This can cause newer clients to crash.\n", lines, motd_txt);
 				}
 			}
-			else
-			{// empty line
+			else {// empty line
 				buf[0] = ' ';
 				buf[1] = 0;
 			}
 			entries++;
 		}
 		fclose(fp);
-
 		ShowStatus("Done reading '"CL_WHITE"%u"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", entries, motd_txt);
 	}
-	else
-	{
+	else {
 		ShowWarning("File '"CL_WHITE"%s"CL_RESET"' not found.\n", motd_txt);
 	}
 

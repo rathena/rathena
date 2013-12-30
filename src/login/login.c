@@ -25,9 +25,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define LOGIN_MAX_MSG 30
-static char* msg_table[LOGIN_MAX_MSG]; // Login Server messages_conf
-struct Login_Config login_config;
+#define LOGIN_MAX_MSG 30				/// Max number predefined in msg_conf
+static char* msg_table[LOGIN_MAX_MSG];	/// Login Server messages_conf
+struct Login_Config login_config;		/// Configuration of login-serv
 
 int login_fd; // login server socket
 struct mmo_char_server server[MAX_SERVERS]; // char server data
@@ -80,7 +80,6 @@ int mmo_auth_new(const char* userid, const char* pass, const char sex, const cha
 #define AUTH_TIMEOUT 30000
 
 struct auth_node {
-
 	int account_id;
 	uint32 login_id1;
 	uint32 login_id2;
@@ -89,7 +88,6 @@ struct auth_node {
 	uint32 version;
 	uint8 clienttype;
 };
-
 static DBMap* auth_db; // int account_id -> struct auth_node*
 
 
@@ -97,20 +95,20 @@ static DBMap* auth_db; // int account_id -> struct auth_node*
 // Online User Database [Wizputer]
 //-----------------------------------------------------
 struct online_login_data {
-
 	int account_id;
 	int waiting_disconnect;
 	int char_server;
 };
-
 static DBMap* online_db; // int account_id -> struct online_login_data*
+
 static int waiting_disconnect_timer(int tid, unsigned int tick, int id, intptr_t data);
 
 /**
  * @see DBCreateData
+ * Create an online_login_data struct and add it into online db
+ * 
  */
-static DBData create_online_user(DBKey key, va_list args)
-{
+static DBData create_online_user(DBKey key, va_list args){
 	struct online_login_data* p;
 	CREATE(p, struct online_login_data, 1);
 	p->account_id = key.i;
@@ -119,6 +117,13 @@ static DBData create_online_user(DBKey key, va_list args)
 	return db_ptr2data(p);
 }
 
+/**
+ * Receive info from char-serv that this user is online
+ * This function will start a timer to recheck if that user still online
+ * @param char_server : Serv id where account_id is connected
+ * @param account_id : aid connected
+ * @return the new online_login_data for that user
+ */
 struct online_login_data* add_online_user(int char_server, int account_id)
 {
 	struct online_login_data* p;
@@ -132,6 +137,11 @@ struct online_login_data* add_online_user(int char_server, int account_id)
 	return p;
 }
 
+/**
+ * Received info from char serv that the account_id is now offline
+ * remove the user from online_db
+ * @param account_id : aid to remove from db
+ */
 void remove_online_user(int account_id)
 {
 	struct online_login_data* p;
@@ -144,6 +154,14 @@ void remove_online_user(int account_id)
 	idb_remove(online_db, account_id);
 }
 
+/**
+ * Timered fonction to check if the user still connected
+ * @param tid
+ * @param tick
+ * @param id
+ * @param data
+ * @return 
+ */
 static int waiting_disconnect_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct online_login_data* p = (struct online_login_data*)idb_get(online_db, id);

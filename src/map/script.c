@@ -16533,7 +16533,7 @@ BUILDIN_FUNC(bg_monster_set_team)
 	int id = script_getnum(st,2),
 		bg_id = script_getnum(st,3);
 
-	if( (mbl = map_id2bl(id)) == NULL || mbl->type != BL_MOB )
+	if( id == 0 || (mbl = map_id2bl(id)) == NULL || mbl->type != BL_MOB )
 		return 0;
 	md = (TBL_MOB *)mbl;
 	md->bg_id = bg_id;

@@ -1502,9 +1502,7 @@ static DBData create_charid2nick(DBKey key, va_list args)
 void map_addnickdb(int charid, const char* nick)
 {
 	struct charid2nick* p;
-	struct charid_request* req;
-	struct map_session_data* sd;
-
+	
 	if( map_charid2sd(charid) )
 		return;// already online
 
@@ -1512,6 +1510,8 @@ void map_addnickdb(int charid, const char* nick)
 	safestrncpy(p->nick, nick, sizeof(p->nick));
 
 	while( p->requests ) {
+		struct map_session_data* sd;
+		struct charid_request* req;
 		req = p->requests;
 		p->requests = req->next;
 		sd = map_charid2sd(req->charid);
@@ -1526,14 +1526,14 @@ void map_addnickdb(int charid, const char* nick)
 void map_delnickdb(int charid, const char* name)
 {
 	struct charid2nick* p;
-	struct charid_request* req;
-	struct map_session_data* sd;
 	DBData data;
 
 	if (!nick_db->remove(nick_db, db_i2key(charid), &data) || (p = db_data2ptr(&data)) == NULL)
 		return;
 
 	while( p->requests ) {
+		struct charid_request* req;
+		struct map_session_data* sd;
 		req = p->requests;
 		p->requests = req->next;
 		sd = map_charid2sd(req->charid);
@@ -2570,16 +2570,15 @@ int map_random_dir(struct block_list *bl, int16 *x, int16 *y)
 {
 	short xi = *x-bl->x;
 	short yi = *y-bl->y;
-	short i=0, j;
+	short i=0;
 	int dist2 = xi*xi + yi*yi;
 	short dist = (short)sqrt((float)dist2);
-	short segment;
 
 	if (dist < 1) dist =1;
 
 	do {
-		j = 1 + 2*(rnd()%4); //Pick a random diagonal direction
-		segment = 1+(rnd()%dist); //Pick a random interval from the whole vector in that direction
+		short j = 1 + 2*(rnd()%4); //Pick a random diagonal direction
+		short segment = 1+(rnd()%dist); //Pick a random interval from the whole vector in that direction
 		xi = bl->x + segment*dirx[j];
 		segment = (short)sqrt((float)(dist2 - segment*segment)); //The complement of the previously picked segment
 		yi = bl->y + segment*diry[j];
@@ -3120,7 +3119,7 @@ int map_waterheight(char* mapname)
 	rsw = (char *) grfio_read (fn);
 	if (rsw)
 	{	//Load water height from file
-		int wh = (int) *(float*)(rsw+166);
+		int wh = (int) *(float*)(rsw+166); //FIXME Casting between integer* and float* which have an incompatible binary data representation.
 		aFree(rsw);
 		return wh;
 	}
@@ -3949,12 +3948,11 @@ int map_msg_config_read(char *cfgName, int lang){
 const char* map_msg_txt(struct map_session_data *sd, int msg_number){
 	struct msg_data *mdb;
 	uint8 lang = 0; //default
-	const char *tmp; //to verify result
 	if(sd && sd->langtype) lang = sd->langtype;
 
 	if( (mdb = map_lang2msgdb(lang)) != NULL){
-		tmp = _msg_txt(msg_number,MAP_MAX_MSG,mdb->msg);
-		if(strcmp(tmp,"??"))
+		const char *tmp = _msg_txt(msg_number,MAP_MAX_MSG,mdb->msg);
+		if(strcmp(tmp,"??")) //to verify result
 			return tmp;
 		ShowDebug("Message #%d not found for langtype %d.\n",msg_number,lang);
 	}

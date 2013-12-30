@@ -1220,7 +1220,9 @@ void socket_final(void)
 	// session[0]
 	aFree(session[0]->rdata);
 	aFree(session[0]->wdata);
+	aFree(session[0]->session_data);
 	aFree(session[0]);
+	session[0] = NULL;
 }
 
 /// Closes a socket.
@@ -1247,9 +1249,7 @@ int socket_getips(uint32* ips, int max)
 
 #ifdef WIN32
 	{
-		char fullhost[255];
-		u_long** a;
-		struct hostent* hent;
+		char fullhost[255];	
 
 		// XXX This should look up the local IP addresses in the registry
 		// instead of calling gethostbyname. However, the way IP addresses
@@ -1262,24 +1262,23 @@ int socket_getips(uint32* ips, int max)
 		}
 		else
 		{
+			u_long** a;
+			struct hostent* hent;
 			hent = gethostbyname(fullhost);
 			if( hent == NULL ){
 				ShowError("socket_getips: Cannot resolve our own hostname to an IP address\n");
 				return 0;
 			}
 			a = (u_long**)hent->h_addr_list;
-			for( ; a[num] != NULL && num < max; ++num)
+			for( ;num < max && a[num] != NULL; ++num)
 				ips[num] = (uint32)ntohl(*a[num]);
 		}
 	}
 #else // not WIN32
 	{
-		int pos;
 		int fd;
 		char buf[2*16*sizeof(struct ifreq)];
 		struct ifconf ic;
-		struct ifreq* ir;
-		struct sockaddr_in* a;
 		u_long ad;
 
 		fd = sSocket(AF_INET, SOCK_STREAM, 0);
@@ -1297,6 +1296,9 @@ int socket_getips(uint32* ips, int max)
 		}
 		else
 		{
+			int pos;
+			struct ifreq* ir;
+			struct sockaddr_in* a;
 			for( pos=0; pos < ic.ifc_len && num < max; )
 			{
 				ir = (struct ifreq*)(buf+pos);
@@ -1389,7 +1391,7 @@ void socket_init(void)
 
 	// session[0] is now currently used for disconnected sessions of the map server, and as such,
 	// should hold enough buffer (it is a vacuum so to speak) as it is never flushed. [Skotlex]
-	create_session(0, null_recv, null_send, null_parse);
+	create_session(0, null_recv, null_send, null_parse); //FIXME this is causing leak
 
 #ifndef MINICORE
 	// Delete old connection history every 5 minutes

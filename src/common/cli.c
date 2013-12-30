@@ -37,12 +37,12 @@ char* MSG_CONF_NAME_EN; //all
  */
 bool opt_has_next_value(const char* option, int i, int argc)
 {
-    if (i >= argc - 1) {
-	ShowWarning("Missing value for option '%s'.\n", option);
-	return false;
-    }
+	if (i >= argc - 1) {
+		ShowWarning("Missing value for option '%s'.\n", option);
+		return false;
+	}
 
-    return true;
+	return true;
 }
 
 /*
@@ -53,12 +53,19 @@ bool opt_has_next_value(const char* option, int i, int argc)
  */
 void display_versionscreen(bool do_exit)
 {
-    ShowInfo(CL_WHITE"rAthena SVN version: %s" CL_RESET"\n", get_svn_revision());
-    ShowInfo(CL_GREEN"Website/Forum:"CL_RESET"\thttp://rathena.org/\n");
-    ShowInfo(CL_GREEN"IRC Channel:"CL_RESET"\tirc://irc.rizon.net/#rathena\n");
-    ShowInfo("Open "CL_WHITE"readme.txt"CL_RESET" for more information.\n");
-    if (do_exit)
-	exit(EXIT_SUCCESS);
+	const char* svn = get_svn_revision();
+	if( svn[0] != UNKNOWN_VERSION )
+		ShowInfo("rAthena SVN Revision: '"CL_WHITE"%s"CL_RESET"'\n", svn);
+	else {
+		const char* git = get_git_hash();
+		if( git[0] != UNKNOWN_VERSION )
+		ShowInfo("rAthena Git Hash: '"CL_WHITE"%s"CL_RESET"'\n", git);
+	}
+	ShowInfo(CL_GREEN"Website/Forum:"CL_RESET"\thttp://rathena.org/\n");
+	ShowInfo(CL_GREEN"IRC Channel:"CL_RESET"\tirc://irc.rizon.net/#rathena\n");
+	ShowInfo("Open "CL_WHITE"readme.txt"CL_RESET" for more information.\n");
+	if (do_exit)
+		exit(EXIT_SUCCESS);
 }
 
 /*

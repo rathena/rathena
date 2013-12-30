@@ -750,7 +750,7 @@ int merc_hom_change_name_ack(struct map_session_data *sd, char* name, int flag)
 
 	normalize_name(name," ");//bugreport:3032
 
-	if ( !flag || !strlen(name) ) {
+	if ( !flag || name[0] == '\0' ) {
 		clif_displaymessage(sd->fd, msg_txt(sd,280)); // You cannot use this name
 		return 0;
 	}

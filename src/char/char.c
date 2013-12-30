@@ -31,7 +31,6 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <malloc.h>
 
 #define MAX_STARTITEM 32	//max number of items a new players can start with
 #define CHAR_MAX_MSG 300	//max number of msg_conf
@@ -74,7 +73,7 @@ char bonus_script_db[256] = "bonus_script";
 // show loading/saving messages
 int save_log = 1;
 
-static DBMap* char_db_; // int char_id -> struct mmo_charstatus*
+static DBMap* char_db_; /// int char_id -> struct mmo_charstatus*
 
 char db_path[1024] = "db";
 
@@ -1968,7 +1967,7 @@ void char_charlist_notify( int fd, struct char_session_data* sd ){
 			found=0;
 		}
 	}
-	
+
 	WFIFOHEAD(fd, 6);
 	WFIFOW(fd, 0) = 0x9a0;
 	// pages to req / send them all in 1 until mmo_chars_fromsql can split them up
@@ -1999,12 +1998,12 @@ int charblock_timer(int tid, unsigned int tick, int id, intptr_t data)
 void char_block_character( int fd, struct char_session_data* sd){
 	int i=0, j=0, len=4;
 	time_t now = time(NULL);
-	
+
 	WFIFOHEAD(fd, 4+MAX_CHARS*24);
 	WFIFOW(fd, 0) = 0x20d;
 
 	for(i=0; i<MAX_CHARS; i++){
-		if(sd->found_char[i] == -1) 
+		if(sd->found_char[i] == -1)
 			continue;
 		if(sd->unban_time[i]){
 			if( sd->unban_time[i] > now ) {
@@ -2025,7 +2024,7 @@ void char_block_character( int fd, struct char_session_data* sd){
 	}
 	WFIFOW(fd, 2) = len; //packet len
 	WFIFOSET(fd,len);
-		
+
 	ARR_FIND(0, MAX_CHARS, i, sd->unban_time[i] > now); //sd->charslot only have productible char
 	if(i < MAX_CHARS ){
 		sd->charblock_timer = add_timer(
@@ -2236,15 +2235,17 @@ static void char_auth_ok(int fd, struct char_session_data *sd)
 int send_accounts_tologin(int tid, unsigned int tick, int id, intptr_t data);
 void mapif_server_reset(int id);
 
-/*
+/**
+ * Send to login-serv the request of banking operation from map
  * HA 0x2740<aid>L <type>B <data>L
- * type:
- *  0 = select
- *  1 = update
+ * @param account_id
+ * @param type : 0 = select, 1 = update
+ * @param data
+ * @return
  */
 int loginif_BankingReq(int32 account_id, int8 type, int32 data){
 	loginif_check(-1);
-	
+
 	WFIFOHEAD(login_fd,11);
 	WFIFOW(login_fd,0) = 0x2740;
 	WFIFOL(login_fd,2) = account_id;
@@ -2399,7 +2400,7 @@ int loginif_parse_reqpincode(int fd, struct char_session_data *sd){
 #if PACKETVER >=  20110309
 	if( pincode_enabled ){
 		// PIN code system enabled
-		if( strlen( sd->pincode ) <= 0 ){
+		if( sd->pincode[0] == '\0' ){
 			// No PIN code has been set yet
 			if( pincode_force ) pincode_sendstate( fd, sd, PINCODE_NEW );
 			else pincode_sendstate( fd, sd, PINCODE_PASSED );
@@ -2805,7 +2806,7 @@ int request_accreg2(int account_id, int char_id)
 int save_accreg2(unsigned char* buf, int len)
 {
 	loginif_check(0);
-	
+
 	WFIFOHEAD(login_fd,len+4);
 	memcpy(WFIFOP(login_fd,4), buf, len);
 	WFIFOW(login_fd,0) = 0x2728;
@@ -3030,7 +3031,7 @@ int mapif_parse_reqcharban(int fd){
 			else if(unban_time<now) unban_time=now; //new entry
 			unban_time += timediff; //alterate the time
 			if( unban_time < now ) unban_time=0; //we have totally reduce the time
-			
+
 			if( SQL_SUCCESS != SqlStmt_Prepare(stmt,
 					  "UPDATE `%s` SET `unban_time` = ? WHERE `char_id` = ? LIMIT 1",
 					  char_db)
@@ -3044,9 +3045,9 @@ int mapif_parse_reqcharban(int fd){
 				return -1;
 			}
 			SqlStmt_Free(stmt);
-			
+
 			// condition applies; send to all map-servers to disconnect the player
-			if( unban_time > now ) { 
+			if( unban_time > now ) {
 					unsigned char buf[11];
 					WBUFW(buf,0) = 0x2b14;
 					WBUFL(buf,2) = t_cid;
@@ -3067,7 +3068,7 @@ int mapif_parse_reqcharunban(int fd){
 	else {
 		int cid = RFIFOL(fd,2);
 		RFIFOSKIP(fd,6);
-		
+
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `unban_time` = '0' WHERE `char_id` = '%d' LIMIT 1", char_db, cid) ) {
 			Sql_ShowDebug(sql_handle);
 			return -1;
@@ -3156,13 +3157,13 @@ int mapif_parse_req_alter_acc(int fd){
 					WFIFOL(login_fd,2) = account_id;
 					WFIFOSET(login_fd,6);
 				break;
-				case 6: 
+				case 6:
 					anwser=(val1&4); // vip_req val1=type, &1 login send return, &2 upd timestamp &4 map send awnser
-					loginif_reqviddata(account_id, val1, timediff, fd); 
-					break; 
-				case 7: 
+					loginif_reqviddata(account_id, val1, timediff, fd);
+					break;
+				case 7:
 					anwser=(val1&1); //val&1 request anwser, val1&2 save data
-					loginif_BankingReq(aid, val1, val2); 
+					loginif_BankingReq(aid, val1, val2);
 					break;
 				} //end switch operation
 			} //login is connected
@@ -4952,6 +4953,14 @@ static int send_accounts_tologin_sub(DBKey key, DBData *data, va_list ap)
 	return 0;
 }
 
+/**
+ * Timered function to send all account_id connected to login-serv
+ * @param tid : Timer id
+ * @param tick : Scheduled tick
+ * @param id : GID linked to that timered call
+ * @param data : data transmited for delayed function
+ * @return 
+ */
 int send_accounts_tologin(int tid, unsigned int tick, int id, intptr_t data)
 {
 	if (loginif_isconnected())
@@ -5119,13 +5128,13 @@ void pincode_decrypt( uint32 userSeed, char* pin ){
 		}
 	}
 
-	buf = (char *)malloc( sizeof(char) * ( PINCODE_LENGTH + 1 ) );
+	buf = (char *)aMalloc( sizeof(char) * ( PINCODE_LENGTH + 1 ) );
 	memset( buf, 0, PINCODE_LENGTH + 1 );
 	for( i = 0; i < PINCODE_LENGTH; i++ ){
 		sprintf( buf + i, "%d", tab[pin[i] - '0'] );
 	}
 	strcpy( pin, buf );
-	free( buf );
+	aFree( buf );
 }
 
 //------------------------------------------------

@@ -8976,7 +8976,7 @@ ACMD_FUNC(cart) {
 ACMD_FUNC(join){
 	char chname[CHAN_NAME_LENGTH], pass[CHAN_NAME_LENGTH];
 
-	if( !message || !*message || sscanf(message, "%s %s", chname, pass) < 1 ) {
+	if( !message || !*message || sscanf(message, "%19s %19s", chname, pass) < 1 ) {
 		sprintf(atcmd_output, msg_txt(sd,1399),command); // Unknown channel (usage: %s <#channel_name>).
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
@@ -9079,7 +9079,7 @@ ACMD_FUNC(channel) {
 	char key[CHAN_NAME_LENGTH], sub1[CHAN_NAME_LENGTH], sub2[CHAN_NAME_LENGTH], sub3[CHAN_NAME_LENGTH];
 	sub1[0] = sub2[0] = sub3[0] = '\0';
 
-	if( !message || !*message || sscanf(message, "%s %s %s %s", key, sub1, sub2, sub3) < 1 ) {
+	if( !message || !*message || sscanf(message, "%19s %19s %19s %19s", key, sub1, sub2, sub3) < 1 ) {
 		atcmd_channel_help(sd,command);
 		return 0;
 	}

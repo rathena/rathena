@@ -83,7 +83,6 @@ bool buyingstore_setup(struct map_session_data* sd, unsigned char slots){
 void buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned char result, const char* storename, const uint8* itemlist, unsigned int count)
 {
 	unsigned int i, weight, listidx;
-	struct item_data* id;
 
 	if( !result || count == 0 )
 	{// canceled, or no items
@@ -129,6 +128,7 @@ void buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 	{// itemlist: <name id>.W <amount>.W <price>.L
 		unsigned short nameid, amount;
 		int price, idx;
+		struct item_data* id;
 
 		nameid = RBUFW(itemlist,i*8+0);
 		amount = RBUFW(itemlist,i*8+2);

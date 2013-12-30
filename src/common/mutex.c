@@ -90,7 +90,7 @@ void ramutex_lock( ramutex m ){
 
 bool ramutex_trylock( ramutex m ){
 #ifdef WIN32
-	if(TryEnterCriticalSection(&m->hMutex) == TRUE)
+	if(TryEnterCriticalSection(&m->hMutex) != FALSE)
 		return true;
 
 	return false;

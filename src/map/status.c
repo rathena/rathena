@@ -2956,14 +2956,15 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 			continue;
 
 		if(sd->inventory_data[index]) {
-			int j,c;
+			int j;
 			struct item_data *data;
 
 			// Card script execution.
 			if(itemdb_isspecial(sd->status.inventory[index].card[0]))
 				continue;
 			for(j=0;j<MAX_SLOTS;j++) { // Uses MAX_SLOTS to support Soul Bound system [Inkfish]
-				current_equip_card_id= c= sd->status.inventory[index].card[j];
+				int c= sd->status.inventory[index].card[j];
+				current_equip_card_id= c;
 				if(!c)
 					continue;
 				data = itemdb_exists(c);
@@ -4262,7 +4263,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 
 			if(b_status->lhw.matk) {
 				if (sd) {
-					sd->state.lr_flag = 1;
+					//sd->state.lr_flag = 1; //?? why was that set here
 					status->lhw.matk = b_status->lhw.matk;
 					sd->state.lr_flag = 0;
 				} else {
@@ -5056,14 +5057,14 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 	if(sc->data[SC_NIBELUNGEN]) {
 		if (bl->type != BL_PC)
 			watk += sc->data[SC_NIBELUNGEN]->val2;
-		else {
 		#ifndef RENEWAL
+		else {
 			TBL_PC *sd = (TBL_PC*)bl;
 			int index = sd->equip_index[sd->state.lr_flag?EQI_HAND_L:EQI_HAND_R];
 			if(index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->wlv == 4)
-		#endif
 				watk += sc->data[SC_NIBELUNGEN]->val2;
 		}
+		#endif
 	}
 
 	if(sc->data[SC_INCATKRATE])
@@ -8311,9 +8312,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_AUTOGUARD:
 			if( !(flag&1) ) {
 				struct map_session_data *tsd;
-				int i,t;
+				int i;
 				for( i = val2 = 0; i < val1; i++) {
-					t = 5-(i>>1);
+					int t = 5-(i>>1);
 					val2 += (t < 0)? 1:t;
 				}
 
@@ -8461,10 +8462,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 			if( (d_bl = map_id2bl(val1)) && (d_sc = status_get_sc(d_bl)) && d_sc->count ) { // Inherits Status From Source
 				const enum sc_type types[] = { SC_AUTOGUARD, SC_DEFENDER, SC_REFLECTSHIELD, SC_ENDURE };
-				enum sc_type type2;
 				int i = (map_flag_gvg(bl->m) || map[bl->m].flag.battleground)?2:3;
 				while( i >= 0 ) {
-					type2 = types[i];
+					enum sc_type type2 = types[i];
 					if( d_sc->data[type2] )
 						sc_start(d_bl,bl, type2, 100, d_sc->data[type2]->val1, skill_get_time(status_sc2skill(type2),d_sc->data[type2]->val1));
 					i--;
@@ -10158,7 +10158,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				int prevline = 0;
 				struct map_session_data *dsd;
 				struct status_change_entry *dsc;
-				struct skill_unit_group *group;
 
 				if( sd ) {
 					if( sd->delunit_prevfile ) { // Initially this is NULL, when a character logs in
@@ -10166,7 +10165,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 						prevline = sd->delunit_prevline;
 					} else
 						prevfile = "<none>";
-
 					sd->delunit_prevfile = file;
 					sd->delunit_prevline = line;
 				}
@@ -10174,17 +10172,15 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				if(sce->val4 && sce->val4 != BCT_SELF && (dsd=map_id2sd(sce->val4))) { // End status on partner as well
 					dsc = dsd->sc.data[SC_DANCING];
 					if(dsc) {
-
 						// This will prevent recursive loops.
 						dsc->val2 = dsc->val4 = 0;
-
 						status_change_end(&dsd->bl, SC_DANCING, INVALID_TIMER);
 					}
 				}
 
 				if(sce->val2) { // Erase associated land skill
+					struct skill_unit_group *group;
 					group = skill_id2group(sce->val2);
-
 					if( group == NULL ) {
 						ShowDebug("status_change_end: SC_DANCING is missing skill unit group (val1=%d, val2=%d, val3=%d, val4=%d, timer=%d, tid=%d, char_id=%d, map=%s, x=%d, y=%d, prev=%s:%d, from=%s:%d). Please report this! (#3504)\n",
 							sce->val1, sce->val2, sce->val3, sce->val4, sce->timer, tid,
@@ -10193,7 +10189,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 							prevfile, prevline,
 							file, line);
 					}
-
 					sce->val2 = 0;
 					skill_delunitgroup(group);
 				}
@@ -11097,11 +11092,11 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 
 			if( !flag ) { // Random Skill Cast
 				if (sd && !pc_issit(sd)) { // Can't cast if sit
-					int mushroom_skill_id = 0, i;
+					int mushroom_skill_id = 0;
 					unit_stop_attack(bl);
 					unit_skillcastcancel(bl,1);
 					do {
-						i = rnd() % MAX_SKILL_MAGICMUSHROOM_DB;
+						int i = rnd() % MAX_SKILL_MAGICMUSHROOM_DB;
 						mushroom_skill_id = skill_magicmushroom_db[i].skill_id;
 					}
 					while( mushroom_skill_id == 0 );

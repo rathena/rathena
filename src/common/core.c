@@ -5,6 +5,7 @@
 #include "showmsg.h"
 #include "malloc.h"
 #include "core.h"
+#include "strlib.h"
 #ifndef MINICORE
 #include "db.h"
 #include "socket.h"
@@ -24,6 +25,7 @@
 #include <unistd.h>
 #else
 #include "../common/winapi.h" // Console close event handling
+#include <direct.h>
 #endif
 
 
@@ -324,14 +326,20 @@ int main (int argc, char **argv)
 {
 	{// initialize program arguments
 		char *p1 = SERVER_NAME = argv[0];
-		char *p2 = p1;
-		while ((p1 = strchr(p2, '/')) != NULL || (p1 = strchr(p2, '\\')) != NULL)
-		{
+		if((p1 = strrchr(argv[0], '/')) != NULL ||  (p1 = strrchr(argv[0], '\\')) != NULL ){
+			char *pwd = NULL; //path working directory
+			int n=0;
 			SERVER_NAME = ++p1;
-			p2 = p1;
+			n = p1-argv[0]; //calc dir name len
+			pwd = safestrncpy(malloc(n + 1), argv[0], n);
+			if(chdir(pwd) != 0)
+				ShowError("Couldn't change working directory to %s for %s, runtime will probably fail",pwd,SERVER_NAME);
+			free(pwd);
 		}
+		
 		arg_c = argc;
 		arg_v = argv;
+		
 	}
 
 	malloc_init();// needed for Show* in display_title() [FlavioJS]

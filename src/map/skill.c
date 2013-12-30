@@ -14040,7 +14040,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_id
 	for (i = 0; i < MAX_SKILL_EQUIP_REQUIRE; i++) {
 		int reqeqit = require.eqItem[i];
 		if(!reqeqit) break; //no more required item get out of here
-		if (!pc_checkequip2(sd,reqeqit)) {
+		if (!pc_checkequip2(sd,reqeqit,EQI_ACC_L,EQI_MAX)) {
 			char output[128];
 			//clif_skill_fail(sd, skill_id, USESKILL_FAIL_NEED_EQUIPMENT, reqeqit);
 			sprintf(output,"need to put on [%d] in order to use.",reqeqit);
@@ -14227,8 +14227,12 @@ int skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id, 
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_REDJAMSTONE,0);// red gemstone required
 			else if( require.itemid[i] == ITEMID_BLUE_GEMSTONE )
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_BLUEJAMSTONE,0);// blue gemstone required
-			else
+			else {
+			//	char output[128]; //not offi but more explicit msg
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+			//	sprintf(output, "You need itemid=%d, amount=%d", require.itemid[i], require.amount[i]);
+			//	clif_colormes(sd,color_table[COLOR_RED],output);
+			}
 			return 0;
 		}
 	}
