@@ -6,6 +6,7 @@
 
 #include "../common/mmo.h"
 #include "../config/core.h"
+#include "map.h" //ELE_MAX
 
 // state of a single attack attempt; used in flee/def penalty calculations when mobbed
 typedef enum damage_lv {
@@ -59,7 +60,7 @@ struct Damage {
 };
 
 //(Used in read pc.c,) attribute table (battle_attr_fix)
-extern int attr_fix_table[4][10][10];
+extern int attr_fix_table[4][ELE_NONE][ELE_NONE];
 
 struct map_session_data;
 struct mob_data;

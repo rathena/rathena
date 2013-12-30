@@ -68,6 +68,7 @@ enum size {
 	SZ_MEDIUM,
 	SZ_BIG,
 	SZ_ALL,
+	SZ_MAX
 };
 
 struct mob_skill {

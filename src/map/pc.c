@@ -14,6 +14,7 @@
 #include "../common/mmo.h" //NAME_LENGTH
 
 #include "atcommand.h" // get_atcommand_level()
+#include "map.h"
 #include "battle.h" // battle_config
 #include "battleground.h"
 #include "channel.h"
@@ -26,7 +27,6 @@
 #include "itemdb.h"
 #include "log.h"
 #include "mail.h"
-#include "map.h"
 #include "path.h"
 #include "homunculus.h"
 #include "instance.h"
@@ -56,7 +56,7 @@ int pc_split_atoui(char* str, unsigned int* val, char sep, int max);
 
 static unsigned int statp[MAX_LEVEL+1];
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
-static unsigned int level_penalty[3][CLASS_ALL][MAX_LEVEL*2+1];
+static unsigned int level_penalty[3][CLASS_MAX][MAX_LEVEL*2+1];
 #endif
 
 // h-files are for declarations, not for implementations... [Shinomori]
@@ -9314,36 +9314,35 @@ bool pc_divorce(struct map_session_data *sd)
 	return true;
 }
 
-/*==========================================
- * Get sd partner charid. (Married partner)
- *------------------------------------------*/
-struct map_session_data *pc_get_partner(struct map_session_data *sd)
-{
+/**
+ * Get the partner map_session_data of a player
+ * @param sd : the husband|wife session
+ * @return partner session or NULL
+ */
+struct map_session_data *pc_get_partner(struct map_session_data *sd){
 	if (!sd || !pc_ismarried(sd))
-		// charid2sd returns NULL if not found
 		return NULL;
 	return map_charid2sd(sd->status.partner_id);
 }
 
-/*==========================================
- * Get sd father charid. (Need to be baby)
- *------------------------------------------*/
-struct map_session_data *pc_get_father (struct map_session_data *sd)
-{
-	if (!sd || !sd->class_&JOBL_BABY || !sd->status.father)
-		// charid2sd returns NULL if not found
+/**
+ * Get the father map_session_data of a player
+ * @param sd : the baby session
+ * @return father session or NULL
+ */
+struct map_session_data *pc_get_father (struct map_session_data *sd){
+	if (!sd || !(sd->class_&JOBL_BABY) || !sd->status.father)
 		return NULL;
-
 	return map_charid2sd(sd->status.father);
 }
 
-/*==========================================
- * Get sd mother charid. (Need to be baby)
- *------------------------------------------*/
-struct map_session_data *pc_get_mother (struct map_session_data *sd)
-{
-	if (!sd || sd->class_&JOBL_BABY || !sd->status.mother)
-		// charid2sd returns NULL if not found
+/**
+ * Get the mother map_session_data of a player
+ * @param sd : the baby session
+ * @return mother session or NULL
+ */
+struct map_session_data *pc_get_mother (struct map_session_data *sd){
+	if (!sd || !(sd->class_&JOBL_BABY) || !sd->status.mother)
 		return NULL;
 	return map_charid2sd(sd->status.mother);
 }
@@ -10500,7 +10499,7 @@ void pc_bonus_script_remove(struct map_session_data *sd, uint8 i) {
 
 	script_free_code(sd->bonus_script[i].script);
 	memset(&sd->bonus_script[i].script,0,sizeof(sd->bonus_script[i].script));
-	*sd->bonus_script[i].script_str = '\0';
+	sd->bonus_script[i].script_str[0] = '\0';
 	sd->bonus_script[i].tick = 0;
 	sd->bonus_script[i].tid = 0;
 	sd->bonus_script[i].flag = 0;

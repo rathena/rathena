@@ -280,7 +280,7 @@ enum bl_type {
 
 enum npc_subtype { WARP, SHOP, SCRIPT, CASHSHOP, ITEMSHOP, POINTSHOP, TOMB };
 
-enum {
+enum e_race {
 	RC_FORMLESS=0,
 	RC_UNDEAD,
 	RC_BRUTE,
@@ -291,17 +291,19 @@ enum {
 	RC_DEMIHUMAN,
 	RC_ANGEL,
 	RC_DRAGON,
-	RC_ALL
+	RC_ALL,
+	RC_MAX //auto upd enum for array size
 };
 
-enum {
+enum e_classAE {
 	CLASS_NORMAL = 0,
 	CLASS_BOSS,
 	CLASS_GUARDIAN,
-	CLASS_ALL
+	CLASS_ALL,
+	CLASS_MAX //auto upd enum for array len
 };
 
-enum {
+enum e_race2 {
 	RC2_NONE = 0,
 	RC2_GOBLIN,
 	RC2_KOBOLD,
@@ -312,7 +314,7 @@ enum {
 	RC2_MAX
 };
 
-enum {
+enum e_elemen {
 	ELE_NEUTRAL=0,
 	ELE_WATER,
 	ELE_EARTH,

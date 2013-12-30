@@ -6,10 +6,10 @@
 #include "../common/strlib.h"
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
+#include "map.h"
 #include "battle.h"
 #include "itemdb.h"
 #include "log.h"
-#include "map.h"
 #include "mob.h"
 #include "pc.h"
 

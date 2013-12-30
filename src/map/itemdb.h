@@ -428,7 +428,7 @@ struct item_data* itemdb_exists(int nameid);
 #define itemdb_iscashfood(id) ( (id) >= ITEMID_STR_DISH10_ && (id) <= ITEMID_VIT_DISH10_ )
 #define itemdb_is_GNbomb(n) (n >= ITEMID_APPLE_BOMB && n <= ITEMID_VERY_HARD_LUMP)
 #define itemdb_is_GNthrowable(n) (n >= ITEMID_MYSTERIOUS_POWDER && n <= ITEMID_BLACK_THING_TO_THROW)
-const char* itemdb_typename(int type);
+const char* itemdb_typename(enum item_types type);
 
 int itemdb_group_bonus(struct map_session_data* sd, int itemid);
 unsigned short itemdb_searchrandomid(int group_id, uint8 sub_group);

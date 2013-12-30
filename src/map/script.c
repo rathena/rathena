@@ -18228,6 +18228,7 @@ BUILDIN_FUNC(montransform) {
  * @param "script code"
  * @param duration
  * @param flag
+ * @param icon
  * @param char_id
  **/
 BUILDIN_FUNC(bonus_script) {
@@ -18236,7 +18237,7 @@ BUILDIN_FUNC(bonus_script) {
 	uint32 dur;
 	char type = 0;
 	TBL_PC* sd;
-	const char *script_str = '\0';
+	const char *script_str = NULL;
 	struct script_code *script = NULL;
 
 	if (script_hasdata(st,7))

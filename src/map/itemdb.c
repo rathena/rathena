@@ -1481,7 +1481,7 @@ static int itemdb_read_sqldb(void) {
 * 2 set new value bypassing anything
 * 3/other return last value
 *------------------------------------------*/
-static uint64 itemdb_unique_id(int8 flag, int64 value) {
+uint64 itemdb_unique_id(int8 flag, int64 value) {
 	static uint64 item_uid = 0;
 
 	if(flag)

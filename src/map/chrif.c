@@ -1859,7 +1859,7 @@ int chrif_load_bsdata(int fd) {
 		struct script_code *script;
 		struct bonus_script_data *bs = (struct bonus_script_data*)RFIFOP(fd,10 + i*sizeof(struct bonus_script_data));
 
-		if (bs->script == '\0' || !(script = parse_script(bs->script,"chrif_load_bsdata",1,1)))
+		if (bs->script[0] == '\0' || !(script = parse_script(bs->script,"chrif_load_bsdata",1,1)))
 			continue;
 
 		memcpy(sd->bonus_script[i].script_str,bs->script,strlen(bs->script));

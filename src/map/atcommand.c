@@ -14,6 +14,7 @@
 #include "../common/utils.h"
 #include "../common/conf.h"
 
+#include "map.h"
 #include "atcommand.h"
 #include "battle.h"
 #include "chat.h"
@@ -25,7 +26,6 @@
 #include "intif.h"
 #include "itemdb.h"
 #include "log.h"
-#include "map.h"
 #include "pc.h"
 #include "pc_groups.h" // groupid2name
 #include "status.h"
