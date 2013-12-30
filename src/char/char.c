@@ -110,8 +110,9 @@ char unknown_char_name[NAME_LENGTH] = "Unknown"; // Name to use when the request
 #define TRIM_CHARS "\255\xA0\032\t\x0A\x0D " //The following characters are trimmed regardless because they cause confusion and problems on the servers. [Skotlex]
 char char_name_letters[1024] = ""; // list of letters/symbols allowed (or not) in a character name. by [Yor]
 
-int char_del_level = 0; //From which level u can delete character [Lupus]
+int char_del_level = 0; //From which level you can delete character [Lupus]
 int char_del_delay = 86400;
+int char_del_option = 2; // Character deletion type, email = 1, birthdate = 2 (default)
 
 int log_char = 1;	// loggin char or not [devil]
 int log_inter = 1;	// loggin inter or not [devil]
@@ -1924,7 +1925,11 @@ int mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 	offset += MAP_NAME_LENGTH_EXT;
 #endif
 #if PACKETVER >= 20100803
+#if PACKETVER > 201300000
 	WBUFL(buf,124) = (p->delete_date?TOL(p->delete_date-time(NULL)):0);
+#else
+	WBUFL(buf,124) = TOL(p->delete_date);
+#endif
 	offset += 4;
 #endif
 #if PACKETVER >= 20110111
@@ -4132,7 +4137,7 @@ static void char_delete2_accept(int fd, struct char_session_data* sd)
 		return;
 	}
 
-	if( ( char_del_level > 0 && base_level >= (unsigned int)char_del_level ) || ( char_del_level < 0 && base_level <= (unsigned int)(-char_del_level) ) )
+	if( ( char_del_level > 0 && base_level >= (unsigned int)char_del_level ) || ( char_del_level < 0 && base_level <= (unsigned int)(-char_del_level) ) || !char_del_option&2 )
 	{// character level config restriction
 		char_delete2_accept_ack(fd, char_id, 2);
 		return;
@@ -4522,11 +4527,13 @@ int parse_char(int fd)
 			RFIFOSKIP(fd,( cmd == 0x68) ? 46 : 56);
 
 			// Check if e-mail is correct
-			if(strcmpi(email, sd->email) && //email does not matches and
+			if((strcmpi(email, sd->email) && //email does not matches and
 			(
 				strcmp("a@a.com", sd->email) || //it is not default email, or
 				(strcmp("a@a.com", email) && strcmp("", email)) //email sent does not matches default
-			)) {	//Fail
+			))
+				|| !char_del_option&1
+			) {	//Fail
 				WFIFOHEAD(fd,3);
 				WFIFOW(fd,0) = 0x70;
 				WFIFOB(fd,2) = 0; // 00 = Incorrect Email address
@@ -5602,6 +5609,8 @@ int char_config_read(const char* cfgName)
 			char_del_level = atoi(w2);
 		} else if (strcmpi(w1, "char_del_delay") == 0) {
 			char_del_delay = atoi(w2);
+		} else if (strcmpi(w1, "char_del_option") == 0) {
+			char_del_option = atoi(w2);
 		} else if(strcmpi(w1,"db_path")==0) {
 			safestrncpy(db_path, w2, sizeof(db_path));
 		} else if (strcmpi(w1, "console") == 0) {

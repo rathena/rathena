@@ -4796,7 +4796,7 @@ BUILDIN_FUNC(prompt)
 		sd->state.menu_or_input = 0;
 		pc_setreg(sd, add_str("@menu"), 0xff);
 		script_pushint(st, 0xff);
-		st->state = RUN;
+		st->state = END;
 	}
 	else
 	{// return selected option

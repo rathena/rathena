@@ -2619,7 +2619,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 			//Spirit of Wizard blocks Kaite's reflection
 			if( type == 2 && tsc && tsc->data[SC_SPIRIT] && tsc->data[SC_SPIRIT]->val2 == SL_WIZARD )
 			{	//Consume one Fragment per hit of the casted skill? [Skotlex]
-				type = tsd?pc_search_inventory (tsd, 7321):0;
+				type = tsd?pc_search_inventory (tsd, ITEMID_FRAGMENT_OF_CRYSTAL):0;
 				if (type >= 0) {
 					if ( tsd ) pc_delitem(tsd, type, 1, 0, 1, LOG_TYPE_CONSUME);
 					dmg.damage = dmg.damage2 = 0;
@@ -6784,7 +6784,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if (sd) {
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 			//Prepare 200 White Potions.
-			if (!skill_produce_mix(sd, skill_id, 504, 0, 0, 0, 200))
+			if (!skill_produce_mix(sd, skill_id, ITEMID_WHITE_POTION, 0, 0, 0, 200))
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 		}
 		break;
@@ -6792,28 +6792,28 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if (sd) {
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 			//Prepare 200 Slim White Potions.
-			if (!skill_produce_mix(sd, skill_id, 547, 0, 0, 0, 200))
+			if (!skill_produce_mix(sd, skill_id, ITEMID_WHITE_SLIM_POTION, 0, 0, 0, 200))
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 		}
 		break;
 	case AM_TWILIGHT3:
 		if (sd) {
-			int ebottle = pc_search_inventory(sd,713);
+			int ebottle = pc_search_inventory(sd,ITEMID_EMPTY_BOTTLE);
 			if( ebottle >= 0 )
 				ebottle = sd->status.inventory[ebottle].amount;
 			//check if you can produce all three, if not, then fail:
-			if (!skill_can_produce_mix(sd,970,-1, 100) //100 Alcohol
-				|| !skill_can_produce_mix(sd,7136,-1, 50) //50 Acid Bottle
-				|| !skill_can_produce_mix(sd,7135,-1, 50) //50 Flame Bottle
+			if (!skill_can_produce_mix(sd,ITEMID_ALCOHOL,-1, 100) //100 Alcohol
+				|| !skill_can_produce_mix(sd,ITEMID_ACID_BOTTLE,-1, 50) //50 Acid Bottle
+				|| !skill_can_produce_mix(sd,ITEMID_FIRE_BOTTLE,-1, 50) //50 Flame Bottle
 				|| ebottle < 200 //200 empty bottle are required at total.
 			) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				break;
 			}
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-			skill_produce_mix(sd, skill_id, 970, 0, 0, 0, 100);
-			skill_produce_mix(sd, skill_id, 7136, 0, 0, 0, 50);
-			skill_produce_mix(sd, skill_id, 7135, 0, 0, 0, 50);
+			skill_produce_mix(sd, skill_id, ITEMID_ALCOHOL, 0, 0, 0, 100);
+			skill_produce_mix(sd, skill_id, ITEMID_ACID_BOTTLE, 0, 0, 0, 50);
+			skill_produce_mix(sd, skill_id, ITEMID_FIRE_BOTTLE, 0, 0, 0, 50);
 		}
 		break;
 	case SA_DISPELL:
@@ -7253,14 +7253,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case WE_MALE:
-		{
+		if( status_get_hp(bl) < status_get_max_hp(bl) / 10 ) {
 			int hp_rate=(!skill_lv)? 0:skill_get_hp_rate(skill_id, skill_lv);
 			int gain_hp= tstatus->max_hp*abs(hp_rate)/100; // The earned is the same % of the target HP than it costed the caster. [Skotlex]
 			clif_skill_nodamage(src,bl,skill_id,status_heal(bl, gain_hp, 0, 0),1);
 		}
 		break;
 	case WE_FEMALE:
-		{
+		if( status_get_sp(bl) < status_get_max_sp(bl) / 10 ) {
 			int sp_rate=(!skill_lv)? 0:skill_get_sp_rate(skill_id, skill_lv);
 			int gain_sp=tstatus->max_sp*abs(sp_rate)/100;// The earned is the same % of the target SP than it costed the caster. [Skotlex]
 			clif_skill_nodamage(src,bl,skill_id,status_heal(bl, 0, gain_sp, 0),1);
@@ -7272,8 +7272,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if(sd){
 			struct map_session_data *f_sd = pc_get_father(sd);
 			struct map_session_data *m_sd = pc_get_mother(sd);
+			struct block_list *b_bl = map_id2bl(sd->bl.id);
+			struct block_list *f_bl = map_id2bl(f_sd->bl.id);
+			struct block_list *m_bl = map_id2bl(m_sd->bl.id);
 			// if neither was found
-			if(!f_sd && !m_sd){
+			if( (!f_sd && !m_sd) || (sd->status.party_id != 0 && sd->status.party_id != f_sd->status.party_id && sd->status.party_id != m_sd->status.party_id) || (!check_distance_bl(b_bl, f_bl, AREA_SIZE) && !check_distance_bl(b_bl, m_bl, AREA_SIZE)) ) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				map_freeblock_unlock();
 				return 0;
@@ -9728,7 +9731,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		   skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 	   break;
 	case MH_SUMMON_LEGION: {
-		int summons[5] = {2158, 2159, 2159, 2160, 2160};
+		int summons[5] = {MOBID_S_HORNET, MOBID_S_GIANT_HORNET, MOBID_S_GIANT_HORNET, MOBID_S_LUCIOLA_VESPA, MOBID_S_LUCIOLA_VESPA};
 		int qty[5] =     {3   , 3   , 4   , 4   , 5};
 		struct mob_data *sum_md;
 		int i,c=0;
@@ -9914,7 +9917,20 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 			case WE_CALLPARTNER:
 				if(sd) clif_callpartner(sd);
 			case WE_CALLPARENT:
+				if(sd) {
+					struct map_session_data *f_sd = pc_get_father(sd);
+					struct map_session_data *m_sd = pc_get_mother(sd);
+
+					if( f_sd->state.autotrade || m_sd->state.autotrade )
+						break;
+				}
 			case WE_CALLBABY:
+				if(sd) {
+					struct map_session_data *c_sd = pc_get_child(sd);
+
+					if( c_sd->state.autotrade )
+						break;
+				}
 			case AM_RESURRECTHOMUN:
 			case PF_SPIDERWEB:
 				//Find a random spot to place the skill. [Skotlex]
@@ -10652,9 +10668,8 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case AM_SPHEREMINE:
 	case AM_CANNIBALIZE:
 		{
-			int summons[5] = { 1589, 1579, 1575, 1555, 1590 };
-			//int summons[5] = { 1020, 1068, 1118, 1500, 1368 };
-			int class_ = skill_id==AM_SPHEREMINE?1142:summons[skill_lv-1];
+			int summons[5] = { MOBID_G_MANDRAGORA, MOBID_G_HYDRA, MOBID_G_FLORA, , MOBID_G_GEOGRAPHER };
+			int class_ = skill_id==AM_SPHEREMINE?MOBID_MARINE_SPHERE:summons[skill_lv-1];
 			int ai = (skill_id == AM_SPHEREMINE) ? AI_SPHERE : AI_FLORA;
 			struct mob_data *md;
 
@@ -14135,10 +14150,9 @@ int skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id, 
 		case AM_CANNIBALIZE:
 		case AM_SPHEREMINE: {
 			int c=0;
-			int summons[5] = { 1589, 1579, 1575, 1555, 1590 };
-			//int summons[5] = { 1020, 1068, 1118, 1500, 1368 };
+			int summons[5] = { MOBID_G_MANDRAGORA, MOBID_G_HYDRA, MOBID_G_FLORA, MOBID_G_PARASITE, MOBID_G_MANDRAGORA };
 			int maxcount = (skill_id==AM_CANNIBALIZE)? 6-skill_lv : skill_get_maxcount(skill_id,skill_lv);
-			int mob_class = (skill_id==AM_CANNIBALIZE)? summons[skill_lv-1] :1142;
+			int mob_class = (skill_id==AM_CANNIBALIZE)? summons[skill_lv-1] :MOBID_MARINE_SPHERE;
 			if(battle_config.land_skill_limit && maxcount>0 && (battle_config.land_skill_limit&BL_PC)) {
 				i = map_foreachinmap(skill_check_condition_mob_master_sub ,sd->bl.m, BL_MOB, sd->bl.id, mob_class, skill_id, &c);
 				if(c >= maxcount ||
@@ -14154,13 +14168,13 @@ int skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id, 
 		case NC_MAGICDECOY: {
 				int c = 0, j;
 				int maxcount = skill_get_maxcount(skill_id,skill_lv);
-				int mob_class = 2042;
+				int mob_class = MOBID_SILVERSNIPER;
 				if( skill_id == NC_MAGICDECOY )
-					mob_class = 2043;
+					mob_class = MOBID_MAGICDECOY_FIRE;
 
 				if( battle_config.land_skill_limit && maxcount > 0 && ( battle_config.land_skill_limit&BL_PC ) ) {
 					if( skill_id == NC_MAGICDECOY ) {
-						for( j = mob_class; j <= 2046; j++ )
+						for( j = mob_class; j <= MOBID_MAGICDECOY_WIND; j++ )
 							map_foreachinmap(skill_check_condition_mob_master_sub, sd->bl.m, BL_MOB, sd->bl.id, j, skill_id, &c);
 					} else
 						map_foreachinmap(skill_check_condition_mob_master_sub, sd->bl.m, BL_MOB, sd->bl.id, mob_class, skill_id, &c);
@@ -15212,19 +15226,23 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 	if (idx >= 0 && idx < MAX_INVENTORY)
 	{
 		int i = 0, ep = 0, per;
-		int material[5] = { 0, 1010, 1011, 984, 984 };
+		int material[5] = { 0, ITEMID_PHRACON, ITEMID_EMVERETARCON, ITEMID_ORIDECON, ITEMID_ORIDECON, };
 		struct item *item;
 		struct item_data *ditem = sd->inventory_data[idx];
 		item = &sd->status.inventory[idx];
 
 		if(item->nameid > 0 && ditem->type == IT_WEAPON)
 		{
-			if( item->refine >= sd->menuskill_val
-			||  item->refine >= 10		// if it's no longer refineable
-			||  ditem->flag.no_refine 	// if the item isn't refinable
-			||  (i = pc_search_inventory(sd, material [ditem->wlv])) < 0 )
-			{
+			if( ditem->flag.no_refine ) { 	// if the item isn't refinable
 				clif_skill_fail(sd,sd->menuskill_id,USESKILL_FAIL_LEVEL,0);
+				return;
+			}
+			if( item->refine >= sd->menuskill_val || item->refine >= 10 ) {
+				clif_upgrademessage(sd->fd, 2, item->nameid);
+				return;
+			}
+			if( (i = pc_search_inventory(sd, material [ditem->wlv])) < 0 ) {
+				clif_upgrademessage(sd->fd, 3, material[ditem->wlv]);
 				return;
 			}
 			per = status_get_refine_chance(ditem->wlv, (int)item->refine);
@@ -15242,9 +15260,10 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 					ep = item->equip;
 					pc_unequipitem(sd,idx,3);
 				}
-				clif_refine(sd->fd,0,idx,item->refine);
 				clif_delitem(sd,idx,1,3);
-				clif_additem(sd,idx,1,0);
+				clif_upgrademessage(sd->fd, 0, item->nameid);
+				clif_inventorylist(sd);
+				clif_refine(sd->fd,0,idx,item->refine);
 				if (ep)
 					pc_equipitem(sd,idx,ep);
 				clif_misceffect(&sd->bl,3);
@@ -15268,6 +15287,7 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 				item->refine = 0;
 				if(item->equip)
 					pc_unequipitem(sd,idx,3);
+				clif_upgrademessage(sd->fd, 1, item->nameid);
 				clif_refine(sd->fd,1,idx,item->refine);
 				pc_delitem(sd,idx,1,0,2, LOG_TYPE_OTHER);
 				clif_misceffect(&sd->bl,2);
@@ -16964,14 +16984,14 @@ int skill_produce_mix (struct map_session_data *sd, uint16 skill_id, int nameid,
 		j = pc_search_inventory(sd,slot[i]);
 		if(j < 0)
 			continue;
-		if(slot[i]==1000){	/* Star Crumb */
+		if(slot[i]==ITEMID_STAR_CRUMB){
 			pc_delitem(sd,j,1,1,0,LOG_TYPE_PRODUCE);
 			sc++;
 		}
-		if(slot[i]>=994 && slot[i]<=997 && ele==0){	/* Flame Heart . . . Great Nature */
+		if(slot[i]>=ITEMID_FLAME_HEART && slot[i]<=ITEMID_GREAT_NATURE && ele==0){
 			static const int ele_table[4]={3,1,4,2};
 			pc_delitem(sd,j,1,1,0,LOG_TYPE_PRODUCE);
-			ele=ele_table[slot[i]-994];
+			ele=ele_table[slot[i]-ITEMID_FLAME_HEART];
 		}
 	}
 
@@ -17037,13 +17057,13 @@ int skill_produce_mix (struct map_session_data *sd, uint16 skill_id, int nameid,
 				i = pc_checkskill(sd,skill_id);
 				make_per = sd->status.job_level*20 + status->dex*10 + status->luk*10; //Base chance
 				switch(nameid){
-					case 998: // Iron
+					case ITEMID_IRON:
 						make_per += 4000+i*500; // Temper Iron bonus: +26/+32/+38/+44/+50
 						break;
-					case 999: // Steel
+					case ITEMID_STEEL:
 						make_per += 3000+i*500; // Temper Steel bonus: +35/+40/+45/+50/+55
 						break;
-					case 1000: //Star Crumb
+					case ITEMID_STAR_CRUMB:
 						make_per = 100000; // Star Crumbs are 100% success crafting rate? (made 1000% so it succeeds even after penalties) [Skotlex]
 						break;
 					default: // Enchanted Stones
@@ -17074,32 +17094,32 @@ int skill_produce_mix (struct map_session_data *sd, uint16 skill_id, int nameid,
 						make_per += skill*100; //+1% bonus per level
 				}
 				switch(nameid){
-					case 501: // Red Potion
-					case 503: // Yellow Potion
-					case 504: // White Potion
+					case ITEMID_RED_POTION:
+					case ITEMID_YELLOW_POTION:
+					case ITEMID_WHITE_POTION:
 						make_per += (1+rnd()%100)*10 + 2000;
 						break;
-					case 970: // Alcohol
+					case ITEMID_ALCOHOL:
 						make_per += (1+rnd()%100)*10 + 1000;
 						break;
-					case 7135: // Bottle Grenade
-					case 7136: // Acid Bottle
-					case 7137: // Plant Bottle
-					case 7138: // Marine Sphere Bottle
+					case ITEMID_FIRE_BOTTLE:
+					case ITEMID_ACID_BOTTLE:
+					case ITEMID_MAN_EATER_BOTTLE:
+					case ITEMID_MINI_BOTTLE:
 						make_per += (1+rnd()%100)*10;
 						break;
-					case 546: // Condensed Yellow Potion
+					case ITEMID_YELLOW_SLIM_POTION:
 						make_per -= (1+rnd()%50)*10;
 						break;
-					case 547: // Condensed White Potion
-					case 7139: // Glistening Coat
+					case ITEMID_WHITE_SLIM_POTION:
+					case ITEMID_COATING_BOTTLE:
 						make_per -= (1+rnd()%100)*10;
 						break;
 					//Common items, recieve no bonus or penalty, listed just because they are commonly produced
-					case 505: // Blue Potion
-					case 545: // Condensed Red Potion
-					case 605: // Anodyne
-					case 606: // Aloevera
+					case ITEMID_BLUE_POTION:
+					case ITEMID_RED_SLIM_POTION:
+					case ITEMID_ANODYNE:
+					case ITEMID_ALOEBERA:
 					default:
 						break;
 				}
@@ -17166,22 +17186,22 @@ int skill_produce_mix (struct map_session_data *sd, uint16 skill_id, int nameid,
 								(sd->status.base_level-100) + pc_checkskill(sd, AM_LEARNINGPOTION) + pc_checkskill(sd, CR_FULLPROTECTION)*(4+rnd()%6); // (Caster?s Base Level - 100) + (Potion Research x 5) + (Full Chemical Protection Skill Level) x (Random number between 4 ~ 10)
 
 					switch(nameid){// difficulty factor
-						case 12422:	case 12425:
-						case 12428:
+						case ITEMID_HP_INCREASE_POTION_SMALL:	case ITEMID_SP_INCREASE_POTION_SMALL:
+						case ITEMID_CONCENTRATED_WHITE_POTION_Z:
 							difficulty += 10;
 							break;
-						case 6212:	case 12426:
+						case ITEMID_BOMB_MUSHROOM_SPORE:		case ITEMID_SP_INCREASE_POTION_MEDIUM:
 							difficulty += 15;
 							break;
-						case 13264:	case 12423:
-						case 12427:	case 12436:
+						case ITEMID_BANANA_BOMB:				case ITEMID_HP_INCREASE_POTION_MEDIUM:
+						case ITEMID_SP_INCREASE_POTION_LARGE:	case ITEMID_VITATA500:
 							difficulty += 20;
 							break;
-						case 6210:	case 6211:
-						case 12437:
+						case ITEMID_SEED_OF_HORNY_PLANT:		case ITEMID_BLOODSUCK_PLANT_SEED:
+						case ITEMID_CONCENTRATED_CEROMAIN_SOUP:
 							difficulty += 30;
 							break;
-						case 12424:	case 12475:
+						case ITEMID_HP_INCREASE_POTION_LARGE:	case ITEMID_CURE_FREE:
 							difficulty += 40;
 							break;
 					}
@@ -17208,18 +17228,18 @@ int skill_produce_mix (struct map_session_data *sd, uint16 skill_id, int nameid,
 					qty = ~(5 + rnd()%5) + 1;
 
 					switch(nameid){// difficulty factor
-						case 13260:
+						case ITEMID_APPLE_BOMB:
 							difficulty += 5;
 							break;
-						case 13261:	case 13262:
+						case ITEMID_COCONUT_BOMB:	case ITEMID_MELON_BOMB:
 							difficulty += 10;
 							break;
-						case 12429:	case 12430:	case 12431:
-						case 12432:	case 12433:	case 12434:
-						case 13263:
+						case ITEMID_SAVAGE_FULL_ROAST:	case ITEMID_COCKTAIL_WARG_BLOOD:	case ITEMID_MINOR_STEW:
+						case ITEMID_SIROMA_ICED_TEA:	case ITEMID_DROSERA_HERB_SALAD:		case ITEMID_PETITE_TAIL_NOODLES:
+						case ITEMID_PINEAPPLE_BOMB:
 							difficulty += 15;
 							break;
-						case 13264:
+						case ITEMID_BANANA_BOMB:
 							difficulty += 20;
 							break;
 					}
@@ -17268,10 +17288,10 @@ int skill_produce_mix (struct map_session_data *sd, uint16 skill_id, int nameid,
 		make_per += pc_checkskill(sd,skill_id)*500; // Smithing skills bonus: +5/+10/+15
 		make_per += pc_checkskill(sd,BS_WEAPONRESEARCH)*100 +((wlv >= 3)? pc_checkskill(sd,BS_ORIDEOCON)*100:0); // Weaponry Research bonus: +1/+2/+3/+4/+5/+6/+7/+8/+9/+10, Oridecon Research bonus (custom): +1/+2/+3/+4/+5
 		make_per -= (ele?2000:0) + sc*1500 + (wlv>1?wlv*1000:0); // Element Stone: -20%, Star Crumb: -15% each, Weapon level malus: -0/-20/-30
-		if(pc_search_inventory(sd,989) > 0) make_per+= 1000; // Emperium Anvil: +10
-		else if(pc_search_inventory(sd,988) > 0) make_per+= 500; // Golden Anvil: +5
-		else if(pc_search_inventory(sd,987) > 0) make_per+= 300; // Oridecon Anvil: +3
-		else if(pc_search_inventory(sd,986) > 0) make_per+= 0; // Anvil: +0?
+		if(pc_search_inventory(sd,ITEMID_EMPERIUM_ANVIL) > 0) make_per+= 1000; // Emperium Anvil: +10
+		else if(pc_search_inventory(sd,ITEMID_GOLDEN_AVNIL) > 0) make_per+= 500; // Golden Anvil: +5
+		else if(pc_search_inventory(sd,ITEMID_ORIDECON_ANVIL) > 0) make_per+= 300; // Oridecon Anvil: +3
+		else if(pc_search_inventory(sd,ITEMID_ANVIL) > 0) make_per+= 0; // Anvil: +0?
 		if(battle_config.wp_rate != 100)
 			make_per = make_per * battle_config.wp_rate / 100;
 	}
@@ -17353,7 +17373,7 @@ int skill_produce_mix (struct map_session_data *sd, uint16 skill_id, int nameid,
 				}
 				if (rnd()%10000 < make_per || qty == 1) { //Success
 					tmp_item.amount++;
-					if(nameid < 545 || nameid > 547)
+					if(nameid < ITEMID_RED_SLIM_POTION || nameid > ITEMID_WHITE_SLIM_POTION)
 						continue;
 					if( skill_id != AM_PHARMACY &&
 						skill_id != AM_TWILIGHT1 &&
@@ -17476,7 +17496,7 @@ int skill_produce_mix (struct map_session_data *sd, uint16 skill_id, int nameid,
 				break;
 			case GN_MIX_COOKING: {
 					struct item tmp_item;
-					const int compensation[5] = {13265, 13266, 13267, 12435, 13268};
+					const int compensation[5] = {ITEMID_BLACK_LUMP, ITEMID_BLACK_HARD_LUMP, ITEMID_VERY_HARD_LUMP, ITEMID_BLACK_MASS, ITEMID_MYSTERIOUS_POWDER};
 					int rate = rnd()%500;
 					memset(&tmp_item,0,sizeof(tmp_item));
 					if( rate < 50) i = 4;
@@ -17561,14 +17581,14 @@ int skill_poisoningweapon( struct map_session_data *sd, int nameid) {
 	}
 	switch( nameid )
 	{ // t_lv used to take duration from skill_get_time2
-		case PO_PARALYSE:      type = SC_PARALYSE;      break;
-		case PO_PYREXIA:       type = SC_PYREXIA;		break;
-		case PO_DEATHHURT:     type = SC_DEATHHURT;     break;
-		case PO_LEECHESEND:    type = SC_LEECHESEND;    break;
-		case PO_VENOMBLEED:    type = SC_VENOMBLEED;    break;
-		case PO_TOXIN:         type = SC_TOXIN;         break;
-		case PO_MAGICMUSHROOM: type = SC_MAGICMUSHROOM; break;
-		case PO_OBLIVIONCURSE: type = SC_OBLIVIONCURSE; break;
+		case ITEMID_PARALYSE:      type = SC_PARALYSE;      break;
+		case ITEMID_PYREXIA:       type = SC_PYREXIA;		break;
+		case ITEMID_DEATHHURT:     type = SC_DEATHHURT;     break;
+		case ITEMID_LEECHESEND:    type = SC_LEECHESEND;    break;
+		case ITEMID_VENOMBLEED:    type = SC_VENOMBLEED;    break;
+		case ITEMID_TOXIN:         type = SC_TOXIN;         break;
+		case ITEMID_MAGICMUSHROOM: type = SC_MAGICMUSHROOM; break;
+		case ITEMID_OBLIVIONCURSE: type = SC_OBLIVIONCURSE; break;
 		default:
 			clif_skill_fail(sd,GC_POISONINGWEAPON,USESKILL_FAIL_LEVEL,0);
 			return 0;
@@ -17626,9 +17646,9 @@ int skill_magicdecoy(struct map_session_data *sd, int nameid) {
 
 	// Item picked decides the mob class
 	switch(nameid) {
-		case 990: class_ = 2043; break;
-		case 991: class_ = 2044; break;
-		case 992: class_ = 2046; break;
+		case ITEMID_BLOODY_RED:			class_ = 2043; break;
+		case ITEMID_CRYSTAL_BLUE:		class_ = 2044; break;
+		case ITEMID_WIND_OF_VERDURE:	class_ = 2046; break;
 		default: class_ = 2045; break;
 	}
 
@@ -17748,15 +17768,15 @@ int skill_elementalanalysis(struct map_session_data* sd, int n, uint16 skill_lv,
 
 		switch( nameid ) {
 				// Level 1
-			case 994: product = 990; break;	// Flame Heart -> Red Blood.
-			case 995: product = 991; break;	// Mystic Frozen -> Crystal Blue.
-			case 996: product = 992; break; // Rough Wind -> Wind of Verdure.
-			case 997: product = 993; break; // Great Nature -> Green Live.
+			case ITEMID_FLAME_HEART:		product = ITEMID_BLOODY_RED;		break;
+			case ITEMID_MISTIC_FROZEN:		product = ITEMID_CRYSTAL_BLUE;		break;
+			case ITEMID_ROUGH_WIND:			product = ITEMID_WIND_OF_VERDURE;	break;
+			case ITEMID_GREAT_NATURE:		product = ITEMID_YELLOW_LIVE;		break;
 				// Level 2
-			case 990: product = 994; break;	// Red Blood -> Flame Heart.
-			case 991: product = 995; break;	// Crystal Blue -> Mystic Frozen.
-			case 992: product = 996; break; // Wind of Verdure -> Rough Wind.
-			case 993: product = 997; break; // Green Live -> Great Nature.
+			case ITEMID_BLOODY_RED:			product = ITEMID_FLAME_HEART;		break;
+			case ITEMID_CRYSTAL_BLUE:		product = ITEMID_MISTIC_FROZEN;		break;
+			case ITEMID_WIND_OF_VERDURE:	product = ITEMID_ROUGH_WIND;		break;
+			case ITEMID_YELLOW_LIVE:		product = ITEMID_GREAT_NATURE;		break;
 			default:
 				clif_skill_fail(sd,SO_EL_ANALYSIS,USESKILL_FAIL_LEVEL,0);
 				return 1;
@@ -18453,10 +18473,10 @@ int skill_get_elemental_type( uint16 skill_id , uint16 skill_lv ) {
 	int type = 0;
 
 	switch( skill_id ) {
-		case SO_SUMMON_AGNI:	type = 2114; break;
-		case SO_SUMMON_AQUA:	type = 2117; break;
-		case SO_SUMMON_VENTUS:	type = 2120; break;
-		case SO_SUMMON_TERA:	type = 2123; break;
+		case SO_SUMMON_AGNI:	type = ELEMENTALID_AGNI_S;		break;
+		case SO_SUMMON_AQUA:	type = ELEMENTALID_AQUA_S;		break;
+		case SO_SUMMON_VENTUS:	type = ELEMENTALID_VENTUS_S;	break;
+		case SO_SUMMON_TERA:	type = ELEMENTALID_TERA_S;		break;
 	}
 
 	type += skill_lv - 1;

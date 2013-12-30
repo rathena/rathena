@@ -4288,91 +4288,90 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 		return 0; // You cannot use this item while sitting.
 	}
 
-	switch( nameid ) //@TODO, lot of hardcoded nameid here
-	{
-		case 605: // Anodyne
+	if (sd->state.storage_flag && item->type != IT_CASH) {
+		clif_colormes(sd, color_table[COLOR_RED], msg_txt(sd,388));
+		return 0; // You cannot use this item while storage is open.
+	}
+
+	switch( nameid ) {
+		case ITEMID_ANODYNE:
 			if( map_flag_gvg(sd->bl.m) )
 				return 0;
-		case 606:
+		case ITEMID_ALOEBERA:
 			if( pc_issit(sd) )
 				return 0;
 			break;
-		case 601: // Fly Wing
-		case 12212: // Giant Fly Wing
-			if( map[sd->bl.m].flag.noteleport || map_flag_gvg(sd->bl.m) )
-			{
+		case ITEMID_WING_OF_FLY:
+		case ITEMID_GIANT_FLY_WING:
+			if( map[sd->bl.m].flag.noteleport || map_flag_gvg(sd->bl.m) ) {
 				clif_skill_teleportmessage(sd,0);
 				return 0;
 			}
-		case 602: // ButterFly Wing
-		case 14527: // Dungeon Teleport Scroll
-		case 14581: // Dungeon Teleport Scroll 2
-		case 12352: // Dungeon Teleport Scroll 3
-		case 14582: // Yellow Butterfly Wing
-		case 14583: // Green Butterfly Wing
-		case 14584: // Red Butterfly Wing
-		case 14585: // Blue Butterfly Wing
-		case 14591: // Siege Teleport Scroll
-			if( sd->duel_group && !battle_config.duel_allow_teleport )
-			{
+		case ITEMID_WING_OF_BUTTERFLY:
+		case ITEMID_DUN_TELE_SCROLL1:
+		case ITEMID_DUN_TELE_SCROLL2:
+		case ITEMID_DUN_TELE_SCROLL3:
+		case ITEMID_WOB_RUNE:
+		case ITEMID_WOB_SCHWALTZ:
+		case ITEMID_WOB_RACHEL:
+		case ITEMID_WOB_LOCAL:
+		case ITEMID_SIEGE_TELEPORT_SCROLL:
+			if( sd->duel_group && !battle_config.duel_allow_teleport ) {
 				clif_displaymessage(sd->fd, msg_txt(sd,663));
 				return 0;
 			}
 			if( nameid != 601 && nameid != 12212 && map[sd->bl.m].flag.noreturn )
 				return 0;
 			break;
-		case 604: // Dead Branch
-		case 12024: // Red Pouch
-		case 12103: // Bloody Branch
-		case 12109: // Poring Box
-		case 12863: // Treasure_Chest_Summoned_II
+		case ITEMID_BRANCH_OF_DEAD_TREE:
+		case ITEMID_RED_POUCH_OF_SURPRISE:
+		case ITEMID_BLOODY_DEAD_BRANCH:
+		case ITEMID_PORING_BOX:
+		case ITEMID_TREASURE_CHEST_SUMMONED_II:
 			if( map[sd->bl.m].flag.nobranch || map_flag_gvg(sd->bl.m) )
 				return 0;
 			break;
-		case 12210: // Bubble Gum
-		case 12264: // Comp Bubble Gum
+		case ITEMID_BUBBLE_GUM:
+		case ITEMID_COMP_BUBBLE_GUM:
 			if( sd->sc.data[SC_ITEMBOOST] )
 				return 0;
 			break;
-		case 12208: // Battle Manual
-		case 12263: // Comp Battle Manual
-		case 12312: // Thick Battle Manual
-		case 12705: // Noble Nameplate
-		case 14532: // Battle_Manual25
-		case 14533: // Battle_Manual100
-		case 14545: // Battle_Manual300
+		case ITEMID_BATTLE_MANUAL:
+		case ITEMID_COMP_BATTLE_MANUAL:
+		case ITEMID_THICK_BATTLE_MANUAL:
+		case ITEMID_NOBLE_NAMEPLATE:
+		case ITEMID_BATTLE_MANUAL25:
+		case ITEMID_BATTLE_MANUAL100:
+		case ITEMID_BATTLE_MANUAL300:
 			if( sd->sc.data[SC_EXPBOOST] )
 				return 0;
 			break;
-		case 14592: // JOB_Battle_Manual
+		case ITEMID_JOB_MANUAL50:
 			if( sd->sc.data[SC_JEXPBOOST] )
 				return 0;
 			break;
-
-		// Mercenary Items
-
-		case 12184: // Mercenary's Red Potion
-		case 12185: // Mercenary's Blue Potion
-		case 12241: // Mercenary's Concentration Potion
-		case 12242: // Mercenary's Awakening Potion
-		case 12243: // Mercenary's Berserk Potion
+		case ITEMID_MERCENARY_RED_POTION:
+		case ITEMID_MERCENARY_BLUE_POTION:
+		case ITEMID_M_CENTER_POTION:
+		case ITEMID_M_AWAKENING_POTION:
+		case ITEMID_M_BERSERK_POTION:
 			if( sd->md == NULL || sd->md->db == NULL )
 				return 0;
 			if (sd->md->sc.data[SC_BERSERK] || sd->md->sc.data[SC_SATURDAYNIGHTFEVER])
 				return 0;
-			if( nameid == 12242 && sd->md->db->lv < 40 )
+			if( nameid == ITEMID_M_AWAKENING_POTION && sd->md->db->lv < 40 )
 				return 0;
-			if( nameid == 12243 && sd->md->db->lv < 80 )
+			if( nameid == ITEMID_M_BERSERK_POTION && sd->md->db->lv < 80 )
 				return 0;
 			break;
 
-		case 12213: //Neuralizer
+		case ITEMID_NEURALIZER:
 			if( !map[sd->bl.m].flag.reset )
 				return 0;
 			break;
 	}
 
-	if( nameid >= 12153 && nameid <= 12182 && sd->md != NULL )
+	if( nameid >= ITEMID_BOW_MERCENARY_SCROLL1 && nameid <= ITEMID_SPEARMERCENARY_SCROLL10 && sd->md != NULL )
 		return 0; // Mercenary Scrolls
 
 	/**
@@ -4422,8 +4421,7 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 		return 0;
 
 	//Dead Branch & Bloody Branch & Porings Box
-	// FIXME: outdated, use constants or database
-	if( nameid == 604 || nameid == 12103 || nameid == 12109 || nameid == 12863 )
+	if( nameid == ITEMID_BRANCH_OF_DEAD_TREE || nameid == ITEMID_BLOODY_DEAD_BRANCH || nameid == ITEMID_PORING_BOX || nameid == ITEMID_TREASURE_CHEST_SUMMONED_II )
 		log_branch(sd);
 
 	return 1;

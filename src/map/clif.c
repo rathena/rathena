@@ -5710,7 +5710,7 @@ void clif_maptypeproperty2(struct block_list *bl,enum send_target t) {
 	WBUFB(buf,4) = ((map_flag_vs(bl->m))?0x01:0); //tvt ?
 	WBUFB(buf,4) |= ((map_flag_gvg(bl->m))?0x02:0); //gvg
 	WBUFB(buf,4) |= ((map_flag_gvg2(bl->m))?0x04:0); //siege
-	WBUFB(buf,4) |= ((map[bl->m].flag.nomineeffect)?0:0x08); //mineffect @FIXME what this do
+	WBUFB(buf,4) |= (map[bl->m].flag.nomineeffect || !map_flag_gvg2(bl->m))?0:0x08; //disable mine effect on nomineeffect map and enable it on gvgmap by default
 	WBUFB(buf,4) |= ((map[bl->m].flag.nolockon)?0x10:0); //nolockon 0x10 @FIXME what this do
 	WBUFB(buf,4) |= ((map[bl->m].flag.pvp)?0x20:0); //countpk
 	WBUFB(buf,4) |= 0; //nopartyformation 0x40
@@ -6084,9 +6084,9 @@ void clif_item_refine_list(struct map_session_data *sd)
 	fd=sd->fd;
 
 	refine_item[0] = -1;
-	refine_item[1] = pc_search_inventory(sd,1010);
-	refine_item[2] = pc_search_inventory(sd,1011);
-	refine_item[3] = refine_item[4] = pc_search_inventory(sd,984);
+	refine_item[1] = pc_search_inventory(sd,ITEMID_PHARCON);
+	refine_item[2] = pc_search_inventory(sd,ITEMID_EMVERETARCON);
+	refine_item[3] = refine_item[4] = pc_search_inventory(sd,ITEMID_ORIDECON);
 
 	WFIFOHEAD(fd, MAX_INVENTORY * 13 + 4);
 	WFIFOW(fd,0)=0x221;
@@ -8201,20 +8201,14 @@ void clif_callpartner(struct map_session_data *sd)
 
 	WBUFW(buf,0) = 0x1e6;
 
-	if( sd->status.partner_id )
-	{
-		const char *p;
-		if( ( p = map_charid2nick(sd->status.partner_id) ) != NULL )
-		{
+	if( sd->status.partner_id ) {
+		const char *p = map_charid2nick(sd->status.partner_id);
+		struct map_session_data *p_sd = pc_get_partner(sd);
+		if( p != NULL && p_sd != NULL && !p_sd->state.autotrade )
 			memcpy(WBUFP(buf,2), p, NAME_LENGTH);
-		}
 		else
-		{
 			WBUFB(buf,2) = 0;
-		}
-	}
-	else
-	{// Send zero-length name if no partner, to initialize the client buffer.
+	} else {// Send zero-length name if no partner, to initialize the client buffer.
 		WBUFB(buf,2) = 0;
 	}
 

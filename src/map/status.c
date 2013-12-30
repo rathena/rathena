@@ -9932,6 +9932,7 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_WEIGHT90:
 			case SC_EDP:
 			case SC_MELTDOWN:
+			case SC_WEDDING:
 			case SC_XMAS:
 			case SC_SUMMER:
 			case SC_HANBOK:
