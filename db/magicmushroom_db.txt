@@ -1,4 +1,4 @@
-// Magic Mushroom DB
+// Magic Mushroom Database
 // List of skills that are randomly used through Magic Mushroom status change.
 //
 // Structure of Database:

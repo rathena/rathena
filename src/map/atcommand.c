@@ -2410,10 +2410,10 @@ ACMD_FUNC(zeny)
  *------------------------------------------*/
 ACMD_FUNC(param)
 {
-	int i, value = 0, new_value;
+	uint8 i;
+	int value = 0;
 	const char* param[] = { "str", "agi", "vit", "int", "dex", "luk" };
-	short* status[6];
-	short max_status[6];
+	short new_value, *status[6], max_status[6];
  	//we don't use direct initialization because it isn't part of the c standard.
 	nullpo_retr(-1, sd);
 
@@ -2438,30 +2438,23 @@ ACMD_FUNC(param)
 	status[4] = &sd->status.dex;
 	status[5] = &sd->status.luk;
 
-	if( battle_config.atcommand_max_stat_bypass ){
-		max_status[0] = SHRT_MAX;
-		max_status[1] = SHRT_MAX;
-		max_status[2] = SHRT_MAX;
-		max_status[3] = SHRT_MAX;
-		max_status[4] = SHRT_MAX;
-		max_status[5] = SHRT_MAX;
-	}
+	if( battle_config.atcommand_max_stat_bypass )
+		max_status[0] = max_status[1] = max_status[2] = max_status[3] = max_status[4] = max_status[5] = SHRT_MAX;
 	else {
-		max_status[0] = pc_maxparameter(sd->class_,sd->status.sex,PARAM_STR);
-		max_status[1] = pc_maxparameter(sd->class_,sd->status.sex,PARAM_AGI);
-		max_status[2] = pc_maxparameter(sd->class_,sd->status.sex,PARAM_VIT);
-		max_status[3] = pc_maxparameter(sd->class_,sd->status.sex,PARAM_INT);
-		max_status[4] = pc_maxparameter(sd->class_,sd->status.sex,PARAM_DEX);
-		max_status[5] = pc_maxparameter(sd->class_,sd->status.sex,PARAM_LUK);
+		max_status[0] = pc_maxparameter(sd,PARAM_STR);
+		max_status[1] = pc_maxparameter(sd,PARAM_AGI);
+		max_status[2] = pc_maxparameter(sd,PARAM_VIT);
+		max_status[3] = pc_maxparameter(sd,PARAM_INT);
+		max_status[4] = pc_maxparameter(sd,PARAM_DEX);
+		max_status[5] = pc_maxparameter(sd,PARAM_LUK);
 	}
 
-	if(value < 0 && *status[i] <= -value) {
-		new_value = 1;
-	} else if(max_status[i] - *status[i] < value) {
+	if(value > 0  && *status[i] + value >= max_status[i])
 		new_value = max_status[i];
-	} else {
+	else if(value < 0 && *status[i] <= -value)
+		new_value = 1;
+	else
 		new_value = *status[i] + value;
-	}
 
 	if (new_value != *status[i]) {
 		*status[i] = new_value;
@@ -2485,10 +2478,9 @@ ACMD_FUNC(param)
  *------------------------------------------*/
 ACMD_FUNC(stat_all)
 {
-	int index, count, value, new_value;
-	short* status[PARAM_MAX];
-	short max_status[PARAM_MAX];
-	short values[PARAM_MAX];
+	int value = 0;
+	uint8 count, i;
+	short *status[PARAM_MAX], max_status[PARAM_MAX];
  	//we don't use direct initialization because it isn't part of the c standard.
 	nullpo_retr(-1, sd);
 
@@ -2500,39 +2492,40 @@ ACMD_FUNC(stat_all)
 	status[5] = &sd->status.luk;
 
 	if (!message || !*message || sscanf(message, "%d", &value) < 1 || value == 0) {
-		uint8 i;
-		for (i  = 0; i < PARAM_MAX; i++) {
-			values[i] = pc_maxparameter(sd->class_,sd->status.sex,(enum e_params)i);
-			max_status[i] = pc_maxparameter(sd->class_,sd->status.sex,(enum e_params)i);
-		}
+		max_status[0] = pc_maxparameter(sd,PARAM_STR);
+		max_status[1] = pc_maxparameter(sd,PARAM_AGI);
+		max_status[2] = pc_maxparameter(sd,PARAM_VIT);
+		max_status[3] = pc_maxparameter(sd,PARAM_INT);
+		max_status[4] = pc_maxparameter(sd,PARAM_DEX);
+		max_status[5] = pc_maxparameter(sd,PARAM_LUK);
+		value = SHRT_MAX;
 	} else {
-		uint8 i;
-		for (i  = 0; i < PARAM_MAX; i++)
-			values[i] = value;
-
-		if( battle_config.atcommand_max_stat_bypass ) {
-			for (i  = 0; i < PARAM_MAX; i++)
-				max_status[i] = SHRT_MAX;
-		}
+		if( battle_config.atcommand_max_stat_bypass )
+			max_status[0] = max_status[1] = max_status[2] = max_status[3] = max_status[4] = max_status[5] = SHRT_MAX;
 		else {
-			for (i  = 0; i < PARAM_MAX; i++)
-				max_status[i] = pc_maxparameter(sd->class_,sd->status.sex,(enum e_params)i);
+			max_status[0] = pc_maxparameter(sd,PARAM_STR);
+			max_status[1] = pc_maxparameter(sd,PARAM_AGI);
+			max_status[2] = pc_maxparameter(sd,PARAM_VIT);
+			max_status[3] = pc_maxparameter(sd,PARAM_INT);
+			max_status[4] = pc_maxparameter(sd,PARAM_DEX);
+			max_status[5] = pc_maxparameter(sd,PARAM_LUK);
 		}
 	}
 	
 	count = 0;
-	for (index = 0; index < ARRAYLENGTH(status); index++) {
-		if (values[index] > 0 && *status[index] > max_status[index] - values[index])
-			new_value = max_status[index];
-		else if (values[index] < 0 && *status[index] <= -values[index])
+	for (i = 0; i < ARRAYLENGTH(status); i++) {
+		short new_value;
+		if (value > 0 && *status[i] + value >= max_status[i])
+			new_value = max_status[i];
+		else if (value < 0 && *status[i] <= -value)
 			new_value = 1;
 		else
-			new_value = *status[index] +values[index];
+			new_value = *status[i] + value;
 
-		if (new_value != (int)*status[index]) {
-			*status[index] = new_value;
-			clif_updatestatus(sd, SP_STR + index);
-			clif_updatestatus(sd, SP_USTR + index);
+		if (new_value != *status[i]) {
+			*status[i] = new_value;
+			clif_updatestatus(sd, SP_STR + i);
+			clif_updatestatus(sd, SP_USTR + i);
 			count++;
 		}
 	}
@@ -5580,7 +5573,7 @@ ACMD_FUNC(marry)
 		return -1;
 	}
 
-	if (pc_marriage(sd, pl_sd) == 0) {
+	if (pc_marriage(sd, pl_sd)) {
 		clif_displaymessage(fd, msg_txt(sd,1173)); // They are married... wish them well.
 		clif_wedding_effect(&pl_sd->bl); //wedding effect and music [Lupus]
 		getring(sd); // Auto-give named rings (Aru)
@@ -5600,7 +5593,7 @@ ACMD_FUNC(divorce)
 {
 	nullpo_retr(-1, sd);
 
-	if (pc_divorce(sd) != 0) {
+	if (!pc_divorce(sd)) {
 		sprintf(atcmd_output, msg_txt(sd,1175), sd->status.name); // '%s' is not married.
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
@@ -8955,7 +8948,7 @@ ACMD_FUNC(cart) {
 		MC_CART_MDFY(1);
 	}
 
-	if( pc_setcart(sd, val) ) {
+	if( !pc_setcart(sd, val) ) {
 		if( need_skill ) {
 			MC_CART_MDFY(0);
 		}

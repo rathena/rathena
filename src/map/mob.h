@@ -139,8 +139,8 @@ struct mob_data {
 		int provoke_flag; // Celest
 	} state;
 	struct guardian_data* guardian_data;
-	struct {
-		int id;
+	struct s_dmglog {
+		int id; //char id
 		unsigned int dmg;
 		unsigned int flag : 2; //0: Normal. 1: Homunc exp. 2: Pet exp
 	} dmglog[DAMAGELOG_SIZE];

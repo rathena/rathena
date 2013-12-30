@@ -11779,7 +11779,7 @@ BUILDIN_FUNC(marriage)
 	TBL_PC *sd=script_rid2sd(st);
 	TBL_PC *p_sd=map_nick2sd(partner);
 
-	if(sd==NULL || p_sd==NULL || pc_marriage(sd,p_sd) < 0){
+	if(!sd || !p_sd || !pc_marriage(sd,p_sd)){
 		script_pushint(st,0);
 		return 0;
 	}
@@ -11803,7 +11803,7 @@ BUILDIN_FUNC(wedding_effect)
 BUILDIN_FUNC(divorce)
 {
 	TBL_PC *sd=script_rid2sd(st);
-	if(sd==NULL || pc_divorce(sd) < 0){
+	if(!sd || !pc_divorce(sd)){
 		script_pushint(st,0);
 		return 0;
 	}
@@ -17345,6 +17345,18 @@ BUILDIN_FUNC(get_revision) {
 		script_pushint(st,-1); //unknown
 	return SCRIPT_CMD_SUCCESS;
 }
+/* get_hash() -> retrieves the current git hash (if available)*/
+BUILDIN_FUNC(get_githash) {
+	const char* git = get_git_hash();
+	char buf[CHAT_SIZE_MAX];
+	safestrncpy(buf,git,strlen(git)+1);
+
+	if ( git[0] != UNKNOWN_VERSION )
+		script_pushstr(st,buf);
+	else
+		script_pushstr(st,"Unknown"); //unknown
+	return SCRIPT_CMD_SUCCESS;
+}
 /**
  * freeloop(<toggle>) -> toggles this script instance's looping-check ability
  **/
@@ -17568,7 +17580,7 @@ BUILDIN_FUNC(getgroupitem) {
 	if (!(sd = script_rid2sd(st)))
 		return SCRIPT_CMD_SUCCESS;
 	
-	if (itemdb_pc_get_itemgroup(group_id,sd->itemid,sd)) {
+	if (itemdb_pc_get_itemgroup(group_id,sd)) {
 		ShowError("getgroupitem: Invalid group id '%d' specified.",group_id);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -18224,7 +18236,7 @@ BUILDIN_FUNC(bonus_script) {
 	uint32 dur;
 	char type = 0;
 	TBL_PC* sd;
-	const char *script_str = NULL;
+	const char *script_str = '\0';
 	struct script_code *script = NULL;
 
 	if (script_hasdata(st,7))
@@ -18241,7 +18253,7 @@ BUILDIN_FUNC(bonus_script) {
 	FETCH(5,type);
 	FETCH(6,icon);
 
-	if (!strlen(script_str) || !dur) {
+	if (script_str == '\0' || !dur) {
 		//ShowWarning("buildin_bonus_script: Invalid value(s). Skipping...\n");
 		return 0;
 	}
@@ -18719,6 +18731,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getcharip,"?"),
 	BUILDIN_DEF(is_function,"s"),
 	BUILDIN_DEF(get_revision,""),
+	BUILDIN_DEF(get_githash,""),
 	BUILDIN_DEF(freeloop,"i"),
 	BUILDIN_DEF(getrandgroupitem,"ii?"),
 	BUILDIN_DEF(cleanmap,"s"),

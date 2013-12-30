@@ -4092,7 +4092,16 @@ This command will return the SVN revision number that the server is
 currently running on.
 
     if ( get_revision() >= 15000 )
-        mes "Welcome rAthena!";
+        mes "Welcome to rAthena!";
+
+---------------------------------------
+
+*get_githash()
+
+This command will return the Git Hash that the server is currently running on.
+
+	set .@gitHash$,get_githash();
+	mes "Welcome to rAthena! Git Hash: "+.@gitHash$;
 
 ---------------------------------------
 \\

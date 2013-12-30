@@ -1779,7 +1779,8 @@ int chrif_bsdata_request(int char_id) {
 * @param sd
 */
 int chrif_save_bsdata(struct map_session_data *sd) {
-	int i, count=0;
+	int i;
+	uint8 count = 0;
 	unsigned int tick;
 	struct bonus_script_data bs;
 	const struct TimerData *timer;
@@ -1801,7 +1802,7 @@ int chrif_save_bsdata(struct map_session_data *sd) {
 	pc_bonus_script_clear(sd,i);
 
 	for (i = 0; i < MAX_PC_BONUS_SCRIPT; i++) {
-		if (!(&sd->bonus_script[i]) || !sd->bonus_script[i].script || strlen(sd->bonus_script[i].script_str) == 0)
+		if (!(&sd->bonus_script[i]) || !sd->bonus_script[i].script || sd->bonus_script[i].script_str == '\0')
 			continue;
 
 		timer = get_timer(sd->bonus_script[i].tid);
@@ -1835,9 +1836,9 @@ int chrif_save_bsdata(struct map_session_data *sd) {
 */
 int chrif_load_bsdata(int fd) {
 	struct map_session_data *sd;
-	struct bonus_script_data *bs;
 	int cid, count;
-	uint8 i, count_ = 0;
+	uint8 i;
+	bool calc = false;
 
 	cid = RFIFOL(fd,4);
 	sd = map_charid2sd(cid);
@@ -1856,9 +1857,9 @@ int chrif_load_bsdata(int fd) {
 
 	for (i = 0; i < count; i++) {
 		struct script_code *script;
-		bs = (struct bonus_script_data*)RFIFOP(fd,10 + i*sizeof(struct bonus_script_data));
+		struct bonus_script_data *bs = (struct bonus_script_data*)RFIFOP(fd,10 + i*sizeof(struct bonus_script_data));
 
-		if (!(script = parse_script(bs->script,"chrif_load_bsdata",1,1)))
+		if (bs->script == '\0' || !(script = parse_script(bs->script,"chrif_load_bsdata",1,1)))
 			continue;
 
 		memcpy(sd->bonus_script[i].script_str,bs->script,strlen(bs->script));
@@ -1869,9 +1870,9 @@ int chrif_load_bsdata(int fd) {
 		sd->bonus_script[i].icon = bs->icon;
 		if (bs->icon != SI_BLANK) //Gives status icon if exist
 			clif_status_change(&sd->bl,sd->bonus_script[i].icon,1,bs->tick,1,0,0);
-		count_++;
+		calc = true;
 	}
-	if (count_)
+	if (calc)
 		status_calc_pc(sd,false);
 	return 0;
 }

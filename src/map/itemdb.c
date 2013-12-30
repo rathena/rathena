@@ -148,7 +148,7 @@ int itemdb_searchname_array(struct item_data** data, int size, const char *str)
 * @param sub_group: Default is 1
 * @return nameid
 */
-int itemdb_searchrandomid(int group_id, uint8 sub_group)
+unsigned short itemdb_searchrandomid(int group_id, uint8 sub_group)
 {
 	if (sub_group)
 		sub_group -= 1;
@@ -197,10 +197,9 @@ uint16 itemdb_get_randgroupitem_count(uint16 group_id, uint8 sub_group, uint16 n
 * Gives item(s) to the player based on item group
 * @param sd: Player that obtains item from item group
 * @param group_id: The group ID of item that obtained by player
-* @param nameid_from: The item that trigger this item group
 * @param *group: struct s_item_group from itemgroup_db[group_id].random[idx] or itemgroup_db[group_id].must[sub_group][idx]
 */
-void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, uint16 group_id, uint16 nameid_from, struct s_item_group *group) {
+static void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, uint16 group_id, struct s_item_group *group) {
 	uint16 i;
 	struct item tmp;
 
@@ -226,7 +225,7 @@ void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, uint16 group_id, u
 			clif_additem(sd,0,0,flag);
 		else if (!flag && group->isAnnounced) { ///TODO: Move this broadcast to proper behavior (it should on at different packet)
 			char output[CHAT_SIZE_MAX];
-			sprintf(output,msg_txt(NULL,717),sd->status.name,itemdb_jname(group->nameid),itemdb_jname(nameid_from));
+			sprintf(output,msg_txt(NULL,717),sd->status.name,itemdb_jname(group->nameid),itemdb_jname(sd->itemid));
 			clif_broadcast(&sd->bl,output,strlen(output),0,ALL_CLIENT);
 			//clif_broadcast_obtain_special_item();
 		}
@@ -239,10 +238,9 @@ void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, uint16 group_id, u
 * Find item(s) that will be obtained by player based on Item Group
 * @param group_id: The group ID that will be gained by player
 * @param nameid: The item that trigger this item group
-* @param sd: Player that obtains item from item group
 * @return val: 0:success, 1:no sd, 2:invalid item group
 */
-uint8 itemdb_pc_get_itemgroup(uint16 group_id, uint16 nameid, struct map_session_data *sd) {
+char itemdb_pc_get_itemgroup(uint16 group_id, struct map_session_data *sd) {
 	uint16 i = 0;
 
 	nullpo_retr(1,sd);
@@ -255,7 +253,7 @@ uint8 itemdb_pc_get_itemgroup(uint16 group_id, uint16 nameid, struct map_session
 	//Get the 'must' item(s)
 	for (i = 0; i < itemgroup_db[group_id].must_qty; i++) {
 		if (&itemgroup_db[group_id].must[i] && itemdb_exists(itemgroup_db[group_id].must[i].nameid))
-			itemdb_pc_get_itemgroup_sub(sd,group_id,nameid,&itemgroup_db[group_id].must[i]);
+			itemdb_pc_get_itemgroup_sub(sd,group_id,&itemgroup_db[group_id].must[i]);
 	}
 
 	//Get the 'random' item each random group
@@ -269,7 +267,7 @@ uint8 itemdb_pc_get_itemgroup(uint16 group_id, uint16 nameid, struct map_session
 			continue;
 		}
 		if (itemdb_exists(itemgroup_db[group_id].random[i][rand].nameid))
-			itemdb_pc_get_itemgroup_sub(sd,group_id,nameid,&itemgroup_db[group_id].random[i][rand]);
+			itemdb_pc_get_itemgroup_sub(sd,group_id,&itemgroup_db[group_id].random[i][rand]);
 	}
 
 	return 0;
@@ -307,7 +305,7 @@ struct item_data* itemdb_exists(int nameid)
 
 /// Returns human readable name for given item type.
 /// @param type Type id to retrieve name for ( IT_* ).
-const char* itemdb_typename(int type)
+const char* itemdb_typename(enum item_types type)
 {
 	switch(type)
 	{
@@ -469,7 +467,7 @@ struct item_data* itemdb_search(int nameid)
 /*==========================================
  * Returns if given item is a player-equippable piece.
  *------------------------------------------*/
-int itemdb_isequip(int nameid)
+bool itemdb_isequip(int nameid)
 {
 	int type=itemdb_type(nameid);
 	switch (type) {
@@ -477,16 +475,16 @@ int itemdb_isequip(int nameid)
 		case IT_ARMOR:
 		case IT_AMMO:
 		case IT_SHADOWGEAR:
-			return 1;
+			return true;
 		default:
-			return 0;
+			return false;
 	}
 }
 
 /*==========================================
  * Alternate version of itemdb_isequip
  *------------------------------------------*/
-int itemdb_isequip2(struct item_data *data)
+bool itemdb_isequip2(struct item_data *data)
 {
 	nullpo_ret(data);
 	switch(data->type) {
@@ -494,34 +492,34 @@ int itemdb_isequip2(struct item_data *data)
 		case IT_ARMOR:
 		case IT_AMMO:
 		case IT_SHADOWGEAR:
-			return 1;
+			return true;
 		default:
-			return 0;
+			return false;
 	}
 }
 
 /*==========================================
  * Returns if given item's type is stackable.
  *------------------------------------------*/
-int itemdb_isstackable(int nameid)
+bool itemdb_isstackable(uint16 nameid)
 {
-  int type=itemdb_type(nameid);
+  uint8 type = itemdb_type(nameid);
   switch(type) {
 	  case IT_WEAPON:
 	  case IT_ARMOR:
 	  case IT_PETEGG:
 	  case IT_PETARMOR:
 	  case IT_SHADOWGEAR:
-		  return 0;
+		  return false;
 	  default:
-		  return 1;
+		  return true;
   }
 }
 
 /*==========================================
  * Alternate version of itemdb_isstackable
  *------------------------------------------*/
-int itemdb_isstackable2(struct item_data *data)
+bool itemdb_isstackable2(struct item_data *data)
 {
   nullpo_ret(data);
   switch(data->type) {
@@ -530,9 +528,9 @@ int itemdb_isstackable2(struct item_data *data)
 	  case IT_PETEGG:
 	  case IT_PETARMOR:
 	  case IT_SHADOWGEAR:
-		  return 0;
+		  return false;
 	  default:
-		  return 1;
+		  return true;
   }
 }
 
@@ -576,29 +574,29 @@ int itemdb_canauction_sub(struct item_data* item, int gmlv, int unused) {
 	return (item && (!(item->flag.trade_restriction&256) || gmlv >= item->gm_lv_trade_override));
 }
 
-int itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, int (*func)(struct item_data*, int, int))
+bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, int (*func)(struct item_data*, int, int))
 {
 	struct item_data* item_data = itemdb_search(item->nameid);
 	int i;
 
 	if (!func(item_data, gmlv, gmlv2))
-		return 0;
+		return false;
 
 	if(item_data->slot == 0 || itemdb_isspecial(item->card[0]))
-		return 1;
+		return true;
 
 	for(i = 0; i < item_data->slot; i++) {
 		if (!item->card[i]) continue;
 		if (!func(itemdb_search(item->card[i]), gmlv, gmlv2))
-			return 0;
+			return false;
 	}
-	return 1;
+	return true;
 }
 
 /*==========================================
  *	Specifies if item-type should drop unidentified.
  *------------------------------------------*/
-int itemdb_isidentified(int nameid)
+char itemdb_isidentified(int nameid)
 {
 	int type=itemdb_type(nameid);
 	switch (type) {
@@ -693,10 +691,10 @@ static void itemdb_read_itemgroup_sub(const char* filename)
 		}
 
 		//Checking group_id
-		if (!atoi(str[0])) //Try reads group id by const
-			script_get_constant(trim(str[0]),&group_id);
-		else
+		if (atoi(str[0]))
 			group_id = atoi(str[0]);
+		else //Try reads group id by const
+			script_get_constant(trim(str[0]),&group_id);
 		if (!group_id || group_id >= MAX_ITEMGROUP) {
 			ShowWarning("itemdb_read_itemgroup: Invalid group id '%s' in %s:%d\n", str[0], filename, ln);
 			continue;
@@ -709,12 +707,12 @@ static void itemdb_read_itemgroup_sub(const char* filename)
 		}
 
 		//Checking item
-		if (!atoi(str[1]) && itemdb_searchname(str[1])) {
+		if ((nameid = atoi(str[1])) && itemdb_exists(nameid))
+			found = true;
+		else if (itemdb_searchname(str[1])) {
 			found = true;
 			nameid = itemdb_searchname(str[1])->nameid;
 		}
-		else if ((nameid = atoi(str[1])) && itemdb_exists(nameid))
-			found = true;
 		if (!found) {
 			ShowWarning("itemdb_read_itemgroup: Non-existant item '%s' in %s:%d\n", str[1], filename, ln);
 			continue;
@@ -741,10 +739,16 @@ static void itemdb_read_itemgroup_sub(const char* filename)
 			itemgroup_db[group_id].must[idx].isNamed = named;
 			itemgroup_db[group_id].must[idx].bound = bound;
 			itemgroup_db[group_id].must_qty++;
+			group = 1;
 		}
+		prob = max(prob,0);
+		if (!prob) {
+			entries++;
+			continue;
+		}
+		group -= 1;
 		for (j = 0; j < prob; j++) {
 			uint16 idx;
-			if (group > 0) group -= 1;
 			idx = itemgroup_db[group_id].random_qty[group];
 			itemgroup_db[group_id].random[group][idx].nameid = nameid;
 			itemgroup_db[group_id].random[group][idx].amount = amt;
@@ -950,7 +954,7 @@ static bool itemdb_read_nouse(char* fields[], int columns, int current)
 /**
  * @return: amount of retrieved entries.
  **/
-int itemdb_combo_split_atoi (char *str, int *val) {
+static int itemdb_combo_split_atoi (char *str, int *val) {
 	int i;
 
 	for (i=0; i<MAX_ITEMS_PER_COMBO; i++) {
@@ -972,7 +976,7 @@ int itemdb_combo_split_atoi (char *str, int *val) {
 /**
  * <combo{:combo{:combo:{..}}}>,<{ script }>
  **/
-void itemdb_read_combos() {
+static void itemdb_read_combos() {
 	uint32 lines = 0, count = 0;
 	char line[1024];
 
@@ -1115,7 +1119,7 @@ void itemdb_read_combos() {
 /*======================================
  * Applies gender restrictions according to settings. [Skotlex]
  *======================================*/
-static int itemdb_gendercheck(struct item_data *id)
+static char itemdb_gendercheck(struct item_data *id)
 {
 	if (id->nameid == WEDDING_RING_M) //Grom Ring
 		return 1;
@@ -1133,7 +1137,7 @@ static int itemdb_gendercheck(struct item_data *id)
  * For backwards compatibility, in Renewal mode, MATK from weapons comes from the atk slot
  * We use a ':' delimiter which, if not found, assumes the weapon does not provide any matk.
  **/
-void itemdb_re_split_atoi(char *str, int *atk, int *matk) {
+static void itemdb_re_split_atoi(char *str, int *atk, int *matk) {
 	int i, val[2];
 
 	for (i=0; i<2; i++) {
@@ -1477,7 +1481,7 @@ static int itemdb_read_sqldb(void) {
 * 2 set new value bypassing anything
 * 3/other return last value
 *------------------------------------------*/
-uint64 itemdb_unique_id(int8 flag, int64 value) {
+static uint64 itemdb_unique_id(int8 flag, int64 value) {
 	static uint64 item_uid = 0;
 
 	if(flag)
@@ -1493,7 +1497,7 @@ uint64 itemdb_unique_id(int8 flag, int64 value) {
 
 	return ++item_uid;
 }
-int itemdb_uid_load(){
+static void itemdb_uid_load(){
 
 	char * uid;
 	if (SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `value` FROM `interreg` WHERE `varname`='unique_id'"))
@@ -1503,14 +1507,12 @@ int itemdb_uid_load(){
 	{
 		ShowError("itemdb_uid_load: Unable to fetch unique_id data\n");
 		Sql_FreeResult(mmysql_handle);
-		return -1;
+		return;
 	}
 
 	Sql_GetData(mmysql_handle, 0, &uid, NULL);
 	itemdb_unique_id(1, (uint64)strtoull(uid, NULL, 10));
 	Sql_FreeResult(mmysql_handle);
-
-	return 0;
 }
 
 /*==========================================

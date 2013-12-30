@@ -223,7 +223,7 @@ struct item_data* itemdb_exists(int nameid);
 const char* itemdb_typename(int type);
 
 int itemdb_group_bonus(struct map_session_data* sd, int itemid);
-int itemdb_searchrandomid(int group_id, uint8 sub_group);
+unsigned short itemdb_searchrandomid(int group_id, uint8 sub_group);
 
 #define itemdb_value_buy(n) itemdb_search(n)->value_buy
 #define itemdb_value_sell(n) itemdb_search(n)->value_sell
@@ -238,7 +238,7 @@ int itemdb_canstore_sub(struct item_data*, int, int);
 int itemdb_canguildstore_sub(struct item_data*, int, int);
 int itemdb_canmail_sub(struct item_data*, int, int);
 int itemdb_canauction_sub(struct item_data*, int, int);
-int itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, int (*func)(struct item_data*, int, int));
+bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, int (*func)(struct item_data*, int, int));
 #define itemdb_isdropable(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_isdropable_sub)
 #define itemdb_cantrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_cantrade_sub)
 #define itemdb_canpartnertrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_canpartnertrade_sub)
@@ -249,15 +249,15 @@ int itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, int (*func)(stru
 #define itemdb_canmail(item, gmlv) itemdb_isrestricted(item , gmlv, 0, itemdb_canmail_sub)
 #define itemdb_canauction(item, gmlv) itemdb_isrestricted(item , gmlv, 0, itemdb_canauction_sub)
 
-int itemdb_isequip(int);
-int itemdb_isequip2(struct item_data *);
-int itemdb_isidentified(int);
-int itemdb_isstackable(int);
-int itemdb_isstackable2(struct item_data *);
+bool itemdb_isequip(int);
+bool itemdb_isequip2(struct item_data *);
+char itemdb_isidentified(int);
+bool itemdb_isstackable(uint16 nameid);
+bool itemdb_isstackable2(struct item_data *data);
 uint64 itemdb_unique_id(int8 flag, int64 value); // Unique Item ID
 bool itemdb_isNoEquip(struct item_data *id, uint16 m);
 
-uint8 itemdb_pc_get_itemgroup(uint16 group_id, uint16 nameid, struct map_session_data *sd);
+char itemdb_pc_get_itemgroup(uint16 group_id, struct map_session_data *sd);
 uint16 itemdb_get_randgroupitem_count(uint16 group_id, uint8 sub_group, uint16 nameid);
 
 DBMap * itemdb_get_combodb();
