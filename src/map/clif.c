@@ -6084,7 +6084,7 @@ void clif_item_refine_list(struct map_session_data *sd)
 	fd=sd->fd;
 
 	refine_item[0] = -1;
-	refine_item[1] = pc_search_inventory(sd,ITEMID_PHARCON);
+	refine_item[1] = pc_search_inventory(sd,ITEMID_PHRACON);
 	refine_item[2] = pc_search_inventory(sd,ITEMID_EMVERETARCON);
 	refine_item[3] = refine_item[4] = pc_search_inventory(sd,ITEMID_ORIDECON);
 

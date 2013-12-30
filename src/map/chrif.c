@@ -1802,7 +1802,7 @@ int chrif_save_bsdata(struct map_session_data *sd) {
 	pc_bonus_script_clear(sd,i);
 
 	for (i = 0; i < MAX_PC_BONUS_SCRIPT; i++) {
-		if (!(&sd->bonus_script[i]) || !sd->bonus_script[i].script || sd->bonus_script[i].script_str == '\0')
+		if (!(&sd->bonus_script[i]) || !sd->bonus_script[i].script || sd->bonus_script[i].script_str[0] == '\0')
 			continue;
 
 		timer = get_timer(sd->bonus_script[i].tid);

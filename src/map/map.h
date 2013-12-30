@@ -50,7 +50,7 @@ void map_msg_reload(void);
 #define MAX_VENDING 12
 #define MAX_MAP_SIZE 512*512 	// Wasn't there something like this already? Can't find it.. [Shinryo]
 
-// Added definitions for WoESE objects. [L0ne_W0lf]
+/** Added definitions for WoESE objects and other [L0ne_W0lf], [aleos] */
 enum MOBID {
     MOBID_PORING = 1002,
     MOBID_A_GUARDIAN = 1285,
@@ -71,7 +71,19 @@ enum MOBID {
     MOBID_TREAS41 = 1938,
     MOBID_TREAS49 = 1946,
     MOBID_SILVERSNIPER = 2042,
-    MOBID_MAGICDECOY_WIND = 2046,
+	MOBID_MAGICDECOY_FIRE,
+	MOBID_MAGICDECOY_WATER,
+	MOBID_MAGICDECOY_EARTH,
+	MOBID_MAGICDECOY_WIND,
+	MOBID_MARINE_SPHERE		= 1142,
+	MOBID_G_PARASITE		= 1555,
+	MOBID_G_FLORA			= 1575,
+	MOBID_G_HYDRA			= 1579,
+	MOBID_G_MANDRAGORA		= 1589,
+	MOBID_G_GEOGRAPHER		= 1590,
+	MOBID_S_HORNET			= 2158,
+	MOBID_S_GIANT_HORNET,
+	MOBID_S_LUCIOLA_VESPA,
 };
 
 //The following system marks a different job ID system used by the map server,

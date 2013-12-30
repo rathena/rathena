@@ -618,7 +618,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 								+ sd->right_weapon.addclass[CLASS_ALL] + sd->left_weapon.addclass[CLASS_ALL];
 					}
 					if (sd->status.weapon == W_KATAR && (skill_learnlv=pc_checkskill(sd,ASC_KATAR)) > 0) { // Adv. Katar Mastery functions similar to a +%ATK card on official [helvetica]
-						t_cf += (10 + 2 * skill);
+						t_cf += (10 + 2 * skill_learnlv);
 					}
 				}
 				for( i = 0; i < ARRAYLENGTH(sd->right_weapon.add_dmg) && sd->right_weapon.add_dmg[i].rate; i++ )
@@ -1741,7 +1741,7 @@ static int battle_blewcount_bonus(struct map_session_data *sd, uint16 skill_id)
  * battle_skill_damage_map() - map based
  *------------------------------------------*/
 #ifdef ADJUST_SKILL_DAMAGE
-bool battle_skill_damage_iscaster(uint8 caster, enum bl_type type)
+static bool battle_skill_damage_iscaster(uint8 caster, enum bl_type type)
 {
 	if (caster == 0)
 		return false;
@@ -1758,7 +1758,7 @@ bool battle_skill_damage_iscaster(uint8 caster, enum bl_type type)
 	return true;
 }
 
-int battle_skill_damage_skill(struct block_list *src, struct block_list *target, uint16 skill_id)
+static int battle_skill_damage_skill(struct block_list *src, struct block_list *target, uint16 skill_id)
 {
 	unsigned short m = src->m;
 	int idx;
@@ -1796,7 +1796,7 @@ int battle_skill_damage_skill(struct block_list *src, struct block_list *target,
 	return 0;
 }
 
-int battle_skill_damage_map(struct block_list *src, struct block_list *target, uint16 skill_id)
+static int battle_skill_damage_map(struct block_list *src, struct block_list *target, uint16 skill_id)
 {
 	int rate = 0;
 	uint16 m = src->m;
@@ -1846,7 +1846,7 @@ int battle_skill_damage_map(struct block_list *src, struct block_list *target, u
 	return rate;
 }
 
-int battle_skill_damage(struct block_list *src, struct block_list *target, uint16 skill_id)
+static int battle_skill_damage(struct block_list *src, struct block_list *target, uint16 skill_id)
 {
 	if (!target)
 		return 0;

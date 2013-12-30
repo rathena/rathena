@@ -19,7 +19,8 @@
 #define EL_SKILLMODE_ASSIST 0x2
 #define EL_SKILLMODE_AGGRESSIVE 0x4
 
-elemental_elementalid {
+///Enum of ELemental ID
+enum elemental_elementalid {
 	ELEMENTALID_AGNI_S = 2114,
 	ELEMENTALID_AGNI_M,
 	ELEMENTALID_AGNI_L,

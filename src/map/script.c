@@ -18253,7 +18253,7 @@ BUILDIN_FUNC(bonus_script) {
 	FETCH(5,type);
 	FETCH(6,icon);
 
-	if (script_str == '\0' || !dur) {
+	if (script_str[0] == '\0' || !dur) {
 		//ShowWarning("buildin_bonus_script: Invalid value(s). Skipping...\n");
 		return 0;
 	}
