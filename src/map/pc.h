@@ -10,7 +10,7 @@
 #include "battle.h" // battle_config
 #include "buyingstore.h"  // struct s_buyingstore
 #include "itemdb.h" // MAX_ITEMGROUP
-#include "map.h" // RC_MAX
+#include "map.h" // RC_ALL
 #include "script.h" // struct script_reg, struct script_regstr
 #include "searchstore.h"  // struct s_search_store_info
 #include "status.h" // OPTION_*, struct weapon_atk
@@ -68,10 +68,13 @@ struct weapon_data {
 	int star;
 	int ignore_def_ele;
 	int ignore_def_race;
+	int ignore_def_class;
 	int def_ratio_atk_ele;
 	int def_ratio_atk_race;
-	int addele[ELE_MAX];
-	int addrace[RC_MAX];
+	int def_ratio_atk_class;
+	int addele[ELE_ALL];
+	int addrace[RC_ALL];
+	int addclass[CLASS_ALL];
 	int addrace2[RC2_MAX];
 	int addsize[3];
 
@@ -80,7 +83,7 @@ struct weapon_data {
 		short per;
 		short value;
 		unsigned type:1;
-	} hp_drain[RC_MAX], sp_drain[RC_MAX];
+	} hp_drain_race[RC_ALL], sp_drain_race[RC_ALL], hp_drain_class[CLASS_ALL], sp_drain_class[CLASS_ALL];
 
 	struct {
 		short class_, rate;
@@ -111,7 +114,7 @@ struct s_addeffectonskill {
 
 struct s_add_drop {
 	short id, group;
-	int race, rate;
+	int race, rate, class_;
 };
 
 struct s_autobonus {
@@ -286,30 +289,36 @@ struct map_session_data {
 
 	// here start arrays to be globally zeroed at the beginning of status_calc_pc()
 	int param_bonus[6],param_equip[6]; //Stores card/equipment bonuses.
-	int subele[ELE_MAX];
-	int subrace[RC_MAX];
+	int subele[ELE_ALL];
+	int subrace[RC_ALL];
+	int subclass[CLASS_ALL];
 	int subrace2[RC2_MAX];
 	int subsize[3];
 	int reseff[SC_COMMON_MAX-SC_COMMON_MIN+1];
-	int weapon_coma_ele[ELE_MAX];
-	int weapon_coma_race[RC_MAX];
+	int weapon_coma_ele[ELE_ALL];
+	int weapon_coma_race[RC_ALL];
+	int weapon_coma_class[CLASS_ALL];
 	int weapon_atk[16];
 	int weapon_atk_rate[16];
-	int arrow_addele[ELE_MAX];
-	int arrow_addrace[RC_MAX];
+	int arrow_addele[ELE_ALL];
+	int arrow_addrace[RC_ALL];
+	int arrow_addclass[CLASS_ALL];
 	int arrow_addsize[3];
-	int magic_addele[ELE_MAX];
-	int magic_addrace[RC_MAX];
+	int magic_addele[ELE_ALL];
+	int magic_addrace[RC_ALL];
+	int magic_addclass[CLASS_ALL];
 	int magic_addsize[3];
-	int magic_atk_ele[ELE_MAX];
-	int critaddrace[RC_MAX];
-	int expaddrace[RC_MAX];
-	int ignore_mdef[RC_MAX];
-	int ignore_def[RC_MAX];
+	int magic_atk_ele[ELE_ALL];
+	int critaddrace[RC_ALL];
+	int expaddrace[RC_ALL];
+	int ignore_mdef;
+	int ignore_mdef_by_race[RC_ALL];
+	int ignore_mdef_by_class[CLASS_ALL];
+	int ignore_def_by_race[RC_ALL];
 	int itemgrouphealrate[MAX_ITEMGROUP];
-	short sp_gain_race[RC_MAX];
-	short sp_gain_race_attack[RC_MAX];
-	short hp_gain_race_attack[RC_MAX];
+	short sp_gain_race[RC_ALL];
+	short sp_gain_race_attack[RC_ALL];
+	short hp_gain_race_attack[RC_ALL];
 	// zeroed arrays end here.
 	// zeroed structures start here
 	struct s_autospell autospell[15], autospell2[15], autospell3[15];
@@ -340,7 +349,7 @@ struct map_session_data {
 	struct {
 		short value;
 		int rate, tick;
-	} def_set_race[RC_MAX], mdef_set_race[RC_MAX];
+	} def_set_race[RC_ALL], mdef_set_race[RC_ALL];
 	// zeroed structures end here
 	// manually zeroed structures start here.
 	struct s_autobonus autobonus[MAX_PC_BONUS], autobonus2[MAX_PC_BONUS], autobonus3[MAX_PC_BONUS]; //Auto script on attack, when attacked, on skill usage
@@ -356,6 +365,7 @@ struct map_session_data {
 		int near_attack_def_rate,long_attack_def_rate,magic_def_rate,misc_def_rate;
 		int ignore_mdef_ele;
 		int ignore_mdef_race;
+		int ignore_mdef_class;
 		int perfect_hit;
 		int perfect_hit_add;
 		int get_zeny_rate;
@@ -1068,6 +1078,6 @@ void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag);
 void pc_cell_basilica(struct map_session_data *sd);
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
-int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_race, uint32 mob_mode, int type);
+int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_class, int type);
 #endif
 #endif /* _PC_H_ */

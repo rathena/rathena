@@ -11308,7 +11308,7 @@ static int buildin_maprespawnguildid_sub_mob(struct block_list *bl,va_list ap)
 {
 	struct mob_data *md=(struct mob_data *)bl;
 
-	if(!md->guardian_data && md->class_ != MOBID_EMPERIUM)
+	if(!md->guardian_data && md->mob_id != MOBID_EMPERIUM)
 		status_kill(bl);
 
 	return 0;
@@ -16951,7 +16951,7 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 	int emotion		= va_arg(ap,int);
 	int target		= va_arg(ap,int);
 
-	if( md->class_ != mobid )
+	if( md->mob_id != mobid )
 		return 0;
 
 	// 0:self, 1:target, 2:master, default:random

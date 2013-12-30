@@ -521,8 +521,8 @@ bGetZenyNum	1041
 bAddGetZenyNum	1042
 bAddDamageClass	1043
 bAddMagicDamageClass	1044
-bAddDefClass	1045
-bAddMdefClass	1046
+bAddDefMonster	1045
+bAddMdefMonster	1046
 bAddMonsterDropItem	1047
 bDefRatioAtkEle	1048
 bDefRatioAtkRace	1049
@@ -561,8 +561,8 @@ bWeaponAtkRate	1082
 bDelayrate	1083
 bHPDrainRateRace	1084
 bSPDrainRateRace	1085
-bIgnoreMdefRate	1086
-bIgnoreDefRate	1087
+bIgnoreMdefRaceRate	1086
+bIgnoreDefRaceRate	1087
 bSkillHeal2	1088
 bAddEffOnSkill	1089
 bHealPower	1090
@@ -634,6 +634,17 @@ bSetDefRace	2059
 bSetMDefRace	2060
 bHPVanishRate	2061
 
+bIgnoreDefClass	2062
+bIgnoreMdefRaceRate	2063
+bDefRatioAtkClass	2064
+bAddClass	2065
+bSubClass	2066
+bMagicAddClass	2067
+bWeaponComaClass	2068
+bHpDrainValueClass	2069
+bSpDrainValueClass	2070
+bIgnoreMdefClassRate	2071
+
 EQI_HEAD_TOP	1
 EQI_ARMOR	2
 EQI_HAND_L	3
@@ -694,6 +705,7 @@ Ele_Holy	6
 Ele_Dark	7
 Ele_Ghost	8
 Ele_Undead	9
+Ele_All	10
 
 RC_Formless	0
 RC_Undead	1
@@ -705,9 +717,12 @@ RC_Demon	6
 RC_DemiHuman	7
 RC_Angel	8
 RC_Dragon	9
-RC_Boss	10
-RC_NonBoss	11
-RC_NonDemiHuman	12
+RC_All	10
+
+Class_Normal	0
+Class_Boss	1
+Class_Guardian	2
+Class_All	3
 
 RC2_None	0
 RC2_Goblin	1
@@ -720,6 +735,7 @@ RC2_Ninja	6
 Size_Small	0
 Size_Medium	1
 Size_Large	2
+Size_All	3
 
 BF_WEAPON	0x0001
 BF_MAGIC	0x0002

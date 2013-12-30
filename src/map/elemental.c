@@ -210,7 +210,7 @@ int elemental_delete(struct elemental_data *ed, int reply) {
 		return unit_free(&ed->bl, 0);
 
 	sd->ed = NULL;
-	sd->status.ele_id = 0;
+	sd->status.class_ = 0;
 
 	return unit_remove_map(&ed->bl, 0);
 }
@@ -238,7 +238,7 @@ int elemental_data_received(struct s_elemental *ele, bool flag) {
 		return 0;
 
 	if( !flag || i < 0 ) { // Not created - loaded - DB info
-		sd->status.ele_id = 0;
+		sd->status.class_ = 0;
 		return 0;
 	}
 
@@ -274,7 +274,7 @@ int elemental_data_received(struct s_elemental *ele, bool flag) {
 		ed = sd->ed;
 	}
 
-	sd->status.ele_id = ele->elemental_id;
+	sd->status.class_ = ele->elemental_id;
 
 	if( ed->bl.prev == NULL && sd->bl.prev != NULL ) {
 		if(map_addblock(&ed->bl))
@@ -755,7 +755,7 @@ static int elemental_ai_sub_timer(struct elemental_data *ed, struct map_session_
 
 static int elemental_ai_sub_foreachclient(struct map_session_data *sd, va_list ap) {
 	unsigned int tick = va_arg(ap,unsigned int);
-	if(sd->status.ele_id && sd->ed)
+	if(sd->status.class_ && sd->ed)
 		elemental_ai_sub_timer(sd->ed,sd,tick);
 
 	return 0;
@@ -832,8 +832,8 @@ int read_elementaldb(void) {
 		ele = atoi(str[21]);
 		status->def_ele = ele%10;
 		status->ele_lv = ele/20;
-		if( status->def_ele >= ELE_MAX ) {
-			ShowWarning("Elemental %d has invalid element type %d (max element is %d)\n", db->class_, status->def_ele, ELE_MAX - 1);
+		if( status->def_ele >= ELE_ALL ) {
+			ShowWarning("Elemental %d has invalid element type %d (max element is %d)\n", db->class_, status->def_ele, ELE_ALL - 1);
 			status->def_ele = ELE_NEUTRAL;
 		}
 		if( status->ele_lv < 1 || status->ele_lv > 4 ) {

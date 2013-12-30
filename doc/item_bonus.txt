@@ -65,28 +65,22 @@ bonus bLongAtkDef,n;			Adds n% damage reduction against ranged physical attacks
 bonus bMagicAtkDef,n;			Adds n% damage reduction against magical attacks
 bonus bMiscAtkDef,n;			Adds n% damage reduction against MISC attacks (traps, falcon, ...)
 bonus bIgnoreDefRace,n;			Disregard DEF against enemies of race n
-					n: 	0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
-						5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
-						10=Boss monster, 11=Other than (normal monster) boss monster
+					n: 	RC_Formless, RC_Undead, RC_Brute, RC_Plant, RC_Insect, RC_Fish, RC_Demon, RC_DemiHuman, RC_Angel, RC_Dragon, RC_All
 bonus bIgnoreDefEle,n;			Disregard DEF against enemies of element n
-					n: 0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison, 6=Holy, 7=Dark, 8=Spirit, 9=Undead
+					n: Ele_Neutral, Ele_Water, Ele_Earth, Ele_Fire, Ele_Wind, Ele_Poison Ele_Holy, Ele_Dark, Ele_Ghost, Ele_Undead, Ele_All
 bonus bIgnoreMDefRace,n;		Disregard MDEF against enemies of race n
-					n: 	0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
-						5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
-						10=Boss monster, 11=Other than (normal monster) boss monster
+					n: 	RC_Formless, RC_Undead, RC_Brute, RC_Plant, RC_Insect, RC_Fish, RC_Demon, RC_DemiHuman, RC_Angel, RC_Dragon, RC_All 
 bonus bIgnoreMDefEle,n;			Disregard MDEF against enemies of element n
-					n:	0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison, 6=Holy, 7=Dark, 8=Spirit, 9=Undead
+					n:	Ele_Neutral, Ele_Water, Ele_Earth, Ele_Fire, Ele_Wind, Ele_Poison Ele_Holy, Ele_Dark, Ele_Ghost, Ele_Undead, Ele_All
 bonus bIgnoreMdefRate,n;		Disregard n% of the target's MDEF
 bonus bDefRatioAtkRace,n;		Does more damage depending on monster Defense against race n (defense disregard)
-					n: 	0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
-						5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
-						10=Boss monster, 11=Other than (normal monster) boss monster
+					n: 	RC_Formless, RC_Undead, RC_Brute, RC_Plant, RC_Insect, RC_Fish, RC_Demon, RC_DemiHuman, RC_Angel, RC_Dragon, RC_All
 bonus bDefRatioAtkEle,n;		n attribute if defensive power is high the high extent big damage is given, (defense disregard)
-					n:	0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison, 6=Holy, 7=Dark, 8=Spirit, 9=Undead
+					n:	Ele_Neutral, Ele_Water, Ele_Earth, Ele_Fire, Ele_Wind, Ele_Poison Ele_Holy, Ele_Dark, Ele_Ghost, Ele_Undead, Ele_All
 bonus bAtkEle,n;			Gives the player's attacks element n
-					n:	0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison, 6=Holy, 7=Dark, 8=Spirit, 9=Undead
+					n:	Ele_Neutral, Ele_Water, Ele_Earth, Ele_Fire, Ele_Wind, Ele_Poison Ele_Holy, Ele_Dark, Ele_Ghost, Ele_Undead, Ele_All
 bonus bDefEle,n;			Gives the player's defense element n
-					n:	0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison, 6=Holy, 7=Dark, 8=Spirit, 9=Undead
+					n:	Ele_Neutral, Ele_Water, Ele_Earth, Ele_Fire, Ele_Wind, Ele_Poison Ele_Holy, Ele_Dark, Ele_Ghost, Ele_Undead, Ele_All
 bonus bSplashRange,n;			Splash attack radius + n (e.g. n=1 makes a 3*3 cells area, n=2 a 5*5 area, etc)
 					Only the highest among all is applied
 bonus bSplashAddRange,n;		Splash attack radius + n (e.g. n=1 makes a 3*3 cells area, n=2 a 5*5 area, etc)
@@ -110,35 +104,25 @@ bonus2 bResEff,e,x;			Adds a x/100 tolerance to effect e (e.g. x=100 makes 1% to
 						Eff_DPoison, Eff_Fear, Eff_Burning
 bonus2 bCastrate,n,x;			Adjust casting time of skill n by x% (supports skill names)
 bonus2 bAddSize,n,x;			+x% physical damage against size n.
-					n:	0=Small  1=Medium  2=Large
+					n:	Size_Small, Size_Medium, Size_Large, Size_All
 bonus2 bMagicAddSize,n,x;		+x% magical damage against size n.
-					n:	0=Small  1=Medium  2=Large
+					n:	Size_Small, Size_Medium, Size_Large, Size_All
 bonus2 bSubSize,n,x;			x% Damage reduction against size n.
-					n:	0=Small  1=Medium  2=Large
+					n:	Size_Small, Size_Medium, Size_Large, Size_All
 bonus2 bAddRace,n,x;			+x% physical damage against race n
-					n: 	0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
-						5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
-						10=Boss monster, 11=Other than (normal monster) boss monster
+					n: 	RC_Formless, RC_Undead, RC_Brute, RC_Plant, RC_Insect, RC_Fish, RC_Demon, RC_DemiHuman, RC_Angel, RC_Dragon, RC_All
 bonus2 bMagicAddRace,n,x;		+x% magical damage against race n
-					n: 	0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
-						5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
-						10=Boss monster, 11=Other than (normal monster) boss monster
+					n: 	RC_Formless, RC_Undead, RC_Brute, RC_Plant, RC_Insect, RC_Fish, RC_Demon, RC_DemiHuman, RC_Angel, RC_Dragon, RC_All
 bonus2 bSubRace,n,x;			+x% damage reduction against race n
-					n: 	0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
-						5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
-						10=Boss monster, 11=Other than (normal monster) boss monster
+					n: 	RC_Formless, RC_Undead, RC_Brute, RC_Plant, RC_Insect, RC_Fish, RC_Demon, RC_DemiHuman, RC_Angel, RC_Dragon, RC_All
 bonus2 bAddEle,n,x;			+x% physical damage against element n
-					n: 	0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison,
-						6=Holy, 7=Dark, 8=Spirit, 9=Undead
+					n: 	Ele_Neutral, Ele_Water, Ele_Earth, Ele_Fire, Ele_Wind, Ele_Poison, Ele_Holy, Ele_Dark, Ele_Ghost, Ele_Undead, Ele_All
 bonus2 bMagicAddEle,n,x; 		+x% magical damage against element n
-					n: 	0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison,
-						6=Holy, 7=Dark, 8=Spirit, 9=Undead
+					n: 	Ele_Neutral, Ele_Water, Ele_Earth, Ele_Fire, Ele_Wind, Ele_Poison, Ele_Holy, Ele_Dark, Ele_Ghost, Ele_Undead, Ele_All
 bonus2 bSubEle,n,x;			x% Damage reduction against element n.
-					n: 	0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison,
-						6=Holy, 7=Dark, 8=Spirit, 9=Undead
+					n: 	Ele_Neutral, Ele_Water, Ele_Earth, Ele_Fire, Ele_Wind, Ele_Poison, Ele_Holy, Ele_Dark, Ele_Ghost, Ele_Undead, Ele_All
 bonus2 bMagicAtkEle,n,x; 		Increases damage of n element magic by x%.
-					n: 	0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison,
-						6=Holy, 7=Dark, 8=Spirit, 9=Undead
+					n: 	Ele_Neutral, Ele_Water, Ele_Earth, Ele_Fire, Ele_Wind, Ele_Poison, Ele_Holy, Ele_Dark, Ele_Ghost, Ele_Undead, Ele_All
 bonus2 bAddDamageClass,n,x;		+x% extra physical damage against monsters of class n
 					Against players, n is their job id
 bonus2 bAddMagicDamageClass,n,x;	+x% extra magical damage against monsters of class n
@@ -147,7 +131,7 @@ bonus2 bAddDefClass,n,x;		x% physical damage reduction against monsters of class
 					Against players, n is their job id.
 bonus2 bAddMDefClass,n,x;		x% magical damage reduction against monsters of class n
 					Against players, n is their job id.
-bonus2 bIgnoreMdefRate,n,x;		Disregard x% of the target's MDEF if the target belongs to race n
+bonus2 bIgnoreMdefRaceRate,n,x;		Disregard x% of the target's MDEF if the target belongs to race n
 bonus2 bHPDrainRate,n,x;		n/10 % probability to drain x% HP when attacking
 bonus2 bSPDrainRate,n,x;		n/10 % probability to drain x% SP when attacking
 bonus2 bSPVanishRate,n,x;		Add the (n/10)% chance of decreasing enemy's SP (player) amount by x% when attacking
@@ -160,9 +144,7 @@ bonus2 bGetZenyNum,n,x;			When killing a monster, there is a x% chance of gainin
 bonus2 bAddGetZenyNum,n,x;		Same as bGetZenyNum, but the rates and zeny to gain stack.
 
 bonus3 bAddMonsterDropItem,n,x,y;	Adds a y/100% chance for item n to be dropped, when killing any monster of race x.
-						0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
-						5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
-						10=Boss monster, 11=Other than (normal monster) boss monster
+						RC_Formless, RC_Undead, RC_Brute, RC_Plant, RC_Insect, RC_Fish, RC_Demon, RC_DemiHuman, RC_Angel, RC_Dragon, RC_All
 					If 'y' is negative value, then it's a part of formula
 						chance = -y*(killed_mob_level/10)+1
 bonus3 bAutoSpell,n,x,y;		Auto Spell casting on attack of spell n at level x with y/10% chance. (supports skill names)
@@ -186,9 +168,7 @@ bonus bSPGainValue,n;			When killing a monster by physical attack, you gain n SP
 bonus bHPGainValue,n;			When killing a monster by physical attack, you gain n HP
 bonus2 bCriticalAddRace,r,n;		Critical + n vs. enemies of race r
 					r:
-						0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
-						5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
-						10=Boss monster, 11=Other than (normal monster) boss monster
+						RC_Formless, RC_Undead, RC_Brute, RC_Plant, RC_Insect, RC_Fish, RC_Demon, RC_DemiHuman, RC_Angel, RC_Dragon, RC_All
 bonus2 bHPRegenRate,n,x;		Gain n HP every x milliseconds
 bonus2 bHPLossRate,n,x;			Lose n HP every x milliseconds
 bonus2 bAddEffWhenHit,n,x;		x/100% chance to cause n state to the enemy when being hit by physical damage
@@ -291,16 +271,12 @@ bonus3 bAddEffWhenHit,n,x,y;		x/100 chance to cause n state to the enemy when be
 						ATF_LONG: Trigger in ranged attacks (default: trigger on all attacks)
 
 bonus3 bAddMonsterDropItemGroup,n,x,y;	Adds a y/100% chance to get an item of group type n when you kill a monster of race x (Check db/item_group_db.txt)
-						0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
-						5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
-						10=Boss monster, 11=Other than (normal monster) boss monster
+						x: RC_Formless, RC_Undead, RC_Brute, RC_Plant, RC_Insect, RC_Fish, RC_Demon, RC_DemiHuman, RC_Angel, RC_Dragon, RC_All
 					If 'y' is negative value, then it's a part of formula
 						chance = -y*(killed_mob_level/10)+1
 
 bonus2 bWeaponComaRace,x,y;		y/100% chance to cause Coma when attacking a monster of race x with a normal attack
-						0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
-						5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
-						10=Boss monster, 11=Other than (normal monster) boss monster
+						x: RC_Formless, RC_Undead, RC_Brute, RC_Plant, RC_Insect, RC_Fish, RC_Demon, RC_DemiHuman, RC_Angel, RC_Dragon, RC_All
 
 bonus bAddStealRate,n;			n/100% increase to Steal skill success chance
 
@@ -315,8 +291,7 @@ bonus2 bSPDrainValue,n,x;		When hitting a monster by physical attack, ...
 bonus2 bIgnoreDefRate,n,x;		Disregard x% of the target's DEF if the target belongs to race n
 
 bonus3 bAddEle,n,x,t;			+x% physical damage against element n
-					n: 	0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison,
-						6=Holy, 7=Dark, 8=Spirit, 9=Undead
+					n: 	Ele_Neutral, Ele_Water, Ele_Earth, Ele_Fire, Ele_Wind, Ele_Poison, Ele_Holy, Ele_Dark, Ele_Ghost, Ele_Undead, Ele_All
 					t: Trigger criteria:
 					   BF_SHORT: Trigger on melee attack
 					   BF_LONG: Trigger on ranged attack
@@ -336,8 +311,7 @@ bonus3 bAddEle,n,x,t;			+x% physical damage against element n
 					   2=use random skill lv in [1..y]
 					   3=1+2 (random lv on enemy)
 bonus3 bSubEle,n,x,t;			x% Damage reduction against element n.
-					n: 	0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison,
-						6=Holy, 7=Dark, 8=Spirit, 9=Undead
+					n: 	Ele_Neutral, Ele_Water, Ele_Earth, Ele_Fire, Ele_Wind, Ele_Poison, Ele_Holy, Ele_Dark, Ele_Ghost, Ele_Undead, Ele_All
 					t: Trigger criteria:
 					   BF_SHORT: Trigger on melee attack
 					   BF_LONG: Trigger on ranged attack
@@ -375,8 +349,7 @@ bonus bUnbreakable,n;			Reduces the break chance of all equipped equipment by n%
 bonus bShortWeaponDamageReturn,n;	Reflects n% of received melee damage back to the enemy that caused it.
 bonus bLongWeaponDamageReturn,n;	Reflects n% of received ranged damage back to the enemy that caused it.
 bonus2 bWeaponComaEle,x,n;		Adds a n/100% chance to cause Coma when attacking a monster of element x with normal attack.
-					x:	0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison,
-						6=Holy, 7=Dark, 8=Spirit, 9=Undead
+					x:	Ele_Neutral, Ele_Water, Ele_Earth, Ele_Fire, Ele_Wind, Ele_Poison, Ele_Holy, Ele_Dark, Ele_Ghost, Ele_Undead, Ele_All
 bonus2 bAddEff2,e,n;			Adds a n/100% chance to cause status change e on self when attacking.
 					e:	Eff_Blind, Eff_Sleep, Eff_Poison, Eff_Freeze, Eff_Silence,
 						Eff_Stun, Eff_Curse, Eff_Confusion, Eff_Stone, Eff_Bleeding,
@@ -425,3 +398,25 @@ bonus2 bVariableCastrate,s,x;		Increases variable cast time of skill s by x%. (s
 bonus2 bFixedCastrate,s,x;		Increases fixed cast time of skill s by x%. (supports skill names.)
 bonus4 bSetDefRace,n,x,r,y;		Set DEF to y of an enemy of race n at x% for r milliseconds with normal attack.
 bonus4 bSetMDefRace,n,x,r,y;		Set MDEF to y of an enemy of race n at x% for r milliseconds with normal attack.
+
+
+bonus bIgnoreDefClass,n;		Disregard DEF against enemies of class n
+									n: 	Class_Normal, Class_Boss, Class_Guardian
+bonus bDefRatioAtkClass,n;		Does more damage depending on monster Defense against class n (defense disregard)
+			
+bonus2 bIgnoreDefRaceRate,n,x;	Disregard x% of the target's DEF if the target belongs to race n	
+									n: 	RC_Formless, RC_Undead, RC_Brute, RC_Plant, RC_Insect, RC_Fish, RC_Demon, RC_DemiHuman, RC_Angel, RC_Dragon, RC_All
+bonus2 bAddClass,n,x;			+x% physical damage against class n
+									n: 	Class_Normal, Class_Boss, Class_Guardian
+bonus2 bSubClass,n,x;			+x% damage reduction against class n
+									n: 	Class_Normal, Class_Boss, Class_Guardian
+bonus2 bMagicAddClass,n,x;		+x% magical damage against class n
+									n: 	Class_Normal, Class_Boss, Class_Guardian
+bonus2 bWeaponComaClass,n,y;	y/100% chance to cause Coma when attacking a monster of class x with a normal attack
+									n: 	Class_Normal, Class_Boss, Class_Guardian
+bonus2 bHpDrainValueClass,n,x;		Heals +x HP when attacking a monster of class n with normal attack.
+										n: 	Class_Normal, Class_Boss, Class_Guardian
+bonus2 bSpDrainValueClass,n,x;		Heals +x SP when attacking a monster of class n with normal attack.
+										n: 	Class_Normal, Class_Boss, Class_Guardian
+bonus2 bIgnoreMdefClassRate,n,x;	Disregard x% of the target's MDEF if the target belongs to class n
+										n: 	Class_Normal, Class_Boss, Class_Guardian

@@ -6239,7 +6239,7 @@ ACMD_FUNC(mobsearch)
 
 		if( md->bl.m != sd->bl.m )
 			continue;
-		if( mob_id != -1 && md->class_ != mob_id )
+		if( mob_id != -1 && md->mob_id != mob_id )
 			continue;
 
 		++number;
@@ -6863,8 +6863,8 @@ ACMD_FUNC(mobinfo)
 
 #ifdef RENEWAL_EXP
 		if( battle_config.atcommand_mobinfo_type ) {
-			base_exp = base_exp * pc_level_penalty_mod(sd, mob->lv, mob->status.race, mob->status.mode, 1) / 100;
-			job_exp = job_exp * pc_level_penalty_mod(sd, mob->lv, mob->status.race, mob->status.mode, 1) / 100;
+			base_exp = base_exp * pc_level_penalty_mod(sd, mob->lv, mob->status.class_, 1) / 100;
+			job_exp = job_exp * pc_level_penalty_mod(sd, mob->lv, mob->status.class_, 1) / 100;
 		}
 #endif
 		// stats
@@ -6897,7 +6897,7 @@ ACMD_FUNC(mobinfo)
 
 #ifdef RENEWAL_DROP
 			if( battle_config.atcommand_mobinfo_type ) {
-				droprate = droprate * pc_level_penalty_mod(sd, mob->lv, mob->status.race, mob->status.mode, 2) / 100;
+				droprate = droprate * pc_level_penalty_mod(sd, mob->lv, mob->status.class_, 2) / 100;
 				if (droprate <= 0 && !battle_config.drop_rate0item)
 						droprate = 1;
 			}
@@ -6996,7 +6996,7 @@ ACMD_FUNC(showmobs)
 
 		if( md->bl.m != sd->bl.m )
 			continue;
-		if( mob_id != -1 && md->class_ != mob_id )
+		if( mob_id != -1 && md->mob_id != mob_id )
 			continue;
 		if( md->special_state.ai || md->master_id )
 			continue; // hide slaves and player summoned mobs
@@ -7425,7 +7425,7 @@ ACMD_FUNC(whodrops)
 
 #ifdef RENEWAL_DROP
 				if( battle_config.atcommand_mobinfo_type )
-					dropchance = dropchance * pc_level_penalty_mod(sd, mob_db(item_data->mob[j].id)->lv, mob_db(item_data->mob[j].id)->status.race, mob_db(item_data->mob[j].id)->status.mode, 2) / 100;
+					dropchance = dropchance * pc_level_penalty_mod(sd, mob_db(item_data->mob[j].id)->lv, mob_db(item_data->mob[j].id)->status.class_,  2) / 100;
 #endif
 				sprintf(atcmd_output, "- %s (%02.02f%%)", mob_db(item_data->mob[j].id)->jname, dropchance/100.);
 				clif_displaymessage(fd, atcmd_output);
