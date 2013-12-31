@@ -1137,6 +1137,7 @@ static char itemdb_gendercheck(struct item_data *id)
  * For backwards compatibility, in Renewal mode, MATK from weapons comes from the atk slot
  * We use a ':' delimiter which, if not found, assumes the weapon does not provide any matk.
  **/
+#ifdef RENEWAL
 static void itemdb_re_split_atoi(char *str, int *atk, int *matk) {
 	int i, val[2];
 
@@ -1161,6 +1162,7 @@ static void itemdb_re_split_atoi(char *str, int *atk, int *matk) {
 	*matk = val[1];
 	return;
 }
+#endif
 /*==========================================
  * processes one itemdb entry
  *------------------------------------------*/
