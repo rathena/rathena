@@ -635,15 +635,14 @@ bSetMDefRace	2060
 bHPVanishRate	2061
 
 bIgnoreDefClass	2062
-bIgnoreMdefRaceRate	2063
-bDefRatioAtkClass	2064
-bAddClass	2065
-bSubClass	2066
-bMagicAddClass	2067
-bWeaponComaClass	2068
-bHpDrainValueClass	2069
-bSpDrainValueClass	2070
-bIgnoreMdefClassRate	2071
+bDefRatioAtkClass	2063
+bAddClass	2064
+bSubClass	2065
+bMagicAddClass	2066
+bWeaponComaClass	2067
+bHpDrainValueClass	2068
+bSpDrainValueClass	2069
+bIgnoreMdefClassRate	2070
 
 EQI_HEAD_TOP	1
 EQI_ARMOR	2

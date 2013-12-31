@@ -2404,11 +2404,6 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			if(sd->state.lr_flag != 2)
 				sd->bonus.misc_def_rate += val;
 			break;
-		case SP_IGNORE_MDEF_RATE:
-			if(sd->state.lr_flag != 2) {
-				sd->ignore_mdef += val;
-			}
-			break;
 		case SP_IGNORE_MDEF_ELE:
 			if(val > ELE_ALL) {
 				ShowError("pc_bonus: SP_IGNORE_MDEF_ELE: Invalid element %d\n", val);

@@ -5344,7 +5344,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			if(sd) {
 				i = sd->ignore_mdef_by_race[tstatus->race] + sd->ignore_mdef_by_race[RC_ALL];
 				i += sd->ignore_mdef_by_class[tstatus->class_] + sd->ignore_mdef_by_class[CLASS_ALL];
-				i += sd->ignore_mdef;
 				if (i)
 				{
 					if (i > 100) i = 100;

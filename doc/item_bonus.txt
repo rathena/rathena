@@ -127,9 +127,9 @@ bonus2 bAddDamageClass,n,x;		+x% extra physical damage against monsters of class
 					Against players, n is their job id
 bonus2 bAddMagicDamageClass,n,x;	+x% extra magical damage against monsters of class n
 					Against players, n is their job id.
-bonus2 bAddDefClass,n,x;		x% physical damage reduction against monsters of class n
+bonus2 bAddDefMonster,n,x;		x% physical damage reduction against monsters of class n
 					Against players, n is their job id.
-bonus2 bAddMDefClass,n,x;		x% magical damage reduction against monsters of class n
+bonus2 bAddMDefMonster,n,x;		x% magical damage reduction against monsters of class n
 					Against players, n is their job id.
 bonus2 bIgnoreMdefRaceRate,n,x;		Disregard x% of the target's MDEF if the target belongs to race n
 bonus2 bHPDrainRate,n,x;		n/10 % probability to drain x% HP when attacking

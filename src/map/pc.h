@@ -311,7 +311,6 @@ struct map_session_data {
 	int magic_atk_ele[ELE_NONE];
 	int critaddrace[RC_MAX];
 	int expaddrace[RC_MAX];
-	int ignore_mdef;
 	int ignore_mdef_by_race[RC_MAX];
 	int ignore_mdef_by_class[CLASS_MAX];
 	int ignore_def_by_race[RC_MAX];
