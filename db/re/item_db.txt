@@ -900,7 +900,7 @@
 1599,Angra_Manyu,Angra Manyu,5,1,,10,10000:10000,,2,0,0xFFFFFFFF,63,2,2,1,1,1,8,{ bonus bAllStats,50; bonus bBaseAtk,3300; bonus bMatkRate,200; bonus2 bHPDrainRate,1000,100; bonus2 bSPDrainRate,1000,20; bonus bHealPower,200; bonus2 bAddClass,Class_All,100; skill "WZ_STORMGUST",10; Skill "WZ_METEOR",10; Skill "WZ_VERMILION",10; skill "GM_SANDMAN",1; bonus bVariableCastrate,-100; bonus bFixedCastrate,-100; },{},{}
 // Staffs
 1601,Rod,Rod,5,50,,400,15:30,,1,3,0x00818315,63,2,2,1,1,1,10,{},{},{}
-1602,Rod_,Rod,5,50,,400,15:30,,1,4,0x00818315,63,2,2,1,1,1,10,{ bonus2 bAddRace,RC_Plant,100; },{},{}
+1602,Rod_,Rod,5,50,,400,15:30,,1,4,0x00818315,63,2,2,1,1,1,10,{},{},{}
 1603,Rod__,Rod,5,50,,400,15:30,,1,0,0x00818315,63,2,2,1,1,1,10,{},{},{}
 1604,Wand,Wand,5,2500,,400,25:45,,1,2,0x00818315,63,2,2,2,12,1,10,{},{},{}
 1605,Wand_,Wand,5,2500,,400,25:45,,1,3,0x00818315,63,2,2,2,12,1,10,{},{},{}

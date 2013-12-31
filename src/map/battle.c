@@ -586,7 +586,8 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 					}
 					else
 					{
-						int ele_fix = sd->right_weapon.addele[tstatus->def_ele] + sd->left_weapon.addele[tstatus->def_ele];
+						int ele_fix = sd->right_weapon.addele[tstatus->def_ele] + sd->left_weapon.addele[tstatus->def_ele]
+									+ sd->right_weapon.addele[ELE_ALL] + sd->left_weapon.addele[ELE_ALL];
 						for (i = 0; ARRAYLENGTH(sd->right_weapon.addele2) > i && sd->right_weapon.addele2[i].rate != 0; i++) {
 							if (sd->right_weapon.addele2[i].ele != tstatus->def_ele) continue;
 							if(!( ((sd->right_weapon.addele2[i].flag)&flag)&BF_WEAPONMASK &&
