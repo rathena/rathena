@@ -1778,6 +1778,8 @@ int login_config_read(const char* cfgName)
 
 		if(!strcmpi(w1,"timestamp_format"))
 			safestrncpy(timestamp_format, w2, 20);
+		else if(strcmpi(w1,"db_path")==0)
+			safestrncpy(db_path, w2, ARRAYLENGTH(db_path));
 		else if(!strcmpi(w1,"stdout_with_ansisequence"))
 			stdout_with_ansisequence = config_switch(w2);
 		else if(!strcmpi(w1,"console_silent")) {
@@ -1794,10 +1796,8 @@ int login_config_read(const char* cfgName)
 		}
 		else if( !strcmpi(w1, "login_port") ) {
 			login_config.login_port = (uint16)atoi(w2);
-		}
-		else if(!strcmpi(w1, "log_login"))
+		} else if(!strcmpi(w1, "log_login"))
 			login_config.log_login = (bool)config_switch(w2);
-
 		else if(!strcmpi(w1, "new_account"))
 			login_config.new_account_flag = (bool)config_switch(w2);
 		else if(!strcmpi(w1, "new_acc_length_limit"))
@@ -1835,26 +1835,20 @@ int login_config_read(const char* cfgName)
 		else if(!strcmpi(w1, "client_hash")) {
 			int group = 0;
 			char md5[33];
-
 			if (sscanf(w2, "%d, %32s", &group, md5) == 2) {
 				struct client_hash_node *nnode;
 				int i;
 				CREATE(nnode, struct client_hash_node, 1);
-
 				for (i = 0; i < 32; i += 2) {
 					char buf[3];
 					unsigned int byte;
-
 					memcpy(buf, &md5[i], 2);
 					buf[2] = 0;
-
 					sscanf(buf, "%x", &byte);
 					nnode->hash[i / 2] = (uint8)(byte & 0xFF);
 				}
-
 				nnode->group_id = group;
 				nnode->next = login_config.client_hash_nodes;
-
 				login_config.client_hash_nodes = nnode;
 			}
 		} else if(strcmpi(w1, "chars_per_account") == 0) { //maxchars per account [Sirius]

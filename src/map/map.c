@@ -148,7 +148,6 @@ struct map_cache_map_info {
 	int32 len;
 };
 
-char db_path[256] = "db";
 char motd_txt[256] = "conf/motd.txt";
 char help_txt[256] = "conf/help.txt";
 char help2_txt[256] = "conf/help2.txt";
@@ -3442,7 +3441,7 @@ int map_config_read(char *cfgName)
 		else if (strcmpi(w1, "charhelp_txt") == 0)
 			strcpy(charhelp_txt, w2);
 		else if(strcmpi(w1,"db_path") == 0)
-			safestrncpy(db_path,w2,255);
+			safestrncpy(db_path,w2,ARRAYLENGTH(db_path));
 		else if (strcmpi(w1, "console") == 0) {
 			console = config_switch(w2);
 			if (console)

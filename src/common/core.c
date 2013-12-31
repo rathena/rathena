@@ -25,7 +25,7 @@
 #include <unistd.h>
 #else
 #include "../common/winapi.h" // Console close event handling
-#include <direct.h>
+#include <direct.h> // _chdir
 #endif
 
 
@@ -39,6 +39,7 @@ void (*shutdown_callback)(void) = NULL;
 int runflag = CORE_ST_RUN;
 int arg_c = 0;
 char **arg_v = NULL;
+char db_path[12] = "db"; /// relative path for db from server
 
 char *SERVER_NAME = NULL;
 char SERVER_TYPE = ATHENA_SERVER_NONE;

@@ -3923,29 +3923,6 @@ static bool mob_readdb_sub(char* fields[], int columns, int current)
 	return mob_parse_dbrow(fields);
 }
 
-static void mob_readdb(void)
-{
-	const char* filename[] = {
-		DBPATH"mob_db.txt",
-		"mob_db2.txt" };
-	int fi;
-
-	for( fi = 0; fi < ARRAYLENGTH(filename); ++fi )
-	{
-		if(fi > 0)
-		{
-			char path[256];
-			sprintf(path, "%s/%s", db_path, filename[fi]);
-			if(!exists(path))
-			{
-				continue;
-			}
-		}
-
-		sv_readdb(db_path, filename[fi], ',', 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, -1, &mob_readdb_sub);
-	}
-}
-
 /*==========================================
  * mob_db table reading
  *------------------------------------------*/
@@ -4058,18 +4035,24 @@ static int mob_read_randommonster(void)
 		DBPATH"mob_poring.txt",
 		DBPATH"mob_boss.txt",
 		"mob_pouch.txt",
-		"mob_classchange.txt"};
+		"mob_classchange.txt",
+		"import/mob_branch.txt",
+		"import/mob_poring.txt",
+		"import/mob_boss.txt",
+		"import/mob_pouch.txt",
+		"import/mob_classchange.txt"
+	};
 
 	memset(&summon, 0, sizeof(summon));
 
-	for( i = 0; i < ARRAYLENGTH(mobfile) && i < MAX_RANDOMMONSTER; i++ )
+	for( i = 0; i < ARRAYLENGTH(mobfile) && i < MAX_RANDOMMONSTER*2; i++ )
 	{ // MobID,DummyName,Rate
 		entries=0;
 		mob_db_data[0]->summonper[i] = MOBID_PORING;	// Default fallback value, in case the database does not provide one
 		sprintf(line, "%s/%s", db_path, mobfile[i]);
 		fp=fopen(line,"r");
 		if(fp==NULL){
-			ShowError("can't read %s\n",line);
+			if(i>=ARRAYLENGTH(mobfile)/2-1) ShowError("mob_read_randommonster: can't read %s\n",line);
 			return -1;
 		}
 		while(fgets(line, sizeof(line), fp))
@@ -4425,32 +4408,12 @@ static bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 /*==========================================
  * mob_skill_db.txt reading
  *------------------------------------------*/
-static void mob_readskilldb(void) {
-	const char* filename[] = {
-		DBPATH"mob_skill_db.txt",
-		"mob_skill_db2.txt" };
-	int fi;
-
-	if( battle_config.mob_skill_rate == 0 )
-	{
+static void mob_readskilldb(const char* basedir, bool silent) {
+	if( battle_config.mob_skill_rate == 0 ) {
 		ShowStatus("Mob skill use disabled. Not reading mob skills.\n");
 		return;
 	}
-
-	for( fi = 0; fi < ARRAYLENGTH(filename); ++fi )
-	{
-		if(fi > 0)
-		{
-			char path[256];
-			sprintf(path, "%s/%s", db_path, filename[fi]);
-			if(!exists(path))
-			{
-				continue;
-			}
-		}
-
-		sv_readdb(db_path, filename[fi], ',', 19, 19, -1, &mob_parse_row_mobskilldb);
-	}
+	sv_readdb(basedir, "mob_skill_db.txt", ',', 19, 19, -1, &mob_parse_row_mobskilldb, silent);
 }
 
 /**
@@ -4570,21 +4533,38 @@ static bool mob_readdb_itemratio(char* str[], int columns, int current)
  */
 static void mob_load(void)
 {
-	sv_readdb(db_path, "mob_item_ratio.txt", ',', 2, 2+MAX_ITEMRATIO_MOBS, -1, &mob_readdb_itemratio); // must be read before mobdb
-	sv_readdb(db_path, "mob_chat_db.txt", '#', 3, 3, MAX_MOB_CHAT, &mob_parse_row_chatdb);
-	if (db_use_sqldbs)
-	{
-		mob_read_sqldb();
-		mob_read_sqlskilldb();
+	int i;
+	const char* dbsubpath[] = {
+		"",
+		"import",
+	};
+	
+	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){	
+		int n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
+		int n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
+		char* dbsubpath1 = aMalloc(n1+1);
+		char* dbsubpath2 = aMalloc(n2+1);
+		safesnprintf(dbsubpath1,n1+1,"%s/%s",db_path,dbsubpath[i]);
+		if(i==0) safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
+		else safesnprintf(dbsubpath2,n2,"%s/%s",db_path,dbsubpath[i]);
+		
+		sv_readdb(dbsubpath1, "mob_item_ratio.txt", ',', 2, 2+MAX_ITEMRATIO_MOBS, -1, &mob_readdb_itemratio, i); // must be read before mobdb
+		sv_readdb(dbsubpath1, "mob_chat_db.txt", '#', 3, 3, MAX_MOB_CHAT, &mob_parse_row_chatdb, i);
+		if (db_use_sqldbs && i==0) //only read once for sql
+		{
+			mob_read_sqldb();
+			mob_read_sqlskilldb();
+		} else {
+			sv_readdb(dbsubpath2, "mob_db.txt", ',', 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, -1, &mob_readdb_sub, i);
+			mob_readskilldb(dbsubpath2,i);
+		}
+		sv_readdb(dbsubpath1, "mob_avail.txt", ',', 2, 12, -1, &mob_readdb_mobavail, i);
+		sv_readdb(dbsubpath2, "mob_race2_db.txt", ',', 2, 20, -1, &mob_readdb_race2, i);
+		
+		aFree(dbsubpath1);
+		aFree(dbsubpath2);
 	}
-	else
-	{
-		mob_readdb();
-		mob_readskilldb();
-	}
-	sv_readdb(db_path, "mob_avail.txt", ',', 2, 12, -1, &mob_readdb_mobavail);
 	mob_read_randommonster();
-	sv_readdb(db_path, DBPATH"mob_race2_db.txt", ',', 2, 20, -1, &mob_readdb_race2);
 }
 
 void mob_reload(void) {

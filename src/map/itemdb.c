@@ -976,17 +976,17 @@ static int itemdb_combo_split_atoi (char *str, int *val) {
 /**
  * <combo{:combo{:combo:{..}}}>,<{ script }>
  **/
-static void itemdb_read_combos() {
+static void itemdb_read_combos(const char* basedir, bool silent) {
 	uint32 lines = 0, count = 0;
 	char line[1024];
 
 	char path[256];
 	FILE* fp;
 
-	sprintf(path, "%s/%s", db_path, DBPATH"item_combo_db.txt");
+	sprintf(path, "%s/%s", basedir, "item_combo_db.txt");
 
 	if ((fp = fopen(path, "r")) == NULL) {
-		ShowError("itemdb_read_combos: File not found \"%s\".\n", path);
+		if(silent==0) ShowError("itemdb_read_combos: File not found \"%s\".\n", path);
 		return;
 	}
 
@@ -1028,7 +1028,6 @@ static void itemdb_read_combos() {
 			ShowError("itemdb_read_combos(#1): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, path);
 			continue;
 		}
-
 		/* no ending key anywhere (missing \}\) */
 		if ( str[1][strlen(str[1])-1] != '}' ) {
 			ShowError("itemdb_read_combos(#2): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, path);
@@ -1038,12 +1037,10 @@ static void itemdb_read_combos() {
 			int v = 0, retcount = 0;
 			struct item_data * id = NULL;
 			int idx = 0;
-
 			if((retcount = itemdb_combo_split_atoi(str[0], items)) < 2) {
 				ShowError("itemdb_read_combos: line %d of \"%s\" doesn't have enough items to make for a combo (min:2), skipping.\n", lines, path);
 				continue;
 			}
-
 			/* validate */
 			for(v = 0; v < retcount; v++) {
 				if( !itemdb_exists(items[v]) ) {
@@ -1054,11 +1051,8 @@ static void itemdb_read_combos() {
 			/* failed at some item */
 			if( v < retcount )
 				continue;
-
 			id = itemdb_exists(items[0]);
-
 			idx = id->combos_count;
-
 			/* first entry, create */
 			if( id->combos == NULL ) {
 				CREATE(id->combos, struct item_combo*, 1);
@@ -1066,9 +1060,7 @@ static void itemdb_read_combos() {
 			} else {
 				RECREATE(id->combos, struct item_combo*, ++id->combos_count);
 			}
-
 			CREATE(id->combos[idx],struct item_combo,1);
-
 			id->combos[idx]->nameid = aMalloc( retcount * sizeof(unsigned short) );
 			id->combos[idx]->count = retcount;
 			id->combos[idx]->script = parse_script(str[1], path, lines, 0);
@@ -1083,20 +1075,15 @@ static void itemdb_read_combos() {
 			for( v = 1; v < retcount; v++ ) {
 				struct item_data * it;
 				int index;
-
 				it = itemdb_exists(items[v]);
-
 				index = it->combos_count;
-
 				if( it->combos == NULL ) {
 					CREATE(it->combos, struct item_combo*, 1);
 					it->combos_count = 1;
 				} else {
 					RECREATE(it->combos, struct item_combo*, ++it->combos_count);
 				}
-
 				CREATE(it->combos[index],struct item_combo,1);
-
 				/* we copy previously alloc'd pointers and just set it to reference */
 				memcpy(it->combos[index],id->combos[idx],sizeof(struct item_combo));
 				/* we flag this way to ensure we don't double-dealloc same data */
@@ -1106,10 +1093,9 @@ static void itemdb_read_combos() {
 		}
 		count++;
 	}
-
 	fclose(fp);
 
-	ShowStatus("Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"item_combo_db"CL_RESET"'.\n", count);
+	ShowStatus("Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",count,path);
 
 	return;
 }
@@ -1300,11 +1286,11 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
  * Reading item from item db
  * item_db2 overwriting item_db
  *------------------------------------------*/
-static int itemdb_readdb(void)
-{
+static int itemdb_readdb(void){
 	const char* filename[] = {
 		DBPATH"item_db.txt",
-		"item_db2.txt" };
+		"import/item_db.txt" 
+	};
 
 	int fi;
 
@@ -1540,22 +1526,39 @@ bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
  * read all item-related databases
  *------------------------------------*/
 static void itemdb_read(void) {
-
+	int i;
+	const char* dbsubpath[] = {
+		"",
+		"/import",
+	};
+	
 	if (db_use_sqldbs)
 		itemdb_read_sqldb();
 	else
 		itemdb_readdb();
 
-	itemdb_read_combos();
+	
 	itemdb_read_itemgroup();
-	sv_readdb(db_path, "item_avail.txt",         ',', 2, 2, -1, &itemdb_read_itemavail);
-	sv_readdb(db_path, DBPATH"item_noequip.txt", ',', 2, 2, -1, &itemdb_read_noequip);
-	sv_readdb(db_path, DBPATH"item_trade.txt",   ',', 3, 3, -1, &itemdb_read_itemtrade);
-	sv_readdb(db_path, DBPATH"item_delay.txt",   ',', 2, 2, -1, &itemdb_read_itemdelay);
-	sv_readdb(db_path, "item_stack.txt",         ',', 3, 3, -1, &itemdb_read_stack);
-	sv_readdb(db_path, DBPATH"item_buyingstore.txt",   ',', 1, 1, -1, &itemdb_read_buyingstore);
-	sv_readdb(db_path, "item_nouse.txt",		 ',', 3, 3, -1, &itemdb_read_nouse);
-
+	
+	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
+		int n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
+		int n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
+		char* dbsubpath2 = aMalloc(n2+1);
+		safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
+		
+		sv_readdb(dbsubpath2, "item_avail.txt",         ',', 2, 2, -1, &itemdb_read_itemavail, i);
+		sv_readdb(dbsubpath2, "item_stack.txt",         ',', 3, 3, -1, &itemdb_read_stack, i);
+		sv_readdb(dbsubpath2, "item_nouse.txt",         ',', 3, 3, -1, &itemdb_read_nouse, i);
+		
+		if(i==0) 
+			safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
+		itemdb_read_combos(dbsubpath2,i); //TODO change this to sv_read ? id#script ?
+		sv_readdb(dbsubpath2, "item_noequip.txt",       ',', 2, 2, -1, &itemdb_read_noequip, i);
+		sv_readdb(dbsubpath2, "item_trade.txt",         ',', 3, 3, -1, &itemdb_read_itemtrade, i);
+		sv_readdb(dbsubpath2, "item_delay.txt",         ',', 2, 2, -1, &itemdb_read_itemdelay, i);
+		sv_readdb(dbsubpath2, "item_buyingstore.txt",   ',', 1, 1, -1, &itemdb_read_buyingstore, i);
+		aFree(dbsubpath2);
+	}
 	itemdb_uid_load();
 }
 

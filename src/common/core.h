@@ -21,6 +21,7 @@ extern char **arg_v;
 /// @see E_CORE_ST
 extern int runflag;
 extern char *SERVER_NAME;
+extern char db_path[12]; /// relative path for db from servers
 
 enum {
 	ATHENA_SERVER_NONE = 0,	// not defined

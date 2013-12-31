@@ -639,10 +639,12 @@ static bool instance_readdb_sub(char* str[], int columns, int current)
 
 void instance_readdb(void)
 {
-
+	const char* filename[] = { DBPATH"instance_db.txt", "import/instance_db.txt"};
+	int f;
 	memset(&instance_db, 0, sizeof(instance_db));
-	sv_readdb(db_path, DBPATH"instance_db.txt", ',', 7, 7+MAX_MAP_PER_INSTANCE, MAX_INSTANCE_DB, &instance_readdb_sub);
-
+	for (f=0; f<ARRAYLENGTH(filename); f++){
+		sv_readdb(db_path, filename[f], ',', 7, 7+MAX_MAP_PER_INSTANCE, MAX_INSTANCE_DB, &instance_readdb_sub, f);
+	}
 }
 
 /*==========================================

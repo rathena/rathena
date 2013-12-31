@@ -10120,55 +10120,16 @@ static bool pc_readdb_job_param(char* fields[], int columns, int current)
 	return true;
 }
 
-/*==========================================
- * pc DB reading.
- * job_exp.txt		- required experience values
- * skill_tree.txt	- skill tree for every class
- * attr_fix.txt		- elemental adjustment table
- * job_db1.txt		- job,weight,hp_factor,hp_multiplicator,sp_factor,aspds/lvl
- * job_db2.txt		- job,stats bonuses/lvl
- * job_maxhpsp_db.txt	- strtlvl,maxlvl,job,type,values/lvl (values=hp|sp)
- *------------------------------------------*/
-int pc_readdb(void)
-{
-	int i, k;
+int pc_read_statsdb(const char *basedir, bool silent){
+	int i=1;
+	char line[24000]; //FIXME this seem too big
 	FILE *fp;
-	char line[24000];
-
-	//reset
-	memset(job_info,0,sizeof(job_info)); // job_info table
-
-	// Reset and read skilltree
-	memset(skill_tree,0,sizeof(skill_tree));
-	sv_readdb(db_path, DBPATH"skill_tree.txt", ',', 3+MAX_PC_SKILL_REQUIRE*2, 4+MAX_PC_SKILL_REQUIRE*2, -1, &pc_readdb_skilltree);
-
-#if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
-	sv_readdb(db_path, "re/level_penalty.txt", ',', 4, 4, -1, &pc_readdb_levelpenalty);
-	for( k=1; k < 3; k++ ){ // fill in the blanks
-		int j;
-		for( j = 0; j < CLASS_ALL; j++ ){
-			int tmp = 0;
-			for( i = 0; i < MAX_LEVEL*2; i++ ){
-				if( i == MAX_LEVEL+1 )
-					tmp = level_penalty[k][j][0];// reset
-				if( level_penalty[k][j][i] > 0 )
-					tmp = level_penalty[k][j][i];
-				else
-					level_penalty[k][j][i] = tmp;
-			}
-		}
-	}
-#endif
-
-	 // reset then read statspoint
-	memset(statp,0,sizeof(statp));
-	i=1;
-
-	sprintf(line, "%s/"DBPATH"statpoint.txt", db_path);
+	
+	sprintf(line, "%s/statpoint.txt", basedir);
 	fp=fopen(line,"r");
 	if(fp == NULL){
-		ShowWarning("Can't read '"CL_WHITE"%s"CL_RESET"'... Generating DB.\n",line);
-		//return 1;
+		if(silent==0) ShowWarning("Can't read '"CL_WHITE"%s"CL_RESET"'... Generating DB.\n",line);
+		return -1;
 	} else {
 		int entries=0;
 		while(fgets(line, sizeof(line), fp))
@@ -10187,25 +10148,88 @@ int pc_readdb(void)
 		fclose(fp);
 		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", entries, DBPATH"statpoint.txt");
 	}
+	return i;
+}
+
+/*==========================================
+ * pc DB reading.
+ * job_exp.txt		- required experience values
+ * skill_tree.txt	- skill tree for every class
+ * attr_fix.txt		- elemental adjustment table
+ * job_db1.txt		- job,weight,hp_factor,hp_multiplicator,sp_factor,aspds/lvl
+ * job_db2.txt		- job,stats bonuses/lvl
+ * job_maxhpsp_db.txt	- strtlvl,maxlvl,job,type,values/lvl (values=hp|sp)
+ *------------------------------------------*/
+int pc_readdb(void)
+{
+	int i, k, s;
+	const char* dbsubpath[] = {
+		"",
+		"import"
+		//add other path here
+	};
+		
+	//reset
+	memset(job_info,0,sizeof(job_info)); // job_info table
+
+	// Reset and read skilltree
+	memset(skill_tree,0,sizeof(skill_tree));
+	sv_readdb(db_path, DBPATH"skill_tree.txt", ',', 3+MAX_PC_SKILL_REQUIRE*2, 4+MAX_PC_SKILL_REQUIRE*2, -1, &pc_readdb_skilltree, 0);
+	sv_readdb(db_path, "import/skill_tree.txt", ',', 3+MAX_PC_SKILL_REQUIRE*2, 4+MAX_PC_SKILL_REQUIRE*2, -1, &pc_readdb_skilltree, 1);
+
+#if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
+	sv_readdb(db_path, "re/level_penalty.txt", ',', 4, 4, -1, &pc_readdb_levelpenalty, 0);
+	sv_readdb(db_path, "import/level_penalty.txt", ',', 4, 4, -1, &pc_readdb_levelpenalty, 1);
+	for( k=1; k < 3; k++ ){ // fill in the blanks
+		int j;
+		for( j = 0; j < CLASS_ALL; j++ ){
+			int tmp = 0;
+			for( i = 0; i < MAX_LEVEL*2; i++ ){
+				if( i == MAX_LEVEL+1 )
+					tmp = level_penalty[k][j][0];// reset
+				if( level_penalty[k][j][i] > 0 )
+					tmp = level_penalty[k][j][i];
+				else
+					level_penalty[k][j][i] = tmp;
+			}
+		}
+	}
+#endif
+
+	 // reset then read statspoint
+	memset(statp,0,sizeof(statp));
+	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
+		int n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
+		int n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
+		char* dbsubpath1 = aMalloc(n1+1);
+		char* dbsubpath2 = aMalloc(n2+1);
+		safesnprintf(dbsubpath1,n1+1,"%s/%s",db_path,dbsubpath[i]);
+		if(i==0) safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
+		else safesnprintf(dbsubpath2,n2,"%s/%s",db_path,dbsubpath[i]);
+
+		s = pc_read_statsdb(dbsubpath2,i);
+#ifdef RENEWAL_ASPD
+		sv_readdb(dbsubpath1, "re/job_db1.txt",',',6+MAX_WEAPON_TYPE,6+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, i);
+#else
+		sv_readdb(dbsubpath1, "pre-re/job_db1.txt",',',5+MAX_WEAPON_TYPE,5+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, i);
+#endif
+		sv_readdb(dbsubpath1, "job_db2.txt",',',1,1+MAX_LEVEL,CLASS_COUNT,&pc_readdb_job2, i);
+		sv_readdb(dbsubpath2, "job_exp.txt",',',4,1000+3,CLASS_COUNT*2,&pc_readdb_job_exp, i); //support till 1000lvl
+#ifdef HP_SP_TABLES
+		sv_readdb(dbsubpath2, "job_basehpsp_db.txt", ',', 4, 4+500, CLASS_COUNT*2, &pc_readdb_job_basehpsp, i); //Make it support until lvl 500!
+#endif
+		sv_readdb(dbsubpath2, "job_param_db.txt", ',', 2, PARAM_MAX+1, CLASS_COUNT, &pc_readdb_job_param, i);
+		aFree(dbsubpath1);
+		aFree(dbsubpath2);
+	}
+	
 	// generate the remaining parts of the db if necessary
 	k = battle_config.use_statpoint_table; //save setting
 	battle_config.use_statpoint_table = 0; //temporarily disable to force pc_gets_status_point use default values
 	statp[0] = 45; // seed value
-	for (; i <= MAX_LEVEL; i++)
-		statp[i] = statp[i-1] + pc_gets_status_point(i-1);
+	for (; s <= MAX_LEVEL; s++)
+		statp[s] = statp[s-1] + pc_gets_status_point(s-1);
 	battle_config.use_statpoint_table = k; //restore setting
-
-#ifdef RENEWAL_ASPD
-	sv_readdb(db_path, "re/job_db1.txt",',',6+MAX_WEAPON_TYPE,6+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1);
-#else
-	sv_readdb(db_path, "pre-re/job_db1.txt",',',5+MAX_WEAPON_TYPE,5+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1);
-#endif
-	sv_readdb(db_path, "job_db2.txt",',',1,1+MAX_LEVEL,CLASS_COUNT,&pc_readdb_job2);
-	sv_readdb(db_path, DBPATH"job_exp.txt",',',4,1000+3,CLASS_COUNT*2,&pc_readdb_job_exp); //support till 1000lvl
-#ifdef HP_SP_TABLES
-	sv_readdb(db_path, DBPATH"job_basehpsp_db.txt", ',', 4, 4+500, CLASS_COUNT*2, &pc_readdb_job_basehpsp); //Make it support until lvl 500!
-#endif
-	sv_readdb(db_path, DBPATH"job_param_db.txt", ',', 2, PARAM_MAX+1, CLASS_COUNT, &pc_readdb_job_param);
 	
 	//Checking if all class have their data
 	for (i = 0; i < JOB_MAX; i++) {

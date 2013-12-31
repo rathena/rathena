@@ -69,7 +69,7 @@ static int cashshop_parse_dbrow( char** str, const char* source, int line ){
  * parses lines and sends them to parse_dbrow.
  */
 static void cashshop_read_db_txt( void ){
-	const char* filename[] = { DBPATH"item_cash_db.txt", "item_cash_db2.txt" };
+	const char* filename[] = { DBPATH"item_cash_db.txt", "import/item_cash_db.txt" };
 	int fi;
 
 	for( fi = 0; fi < ARRAYLENGTH( filename ); ++fi ){

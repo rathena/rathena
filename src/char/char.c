@@ -72,11 +72,7 @@ char bonus_script_db[256] = "bonus_script";
 
 // show loading/saving messages
 int save_log = 1;
-
 static DBMap* char_db_; /// int char_id -> struct mmo_charstatus*
-
-char db_path[1024] = "db";
-
 int db_use_sqldbs;
 
 struct mmo_map_server {
@@ -5614,7 +5610,7 @@ int char_config_read(const char* cfgName)
 		} else if (strcmpi(w1, "char_del_option") == 0) {
 			char_del_option = atoi(w2);
 		} else if(strcmpi(w1,"db_path")==0) {
-			safestrncpy(db_path, w2, sizeof(db_path));
+			safestrncpy(db_path, w2, ARRAYLENGTH(db_path));
 		} else if (strcmpi(w1, "console") == 0) {
 			console = config_switch(w2);
 		} else if (strcmpi(w1, "fame_list_alchemist") == 0) {
