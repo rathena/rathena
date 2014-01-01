@@ -9875,7 +9875,7 @@ static unsigned int pc_calc_basehp(uint16 level, uint16 class_idx) {
 
 	base_hp = 35 + level * (job_info[class_idx].hp_multiplicator/100.);
 	for (i = 2; i <= level; i++)
-		base_hp += floor(((job_info[class_idx].hp_factor/100.) * i) + 0.5);
+		base_hp += floor(((job_info[class_idx].hp_factor/100.) * i) + 0.5); //Don't have round()
 	return (unsigned int)base_hp;
 }
 

@@ -445,16 +445,13 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 	return hp;
 }
 
-/// Making plagiarize check its own function
-/// Credits:
-///   Aru for previous check
-///   Jobbie for class restriction idea
-///   Cydh expands the copyable skill
-/// Returns:
-///   0 - Cannot be copied
-///   1 - Can be copied by Plagiarism
-///   2 - Can be copied by Reproduce
-static short skill_isCopyable (struct map_session_data *sd, uint16 skill_id, struct block_list* bl) {
+/** Making plagiarize check its own function
+* @param sd: Player who will copy the skill
+* @param skill_id: Target skill
+* @return 0 - Cannot be copied; 1 - Can be copied by Plagiarism 2 - Can be copied by Reproduce
+* @author Aru -for previous check; Jobbie for class restriction idea; Cydh expands the copyable skill
+*/
+static char skill_isCopyable (struct map_session_data *sd, uint16 skill_id) {
 	int idx = skill_get_index(skill_id);
 
 	// Only copy skill that player doesn't have or the skill is old clone
@@ -490,7 +487,7 @@ static short skill_isCopyable (struct map_session_data *sd, uint16 skill_id, str
 		return 1;
 
 	//Reproduce can copy skill if SC__REPRODUCE is active and the skill is copyable by Reproduce
-	if (skill_db[idx].copyable.reproduce && pc_checkskill(sd,SC_REPRODUCE) && (&sd->sc && sd->sc.data[SC__REPRODUCE]))
+	if (skill_db[idx].copyable.reproduce && pc_checkskill(sd,SC_REPRODUCE) && (&sd->sc && sd->sc.data[SC__REPRODUCE] && sd->sc.data[SC__REPRODUCE]->val1))
 		return 2;
 
 	return 0;
@@ -2439,52 +2436,56 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 	}
 }
 
-
-void skill_do_copy(struct block_list* src,struct block_list *bl, struct Damage *dmg, int64 damage, uint16 skill_id, uint16 skill_lv){
+/** Copy skill by Plagiarism or Reproduce
+* @param src: The caster
+* @param bl: The target
+* @param skill_id: Skill that casted
+* @param skill_lv: Skill level of the casted skill
+*/
+static void skill_do_copy(struct block_list* src,struct block_list *bl, uint16 skill_id, uint16 skill_lv){
 	TBL_PC *tsd = BL_CAST(BL_PC,bl);
-	struct status_change *tsc = status_get_sc(bl);
 
-	//Check for copying skill
-	if (damage > 0 && dmg->flag&BF_SKILL && tsd
-		&& damage < tsd->battle_status.hp	//Updated to not be able to copy skills if the blow will kill you. [Skotlex]
-		&& (pc_checkskill(tsd, RG_PLAGIARISM) || pc_checkskill(tsd, SC_REPRODUCE)))
-	{
-		uint16 copy_skill = skill_id;
+	if (!tsd || !pc_checkskill(tsd,RG_PLAGIARISM) || !pc_checkskill(tsd,SC_REPRODUCE))
+		return;
+	else {
 		short copy_flag;
 
 		// Copy Referal: dummy skills should point to their source upon copying
 		switch (skill_id) {
 			case AB_DUPLELIGHT_MELEE:
 			case AB_DUPLELIGHT_MAGIC:
-				copy_skill = AB_DUPLELIGHT;
+				skill_id = AB_DUPLELIGHT;
 				break;
 			case WL_CHAINLIGHTNING_ATK:
-				copy_skill = WL_CHAINLIGHTNING;
+				skill_id = WL_CHAINLIGHTNING;
 				break;
 			case WM_REVERBERATION_MELEE:
 			case WM_REVERBERATION_MAGIC:
-				copy_skill = WM_REVERBERATION;
+				skill_id = WM_REVERBERATION;
 				break;
 			case WM_SEVERE_RAINSTORM_MELEE:
-				copy_skill = WM_SEVERE_RAINSTORM;
+				skill_id = WM_SEVERE_RAINSTORM;
 			break;
 			case GN_CRAZYWEED_ATK:
-				copy_skill = GN_CRAZYWEED;
+				skill_id = GN_CRAZYWEED;
 				break;
 			case GN_HELLS_PLANT_ATK:
-				copy_skill = GN_HELLS_PLANT;
+				skill_id = GN_HELLS_PLANT;
 				break;
 			case LG_OVERBRAND_BRANDISH:
 			case LG_OVERBRAND_PLUSATK:
-				copy_skill = LG_OVERBRAND;
+				skill_id = LG_OVERBRAND;
 				break;
 		}
 
-		if ((copy_flag = skill_isCopyable(tsd,copy_skill,bl))) {
-			int lv;
-			if (copy_flag == 2 && (lv = tsc->data[SC__REPRODUCE]->val1)) {
-				//Level dependent and limitation.
-				lv = min(lv,skill_get_max(copy_skill));
+		copy_flag = skill_isCopyable(tsd,skill_id);
+		if (copy_flag != 1 && copy_flag != 2) //Skill cannot be copied
+			return;
+		else {
+			uint8 lv;
+			if (copy_flag == 2) { //Copied by Reproduce
+				struct status_change *tsc = status_get_sc(bl);
+				lv = (tsc) ? tsc->data[SC__REPRODUCE]->val1 : 1; //Already did this SC check on skill_isCopyable()
 				if( tsd->reproduceskill_id && tsd->status.skill[tsd->reproduceskill_id].flag == SKILL_FLAG_PLAGIARIZED ) {
 					tsd->status.skill[tsd->reproduceskill_id].id = 0;
 					tsd->status.skill[tsd->reproduceskill_id].lv = 0;
@@ -2492,17 +2493,13 @@ void skill_do_copy(struct block_list* src,struct block_list *bl, struct Damage *
 					clif_deleteskill(tsd,tsd->reproduceskill_id);
 				}
 
-				tsd->reproduceskill_id = copy_skill;
-				pc_setglobalreg(tsd,SKILL_VAR_REPRODUCE,copy_skill);
-				pc_setglobalreg(tsd,SKILL_VAR_REPRODUCE_LV,lv);
+				lv = min(lv,skill_get_max(skill_id)); //Level dependent and limitation.
 
-				tsd->status.skill[copy_skill].id = copy_skill;
-				tsd->status.skill[copy_skill].lv = lv;
-				tsd->status.skill[copy_skill].flag = SKILL_FLAG_PLAGIARIZED;
-				clif_addskill(tsd,copy_skill);
-			} else if (copy_flag == 1) {
-				int type;
-				lv = skill_lv;
+				tsd->reproduceskill_id = skill_id;
+				pc_setglobalreg(tsd,SKILL_VAR_REPRODUCE,skill_id);
+				pc_setglobalreg(tsd,SKILL_VAR_REPRODUCE_LV,lv);
+			}
+			else if (copy_flag == 1) { //Copied by Plagiarism
 				if (tsd->cloneskill_id && tsd->status.skill[tsd->cloneskill_id].flag == SKILL_FLAG_PLAGIARIZED) {
 					tsd->status.skill[tsd->cloneskill_id].id = 0;
 					tsd->status.skill[tsd->cloneskill_id].lv = 0;
@@ -2510,18 +2507,19 @@ void skill_do_copy(struct block_list* src,struct block_list *bl, struct Damage *
 					clif_deleteskill(tsd,tsd->cloneskill_id);
 				}
 
-				if ((type = pc_checkskill(tsd,RG_PLAGIARISM)) < lv)
-					lv = type;
+				if ((lv = pc_checkskill(tsd,RG_PLAGIARISM)) < skill_lv)
+					skill_lv = lv;
 
-				tsd->cloneskill_id = copy_skill;
-				pc_setglobalreg(tsd,SKILL_VAR_PLAGIARISM,copy_skill);
+				tsd->cloneskill_id = skill_id;
+				pc_setglobalreg(tsd,SKILL_VAR_PLAGIARISM,skill_id);
 				pc_setglobalreg(tsd,SKILL_VAR_PLAGIARISM_LV,lv);
-
-				tsd->status.skill[skill_id].id = copy_skill;
-				tsd->status.skill[skill_id].lv = lv;
-				tsd->status.skill[skill_id].flag = SKILL_FLAG_PLAGIARIZED;
-				clif_addskill(tsd,skill_id);
 			}
+			else
+				return;
+			tsd->status.skill[skill_id].id = skill_id;
+			tsd->status.skill[skill_id].lv = lv;
+			tsd->status.skill[skill_id].flag = SKILL_FLAG_PLAGIARIZED;
+			clif_addskill(tsd,skill_id);
 		}
 	}
 }
@@ -2839,8 +2837,12 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 	}
 
 	map_freeblock_lock();
-
-	skill_do_copy(src,bl,&dmg,damage,skill_id,skill_lv); //try to copy a skill
+	
+	//Cannot copy skills if the blow will kill you. [Skotlex]
+	if (skill_id && skill_get_index(skill_id) >= 0 &&
+		dmg.damage+dmg.damage2 > 0 && dmg.flag&BF_SKILL &&
+		damage < status_get_hp(bl))
+		skill_do_copy(src,bl,skill_id,skill_lv);
 
 	if (dmg.dmg_lv >= ATK_MISS && (type = skill_get_walkdelay(skill_id, skill_lv)) > 0)
 	{	//Skills with can't walk delay also stop normal attacking for that
@@ -14708,6 +14710,12 @@ int skill_castfix (struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
 /*==========================================
  * Does cast-time reductions based on sc data.
  *------------------------------------------*/
+#ifndef RENEWAL_CAST
+/** Get the skill cast time for Pre-Re cast
+* @param bl: The caster
+* @param time: Cast time before Status Change addition or reduction
+* @return time: Modified castime after status change addition or reduction
+*/
 int skill_castfix_sc (struct block_list *bl, int time)
 {
 	struct status_change *sc = status_get_sc(bl);
@@ -14739,7 +14747,14 @@ int skill_castfix_sc (struct block_list *bl, int time)
 	//ShowInfo("Castime castfix_sc = %d\n",time);
 	return time;
 }
-#ifdef RENEWAL_CAST
+#else
+/** Get the skill cast time for RENEWAL_CAST
+* @param bl: The caster
+* @param time: Cast time without reduction
+* @param skill_id: Skill ID of the casted skill
+* @param skill_lv: Skill level of the casted skill
+* @return time: Modified castime after status and bonus addition or reduction
+*/
 int skill_vfcastfix (struct block_list *bl, double time, uint16 skill_id, uint16 skill_lv)
 {
 	struct status_change *sc = status_get_sc(bl);
