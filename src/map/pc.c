@@ -8552,7 +8552,7 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 			
 			for( k = 0; k < EQI_MAX; k++ ) {
 				bool do_continue = false; //used to continue that specific loop with some check that also use some loop
-				uint16 index;
+				int16 index;
 				index = sd->equip_index[k];
 				if( index < 0 ) continue;
 				if( k == EQI_HAND_R   &&  sd->equip_index[EQI_HAND_L] == index ) continue;
