@@ -2468,7 +2468,7 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 		//Only for BL_PC
 		if (bl->type == BL_PC) {
 			struct map_session_data *sd = map_id2sd(bl->id);
-			int i;
+			int8 i;
 
 			bonus += sd->bonus.hp;
 			if ((i=pc_checkskill(sd,CR_TRUST)) > 0)
@@ -2577,13 +2577,15 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 		//Only for BL_PC
 		if (bl->type == BL_PC) {
 			struct map_session_data *sd = map_id2sd(bl->id);
-			int i;
+			int8 i;
 
 			bonus += sd->bonus.sp;
-			if ((i=pc_checkskill(sd,SL_KAINA)) > 0)
+			if ((i = pc_checkskill(sd,SL_KAINA)) > 0)
 				bonus += 30 * i;
 			if ((i = pc_checkskill(sd,RA_RESEARCHTRAP)) > 0)
 				bonus += 200 + 20 * i;
+			if ((i = pc_checkskill(sd,WM_LESSON)) > 0)
+				bonus += 30 * i;
 		}
 		
 		//Bonus by SC
@@ -2600,15 +2602,13 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 		//Only for BL_PC
 		if (bl->type == BL_PC) {
 			struct map_session_data *sd = map_id2sd(bl->id);
-			int i;
+			int8 i;
 
 			bonus += sd->hprate;
 			bonus -= 100; //Default hprate is 100, so it should be add 0%
 
 			if((i=pc_checkskill(sd,HP_MEDITATIO)) > 0)
 				bonus += i;
-			if((i = pc_checkskill(sd,WM_LESSON)) > 0)
-				bonus += 30 * i;
 			if((i=pc_checkskill(sd,HW_SOULDRAIN)) > 0)
 				bonus += 2 * i;
 	
