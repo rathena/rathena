@@ -9935,7 +9935,7 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 				if(sd) {
 					struct map_session_data *c_sd = pc_get_child(sd);
 
-					if( c_sd->state.autotrade )
+					if( c_sd && c_sd->state.autotrade )
 						break;
 				}
 			case AM_RESURRECTHOMUN:
