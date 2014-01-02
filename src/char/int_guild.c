@@ -720,12 +720,16 @@ int inter_guild_CharOffline(int char_id, int guild_id)
 // Initialize guild sql
 int inter_guild_sql_init(void)
 {
+	const char *filename[]={ DBPATH"exp_guild.txt","import/exp_guild.txt"};
+	int i;
 	//Initialize the guild cache
 	guild_db_= idb_alloc(DB_OPT_RELEASE_DATA);
 	castle_db = idb_alloc(DB_OPT_RELEASE_DATA);
 
 	//Read exp file
-	sv_readdb("db", DBPATH"exp_guild.txt", ',', 1, 1, 100, exp_guild_parse_row);
+	for(i = 0; i<ARRAYLENGTH(filename); i++){
+		sv_readdb(db_path, filename[i], ',', 1, 1, 100, exp_guild_parse_row, i);
+	}
 
 	add_timer_func_list(guild_save_timer, "guild_save_timer");
 	add_timer(gettick() + 10000, guild_save_timer, 0, 0);

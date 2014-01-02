@@ -64,10 +64,10 @@ CREATE TABLE `mob_db2` (
   PRIMARY KEY  (`ID`)
 ) ENGINE=MyISAM;
 
-#  Monsters Additional Database
-# 
-#  Structure of Database :
-# REPLACE INTO `mob_db2` VALUES ( ID,'Sprite_Name','kROName','iROName',LV,HP,SP,EXP,JEXP,Range1,ATK1,ATK2,DEF,MDEF,STR,AGI,VIT,INT,DEX,LUK,Range2,Range3,Scale,Race,Element,Mode,Speed,aDelay,aMotion,dMotion,MEXP,MVP1id,MVP1per,MVP2id,MVP2per,MVP3id,MVP3per,Drop1id,Drop1per,Drop2id,Drop2per,Drop3id,Drop3per,Drop4id,Drop4per,Drop5id,Drop5per,Drop6id,Drop6per,Drop7id,Drop7per,Drop8id,Drop8per,Drop9id,Drop9per,DropCardid,DropCardper);
+# Monsters Additional Database
+#
+# Structure of Database :
+#REPLACE INTO `mob_db2` VALUES ( ID,'Sprite_Name','kROName','iROName',LV,HP,SP,EXP,JEXP,Range1,ATK1,ATK2,DEF,MDEF,STR,AGI,VIT,INT,DEX,LUK,Range2,Range3,Scale,Race,Element,Mode,Speed,aDelay,aMotion,dMotion,MEXP,MVP1id,MVP1per,MVP2id,MVP2per,MVP3id,MVP3per,Drop1id,Drop1per,Drop2id,Drop2per,Drop3id,Drop3per,Drop4id,Drop4per,Drop5id,Drop5per,Drop6id,Drop6per,Drop7id,Drop7per,Drop8id,Drop8per,Drop9id,Drop9per,DropCardid,DropCardper);
 
 # rAthena Dev Team
 #REPLACE INTO `mob_db2` VALUES (1900,'VALARIS','Valaris','Valaris',99,668000,0,107250,37895,2,3220,4040,35,45,1,152,96,85,120,95,10,10,2,6,67,0x1973,100,1068,768,576,13000,608,1000,750,400,923,3800,1466,200,2256,200,2607,800,714,500,617,3000,984,4300,985,5600,0,0,0,0,4147,1);
@@ -111,3 +111,4 @@ CREATE TABLE `mob_db2` (
 #REPLACE INTO `mob_db2` VALUES (3000,'ZOMBIE','Zombie','Zombie',15,534,0,50,33,1,67,79,0,10,1,8,7,0,15,0,10,12,1,1,29,0x3885,400,2612,912,288,0,0,0,0,0,0,0,957,9000,724,5,938,1000,958,50,727,70,0,0,0,0,0,0,0,0,4038,1);
 #REPLACE INTO `mob_db2` VALUES (3001,'GHOUL','Ghoul','Ghoul',40,5418,0,1088,622,1,420,500,5,20,1,20,29,0,45,20,10,12,1,1,49,0x3885,250,2456,912,504,0,0,0,0,0,0,0,958,6000,756,110,509,700,511,800,2609,60,934,150,1260,1,0,0,0,0,4110,1);
 #REPLACE INTO `mob_db2` VALUES (3002,'ZOMBIE_MASTER','Zombie Master','Zombie Master',62,14211,0,7610,2826,1,824,1084,37,26,25,20,30,5,77,35,10,12,1,1,29,0x3695,175,2612,912,288,0,0,0,0,0,0,0,7071,4413,938,1500,958,1500,723,200,727,100,1260,1,2324,2,0,0,0,0,4274,1);
+

@@ -650,7 +650,7 @@ niflheim,153,215,3	script	Feylin	794,{
 			mes "more that you expect...";
 			next;
 			if (select("I'm willing to do this.:I don't think I can do this.") == 1) {
-				if (BaseLevel > 79 && BaseLevel < 100) {
+				if (BaseLevel > 79) {
 					mes "[Feylin]";
 					mes "Alright, but you must promise";
 					mes "me that you will not let other";

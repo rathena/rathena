@@ -25,9 +25,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define LOGIN_MAX_MSG 30
-static char* msg_table[LOGIN_MAX_MSG]; // Login Server messages_conf
-struct Login_Config login_config;
+#define LOGIN_MAX_MSG 30				/// Max number predefined in msg_conf
+static char* msg_table[LOGIN_MAX_MSG];	/// Login Server messages_conf
+struct Login_Config login_config;		/// Configuration of login-serv
 
 int login_fd; // login server socket
 struct mmo_char_server server[MAX_SERVERS]; // char server data
@@ -80,7 +80,6 @@ int mmo_auth_new(const char* userid, const char* pass, const char sex, const cha
 #define AUTH_TIMEOUT 30000
 
 struct auth_node {
-
 	int account_id;
 	uint32 login_id1;
 	uint32 login_id2;
@@ -89,7 +88,6 @@ struct auth_node {
 	uint32 version;
 	uint8 clienttype;
 };
-
 static DBMap* auth_db; // int account_id -> struct auth_node*
 
 
@@ -97,20 +95,20 @@ static DBMap* auth_db; // int account_id -> struct auth_node*
 // Online User Database [Wizputer]
 //-----------------------------------------------------
 struct online_login_data {
-
 	int account_id;
 	int waiting_disconnect;
 	int char_server;
 };
-
 static DBMap* online_db; // int account_id -> struct online_login_data*
+
 static int waiting_disconnect_timer(int tid, unsigned int tick, int id, intptr_t data);
 
 /**
  * @see DBCreateData
+ * Create an online_login_data struct and add it into online db
+ * 
  */
-static DBData create_online_user(DBKey key, va_list args)
-{
+static DBData create_online_user(DBKey key, va_list args){
 	struct online_login_data* p;
 	CREATE(p, struct online_login_data, 1);
 	p->account_id = key.i;
@@ -119,6 +117,13 @@ static DBData create_online_user(DBKey key, va_list args)
 	return db_ptr2data(p);
 }
 
+/**
+ * Receive info from char-serv that this user is online
+ * This function will start a timer to recheck if that user still online
+ * @param char_server : Serv id where account_id is connected
+ * @param account_id : aid connected
+ * @return the new online_login_data for that user
+ */
 struct online_login_data* add_online_user(int char_server, int account_id)
 {
 	struct online_login_data* p;
@@ -132,6 +137,11 @@ struct online_login_data* add_online_user(int char_server, int account_id)
 	return p;
 }
 
+/**
+ * Received info from char serv that the account_id is now offline
+ * remove the user from online_db
+ * @param account_id : aid to remove from db
+ */
 void remove_online_user(int account_id)
 {
 	struct online_login_data* p;
@@ -144,6 +154,14 @@ void remove_online_user(int account_id)
 	idb_remove(online_db, account_id);
 }
 
+/**
+ * Timered fonction to check if the user still connected
+ * @param tid
+ * @param tick
+ * @param id
+ * @param data
+ * @return 
+ */
 static int waiting_disconnect_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct online_login_data* p = (struct online_login_data*)idb_get(online_db, id);
@@ -1760,6 +1778,8 @@ int login_config_read(const char* cfgName)
 
 		if(!strcmpi(w1,"timestamp_format"))
 			safestrncpy(timestamp_format, w2, 20);
+		else if(strcmpi(w1,"db_path")==0)
+			safestrncpy(db_path, w2, ARRAYLENGTH(db_path));
 		else if(!strcmpi(w1,"stdout_with_ansisequence"))
 			stdout_with_ansisequence = config_switch(w2);
 		else if(!strcmpi(w1,"console_silent")) {
@@ -1776,10 +1796,8 @@ int login_config_read(const char* cfgName)
 		}
 		else if( !strcmpi(w1, "login_port") ) {
 			login_config.login_port = (uint16)atoi(w2);
-		}
-		else if(!strcmpi(w1, "log_login"))
+		} else if(!strcmpi(w1, "log_login"))
 			login_config.log_login = (bool)config_switch(w2);
-
 		else if(!strcmpi(w1, "new_account"))
 			login_config.new_account_flag = (bool)config_switch(w2);
 		else if(!strcmpi(w1, "new_acc_length_limit"))
@@ -1817,26 +1835,20 @@ int login_config_read(const char* cfgName)
 		else if(!strcmpi(w1, "client_hash")) {
 			int group = 0;
 			char md5[33];
-
 			if (sscanf(w2, "%d, %32s", &group, md5) == 2) {
 				struct client_hash_node *nnode;
 				int i;
 				CREATE(nnode, struct client_hash_node, 1);
-
 				for (i = 0; i < 32; i += 2) {
 					char buf[3];
 					unsigned int byte;
-
 					memcpy(buf, &md5[i], 2);
 					buf[2] = 0;
-
 					sscanf(buf, "%x", &byte);
 					nnode->hash[i / 2] = (uint8)(byte & 0xFF);
 				}
-
 				nnode->group_id = group;
 				nnode->next = login_config.client_hash_nodes;
-
 				login_config.client_hash_nodes = nnode;
 			}
 		} else if(strcmpi(w1, "chars_per_account") == 0) { //maxchars per account [Sirius]

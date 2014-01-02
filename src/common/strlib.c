@@ -968,18 +968,21 @@ const char* skip_escaped_c(const char* p)
 }
 
 
-/// Opens and parses a file containing delim-separated columns, feeding them to the specified callback function row by row.
-/// Tracks the progress of the operation (current line number, number of successfully processed rows).
-/// Returns 'true' if it was able to process the specified file, or 'false' if it could not be read.
-///
-/// @param directory Directory
-/// @param filename File to process
-/// @param delim Field delimiter
-/// @param mincols Minimum number of columns of a valid row
-/// @param maxcols Maximum number of columns of a valid row
-/// @param parseproc User-supplied row processing function
-/// @return true on success, false if file could not be opened
-bool sv_readdb(const char* directory, const char* filename, char delim, int mincols, int maxcols, int maxrows, bool (*parseproc)(char* fields[], int columns, int current))
+/**
+ * Opens and parses a file containing delim-separated columns, feeding them to the specified callback function row by row.
+ * Tracks the progress of the operation (current line number, number of successfully processed rows).
+ * Returns 'true' if it was able to process the specified file, or 'false' if it could not be read.
+ * @param directory : Directory
+ * @param filename : filename File to process
+ * @param delim : delim Field delimiter
+ * @param mincols : mincols Minimum number of columns of a valid row
+ * @param maxcols : maxcols Maximum number of columns of a valid row
+ * @param maxrows : maxcols Maximum number of columns of a valid row
+ * @param parseproc : parseproc User-supplied row processing function
+ * @param silent : should we display error if file not found ?
+ * @return true on success, false if file could not be opened
+ */
+bool sv_readdb(const char* directory, const char* filename, char delim, int mincols, int maxcols, int maxrows, bool (*parseproc)(char* fields[], int columns, int current), bool silent)
 {
 	FILE* fp;
 	int lines = 0;
@@ -995,7 +998,7 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 	fp = fopen(path, "r");
 	if( fp == NULL )
 	{
-		ShowError("sv_readdb: can't read %s\n", path);
+		if(silent == 0) ShowError("sv_readdb: can't read %s\n", path);
 		return false;
 	}
 

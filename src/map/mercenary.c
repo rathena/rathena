@@ -440,9 +440,9 @@ static bool read_mercenarydb_sub(char* str[], int columns, int current)
 	ele = atoi(str[21]);
 	status->def_ele = ele%10;
 	status->ele_lv = ele/20;
-	if( status->def_ele >= ELE_MAX )
+	if( status->def_ele >= ELE_ALL )
 	{
-		ShowWarning("Mercenary %d has invalid element type %d (max element is %d)\n", db->class_, status->def_ele, ELE_MAX - 1);
+		ShowWarning("Mercenary %d has invalid element type %d (max element is %d)\n", db->class_, status->def_ele, ELE_ALL - 1);
 		status->def_ele = ELE_NEUTRAL;
 	}
 	if( status->ele_lv < 1 || status->ele_lv > 4 )
@@ -462,8 +462,12 @@ static bool read_mercenarydb_sub(char* str[], int columns, int current)
 
 int read_mercenarydb(void)
 {
+	const char *filename[]={ "mercenary_db.txt","import/mercenary_db.txt"};
+	int i;
 	memset(mercenary_db,0,sizeof(mercenary_db));
-	sv_readdb(db_path, "mercenary_db.txt", ',', 26, 26, MAX_MERCENARY_CLASS, &read_mercenarydb_sub);
+	for(i = 0; i<ARRAYLENGTH(filename); i++){
+		sv_readdb(db_path, filename[i], ',', 26, 26, MAX_MERCENARY_CLASS, &read_mercenarydb_sub, i);
+	}
 
 	return 0;
 }
@@ -501,7 +505,11 @@ static bool read_mercenary_skilldb_sub(char* str[], int columns, int current)
 
 int read_mercenary_skilldb(void)
 {
-	sv_readdb(db_path, "mercenary_skill_db.txt", ',', 3, 3, -1, &read_mercenary_skilldb_sub);
+	const char *filename[]={ "mercenary_skill_db.txt","import/mercenary_skill_db.txt"};
+	int i;
+	for(i = 0; i<ARRAYLENGTH(filename); i++){
+		sv_readdb(db_path, filename[i], ',', 3, 3, -1, &read_mercenary_skilldb_sub, i);
+	}
 
 	return 0;
 }

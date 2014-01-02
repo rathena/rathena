@@ -3,7 +3,7 @@
 // Structure of Database:
 // SkillID,PreservePoints,Required Book
 //
-// To add more entries, increase MAX_SKILL_SPELLBOOK_DB in skill.h.
+// NOTE: To add more entries, increase MAX_SKILL_SPELLBOOK_DB in skill.h.
 
 //Mage
 14,7,6190	//Cold Bolt

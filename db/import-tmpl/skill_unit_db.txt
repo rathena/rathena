@@ -1,0 +1,29 @@
+// Skill Unit Database
+//
+// Structure of Database:
+// ID,unit ID,unit ID 2,layout,range,interval,target,flag
+//
+// layout = -1:special, 0:1*1, 1:3*3, 2:5*5, up to 5:11*11
+// target = friend (party +guildmates +neutral players) / party / guild
+//          ally (party +guildmates) / all / enemy
+// flag 0x0001(UF_DEFNOTENEMY)		If 'defunit_not_enemy' is set, the target is changed to 'friend'
+//      0x0002(UF_NOREITERRATION)	Spell cannot be stacked
+//      0x0004(UF_NOFOOTSET)		Spell cannot be cast near/on targets
+//      0x0008(UF_NOOVERLAP)		Spell effects do not overlap
+//      0x0010(UF_PATHCHECK)		Only cells with a shootable path will be placed
+//      0x0020(UF_NOPC)				Spell cannot affect players.
+//      0x0040(UF_NOMOB)			Spell cannot affect mobs.
+//      0x0080(UF_SKILL)			Spell CAN affect skills.
+//      0x0100(UF_DANCE)			Dance skill
+//      0x0200(UF_ENSEMBLE)			Ensemble skill
+//      0x0400(UF_SONG)				Song skill
+//      0x0800(UF_DUALMODE)			Spell has effects both at an interval and when you step in/out
+//      0x2000(UF_RANGEDSINGLEUNIT)	Layout hack, use layout range propriety but only display center.
+// 	Example: 0x006 = 0x002+0x004 -> Cannot be stacked nor cast near targets
+//
+// Notes:
+//    0x89,0x8a,0x8b without indication
+//
+//    u1   u2 lay  r intr target  flag
+//
+

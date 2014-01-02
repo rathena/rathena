@@ -100,10 +100,10 @@ int guild_skill_get_max (int id)
 // Retrive skill_lv learned by guild
 
 int guild_checkskill(struct guild *g, int id) {
-    int idx = id - GD_SKILLBASE;
-    if (idx < 0 || idx >= MAX_GUILDSKILL)
-        return 0;
-    return g->skill[idx].lv;
+	int idx = id - GD_SKILLBASE;
+	if (idx < 0 || idx >= MAX_GUILDSKILL)
+		return 0;
+	return g->skill[idx].lv;
 }
 
 /*==========================================
@@ -383,7 +383,7 @@ int guild_create(struct map_session_data *sd, const char *name)
 		clif_guild_created(sd,1);
 		return 0;
 	}
-	if( battle_config.guild_emperium_check && pc_search_inventory(sd,714) == -1 )
+	if( battle_config.guild_emperium_check && pc_search_inventory(sd,ITEMID_EMPERIUM) == -1 )
 	{// item required
 		clif_guild_created(sd,3);
 		return 0;
@@ -2181,6 +2181,12 @@ void guild_flags_clear(void) {
 }
 
 void do_init_guild(void) {
+	const char* dbsubpath[] = {
+		"",
+		"import/",
+	};
+	int i;
+	
 	guild_db           = idb_alloc(DB_OPT_RELEASE_DATA);
 	castle_db          = idb_alloc(DB_OPT_BASE);
 	guild_expcache_db  = idb_alloc(DB_OPT_BASE);
@@ -2189,11 +2195,19 @@ void do_init_guild(void) {
 
 	guild_flags_count = 0;
 
-	sv_readdb(db_path, "castle_db.txt", ',', 4, 5, -1, &guild_read_castledb);
-
 	memset(guild_skill_tree,0,sizeof(guild_skill_tree));
-	sv_readdb(db_path, "guild_skill_tree.txt", ',', 2+MAX_GUILD_SKILL_REQUIRE*2, 2+MAX_GUILD_SKILL_REQUIRE*2, -1, &guild_read_guildskill_tree_db); //guild skill tree [Komurka]
-
+	
+	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
+		int n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
+		char* dbsubpath1 = aMalloc(n1+1);
+		safesnprintf(dbsubpath1,n1+1,"%s/%s",db_path,dbsubpath[i]);
+		
+		sv_readdb(dbsubpath1, "castle_db.txt", ',', 4, 5, -1, &guild_read_castledb, i);
+		sv_readdb(dbsubpath1, "guild_skill_tree.txt", ',', 2+MAX_GUILD_SKILL_REQUIRE*2, 2+MAX_GUILD_SKILL_REQUIRE*2, -1, &guild_read_guildskill_tree_db, i); //guild skill tree [Komurka]
+		
+		aFree(dbsubpath1);
+	}
+	
 	add_timer_func_list(guild_payexp_timer,"guild_payexp_timer");
 	add_timer_func_list(guild_send_xy_timer, "guild_send_xy_timer");
 	add_timer_interval(gettick()+GUILD_PAYEXP_INVERVAL,guild_payexp_timer,0,0,GUILD_PAYEXP_INVERVAL);

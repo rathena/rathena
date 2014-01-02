@@ -1,18 +1,17 @@
-// Pre-renewal Version
+// Refine Database [Pre-Renewal]
 //
+// Structure of Database:
 // Type,Stats per level,Random bonus start level,Random bonus value,Chance+1:Bonus+1,Chance+2:Bonus+2,Chance+3:Bonus+3,...
-//
-// IMPORTANT: changing the number of upgrade levels requires modifying MAX_REFINE in status.h
 //
 // For armors, values of 100 add 1 armor defense.
 // For weapons, values of 100 add 1 ATK.
 //
 // Type:
-// 0 - Armors
-// 1 - Level 1 weapons
-// 2 - Level 2 weapons
-// 3 - Level 3 weapons
-// 4 - Level 4 weapons
+//	0 - Armors
+//	1 - Level 1 weapons
+//	2 - Level 2 weapons
+//	3 - Level 3 weapons
+//	4 - Level 4 weapons
 //
 // Stats per level:
 // This value is applied for every upgrade level.
@@ -26,6 +25,9 @@
 //
 // Chance:
 // 100 = 100%
+//
+// Notes:
+// Changing the number of upgrade levels requires modifying MAX_REFINE in src/map/status.h.
 
 // Armors
 0,70,0,0,100:0,100:0,100:0,100:0,60:0,40:0,40:0,20:0,20:0,10:0

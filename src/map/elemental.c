@@ -101,24 +101,24 @@ int elemental_create(struct map_session_data *sd, int class_, unsigned int lifet
 
 	//per individual bonuses
 	switch(db->class_){
-	case 2114:	case 2115:
-	case 2116: //ATK + (Summon Agni Skill Level x 20) / HIT + (Summon Agni Skill Level x 10)
+	case ELEMENTALID_AGNI_S:	case ELEMENTALID_AGNI_M:
+	case ELEMENTALID_AGNI_L: //ATK + (Summon Agni Skill Level x 20) / HIT + (Summon Agni Skill Level x 10)
 		ele.atk += i * 20;
 		ele.atk2 += i * 20;
 		ele.hit += i * 10;
 		break;
-	case 2117:	case 2118:
-	case 2119: //MDEF + (Summon Aqua Skill Level x 10) / MATK + (Summon Aqua Skill Level x 20)
+	case ELEMENTALID_AQUA_S:	case ELEMENTALID_AQUA_M:
+	case ELEMENTALID_AQUA_L: //MDEF + (Summon Aqua Skill Level x 10) / MATK + (Summon Aqua Skill Level x 20)
 		ele.mdef += i * 10;
 		ele.matk += i * 20;
 		break;
-	case 2120:	case 2121:
-	case 2122: //FLEE + (Summon Ventus Skill Level x 20) / MATK + (Summon Ventus Skill Level x 10)
+	case ELEMENTALID_VENTUS_S:	case ELEMENTALID_VENTUS_M:
+	case ELEMENTALID_VENTUS_L: //FLEE + (Summon Ventus Skill Level x 20) / MATK + (Summon Ventus Skill Level x 10)
 		ele.flee += i * 20;
 		ele.matk += i * 10;
 		break;
-	case 2123:	case 2124:
-	case 2125: //DEF + (Summon Tera Skill Level x 25) / ATK + (Summon Tera Skill Level x 5)
+	case ELEMENTALID_TERA_S:	case ELEMENTALID_TERA_M:
+	case ELEMENTALID_TERA_L: //DEF + (Summon Tera Skill Level x 25) / ATK + (Summon Tera Skill Level x 5)
 		ele.def += i * 25;
 		ele.atk += i * 5;
 		ele.atk2 += i * 5;
@@ -659,12 +659,12 @@ static int elemental_ai_sub_timer(struct elemental_data *ed, struct map_session_
 		int sp = 5;
 
 		switch(ed->vd->class_){
-			case 2115:	case 2118:
-			case 2121:	case 2124:
+			case ELEMENTALID_AGNI_M:	case ELEMENTALID_AQUA_M:
+			case ELEMENTALID_VENTUS_M:	case ELEMENTALID_TERA_M:
 				sp = 8;
 				break;
-			case 2116:	case 2119:
-			case 2122:	case 2125:
+			case ELEMENTALID_AGNI_L:	case ELEMENTALID_AQUA_L:
+			case ELEMENTALID_VENTUS_L:	case ELEMENTALID_TERA_L:
 				sp = 11;
 				break;
 		}
@@ -832,8 +832,8 @@ int read_elementaldb(void) {
 		ele = atoi(str[21]);
 		status->def_ele = ele%10;
 		status->ele_lv = ele/20;
-		if( status->def_ele >= ELE_MAX ) {
-			ShowWarning("Elemental %d has invalid element type %d (max element is %d)\n", db->class_, status->def_ele, ELE_MAX - 1);
+		if( status->def_ele >= ELE_ALL ) {
+			ShowWarning("Elemental %d has invalid element type %d (max element is %d)\n", db->class_, status->def_ele, ELE_ALL - 1);
 			status->def_ele = ELE_NEUTRAL;
 		}
 		if( status->ele_lv < 1 || status->ele_lv > 4 ) {

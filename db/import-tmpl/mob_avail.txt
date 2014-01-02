@@ -1,0 +1,16 @@
+// Mob Availability and Alias Database
+//
+// Structure of Database:
+// MobID,SpriteID{,Equipment}
+//
+// 01. MobID        Mob ID to change.
+// 02. SpriteID     Mob ID which will be sent to the client instead of MobID.
+//                  If 0, the mob becomes unavailable for use.
+// 03. Equipment    Item ID of pet equipment (must be available for pet counterpart, or this will cause problems).
+//
+// To disguise a mob as a player:
+// MobID,SpriteID,Sex,Hair_Style,Hair_Color,Weapon,Shield,Head_Top,Head_Middle,Head_Bottom,Option,Dye_Color
+//
+// SpriteID is a job class value.
+// Weapon and Shield uses Item ID, while Head uses View ID.
+

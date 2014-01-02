@@ -4796,7 +4796,7 @@ BUILDIN_FUNC(prompt)
 		sd->state.menu_or_input = 0;
 		pc_setreg(sd, add_str("@menu"), 0xff);
 		script_pushint(st, 0xff);
-		st->state = RUN;
+		st->state = END;
 	}
 	else
 	{// return selected option
@@ -11308,7 +11308,7 @@ static int buildin_maprespawnguildid_sub_mob(struct block_list *bl,va_list ap)
 {
 	struct mob_data *md=(struct mob_data *)bl;
 
-	if(!md->guardian_data && md->class_ != MOBID_EMPERIUM)
+	if(!md->guardian_data && md->mob_id != MOBID_EMPERIUM)
 		status_kill(bl);
 
 	return 0;
@@ -11779,7 +11779,7 @@ BUILDIN_FUNC(marriage)
 	TBL_PC *sd=script_rid2sd(st);
 	TBL_PC *p_sd=map_nick2sd(partner);
 
-	if(sd==NULL || p_sd==NULL || pc_marriage(sd,p_sd) < 0){
+	if(!sd || !p_sd || !pc_marriage(sd,p_sd)){
 		script_pushint(st,0);
 		return 0;
 	}
@@ -11803,7 +11803,7 @@ BUILDIN_FUNC(wedding_effect)
 BUILDIN_FUNC(divorce)
 {
 	TBL_PC *sd=script_rid2sd(st);
-	if(sd==NULL || pc_divorce(sd) < 0){
+	if(!sd || !pc_divorce(sd)){
 		script_pushint(st,0);
 		return 0;
 	}
@@ -16533,7 +16533,7 @@ BUILDIN_FUNC(bg_monster_set_team)
 	int id = script_getnum(st,2),
 		bg_id = script_getnum(st,3);
 
-	if( (mbl = map_id2bl(id)) == NULL || mbl->type != BL_MOB )
+	if( id == 0 || (mbl = map_id2bl(id)) == NULL || mbl->type != BL_MOB )
 		return 0;
 	md = (TBL_MOB *)mbl;
 	md->bg_id = bg_id;
@@ -16951,7 +16951,7 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 	int emotion		= va_arg(ap,int);
 	int target		= va_arg(ap,int);
 
-	if( md->class_ != mobid )
+	if( md->mob_id != mobid )
 		return 0;
 
 	// 0:self, 1:target, 2:master, default:random
@@ -17345,6 +17345,18 @@ BUILDIN_FUNC(get_revision) {
 		script_pushint(st,-1); //unknown
 	return SCRIPT_CMD_SUCCESS;
 }
+/* get_hash() -> retrieves the current git hash (if available)*/
+BUILDIN_FUNC(get_githash) {
+	const char* git = get_git_hash();
+	char buf[CHAT_SIZE_MAX];
+	safestrncpy(buf,git,strlen(git)+1);
+
+	if ( git[0] != UNKNOWN_VERSION )
+		script_pushstr(st,buf);
+	else
+		script_pushstr(st,"Unknown"); //unknown
+	return SCRIPT_CMD_SUCCESS;
+}
 /**
  * freeloop(<toggle>) -> toggles this script instance's looping-check ability
  **/
@@ -17568,7 +17580,7 @@ BUILDIN_FUNC(getgroupitem) {
 	if (!(sd = script_rid2sd(st)))
 		return SCRIPT_CMD_SUCCESS;
 	
-	if (itemdb_pc_get_itemgroup(group_id,sd->itemid,sd)) {
+	if (itemdb_pc_get_itemgroup(group_id,sd)) {
 		ShowError("getgroupitem: Invalid group id '%d' specified.",group_id);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -18212,22 +18224,24 @@ BUILDIN_FUNC(montransform) {
 }
 
 /** [Cydh]
- * bonus_script "<script code>",<duration>{,<flag>{,<type>{,<char_id>}}};
+ * bonus_script "<script code>",<duration>{,<flag>{,<type>{,<status_icon>{,<char_id>}}}};
  * @param "script code"
  * @param duration
  * @param flag
+ * @param icon
  * @param char_id
  **/
 BUILDIN_FUNC(bonus_script) {
 	uint8 i, flag = 0;
+	int16 icon = SI_BLANK;
 	uint32 dur;
-	bool isBuff = true;
+	char type = 0;
 	TBL_PC* sd;
 	const char *script_str = NULL;
 	struct script_code *script = NULL;
 
-	if (script_hasdata(st,6))
-		sd = map_charid2sd(script_getnum(st,6));
+	if (script_hasdata(st,7))
+		sd = map_charid2sd(script_getnum(st,7));
 	else
 		sd = script_rid2sd(st);
 
@@ -18237,10 +18251,10 @@ BUILDIN_FUNC(bonus_script) {
 	script_str = script_getstr(st,2);
 	dur = 1000 * abs(script_getnum(st,3));
 	FETCH(4,flag);
-	if (script_getnum(st,5) == 1)
-		isBuff = false;
+	FETCH(5,type);
+	FETCH(6,icon);
 
-	if (!strlen(script_str) || !dur) {
+	if (script_str[0] == '\0' || !dur) {
 		//ShowWarning("buildin_bonus_script: Invalid value(s). Skipping...\n");
 		return 0;
 	}
@@ -18269,7 +18283,11 @@ BUILDIN_FUNC(bonus_script) {
 	sd->bonus_script[i].script = script;
 	sd->bonus_script[i].tick = gettick() + dur;
 	sd->bonus_script[i].flag = flag;
-	sd->bonus_script[i].isBuff = isBuff;
+	sd->bonus_script[i].type = type;
+	sd->bonus_script[i].icon = icon;
+
+	if (sd->bonus_script[i].icon != SI_BLANK) //Gives status icon if exist
+		clif_status_change(&sd->bl,sd->bonus_script[i].icon,1,dur,1,0,0);
 
 	status_calc_pc(sd,false);
 	return SCRIPT_CMD_SUCCESS;
@@ -18774,6 +18792,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getcharip,"?"),
 	BUILDIN_DEF(is_function,"s"),
 	BUILDIN_DEF(get_revision,""),
+	BUILDIN_DEF(get_githash,""),
 	BUILDIN_DEF(freeloop,"i"),
 	BUILDIN_DEF(getrandgroupitem,"ii?"),
 	BUILDIN_DEF(cleanmap,"s"),
@@ -18815,7 +18834,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(montransform, "transform", "vii????"), // Monster Transform [malufett/Hercules]
 	BUILDIN_DEF(vip_status,"i?"),
 	BUILDIN_DEF(vip_time,"i?"),
-	BUILDIN_DEF(bonus_script,"si???"),
+	BUILDIN_DEF(bonus_script,"si????"),
 	BUILDIN_DEF(getgroupitem,"i"),
 	BUILDIN_DEF(addspiritball,"ii?"),
 	BUILDIN_DEF(delspiritball,"i?"),

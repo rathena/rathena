@@ -1,0 +1,5 @@
+// Instance Database
+//
+// Structure of Database:
+// ID,Name,LimitTime,EnterMap,EnterX,EnterY,Map1,Map2,Map3,Map4,Map5,Map6,Map7,Map8
+

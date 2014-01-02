@@ -1,0 +1,52 @@
+// Copyable Skills Database
+// List of skills able to be copied by Intimidate/Plagiarism and Reproduce.
+//
+// Sources:
+// http://irowiki.org/wiki/Intimidate
+//    -> "Intimidate will copy any 2nd class skill"
+// http://irowiki.org/wiki/Reproduce/List_of_reproducible_skills
+//    -> "Players can reproduce 1-x, 2-x, and 3-x skills and Expanded Class,
+//        but cannot reproduce transcendent skills"
+//
+// Structure of Database:
+// SkillName,Option{,JobAllowed{,RequirementRemoved}}
+//
+// Option (bitmask) determines how a skill can be copied.
+//	1 = Plagiarism
+//	2 = Reproduce
+//
+// JobAllowed (bitmask) restricts copying the skill to certain classes.
+// By default, all jobs can copy the skill (0).
+//	 1 = Rogue
+//	 2 = Stalker
+//	 4 = Shadow Chaser
+//	 8 = Trans. Shadow Chaser
+//	16 = Baby Rouge
+//	32 = Baby Shadow Chaser
+//	
+// RequirementRemoved (bitmask) removes requirements when casting a copied skill.
+// See 'skill_require_db.txt' for specific skill requirements.
+//	   0 = uses original requirement(s)
+//	   1 = hp
+//	   2 = maxhptrigger
+//	   4 = sp
+//	   8 = hprate
+//	  16 = sprate
+//	  32 = zeny
+//	  64 = weapon type
+//	 128 = ammo (with the amount)
+//	 256 = state
+//	 512 = statuses
+//	1024 = spirit sphere
+//	2048 = items (with the amount)
+//	4096 = equipments
+//
+// Examples:
+// AS_SONICBLOW,2,63,64
+//	Sonic Blow can be copied by all jobs with only Plagiarism.
+//	To use the copied skill, a Katar is not needed (a Sonic Blow weapon type requirement).
+//
+// CR_ACIDDEMONSTRATION,3,10
+//	Acid Demonstration can only be copied by Stalker/Trans. Shadow Chaser with Plagiarism or Reproduce.
+//	This mode simulates the previous battle config, which allowed only Trans. classes to copy Trans. skills.
+

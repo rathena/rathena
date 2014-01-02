@@ -3,11 +3,9 @@
 // Structure of Database:
 // ProduceItemID,ItemLV,RequireSkill,RequireSkillLv,MaterialID1,MaterialAmount1,......
 //
-// Comments:
-// If MaterialAmount = 0, then you just need that item in your inventory (guides)
-// For example, Mine Bottle is 7138,32,228,7131,0,713,1,1050,1,1051,1
-// 7131 is the Guide needed to create mine bottles and the amount needed of this item is 0 (.. ,7131,0, ..).
-
+// Notes:
+// If MaterialAmount is 0, the player must have that item in their inventory (i.e. guides).
+// For example, Mine Bottle requires 0x Marine Sphere Creation Guide (ID 7131).
 
 //===== Weapon === ItemLV=1~3 ==================
 

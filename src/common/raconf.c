@@ -77,8 +77,6 @@ static struct conf_value *makeValue(const char *key, char *val, size_t val_len){
 		v->bval = false;
 	else if((val_len == 3) && (strncmpi("non", val, 3) == 0))
 		v->bval = false;
-	else if((val_len == 2) && (strncmpi("no", val, 2) == 0))
-		v->bval = false;
 	else if((val_len == 4) && (strncmpi("nein", val, 4) == 0))
 		v->bval = false;
 	else if((val_len == 1) && (*val == '0'))

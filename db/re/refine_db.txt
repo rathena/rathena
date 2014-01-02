@@ -1,18 +1,17 @@
-// Renewal Version
+// Refine Database [Renewal]
 //
+// Structure of Database:
 // Type,Stats per level,Random bonus start level,Random bonus value,Chance+1:Bonus+1,Chance+2:Bonus+2,Chance+3:Bonus+3,...
-//
-// IMPORTANT: changing the number of upgrade levels requires modifying MAX_REFINE in status.h
 //
 // For armors, values of 100 add 1 armor defense.
 // For weapons, values of 100 add 1 ATK&MATK.
 //
 // Type:
-// 0 - Armors
-// 1 - Level 1 weapons
-// 2 - Level 2 weapons
-// 3 - Level 3 weapons
-// 4 - Level 4 weapons
+//	0 - Armors
+//	1 - Level 1 weapons
+//	2 - Level 2 weapons
+//	3 - Level 3 weapons
+//	4 - Level 4 weapons
 //
 // Stats per level:
 // This value is applied for every upgrade level.
@@ -27,7 +26,9 @@
 // Chance:
 // 100 = 100%
 //
-// A note about renewal Armors, there may or may not be another bonus, according to iRO wiki: Every upgrade gives floor[( 3 + current upgrade ) / 4] equipment DEF)
+// Notes:
+// Changing the number of upgrade levels requires modifying MAX_REFINE in src/map/status.h.
+// For Renewal Armors, there may or may not be another bonus, according to iRO wiki: Every upgrade gives floor[( 3 + current upgrade ) / 4] equipment DEF)
 
 0,0,0,0,100:100,100:100,100:100,100:100,60:200,40:200,40:200,20:200,20:300,10:300,8:300,8:300,8:400,8:400,7:400,7:400,7:500,7:500,5:500,5:500
 // Level 1 weapons

@@ -17,34 +17,7 @@
 //        5 - 2003-12-18aSakexe+   - 0x1ee, 0x1ef, 0x1f0, ?0x1c4, 0x1c5?
 //        6 - 2004-03-02aSakexe+   - 0x1f4, 0x1f5
 //        7 - 2005-04-11aSakexe+   - 0x229, 0x22a, 0x22b, 0x22c
-// 20061023 - 2006-10-23aSakexe+   - 0x6b, 0x6d
-// 20070521 - 2007-05-21aSakexe+   - 0x283
-// 20070821 - 2007-08-21aSakexe+   - 0x2c5
-// 20070918 - 2007-09-18aSakexe+   - 0x2d7, 0x2d9, 0x2da
-// 20071106 - 2007-11-06aSakexe+   - 0x78, 0x7c, 0x22c
-// 20080102 - 2008-01-02aSakexe+   - 0x2ec, 0x2ed , 0x2ee
-// 20081126 - 2008-11-26aSakexe+   - 0x1a2
-// 20090408 - 2009-04-08aSakexe+   - 0x44a (dont use as it overlaps with RE client packets)
-// 20080827 - 2008-08-27aRagexeRE+ - First RE Client
-// 20081217 - 2008-12-17aRagexeRE+ - 0x6d (Note: This one still use old Char Info Packet Structure)
-// 20081218 - 2008-12-17bRagexeRE+ - 0x6d (Note: From this one client use new Char Info Packet Structure)
-// 20090603 - 2009-06-03aRagexeRE+ - 0x7d7, 0x7d8, 0x7d9, 0x7da
-// 20090617 - 2009-06-17aRagexeRE+ - 0x7d9
-// 20090922 - 2009-09-22aRagexeRE+ - 0x7e5, 0x7e7, 0x7e8, 0x7e9
-// 20091103 - 2009-11-03aRagexeRE+ - 0x7f7, 0x7f8, 0x7f9
-// 20100105 - 2010-01-05aRagexeRE+ - 0x133, 0x800, 0x801
-// 20100126 - 2010-01-26aRagexeRE+ - 0x80e
-// 20100223 - 2010-02-23aRagexeRE+ - 0x80f
-// 20100413 - 2010-04-13aRagexeRE+ - 0x6b
-// 20100629 - 2010-06-29aRagexeRE+ - 0x2d0, 0xaa, 0x2d1, 0x2d2
-// 20100721 - 2010-07-21aRagexeRE+ - 0x6b, 0x6d
-// 20100727 - 2010-07-27aRagexeRE+ - 0x6b, 0x6d
-// 20100803 - 2010-08-03aRagexeRE+ - 0x6b, 0x6d, 0x827, 0x828, 0x829, 0x82a, 0x82b, 0x82c, 0x842, 0x843
-// 20101124 - 2010-11-24aRagexeRE+ - 0x856, 0x857, 0x858
-// 20110111 - 2011-01-11aRagexeRE+ - 0x6b, 0x6d
-// 20110928 - 2011-09-28aRagexeRE+ - 0x6b, 0x6d
-// 20111025 - 2011-10-25aRagexeRE+ - 0x6b, 0x6d
-// 20120307 - 2012-03-07aRagexeRE+ - 0x970
+// see conf/battle/client.conf for other version
 
 #ifndef PACKETVER
 	#define PACKETVER 20130807
@@ -91,7 +64,7 @@
 #define DEFAULT_WALK_SPEED 150
 #define MIN_WALK_SPEED 0
 #define MAX_WALK_SPEED 1000
-#define MAX_STORAGE 600 /// Max number of storage slots the client can support. Used as a cap for the VIP System.
+#define MAX_STORAGE 600 /// Max number of storage slots a player can have, (up to ~850 tested)
 #define MAX_GUILD_STORAGE 600
 #define MAX_PARTY 12
 #define MAX_GUILD 16+10*6	// increased max guild members +6 per 1 extension levels [Lupus]
@@ -255,7 +228,8 @@ struct status_change_data {
 struct bonus_script_data {
 	char script[MAX_BONUS_SCRIPT_LENGTH];
 	long tick;
-	short type, flag;
+	char type;
+	short flag, icon;
 };
 
 struct skill_cooldown_data {

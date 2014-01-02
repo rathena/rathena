@@ -1,0 +1,5 @@
+// Bloody Branch Summonable Monsters Database
+//
+// Structure of Database:
+// MobID,DummyName,Rate
+

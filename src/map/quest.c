@@ -288,63 +288,70 @@ int quest_check(TBL_PC * sd, int quest_id, quest_check_type type) {
 }
 
 int quest_read_db(void) {
-	FILE *fp;
-	char line[1024];
-	int i,j,k = 0;
-	char *str[20],*p,*np;
+	const char* dbsubpath[] = {
+		"",
+		"import/",
+	};
+	int f;
 
-	sprintf(line, "%s/quest_db.txt", db_path);
-	if( (fp=fopen(line,"r"))==NULL ){
-		ShowError("can't read %s\n", line);
-		return -1;
-	}
+	for(f=0; f<ARRAYLENGTH(dbsubpath); f++){
+		FILE *fp;
+		char line[1024];
+		int i,j,k = 0;
+		char *str[20],*p,*np;
+		char filename[256];
 	
-	while(fgets(line, sizeof(line), fp)) {
-		
-		if (k == MAX_QUEST_DB) {
-			ShowError("quest_read_db: Too many entries specified in %s/quest_db.txt!\n", db_path);
-			break;
+		sprintf(filename, "%s/%s%s", db_path,dbsubpath[f],"quest_db.txt");
+		if( (fp=fopen(filename,"r"))==NULL ){
+			if(f==0) ShowError("can't read %s\n", filename);
+			return -1;
 		}
-		
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		memset(str,0,sizeof(str));
 
-		for( j = 0, p = line; j < 8; j++ ) {
-			if( ( np = strchr(p,',') ) != NULL ) {
-				str[j] = p;
-				*np = 0;
-				p = np + 1;
-			}
-			else if (str[0] == NULL)
-				continue;
-			else {
-				ShowError("quest_read_db: insufficient columns in line %s\n", line);
-				continue;
-			}
-		}
-		if(str[0]==NULL)
-			continue;
-
-		memset(&quest_db[k], 0, sizeof(quest_db[0]));
-
-		quest_db[k].id = atoi(str[0]);
-		quest_db[k].time = atoi(str[1]);
-		
-		for( i = 0; i < MAX_QUEST_OBJECTIVES; i++ ) {
-			quest_db[k].mob[i] = atoi(str[2*i+2]);
-			quest_db[k].count[i] = atoi(str[2*i+3]);
-
-			if( !quest_db[k].mob[i] || !quest_db[k].count[i] )
+		while(fgets(line, sizeof(line), fp)) {
+			if (k == MAX_QUEST_DB) {
+				ShowError("quest_read_db: Too many entries specified in %s/quest_db.txt!\n", db_path);
 				break;
-		}
-		
-		quest_db[k].num_objectives = i;
+			}
+			if(line[0]=='/' && line[1]=='/')
+				continue;
+			memset(str,0,sizeof(str));
 
-		k++;
+			for( j = 0, p = line; j < 8; j++ ) {
+				if( ( np = strchr(p,',') ) != NULL ) {
+					str[j] = p;
+					*np = 0;
+					p = np + 1;
+				}
+				else if (str[0] == NULL)
+					continue;
+				else {
+					ShowError("quest_read_db: insufficient columns in line %s\n", line);
+					continue;
+				}
+			}
+			if(str[0]==NULL)
+				continue;
+
+			memset(&quest_db[k], 0, sizeof(quest_db[0]));
+
+			quest_db[k].id = atoi(str[0]);
+			quest_db[k].time = atoi(str[1]);
+
+			for( i = 0; i < MAX_QUEST_OBJECTIVES; i++ ) {
+				quest_db[k].mob[i] = atoi(str[2*i+2]);
+				quest_db[k].count[i] = atoi(str[2*i+3]);
+
+				if( !quest_db[k].mob[i] || !quest_db[k].count[i] )
+					break;
+			}
+
+			quest_db[k].num_objectives = i;
+
+			k++;
+		}
+		fclose(fp);
+		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", k, filename);
 	}
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", k, "quest_db.txt");
 	return 0;
 }
 

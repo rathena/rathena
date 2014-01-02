@@ -1,6 +1,7 @@
-// ====================================
+// Item Package Database
+//
+// Structure of Database:
 // GroupID,ItemID,Rate{,Amount,Random,isAnnounced,Duration,isNamed,isBound}
-// ====================================
 
 IG_Special_Box,Wrapped_Mask,3,1,1
 IG_Special_Box,Poison_Bottle,10,2,1
@@ -874,23 +875,23 @@ IG_Xmas_Pet_Scroll,Crystal_Jewel__,150,10,1,0,0,1
 IG_Xmas_Pet_Scroll,Zeny_Scroll,150,10,1,0,0,1
 IG_Xmas_Pet_Scroll,Max_Weight_Up_Scroll,50,5,1,0,0,1
 
-//IG_Lucky_Scroll08,,Kafra_Card,220,05,0,0,0,1
-//IG_Lucky_Scroll08,,Battle_Manual,210,5,0,0,0,1
-//IG_Lucky_Scroll08,,Bubble_Gum,210,5,0,0,0,1
-//IG_Lucky_Scroll08,,Token_Of_Siegfried_Box,100,05,0,0,0,1
-//IG_Lucky_Scroll08,,Neuralizer,2,0,0,0,0,1
-//IG_Lucky_Scroll08,,Mini_Propeller_,1,0,0,0,0,1
-//IG_Lucky_Scroll08,,Branch_Of_Dead_Tree_Box,5,0,0,0,0,1
-//IG_Lucky_Scroll08,,Dark_Lord_Card,1,0,0,0,0,1
-//IG_Lucky_Scroll08,,Dark_Illusion_Card,1,0,0,0,0,1
-//IG_Lucky_Scroll08,,Angelic_Chain_,2,0,0,0,0,1
-//IG_Lucky_Scroll08,,Satanic_Chain_,3,0,0,0,0,1
-//IG_Lucky_Scroll08,,Magestic_Goat_TW,2,0,0,0,0,1
-//IG_Lucky_Scroll08,,Bunny_Band_,3,0,0,0,0,1
-//IG_Lucky_Scroll08,,Drooping_Kitty_,5,0,0,0,0,1
-//IG_Lucky_Scroll08,,Tulip_Hairpin,65,0,0,0,0,1
-//IG_Lucky_Scroll08,,Insurance_Package,60,0,0,0,0,1
-//IG_Lucky_Scroll08,,Leaf_Of_Yggdrasil,110,05,0,0,0,1
+//IG_Lucky_Scroll08,Kafra_Card,220,05,0,0,0,1
+//IG_Lucky_Scroll08,Battle_Manual,210,5,0,0,0,1
+//IG_Lucky_Scroll08,Bubble_Gum,210,5,0,0,0,1
+//IG_Lucky_Scroll08,Token_Of_Siegfried_Box,100,05,0,0,0,1
+//IG_Lucky_Scroll08,Neuralizer,2,0,0,0,0,1
+//IG_Lucky_Scroll08,Mini_Propeller_,1,0,0,0,0,1
+//IG_Lucky_Scroll08,Branch_Of_Dead_Tree_Box,5,0,0,0,0,1
+//IG_Lucky_Scroll08,Dark_Lord_Card,1,0,0,0,0,1
+//IG_Lucky_Scroll08,Dark_Illusion_Card,1,0,0,0,0,1
+//IG_Lucky_Scroll08,Angelic_Chain_,2,0,0,0,0,1
+//IG_Lucky_Scroll08,Satanic_Chain_,3,0,0,0,0,1
+//IG_Lucky_Scroll08,Magestic_Goat_TW,2,0,0,0,0,1
+//IG_Lucky_Scroll08,Bunny_Band_,3,0,0,0,0,1
+//IG_Lucky_Scroll08,Drooping_Kitty_,5,0,0,0,0,1
+//IG_Lucky_Scroll08,Tulip_Hairpin,65,0,0,0,0,1
+//IG_Lucky_Scroll08,Insurance_Package,60,0,0,0,0,1
+//IG_Lucky_Scroll08,Leaf_Of_Yggdrasil,110,05,0,0,0,1
 
 //IG_Br_SwordPackage,Plate_Armor_,0,1,0,0,0,1
 //IG_Br_SwordPackage,Shield_,0,1,0,0,0,1

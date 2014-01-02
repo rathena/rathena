@@ -250,6 +250,7 @@ typedef uintptr_t uintptr;
 #define inline __inline
 #define forceinline __forceinline
 #define ra_align(n) __declspec(align(n))
+#define _chdir chdir
 #else
 // For GCC
 #define forceinline __attribute__((always_inline)) inline

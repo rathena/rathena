@@ -2519,32 +2519,39 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 	int i,n,ne,nn;
 	unsigned char *buf;
 	unsigned char *bufe;
-	unsigned char *bufn;
 #if PACKETVER < 5
 	const int s = 10; //Entry size.normal item
 	const int sidx=4; //start itemlist idx
+	const int cmd = 0xa5;
 #elif PACKETVER < 20080102
 	const int s = 18;
 	const int sidx=4;
+	const int cmd = 0x1f0;
 #elif PACKETVER < 20120925
 	const int s = 22;
 	const int sidx=4;
+	const int cmd = 0x2ea;
 #else
 	const int s = 24;
 	const int sidx = 4+24;
+	const int cmd = 0x995;
 #endif
 #if PACKETVER < 20071002
 	const int se = 20; //entry size equip
 	const int sidxe = 4; //start itemlist idx
+	const int cmde = 0xa6;
 #elif PACKETVER < 20100629
 	const int se = 26;
 	const int sidxe = 4;
+	const int cmde = 0xa6;
 #elif PACKETVER < 20120925
 	const int se = 28;
 	const int sidxe = 4;
+	const int cmde = 0x2d1;
 #else
 	const int se = 31;
 	const int sidxe = 4+24;
+	const int cmde = 0x996;
 #endif
 
 	buf = (unsigned char*)aMalloc(items_length * s + sidx);
@@ -2564,39 +2571,29 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 			n++;
 		}
 	}
-	for (i = 0; i < n;) // Loop through non-equipable items
+	for (i = 0; i < n; i += nn) // Loop through non-equipable items
 	{
-		nn = n - i < (client_buf - 4)/s ? n - i : (client_buf - 4)/s; // Split up non-equipable items
-		bufn = buf + i*s; // Update buffer to new index range
-		i += nn;
-#if PACKETVER < 5
-		WBUFW(bufn,0)=0xa5;
-#elif PACKETVER < 20080102
-		WBUFW(bufn,0)=0x1f0;
-#elif PACKETVER < 20120925
-		WBUFW(bufn,0)=0x2ea;
-#else
-		WBUFW(bufn,0)=0x995;
-		memset((char*)WBUFP(buf,4),0,24); //storename
+		nn = n - i < (client_buf - sidx)/s ? n - i : (client_buf - sidx)/s; // Split up non-equipable items
+		WFIFOHEAD(sd->fd,sidx+nn*s);
+		WFIFOW(sd->fd,0)=cmd;
+		WFIFOW(sd->fd,2)=sidx+nn*s;
+#if PACKETVER >= 20120925
+		memset((char*)WFIFOP(sd->fd,4),0,24); //storename
 #endif
-		WBUFW(bufn,2)=sidx+nn*s;
-		clif_send(bufn, WBUFW(bufn,2), &sd->bl, SELF);
+		memcpy(WFIFOP(sd->fd,sidx),buf + sidx + i*s,nn*s);
+		WFIFOSET(sd->fd,WFIFOW(sd->fd,2));
 	}
-	for (i = 0; i < ne;) // Loop through equipable items
+	for (i = 0; i < ne; i += nn) // Loop through equipable items
 	{
-		nn = ne - i < (client_buf - 4)/se ? ne - i : (client_buf - 4)/se; // Split up equipable items
-		bufn = bufe + i*se; // Update buffer to new index range
-		i += nn;
-#if PACKETVER < 20071002
-		WBUFW(bufn,0)=0xa6;
-#elif PACKETVER < 20120925
-		WBUFW(bufn,0)=0x2d1;
-#else
-		WBUFW(bufn,0)=0x996;
-		memset((char*)WBUFP(bufn,4),0,24); //storename
+		nn = ne - i < (client_buf - sidxe)/se ? ne - i : (client_buf - sidxe)/se; // Split up equipable items
+		WFIFOHEAD(sd->fd,sidxe+nn*se);
+		WFIFOW(sd->fd,0)=cmde;
+		WFIFOW(sd->fd,2)=sidxe+nn*se;
+#if PACKETVER >= 20120925
+		memset((char*)WFIFOP(sd->fd,4),0,24); //storename
 #endif
-		WBUFW(bufn,2)=sidxe+nn*se;
-		clif_send(bufn, WBUFW(bufn,2), &sd->bl, SELF);
+		memcpy(WFIFOP(sd->fd,sidxe),bufe + sidxe + i*se,nn*se);
+		WFIFOSET(sd->fd,WFIFOW(sd->fd,2));
 	}
 
 	if( buf ) aFree(buf);
@@ -5713,7 +5710,7 @@ void clif_maptypeproperty2(struct block_list *bl,enum send_target t) {
 	WBUFB(buf,4) = ((map_flag_vs(bl->m))?0x01:0); //tvt ?
 	WBUFB(buf,4) |= ((map_flag_gvg(bl->m))?0x02:0); //gvg
 	WBUFB(buf,4) |= ((map_flag_gvg2(bl->m))?0x04:0); //siege
-	WBUFB(buf,4) |= ((map[bl->m].flag.nomineeffect)?0:0x08); //mineffect @FIXME what this do
+	WBUFB(buf,4) |= (map[bl->m].flag.nomineeffect || !map_flag_gvg2(bl->m))?0:0x08; //disable mine effect on nomineeffect map and enable it on gvgmap by default
 	WBUFB(buf,4) |= ((map[bl->m].flag.nolockon)?0x10:0); //nolockon 0x10 @FIXME what this do
 	WBUFB(buf,4) |= ((map[bl->m].flag.pvp)?0x20:0); //countpk
 	WBUFB(buf,4) |= 0; //nopartyformation 0x40
@@ -6087,9 +6084,9 @@ void clif_item_refine_list(struct map_session_data *sd)
 	fd=sd->fd;
 
 	refine_item[0] = -1;
-	refine_item[1] = pc_search_inventory(sd,1010);
-	refine_item[2] = pc_search_inventory(sd,1011);
-	refine_item[3] = refine_item[4] = pc_search_inventory(sd,984);
+	refine_item[1] = pc_search_inventory(sd,ITEMID_PHRACON);
+	refine_item[2] = pc_search_inventory(sd,ITEMID_EMVERETARCON);
+	refine_item[3] = refine_item[4] = pc_search_inventory(sd,ITEMID_ORIDECON);
 
 	WFIFOHEAD(fd, MAX_INVENTORY * 13 + 4);
 	WFIFOW(fd,0)=0x221;
@@ -8204,20 +8201,14 @@ void clif_callpartner(struct map_session_data *sd)
 
 	WBUFW(buf,0) = 0x1e6;
 
-	if( sd->status.partner_id )
-	{
-		const char *p;
-		if( ( p = map_charid2nick(sd->status.partner_id) ) != NULL )
-		{
+	if( sd->status.partner_id ) {
+		const char *p = map_charid2nick(sd->status.partner_id);
+		struct map_session_data *p_sd = pc_get_partner(sd);
+		if( p != NULL && p_sd != NULL && !p_sd->state.autotrade )
 			memcpy(WBUFP(buf,2), p, NAME_LENGTH);
-		}
 		else
-		{
 			WBUFB(buf,2) = 0;
-		}
-	}
-	else
-	{// Send zero-length name if no partner, to initialize the client buffer.
+	} else {// Send zero-length name if no partner, to initialize the client buffer.
 		WBUFB(buf,2) = 0;
 	}
 
@@ -17830,157 +17821,164 @@ void packetdb_readdb(void)
 		{ "ZC_PERSONAL_INFOMATION_CHN", ZC_PERSONAL_INFOMATION_CHN},
 		{ "ZC_CLEAR_DIALOG", ZC_CLEAR_DIALOG},
 	};
+	const char *filename[] = { "packet_db.txt", "import/packet_db.txt"};
+	int f;
 
 	// initialize packet_db[SERVER] from hardcoded packet_len_table[] values
 	memset(packet_db,0,sizeof(packet_db));
 	for( i = 0; i < ARRAYLENGTH(packet_len_table); ++i )
 		packet_len(i) = packet_len_table[i];
 
-	sprintf(line, "%s/packet_db.txt", db_path);
-	if( (fp=fopen(line,"r"))==NULL ){
-		ShowFatalError("can't read %s\n", line);
-		exit(EXIT_FAILURE);
-	}
+	for(f = 0; f<ARRAYLENGTH(filename); f++){
+		sprintf(line, "%s/%s", db_path,filename[f]);
+		if( (fp=fopen(line,"r"))==NULL ){
+			if(f==0) {
+				ShowFatalError("can't read %s\n", line);
+				exit(EXIT_FAILURE);
+			}
+			return;
+		}
 
-	clif_config.packet_db_ver = MAX_PACKET_VER;
-	packet_ver = MAX_PACKET_VER;	// read into packet_db's version by default
-	while( fgets(line, sizeof(line), fp) )
-	{
-		ln++;
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		if (sscanf(line,"%256[^:]: %256[^\r\n]",w1,w2) == 2)
+		clif_config.packet_db_ver = MAX_PACKET_VER;
+		packet_ver = MAX_PACKET_VER;	// read into packet_db's version by default
+		while( fgets(line, sizeof(line), fp) )
 		{
-			if(strcmpi(w1,"packet_ver")==0) {
-				int prev_ver = packet_ver;
-				skip_ver = 0;
-				packet_ver = atoi(w2);
-				if ( packet_ver > MAX_PACKET_VER )
-				{	//Check to avoid overflowing. [Skotlex]
-					if( (warned&1) == 0 )
-						ShowWarning("The packet_db table only has support up to version %d.\n", MAX_PACKET_VER);
-					warned &= 1;
-					skip_ver = 1;
-				}
-				else if( packet_ver < 0 )
-				{
-					if( (warned&2) == 0 )
-						ShowWarning("Negative packet versions are not supported.\n");
-					warned &= 2;
-					skip_ver = 1;
-				}
-				else if( packet_ver == SERVER )
-				{
-					if( (warned&4) == 0 )
-						ShowWarning("Packet version %d is reserved for server use only.\n", SERVER);
-					warned &= 4;
-					skip_ver = 1;
-				}
+			ln++;
+			if(line[0]=='/' && line[1]=='/')
+				continue;
+			if (sscanf(line,"%256[^:]: %256[^\r\n]",w1,w2) == 2)
+			{
+				if(strcmpi(w1,"packet_ver")==0) {
+					int prev_ver = packet_ver;
+					skip_ver = 0;
+					packet_ver = atoi(w2);
+					if ( packet_ver > MAX_PACKET_VER )
+					{	//Check to avoid overflowing. [Skotlex]
+						if( (warned&1) == 0 )
+							ShowWarning("The packet_db table only has support up to version %d.\n", MAX_PACKET_VER);
+						warned &= 1;
+						skip_ver = 1;
+					}
+					else if( packet_ver < 0 )
+					{
+						if( (warned&2) == 0 )
+							ShowWarning("Negative packet versions are not supported.\n");
+						warned &= 2;
+						skip_ver = 1;
+					}
+					else if( packet_ver == SERVER )
+					{
+						if( (warned&4) == 0 )
+							ShowWarning("Packet version %d is reserved for server use only.\n", SERVER);
+						warned &= 4;
+						skip_ver = 1;
+					}
 
-				if( skip_ver )
-				{
-					ShowWarning("Skipping packet version %d.\n", packet_ver);
-					packet_ver = prev_ver;
+					if( skip_ver )
+					{
+						ShowWarning("Skipping packet version %d.\n", packet_ver);
+						packet_ver = prev_ver;
+						continue;
+					}
+					// copy from previous version into new version and continue
+					// - indicating all following packets should be read into the newer version
+					memcpy(&packet_db[packet_ver], &packet_db[prev_ver], sizeof(packet_db[0]));
+					memcpy(&packet_db_ack[packet_ver], &packet_db_ack[prev_ver], sizeof(packet_db_ack[0]));
+					continue;
+				} else if(strcmpi(w1,"packet_db_ver")==0) {
+					if(strcmpi(w2,"default")==0) //This is the preferred version.
+						clif_config.packet_db_ver = MAX_PACKET_VER;
+					else // to manually set the packet DB version
+						clif_config.packet_db_ver = cap_value(atoi(w2), 0, MAX_PACKET_VER);
+
 					continue;
 				}
-				// copy from previous version into new version and continue
-				// - indicating all following packets should be read into the newer version
-				memcpy(&packet_db[packet_ver], &packet_db[prev_ver], sizeof(packet_db[0]));
-				memcpy(&packet_db_ack[packet_ver], &packet_db_ack[prev_ver], sizeof(packet_db_ack[0]));
-				continue;
-			} else if(strcmpi(w1,"packet_db_ver")==0) {
-				if(strcmpi(w2,"default")==0) //This is the preferred version.
-					clif_config.packet_db_ver = MAX_PACKET_VER;
-				else // to manually set the packet DB version
-					clif_config.packet_db_ver = cap_value(atoi(w2), 0, MAX_PACKET_VER);
-
-				continue;
 			}
-		}
 
-		if( skip_ver != 0 )
-			continue; // Skipping current packet version
+			if( skip_ver != 0 )
+				continue; // Skipping current packet version
 
-		memset(str,0,sizeof(str));
-		for(j=0,p=line;j<4 && p; ++j)
-		{
-			str[j]=p;
-			p=strchr(p,',');
-			if(p) *p++=0;
-		}
-		if(str[0]==NULL)
-			continue;
-		cmd=strtol(str[0],(char **)NULL,0);
-
-		if(max_cmd < cmd)
-			max_cmd = cmd;
-		if(cmd <= 0 || cmd > MAX_PACKET_DB)
-			continue;
-		if(str[1]==NULL){
-			ShowError("packet_db: packet len error\n");
-			continue;
-		}
-
-		packet_db[packet_ver][cmd].len = (short)atoi(str[1]);
-
-		if(str[2]==NULL){
-			packet_db[packet_ver][cmd].func = NULL;
-			ln++;
-			continue;
-		}
-
-		// look up processing function by name
-		ARR_FIND( 0, ARRAYLENGTH(clif_parse_func), j, clif_parse_func[j].name != NULL && strcmp(str[2],clif_parse_func[j].name)==0 );
-		if( j < ARRAYLENGTH(clif_parse_func) )
-			packet_db[packet_ver][cmd].func = clif_parse_func[j].func;
-		else { //search if it's a mapped ack func
-			ARR_FIND( 0, ARRAYLENGTH(clif_ack_func), j, clif_ack_func[j].name != NULL && strcmp(str[2],clif_ack_func[j].name)==0 );
-			if( j < ARRAYLENGTH(clif_ack_func)) {
-				int fidx = clif_ack_func[j].funcidx;
-				packet_db_ack[packet_ver][fidx] = cmd;
-				//ShowInfo("Added %s, <=> %X i=%d for v=%d\n",clif_ack_func[j].name,cmd,fidx,packet_ver);
-			}
-		}
-
-		// set the identifying cmd for the packet_db version
-		if (strcmp(str[2],"wanttoconnection")==0)
-			clif_config.connect_cmd[packet_ver] = cmd;
-
-		if(str[3]==NULL){
-			ShowError("packet_db: packet error\n");
-			exit(EXIT_FAILURE);
-		}
-		for(j=0,p2=str[3];p2;j++){
-			short k;
-			str2[j]=p2;
-			p2=strchr(p2,':');
-			if(p2) *p2++=0;
-			k = atoi(str2[j]);
-			// if (packet_db[packet_ver][cmd].pos[j] != k && clif_config.prefer_packet_db)	// not used for now
-
-			if( j >= MAX_PACKET_POS )
+			memset(str,0,sizeof(str));
+			for(j=0,p=line;j<4 && p; ++j)
 			{
-				ShowError("Too many positions found for packet 0x%04x (max=%d).\n", cmd, MAX_PACKET_POS);
-				break;
+				str[j]=p;
+				p=strchr(p,',');
+				if(p) *p++=0;
+			}
+			if(str[0]==NULL)
+				continue;
+			cmd=strtol(str[0],(char **)NULL,0);
+
+			if(max_cmd < cmd)
+				max_cmd = cmd;
+			if(cmd <= 0 || cmd > MAX_PACKET_DB)
+				continue;
+			if(str[1]==NULL){
+				ShowError("packet_db: packet len error\n");
+				continue;
 			}
 
-			packet_db[packet_ver][cmd].pos[j] = k;
-		}
-		entries++;
-	}
-	fclose(fp);
-	if(max_cmd > MAX_PACKET_DB)
-	{
-		ShowWarning("Found packets up to 0x%X, ignored 0x%X and above.\n", max_cmd, MAX_PACKET_DB);
-		ShowWarning("Please increase MAX_PACKET_DB and recompile.\n");
-	}
-	if (!clif_config.connect_cmd[clif_config.packet_db_ver])
-	{	//Locate the nearest version that we still support. [Skotlex]
-		for(j = clif_config.packet_db_ver; j >= 0 && !clif_config.connect_cmd[j]; j--);
+			packet_db[packet_ver][cmd].len = (short)atoi(str[1]);
 
-		clif_config.packet_db_ver = j?j:MAX_PACKET_VER;
+			if(str[2]==NULL){
+				packet_db[packet_ver][cmd].func = NULL;
+				ln++;
+				continue;
+			}
+
+			// look up processing function by name
+			ARR_FIND( 0, ARRAYLENGTH(clif_parse_func), j, clif_parse_func[j].name != NULL && strcmp(str[2],clif_parse_func[j].name)==0 );
+			if( j < ARRAYLENGTH(clif_parse_func) )
+				packet_db[packet_ver][cmd].func = clif_parse_func[j].func;
+			else { //search if it's a mapped ack func
+				ARR_FIND( 0, ARRAYLENGTH(clif_ack_func), j, clif_ack_func[j].name != NULL && strcmp(str[2],clif_ack_func[j].name)==0 );
+				if( j < ARRAYLENGTH(clif_ack_func)) {
+					int fidx = clif_ack_func[j].funcidx;
+					packet_db_ack[packet_ver][fidx] = cmd;
+					//ShowInfo("Added %s, <=> %X i=%d for v=%d\n",clif_ack_func[j].name,cmd,fidx,packet_ver);
+				}
+			}
+
+			// set the identifying cmd for the packet_db version
+			if (strcmp(str[2],"wanttoconnection")==0)
+				clif_config.connect_cmd[packet_ver] = cmd;
+
+			if(str[3]==NULL){
+				ShowError("packet_db: packet error\n");
+				exit(EXIT_FAILURE);
+			}
+			for(j=0,p2=str[3];p2;j++){
+				short k;
+				str2[j]=p2;
+				p2=strchr(p2,':');
+				if(p2) *p2++=0;
+				k = atoi(str2[j]);
+				// if (packet_db[packet_ver][cmd].pos[j] != k && clif_config.prefer_packet_db)	// not used for now
+
+				if( j >= MAX_PACKET_POS )
+				{
+					ShowError("Too many positions found for packet 0x%04x (max=%d).\n", cmd, MAX_PACKET_POS);
+					break;
+				}
+
+				packet_db[packet_ver][cmd].pos[j] = k;
+			}
+			entries++;
+		}
+		fclose(fp);
+		if(max_cmd > MAX_PACKET_DB)
+		{
+			ShowWarning("Found packets up to 0x%X, ignored 0x%X and above.\n", max_cmd, MAX_PACKET_DB);
+			ShowWarning("Please increase MAX_PACKET_DB and recompile.\n");
+		}
+		if (!clif_config.connect_cmd[clif_config.packet_db_ver])
+		{	//Locate the nearest version that we still support. [Skotlex]
+			for(j = clif_config.packet_db_ver; j >= 0 && !clif_config.connect_cmd[j]; j--);
+
+			clif_config.packet_db_ver = j?j:MAX_PACKET_VER;
+		}
+		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", entries, "packet_db.txt");
 	}
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", entries, "packet_db.txt");
 	ShowStatus("Using default packet version: "CL_WHITE"%d"CL_RESET".\n", clif_config.packet_db_ver);
 }
 

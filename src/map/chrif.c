@@ -279,6 +279,7 @@ int chrif_isconnected(void) {
  * Flag = 2: Character is changing map-servers
  *------------------------------------------*/
 int chrif_save(struct map_session_data *sd, int flag) {
+	uint32 mmo_charstatus_len = 0;
 	nullpo_retr(-1, sd);
 
 	pc_makesavestatus(sd);
@@ -312,9 +313,10 @@ int chrif_save(struct map_session_data *sd, int flag) {
 	if (sd->state.reg_dirty&1)
 		intif_saveregistry(sd, 1); //Save account2 regs
 
-	WFIFOHEAD(char_fd, sizeof(sd->status) + 13);
+	mmo_charstatus_len = sizeof(sd->status) + 13;
+	WFIFOHEAD(char_fd, mmo_charstatus_len);
 	WFIFOW(char_fd,0) = 0x2b01;
-	WFIFOW(char_fd,2) = sizeof(sd->status) + 13;
+	WFIFOW(char_fd,2) = mmo_charstatus_len;
 	WFIFOL(char_fd,4) = sd->status.account_id;
 	WFIFOL(char_fd,8) = sd->status.char_id;
 	WFIFOB(char_fd,12) = (flag==1)?1:0; //Flag to tell char-server this character is quitting.
@@ -1777,7 +1779,8 @@ int chrif_bsdata_request(int char_id) {
 * @param sd
 */
 int chrif_save_bsdata(struct map_session_data *sd) {
-	int i, count=0;
+	int i;
+	uint8 count = 0;
 	unsigned int tick;
 	struct bonus_script_data bs;
 	const struct TimerData *timer;
@@ -1789,11 +1792,17 @@ int chrif_save_bsdata(struct map_session_data *sd) {
 	WFIFOW(char_fd,0) = 0x2b2e;
 	WFIFOL(char_fd,4) = sd->status.char_id;
 	
-	//Clear un-saved data
-	pc_bonus_script_check(sd,BONUS_FLAG_REM_ON_LOGOUT);
+	i = BONUS_FLAG_REM_ON_LOGOUT; //Remove bonus with this flag
+	if (battle_config.debuff_on_logout&1) //Remove negative buffs
+		i |= BONUS_FLAG_REM_DEBUFF;
+	if (battle_config.debuff_on_logout&2) //Remove positive buffs
+		i |= BONUS_FLAG_REM_BUFF;
+	
+	//Clear data that won't be stored
+	pc_bonus_script_clear(sd,i);
 
 	for (i = 0; i < MAX_PC_BONUS_SCRIPT; i++) {
-		if (!(&sd->bonus_script[i]) || !sd->bonus_script[i].script || strlen(sd->bonus_script[i].script_str) == 0)
+		if (!(&sd->bonus_script[i]) || !sd->bonus_script[i].script || sd->bonus_script[i].script_str[0] == '\0')
 			continue;
 
 		timer = get_timer(sd->bonus_script[i].tid);
@@ -1803,8 +1812,9 @@ int chrif_save_bsdata(struct map_session_data *sd) {
 		memcpy(bs.script,sd->bonus_script[i].script_str,strlen(sd->bonus_script[i].script_str)+1);
 		bs.tick = DIFF_TICK(timer->tick,tick);
 		bs.flag = sd->bonus_script[i].flag;
-		bs.type = (sd->bonus_script[i].isBuff) ? 1 : 0;
-		
+		bs.type = sd->bonus_script[i].type;
+		bs.icon = sd->bonus_script[i].icon;
+
 		memcpy(WFIFOP(char_fd,10+count*sizeof(struct bonus_script_data)),&bs,sizeof(struct bonus_script_data));
 		delete_timer(sd->bonus_script[i].tid,pc_bonus_script_timer);
 		pc_bonus_script_remove(sd,i);
@@ -1826,9 +1836,9 @@ int chrif_save_bsdata(struct map_session_data *sd) {
 */
 int chrif_load_bsdata(int fd) {
 	struct map_session_data *sd;
-	struct bonus_script_data *bs;
 	int cid, count;
-	uint8 i, count_ = 0;
+	uint8 i;
+	bool calc = false;
 
 	cid = RFIFOL(fd,4);
 	sd = map_charid2sd(cid);
@@ -1847,19 +1857,22 @@ int chrif_load_bsdata(int fd) {
 
 	for (i = 0; i < count; i++) {
 		struct script_code *script;
-		bs = (struct bonus_script_data*)RFIFOP(fd,10 + i*sizeof(struct bonus_script_data));
+		struct bonus_script_data *bs = (struct bonus_script_data*)RFIFOP(fd,10 + i*sizeof(struct bonus_script_data));
 
-		if (!(script = parse_script(bs->script,"chrif_load_bsdata",1,1)))
+		if (bs->script[0] == '\0' || !(script = parse_script(bs->script,"chrif_load_bsdata",1,1)))
 			continue;
 
 		memcpy(sd->bonus_script[i].script_str,bs->script,strlen(bs->script));
 		sd->bonus_script[i].script = script;
 		sd->bonus_script[i].tick = gettick() + bs->tick;
 		sd->bonus_script[i].flag = (uint8)bs->flag;
-		sd->bonus_script[i].isBuff = (bs->type) ? true : false;
-		count_++;
+		sd->bonus_script[i].type = bs->type;
+		sd->bonus_script[i].icon = bs->icon;
+		if (bs->icon != SI_BLANK) //Gives status icon if exist
+			clif_status_change(&sd->bl,sd->bonus_script[i].icon,1,bs->tick,1,0,0);
+		calc = true;
 	}
-	if (count_)
+	if (calc)
 		status_calc_pc(sd,false);
 	return 0;
 }
@@ -1903,7 +1916,7 @@ int do_final_chrif(void) {
  *------------------------------------------*/
 int do_init_chrif(void) {
 	if(sizeof(struct mmo_charstatus) > 0xFFFF){
-		ShowError("mmo_charstatus size = %d is too big to be transmitted.\n",
+		ShowError("mmo_charstatus size = %d is too big to be transmitted. (must be below 0xFFFF) \n",
 			sizeof(struct mmo_charstatus));
 		exit(EXIT_FAILURE);
 	}

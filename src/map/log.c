@@ -6,10 +6,10 @@
 #include "../common/strlib.h"
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
+#include "map.h"
 #include "battle.h"
 #include "itemdb.h"
 #include "log.h"
-#include "map.h"
 #include "mob.h"
 #include "pc.h"
 
@@ -240,7 +240,7 @@ void log_pick_pc(struct map_session_data* sd, e_log_pick_type type, int amount, 
 void log_pick_mob(struct mob_data* md, e_log_pick_type type, int amount, struct item* itm)
 {
 	nullpo_retv(md);
-	log_pick(md->class_, md->bl.m, type, amount, itm);
+	log_pick(md->mob_id, md->bl.m, type, amount, itm);
 }
 
 /// logs zeny transactions

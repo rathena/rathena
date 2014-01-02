@@ -509,11 +509,11 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 
 	//FIXME: delete taming item here, if this was an item-invoked capture and the item was flagged as delay-consume [ultramage]
 
-	i = search_petDB_index(md->class_,PET_CLASS);
+	i = search_petDB_index(md->mob_id,PET_CLASS);
 	//catch_target_class == 0 is used for universal lures (except bosses for now). [Skotlex]
 	if (sd->catch_target_class == 0 && !(md->status.mode&MD_BOSS))
-		sd->catch_target_class = md->class_;
-	if(i < 0 || sd->catch_target_class != md->class_) {
+		sd->catch_target_class = md->mob_id;
+	if(i < 0 || sd->catch_target_class != md->mob_id) {
 		clif_emotion(&md->bl, E_AG);	//mob will do /ag if wrong lure is used on them.
 		clif_pet_roulette(sd,0);
 		sd->catch_target_class = -1;
@@ -1213,7 +1213,7 @@ int pet_skill_support_timer(int tid, unsigned int tick, int id, intptr_t data)
  *------------------------------------------*/
 int read_petdb()
 {
-	char* filename[] = {"pet_db.txt","pet_db2.txt"};
+	char* filename[] = {"pet_db.txt","import/pet_db.txt"};
 	FILE *fp;
 	int nameid,i,j,k;
 
@@ -1243,10 +1243,8 @@ int read_petdb()
 
 		sprintf(line, "%s/%s", db_path, filename[i]);
 		fp=fopen(line,"r");
-		if( fp == NULL )
-		{
-			if( i == 0 )
-				ShowError("can't read %s\n",line);
+		if( fp == NULL ) {
+			if( i == 0 ) ShowError("can't read %s\n",line);
 			continue;
 		}
 

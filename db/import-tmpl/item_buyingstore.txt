@@ -1,0 +1,10 @@
+// Buying Store Item List
+// List of items that can be sold to buying stores.
+//
+// Structure of Database:
+// ItemID
+//
+// Note:
+//  Items are in same order as data\buyingstoreitemlist.txt, which
+//  must be edited as well for the client to accept added items.
+

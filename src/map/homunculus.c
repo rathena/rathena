@@ -750,7 +750,7 @@ int merc_hom_change_name_ack(struct map_session_data *sd, char* name, int flag)
 
 	normalize_name(name," ");//bugreport:3032
 
-	if ( !flag || !strlen(name) ) {
+	if ( !flag || name[0] == '\0' ) {
 		clif_displaymessage(sd->fd, msg_txt(sd,280)); // You cannot use this name
 		return 0;
 	}
@@ -1219,26 +1219,11 @@ static bool read_homunculusdb_sub(char* str[], int columns, int current)
 int read_homunculusdb(void)
 {
 	int i;
-	const char *filename[]={DBPATH"homunculus_db.txt","homunculus_db2.txt"};
-
+	const char *filename[]={DBPATH"homunculus_db.txt","import/homunculus_db.txt"};
 	memset(homunculus_db,0,sizeof(homunculus_db));
-	for(i = 0; i<ARRAYLENGTH(filename); i++)
-	{
-		if( i > 0 )
-		{
-			char path[256];
-
-			sprintf(path, "%s/%s", db_path, filename[i]);
-
-			if( !exists(path) )
-			{
-				continue;
-			}
-		}
-
-		sv_readdb(db_path, filename[i], ',', 50, 50, MAX_HOMUNCULUS_CLASS, &read_homunculusdb_sub);
+	for(i = 0; i<ARRAYLENGTH(filename); i++){
+		sv_readdb(db_path, filename[i], ',', 50, 50, MAX_HOMUNCULUS_CLASS, &read_homunculusdb_sub, i);
 	}
-
 	return 0;
 }
 
@@ -1286,9 +1271,12 @@ static bool read_homunculus_skilldb_sub(char* split[], int columns, int current)
 
 int read_homunculus_skilldb(void)
 {
+	const char *filename[]={ "homun_skill_tree.txt","import/homun_skill_tree.txt"};
+	int i;
 	memset(hskill_tree,0,sizeof(hskill_tree));
-	sv_readdb(db_path, "homun_skill_tree.txt", ',', 13, 15, -1, &read_homunculus_skilldb_sub);
-
+	for(i = 0; i<ARRAYLENGTH(filename); i++){
+		sv_readdb(db_path, filename[i], ',', 13, 15, -1, &read_homunculus_skilldb_sub, i);
+	}
 	return 0;
 }
 
@@ -1299,16 +1287,17 @@ void read_homunculus_expdb(void)
 	int i, j=0;
 	char *filename[]={
 		DBPATH"exp_homun.txt",
-		"exp_homun2.txt"};
+		"import/exp_homun.txt"
+	};
 
 	memset(hexptbl,0,sizeof(hexptbl));
-	for(i=0; i<2; i++){
+	for(i=0; i<ARRAYLENGTH(filename); i++){
 		sprintf(line, "%s/%s", db_path, filename[i]);
 		fp=fopen(line,"r");
 		if(fp == NULL){
 			if(i != 0)
 				continue;
-			ShowError("can't read %s\n",line);
+			if(i==0) ShowError("can't read %s\n",line);
 			return;
 		}
 		while(fgets(line, sizeof(line), fp) && j < MAX_LEVEL)
@@ -1322,7 +1311,7 @@ void read_homunculus_expdb(void)
 		}
 		if (hexptbl[MAX_LEVEL - 1]) // Last permitted level have to be 0!
 		{
-			ShowWarning("read_hexptbl: Reached max level in exp_homun [%d]. Remaining lines were not read.\n ", MAX_LEVEL);
+			ShowWarning("read_hexptbl: Reached max level in %s [%d]. Remaining lines were not read.\n ",filename,MAX_LEVEL);
 			hexptbl[MAX_LEVEL - 1] = 0;
 		}
 		fclose(fp);

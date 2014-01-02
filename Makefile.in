@@ -64,13 +64,16 @@ import:
 # 1) create conf/import folder
 # 2) add missing files
 # 3) remove remaining .svn folder
-	@echo "building conf/import and conf/msg_conf/import folder..."
+	@echo "building conf/import, conf/msg_conf/import and db/import folder..."
 	@if test ! -d conf/import ; then mkdir conf/import ; fi
 	@for f in $$(ls conf/import-tmpl) ; do if test ! -e conf/import/$$f ; then cp conf/import-tmpl/$$f conf/import ; fi ; done
 	@rm -rf conf/import/.svn
 	@if test ! -d conf/msg_conf/import ; then mkdir conf/msg_conf/import ; fi
 	@for f in $$(ls conf/msg_conf/import-tmpl) ; do if test ! -e conf/msg_conf/import/$$f ; then cp conf/msg_conf/import-tmpl/$$f conf/msg_conf/import ; fi ; done
 	@rm -rf conf/msg_conf/import/.svn
+	@if test ! -d db/import ; then mkdir db/import ; fi
+	@for f in $$(ls db/import-tmpl) ; do if test ! -e db/import/$$f ; then cp db/import-tmpl/$$f db/import ; fi ; done
+	@rm -rf db/import/.svn
 
 clean:
 	@$(MAKE) -C src/common $@
@@ -92,7 +95,7 @@ help:
 	@echo "'char'        - builds char server"
 	@echo "'map'        - builds map server"
 	@echo "'tools'       - builds all the tools in src/tools"
-	@echo "'import'      - builds conf/import folder from the template conf/import-tmpl"
+	@echo "'import'      - builds conf/import, conf/msg_conf/import and db/import folders from their template folders (x-tmpl)"
 	@echo "'all'         - builds all the above targets"
 	@echo "'sql'         - builds servers (targets 'common_sql' 'login' 'char' 'map' and 'import')"
 	@echo "'test'        - builds tests"

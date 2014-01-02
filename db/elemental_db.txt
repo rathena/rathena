@@ -2,9 +2,10 @@
 //
 // Structure of Database:
 // ID,Sprite_Name,Name,LV,HP,SP,Range1,ATK1,ATK2,DEF,MDEF,STR,AGI,VIT,INT,DEX,LUK,Range2,Range3,Scale,Race,Element,Speed,aDelay,aMotion,dMotion
-// NOTE
+//
+// Notes:
 // Summoned Elemental’s STATs are affected by the Caster’s Base Level and STATs.
-// So all value added here will be added and will not override the calculated STATs of the summoned elemental.
+// In other words, all values specified will be added to (and will not override) the calculated STATs of the summoned elemental.
 
 // Monster Elementals
 2114,EL_AGNI_S,Agni,100,0,1,1,0,0,0,0,0,0,0,0,0,0,5,12,0,0,83,200,504,1020,360

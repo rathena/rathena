@@ -4110,7 +4110,16 @@ This command will return the SVN revision number that the server is
 currently running on.
 
     if ( get_revision() >= 15000 )
-        mes "Welcome rAthena!";
+        mes "Welcome to rAthena!";
+
+---------------------------------------
+
+*get_githash()
+
+This command will return the Git Hash that the server is currently running on.
+
+	set .@gitHash$,get_githash();
+	mes "Welcome to rAthena! Git Hash: "+.@gitHash$;
 
 ---------------------------------------
 \\
@@ -5164,7 +5173,7 @@ autobonus and autobonus3).
 
 ---------------------------------------
 
-*bonus_script "<script code>",<duration>{,<flag>{,<type>{,<char_id>}}};
+*bonus_script "<script code>",<duration>{,<flag>{,<type>{,<status_icon>{,<char_id>}}}};
 
 This command will attach a script to a player for a given duration, in seconds.
 After that time, the script will automatically expire. The same bonus cannot be
@@ -5174,15 +5183,19 @@ logs out.
 Note that the maximum number of 'bonus_script' commands that can run simultaneously
 for a player is 10 (MAX_PC_BONUS_SCRIPT in 'src/map/pc.h').
 
-Flags:
+Flags: (Default is 0)
 	&1: Remove when dead.
 	&2: Removable by Dispell.
 	&4: Removable by Clearance.
 	&8: Remove when player logs out.
 
 Types:
-	0: Buff
-	1: Debuff
+	This will be used to decide negative or positive buff for 'debuff_on_logout'
+	0: Ignore the buff type and won't be removed if the flag is not &8 (Default)
+	1: Buff
+	2: Debuff
+
+Status_icon: See db/const.txt at 'Status Icon'. Default is SI_BLANK or -1
 
 Example:
 	// Apple gives you +5 Str bonus for 1 minute when it's consumed.
