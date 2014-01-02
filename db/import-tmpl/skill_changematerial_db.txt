@@ -6,3 +6,4 @@
 // NOTE: 
 // Up to 5 ID/Amount pairs can be specified.
 // Rate = n/10%
+

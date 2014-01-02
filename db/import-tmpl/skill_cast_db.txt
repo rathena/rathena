@@ -15,3 +15,4 @@
 // - Original: 6,0,0,0,30000,0,1000
 // - Modified: 6,0,0,0,30000,0,1000:2500:3000:...
 // Gives Level 1 1000ms cool down, Level 2 2500ms, Level 3 3000ms, and so on.
+

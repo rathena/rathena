@@ -13,3 +13,4 @@
 // Job_Novice,60
 //	Normally, Novice's max. param uses 'max_parameter' in 'conf/battle/player.conf'.
 //	With this config, Novice's max. param will be 60 (for all stats).
+

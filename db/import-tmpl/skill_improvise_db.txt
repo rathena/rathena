@@ -3,3 +3,4 @@
 //
 // Structure of Database:
 // SkillID,Rate
+

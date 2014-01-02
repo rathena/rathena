@@ -2,3 +2,4 @@
 //
 // Structure of Database:
 // MercenryID,SkillID,SkillLevel
+
