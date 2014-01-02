@@ -618,7 +618,6 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 				return true;
 			}
 			break;
-		case BS_GREED:
 		case WS_CARTBOOST:
 		case BS_HAMMERFALL:
 		case BS_ADRENALINE:
