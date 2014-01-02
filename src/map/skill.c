@@ -7255,14 +7255,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case WE_MALE:
-		if( status_get_hp(bl) < status_get_max_hp(bl) / 10 ) {
+		if( status_get_hp(bl) > status_get_max_hp(bl) / 10 ) {
 			int hp_rate=(!skill_lv)? 0:skill_get_hp_rate(skill_id, skill_lv);
 			int gain_hp= tstatus->max_hp*abs(hp_rate)/100; // The earned is the same % of the target HP than it costed the caster. [Skotlex]
 			clif_skill_nodamage(src,bl,skill_id,status_heal(bl, gain_hp, 0, 0),1);
 		}
 		break;
 	case WE_FEMALE:
-		if( status_get_sp(bl) < status_get_max_sp(bl) / 10 ) {
+		if( status_get_sp(bl) > status_get_max_sp(bl) / 10 ) {
 			int sp_rate=(!skill_lv)? 0:skill_get_sp_rate(skill_id, skill_lv);
 			int gain_sp=tstatus->max_sp*abs(sp_rate)/100;// The earned is the same % of the target SP than it costed the caster. [Skotlex]
 			clif_skill_nodamage(src,bl,skill_id,status_heal(bl, 0, gain_sp, 0),1);
