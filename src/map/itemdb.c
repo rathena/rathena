@@ -769,7 +769,6 @@ static void itemdb_read_itemgroup(const char* basedir, bool silent)
 {
 	char filepath[256];
 	sprintf(filepath, "%s/%s", basedir, "item_group_db.txt");
-	memset(&itemgroup_db, 0, sizeof(itemgroup_db));
 	itemdb_read_itemgroup_sub(filepath, silent);
 	return;
 }
@@ -1537,8 +1536,7 @@ static void itemdb_read(void) {
 	else
 		itemdb_readdb();
 
-	
-	
+	memset(&itemgroup_db, 0, sizeof(itemgroup_db));
 	
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
 		int n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
