@@ -7280,8 +7280,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					((!f_sd || sd->status.party_id != f_sd->status.party_id) 
 					&& (!m_sd || sd->status.party_id != m_sd->status.party_id) //if both are online they should all be in same team
 					))
-				|| ((!f_sd || !check_distance_bl(b_bl, f_sd->bl, AREA_SIZE)) //not in same screen
-					&& (!m_sd || !check_distance_bl(b_bl, m_sd->bl, AREA_SIZE)))
+				|| ((!f_sd || !check_distance_bl(b_bl, &f_sd->bl, AREA_SIZE)) //not in same screen
+					&& (!m_sd || !check_distance_bl(b_bl, &m_sd->bl, AREA_SIZE)))
 			) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				map_freeblock_unlock();
