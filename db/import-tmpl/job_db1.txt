@@ -1,0 +1,5 @@
+// Job-specific Values Database
+//
+// Structure of Database:
+// JobID,Weight,HPFactor,HPMultiplicator,SPFactor,Unarmed,Dagger,1HSword,2HSword,1HSpear,2HSpear,1HAxe,2HAxe,1HMace,2HMace(unused),Rod,Bow,Knuckle,Instrument,Whip,Book,Katar,Revolver,Rifle,Gatling Gun,Shotgun,Grenade Launcher,Fuuma Shuriken,2HStaff,Shield
+//

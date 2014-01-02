@@ -1,0 +1,9 @@
+// Item Produce Database
+//
+// Structure of Database:
+// ProduceItemID,ItemLV,RequireSkill,RequireSkillLv,MaterialID1,MaterialAmount1,......
+//
+// Notes:
+// If MaterialAmount is 0, the player must have that item in their inventory (i.e. guides).
+// For example, Mine Bottle requires 0x Marine Sphere Creation Guide (ID 7131).
+

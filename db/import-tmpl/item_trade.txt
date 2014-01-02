@@ -1,0 +1,22 @@
+// Item Trade Restrictions Database
+// Defines special trade rules for individual items.
+//
+// Structure of Database:
+// Item ID, TradeMask,Group Level Override
+//
+// Legend for 'TradeMask' field (bitmask):
+// 1   - item can't be dropped
+// 2   - item can't be traded (nor vended)
+// 4   - wedded partner can override restriction 2
+// 8   - item can't be sold to npcs
+// 16  - item can't be placed in the cart
+// 32  - item can't be placed in the storage
+// 64  - item can't be placed in the guild storage
+// 128 - item can't be attached to mail
+// 256 - item can't be auctioned
+//
+// Example:
+// 1161,67,50
+//	Balmung cannot be dropped, traded, or placed in Guild Storage (1+2+64).
+//	Only groups of group-level 50 and up can override this setting.
+

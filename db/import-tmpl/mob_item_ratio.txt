@@ -1,0 +1,30 @@
+// Specific Item Drop Ratio Database
+// Overrides for global item_rate* values from conf/battle/drops.conf
+//
+// Structure of Database:
+// ItemID,Ratio{,MonsterID}
+//
+// Result:
+// ItemID base drop rates defined in mob_db will not get multiplied
+//  by global item_rate* values (aka drop rates) from
+//  conf/battle/drops.conf. Instead Ratio will be used (100 = 1x).
+// If no MonsterID is specified, all monsters will be affected,
+//  otherwise only listed ones.
+//
+// Examples:
+// 909,100 // Jellopies from monsters will drop with 1x drop rate regardless of global drop rate
+// 909,1000 // Jellopies from monsters will drop with 10x drop rate regardless of global drop rate
+// 909,100,1002 // Jellopies from Porings will drop with 1x drop rate. Other monsters that drop Jellopies are unaffected (use global drop rate).
+//
+// Notes:
+// - By default you can list up to 10 MonsterIDs per ItemID.
+//   It can be changed in src/map/mob.c by adjusting MAX_ITEMRATIO_MOBS.
+// - Only ItemIDs up to MAX_ITEMDB are supported (default: 32768).
+// - Does not override item_drop_*_min/max settings.
+// - Does not affect card/item-granted drops. To adjust card/item-granted
+//   drops, edit them in item_db.
+// - Does affect MVP prizes and Treasure Boxes.
+// - You can add only ONE line per ItemID. If you need various ratios
+//   for different monsters, override drop rate with Ratio=100 and edit
+//   base drop rates in mob_db.
+// - This file is reloaded by @reloadmobdb.

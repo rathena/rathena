@@ -462,8 +462,12 @@ static bool read_mercenarydb_sub(char* str[], int columns, int current)
 
 int read_mercenarydb(void)
 {
+	const char *filename[]={ "mercenary_db.txt","import/mercenary_db.txt"};
+	int i;
 	memset(mercenary_db,0,sizeof(mercenary_db));
-	sv_readdb(db_path, "mercenary_db.txt", ',', 26, 26, MAX_MERCENARY_CLASS, &read_mercenarydb_sub, 0);
+	for(i = 0; i<ARRAYLENGTH(filename); i++){
+		sv_readdb(db_path, filename[i], ',', 26, 26, MAX_MERCENARY_CLASS, &read_mercenarydb_sub, i);
+	}
 
 	return 0;
 }
@@ -501,7 +505,11 @@ static bool read_mercenary_skilldb_sub(char* str[], int columns, int current)
 
 int read_mercenary_skilldb(void)
 {
-	sv_readdb(db_path, "mercenary_skill_db.txt", ',', 3, 3, -1, &read_mercenary_skilldb_sub, 0);
+	const char *filename[]={ "mercenary_skill_db.txt","import/mercenary_skill_db.txt"};
+	int i;
+	for(i = 0; i<ARRAYLENGTH(filename); i++){
+		sv_readdb(db_path, filename[i], ',', 3, 3, -1, &read_mercenary_skilldb_sub, i);
+	}
 
 	return 0;
 }

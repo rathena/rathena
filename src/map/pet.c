@@ -1213,7 +1213,7 @@ int pet_skill_support_timer(int tid, unsigned int tick, int id, intptr_t data)
  *------------------------------------------*/
 int read_petdb()
 {
-	char* filename[] = {"pet_db.txt","pet_db2.txt"};
+	char* filename[] = {"pet_db.txt","import/pet_db.txt"};
 	FILE *fp;
 	int nameid,i,j,k;
 
@@ -1243,10 +1243,8 @@ int read_petdb()
 
 		sprintf(line, "%s/%s", db_path, filename[i]);
 		fp=fopen(line,"r");
-		if( fp == NULL )
-		{
-			if( i == 0 )
-				ShowError("can't read %s\n",line);
+		if( fp == NULL ) {
+			if( i == 0 ) ShowError("can't read %s\n",line);
 			continue;
 		}
 

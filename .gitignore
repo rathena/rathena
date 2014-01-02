@@ -40,6 +40,9 @@
 /3rdparty/mt19937ar/Makefile
 /3rdparty/mt19937ar/*.o
 
+# /db/
+/db/import
+
 # /conf/
 /conf/import
 /conf/msg_conf/import

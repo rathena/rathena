@@ -1,0 +1,46 @@
+// Monster Chat Database
+//
+// Structure of Database:
+// Line_ID#Color_Code#Dialog
+
+1#0xFF0000#Weakling! Challenge me if you have any courage!
+2#0xFF0000#Impressive! I wonder how far your recklessness will take you.
+3#0xFF0000#I almost pity how outmatched you are against me. Now prepare for my attack!
+4#0xFF0000#My loyal servants! Welcome them with a painful death!
+5#0xFF0000#Don't you run away!
+6#0xFF0000#You worthless humans. Your so-called holy powers have no effect on me!
+7#0xFF0000#Useless underlings!...Well, that's fine, I have more weapons to use and dispose.
+8#0xFF0000#Pray to your gods!
+9#0xFF0000#Do you still think you're a match to me?!
+10#0xFF0000#Vanish!
+11#0xFF0000#Let's see how long you can endure my power!
+12#0xFF0000#Is this all you've got?!
+13#0xFF0000#You're tickling me!
+14#0xFF0000#This is how you attack? Watch and learn, weaklings!
+15#0xFF0000#It's time to finish the game!
+16#0xFF0000#Oh, you're stronger than I thought!
+17#0xFF0000#No, this can't be happening! I'm Satan Morroc, Demon King of Destruction!
+18#0xFF0000#I can never die! I'll be coming back for you!
+19#0xFF0000#I was born to conquer this world! None shall stop me!
+20#0xFF0000#Your days are numbered!
+21#0xFF0000#Pulse Strike! My fingers tear steel!
+22#0xFF0000#Hahaha, tell me who I am! I'm Baphomet, the Heir of Hell!
+23#0xFF0000#Enjoy your time on the mortal plane while you can, your hope will soon turn into despair!
+24#0xFF0000#When are you going to learn your lesson? In death?
+25#0xFF0000#No... I can't lose! I won't beg for my life! I'm not running away! I don't accept this as defeat!
+26#0xFF0000#Argh... I... I'm weakening...
+27#0xFF0000#What do you want from me?
+28#0xFF0000#No! I didn't do this! He's the one who planned out all this!
+29#0xFF0000#I just wanted to find peace..!  That's why I have been fleeing away!
+30#0xFF0000#Ahhhh!!! Now, I just have to kill you all!
+31#0xFF0000#Annoying flies!! Get off of me!
+32#0xFF0000#Suffer in Hell!
+33#0xFF0000#Mwahahaha! Taste the anger of the earth!!!
+34#0xFF0000#No... I won't accept this as defeat!
+35#0xFF0000#Will it ease your loneliness to hit me?  Why don't you stay here with me forever, human?
+36#0xFF0000#You will forgot the meaning of time.  I wonder how long can you last in here...
+37#0xFF0000#Is there anyone waiting for you outside of here?  Throw them all away, you are mine now...
+38#0xFF0000#Discard your life and stay confined here.  You will yearn for freedom in captivity !!
+39#0xFF0000#How much will the outside world change if you stay here in solitude for one thousand years?
+40#0xFF0000#Yes! Yearn for your freedom from this confined place, your captivity here will be permanent !!
+

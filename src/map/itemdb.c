@@ -646,14 +646,14 @@ static bool itemdb_read_itemavail(char* str[], int columns, int current)
  * read item group data
  * GroupID,ItemID,Rate{,Amount,isMust,isAnnounced,Duration,isNamed,isBound}
  *------------------------------------------*/
-static void itemdb_read_itemgroup_sub(const char* filename)
+static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 {
 	FILE *fp;
 	int ln=0, entries=0;
 	char line[1024];
 
 	if ((fp=fopen(filename,"r")) == NULL) {
-		ShowError("can't read %s\n", filename);
+		if(silent == 0) ShowError("can't read %s\n", filename);
 		return;
 	}
 	
@@ -670,7 +670,7 @@ static void itemdb_read_itemgroup_sub(const char* filename)
 			if (sscanf(line,"%[^:]: %[^\r\n]",w1,w2) == 2 &&
 				strcmpi(w1,"import") == 0)
 			{
-				itemdb_read_itemgroup_sub(w2);
+				itemdb_read_itemgroup_sub(w2, 0);
 				continue;
 			}
 		}
@@ -765,12 +765,12 @@ static void itemdb_read_itemgroup_sub(const char* filename)
 	return;
 }
 
-static void itemdb_read_itemgroup(void)
+static void itemdb_read_itemgroup(const char* basedir, bool silent)
 {
-	char path[256];
-	snprintf(path, 255, "%s/"DBPATH"item_group_db.txt", db_path);
+	char filepath[256];
+	sprintf(filepath, "%s/%s", basedir, "item_group_db.txt");
 	memset(&itemgroup_db, 0, sizeof(itemgroup_db));
-	itemdb_read_itemgroup_sub(path);
+	itemdb_read_itemgroup_sub(filepath, silent);
 	return;
 }
 
@@ -1538,7 +1538,7 @@ static void itemdb_read(void) {
 		itemdb_readdb();
 
 	
-	itemdb_read_itemgroup();
+	
 	
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
 		int n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
@@ -1550,8 +1550,8 @@ static void itemdb_read(void) {
 		sv_readdb(dbsubpath2, "item_stack.txt",         ',', 3, 3, -1, &itemdb_read_stack, i);
 		sv_readdb(dbsubpath2, "item_nouse.txt",         ',', 3, 3, -1, &itemdb_read_nouse, i);
 		
-		if(i==0) 
-			safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
+		if(i==0) safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
+		itemdb_read_itemgroup(dbsubpath2, i);
 		itemdb_read_combos(dbsubpath2,i); //TODO change this to sv_read ? id#script ?
 		sv_readdb(dbsubpath2, "item_noequip.txt",       ',', 2, 2, -1, &itemdb_read_noequip, i);
 		sv_readdb(dbsubpath2, "item_trade.txt",         ',', 3, 3, -1, &itemdb_read_itemtrade, i);

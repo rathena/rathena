@@ -4052,7 +4052,7 @@ static int mob_read_randommonster(void)
 		sprintf(line, "%s/%s", db_path, mobfile[i]);
 		fp=fopen(line,"r");
 		if(fp==NULL){
-			if(i>=ARRAYLENGTH(mobfile)/2-1) ShowError("mob_read_randommonster: can't read %s\n",line);
+			if(i<=ARRAYLENGTH(mobfile)/2-1) ShowError("mob_read_randommonster: can't read %s\n",line);
 			return -1;
 		}
 		while(fgets(line, sizeof(line), fp))
