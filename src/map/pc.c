@@ -3422,26 +3422,6 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 			sd->left_weapon.sp_drain_class[CLASS_BOSS].type = val;
 		}
 		break;
-	case SP_HP_DRAIN_RATE_RACE:
-		if(!sd->state.lr_flag) {
-			sd->right_weapon.hp_drain_race[type2].rate += type3;
-			sd->right_weapon.hp_drain_race[type2].per += val;
-		}
-		else if(sd->state.lr_flag == 1) {
-			sd->left_weapon.hp_drain_race[type2].rate += type3;
-			sd->left_weapon.hp_drain_race[type2].per += val;
-		}
-		break;
-	case SP_SP_DRAIN_RATE_RACE:
-		if(!sd->state.lr_flag) {
-			sd->right_weapon.sp_drain_race[type2].rate += type3;
-			sd->right_weapon.sp_drain_race[type2].per += val;
-		}
-		else if(sd->state.lr_flag == 1) {
-			sd->left_weapon.sp_drain_race[type2].rate += type3;
-			sd->left_weapon.sp_drain_race[type2].per += val;
-		}
-		break;
 	case SP_ADD_MONSTER_DROP_ITEMGROUP:
 		if (sd->state.lr_flag != 2)
 			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), 0, type2, -1, 1<<type3, val);

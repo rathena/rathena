@@ -559,8 +559,8 @@ bSPDrainValue	1080
 bWeaponAtk	1081
 bWeaponAtkRate	1082
 bDelayrate	1083
-bHPDrainRateRace	1084
-bSPDrainRateRace	1085
+bHpDrainValueRace	1084
+bSpDrainValueRace	1085
 bIgnoreMdefRaceRate	1086
 bIgnoreDefRaceRate	1087
 bSkillHeal2	1088
@@ -596,9 +596,9 @@ bHPLossRate	2023
 bAddRace2	2024
 bHPGainValue	2025
 bSubSize	2026
-bHPDrainValueRace	2027
+bHPDrainValueClass	2027
 bAddItemHealRate	2028
-bSPDrainValueRace	2029
+bSPDrainValueClass	2029
 bExpAddRace	2030
 bSPGainRace	2031
 bSubRace2	2032
@@ -640,9 +640,7 @@ bAddClass	2064
 bSubClass	2065
 bMagicAddClass	2066
 bWeaponComaClass	2067
-bHpDrainValueClass	2068
-bSpDrainValueClass	2069
-bIgnoreMdefClassRate	2070
+bIgnoreMdefClassRate	2068
 
 EQI_HEAD_TOP	1
 EQI_ARMOR	2
@@ -2655,14 +2653,13 @@ GUILD_AREA_WOS	20
 GUILD_NOBG	21
 DUEL	22
 DUEL_WOS	23
-CHAT_MAINCHAT	24
-SELF	25
-BG	26
-BG_WOS	27
-BG_SAMEMAP	28
-BG_SAMEMAP_WOS	29
-BG_AREA	30
-BG_AREA_WOS	31
+SELF	24
+BG	25
+BG_WOS	26
+BG_SAMEMAP	27
+BG_SAMEMAP_WOS	28
+BG_AREA	29
+BG_AREA_WOS	30
 
 ARCH_MERC_GUILD	0
 SPEAR_MERC_GUILD	1

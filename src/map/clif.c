@@ -1345,6 +1345,10 @@ int clif_spawn(struct block_list *bl)
 				if( sd->talisman[i] > 0 )
 					clif_talisman(sd, i);
 			}
+			for( i = SC_SPHERE_1; i <= SC_SPHERE_5; i++ ) {
+				if( sd->sc.data[i] )
+					clif_status_change(bl,StatusIconChangeTable[i],1,0,sd->sc.data[i]->val1,sd->sc.data[i]->val2,0);
+			}
 		#ifdef NEW_CARTS
 			if( sd->sc.data[SC_PUSH_CART] )
 				clif_status_load_notick(&sd->bl, SI_ON_PUSH_CART, 2, sd->sc.data[SC_PUSH_CART]->val1, 0, 0);
@@ -4151,6 +4155,10 @@ static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_d
 	for(i = 1; i < 5; i++){
 		if( dstsd->talisman[i] > 0 )
 			clif_talisman_single(sd->fd, dstsd, i);
+	}
+	for( i = SC_SPHERE_1; i <= SC_SPHERE_5; i++ ) {
+		if( dstsd->sc.data[i] )
+			clif_status_load_single(sd->fd,dstsd->bl.id,StatusIconChangeTable[i],1,dstsd->sc.data[i]->val1,dstsd->sc.data[i]->val2,0);
 	}
 	if( dstsd->sc.option&OPTION_MOUNTING ) {
 		//New Mounts are not complaint to the original method, so we gotta tell this guy that I'm mounting.

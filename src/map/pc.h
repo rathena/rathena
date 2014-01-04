@@ -83,7 +83,7 @@ struct weapon_data {
 		short per;
 		short value;
 		unsigned type:1;
-	} hp_drain_race[RC_ALL], sp_drain_race[RC_ALL], hp_drain_class[CLASS_ALL], sp_drain_class[CLASS_ALL];
+	} hp_drain_race[RC_MAX], sp_drain_race[RC_MAX], hp_drain_class[CLASS_MAX], sp_drain_class[CLASS_MAX];
 
 	struct {
 		short class_, rate;

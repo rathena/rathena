@@ -65,7 +65,6 @@ int current_equip_card_id; /// To prevent card-stacking (from jA) [Skotlex]
 // We need it for new cards 15 Feb 2005, to check if the combo cards are insrerted into the CURRENT weapon only to avoid cards exploits
 
 static sc_type SkillStatusChangeTable[MAX_SKILL];  /// skill  -> status
-static int StatusIconChangeTable[SC_MAX];          /// status -> "icon" (icon is a bit of a misnomer, since there exist values with no icon associated)
 static unsigned int StatusChangeFlagTable[SC_MAX]; /// status -> flags
 static int StatusSkillChangeTable[SC_MAX];         /// status -> skill
 static int StatusRelevantBLTypes[SI_MAX];          /// "icon" -> enum bl_type (for clif_status_change to identify for which bl types to send packets)

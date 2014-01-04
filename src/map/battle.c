@@ -5976,39 +5976,64 @@ void battle_drain(TBL_PC *sd, struct block_list *tbl, int64 rdamage, int64 ldama
 		if (i < 2) { wd = &sd->right_weapon; damage = &rdamage; }
 		else { wd = &sd->left_weapon; damage = &ldamage; }
 		if (*damage <= 0) continue;
-		//First and Third iterations: race, other two boss/normal state
-		if( i == 1 || i == 3 )
-		{
-			hp = wd->hp_drain_class[class_].value;
+		if( i == 1 || i == 3 ) {
+			hp = wd->hp_drain_class[class_].value + wd->hp_drain_class[CLASS_ALL].value;
 			if (wd->hp_drain_class[class_].rate)
 				hp += battle_calc_drain(*damage, wd->hp_drain_class[class_].rate, wd->hp_drain_class[class_].per);
+			if (wd->hp_drain_class[CLASS_ALL].rate)
+				hp += battle_calc_drain(*damage, wd->hp_drain_class[CLASS_ALL].rate, wd->hp_drain_class[CLASS_ALL].per);
 
-			sp = wd->sp_drain_class[class_].value;
+			sp = wd->sp_drain_class[class_].value + wd->sp_drain_class[CLASS_ALL].value;
 			if (wd->sp_drain_class[class_].rate)
 				sp += battle_calc_drain(*damage, wd->sp_drain_class[class_].rate, wd->sp_drain_class[class_].per);
+			if (wd->sp_drain_class[CLASS_ALL].rate)
+				sp += battle_calc_drain(*damage, wd->sp_drain_class[CLASS_ALL].rate, wd->sp_drain_class[CLASS_ALL].per);
 
-			if( hp && wd->hp_drain_class[class_].type )
-				rhp += hp;
-			if( sp && wd->sp_drain_class[class_].type )
-				rsp += sp;
+			if( hp ) {
+				if( wd->hp_drain_class[class_].type )
+					rhp += hp;
+				if( wd->hp_drain_class[CLASS_ALL].type )
+					rhp += hp;
+				thp += hp;
+			}
+
+			if( sp ) {
+				if( wd->sp_drain_class[class_].type )
+					rsp += sp;
+				if( wd->sp_drain_class[CLASS_ALL].type )
+					rsp += sp;
+				tsp += sp;
+			}
 		} else {
-			hp = wd->hp_drain_race[race].value;
+			hp = wd->hp_drain_race[race].value + wd->hp_drain_race[RC_ALL].value;
 			if (wd->hp_drain_race[race].rate)
 				hp += battle_calc_drain(*damage, wd->hp_drain_race[race].rate, wd->hp_drain_race[race].per);
+			if (wd->hp_drain_race[RC_ALL].rate)
+				hp += battle_calc_drain(*damage, wd->hp_drain_race[RC_ALL].rate, wd->hp_drain_race[RC_ALL].per);
 
-			sp = wd->sp_drain_race[race].value;
+			sp = wd->sp_drain_race[race].value + wd->sp_drain_race[RC_ALL].value;
 			if (wd->sp_drain_race[race].rate)
 				sp += battle_calc_drain(*damage, wd->sp_drain_race[race].rate, wd->sp_drain_race[race].per);
+			if (wd->sp_drain_race[RC_ALL].rate)
+				sp += battle_calc_drain(*damage, wd->sp_drain_race[RC_ALL].rate, wd->sp_drain_race[RC_ALL].per);
 
-			if( hp && wd->hp_drain_race[race].type )
-				rhp += hp;
-			if( sp && wd->sp_drain_race[race].type)
-				rsp += sp;
+			if( hp ) {
+				if( wd->hp_drain_race[race].type )
+					rhp += hp;
+				if( wd->hp_drain_race[RC_ALL].type )
+					rhp += hp;
+				thp += hp;
+			}
+
+			if( sp ) {
+				if( wd->sp_drain_race[race].type )
+					rsp += sp;
+				if( wd->sp_drain_race[RC_ALL].type )
+					rsp += sp;
+				tsp += sp;
+			}
 		}
 	}
-
-	thp += hp;
-	tsp += sp;
 
 	if (sd->bonus.sp_vanish_rate && rnd()%1000 < sd->bonus.sp_vanish_rate)
 		status_percent_damage(&sd->bl, tbl, 0, (unsigned char)sd->bonus.sp_vanish_per, false);
@@ -6019,8 +6044,12 @@ void battle_drain(TBL_PC *sd, struct block_list *tbl, int64 rdamage, int64 ldama
 
 	if( sd->sp_gain_race_attack[race] )
 		tsp += sd->sp_gain_race_attack[race];
+	if( sd->sp_gain_race_attack[RC_ALL] )
+		tsp += sd->sp_gain_race_attack[RC_ALL];
 	if( sd->hp_gain_race_attack[race] )
 		thp += sd->hp_gain_race_attack[race];
+	if( sd->hp_gain_race_attack[RC_ALL] )
+		thp += sd->hp_gain_race_attack[RC_ALL];
 
 	if (!thp && !tsp) return;
 
