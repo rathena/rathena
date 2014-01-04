@@ -6144,7 +6144,7 @@
 12672,Start_New_Box,Start New Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 617,2; getitem 12263,2; getitem 12329,3; getitem 12330,2; },{},{}
 12673,Lucky_Egg_C10,Lucky Egg C10,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Lucky_Egg_C10); },{},{}
 12674,God_Material_Box,God Material Box,2,20,,500,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12675,Sg_Weapon_Supply_Box,WoE Weapon Supply Box,2,20,,500,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+12675,Sg_Weapon_Supply_Box,WoE Weapon Supply Box,2,20,,500,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem callfunc("F_Rand",18113,2016,1586,1395,21001,18114,13072,16021,1492,1587,1396,1293,21002,1294,1436,16020,1775,1776),1; },{},{}
 12676,Sg_Violet_Potion_Box,Siege Violet Potion Box,2,20,,500,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 11547,50; },{},{}
 12677,Siege_Arrow_Quiver_S,Siege Arrow Quiver S,2,2,,100,,,,,0xFFFFFFFF,63,2,,,130,,,{ getitem 1776,200; },{},{}
 12678,Siege_Arrow_Quiver_A,Siege Arrow Quiver A,2,2,,100,,,,,0xFFFFFFFF,63,2,,,95,,,{ getitem 1775,200; },{},{}
@@ -6215,8 +6215,8 @@
 12738,Runstone_Rare,Rare Rune,0,2,,100,,,,,0x00000080,56,2,,,,,,{ makerune 8; },{},{}
 
 12739,Snow_Flower,Snow Flowers,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 10,10; },{},{}
-12740,Inc_Str_Scroll,Amplification Scroll,2,1,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_POTION_BERSERK; /*bonus_script "{ /*script me!*/ }",60,0,0,SI_STR_SCROLL;*/ },{},{}
-12741,Inc_Int_Scroll,Intellect Amplification Scroll,2,1,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_SPELLBREAKER; /*bonus_script "{ /*script me!*/ }",60,0,0,SI_INT_SCROLL;*/ },{},{}
+12740,Inc_Str_Scroll,Amplification Scroll,2,1,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_POTION_BERSERK; /*bonus_script "{}",60,0,0,SI_STR_SCROLL;*/ },{},{}
+12741,Inc_Int_Scroll,Intellect Amplification Scroll,2,1,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_SPELLBREAKER; /*bonus_script "{}",60,0,0,SI_INT_SCROLL;*/ },{},{}
 12742,Valentine_Gift_Box1,Valentine Gift Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 7946,1; },{},{}
 12743,Valentine_Gift_Box2,Valentine Gift Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 7947,1; },{},{}
 12744,Chocotate_Box,Chocolate Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 558,1; },{},{}

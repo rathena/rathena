@@ -465,5 +465,5 @@ function	script	F_GetNumSuffix	{
 	if (.@mod == 1 && .@n != 11) return .@n+"st";
 	else if (.@mod == 2 && .@n != 12) return .@n+"nd";
 	else if (.@mod == 3 && .@n != 13) return .@n+"rd";
-	else return getarg(0)+"th";
+	else return .@n+"th";
 }
