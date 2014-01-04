@@ -869,7 +869,7 @@
 1010,9,6,1,0,0x1,0,1,0,no,0,0x1,0,misc,0,0x0,	BA_PANGVOICE,Pang Voice
 1011,9,6,1,0,0x1,0,1,0,no,0,0x1,0,misc,0,0x0,	DC_WINKCHARM,Wink of Charm
 1012,0,0,0,0,0,0,1,0,no,0,0x1,0,weapon,0,0x4000,	BS_UNFAIRLYTRICK,Unfair Trick
-1013,0,6,4,0,0x3,2,1,0,no,0,0x1,0,weapon,0,0x4000,	BS_GREED,Greed
+1013,0,6,4,0,0x3,2,1,0,no,0,0x1,0,weapon,0,0x0,	BS_GREED,Greed
 1014,0,6,4,6,0x3,14,1,0,yes,0,0x1,0,magic,0,0x0,	PR_REDEMPTIO,Redemptio
 1015,9,6,16,0,0x1,0,1,1,no,0,0x401,0,weapon,0,0x0,	MO_KITRANSLATION,Ki Translation
 1016,-1,6,1,-1,0x2,1,1,1,no,0,0x1,0,weapon,5,0x0,	MO_BALKYOUNG,Ki Explosion
