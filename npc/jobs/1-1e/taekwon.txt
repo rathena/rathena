@@ -393,7 +393,7 @@ payon,157,141,5	script	Phoenix#TKJobChange	753,{
 			mes "uniform and guard set: make";
 			mes "good use of these gifts. As";
 			mes "you travel and train, enlighten";
-			mes "others about our art and learn^FFFFFF ^000000 what you can from them in return.";
+			mes "others about our art and learn what you can from them in return.";
 			next;
 			mes "[Phoenix]";
 			mes "It is now time for you to";

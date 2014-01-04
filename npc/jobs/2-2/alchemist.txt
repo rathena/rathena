@@ -288,7 +288,7 @@ alde_alche,27,185,5	script	Alchemist Guildsman#am	744,{
 		mes "Aren't you ready?";
 		mes "Like I said before,";
 		mes "you must bring";
-		mes "^551A8B"+.@items[1]+" "+getitemname(.@items[0])+"s^000000.";
+		mes "^551A8B"+callfunc("F_InsertPlural",.@items[1],getitemname(.@items[0]))+"^000000.";
 		next;
 		mes "[Parmy Gianino]";
 		mes "Come back when you";

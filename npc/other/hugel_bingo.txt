@@ -860,17 +860,13 @@ function	script	Func_Bingo	{
 }
 
 function	script	Func_BingoResult	{
-	if (getarg(0) == 1 || getarg(0) == 21) set .@str$,"st";
-	else if (getarg(0) == 2 || getarg(0) == 22) set .@str$,"nd";
-	else if (getarg(0) == 3 || getarg(0) == 23) set .@str$,"rd";
-	else set .@str$,"th";
-	mapannounce "que_bingo","Eukran: The "+getarg(0)+.@str$+" number is "+$bingo[getarg(0) -1]+". Please check your Bingo Plate.",4,0xFFAB54;
-	enablenpc ""+getarg(0)+"a#bingo";
-	enablenpc ""+getarg(0)+"b#bingo";
-	enablenpc ""+getarg(0)+"c#bingo";
-	enablenpc ""+getarg(0)+"d#bingo";
-	enablenpc ""+getarg(0)+"e#bingo";
-	set getarg(0),getarg(0) +1;
+	mapannounce "que_bingo","Eukran: The "+callfunc("F_GetNumSuffix",getarg(0))+" number is "+$bingo[getarg(0) - 1]+". Please check your Bingo Plate.",4,0xFFAB54;
+	enablenpc getarg(0)+"a#bingo";
+	enablenpc getarg(0)+"b#bingo";
+	enablenpc getarg(0)+"c#bingo";
+	enablenpc getarg(0)+"d#bingo";
+	enablenpc getarg(0)+"e#bingo";
+	set $@bingoresult, $@bingoresult + 1;
 	end;
 }
 
@@ -953,7 +949,7 @@ que_bingo,54,17,5	script	Arcade Owner	712,{
 		mes "game, you will be rewarded";
 		mes "with ''Marvelous Medals,''";
 		mes "which can only be used within";
-		mes "this arcade. You also can't^FFFFFF ^000000 trade medals with other players.";
+		mes "this arcade. You also can't trade medals with other players.";
 		next;
 		mes "[Arcade Owner]";
 		mes "You usually get 1 Marvelous";
@@ -966,8 +962,8 @@ que_bingo,54,17,5	script	Arcade Owner	712,{
 		mes "[Arcade Owner]";
 		mes "Collect as many Marvelous";
 		mes "Medals as you can, and trade";
-		mes "them for products in the Monster^FFFFFF ^000000 Racing Arena. I hear there's also";
-		mes "a place in Einbroch where you can^FFFFFF ^000000 use them, but I wouldn't know.";
+		mes "them for products in the Monster Racing Arena. I hear there's also";
+		mes "a place in Einbroch where you can use them, but I wouldn't know.";
 		close;
 	}
 }

@@ -829,7 +829,7 @@ S_Busy:
 	mes "I'm conducting a wedding";
 	mes "for another couple now, so";
 	mes "please wait patiently for your";
-	mes "turn. Thanks for understanding... ^FFFFFF ^000000";
+	mes "turn. Thanks for understanding...";
 	goto L_End;
 
 OnStop:

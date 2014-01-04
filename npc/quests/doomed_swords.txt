@@ -37,8 +37,8 @@ prt_in,162,11,2	script	Ghatu#magum	86,{
 			mes "[Ghatu]";
 			mes "Rumor has it that he's";
 			mes "hiding in the mountains";
-			mes "since too many people want^FFFFFF ^000000 to use his talents for the wrong";
-			mes "purposes. Apparently, there is^FFFFFF ^000000 a godly quality to his weapons...";
+			mes "since too many people want to use his talents for the wrong";
+			mes "purposes. Apparently, there is a godly quality to his weapons...";
 			set event_magum,1;
 			close;
 		}
@@ -63,7 +63,7 @@ prt_in,162,11,2	script	Ghatu#magum	86,{
 		mes "That smith used to be";
 		mes "a pretty easy going guy";
 		mes "until he was forced to work";
-		mes "against his will. Slowly, he^FFFFFF ^000000 became gloomy and intimidating...";
+		mes "against his will. Slowly, he became gloomy and intimidating...";
 		next;
 		mes "[Ghatu]";
 		mes "But I suppose blacksmiths";
@@ -97,7 +97,7 @@ prt_in,162,11,2	script	Ghatu#magum	86,{
 		mes "That smith used to be";
 		mes "a pretty easy going guy";
 		mes "until he was forced to work";
-		mes "against his will. Slowly, he^FFFFFF ^000000 became gloomy and intimidating...";
+		mes "against his will. Slowly, he became gloomy and intimidating...";
 		next;
 		mes "[Ghatu]";
 		mes "But I suppose blacksmiths";
@@ -233,13 +233,13 @@ izlude_in,173,88,2	script	Nain#magum	102,{
 	mes "more criminals, the rage and";
 	mes "bloodlust of its victims began";
 	mes "to accumulate upon the blade.";
-	mes "Although the sword gained great^FFFFFF ^000000 strength, it was tainted by evil.";
+	mes "Although the sword gained great strength, it was tainted by evil.";
 	next;
 	mes "[Nain]";
 	mes "The last person to wield";
 	mes "the Executioner almost lost";
-	mes "his mind to the sword. He saved^FFFFFF ^000000 himself by giving it to a talented";
-	mes "blacksmith who would destroy^FFFFFF ^000000 it for him, thus saving his soul.";
+	mes "his mind to the sword. He saved himself by giving it to a talented";
+	mes "blacksmith who would destroy it for him, thus saving his soul.";
 	next;
 	mes "[Nain]";
 	mes "This mysterious blacksmith";
@@ -418,7 +418,7 @@ pay_fild08,218,283,2	script	Mysterious Man#magum	89,{
 					mes "[Mysterious Blacksmith]";
 					mes "Freyja suspected nothing and";
 					mes "told Loki about the secret of";
-					mes "Mysteltainn. The next time the^FFFFFF ^000000 gods played their game of throwing";
+					mes "Mysteltainn. The next time the gods played their game of throwing";
 					mes "objects at Baldur, Loki was there with a small Mysteltainn twig.";
 					next;
 					mes "[Mysterious Blacksmith]";
@@ -469,7 +469,7 @@ pay_fild08,218,283,2	script	Mysterious Man#magum	89,{
 				mes "I can tell that you don't know";
 				mes "enough about the Mysteltainn";
 				mes "to fully understand all of the";
-				mes "risks that come with wielding^FFFFFF ^000000 that sword. Yes, you're too green.";
+				mes "risks that come with wielding that sword. Yes, you're too green.";
 				next;
 				mes "[Mysterious Blacksmith]";
 				mes "I can't take the risk";
@@ -486,7 +486,7 @@ pay_fild08,218,283,2	script	Mysterious Man#magum	89,{
 					mes "wondering how such a small";
 					mes "dagger can contain such power.";
 					mes "It's simple. I cast forbidden";
-					mes "curse magic to inbue the dagger^FFFFFF ^000000 with its awesome destructiveness.";
+					mes "curse magic to inbue the dagger with its awesome destructiveness.";
 					next;
 					mes "[Mysterious Blacksmith]";
 					mes "The curse I cast is so";
@@ -501,7 +501,7 @@ pay_fild08,218,283,2	script	Mysterious Man#magum	89,{
 					mes "fair to warn you that";
 					mes "the power of the curse";
 					mes "is such that the more you";
-					mes "use the Grimtooth, the more^FFFFFF ^000000 it burns away at your very soul...";
+					mes "use the Grimtooth, the more it burns away at your very soul...";
 					next;
 					mes "[Mysterious Blacksmith]";
 					mes "I am willing to forge";
@@ -565,7 +565,7 @@ pay_fild08,218,283,2	script	Mysterious Man#magum	89,{
 					mes "I created this sword asked";
 					mes "me to destroy it, fearing that";
 					mes "it would corrupt his mind with";
-					mes "its bloodlust. But if you think^FFFFFF ^000000 you can endure, I may forge it...";
+					mes "its bloodlust. But if you think you can endure, I may forge it...";
 					next;
 					mes "[Mysterious Blacksmith]";
 					mes "Just bring me...";
@@ -702,7 +702,7 @@ pay_fild08,218,283,2	script	Mysterious Man#magum	89,{
 						mes "You've forgotten";
 						mes "to bring ^0099FF1 Young Twig^000000,";
 						mes "the embodiment of the";
-						mes "Mysteltainn twig used to^FFFFFF ^000000 kill Baldur. Hurry and bring it...";
+						mes "Mysteltainn twig used to kill Baldur. Hurry and bring it...";
 						close;
 					}
 					if (countitem(7019) < 1) {
@@ -711,7 +711,7 @@ pay_fild08,218,283,2	script	Mysterious Man#magum	89,{
 						mes "^0099FF1 Loki's Whispers^000000. We need";
 						mes "that to imbue the sword with";
 						mes "immense, evil power. Go and";
-						mes "find that as quickly as you can! ^FFFFFF ^000000";
+						mes "find that as quickly as you can!";
 						close;
 					}
 					if (countitem(7020) < 1) {
@@ -719,7 +719,7 @@ pay_fild08,218,283,2	script	Mysterious Man#magum	89,{
 						mes "Hm, you still need to";
 						mes "bring ^0099FF1 Mother's Nightmare^000000";
 						mes "to instill the power of misery";
-						mes "and grave portent to this blade... ^FFFFFF ^000000";
+						mes "and grave portent to this blade...";
 						close;
 					}
 					if (countitem(7021) < 1) {
@@ -728,7 +728,7 @@ pay_fild08,218,283,2	script	Mysterious Man#magum	89,{
 						mes "bring ^0099FF1 Foolishness";
 						mes "of the Blind^000000 to instill the";
 						mes "energy of tragic regret into";
-						mes "the curse imbued into the blade... ^FFFFFF ^000000";
+						mes "the curse imbued into the blade...";
 						close;
 					}
 					if (countitem(714) < 1) {
@@ -834,7 +834,7 @@ pay_fild08,218,283,2	script	Mysterious Man#magum	89,{
 					mes "[Mysterious Blacksmith]";
 					mes "Freyja suspected nothing and";
 					mes "told Loki about the secret of";
-					mes "Mysteltainn. The next time the^FFFFFF ^000000 gods played their game of throwing";
+					mes "Mysteltainn. The next time the gods played their game of throwing";
 					mes "objects at Baldur, Loki was there with a small Mysteltainn twig.";
 					next;
 					mes "[Mysterious Blacksmith]";
@@ -884,7 +884,7 @@ pay_fild08,218,283,2	script	Mysterious Man#magum	89,{
 				mes "Mysteltainn, I advise you";
 				mes "to learn more about it. You";
 				mes "must know the risks involved";
-				mes "in wielding that sort of power... ^FFFFFF ^000000";
+				mes "in wielding that sort of power...";
 				close;
 			case 2:
 				if (dmdswrd_Q2 & 16) {
@@ -982,7 +982,7 @@ pay_fild08,218,283,2	script	Mysterious Man#magum	89,{
 					mes "wondering how such a small";
 					mes "dagger can contain such power.";
 					mes "It's simple. I cast forbidden";
-					mes "curse magic to inbue the dagger^FFFFFF ^000000 with its awesome destructiveness.";
+					mes "curse magic to inbue the dagger with its awesome destructiveness.";
 					next;
 					mes "[Mysterious Blacksmith]";
 					mes "The curse I cast is so";
@@ -997,7 +997,7 @@ pay_fild08,218,283,2	script	Mysterious Man#magum	89,{
 					mes "fair to warn you that";
 					mes "the power of the curse";
 					mes "is such that the more you";
-					mes "use the Grimtooth, the more^FFFFFF ^000000 it burns away at your very soul...";
+					mes "use the Grimtooth, the more it burns away at your very soul...";
 					next;
 					mes "[Mysterious Blacksmith]";
 					mes "I am willing to forge";
@@ -1137,7 +1137,7 @@ pay_fild08,218,283,2	script	Mysterious Man#magum	89,{
 					mes "I created this sword asked";
 					mes "me to destroy it, fearing that";
 					mes "it would corrupt his mind with";
-					mes "its bloodlust. But if you think^FFFFFF ^000000 you can endure, I may forge it...";
+					mes "its bloodlust. But if you think you can endure, I may forge it...";
 					next;
 					mes "[Mysterious Blacksmith]";
 					mes "Just bring me...";

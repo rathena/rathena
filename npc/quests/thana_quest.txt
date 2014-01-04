@@ -462,7 +462,7 @@ tha_t01,140,78,4	script	Guide#reward	831,{
 	mes "[Liei]";
 	if (!countitem(.@Items[.@i])) {
 		mes "I'm sorry, but you are not";
-		mes "carrying any "+getitemname(.@Items[.@i])+"s.";
+		mes "carrying any "+callfunc("F_GetPlural",getitemname(.@Items[.@i]))+".";
 		mes "Please check your inventory";
 		mes "one more time, and then come";
 		mes "to me to redeem your items";
@@ -478,7 +478,7 @@ tha_t01,140,78,4	script	Guide#reward	831,{
 	set .@zeny_tt,(countitem(.@Items[.@i]) * 1000);
 	//set .@exp_tt,(countitem(.@Items[.@i]) * 2000);
 	mes "[Liei]";
-	mes countitem(.@Items[.@i])+" "+getitemname(.@Items[.@i])+"s, then";
+	mes callfunc("F_InsertPlural",countitem(.@Items[.@i]),getitemname(.@Items[.@i]))+", then";
 	mes "you will receive a total of...";
 	mes " ";
 	mes ""+.@zeny_tt+" zeny";
@@ -486,7 +486,7 @@ tha_t01,140,78,4	script	Guide#reward	831,{
 	next;
 	mes "[Liei]";
 	mes "Would you like to exchange";
-	mes "all of your "+getitemname(.@Items[.@i])+"s";
+	mes "all of your "+callfunc("F_GetPlural",getitemname(.@Items[.@i]));
 	mes "for your reward right now?";
 	next;
 	switch(select("Yes:No")) {

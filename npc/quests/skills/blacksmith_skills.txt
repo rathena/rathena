@@ -27,7 +27,7 @@ geffen,178,72,3	script	Akkie#qsk_bs	726,{
 			mes "[Akkie]";
 			mes "Actually, let me jog your";
 			mes "memory with this counterfeit";
-			mes "zeny that we made the last time.^FFFFFF ^000000 Do you remember how to perform";
+			mes "zeny that we made the last time. Do you remember how to perform";
 			mes "Dubious Salesmanship? You";
 			mes "should be able to use it now...";
 			set BLACK_SK,8;
@@ -537,7 +537,7 @@ geffen,172,52,1	script	Goodman#qsk_bs	826,{
 					mes "the Greed skill automatically";
 					mes "picks up all items in a 5*5";
 					mes "cell area around the caster.";
-					mes "It's handy for picking up clumps^FFFFFF ^000000 of goods from looting monsters.";
+					mes "It's handy for picking up clumps of goods from looting monsters.";
 					next;
 					mes "[Goodman]";
 					mes "First thing's first. I need to";
@@ -569,7 +569,7 @@ geffen,172,52,1	script	Goodman#qsk_bs	826,{
 					mes "Back already, eh?";
 					mes "Alright, let me check";
 					mes "the things you're carrying.";
-					mes "Let's see, Inventory, Inventory... ^FFFFFF ^000000";
+					mes "Let's see, Inventory, Inventory...";
 					next;
 					mes "[Goodman]";
 					mes "Good work: you pass.";
@@ -587,9 +587,9 @@ geffen,172,52,1	script	Goodman#qsk_bs	826,{
 					mes "artisans. Being rich and famous";
 					mes "is merely a side effect of that.";
 					if (Upper == 1)
-						mes "Honorable Master Smiths know^FFFFFF ^000000 value is in the craftsmanship...";
+						mes "Honorable Master Smiths know value is in the craftsmanship...";
 					else
-						mes "Honorable Blacksmiths know^FFFFFF ^000000 value is in the craftsmanship...";
+						mes "Honorable Blacksmiths know value is in the craftsmanship...";
 					next;
 					if (Upper == 1) {
 						mes "[Goodman]";
@@ -617,7 +617,7 @@ geffen,172,52,1	script	Goodman#qsk_bs	826,{
 					mes "Hm. You've come back";
 					mes "too early. And you didn't";
 					mes "complete the objective that";
-					mes "I set for you. Listen carefully. ^FFFFFF ^000000";
+					mes "I set for you. Listen carefully.";
 					next;
 					mes "[Goodman]";
 					mes "Go fill your Inventory";

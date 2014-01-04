@@ -534,8 +534,8 @@ comodo,206,310,4	script	Campground Boy#cmd	704,{
 		mes "[Rochito]";
 		mes "Long before Comodo was";
 		mes "built inside this huge cave,";
-		mes "this witch used to live in here.^FFFFFF ^000000 A lot of people died trying to";
-		mes "get rid of her, but there're^FFFFFF ^000000 rumors that she's still around...";
+		mes "this witch used to live in here. A lot of people died trying to";
+		mes "get rid of her, but there're rumors that she's still around...";
 		break;
 	case 1:
 		mes "[Rochito]";
@@ -690,7 +690,7 @@ comodo,204,310,4	script	Camping Youth#cmd	65,{
 		mes "that wine to Tausupa, the";
 		mes "Village Chief, would you let";
 		mes "him know that we miss the guy?";
-		mes "He may be busy, but he'll always^FFFFFF ^000000 be our irreplaceable buddy.";
+		mes "He may be busy, but he'll always be our irreplaceable buddy.";
 		break;
 	case 4:
 		mes "[Rockha]";
@@ -732,7 +732,7 @@ comodo,204,310,4	script	Camping Youth#cmd	65,{
 		mes "would make our barbeque";
 		mes "absolutely perfect--having";
 		mes "the Village Chief here, and";
-		mes "some of that legendary Comodo^FFFFFF ^000000 Cheese that ^3355FFToruna^000000 told me about.";
+		mes "some of that legendary Comodo Cheese that ^3355FFToruna^000000 told me about.";
 		break;
 	}
 	close;
@@ -1005,8 +1005,8 @@ cmd_in02,32,140,4	script	Chief#cmd	49,{
 		mes "[Tausupa]";
 		mes "Greetings, adventurer,";
 		mes "I am Tausupa, the Chief of";
-		mes "Comodo, a city famous for its^FFFFFF ^000000 beauty and nightlife. I hope you";
-		mes "enjoy your stay, whether you are^FFFFFF ^000000 seeking excitement or relaxation~";
+		mes "Comodo, a city famous for its beauty and nightlife. I hope you";
+		mes "enjoy your stay, whether you are seeking excitement or relaxation~";
 		next;
 		switch(select("About Casino:About Banished Witch:Cancel")) {
 		case 1:
@@ -1015,7 +1015,7 @@ cmd_in02,32,140,4	script	Chief#cmd	49,{
 			mes "famous for its Casino. There";
 			mes "are many games that you can";
 			mes "enjoy, but you'll need to use";
-			mes "the Casino's special Eulwo^FFFFFF ^000000 currency and conversion system...";
+			mes "the Casino's special Eulwo currency and conversion system...";
 			break;
 		case 2:
 			switch (dmdswrd_Q) {
@@ -1033,7 +1033,7 @@ cmd_in02,32,140,4	script	Chief#cmd	49,{
 				mes "of BBQ meat on your clothes,";
 				mes "I'm guessing that you ran into";
 				mes "Rochito in the campgrounds, ";
-				mes "right? He must have told you^FFFFFF ^000000 that old story about the witch...";
+				mes "right? He must have told you that old story about the witch...";
 				next;
 				mes "[Tausupa]";
 				mes "I'd like nothing better";
@@ -1067,7 +1067,7 @@ cmd_in02,32,140,4	script	Chief#cmd	49,{
 				mes "Koserserah seasoning to";
 				mes "my friend ^3355FFRochito^000000 at the";
 				mes "barbeque campground. Thanks";
-				mes "again for your help, adventurer. ^FFFFFF ^000000";
+				mes "again for your help, adventurer.";
 				break;
 			}
 			break;
@@ -1142,7 +1142,7 @@ comodo,88,97,4	script	Toruna#cmd	109,{
 			mes "Yes, that is rather";
 			mes "peculiar. What's also";
 			mes "strange is this rumor I've";
-			mes "been hearing about. Now, are^FFFFFF ^000000 you familiar with Comodo Cheese?";
+			mes "been hearing about. Now, are you familiar with Comodo Cheese?";
 			next;
 			mes "[Toruna]";
 			mes "It's this urban legend";
@@ -1191,7 +1191,7 @@ comodo,88,97,4	script	Toruna#cmd	109,{
 			mes "before it was an exotic";
 			mes "village of excitement and";
 			mes "leisure, Comodo was once";
-			mes "a haven for evil creatures, ruled^FFFFFF ^000000 by a witch named Meropusum?";
+			mes "a haven for evil creatures, ruled by a witch named Meropusum?";
 			next;
 			mes "[Toruna]";
 			mes "This witch lay dormant for";
@@ -1303,7 +1303,7 @@ comodo,169,284,4	script	Kichiri#cmd	98,{
 		mes "got me wondering! I mean,";
 		mes "just because I've never seen";
 		mes "Comodo Cheese doesn't mean";
-		mes "it doesn't exist, right? Curses!^FFFFFF ^000000 Now I'm thinking about it too!";
+		mes "it doesn't exist, right? Curses! Now I'm thinking about it too!";
 		break;
 	default:
 		mes "[Kichiri]";
@@ -1434,7 +1434,7 @@ cmd_in02,189,99,4	script	Manzi#cmd	85,{
 		mes "Ah, she won't take you";
 		mes "very seriously unless you";
 		mes "show her this. Magatsu gave";
-		mes "you his lucky bottle cap, so I'm^FFFFFF ^000000 gonna give you my lucky coin!";
+		mes "you his lucky bottle cap, so I'm gonna give you my lucky coin!";
 		mes "The old crone'll recognize it~";
 		next;
 		set dmdswrd_Q,10;
@@ -1467,7 +1467,7 @@ cmd_in02,189,99,4	script	Manzi#cmd	85,{
 		mes "Hey, have a good time in";
 		mes "the Casino, but don't go buck";
 		mes "wild. You wanna walk out of";
-		mes "here with the shirt on your back,^FFFFFF ^000000 you know? Some people don't";
+		mes "here with the shirt on your back, you know? Some people don't";
 		mes "even leave here with that...";
 		break;
 	}
@@ -1524,7 +1524,7 @@ comodo,187,153,4	script	Hullaris#cmd	701,{
 			mes "Comodo Cheese does exist,";
 			mes "and it's as precious as the";
 			mes "legends say. However, it's";
-			mes "not a true cheese, although^FFFFFF ^000000 you may think so from its taste.";
+			mes "not a true cheese, although you may think so from its taste.";
 			next;
 			mes "[Hullaris]";
 			mes "Yes, it's a very rare, natural";
@@ -1750,7 +1750,7 @@ beach_dun3,30,220,4	script	Nigirboran#cmd	704,{
 		mes "I'd expect nothing less of";
 		mes "a brave and daring adventurer.";
 		mes "Now hold still as I gauge your";
-		mes "body's internal energies and see^FFFFFF ^000000 if it can handle Comodo Cheese...";
+		mes "body's internal energies and see if it can handle Comodo Cheese...";
 		next;
 		mes "[Nigirboran]";
 		mes "Alright.";
@@ -1847,7 +1847,7 @@ beach_dun3,30,220,4	script	Nigirboran#cmd	704,{
 				mes "but I do know that you'll need";
 				mes "the ^3355FFAwakening Stone^000000, the ^3355FFBook^000000";
 				mes "^3355FFof the Lamb^000000 and the ^3355FFSlate of^000000";
-				mes "^3355FFMurniel^000000 to even have a chance^FFFFFF ^000000 of obtaining one of those swords.";
+				mes "^3355FFMurniel^000000 to even have a chance of obtaining one of those swords.";
 				next;
 				mes "[Nigirboran]";
 				mes "Let's see... After you";
@@ -2042,7 +2042,7 @@ aldebaran,44,53,4	script	Meteurengut#cmd	64,{
 			mes "sooner, but I need to prepare";
 			mes "all of these stones, and I need";
 			mes "the freshest Cobwebs I can get.";
-			mes "I'll make sure that these stones^FFFFFF ^000000 are ready when you return.";
+			mes "I'll make sure that these stones are ready when you return.";
 			close;
 		}
 		mes "[Meteurengut]";
@@ -2101,14 +2101,14 @@ aldebaran,44,53,4	script	Meteurengut#cmd	64,{
 			mes "that artifact, and its secrets";
 			mes "are as well guarded as that of";
 			mes "the Slate of Muriniel. However,";
-			mes "I do know that a man in Morroc^FFFFFF ^000000 can create the Book of the Lamb...";
+			mes "I do know that a man in Morroc can create the Book of the Lamb...";
 			next;
 			mes "[Meteurengut]";
 			mes "If that man is still in";
 			mes "Morroc, then he will probably";
 			mes "recognize the subtle emanation";
 			mes "of the Awakening Stone and the";
-			mes "Slate of Muriniel from you. Best^FFFFFF ^000000 of luck to you, adventurer...";
+			mes "Slate of Muriniel from you. Best of luck to you, adventurer...";
 			close;
 		}
 		mes "[Meteurengut]";
@@ -2147,7 +2147,7 @@ aldebaran,44,53,4	script	Meteurengut#cmd	64,{
 		next;
 		mes "[Meteurengut]";
 		mes "I'm responsible for guarding";
-		mes "the secrets of its creation, but^FFFFFF ^000000 I must also share the power";
+		mes "the secrets of its creation, but I must also share the power";
 		mes "of the slate with those that";
 		mes "prove themselves worthy of it.";
 		next;
@@ -2179,7 +2179,7 @@ morocc,201,30,4	script	Zaka#cmd	99,{
 		mes "those that seek to own one";
 		mes "of the doomed swords would";
 		mes "trouble themselve to obtain";
-		mes "those items. All that is left for^FFFFFF ^000000 you is the Book of the Lamb...";
+		mes "those items. All that is left for you is the Book of the Lamb...";
 		next;
 		mes "[Zaka]";
 		mes "I've been waiting for so";
@@ -2371,7 +2371,7 @@ morocc,201,30,4	script	Zaka#cmd	99,{
 		mes "Ogretooth, and Executioner";
 		mes "have all been sealed away.";
 		mes "Only a truly great adventurer";
-		mes "can release these doomed^FFFFFF ^000000 swords and actually wield them...";
+		mes "can release these doomed swords and actually wield them...";
 		break;
 	}
 	close;
@@ -2392,7 +2392,7 @@ comodo,232,87,4	script	Won#cmd	106,{
 		mes "presenses of the Book of the";
 		mes "Lamb, the Slate of Muriniel,";
 		mes "and one that has eaten of the";
-		mes "Awakening Stone are unmistakable. ^FFFFFF ^000000";
+		mes "Awakening Stone are unmistakable.";
 		next;
 		mes "[Won]";
 		mes "Now, listen. I personally";
@@ -2415,7 +2415,7 @@ comodo,232,87,4	script	Won#cmd	106,{
 		mes "a look into your eyes...";
 		mes "Yeah, alright. You seem to";
 		mes "understand the value of the";
-		mes "Awakening Stone, Book of the^FFFFFF ^000000 Lamb, and the Slate of Muriniel.";
+		mes "Awakening Stone, Book of the Lamb, and the Slate of Muriniel.";
 		next;
 		mes "[Won]";
 		mes "Yeah, I can't sense any";
@@ -2498,7 +2498,7 @@ comodo,232,87,4	script	Won#cmd	106,{
 		mes "Comodo can afford to relax";
 		mes "so easily. I, for one, have";
 		mes "the responsibility of seeking";
-		mes "out those that are worthy of,^FFFFFF ^000000 well, I don't know if I can say...";
+		mes "out those that are worthy of, well, I don't know if I can say...";
 		next;
 		mes "[Won]";
 		mes "You just have to";

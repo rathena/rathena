@@ -42,12 +42,10 @@
 		set .@item,7932+.@i;
 		set .@price,4000;
 		set .@max,2000;
-		set .@max$,"2,000";
 	} else if (.@i == 6) {
 		set .@item,7931;
 		set .@price,5000;
 		set .@max,500;
-		set .@max$,"500";
 		mes "Each Poison Kit costs 5,000 zeny.";
 	} else {
 		mes "Well, I see. Come back again~!";
@@ -65,7 +63,7 @@
 	}
 	if (.@amount > .@max) {
 		mes "[Poison Herb Merchant]";
-		mes "The number must be less than "+.@max$+"!";
+		mes "The number must be less than "+callfunc("F_InsertComma",.@max)+"!";
 		close;
 	}
 	set .@total, .@amount * .@price;

@@ -236,7 +236,7 @@ prt_in,85,99,3	script	Knight#kabuto	734,{
 			mes "I forget all about my old";
 			mes "fashioned ideals. I guess";
 			mes "times have changed, and that";
-			mes "my idea of chivalry may be dead. ^FFFFFF ^000000";
+			mes "my idea of chivalry may be dead.";
 			close;
 		}
 		if (KNGT_SK == 1) {
@@ -278,7 +278,7 @@ prt_in,85,99,3	script	Knight#kabuto	734,{
 			mes "more active, there are too";
 			mes "many regulations that hamper";
 			mes "the good we can do. Over time,";
-			mes "the situation has grown much^FFFFFF ^000000 worse. But don't take my word...";
+			mes "the situation has grown much worse. But don't take my word...";
 			next;
 			mes "[Essofeit]";
 			mes "Perhaps it will be better";
@@ -365,7 +365,7 @@ prontera,72,352,7	script	Grand Master	733,{
 	mes "men! I know training can";
 	mes "be tough, but it'll make";
 	mes "you harder, better, faster and";
-	mes "stronger! Prontera's safety is^FFFFFF ^000000 your responsibility, Knights!";
+	mes "stronger! Prontera's safety is your responsibility, Knights!";
 	next;
 	mes "[Grand Master]";
 	mes "...";
@@ -487,7 +487,7 @@ prontera,66,358,5	script	Knight#gattack	733,{
 		mes "Gosh, I'm sick and tired of";
 		mes "him talking about Knighthood.";
 		mes "Essofeit insists that all Knights, even complete rookies, should be";
-		mes "able to obtain 5 Candy Canes and^FFFFFF ^000000 3 Witherless Roses from hunting.";
+		mes "able to obtain 5 Candy Canes and 3 Witherless Roses from hunting.";
 		next;
 		mes "[Gatack]";
 		mes "Hell, I just hate to hear";

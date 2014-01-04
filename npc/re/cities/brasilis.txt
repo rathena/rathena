@@ -39,7 +39,7 @@ alberta,246,82,3	script	Crewman#bra2	100,{
 	case 1:
 		if (Zeny < .@cost) {
 			mes "[Crewman]";
-			mes "I said "+(.@cost/1000)+",000 zeny.";
+			mes "I said "+callfunc("F_InsertComma",.@cost)+" zeny.";
 			close;
 		}
 		else {

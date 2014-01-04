@@ -91,7 +91,7 @@ prt_church,111,112,1	script	Sister Linus	79,{
 			next;
 			mes "[Sister Linus]";
 			mes "One day, a group of adventurers";
-			mes "came to Prontera Church in hopes^FFFFFF ^000000 of hiring a Priest to accompany";
+			mes "came to Prontera Church in hopes of hiring a Priest to accompany";
 			mes "them to ^3131DDGlast Heim^000000. It must have been fate that she was the only";
 			mes "Priest that was available.";
 			next;
@@ -116,7 +116,7 @@ prt_church,111,112,1	script	Sister Linus	79,{
 			mes "Surrounded by Wanderers,";
 			mes "the adventurers quickly fell";
 			mes "in defeat, one by one. Soon,";
-			mes "the young nun was the only^FFFFFF ^000000 one of the group still standing.";
+			mes "the young nun was the only one of the group still standing.";
 			next;
 			mes "[Sister Linus]";
 			mes "Alone against impossible";
@@ -195,7 +195,7 @@ prt_church,111,112,1	script	Sister Linus	79,{
 			mes "running my mouth! I'm";
 			mes "sorry to keep you, did you";
 			mes "have somewhere to go? Well,";
-			mes "I'll be praying for your safety~ ^FFFFFF ^000000";
+			mes "I'll be praying for your safety~";
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "Before I go, would you";

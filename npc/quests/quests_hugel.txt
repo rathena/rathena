@@ -47,14 +47,14 @@ hu_in01,387,245,0	script	Allen Schuwell	849,2,2,{
 			mes "I've got. He used to be such";
 			mes "a good obedient kid, but now";
 			mes "I doubt whether he cares about";
-			mes "his father! I told that lazy kid^FFFFFF ^000000 to hurry and bring me my meds...";
+			mes "his father! I told that lazy kid to hurry and bring me my meds...";
 			next;
 			mes "[Allen]";
 			mes "But does he worry about";
 			mes "his father's suffering?! No!";
 			mes "I bet you he's hanging out with";
 			mes "his no good hoodlum friends!";
-			mes "Argh! The pain is getting worse!^FFFFFF ^000000 I... I need my medication!";
+			mes "Argh! The pain is getting worse! I... I need my medication!";
 			next;
 			mes "[Allen]";
 			mes "Oh! I can definitely feel";
@@ -172,7 +172,7 @@ hu_in01,387,245,0	script	Allen Schuwell	849,2,2,{
 					mes "Wh-what if I have another";
 					mes "ulcer attack before Postell";
 					mes "can bring my meds?! I might";
-					mes "not survive! A-adventurer, would^FFFFFF ^000000 you please stay by my side until";
+					mes "not survive! A-adventurer, would you please stay by my side until";
 					mes "my son arrives? P-please?";
 					next;
 					set hg_herb,3;
@@ -997,7 +997,7 @@ ein_in01,16,36,3	script	Morriphen	86,{
 		mes "[Morriphen]";
 		mes "You're such a kind person...";
 		mes "You save my life and my wife's";
-		mes "life. I'll do anything you ask me^FFFFFF ^000000 to do to repay you! Consider me";
+		mes "life. I'll do anything you ask me to do to repay you! Consider me";
 		mes "your humble servant from now on. What is your command, oh master?";
 		next;
 		mes "["+strcharinfo(0)+"]";
@@ -1042,7 +1042,7 @@ ein_in01,16,36,3	script	Morriphen	86,{
 		mes "since childhood. We did almost";
 		mes "everything together. Even when";
 		mes "we started our professional";
-		mes "careers, we both decided to work^FFFFFF ^000000 for the Rekenber Corporation.";
+		mes "careers, we both decided to work for the Rekenber Corporation.";
 		next;
 		mes "[Morriphen]";
 		mes "Dono eventually became in";
@@ -1070,7 +1070,7 @@ ein_in01,16,36,3	script	Morriphen	86,{
 		mes "[Morriphen]";
 		mes "He told me not to be so";
 		mes "curious, but I didn't listen.";
-		mes "Ever since then, I went to his^FFFFFF ^000000 office as often as I could, making";
+		mes "Ever since then, I went to his office as often as I could, making";
 		mes "stupid excuses to see her. I just couldn't help it. I was in love.";
 		next;
 		mes "[Morriphen]";
@@ -1085,7 +1085,7 @@ ein_in01,16,36,3	script	Morriphen	86,{
 		mes "There was a snowstorm";
 		mes "that night, but I braved the";
 		mes "freezing cold to sneak into the";
-		mes "Rekenber Laboratory. I broke her^FFFFFF ^000000 out of her test tube, set the lab";
+		mes "Rekenber Laboratory. I broke her out of her test tube, set the lab";
 		mes "on fire, and got the hell out.";
 		next;
 		mes "[Morriphen]";
@@ -1109,7 +1109,7 @@ ein_in01,16,36,3	script	Morriphen	86,{
 		mes "man right before I fainted. He";
 		mes "said something about bringing";
 		mes "us to Hugel, a resting place";
-		mes "for the lost, those born from^FFFFFF ^000000 Odin's shadow. It was strange...";
+		mes "for the lost, those born from Odin's shadow. It was strange...";
 		next;
 		mes "[Morriphen]";
 		mes "I couldn't see his face.";
@@ -1124,7 +1124,7 @@ ein_in01,16,36,3	script	Morriphen	86,{
 		mes "accomdating, welcome, and";
 		mes "friendly. They also didn't";
 		mes "ask us any questions: we were";
-		mes "just accepted. The girl I saved^FFFFFF ^000000 didn't know how to speak then...";
+		mes "just accepted. The girl I saved didn't know how to speak then...";
 		next;
 		mes "[Morriphen]";
 		mes "As soon as I got better,";
@@ -1151,7 +1151,7 @@ ein_in01,16,36,3	script	Morriphen	86,{
 		mes "You know, Siria was supposed";
 		mes "to become a mass murder weapon.";
 		mes "The reason why Dono's experiment failed was became she resisted";
-		mes "their plans. She's more than just^FFFFFF ^000000 an experiment or weapon, you know.";
+		mes "their plans. She's more than just an experiment or weapon, you know.";
 		next;
 		mes "[Morriphen]";
 		mes "If everything had turned out";
@@ -1161,7 +1161,7 @@ ein_in01,16,36,3	script	Morriphen	86,{
 		mes "cutting edge weapons at the pinnacle of military development.";
 		next;
 		mes "[Morriphen]";
-		mes "While I was working for Rekenber,^FFFFFF ^000000 I was working on mass producing";
+		mes "While I was working for Rekenber, I was working on mass producing";
 		mes "imitations of the legendary sword, ''Executioner.'' They wouldn't be";
 		mes "perfect copies, but imagine what would've happened if I succeeded.";
 		next;
@@ -1485,7 +1485,7 @@ lighthalzen,88,79,7	script	Dono	85,{
 		mes "[Dono]";
 		mes "I have the medicine, but it's";
 		mes "not enough for one person, much";
-		mes "less the two of them. I need you^FFFFFF ^000000 to help me make some more.";
+		mes "less the two of them. I need you to help me make some more.";
 		mes "Now, listen carefully, these";
 		mes "are the ingredients I need...";
 		next;
@@ -1524,7 +1524,7 @@ lighthalzen,88,79,7	script	Dono	85,{
 		mes "I know I'm pushing you";
 		mes "hard, but I've got no choice.";
 		mes "If you don't hurry, then";
-		mes "those two will die, simple^FFFFFF ^000000 as that. I'll wait for you here.";
+		mes "those two will die, simple as that. I'll wait for you here.";
 		set hg_bio,3;
 		changequest 11010,11011;
 		close;
@@ -1582,7 +1582,7 @@ lighthalzen,88,79,7	script	Dono	85,{
 			mes "[Dono]";
 			mes "Go to the Lighthalzen";
 			mes "Makkie. Tell him I sent you";
-			mes "to get some Red Plant Stem^FFFFFF ^000000 Powder for Morriphen's medicine.";
+			mes "to get some Red Plant Stem Powder for Morriphen's medicine.";
 			next;
 			mes "[Dono]";
 			mes "Look, I know it's a pain,";
@@ -1624,7 +1624,7 @@ lighthalzen,88,79,7	script	Dono	85,{
 		mes "to find Makkie inside the";
 		mes "pub across the street. Hurry";
 		mes "up and bring me some Red";
-		mes "Plant Stem Power from him.^FFFFFF ^000000 Come on, Morriphen's in trouble!";
+		mes "Plant Stem Power from him. Come on, Morriphen's in trouble!";
 		close;
 	} else if (hg_bio == 5) {
 		mes "[Dono]";
@@ -1752,7 +1752,7 @@ lhz_in03,193,28,3	script	Makkie	83,{
 		mes "it to prepare medicine for";
 		mes "Morriphen and Siria, am";
 		mes "I right? Okay, just give me";
-		mes "a moment. While you're waiting,^FFFFFF ^000000 go ahead and relax, look around...";
+		mes "a moment. While you're waiting, go ahead and relax, look around...";
 		next;
 		mes "^3355FFMakkie sifted the powder";
 		mes "into a bag for you, you see";
@@ -1795,7 +1795,7 @@ lhz_in03,193,28,3	script	Makkie	83,{
 		mes "up at our current jobs.";
 		mes "Strangely enough, Morriphen";
 		mes "disappeared at the same time.";
-		mes "I don't know what happened to^FFFFFF ^000000 him since our days at Rekenber...";
+		mes "I don't know what happened to him since our days at Rekenber...";
 		next;
 		mes "[Makkie]";
 		mes "Anyway, when Morriphen";
@@ -4270,7 +4270,7 @@ hugel,191,172,3	script	Manainne	892,1,{
 		mes "I used to get along when";
 		mes "he dated my older sister,";
 		mes "Kanainne. In fact, they'd";
-		mes "always spend time together^FFFFFF ^000000 right under that tree. Weird, huh?";
+		mes "always spend time together right under that tree. Weird, huh?";
 		next;
 		mes "[Manainne]";
 		mes "Then, well, Kanainne";
@@ -4439,13 +4439,13 @@ hugel,191,172,3	script	Manainne	892,1,{
 		mes "[Manainne]";
 		mes "''In my dream, your";
 		mes "eyes held the reflection";
-		mes "of the ocean's clear waters...^FFFFFF ^000000 Someday I'll show them to you.''";
+		mes "of the ocean's clear waters... Someday I'll show them to you.''";
 		next;
 		mes "[Manainne]";
 		mes "''Your lovely face,";
 		mes "your enticing smile...";
 		mes "They're forever be in my";
-		mes "heart, so I'll never be lonely.'' ^FFFFFF ^000000";
+		mes "heart, so I'll never be lonely.''";
 		next;
 		mes "[El Schatt]";
 		mes "Manainne...";
@@ -4604,8 +4604,8 @@ hugel,100,103,3	script	Perfitz	866,{
 		mes "[Perfitz]";
 		mes "It's funny how things";
 		mes "change. You know, El Schatt";
-		mes "actually used to protest against^FFFFFF ^000000 my idea of building shops in the";
-		mes "area when that tree grows. Hmm...^FFFFFF ^000000 I wonder, what happened to him?";
+		mes "actually used to protest against my idea of building shops in the";
+		mes "area when that tree grows. Hmm... I wonder, what happened to him?";
 		close;
 	} else {
 		mes "[Perfitz]";
@@ -4656,7 +4656,7 @@ hugel,196,164,3	script	El Schatt	50,{
 		mes "[El Schatt]";
 		mes "My father's been wanting to";
 		mes "build a shop here for so long,";
-		mes "and now, I think it's about time.^FFFFFF ^000000 And this business will help the";
+		mes "and now, I think it's about time. And this business will help the";
 		mes "entire community. We should've";
 		mes "done this a long time ago...";
 		next;
@@ -4700,7 +4700,7 @@ hugel,196,164,3	script	El Schatt	50,{
 		mes "to think differently...";
 		mes "I'd protect that old tree";
 		mes "with my life, I won't deny";
-		mes "it. But that's an old story that^FFFFFF ^000000 should be buried in the past...";
+		mes "it. But that's an old story that should be buried in the past...";
 		changequest 8060,8061;
 		close;
 	} else if (hg_memory == 5) {
@@ -5045,7 +5045,7 @@ hugel,107,67,3	script	Torpy	706,{
 			mes "I'm older to have a girlfriend.";
 			mes "I mean, what if the girl I pick";
 			mes "now gets uglier when she";
-			mes "grows up? Or what if she gets^FFFFFF ^000000 really fat? I better be careful...";
+			mes "grows up? Or what if she gets really fat? I better be careful...";
 			next;
 			mes "^3355FFTorpy is still a young,";
 			mes "naive child that has much";
@@ -5503,7 +5503,7 @@ hu_in01,15,372,3	script	Cellette Lavit	74,{
 			mes "[Cellette]";
 			mes "Oh, thank you so much!";
 			mes "You can't imagine how busy";
-			mes "I've been, and how much I need^FFFFFF ^000000 the help! Now, let's get started~";
+			mes "I've been, and how much I need the help! Now, let's get started~";
 			next;
 			switch(rand(1,4)) {
 			case 1:
@@ -5512,7 +5512,7 @@ hu_in01,15,372,3	script	Cellette Lavit	74,{
 				mes "order of Fish Cake Soup to";
 				mes "my friend Neha. I'm grateful";
 				mes "that she's a regular customer--";
-				mes "she's a good friend, but I'm sure^FFFFFF ^000000 that she loves the soup as well.";
+				mes "she's a good friend, but I'm sure that she loves the soup as well.";
 				set hg_odeng,1;
 				setquest 8064;
 				getitem 584,1; //Fish_Ball_Soup
@@ -5523,7 +5523,7 @@ hu_in01,15,372,3	script	Cellette Lavit	74,{
 				mes "of Fish Cake Soup to Maewan,";
 				mes "another one of my regulars.";
 				mes "He's been buying my soup ever";
-				mes "since I helped him start his^FFFFFF ^000000 business. Nice of him, isn't it?";
+				mes "since I helped him start his business. Nice of him, isn't it?";
 				set hg_odeng,2;
 				setquest 8065;
 				getitem 584,1; //Fish_Ball_Soup 
@@ -5732,7 +5732,7 @@ hu_in01,15,372,3	script	Cellette Lavit	74,{
 			mes "leave now and deliver";
 			mes "that Fish Cake Soup to";
 			mes "Erjan before he can think";
-			mes "of something to complain about.^FFFFFF ^000000 Although it's probably too late...";
+			mes "of something to complain about. Although it's probably too late...";
 			close;
 		} else {
 			mes "[Cellette]";
@@ -5912,7 +5912,7 @@ hugel,87,139,3	script	Maewan	86,{
 			mes "Oh, finally, I've been";
 			mes "waiting for my order of";
 			mes "Fish Cake Soup from Cellette!";
-			mes "Aaaah, it smells oh so delicious~ ^FFFFFF ^000000";
+			mes "Aaaah, it smells oh so delicious~";
 			next;
 			mes "[Maewan]";
 			mes "Argh, but you're late!";
@@ -6026,7 +6026,7 @@ hugel,84,125,3	script	Layoma	700,{
 			mes "count on you to work";
 			mes "for my roommate Cellette";
 			mes "a little while longer. Oh, and";
-			mes "please tell her to not to come^FFFFFF ^000000 home so late all the time, okay?";
+			mes "please tell her to not to come home so late all the time, okay?";
 			delitem 921,1; //Mushroom_Spore
 			delitem 584,1; //Fish_Ball_Soup
 			set hg_odeng,10;
@@ -6061,7 +6061,7 @@ hugel,102,161,3	script	Erjan	100,{
 			mes "never come to deliver";
 			mes "my Fish Cake Soup. You're";
 			mes "awfully late, you know that?";
-			mes "Still, the smell is just so^FFFFFF ^000000 appetizing, I can barely resist...";
+			mes "Still, the smell is just so appetizing, I can barely resist...";
 			next;
 			mes "[Erjan]";
 			mes "Hm, but as the first son";
@@ -6273,7 +6273,7 @@ yuno,111,156,3	script	Euslan	90,{
 			mes "My fiancee was planning on";
 			mes "searching the Schwaltzvalt";
 			mes "Republic, so maybe the crewmen";
-			mes "on the Schwaltzvalt Republic^FFFFFF ^000000 domestic flights might know him.";
+			mes "on the Schwaltzvalt Republic domestic flights might know him.";
 			next;
 			mes "[Euslan]";
 			mes "If you manage to find";
@@ -6342,7 +6342,7 @@ yuno,111,156,3	script	Euslan	90,{
 			mes "My fiancee was planning on";
 			mes "searching the Schwaltzvalt";
 			mes "Republic, so maybe the crewmen";
-			mes "on the Schwaltzvalt Republic^FFFFFF ^000000 domestic flights might know him.";
+			mes "on the Schwaltzvalt Republic domestic flights might know him.";
 			next;
 			mes "[Euslan]";
 			mes "If you manage to find";
@@ -6419,7 +6419,7 @@ yuno,111,156,3	script	Euslan	90,{
 		mes "please visit my brother";
 		mes "Eukran in Hugel, and ask";
 		mes "him where my Thierry might be.";
-		mes "Thank you again for your kindness. ^FFFFFF ^000000";
+		mes "Thank you again for your kindness.";
 		close;
 	} else if (hg_ma1 == 8 || hg_ma1 == 9 || hg_ma1 == 10 || hg_ma1 == 11) {
 		mes "^3355FFEuslan is waiting for";
@@ -6446,7 +6446,7 @@ yuno,111,156,3	script	Euslan	90,{
 		mes "such a wonderful man. Why";
 		mes "did that silly fool go through";
 		mes "so much trouble for a useless";
-		mes "woman like me. *Cough* I still^FFFFFF ^000000 don't understand it... I don't...";
+		mes "woman like me. *Cough* I still don't understand it... I don't...";
 		next;
 		mes "[Euslan]";
 		mes "Thank you so much for";
@@ -6540,7 +6540,7 @@ que_bingo,53,190,7	script	Eukran	778,{
 		mes "there that can help my";
 		mes "sister recover. Why else";
 		mes "would Thierry go to such a";
-		mes "dangerous place? No one goes^FFFFFF ^000000 to the Odin Shrine for no reason.";
+		mes "dangerous place? No one goes to the Odin Shrine for no reason.";
 		close2;
 		set hg_ma1,8;
 		changequest 8047,8048;
@@ -6762,7 +6762,7 @@ odin_tem01,130,134,4	script	Young Man#Hu_Quest	774,{
 		mes "been using their guardians to";
 		mes "gather the ingredients needed";
 		mes "for my fiancee's medicine. But";
-		mes "if they're planning to get rid of^FFFFFF ^000000 me, I've just run out of time.";
+		mes "if they're planning to get rid of me, I've just run out of time.";
 		next;
 		mes "[Thierry]";
 		mes "It doesn't matter what";
@@ -6869,7 +6869,7 @@ OnTouch:
 		mes "[Suspicious Man]";
 		mes "Thierry seems to have";
 		mes "caught on to what we're";
-		mes "really up to. I think that's why^FFFFFF ^000000 he's slowing down on his";
+		mes "really up to. I think that's why he's slowing down on his";
 		mes "research. We better get rid";
 		mes "of him before it's too late.";
 		next;
@@ -7240,7 +7240,7 @@ hu_fild06,217,270,3	script	Burupu	896,3,3,{
 		mes "Airship landed in our";
 		mes "town, and I saw all those";
 		mes "Swordmen, I knew it'd be";
-		mes "my destiny! Forget ranching,^FFFFFF ^000000 I'm gonna wield a frickin' sword!";
+		mes "my destiny! Forget ranching, I'm gonna wield a frickin' sword!";
 		set hg_milk,4;
 		close;
 	} else if (hg_milk == 4) {
@@ -7257,7 +7257,7 @@ hu_fild06,217,270,3	script	Burupu	896,3,3,{
 		mes "Booboo the cow if you can get";
 		mes "me some proper Swordman";
 		mes "equipment. Let's see... Why not";
-		mes "give me 1 Rapier with 2 Slots?^FFFFFF ^000000 That's not too much to ask, right?";
+		mes "give me 1 Rapier with 2 Slots? That's not too much to ask, right?";
 		next;
 		switch(select("Alright.:Whoa, that's too much!")) {
 			case 1:
@@ -7313,7 +7313,7 @@ hu_fild06,217,270,3	script	Burupu	896,3,3,{
 		mes "I hid my secret instructions";
 		mes "for milking Booboo the cow";
 		mes "under the ground just northeast";
-		mes "of her. Read them carefully, and^FFFFFF ^000000 you should be able to milk her";
+		mes "of her. Read them carefully, and you should be able to milk her";
 		mes "yourself. You can do it, right?";
 		next;
 		mes "[Burupu]";
@@ -7338,7 +7338,7 @@ hu_fild06,217,270,3	script	Burupu	896,3,3,{
 		mes "best Swordman in the";
 		mes "world! But first, I gotta";
 		mes "learn how to use this thing!";
-		mes "Heeeeee-YAH! How's that? That^FFFFFF ^000000 was almost a Magnum Break, right?";
+		mes "Heeeeee-YAH! How's that? That was almost a Magnum Break, right?";
 		emotion e_swt2,0;
 		close;
 	}
@@ -7761,7 +7761,7 @@ hu_in01,19,161,0	script	Alex	803,{
 		mes "Our main goal in this";
 		mes "excavation is to retrieve";
 		mes "some extremely valuable";
-		mes "item inside the shrine. However,^FFFFFF ^000000 it's too dangerous to go in there";
+		mes "item inside the shrine. However, it's too dangerous to go in there";
 		mes "if you're not strong enough.";
 		next;
 		mes "[Alex]";
@@ -7810,7 +7810,7 @@ hu_in01,19,161,0	script	Alex	803,{
 			mes "Anyway, I have to accept";
 			mes "them to help international";
 			mes "relations or something silly";
-			mes "like that. They say they're here^FFFFFF ^000000 to research religious relics,";
+			mes "like that. They say they're here to research religious relics,";
 			mes "but I just don't trust them.";
 			next;
 			cutin "hu_alex04.bmp",2;
@@ -8214,7 +8214,7 @@ hu_in01,14,11,4	script	Laura	70,{
 			mes "Perfect! Now, you first";
 			mes "you need to go to the shrine";
 			mes "and survey the area for your";
-			mes "own benefit. Talk to the Boatman,^FFFFFF ^000000 and he'll take you there, okay?";
+			mes "own benefit. Talk to the Boatman, and he'll take you there, okay?";
 			mes "Hurry up and come back soon!";
 			set hg_odin,12;
 			setquest 11003;
@@ -8260,7 +8260,7 @@ hu_in01,14,11,4	script	Laura	70,{
 			mes "Sorry, let me introduce";
 			mes "myself. I'm Laura Laurence,";
 			mes "the leader of the Odin Shrine";
-			mes "expedition for the Rune Midgarts^FFFFFF ^000000 Kingdom. Ashe Milton is my";
+			mes "expedition for the Rune Midgarts Kingdom. Ashe Milton is my";
 			mes "assistant for this excavation.";
 			next;
 			emotion e_heh,0,"Ashe";
@@ -8302,7 +8302,7 @@ hu_in01,14,11,4	script	Laura	70,{
 		mes "to spy on that snobby girl,";
 		mes "Alex of the Schwaltzvalt";
 		mes "Republic office, and report";
-		mes "what she's actually doing to me. ^FFFFFF ^000000";
+		mes "what she's actually doing to me.";
 		next;
 		cutin "hu_laura03.bmp",2;
 		mes "[Laura]";
@@ -8345,7 +8345,7 @@ hu_in01,14,11,4	script	Laura	70,{
 		mes "Ask the Boatman to take";
 		mes "you to the Odin Shrine so";
 		mes "that you can actually see it";
-		mes "for yourself. If you don't think^FFFFFF ^000000 you can handle the expedition,";
+		mes "for yourself. If you don't think you can handle the expedition,";
 		mes "then you can just let me know.";
 		close2;
 		cutin "hu_laura02.bmp",255;
@@ -8498,8 +8498,8 @@ hu_in01,14,11,4	script	Laura	70,{
 			mes "[Laura]";
 			mes "This isn't really one";
 			mes "of those jobs where you";
-			mes "can take your time. Sure,^FFFFFF ^000000 I didn't give you a deadline, but";
-			mes "we can't make progress on our^FFFFFF ^000000 research until you make progress.";
+			mes "can take your time. Sure, I didn't give you a deadline, but";
+			mes "we can't make progress on our research until you make progress.";
 			close2;
 			cutin "hu_laura03.bmp",255;
 			end;
@@ -8547,7 +8547,7 @@ hu_in01,14,11,4	script	Laura	70,{
 				mes "Schwaltzvalt snobs are doing?";
 				mes "They must think this project";
 				mes "is an excuse for them to relax";
-				mes "and slack off! They can afford^FFFFFF ^000000 to, obviously. Hmpf! Rich people!";
+				mes "and slack off! They can afford to, obviously. Hmpf! Rich people!";
 				next;
 				cutin "hu_laura03.bmp",2;
 				mes "[Laura]";
@@ -8690,7 +8690,7 @@ hu_in01,14,11,4	script	Laura	70,{
 		mes "to spy on that snobby girl,";
 		mes "Alex of the Schwaltzvalt";
 		mes "Republic office, and report";
-		mes "what she's actually doing to me. ^FFFFFF ^000000";
+		mes "what she's actually doing to me.";
 		next;
 		cutin "hu_laura04.bmp",2;
 		mes "[Laura]";
@@ -8898,7 +8898,7 @@ hu_in01,18,167,4	script	Julian	86,{
 		mes "Basically, each of our teams";
 		mes "is conducting its own research";
 		mes "for now. Now, we need your help";
-		mes "to find any relics from the Odin ^FFFFFF ^000000 Shrine. We'd appreciate it if you";
+		mes "to find any relics from the Odin Shrine. We'd appreciate it if you";
 		mes "brought as many as you can!";
 		close;
 	} else if (hg_odin == 2) {
@@ -8998,7 +8998,7 @@ hu_in01,16,20,4	script	Ashe	95,{
 			mes "Now, we should be working";
 			mes "together with the Schwaltvalt";
 			mes "Republic's Research Team, but";
-			mes "our leaders aren't getting along^FFFFFF ^000000 at all. There's just a huge";
+			mes "our leaders aren't getting along at all. There's just a huge";
 			mes "clash of personalities...";
 			next;
 			mes "[Ashe]";
@@ -9223,7 +9223,7 @@ hu_in01,159,84,3	script	Laura#2	70,{
 		mes "be equal partners in the same";
 		mes "expedition? That's what I heard";
 		mes "at the beginning! But you guys";
-		mes "have something different in mind! ^FFFFFF ^000000";
+		mes "have something different in mind!";
 		next;
 		cutin "hu_laura03.bmp",2;
 		mes "[Laura]";
@@ -9240,7 +9240,7 @@ hu_in01,159,84,3	script	Laura#2	70,{
 		mes "I-I don't know what you're";
 		mes "talking about! J-Julian must";
 		mes "have gotten some mission, and";
-		mes "has been carrying it out without^FFFFFF ^000000 my consent! Don't go twisting";
+		mes "has been carrying it out without my consent! Don't go twisting";
 		mes "the facts, you... you thief!";
 		next;
 		cutin "hu_laura03.bmp",2;

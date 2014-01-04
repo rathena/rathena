@@ -226,7 +226,7 @@ izlude,103,106,3	script	Guildsman#1	48,3,3,{
 			mes "you'll need to meet with your";
 			mes "contact from the Assassin";
 			mes "Guild near a hut at the west";
-			mes "side of the Oasis inside Morroc.^FFFFFF ^000000 So keep an eye out for him.";
+			mes "side of the Oasis inside Morroc. So keep an eye out for him.";
 			next;
 			mes "[Guildsman]";
 			mes "I doubt you'll have";
@@ -4100,7 +4100,7 @@ que_job01,84,17,3	script	Lin#2-1	885,{
 		mes "If I can obtain that,";
 		mes "people would be able to";
 		mes "take Satan Morroc's threat";
-		mes "more seriously. And Thanatos^FFFFFF ^000000 Tower wouldn't be a tourist area.";
+		mes "more seriously. And Thanatos Tower wouldn't be a tourist area.";
 		next;
 		mes "[R. Moore]";
 		mes "I'm begging you, please";
@@ -4327,7 +4327,7 @@ que_job01,79,15,1	script	R	880,{
 		mes "attacked me because they";
 		mes "did not want me to repair";
 		mes "Morroc's elemental equilibrium.";
-		mes "At least, that's what I believe. ^FFFFFF ^000000";
+		mes "At least, that's what I believe.";
 		set mao_request,109;
 		next;
 		mes "[R. Moore]";
@@ -4369,7 +4369,7 @@ que_job01,79,15,1	script	R	880,{
 		mes "You should be able to find";
 		mes "the element regulation device";
 		mes "behind one of the pyramids in";
-		mes "the field west of Morroc. Please^FFFFFF ^000000";
+		mes "the field west of Morroc. Please";
 		mes "use an enchanted stone to";
 		mes "boost the crest's power.";
 		close2;
@@ -5003,7 +5003,7 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 		mes "types of those elemental";
 		mes "stones. Anyway, you already";
 		mes "know where the west crest is.";
-		mes "The south crest is in the lowest^FFFFFF ^000000 part of the field south of Morroc.";
+		mes "The south crest is in the lowest part of the field south of Morroc.";
 		next;
 		mes "[Kidd]";
 		mes "As for the north and east";
@@ -5199,7 +5199,7 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 		mes "are supposed to protect some";
 		mes "seal beneath Morroc Castle";
 		mes "that keeps this monster, Satan";
-		mes "Morroc, from invading our world.^FFFFFF ^000000 It might be just a legend, but...";
+		mes "Morroc, from invading our world. It might be just a legend, but...";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "The assistant told me that";
@@ -5589,7 +5589,7 @@ que_job01,89,85,5	script	Dandelion Member	880,{
 				mes "Ah, so you already know";
 				mes "about us? I feel so ashamed...";
 				mes "We let that Raiyan Moore kidnap";
-				mes "the children that were entrusted^FFFFFF ^000000 to our care. I don't know if we";
+				mes "the children that were entrusted to our care. I don't know if we";
 				mes "can ever forgive ourselves.";
 				close2;
 				break;
@@ -5607,7 +5607,7 @@ que_job01,89,85,5	script	Dandelion Member	880,{
 				mes "streets, repair homes for";
 				mes "lower income households, and";
 				mes "even operated a day care center.";
-				mes "However, Raiyan Moore kidnapped^FFFFFF ^000000 all the children under our care...";
+				mes "However, Raiyan Moore kidnapped all the children under our care...";
 				next;
 				mes "[Dandelion Member]";
 				mes "I can only imagine the";
@@ -6147,7 +6147,7 @@ yuno_in04,180,106,3	script	Reading Girl	73,{
 		mes "the organized documents did";
 		mes "so on Mr. Moore's behalf. Then,";
 		mes "she quickly vanished before";
-		mes "I could ask her for her name or^FFFFFF ^000000 Mr. Moore's contact information.";
+		mes "I could ask her for her name or Mr. Moore's contact information.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Damn! That information";

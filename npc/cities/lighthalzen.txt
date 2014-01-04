@@ -333,7 +333,7 @@ lighthalzen,230,182,4	script	Klaubis#zen3	866,{
 		mes "many people stay in their";
 		mes "hometowns. Even if you do";
 		mes "leave, though, you can always";
-		mes "come back. It wouldn't be your^FFFFFF ^000000 hometown if you couldn't, right?";
+		mes "come back. It wouldn't be your hometown if you couldn't, right?";
 		close;
 	case 2:
 		mes "[Klaubis]";
@@ -461,7 +461,7 @@ lighthalzen,132,103,5	script	Sefith#li_01	734,{
 	mes "Good looks. Intelligence.";
 	mes "Excellent manners. A strong,";
 	mes "manly chin and overpowering,";
-	mes "piercing eyes. Perfectly balanced^FFFFFF ^000000 passion and charimsma. All the";
+	mes "piercing eyes. Perfectly balanced passion and charimsma. All the";
 	mes "good things that ladies want.";
 	next;
 	mes "[Sefith]";
@@ -1084,8 +1084,8 @@ OnTouch:
 			mes "[Beggar]";
 			mes "What you can see and";
 			mes "understand might not match";
-			mes "with reality. Like the stars that^FFFFFF ^000000 are always there, but not visible";
-			mes "during the day, we'll always have^FFFFFF ^000000 hope, even if we can't see it.";
+			mes "with reality. Like the stars that are always there, but not visible";
+			mes "during the day, we'll always have hope, even if we can't see it.";
 			next;
 			mes "[" + strcharinfo(0) + "]";
 			emotion e_dots,1;
@@ -1113,7 +1113,7 @@ OnTouch:
 			mes "sort of don't. Let me explain";
 			mes "it this way. I take life day by";
 			mes "day, with each day covering its";
-			mes "own spectrum with miracle on^FFFFFF ^000000 one end and tragedy on the other.";
+			mes "own spectrum with miracle on one end and tragedy on the other.";
 			next;
 			mes "[Beggar]";
 			mes "So each day has the capacity";
@@ -1133,7 +1133,7 @@ OnTouch:
 			next;
 			mes "[Beggar]";
 			mes "Stand up when you're down";
-			mes "and live your life with passion.^FFFFFF ^000000 The capacity for miracles will";
+			mes "and live your life with passion. The capacity for miracles will";
 			mes "always be there and know that";
 			mes "you can be someone else's";
 			mes "miracle. Isn't that wonderful?";
@@ -1174,14 +1174,14 @@ OnTouch:
 			mes "isn't so productive. More of";
 			mes "a frustration that you can let";
 			mes "go. Someone cut you off on the";
-			mes "freeway or a friend innocently^FFFFFF ^000000 forgot your birthday? No biggie.";
+			mes "freeway or a friend innocently forgot your birthday? No biggie.";
 			next;
 			mes "[Beggar]";
 			mes "Don't let this kind of";
 			mes "anger get to you or you'll";
 			mes "look like a loser. Think of";
 			mes "the big picture and if you're";
-			mes "still upset, vent appropriately.^FFFFFF ^000000 Be honest without hurting anyone.";
+			mes "still upset, vent appropriately. Be honest without hurting anyone.";
 			next;
 			mes "[Beggar]";
 			mes "The second kind of anger";
@@ -1204,7 +1204,7 @@ OnTouch:
 			mes "righteous anger, say to protect";
 			mes "someone dear to you, will make";
 			mes "you a hero. Fighting with anger";
-			mes "born of frustration will make you^FFFFFF ^000000 a bully. Know the difference.";
+			mes "born of frustration will make you a bully. Know the difference.";
 			next;
 			mes "[" + strcharinfo(0) + "]";
 			emotion e_dots,1;
@@ -1383,7 +1383,7 @@ lhz_in01,139,40,7	script	Enoz#oz	53,{
 	mes "[Enoz]";
 	mes "So, the novel I ordered from";
 	mes "the Rune-Midgarts Kingdom";
-	mes "just recently arrived. It's real^FFFFFF ^000000 good, by the guy who wrote";
+	mes "just recently arrived. It's real good, by the guy who wrote";
 	mes "''Roda Frog Adventure''";
 	mes "years ago. Remember?";
 	next;
@@ -2592,7 +2592,7 @@ lighthalzen,107,107,3	script	Kosit#zen1	869,{
 	mes "these rules is because of all";
 	mes "the unruly gangsters that can";
 	mes "sometimes get into the city.";
-	mes "I mean, it's relatively peaceful^FFFFFF ^000000 and all. But these rules...";
+	mes "I mean, it's relatively peaceful and all. But these rules...";
 	next;
 	mes "[Kosit]";
 	mes "It's good to be safe,";
@@ -2669,7 +2669,7 @@ lighthalzen,364,282,3	script	Bodger#zen5	870,{
 	mes "I hear that the people";
 	mes "who live Uptown eat totally";
 	mes "delicious, gourmet food eight";
-	mes "times a day! Hopefully it's just^FFFFFF ^000000 an exaggeration. 'Cuz if it";
+	mes "times a day! Hopefully it's just an exaggeration. 'Cuz if it";
 	mes "wasn't, I'd be so mad...";
 	close;
 }
@@ -2986,7 +2986,7 @@ lhz_in01,139,48,7	script	Leimi#mimir	73,{
 			mes "[Leimi]";
 			mes "Oh, you're an Assassin!";
 			mes "Oh, you boys are soooo cute!";
-			mes "And so cool and so mysterious^FFFFFF ^000000 all at the same time! I love you!";
+			mes "And so cool and so mysterious all at the same time! I love you!";
 		}
 		else {
 			next;

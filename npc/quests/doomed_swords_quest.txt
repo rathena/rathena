@@ -842,7 +842,7 @@ morocc,248,159,4	script	Young Man#magum1	86,{
 		mes "appreciate it, but this";
 		mes "pentagram has really good";
 		mes "craftsmanship! Now, if my";
-		mes "older brothers have already^FFFFFF ^000000 helped you, I shall do the same.";
+		mes "older brothers have already helped you, I shall do the same.";
 		next;
 		mes "[Huey]";
 		mes "My older brothers are even";
@@ -856,7 +856,7 @@ morocc,248,159,4	script	Young Man#magum1	86,{
 		mes "would have been for nothing.";
 		mes "And then... They might just";
 		mes "come looking for me. Morf";
-		mes "especially. Oh, right! Materials!^FFFFFF ^000000 I need these for the pentagram!";
+		mes "especially. Oh, right! Materials! I need these for the pentagram!";
 		next;
 		mes "[Huey]";
 		mes "Please bring me";

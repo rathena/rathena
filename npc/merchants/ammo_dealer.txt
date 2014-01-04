@@ -64,11 +64,11 @@ alberta,118,160,3	script	Bullet Dealer Tony#alb::bdt	86,{
 function	script	Bullet_Trade	{
 	mes "[Tony]";
 	mes "For every set of";
-	mes "30 "+getitemname(getarg(2))+"s,";
+	mes callfunc("F_InsertPlural",30,getitemname(getarg(2)))+",";
 	mes "you must give me";
 	mes "1 Emveretarcon,";
 	mes "1 Phracon, and";
-	mes ""+getarg(1)+" "+getitemname(getarg(0))+".";
+	mes callfunc("F_InsertPlural",getarg(1),getitemname(getarg(0)))+".";
 	next;
 	mes "[Tony]";
 	mes "Remember that I can give";
@@ -106,8 +106,8 @@ function	script	Bullet_Trade	{
 			mes "these materials, and here are";
 			mes "your bullets. It's a pleasure";
 			mes "to do business with you~";
-			delitem 1010,.@amount;
-			delitem 1011,.@amount;
+			delitem 1010,.@amount; //Phracon
+			delitem 1011,.@amount; //Emveretarcon
 			delitem getarg(0),.@amount * getarg(1);
 			getitem getarg(2),.@amount * 30;
 			close;

@@ -94,7 +94,7 @@ comodo,204,172,5	script	Canell#qsk_dan01	724,{
 			mes "Ho-ho~ It's good that you";
 			mes "recognize that you have much";
 			mes "to learn. Well, let's not waste";
-			mes "any time. Your first lesson will^FFFFFF ^000000 be on image training and self";
+			mes "any time. Your first lesson will be on image training and self";
 			mes "visualization. Now, for that...";
 			next;
 			mes "[Canell]";
@@ -259,7 +259,7 @@ comodo,204,172,5	script	Canell#qsk_dan01	724,{
 			mes "proper winking is to allow";
 			mes "your eyelid to seductively";
 			mes "move to a natural rhythm.";
-			mes "Close your eye for a second,^FFFFFF ^000000 then open it slowly to this count.";
+			mes "Close your eye for a second, then open it slowly to this count.";
 			next;
 			mes "[Canell]";
 			mes "Un, deux, trois~";

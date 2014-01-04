@@ -420,7 +420,7 @@ morocc_in,169,72,7	script	Spiteful-Looking Bard#bs	741,3,3,{
 				mes "fiercely into the eyes of";
 				mes "your target, and focus on";
 				mes "thoughts of dominance. This";
-				mes "is the basis for mesmerization.^FFFFFF ^000000 Now listen to this incantation...";
+				mes "is the basis for mesmerization. Now listen to this incantation...";
 				next;
 				mes "[Riott]";
 				mes "Uuuummm Baaalaaaa";
@@ -434,7 +434,7 @@ morocc_in,169,72,7	script	Spiteful-Looking Bard#bs	741,3,3,{
 				mes "[Riott]";
 				mes "Pang's Voice is used to";
 				mes "confuse people and disrupt";
-				mes "control of their bodies. It's not^FFFFFF ^000000 a fatal skill, but it is effective";
+				mes "control of their bodies. It's not a fatal skill, but it is effective";
 				mes "in mentally upsetting your enemy. Make very wise use of this skill.";
 				skill "BA_PANGVOICE",1,0;
 				close;
@@ -478,7 +478,7 @@ morocc_in,169,72,7	script	Spiteful-Looking Bard#bs	741,3,3,{
 				mes "fiercely into the eyes of";
 				mes "your target, and focus on";
 				mes "thoughts of dominance. This";
-				mes "is the basis for mesmerization.^FFFFFF ^000000 Now listen to this incantation...";
+				mes "is the basis for mesmerization. Now listen to this incantation...";
 				next;
 				mes "[Riott]";
 				mes "''Toad's leg, Verit's heart,";
@@ -519,7 +519,7 @@ morocc_in,169,72,7	script	Spiteful-Looking Bard#bs	741,3,3,{
 				mes "your use of this skill! Don't";
 				mes "use it recklessly, or people";
 				mes "will come to hate you as they";
-				mes "hate me. But ''Pang Voice'' can^FFFFFF ^000000 be welcome is certain situations.";
+				mes "hate me. But ''Pang Voice'' can be welcome is certain situations.";
 				next;
 				mes "[Riott]";
 				mes "Subject your enemies to";
@@ -544,7 +544,7 @@ morocc_in,169,72,7	script	Spiteful-Looking Bard#bs	741,3,3,{
 				mes "some fresh eggs laid by";
 				mes "Yhelle, just like I asked.";
 				mes "I'm sure it was dangerous";
-				mes "going to Nifflheim, but the^FFFFFF ^000000 flavor of these eggs is worth it.";
+				mes "going to Nifflheim, but the flavor of these eggs is worth it.";
 				next;
 				next;
 				mes "[Riott]";
@@ -560,7 +560,7 @@ morocc_in,169,72,7	script	Spiteful-Looking Bard#bs	741,3,3,{
 				mes "fiercely into the eyes of";
 				mes "your target, and focus on";
 				mes "thoughts of dominance. This";
-				mes "is the basis for mesmerization.^FFFFFF ^000000 Now listen to this incantation...";
+				mes "is the basis for mesmerization. Now listen to this incantation...";
 				next;
 				mes "[Riott]";
 				mes "''Toad's leg, Verit's heart,";
@@ -601,7 +601,7 @@ morocc_in,169,72,7	script	Spiteful-Looking Bard#bs	741,3,3,{
 				mes "your use of this skill! Don't";
 				mes "use it recklessly, or people";
 				mes "will come to hate you as they";
-				mes "hate me. But ''Pang Voice'' can^FFFFFF ^000000 be welcome is certain situations.";
+				mes "hate me. But ''Pang Voice'' can be welcome is certain situations.";
 				next;
 				mes "[Riott]";
 				mes "Subject your enemies to";

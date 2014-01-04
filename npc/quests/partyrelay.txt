@@ -285,7 +285,7 @@ payon,103,113,3	script	Ledrion#payon::RelayLedrion	109,{
 	mes "a meaningful contribution";
 	mes "to all of Rune Midgard, which";
 	mes "brings me to why I am here.";
-	mes "There are many adventurers^FFFFFF ^000000 like you, but we have a problem.";
+	mes "There are many adventurers like you, but we have a problem.";
 	next;
 	mes "[Ledrion]";
 	mes "So many adventurers have";

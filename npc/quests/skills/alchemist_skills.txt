@@ -141,7 +141,7 @@ yuno_in04,33,108,4	script	Pisruik#qsk_al	883,{
 				mes "5 Yellow Gemstones.";
 				mes "That's what I needed.";
 				mes "I'm sure there was more,";
-				mes "but what I can't recall exactly... ^FFFFFF ^000000";
+				mes "but what I can't recall exactly...";
 				next;
 				if (select("10 Hearts of Mermaid:10 Large Jellopies") == 1) {
 					mes "[Pisruik]";
@@ -642,7 +642,7 @@ yuno_in04,33,108,4	script	Pisruik#qsk_al	883,{
 			mes "20 Maneater Blossoms.";
 			mes "If I weren't so sickly, I'd get";
 			mes "them myself, but--*Cough* as";
-			mes "you can see, I don't feel so well. ^FFFFFF ^000000";
+			mes "you can see, I don't feel so well.";
 			set ALCHE_SK,6;
 			next;
 			mes "[Pisruik]";
@@ -761,7 +761,7 @@ yuno_in04,33,108,4	script	Pisruik#qsk_al	883,{
 			mes "Actually, I miscalculated";
 			mes "the number of Maneater";
 			mes "Blossoms that I need. Would";
-			mes "you bring me one more? Sorry,^FFFFFF ^000000 I know it's kind of troublesome...";
+			mes "you bring me one more? Sorry, I know it's kind of troublesome...";
 			close;
 		}
 		else if (ALCHE_SK == 8) {
@@ -853,7 +853,7 @@ yuno_in04,33,108,4	script	Pisruik#qsk_al	883,{
 				mes "Actually, I miscalculated";
 				mes "the number of Maneater";
 				mes "Blossoms that I need. Would";
-				mes "you bring me one more? Sorry,^FFFFFF ^000000 I know it's kind of troublesome...";
+				mes "you bring me one more? Sorry, I know it's kind of troublesome...";
 				close;
 			}
 		}
@@ -1135,7 +1135,7 @@ yuno_in04,27,107,4	script	Degas#qsk_al	748,{
 	mes "always coughing. Between";
 	mes "the two of them, it's far too";
 	mes "noisy to focus on my research!";
-	mes "If only I could work in my very^FFFFFF ^000000 own private, secret laboratory...";
+	mes "If only I could work in my very own private, secret laboratory...";
 	close;
 }
 
@@ -1179,12 +1179,12 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	57,{
 		mes "to see if your Homunculus";
 		mes "is tired or hungry, or if it's";
 		mes "been hurt. You must also take";
-		mes "into account your Homunculus's^FFFFFF ^000000 feelings towards you, its owner.";
+		mes "into account your Homunculus's feelings towards you, its owner.";
 		next;
 		mes "[Kellasus]";
 		mes "When that nurturing attitude";
 		mes "becomes second nature to you,";
-		mes "you will have mastered Bioethics.^FFFFFF ^000000 It sounds simple, but you can only";
+		mes "you will have mastered Bioethics. It sounds simple, but you can only";
 		mes "understand a relationship with a Homunculus through experience.";
 		next;
 		mes "[Kellasus]";
@@ -1527,7 +1527,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	57,{
 		mes "brings you this way?";
 		mes "As your senior in the";
 		mes "field of Alchemy, I can";
-		mes "give you some advice if you're^FFFFFF ^000000 stumped by a particular problem...";
+		mes "give you some advice if you're stumped by a particular problem...";
 		next;
 		if (select("Teach me the Homunculus Skills.:No, nothing.") == 1) {
 			mes "[" + strcharinfo(0) + "]";
@@ -1557,7 +1557,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	57,{
 			mes "[Kellasus]";
 			mes "Perhaps I never should";
 			mes "have mentioned that subject.";
-			mes "But I still don't understand why^FFFFFF ^000000 you would suddenly want to ";
+			mes "But I still don't understand why you would suddenly want to ";
 			mes "learn those skills. Yes, it's";
 			mes "true that I could teach you...";
 			next;
@@ -1631,8 +1631,8 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	57,{
 		mes "[Kellasus]";
 		mes "I only fear that your quest";
 		mes "for knowledge, your insatiable";
-		mes "curiosity to reveal the unknown,^FFFFFF ^000000 may lead you on the path of the";
-		mes "Homunculus. For your own sake,^FFFFFF ^000000 don't bother considering the idea.";
+		mes "curiosity to reveal the unknown, may lead you on the path of the";
+		mes "Homunculus. For your own sake, don't bother considering the idea.";
 		next;
 		set bioeth,3;
 		mes "[Kellasus]";
@@ -1640,7 +1640,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	57,{
 		mes "precious. If your motives";
 		mes "are good, and untainted by";
 		mes "the desire for fame or fortune,";
-		mes "and if you work for the greater^FFFFFF ^000000 good of mankind, you'll be fine.";
+		mes "and if you work for the greater good of mankind, you'll be fine.";
 		close;
 	}
 	if (BaseJob == Job_Alchemist && bioeth == 1) {
@@ -1688,7 +1688,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	57,{
 		mes "exciting vastness of Alchemy,";
 		mes "there is no turning back. Do";
 		mes "your best to learn all that you";
-		mes "can, and never forget that you^FFFFFF ^000000 have responsibilities to mankind.";
+		mes "can, and never forget that you have responsibilities to mankind.";
 		close;
 	}
 	if (BaseJob == Job_Alchemist) {
@@ -1748,7 +1748,7 @@ lhz_in01,225,122,5	script	Skrajjad#qsk_al	754,{
 		mes "I've taught you everything";
 		mes "I can about the Homunculi.";
 		mes "I hope that I've been of some";
-		mes "help in your quest for knowledge^FFFFFF ^000000 and understanding of our universe.";
+		mes "help in your quest for knowledge and understanding of our universe.";
 		next;
 		mes "[Skrajjad]";
 		mes "If you haven't already done";
@@ -2079,7 +2079,7 @@ lhz_in03,106,34,3	script	Koring#qsk_al	706,{
 		mes "He's always trying hard";
 		mes "to make me happy and to ";
 		mes "help me when I have problems.";
-		mes "Like the time I was really sick... ^FFFFFF ^000000";
+		mes "Like the time I was really sick...";
 		next;
 		mes "[Koring]";
 		mes "Daddy did his best to make";
@@ -2152,15 +2152,15 @@ lhz_in03,109,31,5	script	Beninne#qsk_al	90,{
 
 lighthalzen,226,210,3	script	Nannan#qsk_al	86,{
 	mes "[Nannan]";
-	mes "You know, I always thought^FFFFFF ^000000 that all Alchemists were bookish,";
+	mes "You know, I always thought that all Alchemists were bookish,";
 	mes "scholarly types, their faces always buried in books and studying. But";
 	mes "I managed to find one who doesn't fit that nerdy stereotype at all.";
 	next;
 	mes "[Nannan]";
 	mes "This guy, what's-his-face,";
 	mes "Broncher, is always wasting";
-	mes "his time drinking. I guess he^FFFFFF ^000000 discovered the secret of turning";
-	mes "water into Grade A booze. But^FFFFFF ^000000 at least he's not the stuffy type.";
+	mes "his time drinking. I guess he discovered the secret of turning";
+	mes "water into Grade A booze. But at least he's not the stuffy type.";
 	next;
 	mes "[Nannan]";
 	mes "I don't know how much";

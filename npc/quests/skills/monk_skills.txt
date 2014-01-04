@@ -101,7 +101,7 @@ prt_monk,270,198,3	script	Apprentice Monk#qsk_mo	753,{
 				mes "[Monk]";
 				mes "My test may seem too strict,";
 				mes "but it is impossible to learn";
-				mes "Spiritual Bestowment without^FFFFFF ^000000 the right discipline. As with all";
+				mes "Spiritual Bestowment without the right discipline. As with all";
 				mes "things, readiness and preparation precede all forms of realization.";
 				next;
 				mes "[Monk]";
@@ -164,7 +164,7 @@ prt_monk,270,198,3	script	Apprentice Monk#qsk_mo	753,{
 				mes "meaning of selflessness?";
 				mes "When you abandon greed";
 				mes "and the desires of the world,";
-				mes "you will be ready for my teaching. ^FFFFFF ^000000";
+				mes "you will be ready for my teaching.";
 				close;
 			}
 		}
@@ -180,7 +180,7 @@ prt_monk,270,198,3	script	Apprentice Monk#qsk_mo	753,{
 			mes "[Monk]";
 			mes "Hm? To what purpose have";
 			mes "you come to visit me? Ah, so";
-			mes "you wish to learn the skill that^FFFFFF ^000000 I have developed. My colleague";
+			mes "you wish to learn the skill that I have developed. My colleague";
 			mes "was right: more and more people have been wanting to learn this.";
 			next;
 			mes "[Monk]";
@@ -305,7 +305,7 @@ monk_test,316,69,5	script	Monk#qsk_mo	823,{
 			mes "innocents terrorized by";
 			mes "the aggressive Mandragoras.";
 			mes "If you bring me ^FF000020 Stems^000000 and";
-			mes "^FF00003 Shoots^000000, I will be satisfied^FFFFFF ^000000 with this proof of your ability.";
+			mes "^FF00003 Shoots^000000, I will be satisfied with this proof of your ability.";
 			next;
 			mes "[Monk]";
 			mes "Do you understand now?";
@@ -366,7 +366,7 @@ monk_test,316,69,5	script	Monk#qsk_mo	823,{
 			mes "living in seclusion that";
 			mes "can teach the Spiritual";
 			mes "Bestowment skill. However,";
-			mes "he is stubborn, and has refused^FFFFFF ^000000 many who wish to learn from him.";
+			mes "he is stubborn, and has refused many who wish to learn from him.";
 			next;
 			mes "[Monk]";
 			mes "It would be good if";

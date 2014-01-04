@@ -109,7 +109,7 @@
 	}
 	set .@ore$,"^ff9999Blessed "+.@type$+" Ore^000000";
 	mes "[Blacksmith Dister]";
-	mes "This "+.@type$+" has been refined to "+.@equip_refine+". To refine it, I need "+.@ore$+" and a "+(.@price/1000)+",000 zeny refining fee.";
+	mes "This "+.@type$+" has been refined to "+.@equip_refine+". To refine it, I need "+.@ore$+" and a "+callfunc("F_InsertComma",.@price)+" zeny refining fee.";
 	mes "Do you want to proceed?";
 	next;
 	if(select("Yes:No") == 2) {
@@ -133,7 +133,7 @@
 	if (countitem(.@material) == 0 || Zeny < .@price) {
 		mes "[Blacksmith Dister]";
 		mes "Materials insufficient.";
-		mes "To refine "+((.@equip_lv)?"a level "+.@equip_lv+" weapon":"armor")+", I need "+.@ore$+" and a "+(.@price/1000)+",000 zeny refining fee.";
+		mes "To refine "+((.@equip_lv)?"a level "+.@equip_lv+" weapon":"armor")+", I need "+.@ore$+" and a "+callfunc("F_InsertComma",.@price)+" zeny refining fee.";
 		close;
 	}
 	delitem .@material,1;

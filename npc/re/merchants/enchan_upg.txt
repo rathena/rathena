@@ -234,7 +234,7 @@ prt_in,28,73,3	script	Devil Enchant Master#prq	63,{
 		if (.@lost_refine) {
 			next;
 			mes "[Devil Enchant Master]";
-			mes "The failure has reduced the refine by "+.@lost_refine+" level"+((.@lost_refine == 1)?"":"s")+"! Don't be depressed!";
+			mes "The failure has reduced the refine by "+callfunc("F_InsertPlural",.@lost_refine,"level")+"! Don't be depressed!";
 		}
 		close;
 	} else if (.@select == 2) {

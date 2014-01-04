@@ -387,7 +387,7 @@ airplane,221,158,2	script	Pilot#airplane	852,{
 		mes "......";
 		mes "No one ever really";
 		mes "comes into this room.";
-		mes "And the captain IS a reindeer.^FFFFFF ^000000 I could just strip to my boxers.";
+		mes "And the captain IS a reindeer. I could just strip to my boxers.";
 		next;
 		emotion e_omg;
 		mes "[Pilot]";

@@ -395,27 +395,27 @@ beach_dun2,119,92,4	script	Fishing Novice#sp2	567,{
 		close;
 	}
 	else if (checkquest(5100) >= 0) {
-		if (EXSUPNOV_Q_ == 3) set .@str$,"300,000";
-		else if (EXSUPNOV_Q_ == 4) set .@str$,"1,000,000";
-		else set .@str$,"100,000";
+		if (EXSUPNOV_Q_ == 3) set .@n,300000;
+		else if (EXSUPNOV_Q_ == 4) set .@n,1000000;
+		else set .@n,100000;
 		mes "[Nodor]";
 		mes "Hey, have you gone there?";
 		mes "I got another message from my bro.";
 		next;
 		mes "Bro, someone gave me...";
-		mes .@str$+" Zeny.";
+		mes callfunc("F_InsertComma",.@n)+" Zeny.";
 		mes "You do care about me...";
 		mes "~ Nudor";
 		next;
 		select("He seemed so hungry...");
 		mes "[Nodor]";
 		mes "By the way...";
-		mes .@str$+" Zeny is so little considering my celebrity status, don't you think?";
+		mes callfunc("F_InsertComma",.@n)+" Zeny is so little considering my celebrity status, don't you think?";
 		next;
 		select("Eh.....");
 		mes "[Nodor]";
 		mes "Anyway~";
-		mes .@str$+" Zeny...";
+		mes callfunc("F_InsertComma",.@n)+" Zeny...";
 		mes "Don't you think you gave him too little? My reputation is gonna take a hit now.";
 		next;
 		select("Hey...");
@@ -624,15 +624,15 @@ airplane,33,47,5	script	Nudor#sp2	729,{
 		}
 		else if (.@i < 5) {
 			switch(.@i) {
-				case 2: set .@str$,"100,000"; set .@n,100000; break;
-				case 3: set .@str$,"300,000"; set .@n,300000; break;
-				case 4: set .@str$,"1,000,000"; set .@n,1000000; break;
+				case 2: set .@n,100000; break;
+				case 3: set .@n,300000; break;
+				case 4: set .@n,1000000; break;
 			}
-			mes "Lovely~~ Did he give you "+.@str$+" Zeny? That's pretty much!";
+			mes "Lovely~~ Did he give you "+callfunc("F_InsertComma",.@n)+" Zeny? That's pretty much!";
 			next;
 			if (Zeny < .@n) {
 				mes "[Nudor]";
-				mes "What? But where is "+.@str$+" Zeny?";
+				mes "What? But where is "+callfunc("F_InsertComma",.@n)+" Zeny?";
 				close;
 			}
 		}

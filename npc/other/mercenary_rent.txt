@@ -39,9 +39,8 @@
 			mes "Which Grade were you";
 			mes "interested in hiring?";
 			next;
-			setarray .@suffix$, "th","st","nd","rd";
 			for (set .@i, 1; .@i <= 9; set .@i, .@i + 1)
-				set .@menu$, .@menu$ + .@i + .@suffix$[((.@i <= 3)? .@i : 0)] + " Grade " + .@npc$ + " Mercenary:";
+				set .@menu$, .@menu$ + callfunc("F_GetNumSuffix",.@i) + " Grade " + .@npc$ + " Mercenary:";
 			set .@Grade, select(.@menu$);
 			set .@BaseLevel, 5 + (.@Grade * 10);
 			set .@BaseLevel, (.@val > 90)? 90 : .@BaseLevel;
@@ -49,7 +48,7 @@
 			setarray .@FaithCost[7], 50,100,300;
 			set .@FaithCost, .@FaithCost[.@Grade];
 			mes "[Mercenary Manager]";
-			mes "So you want to hire a " + .@Grade + .@suffix$[((.@Grade <= 3)? .@i : 0)];
+			mes "So you want to hire a " + callfunc("F_GetNumSuffix",.@Grade);
 			mes "Grade " + .@npc$ + " Mercenary?";
 			mes "You need to have attained";
 			mes "Base Level " + .@BaseLevel + " or higher, and";
@@ -277,7 +276,7 @@ pay_arche,99,167,4	duplicate(Mercenary Manager#main)	Mercenary Manager#Bow	732
 		mes "Here's your " + getitemname(.@item[.@m]) + ".";
 	else {
 		mes "Here you are, this is exactly";
-		mes .@input + " " + getitemname(.@item[.@m]) + "s.";
+		mes callfunc("F_InsertPlural",.@input,getitemname(.@item[.@m])) + ".";
 	}
 	mes "Thank you, and please come";
 	mes "again when you need more";

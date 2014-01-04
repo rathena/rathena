@@ -65,13 +65,13 @@ alberta,118,157,3	script	Magazine Dealer Kenny::mdk	83,{
 function	script	Func_Casing	{
 	mes "[Kenny]";
 	mes "Now, you can trade";
-	mes "500 "+getitemname(getarg(0))+"s";
+	mes callfunc("F_InsertPlural",500,getitemname(getarg(0)));
 	mes "and 500 zeny for 1 "+getitemname(getarg(1))+", so make sure";
 	mes "you have sufficient bullets";
 	mes "and zeny for this exchange.";
 	next;
 	mes "[Kenny]";
-	mes "You can exchange 500 "+getitemname(getarg(0))+"s and 500 zeny";
+	mes "You can exchange "+callfunc("F_InsertPlural",500,getitemname(getarg(0)))+" and 500 zeny";
 	mes "with 1 "+getitemname(getarg(1))+".";
 	next;
 	mes "[Kenny]";

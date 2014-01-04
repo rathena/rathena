@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.3a
+//= 1.3b
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: =========================================
@@ -16,10 +16,11 @@
 //=     SQL query, both thanks to AnnieRuru.
 //= 1.3 Re-added a blacklist adapted for the SQL query.
 //= 1.3a Added mission reset options.
+//= 1.3b Function updates.
 //============================================================
 
 prontera,152,187,6	script	Hunting Missions	951,{
-function Chk; function Cm;
+function Chk;
 	mes "[Hunting Missions]";
 	mes "Hello, "+strcharinfo(0)+"!";
 	if (!#Mission_Delay) {
@@ -38,7 +39,7 @@ function Chk; function Cm;
 	mes "Is there anything I can help";
 	mes "you with?";
 	mes " ";
-	mes "^777777~ You've completed ^0055FF"+Mission_Total+"^777777 mission"+((Mission_Total == 1)?"":"s")+". ~^000000";
+	mes "^777777~ You've completed ^0055FF"+callfunc("F_InsertPlural",Mission_Total,"mission")+"^777777. ~^000000";
 	next;
 	switch(select(((!Mission0)?" ~ New Mission::":": ~ Mission Status: ~ Abandon Mission")+": ~ Information: ~ Mission Shop: ~ View Top Hunters: ~ ^777777Cancel^000000")) {
 	case 1:
@@ -49,11 +50,7 @@ function Chk; function Cm;
 			close;
 		}
 		if (#Mission_Delay > gettimetick(2) && .Delay) {
-			set .@i, #Mission_Delay-gettimetick(2);
-			if (.@i > 3600) set .@j$, (.@i/3600)+" hour"+(((.@i/3600) == 1)?"":"s");
-			else if (.@i > 60) set .@j$, (.@i/60)+" minute"+(((.@i/60) == 1)?"":"s");
-			else set .@j$, (.@i)+" second"+((.@i == 1)?"":"s");
-			mes "I'm afraid you'll have to wait "+.@j$+" before taking another mission.";
+			mes "I'm afraid you'll have to wait "+callfunc("Time2Str",#Mission_Delay)+" before taking another mission.";
 			close;
 		}
 		mes "You must hunt:";
@@ -82,7 +79,7 @@ function Chk; function Cm;
 		if (.Reset < 0 && .Delay)
 			mes "Your delay time will not be reset.";
 		else if (.Reset > 0)
-			mes "It will cost "+Cm(.Reset)+" Zeny.";
+			mes "It will cost "+callfunc("F_InsertComma",.Reset)+" Zeny.";
 		next;
 		switch(select(" ~ Abandon...: ~ ^777777Cancel^000000")) {
 		case 1:
@@ -160,9 +157,9 @@ Mission_Status:
 	mes "[Hunting Missions]";
 	mes "Mission rewards:";
 	mes " > Mission Points: ^0055FF"+.@Mission_Points+"^000000";
-	mes " > Base Experience: ^0055FF"+Cm(.@Base_Exp)+"^000000";
-	mes " > Job Experience: ^0055FF"+Cm(.@Job_Exp)+"^000000";
-	mes " > Zeny: ^0055FF"+Cm(.@Zeny)+"^000000";
+	mes " > Base Experience: ^0055FF"+callfunc("F_InsertComma",.@Base_Exp)+"^000000";
+	mes " > Job Experience: ^0055FF"+callfunc("F_InsertComma",.@Job_Exp)+"^000000";
+	mes " > Zeny: ^0055FF"+callfunc("F_InsertComma",.@Zeny)+"^000000";
 	if (@f) { set @f,0; return; }
 	next;
 	mes "[Hunting Missions]";
@@ -211,12 +208,6 @@ Mission_Info:
 function Chk {
 	if (getarg(0) < getarg(1)) { set @f,1; return "^FF0000"; }
 	else return "^00FF00"; }
-
-function Cm {
-	set .@str$, getarg(0);
-	for(set .@i,getstrlen(.@str$)-3; .@i>0; set .@i,.@i-3)
-		set .@str$, insertchar(.@str$,",",.@i);
-	return .@str$; }
 
 OnBuyItem:
 	set @cost,0;

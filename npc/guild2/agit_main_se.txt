@@ -697,12 +697,12 @@ OnStartArena:
 						mes .@n$;
 						mes "Guardian Stones that have";
 						mes "been destroyed can be revived";
-						mes "after a certain time, but one of^FFFFFF ^000000 the guild members must give";
-						mes "me the order. I can also report^FFFFFF ^000000 the status of the Guardian Stones.";
+						mes "after a certain time, but one of the guild members must give";
+						mes "me the order. I can also report the status of the Guardian Stones.";
 						close;
 					case 2:
 						mes .@n$;
-						mes "^4D4DFFFortress Gates^000000 are the second ^FFFFFF ^000000 line of guild stronghold defense,";
+						mes "^4D4DFFFortress Gates^000000 are the second line of guild stronghold defense,";
 						mes "and are protected by extra barricades activated by the Guardian Stones.";
 						mes "These gates are located in three different parts of the fortress.";
 						next;

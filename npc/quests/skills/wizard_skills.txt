@@ -102,7 +102,7 @@ gef_tower,115,36,4	script	Meow#q_wiz	876,{
 			mes "teaching Wizards this new";
 			mes "skill on behalf of the Wizard";
 			mes "Guild. Although I don't really";
-			mes "want to, I pretty much don't have^FFFFFF ^000000 a choice. So what do you say?";
+			mes "want to, I pretty much don't have a choice. So what do you say?";
 			next;
 			if (select("Nah, I'm too sleepy...:Sure, I'd like to learn a new skill.") == 1) {
 				mes "[Meow]";
@@ -368,7 +368,7 @@ prt_in,82,98,3	script	Simon Mayace#q_wiz	46,{
 			mes "I'm surprised that you chose";
 			mes "to practice magic: judging";
 			mes "from your build, I'd say that";
-			mes "you'd be well suited to wielding^FFFFFF ^000000 a sword. Haha, but that's just";
+			mes "you'd be well suited to wielding a sword. Haha, but that's just";
 			mes "a humble Knight's opinion.";
 			close;
 		}
@@ -418,7 +418,7 @@ prt_in,82,98,3	script	Simon Mayace#q_wiz	46,{
 		mes "pushing as best as I can.";
 		mes "Concentrate and practice the";
 		mes "theory on your own, and you";
-		mes "should be able to do it. Good^FFFFFF ^000000luck on your travels, adventurer~";
+		mes "should be able to do it. Good luck on your travels, adventurer~";
 		set WIZ_SK,2;
 		close;
 	}

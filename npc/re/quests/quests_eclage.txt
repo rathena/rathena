@@ -52,7 +52,7 @@
 	for(set .@i,0; .@i<getarraysize(.@map$); set .@i,.@i+1) {
 		set .@menu$, .@menu$+
 			.@map$[.@i]+" ("+.@cost[.@i]+" Canned Food):"+
-			.@map$[.@i]+" ("+.@cost[.@i]+",000 Zeny):";
+			.@map$[.@i]+" ("+callfunc("F_InsertComma",.@cost[.@i]*1000)+" Zeny):";
 	}
 	set .@i, select(.@menu$)-2;
 	if (.@i == -1) {

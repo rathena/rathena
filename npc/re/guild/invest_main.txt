@@ -163,7 +163,7 @@ function	script	F_Invest_Abyss	{
 			close;
 		}
 		mes getarg(1);
-		mes "You've invested "+.@units+" unit"+((.@units == 1)?"":"s")+" "+((.@units < 100)?.@units:insertchar(""+.@units,",",1))+"0,000 Zeny"+getarg(2,"")+".";
+		mes "You've invested "+callfunc("F_InsertPlural",.@units,"unit")+" "+callfunc("F_InsertComma",.@zeny)+" Zeny"+getarg(2,"")+".";
 		mes "Not much but this is a small gift. You can exchange it with items in Malangdo.";
 		set Zeny, Zeny-.@zeny;
 		setd getarg(0), getd(getarg(0)) + .@units;
@@ -1038,15 +1038,8 @@ OnAgitInvest:
 		if (.@notice < 1 || .@notice > 12) {
 			mes "There are currently no investment sums available.";
 			close;
-		} else if (.@notice == 1)
-			set .@str$,"1st";
-		else if (.@notice == 2)
-			set .@str$,"2nd";
-		else if (.@notice == 3)
-			set .@str$,"3rd";
-		else
-			set .@str$,.@notice+"th";
-		mes .@str$+" total (unit in 10,000z)";
+		}
+		mes callfunc("F_GetNumSuffix",.@notice)+" total (unit in 10,000z)";
 		for(set .@i,1; .@i<=5; set .@i,.@i+1) {
 			set .@map$, .@npc$+"g_cas0"+.@i;
 			set .@fund[.@i], getd("$@vfund_"+.@npc$+"0"+.@i);

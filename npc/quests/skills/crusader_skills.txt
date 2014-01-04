@@ -153,7 +153,7 @@ geffen,110,117,3	script	Ford#11	752,{
 			mes "Goodness, there's blood all";
 			mes "over the paper! Let's see...";
 			mes "Oh no. This is an emergency";
-			mes "situation! I need to report this^FFFFFF ^000000 to Sir Arga and request for";
+			mes "situation! I need to report this to Sir Arga and request for";
 			mes "backup immediately!";
 			next;
 			mes "["+ strcharinfo(0) +"]";
@@ -400,7 +400,7 @@ gef_fild13,297,242,3	script	Soldier#277	751,{
 				mes "^333333(I better bring him";
 				mes "a Red Potion, otherwise";
 				mes "I have no hope of getting";
-				mes "that report without hurting him!) ^FFFFFF ^000000";
+				mes "that report without hurting him!)";
 				close;
 			}
 		}

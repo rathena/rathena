@@ -132,7 +132,7 @@ cmd_in02,172,105,4	script	G . J#cmd	86,{
 	mes "it seems smarter to make";
 	mes "money in other ways. Sure,";
 	mes "working hard is no fun, but";
-	mes "there are ways to use your^FFFFFF ^000000 money to make more of it, right?";
+	mes "there are ways to use your money to make more of it, right?";
 	next;
 	mes "[G . J]";
 	mes "There's also the matter of";
@@ -217,7 +217,7 @@ cmd_in02,57,62,4	script	Moo#cmd	109,{
 		mes "manager of the Comodo";
 		mes "Casino. We pride ourselves in";
 		mes "serving all of our customers'";
-		mes "needs, doing all we can so that^FFFFFF ^000000 your visit here is unforgettable.";
+		mes "needs, doing all we can so that your visit here is unforgettable.";
 		next;
 		mes "[Moo]";
 		mes "All of our guests can enjoy";
@@ -251,7 +251,7 @@ cmd_fild04,188,74,4	script	Zyosegirl#cmd	93,{
 	mes "It's nice to be able to work";
 	mes "outdoors, but someday, I want";
 	mes "to save enough money and move";
-	mes "to the city. I'm still young, you^FFFFFF ^000000 know, and I've got dreams";
+	mes "to the city. I'm still young, you know, and I've got dreams";
 	mes "that I want to fulfill~";
 	close;
 }
@@ -408,7 +408,7 @@ moc_fild12,35,303,4	script	Serutero#cmd	59,{
 	mes "guardian of the roads that";
 	mes "lead to Sandaruman Fortress.";
 	mes "If you really want to go there,";
-	mes "I'll permit you to continue, but^FFFFFF ^000000 you must beware of its dangers...";
+	mes "I'll permit you to continue, but you must beware of its dangers...";
 	next;
 	switch(select("I'm going there!:Sandaruman Fortress?:Cancel")) {
 	case 1:

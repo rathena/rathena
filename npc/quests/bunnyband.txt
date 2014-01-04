@@ -40,7 +40,7 @@ alberta,26,229,0	script	Kafra Employee#bunny	83,{
 					mes "Ooh, I'm sorry";
 					mes "but you need to";
 					mes "bring at least";
-					mes .@Items[.@i+1]+" "+getitemname(.@Items[.@i])+((!.@i)?"s.":".");
+					mes callfunc("F_InsertPlural",.@Items[.@i+1],getitemname(.@Items[.@i]))+".";
 					close;
 				}
 			mes "[Kafra Employee]";
@@ -57,7 +57,7 @@ alberta,26,229,0	script	Kafra Employee#bunny	83,{
 					mes "Hm? I'm sorry,";
 					mes "but I actually can't";
 					mes "make this right now. You";
-					mes "need "+.@Items[.@i+1]+" "+getitemname(.@Items[.@i])+((!.@i)?"s":"");
+					mes "need "+callfunc("F_InsertPlural",.@Items[.@i+1],getitemname(.@Items[.@i]));
 					mes "in order for me to put this";
 					mes "Bunny Band together...";
 					close;

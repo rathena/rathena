@@ -4221,7 +4221,7 @@ cmd_fild01,55,160,0	script	Heap of Earth	844,{
 		mes "Ah, so you failed to";
 		mes "fix the Mystic Dryer de";
 		mes "Elegance? That's expected:";
-		mes "I didn't really design it for the^FFFFFF ^000000 common user in mind. Well,";
+		mes "I didn't really design it for the common user in mind. Well,";
 		mes "why don't you try it again?";
 		erasequest 3106;
 		set diamond_edq,10;
@@ -4419,7 +4419,7 @@ OnTouch:
 							mes "and vibrated violently";
 							mes "before coming to a sudden";
 							mes "stop. That was the wrong";
-							mes "switch. You'd better ask Dorian... ^FFFFFF ^000000";
+							mes "switch. You'd better ask Dorian...";
 							setquest 3106;
 							set diamond_edq,11;
 							close;
@@ -4445,7 +4445,7 @@ OnTouch:
 								mes "and vibrated violently";
 								mes "before coming to a sudden";
 								mes "stop. That was the wrong";
-								mes "switch. You'd better ask Dorian... ^FFFFFF ^000000";
+								mes "switch. You'd better ask Dorian...";
 								setquest 3106;
 								set diamond_edq,11;
 								close;
@@ -4471,7 +4471,7 @@ OnTouch:
 							mes "and vibrated violently";
 							mes "before coming to a sudden";
 							mes "stop. That was the wrong";
-							mes "switch. You'd better ask Dorian... ^FFFFFF ^000000";
+							mes "switch. You'd better ask Dorian...";
 							setquest 3106;
 							set diamond_edq,11;
 							close;
@@ -4497,7 +4497,7 @@ OnTouch:
 								mes "and vibrated violently";
 								mes "before coming to a sudden";
 								mes "stop. That was the wrong";
-								mes "switch. You'd better ask Dorian... ^FFFFFF ^000000";
+								mes "switch. You'd better ask Dorian...";
 								setquest 3106;
 								set diamond_edq,11;
 								close;
@@ -4522,7 +4522,7 @@ OnTouch:
 							mes "and vibrated violently";
 							mes "before coming to a sudden";
 							mes "stop. That was the wrong";
-							mes "switch. You'd better ask Dorian... ^FFFFFF ^000000";
+							mes "switch. You'd better ask Dorian...";
 							setquest 3106;
 							set diamond_edq,11;
 							close;
@@ -4548,7 +4548,7 @@ OnTouch:
 								mes "and vibrated violently";
 								mes "before coming to a sudden";
 								mes "stop. That was the wrong";
-								mes "switch. You'd better ask Dorian... ^FFFFFF ^000000";
+								mes "switch. You'd better ask Dorian...";
 								setquest 3106;
 								set diamond_edq,11;
 								close;
@@ -4574,7 +4574,7 @@ OnTouch:
 							mes "and vibrated violently";
 							mes "before coming to a sudden";
 							mes "stop. That was the wrong";
-							mes "switch. You'd better ask Dorian... ^FFFFFF ^000000";
+							mes "switch. You'd better ask Dorian...";
 							setquest 3106;
 							set diamond_edq,11;
 							close;
@@ -4600,7 +4600,7 @@ OnTouch:
 								mes "and vibrated violently";
 								mes "before coming to a sudden";
 								mes "stop. That was the wrong";
-								mes "switch. You'd better ask Dorian... ^FFFFFF ^000000";
+								mes "switch. You'd better ask Dorian...";
 								setquest 3106;
 								set diamond_edq,11;
 								close;
@@ -7202,7 +7202,7 @@ in_rogue,359,116,3	script	Marybell	747,{
 		mes "[Marybell]";
 		mes "Oh, Gooho decoded everything?";
 		mes "Let's see... Something about";
-		mes "the Book of Forbidden Mystery...^FFFFFF ^000000 Ah. There we go! The location";
+		mes "the Book of Forbidden Mystery... Ah. There we go! The location";
 		mes "of the Z Gang's hideout!";
 		mes "Heh heh! We got 'em!";
 		next;
@@ -9404,7 +9404,7 @@ morocc,143,63,3	script	Ragged Man#nd	929,{
 						mes "the hands of someone like";
 						mes "you than a rival treasure";
 						mes "hunter. This hunter that";
-						mes "stays north in town apparently^FFFFFF ^000000 confirmed the treasure's location.";
+						mes "stays north in town apparently confirmed the treasure's location.";
 						next;
 						mes "[Ragged Man]";
 						mes "Now, I hear that this guy";
@@ -9475,7 +9475,7 @@ morocc,143,63,3	script	Ragged Man#nd	929,{
 				mes "he hands of someone like";
 				mes "you than a rival treasure";
 				mes "hunter. This hunter that";
-				mes "stays north in town apparently^FFFFFF ^000000 confirmed the treasure's location.";
+				mes "stays north in town apparently confirmed the treasure's location.";
 				next;
 				mes "[Ragged Man]";
 				mes "Now, I hear that this guy";
@@ -9509,7 +9509,7 @@ morocc,143,63,3	script	Ragged Man#nd	929,{
 		mes "Ah, you must be having";
 		mes "trouble finding that guy";
 		mes "I was talking about. He's";
-		mes "just in the northern part of^FFFFFF ^000000 this town. It can't be that hard.";
+		mes "just in the northern part of this town. It can't be that hard.";
 		close;
 	}
 	else if (treasure_nd > 10) {
@@ -9534,7 +9534,7 @@ morocc,143,63,3	script	Ragged Man#nd	929,{
 		mes "So how's the treasure";
 		mes "hunt coming along? I hope";
 		mes "you have better luck than";
-		mes "I did. Still, I've got a pretty^FFFFFF ^000000 good feeling that you'll find it.";
+		mes "I did. Still, I've got a pretty good feeling that you'll find it.";
 		close;
 	}
 }
@@ -10337,7 +10337,7 @@ comodo,139,184,3	script	Scholar#zgang	742,{
 		mes "jewel came into a rich man's";
 		mes "possession. However, he lost";
 		mes "his fortune and was completely";
-		mes "ruined after obtaining it. Hence ^FFFFFF ^000000 the moniker, ''Unlucky Emerald.''";
+		mes "ruined after obtaining it. Hence the moniker, ''Unlucky Emerald.''";
 		next;
 		mes "[Scholar]";
 		mes "Then the emerald came into";

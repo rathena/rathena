@@ -4453,7 +4453,7 @@ veins,115,59,5	script	Saraman	847,{
 		mes "Sadly, Silk Sand Camels";
 		mes "are almost extinct, so I only";
 		mes "have one on this farm. That's";
-		mes "why we have a special contract^FFFFFF ^000000 with Ms. Ivory to make her soap.";
+		mes "why we have a special contract with Ms. Ivory to make her soap.";
 		next;
 		mes "[Camel Farm Owner Saraman]";
 		mes "Say... I wasn't expecting";

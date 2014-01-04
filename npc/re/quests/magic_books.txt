@@ -815,14 +815,14 @@ function	script	Magic_Book_Essence	{
 		progressbar "ffff00",4;
 		delitem getarg(1),getarg(2);
 		if (rand(2)) {
-			mes "You have used "+getarg(2)+" "+getitemname(getarg(1))+"s to create ^999900"+getarg(3)+" Essence^000000.";
+			mes "You have used "+callfunc("F_InsertPlural",getarg(2),getitemname(getarg(1)))+" to create ^999900"+getarg(3)+" Essence^000000.";
 			next;
 			mes "^008800The "+getarg(3)+" Essence will last permanently, unless there's a problem.^000000";
 			completequest getarg(0);
 			specialeffect2 EF_LORD;
 			close;
 		}
-		mes "^008888You have failed to refine the essence using "+getarg(2)+" "+getitemname(getarg(1))+"s.^000000";
+		mes "^008888You have failed to refine the essence using "+callfunc("F_InsertPlural",getarg(2),getitemname(getarg(1)))+".^000000";
 		close;
 	}
 	if (checkquest(getarg(0)) == 2) {

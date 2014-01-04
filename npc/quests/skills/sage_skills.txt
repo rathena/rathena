@@ -185,14 +185,14 @@ yuno_in03,176,24,3	script	Mischna	755,{
 		mes "The first is called ^FF0000Elemental";
 		mes "Change^000000, which enables you";
 		mes "to change a monster's attribute";
-		mes "according to the specific element^FFFFFF ^000000 of the Elemental Change skill";
+		mes "according to the specific element of the Elemental Change skill";
 		mes "that you have learned.";
 		next;
 		mes "[Mishuna]";
 		mes "The second is called";
 		mes "Elemental Converter Creation,";
 		mes "which enables you to create";
-		mes "converter items that are required^FFFFFF ^000000 to use the Elemental Change skill.";
+		mes "converter items that are required to use the Elemental Change skill.";
 		next;
 		mes "[Mishuna]";
 		mes "Although the knowledge of";
@@ -238,7 +238,7 @@ yuno_in03,176,24,3	script	Mischna	755,{
 		mes "nexting here for your";
 		mes "return. Remember that we";
 		mes "need these items to create";
-		mes "a converter so that you can^FFFFFF ^000000 learn the skill from my example...";
+		mes "a converter so that you can learn the skill from my example...";
 		set SAG_SK,1;
 		close;
 	}

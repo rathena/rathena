@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.6b
+//= 1.6c
 //===== Compatible With: =====================================
 //= rAthena SVN r16862+
 //===== Description: =========================================
@@ -19,6 +19,7 @@
 //= 1.6 Added support for purchasing stackables.
 //= 1.6a Added support for previewing costumes and robes.
 //= 1.6b Added 'disable_items' command.
+//= 1.6c Replaced function 'A_An' with "F_InsertArticle".
 //============================================================
 
 // Shop NPCs -- supplying no argument displays entire menu.
@@ -30,7 +31,7 @@ prontera,164,203,6	script	Quest Shop#1	998,{ callfunc "qshop"; }
 // Script Core
 //============================================================
 -	script	quest_shop	-1,{ 
-function Add; function Chk; function Slot; function A_An;
+function Add; function Chk; function Slot;
 OnInit:
 	freeloop(1);
 
@@ -147,7 +148,7 @@ OnBuyItem:
 			if (.@q[6]) for(set .@i,6; .@i<getarraysize(.@q); set .@i,.@i+2)
 				delitem .@q[.@i],.@q[.@i+1]*.@q[1];
 			getitem .@q[0],.@q[2];
-			if (.Announce) announce strcharinfo(0)+" has created "+((.@q[2] > 1)?.@q[2]+"x "+getitemname(.@q[0]):A_An(getitemname(.@q[0])))+"!",0;
+			if (.Announce) announce strcharinfo(0)+" has created "+((.@q[2] > 1)?.@q[2]+"x "+getitemname(.@q[0]):callfunc("F_InsertArticle",getitemname(.@q[0])))+"!",0;
 			specialeffect2 EF_FLOWERLEAF;
 			close;
 		case 2:
@@ -205,14 +206,6 @@ function Slot {
 		case 2: if (getiteminfo(getarg(0),2) == 4 || getiteminfo(getarg(0),2) == 5) return .@s$+" ["+getitemslots(getarg(0))+"]";
 		default: return .@s$;
 	}
-}
-
-function A_An {
-	setarray .@A$[0],"a","e","i","o","u";
-	set .@B$, "_"+getarg(0);
-	for(set .@i,0; .@i<5; set .@i,.@i+1)
-		if (compare(.@B$,"_"+.@A$[.@i])) return "an "+getarg(0);
-	return "a "+getarg(0);
 }
 }
 
