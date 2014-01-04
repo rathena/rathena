@@ -39,7 +39,7 @@ function Chk;
 	mes "Is there anything I can help";
 	mes "you with?";
 	mes " ";
-	mes "^777777~ You've completed ^0055FF"+callfunc("F_InsertPlural",Mission_Total,"mission")+"^777777. ~^000000";
+	mes "^777777~ You've completed "+callfunc("F_InsertPlural",Mission_Total,"mission",0,"^0055FF%d^777777 %s")+". ~^000000";
 	next;
 	switch(select(((!Mission0)?" ~ New Mission::":": ~ Mission Status: ~ Abandon Mission")+": ~ Information: ~ Mission Shop: ~ View Top Hunters: ~ ^777777Cancel^000000")) {
 	case 1:

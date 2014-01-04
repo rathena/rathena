@@ -1723,7 +1723,7 @@ OnMyMobDead:
 		mapannounce "juperos_02","Have you come seeking Juperos?! It no longer exists...",bc_map,"0xFF0000";
 	else if (.MyMobs == 0) {
 		mapannounce "juperos_02","Have you come to see me? Fine! Find me first!",bc_map,"0xFF0000";
-		specialeffect2 563;
+		specialeffect2 EF_SCREEN_QUAKE;
 		soundeffectall "earth_quake.wav",0;
 		disablenpc "3F Gate Switch#jupe";
 		donpcevent "Restricted Area#jupe::OnEnable";
@@ -4315,7 +4315,7 @@ jupe_ele_r,51,98,0	script	Switch#ufe	844,{
 							disablenpc "Switch#ufe";
 							enablenpc "Switch On#ufe";
 							initnpctimer;
-							specialeffect2 563;
+							specialeffect2 EF_SCREEN_QUAKE;
 							soundeffectall "earth_quake.wav",0;
 							close2;
 							cutin "5-1",255;

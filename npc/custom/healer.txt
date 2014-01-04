@@ -21,7 +21,7 @@
 
 	if (@HD > gettimetick(2)) end;
 	if (.@Price) {
-		message strcharinfo(0),"Healing costs "+.@Price+" Zeny.";
+		message strcharinfo(0),"Healing costs "+callfunc("F_InsertComma",.@Price)+" Zeny.";
 		if (Zeny < .@Price) end;
 		if(select("^0055FFHeal^000000:^777777Cancel^000000") == 2) end;
 		set Zeny, Zeny-.@Price;

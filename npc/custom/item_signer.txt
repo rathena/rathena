@@ -32,8 +32,8 @@ prt_in,24,61,7	script	Perchik	47,{
 			mes "For my work I accept:";
 			if (getarraysize(.@Item)) for(set .@i,0; .@i<getarraysize(.@Item); set .@i,.@i+2)
 				mes " ~ "+.@Item[.@i+1]+"x "+getitemname(.@Item[.@i]);
-			if (.@Cost[0]) mes " ~ "+.@Cost[0]+" Zeny";
-			if (.@Cost[1]) mes " ~ "+.@Cost[1]+" Zeny per refine";
+			if (.@Cost[0]) mes " ~ "+callfunc("F_InsertComma",.@Cost[0])+" Zeny";
+			if (.@Cost[1]) mes " ~ "+callfunc("F_InsertComma",.@Cost[1])+" Zeny per refine";
 		}
 		else mes "I work for free, but...";
 		next;

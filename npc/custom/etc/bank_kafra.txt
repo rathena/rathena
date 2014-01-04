@@ -35,9 +35,9 @@ L_NoIncomeToday:
 	set #kb_int,@kb_int; //reset days timer
 
 	if(#kafrabank==0) mes "We could open you an account.";
-	if(@income>0) mes "Today's income: ^135445" + @income + "^000000 zeny.";
+	if(@income>0) mes "Today's income: ^135445" + callfunc("F_InsertComma",@income) + "^000000 zeny.";
 	set #kafrabank,#kafrabank+@income;
-	if(#kafrabank>0) mes "Your account: ^135445" + #kafrabank + "^000000 zeny.";
+	if(#kafrabank>0) mes "Your account: ^135445" + callfunc("F_InsertComma",#kafrabank) + "^000000 zeny.";
 	mes "What would you like?";
 	next;
 	if(#kafrabank==0) menu "-Open an account",-,"-Quit",B_EXIT2;
@@ -53,7 +53,7 @@ L_NoIncomeToday:
 	set Zeny, Zeny-@kafrabank;
 	set #kafrabank,#kafrabank+@kafrabank;
 	mes"[Maniss]";
-	mes "You've made a deposit of ^135445" + @kafrabank + "z^000000.";
+	mes "You've made a deposit of ^135445" + callfunc("F_InsertComma",@kafrabank) + "z^000000.";
 	//we log these zeny operations into the log db
 	logmes "Bank %: " + @income +"z, Deposit: "+ @kafrabank +"z, Final: "+ #kafrabank +"z";
 	goto B_EXIT;
@@ -61,7 +61,7 @@ L_NoIncomeToday:
 M_WITHDRAW:
 	if(#kafrabank==0) goto L_ZERO_ACCOUNT;
 	mes"[Maniss]";
-	mes "Your account: ^135445" + #kafrabank + "^000000 zeny.";
+	mes "Your account: ^135445" + callfunc("F_InsertComma",#kafrabank) + "^000000 zeny.";
 	mes "How much zeny would you like to withdraw?";
 	next;
 	if(input(@kafrabank) == 1) goto L_TOO_BIG_AMOUNT;
@@ -71,7 +71,7 @@ M_WITHDRAW:
 	set #kafrabank,#kafrabank-@kafrabank;
 	set Zeny, Zeny+@kafrabank;
 	mes"[Maniss]";
-	mes "Here is your ^135445" + @kafrabank + "z^000000, put your sign here...";
+	mes "Here is your ^135445" + callfunc("F_InsertComma",@kafrabank) + "z^000000, put your sign here...";
 	//we log these zeny operations into the log db
 	logmes "Bank %: " + @income +"z, Withdraw: "+ @kafrabank +"z, Final: "+ #kafrabank +"z";
 	goto B_EXIT;

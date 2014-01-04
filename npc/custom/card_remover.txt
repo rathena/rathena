@@ -16,9 +16,9 @@
 
 prt_in,28,73,4	script	Wise Old Woman#eAcustom	78,{
 
-	set .zenycost,200000; // Set base cost in zeny of the card remover services
-	set .percardcost,25000; // set cost per card of the card remover services
-	set .faildestroy,1; // Should the card remover have a chance of failure that destroys items? 1 = Yes, 0 = No.
+	set .zenycost,200000;    // base cost of the card remover services (in Zeny)
+	set .percardcost,25000;  // cost per card of the card remover services (in Zeny)
+	set .faildestroy,1;      // should the card remover have a chance of failure that destroys items? (1=yes, 0=no)
 
 	disable_items;
 	mes "[Wise Old Woman]";
@@ -91,8 +91,8 @@ prt_in,28,73,4	script	Wise Old Woman#eAcustom	78,{
 		mes "[Wise Old Woman]";
 		mes "Very well. I shall begin.";
 		set Zeny, Zeny - (.zenycost+(.@cardcount * .percardcost));
-		delitem 1000,1;
-		delitem 715,1;
+		delitem 1000,1; //Star_Crumb
+		delitem 715,1; //Yellow_Gemstone
 		
 		// Replace the constants in the next 3 lines with failure chance values defined in refine_db.txt
 		// First value = Total failure chance (item and cards destroyed)
@@ -142,7 +142,7 @@ prt_in,28,73,4	script	Wise Old Woman#eAcustom	78,{
 		close;
 	case 2:
 		mes "[Wise Old Woman]";
-		mes "I charge a flat fee of "+.zenycost+" zeny, plus "+.percardcost+" zeny for each card I remove from the item. In addition, I need a star crumb and a yellow gemstone to work my magic.";
+		mes "I charge a flat fee of "+callfunc("F_InsertComma",.zenycost)+" zeny, plus "+callfunc("F_InsertComma",.percardcost)+" zeny for each card I remove from the item. In addition, I need a star crumb and a yellow gemstone to work my magic.";
 		close;
 	case 3:
 		mes "[Wise Old Woman]";

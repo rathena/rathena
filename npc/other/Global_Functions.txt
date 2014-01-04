@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, kobra_k88
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.21
 //===== Compatible With: ===================================== 
 //= rAthena 1.0
 //===== Description: ========================================= 
@@ -43,6 +43,7 @@
 //= 2.18 Removed useless 'getJobName' function. [Euphy]
 //= 2.2 Added "F_GetPlural", "F_InsertPlural", "F_InsertArticle", "F_InsertComma", "F_GetNumSuffix". [Euphy]
 //=     Standardized descriptions, updated 'F_GetArmorType'.
+//= 2.21 Added format string to "F_InsertPlural" and more checks to "F_GetPlural". [Euphy]
 //============================================================ 
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -368,28 +369,45 @@ function	script	Time2Str	{
 
 //////////////////////////////////////////////////////////////////////////////////
 // Returns the plural of a noun - only follows basic rules, with few exceptions!
-// -- callfunc "F_GetPlural","<noun>"{,<1:uppercase>}
+// -- callfunc "F_GetPlural","<noun>"{,<0:normal/1:uppercase>}
 // Examples:
 //    callfunc("F_GetPlural","dog")    // returns "dogs"
 //    callfunc("F_GetPlural","fox",1)  // returns "FOXES"
 //    callfunc("F_GetPlural","knife")  // returns "knives"
 //
 // Returns the plural of a noun if the given number is not 1.
-// -- callfunc "F_InsertPlural",<number>,"<noun>"{,<1:uppercase>}
+// -- callfunc "F_InsertPlural",<number>,"<noun>"{,<0:normal/1:uppercase>{,"<format string>"}}
+// Format string uses sprintf(), and MUST contain %d (arg0) and %s (arg1), in that order.
 // Examples:
 //    callfunc("F_InsertPlural",1,"dog")    // returns "1 dog"
 //    callfunc("F_InsertPlural",3,"fox",1)  // returns "3 FOXES"
-//    callfunc("F_InsertPlural",0,"knife")  // returns "0 knives"
-//
-// NOTE: Nouns must be 3 or more characters in length.
+//    // returns "^FF00005^000000 knives"
+//    callfunc("F_InsertPlural",5,"knife",0,"^FF0000%d^000000 %s")
 //////////////////////////////////////////////////////////////////////////////////
 function	script	F_GetPlural	{
 	set .@str$, getarg(0);
+
+	if (countstr(.@str$," ")) {  // if multiple words, only pluralize last word
+		explode(.@tmp$,.@str$," ");
+		set .@size, getarraysize(.@tmp$);
+		set .@str$, .@tmp$[.@size-1];
+		deletearray .@tmp$[.@size-1],1;
+		set .@pre$, implode(.@tmp$," ") + " ";
+	}
+
 	set .@strlen, getstrlen(.@str$);
+	if (.@strlen < 3)  // prevent errors
+		return ((getarg(1,0)) ? strtoupper(.@pre$ + .@str$) : .@pre$ + .@str$);
+
 	setarray .@suffix$[0], charat(.@str$,.@strlen - 1), substr(.@str$,.@strlen - 2,.@strlen - 1);
 
+	// common exceptions --> singular form == plural form
+	if (compare("deceit|information|wisdom|intelligence|fish|glasses|sunglasses",.@str$)) {
+		set .@result$, .@str$;
+	}
+
 	// ends in -s, -x, -z, -ch, -sh --> add -es
-	if (.@suffix$[0] == "s" || .@suffix$[0] == "x" || .@suffix$[0] == "z" ||
+	else if (.@suffix$[0] == "s" || .@suffix$[0] == "x" || .@suffix$[0] == "z" ||
 	    .@suffix$[1] == "ch" || .@suffix$[1] == "sh") {
 		set .@result$, .@str$ + "es";
 	}
@@ -418,16 +436,16 @@ function	script	F_GetPlural	{
 		set .@result$, .@str$ + "s";
 	}
 
-	return ((getarg(1,0)) ? strtoupper(.@result$) : .@result$);
+	return ((getarg(1,0)) ? strtoupper(.@pre$ + .@result$) : .@pre$ + .@result$);
 }
 function	script	F_InsertPlural	{
-	return getarg(0) + " " + ((getarg(0) == 1) ? getarg(1) : callfunc("F_GetPlural",getarg(1),getarg(2,0)));
+	return sprintf(getarg(3,"%d %s"), getarg(0), ((getarg(0) == 1) ? getarg(1) : callfunc("F_GetPlural",getarg(1),getarg(2,0))));
 }
 
 
 //////////////////////////////////////////////////////////////////////////////////
 // Returns 'a' or 'an' based on a word - only follows basic rules, without exceptions!
-// -- callfunc "F_InsertArticle","<word>"{,<1:uppercase A>}
+// -- callfunc "F_InsertArticle","<word>"{,<0:lowercase a/1:uppercase A>}
 // Examples:
 //    callfunc("F_InsertArticle","apple")  // returns "an apple"
 //    callfunc("F_InsertArticle","dog",1)  // returns "A dog"

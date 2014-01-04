@@ -16,7 +16,7 @@
 //============================================================
 
 prontera,153,193,6	script	Job Master	123,{
-function Job_Menu; function A_An;
+function Job_Menu;
 
 	mes "[Job Master]";
 	if (Class > 4049) {
@@ -127,11 +127,11 @@ function Job_Menu {
 			set .@i, getarg(0);
 		if (select(" ~ Change into ^0055FF"+jobname(.@i)+"^000000 class: ~ ^777777"+((getargcount() > 1)?"Go back":"Cancel")+"^000000") == 1) {
 			mes "[Job Master]";
-			mes "You are now "+A_An(jobname(.@i))+"!";
+			mes "You are now "+callfunc("F_InsertArticle",jobname(.@i))+"!";
 			if (.@i==4001 && .LastJob) set lastJob, Class;
 			jobchange .@i;
 			if (.@i==4001 || .@i==4023) resetlvl(1);
-			specialeffect2 338; specialeffect2 432;
+			specialeffect2 EF_ANGEL2; specialeffect2 EF_ELECTRIC;
 			if (.Platinum) callsub Get_Platinum;
 			close;
 		}
@@ -139,14 +139,6 @@ function Job_Menu {
 		mes "[Job Master]";
 	}
 	end;
-}
-
-function A_An {
-	setarray .@A$[0],"a","e","i","o","u";
-	set .@B$, "_"+getarg(0);
-	for(set .@i,0; .@i<5; set .@i,.@i+1)
-		if (compare(.@B$,"_"+.@A$[.@i])) return "an "+getarg(0);
-	return "a "+getarg(0);
 }
 
 Get_Platinum:

@@ -23,7 +23,7 @@ prontera,156,219,4	script	Cluckers	800,{
 	set .@GMAccess,80;	// GM level required to access NPC
 
 	if (.startcluck) {
-		specialeffect2 2;
+		specialeffect2 EF_HIT3;
 		switch(rand(15)) {
 			case 0: npctalk "CLUUUUUUCK!!!"; unitskilluseid getcharid(3),"NPC_SELFDESTRUCTION",1; emotion e_omg; break;
 			case 1: npctalk "Cluuuuuck!~"; break;
@@ -42,7 +42,7 @@ prontera,156,219,4	script	Cluckers	800,{
 			default:
 				if (rand(50) < 4) {
 					npctalk "WOOF!...........";
-					specialeffect2 72;
+					specialeffect2 EF_SPHERE;
 					announce "[Cluck! Cluck! Boom!] " + strcharinfo(0) + " squeezed out the prize! Well done!",0;
 					getitem $cluck_item_id,$cluck_item_amount;
 					set .startcluck,0;

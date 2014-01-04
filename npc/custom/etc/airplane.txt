@@ -246,7 +246,7 @@ Board:
 L_Yes:
 	if($destination!=getarg(0))goto Notime;
 	warp "airplane", 105, 72;
-	specialeffect2 501;
+	specialeffect2 EF_CASTSPIN;
 L_Nope:
 	mes "^FF0000[Porter]^000000";
 	mes "Have a good day.  Thank you for traveling with Airship.";
@@ -356,7 +356,7 @@ Lyes:
 	if($destination == 250)goto Notime;
 	if($destination != @dockky)goto Notime;
 	warp $locationsmap$[$destination], $locationsx[$destination], $locationsy[$destination];
-	specialeffect2 501;
+	specialeffect2 EF_CASTSPIN;
 
 Lnope:
 	mes "^FF0000[Airplane Attendant]^000000";
