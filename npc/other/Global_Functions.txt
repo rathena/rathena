@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, kobra_k88
 //===== Current Version: ===================================== 
-//= 2.21
+//= 2.22
 //===== Compatible With: ===================================== 
 //= rAthena 1.0
 //===== Description: ========================================= 
@@ -44,6 +44,7 @@
 //= 2.2 Added "F_GetPlural", "F_InsertPlural", "F_InsertArticle", "F_InsertComma", "F_GetNumSuffix". [Euphy]
 //=     Standardized descriptions, updated 'F_GetArmorType'.
 //= 2.21 Added format string to "F_InsertPlural" and more checks to "F_GetPlural". [Euphy]
+//= 2.22 Further improvements to "F_GetPlural". [Euphy]
 //============================================================ 
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -253,6 +254,9 @@ function	script	F_Load2Skills	{
 //////////////////////////////////////////////////////////////////////////////////
 // Returns weapon type, based on view.
 // -- callfunc "F_GetWeaponType",<weapon ID>
+//
+// Returns equipment type, based on equip location.
+// -- callfunc "F_GetArmorType",<item ID>
 //////////////////////////////////////////////////////////////////////////////////
 function	script	F_GetWeaponType	{
 	switch(getiteminfo(getarg(0),11)) {
@@ -282,12 +286,6 @@ function	script	F_GetWeaponType	{
 	}
 	end;
 }
-
-
-//////////////////////////////////////////////////////////////////////////////////
-// Returns equipment type, based on equip location.
-// -- callfunc "F_GetArmorType",<item ID>
-//////////////////////////////////////////////////////////////////////////////////
 function	script	F_GetArmorType	{
 	switch(getiteminfo(getarg(0),5)) {
 		case 001: return "Lower Headgear"; break;
@@ -368,12 +366,13 @@ function	script	Time2Str	{
 //////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////////////
-// Returns the plural of a noun - only follows basic rules, with few exceptions!
+// Returns the plural of a noun - works in most cases, but not for everything!
 // -- callfunc "F_GetPlural","<noun>"{,<0:normal/1:uppercase>}
 // Examples:
-//    callfunc("F_GetPlural","dog")    // returns "dogs"
-//    callfunc("F_GetPlural","fox",1)  // returns "FOXES"
-//    callfunc("F_GetPlural","knife")  // returns "knives"
+//    callfunc("F_GetPlural","dog")            // returns "dogs"
+//    callfunc("F_GetPlural","fox",1)          // returns "FOXES"
+//    callfunc("F_GetPlural","knife")          // returns "knives"
+//    callfunc("F_GetPlural","Piece of Cake")  // returns "Pieces of Cake"
 //
 // Returns the plural of a noun if the given number is not 1.
 // -- callfunc "F_InsertPlural",<number>,"<noun>"{,<0:normal/1:uppercase>{,"<format string>"}}
@@ -387,22 +386,37 @@ function	script	Time2Str	{
 function	script	F_GetPlural	{
 	set .@str$, getarg(0);
 
-	if (countstr(.@str$," ")) {  // if multiple words, only pluralize last word
+	if (countstr(.@str$," ")) {  // multiple words
 		explode(.@tmp$,.@str$," ");
 		set .@size, getarraysize(.@tmp$);
-		set .@str$, .@tmp$[.@size-1];
-		deletearray .@tmp$[.@size-1],1;
-		set .@pre$, implode(.@tmp$," ") + " ";
-	}
+
+		// if format is "... of|in|on ...", pluralize preceding word; else pluralize last word
+		if (compare(.@str$," of ") || compare(.@str$," in ") || compare(.@str$," on ")) {
+			for (set .@i,1; .@i<.@size; set .@i,.@i+1) {
+				if (getstrlen(.@tmp$[.@i]) == 2 && compare("of|in|on",.@tmp$[.@i]))
+					break;
+				set .@index, .@index + 1;
+			}
+		} else
+			set .@index, .@size - 1;
+
+		set .@str$, .@tmp$[.@index];
+		set .@tmp$[.@index],"%s";
+		set .@format$, implode(.@tmp$," ");
+	} else
+		set .@format$, "%s";
 
 	set .@strlen, getstrlen(.@str$);
 	if (.@strlen < 3)  // prevent errors
-		return ((getarg(1,0)) ? strtoupper(.@pre$ + .@str$) : .@pre$ + .@str$);
+		return ((getarg(1,0)) ? strtoupper(sprintf(.@format$,.@str$)) : sprintf(.@format$,.@str$));
 
 	setarray .@suffix$[0], charat(.@str$,.@strlen - 1), substr(.@str$,.@strlen - 2,.@strlen - 1);
+	if (!compare("abcdefghijklmnopqrstuvwxyz",.@suffix$[0])) {  // last character is not a letter
+		set .@result$, .@str$;
+	}
 
 	// common exceptions --> singular form == plural form
-	if (compare("deceit|information|wisdom|intelligence|fish|glasses|sunglasses",.@str$)) {
+	else if (compare("fish|glasses|sunglasses|clothes|boots|shoes|greaves|sandals|wings|ears",.@str$)) {
 		set .@result$, .@str$;
 	}
 
@@ -413,7 +427,7 @@ function	script	F_GetPlural	{
 	}
 
 	// ends in -f, -fe --> remove -f, -fe --> add -ves
-	else if (.@suffix$[0] == "f" || .@suffix$[1] == "fe") {
+	else if ((.@suffix$[0] == "f" || .@suffix$[1] == "fe") && .@suffix$[1] != "ff") {
 		if (compare("belief|cliff|chief|dwarf|grief|gulf|proof|roof",.@str$))
 			set .@result$, .@str$ + "s";  // exceptions --> add -s
 		else
@@ -421,7 +435,7 @@ function	script	F_GetPlural	{
 	}
 	
 	// ends in consonant + -y --> remove -y --> add -ies
-	else if (.@suffix$[0] == "y" && !(compare("aeiou",charat(.@suffix$[1],0)))) {
+	else if (.@suffix$[0] == "y" && !compare("aeiou",charat(.@suffix$[1],0))) {
 		set .@result$, delchar(.@str$,.@strlen - 1) + "ies";
 	}
 
@@ -436,7 +450,7 @@ function	script	F_GetPlural	{
 		set .@result$, .@str$ + "s";
 	}
 
-	return ((getarg(1,0)) ? strtoupper(.@pre$ + .@result$) : .@pre$ + .@result$);
+	return ((getarg(1,0)) ? strtoupper(sprintf(.@format$,.@result$)) : sprintf(.@format$,.@result$));
 }
 function	script	F_InsertPlural	{
 	return sprintf(getarg(3,"%d %s"), getarg(0), ((getarg(0) == 1) ? getarg(1) : callfunc("F_GetPlural",getarg(1),getarg(2,0))));
