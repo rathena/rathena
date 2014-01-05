@@ -8550,7 +8550,6 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 						continue;
 				}
 				
-
 				if ( itemdb_type(id) != IT_CARD ) {
 					if ( sd->inventory_data[index]->nameid != id )
 						continue;
@@ -8574,7 +8573,6 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 				break;/* we haven't found all the ids for this combo, so we can return */
 		}
 		aFree(combo_idx);
-
 		/* means we broke out of the count loop w/o finding all ids, we can move to the next combo */
 		if( j < data->combos[i]->count )
 			continue;
@@ -8620,6 +8618,10 @@ static int pc_removecombo(struct map_session_data *sd, struct item_data *data ) 
 		sd->combos.id[x] = 0;
 		retval++;
 
+		/* check if combo requirements still fit */
+		if( pc_checkcombo( sd, data ) )
+			continue;
+
 		/* move next value to empty slot */
 		for( j = 0, cursor = 0; j < sd->combos.count; j++ ) {
 			if( sd->combos.bonus[j] == NULL )
@@ -8631,10 +8633,6 @@ static int pc_removecombo(struct map_session_data *sd, struct item_data *data ) 
 			}
 			cursor++;
 		}
-
-		/* check if combo requirements still fit */
-		if( pc_checkcombo( sd, data ) )
-			continue;
 
 		/* it's empty, we can clear all the memory */
 		if( (sd->combos.count = cursor) == 0 ) {
