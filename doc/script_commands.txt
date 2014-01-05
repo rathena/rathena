@@ -10,7 +10,7 @@
 //============================================================
 
 This document is a reference manual for all the scripting commands and functions 
-available in current rAthena SVN. It is not a simple tutorial. When people tell 
+available in current rAthena repository. It is not a simple tutorial. When people tell 
 you to "Read The F***ing Manual", they mean this.
 
 The information was mostly acquired through looking up how things actually work 
