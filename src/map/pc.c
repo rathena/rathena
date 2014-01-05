@@ -4011,54 +4011,52 @@ int pc_search_inventory(struct map_session_data *sd,int item_id)
 	return ( i < MAX_INVENTORY ) ? i : -1;
 }
 
-/** Attempt to add a new item to player inventory
- * @param sd
- * @param item_data
- * @param amount
- * @param log_type
- * @return
- *   0 = success
- *   1 = invalid itemid not found or negative amount
- *   2 = overweight
- *   3 = ?
- *   4 = no free place found
- *   5 = max amount reached
- *   6 = ?
- *   7 = stack limitation
- */
-char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_pick_type log_type) {
-	struct item_data *id;
-	uint16 i;
+/*==========================================
+ * Attempt to add a new item to inventory.
+ * Return:
+    0 = success
+    1 = invalid itemid not found or negative amount
+    2 = overweight
+    3 = ?
+    4 = no free place found
+    5 = max amount reached
+    6 = ?
+    7 = stack limitation
+ *------------------------------------------*/
+int pc_additem(struct map_session_data *sd,struct item *item_data,int amount,e_log_pick_type log_type)
+{
+	struct item_data *data;
+	int i;
 	unsigned int w;
 
 	nullpo_retr(1, sd);
-	nullpo_retr(1, item);
+	nullpo_retr(1, item_data);
 
-	if( item->nameid <= 0 || amount <= 0 )
+	if( item_data->nameid <= 0 || amount <= 0 )
 		return ADDITEM_INVALID;
 	if( amount > MAX_AMOUNT )
 		return ADDITEM_OVERAMOUNT;
 
-	id = itemdb_search(item->nameid);
+	data = itemdb_search(item_data->nameid);
 
-	if( id->stack.inventory && amount > id->stack.amount )
+	if( data->stack.inventory && amount > data->stack.amount )
 	{// item stack limitation
 		return ADDITEM_STACKLIMIT;
 	}
 
-	w = id->weight*amount;
+	w = data->weight*amount;
 	if(sd->weight + w > sd->max_weight)
 		return ADDITEM_OVERWEIGHT;
 
 	i = MAX_INVENTORY;
 
-	if( itemdb_isstackable2(id) && item->expire_time == 0 )
+	if( itemdb_isstackable2(data) && item_data->expire_time == 0 )
 	{ // Stackable | Non Rental
 		for( i = 0; i < MAX_INVENTORY; i++ )
 		{
-			if( sd->status.inventory[i].nameid == item->nameid && sd->status.inventory[i].bound == item->bound && memcmp(&sd->status.inventory[i].card, &item->card, sizeof(item->card)) == 0 )
+			if( sd->status.inventory[i].nameid == item_data->nameid && sd->status.inventory[i].bound == item_data->bound && memcmp(&sd->status.inventory[i].card, &item_data->card, sizeof(item_data->card)) == 0 )
 			{
-				if( amount > MAX_AMOUNT - sd->status.inventory[i].amount || ( id->stack.inventory && amount > id->stack.amount - sd->status.inventory[i].amount ) )
+				if( amount > MAX_AMOUNT - sd->status.inventory[i].amount || ( data->stack.inventory && amount > data->stack.amount - sd->status.inventory[i].amount ) )
 					return 5;
 				sd->status.inventory[i].amount += amount;
 				clif_additem(sd,i,amount,0);
@@ -4073,17 +4071,17 @@ char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_p
 		if( i < 0 )
 			return ADDITEM_OVERITEM;
 
-		memcpy(&sd->status.inventory[i], item, sizeof(sd->status.inventory[0]));
+		memcpy(&sd->status.inventory[i], item_data, sizeof(sd->status.inventory[0]));
 		// clear equips field first, just in case
-		if( item->equip )
+		if( item_data->equip )
 			sd->status.inventory[i].equip = 0;
 
 		sd->status.inventory[i].amount = amount;
-		sd->inventory_data[i] = id;
+		sd->inventory_data[i] = data;
 		clif_additem(sd,i,amount,0);
 	}
 #ifdef NSI_UNIQUE_ID
-	if( !itemdb_isstackable2(id) && !item->unique_id )
+	if( !itemdb_isstackable2(data) && !item_data->unique_id )
 		sd->status.inventory[i].unique_id = itemdb_unique_id(0,0);
 #endif
 	log_pick_pc(sd, log_type, amount, &sd->status.inventory[i]);
@@ -4091,16 +4089,16 @@ char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_p
 	sd->weight += w;
 	clif_updatestatus(sd,SP_WEIGHT);
 	//Auto-equip
-	if(id->flag.autoequip)
-		pc_equipitem(sd, i, id->equip);
+	if(data->flag.autoequip)
+		pc_equipitem(sd, i, data->equip);
 
 	/* rental item check */
-	if( item->expire_time ) {
-		if( time(NULL) > item->expire_time ) {
+	if( item_data->expire_time ) {
+		if( time(NULL) > item_data->expire_time ) {
 			clif_rental_expired(sd->fd, i, sd->status.inventory[i].nameid);
 			pc_delitem(sd, i, sd->status.inventory[i].amount, 1, 0, LOG_TYPE_OTHER);
 		} else {
-			int seconds = (int)( item->expire_time - time(NULL) );
+			int seconds = (int)( item_data->expire_time - time(NULL) );
 			clif_rental_time(sd->fd, sd->status.inventory[i].nameid, seconds);
 			pc_inventory_rental_add(sd, seconds);
 		}
@@ -5951,15 +5949,12 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 	return 1;
 }
 
-/** Alters experiences calculation based on self bonuses that do not get even shared to the party.
-* @param sd Player
-* @param base_exp Base EXP before peronal bonuses
-* @param job_exp Job EXP before peronal bonuses
-* @param src Block list that affecting the exp calculation
-*/
+/*==========================================
+ * Alters experienced based on self bonuses that do not get even shared to the party.
+ *------------------------------------------*/
 static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsigned int *job_exp, struct block_list *src)
 {
-	int bonus = 0, vip_bonus_base = 0, vip_bonus_job = 0;
+	int bonus = 0;
 	struct status_data *status = status_get_status_data(src);
 
 	if( sd->expaddrace[status->race] )
@@ -5981,20 +5976,12 @@ static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsi
 			bonus += ( sd->sc.data[SC_EXPBOOST]->val1 / battle_config.vip_bm_increase );
 	}
 
-#ifdef VIP_ENABLE
-	//EXP bonus for VIP player
-	if (src && src->type == BL_MOB && pc_isvip(sd)) {
-		vip_bonus_base = battle_config.vip_base_exp_increase;
-		vip_bonus_job = battle_config.vip_job_exp_increase;
-	}
-#endif
+	*base_exp = (unsigned int) cap_value(*base_exp + (double)*base_exp * bonus/100., 1, UINT_MAX);
 
-	*base_exp = (unsigned int) cap_value(*base_exp + (double)*base_exp * (bonus + vip_bonus_base)/100., 1, UINT_MAX);
-	
 	if (sd->sc.data[SC_JEXPBOOST])
 		bonus += sd->sc.data[SC_JEXPBOOST]->val1;
 
-	*job_exp = (unsigned int) cap_value(*job_exp + (double)*job_exp * (bonus + vip_bonus_job)/100., 1, UINT_MAX);
+	*job_exp = (unsigned int) cap_value(*job_exp + (double)*job_exp * bonus/100., 1, UINT_MAX);
 
 	return;
 }
@@ -6012,7 +5999,11 @@ int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int
 
 	if(!battle_config.pvp_exp && map[sd->bl.m].flag.pvp)  // [MouseJstr]
 		return 0; // no exp on pvp maps
-	
+
+	// Increase base EXP rate for VIP.
+	if (src && src->type&BL_MOB && (battle_config.vip_base_exp_increase && (sd && pc_isvip(sd))))
+		base_exp = (unsigned int)cap_value(base_exp * (battle_config.vip_base_exp_increase)/100., 1, UINT_MAX);
+
 	if(sd->status.guild_id>0)
 		base_exp-=guild_payexp(sd,base_exp);
 

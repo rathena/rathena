@@ -86,7 +86,7 @@ enum e_skill_inf3 {
 	INF3_EFF_SHADOWJUMP		= 0x0200,	// spell range affected by NJ_SHADOWJUMP
 	INF3_EFF_RADIUS			= 0x0400,	// spell range affected by WL_RADIUS
 	INF3_EFF_RESEARCHTRAP	= 0x0800,	// spell range affected by RA_RESEARCHTRAP
-	INF3_NO_EFF_HOVERING	= 0x1000,	// Spell that does not affect user that has SC_HOVERING active
+	//INF3_ = 0x1000, // free
 	INF3_USABLE_WARG		= 0x2000,	// spell that can be use while riding warg
 	INF3_DIS_MADO			= 0x4000,	// spell that can't be used while in mado
 	//... add other spell list option here
