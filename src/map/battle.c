@@ -6005,10 +6005,10 @@ void battle_drain(TBL_PC *sd, struct block_list *tbl, int64 rdamage, int64 ldama
 			if( sp && wd->sp_drain_race[race].type)
 				rsp += sp;
 		}
-	}
 
-	thp += hp;
-	tsp += sp;
+		thp += hp;
+		tsp += sp;
+	}
 
 	if (sd->bonus.sp_vanish_rate && rnd()%1000 < sd->bonus.sp_vanish_rate)
 		status_percent_damage(&sd->bl, tbl, 0, (unsigned char)sd->bonus.sp_vanish_per, false);
