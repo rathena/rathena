@@ -8746,7 +8746,7 @@ void clif_charnameack (int fd, struct block_list *bl)
 				if( battle_config.show_mob_info&1 )
 					str_p += sprintf(str_p, "HP: %u/%u | ", md->status.hp, md->status.max_hp);
 				if( battle_config.show_mob_info&2 )
-					str_p += sprintf(str_p, "HP: %d%% | ", get_percentage(md->status.hp, md->status.max_hp));
+					str_p += sprintf(str_p, "HP: %ui%% | ", get_percentage(md->status.hp, md->status.max_hp));
 				//Even thought mobhp ain't a name, we send it as one so the client
 				//can parse it. [Skotlex]
 				if( str_p != mobhp )
@@ -11024,7 +11024,7 @@ void clif_parse_ChangeCart(int fd,struct map_session_data *sd)
 {// TODO: State tracking?
 	int type;
 
-	if( sd && pc_checkskill(sd, MC_CHANGECART) < 1 )
+	if( !sd || pc_checkskill(sd, MC_CHANGECART) < 1 )
 		return;
 
 	type = (int)RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);

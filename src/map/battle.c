@@ -5548,11 +5548,10 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		if(mflag > 1) //Autocasted Blitz.
 			nk|=NK_SPLASHSPLIT;
 
-		if (skill_id == SN_FALCONASSAULT)
-		{
+		if (skill_id == SN_FALCONASSAULT) {
 			//Div fix of Blitzbeat
-			skill = skill_get_num(HT_BLITZBEAT, 5);
-			damage_div_fix(md.damage, skill);
+			md.div_ = skill_get_num(HT_BLITZBEAT, 5);
+			damage_div_fix(md.damage, md.div_);
 
 			//Falcon Assault Modifier
 			md.damage=(int64)md.damage*(150+70*skill_lv)/100;

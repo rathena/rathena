@@ -1417,7 +1417,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 	int mode;
 	int view_range, can_move;
 
-	if(md->bl.prev == NULL || md->status.hp <= 0)
+	if(md->bl.prev == NULL || md->status.hp == 0)
 		return false;
 
 	if (DIFF_TICK(tick, md->last_thinktime) < MIN_MOBTHINKTIME)
@@ -3338,7 +3338,7 @@ int mobskill_event(struct mob_data *md, struct block_list *src, unsigned int tic
 {
 	int target_id, res = 0;
 
-	if(md->bl.prev == NULL || md->status.hp <= 0)
+	if(md->bl.prev == NULL || md->status.hp == 0)
 		return 0;
 
 	target_id = md->target_id;

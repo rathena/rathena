@@ -6887,7 +6887,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	//Reset ticks.
 	sd->hp_loss.tick = sd->sp_loss.tick = sd->hp_regen.tick = sd->sp_regen.tick = 0;
 
-	if ( sd && (sd->spiritball)!=0 )
+	if ( sd->spiritball !=0 )
 		pc_delspiritball(sd,sd->spiritball,0);
 
 	for(i = 1; i < 5; i++)

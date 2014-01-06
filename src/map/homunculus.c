@@ -58,14 +58,14 @@ struct view_data* merc_get_hom_viewdata(int class_)
 
 enum homun_type hom_class2type(int class_) {
 	int mid = hom_class2mapid(class_);
-	if(mid&(HOM_REG|HOM_EVO))
+	if((mid&(HOM_REG|HOM_EVO)) == (HOM_REG|HOM_EVO))
 		return HT_EVO;
 	else if(mid&(HOM_REG))
 		return HT_REG;
 	else if(mid&(HOM_S))
 		return HT_S;
-	else //invalid type
-		return -1;
+	else
+		return HT_INVALID;
 }
 
 int hom_class2mapid(int hom_class)
@@ -73,23 +73,23 @@ int hom_class2mapid(int hom_class)
 	switch(hom_class)
 	{
 		// Normal Homunculus
-		case 6001: case 6005:                return MAPID_LIF;
-		case 6002: case 6006:                return MAPID_AMISTR;
-		case 6003: case 6007:                return MAPID_FILIR;
-		case 6004: case 6008:                return MAPID_VANILMIRTH;
+		case 6001: case 6005:	return MAPID_LIF;
+		case 6002: case 6006:	return MAPID_AMISTR;
+		case 6003: case 6007:	return MAPID_FILIR;
+		case 6004: case 6008:	return MAPID_VANILMIRTH;
 		// Evolved Homunculus
-		case 6009: case 6013:                return MAPID_LIF_E;
-		case 6010: case 6014:                return MAPID_AMISTR_E;
-		case 6011: case 6015:                return MAPID_FILIR_E;
-		case 6012: case 6016:                return MAPID_VANILMIRTH_E;
+		case 6009: case 6013:	return MAPID_LIF_E;
+		case 6010: case 6014:	return MAPID_AMISTR_E;
+		case 6011: case 6015:	return MAPID_FILIR_E;
+		case 6012: case 6016:	return MAPID_VANILMIRTH_E;
 		// Homunculus S
-		case 6048:                           return MAPID_EIRA;
-		case 6049:                           return MAPID_BAYERI;
-		case 6050:                           return MAPID_SERA;
-		case 6051:                           return MAPID_DIETER;
-		case 6052:                           return MAPID_ELANOR;
+		case 6048:				return MAPID_EIRA;
+		case 6049:				return MAPID_BAYERI;
+		case 6050:				return MAPID_SERA;
+		case 6051:				return MAPID_DIETER;
+		case 6052:				return MAPID_ELANOR;
 
-		default:                             return -1;
+		default:				return -1;
 	}
 }
 

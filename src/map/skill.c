@@ -1659,13 +1659,12 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 			skill = (sd->autospell[i].id > 0) ? sd->autospell[i].id : -sd->autospell[i].id;
 
 			sd->state.autocast = 1;
+			if ( skill_isNotOk(skill, sd) )
+				continue;
 			sd->state.autocast = 0;
 
 			skill_lv = sd->autospell[i].lv?sd->autospell[i].lv:1;
 			if (skill_lv < 0) skill_lv = 1+rnd()%(-skill_lv);
-
-			if ( skill_isNotOk(skill, sd) )
-				continue;
 
 			rate = (!sd->state.arrow_atk) ? sd->autospell[i].rate : sd->autospell[i].rate / 2;
 
@@ -2002,10 +2001,9 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 				 rate>>=1;
 
 			dstsd->state.autocast = 1;
-			dstsd->state.autocast = 0;
-
 			if ( skill_isNotOk(skill_id, dstsd) )
 				continue;
+			dstsd->state.autocast = 0;
 
 			if (rnd()%1000 >= rate)
 				continue;
@@ -7255,14 +7253,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case WE_MALE:
-		if( status_get_hp(bl) < status_get_max_hp(bl) / 10 ) {
+		if( status_get_hp(bl) > status_get_max_hp(bl) / 10 ) {
 			int hp_rate=(!skill_lv)? 0:skill_get_hp_rate(skill_id, skill_lv);
 			int gain_hp= tstatus->max_hp*abs(hp_rate)/100; // The earned is the same % of the target HP than it costed the caster. [Skotlex]
 			clif_skill_nodamage(src,bl,skill_id,status_heal(bl, gain_hp, 0, 0),1);
 		}
 		break;
 	case WE_FEMALE:
-		if( status_get_sp(bl) < status_get_max_sp(bl) / 10 ) {
+		if( status_get_sp(bl) > status_get_max_sp(bl) / 10 ) {
 			int sp_rate=(!skill_lv)? 0:skill_get_sp_rate(skill_id, skill_lv);
 			int gain_sp=tstatus->max_sp*abs(sp_rate)/100;// The earned is the same % of the target SP than it costed the caster. [Skotlex]
 			clif_skill_nodamage(src,bl,skill_id,status_heal(bl, 0, gain_sp, 0),1);
@@ -7274,16 +7272,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if(sd){
 			struct map_session_data *f_sd = pc_get_father(sd);
 			struct map_session_data *m_sd = pc_get_mother(sd);
-			struct block_list *b_bl = map_id2bl(sd->bl.id);
-			struct block_list *f_bl = map_id2bl(f_sd->bl.id);
-			struct block_list *m_bl = map_id2bl(m_sd->bl.id);
 			if( (!f_sd && !m_sd) // if neither was found
 				|| (sd->status.party_id != 0 && //not in same party
 					((!f_sd || sd->status.party_id != f_sd->status.party_id) 
 					&& (!m_sd || sd->status.party_id != m_sd->status.party_id) //if both are online they should all be in same team
 					))
-				|| ((!f_sd || !check_distance_bl(b_bl, f_bl, AREA_SIZE)) //not in same screen
-					&& (!m_bl && !check_distance_bl(b_bl, m_bl, AREA_SIZE)))
+				|| ((!f_sd || !check_distance_bl(&sd->bl, &f_sd->bl, AREA_SIZE)) //not in same screen
+					&& (!m_sd || !check_distance_bl(&sd->bl, &m_sd->bl, AREA_SIZE)))
 			) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				map_freeblock_unlock();
@@ -9702,19 +9697,19 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	     break;
 	case MH_GRANITIC_ARMOR:
 	case MH_PYROCLASTIC:
-		{
-			 struct block_list *s_bl = battle_get_master(src);
-			 if(s_bl) sc_start2(src, s_bl, type, 100, skill_lv, hd->homunculus.level, skill_get_time(skill_id, skill_lv)); //start on master
-			 sc_start2(src, bl, type, 100, skill_lv, hd->homunculus.level, skill_get_time(skill_id, skill_lv));
-			 if (hd) skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
+		if(hd) {
+			struct block_list *s_bl = battle_get_master(src);
+			if(s_bl) sc_start2(src, s_bl, type, 100, skill_lv, hd->homunculus.level, skill_get_time(skill_id, skill_lv)); //start on master
+			sc_start2(src, bl, type, 100, skill_lv, hd->homunculus.level, skill_get_time(skill_id, skill_lv));
+			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 	     }
 	     break;
 	case MH_LIGHT_OF_REGENE: //self
-		sc_start2(src, src, type, 100, skill_lv, hd->homunculus.level, skill_get_time(skill_id, skill_lv));
 		if(hd) {
-		    hd->homunculus.intimacy = 251; //change to neutral (can't be cast if < 750)
-		    if(sd) clif_send_homdata(sd, SP_INTIMATE, hd->homunculus.intimacy); //refresh intimacy info
-		    skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
+			sc_start2(src, src, type, 100, skill_lv, hd->homunculus.level, skill_get_time(skill_id, skill_lv));
+			hd->homunculus.intimacy = 251; //change to neutral (can't be cast if < 750)
+			if(sd) clif_send_homdata(sd, SP_INTIMATE, hd->homunculus.intimacy); //refresh intimacy info
+			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 		}
 		break;
 	case MH_STYLE_CHANGE:
