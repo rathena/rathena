@@ -8525,7 +8525,7 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 		}
 
 		CREATE(combo_idx,int16,data->combos[i]->count);
-		memset(combo_idx,0,data->combos[i]->count);
+		memset(combo_idx,-1,data->combos[i]->count);
 		for( j = 0; j < data->combos[i]->count; j++ ) {
 			uint16 id = data->combos[i]->nameid[j], k;
 			bool found = false;
