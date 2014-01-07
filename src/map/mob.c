@@ -4043,7 +4043,7 @@ static int mob_read_randommonster(void)
 	FILE *fp;
 	char line[1024];
 	char *str[10],*p;
-	int i,j, entries;
+	int i,j, entries, k;
 	const char* mobfile[] = {
 		DBPATH"mob_branch.txt",
 		DBPATH"mob_poring.txt",
@@ -4059,14 +4059,14 @@ static int mob_read_randommonster(void)
 
 	memset(&summon, 0, sizeof(summon));
 
-	for( i = 0; i < ARRAYLENGTH(mobfile) && i < MAX_RANDOMMONSTER*2; i++ )
+	for( i = 0; i < ARRAYLENGTH(mobfile); i++ )
 	{ // MobID,DummyName,Rate
 		entries=0;
-		mob_db_data[0]->summonper[i] = MOBID_PORING;	// Default fallback value, in case the database does not provide one
+		k = (i >= MAX_RANDOMMONSTER) ? i - MAX_RANDOMMONSTER : i;
+		mob_db_data[0]->summonper[k] = MOBID_PORING;	// Default fallback value, in case the database does not provide one
 		sprintf(line, "%s/%s", db_path, mobfile[i]);
-		fp=fopen(line,"r");
-		if(fp==NULL){
-			if(i<=ARRAYLENGTH(mobfile)/2-1) ShowError("mob_read_randommonster: can't read %s\n",line);
+		if( (fp=fopen(line,"r")) == NULL ) {
+			if( i <= k ) ShowError("mob_read_randommonster: can't read %s\n",line);
 			return -1;
 		}
 		while(fgets(line, sizeof(line), fp))
@@ -4087,10 +4087,10 @@ static int mob_read_randommonster(void)
 			mob_id = atoi(str[0]);
 			if(mob_db(mob_id) == mob_dummy)
 				continue;
-			mob_db_data[mob_id]->summonper[i]=atoi(str[2]);
+			mob_db_data[mob_id]->summonper[k]=atoi(str[2]);
 			if (i) {
-				if( summon[i].qty < ARRAYLENGTH(summon[i].mob_id) ) //MvPs
-					summon[i].mob_id[summon[i].qty++] = mob_id;
+				if( summon[k].qty < ARRAYLENGTH(summon[k].mob_id) ) //MvPs
+					summon[k].mob_id[summon[k].qty++] = mob_id;
 				else {
 					ShowDebug("Can't store more random mobs from %s, increase size of mob.c:summon variable!\n", mobfile[i]);
 					break;
@@ -4098,10 +4098,10 @@ static int mob_read_randommonster(void)
 			}
 			entries++;
 		}
-		if (i && !summon[i].qty)
+		if (i && !summon[k].qty)
 		{ //At least have the default here.
-			summon[i].mob_id[0] = mob_db_data[0]->summonper[i];
-			summon[i].qty = 1;
+			summon[k].mob_id[0] = mob_db_data[0]->summonper[k];
+			summon[k].qty = 1;
 		}
 		fclose(fp);
 		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", entries, mobfile[i]);
