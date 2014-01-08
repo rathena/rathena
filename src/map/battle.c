@@ -5467,7 +5467,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
  */
 struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *target,uint16 skill_id,uint16 skill_lv,int mflag)
 {
-	int skill;
 #ifdef ADJUST_SKILL_DAMAGE
 	int skill_damage;
 #endif
@@ -5541,6 +5540,8 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 #endif
 	case HT_BLITZBEAT:
 	case SN_FALCONASSAULT:
+	{
+		uint8 skill;
 		//Blitz-beat Damage.
 		if(!sd || (skill = pc_checkskill(sd,HT_STEELCROW)) <= 0)
 			skill=0;
@@ -5550,12 +5551,12 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 
 		if (skill_id == SN_FALCONASSAULT) {
 			//Div fix of Blitzbeat
-			md.div_ = skill_get_num(HT_BLITZBEAT, 5);
-			damage_div_fix(md.damage, md.div_);
+			damage_div_fix2(md.damage, skill_get_num(HT_BLITZBEAT, 5));
 
 			//Falcon Assault Modifier
 			md.damage=(int64)md.damage*(150+70*skill_lv)/100;
 		}
+	}
 		break;
 	case TF_THROWSTONE:
 		md.damage=50;

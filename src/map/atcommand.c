@@ -7942,7 +7942,7 @@ ACMD_FUNC(duel)
 	}
 
 	if( message[0] ) {
-		if(sscanf(message, "%ui", &maxpl) >= 1) {
+		if(sscanf(message, "%u", &maxpl) >= 1) {
 			if(maxpl < 2 || maxpl > 65535) {
 				clif_displaymessage(fd, msg_txt(sd,357)); // "Duel: Invalid value."
 				return 0;
