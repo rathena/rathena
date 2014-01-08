@@ -1915,9 +1915,9 @@ static int pc_bonus_item_drop(struct s_add_drop *drop, const short max, short id
 		if(
 			((id && drop[i].id == id) ||
 			(group && drop[i].group == group))
-			&& ((race<RC_NONE && race<RC_MAX) || (class_<CLASS_NONE && class_<CLASS_MAX))
+			&& ((race<RC_NONE_ && race<RC_MAX) || (class_<CLASS_NONE && class_<CLASS_MAX))
 		) {
-			if(race<RC_NONE && race<RC_MAX) drop[i].race |= 1<<race;
+			if(race<RC_NONE_ && race<RC_MAX) drop[i].race |= 1<<race;
 			if(class_<CLASS_NONE && class_<CLASS_MAX) drop[i].class_ |= 1<<class_;
 			if(drop[i].rate > 0 && rate > 0)
 			{	//Both are absolute rates.
@@ -1939,7 +1939,7 @@ static int pc_bonus_item_drop(struct s_add_drop *drop, const short max, short id
 	}
 	drop[i].id = id;
 	drop[i].group = group;
-	if(race<RC_NONE && race<RC_MAX) drop[i].race |= 1<<race;
+	if(race<RC_NONE_ && race<RC_MAX) drop[i].race |= 1<<race;
 	if(class_<CLASS_NONE && class_<CLASS_MAX) drop[i].class_ |= 1<<class_;
 	drop[i].rate = rate;
 	return 1;
