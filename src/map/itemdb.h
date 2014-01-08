@@ -26,10 +26,8 @@
 #define IG_FINDINGORE 6
 #define IG_POTION 37
 
-#define MAX_ITEMGROUP 390 ///The max. item group count (increase this when needed).
+#define MAX_ITEMGROUP 390 ///The max. item group count (increase this when needed). TODO: Remove this limit and use dynamic allocaton
 
-#define MAX_ITEMGROUP_RAND 11000 ///Max item slots for random item group (increase this when needed).
-#define MAX_ITEMGROUP_MUST 15 ///Max item for 'must' item group (increase this when needed).
 #define MAX_ITEMGROUP_RANDGROUP 4	///Max group for random item (increase this when needed).
 
 #define CARD0_FORGE 0x00FF
@@ -310,6 +308,14 @@ enum e_item_job {
 	ITEMJ_THIRD_BABY  = 0x20,
 };
 
+struct item_combo {
+	struct script_code *script;
+	unsigned short *nameid;/* nameid array */
+	unsigned char count;
+	unsigned short id;/* id of this combo */
+	bool isRef;/* whether this struct is a reference or the master */
+};
+
 struct item_data {
 	uint16 nameid;
 	char name[ITEM_NAME_LENGTH],jname[ITEM_NAME_LENGTH];
@@ -373,7 +379,7 @@ struct item_data {
 	unsigned char combos_count;
 };
 
-/* Struct of item group */
+/* Struct of item group entry */
 struct s_item_group {
 	uint16 nameid, ///item id
 		duration; ///duration if item as rental item
@@ -383,19 +389,17 @@ struct s_item_group {
 	char bound; ///makes the item as bound item (according to bound type)
 };
 
-/* Struct of item group that will be used for db */
-struct s_item_group_db {
-	struct s_item_group must[MAX_ITEMGROUP_MUST];
-	struct s_item_group random[MAX_ITEMGROUP_RANDGROUP][MAX_ITEMGROUP_RAND]; ///NOTE: Is this good?
-	uint16 must_qty, random_qty[MAX_ITEMGROUP_RANDGROUP];
+/* Struct of random group */
+struct s_item_group_random {
+	struct s_item_group *data;
+	uint16 data_qty;
 };
 
-struct item_combo {
-	struct script_code *script;
-	unsigned short *nameid;/* nameid array */
-	unsigned char count;
-	unsigned short id;/* id of this combo */
-	bool isRef;/* whether this struct is a reference or the master */
+/* Struct of item group that will be used for db */
+struct s_item_group_db {
+	struct s_item_group *must;
+	uint16 must_qty;
+	struct s_item_group_random random[MAX_ITEMGROUP_RANDGROUP]; //! TODO: Move this fixed array to dynamic allocation!
 };
 
 struct item_data* itemdb_searchname(const char *name);
