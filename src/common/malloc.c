@@ -115,8 +115,6 @@ void aFree_(void *p, const char *file, int line, const char *func)
 	// ShowMessage("%s:%d: in func %s: aFree %p\n",file,line,func,p);
 	if (p)
 		FREE(p, file, line, func);
-
-	p = NULL;
 }
 
 
@@ -447,13 +445,13 @@ void _mfree(void *ptr, const char *file, int line, const char *func )
 /* Allocating blocks */
 static struct block* block_malloc(unsigned short hash)
 {
-	int i;
 	struct block *p;
 	if(hash_unfill[0] != NULL) {
 		/* Space for the block has already been secured */
 		p = hash_unfill[0];
 		hash_unfill[0] = hash_unfill[0]->unfill_next;
 	} else {
+		int i;
 		/* Newly allocated space for the block */
 		p = (struct block*)MALLOC(sizeof(struct block) * (BLOCK_ALLOC), __FILE__, __LINE__, __func__ );
 		if(p == NULL) {

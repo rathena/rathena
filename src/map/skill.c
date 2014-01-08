@@ -1651,9 +1651,9 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 
 		for (i = 0; i < ARRAYLENGTH(sd->autospell) && sd->autospell[i].id; i++) {
 
-			if(!(sd->autospell[i].flag&attack_type&BF_WEAPONMASK &&
-				 sd->autospell[i].flag&attack_type&BF_RANGEMASK &&
-				 sd->autospell[i].flag&attack_type&BF_SKILLMASK))
+			if(!( ((sd->autospell[i].flag)&attack_type)&BF_WEAPONMASK &&
+				  ((sd->autospell[i].flag)&attack_type)&BF_RANGEMASK &&
+				  ((sd->autospell[i].flag)&attack_type)&BF_SKILLMASK))
 				continue; // one or more trigger conditions were not fulfilled
 
 			skill = (sd->autospell[i].id > 0) ? sd->autospell[i].id : -sd->autospell[i].id;
@@ -1744,9 +1744,9 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 				continue;
 			if( sd->autobonus[i].active != INVALID_TIMER )
 				continue;
-			if(!(sd->autobonus[i].atk_type&attack_type&BF_WEAPONMASK &&
-				 sd->autobonus[i].atk_type&attack_type&BF_RANGEMASK &&
-				 sd->autobonus[i].atk_type&attack_type&BF_SKILLMASK))
+			if(!( ((sd->autobonus[i].atk_type)&attack_type)&BF_WEAPONMASK &&
+				  ((sd->autobonus[i].atk_type)&attack_type)&BF_RANGEMASK &&
+				  ((sd->autobonus[i].atk_type)&attack_type)&BF_SKILLMASK))
 				continue; // one or more trigger conditions were not fulfilled
 			pc_exeautobonus(sd,&sd->autobonus[i]);
 		}
@@ -1987,9 +1987,9 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 
 		for (i = 0; i < ARRAYLENGTH(dstsd->autospell2) && dstsd->autospell2[i].id; i++) {
 
-			if(!(dstsd->autospell2[i].flag&attack_type&BF_WEAPONMASK &&
-				 dstsd->autospell2[i].flag&attack_type&BF_RANGEMASK &&
-				 dstsd->autospell2[i].flag&attack_type&BF_SKILLMASK))
+			if(!( ((dstsd->autospell2[i].flag)&attack_type)&BF_WEAPONMASK &&
+				  ((dstsd->autospell2[i].flag)&attack_type)&BF_RANGEMASK &&
+				  ((dstsd->autospell2[i].flag)&attack_type)&BF_SKILLMASK))
 				continue; // one or more trigger conditions were not fulfilled
 
 			skill_id = (dstsd->autospell2[i].id > 0) ? dstsd->autospell2[i].id : -dstsd->autospell2[i].id;
@@ -2073,9 +2073,9 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 				continue;
 			if( dstsd->autobonus2[i].active != INVALID_TIMER )
 				continue;
-			if(!(dstsd->autobonus2[i].atk_type&attack_type&BF_WEAPONMASK &&
-				 dstsd->autobonus2[i].atk_type&attack_type&BF_RANGEMASK &&
-				 dstsd->autobonus2[i].atk_type&attack_type&BF_SKILLMASK))
+			if(!( ((dstsd->autobonus2[i].atk_type)&attack_type)&BF_WEAPONMASK &&
+				  ((dstsd->autobonus2[i].atk_type)&attack_type)&BF_RANGEMASK &&
+				  ((dstsd->autobonus2[i].atk_type)&attack_type)&BF_SKILLMASK))
 				continue; // one or more trigger conditions were not fulfilled
 			pc_exeautobonus(dstsd,&dstsd->autobonus2[i]);
 		}
@@ -2095,7 +2095,7 @@ int skill_break_equip (struct block_list *src,struct block_list *bl, unsigned sh
 	const enum sc_type scatk[4] = {SC_STRIPWEAPON, SC_STRIPARMOR, SC_STRIPSHIELD, SC_STRIPHELM};
 	const enum sc_type scdef[4] = {SC_CP_WEAPON, SC_CP_ARMOR, SC_CP_SHIELD, SC_CP_HELM};
 	struct status_change *sc = status_get_sc(bl);
-	int i,j;
+	int i;
 	TBL_PC *sd;
 	sd = BL_CAST(BL_PC, bl);
 	if (sc && !sc->count)
@@ -2143,7 +2143,7 @@ int skill_break_equip (struct block_list *src,struct block_list *bl, unsigned sh
 		return 0;
 	if (sd) {
 		for (i = 0; i < EQI_MAX; i++) {
-			j = sd->equip_index[i];
+			int j = sd->equip_index[i];
 			if (j < 0 || sd->status.inventory[j].attribute == 1 || !sd->inventory_data[j])
 				continue;
 
@@ -4094,7 +4094,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			// skill_area_temp[0] holds number of targets in area
 			// skill_area_temp[1] holds the id of the original target
 			// skill_area_temp[2] counts how many targets have already been processed
-			int sflag = skill_area_temp[0] & 0xFFF, heal;
+			int sflag = skill_area_temp[0] & 0xFFF;
 			if( flag&SD_LEVEL )
 				sflag |= SD_LEVEL; // -1 will be used in packets instead of the skill level
 			if( skill_area_temp[1] != bl->id && !(skill_get_inf2(skill_id)&INF2_NPC_SKILL) )
@@ -4114,7 +4114,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					sd->flicker = false;
 			}
 			else {
-				heal = (int)skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, sflag);
+				int heal = (int)skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, sflag);
 				if( skill_id == NPC_VAMPIRE_GIFT && heal > 0 ) {
 					clif_skill_nodamage(NULL, src, AL_HEAL, heal, 1);
 					status_heal(src,heal,0,0);
@@ -4663,7 +4663,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					break;
 
 				i = spell[s==1?0:rand()%s];// Random select of spell to be released.
-				if( s && sc->data[i] ){// Now extract the data from the preserved spell
+				if(sc->data[i] ){// Now extract the data from the preserved spell
 					skill_id = sc->data[i]->val1;
 					skill_lv = sc->data[i]->val2;
 					point = sc->data[i]->val3;
@@ -4702,7 +4702,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			}
 			else
 			{ // Summon Balls
-				int j = 0, k, skele;
+				int j = 0, k;
 				int spheres[5] = { 0, 0, 0, 0, 0 },
 					positions[5] = {-1,-1,-1,-1,-1 };
 
@@ -4733,7 +4733,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				if( skill_lv == 1 ) j = 1; // Limit only to one ball
 				for( i = 0; i < j; i++ )
 				{
-					skele = WL_RELEASE - 5 + sc->data[spheres[i]]->val1 - WLS_FIRE; // Convert Ball Element into Skill ATK for balls
+					int skele = WL_RELEASE - 5 + sc->data[spheres[i]]->val1 - WLS_FIRE; // Convert Ball Element into Skill ATK for balls
 					// WL_SUMMON_ATK_FIRE, WL_SUMMON_ATK_WIND, WL_SUMMON_ATK_WATER, WL_SUMMON_ATK_GROUND
 					skill_addtimerskill(src,tick+status_get_adelay(src)*i,bl->id,0,0,skele,sc->data[spheres[i]]->val3,BF_MAGIC,flag|SD_LEVEL);
 					status_change_end(src, spheres[i], INVALID_TIMER); // Eliminate ball
@@ -7552,7 +7552,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case CG_TAROTCARD:
 		{
-			int eff, count = -1;
+			int count = -1;
 			if( rnd() % 100 > skill_lv * 8 || (tsc && tsc->data[SC_BASILICA]) ||
 			(dstmd && ((dstmd->guardian_data && dstmd->mob_id == MOBID_EMPERIUM) || mob_is_battleground(dstmd))) ) {
 				if( sd )
@@ -7563,7 +7563,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			}
 			status_zap(src,0,skill_get_sp(skill_id,skill_lv)); // consume sp only if succeeded [Inkfish]
 			do {
-				eff = rnd() % 14;
+				int eff = rnd() % 14;
 				clif_specialeffect(bl, 523 + eff, AREA);
 				switch (eff)
 				{
@@ -9653,11 +9653,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case MH_SILENT_BREEZE: {
 			 struct status_change *ssc = status_get_sc(src);
 			 struct block_list *m_bl = battle_get_master(src);
-			 const enum sc_type scs[] = {
-				 SC_MANDRAGORA, SC_HARMONIZE, SC_DEEPSLEEP, SC_VOICEOFSIREN, SC_SLEEP, SC_CONFUSION, SC_HALLUCINATION
-			 };
 			 int heal;
 			 if(tsc){
+				 const enum sc_type scs[] = {
+				 SC_MANDRAGORA, SC_HARMONIZE, SC_DEEPSLEEP, SC_VOICEOFSIREN, SC_SLEEP, SC_CONFUSION, SC_HALLUCINATION
+				};
 				 for (i = 0; i < ARRAYLENGTH(scs); i++) {
 					 if (tsc->data[scs[i]]) status_change_end(bl, scs[i], INVALID_TIMER);
 				 }
@@ -10205,7 +10205,6 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 int skill_castend_pos(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct block_list* src = map_id2bl(id);
-	int maxcount;
 	struct map_session_data *sd;
 	struct unit_data *ud = unit_bl2ud(src);
 	struct mob_data *md;
@@ -10235,6 +10234,7 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr_t data)
 	ud->skilltimer = INVALID_TIMER;
 
 	do {
+		int maxcount=0;
 		if( status_isdead(src) )
 			break;
 

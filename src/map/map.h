@@ -281,6 +281,7 @@ enum bl_type {
 enum npc_subtype { WARP, SHOP, SCRIPT, CASHSHOP, ITEMSHOP, POINTSHOP, TOMB };
 
 enum e_race {
+	RC_NONE=-1, //don't give us bonus
 	RC_FORMLESS=0,
 	RC_UNDEAD,
 	RC_BRUTE,
@@ -296,6 +297,7 @@ enum e_race {
 };
 
 enum e_classAE {
+	CLASS_NONE=-1, //don't give us bonus
 	CLASS_NORMAL = 0,
 	CLASS_BOSS,
 	CLASS_GUARDIAN,

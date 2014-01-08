@@ -114,7 +114,8 @@ struct s_addeffectonskill {
 
 struct s_add_drop {
 	short id, group;
-	int race, rate, class_;
+	int rate;
+	int race, class_; //bitwise value of 1<<x
 };
 
 struct s_autobonus {

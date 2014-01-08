@@ -1415,7 +1415,7 @@ void clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 	WBUFW(buf,31)=(unsigned short) (hd->homunculus.intimacy / 100) ;
 	WBUFW(buf,33)=0; // equip id
 	WBUFW(buf,35)=cap_value(status->rhw.atk2+status->batk, 0, INT16_MAX);
-	WBUFW(buf,37)=cap_value(status->matk_max, 0, INT16_MAX);
+	WBUFW(buf,37)=min(status->matk_max, INT16_MAX); //FIXME capping to INT16 here is too late
 	WBUFW(buf,39)=status->hit;
 	if (battle_config.hom_setting&0x10)
 		WBUFW(buf,41)=status->luk/3 + 1;	//crit is a +1 decimal value! Just display purpose.[Vicious]
@@ -13623,7 +13623,7 @@ void clif_blacksmith(struct map_session_data* sd)
 	WFIFOHEAD(fd,packet_len(0x219));
 	WFIFOW(fd,0) = 0x219;
 	//Packet size limits this list to 10 elements. [Skotlex]
-	for (i = 0; i < 10 && i < MAX_FAME_LIST; i++) {
+	for (i = 0; i < min(10,MAX_FAME_LIST); i++) { //client is capped to 10 char
 		if (smith_fame_list[i].id > 0) {
 			if (strcmp(smith_fame_list[i].name, "-") == 0 &&
 				(name = map_charid2nick(smith_fame_list[i].id)) != NULL)
@@ -13676,7 +13676,7 @@ void clif_alchemist(struct map_session_data* sd)
 	WFIFOHEAD(fd,packet_len(0x21a));
 	WFIFOW(fd,0) = 0x21a;
 	//Packet size limits this list to 10 elements. [Skotlex]
-	for (i = 0; i < 10 && i < MAX_FAME_LIST; i++) {
+	for (i = 0; i < min(10,MAX_FAME_LIST); i++) {
 		if (chemist_fame_list[i].id > 0) {
 			if (strcmp(chemist_fame_list[i].name, "-") == 0 &&
 				(name = map_charid2nick(chemist_fame_list[i].id)) != NULL)
@@ -13729,7 +13729,7 @@ void clif_taekwon(struct map_session_data* sd)
 	WFIFOHEAD(fd,packet_len(0x226));
 	WFIFOW(fd,0) = 0x226;
 	//Packet size limits this list to 10 elements. [Skotlex]
-	for (i = 0; i < 10 && i < MAX_FAME_LIST; i++) {
+	for (i = 0; i < min(10,MAX_FAME_LIST); i++) {
 		if (taekwon_fame_list[i].id > 0) {
 			if (strcmp(taekwon_fame_list[i].name, "-") == 0 &&
 				(name = map_charid2nick(taekwon_fame_list[i].id)) != NULL)
@@ -15756,7 +15756,7 @@ void clif_instance_status(struct map_session_data *sd, const char *name, unsigne
 #if PACKETVER >= 20071128
 	unsigned char buf[71];
 
-	nullpo_retv(sd);
+	if(!sd) return; //party_getavailablesd can return NULL
 
 	WBUFW(buf,0) = 0x2cd;
 	safestrncpy( WBUFP(buf,2), name, 62 );
@@ -16914,7 +16914,7 @@ void clif_sub_ranklist(unsigned char *buf,int idx,struct map_session_data* sd, i
 
 	if(!skip){
 		//Packet size limits this list to 10 elements. [Skotlex]
-		for (i = 0; i < 10 && i < MAX_FAME_LIST; i++) {
+		for (i = 0; i < min(10,MAX_FAME_LIST); i++) {
 			if (list[i].id > 0) {
 				if (strcmp(list[i].name, "-") == 0 &&
 					(name = map_charid2nick(list[i].id)) != NULL)
@@ -17854,7 +17854,7 @@ void packetdb_readdb(void)
 			ln++;
 			if(line[0]=='/' && line[1]=='/')
 				continue;
-			if (sscanf(line,"%256[^:]: %256[^\r\n]",w1,w2) == 2)
+			if (sscanf(line,"%255[^:]: %255[^\r\n]",w1,w2) == 2)
 			{
 				if(strcmpi(w1,"packet_ver")==0) {
 					int prev_ver = packet_ver;

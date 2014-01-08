@@ -1769,12 +1769,12 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
  */
 int unit_set_target(struct unit_data* ud, int target_id)
 {
-	struct unit_data * ux;
-	struct block_list* target;
-
 	nullpo_ret(ud);
 
 	if( ud->target != target_id ) {
+		struct unit_data * ux;
+		struct block_list* target;
+	
 		if( ud->target && (target = map_id2bl(ud->target)) && (ux = unit_bl2ud(target)) && ux->target_count > 0 )
 			ux->target_count --;
 		if( target_id && (target = map_id2bl(target_id)) && (ux = unit_bl2ud(target)) )
@@ -1939,7 +1939,6 @@ bool unit_can_reach_pos(struct block_list *bl,int x,int y, int easy)
  */
 bool unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int range, int easy, short *x, short *y)
 {
-	int i;
 	short dx,dy;
 	nullpo_retr(false, bl);
 	nullpo_retr(false, tbl);
@@ -1960,6 +1959,7 @@ bool unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int range, 
 	dy=(dy>0)?1:((dy<0)?-1:0);
 
 	if (map_getcell(tbl->m,tbl->x-dx,tbl->y-dy,CELL_CHKNOPASS)) { // Look for a suitable cell to place in.
+		int i;
 		for(i=0;i<9 && map_getcell(tbl->m,tbl->x-dirx[i],tbl->y-diry[i],CELL_CHKNOPASS);i++);
 		if (i==9) return false; // No valid cells.
 		dx = dirx[i];
@@ -1981,7 +1981,7 @@ bool unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int range, 
  */
 int unit_calc_pos(struct block_list *bl, int tx, int ty, uint8 dir)
 {
-	int dx, dy, x, y, i, k;
+	int dx, dy, x, y;
 	struct unit_data *ud = unit_bl2ud(bl);
 	nullpo_ret(ud);
 
@@ -2001,8 +2001,9 @@ int unit_calc_pos(struct block_list *bl, int tx, int ty, uint8 dir)
 		if( dx > 0 ) x--; else if( dx < 0 ) x++;
 		if( dy > 0 ) y--; else if( dy < 0 ) y++;
 		if( !unit_can_reach_pos(bl, x, y, 0) ) {
+			int i;
 			for( i = 0; i < 12; i++ ) {
-				k = rnd()%8; // Pick a Random Dir
+				int k = rnd()%8; // Pick a Random Dir
 				dx = -dirx[k] * 2;
 				dy = -diry[k] * 2;
 				x = tx + dx;

@@ -1297,12 +1297,10 @@ int socket_getips(uint32* ips, int max)
 		else
 		{
 			int pos;
-			struct ifreq* ir;
-			struct sockaddr_in* a;
 			for( pos=0; pos < ic.ifc_len && num < max; )
 			{
-				ir = (struct ifreq*)(buf+pos);
-				a = (struct sockaddr_in*) &(ir->ifr_addr);
+				struct ifreq* ir = (struct ifreq*)(buf+pos);
+				struct sockaddr_in*a = (struct sockaddr_in*) &(ir->ifr_addr);
 				if( a->sin_family == AF_INET ){
 					ad = ntohl(a->sin_addr.s_addr);
 					if( ad != INADDR_LOOPBACK && ad != INADDR_ANY )
