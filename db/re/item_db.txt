@@ -4929,9 +4929,9 @@
 7648,Snake_Bookmark,Snake Bookmark,3,20,,10,,,,,,,,,,,,,{},{},{}
 7649,Big_Luk_Bookmark,Big Luk Bookmark,3,20,,10,,,,,,,,,,,,,{},{},{}
 7651,Mystery_Egg,Mystery Egg,3,10,,10,,,,,,,,,,,,,{},{},{}
-7663,Full_Metal_Jacket,Full Metal Jacket,10,1,,2,10,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
-7664,Projection_Landmines,Projection Landmines,10,1,,3,10,,,,0x41000000,63,2,32768,,1,,5,{},{},{}
-7665,Dragon_Tail_Missile,Dragon Tail Missile,10,1,,100,10,,,,0x41000000,63,2,32768,,1,,5,{},{},{}
+7663,Full_Metal_Jacket,Full Metal Jacket,10,200,,2,10,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
+7664,Projection_Landmines,Projection Landmines,10,450,,3,10,,,,0x41000000,63,2,32768,,1,,5,{},{},{}
+7665,Dragon_Tail_Missile,Dragon Tail Missile,10,1500,,100,10,,,,0x41000000,63,2,32768,,1,,5,{},{},{}
 7666,TimeTravel_Scroll,Time Travel Scroll,3,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 7667,Abandoned_Machine,Abandoned Machine,3,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 7668,Clean_Bandage,Clean Bandage,3,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
@@ -6532,8 +6532,11 @@
 13114,P_Revolver3,Eden Revolver III,5,0,,0,76,,7,0,0x41000000,63,2,34,3,60,0,17,{ bonus bHit,-5; },{},{}
 13115,Upg_Revolver,Upg Revolver,5,20,,500,35,,7,1,0x41000000,63,2,34,3,1,1,17,{ bonus bBaseAtk,(getrefine()*5); bonus bLongAtkRate,(getrefine()*2); if(BaseLevel>70) bonus bBaseAtk,(((BaseLevel-70)/10)*5); },{},{}
 13116,Novice_Revolver,Novice Revolver,5,0,,500,20,,7,0,0x41000000,63,2,34,1,1,0,17,{ bonus bHit,-5; },{},{}
-13118,Spark_Light,Spark Light,5,1,,100,0,,,,0x41000000,63,2,34,1,1,1,17,{},{},{}
-13119,Spark_Of_Freedom,Spark Of Freedom,5,1,,100,100,,,,0x41000000,63,2,34,3,1,1,17,{},{},{}
+13118,Spark_Light,Spark Light,5,1,,100,0,,9,0,0x41000000,63,2,34,1,1,1,17,{},{},{}
+13119,Spark_Of_Freedom,Spark Of Freedom,5,1,,100,100,,9,2,0x41000000,63,2,34,3,1,1,17,{},{},{}
+13120,Heaven's_Feather_and_Hell's_Fire,Heaven's_Feather_&_Hell's_Fire,5,1250000,,800,150,,9,1,0x41000000,63,2,34,3,99,1,17,{ bonus2 bSkillAtk,"GS_DESPERADO",20; bonus2 bSkillAtk,"RL_FALLEN_ANGEL",20; },{},{}
+13122,Altea_and_Ares,Altea & Ares,5,1450000,,1000,200,,9,0,0x40000000,63,2,34,3,140,1,17,{ bonus bHit,5; bonus bDelayrate,10; bonus bLongAtkRate,30; },{},{}
+13124,Altea_and_Ares_,Altea & Ares,5,1450000,,1000,200,,9,1,0x40000000,63,2,34,3,140,1,17,{ bonus bHit,5; bonus bDelayrate,10; bonus bLongAtkRate,30; },{},{}
 // Guns
 13150,Branch,Branch,5,3000,,500,50,,9,3,0x41000000,63,2,34,1,1,1,18,{},{},{}
 13151,The_Cyclone,Cyclone,5,17500,,700,120,,9,1,0x41000000,63,2,34,2,24,1,18,{ bonus bHit,10; bonus bCritical,10; },{},{}
@@ -6569,9 +6572,16 @@
 13181,Novice_Shotgun,Novice Shotgun,5,0,,1000,80,,9,0,0x41000000,1,2,34,4,1,0,20,{},{},{}
 13182,Novice_Gatling,Novice Gatling,5,0,,1500,40,,9,0,0x41000000,1,2,34,4,1,0,19,{},{},{}
 13183,Novice_Grenade_Launcher,Novice Grenade Launcher,5,0,,1500,40,,9,0,0x41000000,1,2,34,4,1,0,21,{},{},{}
-13194,Peace_Breaker,Peace Breaker,5,1,,1400,250,,,,0x41000000,63,2,2,3,120,,20,{ bonus bHit,-25; bonus bAspdRate,25; },{},{}
-13196,Peace_Breaker,Peace Breaker,5,1,,1400,250,,,,0x41000000,63,2,2,3,120,,20,{ bonus bHit,-25; bonus bAspdRate,25; },{},{}
-13197,Mini_Mei,Mini Mei,5,1,,2500,220,,,,0x41000000,63,2,2,2,106,,19,{},{},{}
+13189,Color_Scope,Color Scope,5,1350000,,1200,240,,9,2,0x40000000,63,2,34,3,105,1,18,{ bonus bHit,30; bonus bCriticalRate,30; },{},{}
+13190,RAG203,RAG203,5,1800000,,1300,260,,9,1,0x40000000,63,2,34,3,140,1,18,{ bonus bHit,10; bonus bCriticalRate,15; bonus4 bAutoSpell,"AL_DECAGI",1,500,0; },{},{}
+13192,Death_Fire,Death Fire,5,1250000,,2000,400,,9,1,0x40000000,63,2,34,3,108,1,20,{ bonus bLongAtkRate,5; bonus bHit,-50; bonus bDelayrate,-10; },{},{}
+13193,Rolling_Thunder,Rolling Thunder,5,1350000,,1800,280,,9,1,0x40000000,63,2,34,3,120,1,20,{ bonus bHit,-10; bonus bDelayrate,-10; bonus3 bAutoSpell,"MG_THUNDERSTORM",5,500; },{},{}
+13194,Peace_Breaker,Peace Breaker,5,1950000,,1400,250,,9,0,0x41000000,63,2,34,3,120,1,20,{ bonus bHit,-25; bonus bAspdRate,25; },{},{}
+13195,RAG203_,RAG203,5,1800000,,1300,260,,9,0,0x40000000,63,2,34,3,140,1,18,{ bonus bHit,10; bonus bCriticalRate,15; bonus4 bAutoSpell,"AL_DECAGI",1,10,0; },{},{}
+13196,Peace_Breaker_,Peace Breaker,5,1950000,,1400,250,,9,1,0x41000000,63,2,34,3,120,1,20,{ bonus bHit,-25; bonus bAspdRate,25; },{},{}
+13197,Mini_Mei,Mini Mei,5,1600000,,2500,220,,9,2,0x41000000,63,2,34,2,106,1,19,{},{},{}
+13198,Tempest_,Tempest,5,2200000,,2500,250,,9,0,0x41000000,63,2,34,2,140,1,19,{ bonus bHit,-25; bonus bCritical,10; bonus bLongAtkRate,20; },{},{}
+13199,Tempest,Tempest,5,2200000,,2500,250,,9,1,0x41000000,63,2,34,2,140,1,19,{ bonus bHit,-25; bonus bCritical,10; bonus bLongAtkRate,20; },{},{}
 // Bullets
 13200,Bullet,Bullet,10,1,,2,10,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
 13201,Silver_Bullet,Silver Bullet,10,15,,2,15,,,,0x41000000,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Holy; },{},{}
@@ -6582,9 +6592,9 @@
 13206,Blind_Sphere,Blind Sphere,10,80,,5,50,,,,0x41000000,63,2,32768,,1,,5,{ bonus bAtkEle,Ele_Dark; bonus2 bAddEff,Eff_Blind,500; },{},{}
 13207,Freezing_Sphere,Freezing Sphere,10,80,,5,50,,,,0x41000000,63,2,32768,,1,,5,{ bonus bAtkEle,Ele_Water; },{},{}
 13208,Gong_Bug,Sow Bug,10,0,,20,50,,,,0x41000000,63,2,32768,,50,,3,{ bonus2 bAddEff,Eff_Stun,1000; },{},{}
-13210,Slug_Ammunition_L,Slug Ammunition L,10,1,,500,30,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
-13211,Slug_Ammunition_M,Slug Ammunition M,10,1,,500,30,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
-13212,Slug_Ammunition_H,Slug Ammunition H,10,1,,750,30,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
+13210,Slug_Ammunition_L,Slug Ammunition L,10,250,,500,30,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
+13211,Slug_Ammunition_M,Slug Ammunition M,10,500,,500,30,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
+13212,Slug_Ammunition_H,Slug Ammunition H,10,750,,750,30,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
 13213,Slug_Ammunition_SH,Slug Ammunition SH,10,1,,1000,30,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
 13214,Slug_Ammunition_XH,Slug Ammunition XH,10,1,,1200,30,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
 // Shurikens & Kunais
@@ -8822,6 +8832,10 @@
 24083,Mali_Shas_Shadow_Shield,Mali Shas Shadow Shield,12,10,,0,,,,,0xFFFFFFFF,63,2,262144,,1,1,,{ bonus bHPrecovRate,(getrefine()>=7?10:5); },{},{}
 //
 28101,Axe_Tornado,Axe Tornado,5,10,,4000,320,,,,0x00000400,56,2,2,4,130,,6,{ bonus bAtkEle,4; bonus2 bSkillCooldown,"NC_AXETORNADO",-1000; },{},{}
+//
+28200,End_Of_The_Horizon,End Of The Horizon,5,2700000,,2400,410,,9,1,0x40000000,63,2,34,4,110,1,21,{},{},{}
+28201,Southern_Cross,Southern Cross,5,2800000,,2000,480,,9,0,0x40000000,63,2,34,4,141,1,21,{ bonus3 bAutoSpell,"GC_CROSSIMPACT",1,50; },{},{}
+28202,Southern_Cross_,Southern Cross,5,2800000,,2000,480,,9,1,0x40000000,63,2,34,4,141,1,21,{ bonus3 bAutoSpell,"GC_CROSSIMPACT",1,50; },{},{}
 
 //unknown,Lucky_Scroll08,Lucky_Scroll08,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Lucky_Scroll08); },{},{}
 //unknown,Br_SwordPackage,Br_SwordPackage,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Br_SwordPackage); },{},{}
