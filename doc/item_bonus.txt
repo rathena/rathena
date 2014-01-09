@@ -399,22 +399,24 @@ bonus4 bSetMDefRace,n,x,r,y;		Set MDEF to y of an enemy of race n at x% for r mi
 
 
 bonus bIgnoreDefClass,n;		Disregard DEF against enemies of class n
-									n: 	Class_Normal, Class_Boss, Class_Guardian
+									n: 	Class_Normal, Class_Boss, Class_Guardian, Class_All
 bonus bDefRatioAtkClass,n;		Does more damage depending on monster Defense against class n (defense disregard)
-			
+									n: 	Class_Normal, Class_Boss, Class_Guardian, Class_All
 bonus2 bIgnoreDefRaceRate,n,x;	Disregard x% of the target's DEF if the target belongs to race n	
 									n: 	RC_Formless, RC_Undead, RC_Brute, RC_Plant, RC_Insect, RC_Fish, RC_Demon, RC_DemiHuman, RC_Angel, RC_Dragon, RC_All
 bonus2 bAddClass,n,x;			+x% physical damage against class n
-									n: 	Class_Normal, Class_Boss, Class_Guardian
+									n: 	Class_Normal, Class_Boss, Class_Guardian, Class_All
 bonus2 bSubClass,n,x;			+x% damage reduction against class n
-									n: 	Class_Normal, Class_Boss, Class_Guardian
+									n: 	Class_Normal, Class_Boss, Class_Guardian, Class_All
 bonus2 bMagicAddClass,n,x;		+x% magical damage against class n
-									n: 	Class_Normal, Class_Boss, Class_Guardian
+									n: 	Class_Normal, Class_Boss, Class_Guardian, Class_All
 bonus2 bWeaponComaClass,n,y;	y/100% chance to cause Coma when attacking a monster of class x with a normal attack
-									n: 	Class_Normal, Class_Boss, Class_Guardian
+									n: 	Class_Normal, Class_Boss, Class_Guardian, Class_All
 bonus2 bHpDrainValueClass,n,x;		Heals +x HP when attacking a monster of class n with normal attack.
-										n: 	Class_Normal, Class_Boss, Class_Guardian
+										n: 	Class_Normal, Class_Boss, Class_Guardian, Class_All
 bonus2 bSpDrainValueClass,n,x;		Heals +x SP when attacking a monster of class n with normal attack.
-										n: 	Class_Normal, Class_Boss, Class_Guardian
+										n: 	Class_Normal, Class_Boss, Class_Guardian, Class_All
 bonus2 bIgnoreMdefClassRate,n,x;	Disregard x% of the target's MDEF if the target belongs to class n
-										n: 	Class_Normal, Class_Boss, Class_Guardian
+										n: 	Class_Normal, Class_Boss, Class_Guardian, Class_All
+bonus2 bExpAddClass,n,x;			Increase exp gained by x% vs. enemies of class n
+										n: 	Class_Normal, Class_Boss, Class_Guardian, Class_All

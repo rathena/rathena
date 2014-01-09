@@ -641,6 +641,7 @@ bSubClass	2065
 bMagicAddClass	2066
 bWeaponComaClass	2067
 bIgnoreMdefClassRate	2068
+bExpAddClass	2069
 
 EQI_HEAD_TOP	1
 EQI_ARMOR	2
@@ -714,7 +715,8 @@ RC_Demon	6
 RC_DemiHuman	7
 RC_Angel	8
 RC_Dragon	9
-RC_All	10
+RC_Player	10
+RC_All	11
 
 Class_Normal	0
 Class_Boss	1

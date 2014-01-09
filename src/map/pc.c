@@ -3193,6 +3193,10 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag != 2)
 			sd->expaddrace[type2]+=val;
 		break;
+	case SP_EXP_ADDCLASS:
+		if(sd->state.lr_flag != 2)
+			sd->expaddclass[type2]+=val;
+		break;
 	case SP_SP_GAIN_RACE:
 		if(sd->state.lr_flag != 2)
 			sd->sp_gain_race[type2]+=val;
@@ -5922,6 +5926,10 @@ static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsi
 		bonus += sd->expaddrace[status->race];
 	if( sd->expaddrace[RC_ALL] )
 		bonus += sd->expaddrace[RC_ALL];
+	if( sd->expaddclass[status->class_] )
+		bonus += sd->expaddclass[status->class_];
+	if( sd->expaddclass[CLASS_ALL] )
+		bonus += sd->expaddclass[CLASS_ALL];
 
 	if (battle_config.pk_mode &&
 		(int)(status_get_lv(src) - sd->status.base_level) >= 20)

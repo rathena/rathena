@@ -2760,6 +2760,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		+ sizeof(sd->magic_atk_ele)
 		+ sizeof(sd->critaddrace)
 		+ sizeof(sd->expaddrace)
+		+ sizeof(sd->expaddclass)
 		+ sizeof(sd->ignore_def_by_race)
 		+ sizeof(sd->ignore_mdef_by_race)
 		+ sizeof(sd->ignore_mdef_by_class)
@@ -2795,7 +2796,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	}
 	status->aspd_rate = 1000;
 	status->ele_lv = 1;
-	status->race = RC_DEMIHUMAN;
+	status->race = RC_PLAYER;
 	status->class_ = CLASS_NORMAL;
 
 	// Zero up structures...

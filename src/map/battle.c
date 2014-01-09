@@ -2035,9 +2035,9 @@ static int is_attack_piercing(struct Damage wd, struct block_list *src, struct b
 			&& skill_id != PA_SHIELDCHAIN && !is_attack_critical(wd, src, target, skill_id, skill_lv, false) )
 #endif
 		{ //Elemental/Racial adjustments
-			if( sd && (sd->right_weapon.def_ratio_atk_ele & (1<<tstatus->def_ele) ||
-				sd->right_weapon.def_ratio_atk_race & (1<<tstatus->race) ||
-				sd->right_weapon.def_ratio_atk_class & (1<<tstatus->class_))
+			if( sd && (sd->right_weapon.def_ratio_atk_ele & (1<<tstatus->def_ele) || sd->right_weapon.def_ratio_atk_ele & (1<<ELE_ALL) ||
+				sd->right_weapon.def_ratio_atk_race & (1<<tstatus->race) || sd->right_weapon.def_ratio_atk_race & (1<<RC_ALL) ||
+				sd->right_weapon.def_ratio_atk_class & (1<<tstatus->class_) || sd->right_weapon.def_ratio_atk_class & (1<<CLASS_ALL))
 			)
 				if (weapon_position == EQI_HAND_R)
 					return 1;
