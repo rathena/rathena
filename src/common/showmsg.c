@@ -52,7 +52,6 @@
 int stdout_with_ansisequence = 0;
 
 int msg_silent = 0; //Specifies how silent the console is.
-
 int console_msg_log = 0;//[Ind] msg error logging
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -663,15 +662,6 @@ int	FPRINTF(FILE *file, const char *fmt, ...)
 #define STDERR stderr
 
 #endif// not _WIN32
-
-
-
-
-
-
-
-
-
 
 char timestamp_format[20] = ""; //For displaying Timestamps
 

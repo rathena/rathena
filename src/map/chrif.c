@@ -353,6 +353,11 @@ int chrif_save(struct map_session_data *sd, int flag) {
 }
 
 // connects to char-server (plaintext)
+/**
+ * Map-serv request to login into char-serv
+ * @param fd : char-serv fd to log into
+ * @return 0:request sent
+ */
 int chrif_connect(int fd) {
 	ShowStatus("Logging in to char server...\n", char_fd);
 	WFIFOHEAD(fd,60);
@@ -482,7 +487,7 @@ int chrif_connectack(int fd) {
 	static bool char_init_done = false;
 
 	if (RFIFOB(fd,2)) {
-		ShowFatalError("Connection to char-server failed %d.\n", RFIFOB(fd,2));
+		ShowFatalError("Connection to char-server failed %d, please check conf/import/map_conf userid and passwd.\n", RFIFOB(fd,2));
 		exit(EXIT_FAILURE);
 	}
 
@@ -1481,7 +1486,7 @@ void chrif_on_disconnect(void) {
 		ShowWarning("Connection to Char Server lost.\n\n");
 	chrif_connected = 0;
 
- 	other_mapserver_count = 0; //Reset counter. We receive ALL maps from all map-servers on reconnect.
+	other_mapserver_count = 0; //Reset counter. We receive ALL maps from all map-servers on reconnect.
 	map_eraseallipport();
 
 	//Attempt to reconnect in a second. [Skotlex]

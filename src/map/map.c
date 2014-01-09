@@ -3983,6 +3983,7 @@ void do_shutdown(void)
 
 int do_init(int argc, char *argv[])
 {
+	runflag = MAPSERVER_ST_STARTING;
 #ifdef GCOLLECT
 	GC_enable_incremental();
 #endif

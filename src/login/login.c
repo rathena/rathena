@@ -2001,7 +2001,8 @@ void do_shutdown(void)
 int do_init(int argc, char** argv)
 {
 	int i;
-
+	
+	runflag = LOGINSERVER_ST_STARTING;
 	// intialize engines (to accept config settings)
 	for( i = 0; account_engines[i].constructor; ++i )
 		account_engines[i].db = account_engines[i].constructor();
