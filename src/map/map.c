@@ -3380,7 +3380,7 @@ int map_config_read(char *cfgName)
 			continue;
 		if( (ptr = strstr(line, "//")) != NULL )
 			*ptr = '\n'; //Strip comments
-		if( sscanf(line, "%[^:]: %[^\t\r\n]", w1, w2) < 2 )
+		if( sscanf(line, "%1023[^:]: %1023[^\t\r\n]", w1, w2) < 2 )
 			continue;
 
 		//Strip trailing spaces
@@ -3482,7 +3482,7 @@ void map_reloadnpc_sub(char *cfgName)
 			continue;
 		if( (ptr = strstr(line, "//")) != NULL )
 			*ptr = '\n'; //Strip comments
-		if( sscanf(line, "%[^:]: %[^\t\r\n]", w1, w2) < 2 )
+		if( sscanf(line, "%1023[^:]: %1023[^\t\r\n]", w1, w2) < 2 )
 			continue;
 
 		//Strip trailing spaces
@@ -3530,7 +3530,7 @@ int inter_config_read(char *cfgName)
 	{
 		if(line[0] == '/' && line[1] == '/')
 			continue;
-		if( sscanf(line,"%[^:]: %[^\r\n]",w1,w2) < 2 )
+		if( sscanf(line,"%1023[^:]: %1023[^\r\n]",w1,w2) < 2 )
 			continue;
 
 		if(strcmpi(w1,"item_db_db")==0)

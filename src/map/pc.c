@@ -1915,10 +1915,10 @@ static int pc_bonus_item_drop(struct s_add_drop *drop, const short max, short id
 		if(
 			((id && drop[i].id == id) ||
 			(group && drop[i].group == group))
-			&& ((race<RC_NONE_ && race<RC_MAX) || (class_<CLASS_NONE && class_<CLASS_MAX))
+			&& ((race>RC_NONE_ && race<RC_MAX) || (class_>CLASS_NONE && class_<CLASS_MAX))
 		) {
-			if(race<RC_NONE_ && race<RC_MAX) drop[i].race |= 1<<race;
-			if(class_<CLASS_NONE && class_<CLASS_MAX) drop[i].class_ |= 1<<class_;
+			if(race>RC_NONE_ && race<RC_MAX) drop[i].race |= 1<<race;
+			if(class_>CLASS_NONE && class_<CLASS_MAX) drop[i].class_ |= 1<<class_;
 			if(drop[i].rate > 0 && rate > 0)
 			{	//Both are absolute rates.
 				if (drop[i].rate < rate)
@@ -1939,8 +1939,8 @@ static int pc_bonus_item_drop(struct s_add_drop *drop, const short max, short id
 	}
 	drop[i].id = id;
 	drop[i].group = group;
-	if(race<RC_NONE_ && race<RC_MAX) drop[i].race |= 1<<race;
-	if(class_<CLASS_NONE && class_<CLASS_MAX) drop[i].class_ |= 1<<class_;
+	if(race>RC_NONE_ && race<RC_MAX) drop[i].race |= 1<<race;
+	if(class_>CLASS_NONE && class_<CLASS_MAX) drop[i].class_ |= 1<<class_;
 	drop[i].rate = rate;
 	return 1;
 }
@@ -4176,20 +4176,16 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 	if (sd->status.party_id)
 		p = party_search(sd->status.party_id);
 
-	if(fitem->first_get_charid > 0 && fitem->first_get_charid != sd->status.char_id)
-	{
-		struct map_session_data *first_sd = NULL,*second_sd = NULL,*third_sd = NULL;
-		first_sd = map_charid2sd(fitem->first_get_charid);
+	if(fitem->first_get_charid > 0 && fitem->first_get_charid != sd->status.char_id) {
+		struct map_session_data *first_sd = map_charid2sd(fitem->first_get_charid);
 		if(DIFF_TICK(tick,fitem->first_get_tick) < 0) {
 			if (!(p && p->party.item&1 &&
 				first_sd && first_sd->status.party_id == sd->status.party_id
 			))
 				return 0;
 		}
-		else
-		if(fitem->second_get_charid > 0 && fitem->second_get_charid != sd->status.char_id)
-		{
-			second_sd = map_charid2sd(fitem->second_get_charid);
+		else if(fitem->second_get_charid > 0 && fitem->second_get_charid != sd->status.char_id) {
+			struct map_session_data *second_sd = map_charid2sd(fitem->second_get_charid);
 			if(DIFF_TICK(tick, fitem->second_get_tick) < 0) {
 				if(!(p && p->party.item&1 &&
 					((first_sd && first_sd->status.party_id == sd->status.party_id) ||
@@ -4197,10 +4193,8 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 				))
 					return 0;
 			}
-			else
-			if(fitem->third_get_charid > 0 && fitem->third_get_charid != sd->status.char_id)
-			{
-				third_sd = map_charid2sd(fitem->third_get_charid);
+			else if(fitem->third_get_charid > 0 && fitem->third_get_charid != sd->status.char_id){
+				struct map_session_data *third_sd = map_charid2sd(fitem->third_get_charid);
 				if(DIFF_TICK(tick,fitem->third_get_tick) < 0) {
 					if(!(p && p->party.item&1 &&
 						((first_sd && first_sd->status.party_id == sd->status.party_id) ||

@@ -3922,7 +3922,6 @@ struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list 
 	struct status_change *tsc = status_get_sc(target);
 	struct status_data *sstatus = status_get_status_data(src);
 	struct status_data *tstatus = status_get_status_data(target);
-	int i;
 
 	//Defense reduction
 	short vit_def;
@@ -3932,11 +3931,9 @@ struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list 
 	if( tsc && tsc->data[SC_ASSUMPTIO] )
 		def1 <<= 1; // only eDEF is doubled
 #endif
-	if( sd )
-	{
-		i = sd->ignore_def_by_race[tstatus->race] + sd->ignore_def_by_race[RC_ALL];
-		if( i )
-		{
+	if( sd ) {
+		int i = sd->ignore_def_by_race[tstatus->race] + sd->ignore_def_by_race[RC_ALL];
+		if( i ) {
 			if( i > 100 ) i = 100;
 			def1 -= def1 * i / 100;
 			def2 -= def2 * i / 100;

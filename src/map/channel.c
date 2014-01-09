@@ -117,14 +117,13 @@ int channel_delete(struct Channel *channel) {
  * -3 : sd banned
  */
 int channel_join(struct Channel *channel, struct map_session_data *sd) {
-	char output[128];
-
 	if(!channel || !sd)
 		return -1;
 	if(channel_haspc(channel,sd)==1)
 		return -2;
 
 	if(channel_haspcbanned(channel,sd)==1){
+		char output[128];
 		sprintf(output, msg_txt(sd,1438),channel->name); //You're currently banned from the '%s' channel.
 		clif_displaymessage(sd->fd, output);
 		return -3;
@@ -211,10 +210,8 @@ int channel_ajoin(struct guild *g){
 int channel_gjoin(struct map_session_data *sd, int flag){
 	struct Channel *channel;
 	struct guild *g;
-	int i;
 
 	if(!sd) return -1;
-
 	g = sd->guild;
 	if(!g) return -2;
 
@@ -228,6 +225,7 @@ int channel_gjoin(struct map_session_data *sd, int flag){
 		channel_join(channel,sd);	//join our guild chat
 	}
 	if(flag&2){
+		int i;
 		for (i = 0; i < MAX_GUILDALLIANCE; i++){
 			struct guild *ag; //allied guld
 			struct guild_alliance *ga = &g->alliance[i]; //guild alliance
@@ -305,8 +303,8 @@ int channel_pcquit(struct map_session_data *sd, int type){
 			channel_clean(g->channel,sd,0); //leave guild chan
 		}
 		if(type&2){
-			struct guild *ag; //allied guild
 			for (i = 0; i < MAX_GUILDALLIANCE; i++) { //leave all alliance chan
+				struct guild *ag; //allied guild
 				if( g->alliance[i].guild_id && (ag = guild_search(g->alliance[i].guild_id) ) ) {
 					if(channel_haspc(ag->channel,sd) == 1)
 						channel_clean(ag->channel,sd,0);
@@ -538,7 +536,6 @@ int channel_display_list(struct map_session_data *sd, char *options){
  *  -1 : fail
  */
 int channel_pccreate(struct map_session_data *sd, char *chname, char *chpass){
-	struct Channel *channel;
 	char output[128];
 	int8 res;
 
@@ -547,7 +544,7 @@ int channel_pccreate(struct map_session_data *sd, char *chname, char *chpass){
 
 	res = channel_chk(chname,chpass,7);
 	if(res==0){ //success
-		channel = channel_create(chname + 1,chpass,0,CHAN_TYPE_PRIVATE,sd->status.char_id);
+		struct Channel *channel = channel_create(chname + 1,chpass,0,CHAN_TYPE_PRIVATE,sd->status.char_id);
 		channel_join(channel,sd);
 		if( !( channel->opt & CHAN_OPT_ANNOUNCE_JOIN ) ) {
 			sprintf(output, msg_txt(sd,1403),chname); // You're now in the '%s' channel.
@@ -931,7 +928,7 @@ int channel_pcsetopt(struct map_session_data *sd, char *chname, const char *opti
 		return -1;
 	}
 
-	if(!option || option == '\0' ) {
+	if(!option || option[0] == '\0' ) {
 		clif_displaymessage(sd->fd, msg_txt(sd,1446));// You need to input an option.
 		return -1;
 	}
@@ -1152,8 +1149,7 @@ int do_init_channel(void) {
 void do_final_channel(void) {
 	DBIterator *iter;
 	struct Channel *channel;
-	int i=0;
-
+	
 	//delete all in remaining chan db
 	iter = db_iterator(channel_db);
 	for( channel = dbi_first(iter); dbi_exists(iter); channel = dbi_next(iter) ) {
@@ -1165,6 +1161,7 @@ void do_final_channel(void) {
 
 	//delete all color thing
 	if( Channel_Config.colors_count ) {
+		int i=0;
 		for(i = 0; i < Channel_Config.colors_count; i++) {
 			aFree(Channel_Config.colors_name[i]);
 		}

@@ -887,10 +887,11 @@ void guild_retrieveitembound(int char_id,int aid,int guild_id)
 	TBL_PC *sd = map_id2sd(aid);
 	if(sd){ //Character is online
 		int idxlist[MAX_INVENTORY];
-		int j,i;
+		int j;
 		j = pc_bound_chk(sd,2,idxlist);
 		if(j) {
 			struct guild_storage* stor = guild2storage(sd->status.guild_id);
+			int i;
 			for(i=0;i<j;i++) { //Loop the matching items, guild_storage_additem takes care of opening storage
 				if(stor)
 					guild_storage_additem(sd,stor,&sd->status.inventory[idxlist[i]],sd->status.inventory[idxlist[i]].amount);
@@ -902,9 +903,9 @@ void guild_retrieveitembound(int char_id,int aid,int guild_id)
 	else { //Character is offline, ask char server to do the job
 		struct guild_storage* stor = guild2storage2(guild_id);
 		struct guild *g = guild_search(guild_id);
-		int i;
 		nullpo_retv(g);
 		if(stor && stor->storage_status == 1) { //Someone is in guild storage, close them
+			int i;
 			for(i=0; i<g->max_member; i++){
 				TBL_PC *pl_sd = g->member[i].sd;
 				if(pl_sd && pl_sd->state.storage_flag == 2)
@@ -1120,7 +1121,6 @@ int guild_change_notice(struct map_session_data *sd,int guild_id,const char *mes
 int guild_notice_changed(int guild_id,const char *mes1,const char *mes2)
 {
 	int i;
-	struct map_session_data *sd;
 	struct guild *g=guild_search(guild_id);
 	if(g==NULL)
 		return 0;
@@ -1129,7 +1129,8 @@ int guild_notice_changed(int guild_id,const char *mes1,const char *mes2)
 	memcpy(g->mes2,mes2,MAX_GUILDMES2);
 
 	for(i=0;i<g->max_member;i++){
-		if((sd=g->member[i].sd)!=NULL)
+		struct map_session_data *sd = g->member[i].sd;
+		if(sd != NULL)
 			clif_guild_notice(sd,g);
 	}
 	return 0;
@@ -1660,13 +1661,14 @@ int guild_allianceack(int guild_id1,int guild_id2,int account_id1,int account_id
 
 
 	for (i = 0; i < 2 - (flag & 1); i++) { // Retransmission of the relationship list to all members
-		struct map_session_data *sd;
 		if(g[i]!=NULL)
-			for(j=0;j<g[i]->max_member;j++)
-				if((sd=g[i]->member[j].sd)!=NULL){
+			for(j=0;j<g[i]->max_member;j++) {
+				struct map_session_data *sd = g[i]->member[j].sd;
+				if( sd!=NULL){
 					clif_guild_allianceinfo(sd);
 					channel_gjoin(sd,2); //join ally join
 				}
+			}
 	}
 	return 0;
 }
@@ -1724,14 +1726,14 @@ int castle_guild_broken_sub(DBKey key, DBData *data, va_list ap)
 int guild_broken(int guild_id,int flag)
 {
 	struct guild *g = guild_search(guild_id);
-	struct map_session_data *sd = NULL;
 	int i;
 
 	if(flag!=0 || g==NULL)
 		return 0;
 
 	for(i=0;i<g->max_member;i++){	// Destroy all relationships
-		if((sd=g->member[i].sd)!=NULL){
+		struct map_session_data *sd = sd=g->member[i].sd;
+		if(sd != NULL){
 			if(sd->state.storage_flag == 2)
 				storage_guild_storage_quit(sd,1);
 			sd->status.guild_id=0;
@@ -1873,12 +1875,12 @@ int guild_break(struct map_session_data *sd,char *name)
  */
 void guild_castle_map_init(void)
 {
-	DBIterator* iter = NULL;
 	int num = db_size(castle_db);
 
 	if (num > 0) {
 		struct guild_castle* gc = NULL;
 		int *castle_ids, *cursor;
+		DBIterator* iter = NULL;
 
 		CREATE(castle_ids, int, num);
 		cursor = castle_ids;
@@ -1914,11 +1916,12 @@ int guild_castledatasave(int castle_id, int index, int value)
 	case 1: // The castle's owner has changed? Update or remove Guardians too. [Skotlex]
 	{
 		int i;
-		struct mob_data *gd;
 		gc->guild_id = value;
-		for (i = 0; i < MAX_GUARDIANS; i++)
+		for (i = 0; i < MAX_GUARDIANS; i++){
+			struct mob_data *gd;
 			if (gc->guardian[i].visible && (gd = map_id2md(gc->guardian[i].id)) != NULL)
 				mob_guardian_guildchange(gd);
+		}
 		break;
 	}
 	case 2:
@@ -1926,11 +1929,12 @@ int guild_castledatasave(int castle_id, int index, int value)
 	case 3: // defense invest change -> recalculate guardian hp
 	{
 		int i;
-		struct mob_data *gd;
 		gc->defense = value;
-		for (i = 0; i < MAX_GUARDIANS; i++)
+		for (i = 0; i < MAX_GUARDIANS; i++){
+			struct mob_data *gd;
 			if (gc->guardian[i].visible && (gd = map_id2md(gc->guardian[i].id)) != NULL)
 				status_calc_mob(gd, 0);
+		}
 		break;
 	}
 	case 4:

@@ -15719,7 +15719,7 @@ void clif_instance_create(struct map_session_data *sd, const char *name, int num
 #if PACKETVER >= 20071128
 	unsigned char buf[65];
 
-	nullpo_retv(sd);
+	if(!sd) return;
 
 	WBUFW(buf,0) = 0x2cb;
 	safestrncpy( WBUFP(buf,2), name, 62 );
@@ -15738,7 +15738,7 @@ void clif_instance_changewait(struct map_session_data *sd, int num, int flag)
 #if PACKETVER >= 20071128
 	unsigned char buf[4];
 
-	nullpo_retv(sd);
+	if(!sd) return;
 
 	WBUFW(buf,0) = 0x2cc;
 	WBUFW(buf,2) = num;
@@ -15776,7 +15776,7 @@ void clif_instance_changestatus(struct map_session_data *sd, int type, unsigned 
 #if PACKETVER >= 20071128
 	unsigned char buf[10];
 
-	nullpo_retv(sd);
+	if(!sd) return;
 
 	WBUFW(buf,0) = 0x2ce;
 	WBUFL(buf,2) = type;
