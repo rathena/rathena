@@ -10099,7 +10099,7 @@ static bool pc_readdb_job_param(char* fields[], int columns, int current)
 	return true;
 }
 
-int pc_read_statsdb(const char *basedir, bool silent){
+static int pc_read_statsdb(const char *basedir, int last_s, bool silent){
 	int i=1;
 	char line[24000]; //FIXME this seem too big
 	FILE *fp;
@@ -10114,7 +10114,8 @@ int pc_read_statsdb(const char *basedir, bool silent){
 		while(fgets(line, sizeof(line), fp))
 		{
 			int stat;
-			if(line[0]=='/' && line[1]=='/')
+			trim(line);
+			if(line[0] == '\0' || (line[0]=='/' && line[1]=='/'))
 				continue;
 			if ((stat=strtoul(line,NULL,10))<0)
 				stat=0;
@@ -10125,9 +10126,9 @@ int pc_read_statsdb(const char *basedir, bool silent){
 			entries++;
 		}
 		fclose(fp);
-		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s%s"CL_RESET"'.\n", entries, basedir,"statpoint.txt");
+		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s/%s"CL_RESET"'.\n", entries, basedir,"statpoint.txt");
 	}
-	return i;
+	return (i>1)?i:last_s; //If i == 1 means the file is empty.
 }
 
 /*==========================================
@@ -10141,7 +10142,7 @@ int pc_read_statsdb(const char *basedir, bool silent){
  *------------------------------------------*/
 int pc_readdb(void)
 {
-	int i, k, s;
+	int i, k, s = 1;
 	const char* dbsubpath[] = {
 		"",
 		"import"
@@ -10186,7 +10187,7 @@ int pc_readdb(void)
 		if(i==0) safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
 		else safesnprintf(dbsubpath2,n2,"%s/%s",db_path,dbsubpath[i]);
 
-		s = pc_read_statsdb(dbsubpath2,i);
+		s = pc_read_statsdb(dbsubpath2,s,i);
 #ifdef RENEWAL_ASPD
 		sv_readdb(dbsubpath1, "re/job_db1.txt",',',6+MAX_WEAPON_TYPE,6+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, i);
 #else
