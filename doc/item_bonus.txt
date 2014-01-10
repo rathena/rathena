@@ -377,7 +377,7 @@ bonus2 bSPDrainValueRace,r,n;		Heals +n SP when attacking a monster of race r wi
 bonus bMagicSPGainValue,n;		Heals +n SP when killing an enemy with magic attack.
 bonus bMagicHPGainValue,n;		Heals +n HP when killing an enemy with magic attack.
 
-bonus3 bAddClassDropItem,s,x,n;		Adds an n/100% chance of dropping item s when killing monster class x.
+bonus3 bAddMonsterIdDropItem,s,x,n;		Adds an n/100% chance of dropping item s when killing monster id x.
 
 bonus2 bHPGainRaceAttack,x,n;		Heals n HP when attacking x Race on every hit
 bonus2 bSPGainRaceAttack,x,n;		Heals n SP when attacking x Race on every hit
@@ -420,3 +420,13 @@ bonus2 bIgnoreMdefClassRate,n,x;	Disregard x% of the target's MDEF if the target
 										n: 	Class_Normal, Class_Boss, Class_Guardian, Class_All
 bonus2 bExpAddClass,n,x;			Increase exp gained by x% vs. enemies of class n
 										n: 	Class_Normal, Class_Boss, Class_Guardian, Class_All
+
+bonus3 bAddClassDropItem,n,x,y;	Adds a y/100% chance for item n to be dropped, when killing any monster of class x.
+						x: Class_Normal, Class_Boss, Class_Guardian, Class_All
+					If 'y' is negative value, then it's a part of formula
+						chance = -y*(killed_mob_level/10)+1
+
+bonus3 bAddClassDropItemGroup,n,x,y;	Adds a y/100% chance to get an item of group type n when you kill a monster of class x (Check db/item_group_db.txt)
+						x: Class_Normal, Class_Boss, Class_Guardian, Class_All
+					If 'y' is negative value, then it's a part of formula
+						chance = -y*(killed_mob_level/10)+1

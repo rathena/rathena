@@ -1614,8 +1614,8 @@
 //2793,Ring_Of_Resonance_I,Ring of Resonance,4,0,,0,,2,,0,0x00CFFF80,2,2,136,,0,0,0,{ bonus bAgi,2; bonus bVit,1; bonus bMdef,2; bonus4 bAutoSpellWhenHit,"WZ_QUAGMIRE",1,50,0; bonus3 bAutoSpellWhenHit,"AS_SPLASHER",10,20; bonus3 bAutoSpellWhenHit,"AL_HEAL",10,30; bonus3 bAutoSpellWhenHit,"HP_ASSUMPTIO",3,20; bonus3 bAutoSpellWhenHit,"CG_TAROTCARD",5,20; },{},{}
 2794,Magic_Stone_Ring,Magic Stone Ring,4,0,,0,,0,,1,0x00004082,7,2,136,,99,0,0,{ bonus bStr,2; },{},{}
 2795,Green_Apple_Ring,Green Apple Ring,4,0,,0,,0,,0,0xFFFFFFFE,7,2,136,,99,0,0,{ bonus bAllStats,6; if(JobLevel <30) { bonus bAllStats,(JobLevel/5); } },{},{}
-2796,Magical_Stone,Rocks,4,0,,200,,0,,0,0x00810204,7,2,136,,99,0,0,{ bonus2 bAddDamageClass,2047,10; bonus2 bAddDefMonster,2048,-10; bonus3 bAddClassDropItem,6152,2047,70; },{},{}
-2797,Magical_Stone_,Rocks,4,0,,200,,0,,0,0x00810204,7,2,136,,99,0,0,{ bonus2 bAddDamageClass,2049,10; bonus2 bAddDefMonster,2050,-10; bonus3 bAddClassDropItem,6151,2049,70; },{},{}
+2796,Magical_Stone,Rocks,4,0,,200,,0,,0,0x00810204,7,2,136,,99,0,0,{ bonus2 bAddDamageClass,2047,10; bonus2 bAddDefMonster,2048,-10; bonus3 bAddMonsterIdDropItem,6152,2047,70; },{},{}
+2797,Magical_Stone_,Rocks,4,0,,200,,0,,0,0x00810204,7,2,136,,99,0,0,{ bonus2 bAddDamageClass,2049,10; bonus2 bAddDefMonster,2050,-10; bonus3 bAddMonsterIdDropItem,6151,2049,70; },{},{}
 2798,Will_Of_Exhausted_Angel,Will Of Exhausted Angel,4,0,,200,,0,,0,0x00008100,7,2,136,,99,0,0,{ if(strcharinfo(3)=="job3_arch02") { bonus2 bAddDefMonster,1761,50; bonus2 bAddDefMonster,1762,50; } },{},{}
 2799,Kuirpenring,Kuirpenring,4,0,,100,,0,,1,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bMdef,1; },{},{}
 2819,Swordman_Manual,Swordsman Manual,4,0,,100,,0,,0,0x00000001,7,2,136,,1,0,0,{ bonus bMaxSP,100; skill "SM_BASH",1; skill "SM_PROVOKE",1; skill "SM_MAGNUM",1; },{},{}

@@ -1913,12 +1913,13 @@ static int pc_bonus_item_drop(struct s_add_drop *drop, const short max, short id
 	}
 	for(i = 0; i < max && (drop[i].id || drop[i].group); i++) {
 		if(
-			((id && drop[i].id == id) ||
-			(group && drop[i].group == group))
-			&& ((race>RC_NONE_ && race<RC_MAX) || (class_>CLASS_NONE && class_<CLASS_MAX))
+			((id && drop[i].id == id) || (group && drop[i].group == group)) &&
+			((race > RC_NONE_ && race < RC_MAX) || (class_ > CLASS_NONE && class_ < CLASS_MAX))
 		) {
-			if(race>RC_NONE_ && race<RC_MAX) drop[i].race |= 1<<race;
-			if(class_>CLASS_NONE && class_<CLASS_MAX) drop[i].class_ |= 1<<class_;
+			if(race > RC_NONE_ && race < RC_MAX)
+				drop[i].race |= 1<<race;
+			if(class_ > CLASS_NONE && class_ < CLASS_MAX)
+				drop[i].class_ |= 1<<class_;
 			if(drop[i].rate > 0 && rate > 0)
 			{	//Both are absolute rates.
 				if (drop[i].rate < rate)
@@ -1939,8 +1940,7 @@ static int pc_bonus_item_drop(struct s_add_drop *drop, const short max, short id
 	}
 	drop[i].id = id;
 	drop[i].group = group;
-	if(race>RC_NONE_ && race<RC_MAX) drop[i].race |= 1<<race;
-	if(class_>CLASS_NONE && class_<CLASS_MAX) drop[i].class_ |= 1<<class_;
+	drop[i].race |= race;
 	drop[i].rate = rate;
 	return 1;
 }
@@ -3203,11 +3203,11 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		break;
 	case SP_ADD_MONSTER_DROP_ITEM:
 		if (sd->state.lr_flag != 2)
-			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), type2, 0, (1<<CLASS_NORMAL)|(1<<CLASS_BOSS), 0, val);
+			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), type2, 0, CLASS_ALL, RC_NONE_, val);
 		break;
 	case SP_ADD_MONSTER_DROP_ITEMGROUP:
 		if (sd->state.lr_flag != 2)
-			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), 0, type2, (1<<CLASS_NORMAL)|(1<<CLASS_BOSS), 0, val);
+			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), 0, type2, CLASS_ALL, RC_NONE_, val);
 		break;
 	case SP_SP_LOSS_RATE:
 		if(sd->state.lr_flag != 2) {
@@ -3383,11 +3383,15 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 	switch(type){
 	case SP_ADD_MONSTER_DROP_ITEM:
 		if(sd->state.lr_flag != 2)
-			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), type2, 0, -1, 1<<type3, val);
+			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), type2, 0, CLASS_NONE, type3, val);
+		break;
+	case SP_ADD_MONSTER_ID_DROP_ITEM:
+		if(sd->state.lr_flag != 2)
+			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), type2, 0, CLASS_NONE, -type3, val);
 		break;
 	case SP_ADD_CLASS_DROP_ITEM:
 		if(sd->state.lr_flag != 2)
-			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), type2, 0, -1, -type3, val);
+			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), type2, 0, type3, RC_NONE_, val);
 		break;
 	case SP_AUTOSPELL:
 		if(sd->state.lr_flag != 2)
@@ -3428,7 +3432,11 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 		break;
 	case SP_ADD_MONSTER_DROP_ITEMGROUP:
 		if (sd->state.lr_flag != 2)
-			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), 0, type2, -1, 1<<type3, val);
+			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), 0, type2, CLASS_NONE, type3, val);
+		break;
+	case SP_ADD_CLASS_DROP_ITEMGROUP:
+		if (sd->state.lr_flag != 2)
+			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), 0, type2, type3, RC_NONE_, val);
 		break;
 
 	case SP_ADDEFF:
