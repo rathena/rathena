@@ -4531,7 +4531,7 @@ int parse_char(int fd)
 				strcmp("a@a.com", sd->email) || //it is not default email, or
 				(strcmp("a@a.com", email) && strcmp("", email)) //email sent does not matches default
 			))
-				|| !char_del_option&1
+				|| !(char_del_option&1)
 			) {	//Fail
 				WFIFOHEAD(fd,3);
 				WFIFOW(fd,0) = 0x70;

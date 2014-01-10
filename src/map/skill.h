@@ -1966,6 +1966,7 @@ struct s_skill_magicmushroom_db {
 };
 extern struct s_skill_magicmushroom_db skill_magicmushroom_db[MAX_SKILL_MAGICMUSHROOM_DB];
 int skill_maelstrom_suction(struct block_list *bl, va_list ap);
+int skill_check_shadowform(struct block_list *bl, int64 damage, int hit);
 /**
  * Ranger
  **/
