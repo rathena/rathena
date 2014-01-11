@@ -304,7 +304,7 @@ EAJ_BABY_CHASER		0x6206
 Option_Nothing	0x00000000
 Option_Sight	0x00000001
 Option_Hide	0x00000002
-Option_Cloadk	0x00000004
+Option_Cloak	0x00000004
 Option_Falcon	0x00000010
 Option_Riding	0x00000020
 Option_Invisible	0x00000040
