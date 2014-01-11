@@ -8914,7 +8914,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			int opt = rnd()%3 + 1;
 			int val = 0, splash = 0;
 			int index = sd->equip_index[EQI_HAND_L];
-			struct item_data *shield_data;
+			struct item_data *shield_data = NULL;
 			if( index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR )
 				shield_data = sd->inventory_data[index];
 			if( !shield_data || shield_data->type != IT_ARMOR ) {	// No shield?

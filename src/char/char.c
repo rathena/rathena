@@ -4766,7 +4766,7 @@ int parse_char(int fd)
 			if( RFIFOREST(fd) < 6 )
 				return 0;
 			if( pincode_enabled && RFIFOL(fd,2) == sd->account_id ){
-				if( strlen( sd->pincode ) <= 0 ){
+				if( sd->pincode[0] == '\0' ){
 					pincode_sendstate( fd, sd, PINCODE_NEW );
 				}else{
 					pincode_sendstate( fd, sd, PINCODE_ASK );

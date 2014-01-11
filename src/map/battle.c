@@ -3378,7 +3378,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 		case LG_SHIELDSPELL:// [(Casters Base Level x 4) + (Shield DEF x 10) + (Casters VIT x 2)] %
 			if( sd ) {
 				int index = sd->equip_index[EQI_HAND_L];
-				struct item_data *shield_data;
+				struct item_data *shield_data = NULL;
 				if( index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR )
 					shield_data = sd->inventory_data[index];
 				skillratio = status_get_lv(src) * 4 + status_get_vit(src) * 2;
