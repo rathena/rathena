@@ -3407,9 +3407,17 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			RE_LVL_DMOD(100);
 			break;
 		case LG_EARTHDRIVE:
-			skillratio += skill_lv;
-			RE_LVL_DMOD(100);
-			break;
+			{
+				int16 sh_w = 0;
+				if (sd && sd->equip_index[EQI_HAND_L] >= 0) {
+					int16 idx = sd->equip_index[EQI_HAND_L];
+					if (sd->inventory_data[idx] && sd->inventory_data[idx]->type == IT_ARMOR)
+						sh_w = sd->inventory_data[idx]->weight/10;
+				}
+				skillratio += -100 + (skill_lv+1) * max(sh_w,1);
+				RE_LVL_DMOD(100);
+				break;
+			}
 		case LG_HESPERUSLIT:
 			skillratio = 120 * skill_lv;
 			if( sc && sc->data[SC_BANDING] )
