@@ -1,8 +1,8 @@
 -	script	OnInterChk	-1,{
-	OnInterIfInit:
+OnInterIfInit:
 	debugmes "Loaded OnInterIfInit <-------";
 	end;
-	OnInterIfInitOnce:
+OnInterIfInitOnce:
 	debugmes "Loaded OnInterIfInitOnce <-------";
 	end;
 }
