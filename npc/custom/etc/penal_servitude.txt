@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.2
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: =========================================
 //= A simple Penal Servitude Script.
 //= It could cheer up your prisoners a bit.

@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.2
 //===== Compatible With: =====================================
-//= Any Athena Version
+//= rAthena Project
 //===== Additional Comments: =================================
 //= 1.0 Added spawns [Playtester]
 //= 1.1 Updated to Renewal Spawns [Kisuka]

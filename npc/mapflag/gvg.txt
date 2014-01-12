@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.3
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= Players can attack other guilds, and will have their guild
 //= icons shown. WoE damage reductions will also take place.

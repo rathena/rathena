@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.1
 //===== Compatible With: =====================================
-//= rAthena
+//= rAthena Project
 //===== Description: =========================================
 //= [Official Conversion]
 //= This event ran on iRO from 16th Oct to 6th Nov (3 weeks)

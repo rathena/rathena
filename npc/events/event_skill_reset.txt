@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 1.02
 //===== Compatible With: ===================================== 
-//= rAthena 1.0
+//= rAthena Project
 //===== Description: ========================================= 
 //= 2006 - Edition Skill Reset NPC
 //= 2006/11/16: 1.0 Release and fully working. [$ephiroth]

@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.8
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: =========================================
 //= Quests for skills: Crazy Uproar, Change Cart, Cart Revolution
 //===== Additional Comments: =================================

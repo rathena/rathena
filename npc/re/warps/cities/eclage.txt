@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.0a
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: =========================================
 //= Warp Points for Eclage
 //===== Additional Comments: =================================

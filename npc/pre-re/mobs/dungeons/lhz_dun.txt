@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.8
 //===== Compatible With: =====================================
-//= Any Athena
+//= rAthena Project
 //===== Additional Comments: =================================
 //= 08/24/05 : Added 1st version. [Muad_Dib]
 //= 1.1 Some corrections to level 1, 2 as pointed out by

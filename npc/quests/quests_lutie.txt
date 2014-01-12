@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 1.3b
 //===== Compatible With: ===================================== 
-//= rAthena 1.0
+//= rAthena Project
 //===== Description: ========================================= 
 //= Blush, Cake Hat, Candle, Chef Hat, Raccoon Hat, Rainbow Eggshell,
 //= Spore Hat, Wonder Nutshell Quests

@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 3.6
 //===== Compatible With: ===================================== 
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= Collection of Rachel Quests 
 //= Lost Child Quest:

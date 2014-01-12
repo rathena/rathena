@@ -6,7 +6,7 @@
 //===== Current Version: ===================================== 
 //= 1.1a
 //===== Compatible With: ===================================== 
-//= rAthena
+//= rAthena Project
 //===== Description: ========================================= 
 //= [Official Conversion]
 //= An NPC which sells you different kinds of Magic Books.

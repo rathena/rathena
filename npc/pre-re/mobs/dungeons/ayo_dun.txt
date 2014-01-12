@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.5
 //===== Compatible With: =====================================
-//= Any Athena Version
+//= rAthena Project
 //===== Additional Comments: =================================
 //= 1.1 Using euRO data [Ishizu]
 //= 1.2 Moved Tao Gunka to west cave of Comodo [Lupus]

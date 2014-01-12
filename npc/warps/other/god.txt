@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.0
 //===== Compatible With: =====================================
-//=
+//= rAthena Project
 //===== Description: =========================================
 //= Warp Points related to the God Seal Quest.
 //===== Additional Comments: =================================

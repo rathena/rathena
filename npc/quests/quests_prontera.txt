@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 2.9
 //===== Compatible With: ===================================== 
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= Collection of Prontera-based quests.
 //= * Culvert Access

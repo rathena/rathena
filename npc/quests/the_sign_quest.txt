@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 3.9
 //===== Compatible With: ===================================== 
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= [Official Conversion]
 //= Quest for opening the doors to Geffenia.

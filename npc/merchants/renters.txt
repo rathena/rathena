@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 2.2
 //===== Compatible With: ===================================== 
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= Knight and Crusader Peco Peco Breeders, Falcon Breeder scripts
 //===== Additional Comments: ================================= 

@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.2
 //===== Compatible With: =====================================
-//= rAthena 0.1+; RO Episode 5+
+//= rAthena Project; RO Episode 5+
 //===== Description: =========================================
 //= Provides Kafra services for guild members of NGuild Castles.
 //= Used in conjuction with function F_Kafra.

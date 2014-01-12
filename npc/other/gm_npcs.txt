@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 1.0
 //===== Compatible With: ===================================== 
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= Controls the official GM management NPCs in certain scripts.
 //===== Additional Comments: ================================= 

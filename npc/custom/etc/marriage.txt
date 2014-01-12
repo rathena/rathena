@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 2.9
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: =========================================
 //= Fully working wedding script for all kind of weddings
 //===== Additional Comments: =================================

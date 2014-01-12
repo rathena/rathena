@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.8
 //===== Compatible With: ===================================== 
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= Quest for skills: Energy Coat
 //===== Additional Comments: ================================= 

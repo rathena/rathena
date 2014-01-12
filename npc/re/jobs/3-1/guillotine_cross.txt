@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 1.6
 //===== Compatible With: ===================================== 
-//= rAthena SVN r16945+
+//= rAthena Project; SVN r16945+
 //===== Description: ========================================= 
 //= [Official Conversion]
 //= Job change Quest from Assassin / Assassin Cross -> Guillotine Cross.

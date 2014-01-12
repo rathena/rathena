@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.1a
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: =========================================
 //= Write you name on your rare equipment or weapon ^_-
 //===== Additional Comments: =================================

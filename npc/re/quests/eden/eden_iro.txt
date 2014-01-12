@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.2
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: =========================================
 //= Eden scripts custom to iRO (disabled by default).
 //= You may need iRO's data.grf to view some of the items.

@@ -6,7 +6,7 @@
 //===== Current Version: =====================================
 //= 1.7
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: =========================================
 //= NPC's for the City of Hugel.
 //===== Additional Comments: =================================

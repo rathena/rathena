@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 2.0
 //===== Compatible With: =====================================
-//= rAthena SVN (Trunk, r12752+)
+//= rAthena Project; SVN r12752+
 //===== Description: =========================================
 //= [Official Conversion]
 //= - Hugel Monster Races (Single and Double)

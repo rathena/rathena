@@ -6,7 +6,7 @@
 //===== Current Version: =====================================
 //= 1.3
 //===== Compatible With: =====================================
-//= Any Athena Version
+//= rAthena Project
 //===== Description: =========================================
 //= Warp Points for Bibilyn Island & Undersea Cave
 //===== Additional Comments: =================================

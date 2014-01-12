@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.0
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: =========================================
 //= WoE SE Guild Flags in Juno and Rachel
 //===== Additional Comments: =================================

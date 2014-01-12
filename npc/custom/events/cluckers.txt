@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.2a
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: =========================================
 //= Click the chicken and try retrieve the item at a low 
 //= chance. If you fail he will nuke, freeze, stone, 

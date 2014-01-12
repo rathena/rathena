@@ -5,7 +5,7 @@
 //===== Current Version: ==========================================
 //= 2.3
 //===== Compatible With: ==========================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ==============================================
 //= Warper that works only after locations are unlocked.
 //===== Additional Comments: ======================================

@@ -6,7 +6,7 @@
 //===== Current Version: =====================================
 //= 1.0
 //===== Compatible With: =====================================
-//= SVN rA
+//= rAthena Project
 //===== Description: =========================================
 //= [Official Conversion]
 //= Cats Footprint, Cute Ribbon Dyer and Brides Corolla.

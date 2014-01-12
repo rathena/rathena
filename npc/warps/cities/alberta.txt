@@ -6,7 +6,7 @@
 //===== Current Version: =====================================
 //= 1.1
 //===== Compatible With: =====================================
-//= Any Athena Version
+//= rAthena Project
 //===== Description: =========================================
 //= Warp Points for Alberta, Treasure Island & Turtle Island
 //===== Additional Comments: =================================

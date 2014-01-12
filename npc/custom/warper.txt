@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.4a
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= A complete - but very condensed - warper script.
 //= Some coordinates written by Tekno-Kanix and ToastOfDoom.

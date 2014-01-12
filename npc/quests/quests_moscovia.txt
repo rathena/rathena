@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 2.3
 //===== Compatible With: ===================================== 
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= Quests for Moscovia.
 //= The Moving Island, Help Mikhail, Acorn Exchange,

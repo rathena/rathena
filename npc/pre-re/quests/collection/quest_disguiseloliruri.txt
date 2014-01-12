@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.0
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: =========================================
 //= Custom Version.
 //= Repeatable EXP Quest : Kill 50 Disguise or Loli Ruri.

@@ -5,7 +5,7 @@
 //===== Version ==============================================
 //= 2.0
 //===== Compatible With: ===================================== 
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 // [Official Conversion]
 //= Old Blue Box quest (?)

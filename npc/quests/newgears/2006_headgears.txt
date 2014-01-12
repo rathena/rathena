@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.4
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: =========================================
 //= [Official Conversion]
 //= Censor Bar, Feather Beret, Valk. Helm, Hahoe Mask,

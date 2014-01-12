@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.6
 //===== Compatible With: =====================================
-//= Any Athena Version
+//= rAthena Project
 //===== Additional Comments: =================================
 //= 1.1 Using EuRO data [Ishizu]
 //= 1.2 According the guide book, added a Choco [Lupus&VP]

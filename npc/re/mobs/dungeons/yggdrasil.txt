@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.1
 //===== Compatible With: =====================================
-//= Any Athena Version
+//= rAthena Project
 //===== Additional Comments: =================================
 //= 1.0 Splitted from Nifflheim fields [DracoRPG]
 //= 1.1 Official kRO 10.1 spawns [Playtester]

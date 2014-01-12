@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 2.2
 //===== Compatible With: ===================================== 
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= 1.0 A Pile Bunker quest based on iRO WiKi. [JayPee Mateo]
 //= 2.0 Rewrited the Script a little so it looks a bit better. [Masao]

@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 1.0a
 //===== Compatible With: ===================================== 
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= [Official Conversion]
 //= Adds enchantments to many high level weapons in exchange

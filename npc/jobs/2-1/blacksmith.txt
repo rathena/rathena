@@ -9,7 +9,7 @@
 //===== Current Version: =====================================
 //= 2.9
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: =========================================
 //= [Official Conversion]
 //= Job Change quest for Blacksmith class.

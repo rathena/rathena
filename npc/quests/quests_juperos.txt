@@ -5,7 +5,7 @@
 //===== Version ==============================================
 //= 1.9
 //===== Compatible With ======================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description ==========================================
 //= [Partial Official Conversion]
 //= Juperos Ruins related Quests/Events

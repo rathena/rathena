@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 2.0
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= Prevents players from using /memo on a map.
 //= Also disables marriage warp skills.

@@ -6,7 +6,7 @@
 //===== Current Version: =====================================
 //= 0.9a
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: =========================================
 //= [Partial Official Conversion]
 //= Arunafeltz NPCs

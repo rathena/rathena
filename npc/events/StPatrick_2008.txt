@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.5
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: =========================================
 //= iRO St. Patrick's Day. (2008)
 //= Find O'Riley's treasure for him, then hunt down coinds from
