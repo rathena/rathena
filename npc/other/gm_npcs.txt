@@ -100,6 +100,8 @@ List of GM Management NPCs (incomplete)
 - sorcereryal
 - Button Girl#wl
 - Button Girl#sura
+- Battle Test Control#ko
+- Guide#ko_helper
 --------------------------
 - Soul Linker Var
 - 1st Job Quest Reset

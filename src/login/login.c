@@ -345,7 +345,7 @@ int login_lan_config_read(const char *lancfgName)
 		if ((line[0] == '/' && line[1] == '/') || line[0] == '\n' || line[1] == '\n')
 			continue;
 
-		if(sscanf(line,"%[^:]: %[^:]:%[^:]:%[^\r\n]", w1, w2, w3, w4) != 4)
+		if(sscanf(line,"%63[^:]: %63[^:]:%63[^:]:%63[^\r\n]", w1, w2, w3, w4) != 4)
 		{
 			ShowWarning("Error syntax of configuration file %s in line %d.\n", lancfgName, line_num);
 			continue;
@@ -922,21 +922,18 @@ int parse_fromchar(int fd){
 			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
 				return 0;
 			else{
-				struct online_login_data *p;
-				int aid;
 				uint32 i, users;
 				online_db->foreach(online_db, online_db_setoffline, id); //Set all chars from this char-server offline first
 				users = RFIFOW(fd,4);
 				for (i = 0; i < users; i++) {
-					aid = RFIFOL(fd,6+i*4);
-					p = idb_ensure(online_db, aid, create_online_user);
+					int aid = RFIFOL(fd,6+i*4);
+					struct online_login_data *p = idb_ensure(online_db, aid, create_online_user);
 					p->char_server = id;
 					if (p->waiting_disconnect != INVALID_TIMER){
 						delete_timer(p->waiting_disconnect, waiting_disconnect_timer);
 						p->waiting_disconnect = INVALID_TIMER;
 					}
 				}
-
 				RFIFOSKIP(fd,RFIFOW(fd,2));
 			}
 		break;
@@ -1773,7 +1770,7 @@ int login_config_read(const char* cfgName)
 		if (line[0] == '/' && line[1] == '/')
 			continue;
 
-		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) < 2)
+		if (sscanf(line, "%1023[^:]: %1023[^\r\n]", w1, w2) < 2)
 			continue;
 
 		if(!strcmpi(w1,"timestamp_format"))
@@ -1835,7 +1832,7 @@ int login_config_read(const char* cfgName)
 		else if(!strcmpi(w1, "client_hash")) {
 			int group = 0;
 			char md5[33];
-			if (sscanf(w2, "%d, %32s", &group, md5) == 2) {
+			if (sscanf(w2, "%3d, %32s", &group, md5) == 2) {
 				struct client_hash_node *nnode;
 				int i;
 				CREATE(nnode, struct client_hash_node, 1);
@@ -1844,7 +1841,7 @@ int login_config_read(const char* cfgName)
 					unsigned int byte;
 					memcpy(buf, &md5[i], 2);
 					buf[2] = 0;
-					sscanf(buf, "%x", &byte);
+					sscanf(buf, "%2x", &byte);
 					nnode->hash[i / 2] = (uint8)(byte & 0xFF);
 				}
 				nnode->group_id = group;
@@ -2001,7 +1998,8 @@ void do_shutdown(void)
 int do_init(int argc, char** argv)
 {
 	int i;
-
+	
+	runflag = LOGINSERVER_ST_STARTING;
 	// intialize engines (to accept config settings)
 	for( i = 0; account_engines[i].constructor; ++i )
 		account_engines[i].db = account_engines[i].constructor();

@@ -1913,12 +1913,13 @@ static int pc_bonus_item_drop(struct s_add_drop *drop, const short max, short id
 	}
 	for(i = 0; i < max && (drop[i].id || drop[i].group); i++) {
 		if(
-			((id && drop[i].id == id) ||
-			(group && drop[i].group == group))
-			&& (race > 0 || class_ > -1)
+			((id && drop[i].id == id) || (group && drop[i].group == group)) &&
+			((race > RC_NONE_ && race < RC_MAX) || (class_ > CLASS_NONE && class_ < CLASS_MAX))
 		) {
-			drop[i].race |= race;
-			drop[i].class_ |= class_;
+			if(race > RC_NONE_ && race < RC_MAX)
+				drop[i].race |= 1<<race;
+			if(class_ > CLASS_NONE && class_ < CLASS_MAX)
+				drop[i].class_ |= 1<<class_;
 			if(drop[i].rate > 0 && rate > 0)
 			{	//Both are absolute rates.
 				if (drop[i].rate < rate)
@@ -1940,7 +1941,6 @@ static int pc_bonus_item_drop(struct s_add_drop *drop, const short max, short id
 	drop[i].id = id;
 	drop[i].group = group;
 	drop[i].race |= race;
-	drop[i].class_ |= class_;
 	drop[i].rate = rate;
 	return 1;
 }
@@ -3193,17 +3193,21 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag != 2)
 			sd->expaddrace[type2]+=val;
 		break;
+	case SP_EXP_ADDCLASS:
+		if(sd->state.lr_flag != 2)
+			sd->expaddclass[type2]+=val;
+		break;
 	case SP_SP_GAIN_RACE:
 		if(sd->state.lr_flag != 2)
 			sd->sp_gain_race[type2]+=val;
 		break;
 	case SP_ADD_MONSTER_DROP_ITEM:
 		if (sd->state.lr_flag != 2)
-			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), type2, 0, (1<<CLASS_NORMAL)|(1<<CLASS_BOSS), 0, val);
+			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), type2, 0, CLASS_ALL, RC_NONE_, val);
 		break;
 	case SP_ADD_MONSTER_DROP_ITEMGROUP:
 		if (sd->state.lr_flag != 2)
-			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), 0, type2, (1<<CLASS_NORMAL)|(1<<CLASS_BOSS), 0, val);
+			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), 0, type2, CLASS_ALL, RC_NONE_, val);
 		break;
 	case SP_SP_LOSS_RATE:
 		if(sd->state.lr_flag != 2) {
@@ -3379,11 +3383,15 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 	switch(type){
 	case SP_ADD_MONSTER_DROP_ITEM:
 		if(sd->state.lr_flag != 2)
-			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), type2, 0, -1, 1<<type3, val);
+			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), type2, 0, CLASS_NONE, type3, val);
+		break;
+	case SP_ADD_MONSTER_ID_DROP_ITEM:
+		if(sd->state.lr_flag != 2)
+			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), type2, 0, CLASS_NONE, -type3, val);
 		break;
 	case SP_ADD_CLASS_DROP_ITEM:
 		if(sd->state.lr_flag != 2)
-			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), type2, 0, -1, -type3, val);
+			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), type2, 0, type3, RC_NONE_, val);
 		break;
 	case SP_AUTOSPELL:
 		if(sd->state.lr_flag != 2)
@@ -3424,7 +3432,11 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 		break;
 	case SP_ADD_MONSTER_DROP_ITEMGROUP:
 		if (sd->state.lr_flag != 2)
-			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), 0, type2, -1, 1<<type3, val);
+			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), 0, type2, CLASS_NONE, type3, val);
+		break;
+	case SP_ADD_CLASS_DROP_ITEMGROUP:
+		if (sd->state.lr_flag != 2)
+			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), 0, type2, type3, RC_NONE_, val);
 		break;
 
 	case SP_ADDEFF:
@@ -4176,20 +4188,16 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 	if (sd->status.party_id)
 		p = party_search(sd->status.party_id);
 
-	if(fitem->first_get_charid > 0 && fitem->first_get_charid != sd->status.char_id)
-	{
-		struct map_session_data *first_sd = NULL,*second_sd = NULL,*third_sd = NULL;
-		first_sd = map_charid2sd(fitem->first_get_charid);
+	if(fitem->first_get_charid > 0 && fitem->first_get_charid != sd->status.char_id) {
+		struct map_session_data *first_sd = map_charid2sd(fitem->first_get_charid);
 		if(DIFF_TICK(tick,fitem->first_get_tick) < 0) {
 			if (!(p && p->party.item&1 &&
 				first_sd && first_sd->status.party_id == sd->status.party_id
 			))
 				return 0;
 		}
-		else
-		if(fitem->second_get_charid > 0 && fitem->second_get_charid != sd->status.char_id)
-		{
-			second_sd = map_charid2sd(fitem->second_get_charid);
+		else if(fitem->second_get_charid > 0 && fitem->second_get_charid != sd->status.char_id) {
+			struct map_session_data *second_sd = map_charid2sd(fitem->second_get_charid);
 			if(DIFF_TICK(tick, fitem->second_get_tick) < 0) {
 				if(!(p && p->party.item&1 &&
 					((first_sd && first_sd->status.party_id == sd->status.party_id) ||
@@ -4197,10 +4205,8 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 				))
 					return 0;
 			}
-			else
-			if(fitem->third_get_charid > 0 && fitem->third_get_charid != sd->status.char_id)
-			{
-				third_sd = map_charid2sd(fitem->third_get_charid);
+			else if(fitem->third_get_charid > 0 && fitem->third_get_charid != sd->status.char_id){
+				struct map_session_data *third_sd = map_charid2sd(fitem->third_get_charid);
 				if(DIFF_TICK(tick,fitem->third_get_tick) < 0) {
 					if(!(p && p->party.item&1 &&
 						((first_sd && first_sd->status.party_id == sd->status.party_id) ||
@@ -5928,6 +5934,10 @@ static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsi
 		bonus += sd->expaddrace[status->race];
 	if( sd->expaddrace[RC_ALL] )
 		bonus += sd->expaddrace[RC_ALL];
+	if( sd->expaddclass[status->class_] )
+		bonus += sd->expaddclass[status->class_];
+	if( sd->expaddclass[CLASS_ALL] )
+		bonus += sd->expaddclass[CLASS_ALL];
 
 	if (battle_config.pk_mode &&
 		(int)(status_get_lv(src) - sd->status.base_level) >= 20)
@@ -8511,7 +8521,6 @@ void pc_cleareventtimer(struct map_session_data *sd)
 static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 	uint16 i;
 	int success = 0;
-
 	for( i = 0; i < data->combos_count; i++ ) {
 		int16 *combo_idx = NULL, idx, j;
 		/* ensure this isn't a duplicate combo */
@@ -8525,7 +8534,8 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 		}
 
 		CREATE(combo_idx,int16,data->combos[i]->count);
-		memset(combo_idx,-1,data->combos[i]->count);
+		memset(combo_idx,-1,data->combos[i]->count * sizeof(int16));
+
 		for( j = 0; j < data->combos[i]->count; j++ ) {
 			uint16 id = data->combos[i]->nameid[j], k;
 			bool found = false;
@@ -8542,7 +8552,7 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 				if(!sd->inventory_data[index])
 					continue;
 				if(j>0){
-					uint16 z;
+					uint8 z;
 					for (z = 0; z < data->combos[i]->count; z++)
 						if(combo_idx[z] == index) //we already have that index recorded
 							do_continue=true;
@@ -10098,7 +10108,7 @@ static bool pc_readdb_job_param(char* fields[], int columns, int current)
 	return true;
 }
 
-int pc_read_statsdb(const char *basedir, bool silent){
+static int pc_read_statsdb(const char *basedir, int last_s, bool silent){
 	int i=1;
 	char line[24000]; //FIXME this seem too big
 	FILE *fp;
@@ -10113,7 +10123,8 @@ int pc_read_statsdb(const char *basedir, bool silent){
 		while(fgets(line, sizeof(line), fp))
 		{
 			int stat;
-			if(line[0]=='/' && line[1]=='/')
+			trim(line);
+			if(line[0] == '\0' || (line[0]=='/' && line[1]=='/'))
 				continue;
 			if ((stat=strtoul(line,NULL,10))<0)
 				stat=0;
@@ -10124,9 +10135,9 @@ int pc_read_statsdb(const char *basedir, bool silent){
 			entries++;
 		}
 		fclose(fp);
-		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s%s"CL_RESET"'.\n", entries, basedir,"statpoint.txt");
+		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s/%s"CL_RESET"'.\n", entries, basedir,"statpoint.txt");
 	}
-	return i;
+	return max(last_s,i);
 }
 
 /*==========================================
@@ -10140,7 +10151,7 @@ int pc_read_statsdb(const char *basedir, bool silent){
  *------------------------------------------*/
 int pc_readdb(void)
 {
-	int i, k, s;
+	int i, k, s = 1;
 	const char* dbsubpath[] = {
 		"",
 		"import"
@@ -10185,7 +10196,7 @@ int pc_readdb(void)
 		if(i==0) safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
 		else safesnprintf(dbsubpath2,n2,"%s/%s",db_path,dbsubpath[i]);
 
-		s = pc_read_statsdb(dbsubpath2,i);
+		s = pc_read_statsdb(dbsubpath2,s,i);
 #ifdef RENEWAL_ASPD
 		sv_readdb(dbsubpath1, "re/job_db1.txt",',',6+MAX_WEAPON_TYPE,6+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, i);
 #else

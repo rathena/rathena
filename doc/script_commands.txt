@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20131118
+//= 20140111
 //===== Description: =========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -7529,6 +7529,15 @@ If parameter "HUNTING" is supplied:
 	0  = you haven't killed all of the target monsters and the time limit has not been reached.
 	1  = you haven't killed all of the target monsters but the time limit has been reached.
 	2  = you've killed all of the target monsters
+
+---------------------------------------
+
+*isbegin_quest(<ID>)
+
+Return the state of the quest: 
+	0  = Quest not started (not in quest log)
+	1  = Quest has been given (state is either "inactive" or "active")
+	2  = Quest completed
 
 ---------------------------------------
 

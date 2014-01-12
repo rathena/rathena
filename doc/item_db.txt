@@ -27,8 +27,8 @@ Type:
 	0	Healing item.
 	2	Usable item.
 	3	Etc item
-	4	Weapon
-	5	Armor/Garment/Boots/Headgear/Accessory
+	4	Armor/Garment/Boots/Headgear/Accessory
+	5	Weapon
 	6	Card
 	7	Pet egg
 	8	Pet equipment

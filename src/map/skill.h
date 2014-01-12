@@ -119,10 +119,10 @@ struct skill_condition {
 		state,
 		spiritball,
 		itemid[MAX_SKILL_ITEM_REQUIRE],
-		amount[MAX_SKILL_ITEM_REQUIRE],
-		eqItem[MAX_SKILL_EQUIP_REQUIRE]; //max eq_item
-	uint8 status_count;
-	enum sc_type status[MAX_SKILL_STATUS_REQUIRE];
+		amount[MAX_SKILL_ITEM_REQUIRE];
+	short *eqItem;
+	enum sc_type *status;
+	uint8 status_count, eqItem_count;
 };
 
 struct s_skill_require {
@@ -138,10 +138,10 @@ struct s_skill_require {
 		state,
 		spiritball[MAX_SKILL_LEVEL],
 		itemid[MAX_SKILL_ITEM_REQUIRE],
-		amount[MAX_SKILL_ITEM_REQUIRE],
-		eqItem[MAX_SKILL_EQUIP_REQUIRE]; //max eq_item
-	uint8 status_count;
-	enum sc_type status[MAX_SKILL_STATUS_REQUIRE];
+		amount[MAX_SKILL_ITEM_REQUIRE];
+	short *eqItem;
+	enum sc_type *status;
+	uint8 status_count, eqItem_count;
 };
 
 /// Database skills
@@ -334,7 +334,7 @@ int skill_get_weapontype( uint16 skill_id );
 int skill_get_ammotype( uint16 skill_id );
 int skill_get_ammo_qty( uint16 skill_id, uint16 skill_lv );
 int skill_get_state(uint16 skill_id);
-int skill_get_status( uint16 skill_id, int idx );
+//int skill_get_status( uint16 skill_id, int idx );
 int skill_get_status_count( uint16 skill_id );
 int skill_get_spiritball( uint16 skill_id, uint16 skill_lv );
 int skill_get_itemid( uint16 skill_id, int idx );
@@ -1966,6 +1966,7 @@ struct s_skill_magicmushroom_db {
 };
 extern struct s_skill_magicmushroom_db skill_magicmushroom_db[MAX_SKILL_MAGICMUSHROOM_DB];
 int skill_maelstrom_suction(struct block_list *bl, va_list ap);
+int skill_check_shadowform(struct block_list *bl, int64 damage, int hit);
 /**
  * Ranger
  **/

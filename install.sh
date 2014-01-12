@@ -2,18 +2,36 @@
 #source var/function
 . ./function.sh
 
+#read -p "WARNING: This target is experimental. Press Ctrl+C to cancel or Enter to continue." readEnterKey
+
+# NOTE: This requires GNU getopt.  On Mac OS X and FreeBSD, you have to install this
+# separately; see below.
+TEMP=`getopt -o d: -l destdir: -- "$@"`
+if [ $? != 0 ] ; then echo "Terminating..." >&2 ; exit 1 ; fi
+# Note the quotes around `$TEMP': they are essential!
+eval set -- "$TEMP"
+
+eval set -- "$TEMP"
+while [ $# -gt 0 ]
+do
+    case "$1" in
+    (-d | --destdir) PKG_PATH="$2"; shift;;
+    esac
+    shift
+done
+
+echo "destdir = $PKG_PATH "
 check_inst_right
 check_files
-read -p "WARNING: This target dis experimental. Press Ctrl+C to cancel or Enter to continue." readEnterKey
 mkdir -p $PKG_PATH/bin/
-mkdir -p $PKG_PATH/etc/$PKG/
-mkdir -p $PKG_PATH/var/$PKG/
+mkdir -p $PKG_PATH/etc/$PKG/conf
+mkdir -p $PKG_PATH/var/$PKG/log
 
 #we copy all file into opt/ dir and treat dir like normal unix arborescence
-rsync -r --exclude .svn db/ $PKG_PATH/var/$PKG/db
-rsync -r --exclude .svn log/ $PKG_PATH/var/$PKG/log
-rsync -r --exclude .svn conf/ $PKG_PATH/etc/$PKG/conf
-rsync -r --exclude .svn npc/ $PKG_PATH/npc
+cp -r db/ $PKG_PATH/var/$PKG/db
+if [ -d log ]; then cp -r log/ $PKG_PATH/var/$PKG/log; fi
+cp -r conf/ $PKG_PATH/etc/$PKG/conf
+cp -r npc/ $PKG_PATH/npc
 cp athena-start $PKG_PATH/	
 mv *-server* $PKG_PATH/bin/
 

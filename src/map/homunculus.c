@@ -1282,9 +1282,7 @@ int read_homunculus_skilldb(void)
 
 void read_homunculus_expdb(void)
 {
-	FILE *fp;
-	char line[1024];
-	int i, j=0;
+	int i;
 	char *filename[]={
 		DBPATH"exp_homun.txt",
 		"import/exp_homun.txt"
@@ -1292,6 +1290,10 @@ void read_homunculus_expdb(void)
 
 	memset(hexptbl,0,sizeof(hexptbl));
 	for(i=0; i<ARRAYLENGTH(filename); i++){
+		FILE *fp;
+		char line[1024];
+		int j=0;
+		
 		sprintf(line, "%s/%s", db_path, filename[i]);
 		fp=fopen(line,"r");
 		if(fp == NULL){

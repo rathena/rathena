@@ -268,7 +268,7 @@ const char *get_git_hash (void) {
 		char line[64];
 		char *rev = malloc(sizeof(char) * 50);
 
-		if( fgets(line, sizeof(line), fp) && sscanf(line, "%s", rev) )
+		if( fgets(line, sizeof(line), fp) && sscanf(line, "%40s", rev) )
 			snprintf(GitHash, sizeof(GitHash), "%s", rev);
 
 		free(rev);
@@ -370,12 +370,10 @@ int main (int argc, char **argv)
 
 	do_init(argc,argv);
 
-	{// Main runtime cycle
-		int next;
-		while (runflag != CORE_ST_STOP) {
-			next = do_timer(gettick_nocache());
-			do_sockets(next);
-		}
+	// Main runtime cycle
+	while (runflag != CORE_ST_STOP) { 
+		int next = do_timer(gettick_nocache());
+		do_sockets(next);
 	}
 
 	do_final();

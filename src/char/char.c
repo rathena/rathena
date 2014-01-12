@@ -112,6 +112,7 @@ int char_del_option = 2; // Character deletion type, email = 1, birthdate = 2 (d
 
 int log_char = 1;	// loggin char or not [devil]
 int log_inter = 1;	// loggin inter or not [devil]
+int char_check_db = 1;	///cheking sql-table at begining ?
 
 // Advanced subnet check [LuzZza]
 struct s_subnet {
@@ -4530,7 +4531,7 @@ int parse_char(int fd)
 				strcmp("a@a.com", sd->email) || //it is not default email, or
 				(strcmp("a@a.com", email) && strcmp("", email)) //email sent does not matches default
 			))
-				|| !char_del_option&1
+				|| !(char_del_option&1)
 			) {	//Fail
 				WFIFOHEAD(fd,3);
 				WFIFOW(fd,0) = 0x70;
@@ -4765,7 +4766,7 @@ int parse_char(int fd)
 			if( RFIFOREST(fd) < 6 )
 				return 0;
 			if( pincode_enabled && RFIFOL(fd,2) == sd->account_id ){
-				if( strlen( sd->pincode ) <= 0 ){
+				if( sd->pincode[0] == '\0' ){
 					pincode_sendstate( fd, sd, PINCODE_NEW );
 				}else{
 					pincode_sendstate( fd, sd, PINCODE_ASK );
@@ -4842,7 +4843,7 @@ int parse_console(const char* buf)
 
 	if( n == 2 && strcmpi("server", type) == 0 ){
 		if( strcmpi("shutdown", command) == 0 || strcmpi("exit", command) == 0 || strcmpi("quit", command) == 0 ){
-			runflag = 0;
+			runflag = CHARSERVER_ST_SHUTDOWN;
 		}
 		else if( strcmpi("alive", command) == 0 || strcmpi("status", command) == 0 )
 			ShowInfo(CL_CYAN"Console: "CL_BOLD"I'm Alive."CL_RESET"\n");
@@ -5350,7 +5351,7 @@ int char_lan_config_read(const char *lancfgName)
 		if ((line[0] == '/' && line[1] == '/') || line[0] == '\n' || line[1] == '\n')
 			continue;
 
-		if(sscanf(line,"%[^:]: %[^:]:%[^:]:%[^\r\n]", w1, w2, w3, w4) != 4) {
+		if(sscanf(line,"%63[^:]: %63[^:]:%63[^:]:%63[^\r\n]", w1, w2, w3, w4) != 4) {
 
 			ShowWarning("Error syntax of configuration file %s in line %d.\n", lancfgName, line_num);
 			continue;
@@ -5384,6 +5385,235 @@ int char_lan_config_read(const char *lancfgName)
 	return 0;
 }
 
+/**
+ * Check if our table are all ok in sqlserver
+ * Char tables to check
+ * @return 0:fail, 1:success
+ */
+bool char_checkdb(void){
+	int i;
+	const char* sqltable[] = {
+		char_db, hotkey_db, scdata_db, cart_db, inventory_db, charlog_db, storage_db, reg_db, skill_db, interlog_db, memo_db,
+		guild_db, guild_alliance_db, guild_castle_db, guild_expulsion_db, guild_member_db, guild_skill_db, guild_position_db, guild_storage_db,
+		party_db, pet_db, friend_db, mail_db, auction_db, quest_db, homunculus_db, skill_homunculus_db, mercenary_db, mercenary_owner_db,
+		elemental_db, ragsrvinfo_db, skillcooldown_db, bonus_script_db
+	};
+	ShowInfo("Start checking DB integrity\n");
+	for (i=0; i<ARRAYLENGTH(sqltable); i++){ //check if they all exist and we can acces them in sql-server
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  * from `%s`;", sqltable[i]) )
+			return false;
+	}
+	//checking char_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`account_id`,`char_num`,`name`,`class`,"
+		"`base_level`,`job_level`,`base_exp`,`job_exp`,`zeny`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,"
+		"`max_hp`,`hp`,`max_sp`,`sp`,`status_point`,`skill_point`,`option`,`karma`,`manner`,`party_id`,"
+		"`guild_id`,`pet_id`,`homun_id`,`elemental_id`,`hair`,`hair_color`,`clothes_color`,`weapon`,"
+		"`shield`,`head_top`,`head_mid`,`head_bottom`,`robe`,`last_map`,`last_x`,`last_y`,`save_map`,"
+		"`save_x`,`save_y`,`partner_id`,`online`,`father`,`mother`,`child`,`fame`,`rename`,`delete_date`,`moves`"
+		" from `%s`;", char_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking charlog_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `time`,`char_msg`,`account_id`,`char_num`,`name`,"
+			 "`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hair`,`hair_color`"
+		" from `%s`;", charlog_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking reg_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`str`,`value`,`type`,`account_id` from `%s`;", reg_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking hotkey_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `char_id`,`hotkey`,`type`,`itemskill_id`,`skill_lvl`"
+		" from `%s`;", hotkey_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking scdata_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `account_id`,`char_id`,`type`,`tick`,`val1`,`val2`,`val3`,`val4`"
+		" from `%s`;", scdata_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking skill_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `char_id`,`id`,`lv`,`flag` from `%s`;", skill_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking interlog_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `time`,`log` from `%s`;", interlog_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking memo_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `memo_id`,`char_id`,`map`,`x`,`y` from `%s`;", memo_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking guild_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `guild_id`,`name`,`char_id`,`master`,`guild_lv`,"
+			"`connect_member`,`max_member`,`average_lv`,`exp`,`next_exp`,`skill_point`,`mes1`,`mes2`,"
+			"`emblem_len`,`emblem_id`,`emblem_data`"
+			" from `%s`;", guild_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking guild_alliance_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `guild_id`,`opposition`,`alliance_id`,`name` from `%s`;", guild_alliance_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking guild_castle_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `castle_id`,`guild_id`,`economy`,`defense`,`triggerE`,"
+			"`triggerD`,`nextTime`,`payTime`,`createTime`,`visibleC`,`visibleG0`,`visibleG1`,`visibleG2`,"
+			"`visibleG3`,`visibleG4`,`visibleG5`,`visibleG6`,`visibleG7` "
+			" from `%s`;", guild_castle_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking guild_expulsion_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `guild_id`,`account_id`,`name`,`mes` from `%s`;", guild_expulsion_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking guild_member_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `guild_id`,`account_id`,`char_id`,`hair`,"
+			"`hair_color`,`gender`,`class`,`lv`,`exp`,`exp_payper`,`online`,`position`,`name`"
+			" from `%s`;", guild_member_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking guild_skill_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `guild_id`,`id`,`lv` from `%s`;", guild_skill_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking guild_position_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `guild_id`,`position`,`name`,`mode`,`exp_mode` from `%s`;", guild_position_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking party_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `party_id`,`name`,`exp`,`item`,`leader_id`,`leader_char` from `%s`;", party_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking pet_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `pet_id`,`class`,`name`,`account_id`,`char_id`,`level`,"
+			"`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incuvate`"
+			" from `%s`;", pet_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking friend_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `char_id`,`friend_account`,`friend_id` from `%s`;", friend_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking mail_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `id`,`send_name`,`send_id`,`dest_name`,`dest_id`,"
+			"`title`,`message`,`time`,`status`,`zeny`,`nameid`,`amount`,`refine`,`attribute`,`identify`,"
+			"`card0`,`card1`,`card2`,`card3`,`unique_id`"
+			" from `%s`;", mail_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking auction_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `auction_id`,`seller_id`,`seller_name`,`buyer_id`,`buyer_name`,"
+			"`price`,`buynow`,`hours`,`timestamp`,`nameid`,`item_name`,`type`,`refine`,`attribute`,`card0`,`card1`,"
+			"`card2`,`card3`,`unique_id` "
+			"from `%s`;", auction_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking quest_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `char_id`,`quest_id`,`state`,`time`,`count1`,`count2`,`count3` from `%s`;", quest_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking homunculus_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `homun_id`,`char_id`,`class`,`prev_class`,`name`,`level`,`exp`,`intimacy`,`hunger`,"
+			"`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hp`,`max_hp`,`sp`,`max_sp`,`skill_point`,`alive`,`rename_flag`,`vaporize` "
+			" from `%s`;", homunculus_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking skill_homunculus_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `homun_id`,`id`,`lv` from `%s`;", skill_homunculus_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking mercenary_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `mer_id`,`char_id`,`class`,`hp`,`sp`,`kill_counter`,`life_time` from `%s`;", mercenary_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking mercenary_owner_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `char_id`,`merc_id`,`arch_calls`,`arch_faith`,"
+			"`spear_calls`,`spear_faith`,`sword_calls`,`sword_faith`"
+			" from `%s`;", mercenary_owner_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking elemental_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `ele_id`,`char_id`,`class`,`mode`,`hp`,`sp`,`max_hp`,`max_sp`,"
+			"`atk1`,`atk2`,`matk`,`aspd`,`def`,`mdef`,`flee`,`hit`,`life_time` "
+			" from `%s`;", elemental_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking ragsrvinfo_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `index`,`name`,`exp`,`jexp`,`drop` from `%s`;", ragsrvinfo_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking skillcooldown_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `account_id`,`char_id`,`skill`,`tick` from `%s`;", skillcooldown_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking bonus_script_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `char_id`,`script`,`tick`,`flag`,`type`,`icon` from `%s`;", bonus_script_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	
+	//checking cart_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `id`,`char_id`,`nameid`,`amount`,`equip`,`identify`,`refine`,"
+			"`attribute`,`card0`,`card1`,`card2`,`card3`,`expire_time`,`bound`,`unique_id`"
+		" from `%s`;", cart_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking inventory_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `id`,`char_id`,`nameid`,`amount`,`equip`,`identify`,`refine`,"
+			"`attribute`,`card0`,`card1`,`card2`,`card3`,`expire_time`,`favorite`,`bound`,`unique_id`"
+		" from `%s`;", inventory_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking storage_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `id`,`account_id`,`nameid`,`amount`,`equip`,`identify`,`refine`,"
+			"`attribute`,`card0`,`card1`,`card2`,`card3`,`expire_time`,`bound`,`unique_id`"
+		" from `%s`;", storage_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking guild_storage_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `id`,`guild_id`,`nameid`,`amount`,`equip`,`identify`,`refine`,"
+			"`attribute`,`card0`,`card1`,`card2`,`card3`,`expire_time`,`bound`,`unique_id`"
+		" from `%s`;", guild_storage_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	
+	ShowInfo("DB integrity check finished with success\n");
+	return true;
+}
+
 void sql_config_read(const char* cfgName)
 {
 	char line[1024], w1[1024], w2[1024];
@@ -5398,7 +5628,7 @@ void sql_config_read(const char* cfgName)
 		if(line[0] == '/' && line[1] == '/')
 			continue;
 
-		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) != 2)
+		if (sscanf(line, "%1023[^:]: %1023[^\r\n]", w1, w2) != 2)
 			continue;
 
 		if(!strcmpi(w1,"char_db"))
@@ -5487,7 +5717,7 @@ int char_config_read(const char* cfgName)
 		if (line[0] == '/' && line[1] == '/')
 			continue;
 
-		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) != 2)
+		if (sscanf(line, "%1023[^:]: %1023[^\r\n]", w1, w2) != 2)
 			continue;
 
 		remove_control_chars(w1);
@@ -5653,6 +5883,8 @@ int char_config_read(const char* cfgName)
 			char_movetoused = config_switch(w2);
 		} else if (strcmpi(w1, "char_moves_unlimited") == 0) {
 			char_moves_unlimited = config_switch(w2);
+		} else if (strcmpi(w1, "char_checkdb") == 0) {
+			char_check_db = config_switch(w2);
 		} else if (strcmpi(w1, "import") == 0) {
 			char_config_read(w2);
 		}
@@ -5732,6 +5964,7 @@ void do_shutdown(void)
 int do_init(int argc, char **argv)
 {
 	//Read map indexes
+	runflag = CHARSERVER_ST_STARTING;
 	mapindex_init();
 	start_point.map = mapindex_name2id("new_zone01");
 
@@ -5793,6 +6026,11 @@ int do_init(int argc, char **argv)
 	add_timer_func_list(online_data_cleanup, "online_data_cleanup");
 	add_timer_interval(gettick() + 1000, online_data_cleanup, 0, 0, 600 * 1000);
 
+	//chek db tables
+	if(char_check_db && char_checkdb() == 0){
+		ShowFatalError("char : A tables is missing in sql-server, please fix it, see (sql-files main.sql for structure) \n");
+		exit(EXIT_FAILURE);
+	}
 	//Cleaning the tables for NULL entrys @ startup [Sirius]
 	//Chardb clean
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '0'", char_db) )
@@ -5807,6 +6045,7 @@ int do_init(int argc, char **argv)
 		Sql_ShowDebug(sql_handle);
 
 	set_defaultparse(parse_char);
+	
 
 	if( (char_fd = make_listen_bind(bind_ip,char_port)) == -1 ) {
 		ShowFatalError("Failed to bind to port '"CL_WHITE"%d"CL_RESET"'\n",char_port);

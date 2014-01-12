@@ -304,7 +304,7 @@ EAJ_BABY_CHASER		0x6206
 Option_Nothing	0x00000000
 Option_Sight	0x00000001
 Option_Hide	0x00000002
-Option_Cloadk	0x00000004
+Option_Cloak	0x00000004
 Option_Falcon	0x00000010
 Option_Riding	0x00000020
 Option_Invisible	0x00000040
@@ -614,7 +614,7 @@ bAddSkillBlow	2041
 bSPVanishRate	2042
 bMagicSPGainValue	2043
 bMagicHPGainValue	2044
-bAddClassDropItem	2045
+bAddMonsterIdDropItem	2045
 bMatk	2046
 bSPGainRaceAttack	2047
 bHPGainRaceAttack	2048
@@ -641,6 +641,9 @@ bSubClass	2065
 bMagicAddClass	2066
 bWeaponComaClass	2067
 bIgnoreMdefClassRate	2068
+bExpAddClass	2069
+bAddClassDropItem	2070
+bAddClassDropItemGroup	2071
 
 EQI_HEAD_TOP	1
 EQI_ARMOR	2
@@ -714,7 +717,8 @@ RC_Demon	6
 RC_DemiHuman	7
 RC_Angel	8
 RC_Dragon	9
-RC_All	10
+RC_Player	10
+RC_All	11
 
 Class_Normal	0
 Class_Boss	1
