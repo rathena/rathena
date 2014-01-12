@@ -6658,11 +6658,11 @@
 13308,Huuma_Blaze_I,Huuma Blaze Shuriken,5,0,,0,230,,1,0,0x02000000,63,2,34,4,0,0,22,{ bonus bUnbreakableWeapon,0; bonus bAtkEle,Ele_Fire; bonus bDex,2; },{},{}
 13309,Huuma_Giant_Wheel_C,Huuma Giant Wheel Shuriken,5,0,,0,99,,1,0,0x02000000,63,2,34,4,1,0,22,{ bonus2 bAddSize,Size_All,80; },{},{}
 13310,P_Huuma_Suriken1,P.Huuma Suriken I,5,0,,0,170,,1,0,0x02000000,63,2,34,3,60,0,22,{ bonus bMatk,50; },{},{}
-13311,Huuma_Shadow,Sword Huuma Shuriken,5,5000,,1500,170,,1,0,0x02000000,56,2,34,3,99,1,22,{ bonus bStr,3; },{},{}
-13312,Huuma_Job_Test,Prototype Huuma Shuriken,5,0,,3000,0,,1,0,0x02000000,56,2,34,4,99,1,22,{},{},{}
-13313,Huuma_Swirling_Petal,Flower Huuma Shuriken,5,100000,,1500,150,,1,2,0x02000000,56,2,34,3,110,1,22,{ bonus bMatk,50; bonus bAtkEle,Ele_Fire; bonus2 bSkillAtk,"KO_HUUMARANKA",20; },{},{}
-13314,Huuma_Fluttering_Snow,Wave Huuma Shuriken,5,100000,,1500,200,,1,0,0x02000000,56,2,34,4,110,1,22,{ bonus bMatk,50; bonus bAtkEle,Ele_Water; bonus3 bAutoSpell,"NJ_HYOUSYOURAKU",(getskilllv("NJ_HYOUSYOURAKU")?getskilllv("NJ_HYOUSYOURAKU"):1),30; },{},{}
-13315,Huuma_Thunderstorm,Thunderstorm Huuma Shuriken,5,100000,,1500,200,,1,0,0x02000000,56,2,34,4,110,1,22,{ bonus bMatk,50; bonus bAtkEle,Ele_Wind; bonus3 bAutoSpell,"NJ_RAIGEKISAI",(getskilllv("NJ_RAIGEKISAI")?getskilllv("NJ_RAIGEKISAI"):1),30; },{},{}
+13311,Huuma_Shadow,Sword Huuma Shuriken,5,5000,,1500,170,,1,0,0x02000000,63,2,34,3,99,1,22,{ bonus bStr,3; },{},{}
+13312,Huuma_Job_Test,Prototype Huuma Shuriken,5,0,,3000,0,,1,0,0x02000000,63,2,34,4,99,1,22,{},{},{}
+13313,Huuma_Swirling_Petal,Flower Huuma Shuriken,5,100000,,1500,150,,1,2,0x02000000,63,2,34,3,110,1,22,{ bonus bMatk,50; bonus bAtkEle,Ele_Fire; bonus2 bSkillAtk,"KO_HUUMARANKA",20; },{},{}
+13314,Huuma_Fluttering_Snow,Wave Huuma Shuriken,5,100000,,1500,200,,1,0,0x02000000,63,2,34,4,110,1,22,{ bonus bMatk,50; bonus bAtkEle,Ele_Water; bonus3 bAutoSpell,"NJ_HYOUSYOURAKU",(getskilllv("NJ_HYOUSYOURAKU")?getskilllv("NJ_HYOUSYOURAKU"):1),30; },{},{}
+13315,Huuma_Thunderstorm,Thunderstorm Huuma Shuriken,5,100000,,1500,200,,1,0,0x02000000,63,2,34,4,110,1,22,{ bonus bMatk,50; bonus bAtkEle,Ele_Wind; bonus3 bAutoSpell,"NJ_RAIGEKISAI",(getskilllv("NJ_RAIGEKISAI")?getskilllv("NJ_RAIGEKISAI"):1),30; },{},{}
 13316,Upg_Huuma_Shuriken,Upg Huuma Shuriken,5,20,,1500,55,,1,1,0x02000000,63,2,34,3,1,1,22,{ bonus bBaseAtk,(getrefine()*10); bonus bMatk,(getrefine()*5); bonus bLongAtkRate,(getrefine()); if(BaseLevel>70) bonus bBaseAtk,(((BaseLevel-70)/10)*5); },{},{}
 // More 1-Handed Swords
 13400,Cutlas_,Cutlus,5,20,,900,150,,1,1,0x000654E2,63,2,2,4,40,1,2,{ skill "SM_BASH",5; bonus bStr,2; bonus bDef,1; },{},{}
