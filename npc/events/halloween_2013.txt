@@ -3,42 +3,43 @@
 //===== By: ==================================================
 //= Akkarin
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= rAthena
 //===== Description: =========================================
+//= [Official Conversion]
 //= This event ran on iRO from 16th Oct to 6th Nov (3 weeks)
 //===== Additional Comments: =================================
 //= 1.0 Conversion from official script -> rAthena. [Akkarin]
+//= 1.1 Some cleanup. [Euphy]
 //============================================================
 
-prontera,154,136,5	script	suspicious coffin#2013HE	801,{
+prontera,154,136,5	script	Suspicious Coffin#2013HE	801,{
 	if (eve_bs < 1) {
-		mes "- the coffin seems very suspicious -";
+		mes "- The coffin seems very suspicious. -";
 		next;
-		switch (select("leave it:knock-knock.")) {
+		switch(select("Leave it:Knock-knock.")) {
 		case 1:
-			mes "- you left though with doubt. -";
+			mes "- You left though with doubt. -";
 			close;
-			break;
 		case 2:
 			mes "- tap tap tap -";
 			next;
 			mes "[???]";
-			mes "awwww!!!";
+			mes "Awwww!!!";
 			mes "W......Who are you!!!";
 			next;
 			mes "- chunk -";
 			mes "- thump -";
 			next;
 			mes "[???]";
-			mes "ouch, my head!!!";
+			mes "Ouch, my head!!!";
 			next;
 			mes "[???]";
-			mes "are you okay? Trick?";
+			mes "Are you okay? Trick?";
 			next;
 			mes "[Trick]";
-			mes "i'm fine!";
+			mes "I'm fine!";
 			mes "This is not a big deal!";
 			mes "Treat.";
 			next;
@@ -48,13 +49,13 @@ prontera,154,136,5	script	suspicious coffin#2013HE	801,{
 			next;
 			mes "[Trick]";
 			mes "Awwww!";
-			mes "ugh!!!!";
-			mes "i'm gonna die!!!";
+			mes "Ugh!!!!";
+			mes "I'm gonna die!!!";
 			mes "Oh, no...!!!";
 			next;
 			mes "[Trick]";
 			mes "koff, koff...";
-			mes "i was happy with you.....though it was short time...";
+			mes "I was happy with you.....though it was short time...";
 			mes "Treat....";
 			next;
 			mes "[Trick]";
@@ -71,238 +72,211 @@ prontera,154,136,5	script	suspicious coffin#2013HE	801,{
 			mes "we'd died before.";
 			next;
 			mes "[Trick]";
-			mes "yipee, yeah, that's true!";
+			mes "Yipee, yeah, that's true!";
 			next;
 			mes "[Trick]";
-			mes "i forget everytime as i died for a long time ago.";
+			mes "I forget everytime as I died for a long time ago.";
 			next;
 			mes "[Trick]";
-			mes "yow!!!";
-			mes "by the way!!!!";
-			mes "we are not supposed to waste time like this!";
+			mes "Yow!!!";
+			mes "By the way!!!!";
+			mes "We are not supposed to waste time like this!";
 			mes "Treat.";
 			next;
 			mes "[Trick]";
-			mes "we will die if we dont get back to master with ^ff9000'that'^000000...";
+			mes "We will die if we dont get back to master with ^ff9000'that'^000000...";
 			next;
 			mes "[Treat]";
-			mes "we are dead already...";
+			mes "We are dead already...";
 			mes "Trick.";
 			next;
 			mes "[Treat]";
-			mes "we will be bothered by him until we lose his temper at the most.";
+			mes "We will be bothered by him until we lose his temper at the most.";
 			next;
 			mes "[Trick]";
-			mes "Ah...no...";
-			mes "hurry!";
-			mes "let's go fid 'that' !";
+			mes "Ah... no...";
+			mes "Hurry!";
+			mes "Let's go find 'that' !";
 			mes "Treat.";
 			next;
 			mes "[Treat]";
-			mes "now...";
+			mes "Now...";
 			next;
 			mes "[Trick]";
 			mes "^ff9000Ugh, awww, hik, heck!!!!!!!!^000000";
 			next;
 			mes "[Treat]";
-			mes "we gonna die with sun burn if we leave now.";
+			mes "We gonna die with sun burn if we leave now.";
 			mes "Trick.";
 			next;
 			mes "[Trick]";
-			mes "you MUST say that much important thing in advance!!!!!!!!!";
+			mes "You MUST say that much important thing in advance!!!!!!!!!";
 			next;
 			mes "[Treat]";
-			mes "this world was good only we were alive.";
+			mes "This world was good only we were alive.";
 			next;
 			mes "[Trick]";
 			mes "Hey!";
 			mes "You!";
 			next;
 			mes "[Trick]";
-			mes "you are the first man made my head pump out strawberry jam.";
-			mes "would you love..me...?";
+			mes "You are the first man made my head pump out strawberry jam.";
+			mes "Would you love... me...?";
 			next;
 			mes "- Crash! -";
 			next;
-			mes "- there is more jam coming out under the coffin. -";
+			mes "- There is more jam coming out under the coffin. -";
 			next;
 			mes "[Treat]";
-			mes "he is little bit strange as for the jam he bleeded.";
+			mes "He is little bit strange as for the jam he bleeded.";
 			mes "Trick..";
 			next;
 			mes "[Trick]";
-			mes "no,treat.";
-			mes "now i feel very refreshed, would you put down that club??.";
+			mes "No, treat.";
+			mes "Now I feel very refreshed, would you put down that club??";
 			next;
 			mes "[Trick]";
-			mes "hey you!";
-			mes "i don't blame you for making my head like this but would you help us?";
+			mes "Hey you!";
+			mes "I don't blame you for making my head like this but would you help us?";
 			next;
 			mes "[Trick]";
-			mes "don't feel pressured.";
-			mes "the strawberry thing will be recovered after few days of illness.";
+			mes "Don't feel pressured.";
+			mes "The strawberry thing will be recovered after few days of illness.";
 			next;
-			switch (select("help them.:leave it.")) {
+			switch(select("Help them.:Leave it.")) {
 			case 1:
 				mes "[Trick]";
-				mes "haha!";
+				mes "Haha!";
 				mes "Thanks!";
 				next;
-				switch (select("listen their story.")) {
-				case 1:
-					break;
-				}
+				select("listen their story.");
 				mes "[Trick]";
-				mes "it is secret...";
-				mes "well, we are dead.";
+				mes "It is secret...";
+				mes "Well, we are dead.";
 				next;
 				mes "- kaboom! -";
 				next;
 				mes "[Trick]";
-				mes "it hurts.";
+				mes "It hurts.";
 				mes "Treat.";
 				next;
 				mes "[Trick]";
 				mes "I will explain properly, just put that down.";
 				next;
-				mes "[Trick]";
-				mes "we are from  ^ff9000'town of the dead' NIffleheim^000000.";
-				next;
-				mes "[Trick]";
-				mes "^ff9000the pumpkins for halloween event on niffleheim^000000 were all disappeared.";
-				next;
-				mes "[Trick]";
-				mes "first we are preparing another cake but Sir, Hell loves pumpkin cake.......halloween without pumpkin cake is like vampire without fang...";
-				next;
-				mes "[Trick]";
-				mes "we came to search pumpkin as our chef is too busy to do with other things,";
-				next;
-				mes "[Trick]";
-				mes "far from searching them, we are at risk for leaving this coffin...";
-				next;
-				mes "[Trick]";
-				mes "^ff9000pumpkins are any of field. please collect organic or non-organic pumpkins for 30 people and bring them to chef. candycon at Niffleheim.^000000";
-				next;
-				mes "[Trick]";
-				mes "organic pumpkin has more valuable,";
-				mes "it is triple times useful!";
-				set eve_bs, 1;
+				callsub L_Explanation;
+				set eve_bs,1;
 				setquest 11378;
 				close;
-				break;
 			case 2:
 				mes "[Trick]";
 				mes "Ooops!";
-				mes "well, then we have to go out Treat!";
+				mes "Well, then we have to go out Treat!";
 				next;
 				mes "[Treat]";
 				mes "Don't worry treat.";
-				mes "we just will be sent back to Niffleheim in the worst case. ";
+				mes "We just will be sent back to Niflheim in the worst case.";
 				close;
-				break;
 			}
-			break;
 		}
 	} else if (eve_bs == 1) {
-		mes "[Trick]";
-		mes "we are from  ^ff9000'town of the dead' NIffleheim^000000.";
-		next;
-		mes "[Trick]";
-		mes "^ff9000the pumpkins for halloween event on niffleheim^000000 were all disappeared.";
-		next;
-		mes "[Trick]";
-		mes "first we are preparing another cake but Sir, Hell loves pumpkin cake.......halloween without pumpkin cake is like vampire without fang...";
-		next;
-		mes "[Trick]";
-		mes "we came to search pumpkin as our chef is too busy to do with other things,";
-		next;
-		mes "[Trick]";
-		mes "far from searching them, we are at risk for leaving this coffin...";
-		next;
-		mes "[Trick]";
-		mes "^ff9000pumpkins are any of field. please collect organic or non-organic pumpkins for 30 people and bring them to chef. candycon at Niffleheim.^000000";
-		next;
-		mes "[Trick]";
-		mes "organic pumpkin has more valuable,";
-		mes "it is triple times useful!";
+		callsub L_Explanation;
 		close;
 	} else if (eve_bs == 2) {
-		if (isbegin_quest(11378) > 0) {
+		if (isbegin_quest(11378)) {
 			mes "[Trick]";
-			mes "^ff9000pumpkins are any of field. please collect organic or non-organic pumpkins for 30 people and bring them to chef. candycon at Niffleheim.^000000";
+			mes "^ff9000Pumpkins are any of field. Please collect organic or non-organic pumpkins for 30 people and bring them to Chef Candycon at Niflheim.^000000";
 			next;
 			mes "[Trick]";
-			mes "organic pumpkin has more valuable,";
-			mes "it is triple times useful!";
+			mes "Organic pumpkin has more value.";
+			mes "It is three times as useful!";
 			close;
 		} else {
 			mes "[Trick]";
-			mes "thanks! we won't die for sun burn!";
+			mes "Thanks! We won't die from sun burn!";
 			next;
 			mes "[Treat]";
 			mes "Thanks.";
 			next;
 			mes "[Trick]";
-			mes "and if you don't mind, would you please help more?";
-			mes "pumpkin cake is still deficient.";
+			mes "And if you don't mind, would you please help more?";
+			mes "Pumpkin cake is still deficient.";
 			next;
 			mes "[Trick]";
-			mes "last time when i visited there, i saw piled up pumpkin cake which was taller than castle...how much should we make more?";
+			mes "Last time when I visited there, I saw piled up pumpkin cake which was taller than castle... how much should we make more?";
 			next;
-			switch (select("help them:leave it.")) {
+			switch(select("Help them:Leave it.")) {
 			case 1:
 				mes "[Trick]";
-				mes "^ff9000pumpkins are any of field. please collect organic or non-organic pumpkins for 30 people and bring them to chef. candycon at Niffleheim.^000000";
+				mes "^ff9000Pumpkins are any of field. Please collect organic or non-organic pumpkins for 30 people and bring them to Chef Candycon at Niflheim.^000000";
 				next;
 				mes "[Trick]";
-				mes "organic pumpkin has more valuable,";
-				mes "it is triple times useful!";
+				mes "Organic pumpkin has more value.";
+				mes "It is three times as useful!";
 				setquest 11378;
 				close;
-				break;
 			case 2:
 				mes "[Trick]";
 				mes "Ooops!";
-				mes "well, then we have to go out Treat!";
+				mes "Well, then we have to go out Treat!";
 				next;
 				mes "[Treat]";
 				mes "Don't worry treat.";
-				mes "we just will be sent back to Niffleheim in the worst case. ";
+				mes "We just will be sent back to Niflheim in the worst case.";
 				close;
-				break;
 			}
 		}
-	} else {
 	}
+	end;
+
+L_Explanation:
+	mes "[Trick]";
+	mes "We are from ^ff9000'town of the dead' Niflheim^000000.";
+	next;
+	mes "[Trick]";
+	mes "^ff9000The pumpkins for Halloween event on Niflheim^000000 were all disappeared.";
+	next;
+	mes "[Trick]";
+	mes "First we are preparing another cake but Sir, Hell loves pumpkin cake....... Halloween without pumpkin cake is like vampire without fang...";
+	next;
+	mes "[Trick]";
+	mes "We came to search pumpkin as our chef is too busy to do with other things,";
+	next;
+	mes "[Trick]";
+	mes "Far from searching them, we are at risk for leaving this coffin...";
+	next;
+	mes "[Trick]";
+	mes "^ff9000Pumpkins are any of field. Please collect organic or non-organic pumpkins for 30 people and bring them to Chef Candycon at Niflheim.^000000";
+	next;
+	mes "[Trick]";
+	mes "Organic pumpkin has more value.";
+	mes "It is three times as useful!";
+	return;
 }
 
 niflheim,181,173,5	script	Chef Candycon#2013HE	796,{
-	set .@o_pum, countitem(6804);
-	set .@i_pum, countitem(6805);
-	set .@oo_pum, .@o_pum * 3;
-	set .@pumpum, .@i_pum + .@oo_pum;
+	set .@pumpum, countitem(6805) + (countitem(6804)*3);
 	if (eve_bs == 1) {
 		if (.@pumpum > 29) {
 			mes "[Chef Candycon]";
 			mes "clang~clang~!";
 			next;
 			mes "[Chef Candycon]";
-			mes "Phew... when is the end of making this cake? ...feel like eternal";
+			mes "Phew... when is the end of making this cake? ...feel like eternal...";
 			next;
 			mes "[Chef Candycon]";
-			mes "holy mother! i will hang anyone who suggest to make pumpkin cake on tree from next time.";
+			mes "Holy mother! I will hang anyone who suggest to make pumpkin cake on tree from next time.";
 			next;
 			mes "[Chef Candycon]";
-			mes "Though Sir, Hell like this but he doesn't care what pumpkin used. he said he is good with normal but";
+			mes "Though Sir, Hell like this but he doesn't care what pumpkin used. He said he is good with normal but...";
 			next;
 			mes "[Chef Candycon]";
-			mes "ALWAYS saying this pumpkin is not good....only the organic is good...what the heck, are you a cook!? if you know cooking that much why you don't you do by yourself!!";
+			mes "ALWAYS saying this pumpkin is not good....only the organic is good...what the heck, are you a cook!? If you know cooking that much why don't you do it by yourself!!";
 			next;
 			mes "[Chef Candycon]";
-			mes "and never helped me for escaping pumpkins and pretend busy? UGH! tut";
+			mes "And never helped me for escaping pumpkins and pretend busy? UGH! tut~";
 			next;
 			mes "[Chef Candycon]";
-			mes "my lord!!!";
+			mes "My lord!!!";
 			mes "Hu....Human!!";
 			mes "hub~ (deep breath)..";
 			next;
@@ -312,7 +286,7 @@ niflheim,181,173,5	script	Chef Candycon#2013HE	796,{
 			mes "[Chef Candycon]";
 			mes "how...........do....you......come......";
 			mes "to.....town.......... of......... the dead.......";
-			mes "Ni....ffle.......he...im........";
+			mes "Ni....fle.......he...im........";
 			next;
 			mes "[Chef Candycon]";
 			mes "he....re....";
@@ -320,10 +294,7 @@ niflheim,181,173,5	script	Chef Candycon#2013HE	796,{
 			mes "for..................";
 			mes "li..ving....crea...ture.......";
 			next;
-			switch (select("tell him about pumpkin.")) {
-			case 1:
-				break;
-			}
+			select("Tell him about pumpkins.");
 			mes "[Chef Candycon]";
 			mes ".....Pu...........m............ki....n.....";
 			next;
@@ -339,83 +310,41 @@ niflheim,181,173,5	script	Chef Candycon#2013HE	796,{
 			mes "......";
 			next;
 			mes "[Chef Candycon]";
-			mes "May....may i??";
+			mes "May....may I??";
 			next;
 			mes "[Chef Candycon]";
-			mes "ah...i'm not supposed to speak like this...we also have image making issue....";
+			mes "Ah... I'm not supposed to speak like this... we also have image making issue....";
 			next;
 			mes "[Chef Candycon]";
-			mes "speaking like this is way better to scare people...heww..however, i can't bare it as it is too stuffy.";
+			mes "Speaking like this is way better to scare people...heww..however, I can't bare it as it is too stuffy.";
 			next;
 			mes "[Chef Candycon]";
-			mes "anyway! it won't be delayed if those pumpkins didn't escape to midgards.";
+			mes "Anyway! It won't be delayed if those pumpkins didn't escape to Midgarts.";
 			next;
 			mes "[Chef Candycon]";
-			mes "obviouslt, we are dead so we are pretty weak at sun. we would be a pile of ash if we searched on day time.";
+			mes "Obviously, we are dead so we are pretty weak to the sun. We would be a pile of ash if we searched during daytime.";
 			next;
 			mes "[Trick]";
-			mes "did you know?! how could you send us to seach pumpkin?!";
+			mes "Did you know?! How could you send us to search for pumpkins?!";
 			next;
 			mes "[Chef Candycon]";
-			mes "what? you can walk around after sunset. and you got wings and night vision... and what? ultra sonic..?!!!!";
+			mes "What? You can walk around after sunset. And you got wings and night vision... and what? Ultra sonic...?!!!!";
 			next;
 			mes "[Treat]";
-			mes "so i didn't leave coffin.";
+			mes "So I didn't leave the coffin.";
 			next;
 			mes "[Trick]";
-			mes "ah...?!";
+			mes "Ah...?!";
 			next;
 			mes "[Chef Candycon]";
-			mes "gosh. how fortune we are for your effort, considering the process after bringing pumpkins";
+			mes "Gosh. How fortune we are for your effort, considering the process after bringing pumpkins.";
 			next;
-			switch (select("give pumpkins.")) {
-			case 1:
-				break;
-			}
+			select("Give pumpkins.");
 			mes "[Chef Candycon]";
-			mes "let me see! correct? yeah that's it! hold on a sec.";
+			mes "Let me see! Correct? Yeah that's it! Hold on a sec.";
 			next;
-			mes "[Chef Candycon]";
-			mes "well, ^ff9000i need all the pumpkin^000000!";
-			mes "if we dont' work fast, we will late for festival.";
-			next;
-			mes "^ff9000*****WARNING*****^000000";
-			mes "^ff9000you will give all of pumpkin, [ALL]^000000";
-			mes "^ff9000would you proceed?^000000";
-			switch (select("give all of pumpkin.:cancel")) {
-			case 1:
-				if (.@pumpum > 29){
-					if (.@i_pum > 0) { // Inorganic Pumpkin
-						delitem 6805,.@i_pum;
-					}
-					if (.@o_pum > 0) { // Organic Pumpkin
-						delitem 6804,.@o_pum;	
-					}
-					set eve_bs,2;	
-					getitem 22669,1; // Halloween Gift Box
-					erasequest 11378;	
-					mes "[Chef Candycon]";
-					mes "Okay! dig out the inside of pumpkin and like this~ and that~!";
-					next;
-					mes "[Chef Candycon]";
-					mes "Cool! pumpkin has been carved just in shape? this is it for halloween! Halloween without Jack'o lantern can't be real halloween!";
-					next;
-					mes "[Chef Candycon]";
-					mes "take this, it's a reward for bringing pumpkins! Open it, there might be some fun stuff..";
-					close;
-				} else {
-					mes "[Chef Candycon]";
-					mes "Ooops where is pumpkin? escaped again?";
-					mes "Oh, boy...no... you should go to get them again..";
-					close;
-				}
-				break;
-			case 2:
-				mes "[Chef Candycon]";
-				mes "eeh~~ You have no use of those pumpkins~~";
-				close;
-				break;
-			}
+			callsub L_GivePumpkins;
+			end;
 		} else {
 			mes "[Chef Candycon]";
 			mes "li.....ving....h....u.... m....a....n....";
@@ -433,55 +362,24 @@ niflheim,181,173,5	script	Chef Candycon#2013HE	796,{
 			close;
 		}
 	} else if (eve_bs == 2) {
-		if (isbegin_quest(11378) > 0) {
+		if (isbegin_quest(11378)) {
 			mes "[Chef Candycon]";
-			mes "eh! more pumpkins??";
-			mes "heck.. seriously...how many more left?..";
+			mes "Eh! More pumpkins??";
+			mes "Heck... seriously... How many more left?";
 			next;
 			mes "[Chef Candycon]";
-			mes "well, ^ff9000i need all the pumpkin^000000!";
-			mes "if we dont' work fast, we will late for festival.";
+			mes "Well, ^ff9000I need all the pumpkins^000000!";
+			mes "If we don't work fast, we will late for the festival.";
 			next;
 			mes "^ff9000*****WARNING*****^000000";
-			mes "^ff9000you will give all of pumpkin, [ALL]^000000";
-			mes "^ff9000would you proceed?^000000";
-			switch (select("give all of pumpkin.:cancel")) {
-			case 1:
-				if (.@pumpum > 29){
-					if (.@i_pum > 0) { // Inorganic Pumpkin
-						delitem 6805,.@i_pum;
-					}
-					if (.@o_pum > 0) { // Organic Pumpkin
-						delitem 6804,.@o_pum;
-					}
-					getitem 22669,1;
-					erasequest 11378;
-					mes "[Chef Candycon]";
-					mes "Okay! dig out the inside of pumpkin and like this~ and that~!";
-					next;
-					mes "[Chef Candycon]";
-					mes "Cool! pumpkin has been carved just in shape? this is it for halloween! Halloween without Jack'o lantern can't be real halloween!";
-					next;
-					mes "[Chef Candycon]";
-					mes "take this, it's a reward for bringing pumpkins! Open it, there might be some fun stuff..";
-					close;
-				} else {
-					mes "[Chef Candycon]";
-					mes "Ooops where is pumpkin? escaped again?";
-					mes "Oh, boy...no... you should go to get them again..";
-					close;
-				}
-				break;
-			case 2:
-				mes "[Chef Candycon]";
-				mes "eeh~~ You have no use of those pumpkins~~";
-				close;
-				break;
-			}
+			mes "^ff9000You will give all of pumpkin, [ALL]!^000000";
+			mes "^ff9000Will you proceed?^000000";
+			callsub L_GivePumpkins;
+			end;
 		} else {
 			mes "[Chef Candycon]";
-			mes "Yo! thanks to your delivery, baking cake day and night.";
-			mes "laying on the tomb will not garantee eternal sleeping. T.T ";
+			mes "Yo! Thanks to your delivery, baking cake day and night.";
+			mes "Laying on the tomb will not guarantee eternal sleeping. T.T ";
 			close;
 		}
 	} else {
@@ -491,7 +389,7 @@ niflheim,181,173,5	script	Chef Candycon#2013HE	796,{
 		mes "[Chef Candycon]";
 		mes "how...........do....you......come......";
 		mes "to.....town.......... of......... the dead.......";
-		mes "Ni....ffle.......he...im........";
+		mes "Ni....fle.......he...im........";
 		next;
 		mes "[Chef Candycon]";
 		mes "he....re....";
@@ -501,23 +399,61 @@ niflheim,181,173,5	script	Chef Candycon#2013HE	796,{
 		close;
 	}
 	end;
+
+L_GivePumpkins:
+	mes "[Chef Candycon]";
+	mes "Well, ^ff9000I need all the pumpkins^000000!";
+	mes "If we don't work fast, we will be late for the festival.";
+	next;
+	mes "^ff9000*****WARNING*****^000000";
+	mes "^ff9000You will give all of pumpkin, [ALL]!^000000";
+	mes "^ff9000Will you proceed?^000000";
+	switch(select("Give all pumpkins.:Cancel.")) {
+	case 1:
+		set .@pumpum, countitem(6805) + (countitem(6804)*3);
+		if (.@pumpum > 29){
+			if (countitem(6805)) delitem 6805,countitem(6805); //INORGANIC_PUMPKIN
+			if (countitem(6804)) delitem 6804,countitem(6804); //ORGANIC_PUMPKIN
+			set eve_bs,2;
+			getitem 22669,1; //HALLOWEEN_G_BOX
+			erasequest 11378;
+			mes "[Chef Candycon]";
+			mes "Okay! Dig out the inside of pumpkin and like this~ and that~!";
+			next;
+			mes "[Chef Candycon]";
+			mes "Cool! Pumpkin has been carved just in shape? This is it for Halloween! Halloween without Jack'o lantern can't be real Halloween!";
+			next;
+			mes "[Chef Candycon]";
+			mes "Take this, it's a reward for bringing pumpkins! Open it, there might be some fun stuff...";
+			close;
+		} else {
+			mes "[Chef Candycon]";
+			mes "Ooops where is pumpkin? Escaped again?";
+			mes "Oh, boy...no... you should go to get them again...";
+			close;
+		}
+	case 2:
+		mes "[Chef Candycon]";
+		mes "eeh~~ You have no use of those pumpkins~~";
+		close;
+	}
 }
 
 niflheim,182,177,3	script	Trick#2013HE	799,{
 	if (eve_bs == 1) {
 		mes "[Trick]";
-		mes "it's really fresh, outside of coffin?";
-		mes "have you got 30 pumpkins?";
+		mes "It's really fresh, outside of coffin?";
+		mes "Have you got 30 pumpkins?";
 		next;
 		mes "[Trick]";
-		mes "If you brought all, deliver them to the chef there.";
+		mes "If you brought them all, deliver them to the chef there.";
 		close;
 	} else if (eve_bs > 1) {
 		mes "[Trick]";
-		mes "what would happen without your help?~";
+		mes "What would happen without your help?~";
 		next;
 		mes "[Treat]";
-		mes "maybe, Sir, Hell would have grilled bat, instead of pumpkin cake.";
+		mes "Maybe, Sir, Hell would have grilled bat, instead of pumpkin cake.";
 		next;
 		mes "[Trick]";
 		mes "Gosh....";
@@ -525,7 +461,7 @@ niflheim,182,177,3	script	Trick#2013HE	799,{
 	} else {
 		mes "[Trick]";
 		mes "I don't need sweets!!";
-		mes "as i will just mess up everything! wahahahaa!";
+		mes "As I will just mess up everything! Wahahahaa!";
 		close;
 	}
 	end;
@@ -538,52 +474,51 @@ niflheim,183,176,3	script	Treat#2013HE	799,{
 		close;
 	} else if (eve_bs > 1) {
 		mes "[Treat]";
-		mes "doing good...?";
+		mes "Doing good...?";
 		close;
 	} else {
 		mes "[Treat]";
 		mes "-giggle-";
 		close;
 	}
-	end;
 }
 
 niflheim,179,168,5	script	Kentucky#2013HE	800,{
 	mes "[Kentucky]";
-	mes "ho.. these seeds has really deep taste";
-	mes "i will be able to have this kind of seeds no matter how much.";
+	mes "Ho.. these seeds have really deep taste.";
+	mes "I will be able to have this kind of seeds no matter how much.";
 	close;
 }
 
 niflheim,177,166,8	script	Chicken#2013HE	800,{
 	mes "[Chicken]";
-	mes "Hey kentucky!!";
-	mes "you are eating alone too much!";
+	mes "Hey Kentucky!!";
+	mes "You are eating alone too much!";
 	close;
 }
 
 niflheim,198,175,5	script	Wandering soul#2013HE	802,{
 	mes "[Wandering soul]";
 	mes "-giggle-";
-	mes "the festival is about to begin...";
+	mes "The festival is about to begin...";
 	close;
 }
 
 niflheim,191,180,3	script	Wandering soul#2013HE2	802,{
 	mes "[Wandering soul]";
-	mes "living creatures can't participate in the festival of Niffleheim -giggle- ";
+	mes "Living creatures can't participate in the festival of Niflheim. -giggle-";
 	close;
 }
 
 niflheim,181,181,5	script	Wandering soul#2013HE3	802,{
 	mes "[Wandering soul]";
-	mes "the festival brought vitality to 'city of the dead'....";
-	mes "doesn't it seem something wrong??";
+	mes "The festival brought vitality to 'city of the dead'....";
+	mes "Doesn't it seem like something is wrong??";
 	close;
 }
 
 niflheim,183,162,5	script	Wandering soul#2013HE4	802,{
 	mes "[Wandering soul]";
-	mes "soon, the festivel of soul will be here!";
+	mes "Soon, the festival of souls will be here!";
 	close;
 }

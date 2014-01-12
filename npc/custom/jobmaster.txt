@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= rAthena SVN r16114+
 //===== Description: =========================================
@@ -13,6 +13,7 @@
 //= 1.1 Fixed reset on Baby job change.
 //= 1.2 Added Expanded Super Novice support and initial Kagerou/Oboro support.
 //= 1.3 Kagerou/Oboro added.
+//= 1.4 Rebellion added.
 //============================================================
 
 prontera,153,193,6	script	Job Master	123,{
@@ -60,8 +61,8 @@ function Job_Menu;
 	}
 	set .@j1, roclass(.@eac|EAJL_2_1); set .@j2,roclass(.@eac|EAJL_2_2);
 	if ((.@eac&EAJ_UPPERMASK) == EAJ_SUPER_NOVICE) setarray .@exp[0],roclass(.@eac|EAJL_THIRD),99;
-	if (Class == Job_Ninja) setarray .@exp[0],.@j1,70;
-	if (.@exp[0] && .ThirdClass) {
+	if (Class == Job_Ninja || Class == Job_Gunslinger) setarray .@exp[0],.@j1,70;
+	if (.@exp[0] && .SecondExpanded) {
 		if (BaseLevel < .Rebirth[0] || JobLevel < .@exp[1]) {
 			set .@blvl, .Rebirth[0]-BaseLevel; set .@jlvl, .@exp[1]-JobLevel;
 			mes "You need "+((.@blvl>0)?.@blvl+" more base levels "+((.@jlvl>0)?"/ ":""):"")+((.@jlvl>0)?.@jlvl+" more job levels ":"")+"to continue.";
@@ -175,6 +176,7 @@ OnInit:
 	setarray .Rebirth[0],99,50;	// Minimum base level, job level to rebirth OR change to third class
 	setarray .JobReq[0],10,40;	// Minimum job level to turn into 1st class, 2nd class
 	set .ThirdClass,1;		// Enable third classes? (1: yes / 0: no)
+	set .SecondExpanded,1;		// Enable new expanded second classes: Ex. Super Novice, Kagerou/Oboro, Rebellion? (1: yes / 0: no)
 	set .SNovice,45;		// Minimum base level to turn into Super Novice
 	set .LastJob,1;			// Enforce linear class changes? (1: yes / 0: no)
 	set .SkillPointCheck,1;		// Force player to use up all skill points? (1: yes / 0: no)
