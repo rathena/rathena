@@ -173,7 +173,7 @@ struct s_skill_db {
 	struct s_skill_damage damage;
 #endif
 	struct s_copyable { // [Cydh]
-		bool plagiarism, reproduce;
+		uint8 option;
 		uint16 joballowed, req_opt;
 	} copyable;
 };

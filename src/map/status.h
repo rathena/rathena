@@ -1739,7 +1739,7 @@ struct status_data {
 	unsigned char
 		def_ele, ele_lv,
 		size, race,
-		class_;
+		class_; /// Class_Normal, Class_Boss, Class_Guardian
 
 	struct weapon_atk rhw, lhw; //Right Hand/Left Hand Weapon.
 };

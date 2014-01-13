@@ -451,11 +451,11 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 * @return 0 - Cannot be copied; 1 - Can be copied by Plagiarism 2 - Can be copied by Reproduce
 * @author Aru -for previous check; Jobbie for class restriction idea; Cydh expands the copyable skill
 */
-static char skill_isCopyable (struct map_session_data *sd, uint16 skill_id) {
+static char skill_isCopyable(struct map_session_data *sd, uint16 skill_id) {
 	int idx = skill_get_index(skill_id);
 
 	// Only copy skill that player doesn't have or the skill is old clone
-	if (sd->status.skill[skill_id].id != 0 && sd->status.skill[skill_id].flag != SKILL_FLAG_PLAGIARIZED)
+	if (sd->status.skill[idx].id != 0 && sd->status.skill[idx].flag != SKILL_FLAG_PLAGIARIZED)
 		return 0;
 
 	// Never copy NPC/Wedding Skills
@@ -468,7 +468,7 @@ static char skill_isCopyable (struct map_session_data *sd, uint16 skill_id) {
 		return 0;
 
 	// Check if the skill is copyable by class
-	if (!pc_has_permission(sd, PC_PERM_ALL_SKILL)) {
+	if (!pc_has_permission(sd,PC_PERM_ALL_SKILL)) {
 		uint16 job_allowed;
 		job_allowed = skill_db[idx].copyable.joballowed;
 		while (1) {
@@ -483,11 +483,11 @@ static char skill_isCopyable (struct map_session_data *sd, uint16 skill_id) {
 	}
 
 	//Plagiarism only able to copy skill while SC_PRESERVE is not active and skill is copyable by Plagiarism
-	if (skill_db[idx].copyable.plagiarism && pc_checkskill(sd,RG_PLAGIARISM) && !sd->sc.data[SC_PRESERVE])
+	if (skill_db[idx].copyable.option&1 && pc_checkskill(sd,RG_PLAGIARISM) && !sd->sc.data[SC_PRESERVE])
 		return 1;
 
 	//Reproduce can copy skill if SC__REPRODUCE is active and the skill is copyable by Reproduce
-	if (skill_db[idx].copyable.reproduce && pc_checkskill(sd,SC_REPRODUCE) && (&sd->sc && sd->sc.data[SC__REPRODUCE] && sd->sc.data[SC__REPRODUCE]->val1))
+	if (skill_db[idx].copyable.option&2 && pc_checkskill(sd,SC_REPRODUCE) && &sd->sc && sd->sc.data[SC__REPRODUCE] && sd->sc.data[SC__REPRODUCE]->val1)
 		return 2;
 
 	return 0;
@@ -2484,7 +2484,10 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 static void skill_do_copy(struct block_list* src,struct block_list *bl, uint16 skill_id, uint16 skill_lv){
 	TBL_PC *tsd = BL_CAST(BL_PC,bl);
 
-	if (!tsd || !pc_checkskill(tsd,RG_PLAGIARISM) || !pc_checkskill(tsd,SC_REPRODUCE))
+	if (!tsd || (!pc_checkskill(tsd,RG_PLAGIARISM) && !pc_checkskill(tsd,SC_REPRODUCE)))
+		return;
+	//If SC_PRESERVE is active and SC__REPRODUCE is not active, nothing to do
+	else if (&tsd->sc && tsd->sc.data[SC_PRESERVE] && !tsd->sc.data[SC__REPRODUCE])
 		return;
 	else {
 		short copy_flag;
@@ -2876,11 +2879,9 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 	}
 
 	map_freeblock_lock();
-	
-	//Cannot copy skills if the blow will kill you. [Skotlex]
-	if (skill_id && skill_get_index(skill_id) >= 0 &&
-		dmg.damage+dmg.damage2 > 0 && dmg.flag&BF_SKILL &&
-		damage < status_get_hp(bl))
+
+	if (bl->type == BL_PC && skill_id && skill_get_index(skill_id) >= 0 && skill_db[skill_get_index(skill_id)].copyable.option && //Only copy skill that copyable [Cydh]
+		dmg.flag&BF_SKILL && dmg.damage+dmg.damage2 > 0 && damage < status_get_hp(bl)) //Cannot copy skills if the blow will kill you. [Skotlex]
 		skill_do_copy(src,bl,skill_id,skill_lv);
 
 	if (dmg.dmg_lv >= ATK_MISS && (type = skill_get_walkdelay(skill_id, skill_lv)) > 0)
@@ -19018,28 +19019,29 @@ static bool skill_parse_row_magicmushroomdb(char* split[], int column, int curre
 }
 
 static bool skill_parse_row_copyabledb(char* split[], int column, int current) {
-	uint16 skill_id = skill_name2id(split[0]), idx;
+	int16 id;
 	uint8 option;
 
-	if (!skill_get_index(skill_id)) {
+	trim(split[0]);
+	if(ISDIGIT(split[0][0]))
+		id = atoi(split[0]);
+	else
+		id = skill_name2id(split[0]);
+
+	if ((id = skill_get_index(id)) < 0) {
 		ShowError("skill_parse_row_copyabledb: Invalid skill '%s'\n",split[0]);
 		return false;
 	}
-	if (!(option = atoi(split[1]))) {
-		ShowError("skill_parse_row_copyabledb: Invalid option %d\n",option);
+	if ((option = atoi(split[1])) < 0 || option > 3) {
+		ShowError("skill_parse_row_copyabledb: Invalid option '%s'\n",split[1]);
 		return false;
 	}
-	idx = skill_get_index(skill_id);
 
-	//skill that can be copied by plagiarism
-	skill_db[idx].copyable.plagiarism = (option&1) ? true : false;
-	//skill that can be copied by reproduce
-	skill_db[idx].copyable.reproduce = (option&2) ? true : false;
-
-	skill_db[idx].copyable.joballowed = (atoi(split[2])) ? cap_value(atoi(split[2]),1,63) : 63;
-	
-	skill_db[idx].copyable.req_opt = cap_value(atoi(split[3]),0,(0x2000)-1);
-
+	skill_db[id].copyable.option = option;
+	skill_db[id].copyable.joballowed = 63;
+	if (atoi(split[2]))
+		skill_db[id].copyable.joballowed = cap_value(atoi(split[2]),1,63);
+	skill_db[id].copyable.req_opt = cap_value(atoi(split[3]),0,(0x2000)-1);
 	return true;
 }
 
