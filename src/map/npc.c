@@ -2302,9 +2302,9 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
  * Parses a shop/cashshop npc.
  * Line definition :
  * <map name>,<x>,<y>,<facing>%TAB%shop%TAB%<NPC Name>%TAB%<sprite id>,<itemid>:<price>{,<itemid>:<price>...}
+ * <map name>,<x>,<y>,<facing>%TAB%cashshop%TAB%<NPC Name>%TAB%<sprite id>,<itemid>:<price>{,<itemid>:<price>...}
  * <map name>,<x>,<y>,<facing>%TAB%itemshop%TAB%<NPC Name>%TAB%<sprite id>,<costitemid>{:<discount>},<itemid>:<price>{,<itemid>:<price>...}
  * <map name>,<x>,<y>,<facing>%TAB%pointshop%TAB%<NPC Name>%TAB%<sprite id>,<costvariable>{:<discount>},<itemid>:<price>{,<itemid>:<price>...}
- * @TODO missing cashshop line definition
  * @param w1 : word 1 before tab (<from map name>,<x>,<y>,<facing>)
  * @param w2 : word 2 before tab (shop|cashshop|itemshop|pointshop), keyword that sent us in this parsing
  * @param w3 : word 3 before tab (<NPC Name>)

@@ -262,3 +262,4 @@
 1990:2989,{ bonus2 bSkillAtk,"CG_ARROWVULCAN",200; }
 4488:4169,{ if(getequiprefinerycnt(EQI_SHOES) >= 15) { bonus bMaxHPrate,15; bonus bMaxSPrate,15; } else { bonus bMaxHPrate,10; bonus bMaxSPrate,10; } }
 4608:4609,{ bonus2 bAddSize,Size_Medium,15; bonus2 bAddSize,Size_Large,15; bonus2 bSubSize,Size_Medium,5; bonus2 bSubSize,Size_Large,5; }
+2177:18574,{ bonus2 bAddClass,Class_Boss,5; bonus2 bMagicAddClass,Class_Boss,5; if (getequiprefinerycnt(EQI_HEAD_TOP) > 7) { bonus2 bAddClass,Class_Boss,5; bonus2 bMagicAddClass,Class_Boss,5; } }
