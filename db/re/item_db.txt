@@ -4285,6 +4285,9 @@
 //6792,Small_Stone,Small Stone,4,20,,100,,0,,0,0xFFFFFFFF,63,2,1024,,1,1,0,{ bonus2 bAddSize,0,1; },{},{}
 6797,11th_Anniversary_Coin,11th Anniversary Coin,3,10,,0,,,,,,,,,,,,,{},{},{}
 //
+6804,Organic_Agriculture_Pumpkin,Organic Pumpkin,3,10,,10,,,,,,,,,,,,,{},{},{}
+6805,Inorganic_Agriculture_Pumpkin,Inorganic Pumpkin,3,10,,10,,,,,,,,,,,,,{},{},{}
+
 7001,Mould_Powder,Mould Powder,3,466,,10,,,,,,,,,,,,,{},{},{}
 7002,Ogre_Tooth,Ogre Tooth,3,658,,10,,,,,,,,,,,,,{},{},{}
 7003,Anolian_Skin,Anolian Skin,3,968,,10,,,,,,,,,,,,,{},{},{}
@@ -7699,7 +7702,7 @@
 //
 14695,Costume_Enchant_Stone_Box_3,Costume Enchant Stone Box 3,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem rand(6790,6792),1; getitem 4936,1; getitem 4937,1; getitem 4938,1; },{},{}
 14696,Sealed_Gloom_Under_Night_Gachapon,Sealed Gloom Under Night Gachapon,3,0,,10,,,,,,,,,,,,,{},{},{}
-
+14713,Sealed_Ifrit_Scroll,Sealed Ifrit Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
 // More Armors
 15000,Bone_Plate,Bone Plate,4,20,,1000,,60,,1,0x000654E2,18,2,16,,85,1,0,{ bonus bStr,1; bonus bMdef,3; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,10; bonus2 bIgnoreDefRaceRate,RC_Player,10; bonus2 bIgnoreDefRaceRate,RC_Brute,10; bonus3 bAutoSpellWhenHit,"NPC_WIDEBLEEDING",1,10; },{},{}
 15001,Odin's_Blessing_I,Odin's Blessing,4,0,,0,,10,,0,0xFFFFFFFE,63,2,16,,0,0,0,{},{},{}
@@ -8288,6 +8291,8 @@
 //17394,Event_Old_Headgear_Box,Event Old Headgear Box,2,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
 17429,11_Anniversary_Shadow_Box,11 Anniversary Shadow Box,3,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
 17430,11_Anniversary_Shadow_Package,11 Anniversary Shadow Package,3,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
+17438,Three_Master_Package_II,Three Master Package II,3,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
+17439,Three_Master_Package_II10,Three Master Package II(10),3,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
 17442,Emperium_G_Box,Emperium G Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 6444,1; },{},{}
 17449,Cookies_Bar_Set,Set Bar Cookies,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ for (set .@i,14616; .@i <= 14621; set .@i,.@i+1) getitem .@i,1; },{},{}
 // Mechanic/Genetic Cannonballs
@@ -8718,6 +8723,7 @@
 19918,Costume_Lude_Mask,Costume Lude Mask,4,0,,0,,0,,0,0xFFFFFFFF,63,2,6144,,1,0,802,{ bonus bAddItemHealRate,20; },{},{}
 19919,Costume_Quve_Mask,Costume Quve Mask,4,0,,0,,0,,0,0xFFFFFFFF,63,2,6144,,1,0,472,{ bonus bAspdRate,10; },{},{}
 19920,Costume_Evolved_Whisper_Mask,Costume Evolved Whisper Mask,4,0,,0,,0,,0,0xFFFFFFFF,63,2,7168,,1,0,458,{ bonus bFlee,20; },{},{}
+19922,Costume_Noahs_Hat,Costume Noahs Hat,4,0,,0,,0,,0,0xFFFFFFFF,63,2,7168,,1,0,458,{ /* TODO */ },{},{}
 19938,Costume_Love_Rabbit_Hood,Costume Love Rabbit Hood,4,0,,0,,0,,0,0xFFFFFFFF,63,2,7168,,1,0,549,{},{},{}
 //
 20500,T_Archangel_Wing,Archangel Wing,4,0,,0,,0,,0,0xFFFFFFFF,63,2,8192,,1,0,1,{ bonus bUnbreakableHelm,0; },{},{}
@@ -8766,8 +8772,10 @@
 22657,Honey_Songpyun,Honey_Songpyun,0,20,,200,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 20,0; },{},{}
 22659,Pig_Steamed_Ribs,Pig_Steamed_Ribs,0,20,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "{ bonus bAspdRate,5; bonus bUseSPrate,-2; }",180; },{},{}
 22658,Cow_Steamed_Ribs,Cow_Steamed_Ribs,0,20,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "{ bonus bVariableCastrate,5; bonus bUseSPrate,-3; }",180; },{},{}
-22675,Mysterious_Scroll,Mysterious Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INTFOOD,3600000,30; },{},{}
+22670,Invitation_of_Darkness,Invitation of Darkness,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
 22676,Hangul_Day_Event_Box,Hangul Day Event Box,2,20,,0,,,,,0xFFFFFFFF,63,2,,,0,,,{ getitem 22675,10; getitem 607,9; },{},{}
+22675,Mysterious_Scroll,Mysterious Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INTFOOD,3600000,30; },{},{}
+22669,Halloween_Witchs_Box,Halloween_Box,2,20,,0,,,,,0xFFFFFFFF,63,2,,,0,,,{ /* TODO */ },{},{}
 
 // Shadow Equip
 24018,Shadow_Physical_Earring,Shadow Physical Earring,12,10,,0,,0,,0,0xFFFFFFFF,63,2,3145728,,1,1,0,{ bonus bAspdRate,(getrefine()>=7)?2:1; },{},{}
@@ -8830,6 +8838,9 @@
 24081,Mali_Shas_Shadow_Armor,Mali Shas Shadow Armor,12,10,,0,,,,,0xFFFFFFFF,63,2,65536,,1,1,,{ bonus bMaxHP,100; if(getrefine()>=7){bonus bMaxHPrate,1;} },{},{}
 24082,Mali_Shas_Shadow_Shoes,Mali Shas Shadow Shoes,12,10,,0,,,,,0xFFFFFFFF,63,2,524288,,1,1,,{ bonus bMaxHPrate,(getrefine()>=7?2:1); },{},{}
 24083,Mali_Shas_Shadow_Shield,Mali Shas Shadow Shield,12,10,,0,,,,,0xFFFFFFFF,63,2,262144,,1,1,,{ bonus bHPrecovRate,(getrefine()>=7?10:5); },{},{}
+24100,Freezing_Frozen_Shadow_Earring,Freezing Frozen Shadow Earring,12,10,,0,,,,,0xFFFFFFFF,63,2,3145728,,1,,8,{ /* TODO */ },{},{}
+24101,Freezing_Frozen_Pendant,Freezing Frozen Shadow Pendant,12,10,,0,,,,,0xFFFFFFFF,63,2,3145728,,1,,8,{ /* TODO */ },{},{}
+24102,Freezing_Frozen_Earring,Freezing Frozen Shadow Earring,12,10,,0,,,,,0xFFFFFFFF,63,2,3145728,,1,,8,{ /* TODO */ },{},{}
 //
 28101,Axe_Tornado,Axe Tornado,5,10,,4000,320,,,,0x00000400,56,2,2,4,130,,6,{ bonus bAtkEle,4; bonus2 bSkillCooldown,"NC_AXETORNADO",-1000; },{},{}
 //
