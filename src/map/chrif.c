@@ -562,6 +562,9 @@ void chrif_on_ready(void) {
 
 	//Re-save any guild castles that were modified in the disconnection time.
 	guild_castle_reconnect(-1, 0, 0);
+	
+	// Charserver is ready for this now
+	do_init_vending_autotrade();
 }
 
 
@@ -615,7 +618,7 @@ int chrif_skillcooldown_request(int account_id, int char_id) {
 /*==========================================
  * Request auth confirmation
  *------------------------------------------*/
-void chrif_authreq(struct map_session_data *sd) {
+void chrif_authreq(struct map_session_data *sd, bool autotrade) {
 	struct auth_node *node= chrif_search(sd->bl.id);
 
 	if( node != NULL || !chrif_isconnected() ) {
@@ -623,14 +626,15 @@ void chrif_authreq(struct map_session_data *sd) {
 		return;
 	}
 
-	WFIFOHEAD(char_fd,19);
+	WFIFOHEAD(char_fd,20);
 	WFIFOW(char_fd,0) = 0x2b26;
 	WFIFOL(char_fd,2) = sd->status.account_id;
 	WFIFOL(char_fd,6) = sd->status.char_id;
 	WFIFOL(char_fd,10) = sd->login_id1;
 	WFIFOB(char_fd,14) = sd->status.sex;
 	WFIFOL(char_fd,15) = htonl(session[sd->fd]->client_addr);
-	WFIFOSET(char_fd,19);
+	WFIFOB(char_fd,19) = autotrade;
+	WFIFOSET(char_fd,20);
 	chrif_sd_to_auth(sd, ST_LOGIN);
 }
 
@@ -1364,6 +1368,11 @@ int chrif_load_scdata(int fd) {
 		status_change_start(NULL,&sd->bl, (sc_type)data->type, 10000, data->val1, data->val2, data->val3, data->val4, data->tick, 1|2|4|8);
 	}
 #endif
+
+	if( sd->state.autotrade ){
+		vending_reopen( sd );
+	}
+
 	return 0;
 }
 

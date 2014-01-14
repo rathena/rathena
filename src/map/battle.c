@@ -7339,6 +7339,9 @@ static const struct _battle_data {
 	{ "discount_item_point_shop",			&battle_config.discount_item_point_shop,		0,		0,		3,				},
 	{ "update_enemy_position",				&battle_config.update_enemy_position,			0,		0,		1,				},
 	{ "devotion_rdamage",					&battle_config.devotion_rdamage,				0,		0,		100,			},
+	{ "feature.autotrade",					&battle_config.feature_autotrade,				1,		0,		1,				},
+	{ "feature.autotrade_direction",		&battle_config.feature_autotrade_direction,		4,		0,		7,				},
+	{ "feature.autotrade_sit",				&battle_config.feature_autotrade_sit,			1,		0,		1,				},
 };
 #ifndef STATS_OPT_OUT
 /**

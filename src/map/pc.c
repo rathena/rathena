@@ -1328,6 +1328,10 @@ int pc_reg_received(struct map_session_data *sd)
 
 		clif_changeoption( &sd->bl );
 	}
+	
+	if( sd->state.autotrade ){
+		clif_parse_LoadEndAck(sd->fd, sd);
+	}
 
 	return 1;
 }

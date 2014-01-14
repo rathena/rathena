@@ -519,6 +519,11 @@ extern struct Battle_Config
 	int discount_item_point_shop;
 	int update_enemy_position;
 	int devotion_rdamage;
+
+	// autotrade persistency
+	int feature_autotrade;
+	int feature_autotrade_direction;
+	int feature_autotrade_sit;
 } battle_config;
 
 void do_init_battle(void);

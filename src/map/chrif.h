@@ -35,7 +35,7 @@ struct auth_node* chrif_auth_check(int account_id, int char_id, enum sd_state st
 bool chrif_auth_delete(int account_id, int char_id, enum sd_state state);
 bool chrif_auth_finished(struct map_session_data* sd);
 
-void chrif_authreq(struct map_session_data* sd);
+void chrif_authreq(struct map_session_data* sd, bool autotrade);
 void chrif_authok(int fd);
 int chrif_scdata_request(int account_id, int char_id);
 int chrif_skillcooldown_request(int account_id, int char_id);
