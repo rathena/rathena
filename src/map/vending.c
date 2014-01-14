@@ -470,6 +470,8 @@ void vending_reopen( struct map_session_data* sd ){
 
 	if( vending->count <= 0 ){
 		idb_remove( autotrade_db, sd->status.char_id );
+		aFree(vending->entries);
+		aFree(vending);
 		map_quit(sd);
 		return;
 	}
@@ -498,6 +500,9 @@ void vending_reopen( struct map_session_data* sd ){
 	}
 
 	if( !count ){
+		idb_remove( autotrade_db, sd->status.char_id );
+		aFree(vending->entries);
+		aFree(vending);
 		map_quit(sd);
 		return;
 	}
@@ -597,8 +602,9 @@ void do_init_vending_autotrade( void ){
 
 			if( vending->count <= 0 ){
 				// Player was not correctly deleted, must not be set online
-				vending->count = 0;
+				idb_remove( autotrade_db, vending->char_id );
 				map_quit(vending->sd);
+				aFree(vending);
 				continue;
 			}
 		
