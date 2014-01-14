@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= rAthena Dev Team
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.2
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: ========================================= 
@@ -116,6 +116,9 @@ prontera,130,213,5	script	Riding Creature Master	105,{
 	mes "I'm here to provide Rune Knights and Royal Guards with riding creatures.";
 	close;
 }
+geffen,100,55,3	duplicate(Riding Creature Master)	Riding Creature Master#2	105
+payon,166,102,5	duplicate(Riding Creature Master)	Riding Creature Master#3	105
+aldebaran,133,109,5	duplicate(Riding Creature Master)	Riding Creature Master#6	105
 
 // Peco removing NPC
 //============================================================
@@ -208,9 +211,3 @@ dicastes01,187,207,3	duplicate(mgm)	Magic Gear Master#dic	105
 manuk,273,212,5	duplicate(mgm)	Magic Gear Master#man	105
 splendide,180,174,5	duplicate(mgm)	Magic Gear Master#spl	105
 mid_camp,242,243,3	duplicate(mgm)	Magic Gear Master#mid	105
-
-// Riding Creature duplicates
-
-geffen,100,55,3	duplicate(Riding Creature Master)	Riding Creature Master#2	105
-payon,166,102,5	duplicate(Riding Creature Master)	Riding Creature Master#3	105
-aldebaran,133,109,5	duplicate(Riding Creature Master)	Riding Creature Master#6	105

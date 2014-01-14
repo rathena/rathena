@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20140111
+//= 20140113
 //===== Description: =========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -7034,7 +7034,7 @@ mes axtoi("11");      	// Displays 17 (1 = 1, 10 = 16)
 
 ---------------------------------------
 
-*compare(<string>,<substring>)
+*compare("<string>","<substring>")
 
 This command returns 1 or 0 when the substring is in the main string (1) or not (0).
 This command is not case sensitive.
@@ -7047,6 +7047,15 @@ Examples:
 //dothat; will not be executed ('Blood butterfly' does not contain 'Bloody').
 	if (compare("Blood Butterfly","Bloody"))
 		dothat;
+
+---------------------------------------
+
+*strcmp("<string>","<string>")
+
+This command compares two strings are returns a value:
+   1: string 1 > string 2
+   0: strings are equal
+  -1: string 1 < string 2
 
 ---------------------------------------
 
