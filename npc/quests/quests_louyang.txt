@@ -2409,9 +2409,9 @@ lou_in02,192,170,0	script	Supply Stack#2	111,{
 	close;
 }
 
-louyang,129,121,0	warp	Storage Warp#1	1,1,lou_in02,203,161;
-louyang,125,121,0	warp	Storage Warp#2	1,1,lou_in02,198,161;
-lou_in02,198,159,0	warp	Storage Warp#3	1,1,louyang,124,118;
+louyang,129,121,0	warp	Storage Warp#1	1,1,lou_in02,203,161
+louyang,125,121,0	warp	Storage Warp#2	1,1,lou_in02,198,161
+lou_in02,198,159,0	warp	Storage Warp#3	1,1,louyang,124,118
 lou_in02,203,159,0	warp	Storage Warp#4	1,1,louyang,129,118
 
 // Poison King Quest :: poison_king

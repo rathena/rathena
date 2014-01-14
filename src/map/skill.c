@@ -19177,9 +19177,9 @@ static void skill_readdb(void) {
 		int n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
 		char* dbsubpath1 = aMalloc(n1+1);
 		char* dbsubpath2 = aMalloc(n2+1);
-		safesnprintf(dbsubpath1,n1+1,"%s/%s",db_path,dbsubpath[i]);
+		safesnprintf(dbsubpath1,n1+1,"%s%s",db_path,dbsubpath[i]);
 		if(i==0) safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
-		else safesnprintf(dbsubpath2,n2,"%s/%s",db_path,dbsubpath[i]);
+		else safesnprintf(dbsubpath2,n2,"%s%s",db_path,dbsubpath[i]);
 		
 		sv_readdb(dbsubpath2, "skill_db.txt"          , ',',  18, 18, MAX_SKILL_DB, skill_parse_row_skilldb, i);
 		sv_readdb(dbsubpath2, "skill_require_db.txt"  , ',',  34, 34, MAX_SKILL_DB, skill_parse_row_requiredb, i);

@@ -12014,7 +12014,7 @@ OnTouch:
 
 que_job01,6,94,0	warp	morocc#01	2,2,morocc,45,103
 que_job01,17,48,0	warp	que_job01#02	2,2,que_job01,68,92
-que_job01,68,96,0	warp	que_job01#03	2,2,que_job01,17,53;
+que_job01,68,96,0	warp	que_job01#03	2,2,que_job01,17,53
 
 que_job01,82,95,3	script	Bar Master#moc2_01	46,{
 	if (checkweight(1201,1) == 0) {

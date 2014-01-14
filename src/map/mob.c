@@ -4558,9 +4558,9 @@ static void mob_load(void)
 		int n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
 		char* dbsubpath1 = aMalloc(n1+1);
 		char* dbsubpath2 = aMalloc(n2+1);
-		safesnprintf(dbsubpath1,n1+1,"%s/%s",db_path,dbsubpath[i]);
+		safesnprintf(dbsubpath1,n1+1,"%s%s",db_path,dbsubpath[i]);
 		if(i==0) safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
-		else safesnprintf(dbsubpath2,n2,"%s/%s",db_path,dbsubpath[i]);
+		else safesnprintf(dbsubpath2,n2,"%s%s",db_path,dbsubpath[i]);
 		
 		sv_readdb(dbsubpath1, "mob_item_ratio.txt", ',', 2, 2+MAX_ITEMRATIO_MOBS, -1, &mob_readdb_itemratio, i); // must be read before mobdb
 		sv_readdb(dbsubpath1, "mob_chat_db.txt", '#', 3, 3, MAX_MOB_CHAT, &mob_parse_row_chatdb, i);

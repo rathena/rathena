@@ -17852,6 +17852,7 @@ void packetdb_readdb(void)
 		packet_len(i) = packet_len_table[i];
 
 	for(f = 0; f<ARRAYLENGTH(filename); f++){
+		entries = 0;
 		sprintf(line, "%s/%s", db_path,filename[f]);
 		if( (fp=fopen(line,"r"))==NULL ){
 			if(f==0) {
@@ -17999,7 +18000,8 @@ void packetdb_readdb(void)
 
 			clif_config.packet_db_ver = j?j:MAX_PACKET_VER;
 		}
-		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", entries, "packet_db.txt");
+		sprintf(line, "%s/%s", db_path,filename[f]);
+		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", entries, line);
 	}
 	ShowStatus("Using default packet version: "CL_WHITE"%d"CL_RESET".\n", clif_config.packet_db_ver);
 }
