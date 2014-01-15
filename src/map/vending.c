@@ -593,7 +593,8 @@ void do_init_vending_autotrade( void ){
 			if( SQL_ERROR == Sql_Query(mmysql_handle, 
 				"SELECT `cartinventory_id`, `amount`, `price`"
 				"FROM `%s`"
-				"WHERE `vending_id` = %d;", vending_items_db, vending->vendor_id ) ) {
+				"WHERE `vending_id` = %d"
+				"ORDER BY `index` ASC;", vending_items_db, vending->vendor_id ) ) {
 				Sql_ShowDebug(mmysql_handle);
 				return;
 			}
