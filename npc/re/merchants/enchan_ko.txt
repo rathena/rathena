@@ -86,12 +86,12 @@ que_ng,75,20,3	script	Artisan Tene#ko	762,{
 			mes "So you want to add an option to your weapon. That will be ^ff0000100,000 Zeny for a 1 time service.^000000";
 			next;
 			mes "[Artisan Tene]";
-			mes "^FF0000Ah! Equip the one-handed weapons on your right hand for the most enchantment capacity.^000000";  //custom translation
+			mes "^FF0000Ah! I can add an additional option if you equip a one-handed weapon on your right hand because it is easier for me to work on.^000000";
 			next;
 			mes "[Artisan Tene]";
 			mes "Which weapon do you want to add an option to?";
 			next;
-			switch(select("Later...:Raksasa Dagger:Mikatsuki:Huuma Swirling Petal:Huuma Fluttering Snow:Huuma Thunderstorm")) {
+			switch(select("Later...:Raksasa Dagger [1]:Mikatsuki [1]:Huuma Swirling Petal [2]:Huuma Fluttering Snow:Huuma Thunderstorm")) {
 			case 1:
 				mes "[Artisan Tene]";
 				mes "Changed your mind? Very well. Hope to see you later.";
@@ -161,7 +161,7 @@ que_ng,75,20,3	script	Artisan Tene#ko	762,{
 		mes "[Artisan Tene]";
 		mes "^ff0000Removing an option will be 100,000 Zeny.^000000 Which option from the list of items do you want to remove?";
 		next;
-		switch(select("Later...:Raksasa Dagger:Mikatsuki:Huuma Swirling Petal:Huuma Fluttering Snow:Huuma Thunderstorm:Wolf Armguard [1]:Crescent Armguard [1]:Ninja Scale Armor [1]:Tenebris Latitantes [1]:Special Ninja Suit [1]")) {
+		switch(select("Later...:Raksasa Dagger [1]:Mikatsuki [1]:Huuma Swirling Petal [2]:Huuma Fluttering Snow:Huuma Thunderstorm:Wolf Armguard [1]:Crescent Armguard [1]:Ninja Scale Armor [1]:Tenebris Latitantes [1]:Special Ninja Suit [1]")) {
 		case 1:
 			mes "[Artisan Tene]";
 			mes "Removing options is expensive, isn't it? Sorry. I will work harder in developing my skills and bring down costs as well.";
@@ -222,7 +222,7 @@ que_ng,75,20,3	script	Artisan Tene#ko	762,{
 			break;
 		case 2:
 			mes "[Artisan Tene]";
-			mes "Very well. I will reset everything."; //custom translation
+			mes "Very well. I will reset all slots.";
 			next;
 			break;
 		}
@@ -231,7 +231,7 @@ que_ng,75,20,3	script	Artisan Tene#ko	762,{
 	}
 	if (getequipisequiped(.@part) == 0) {
 		mes "[Artisan Tene]";
-		mes "You need to have ^44B7BC" + getitemname(.@equip_id) + "^000000 with you."; //custom translation
+		mes "You will have to equip all items before ^44B7BC" + getitemname(.@equip_id) + "^000000.";
 		close;
 	}
 	if (Zeny < 100000) {  //custom translation

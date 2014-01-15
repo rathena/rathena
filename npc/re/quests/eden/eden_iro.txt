@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= -SkittleNugget-
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -13,6 +13,7 @@
 //= 1.0 First version.
 //= 1.1 Edited and added more NPCs, lots of placeholders. [Euphy]
 //= 1.2 Added VIP NPCs and features. [Euphy]
+//= 1.3 Added Mail Annex Station scripts, commented out. [Euphy]
 //============================================================
 
 // Acolyte Warper (part of other/acolyte_warp.txt)
@@ -728,3 +729,62 @@ moc_para01,174,33,3	script	Bathory#2012spirits	1102,{
 }
 
 moc_para01,26,174,4	script	Grandma Boxter#boxx	840,{ end; }
+
+// Mail Annex Station
+//============================================================
+/* Map "auction_03" is a duplicate of "auction_02".
+
+moc_para01,30,187,4	script	Mail Annex Station	888,{
+	mes "[Mail Annex Station]";
+	mes "Would you like to go to the Kafra Mail Annex Station?";
+	next;
+	switch(select("Yes, send me now!:No thanks.")) {
+	case 1:
+		mes "[Mail Annex Station]";
+		mes "Sending you to the Mail Annex Room.";
+		close2;
+		warp "auction_03",151,23;
+		end;
+	case 2:
+		mes "[Mail Annex Station]";
+		mes "Ok then!";
+		close;
+	}
+}
+auction_03,152,16,0	warp	#mail_annex_warp	1,1,moc_para01,30,184
+
+auction_03,152,42,4	script	Kafra Employee#annex	117,{
+	mes "[Kafra Employee]";
+	mes "Welcome to the Kafra's Mail Annex Station. This is now the only place to send and retrieve mail.";
+	next;
+	mes "[Kafra Employee]";
+	mes "What would you like to do?";
+	next;
+	switch(select("Access Mail:Storage:Cancel")) {
+	case 1:
+		if (Zeny < 130) {
+			mes "[Kafra Employee]";
+			mes "I am sorry, but you do not have enough money.";
+			mes "To use the mailbox service,";
+			mes "you are required to pay 130 zeny.";
+			close;
+		}
+		mes "[Kafra Employee]";
+		mes "Thank you for using the Kafra Service.";
+		set Zeny, Zeny - 130;
+		close2;
+		openmail;
+		end;
+	case 2:
+		callfunc "F_KafStor",0,1200,0;
+		end;
+	case 3:
+		mes "[Kafra Employee]";
+		mes "Thank you for using the Kafra Service.";
+		close;
+	}
+}
+
+auction_03,145,47,2	shop	Tool Dealer#annex	83,611:-1,501:-1,502:-1,503:-1,506:-1,504:-1,645:-1,656:-1,657:-1,601:-1,602:-1,1065:-1,911:-1,910:-1,717:-1,1092:-1,1093:-1,713:400
+
+*/
