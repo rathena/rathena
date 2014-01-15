@@ -5654,7 +5654,9 @@ ACMD_FUNC(autotrade) {
 
 	sd->state.autotrade = 1;
 
-	if( battle_config.feature_autotrade && Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", "vendings", sd->vender_id ) != SQL_SUCCESS ){
+	if( battle_config.feature_autotrade && 
+		sd->state.vending && 
+		Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", "vendings", sd->vender_id ) != SQL_SUCCESS ){
 		Sql_ShowDebug( mmysql_handle );
 	}
 
@@ -5666,7 +5668,7 @@ ACMD_FUNC(autotrade) {
 	channel_pcquit(sd,0xF); //leave all chan
 	clif_authfail_fd(sd->fd, 15);
 	
-	chrif_save(sd,1);
+	chrif_save(sd,3);
 
 	return 0;
 }

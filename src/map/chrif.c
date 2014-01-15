@@ -277,6 +277,7 @@ int chrif_isconnected(void) {
  * Saves character data.
  * Flag = 1: Character is quitting
  * Flag = 2: Character is changing map-servers
+ * Flag = 3: Character used @autotrade
  *------------------------------------------*/
 int chrif_save(struct map_session_data *sd, int flag) {
 	uint32 mmo_charstatus_len = 0;
@@ -292,7 +293,7 @@ int chrif_save(struct map_session_data *sd, int flag) {
 		chrif_save_bsdata(sd);
 		chrif_req_login_operation(sd->status.account_id, sd->status.name, 7, 0, 2, sd->status.bank_vault); //save Bank data
 	}
-		if ( !chrif_auth_logout(sd,flag == 1 ? ST_LOGOUT : ST_MAPCHANGE) )
+		if ( flag != 3 && !chrif_auth_logout(sd,flag == 1 ? ST_LOGOUT : ST_MAPCHANGE) )
 			ShowError("chrif_save: Failed to set up player %d:%d for proper quitting!\n", sd->status.account_id, sd->status.char_id);
 	}
 
@@ -1121,8 +1122,13 @@ int chrif_disconnectplayer(int fd) {
 	}
 
 	if (!sd->fd) { //No connection
-		if (sd->state.autotrade)
+		if (sd->state.autotrade){
+			if( sd->state.vending ){
+				vending_closevending(sd);
+			}
+
 			map_quit(sd); //Remove it.
+		}
 		//Else we don't remove it because the char should have a timer to remove the player because it force-quit before,
 		//and we don't want them kicking their previous instance before the 10 secs penalty time passes. [Skotlex]
 		return 0;
