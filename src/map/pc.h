@@ -867,10 +867,10 @@ bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd,
 
 int pc_updateweightstatus(struct map_session_data *sd);
 
-int pc_addautobonus(struct s_autobonus *bonus,char max,const char *script,short rate,unsigned int dur,short atk_type,const char *o_script,unsigned short pos,bool onskill);
-int pc_exeautobonus(struct map_session_data* sd,struct s_autobonus *bonus);
+bool pc_addautobonus(struct s_autobonus *bonus,char max,const char *script,short rate,unsigned int dur,short atk_type,const char *o_script,unsigned short pos,bool onskill);
+void pc_exeautobonus(struct map_session_data* sd,struct s_autobonus *bonus);
 int pc_endautobonus(int tid, unsigned int tick, int id, intptr_t data);
-int pc_delautobonus(struct map_session_data* sd,struct s_autobonus *bonus,char max,bool restore);
+void pc_delautobonus(struct map_session_data* sd,struct s_autobonus *bonus,char max,bool restore);
 
 int pc_bonus(struct map_session_data*,int,int);
 int pc_bonus2(struct map_session_data *sd,int,int,int);

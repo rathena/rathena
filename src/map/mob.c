@@ -2439,8 +2439,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			int itemid = 0;
 			for (i = 0; i < ARRAYLENGTH(sd->add_drop) && (sd->add_drop[i].id || sd->add_drop[i].group); i++) {
 				if ( sd->add_drop[i].race == -md->mob_id 
-					|| (sd->add_drop[i].race && sd->add_drop[i].race&(1<<status->race|1<<RC_ALL))
-					|| (sd->add_drop[i].class_ && sd->add_drop[i].class_&(1<<status->class_|1<<CLASS_ALL))
+					|| (sd->add_drop[i].race && sd->add_drop[i].race&((1<<status->race)|(1<<RC_ALL)))
+					|| (sd->add_drop[i].class_ && sd->add_drop[i].class_&((1<<status->class_)|(1<<CLASS_ALL)))
 				) {
 					//check if the bonus item drop rate should be multiplied with mob level/10 [Lupus]
 					if(sd->add_drop[i].rate < 0) {
