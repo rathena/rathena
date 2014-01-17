@@ -108,7 +108,7 @@ Additional stats
 bonus bHit,n;         			Hit + n
 bonus bHitRate,n;     			Hit + n%
 bonus bCritical,n;    			Critical + n
-bonus2 bCriticalAddRace,r,n;		Critical + n against enemies of race r
+bonus2 bCriticalAddRace,r,n;	Critical + n against enemies of race r
 bonus bCriticalRate,n;			Critical + n%
 bonus bFlee,n;        			Flee + n
 bonus bFleeRate,n;    			Flee + n%
@@ -234,8 +234,8 @@ bonus bDefRatioAtkRace,r; 		Deals more damage to enemies of race r with higher d
 bonus bDefRatioAtkEle,e;  		Deals more damage to enemies of element e with higher defense
 bonus bDefRatioAtkClass,c;		Deals more damage to enemies of class c with higher defense
 
-bonus4 bSetDefRace,r,n,t,y; 		Set DEF to y of an enemy of race r at n% for t milliseconds with normal attack
-bonus4 bSetMDefRace,r,n,t,y;		Set MDEF to y of an enemy of race r at n% for t milliseconds with normal attack
+bonus4 bSetDefRace,r,n,t,y; 	Set DEF to y of an enemy of race r at n% for t milliseconds with normal attack
+bonus4 bSetMDefRace,r,n,t,y;	Set MDEF to y of an enemy of race r at n% for t milliseconds with normal attack
 
 Ignore Def
 ----------
@@ -366,7 +366,7 @@ bonus bBreakArmorRate,n; 		Adds a n/100% chance to break enemy's armor while att
 
 Monster drops
 -------------
-bonus3 bAddMonsterIdDropItem,s,mid,n;	Adds an n/100% chance of dropping item s when killing monster mid
+bonus3 bAddMonsterIdDropItem,iid,mid,n;	Adds a n/100% chance of dropping item iid when killing monster mid
 
 bonus2 bAddMonsterDropItem,iid,n;    	Adds a n/100% chance for item iid to be dropped when killing a monster
 bonus3 bAddMonsterDropItem,iid,r,n;  	Adds a n/100% chance for item iid to be dropped when killing a monster of race r
@@ -395,6 +395,6 @@ bonus bNoGemStone,n;      		Skills requiring Gemstones do no require them (n is 
                           		NOTE: Hocus Pocus still requires 1 Yellow Gemstone, Ganbantein requirements not reduced
 bonus bIntravision,n;     		Always see Hiding and Cloaking players/mobs (n is meaningless)
 bonus bPerfectHide,n;     		Hidden/cloaked character is no longer detected by monsters with 'detector' mode (n is meaningless)
-bonus bRestartFullRecover,n;		When reviving, HP and SP are fully healed (n is meaningless)
+bonus bRestartFullRecover,n;	When reviving, HP and SP are fully healed (n is meaningless)
 bonus bClassChange,n;     		Gives a n/100% chance to change the attacked monster's class with normal attack
 bonus bAddStealRate,n;    		Increases success rate of Steal skill by n/100%
