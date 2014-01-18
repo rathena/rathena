@@ -4152,7 +4152,7 @@
 6490,Magic_Clay_Fragment,Magic Clay Fragment,3,0,,10,,,,,,,,,,,,,{},{},{}
 6491,Magic_Clay,Magic Clay,3,0,,10,,,,,,,,,,,,,{},{},{}
 6492,Magic_Clay_Lump,Magic Clay Lump,3,0,,10,,,,,,,,,,,,,{},{},{}
-6493,Makibi,Makibi,3,30,,1,,,,,,,,,,,,,{},{},{}
+6493,Makibishi,Makibishi,3,30,,1,,,,,,,,,,,,,{},{},{}
 6494,Kafra_Coin2,Kafra Coin,3,0,,0,,,,,,,,,,,,,{},{},{}
 6495,Para_Logro_Badge,Eden Merit Badge,3,0,,0,,,,,,,,,,,,,{},{},{}
 6496,Tikbalang_Thick_Spine,Tikbalang's Thick Spine,3,300,,10,,,,,,,,,,,,,{},{},{}

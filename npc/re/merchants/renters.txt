@@ -118,9 +118,9 @@ prontera,130,213,5	script	Riding Creature Master	105,{
 }
 geffen,100,55,3	duplicate(Riding Creature Master)	Riding Creature Master#2	105
 payon,166,102,5	duplicate(Riding Creature Master)	Riding Creature Master#3	105
-aldebaran,133,109,5	duplicate(Riding Creature Master)	Riding Creature Master#6	105
-yuno,171,187,3	duplicate(Riding Creature Master)	Riding Creature Master#yuno	105
-rachel,106,130,5	duplicate(Riding Creature Master)	Riding Creature Master#ra	105
+aldebaran,133,109,5	duplicate(Riding Creature Master)	Riding Creature Master#4	105
+yuno,171,187,3	duplicate(Riding Creature Master)	Riding Creature Master#5	105
+rachel,106,130,5	duplicate(Riding Creature Master)	Riding Creature Master#6	105
 
 // Peco removing NPC
 //============================================================
