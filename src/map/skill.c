@@ -445,7 +445,8 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 	return hp;
 }
 
-/** Making plagiarize check its own function
+/** Making Plagiarism and Reproduce check their own function
+* Previous prevention for NPC skills, Wedding skills, and INF3_DIS_PLAGIA are removed since we use skill_copyable_db.txt [Cydh]
 * @param sd: Player who will copy the skill
 * @param skill_id: Target skill
 * @return 0 - Cannot be copied; 1 - Can be copied by Plagiarism 2 - Can be copied by Reproduce
@@ -458,19 +459,9 @@ static char skill_isCopyable(struct map_session_data *sd, uint16 skill_id) {
 	if (sd->status.skill[idx].id != 0 && sd->status.skill[idx].flag != SKILL_FLAG_PLAGIARIZED)
 		return 0;
 
-	// Never copy NPC/Wedding Skills
-	if (skill_get_inf2(skill_id)&(INF2_NPC_SKILL|INF2_WEDDING_SKILL))
-		return 0;
-
-	// Added so plagarize can't copy agi/bless if you're undead since it damages you
-	// NOTE: Is this still needed since we use skill_copyable_db now?
-	if (skill_get_inf3(skill_id)&INF3_DIS_PLAGIA)
-		return 0;
-
 	// Check if the skill is copyable by class
 	if (!pc_has_permission(sd,PC_PERM_ALL_SKILL)) {
-		uint16 job_allowed;
-		job_allowed = skill_db[idx].copyable.joballowed;
+		uint16 job_allowed = skill_db[idx].copyable.joballowed;
 		while (1) {
 			if (job_allowed&0x01 && sd->status.class_ == JOB_ROGUE) break;
 			if (job_allowed&0x02 && sd->status.class_ == JOB_STALKER) break;
@@ -2490,7 +2481,8 @@ static void skill_do_copy(struct block_list* src,struct block_list *bl, uint16 s
 	else if (&tsd->sc && tsd->sc.data[SC_PRESERVE] && !tsd->sc.data[SC__REPRODUCE])
 		return;
 	else {
-		short copy_flag;
+		short idx;
+		unsigned char lv;
 
 		// Copy Referal: dummy skills should point to their source upon copying
 		switch (skill_id) {
@@ -2520,49 +2512,52 @@ static void skill_do_copy(struct block_list* src,struct block_list *bl, uint16 s
 				break;
 		}
 
-		copy_flag = skill_isCopyable(tsd,skill_id);
-		if (copy_flag != 1 && copy_flag != 2) //Skill cannot be copied
+		//Use skill index, avoiding out-of-bound array [Cydh]
+		if ((idx = skill_get_index(skill_id)) < 0)
 			return;
-		else {
-			uint8 lv;
-			if (copy_flag == 2) { //Copied by Reproduce
-				struct status_change *tsc = status_get_sc(bl);
-				lv = (tsc) ? tsc->data[SC__REPRODUCE]->val1 : 1; //Already did this SC check on skill_isCopyable()
-				if( tsd->reproduceskill_id && tsd->status.skill[tsd->reproduceskill_id].flag == SKILL_FLAG_PLAGIARIZED ) {
-					tsd->status.skill[tsd->reproduceskill_id].id = 0;
-					tsd->status.skill[tsd->reproduceskill_id].lv = 0;
-					tsd->status.skill[tsd->reproduceskill_id].flag = SKILL_FLAG_PERMANENT;
-					clif_deleteskill(tsd,tsd->reproduceskill_id);
+
+		switch (skill_isCopyable(tsd,skill_id)) {
+			case 1: //Copied by Plagiarism
+				{
+					if (tsd->cloneskill_idx >= 0 && tsd->status.skill[tsd->cloneskill_idx].flag == SKILL_FLAG_PLAGIARIZED) {
+						clif_deleteskill(tsd,tsd->status.skill[tsd->cloneskill_idx].id);
+						tsd->status.skill[tsd->cloneskill_idx].id = 0;
+						tsd->status.skill[tsd->cloneskill_idx].lv = 0;
+						tsd->status.skill[tsd->cloneskill_idx].flag = SKILL_FLAG_PERMANENT;
+					}
+
+					if ((lv = pc_checkskill(tsd,RG_PLAGIARISM)) < skill_lv)
+						skill_lv = lv;
+
+					tsd->cloneskill_idx = idx;
+					pc_setglobalreg(tsd,SKILL_VAR_PLAGIARISM,skill_id);
+					pc_setglobalreg(tsd,SKILL_VAR_PLAGIARISM_LV,lv);
 				}
+				break;
+			case 2: //Copied by Reproduce
+				{
+					struct status_change *tsc = status_get_sc(bl);
+					//Already did SC check
+					//Skill level copied depends on Reproduce skill that used
+					lv = (tsc) ? tsc->data[SC__REPRODUCE]->val1 : 1;
+					if( tsd->reproduceskill_idx >= 0 && tsd->status.skill[tsd->reproduceskill_idx].flag == SKILL_FLAG_PLAGIARIZED ) {
+						clif_deleteskill(tsd,tsd->status.skill[tsd->reproduceskill_idx].id);
+						tsd->status.skill[tsd->reproduceskill_idx].id = 0;
+						tsd->status.skill[tsd->reproduceskill_idx].lv = 0;
+						tsd->status.skill[tsd->reproduceskill_idx].flag = SKILL_FLAG_PERMANENT;
+					}
 
-				lv = min(lv,skill_get_max(skill_id)); //Level dependent and limitation.
-
-				tsd->reproduceskill_id = skill_id;
-				pc_setglobalreg(tsd,SKILL_VAR_REPRODUCE,skill_id);
-				pc_setglobalreg(tsd,SKILL_VAR_REPRODUCE_LV,lv);
-			}
-			else if (copy_flag == 1) { //Copied by Plagiarism
-				if (tsd->cloneskill_id && tsd->status.skill[tsd->cloneskill_id].flag == SKILL_FLAG_PLAGIARIZED) {
-					tsd->status.skill[tsd->cloneskill_id].id = 0;
-					tsd->status.skill[tsd->cloneskill_id].lv = 0;
-					tsd->status.skill[tsd->cloneskill_id].flag = SKILL_FLAG_PERMANENT;
-					clif_deleteskill(tsd,tsd->cloneskill_id);
+					tsd->reproduceskill_idx = idx;
+					pc_setglobalreg(tsd,SKILL_VAR_REPRODUCE,skill_id);
+					pc_setglobalreg(tsd,SKILL_VAR_REPRODUCE_LV,lv);
 				}
-
-				if ((lv = pc_checkskill(tsd,RG_PLAGIARISM)) < skill_lv)
-					skill_lv = lv;
-
-				tsd->cloneskill_id = skill_id;
-				pc_setglobalreg(tsd,SKILL_VAR_PLAGIARISM,skill_id);
-				pc_setglobalreg(tsd,SKILL_VAR_PLAGIARISM_LV,lv);
-			}
-			else
-				return;
-			tsd->status.skill[skill_id].id = skill_id;
-			tsd->status.skill[skill_id].lv = lv;
-			tsd->status.skill[skill_id].flag = SKILL_FLAG_PLAGIARIZED;
-			clif_addskill(tsd,skill_id);
+				break;
+			default: return;
 		}
+		tsd->status.skill[idx].id = skill_id;
+		tsd->status.skill[idx].lv = lv;
+		tsd->status.skill[idx].flag = SKILL_FLAG_PLAGIARIZED;
+		clif_addskill(tsd,skill_id);
 	}
 }
 /*
@@ -8823,7 +8818,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case SC_AUTOSHADOWSPELL:
 		if( sd ) {
-			if( sd->status.skill[sd->reproduceskill_id].id || sd->status.skill[sd->cloneskill_id].id ) {
+			if( (sd->reproduceskill_idx >= 0 && sd->status.skill[sd->reproduceskill_idx].id) ||
+				(sd->cloneskill_idx >= 0 && sd->status.skill[sd->cloneskill_idx].id) )
+			{
 				sc_start(src,src,SC_STOP,100,skill_lv,-1);// The skill_lv is stored in val1 used in skill_select_menu to determine the used skill lvl [Xazax]
 				clif_autoshadowspell_list(sd);
 				clif_skill_nodamage(src,bl,skill_id,1,1);

@@ -1243,23 +1243,23 @@ int pc_reg_received(struct map_session_data *sd)
 	}
 
 	if ((i = pc_checkskill(sd,RG_PLAGIARISM)) > 0) {
-		sd->cloneskill_id = pc_readglobalreg(sd,SKILL_VAR_PLAGIARISM);
-		if (sd->cloneskill_id > 0) {
-			sd->status.skill[sd->cloneskill_id].id = sd->cloneskill_id;
-			sd->status.skill[sd->cloneskill_id].lv = pc_readglobalreg(sd,SKILL_VAR_PLAGIARISM_LV);
-			if (sd->status.skill[sd->cloneskill_id].lv > i)
-				sd->status.skill[sd->cloneskill_id].lv = i;
-			sd->status.skill[sd->cloneskill_id].flag = SKILL_FLAG_PLAGIARIZED;
+		sd->cloneskill_idx = skill_get_index(pc_readglobalreg(sd,SKILL_VAR_PLAGIARISM));
+		if (sd->cloneskill_idx >= 0) {
+			sd->status.skill[sd->cloneskill_idx].id = pc_readglobalreg(sd,SKILL_VAR_PLAGIARISM);
+			sd->status.skill[sd->cloneskill_idx].lv = pc_readglobalreg(sd,SKILL_VAR_PLAGIARISM_LV);
+			if (sd->status.skill[sd->cloneskill_idx].lv > i)
+				sd->status.skill[sd->cloneskill_idx].lv = i;
+			sd->status.skill[sd->cloneskill_idx].flag = SKILL_FLAG_PLAGIARIZED;
 		}
 	}
 	if ((i = pc_checkskill(sd,SC_REPRODUCE)) > 0) {
-		sd->reproduceskill_id = pc_readglobalreg(sd,SKILL_VAR_REPRODUCE);
-		if( sd->reproduceskill_id > 0) {
-			sd->status.skill[sd->reproduceskill_id].id = sd->reproduceskill_id;
-			sd->status.skill[sd->reproduceskill_id].lv = pc_readglobalreg(sd,SKILL_VAR_REPRODUCE_LV);
-			if( i < sd->status.skill[sd->reproduceskill_id].lv)
-				sd->status.skill[sd->reproduceskill_id].lv = i;
-			sd->status.skill[sd->reproduceskill_id].flag = SKILL_FLAG_PLAGIARIZED;
+		sd->reproduceskill_idx = skill_get_index(pc_readglobalreg(sd,SKILL_VAR_REPRODUCE));
+		if( sd->reproduceskill_idx >= 0) {
+			sd->status.skill[sd->reproduceskill_idx].id = pc_readglobalreg(sd,SKILL_VAR_REPRODUCE);
+			sd->status.skill[sd->reproduceskill_idx].lv = pc_readglobalreg(sd,SKILL_VAR_REPRODUCE_LV);
+			if( i < sd->status.skill[sd->reproduceskill_idx].lv)
+				sd->status.skill[sd->reproduceskill_idx].lv = i;
+			sd->status.skill[sd->reproduceskill_idx].flag = SKILL_FLAG_PLAGIARIZED;
 		}
 	}
 	//Weird... maybe registries were reloaded?
@@ -7629,26 +7629,26 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 		pc_setglobalreg (sd, "jobchange_level_3rd", sd->change_level_3rd);
 	}
 
-	if(sd->cloneskill_id) {
-		if( sd->status.skill[sd->cloneskill_id].flag == SKILL_FLAG_PLAGIARIZED ) {
-			sd->status.skill[sd->cloneskill_id].id = 0;
-			sd->status.skill[sd->cloneskill_id].lv = 0;
-			sd->status.skill[sd->cloneskill_id].flag = SKILL_FLAG_PERMANENT;
-			clif_deleteskill(sd,sd->cloneskill_id);
+	if(sd->cloneskill_idx >= 0) {
+		if( sd->status.skill[sd->cloneskill_idx].flag == SKILL_FLAG_PLAGIARIZED ) {
+			sd->status.skill[sd->cloneskill_idx].id = 0;
+			sd->status.skill[sd->cloneskill_idx].lv = 0;
+			sd->status.skill[sd->cloneskill_idx].flag = SKILL_FLAG_PERMANENT;
+			clif_deleteskill(sd,pc_readglobalreg(sd,SKILL_VAR_PLAGIARISM));
 		}
-		sd->cloneskill_id = 0;
+		sd->cloneskill_idx = -1;
 		pc_setglobalreg(sd,SKILL_VAR_PLAGIARISM, 0);
 		pc_setglobalreg(sd,SKILL_VAR_PLAGIARISM_LV, 0);
 	}
 
-	if(sd->reproduceskill_id) {
-		if( sd->status.skill[sd->reproduceskill_id].flag == SKILL_FLAG_PLAGIARIZED ) {
-			sd->status.skill[sd->reproduceskill_id].id = 0;
-			sd->status.skill[sd->reproduceskill_id].lv = 0;
-			sd->status.skill[sd->reproduceskill_id].flag = SKILL_FLAG_PERMANENT;
-			clif_deleteskill(sd,sd->reproduceskill_id);
+	if(sd->reproduceskill_idx >= 0) {
+		if( sd->status.skill[sd->reproduceskill_idx].flag == SKILL_FLAG_PLAGIARIZED ) {
+			sd->status.skill[sd->reproduceskill_idx].id = 0;
+			sd->status.skill[sd->reproduceskill_idx].lv = 0;
+			sd->status.skill[sd->reproduceskill_idx].flag = SKILL_FLAG_PERMANENT;
+			clif_deleteskill(sd,pc_readglobalreg(sd,SKILL_VAR_REPRODUCE));
 		}
-		sd->reproduceskill_id = 0;
+		sd->reproduceskill_idx = -1;
 		pc_setglobalreg(sd,SKILL_VAR_REPRODUCE,0);
 		pc_setglobalreg(sd,SKILL_VAR_REPRODUCE_LV,0);
 	}
@@ -9966,6 +9966,8 @@ static bool pc_readdb_job_exp(char* fields[], int columns, int current)
 	for(i=0; i<maxlvl; i++) {
 		job_info[idx].exp_table[type][i] = ((uint32) atoi(fields[3+i]));
 		//Place the BaseHP/SP calculation here, so we can use the maxlevel from job_exp
+		if (type != 0)
+			continue;
 		job_info[idx].base_hp[i] = pc_calc_basehp(i+1,idx);
 		job_info[idx].base_sp[i] = 10 + ((i+1) * (job_info[idx].sp_factor/100));
 	}
@@ -9995,14 +9997,16 @@ static bool pc_readdb_job_exp(char* fields[], int columns, int current)
 		idx = pc_class2idx(job_id);
 		memcpy(job_info[idx].exp_table[type], job_info[pc_class2idx(jobs[0])].exp_table[type], sizeof(job_info[pc_class2idx(jobs[0])].exp_table[type]));
 
+		job_info[idx].max_level[type] = maxlvl;
+//		ShowInfo("%s - Class %d: %u\n", type?"Job":"Base", job_id, job_info[idx].max_level[type]);
+
 		//Place the BaseHP/SP calculation here, so we can use the maxlevel from job_exp
+		if (type != 0)
+			continue;
 		for (j = 0; j < maxlvl; j++) {
 			job_info[idx].base_hp[j] = pc_calc_basehp(j+1,idx);
 			job_info[idx].base_sp[j] = 10 + ((j+1) * (job_info[idx].sp_factor/100));
 		}
-
-		job_info[idx].max_level[type] = maxlvl;
-//		ShowInfo("%s - Class %d: %u\n", type?"Job":"Base", job_id, job_info[idx].max_level[type]);
 	}
 	return true;
 }

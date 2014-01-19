@@ -59,7 +59,7 @@
 //    0x0200- spell range affected by NJ_SHADOWJUMP
 //    0x0400- spell range affected by WL_RADIUS
 //    0x0800- spell range affected by RA_RESEARCHTRAP
-//    0x1000- spell that can't be copied
+//    0x1000- free
 //    0x2000- spell that can be using while riding warg
 //    0x4000- spell that can't be used while in mado
 // 17 Name
@@ -101,12 +101,12 @@
 26,0,6,4,0,0x1,0,2,1,yes,0,0,0,magic,0,0x60,		AL_TELEPORT,Teleport
 27,9,6,2,0,0x1,0,4,1,yes,0,0,3,magic,0,0x20,		AL_WARP,Warp Portal
 28,9,6,16,6,0x21,0,10,1,yes,0,0,0,magic,0,0x20,	AL_HEAL,Heal
-29,9,6,16,0,0x1,0,10,1,yes,0,0,0,magic,0,0x1020,	AL_INCAGI,Increase AGI
+29,9,6,16,0,0x1,0,10,1,yes,0,0,0,magic,0,0x20,	AL_INCAGI,Increase AGI
 30,9,6,1,0,0x1,0,10,1,yes,0,0,0,magic,0,0x0,		AL_DECAGI,Decrease AGI
 31,0,6,4,0,0x1,0,1,1,yes,0,0,0,magic,0,0x20,		AL_HOLYWATER,Aqua Benedicta
 32,0,6,4,0,0x3,15,10,1,yes,0,0,0,magic,0,0x0,	AL_CRUCIS,Signum Crucis
 33,0,6,4,0,0x3,-1,10,1,yes,0,0,0,magic,0,0x0,	AL_ANGELUS,Angelus
-34,9,6,16,0,0x1,0,10,1,yes,0,0,0,magic,0,0x1020,	AL_BLESSING,Blessing
+34,9,6,16,0,0x1,0,10,1,yes,0,0,0,magic,0,0x20,	AL_BLESSING,Blessing
 35,9,6,16,0,0x1,0,1,1,yes,0,0,0,magic,0,0x0,		AL_CURE,Cure
 
 //****
@@ -812,8 +812,8 @@
 //****
 // Additional Skill (??)
 688,9,6,16,0,0x1,0,10,0,no,0,0x200,0,none,0,0x0,	GM_SANDMAN,GM Sandman
-689,0,6,4,0,0x3,-1,10,1,yes,0,0x2,0,magic,0,0x1000,	CASH_BLESSING,Party Blessing
-690,0,6,4,0,0x3,-1,10,1,yes,0,0x2,0,magic,0,0x1000,	CASH_INCAGI,Party Increase AGI
+689,0,6,4,0,0x3,-1,10,1,yes,0,0x2,0,magic,0,0x0,	CASH_BLESSING,Party Blessing
+690,0,6,4,0,0x3,-1,10,1,yes,0,0x2,0,magic,0,0x0,	CASH_INCAGI,Party Increase AGI
 691,0,6,4,0,0x3,-1,5,1,yes,0,0x2,0,magic,0,0x0,	CASH_ASSUMPTIO,Party Assumptio
 //692,0,0,0,0,0,0,9,0,no,0,0x2,0,none,0,0x0,		ALL_CATCRY,Cat Cry
 693,0,6,4,0,0x3,-1,1,1,yes,0,0x2,0,magic,0,0x0,	ALL_PARTYFLEE,Party Flee
@@ -1192,8 +1192,8 @@
 2480,11,6,1,0,0x1,0,5,1,yes,0,0,3,misc,0,0x0,		GN_BLOOD_SUCKER,Blood Sucker //CHECK Data says its a magic attack. Hmmmm....
 2481,11,6,1,-1,0x2,1:2:3:4:5,5,1,yes,0,0,0,weapon,0,0x0,	GN_SPORE_EXPLOSION,Spore Explosion //CHECK Data says its element is set to neutral. Need to confirm.
 2482,11,6,16,0,0,0,5,1,yes,0,0,1,weapon,2,0x0,	GN_WALLOFTHORN,Wall of Thorns
-2483,11,6,2,0,0x3,4,10,1,yes,0,0x2000,0,weapon,0,0x0,	GN_CRAZYWEED,Crazy Weed
-2484,0,6,2,2,0x2,2,10,1,no,0,0x2000,0,weapon,0,0x0,	GN_CRAZYWEED_ATK,Crazy Weed Attack
+2483,11,6,2,0,0x3,4,10,1,yes,0,0x0,0,weapon,0,0x1,	GN_CRAZYWEED,Crazy Weed
+2484,0,6,2,2,0x2,2,10,1,no,0,0x0,0,weapon,0,0x1,	GN_CRAZYWEED_ATK,Crazy Weed Attack
 2485,9,6,2,3,0,0,5,1,yes,0,0,0,magic,0,0x0,		GN_DEMONIC_FIRE,Demonic Fire
 2486,9,6,2,0,0,0,5,1,yes,0,0,0,none,0,0x0,		GN_FIRE_EXPANSION,Fire Expansion //CHECK FIX ME!!!! Level 1 is reducing the damage. Should increase it by 50%
 2487,9,6,2,0,0,0,1,1,no,0,0,0,none,0,0x0,		GN_FIRE_EXPANSION_SMOKE_POWDER,Fire Expansion Smoke Powder
@@ -1404,8 +1404,8 @@
 8236,5,6,1,0,0x1,0,10,0,yes,0,0,0,magic,0,0x0,	MER_LEXDIVINA,Lex_Divina
 8237,9,6,1,0,0x1,0,1,1,yes,0,0,0,magic,0,0x0,	MER_ESTIMATION,Sense
 8238,9,6,16,0,0x1,0,10,1,yes,0,0,0,magic,0,0x0,	MER_KYRIE,Kyrie Eleison
-8239,9,6,16,0,0x1,0,10,1,yes,0,0,0,magic,0,0x1000,	MER_BLESSING,Blessing
-8240,9,6,16,0,0x1,0,10,1,yes,0,0,0,magic,0,0x1000,	MER_INCAGI,Increase Agility
+8239,9,6,16,0,0x1,0,10,1,yes,0,0,0,magic,0,0x0,	MER_BLESSING,Blessing
+8240,9,6,16,0,0x1,0,10,1,yes,0,0,0,magic,0,0x0,	MER_INCAGI,Increase Agility
 //8241,2,6,2,0,0,0,1,1,no,0,0,0,none,0,0x0,		MER_INVINCIBLEOFF2,Mind Blaster
 
 //****
