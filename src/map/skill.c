@@ -16078,16 +16078,24 @@ bool skill_check_cloaking(struct block_list *bl, struct status_change_entry *sce
 	return wall;
 }
 
-int skill_check_shadowform(struct block_list *bl, int64 damage, int hit) {
+/** Check Shadow Form on the target
+* @param bl: Target
+* @param damage: Damage amount
+* @param hit
+* @return val
+*/
+char skill_check_shadowform(struct block_list *bl, int64 damage, int hit) {
 	struct status_change *sc;
-	struct block_list *src;
 
 	nullpo_retr(0, bl);
 
+	if (!damage)
+		return 0;
+
 	sc = status_get_sc(bl);
 
-	if( sc && sc->data[SC__SHADOWFORM] && damage ) {
-		src = map_id2bl(sc->data[SC__SHADOWFORM]->val2);
+	if( sc && sc->data[SC__SHADOWFORM] ) {
+		struct block_list *src = map_id2bl(sc->data[SC__SHADOWFORM]->val2);
 
 		if( !src || src->m != bl->m ) { 
 			status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER);
@@ -16102,7 +16110,7 @@ int skill_check_shadowform(struct block_list *bl, int64 damage, int hit) {
 		}
 
 		status_damage(bl, src, damage, 0, clif_damage(src, src, gettick(), 500, 500, damage, hit, (hit > 1 ? 8 : 0), 0), 0);
-		if( (--sc->data[SC__SHADOWFORM]->val3) <= 0 ) {
+		if( sc && sc->data[SC__SHADOWFORM] && (--sc->data[SC__SHADOWFORM]->val3) <= 0 ) {
 			status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER);
 			if( src->type == BL_PC )
 				((TBL_PC*)src)->shadowform_id = 0;
