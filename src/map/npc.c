@@ -122,16 +122,18 @@ struct view_data* npc_get_viewdata(int class_)
 int npc_isnear_sub(struct block_list* bl, va_list args) {
     struct npc_data *nd = (struct npc_data*)bl;
 	int skill_id = va_arg(args, int);
-	uint16 idx = -1;
 
-	//Check the NPC type if is used by INF2_NO_NEARNPC (skill_id is not null) [Cydh]
-	if (skill_id && (idx = skill_get_index(skill_id)) && skill_db[idx].unit_nonearnpc_type) {
-		while (1) {
-			if (skill_db[idx].unit_nonearnpc_type&1 && nd->subtype == WARP) break;
-			if (skill_db[idx].unit_nonearnpc_type&2 && nd->subtype == SHOP) break;
-			if (skill_db[idx].unit_nonearnpc_type&4 && nd->subtype == SCRIPT) break;
-			if (skill_db[idx].unit_nonearnpc_type&8 && nd->subtype == TOMB) break;
-				return 0;
+	if (skill_id > 0) { //If skill_id > 0 that means is used for INF2_NO_NEARNPC [Cydh]
+		int16 idx = skill_get_index(skill_id);
+
+		if (idx >= 0 && skill_db[idx].unit_nonearnpc_type) {
+			while (1) {
+				if (skill_db[idx].unit_nonearnpc_type&1 && nd->subtype == WARP) break;
+				if (skill_db[idx].unit_nonearnpc_type&2 && nd->subtype == SHOP) break;
+				if (skill_db[idx].unit_nonearnpc_type&4 && nd->subtype == SCRIPT) break;
+				if (skill_db[idx].unit_nonearnpc_type&8 && nd->subtype == TOMB) break;
+					return 0;
+			}
 		}
 	}
 

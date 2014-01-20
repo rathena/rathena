@@ -1231,7 +1231,7 @@ int pc_reg_received(struct map_session_data *sd)
 	//SG map and mob read [Komurka]
 	for(i=0;i<MAX_PC_FEELHATE;i++) //for now - someone need to make reading from txt/sql
 	{
-		uint8 j;
+		uint16 j;
 		if ((j = pc_readglobalreg(sd,sg_info[i].feel_var))!=0) {
 			sd->feel_map[i].index = j;
 			sd->feel_map[i].m = map_mapindex2mapid(j);
@@ -1254,10 +1254,10 @@ int pc_reg_received(struct map_session_data *sd)
 	}
 	if ((i = pc_checkskill(sd,SC_REPRODUCE)) > 0) {
 		sd->reproduceskill_idx = skill_get_index(pc_readglobalreg(sd,SKILL_VAR_REPRODUCE));
-		if( sd->reproduceskill_idx >= 0) {
+		if (sd->reproduceskill_idx >= 0) {
 			sd->status.skill[sd->reproduceskill_idx].id = pc_readglobalreg(sd,SKILL_VAR_REPRODUCE);
 			sd->status.skill[sd->reproduceskill_idx].lv = pc_readglobalreg(sd,SKILL_VAR_REPRODUCE_LV);
-			if( i < sd->status.skill[sd->reproduceskill_idx].lv)
+			if (i < sd->status.skill[sd->reproduceskill_idx].lv)
 				sd->status.skill[sd->reproduceskill_idx].lv = i;
 			sd->status.skill[sd->reproduceskill_idx].flag = SKILL_FLAG_PLAGIARIZED;
 		}

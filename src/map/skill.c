@@ -450,7 +450,7 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 * @param sd: Player who will copy the skill
 * @param skill_id: Target skill
 * @return 0 - Cannot be copied; 1 - Can be copied by Plagiarism 2 - Can be copied by Reproduce
-* @author Aru -for previous check; Jobbie for class restriction idea; Cydh expands the copyable skill
+* @author Aru - for previous check; Jobbie for class restriction idea; Cydh expands the copyable skill
 */
 static char skill_isCopyable(struct map_session_data *sd, uint16 skill_id) {
 	int idx = skill_get_index(skill_id);
@@ -484,8 +484,13 @@ static char skill_isCopyable(struct map_session_data *sd, uint16 skill_id) {
 	return 0;
 }
 
-// [MouseJstr] - skill ok to cast? and when?
-//done before check_condition_begin, requirement
+/** Check if the skill is ok to cast and when.
+* Done before check_condition_begin, requirement
+* @param skill_id: Skill ID that casted
+* @param sd: Player who casted
+* @return true: Skill cannot be used, false: otherwise
+* @author [MouseJstr]
+*/
 bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 {
 	int16 idx,m;
@@ -641,6 +646,12 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 	return (map[m].flag.noskill);
 }
 
+/** Check if the homunculus skill is ok to be processed
+* After checking from Homunculus side, also check the master condition
+* @param skill_id: Skill ID that casted
+* @param hd: Homunculus who casted
+* @return true: Skill cannot be used, false: otherwise
+*/
 bool skill_isNotOk_hom(uint16 skill_id, struct homun_data *hd)
 {
 	uint16 idx = skill_get_index(skill_id);
@@ -660,33 +671,39 @@ bool skill_isNotOk_hom(uint16 skill_id, struct homun_data *hd)
 			if(hd->homunculus.hunger <= 1) return true;
 			break;
 		case MH_GOLDENE_FERSE: //cant be used with angriff
-			if(hd->sc.data[SC_ANGRIFFS_MODUS]) return true;
+			if(&hd->sc && hd->sc.data[SC_ANGRIFFS_MODUS]) return true;
 			break;
 		case MH_ANGRIFFS_MODUS:
-			if(hd->sc.data[SC_GOLDENE_FERSE]) return true;
+			if(&hd->sc && hd->sc.data[SC_GOLDENE_FERSE]) return true;
 			break;
 		case MH_TINDER_BREAKER: //must be in grappling mode
-			if(!(hd->sc.data[SC_STYLE_CHANGE] && hd->sc.data[SC_STYLE_CHANGE]->val1 == MH_MD_GRAPPLING)
+			if(!&hd->sc
+				|| !(hd->sc.data[SC_STYLE_CHANGE] && hd->sc.data[SC_STYLE_CHANGE]->val1 == MH_MD_GRAPPLING)
 				|| !hd->homunculus.spiritball) return true;
 			break;
 		case MH_SONIC_CRAW: //must be in fighting mode
-			if(!(hd->sc.data[SC_STYLE_CHANGE] && hd->sc.data[SC_STYLE_CHANGE]->val1 == MH_MD_FIGHTING)
+			if(!&hd->sc
+				|| !(hd->sc.data[SC_STYLE_CHANGE] && hd->sc.data[SC_STYLE_CHANGE]->val1 == MH_MD_FIGHTING)
 				|| !hd->homunculus.spiritball) return true;
 			break;
 		case MH_SILVERVEIN_RUSH:
-			if(!(hd->sc.data[SC_COMBO] && hd->sc.data[SC_COMBO]->val1 == MH_SONIC_CRAW)
+			if(!&hd->sc
+				|| !(hd->sc.data[SC_COMBO] && hd->sc.data[SC_COMBO]->val1 == MH_SONIC_CRAW)
 				|| hd->homunculus.spiritball < 2) return true;
 			break;
 		case MH_MIDNIGHT_FRENZY:
-			if(!(hd->sc.data[SC_COMBO] && hd->sc.data[SC_COMBO]->val1 == MH_SILVERVEIN_RUSH)
+			if(!&hd->sc
+				|| !(hd->sc.data[SC_COMBO] && hd->sc.data[SC_COMBO]->val1 == MH_SILVERVEIN_RUSH)
 				|| !hd->homunculus.spiritball) return true;
 			break;
 		case MH_CBC:
-			if(!(hd->sc.data[SC_COMBO] && hd->sc.data[SC_COMBO]->val1 == MH_TINDER_BREAKER)
+			if(!&hd->sc
+				|| !(hd->sc.data[SC_COMBO] && hd->sc.data[SC_COMBO]->val1 == MH_TINDER_BREAKER)
 				|| hd->homunculus.spiritball < 2) return true;
 			break;
 		case MH_EQC:
-			if(!(hd->sc.data[SC_COMBO] && hd->sc.data[SC_COMBO]->val1 == MH_CBC)
+			if(!&hd->sc
+				|| !(hd->sc.data[SC_COMBO] && hd->sc.data[SC_COMBO]->val1 == MH_CBC)
 				|| hd->homunculus.spiritball < 3) return true;
 			break;
 	}
@@ -695,6 +712,12 @@ bool skill_isNotOk_hom(uint16 skill_id, struct homun_data *hd)
 	return skill_isNotOk(skill_id, hd->master);
 }
 
+/** Check if the mercenary skill is ok to be processed
+* After checking from Homunculus side, also check the master condition
+* @param skill_id: Skill ID that casted
+* @param md: Mercenary who casted
+* @return true: Skill cannot be used, false: otherwise
+*/
 bool skill_isNotOk_mercenary(uint16 skill_id, struct mercenary_data *md)
 {
 	uint16 idx = skill_get_index(skill_id);
@@ -708,9 +731,16 @@ bool skill_isNotOk_mercenary(uint16 skill_id, struct mercenary_data *md)
 	return skill_isNotOk(skill_id, md->master);
 }
 
-/// Check if the skill can be casted near NPC or not [Cydh]
-/// NOTE: 'target' may be NULL if the skill is targetting ground/area
-bool skill_isNotOk_npcRange(struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, int pos_x, int pos_y) {
+/** Check if the skill can be casted near NPC or not
+* @param src Object who casted
+* @param skill_id Skill ID that casted
+* @param skill_lv Skill Lv
+* @param pos_x Position x of the target
+* @param pos_y Position y of the target
+* @return true: Skill cannot be used, false: otherwise
+* @author [Cydh]
+*/
+bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skill_lv, int pos_x, int pos_y) {
 	int inf;
 
 	if (!src || skill_get_index(skill_id) < 0)
@@ -726,10 +756,8 @@ bool skill_isNotOk_npcRange(struct block_list *src, struct block_list *target, u
 		pos_y = src->y;
 	}
 
-	if (pos_x <= 0 || pos_y <= 0) {
-		pos_x = src->x;
-		pos_y = src->y;
-	}
+	if (pos_x <= 0) pos_x = src->x;
+	if (pos_y <= 0) pos_y = src->y;
 
 	return skill_check_unit_range2(src,pos_x,pos_y,skill_id,skill_lv,true);
 }
@@ -2526,8 +2554,7 @@ static void skill_do_copy(struct block_list* src,struct block_list *bl, uint16 s
 						tsd->status.skill[tsd->cloneskill_idx].flag = SKILL_FLAG_PERMANENT;
 					}
 
-					if ((lv = pc_checkskill(tsd,RG_PLAGIARISM)) < skill_lv)
-						skill_lv = lv;
+					lv = min(skill_lv,pc_checkskill(tsd,RG_PLAGIARISM)); //Copied level never be > player's RG_PLAGIARISM level
 
 					tsd->cloneskill_idx = idx;
 					pc_setglobalreg(tsd,SKILL_VAR_PLAGIARISM,skill_id);
@@ -2546,6 +2573,12 @@ static void skill_do_copy(struct block_list* src,struct block_list *bl, uint16 s
 						tsd->status.skill[tsd->reproduceskill_idx].lv = 0;
 						tsd->status.skill[tsd->reproduceskill_idx].flag = SKILL_FLAG_PERMANENT;
 					}
+
+					//Level dependent and limitation.
+					if (src->type == BL_PC) //If player, max skill level is skill_get_max(skill_id)
+						lv = min(lv,skill_get_max(skill_id));
+					else //Monster might used skill level > allowed player max skill lv. Ex. Drake with Waterball lv. 10
+						lv = min(lv,skill_lv);
 
 					tsd->reproduceskill_idx = idx;
 					pc_setglobalreg(tsd,SKILL_VAR_REPRODUCE,skill_id);
@@ -2582,7 +2615,8 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 	struct map_session_data *sd, *tsd;
 	int64 damage;
 	int8 rmdamage=0;//magic reflected
-	int type, shadow_flag = 0;
+	int type;
+	bool shadow_flag = false;
 	bool additional_effects = true;
 
 	if(skill_id > 0 && !skill_lv) return 0;
@@ -3194,7 +3228,15 @@ static int skill_check_unit_range2_sub (struct block_list *bl, va_list ap)
 	return 1;
 }
 
-//NOTE: 'isNearNPC' is used to check is the skill near NPC or not, if yes will use npc_isnear and range calculation [Cydh]
+/** Used to check range condition of the casted skill. Used if the skill has UF_NOFOOTSET or INF2_NO_NEARNPC
+* @param bl Object that casted skill
+* @param x Position x of the target
+* @param y Position y of the target
+* @param skill_id The casted skill
+* @param skill_lv The skill Lv
+* @param isNearNPC 'true' means, check the range between target and nearer NPC by using npc_isnear and range calculation [Cydh]
+* @return 0: No object (BL_CHAR or BL_PC) within the range. If 'isNearNPC' the target oject is BL_NPC
+*/
 static int skill_check_unit_range2 (struct block_list *bl, int x, int y, uint16 skill_id, uint16 skill_lv, bool isNearNPC)
 {
 	int range = 0, type;
@@ -5472,7 +5514,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				abra_skill_id = skill_abra_db[i].skill_id;
 				abra_skill_lv = min(skill_lv, skill_get_max(abra_skill_id));
 			} while (abra_skill_id == 0 ||
-				rnd()%10000 >= skill_abra_db[i].per[abra_skill_lv]
+				rnd()%10000 >= skill_abra_db[i].per[max(skill_lv-1,0)]
 			);
 
 			clif_skill_nodamage (src, bl, skill_id, skill_lv, 1);
@@ -16079,15 +16121,15 @@ bool skill_check_cloaking(struct block_list *bl, struct status_change_entry *sce
 * @param bl: Target
 * @param damage: Damage amount
 * @param hit
-* @return val
+* @return true - in Shadow Form state; false - otherwise
 */
-char skill_check_shadowform(struct block_list *bl, int64 damage, int hit) {
+bool skill_check_shadowform(struct block_list *bl, int64 damage, int hit) {
 	struct status_change *sc;
 
-	nullpo_retr(0, bl);
+	nullpo_retr(false,bl);
 
 	if (!damage)
-		return 0;
+		return false;
 
 	sc = status_get_sc(bl);
 
@@ -16096,14 +16138,14 @@ char skill_check_shadowform(struct block_list *bl, int64 damage, int hit) {
 
 		if( !src || src->m != bl->m ) { 
 			status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER);
-			return 0;
+			return false;
 		}
 
 		if( src && (status_isdead(src) || !battle_check_target(bl,src,BCT_ENEMY)) ) {
 			if( src->type == BL_PC )
 				((TBL_PC*)src)->shadowform_id = 0;
 			status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER);
-			return 0;
+			return false;
 		}
 
 		status_damage(bl, src, damage, 0, clif_damage(src, src, gettick(), 500, 500, damage, hit, (hit > 1 ? 8 : 0), 0), 0);
@@ -16112,9 +16154,9 @@ char skill_check_shadowform(struct block_list *bl, int64 damage, int hit) {
 			if( src->type == BL_PC )
 				((TBL_PC*)src)->shadowform_id = 0;
 		}
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 bool skill_check_camouflage(struct block_list *bl, struct status_change_entry *sce)

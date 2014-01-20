@@ -8994,7 +8994,7 @@ void clif_feel_info(struct map_session_data* sd, unsigned char feel_level, unsig
 {
 	char mapname[MAP_NAME_LENGTH_EXT];
 
-	mapindex_getmapname_ext(mapindex_id2name(sd->feel_map[feel_level].index), mapname);
+	mapindex_getmapname_ext(map[sd->feel_map[feel_level].m].name, mapname);
 	clif_starskill(sd, mapname, 0, feel_level, type ? 1 : 0);
 }
 
