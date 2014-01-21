@@ -17272,9 +17272,10 @@ BUILDIN_FUNC(setmounting) {
 	TBL_PC* sd;
 	if( (sd = script_rid2sd(st)) == NULL )
 		return 0;
-	if( sd->sc.option&(OPTION_WUGRIDER|OPTION_RIDING|OPTION_DRAGON|OPTION_MADOGEAR) )
+	if( sd->sc.option&(OPTION_WUGRIDER|OPTION_RIDING|OPTION_DRAGON|OPTION_MADOGEAR) ) {
+		clif_msgtable(sd->fd, 0x78b);
 		script_pushint(st,0);//can't mount with one of these
-	else {
+	} else {
 		if( sd->sc.option&OPTION_MOUNTING )
 			pc_setoption(sd, sd->sc.option&~OPTION_MOUNTING);//release mount
 		else

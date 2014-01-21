@@ -229,6 +229,7 @@ extern struct Battle_Config
 	int xmas_ignorepalette;	// [Valaris]
 	int summer_ignorepalette; // [Zephyrus]
 	int hanbok_ignorepalette;
+	int oktoberfest_ignorepalette;
 	int natural_healhp_interval;
 	int natural_healsp_interval;
 	int natural_heal_skill_interval;

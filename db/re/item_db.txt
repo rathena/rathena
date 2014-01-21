@@ -8887,7 +8887,7 @@
 22620,Memorial_Box,Box Of Memories,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
 22621,Squid_Bbq,Barbecued Squid,2,5000,,250,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_EXIT; /* SetBuff "EFST_JP_EVENT04" 300000 1 */ percentheal 5,5; },{},{}
 22624,Riesen_Bretzel,Riesen Bretzel,0,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 100,0; },{},{}
-22625,Oktoberfest_Bag,Oktoberfest Bag,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ /* sc_start SC_OKTOBERFEST,600000,0; */ },{},{}
+22625,Oktoberfest_Bag,Oktoberfest Bag,2,0,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_OKTOBERFEST,600000,0; },{},{}
 //
 22648,Angeling_Package,Angel Ring Package,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
 22649,Deviling_Package,Devil Ring Package,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}

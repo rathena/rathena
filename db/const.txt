@@ -44,6 +44,7 @@ Job_Ninja	25
 Job_Xmas	26
 Job_Summer	27
 Job_Hanbok	28
+Job_Oktoberfest	29
 
 Job_Novice_High	4001
 Job_Swordman_High	4002
@@ -326,6 +327,7 @@ Option_Dragon4	0x02000000
 Option_Dragon5	0x04000000
 Option_Hanbok	0x08000000
 Option_Mounting	0x10000000
+Option_Oktoberfest	0x20000000
 
 bc_all	0
 bc_map	1
@@ -1720,7 +1722,10 @@ SC_MTF_RANGEATK 582
 SC_MTF_MATK 583
 SC_MTF_MLEATKED 584
 SC_MTF_CRIDAMAGE 585
-SC_EXTREMITYFIST2	586
+SC_OKTOBERFEST	586
+SC_STRANGELIGHTS	587
+SC_DECORATION_OF_MUSIC	588
+SC_EXTREMITYFIST2	589
 
 //Status Icon
 SI_BLANK	-1
