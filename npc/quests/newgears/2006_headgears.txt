@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= 2006 Headgear
+//= 2006 Headgear Quests
 //===== By: ==================================================
 //= DiviniaRO members, cleaned by reddozen
 //===== Current Version: =====================================

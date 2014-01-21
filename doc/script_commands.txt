@@ -4973,7 +4973,7 @@ Examples:
 
 ---------------------------------------
 
-*getstatus <effect type>{,<type>};
+*getstatus(<effect type>{,<type>})
 
 Retrieve information about a specific status effect when called. Depending on <type>
 specified the function will return different information.

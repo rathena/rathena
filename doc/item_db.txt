@@ -33,8 +33,9 @@ Type:
 	7	Pet egg
 	8	Pet equipment
 	10	Ammo (Arrows/Bullets/etc)
-	11	Usable with delayed consumption (item is lost from inventory
-		after selecting a target, for use with skills and pet lures)
+	11	Usable with delayed consumption (intended for 'itemskill')
+		Items using the 'itemskill' script command are consumed after
+		selecting a target. Any other command will NOT consume the item.
 	12	Shadow Equipment
 	18	Another delayed consume that requires user confirmation before
 		using item.

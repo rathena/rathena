@@ -957,6 +957,10 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_QD_SHOT_READY] = SI_E_QD_SHOT_READY;
 	StatusIconChangeTable[SC_HEAT_BARREL_AFTER] = SI_HEAT_BARREL_AFTER;
 
+	StatusIconChangeTable[SC_QUEST_BUFF1] = SI_QUEST_BUFF1;
+	StatusIconChangeTable[SC_QUEST_BUFF2] = SI_QUEST_BUFF2;
+	StatusIconChangeTable[SC_QUEST_BUFF3] = SI_QUEST_BUFF3;
+
 	/* Other SC which are not necessarily associated to skills */
 	StatusChangeFlagTable[SC_ASPDPOTION0] = SCB_ASPD;
 	StatusChangeFlagTable[SC_ASPDPOTION1] = SCB_ASPD;
@@ -1051,6 +1055,10 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_MTF_ASPD] = SCB_ASPD|SCB_HIT;
 	StatusChangeFlagTable[SC_MTF_MATK] = SCB_MATK;
 	StatusChangeFlagTable[SC_MTF_MLEATKED] |= SCB_ALL;
+
+	StatusChangeFlagTable[SC_QUEST_BUFF1] |= SCB_BATK|SCB_MATK;
+	StatusChangeFlagTable[SC_QUEST_BUFF2] |= SCB_BATK|SCB_MATK;
+	StatusChangeFlagTable[SC_QUEST_BUFF3] |= SCB_BATK|SCB_MATK;
 
 #ifdef RENEWAL
 	// renewal EDP increases your weapon atk
@@ -5042,6 +5050,12 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 		batk += sc->data[SC_PYROCLASTIC]->val2;
 	if (sc->data[SC_ANGRIFFS_MODUS])
 		batk += sc->data[SC_ANGRIFFS_MODUS]->val2;
+	if(sc->data[SC_QUEST_BUFF1])
+		batk += sc->data[SC_QUEST_BUFF1]->val1;
+	if(sc->data[SC_QUEST_BUFF2])
+		batk += sc->data[SC_QUEST_BUFF2]->val1;
+	if(sc->data[SC_QUEST_BUFF3])
+		batk += sc->data[SC_QUEST_BUFF3]->val1;
 
 	if(sc->data[SC_INCATKRATE])
 		batk += batk * sc->data[SC_INCATKRATE]->val1/100;
@@ -5193,6 +5207,12 @@ static unsigned short status_calc_ematk(struct block_list *bl, struct status_cha
 		matk += 40 + 30 * sc->data[SC_ODINS_POWER]->val1; // 70 lvl1, 100lvl2
 	if(sc->data[SC_IZAYOI])
 		matk += 50 * sc->data[SC_IZAYOI]->val1;
+	if(sc->data[SC_QUEST_BUFF1])
+		matk += sc->data[SC_QUEST_BUFF1]->val1;
+	if(sc->data[SC_QUEST_BUFF2])
+		matk += sc->data[SC_QUEST_BUFF2]->val1;
+	if(sc->data[SC_QUEST_BUFF3])
+		matk += sc->data[SC_QUEST_BUFF3]->val1;
 	return (unsigned short)cap_value(matk,0,USHRT_MAX);
 }
 #endif
@@ -10016,6 +10036,9 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_PUSH_CART:
 			case SC_STYLE_CHANGE:
 			case SC_HEAT_BARREL_AFTER:
+			case SC_QUEST_BUFF1:
+			case SC_QUEST_BUFF2:
+			case SC_QUEST_BUFF3:
 				continue;
 		}
 
@@ -11780,6 +11803,9 @@ void status_change_clear_buffs (struct block_list* bl, int type)
 			case SC_PUSH_CART:
 			case SC_STYLE_CHANGE:
 			case SC_HEAT_BARREL_AFTER:
+			case SC_QUEST_BUFF1:
+			case SC_QUEST_BUFF2:
+			case SC_QUEST_BUFF3:
 				continue;
 
 			// Debuffs that can be removed.
