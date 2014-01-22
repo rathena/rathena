@@ -3308,10 +3308,6 @@ int parse_frommap(int fd)
 					WFIFOW(fd,2) = 14 + count*sizeof(struct status_change_data);
 					WFIFOW(fd,12) = count;
 					WFIFOSET(fd,WFIFOW(fd,2));
-
-					//Clear the data once loaded.
-					if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%d' AND `char_id`='%d'", scdata_db, aid, cid) )
-						Sql_ShowDebug(sql_handle);
 				}
 			}
 			Sql_FreeResult(sql_handle);
@@ -3715,8 +3711,10 @@ int parse_frommap(int fd)
 			cid = RFIFOL(fd, 8);
 			count = RFIFOW(fd, 12);
 
-			if( count > 0 )
-			{
+			// Whatever comes from the mapserver, now is the time to drop previous entries
+			if( Sql_Query( sql_handle, "DELETE FROM `%s` where `account_id` = %d and `char_id` = %d;", scdata_db, aid, cid ) != SQL_SUCCESS ){
+				Sql_ShowDebug( sql_handle );
+			}else if( count > 0 ){
 				struct status_change_data data;
 				StringBuf buf;
 				int i;
