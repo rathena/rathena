@@ -15,7 +15,8 @@
 //= 1.2 Added Wolf Flute trader, optimized. [Euphy]
 //= 1.2a Fixed some conditions. [Euphy]
 //============================================================ 
-
+// Falcon Flute :: falcon_flute
+//============================================================
 -	script	Falcon Flute Trader::fflute	-1,{
 	mes "[Falcon Flute Trader]";
 	if (BaseJob == Job_Hunter) {
@@ -89,6 +90,8 @@
 hu_in01,386,306,3	duplicate(fflute)	Falcon Flute Trader#fft	51
 pay_arche,91,134,3	duplicate(fflute)	Falcon Flute Trader#fft2	51
 
+// Wolf Flute :: job_ranger
+//============================================================
 tur_dun01,89,170,5	script	Expert Flute Crafter	59,{
 	if (Class == Job_Ranger || Class == Job_Ranger_T || Class == Job_Baby_Ranger) {
 		if (countitem(6124)) {

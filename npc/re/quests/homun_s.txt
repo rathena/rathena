@@ -16,7 +16,7 @@
 //= 1.2 Replaced with official script. [Euphy]
 //============================================================ 
 
-// Main NPCs
+// Main NPCs :: Homun_S
 //============================================================
 job3_gen01,12,44,3	script	Viorel#job3_gen01	542,{
 	if (countitem(6415)) {

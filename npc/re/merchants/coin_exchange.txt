@@ -15,7 +15,7 @@
 //= 1.2 Added Eclage traders (not fully complete). [Euphy]
 //============================================================
 
-// Malangdo
+// Malangdo Item Machines :: mal_yong
 //============================================================
 malangdo,220,167,5	script	Coin Exchanger CX-1	564,{
 	if (checkweight(1201,1) == 0) {
@@ -178,6 +178,8 @@ L_AddItem:
 	}
 }
 
+// Malangdo Coin Exchange :: mal_mo_coin
+//============================================================
 malangdo,236,179,5	script	Dark Merchant K	554,{
 	if (checkweight(1201,1) == 0) {
 		mes "It seems you have too much in your inventory. Let's try again after getting rid of some of your belongings.";
@@ -344,6 +346,8 @@ malangdo,233,180,3	script	Dark MachineTX100	564,{
 	close;
 }
 
+// Malangdo Can Exchange :: mal_can_rep
+//============================================================
 malangdo,175,145,4	script	Can Agency Guard	549,{
 	if (checkweight(1201,1) == 0) {
 		mes "You seem to have too many items. Give it a try after sorting out the item kinds.";
@@ -425,6 +429,8 @@ malangdo,175,145,4	script	Can Agency Guard	549,{
 	close;
 }
 
+// Malangdo Traders :: malang_trader
+//============================================================
 function	script	F_mal_coin	{
 
 // Initial dialogue and checks:

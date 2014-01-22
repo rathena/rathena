@@ -13,6 +13,8 @@
 //= 1.0 First Version. [Euphy]
 //============================================================
 
+// Main Quest :: TutorialVer2
+//============================================================
 moc_para01,34,178,3	script	Tutorial Instructor	904,{
 	if (Class == Job_Novice) {
 		// Fall through

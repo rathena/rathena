@@ -49,7 +49,7 @@ moc_fild16,124,381,4	duplicate(Continental Guard#man)	Continental Guard#man7	852
 moc_fild16,333,380,4	duplicate(Continental Guard#man)	Continental Guard#man8	852
 moc_fild01,84,19,1	duplicate(Continental Guard#man)	Continental Guard#man9	852
 
-// Pyramids Nightmare Mode
+// Pyramids Nightmare Mode :: nightmare_pry
 //============================================================
 moc_prydb1,103,54,3	script	Suspicious Cat#night	547,{
 	mes "[Suspicious Cat]";

@@ -15,7 +15,7 @@
 //= 1.1 Instance system rewrite. [Euphy]
 //============================================================ 
 
-// Instance Creation
+// Instance Creation :: md_mistwoods_enter
 //============================================================
 bif_fild01,158,340,5	script	Laphine Soldier#mist	447,{
 
@@ -168,7 +168,7 @@ bif_fild01,161,355,0	script	Log Tunnel	844,{
 	}
 }
 
-// Instance Scripts
+// Instance Scripts :: md_mistwoods_in
 //============================================================
 1@mist,89,29,0	script	#Whisper_mist	844,1,1,{
 	end;
@@ -502,6 +502,8 @@ OnMyMobDead:
 
 // Wandering Guardian Quest
 //============================================================
+
+// ----------------- Part of md_mistwoods_in -----------------
 1@mist,2,2,0	script	#Dragon Herder	844,{
 	end;
 OnInstanceInit:
@@ -747,6 +749,7 @@ OnEnable:
 	end;
 }
 
+// --------------- Part of md_mistwoods_enter ----------------
 mora,46,152,5	script	Flower Smelling Lady	510,{
 	if (ep14_1_mistwoods < 3) {
 		mes "[Flower Smell Lady]";
@@ -922,7 +925,7 @@ mora,48,152,3	script	Sharp Eyed Man	512,{
 	}
 }
 
-// Monster Spawns
+// Monster Spawns :: md_mist_mob
 //============================================================
 1@mist,1,1,0	script	#Mist Mobs Respawn1	844,{
 	end;
@@ -997,7 +1000,7 @@ OnInstanceInit:
 	end;
 }
 
-// Warp Portals
+// Warp Portals :: md_mist_in_link
 //============================================================
 bif_fild01,38,374,0	script	Mysterious Flower#ep14_1	844,{
 	mes "It's a giant flower with mysterious energy.";

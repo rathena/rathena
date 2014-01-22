@@ -16,6 +16,8 @@
 //=     The function is located in re/quests/eden/eden_vip.txt.
 //============================================================
 
+// Warpers :: acolyte_warp
+//============================================================
 prontera,98,121,4	script	Acolyte#Prtclear	90,{
 	mes "[Keiki]";
 	mes "Hello there, adventurer.";

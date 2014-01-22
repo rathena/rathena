@@ -13,6 +13,8 @@
 //= 1.0 First version. [Euphy]
 //============================================================
 
+// Main NPC :: job_ko
+//============================================================
 que_ng,75,20,3	script	Artisan Tene#ko	762,{
 	disable_items;
 	mes "[Artisan Tene]";

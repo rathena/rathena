@@ -14,6 +14,8 @@
 //=     Script is a little messy, could use some cleaning.
 //============================================================
 
+// Main NPC :: 2012_hat_quest
+//============================================================
 moc_para01,41,169,3	script	Reno#2012hat	64,{
 
 	// iRO has (very) minor differences in dialogue from the original script.

@@ -19,7 +19,7 @@
 //= 1.5 Added Izlude duplicates. [Euphy]
 //============================================================ 
 
-// Poison Herb Merchants (Guillotine Cross)
+// Poison Herb Merchants (Guillotine Cross) :: poison_herb_3rd_trader
 //============================================================
 -	script	::phs	-1,{
 	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
@@ -83,7 +83,7 @@ job3_guil01,79,96,3	duplicate(phs)	Poison Herb Merchant	877
 morocc,191,94,4	duplicate(phs)	Poison Herb Merchant#moc	877	//Official: (190,96) -> in a wall
 lhz_in02,16,205,4	duplicate(phs)	Poison Herb Merchant#lhz	877
 
-// Rune Stone Merchants (Rune Knight)
+// Rune Stone Merchants (Rune Knight) :: rune_3rd_trader
 //============================================================
 -	script	::runesale	-1,{
 	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
@@ -151,7 +151,7 @@ lhz_in02,16,205,4	duplicate(phs)	Poison Herb Merchant#lhz	877
 job3_rune01,90,62,3	duplicate(runesale)	Rune Merchant#job3	853
 prontera,168,228,3	duplicate(runesale)	Rune Merchant#prt	853
 
-// Rare Herb Merchants (Guillotine Cross)
+// Rare Herb Merchants (Guillotine Cross) :: rare_herb_3rd_trader
 //============================================================
 job3_guil01,91,93,3	script	Rare Herb Collector	49,{
 	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
@@ -214,7 +214,7 @@ job3_guil01,91,93,3	script	Rare Herb Collector	49,{
 	close;
 }
 
-// Point Merchants (Sorcerer)
+// Point Merchants (Sorcerer) :: point_3rd_trader
 //============================================================
 -	script	::pss	-1,{
 	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {

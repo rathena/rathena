@@ -14,7 +14,7 @@
 //= 1.3 Added Undersea Tunnel 6th floor warper.
 //============================================================
 
-// Undersea Tunnel Warper
+// Undersea Tunnel Warper :: iz_dun05
 //============================================================
 iz_dun04,130,234,5	script	Gatekeeper#iz_dun	413,{
 	mes "[Gatekeeper]";

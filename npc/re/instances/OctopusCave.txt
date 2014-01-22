@@ -14,7 +14,7 @@
 //= 1.1 Instance system rewrite. [Euphy]
 //============================================================ 
 
-// Instance Creation
+// Instance Creation :: oct
 //============================================================
 mal_dun01,151,235,5	script	Starfish	551,{
 
@@ -157,7 +157,7 @@ mal_dun01,153,237,5	script	Weird Entrance	844,{
 	}
 }
 
-// Instance Scripts
+// Instance Scripts :: oct_in
 //============================================================
 1@cash,199,99,0	script	oct_enter	139,4,4,{
 	end;

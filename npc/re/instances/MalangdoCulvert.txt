@@ -19,7 +19,7 @@
 //= 1.1 Instance system rewrite. [Euphy]
 //============================================================ 
 
-// Quest NPCs
+// Quest NPCs :: mal_yong
 //============================================================
 mal_in01,172,28,2	script	Albo#mal	561,{
 	if (checkweight(1201,1) == 0) {
@@ -265,7 +265,7 @@ L_CheckQuest:
 	return;
 }
 
-// Instance Creation
+// Instance Creation :: pump
 //============================================================
 mal_in01,160,34,4	script	Missing, the Cleaner	545,{
 	if (BaseLevel < 90) {
@@ -565,7 +565,7 @@ function	script	F_mal_missing	{
 	}
 }
 
-// Instance: Normal Mode
+// Instance: Normal Mode :: in_pump1
 //============================================================
 1@pump,84,105,4	script	Missing, the Cleaner#nf	545,{
 	mes "[Missing, the Cleaner]";
@@ -895,7 +895,7 @@ OnInstanceInit:
 	end;
 }
 
-// Instance: Hard Mode
+// Instance: Hard Mode :: in_pump2
 //============================================================
 2@pump,39,88,4	duplicate(Missing, the Cleaner#nf)	Missing, the Cleaner#hf	545
 

@@ -565,7 +565,7 @@ L_Exchange:
 moc_para01,41,169,2	script	Kafra Stacker#eden	749,{
 	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
 		mes "- Wait a moment! -";
-		mes "- Currently you'r carrying -";
+		mes "- Currently you're carrying -";
 		mes "- too much weight in items. -";
 		mes "- Please come back later -";
 		mes "- after you put some into Kafra storage. -";

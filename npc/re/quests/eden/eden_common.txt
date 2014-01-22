@@ -21,6 +21,8 @@
 //= 1.8 Updated to match the latest official script. [Euphy]
 //============================================================
 
+// Common NPCs :: lv_tre
+//============================================================
 moc_para01,27,35,5	script	Secretary Lime Evenor	952,{
 	if (checkweight(1201,1) == 0 || (MaxWeight - Weight) < 2000) {
 		mes "- Wait a minute !! -";

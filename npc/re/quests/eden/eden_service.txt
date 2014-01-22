@@ -13,6 +13,8 @@
 //= 1.1 Replaced 2nd NPC with duplicate function. [Masao]
 //============================================================
 
+// Goods Cabinets :: pare_service
+//============================================================
 -	script	Goods Cabinet#00::pggc	-1,{
 	mes "It is a Goods Storage Cabinet.";
 	mes "A message is written on a piece of paper.";
