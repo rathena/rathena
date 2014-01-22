@@ -21,6 +21,17 @@
 1015,0,0,0,0,0,0,0,"Your first quest"
 1016,0,0,0,0,0,0,0,"Gaining base levels"
 
+// 2010 Headgear Quests
+1100,0,1178,20,0,0,0,0,"Solo in the Sphinx Dungeon!"
+1101,0,1164,20,0,0,0,0,"Soloing Sphinx Dungeon!"
+1102,0,1194,40,0,0,0,0,"Soloing Clock Tower!"
+1103,0,1213,30,0,0,0,0,"Soloing Clock Tower!"
+1104,0,1519,20,0,0,0,0,"Solo at Louyang!"
+1105,0,1513,50,0,0,0,0,"Solo at Louyang!"
+1106,0,1375,20,0,0,0,0,"Solo at Amatsu Dungeon!"
+1107,0,1403,40,0,0,0,0,"Solo at Amatsu Dungeon!"
+1108,0,1519,20,0,0,0,0,"Solo at Louyang!"
+
 // Ropewa & Yuridi Quest
 1109,0,0,0,0,0,0,0,"Ropewa & Yuridi - Survivors of the Labyrinth"
 1110,0,0,0,0,0,0,0,"Ropewa & Yuridi - Victims of the Labyrinth"
@@ -602,7 +613,12 @@
 //4303,0,0,0,0,0,0,0,""
 //4304,0,0,0,0,0,0,0,""
 //4305,0,0,0,0,0,0,0,""
+4999,0,0,0,0,0,0,0,"Extermination Crisis"
 5000,0,0,0,0,0,0,0,"The Crow of the Fate - 7"
+5001,0,1037,50,0,0,0,0,"King Froggie VII's revenge"
+5002,0,0,0,0,0,0,0,"The hero of the frogs"
+5003,0,0,0,0,0,0,0,"Frog Hiding Skill"
+5004,0,1099,50,0,0,0,0,"Food Shortage"
 
 // Researcher's Quest
 5016,0,0,0,0,0,0,0,"Bring me a Research Tool Bag"

@@ -3282,8 +3282,8 @@ REPLACE INTO `item_db_re` VALUES (5444,'Hair_Brush','Hair Brush',4,20,NULL,100,N
 REPLACE INTO `item_db_re` VALUES (5445,'Candy_Cane_In_The_Mouth','Candy Cane In Mouth',4,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,63,2,1,NULL,'0',0,446,'bonus bMaxSP,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5446,'Cat_Foot_Hairpin','Catfoot Hairpin',4,20,NULL,200,NULL,0,NULL,1,0xFFFFFFFF,63,2,256,NULL,'0',1,447,'bonus bFlee,5; bonus bFlee2,3;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5447,'Frog_Cap','Frog Hat',4,20,NULL,500,NULL,3,NULL,0,0xFFFFFFFF,63,2,256,NULL,'70',1,448,'bonus bMdef,1; bonus2 bAddRace,RC_Insect,12; bonus2 bMagicAddRace,RC_Insect,12;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (5448,'Solo_Play_Box1','Soloplay Box1',4,20,NULL,300,NULL,0,NULL,1,0xFFFFFFFF,63,2,769,NULL,'0',1,449,'skill "RG_GRAFFITI",1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (5449,'Solo_Play_Box2','Soloplay Box2',4,20,NULL,300,NULL,0,NULL,1,0xFFFFFFFF,63,2,769,NULL,'0',1,450,'skill "RG_GRAFFITI",1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (5448,'Solo_Play_Box1','Indifferent Solo Hat',4,20,NULL,300,NULL,0,NULL,1,0xFFFFFFFF,63,2,769,NULL,'0',1,449,'skill "RG_GRAFFITI",1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (5449,'Solo_Play_Box2','Angry Solo Hat',4,20,NULL,300,NULL,0,NULL,1,0xFFFFFFFF,63,2,769,NULL,'0',1,450,'skill "RG_GRAFFITI",1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5450,'Sun_Cap','Solar Hat',4,20,NULL,1000,NULL,0,NULL,0,0xFFFFFFFE,63,2,256,NULL,'20',1,451,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5451,'Dragonhelm_Gold','RWC 2008 Dragon Helm Gold',4,20,NULL,2500,NULL,7,NULL,1,0xFFFFFFFF,63,2,256,NULL,'1',0,452,'bonus bAspdRate,10; bonus bAllStats,3; bonus2 bAddRace,RC_DemiHuman,5; bonus2 bAddRace,RC_Player,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5452,'Dragonhelm_Silver','RWC 2008 Dragon Helm Silver',4,20,NULL,2500,NULL,5,NULL,1,0xFFFFFFFF,63,2,256,NULL,'1',0,453,'bonus bAspdRate,7; bonus bAllStats,2; bonus2 bAddRace,RC_DemiHuman,3; bonus2 bAddRace,RC_Player,3;',NULL,NULL);
