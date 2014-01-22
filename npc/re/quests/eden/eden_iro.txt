@@ -471,7 +471,7 @@ moc_para01,50,39,4	script	Eve Natalia	882,{
 // Bubble Gum & Battle Manual Exchanger
 //============================================================
 moc_para01,48,184,2	script	Gum & Manual Exchanger	562,{
-	if (Weight < MaxWeight / 2) {
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
 		mes "You're carrying too many items right now.";
 		close;	
 	}
@@ -563,6 +563,14 @@ L_Exchange:
 // Kafra Stacker
 //============================================================
 moc_para01,41,169,2	script	Kafra Stacker#eden	749,{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
+		mes "- Wait a moment! -";
+		mes "- Currently you'r carrying -";
+		mes "- too much weight in items. -";
+		mes "- Please come back later -";
+		mes "- after you put some into Kafra storage. -";
+		close;
+	}
 	mes "[Toma]";
 	mes "I can take your non-stacking Kafra Consumables";
 	mes "and make them fit neatly into stacks!";
@@ -590,6 +598,11 @@ moc_para01,41,169,2	script	Kafra Stacker#eden	749,{
 // Code Redeemer
 //============================================================
 moc_para01,38,162,2	script	Code the Redeemer#Give1	405,{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
+		mes "^0000ffHold it right there!";
+		mes "You're carrying too many items and don't have enough inventory space to receive any rewards. Please make more inventory space available and come back to take this challenge.^000000";
+		close;
+	}
 	mes "[Code the Redeemer]";
 	mes "Welcome, "+strcharinfo(0)+"!";
 	mes "I've been expecting you.";
