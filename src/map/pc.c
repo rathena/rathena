@@ -7009,21 +7009,25 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		&& !map[sd->bl.m].flag.noexppenalty && !map_flag_gvg(sd->bl.m)
 		&& !sd->sc.data[SC_BABY] && !sd->sc.data[SC_LIFEINSURANCE])
 	{
-		unsigned int base_penalty = battle_config.death_penalty_base, job_penalty = battle_config.death_penalty_job;
+		uint32 base_penalty = battle_config.death_penalty_base;
+		uint32 job_penalty = battle_config.death_penalty_job;
+		uint32 zeny_penalty = battle_config.zeny_penalty;
+
 #ifdef VIP_ENABLE
 		if(pc_isvip(sd)){
-			base_penalty = base_penalty*battle_config.vip_exp_penalty_base;
-			job_penalty = job_penalty*battle_config.vip_exp_penalty_job;
+			base_penalty *= battle_config.vip_exp_penalty_base;
+			job_penalty *= battle_config.vip_exp_penalty_job;
 		}
 		else {
-			base_penalty = base_penalty*battle_config.vip_exp_penalty_base_normal;
-			job_penalty = job_penalty*battle_config.vip_exp_penalty_job_normal;
+			base_penalty *= battle_config.vip_exp_penalty_base_normal;
+			job_penalty *= battle_config.vip_exp_penalty_job_normal;
 		}
 #endif
+
 		if (base_penalty > 0) {
 			switch (battle_config.death_penalty_type) {
-				case 1: base_penalty = (uint32) ((double)(pc_nextbaseexp(sd) * base_penalty)/10000); break;
-				case 2: base_penalty = (uint32) ((double)(sd->status.base_exp * base_penalty)/10000); break;
+				case 1: base_penalty = (uint32) ( pc_nextbaseexp(sd) * ( base_penalty / 10000. ) ); break;
+				case 2: base_penalty = (uint32) ( sd->status.base_exp * ( base_penalty / 10000. ) ); break;
 			}
 			if (base_penalty > 0){ //recheck after altering to speedup
 				if (battle_config.pk_mode && src && src->type==BL_PC)
@@ -7032,10 +7036,11 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 				clif_updatestatus(sd,SP_BASEEXP);
 			}
 		}
+
 		if(job_penalty > 0) {
 			switch (battle_config.death_penalty_type) {
-				case 1: job_penalty = (uint32) ((double)(pc_nextjobexp(sd) * job_penalty)/10000); break;
-				case 2: job_penalty = (uint32) ((double)(sd->status.job_exp * job_penalty)/10000); break;
+				case 1: job_penalty = (uint32) ( pc_nextjobexp(sd) * ( job_penalty / 10000. ) ); break;
+				case 2: job_penalty = (uint32) ( sd->status.job_exp * ( job_penalty /10000. ) ); break;
 			}
 			if(job_penalty) {
 				if (battle_config.pk_mode && src && src->type==BL_PC)
@@ -7044,10 +7049,11 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 				clif_updatestatus(sd,SP_JOBEXP);
 			}
 		}
-		if(battle_config.zeny_penalty > 0 && !map[sd->bl.m].flag.nozenypenalty) {
-			base_penalty = (unsigned int)((double)sd->status.zeny * (double)battle_config.zeny_penalty / 10000.);
-			if(base_penalty)
-				pc_payzeny(sd, base_penalty, LOG_TYPE_PICKDROP_PLAYER, NULL);
+
+		if( zeny_penalty > 0 && !map[sd->bl.m].flag.nozenypenalty) {
+			zeny_penalty = (uint32)( sd->status.zeny * ( zeny_penalty / 10000. ) );
+			if(zeny_penalty)
+				pc_payzeny(sd, zeny_penalty, LOG_TYPE_PICKDROP_PLAYER, NULL);
 		}
 	}
 
