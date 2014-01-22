@@ -15,6 +15,8 @@
 //= 1.0a Added 'delequip' command. [Euphy]
 //============================================================ 
 
+// Enchanter NPC :: mal_yong
+//============================================================
 malangdo,213,167,4	script	Mayomayo#mal	555,{
 	disable_items;
 	if (checkweight(1201,1) == 0) {

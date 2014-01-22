@@ -10505,7 +10505,7 @@ mal_in01,19,213,1	script	Waiting Cat#gamer	555,{
 	close;
 }
 
-// Archangel Wing Enchants :: enc_angel
+// Archangel Wing Enchants :: 2011_enc_angel02
 //============================================================
 malangdo,234,153,6	script	Notice Board#mal	837,{
 	mes "^0000FFThere's a hastily written message on this bulletin board.^000000";

@@ -15,6 +15,8 @@
 //= 1.1 Updated dialogue. [Euphy]
 //============================================================ 
 
+// Main NPC :: catalog_merchant
+//============================================================
 moc_para01,22,16,5	script	Catalog Magician#catal01	704,{
 	if (!checkweight(1301,3)) {
 		mes "- You have too many items. Please make space. -";

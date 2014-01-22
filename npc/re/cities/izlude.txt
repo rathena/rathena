@@ -82,7 +82,7 @@ prt_fild08b,350,219,4	duplicate(Guard_izlude)	Guard#izlude_b	105
 prt_fild08c,350,219,4	duplicate(Guard_izlude)	Guard#izlude_c	105
 prt_fild08d,350,219,4	duplicate(Guard_izlude)	Guard#izlude_d	105
 
-// Channel Warper
+// Channel Warper :: channel
 //============================================================
 function	script	F_IzludeChannel	{
 	mes "[Izlude Copy Warper]";

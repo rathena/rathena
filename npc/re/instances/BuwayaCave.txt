@@ -14,6 +14,8 @@
 //= 1.0 First version. [Euphy]
 //============================================================ 
 
+// Instance Creation :: buwaya_dun
+//============================================================
 ma_fild02,312,317,5	script	Guard#buwaya_cave	570,{
 	if (BaseLevel < 130) {
 		mes "[Guard]";
@@ -152,6 +154,8 @@ OnTouch:
 	}
 }
 
+// Instance Scripts :: buwaya_in
+//============================================================
 1@ma_c,33,112,0	script	#damage	139,7,7,{
 	end;
 OnInstanceInit:

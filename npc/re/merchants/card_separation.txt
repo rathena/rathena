@@ -356,5 +356,5 @@
 	mes "That is all for the results of the card separation. Please come again.";
 	close;
 }
-malangdo,215,166,4	duplicate(CardSeparation_mal)	Jeremy#pa0829	553
-malangdo,208,166,6	duplicate(CardSeparation_mal)	Richard#pa0829	559
+malangdo,215,166,4	duplicate(CardSeparation_mal)	Jeremy#pa0829	553	// Armors :: mal_yong
+malangdo,208,166,6	duplicate(CardSeparation_mal)	Richard#pa0829	559	// Weapons :: soc_weapon

@@ -16,7 +16,7 @@
 //= 1.2 Added VIP features. [Euphy]
 //============================================================ 
 
-// Instance Creation
+// Instance Creation :: ma_hos_enter
 //============================================================
 ma_dun01,147,10,5	script	Nurse#ma_dun01	569,{
 	if (BaseLevel < 100) end;
@@ -349,6 +349,8 @@ L_Complete:
 	return;
 }
 
+// GM Management NPC :: ma_hos_enter_2
+//============================================================
 sec_in02,27,30,0	script	Bangungot Gate	406,{
 	callfunc "F_GM_NPC";
 	mes "Password";
@@ -372,7 +374,7 @@ sec_in02,27,30,0	script	Bangungot Gate	406,{
 	}
 }
 
-// Instance Scripts
+// Instance Scripts :: ma_hos
 //============================================================
 1@ma_h,43,157,0	script	#Memorial Start	139,2,2,{
 	end;

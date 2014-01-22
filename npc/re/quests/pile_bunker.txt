@@ -13,6 +13,8 @@
 //= 2.2 Updated to match the official script. [Euphy]
 //============================================================ 
 
+// Main NPC :: mech_book
+//============================================================
 yuno,179,174,4	script	Gomer	851,{
 	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 1000) {
 		mes "[Gomer]";
