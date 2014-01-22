@@ -324,9 +324,9 @@ einbroch,248,205,3	duplicate(idRO_rental)	Rental Shop#einbr-1	874
 //============================================================
 //Einbeich
 //============================================================
-einbeich,174,132,8	duplicate(idRO_kafra)	Kafra Shop#ein	721
-einbeich,175,132,8	duplicate(idRO_kafra2)	Kafra Shop 2#ein	80
-einbeich,170,132,8	duplicate(idRO_rental)	Rental Shop#ein	874
+einbech,174,132,8	duplicate(idRO_kafra)	Kafra Shop#ein	721
+einbech,175,132,8	duplicate(idRO_kafra2)	Kafra Shop 2#ein	80
+einbech,170,132,8	duplicate(idRO_rental)	Rental Shop#ein	874
 
 //============================================================
 //Lighthalzen
