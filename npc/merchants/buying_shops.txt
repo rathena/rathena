@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Kisuka
 //===== Current Version: =====================================
-//= 1.1a
+//= 1.1b
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -12,11 +12,18 @@
 //= 1.0 First version. [Kisuka]
 //= 1.1 Added Catalog Magician. [Euphy]
 //= 1.1a Moved Catalog Magician to Renewal path. [Euphy]
+//= 1.1b Added missing weight checks. [Euphy]
 //============================================================ 
 
-// Black Marketeer (Buy Licenses - Non-Merchant Classes)
+// Black Marketeer (Buy Licenses - Non-Merchant Classes) :: qskill_buy_store
 //============================================================ 
 que_job01,68,84,1	script	Black Marketeer#Buying	881,{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2400) {
+		mes "[Mr. Jass]";
+		mes "You're too greedy, even compared to someone like me!";
+		mes "Why don't you go lighten your bag first?";
+		close;
+	}
 	if (getskilllv("ALL_BUYING_STORE") == 1) {
 		mes "[Mr. Jass]";
 		mes "Hey, you already made a contract with Hugh.";
@@ -63,7 +70,7 @@ que_job01,68,84,1	script	Black Marketeer#Buying	881,{
 					mes "Ha... Ha ha ha!";
 					mes "Mr. Hugh, I'll take over your license business. You'll see!";
 					mes "*Giggle Giggle*";
-					getitem 12548,.@input; //Shabby_Purchase_Street
+					getitem 12548,.@input; //Buy_Market_Permit2
 					set Zeny,Zeny-(.@input*500);
 				}
 				close;
@@ -95,6 +102,10 @@ que_job01,68,84,1	script	Black Marketeer#Buying	881,{
 // Purchasing Team (Learn Skill - Merchant Classes)
 //============================================================ 
 alberta_in,58,52,4	script	Purchasing Team#Buying	59,{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2400) {
+		mes "- You cannot converse or perform the quest because you are carrying too many items. -";
+		close;
+	}
 	mes "[Mr. Hugh]";
 	if (BaseClass == Job_Merchant && getskilllv("MC_VENDING") >= 1) {
 		if (getskilllv("ALL_BUYING_STORE") == 1) {
@@ -127,7 +138,7 @@ alberta_in,58,52,4	script	Purchasing Team#Buying	59,{
 						mes "but you don't seem to have enough money.";
 					} else {
 						mes "Thank you for your patronage.";
-						getitem 6377,.@input; //Buy_Stall_Permit
+						getitem 6377,.@input; //Buy_Market_Permit
 						set Zeny,Zeny-(.@input*200);
 					}
 					close;
