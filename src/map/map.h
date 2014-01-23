@@ -910,6 +910,8 @@ extern char mob_db2_db[32];
 extern char mob_skill_db_db[32];
 extern char mob_skill_db_re_db[32];
 extern char mob_skill_db2_db[32];
+extern char vendings_db[32];
+extern char vending_items_db[32];
 
 void do_shutdown(void);
 

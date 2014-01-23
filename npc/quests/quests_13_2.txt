@@ -2548,7 +2548,7 @@ OnTouch:
 	}
 }
 
-spl_in02,236,86,0	warp	terrashome_out	1,1,splendide,285,139;
+spl_in02,236,86,0	warp	terrashome_out	1,1,splendide,285,139
 
 spl_fild01,357,44,0	script	???#ep13mdf01	844,{
 	if (checkweight(1201,2) == 0) {

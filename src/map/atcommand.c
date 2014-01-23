@@ -5653,6 +5653,13 @@ ACMD_FUNC(autotrade) {
 	}
 
 	sd->state.autotrade = 1;
+
+	if( battle_config.feature_autotrade && 
+		sd->state.vending && 
+		Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", "vendings", sd->vender_id ) != SQL_SUCCESS ){
+		Sql_ShowDebug( mmysql_handle );
+	}
+
 	if( battle_config.at_timeout ) {
 		int timeout = atoi(message);
 		status_change_start(NULL,&sd->bl, SC_AUTOTRADE, 10000, 0, 0, 0, 0, ((timeout > 0) ? min(timeout,battle_config.at_timeout) : battle_config.at_timeout) * 60000, 0);
@@ -5660,6 +5667,8 @@ ACMD_FUNC(autotrade) {
 
 	channel_pcquit(sd,0xF); //leave all chan
 	clif_authfail_fd(sd->fd, 15);
+	
+	chrif_save(sd,3);
 
 	return 0;
 }

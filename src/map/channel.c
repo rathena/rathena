@@ -119,6 +119,8 @@ int channel_delete(struct Channel *channel) {
 int channel_join(struct Channel *channel, struct map_session_data *sd) {
 	if(!channel || !sd)
 		return -1;
+	if(sd->state.autotrade)
+		return 0; // fake success
 	if(channel_haspc(channel,sd)==1)
 		return -2;
 

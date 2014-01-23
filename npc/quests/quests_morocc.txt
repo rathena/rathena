@@ -3646,8 +3646,8 @@ que_ba,181,14,7	script	Researcher#bpast_2_2	865,{
 	close;
 }
 
-que_ba,183,25,0	warp	#bpast_2to3_1	1,1,que_ba,72,25;
-que_ba,183,52,0	warp	#bpast_2to3_2	1,1,que_ba,72,51;
+que_ba,183,25,0	warp	#bpast_2to3_1	1,1,que_ba,72,25
+que_ba,183,52,0	warp	#bpast_2to3_2	1,1,que_ba,72,51
 
 que_ba,102,56,0	script	#3room_barmunt	-1,3,3,{
 //OnTouch2:

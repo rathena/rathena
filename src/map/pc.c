@@ -1328,6 +1328,10 @@ int pc_reg_received(struct map_session_data *sd)
 
 		clif_changeoption( &sd->bl );
 	}
+	
+	if( sd->state.autotrade ){
+		clif_parse_LoadEndAck(sd->fd, sd);
+	}
 
 	return 1;
 }
@@ -10224,9 +10228,9 @@ int pc_readdb(void)
 		int n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
 		char* dbsubpath1 = aMalloc(n1+1);
 		char* dbsubpath2 = aMalloc(n2+1);
-		safesnprintf(dbsubpath1,n1+1,"%s/%s",db_path,dbsubpath[i]);
+		safesnprintf(dbsubpath1,n1+1,"%s%s",db_path,dbsubpath[i]);
 		if(i==0) safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
-		else safesnprintf(dbsubpath2,n2,"%s/%s",db_path,dbsubpath[i]);
+		else safesnprintf(dbsubpath2,n2,"%s%s",db_path,dbsubpath[i]);
 
 		s = pc_read_statsdb(dbsubpath2,s,i);
 #ifdef RENEWAL_ASPD
