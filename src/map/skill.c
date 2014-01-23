@@ -11863,6 +11863,11 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, uint16 skill
 		int val2 = 0;
 		int alive = 1;
 
+		// are the coordinates out of range?
+		if( ux <= 0 || uy <= 0 || ux >= map[sd->bl.m].xs || uy >= map[sd->bl.m].ys ){
+			continue;
+		}
+
 		if( !group->state.song_dance && !map_getcell(src->m,ux,uy,CELL_CHKREACH) )
 			continue; // don't place skill units on walls (except for songs/dances/encores)
 		if( battle_config.skill_wall_check && unit_flag&UF_PATHCHECK && !path_search_long(NULL,src->m,ux,uy,x,y,CELL_CHKWALL) )
