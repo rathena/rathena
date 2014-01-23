@@ -6151,7 +6151,8 @@ int checkweight_sub(TBL_PC *sd,int nbargs,int32 *eitemid,int32 *eamount)
 {
 	struct item_data* id = NULL;
 	int nameid,amount;
-	uint16 amount2=0,slots,weight=0,i;
+	uint32 weight=0;
+	uint16 amount2=0,slots,i;
 
 	slots = pc_inventoryblank(sd); //nb of empty slot
 
