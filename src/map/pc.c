@@ -3854,10 +3854,14 @@ int pc_payzeny(struct map_session_data *sd,int zeny, enum e_log_pick_type type, 
 
 	return 0;
 }
-/*==========================================
- * Cash Shop
- *------------------------------------------*/
 
+/** Makes player pays by using cash points
+ * @param sd Player who pays
+ * @param price How many point player has to pay
+ * @param points
+ * @param type e_log_pick_type
+ * @return -2: Paying negative points, -1: Not enough points, otherwise is succes (cash+points)
+ */
 int pc_paycash(struct map_session_data *sd, int price, int points, e_log_pick_type type ){
 	int cash;
 	nullpo_retr(-1,sd);

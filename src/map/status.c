@@ -7221,7 +7221,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 * @param src: Source of the status change [PC|MOB|HOM|MER|ELEM|NPC]
 * @param bl: Target of the status change (See: enum sc_type)
 * @param type: Status change (SC_*)
-* @param rate: Initial percentage rate of affecting bl
+* @param rate: Initial percentage rate of affecting bl (0~10000)
 * @param val1~4: Depends on type of status change
 * @param tick: Initial duration that the status change affects bl
 * @param flag: Value which determines what parts to calculate

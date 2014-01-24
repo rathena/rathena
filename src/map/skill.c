@@ -507,6 +507,9 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 	if (skill_id == AL_TELEPORT && sd->skillitem == skill_id && sd->skillitemlv > 2)
 		return false; // Teleport lv 3 bypasses this check.[Inkfish]
 
+	if (map[m].flag.noskill)
+		return true;
+
 	// Epoque:
 	// This code will compare the player's attack motion value which is influenced by ASPD before
 	// allowing a skill to be cast. This is to prevent no-delay ACT files from spamming skills such as
@@ -643,7 +646,7 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 			break;
 
 	}
-	return (map[m].flag.noskill);
+	return false;
 }
 
 /** Check if the homunculus skill is ok to be processed
@@ -9789,32 +9792,24 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 
-	case MH_SILENT_BREEZE: {
-			 struct status_change *ssc = status_get_sc(src);
-			 struct block_list *m_bl = battle_get_master(src);
-			 int heal;
-			 if(tsc){
-				 const enum sc_type scs[] = {
-				 SC_MANDRAGORA, SC_HARMONIZE, SC_DEEPSLEEP, SC_VOICEOFSIREN, SC_SLEEP, SC_CONFUSION, SC_HALLUCINATION
-				};
-				 for (i = 0; i < ARRAYLENGTH(scs); i++) {
-					 if (tsc->data[scs[i]]) status_change_end(bl, scs[i], INVALID_TIMER);
-				 }
-				 if (!tsc->data[SC_SILENCE]) //put inavoidable silence on target
-					 status_change_start(src,bl, SC_SILENCE, 100, skill_lv, 0,0,0, skill_get_time(skill_id, skill_lv),1|2|8);
-			 }
-			 heal = status_get_sp(src) + status_get_lv(src); //cur_sp+blvl @TODO need real value
-			 status_heal(bl, heal, 0, 7);
+	case MH_SILENT_BREEZE:
+		{
+			//Silences the homunculus and target
+			status_change_start(src,src,SC_SILENCE,10000,skill_lv,0,0,0,skill_get_time(skill_id,skill_lv),0);
+			status_change_start(src,bl,SC_SILENCE,10000,skill_lv,0,0,0,skill_get_time(skill_id,skill_lv),0);
 
-			 //now inflict silence on everyone
-			 if(ssc && !ssc->data[SC_SILENCE]) //put inavoidable silence on homun
-				status_change_start(src, src, SC_SILENCE, 100, skill_lv, 0,0,0, skill_get_time(skill_id, skill_lv),1|2|8);
-			 if(m_bl) {
-				 struct status_change *msc = status_get_sc(m_bl);
-				 if(msc && !msc->data[SC_SILENCE]) //put inavoidable silence on master
-					 status_change_start(src, m_bl, SC_SILENCE, 100, skill_lv, 0,0,0, skill_get_time(skill_id, skill_lv),1|2|8);
-			 }
-			 if (hd)
+			//Recover the target's HP
+			status_heal(bl,status_get_lv(src)+status_get_sp(src),0,3); //(custom)
+
+			//Removes these SC from target
+			if (tsc) {
+				const enum sc_type scs[] = {
+					SC_MANDRAGORA, SC_HARMONIZE, SC_DEEPSLEEP, SC_VOICEOFSIREN, SC_SLEEP, SC_CONFUSION, SC_HALLUCINATION
+				};
+				for (i = 0; i < ARRAYLENGTH(scs); i++)
+					if (tsc->data[scs[i]]) status_change_end(bl, scs[i], INVALID_TIMER);
+			}
+			if (hd)
 				skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 		}
 		break;
@@ -11864,7 +11859,7 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, uint16 skill
 		int alive = 1;
 
 		// are the coordinates out of range?
-		if( ux <= 0 || uy <= 0 || ux >= map[sd->bl.m].xs || uy >= map[sd->bl.m].ys ){
+		if( ux <= 0 || uy <= 0 || ux >= map[src->m].xs || uy >= map[src->m].ys ){
 			continue;
 		}
 
