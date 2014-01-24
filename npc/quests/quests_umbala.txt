@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 2.2a
 //===== Compatible With: ===================================== 
-//= rAthena 7.15 +
+//= rAthena Project; 7.15 +
 //===== Description: ========================================= 
 //= [Official Conversion]
 //= Umbalian Language Quest, Umbala Skeletal Gate Quest,

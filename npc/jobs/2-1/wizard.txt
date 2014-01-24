@@ -6,7 +6,7 @@
 //===== Current Version: ===================================== 
 //= 3.3
 //===== Compatible With: ===================================== 
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= [Official Conversion]
 //= Job Change quest for Wizard class.

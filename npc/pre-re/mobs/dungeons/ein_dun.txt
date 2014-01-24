@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.5
 //===== Compatible With: =====================================
-//= Any Athena Version
+//= rAthena Project
 //===== Additional Comments: =================================
 //= 1.0 spawn N and spawn delays aren't yet correct, so I set
 //=     respawn delays quite big for now [Lupus]

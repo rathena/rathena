@@ -83,7 +83,7 @@ struct weapon_data {
 		short per;
 		short value;
 		unsigned type:1;
-	} hp_drain_race[RC_ALL], sp_drain_race[RC_ALL], hp_drain_class[CLASS_ALL], sp_drain_class[CLASS_ALL];
+	} hp_drain_race[RC_MAX], sp_drain_race[RC_MAX], hp_drain_class[CLASS_MAX], sp_drain_class[CLASS_MAX];
 
 	struct {
 		short class_, rate;
@@ -114,7 +114,8 @@ struct s_addeffectonskill {
 
 struct s_add_drop {
 	short id, group;
-	int race, rate, class_;
+	int rate;
+	int race, class_; //bitwise value of 1<<x
 };
 
 struct s_autobonus {
@@ -264,7 +265,8 @@ struct map_session_data {
 	uint16 skill_id_dance,skill_lv_dance;
 	short cook_mastery; // range: [0,1999] [Inkfish]
 	struct skill_cooldown_entry * scd[MAX_SKILLCOOLDOWN]; // Skill Cooldown
-	int cloneskill_id, reproduceskill_id;
+	int cloneskill_idx, ///Stores index of copied skill by Intimidate/Plagiarism
+		reproduceskill_idx; ///Stores index of copied skill by Reproduce
 	int menuskill_id, menuskill_val, menuskill_val2;
 
 	int invincible_timer;
@@ -311,6 +313,7 @@ struct map_session_data {
 	int magic_atk_ele[ELE_NONE];
 	int critaddrace[RC_MAX];
 	int expaddrace[RC_MAX];
+	int expaddclass[CLASS_MAX];
 	int ignore_mdef_by_race[RC_MAX];
 	int ignore_mdef_by_class[CLASS_MAX];
 	int ignore_def_by_race[RC_MAX];
@@ -865,10 +868,10 @@ bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd,
 
 int pc_updateweightstatus(struct map_session_data *sd);
 
-int pc_addautobonus(struct s_autobonus *bonus,char max,const char *script,short rate,unsigned int dur,short atk_type,const char *o_script,unsigned short pos,bool onskill);
-int pc_exeautobonus(struct map_session_data* sd,struct s_autobonus *bonus);
+bool pc_addautobonus(struct s_autobonus *bonus,char max,const char *script,short rate,unsigned int dur,short atk_type,const char *o_script,unsigned short pos,bool onskill);
+void pc_exeautobonus(struct map_session_data* sd,struct s_autobonus *bonus);
 int pc_endautobonus(int tid, unsigned int tick, int id, intptr_t data);
-int pc_delautobonus(struct map_session_data* sd,struct s_autobonus *bonus,char max,bool restore);
+void pc_delautobonus(struct map_session_data* sd,struct s_autobonus *bonus,char max,bool restore);
 
 int pc_bonus(struct map_session_data*,int,int);
 int pc_bonus2(struct map_session_data *sd,int,int,int);

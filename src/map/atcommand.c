@@ -433,7 +433,7 @@ ACMD_FUNC(where)
 	nullpo_retr(-1, sd);
 	memset(atcmd_player_name, '\0', sizeof atcmd_player_name);
 
-	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
+	if (!message || !*message || sscanf(message, "%23s[^\n]", atcmd_player_name) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,910)); // Please enter a player name (usage: @where <char name>).
 		return -1;
 	}
@@ -968,7 +968,7 @@ ACMD_FUNC(jobchange)
 		}
 	}
 
-    if (job == JOB_KNIGHT2 || job == JOB_CRUSADER2 || job == JOB_WEDDING || job == JOB_XMAS || job == JOB_SUMMER || job == JOB_HANBOK
+    if (job == JOB_KNIGHT2 || job == JOB_CRUSADER2 || job == JOB_WEDDING || job == JOB_XMAS || job == JOB_SUMMER || job == JOB_HANBOK || job == JOB_OKTOBERFEST
         || job == JOB_LORD_KNIGHT2 || job == JOB_PALADIN2 || job == JOB_BABY_KNIGHT2 || job == JOB_BABY_CRUSADER2 || job == JOB_STAR_GLADIATOR2
 		 || (job >= JOB_RUNE_KNIGHT2 && job <= JOB_MECHANIC_T2) || (job >= JOB_BABY_RUNE2 && job <= JOB_BABY_MECHANIC2))
 	{ // Deny direct transformation into dummy jobs
@@ -2807,7 +2807,7 @@ ACMD_FUNC(char_ban)
 {
 	char * modif_p;
 	int32 timediff=0; //don't set this as uint as we may want to decrease banned time
-	int bantype=2; //2=account block, 6=char specific
+	int bantype=0; //2=account block, 6=char specific
 	char output[256];
 
 	nullpo_retr(-1, sd);
@@ -2880,7 +2880,7 @@ ACMD_FUNC(char_unblock)
  * char unban command (usage: charunban <player_name>)
  *------------------------------------------*/
 ACMD_FUNC(char_unban){
-	int unbantype=4;
+	int unbantype=0;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
@@ -4373,12 +4373,12 @@ ACMD_FUNC(loadnpc)
 ACMD_FUNC(unloadnpc)
 {
 	struct npc_data *nd;
-	char NPCname[NAME_LENGTH+1];
+	char NPCname[NAME_LENGTH];
 	nullpo_retr(-1, sd);
 
 	memset(NPCname, '\0', sizeof(NPCname));
 
-	if (!message || !*message || sscanf(message, "%24[^\n]", NPCname) < 1) {
+	if (!message || !*message || sscanf(message, "%23[^\n]", NPCname) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,1133)); // Please enter a NPC name (usage: @unloadnpc <NPC_name>).
 		return -1;
 	}
@@ -5653,6 +5653,13 @@ ACMD_FUNC(autotrade) {
 	}
 
 	sd->state.autotrade = 1;
+
+	if( battle_config.feature_autotrade && 
+		sd->state.vending && 
+		Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", "vendings", sd->vender_id ) != SQL_SUCCESS ){
+		Sql_ShowDebug( mmysql_handle );
+	}
+
 	if( battle_config.at_timeout ) {
 		int timeout = atoi(message);
 		status_change_start(NULL,&sd->bl, SC_AUTOTRADE, 10000, 0, 0, 0, 0, ((timeout > 0) ? min(timeout,battle_config.at_timeout) : battle_config.at_timeout) * 60000, 0);
@@ -5660,6 +5667,8 @@ ACMD_FUNC(autotrade) {
 
 	channel_pcquit(sd,0xF); //leave all chan
 	clif_authfail_fd(sd->fd, 15);
+	
+	chrif_save(sd,3);
 
 	return 0;
 }
@@ -7942,7 +7951,7 @@ ACMD_FUNC(duel)
 	}
 
 	if( message[0] ) {
-		if(sscanf(message, "%d", &maxpl) >= 1) {
+		if(sscanf(message, "%u", &maxpl) >= 1) {
 			if(maxpl < 2 || maxpl > 65535) {
 				clif_displaymessage(fd, msg_txt(sd,357)); // "Duel: Invalid value."
 				return 0;
@@ -8653,7 +8662,7 @@ static void atcommand_commands_sub(struct map_session_data* sd, const int fd, At
 	if ( atcmd_binding_count ) {
 		int i, count_bind, gm_lvl = pc_get_group_level(sd);
 		for( i = count_bind = 0; i < atcmd_binding_count; i++ ) {
-			if ( gm_lvl >= ( type -1 ? atcmd_binding[i]->level2 : atcmd_binding[i]->level ) ) {
+			if ( gm_lvl >= ( (type - 1) ? atcmd_binding[i]->level2 : atcmd_binding[i]->level ) ) {
 				unsigned int slen = strlen(atcmd_binding[i]->command);
 				if ( count_bind == 0 ) {
 					cur = line_buff;
@@ -9143,12 +9152,12 @@ ACMD_FUNC(fontcolor)
 ACMD_FUNC(langtype)
 {
 	char langstr[8];
-	int i=0, test=0;
+	int i=0, fail=0;
 
 	memset(langstr, '\0', sizeof(langstr));
 
 	if(sscanf(message, "%3s", langstr) >= 1){
-		int lang=-1;
+		int lang=0;
 		lang = msg_langstr2langtype(langstr); //Switch langstr to associated langtype
 		if( msg_checklangtype(lang,false) == 1 ){ //Verify it's enabled and set it
 			char output[100];
@@ -9166,9 +9175,9 @@ ACMD_FUNC(langtype)
 	//wrong or no entry
 	clif_displaymessage(fd,msg_txt(sd,460)); // Please enter a valid language (usage: @langtype <language>).
 	clif_displaymessage(fd,msg_txt(sd,464)); // ---- Available languages:
-	while(test!=-1){ //out of range
-		test = msg_checklangtype(i,false);
-		if(test == 1)
+	while(fail != -1){ //out of range
+		fail = msg_checklangtype(i,false);
+		if(fail == 1)
 			clif_displaymessage(fd,msg_langtype2langstr(i));
 		i++;
 	}

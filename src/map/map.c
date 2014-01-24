@@ -81,6 +81,8 @@ char mob_db2_db[32] = "mob_db2";
 char mob_skill_db_db[32] = "mob_skill_db";
 char mob_skill_db_re_db[32] = "mob_skill_db_re";
 char mob_skill_db2_db[32] = "mob_skill_db2";
+char vendings_db[32] = "vendings";
+char vending_items_db[32] = "vending_items";
 
 // log database
 char log_db_ip[32] = "127.0.0.1";
@@ -3380,7 +3382,7 @@ int map_config_read(char *cfgName)
 			continue;
 		if( (ptr = strstr(line, "//")) != NULL )
 			*ptr = '\n'; //Strip comments
-		if( sscanf(line, "%[^:]: %[^\t\r\n]", w1, w2) < 2 )
+		if( sscanf(line, "%1023[^:]: %1023[^\t\r\n]", w1, w2) < 2 )
 			continue;
 
 		//Strip trailing spaces
@@ -3482,7 +3484,7 @@ void map_reloadnpc_sub(char *cfgName)
 			continue;
 		if( (ptr = strstr(line, "//")) != NULL )
 			*ptr = '\n'; //Strip comments
-		if( sscanf(line, "%[^:]: %[^\t\r\n]", w1, w2) < 2 )
+		if( sscanf(line, "%1023[^:]: %1023[^\t\r\n]", w1, w2) < 2 )
 			continue;
 
 		//Strip trailing spaces
@@ -3530,7 +3532,7 @@ int inter_config_read(char *cfgName)
 	{
 		if(line[0] == '/' && line[1] == '/')
 			continue;
-		if( sscanf(line,"%[^:]: %[^\r\n]",w1,w2) < 2 )
+		if( sscanf(line,"%1023[^:]: %1023[^\r\n]",w1,w2) < 2 )
 			continue;
 
 		if(strcmpi(w1,"item_db_db")==0)
@@ -3555,6 +3557,10 @@ int inter_config_read(char *cfgName)
 			strcpy( item_cash_db_db, w2 );
 		else if( strcmpi( w1, "item_cash_db2_db" ) == 0 )
 			strcpy( item_cash_db2_db, w2 );
+		else if( strcmpi( w1, "vending_db" ) == 0 )
+			strcpy( vendings_db, w2 );
+		else if( strcmpi( w1, "vending_items_db" ) == 0 )
+			strcpy( vending_items_db, w2 );
 		else
 		//Map Server SQL DB
 		if(strcmpi(w1,"map_server_ip")==0)
@@ -3983,6 +3989,7 @@ void do_shutdown(void)
 
 int do_init(int argc, char *argv[])
 {
+	runflag = MAPSERVER_ST_STARTING;
 #ifdef GCOLLECT
 	GC_enable_incremental();
 #endif

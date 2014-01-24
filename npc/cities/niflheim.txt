@@ -6,9 +6,9 @@
 //===== Current Version: ===================================== 
 //= 1.5
 //===== Compatible With: ===================================== 
-//= [Official Conversion]
-//= rAthena SVN; Niflheim Required
+//= rAthena Project
 //===== Description: ========================================= 
+//= [Official Conversion]
 //= Official NPC's for Niflheim
 //= 1.01 Splitted file(guides, shops). Fixed rand() bugs,
 //=      missing labels bugs, optimization [Lupus]

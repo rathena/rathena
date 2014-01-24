@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.4b
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: =========================================
 //= 4 brothers give you quests to get 6 new hats (missing
 //=   from official quests)

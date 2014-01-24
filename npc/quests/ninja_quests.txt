@@ -1,13 +1,13 @@
 //===== rAthena Script =======================================
-//= Ninja quests
+//= Ninja Equipment Quests
 //===== By: ==================================================
 //= Playtester
 //===== Current Version: =====================================
 //= 1.2a
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: =========================================
-//= Ninja quests
+//= Quests for Ninja weapons and armor.
 //===== Additional Comments: =================================
 //= 1.0 Ninja Arm Guards only yet [Playtester]
 //= 1.1 Added Kaibara [Playtester]

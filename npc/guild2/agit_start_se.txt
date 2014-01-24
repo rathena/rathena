@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.0
 //===== Compatible With: =====================================
-//= rAthena SVN; RO Episode 11.3
+//= rAthena Project; RO Episode 11.3
 //===== Description: =========================================
 //= Auto-start for War of Emperium SE.
 //= For instructions, see doc/woe_time_explanation.txt.

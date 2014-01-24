@@ -277,6 +277,7 @@ int chrif_isconnected(void) {
  * Saves character data.
  * Flag = 1: Character is quitting
  * Flag = 2: Character is changing map-servers
+ * Flag = 3: Character used @autotrade
  *------------------------------------------*/
 int chrif_save(struct map_session_data *sd, int flag) {
 	uint32 mmo_charstatus_len = 0;
@@ -292,7 +293,7 @@ int chrif_save(struct map_session_data *sd, int flag) {
 		chrif_save_bsdata(sd);
 		chrif_req_login_operation(sd->status.account_id, sd->status.name, 7, 0, 2, sd->status.bank_vault); //save Bank data
 	}
-		if ( !chrif_auth_logout(sd,flag == 1 ? ST_LOGOUT : ST_MAPCHANGE) )
+		if ( flag != 3 && !chrif_auth_logout(sd,flag == 1 ? ST_LOGOUT : ST_MAPCHANGE) )
 			ShowError("chrif_save: Failed to set up player %d:%d for proper quitting!\n", sd->status.account_id, sd->status.char_id);
 	}
 
@@ -353,6 +354,11 @@ int chrif_save(struct map_session_data *sd, int flag) {
 }
 
 // connects to char-server (plaintext)
+/**
+ * Map-serv request to login into char-serv
+ * @param fd : char-serv fd to log into
+ * @return 0:request sent
+ */
 int chrif_connect(int fd) {
 	ShowStatus("Logging in to char server...\n", char_fd);
 	WFIFOHEAD(fd,60);
@@ -482,7 +488,7 @@ int chrif_connectack(int fd) {
 	static bool char_init_done = false;
 
 	if (RFIFOB(fd,2)) {
-		ShowFatalError("Connection to char-server failed %d.\n", RFIFOB(fd,2));
+		ShowFatalError("Connection to char-server failed %d, please check conf/import/map_conf userid and passwd.\n", RFIFOB(fd,2));
 		exit(EXIT_FAILURE);
 	}
 
@@ -557,6 +563,9 @@ void chrif_on_ready(void) {
 
 	//Re-save any guild castles that were modified in the disconnection time.
 	guild_castle_reconnect(-1, 0, 0);
+	
+	// Charserver is ready for this now
+	do_init_vending_autotrade();
 }
 
 
@@ -610,7 +619,7 @@ int chrif_skillcooldown_request(int account_id, int char_id) {
 /*==========================================
  * Request auth confirmation
  *------------------------------------------*/
-void chrif_authreq(struct map_session_data *sd) {
+void chrif_authreq(struct map_session_data *sd, bool autotrade) {
 	struct auth_node *node= chrif_search(sd->bl.id);
 
 	if( node != NULL || !chrif_isconnected() ) {
@@ -618,14 +627,15 @@ void chrif_authreq(struct map_session_data *sd) {
 		return;
 	}
 
-	WFIFOHEAD(char_fd,19);
+	WFIFOHEAD(char_fd,20);
 	WFIFOW(char_fd,0) = 0x2b26;
 	WFIFOL(char_fd,2) = sd->status.account_id;
 	WFIFOL(char_fd,6) = sd->status.char_id;
 	WFIFOL(char_fd,10) = sd->login_id1;
 	WFIFOB(char_fd,14) = sd->status.sex;
 	WFIFOL(char_fd,15) = htonl(session[sd->fd]->client_addr);
-	WFIFOSET(char_fd,19);
+	WFIFOB(char_fd,19) = autotrade;
+	WFIFOSET(char_fd,20);
 	chrif_sd_to_auth(sd, ST_LOGIN);
 }
 
@@ -727,9 +737,9 @@ void chrif_authfail(int fd) {/* HELLO WORLD. ip in RFIFOL 15 is not being used (
  */
 int auth_db_cleanup_sub(DBKey key, DBData *data, va_list ap) {
 	struct auth_node *node = db_data2ptr(data);
-	const char* states[] = { "Login", "Logout", "Map change" };
-
+	
 	if(DIFF_TICK(gettick(),node->node_created)>60000) {
+		const char* states[] = { "Login", "Logout", "Map change" };
 		switch (node->state) {
 			case ST_LOGOUT:
 				//Re-save attempt (->sd should never be null here).
@@ -1112,8 +1122,13 @@ int chrif_disconnectplayer(int fd) {
 	}
 
 	if (!sd->fd) { //No connection
-		if (sd->state.autotrade)
+		if (sd->state.autotrade){
+			if( sd->state.vending ){
+				vending_closevending(sd);
+			}
+
 			map_quit(sd); //Remove it.
+		}
 		//Else we don't remove it because the char should have a timer to remove the player because it force-quit before,
 		//and we don't want them kicking their previous instance before the 10 secs penalty time passes. [Skotlex]
 		return 0;
@@ -1281,9 +1296,6 @@ int chrif_save_scdata(struct map_session_data *sd) { //parses the sc_data of the
 		count++;
 	}
 
-	if (count == 0)
-		return 0; //Nothing to save.
-
 	WFIFOW(char_fd,12) = count;
 	WFIFOW(char_fd,2) = 14 +count*sizeof(struct status_change_data); //Total packet size
 	WFIFOSET(char_fd,WFIFOW(char_fd,2));
@@ -1335,7 +1347,6 @@ int chrif_load_scdata(int fd) {
 
 #ifdef ENABLE_SC_SAVING
 	struct map_session_data *sd;
-	struct status_change_data *data;
 	int aid, cid, i, count;
 
 	aid = RFIFOL(fd,4); //Player Account ID
@@ -1356,10 +1367,15 @@ int chrif_load_scdata(int fd) {
 	count = RFIFOW(fd,12); //sc_count
 
 	for (i = 0; i < count; i++) {
-		data = (struct status_change_data*)RFIFOP(fd,14 + i*sizeof(struct status_change_data));
+		struct status_change_data *data = (struct status_change_data*)RFIFOP(fd,14 + i*sizeof(struct status_change_data));
 		status_change_start(NULL,&sd->bl, (sc_type)data->type, 10000, data->val1, data->val2, data->val3, data->val4, data->tick, 1|2|4|8);
 	}
 #endif
+
+	if( sd->state.autotrade ){
+		vending_reopen( sd );
+	}
+
 	return 0;
 }
 
@@ -1367,12 +1383,10 @@ int chrif_load_scdata(int fd) {
 
 int chrif_skillcooldown_load(int fd) {
 	struct map_session_data *sd;
-	struct skill_cooldown_data *data;
 	int aid, cid, i, count;
 
 	aid = RFIFOL(fd, 4);
 	cid = RFIFOL(fd, 8);
-
 
 	sd = map_id2sd(aid);
 	if (!sd) {
@@ -1385,7 +1399,7 @@ int chrif_skillcooldown_load(int fd) {
 	}
 	count = RFIFOW(fd, 12); //sc_count
 	for (i = 0; i < count; i++) {
-		data = (struct skill_cooldown_data*) RFIFOP(fd, 14 + i * sizeof (struct skill_cooldown_data));
+		struct skill_cooldown_data *data = (struct skill_cooldown_data*) RFIFOP(fd, 14 + i * sizeof (struct skill_cooldown_data));
 		skill_blockpc_start(sd, data->skill_id, data->tick);
 	}
 	return 0;
@@ -1484,7 +1498,7 @@ void chrif_on_disconnect(void) {
 		ShowWarning("Connection to Char Server lost.\n\n");
 	chrif_connected = 0;
 
- 	other_mapserver_count = 0; //Reset counter. We receive ALL maps from all map-servers on reconnect.
+	other_mapserver_count = 0; //Reset counter. We receive ALL maps from all map-servers on reconnect.
 	map_eraseallipport();
 
 	//Attempt to reconnect in a second. [Skotlex]
@@ -1565,7 +1579,7 @@ void chrif_parse_ack_vipActive(int fd) {
  *
  *------------------------------------------*/
 int chrif_parse(int fd) {
-	int packet_len, cmd;
+	int packet_len;
 
 	// only process data from the char-server
 	if ( fd != char_fd ) {
@@ -1590,7 +1604,7 @@ int chrif_parse(int fd) {
 	}
 
 	while ( RFIFOREST(fd) >= 2 ) {
-		cmd = RFIFOW(fd,0);
+		int cmd = RFIFOW(fd,0);
 		if (cmd < 0x2af8 || cmd >= 0x2af8 + ARRAYLENGTH(packet_len_table) || packet_len_table[cmd-0x2af8] == 0) {
 			int r = intif_parse(fd); // Passed on to the intif
 

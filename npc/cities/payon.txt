@@ -6,7 +6,7 @@
 //===== Current Version: ===================================== 
 //= 2.1c
 //===== Compatible With: ===================================== 
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= Payon City Npcs
 //===== Additional Comments: ================================= 

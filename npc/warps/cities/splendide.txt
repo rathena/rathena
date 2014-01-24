@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.0
 //===== Compatible With: =====================================
-//= Any Athena Version; RO Episode 13.2+
+//= rAthena Project; RO Episode 13.2+
 //===== Description: =========================================
 //= [Official Conversion]
 //= Warp Points for Splendide

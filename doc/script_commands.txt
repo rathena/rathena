@@ -3,15 +3,15 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20131118
+//= 20140113
 //===== Description: =========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
 //============================================================
 
 This document is a reference manual for all the scripting commands and functions 
-available in current rAthena SVN. It is not a simple tutorial. When people tell 
-you to "Read The F***ing Manual", they mean this.
+available in rAthena. It is not a simple tutorial. When people tell you to
+"Read The F***ing Manual", they mean this.
 
 The information was mostly acquired through looking up how things actually work 
 in the source code of the server, which was written by many people over time, 
@@ -272,6 +272,9 @@ these floating NPC objects are for. More on that below.
 
 -%TAB%shop%TAB%<NPC Name>%TAB%<sprite id>,<itemid>:<price>{,<itemid>:<price>...}
 <map name>,<x>,<y>,<facing>%TAB%shop%TAB%<NPC Name>%TAB%<sprite id>,<itemid>:<price>{,<itemid>:<price>...}
+
+-%TAB%cashshop%TAB%<NPC Name>%TAB%<sprite id>,<itemid>:<price>{,<itemid>:<price>...}
+<map name>,<x>,<y>,<facing>%TAB%cashshop%TAB%<NPC Name>%TAB%<sprite id>,<itemid>:<price>{,<itemid>:<price>...}
 
 -%TAB%itemshop%TAB%<NPC Name>%TAB%<sprite id>,<costitemid>{:<discount>},<itemid>:<price>{,<itemid>:<price>...}
 <map name>,<x>,<y>,<facing>%TAB%itemshop%TAB%<NPC Name>%TAB%<sprite id>,<costitemid>{:<discount>},<itemid>:<price>{,<itemid>:<price>...}
@@ -4513,7 +4516,7 @@ Gives item(s) to the attached player based on item group contents.
 This is not working like 'getrandgroupitem' which only give 1 item for specified
 item group.
 
-Can use const data for 'group_id', see db/const.txt at 'Item Group ID' section
+For contants, see the "Item Group ID" section in 'db/const.txt'.
 
 ---------------------------------------
 
@@ -4988,7 +4991,7 @@ Examples:
 
 ---------------------------------------
 
-*getstatus <effect type>{,<type>};
+*getstatus(<effect type>{,<type>})
 
 Retrieve information about a specific status effect when called. Depending on <type>
 specified the function will return different information.
@@ -5190,12 +5193,12 @@ Flags: (Default is 0)
 	&8: Remove when player logs out.
 
 Types:
-	This will be used to decide negative or positive buff for 'debuff_on_logout'
+	This will be used to decide negative or positive buff for 'debuff_on_logout'.
 	0: Ignore the buff type and won't be removed if the flag is not &8 (Default)
 	1: Buff
 	2: Debuff
 
-Status_icon: See db/const.txt at 'Status Icon'. Default is SI_BLANK or -1
+Status_icon: See "Status Icon" section in 'db/const.txt'. Default is SI_BLANK (-1).
 
 Example:
 	// Apple gives you +5 Str bonus for 1 minute when it's consumed.
@@ -5916,7 +5919,7 @@ This command will broadcast a message to all or most players, similar to
 The region the broadcast is heard in (target), source of the broadcast
 and the color the message will come up as is determined by the flags.
 
-The flag values are coded as constants in db/const.txt to make them easier to use.
+The flag values are coded as constants in 'db/const.txt' to make them easier to use.
 
 Target flags:
 - bc_all: Broadcast message is sent server-wide (default).
@@ -7049,7 +7052,7 @@ mes axtoi("11");      	// Displays 17 (1 = 1, 10 = 16)
 
 ---------------------------------------
 
-*compare(<string>,<substring>)
+*compare("<string>","<substring>")
 
 This command returns 1 or 0 when the substring is in the main string (1) or not (0).
 This command is not case sensitive.
@@ -7062,6 +7065,15 @@ Examples:
 //dothat; will not be executed ('Blood butterfly' does not contain 'Bloody').
 	if (compare("Blood Butterfly","Bloody"))
 		dothat;
+
+---------------------------------------
+
+*strcmp("<string>","<string>")
+
+This command compares two strings are returns a value:
+   1: string 1 > string 2
+   0: strings are equal
+  -1: string 1 < string 2
 
 ---------------------------------------
 
@@ -7305,7 +7317,7 @@ Each of these can be 'on' or 'off'. Together they define a cell's behavior.
 
 This command lets you alter these flags for all map cells in the specified
 (x1,y1)-(x2,y2) rectangle. The 'flag' can be 0 or 1 (0:clear flag, 1:set flag).
-The 'type' defines which flag to modify. Possible options see const.txt.
+The 'type' defines which flag to modify. Possible options see 'db/const.txt'.
 
 Example:
 
@@ -7339,7 +7351,7 @@ remove a nonwalkable row of cells after the barricade mobs.
 
 This command will return 1 or 0, depending on whether the specified cell has
 the 'type' flag set or not. There are various types to check, all mimicking
-the server's cell_chk enumeration. The types can be found in db/const.txt.
+the server's cell_chk enumeration. The types can be found in 'db/const.txt'.
 
 The meaning of the individual types can be confusing, so here's an overview:
   - cell_chkwall/water/cliff
@@ -7547,6 +7559,15 @@ If parameter "HUNTING" is supplied:
 	0  = you haven't killed all of the target monsters and the time limit has not been reached.
 	1  = you haven't killed all of the target monsters but the time limit has been reached.
 	2  = you've killed all of the target monsters
+
+---------------------------------------
+
+*isbegin_quest(<ID>)
+
+Return the state of the quest: 
+	0  = Quest not started (not in quest log)
+	1  = Quest has been given (state is either "inactive" or "active")
+	2  = Quest completed
 
 ---------------------------------------
 

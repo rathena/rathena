@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 1.8a
 //===== Compatible With: ===================================== 
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= [Official Conversion]
 //= Official Cooking Quest (10.3)

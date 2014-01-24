@@ -229,6 +229,7 @@ extern struct Battle_Config
 	int xmas_ignorepalette;	// [Valaris]
 	int summer_ignorepalette; // [Zephyrus]
 	int hanbok_ignorepalette;
+	int oktoberfest_ignorepalette;
 	int natural_healhp_interval;
 	int natural_healsp_interval;
 	int natural_heal_skill_interval;
@@ -519,6 +520,11 @@ extern struct Battle_Config
 	int discount_item_point_shop;
 	int update_enemy_position;
 	int devotion_rdamage;
+
+	// autotrade persistency
+	int feature_autotrade;
+	int feature_autotrade_direction;
+	int feature_autotrade_sit;
 } battle_config;
 
 void do_init_battle(void);

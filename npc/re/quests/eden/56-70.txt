@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.5
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: =========================================
 //= Repetable Quests for Players between Baselevel 56 - 70.
 //===== Additional Comments: =================================

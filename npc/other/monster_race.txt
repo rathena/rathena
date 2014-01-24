@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 2.0
 //===== Compatible With: =====================================
-//= rAthena SVN (Trunk, r12752+)
+//= rAthena Project; SVN r12752+
 //===== Description: =========================================
 //= [Official Conversion]
 //= - Hugel Monster Races (Single and Double)
@@ -295,7 +295,7 @@ OnTimer9000:
 	function	WN	{
 		set .@n, charat(strnpcinfo(0),getstrlen(strnpcinfo(0))-1);
 		if (!getarg(0)) return .@n;
-		return ((.@n <= 3)?((.@n == 1)?"1st":((.@n == 2)?"2nd":"3rd")):.@n+"th"); 
+		return callfunc("F_GetNumSuffix",.@n);
 	}
 	
 OnInit:

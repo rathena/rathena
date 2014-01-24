@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.0
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: =========================================
 //= A series of quests introducing the major features of
 //= Ragnarok Online.
@@ -13,6 +13,8 @@
 //= 1.0 First Version. [Euphy]
 //============================================================
 
+// Main Quest :: TutorialVer2
+//============================================================
 moc_para01,34,178,3	script	Tutorial Instructor	904,{
 	if (Class == Job_Novice) {
 		// Fall through

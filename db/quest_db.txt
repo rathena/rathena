@@ -21,6 +21,17 @@
 1015,0,0,0,0,0,0,0,"Your first quest"
 1016,0,0,0,0,0,0,0,"Gaining base levels"
 
+// 2010 Headgear Quests
+1100,0,1178,20,0,0,0,0,"Solo in the Sphinx Dungeon!"
+1101,0,1164,20,0,0,0,0,"Soloing Sphinx Dungeon!"
+1102,0,1194,40,0,0,0,0,"Soloing Clock Tower!"
+1103,0,1213,30,0,0,0,0,"Soloing Clock Tower!"
+1104,0,1519,20,0,0,0,0,"Solo at Louyang!"
+1105,0,1513,50,0,0,0,0,"Solo at Louyang!"
+1106,0,1375,20,0,0,0,0,"Solo at Amatsu Dungeon!"
+1107,0,1403,40,0,0,0,0,"Solo at Amatsu Dungeon!"
+1108,0,1519,20,0,0,0,0,"Solo at Louyang!"
+
 // Ropewa & Yuridi Quest
 1109,0,0,0,0,0,0,0,"Ropewa & Yuridi - Survivors of the Labyrinth"
 1110,0,0,0,0,0,0,0,"Ropewa & Yuridi - Victims of the Labyrinth"
@@ -602,7 +613,12 @@
 //4303,0,0,0,0,0,0,0,""
 //4304,0,0,0,0,0,0,0,""
 //4305,0,0,0,0,0,0,0,""
+4999,0,0,0,0,0,0,0,"Extermination Crisis"
 5000,0,0,0,0,0,0,0,"The Crow of the Fate - 7"
+5001,0,1037,50,0,0,0,0,"King Froggie VII's revenge"
+5002,0,0,0,0,0,0,0,"The hero of the frogs"
+5003,0,0,0,0,0,0,0,"Frog Hiding Skill"
+5004,0,1099,50,0,0,0,0,"Food Shortage"
 
 // Researcher's Quest
 5016,0,0,0,0,0,0,0,"Bring me a Research Tool Bag"
@@ -728,7 +744,35 @@
 5145,0,0,0,0,0,0,0,"Prototype-(3)"
 5146,0,0,0,0,0,0,0,"Battle test"
 
-//5304,0,0,0,0,0,0,0,""
+// 2012 Headgear Quests
+5161,86400,0,0,0,0,0,0,"Low Level collection request[Stand by]"
+5162,0,1164,100,0,0,0,0,"Low Level collection request"
+5163,0,1102,100,0,0,0,0,"Low Level collection request"
+5164,0,1322,100,0,0,0,0,"Low Level collection request"
+5165,0,1386,100,0,0,0,0,"Low Level collection request"
+5166,0,1117,100,0,0,0,0,"Low Level collection request"
+5167,0,1155,100,0,0,0,0,"Low Level collection request"
+5168,0,1269,100,0,0,0,0,"Low Level collection request"
+5169,86400,0,0,0,0,0,0,"Mid-Level collection request[Stand by]"
+5170,0,1776,100,0,0,0,0,"Mid-Level collection request"
+5171,0,1198,100,0,0,0,0,"Mid-Level collection request"
+5172,0,1784,100,0,0,0,0,"Mid-Level collection request"
+5173,0,1316,100,0,0,0,0,"Mid-Level collection request"
+5174,86400,0,0,0,0,0,0,"High level collectiong request[Stand by]"
+5175,0,1106,100,0,0,0,0,"High level collection request"
+5176,0,1148,100,0,0,0,0,"High level collection request"
+5177,0,1995,100,0,0,0,0,"High level collection request"
+5178,0,1310,100,0,0,0,0,"High level collection request"
+5179,0,1163,100,0,0,0,0,"Highest level collection request"
+5180,0,1993,100,0,0,0,0,"Highest level collection request"
+5181,0,1297,100,0,0,0,0,"Highest level collection request"
+5182,0,1699,100,0,0,0,0,"Highest level collection request"
+5222,0,0,0,0,0,0,0,"Saving the energy crystals"
+5223,0,0,0,0,0,0,0,"Saving the energy crystals"
+5224,0,0,0,0,0,0,0,"Saving the energy crystals"
+5225,7200,0,0,0,0,0,0,"Saving energy crystal[Stand by]"
+5226,7200,0,0,0,0,0,0,"Saving energy crystal[Stand by]"
+5227,7200,0,0,0,0,0,0,"Saving energy crystal[Stand by]"
 
 6000,0,0,0,0,0,0,0,"Job Change to Taekwon"
 6001,0,0,0,0,0,0,0,"Job Change to Taekwon"
@@ -2026,6 +2070,7 @@
 11337,0,0,0,0,0,0,0,"Dreaming boy"
 
 //11366,0,0,0,0,0,0,0,""
+11378,0,0,0,0,0,0,0,"Trick or treat" // Halloween Event 2013
 
 12000,0,0,0,0,0,0,0,"An old friend"
 12001,0,0,0,0,0,0,0,"Digotz, Maku's old friend"

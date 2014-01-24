@@ -146,17 +146,18 @@ TK_JUMPKICK,3 // Flying Kick
 
 // Ninja
 NJ_ZENYNAGE,3     // Throw Zeny
-NJ_TATAMIGAESHI,3 // Flip Tatami
-NJ_KASUMIKIRI,3   // Haze Slasher
-NJ_SHADOWJUMP,3   // Shadow Slash
-NJ_UTSUSEMI,3     // Blaze Shield
-NJ_KOUENKA,3      // Flaming Petals
-NJ_BAKUENRYU,3    // Exploding Dragon
-NJ_HYOUSENSOU,3   // Freezing Spear
-NJ_HYOUSYOURAKU,3 // Snow Flake Draft
+NJ_TATAMIGAESHI,3 // Improvised Defense
+NJ_KASUMIKIRI,3   // Vanishing Slash
+NJ_SHADOWJUMP,3   // Shadow Leap
+NJ_KIRIKAGE,3     // Shadow Slash
+NJ_UTSUSEMI,3     // Cicada Skin Sheeding
+NJ_KOUENKA,3      // Crimson Fire Petal
+NJ_BAKUENRYU,3    // Raging Fire Dragon
+NJ_HYOUSENSOU,3   // Spear of Ice
+NJ_HYOUSYOURAKU,3 // Ice Meteor
 NJ_HUUJIN,3       // Wind Blade
-NJ_RAIGEKISAI,3   // Lightning Jolt
-NJ_KAMAITACHI,3   // First Wind
+NJ_RAIGEKISAI,3   // Lightning Strike of Destruction
+NJ_KAMAITACHI,3   // Kamaitachi
 
 // 2nd Job Quest Skills
 KN_CHARGEATK,3     // Charge Attack
@@ -167,8 +168,8 @@ MO_KITRANSLATION,3 // Excruciating Palm
 
 // Rune Knight
 RK_SONICWAVE,2     // Sonic Wave
-RK_WINDCUTTER,2    // Ignition Break
-RK_IGNITIONBREAK,2 // Wind Cutter
+RK_WINDCUTTER,2    // Wind Cutter
+RK_IGNITIONBREAK,2 // Ignition Break
 
 // Guillotine Cross
 GC_CROSSIMPACT,2   // Cross Impact

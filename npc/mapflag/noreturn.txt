@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.6
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= Disables the following items:
 //=   Butterfly Wing (602), Siege Teleport Scroll (14591),

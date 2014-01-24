@@ -640,7 +640,7 @@ static bool grfio_parse_restable_row(const char* row)
 	char local[256];
 	FILELIST* entry;
 
-	if( sscanf(row, "%[^#\r\n]#%[^#\r\n]#", w1, w2) != 2 )
+	if( sscanf(row, "%255[^#\r\n]#%255[^#\r\n]#", w1, w2) != 2 )
 		return false;
 
 	if( strstr(w2, ".gat") == NULL && strstr(w2, ".rsw") == NULL )
@@ -790,7 +790,7 @@ void grfio_init(const char* fname)
 			if( line[0] == '/' && line[1] == '/' )
 				continue; // skip comments
 
-			if( sscanf(line, "%[^:]: %[^\r\n]", w1, w2) != 2 )
+			if( sscanf(line, "%1023[^:]: %1023[^\r\n]", w1, w2) != 2 )
 				continue; // skip unrecognized lines
 
 			// Entry table reading

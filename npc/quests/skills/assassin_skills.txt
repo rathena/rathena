@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 1.5
 //===== Compatible With: ===================================== 
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= [Official Conversion]
 //= Quests for skills: Venom Knife, Sonic Acceleration
@@ -170,7 +170,7 @@ in_moc_16,14,27,5	script	Assassin#realman	884,{
 					mes "the Venom Knife skill from";
 					mes "me first. Then, you can talk";
 					mes "to Esmille, the beautiful";
-					mes "Assassin Cross right next to^FFFFFF ^000000 me, to learn Sonic Acceleration.";
+					mes "Assassin Cross right next to me, to learn Sonic Acceleration.";
 					next;
 					break;
 				case 2:
@@ -186,7 +186,7 @@ in_moc_16,14,27,5	script	Assassin#realman	884,{
 					mes "This Venom Knife skill was";
 					mes "developed with this weakness";
 					mes "in long range attacking in mind. Basically, we use the Envenom";
-					mes "skill on a knife and throw it at^FFFFFF ^000000 a distant enemy to poison them.";
+					mes "skill on a knife and throw it at a distant enemy to poison them.";
 					next;
 					break;
 				case 3:
@@ -309,7 +309,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 				mes "Sonic Blow skill. The skill";
 				mes "I will teach you is completely";
 				mes "useless unless you learn how";
-				mes "to perform a Sonic Blow. I shall^FFFFFF ^000000 be waiting right here till then.";
+				mes "to perform a Sonic Blow. I shall be waiting right here till then.";
 				close;
 			}
 			mes "[Esmille]";
@@ -486,8 +486,8 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 			mes "[Esmille]";
 			mes "That jewel is yours";
 			mes "to keep. In truth, I don't";
-			mes "really need any treasure, just^FFFFFF ^000000 some proof of your qualification.";
-			mes "It looks like you're ready for me^FFFFFF ^000000 to teach you Sonic Acceleration.";
+			mes "really need any treasure, just some proof of your qualification.";
+			mes "It looks like you're ready for me to teach you Sonic Acceleration.";
 			set ASSN_SK,6;
 			next;
 			mes "[Esmille]";
@@ -642,7 +642,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 				mes "that you're so enthusiastic";
 				mes "about learning this skill.";
 				mes "But first, there we need to";
-				mes "take care of the prerequisites... ^FFFFFF ^000000";
+				mes "take care of the prerequisites...";
 				next;
 				if (getskilllv("AS_SONICBLOW") == 0) {
 					mes "[Esmille]";
@@ -650,7 +650,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 					mes "Sonic Blow skill. The skill";
 					mes "I will teach you is completely";
 					mes "useless unless you learn how";
-					mes "to perform a Sonic Blow. I shall^FFFFFF ^000000 be waiting right here till then.";
+					mes "to perform a Sonic Blow. I shall be waiting right here till then.";
 					close;
 				}
 				mes "[Esmille]";

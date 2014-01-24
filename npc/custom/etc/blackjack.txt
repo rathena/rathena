@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.0
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: =========================================
 //= Black Jack card game.  Gameplay based off standard casino
 //= black jack rules.  Dealer must have at least 17 to stay and will
@@ -14,7 +14,7 @@
 //= Currently does not allow for "insurance", or "splitting"
 //= of pairs.
 //===== Additional Comments: =================================
-//= 
+//= 1.0 First version.
 //============================================================
 
 cmd_in02,188,89,1	script	Black Jack Dealer	57,{

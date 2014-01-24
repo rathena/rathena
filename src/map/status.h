@@ -685,6 +685,14 @@ typedef enum sc_type {
 	SC_MTF_MLEATKED,
 	SC_MTF_CRIDAMAGE,
 
+	SC_OKTOBERFEST,
+	SC_STRANGELIGHTS,
+	SC_DECORATION_OF_MUSIC,
+
+	SC_QUEST_BUFF1,
+	SC_QUEST_BUFF2,
+	SC_QUEST_BUFF3,
+
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2,
 #endif
@@ -1567,7 +1575,7 @@ enum sc_opt3 {
 enum e_option {
 	OPTION_NOTHING		= 0x00000000,
 	OPTION_SIGHT		= 0x00000001,
-	OPTION_HIDE		= 0x00000002,
+	OPTION_HIDE			= 0x00000002,
 	OPTION_CLOAK		= 0x00000004,
 	OPTION_FALCON		= 0x00000010,
 	OPTION_RIDING		= 0x00000020,
@@ -1577,11 +1585,11 @@ enum e_option {
 	OPTION_RUWACH		= 0x00002000,
 	OPTION_CHASEWALK	= 0x00004000,
 	OPTION_FLYING		= 0x00008000, //Note that clientside Flying and Xmas are 0x8000 for clients prior to 2007.
-	OPTION_XMAS		= 0x00010000,
+	OPTION_XMAS			= 0x00010000,
 	OPTION_TRANSFORM	= 0x00020000,
 	OPTION_SUMMER		= 0x00040000,
 	OPTION_DRAGON1		= 0x00080000,
-	OPTION_WUG		= 0x00100000,
+	OPTION_WUG			= 0x00100000,
 	OPTION_WUGRIDER		= 0x00200000,
 	OPTION_MADOGEAR		= 0x00400000,
 	OPTION_DRAGON2		= 0x00800000,
@@ -1590,6 +1598,7 @@ enum e_option {
 	OPTION_DRAGON5		= 0x04000000,
 	OPTION_HANBOK		= 0x08000000,
 	OPTION_MOUNTING		= 0x10000000,
+	OPTION_OKTOBERFEST	= 0x20000000,
 
 #ifndef NEW_CARTS
 	OPTION_CART1	= 0x00000008,
@@ -1739,7 +1748,7 @@ struct status_data {
 	unsigned char
 		def_ele, ele_lv,
 		size, race,
-		class_;
+		class_; /// Class_Normal, Class_Boss, Class_Guardian
 
 	struct weapon_atk rhw, lhw; //Right Hand/Left Hand Weapon.
 };
@@ -1825,6 +1834,8 @@ sc_type status_skill2sc(int skill);
 int status_sc2skill(sc_type sc);
 unsigned int status_sc2scb_flag(sc_type sc);
 int status_type2relevant_bl_types(int type);
+
+int StatusIconChangeTable[SC_MAX];          /// status -> "icon" (icon is a bit of a misnomer, since there exist values with no icon associated)
 
 int status_damage(struct block_list *src,struct block_list *target,int64 dhp,int64 dsp, int walkdelay, int flag);
 //Define for standard HP damage attacks.

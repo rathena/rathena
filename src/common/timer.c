@@ -457,7 +457,6 @@ void split_time(int timein, int* year, int* month, int* day, int* hour, int* min
  */
 double solve_time(char* modif_p) {
 	double totaltime = 0;
-	int value = 0;
 	struct tm then_tm;
 	time_t now = time(NULL);
 	time_t then = now;
@@ -466,7 +465,7 @@ double solve_time(char* modif_p) {
 	nullpo_retr(0,modif_p);
 
 	while (modif_p[0] != '\0') {
-		value = atoi(modif_p);
+		int value = atoi(modif_p);
 		if (value == 0)
 			modif_p++;
 		else {

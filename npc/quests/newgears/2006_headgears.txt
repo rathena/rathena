@@ -1,11 +1,11 @@
 //===== rAthena Script =======================================
-//= 2006 Headgear
+//= 2006 Headgear Quests
 //===== By: ==================================================
 //= DiviniaRO members, cleaned by reddozen
 //===== Current Version: =====================================
 //= 1.4
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: =========================================
 //= [Official Conversion]
 //= Censor Bar, Feather Beret, Valk. Helm, Hahoe Mask,
