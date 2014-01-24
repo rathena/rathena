@@ -150,5 +150,6 @@ List of GM Management NPCs (incomplete)
 --------------------------
 - Monster Race Manager
 - Vote Globalvar Girl#yuno (disabled)
+- 2013questreset2#xmas (event, disabled)
 
 */

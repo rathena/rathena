@@ -1143,6 +1143,8 @@ IG_Bi_Hwang_Scroll	382
 IG_Jung_Bi_Scroll	383
 IG_Je_Un_Scroll	384
 IG_Yong_Kwang_Scroll	385
+IG_HALLOWEEN_G_BOX	386
+IG_Solo_Christmas_Gift	387
 
 SC_ALL	-1
 SC_STONE	0
