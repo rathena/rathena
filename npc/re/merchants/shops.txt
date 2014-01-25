@@ -64,9 +64,9 @@ izlude_a,128,158,7	duplicate(Vendor from Milk Ranch#i)	Vendor from Milk Ranch#a	
 izlude_b,128,158,7	duplicate(Vendor from Milk Ranch#i)	Vendor from Milk Ranch#b	90
 izlude_c,128,158,7	duplicate(Vendor from Milk Ranch#i)	Vendor from Milk Ranch#c	90
 izlude_d,128,158,7	duplicate(Vendor from Milk Ranch#i)	Vendor from Milk Ranch#d	90
-izlude_in,72,98,4	shop	Pet Groomer#iz	124,537:-1,643:-1,10013:-1,10014:-1,554:-1,6113:-1,6114:-1,6115:-1
+izlude_in,72,98,3	shop	Pet Groomer#iz	124,537:-1,643:-1,10013:-1,10014:-1,554:-1,6113:-1,6114:-1,6115:-1
 izlude_in,57,110,0	shop	Tool Dealer#iz	47,611:-1,501:-1,502:-1,503:-1,504:-1,506:-1,645:-1,656:-1,601:-1,602:-1,1065:-1,1750:-1
-izlude_in,72,110,3	shop	Trading Merchant#iz	900,13200:-1,13201:-1,13202:-1,13150:-1,13102:-1,13151:-1,13154:-1,13155:-1,13163:-1,13165:-1,13168:-1
+izlude_in,72,102,3	shop	Trading Merchant#iz	900,13200:-1,13201:-1,13202:-1,13150:-1,13102:-1,13151:-1,13154:-1,13155:-1,13163:-1,13165:-1,13168:-1
 
 //=======================================================
 // Juno
