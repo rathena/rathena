@@ -2741,6 +2741,10 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 				sd->bonus.add_varcast += val;
 			break;
 	#endif
+		case SP_ADDMAXWEIGHT:
+			if (sd->state.lr_flag != 2)
+				sd->max_weight += val;
+			break;
 		default:
 			ShowWarning("pc_bonus: unknown type %d %d !\n",type,val);
 			break;
@@ -4522,7 +4526,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 
 	/* on restricted maps the item is consumed but the effect is not used */
 	if (!pc_has_permission(sd,PC_PERM_ITEM_UNCONDITIONAL) && itemdb_isNoEquip(id,sd->bl.m)) {
-		if( battle_config.allow_consume_restricted_item ) {
+		if( battle_config.allow_consume_restricted_item && !id->flag.delay_consume ) { //need confirmation for delayed consumption items
 			clif_useitemack(sd,n,item.amount-1,true);
 			pc_delitem(sd,n,1,1,0,LOG_TYPE_CONSUME);
 		}

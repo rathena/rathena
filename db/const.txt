@@ -647,6 +647,8 @@ bExpAddClass	2069
 bAddClassDropItem	2070
 bAddClassDropItemGroup	2071
 
+bAddMaxWeight	2072
+
 EQI_HEAD_TOP	1
 EQI_ARMOR	2
 EQI_HAND_L	3
@@ -1145,6 +1147,7 @@ IG_Je_Un_Scroll	384
 IG_Yong_Kwang_Scroll	385
 IG_HALLOWEEN_G_BOX	386
 IG_Solo_Christmas_Gift	387
+IG_Sg_Weapon_Supply_Box	388
 
 SC_ALL	-1
 SC_STONE	0
