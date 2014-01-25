@@ -18131,7 +18131,7 @@ BUILDIN_FUNC(vip_status) {
 			if (pc_isvip(sd)) {
 				time_t viptime_remain = sd->vip.time - now;
 				int year=0,month=0,day=0,hour=0,min=0,sec=0;
-				split_time(viptime_remain,&year,&month,&day,&hour,&min,&sec);
+				split_time((int)viptime_remain,&year,&month,&day,&hour,&min,&sec);
 				safesnprintf(vip_str,sizeof(vip_str),"%d-%d-%d %d:%d",year,month,day,hour,min);
 				script_pushstrcopy(st, vip_str);
 			} else

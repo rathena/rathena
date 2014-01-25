@@ -571,7 +571,8 @@ struct map_session_data {
 
 	int storage_size; /// Holds player storage size (VIP system).
 #ifdef VIP_ENABLE
-	struct vip_info  vip;
+	struct vip_info vip;
+	bool disableshowrate; //State to disable clif_display_pinfo(). [Cydh]
 #endif
 	///Timed bonus 'bonus_script' struct [Cydh]
 	struct s_script {

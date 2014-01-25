@@ -1056,6 +1056,10 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 		sd->state.showexp = 1;
 	if (battle_config.disp_zeny)
 		sd->state.showzeny = 1;
+#ifdef VIP_ENABLE
+	if (!battle_config.vip_disp_rate)
+		sd->disableshowrate = 1;
+#endif
 
 	if (!(battle_config.display_skill_fail&2))
 		sd->state.showdelay = 1;

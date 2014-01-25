@@ -9233,7 +9233,7 @@ ACMD_FUNC(vip) {
 		int year,month,day,hour,minute,second;
 		char timestr[21];
 		
-		split_time(pl_sd->vip.time-now,&year,&month,&day,&hour,&minute,&second);
+		split_time((int)(pl_sd->vip.time-now),&year,&month,&day,&hour,&minute,&second);
 		sprintf(atcmd_output,msg_txt(pl_sd,705),year,month,day,hour,minute); // Your VIP status is valid for %d years, %d months, %d days, %d hours and %d minutes.
 		clif_displaymessage(pl_sd->fd,atcmd_output);
 		timestamp2string(timestr,20,pl_sd->vip.time,"%Y-%m-%d %H:%M");
@@ -9248,6 +9248,21 @@ ACMD_FUNC(vip) {
 		}
 	}
 	chrif_req_login_operation(pl_sd->status.account_id, pl_sd->status.name, 6, vipdifftime, 7, 0); 
+	return 0;
+}
+
+/** Enable/disable rate info */
+ACMD_FUNC(showrate) {
+	nullpo_retr(-1,sd);
+	if (!sd->disableshowrate) {
+		sprintf(atcmd_output,msg_txt(sd,718)); //Personal rate information is not displayed now.
+		sd->disableshowrate = 1;
+	}
+	else {
+		sprintf(atcmd_output,msg_txt(sd,719)); //Personal rate information will be shown.
+		sd->disableshowrate = 0;
+	}
+	clif_displaymessage(fd,atcmd_output);
 	return 0;
 }
 #endif
@@ -9559,6 +9574,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(langtype),
 #ifdef VIP_ENABLE
 		ACMD_DEF(vip),
+		ACMD_DEF(showrate),
 #endif
 		ACMD_DEF(fullstrip),
 	};

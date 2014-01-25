@@ -9672,8 +9672,10 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_equipcheckbox(sd);
 #endif
 #ifdef VIP_ENABLE
-		clif_display_pinfo(sd,ZC_PERSONAL_INFOMATION);
-		//clif_vip_display_info(sd,ZC_PERSONAL_INFOMATION_CHN);
+		if (!sd->disableshowrate) {
+			clif_display_pinfo(sd,ZC_PERSONAL_INFOMATION);
+			//clif_vip_display_info(sd,ZC_PERSONAL_INFOMATION_CHN);
+		}
 #endif
 		if( (battle_config.bg_flee_penalty != 100 || battle_config.gvg_flee_penalty != 100) &&
 			(map_flag_gvg(sd->state.pmap) || map_flag_gvg(sd->bl.m) || map[sd->state.pmap].flag.battleground || map[sd->bl.m].flag.battleground) )

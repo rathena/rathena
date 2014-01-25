@@ -298,6 +298,13 @@ prontera (x= 165, y= 198) 01 00 00 00 00
 
 ---------------------------------------
 
+@showrate
+
+When VIP is enabled, the rate information always be shown when every player load map.
+Use this command to disable or enable that rate information.
+
+---------------------------------------
+
 ========================
 | 2. Database Commands |
 ========================

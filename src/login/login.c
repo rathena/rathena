@@ -506,7 +506,7 @@ int chrif_sendvipdata(int fd, struct mmo_account acc, char isvip, int mapfd) {
 	WFIFOHEAD(fd,19);
 	WFIFOW(fd,0) = 0x2743;
 	WFIFOL(fd,2) = acc.account_id;
-	WFIFOL(fd,6) = acc.vip_time;
+	WFIFOL(fd,6) = (int)acc.vip_time;
 	WFIFOB(fd,10) = isvip;
 	WFIFOL(fd,11) = acc.group_id; //new group id
 	WFIFOL(fd,15) = mapfd; //link to mapserv
