@@ -5779,7 +5779,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 				val = max( val, 25 );
 			if( sc->data[SC_QUAGMIRE] || sc->data[SC_HALLUCINATIONWALK_POSTDELAY] || (sc->data[SC_GLOOMYDAY] && sc->data[SC_GLOOMYDAY]->val4) )
 				val = max( val, 50 );
-			if( sc->data[SC_DONTFORGETME] )
+			if( sc->data[SC_DONTFORGETME] && !sc->data[SC_GN_CARTBOOST] && !sc->data[SC_CARTBOOST] ) //Cart Boost cannot be affected
 				val = max( val, sc->data[SC_DONTFORGETME]->val3 );
 			if( sc->data[SC_CURSE] )
 				val = max( val, 300 );
@@ -7777,6 +7777,12 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			status_change_end(bl, SC_ADORAMUS, INVALID_TIMER);
 			return 0;
 		}
+		//Cart Boost cannot be affected by Slow grace. Assumed if player got Slow Grace first, Cart Boost is failed
+		//since Cart Boost don't cancel Slow Grace effect
+		//http://irowiki.org/wiki/Cart_Boost_%28Genetic%29 (view date: 2014-01-26)
+		//http://irowiki.org/wiki/Cart_Boost (view date: 2014-01-26)
+		if(sc->data[SC_DONTFORGETME])
+			return 0;
 		break;
 	case SC_FUSION:
 		status_change_end(bl, SC_SPIRIT, INVALID_TIMER);
