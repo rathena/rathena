@@ -7345,6 +7345,7 @@ static const struct _battle_data {
 	{ "feature.autotrade_direction",		&battle_config.feature_autotrade_direction,		4,		0,		7,				},
 	{ "feature.autotrade_sit",				&battle_config.feature_autotrade_sit,			1,		0,		1,				},
 	{ "disp_serverbank_msg",				&battle_config.disp_serverbank_msg,				0,		0,		1,				},
+	{ "warg_can_falcon",                    &battle_config.warg_can_falcon,                 0,      0,      1,              },
 };
 #ifndef STATS_OPT_OUT
 /**

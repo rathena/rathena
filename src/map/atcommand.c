@@ -4083,7 +4083,7 @@ ACMD_FUNC(mount_peco)
 		}
 		return 0;
 	}
-	if( (sd->class_&MAPID_THIRDMASK) == MAPID_RANGER && pc_checkskill(sd,RA_WUGRIDER) > 0 ) {
+	if( (sd->class_&MAPID_THIRDMASK) == MAPID_RANGER && pc_checkskill(sd,RA_WUGRIDER) > 0 && (!pc_isfalcon(sd) || battle_config.warg_can_falcon) ) {
 		if( !pc_isridingwug(sd) ) {
 			clif_displaymessage(sd->fd,msg_txt(sd,1121)); // You have mounted your Warg.
 			pc_setoption(sd, sd->sc.option|OPTION_WUGRIDER);
