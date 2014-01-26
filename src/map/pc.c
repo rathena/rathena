@@ -1903,18 +1903,21 @@ static int pc_bonus_addeff_onskill(struct s_addeffectonskill* effect, int max, e
 }
 
 /** Adjust/add drop rate modifier for player
-* @param drop: sd->add_drop (struct s_add_drop)
-* @param max: max stacked bonus
-* @param id: item id that will be dropped
+* @param drop: Player's sd->add_drop (struct s_add_drop)
+* @param max: Max bonus can be received
+* @param nameid: item id that will be dropped
 * @param group: group id
 * @param class_: target class
-* @param race: target race
-* @param rate: rate value
-* @return true/false: false if max limit is reached
+* @param race: target race. if < 0, means monster_id
+* @param rate: rate value: 1 ~ 10000. If < 0, it will be multiplied with mob level/10
 */
-static void pc_bonus_item_drop(struct s_add_drop *drop, const short max, short id, short group, int class_, int race, int rate)
+static void pc_bonus_item_drop(struct s_add_drop *drop, const short max, uint16 nameid, uint16 group, int class_, int race, int rate)
 {
-	int i;
+	uint8 i;
+	if (nameid && !group && !itemdb_exists(nameid)) {
+		ShowWarning("pc_bonus_item_drop: Invalid item id\n",nameid);
+		return;
+	}
 	//Apply config rate adjustment settings.
 	if (rate >= 0) { //Absolute drop.
 		if (battle_config.item_rate_adddrop != 100)
@@ -1929,42 +1932,35 @@ static void pc_bonus_item_drop(struct s_add_drop *drop, const short max, short i
 		if (rate > -1)
 			rate = -1;
 	}
-	for(i = 0; i < max && (drop[i].id || drop[i].group); i++) {
-		if(
-			((id && drop[i].id == id) || (group && drop[i].group == group)) &&
-			((race > RC_NONE_ && race < RC_MAX) || (class_ > CLASS_NONE && class_ < CLASS_MAX))
-		) {
-			if(race > RC_NONE_ && race < RC_MAX)
-				drop[i].race |= 1<<race;
-			if(class_ > CLASS_NONE && class_ < CLASS_MAX)
-				drop[i].class_ |= 1<<class_;
-			if(drop[i].rate > 0 && rate > 0)
-			{	//Both are absolute rates.
-				if (drop[i].rate < rate)
-					drop[i].rate = rate;
-			} else if(drop[i].rate < 0 && rate < 0) {
-				//Both are relative rates.
-				if (drop[i].rate > rate)
-					drop[i].rate = rate;
-			} else if (rate < 0) //Give preference to relative rate.
-					drop[i].rate = rate;
-			return;
+
+	//Find match entry, and adjust the rate only
+	for (i = 0; i < max; i++) {
+		if (!&drop[i] || (!drop[i].nameid && !drop[i].group))
+			continue;
+		if (drop[i].nameid == nameid &&
+			drop[i].group == group &&
+			drop[i].race == race &&
+			drop[i].class_ == class_
+			)
+		{
+			//Adjust the rate if it has same classification
+			if ((rate < 0  && drop[i].rate < 0) ||
+				(rate > 0  && drop[i].rate > 0))
+			{
+				drop[i].rate += rate;
+				return;
+			}
 		}
 	}
-	if(i == max) {
-		ShowWarning("pc_bonus: Reached max (%d) number of added drops per character!\n", max);
+	ARR_FIND(0,max,i,!&drop[i] || (drop[i].nameid == 0 && drop[i].group == 0));
+	if (i >= max) {
+		ShowWarning("pc_bonus_item_drop: Reached max (%d) number of added drops per character! (nameid:%d group:%d class_:%d race:%d rate:%d)\n",max,nameid,group,class_,race,rate);
 		return;
 	}
-	drop[i].id = id;
+	drop[i].nameid = nameid;
 	drop[i].group = group;
-	if(race>RC_NONE_ && race<RC_MAX)
-		drop[i].race = 1<<race;
-	else
-		drop[i].race = race;
-	if(class_>CLASS_NONE && class_<CLASS_MAX)
-		drop[i].class_ = 1<<class_;
-	else
-		drop[i].class_ = class_;
+	drop[i].race = race;
+	drop[i].class_ = class_;
 	drop[i].rate = rate;
 }
 

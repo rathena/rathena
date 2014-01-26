@@ -112,10 +112,13 @@ struct s_addeffectonskill {
 	unsigned char target;
 };
 
+///Struct of add drop item/group rate
 struct s_add_drop {
-	short id, group;
-	int rate;
-	int race, class_; //bitwise value of 1<<x
+	uint16 nameid, ///Item ID
+		group; ///Group ID
+	int rate; ///Rate, 1 ~ 10000, -1 ~ -100000
+	char race, ///Target Race, bitwise value of 1<<x. if < 0 means Monster ID
+		class_; ///Target Class, bitwise value of 1<<x
 };
 
 struct s_autobonus {

@@ -148,11 +148,11 @@ int itemdb_searchname_array(struct item_data** data, int size, const char *str)
 * @param sub_group: Default is 1
 * @return nameid
 */
-unsigned short itemdb_searchrandomid(int group_id, uint8 sub_group)
+unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group)
 {
 	if (sub_group)
 		sub_group -= 1;
-	if (group_id < 1 || group_id >= MAX_ITEMGROUP || !&itemgroup_db[group_id]) {
+	if (!group_id || group_id >= MAX_ITEMGROUP || !&itemgroup_db[group_id]) {
 		ShowError("itemdb_searchrandomid: Invalid group id %d\n", group_id);
 		return UNKNOWN_ITEM_ID;
 	}
@@ -179,7 +179,7 @@ uint16 itemdb_get_randgroupitem_count(uint16 group_id, uint8 sub_group, uint16 n
 	uint16 i, amt = 1;
 	if (sub_group)
 		sub_group -= 1;
-	if (group_id < 1 || group_id >= MAX_ITEMGROUP || !&itemgroup_db[group_id]) {
+	if (!group_id || group_id >= MAX_ITEMGROUP || !&itemgroup_db[group_id]) {
 		ShowError("itemdb_get_randgroupitem_count: Invalid group id %d\n", group_id);
 		return amt;
 	}

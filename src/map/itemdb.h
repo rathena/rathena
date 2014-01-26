@@ -426,7 +426,7 @@ struct item_data* itemdb_exists(int nameid);
 const char* itemdb_typename(enum item_types type);
 
 int itemdb_group_bonus(struct map_session_data* sd, int itemid);
-unsigned short itemdb_searchrandomid(int group_id, uint8 sub_group);
+unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group);
 
 #define itemdb_value_buy(n) itemdb_search(n)->value_buy
 #define itemdb_value_sell(n) itemdb_search(n)->value_sell
