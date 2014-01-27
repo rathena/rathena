@@ -9717,6 +9717,10 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	if ( !message || !*message )
 		return false;
 
+	//If cannot use atcomamnd while talking with NPC [Kichi]
+	if (sd->npc_id && sd->state.disable_atcommand_on_npc)
+		return false;
+
 	//Block NOCHAT but do not display it as a normal message
 	if ( sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCOMMAND )
 		return true;

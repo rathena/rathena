@@ -208,6 +208,7 @@ struct map_session_data {
 		unsigned int permanent_speed : 1; // When 1, speed cannot be changed through status_calc_pc().
 		unsigned int banking : 1; //1 when we using the banking system 0 when closed
 		unsigned int hpmeter_visible : 1;
+		bool disable_atcommand_on_npc; //Prevent to use atcommand while talking with NPC [Kichi]
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;

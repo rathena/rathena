@@ -3077,6 +3077,7 @@ struct script_state* script_alloc_state(struct script_code* script, int pos, int
 	st->oid = oid;
 	st->sleep.timer = INVALID_TIMER;
 	st->npc_item_flag = battle_config.item_enabled_npc;
+	st->atcommand_enable_npc = battle_config.atcommand_enable_npc;
 	return st;
 }
 
@@ -3701,6 +3702,7 @@ static void script_attach_state(struct script_state* st)
 		sd->st = st;
 		sd->npc_id = st->oid;
 		sd->npc_item_flag = st->npc_item_flag; // load default.
+		sd->state.disable_atcommand_on_npc = (pc_get_group_level(sd) >= st->atcommand_enable_npc) ? false : true;
 #ifdef SECURE_NPCTIMEOUT
 		if( sd->npc_idle_timer == INVALID_TIMER )
 			sd->npc_idle_timer = add_timer(gettick() + (SECURE_NPCTIMEOUT_INTERVAL*1000),npc_rr_secure_timeout_timer,sd->bl.id,0);
@@ -18324,6 +18326,28 @@ BUILDIN_FUNC(bonus_script) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/** Allows player to use atcommand while talking with NPC
+* @author [Cydh], [Kichi] */
+BUILDIN_FUNC(enable_command) {
+	TBL_PC* sd = script_rid2sd(st);
+
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
+	sd->state.disable_atcommand_on_npc = false;
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/** Prevents player to use atcommand while talking with NPC
+* @author [Cydh], [Kichi] */
+BUILDIN_FUNC(disable_command) {
+	TBL_PC* sd = script_rid2sd(st);
+
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
+	sd->state.disable_atcommand_on_npc = true;
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -18809,6 +18833,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(vip_time,"i?"),
 	BUILDIN_DEF(bonus_script,"si????"),
 	BUILDIN_DEF(getgroupitem,"i"),
+	BUILDIN_DEF(enable_command,""),
+	BUILDIN_DEF(disable_command,""),
 
 #include "../custom/script_def.inc"
 

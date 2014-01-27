@@ -4765,6 +4765,15 @@ Example:
 	searchstores 10,1;
 
 ---------------------------------------
+
+*enable_command;
+*disable_command;
+
+These commands toggle the ability to use atcommand while interacting with an NPC.
+
+The default setting, 'atcommand_enable_npc', is defined in 'conf/battle/gm.conf'.
+
+---------------------------------------
 //
 4,1.- End of item-related commands
 //
