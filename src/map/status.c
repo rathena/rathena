@@ -12321,7 +12321,7 @@ int status_readdb(void)
 	int i, j, k;
 	const char* dbsubpath[] = {
 		"",
-		"import"
+		"/import"
 		//add other path here
 	};
 	// Initialize databases to default
