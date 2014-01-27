@@ -2500,8 +2500,6 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += sc->data[SC_LERADSDEW]->val3;
 			if(sc->data[SC_INSPIRATION])
 				bonus += (600 * sc->data[SC_INSPIRATION]->val1);
-			if(sc->data[SC_FRIGG_SONG])
-				bonus += sc->data[SC_FRIGG_SONG]->val2;
 			if(sc->data[SC_SOLID_SKIN_OPTION])
 				bonus += 2000;
 			if(sc->data[SC_MARIONETTE])
@@ -2537,6 +2535,8 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += sc->data[SC_MERC_HPUP]->val2;
 			if(sc->data[SC_EPICLESIS])
 				bonus += sc->data[SC_EPICLESIS]->val2;
+			if(sc->data[SC_FRIGG_SONG])
+				bonus += sc->data[SC_FRIGG_SONG]->val2;
 			if(sc->data[SC_FORCEOFVANGUARD])
 				bonus += (3 * sc->data[SC_FORCEOFVANGUARD]->val1);
 			if(sc->data[SC_INSPIRATION])

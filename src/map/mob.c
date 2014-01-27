@@ -1152,17 +1152,18 @@ static int mob_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 	struct block_list **target;
 	int dist;
 
-	md=va_arg(ap,struct mob_data *);
-	target= va_arg(ap,struct block_list**);
+	md = va_arg(ap,struct mob_data *);
+	target = va_arg(ap,struct block_list**);
 
-	dist=distance_bl(&md->bl, bl);
+	dist = distance_bl(&md->bl, bl);
 	if(mob_can_reach(md,bl,dist+1, MSS_LOOT) &&
 		((*target) == NULL || !check_distance_bl(&md->bl, *target, dist)) //New target closer than previous one.
 	) {
 		(*target) = bl;
-		md->target_id=bl->id;
-		md->min_chase=md->db->range3;
-	}
+		md->target_id = bl->id;
+		md->min_chase = md->db->range3;
+	} else
+		mob_stop_walking(md, 1); // Stop walking immediately if item is no longer on the ground.
 	return 0;
 }
 
@@ -2246,6 +2247,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 			if (map[m].flag.nobaseexp || !md->db->base_exp)
 				base_exp = 0;
+			else
+				base_exp = (unsigned int)cap_value(md->db->base_exp * per * bonus/100. * map[m].adjust.bexp/100., 1, UINT_MAX);
 
 			if (map[m].flag.nojobexp || !md->db->job_exp || md->dmglog[i].flag == MDLF_HOMUN) //Homun earned job-exp is always lost.
 				job_exp = 0;
