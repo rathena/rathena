@@ -40,7 +40,7 @@ struct vending{
 	unsigned char sex;
 	char title[MESSAGE_SIZE];
 	uint32 count;
-	struct vending_entry* entries;
+	struct vending_entry** entries;
 	struct map_session_data *sd;
 };
 
@@ -468,70 +468,68 @@ void vending_reopen( struct map_session_data* sd ){
 		return;
 	}
 
-	if( vending->count <= 0 ){
-		idb_remove( autotrade_db, sd->status.char_id );
-		aFree(vending->entries);
-		aFree(vending);
-		map_quit(sd);
-		return;
-	}
+	if( vending->count > 0 ){
+		data = (uint8*)aMalloc( vending->count * 8 );
 
-	data = (uint8*)aMalloc( vending->count * 8 );
+		for( i = 0, p = data, count = vending->count; i < vending->count; i++ ){
+			entry = vending->entries[i];
 
-	for( i = 0, p = data, count = vending->count; i < vending->count; i++ ){
-		entry = &vending->entries[i];
+			index = (uint16*)(p + 0);
+			amount = (uint16*)(p + 2);
+			value = (uint32*)(p + 4);
 
-		index = (uint16*)(p + 0);
-		amount = (uint16*)(p + 2);
-		value = (uint32*)(p + 4);
+			ARR_FIND( 0, MAX_CART, entry->index, sd->status.cart[entry->index].id == entry->cartinventory_id );
 
-		ARR_FIND( 0, MAX_CART, entry->index, sd->status.cart[entry->index].id == entry->cartinventory_id );
+			if( entry->index == MAX_CART ){
+				count--;
+				continue;
+			}
 
-		if( entry->index == MAX_CART ){
-			count--;
-			continue;
+			*index = entry->index + 2;
+			*amount = entry->amount;
+			*value = entry->price;
+
+			p += 8;
 		}
 
-		*index = entry->index + 2;
-		*amount = entry->amount;
-		*value = entry->price;
+		// Set him into a hacked prevend state
+		sd->state.prevend = 1;
 
-		p += 8;
+		// Open the shop again
+		vending_openvending( sd, vending->title, data, count );
+
+		// Set him to autotrade
+		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", vendings_db, sd->vender_id ) != SQL_SUCCESS ){
+			Sql_ShowDebug( mmysql_handle );
+		}
+
+		// Make him look perfect
+		unit_setdir(&sd->bl,battle_config.feature_autotrade_direction);
+
+		if( battle_config.feature_autotrade_sit ){
+			pc_setsit(sd);
+		}
 	}
 
-	if( !count ){
-		idb_remove( autotrade_db, sd->status.char_id );
-		aFree(vending->entries);
-		aFree(vending);
-		map_quit(sd);
-		return;
-	}
-
-	vending->count = count;
-
-	// Set him into a hacked prevend state
-	sd->state.prevend = 1;
-
-	// Open the shop again
-	vending_openvending( sd, vending->title, data, vending->count );
-
-	// Make him look perfect
-	unit_setdir(&sd->bl,battle_config.feature_autotrade_direction);
-
-	if( battle_config.feature_autotrade_sit ){
-		pc_setsit(sd);
-	}
+	aFree(data);
 
 	idb_remove( autotrade_db, sd->status.char_id );
 
-	aFree(data);
+	for( i = 0; i < vending->count; i++ ){
+		aFree( vending->entries[i] );
+	}
+
 	aFree(vending->entries);
 	aFree(vending);
+
+	if( !count ){
+		map_quit(sd);
+	}
 }
 
 void do_init_vending_autotrade( void ){
 	if( battle_config.feature_autotrade ){
-		struct vending *autotraders;
+		struct vending **autotraders;
 		struct vending *vending;
 		struct vending_entry *entry;
 		uint32 count;
@@ -551,14 +549,14 @@ void do_init_vending_autotrade( void ){
 			return;
 		}
 
-		autotraders = (struct vending*)aMalloc( sizeof( struct vending ) * count );
+		autotraders = (struct vending**)aMalloc( sizeof( struct vending* ) * count );
 		i = 0;
 
 		while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) ) {
 			size_t len;
 			char* data;
 
-			vending = &autotraders[i];
+			vending = autotraders[i] = (struct vending *)aMalloc( sizeof( struct vending ) );
 
 			Sql_GetData( mmysql_handle, 0, &data, NULL ); vending->vendor_id = atoi(data);
 			Sql_GetData( mmysql_handle, 1, &data, NULL ); vending->account_id = atoi(data);
@@ -588,7 +586,7 @@ void do_init_vending_autotrade( void ){
 		Sql_FreeResult( mmysql_handle );
 
 		for( i = 0; i < count; i++ ){
-			vending = &autotraders[i];
+			vending = autotraders[i];
 
 			if( SQL_ERROR == Sql_Query(mmysql_handle, 
 				"SELECT `cartinventory_id`, `amount`, `price`"
@@ -596,7 +594,7 @@ void do_init_vending_autotrade( void ){
 				"WHERE `vending_id` = %d "
 				"ORDER BY `index` ASC;", vending_items_db, vending->vendor_id ) ) {
 				Sql_ShowDebug(mmysql_handle);
-				return;
+				continue;
 			}
 
 			vending->count = (uint32)Sql_NumRows(mmysql_handle);
@@ -609,13 +607,13 @@ void do_init_vending_autotrade( void ){
 				continue;
 			}
 		
-			vending->entries = (struct vending_entry*)aMalloc( sizeof( struct vending_entry ) * vending->count );
+			vending->entries = (struct vending_entry**)aMalloc( sizeof( struct vending_entry* ) * vending->count );
 			j = 0;
 
 			while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) ) {
 				char* data;
 
-				entry = &vending->entries[j];
+				entry = vending->entries[j] = (struct vending_entry*)aMalloc( sizeof( struct vending_entry ) );
 			
 				Sql_GetData( mmysql_handle, 0, &data, NULL ); entry->cartinventory_id = atoi(data);
 				Sql_GetData( mmysql_handle, 1, &data, NULL ); entry->amount = atoi(data);
@@ -627,6 +625,8 @@ void do_init_vending_autotrade( void ){
 			Sql_FreeResult( mmysql_handle );
 		}
 
+		aFree(autotraders);
+
 		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' autotraders.\n",count);
 	}
 	
@@ -634,7 +634,6 @@ void do_init_vending_autotrade( void ){
 	if( Sql_Query( mmysql_handle, "DELETE FROM `%s`;", vendings_db ) != SQL_SUCCESS ||
 		Sql_Query( mmysql_handle, "DELETE FROM `%s`;", vending_items_db ) != SQL_SUCCESS ){
 		Sql_ShowDebug(mmysql_handle);
-		return;
 	}
 }
 
