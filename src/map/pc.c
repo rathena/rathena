@@ -614,7 +614,7 @@ int pc_equippoint(struct map_session_data *sd,int n){
 }
 
 /**
- * Fill inventory_data with struct *item_data trough inventory (fill with struct *item)
+ * Fill inventory_data with struct *item_data through inventory (fill with struct *item)
  * @param sd : player session
  * @return 0 sucess, 1:invalid sd
  */
@@ -6001,6 +6001,10 @@ int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int
 
 	if(!battle_config.pvp_exp && map[sd->bl.m].flag.pvp)  // [MouseJstr]
 		return 0; // no exp on pvp maps
+
+	// Increase base EXP rate for VIP.
+	if (src && src->type&BL_MOB && (battle_config.vip_base_exp_increase && (sd && pc_isvip(sd))))
+		base_exp = (unsigned int)cap_value(base_exp * (battle_config.vip_base_exp_increase)/100., 1, UINT_MAX);
 
 	if(sd->status.guild_id>0)
 		base_exp-=guild_payexp(sd,base_exp);

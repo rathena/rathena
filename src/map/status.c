@@ -7103,7 +7103,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			tick_def2 = (status->vit + status->luk)*50;
 			break;
 		case SC_VOICEOFSIREN:
-			tick_def2 = (status_get_lv(bl) * 100) + ((bl->type == BL_PC)?((TBL_PC*)bl)->status.job_level * 20 : 0);
+			tick_def2 = (status_get_lv(bl) * 100) + ((bl->type == BL_PC)?((TBL_PC*)bl)->status.job_level * 200 : 0);
 			break;
 		default:
 			// Effect that cannot be reduced? Likely a buff.
@@ -11889,6 +11889,7 @@ void status_change_clear_buffs (struct block_list* bl, int type)
 int status_change_spread( struct block_list *src, struct block_list *bl )
 {
 	int i, flag = 0;
+	struct status_data* status = status_get_status_data(bl);
 	struct status_change *sc = status_get_sc(src);
 	const struct TimerData *timer;
 	unsigned int tick;
@@ -11903,6 +11904,21 @@ int status_change_spread( struct block_list *src, struct block_list *bl )
 		if( !sc->data[i] || i == SC_COMMON_MAX )
 			continue;
 
+		// Boss monsters are still resistant to Guillotine Cross poisons but not other statuses.
+		if( status->mode&MD_BOSS ) {
+			 switch( i ) {
+				case SC_PYREXIA:
+				case SC_DEATHHURT:
+				case SC_TOXIN:
+				case SC_PARALYSE:
+				case SC_VENOMBLEED:
+				case SC_MAGICMUSHROOM:
+				case SC_OBLIVIONCURSE:
+				case SC_LEECHESEND:
+					continue;
+			}
+		}
+
 		switch( i ) {
 			// Debuffs that can be spread.
 			// NOTE: We'll add/delete SCs when we are able to confirm it.
@@ -11910,21 +11926,21 @@ int status_change_spread( struct block_list *src, struct block_list *bl )
 			case SC_SILENCE:
 			case SC_CONFUSION:
 			case SC_BLIND:
-			case SC_NOCHAT:
+			//case SC_NOCHAT:
 			case SC_HALLUCINATION:
 			case SC_SIGNUMCRUCIS:
 			case SC_DECREASEAGI:
 			case SC_SLOWDOWN:
-			case SC_MINDBREAKER:
-			case SC_WINKCHARM:
-			case SC_STOP:
+			//case SC_MINDBREAKER:
+			//case SC_WINKCHARM:
+			//case SC_STOP:
 			case SC_ORCISH:
 			// case SC_STRIPWEAPON: // Omg I got infected and had the urge to strip myself physically.
 			// case SC_STRIPSHIELD: // No this is stupid and shouldnt be spreadable at all.
 			// case SC_STRIPARMOR: // Disabled until I can confirm if it does or not. [Rytech]
 			// case SC_STRIPHELM:
 			// case SC__STRIPACCESSORY:
-			case SC_BITE:
+			//case SC_BITE:
 			case SC_FREEZING:
 			case SC_VENOMBLEED:
 			case SC_DEATHHURT:
@@ -11950,7 +11966,7 @@ int status_change_spread( struct block_list *src, struct block_list *bl )
 				data.tick = sc->data[i]->val4 * 2000;
 				break;
 			case SC_PYREXIA:
-			case SC_OBLIVIONCURSE:
+			//case SC_OBLIVIONCURSE: // Players are not affected by Oblivion Curse.
 				data.tick = sc->data[i]->val4 * 3000;
 				break;
 			case SC_MAGICMUSHROOM:

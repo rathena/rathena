@@ -5030,7 +5030,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				break;
 			}
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), splash_target(src), src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
-			status_zap(src, hpcost, spcost);
 		}
 		break;
 
@@ -9142,17 +9141,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		{
 			int heal;
 
-			if( status_isimmune(bl) )
-			{
+			if( status_isimmune(bl) ) {
 				clif_skill_nodamage(src,bl,skill_id,skill_lv,0);
 				break;
 			}
 
-			heal = 120 * skill_lv + status_get_max_hp(bl);
+			heal = (120 * skill_lv) + (status_get_max_hp(bl) * (skill_lv / 100));
 			status_heal(bl, heal, 0, 0);
 
-			if( (tsc && tsc->opt1) && (rnd()%100 < ((skill_lv * 5) + (status_get_dex(src) + status_get_lv(src)) / 4) - (1 + (rnd() % 10))) )
-			{
+			if( (tsc && tsc->opt1) && (rnd()%100 < ((skill_lv * 5) + (status_get_dex(src) + status_get_lv(src)) / 4) - (1 + (rnd() % 10))) ) {
 				status_change_end(bl, SC_STONE, INVALID_TIMER);
 				status_change_end(bl, SC_FREEZE, INVALID_TIMER);
 				status_change_end(bl, SC_STUN, INVALID_TIMER);
@@ -19224,9 +19221,9 @@ static void skill_readdb(void) {
 		int n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
 		char* dbsubpath1 = aMalloc(n1+1);
 		char* dbsubpath2 = aMalloc(n2+1);
-		safesnprintf(dbsubpath1,n1+1,"%s%s",db_path,dbsubpath[i]);
+		safesnprintf(dbsubpath1,n1+1,"%s/%s",db_path,dbsubpath[i]);
 		if(i==0) safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
-		else safesnprintf(dbsubpath2,n2,"%s%s",db_path,dbsubpath[i]);
+		else safesnprintf(dbsubpath2,n2,"%s/%s",db_path,dbsubpath[i]);
 		
 		sv_readdb(dbsubpath2, "skill_db.txt"          , ',',  18, 18, MAX_SKILL_DB, skill_parse_row_skilldb, i);
 		sv_readdb(dbsubpath2, "skill_require_db.txt"  , ',',  34, 34, MAX_SKILL_DB, skill_parse_row_requiredb, i);

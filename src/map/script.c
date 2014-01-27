@@ -14488,7 +14488,10 @@ BUILDIN_FUNC(sscanf){
 		*(buf_p-len+1) = '*';
 	}
 
-	script_pushint(st, arg);
+	if( !strcmp(str, "") )
+		script_pushint(st, -1);
+	else
+		script_pushint(st, arg);
 	if(buf) aFree(buf);
 	if(ref_str) aFree(ref_str);
 

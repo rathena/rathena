@@ -1894,7 +1894,7 @@ bool map_blid_exists( int id ) {
 }
 
 /*==========================================
- * Convext Mirror
+ * Convex Mirror
  *------------------------------------------*/
 struct mob_data * map_getmob_boss(int16 m)
 {
