@@ -357,7 +357,7 @@ void vending_openvending(struct map_session_data* sd, const char* message, const
 	
 	Sql_EscapeString( mmysql_handle, message_sql, sd->message );
 
-	if( Sql_Query( mmysql_handle, "INSERT INTO `%s`(`id`,`account_id`,`char_id`,`sex`,`map`,`x`,`y`,`title`,`autotrade`) VALUES( %d, %d, %d, '%c', '%s', %d, %d, '%s', %d );", vendings_db, sd->vender_id, sd->status.account_id, sd->status.char_id, sd->status.sex == 2 ? 'F' : 'M', map[sd->bl.m].name, sd->bl.x, sd->bl.y, message_sql, sd->state.autotrade ) != SQL_SUCCESS ){
+	if( Sql_Query( mmysql_handle, "INSERT INTO `%s`(`id`,`account_id`,`char_id`,`sex`,`map`,`x`,`y`,`title`,`autotrade`) VALUES( %d, %d, %d, '%c', '%s', %d, %d, '%s', %d );", vendings_db, sd->vender_id, sd->status.account_id, sd->status.char_id, sd->status.sex == 0 ? 'F' : 'M', map[sd->bl.m].name, sd->bl.x, sd->bl.y, message_sql, sd->state.autotrade ) != SQL_SUCCESS ){
 		Sql_ShowDebug(mmysql_handle);
 	}
 
@@ -576,7 +576,7 @@ void do_init_vending_autotrade( void ){
 			// initialize player
 			CREATE(vending->sd, TBL_PC, 1);
 
-			pc_setnewpc( vending->sd, vending->account_id, vending->char_id, 0, gettick(), vending->sex, 0 );
+			pc_setnewpc( vending->sd, vending->account_id, vending->char_id, 0, gettick(), vending->sex == 'F' ? 0 : 1, 0 );
 
 			vending->sd->state.autotrade = 1;
 
@@ -631,8 +631,8 @@ void do_init_vending_autotrade( void ){
 	}
 	
 	// Everything is loaded fine, their entries will be reinserted once they are loaded
-	if( Sql_Query( mmysql_handle, "TRUNCATE TABLE `%s`;", vendings_db ) != SQL_SUCCESS ||
-		Sql_Query( mmysql_handle, "TRUNCATE TABLE `%s`;", vending_items_db ) != SQL_SUCCESS ){
+	if( Sql_Query( mmysql_handle, "DELETE FROM `%s`;", vendings_db ) != SQL_SUCCESS ||
+		Sql_Query( mmysql_handle, "DELETE FROM `%s`;", vending_items_db ) != SQL_SUCCESS ){
 		Sql_ShowDebug(mmysql_handle);
 		return;
 	}
