@@ -170,20 +170,25 @@ int path_blownpos(int16 m,int16 x0,int16 y0,int16 dx,int16 dy,int count)
 	while( count > 0 && (dx != 0 || dy != 0) )
 	{
 		if( !map_getcellp(md,x0+dx,y0+dy,CELL_CHKPASS) )
-		{// attempt partial movement
-			int fx = ( dx != 0 && map_getcellp(md,x0+dx,y0,CELL_CHKPASS) );
-			int fy = ( dy != 0 && map_getcellp(md,x0,y0+dy,CELL_CHKPASS) );
-			if( fx && fy )
-			{
-				if(rnd()&1)
+		{
+			if (battle_config.path_blown_halt)
+				break;
+			else
+			{// attempt partial movement
+				int fx = ( dx != 0 && map_getcellp(md,x0+dx,y0,CELL_CHKPASS) );
+				int fy = ( dy != 0 && map_getcellp(md,x0,y0+dy,CELL_CHKPASS) );
+				if( fx && fy )
+				{
+					if(rnd()&1)
+						dx=0;
+					else
+						dy=0;
+				}
+				if( !fx )
 					dx=0;
-				else
+				if( !fy )
 					dy=0;
 			}
-			if( !fx )
-				dx=0;
-			if( !fy )
-				dy=0;
 		}
 
 		x0 += dx;
