@@ -7349,6 +7349,7 @@ static const struct _battle_data {
 	{ "warg_can_falcon",                    &battle_config.warg_can_falcon,                 0,      0,      1,              },
 	{ "atcommand_enable_npc",				&battle_config.atcommand_enable_npc,			0,		0,		100,			},
 	{ "path_blown_halt",                    &battle_config.path_blown_halt,                 1,      0,      1,              },
+	{ "rental_mount_speed_boost",           &battle_config.rental_mount_speed_boost,        25,     0,      100,        	},
 };
 #ifndef STATS_OPT_OUT
 /**

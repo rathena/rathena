@@ -8717,12 +8717,12 @@ ACMD_FUNC(charcommands)
 ACMD_FUNC(mount2) {
 
 	clif_displaymessage(sd->fd,msg_txt(sd,1362)); // NOTICE: If you crash with mount your LUA is outdated.
-	if( !(sd->sc.option&OPTION_MOUNTING) ) {
+	if( !(sd->sc.data[SC_ALL_RIDING]) ) {
 		clif_displaymessage(sd->fd,msg_txt(sd,1363)); // You have mounted.
-		pc_setoption(sd, sd->sc.option|OPTION_MOUNTING);
+		sc_start(NULL, &sd->bl, SC_ALL_RIDING, 10000, 1, INVALID_TIMER);
 	} else {
 		clif_displaymessage(sd->fd,msg_txt(sd,1364)); // You have released your mount.
-		pc_setoption(sd, sd->sc.option&~OPTION_MOUNTING);
+		status_change_end(&sd->bl, SC_ALL_RIDING, INVALID_TIMER);
 	}
 	return 0;
 }

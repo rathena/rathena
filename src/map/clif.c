@@ -1348,10 +1348,6 @@ int clif_spawn(struct block_list *bl)
 				clif_specialeffect(bl,421,AREA);
 			if( sd->bg_id && map[sd->bl.m].flag.battleground )
 				clif_sendbgemblem_area(sd);
-			if( sd->sc.option&OPTION_MOUNTING ) {
-				//New Mounts are not complaint to the original method, so we gotta tell this guy that he is mounting.
-				clif_status_load_notick(&sd->bl,SI_ALL_RIDING,2,1,0,0);
-			}
 			for(i = 1; i < 5; i++){
 				if( sd->talisman[i] > 0 )
 					clif_talisman(sd, i);
@@ -1375,6 +1371,8 @@ int clif_spawn(struct block_list *bl)
 				clif_status_load(bl,SI_MOONSTAR,1);
 			if( sd->sc.data[SC_SUPER_STAR] )
 				clif_status_load(bl,SI_SUPER_STAR,1);
+			if( sd->sc.data[SC_ALL_RIDING] )
+				clif_status_load(bl,SI_ALL_RIDING,1);
 		}
 		break;
 	case BL_MOB:
@@ -4173,10 +4171,6 @@ static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_d
 		if( dstsd->sc.data[i] )
 			clif_status_load_single(sd->fd,dstsd->bl.id,StatusIconChangeTable[i],1,dstsd->sc.data[i]->val1,dstsd->sc.data[i]->val2,0);
 	}
-	if( dstsd->sc.option&OPTION_MOUNTING ) {
-		//New Mounts are not complaint to the original method, so we gotta tell this guy that I'm mounting.
-		clif_status_load_single(sd->fd,dstsd->bl.id,SI_ALL_RIDING,2,1,0,0);
-	}
 #ifdef NEW_CARTS
 	if( dstsd->sc.data[SC_PUSH_CART] )
 		clif_status_load_single(sd->fd, dstsd->bl.id, SI_ON_PUSH_CART, 2, dstsd->sc.data[SC_PUSH_CART]->val1, 0, 0);
@@ -4244,6 +4238,8 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 				clif_status_load(bl,SI_MOONSTAR,1);
 			if( tsd->sc.data[SC_SUPER_STAR] )
 				clif_status_load(bl,SI_SUPER_STAR,1);
+			if( tsd->sc.data[SC_ALL_RIDING] )
+				clif_status_load(bl,SI_ALL_RIDING,1);
 		}
 		break;
 	case BL_MER: // Devotion Effects

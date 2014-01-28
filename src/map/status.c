@@ -784,6 +784,8 @@ void initChangeTables(void)
 	set_sc( RL_AM_BLAST			, SC_ANTI_M_BLAST	, SI_ANTI_M_BLAST	, SCB_DEF_ELE );
 	set_sc( RL_HEAT_BARREL		, SC_HEAT_BARREL	, SI_HEAT_BARREL	, SCB_BATK|SCB_ASPD|SCB_HIT );
 
+	set_sc_with_vfx( SC_ALL_RIDING		, SC_ALL_RIDING		, SI_ALL_RIDING		, SCB_SPEED );
+
 	/* Storing the target job rather than simply SC_SPIRIT simplifies code later on */
 	SkillStatusChangeTable[SL_ALCHEMIST]	= (sc_type)MAPID_ALCHEMIST,
 	SkillStatusChangeTable[SL_MONK]		= (sc_type)MAPID_MONK,
@@ -1825,9 +1827,10 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, uin
 		}
 		if (sc->option&OPTION_CHASEWALK && skill_id != ST_CHASEWALK)
 			return 0;
-		if(sc->option&OPTION_MOUNTING)
-			return 0; // New mounts can't attack nor use skills in the client; this check makes it cheat-safe [Ind]
 	}
+
+	if( sc->data[SC_ALL_RIDING] )
+		return 0; //You can't use skills while in the new mounts (The client doesn't let you, this is to make cheat-safe)
 
 	if (target == NULL || target == src) // No further checking needed.
 		return 1;
@@ -5749,7 +5752,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 		if( sc->data[SC_FUSION] )
 			val = 25;
 		else if( sd ) {
-			if( pc_isriding(sd) || sd->sc.option&(OPTION_DRAGON|OPTION_MOUNTING) )
+			if( pc_isriding(sd) || sd->sc.option&OPTION_DRAGON )
 				val = 25; // Same bonus
 			else if( pc_isridingwug(sd) )
 				val = 15 + 5 * pc_checkskill(sd, RA_WUGRIDER);
@@ -5758,6 +5761,8 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 				if( sc->data[SC_ACCELERATION] )
 					val += 25;
 			}
+			else if( sc->data[SC_ALL_RIDING] )
+				val = battle_config.rental_mount_speed_boost;
 		}
 		speed_rate -= val;
 
@@ -7350,6 +7355,16 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			return 0; // Cannot override other opt1 status changes. [Skotlex]
 		if((type == SC_FREEZE || type == SC_FREEZING || type == SC_CRYSTALIZE) && sc->data[SC_WARMER])
 			return 0; // Immune to Frozen and Freezing status if under Warmer status. [Jobbie]
+	break;
+ 
+	case SC_ALL_RIDING:
+		if( !sd || sc->option&(OPTION_RIDING|OPTION_DRAGON|OPTION_WUG|OPTION_MADOGEAR) )
+			return 0;
+		if( sc->data[type] )
+		{	// Already mounted, just dismount.
+			status_change_end(bl, SC_ALL_RIDING, INVALID_TIMER);
+			return 0;
+		}
 	break;
 
 	// They're all like berserk, do not everlap each other
