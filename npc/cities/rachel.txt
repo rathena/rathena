@@ -310,7 +310,8 @@ rachel,206,30,3	script	Freya's Priest#play	920,{
 	close2;
 	set .@play,rand(1,10);
 	if (.@play < 3)
-		consumeitem 601; //Wing_Of_Fly
+		//consumeitem 601; //Wing_Of_Fly
+		warp "Random",0,0;
 	else if (.@play < 5)
 		consumeitem 12016; //Speed_Up_Potion
 	else
