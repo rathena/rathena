@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= -SkittleNugget-
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -14,6 +14,7 @@
 //= 1.1 Edited and added more NPCs, lots of placeholders. [Euphy]
 //= 1.2 Added VIP NPCs and features. [Euphy]
 //= 1.3 Added Mail Annex Station scripts, commented out. [Euphy]
+//= 1.4 Cleaned up a few scripts & Added Merry Badger. [-SkittleNugget-]
 //============================================================
 
 // Acolyte Warper (part of other/acolyte_warp.txt)
@@ -487,28 +488,19 @@ moc_para01,48,184,2	script	Gum & Manual Exchanger	562,{
 	mes "What would you like to exchange for?";
 	next;
 	switch(select("HE Bubble Gum:HE Battle Manual:1 Battle Manual X3:2 Battle Manual X3:1 Costume Corsair:Nothing")) {
-	case 1:
-		callsub L_Exchange,12210,2,12412,1;
-		break;
-	case 2:
-		callsub L_Exchange,12208,2,12411,1;
-		break;
-	case 3:
-		callsub L_Exchange,12411,4,14545,1;
-		break;
-	case 4:
-		callsub L_Exchange,12312,3,14545,2;
-		break;
+	case 1: callsub L_Exchange,12210,2,12412,1;
+	case 2: callsub L_Exchange,12208,2,12411,1;
+	case 3: callsub L_Exchange,12411,4,14545,1;
+	case 4: callsub L_Exchange,12312,3,14545,2;
 	case 5:
 		mes "[Trader Machine]";
 		mes "I can give you 1 Battle Manual X3 for 1 Costume Corsair.";
 		next;
-		if (countitem(19619) == 0) {
+		if (!countitem(19619)) {
 			mes "[Trader Machine]";
 			mes "You don't have a Costume Corsair hat to make that trade.";
 			close;
 		}
-		next;
 		if(select("Yes, give it to me!:No, wait not yet.") == 2)
 			close;
 		// Unofficial dialogue.
@@ -531,32 +523,34 @@ L_Exchange:
 	mes "I can give you up to 60.";
 	mes "Type 0 to cancel.";
 	next;
-	input .@amount;
-	if (.@amount == 0) {
+	input .@input;
+	if (!.@input) {
 		mes "[Trader Machine]";
 		mes "Cancelled.";
 		close;
-	} else if (.@amount < 0 || .@amount > 60) {
+	}
+	//checks for less than 0 as some people will use text
+	if (.@input > 60 || .@input < 0 ) {
 		mes "[Trader Machine]";
 		mes "I said only 60 max.";
 		close;
 	}
 	mes "[Trader Machine]";
-	mes "That's a total of "+.@amount;
-	mes getitemname(getarg(2))+".";
+	mes "That's a total of "+.@input+" "+getitemname(getarg(2))+".";
 	mes "Is this correct?";
 	next;
-	if(select("Yes, give them to me!:No, wait not yet.") == 2)
+	if(select("Yes, give them to me!:No, wait not yet.") == 2){
 		close;
-	set .@cost, getarg(1) * .@amount;
-	set .@total_amount, getarg(3) * .@amount;
+	}
+	set .@insert_amount, getarg(1) * .@input;
+	set .@return_amount, getarg(3) * .@input;
 	if (countitem(getarg(0)) < .@cost) {
 		mes "[Trader Machine]";
 		mes "You don't have enough "+getitemname(getarg(0))+" to make that trade.";
 		close;
 	}
-	delitem getarg(0),.@cost;
-	getitem getarg(2),.@total_amount;
+	delitem getarg(0),.@insert_amount;
+	getitem getarg(2),.@return_amount;
 	close;
 }
 
@@ -618,11 +612,8 @@ moc_para01,38,162,2	script	Code the Redeemer#Give1	405,{
 	mes "that means that you have";
 	mes "not purchased, or inputted";
 	mes "your serial code from the purchasing website.^000000";
-	next;
-
-	// If you have a code redemption system, write your SQL queries here.
-	select("");
-
+	//next;
+	// Add your in-game redemption script here.
 	close;
 }
 
@@ -630,11 +621,11 @@ moc_para01,38,162,2	script	Code the Redeemer#Give1	405,{
 //============================================================
 /* Due to the irregularity of iRO's databases, some of these sprites may not display properly. */
 
-moc_para01,32,171,4	cashshop	Kafra Headgears#eden1	115,14024:500,14098:150,17081:300,14097:500,14094:1000,14017:400,14099:300
+moc_para01,32,171,6	cashshop	Kafra Headgears#eden1	115,14024:500,14098:150,17081:300,14097:500,14094:1000,14017:400,14099:300
 moc_para01,35,174,2	cashshop	Kafra Dye Shop#dyes2	114,6287:150
-moc_para01,36,170,2	cashshop	Kafra Consumables#eden3	112,13810:5,14167:400,16556:100,14111:75,14075:25,16419:30,14107:70,14104:50,14112:25,14082:30,14091:60,14088:30,14085:60,14169:40,14170:40,14172:40,14173:40,14171:40,14174:40,14159:100,14160:100,14161:100,14162:100,14163:100:14164:100,16420:1500
+moc_para01,37,170,2	cashshop	Kafra Consumables#eden3	112,13810:5,14167:400,16556:100,14111:75,14075:25,16419:30,14107:70,14104:50,14112:25,14082:30,14091:60,14088:30,14085:60,14169:40,14170:40,14172:40,14173:40,14171:40,14174:40,14159:100,14160:100,14161:100,14162:100,14163:100:14164:100,16420:1500
 moc_para01,32,174,2	cashshop	Kafra Rental Items#eden	721,16683:150,16682:50,14126:250,14125:250,16430:250,14137:250,14127:250,14118:250,14119:250,14132:250,16425:250,14124:250,14133:250,14130:250,16424:250,14136:250,14122:250,16426:250,14135:250,14134:250,14138:250,16428:250,16431:250,14139:250,14131:250,16429:250,16427:250
-moc_para01,36,172,2	cashshop	Kafra Costume#eden5	860,16974:300,16972:600,16973:150,16975:150,16977:150,17014:150,17015:150
+moc_para01,37,172,2	cashshop	Kafra Costume#eden5	860,16974:300,16972:600,16973:150,16975:150,16977:150,17014:150,17015:150
 moc_para01,35,168,1	cashshop	Kafra Utility Shop#eden	113,16677:25,13990:400,16396:100,16394:100,17106:500,6241:10,6240:10,6225:15,6226:15,14002:5,6294:500,7776:50,7619:30,7620:30,12208:40,14156:400,12210:40,14158:400,14042:50,14044:50,14046:50,14048:50,14114:50,14166:40,16418:500,16381:400,14165:100,14157:100,14178:100
 
 // Duplicate NPCs
@@ -667,7 +658,7 @@ OnTimer5000:
 }
 
 // Gym Pass Trainer "Ripped Cabus" (other/gympass)
-moc_para01,33,162,4	duplicate(Ripped Cabus#GymPass)	Ripped Callus#ed	899
+moc_para01,33,162,6	duplicate(Ripped Cabus#GymPass)	Ripped Callus#ed	899
 
 // RWC 2012 Enchanter "Goldenthiefberg" (events/RWC_2012.txt)
 // A combination of the slotter and enchanter, currently a placeholder.
@@ -685,7 +676,7 @@ moc_para01,33,185,4	script	Dinorah Lacostt#ed	862,{ end; }
 //============================================================
 /* These scripts change on a regular basis, so they're mostly just placeholders for now. */
 
-moc_para01,29,35,4	script	Gramps#huntquests	866,{
+moc_para01,28,20,4	script	Gramps#huntquests	866,{
 	mes "[Gramps]";
 	mes "When you get to being my";
 	mes "age, you become bitter.";
@@ -703,15 +694,144 @@ moc_para01,29,35,4	script	Gramps#huntquests	866,{
 
 moc_para01,13,22,4	script	Merry Badger#xch	882,{
 	mes "[Merry Badger]";
-	mes "Hello there!  I'm Merry Badger and I was hired to exchange the ^00CC00Eden Merit Badges^000000!";
+	mes "Hello there ! I'm Merry Badger and";
+	mes "I was hired to exchange the ^00FF33Eden^000000";
+	mes "^00FF33Merit Badges^000000!";
 	next;
 	mes "[Merry Badger]";
-	mes "I can take your Merit Badges and give you some useful stuff, or I can take some of your stuff and give you some Eden Merit Badges.";
-	mes "As I get more authorization I can offer more things to trade with you, so definitely keep me in mind when visiting the Eden Group.";
-	close;
-	//next;
-	//switch(select("Redeem Badges:Trade in FOR badges:Exchange Rates:15 Job Manuals - 1 JM Box")) {
+	mes "I can take your Merit Badges and";
+	mes "give you some useful stuff, or I";
+	mes "can take some of your stuff and";
+	mes "give you some Eden Merit Badges.";
+	mes "As I get more authorization I can";
+	mes "offer more things to trade with";
+	mes "you, so definitely keep me in mind";
+	mes "when visiting the Eden Group";
+	next;
+	switch(select("Redeem Badges:Trade in items for badges:15 Job Manuals - 1 JM Box")){
+	case 1:
+		mes "[Merry Badger]";
+		mes "Sure thing, I have several options";
+		mes "currently for your badges!";
+		next;
+		switch(select("This Week's Special:2 EMB for 10 KVM Badge:2 EMB for 10 Bravery Medals:2 EMB for 10 Valor Medals:5 EMB for 5 Medium Life Potion:5 EMB for 5 Life Insurance:5 EMB for 5 Token of Siegfried:7 EMB for 1 Job Battle Manual:Nothing Now")){
+		case 1:
+			mes "[Merry Badger]";
+			mes "Ok, I have a special for 3 Merit";
+			mes "Badge. This week I'll give you :";
+			mes "^00CC0040 Light Granule ^000000";
+			mes "^0066CC40 Gun Powder^000000";
+			mes "^00CC003 Izidor^000000";
+			mes "^0066CC10 Prickly Fruit^000000";
+			mes "^00CC001 Mandragora Flowerpot^000000";
+			next;
+			if(select("Yes:No")==2){
+				mes "[Merry Badger]";
+				mes "Wonderfull, I will be here if you";
+				mes "ever need anything";
+				close;
+			}
+			if (countitem(6495) < 3){
+				mes "[Merry Badger]";
+				mes "You dont have enough Merit Badges for that!";
+				close;
+			}
+			delitem 6495,3;  //Merit Badges
+			getitem 7938,40; //Light Granule
+			getitem 6244,40; //Gun Power
+			getitem 709,3;   //Izidor
+			getitem 576,10;  //Prickly Fruit
+			getitem 6217,1;  //Mandragora Flowerpot
+			mes "Here you go";
+			close;
+		
+		case 2:callsub L_Redeem_Item,2,6376,10; //2 EMB for 10 KVM Badges
+		case 3:callsub L_Redeem_Item,2,7828,10; //2 EMB for 10 Bravery Medals
+		case 4:callsub L_Redeem_Item,2,7829,10; //2 EMB for 10 Valor Medals
+		case 5:callsub L_Redeem_Item,5,14535,5; //5 EMB for 5 Medium Life Potion
+		case 6:callsub L_Redeem_Item,5,12209,5; //5 EMB for 5 Life Insurance
+		case 7:callsub L_Redeem_Item,5,7621,5;  //5 EMB for 5 Token of Siegfried
+		case 8:callsub L_Redeem_Item,7,14592,1; //7 EMB for 1 Job Battle Manual
+		case 9:
+			mes "I will be here if you ever need anything";
+			close;
+		}
+		L_Redeem_Item:
+			set .@value, getarg(0);
+			set .@item, getarg(1);
+			set .@amount, getarg(2);
+			
+			mes "[Merry Badger]";
+			mes "Ok, I can give you ^ff0000" + .@amount + " " + getitemname(.@item) + "^000000";
+			mes "for ^0066CC" + .@value + " Eden Merit Badge(s) ^000000.";
+			mes "Do you want to ?";
+			next;
+			if (select("Yes:No")==2){
+				mes "[Merry Badger]";
+				mes "Wonderfull, I will be here if you";
+				mes "ever need anything";
+				close;
+			}
+			mes "[Merry Badger]";
+			if (countitem(6495) < .@value)
+			mes "You do not have enough to get that.";
+			delitem 6495, .@value; //Eden Merit Badge
+			getitem .@item, .@amount;
+			mes "Here you go!";
+			close;
+		
+	case 2:
+		mes "[Merry Badger]";
+		mes "I have a limited selection as of";
+		mes "right now, but here is what I can";
+		mes "offer to get 1 Eden Merit Badge";
+		next;
+		if(select("Etc Items:Cancel")==1)
+			if(select("5x Old Purple Box:Nothing")==1){
+				mes "[Merry Badger]";
+				if (countitem(617) < 5){
+					mes "You don't have enough of that to";
+					mes "get 1 Eden Merit Badge. Lets start";
+					mes "over";
+					close;
+				}
+				mes "Here you go!";
+				delitem 617, 5; //Old Purple Box
+				getitem 6495,1; //Eden Merit Badge
+				close;
+		}
+		close;	
+
+	case 3:
+		mes "[Merry Badger]";
+		mes "I was strong armed into giving";
+		mes "this, but you are worth it!";
+		mes "do you want to exchange 15 Job";
+		mes "Manuals to get 1 Tradable Box of";
+		mes "10 Battle Manuals?";
+		mes "I know 15 does not equal 10, but";
+		mes "boxes are expensive you know";
+		next;
+		if (select("Yes:No")==2){
+		mes "[Merry Badger]";
+		mes "Wonderfull, I will be here if you";
+		mes "ever need anything";
+		close;
+		}
+		if(countitem(14592) < 15){
+		mes "[Merry Badger]";
+		mes "You don't have 15 or more Job";
+		mes "Manuals to get Job Manual Box!";
+		close;
+		}
+		mes "[Merry Badger]";
+		mes "Here you go!";
+		delitem 14592,15;
+		getitem 13990,1;
+		close;
+	}
 }
+
 
 moc_para01,174,33,3	script	Bathory#2012spirits	1102,{
 	mes "[Bathory]";
@@ -720,25 +840,23 @@ moc_para01,174,33,3	script	Bathory#2012spirits	1102,{
 	mes "[Bathory]";
 	mes "How about it? Want to take a ride on a beautiful Bathory's broom?";
 	next;
-	switch(select("Prepare for Takeoff!:No thanks.")) {
-	case 1:
-		if (Zeny < 1000) {
-			mes "[Bathory]";
-			mes "Come on dearie...";
-			mes "You don't even have 1,000 zeny?";
-			close;
-		}
-		mes "[Bathory]";
-		mes "Alright, hold on tight!";
-		close2;
-		set Zeny, Zeny-1000;
-		warp "niflheim",194,185;
-		end;
-	case 2:
+	if(select("Prepare for Takeoff!:No thanks.")==2) {
 		mes "["+strcharinfo(0)+"]";
 		mes "No thanks, maybe later.";
 		close;
 	}
+	if (Zeny < 1000) {
+		mes "[Bathory]";
+		mes "Come on dearie...";
+		mes "You don't even have 1,000 zeny?";
+		close;
+	}
+	mes "[Bathory]";
+	mes "Alright, hold on tight!";
+	close2;
+	set Zeny, Zeny-1000;
+	warp "niflheim",194,185;
+	end;
 }
 
 moc_para01,26,174,4	script	Grandma Boxter#boxx	840,{ end; }
