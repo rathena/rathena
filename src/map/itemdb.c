@@ -305,6 +305,22 @@ struct item_data* itemdb_exists(int nameid)
 	return item;
 }
 
+/// Returns name type of ammunition [Cydh]
+const char *itemdb_typename_ammo (enum e_item_ammo ammo) {
+	switch (ammo) {
+		case AMMO_ARROW:			return "Arrow";
+		case AMMO_THROWABLE_DAGGER:	return "Throwable Dagger";
+		case AMMO_BULLET:			return "Bullet";
+		case AMMO_SHELL:			return "Shell";
+		case AMMO_GRENADE:			return "Grenade";
+		case AMMO_SHURIKEN:			return "Shuriken";
+		case AMMO_KUNAI:			return "Kunai";
+		case AMMO_CANNONBALL:		return "Cannonball";
+		case AMMO_THROWABLE_ITEM:	return "Throwable Item/Sling Item";
+	}
+	return "Ammunition";
+}
+
 /// Returns human readable name for given item type.
 /// @param type Type id to retrieve name for ( IT_* ).
 const char* itemdb_typename(enum item_types type)

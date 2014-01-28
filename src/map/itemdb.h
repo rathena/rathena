@@ -297,6 +297,18 @@ enum e_item_job {
 	ITEMJ_THIRD_BABY  = 0x20,
 };
 
+enum e_item_ammo {
+	AMMO_ARROW = 1,
+	AMMO_THROWABLE_DAGGER,
+	AMMO_BULLET,
+	AMMO_SHELL,
+	AMMO_GRENADE,
+	AMMO_SHURIKEN,
+	AMMO_KUNAI,
+	AMMO_CANNONBALL,
+	AMMO_THROWABLE_ITEM, ///Sling items
+};
+
 ///Item combo struct
 struct item_combo {
 	struct script_code *script;
@@ -424,6 +436,7 @@ struct item_data* itemdb_exists(int nameid);
 #define itemdb_is_GNbomb(n) (n >= ITEMID_APPLE_BOMB && n <= ITEMID_VERY_HARD_LUMP)
 #define itemdb_is_GNthrowable(n) (n >= ITEMID_MYSTERIOUS_POWDER && n <= ITEMID_BLACK_THING_TO_THROW)
 const char* itemdb_typename(enum item_types type);
+const char *itemdb_typename_ammo (enum e_item_ammo ammo);
 
 int itemdb_group_bonus(struct map_session_data* sd, int itemid);
 unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group);
