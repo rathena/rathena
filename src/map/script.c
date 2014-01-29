@@ -51,6 +51,10 @@
 #include "elemental.h"
 #include "../config/core.h"
 
+#ifdef PCRE_SUPPORT
+#include "../../3rdparty/pcre/include/pcre.h" // preg_match
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -18357,6 +18361,38 @@ BUILDIN_FUNC(defpattern);
 BUILDIN_FUNC(activatepset);
 BUILDIN_FUNC(deactivatepset);
 BUILDIN_FUNC(deletepset);
+
+/** Regular expression matching
+ * preg_match(<pattern>,<string>{,<offset>})
+ */
+BUILDIN_FUNC(preg_match) {
+	pcre *re;
+	pcre_extra *pcreExtra;
+	const char *error;
+	int erroffset, r, offset = 0;
+	int subStrVec[30];
+
+	const char* pattern = script_getstr(st,2);
+	const char* subject = script_getstr(st,3);
+	if (script_hasdata(st,4))
+		offset = script_getnum(st,4);
+
+	re = pcre_compile(pattern, 0, &error, &erroffset, NULL);
+	pcreExtra = pcre_study(re, 0, &error);
+
+	r = pcre_exec(re, pcreExtra, subject, (int)strlen(subject), offset, 0, subStrVec, 30);
+
+	pcre_free(re);
+	if (pcreExtra != NULL)
+		pcre_free(pcreExtra);
+
+	if (r < 0)
+		script_pushint(st,0);
+	else
+		script_pushint(st,(r > 0) ? r : 30 / 3);
+
+	return SCRIPT_CMD_SUCCESS;
+}
 #endif
 
 /// script command definitions
@@ -18627,6 +18663,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(activatepset,"i"), // Activate a pattern set [MouseJstr]
 	BUILDIN_DEF(deactivatepset,"i"), // Deactive a pattern set [MouseJstr]
 	BUILDIN_DEF(deletepset,"i"), // Delete a pattern set [MouseJstr]
+	BUILDIN_DEF(preg_match,"ss?"),
 #endif
 	BUILDIN_DEF(dispbottom,"s"), //added from jA [Lupus]
 	BUILDIN_DEF(getusersname,""),

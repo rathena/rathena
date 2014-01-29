@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20140113
+//= 20140129
 //===== Description: =========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -7251,6 +7251,17 @@ sensitive unless <usecase> is set to 0.
 Example:
 	countstr("test test test Test", "test"); //returns 3
 	countstr("cake Cake", "Cake", 0); //returns 2
+
+---------------------------------------
+
+*preg_match(<regular expression pattern>,<string>{,<offset>})
+
+Searches a string for a match to the regular expression provided. The
+offset parameter indicates the index of the string to start searching.
+Returns offsets to captured substrings, or 0 if no match is found.
+
+This command is only available if the server is compiled with the regular 
+expressions library enabled.
 
 ---------------------------------------
 
