@@ -17261,7 +17261,7 @@ BUILDIN_FUNC(ismounting) {
 	TBL_PC* sd;
 	if( (sd = script_rid2sd(st)) == NULL )
 		return 0;
-	if( sd->sc.data[SC_ALL_RIDING] )
+	if( &sd->sc && sd->sc.data[SC_ALL_RIDING] )
 		script_pushint(st,1);
 	else
 		script_pushint(st,0);
@@ -17278,11 +17278,11 @@ BUILDIN_FUNC(setmounting) {
 	TBL_PC* sd;
 	if( (sd = script_rid2sd(st)) == NULL )
 		return 0;
-	if( sd->sc.option&(OPTION_WUGRIDER|OPTION_RIDING|OPTION_DRAGON|OPTION_MADOGEAR) ) {
+	if( &sd->sc && sd->sc.option&(OPTION_WUGRIDER|OPTION_RIDING|OPTION_DRAGON|OPTION_MADOGEAR) ) {
 		clif_msgtable(sd->fd, 0x78b);
 		script_pushint(st,0); //can't mount with one of these
 	} else {
-		if( sd->sc.data[SC_ALL_RIDING] )
+		if( &sd->sc && sd->sc.data[SC_ALL_RIDING] )
 			status_change_end(&sd->bl, SC_ALL_RIDING, INVALID_TIMER); //release mount
 		else
 			sc_start(NULL, &sd->bl, SC_ALL_RIDING, 10000, 1, INVALID_TIMER); //mount

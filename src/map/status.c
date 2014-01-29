@@ -1820,17 +1820,18 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, uin
 		}
 	}
 
-	if (sc && sc->option) {
-		if ((sc->option&OPTION_HIDE) && src->type == BL_PC &&( !skill_id || !(skill_get_inf3(skill_id)&INF3_USABLE_HIDING))) {
-			// Non players can use all skills while hidden.
-			return 0;
+	if (sc) {
+		if (sc->option) {
+			if ((sc->option&OPTION_HIDE) && src->type == BL_PC &&( !skill_id || !(skill_get_inf3(skill_id)&INF3_USABLE_HIDING))) {
+				// Non players can use all skills while hidden.
+				return 0;
+			}
+			if (sc->option&OPTION_CHASEWALK && skill_id != ST_CHASEWALK)
+				return 0;
 		}
-		if (sc->option&OPTION_CHASEWALK && skill_id != ST_CHASEWALK)
-			return 0;
+		if (sc->data[SC_ALL_RIDING])
+			return 0; //You can't use skills while in the new mounts (The client doesn't let you, this is to make cheat-safe)
 	}
-
-	if( sc->data[SC_ALL_RIDING] )
-		return 0; //You can't use skills while in the new mounts (The client doesn't let you, this is to make cheat-safe)
 
 	if (target == NULL || target == src) // No further checking needed.
 		return 1;
@@ -7358,7 +7359,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	break;
  
 	case SC_ALL_RIDING:
-		if( !sd || sc->option&(OPTION_RIDING|OPTION_DRAGON|OPTION_WUG|OPTION_MADOGEAR) )
+		if( !sd || !&sd->sc || sc->option&(OPTION_RIDING|OPTION_DRAGON|OPTION_WUG|OPTION_MADOGEAR) )
 			return 0;
 		if( sc->data[type] )
 		{	// Already mounted, just dismount.

@@ -1362,7 +1362,9 @@ int clif_spawn(struct block_list *bl)
 		#endif
 			if (sd->status.robe)
 				clif_refreshlook(bl,bl->id,LOOK_ROBE,sd->status.robe,AREA);
-
+			
+			if (!&sd->sc)
+				break;
 			if( sd->sc.data[SC_CAMOUFLAGE] )
 				clif_status_load(bl,SI_CAMOUFLAGE,1);
 			if( sd->sc.data[SC_MONSTER_TRANSFORM] )
@@ -4230,6 +4232,8 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 			if ( tsd->status.robe )
 				clif_refreshlook(&sd->bl,bl->id,LOOK_ROBE,tsd->status.robe,SELF);
 
+			if (!&tsd->sc)
+				break;
 			if( tsd->sc.data[SC_CAMOUFLAGE] )
 				clif_status_load(bl,SI_CAMOUFLAGE,1);
 			if( tsd->sc.data[SC_MONSTER_TRANSFORM] )

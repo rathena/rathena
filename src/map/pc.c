@@ -459,7 +459,7 @@ void pc_inventory_rentals(struct map_session_data *sd)
 			continue;
 
 		if( sd->status.inventory[i].expire_time <= time(NULL) ) {
-			if( sd->status.inventory[i].nameid == ITEMID_REINS_OF_MOUNT && sd->sc.data[SC_ALL_RIDING] )
+			if( sd->status.inventory[i].nameid == ITEMID_REINS_OF_MOUNT && &sd->sc && sd->sc.data[SC_ALL_RIDING] )
 				status_change_end(&sd->bl, SC_ALL_RIDING, INVALID_TIMER);
 			clif_rental_expired(sd->fd, i, sd->status.inventory[i].nameid);
 			pc_delitem(sd, i, sd->status.inventory[i].amount, 0, 0, LOG_TYPE_OTHER);
@@ -4472,7 +4472,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 
 	/* Items with delayed consume are not meant to work while in mounts except reins of mount(12622) */
 	if( id->flag.delay_consume ) {
-		if( nameid != ITEMID_REINS_OF_MOUNT && sd->sc.data[SC_ALL_RIDING] )
+		if( nameid != ITEMID_REINS_OF_MOUNT && &sd->sc && sd->sc.data[SC_ALL_RIDING] )
 			return 0;
 		else if( pc_issit(sd) )
 			return 0;
@@ -8061,7 +8061,7 @@ void pc_setfalcon(TBL_PC* sd, int flag)
  *------------------------------------------*/
 void pc_setriding(TBL_PC* sd, int flag)
 {
-	if( sd->sc.data[SC_ALL_RIDING] )
+	if( &sd->sc && sd->sc.data[SC_ALL_RIDING] )
 		return;
 
 	if( flag ){

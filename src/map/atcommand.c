@@ -8708,21 +8708,20 @@ ACMD_FUNC(commands)
 /*==========================================
  * @charcommands Lists available # commands to you
  *------------------------------------------*/
-ACMD_FUNC(charcommands)
-{
+ACMD_FUNC(charcommands) {
 	atcommand_commands_sub(sd, fd, COMMAND_CHARCOMMAND);
 	return 0;
 }
 /* for new mounts */
 ACMD_FUNC(mount2) {
-
 	clif_displaymessage(sd->fd,msg_txt(sd,1362)); // NOTICE: If you crash with mount your LUA is outdated.
-	if( !(sd->sc.data[SC_ALL_RIDING]) ) {
+	if (!&sd->sc || !(sd->sc.data[SC_ALL_RIDING])) {
 		clif_displaymessage(sd->fd,msg_txt(sd,1363)); // You have mounted.
 		sc_start(NULL, &sd->bl, SC_ALL_RIDING, 10000, 1, INVALID_TIMER);
 	} else {
 		clif_displaymessage(sd->fd,msg_txt(sd,1364)); // You have released your mount.
-		status_change_end(&sd->bl, SC_ALL_RIDING, INVALID_TIMER);
+		if (&sd->sc)
+			status_change_end(&sd->bl, SC_ALL_RIDING, INVALID_TIMER);
 	}
 	return 0;
 }

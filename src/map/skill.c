@@ -541,7 +541,7 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 			return true;
 	}
 
-	if( sd->sc.data[SC_ALL_RIDING] )
+	if( &sd->sc && sd->sc.data[SC_ALL_RIDING] )
 		return true; //You can't use skills while in the new mounts (The client doesn't let you, this is to make cheat-safe)
 
 	switch (skill_id) {
