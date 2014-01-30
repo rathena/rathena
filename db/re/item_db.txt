@@ -6210,7 +6210,7 @@
 12700,Insideout_Shirt,Inside-out Shirt,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ warp "malaya",242,211; },{},{}
 12701,Old_Blue_Box_F,Old Blue Box,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12702,Old_Bleu_Box,Old Navy Box,2,0,,200,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_BleuBox),1; getrandgroupitem(IG_BleuBox),1; },{},{}
-12703,Holy_Egg_2,Holy Egg,11,0,,50,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+12703,Holy_Egg_2,Holy Egg,11,0,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_Holy_Egg_2,1); },{},{}
 12704,Elixir_Of_Life,Elixir of Life,0,0,,10,,,,,0xFFFFFFFF,63,2,,,85,,,{ percentheal 100,0; },{},{}
 12705,Noble_Nameplate,Noble Nameplate,2,0,,100,,,,,0xFFFFFFFF,63,2,,,90,,,{ sc_start SC_EXPBOOST,1800000,100; },{},{}
 12706,Lucky_Cookie01,Lucky Cookie,11,0,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "PR_GLORIA",5; },{},{}
@@ -8068,9 +8068,9 @@
 16625,Half_Asprika_box7,Half Asprika box7,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ rentitem 2566,604800; },{},{}
 16628,Brynhild_Box,Half Brynhild Box,2,20,,0,,,,,0xFFFFFFFF,63,2,,,47,,,{ rentitem 15023,604800; },{},{}
 16631,Aributa_Scroll,Aributa Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-16638,Life_Ribbon_Box,Life Ribbon Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /*getgroupitem(IG_Life_Ribbon_Box);*/ /*rentitem Life_Ribbon,3600;*/ },{},{}
-16639,Life_Ribbon_Box2,Life Ribbon Box2,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /*getgroupitem(IG_Life_Ribbon_Box2);*/ /*rentitem Life_Ribbon,7200;*/ },{},{}
-16640,Life_Ribbon_Box3,Life Ribbon Box3,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /*getgroupitem(IG_Life_Ribbon_Box3);*/ /*rentitem Life_Ribbon,14400;*/ },{},{}
+16638,Life_Ribbon_Box,Life Ribbon Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Life_Ribbon_Box); },{},{}
+16639,Life_Ribbon_Box2,Life Ribbon Box2,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Life_Ribbon_Box2); },{},{}
+16640,Life_Ribbon_Box3,Life Ribbon Box3,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Life_Ribbon_Box3); },{},{}
 //
 16652,Flame_Light,Flame Light,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Flame_Light); },{},{}
 16653,BM75_10Box,BM75 10Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12563,10; },{},{}
@@ -8187,7 +8187,7 @@
 16866,Siege_Map_Teleport_Scroll_II_Box_10,Siege Map Teleport Scroll II Box(10),18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 14591,10; },{},{}
 16867,Siege_Map_Teleport_Scroll_II_Box_30,Siege Map Teleport Scroll II Box(30),18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 14591,30; },{},{}
 //
-16972,Weather_Report_Box,Weather Report Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /*getgroupitem(IG_Weather_Report_Box);*/ /*getitem Fine_Sun,1;*/ getitem 19518,1; getitem 19520,1; getitem 19519,1; },{},{}
+16972,Weather_Report_Box,Weather Report Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /*getgroupitem(IG_Weather_Report_Box);*/ getitem 19507,1; getitem 19518,1; getitem 19520,1; getitem 19519,1; },{},{}
 16973,Yellow_Hat_Box,Yellow Hat Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 19515,1; },{},{}
 16974,Comin_Actor_Box,Comin Actor Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /*getgroupitem(IG_Comin_Actor_Box);*/ getitem 19514,1; getitem 19521,1; },{},{}
 16975,Singing_Bird_Box,Singing Bird Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 19516,1; },{},{}
@@ -8902,9 +8902,9 @@
 22043,AGI_Complement,AGI Complement,4,10,,350,,25,,,0x00000400,56,2,64,,100,1,,{ bonus bAspdRate,5+(getrefine()/4); },{},{}
 22044,Reinforced_Parts_Booster,Reinforced Parts - Booster,4,10,,1000,,23,,,0x00000400,56,2,64,,100,1,,{ bonus2 bSkillUseSP,"NC_HOVERING",15; if(getrefine()>=7){bonus2 bSkillUseSP,"NC_HOVERING",-20;} },{},{}
 22045,Beach_Sandals,Summer Sandals,4,10,,200,,5,,0,0xFFFFFFFF,63,2,64,,0,1,0,{ bonus bFlee,5; bonus3 bAutoSpellWhenHit,"AL_INCAGI",10,300; },{},{}
-22514,Candy_Holder,Candy Holder,11,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+22514,Candy_Holder,Candy Holder,11,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_Candy_Holder,1); getrandgroupitem(IG_Candy_Holder,1); getrandgroupitem(IG_Candy_Holder,1); },{},{}
 22540,Runstone_Luxanima,Lux Anima Runestone,11,2,,100,,,,,0xFFFFFFFF,56,2,,,,,,{ itemskill "RK_LUXANIMA",1; },{},{}
-22558,Lucky_Bag,Lucky Bag,11,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+22558,Lucky_Bag,Lucky Bag,11,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_Lucky_Bag,1); },{},{}
 22559,Mock_Strawberry,Mock Strawberry,11,20,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 50,50; itemskill "SM_ENDURE",3; },{},{}
 22563,Lucky_Bag_Of_New_Era,Lucky Bag Of New Era,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
 22566,Last_Years_Frost,Last Year's Frost,3,20,,0,,,,,,,,,,,,,{},{},{}
@@ -9021,5 +9021,4 @@
 //unknown,Br_MerPackage,Br_MerPackage,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Br_MerPackage); },{},{}
 //unknown,Br_ThiefPackage,Br_ThiefPackage,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Br_ThiefPackage); },{},{}
 //unknown,Sakura_Scroll,Sakura_Scroll,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Sakura_Scroll); },{},{}
-//unknown,Ptotection_Seagod_Box,The Sea God's Call 1 Day Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /*getgroupitem(IG_Ptotection_Seagod_Box);*/ rentitem 6436,86400; },{},{}
 //unknown,Blue_Scroll,Blue_Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Blue_Scroll); },{},{}

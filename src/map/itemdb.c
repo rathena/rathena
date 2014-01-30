@@ -611,11 +611,10 @@ bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, int (*func)(str
 	return true;
 }
 
-/*==========================================
- *	Specifies if item-type should drop unidentified.
- *------------------------------------------*/
-char itemdb_isidentified(int nameid)
-{
+/** Specifies if item-type should drop unidentified.
+* @param nameid ID of item
+*/
+char itemdb_isidentified(int nameid) {
 	int type=itemdb_type(nameid);
 	switch (type) {
 		case IT_WEAPON:
@@ -628,12 +627,10 @@ char itemdb_isidentified(int nameid)
 	}
 }
 
-/*==========================================
- * Search by name for the override flags available items
- * (Give item another sprite)
- *------------------------------------------*/
-static bool itemdb_read_itemavail(char* str[], int columns, int current)
-{// <nameid>,<sprite>
+/** Search by name for the override flags available items (Give item another sprite)
+* Structure: <nameid>,<sprite>
+*/
+static bool itemdb_read_itemavail(char* str[], int columns, int current) {
 	int nameid, sprite;
 	struct item_data *id;
 
@@ -660,10 +657,9 @@ static bool itemdb_read_itemavail(char* str[], int columns, int current)
 	return true;
 }
 
-/*==========================================
- * read item group data
- * GroupID,ItemID,Rate{,Amount,isMust,isAnnounced,Duration,isNamed,isBound}
- *------------------------------------------*/
+/** Read item group data
+* Structure: GroupID,ItemID,Rate{,Amount,isMust,isAnnounced,Duration,isNamed,isBound}
+*/
 static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 {
 	FILE *fp;
@@ -716,15 +712,21 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 		else //Try reads group id by const
 			script_get_constant(trim(str[0]),&group_id);
 		if (!group_id || group_id >= MAX_ITEMGROUP) {
-			ShowWarning("itemdb_read_itemgroup: Invalid group id '%s' in %s:%d\n", str[0], filename, ln);
+			ShowWarning("itemdb_read_itemgroup: Cannot save '%s' because invalid group id or group db is overflow in %s:%d\n", str[0], filename, ln);
 			continue;
 		}
 
 		//Checking sub group
 		if (rand_group > MAX_ITEMGROUP_RANDGROUP) {
-			ShowWarning("itemdb_read_itemgroup: Invalid sub group %d for group id %d in %s:%d\n", rand_group, group_id, filename, ln);
+			ShowWarning("itemdb_read_itemgroup: Invalid sub group %d for group '%s' in %s:%d\n", rand_group, str[0], filename, ln);
 			continue;
 		}
+
+		if (rand_group && prob < 1) {
+			ShowWarning("itemdb_read_itemgroup: Invalid probaility for group '%s' sub: %d in %s:%d\n", str[0], rand_group, filename, ln);
+			continue;
+		}
+		rand_group -= 1;
 
 		//Checking item
 		trim(str[1]);
@@ -758,15 +760,14 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 			itemgroup_db[group_id].must[idx].isNamed = named;
 			itemgroup_db[group_id].must[idx].bound = bound;
 			itemgroup_db[group_id].must_qty++;
-			rand_group = 1;
+			//If 'must' item isn't set as random item, skip the next process
+			if (!prob) {
+				entries++;
+				continue;
+			}
+			rand_group = 0;
 		}
-		prob = max(prob,0);
-		//Must item didn't set as random item, skip next process
-		if (!prob) {
-			entries++;
-			continue;
-		}
-		rand_group -= 1;
+
 		random = &itemgroup_db[group_id].random[rand_group];
 
 		//Check, if the entry for this random group already created or not
@@ -793,19 +794,17 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 	return;
 }
 
-static void itemdb_read_itemgroup(const char* basedir, bool silent)
-{
+static void itemdb_read_itemgroup(const char* basedir, bool silent) {
 	char filepath[256];
 	sprintf(filepath, "%s/%s", basedir, "item_group_db.txt");
 	itemdb_read_itemgroup_sub(filepath, silent);
 	return;
 }
 
-/*==========================================
- * Read item forbidden by mapflag (can't equip item)
- *------------------------------------------*/
-static bool itemdb_read_noequip(char* str[], int columns, int current)
-{// <nameid>,<mode>
+/** Read item forbidden by mapflag (can't equip item)
+* Structure: <nameid>,<mode>
+*/
+static bool itemdb_read_noequip(char* str[], int columns, int current) {
 	int nameid;
 	struct item_data *id;
 
@@ -822,11 +821,10 @@ static bool itemdb_read_noequip(char* str[], int columns, int current)
 	return true;
 }
 
-/*==========================================
- * Reads item trade restrictions [Skotlex]
- *------------------------------------------*/
-static bool itemdb_read_itemtrade(char* str[], int columns, int current)
-{// <nameid>,<mask>,<gm level>
+/** Reads item trade restrictions [Skotlex]
+* Structure: <nameid>,<mask>,<gm level>
+*/
+static bool itemdb_read_itemtrade(char* str[], int columns, int current) {
 	int nameid, flag, gmlv;
 	struct item_data *id;
 
@@ -859,11 +857,10 @@ static bool itemdb_read_itemtrade(char* str[], int columns, int current)
 	return true;
 }
 
-/*==========================================
- * Reads item delay amounts [Paradox924X]
- *------------------------------------------*/
-static bool itemdb_read_itemdelay(char* str[], int columns, int current)
-{// <nameid>,<delay>
+/** Reads item delay amounts [Paradox924X]
+* Structure: <nameid>,<delay>
+*/
+static bool itemdb_read_itemdelay(char* str[], int columns, int current) {
 	int nameid, delay;
 	struct item_data *id;
 
@@ -888,11 +885,10 @@ static bool itemdb_read_itemdelay(char* str[], int columns, int current)
 	return true;
 }
 
-/*==================================================================
- * Reads item stacking restrictions
- *----------------------------------------------------------------*/
-static bool itemdb_read_stack(char* fields[], int columns, int current)
-{// <item id>,<stack limit amount>,<type>
+/** Reads item stacking restrictions
+* Structure: <item id>,<stack limit amount>,<type>
+*/
+static bool itemdb_read_stack(char* fields[], int columns, int current) {
 	unsigned short nameid, amount;
 	unsigned int type;
 	struct item_data* id;
@@ -928,10 +924,10 @@ static bool itemdb_read_stack(char* fields[], int columns, int current)
 	return true;
 }
 
-
-/// Reads items allowed to be sold in buying stores
-static bool itemdb_read_buyingstore(char* fields[], int columns, int current)
-{// <nameid>
+/** Reads items allowed to be sold in buying stores
+* <nameid>
+*/
+static bool itemdb_read_buyingstore(char* fields[], int columns, int current) {
 	int nameid;
 	struct item_data* id;
 
@@ -954,11 +950,10 @@ static bool itemdb_read_buyingstore(char* fields[], int columns, int current)
 	return true;
 }
 
-/*******************************************
-** Item usage restriction (item_nouse.txt)
-********************************************/
-static bool itemdb_read_nouse(char* fields[], int columns, int current)
-{// <nameid>,<flag>,<override>
+/** Item usage restriction (item_nouse.txt)
+* <nameid>,<flag>,<override>
+*/
+static bool itemdb_read_nouse(char* fields[], int columns, int current) {
 	int nameid, flag, override;
 	struct item_data* id;
 
@@ -1176,9 +1171,9 @@ static void itemdb_re_split_atoi(char *str, int *atk, int *matk) {
 	return;
 }
 #endif
-/*==========================================
- * processes one itemdb entry
- *------------------------------------------*/
+/**
+* Processes one itemdb entry
+*/
 static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scriptopt) {
 	/*
 		+----+--------------+---------------+------+-----------+------------+--------+--------+---------+-------+-------+------------+-------------+---------------+-----------------+--------------+-------------+------------+------+--------+--------------+----------------+
@@ -1309,10 +1304,10 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 	return true;
 }
 
-/*==========================================
- * Reading item from item db
- * item_db2 overwriting item_db
- *------------------------------------------*/
+/**
+* Read item from item db
+* item_db2 overwriting item_db
+*/
 static int itemdb_readdb(void){
 	const char* filename[] = {
 		DBPATH"item_db.txt",
@@ -1437,9 +1432,9 @@ static int itemdb_readdb(void){
 	return 0;
 }
 
-/*======================================
- * item_db table reading
- *======================================*/
+/**
+* Read item_db table
+*/
 static int itemdb_read_sqldb(void) {
 
 	const char* item_db_name[] = {
@@ -1487,14 +1482,15 @@ static int itemdb_read_sqldb(void) {
 	return 0;
 }
 
-/*==========================================
-* Unique item ID function
+/** Unique item ID function
 * Only one operation by once
-* Flag:
+* @param flag
 * 0 return new id
 * 1 set new value, checked with current value
 * 2 set new value bypassing anything
-* 3/other return last value
+* 3/other
+* @param value
+* @return last value
 *------------------------------------------*/
 uint64 itemdb_unique_id(int8 flag, int64 value) {
 	static uint64 item_uid = 0;
@@ -1512,7 +1508,11 @@ uint64 itemdb_unique_id(int8 flag, int64 value) {
 
 	return ++item_uid;
 }
-static void itemdb_uid_load(){
+
+/**
+* Load Unique ID for Item
+*/
+static void itemdb_uid_load(void){
 
 	char * uid;
 	if (SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `value` FROM `interreg` WHERE `varname`='unique_id'"))
@@ -1530,11 +1530,11 @@ static void itemdb_uid_load(){
 	Sql_FreeResult(mmysql_handle);
 }
 
-/*==========================================
- * Check if the item is restricted by item_noequip.txt (return):
- * true		- can't be used
- * false	- can be used
- *------------------------------------------*/
+/** Check if the item is restricted by item_noequip.txt
+* @param id Item that will be checked
+* @param m Map ID
+* @return true: can't be used; false: can be used
+*/
 bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
 	if (!id->flag.no_equip)
 		return false;
@@ -1549,9 +1549,9 @@ bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
 	return false;
 }
 
-/*====================================
- * read all item-related databases
- *------------------------------------*/
+/**
+* Read all item-related databases
+*/
 static void itemdb_read(void) {
 	int i;
 	const char* dbsubpath[] = {
@@ -1592,9 +1592,10 @@ static void itemdb_read(void) {
  * Initialize / Finalize
  *------------------------------------------*/
 
-/// Destroys the item_data.
-static void destroy_item_data(struct item_data* self, bool free_self)
-{
+/**
+* Destroys the item_data.
+*/
+static void destroy_item_data(struct item_data* self, bool free_self) {
 	if( self == NULL )
 		return;
 	// free scripts
@@ -1637,8 +1638,10 @@ static int itemdb_final_sub(DBKey key, DBData *data, va_list ap)
 	return 0;
 }
 
-void itemdb_reload(void)
-{
+/**
+* Reload Item DB
+*/
+void itemdb_reload(void) {
 	struct s_mapiterator* iter;
 	struct map_session_data* sd;
 
@@ -1720,8 +1723,11 @@ void itemdb_reload(void)
 	mapit_free(iter);
 }
 
-void do_final_itemdb(void)
-{
+
+/**
+* Finalizing Item DB
+*/
+void do_final_itemdb(void) {
 	int i;
 
 	for( i = 0; i < ARRAYLENGTH(itemdb_array); ++i )
@@ -1746,6 +1752,9 @@ void do_final_itemdb(void)
 	db_destroy(itemdb_combo);
 }
 
+/**
+* Initializing Item DB
+*/
 int do_init_itemdb(void) {
 	memset(itemdb_array, 0, sizeof(itemdb_array));
 	itemdb_other = idb_alloc(DB_OPT_BASE);

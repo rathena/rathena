@@ -1148,6 +1148,9 @@ IG_Yong_Kwang_Scroll	385
 IG_HALLOWEEN_G_BOX	386
 IG_Solo_Christmas_Gift	387
 IG_Sg_Weapon_Supply_Box	388
+IG_Candy_Holder	389
+IG_Lucky_Bag	390
+IG_Holy_Egg_2	391
 
 SC_ALL	-1
 SC_STONE	0

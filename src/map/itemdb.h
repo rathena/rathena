@@ -23,9 +23,9 @@
 #define IG_FINDINGORE 6
 #define IG_POTION 37
 
-#define MAX_ITEMGROUP 390 ///The max. item group count (increase this when needed). TODO: Remove this limit and use dynamic allocaton if needed
+#define MAX_ITEMGROUP 400 ///The max. item group count (increase this when needed). TODO: Remove this limit and use dynamic size or DBMap if needed
 
-#define MAX_ITEMGROUP_RANDGROUP 4	///Max group for random item (increase this when needed). TODO: Remove this limit and use dynamic allocaton if needed
+#define MAX_ITEMGROUP_RANDGROUP 4	///Max group for random item (increase this when needed). TODO: Remove this limit and use dynamic size if needed
 
 #define CARD0_FORGE 0x00FF
 #define CARD0_CREATE 0x00FE
@@ -402,7 +402,7 @@ struct s_item_group_random {
 struct s_item_group_db {
 	struct s_item_group *must;
 	uint16 must_qty;
-	struct s_item_group_random random[MAX_ITEMGROUP_RANDGROUP]; //! TODO: Move this fixed array to dynamic allocation if needed.
+	struct s_item_group_random random[MAX_ITEMGROUP_RANDGROUP]; //! TODO: Move this fixed array to dynamic size if needed.
 };
 
 struct item_data* itemdb_searchname(const char *name);

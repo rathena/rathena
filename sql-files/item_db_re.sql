@@ -6241,7 +6241,7 @@ REPLACE INTO `item_db_re` VALUES (12699,'Tikbalang_Belt','Tikbalang Harness',2,2
 REPLACE INTO `item_db_re` VALUES (12700,'Insideout_Shirt','Inside-out Shirt',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'warp "malaya",242,211;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12701,'Old_Blue_Box_F','Old Blue Box',2,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12702,'Old_Bleu_Box','Old Navy Box',2,0,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_BleuBox),1; getrandgroupitem(IG_BleuBox),1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12703,'Holy_Egg_2','Holy Egg',11,0,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12703,'Holy_Egg_2','Holy Egg',11,0,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_Holy_Egg_2,1);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12704,'Elixir_Of_Life','Elixir of Life',0,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,'85',NULL,NULL,'percentheal 100,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12705,'Noble_Nameplate','Noble Nameplate',2,0,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,'90',NULL,NULL,'sc_start SC_EXPBOOST,1800000,100;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12706,'Lucky_Cookie01','Lucky Cookie',11,0,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemskill "PR_GLORIA",5;',NULL,NULL);
@@ -8099,9 +8099,9 @@ REPLACE INTO `item_db_re` VALUES (16619,'Yellow_Bunnyband_Box','Yellow Bunnyband
 REPLACE INTO `item_db_re` VALUES (16625,'Half_Asprika_box7','Half Asprika box7',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'rentitem 2566,604800;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (16628,'Brynhild_Box','Half Brynhild Box',2,20,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,'47',NULL,NULL,'rentitem 15023,604800;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (16631,'Aributa_Scroll','Aributa Scroll',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (16638,'Life_Ribbon_Box','Life Ribbon Box',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*getgroupitem(IG_Life_Ribbon_Box);*/ /*rentitem Life_Ribbon,3600;*/',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (16639,'Life_Ribbon_Box2','Life Ribbon Box2',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*getgroupitem(IG_Life_Ribbon_Box2);*/ /*rentitem Life_Ribbon,7200;*/',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (16640,'Life_Ribbon_Box3','Life Ribbon Box3',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*getgroupitem(IG_Life_Ribbon_Box3);*/ /*rentitem Life_Ribbon,14400;*/',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (16638,'Life_Ribbon_Box','Life Ribbon Box',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_Life_Ribbon_Box);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (16639,'Life_Ribbon_Box2','Life Ribbon Box2',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_Life_Ribbon_Box2);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (16640,'Life_Ribbon_Box3','Life Ribbon Box3',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_Life_Ribbon_Box3);',NULL,NULL);
 #
 REPLACE INTO `item_db_re` VALUES (16652,'Flame_Light','Flame Light',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_Flame_Light);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (16653,'BM75_10Box','BM75 10Box',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 12563,10;',NULL,NULL);
@@ -8218,7 +8218,7 @@ REPLACE INTO `item_db_re` VALUES (16865,'Siege_Map_Teleport_Scroll_Box_30','Sieg
 REPLACE INTO `item_db_re` VALUES (16866,'Siege_Map_Teleport_Scroll_II_Box_10','Siege Map Teleport Scroll II Box(10)',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 14591,10;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (16867,'Siege_Map_Teleport_Scroll_II_Box_30','Siege Map Teleport Scroll II Box(30)',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 14591,30;',NULL,NULL);
 #
-REPLACE INTO `item_db_re` VALUES (16972,'Weather_Report_Box','Weather Report Box',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*getgroupitem(IG_Weather_Report_Box);*/ /*getitem Fine_Sun,1;*/ getitem 19518,1; getitem 19520,1; getitem 19519,1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (16972,'Weather_Report_Box','Weather Report Box',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*getgroupitem(IG_Weather_Report_Box);*/ getitem 19507,1; getitem 19518,1; getitem 19520,1; getitem 19519,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (16973,'Yellow_Hat_Box','Yellow Hat Box',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 19515,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (16974,'Comin_Actor_Box','Comin Actor Box',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*getgroupitem(IG_Comin_Actor_Box);*/ getitem 19514,1; getitem 19521,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (16975,'Singing_Bird_Box','Singing Bird Box',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 19516,1;',NULL,NULL);
@@ -8933,9 +8933,9 @@ REPLACE INTO `item_db_re` VALUES (22015,'Impr_Angel\'s_Arrival','Advanced Angel\
 REPLACE INTO `item_db_re` VALUES (22043,'AGI_Complement','AGI Complement',4,10,NULL,350,NULL,25,NULL,NULL,0x00000400,56,2,64,NULL,'100',1,NULL,'bonus bAspdRate,5+(getrefine()/4);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22044,'Reinforced_Parts_Booster','Reinforced Parts - Booster',4,10,NULL,1000,NULL,23,NULL,NULL,0x00000400,56,2,64,NULL,'100',1,NULL,'bonus2 bSkillUseSP,"NC_HOVERING",15; if(getrefine()>=7){bonus2 bSkillUseSP,"NC_HOVERING",-20;}',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22045,'Beach_Sandals','Summer Sandals',4,10,NULL,200,NULL,5,NULL,0,0xFFFFFFFF,63,2,64,NULL,'0',1,0,'bonus bFlee,5; bonus3 bAutoSpellWhenHit,"AL_INCAGI",10,300;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (22514,'Candy_Holder','Candy Holder',11,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22514,'Candy_Holder','Candy Holder',11,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_Candy_Holder,1); getrandgroupitem(IG_Candy_Holder,1); getrandgroupitem(IG_Candy_Holder,1);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22540,'Runstone_Luxanima','Lux Anima Runestone',11,2,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,56,2,NULL,NULL,NULL,NULL,NULL,'itemskill "RK_LUXANIMA",1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (22558,'Lucky_Bag','Lucky Bag',11,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22558,'Lucky_Bag','Lucky Bag',11,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_Lucky_Bag,1);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22559,'Mock_Strawberry','Mock Strawberry',11,20,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'percentheal 50,50; itemskill "SM_ENDURE",3;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22563,'Lucky_Bag_Of_New_Era','Lucky Bag Of New Era',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/* TODO */',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22566,'Last_Years_Frost','Last Year\'s Frost',3,20,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
@@ -9052,6 +9052,5 @@ REPLACE INTO `item_db_re` VALUES (28204,'Half_BF_Shotgun1','Half BF Shotgun1',5,
 #REPLACE INTO `item_db_re` VALUES (unknown,'Br_MerPackage','Br_MerPackage',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_Br_MerPackage);',NULL,NULL);
 #REPLACE INTO `item_db_re` VALUES (unknown,'Br_ThiefPackage','Br_ThiefPackage',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_Br_ThiefPackage);',NULL,NULL);
 #REPLACE INTO `item_db_re` VALUES (unknown,'Sakura_Scroll','Sakura_Scroll',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_Sakura_Scroll);',NULL,NULL);
-#REPLACE INTO `item_db_re` VALUES (unknown,'Ptotection_Seagod_Box','The Sea God\'s Call 1 Day Box',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*getgroupitem(IG_Ptotection_Seagod_Box);*/ rentitem 6436,86400;',NULL,NULL);
 #REPLACE INTO `item_db_re` VALUES (unknown,'Blue_Scroll','Blue_Scroll',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_Blue_Scroll);',NULL,NULL);
 
