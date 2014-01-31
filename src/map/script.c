@@ -18361,11 +18361,13 @@ BUILDIN_FUNC(defpattern);
 BUILDIN_FUNC(activatepset);
 BUILDIN_FUNC(deactivatepset);
 BUILDIN_FUNC(deletepset);
+#endif
 
 /** Regular expression matching
  * preg_match(<pattern>,<string>{,<offset>})
  */
 BUILDIN_FUNC(preg_match) {
+#ifdef PCRE_SUPPORT
 	pcre *re;
 	pcre_extra *pcreExtra;
 	const char *error;
@@ -18392,8 +18394,12 @@ BUILDIN_FUNC(preg_match) {
 		script_pushint(st,(r > 0) ? r : 30 / 3);
 
 	return SCRIPT_CMD_SUCCESS;
-}
+#else
+	ShowError("script:preg_match: cannot run without PCRE library enabled.\n");
+	script_pushint(st,0);
+	return SCRIPT_CMD_FAILURE;
 #endif
+}
 
 /// script command definitions
 /// for an explanation on args, see add_buildin_func
@@ -18663,8 +18669,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(activatepset,"i"), // Activate a pattern set [MouseJstr]
 	BUILDIN_DEF(deactivatepset,"i"), // Deactive a pattern set [MouseJstr]
 	BUILDIN_DEF(deletepset,"i"), // Delete a pattern set [MouseJstr]
-	BUILDIN_DEF(preg_match,"ss?"),
 #endif
+	BUILDIN_DEF(preg_match,"ss?"),
 	BUILDIN_DEF(dispbottom,"s"), //added from jA [Lupus]
 	BUILDIN_DEF(getusersname,""),
 	BUILDIN_DEF(recovery,"i???"),
