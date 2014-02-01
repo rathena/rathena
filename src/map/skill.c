@@ -19227,7 +19227,7 @@ static void skill_readdb(void) {
 	int i;
 	const char* dbsubpath[] = {
 		"",
-		"import"
+		"/import"
 		//add other path here
 	};
 	

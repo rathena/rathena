@@ -10192,7 +10192,7 @@ int pc_readdb(void)
 	int i, k, s = 1;
 	const char* dbsubpath[] = {
 		"",
-		"import"
+		"/import"
 		//add other path here
 	};
 		

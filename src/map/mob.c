@@ -4534,7 +4534,7 @@ static void mob_load(void)
 	int i;
 	const char* dbsubpath[] = {
 		"",
-		"import",
+		"/import",
 	};
 	
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){	
