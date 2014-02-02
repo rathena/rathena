@@ -12353,7 +12353,7 @@ int status_readdb(void)
 	int i, j, k;
 	const char* dbsubpath[] = {
 		"",
-		"import"
+		"/"DBIMPORT,
 		//add other path here
 	};
 	// Initialize databases to default
@@ -12382,11 +12382,17 @@ int status_readdb(void)
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
 		int n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
 		int n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
-		char* dbsubpath1 = aMalloc(n1+1);
-		char* dbsubpath2 = aMalloc(n2+1);
-		safesnprintf(dbsubpath1,n1+1,"%s%s",db_path,dbsubpath[i]);
-		if(i==0) safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
-		else safesnprintf(dbsubpath2,n2,"%s%s",db_path,dbsubpath[i]);
+		char* dbsubpath1 = (char*)aMalloc(n1+1);
+		char* dbsubpath2 = (char*)aMalloc(n2+1);
+
+		if(i==0) {
+			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
+			safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
+		}
+		else {
+			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
+			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
+		}
 		
 		status_readdb_attrfix(dbsubpath2,i); // !TODO use sv_readdb ?
 		sv_readdb(dbsubpath1, "size_fix.txt",',',MAX_WEAPON_TYPE,MAX_WEAPON_TYPE,ARRAYLENGTH(atkmods),&status_readdb_sizefix, i);

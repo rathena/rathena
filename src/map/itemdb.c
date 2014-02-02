@@ -667,7 +667,7 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 	char line[1024];
 
 	if ((fp=fopen(filename,"r")) == NULL) {
-		if(silent == 0) ShowError("can't read %s\n", filename);
+		if(silent == 0) ShowError("Can't read %s\n", filename);
 		return;
 	}
 	
@@ -1311,7 +1311,7 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 static int itemdb_readdb(void){
 	const char* filename[] = {
 		DBPATH"item_db.txt",
-		"import/item_db.txt" 
+		DBIMPORT"/item_db.txt" 
 	};
 
 	int fi;
@@ -1556,7 +1556,7 @@ static void itemdb_read(void) {
 	int i;
 	const char* dbsubpath[] = {
 		"",
-		"/import",
+		"/"DBIMPORT,
 	};
 	
 	if (db_use_sqldbs)
@@ -1567,22 +1567,32 @@ static void itemdb_read(void) {
 	memset(&itemgroup_db, 0, sizeof(itemgroup_db));
 	
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
-		int n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
-		int n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
-		char* dbsubpath2 = aMalloc(n2+1);
-		safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
+		uint8 n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
+		uint8 n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
+		char* dbsubpath1 = (char*)aMalloc(n1+1);
+		char* dbsubpath2 = (char*)aMalloc(n2+1);
 		
-		sv_readdb(dbsubpath2, "item_avail.txt",         ',', 2, 2, -1, &itemdb_read_itemavail, i);
-		sv_readdb(dbsubpath2, "item_stack.txt",         ',', 3, 3, -1, &itemdb_read_stack, i);
-		sv_readdb(dbsubpath2, "item_nouse.txt",         ',', 3, 3, -1, &itemdb_read_nouse, i);
+
+		if(i==0) {
+			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
+			safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
+		}
+		else {
+			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
+			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
+		}
 		
-		if(i==0) safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
+		sv_readdb(dbsubpath1, "item_avail.txt",         ',', 2, 2, -1, &itemdb_read_itemavail, i);
+		sv_readdb(dbsubpath1, "item_stack.txt",         ',', 3, 3, -1, &itemdb_read_stack, i);
+		sv_readdb(dbsubpath1, "item_nouse.txt",         ',', 3, 3, -1, &itemdb_read_nouse, i);
+		
 		itemdb_read_itemgroup(dbsubpath2, i);
 		itemdb_read_combos(dbsubpath2,i); //TODO change this to sv_read ? id#script ?
 		sv_readdb(dbsubpath2, "item_noequip.txt",       ',', 2, 2, -1, &itemdb_read_noequip, i);
 		sv_readdb(dbsubpath2, "item_trade.txt",         ',', 3, 3, -1, &itemdb_read_itemtrade, i);
 		sv_readdb(dbsubpath2, "item_delay.txt",         ',', 2, 2, -1, &itemdb_read_itemdelay, i);
 		sv_readdb(dbsubpath2, "item_buyingstore.txt",   ',', 1, 1, -1, &itemdb_read_buyingstore, i);
+		aFree(dbsubpath1);
 		aFree(dbsubpath2);
 	}
 	itemdb_uid_load();

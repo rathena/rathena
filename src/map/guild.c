@@ -2088,7 +2088,7 @@ void guild_flags_clear(void) {
 void do_init_guild(void) {
 	const char* dbsubpath[] = {
 		"",
-		"import/",
+		"/"DBIMPORT,
 	};
 	int i;
 	
@@ -2104,7 +2104,7 @@ void do_init_guild(void) {
 	
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
 		int n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
-		char* dbsubpath1 = aMalloc(n1+1);
+		char* dbsubpath1 = (char*)aMalloc(n1+1);
 		safesnprintf(dbsubpath1,n1+1,"%s%s",db_path,dbsubpath[i]);
 		
 		sv_readdb(dbsubpath1, "castle_db.txt", ',', 4, 4, -1, &guild_read_castledb, i);

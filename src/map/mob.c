@@ -4030,11 +4030,11 @@ static int mob_read_randommonster(void)
 		DBPATH"mob_boss.txt",
 		"mob_pouch.txt",
 		"mob_classchange.txt",
-		"import/mob_branch.txt",
-		"import/mob_poring.txt",
-		"import/mob_boss.txt",
-		"import/mob_pouch.txt",
-		"import/mob_classchange.txt"
+		DBIMPORT"/mob_branch.txt",
+		DBIMPORT"/mob_poring.txt",
+		DBIMPORT"/mob_boss.txt",
+		DBIMPORT"/mob_pouch.txt",
+		DBIMPORT"/mob_classchange.txt"
 	};
 
 	memset(&summon, 0, sizeof(summon));
@@ -4076,7 +4076,7 @@ static int mob_read_randommonster(void)
 				if( summon[k].qty < ARRAYLENGTH(summon[k].mob_id) ) //MvPs
 					summon[k].mob_id[summon[k].qty++] = mob_id;
 				else {
-					ShowDebug("Can't store more random mobs from %s, increase size of mob.c:summon variable!\n", mobfile[i]);
+					ShowDebug("Can't store more random mobs from %s/%s, increase size of mob.c:summon variable!\n", db_path, mobfile[i]);
 					break;
 				}
 			}
@@ -4088,7 +4088,7 @@ static int mob_read_randommonster(void)
 			summon[k].qty = 1;
 		}
 		fclose(fp);
-		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", entries, mobfile[i]);
+		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s/%s"CL_RESET"'.\n", entries, db_path, mobfile[i]);
 	}
 	return 0;
 }
@@ -4534,17 +4534,24 @@ static void mob_load(void)
 	int i;
 	const char* dbsubpath[] = {
 		"",
-		"import",
+		"/"DBIMPORT,
 	};
 	
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){	
 		int n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
 		int n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
-		char* dbsubpath1 = aMalloc(n1+1);
-		char* dbsubpath2 = aMalloc(n2+1);
-		safesnprintf(dbsubpath1,n1+1,"%s%s",db_path,dbsubpath[i]);
-		if(i==0) safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
-		else safesnprintf(dbsubpath2,n2,"%s%s",db_path,dbsubpath[i]);
+
+		char* dbsubpath1 = (char*)aMalloc(n1+1);
+		char* dbsubpath2 = (char*)aMalloc(n2+1);
+		
+		if(i==0) {
+			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
+			safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
+		}
+		else {
+			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
+			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
+		}
 		
 		sv_readdb(dbsubpath1, "mob_item_ratio.txt", ',', 2, 2+MAX_ITEMRATIO_MOBS, -1, &mob_readdb_itemratio, i); // must be read before mobdb
 		sv_readdb(dbsubpath1, "mob_chat_db.txt", '#', 3, 3, MAX_MOB_CHAT, &mob_parse_row_chatdb, i);

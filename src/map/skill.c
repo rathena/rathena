@@ -19227,7 +19227,7 @@ static void skill_readdb(void) {
 	int i;
 	const char* dbsubpath[] = {
 		"",
-		"import"
+		"/"DBIMPORT,
 		//add other path here
 	};
 	
@@ -19247,18 +19247,24 @@ static void skill_readdb(void) {
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
 		int n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
 		int n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
-		char* dbsubpath1 = aMalloc(n1+1);
-		char* dbsubpath2 = aMalloc(n2+1);
-		safesnprintf(dbsubpath1,n1+1,"%s%s",db_path,dbsubpath[i]);
-		if(i==0) safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
-		else safesnprintf(dbsubpath2,n2,"%s%s",db_path,dbsubpath[i]);
+		char* dbsubpath1 = (char*)aMalloc(n1+1);
+		char* dbsubpath2 = (char*)aMalloc(n2+1);
+
+		if(i==0) {
+			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
+			safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
+		}
+		else {
+			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
+			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
+		}
 		
 		sv_readdb(dbsubpath2, "skill_db.txt"          , ',',  18, 18, MAX_SKILL_DB, skill_parse_row_skilldb, i);
 		sv_readdb(dbsubpath2, "skill_require_db.txt"  , ',',  34, 34, MAX_SKILL_DB, skill_parse_row_requiredb, i);
 #ifdef RENEWAL_CAST
-		sv_readdb(dbsubpath1, "re/skill_cast_db.txt"        , ',',   8,  8, MAX_SKILL_DB, skill_parse_row_castdb, i);
+		sv_readdb(dbsubpath2, "skill_cast_db.txt"        , ',',   8,  8, MAX_SKILL_DB, skill_parse_row_castdb, i);
 #else
-		sv_readdb(dbsubpath1, "pre-re/skill_cast_db.txt"    , ',',   7,  7, MAX_SKILL_DB, skill_parse_row_castdb, i);
+		sv_readdb(dbsubpath2, "skill_cast_db.txt"    , ',',   7,  7, MAX_SKILL_DB, skill_parse_row_castdb, i);
 #endif
 		sv_readdb(dbsubpath2, "skill_castnodex_db.txt", ',',   2,  3, MAX_SKILL_DB, skill_parse_row_castnodexdb, i);
 		sv_readdb(dbsubpath2, "skill_unit_db.txt"     , ',',   8,  8, MAX_SKILL_DB, skill_parse_row_unitdb, i);
