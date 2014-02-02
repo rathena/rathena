@@ -1078,7 +1078,7 @@ The "flag" parameter can be:
 
 The example below will make the [Tool Shop] text clickable and begin navigation
 to alberta (98,154) when clicked.
-g
+
     mes "Have you checked out the <NAVI>[Tool Shop]<INFO>alberta,98,154,0,000,0</INFO></NAVI>?";
 
 URLs
