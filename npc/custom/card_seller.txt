@@ -1,0 +1,72 @@
+//===== rAthena Script =======================================
+//= Card Seller A-Z
+//===== By: ==================================================
+//= AnnieRuru
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Sells all cards dropped by mobs, grouped alphabetically.
+//= MVP cards are excluded from the list.
+//=
+//= NOTE: Requires SQL item and mob databases.
+//===== Additional Comments: =================================
+//= 1.0 First version, edited. [Euphy]
+//============================================================
+
+prontera,155,177,5	script	Card Seller	100,{
+	mes "[Card Seller]";
+	mes "Welcome!";
+	mes "I can sell you any normal monster card in the game. Would you like to have a look?";
+	next;
+	.@s = select( .alphabet_menu$ ) -1;
+	close2;
+	callshop "card_mob#"+ .alphabet$[.@s], 1;
+	end;
+OnInit:
+	if (checkre(0)) {
+		.@mob_db$  = "mob_db_re";
+		.@item_db$ = "item_db_re";
+	} else {
+		.@mob_db$  = "mob_db";
+		.@item_db$ = "item_db";
+	}
+	freeloop 1;
+	.@total = query_sql( "SELECT DISTINCT LEFT( `name_japanese`, 1 ) AS alphabets FROM `"+ .@item_db$ +"` RIGHT JOIN `"+ .@mob_db$ +"` ON `"+ .@item_db$ +"`.`id` = `"+ .@mob_db$ +"`.`dropcardid` WHERE ~(`MODE`) & 32 AND `type` = 6 GROUP BY `name_japanese` ORDER BY alphabets;", .alphabet$ );
+	for ( .@i = 0; .@i < .@total; .@i++ ) {
+		.alphabet_menu$ = .alphabet_menu$ + .alphabet$[.@i] +" Cards:";
+		.@nb = query_sql( "SELECT `"+ .@item_db$ +"`.`id` FROM `"+ .@item_db$ +"` RIGHT JOIN `"+ .@mob_db$ +"` ON `"+ .@item_db$ +"`.`id` = `"+ .@mob_db$ +"`.`dropcardid` WHERE ~(`MODE`) & 32 AND `type` = 6 AND LEFT( `name_japanese`, 1 ) = '"+ .alphabet$[.@i] +"' GROUP BY `name_japanese` ORDER BY `name_japanese` LIMIT 128;", .@id );
+		npcshopdelitem "card_mob#"+ .alphabet$[.@i], 501;
+		for ( .@j = 0; .@j < .@nb; .@j++ )
+			npcshopadditem "card_mob#"+ .alphabet$[.@i], .@id[.@j], 1000000;
+	}
+	freeloop 0;
+	end;
+}
+-	shop	card_mob#A	-1,501:1000
+-	shop	card_mob#B	-1,501:1000
+-	shop	card_mob#C	-1,501:1000
+-	shop	card_mob#D	-1,501:1000
+-	shop	card_mob#E	-1,501:1000
+-	shop	card_mob#F	-1,501:1000
+-	shop	card_mob#G	-1,501:1000
+-	shop	card_mob#H	-1,501:1000
+-	shop	card_mob#I	-1,501:1000
+-	shop	card_mob#J	-1,501:1000
+-	shop	card_mob#K	-1,501:1000
+-	shop	card_mob#L	-1,501:1000
+-	shop	card_mob#M	-1,501:1000
+-	shop	card_mob#N	-1,501:1000
+-	shop	card_mob#O	-1,501:1000
+-	shop	card_mob#P	-1,501:1000
+-	shop	card_mob#Q	-1,501:1000
+-	shop	card_mob#R	-1,501:1000
+-	shop	card_mob#S	-1,501:1000
+-	shop	card_mob#T	-1,501:1000
+-	shop	card_mob#U	-1,501:1000
+-	shop	card_mob#V	-1,501:1000
+-	shop	card_mob#W	-1,501:1000
+-	shop	card_mob#X	-1,501:1000
+-	shop	card_mob#Y	-1,501:1000
+-	shop	card_mob#Z	-1,501:1000
