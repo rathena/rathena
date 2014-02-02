@@ -1219,7 +1219,10 @@ static bool read_homunculusdb_sub(char* str[], int columns, int current)
 int read_homunculusdb(void)
 {
 	int i;
-	const char *filename[]={DBPATH"homunculus_db.txt",DBIMPORT"/homunculus_db.txt"};
+	const char *filename[] = {
+		DBPATH"homunculus_db.txt",
+		DBIMPORT"/homunculus_db.txt",
+	};
 	memset(homunculus_db,0,sizeof(homunculus_db));
 	for(i = 0; i<ARRAYLENGTH(filename); i++){
 		sv_readdb(db_path, filename[i], ',', 50, 50, MAX_HOMUNCULUS_CLASS, &read_homunculusdb_sub, i);

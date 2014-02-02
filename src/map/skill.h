@@ -65,7 +65,7 @@ enum e_skill_inf2 {
 	INF2_PARTY_ONLY     = 0x00400,
 	INF2_GUILD_ONLY     = 0x00800,
 	INF2_NO_ENEMY       = 0x01000,
-	//INF2_ = 0x02000, // free
+	INF2_NO_AUTOSHADOWSPELL = 0x02000, // Skill that cannot be auto casted by Auto Shadow Spell
 	INF2_CHORUS_SKILL	= 0x04000, // Chorus skill
 	INF2_NO_BG_DMG		= 0x08000, // spell that ignore bg reduction
 	INF2_NO_GVG_DMG		= 0x10000, // spell that ignore gvg reduction
