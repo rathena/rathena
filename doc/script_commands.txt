@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20140129
+//= 20140202
 //===== Description: =========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -2795,8 +2795,7 @@ specially when talked to by GMs.
 
 *getgroupid()
 
-This function will return the id of player group the account to which the 
-invoking player belongs.
+This function will return the group id which the invoking player account belongs to.
 
 ---------------------------------------
 
