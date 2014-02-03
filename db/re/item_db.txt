@@ -6217,7 +6217,7 @@
 12707,Lucky_Cookie02,Lucky Cookie,11,0,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "PR_MAGNIFICAT",1; },{},{}
 12708,Lucky_Cookie03,Lucky Cookie,11,0,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "PR_IMPOSITIO",3; },{},{}
 12709,Guyak_Candy,Guyak Candy,0,0,,150,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 30,30; },{},{}
-12710,Guyak_Pudding,Guyak Pudding,2,0,,200,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+12710,Guyak_Pudding,Guyak Pudding,2,0,,200,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_SpeedUp1,300000,0; },{},{}
 12711,Pretzel,Pretzel,0,2,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(50,90),0; },{},{}
 12712,Green_Beer,Green Beer,2,2,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 0,50; },{},{}
 12713,Monster_Extract,Monster Extract,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}

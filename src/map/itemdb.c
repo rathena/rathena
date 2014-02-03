@@ -717,7 +717,7 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 		}
 
 		//Checking sub group
-		if (rand_group > MAX_ITEMGROUP_RANDGROUP) {
+		if (rand_group < 0 || rand_group > MAX_ITEMGROUP_RANDGROUP) {
 			ShowWarning("itemdb_read_itemgroup: Invalid sub group %d for group '%s' in %s:%d\n", rand_group, str[0], filename, ln);
 			continue;
 		}
@@ -726,7 +726,6 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 			ShowWarning("itemdb_read_itemgroup: Invalid probaility for group '%s' sub: %d in %s:%d\n", str[0], rand_group, filename, ln);
 			continue;
 		}
-		rand_group -= 1;
 
 		//Checking item
 		trim(str[1]);
@@ -745,7 +744,7 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 		dur = cap_value(dur,0,UINT16_MAX);
 		bound = cap_value(bound,0,4);
 
-		//Must item, place it here
+		//Must item (rand_group == 0), place it here
 		if (!rand_group) {
 			uint16 idx = itemgroup_db[group_id].must_qty;
 			if (!idx)
@@ -767,6 +766,8 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 			}
 			rand_group = 0;
 		}
+		else
+			rand_group -= 1;
 
 		random = &itemgroup_db[group_id].random[rand_group];
 
