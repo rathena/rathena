@@ -2764,15 +2764,15 @@ NOT locate a pet by name.
     }
 
     prontera,164,299,3%TAB%script%TAB%Nyah%TAB%730,{
-		mes "My name is Nyah.";
-		mes "I will now search for Meh all across the world!";
-		if (getmapxy(@mapname$,@mapx,@mapy,1,"Meh") != 0) {
-			mes "I can't seem to find Meh anywhere!";
-			close;
-		}
-		mes "I found him at "+@mapname$+" at X:"+@mapx+" Y:"+@mapy+" !";
-		close;
-	}
+        mes "My name is Nyah.";
+        mes "I will now search for Meh all across the world!";
+        if (getmapxy(@mapname$,@mapx,@mapy,1,"Meh") != 0) {
+            mes "I can't seem to find Meh anywhere!";
+            close;
+        }
+        mes "I found him at "+@mapname$+" at X:"+@mapx+" Y:"+@mapy+" !";
+        close;
+    }
    
 Notice that NPC objects disabled with 'disablenpc' will still be located.
 
@@ -2780,7 +2780,7 @@ Notice that NPC objects disabled with 'disablenpc' will still be located.
 
 *getgmlevel()
 
-This function will return the (GM) level or group id of the account which the 
+This function will return the (GM) level of the account which the 
 invoking player belongs to. If this is somehow executed from a console command,
 99 will be returned, and 0 will be returned if the account has no GM level.
 
@@ -2793,8 +2793,7 @@ specially when talked to by GMs.
 
 *getgroupid()
 
-This function is similiar to *getgmlevel(), although used specifically to get the group id.
-This will return the group id or (GM) level that the invoking player account belongs to.
+This function will return the group id that the invoking player account belongs to.
 
 	if (getgroupid() > 0) mes "I see your apart of the GM Team.";
 
