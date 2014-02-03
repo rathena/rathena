@@ -2681,7 +2681,7 @@ static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, uint8 fl
 		max = job_info[idx].base_sp[level-1] * (1 + (max(sd->battle_status.int_,1) * 0.01));
 		max += status_get_spbonus(&sd->bl,STATUS_BONUS_FIX);
 		max = max * (1 + status_get_spbonus(&sd->bl,STATUS_BONUS_RATE) * 0.01);
-		max = max * ((sd->class_&JOBL_UPPER)?1.25:1)+0.5; //Don't have round()
+		max = (max * ((sd->class_&JOBL_UPPER)?1.25:1)) + 0.5; //Don't have round()
 	}
 
 	return cap_value((unsigned int)max,1,UINT_MAX);
