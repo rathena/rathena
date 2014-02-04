@@ -433,7 +433,7 @@ ACMD_FUNC(where)
 	nullpo_retr(-1, sd);
 	memset(atcmd_player_name, '\0', sizeof atcmd_player_name);
 
-	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
+	if (!message || !*message || sscanf(message, "%23s[^\n]", atcmd_player_name) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,910)); // Please enter a player name (usage: @where <char name>).
 		return -1;
 	}
@@ -968,7 +968,7 @@ ACMD_FUNC(jobchange)
 		}
 	}
 
-    if (job == JOB_KNIGHT2 || job == JOB_CRUSADER2 || job == JOB_WEDDING || job == JOB_XMAS || job == JOB_SUMMER || job == JOB_HANBOK
+    if (job == JOB_KNIGHT2 || job == JOB_CRUSADER2 || job == JOB_WEDDING || job == JOB_XMAS || job == JOB_SUMMER || job == JOB_HANBOK || job == JOB_OKTOBERFEST
         || job == JOB_LORD_KNIGHT2 || job == JOB_PALADIN2 || job == JOB_BABY_KNIGHT2 || job == JOB_BABY_CRUSADER2 || job == JOB_STAR_GLADIATOR2
 		 || (job >= JOB_RUNE_KNIGHT2 && job <= JOB_MECHANIC_T2) || (job >= JOB_BABY_RUNE2 && job <= JOB_BABY_MECHANIC2))
 	{ // Deny direct transformation into dummy jobs
@@ -2807,7 +2807,7 @@ ACMD_FUNC(char_ban)
 {
 	char * modif_p;
 	int32 timediff=0; //don't set this as uint as we may want to decrease banned time
-	int bantype=2; //2=account block, 6=char specific
+	int bantype=0; //2=account block, 6=char specific
 	char output[256];
 
 	nullpo_retr(-1, sd);
@@ -2880,7 +2880,7 @@ ACMD_FUNC(char_unblock)
  * char unban command (usage: charunban <player_name>)
  *------------------------------------------*/
 ACMD_FUNC(char_unban){
-	int unbantype=4;
+	int unbantype=0;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
@@ -4083,7 +4083,7 @@ ACMD_FUNC(mount_peco)
 		}
 		return 0;
 	}
-	if( (sd->class_&MAPID_THIRDMASK) == MAPID_RANGER && pc_checkskill(sd,RA_WUGRIDER) > 0 ) {
+	if( (sd->class_&MAPID_THIRDMASK) == MAPID_RANGER && pc_checkskill(sd,RA_WUGRIDER) > 0 && (!pc_isfalcon(sd) || battle_config.warg_can_falcon) ) {
 		if( !pc_isridingwug(sd) ) {
 			clif_displaymessage(sd->fd,msg_txt(sd,1121)); // You have mounted your Warg.
 			pc_setoption(sd, sd->sc.option|OPTION_WUGRIDER);
@@ -4373,12 +4373,12 @@ ACMD_FUNC(loadnpc)
 ACMD_FUNC(unloadnpc)
 {
 	struct npc_data *nd;
-	char NPCname[NAME_LENGTH+1];
+	char NPCname[NAME_LENGTH];
 	nullpo_retr(-1, sd);
 
 	memset(NPCname, '\0', sizeof(NPCname));
 
-	if (!message || !*message || sscanf(message, "%24[^\n]", NPCname) < 1) {
+	if (!message || !*message || sscanf(message, "%23[^\n]", NPCname) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,1133)); // Please enter a NPC name (usage: @unloadnpc <NPC_name>).
 		return -1;
 	}
@@ -5653,6 +5653,14 @@ ACMD_FUNC(autotrade) {
 	}
 
 	sd->state.autotrade = 1;
+
+	if( battle_config.feature_autotrade && 
+		sd->state.vending && 
+		Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", vendings_db, sd->vender_id ) != SQL_SUCCESS )
+	{
+		Sql_ShowDebug( mmysql_handle );
+	}
+
 	if( battle_config.at_timeout ) {
 		int timeout = atoi(message);
 		status_change_start(NULL,&sd->bl, SC_AUTOTRADE, 10000, 0, 0, 0, 0, ((timeout > 0) ? min(timeout,battle_config.at_timeout) : battle_config.at_timeout) * 60000, 0);
@@ -5660,6 +5668,8 @@ ACMD_FUNC(autotrade) {
 
 	channel_pcquit(sd,0xF); //leave all chan
 	clif_authfail_fd(sd->fd, 15);
+	
+	chrif_save(sd,3);
 
 	return 0;
 }
@@ -7362,7 +7372,7 @@ ACMD_FUNC(iteminfo)
 		item_data = item_array[i];
 		sprintf(atcmd_output, msg_txt(sd,1277), // Item: '%s'/'%s'[%d] (%d) Type: %s | Extra Effect: %s
 			item_data->name,item_data->jname,item_data->slot,item_data->nameid,
-			itemdb_typename(item_data->type),
+			(item_data->type != IT_AMMO) ? itemdb_typename(item_data->type) : itemdb_typename_ammo(item_data->look),
 			(item_data->script==NULL)? msg_txt(sd,1278) : msg_txt(sd,1279) // None / With script
 		);
 		clif_displaymessage(fd, atcmd_output);
@@ -7942,7 +7952,7 @@ ACMD_FUNC(duel)
 	}
 
 	if( message[0] ) {
-		if(sscanf(message, "%d", &maxpl) >= 1) {
+		if(sscanf(message, "%u", &maxpl) >= 1) {
 			if(maxpl < 2 || maxpl > 65535) {
 				clif_displaymessage(fd, msg_txt(sd,357)); // "Duel: Invalid value."
 				return 0;
@@ -8057,6 +8067,8 @@ ACMD_FUNC(cash)
 			}
 			else clif_displaymessage(fd, msg_txt(sd,149)); // Unable to decrease the number/value.
 		} else {
+			if (-value > sd->cashPoints) //By command, if cash < value, force it to remove all
+				value = -sd->cashPoints;
 			if( (ret=pc_paycash(sd, -value, 0, LOG_TYPE_COMMAND)) >= 0){
 				// If this option is set, the message is already sent by pc function
 				if( !battle_config.cashshop_show_points ){
@@ -8653,7 +8665,7 @@ static void atcommand_commands_sub(struct map_session_data* sd, const int fd, At
 	if ( atcmd_binding_count ) {
 		int i, count_bind, gm_lvl = pc_get_group_level(sd);
 		for( i = count_bind = 0; i < atcmd_binding_count; i++ ) {
-			if ( gm_lvl >= ( type -1 ? atcmd_binding[i]->level2 : atcmd_binding[i]->level ) ) {
+			if ( gm_lvl >= ( (type - 1) ? atcmd_binding[i]->level2 : atcmd_binding[i]->level ) ) {
 				unsigned int slen = strlen(atcmd_binding[i]->command);
 				if ( count_bind == 0 ) {
 					cur = line_buff;
@@ -8697,21 +8709,20 @@ ACMD_FUNC(commands)
 /*==========================================
  * @charcommands Lists available # commands to you
  *------------------------------------------*/
-ACMD_FUNC(charcommands)
-{
+ACMD_FUNC(charcommands) {
 	atcommand_commands_sub(sd, fd, COMMAND_CHARCOMMAND);
 	return 0;
 }
 /* for new mounts */
 ACMD_FUNC(mount2) {
-
 	clif_displaymessage(sd->fd,msg_txt(sd,1362)); // NOTICE: If you crash with mount your LUA is outdated.
-	if( !(sd->sc.option&OPTION_MOUNTING) ) {
+	if (!&sd->sc || !(sd->sc.data[SC_ALL_RIDING])) {
 		clif_displaymessage(sd->fd,msg_txt(sd,1363)); // You have mounted.
-		pc_setoption(sd, sd->sc.option|OPTION_MOUNTING);
+		sc_start(NULL, &sd->bl, SC_ALL_RIDING, 10000, 1, INVALID_TIMER);
 	} else {
 		clif_displaymessage(sd->fd,msg_txt(sd,1364)); // You have released your mount.
-		pc_setoption(sd, sd->sc.option&~OPTION_MOUNTING);
+		if (&sd->sc)
+			status_change_end(&sd->bl, SC_ALL_RIDING, INVALID_TIMER);
 	}
 	return 0;
 }
@@ -9143,12 +9154,12 @@ ACMD_FUNC(fontcolor)
 ACMD_FUNC(langtype)
 {
 	char langstr[8];
-	int i=0, test=0;
+	int i=0, fail=0;
 
 	memset(langstr, '\0', sizeof(langstr));
 
 	if(sscanf(message, "%3s", langstr) >= 1){
-		int lang=-1;
+		int lang=0;
 		lang = msg_langstr2langtype(langstr); //Switch langstr to associated langtype
 		if( msg_checklangtype(lang,false) == 1 ){ //Verify it's enabled and set it
 			char output[100];
@@ -9166,9 +9177,9 @@ ACMD_FUNC(langtype)
 	//wrong or no entry
 	clif_displaymessage(fd,msg_txt(sd,460)); // Please enter a valid language (usage: @langtype <language>).
 	clif_displaymessage(fd,msg_txt(sd,464)); // ---- Available languages:
-	while(test!=-1){ //out of range
-		test = msg_checklangtype(i,false);
-		if(test == 1)
+	while(fail != -1){ //out of range
+		fail = msg_checklangtype(i,false);
+		if(fail == 1)
 			clif_displaymessage(fd,msg_langtype2langstr(i));
 		i++;
 	}
@@ -9222,7 +9233,7 @@ ACMD_FUNC(vip) {
 		int year,month,day,hour,minute,second;
 		char timestr[21];
 		
-		split_time(pl_sd->vip.time-now,&year,&month,&day,&hour,&minute,&second);
+		split_time((int)(pl_sd->vip.time-now),&year,&month,&day,&hour,&minute,&second);
 		sprintf(atcmd_output,msg_txt(pl_sd,705),year,month,day,hour,minute); // Your VIP status is valid for %d years, %d months, %d days, %d hours and %d minutes.
 		clif_displaymessage(pl_sd->fd,atcmd_output);
 		timestamp2string(timestr,20,pl_sd->vip.time,"%Y-%m-%d %H:%M");
@@ -9237,6 +9248,21 @@ ACMD_FUNC(vip) {
 		}
 	}
 	chrif_req_login_operation(pl_sd->status.account_id, pl_sd->status.name, 6, vipdifftime, 7, 0); 
+	return 0;
+}
+
+/** Enable/disable rate info */
+ACMD_FUNC(showrate) {
+	nullpo_retr(-1,sd);
+	if (!sd->disableshowrate) {
+		sprintf(atcmd_output,msg_txt(sd,718)); //Personal rate information is not displayed now.
+		sd->disableshowrate = 1;
+	}
+	else {
+		sprintf(atcmd_output,msg_txt(sd,719)); //Personal rate information will be shown.
+		sd->disableshowrate = 0;
+	}
+	clif_displaymessage(fd,atcmd_output);
 	return 0;
 }
 #endif
@@ -9548,6 +9574,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(langtype),
 #ifdef VIP_ENABLE
 		ACMD_DEF(vip),
+		ACMD_DEF(showrate),
 #endif
 		ACMD_DEF(fullstrip),
 	};
@@ -9688,6 +9715,10 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 
 	//Shouldn't happen
 	if ( !message || !*message )
+		return false;
+
+	//If cannot use atcomamnd while talking with NPC [Kichi]
+	if (sd->npc_id && sd->state.disable_atcommand_on_npc)
 		return false;
 
 	//Block NOCHAT but do not display it as a normal message

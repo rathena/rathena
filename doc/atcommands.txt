@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20130827
+//= 20140126
 //===== Description: =========================================
 //= List of available atcommands and their functions.
 //============================================================
@@ -295,6 +295,13 @@ prontera (x= 165, y= 201) 01 00 00 00 00
 prontera (x= 165, y= 200) 01 00 00 00 00
 prontera (x= 165, y= 199) 01 00 00 00 00
 prontera (x= 165, y= 198) 01 00 00 00 00
+
+---------------------------------------
+
+@showrate
+
+When VIP is enabled, the rate information always be shown when every player load map.
+Use this command to disable or enable that rate information.
 
 ---------------------------------------
 
@@ -779,9 +786,10 @@ Warps to your save point.
 
 ---------------------------------------
 
-@jump
+@jump {<x> <y>}
 
-Warps to a random coordinate on the current map.
+Warps to the given coordinates on the current map.
+If no coordinates are entered, a random location will be chosen.
 
 ---------------------------------------
 
@@ -856,9 +864,10 @@ Changes the specified stat of your character.
 
 ---------------------------------------
 
-@allstats
+@allstats {<+/- amount>}
 
-Sets all stats to the maximum (default is 99).
+Changes all stats of your character.
+If no amount is given, sets all stats to the maximum (default is 99).
 
 ---------------------------------------
 
@@ -1051,15 +1060,16 @@ Example:
 
 @fullstrip <player name>
 
-Unequip all item from a player.
+Unequip all items from a player.
 
 ---------------------------------------
 
-@cart <0-%d>
+@cart <cart ID>
 
-Give or remove a cart to a player and also change the cart skin.
-0 = remove cart
-x = cart color
+Give or remove a cart to a player and also change the cart skin based on ID:
+  0: remove cart
+1-5: normal carts
+6-9: new carts (available for PACKETVER >= 20120201)
 
 ---------------------------------------
 

@@ -56,8 +56,8 @@ struct npc_data {
 			struct npc_label_list *label_list;
 		} scr;
 		struct {
-			struct npc_item_list* shop_item;
-			int count;
+			struct npc_item_list *shop_item;
+			uint16 count;
 			int itemshop_nameid; // Item Shop cost item ID
 			char pointshop_str[32]; // Point Shop cost variable name
 			bool discount;
@@ -92,7 +92,7 @@ enum actor_classes
 #define MAX_NPC_CLASS 1000
 // New NPC range
 #define MAX_NPC_CLASS2_START 10000
-#define MAX_NPC_CLASS2_END 10049
+#define MAX_NPC_CLASS2_END 10095
 
 //Checks if a given id is a valid npc id. [Skotlex]
 //Since new npcs are added all the time, the max valid value is the one before the first mob (Scorpion = 1001)

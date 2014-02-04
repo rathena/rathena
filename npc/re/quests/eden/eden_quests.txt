@@ -3,9 +3,9 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: =========================================
 //= Eden Group Headquarter NPCs.
 //===== Additional Comments: =================================
@@ -19,6 +19,7 @@
 //= 1.4a Added 'npcskill' command. [Euphy]
 //= 1.4b Added 'disable_items' command. [Euphy]
 //= 1.5 Added GM management function. [Euphy]
+//= 1.6 Kagerou/Oboro support (Class -> BaseClass) [Euphy]
 //============================================================
 
 moc_para01,25,35,4	script	Instructor Boya#para01	469,{
@@ -3079,7 +3080,7 @@ moc_para01,112,96,5	script	Administrator Michael	967,{
 					mes "I hope they're useful to you.";
 					close;
 				}
-				if (Class == Job_Novice || Class == Job_Novice_High || Class == Job_SuperNovice || Class == Job_Soul_Linker || Class == Job_Ninja) {
+				if (Class == Job_Novice || Class == Job_Novice_High || Class == Job_SuperNovice || Class == Job_Soul_Linker || BaseClass == Job_Ninja) {
 					mes "[Michael]";
 					mes "We only have 1 weapon for you.";
 					next;
@@ -4538,7 +4539,7 @@ moc_para01,111,83,3	script	Toren	813,{
 					1658,"Staff","One-handed, 60 Atk, 170 Matk, 4 Int", //P.Staff III
 					13066,"Dagger","One-handed, 165 Atk, 80 Matk"; //P.Dagger III
 			}
-			else if (Class == Job_Ninja) {
+			else if (BaseClass == Job_Ninja) {
 				mes "Ninja Class gets a choice of weapons, would you like to have a huuma suriken or a dagger?";
 				callsub L_Select,
 					13310,"Huuma Suriken","Two-handed, 170 Atk, 50 Matk", //P.Huuma Suriken I
@@ -4854,7 +4855,7 @@ moc_para01,112,79,3	script	Weapons Expert	851,{
 						1658,"Staff","One-handed, 60 Atk, 170 Matk, 4 Int", //P.Staff III
 						13066,"Dagger","One-handed, 165 Atk, 80 Matk"; //P.Dagger III
 				}
-				else if (Class == Job_Ninja) {
+				else if (BaseClass == Job_Ninja) {
 					mes "Ninja Class gets a choice of weapons, would you like to have a huuma suriken or a dagger?";
 					callsub L_Select,
 						13310,"Huuma Suriken","Two-handed, 170 Atk, 50 Matk", //P.Huuma Suriken I

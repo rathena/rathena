@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.8
 //===== Compatible With: =====================================
-//= Any Athena Version
+//= rAthena Project
 //===== Additional Comments: =================================
 //= 1.1 Official kRO 10.1 spawns [Playtester]
 //= 1.2 More accurate spawns [Playtester]

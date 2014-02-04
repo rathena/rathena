@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.0a
 //===== Compatible With: =====================================
-//= Any Athena Version; RO Episode 6+
+//= rAthena Project; RO Episode 6+
 //===== Description: =========================================
 //= Sells candy, candy cane and well baked cookie.
 //===== Additional Comments: =================================

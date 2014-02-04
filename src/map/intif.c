@@ -938,20 +938,17 @@ int mapif_parse_WisToGM(int fd)
 {
 	int permission, mes_len;
 	char Wisp_name[NAME_LENGTH];
-	char mbuf[255];
 	char *message;
 
 	mes_len =  RFIFOW(fd,2) - 32;
-	message = (char *) (mes_len >= 255 ? (char *) aMalloc(mes_len) : mbuf);
+	message = (char *) aMalloc(mes_len);
 
 	permission = RFIFOL(fd,28);
 	safestrncpy(Wisp_name, (char*)RFIFOP(fd,4), NAME_LENGTH);
 	safestrncpy(message, (char*)RFIFOP(fd,32), mes_len);
 	// information is sent to all online GM
 	map_foreachpc(mapif_parse_WisToGM_sub, permission, Wisp_name, message, mes_len);
-
-	if (message != mbuf)
-		aFree(message);
+	aFree(message);
 	return 0;
 }
 

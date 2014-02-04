@@ -5,9 +5,9 @@
 //===== Current Version: ===================================== 
 //= 1.7
 //===== Compatible With: ===================================== 
-//= rAthena Revision 3000+
+//= rAthena Project
 //===== Description: ========================================= 
-//=
+//= Einbroch Town Script
 //===== Additional Comments: ================================= 
 //= 0.2 Added some NPCs [MasterOfMuppets]
 //= 0.3 Added a few npcs by reddozen [MasterOfMuppets]

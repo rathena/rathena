@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 1.9
 //===== Compatible With: ===================================== 
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= Quest for breaking the seal of Mjolnir.
 //===== Additional Comments: =================================

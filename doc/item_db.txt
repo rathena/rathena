@@ -27,14 +27,15 @@ Type:
 	0	Healing item.
 	2	Usable item.
 	3	Etc item
-	4	Weapon
-	5	Armor/Garment/Boots/Headgear/Accessory
+	4	Armor/Garment/Boots/Headgear/Accessory
+	5	Weapon
 	6	Card
 	7	Pet egg
 	8	Pet equipment
 	10	Ammo (Arrows/Bullets/etc)
-	11	Usable with delayed consumption (item is lost from inventory
-		after selecting a target, for use with skills and pet lures)
+	11	Usable with delayed consumption (intended for 'itemskill')
+		Items using the 'itemskill' script command are consumed after
+		selecting a target. Any other command will NOT consume the item.
 	12	Shadow Equipment
 	18	Another delayed consume that requires user confirmation before
 		using item.

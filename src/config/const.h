@@ -37,6 +37,8 @@
 	#define DBPATH "pre-re/"
 #endif
 
+#define DBIMPORT "import"
+
 /**
  * DefType
  **/

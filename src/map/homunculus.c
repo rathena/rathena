@@ -58,14 +58,14 @@ struct view_data* merc_get_hom_viewdata(int class_)
 
 enum homun_type hom_class2type(int class_) {
 	int mid = hom_class2mapid(class_);
-	if(mid&(HOM_REG|HOM_EVO))
+	if((mid&(HOM_REG|HOM_EVO)) == (HOM_REG|HOM_EVO))
 		return HT_EVO;
 	else if(mid&(HOM_REG))
 		return HT_REG;
 	else if(mid&(HOM_S))
 		return HT_S;
-	else //invalid type
-		return -1;
+	else
+		return HT_INVALID;
 }
 
 int hom_class2mapid(int hom_class)
@@ -73,23 +73,23 @@ int hom_class2mapid(int hom_class)
 	switch(hom_class)
 	{
 		// Normal Homunculus
-		case 6001: case 6005:                return MAPID_LIF;
-		case 6002: case 6006:                return MAPID_AMISTR;
-		case 6003: case 6007:                return MAPID_FILIR;
-		case 6004: case 6008:                return MAPID_VANILMIRTH;
+		case 6001: case 6005:	return MAPID_LIF;
+		case 6002: case 6006:	return MAPID_AMISTR;
+		case 6003: case 6007:	return MAPID_FILIR;
+		case 6004: case 6008:	return MAPID_VANILMIRTH;
 		// Evolved Homunculus
-		case 6009: case 6013:                return MAPID_LIF_E;
-		case 6010: case 6014:                return MAPID_AMISTR_E;
-		case 6011: case 6015:                return MAPID_FILIR_E;
-		case 6012: case 6016:                return MAPID_VANILMIRTH_E;
+		case 6009: case 6013:	return MAPID_LIF_E;
+		case 6010: case 6014:	return MAPID_AMISTR_E;
+		case 6011: case 6015:	return MAPID_FILIR_E;
+		case 6012: case 6016:	return MAPID_VANILMIRTH_E;
 		// Homunculus S
-		case 6048:                           return MAPID_EIRA;
-		case 6049:                           return MAPID_BAYERI;
-		case 6050:                           return MAPID_SERA;
-		case 6051:                           return MAPID_DIETER;
-		case 6052:                           return MAPID_ELANOR;
+		case 6048:				return MAPID_EIRA;
+		case 6049:				return MAPID_BAYERI;
+		case 6050:				return MAPID_SERA;
+		case 6051:				return MAPID_DIETER;
+		case 6052:				return MAPID_ELANOR;
 
-		default:                             return -1;
+		default:				return -1;
 	}
 }
 
@@ -1219,7 +1219,10 @@ static bool read_homunculusdb_sub(char* str[], int columns, int current)
 int read_homunculusdb(void)
 {
 	int i;
-	const char *filename[]={DBPATH"homunculus_db.txt","import/homunculus_db.txt"};
+	const char *filename[] = {
+		DBPATH"homunculus_db.txt",
+		DBIMPORT"/homunculus_db.txt",
+	};
 	memset(homunculus_db,0,sizeof(homunculus_db));
 	for(i = 0; i<ARRAYLENGTH(filename); i++){
 		sv_readdb(db_path, filename[i], ',', 50, 50, MAX_HOMUNCULUS_CLASS, &read_homunculusdb_sub, i);
@@ -1271,7 +1274,7 @@ static bool read_homunculus_skilldb_sub(char* split[], int columns, int current)
 
 int read_homunculus_skilldb(void)
 {
-	const char *filename[]={ "homun_skill_tree.txt","import/homun_skill_tree.txt"};
+	const char *filename[]={ "homun_skill_tree.txt",DBIMPORT"/homun_skill_tree.txt"};
 	int i;
 	memset(hskill_tree,0,sizeof(hskill_tree));
 	for(i = 0; i<ARRAYLENGTH(filename); i++){
@@ -1282,22 +1285,24 @@ int read_homunculus_skilldb(void)
 
 void read_homunculus_expdb(void)
 {
-	FILE *fp;
-	char line[1024];
-	int i, j=0;
+	int i;
 	char *filename[]={
 		DBPATH"exp_homun.txt",
-		"import/exp_homun.txt"
+		DBIMPORT"/exp_homun.txt"
 	};
 
 	memset(hexptbl,0,sizeof(hexptbl));
 	for(i=0; i<ARRAYLENGTH(filename); i++){
+		FILE *fp;
+		char line[1024];
+		int j=0;
+		
 		sprintf(line, "%s/%s", db_path, filename[i]);
 		fp=fopen(line,"r");
 		if(fp == NULL){
 			if(i != 0)
 				continue;
-			if(i==0) ShowError("can't read %s\n",line);
+			if(i==0) ShowError("Can't read %s\n",line);
 			return;
 		}
 		while(fgets(line, sizeof(line), fp) && j < MAX_LEVEL)
@@ -1315,7 +1320,7 @@ void read_homunculus_expdb(void)
 			hexptbl[MAX_LEVEL - 1] = 0;
 		}
 		fclose(fp);
-		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' levels in '"CL_WHITE"%s"CL_RESET"'.\n", j, filename[i]);
+		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' levels in '"CL_WHITE"%s/%s"CL_RESET"'.\n", j, db_path, filename[i]);
 	}
 }
 

@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 2.7
 //===== Compatible With: =====================================
-//= Any Athena Version
+//= rAthena Project
 //===== Description: =========================================
 //= Warp Points for Al de Baran, Payon, Prontera, Geffen,
 //= and Juno Guild Castles

@@ -8,8 +8,9 @@
 //= Explanation of the item_group.txt file and structure.
 //============================================================
 
-Items at item group can be used for 'getrandgroupitem' or 'getgroupitem' script.
-See this table below to know which field that influences those scripts.
+Items within an item group can be retrieved through the 'getrandgroupitem'
+and 'getgroupitem' script commands. The table below explains which fields are
+accessed in each.
 
 +===============+====================+================+
 | Field			| 'getrandgroupitem' | 'getgroupitem' |
@@ -35,18 +36,19 @@ See this table below to know which field that influences those scripts.
 
 ---------------------------------------
 
-GroupID: See const.txt on 'Item Group ID' section for id. Supports IG_* const.
+GroupID: See the "Item Group ID" section in 'db/const.txt'.
+         Supports IG_* constants.
 
 ---------------------------------------
 
 ItemID: Available item_id that will be obtained from this item group.
-		Supports AegisName of the item.
+        Supports AegisName of the item.
 
 ---------------------------------------
 
 Rate: Probability to get the item. Not a percentage value!
 
-Example:
+Examples:
 	IG_MyItemGroup,Knife,5
 	IG_MyItemGroup,Dagger,1
 
@@ -59,20 +61,20 @@ Amount: Amount of item that will be obtained.
 
 ---------------------------------------
 
-Random: Set this to '0' and the item always be obtained ("must" item).
+Random: Set this to '0' and the item will always be obtained ("must" item).
 		Random value will allocates where the item will be stored at random group.
-		(max. random group is 4 a itemdb.c MAX_ITEMGROUP_RANDGROUP)
+		(max. random group is 4, defined as MAX_ITEMGROUP_RANDGROUP in 'src/map/itemdb.c'.)
 
 	Example:
-		IG_MyItemGroup,Knife,0,1,0		//as 'must' item
-		IG_MyItemGroup,Dagger,0,1,0		//as 'must' item
+		IG_MyItemGroup,Knife,0,1,0		//a "must" item
+		IG_MyItemGroup,Dagger,0,1,0		//a "must" item
 		IG_MyItemGroup,Stiletto,5,1,1	//random at group 1
 		IG_MyItemGroup,Stiletto_,2,1,1	//random at group 1
 		IG_MyItemGroup,Stiletto,5,1,2	//random at group 2
 		IG_MyItemGroup,Dagger_,4,1,2	//random at group 2
 
 	-> usage: 'getgroupitem(IG_MyItemGroup);'
-		- Player always get 1x Knife and 1x Dagger
+		- Player always gets 1x Knife and 1x Dagger
 		- Player has chance to get 1x Stiletto by chance 5/7 from group 1
 		- Player has chance to get 1x Stiletto_ by chance 2/7 from group 1
 		- Player has chance to get 1x Stiletto by chance 5/9 from group 2
@@ -95,33 +97,32 @@ Random: Set this to '0' and the item always be obtained ("must" item).
 		- 1x Dagger always be obtained and also has chance to get 1 more by
 		  chance 5/7
 		- 1x Stiletto can be obtained by chance 2/7
-		So, player will get 1x Knife, 1x Dagger, and 1x Dagger or 1x Stiletto
+		result -> player will get 1x Knife, 1x Dagger, and 1x Dagger or 1x Stiletto
 
 	-> usage: 'getrandgroupitem(IG_MyItemGroup2,1);' (Ignores 'Amount' field)
 		- 1x Knife never be obtained!
 		- 1x Dagger can be obtained by chance 5/7
 		- 1x Stiletto can be obtained by chance 2/7
-		So, player will get only 1x Dagger or 1x Stiletto
+		result -> player will get only 1x Dagger or 1x Stiletto
 
 ---------------------------------------
 
-isAnnounced: If player obtained this item, it will be broadcasted!
-		"[Player] has won [Item] from 'Box'"
+isAnnounced: If player obtained this item, it will be broadcast to the server.
+             "[Player] has won [Item] from 'Box'"
 
 ---------------------------------------
 
-Duration: Makes the item as rental item, will be removed when it is expire in
-		  certain minute. If wanted it as hour, just do x*60.
-		  Better use this for non-stackable item only.
+Duration: Makes the item a rental item, which will be expire in the given amount
+          of minutes. Not intended for use with stackable items.
 
 ---------------------------------------
 
-isNamed: Makes the item is marked by the obtainer's name.
+isNamed: Inscribes the item with the obtainer's name.
 
 ---------------------------------------
 
-isBound: Makes the obtained item as bound item.
-		 See doc/script_commands.txt at 'getitembound' for valid bound types.
+isBound: Binds the obtained item.
+         See 'getitembound' in 'doc/script_commands.txt' for valid bound types.
 
 ---------------------------------------
 

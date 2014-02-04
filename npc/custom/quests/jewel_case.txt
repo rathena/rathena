@@ -5,12 +5,12 @@
 //===== Current Version: =====================================
 //= 1.0
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: =========================================
 //= A quest for players at base level 99,
 //= with Jewel Case as a reward.
 //===== Additional Comments: =================================
-//= 
+//= 1.0 First Version.
 //============================================================
 
 lighthalzen,108,229,2	script	La Fenn	766,{

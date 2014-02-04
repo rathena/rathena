@@ -91,9 +91,10 @@ enum {
 	MAPID_ELANOR,
 };
 enum homun_type {
-	HT_REG	= 0x1,
-	HT_EVO	= 0x2,
-	HT_S	= 0x4,
+	HT_REG		= 0x1,
+	HT_EVO		= 0x2,
+	HT_S		= 0x4,
+	HT_INVALID	= -1,
 };
 
 #define homdb_checkid(id) (id >=  HM_CLASS_BASE && id <= HM_CLASS_MAX)

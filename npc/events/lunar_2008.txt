@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.1
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: =========================================
 //= iRO Lunar New Year event; Year of the Rat. (2008)
 //= Kill Cramps, Taruus, and Matrins to retrieve "Rice Pouches"

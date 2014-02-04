@@ -229,6 +229,7 @@ extern struct Battle_Config
 	int xmas_ignorepalette;	// [Valaris]
 	int summer_ignorepalette; // [Zephyrus]
 	int hanbok_ignorepalette;
+	int oktoberfest_ignorepalette;
 	int natural_healhp_interval;
 	int natural_healsp_interval;
 	int natural_heal_skill_interval;
@@ -513,12 +514,24 @@ extern struct Battle_Config
 	int vip_exp_penalty_base;
 	int vip_exp_penalty_job_normal;
 	int vip_exp_penalty_job;
+	int vip_disp_rate;
 	int mon_trans_disable_in_gvg;
 	int emblem_woe_change;
 	int emblem_transparency_limit;
 	int discount_item_point_shop;
 	int update_enemy_position;
 	int devotion_rdamage;
+
+	// autotrade persistency
+	int feature_autotrade;
+	int feature_autotrade_direction;
+	int feature_autotrade_sit;
+
+	int disp_serverbank_msg;
+	int warg_can_falcon;
+	int atcommand_enable_npc;
+	int path_blown_halt;
+	int rental_mount_speed_boost;
 } battle_config;
 
 void do_init_battle(void);

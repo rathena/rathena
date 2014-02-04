@@ -1089,9 +1089,9 @@ int access_ipmask(const char* str, AccessControl* acc)
 		unsigned int a[4];
 		unsigned int m[4];
 		int n;
-		if( ((n=sscanf(str,"%u.%u.%u.%u/%u.%u.%u.%u",a,a+1,a+2,a+3,m,m+1,m+2,m+3)) != 8 && // not an ip + standard mask
-				(n=sscanf(str,"%u.%u.%u.%u/%u",a,a+1,a+2,a+3,m)) != 5 && // not an ip + bit mask
-				(n=sscanf(str,"%u.%u.%u.%u",a,a+1,a+2,a+3)) != 4 ) || // not an ip
+		if( ((n=sscanf(str,"%3u.%3u.%3u.%3u/%3u.%3u.%3u.%3u",a,a+1,a+2,a+3,m,m+1,m+2,m+3)) != 8 && // not an ip + standard mask
+				(n=sscanf(str,"%3u.%3u.%3u.%3u/%3u",a,a+1,a+2,a+3,m)) != 5 && // not an ip + bit mask
+				(n=sscanf(str,"%3u.%3u.%3u.%3u",a,a+1,a+2,a+3)) != 4 ) || // not an ip
 				a[0] > 255 || a[1] > 255 || a[2] > 255 || a[3] > 255 || // invalid ip
 				(n == 8 && (m[0] > 255 || m[1] > 255 || m[2] > 255 || m[3] > 255)) || // invalid standard mask
 				(n == 5 && m[0] > 32) ){ // invalid bit mask
@@ -1139,7 +1139,7 @@ int socket_config_read(const char* cfgName)
 	{
 		if(line[0] == '/' && line[1] == '/')
 			continue;
-		if(sscanf(line, "%[^:]: %[^\r\n]", w1, w2) != 2)
+		if(sscanf(line, "%1023[^:]: %1023[^\r\n]", w1, w2) != 2)
 			continue;
 
 		if (!strcmpi(w1, "stall_time")) {
@@ -1297,12 +1297,10 @@ int socket_getips(uint32* ips, int max)
 		else
 		{
 			int pos;
-			struct ifreq* ir;
-			struct sockaddr_in* a;
 			for( pos=0; pos < ic.ifc_len && num < max; )
 			{
-				ir = (struct ifreq*)(buf+pos);
-				a = (struct sockaddr_in*) &(ir->ifr_addr);
+				struct ifreq* ir = (struct ifreq*)(buf+pos);
+				struct sockaddr_in*a = (struct sockaddr_in*) &(ir->ifr_addr);
 				if( a->sin_family == AF_INET ){
 					ad = ntohl(a->sin_addr.s_addr);
 					if( ad != INADDR_LOOPBACK && ad != INADDR_ANY )

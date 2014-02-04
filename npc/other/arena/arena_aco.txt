@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.5
 //===== Compatible With: =====================================
-//= Any Athena Version
+//= rAthena Project
 //===== Description: =========================================
 //= Izlude Acolyte Battle Arena
 //===== Additional Comments: =================================

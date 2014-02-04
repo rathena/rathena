@@ -4,10 +4,13 @@
 //= GmOcean
 //===== Current Version: =====================================
 //= 5.1
-//===== Compatible With: ===================================== 
-//= rAthena SVN
-//===== Additional Comments: =================================  
-//= Note: This script requires PCRE to run properly.
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Guess a monster name correctly for prizes.
+//= 
+//= NOTE: Requires PCRE library installed.
+//===== Additional Comments: =================================
 //= 5.0 Last update by GmOcean.
 //= 5.1 Cleaned and standardized, mostly. [Euphy]
 //============================================================

@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 1.2
 //===== Compatible With: ===================================== 
-//= Any rAthena Mod
+//= rAthena Project
 //===== Description: ========================================= 
 //= Payon Field Warps
 //===== Additional Comments: ================================= 

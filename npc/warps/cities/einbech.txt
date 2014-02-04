@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 1.1
 //===== Compatible With: ===================================== 
-//= Any rAthena Version
+//= rAthena Project
 //===== Description: ========================================= 
 //= Einbech Town warps
 //===== Additional Comments: ================================= 

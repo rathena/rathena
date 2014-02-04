@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.1
 //===== Compatible With: =====================================
-//= rAthena SVN; 4500+
+//= rAthena Project; SVN r4500+
 //===== Description: =========================================
 // Close to other official stValentine event (added white chocolate)
 // Custom: Handmade choco gives some EXP bonuses to married people

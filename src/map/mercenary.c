@@ -377,8 +377,8 @@ int mercenary_killbonus(struct mercenary_data *md)
 
 int mercenary_kills(struct mercenary_data *md)
 {
-	md->mercenary.kill_count++;
-	md->mercenary.kill_count = cap_value(md->mercenary.kill_count, 0, INT_MAX);
+	if(md->mercenary.kill_count <= (INT_MAX-1)) //safe cap to INT_MAX
+		md->mercenary.kill_count++;
 
 	if( (md->mercenary.kill_count % 50) == 0 )
 	{

@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.9
 //===== Compatible With: =====================================
-//= Any Athena Version
+//= rAthena Project
 //===== Additional Comments: =================================
 //= 1.0 Temp. monster spawn in Veins Field. [$ephiroth]
 //= 1.1 Updated monster spawn based on kRO website. [$ephiroth]

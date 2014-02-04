@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.9
 //===== Compatible With: ===================================== 
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= [Official Conversion]
 //= Ayotaya Town Script

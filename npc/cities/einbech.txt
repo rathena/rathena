@@ -5,9 +5,9 @@
 //===== Current Version: ===================================== 
 //= 1.5
 //===== Compatible With: ===================================== 
-//= rAthena Revision 3000+
+//= rAthena Project
 //===== Description: ========================================= 
-//=
+//= Einbech Town Script
 //===== Additional Comments: ================================= 
 //= 0.1  Started writing Einbech npc's. [Muad_Dib]
 //= 0.1a Conversion to eA format [MasterOfMuppets]

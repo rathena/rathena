@@ -7,7 +7,7 @@
 //= 1.7
 //===== Compatible With: ===================================== 
 //= [Official Conversion]
-//= rAthena 7.15 +
+//= rAthena Project; 7.15 +
 //===== Description: ========================================= 
 //= Misc. Message Boards for:
 //=  - Prontera

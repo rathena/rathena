@@ -6,7 +6,7 @@
 //===== Current Version: ===================================== 
 //= 2.2b
 //===== Compatible With: ===================================== 
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= [Official Conversion]
 //= Counteragent and Mixtures for making dyes & Alchemist Job Quest

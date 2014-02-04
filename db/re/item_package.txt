@@ -108,7 +108,7 @@ IG_Solo_Gift_Basket,HandMade_Chocolate_,1,10,1
 
 IG_Couple_Event_Basket,Fire_Cracker_Love,1,10,1
 IG_Couple_Event_Basket,Fire_Cracker_Wday,1,10,1
-//IG_Couple_Event_Basket,Fire_Cracker_Vday,1,10,1
+IG_Couple_Event_Basket,14548,1,10,1
 IG_Couple_Event_Basket,Fire_Cracker_Bday,1,10,1
 IG_Couple_Event_Basket,Fire_Cracker_Xmas,1,10,1
 
@@ -183,11 +183,11 @@ IG_Pet_Egg_Scroll2,Aspersio_5_Scroll,200,2,1,0,0,1
 IG_Pet_Egg_Scroll2,Bubble_Gum,150,2,1,0,0,1
 IG_Pet_Egg_Scroll2,Red_Wizardry_Hat,10,1,1,0,0,1
 
-IG_Pet_Egg_Scroll_Box3,Pet_Egg_Scroll3,0,1,1,0,0,1
+IG_Pet_Egg_Scroll_Box3,Pet_Egg_Scroll3,0,1,0,0,0,1
 
-IG_Pet_Egg_Scroll_Box4,Pet_Egg_Scroll4,0,1,1,0,0,1
+IG_Pet_Egg_Scroll_Box4,Pet_Egg_Scroll4,0,1,0,0,0,1
 
-IG_Pet_Egg_Scroll_Box4,Pet_Egg_Scroll5,0,1,1,0,1
+IG_Pet_Egg_Scroll_Box4,Pet_Egg_Scroll5,0,1,0,0,0,1
 
 IG_Pet_Egg_Scroll3,Battle_Manual,100,2,1,0,0,1
 IG_Pet_Egg_Scroll3,Insurance,200,2,1,0,0,1
@@ -1275,11 +1275,11 @@ IG_Majestic_Devil_Scroll,Magic_Card_Album,10,1,1,0,0,1
 IG_Majestic_Devil_Scroll,Orleans_Glove,20,1,1,0,0,1
 IG_Majestic_Devil_Scroll,Majestic_Evil_Horn,1,1,1,0,0,1
 
-//IG_Life_Ribbon_Box,Life_Ribbon,0,1,0,0,60,1
+IG_Life_Ribbon_Box,5793,0,1,0,0,60,1
 
-//IG_Life_Ribbon_Box2,Life_Ribbon,0,1,0,0,120,1
+IG_Life_Ribbon_Box2,5793,0,1,0,0,120,1
 
-//IG_Life_Ribbon_Box3,Life_Ribbon,0,1,0,0,240,1
+IG_Life_Ribbon_Box3,5793,0,1,0,0,240,1
 
 IG_Magic_Candy_Box10,Magic_Candy,0,10,0,0,0,1
 
@@ -1940,6 +1940,7 @@ IG_Lucky_Egg_C2,Bogy_Horn,150,1,1,1,0,0
 IG_Lucky_Egg_C2,Flame_Sprits_Armor__,150,1,1,1,0,0
 IG_Lucky_Egg_C2,Jasper_Crest,150,1,1,1,0,0
 
+//Duplicated? But has different contents
 //IG_Lucky_Egg_C6,Yggdrasilberry_Box_,928,1,1,0,0,0
 //IG_Lucky_Egg_C6,Battle_Manual_Box,800,1,1,0,0,0
 //IG_Lucky_Egg_C6,Underripe_Yggseed,1000,10,1,0,0,0
@@ -2133,7 +2134,7 @@ IG_Lucky_Egg_C5,Ring_Of_Flame_Lord,50,1,1,1,0,0
 IG_Lucky_Egg_C5,Samambaia_Box,200,1,1,1,0,0
 IG_Lucky_Egg_C5,Ring_Of_Resonance,50,1,1,1,0,0
 
-//IG_Weather_Report_Box,Fine_Sun,0,1,0,0,0,0
+IG_Weather_Report_Box,19507,0,1,0,0,0,0 //Fine_Sun
 IG_Weather_Report_Box,Rainbow,0,1,0,0,0,0
 IG_Weather_Report_Box,Rain_Cloud,0,1,0,0,0,0
 IG_Weather_Report_Box,Lightning_Cloud,0,1,0,0,0,0
@@ -2205,6 +2206,7 @@ IG_Earth_Type_Scroll,Sealed_Lady_Tanee_Card,1,1,1,1,0,0
 IG_Earth_Type_Scroll,Silvervine_Fruit_Box10,1600,1,1,0,0,0
 IG_Earth_Type_Scroll,Diabolic_Scroll,1600,5,1,0,0,0
 
+//Duplicated?
 //IG_Earth_Type_Scroll,5745,150,1,1,1,0,0
 //IG_Earth_Type_Scroll,5744,150,1,1,1,0,0
 //IG_Earth_Type_Scroll,Virgo_Diadem,150,1,1,1,0,0
@@ -2224,7 +2226,7 @@ IG_Earth_Type_Scroll,Diabolic_Scroll,1600,5,1,0,0,0
 //IG_Earth_Type_Scroll,Hen_Set_Box,50,1,1,1,0,0
 //IG_Earth_Type_Scroll,Sealed_Knight_WS_Card,1,1,1,1,0,0
 //IG_Earth_Type_Scroll,Sealed_Lady_Tanee_Card,1,1,1,1,0,0
-//IG_Earth_Type_Scroll,Fruit_Of_Mastela_Box2,1600,1,1,0,0,0
+//IG_Earth_Type_Scroll,Fruit_Of_Mastela_Box2,1600,1,1,0,0,0 //The different only here
 //IG_Earth_Type_Scroll,Diabolic_Scroll,1600,5,1,0,0,0
 
 IG_Splash_Scroll,Songpyun_Box50,1200,1,1,0,0,0
@@ -2691,6 +2693,7 @@ IG_Tw_April_Scroll,Spiked_Scarf_Box,50,1,1,1,0,0
 IG_Tw_April_Scroll,Rainbow_Scarf_Box,50,1,1,1,0,0
 IG_Tw_April_Scroll,Fish_Head_Hat_Box,180,1,1,1,0,0
 
+//Duplicated?
 //IG_Tw_October_Scroll,Max_Weight_Up_Box,432,1,1,0,0,1
 //IG_Tw_October_Scroll,Token_Of_Siegfried_Box,1350,1,1,0,0,1
 //IG_Tw_October_Scroll,Int_Dish_Box,1350,1,1,0,0,1
@@ -2867,7 +2870,7 @@ IG_Egrade_Pocket,Egrade_Coin,200,2,2,0,0,0
 IG_Egrade_Pocket,Malang_Sp_Can,800,1,3,0,0,0
 IG_Egrade_Pocket,Egrade_Coin,200,1,3,0,0,0
 
-//IG_Ptotection_Seagod_Box,Ptotection_Seagod,0,1,0,0,1380,0
+IG_Ptotection_Seagod_Box,Ptotection_Seagod,0,1,0,0,1380,0
 
 IG_Hairtail_Box1,Hairtail,0,1,0,0,60,0
 
@@ -2912,7 +2915,7 @@ IG_Silvervine_Fruit_Box40,Malang_Sp_Can,0,120,0,0,0,0
 IG_Silvervine_Fruit_Box4,Silvervine,0,4,0,0,0,0
 IG_Silvervine_Fruit_Box4,Malang_Sp_Can,0,12,0,0,0,0
 
-//IG_Malang_Woe_Encard_Box,Ptotection_Seagod_Box,0,1,0,0,0,0
+IG_Malang_Woe_Encard_Box,Protection_Seagod_Box,0,1,0,0,0,0
 IG_Malang_Woe_Encard_Box,Octo_Hstick_Box,0,1,0,0,0,0
 
 IG_Xmas_Bless,Fire_Cracker_Xmas,0,10,0,0,0,1
@@ -3099,3 +3102,49 @@ IG_Yong_Kwang_Scroll,SLD_Garm_Card,5,1,1,1,0,0
 IG_Yong_Kwang_Scroll,Drosera_Hairpin,25,1,1,1,0,0
 IG_Yong_Kwang_Scroll,Sinsuncho_Hat,25,1,1,1,0,0
 IG_Yong_Kwang_Scroll,Detale_Card,1,1,1,1,0,0
+
+// 2013 iRO Events - incomplete
+IG_Solo_Christmas_Gift,C_Cat_Santa_Hat,1,1,1
+IG_Solo_Christmas_Gift,Old_Blue_Box,1,1,1
+IG_Solo_Christmas_Gift,Oh_Holy_Night,1,1,1
+IG_Solo_Christmas_Gift,Angeling_Potion,1,3,1
+IG_Solo_Christmas_Gift,Solo_Cookie,1,5,1
+IG_Solo_Christmas_Gift,Buche_De_Noel,1,5,1
+IG_Solo_Christmas_Gift,Event_Cake,1,5,1
+IG_Solo_Christmas_Gift,Vivid_Notation,1,5,1
+IG_HALLOWEEN_G_BOX,Immortal_Heart,1,30,1
+IG_HALLOWEEN_G_BOX,Starsand_Of_Witch,1,30,1
+IG_HALLOWEEN_G_BOX,Empty_Bottle,1,30,1
+IG_HALLOWEEN_G_BOX,Alchol,1,30,1
+IG_HALLOWEEN_G_BOX,Karvodailnirol,1,30,1
+IG_HALLOWEEN_G_BOX,Transparent_Cloth,1,30,1
+IG_HALLOWEEN_G_BOX,Stem,1,30,1
+IG_HALLOWEEN_G_BOX,Poison_Spore,1,30,1
+IG_HALLOWEEN_G_BOX,Speed_Up_Potion,1,5,1
+IG_HALLOWEEN_G_BOX,Chocolate,1,5,1
+IG_HALLOWEEN_G_BOX,Guarana_Candy,1,5,1
+IG_HALLOWEEN_G_BOX,Seed_Of_Yggdrasil,1,5,1
+IG_HALLOWEEN_G_BOX,Old_Blue_Box,1,1,1
+IG_HALLOWEEN_G_BOX,Old_Card_Album,1,1,1
+IG_HALLOWEEN_G_BOX,Old_Violet_Box,1,1,1
+
+// Based on available information - may be inaccurate
+IG_Sg_Weapon_Supply_Box,Velum_Arbalest,1,1,1
+IG_Sg_Weapon_Supply_Box,Velum_Arc_Wand,1,1,1
+IG_Sg_Weapon_Supply_Box,Velum_Bible,1,1,1
+IG_Sg_Weapon_Supply_Box,Velum_Buster,1,1,1
+IG_Sg_Weapon_Supply_Box,Velum_Claw,1,1,1
+IG_Sg_Weapon_Supply_Box,Velum_Claymore,1,1,1
+IG_Sg_Weapon_Supply_Box,Velum_CrossBow,1,1,1
+IG_Sg_Weapon_Supply_Box,Velum_Damascus,1,1,1
+IG_Sg_Weapon_Supply_Box,Velum_Flail,1,1,1
+IG_Sg_Weapon_Supply_Box,Velum_Glaive,1,1,1
+IG_Sg_Weapon_Supply_Box,Velum_Encyclopedia,1,1,1
+IG_Sg_Weapon_Supply_Box,Velum_Guillotine,1,1,1
+IG_Sg_Weapon_Supply_Box,Velum_Jamadhar,1,1,1
+IG_Sg_Weapon_Supply_Box,Velum_Katzbalger,1,1,1
+IG_Sg_Weapon_Supply_Box,Velum_Scare,1,1,1
+IG_Sg_Weapon_Supply_Box,Velum_Spear,1,1,1
+IG_Sg_Weapon_Supply_Box,Velum_Stunner,1,1,1
+IG_Sg_Weapon_Supply_Box,Siege_Arrow_A,1,1,1
+IG_Sg_Weapon_Supply_Box,Siege_Arrow_S,1,1,1

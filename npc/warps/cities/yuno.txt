@@ -6,7 +6,7 @@
 //===== Current Version: =====================================
 //= 1.9
 //===== Compatible With: =====================================
-//= Any Athena Version; RO Episode 5+
+//= rAthena Project; RO Episode 5+
 //===== Description: =========================================
 //= Warp Points for Yuno
 //===== Additional Comments: =================================

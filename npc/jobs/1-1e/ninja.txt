@@ -3,9 +3,9 @@
 //===== By: ================================================== 
 //= Legionaire, Kisuka
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= Ninja Job Change Quest
 //===== Additional Comments: ================================= 
@@ -15,6 +15,7 @@
 //= 1.4 Fixed a minor bug [SinSloth]
 //= 1.5 Updated to match AEGIS script and Added Quest Log commands. [Kisuka]
 //= 1.6 Fixed AEGIS amatsu warp typo. [Kisuka]
+//= 1.7 Kagerou/Oboro support (Class -> BaseClass) [Euphy]
 //============================================================ 
 
 alberta,30,65,3	script	Akagi	730,{
@@ -351,7 +352,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 			close;
 		}
 	} else {
-		if (Class == Job_Ninja) {
+		if (BaseClass == Job_Ninja) {
 			mes "[Cougar]";
 			mes "How have you been?";
 			mes "Train hard: you want";
@@ -565,7 +566,7 @@ einbroch,184,194,3	script	Suspicious Man#nq	 	881,{
 		mes "to beat him in a fair fight~";
 		close;
 	}
-	else if (NINJ_Q == 5 && Class == Job_Ninja) {
+	else if (NINJ_Q == 5 && BaseClass == Job_Ninja) {
 		mes "[Red Leopard Joe]";
 		mes "Oh, you're a Ninja~";
 		mes "I hope you continue to";

@@ -1130,6 +1130,22 @@ int party_sub_count(struct block_list *bl, va_list ap)
 	return 1;
 }
 
+// To use for counting classes in a party.
+int party_sub_count_class(struct block_list *bl, va_list ap)
+{
+	struct map_session_data *sd = (TBL_PC *)bl;
+	unsigned int mask = va_arg(ap, unsigned int);
+	unsigned int mapid_class = va_arg(ap, unsigned int);
+
+	if( !party_sub_count(bl, ap) )
+		return 0;
+
+	if( (sd->class_&mask) != mapid_class )
+		return 0;
+
+	return 1;
+}
+
 /// Executes 'func' for each party member on the same map and in range (0:whole map)
 int party_foreachsamemap(int (*func)(struct block_list*,va_list),struct map_session_data *sd,int range,...)
 {

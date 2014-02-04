@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 1.8
 //===== Compatible With: ===================================== 
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= Used for Cash shop items:
 //= - Kafra Card

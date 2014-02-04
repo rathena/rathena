@@ -65,7 +65,7 @@ enum e_skill_inf2 {
 	INF2_PARTY_ONLY     = 0x00400,
 	INF2_GUILD_ONLY     = 0x00800,
 	INF2_NO_ENEMY       = 0x01000,
-	//INF2_ = 0x02000, // free
+	INF2_AUTOSHADOWSPELL = 0x02000, // Skill that available for SC_AUTOSHADOWSPELL
 	INF2_CHORUS_SKILL	= 0x04000, // Chorus skill
 	INF2_NO_BG_DMG		= 0x08000, // spell that ignore bg reduction
 	INF2_NO_GVG_DMG		= 0x10000, // spell that ignore gvg reduction
@@ -86,7 +86,7 @@ enum e_skill_inf3 {
 	INF3_EFF_SHADOWJUMP		= 0x0200,	// spell range affected by NJ_SHADOWJUMP
 	INF3_EFF_RADIUS			= 0x0400,	// spell range affected by WL_RADIUS
 	INF3_EFF_RESEARCHTRAP	= 0x0800,	// spell range affected by RA_RESEARCHTRAP
-	INF3_DIS_PLAGIA			= 0x1000,	// spell that can't be copied
+	//INF3_ = 0x1000, // free
 	INF3_USABLE_WARG		= 0x2000,	// spell that can be use while riding warg
 	INF3_DIS_MADO			= 0x4000,	// spell that can't be used while in mado
 	//... add other spell list option here
@@ -119,10 +119,10 @@ struct skill_condition {
 		state,
 		spiritball,
 		itemid[MAX_SKILL_ITEM_REQUIRE],
-		amount[MAX_SKILL_ITEM_REQUIRE],
-		eqItem[MAX_SKILL_EQUIP_REQUIRE]; //max eq_item
-	uint8 status_count;
-	enum sc_type status[MAX_SKILL_STATUS_REQUIRE];
+		amount[MAX_SKILL_ITEM_REQUIRE];
+	short *eqItem;
+	enum sc_type *status;
+	uint8 status_count, eqItem_count;
 };
 
 struct s_skill_require {
@@ -138,10 +138,10 @@ struct s_skill_require {
 		state,
 		spiritball[MAX_SKILL_LEVEL],
 		itemid[MAX_SKILL_ITEM_REQUIRE],
-		amount[MAX_SKILL_ITEM_REQUIRE],
-		eqItem[MAX_SKILL_EQUIP_REQUIRE]; //max eq_item
-	uint8 status_count;
-	enum sc_type status[MAX_SKILL_STATUS_REQUIRE];
+		amount[MAX_SKILL_ITEM_REQUIRE];
+	short *eqItem;
+	enum sc_type *status;
+	uint8 status_count, eqItem_count;
 };
 
 /// Database skills
@@ -173,7 +173,7 @@ struct s_skill_db {
 	struct s_skill_damage damage;
 #endif
 	struct s_copyable { // [Cydh]
-		bool plagiarism, reproduce;
+		uint8 option;
 		uint16 joballowed, req_opt;
 	} copyable;
 };
@@ -334,7 +334,7 @@ int skill_get_weapontype( uint16 skill_id );
 int skill_get_ammotype( uint16 skill_id );
 int skill_get_ammo_qty( uint16 skill_id, uint16 skill_lv );
 int skill_get_state(uint16 skill_id);
-int skill_get_status( uint16 skill_id, int idx );
+//int skill_get_status( uint16 skill_id, int idx );
 int skill_get_status_count( uint16 skill_id );
 int skill_get_spiritball( uint16 skill_id, uint16 skill_lv );
 int skill_get_itemid( uint16 skill_id, int idx );
@@ -377,10 +377,10 @@ int skill_vfcastfix( struct block_list *bl, double time, uint16 skill_id, uint16
 int skill_delayfix( struct block_list *bl, uint16 skill_id, uint16 skill_lv);
 
 // Skill conditions check and remove [Inkfish]
-int skill_check_condition_castbegin(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
-int skill_check_condition_castend(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
+bool skill_check_condition_castbegin(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
+bool skill_check_condition_castend(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 int skill_check_condition_char_sub (struct block_list *bl, va_list ap);
-int skill_consume_requirement(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv, short type);
+void skill_consume_requirement(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv, short type);
 struct skill_condition skill_get_requirement(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 int skill_disable_check(struct status_change *sc, uint16 skill_id);
 
@@ -417,7 +417,7 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd);
 bool skill_isNotOk_hom(uint16 skill_id, struct homun_data *hd);
 bool skill_isNotOk_mercenary(uint16 skill_id, struct mercenary_data *md);
 
-bool skill_isNotOk_npcRange(struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, int pos_x, int pos_y);
+bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skill_lv, int pos_x, int pos_y);
 
 int skill_chastle_mob_changetarget(struct block_list *bl,va_list ap);
 
@@ -1966,6 +1966,7 @@ struct s_skill_magicmushroom_db {
 };
 extern struct s_skill_magicmushroom_db skill_magicmushroom_db[MAX_SKILL_MAGICMUSHROOM_DB];
 int skill_maelstrom_suction(struct block_list *bl, va_list ap);
+bool skill_check_shadowform(struct block_list *bl, int64 damage, int hit);
 /**
  * Ranger
  **/

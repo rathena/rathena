@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.1
 //===== Compatible With: =====================================
-//= Any Athena Version
+//= rAthena Project
 //===== Additional Comments: =================================
 //= Added 1st Version. [Muad_Dib]
 //= Conversion to eA [MasterOfMuppets]

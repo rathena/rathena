@@ -6,7 +6,7 @@
 //===== Current Version: ===================================== 
 //= 1.9a
 //===== Compatible With: ===================================== 
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= [Official Conversion]
 //= Izlude town NPCs

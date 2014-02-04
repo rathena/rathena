@@ -112,9 +112,13 @@ struct s_addeffectonskill {
 	unsigned char target;
 };
 
+///Struct of add drop item/group rate
 struct s_add_drop {
-	short id, group;
-	int race, rate, class_;
+	uint16 nameid, ///Item ID
+		group; ///Group ID
+	int rate; ///Rate, 1 ~ 10000, -1 ~ -100000
+	char race, ///Target Race, bitwise value of 1<<x. if < 0 means Monster ID
+		class_; ///Target Class, bitwise value of 1<<x
 };
 
 struct s_autobonus {
@@ -204,6 +208,7 @@ struct map_session_data {
 		unsigned int permanent_speed : 1; // When 1, speed cannot be changed through status_calc_pc().
 		unsigned int banking : 1; //1 when we using the banking system 0 when closed
 		unsigned int hpmeter_visible : 1;
+		bool disable_atcommand_on_npc; //Prevent to use atcommand while talking with NPC [Kichi]
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -264,7 +269,8 @@ struct map_session_data {
 	uint16 skill_id_dance,skill_lv_dance;
 	short cook_mastery; // range: [0,1999] [Inkfish]
 	struct skill_cooldown_entry * scd[MAX_SKILLCOOLDOWN]; // Skill Cooldown
-	int cloneskill_id, reproduceskill_id;
+	short cloneskill_idx, ///Stores index of copied skill by Intimidate/Plagiarism
+		reproduceskill_idx; ///Stores index of copied skill by Reproduce
 	int menuskill_id, menuskill_val, menuskill_val2;
 
 	int invincible_timer;
@@ -311,6 +317,7 @@ struct map_session_data {
 	int magic_atk_ele[ELE_NONE];
 	int critaddrace[RC_MAX];
 	int expaddrace[RC_MAX];
+	int expaddclass[CLASS_MAX];
 	int ignore_mdef_by_race[RC_MAX];
 	int ignore_mdef_by_class[CLASS_MAX];
 	int ignore_def_by_race[RC_MAX];
@@ -568,7 +575,8 @@ struct map_session_data {
 
 	int storage_size; /// Holds player storage size (VIP system).
 #ifdef VIP_ENABLE
-	struct vip_info  vip;
+	struct vip_info vip;
+	bool disableshowrate; //State to disable clif_display_pinfo(). [Cydh]
 #endif
 	///Timed bonus 'bonus_script' struct [Cydh]
 	struct s_script {
@@ -865,10 +873,10 @@ bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd,
 
 int pc_updateweightstatus(struct map_session_data *sd);
 
-int pc_addautobonus(struct s_autobonus *bonus,char max,const char *script,short rate,unsigned int dur,short atk_type,const char *o_script,unsigned short pos,bool onskill);
-int pc_exeautobonus(struct map_session_data* sd,struct s_autobonus *bonus);
+bool pc_addautobonus(struct s_autobonus *bonus,char max,const char *script,short rate,unsigned int dur,short atk_type,const char *o_script,unsigned short pos,bool onskill);
+void pc_exeautobonus(struct map_session_data* sd,struct s_autobonus *bonus);
 int pc_endautobonus(int tid, unsigned int tick, int id, intptr_t data);
-int pc_delautobonus(struct map_session_data* sd,struct s_autobonus *bonus,char max,bool restore);
+void pc_delautobonus(struct map_session_data* sd,struct s_autobonus *bonus,char max,bool restore);
 
 int pc_bonus(struct map_session_data*,int,int);
 int pc_bonus2(struct map_session_data *sd,int,int,int);

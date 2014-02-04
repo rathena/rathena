@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 2.6
 //===== Compatible With: ===================================== 
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= [Official Conversion]
 //= Job quest for Bard class

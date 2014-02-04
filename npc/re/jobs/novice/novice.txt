@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.6
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: =========================================
 //= [Official Conversion]
 //= A tutorial for new players starting at new_1-1 (53,111).

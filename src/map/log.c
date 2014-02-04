@@ -537,7 +537,7 @@ int log_config_read(const char* cfgName)
 		if( line[0] == '/' && line[1] == '/' )
 			continue;
 
-		if( sscanf(line, "%[^:]: %[^\r\n]", w1, w2) == 2 )
+		if( sscanf(line, "%1023[^:]: %1023[^\r\n]", w1, w2) == 2 )
 		{
 			if( strcmpi(w1, "enable_logs") == 0 )
 				log_config.enable_logs = (e_log_pick_type)config_switch(w2);

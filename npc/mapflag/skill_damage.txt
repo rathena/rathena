@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.0
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= Enables skill damage adjustment. All adjustments in
 //= skill_damage_db.txt for 'Map' type 16 will be applied.

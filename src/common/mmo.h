@@ -24,10 +24,10 @@
 	//#define PACKETVER 20120410
 #endif
 
-//Remove/Comment this line to disable sc_data saving. [Skotlex]
+///Remove/Comment this line to disable sc_data saving. [Skotlex]
 #define ENABLE_SC_SAVING
-//Remove/Comment this line to disable server-side hot-key saving support [Skotlex]
-//Note that newer clients no longer save hotkeys in the registry!
+/** Remove/Comment this line to disable server-side hot-key saving support [Skotlex]
+* Note that newer clients no longer save hotkeys in the registry! */
 #define HOTKEY_SAVING
 
 #if PACKETVER < 20090603
@@ -41,41 +41,39 @@
         #define MAX_HOTKEYS 38
 #endif
 
-#define MAX_MAP_PER_SERVER 1500 // Increased to allow creation of Instance Maps
-#define MAX_INVENTORY 100
-//Max number of characters per account. Note that changing this setting alone is not enough if the client is not hexed to support more characters as well.
-//Max value tested was 265
+#define MAX_MAP_PER_SERVER 1500 /// Increased to allow creation of Instance Maps
+#define MAX_INVENTORY 100 ///Maximum items in player inventory
+/** Max number of characters per account. Note that changing this setting alone is not enough if the client is not hexed to support more characters as well.
+* Max value tested was 265 */
 #define MAX_CHARS 9 
-//Number of slots carded equipment can have. Never set to less than 4 as they are also used to keep the data of forged items/equipment. [Skotlex]
-//Note: The client seems unable to receive data for more than 4 slots due to all related packets having a fixed size.
+/** Number of slots carded equipment can have. Never set to less than 4 as they are also used to keep the data of forged items/equipment. [Skotlex]
+* Note: The client seems unable to receive data for more than 4 slots due to all related packets having a fixed size. */
 #define MAX_SLOTS 4
-//Max amount of a single stacked item
-#define MAX_AMOUNT 30000
-#define MAX_ZENY 1000000000
-#define MAX_BANK_ZENY SINT32_MAX
-#define MAX_FAME 1000000000
-#define MAX_CART 100
-#define MAX_SKILL 5020
-#define GLOBAL_REG_NUM 256   // max permanent character variables per char
-#define ACCOUNT_REG_NUM 64   // max permanent local account variables per account
-#define ACCOUNT_REG2_NUM 16  // max permanent global account variables per account
-//Should hold the max of GLOBAL/ACCOUNT/ACCOUNT2 (needed for some arrays that hold all three)
-#define MAX_REG_NUM 256
-#define DEFAULT_WALK_SPEED 150
-#define MIN_WALK_SPEED 0
-#define MAX_WALK_SPEED 1000
-#define MAX_STORAGE 600 /// Max number of storage slots a player can have, (up to ~850 tested)
-#define MAX_GUILD_STORAGE 600
-#define MAX_PARTY 12
-#define MAX_GUILD 16+10*6	// increased max guild members +6 per 1 extension levels [Lupus]
-#define MAX_GUILDPOSITION 20	// increased max guild positions to accomodate for all members [Valaris] (removed) [PoW]
-#define MAX_GUILDEXPULSION 32
-#define MAX_GUILDALLIANCE 16
-#define MAX_GUILDSKILL	15 // increased max guild skills because of new skills [Sara-chan]
-#define MAX_GUILDLEVEL 50
-#define MAX_GUARDIANS 8	//Local max per castle. [Skotlex]
-#define MAX_QUEST_DB 2700 //Max quests that the server will load
-#define MAX_QUEST_OBJECTIVES 3 //Max quest objectives for a quest
+#define MAX_AMOUNT 30000 ////Max amount of a single stacked item
+#define MAX_ZENY 1000000000 ///Max zeny
+#define MAX_BANK_ZENY SINT32_MAX ///Max zeny in Bank
+#define MAX_FAME 1000000000 ///Max fame points
+#define MAX_CART 100 ///Maximum item in cart
+#define MAX_SKILL 5020 ///Maximum skill data
+#define GLOBAL_REG_NUM 256 ///Max permanent character variables per char
+#define ACCOUNT_REG_NUM 64 ///Max permanent local account variables per account
+#define ACCOUNT_REG2_NUM 16 ///Max permanent global account variables per account
+#define MAX_REG_NUM 256 ///Should hold the max of GLOBAL/ACCOUNT/ACCOUNT2 (needed for some arrays that hold all three)
+#define DEFAULT_WALK_SPEED 150 ///Default walk speed
+#define MIN_WALK_SPEED 0 ///Min walk speed
+#define MAX_WALK_SPEED 1000 ///Max walk speed
+#define MAX_STORAGE 600 ///Max number of storage slots a player can have, (up to ~850 tested)
+#define MAX_GUILD_STORAGE 600 ///Max number of storage slots a guild
+#define MAX_PARTY 12 ///Max party member
+#define MAX_GUILD 16+10*6	///Increased max guild members +6 per 1 extension levels [Lupus]
+#define MAX_GUILDPOSITION 20	///Increased max guild positions to accomodate for all members [Valaris] (removed) [PoW]
+#define MAX_GUILDEXPULSION 32 ///Max Guild expulsion
+#define MAX_GUILDALLIANCE 16 ///Max Guild alliance
+#define MAX_GUILDSKILL	15 ///Increased max guild skills because of new skills [Sara-chan]
+#define MAX_GUILDLEVEL 50 ///Max Guild level
+#define MAX_GUARDIANS 8	///Local max per castle. If this value is increased, need to add more fields on MySQL `guild_castle` table [Skotlex]
+#define MAX_QUEST_DB 2800 ///Max quests that the server will load
+#define MAX_QUEST_OBJECTIVES 3 ///Max quest objectives for a quest
 
 // for produce
 #define MIN_ATTRIBUTE 0
@@ -616,6 +614,7 @@ enum {
 	JOB_XMAS,
 	JOB_SUMMER,
 	JOB_HANBOK,
+	JOB_OKTOBERFEST,
 	JOB_MAX_BASIC,
 
 	JOB_NOVICE_HIGH = 4001,

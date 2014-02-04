@@ -7,7 +7,7 @@
 //===== Current Version: ===================================== 
 //= 1.7
 //===== Compatible With: ===================================== 
-//= Any rAthena Mod
+//= rAthena Project
 //===== Description: ========================================= 
 //= Payon warps
 //===== Additional Comments: ================================= 

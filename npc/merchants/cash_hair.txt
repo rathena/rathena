@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 1.0
 //===== Compatible With: ===================================== 
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= Exchange cash item, New_Style_Coupon, for new hair styles.
 //===== Additional Comments: ================================= 

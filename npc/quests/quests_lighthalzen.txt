@@ -6,7 +6,7 @@
 //===== Current Version: ===================================== 
 //= 5.1
 //===== Compatible With: ===================================== 
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= Quests related to Lighthalzen City.
 //===== Additional Comments: ================================= 

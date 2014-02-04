@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 2.4
 //===== Compatible With: ===================================== 
-//= rAthena SVN 3422+(Requires jA Script System)
+//= rAthena Project; SVN 3422+
 //===== Description: ========================================= 
 //= [Official Conversion]
 //= Novice Training Grounds

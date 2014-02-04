@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 1.6
 //===== Compatible With: ===================================== 
-//= rAthena SVN 3422+(Requires jA Script System)
+//= rAthena Project; SVN 3422+
 //===== Description: ========================================= 
 //= [Official Conversion]
 //= Grade A and Grade S weapon quests

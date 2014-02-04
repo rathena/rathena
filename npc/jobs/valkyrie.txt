@@ -7,7 +7,7 @@
 //===== Current Version: ===================================== 
 //= 3.1
 //===== Compatible With: ===================================== 
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= [Official Conversion]
 //= Quest to become a Tranceded Class. (Advanced/Rebirthed)

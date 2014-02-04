@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 2.0
 //===== Compatible With: ===================================== 
-//= Any rAthena version with Account variables.
+//= rAthena Project
 //===== Description: ========================================= 
 //= An account wide Banker to store Zeny
 //===== Additional Comments: ================================= 

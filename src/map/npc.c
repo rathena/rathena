@@ -122,16 +122,18 @@ struct view_data* npc_get_viewdata(int class_)
 int npc_isnear_sub(struct block_list* bl, va_list args) {
     struct npc_data *nd = (struct npc_data*)bl;
 	int skill_id = va_arg(args, int);
-	uint16 idx = -1;
 
-	//Check the NPC type if is used by INF2_NO_NEARNPC (skill_id is not null) [Cydh]
-	if (skill_id && (idx = skill_get_index(skill_id)) && skill_db[idx].unit_nonearnpc_type) {
-		while (1) {
-			if (skill_db[idx].unit_nonearnpc_type&1 && nd->subtype == WARP) break;
-			if (skill_db[idx].unit_nonearnpc_type&2 && nd->subtype == SHOP) break;
-			if (skill_db[idx].unit_nonearnpc_type&4 && nd->subtype == SCRIPT) break;
-			if (skill_db[idx].unit_nonearnpc_type&8 && nd->subtype == TOMB) break;
-				return 0;
+	if (skill_id > 0) { //If skill_id > 0 that means is used for INF2_NO_NEARNPC [Cydh]
+		int16 idx = skill_get_index(skill_id);
+
+		if (idx >= 0 && skill_db[idx].unit_nonearnpc_type) {
+			while (1) {
+				if (skill_db[idx].unit_nonearnpc_type&1 && nd->subtype == WARP) break;
+				if (skill_db[idx].unit_nonearnpc_type&2 && nd->subtype == SHOP) break;
+				if (skill_db[idx].unit_nonearnpc_type&4 && nd->subtype == SCRIPT) break;
+				if (skill_db[idx].unit_nonearnpc_type&8 && nd->subtype == TOMB) break;
+					return 0;
+			}
 		}
 	}
 
@@ -2302,9 +2304,9 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
  * Parses a shop/cashshop npc.
  * Line definition :
  * <map name>,<x>,<y>,<facing>%TAB%shop%TAB%<NPC Name>%TAB%<sprite id>,<itemid>:<price>{,<itemid>:<price>...}
+ * <map name>,<x>,<y>,<facing>%TAB%cashshop%TAB%<NPC Name>%TAB%<sprite id>,<itemid>:<price>{,<itemid>:<price>...}
  * <map name>,<x>,<y>,<facing>%TAB%itemshop%TAB%<NPC Name>%TAB%<sprite id>,<costitemid>{:<discount>},<itemid>:<price>{,<itemid>:<price>...}
  * <map name>,<x>,<y>,<facing>%TAB%pointshop%TAB%<NPC Name>%TAB%<sprite id>,<costvariable>{:<discount>},<itemid>:<price>{,<itemid>:<price>...}
- * @TODO missing cashshop line definition
  * @param w1 : word 1 before tab (<from map name>,<x>,<y>,<facing>)
  * @param w2 : word 2 before tab (shop|cashshop|itemshop|pointshop), keyword that sent us in this parsing
  * @param w3 : word 3 before tab (<NPC Name>)
@@ -2316,11 +2318,8 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
  */
 static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
-	//TODO: could be rewritten to NOT need this temp array [ultramage]
-	#define MAX_SHOPITEM 100
-	struct npc_item_list items[MAX_SHOPITEM];
 	char *p, point_str[32];
-	int x, y, dir, m, i, nameid = 0, is_discount = 0;
+	int x, y, dir, m, nameid = 0, is_discount = 0;
 	struct npc_data *nd;
 	enum npc_subtype type;
 
@@ -2396,10 +2395,15 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 			is_discount = 1;
 			break;
 	}
+	
+	CREATE(nd, struct npc_data, 1);
 
-	for( i = 0; i < ARRAYLENGTH(items) && p; ++i ) {
+	nd->u.shop.count = 0;
+	while ( p ) {
 		int nameid, value;
 		struct item_data* id;
+		if( p == NULL )
+			break;
 		if( sscanf(p, ",%d:%d", &nameid, &value) != 2 ) {
 			ShowError("npc_parse_shop: Invalid item definition in file '%s', line '%d'. Ignoring the rest of the line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 			break;
@@ -2428,22 +2432,27 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		if( id->maxchance == 0 )
 			id->maxchance = -1; // -1 would show that the item's sold in NPC Shop
 
-		items[i].nameid = nameid;
-		items[i].value = value;
+		if (nd->u.shop.count > 0)
+			RECREATE(nd->u.shop.shop_item, struct npc_item_list,nd->u.shop.count+1);
+		else
+			CREATE(nd->u.shop.shop_item, struct npc_item_list,1);
+
+		nd->u.shop.shop_item[nd->u.shop.count].nameid = nameid;
+		nd->u.shop.shop_item[nd->u.shop.count].value = value;
+		nd->u.shop.count++;
 		p = strchr(p+1,',');
 	}
-	if( i == 0 ) {
+	if( nd->u.shop.count == 0 ) {
 		ShowWarning("npc_parse_shop: Ignoring empty shop in file '%s', line '%d'.\n", filepath, strline(buffer,start-buffer));
+		aFree(nd);
 		return strchr(start,'\n');// continue
 	}
 
-	CREATE(nd, struct npc_data, 1);
-	CREATE(nd->u.shop.shop_item, struct npc_item_list, i);
-	memcpy(nd->u.shop.shop_item, items, sizeof(struct npc_item_list)*i);
-	nd->u.shop.count = i;
-	nd->u.shop.itemshop_nameid = nameid; // Item shop currency
-	safestrncpy(nd->u.shop.pointshop_str,point_str,strlen(point_str)+1); // Point shop currency
-	nd->u.shop.discount = is_discount;
+	if (type != SHOP) {
+		if (type == ITEMSHOP) nd->u.shop.itemshop_nameid = nameid; // Item shop currency
+		else if (type == POINTSHOP) safestrncpy(nd->u.shop.pointshop_str,point_str,strlen(point_str)+1); // Point shop currency
+		nd->u.shop.discount = is_discount;
+	}
 	nd->bl.prev = nd->bl.next = NULL;
 	nd->bl.m = m;
 	nd->bl.x = x;
@@ -4038,7 +4047,6 @@ int npc_reload(void) {
 	// Execute rest of the startup events if connected to char-server. [Lance]
 	if(!CheckForCharServer()){
 		ShowStatus("Event '"CL_WHITE"OnInterIfInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc_event_doall("OnInterIfInit"));
-		ShowStatus("Event '"CL_WHITE"OnInterIfInitOnce"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc_event_doall("OnInterIfInitOnce"));
 	}
 	return 0;
 }

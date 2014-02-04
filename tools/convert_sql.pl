@@ -13,7 +13,7 @@
 #     --i=../db/re/mob_skill_db.txt --o=../sql-files/mob_skill_db_re.sql --t=re --m=mob_skill --table=mob_skill_db_re
 #
 # List of options:
-#   item_db.pl --help
+#   convert_sql.pl --help
 
 use strict;
 use warnings;
@@ -245,7 +245,7 @@ CREATE TABLE `$db` (
   `price_buy` mediumint(8) unsigned DEFAULT NULL,
   `price_sell` mediumint(8) unsigned DEFAULT NULL,
   `weight` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `atk:matk` varchar(10) DEFAULT NULL,
+  `atk:matk` varchar(11) DEFAULT NULL,
   `defence` smallint(5) unsigned DEFAULT NULL,
   `range` tinyint(2) unsigned DEFAULT NULL,
   `slots` tinyint(2) unsigned DEFAULT NULL,

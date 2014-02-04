@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 3.4
 //===== Compatible With: ===================================== 
-//= rAthena SVN
+//= rAthena Project
 //===== Description: ========================================= 
 //= [Official Conversion]
 //= Contains Quests:
@@ -12014,7 +12014,7 @@ OnTouch:
 
 que_job01,6,94,0	warp	morocc#01	2,2,morocc,45,103
 que_job01,17,48,0	warp	que_job01#02	2,2,que_job01,68,92
-que_job01,68,96,0	warp	que_job01#03	2,2,que_job01,17,53;
+que_job01,68,96,0	warp	que_job01#03	2,2,que_job01,17,53
 
 que_job01,82,95,3	script	Bar Master#moc2_01	46,{
 	if (checkweight(1201,1) == 0) {
@@ -13817,7 +13817,8 @@ OnTouch:
 		set mao_morocc2,18;
 		changequest 7026,7027;
 		close2;
-		consumeitem 602; //Wing_Of_Butterfly
+		//consumeitem 602; //Wing_Of_Butterfly
+		warp "SavePoint",0,0;
 		end;
 	}
 	else if (mao_morocc2 == 19) {
@@ -13909,7 +13910,8 @@ que_dan02,115,53,3	script	Man#moc2_crazyR01	456,{
 		set mao_morocc2,20;
 		changequest 7028,7029;
 		close2;
-		consumeitem 602; //Wing_Of_Butterfly
+		//consumeitem 602; //Wing_Of_Butterfly
+		warp "SavePoint",0,0;
 		donpcevent "Mr. Kidd#moc_extra01::OnDisable";
 	}
 	else {

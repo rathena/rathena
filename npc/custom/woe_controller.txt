@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.5
 //===== Compatible With: =====================================
-//= rAthena SVN r16958+
+//= rAthena Project
 //===== Description: =========================================
 //= A controller for War of Emperium designed for
 //= simplicity and ease of use.

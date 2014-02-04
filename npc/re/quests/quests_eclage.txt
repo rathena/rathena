@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 0.1
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Project
 //===== Description: =========================================
 //= Quest NPCs related to Eclage.
 //===== Additional Comments: =================================
