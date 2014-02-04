@@ -56,8 +56,8 @@ struct npc_data {
 			struct npc_label_list *label_list;
 		} scr;
 		struct {
-			struct npc_item_list* shop_item;
-			int count;
+			struct npc_item_list *shop_item;
+			uint16 count;
 			int itemshop_nameid; // Item Shop cost item ID
 			char pointshop_str[32]; // Point Shop cost variable name
 			bool discount;

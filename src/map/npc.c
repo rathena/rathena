@@ -2318,11 +2318,8 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
  */
 static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
-	//TODO: could be rewritten to NOT need this temp array [ultramage]
-	#define MAX_SHOPITEM 100
-	struct npc_item_list items[MAX_SHOPITEM];
 	char *p, point_str[32];
-	int x, y, dir, m, i, nameid = 0, is_discount = 0;
+	int x, y, dir, m, nameid = 0, is_discount = 0;
 	struct npc_data *nd;
 	enum npc_subtype type;
 
@@ -2398,10 +2395,15 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 			is_discount = 1;
 			break;
 	}
+	
+	CREATE(nd, struct npc_data, 1);
 
-	for( i = 0; i < ARRAYLENGTH(items) && p; ++i ) {
+	nd->u.shop.count = 0;
+	while ( p ) {
 		int nameid, value;
 		struct item_data* id;
+		if( p == NULL )
+			break;
 		if( sscanf(p, ",%d:%d", &nameid, &value) != 2 ) {
 			ShowError("npc_parse_shop: Invalid item definition in file '%s', line '%d'. Ignoring the rest of the line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 			break;
@@ -2430,22 +2432,27 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		if( id->maxchance == 0 )
 			id->maxchance = -1; // -1 would show that the item's sold in NPC Shop
 
-		items[i].nameid = nameid;
-		items[i].value = value;
+		if (nd->u.shop.count > 0)
+			RECREATE(nd->u.shop.shop_item, struct npc_item_list,nd->u.shop.count+1);
+		else
+			CREATE(nd->u.shop.shop_item, struct npc_item_list,1);
+
+		nd->u.shop.shop_item[nd->u.shop.count].nameid = nameid;
+		nd->u.shop.shop_item[nd->u.shop.count].value = value;
+		nd->u.shop.count++;
 		p = strchr(p+1,',');
 	}
-	if( i == 0 ) {
+	if( nd->u.shop.count == 0 ) {
 		ShowWarning("npc_parse_shop: Ignoring empty shop in file '%s', line '%d'.\n", filepath, strline(buffer,start-buffer));
+		aFree(nd);
 		return strchr(start,'\n');// continue
 	}
 
-	CREATE(nd, struct npc_data, 1);
-	CREATE(nd->u.shop.shop_item, struct npc_item_list, i);
-	memcpy(nd->u.shop.shop_item, items, sizeof(struct npc_item_list)*i);
-	nd->u.shop.count = i;
-	nd->u.shop.itemshop_nameid = nameid; // Item shop currency
-	safestrncpy(nd->u.shop.pointshop_str,point_str,strlen(point_str)+1); // Point shop currency
-	nd->u.shop.discount = is_discount;
+	if (type != SHOP) {
+		if (type == ITEMSHOP) nd->u.shop.itemshop_nameid = nameid; // Item shop currency
+		else if (type == POINTSHOP) safestrncpy(nd->u.shop.pointshop_str,point_str,strlen(point_str)+1); // Point shop currency
+		nd->u.shop.discount = is_discount;
+	}
 	nd->bl.prev = nd->bl.next = NULL;
 	nd->bl.m = m;
 	nd->bl.x = x;

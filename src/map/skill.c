@@ -18898,8 +18898,10 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	return true;
 }
 
-static bool skill_parse_row_castdb(char* split[], int columns, int current)
-{// skill_id,CastingTime,AfterCastActDelay,AfterCastWalkDelay,Duration1,Duration2,Cooldown{,Fixedcast}
+/** Reads skill cast db
+* SkillID,CastingTime,AfterCastActDelay,AfterCastWalkDelay,Duration1,Duration2,Cooldown{,Fixedcast}
+*/
+static bool skill_parse_row_castdb(char* split[], int columns, int current) {
 	uint16 skill_id = atoi(split[0]);
 	uint16 idx = skill_get_index(skill_id);
 	if( !idx ) // invalid skill id
@@ -18917,8 +18919,10 @@ static bool skill_parse_row_castdb(char* split[], int columns, int current)
 	return true;
 }
 
-static bool skill_parse_row_castnodexdb(char* split[], int columns, int current)
-{// Skill id,Cast,Delay (optional)
+/** Reads skill cast no dex db
+* SkillID,Cast,Delay (optional)
+*/
+static bool skill_parse_row_castnodexdb(char* split[], int columns, int current) {
 	uint16 skill_id = atoi(split[0]);
 	uint16 idx = skill_get_index(skill_id);
 	if( !idx ) // invalid skill id
@@ -18931,8 +18935,10 @@ static bool skill_parse_row_castnodexdb(char* split[], int columns, int current)
 	return true;
 }
 
-static bool skill_parse_row_nocastdb(char* split[], int columns, int current)
-{// skill_id,Flag
+/** Reads skill no cast db
+* SkillID,Flag
+*/
+static bool skill_parse_row_nocastdb(char* split[], int columns, int current) {
 	uint16 skill_id = atoi(split[0]);
 	uint16 idx = skill_get_index(skill_id);
 	if( !idx ) // invalid skill id
@@ -18943,8 +18949,10 @@ static bool skill_parse_row_nocastdb(char* split[], int columns, int current)
 	return true;
 }
 
-static bool skill_parse_row_unitdb(char* split[], int columns, int current)
-{// ID,unit ID,unit ID 2,layout,range,interval,target,flag
+/** Reads skill unit db
+* ID,unit ID,unit ID 2,layout,range,interval,target,flag
+*/
+static bool skill_parse_row_unitdb(char* split[], int columns, int current) {
 	uint16 skill_id = atoi(split[0]);
 	uint16 idx = skill_get_index(skill_id);
 	if( !idx ) // invalid skill id
@@ -18984,8 +18992,10 @@ static bool skill_parse_row_unitdb(char* split[], int columns, int current)
 	return true;
 }
 
-static bool skill_parse_row_producedb(char* split[], int columns, int current)
-{// ProduceItemID,ItemLV,RequireSkill,Requireskill_lv,MaterialID1,MaterialAmount1,......
+/** Reads Produce db
+* ProduceItemID,ItemLV,RequireSkill,Requireskill_lv,MaterialID1,MaterialAmount1,......
+*/
+static bool skill_parse_row_producedb(char* split[], int columns, int current) {
 	int x,y;
 
 	int i = atoi(split[0]);
@@ -19005,8 +19015,10 @@ static bool skill_parse_row_producedb(char* split[], int columns, int current)
 	return true;
 }
 
-static bool skill_parse_row_createarrowdb(char* split[], int columns, int current)
-{// SourceID,MakeID1,MakeAmount1,...,MakeID5,MakeAmount5
+/** Reads create arrow db
+* SourceID,MakeID1,MakeAmount1,...,MakeID5,MakeAmount5
+*/
+static bool skill_parse_row_createarrowdb(char* split[], int columns, int current) {
 	int x,y;
 
 	int i = atoi(split[0]);
@@ -19022,8 +19034,11 @@ static bool skill_parse_row_createarrowdb(char* split[], int columns, int curren
 
 	return true;
 }
-static bool skill_parse_row_spellbookdb(char* split[], int columns, int current)
-{// skill_id,PreservePoints
+
+/** Reads Spell book db
+* SkillID,PreservePoints
+*/
+static bool skill_parse_row_spellbookdb(char* split[], int columns, int current) {
 
 	uint16 skill_id = atoi(split[0]);
 	int points = atoi(split[1]);
@@ -19045,8 +19060,11 @@ static bool skill_parse_row_spellbookdb(char* split[], int columns, int current)
 
 	return false;
 }
-static bool skill_parse_row_improvisedb(char* split[], int columns, int current)
-{// SkillID,Rate
+
+/** Reads improvise db
+* SkillID,Rate
+*/
+static bool skill_parse_row_improvisedb(char* split[], int columns, int current) {
 	uint16 skill_id = atoi(split[0]);
 	short j = atoi(split[1]);
 
@@ -19070,8 +19088,11 @@ static bool skill_parse_row_improvisedb(char* split[], int columns, int current)
 
 	return true;
 }
-static bool skill_parse_row_magicmushroomdb(char* split[], int column, int current)
-{// SkillID
+
+/** Reads Magic mushroom db
+* SkillID
+*/
+static bool skill_parse_row_magicmushroomdb(char* split[], int column, int current) {
 	uint16 skill_id = atoi(split[0]);
 
 	if( !skill_get_index(skill_id) || !skill_get_max(skill_id) )
@@ -19090,6 +19111,10 @@ static bool skill_parse_row_magicmushroomdb(char* split[], int column, int curre
 	return true;
 }
 
+/** Reads db of copyable skill
+* SkillName,Option{,JobAllowed{,RequirementRemoved}}
+* SkillID,Option{,JobAllowed{,RequirementRemoved}}
+*/
 static bool skill_parse_row_copyabledb(char* split[], int column, int current) {
 	int16 id;
 	uint8 option;
@@ -19117,24 +19142,33 @@ static bool skill_parse_row_copyabledb(char* split[], int column, int current) {
 	return true;
 }
 
-/// Reads additional range [Cydh]
+/** Reads additional range for distance checking from NPC [Cydh]
+* SkillName,AdditionalRange{,NPC Type}
+* SkillID,AdditionalRange{,NPC Type}
+*/
 static bool skill_parse_row_nonearnpcrangedb(char* split[], int column, int current) {
-	int idx;
-	uint16 skill_id = skill_name2id(split[0]);
+	int16 id;
 
-	if ((idx = skill_get_index(skill_id)) < 0) { // invalid skill id
+	trim(split[0]);
+	if(ISDIGIT(split[0][0]))
+		id = atoi(split[0]);
+	else
+		id = skill_name2id(split[0]);
+
+	if ((id = skill_get_index(id)) < 0) { // invalid skill id
 		ShowError("skill_parse_row_nonearnpcrangedb: Invalid skill '%s'\n",split[0]);
 		return false;
 	}
 
-	skill_db[idx].unit_nonearnpc_range = max(atoi(split[1]),0);
-	skill_db[idx].unit_nonearnpc_type = (atoi(split[2])) ? cap_value(atoi(split[2]),1,15) : 15;
+	skill_db[id].unit_nonearnpc_range = max(atoi(split[1]),0);
+	skill_db[id].unit_nonearnpc_type = (atoi(split[2])) ? cap_value(atoi(split[2]),1,15) : 15;
 	return true;
 }
 
-
-static bool skill_parse_row_abradb(char* split[], int columns, int current)
-{// skill_id,DummyName,RatePerLvl
+/** Reads skill chance by Abracadabra/Hocus Pocus spell
+* SkillID,DummyName,RatePerLvl
+*/
+static bool skill_parse_row_abradb(char* split[], int columns, int current) {
 	uint16 skill_id = atoi(split[0]);
 	if( !skill_get_index(skill_id) || !skill_get_max(skill_id) )
 	{
@@ -19154,8 +19188,10 @@ static bool skill_parse_row_abradb(char* split[], int columns, int current)
 	return true;
 }
 
-static bool skill_parse_row_changematerialdb(char* split[], int columns, int current)
-{// ProductID,BaseRate,MakeAmount1,MakeAmountRate1...,MakeAmount5,MakeAmountRate5
+/** Reads change material db
+* ProductID,BaseRate,MakeAmount1,MakeAmountRate1...,MakeAmount5,MakeAmountRate5
+*/
+static bool skill_parse_row_changematerialdb(char* split[], int columns, int current) {
 	uint16 skill_id = atoi(split[0]);
 	short j = atoi(split[1]);
 	int x,y;

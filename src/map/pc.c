@@ -743,7 +743,7 @@ bool pc_isequipped(struct map_session_data *sd, int nameid)
 
 	for( i = 0; i < EQI_MAX; i++ )
 	{
-		uint8 index = sd->equip_index[i], j;
+		int8 index = sd->equip_index[i], j;
 		if( index < 0 ) continue;
 
 		if( i == EQI_HAND_R && sd->equip_index[EQI_HAND_L] == index ) continue;
