@@ -2770,7 +2770,7 @@ NOT locate a pet by name.
             mes "I can't seem to find Meh anywhere!";
             close;
         }
-        mes "I found him at "+@mapname$+" at X:"+@mapx+" Y:"+@mapy+" !";
+        mes "I found him at "+@mapname$+" X:"+@mapx+" Y:"+@mapy+" !";
         close;
     }
    
@@ -2780,22 +2780,22 @@ Notice that NPC objects disabled with 'disablenpc' will still be located.
 
 *getgmlevel()
 
-This function will return the (GM) level of the account which the 
+This function will return the (GM) level of the 'group id' in which the
 invoking player belongs to. If this is somehow executed from a console command,
 99 will be returned, and 0 will be returned if the account has no GM level.
 
 This allows you to make NPC's only accessible for certain GM levels, or behave 
 specially when talked to by GMs.
 
-	if (getgmlevel() > 0) mes "What is your command, your godhood?";
+	if (getgmlevel() >= 1)    mes "Your GM level means you are a true GM.";
 
 ---------------------------------------
 
 *getgroupid()
 
-This function will return the group id that the invoking player account belongs to.
+This function will return the group id which the invoking players account belongs to.
 
-	if (getgroupid() > 0) mes "I see your apart of the GM Team.";
+	if (getgroupid() == 99)    mes "I see your apart of the 'Administrator GM' Group.";
 
 ---------------------------------------
 
