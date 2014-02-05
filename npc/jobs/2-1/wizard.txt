@@ -1520,7 +1520,7 @@ OnTimer183000:
 	end;
 
 OnTimer184000:
-	enablenpc"Room of Fire#Failed";
+	enablenpc "Room of Fire#Failed";
 	end;
 
 OnTimer185000:

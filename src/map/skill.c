@@ -19129,7 +19129,7 @@ static bool skill_parse_row_copyabledb(char* split[], int column, int current) {
 		ShowError("skill_parse_row_copyabledb: Invalid skill '%s'\n",split[0]);
 		return false;
 	}
-	if ((option = atoi(split[1])) < 0 || option > 3) {
+	if ((option = atoi(split[1])) > 3) {
 		ShowError("skill_parse_row_copyabledb: Invalid option '%s'\n",split[1]);
 		return false;
 	}
