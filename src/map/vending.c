@@ -471,8 +471,7 @@ void vending_reopen( struct map_session_data* sd ){
 		uint16 j, count;
 
 		ARR_FIND(0,autotrader_count,i,autotraders[i] && autotraders[i]->char_id == sd->status.char_id);
-		if (i >= autotrader_count) { //This is shouldn't happen [Cydh]
-			ShowError("vending_reopen: Player not found as autotrader (aid:%d cid:%d)\n",sd->status.account_id,sd->status.char_id);
+		if (i >= autotrader_count) {
 			return;
 		}
 		
@@ -494,7 +493,7 @@ void vending_reopen( struct map_session_data* sd ){
 			}
 
 			*index = entry->index + 2;
-			*amount = min(entry->amount, sd->status.cart[entry->index].amount); // Limit the vending amount
+			*amount = entry->amount;
 			*value = entry->price;
 
 			p += 8;
@@ -507,7 +506,7 @@ void vending_reopen( struct map_session_data* sd ){
 		vending_openvending(sd, autotraders[i]->title, data, count);
 		aFree(data);
 
-		ShowInfo("Autotrader loaded: '"CL_WHITE"%s"CL_RESET"' with '"CL_WHITE"%d"CL_RESET"' items at "CL_WHITE"%s (%d,%d)"CL_RESET"\n",
+		ShowInfo("Loaded autotrade vending data for '"CL_WHITE"%s"CL_RESET"' with '"CL_WHITE"%d"CL_RESET"' items at "CL_WHITE"%s (%d,%d)"CL_RESET"\n",
 			sd->status.name,count,mapindex_id2name(sd->mapindex),sd->bl.x,sd->bl.y);
 
 		// Set him to autotrade

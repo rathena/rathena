@@ -30,4 +30,7 @@ void buyingstore_trade(struct map_session_data* sd, int account_id, unsigned int
 bool buyingstore_search(struct map_session_data* sd, unsigned short nameid);
 bool buyingstore_searchall(struct map_session_data* sd, const struct s_search_store_search* s);
 
+void do_init_buyingstore_autotrade( void );
+void buyingstore_reopen( struct map_session_data* sd );
+
 #endif  // _BUYINGSTORE_H_
