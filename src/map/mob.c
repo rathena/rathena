@@ -2252,13 +2252,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 			if (map[m].flag.nojobexp || !md->db->job_exp || md->dmglog[i].flag == MDLF_HOMUN) //Homun earned job-exp is always lost.
 				job_exp = 0;
-			else {
-				int vip_bonus = 0;
-				// Increase job EXP rate for VIP.
-				if (battle_config.vip_job_exp_increase && (sd && pc_isvip(sd)))
-					vip_bonus += battle_config.vip_job_exp_increase;
-				job_exp = (unsigned int)cap_value(md->db->job_exp * per * (bonus+vip_bonus)/100. * map[m].adjust.jexp/100., 1, UINT_MAX);
-			}
+			else
+				job_exp = (unsigned int)cap_value(md->db->job_exp * per * bonus/100. * map[m].adjust.jexp/100., 1, UINT_MAX);
 
 			if ( ( temp = tmpsd[i]->status.party_id)>0 ) {
 				int j;
