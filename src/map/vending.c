@@ -297,7 +297,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
  *	data := {<index>.w <amount>.w <value>.l}[count]
  * @param count : number of different items
  */
-void vending_openvending(struct map_session_data* sd, const char* message, const uint8* data, int count) {
+bool vending_openvending(struct map_session_data* sd, const char* message, const uint8* data, int count) {
 	int i, j;
 	int vending_skill_lvl;
 	char message_sql[MESSAGE_SIZE*2];
@@ -305,21 +305,21 @@ void vending_openvending(struct map_session_data* sd, const char* message, const
 	nullpo_retv(sd);
 
 	if ( pc_isdead(sd) || !sd->state.prevend || pc_istrading(sd))
-		return; // can't open vendings lying dead || didn't use via the skill (wpe/hack) || can't have 2 shops at once
+		return false; // can't open vendings lying dead || didn't use via the skill (wpe/hack) || can't have 2 shops at once
 
 	vending_skill_lvl = pc_checkskill(sd, MC_VENDING);
 	
 	// skill level and cart check
 	if( !vending_skill_lvl || !pc_iscarton(sd) ) {
 		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0);
-		return;
+		return false;
 	}
 
 	// check number of items in shop
 	if( count < 1 || count > MAX_VENDING || count > 2 + vending_skill_lvl )
 	{	// invalid item count
 		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0);
-		return;
+		return false;
 	}
 
 	// filter out invalid items
@@ -353,7 +353,7 @@ void vending_openvending(struct map_session_data* sd, const char* message, const
 
 	if( i == 0 ) { // no valid item found
 		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0); // custom reply packet
-		return;
+		return false;
 	}
 	sd->state.prevend = 0;
 	sd->state.vending = true;
@@ -377,6 +377,8 @@ void vending_openvending(struct map_session_data* sd, const char* message, const
 	clif_showvendingboard(&sd->bl,message,0);
 
 	idb_put(vending_db, sd->status.char_id, sd);
+
+	return true;
 }
 
 /**
@@ -463,9 +465,8 @@ bool vending_searchall(struct map_session_data* sd, const struct s_search_store_
 * @param sd Player as autotrader
 */
 void vending_reopen( struct map_session_data* sd ){
-	if (!sd || !autotrader_count || !autotraders)
-		return;
-	else { // Ready to open vending for this char
+	// Ready to open vending for this char
+	if ( sd && autotrader_count > 0 && autotraders){
 		uint16 i;
 		uint8 *data, *p;
 		uint16 j, count;
@@ -502,25 +503,31 @@ void vending_reopen( struct map_session_data* sd ){
 		// Set him into a hacked prevend state
 		sd->state.prevend = 1;
 
-		// Open the shop again
-		vending_openvending(sd, autotraders[i]->title, data, count);
-		aFree(data);
+		// Open the vending again
+		if( vending_openvending(sd, autotraders[i]->title, data, count) ){
+			// Set him to autotrade
+			if (Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;",
+				vendings_db, sd->vender_id ) != SQL_SUCCESS )
+			{
+				Sql_ShowDebug( mmysql_handle );
+			}
 
-		ShowInfo("Loaded autotrade vending data for '"CL_WHITE"%s"CL_RESET"' with '"CL_WHITE"%d"CL_RESET"' items at "CL_WHITE"%s (%d,%d)"CL_RESET"\n",
-			sd->status.name,count,mapindex_id2name(sd->mapindex),sd->bl.x,sd->bl.y);
+			// Make him look perfect
+			unit_setdir(&sd->bl,battle_config.feature_autotrade_direction);
 
-		// Set him to autotrade
-		if (Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;",
-			vendings_db, sd->vender_id ) != SQL_SUCCESS )
-		{
-			Sql_ShowDebug( mmysql_handle );
+			if( battle_config.feature_autotrade_sit )
+				pc_setsit(sd);
+
+			ShowInfo("Loaded autotrade vending data for '"CL_WHITE"%s"CL_RESET"' with '"CL_WHITE"%d"CL_RESET"' items at "CL_WHITE"%s (%d,%d)"CL_RESET"\n",
+				sd->status.name,count,mapindex_id2name(sd->mapindex),sd->bl.x,sd->bl.y);
+		}else{
+			// Failed to open the vending, set him offline
+			ShowWarning("Failed to load autotrade vending data for '"CL_WHITE"%s"CL_RESET"' with '"CL_WHITE"%d"CL_RESET"' items\n", sd->status.name, count );
+
+			map_quit( sd );
 		}
 
-		// Make him look perfect
-		unit_setdir(&sd->bl,battle_config.feature_autotrade_direction);
-
-		if( battle_config.feature_autotrade_sit )
-			pc_setsit(sd);
+		aFree(data);
 
 		//If the last autotrade is loaded, clear autotraders [Cydh]
 		if (i+1 >= autotrader_count)
@@ -554,6 +561,12 @@ void do_init_vending_autotrade( void ) {
 		// Init autotraders
 		CREATE(autotraders, struct s_autotrade *, autotrader_count);
 
+		if (autotraders == NULL) { //This is shouldn't happen [Cydh]
+			ShowError("Failed to initialize vending autotraders!\n");
+			Sql_FreeResult(mmysql_handle);
+			return;
+		}
+
 		// Init each autotrader data
 		i = 0;
 		while (SQL_SUCCESS == Sql_NextRow(mmysql_handle) && i < autotrader_count) {
@@ -579,12 +592,6 @@ void do_init_vending_autotrade( void ) {
 			i++;
 		}
 		Sql_FreeResult(mmysql_handle);
-
-		if (autotraders == NULL) { //This is shouldn't happen [Cydh]
-			ShowError("Failed to initialize autotraders!\n");
-			do_final_vending_autotrade();
-			return;
-		}
 
 		//Init items on vending list each autotrader
 		for (i = 0; i < autotrader_count; i++){
@@ -644,9 +651,7 @@ void do_init_vending_autotrade( void ) {
 * @author [Cydh]
 */
 void do_final_vending_autotrade(void) {
-	if (!autotrader_count || !autotraders)
-		return;
-	else {
+	if (autotrader_count && autotraders){
 		uint16 i = 0;
 		while (i < autotrader_count) { //Free the autotrader
 			if (autotraders[i] == NULL)

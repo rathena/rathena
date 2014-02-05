@@ -23,7 +23,7 @@ struct s_buyingstore
 };
 
 bool buyingstore_setup(struct map_session_data* sd, unsigned char slots);
-void buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned char result, const char* storename, const uint8* itemlist, unsigned int count);
+bool buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned char result, const char* storename, const uint8* itemlist, unsigned int count);
 void buyingstore_close(struct map_session_data* sd);
 void buyingstore_open(struct map_session_data* sd, int account_id);
 void buyingstore_trade(struct map_session_data* sd, int account_id, unsigned int buyer_id, const uint8* itemlist, unsigned int count);
