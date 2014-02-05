@@ -300,7 +300,7 @@ OnInit:
 		mf_nomemo,
 		mf_noteleport,
 //		mf_nopenalty, // disable exp loss
-//		mf_noreturn,
+		mf_noreturn,
 //		mf_nobranch,
 //		mf_nomobloot, // disable monster drop loots,
 //		mf_nomvploot, // 2 of these
