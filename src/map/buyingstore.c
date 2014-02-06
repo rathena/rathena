@@ -15,6 +15,8 @@
 #include "pc.h"  // struct map_session_data
 #include "chrif.h"
 
+#include <stdlib.h> // atoi
+
 /// Struct for buyingstore entry of autotrader
 struct s_autotrade_entry {
 	uint16 amount;
