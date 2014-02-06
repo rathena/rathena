@@ -4209,6 +4209,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				sflag |= SD_LEVEL; // -1 will be used in packets instead of the skill level
 			if( skill_area_temp[1] != bl->id && !(skill_get_inf2(skill_id)&INF2_NPC_SKILL) )
 				sflag |= SD_ANIMATION; // original target gets no animation (as well as all NPC skills)
+				
+			if ( tsc && tsc->data[SC_HOVERING] && ( skillid == LG_MOONSLASHER || skillid == SR_WINDMILL ) )
+				break;	// http://rathena.org/board/tracker/issue-7179-mechanic-hovering/
 
 			if (skill_id == RL_FLICKER) { //Skills that triggered by RL_FLICKER
 				tsc = status_get_sc(bl);
@@ -11999,15 +12002,16 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 
 	sc = status_get_sc(bl);
 
-	if (sc && (sc->data[SC_HOVERING]
-		|| (sc->option&OPTION_HIDE && sg->skill_id != WZ_HEAVENDRIVE && sg->skill_id != WL_EARTHSTRAIN )
-		))
-		return 0; //Hidden characters are immune to AoE skills except to these. [Skotlex]
-			//Under hovering characters are immune to trap and ground target skills.
+	if (sc && sc->option&OPTION_HIDE && sg->skill_id != WZ_HEAVENDRIVE && sg->skill_id != WL_EARTHSTRAIN && sg->skill_id != RA_ARROWSTORM )
+		return 0; //Hidden characters are immune to AoE skills except Heaven's Drive and Earth Strain. [Skotlex], Include Arrow Storm and Earth Grave.		
 
 	type = status_skill2sc(sg->skill_id);
 	sce = (sc && type != -1)?sc->data[type]:NULL;
 	skill_id = sg->skill_id; //In case the group is deleted, we need to return the correct skill id, still.
+	
+	if ( sc && sc->data[SC_HOVERING] && ( skillid != WZ_QUAGMIRE || skillid != SO_ELECTRICWALK || skillid !=SO_FIREWALK  || skillid != SO_VACUUM_EXTREME) )
+		return 0;	//http://rathena.org/board/tracker/issue-7179-mechanic-hovering/ hovering characters are immune to trap and ground target skills
+
 	switch (sg->unit_id) {
 		case UNT_SPIDERWEB:
 			if( sc && sc->data[SC_SPIDERWEB] && sc->data[SC_SPIDERWEB]->val1 > 0 ) {
@@ -12215,8 +12219,14 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 	tsd = BL_CAST(BL_PC, bl);
 	tsc = status_get_sc(bl);
 
-	if ( tsc && tsc->data[SC_HOVERING] )
-		return 0; //Under hovering characters are immune to trap and ground target skills.
+	if ( tsc && tsc->data[SC_HOVERING] ) {
+		switch ( skillid ) {
+		case HT_ANKLESNARE:		case HT_BLASTMINE:		case HT_CLAYMORETRAP:	case HT_FLASHER:		case HT_FREEZINGTRAP:
+		case HT_LANDMINE:		case HT_SANDMAN:		case HT_SKIDTRAP:		case HT_SHOCKWAVE:		 
+		case HW_GRAVITATION:		case SA_DELUGE:			case SA_VOLCANO:		case SA_VIOLENTGALE:
+			return 0; //Under hovering characters are immune to trap and ground target skills.
+		}
+	}
 
 	tstatus = status_get_status_data(bl);
 	type = status_skill2sc(sg->skill_id);
