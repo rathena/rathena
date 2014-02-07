@@ -18016,7 +18016,10 @@ void packetdb_readdb(void)
  *
  *------------------------------------------*/
 int do_init_clif(void) {
-	const char* colors[COLOR_MAX] = { "0xFF0000" };
+	const char* colors[COLOR_MAX] = {
+		"0xFF0000",
+		"0xFFFFFF",
+	};
 	int i;
 	/**
 	 * Setup Color Table (saves unnecessary load of strtoul on every call)

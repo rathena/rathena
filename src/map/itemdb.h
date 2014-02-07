@@ -428,7 +428,7 @@ struct item_data* itemdb_exists(int nameid);
 #define itemdb_viewid(n) (itemdb_search(n)->view_id)
 #define itemdb_autoequip(n) (itemdb_search(n)->flag.autoequip)
 #define itemdb_is_rune(n) ((n >= ITEMID_NAUTHIZ && n <= ITEMID_HAGALAZ) || n == ITEMID_LUX_ANIMA)
-#define itemdb_is_element(n) (n >= ITEMID_SCARLET_PTS && n <= ITEMID_SCARLET_PTS)
+#define itemdb_is_element(n) (n >= ITEMID_SCARLET_PTS && n <= ITEMID_LIME_GREEN_PTS)
 #define itemdb_is_spellbook(n) (n >= ITEMID_MAGIC_BOOK_FB && n <= ITEMID_MAGIC_BOOK_DL)
 #define itemdb_is_poison(n) (n >= ITEMID_PARALYSE && n <= ITEMID_VENOMBLEED)
 #define itemid_isgemstone(id) ( (id) >= ITEMID_YELLOW_GEMSTONE && (id) <= ITEMID_BLUE_GEMSTONE )
