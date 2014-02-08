@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Lupus
 //===== Last Updated: ========================================
-//= 20130905
+//= 20140208
 //===== Description: ========================================= 
 //= An example of an NPC with live dialogue.
 //= Note: This relies on Global_Functions.txt to run.
@@ -20,11 +20,16 @@ prontera,167,177,5	script	Luppy	1107,{
 	mes callfunc("F_Sex","What a beautiful lady!","What a handsome man!");
 
 	// Add some random greeting and goodbye into the menu
-	menu callfunc("F_Hi"),-, callfunc("F_Bye"),M_BYE;
+	if (select(callfunc("F_Hi"), callfunc("F_Bye")) != 1) {
+		mes "[Luppy]";
+		// Add some random goodbye from Global_Functions.txt
+		mes callfunc("F_Bye");
+		close;
+	}
 
 	mes "[Luppy]";
 	// Give a random prize from set list of items
-	if(@gotstuff){
+	if (@gotstuff){
 		// Again, say stuff according to player's gender
 		mes "I like "+callfunc("F_Sex","smiling ladies!","bloody pirates!");
 
@@ -34,21 +39,15 @@ prontera,167,177,5	script	Luppy	1107,{
 	}
 
 	// We set a temp var to give present just once. Player can get more by relogging.
-	set @gotstuff,1;
+	@gotstuff = 1;
 
 	// Get item ID from the list of presents: Apple, Mastela Fruit, Yggdrasil Seed or Orange Juice
-	set @itemIDfromList, callfunc("F_Rand",512,522,608,620);
+	.@itemIDfromList = callfunc("F_Rand",512,522,608,620);
 
 	// Again, say stuff according to player's gender
-	mes "Hey, "+callfunc("F_Sex","sister!","brother!")+" I have "+getitemname(@itemIDfromList)+" for you!";
+	mes "Hey, "+callfunc("F_Sex","sister!","brother!")+" I have "+getitemname(.@itemIDfromList)+" for you!";
 
 	// Get the item from the list
-	getitem @itemIDfromList,1;
-	close;
-
-M_BYE:
-	mes "[Luppy]";
-	// Add some random goodbye from Global_Functions.txt
-	mes callfunc("F_Bye");
+	getitem .@itemIDfromList,1;
 	close;
 }

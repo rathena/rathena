@@ -7021,7 +7021,7 @@ Example:
 
 *atoi("<string>")
 *axtoi("<string>")
-*strol("<string>", base)
+*strtol("<string>", base)
 
 These commands are used to convert strings to numbers. 'atoi' will interpret
 given string as a decimal number (base 10), while 'axtoi' interprets strings as

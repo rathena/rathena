@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20130325
+//= 20140208
 //===== Description: ========================================= 
 //= Contains commands needed for a guild warehouse NPC.
 //============================================================
@@ -15,30 +15,22 @@ prontera,165,188,4	script	Guild Warehouse	112,{
 	mes "This is the guild warehouse coupler service."; 
 	mes "You will not receive zeny for this is a test.";
 	next;
-	menu "Access Guild Warehouse", GS_OPEN, "Exit", GS_EXIT3;
+	if (select("Access Guild Warehouse","Exit") != 1) {
+		mes "[Guild Warehouser]";
+		mes "Come back whenever you want.";
+		cutin "kafra_06", 255;
+		close;
+	}
 
-GS_OPEN:
-	set @flag,guildopenstorage();
-	if(@flag == 1) goto GS_EXIT1;
-	if(@flag == 2) goto GS_EXIT2;
-	goto GS_EXIT4;
-
-GS_EXIT1:
-	mes "[Guild Warehouse]";
-	mes "The guild warehouse is being used right now.";
-	mes "Please wait a while, then come back.";
-	goto GS_EXIT4;
-
-GS_EXIT2:
-	mes "[Guild Warehouse]";
-	mes "You can't use this service if you're not in a guild!";
-	goto GS_EXIT4;
-
-GS_EXIT3:
-	mes "[Guild Warehouser]";
-	mes "Come back whenever you want.";
-
-GS_EXIT4:
+	.@flag = guildopenstorage;
+	if (.@flag == 1) {
+		mes "[Guild Warehouse]";
+		mes "The guild warehouse is being used right now.";
+		mes "Please wait a while, then come back.";
+	} else if (.@flag == 2) {
+		mes "[Guild Warehouse]";
+		mes "You can't use this service if you're not in a guild!";
+	}
 	cutin "kafra_06",255;
 	close;
 }

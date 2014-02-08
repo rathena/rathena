@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20121003
+//= 20140208
 //===== Description: ========================================= 
 //= Demonstrates the 'skill' command.
 //============================================================
@@ -17,15 +17,16 @@
 
 prontera,157,182,0	script	Skills	116,{
 	mes "What skill would you like?";
+	next;
 	switch(select("First Aid:Play Dead:Heal:None")) {
 	case 1:
-		skill 142,1,0;	// Permanently gives player level 1 First Aid
+		skill "NV_FIRSTAID",1,0;	// Permanently gives player level 1 First Aid
 		close;
 	case 2:
-		skill 143,1,0;	// Permanently gives player level 1 Play Dead
+		skill "NV_TRICKDEAD",1,0;	// Permanently gives player level 1 Play Dead
 		close;
 	case 3:
-		skill 28,3,1;	// Temporarily gives player level 3 Heal
+		skill "AL_HEAL",3,1;	// Temporarily gives player level 3 Heal
 		close;
 	case 4:
 		close;
