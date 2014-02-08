@@ -8520,7 +8520,7 @@
 18573,White_Feather,White Feather,4,20,,500,,2,,1,0xFFFFFFFF,63,2,256,,30,1,741,{ if(getrefine()<5){bonus bHit,20;bonus bMaxHPrate,-10;}else if(getrefine()<7){bonus bHit,10;}else if(getrefine()<9){bonus bHit,7;bonus bMaxHPrate,3;}else{bonus bHit,4;bonus bMaxHPrate,4;} },{},{}
 18574,Lord_of_Death,Lord of Death,4,20,,1000,,10,,1,0xFFFFFFFF,63,2,256,,70,1,742,{ bonus bMdef,5; bonus2 bAddClass,Class_Normal,(10+((getrefine()>4)?getrefine()-4:0)); bonus2 bSubClass,Class_Normal,-5; },{},{}
 18575,Wunderkammer,Wunderkammer,4,20,,500,,10,,1,0xFFFFFFFF,63,2,769,,20,0,743,{ bonus bMdef,10; },{},{}
-18576,YinYang_Earring,YinYang Earring,4,20,,100,,0,,0,0xFFFFFFFF,63,2,512,,50,0,744,{ bonus2 bSkillAtk,272,10; bonus2 bSkillAtk,263,5; bonus2 bSkillAtk,273,5; bonus2 bSkillUseSP,272,1; bonus2 bSkillUseSP,273,1; },{},{}
+18576,YinYang_Earring,YinYang Earring,4,20,,100,,0,,0,0xFFFFFFFF,63,2,512,,50,0,744,{ bonus2 bSkillAtk,"MO_CHAINCOMBO",10; bonus2 bSkillAtk,"MO_TRIPLEATTACK",5; bonus2 bSkillAtk,"MO_COMBOFINISH",5; bonus2 bSkillUseSP,"MO_CHAINCOMBO",1; bonus2 bSkillUseSP,"MO_COMBOFINISH",1; },{},{}
 18577,24_Bolt,24 Bolt,4,20,,200,,0,,0,0xFFFFFFFF,63,2,512,,10,0,696,{},{},{}
 18578,Helm_Of_Valor,Helm Of Valor,4,0,,0,,4,,0,0xFFFFFFFF,63,2,256,,0,0,258,{},{},{}
 18579,9th_Anni_Hat,9th Anni Hat,4,0,,90,,0,,0,0xFFFFFFFF,63,2,256,,0,1,745,{ bonus bMdef,9; },{},{}

@@ -4011,52 +4011,54 @@ int pc_search_inventory(struct map_session_data *sd,int item_id)
 	return ( i < MAX_INVENTORY ) ? i : -1;
 }
 
-/*==========================================
- * Attempt to add a new item to inventory.
- * Return:
-    0 = success
-    1 = invalid itemid not found or negative amount
-    2 = overweight
-    3 = ?
-    4 = no free place found
-    5 = max amount reached
-    6 = ?
-    7 = stack limitation
- *------------------------------------------*/
-int pc_additem(struct map_session_data *sd,struct item *item_data,int amount,e_log_pick_type log_type)
-{
-	struct item_data *data;
-	int i;
+/** Attempt to add a new item to player inventory
+ * @param sd
+ * @param item_data
+ * @param amount
+ * @param log_type
+ * @return
+ *   0 = success
+ *   1 = invalid itemid not found or negative amount
+ *   2 = overweight
+ *   3 = ?
+ *   4 = no free place found
+ *   5 = max amount reached
+ *   6 = ?
+ *   7 = stack limitation
+ */
+char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_pick_type log_type) {
+	struct item_data *id;
+	uint16 i;
 	unsigned int w;
 
 	nullpo_retr(1, sd);
-	nullpo_retr(1, item_data);
+	nullpo_retr(1, item);
 
-	if( item_data->nameid <= 0 || amount <= 0 )
+	if( item->nameid <= 0 || amount <= 0 )
 		return ADDITEM_INVALID;
 	if( amount > MAX_AMOUNT )
 		return ADDITEM_OVERAMOUNT;
 
-	data = itemdb_search(item_data->nameid);
+	id = itemdb_search(item->nameid);
 
-	if( data->stack.inventory && amount > data->stack.amount )
+	if( id->stack.inventory && amount > id->stack.amount )
 	{// item stack limitation
 		return ADDITEM_STACKLIMIT;
 	}
 
-	w = data->weight*amount;
+	w = id->weight*amount;
 	if(sd->weight + w > sd->max_weight)
 		return ADDITEM_OVERWEIGHT;
 
 	i = MAX_INVENTORY;
 
-	if( itemdb_isstackable2(data) && item_data->expire_time == 0 )
+	if( itemdb_isstackable2(id) && item->expire_time == 0 )
 	{ // Stackable | Non Rental
 		for( i = 0; i < MAX_INVENTORY; i++ )
 		{
-			if( sd->status.inventory[i].nameid == item_data->nameid && sd->status.inventory[i].bound == item_data->bound && memcmp(&sd->status.inventory[i].card, &item_data->card, sizeof(item_data->card)) == 0 )
+			if( sd->status.inventory[i].nameid == item->nameid && sd->status.inventory[i].bound == item->bound && memcmp(&sd->status.inventory[i].card, &item->card, sizeof(item->card)) == 0 )
 			{
-				if( amount > MAX_AMOUNT - sd->status.inventory[i].amount || ( data->stack.inventory && amount > data->stack.amount - sd->status.inventory[i].amount ) )
+				if( amount > MAX_AMOUNT - sd->status.inventory[i].amount || ( id->stack.inventory && amount > id->stack.amount - sd->status.inventory[i].amount ) )
 					return 5;
 				sd->status.inventory[i].amount += amount;
 				clif_additem(sd,i,amount,0);
@@ -4071,17 +4073,17 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount,e_l
 		if( i < 0 )
 			return ADDITEM_OVERITEM;
 
-		memcpy(&sd->status.inventory[i], item_data, sizeof(sd->status.inventory[0]));
+		memcpy(&sd->status.inventory[i], item, sizeof(sd->status.inventory[0]));
 		// clear equips field first, just in case
-		if( item_data->equip )
+		if( item->equip )
 			sd->status.inventory[i].equip = 0;
 
 		sd->status.inventory[i].amount = amount;
-		sd->inventory_data[i] = data;
+		sd->inventory_data[i] = id;
 		clif_additem(sd,i,amount,0);
 	}
 #ifdef NSI_UNIQUE_ID
-	if( !itemdb_isstackable2(data) && !item_data->unique_id )
+	if( !itemdb_isstackable2(id) && !item->unique_id )
 		sd->status.inventory[i].unique_id = itemdb_unique_id(0,0);
 #endif
 	log_pick_pc(sd, log_type, amount, &sd->status.inventory[i]);
@@ -4089,16 +4091,16 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount,e_l
 	sd->weight += w;
 	clif_updatestatus(sd,SP_WEIGHT);
 	//Auto-equip
-	if(data->flag.autoequip)
-		pc_equipitem(sd, i, data->equip);
+	if(id->flag.autoequip)
+		pc_equipitem(sd, i, id->equip);
 
 	/* rental item check */
-	if( item_data->expire_time ) {
-		if( time(NULL) > item_data->expire_time ) {
+	if( item->expire_time ) {
+		if( time(NULL) > item->expire_time ) {
 			clif_rental_expired(sd->fd, i, sd->status.inventory[i].nameid);
 			pc_delitem(sd, i, sd->status.inventory[i].amount, 1, 0, LOG_TYPE_OTHER);
 		} else {
-			int seconds = (int)( item_data->expire_time - time(NULL) );
+			int seconds = (int)( item->expire_time - time(NULL) );
 			clif_rental_time(sd->fd, sd->status.inventory[i].nameid, seconds);
 			pc_inventory_rental_add(sd, seconds);
 		}

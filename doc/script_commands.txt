@@ -4314,6 +4314,13 @@ Note: 'delitem' in an NPC script can still remove rental items.
 
 ---------------------------------------
 
+*rentitem2 <item id>,<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>;
+*rentitem2 "<item name>",<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>;
+
+
+
+---------------------------------------
+
 *makeitem <item id>,<amount>,"<map name>",<X>,<Y>;
 *makeitem "<item name>",<amount>,"<map name>",<X>,<Y>;
 
@@ -4330,6 +4337,13 @@ This item will still disappear just like any other dropped item. Like 'getitem',
 it also accepts an 'english name' field from the database and creates apples if 
 the name isn't found.
 If the map name is given as "this", the map the invoking character is on will be used.
+
+---------------------------------------
+
+*makeitem2 <item id>,<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>;
+*makeitem2 "<item name>",<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>;
+
+
 
 ---------------------------------------
 
