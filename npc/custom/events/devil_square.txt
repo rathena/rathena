@@ -227,6 +227,7 @@ ordeal_1-1,246,245,7	script	Devil Square Guardian#2	406,{
 ordeal_1-1	mapflag	nowarp
 ordeal_1-1	mapflag	nowarpto
 ordeal_1-1	mapflag	noteleport
+ordeal_1-1	mapflag	monster_noteleport
 ordeal_1-1	mapflag	nosave	SavePoint
 ordeal_1-1	mapflag	nomemo
 ordeal_1-1	mapflag	nobranch

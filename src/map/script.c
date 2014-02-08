@@ -14579,6 +14579,16 @@ BUILDIN_FUNC(sscanf){
 	argc = script_lastdata(st)-3;
 
 	len = strlen(format);
+
+
+	if (len != 0 && strlen(str) == 0) {
+		// If the source string is empty but the format string is not, we return -1
+		// according to the C specs. (if the format string is also empty, we shall
+		// continue and return 0: 0 conversions took place out of the 0 attempted.)
+		script_pushint(st, -1);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
 	CREATE(buf, char, len*2+1);
 
 	// Issue sscanf for each parameter
@@ -14649,10 +14659,7 @@ BUILDIN_FUNC(sscanf){
 		*(buf_p-len+1) = '*';
 	}
 
-	if( !strcmp(str, "") )
-		script_pushint(st, -1);
-	else
-		script_pushint(st, arg);
+	script_pushint(st, arg);
 	if(buf) aFree(buf);
 	if(ref_str) aFree(ref_str);
 
@@ -14920,6 +14927,29 @@ BUILDIN_FUNC(atoi)
 	const char *value;
 	value = script_getstr(st,2);
 	script_pushint(st,atoi(value));
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(axtoi)
+{
+	const char *hex = script_getstr(st,2);
+	long value = strtol(hex, NULL, 16);
+#if LONG_MAX > INT_MAX || LONG_MIN < INT_MIN
+	value = cap_value(value, INT_MIN, INT_MAX);
+#endif
+	script_pushint(st, (int)value);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(strtol)
+{
+	const char *string = script_getstr(st, 2);
+	int base = script_getnum(st, 3);
+	long value = strtol(string, NULL, base);
+#if LONG_MAX > INT_MAX || LONG_MIN < INT_MIN
+	value = cap_value(value, INT_MIN, INT_MAX);
+#endif
+	script_pushint(st, (int)value);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -15653,47 +15683,6 @@ BUILDIN_FUNC(searchitem)
 	}
 
 	script_pushint(st, count);
-	return SCRIPT_CMD_SUCCESS;
-}
-
-int axtoi(const char *hexStg)
-{
-	int n = 0;         // position in string
-	int16 m = 0;         // position in digit[] to shift
-	int count;         // loop index
-	int intValue = 0;  // integer value of hex string
-	int digit[11];      // hold values to convert
-	while (n < 10) {
-		if (hexStg[n]=='\0')
-			break;
-		if (hexStg[n] > 0x29 && hexStg[n] < 0x40 ) //if 0 to 9
-			digit[n] = hexStg[n] & 0x0f;            //convert to int
-		else if (hexStg[n] >='a' && hexStg[n] <= 'f') //if a to f
-			digit[n] = (hexStg[n] & 0x0f) + 9;      //convert to int
-		else if (hexStg[n] >='A' && hexStg[n] <= 'F') //if A to F
-			digit[n] = (hexStg[n] & 0x0f) + 9;      //convert to int
-		else break;
-		n++;
-	}
-	count = n;
-	m = n - 1;
-	n = 0;
-	while(n < count) {
-		// digit[n] is value of hex digit at position n
-		// (m << 2) is the number of positions to shift
-		// OR the bits into return value
-		intValue = intValue | (digit[n] << (m << 2));
-		m--;   // adjust the position to set
-		n++;   // next digit to process
-	}
-	return (intValue);
-}
-
-// [Lance] Hex string to integer converter
-BUILDIN_FUNC(axtoi)
-{
-	const char *hex = script_getstr(st,2);
-	script_pushint(st,axtoi(hex));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -17556,10 +17545,12 @@ BUILDIN_FUNC(get_githash) {
  **/
 BUILDIN_FUNC(freeloop) {
 
-	if( script_getnum(st,2) )
-		st->freeloop = 1;
-	else
-		st->freeloop = 0;
+	if( script_hasdata(st,2) ) {
+		if( script_getnum(st,2) )
+			st->freeloop = 1;
+		else
+			st->freeloop = 0;
+	}
 
 	script_pushint(st, st->freeloop);
 	return SCRIPT_CMD_SUCCESS;
@@ -18893,6 +18884,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(query_logsql,"s*"),
 	BUILDIN_DEF(escape_sql,"v"),
 	BUILDIN_DEF(atoi,"s"),
+	BUILDIN_DEF(strtol,"si"),
 	// [zBuffer] List of player cont commands --->
 	BUILDIN_DEF(rid2name,"i"),
 	BUILDIN_DEF(pcfollow,"ii"),
@@ -18992,7 +18984,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(is_function,"s"),
 	BUILDIN_DEF(get_revision,""),
 	BUILDIN_DEF(get_githash,""),
-	BUILDIN_DEF(freeloop,"i"),
+	BUILDIN_DEF(freeloop,"?"),
 	BUILDIN_DEF(getrandgroupitem,"ii?"),
 	BUILDIN_DEF(cleanmap,"s"),
 	BUILDIN_DEF2(cleanmap,"cleanarea","siiii"),
