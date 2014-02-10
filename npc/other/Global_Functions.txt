@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, kobra_k88
 //===== Current Version: ===================================== 
-//= 2.22
+//= 2.23
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: ========================================= 
@@ -45,6 +45,7 @@
 //=     Standardized descriptions, updated 'F_GetArmorType'.
 //= 2.21 Added format string to "F_InsertPlural" and more checks to "F_GetPlural". [Euphy]
 //= 2.22 Further improvements to "F_GetPlural". [Euphy]
+//= 2.23 Completed article function and added "F_GetArticle". [Euphy]
 //============================================================ 
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -458,14 +459,64 @@ function	script	F_InsertPlural	{
 
 
 //////////////////////////////////////////////////////////////////////////////////
-// Returns 'a' or 'an' based on a word - only follows basic rules, without exceptions!
+// Returns 'a' or 'an' based on a word.
+// -- callfunc "F_GetArticle","<noun>";
+// Examples:
+//    callfunc("F_GetArticle","Apple")  // returns "an"
+//    callfunc("F_GetArticle","dog")    // returns "a"
+//
+// Returns 'a' or 'an' based on a word, followed by the word.
 // -- callfunc "F_InsertArticle","<word>"{,<0:lowercase a/1:uppercase A>}
 // Examples:
-//    callfunc("F_InsertArticle","apple")  // returns "an apple"
+//    callfunc("F_InsertArticle","Apple")  // returns "an Apple"
 //    callfunc("F_InsertArticle","dog",1)  // returns "A dog"
 //////////////////////////////////////////////////////////////////////////////////
+function	script	F_GetArticle	{
+	set .@str$, strtolower(getarg(0));
+
+	// not a word
+	if (!charisalpha(.@str$,0))
+		return "a";
+
+	// 1-letter words
+	if (getstrlen(.@str$) == 1) {
+		if (strpos("aefhilmnorsx",.@str$) > -1)
+			return "an";
+		else
+			return "a";
+	}
+
+	// special cases
+	if (preg_match("(euler|hour(?!i)|heir|honest|hono)",.@str$))
+		return "an";
+
+	// consonants
+	if (preg_match("^[^aeiouy]",.@str$))
+		return "a";
+
+	// special vowel forms
+	if (preg_match("^e[uw]",.@str$) || preg_match("^onc?e\b",.@str$) || preg_match("^uni([^nmd]|mo)",.@str$) || preg_match("^u[bcfhjkqrst][aeiou]",.@str$))
+		return "a";
+	if (preg_match("^ut[th]",.@str$))
+		return "an";
+
+	// special capitals (rare)
+	//if (preg_match("^U[NK][AIEO]?",getarg(0)))
+	//	return "a";
+
+	// vowels
+	if (preg_match("^[aeiou]",.@str$))
+		return "an";
+
+	// y... (rare)
+	//if (preg_match("^(y(b[lor]|cl[ea]|fere|gg|p[ios]|rou|tt))",.@str$))
+	//	return "an";
+
+	return "a";
+}
 function	script	F_InsertArticle	{
-	return ((getarg(1,0)) ? "A" : "a") + ((compare("aeiou", charat(getarg(0),0))) ? "n " : " ") + getarg(0);
+	set .@article$, callfunc("F_GetArticle",getarg(0));
+	return sprintf("%s %s", ((getarg(1,0)) ? replacestr(.@article$,"a","A") : .@article$), getarg(0));
 }
 
 
@@ -494,7 +545,7 @@ function	script	F_InsertComma	{
 function	script	F_GetNumSuffix	{
 	set .@n, getarg(0);
 	set .@mod, .@n % 10;
-	if (.@mod == 1 && .@n != 11) return .@n+"st";
+	if      (.@mod == 1 && .@n != 11) return .@n+"st";
 	else if (.@mod == 2 && .@n != 12) return .@n+"nd";
 	else if (.@mod == 3 && .@n != 13) return .@n+"rd";
 	else return .@n+"th";

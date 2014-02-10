@@ -472,7 +472,7 @@ enum _sp {
 
 	SP_IGNORE_DEF_CLASS, SP_DEF_RATIO_ATK_CLASS, SP_ADDCLASS, SP_SUBCLASS, SP_MAGIC_ADDCLASS, //2062-2066
 	SP_WEAPON_COMA_CLASS, SP_IGNORE_MDEF_CLASS_RATE, SP_EXP_ADDCLASS, SP_ADD_CLASS_DROP_ITEM, //2067-2070
-	SP_ADD_CLASS_DROP_ITEMGROUP // 2071
+	SP_ADD_CLASS_DROP_ITEMGROUP, SP_ADDMAXWEIGHT  // 2071-2072
 };
 
 enum _look {
@@ -901,6 +901,8 @@ extern int db_use_sqldbs;
 extern Sql* mmysql_handle;
 extern Sql* logmysql_handle;
 
+extern char buyingstore_db[32];
+extern char buyingstore_items_db[32];
 extern char item_db_db[32];
 extern char item_db2_db[32];
 extern char item_db_re_db[32];

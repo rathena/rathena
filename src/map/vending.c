@@ -23,30 +23,36 @@
 #include <stdlib.h> // atoi
 #include <string.h>
 
-struct vending_entry{
+/// Struct for vending entry of autotrader
+struct s_autotrade_entry {
 	int cartinventory_id;
-	int amount;
+	uint16 amount;
 	int price;
-	int index;
+	uint16 index;
 };
 
-struct vending{
+/// Struct of autotrader
+struct s_autotrade {
 	int account_id;
 	int char_id;
 	int vendor_id;
 	int m;
-	int x;
-	int y;
+	uint16 x,
+		y;
 	unsigned char sex;
 	char title[MESSAGE_SIZE];
-	uint32 count;
-	struct vending_entry* entries;
+	uint16 count;
+	struct s_autotrade_entry **entries;
 	struct map_session_data *sd;
 };
 
 static int vending_nextid = 0; ///Vending_id counter
 static DBMap *vending_db; ///Db holder the vender : charid -> map_session_data
-static DBMap *autotrade_db;
+
+//Autotrader
+static struct s_autotrade **autotraders; ///Autotraders Storage
+static uint16 autotrader_count; ///Autotrader count
+static void do_final_vending_autotrade(void);
 
 /**
  * Lookup to get the vending_db outside module
@@ -291,29 +297,29 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
  *	data := {<index>.w <amount>.w <value>.l}[count]
  * @param count : number of different items
  */
-void vending_openvending(struct map_session_data* sd, const char* message, const uint8* data, int count) {
+bool vending_openvending(struct map_session_data* sd, const char* message, const uint8* data, int count) {
 	int i, j;
 	int vending_skill_lvl;
 	char message_sql[MESSAGE_SIZE*2];
 	
-	nullpo_retv(sd);
+	nullpo_retr(false,sd);
 
 	if ( pc_isdead(sd) || !sd->state.prevend || pc_istrading(sd))
-		return; // can't open vendings lying dead || didn't use via the skill (wpe/hack) || can't have 2 shops at once
+		return false; // can't open vendings lying dead || didn't use via the skill (wpe/hack) || can't have 2 shops at once
 
 	vending_skill_lvl = pc_checkskill(sd, MC_VENDING);
 	
 	// skill level and cart check
 	if( !vending_skill_lvl || !pc_iscarton(sd) ) {
 		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0);
-		return;
+		return false;
 	}
 
 	// check number of items in shop
 	if( count < 1 || count > MAX_VENDING || count > 2 + vending_skill_lvl )
 	{	// invalid item count
 		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0);
-		return;
+		return false;
 	}
 
 	// filter out invalid items
@@ -347,7 +353,7 @@ void vending_openvending(struct map_session_data* sd, const char* message, const
 
 	if( i == 0 ) { // no valid item found
 		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0); // custom reply packet
-		return;
+		return false;
 	}
 	sd->state.prevend = 0;
 	sd->state.vending = true;
@@ -357,7 +363,7 @@ void vending_openvending(struct map_session_data* sd, const char* message, const
 	
 	Sql_EscapeString( mmysql_handle, message_sql, sd->message );
 
-	if( Sql_Query( mmysql_handle, "INSERT INTO `%s`(`id`,`account_id`,`char_id`,`sex`,`map`,`x`,`y`,`title`,`autotrade`) VALUES( %d, %d, %d, '%c', '%s', %d, %d, '%s', %d );", vendings_db, sd->vender_id, sd->status.account_id, sd->status.char_id, sd->status.sex == 2 ? 'F' : 'M', map[sd->bl.m].name, sd->bl.x, sd->bl.y, message_sql, sd->state.autotrade ) != SQL_SUCCESS ){
+	if( Sql_Query( mmysql_handle, "INSERT INTO `%s`(`id`,`account_id`,`char_id`,`sex`,`map`,`x`,`y`,`title`,`autotrade`) VALUES( %d, %d, %d, '%c', '%s', %d, %d, '%s', %d );", vendings_db, sd->vender_id, sd->status.account_id, sd->status.char_id, sd->status.sex == 0 ? 'F' : 'M', map[sd->bl.m].name, sd->bl.x, sd->bl.y, message_sql, sd->state.autotrade ) != SQL_SUCCESS ){
 		Sql_ShowDebug(mmysql_handle);
 	}
 
@@ -371,6 +377,8 @@ void vending_openvending(struct map_session_data* sd, const char* message, const
 	clif_showvendingboard(&sd->bl,message,0);
 
 	idb_put(vending_db, sd->status.char_id, sd);
+
+	return true;
 }
 
 /**
@@ -453,188 +461,216 @@ bool vending_searchall(struct map_session_data* sd, const struct s_search_store_
 	return true;
 }
 
+/** Open vending for Autotrader
+* @param sd Player as autotrader
+*/
 void vending_reopen( struct map_session_data* sd ){
-	int i, count;
-	uint8 *data, *p;
-	uint16 *index, *amount;
-	uint32 *value;
-	struct vending *vending;
-	struct vending_entry *entry;
+	// Ready to open vending for this char
+	if ( sd && autotrader_count > 0 && autotraders){
+		uint16 i;
+		uint8 *data, *p;
+		uint16 j, count;
 
-	vending = (struct vending*)idb_get( autotrade_db, sd->status.char_id );
+		ARR_FIND(0,autotrader_count,i,autotraders[i] && autotraders[i]->char_id == sd->status.char_id);
+		if (i >= autotrader_count) {
+			return;
+		}
+		
+		// Init vending data for autotrader
+		CREATE(data, uint8, autotraders[i]->count * 8);
 
-	if( !vending ){
-		map_quit(sd);
-		return;
-	}
+		for (j = 0, p = data, count = autotraders[i]->count; j < autotraders[i]->count; j++) {
+			struct s_autotrade_entry *entry = autotraders[i]->entries[j];
+			uint16 *index = (uint16*)(p + 0);
+			uint16 *amount = (uint16*)(p + 2);
+			uint32 *value = (uint32*)(p + 4);
 
-	if( vending->count <= 0 ){
-		idb_remove( autotrade_db, sd->status.char_id );
-		aFree(vending->entries);
-		aFree(vending);
-		map_quit(sd);
-		return;
-	}
+			// Find item position in cart
+			ARR_FIND(0, MAX_CART, entry->index, sd->status.cart[entry->index].id == entry->cartinventory_id);
 
-	data = (uint8*)aMalloc( vending->count * 8 );
+			if (entry->index == MAX_CART) {
+				count--;
+				continue;
+			}
 
-	for( i = 0, p = data, count = vending->count; i < vending->count; i++ ){
-		entry = &vending->entries[i];
+			*index = entry->index + 2;
+			*amount = entry->amount;
+			*value = entry->price;
 
-		index = (uint16*)(p + 0);
-		amount = (uint16*)(p + 2);
-		value = (uint32*)(p + 4);
-
-		ARR_FIND( 0, MAX_CART, entry->index, sd->status.cart[entry->index].id == entry->cartinventory_id );
-
-		if( entry->index == MAX_CART ){
-			count--;
-			continue;
+			p += 8;
 		}
 
-		*index = entry->index + 2;
-		*amount = entry->amount;
-		*value = entry->price;
+		// Set him into a hacked prevend state
+		sd->state.prevend = 1;
 
-		p += 8;
+		// Open the vending again
+		if( vending_openvending(sd, autotraders[i]->title, data, count) ){
+			// Set him to autotrade
+			if (Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;",
+				vendings_db, sd->vender_id ) != SQL_SUCCESS )
+			{
+				Sql_ShowDebug( mmysql_handle );
+			}
+
+			// Make him look perfect
+			unit_setdir(&sd->bl,battle_config.feature_autotrade_direction);
+
+			if( battle_config.feature_autotrade_sit )
+				pc_setsit(sd);
+
+			ShowInfo("Loaded autotrade vending data for '"CL_WHITE"%s"CL_RESET"' with '"CL_WHITE"%d"CL_RESET"' items at "CL_WHITE"%s (%d,%d)"CL_RESET"\n",
+				sd->status.name,count,mapindex_id2name(sd->mapindex),sd->bl.x,sd->bl.y);
+		}else{
+			// Failed to open the vending, set him offline
+			ShowWarning("Failed to load autotrade vending data for '"CL_WHITE"%s"CL_RESET"' with '"CL_WHITE"%d"CL_RESET"' items\n", sd->status.name, count );
+
+			map_quit( sd );
+		}
+
+		aFree(data);
+
+		//If the last autotrade is loaded, clear autotraders [Cydh]
+		if (i+1 >= autotrader_count)
+			do_final_vending_autotrade();
 	}
-
-	if( !count ){
-		idb_remove( autotrade_db, sd->status.char_id );
-		aFree(vending->entries);
-		aFree(vending);
-		map_quit(sd);
-		return;
-	}
-
-	vending->count = count;
-
-	// Set him into a hacked prevend state
-	sd->state.prevend = 1;
-
-	// Open the shop again
-	vending_openvending( sd, vending->title, data, vending->count );
-
-	// Make him look perfect
-	unit_setdir(&sd->bl,battle_config.feature_autotrade_direction);
-
-	if( battle_config.feature_autotrade_sit ){
-		pc_setsit(sd);
-	}
-
-	idb_remove( autotrade_db, sd->status.char_id );
-
-	aFree(data);
-	aFree(vending->entries);
-	aFree(vending);
 }
 
-void do_init_vending_autotrade( void ){
-	if( battle_config.feature_autotrade ){
-		struct vending *autotraders;
-		struct vending *vending;
-		struct vending_entry *entry;
-		uint32 count;
-		int i, j;
+/**
+* Initializing autotraders from table
+*/
+void do_init_vending_autotrade( void ) {
+	if (battle_config.feature_autotrade) {
+		uint16 i, items = 0;
+		autotrader_count = 0;
 
-		if( Sql_Query(mmysql_handle, 
-			"SELECT `id`, `account_id`, `char_id`, `sex`, `map`, `x`, `y`, `title`"
-			"FROM `%s`"
-			"WHERE `autotrade` = 1;", vendings_db ) != SQL_SUCCESS ) {
+		// Get autotrader from table. `map`, `x`, and `y`, aren't used here
+		// Just read player that has data at vending_items [Cydh]
+		if (Sql_Query(mmysql_handle,
+			"SELECT `id`, `account_id`, `char_id`, `sex`, `title` "
+			"FROM `%s` "
+			"WHERE `autotrade` = 1 AND (SELECT COUNT(`vending_id`) FROM `%s` WHERE `vending_id` = `id`) > 0;",
+			vendings_db, vending_items_db ) != SQL_SUCCESS )
+		{
 			Sql_ShowDebug(mmysql_handle);
 			return;
 		}
 
-		count = (uint32)Sql_NumRows(mmysql_handle);
+		if( (autotrader_count = (uint32)Sql_NumRows(mmysql_handle)) > 0 ){
+			// Init autotraders
+			CREATE(autotraders, struct s_autotrade *, autotrader_count);
 
-		if( count <= 0 ){
-			return;
-		}
-
-		autotraders = (struct vending*)aMalloc( sizeof( struct vending ) * count );
-		i = 0;
-
-		while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) ) {
-			size_t len;
-			char* data;
-
-			vending = &autotraders[i];
-
-			Sql_GetData( mmysql_handle, 0, &data, NULL ); vending->vendor_id = atoi(data);
-			Sql_GetData( mmysql_handle, 1, &data, NULL ); vending->account_id = atoi(data);
-			Sql_GetData( mmysql_handle, 2, &data, NULL ); vending->char_id = atoi(data);
-			Sql_GetData( mmysql_handle, 3, &data, NULL ); vending->sex = data[0];
-			Sql_GetData( mmysql_handle, 4, &data, NULL ); vending->m = map_mapname2mapid( data );
-			Sql_GetData( mmysql_handle, 5, &data, NULL ); vending->x = atoi(data);
-			Sql_GetData( mmysql_handle, 6, &data, NULL ); vending->y = atoi(data);
-			Sql_GetData( mmysql_handle, 7, &data, &len ); safestrncpy( vending->title, data, min( len + 1, MESSAGE_SIZE ) );
-
-			vending->count = 0;
-
-			idb_put( autotrade_db, vending->char_id, vending );
-			
-			// initialize player
-			CREATE(vending->sd, TBL_PC, 1);
-
-			pc_setnewpc( vending->sd, vending->account_id, vending->char_id, 0, gettick(), vending->sex, 0 );
-
-			vending->sd->state.autotrade = 1;
-
-			chrif_authreq( vending->sd, true );
-
-			i++;
-		}
-
-		Sql_FreeResult( mmysql_handle );
-
-		for( i = 0; i < count; i++ ){
-			vending = &autotraders[i];
-
-			if( SQL_ERROR == Sql_Query(mmysql_handle, 
-				"SELECT `cartinventory_id`, `amount`, `price`"
-				"FROM `%s`"
-				"WHERE `vending_id` = %d "
-				"ORDER BY `index` ASC;", vending_items_db, vending->vendor_id ) ) {
-				Sql_ShowDebug(mmysql_handle);
+			if (autotraders == NULL) { //This is shouldn't happen [Cydh]
+				ShowError("Failed to initialize vending autotraders!\n");
+				Sql_FreeResult(mmysql_handle);
 				return;
 			}
 
-			vending->count = (uint32)Sql_NumRows(mmysql_handle);
-
-			if( vending->count <= 0 ){
-				// Player was not correctly deleted, must not be set online
-				idb_remove( autotrade_db, vending->char_id );
-				map_quit(vending->sd);
-				aFree(vending);
-				continue;
-			}
-		
-			vending->entries = (struct vending_entry*)aMalloc( sizeof( struct vending_entry ) * vending->count );
-			j = 0;
-
-			while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) ) {
+			// Init each autotrader data
+			i = 0;
+			while (SQL_SUCCESS == Sql_NextRow(mmysql_handle) && i < autotrader_count) {
+				size_t len;
 				char* data;
 
-				entry = &vending->entries[j];
-			
-				Sql_GetData( mmysql_handle, 0, &data, NULL ); entry->cartinventory_id = atoi(data);
-				Sql_GetData( mmysql_handle, 1, &data, NULL ); entry->amount = atoi(data);
-				Sql_GetData( mmysql_handle, 2, &data, NULL ); entry->price = atoi(data);
+				CREATE(autotraders[i], struct s_autotrade, 1);
 
-				j++;
+				Sql_GetData(mmysql_handle, 0, &data, NULL); autotraders[i]->vendor_id = atoi(data);
+				Sql_GetData(mmysql_handle, 1, &data, NULL); autotraders[i]->account_id = atoi(data);
+				Sql_GetData(mmysql_handle, 2, &data, NULL); autotraders[i]->char_id = atoi(data);
+				Sql_GetData(mmysql_handle, 3, &data, NULL); autotraders[i]->sex = (data[0] == 'F') ? 0 : 1;
+				Sql_GetData(mmysql_handle, 4, &data, &len); safestrncpy(autotraders[i]->title, data, min(len + 1, MESSAGE_SIZE));
+				autotraders[i]->count = 0;
+
+				// initialize player
+				CREATE(autotraders[i]->sd, struct map_session_data, 1);
+			
+				pc_setnewpc(autotraders[i]->sd, autotraders[i]->account_id, autotraders[i]->char_id, 0, gettick(), autotraders[i]->sex, 0);
+			
+				autotraders[i]->sd->state.autotrade = 1;
+				chrif_authreq(autotraders[i]->sd, true);
+				i++;
+			}
+			Sql_FreeResult(mmysql_handle);
+
+			//Init items on vending list each autotrader
+			for (i = 0; i < autotrader_count; i++){
+				struct s_autotrade *at = NULL;
+				uint16 j;
+
+				if (autotraders[i] == NULL)
+					continue;
+				at = autotraders[i];
+
+				if (SQL_ERROR == Sql_Query(mmysql_handle,
+					"SELECT `cartinventory_id`, `amount`, `price` "
+					"FROM `%s` "
+					"WHERE `vending_id` = %d "
+					"ORDER BY `index` ASC;", vending_items_db, at->vendor_id ) )
+				{
+					Sql_ShowDebug(mmysql_handle);
+					continue;
+				}
+
+				if (!(at->count = (uint32)Sql_NumRows(mmysql_handle))) {
+					map_quit(at->sd);
+					continue;
+				}
+			
+				//Init the list
+				CREATE(at->entries, struct s_autotrade_entry *,at->count);
+
+				//Add the item into list
+				j = 0;
+				while (SQL_SUCCESS == Sql_NextRow(mmysql_handle) && j < at->count) {
+					char* data;
+					CREATE(at->entries[j], struct s_autotrade_entry, 1);
+
+					Sql_GetData(mmysql_handle, 0, &data, NULL); at->entries[j]->cartinventory_id = atoi(data);
+					Sql_GetData(mmysql_handle, 1, &data, NULL); at->entries[j]->amount = atoi(data);
+					Sql_GetData(mmysql_handle, 2, &data, NULL); at->entries[j]->price = atoi(data);
+					j++;
+				}
+				items += j;
+				Sql_FreeResult(mmysql_handle);
 			}
 
-			Sql_FreeResult( mmysql_handle );
+			ShowStatus("Done loading '"CL_WHITE"%d"CL_RESET"' autotraders with '"CL_WHITE"%d"CL_RESET"' items.\n", autotrader_count, items);
 		}
-
-		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' autotraders.\n",count);
 	}
-	
+
 	// Everything is loaded fine, their entries will be reinserted once they are loaded
-	if( Sql_Query( mmysql_handle, "TRUNCATE TABLE `%s`;", vendings_db ) != SQL_SUCCESS ||
-		Sql_Query( mmysql_handle, "TRUNCATE TABLE `%s`;", vending_items_db ) != SQL_SUCCESS ){
+	if (Sql_Query( mmysql_handle, "DELETE FROM `%s`;", vendings_db ) != SQL_SUCCESS ||
+		Sql_Query( mmysql_handle, "DELETE FROM `%s`;", vending_items_db ) != SQL_SUCCESS)
+	{
 		Sql_ShowDebug(mmysql_handle);
-		return;
+	}
+}
+
+/**
+* Clear all autotraders
+* @author [Cydh]
+*/
+void do_final_vending_autotrade(void) {
+	if (autotrader_count && autotraders){
+		uint16 i = 0;
+		while (i < autotrader_count) { //Free the autotrader
+			if (autotraders[i] == NULL)
+				continue;
+			if (autotraders[i]->count) {
+				uint16 j = 0;
+				while (j < autotraders[i]->count) { //Free the autotrade entries
+					if (autotraders[i]->entries == NULL)
+						continue;
+					if (autotraders[i]->entries[j])
+						aFree(autotraders[i]->entries[j]);
+					j++;
+				}
+				aFree(autotraders[i]->entries);
+			}
+			aFree(autotraders[i]);
+			i++;
+		}
+		aFree(autotraders);
+		autotrader_count = 0;
 	}
 }
 
@@ -644,7 +680,7 @@ void do_init_vending_autotrade( void ){
  */
 void do_final_vending(void) {
 	db_destroy(vending_db);
-	db_destroy(autotrade_db);
+	do_final_vending_autotrade(); //Make sure everything is cleared [Cydh]
 }
 
 /**
@@ -653,6 +689,5 @@ void do_final_vending(void) {
  */
 void do_init_vending(void) {
 	vending_db = idb_alloc(DB_OPT_BASE);
-	autotrade_db = idb_alloc(DB_OPT_BASE);
 	vending_nextid = 0;
 }

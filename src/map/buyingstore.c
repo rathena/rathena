@@ -3,6 +3,7 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/db.h"  // ARR_FIND
+#include "../common/malloc.h" // aMalloc, aFree
 #include "../common/showmsg.h"  // ShowWarning
 #include "../common/socket.h"  // RBUF*
 #include "../common/strlib.h"  // safestrncpy
@@ -14,6 +15,34 @@
 #include "pc.h"  // struct map_session_data
 #include "chrif.h"
 
+#include <stdlib.h> // atoi
+
+/// Struct for buyingstore entry of autotrader
+struct s_autotrade_entry {
+	uint16 amount;
+	int price;
+	uint16 item_id;
+};
+
+/// Struct of autotrader
+struct s_autotrade {
+	int account_id;
+	int char_id;
+	int buyer_id;
+	int m;
+	uint16 x, y;
+	unsigned char sex;
+	char title[MESSAGE_SIZE];
+	int limit;
+	uint16 count;
+	struct s_autotrade_entry **entries;
+	struct map_session_data *sd;
+};
+
+//Autotrader
+static struct s_autotrade **autotraders; ///Autotraders Storage
+static uint16 autotrader_count; ///Autotrader count
+static void do_final_buyingstore_autotrade(void);
 
 /// constants (client-side restrictions)
 #define BUYINGSTORE_MAX_PRICE 99990000
@@ -80,20 +109,21 @@ bool buyingstore_setup(struct map_session_data* sd, unsigned char slots){
 }
 
 
-void buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned char result, const char* storename, const uint8* itemlist, unsigned int count)
+bool buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned char result, const char* storename, const uint8* itemlist, unsigned int count)
 {
 	unsigned int i, weight, listidx;
+	char message_sql[MESSAGE_SIZE*2];
 
 	if( !result || count == 0 )
 	{// canceled, or no items
-		return;
+		return false;
 	}
 
 	if( !battle_config.feature_buying_store || pc_istrading(sd) || sd->buyingstore.slots == 0 || count > sd->buyingstore.slots || zenylimit <= 0 || zenylimit > sd->status.zeny || !storename[0] )
 	{// disabled or invalid input
 		sd->buyingstore.slots = 0;
 		clif_buyingstore_open_failed(sd, BUYINGSTORE_CREATE, 0);
-		return;
+		return false;
 	}
 
 	if( !pc_can_give_items(sd) )
@@ -101,24 +131,24 @@ void buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 		sd->buyingstore.slots = 0;
 		clif_displaymessage(sd->fd, msg_txt(sd,246));
 		clif_buyingstore_open_failed(sd, BUYINGSTORE_CREATE, 0);
-		return;
+		return false;
 	}
 
 	if( sd->sc.data[SC_NOCHAT] && (sd->sc.data[SC_NOCHAT]->val1&MANNER_NOROOM) )
 	{// custom: mute limitation
-		return;
+		return false;
 	}
 
 	if( map[sd->bl.m].flag.novending )
 	{// custom: no vending maps
 		clif_displaymessage(sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
-		return;
+		return false;
 	}
 
 	if( map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOVENDING) )
 	{// custom: no vending cells
 		clif_displaymessage(sd->fd, msg_txt(sd,204)); // "You can't open a shop on this cell."
-		return;
+		return false;
 	}
 
 	weight = sd->weight;
@@ -174,14 +204,14 @@ void buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 	{// invalid item/amount/price
 		sd->buyingstore.slots = 0;
 		clif_buyingstore_open_failed(sd, BUYINGSTORE_CREATE, 0);
-		return;
+		return false;
 	}
 
 	if( (sd->max_weight*90)/100 < weight )
 	{// not able to carry all wanted items without getting overweight (90%)
 		sd->buyingstore.slots = 0;
 		clif_buyingstore_open_failed(sd, BUYINGSTORE_CREATE_OVERWEIGHT, weight);
-		return;
+		return false;
 	}
 
 	// success
@@ -190,8 +220,23 @@ void buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 	sd->buyingstore.zenylimit = zenylimit;
 	sd->buyingstore.slots = i;  // store actual amount of items
 	safestrncpy(sd->message, storename, sizeof(sd->message));
+
+	Sql_EscapeString( mmysql_handle, message_sql, sd->message );
+
+	if( Sql_Query( mmysql_handle, "INSERT INTO `%s`(`id`,`account_id`,`char_id`,`sex`,`map`,`x`,`y`,`title`,`limit`,`autotrade`) VALUES( %d, %d, %d, '%c', '%s', %d, %d, '%s', %d, %d );", buyingstore_db, sd->buyer_id, sd->status.account_id, sd->status.char_id, sd->status.sex == 0 ? 'F' : 'M', map[sd->bl.m].name, sd->bl.x, sd->bl.y, message_sql, sd->buyingstore.zenylimit, sd->state.autotrade ) != SQL_SUCCESS ){
+		Sql_ShowDebug(mmysql_handle);
+	}
+
+	for( i = 0; i < sd->buyingstore.slots; i++ ){
+		if( Sql_Query( mmysql_handle, "INSERT INTO `%s`(`buyingstore_id`,`index`,`item_id`,`amount`,`price`) VALUES( %d, %d, %d, %d, %d );", buyingstore_items_db, sd->buyer_id, i, sd->buyingstore.items[i].nameid, sd->buyingstore.items[i].amount, sd->buyingstore.items[i].price ) != SQL_SUCCESS ){
+			Sql_ShowDebug(mmysql_handle);
+		}
+	}
+
 	clif_buyingstore_myitemlist(sd);
 	clif_buyingstore_entry(sd);
+
+	return true;
 }
 
 
@@ -199,6 +244,15 @@ void buyingstore_close(struct map_session_data* sd)
 {
 	if( sd->state.buyingstore )
 	{
+		if( !sd->state.autotrade ){
+			if( 
+				Sql_Query( mmysql_handle, "DELETE FROM `%s` WHERE buyingstore_id = %d;", buyingstore_items_db, sd->buyer_id ) != SQL_SUCCESS ||
+				Sql_Query( mmysql_handle, "DELETE FROM `%s` WHERE `id` = %d;", buyingstore_db, sd->buyer_id ) != SQL_SUCCESS
+			){
+				Sql_ShowDebug(mmysql_handle);
+			}
+		}
+
 		// invalidate data
 		sd->state.buyingstore = false;
 		memset(&sd->buyingstore, 0, sizeof(sd->buyingstore));
@@ -370,6 +424,16 @@ void buyingstore_trade(struct map_session_data* sd, int account_id, unsigned int
 		pc_delitem(sd, index, amount, 1, 0, LOG_TYPE_BUYING_STORE);
 		pl_sd->buyingstore.items[listidx].amount-= amount;
 
+		if( pl_sd->buyingstore.items[listidx].amount > 0 ){
+			if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `amount` = %d WHERE `buyingstore_id` = %d AND `index` = %d;", buyingstore_items_db, pl_sd->buyingstore.items[listidx].amount, pl_sd->buyer_id, listidx ) != SQL_SUCCESS ){
+				Sql_ShowDebug( mmysql_handle );
+			}
+		}else{
+			if( Sql_Query( mmysql_handle, "DELETE FROM `%s` WHERE `buyingstore_id` = %d AND `index` = %d;", buyingstore_items_db, pl_sd->buyer_id, listidx ) != SQL_SUCCESS ){
+				Sql_ShowDebug( mmysql_handle );
+			}
+		}
+
 		// pay up
 		pc_payzeny(pl_sd, zeny, LOG_TYPE_BUYING_STORE, sd);
 		pc_getzeny(sd, zeny, LOG_TYPE_BUYING_STORE, pl_sd);
@@ -397,6 +461,10 @@ void buyingstore_trade(struct map_session_data* sd, int account_id, unsigned int
 	}
 	else
 	{// continue buying
+		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `limit` = %d WHERE `id` = %d;", buyingstore_db, pl_sd->buyingstore.zenylimit, pl_sd->buyer_id ) != SQL_SUCCESS ){
+			Sql_ShowDebug( mmysql_handle );
+		}
+
 		return;
 	}
 
@@ -474,4 +542,209 @@ bool buyingstore_searchall(struct map_session_data* sd, const struct s_search_st
 	}
 
 	return true;
+}
+
+/** Open buyingstore for Autotrader
+* @param sd Player as autotrader
+*/
+void buyingstore_reopen( struct map_session_data* sd ){
+	// Ready to open buyingstore for this char
+	if ( sd && autotrader_count > 0 && autotraders){
+		uint16 i;
+		uint8 *data, *p;
+		uint16 j, count;
+
+		ARR_FIND(0,autotrader_count,i,autotraders[i] && autotraders[i]->char_id == sd->status.char_id);
+		if (i >= autotrader_count) {
+			return;
+		}
+		
+		// Init buyingstore data for autotrader
+		CREATE(data, uint8, autotraders[i]->count * 8);
+
+		for (j = 0, p = data, count = autotraders[i]->count; j < autotraders[i]->count; j++) {
+			struct s_autotrade_entry *entry = autotraders[i]->entries[j];
+			uint16 *item_id = (uint16*)(p + 0);
+			uint16 *amount = (uint16*)(p + 2);
+			uint32 *price = (uint32*)(p + 4);
+
+			*item_id = entry->item_id;
+			*amount = entry->amount;
+			*price = entry->price;
+
+			p += 8;
+		}
+
+		// Open the buyingstore again
+		if( buyingstore_setup( sd, (unsigned char)autotraders[i]->count ) &&
+			buyingstore_create( sd, autotraders[i]->limit, 1, autotraders[i]->title, data, autotraders[i]->count ) )
+		{
+			ShowInfo("Loaded autotrade buyingstore data for '"CL_WHITE"%s"CL_RESET"' with '"CL_WHITE"%d"CL_RESET"' items at "CL_WHITE"%s (%d,%d)"CL_RESET"\n",
+				sd->status.name,count,mapindex_id2name(sd->mapindex),sd->bl.x,sd->bl.y);
+
+			// Set him to autotrade
+			if (Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;",
+				buyingstore_db, sd->buyer_id ) != SQL_SUCCESS )
+			{
+				Sql_ShowDebug( mmysql_handle );
+			}
+
+			// Make him look perfect
+			unit_setdir(&sd->bl,battle_config.feature_autotrade_direction);
+
+			if( battle_config.feature_autotrade_sit )
+				pc_setsit(sd);
+		}else{
+			// Failed to open the buyingstore, set him offline
+			ShowWarning("Failed to load autotrade buyingstore data for '"CL_WHITE"%s"CL_RESET"' with '"CL_WHITE"%d"CL_RESET"' items\n", sd->status.name, count );
+
+			map_quit( sd );
+		}
+
+		aFree(data);
+
+		//If the last autotrade is loaded, clear autotraders [Cydh]
+		if (i+1 >= autotrader_count)
+			do_final_buyingstore_autotrade();
+	}
+}
+
+/**
+* Initializing autotraders from table
+*/
+void do_init_buyingstore_autotrade( void ) {
+	if(battle_config.feature_autotrade) {
+		uint16 i, items = 0;
+		autotrader_count = 0;
+
+		// Get autotrader from table. `map`, `x`, and `y`, aren't used here
+		// Just read player that has data at buyingstore_items [Cydh]
+		if (Sql_Query(mmysql_handle,
+			"SELECT `id`, `account_id`, `char_id`, `sex`, `title`, `limit` "
+			"FROM `%s` "
+			"WHERE `autotrade` = 1 AND `limit` > 0 AND (SELECT COUNT(`buyingstore_id`) FROM `%s` WHERE `buyingstore_id` = `id`) > 0;",
+			buyingstore_db, buyingstore_items_db ) != SQL_SUCCESS )
+		{
+			Sql_ShowDebug(mmysql_handle);
+			return;
+		}
+
+		if( (autotrader_count = (uint32)Sql_NumRows(mmysql_handle)) > 0 ){
+			// Init autotraders
+			CREATE(autotraders, struct s_autotrade *, autotrader_count);
+
+			if (autotraders == NULL) { //This is shouldn't happen [Cydh]
+				ShowError("Failed to initialize buyingstore autotraders!\n");
+				Sql_FreeResult(mmysql_handle);
+				return;
+			}
+
+			// Init each autotrader data
+			i = 0;
+			while (SQL_SUCCESS == Sql_NextRow(mmysql_handle) && i < autotrader_count) {
+				size_t len;
+				char* data;
+
+				CREATE(autotraders[i], struct s_autotrade, 1);
+
+				Sql_GetData(mmysql_handle, 0, &data, NULL); autotraders[i]->buyer_id = atoi(data);
+				Sql_GetData(mmysql_handle, 1, &data, NULL); autotraders[i]->account_id = atoi(data);
+				Sql_GetData(mmysql_handle, 2, &data, NULL); autotraders[i]->char_id = atoi(data);
+				Sql_GetData(mmysql_handle, 3, &data, NULL); autotraders[i]->sex = (data[0] == 'F') ? 0 : 1;
+				Sql_GetData(mmysql_handle, 4, &data, &len); safestrncpy(autotraders[i]->title, data, min(len + 1, MESSAGE_SIZE));
+				Sql_GetData(mmysql_handle, 5, &data, NULL); autotraders[i]->limit = atoi(data);
+				autotraders[i]->count = 0;
+
+				// initialize player
+				CREATE(autotraders[i]->sd, struct map_session_data, 1);
+			
+				pc_setnewpc(autotraders[i]->sd, autotraders[i]->account_id, autotraders[i]->char_id, 0, gettick(), autotraders[i]->sex, 0);
+			
+				autotraders[i]->sd->state.autotrade = 1;
+				chrif_authreq(autotraders[i]->sd, true);
+				i++;
+			}
+			Sql_FreeResult(mmysql_handle);
+
+			//Init items on vending list each autotrader
+			for (i = 0; i < autotrader_count; i++){
+				struct s_autotrade *at = NULL;
+				uint16 j;
+
+				if (autotraders[i] == NULL)
+					continue;
+				at = autotraders[i];
+
+				if (SQL_ERROR == Sql_Query(mmysql_handle,
+					"SELECT `item_id`, `amount`, `price` "
+					"FROM `%s` "
+					"WHERE `buyingstore_id` = %d "
+					"ORDER BY `index` ASC;", buyingstore_items_db, at->buyer_id ) )
+				{
+					Sql_ShowDebug(mmysql_handle);
+					continue;
+				}
+
+				if (!(at->count = (uint32)Sql_NumRows(mmysql_handle))) {
+					map_quit(at->sd);
+					continue;
+				}
+			
+				//Init the list
+				CREATE(at->entries, struct s_autotrade_entry *,at->count);
+
+				//Add the item into list
+				j = 0;
+				while (SQL_SUCCESS == Sql_NextRow(mmysql_handle) && j < at->count) {
+					char* data;
+					CREATE(at->entries[j], struct s_autotrade_entry, 1);
+
+					Sql_GetData(mmysql_handle, 0, &data, NULL); at->entries[j]->item_id = atoi(data);
+					Sql_GetData(mmysql_handle, 1, &data, NULL); at->entries[j]->amount = atoi(data);
+					Sql_GetData(mmysql_handle, 2, &data, NULL); at->entries[j]->price = atoi(data);
+					j++;
+				}
+				items += j;
+				Sql_FreeResult(mmysql_handle);
+			}
+
+			ShowStatus("Done loading '"CL_WHITE"%d"CL_RESET"' autotraders with '"CL_WHITE"%d"CL_RESET"' items.\n", autotrader_count, items);
+		}
+	}
+
+	// Everything is loaded fine, their entries will be reinserted once they are loaded
+	if (Sql_Query( mmysql_handle, "DELETE FROM `%s`;", buyingstore_db ) != SQL_SUCCESS ||
+		Sql_Query( mmysql_handle, "DELETE FROM `%s`;", buyingstore_items_db ) != SQL_SUCCESS)
+	{
+		Sql_ShowDebug(mmysql_handle);
+	}
+}
+
+/**
+* Clear all autotraders
+* @author [Cydh]
+*/
+void do_final_buyingstore_autotrade(void) {
+	if (autotrader_count && autotraders){
+		uint16 i = 0;
+		while (i < autotrader_count) { //Free the autotrader
+			if (autotraders[i] == NULL)
+				continue;
+			if (autotraders[i]->count) {
+				uint16 j = 0;
+				while (j < autotraders[i]->count) { //Free the autotrade entries
+					if (autotraders[i]->entries == NULL)
+						continue;
+					if (autotraders[i]->entries[j])
+						aFree(autotraders[i]->entries[j]);
+					j++;
+				}
+				aFree(autotraders[i]->entries);
+			}
+			aFree(autotraders[i]);
+			i++;
+		}
+		aFree(autotraders);
+		autotrader_count = 0;
+	}
 }

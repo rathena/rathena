@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20070315
+//= 20140208
 //===== Description: ========================================= 
 //= Example of a localized NPC.
 //= 
@@ -37,7 +37,7 @@
 /// Sets the language of the player account.
 /// @param langid	Languange identifier (0 for default)
 function	script	setlang	{
-	set ##_langid_, getarg(0);
+	##_langid_ = getarg(0);
 	return;
 }
 
@@ -54,15 +54,15 @@ function	script	getlang	{
 /// @param langid	Language identifier (0 for default)
 /// @param text	Text message
 function	script	setmes2	{
-	set $@mes2_name$, getarg(0);
-	set $@mes2_langid, getarg(1);
-	set $@mes2_text$, getarg(2);
-	set $@mes2_var$, "$@__"+ $@mes2_name$ +"_"+ $@mes2_langid +"$";
+	.@mes2_name$  = getarg(0);
+	.@mes2_langid = getarg(1);
+	.@mes2_text$  = getarg(2);
+	.@mes2_var$   = "$@__"+ .@mes2_name$ +"_"+ .@mes2_langid +"$";
 
-	//debugmes "setmes2 \""+ $@mes2_var$ +"\", \""+ $@mes2_text$ +"\";";
+	//debugmes "setmes2 \""+ .@mes2_var$ +"\", \""+ .@mes2_text$ +"\";";
 
 	// set the localized text
-	setd $@mes2_var$, $@mes2_text$;
+	setd .@mes2_var$, .@mes2_text$;
 	return;
 }
 
@@ -73,14 +73,14 @@ function	script	setmes2	{
 /// @param langid	Language identifier (0 for default)
 /// @return	Text message
 function	script	getmes2	{
-	set $@mes2_name$, getarg(0);
-	set $@mes2_langid, getarg(1);
-	set $@mes2_var$, "$@__"+ $@mes2_name$ +"_"+ $@mes2_langid +"$";
-	set $@mes2_text$, getd($@mes2_var$);
+	.@mes2_name$  = getarg(0);
+	.@mes2_langid = getarg(1);
+	.@mes2_var$   = "$@__"+ .@mes2_name$ +"_"+ .@mes2_langid +"$";
+	.@mes2_text$  = getd(.@mes2_var$);
 
-	//debugmes "getmes2(\""+ $@mes2_var$ +"\")=\""+ $@mes2_text$ +"\"";
+	//debugmes "getmes2(\""+ .@mes2_var$ +"\")=\""+ .@mes2_text$ +"\"";
 
-	return $@mes2_text$;
+	return .@mes2_text$;
 }
 
 //////////////////////////////////////////////////////////////
@@ -89,23 +89,22 @@ function	script	getmes2	{
 /// that are valis as a variable name
 /// @param index	Message identifier
 function	script	mes2	{
-	set @mes2_index$, getarg(0);
+	.@mes2_index$ = getarg(0);
 
-	if( getstrlen(@mes2_index$) == 0 )
+	if( getstrlen(.@mes2_index$) == 0 )
 		return; // invalid index
 
 	// print localized text
-	set @mes2_text$, callfunc("getmes2",@mes2_index$,##_langid_);
-	if( getstrlen(@mes2_text$) == 0 )
-	{
-		if( ##_langid_ != 0 )
-		{// revert to default language
-			set @mes2_text$, callfunc("getmes2",@mes2_index$,0);
-			if( getstrlen(@mes2_text$) != 0 )
-				mes @mes2_text$; // default text
+	.@mes2_text$ = callfunc("getmes2",.@mes2_index$,##_langid_);
+	if( getstrlen(.@mes2_text$) == 0 ) {
+		if( ##_langid_ != 0 ) {
+			// revert to default language
+			.@mes2_text$ = callfunc("getmes2",.@mes2_index$,0);
+			if( getstrlen(.@mes2_text$) != 0 )
+				mes .@mes2_text$; // default text
 		}
 	} else
-		mes @mes2_text$; // localized text
+		mes .@mes2_text$; // localized text
 	return;
 }
 
@@ -113,8 +112,8 @@ function	script	mes2	{
 /// Sample localized NPC
 prontera,155,183,4	script	LocalizedNPC	705,{
 	// Get text for specific languages
-	set @menu1$, callfunc("getmes2","LNPC_lang",0);
-	set @menu2$, callfunc("getmes2","LNPC_lang",1);
+	.@menu1$ = callfunc("getmes2","LNPC_lang",0);
+	.@menu2$ = callfunc("getmes2","LNPC_lang",1);
 	do {
 		// get text that fallbacks to language 0
 		callfunc "mes2", "LNPC_name";
@@ -123,7 +122,7 @@ prontera,155,183,4	script	LocalizedNPC	705,{
 		callfunc "mes2", "LNPC_text";
 		next;
 
-		switch(select(@menu1$,@menu2$,"Cancel"))
+		switch(select(.@menu1$,.@menu2$,"Cancel"))
 		{
 			case 1:
 			case 2:
@@ -144,6 +143,6 @@ OnInterIfInitOnce:
 	callfunc "setmes2", "LNPC_lang", 0, "EN";
 	callfunc "setmes2", "LNPC_lang", 1, "PT";
 	callfunc "setmes2", "LNPC_text", 0, "Something in english";
-	callfunc "setmes2", "LNPC_text", 1, "Algo em portugu�s";
+	callfunc "setmes2", "LNPC_text", 1, "Algo em português";
 	end;
 }

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20140113
+//= 20140208
 //===== Description: =========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -1241,10 +1241,10 @@ Examples:
 	getvariableofnpc(.var,"TargetNPC");
 	
 //This will set the .v variable to the value of the TargetNPC's .var variable.
-	set .v,getvariableofnpc(.var,"TargetNPC");
+	set .v, getvariableofnpc(.var,"TargetNPC");
 	
 //This will set the .var variable of TargetNPC to 1.
-	set getvariableofnpc(.var,"TargetNPC"),1;
+	set getvariableofnpc(.var,"TargetNPC"), 1;
 
 Note: even though function objects can have .variables, 
 getvariableofnpc will not work on them.
@@ -1324,11 +1324,11 @@ to leave any gaps. Normally, you do it with a loop and an extra counter, like
 this:
 
 	setarray @possiblemenuitems$[0],<list of potential menu items>;
-	set @j,0; // That's the menu lines counter.
+	@j = 0; // That's the menu lines counter.
 	
 	// We loop through the list of possible menu items.
 	// @i is our loop counter.
-	for( set @i,0; @i<getarraysize(@possiblemenuitems$) ; set @i,@i+1 )
+	for( @i = 0; @i < getarraysize(@possiblemenuitems$); @i++ )
 	{
 		// That 'condition' is whatever condition that determines whether 
 		// a menu item number @i actually goes into the menu or not.
@@ -1337,17 +1337,17 @@ this:
 		{
 			// We record the option into the list of options actually available.
 			
-			set @menulist$[@j],@possiblemenuitems$[@i];
+			@menulist$[@j] = @possiblemenuitems$[@i];
 			
 			// We just copied the string, we do need its number for later 
 			// though, so we record it as well.
 			
-			set @menureference[@j],@i;
+			@menureference[@j] = @i;
 			
 			// Since we've just added a menu item into the list, we increment 
 			// the menu lines counter.
 			
-			set @j,@j+1;
+			@j++;
 		}
 		
 		// We go on to the next possible menu item.
@@ -1400,7 +1400,7 @@ probably since that wasn't documented anywhere.
 See also 'select', which is probably better in this particular case. Instead of 
 menu, you could use 'select' like this:
 
-    set @dummy,select(@menulist$[0],@menulist$[1],....@menulist$[<X>]);
+    @dummy = select(@menulist$[0],@menulist$[1],....@menulist$[<X>]);
     
 For the purposes of the technique described above these two statements are 
 perfectly equivalent.
@@ -1437,16 +1437,13 @@ function:
 	mes "Try and guess the number I am thinking of.";
 	mes "The number will be between 1 and 10.";
 	next;
-	set @number, rand(1,10);
-	input @guess;
-	if(@guess==@number)
-	{
+	.@number = rand(1,10);
+	input .@guess;
+	if (.@guess == .@number) {
 		mes "[Woman]";
-		mes "Well done that was the number I was thinking of";
+		mes "Well done, that was the number I was thinking of!";
 		close;
-	}
-	else
-	{
+	} else {
 		mes "[Woman]";
 		mes "Sorry, that wasn't the number I was thinking of.";
 		close;
@@ -1458,17 +1455,14 @@ allow the player to enter text. Otherwise, only numbers will be allowed.
 	mes "[Woman]";
 	mes "Please say HELLO";
 	next;
-	input @var$;
-	if(@var$=="HELLO")
-	{
+	input .@var$;
+	if (.@var$ == "HELLO") {
 		mes "[Woman]";
-		mes "Well done you typed it correctly";
+		mes "Well done, you typed it correctly.";
 		close;
-	}
-	else
-	{
+	} else {
 		mes "[Woman]";
-		mes "Sorry you got it wrong";
+		mes "Sorry, you got it wrong.";
 		close;
 	}
 
@@ -1496,16 +1490,16 @@ the place that called it.
 
 	place,50,50,6%TAB%script%TAB%Woman%TAB%115,{
 		mes "[Woman]"
-		mes "Lets see if you win";
+		mes "Let's see if you win...";
 		callfunc "funcNPC";
-		mes "Well done you have won";
+		mes "Well done, you have won!";
 		close;
 	}
 	function%TAB%script%TAB%funcNPC%TAB%{
-		set @win, rand(2);
-		if(@win==0) return;
-		mes "Sorry you lost";
-		end;
+		.@win = rand(2);
+		if (.@win == 0) return;
+		mes "Sorry, you lost.";
+		close;
 	}
 
 You can pass arguments to your function - values telling it what exactly to do -
@@ -1600,7 +1594,7 @@ S_DunWarp:
 // getarg(1) = x
 // getarg(2) = y
 	if (Zeny >= 100) {
-		set Zeny, Zeny-100;
+		Zeny -= 100;
 		warp getarg(0),getarg(1),getarg(2);
 	} else {
 		mes "Dungeon warp costs 100 Zeny.";
@@ -1622,24 +1616,26 @@ If no such argument was given, a zero is returned.
 
 	place,50,50,6%TAB%script%TAB%Woman1%TAB%115,{
 		mes "[Woman]";
-		mes "Lets see if you win";
+		mes "Let's see if you win...";
 		callfunc "funcNPC",2;
-		mes "Well done you have won";
-
-	...
+		mes "Well done, you have won!";
+		close;
+	}
 
 	place,52,50,6%TAB%script%TAB%Woman2%TAB%115,{
 		mes "[Woman]";
-		mes "Lets see if you win";
+		mes "Let's see if you win...";
 		callfunc "funcNPC",5;
-		mes "Well done you have won";
-
-	...
+		mes "Well done, you have won!";
+		close;
+	}
 
 	function%TAB%script%TAB%funcNPC%TAB%{
-		set @win, rand(getarg(0));
-		if(@win==0) return;
-		mes "Sorry you lost";
+		.@win = rand(getarg(0));
+		if (.@win == 0) return;
+		mes "Sorry, you lost.";
+		close;
+	|
 
 "woman1" NPC object calls the funcNPC. The argument it gives in this call is 
 stated as 2, so when the random number is generated by the 'rand' function, it 
@@ -1672,7 +1668,7 @@ Example:
 	callfunc "funcNPC",5,4,3;
 	...
 	function%TAB%script%TAB%funcNPC%TAB%{
-		set .@count, getargcount(); // 3
+		.@count = getargcount(); // 3
 		...
 	}
 
@@ -1732,7 +1728,7 @@ prontera,154,189,4	script	Item Seller	767,{
 		mes "Would you like to buy a phracon for 50z?";
 		next;
 		if(select("Yes","No, thanks") == 1) {
-			set Zeny, Zeny-50;
+			Zeny -= Zeny;
 			getitem 1010,1;
 			mes "Thank you!";
 		}
@@ -1775,8 +1771,8 @@ Example:
 	}
 
 	-	script	test	-1,{
-		set .@try, is_function("try"); // 1
-		set .@not, is_function("not"); // 0
+		.@try = is_function("try"); // 1
+		.@not = is_function("not"); // 0
 	}
 
 ---------------------------------------
@@ -1808,108 +1804,106 @@ More examples of using the 'if' command in the real world:
 
 Example 1:
 
-        set @var1,1;
-        input @var2;
-        if(@var1==@var2) goto L_Same;
-        mes "Sorry that is wrong";
-        close;
-    L_Same:
+	.@answer = 1;
+	input .@input;
+	if (.@input == .@answer)
+		close;
+	mes "Sorry, your answer is incorrect.";
         close;
 
 Example 2:
     
-    set @var1,1;
-    input @var2;
-    if(@var1!=@var2) mes "Sorry that is wrong";
-    close;
+	.@answer = 1;
+	input .@input;
+	if (.@input != .@answer)
+		mes "Sorry, your answer is incorrect.";
+	close;
 
-(Notice examples 1 and 2 have the same effect.)
+Notice that examples 1 and 2 have the same effect.
 
 Example 3:
 
-    set @var1,@var1+1;
-    mes "[Forgetfull Man]";
-    if (@var==1) mes "This is the first time you have talked to me";
-    if (@var==2) mes "This is the second time you have talked to me";
-    if (@var==3) mes "This is the third time you have talked to me";
-    if (@var==4) mes "This is the forth time you have talked to me, but I think I am getting amnesia, I have forgotten about you";
-    if (@var==4) set @var,0;
-    close;
+	@count++;
+	mes "[Forgetful Man]";
+	if (@count == 1) mes "This is the first time you have talked to me.";
+	if (@count == 2) mes "This is the second time you have talked to me.";
+	if (@count == 3) mes "This is the third time you have talked to me.";
+	if (@count == 4) {
+		mes "This is the fourth time you have talked to me.";
+		mes "I think I am getting amnesia, I have forgotten about you...";
+		@count = 0;
+	}
+	close;
 
 Example 4:
 
-        mes "[Quest Person]";
-        if(countitem(512)>=1) goto L_GiveApple;
-        // The number 512 was found from item_db, it is the item number for the Apple.
-        mes "Can you please bring me an apple?";
-        close;
-    L_GiveApple:
-        mes "Oh an apple, I didn't want it, I just wanted to see one";
-        close;
+	mes "[Quest Person]";
+	if (countitem(512) < 1) {  // 512 is the item ID for Apple, found in item_db
+		mes "Can you please bring me an apple?";
+		close;
+	}
+        mes "Oh, you brought an Apple!";
+	mes "I didn't want it, I just wanted to see one.";
+	close;
 
 Example 5:
 
-        mes "[Person Checker]";
-        if($name$!=null) goto L_Check;
-        mes "Please tell me someones name";
-        next;
-        input $name$;
-        set $name2$,strcharinfo(0);
-        mes "[Person Checker]";
-        mes "Thank you";
-    L_Check:
-        if($name$==strcharinfo(0) ) goto L_SameName;
-        mes "[Person Checker]";
-        mes "You are not the person that " +$name2$+ " mentioned";
-    L_End:
-        set $name$,null;
-        set $name2$,null;
-        close;
-    L_SameName:
-        mes "[Person Checker]";
-        mes "You are the person that " +$name2$+ " just mentioned";
-        mes "nice to meet you";
-        goto L_End;
+	mes "[Person Checker]";
+	if ($@name$ == "") {  // global variable not yet set
+		mes "Please tell me someones name";
+		next;
+		input $@name$;
+		$@name2$ = strcharinfo(0);
+		mes "[Person Checker]";
+		mes "Thank you.";
+		close;
+	}
+	if ($@name$ == strcharinfo(0)) {  // player name matches $@name$
+		mes "You are the person that " +$@name2$+ " just mentioned.";
+		mes "Nice to meet you!";
 
-See 'strcharinfo' for explanation of what this function does.
+		// reset the global variables
+		$@name$ = "";
+		$@name2$ = "";
+
+		close;
+	}
+	mes "You are not the person that " +$name2$+ " mentioned.";
+	close;
+
+See 'strcharinfo' for an explanation of what this function does.
 
 Example 6: Using complex conditions.
 
-        mes "[Multi Checker]";
-        if( (@queststarted==1) && (countitem(512)>=5) ) goto L_MultiCheck;
-        // Only if the quest has been started AND You have 5 apples will it goto "L_MultiCheck"
-        mes "Please get me 5 apples";
-        set @queststarted,1;
-        close;
-    L_MultiCheck:
-        mes "[Multi Checker]";
-        mes "Well done you have started the quest of got me 5 apples";
-        mes "Thank you";
-        set @queststarted,0;
-        delitem 512,5;
-        close;
+	mes "[Multiple Checks]";
+	if ( (@queststarted == 1) && (countitem(512) >= 5) ) {
+		mes "Well done, you have started the quest and brought me 5 Apples.";
+		@queststarted = 0;
+		delitem 512,5;
+		close;
+	}
+	mes "Please bring me 5 apples.";
+	@queststarted = 1;
+	close;
 
-With the Advanced scripting engine, we got nested if's. That is:
+The script engine also supports nested 'if' statements:
 
-if (<condition>)
-	dothis;
-else
-	dothat;
-	
-If the condition doesn't meet, it'll do the action following the else.
-We can also group several actions depending on a condition, the following way:
+	if (<condition>)
+		dothis;
+	else
+		dothat;
 
-if (<condition)
-{
-	dothis1;
-	dothis2;
-	dothis3;
-} else {
-	dothat1;
-	dothat2;
-	dothat3;
-	dothat4;
-}
+If the condition isn't met, it'll do the action following the 'else'.
+We can also group several actions depending on a condition:
+
+	if (<condition>) {
+		dothis1;
+		dothis2;
+	} else {
+		dothat1;
+		dothat2;
+		dothat3;
+	}
 
 Remember that if you plan to do several actions upon the condition being false, and 
 you forget to use the curly braces (the { } ), the second action will be executed regardless
@@ -1919,17 +1913,13 @@ condition is true (that is, in the first grouping using a return; , and end; or 
 Also, you can have multiple conditions nested or chained, and don't worry about limits as to
 how many nested if you can have, there is no spoon ;)
 
-...
-if (<condition 1>)
-	dothis;
-else if (<condition 2>)
-{
-	dotheother;
-	do that;
-	end;
-} else
-	do this;
-...
+	if (<condition 1>)
+		dothis;
+	else if (<condition 2>) {
+		dothat;
+		end;
+	} else
+		dothis;
 
 ---------------------------------------
 
@@ -1961,19 +1951,22 @@ Multiple statements can be grouped with { }, curly braces, just like with the 'i
 Example 1:
 	while (switch(select("Yes:No") == 2 ))
 		mes "You picked no.";
+	close;
 
 Example 2: multiple statements
 	while (switch(select("Yes:No") == 2 )) {
 		mes "Why did you pick no?";
 		mes "You should pick yes instead!";
 	}
+	close;
 
 Example 3: counter-controlled loop
-	set .@i, 1;
+	.@i = 1;
 	while (.@i <= 5) {
 		mes "This line will print 5 times.";
-		set .@i, .@i +1;
+		.@i += 1;
 	}
+	close;
 
 Example 4: sentinel-controlled loop
 	mes "Input 0 to stop";
@@ -1998,13 +1991,13 @@ update statement is executed (this usually involves incrementing a variable).
 Then the condition is reevaluated and the cycle continues. 
 
 Example 1:
-	for( set .@i, 1; .@i <= 5; set .@i, .@i +1 )
+	for( .@i = 1; .@i <= 5; .@i++ )
 		mes "This line will print 5 times.";
 
 Example 2:
 	mes "This will print the numbers 1 - 5.";
-	for( set .@i, 1; .@i <= 5; set .@i, .@i +1 )
-		mes .@i;
+	for( .@i = 1; .@i <= 5; .@i++ )
+		mes "Number: " + .@i;
 
 ---------------------------------------
 
@@ -2019,38 +2012,41 @@ condition is false, control is transferred to the statement following the
 Example 1: sentinel-controlled loop
 	mes "This menu will keep appearing until you pick Cancel";
 	do {
-		set .@menu, select("One:Two:Three:Cancel");
+		.@menu = select("One:Two:Three:Cancel");
 	} while (.@menu != 4);
 
 Example 2: counter-controlled loop
 	mes "This will countdown from 10 to 1.";
-	set .@i, 10;
+	.@i = 10;
 	do {
 		mes .@i;
-		set .@i, .@i - 1;
+		.@i -= 1;
 	} while (.@i > 0);
 
 ---------------------------------------
 
-*freeloop(<toggle>)
+*freeloop({<toggle>})
 
 Toggling this to enabled (1) allows the script instance to bypass the infinite loop 
 protection, allowing your script to loop as much as it may need. Disabling (0) will
 warn you if an infinite loop is detected.
 
+The command will return the state of freeloop for the attached script, even if no
+argument is provided.
+
 Example:
 	freeloop(1); // enable script to loop freely
 
-	//Be aware with what you do here.
-	for ( set .@i,0; .@i<.@bigloop; set .@i, .@i+1 ) {
+	// be careful with what you do here
+	for ( .@i = 0; .@i < .@bigloop; .@i++ ) {
 		dothis;
 		// will sleep the script for 1ms when detect an infinity loop to 
-		// let rAthena do what it need to do (socket, timer, process, etc.)
+		// let rAthena do what it needs to do (socket, timer, process, etc.)
 	}
 
-	freeloop(0); // disable
+	freeloop(0); // disable freeloop
 
-	for ( set .@i,0; .@i<.@bigloop; set .@i, .@i+1 ) {
+	for ( .@i = 0; .@i < .@bigloop; .@i++ ) {
 		dothis;
 		// throw an infinity loop error
 	}
@@ -2709,8 +2705,8 @@ someone messed up the item database. It will return -1 if there is no such item.
 
 Example:
 
-//@slots now has the amount of slots of the item with ID 1205.
-	set @slots, getItemSlots(1205);
+//.@slots now has the amount of slots of the item with ID 1205.
+	.@slots = getitemslots(1205);
 
 ---------------------------------------
 
@@ -2917,17 +2913,10 @@ You need to put a 'close' after that yourself.
 *getguildname(<guild id>)
 
 This function returns a guild's name given an ID number. If there is no such 
-guild, "null" will be returned;
+guild, "null" will be returned.
 
-   // Would print what ever guild 10007 is, in my case this would return "AlcoROhics"
-   mes "The guild "+GetGuildName(10007)+" are all nice people.";
-
-   // This will do the same as above:
-   set @var,10007;
-   mes "We have some friends in "+GetGuildName(@var)+", you know.";
-
-This is used all over the WoE controlling scripts. You could also use it for a 
-guild-based event.
+Example:
+	mes "The guild "+getguildname(10007)+" are all nice people.";
 
 ---------------------------------------
 
@@ -2936,24 +2925,22 @@ guild-based event.
 This function return the name of the master of the guild which has the specified 
 ID number. If there is no such guild, "null" will be returned.
 
-// Would return the guild master of guild 10007, whatever that might be.
-// In this example it would return "MissDjax" cause she owns "AlcoROhics" (10007)
-    mes getguildmaster(10007)+" runs "+getguildname(10007);
+Example 1:
+	// Prints the guild master of guild 10007, whoever that might be.
+	mes getguildmaster(10007)+" runs "+getguildname(10007);
 
-Can be used to check if the character is the guild master of the specified guild.
-
-Maybe you want to make a room only guild masters can enter:
-
-        set @GID,getcharid(2);
-        if(@GID==0) goto L_NoGuild;
-        if(strcharinfo(0)==getguildmaster(@GID)) goto L_GuildMaster;
-        mes "Sorry you don't own the guild you are in";
-        close;
-    L_NoGuild:
-        mes "Sorry you are not in a guild";
-        close;
-    L_GuildMaster:
-        mes "Welcome guild master of "+GetGuildName(@GID);
+Example 2:
+	// Checks if the character is the guild master of the specified guild.
+	.@GID = getcharid(2);
+	if (.@GID == 0) {
+		mes "Sorry, you are not in a guild.";
+		close;
+	}
+	if (strcharinfo(0) != getguildmaster(.@GID)) {
+		mes "Sorry, you don't own the guild you are in.";
+		close;
+	}
+        mes "Welcome, guild master of "+getguildname(.@GID);
         close;
 
 ---------------------------------------
@@ -3171,12 +3158,12 @@ Example:
 		// immediately copy global temporary variables into scope variables, 
 		// since we don't know when 'getmobdrops' will get called again for 
 		// another mob, overwriting your global temporary variables
-		set .@count, $@MobDrop_count;
+		.@count = $@MobDrop_count;
 		copyarray .@item[0],$@MobDrop_item[0],.@count;
 		copyarray .@rate[0],$@MobDrop_rate[0],.@count;
 		
 		mes getmonsterinfo(.@mob_id,MOB_NAME) + " - " + .@count + " drops found:";
-		for( set .@i,0; .@i < .@count; set .@i,.@i +1 ) {
+		for( .@i = 0; .@i < .@count; .@i++ ) {
 			mes .@item[.@i] + " (" + getitemname(.@item[.@i]) + ") " + .@rate[.@i]/100 + ((.@rate[.@i]%100 < 10) ? ".0":".") + .@rate[.@i]%100 + "%";
 		}
 	} else {
@@ -3193,15 +3180,12 @@ This command can be used to check the currently attached characters total amount
 This means the skill points used in skill are counted, and added to SkillPoints (number of skill points not used).
 This command does not count skills which are set as flag 4 (permament granted) (ALL_BUYING_STORE/ALL_INCCARRY)
 
-Example:
+Example 1:
+	.@skillPoints = skillpointcount();
+	mes "You have " + .@skillPoints + " skill points in total!";
 
-//This will set the temp character variable @skillPoints to the amount of skill points,
-//and then tell the player the value.
-	set @skillPoints, skillPointCount();
-	mes "You have "+@skillPoints+" skill points in total!";
-	
-//Self-explanatory... :P
-	if (skillPointCount() > 20)
+Example 2:
+	if (skillpointcount() > 20)
 		mes "Wow, you have more then 20 Skill Points in total!";
 
 ---------------------------------------
@@ -3741,13 +3725,12 @@ Leader:       All party members are warped to the leader's position. The leader 
 If you specify a from_mapname, 'warpparty' will only affect those on that map.
 
 Example:
-
-mes "[Party Warper]";
-mes "Here you go!";
-close2;
-set @id,getcharid(1);
-warpparty "prontera",150,100,@id;
-close;
+	mes "[Party Warper]";
+	mes "Here you go!";
+	close2;
+	.@party_id = getcharid(1);
+	warpparty "prontera",150,100,.@party_id;
+	close;
 
 ---------------------------------------
 
@@ -3931,7 +3914,7 @@ class number system, but it's one that comes with constants which make it easy
 to convert among classes. The command will return -1 if you pass it a job number
 which doesn't have an eA job-number equivalent.
 
-	set @eac, eaclass();
+	@eac = eaclass();
 	if ((@eac&EAJ_BASEMASK) == EAJ_SWORDMAN)
 		mes "Your base job is Swordman.";
 	if (@eac&EAJL_UPPER)
@@ -3952,13 +3935,13 @@ gender if none is given (if no player is attached, male will be used by default)
 The command will return -1 if there is no valid class to represent the specified
 job (for example, if you try to get the baby version of a Taekwon class).
 
-	set @eac, eaclass();
+	@eac = eaclass();
 	//Check if class is already rebirth
 	if (@eac&EAJL_UPPER) {
 		mes "You look strong.";
 		close;
 	}
-	set @eac, roclass(@eac|EAJL_UPPER);
+	@eac = roclass(@eac|EAJL_UPPER);
 	//Check if class has a rebirth version
 	if (@eac != -1) {
 		mes "Bet you can't wait to become a "+jobname(@eac)+"!";
@@ -4109,8 +4092,8 @@ wall), the character is pushed only up to the obstacle.
 
 *get_revision()
 
-This command will return the SVN revision number that the server is
-currently running on.
+This command will return the SVN revision number that the server is currently
+running on.
 
     if ( get_revision() >= 15000 )
         mes "Welcome to rAthena!";
@@ -4121,8 +4104,7 @@ currently running on.
 
 This command will return the Git Hash that the server is currently running on.
 
-	set .@gitHash$,get_githash();
-	mes "Welcome to rAthena! Git Hash: "+.@gitHash$;
+	mes "Welcome to rAthena! Git Hash: " + get_githash();
 
 ---------------------------------------
 \\
@@ -4206,27 +4188,23 @@ this. Careful, minor magic ahead.
     // First, let's get an ID of a character who's name will be on the item.
     // Only an existing character's name may be there.
     // Let's assume our character is 'Adam' and find his ID.
-    
-    set @charid,getcharid(0,"Adam");
+    @charid = getcharid(0,"Adam");
 
     // Now we split the character ID number into two portions with a binary
     // shift operation. If you don't understand what this does, just copy it.
-    
-    set @card3, @charid & 65535;
-    set @card4, @charid >> 16;
+    @card3 = @charid & 65535;
+    @card4 = @charid >> 16;
 
     // If you're inscribing non-equipment, @card1 must be 254.
     // Arrows are also not equipment. :)
-    set @card1,254;
-    
+    @card1 = 254;
+
     // For named equipment, card2 means the Star Crumbs and elemental 
     // crystals used to make this equipment. For everything else, it's 0.
-     
-    set @card2,0;
-    
+    @card2 = 0;
+
     // Now, let's give the character who invoked the script some 
     // Adam's Apples:
-    
     getitem2 512,1,1,0,0,@card1,@card2,@card3,@card4;
 
 This wasn't tested with all possible items, so I can't give any promises, 
@@ -4239,20 +4217,19 @@ To create equipment, continue this example it like this:
     // for an Ice Stiletto.
 
     // If you're inscribing equipment, @card1 must be 255.
-    set @card1,255;
-    
+    @card1 = 255;
+
     // That's the number of star crumbs in a weapon.
-    set @sc,2;
-    
+    @sc = 2;
+
     // That's the number of elemental property of the weapon.
-    set @ele,1;
+    @ele = 1;
 
     // And that's the wacky formula that makes them into
     // a single number.    
-    set @card2,@ele+((@sc*5)<<8);
+    @card2 = @ele+((@sc*5)<<8);
 
     // That will make us an Adam's +2 VVS Ice Stiletto:
-    
     getitem2 1216,1,1,2,0,@card1,@card2,@card3,@card4;
 
 Experiment with the number of star crumbs - I'm not certain just how much will 
@@ -4332,22 +4309,38 @@ Note: 'delitem' in an NPC script can still remove rental items.
 
 ---------------------------------------
 
+*rentitem2 <item id>,<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>;
+*rentitem2 "<item name>",<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>;
+
+Creates a rental item in the attached character's inventory. The item will expire 
+in <time> seconds and be automatically deleted. See 'rentitem' for further details.
+
+See 'getitem2' for an explanation of the expanded parameters.
+
+---------------------------------------
+
 *makeitem <item id>,<amount>,"<map name>",<X>,<Y>;
 *makeitem "<item name>",<amount>,"<map name>",<X>,<Y>;
 
-This command will create an item lying around on a specified map in the 
-specified location.
+This command will create an item on the specified cell of a map.
 
- itemid   - Found in 'db/(pre-)re/item_db.txt'
- amount   - Amount you want produced
- map name - The map name
- X        - The X coordinate
- Y        - The Y coordinate.
+As with any dropped items, the items created with this command will disappear after
+a period of time. Using an amount greater than 1 will create a single stack of the
+given amount, not multiple stacks of 1.
 
-This item will still disappear just like any other dropped item. Like 'getitem', 
-it also accepts an 'english name' field from the database and creates apples if 
-the name isn't found.
+Like 'getitem', it also accepts an 'english name' field from the database and creates
+Apples if the name isn't found.
 If the map name is given as "this", the map the invoking character is on will be used.
+
+---------------------------------------
+
+*makeitem2 <item id>,<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>;
+*makeitem2 "<item name>",<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>;
+
+This command will create an item on the specified cell of a map. See 'makeitem' for
+further details.
+
+See 'getitem2' for an explanation of the expanded parameters.
 
 ---------------------------------------
 
@@ -4366,12 +4359,12 @@ the given one. It returns the number of items found. For performance reasons,
 the results array is limited to 10 items.
 
 	mes "What item are you looking for?";
-	input @name$;
-	set @qty, searchitem(@matches[0],@name$);
-	mes "I found "+@qty+" items:";
-	for (set @i, 0; @i < @qty; set @i, @i+1)
-		//Display name (eg: "Apple[0]")
-		mes getitemname(@matches[@i])+"["+getitemslots(@matches[@i])+"]";
+	input .@name$;
+	.@qty = searchitem(.@matches[0],.@name$);
+	mes "I found " + .@qty + " items:";
+	for (.@i = 0; .@i < .@qty; .@i++)
+		// Display name (eg: "Apple[0]")
+		mes getitemname(.@matches[.@i]) + "[" + getitemslots(.@matches[.@i]) + "]";
 
 ---------------------------------------
 
@@ -4397,7 +4390,7 @@ database. If the name is not found, nothing will be deleted.
 *delitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 
 This command will remove a specified amount of items from the invoking/target character. 
-Check 'getitem2' to understand its expanded parameters.
+See 'getitem2' for an explanation of the expanded parameters.
 
 ---------------------------------------
 
@@ -4430,7 +4423,7 @@ Expanded version of 'countitem' function, used for created/carded/forged items.
 
 This function will return the number of items for the specified item ID and
 other parameters that the invoking character has in the inventory.
-Check 'getitem2' to understand the arguments of the function.
+See 'getitem2' for an explanation of the expanded parameters.
 
 ---------------------------------------
 
@@ -4446,7 +4439,7 @@ Example:
 	mes "You currently have "+countbound()+" bounded items.";
 	next;
 	mes "The list of bounded items include:";
-	for(set .@i,0; .@i<getarraysize(@bound_items); set .@i,.@i+1)
+	for(.@i = 0; .@i < getarraysize(@bound_items); .@i++)
 		mes getitemname(@bound_items[.@i]);
 	close;
 
@@ -4554,6 +4547,8 @@ This command will run the item script of the specified item on the invoking
 character. The character does not need to possess the item, and the item will
 not be deleted. While this command is intended for usable items, it will run
 for any item type.
+
+This command does not currently work with the 'itemskill' script command.
 
 ---------------------------------------
 
@@ -4758,7 +4753,6 @@ without the item requirement. Amount of slots is limited by the server to
 a maximum of 5 slots by default.
 
 Example:
-
 	// Gives the player opportunity to buy 4 different kinds of items.
 	buyingstore 4;
 
@@ -4773,14 +4767,22 @@ what happens, when a result item is double-clicked and can be one of the
 following:
 
 	0 = Shows the store's position on the mini-map and highlights the
-		shop sign with yellow color, when the store is on same map
-		as the invoking player.
+	    shop sign with yellow color, when the store is on same map
+	    as the invoking player.
 	1 = Directly opens the shop, regardless of distance.
 
 Example:
-
 	// Item Universal_Catalog_Gold (10 uses, effect: open shop)
 	searchstores 10,1;
+
+---------------------------------------
+
+*enable_command;
+*disable_command;
+
+These commands toggle the ability to use atcommand while interacting with an NPC.
+
+The default setting, 'atcommand_enable_npc', is defined in 'conf/battle/gm.conf'.
 
 ---------------------------------------
 //
@@ -5401,26 +5403,30 @@ Simple monster killing script:
 
         <Normal NPC object definition. Let's assume you called him NPCNAME.>
         mes "[Summon Man]";
-        mes "Want to start the kill?";
+        mes "Want to start the Poring hunt?";
         next;
-        menu "Yes",L_Yes,"No",-;
-        mes "[Summon Man]";
-        mes "Come back later";
-        close;
-    L_Yes:
+        if(select("Yes.:No.") == 2) {
+                mes "[Summon Man]";
+                mes "Come back later.";
+                close;
+        }
+
+        // Summon 10 Porings.
+        // Using coordinates 0,0 will spawn them in a random location.
         monster "prontera",0,0,"Quest Poring",1002,10,"NPCNAME::OnPoringKilled";
-        // By using 0,0 it will spawn them in a random place.
+
         mes "[Summon Man]";
-        mes "Now go and kill all the Poring I summoned";
-        // He summoned ten.
+        mes "Now go and kill all the Porings I summoned.";
         close;
+
     OnPoringKilled:
-        set $PoringKilled,$PoringKilled+1;
-        if ($PoringKilled==10) goto L_AllDead;
+        $PoringKilled++;
+        if ($PoringKilled >= 10) goto L_AllDead;
         end;
+
     L_AllDead:
-        announce "Summon Man: Well done all the poring are dead",3;
-        set $PoringKilled,0;
+        announce "Summon Man: Well done. All the Porings are dead!",3;
+        $PoringKilled = 0;
         end;
 
 For more good examples see just about any official 2-1 or 2-2 job quest script.
@@ -5659,23 +5665,21 @@ attached to a player. The event label name is required to start with "On".
 This command can be used to make other NPCs act, as if they were responding to
 the invoking NPC's actions, such as using an emotion or talking.
 
-    place,100,100,1%TAB%script%TAB%NPC%TAB%53,{
-        mes "Hey NPC2 copy what I do";
+    place,100,100,1%TAB%script%TAB%NPC1%TAB%53,{
+        mes "NPC2 copies my actions!";
         close2;
-        set .@emote, rand(1,30);
         donpcevent "NPC2::OnEmote";
     OnEmote:
-        emotion .@emote;
+        emotion rand(1,30);
         end;
     }
 
     place,102,100,1%TAB%script%TAB%NPC2%TAB%53,{
-        mes "Hey NPC copy what I do";
+        mes "NPC1 copies my actions!";
         close2;
-        set .@emote, rand(1,30);
-        donpcevent "NPC::OnEmote";
+        donpcevent "NPC1::OnEmote";
     OnEmote:
-        emotion .@emote;
+        emotion rand(1,30);
         end;
     }
 
@@ -6936,16 +6940,16 @@ they want it so much.
 Returns the result of the calculation.
 
 Example:
-set @i, pow(2,3); // @i will be 8
+	.@i = pow(2,3); // .@i will be 8
 
 ---------------------------------------
 
 *sqrt(<number>)
 
-Returns square-root of number.
+Returns the square-root of a number.
 
 Example:
-set @i, sqrt(25); // @i will be 5
+	.@i = sqrt(25); // .@i will be 5
 
 ---------------------------------------
 
@@ -6954,7 +6958,7 @@ set @i, sqrt(25); // @i will be 5
 Returns distance between 2 points.
 
 Example:
-set @i, distance(100,200,101,202);
+	.@i = distance(100,200,101,202);
 
 ---------------------------------------
 
@@ -6978,24 +6982,24 @@ and will return the number of rows (i.e. array size).
 Note that 'query_sql' runs on the main database while 'query_logsql' runs on the log database.
 
 Example:
-set @nb, query_sql("select name,fame from `char` ORDER BY fame DESC LIMIT 5", @name$, @fame);
-mes "Hall Of Fame: TOP5";
-mes "1."+@name$[0]+"("+@fame[0]+")"; // Will return a person with the biggest fame value.
-mes "2."+@name$[1]+"("+@fame[1]+")";
-mes "3."+@name$[2]+"("+@fame[2]+")";
-mes "4."+@name$[3]+"("+@fame[3]+")";
-mes "5."+@name$[4]+"("+@fame[4]+")";
+	.@nb = query_sql("select name,fame from `char` ORDER BY fame DESC LIMIT 5", .@name$, .@fame);
+	mes "Hall Of Fame: TOP5";
+	mes "1."+.@name$[0]+"("+.@fame[0]+")"; // largest fame value.
+	mes "2."+.@name$[1]+"("+.@fame[1]+")";
+	mes "3."+.@name$[2]+"("+.@fame[2]+")";
+	mes "4."+.@name$[3]+"("+.@fame[3]+")";
+	mes "5."+.@name$[4]+"("+.@fame[4]+")";
 
 ---------------------------------------
 
 *escape_sql(<value>)
 
-Converts the value to a string and escapes special characters so that it is safe to use in query_sql().
-Returns the escaped form of the given value.
+Converts the value to a string and escapes special characters so that it is safe to
+use in query_sql(). Returns the escaped form of the given value.
 
 Example:
-	set .@str$, "John's Laptop";
-	set .@esc_str$, escape_sql(.@name$); // Escaped string: John\'s Laptop
+	.@name$ = "John's Laptop";
+	.@esc_str$ = escape_sql(.@name$); // Escaped string: John\'s Laptop
 
 ---------------------------------------
 
@@ -7013,8 +7017,7 @@ Valid types are:
 	10 - slot; 11 - look; 12 - elv; 13 - wlv; 14 - view id
 
 Example:
-
-setiteminfo 7049,6,9990; // Stone now weighs 999.0
+	setiteminfo 7049,6,9990; // Stone now weighs 999.0
 
 ---------------------------------------
 
@@ -7029,26 +7032,35 @@ Type can optionally be used indicates which script to set (default is 0):
  2 - OnUnequip_Script
 
 Example:
-
-setitemscript 2637,"{ if(isequipped(2236)==0)end; if(getskilllv(26)){skill 40,1;}else{skill 26,1+isequipped(2636);} }";
-setitemscript 2637,"";
+	setitemscript 2637,"{ if(isequipped(2236)==0)end; if(getskilllv(26)){skill 40,1;}else{skill 26,1+isequipped(2636);} }";
+	setitemscript 2637,"";
 
 ---------------------------------------
 
-*atoi ("<string>")
-*axtoi ("<string>")
+*atoi("<string>")
+*axtoi("<string>")
+*strtol("<string>", base)
 
 These commands are used to convert strings to numbers. 'atoi' will interpret
 given string as a decimal number (base 10), while 'axtoi' interprets strings as
-hexadecimal numbers (base 16).
+hexadecimal numbers (base 16). 'strtol' lets the user specify a base (valid range
+is between 2 and 36 inclusive, or the special value0, which means auto-detection).
 
-Hexadecimal number set: {0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F}
+The 'atoi' and 'strtol' functions conform to the C functions with the same names,
+and 'axtoi' is the same as strtol, with a base of 16. Results are clamped to signed
+32 bit int range (INT_MIN ~ INT_MAX).
 
-Example:
+Examples:
 
-set @var, atoi("11"); 	// Sets @var to 11
-set @var, axtoi("FF");	// Sets @var to 255
-mes axtoi("11");      	// Displays 17 (1 = 1, 10 = 16)
+	.@var = atoi("11");        // Sets .@var to 11
+	.@var = axtoi("FF");       // Sets .@var to 255
+	mes axtoi("11");           // Displays 17 (1 = 1, 10 = 16)
+	.@var = strtol("11", 10);  // Sets .@var to 11 (11 base 10)
+	.@var = strtol("11", 16);  // Sets .@var to 17 (11 base 16)
+	.@var = strtol("11", 0);   // Sets .@var to 11 (11 base 10, auto-detected)
+	.@var = strtol("0x11", 0); // Sets .@var to 17 (11 base 16, auto-detected because of the "0x" prefix)
+	.@var = strtol("011", 0);  // Sets .@var to 9 (11 base 8, auto-detected because of the "0" prefix)
+	.@var = strtol("11", 2);   // Sets .@var to 3 (binary 11)
 
 ---------------------------------------
 
@@ -7058,11 +7070,11 @@ This command returns 1 or 0 when the substring is in the main string (1) or not 
 This command is not case sensitive.
 
 Examples:
-
-//dothis; will be executed ('Bloody Murderer' contains 'Blood').
+	//dothis; will be executed ('Bloody Murderer' contains 'Blood').
 	if (compare("Bloody Murderer","Blood"))
 		dothis;
-//dothat; will not be executed ('Blood butterfly' does not contain 'Bloody').
+
+	//dothat; will not be executed ('Blood butterfly' does not contain 'Bloody').
 	if (compare("Blood Butterfly","Bloody"))
 		dothat;
 
@@ -7204,7 +7216,7 @@ specifiers are supported except %n. More info: sprintf @ www.cplusplus.com.
 The number of params is only limited by rA's script engine.
 
 Example:
-	set .@format$, "The %s contains %d monkeys";
+	.@format$ = "The %s contains %d monkeys";
 	dispbottom(sprintf(.@format$, "zoo", 5));        //prints "The zoo contains 5 monkeys"
 	dispbottom(sprintf(.@format$, "barrel", 82));    //prints "The barrel contains 82 monkeys"
 
@@ -7258,6 +7270,17 @@ sensitive unless <usecase> is set to 0.
 Example:
 	countstr("test test test Test", "test"); //returns 3
 	countstr("cake Cake", "Cake", 0); //returns 2
+
+---------------------------------------
+
+*preg_match(<regular expression pattern>,<string>{,<offset>})
+
+Searches a string for a match to the regular expression provided. The
+offset parameter indicates the index of the string to start searching.
+Returns offsets to captured substrings, or 0 if no match is found.
+
+This command is only available if the server is compiled with the regular 
+expressions library enabled.
 
 ---------------------------------------
 
@@ -7362,19 +7385,15 @@ The meaning of the individual types can be confusing, so here's an overview:
     these check for specific dynamic flags (their name indicates what they do)
 
 Example:
-
 	mes "Pick a destination map.";
 	input .@map$;
 	mes "Alright, now give me the coordinates.";
 	input .@x;
 	input .@y;
-	if( !checkcell(.@map$,.@x,.@y,cell_chkpass) )
-	{
+	if( !checkcell(.@map$,.@x,.@y,cell_chkpass) ) {
 		mes "Can't warp you there, sorry!";
 		close;
-	}
-	else
-	{
+	} else {
 		mes "Ok, get ready...";
 		close2;
 		warp .@map$, .@x, .@y;
@@ -8102,19 +8121,18 @@ Example 1: list party member names
 	// script (sleep, sleep2, next, close2, input, menu, select, or prompt), 
 	// another player could click this NPC, trigger 'getpartymember', and 
 	// overwrite the $@partymember***** variables.
-	set .@count, $@partymembercount;
+	.@count = $@partymembercount;
 	copyarray .@name$[0], $@partymembername$[0], $@partymembercount;
 	
 	// list the party member names
-	for (set .@i,0; .@i < .@count; set .@i, .@i+1) {
+	for (.@i = 0; .@i < .@count; .@i++)
 		mes (.@i +1) + ". ^0000FF" + .@name$[.@i] + "^000000";
-	}
 	close;
 
 
 Example 2: check party count (with a 'next' pause), before warping to event
 
-	set .register_num, 5; // How many party members are required?
+	.register_num = 5; // How many party members are required?
 	
 	// get the charID and accountID of character's party members
 	getpartymember getcharid(1), 1;
@@ -8126,9 +8144,10 @@ Example 2: check party count (with a 'next' pause), before warping to event
 	}
 	
 	// loop through both and use 'isloggedin' to count online party members
-	for ( set .@i, 0; .@i < $@partymembercount; set .@i, .@i +1 )
+	for ( .@i = 0; .@i < $@partymembercount; .@i++ )
 		if ( isloggedin( $@partymemberaid[.@i], $@partymembercid[.@i] ) )
-			set .@count_online, .@count_online +1 ;
+			.@count_online++;
+
 	// We search accountID & charID because a single party can have multiple 
 	// characters from the same account. Without searching through the charID, 
 	// if a player has 2 characters from the same account inside the party but 
@@ -8144,7 +8163,7 @@ Example 2: check party count (with a 'next' pause), before warping to event
 	
 	mes "Are you ready ?";
 	next; // careful here
-	select "Yes";
+	select("Yes");
 	
 	// When a script hits a next, menu, sleep or input that pauses the script, 
 	// players can invite or /leave and make changes in their party. To prevent 
@@ -8155,7 +8174,7 @@ Example 2: check party count (with a 'next' pause), before warping to event
 		mes "You've made changes to your party !";
 		close;
 	}
-	for ( set .@i, 0; .@i < $@partymembercount; set .@i, .@i +1 ) {
+	for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
 		if ( .@partymembercid[.@i] != $@partymembercid[.@i] ) {
 			mes "You've made changes to your party !";
 			close;

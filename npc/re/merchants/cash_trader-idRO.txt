@@ -3,18 +3,18 @@
 //===== By: ================================================== 
 //= Cydh
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: ========================================= 
-//= Sell Cash shop items based on idRO's Cash shop.
+//= Sell Cash shop items based on idRO's Cash shop
 //===== Additional Comments: ================================= 
 //= 1.0 Initial release. 2014-Jan-13 [Cydh]
-//      - Put/enable all 'idRO misc items' from db/import/item_db.txt, or put from db/import-tmpl/item_db.txt
-//      - Change MAX_SHOPITEM (on npc.c) to 210 then recompile your server (some NPCs sell more than 100 items)
 //= 1.1 2014-Jan-18 [Cydh]
 //      - Fixed the item list
 //      - Added NPC placement for some maps
+//= 1.2 2014-Feb-4 [Cydh]
+//      - Added Cash Trader with special offer for Chinese New Year
 //============================================================
 
 //============================================================
@@ -349,3 +349,9 @@ rachel,100,135,3	duplicate(idRO_eq2)	Equipment 2#ra	80
 rachel,100,131,3	duplicate(idRO_acc)	Acc and Kartu#ra	721
 rachel,100,133,3	duplicate(idRO_acc2)	Acc and Kartu 2#ra	80
 rachel,95,131,3	duplicate(idRO_rental)	Rental Shop#ra	874
+
+//===========================================================
+//Special Prices of Chinese New Year 2014
+//===========================================================
+-	cashshop	idROC2014::idRO_C2014	721,2936:6250,2177:6250,18574:6250,6225:7500,6226:5625,5381:7500,5210:10000,5294:6250,5463:6250,5335:6250,5256:6250,5495:6250,18630:6250,19518:6250,19519:6250,19520:6250,2573:6250,15058:6250,5490:6250,5498:6250,5253:6250,5502:6250,5526:6250,5529:6250,19509:6250,5359:7500,18729:6250,18666:6250,5284:6250,5471:6250,5467:6250,5363:6250,5546:6250,5334:6250,1472:5000,13420:6250,1392:5000,15008:6250,1731:3750,1825:2500,1261:1875,5545:6250,5550:6250,5549:6250,5515:6250,5514:6250,5470:6250,5505:6250,18695:6250,18694:6250
+prontera,156,178,3	duplicate(idRO_C2014)	Kafra Shop#C2014_prt	721

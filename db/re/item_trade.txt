@@ -2003,6 +2003,7 @@
 2826,65,100	// Dark Knight Belt
 2827,65,100	// Dark Knight Glove
 2843,507,100	// Gold Trickle
+6821,475,100	// Single Union Badge
 12786,459,100	// Character Position Change Coupon
 13049,65,100	// Lacma
 13052,499,100	// Tourist Dagger
@@ -2019,6 +2020,7 @@
 12779,473,100	// Galapago Scroll
 17338,457,100	// Ore Box V
 17339,457,100	// Ore Box V(10)
+22685,475,100	// Single Union Christmas Gift
 
 // Sealed Cards
 4485,457,100	// Sealed Gloom Under Night Card

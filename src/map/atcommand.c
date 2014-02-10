@@ -4083,7 +4083,7 @@ ACMD_FUNC(mount_peco)
 		}
 		return 0;
 	}
-	if( (sd->class_&MAPID_THIRDMASK) == MAPID_RANGER && pc_checkskill(sd,RA_WUGRIDER) > 0 ) {
+	if( (sd->class_&MAPID_THIRDMASK) == MAPID_RANGER && pc_checkskill(sd,RA_WUGRIDER) > 0 && (!pc_isfalcon(sd) || battle_config.warg_can_falcon) ) {
 		if( !pc_isridingwug(sd) ) {
 			clif_displaymessage(sd->fd,msg_txt(sd,1121)); // You have mounted your Warg.
 			pc_setoption(sd, sd->sc.option|OPTION_WUGRIDER);
@@ -5654,10 +5654,14 @@ ACMD_FUNC(autotrade) {
 
 	sd->state.autotrade = 1;
 
-	if( battle_config.feature_autotrade && 
-		sd->state.vending && 
-		Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", "vendings", sd->vender_id ) != SQL_SUCCESS ){
-		Sql_ShowDebug( mmysql_handle );
+	if( sd->state.vending ){
+		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", vendings_db, sd->vender_id ) != SQL_SUCCESS ){
+			Sql_ShowDebug( mmysql_handle );
+		}
+	}else if( sd->state.buyingstore ){
+		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", buyingstore_db, sd->buyer_id ) != SQL_SUCCESS ){
+			Sql_ShowDebug( mmysql_handle );
+		}
 	}
 
 	if( battle_config.at_timeout ) {
@@ -7371,7 +7375,7 @@ ACMD_FUNC(iteminfo)
 		item_data = item_array[i];
 		sprintf(atcmd_output, msg_txt(sd,1277), // Item: '%s'/'%s'[%d] (%d) Type: %s | Extra Effect: %s
 			item_data->name,item_data->jname,item_data->slot,item_data->nameid,
-			itemdb_typename(item_data->type),
+			(item_data->type != IT_AMMO) ? itemdb_typename(item_data->type) : itemdb_typename_ammo(item_data->look),
 			(item_data->script==NULL)? msg_txt(sd,1278) : msg_txt(sd,1279) // None / With script
 		);
 		clif_displaymessage(fd, atcmd_output);
@@ -8066,6 +8070,8 @@ ACMD_FUNC(cash)
 			}
 			else clif_displaymessage(fd, msg_txt(sd,149)); // Unable to decrease the number/value.
 		} else {
+			if (-value > sd->cashPoints) //By command, if cash < value, force it to remove all
+				value = -sd->cashPoints;
 			if( (ret=pc_paycash(sd, -value, 0, LOG_TYPE_COMMAND)) >= 0){
 				// If this option is set, the message is already sent by pc function
 				if( !battle_config.cashshop_show_points ){
@@ -8706,21 +8712,20 @@ ACMD_FUNC(commands)
 /*==========================================
  * @charcommands Lists available # commands to you
  *------------------------------------------*/
-ACMD_FUNC(charcommands)
-{
+ACMD_FUNC(charcommands) {
 	atcommand_commands_sub(sd, fd, COMMAND_CHARCOMMAND);
 	return 0;
 }
 /* for new mounts */
 ACMD_FUNC(mount2) {
-
 	clif_displaymessage(sd->fd,msg_txt(sd,1362)); // NOTICE: If you crash with mount your LUA is outdated.
-	if( !(sd->sc.option&OPTION_MOUNTING) ) {
+	if (!&sd->sc || !(sd->sc.data[SC_ALL_RIDING])) {
 		clif_displaymessage(sd->fd,msg_txt(sd,1363)); // You have mounted.
-		pc_setoption(sd, sd->sc.option|OPTION_MOUNTING);
+		sc_start(NULL, &sd->bl, SC_ALL_RIDING, 10000, 1, INVALID_TIMER);
 	} else {
 		clif_displaymessage(sd->fd,msg_txt(sd,1364)); // You have released your mount.
-		pc_setoption(sd, sd->sc.option&~OPTION_MOUNTING);
+		if (&sd->sc)
+			status_change_end(&sd->bl, SC_ALL_RIDING, INVALID_TIMER);
 	}
 	return 0;
 }
@@ -9231,7 +9236,7 @@ ACMD_FUNC(vip) {
 		int year,month,day,hour,minute,second;
 		char timestr[21];
 		
-		split_time(pl_sd->vip.time-now,&year,&month,&day,&hour,&minute,&second);
+		split_time((int)(pl_sd->vip.time-now),&year,&month,&day,&hour,&minute,&second);
 		sprintf(atcmd_output,msg_txt(pl_sd,705),year,month,day,hour,minute); // Your VIP status is valid for %d years, %d months, %d days, %d hours and %d minutes.
 		clif_displaymessage(pl_sd->fd,atcmd_output);
 		timestamp2string(timestr,20,pl_sd->vip.time,"%Y-%m-%d %H:%M");
@@ -9246,6 +9251,21 @@ ACMD_FUNC(vip) {
 		}
 	}
 	chrif_req_login_operation(pl_sd->status.account_id, pl_sd->status.name, 6, vipdifftime, 7, 0); 
+	return 0;
+}
+
+/** Enable/disable rate info */
+ACMD_FUNC(showrate) {
+	nullpo_retr(-1,sd);
+	if (!sd->disableshowrate) {
+		sprintf(atcmd_output,msg_txt(sd,718)); //Personal rate information is not displayed now.
+		sd->disableshowrate = 1;
+	}
+	else {
+		sprintf(atcmd_output,msg_txt(sd,719)); //Personal rate information will be shown.
+		sd->disableshowrate = 0;
+	}
+	clif_displaymessage(fd,atcmd_output);
 	return 0;
 }
 #endif
@@ -9557,6 +9577,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(langtype),
 #ifdef VIP_ENABLE
 		ACMD_DEF(vip),
+		ACMD_DEF(showrate),
 #endif
 		ACMD_DEF(fullstrip),
 	};
@@ -9697,6 +9718,10 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 
 	//Shouldn't happen
 	if ( !message || !*message )
+		return false;
+
+	//If cannot use atcomamnd while talking with NPC [Kichi]
+	if (sd->npc_id && sd->state.disable_atcommand_on_npc)
 		return false;
 
 	//Block NOCHAT but do not display it as a normal message

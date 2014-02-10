@@ -172,23 +172,8 @@ void mvptomb_destroy(struct mob_data *md) {
 	struct npc_data *nd;
 
 	if ( (nd = map_id2nd(md->tomb_nid)) ) {
-		int16 m, i;
-
-		m = nd->bl.m;
-
-		clif_clearunit_area(&nd->bl,CLR_OUTSIGHT);
-
-		map_delblock(&nd->bl);
-
-		ARR_FIND( 0, map[m].npc_num, i, map[m].npc[i] == nd );
-		if( !(i == map[m].npc_num) ) {
-			map[m].npc_num--;
-			map[m].npc[i] = map[m].npc[map[m].npc_num];
-			map[m].npc[map[m].npc_num] = NULL;
-		}
-
+		npc_remove_map(nd);
 		map_deliddb(&nd->bl);
-
 		aFree(nd);
 	}
 
@@ -1167,17 +1152,18 @@ static int mob_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 	struct block_list **target;
 	int dist;
 
-	md=va_arg(ap,struct mob_data *);
-	target= va_arg(ap,struct block_list**);
+	md = va_arg(ap,struct mob_data *);
+	target = va_arg(ap,struct block_list**);
 
-	dist=distance_bl(&md->bl, bl);
+	dist = distance_bl(&md->bl, bl);
 	if(mob_can_reach(md,bl,dist+1, MSS_LOOT) &&
 		((*target) == NULL || !check_distance_bl(&md->bl, *target, dist)) //New target closer than previous one.
 	) {
 		(*target) = bl;
-		md->target_id=bl->id;
-		md->min_chase=md->db->range3;
-	}
+		md->target_id = bl->id;
+		md->min_chase = md->db->range3;
+	} else
+		mob_stop_walking(md, 1); // Stop walking immediately if item is no longer on the ground.
 	return 0;
 }
 
@@ -2261,23 +2247,13 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 			if (map[m].flag.nobaseexp || !md->db->base_exp)
 				base_exp = 0;
-			else {
-				int vip_bonus = 0;
-				// Increase base EXP rate for VIP.
-				if (battle_config.vip_base_exp_increase && (sd && pc_isvip(sd)))
-					vip_bonus += battle_config.vip_base_exp_increase;
-				base_exp = (unsigned int)cap_value(md->db->base_exp * per * (bonus+vip_bonus)/100. * map[m].adjust.bexp/100., 1, UINT_MAX);
-			}
+			else
+				base_exp = (unsigned int)cap_value(md->db->base_exp * per * bonus/100. * map[m].adjust.bexp/100., 1, UINT_MAX);
 
 			if (map[m].flag.nojobexp || !md->db->job_exp || md->dmglog[i].flag == MDLF_HOMUN) //Homun earned job-exp is always lost.
 				job_exp = 0;
-			else {
-				int vip_bonus = 0;
-				// Increase job EXP rate for VIP.
-				if (battle_config.vip_job_exp_increase && (sd && pc_isvip(sd)))
-					vip_bonus += battle_config.vip_job_exp_increase;
-				job_exp = (unsigned int)cap_value(md->db->job_exp * per * (bonus+vip_bonus)/100. * map[m].adjust.jexp/100., 1, UINT_MAX);
-			}
+			else
+				job_exp = (unsigned int)cap_value(md->db->job_exp * per * bonus/100. * map[m].adjust.jexp/100., 1, UINT_MAX);
 
 			if ( ( temp = tmpsd[i]->status.party_id)>0 ) {
 				int j;
@@ -2436,19 +2412,21 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 		if(sd) {
 			// process script-granted extra drop bonuses
-			int itemid = 0;
-			for (i = 0; i < ARRAYLENGTH(sd->add_drop) && (sd->add_drop[i].id || sd->add_drop[i].group); i++) {
-				if ( sd->add_drop[i].race == -md->mob_id 
-					|| (sd->add_drop[i].race && sd->add_drop[i].race&((1<<status->race)|(1<<RC_ALL)))
-					|| (sd->add_drop[i].class_ && sd->add_drop[i].class_&((1<<status->class_)|(1<<CLASS_ALL)))
-				) {
-					//check if the bonus item drop rate should be multiplied with mob level/10 [Lupus]
-					if(sd->add_drop[i].rate < 0) {
-						//it's negative, then it should be multiplied. e.g. for Mimic,Myst Case Cards, etc
-						// rate = base_rate * (mob_level/10) + 1
-						drop_rate = -sd->add_drop[i].rate*(md->level/10)+1;
-						drop_rate = cap_value(drop_rate, battle_config.item_drop_adddrop_min, battle_config.item_drop_adddrop_max);
-						if (drop_rate > 10000) drop_rate = 10000;
+			uint16 dropid = 0;
+
+			for (i = 0; i < ARRAYLENGTH(sd->add_drop); i++) {
+				if (!&sd->add_drop[i] || (!sd->add_drop[i].nameid && !sd->add_drop[i].group))
+					continue;
+				if ((sd->add_drop[i].race < 0 && sd->add_drop[i].race == -md->mob_id) || //Race < 0, use mob_id
+					(sd->add_drop[i].race == RC_ALL || sd->add_drop[i].race == status->race) || //Matched race
+					(sd->add_drop[i].class_ == CLASS_ALL || sd->add_drop[i].class_ == status->class_)) //Matched class
+				{
+					//Check if the bonus item drop rate should be multiplied with mob level/10 [Lupus]
+					if (sd->add_drop[i].rate < 0) {
+						//It's negative, then it should be multiplied. with mob_level/10
+						//rate = base_rate * (mob_level/10) + 1
+						drop_rate = (-sd->add_drop[i].rate) * md->level / 10 + 1;
+						drop_rate = cap_value(drop_rate, max(battle_config.item_drop_adddrop_min,1), min(battle_config.item_drop_adddrop_max,10000));
 					}
 					else
 						//it's positive, then it goes as it is
@@ -2456,8 +2434,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 					if (rnd()%10000 >= drop_rate)
 						continue;
-					itemid = (sd->add_drop[i].id > 0) ? sd->add_drop[i].id : itemdb_searchrandomid(sd->add_drop[i].group,1);
-					mob_item_drop(md, dlist, mob_setdropitem(itemid,1), 0, drop_rate, homkillonly);
+					dropid = (sd->add_drop[i].nameid > 0) ? sd->add_drop[i].nameid : itemdb_searchrandomid(sd->add_drop[i].group,1);
+
+					mob_item_drop(md, dlist, mob_setdropitem(dropid,1), 0, drop_rate, homkillonly);
 				}
 			}
 
@@ -4046,11 +4025,11 @@ static int mob_read_randommonster(void)
 		DBPATH"mob_boss.txt",
 		"mob_pouch.txt",
 		"mob_classchange.txt",
-		"import/mob_branch.txt",
-		"import/mob_poring.txt",
-		"import/mob_boss.txt",
-		"import/mob_pouch.txt",
-		"import/mob_classchange.txt"
+		DBIMPORT"/mob_branch.txt",
+		DBIMPORT"/mob_poring.txt",
+		DBIMPORT"/mob_boss.txt",
+		DBIMPORT"/mob_pouch.txt",
+		DBIMPORT"/mob_classchange.txt"
 	};
 
 	memset(&summon, 0, sizeof(summon));
@@ -4092,7 +4071,7 @@ static int mob_read_randommonster(void)
 				if( summon[k].qty < ARRAYLENGTH(summon[k].mob_id) ) //MvPs
 					summon[k].mob_id[summon[k].qty++] = mob_id;
 				else {
-					ShowDebug("Can't store more random mobs from %s, increase size of mob.c:summon variable!\n", mobfile[i]);
+					ShowDebug("Can't store more random mobs from %s/%s, increase size of mob.c:summon variable!\n", db_path, mobfile[i]);
 					break;
 				}
 			}
@@ -4104,7 +4083,7 @@ static int mob_read_randommonster(void)
 			summon[k].qty = 1;
 		}
 		fclose(fp);
-		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", entries, mobfile[i]);
+		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s/%s"CL_RESET"'.\n", entries, db_path, mobfile[i]);
 	}
 	return 0;
 }
@@ -4550,17 +4529,24 @@ static void mob_load(void)
 	int i;
 	const char* dbsubpath[] = {
 		"",
-		"import",
+		"/"DBIMPORT,
 	};
 	
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){	
 		int n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
 		int n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
-		char* dbsubpath1 = aMalloc(n1+1);
-		char* dbsubpath2 = aMalloc(n2+1);
-		safesnprintf(dbsubpath1,n1+1,"%s%s",db_path,dbsubpath[i]);
-		if(i==0) safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
-		else safesnprintf(dbsubpath2,n2,"%s%s",db_path,dbsubpath[i]);
+
+		char* dbsubpath1 = (char*)aMalloc(n1+1);
+		char* dbsubpath2 = (char*)aMalloc(n2+1);
+		
+		if(i==0) {
+			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
+			safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
+		}
+		else {
+			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
+			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
+		}
 		
 		sv_readdb(dbsubpath1, "mob_item_ratio.txt", ',', 2, 2+MAX_ITEMRATIO_MOBS, -1, &mob_readdb_itemratio, i); // must be read before mobdb
 		sv_readdb(dbsubpath1, "mob_chat_db.txt", '#', 3, 3, MAX_MOB_CHAT, &mob_parse_row_chatdb, i);

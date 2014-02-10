@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20140123
+//= 20140126
 //===== Description: =========================================
 //= List of available atcommands and their functions.
 //============================================================
@@ -295,6 +295,13 @@ prontera (x= 165, y= 201) 01 00 00 00 00
 prontera (x= 165, y= 200) 01 00 00 00 00
 prontera (x= 165, y= 199) 01 00 00 00 00
 prontera (x= 165, y= 198) 01 00 00 00 00
+
+---------------------------------------
+
+@showrate
+
+When VIP is enabled, the rate information always be shown when every player load map.
+Use this command to disable or enable that rate information.
 
 ---------------------------------------
 
@@ -779,9 +786,10 @@ Warps to your save point.
 
 ---------------------------------------
 
-@jump
+@jump {<x> <y>}
 
-Warps to a random coordinate on the current map.
+Warps to the given coordinates on the current map.
+If no coordinates are entered, a random location will be chosen.
 
 ---------------------------------------
 

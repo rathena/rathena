@@ -1414,7 +1414,7 @@ OnTimer60000:
 	end;
 
 OnTimer61000:
-	donpcevent "Room of Earth#Failed::OnEnable";
+	enablenpc "Room of Earth#Failed";
 	end;
 
 OnTimer62000:
@@ -1520,7 +1520,7 @@ OnTimer183000:
 	end;
 
 OnTimer184000:
-	donpcevent "Room of Fire#Failed::OnEnable";
+	enablenpc "Room of Fire#Failed";
 	end;
 
 OnTimer185000:

@@ -340,7 +340,7 @@ enum useskill_fail_cause
 	USESKILL_FAIL_STYLE_CHANGE_FIGHTER = 81,
 	USESKILL_FAIL_STYLE_CHANGE_GRAPPLER = 82,
 	USESKILL_FAIL_THERE_ARE_NPC_AROUND = 83,
-	//USESKILL_FAIL_NEED_MORE_BULLET = 84,
+	USESKILL_FAIL_NEED_MORE_BULLET = 84,
 };
 
 enum clif_messages {
@@ -824,6 +824,7 @@ void clif_monster_hp_bar( struct mob_data* md, int fd );
  **/
 enum clif_colors {
 	COLOR_RED,
+	COLOR_WHITE,
 
 	COLOR_MAX
 };

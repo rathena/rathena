@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20140110
+//= 20140124
 //===== Description: =========================================
 //= List of script instructions used in item bonuses.
 //============================================================
@@ -121,6 +121,7 @@ bonus bSpeedAddRate,n;			Movement speed + n%
 bonus bAspd,n;        			Attack speed + n
 bonus bAspdRate,n;    			Attack speed + n%
 bonus bAtkRange,n;    			Attack range + n
+bonus bAddMaxWeight,n;			MaxWeight + n (in units of 0.1)
 
 =======================
 | 2. Extended Bonuses |

@@ -50,11 +50,17 @@ int quest_search_db(int quest_id)
 //Send quest info on login
 int quest_pc_login(TBL_PC * sd)
 {
+	int i;
+
 	if(sd->avail_quests == 0)
 		return 1;
 
 	clif_quest_send_list(sd);
 	clif_quest_send_mission(sd);
+	
+	for( i = 0; i < sd->avail_quests; i++ ){
+		clif_quest_update_objective(sd, &sd->quest_log[i], sd->quest_index[i]);
+	}
 
 	return 0;
 }
@@ -98,6 +104,8 @@ int quest_add(TBL_PC * sd, int quest_id)
 	sd->save_quest = true;
 
 	clif_quest_add(sd, &sd->quest_log[i], sd->quest_index[i]);
+
+	clif_quest_update_objective(sd, &sd->quest_log[i], sd->quest_index[i]);
 
 	if( save_settings&64 )
 		chrif_save(sd,0);
@@ -146,6 +154,8 @@ int quest_change(TBL_PC * sd, int qid1, int qid2)
 
 	clif_quest_delete(sd, qid1);
 	clif_quest_add(sd, &sd->quest_log[i], sd->quest_index[i]);
+
+	clif_quest_update_objective(sd, &sd->quest_log[i], sd->quest_index[i]);
 
 	if( save_settings&64 )
 		chrif_save(sd,0);
@@ -290,7 +300,7 @@ int quest_check(TBL_PC * sd, int quest_id, quest_check_type type) {
 int quest_read_db(void) {
 	const char* dbsubpath[] = {
 		"",
-		"import/",
+		DBIMPORT"/",
 	};
 	int f;
 

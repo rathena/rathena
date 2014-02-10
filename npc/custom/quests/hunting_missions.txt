@@ -9,6 +9,8 @@
 //===== Description: =========================================
 //= Random hunting missions.
 //= Rewards are based on quest difficulty.
+//= 
+//= NOTE: Requires SQL mob database.
 //===== Additional Comments: =================================
 //= 1.0 Initial script.
 //= 1.1 Small improvements and fixes.
@@ -54,7 +56,7 @@ function Chk;
 			close;
 		}
 		mes "You must hunt:";
-		query_sql("SELECT ID FROM `mob_db` WHERE left(Sprite, 4) != 'meta' AND left(Sprite, 2) != 'E_' AND ~Mode & 32 AND EXP > 0 AND MVP1id = 0 AND DropCardid > 4000 AND DropCardid < 5000 AND ID < 2000 AND instr('"+.Blacklist$+"',ID) = 0 ORDER BY rand() LIMIT "+.Quests, .@mob);
+		query_sql("SELECT ID FROM `" + .mob_db$ + "` WHERE left(Sprite, 4) != 'meta' AND left(Sprite, 2) != 'E_' AND ~Mode & 32 AND EXP > 0 AND MVP1id = 0 AND DropCardid > 4000 AND DropCardid < 5000 AND ID < 2000 AND instr('"+.Blacklist$+"',ID) = 0 ORDER BY rand() LIMIT "+.Quests, .@mob);
 		for (set .@i,0; .@i<.Quests; set .@i,.@i+1) {
 			setd "Mission"+.@i, .@mob[.@i];
 			setd "Mission"+.@i +"_",0;
@@ -279,6 +281,8 @@ OnInit:
 		40,70;
 	setarray .Modifier[0],	// Multipliers for Base Exp, Job Exp, and Zeny rewards.
 		getbattleflag("base_exp_rate")/100,getbattleflag("job_exp_rate")/100,60;
+	set .mob_db$,		// Table name of SQL mob database
+		(checkre(0))?"mob_db_re":"mob_db";
 	setarray .Shop[0],	// Reward items: <ID>,<point cost> (about 10~20 points per hunt).
 		512,1,513,1,514,1,538,5,539,5,558,10,561,10;
 	set .Blacklist$,	// Blacklisted mob IDs.

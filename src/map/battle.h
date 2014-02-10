@@ -514,6 +514,7 @@ extern struct Battle_Config
 	int vip_exp_penalty_base;
 	int vip_exp_penalty_job_normal;
 	int vip_exp_penalty_job;
+	int vip_disp_rate;
 	int mon_trans_disable_in_gvg;
 	int emblem_woe_change;
 	int emblem_transparency_limit;
@@ -525,6 +526,12 @@ extern struct Battle_Config
 	int feature_autotrade;
 	int feature_autotrade_direction;
 	int feature_autotrade_sit;
+
+	int disp_serverbank_msg;
+	int warg_can_falcon;
+	int atcommand_enable_npc;
+	int path_blown_halt;
+	int rental_mount_speed_boost;
 } battle_config;
 
 void do_init_battle(void);

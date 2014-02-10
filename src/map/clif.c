@@ -1348,10 +1348,6 @@ int clif_spawn(struct block_list *bl)
 				clif_specialeffect(bl,421,AREA);
 			if( sd->bg_id && map[sd->bl.m].flag.battleground )
 				clif_sendbgemblem_area(sd);
-			if( sd->sc.option&OPTION_MOUNTING ) {
-				//New Mounts are not complaint to the original method, so we gotta tell this guy that he is mounting.
-				clif_status_load_notick(&sd->bl,SI_ALL_RIDING,2,1,0,0);
-			}
 			for(i = 1; i < 5; i++){
 				if( sd->talisman[i] > 0 )
 					clif_talisman(sd, i);
@@ -1366,7 +1362,9 @@ int clif_spawn(struct block_list *bl)
 		#endif
 			if (sd->status.robe)
 				clif_refreshlook(bl,bl->id,LOOK_ROBE,sd->status.robe,AREA);
-
+			
+			if (!&sd->sc)
+				break;
 			if( sd->sc.data[SC_CAMOUFLAGE] )
 				clif_status_load(bl,SI_CAMOUFLAGE,1);
 			if( sd->sc.data[SC_MONSTER_TRANSFORM] )
@@ -1375,6 +1373,8 @@ int clif_spawn(struct block_list *bl)
 				clif_status_load(bl,SI_MOONSTAR,1);
 			if( sd->sc.data[SC_SUPER_STAR] )
 				clif_status_load(bl,SI_SUPER_STAR,1);
+			if( sd->sc.data[SC_ALL_RIDING] )
+				clif_status_load(bl,SI_ALL_RIDING,1);
 		}
 		break;
 	case BL_MOB:
@@ -4173,10 +4173,6 @@ static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_d
 		if( dstsd->sc.data[i] )
 			clif_status_load_single(sd->fd,dstsd->bl.id,StatusIconChangeTable[i],1,dstsd->sc.data[i]->val1,dstsd->sc.data[i]->val2,0);
 	}
-	if( dstsd->sc.option&OPTION_MOUNTING ) {
-		//New Mounts are not complaint to the original method, so we gotta tell this guy that I'm mounting.
-		clif_status_load_single(sd->fd,dstsd->bl.id,SI_ALL_RIDING,2,1,0,0);
-	}
 #ifdef NEW_CARTS
 	if( dstsd->sc.data[SC_PUSH_CART] )
 		clif_status_load_single(sd->fd, dstsd->bl.id, SI_ON_PUSH_CART, 2, dstsd->sc.data[SC_PUSH_CART]->val1, 0, 0);
@@ -4236,6 +4232,8 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 			if ( tsd->status.robe )
 				clif_refreshlook(&sd->bl,bl->id,LOOK_ROBE,tsd->status.robe,SELF);
 
+			if (!&tsd->sc)
+				break;
 			if( tsd->sc.data[SC_CAMOUFLAGE] )
 				clif_status_load(bl,SI_CAMOUFLAGE,1);
 			if( tsd->sc.data[SC_MONSTER_TRANSFORM] )
@@ -4244,6 +4242,8 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 				clif_status_load(bl,SI_MOONSTAR,1);
 			if( tsd->sc.data[SC_SUPER_STAR] )
 				clif_status_load(bl,SI_SUPER_STAR,1);
+			if( tsd->sc.data[SC_ALL_RIDING] )
+				clif_status_load(bl,SI_ALL_RIDING,1);
 		}
 		break;
 	case BL_MER: // Devotion Effects
@@ -9672,8 +9672,10 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_equipcheckbox(sd);
 #endif
 #ifdef VIP_ENABLE
-		clif_display_pinfo(sd,ZC_PERSONAL_INFOMATION);
-		//clif_vip_display_info(sd,ZC_PERSONAL_INFOMATION_CHN);
+		if (!sd->disableshowrate) {
+			clif_display_pinfo(sd,ZC_PERSONAL_INFOMATION);
+			//clif_vip_display_info(sd,ZC_PERSONAL_INFOMATION_CHN);
+		}
 #endif
 		if( (battle_config.bg_flee_penalty != 100 || battle_config.gvg_flee_penalty != 100) &&
 			(map_flag_gvg(sd->state.pmap) || map_flag_gvg(sd->bl.m) || map[sd->state.pmap].flag.battleground || map[sd->bl.m].flag.battleground) )
@@ -10602,9 +10604,8 @@ void clif_parse_EquipItem(int fd,struct map_session_data *sd)
 	if (index < 0 || index >= MAX_INVENTORY)
 		return; //Out of bounds check.
 
-	if(sd->npc_id) {
-		if (!sd->npc_item_flag)
-			return;
+	if(sd->npc_id && !sd->npc_item_flag) {
+		return;
 	} else if (sd->state.storage_flag || sd->sc.opt1)
 		; //You can equip/unequip stuff while storage is open/under status changes
 	else if (pc_cant_act2(sd))
@@ -10648,9 +10649,8 @@ void clif_parse_UnequipItem(int fd,struct map_session_data *sd)
 		return;
 	}
 
-	if (sd->npc_id) {
-		if (!sd->npc_item_flag)
-			return;
+	if (sd->npc_id && !sd->npc_item_flag) {
+		return;
 	} else if (sd->state.storage_flag || sd->sc.opt1)
 		; //You can equip/unequip stuff while storage is open/under status changes
 	else if (pc_cant_act2(sd))
@@ -14965,8 +14965,6 @@ void clif_cashshop_result( struct map_session_data *sd, uint16 item_id, uint16 r
 /// 0288 <packet len>.W <kafra points>.L <count>.W { <amount>.W <name id>.W }.4B*count (PACKETVER >= 20100803)
 /// 0848 <packet len>.W <count>.W <packet len>.W <kafra points>.L <count>.W { <amount>.W <name id>.W <tab>.W }.6B*count (PACKETVER >= 20130000)
 void clif_parse_cashshop_buy(int fd, struct map_session_data *sd){
-
-	int fail = 0;
 	struct s_packet_db* info;
 	int cmd = RFIFOW(fd,0);
 
@@ -14974,16 +14972,17 @@ void clif_parse_cashshop_buy(int fd, struct map_session_data *sd){
 
 	info = &packet_db[sd->packet_ver][cmd];
 
-	if( sd->state.trading || !sd->npc_shopid )
-		fail = 1;
+	if( sd->state.trading || !sd->npc_shopid ) {
+		clif_cashshop_ack(sd,1);
+		return;
+	}
 	else {
 #if PACKETVER < 20101116
 		short nameid = RFIFOW(fd,info->pos[0]);
 		short amount = RFIFOW(fd,info->pos[1]);
 		int points   = RFIFOL(fd,info->pos[2]);
 
-		fail = npc_cashshop_buy(sd, nameid, amount, points);
-		clif_cashshop_ack(sd,fail);
+		clif_cashshop_ack(sd,npc_cashshop_buy(sd, nameid, amount, points));
 #else
 		int s_itl = (cmd==0x848)?10:4; //item _list size (depend on cmd even for 2013+)
 		int len    = RFIFOW(fd,info->pos[0]);
@@ -14996,13 +14995,15 @@ void clif_parse_cashshop_buy(int fd, struct map_session_data *sd){
 			return;
 		}
 		if(cmd==0x848){
-			cashshop_buylist( sd, points, count, item_list);
+			if (cashshop_buylist( sd, points, count, item_list))
+				clif_cashshop_ack(sd,0);
+			return;
 		} else {
-			fail = npc_cashshop_buylist(sd,points,count,item_list);
+			clif_cashshop_ack(sd,npc_cashshop_buylist(sd,points,count,item_list));
+			return;
 		}
 #endif
 	}
-	clif_cashshop_ack(sd,fail);
 }
 
 /// Adoption System
@@ -16668,10 +16669,12 @@ int clif_autoshadowspell_list(struct map_session_data *sd) {
 
 	WFIFOHEAD(fd, 2 * 6 + 4);
 	WFIFOW(fd,0) = 0x442;
+	
+	//AEGIS listed the specified skills that available for SC_AUTOSHADOWSPELL
 	for( i = 0, c = 0; i < MAX_SKILL; i++ )
 		if( sd->status.skill[i].flag == SKILL_FLAG_PLAGIARIZED && sd->status.skill[i].id > 0 &&
-				sd->status.skill[i].id < GS_GLITTERING && skill_get_type(sd->status.skill[i].id) == BF_MAGIC )
-		{ // Can't auto cast both Extended class and 3rd class skills.
+			(skill_get_inf2(sd->status.skill[i].id)&INF2_AUTOSHADOWSPELL))
+		{
 			WFIFOW(fd,8+c*2) = sd->status.skill[i].id;
 			c++;
 		}
@@ -17370,7 +17373,7 @@ void packetdb_readdb(void)
 	int ln=0, entries=0;
 	int cmd,i,j,packet_ver;
 	int max_cmd=-1;
-	int skip_ver = 0;
+	bool skip_ver = false;
 	int warned = 0;
 	char *str[64],*p,*str2[64],*p2,w1[256],w2[256];
 	int packet_len_table[MAX_PACKET_DB] = {
@@ -17848,26 +17851,25 @@ void packetdb_readdb(void)
 		{ "ZC_PERSONAL_INFOMATION_CHN", ZC_PERSONAL_INFOMATION_CHN},
 		{ "ZC_CLEAR_DIALOG", ZC_CLEAR_DIALOG},
 	};
-	const char *filename[] = { "packet_db.txt", "import/packet_db.txt"};
+	const char *filename[] = { "packet_db.txt", DBIMPORT"/packet_db.txt"};
 	int f;
 
 	// initialize packet_db[SERVER] from hardcoded packet_len_table[] values
 	memset(packet_db,0,sizeof(packet_db));
 	for( i = 0; i < ARRAYLENGTH(packet_len_table); ++i )
 		packet_len(i) = packet_len_table[i];
-
+	
+	clif_config.packet_db_ver = MAX_PACKET_VER;
 	for(f = 0; f<ARRAYLENGTH(filename); f++){
 		entries = 0;
 		sprintf(line, "%s/%s", db_path,filename[f]);
 		if( (fp=fopen(line,"r"))==NULL ){
 			if(f==0) {
-				ShowFatalError("can't read %s\n", line);
+				ShowFatalError("Can't read %s\n", line);
 				exit(EXIT_FAILURE);
 			}
 			return;
 		}
-
-		clif_config.packet_db_ver = MAX_PACKET_VER;
 		packet_ver = MAX_PACKET_VER;	// read into packet_db's version by default
 		while( fgets(line, sizeof(line), fp) )
 		{
@@ -17885,21 +17887,21 @@ void packetdb_readdb(void)
 						if( (warned&1) == 0 )
 							ShowWarning("The packet_db table only has support up to version %d.\n", MAX_PACKET_VER);
 						warned &= 1;
-						skip_ver = 1;
+						skip_ver = true;
 					}
 					else if( packet_ver < 0 )
 					{
 						if( (warned&2) == 0 )
 							ShowWarning("Negative packet versions are not supported.\n");
 						warned &= 2;
-						skip_ver = 1;
+						skip_ver = true;
 					}
 					else if( packet_ver == SERVER )
 					{
 						if( (warned&4) == 0 )
 							ShowWarning("Packet version %d is reserved for server use only.\n", SERVER);
 						warned &= 4;
-						skip_ver = 1;
+						skip_ver = true;
 					}
 
 					if( skip_ver )
@@ -17918,12 +17920,11 @@ void packetdb_readdb(void)
 						clif_config.packet_db_ver = MAX_PACKET_VER;
 					else // to manually set the packet DB version
 						clif_config.packet_db_ver = cap_value(atoi(w2), 0, MAX_PACKET_VER);
-
 					continue;
 				}
 			}
 
-			if( skip_ver != 0 )
+			if( skip_ver )
 				continue; // Skipping current packet version
 
 			memset(str,0,sizeof(str));
@@ -18015,7 +18016,10 @@ void packetdb_readdb(void)
  *
  *------------------------------------------*/
 int do_init_clif(void) {
-	const char* colors[COLOR_MAX] = { "0xFF0000" };
+	const char* colors[COLOR_MAX] = {
+		"0xFF0000",
+		"0xFFFFFF",
+	};
 	int i;
 	/**
 	 * Setup Color Table (saves unnecessary load of strtoul on every call)

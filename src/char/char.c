@@ -1922,7 +1922,7 @@ int mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 	offset += MAP_NAME_LENGTH_EXT;
 #endif
 #if PACKETVER >= 20100803
-#if PACKETVER > 201300000
+#if PACKETVER > 20130000
 	WBUFL(buf,124) = (p->delete_date?TOL(p->delete_date-time(NULL)):0);
 #else
 	WBUFL(buf,124) = TOL(p->delete_date);
@@ -4009,20 +4009,20 @@ void char_delete2_ack(int fd, int char_id, uint32 result, time_t delete_date)
 /// Any (0x718): An unknown error has occurred.
 void char_delete2_accept_ack(int fd, int char_id, uint32 result)
 {// HC: <082a>.W <char id>.L <Msg:0-5>.L
-	 if(result == 1)
-	{
+	if(result == 1 ){
 		struct char_session_data* sd;
 		sd = (struct char_session_data*)session[fd]->session_data;
-		mmo_char_send(fd, sd);
+
+		if( sd->version >= date2version(20130000) ){
+			mmo_char_send(fd, sd);
+		}
 	}
-	else
-	{
-		WFIFOHEAD(fd,10);
-		WFIFOW(fd,0) = 0x82a;
-		WFIFOL(fd,2) = char_id;
-		WFIFOL(fd,6) = result;
-		WFIFOSET(fd,10);
-	}
+	
+	WFIFOHEAD(fd,10);
+	WFIFOW(fd,0) = 0x82a;
+	WFIFOL(fd,2) = char_id;
+	WFIFOL(fd,6) = result;
+	WFIFOSET(fd,10);
 }
 
 

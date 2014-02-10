@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Lupus
 //===== Last Updated: ========================================
-//= 20121003
+//= 20140208
 //===== Description: ========================================= 
 //= Demonstrates the 'getiteminfo' command.
 //============================================================
@@ -14,10 +14,10 @@ prontera,156,179,6	script	test_getiteminfo	117,{
 
 	// This line uses an INTERNAL function of your client to show item name by its ID!
 	// ^nItemID^XXXX -> Item Name
-	mes "Item ID: "+.@value+" ^nItemID^"+.@value;
+	mes "Item ID: " + .@value + " ^nItemID^" + .@value;
 
 	mes "Current item info:";
-	for(set .@id,0; .@id<14; set .@id,.@id+1)
-		mes " getiteminfo("+.@value+","+.@id+") = "+getiteminfo(.@value,.@id);
+	for(.@id = 0; .@id < 14; .@id++)
+		mes " getiteminfo(" + .@value + "," + .@id + ") = " + getiteminfo(.@value,.@id);
 	close;
 }

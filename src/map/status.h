@@ -21,6 +21,7 @@ struct status_change;
 #	define MAX_REFINE 10
 #endif
 
+/// Refine type
 enum refine_type {
 	REFINE_TYPE_ARMOR	= 0,
 	REFINE_TYPE_WEAPON1	= 1,
@@ -30,9 +31,10 @@ enum refine_type {
 	REFINE_TYPE_MAX		= 5
 };
 
+/// Get refine chance
 int status_get_refine_chance(enum refine_type wlv, int refine);
 
-// Status changes listing. These code are for use by the server.
+/// Status changes listing. These code are for use by the server.
 typedef enum sc_type {
 	SC_NONE = -1,
 
@@ -692,15 +694,18 @@ typedef enum sc_type {
 	SC_QUEST_BUFF1,
 	SC_QUEST_BUFF2,
 	SC_QUEST_BUFF3,
+	
+	SC_ALL_RIDING,
+
+	SC_TEARGAS_SOB,
 
 #ifdef RENEWAL
-	SC_EXTREMITYFIST2,
+	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif
-
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 } sc_type;
 
-// Official status change ids, used to display status icons on the client.
+/// Official status change ids, used to display status icons on the client.
 enum si_type {
 	SI_BLANK		= -1,
 	SI_PROVOKE		= 0,
@@ -1523,7 +1528,7 @@ enum e_mode
 //Status change option definitions (options are what makes status changes visible to chars
 //who were not on your field of sight when it happened)
 
-//opt1: Non stackable status changes.
+///opt1: Non stackable status changes.
 enum sc_opt1 {
 	OPT1_STONE = 1, //Petrified
 	OPT1_FREEZE,
@@ -1536,7 +1541,7 @@ enum sc_opt1 {
 	OPT1_CRYSTALIZE,
 };
 
-//opt2: Stackable status changes.
+///opt2: Stackable status changes.
 enum sc_opt2 {
 	OPT2_POISON		= 0x0001,
 	OPT2_CURSE		= 0x0002,
@@ -1549,7 +1554,7 @@ enum sc_opt2 {
 	OPT2_FEAR		= 0x0100,
 };
 
-//opt3: (SHOW_EFST_*)
+///opt3: (SHOW_EFST_*)
 enum sc_opt3 {
 	OPT3_NORMAL		= 0x00000000,
 	OPT3_QUICKEN		= 0x00000001,
@@ -1572,6 +1577,7 @@ enum sc_opt3 {
 	OPT3_CONTRACT		= 0x00020000,
 };
 
+///Option
 enum e_option {
 	OPTION_NOTHING		= 0x00000000,
 	OPTION_SIGHT		= 0x00000001,
@@ -1584,7 +1590,7 @@ enum e_option {
 	OPTION_WEDDING		= 0x00001000,
 	OPTION_RUWACH		= 0x00002000,
 	OPTION_CHASEWALK	= 0x00004000,
-	OPTION_FLYING		= 0x00008000, //Note that clientside Flying and Xmas are 0x8000 for clients prior to 2007.
+	OPTION_FLYING		= 0x00008000, //! NOTE: That clientside Flying and Xmas are 0x8000 for clients prior to 2007.
 	OPTION_XMAS			= 0x00010000,
 	OPTION_TRANSFORM	= 0x00020000,
 	OPTION_SUMMER		= 0x00040000,
@@ -1597,8 +1603,7 @@ enum e_option {
 	OPTION_DRAGON4		= 0x02000000,
 	OPTION_DRAGON5		= 0x04000000,
 	OPTION_HANBOK		= 0x08000000,
-	OPTION_MOUNTING		= 0x10000000,
-	OPTION_OKTOBERFEST	= 0x20000000,
+	OPTION_OKTOBERFEST	= 0x10000000,
 
 #ifndef NEW_CARTS
 	OPTION_CART1	= 0x00000008,
@@ -1615,7 +1620,7 @@ enum e_option {
 	OPTION_DRAGON	= OPTION_DRAGON1|OPTION_DRAGON2|OPTION_DRAGON3|OPTION_DRAGON4|OPTION_DRAGON5,
 };
 
-//Defines for the manner system [Skotlex]
+///Defines for the manner system [Skotlex]
 enum manner_flags
 {
 	MANNER_NOCHAT		= 0x01,
@@ -1639,7 +1644,7 @@ enum scs_flag {
 	SCS_NOCHATCOND		= 0x00000200, /* cond flag for notalk */
 };
 
-//Define flags for the status_calc_bl function. [Skotlex]
+///Define flags for the status_calc_bl function. [Skotlex]
 enum scb_flag
 {
 	SCB_NONE	= 0x00000000,
@@ -1695,16 +1700,16 @@ enum e_status_bonus {
 	STATUS_BONUS_RATE = 1,
 };
 
-//Define to determine who gets HP/SP consumed on doing skills/etc. [Skotlex]
+///Define to determine who gets HP/SP consumed on doing skills/etc. [Skotlex]
 #define BL_CONSUME (BL_PC|BL_HOM|BL_MER|BL_ELEM)
-//Define to determine who has regen
+///Define to determine who has regen
 #define BL_REGEN (BL_PC|BL_HOM|BL_MER|BL_ELEM)
-//Define to determine who will receive a clif_status_change packet for effects that require one to display correctly
+///Define to determine who will receive a clif_status_change packet for effects that require one to display correctly
 #define BL_SCEFFECT (BL_PC|BL_HOM|BL_MER|BL_MOB|BL_ELEM)
 
-//Basic damage info of a weapon
-//Required because players have two of these, one in status_data
-//and another for their left hand weapon.
+/** Basic damage info of a weapon
+* Required because players have two of these, one in status_data
+* and another for their left hand weapon. */
 struct weapon_atk {
 	unsigned short atk, atk2;
 	unsigned short range;
@@ -1716,7 +1721,7 @@ struct weapon_atk {
 };
 
 
-//For holding basic status (which can be modified by status changes)
+///For holding basic status (which can be modified by status changes)
 struct status_data {
 	unsigned int
 		hp, sp,  // see status_cpy before adding members before hp and sp
@@ -1747,13 +1752,14 @@ struct status_data {
 
 	unsigned char
 		def_ele, ele_lv,
-		size, race,
-		class_; /// Class_Normal, Class_Boss, Class_Guardian
+		size,
+		race, /// see enum e_race
+		class_; /// see enum e_classAE
 
 	struct weapon_atk rhw, lhw; //Right Hand/Left Hand Weapon.
 };
 
-//Additional regen data that only players have.
+///Additional regen data that only players have.
 struct regen_data_sub {
 	unsigned short
 		hp,sp;
@@ -1769,8 +1775,8 @@ struct regen_data_sub {
 	} rate;
 };
 
+///Regen data
 struct regen_data {
-
 	unsigned short flag; //Marks what stuff you may heal or not.
 	unsigned short
 		hp,sp,shp,ssp;
@@ -1797,18 +1803,20 @@ struct regen_data {
 	struct regen_data_sub *sregen, *ssregen;
 };
 
+///Status change entry
 struct status_change_entry {
 	int timer;
 	int val1,val2,val3,val4;
 };
 
+///Status change
 struct status_change {
 	unsigned int option;// effect state (bitfield)
 	unsigned int opt3;// skill state (bitfield)
 	unsigned short opt1;// body state
 	unsigned short opt2;// health state (bitfield)
 	unsigned char count;
-	//TODO: See if it is possible to implement the following SC's without requiring extra parameters while the SC is inactive.
+	//! TODO: See if it is possible to implement the following SC's without requiring extra parameters while the SC is inactive.
 	unsigned char jb_flag; //Joint Beat type flag
 	struct {
 		unsigned char move;

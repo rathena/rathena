@@ -8,33 +8,30 @@
 #include "../common/mmo.h" // ITEM_NAME_LENGTH
 #include "map.h"
 
-// 32k array entries in array (the rest goes to the db)
+/// 32k array entries in array (the rest goes to the db)
 #define MAX_ITEMDB 0x8000
-
-//Use apple for unknown items.
+///Use apple for unknown items.
 #define UNKNOWN_ITEM_ID 512
-
-// The maximum number of item delays
+/// The maximum number of item delays
 #define MAX_ITEMDELAYS	10
-
-#define MAX_SEARCH	5  //Designed for search functions, species max number of matches to display.
-
-/* maximum amount of items a combo may require */
+///Designed for search functions, species max number of matches to display.
+#define MAX_SEARCH	5
+///Maximum amount of items a combo may require
 #define MAX_ITEMS_PER_COMBO 6
 
 //The only item group required by the code to be known. See const.txt for the full list.
 #define IG_FINDINGORE 6
 #define IG_POTION 37
 
-#define MAX_ITEMGROUP 390 ///The max. item group count (increase this when needed). TODO: Remove this limit and use dynamic allocaton
+#define MAX_ITEMGROUP 400 ///The max. item group count (increase this when needed). TODO: Remove this limit and use dynamic size or DBMap if needed
 
-#define MAX_ITEMGROUP_RANDGROUP 4	///Max group for random item (increase this when needed).
+#define MAX_ITEMGROUP_RANDGROUP 4	///Max group for random item (increase this when needed). TODO: Remove this limit and use dynamic size if needed
 
 #define CARD0_FORGE 0x00FF
 #define CARD0_CREATE 0x00FE
 #define CARD0_PET ((short)0xFF00)
 
-//Marks if the card0 given is "special" (non-item id used to mark pets/created items. [Skotlex]
+///Marks if the card0 given is "special" (non-item id used to mark pets/created items. [Skotlex]
 #define itemdb_isspecial(i) (i == CARD0_FORGE || i == CARD0_CREATE || i == CARD0_PET)
 
 ///Enum of item id (for hardcoded purpose)
@@ -120,9 +117,7 @@ enum item_itemid {
 	ITEMID_JOB_MANUAL50					= 14592,
 };
 
-/**
- * Mercenary Scrolls
- */
+///Mercenary Scrolls
 enum mercenary_scroll_item_list {
 	ITEMID_BOW_MERCENARY_SCROLL1 = 12153,
 	ITEMID_BOW_MERCENARY_SCROLL2,
@@ -156,9 +151,7 @@ enum mercenary_scroll_item_list {
 	ITEMID_SPEARMERCENARY_SCROLL10,
 };
 
-/**
- * Rune Knight
- */
+///Rune Knight
 enum rune_item_list {
 	ITEMID_NAUTHIZ		= 12725,
 	ITEMID_RAIDO,
@@ -172,9 +165,7 @@ enum rune_item_list {
 	ITEMID_LUX_ANIMA	= 22540,
 };
 
-/**
- * Mechanic
- */
+///Mechanic
 enum mechanic_item_list {
 	ITEMID_ACCELERATOR				= 2800,
 	ITEMID_HOVERING_BOOSTER,
@@ -193,9 +184,7 @@ enum mechanic_item_list {
 	ITEMID_LIME_GREEN_PTS,
 };
 
-/**
- * Genetic
- */
+///Genetic
 enum genetic_item_list {
 	ITEMID_SEED_OF_HORNY_PLANT			= 6210,
 	ITEMID_BLOODSUCK_PLANT_SEED			= 6211,
@@ -250,9 +239,7 @@ enum genetic_item_list {
 	ITEMID_BLACK_THING_TO_THROW,
 };
 
-/**
- * Guillotine Cross
- */
+///Guillotine Cross
 enum poison_item_list {
 	ITEMID_PARALYSE = 12717,
 	ITEMID_LEECHESEND,
@@ -264,9 +251,7 @@ enum poison_item_list {
 	ITEMID_VENOMBLEED,
 };
 
-/**
- * Spell Books
- */
+///Spell Books
 enum spell_book_item_list {
 	ITEMID_MAGIC_BOOK_FB = 6189,
 	ITEMID_MAGIC_BOOK_CB,
@@ -287,9 +272,7 @@ enum spell_book_item_list {
 	ITEMID_MAGIC_BOOK_DL,
 };
 
-/**
- * Cash Food
- */
+///Cash Food
 enum cash_food_item_list {
 	ITEMID_STR_DISH10_  = 12202,
 	ITEMID_AGI_DISH10_,
@@ -299,10 +282,12 @@ enum cash_food_item_list {
 	ITEMID_VIT_DISH10_,
 };
 
+///Item No Use List
 enum item_nouse_list {
 	NOUSE_SITTING = 0x01,
 };
 
+///Item job
 enum e_item_job {
 	ITEMJ_NORMAL      = 0x01,
 	ITEMJ_UPPER       = 0x02,
@@ -312,6 +297,19 @@ enum e_item_job {
 	ITEMJ_THIRD_BABY  = 0x20,
 };
 
+enum e_item_ammo {
+	AMMO_ARROW = 1,
+	AMMO_THROWABLE_DAGGER,
+	AMMO_BULLET,
+	AMMO_SHELL,
+	AMMO_GRENADE,
+	AMMO_SHURIKEN,
+	AMMO_KUNAI,
+	AMMO_CANNONBALL,
+	AMMO_THROWABLE_ITEM, ///Sling items
+};
+
+///Item combo struct
 struct item_combo {
 	struct script_code *script;
 	unsigned short *nameid;/* nameid array */
@@ -320,6 +318,7 @@ struct item_combo {
 	bool isRef;/* whether this struct is a reference or the master */
 };
 
+///Main item data struct
 struct item_data {
 	uint16 nameid;
 	char name[ITEM_NAME_LENGTH],jname[ITEM_NAME_LENGTH];
@@ -386,7 +385,7 @@ struct item_data {
 /* Struct of item group entry */
 struct s_item_group {
 	uint16 nameid, ///item id
-		duration; ///duration if item as rental item
+		duration; ///duration if item as rental item (in minute)
 	uint16 amount; ///amount of item will be obtained
 	bool isAnnounced, ///broadcast if player get this item
 		isNamed; ///named the item (if possible)
@@ -403,7 +402,7 @@ struct s_item_group_random {
 struct s_item_group_db {
 	struct s_item_group *must;
 	uint16 must_qty;
-	struct s_item_group_random random[MAX_ITEMGROUP_RANDGROUP]; //! TODO: Move this fixed array to dynamic allocation!
+	struct s_item_group_random random[MAX_ITEMGROUP_RANDGROUP]; //! TODO: Move this fixed array to dynamic size if needed.
 };
 
 struct item_data* itemdb_searchname(const char *name);
@@ -429,7 +428,7 @@ struct item_data* itemdb_exists(int nameid);
 #define itemdb_viewid(n) (itemdb_search(n)->view_id)
 #define itemdb_autoequip(n) (itemdb_search(n)->flag.autoequip)
 #define itemdb_is_rune(n) ((n >= ITEMID_NAUTHIZ && n <= ITEMID_HAGALAZ) || n == ITEMID_LUX_ANIMA)
-#define itemdb_is_element(n) (n >= ITEMID_CRYSTAL_BLUE && n <= ITEMID_YELLOW_LIVE)
+#define itemdb_is_element(n) (n >= ITEMID_SCARLET_PTS && n <= ITEMID_LIME_GREEN_PTS)
 #define itemdb_is_spellbook(n) (n >= ITEMID_MAGIC_BOOK_FB && n <= ITEMID_MAGIC_BOOK_DL)
 #define itemdb_is_poison(n) (n >= ITEMID_PARALYSE && n <= ITEMID_VENOMBLEED)
 #define itemid_isgemstone(id) ( (id) >= ITEMID_YELLOW_GEMSTONE && (id) <= ITEMID_BLUE_GEMSTONE )
@@ -437,9 +436,10 @@ struct item_data* itemdb_exists(int nameid);
 #define itemdb_is_GNbomb(n) (n >= ITEMID_APPLE_BOMB && n <= ITEMID_VERY_HARD_LUMP)
 #define itemdb_is_GNthrowable(n) (n >= ITEMID_MYSTERIOUS_POWDER && n <= ITEMID_BLACK_THING_TO_THROW)
 const char* itemdb_typename(enum item_types type);
+const char *itemdb_typename_ammo (enum e_item_ammo ammo);
 
 int itemdb_group_bonus(struct map_session_data* sd, int itemid);
-unsigned short itemdb_searchrandomid(int group_id, uint8 sub_group);
+unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group);
 
 #define itemdb_value_buy(n) itemdb_search(n)->value_buy
 #define itemdb_value_sell(n) itemdb_search(n)->value_sell

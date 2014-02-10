@@ -506,7 +506,7 @@ int chrif_sendvipdata(int fd, struct mmo_account acc, char isvip, int mapfd) {
 	WFIFOHEAD(fd,19);
 	WFIFOW(fd,0) = 0x2743;
 	WFIFOL(fd,2) = acc.account_id;
-	WFIFOL(fd,6) = acc.vip_time;
+	WFIFOL(fd,6) = (int)acc.vip_time;
 	WFIFOB(fd,10) = isvip;
 	WFIFOL(fd,11) = acc.group_id; //new group id
 	WFIFOL(fd,15) = mapfd; //link to mapserv
@@ -1208,26 +1208,28 @@ int mmo_auth(struct login_session_data* sd, bool isServer) {
 	}
 
 	if( login_config.client_hash_check && !isServer ) {
-		struct client_hash_node *node = login_config.client_hash_nodes;
+		struct client_hash_node *node = NULL;
 		bool match = false;
 
-		if( !sd->has_client_hash ) {
-			ShowNotice("Client doesn't sent client hash (account: %s, pass: %s, ip: %s)\n", sd->userid, sd->passwd, acc.state, ip);
-			return 5;
-		}
-
-		while( node ) {
-			if( node->group_id <= acc.group_id && memcmp(node->hash, sd->client_hash, 16) == 0 ) {
+		for( node = login_config.client_hash_nodes; node; node = node->next ) {
+			if( acc.group_id < node->group_id )
+				continue;
+			if( *node->hash == '\0' // Allowed to login without hash
+			 || (sd->has_client_hash && memcmp(node->hash, sd->client_hash, 16) == 0 ) // Correct hash
+			) {
 				match = true;
 				break;
 			}
-
-			node = node->next;
 		}
 
 		if( !match ) {
 			char smd5[33];
 			int i;
+
+			if( !sd->has_client_hash ) {
+				ShowNotice("Client didn't send client hash (account: %s, pass: %s, ip: %s)\n", sd->userid, sd->passwd, acc.state, ip);
+				return 5;
+			}
 
 			for( i = 0; i < 16; i++ )
 				sprintf(&smd5[i * 2], "%02x", sd->client_hash[i]);
@@ -1832,20 +1834,30 @@ int login_config_read(const char* cfgName)
 		else if(!strcmpi(w1, "client_hash")) {
 			int group = 0;
 			char md5[33];
+
 			if (sscanf(w2, "%3d, %32s", &group, md5) == 2) {
 				struct client_hash_node *nnode;
 				int i;
 				CREATE(nnode, struct client_hash_node, 1);
-				for (i = 0; i < 32; i += 2) {
-					char buf[3];
-					unsigned int byte;
-					memcpy(buf, &md5[i], 2);
-					buf[2] = 0;
-					sscanf(buf, "%2x", &byte);
-					nnode->hash[i / 2] = (uint8)(byte & 0xFF);
+
+				if (strcmpi(md5, "disabled") == 0) {
+					nnode->hash[0] = '\0';
+				} else {
+					for (i = 0; i < 32; i += 2) {
+						char buf[3];
+						unsigned int byte;
+
+						memcpy(buf, &md5[i], 2);
+						buf[2] = 0;
+
+						sscanf(buf, "%2x", &byte);
+						nnode->hash[i / 2] = (uint8)(byte & 0xFF);
+					}
 				}
+
 				nnode->group_id = group;
 				nnode->next = login_config.client_hash_nodes;
+
 				login_config.client_hash_nodes = nnode;
 			}
 		} else if(strcmpi(w1, "chars_per_account") == 0) { //maxchars per account [Sirius]

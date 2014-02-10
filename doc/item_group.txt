@@ -13,25 +13,25 @@ and 'getgroupitem' script commands. The table below explains which fields are
 accessed in each.
 
 +===============+====================+================+
-| Field			| 'getrandgroupitem' | 'getgroupitem' |
+| Field         | 'getrandgroupitem' | 'getgroupitem' |
 +===============+====================+================+
-| GroupID		|		YES			 |		YES		  |
+| GroupID       |       YES          |      YES       |
 +===============+====================+================+
-| ItemID		|		YES			 |		YES		  |
+| ItemID        |       YES          |      YES       |
 +===============+====================+================+
-| Rate			|		YES			 |		YES		  |
+| Rate          |       YES          |      YES       |
 +===============+====================+================+
-| Amount		|		no			 |		YES		  |
+| Amount        |       no           |      YES       |
 +===============+====================+================+
-| Random		|		no			 |		YES		  |
+| Random        |       no           |      YES       |
 +===============+====================+================+
-| isAnnounced	|		no			 |		YES		  |
+| isAnnounced   |       no           |      YES       |
 +===============+====================+================+
-| Duration		|		no			 |		YES		  |
+| Duration      |       no           |      YES       |
 +===============+====================+================+
-| isNamed		|		no			 |		YES		  |
+| isNamed       |       no           |      YES       |
 +===============+====================+================+
-| isBound		|		no			 |		YES		  |
+| isBound       |       no           |      YES       |
 +===============+====================+================+
 
 ---------------------------------------

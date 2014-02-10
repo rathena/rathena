@@ -41,8 +41,8 @@ struct eventlist {
 };
 
 //Constant related to the flash of the Guild EXP cache
-#define GUILD_SEND_XY_INVERVAL	5000 // Interval of sending coordinates and HP
-#define GUILD_PAYEXP_INVERVAL 10000 //Interval (maximum survival time of the cache, in milliseconds)
+#define GUILD_SEND_XY_INTERVAL	5000 // Interval of sending coordinates and HP
+#define GUILD_PAYEXP_INTERVAL 10000 //Interval (maximum survival time of the cache, in milliseconds)
 #define GUILD_PAYEXP_LIST 8192 //The maximum number of cache
 
 //Guild EXP cache
@@ -1652,7 +1652,7 @@ int guild_broken(int guild_id,int flag) {
 		return 0;
 
 	for(i=0;i<g->max_member;i++){	// Destroy all relationships
-		struct map_session_data *sd = sd=g->member[i].sd;
+		struct map_session_data *sd = g->member[i].sd;
 		if(sd != NULL){
 			if(sd->state.storage_flag == 2)
 				storage_guild_storage_quit(sd,1);
@@ -2088,7 +2088,7 @@ void guild_flags_clear(void) {
 void do_init_guild(void) {
 	const char* dbsubpath[] = {
 		"",
-		"import/",
+		"/"DBIMPORT,
 	};
 	int i;
 	
@@ -2104,7 +2104,7 @@ void do_init_guild(void) {
 	
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
 		int n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
-		char* dbsubpath1 = aMalloc(n1+1);
+		char* dbsubpath1 = (char*)aMalloc(n1+1);
 		safesnprintf(dbsubpath1,n1+1,"%s%s",db_path,dbsubpath[i]);
 		
 		sv_readdb(dbsubpath1, "castle_db.txt", ',', 4, 4, -1, &guild_read_castledb, i);
@@ -2115,8 +2115,8 @@ void do_init_guild(void) {
 	
 	add_timer_func_list(guild_payexp_timer,"guild_payexp_timer");
 	add_timer_func_list(guild_send_xy_timer, "guild_send_xy_timer");
-	add_timer_interval(gettick()+GUILD_PAYEXP_INVERVAL,guild_payexp_timer,0,0,GUILD_PAYEXP_INVERVAL);
-	add_timer_interval(gettick()+GUILD_SEND_XY_INVERVAL,guild_send_xy_timer,0,0,GUILD_SEND_XY_INVERVAL);
+	add_timer_interval(gettick()+GUILD_PAYEXP_INTERVAL,guild_payexp_timer,0,0,GUILD_PAYEXP_INTERVAL);
+	add_timer_interval(gettick()+GUILD_SEND_XY_INTERVAL,guild_send_xy_timer,0,0,GUILD_SEND_XY_INTERVAL);
 }
 
 void do_final_guild(void) {

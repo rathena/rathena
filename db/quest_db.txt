@@ -2469,6 +2469,17 @@
 //15043,0,0,0,0,0,0,0,""
 //15045,0,0,0,0,0,0,0,""
 
+// 2013 Christmas Event
+15055,0,0,0,0,0,0,0,"Christmas : We are the great Single Union Army!"
+15056,0,0,0,0,0,0,0,"Christmas : Declare war against couples!"
+15057,0,0,0,0,0,0,0,"Christmas : Prepare the festival!"
+15059,86400,0,0,0,0,0,0,"Christmas : Cooldown Timer"
+15060,0,0,0,0,0,0,0,"Christmas : Kwami has joined"
+15061,0,0,0,0,0,0,0,"Christmas : Willer has joined"
+15062,0,0,0,0,0,0,0,"Christmas : Rinka has joined"
+15063,0,0,0,0,0,0,0,"Christmas : Jee has joined"
+15064,0,0,0,0,0,0,0,"Christmas : Marty has joined"
+
 16000,0,0,0,0,0,0,0,"Metz Brayde's Notice"
 16001,0,0,0,0,0,0,0,"First examination"
 16002,0,0,0,0,0,0,0,"Fetching Items for Arian -1"

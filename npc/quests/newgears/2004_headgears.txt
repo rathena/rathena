@@ -1140,7 +1140,6 @@ xmas,175,156,3	script	Fuzzy Fuzz#1	712,{
 		mes "You can learn a lot about telling good people from the naughty after working for Santa for a loooong time...";
 	}
 	else {
-		mes "[Fuzzy Fuzz]";
 		mes "I sense that you are an adventurer with a good heart, and that a sweet girl like you deserves a nice gift.";
 		next;
 		mes "[Fuzzy Fuzz]";

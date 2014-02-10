@@ -69,7 +69,7 @@ static int cashshop_parse_dbrow( char** str, const char* source, int line ){
  * parses lines and sends them to parse_dbrow.
  */
 static void cashshop_read_db_txt( void ){
-	const char* filename[] = { DBPATH"item_cash_db.txt", "import/item_cash_db.txt" };
+	const char* filename[] = { DBPATH"item_cash_db.txt", DBIMPORT"/item_cash_db.txt" };
 	int fi;
 
 	for( fi = 0; fi < ARRAYLENGTH( filename ); ++fi ){
@@ -190,22 +190,26 @@ static void cashshop_read_db( void ){
 	}
 }
 
-/*
- * Attempts to purchase a cashshop item from the list.
+/** Attempts to purchase a cashshop item from the list.
  * Checks if the transaction is valid and if the user has enough inventory space to receive the item.
- * If yes, take cashpoints and give items;
- * else return clif_error.
+ * If yes, take cashpoints and give items; else return clif_error.
+ * @param sd Player that request to buy item(s)
+ * @param kafrapoints
+ * @param n Count of item list
+ * @param item_list Array of item ID
+ * @return true: success, false: fail
  */
-void cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, uint16* item_list ){
+bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, uint16* item_list ){
 	uint32 totalcash = 0;
 	uint32 totalweight = 0;
 	int i,new_;
 
 	if( sd == NULL || item_list == NULL ){
-		return;
+		clif_cashshop_result( sd, 0, CASHSHOP_RESULT_ERROR_UNKNOWN );
+		return false;
 	}else if( sd->state.trading ){
 		clif_cashshop_result( sd, 0, CASHSHOP_RESULT_ERROR_PC_STATE );
-		return;
+		return false;
 	}
 
 	new_ = 0;
@@ -218,14 +222,14 @@ void cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 
 		if( tab > CASHSHOP_TAB_SEARCH ){
 			clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_UNKNOWN );
-			return;
+			return false;
 		}
 
 		ARR_FIND( 0, cash_shop_items[tab].count, j, nameid == cash_shop_items[tab].item[j]->nameid );
 
 		if( j == cash_shop_items[tab].count || !itemdb_exists( nameid ) ){
-			clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_UNKNOWN );
-			return;
+			clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_UNKONWN_ITEM );
+			return false;
 		}else if( !itemdb_isstackable( nameid ) && quantity > 1 ){
 			uint32* quantity_ptr = (uint32*)item_list + i * 5 + 2;
 			ShowWarning( "Player %s (%d:%d) sent a hexed packet trying to buy %d of nonstackable cash item %d!\n", sd->status.name, sd->status.account_id, sd->status.char_id, quantity, nameid );
@@ -242,7 +246,7 @@ void cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 
 			case CHKADDITEM_OVERAMOUNT:
 				clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_OVER_PRODUCT_TOTAL_CNT );
-				return;
+				return false;
 		}
 
 		totalcash += cash_shop_items[tab].item[j]->price * quantity;
@@ -251,15 +255,15 @@ void cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 
 	if( ( totalweight + sd->weight ) > sd->max_weight ){
 		clif_cashshop_result( sd, 0, CASHSHOP_RESULT_ERROR_INVENTORY_WEIGHT );
-		return;
+		return false;
 	}else if( pc_inventoryblank( sd ) < new_ ){
 		clif_cashshop_result( sd, 0, CASHSHOP_RESULT_ERROR_INVENTORY_ITEMCNT );
-		return;
+		return false;
 	}
 
 	if(pc_paycash( sd, totalcash, kafrapoints, LOG_TYPE_CASH ) < 0){
 		clif_cashshop_result( sd, 0, CASHSHOP_RESULT_ERROR_SHORTTAGE_CASH );
-		return;
+		return false;
 	}
 
 	for( i = 0; i < n; ++i ){
@@ -278,21 +282,22 @@ void cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 			switch( pc_additem( sd, &item_tmp, quantity, LOG_TYPE_CASH ) ){
 				case ADDITEM_OVERWEIGHT:
 					clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_INVENTORY_WEIGHT );
-					return;
+					return false;
 				case ADDITEM_OVERITEM:
 					clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_INVENTORY_ITEMCNT );
-					return;
+					return false;
 				case ADDITEM_OVERAMOUNT:
 					clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_OVER_PRODUCT_TOTAL_CNT );
-					return;
+					return false;
 				case ADDITEM_STACKLIMIT:
 					clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_RUNE_OVERCOUNT );
-					return;
+					return false;
 			}
 		}
 	}
 
-	clif_cashshop_result( sd, 0, CASHSHOP_RESULT_SUCCESS );
+	clif_cashshop_result( sd, 0, CASHSHOP_RESULT_SUCCESS ); //Doesn't show any message?
+	return true;
 }
 
 /*

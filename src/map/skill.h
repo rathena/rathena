@@ -65,7 +65,7 @@ enum e_skill_inf2 {
 	INF2_PARTY_ONLY     = 0x00400,
 	INF2_GUILD_ONLY     = 0x00800,
 	INF2_NO_ENEMY       = 0x01000,
-	//INF2_ = 0x02000, // free
+	INF2_AUTOSHADOWSPELL = 0x02000, // Skill that available for SC_AUTOSHADOWSPELL
 	INF2_CHORUS_SKILL	= 0x04000, // Chorus skill
 	INF2_NO_BG_DMG		= 0x08000, // spell that ignore bg reduction
 	INF2_NO_GVG_DMG		= 0x10000, // spell that ignore gvg reduction
@@ -86,7 +86,7 @@ enum e_skill_inf3 {
 	INF3_EFF_SHADOWJUMP		= 0x0200,	// spell range affected by NJ_SHADOWJUMP
 	INF3_EFF_RADIUS			= 0x0400,	// spell range affected by WL_RADIUS
 	INF3_EFF_RESEARCHTRAP	= 0x0800,	// spell range affected by RA_RESEARCHTRAP
-	//INF3_ = 0x1000, // free
+	INF3_NO_EFF_HOVERING	= 0x1000,	// Spell that does not affect user that has SC_HOVERING active
 	INF3_USABLE_WARG		= 0x2000,	// spell that can be use while riding warg
 	INF3_DIS_MADO			= 0x4000,	// spell that can't be used while in mado
 	//... add other spell list option here
@@ -377,10 +377,10 @@ int skill_vfcastfix( struct block_list *bl, double time, uint16 skill_id, uint16
 int skill_delayfix( struct block_list *bl, uint16 skill_id, uint16 skill_lv);
 
 // Skill conditions check and remove [Inkfish]
-int skill_check_condition_castbegin(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
-int skill_check_condition_castend(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
+bool skill_check_condition_castbegin(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
+bool skill_check_condition_castend(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 int skill_check_condition_char_sub (struct block_list *bl, va_list ap);
-int skill_consume_requirement(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv, short type);
+void skill_consume_requirement(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv, short type);
 struct skill_condition skill_get_requirement(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 int skill_disable_check(struct status_change *sc, uint16 skill_id);
 

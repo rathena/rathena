@@ -1220,3 +1220,33 @@
 70,545,1		// Condensed Red Potion
 70,546,1		// Condensed Yellow Potion
 70,547,1		// Condensed White Potion
+//Candy Holder
+IG_Candy_Holder,518,10 //Honey
+IG_Candy_Holder,529,20	//Candy
+IG_Candy_Holder,538,15	//Well_Baked_Cookie
+IG_Candy_Holder,539,10	//Piece_Of_Cake
+IG_Candy_Holder,580,20	//Bread
+IG_Candy_Holder,603,1	//Old_Blue_Box
+IG_Candy_Holder,607,1	//Yggdrasilberry
+IG_Candy_Holder,616,1	//Old_Card_Album
+IG_Candy_Holder,617,1	//Old_Violet_Box
+IG_Candy_Holder,641,1	//Contracts_In_Shadow
+IG_Candy_Holder,7460,10	//Niflheim_Ticket
+IG_Candy_Holder,11550,5	//Pumpkin_Cake
+IG_Candy_Holder,12192,5	//Pumpkin_Pie
+//Lucky Bag
+IG_Lucky_Bag,12018,8	//Fire_Cracker
+IG_Lucky_Bag,663,6	//Korea_Rice_Cake
+IG_Lucky_Bag,668,2	//Handsei
+IG_Lucky_Bag,7647,3	//Taiwan_Luk_Coin
+IG_Lucky_Bag,7649,1	//Big_Luk_Bookmark
+//Holy Egg 2
+IG_Holy_Egg_2,984,4	//Oridecon
+IG_Holy_Egg_2,985,10	//Elunium
+IG_Holy_Egg_2,547,30	//White_Slim_Potion
+IG_Holy_Egg_2,505,30	//Blue_Potion
+IG_Holy_Egg_2,607,3	//Yggdrasilberry
+IG_Holy_Egg_2,608,2	//Seed_Of_Yggdrasil
+IG_Holy_Egg_2,610,15	//Leaf_Of_Yggdrasil
+IG_Holy_Egg_2,616,5	//Old_Card_Album
+IG_Holy_Egg_2,5198,1	//Drooping_Bunny

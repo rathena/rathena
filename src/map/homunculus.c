@@ -1219,7 +1219,10 @@ static bool read_homunculusdb_sub(char* str[], int columns, int current)
 int read_homunculusdb(void)
 {
 	int i;
-	const char *filename[]={DBPATH"homunculus_db.txt","import/homunculus_db.txt"};
+	const char *filename[] = {
+		DBPATH"homunculus_db.txt",
+		DBIMPORT"/homunculus_db.txt",
+	};
 	memset(homunculus_db,0,sizeof(homunculus_db));
 	for(i = 0; i<ARRAYLENGTH(filename); i++){
 		sv_readdb(db_path, filename[i], ',', 50, 50, MAX_HOMUNCULUS_CLASS, &read_homunculusdb_sub, i);
@@ -1271,7 +1274,7 @@ static bool read_homunculus_skilldb_sub(char* split[], int columns, int current)
 
 int read_homunculus_skilldb(void)
 {
-	const char *filename[]={ "homun_skill_tree.txt","import/homun_skill_tree.txt"};
+	const char *filename[]={ "homun_skill_tree.txt",DBIMPORT"/homun_skill_tree.txt"};
 	int i;
 	memset(hskill_tree,0,sizeof(hskill_tree));
 	for(i = 0; i<ARRAYLENGTH(filename); i++){
@@ -1285,7 +1288,7 @@ void read_homunculus_expdb(void)
 	int i;
 	char *filename[]={
 		DBPATH"exp_homun.txt",
-		"import/exp_homun.txt"
+		DBIMPORT"/exp_homun.txt"
 	};
 
 	memset(hexptbl,0,sizeof(hexptbl));
@@ -1299,7 +1302,7 @@ void read_homunculus_expdb(void)
 		if(fp == NULL){
 			if(i != 0)
 				continue;
-			if(i==0) ShowError("can't read %s\n",line);
+			if(i==0) ShowError("Can't read %s\n",line);
 			return;
 		}
 		while(fgets(line, sizeof(line), fp) && j < MAX_LEVEL)
@@ -1317,7 +1320,7 @@ void read_homunculus_expdb(void)
 			hexptbl[MAX_LEVEL - 1] = 0;
 		}
 		fclose(fp);
-		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' levels in '"CL_WHITE"%s"CL_RESET"'.\n", j, filename[i]);
+		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' levels in '"CL_WHITE"%s/%s"CL_RESET"'.\n", j, db_path, filename[i]);
 	}
 }
 
