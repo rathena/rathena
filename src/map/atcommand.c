@@ -5654,14 +5654,11 @@ ACMD_FUNC(autotrade) {
 
 	sd->state.autotrade = 1;
 
-	if( sd->state.vending ){
-		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", vendings_db, sd->vender_id ) != SQL_SUCCESS ){
-			Sql_ShowDebug( mmysql_handle );
-		}
-	}else if( sd->state.buyingstore ){
-		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", buyingstore_db, sd->buyer_id ) != SQL_SUCCESS ){
-			Sql_ShowDebug( mmysql_handle );
-		}
+	if( battle_config.feature_autotrade && 
+		sd->state.vending && 
+		Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", vendings_db, sd->vender_id ) != SQL_SUCCESS )
+	{
+		Sql_ShowDebug( mmysql_handle );
 	}
 
 	if( battle_config.at_timeout ) {
