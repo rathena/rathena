@@ -7819,13 +7819,16 @@ BUILDIN_FUNC(getequippercentrefinery)
  *------------------------------------------*/
 BUILDIN_FUNC(successrefitem)
 {
-	int i=-1,num,ep;
+	int i = -1, num, ep, up = 1;
 	TBL_PC *sd;
 
 	num = script_getnum(st,2);
 	sd = script_rid2sd(st);
 	if( sd == NULL )
 		return 0;
+
+	if( script_hasdata(st, 3) )
+		up = script_getnum(st, 3);
 
 	if (num > 0 && num <= ARRAYLENGTH(equip))
 		i=pc_checkequip(sd,equip[num-1]);
@@ -7835,7 +7838,11 @@ BUILDIN_FUNC(successrefitem)
 		//Logs items, got from (N)PC scripts [Lupus]
 		log_pick_pc(sd, LOG_TYPE_SCRIPT, -1, &sd->status.inventory[i]);
 
-		sd->status.inventory[i].refine++;
+		if (sd->status.inventory[i].refine >= MAX_REFINE)
+			return SCRIPT_CMD_SUCCESS;
+
+		sd->status.inventory[i].refine += up;
+		sd->status.inventory[i].refine = cap_value( sd->status.inventory[i].refine, 0, MAX_REFINE);
 		pc_unequipitem(sd,i,2); // status calc will happen in pc_equipitem() below
 
 		clif_refine(sd->fd,0,i,sd->status.inventory[i].refine);
@@ -7901,7 +7908,7 @@ BUILDIN_FUNC(failedrefitem)
  *------------------------------------------*/
 BUILDIN_FUNC(downrefitem)
 {
-	int i = -1,num,ep,down = 1;
+	int i = -1, num, ep, down = 1;
 	TBL_PC *sd;
 
 	sd = script_rid2sd(st);
@@ -18626,7 +18633,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getequiprefinerycnt,"i"),
 	BUILDIN_DEF(getequipweaponlv,"i"),
 	BUILDIN_DEF(getequippercentrefinery,"i"),
-	BUILDIN_DEF(successrefitem,"i"),
+	BUILDIN_DEF(successrefitem,"i?"),
 	BUILDIN_DEF(failedrefitem,"i"),
 	BUILDIN_DEF(downrefitem,"i?"),
 	BUILDIN_DEF(statusup,"i"),

@@ -4052,12 +4052,13 @@ char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_p
 
 	i = MAX_INVENTORY;
 
-	if( itemdb_isstackable2(id) && item->expire_time == 0 )
-	{ // Stackable | Non Rental
-		for( i = 0; i < MAX_INVENTORY; i++ )
-		{
-			if( sd->status.inventory[i].nameid == item->nameid && sd->status.inventory[i].bound == item->bound && memcmp(&sd->status.inventory[i].card, &item->card, sizeof(item->card)) == 0 )
-			{
+	// Stackable | Non Rental
+	if( itemdb_isstackable2(id) && item->expire_time == 0 ) {
+		for( i = 0; i < MAX_INVENTORY; i++ ) {
+			if( sd->status.inventory[i].nameid == item->nameid &&
+			    sd->status.inventory[i].bound == item->bound &&
+			    sd->status.inventory[i].expire_time == 0 &&
+			    memcmp(&sd->status.inventory[i].card, &item->card, sizeof(item->card)) == 0 ) {
 				if( amount > MAX_AMOUNT - sd->status.inventory[i].amount || ( id->stack.inventory && amount > id->stack.amount - sd->status.inventory[i].amount ) )
 					return 5;
 				sd->status.inventory[i].amount += amount;

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20140208
+//= 20140210
 //===== Description: =========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -4638,14 +4638,14 @@ end silently.
 
 ---------------------------------------
 
-*successrefitem <equipment slot>;
+*successrefitem <equipment slot>{,<count>};
 
 This command will refine an item in the specified equipment slot of the invoking 
-character by +1. For a list of equipment slots see 'getequipid'. This command 
-will not only add the +1, but also display a 'refine success' effect on the 
-character and put appropriate messages into their chat window. It will also give 
-the character fame points if a weapon reached +10 this way, even though these 
-will only take effect for blacksmith who will later forge a weapon.
+character by +1, or a count if given. For a list of equipment slots see 'getequipid'.
+This command will also display a 'refine success' effect on the character and put
+appropriate messages into their chat window. It will also give the character fame
+points if a weapon reached +10 this way, even though these will only take effect for
+blacksmith who will later forge a weapon.
 
 ---------------------------------------
 
