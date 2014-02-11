@@ -18508,6 +18508,43 @@ BUILDIN_FUNC(disable_command) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/** Get the information of the members of a guild by type.
+ * getguildmember  <guild_id>{,<type>};
+ * @param guild_id: ID of guild
+ * @param type: Type of option (optional)
+ */
+BUILDIN_FUNC(getguildmember)
+{
+	int i, j = 0, type = 0;
+	struct guild *g = NULL;
+
+	g = guild_search(script_getnum(st,2));
+
+	if (script_hasdata(st,3))
+		type = script_getnum(st,3);
+
+	if (g) {
+		for (i = 0; i < MAX_GUILD; i++) {
+			if (g->member[i].account_id) {
+				switch (type) {
+				case 2:
+					mapreg_setreg(reference_uid(add_str("$@guildmemberaid"), j),g->member[i].account_id);
+					break;
+				case 1:
+					mapreg_setreg(reference_uid(add_str("$@guildmembercid"), j), g->member[i].char_id);
+					break;
+				default:
+					mapreg_setregstr(reference_uid(add_str("$@guildmembername$"), j), g->member[i].name);
+					break;
+				}
+				j++;
+			}
+		}
+	}
+	mapreg_setreg(add_str("$@guildmembercount"), j);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -19037,6 +19074,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getgroupitem,"i"),
 	BUILDIN_DEF(enable_command,""),
 	BUILDIN_DEF(disable_command,""),
+	BUILDIN_DEF(getguildmember,"i?"),
 
 #include "../custom/script_def.inc"
 
