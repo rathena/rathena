@@ -181,6 +181,8 @@ AB_JUDEX,2        // Judex
 AB_ADORAMUS,2     // Adoramus
 AB_HIGHNESSHEAL,2 // Highness Heal
 AB_DUPLELIGHT,2   // Duple Light
+AB_DUPLELIGHT_MELEE,2	// Dummy skill for Duple Light
+AB_DUPLELIGHT_MAGIC,2	// Dummy skill for Duple Light
 
 // Warlock
 WL_SOULEXPANSION,2  // Soul Expansion
@@ -192,6 +194,7 @@ WL_HELLINFERNO,2    // Hell Inferno
 WL_COMET,2          // Comet
 WL_CHAINLIGHTNING,2 // Chain Lightning
 WL_EARTHSTRAIN,2    // Earth Strain
+WL_CHAINLIGHTNING_ATK,2	// Dummy skill for Chain Lightning
 
 // Ranger
 RA_ARROWSTORM,2   // Arrow Storm
@@ -211,6 +214,8 @@ LG_SHIELDSPELL,2 // Shield Spell
 LG_EXEEDBREAK,2  // Exceed Break
 LG_MOONSLASHER,2 // Moon Slasher
 LG_EARTHDRIVE,2  // Earth Drive
+LG_OVERBRAND_BRANDISH,2	// Dummy skill for Over Brand
+LG_OVERBRAND_PLUSATK,2	// Dummy skill for Over Brand
 
 // Sura
 SR_DRAGONCOMBO,2  // Dragon Combo
@@ -229,6 +234,9 @@ SR_RIDEINLIGHTNING,2    // Riding Lightning
 WM_METALICSOUND,2     // Metallic Sound
 WM_REVERBERATION,2    // Reverberation
 WM_SEVERE_RAINSTORM,2 // Severe Rainstorm
+WM_SEVERE_RAINSTORM_MELEE,2	// Dummy skill for Severe Rainstorm
+WM_REVERBERATION_MELEE,2	// Dummy skill for Reverberation
+WM_REVERBERATION_MAGIC,2	// Dummy skill for Reverberation
 
 // Sorcerer
 SO_FIREWALK,2      // Fire Walk
@@ -247,3 +255,5 @@ GN_SPORE_EXPLOSION,2 // Spore Explosion
 GN_WALLOFTHORN,2     // Wall of Thorns
 GN_CRAZYWEED,2       // Crazy Weed
 GN_HELLS_PLANT,2     // Hell's Plant
+GN_CRAZYWEED_ATK,2	// Dummy skill for Crazy Weed
+GN_HELLS_PLANT_ATK,2	//Dummy skil for Hell's Plant
