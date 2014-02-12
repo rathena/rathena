@@ -2904,7 +2904,7 @@ Example:
 
 *getguildmember <guild id>{,<type>};
 
-This command will find all members of a specified guildand returns their names 
+This command will find all members of a specified guild and returns their names 
 (or character id or account id depending on the value of "type") into an array
 of temporary global variables.
 

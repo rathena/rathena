@@ -4074,12 +4074,21 @@ ACMD_FUNC(mount_peco)
 	}
 
 	if( (sd->class_&MAPID_THIRDMASK) == MAPID_RUNE_KNIGHT && pc_checkskill(sd,RK_DRAGONTRAINING) > 0 ) {
-		if( !(sd->sc.option&OPTION_DRAGON1) ) {
+		if( !(sd->sc.option&OPTION_DRAGON) ) {
+			unsigned int option = OPTION_DRAGON1;
+			if( message[0] ) {
+				int color = atoi(message);
+				option = ( color == 2 ? OPTION_DRAGON2 :
+				           color == 3 ? OPTION_DRAGON3 :
+				           color == 4 ? OPTION_DRAGON4 :
+				           color == 5 ? OPTION_DRAGON5 :
+				                        OPTION_DRAGON1 );
+			}
 			clif_displaymessage(sd->fd,msg_txt(sd,1119)); // You have mounted your Dragon.
-			pc_setoption(sd, sd->sc.option|OPTION_DRAGON1);
+			pc_setoption(sd, sd->sc.option|option);
 		} else {
 			clif_displaymessage(sd->fd,msg_txt(sd,1120)); // You have released your Dragon.
-			pc_setoption(sd, sd->sc.option&~OPTION_DRAGON1);
+			pc_setoption(sd, sd->sc.option&~OPTION_DRAGON);
 		}
 		return 0;
 	}
