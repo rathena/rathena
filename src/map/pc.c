@@ -1909,7 +1909,7 @@ static int pc_bonus_addeff_onskill(struct s_addeffectonskill* effect, int max, e
 * @param race: target race. if < 0, means monster_id
 * @param rate: rate value: 1 ~ 10000. If < 0, it will be multiplied with mob level/10
 */
-static void pc_bonus_item_drop(struct s_add_drop *drop, const short max, uint16 nameid, uint16 group, int class_, int race, int rate)
+static void pc_bonus_item_drop(struct s_add_drop *drop, const short max, uint16 nameid, uint16 group, int class_, short race, int rate)
 {
 	uint8 i;
 	if (nameid && !group && !itemdb_exists(nameid)) {
@@ -4004,7 +4004,7 @@ int pc_getzeny(struct map_session_data *sd,int zeny, enum e_log_pick_type type, 
  *------------------------------------------*/
 int pc_search_inventory(struct map_session_data *sd,int item_id)
 {
-	int i;
+	int16 i;
 	nullpo_retr(-1, sd);
 
 	ARR_FIND( 0, MAX_INVENTORY, i, sd->status.inventory[i].nameid == item_id && (sd->status.inventory[i].amount > 0 || item_id == 0) );
@@ -4028,7 +4028,7 @@ int pc_search_inventory(struct map_session_data *sd,int item_id)
  */
 char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_pick_type log_type) {
 	struct item_data *id;
-	uint16 i;
+	int16 i;
 	unsigned int w;
 
 	nullpo_retr(1, sd);
