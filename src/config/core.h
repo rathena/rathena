@@ -11,7 +11,7 @@
 /// Max number of items on @autolootid list
 #define AUTOLOOTITEM_SIZE 10
 
-/// The maximum number of atcommand suggestions
+/// The maximum number of atcommand and @warp suggestions
 #define MAX_SUGGESTIONS 10
 
 /// Comment to disable the official walk path

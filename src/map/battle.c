@@ -7369,6 +7369,7 @@ static const struct _battle_data {
 	{ "atcommand_enable_npc",				&battle_config.atcommand_enable_npc,			0,		0,		100,			},
 	{ "path_blown_halt",                    &battle_config.path_blown_halt,                 1,      0,      1,              },
 	{ "rental_mount_speed_boost",           &battle_config.rental_mount_speed_boost,        25,     0,      100,        	},
+	{ "feature.warp_suggestions",           &battle_config.warp_suggestions_enabled,        0,      0,      1,              },
 };
 #ifndef STATS_OPT_OUT
 /**

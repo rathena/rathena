@@ -87,6 +87,7 @@ static char atcmd_player_name[NAME_LENGTH];
 static AtCommandInfo* get_atcommandinfo_byname(const char *name); // @help
 static const char* atcommand_checkalias(const char *aliasname); // @help
 static void atcommand_get_suggestions(struct map_session_data* sd, const char *name, bool atcommand); // @help
+static void warp_get_suggestions(struct map_session_data* sd, const char *name); // @rura, @warp, @mapmove
 
 // @commands (script-based)
 struct atcmd_binding_data* get_atcommandbind_byname(const char* name) {
@@ -370,6 +371,77 @@ ACMD_FUNC(send)
 #undef GET_VALUE
 }
 
+/**
+ * Retrieves map name suggestions for a given string.
+ * This will first check if any map names contain the given string, and will
+ *   print out MAX_SUGGESTIONS results if any maps are found.
+ * Otherwise, suggestions will be calculated through Levenshtein distance,
+ *   and up to 5 of the closest matches will be printed.
+ *
+ * @author Euphy
+ */
+static void warp_get_suggestions(struct map_session_data* sd, const char *name) {
+	char buffer[512];
+	int i, count = 0;
+
+	if (strlen(name) < 2)
+		return;
+
+	// build the suggestion string
+	strcpy(buffer, msg_txt(sd, 205)); // Maybe you meant:
+	strcat(buffer, "\n");
+
+	// check for maps that contain string
+	for (i = 0; i < MAX_MAP_PER_SERVER; i++) {
+		if (count < MAX_SUGGESTIONS && strstr(map[i].name, name) != NULL) {
+			strcat(buffer, map[i].name);
+			strcat(buffer, " ");
+			if (++count >= MAX_SUGGESTIONS)
+				break;
+		}
+	}
+
+	// if no maps found, search by edit distance
+	if (!count) {
+		unsigned int distance[MAX_MAP_PER_SERVER][2];
+		int j, min;
+
+		// calculate Levenshtein distance for all maps
+		for (i = 0; i < MAX_MAP_PER_SERVER; i++) {
+			if (strlen(map[i].name) < 4)  // invalid map name?
+				distance[i][0] = INT_MAX;
+			else {
+				distance[i][0] = levenshtein(map[i].name, name);
+				distance[i][1] = i;
+			}
+		}
+
+		// selection sort elements as needed
+		count = min(MAX_SUGGESTIONS, 5);  // results past 5 aren't worth showing
+		for (i = 0; i < count; i++) {
+			min = i;
+			for (j = i+1; j < MAX_MAP_PER_SERVER; j++) {
+				if (distance[j][0] < distance[min][0])
+					min = j;
+			}
+
+			// print map name
+			if (distance[min][0] > 4) {  // awful results, don't bother
+				if (!i) return;
+				break;
+			}
+			strcat(buffer, map[distance[min][1]].name);
+			strcat(buffer, " ");
+
+			// swap elements
+			swap(distance[i][0], distance[min][0]);
+			swap(distance[i][1], distance[min][1]);
+		}
+	}
+
+	clif_displaymessage(sd->fd, buffer);
+}
+
 /*==========================================
  * @rura, @warp, @mapmove
  *------------------------------------------*/
@@ -397,6 +469,10 @@ ACMD_FUNC(mapmove)
 
 	if (!mapindex) { // m < 0 means on different server! [Kevin]
 		clif_displaymessage(fd, msg_txt(sd,1)); // Map not found.
+
+		if (battle_config.warp_suggestions_enabled)
+			warp_get_suggestions(sd, map_name);
+
 		return -1;
 	}
 

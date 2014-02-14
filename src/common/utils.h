@@ -31,4 +31,6 @@ extern uint32 MakeDWord(uint16 word0, uint16 word1);
 
 uint32 date2version(int date);
 
+int levenshtein(const char *s1, const char *s2);
+
 #endif /* _UTILS_H_ */
