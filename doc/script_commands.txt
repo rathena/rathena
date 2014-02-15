@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20140211
+//= 20140215
 //===== Description: =========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -945,11 +945,18 @@ This special label triggers when a player kills a monster. The variable
 
 OnPCLoadMapEvent:
 
-This special label will trigger once a player steps in a map marked with the 
-'loadevent' mapflag and attach its RID. The fact that this label requires a 
+This special label triggers when a player steps in a map marked with the 
+'loadevent' mapflag and attaches its RID. The fact that this label requires a 
 mapflag for it to work is because, otherwise, it'd be server-wide and trigger
 every time a player would change maps. Imagine the server load with 1,000 players
 (oh the pain...)
+
+OnPCStatCalcEvent:
+
+This special label triggers when a player's stats are recalculated, such as when
+changing stats, equipment, or maps, as well as when logging in, leveling up, and
+mounting a job mount. This can be used to grant additional item bonuses to certain
+player groups, for instance.
 
 Only the special labels which are not associated with any script command are 
 listed here. There are other kinds of labels which may be triggered in a similar 
