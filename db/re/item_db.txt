@@ -8695,7 +8695,7 @@
 18768,Enhanced_Bone_Helm,Enhanced Bone Helm,4,20,,800,,15,,1,0x000444A2,63,2,256,,70,1,103,{ bonus2 bSubEle,Ele_Dark,-15; if(getrefine()>=7){ set .@i,1; if(getrefine()>=9) set .@i,2; } bonus2 bSubEle,Ele_Neutral,2+(2*.@i); },{},{}
 18769,Remodel_Munak_Turban,Improved Munak Hat,4,20,,300,,5,,1,0xFFFFFFFF,63,2,769,,0,0,51,{ bonus2 bSubRace,RC_Undead,10; if(getrefine()>=7) bonus2 bAddRace,RC_Undead,10; },{},{}
 18770,Remodel_Bongun_Hat,Improved Bongun Hat,4,20,,300,,5,,1,0xFFFFFFFF,63,2,769,,0,0,139,{ bonus2 bSubRace,RC_Demon,10; if(getrefine()>=7) bonus2 bAddRace,RC_Demon,10; },{},{}
-18771,Remodel_Opera_Mask,Improved Opera Phantom Mask,4,20,,200,,2,,0,0xFFFFFFFF,63,2,513,,20,0,68,{ bonus bBaseAtk,5; bonus bMatk,5; },{},{}
+18771,Remodel_Opera_Mask,Improved Opera Phantom Mask,4,20,,200,,2,,0,0xFFFFFFFF,63,2,512,,20,0,128,{ bonus bBaseAtk,5; bonus bMatk,5; },{},{}
 18772,Improved_Binoculars,Advanced Binoculars,4,20,,100,,2,,0,0x00080808,63,2,512,,50,0,83,{ bonus bDex,1; bonus bLongAtkRate,1; },{},{}
 18773,Improved_Fin_Helm,Advanced Fin Helm,4,20,,300,,5,,0,0x00004082,63,2,512,,65,0,100,{ bonus bMaxHP,300+BaseLevel; /* unconfirmed */ },{},{}
 18774,Improved_Assassin_Mask,Advanced Assassin Mask,4,20,,100,,1,,0,0x00001100,63,2,1,,70,0,180,{ bonus bCritical,1; bonus bCritAtkRate,1; },{},{}
