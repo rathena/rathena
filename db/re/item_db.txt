@@ -8783,7 +8783,7 @@
 18850,Polar_Bear_Cap,Polar Bear Cap,4,20,,300,,7,,0,0xFFFFFFFF,63,2,256,,1,0,966,{ bonus bUnbreakableHelm,0; bonus bDex,1; bonus bAgi,1; bonus bMdef,3; bonus bHPrecovRate,5; bonus bSPrecovRate,3; bonus2 bAddMonsterDropItem,12354,100; },{},{}
 18851,C_Polar_Bear_Cap,Costume Polar Bear Cap,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,1,966,{},{},{}
 18856,W_King_Tiger_Doll_Hat,W King Tiger Doll Hat,4,10,,0,,10,,0,0xFFFFFFFF,63,2,256,,1,1,973,{ bonus bStr,2, bonus bDex,2; bonus2 bAddRace,RC_Brute,10; /*There is transform possibility becomes Eddga*/ },{},{}
-18859,Angeling_Bubble,Angeling Bubble,4,10,,50,,5,,0,0xFFFFFFFF,63,2,1,,1,1,975,{ bonus bDex,1; bonus bMatkRate,2; bonus bMaxHP,100; },{},{}
+18859,Angeling_Bubble,Angeling Bubble,4,10,,50,,5,,0,0xFFFFFFFF,63,2,1,,1,,975,{ bonus bDex,1; bonus bMatkRate,2; bonus bMaxHP,100; },{},{}
 18861,Zaha_Doll_J_Hat,Zaha Doll J Hat,4,10,,100,,,,0,0xFFFFFFFF,63,2,256,,50,1,461,{ bonus bHealPower,15; bonus bUseSPrate,15; },{},{}
 18865,Sword_Master_Crown,Sword Master Crown,4,10,,1000,,30,,0,0xFFFFFFFF,63,2,256,,50,1,981,{ if (BaseLevel > 150) { bonus bBaseAtk,15; } else if (BaseLevel > 100) { bonus bBaseAtk,10; } else if (BaseLevel > 50) { bonus bBaseAtk,5; } /*TODO, other bonuses*/ },{},{}
 18868,Assassin_Skull_Mask,Assassin Skull Mask,4,10,,500,,2,,0,0xFFFFFFFF,63,2,513,,70,,984,{ bonus bCritical,5; },{},{}
