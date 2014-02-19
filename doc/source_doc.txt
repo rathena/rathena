@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20140215
+//= 20140218
 //===== Description: =========================================
 //= Explanation of source behaviours and structures.
 //============================================================
@@ -137,14 +137,16 @@ For real table names, see 'conf/inter_athena.conf'.
   ============
   | Map-serv |
   ============
-  Except for mapreg_db, vending_db, and vending_items_db, the other map-serv
-  tables are optional alternatives to TXT databases located in 'db/*.txt'.
 
   Table                 Contents
   -----                 --------
   mapreg_db             permanent map-serv global variables (ex. $agit_result_timer)
+  buyingstore_db        live buyers database (map_pos, aid, shop title, etc.)
+  buyingstore_items_db  items currently being purchased by live buyers
   vending_db            live vendors database (map_pos, aid, shop title, etc.)
   vending_items_db      items currently being sold by live vendors
+
+  The tables below are optional alternatives to TXT databases located in 'db/*.txt'.
 
   item_db               item database (Pre-Renewal)
   item_db_re            item database (Renewal)

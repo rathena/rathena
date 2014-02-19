@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20140215
+//= 20140218
 //===== Description: =========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -2760,7 +2760,7 @@ the specified name will be located. If type is 3, the search will locate the
 current pet of the character who's name is given in the search string, it will 
 NOT locate a pet by name.
 
-What a mess. Example, a working and tested one now:
+Example:
 
     prontera,164,301,3%TAB%script%TAB%Meh%TAB%730,{
         mes "My name is Meh. I'm here so that Nyah can find me.";
@@ -2770,36 +2770,34 @@ What a mess. Example, a working and tested one now:
     prontera,164,299,3%TAB%script%TAB%Nyah%TAB%730,{
         mes "My name is Nyah.";
         mes "I will now search for Meh all across the world!";
-        if (getmapxy(@mapname$,@mapx,@mapy,1,"Meh")!=0) goto Notfound;
+        if (getmapxy(@mapname$,@mapx,@mapy,1,"Meh")!=0) {
+                mes "I can't seem to find Meh anywhere!";
+                close;
+        }
         mes "And I found him on map "+@mapname$+" at X:"+@mapx+" Y:"+@mapy+" !";
         close;
-    Notfound:
-        mes "I can't seem to find Meh anywhere!";
-        close;
    }
-   
+
 Notice that NPC objects disabled with 'disablenpc' will still be located.
 
 ---------------------------------------
 
 *getgmlevel()
 
-This function will return the (GM) level of player group the account to which the 
-invoking character belongs. If this is somehow executed from a console command,
+This function will return the (GM) level associated with the player group to which
+the invoking character belongs. If this is somehow executed from a console command,
 99 will be returned, and 0 will be returned if the account has no GM level.
 
 This allows you to make NPC's only accessible for certain GM levels, or behave 
 specially when talked to by GMs.
 
    if (getgmlevel()) mes "What is your command, your godhood?";
-   if (getgmlevel()) goto Wherever;
 
 ---------------------------------------
 
 *getgroupid()
 
-This function will return the id of player group the account to which the 
-invoking player belongs.
+This function will return the group id to which the invoking player belongs.
 
 ---------------------------------------
 
