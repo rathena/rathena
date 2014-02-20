@@ -87,6 +87,7 @@ static char atcmd_player_name[NAME_LENGTH];
 static AtCommandInfo* get_atcommandinfo_byname(const char *name); // @help
 static const char* atcommand_checkalias(const char *aliasname); // @help
 static void atcommand_get_suggestions(struct map_session_data* sd, const char *name, bool atcommand); // @help
+static void warp_get_suggestions(struct map_session_data* sd, const char *name); // @rura, @warp, @mapmove
 
 // @commands (script-based)
 struct atcmd_binding_data* get_atcommandbind_byname(const char* name) {
@@ -95,7 +96,7 @@ struct atcmd_binding_data* get_atcommandbind_byname(const char* name) {
 	if( *name == atcommand_symbol || *name == charcommand_symbol )
 		name++; // for backwards compatibility
 
-	ARR_FIND( 0, atcmd_binding_count, i, strcmp(atcmd_binding[i]->command, name) == 0 );
+	ARR_FIND( 0, atcmd_binding_count, i, strcmpi(atcmd_binding[i]->command, name) == 0 );
 
 	return ( i < atcmd_binding_count ) ? atcmd_binding[i] : NULL;
 }
@@ -119,7 +120,7 @@ static const char* atcommand_help_string(const char* command)
 	// convert alias to the real command name
 	command = atcommand_checkalias(command);
 
-	// attept to find the first default help command
+	// attempt to find the first default help command
 	info = config_lookup(&atcommand_config, "help");
 
 	if( info == NULL )
@@ -370,6 +371,77 @@ ACMD_FUNC(send)
 #undef GET_VALUE
 }
 
+/**
+ * Retrieves map name suggestions for a given string.
+ * This will first check if any map names contain the given string, and will
+ *   print out MAX_SUGGESTIONS results if any maps are found.
+ * Otherwise, suggestions will be calculated through Levenshtein distance,
+ *   and up to 5 of the closest matches will be printed.
+ *
+ * @author Euphy
+ */
+static void warp_get_suggestions(struct map_session_data* sd, const char *name) {
+	char buffer[512];
+	int i, count = 0;
+
+	if (strlen(name) < 2)
+		return;
+
+	// build the suggestion string
+	strcpy(buffer, msg_txt(sd, 205)); // Maybe you meant:
+	strcat(buffer, "\n");
+
+	// check for maps that contain string
+	for (i = 0; i < MAX_MAP_PER_SERVER; i++) {
+		if (count < MAX_SUGGESTIONS && strstr(map[i].name, name) != NULL) {
+			strcat(buffer, map[i].name);
+			strcat(buffer, " ");
+			if (++count >= MAX_SUGGESTIONS)
+				break;
+		}
+	}
+
+	// if no maps found, search by edit distance
+	if (!count) {
+		unsigned int distance[MAX_MAP_PER_SERVER][2];
+		int j, min;
+
+		// calculate Levenshtein distance for all maps
+		for (i = 0; i < MAX_MAP_PER_SERVER; i++) {
+			if (strlen(map[i].name) < 4)  // invalid map name?
+				distance[i][0] = INT_MAX;
+			else {
+				distance[i][0] = levenshtein(map[i].name, name);
+				distance[i][1] = i;
+			}
+		}
+
+		// selection sort elements as needed
+		count = min(MAX_SUGGESTIONS, 5);  // results past 5 aren't worth showing
+		for (i = 0; i < count; i++) {
+			min = i;
+			for (j = i+1; j < MAX_MAP_PER_SERVER; j++) {
+				if (distance[j][0] < distance[min][0])
+					min = j;
+			}
+
+			// print map name
+			if (distance[min][0] > 4) {  // awful results, don't bother
+				if (!i) return;
+				break;
+			}
+			strcat(buffer, map[distance[min][1]].name);
+			strcat(buffer, " ");
+
+			// swap elements
+			swap(distance[i][0], distance[min][0]);
+			swap(distance[i][1], distance[min][1]);
+		}
+	}
+
+	clif_displaymessage(sd->fd, buffer);
+}
+
 /*==========================================
  * @rura, @warp, @mapmove
  *------------------------------------------*/
@@ -397,6 +469,10 @@ ACMD_FUNC(mapmove)
 
 	if (!mapindex) { // m < 0 means on different server! [Kevin]
 		clif_displaymessage(fd, msg_txt(sd,1)); // Map not found.
+
+		if (battle_config.warp_suggestions_enabled)
+			warp_get_suggestions(sd, map_name);
+
 		return -1;
 	}
 
@@ -1317,7 +1393,7 @@ ACMD_FUNC(baselevelup)
 			clif_displaymessage(fd, msg_txt(sd,47)); // Base level can't go any higher.
 			return -1;
 		} // End Addition
-		if ((unsigned int)level > pc_maxbaselv(sd) || (unsigned int)level > pc_maxbaselv(sd) - sd->status.base_level) // fix positiv overflow
+		if ((unsigned int)level > pc_maxbaselv(sd) || (unsigned int)level > pc_maxbaselv(sd) - sd->status.base_level) // fix positive overflow
 			level = pc_maxbaselv(sd) - sd->status.base_level;
 		for (i = 0; i < level; i++)
 			status_point += pc_gets_status_point(sd->status.base_level + i);
@@ -1377,7 +1453,7 @@ ACMD_FUNC(joblevelup)
 			clif_displaymessage(fd, msg_txt(sd,23)); // Job level can't go any higher.
 			return -1;
 		}
-		if ((unsigned int)level > pc_maxjoblv(sd) || (unsigned int)level > pc_maxjoblv(sd) - sd->status.job_level) // fix positiv overflow
+		if ((unsigned int)level > pc_maxjoblv(sd) || (unsigned int)level > pc_maxjoblv(sd) - sd->status.job_level) // fix positive overflow
 			level = pc_maxjoblv(sd) - sd->status.job_level;
 		sd->status.job_level += (unsigned int)level;
 		sd->status.skill_point += level;
@@ -1389,11 +1465,11 @@ ACMD_FUNC(joblevelup)
 			return -1;
 		}
 		level *=-1;
-		if ((unsigned int)level >= sd->status.job_level) // fix negativ overflow
+		if ((unsigned int)level >= sd->status.job_level) // fix negative overflow
 			level = sd->status.job_level-1;
 		sd->status.job_level -= (unsigned int)level;
 		if (sd->status.skill_point < level)
-			pc_resetskill(sd,0);	//Reset skills since we need to substract more points.
+			pc_resetskill(sd,0);	//Reset skills since we need to subtract more points.
 		if (sd->status.skill_point < level)
 			sd->status.skill_point = 0;
 		else
@@ -1632,7 +1708,7 @@ ACMD_FUNC(model)
 			pc_changelook(sd, LOOK_HAIR, hair_style);
 			pc_changelook(sd, LOOK_HAIR_COLOR, hair_color);
 			pc_changelook(sd, LOOK_CLOTHES_COLOR, cloth_color);
-			clif_displaymessage(fd, msg_txt(sd,36)); // Appearence changed.
+			clif_displaymessage(fd, msg_txt(sd,36)); // Appearance changed.
 	} else {
 		clif_displaymessage(fd, msg_txt(sd,37)); // An invalid number was specified.
 		return -1;
@@ -1659,7 +1735,7 @@ ACMD_FUNC(dye)
 
 	if (cloth_color >= MIN_CLOTH_COLOR && cloth_color <= MAX_CLOTH_COLOR) {
 		pc_changelook(sd, LOOK_CLOTHES_COLOR, cloth_color);
-		clif_displaymessage(fd, msg_txt(sd,36)); // Appearence changed.
+		clif_displaymessage(fd, msg_txt(sd,36)); // Appearance changed.
 	} else {
 		clif_displaymessage(fd, msg_txt(sd,37)); // An invalid number was specified.
 		return -1;
@@ -1686,7 +1762,7 @@ ACMD_FUNC(hair_style)
 
 	if (hair_style >= MIN_HAIR_STYLE && hair_style <= MAX_HAIR_STYLE) {
 			pc_changelook(sd, LOOK_HAIR, hair_style);
-			clif_displaymessage(fd, msg_txt(sd,36)); // Appearence changed.
+			clif_displaymessage(fd, msg_txt(sd,36)); // Appearance changed.
 	} else {
 		clif_displaymessage(fd, msg_txt(sd,37)); // An invalid number was specified.
 		return -1;
@@ -1713,7 +1789,7 @@ ACMD_FUNC(hair_color)
 
 	if (hair_color >= MIN_HAIR_COLOR && hair_color <= MAX_HAIR_COLOR) {
 			pc_changelook(sd, LOOK_HAIR_COLOR, hair_color);
-			clif_displaymessage(fd, msg_txt(sd,36)); // Appearence changed.
+			clif_displaymessage(fd, msg_txt(sd,36)); // Appearance changed.
 	} else {
 		clif_displaymessage(fd, msg_txt(sd,37)); // An invalid number was specified.
 		return -1;
@@ -2568,9 +2644,9 @@ ACMD_FUNC(guildlevelup) {
 	//}
 
 	added_level = (short)level;
-	if (level > 0 && (level > MAX_GUILDLEVEL || added_level > ((short)MAX_GUILDLEVEL - guild_info->guild_lv))) // fix positiv overflow
+	if (level > 0 && (level > MAX_GUILDLEVEL || added_level > ((short)MAX_GUILDLEVEL - guild_info->guild_lv))) // fix positive overflow
 		added_level = (short)MAX_GUILDLEVEL - guild_info->guild_lv;
-	else if (level < 0 && (level < -MAX_GUILDLEVEL || added_level < (1 - guild_info->guild_lv))) // fix negativ overflow
+	else if (level < 0 && (level < -MAX_GUILDLEVEL || added_level < (1 - guild_info->guild_lv))) // fix negative overflow
 		added_level = 1 - guild_info->guild_lv;
 
 	if (added_level != 0) {
@@ -3437,7 +3513,7 @@ ACMD_FUNC(recallall)
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (sd->bl.m >= 0 && map[sd->bl.m].flag.nowarpto && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE)) {
-		clif_displaymessage(fd, msg_txt(sd,1032)); // You are not authorized to warp somenone to your current map.
+		clif_displaymessage(fd, msg_txt(sd,1032)); // You are not authorized to warp someone to your current map.
 		return -1;
 	}
 
@@ -3492,7 +3568,7 @@ ACMD_FUNC(guildrecall)
 	}
 
 	if (sd->bl.m >= 0 && map[sd->bl.m].flag.nowarpto && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE)) {
-		clif_displaymessage(fd, msg_txt(sd,1032)); // You are not authorized to warp somenone to your current map.
+		clif_displaymessage(fd, msg_txt(sd,1032)); // You are not authorized to warp someone to your current map.
 		return -1;
 	}
 
@@ -3551,7 +3627,7 @@ ACMD_FUNC(partyrecall)
 	}
 
 	if (sd->bl.m >= 0 && map[sd->bl.m].flag.nowarpto && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE)) {
-		clif_displaymessage(fd, msg_txt(sd,1032)); // You are not authorized to warp somenone to your current map.
+		clif_displaymessage(fd, msg_txt(sd,1032)); // You are not authorized to warp someone to your current map.
 		return -1;
 	}
 
@@ -4074,12 +4150,21 @@ ACMD_FUNC(mount_peco)
 	}
 
 	if( (sd->class_&MAPID_THIRDMASK) == MAPID_RUNE_KNIGHT && pc_checkskill(sd,RK_DRAGONTRAINING) > 0 ) {
-		if( !(sd->sc.option&OPTION_DRAGON1) ) {
+		if( !(sd->sc.option&OPTION_DRAGON) ) {
+			unsigned int option = OPTION_DRAGON1;
+			if( message[0] ) {
+				int color = atoi(message);
+				option = ( color == 2 ? OPTION_DRAGON2 :
+				           color == 3 ? OPTION_DRAGON3 :
+				           color == 4 ? OPTION_DRAGON4 :
+				           color == 5 ? OPTION_DRAGON5 :
+				                        OPTION_DRAGON1 );
+			}
 			clif_displaymessage(sd->fd,msg_txt(sd,1119)); // You have mounted your Dragon.
-			pc_setoption(sd, sd->sc.option|OPTION_DRAGON1);
+			pc_setoption(sd, sd->sc.option|option);
 		} else {
 			clif_displaymessage(sd->fd,msg_txt(sd,1120)); // You have released your Dragon.
-			pc_setoption(sd, sd->sc.option&~OPTION_DRAGON1);
+			pc_setoption(sd, sd->sc.option&~OPTION_DRAGON);
 		}
 		return 0;
 	}
@@ -4463,7 +4548,7 @@ ACMD_FUNC(servertime)
 	} else if (battle_config.night_duration == 0)
 		if (night_flag == 1) { // we start with night
 			timer_data = get_timer(day_timer_tid);
-			sprintf(temp, msg_txt(sd,233), txt_time(DIFF_TICK(timer_data->tick,gettick())/1000)); // Game time: The game is actualy in night for %s.
+			sprintf(temp, msg_txt(sd,233), txt_time(DIFF_TICK(timer_data->tick,gettick())/1000)); // Game time: The game is in night for %s.
 			clif_displaymessage(fd, temp);
 			clif_displaymessage(fd, msg_txt(sd,234)); // Game time: After, the game will be in permanent daylight.
 		} else
@@ -4471,7 +4556,7 @@ ACMD_FUNC(servertime)
 	else if (battle_config.day_duration == 0)
 		if (night_flag == 0) { // we start with day
 			timer_data = get_timer(night_timer_tid);
-			sprintf(temp, msg_txt(sd,235), txt_time(DIFF_TICK(timer_data->tick,gettick())/1000)); // Game time: The game is actualy in daylight for %s.
+			sprintf(temp, msg_txt(sd,235), txt_time(DIFF_TICK(timer_data->tick,gettick())/1000)); // Game time: The game is in daylight for %s.
 			clif_displaymessage(fd, temp);
 			clif_displaymessage(fd, msg_txt(sd,236)); // Game time: After, the game will be in permanent night.
 		} else
@@ -4480,7 +4565,7 @@ ACMD_FUNC(servertime)
 		if (night_flag == 0) {
 			timer_data = get_timer(night_timer_tid);
 			timer_data2 = get_timer(day_timer_tid);
-			sprintf(temp, msg_txt(sd,235), txt_time(DIFF_TICK(timer_data->tick,gettick())/1000)); // Game time: The game is actualy in daylight for %s.
+			sprintf(temp, msg_txt(sd,235), txt_time(DIFF_TICK(timer_data->tick,gettick())/1000)); // Game time: The game is in daylight for %s.
 			clif_displaymessage(fd, temp);
 			if (DIFF_TICK(timer_data->tick, timer_data2->tick) > 0)
 				sprintf(temp, msg_txt(sd,237), txt_time(DIFF_TICK(timer_data->interval,DIFF_TICK(timer_data->tick,timer_data2->tick)) / 1000)); // Game time: After, the game will be in night for %s.
@@ -4492,7 +4577,7 @@ ACMD_FUNC(servertime)
 		} else {
 			timer_data = get_timer(day_timer_tid);
 			timer_data2 = get_timer(night_timer_tid);
-			sprintf(temp, msg_txt(sd,233), txt_time(DIFF_TICK(timer_data->tick,gettick()) / 1000)); // Game time: The game is actualy in night for %s.
+			sprintf(temp, msg_txt(sd,233), txt_time(DIFF_TICK(timer_data->tick,gettick()) / 1000)); // Game time: The game is in night for %s.
 			clif_displaymessage(fd, temp);
 			if (DIFF_TICK(timer_data->tick,timer_data2->tick) > 0)
 				sprintf(temp, msg_txt(sd,239), txt_time((timer_data->interval - DIFF_TICK(timer_data->tick, timer_data2->tick)) / 1000)); // Game time: After, the game will be in daylight for %s.
@@ -4773,7 +4858,7 @@ ACMD_FUNC(disguiseall)
 		return -1;
 	}
 
-	if ((mob_id = mobdb_searchname(message)) == 0) // check name first (to avoid possible name begining by a number)
+	if ((mob_id = mobdb_searchname(message)) == 0) // check name first (to avoid possible name beginning by a number)
 		mob_id = atoi(message);
 
 	if (!mobdb_checkid(mob_id) && !npcdb_checkid(mob_id)) { //if mob or npc...
@@ -5004,7 +5089,7 @@ ACMD_FUNC(email)
 	}
 
 	chrif_changeemail(sd->status.account_id, actual_email, new_email);
-	clif_displaymessage(fd, msg_txt(sd,148)); // Information sended to login-server via char-server.
+	clif_displaymessage(fd, msg_txt(sd,148)); // Information sent to login-server via char-server.
 	return 0;
 }
 

@@ -15,6 +15,8 @@
 //= 1.0 First version. [Euphy]
 //============================================================
 
+// Main NPC :: safety_Ref_NPC
+//============================================================
 prontera,184,177,6	script	Refine Master	851,{
 	disable_items;
 	if (countitem(6238) || countitem(6228) || countitem(6229) || countitem(6230) || countitem(6231) || countitem(6456))
@@ -148,8 +150,7 @@ prontera,184,177,6	script	Refine Master	851,{
 		mes "Please report this.";
 		close;
 	}
-	for(set .@i,getequiprefinerycnt(.@part); .@i<.@ticket_lv; set .@i,.@i+1)
-		successrefitem .@part;
+	successrefitem .@part, .@ticket_lv;
 	next;
 	emotion e_ho;
 	mes "[Refine Master]";

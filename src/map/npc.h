@@ -112,6 +112,7 @@ enum npce_event {
 	NPCE_DIE,
 	NPCE_KILLPC,
 	NPCE_KILLNPC,
+	NPCE_STATCALC,
 	NPCE_MAX
 };
 struct view_data* npc_get_viewdata(int class_);
@@ -129,6 +130,7 @@ int npc_buysellsel(struct map_session_data* sd, int id, int type);
 int npc_buylist(struct map_session_data* sd,int n, unsigned short* item_list);
 int npc_selllist(struct map_session_data* sd, int n, unsigned short* item_list);
 void npc_parse_mob2(struct spawn_data* mob);
+bool npc_viewisid(const char * viewid);
 struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short from_y, short xs, short ys, unsigned short to_mapindex, short to_x, short to_y);
 int npc_globalmessage(const char* name,const char* mes);
 

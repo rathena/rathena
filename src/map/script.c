@@ -256,6 +256,7 @@ struct Script_Config script_config = {
 	"OnPCLoadMapEvent", //loadmap_event_name
 	"OnPCBaseLvUpEvent", //baselvup_event_name
 	"OnPCJobLvUpEvent", //joblvup_event_name
+	"OnPCStatCalcEvent", //stat_calc_event_name
 	"OnTouch_",	//ontouch_name (runs on first visible char to enter area, picks another char if the first char leaves)
 	"OnTouch",	//ontouch2_name (run whenever a char walks into the OnTouch area)
 };
@@ -7819,13 +7820,16 @@ BUILDIN_FUNC(getequippercentrefinery)
  *------------------------------------------*/
 BUILDIN_FUNC(successrefitem)
 {
-	int i=-1,num,ep;
+	int i = -1, num, ep, up = 1;
 	TBL_PC *sd;
 
 	num = script_getnum(st,2);
 	sd = script_rid2sd(st);
 	if( sd == NULL )
 		return 0;
+
+	if( script_hasdata(st, 3) )
+		up = script_getnum(st, 3);
 
 	if (num > 0 && num <= ARRAYLENGTH(equip))
 		i=pc_checkequip(sd,equip[num-1]);
@@ -7835,7 +7839,11 @@ BUILDIN_FUNC(successrefitem)
 		//Logs items, got from (N)PC scripts [Lupus]
 		log_pick_pc(sd, LOG_TYPE_SCRIPT, -1, &sd->status.inventory[i]);
 
-		sd->status.inventory[i].refine++;
+		if (sd->status.inventory[i].refine >= MAX_REFINE)
+			return SCRIPT_CMD_SUCCESS;
+
+		sd->status.inventory[i].refine += up;
+		sd->status.inventory[i].refine = cap_value( sd->status.inventory[i].refine, 0, MAX_REFINE);
 		pc_unequipitem(sd,i,2); // status calc will happen in pc_equipitem() below
 
 		clif_refine(sd->fd,0,i,sd->status.inventory[i].refine);
@@ -7901,7 +7909,7 @@ BUILDIN_FUNC(failedrefitem)
  *------------------------------------------*/
 BUILDIN_FUNC(downrefitem)
 {
-	int i = -1,num,ep,down = 1;
+	int i = -1, num, ep, down = 1;
 	TBL_PC *sd;
 
 	sd = script_rid2sd(st);
@@ -18501,6 +18509,43 @@ BUILDIN_FUNC(disable_command) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/** Get the information of the members of a guild by type.
+ * getguildmember  <guild_id>{,<type>};
+ * @param guild_id: ID of guild
+ * @param type: Type of option (optional)
+ */
+BUILDIN_FUNC(getguildmember)
+{
+	int i, j = 0, type = 0;
+	struct guild *g = NULL;
+
+	g = guild_search(script_getnum(st,2));
+
+	if (script_hasdata(st,3))
+		type = script_getnum(st,3);
+
+	if (g) {
+		for (i = 0; i < MAX_GUILD; i++) {
+			if (g->member[i].account_id) {
+				switch (type) {
+				case 2:
+					mapreg_setreg(reference_uid(add_str("$@guildmemberaid"), j),g->member[i].account_id);
+					break;
+				case 1:
+					mapreg_setreg(reference_uid(add_str("$@guildmembercid"), j), g->member[i].char_id);
+					break;
+				default:
+					mapreg_setregstr(reference_uid(add_str("$@guildmembername$"), j), g->member[i].name);
+					break;
+				}
+				j++;
+			}
+		}
+	}
+	mapreg_setreg(add_str("$@guildmembercount"), j);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /** Adds a spirit ball to player for 'duration' in second
 * addspiritball <amount>,<duration>{,<char_id>};
 */
@@ -18512,8 +18557,12 @@ BUILDIN_FUNC(addspiritball) {
 	if (amount == 0)
 		return SCRIPT_CMD_SUCCESS;
 
-	if (script_hasdata(st,4))
-		sd = map_charid2sd(script_getnum(st,4));
+	if (script_hasdata(st,4)) {
+		if (script_isstring(st,4))
+			sd = map_charid2sd(script_getnum(st,4));
+		else
+			sd = map_nick2sd(script_getstr(st,4));
+	}
 	else
 		sd = script_rid2sd(st);
 	if (!sd)
@@ -18534,8 +18583,12 @@ BUILDIN_FUNC(delspiritball) {
 	if (amount == 0)
 		return SCRIPT_CMD_SUCCESS;
 	
-	if (script_hasdata(st,3))
-		sd = map_charid2sd(script_getnum(st,3));
+	if (script_hasdata(st,3)) {
+		if (script_isstring(st,2))
+			sd = map_charid2sd(script_getnum(st,3));
+		else
+			sd = map_nick2sd(script_getstr(st,3));
+	}
 	else
 		sd = script_rid2sd(st);
 	if (!sd)
@@ -18551,8 +18604,12 @@ BUILDIN_FUNC(delspiritball) {
 BUILDIN_FUNC(countspiritball) {
 	struct map_session_data *sd;
 
-	if (script_hasdata(st,2))
-		sd = map_charid2sd(script_getnum(st,2));
+	if (script_hasdata(st,2)) {
+		if (script_isstring(st,2))
+			sd = map_charid2sd(script_getnum(st,2));
+		else
+			sd = map_nick2sd(script_getstr(st,2));
+	}
 	else
 		sd = script_rid2sd(st);
 	if (!sd)
@@ -18686,7 +18743,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getequiprefinerycnt,"i"),
 	BUILDIN_DEF(getequipweaponlv,"i"),
 	BUILDIN_DEF(getequippercentrefinery,"i"),
-	BUILDIN_DEF(successrefitem,"i"),
+	BUILDIN_DEF(successrefitem,"i?"),
 	BUILDIN_DEF(failedrefitem,"i"),
 	BUILDIN_DEF(downrefitem,"i?"),
 	BUILDIN_DEF(statusup,"i"),
@@ -19090,6 +19147,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getgroupitem,"i"),
 	BUILDIN_DEF(enable_command,""),
 	BUILDIN_DEF(disable_command,""),
+	BUILDIN_DEF(getguildmember,"i?"),
 	BUILDIN_DEF(addspiritball,"ii?"),
 	BUILDIN_DEF(delspiritball,"i?"),
 	BUILDIN_DEF(countspiritball,"?"),

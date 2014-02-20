@@ -1,8 +1,7 @@
 //===== rAthena Script ======================================= 
 //= Magic Book Seller
 //===== By: ================================================== 
-//= Masao
-//= Credits to Muad_Dib for the translation.
+//= Masao, Muad_Dib (translation)
 //===== Current Version: ===================================== 
 //= 1.1a
 //===== Compatible With: ===================================== 
@@ -16,6 +15,8 @@
 //= 1.1a Updated NPC name to "Master Velofos". [Euphy]
 //============================================================ 
 
+// Main Quest :: war_book
+//============================================================
 geffen_in,176,105,4	script	Master Velofos	64,{
 	if (checkweight(1201,1) == 0) {
 		mes "You're carrying too many items. Please make some room in your bag first.";

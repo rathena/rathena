@@ -94,7 +94,7 @@ char log_db_pw[32] = "ragnarok";
 char log_db_db[32] = "log";
 Sql* logmysql_handle;
 
-// DBMap declaartion
+// DBMap declaration
 static DBMap* id_db=NULL; /// int id -> struct block_list*
 static DBMap* pc_db=NULL; /// int id -> struct map_session_data*
 static DBMap* mobid_db=NULL; /// int id -> struct mob_data*
@@ -249,7 +249,7 @@ int map_freeblock_timer(int tid, unsigned int tick, int id, intptr_t data)
 //
 /*==========================================
  * Handling of map_bl[]
- * The adresse of bl_heal is set in bl->prev
+ * The address of bl_heal is set in bl->prev
  *------------------------------------------*/
 static struct block_list bl_head;
 
@@ -336,7 +336,7 @@ int map_delblock(struct block_list* bl)
 	// blocklist (2ways chainlist)
 	if (bl->prev == NULL) {
 		if (bl->next != NULL) {
-			// can't delete block (already at the begining of the chain)
+			// can't delete block (already at the beginning of the chain)
 			ShowError("map_delblock error : bl->next!=NULL\n");
 		}
 		return 0;
@@ -374,7 +374,7 @@ int map_delblock(struct block_list* bl)
  * @param x1 : new x position
  * @param y1 : new y position
  * @param tick : when this was scheduled
- * @return 0:sucess, 1:fail
+ * @return 0:success, 1:fail
  */
 int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 {
@@ -596,7 +596,7 @@ int map_foreachinrange(int (*func)(struct block_list*,va_list), struct block_lis
 	map_freeblock_lock();
 
 	for( i = blockcount; i < bl_list_count; i++ )
-		if( bl_list[ i ]->prev ) { //func() may delete this bl_list[] slot, checking for prev ensures it wasnt queued for deletion.
+		if( bl_list[ i ]->prev ) { //func() may delete this bl_list[] slot, checking for prev ensures it wasn't queued for deletion.
 			va_start(ap, type);
 			returnCount += func(bl_list[ i ], ap);
 			va_end(ap);
@@ -665,7 +665,7 @@ int map_foreachinshootrange(int (*func)(struct block_list*,va_list),struct block
 	map_freeblock_lock();
 
 	for( i = blockcount; i < bl_list_count; i++ )
-		if( bl_list[ i ]->prev ) { //func() may delete this bl_list[] slot, checking for prev ensures it wasnt queued for deletion.
+		if( bl_list[ i ]->prev ) { //func() may delete this bl_list[] slot, checking for prev ensures it wasn't queued for deletion.
 			va_start(ap, type);
 			returnCount += func(bl_list[ i ], ap);
 			va_end(ap);
@@ -722,7 +722,7 @@ int map_foreachinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x0
 	map_freeblock_lock();
 
 	for( i = blockcount; i < bl_list_count; i++ )
-		if( bl_list[ i ]->prev ) { //func() may delete this bl_list[] slot, checking for prev ensures it wasnt queued for deletion.
+		if( bl_list[ i ]->prev ) { //func() may delete this bl_list[] slot, checking for prev ensures it wasn't queued for deletion.
 			va_start(ap, type);
 			returnCount += func(bl_list[ i ], ap);
 			va_end(ap);
@@ -785,7 +785,7 @@ int map_forcountinrange(int (*func)(struct block_list*,va_list), struct block_li
 	map_freeblock_lock();
 
 	for( i = blockcount; i < bl_list_count; i++ )
-		if( bl_list[ i ]->prev ) { //func() may delete this bl_list[] slot, checking for prev ensures it wasnt queued for deletion.
+		if( bl_list[ i ]->prev ) { //func() may delete this bl_list[] slot, checking for prev ensures it wasn't queued for deletion.
 			va_start(ap, type);
 			returnCount += func(bl_list[ i ], ap);
 			va_end(ap);
@@ -839,7 +839,7 @@ int map_forcountinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x
 	map_freeblock_lock();
 
 	for( i = blockcount; i < bl_list_count; i++ )
-		if(bl_list[ i ]->prev) { //func() may delete this bl_list[] slot, checking for prev ensures it wasnt queued for deletion.
+		if(bl_list[ i ]->prev) { //func() may delete this bl_list[] slot, checking for prev ensures it wasn't queued for deletion.
 			va_start(ap, type);
 			returnCount += func(bl_list[ i ], ap);
 			va_end(ap);
@@ -854,9 +854,8 @@ int map_forcountinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x
 }
 
 /*==========================================
- * For what I get
  * Move bl and do func* with va_list while moving.
- * Mouvement is set by dx dy wich are distance in x and y
+ * Movement is set by dx dy which are distance in x and y
  *------------------------------------------*/
 int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int16 dx, int16 dy, int type, ...)
 {
@@ -967,7 +966,7 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 	map_freeblock_lock();	// Prohibit the release from memory
 
 	for( i = blockcount; i < bl_list_count; i++ )
-		if( bl_list[ i ]->prev ) { //func() may delete this bl_list[] slot, checking for prev ensures it wasnt queued for deletion.
+		if( bl_list[ i ]->prev ) { //func() may delete this bl_list[] slot, checking for prev ensures it wasn't queued for deletion.
 			va_start(ap, type);
 			returnCount += func(bl_list[ i ], ap);
 			va_end(ap);
@@ -1011,7 +1010,7 @@ int map_foreachincell(int (*func)(struct block_list*,va_list), int16 m, int16 x,
 	map_freeblock_lock();
 
 	for( i = blockcount; i < bl_list_count; i++ )
-		if( bl_list[ i ]->prev ) { //func() may delete this bl_list[] slot, checking for prev ensures it wasnt queued for deletion.
+		if( bl_list[ i ]->prev ) { //func() may delete this bl_list[] slot, checking for prev ensures it wasn't queued for deletion.
 			va_start(ap, type);
 			returnCount += func(bl_list[ i ], ap);
 			va_end(ap);
@@ -1048,7 +1047,7 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int16 m,int16 x0,i
 //////////////////////////////////////////////////////////////
 // Methodology:
 // My trigonometrics and math are a little rusty... so the approach I am writing
-// here is basicly do a double for to check for all targets in the square that
+// here is basically do a double for to check for all targets in the square that
 // contains the initial and final positions (area range increased to match the
 // radius given), then for each object to test, calculate the distance to the
 // path and include it if the range fits and the target is in the line (0<k<1,
@@ -1190,7 +1189,7 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int16 m,int16 x0,i
 	map_freeblock_lock();
 
 	for( i = blockcount; i < bl_list_count; i++ )
-		if( bl_list[ i ]->prev ) { //func() may delete this bl_list[] slot, checking for prev ensures it wasnt queued for deletion.
+		if( bl_list[ i ]->prev ) { //func() may delete this bl_list[] slot, checking for prev ensures it wasn't queued for deletion.
 			va_start(ap, type);
 			returnCount += func(bl_list[ i ], ap);
 			va_end(ap);
@@ -1232,7 +1231,7 @@ int map_foreachinmap(int (*func)(struct block_list*,va_list), int16 m, int type,
 	map_freeblock_lock();
 
 	for( i = blockcount; i < bl_list_count ; i++ )
-		if( bl_list[ i ]->prev ) { //func() may delete this bl_list[] slot, checking for prev ensures it wasnt queued for deletion.
+		if( bl_list[ i ]->prev ) { //func() may delete this bl_list[] slot, checking for prev ensures it wasn't queued for deletion.
 			va_start(ap, type);
 			returnCount += func(bl_list[ i ], ap);
 			va_end(ap);
@@ -1500,7 +1499,7 @@ static DBData create_charid2nick(DBKey key, va_list args)
 	return db_ptr2data(p);
 }
 
-/// Adds(or replaces) the nick of charid to nick_db and fullfils pending requests.
+/// Adds(or replaces) the nick of charid to nick_db and fulfils pending requests.
 /// Does nothing if the character is online.
 void map_addnickdb(int charid, const char* nick)
 {
@@ -1995,7 +1994,7 @@ void map_foreachnpc(int (*func)(struct npc_data* nd, va_list args), ...)
 }
 
 /// Applies func to everything in the db.
-/// Stops iteratin gif func returns -1.
+/// Stops iterating if func returns -1.
 void map_foreachregen(int (*func)(struct block_list* bl, va_list args), ...)
 {
 	DBIterator* iter;
@@ -3208,7 +3207,7 @@ int map_readallmaps (void)
 			exit(EXIT_FAILURE); //No use launching server if maps can't be read.
 		}
 
-		// Init mapcache data.. [Shinryo]
+		// Init mapcache data. [Shinryo]
 		map_cache_buffer = map_init_mapcache(fp);
 		if(!map_cache_buffer) {
 			ShowFatalError("Failed to initialize mapcache data (%s)..\n", mapcachefilepath);
@@ -3270,7 +3269,7 @@ int map_readallmaps (void)
 	if( !enable_grf ) {
 		fclose(fp);
 
-		// The cache isn't needed anymore, so free it.. [Shinryo]
+		// The cache isn't needed anymore, so free it. [Shinryo]
 		aFree(map_cache_buffer);
 	}
 

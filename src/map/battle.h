@@ -532,6 +532,7 @@ extern struct Battle_Config
 	int atcommand_enable_npc;
 	int path_blown_halt;
 	int rental_mount_speed_boost;
+	int warp_suggestions_enabled;
 } battle_config;
 
 void do_init_battle(void);
