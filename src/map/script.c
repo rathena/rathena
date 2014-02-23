@@ -16901,28 +16901,11 @@ BUILDIN_FUNC(instance_enter)
 {
 	struct map_session_data *sd;
 
-	if((sd = script_rid2sd(st)) != NULL)
-		script_pushint(st,instance_enter(sd,script_getstr(st, 2)));
-	else
-		return 1;
-	return SCRIPT_CMD_SUCCESS;
-
-}
-
-/*==========================================
- * Warps player to instance at the specified coordinates [CairoLee]
- * Results:
- *	0: Success
- *	1: Character not in party
- *	2: Party doesn't have instance
- *	3: Other errors (instance not in DB, instance doesn't match with party, etc.)
- *------------------------------------------*/
-BUILDIN_FUNC(instance_enter2)
-{
-	struct map_session_data *sd;
-
 	if((sd = script_rid2sd(st)) != NULL){
-		script_pushint(st,instance_enter_position(sd,script_getstr(st, 2),script_getnum(st, 3),script_getnum(st, 4)));
+		if (script_hasdata(st,3) && script_hasdata(st,4))
+			script_pushint(st,instance_enter_position(sd,script_getstr(st, 2),script_getnum(st, 3),script_getnum(st, 4)));
+		else
+			script_pushint(st,instance_enter(sd,script_getstr(st, 2)));
 	}
 	else
 		return 1;
