@@ -18546,6 +18546,84 @@ BUILDIN_FUNC(getguildmember)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/** Adds spirit ball to player for 'duration' in milisecond
+* @param count How many spirit ball will be added
+* @param duration How long spiritball is active until it disappears
+* @param char_id Target player (Optional)
+* @author [Cydh]
+*/
+BUILDIN_FUNC(addspiritball) {
+	uint8 i, count = script_getnum(st,2);
+	uint16 duration = script_getnum(st,3);
+	struct map_session_data *sd = NULL;
+	
+	if (count == 0)
+		return SCRIPT_CMD_SUCCESS;
+
+	if (script_hasdata(st,4)) {
+		if (script_isstring(st,4))
+			sd = map_charid2sd(script_getnum(st,4));
+		else
+			sd = map_nick2sd(script_getstr(st,4));
+	}
+	else
+		sd = script_rid2sd(st);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
+
+	for (i = 0; i < count; i++)
+		pc_addspiritball(sd,duration,10);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/** Deletes the spirit ball(s) from player
+* @param count How many spirit ball will be deleted
+* @param char_id Target player (Optional)
+* @author [Cydh]
+*/
+BUILDIN_FUNC(delspiritball) {
+	uint8 count = script_getnum(st,2);
+	struct map_session_data *sd = NULL;
+	
+	if (count == 0)
+		count = 1;
+	
+	if (script_hasdata(st,3)) {
+		if (script_isstring(st,3))
+			sd = map_charid2sd(script_getnum(st,3));
+		else
+			sd = map_nick2sd(script_getstr(st,3));
+	}
+	else
+		sd = script_rid2sd(st);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
+
+	pc_delspiritball(sd,count,0);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/** Counts the spirit ball that player has
+* @param char_id Target player (Optional)
+* @author [Cydh]
+*/
+BUILDIN_FUNC(countspiritball) {
+	struct map_session_data *sd;
+
+	if (script_hasdata(st,2)) {
+		if (script_isstring(st,2))
+			sd = map_charid2sd(script_getnum(st,2));
+		else
+			sd = map_nick2sd(script_getstr(st,2));
+	}
+	else
+		sd = script_rid2sd(st);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
+	script_pushint(st,sd->spiritball);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -19076,6 +19154,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(enable_command,""),
 	BUILDIN_DEF(disable_command,""),
 	BUILDIN_DEF(getguildmember,"i?"),
+	BUILDIN_DEF(addspiritball,"ii?"),
+	BUILDIN_DEF(delspiritball,"i?"),
+	BUILDIN_DEF(countspiritball,"?"),
 
 #include "../custom/script_def.inc"
 
