@@ -2377,19 +2377,19 @@ NOTE: This command is only available if the VIP System is enabled.
 
 ---------------------------------------
 
-*addspiritball <amount>,<duration>{,<char_id>};
+*addspiritball <count>,<duration>{,<char_id>};
 
-Adds a spirit ball to player for 'duration' in second.
+Adds a spirit ball to player for 'duration' in milisecond.
 
 ---------------------------------------
 
-*delspiritball <amount>{,<char_id>};
+*delspiritball <count>{,<char_id>};
 
 Deletes the spirit ball(s) from player.
 
 ---------------------------------------
 
-*delspiritball {,<char_id>};
+*countspiritball {<char_id>};
 
 Counts the spirit ball that player has.
 

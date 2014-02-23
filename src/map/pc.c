@@ -225,7 +225,7 @@ int pc_addspiritball(struct map_session_data *sd,int interval,int max)
 * Removes number of spiritball from player
 * @param sd
 * @param count
-* @param type 1 = gives client effect
+* @param type 0 = gives client effect
 * @return 0
 */
 int pc_delspiritball(struct map_session_data *sd,int count,int type)

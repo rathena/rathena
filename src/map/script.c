@@ -18546,15 +18546,18 @@ BUILDIN_FUNC(getguildmember)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/** Adds a spirit ball to player for 'duration' in second
-* addspiritball <amount>,<duration>{,<char_id>};
+/** Adds spirit ball to player for 'duration' in milisecond
+* @param count How many spirit ball will be added
+* @param duration How long spiritball is active until it disappears
+* @param char_id Target player (Optional)
+* @author [Cydh]
 */
 BUILDIN_FUNC(addspiritball) {
-	uint8 i, amount = script_getnum(st,2);
-	uint16 tick = script_getnum(st,3);
+	uint8 i, count = script_getnum(st,2);
+	uint16 duration = script_getnum(st,3);
 	struct map_session_data *sd = NULL;
 	
-	if (amount == 0)
+	if (count == 0)
 		return SCRIPT_CMD_SUCCESS;
 
 	if (script_hasdata(st,4)) {
@@ -18568,20 +18571,22 @@ BUILDIN_FUNC(addspiritball) {
 	if (!sd)
 		return SCRIPT_CMD_FAILURE;
 
-	for (i = 0; i < amount; i++)
-		pc_addspiritball(sd,tick*1000,10);
+	for (i = 0; i < count; i++)
+		pc_addspiritball(sd,duration,10);
 	return SCRIPT_CMD_SUCCESS;
 }
 
 /** Deletes the spirit ball(s) from player
-* delspiritball <amount>{,<char_id>};
+* @param count How many spirit ball will be deleted
+* @param char_id Target player (Optional)
+* @author [Cydh]
 */
 BUILDIN_FUNC(delspiritball) {
-	uint8 amount = script_getnum(st,2);
+	uint8 count = script_getnum(st,2);
 	struct map_session_data *sd = NULL;
 	
-	if (amount == 0)
-		return SCRIPT_CMD_SUCCESS;
+	if (count == 0)
+		count = 1;
 	
 	if (script_hasdata(st,3)) {
 		if (script_isstring(st,2))
@@ -18594,12 +18599,13 @@ BUILDIN_FUNC(delspiritball) {
 	if (!sd)
 		return SCRIPT_CMD_FAILURE;
 
-	pc_delspiritball(sd,max(amount,1),1);
+	pc_delspiritball(sd,count,0);
 	return SCRIPT_CMD_SUCCESS;
 }
 
 /** Counts the spirit ball that player has
-* countspiritball {,<char_id>};
+* @param char_id Target player (Optional)
+* @author [Cydh]
 */
 BUILDIN_FUNC(countspiritball) {
 	struct map_session_data *sd;
