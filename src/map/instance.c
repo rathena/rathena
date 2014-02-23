@@ -485,6 +485,19 @@ int instance_destroy(short instance_id)
  *------------------------------------------*/
 int instance_enter(struct map_session_data *sd, const char *name)
 {
+	struct instance_db *db = instance_searchname_db(name);
+
+	if(db == NULL)
+		return 3;
+
+	return instance_enter_position(sd, name, db->enter.x, db->enter.y);
+}
+
+/*==========================================
+ * Warp a user into instance
+ *------------------------------------------*/
+int instance_enter_position(struct map_session_data *sd, const char *name, short x, short y)
+{
 	struct instance_data *im;
 	struct instance_db *db = instance_searchname_db(name);
 	struct party_data *p;
@@ -517,7 +530,7 @@ int instance_enter(struct map_session_data *sd, const char *name)
 	if((m = instance_mapname2mapid(db->enter.mapname, p->instance_id)) < 0)
 		return 3;
 
-	if(pc_setpos(sd, map_id2index(m), db->enter.x, db->enter.y, 0))
+	if(pc_setpos(sd, map_id2index(m), x, y, 0))
 		return 3;
 
 	// If there was an idle timer, let's stop it

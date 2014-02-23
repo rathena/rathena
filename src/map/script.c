@@ -16910,6 +16910,27 @@ BUILDIN_FUNC(instance_enter)
 }
 
 /*==========================================
+ * Warps player to instance at the specified coordinates [CairoLee]
+ * Results:
+ *	0: Success
+ *	1: Character not in party
+ *	2: Party doesn't have instance
+ *	3: Other errors (instance not in DB, instance doesn't match with party, etc.)
+ *------------------------------------------*/
+BUILDIN_FUNC(instance_enter2)
+{
+	struct map_session_data *sd;
+
+	if((sd = script_rid2sd(st)) != NULL){
+		script_pushint(st,instance_enter_position(sd,script_getstr(st, 2),script_getnum(st, 3),script_getnum(st, 4)));
+	}
+	else
+		return 1;
+	return SCRIPT_CMD_SUCCESS;
+
+}
+
+/*==========================================
  * Returns the name of a duplicated NPC
  *
  * instance_npcname <npc_name>{,<instance_id>};
@@ -19085,6 +19106,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_destroy,"?"),
 	BUILDIN_DEF(instance_id,""),
 	BUILDIN_DEF(instance_enter,"s"),
+	BUILDIN_DEF(instance_enter2,"sii"),
 	BUILDIN_DEF(instance_npcname,"s?"),
 	BUILDIN_DEF(instance_mapname,"s?"),
 	BUILDIN_DEF(instance_warpall,"sii?"),
