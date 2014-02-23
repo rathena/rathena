@@ -18589,7 +18589,7 @@ BUILDIN_FUNC(delspiritball) {
 		count = 1;
 	
 	if (script_hasdata(st,3)) {
-		if (script_isstring(st,2))
+		if (script_isstring(st,3))
 			sd = map_charid2sd(script_getnum(st,3));
 		else
 			sd = map_nick2sd(script_getstr(st,3));

@@ -2379,7 +2379,7 @@ NOTE: This command is only available if the VIP System is enabled.
 
 *addspiritball <count>,<duration>{,<char_id>};
 
-Adds a spirit ball to player for 'duration' in milisecond.
+Adds spirit ball to player for 'duration' in milisecond.
 
 ---------------------------------------
 
