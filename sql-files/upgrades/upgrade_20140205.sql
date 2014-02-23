@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS `buyingstore_items` (
   `item_id` int(10) unsigned NOT NULL,
   `amount` smallint(5) unsigned NOT NULL,
   `price` int(10) unsigned NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 CREATE TABLE IF NOT EXISTS `buyingstores` (
   `id` int(10) unsigned NOT NULL,
@@ -18,4 +18,4 @@ CREATE TABLE IF NOT EXISTS `buyingstores` (
   `limit` int(10) unsigned NOT NULL,
   `autotrade` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;

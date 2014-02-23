@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `skillcooldown` (
   `tick` int(11) NOT NULL,
   KEY `account_id` (`account_id`),
   KEY `char_id` (`char_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `auction`
@@ -711,7 +711,7 @@ CREATE TABLE IF NOT EXISTS `bonus_script` (
   `flag` varchar(3) NOT NULL DEFAULT '0',
   `type` char(1) NOT NULL DEFAULT '0',
   `icon` varchar(3) NOT NULL DEFAULT '-1'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `vending_items` (
   `vending_id` int(10) unsigned NOT NULL,
@@ -719,7 +719,7 @@ CREATE TABLE IF NOT EXISTS `vending_items` (
   `cartinventory_id` int(10) unsigned NOT NULL,
   `amount` smallint(5) unsigned NOT NULL,
   `price` int(10) unsigned NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 CREATE TABLE IF NOT EXISTS `vendings` (
   `id` int(10) unsigned NOT NULL,
@@ -732,7 +732,7 @@ CREATE TABLE IF NOT EXISTS `vendings` (
   `title` varchar(80) NOT NULL,
   `autotrade` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 CREATE TABLE IF NOT EXISTS `buyingstore_items` (
   `buyingstore_id` int(10) unsigned NOT NULL,
@@ -740,7 +740,7 @@ CREATE TABLE IF NOT EXISTS `buyingstore_items` (
   `item_id` int(10) unsigned NOT NULL,
   `amount` smallint(5) unsigned NOT NULL,
   `price` int(10) unsigned NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 CREATE TABLE IF NOT EXISTS `buyingstores` (
   `id` int(10) unsigned NOT NULL,
@@ -754,4 +754,4 @@ CREATE TABLE IF NOT EXISTS `buyingstores` (
   `limit` int(10) unsigned NOT NULL,
   `autotrade` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
