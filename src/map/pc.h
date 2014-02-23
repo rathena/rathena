@@ -1016,8 +1016,8 @@ extern const struct sg_data sg_info[MAX_PC_FEELHATE];
 void pc_setinvincibletimer(struct map_session_data* sd, int val);
 void pc_delinvincibletimer(struct map_session_data* sd);
 
-int pc_addspiritball(struct map_session_data *sd,int interval,int max);
-int pc_delspiritball(struct map_session_data *sd,int count,int type);
+void pc_addspiritball(struct map_session_data *sd,int interval,int max);
+void pc_delspiritball(struct map_session_data *sd,int count,int type);
 void pc_addfame(struct map_session_data *sd,int count);
 unsigned char pc_famerank(int char_id, int job);
 bool pc_set_hate_mob(struct map_session_data *sd, int pos, struct block_list *bl);
