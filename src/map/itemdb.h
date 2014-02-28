@@ -182,6 +182,9 @@ enum mechanic_item_list {
 	ITEMID_INDIGO_PTS,
 	ITEMID_YELLOW_WISH_PTS,
 	ITEMID_LIME_GREEN_PTS,
+	ITEMID_REPAIR_A              = 12392,
+	ITEMID_REPAIR_B,
+	ITEMID_REPAIR_C,
 };
 
 ///Genetic

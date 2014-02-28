@@ -2373,7 +2373,7 @@ int status_calc_mob_(struct mob_data* md, bool first)
 					if(!mstatus)
 						break;
 					status->max_hp = (1000 * ud->skill_lv) + (mstatus->hp / 3) + (status_get_lv(mbl) * 12);
-					status->batk = (((ud->skill_lv > 3)?300:100) + (200 * ud->skill_lv));
+					status->batk = 200 * ud->skill_lv;
 					break;
 				}
 				case NC_MAGICDECOY:
@@ -2381,7 +2381,7 @@ int status_calc_mob_(struct mob_data* md, bool first)
 					struct status_data *mstatus = status_get_status_data(mbl);
 					if(!mstatus)
 						break;
-					status->max_hp = (1000 * ((TBL_PC*)mbl)->menuskill_val) + (mstatus->hp * 4) + (status_get_lv(mbl) * 12);
+					status->max_hp = (1000 * ((TBL_PC*)mbl)->menuskill_val) + (mstatus->sp * 4) + (status_get_lv(mbl) * 12);
 					status->matk_min = status->matk_max = 250 + 50*((TBL_PC*)mbl)->menuskill_val;
 					break;
 				}
@@ -5260,7 +5260,7 @@ static unsigned short status_calc_matk(struct block_list *bl, struct status_chan
 	if (sc->data[SC_INCMATKRATE])
 		matk += matk * sc->data[SC_INCMATKRATE]->val1/100;
 	if (sc->data[SC_MOONLITSERENADE])
-		matk += matk * sc->data[SC_MOONLITSERENADE]->val3;
+		matk += matk * sc->data[SC_MOONLITSERENADE]->val3/100;
 	if (sc->data[SC_ZANGETSU])
 		matk += matk * sc->data[SC_ZANGETSU]->val2 / 100;
 	if (sc->data[SC_MTF_MATK])
@@ -5812,8 +5812,8 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 				val = max( val, 50 );
 			if( sc->data[SC_MARSHOFABYSS] )
 				val = max( val, sc->data[SC_MARSHOFABYSS]->val3 );
-			if( sc->data[SC_CAMOUFLAGE] )
-				val = max( val, sc->data[SC_CAMOUFLAGE]->val1 < 3 ? 0 : 25 * sc->data[SC_CAMOUFLAGE]->val1 );
+			if( sc->data[SC_CAMOUFLAGE] && (sc->data[SC_CAMOUFLAGE]->val3&1) == 0 )
+				val = max( val, sc->data[SC_CAMOUFLAGE]->val1 < 3 ? 0 : 25 * (5 - sc->data[SC_CAMOUFLAGE]->val1) );
 			if( sc->data[SC_STEALTHFIELD_MASTER] )
 				val = max( val, 30 );
 			if( sc->data[SC_BANDING_DEFENCE] )
@@ -7100,6 +7100,9 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 		case SC_CRYSTALIZE:
 			tick_def2 = status->vit*100;
 			break;
+		case SC_VACUUM_EXTREME:
+			tick_def2 = status->str*50;
+			break;
 		case SC_MANDRAGORA:
 			sc_def = (status->vit + status->luk)*20;
 			break;
@@ -7277,15 +7280,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		switch( type ) {
 			case SC_DEEPSLEEP:
 			case SC_BURNING:
-			case SC_STUN:
-			case SC_SLEEP:
-			case SC_CURSE:
-			case SC_STONE:
-			case SC_POISON:
-			case SC_BLIND:
-			case SC_SILENCE:
-			case SC_BLEEDING:
-			case SC_FREEZE:
 			case SC_FREEZING:
 			case SC_CRYSTALIZE:
 			case SC_TOXIN:
@@ -7304,22 +7298,27 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		if( type >= SC_COMMON_MIN && type <= SC_COMMON_MAX )
 			return 0; // Immune to status ailements
 		switch( type ) {
-			case SC_DEEPSLEEP:
-			case SC_SATURDAYNIGHTFEVER:
-			case SC_PYREXIA:
-			case SC_DEATHHURT:
-			case SC_MAGICMUSHROOM:
-			case SC_VENOMBLEED:
+			case SC_BURNING:
+			case SC_FREEZING:
+			case SC_CRYSTALIZE:
+			case SC_FEAR:
 			case SC_TOXIN:
+			case SC_PARALYSE:
+			case SC_VENOMBLEED:
+			case SC_MAGICMUSHROOM:
+			case SC_DEATHHURT:
+			case SC_PYREXIA:
 			case SC_OBLIVIONCURSE:
 			case SC_LEECHESEND:
+			case SC_DEEPSLEEP:
+			case SC_SATURDAYNIGHTFEVER:
+			case SC__BODYPAINT:
 			case SC__ENERVATION:
 			case SC__GROOMY:
+			case SC__IGNORANCE:
 			case SC__LAZINESS:
 			case SC__UNLUCKY:
 			case SC__WEAKNESS:
-			case SC__BODYPAINT:
-			case SC__IGNORANCE:
 				return 0;
 		}
 	}
@@ -7341,6 +7340,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		|| (type==SC_ANGRIFFS_MODUS && sc->data[SC_GOLDENE_FERSE])
 		)
 			return 0;
+	case SC_VACUUM_EXTREME:
+		if(sc->data[SC_HALLUCINATIONWALK] || sc->data[SC_HOVERING])
+			return 0;
+		break;
 	case SC_STONE:
 		if(sc->data[SC_POWER_OF_GAIA])
 			return 0;
@@ -8398,10 +8401,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			else
 				val4 |= battle_config.monster_cloak_check_type&7;
 			break;
-		case SC_SIGHTBLASTER:
-			tick = -1; // Duration sent to the client should be infinite
 		case SC_SIGHT:			/* splash status */
 		case SC_RUWACH:
+		case SC_SIGHTBLASTER:
 			val3 = skill_get_splash(val2, val1); // Val2 should bring the skill-id.
 			val2 = tick/250;
 			tick_time = 10; // [GodLesZ] tick time
@@ -9145,8 +9147,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = 2000; // [GodLesZ] tick time
 			break;
 		case SC_SIRCLEOFNATURE:
-			val2 = 4 + val1; // SP consume
-			val3 = 40 * val1;	// HP recovery
+			val2 = 40 + val1; // HP recovery
+			val3 = 4 * val1;	// SP consume
 			val4 = tick / 1000;
 			tick_time = 1000; // [GodLesZ] tick time
 			break;
@@ -9221,12 +9223,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_EXEEDBREAK:
 			val1 *= 100; // 100 * skill_lv
-			if( sd && sd->inventory_data[sd->equip_index[EQI_HAND_R]] ) {  // Chars.
+			if( sd && sd->inventory_data[sd->equip_index[EQI_HAND_R]] ) {
 				val1 += (sd->inventory_data[sd->equip_index[EQI_HAND_R]]->weight/10 * sd->inventory_data[sd->equip_index[EQI_HAND_R]]->wlv * status_get_lv(bl) / 100);
 				val1 += 10 * sd->status.job_level;
 			}
-			else	// Mobs
-				val1 += 500;
 			break;
 		case SC_PRESTIGE:
 			val2 = (status->int_ + status->luk) * (val1 / 20) * (status_get_lv(bl) / 200) + val1;	// Chance to evade magic damage.
@@ -9725,6 +9725,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_SILENCE:
 			if (battle_config.sc_castcancel&bl->type)
 				unit_skillcastcancel(bl, 0);
+		break;
+		case SC_VACUUM_EXTREME:
+			if (!map_flag_gvg(bl->m))
+				unit_stop_walking(bl, 1);
 		break;
 	}
 
@@ -10588,9 +10592,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				}
 			}
 			break;
-		case SC_VACUUM_EXTREME:
-			if(sc && sce->val2 && sc->cant.move > 0) sc->cant.move--;
-			break;
 		case SC_KYOUGAKU:
 			clif_status_load(bl, SI_KYOUGAKU, 0); // Avoid client crash
 			clif_status_load(bl, SI_ACTIVE_MONSTER_TRANSFORM, 0);
@@ -11324,7 +11325,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			int heal = status->max_hp * 3 / 100;
 			if( sc && sc->data[SC_AKAITSUKI] && heal )
 				heal = ~heal + 1;
-			status_heal(bl, heal, 0, 2);
+			status_heal(bl, heal, 0, 3);
 			sc_timer_next(5000 + tick, status_change_timer, bl->id, data);
 			return 0;
 		}
@@ -11420,16 +11421,6 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			if( !status_charge(bl,0, sce->val3 ) )
 				break;
 			sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
-			return 0;
-		}
-		break;
-	case SC_VACUUM_EXTREME:
-		if( --(sce->val4) >= 0 ) {
-			if( !unit_is_walking(bl) && !sce->val2 ) {
-				sc->cant.move++;
-				sce->val2 = 1;
-			}
-			sc_timer_next(100 + tick, status_change_timer, bl->id, data);
 			return 0;
 		}
 		break;

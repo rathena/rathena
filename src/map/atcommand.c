@@ -6006,7 +6006,7 @@ ACMD_FUNC(autoloottype)
 {
 	uint8 i = 0, action = 3; // 1=add, 2=remove, 3=help+list (default), 4=reset
 	enum item_types type = -1;
-	int ITEM_NONE = 0, ITEM_MAX = 1533;
+	int ITEM_MAX = 1533;
 
 	nullpo_retr(-1, sd);
 
@@ -6058,7 +6058,6 @@ ACMD_FUNC(autoloottype)
 				clif_displaymessage(fd, msg_txt(sd,1482)); // Your autoloottype list has all item types. You can remove some items with @autoloottype -<type name or ID>.
 				return -1;
 			}
-			sd->state.autolootingtype = 1; // Autoloot Activated
 			sd->state.autoloottype |= (1<<type); // Stores the type
 			sprintf(atcmd_output, msg_txt(sd,1483), itemdb_typename(type), type); // Autolooting item type: '%s' {%d}
 			clif_displaymessage(fd, atcmd_output);
@@ -6071,14 +6070,12 @@ ACMD_FUNC(autoloottype)
 			sd->state.autoloottype &= ~(1<<type);
 			sprintf(atcmd_output, msg_txt(sd,1485), itemdb_typename(type), type); // Removed item type: '%s' {%d} from your autoloottype list.
 			clif_displaymessage(fd, atcmd_output);
-			if (sd->state.autoloottype == ITEM_NONE)
-				sd->state.autolootingtype = 0;
 			break;
 		case 3:
 			clif_displaymessage(fd, msg_txt(sd,1486)); // To add an item type to the list, use "@aloottype +<type name or ID>". To remove an item type, use "@aloottype -<type name or ID>".
 			clif_displaymessage(fd, msg_txt(sd,1487)); // Type List: healing = 0, usable = 2, etc = 3, armor = 4, weapon = 5, card = 6, petegg = 7, petarmor = 8, ammo = 10
 			clif_displaymessage(fd, msg_txt(sd,1488)); // "@aloottype reset" will clear your autoloottype list.
-			if (sd->state.autoloottype == ITEM_NONE)
+			if (sd->state.autoloottype == 0)
 				clif_displaymessage(fd, msg_txt(sd,1489)); // Your autoloottype list is empty.
 			else {
 				clif_displaymessage(fd, msg_txt(sd,1490)); // Item types on your autoloottype list:
@@ -6092,8 +6089,7 @@ ACMD_FUNC(autoloottype)
 			}
 			break;
 		case 4:
-			sd->state.autoloottype = ITEM_NONE;
-			sd->state.autolootingtype = 0;
+			sd->state.autoloottype = 0;
 			clif_displaymessage(fd, msg_txt(sd,1491)); // Your autoloottype list has been reset.
 			break;
 	}

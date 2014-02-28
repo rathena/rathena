@@ -886,7 +886,7 @@
 2005,1,6,2,4,0x2,2,5,1,no,0,0,0,weapon,3,0x0,	RK_WINDCUTTER,Wind Cutter
 2006,0,6,4,-1,0x2,5,5,1,no,0,0,0,weapon,0,0x0,	RK_IGNITIONBREAK,Ignition Break
 2007,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0,0x0,		RK_DRAGONTRAINING,Dragon Training
-2008,9,6,2,3,0x2,1:1:1:2:2:2:3:3:4:4,10,1,no,0,0,0,misc,0,0x0,	RK_DRAGONBREATH,Dragon Breath
+2008,9,6,2,3,0x2,1:1:1:2:2:2:3:3:4:4,10,1,no,0,0,0,weapon,0,0x0,	RK_DRAGONBREATH,Dragon Breath
 2009,0,6,4,0,0x3,3:4:5:6:7,5,1,no,0,0,0,none,0,0x0,	RK_DRAGONHOWLING,Dragon Howling
 2010,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,		RK_RUNEMASTERY,Rune Mastery
 2011,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,0x0,	RK_MILLENNIUMSHIELD,Millenium Shield
@@ -958,7 +958,7 @@
 
 //****
 // AB Arch Bishop
-2038,11,8,1,6,0x2,3,5,-3,yes,0,0,0,magic,0,0x0,	AB_JUDEX,Judex
+2038,11,8,1,6,0x2,1,5,-3,yes,0,0,0,magic,0,0x0,	AB_JUDEX,Judex
 2039,0,6,4,0,0x1,0,1,1,yes,0,0,0,magic,0,0x0,	AB_ANCILLA,Ancilla
 2040,11,8,1,6,0,0,10,-10,yes,0,0,0,magic,0,0x0,	AB_ADORAMUS,Adoramus
 2041,0,6,4,6,0x3,3:7:15,3,1,yes,0,0,0,magic,0,0x0,	AB_CLEMENTIA,Crementia
@@ -1003,8 +1003,8 @@
 2250,3,6,2,1,0x43,2,1,1,no,0,0x80,1,misc,0,0x0,	RA_COBALTTRAP,Cobalt Trap
 2251,3,6,2,2,0x43,2,1,1,no,0,0x80,1,misc,0,0x0,	RA_MAIZETRAP,Maize Trap
 2252,3,6,2,4,0x43,2,1,1,no,0,0x80,1,misc,0,0x0,	RA_VERDURETRAP,Verdure Trap
-2253,3,6,2,0,0x42,2,5,1,no,0,0x80,2,misc,0,0x2800,	RA_FIRINGTRAP,Firing Trap
-2254,3,6,2,0,0x42,2,5,1,no,0,0x80,2,misc,0,0x2800,	RA_ICEBOUNDTRAP,Icebound Trap
+2253,3,6,2,3,0x42,2,5,1,no,0,0x80,2,misc,0,0x2800,	RA_FIRINGTRAP,Firing Trap
+2254,3,6,2,1,0x42,2,5,1,no,0,0x80,2,misc,0,0x2800,	RA_ICEBOUNDTRAP,Icebound Trap
 
 //****
 // NC Mechanic
@@ -1074,7 +1074,7 @@
 2314,1,6,1,-1,0,0,1,1,no,0,0,0,weapon,0,0x0,	LG_RAGEBURST,Rage Burst
 2315,0,6,4,0:6:0,0x2,0,3,1,yes,0,0,0,none,2:0:0,0x0,	LG_SHIELDSPELL,Shield Spell
 2316,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0,0x0,	LG_EXEEDBREAK,Exceed Break
-2317,1,6,2,-1,0x2,5,5,1,yes,0,0,0,none,3:4:5:6:7,0x0,	LG_OVERBRAND,Over Brand
+2317,1,6,2,-1,0x2,0,5,1,yes,0,0,0,none,0,0x0,	LG_OVERBRAND,Over Brand
 2318,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0,0x0,	LG_PRESTIGE,Prestige
 2319,0,6,4,0,0x3,3,5,1,no,0,0,0,weapon,0,0x0,	LG_BANDING,Banding //CHECK Splash isnt needed right? Banding has its own UNIT ID.
 2320,0,6,4,-1,0x2,3,5,1,yes,0,0,0,weapon,0,0x1000,	LG_MOONSLASHER,Moon Slasher
@@ -1083,6 +1083,7 @@
 2323,0,8,4,2,0x2,1:1:2:2:3,5,-5,yes,0,0,0,weapon,0,0x0,	LG_EARTHDRIVE,Earth Drive
 2324,3,8,1,-1,0,0,5,3,yes,0,0,0,weapon,0,0x0,	LG_HESPERUSLIT,Hesperus Lit
 2325,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0,0x0,	LG_INSPIRATION,Inspiration
+2519,1,6,1,-1,0x2,0,5,1,yes,0,0,0,weapon,3:4:5:6:7,0x0, LG_OVERBRAND_BRANDISH,Overbrand Brandish
 
 //****
 // SR Sura
@@ -1090,7 +1091,7 @@
 2327,0,8,4,-1,0x2,2,5,-3,no,0,0,0,weapon,3,0x0,	SR_SKYNETBLOW,Sky Net Blow
 2328,0,6,4,-1,0x2,1:2:3:4:5,5,1,no,0,0,0,weapon,0,0x0,	SR_EARTHSHAKER,Earth Shaker
 2329,-2,8,4,-1,0,0,5,-2,no,0,0x200,0,weapon,0,0x0,	SR_FALLENEMPIRE,Fallen Empire
-2330,-2,6,1,-1,0x2,1:1:1:1:1:2:2:2:2:2,10,1,yes,0,0,0,weapon,0,0x0,	SR_TIGERCANNON,Tiger Cannon
+2330,-2,6,1,-1,0x42,1:1:1:1:1:2:2:2:2:2,10,1,yes,0,0,0,weapon,0,0x0,	SR_TIGERCANNON,Tiger Cannon
 2331,1:2:3:3:4:4:5:5:6:7,6,1,0,0,0,10,0,no,0,0,0,none,0,0x0,		SR_HELLGATE,Hell Gate
 2332,0,6,4,-1,0x2,3,5,1,no,0,0,0,weapon,0,0x0,	SR_RAMPAGEBLASTER,Rampage Blaster
 2333,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0,		SR_CRESCENTELBOW,Crescent Elbow //CHECK Check the autospell ID.

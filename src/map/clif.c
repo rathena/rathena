@@ -2554,11 +2554,11 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 #if PACKETVER < 20071002
 	const int se = 20; //entry size equip
 	const int sidxe = 4; //start itemlist idx
-	const int cmde = 0xa6;
+	const int cmde = 0x2d1;
 #elif PACKETVER < 20100629
 	const int se = 26;
 	const int sidxe = 4;
-	const int cmde = 0xa6;
+	const int cmde = 0x2d1;
 #elif PACKETVER < 20120925
 	const int se = 28;
 	const int sidxe = 4;
@@ -13122,13 +13122,15 @@ void clif_account_name(struct map_session_data* sd, int account_id, const char* 
 /// 01df <account id>.L
 void clif_parse_GMReqAccountName(int fd, struct map_session_data *sd)
 {
-	char command[30];
-	int account_id = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
+	if (sd->bl.type&BL_PC) { // Only show for players
+		char command[30];
+		int account_id = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
 
-	//tmp get all display
-	safesnprintf(command,sizeof(command),"%caccinfo %d", atcommand_symbol, account_id);
-	is_atcommand(fd, sd, command, 1);
-	//clif_account_name(sd, account_id, ""); //! TODO request to login-serv
+		//tmp get all display
+		safesnprintf(command,sizeof(command),"%caccinfo %d", atcommand_symbol, account_id);
+		is_atcommand(fd, sd, command, 1);
+		//clif_account_name(sd, account_id, ""); //! TODO request to login-serv
+	}
 }
 
 

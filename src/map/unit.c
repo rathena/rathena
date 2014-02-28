@@ -141,10 +141,10 @@ TBL_PC* unit_get_master(struct block_list *bl)
 {
 	if(bl)
 		switch(bl->type) {
-			case BL_HOM : return (((TBL_HOM *)bl)->master);
-			case BL_ELEM : return (((TBL_ELEM *)bl)->master);
-			case BL_PET : return (((TBL_PET *)bl)->master);
-			case BL_MER : return (((TBL_MER *)bl)->master);
+			case BL_HOM: return (((TBL_HOM *)bl)->master);
+			case BL_ELEM: return (((TBL_ELEM *)bl)->master);
+			case BL_PET: return (((TBL_PET *)bl)->master);
+			case BL_MER: return (((TBL_MER *)bl)->master);
 		}
 	return NULL;
 }
@@ -167,7 +167,7 @@ int* unit_get_masterteleport_timer(struct block_list *bl)
 }
 
 /**
- * Warps a unit to its master master has gone out of site (3 second default) \n
+ * Warps a unit to its master if the master has gone out of sight (3 second default)
  * Can be any object with a master [MOB|PET|HOM|MER|ELEM]
  * @param tid: Timer
  * @param tick: tick (unused)
@@ -197,23 +197,23 @@ int unit_teleport_timer(int tid, unsigned int tick, int id, intptr_t data)
 }
 
 /**
- * Checks if a slave unit is outside their max distance from master \n
- * If so, starts a timer for (default: 3 seconds) which will teleport the unit back to master
+ * Checks if a slave unit is outside their max distance from master
+ * If so, starts a timer (default: 3 seconds) which will teleport the unit back to master
  * @param sbl: Object with a master [MOB|PET|HOM|MER|ELEM]
  * @return 0
  */
 int unit_check_start_teleport_timer(struct block_list *sbl)
 {
 	TBL_PC *msd = unit_get_master(sbl);
-	int max_dist=0;
-	switch(sbl->type){
-		case BL_HOM: max_dist = AREA_SIZE; break;
-		case BL_ELEM: max_dist = MAX_ELEDISTANCE; break;
-		case BL_PET : max_dist = AREA_SIZE; break;
-		case BL_MER : max_dist = MAX_MER_DISTANCE; break;
+	int max_dist = 0;
+	switch(sbl->type) {
+		case BL_HOM:	max_dist = AREA_SIZE;			break;
+		case BL_ELEM:	max_dist = MAX_ELEDISTANCE;		break;
+		case BL_PET:	max_dist = AREA_SIZE;			break;
+		case BL_MER:	max_dist = MAX_MER_DISTANCE;	break;
 	}
 	// If there is a master and it's a valid type
-	if(msd && (msd->bl.type&BL_PC) && max_dist){ ///TODO the bl.type is an hotfix please dig it to remove it
+	if(msd && (msd->bl.type&BL_PC) && max_dist) { ///TODO the bl.type is an hotfix please dig it to remove it
 		int *msd_tid = unit_get_masterteleport_timer(sbl);
 		if(msd_tid == NULL) return 0;
 		if (!check_distance_bl(&msd->bl, sbl, max_dist)) {
