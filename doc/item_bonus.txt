@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20140124
+//= 20140301
 //===== Description: =========================================
 //= List of script instructions used in item bonuses.
 //============================================================
@@ -244,7 +244,6 @@ bonus bIgnoreDefEle,e;  		Disregard DEF against enemies of element e
 bonus bIgnoreDefRace,r; 		Disregard DEF against enemies of race r
 bonus2 bIgnoreDefRaceRate,r,n;  	Disregard n% of the target's DEF if the target belongs to race r
 bonus bIgnoreDefClass,c;		Disregard DEF against enemies of class c
-bonus bIgnoreMdefRate,n;		Disregard n% of the target's MDEF
 bonus bIgnoreMDefRace,r;		Disregard MDEF against enemies of race r
 bonus2 bIgnoreMdefRaceRate,r,n; 	Disregard n% of the target's MDEF if the target belongs to race r
 bonus bIgnoreMDefEle,e; 		Disregard MDEF against enemies of element e
