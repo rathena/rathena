@@ -2258,6 +2258,58 @@ static void read_constdb(void)
 	fclose(fp);
 }
 
+/**
+ * Sets source-end constants for NPC scripts to access.
+ **/
+void script_hardcoded_constants(void) {
+
+	/* server defines */
+	script_set_constant("PACKETVER",PACKETVER,false);
+	script_set_constant("MAX_LEVEL",MAX_LEVEL,false);
+	script_set_constant("MAX_STORAGE",MAX_STORAGE,false);
+	script_set_constant("MAX_INVENTORY",MAX_INVENTORY,false);
+	script_set_constant("MAX_CART",MAX_INVENTORY,false);
+	script_set_constant("MAX_ZENY",MAX_ZENY,false);
+	script_set_constant("MAX_PARTY",MAX_PARTY,false);
+	script_set_constant("MAX_GUILD",MAX_GUILD,false);
+	script_set_constant("MAX_GUILDLEVEL",MAX_GUILDLEVEL,false);
+	script_set_constant("MAX_GUILD_STORAGE",MAX_GUILD_STORAGE,false);
+	script_set_constant("MAX_BG_MEMBERS",MAX_BG_MEMBERS,false);
+	script_set_constant("MAX_CHAT_USERS",MAX_CHAT_USERS,false);
+	script_set_constant("VIP_SCRIPT",VIP_SCRIPT,false);
+	script_set_constant("MIN_STORAGE",MIN_STORAGE,false);
+
+	/* status options */
+	script_set_constant("Option_Nothing",OPTION_NOTHING,false);
+	script_set_constant("Option_Sight",OPTION_SIGHT,false);
+	script_set_constant("Option_Hide",OPTION_HIDE,false);
+	script_set_constant("Option_Cloak",OPTION_CLOAK,false);
+	script_set_constant("Option_Falcon",OPTION_FALCON,false);
+	script_set_constant("Option_Riding",OPTION_RIDING,false);
+	script_set_constant("Option_Invisible",OPTION_INVISIBLE,false);
+	script_set_constant("Option_Orcish",OPTION_ORCISH,false);
+	script_set_constant("Option_Wedding",OPTION_WEDDING,false);
+	script_set_constant("Option_Chasewalk",OPTION_CHASEWALK,false);
+	script_set_constant("Option_Flying",OPTION_FLYING,false);
+	script_set_constant("Option_Xmas",OPTION_XMAS,false);
+	script_set_constant("Option_Transform",OPTION_TRANSFORM,false);
+	script_set_constant("Option_Summer",OPTION_SUMMER,false);
+	script_set_constant("Option_Dragon1",OPTION_DRAGON1,false);
+	script_set_constant("Option_Wug",OPTION_WUG,false);
+	script_set_constant("Option_Wugrider",OPTION_WUGRIDER,false);
+	script_set_constant("Option_Madogear",OPTION_MADOGEAR,false);
+	script_set_constant("Option_Dragon2",OPTION_DRAGON2,false);
+	script_set_constant("Option_Dragon3",OPTION_DRAGON3,false);
+	script_set_constant("Option_Dragon4",OPTION_DRAGON4,false);
+	script_set_constant("Option_Dragon5",OPTION_DRAGON5,false);
+	script_set_constant("Option_Hanbok",OPTION_HANBOK,false);
+	script_set_constant("Option_Oktoberfest",OPTION_OKTOBERFEST,false);
+
+	/* status option compounds */
+	script_set_constant("Option_Dragon",OPTION_DRAGON,false);
+	script_set_constant("Option_Costume",OPTION_COSTUME,false);
+}
+
 /*==========================================
  * Display emplacement line of script
  *------------------------------------------*/
@@ -2355,6 +2407,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	if(first){
 		add_buildin_func();
 		read_constdb();
+		script_hardcoded_constants();
 		first=0;
 	}
 
@@ -18231,32 +18284,6 @@ BUILDIN_FUNC(is_clientver) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/** Retrieves server definitions
-* @param type: See in const.txt
-*/
-BUILDIN_FUNC(getserverdef) {
-	int type = script_getnum(st,2);
-	switch(type){
-		case 0: script_pushint(st,PACKETVER); break;
-		case 1: script_pushint(st,MAX_LEVEL); break;
-		case 2: script_pushint(st,MAX_STORAGE); break;
-		case 3: script_pushint(st,MAX_INVENTORY); break;
-		case 4: script_pushint(st,MAX_ZENY); break;
-		case 5: script_pushint(st,MAX_PARTY); break;
-		case 6: script_pushint(st,MAX_GUILD); break;
-		case 7: script_pushint(st,MAX_GUILDLEVEL); break;
-		case 8: script_pushint(st,MAX_GUILD_STORAGE); break;
-		case 9: script_pushint(st,MAX_BG_MEMBERS); break;
-		case 10: script_pushint(st,VIP_SCRIPT); break;
-		case 11: script_pushint(st,MIN_STORAGE); break;
-		default:
-			ShowWarning("buildin_getserverdef: unknown type %d.\n", type);
-			script_pushint(st,0);
-			break;
-	}
-	return SCRIPT_CMD_SUCCESS;
-}
-
 /** Returns various information about a player's VIP status. Need to enable VIP system
  * vip_status <type>,{"<character name>"};
  * @param type: Info type, 1: VIP status, 2: Expired date, 3: Remaining time
@@ -19145,7 +19172,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(party_destroy,"i"),
 
 	BUILDIN_DEF(is_clientver,"ii?"),
-	BUILDIN_DEF(getserverdef,"i"),
 	BUILDIN_DEF2(montransform, "transform", "vii????"), // Monster Transform [malufett/Hercules]
 	BUILDIN_DEF(vip_status,"i?"),
 	BUILDIN_DEF(vip_time,"i?"),

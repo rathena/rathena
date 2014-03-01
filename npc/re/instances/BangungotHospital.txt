@@ -161,7 +161,7 @@ ma_dun01,147,10,5	script	Nurse#ma_dun01	569,{
 					erasequest 9224;
 					setquest 9223;
 					getexp 500000,0;
-					if (!getserverdef(VAR_VIP_SCRIPT) || vip_status(1))
+					if (!VIP_SCRIPT || vip_status(1))
 						getitem 6499,7; //Ancient_Grudge
 					else
 						getitem 6499,5; //Ancient_Grudge

@@ -479,7 +479,7 @@ OnMobSpawn:
 		erasequest 12279;
 		mes "[Taho]";
 		mes "This was found from Bakonawa's corpse. It would be better if you take this.";
-		if (!getserverdef(VAR_VIP_SCRIPT) || vip_status(1))
+		if (!VIP_SCRIPT || vip_status(1))
 			getitem 6499,7; //Ancient_Grudge
 		else
 			getitem 6499,5; //Ancient_Grudge

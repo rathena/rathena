@@ -949,18 +949,18 @@ L_Services:
 		next;
 
 		// VIP System messages.
-		if (getserverdef(VAR_MIN_STORAGE) != getserverdef(VAR_MAX_STORAGE)) {
+		if (MIN_STORAGE != MAX_STORAGE) {
 			mes "[Kafra Employee]";
-			mes "There are a maximum of "+getserverdef(VAR_MIN_STORAGE)+" Inventory Slots in Kafra Storage, meaning you can have up to "+getserverdef(VAR_MIN_STORAGE)+" different kinds of items in Storage.";
+			mes "There are a maximum of "+MIN_STORAGE+" Inventory Slots in Kafra Storage, meaning you can have up to "+MIN_STORAGE+" different kinds of items in Storage.";
 			next;
 			mes "[Kafra Employee]";
-			mes "If you have a Premium Subscription, the maximum Inventory Slots in Kafra Storage is "+getserverdef(VAR_MAX_STORAGE)+"!";
+			mes "If you have a Premium Subscription, the maximum Inventory Slots in Kafra Storage is "+MAX_STORAGE+"!";
 			mes "Remember though, that in the case of Equipment, each item takes up one Inventory Slot.";
 			mes "The maximum number of items that can be placed in Kafra Storage is 30,000.";
 			next;
 		} else {
 			mes "[Kafra Employee]";
-			mes "There are a maximum of "+getserverdef(VAR_MAX_STORAGE)+" Inventory Slots in Kafra Storage, meaning you can have up to "+getserverdef(VAR_MAX_STORAGE)+" different kinds of items in Storage.";
+			mes "There are a maximum of "+MAX_STORAGE+" Inventory Slots in Kafra Storage, meaning you can have up to "+MAX_STORAGE+" different kinds of items in Storage.";
 			next;
 		}
 

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20140218
+//= 20140301
 //===== Description: =========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -550,6 +550,20 @@ or a function to set something, it's usually preferable to use that instead. The
 notable exception is Zeny, which you can and often will address directly -
 setting it will make the character own this number of Zeny.
 If you try to set Zeny to a negative number, the script will be terminated with an error.
+
+Some source-end constants can also be accessed in scripts. This list is located in
+'src/map/script.c' in the 'script_hardcoded_constants' function, which contains
+constants such as server defines and status options:
+
+    PACKETVER, MAX_LEVEL, MAX_STORAGE, MAX_INVENTORY, MAX_CART, MAX_ZENY, MAX_PARTY,
+    MAX_GUILD, MAX_GUILDLEVEL, MAX_GUILD_STORAGE, MAX_BG_MEMBERS, MAX_CHAT_USERS,
+    VIP_SCRIPT, MIN_STORAGE
+
+    Option_Nothing, Option_Sight, Option_Hide, Option_Cloak, Option_Falcon, Option_Riding,
+    Option_Invisible, Option_Orcish, Option_Wedding, Option_Chasewalk, Option_Flying,
+    Option_Xmas, Option_Transform, Option_Summer, Option_Dragon1, Option_Wug,
+    Option_Wugrider, Option_Madogear, Option_Dragon2, Option_Dragon3, Option_Dragon4,
+    Option_Dragon5, Option_Hanbok, Option_Oktoberfest, Option_Dragon, Option_Costume
 
 Assigning variables
 --------- ---------
@@ -3558,24 +3572,6 @@ given, the command will run for the invoking character. The function will return
 Available types are:
  0 - version number (packet_db_ver)
  1 - client date (YYYYMMDD)
-
----------------------------------------
-
-*getserverdef(<type>)
-
-Returns a server definition. Valid types are listed in 'db/const.txt':
-	VAR_PACKETVER	0
-	VAR_MAX_LEVEL	1
-	VAR_MAX_STORAGE	2
-	VAR_MAX_INVENTORY	3
-	VAR_MAX_ZENY	4
-	VAR_MAX_PARTY	5
-	VAR_MAX_GUILD	6
-	VAR_MAX_GUILDLEVEL	7
-	VAR_MAX_GUILD_STORAGE	8
-	VAR_MAX_BG_MEMBERS	9
-	VAR_VIP_SCRIPT	10
-	VAR_MIN_STORAGE	11
 
 ---------------------------------------
 \\
