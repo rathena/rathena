@@ -2850,7 +2850,6 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 	case LG_OVERBRAND:
 	case LG_OVERBRAND_BRANDISH:
 		dmg.amotion = status_get_amotion(src) * 2;
-		break;
 	case LG_OVERBRAND_PLUSATK:
 		dmg.dmotion = clif_skill_damage(dsrc,bl,tick,status_get_amotion(src),dmg.dmotion,damage,dmg.div_,skill_id,-1,5);
 		break;

@@ -9147,7 +9147,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = 2000; // [GodLesZ] tick time
 			break;
 		case SC_SIRCLEOFNATURE:
-			val2 = 40 + val1; // HP recovery
+			val2 = 40 * val1; // HP recovery
 			val3 = 4 * val1;	// SP consume
 			val4 = tick / 1000;
 			tick_time = 1000; // [GodLesZ] tick time
