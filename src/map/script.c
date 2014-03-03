@@ -16954,8 +16954,12 @@ BUILDIN_FUNC(instance_enter)
 {
 	struct map_session_data *sd;
 
-	if((sd = script_rid2sd(st)) != NULL)
-		script_pushint(st,instance_enter(sd,script_getstr(st, 2)));
+	if((sd = script_rid2sd(st)) != NULL){
+		if (script_hasdata(st,3) && script_hasdata(st,4))
+			script_pushint(st,instance_enter_position(sd,script_getstr(st, 2),script_getnum(st, 3),script_getnum(st, 4)));
+		else
+			script_pushint(st,instance_enter(sd,script_getstr(st, 2)));
+	}
 	else
 		return 1;
 	return SCRIPT_CMD_SUCCESS;
@@ -19111,7 +19115,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_create,"s"),
 	BUILDIN_DEF(instance_destroy,"?"),
 	BUILDIN_DEF(instance_id,""),
-	BUILDIN_DEF(instance_enter,"s"),
+	BUILDIN_DEF(instance_enter,"s??"),
 	BUILDIN_DEF(instance_npcname,"s?"),
 	BUILDIN_DEF(instance_mapname,"s?"),
 	BUILDIN_DEF(instance_warpall,"sii?"),

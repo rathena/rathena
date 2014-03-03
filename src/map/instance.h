@@ -33,6 +33,7 @@ extern struct instance_data instance_data[MAX_INSTANCE_DATA];
 int instance_create(int party_id, const char *name);
 int instance_destroy(short instance_id);
 int instance_enter(struct map_session_data *sd, const char *name);
+int instance_enter_position(struct map_session_data *sd, const char *name, short x, short y);
 int instance_reqinfo(struct map_session_data *sd, short instance_id);
 int instance_addusers(short instance_id);
 int instance_delusers(short instance_id);

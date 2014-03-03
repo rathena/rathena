@@ -7481,7 +7481,7 @@ the script will come to a halt.
 
 ---------------------------------------
 
-*instance_enter("<instance name>");
+*instance_enter("<instance name>"{,<x>,<y>});
 
 Warps player to the specified instance after the script terminates. The map and
 coordinates are located in 'db/(pre-)re/instance_db.txt'.
