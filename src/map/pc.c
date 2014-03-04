@@ -370,9 +370,9 @@ void pc_addfame(struct map_session_data *sd,int count)
 		sd->status.fame = MAX_FAME;
 
 	switch(sd->class_&MAPID_UPPERMASK){
-		case MAPID_BLACKSMITH: ranktype=0; break;
-		case MAPID_ALCHEMIST:  ranktype=1; break;
-		case MAPID_TAEKWON: ranktype=2; break;
+		case MAPID_BLACKSMITH:	ranktype = 0; break;
+		case MAPID_ALCHEMIST:	ranktype = 1; break;
+		case MAPID_TAEKWON:		ranktype = 2; break;
 	}
 
 	clif_update_rankingpoint(sd,ranktype,count);
@@ -1490,7 +1490,7 @@ int pc_calc_skilltree(struct map_session_data *sd)
 						if (sd->status.skill[k].id == 0 || sd->status.skill[k].flag == SKILL_FLAG_TEMPORARY || sd->status.skill[k].flag == SKILL_FLAG_PLAGIARIZED)
 							k = 0; //Not learned.
 						else
-						if (sd->status.skill[k].flag >= SKILL_FLAG_REPLACED_LV_0) //Real lerned level
+						if (sd->status.skill[k].flag >= SKILL_FLAG_REPLACED_LV_0) //Real learned level
 							k = sd->status.skill[skill_tree[c][i].need[j].id].flag - SKILL_FLAG_REPLACED_LV_0;
 						else
 							k = pc_checkskill(sd,k);
@@ -1531,29 +1531,22 @@ int pc_calc_skilltree(struct map_session_data *sd)
 		}
 	} while(flag);
 
-	//
-	if( c > 0 && (sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && sd->status.skill_point == 0 && pc_famerank(sd->status.char_id, MAPID_TAEKWON) )
-	{
-		/* Taekwon Ranger Bonus Skill Tree
+	if( c > 0 && (sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && sd->status.skill_point == 0 && pc_famerank(sd->status.char_id, MAPID_TAEKWON) ) {
+		/* Taekwon Ranker Bonus Skill Tree
 		============================================
 		- Grant All Taekwon Tree, but only as Bonus Skills in case they drop from ranking.
 		- (c > 0) to avoid grant Novice Skill Tree in case of Skill Reset (need more logic)
-		- (sd->status.skill_point == 0) to wait until all skill points are asigned to avoid problems with Job Change quest. */
+		- (sd->status.skill_point == 0) to wait until all skill points are assigned to avoid problems with Job Change quest. */
 
-		for( i = 0; i < MAX_SKILL_TREE && (id = skill_tree[c][i].id) > 0; i++ )
-		{
+		for( i = 0; i < MAX_SKILL_TREE && (id = skill_tree[c][i].id) > 0; i++ ) {
 			if( (skill_get_inf2(id)&(INF2_QUEST_SKILL|INF2_WEDDING_SKILL)) )
 				continue; //Do not include Quest/Wedding skills.
 
-			if( sd->status.skill[id].id == 0 )
-			{
+			if( sd->status.skill[id].id == 0 ) {
 				sd->status.skill[id].id = id;
 				sd->status.skill[id].flag = SKILL_FLAG_TEMPORARY; // So it is not saved, and tagged as a "bonus" skill.
-			}
-			else if( id != NV_BASIC )
-			{
+			} else if( id != NV_BASIC )
 				sd->status.skill[id].flag = SKILL_FLAG_REPLACED_LV_0 + sd->status.skill[id].lv; // Remember original level
-			}
 
 			sd->status.skill[id].lv = skill_tree_get_max(id, sd->status.class_);
 		}
@@ -6340,7 +6333,7 @@ int pc_skillup(struct map_session_data *sd,uint16 skill_id)
 		if( !skill_get_inf(skill_id) )
 			status_calc_pc(sd,0); // Only recalculate for passive skills.
 		else if( sd->status.skill_point == 0 && (sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && pc_famerank(sd->status.char_id, MAPID_TAEKWON) )
-			pc_calc_skilltree(sd); // Required to grant all TK Ranger skills.
+			pc_calc_skilltree(sd); // Required to grant all TK Ranker skills.
 		else
 			pc_check_skilltree(sd, skill_id); // Check if a new skill can Lvlup
 
@@ -6583,7 +6576,7 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 	if( !(flag&2) ) { //Remove stuff lost when resetting skills.
 
 		/**
-		 * It has been confirmed on official server that when you reset skills with a ranked tweakwon your skills are not reset (because you have all of them anyway)
+		 * It has been confirmed on official servers that when you reset skills with a ranked Taekwon your skills are not reset (because you have all of them anyway)
 		 **/
 		if( (sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && pc_famerank(sd->status.char_id, MAPID_TAEKWON) )
 			return 0;

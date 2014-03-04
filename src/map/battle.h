@@ -533,6 +533,7 @@ extern struct Battle_Config
 	int path_blown_halt;
 	int rental_mount_speed_boost;
 	int warp_suggestions_enabled;
+	int taekwon_mission_mobname;
 } battle_config;
 
 void do_init_battle(void);

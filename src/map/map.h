@@ -54,6 +54,11 @@ void map_msg_reload(void);
 /** Added definitions for WoESE objects and other [L0ne_W0lf], [aleos] */
 enum MOBID {
 	MOBID_PORING			= 1002,
+	MOBID_GOBLIN_1			= 1122,
+	MOBID_GOBLIN_2,
+	MOBID_GOBLIN_3,
+	MOBID_GOBLIN_4,
+	MOBID_GOBLIN_5,
 	MOBID_MARINE_SPHERE		= 1142,
 	MOBID_A_GUARDIAN		= 1285,
 	MOBID_K_GUARDIAN,
