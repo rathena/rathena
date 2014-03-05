@@ -6961,6 +6961,14 @@ ACMD_FUNC(mobinfo)
 			job_exp = job_exp * pc_level_penalty_mod(sd, mob->lv, mob->status.class_, 1) / 100;
 		}
 #endif
+#ifdef VIP_ENABLE
+	// Display EXP and item rate increase for VIP.
+	if (pc_isvip(sd) && (battle_config.vip_base_exp_increase || battle_config.vip_job_exp_increase || battle_config.vip_drop_increase)) {
+		base_exp += battle_config.vip_base_exp_increase;
+		job_exp += battle_config.vip_job_exp_increase;
+		droprate += battle_config.vip_drop_increase;
+	}
+#endif
 		// stats
 		if (mob->mexp)
 			sprintf(atcmd_output, msg_txt(sd,1240), mob->name, mob->jname, mob->sprite, mob->vd.class_); // MVP Monster: '%s'/'%s'/'%s' (%d)
@@ -7521,6 +7529,11 @@ ACMD_FUNC(whodrops)
 				if( battle_config.atcommand_mobinfo_type )
 					dropchance = dropchance * pc_level_penalty_mod(sd, mob_db(item_data->mob[j].id)->lv, mob_db(item_data->mob[j].id)->status.class_,  2) / 100;
 #endif
+#ifdef VIP_ENABLE
+				// Display item rate increase for VIP.
+				if (pc_isvip(sd) && battle_config.vip_drop_increase)
+					dropchance += battle_config.vip_drop_increase;
+#endif
 				sprintf(atcmd_output, "- %s (%02.02f%%)", mob_db(item_data->mob[j].id)->jname, dropchance/100.);
 				clif_displaymessage(fd, atcmd_output);
 			}
@@ -7635,12 +7648,14 @@ ACMD_FUNC(rates)
 	nullpo_ret(sd);
 	memset(buf, '\0', sizeof(buf));
 
+#ifdef VIP_ENABLE
 	// Display EXP and item rate increase for VIP.
 	if (pc_isvip(sd) && (battle_config.vip_base_exp_increase || battle_config.vip_job_exp_increase || battle_config.vip_drop_increase)) {
 		base_exp_rate += battle_config.vip_base_exp_increase;
 		job_exp_rate += battle_config.vip_job_exp_increase;
 		item_rate += battle_config.vip_drop_increase;
 	}
+#endif
 	snprintf(buf, CHAT_SIZE_MAX, msg_txt(sd,1298), // Experience rates: Base %.2fx / Job %.2fx
 		(battle_config.base_exp_rate+base_exp_rate)/100., (battle_config.job_exp_rate+job_exp_rate)/100.);
 	clif_displaymessage(fd, buf);

@@ -463,7 +463,7 @@ int chrif_send_accdata(int fd, uint32 aid) {
 #ifdef VIP_ENABLE
 		char_vip = login_config.vip_sys.char_increase;
 		if( acc.vip_time > time(NULL) ) {
-			isvip=true;
+			isvip = true;
 			char_slots = login_config.char_per_account + char_vip;
 		} else
 			char_slots = login_config.char_per_account;
@@ -501,7 +501,7 @@ int chrif_parse_reqaccdata(int fd, int cid, char *ip) {
 }
 
 
-int chrif_sendvipdata(int fd, struct mmo_account acc, char isvip, int mapfd) {
+int chrif_sendvipdata(int fd, struct mmo_account acc, char isvip, char isgm, int mapfd) {
 #ifdef VIP_ENABLE
 	WFIFOHEAD(fd,19);
 	WFIFOW(fd,0) = 0x2743;
@@ -509,8 +509,9 @@ int chrif_sendvipdata(int fd, struct mmo_account acc, char isvip, int mapfd) {
 	WFIFOL(fd,6) = (int)acc.vip_time;
 	WFIFOB(fd,10) = isvip;
 	WFIFOL(fd,11) = acc.group_id; //new group id
-	WFIFOL(fd,15) = mapfd; //link to mapserv
-	WFIFOSET(fd,19);
+	WFIFOL(fd,15) = isgm;
+	WFIFOL(fd,16) = mapfd; //link to mapserv
+	WFIFOSET(fd,20);
 	chrif_send_accdata(fd,acc.account_id); //refresh char with new setting
 #endif
 	return 1;
@@ -522,7 +523,7 @@ int chrif_sendvipdata(int fd, struct mmo_account acc, char isvip, int mapfd) {
  *  &1 : Select info and update old_groupid
  *  &2 : Update vip time
  * @param fd link to charserv
- * @return 0 missing data, 1 succeed
+ * @return 0 missing data, 1 succeeded
  */
 int chrif_parse_reqvipdata(int fd) {
 #ifdef VIP_ENABLE
@@ -533,19 +534,23 @@ int chrif_parse_reqvipdata(int fd) {
 		int aid = RFIFOL(fd,2);
 		int8 type = RFIFOB(fd,6);
 		int32 timediff = RFIFOL(fd,7);
-		int mapfd =  RFIFOL(fd,11);
+		int mapfd = RFIFOL(fd,11);
 		RFIFOSKIP(fd,15);
 		
-		if( accounts->load_num(accounts, &acc, aid ) ){
+		if( accounts->load_num(accounts, &acc, aid ) ) {
 			time_t now = time(NULL);
 			time_t vip_time = acc.vip_time;
 			bool isvip = false;
 
-			if( type&2 ){
+			if( acc.group_id > login_config.vip_sys.group ) { //Don't change group if it's higher.
+				chrif_sendvipdata(fd,acc,false,true,mapfd);
+				return 1;
+			}
+			if( type&2 ) {
 				if(!vip_time) vip_time = now; //new entry
-				vip_time +=  timediff; // set new duration
-			} 
-			if( now < vip_time) { //isvip
+				vip_time += timediff; // set new duration
+			}
+			if( now < vip_time ) { //isvip
 				if(acc.group_id != login_config.vip_sys.group) //only upd this if we're not vip already
 					acc.old_group = acc.group_id;
 				acc.group_id = login_config.vip_sys.group;
@@ -553,14 +558,14 @@ int chrif_parse_reqvipdata(int fd) {
 				isvip = true;
 			} else { //expired or @vip -xx
 				vip_time = 0;
-				if(acc.group_id == login_config.vip_sys.group) //prevent alteration in case we wasn't registered vip yet
+				if(acc.group_id == login_config.vip_sys.group) //prevent alteration in case account wasn't registered as vip yet
 					acc.group_id = acc.old_group;
 				acc.old_group = 0;
 				acc.char_slots = login_config.char_per_account;
 			}
 			acc.vip_time = vip_time;
 			accounts->save(accounts,&acc);
-			if( type&1 ) chrif_sendvipdata(fd,acc,isvip,mapfd);
+			if( type&1 ) chrif_sendvipdata(fd,acc,isvip,false,mapfd);
 		}
 	}
 #endif
