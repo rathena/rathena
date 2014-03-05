@@ -515,25 +515,25 @@ typedef enum {
 
 // used by map_getcell()
 typedef enum {
-	CELL_GETTYPE,		// retrieves a cell's 'gat' type
+	CELL_GETTYPE,			// Retrieves a cell's 'gat' type
 
-	CELL_CHKWALL,		// wall (gat type 1)
-	CELL_CHKWATER,		// water (gat type 3)
-	CELL_CHKCLIFF,		// cliff/gap (gat type 5)
+	CELL_CHKWALL,			// Whether the cell is a wall (gat type 1)
+	CELL_CHKWATER,			// Whether the cell is water (gat type 3)
+	CELL_CHKCLIFF,			// Whether the cell is a cliff/gap (gat type 5)
 
-	CELL_CHKPASS,		// passable cell (gat type non-1/5)
-	CELL_CHKREACH,		// Same as PASS, but ignores the cell-stacking mod.
-	CELL_CHKNOPASS,		// non-passable cell (gat types 1 and 5)
-	CELL_CHKNOREACH,	// Same as NOPASS, but ignores the cell-stacking mod.
-	CELL_CHKSTACK,		// whether cell is full (reached cell stacking limit)
+	CELL_CHKPASS,			// Whether the cell is passable (gat type not 1 and 5)
+	CELL_CHKREACH,			// Whether the cell is passable, but ignores the cell stacking limit
+	CELL_CHKNOPASS,			// Whether the cell is non-passable (gat types 1 and 5)
+	CELL_CHKNOREACH,		// Whether the cell is non-passable, but ignores the cell stacking limit
+	CELL_CHKSTACK,			// Whether the cell is full (reached cell stacking limit)
 
-	CELL_CHKNPC,
-	CELL_CHKBASILICA,
-	CELL_CHKLANDPROTECTOR,
-	CELL_CHKNOVENDING,
-	CELL_CHKNOCHAT,
-	CELL_CHKMAELSTROM,
-	CELL_CHKICEWALL,
+	CELL_CHKNPC,			// Whether the cell has an OnTouch NPC
+	CELL_CHKBASILICA,		// Whether the cell has Basilica
+	CELL_CHKLANDPROTECTOR,	// Whether the cell has Land Protector
+	CELL_CHKNOVENDING,		// Whether the cell denies MC_VENDING skill
+	CELL_CHKNOCHAT,			// Whether the cell denies Player Chat Window
+	CELL_CHKMAELSTROM,		// Whether the cell has Maelstrom
+	CELL_CHKICEWALL,		// Whether the cell has Ice Wall
 
 } cell_chk;
 

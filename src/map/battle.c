@@ -7372,6 +7372,7 @@ static const struct _battle_data {
 	{ "rental_mount_speed_boost",           &battle_config.rental_mount_speed_boost,        25,     0,      100,        	},
 	{ "feature.warp_suggestions",           &battle_config.warp_suggestions_enabled,        0,      0,      1,              },
 	{ "taekwon_mission_mobname",            &battle_config.taekwon_mission_mobname,         0,      0,      2,              },
+	{ "teleport_on_portal",                 &battle_config.teleport_on_portal,              0,      0,      1,              },
 };
 #ifndef STATS_OPT_OUT
 /**

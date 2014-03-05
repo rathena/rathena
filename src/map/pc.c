@@ -5015,12 +5015,11 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 		x = y = 0; // make it random
 	}
 
-	if( x == 0 && y == 0 )
-	{// pick a random walkable cell
+	if( x == 0 && y == 0 ) { // pick a random walkable cell
 		do {
-			x=rnd()%(map[m].xs-2)+1;
-			y=rnd()%(map[m].ys-2)+1;
-		} while(map_getcell(m,x,y,CELL_CHKNOPASS));
+			x = rnd()%(map[m].xs-2)+1;
+			y = rnd()%(map[m].ys-2)+1;
+		} while(map_getcell(m,x,y,CELL_CHKNOPASS) || (!battle_config.teleport_on_portal && npc_check_areanpc(1,m,x,y,1)));
 	}
 
 	if (sd->state.vending && map_getcell(m,x,y,CELL_CHKNOVENDING)) {
@@ -5093,10 +5092,10 @@ int pc_randomwarp(struct map_session_data *sd, clr_type type)
 	if (map[sd->bl.m].flag.noteleport) //Teleport forbidden
 		return 0;
 
-	do{
-		x=rnd()%(map[m].xs-2)+1;
-		y=rnd()%(map[m].ys-2)+1;
-	}while(map_getcell(m,x,y,CELL_CHKNOPASS) && (i++)<1000 );
+	do {
+		x = rnd()%(map[m].xs-2)+1;
+		y = rnd()%(map[m].ys-2)+1;
+	} while((map_getcell(m,x,y,CELL_CHKNOPASS) || (!battle_config.teleport_on_portal && npc_check_areanpc(1,m,x,y,1))) && (i++) < 1000);
 
 	if (i < 1000)
 		return pc_setpos(sd,map[sd->bl.m].index,x,y,type);
