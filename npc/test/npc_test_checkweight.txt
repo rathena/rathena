@@ -172,7 +172,7 @@ L_FINAL:
 		.@tdone = getarg(0);
 		.@success = getarg(1);
 		debugmes "Results = Pass : "+.@success+"/"+.@tdone+" Fails : "+(.@tdone-.@success)+"/"+.@tdone;
-		if(.@success != .@tdone) { debugmes "Some failure has occurred. Enable chkresult print to find failed tests."; }
+		if(.@success != .@tdone) { debugmes "One or more failures have occurred. Enable chkresult print to find failed tests."; }
 		return;
 	}
 }
