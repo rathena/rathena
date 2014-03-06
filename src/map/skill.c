@@ -11804,6 +11804,10 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, uint16 skill
 		val2 = 1;
 	case WM_POEMOFNETHERWORLD:	// Can't be placed on top of Land Protector.
 	case WM_SEVERE_RAINSTORM:
+	case SO_WATER_INSIGNIA:
+	case SO_FIRE_INSIGNIA:
+	case SO_WIND_INSIGNIA:
+	case SO_EARTH_INSIGNIA:
 		if( map_getcell(src->m, x, y, CELL_CHKLANDPROTECTOR) )
 			return NULL;
 		break;

@@ -1092,7 +1092,7 @@
 2328,0,6,4,-1,0x2,1:2:3:4:5,5,1,no,0,0,0,weapon,0,0x0,	SR_EARTHSHAKER,Earth Shaker
 2329,-2,8,4,-1,0,0,5,-2,no,0,0x200,0,weapon,0,0x0,	SR_FALLENEMPIRE,Fallen Empire
 2330,-2,6,1,-1,0x42,1:1:1:1:1:2:2:2:2:2,10,1,yes,0,0,0,weapon,0,0x0,	SR_TIGERCANNON,Tiger Cannon
-2331,1:2:3:3:4:4:5:5:6:7,6,1,0,0,0,10,0,no,0,0,0,none,0,0x0,		SR_HELLGATE,Hell Gate
+2331,0,6,1,0,0,0,10,0,no,0,0,0,none,0,0x0,		SR_HELLGATE,Hell Gate
 2332,0,6,4,-1,0x2,3,5,1,no,0,0,0,weapon,0,0x0,	SR_RAMPAGEBLASTER,Rampage Blaster
 2333,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0,		SR_CRESCENTELBOW,Crescent Elbow //CHECK Check the autospell ID.
 2334,0,6,4,0,0x3,1:1:2:2:3,5,1,no,0,0,0,none,0,0x0,	SR_CURSEDCIRCLE,Cursed Circle

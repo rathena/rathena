@@ -1697,6 +1697,14 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 			return BF_SHORT;
 		return BF_LONG;
 	}
+
+	if (skill_id == SR_GATEOFHELL) {
+		if (skill_lv < 5)
+			return BF_SHORT;
+		else
+			return BF_LONG;
+	}
+
 	//based on used skill's range
 	if (skill_get_range2(src, skill_id, skill_lv) < 5)
 		return BF_SHORT;
@@ -4616,9 +4624,20 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		wd.type = 0x0a;
 
 	// check if we're landing a hit
-	if(!is_attack_hitting(wd, src,  target, skill_id, skill_lv, true))
+	if(!is_attack_hitting(wd, src, target, skill_id, skill_lv, true)) {
 		wd.dmg_lv = ATK_FLEE;
-	else if(!target_has_infinite_defense(target, skill_id)) { //no need for math against plants
+		if(skill_id == SR_GATEOFHELL) {
+			if(wd.dmg_lv != ATK_FLEE) {
+				int ratio;
+
+				wd.flag = BF_WEAPON;
+				ratio = battle_calc_attack_skill_ratio(wd, src, target, skill_id, skill_lv);
+
+				ATK_RATE(wd.damage, wd.damage2, ratio);
+			} else
+				wd.dmg_lv = ATK_DEF;
+		}
+	} else if(!target_has_infinite_defense(target, skill_id)) { //no need for math against plants
 		int ratio;
 		int i;
 		wd = battle_calc_skill_base_damage(wd, src, target, skill_id, skill_lv); // base skill damage

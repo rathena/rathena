@@ -778,7 +778,7 @@ short pc_maxparameter(struct map_session_data *sd, enum e_params param);
 	#define pc_leftside_mdef(sd) ((sd)->battle_status.mdef2)
 	#define pc_rightside_mdef(sd) ((sd)->battle_status.mdef)
 #define pc_leftside_matk(sd) (status_base_matk(status_get_status_data(&(sd)->bl), (sd)->status.base_level))
-#define pc_rightside_matk(sd) ((sd)->battle_status.rhw.matk+(sd)->battle_status.lhw.matk+(sd)->bonus.ematk)
+#define pc_rightside_matk(sd) ((sd)->battle_status.rhw.matk+(sd)->battle_status.lhw.matk+(sd)->bonus.ematk+((sd)->battle_status.matk_min-(sd)->base_status.matk_min))
 #else
 	#define pc_leftside_atk(sd) ((sd)->battle_status.batk + (sd)->battle_status.rhw.atk + (sd)->battle_status.lhw.atk)
 	#define pc_rightside_atk(sd) ((sd)->battle_status.rhw.atk2 + (sd)->battle_status.lhw.atk2)

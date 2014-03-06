@@ -493,7 +493,7 @@ void initChangeTables(void)
 	set_sc( CASH_ASSUMPTIO		, SC_ASSUMPTIO		, SI_ASSUMPTIO		, SCB_NONE );
 
 	set_sc( ALL_PARTYFLEE		, SC_PARTYFLEE		, SI_PARTYFLEE		, SCB_NONE );
-	set_sc( ALL_ODINS_POWER		, SC_ODINS_POWER	, SI_ODINS_POWER	, SCB_MATK|SCB_BATK|SCB_MDEF|SCB_DEF );
+	set_sc( ALL_ODINS_POWER		, SC_ODINS_POWER	, SI_ODINS_POWER	, SCB_WATK|SCB_MATK|SCB_MDEF|SCB_DEF );
 
 	set_sc( CR_SHRINK		, SC_SHRINK		, SI_SHRINK		, SCB_NONE );
 	set_sc( RG_CLOSECONFINE		, SC_CLOSECONFINE2	, SI_CLOSECONFINE2	, SCB_NONE );
@@ -684,7 +684,7 @@ void initChangeTables(void)
 	set_sc( WA_SWING_DANCE			, SC_SWINGDANCE			, SI_SWINGDANCE			, SCB_SPEED|SCB_ASPD );
 	set_sc( WA_SYMPHONY_OF_LOVER		, SC_SYMPHONYOFLOVER		, SI_SYMPHONYOFLOVERS		, SCB_MDEF );
 	set_sc( WA_MOONLIT_SERENADE		, SC_MOONLITSERENADE		, SI_MOONLITSERENADE		, SCB_MATK );
-	set_sc( MI_RUSH_WINDMILL		, SC_RUSHWINDMILL		, SI_RUSHWINDMILL		, SCB_BATK  );
+	set_sc( MI_RUSH_WINDMILL		, SC_RUSHWINDMILL		, SI_RUSHWINDMILL		, SCB_WATK  );
 	set_sc( MI_ECHOSONG			, SC_ECHOSONG			, SI_ECHOSONG			, SCB_DEF2  );
 	set_sc( MI_HARMONIZE			, SC_HARMONIZE			, SI_HARMONIZE			, SCB_STR|SCB_AGI|SCB_VIT|SCB_INT|SCB_DEX|SCB_LUK );
 	set_sc_with_vfx( WM_POEMOFNETHERWORLD	, SC_NETHERWORLD		, SI_NETHERWORLD		, SCB_NONE );
@@ -5045,8 +5045,6 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 		batk += batk / 5;
 	if(sc->data[SC_FULL_SWING_K])
 		batk += sc->data[SC_FULL_SWING_K]->val1;
-	if(sc->data[SC_ODINS_POWER])
-		batk += 40 + 30 * sc->data[SC_ODINS_POWER]->val1;
 	if(sc->data[SC_ASH])
 		batk -= batk * sc->data[SC_ASH]->val4 / 100;
 	if(sc->data[SC_PYROCLASTIC])
@@ -5080,8 +5078,6 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 		batk -= batk * sc->data[SC__ENERVATION]->val2 / 100;
 	if(sc->data[SC__BLOODYLUST])
 		batk += batk * 32 / 100;
-	if(sc->data[SC_RUSHWINDMILL])
-		batk += batk * sc->data[SC_RUSHWINDMILL]->val3/100;
 	if(sc->data[SC_SATURDAYNIGHTFEVER])
 		batk += 100 * sc->data[SC_SATURDAYNIGHTFEVER]->val1;
 	if( sc->data[SC_ZANGETSU] )
@@ -5167,6 +5163,10 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 		watk -= watk * 25/100;
 	if(sc->data[SC_STRIPWEAPON]  && bl->type != BL_PC)
 		watk -= watk * sc->data[SC_STRIPWEAPON]->val2/100;
+	if(sc->data[SC_RUSHWINDMILL])
+		watk += watk * sc->data[SC_RUSHWINDMILL]->val3/100;
+	if (sc->data[SC_ODINS_POWER])
+		watk += 40 + 30 * sc->data[SC_ODINS_POWER]->val1;
 	if((sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 2)
 	   || (sc->data[SC_WATER_INSIGNIA] && sc->data[SC_WATER_INSIGNIA]->val1 == 2)
 	   || (sc->data[SC_WIND_INSIGNIA] && sc->data[SC_WIND_INSIGNIA]->val1 == 2)
