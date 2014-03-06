@@ -6962,11 +6962,10 @@ ACMD_FUNC(mobinfo)
 		}
 #endif
 #ifdef VIP_ENABLE
-	// Display EXP and item rate increase for VIP.
-	if (pc_isvip(sd) && (battle_config.vip_base_exp_increase || battle_config.vip_job_exp_increase || battle_config.vip_drop_increase)) {
+	// Display EXP rate increase for VIP.
+	if (pc_isvip(sd) && (battle_config.vip_base_exp_increase || battle_config.vip_job_exp_increase)) {
 		base_exp += battle_config.vip_base_exp_increase;
 		job_exp += battle_config.vip_job_exp_increase;
-		droprate += battle_config.vip_drop_increase;
 	}
 #endif
 		// stats
@@ -7003,6 +7002,11 @@ ACMD_FUNC(mobinfo)
 				if (droprate <= 0 && !battle_config.drop_rate0item)
 						droprate = 1;
 			}
+#endif
+#ifdef VIP_ENABLE
+			// Display item rate increase for VIP.
+			if (pc_isvip(sd) && battle_config.vip_drop_increase)
+				droprate += battle_config.vip_drop_increase;
 #endif
 			if (item_data->slot)
 				sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", item_data->jname, item_data->slot, (float)droprate / 100);
