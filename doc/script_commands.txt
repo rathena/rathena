@@ -1231,7 +1231,7 @@ Examples:
   setd ".@var$", "Poporing";
   mes .@var$; // Displays "Poporing".
 
-  setd ".@" + $var$ + "123$", "Poporing is cool";
+  setd ".@" + .@var$ + "123$", "Poporing is cool";
   mes .@Poporing123$; // Displays "Poporing is cool".
 
 ---------------------------------------
