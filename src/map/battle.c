@@ -2171,6 +2171,9 @@ static bool is_attack_hitting(struct Damage wd, struct block_list *src, struct b
 		case GC_VENOMPRESSURE:
 			hitrate += 10 + 4 * skill_lv;
 			break;
+		case SC_FATALMENACE:
+			hitrate -= 35 - 5 * skill_lv;
+			break;
 		case RL_SLUGSHOT:
 			if (distance_bl(src,target) > 3)
 				hitrate -= (10 - (skill_lv - 1));
@@ -3347,6 +3350,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 		case SC_FATALMENACE:
 			skillratio += 100 * skill_lv;
+			RE_LVL_DMOD(100);
 			break;
 		case SC_TRIANGLESHOT:
 			skillratio += ((skill_lv - 1) * (status_get_agi(src) / 2)) + 200;

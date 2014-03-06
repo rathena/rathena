@@ -172,7 +172,7 @@
 //****
 // Wizard
 80,9,8,2,3,0x20,1:1:1:1:1:2:2:2:2:2:2,10,3:4:5:6:7:8:9:10:11:12:12,yes,0,0x2080,5,magic,0,0x0,	WZ_FIREPILLAR,Fire Pillar
-81,0,6,4,3,0,3,10,1,yes,0,0x2000,0,magic,5,0x20,		WZ_SIGHTRASHER,Sightrasher
+81,0,6,4,3,0,7,10,1,yes,0,0x2000,0,magic,5,0x20,		WZ_SIGHTRASHER,Sightrasher
 83,9,8,2,3,0,3:3:3:3:3:3:3:3:3:3:14,10,1:1:2:2:3:3:4:4:5:5:15,yes,0,0x2000,0,magic,0,0x20,	WZ_METEOR,Meteor Storm
 84,9,8,1,4,0,0,10,3:4:5:6:7:8:9:10:11:12,yes,0,0x2000,0,magic,2:3:3:4:4:5:5:6:6:7,0x20,	WZ_JUPITEL,Jupitel Thunder
 85,9,8,2,4,0,0,10,-10,yes,0,0x2000,0,magic,0,0x20,		WZ_VERMILION,Lord of Vermilion
@@ -993,8 +993,8 @@
 2240,0,6,4,0,0,0,1,1,no,0,0,0,none,0,0x0,		RA_WUGMASTERY,Warg Mastery
 2241,0,6,4,0,0,0,3,1,no,0,0,0,none,0,0x2000,		RA_WUGRIDER,Warg Rider
 2242,0,6,4,-1,0x2,1,1,0,no,0,0,0,weapon,0,0x2000,	RA_WUGDASH,Warg Dash
-2243,9,6,1,-1,0x40,0,5,1,no,0,0,0,misc,0,0x2000,	RA_WUGSTRIKE,Warg Strike
-2244,9,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x80,	RA_WUGBITE,Warg Bite
+2243,9,6,1,0,0,0,5,1,no,0,0,0,weapon,0,0x2000,	RA_WUGSTRIKE,Warg Strike
+2244,9,6,1,0,0,0,5,1,no,0,0,0,weapon,0,0x80,	RA_WUGBITE,Warg Bite
 2245,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,		RA_TOOTHOFWUG,Tooth of Warg
 2246,0,6,4,0,0x2,3:4:5:6:7,5,1,no,0,0,0,weapon,0,0x0,	RA_SENSITIVEKEEN,Sensitive Keen
 2247,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x42,		RA_CAMOUFLAGE,Camouflage
