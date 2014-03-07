@@ -2554,7 +2554,7 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 #if PACKETVER < 20071002
 	const int se = 20; //entry size equip
 	const int sidxe = 4; //start itemlist idx
-	const int cmde = 0x2d1;
+	const int cmde = 0xa6;
 #elif PACKETVER < 20100629
 	const int se = 26;
 	const int sidxe = 4;

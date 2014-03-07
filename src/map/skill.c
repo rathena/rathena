@@ -12211,7 +12211,7 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 		case UNT_GD_GLORYWOUNDS:
 		case UNT_GD_SOULCOLD:
 		case UNT_GD_HAWKEYES:
-			if ( !sce )
+			if ( !sce && battle_check_target(&sg->unit->bl, bl, sg->target_flag) > 0 )
 				sc_start4(ss, bl,type,100,sg->skill_lv,0,0,0,1000);
 			break;
 	}
@@ -18990,6 +18990,7 @@ static bool skill_parse_row_unitdb(char* split[], int columns, int current) {
 	else if( strcmpi(split[6],"all")==0 ) skill_db[idx].unit_target = BCT_ALL;
 	else if( strcmpi(split[6],"enemy")==0 ) skill_db[idx].unit_target = BCT_ENEMY;
 	else if( strcmpi(split[6],"self")==0 ) skill_db[idx].unit_target = BCT_SELF;
+	else if( strcmpi(split[6],"sameguild"==0 ) skill_db[idx].unit_target = BCT_GUILD|BCT_SAMEGUILD;
 	else if( strcmpi(split[6],"noone")==0 ) skill_db[idx].unit_target = BCT_NOONE;
 	else skill_db[idx].unit_target = strtol(split[6],NULL,16);
 
