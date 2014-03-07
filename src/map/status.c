@@ -667,6 +667,7 @@ void initChangeTables(void)
 	set_sc_with_vfx( SC_MANHOLE	, SC__MANHOLE		, SI_MANHOLE		, SCB_NONE );
 	add_sc( SC_CHAOSPANIC		, SC_CONFUSION		);
 	set_sc( SC_BLOODYLUST		, SC_BERSERK		, SI_BLOODYLUST		, SCB_DEF|SCB_DEF2|SCB_BATK|SCB_WATK);
+	add_sc( SC_FEINTBOMB		, SC__FEINTBOMB		);
 
 	/* Sura */
 	add_sc( SR_DRAGONCOMBO			, SC_STUN		);
@@ -1107,6 +1108,7 @@ void initChangeTables(void)
 	StatusChangeStateTable[SC_TRICKDEAD]		|= SCS_NOPICKITEM;
 	StatusChangeStateTable[SC_BLADESTOP]		|= SCS_NOPICKITEM;
 	StatusChangeStateTable[SC_CLOAKINGEXCEED]	|= SCS_NOPICKITEM;
+	StatusChangeStateTable[SC__FEINTBOMB]	|= SCS_NOPICKITEM;
 	StatusChangeStateTable[SC_NOCHAT]		|= SCS_NOPICKITEM|SCS_NOPICKITEMCOND;
 
 	/* StatusChangeState (SCS_) NODROPITEMS */
@@ -1872,6 +1874,8 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, uin
 					((sd->special_state.perfect_hiding || !is_detect) ||
 					(tsc->data[SC_CLOAKINGEXCEED] && is_detect)))
 					return 0;
+				if( tsc->data[SC__FEINTBOMB] && (is_boss || is_detect))
+					return 0;
 				if( tsc->data[SC_CAMOUFLAGE] && !(is_boss || is_detect) && !skill_id )
 					return 0;
 				if( tsc->data[SC_STEALTHFIELD] && !is_boss )
@@ -1933,6 +1937,8 @@ int status_check_visibility(struct block_list *src, struct block_list *target)
 	switch (target->type) {	// Check for chase-walk/hiding/cloaking opponents.
 		case BL_PC:
 			if ( tsc && tsc->data[SC_CLOAKINGEXCEED] && !(status->mode&MD_BOSS) )
+				return 0;
+			if ( tsc && tsc->data[SC__FEINTBOMB] && !(status->mode&MD_BOSS || status->mode&MD_DETECTOR) )
 				return 0;
 			if( ( tsc && (tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK) || tsc->data[SC__INVISIBILITY] || tsc->data[SC_CAMOUFLAGE])) && !(status->mode&MD_BOSS) &&
 				( ((TBL_PC*)target)->special_state.perfect_hiding || !(status->mode&MD_DETECTOR) ) )
@@ -9097,6 +9103,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			sc_start(src,bl,SC_STRIPWEAPON,100,val1,tick);
 			sc_start(src,bl,SC_STRIPSHIELD,100,val1,tick);
 			break;
+		case SC__FEINTBOMB:
+			val4 = tick / 1000;
+			tick_time = 1000;
+			val_flag |= 1|2;
+			break;
 		case SC_GN_CARTBOOST:
 			if( val1 < 3 )
 				val2 = 50;
@@ -9716,6 +9727,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_HIDING:
 		case SC_CLOAKING:
 		case SC_CLOAKINGEXCEED:
+		case SC__FEINTBOMB:
 		case SC_CHASEWALK:
 		case SC_WEIGHT90:
 		case SC_CAMOUFLAGE:
@@ -9856,6 +9868,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_CHASEWALK:
 			sc->option |= OPTION_CHASEWALK|OPTION_CLOAK;
+			opt_flag = 2;
+			break;
+		case SC__FEINTBOMB:
+			sc->option |= OPTION_INVISIBLE;
 			opt_flag = 2;
 			break;
 		case SC_SIGHT:
@@ -10535,6 +10551,14 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				if(s_sd ) s_sd->shadowform_id = 0;
 			}
 			break;
+		case SC__FEINTBOMB:
+			if( sd && pc_ishiding(sd) ) {
+				status_change_end(bl, SC_HIDING, INVALID_TIMER);
+				status_change_end(bl, SC_CLOAKING, INVALID_TIMER);
+				status_change_end(bl, SC_CHASEWALK, INVALID_TIMER);
+				status_change_end(bl, SC__INVISIBILITY, INVALID_TIMER);
+			}
+			break;
 		case SC_SITDOWN_FORCE:
 			if( sd && pc_issit(sd) ) {
 				pc_setstand(sd);
@@ -10665,19 +10689,22 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 
 	case SC_HIDING:
 		sc->option &= ~OPTION_HIDE;
-		opt_flag|= 2|4; // Check for warp trigger + AoE trigger
+		opt_flag |= 2|4; // Check for warp trigger + AoE trigger
 		break;
 	case SC_CLOAKING:
 	case SC_CLOAKINGEXCEED:
 	case SC__INVISIBILITY:
 		sc->option &= ~OPTION_CLOAK;
 	case SC_CAMOUFLAGE:
-		opt_flag|= 2;
+		opt_flag |= 2;
 		break;
 	case SC_CHASEWALK:
 		sc->option &= ~(OPTION_CHASEWALK|OPTION_CLOAK);
-		opt_flag|= 2;
+		opt_flag |= 2;
 		break;
+	case SC__FEINTBOMB:
+		sc->option &= ~OPTION_INVISIBLE;
+		opt_flag |= 2;
 	case SC_SIGHT:
 		sc->option &= ~OPTION_SIGHT;
 		break;
@@ -11416,6 +11443,15 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			break;
 		sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
 		return 0;
+
+	case SC__FEINTBOMB:
+		if( --(sce->val4) >= 0) {
+			if( !status_charge(bl, 0, 1) )
+				break;
+			sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
+			return 0;
+		}
+		break;
 
 	case SC_STRIKING:
 		if( --(sce->val4) >= 0 ) {

@@ -6370,7 +6370,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,i);
 		break;
 	case TF_HIDING:
-	case ST_CHASEWALK:
+	case ST_CHASEWALK: {
+		struct status_change* sc = status_get_sc(src);
+
+		if( sc && sc->data[SC__FEINTBOMB] )
+			status_change_end(bl, SC__FEINTBOMB, INVALID_TIMER);
+	}
 	case KO_YAMIKUMO:
 		if (tsce)
 		{
@@ -11075,10 +11080,9 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		break;
 
 	case SC_FEINTBOMB:
-		clif_skill_nodamage(src,src,skill_id,skill_lv,1);
 		skill_unitsetting(src,skill_id,skill_lv,x,y,0); // Set bomb on current Position
-		if( skill_blown(src,src,3*skill_lv,unit_getdir(src),0) )
-			skill_castend_nodamage_id(src,src,TF_HIDING,1,tick,0);
+		skill_blown(src,src,3*skill_lv,unit_getdir(src),0);
+		clif_skill_nodamage(src,src,skill_id,skill_lv,sc_start(src,src,type,100,skill_lv,skill_get_time2(skill_id,skill_lv)));
 		break;
 
 	case SC_ESCAPE:
@@ -16785,13 +16789,13 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 			case UNT_FEINTBOMB: {
 				struct block_list *src = map_id2bl(group->src_id);
 				struct status_change *sc;
-				if (src && (sc = status_get_sc(src)) != NULL && sc->data[SC_HIDING]) { // Copycat explodes if caster is still hidden.
+				if (src && (sc = status_get_sc(src)) != NULL && sc->data[SC__FEINTBOMB]) { // Copycat explodes if caster is still hidden.
 					map_foreachinrange(skill_area_sub, &group->unit->bl, unit->range, splash_target(src), src, SC_FEINTBOMB, group->skill_lv, tick, BCT_ENEMY|SD_ANIMATION|1, skill_castend_damage_id);
-					status_change_end(src, SC_HIDING, INVALID_TIMER);
+					status_change_end(src, SC__FEINTBOMB, INVALID_TIMER);
 				}
 				skill_delunit(unit);
-				break;
 			}
+			break;
 
 			case UNT_BANDING:
 			{
@@ -18993,7 +18997,7 @@ static bool skill_parse_row_unitdb(char* split[], int columns, int current) {
 	else if( strcmpi(split[6],"all")==0 ) skill_db[idx].unit_target = BCT_ALL;
 	else if( strcmpi(split[6],"enemy")==0 ) skill_db[idx].unit_target = BCT_ENEMY;
 	else if( strcmpi(split[6],"self")==0 ) skill_db[idx].unit_target = BCT_SELF;
-	else if( strcmpi(split[6],"sameguild"==0 ) skill_db[idx].unit_target = BCT_GUILD|BCT_SAMEGUILD;
+	else if( strcmpi(split[6],"sameguild")==0 ) skill_db[idx].unit_target = BCT_GUILD|BCT_SAMEGUILD;
 	else if( strcmpi(split[6],"noone")==0 ) skill_db[idx].unit_target = BCT_NOONE;
 	else skill_db[idx].unit_target = strtol(split[6],NULL,16);
 
