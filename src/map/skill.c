@@ -14818,6 +14818,9 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
 		case SR_RAMPAGEBLASTER:
 			req.spiritball = sd->spiritball?sd->spiritball:15;
 			break;
+		case LG_RAGEBURST:
+			req.spiritball = sd->spiritball?sd->spiritball:1;
+			break;
 		case SR_GATEOFHELL:
 			if( sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE )
 				req.sp -= req.sp * 10 / 100;
