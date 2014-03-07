@@ -2395,7 +2395,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 #endif
 			// attempt to drop the item
 			if (rnd() % 10000 >= drop_rate)
-					continue;
+				continue;
 
 			if( mvp_sd && it->type == IT_PETEGG ) {
 				pet_create_egg(mvp_sd, md->db->dropitem[i].nameid);
@@ -2510,30 +2510,36 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			int mdrop_id[MAX_MVP_DROP];
 			int mdrop_p[MAX_MVP_DROP];
 
-			memset(&mdrop_id,0,MAX_MVP_DROP*sizeof(int));
+			memset(mdrop_id,0,MAX_MVP_DROP*sizeof(int));
+			memset(mdrop_p,0,MAX_MVP_DROP*sizeof(int));
 
+			//Make random order
 			for(i = 0; i < MAX_MVP_DROP; i++) {
 				while( 1 ) {
-					int va = rnd()%MAX_MVP_DROP;
-					if( !mdrop_id[va] || !md->db->mvpitem[i].nameid ) {
-						mdrop_id[va] = md->db->mvpitem[i].nameid;
-						mdrop_p[va]  = md->db->mvpitem[i].p;
+					uint8 va = rnd()%MAX_MVP_DROP;
+					if (mdrop_id[va] == 0) {
+						if (md->db->mvpitem[i].nameid > 0) {
+							mdrop_id[va] = md->db->mvpitem[i].nameid;
+							mdrop_p[va] = md->db->mvpitem[i].p;
+						}
+						else
+							mdrop_id[va] = -1;
 						break;
 					}
 				}
 			}
 
 			for(i = 0; i < MAX_MVP_DROP; i++) {
-				if(mdrop_id[i] <= 0)
-					continue;
-				if(!itemdb_exists(mdrop_id[i]))
+				if(mdrop_id[i] <= 0 || !itemdb_exists(mdrop_id[i]))
 					continue;
 
 				temp = mdrop_p[i];
-				if(temp <= 0 && !battle_config.drop_rate0item)
-					temp = 1;
-				if(temp <= rnd()%10000+1) //if ==0, then it doesn't drop
-					continue;
+				if (temp != 10000) {
+					if(temp <= 0 && !battle_config.drop_rate0item)
+						temp = 1;
+					if(rnd()%10000 >= temp) //if ==0, then it doesn't drop
+						continue;
+				}
 
 				memset(&item,0,sizeof(item));
 				item.nameid=mdrop_id[i];

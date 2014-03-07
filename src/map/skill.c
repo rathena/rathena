@@ -336,8 +336,16 @@ int skill_get_range2 (struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
 	return range;
 }
 
+/** Calculates heal value of skill's effect
+* @param src
+* @param target
+* @param skill_id
+* @param skill_lv
+* @param heal
+* @return modified heal value
+*/
 int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, bool heal) {
-	int skill, hp;
+	int skill, hp = 0;
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
 	struct map_session_data *tsd = BL_CAST(BL_PC, target);
 	struct status_change *sc, *tsc;
@@ -11696,11 +11704,6 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, uint16 skill
 			val1 += pc_checkskill(sd,DC_DANCINGLESSON);
 			val2 += pc_checkskill(sd,DC_DANCINGLESSON);
 		}
-		break;
-	case BA_APPLEIDUN:
-		val1 = 5+2*skill_lv+status->vit/10; // MaxHP percent increase
-		if(sd)
-			val1 += pc_checkskill(sd,BA_MUSICALLESSON);
 		break;
 	case DC_SERVICEFORYOU:
 			//val1: MaxSP percent increase

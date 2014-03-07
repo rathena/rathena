@@ -104,7 +104,7 @@ static unsigned short status_calc_ematk(struct block_list *,struct status_change
 #endif
 static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type);
 static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type);
-static unsigned int status_calc_maxhpsp_pc(struct map_session_data *sd, uint8 flag);
+static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned int stat, bool isHP);
 
 /**
  * Returns the status change associated with a skill.
@@ -2660,13 +2660,13 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 
 /**
 * Get final MaxHP or MaxSP for player. References: http://irowiki.org/wiki/Max_HP and http://irowiki.org/wiki/Max_SP
-* The calculation needs base_level, battle_status (vit or int), additive modifier, and multiplicative modifier
-* @param sd: Player
-* @param flag: 0=Calculates MaxHP, 1=Calculates MaxSP
-* @return max_hp: value
+* The calculation needs base_level, base_status/battle_status (vit or int), additive modifier, and multiplicative modifier
+* @param sd Player
+* @param stat Vit/Int of player as param modifier
+* @param isHP true - calculates Max HP, false - calculated Max SP
+* @return max The max value of HP or SP
 **/
-static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, uint8 flag)
-{
+static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned int stat, bool isHP) {
 	double max = 0;
 	uint16 idx, level, job_id;
 
@@ -2676,13 +2676,13 @@ static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, uint8 fl
 	idx = pc_class2idx(job_id);
 	level = max(sd->status.base_level,1);
 
-	if (flag == 0) { //Calculates MaxHP
-		max = job_info[idx].base_hp[level-1] * (1 + (max(sd->battle_status.vit,1) * 0.01)) * ((sd->class_&JOBL_UPPER)?1.25:1);
+	if (isHP) { //Calculates MaxHP
+		max = job_info[idx].base_hp[level-1] * (1 + (max(stat,1) * 0.01)) * ((sd->class_&JOBL_UPPER)?1.25:1);
 		max += status_get_hpbonus(&sd->bl,STATUS_BONUS_FIX);
 		max = max * (1 + status_get_hpbonus(&sd->bl,STATUS_BONUS_RATE) * 0.01);
 	}
-	else if (flag == 1) { //Calculates MaxSP
-		max = job_info[idx].base_sp[level-1] * (1 + (max(sd->battle_status.int_,1) * 0.01));
+	else { //Calculates MaxSP
+		max = job_info[idx].base_sp[level-1] * (1 + (max(stat,1) * 0.01));
 		max += status_get_spbonus(&sd->bl,STATUS_BONUS_FIX);
 		max = max * (1 + status_get_spbonus(&sd->bl,STATUS_BONUS_RATE) * 0.01);
 		max = (max * ((sd->class_&JOBL_UPPER)?1.25:1)) + 0.5; //Don't have round()
@@ -3176,7 +3176,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 #endif
 
 // ----- HP MAX CALCULATION -----
-	sd->status.max_hp = status_calc_maxhpsp_pc(sd,0);
+	status->max_hp = sd->status.max_hp = status_calc_maxhpsp_pc(sd,status->vit,true);
 	
 	if(battle_config.hp_rate != 100)
 		status->max_hp = (int64)status->max_hp * battle_config.hp_rate/100;
@@ -3187,7 +3187,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		status->max_hp = 1;
 
 // ----- SP MAX CALCULATION -----
-	sd->status.max_sp = status_calc_maxhpsp_pc(sd,1);
+	status->max_sp = sd->status.max_sp = status_calc_maxhpsp_pc(sd,status->int_,false);
 
 	if(battle_config.sp_rate != 100)
 		status->max_sp = (int64)status->max_sp * battle_config.sp_rate/100;
@@ -3217,7 +3217,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		if( !status->sp ) // The minimum for the respawn setting is SP:1
 			status->sp = 1;
 	}
-
+	
 // ----- MISC CALCULATION -----
 	status_calc_misc(&sd->bl, status, sd->status.base_level);
 
@@ -3925,8 +3925,6 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 		} else
 			regen->flag&=~sce->val4; // Remove regen as specified by val4
 	}
-	if (sc->data[SC_APPLEIDUN])
-		regen->rate.hp += sc->data[SC_APPLEIDUN]->val3;
 	if (sc->data[SC_EPICLESIS]) {
 		regen->rate.hp += sc->data[SC_EPICLESIS]->val3;
 		regen->rate.sp += sc->data[SC_EPICLESIS]->val4;
@@ -4283,7 +4281,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 
 	if(flag&SCB_MAXHP) {
 		if( bl->type&BL_PC ) {
-			status->max_hp = status_calc_maxhpsp_pc(sd,0);
+			status->max_hp = status_calc_maxhpsp_pc(sd,status->vit,true);
 			
 			if( status->max_hp > (unsigned int)battle_config.max_hp )
 				status->max_hp = (unsigned int)battle_config.max_hp;
@@ -4298,7 +4296,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 
 	if(flag&SCB_MAXSP) {
 		if( bl->type&BL_PC ) {
-			status->max_sp = status_calc_maxhpsp_pc(sd,1);
+			status->max_sp = status_calc_maxhpsp_pc(sd,status->int_,false);
 			
 			if( status->max_sp > (unsigned int)battle_config.max_sp )
 				status->max_sp = (unsigned int)battle_config.max_sp;
@@ -9534,15 +9532,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val1 = 1002; // Default poring
 			break;
 		case SC_APPLEIDUN:
-			{
-				uint8 i;
-				val2 = 5 + (2 * (val1-1)); //HP Rate
-				val3 = 30 + (5 * val1); //HP Recovery rate
-				if (sd && (i = pc_checkskill(sd,BA_MUSICALLESSON)) > 0) {
-					val2 += i;
-					val3 += (5 * i);
-				}
-			} break;
+			val2 = (5 + 2 * val1) + (status_get_vit(src) / 10); //HP Rate: (5 + 2 * skill_lv) + (vit/10) + (BA_MUSICALLESSON level)
+			if (sd)
+				val2 += pc_checkskill(sd,BA_MUSICALLESSON);
+			break;
 		case SC_EPICLESIS:
 			val2 = 5 * val1; //HP rate bonus
 			switch (val1) { //! FIXME, looks so weird!
