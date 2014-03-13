@@ -3841,16 +3841,18 @@ character and produces no other output whatsoever.
 
 *itemheal <hp>,<sp>;
 
-This command heals given absolute amounts of HP and/or SP on the invoking
-character. Unlike heal, this command is intended for use in item scripts. It
-applies potion-related bonuses, such as alchemist ranking, cards and status
-changes. When used inside an NPC script, certain bonuses are omitted.
+This command heals relative amounts of HP and/or SP on the invoking character.
+Unlike heal, this command is intended for use in item scripts. It applies
+potion-related bonuses, such as alchemist ranking, cards, and status changes.
+When used inside an NPC script, certain bonuses are omitted.
 
-There is also a nice example on using this with the 'rand' function, to give you 
-a random amount of healing.
+The command also applies a SP/VIT-related bonus:
+    heal = heal * [(100 + STATUS*2) / 100]
 
-    // This will heal anything thing from 100 to 150 HP and no SP
-    itemheal rand(100,150),0;
+Example:
+    // If the player has 50 vit and no bonuses, this will heal
+    // anything from 200 to 300 HP and 5 SP
+    itemheal rand(100,150),5;
 
 ---------------------------------------
 

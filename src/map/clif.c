@@ -11024,16 +11024,16 @@ void clif_parse_GetItemFromCart(int fd,struct map_session_data *sd)
 /// 012a
 void clif_parse_RemoveOption(int fd,struct map_session_data *sd)
 {
-	/**
-	 * Attempts to remove these options when this function is called (will remove all available)
-	 **/
+	if( !(sd->sc.option&(OPTION_RIDING|OPTION_FALCON|OPTION_DRAGON|OPTION_MADOGEAR))
 #ifdef NEW_CARTS
-	pc_setoption(sd,sd->sc.option&~(OPTION_RIDING|OPTION_FALCON|OPTION_DRAGON|OPTION_MADOGEAR));
-	if( sd->sc.data[SC_PUSH_CART] )
+	    && sd->sc.data[SC_PUSH_CART] ){
 		pc_setcart(sd,0);
 #else
-	pc_setoption(sd,sd->sc.option&~(OPTION_CART|OPTION_RIDING|OPTION_FALCON|OPTION_DRAGON|OPTION_MADOGEAR));
+	    ){
+		pc_setoption(sd,sd->sc.option&~OPTION_CART);
 #endif
+	} else  // priority to remove this option before we can clear cart
+		pc_setoption(sd,sd->sc.option&~(OPTION_RIDING|OPTION_FALCON|OPTION_DRAGON|OPTION_MADOGEAR));
 }
 
 
