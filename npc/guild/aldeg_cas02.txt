@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= War of Emperium (Al De Baran)
+//= War of Emperium (Al De Baran) - Hohenschwangau
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
@@ -109,7 +109,6 @@ aldeg_cas02,78,74,0	duplicate(cm)	Chenchenlie#aldeg_cas02	55
 // Treasure Room Lever
 //============================================================
 aldeg_cas02,139,234,0	script	#lever_A02	111,{
-
 	mes " ";
 	mes "There's a small lever. Will you pull it?";
 	next;

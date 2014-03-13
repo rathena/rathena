@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= War of Emperium (Geffen)
+//= War of Emperium (Geffen) - Eeyorbriggar
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
@@ -104,7 +104,6 @@ gefg_cas02,12,66,5	duplicate(cm)	Esmarehk#gefg_cas02	55
 // Treasure Room Exit
 //============================================================
 gefg_cas02,145,114,0	script	#lever_G02	111,{
-
 	mes " ";
 	mes "There's a small lever. Will you pull it?";
 	next;

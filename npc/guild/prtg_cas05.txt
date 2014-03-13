@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= War of Emperium (Prontera)
+//= War of Emperium (Prontera) - Gondul
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
@@ -107,7 +107,6 @@ prtg_cas05,36,37,4	duplicate(cm)	Raynor#prtg_cas05	55
 // Treasure Room Exit
 //============================================================
 prtg_cas05,281,176,0	script	#Lever_PR05	111,{
-
 	mes " ";
 	mes "There's a small lever. Will you pull it?";
 	next;

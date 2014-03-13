@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= War of Emperium (Geffen)
+//= War of Emperium (Geffen) - Yesnelph
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
@@ -107,7 +107,6 @@ gefg_cas03,106,23,5	duplicate(cm)	Jyang#gefg_cas03	55
 // Treasure Room Exit
 //============================================================
 gefg_cas03,275,289,0	script	#lever_G03	111,{
-
 	mes " ";
 	mes "There's a small lever. Will you pull it?";
 	next;

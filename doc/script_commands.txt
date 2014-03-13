@@ -974,13 +974,10 @@ player groups, for instance.
 
 OnWhisperGlobal:
 
-This special label triggers when a player whispers the NPC by its name
-and would execute all the scripts under this event label. This is similar to the
-'donpcevent' and 'goto' command but can only be trigged manually by whispering.
-It can accept up to ten parameters, which will be stored into separate temporary
-character string variables.
-
-See the sample in 'doc/whisper_sys.txt'.
+This special label triggers when a player whispers the NPC, and will run with the
+player's RID attached. It can accept up to ten parameters, which will be stored
+into separate temporary character string variables @whispervar0$ to @whispervar9$.
+See 'doc/whisper_sys.txt' for further documentation.
 
 Only the special labels which are not associated with any script command are 
 listed here. There are other kinds of labels which may be triggered in a similar 
@@ -5365,31 +5362,30 @@ players, telling them they are now divorced.
 *pcfollow <id>,<target id>;
 *pcstopfollow <id>;
 
-Makes a character follow or stop following someone. This command does the same as the @follow command.
-The main difference is that @follow can use character names, and this commands needs the Account ID for the target.
+Makes a character follow or stop following someone. This command does the same
+as the @follow command. The main difference is that @follow can use character
+names, and this commands needs the account ID for the target.
 
 Examples:
+	// This will make Aaron follow Bullah, when both of these characters are online.
+	pcfollow getCharID(3,"Aaron"),getCharID(3,"Bullah");
 
-// This will make Aaron follow Bullah, when both of these characters are online.
-	PCFollow getCharID(3,"Aaron"),getCharID(3,"Bullah");
-	
-// Makes Aaron stop following whoever he is following.
-	PCStopFollow getCharID(3,"Aaron");
+	// Makes Aaron stop following whoever he is following.
+	pcstopfollow getCharID(3,"Aaron");
 	
 ---------------------------------------
 
 *pcblockmove <id>,<option>;
 
-Prevents the given ID from moving when the option != 0, and 0 enables the ID to
-move again. The ID can either be the GID of a monster/NPC or account ID of a
-character, and will run for the attached player if zero is supplied.
+Prevents the given GID from moving when the option is 1, and enables the ID to
+move again when the option is 0. This command will run for the attached player
+if the given GID is zero.
 
 Examples:
-
-// Prevents the current char from moving away.
+	// Prevents the current char from moving away.
 	pcblockmove getcharid(3),1;
-	
-// Enables the current char to move again.
+
+	// Enables the current char to move again.
 	pcblockmove getcharid(3),0;
 
 --------------------------------------- 

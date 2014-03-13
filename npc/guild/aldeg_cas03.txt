@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= War of Emperium (Al De Baran)
+//= War of Emperium (Al De Baran) - Nuernberg
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
@@ -112,7 +112,6 @@ aldeg_cas03,110,118,0	duplicate(cm)	Nahzarf#aldeg_cas03	55
 // Treasure Room Exit
 //============================================================
 aldeg_cas03,229,267,0	script	#lever_A03	111,{
-
 	mes " ";
 	mes "There's a small lever. Will you pull it?";
 	next;
