@@ -699,7 +699,7 @@ void clif_quest_show_event(struct map_session_data *sd, struct block_list *bl, s
 void clif_displayexp(struct map_session_data *sd, unsigned int exp, char type, bool quest);
 
 int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target type);
-int do_init_clif(void);
+void do_init_clif(void);
 void do_final_clif(void);
 
 // MAIL SYSTEM
@@ -837,6 +837,8 @@ void clif_channel_msg(struct Channel *channel, struct map_session_data *sd, char
 
 void clif_ranklist(struct map_session_data *sd, int16 rankingType);
 void clif_update_rankingpoint(struct map_session_data *sd, int rankingtype, int point);
+
+void clif_crimson_marker(int fd, struct block_list *bl, bool remove);
 
 //void clif_broadcast_obtain_special_item(); ///TODO!
 

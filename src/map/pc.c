@@ -5053,7 +5053,7 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 		sd->pd->ud.dir = sd->ud.dir;
 	}
 
-	if( merc_is_hom_active(sd->hd) )
+	if( hom_is_active(sd->hd) )
 	{
 		sd->hd->bl.m = m;
 		sd->hd->bl.x = sd->hd->ud.to_x = x;
@@ -6351,7 +6351,7 @@ int pc_skillup(struct map_session_data *sd,uint16 skill_id)
 
 	if( skill_id >= HM_SKILLBASE && skill_id < HM_SKILLBASE+MAX_HOMUNSKILL && sd->hd )
 	{
-		merc_hom_skillup(sd->hd, skill_id);
+		hom_skillup(sd->hd, skill_id);
 		return 0;
 	}
 
@@ -6642,8 +6642,8 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 		if( i != sd->sc.option )
 			pc_setoption(sd, i);
 
-		if( merc_is_hom_active(sd->hd) && pc_checkskill(sd, AM_CALLHOMUN) )
-			merc_hom_vaporize(sd, HOM_ST_ACTIVE);
+		if( hom_is_active(sd->hd) && pc_checkskill(sd, AM_CALLHOMUN) )
+			hom_vaporize(sd, HOM_ST_ACTIVE);
 	}
 
 	for( i = 1; i < MAX_SKILL; i++ )
@@ -6940,11 +6940,11 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	if (sd->status.hom_id > 0) {
 		if(battle_config.homunculus_auto_vapor && sd->hd && !sd->hd->sc.data[SC_LIGHT_OF_REGENE])
-			merc_hom_vaporize(sd, HOM_ST_ACTIVE);
+			hom_vaporize(sd, HOM_ST_ACTIVE);
 	}
 
 	if( sd->md )
-		merc_delete(sd->md, 3); // Your mercenary soldier has ran away.
+		mercenary_delete(sd->md, 3); // Your mercenary soldier has ran away.
 
 	if( sd->ed )
 		elemental_delete(sd->ed, 0);
@@ -7827,8 +7827,8 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 	if(i != sd->sc.option)
 		pc_setoption(sd, i);
 
-	if(merc_is_hom_active(sd->hd) && !pc_checkskill(sd, AM_CALLHOMUN))
-		merc_hom_vaporize(sd, HOM_ST_ACTIVE);
+	if(hom_is_active(sd->hd) && !pc_checkskill(sd, AM_CALLHOMUN))
+		hom_vaporize(sd, HOM_ST_ACTIVE);
 
 	if(sd->status.manner < 0)
 		clif_changestatus(sd,SP_MANNER,sd->status.manner);
@@ -10222,8 +10222,7 @@ static int pc_read_statsdb(const char *basedir, int last_s, bool silent){
  * job_db2.txt		- job,stats bonuses/lvl
  * job_maxhpsp_db.txt	- strtlvl,maxlvl,job,type,values/lvl (values=hp|sp)
  *------------------------------------------*/
-int pc_readdb(void)
-{
+void pc_readdb(void) {
 	int i, k, s = 1;
 	const char* dbsubpath[] = {
 		"",
@@ -10323,7 +10322,6 @@ int pc_readdb(void)
 				job_info[idx].base_sp[j] = 10 + (unsigned int)floor((j+1) * (job_info[idx].sp_factor / 100.));
 		}
 	}
- 	return 0;
 }
 
 // Read MOTD on startup. [Valaris]
@@ -10537,7 +10535,9 @@ void pc_crimson_marker_clear(struct map_session_data *sd) {
 		struct block_list *bl = NULL;
 		if (sd->c_marker.target[i] && (bl = map_id2bl(sd->c_marker.target[i])))
 			status_change_end(bl,SC_C_MARKER,INVALID_TIMER);
+		sd->c_marker.target[i] = 0;
 	}
+	sd->c_marker.count = 0;
 }
 
 /**
@@ -10686,10 +10686,9 @@ void do_final_pc(void) {
 	db_destroy(itemcd_db);
 
 	do_final_pc_groups();
-	return;
 }
 
-int do_init_pc(void) {
+void do_init_pc(void) {
 
 	itemcd_db = idb_alloc(DB_OPT_RELEASE_DATA);
 
@@ -10723,6 +10722,4 @@ int do_init_pc(void) {
 	}
 
 	do_init_pc_groups();
-
-	return 0;
 }

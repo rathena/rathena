@@ -283,8 +283,8 @@ extern struct s_skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
 extern int enchant_eff[5];
 extern int deluge_eff[5];
 
-int do_init_skill(void);
-int do_final_skill(void);
+void do_init_skill(void);
+void do_final_skill(void);
 
 /// Cast type
 enum { CAST_GROUND, CAST_DAMAGE, CAST_NODAMAGE };

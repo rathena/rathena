@@ -84,7 +84,7 @@ int channel_pcunbind(struct map_session_data *sd);
 int channel_pcban(struct map_session_data *sd, char *chname, struct map_session_data *tsd, int flag);
 int channel_pcsetopt(struct map_session_data *sd, char *chname, const char *option, const char *val);
 
-int do_init_channel(void);
+void do_init_channel(void);
 void do_final_channel(void);
 
 #ifdef	__cplusplus

@@ -49,35 +49,36 @@ struct mercenary_data {
 	unsigned devotion_flag : 1;
 };
 
-bool merc_class(int class_);
-struct view_data * merc_get_viewdata(int class_);
+bool mercenary_class(int class_);
+struct view_data * mercenary_get_viewdata(int class_);
 
-int merc_create(struct map_session_data *sd, int class_, unsigned int lifetime);
-int merc_data_received(struct s_mercenary *merc, bool flag);
-int mercenary_save(struct mercenary_data *md);
+bool mercenary_create(struct map_session_data *sd, int class_, unsigned int lifetime);
+bool mercenary_recv_data(struct s_mercenary *merc, bool flag);
+void mercenary_save(struct mercenary_data *md);
 
 void mercenary_heal(struct mercenary_data *md, int hp, int sp);
-int mercenary_dead(struct mercenary_data *md);
+bool mercenary_dead(struct mercenary_data *md);
 
-int merc_delete(struct mercenary_data *md, int reply);
-void merc_contract_stop(struct mercenary_data *md);
+int mercenary_delete(struct mercenary_data *md, int reply);
+void mercenary_contract_stop(struct mercenary_data *md);
 
 int mercenary_get_lifetime(struct mercenary_data *md);
 int mercenary_get_guild(struct mercenary_data *md);
 int mercenary_get_faith(struct mercenary_data *md);
-int mercenary_set_faith(struct mercenary_data *md, int value);
+void mercenary_set_faith(struct mercenary_data *md, int value);
 int mercenary_get_calls(struct mercenary_data *md);
-int mercenary_set_calls(struct mercenary_data *md, int value);
-int mercenary_kills(struct mercenary_data *md);
+void mercenary_set_calls(struct mercenary_data *md, int value);
+void mercenary_kills(struct mercenary_data *md);
 
 int mercenary_checkskill(struct mercenary_data *md, uint16 skill_id);
 
 /**
  * atcommand.c required
  **/
-int read_mercenarydb(void);
-int read_mercenary_skilldb(void);
+void mercenary_readdb(void);
+void mercenary_read_skilldb(void);
 
-int do_init_mercenary(void);
+void do_init_mercenary(void);
+void do_final_mercenary(void);
 
 #endif /* _MERCENARY_H_ */

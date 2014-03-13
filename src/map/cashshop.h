@@ -7,8 +7,8 @@
 #include "../common/cbasetypes.h" // uint16, uint32
 #include "pc.h" // struct map_session_data
 
-int do_init_cashshop( void );
-int do_final_cashshop( void );
+void do_init_cashshop( void );
+void do_final_cashshop( void );
 void cashshop_reloaddb( void );
 bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, uint16* item_list );
 

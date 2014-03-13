@@ -130,8 +130,8 @@ int pet_heal_timer(int tid, unsigned int tick, int id, intptr_t data); // [Valar
 #define pet_stop_walking(pd, type) unit_stop_walking(&(pd)->bl, type)
 #define pet_stop_attack(pd) unit_stop_attack(&(pd)->bl)
 
-int read_petdb(void);
-int do_init_pet(void);
-int do_final_pet(void);
+void read_petdb(void);
+void do_init_pet(void);
+void do_final_pet(void);
 
 #endif /* _PET_H_ */

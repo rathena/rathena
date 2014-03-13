@@ -133,8 +133,8 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 int unit_free(struct block_list *bl, clr_type clrtype);
 int unit_changeviewsize(struct block_list *bl,short size);
 
-int do_init_unit(void);
-int do_final_unit(void);
+void do_init_unit(void);
+void do_final_unit(void);
 
 
 #endif /* _UNIT_H_ */

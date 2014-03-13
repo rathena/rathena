@@ -2556,7 +2556,7 @@ void unit_remove_map_pc(struct map_session_data *sd, clr_type clrtype)
 
 	if(sd->pd)
 		unit_remove_map(&sd->pd->bl, clrtype);
-	if(merc_is_hom_active(sd->hd))
+	if(hom_is_active(sd->hd))
 		unit_remove_map(&sd->hd->bl, clrtype);
 	if(sd->md)
 		unit_remove_map(&sd->md->bl, clrtype);
@@ -2752,9 +2752,9 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 		{
 			struct homun_data *hd = (TBL_HOM*)bl;
 			struct map_session_data *sd = hd->master;
-			merc_hom_hungry_timer_delete(hd);
+			hom_hungry_timer_delete(hd);
 			if( hd->homunculus.intimacy > 0 )
-				merc_save(hd);
+				hom_save(hd);
 			else {
 				intif_homunculus_requestdelete(hd->homunculus.hom_id);
 				if( sd )
@@ -2778,7 +2778,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			if( sd )
 				sd->md = NULL;
 
-			merc_contract_stop(md);
+			mercenary_contract_stop(md);
 			break;
 		}
 		case BL_ELEM: {
@@ -2812,15 +2812,13 @@ int unit_free(struct block_list *bl, clr_type clrtype)
  * Initialization function for unit on map start
  * called in map::do_init
  */
-int do_init_unit(void)
-{
+void do_init_unit(void){
 	add_timer_func_list(unit_attack_timer,  "unit_attack_timer");
 	add_timer_func_list(unit_walktoxy_timer,"unit_walktoxy_timer");
 	add_timer_func_list(unit_walktobl_sub, "unit_walktobl_sub");
 	add_timer_func_list(unit_delay_walktoxy_timer,"unit_delay_walktoxy_timer");
 	add_timer_func_list(unit_delay_walktobl_timer,"unit_delay_walktobl_timer");
 	add_timer_func_list(unit_teleport_timer,"unit_teleport_timer");
-	return 0;
 }
 
 /**
@@ -2828,8 +2826,6 @@ int do_init_unit(void)
  * called in map::do_final
  * @return 0
  */
-int do_final_unit(void)
-{
+void do_final_unit(void){
 	// Nothing to do
-	return 0;
 }

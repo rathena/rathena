@@ -2866,6 +2866,10 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 		if( sc && sc->data[SC_TRUESIGHT] )
 			skillratio += 2*sc->data[SC_TRUESIGHT]->val1;
 #endif
+		if(sc->data[SC_HEAT_BARREL])
+			skillratio += 200;
+		if(sc->data[SC_P_ALTER])
+			skillratio += sc->data[SC_P_ALTER]->val2;
 	}
 
 	switch( skill_id )
@@ -3698,8 +3702,8 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 		case RL_SLUGSHOT:
 			{
 				uint16 w = 50;
-				if (sd->equip_index[EQI_AMMO] > 0) {
-					uint16 idx = sd->equip_index[EQI_AMMO];
+				int16 idx = 0;
+				if (sd && (idx = sd->equip_index[EQI_AMMO]) > 0) {
 					struct item_data *id = NULL;
 					if ((id = itemdb_exists(sd->status.inventory[idx].nameid)))
 						w = id->weight;
@@ -3723,13 +3727,16 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 				skillratio += 400 + (300 * skill_lv);
 			break;
 		case RL_HAMMER_OF_GOD:
-			skillratio += -100 + (2000 + (skill_lv - 1) * 500);
+			//! TODO: Please check the right formula. [Cydh]
+			//kRO Update 2013-07-24. Ratio: 1600+lv*800
+			//kRO Update 2014-02-12. Coins increase the damage
+			skillratio += -100 + (1600 + skill_lv * 800) + ((sd) ? sd->spiritball_old : 10) * 20; //(custom)
 			break;
 		case RL_QD_SHOT:
 			skillratio += -100 + (max(pc_checkskill(sd,GS_CHAINACTION),1) * status_get_dex(src) / 5); //(custom)
 			break;
 		case RL_FIRE_RAIN:
-			skillratio += -100 + 500 + (200 * (skill_lv - 1)) + status_get_dex(src); //(custom)
+			skillratio += -100 + 2000 + status_get_dex(src); //(custom) //kRO Update 2013-07-24. 2,000% + caster's DEX (?) [Cydh]
 			break;
 	}
 	return skillratio;
@@ -3936,14 +3943,6 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, u
 			if(sc->data[SC_FLASHCOMBO]) {
 				ATK_ADD(wd.damage, wd.damage2, sc->data[SC_FLASHCOMBO]->val2);
 				RE_ALLATK_ADD(wd, sc->data[SC_FLASHCOMBO]->val2);
-			}
-			if(sc->data[SC_HEAT_BARREL]) {
-				ATK_ADD(wd.damage, wd.damage2, sc->data[SC_HEAT_BARREL]->val2);
-				RE_ALLATK_ADD(wd, sc->data[SC_HEAT_BARREL]->val2);
-			}
-			if(sc->data[SC_P_ALTER]) {
-				ATK_ADD(wd.damage, wd.damage2, sc->data[SC_P_ALTER]->val2);
-				RE_ALLATK_ADD(wd, sc->data[SC_P_ALTER]->val2);
 			}
 			// Monster Transformation bonus
 			if(wd.flag&BF_LONG && sc->data[SC_MTF_RANGEATK]) {
@@ -6691,7 +6690,6 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 					case SR_RAMPAGEBLASTER:
 					case NC_COLDSLOWER:
 					case NC_SELFDESTRUCTION:
-					case RL_FIRE_RAIN:
 #ifdef RENEWAL
 					case KN_BOWLINGBASH:
 					case KN_SPEARSTAB:

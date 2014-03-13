@@ -1349,7 +1349,7 @@ int intif_parse_ChangeNameOk(int fd)
 		pet_change_name_ack(sd, (char*)RFIFOP(fd,12), RFIFOB(fd,11));
 		break;
 	case 2: //Hom
-		merc_hom_change_name_ack(sd, (char*)RFIFOP(fd,12), RFIFOB(fd,11));
+		hom_change_name_ack(sd, (char*)RFIFOP(fd,12), RFIFOB(fd,11));
 		break;
 	}
 	return 0;
@@ -1367,7 +1367,7 @@ int intif_parse_CreateHomunculus(int fd)
 			ShowError("intif: create homun data: data size error %d != %d\n",sizeof(struct s_homunculus),len);
 		return 0;
 	}
-	merc_hom_recv_data(RFIFOL(fd,4), (struct s_homunculus*)RFIFOP(fd,9), RFIFOB(fd,8)) ;
+	hom_recv_data(RFIFOL(fd,4), (struct s_homunculus*)RFIFOP(fd,9), RFIFOB(fd,8)) ;
 	return 0;
 }
 
@@ -1382,7 +1382,7 @@ int intif_parse_RecvHomunculusData(int fd)
 			ShowError("intif: homun data: data size error %d %d\n",sizeof(struct s_homunculus),len);
 		return 0;
 	}
-	merc_hom_recv_data(RFIFOL(fd,4), (struct s_homunculus*)RFIFOP(fd,9), RFIFOB(fd,8));
+	hom_recv_data(RFIFOL(fd,4), (struct s_homunculus*)RFIFOP(fd,9), RFIFOB(fd,8));
 	return 0;
 }
 
@@ -1985,7 +1985,7 @@ int intif_parse_mercenary_received(int fd)
 		return 0;
 	}
 
-	merc_data_received((struct s_mercenary*)RFIFOP(fd,5), RFIFOB(fd,4));
+	mercenary_recv_data((struct s_mercenary*)RFIFOP(fd,5), RFIFOB(fd,4));
 	return 0;
 }
 

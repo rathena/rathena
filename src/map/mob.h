@@ -278,8 +278,8 @@ void mob_heal(struct mob_data *md,unsigned int heal);
 #define mob_is_samename(md, mid) (strcmp(mob_db((md)->mob_id)->jname, mob_db(mid)->jname) == 0)
 
 void mob_clear_spawninfo();
-int do_init_mob(void);
-int do_final_mob(void);
+void do_init_mob(void);
+void do_final_mob(void);
 
 int mob_timer_delete(int tid, unsigned int tick, int id, intptr_t data);
 int mob_deleteslave(struct mob_data *md);

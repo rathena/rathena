@@ -4240,7 +4240,7 @@ static void *queryThread_main(void *x) {
 /*==========================================
  * Destructor
  *------------------------------------------*/
-int do_final_script() {
+void do_final_script() {
 	int i;
 #ifdef DEBUG_HASH
 	if (battle_config.etc_log)
@@ -4346,13 +4346,11 @@ int do_final_script() {
 
 	aFree(logThreadData.entry);
 #endif
-
-	return 0;
 }
 /*==========================================
  * Initialization
  *------------------------------------------*/
-int do_init_script() {
+void do_init_script(void) {
 	userfunc_db=strdb_alloc(DB_OPT_DUP_KEY,0);
 	scriptlabel_db=strdb_alloc(DB_OPT_DUP_KEY,50);
 	autobonus_db = strdb_alloc(DB_OPT_DUP_KEY,0);
@@ -4381,10 +4379,9 @@ int do_init_script() {
 
 	add_timer_func_list(queryThread_timer, "queryThread_timer");
 #endif
-	return 0;
 }
 
-int script_reload() {
+void script_reload(void) {
 	int i;
 
 #ifdef BETA_THREAD_TEST
@@ -4429,7 +4426,6 @@ int script_reload() {
 		linkdb_final(&sleep_db);
 	}
 	mapreg_reload();
-	return 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -10342,10 +10338,10 @@ BUILDIN_FUNC(homunculus_evolution)
 	if( sd == NULL )
 		return 0;
 
-	if(merc_is_hom_active(sd->hd))
+	if(hom_is_active(sd->hd))
 	{
 		if (sd->hd->homunculus.intimacy > 91000)
-			merc_hom_evolution(sd->hd);
+			hom_evolution(sd->hd);
 		else
 			clif_emotion(&sd->hd->bl, E_SWT);
 	}
@@ -10378,7 +10374,7 @@ BUILDIN_FUNC(homunculus_mutate)
 
 		if ( m_class != -1 && m_id != -1 && m_class&HOM_EVO && m_id&HOM_S && sd->hd->homunculus.level >= 99 && i >= 0 ) {
 			sd->hd->homunculus.vaporize = HOM_ST_REST; // Remove morph state.
-			merc_call_homunculus(sd); // Respawn homunculus.
+			hom_call(sd); // Respawn homunculus.
 			hom_mutate(sd->hd, homun_id);
 			pc_delitem(sd, i, 1, 0, 0, LOG_TYPE_SCRIPT);
 			script_pushint(st, 1);
@@ -10407,7 +10403,7 @@ BUILDIN_FUNC(morphembryo)
 	if( sd == NULL || sd->hd == NULL )
 		return 0;
 
-	if( merc_is_hom_active(sd->hd) ) {
+	if( hom_is_active(sd->hd) ) {
 		m_class = hom_class2mapid(sd->hd->homunculus.class_);
 
 		if ( m_class != -1 && m_class&HOM_EVO && sd->hd->homunculus.level >= 99 ) {
@@ -10419,7 +10415,7 @@ BUILDIN_FUNC(morphembryo)
 				clif_additem(sd, 0, 0, i);
 				clif_emotion(&sd->bl, E_SWT); // Fail to avoid item drop exploit.
 			} else {
-				merc_hom_vaporize(sd, HOM_ST_MORPH);
+				hom_vaporize(sd, HOM_ST_MORPH);
 				script_pushint(st, 1);
 				return 0;
 			}
@@ -10442,8 +10438,8 @@ BUILDIN_FUNC(homunculus_shuffle)
 	if( sd == NULL )
 		return 0;
 
-	if(merc_is_hom_active(sd->hd))
-		merc_hom_shuffle(sd->hd);
+	if(hom_is_active(sd->hd))
+		hom_shuffle(sd->hd);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -16369,11 +16365,11 @@ BUILDIN_FUNC(mercenary_create)
 
 	class_ = script_getnum(st,2);
 
-	if( !merc_class(class_) )
+	if( !mercenary_class(class_) )
 		return 0;
 
 	contract_time = script_getnum(st,3);
-	merc_create(sd, class_, contract_time);
+	mercenary_create(sd, class_, contract_time);
 	return SCRIPT_CMD_SUCCESS;
 }
 

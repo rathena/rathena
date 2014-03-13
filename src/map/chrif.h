@@ -76,8 +76,8 @@ int chrif_bsdata_request(int char_id);
 int chrif_save_bsdata(struct map_session_data *sd);
 int chrif_load_bsdata(int fd);
 
-int do_final_chrif(void);
-int do_init_chrif(void);
+void do_final_chrif(void);
+void do_init_chrif(void);
 
 int chrif_flush_fifo(void);
 

@@ -1766,12 +1766,11 @@ void do_final_itemdb(void) {
 /**
 * Initializing Item DB
 */
-int do_init_itemdb(void) {
+void do_init_itemdb(void) {
 	memset(itemdb_array, 0, sizeof(itemdb_array));
 	itemdb_other = idb_alloc(DB_OPT_BASE);
 	itemdb_combo = idb_alloc(DB_OPT_BASE);
 	create_dummy_data(); //Dummy data item.
 	
 	itemdb_read();
-	return 0;
 }

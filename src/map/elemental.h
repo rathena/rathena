@@ -102,10 +102,10 @@ struct skill_condition elemental_skill_get_requirements(uint16 skill_id, uint16 
 #define elemental_stop_walking(ed, type) unit_stop_walking(&(ed)->bl, type)
 #define elemental_stop_attack(ed) unit_stop_attack(&(ed)->bl)
 
-int read_elemental_skilldb(void);
+void read_elemental_skilldb(void);
 void reload_elementaldb(void);
 void reload_elemental_skilldb(void);
-int do_init_elemental(void);
+void do_init_elemental(void);
 void do_final_elemental(void);
 
 #endif /* _ELEMENTAL_H_ */

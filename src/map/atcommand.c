@@ -3687,16 +3687,16 @@ ACMD_FUNC(reload) {
 	} else if (strstr(command, "mobdb") || strncmp(message, "mobdb", 3) == 0) {
 		mob_reload();
 		read_petdb();
-		merc_reload();
-		read_mercenarydb();
-		read_mercenary_skilldb();
+		hom_reload();
+		mercenary_readdb();
+		mercenary_read_skilldb();
 		reload_elementaldb();
 		clif_displaymessage(fd, msg_txt(sd,98)); // Monster database has been reloaded.
 	} else if (strstr(command, "skilldb") || strncmp(message, "skilldb", 4) == 0) {
 		skill_reload();
-		merc_skill_reload();
+		hom_reload_skill();
 		reload_elemental_skilldb();
-		read_mercenary_skilldb();
+		mercenary_read_skilldb();
 		clif_displaymessage(fd, msg_txt(sd,99)); // Skill database has been reloaded.
 	} else if (strstr(command, "atcommand") || strncmp(message, "atcommand", 4) == 0) {
 		config_t run_test;
@@ -5522,7 +5522,7 @@ ACMD_FUNC(useskill)
 	}
 
 	if (skill_id >= HM_SKILLBASE && skill_id < HM_SKILLBASE+MAX_HOMUNSKILL
-		&& sd->hd && merc_is_hom_active(sd->hd)) // (If used with @useskill, put the homunc as dest)
+		&& sd->hd && hom_is_active(sd->hd)) // (If used with @useskill, put the homunc as dest)
 		bl = &sd->hd->bl;
 	else
 		bl = &sd->bl;
@@ -7132,7 +7132,7 @@ ACMD_FUNC(homlevel)
 		return -1;
 	}
 
-	if ( !merc_is_hom_active(sd->hd) ) {
+	if ( !hom_is_active(sd->hd) ) {
 		clif_displaymessage(fd, msg_txt(sd,1254)); // You do not have a homunculus.
 		return -1;
 	}
@@ -7141,7 +7141,7 @@ ACMD_FUNC(homlevel)
 
 	for (i = 1; i <= level && hd->exp_next; i++){
 		hd->homunculus.exp += hd->exp_next;
-		if( !merc_hom_levelup(hd) ){
+		if( !hom_levelup(hd) ){
 			break;
 		}
 	}
@@ -7158,12 +7158,12 @@ ACMD_FUNC(homevolution)
 {
 	nullpo_retr(-1, sd);
 
-	if ( !merc_is_hom_active(sd->hd) ) {
+	if ( !hom_is_active(sd->hd) ) {
 		clif_displaymessage(fd, msg_txt(sd,1254)); // You do not have a homunculus.
 		return -1;
 	}
 
-	if ( !merc_hom_evolution(sd->hd) ) {
+	if ( !hom_evolution(sd->hd) ) {
 		clif_displaymessage(fd, msg_txt(sd,1255)); // Your homunculus doesn't evolve.
 		return -1;
 	}
@@ -7176,7 +7176,7 @@ ACMD_FUNC(hommutate)
 	int homun_id, m_class = 0, m_id;
 	nullpo_retr(-1, sd);
 
-	if (!merc_is_hom_active(sd->hd)) {
+	if (!hom_is_active(sd->hd)) {
 		clif_displaymessage(fd, msg_txt(sd,1254)); // You do not have a homunculus.
 		return -1;
 	}
@@ -7223,7 +7223,7 @@ ACMD_FUNC(makehomun)
 		return -1;
 	}
 
-	merc_create_homunculus_request(sd,homunid);
+	hom_create_request(sd,homunid);
 	return 0;
 }
 
@@ -7236,7 +7236,7 @@ ACMD_FUNC(homfriendly)
 
 	nullpo_retr(-1, sd);
 
-	if ( !merc_is_hom_active(sd->hd) ) {
+	if ( !hom_is_active(sd->hd) ) {
 		clif_displaymessage(fd, msg_txt(sd,1254)); // You do not have a homunculus.
 		return -1;
 	}
@@ -7263,7 +7263,7 @@ ACMD_FUNC(homhungry)
 
 	nullpo_retr(-1, sd);
 
-	if ( !merc_is_hom_active(sd->hd) ) {
+	if ( !hom_is_active(sd->hd) ) {
 		clif_displaymessage(fd, msg_txt(sd,1254)); // You do not have a homunculus.
 		return -1;
 	}
@@ -7299,7 +7299,7 @@ ACMD_FUNC(homtalk)
 	if (sd->sc.cant.chat)
 		return -1; //no "chatting" while muted.
 
-	if ( !merc_is_hom_active(sd->hd) ) {
+	if ( !hom_is_active(sd->hd) ) {
 		clif_displaymessage(fd, msg_txt(sd,1254)); // You do not have a homunculus.
 		return -1;
 	}
@@ -7324,7 +7324,7 @@ ACMD_FUNC(hominfo)
 	struct status_data *status;
 	nullpo_retr(-1, sd);
 
-	if ( !merc_is_hom_active(sd->hd) ) {
+	if ( !hom_is_active(sd->hd) ) {
 		clif_displaymessage(fd, msg_txt(sd,1254)); // You do not have a homunculus.
 		return -1;
 	}
@@ -7363,7 +7363,7 @@ ACMD_FUNC(homstats)
 
 	nullpo_retr(-1, sd);
 
-	if ( !merc_is_hom_active(sd->hd) ) {
+	if ( !hom_is_active(sd->hd) ) {
 		clif_displaymessage(fd, msg_txt(sd,1254)); // You do not have a homunculus.
 		return -1;
 	}
@@ -7430,7 +7430,7 @@ ACMD_FUNC(homshuffle)
 	if(!sd->hd)
 		return -1; // nothing to do
 
-	if(!merc_hom_shuffle(sd->hd))
+	if(!hom_shuffle(sd->hd))
 		return -1;
 
 	clif_displaymessage(sd->fd, msg_txt(sd,1275)); // Homunculus stats altered.

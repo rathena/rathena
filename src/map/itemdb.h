@@ -484,6 +484,6 @@ DBMap * itemdb_get_combodb();
 void itemdb_reload(void);
 
 void do_final_itemdb(void);
-int do_init_itemdb(void);
+void do_init_itemdb(void);
 
 #endif /* _ITEMDB_H_ */

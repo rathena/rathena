@@ -568,7 +568,7 @@ struct map_session_data {
 
 	struct s_crimson_marker { ///Store target that marked by Crimson Marker [Cydh]
 		int target[MAX_SKILL_CRIMSON_MARKER]; //Target id storage
-		uint8 count; //Count of target for skill like RL_D_TAIL
+		uint8 count; //Count of target for skill used (i.e. RL_D_TAIL).
 	} c_marker;
 	bool flicker; ///Is Flicker Skill skill as player's last action? [Cydh]
 
@@ -1026,8 +1026,8 @@ extern struct fame_list smith_fame_list[MAX_FAME_LIST];
 extern struct fame_list chemist_fame_list[MAX_FAME_LIST];
 extern struct fame_list taekwon_fame_list[MAX_FAME_LIST];
 
-int pc_readdb(void);
-int do_init_pc(void);
+void pc_readdb(void);
+void do_init_pc(void);
 void do_final_pc(void);
 
 enum {CHKADDITEM_EXIST,CHKADDITEM_NEW,CHKADDITEM_OVERAMOUNT};
