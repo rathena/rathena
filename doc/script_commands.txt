@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20140301
+//= 20140313
 //===== Description: =========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -977,7 +977,10 @@ OnWhisperGlobal:
 This special label triggers when a player whispers the NPC by its name
 and would execute all the scripts under this event label. This is similar to the
 'donpcevent' and 'goto' command but can only be trigged manually by whispering.
+It can accept up to ten parameters, which will be stored into separate temporary
+character string variables.
 
+See the sample in 'doc/whisper_sys.txt'.
 
 Only the special labels which are not associated with any script command are 
 listed here. There are other kinds of labels which may be triggered in a similar 
