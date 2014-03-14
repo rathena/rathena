@@ -446,7 +446,7 @@ inline short bcc_multi_damage_rate(short cardfix, short effect_rate, short effec
  *------------------------------------------*/
 int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_list *target, int nk, int s_ele, int s_ele_, int64 damage, int left, int flag){
 	struct map_session_data *sd, *tsd;
-	short cardfix = 100, t_class, s_class, s_race2, t_race2;
+	short cardfix = 1000, t_class, s_class, s_race2, t_race2;
 	struct status_data *sstatus, *tstatus;
 	int64 original_damage;
 	int i;
