@@ -2399,12 +2399,20 @@ static struct Damage battle_calc_element_damage(struct Damage wd, struct block_l
 		{
 			wd.damage=battle_attr_fix(src, target, wd.damage, right_element, tstatus->def_ele, tstatus->ele_lv);
 
-			if( skill_id == MC_CARTREVOLUTION ) //Cart Revolution apply the element fix once more with neutral element
-				wd.damage = battle_attr_fix(src, target, wd.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
-
-			if( skill_id == GS_GROUNDDRIFT ) //Additional 50*lv Neutral damage.
-				wd.damage += battle_attr_fix(src, target, 50*skill_lv, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
-
+			switch( skill_id ) {
+				case MC_CARTREVOLUTION: //Cart Revolution apply the element fix once more with neutral element
+					wd.damage = battle_attr_fix(src, target, wd.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
+					break;
+				case GS_GROUNDDRIFT:
+					//Additional 50 * lv neutral damage
+					wd.damage += battle_attr_fix(src, target, 50 * skill_lv, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
+					break;
+				case GN_CARTCANNON:
+				case KO_HAPPOKUNAI:
+					//Forced to ammo's element
+					wd.damage = battle_attr_fix(src, target, wd.damage, (sd && sd->bonus.arrow_ele) ? sd->bonus.arrow_ele : ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
+					break;
+			}
 		}
 		if( is_attack_left_handed(src, skill_id) && wd.damage2 > 0 )
 			wd.damage2 = battle_attr_fix(src, target, wd.damage2, left_element ,tstatus->def_ele, tstatus->ele_lv);
@@ -2611,7 +2619,7 @@ struct Damage battle_calc_skill_base_damage(struct Damage wd, struct block_list 
 			}
 #else
 		case NJ_ISSEN:
-			wd.damage = 40 * sstatus->str + (8 / 100) * skill_lv * sstatus->hp;
+			wd.damage = (40 * sstatus->str) + (8 / 100 * skill_lv * sstatus->hp);
 			wd.damage2 = 0;
 			break;
 		case LK_SPIRALPIERCE:
@@ -3010,7 +3018,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			skillratio+= 50 * skill_lv;
 			break;
 		case MO_INVESTIGATE:
-			skillratio += 75*skill_lv;
+			skillratio += 100 + 150 * skill_lv;
 			break;
 		case MO_EXTREMITYFIST:
 			skillratio += 100*(7 + sstatus->sp/10);
@@ -4792,23 +4800,54 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		}
 	}
 
+#ifdef RENEWAL
 	// forced to neutral skills [helvetica]
 	// skills forced to neutral gain benefits from weapon element
 	// but final damage is considered "neutral" and resistances are applied again
 	switch (skill_id) {
 		case GN_CARTCANNON: // Cart Cannon gets forced to element of cannon ball (neutral or holy/shadow/ghost)
-			if (sd)
-				wd.damage = battle_attr_fix(src, target, wd.damage, sd->bonus.arrow_ele ? sd->bonus.arrow_ele : ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
-			else
-				wd.damage = battle_attr_fix(src, target, wd.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
+			wd.damage = battle_attr_fix(src, target, wd.damage, (sd && sd->bonus.arrow_ele) ? sd->bonus.arrow_ele : ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 			break;
 		case MC_CARTREVOLUTION: // Cart Revolution gets forced to neutral element
-			wd.damage = battle_attr_fix(src,target,wd.damage,ELE_NEUTRAL,tstatus->def_ele, tstatus->ele_lv);
+		case MO_INVESTIGATE:
+			wd.damage = battle_attr_fix(src, target, wd.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
+			break;
+		case CR_SHIELDBOOMERANG:
+		case LK_SPIRALPIERCE:
+		case ML_SPIRALPIERCE:
+		case PA_SHIELDCHAIN:
+		case PA_SACRIFICE:
+		case RK_DRAGONBREATH:
+		case RK_DRAGONBREATH_WATER:
+		case NC_SELFDESTRUCTION:
+		case LG_SHIELDPRESS:
+		case LG_EARTHDRIVE:
+		case KO_HAPPOKUNAI: {
+				int64 tmp = wd.damage;
+
+				if (sd) {
+					if (skill_id == PA_SHIELDCHAIN) {
+						wd.damage = battle_attr_fix(src, target, wd.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
+						if (wd.damage > 0) {
+							wd.damage = battle_attr_fix(src, target, tmp, right_element, tstatus->def_ele, tstatus->ele_lv);
+							if (!wd.damage)
+								wd.damage = battle_attr_fix(src, target, tmp, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
+						}
+					} else if (skill_id == KO_HAPPOKUNAI) {
+						wd.damage = battle_attr_fix(src, target, wd.damage, (sd->bonus.arrow_ele) ? sd->bonus.arrow_ele : ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
+						if (wd.damage > 0) {
+							wd.damage = battle_attr_fix(src, target, tmp, right_element, tstatus->def_ele, tstatus->ele_lv);
+							if (!wd.damage)
+								wd.damage = battle_attr_fix(src, target, tmp, (sd->bonus.arrow_ele) ? sd->bonus.arrow_ele : ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
+						}
+					} else
+						wd.damage = battle_attr_fix(src, target, wd.damage, right_element, tstatus->def_ele, tstatus->ele_lv);
+				}
+			}
 			break;
 	}
 
 	// perform multihit calculations
-#ifdef RENEWAL
 	damage_div_fix_renewal(wd, wd.div_);
 #endif
 	damage_div_fix(wd.damage, wd.div_);

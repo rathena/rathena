@@ -4387,6 +4387,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 			// recursive invocation of skill_castend_damage_id() with flag|1
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), ( skill_id == WM_REVERBERATION_MELEE || skill_id == WM_REVERBERATION_MAGIC )?BL_CHAR:splash_target(src), src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
+			if( skill_id == AS_SPLASHER ) {
+				map_freeblock_unlock(); // Don't consume a second gemstone.
+				return 0;
+			}
 		}
 		break;
 
