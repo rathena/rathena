@@ -4223,7 +4223,7 @@ cmd_fild01,55,160,0	script	Heap of Earth	844,{
 		mes "Elegance? That's expected:";
 		mes "I didn't really design it for the common user in mind. Well,";
 		mes "why don't you try it again?";
-		erasequest 3106;
+		changequest 3106,3105;
 		set diamond_edq,10;
 		close;
 	}
@@ -4241,8 +4241,7 @@ cmd_fild01,55,160,0	script	Heap of Earth	844,{
 		mes "is insert the damaged";
 		mes "document and press the";
 		mes "switch. Simple, yes?";
-		erasequest 3106;
-		changequest 3105,3108;
+		changequest 3107,3108;
 		set diamond_edq,13;
 		next;
 		mes "[Dorian]";
@@ -4358,7 +4357,7 @@ OnTouch:
 					mes "The joint is broken...";
 					mes "You should go back";
 					mes "to Dorian for help.^000000";
-					setquest 3106;
+					changequest 3105,3106;
 					set diamond_edq,11;
 					close;
 				}
@@ -4396,7 +4395,7 @@ OnTouch:
 					mes "^3355FFYou should tell Dorian";
 					mes "first so that you can";
 					mes "use this machine.^000000";
-					setquest 3107;
+					changequest 3105,3107;
 					set diamond_edq,12;
 					close;
 				}
@@ -4420,7 +4419,7 @@ OnTouch:
 							mes "before coming to a sudden";
 							mes "stop. That was the wrong";
 							mes "switch. You'd better ask Dorian...";
-							setquest 3106;
+							changequest 3105,3106;
 							set diamond_edq,11;
 							close;
 						case 1:
@@ -4446,7 +4445,7 @@ OnTouch:
 								mes "before coming to a sudden";
 								mes "stop. That was the wrong";
 								mes "switch. You'd better ask Dorian...";
-								setquest 3106;
+								changequest 3105,3106;
 								set diamond_edq,11;
 								close;
 							}
@@ -4472,7 +4471,7 @@ OnTouch:
 							mes "before coming to a sudden";
 							mes "stop. That was the wrong";
 							mes "switch. You'd better ask Dorian...";
-							setquest 3106;
+							changequest 3105,3106;
 							set diamond_edq,11;
 							close;
 						case 2:
@@ -4498,7 +4497,7 @@ OnTouch:
 								mes "before coming to a sudden";
 								mes "stop. That was the wrong";
 								mes "switch. You'd better ask Dorian...";
-								setquest 3106;
+								changequest 3105,3106;
 								set diamond_edq,11;
 								close;
 							}
@@ -4523,7 +4522,7 @@ OnTouch:
 							mes "before coming to a sudden";
 							mes "stop. That was the wrong";
 							mes "switch. You'd better ask Dorian...";
-							setquest 3106;
+							changequest 3105,3106;
 							set diamond_edq,11;
 							close;
 						case 3:
@@ -4549,7 +4548,7 @@ OnTouch:
 								mes "before coming to a sudden";
 								mes "stop. That was the wrong";
 								mes "switch. You'd better ask Dorian...";
-								setquest 3106;
+								changequest 3105,3106;
 								set diamond_edq,11;
 								close;
 							}
@@ -4575,7 +4574,7 @@ OnTouch:
 							mes "before coming to a sudden";
 							mes "stop. That was the wrong";
 							mes "switch. You'd better ask Dorian...";
-							setquest 3106;
+							changequest 3105,3106;
 							set diamond_edq,11;
 							close;
 						case 4:
@@ -4601,7 +4600,7 @@ OnTouch:
 								mes "before coming to a sudden";
 								mes "stop. That was the wrong";
 								mes "switch. You'd better ask Dorian...";
-								setquest 3106;
+								changequest 3105,3106;
 								set diamond_edq,11;
 								close;
 							}
