@@ -188,6 +188,12 @@ struct s_skill_unit_layout {
 	int dy[MAX_SKILL_UNIT_COUNT];
 };
 
+struct s_skill_nounit_layout {
+	int count;
+	int dx[MAX_SKILL_UNIT_COUNT];
+	int dy[MAX_SKILL_UNIT_COUNT];
+};
+
 #define MAX_SKILLTIMERSKILL 15
 struct skill_timerskill {
 	int timer;

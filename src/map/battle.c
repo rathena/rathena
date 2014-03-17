@@ -402,23 +402,6 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 			break;
 		}
 	} //end tsc check
-	if (src && src->type == BL_PC) {
-		TBL_PC *sd = BL_CAST(BL_PC,src);
-		int s;
-
-		ARR_FIND(1, 6, s, sd->talisman[s] > 0);
-
-		if( s < 5 && atk_elem == s )
-			ratio += sd->talisman[s] * 2; // +2% custom value
-	}
-	if( target && target->type == BL_PC ) {
-		TBL_PC *tsd = BL_CAST(BL_PC, target);
-		int t;
-
-		ARR_FIND(1, 6, t, tsd->talisman[t] > 0);
-		if( t < 5 && atk_elem == t )
-			DAMAGE_SUBRATE(tsd->talisman[t] * 3) // -3% custom value
-	}
 	return (int64)damage*ratio/100;
 }
 
@@ -3758,17 +3741,7 @@ static int battle_calc_skill_constant_addition(struct Damage wd, struct block_li
 	struct status_change *tsc = status_get_sc(target);
 	struct status_data *sstatus = status_get_status_data(src);
 	struct status_data *tstatus = status_get_status_data(target);
-	int atk = 0, chorusbonus = 0;
-
-	// Minstrel/Wanderer number check for chorus skills.
-	// Bonus remains 0 unless 3 or more Minstrels/Wanderers are in the party.
-	if( sd && sd->status.party_id ) {
-		chorusbonus = party_foreachsamemap(party_sub_count_class, sd, MAPID_THIRDMASK, MAPID_MINSTRELWANDERER);
-		if( chorusbonus > 7 )
-			chorusbonus = 5; // Maximum effect possible from 7 or more Minstrels/Wanderers
-		else if( chorusbonus > 2 )
-			chorusbonus = chorusbonus - 2; // Effect bonus from additional Minstrels/Wanderers if not above the max possible.
-	}
+	int atk = 0;
 
 	//Constant/misc additions from skills
 	switch (skill_id) {
@@ -3805,8 +3778,6 @@ static int battle_calc_skill_constant_addition(struct Damage wd, struct block_li
 		case RA_WUGBITE:
 			if(sd)
 				atk = (30*pc_checkskill(sd, RA_TOOTHOFWUG));
-			if( sc && sc->data[SC_DANCEWITHWUG] )
-				atk += skill_lv * 10 * chorusbonus; // Dance With Wug Bonus. ATK = [(Skill Level x 10) x Number of Maestro/Wanderer in party(Maximum of 7)] %
 			break;
 		case SR_GATEOFHELL:
 			atk = (status_get_max_hp(src) - status_get_hp(src));
@@ -3866,9 +3837,45 @@ static int battle_calc_skill_constant_addition(struct Damage wd, struct block_li
  */
 struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, uint16 skill_id)
 {
+	struct map_session_data *sd = BL_CAST(BL_PC, src);
 	struct status_change *sc = status_get_sc(src);
+	int chorusbonus = 0, type;
+
+	if( sd ) {
+		// Minstrel/Wanderer number check for chorus skills.
+		// Bonus remains 0 unless 3 or more Minstrels/Wanderers are in the party.
+		if( sd->status.party_id ) {
+			chorusbonus = party_foreachsamemap(party_sub_count_class, sd, MAPID_THIRDMASK, MAPID_MINSTRELWANDERER);
+			if( chorusbonus > 7 )
+				chorusbonus = 5; // Maximum effect possible from 7 or more Minstrels/Wanderers
+			else if( chorusbonus > 2 )
+				chorusbonus = chorusbonus - 2; // Effect bonus from additional Minstrels/Wanderers if not above the max possible.
+		}
+
+		// Kagerou/Oboro Earth Charm effect +15% wATK
+		ARR_FIND(1, 6, type, sd->talisman[type] > 0);
+		if( type == 2 ) {
+			ATK_ADDRATE(wd.damage, wd.damage2, 15 * sd->talisman[type]);
+#ifdef RENEWAL
+			ATK_ADDRATE(wd.weaponAtk, wd.weaponAtk2, 15 * sd->talisman[type]);
+#endif
+		}
+	}
+
 	//The following are applied on top of current damage and are stackable.
 		if ( sc ) {
+			if( sc->data[SC_DANCEWITHWUG] ) {
+				ATK_ADDRATE(wd.damage, wd.damage2, sc->data[SC_DANCEWITHWUG]->val1 * 2 * chorusbonus);
+#ifdef RENEWAL
+				ATK_ADDRATE(wd.equipAtk, wd.equipAtk2, sc->data[SC_DANCEWITHWUG]->val1 * 2 * chorusbonus);
+#endif
+				if( skill_id == RA_WUGSTRIKE || skill_id == RA_WUGBITE || skill_id == RA_WUGDASH ) {
+					ATK_ADDRATE(wd.damage, wd.damage2, sc->data[SC_DANCEWITHWUG]->val1 * 10 * chorusbonus);
+#ifdef RENEWAL
+					RE_ALLATK_ADDRATE(wd, sc->data[SC_DANCEWITHWUG]->val1 * 10 * chorusbonus);
+#endif
+				}
+			}
 #ifndef RENEWAL
 			if( sc->data[SC_TRUESIGHT] )
 				ATK_ADDRATE(wd.damage, wd.damage2, 2*sc->data[SC_TRUESIGHT]->val1);
@@ -3980,10 +3987,19 @@ struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list 
 #endif
 	if( sd ) {
 		int i = sd->ignore_def_by_race[tstatus->race] + sd->ignore_def_by_race[RC_ALL];
+		int type;
 		if( i ) {
 			if( i > 100 ) i = 100;
 			def1 -= def1 * i / 100;
 			def2 -= def2 * i / 100;
+		}
+
+		//Kagerou/Oboro Earth Charm effect +5% eDEF
+		ARR_FIND(1, 6, type, sd->talisman[type] > 0);
+		if( type == 2 ) {
+			short i = 5 * sd->talisman[type];
+
+			def1 = (def1 * (100 + i)) / 100;
 		}
 	}
 
@@ -7399,6 +7415,7 @@ static const struct _battle_data {
 	{ "feature.warp_suggestions",           &battle_config.warp_suggestions_enabled,        0,      0,      1,              },
 	{ "taekwon_mission_mobname",            &battle_config.taekwon_mission_mobname,         0,      0,      2,              },
 	{ "teleport_on_portal",                 &battle_config.teleport_on_portal,              0,      0,      1,              },
+	{ "cart_revo_knockback",                &battle_config.cart_revo_knockback,             1,      0,      1,              },
 };
 #ifndef STATS_OPT_OUT
 /**

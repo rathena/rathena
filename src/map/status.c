@@ -3885,7 +3885,6 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 		|| sc->data[SC_TRICKDEAD]
 		|| sc->data[SC_BLEEDING]
 		|| sc->data[SC_MAGICMUSHROOM]
-		|| sc->data[SC_RAISINGDRAGON]
 		|| sc->data[SC_SATURDAYNIGHTFEVER]
 	)	// No regen
 		regen->flag = 0;
@@ -3918,11 +3917,6 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 		} else
 			regen->flag&=~sce->val4; // Remove regen as specified by val4
 	}
-	if (sc->data[SC_EPICLESIS]) {
-		regen->rate.hp += sc->data[SC_EPICLESIS]->val3;
-		regen->rate.sp += sc->data[SC_EPICLESIS]->val4;
-	}
-
 	if(sc->data[SC_GT_REVITALIZE]) {
 		regen->hp = cap_value(regen->hp*sc->data[SC_GT_REVITALIZE]->val3/100, 1, SHRT_MAX);
 		regen->state.walk= 1;
@@ -6942,7 +6936,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 	/// Example: 25% -> sc_def2=2000 -> 5%; 2500ms -> tick_def2=2000 -> 500ms
 	int sc_def2 = 0, tick_def2 = 0;
 
-	struct status_data *status, *status_src;
+	struct status_data *status, *status_src, *b_status;
 	struct status_change *sc;
 	struct map_session_data *sd;
 
@@ -6987,6 +6981,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 	sd = BL_CAST(BL_PC,bl);
 	status = status_get_status_data(bl);
 	status_src = status_get_status_data(src);
+	b_status = status_get_base_status(bl);
 	sc = status_get_sc(bl);
 	if( sc && !sc->count )
 		sc = NULL;
@@ -7058,9 +7053,9 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			sc_def = status->agi*50;
 			break;
 		case SC_DEEPSLEEP:
-			sc_def = status->int_*50;
+			sc_def = b_status->int_*50;
 			tick_def = 0; // Linear reduction instead
-			tick_def2 = (status->int_ + status_get_lv(bl))*50; // kRO balance update lists this formula
+			tick_def2 = (b_status->int_ + status_get_lv(bl))*50; // kRO balance update lists this formula
 			break;
 		case SC_MAGICMIRROR:
 		case SC_ARMORCHANGE:
@@ -7102,10 +7097,10 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 				tick_def2 = status->agi*100;
 			break;
 		case SC_CRYSTALIZE:
-			tick_def2 = status->vit*100;
+			tick_def2 = b_status->vit*100;
 			break;
 		case SC_VACUUM_EXTREME:
-			tick_def2 = status->str*50;
+			tick_def2 = b_status->str*50;
 			break;
 		case SC_MANDRAGORA:
 			sc_def = (status->vit + status->luk)*20;
@@ -9252,7 +9247,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			}
 			break;
 		case SC_PRESTIGE:
-			val2 = (status->int_ + status->luk) * (val1 / 20) * (status_get_lv(bl) / 200) + val1;	// Chance to evade magic damage.
+			val2 = (status->int_ + status->luk) * val1 / 20 * status_get_lv(bl) / 200 + val1;	// Chance to evade magic damage.
 			val1 *= 15; // Defence added
 			if( sd )
 				val1 += (10 * pc_checkskill(sd,CR_DEFENDER)) * (status_get_lv(bl) / 100);
@@ -9551,24 +9546,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_EPICLESIS:
 			val2 = 5 * val1; //HP rate bonus
-			switch (val1) { //! FIXME, looks so weird!
-				//val3: HP regen rate bonus
-				//val4: SP regen rate bonus
-				case 1:
-				case 2:
-					val3 = 3; //HP regen rate bonus
-					val4 = 2; //SP regen rate bonus
-					break;
-				case 3:
-				case 4:
-					val3 = 4; //HP regen rate bonus
-					val4 = 3; //SP regen rate bonus
-					break;
-				case 5:
-					val3 = 5; //HP regen rate bonus
-					val4 = 4; //SP regen rate bonus
-					break;
-			}
 			break;
 
 		/* Rebellion */
@@ -10607,8 +10584,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			break;
 		case SC_RAISINGDRAGON:
 			if( sd && sce->val2 && !pc_isdead(sd) ) {
-				int i;
-				i = min(sd->spiritball,5);
+				int i = min(sd->spiritball,5);
 				pc_delspiritball(sd, sd->spiritball, 0);
 				status_change_end(bl, SC_EXPLOSIONSPIRITS, INVALID_TIMER);
 				while( i > 0 ) {
