@@ -4900,6 +4900,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			{ // SpellBook
 				uint16 skill_id, skill_lv, point, s = 0;
 				int spell[SC_MAXSPELLBOOK-SC_SPELLBOOK1 + 1];
+				int cooldown;
 
 				for(i = SC_MAXSPELLBOOK; i >= SC_SPELLBOOK1; i--) // List all available spell to be released
 					if( sc->data[i] ) spell[s++] = i;
@@ -4944,6 +4945,16 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 				sd->ud.canact_tick = tick + skill_delayfix(src, skill_id, skill_lv);
 				clif_status_change(src, SI_ACTIONDELAY, 1, skill_delayfix(src, skill_id, skill_lv), 0, 0, 0);
+
+				cooldown = skill_get_cooldown(skill_id, skill_lv);
+				for (i = 0; i < ARRAYLENGTH(sd->skillcooldown) && sd->skillcooldown[i].id; i++) {
+					if( sd->skillcooldown[i].id == skill_id ) {
+						cooldown += sd->skillcooldown[i].val;
+						break;
+					}
+				}
+				if( cooldown )
+					skill_blockpc_start(sd, skill_id, cooldown);
 			}
 			else
 			{ // Summon Balls
