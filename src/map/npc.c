@@ -1218,25 +1218,10 @@ int npc_click(struct map_session_data* sd, struct npc_data* nd)
 	
 	switch(nd->subtype) {
 		case SHOP:
+		case ITEMSHOP:
+		case POINTSHOP:
 			clif_npcbuysell(sd,nd->bl.id);
 			break;
-		case ITEMSHOP:
-			{
-				char output[CHAT_SIZE_MAX];
-				struct item_data *id = itemdb_exists(nd->u.shop.itemshop_nameid);
-				memset(output,'\0',sizeof(output));
-				sprintf(output,msg_txt(sd,714),id->jname,id->nameid); // Item Shop List: %s (%d)
-				clif_broadcast(&sd->bl,output,strlen(output) + 1,0x10,SELF);
-				clif_npcbuysell(sd,nd->bl.id);
-			} break;
-		case POINTSHOP:
-			{
-				char output[CHAT_SIZE_MAX];
-				memset(output,'\0',sizeof(output));
-				sprintf(output,msg_txt(sd,715),nd->u.shop.pointshop_str); // Point Shop List: '%s'
-				clif_broadcast(&sd->bl,output,strlen(output) + 1,0x10,SELF);
-				clif_npcbuysell(sd,nd->bl.id);
-			} break;
 		case CASHSHOP:
 			clif_cashshop_show(sd,nd);
 			break;
@@ -1311,9 +1296,27 @@ int npc_buysellsel(struct map_session_data* sd, int id, int type)
 	}
 	if (nd->sc.option & OPTION_INVISIBLE) // can't buy if npc is not visible (hack?)
 		return 1;
-	if( nd->class_ < 0 && !sd->state.callshop )
-	{// not called through a script and is not a visible NPC so an invalid call
+	if( nd->class_ < 0 && !sd->state.callshop ) {// not called through a script and is not a visible NPC so an invalid call
 		return 1;
+	}
+
+	if (nd->subtype == ITEMSHOP) {
+		char output[CHAT_SIZE_MAX];
+		struct item_data *id = itemdb_exists(nd->u.shop.itemshop_nameid);
+
+		memset(output,'\0',sizeof(output));
+
+		if (id) {
+			sprintf(output,msg_txt(sd,714),id->jname,id->nameid); // Item Shop List: %s (%d)
+			clif_broadcast(&sd->bl,output,strlen(output) + 1,0x10,SELF);
+		}
+	} else if (nd->subtype == POINTSHOP) {
+		char output[CHAT_SIZE_MAX];
+
+		memset(output,'\0',sizeof(output));
+
+		sprintf(output,msg_txt(sd,715),nd->u.shop.pointshop_str); // Point Shop List: '%s'
+		clif_broadcast(&sd->bl,output,strlen(output) + 1,0x10,SELF);
 	}
 
 	// reset the callshop state for future calls
