@@ -250,28 +250,6 @@ int skill_tree_get_max(uint16 skill_id, int b_class)
 	else
 		return skill_get_max(skill_id);
 }
-
-int skill_get_cooldown_(struct map_session_data *sd, int id, int lv) {
-	int i, cooldown;
-	int idx = skill_get_index (id);
-	if (!idx) return 0;
-
-	cooldown = 0;
-	if (skill_db[idx].cooldown[lv - 1])
-		cooldown = skill_db[idx].cooldown[lv - 1];
-
-	for (i = 0; i < ARRAYLENGTH(sd->skillcooldown) && sd->skillcooldown[i].id; i++) {
-		if (sd->skillcooldown[i].id == id) {
-			cooldown += sd->skillcooldown[i].val;
-			if (cooldown < 0)
-				cooldown = 0;
-			break;
-		}
-	}
-
-	return cooldown;
-}
-
 int skill_frostjoke_scream(struct block_list *bl,va_list ap);
 int skill_check_target_c_marker(struct block_list *bl,va_list ap);
 int skill_attack_area(struct block_list *bl,va_list ap);
@@ -3634,18 +3612,17 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 				 * Warlock
 				 **/
 				case WL_CHAINLIGHTNING_ATK: {
-						struct block_list *nbl = NULL; // Next Target of Chain
 						skill_attack(BF_MAGIC,src,src,target,skl->skill_id,skl->skill_lv,tick,skl->flag); // Hit a Lightning on the current Target
 						skill_toggle_magicpower(src, skl->skill_id); // only the first hit will be amplify
 						if( skl->type < (4 + skl->skill_lv - 1) && skl->x < 3  )
 						{ // Remaining Chains Hit
+							struct block_list *nbl = NULL; // Next Target of Chain
 							nbl = battle_getenemyarea(src, target->x, target->y, (skl->type>2)?2:3, // After 2 bounces, it will bounce to other targets in 7x7 range.
 									BL_CHAR|BL_SKILL, target->id); // Search for a new Target around current one...
 							if( nbl == NULL )
 								skl->x++;
 							else
-								skl->x = 0;
-							
+								skl->x = 0;							
 							skill_addtimerskill(src, tick + 651, (nbl?nbl:target)->id, skl->x, 0, WL_CHAINLIGHTNING_ATK, skl->skill_lv, skl->type + 1, skl->flag);
 						}
 					}
@@ -4946,13 +4923,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				sd->ud.canact_tick = tick + skill_delayfix(src, skill_id, skill_lv);
 				clif_status_change(src, SI_ACTIONDELAY, 1, skill_delayfix(src, skill_id, skill_lv), 0, 0, 0);
 
-				cooldown = skill_get_cooldown(skill_id, skill_lv);
-				for (i = 0; i < ARRAYLENGTH(sd->skillcooldown) && sd->skillcooldown[i].id; i++) {
-					if( sd->skillcooldown[i].id == skill_id ) {
-						cooldown += sd->skillcooldown[i].val;
-						break;
-					}
-				}
+				cooldown = pc_get_skillcooldown(sd,skill_id, skill_lv);
 				if( cooldown )
 					skill_blockpc_start(sd, skill_id, cooldown);
 			}
@@ -10345,7 +10316,7 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 		if( !sd || sd->skillitem != ud->skill_id || skill_get_delay(ud->skill_id,ud->skill_lv) )
 			ud->canact_tick = tick + skill_delayfix(src, ud->skill_id, ud->skill_lv); //Tests show wings don't overwrite the delay but skill scrolls do. [Inkfish]
 		if (sd) { //Cooldown application
-			int cooldown = skill_get_cooldown_(sd,ud->skill_id, ud->skill_lv); // Increases/Decreases cooldown of a skill by item/card bonuses.
+			int cooldown = pc_get_skillcooldown(sd,ud->skill_id, ud->skill_lv); // Increases/Decreases cooldown of a skill by item/card bonuses.
 			if(cooldown) skill_blockpc_start(sd, ud->skill_id, cooldown);
 		}
 		if( battle_config.display_status_timers && sd )
@@ -10571,7 +10542,7 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr_t data)
 		if( !sd || sd->skillitem != ud->skill_id || skill_get_delay(ud->skill_id,ud->skill_lv) )
 			ud->canact_tick = tick + skill_delayfix(src, ud->skill_id, ud->skill_lv);
 		if (sd) { //Cooldown application
-			int cooldown = skill_get_cooldown_(sd,ud->skill_id, ud->skill_lv);
+			int cooldown = pc_get_skillcooldown(sd,ud->skill_id, ud->skill_lv);
 			if(cooldown) skill_blockpc_start(sd, ud->skill_id, cooldown);
 		}
 		if( battle_config.display_status_timers && sd )
@@ -15590,7 +15561,7 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 
 		if(item->nameid > 0 && ditem->type == IT_WEAPON)
 		{
-			int i = 0, ep = 0, per;
+			int i = 0, per;
 			int material[5] = { 0, ITEMID_PHRACON, ITEMID_EMVERETARCON, ITEMID_ORIDECON, ITEMID_ORIDECON, };
 			if( ditem->flag.no_refine ) { 	// if the item isn't refinable
 				clif_skill_fail(sd,sd->menuskill_id,USESKILL_FAIL_LEVEL,0);
@@ -15612,6 +15583,7 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 
 			pc_delitem(sd, i, 1, 0, 0, LOG_TYPE_OTHER);
 			if (per > rnd() % 100) {
+				int ep=0;
 				log_pick_pc(sd, LOG_TYPE_OTHER, -1, item);
 				item->refine++;
 				log_pick_pc(sd, LOG_TYPE_OTHER,  1, item);

@@ -150,7 +150,6 @@ bool mapif_homunculus_save(struct s_homunculus* hd)
 // Load an homunculus
 bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd)
 {
-	int i;
 	char* data;
 	size_t len;
 
@@ -198,7 +197,7 @@ bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd)
 	Sql_GetData(sql_handle, 21, &data, NULL); hd->vaporize = atoi(data);
 	Sql_FreeResult(sql_handle);
 
-	hd->intimacy = cap_value(hd->intimacy, 0, 100000);
+	hd->intimacy = min(hd->intimacy,100000);
 	hd->hunger = cap_value(hd->hunger, 0, 100);
 
 	// Load Homunculus Skill
@@ -209,6 +208,7 @@ bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd)
 	}
 	while( SQL_SUCCESS == Sql_NextRow(sql_handle) )
 	{
+		int i;
 		// id
 		Sql_GetData(sql_handle, 0, &data, NULL);
 		i = atoi(data);

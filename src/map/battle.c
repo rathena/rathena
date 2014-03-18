@@ -3847,9 +3847,10 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, u
 {
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
 	struct status_change *sc = status_get_sc(src);
-	int chorusbonus = 0, type;
+	int chorusbonus = 0;
 
 	if( sd ) {
+		int type;
 		// Minstrel/Wanderer number check for chorus skills.
 		// Bonus remains 0 unless 3 or more Minstrels/Wanderers are in the party.
 		if( sd->status.party_id ) {

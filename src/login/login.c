@@ -1842,12 +1842,11 @@ int login_config_read(const char* cfgName)
 
 			if (sscanf(w2, "%3d, %32s", &group, md5) == 2) {
 				struct client_hash_node *nnode;
-				int i;
 				CREATE(nnode, struct client_hash_node, 1);
-
 				if (strcmpi(md5, "disabled") == 0) {
 					nnode->hash[0] = '\0';
 				} else {
+					int i;
 					for (i = 0; i < 32; i += 2) {
 						char buf[3];
 						unsigned int byte;
@@ -1859,10 +1858,8 @@ int login_config_read(const char* cfgName)
 						nnode->hash[i / 2] = (uint8)(byte & 0xFF);
 					}
 				}
-
 				nnode->group_id = group;
 				nnode->next = login_config.client_hash_nodes;
-
 				login_config.client_hash_nodes = nnode;
 			}
 		} else if(strcmpi(w1, "chars_per_account") == 0) { //maxchars per account [Sirius]

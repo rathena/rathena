@@ -9151,7 +9151,7 @@ BUILDIN_FUNC(monster)
 
 	for(i=0; i<amount; i++){ //not optimised
 		int mobid = mob_once_spawn(sd, m, x, y, str, class_, 1, event, size, ai);
-		mapreg_setreg(reference_uid(add_str("$@mobid"), i),mobid);
+		if(mobid) mapreg_setreg(reference_uid(add_str("$@mobid"), i),mobid);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }

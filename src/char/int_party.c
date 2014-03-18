@@ -63,7 +63,6 @@ static int int_party_check_lv(struct party_data *p) {
 static void int_party_calc_state(struct party_data *p)
 {
 	int i;
-	unsigned int lv;
 	p->min_lv = UINT_MAX;
 	p->max_lv = 0;
 	p->party.count =
@@ -93,7 +92,7 @@ static void int_party_calc_state(struct party_data *p)
 	}
 	//max/min levels.
 	for(i=0;i<MAX_PARTY;i++){
-		lv=p->party.member[i].lv;
+		unsigned int lv=p->party.member[i].lv;
 		if (!lv) continue;
 		if(p->party.member[i].online &&
 			//On families, the kid is not counted towards exp share rules.

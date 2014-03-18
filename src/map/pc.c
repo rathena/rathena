@@ -5160,6 +5160,32 @@ int pc_memo(struct map_session_data* sd, int pos)
 //
 // Skills
 //
+
+/**
+ * Get the skill current cooldown for player.
+ * (get the db base cooldown for skill + player specific cooldown)
+ * @param sd : player pointer
+ * @param id : skill id
+ * @param lv : skill lv
+ * @return player skill cooldown
+ */
+int pc_get_skillcooldown(struct map_session_data *sd, int id, int lv) {
+	int i, cooldown=0;
+	int idx = skill_get_index (id);
+	int cooldownlen = ARRAYLENGTH(sd->skillcooldown);
+	
+	if (!idx) return 0;
+	if (skill_db[idx].cooldown[lv - 1])
+		cooldown = skill_db[idx].cooldown[lv - 1];
+
+	ARR_FIND(0, cooldownlen, i, sd->skillcooldown[i].id == id);
+	if(i<cooldownlen){
+		cooldown += sd->skillcooldown[i].val;
+		cooldown = max(0,cooldown);
+	}
+	return cooldown;
+}
+
 /*==========================================
  * Return player sd skill_lv learned for given skill
  *------------------------------------------*/

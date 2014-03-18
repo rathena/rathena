@@ -826,6 +826,7 @@ int pc_isequip(struct map_session_data *sd,int n);
 int pc_equippoint(struct map_session_data *sd,int n);
 int pc_setinventorydata(struct map_session_data *sd);
 
+int pc_get_skillcooldown(struct map_session_data *sd, int id, int lv);
 int pc_checkskill(struct map_session_data *sd,uint16 skill_id);
 short pc_checkequip(struct map_session_data *sd,int pos);
 bool pc_checkequip2(struct map_session_data *sd,int nameid,int min, int max);
