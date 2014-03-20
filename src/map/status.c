@@ -1312,7 +1312,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 			status_change_end(target, SC_CHASEWALK, INVALID_TIMER);
 			status_change_end(target, SC_CAMOUFLAGE, INVALID_TIMER);
 			status_change_end(target, SC_DEEPSLEEP, INVALID_TIMER);
-			if ((sce=sc->data[SC_ENDURE]) && !sce->val4) {
+			if ((sce=sc->data[SC_ENDURE]) && !sce->val4 && !sc->data[SC_CONCENTRATION]) {
 				/** [Skotlex]
 				* Endure count is only reduced by non-players on non-gvg maps.
 				* val4 signals infinite endure.
@@ -6217,8 +6217,6 @@ static unsigned short status_calc_dmotion(struct block_list *bl, struct status_c
 	/// It has been confirmed on official servers that MvP mobs have no dmotion even without endure
 	if( sc->data[SC_ENDURE] || ( bl->type == BL_MOB && (((TBL_MOB*)bl)->status.mode&MD_BOSS) ) )
 		return 0;
-	if( sc->data[SC_CONCENTRATION] )
-		return 0;
 	if( sc->data[SC_RUN] || sc->data[SC_WUGDASH] )
 		return 0;
 
@@ -7718,6 +7716,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 	// Before overlapping fail, one must check for status cured.
 	switch (type) {
+	case SC_ENDURE:
+		if (val4)
+			status_change_end(bl, SC_CONCENTRATION, INVALID_TIMER);
+		break;
 	case SC_BLESSING:
 		// !TODO: Blessing and Agi up should do 1 damage against players on Undead Status, even on PvM
 		// !but cannot be plagiarized (this requires aegis investigation on packets and official behavior) [Brainstorm]
@@ -8716,6 +8718,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 5*val1; // Batk/Watk Increase
 			val3 = 10*val1; // Hit Increase
 			val4 = 5*val1; // Def reduction
+			sc_start(src, bl, SC_ENDURE, 100, 1, tick); // Level 1 Endure effect
 			break;
 		case SC_ANGELUS:
 			val2 = 5*val1; // def increase
@@ -10430,6 +10433,9 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			}
 			break;
 
+		case SC_CONCENTRATION:
+			status_change_end(bl, SC_ENDURE, INVALID_TIMER);
+			break;
 		case SC_BERSERK:
 		case SC_SATURDAYNIGHTFEVER:
 			if(status->hp > 200 && sc && sc->data[SC__BLOODYLUST]) {
