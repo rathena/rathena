@@ -12675,7 +12675,7 @@ OnStop:
 	donpcevent "#room2_1_warp::OnDisable";
 	donpcevent "#room2_2_warp::OnDisable";
 	donpcevent "Rin#moc_room2_2::OnDisable";
-	donpcevent "Rin#moc_room2_1::OnDisable";
+	//donpcevent "Rin#moc_room2_1::OnDisable";
 	donpcevent "Rayan#moc_room2_2::OnDisable";
 	donpcevent "que_job01#room_2::OnReset";
 	stopnpctimer;
@@ -12690,7 +12690,7 @@ OnTimer245000:
 	donpcevent "#room2_1_warp::OnDisable";
 	donpcevent "#room2_2_warp::OnDisable";
 	donpcevent "Rin#moc_room2_2::OnDisable";
-	donpcevent "Rin#moc_room2_1::OnDisable";
+	//donpcevent "Rin#moc_room2_1::OnDisable";
 	donpcevent "Rayan#moc_room2_2::OnDisable";
 	end;
 

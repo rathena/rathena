@@ -3200,7 +3200,7 @@ REPLACE INTO `item_db_re` VALUES (5355,'Muslim_Hat_F','Selendang',4,0,NULL,100,N
 REPLACE INTO `item_db_re` VALUES (5356,'Pumpkin_Hat_H','Festival Pumpkin Hat',4,20,NULL,200,NULL,2,NULL,0,0xFFFFFFFF,63,2,256,NULL,'0',1,206,'bonus2 bSubRace,RC_Demon,5; bonus2 bAddRace,RC_Demon,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5357,'Wings_Of_Victory','Wings Of Victory',4,20,NULL,200,NULL,10,NULL,0,0xFFFFFFFF,63,2,768,NULL,'0',0,365,'bonus bMdef,10; bonus bUnbreakableHelm,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5358,'Pecopeco_Wing_Ears','Peco Ears',4,20,NULL,100,NULL,1,NULL,0,0xFFFFFFFF,63,2,512,NULL,'70',0,366,'bonus bAgi,1; bonus bMdef,2; bonus bUnbreakableHelm,0;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (5359,'J_Captain_Hat','Ship Captain Hat',4,20,NULL,300,NULL,3,NULL,1,0xFFFFFFFF,63,2,256,NULL,'60',1,367,'bonus bDex,1; bonus bLongAtkRate,3;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (5359,'J_Captain_Hat','Ship Captain Hat',4,20,NULL,300,NULL,3,NULL,1,0xFFFFFFFF,63,2,256,NULL,'60',1,367,'bonus bDex,1; bonus bMaxHP,100; bonus bLongAtkRate,7;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5360,'Whikebain_Ears','Hyuke\'s Black Cat Ears',4,20,NULL,200,NULL,2,NULL,0,0xFFFFFFFF,63,2,256,NULL,'45',1,368,'bonus bFlee,10; bonus bCritical,3; bonus bCritAtkRate,10; bonus bDefRate,-50; bonus bDef2Rate,-50;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5361,'Gang_Scarf','Gangster Scarf',4,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,63,2,1,NULL,'0',0,369,'bonus bBaseAtk,5; if(BaseJob==Job_Rogue) skill "RG_GANGSTER",1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5362,'Ninja_Scroll','Ninja Scroll',4,20,NULL,200,NULL,0,NULL,0,0xFFFFFFFF,63,2,1,NULL,'0',0,370,'bonus bMatkRate,1;',NULL,NULL);
