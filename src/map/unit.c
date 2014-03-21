@@ -55,7 +55,7 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 
 /**
  * Get the unit_data related to the bl
- * @param bl : Object to get the unit_data from \n
+ * @param bl : Object to get the unit_data from
  *	valid type are : BL_PC|BL_MOB|BL_PET|BL_NPC|BL_HOM|BL_MER|BL_ELEM
  * @return unit_data of bl or NULL
  */
@@ -230,7 +230,7 @@ int unit_check_start_teleport_timer(struct block_list *sbl)
 }
 
 /**
- * Defines when to refresh the walking character to object and restart the timer if applicable \n
+ * Defines when to refresh the walking character to object and restart the timer if applicable
  * Also checks for speed update, target location, and slave teleport timers
  * @param tid: Timer ID
  * @param tick: Current tick to decide next timer update
@@ -441,14 +441,14 @@ int unit_delay_walktobl_timer(int tid, unsigned int tick, int id, intptr_t data)
 }
 
 /**
- * Begins the function of walking a unit to an x,y location \n
+ * Begins the function of walking a unit to an x,y location
  * This is where the path searches and unit can_move checks are done
  * @param bl: Object to send to x,y coordinate
  * @param x: X coordinate where the object will be walking to
  * @param y: Y coordinate where the object will be walking to
- * @param flag: Parameter to decide how to walk \n
- *	&1: Easy walk (fail if CELL_CHKNOPASS is in direct path) \n
- *	&2: Force walking (override can_move) \n
+ * @param flag: Parameter to decide how to walk
+ *	&1: Easy walk (fail if CELL_CHKNOPASS is in direct path)
+ *	&2: Force walking (override can_move)
  *	&4: Delay walking for can_move
  * @return 1: Success 0: Fail or unit_walktoxy_sub()
  */
@@ -509,7 +509,7 @@ int unit_walktoxy( struct block_list *bl, short x, short y, int flag)
 }
 
 /**
- * Sets a mob's CHASE/FOLLOW state \n
+ * Sets a mob's CHASE/FOLLOW state
  * This should not be done if there's no path to reach
  * @param bl: Mob to set state on
  * @param flag: Whether to set state or not
@@ -523,7 +523,7 @@ static inline void set_mobstate(struct block_list* bl, int flag)
 }
 
 /**
- * Timer to walking a unit to another unit's location \n
+ * Timer to walking a unit to another unit's location
  * Calls unit_walktoxy_sub once determined the unit can move
  * @param tid: Object's timer ID
  * @param id: Object's ID
@@ -551,8 +551,8 @@ static int unit_walktobl_sub(int tid, unsigned int tick, int id, intptr_t data)
  * @param bl: Object that is walking to target
  * @param tbl: Target object
  * @param range: How close to get to target (or attack range if flag&2)
- * @param flag: Extra behaviour \n
- *	&1: Use hard path seek (obstacles will be walked around if possible) \n
+ * @param flag: Extra behaviour
+ *	&1: Use hard path seek (obstacles will be walked around if possible)
  *	&2: Start attacking upon arrival within range, otherwise just walk to target
  * @return 1: Started walking or set timer 0: Failed
  */
@@ -880,7 +880,7 @@ uint8 unit_getdir(struct block_list *bl)
 }
 
 /**
- * Pushes a unit in a direction by a given amount of cells \n
+ * Pushes a unit in a direction by a given amount of cells
  * There is no path check, only map cell restrictions are respected
  * @param bl: Object to push
  * @param dx: Destination cell X
@@ -948,8 +948,8 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag)
 }
 
 /**
- * Warps a unit to a map/position \n
- * pc_setpos is used for player warping \n
+ * Warps a unit to a map/position
+ * pc_setpos is used for player warping
  * This function checks for "no warp" map flags, so it's safe to call without doing nowarpto/nowarp checks
  * @param bl: Object to warp
  * @param m: Map ID from bl structure (NOT index)
@@ -1027,10 +1027,10 @@ int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
 /**
  * Stops a unit from walking
  * @param bl: Object to stop walking
- * @param type: Options \n
- *	&0x1: Issue a fixpos packet afterwards \n
- *	&0x2: Force the unit to move one cell if it hasn't yet \n
- *	&0x4: Enable moving to the next cell when unit was already half-way there \n
+ * @param type: Options
+ *	&0x1: Issue a fixpos packet afterwards
+ *	&0x2: Force the unit to move one cell if it hasn't yet
+ *	&0x4: Enable moving to the next cell when unit was already half-way there
  *		(may cause on-touch/place side-effects, such as a scripted map change)
  * @return Success(1); Failed(0);
  */
@@ -1108,8 +1108,8 @@ int unit_is_walking(struct block_list *bl)
 }
 
 /** 
- * Checks if a unit is able to move based on status changes \n
- * View the StatusChangeStateTable in status.c for a list of statuses \n
+ * Checks if a unit is able to move based on status changes
+ * View the StatusChangeStateTable in status.c for a list of statuses
  * Some statuses are still checked here due too specific variables
  * @author [Skotlex]
  * @param bl: Object to check
@@ -1195,8 +1195,8 @@ int unit_resume_running(int tid, unsigned int tick, int id, intptr_t data)
  * @param bl: Object to apply walk delay to
  * @param tick: Current tick
  * @param delay: Amount of time to set walk delay
- * @param type: Type of delay \n
- *	0: Damage induced delay; Do not change previous delay \n
+ * @param type: Type of delay
+ *	0: Damage induced delay; Do not change previous delay
  *	1: Skill induced delay; Walk delay can only be increased, not decreased
  * @return Success(1); Fail(0);
  */
@@ -1862,7 +1862,7 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 	ud->state.attack_continue = continuous;
 	unit_set_target(ud, target_id);
 
-	if (continuous) // If you're to attack continously, set to auto-case character
+	if (continuous) // If you're to attack continously, set to auto-chase character
 		ud->chaserange = status_get_range(src);
 
 	// Just change target/type. [Skotlex]
@@ -1883,7 +1883,7 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 }
 
 /** 
- * Cancels an ongoing combo, resets attackable time, and restarts the \n
+ * Cancels an ongoing combo, resets attackable time, and restarts the
  * attack timer to resume attack after amotion time
  * @author [Skotlex]
  * @param bl: Object to cancel combo
@@ -2189,8 +2189,8 @@ static int unit_attack_timer(int tid, unsigned int tick, int id, intptr_t data)
 /**
  * Cancels a skill's cast
  * @param bl: Object to cancel cast
- * @param type: Cancel check flag \n
- *	&1: Cast-Cancel invoked \n
+ * @param type: Cancel check flag
+ *	&1: Cast-Cancel invoked
  *	&2: Cancel only if skill is cancellable
  * @return Success(1); Fail(0);
  */
@@ -2305,11 +2305,11 @@ int unit_changeviewsize(struct block_list *bl,short size)
 }
 
 /**
- * Removes a bl/ud from the map \n
+ * Removes a bl/ud from the map
  * On kill specifics are not performed here, check status_damage()
  * @param bl: Object to remove from map
- * @param clrtype: How bl is being removed \n
- *	0: Assume bl is being warped \n
+ * @param clrtype: How bl is being removed
+ *	0: Assume bl is being warped
  *	1: Death, appropriate cleanup performed
  * @param file, line, func: Call information for debug purposes
  * @return Success(1); Couldn't be removed or bl was free'd(0)
@@ -2543,8 +2543,8 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 /**
  * Removes units of a master when the master is removed from map
  * @param sd: Player
- * @param clrtype: How bl is being removed \n
- *	0: Assume bl is being warped \n
+ * @param clrtype: How bl is being removed
+ *	0: Assume bl is being warped
  *	1: Death, appropriate cleanup performed
  */
 void unit_remove_map_pc(struct map_session_data *sd, clr_type clrtype)
@@ -2581,8 +2581,8 @@ void unit_free_pc(struct map_session_data *sd)
 /**
  * Frees all related resources to the unit
  * @param bl: Object being removed from map
- * @param clrtype: How bl is being removed \n
- *	0: Assume bl is being warped \n
+ * @param clrtype: How bl is being removed
+ *	0: Assume bl is being warped
  *	1: Death, appropriate cleanup performed
  * @return 0
  */

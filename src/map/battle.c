@@ -3636,6 +3636,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 		case KO_JYUMONJIKIRI:
 			skillratio += -100 + 150 * skill_lv;
+			break;
 		case KO_HUUMARANKA:
 			skillratio += -100 + 150 * skill_lv + sstatus->dex/2 + sstatus->agi/2; // needs more info
 			break;
