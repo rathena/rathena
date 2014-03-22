@@ -4428,11 +4428,31 @@ database. If the name is not found, nothing will be deleted.
 
 ---------------------------------------
 
+*cartdelitem <item id>,<amount>{,<account ID>};
+*cartdelitem "<item name>",<amount>{,<account ID>};
+*storagedelitem <item id>,<amount>{,<account ID>};
+*storagedelitem "<item name>",<amount>{,<account ID>};
+
+Same like delitem, but deletes item from cart or storage.
+If cart is not mounted, it will be failed.
+
+---------------------------------------
+
 *delitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 *delitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 
 This command will remove a specified amount of items from the invoking/target character. 
 See 'getitem2' for an explanation of the expanded parameters.
+
+---------------------------------------
+
+*cartdelitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+*cartdelitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+*storageitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+*storageitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+
+Same like delitem2, but deletes item from cart or storage.
+If cart is not mounted, it will be failed.
 
 ---------------------------------------
 
@@ -4458,6 +4478,16 @@ adding up strings:
     
 ---------------------------------------
 
+*cartcountitem(<item id>)
+*cartcountitem("<item name>")
+*storagecountitem(<item id>)
+*storagecountitem("<item name>")
+
+Same like countitem, but counts item from cart or storage.
+If cart is not mounted, -1 will be returned.
+
+---------------------------------------
+
 *countitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
 *countitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
 
@@ -4466,6 +4496,16 @@ Expanded version of 'countitem' function, used for created/carded/forged items.
 This function will return the number of items for the specified item ID and
 other parameters that the invoking character has in the inventory.
 See 'getitem2' for an explanation of the expanded parameters.
+
+---------------------------------------
+
+*cartcountitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
+*cartcountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
+*storagecountitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
+*storagecountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
+
+Same like countitem2, but counts item from cart or storage.
+If cart is not mounted, -1 will be returned.
 
 ---------------------------------------
 
