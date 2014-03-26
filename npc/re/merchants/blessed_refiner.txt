@@ -17,6 +17,8 @@
 //= 1.0 First version. [Euphy]
 //============================================================
 
+// Main NPC :: new_smelting612
+//============================================================
 -	script	::BlacksmithDister	-1,{
 	disable_items;
 	mes "[Blacksmith Dister]";

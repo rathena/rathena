@@ -2579,12 +2579,12 @@
 4571,Gertie_Card,Gertie Card,6,20,,10,,,,,,,,4,,,,,{ bonus bFlee,10; skill "RG_CLOSECONFINE",1; },{},{}
 4572,Randel_Card,Randel Card,6,20,,10,,,,,,,,4,,,,,{ bonus bFlee,10; skill "CR_AUTOGUARD",3; },{},{}
 4573,Trentini_Card,Trentini Card,6,20,,10,,,,,,,,4,,,,,{ bonus bFlee,10; if(BaseJob==Job_Dancer) { bonus bMaxHPrate,10; bonus bMaxSPrate,5;} },{},{}
-4574,General_Daehyon_Card,General Daehyon Card,6,20,,10,,,,,,,,2,,,,,{ if((getiteminfo(getequipid(EQI_HAND_R),14) == 3) || (getiteminfo(getequipid(EQI_HAND_R),14) == 4)) { bonus bBaseAtk,100; } },{},{}
-4575,Armed_Guard_Soheon_Card,Armed Guard Soheon Card,6,20,,10,,,,,,,,2,,,,,{ bonus bBaseAtk,10; if(getiteminfo(getequipid(EQI_HAND_R),14) == 1) { if(getrefine()>=10) { bonus bAspd,1; } if(getrefine()>=14) { bonus bAspd,1; } } },{},{}
+4574,General_Daehyon_Card,General Daehyon Card,6,20,,10,,,,,,,,2,,,,,{ if((getiteminfo(getequipid(EQI_HAND_R),11) == 3) || (getiteminfo(getequipid(EQI_HAND_R),11) == 4)) { bonus bBaseAtk,100; } },{},{}
+4575,Armed_Guard_Soheon_Card,Armed Guard Soheon Card,6,20,,10,,,,,,,,2,,,,,{ bonus bBaseAtk,10; if(getiteminfo(getequipid(EQI_HAND_R),11) == 1) { if(getrefine()>=10) { bonus bAspd,1; } if(getrefine()>=14) { bonus bAspd,1; } } },{},{}
 4576,Gioia_Card,Gioia Card,6,20,,10,,,,,,,,4,,,,,{ bonus2 bMagicAtkEle,4,100; bonus2 bMagicAtkEle,8,100; bonus2 bSubEle,0,-30; bonus2 bSubEle,1,-30; bonus2 bSubEle,2,-30; bonus2 bSubEle,3,-30; bonus2 bSubEle,4,-30; bonus2 bSubEle,5,-30; bonus2 bSubEle,6,-30; bonus2 bSubEle,7,-30; bonus2 bSubEle,8,-30; bonus2 bSubEle,9,-30; },{},{}
 4577,Elvira_Card,Elvira Card,6,20,,10,,,,,,,,136,,,,,{ bonus2 bMagicAtkEle,4,20; bonus2 bMagicAtkEle,8,20; },{},{}
 4578,Angry_Student_Pyuriel_Card,Angry Student Pyuriel Card,6,20,,10,,,,,,,,2,,,,,{ bonus bCritAtkRate,30; bonus2 bSubRace,0,-10; bonus2 bSubRace,1,-10; bonus2 bSubRace,2,-10; bonus2 bSubRace,3,-10; bonus2 bSubRace,4,-10; bonus2 bSubRace,5,-10; bonus2 bSubRace,6,-10; bonus2 bSubRace,7,-10; bonus2 bSubRace,8,-10; bonus2 bSubRace,9,-10; },{},{}
-4579,Warrior_Lola_Card,Warrior Lola Card,6,20,,10,,,,,,,,2,,,,,{ if(getiteminfo(getequipid(EQI_HAND_R),14) == 8) { bonus bBaseAtk,20; bonus bCritical,10; } bonus bBaseAtk,getrefine(); bonus bCritical,getrefine(); },{},{}
+4579,Warrior_Lola_Card,Warrior Lola Card,6,20,,10,,,,,,,,2,,,,,{ if(getiteminfo(getequipid(EQI_HAND_R),11) == 8) { bonus bBaseAtk,20; bonus bCritical,10; } bonus bBaseAtk,getrefine(); bonus bCritical,getrefine(); },{},{}
 4580,Dark_Guardian_Kades_Card,Dark Guardian Kades Card,6,20,,10,,,,,,,,4,,,,,{ bonus2 bSubEle,1,50; bonus2 bSubEle,2,50; bonus2 bSubEle,3,50; bonus2 bSubEle,4,50; bonus2 bSubEle,7,50; bonus2 bSubEle,9,50; bonus2 bSubEle,6,-100; bonus2 bSubEle,8,-100; },{},{}
 4581,Rudo_Card,Rudo Card,6,20,,10,,,,,,,,64,,,,,{ /* TODO: { heal 0,-40; bonus_script "{ bonus bAgi,44; }",3,15,0; sc_start SC_SpeedUp1,3000,0; } */},{},{}
 4582,Bungisngis_Card,Bungisngis Card,6,20,,10,,,,,,,,769,,,,,{ bonus bMaxHPrate,(getrefine()/2); },{},{}
@@ -2612,7 +2612,7 @@
 4604,Realized_Corruption_Root_Card,Realized Corruption Root Card,6,20,,10,,,,,,,,2,,,,,{ bonus bBaseAtk,30; bonus5 bAutoSpellWhenHit,"NPC_WIDESTONE",2,70,BF_WEAPON,0; bonus5 bAutoSpellWhenHit,"NPC_WIDESLEEP",2,70,BF_WEAPON,0; bonus5 bAutoSpellWhenHit,"NPC_WIDECURSE",2,70,BF_WEAPON,0; },{},{}
 4605,Agony_Of_Royal_Knight_Card,Agony Of Royal Knight Card,6,20,,10,,,,,,,,16,,,,,{ bonus bMaxHPrate,-44; bonus bHPGainValue,200+10*getrefine(); },{},{}
 4606,Grudge_of_Royal_Knight_Card,Grudge of Royal Knight Card,6,20,,10,,,,,,,,4,,,,,{ bonus bMaxSPrate,-44; bonus bSPGainValue,20+(getrefine()/2); },{},{ heal 0,-444; }
-4607,Faithful_Manager_Card,Faithful Manager Card,6,20,,10,,,,,,,,2,,,,,{ bonus bBaseAtk,5; bonus bMatk,5; if(getiteminfo(getequipid(EQI_HAND_R),14) == 15) { if(getrefine()>=10) { bonus bBaseAtk,20; bonus bMatk,20; } if(getrefine()>=14) { bonus bBaseAtk,20; bonus bMatk,20; } } },{},{}
+4607,Faithful_Manager_Card,Faithful Manager Card,6,20,,10,,,,,,,,2,,,,,{ bonus bBaseAtk,5; bonus bMatk,5; if(getiteminfo(getequipid(EQI_HAND_R),11) == 15) { if(getrefine()>=10) { bonus bBaseAtk,20; bonus bMatk,20; } if(getrefine()>=14) { bonus bBaseAtk,20; bonus bMatk,20; } } },{},{}
 4608,White_Knight_Card,White Knight Card,6,20,,10,,,,,,,,2,,,,,{ bonus bBaseAtk,15; bonus2 bAddSize,Size_Medium,20; bonus2 bAddSize,Size_Large,20; },{},{}
 4609,Khalitzburg_Knight_Card,Khalitzburg Knight Card,6,20,,10,,,,,,,,32,,,,,{ bonus bDef,20; bonus2 bSubSize,Size_Medium,25; bonus2 bSubSize,Size_Large,25; },{},{}
 

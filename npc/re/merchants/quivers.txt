@@ -19,6 +19,8 @@
 //= 1.1 Updated to match the official scripts. [Euphy]
 //============================================================
 
+// Mora :: ep14_1_tre
+//============================================================
 mora,106,117,3	script	Quiver Maker#mora	516,{
 	if (checkweight(1201,1) == 0) {
 		mes "[Quiver Maker]";
