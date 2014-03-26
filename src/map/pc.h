@@ -587,7 +587,14 @@ struct map_session_data {
 		int16 icon;
 		int tid;
 	} bonus_script[MAX_PC_BONUS_SCRIPT];
+
+	/* Expiration Timer ID */
+	int expiration_tid;
+	time_t expiration_time;
 };
+
+/* Global Expiration Timer ID */
+extern int pc_expiration_tid;
 
 enum weapon_type {
 	W_FIST,	//Bare hands
@@ -830,6 +837,10 @@ int pc_get_skillcooldown(struct map_session_data *sd, int id, int lv);
 int pc_checkskill(struct map_session_data *sd,uint16 skill_id);
 short pc_checkequip(struct map_session_data *sd,int pos);
 bool pc_checkequip2(struct map_session_data *sd,int nameid,int min, int max);
+
+int pc_expiration_timer(int tid, unsigned int tick, int id, intptr_t data);
+int pc_global_expiration_timer(int tid, unsigned tick, int id, intptr_t data);
+void pc_expire_check(struct map_session_data *sd);
 
 int pc_calc_skilltree(struct map_session_data *sd);
 int pc_calc_skilltree_normalize_job(struct map_session_data *sd);

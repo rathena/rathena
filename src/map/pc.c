@@ -62,8 +62,10 @@ static unsigned int level_penalty[3][CLASS_MAX][MAX_LEVEL*2+1];
 // h-files are for declarations, not for implementations... [Shinomori]
 struct skill_tree_entry skill_tree[CLASS_COUNT][MAX_SKILL_TREE];
 // timer for night.day implementation
-int day_timer_tid;
-int night_timer_tid;
+int day_timer_tid = INVALID_TIMER;
+int night_timer_tid = INVALID_TIMER;
+
+int pc_expiration_tid = INVALID_TIMER;
 
 struct fame_list smith_fame_list[MAX_FAME_LIST];
 struct fame_list chemist_fame_list[MAX_FAME_LIST];
@@ -1033,6 +1035,7 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	sd->invincible_timer = INVALID_TIMER;
 	sd->npc_timer_id = INVALID_TIMER;
 	sd->pvp_timer = INVALID_TIMER;
+	sd->expiration_tid = INVALID_TIMER;
 
 #ifdef SECURE_NPCTIMEOUT
 	// Initialize to defaults/expected
@@ -1138,12 +1141,8 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 				clif_displaymessage(sd->fd, motd_text[i]);
 		}
 
-		// message of the limited time of the account
-		if (expiration_time != 0) { // don't display if it's unlimited or unknow value
-			char tmpstr[1024];
-			strftime(tmpstr, sizeof(tmpstr) - 1, msg_txt(sd,501), localtime(&expiration_time)); // "Your account time limit is: %d-%m-%Y %H:%M:%S."
-			clif_wis_message(sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
-		}
+		if (expiration_time != 0)
+			sd->expiration_time = expiration_time;
 
 		/**
 		 * Fixes login-without-aura glitch (the screen won't blink at this point, don't worry :P)
@@ -1343,6 +1342,15 @@ int pc_reg_received(struct map_session_data *sd)
 	
 	if( sd->state.autotrade ){
 		clif_parse_LoadEndAck(sd->fd, sd);
+	}
+
+	if (sd->expiration_time != 0) { // don't display if it's unlimited or an unknown value
+		time_t exp_time = sd->expiration_time;
+		char tmpstr[1024];
+			strftime(tmpstr, sizeof(tmpstr) - 1, msg_txt(sd,501), localtime(&sd->expiration_time)); // "Your account time limit is: %d-%m-%Y %H:%M:%S."
+			clif_wis_message(sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
+		
+		pc_expire_check(sd);
 	}
 
 	return 1;
@@ -10501,6 +10509,56 @@ void pc_damage_log_clear(struct map_session_data *sd, int id)
 	}
 }
 
+int pc_expiration_timer(int tid, unsigned int tick, int id, intptr_t data) {
+	struct map_session_data *sd = map_id2sd(id);
+
+	if( !sd ) return 0;
+
+	sd->expiration_tid = INVALID_TIMER;
+
+	if( sd->fd )
+		clif_authfail_fd(sd->fd,10);
+
+	map_quit(sd);
+
+	return 0;
+}
+
+/* this timer exists only when a character with a expire timer > 24h is online */
+/* it loops thru online players once an hour to check whether a new < 24h is available */
+int pc_global_expiration_timer(int tid, unsigned int tick, int id, intptr_t data) {
+	struct s_mapiterator* iter;
+	struct map_session_data* sd;
+
+	iter = mapit_getallusers();
+
+	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
+		if( sd->expiration_time )
+			pc_expire_check(sd);
+
+	mapit_free(iter);
+
+  return 0;
+}
+
+void pc_expire_check(struct map_session_data *sd) {  
+	/* ongoing timer */
+	if( sd->expiration_tid != INVALID_TIMER )
+		return;
+
+	/* not within the next 24h, enable the global check */
+	if( sd->expiration_time > (time(NULL) + ((60 * 60) * 24)) ) {
+
+		/* global check not running, enable */
+		if( pc_expiration_tid == INVALID_TIMER ) /* Starts in 1h, repeats every hour */
+			pc_expiration_tid = add_timer_interval(gettick() + ((1000 * 60) * 60), pc_global_expiration_timer, 0, 0, ((1000 * 60) * 60));
+
+		return;
+	}
+
+	sd->expiration_tid = add_timer(gettick() + (unsigned int)(sd->expiration_time - time(NULL)) * 1000, pc_expiration_timer, sd->bl.id, 0);
+}
+
 /**
 * Deposit some money to bank
 * @param sd
@@ -10734,6 +10792,8 @@ void do_init_pc(void) {
 	add_timer_func_list(pc_follow_timer, "pc_follow_timer");
 	add_timer_func_list(pc_endautobonus, "pc_endautobonus");
 	add_timer_func_list(pc_talisman_timer, "pc_talisman_timer");
+	add_timer_func_list(pc_global_expiration_timer, "pc_global_expiration_timer");
+	add_timer_func_list(pc_expiration_timer, "pc_expiration_timer");
 
 	add_timer(gettick() + autosave_interval, pc_autosave, 0, 0);
 
