@@ -14,6 +14,8 @@
 //= 1.1 Standardizing, grammar and bug fixes. [Euphy]
 //============================================================
 
+// Main NPC :: 201105_luk_enc
+//============================================================
 prt_in,28,73,3	script	Devil Enchant Master#prq	63,{
 	disable_items;
 	if (checkweight(1201,1) == 0) {

@@ -18,6 +18,8 @@
 //= 1.5 Added This Version History (#15429)
 //============================================================
 
+// Main NPC :: diamond
+//============================================================
 -	script	RareDiamondMerchant	58,{
 
 	set .@npc$, "[Rare Diamond Merchant]";

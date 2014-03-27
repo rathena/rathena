@@ -1646,6 +1646,9 @@ int map_quit(struct map_session_data *sd) {
 		return 0;
 	}
 
+	if (sd->expiration_tid != INVALID_TIMER)
+		delete_timer(sd->expiration_tid, pc_expiration_timer);
+
 	if (sd->npc_timer_id != INVALID_TIMER) //Cancel the event timer.
 		npc_timerevent_quit(sd);
 

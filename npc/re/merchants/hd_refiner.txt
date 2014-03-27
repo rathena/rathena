@@ -18,7 +18,7 @@
 //= 1.0 First version. [Euphy]
 //============================================================
 
-// Blacksmith Mighty Hammer (+7~9)
+// Blacksmith Mighty Hammer (+7~9) :: cash_smelting79
 //============================================================
 -	script	::MightyHammer	-1,{
 	disable_items;
@@ -153,7 +153,7 @@ lhz_in02,280,19,3	duplicate(MightyHammer)	Mighty Hammer#lhz	826
 // iRO NPC locations:
 // payon,174,133,4	duplicate(MightyHammer)	Mighty Hammer#im	826
 
-// Basta (+10 and up)
+// Basta (+10 and up) :: cash_smelting
 //============================================================
 -	script	::Basta	-1,{
 	disable_items;
