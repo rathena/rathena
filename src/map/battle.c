@@ -902,8 +902,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		if(sc->data[SC_TATAMIGAESHI] && (flag&(BF_MAGIC|BF_LONG)) == BF_LONG)
 			return 0;
 
-		// TODO: Find out whether Neutral Barrier really blocks all splash damage or just specific cases (Earthquake)
-		if( sc->data[SC_NEUTRALBARRIER] && ((flag&(BF_MAGIC|BF_LONG)) == BF_LONG || (skill_id && skill_get_splash(skill_id,skill_lv))) ) {
+		if( sc->data[SC_NEUTRALBARRIER] && (skill_id == NPC_EARTHQUAKE || (flag&(BF_LONG|BF_MAGIC)) == BF_LONG) ) {
 			d->dmg_lv = ATK_MISS;
 			return 0;
 		}
@@ -1149,6 +1148,13 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		if (sc->data[SC_STYLE_CHANGE] && sc->data[SC_STYLE_CHANGE]->val1 == MH_MD_GRAPPLING) {
 			TBL_HOM *hd = BL_CAST(BL_HOM,bl); // We add a sphere for when the Homunculus is being hit
 			if (hd && (rnd()%100<50) ) hom_addspiritball(hd, 10); // According to WarpPortal, this is a flat 50% chance
+		}
+		if( sd && (sce = sc->data[SC_GT_ENERGYGAIN]) && flag&BF_WEAPON && rnd()%100 < 10 + 5 * sc->data[SC_GT_ENERGYGAIN]->val1 ) {
+			int spheres = 5;
+
+			if( sc->data[SC_RAISINGDRAGON] )
+				spheres += sc->data[SC_RAISINGDRAGON]->val1;
+			pc_addspiritball(sd, skill_get_time2(SR_GENTLETOUCH_ENERGYGAIN, sce->val1), spheres);
 		}
 
 		if( sc->data[SC__DEADLYINFECT] && damage > 0 && rnd()%100 < 30 + 10 * sc->data[SC__DEADLYINFECT]->val1 )
@@ -2087,7 +2093,7 @@ static bool is_attack_hitting(struct Damage wd, struct block_list *src, struct b
 	else if (nk&NK_IGNORE_FLEE)
 		return true;
 
-	if( sc && (sc->data[SC_NEUTRALBARRIER] || sc->data[SC_NEUTRALBARRIER_MASTER]) && wd.flag&BF_LONG )
+	if( sc && (sc->data[SC_NEUTRALBARRIER] || sc->data[SC_NEUTRALBARRIER_MASTER]) && (wd.flag&(BF_LONG|BF_MAGIC)) == BF_LONG )
 		return false;
 
 	flee = tstatus->flee;
@@ -2344,13 +2350,6 @@ static int battle_get_weapon_element(struct Damage wd, struct block_list *src, s
 		case RL_H_MINE:
 			if (sd && sd->skill_id_old == RL_FLICKER) //Force RL_H_MINE deals fire damage if activated by RL_FLICKER
 				element = ELE_FIRE;
-			break;
-		case KO_KAIHOU:
-			if( sd ){
-				ARR_FIND(1, 6, i, sd->talisman[i] > 0);
-				if( i < 5 )
-					element = i;
-			}
 			break;
 	}
 
@@ -2674,6 +2673,28 @@ struct Damage battle_calc_skill_base_damage(struct Damage wd, struct block_list 
 			wd.weaponAtk = (int)wd.damage;
 			wd.weaponAtk2 = (int)wd.damage2;
 #endif
+			break;
+		case KO_HAPPOKUNAI: {
+				int damagevalue = 0;
+
+				wd.damage = wd.damage2 = 0;
+#ifdef RENEWAL
+				wd.weaponAtk = wd.weaponAtk2 = 0;
+#endif
+				if(sd) {
+					short index = sd->equip_index[EQI_AMMO];
+
+					damagevalue = (3 * (sstatus->batk + sstatus->rhw.atk + sd->inventory_data[index]->atk)) * (skill_lv + 5) / 5;
+					if(index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_AMMO)
+						ATK_ADD(wd.damage, wd.damage2, damagevalue);
+				} else {
+					damagevalue = 5000;
+					ATK_ADD(wd.damage, wd.damage2, damagevalue);
+				}
+#ifdef RENEWAL
+				ATK_ADD(wd.weaponAtk, wd.weaponAtk2, damagevalue);
+#endif
+			}
 			break;
 		case HFLI_SBR44:	//[orn]
 			if(src->type == BL_HOM) {
@@ -3818,20 +3839,6 @@ static int battle_calc_skill_constant_addition(struct Damage wd, struct block_li
 				status_change_end(target,SC_SPIRIT,INVALID_TIMER);
 			}
 			break;
-		case KO_KAIHOU:
-			if( sd ){
-				int i;
-				ARR_FIND(1, 6, i, sd->talisman[i] > 0);
-				if( i < 5 ){
-#ifdef RENEWAL
-					atk = ((wd.equipAtk + wd.weaponAtk + wd.statusAtk + wd.masteryAtk) * (100 * sd->talisman[i])) / 100;// +100% custom value.
-#else
-					atk = (int) ((wd.damage) * (100 * sd->talisman[i])) / 100;// +100% custom value.
-#endif
-					pc_del_talisman(sd, sd->talisman[i], i);
-				}
-			}
-			break;
 	}
 	return atk;
 }
@@ -3953,6 +3960,15 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, u
 #endif
 				}
 			}
+			if(sc->data[SC_GT_CHANGE] && sc->data[SC_GT_CHANGE]->val2){
+				struct block_list *bl; // ATK increase: ATK [{(Caster DEX / 4) + (Caster STR / 2)} x Skill Level / 5]
+				if( (bl = map_id2bl(sc->data[SC_GT_CHANGE]->val2)) ) {
+					ATK_ADD(wd.damage, wd.damage2, ( status_get_dex(bl)/4 + status_get_str(bl)/2 ) * sc->data[SC_GT_CHANGE]->val1 / 5 );
+#ifdef RENEWAL
+					ATK_ADD(wd.weaponAtk, wd.weaponAtk2, (status_get_dex(bl) / 4 + status_get_str(bl) / 2) * sc->data[SC_GT_CHANGE]->val1 / 5);
+#endif
+				}
+			}
 			if(sc->data[SC_STYLE_CHANGE]){
 				TBL_HOM *hd = BL_CAST(BL_HOM,src);
 				if (hd) ATK_ADD(wd.damage, wd.damage2, hd->homunculus.spiritball * 3);
@@ -4021,7 +4037,7 @@ struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list 
 	}
 
 	if( tsc && tsc->data[SC_GT_REVITALIZE] && tsc->data[SC_GT_REVITALIZE]->val4 )
-		def2 += 2 * tsc->data[SC_GT_REVITALIZE]->val4;
+		def2 += tsc->data[SC_GT_REVITALIZE]->val4;
 
 	if( tsc && tsc->data[SC_CAMOUFLAGE] ){
 		short i = 5 * tsc->data[SC_CAMOUFLAGE]->val3; //5% per second
@@ -4145,13 +4161,6 @@ struct Damage battle_calc_attack_post_defense(struct Damage wd, struct block_lis
 #endif
 			ATK_ADD(wd.damage, wd.damage2, 20*lv);
 		}
-
-		if(sc->data[SC_GT_CHANGE] && sc->data[SC_GT_CHANGE]->val2){
-			struct block_list *bl; // ATK increase: ATK [{(Caster DEX / 4) + (Caster STR / 2)} x Skill Level / 5]
-			if( (bl = map_id2bl(sc->data[SC_GT_CHANGE]->val2)) )
-				ATK_ADD(wd.damage, wd.damage2, ( status_get_dex(bl)/4 + status_get_str(bl)/2 ) * sc->data[SC_GT_CHANGE]->val1 / 5 );
-		}
-
 	}
 
 #ifndef RENEWAL
@@ -4896,7 +4905,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	short s_ele = 0;
 
 	TBL_PC *sd;
-//	TBL_PC *tsd;
+	TBL_PC *tsd;
 	struct status_change *sc, *tsc;
 	struct Damage ad;
 	struct status_data *sstatus = status_get_status_data(src);
@@ -4926,7 +4935,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	flag.imdef = nk&NK_IGNORE_DEF?1:0;
 
 	sd = BL_CAST(BL_PC, src);
-//	tsd = BL_CAST(BL_PC, target);
+	tsd = BL_CAST(BL_PC, target);
 	sc = status_get_sc(src);
 	tsc = status_get_sc(target);
 
@@ -4944,13 +4953,22 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	else if( s_ele == -3 ) //Use random element
 		s_ele = rnd()%ELE_ALL;
 
-	if( skill_id == SO_PSYCHIC_WAVE ) {
-		if( sc && sc->count ) {
-			if( sc->data[SC_HEATER_OPTION] ) s_ele = sc->data[SC_HEATER_OPTION]->val3;
-			else if( sc->data[SC_COOLER_OPTION] ) s_ele = sc->data[SC_COOLER_OPTION]->val3;
-			else if( sc->data[SC_BLAST_OPTION] ) s_ele = sc->data[SC_BLAST_OPTION]->val3;
-			else if( sc->data[SC_CURSED_SOIL_OPTION] ) s_ele = sc->data[SC_CURSED_SOIL_OPTION]->val3;
-		}
+	switch( skill_id ) {
+		case SO_PSYCHIC_WAVE:
+			if( sc && sc->count ) {
+				if( sc->data[SC_HEATER_OPTION] ) s_ele = sc->data[SC_HEATER_OPTION]->val3;
+				else if( sc->data[SC_COOLER_OPTION] ) s_ele = sc->data[SC_COOLER_OPTION]->val3;
+				else if( sc->data[SC_BLAST_OPTION] ) s_ele = sc->data[SC_BLAST_OPTION]->val3;
+				else if( sc->data[SC_CURSED_SOIL_OPTION] ) s_ele = sc->data[SC_CURSED_SOIL_OPTION]->val3;
+			}
+			break;
+		case KO_KAIHOU:
+			if(sd) {
+				ARR_FIND(1, 6, i, sd->talisman[i] > 0);
+				if(i < 5)
+					s_ele = i;
+			}
+			break;
 	}
 
 	//Set miscellaneous data that needs be filled
@@ -5364,6 +5382,19 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						else
 							skillratio += 110 + 20 * skill_lv;
 						break;
+					case KO_KAIHOU: {
+							int ttype;
+
+							if(sd) {
+								ARR_FIND(1, 6, ttype, sd->talisman[ttype] > 0);
+								if(ttype < 5) {
+									skillratio += -100 + 200 * sd->talisman[ttype];
+									RE_LVL_DMOD(100);
+									pc_del_talisman(sd, sd->talisman[ttype], ttype);
+								}
+							}
+						}
+						break;
 						// Magical Elemental Spirits Attack Skills
 					case EL_FIRE_MANTLE:
 					case EL_WATER_SCREW:
@@ -5398,6 +5429,62 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case MH_POISON_MIST:
 						skillratio += -100 + 40 * skill_lv * status_get_lv(src) / 100;
 						break;
+				}
+
+				if (sd) {
+					int sd_charm;
+
+					ARR_FIND(1, 6, sd_charm, sd->talisman[sd_charm] > 0);
+					if(sd_charm < 5 && s_ele == sd_charm) {
+						switch(skill_id) {
+							case NJ_HYOUSYOURAKU:
+								skillratio += 25 * sd->talisman[sd_charm];
+								break;
+							case NJ_KOUENKA:
+							case NJ_HUUJIN:
+								skillratio += 20 * sd->talisman[sd_charm];
+								break;
+							case NJ_BAKUENRYU:
+							case NJ_RAIGEKISAI:
+								skillratio += 15 * sd->talisman[sd_charm];
+								break;
+							case NJ_KAMAITACHI:
+								skillratio += 10 * sd->talisman[sd_charm];
+								break;
+							case NJ_KAENSIN:
+							case NJ_HYOUSENSOU:
+								skillratio += 5 * sd->talisman[sd_charm];
+								break;
+						}
+					}
+				}
+
+				if (tsd) {
+					int tsd_charm;
+
+					ARR_FIND(1, 6, tsd_charm, tsd->talisman[tsd_charm] > 0);
+					if(tsd_charm < 5 && s_ele == tsd_charm) {
+						switch(skill_id) {
+							case NJ_HYOUSYOURAKU:
+								skillratio -= 25 * tsd->talisman[tsd_charm];
+								break;
+							case NJ_KOUENKA:
+							case NJ_HUUJIN:
+								skillratio -= 20 * tsd->talisman[tsd_charm];
+								break;
+							case NJ_BAKUENRYU:
+							case NJ_RAIGEKISAI:
+								skillratio -= 15 * tsd->talisman[tsd_charm];
+								break;
+							case NJ_KAMAITACHI:
+								skillratio -= 10 * tsd->talisman[tsd_charm];
+								break;
+							case NJ_KAENSIN:
+							case NJ_HYOUSENSOU:
+								skillratio -= 5 * tsd->talisman[tsd_charm];
+								break;
+						}
+					}
 				}
 
 				MATK_RATE(skillratio);
@@ -5703,14 +5790,14 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 #endif
 	case NJ_ZENYNAGE:
 	case KO_MUCHANAGE:
-			md.damage = skill_get_zeny(skill_id ,skill_lv);
+			md.damage = skill_get_zeny(skill_id, skill_lv);
 			if (!md.damage) md.damage = (skill_id == NJ_ZENYNAGE ? 2 : 10);
-			md.damage = rand()%md.damage + md.damage;
+			md.damage = (skill_id == NJ_ZENYNAGE ? rnd()%md.damage + md.damage : md.damage * rnd_value(50,100)) / (skill_id == NJ_ZENYNAGE ? 1 : 100);
 			if (is_boss(target))
 				md.damage = md.damage / (skill_id == NJ_ZENYNAGE ? 3 : 2);
-			else if (tsd)
+			if (sd && skill_id == KO_MUCHANAGE && !pc_checkskill(sd, NJ_TOBIDOUGU))
 				md.damage = md.damage / 2;
-			if (skill_id == KO_MUCHANAGE && pc_checkskill(sd, NJ_TOBIDOUGU) < 1 )
+			else if (tsd && skill_id == NJ_ZENYNAGE)
 				md.damage = md.damage / 2;
 		break;
 #ifdef RENEWAL
@@ -5820,14 +5907,6 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	case GN_HELLS_PLANT_ATK:
 		//[{( Hell Plant Skill Level x Casters Base Level ) x 10 } + {( Casters INT x 7 ) / 2 } x { 18 + ( Casters Job Level / 4 )] x ( 5 / ( 10 - Summon Flora Skill Level ))
 		md.damage = ( skill_lv * status_get_lv(src) * 10 ) + ( status_get_int(src) * 7 / 2 ) * ( 18 + (sd?sd->status.job_level:0) / 4 ) * ( 5 / (10 - ((sd) ? pc_checkskill(sd,AM_CANNIBALIZE) : skill_get_max(AM_CANNIBALIZE))) );
-		break;
-	case KO_HAPPOKUNAI:
-		{
-			struct Damage wd = battle_calc_weapon_attack(src,target,skill_id,skill_lv,mflag);
-			short totaldef = tstatus->def2 + (short)status_get_def(target);
-			md.damage = (int64)wd.damage * 60 * (5 + skill_lv) / 100;
-			md.damage -= totaldef;
-		}
 		break;
 	case KO_MAKIBISHI:
 		md.damage = 20 * skill_lv;
@@ -6335,17 +6414,14 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				return ATK_DEF;
 			return ATK_MISS;
 		}
-		if( sc->data[SC_GT_ENERGYGAIN] ) {
+		if( sc->data[SC_GT_ENERGYGAIN] && sc->data[SC_GT_ENERGYGAIN]->val2 ) {
+			int spheres = 5;
+
+			if( sc->data[SC_RAISINGDRAGON] )
+				spheres += sc->data[SC_RAISINGDRAGON]->val1;
+
 			if( sd && rnd()%100 < 10 + 5 * sc->data[SC_GT_ENERGYGAIN]->val1)
-				pc_addspiritball(sd,
-								 skill_get_time(MO_CALLSPIRITS, sc->data[SC_GT_ENERGYGAIN]->val1),
-								 sc->data[SC_GT_ENERGYGAIN]->val1);
-		}
-		if( tsc && tsc->data[SC_GT_ENERGYGAIN] ) {
-			if( tsd && rnd()%100 < 10 + 5 * tsc->data[SC_GT_ENERGYGAIN]->val1)
-				pc_addspiritball(tsd,
-								 skill_get_time(MO_CALLSPIRITS, tsc->data[SC_GT_ENERGYGAIN]->val1),
-								 tsc->data[SC_GT_ENERGYGAIN]->val1);
+				pc_addspiritball(sd, skill_get_time2(SR_GENTLETOUCH_ENERGYGAIN, sc->data[SC_GT_ENERGYGAIN]->val1), spheres);
 		}
 		if( sc && sc->data[SC_CRUSHSTRIKE] ){
 			uint16 skill_lv = sc->data[SC_CRUSHSTRIKE]->val1;
@@ -6360,6 +6436,16 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 
 	if(tsc && tsc->data[SC_KAAHI] && tsc->data[SC_KAAHI]->val4 == INVALID_TIMER && tstatus->hp < tstatus->max_hp)
 		tsc->data[SC_KAAHI]->val4 = add_timer(tick + skill_get_time2(SL_KAAHI,tsc->data[SC_KAAHI]->val1), kaahi_heal_timer, target->id, SC_KAAHI); //Activate heal.
+
+	if( tsc && tsc->data[SC_GT_ENERGYGAIN] ) {
+		int spheres = 5;
+
+		if( tsc->data[SC_RAISINGDRAGON])
+			spheres += sc->data[SC_RAISINGDRAGON]->val1;
+
+		if( tsd && rnd()%100 < 10 + 5 * tsc->data[SC_GT_ENERGYGAIN]->val1)
+			pc_addspiritball(tsd, skill_get_time2(SR_GENTLETOUCH_ENERGYGAIN, tsc->data[SC_GT_ENERGYGAIN]->val1), spheres);
+	}
 
 	wd = battle_calc_attack(BF_WEAPON, src, target, 0, 0, flag);
 

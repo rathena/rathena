@@ -1482,15 +1482,15 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 		if( sd ) {
 			switch( sd->itemid ) {	// Starting SCs here instead of do it in skill_additional_effect to simplify the code.
 				case ITEMID_COCONUT_BOMB:
-					sc_start(src,bl, SC_STUN, 100, skill_lv, skill_get_time2(GN_SLINGITEM, skill_lv));
-					sc_start2(src,bl, SC_BLEEDING, 100, skill_lv, src->id, skill_get_time2(GN_SLINGITEM, skill_lv));
+					sc_start(src,bl, SC_STUN, 100, skill_lv, 10000);
+					sc_start2(src,bl, SC_BLEEDING, 100, skill_lv, src->id, 10000);
 					break;
 				case ITEMID_MELON_BOMB:
-					sc_start(src,bl, SC_MELON_BOMB, 100, skill_lv, skill_get_time(GN_SLINGITEM, skill_lv));
+					sc_start(src,bl, SC_MELON_BOMB, 100, skill_lv, 60000);
 					break;
 				case ITEMID_BANANA_BOMB:
-					sc_start(src,bl, SC_BANANA_BOMB, 100, skill_lv, skill_get_time(GN_SLINGITEM, skill_lv));
-					sc_start(src,bl, SC_BANANA_BOMB_SITDOWN, 75, skill_lv, skill_get_time(GN_SLINGITEM_RANGEMELEEATK,skill_lv));
+					sc_start(src,bl, SC_BANANA_BOMB, 100, skill_lv, 60000);
+					sc_start(src,bl, SC_BANANA_BOMB_SITDOWN, sd->status.job_level + sstatus->dex / 6 + tstatus->agi / 4 - tstatus->luk / 5 - status_get_lv(bl) + status_get_lv(src), skill_lv, 3000);
 					break;
 			}
 			sd->itemid = -1;
@@ -5979,7 +5979,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case LG_PRESTIGE:
 	case SR_CRESCENTELBOW:
 	case SR_LIGHTNINGWALK:
-	case SR_GENTLETOUCH_ENERGYGAIN:
 	case GN_CARTBOOST:
 	case KO_MEIKYOUSISUI:
 	case ALL_ODINS_POWER:
@@ -9237,11 +9236,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		{
 			int heal;
 
-			if( status_isimmune(bl) ) {
-				clif_skill_nodamage(src,bl,skill_id,skill_lv,0);
-				break;
-			}
-
 			heal = (120 * skill_lv) + (status_get_max_hp(bl) * skill_lv / 100);
 			status_heal(bl, heal, 0, 0);
 
@@ -9258,6 +9252,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		}
 		break;
+	case SR_GENTLETOUCH_ENERGYGAIN:
 	case SR_GENTLETOUCH_CHANGE:
 	case SR_GENTLETOUCH_REVITALIZE:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
@@ -9275,16 +9270,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case WA_SWING_DANCE:
 	case WA_MOONLIT_SERENADE:
 	case WA_SYMPHONY_OF_LOVER:
+	case MI_RUSH_WINDMILL:
 	case MI_ECHOSONG:
-		if( sd == NULL || sd->status.party_id == 0 || (flag & 1) ) {
+		if( !sd || !sd->status.party_id || (flag & 1) ) {
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 			sc_start2(src,bl,type,100,skill_lv,((sd) ? pc_checkskill(sd,WM_LESSON) : skill_get_max(WM_LESSON)),skill_get_time(skill_id,skill_lv));
-		}
-		break;
-	case MI_RUSH_WINDMILL:
-		if( sd ) {
-			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
+		} else if( sd ) {
 			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
+			sc_start2(src,bl,type,100,skill_lv,((sd) ? pc_checkskill(sd,WM_LESSON) : skill_get_max(WM_LESSON)),skill_get_time(skill_id,skill_lv));
+			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		}
 		break;
 
@@ -9835,14 +9829,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if (unit_movepos(src,bl->x,bl->y,0,0)) {
 				clif_skill_nodamage(src,src,skill_id,skill_lv,1);
 				clif_slide(src,bl->x,bl->y) ;
-				sc_start(src,src,SC_CONFUSION,80,skill_lv,skill_get_time(skill_id,skill_lv));
+				sc_start(src,src,SC_CONFUSION,25,skill_lv,skill_get_time(skill_id,skill_lv));
 				if (unit_movepos(bl,x,y,0,0))
 				{
 					clif_skill_damage(bl,bl,tick, status_get_amotion(src), 0, -30000, 1, skill_id, -1, 6);
 					if( bl->type == BL_PC && pc_issit((TBL_PC*)bl))
 						clif_sitting(bl); //Avoid sitting sync problem
 					clif_slide(bl,x,y) ;
-					sc_start(src,bl,SC_CONFUSION,80,skill_lv,skill_get_time(skill_id,skill_lv));
+					sc_start(src,bl,SC_CONFUSION,75,skill_lv,skill_get_time(skill_id,skill_lv));
 				}
 			}
 		}
@@ -10793,7 +10787,6 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case SO_WIND_INSIGNIA:
 	case SO_EARTH_INSIGNIA:
 	case KO_HUUMARANKA:
-	case KO_MUCHANAGE:
 	case KO_BAKURETSU:
 	case KO_ZENKAI:
 	case MH_LAVA_SLIDE:
@@ -11295,6 +11288,20 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			x = src->x - 1 + rnd()%3;
 			y = src->y - 1 + rnd()%3;
 			skill_unitsetting(src,skill_id,skill_lv,x,y,0);
+		}
+		break;
+	case KO_MUCHANAGE: {
+			struct status_data *sstatus;
+			int rate = 0;
+
+			sstatus = status_get_status_data(src);
+			i = skill_get_splash(skill_id,skill_lv);
+			rate = (100 - (1000 / (sstatus->dex + sstatus->luk) * 5)) * (skill_lv / 2 + 5) / 10;
+			if( rate < 0 )
+				rate = 0;
+			skill_area_temp[0] = map_foreachinarea(skill_area_sub,src->m,x-i,y-i,x+i,y+i,BL_CHAR,src,skill_id,skill_lv,tick,BCT_ENEMY,skill_area_sub_count);
+			if( rnd()%100 < rate )
+				map_foreachinarea(skill_area_sub,src->m,x-i,y-i,x+i,y+i,BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
 		}
 		break;
 
@@ -14227,6 +14234,10 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				return false;
 			}
 			break;
+		case KO_JYUMONJIKIRI:
+			if (sd->status.shield && !sd->weapontype2 && (sd->weapontype1 == W_DAGGER || sd->weapontype1 == W_1HSWORD))
+				return true; // Wearing Shield + Dagger/Sword, other non-shield weapon checks are later
+			break;
 	}
 
 	/* check state required */
@@ -15750,6 +15761,8 @@ int skill_sit (struct map_session_data *sd, int type)
 
 	if( type ) {
 		clif_status_load(&sd->bl,SI_SIT,1);
+		// TODO: Include the case of using the Insert key
+		pc_stop_attack(sd); // Stop players who may be attacking to not de-sync
 	} else {
 		clif_status_load(&sd->bl,SI_SIT,0);
 	}

@@ -1058,7 +1058,7 @@
 2299,7,6,2,0,0x1,0,3,1,yes,0,0,3,none,0,0x0,	SC_MANHOLE,Man Hole
 2300,7,6,2,0,0x1,0,3,1,yes,0,0,1,none,0,0x0,	SC_DIMENSIONDOOR,Dimension Door
 2301,7,6,2,0,0x1,0,3,1,yes,0,0x20000,0,none,0,0x0,	SC_CHAOSPANIC,Chaos Panic
-2302,7,6,2,0,0x1,0,3,1,yes,0,0x20000,0,none,0,0x0,	SC_MAELSTROM,Maelstrom
+2302,7,6,2,0,0x1,0,3,1,yes,0,0x20000,1,none,0,0x0,	SC_MAELSTROM,Maelstrom
 2303,7,6,2,0,0x1,3,3,1,yes,0,0,1,none,0,0x0,	SC_BLOODYLUST,Bloody Lust
 2304,0,6,4,-1,0,0,3,1,no,0,0,0,weapon,0,0x0,	SC_FEINTBOMB,Feint Bomb
 
@@ -1094,7 +1094,7 @@
 2330,-2,6,1,-1,0x42,1:1:1:1:1:2:2:2:2:2,10,1,yes,0,0,0,weapon,0,0x0,	SR_TIGERCANNON,Tiger Cannon
 2331,0,6,1,0,0,0,10,0,no,0,0,0,none,0,0x0,		SR_HELLGATE,Hell Gate
 2332,0,6,4,-1,0x2,3,5,1,no,0,0,0,weapon,0,0x0,	SR_RAMPAGEBLASTER,Rampage Blaster
-2333,0,6,4,0,0x1,0,5,1,no,0,0,0,none,8,0x0,		SR_CRESCENTELBOW,Crescent Elbow
+2333,0,6,4,0,0x1,0,5,1,no,0,0,0,none,7,0x0,		SR_CRESCENTELBOW,Crescent Elbow
 2334,0,6,4,0,0x3,1:1:2:2:3,5,1,no,0,0,0,none,0,0x0,	SR_CURSEDCIRCLE,Cursed Circle
 2335,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0,		SR_LIGHTNINGWALK,Lightning Walk
 2336,7:8:9:10:11,6,1,-1,0,0,5,1,no,0,0,0,weapon,2:3:4:5:6,0x0,	SR_KNUCKLEARROW,Knuckle Arrow
@@ -1262,21 +1262,21 @@
 3003,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0,0x0,		KO_LEFT,Left Hand Mastery
 3004,3:4:5:6:7,8,1,-1,0,0,5,-2,no,0,0,0,weapon,0,0x0,	KO_JYUMONJIKIRI,Cross Strike
 3005,2,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,		KO_SETSUDAN,Soul Sever
-3006,7:8:9:10:11,6,2,0,0x2,2,5,0,no,0,0,0,weapon,0,0x0,	KO_BAKURETSU,Bakuretsu Kunai
-3007,0,6,4,-1,0x42,4:4:4:4:5,5,0,no,0,0,0,misc,0,0x0,	KO_HAPPOKUNAI,Happo Kunai
-3008,9,8,2,0,0x52,2,10,-10,no,0,0x18000,0,misc,0,0x0,	KO_MUCHANAGE,Mucha Nage
+3006,7:8:9:10:11,6,2,-1,0x42,2,5,1,no,0,0,0,weapon,0,0x0,	KO_BAKURETSU,Bakuretsu Kunai
+3007,5,6,4,-1,0x42,4:4:4:4:5,5,1,no,0,0,0,weapon,0,0x0,	KO_HAPPOKUNAI,Happo Kunai
+3008,11,8,2,0,0x56,1:1:1:1:1:1:1:1:1:2,10,-10,no,0,0,0,misc,0,0x0,	KO_MUCHANAGE,Mucha Nage
 3009,9:10:11:12:13,8,2,-1,0x2,3,5,2,no,0,0,0,weapon,0,0x0,	KO_HUUMARANKA,Huuma Shuriken Ranka 
-3010,3,6,4,0,0x43,0,5,1,no,0,0x80,0,misc,0,0x0,	KO_MAKIBISHI,Makibishi
+3010,3,6,4,0,0x52,0,5,1,no,0,0x80,0,weapon,0,0x10,	KO_MAKIBISHI,Makibishi
 3011,0,6,4,0,0x1,0,5,0,yes,0,0,0,none,0,0x0,	KO_MEIKYOUSISUI,Meikyo Shisui
-3012,0,6,4,0,0x1,0,5,0,no,0,0,1,none,7,0x0,		KO_ZANZOU,Zanzou
+3012,0,6,4,0,0x1,0,5,0,no,0,0,1,none,3:4:5:6:7,0x0,	KO_ZANZOU,Zanzou
 3013,5,6,1,0,0x1,0,5,0,no,0,0,0,none,0,0x0,		KO_KYOUGAKU,Kyougaku
 3014,5,6,1,0,0x1,0,5,0,no,0,0,0,none,0,0x0,		KO_JYUSATSU,Jyusatsu
 3015,0,6,4,3,0x1,0,1,1,no,0,0,0,none,0,0x0,		KO_KAHU_ENTEN,Kahu Enten
 3016,0,6,4,1,0x1,0,1,1,no,0,0,0,none,0,0x0,		KO_HYOUHU_HUBUKI,Hyouhu Hubuki
 3017,0,6,4,4,0x1,0,1,1,no,0,0,0,none,0,0x0,		KO_KAZEHU_SEIRAN,Kazehu Seiran
-3018,0,6,4,2,0x1,0,1,1,no,0,0,0,none,0,0x0,		KO_DOHU_KOUKAI,Dohu Koukai	
-3019,11,6,1,0,0,0,5,0,no,0,0,0,weapon,0,0x0,	KO_KAIHOU,Technique Kaihou
-3020,7,6,2,0,0,0,1,3,yes,0,0,0,magic,0,0x0,		KO_ZENKAI,Zenkai
+3018,0,6,4,2,0x1,0,1,1,no,0,0,0,none,0,0x0,		KO_DOHU_KOUKAI,Dohu Koukai
+3019,11,6,1,0,0,0,1,1,no,0,0,0,magic,0,0x0,		KO_KAIHOU,Technique Kaihou
+3020,7,6,2,0,0,0,1,1,yes,0,0,0,magic,0,0x0,		KO_ZENKAI,Zenkai
 3021,5:6:7:8:9,6,16,0,0x1,0,5,1,no,0,0,0,none,0,0x0,	KO_GENWAKU,Genwaku
 3022,0,6,4,0,0x1,0,5,0,no,0,0,0,none,0,0x0,		KO_IZAYOI,Izayoi
 3023,0,6,4,0,0x3,2:3:4:5:6,5,0,no,0,0,0,none,0,0x0,	KG_KAGEHUMI,Kagehumi

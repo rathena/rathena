@@ -188,6 +188,14 @@ View: For normal items, defines a replacement view-sprite for the item (eg:
 		20: Shotguns
 		21: Grenade launchers
 		22: Fuuma Shurikens
+		23: Two-handed staves
+		24: Max Type
+		25: Dual-wield Daggers
+		26: Dual-wield Swords
+		27: Dual-wield Axes
+		28: Dagger + Sword
+		29: Dagger + Axe
+		30: Sword + Axe
 
 	For ammo, the types are:
 		1: Arrows
