@@ -2260,6 +2260,13 @@ int map_addinstancemap(const char *name, int id)
 		snprintf(map[dst_m].name, sizeof(map[dst_m].name),"%.3d%s", id, iname);
 	map[dst_m].name[MAP_NAME_LENGTH-1] = '\0';
 
+	// Mimic questinfo
+	if( map[src_m].qi_count ) {
+		map[dst_m].qi_count = map[src_m].qi_count;
+		CREATE( map[dst_m].qi_data, struct questinfo, map[dst_m].qi_count );
+		memcpy( map[dst_m].qi_data, map[src_m].qi_data, map[dst_m].qi_count * sizeof(struct questinfo) );
+	}
+
 	map[dst_m].m = dst_m;
 	map[dst_m].instance_id = id;
 	map[dst_m].users = 0;
@@ -2355,6 +2362,9 @@ int map_delinstancemap(int m)
 
 	map_removemapdb(&map[m]);
 	memset(&map[m], 0x00, sizeof(map[0]));
+
+	if( map[m].qi_data )
+		aFree(map[m].qi_data);
 
 	// Make delete timers invalid to avoid errors
 	map[m].mob_delete_timer = INVALID_TIMER;
@@ -3102,6 +3112,12 @@ void map_flags_init(void)
 		// adjustments
 		if( battle_config.pk_mode )
 			map[i].flag.pvp = 1; // make all maps pvp for pk_mode [Valaris]
+
+		if( map[i].qi_data )
+			aFree(map[i].qi_data);
+
+		map[i].qi_data = NULL;
+		map[i].qi_count = 0;
 	}
 }
 
@@ -3678,6 +3694,37 @@ int log_sql_init(void)
 	return 0;
 }
 
+void map_add_questinfo(int m, struct questinfo *qi) {
+	unsigned short i;
+
+	/* duplicate, override */
+	for(i = 0; i < map[m].qi_count; i++) {
+		if( map[m].qi_data[i].nd == qi->nd )
+			break;
+	}
+
+	if( i == map[m].qi_count )
+		RECREATE(map[m].qi_data, struct questinfo, ++map[m].qi_count);
+
+	memcpy(&map[m].qi_data[i], qi, sizeof(struct questinfo));
+}
+
+bool map_remove_questinfo(int m, struct npc_data *nd) {
+	unsigned short i;
+
+	for(i = 0; i < map[m].qi_count; i++) {
+		struct questinfo *qi = &map[m].qi_data[i];
+		if( qi->nd == nd ) {
+			memset(&map[m].qi_data[i], 0, sizeof(struct questinfo));
+			if( i != --map[m].qi_count )
+				memmove(&map[m].qi_data[i],&map[m].qi_data[i+1],sizeof(struct questinfo)*(map[m].qi_count-i));
+			return true;
+		}
+	}
+
+	return false;
+}
+
 /**
  * @see DBApply
  */
@@ -3813,6 +3860,7 @@ void do_final(void)
 		if(map[i].cell) aFree(map[i].cell);
 		if(map[i].block) aFree(map[i].block);
 		if(map[i].block_mob) aFree(map[i].block_mob);
+		if(map[i].qi_data) aFree(map[i].qi_data);
 		if(battle_config.dynamic_mobs) { //Dynamic mobs flag by [random]
 			if(map[i].mob_delete_timer != INVALID_TIMER)
 				delete_timer(map[i].mob_delete_timer, map_removemobs_timer);

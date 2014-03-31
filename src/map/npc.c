@@ -1945,6 +1945,9 @@ int npc_unload(struct npc_data* nd, bool single) {
 			aFree(nd->path);/* remove now that no other instances exist */
 		}
 	}
+	
+	if( single && nd->bl.m != -1 )
+		map_remove_questinfo(nd->bl.m, nd);
 
 	if( (nd->subtype == SHOP || nd->subtype == CASHSHOP || nd->subtype == ITEMSHOP || nd->subtype == POINTSHOP) && nd->src_id == 0) //src check for duplicate shops [Orcao]
 		aFree(nd->u.shop.shop_item);
