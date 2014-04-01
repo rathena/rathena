@@ -18827,6 +18827,8 @@ void skill_init_unit_layout (void) {
 		pos++;
 	}
 
+	if( pos >= MAX_SKILL_UNIT_LAYOUT )
+		ShowError("skill_init_unit_layout: The skill_unit_layout has met the limit or overflowed (pos=%d)\n", pos);
 }
 
 void skill_init_nounit_layout (void) {
@@ -18993,6 +18995,9 @@ void skill_init_nounit_layout (void) {
 		}
 		pos++;
 	}
+
+	if( pos >= MAX_SKILL_UNIT_LAYOUT )
+		ShowError("skill_init_nounit_layout: The skill_nounit_layout has met the limit or overflowed (pos=%d)\n", pos);
 }
 
 int skill_block_check(struct block_list *bl, sc_type type , uint16 skill_id) {
