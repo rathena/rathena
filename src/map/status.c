@@ -334,9 +334,9 @@ void initChangeTables(void)
 	add_sc( MO_BLADESTOP		, SC_BLADESTOP_WAIT	);
 	set_sc( MO_BLADESTOP		, SC_BLADESTOP	, SI_BLADESTOP	, SCB_NONE );
 	set_sc( MO_EXPLOSIONSPIRITS	, SC_EXPLOSIONSPIRITS	, SI_EXPLOSIONSPIRITS	, SCB_CRI|SCB_REGEN );
-	set_sc( MO_EXTREMITYFIST	, SC_EXTREMITYFIST	, SI_EXTREMITYFIST	, SCB_REGEN );
+	set_sc( MO_EXTREMITYFIST	, SC_EXTREMITYFIST	, SI_BLANK			, SCB_REGEN );
 #ifdef RENEWAL
-	set_sc( MO_EXTREMITYFIST	, SC_EXTREMITYFIST2	, SI_BLANK			, SCB_NONE );
+	set_sc( MO_EXTREMITYFIST	, SC_EXTREMITYFIST2	, SI_EXTREMITYFIST	, SCB_NONE );
 #endif
 	set_sc( SA_MAGICROD		, SC_MAGICROD	, SI_MAGICROD	, SCB_NONE );
 	set_sc( SA_AUTOSPELL		, SC_AUTOSPELL		, SI_AUTOSPELL		, SCB_NONE );
@@ -3288,9 +3288,12 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	if(sd->def_rate < 0)
 		sd->def_rate = 0;
 	if(sd->def_rate != 100) {
-		i =  status->def * sd->def_rate/100;
+		i = status->def * sd->def_rate/100;
 		status->def = cap_value(i, DEFTYPE_MIN, DEFTYPE_MAX);
 	}
+
+	if(pc_isriding(sd) && pc_checkskill(sd, NC_MAINFRAME) > 0)
+		status->def += 20 + (pc_checkskill(sd, NC_MAINFRAME) * 20);
 
 #ifndef RENEWAL
 	if (!battle_config.weapon_defense_type && status->def > battle_config.max_def) {
@@ -3878,27 +3881,32 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 	if (!sc || !sc->count)
 		return;
 
-	if (
-		(sc->data[SC_POISON] && !sc->data[SC_SLOWPOISON])
+	if ((sc->data[SC_POISON] && !sc->data[SC_SLOWPOISON])
 		|| (sc->data[SC_DPOISON] && !sc->data[SC_SLOWPOISON])
 		|| sc->data[SC_BERSERK]
 		|| sc->data[SC_TRICKDEAD]
 		|| sc->data[SC_BLEEDING]
 		|| sc->data[SC_MAGICMUSHROOM]
 		|| sc->data[SC_SATURDAYNIGHTFEVER]
-	)	// No regen
-		regen->flag = 0;
+		|| sc->data[SC_REBOUND])
+		regen->flag = 0; // No HP or SP regen
 
-	if ( sc->data[SC_DANCING] || sc->data[SC_OBLIVIONCURSE] || sc->data[SC_REBOUND] || sc->data[SC_VITALITYACTIVATION] ||
+	if (sc->data[SC_DANCING] ||
 #ifdef RENEWAL
 		sc->data[SC_MAXIMIZEPOWER] ||
 #endif
-		( bl->type == BL_PC && (((TBL_PC*)bl)->class_&MAPID_UPPERMASK) == MAPID_MONK &&
-		(sc->data[SC_EXTREMITYFIST] || (sc->data[SC_EXPLOSIONSPIRITS] && (!sc->data[SC_SPIRIT] || sc->data[SC_SPIRIT]->val2 != SL_MONK)))
-		)
-	) {
-		regen->flag &=~RGN_SP; // No natural SP regen
-	}
+#ifndef RENEWAL
+		(bl->type == BL_PC && (((TBL_PC*)bl)->class_&MAPID_UPPERMASK) == MAPID_MONK &&
+		(sc->data[SC_EXTREMITYFIST] || (sc->data[SC_EXPLOSIONSPIRITS]) && (!sc->data[SC_SPIRIT] || sc->data[SC_SPIRIT]->val2 != SL_MONK)) ||
+#endif
+		sc->data[SC_OBLIVIONCURSE] || sc->data[SC_VITALITYACTIVATION])
+		regen->flag &= ~RGN_SP; // No natural SP regen
+
+#ifdef RENEWAL
+	if (bl->type == BL_PC && (((TBL_PC*)bl)->class_&MAPID_UPPERMASK) == MAPID_MONK &&
+		sc->data[SC_EXPLOSIONSPIRITS] && (!sc->data[SC_SPIRIT] || sc->data[SC_SPIRIT]->val2 != SL_MONK))
+		regen->rate.sp = regen->rate.sp / 2; // 50% SP regen while in Fury State
+#endif
 
 	if(sc->data[SC_TENSIONRELAX]) {
 		regen->rate.hp += 2;
@@ -3919,7 +3927,7 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 	}
 	if(sc->data[SC_GT_REVITALIZE]) {
 		regen->hp += cap_value(regen->hp*sc->data[SC_GT_REVITALIZE]->val3/100, 1, SHRT_MAX);
-		regen->state.walk= 1;
+		regen->state.walk = 1;
 	}
 	if ((sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 1) // If insignia lvl 1
 	        || (sc->data[SC_WATER_INSIGNIA] && sc->data[SC_WATER_INSIGNIA]->val1 == 1)
@@ -5564,6 +5572,8 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 		def -= def * sc->data[SC_ASH]->val3/100;
 	if( sc->data[SC_OVERED_BOOST] )
 		def -= def * sc->data[SC_OVERED_BOOST]->val3 / 100;
+	if(sc->data[SC_UNLIMIT])
+		return 1;
 
 	return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);;
 }
@@ -5628,6 +5638,8 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 		def2 -= def2 * sc->data[SC_PARALYSIS]->val2 / 100;
 	if(sc->data[SC_EQC])
 		def2 -= def2 * sc->data[SC_EQC]->val2 / 100;
+	if(sc->data[SC_UNLIMIT])
+		return 1;
 
 #ifdef RENEWAL
 	return (short)cap_value(def2,SHRT_MIN,SHRT_MAX);
@@ -5687,6 +5699,8 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 	}
 	if (sc->data[SC_ODINS_POWER])
 		mdef -= 20;
+	if(sc->data[SC_UNLIMIT])
+		return 1;
 
 	return (defType)cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX);
 }
@@ -5716,6 +5730,8 @@ static signed short status_calc_mdef2(struct block_list *bl, struct status_chang
 		mdef2 -= mdef2 * sc->data[SC_MINDBREAKER]->val3/100;
 	if(sc->data[SC_ANALYZE])
 		mdef2 -= mdef2 * ( 14 * sc->data[SC_ANALYZE]->val1 ) / 100;
+	if(sc->data[SC_UNLIMIT])
+		return 1;
 
 #ifdef RENEWAL
 	return (short)cap_value(mdef2,SHRT_MIN,SHRT_MAX);
@@ -8497,6 +8513,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 		case SC_TENSIONRELAX:
 			if (sd) {
+				skill_sit(sd, 1);
 				pc_setsit(sd);
 				clif_sitting(&sd->bl);
 			}
@@ -9216,8 +9233,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_SITDOWN_FORCE:
 		case SC_BANANA_BOMB_SITDOWN:
 			if( sd && !pc_issit(sd) ) {
+				skill_sit(sd, 1);
 				pc_setsit(sd);
-				skill_sit(sd,1);
 				clif_sitting(bl);
 			}
 			break;
@@ -9299,6 +9316,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_RAISINGDRAGON:
 			val3 = tick / 5000;
 			tick_time = 5000; // [GodLesZ] tick time
+			break;
+		case SC_GT_ENERGYGAIN:
+			val3 = 10 + 5 * val1; // Sphere gain chance.
 			break;
 		case SC_GT_CHANGE:
 			{ // Take note there is no def increase as skill desc says. [malufett]
@@ -11685,8 +11705,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		if( --(sce->val4) > 0 ) {
 			status_charge(bl,0,sce->val2);	// Reduce 8 every 10 seconds.
 			if( sd && !pc_issit(sd) ) { // Force to sit every 10 seconds.
-				pc_stop_walking(sd,1|4);
-				pc_stop_attack(sd);
+				skill_sit(sd, 1);
 				pc_setsit(sd);
 				clif_sitting(bl);
 			}

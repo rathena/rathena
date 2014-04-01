@@ -1347,9 +1347,9 @@ int pc_reg_received(struct map_session_data *sd)
 	if (sd->expiration_time != 0) { // don't display if it's unlimited or an unknown value
 		time_t exp_time = sd->expiration_time;
 		char tmpstr[1024];
-			strftime(tmpstr, sizeof(tmpstr) - 1, msg_txt(sd,501), localtime(&sd->expiration_time)); // "Your account time limit is: %d-%m-%Y %H:%M:%S."
+			strftime(tmpstr, sizeof(tmpstr) - 1, msg_txt(sd,501), localtime(&exp_time)); // "Your account time limit is: %d-%m-%Y %H:%M:%S."
 			clif_wis_message(sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
-		
+
 		pc_expire_check(sd);
 	}
 

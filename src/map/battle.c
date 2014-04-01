@@ -1149,7 +1149,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			TBL_HOM *hd = BL_CAST(BL_HOM,bl); // We add a sphere for when the Homunculus is being hit
 			if (hd && (rnd()%100<50) ) hom_addspiritball(hd, 10); // According to WarpPortal, this is a flat 50% chance
 		}
-		if( sd && (sce = sc->data[SC_GT_ENERGYGAIN]) && flag&BF_WEAPON && rnd()%100 < 10 + 5 * sc->data[SC_GT_ENERGYGAIN]->val1 ) {
+		if( sd && (sce = sc->data[SC_GT_ENERGYGAIN]) && flag&BF_WEAPON && rnd()%100 < sce->val3 ) {
 			int spheres = 5;
 
 			if( sc->data[SC_RAISINGDRAGON] )
@@ -1204,8 +1204,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			TBL_HOM *hd = BL_CAST(BL_HOM,src); //when attacking
 			if (hd && (rnd()%100<50) ) hom_addspiritball(hd, 10); // According to WarpPortal, this is a flat 50% chance
 		}
-		if( sc->data[SC_UNLIMIT] && (flag&(BF_WEAPON|BF_LONG))==(BF_WEAPON|BF_LONG) )
-			DAMAGE_ADDRATE(sc->data[SC_UNLIMIT]->val2);
 	} //End of caster SC_ check
 
 	//PK damage rates
@@ -3592,6 +3590,9 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			skillratio = (100 * skill_lv) + (200 + status_get_int(src));
 			RE_LVL_DMOD(100);
 			break;
+		case GN_WALLOFTHORN:
+			skillratio += 10 * skill_lv;
+			break;
 		case GN_CRAZYWEED_ATK:
 			skillratio += 400 + 100 * skill_lv;
 			break;
@@ -3977,10 +3978,21 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, u
 				ATK_ADD(wd.damage, wd.damage2, sc->data[SC_FLASHCOMBO]->val2);
 				RE_ALLATK_ADD(wd, sc->data[SC_FLASHCOMBO]->val2);
 			}
-			// Monster Transformation bonus
-			if(wd.flag&BF_LONG && sc->data[SC_MTF_RANGEATK]) {
+			if(wd.flag&BF_LONG && sc->data[SC_MTF_RANGEATK]) { // Monster Transformation bonus
 				ATK_ADD(wd.damage, wd.damage2, 25);
 				RE_ALLATK_ADD(wd, 25);
+			}
+			if(sc->data[SC_UNLIMIT] && (wd.flag&(BF_LONG|BF_MAGIC)) == BF_LONG) {
+				switch(skill_id) {
+					case RA_WUGDASH:
+					case RA_WUGSTRIKE:
+					case RA_WUGBITE:
+						break;
+					default:
+						ATK_ADDRATE(wd.damage, wd.damage2, sc->data[SC_UNLIMIT]->val2);
+						RE_ALLATK_ADDRATE(wd, sc->data[SC_UNLIMIT]->val2);
+						break;
+				}
 			}
 		}
 	return wd;
@@ -4036,7 +4048,7 @@ struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list 
 		def2 = (def2*(100-i))/100;
 	}
 
-	if( tsc && tsc->data[SC_GT_REVITALIZE] && tsc->data[SC_GT_REVITALIZE]->val4 )
+	if( tsc && tsc->data[SC_GT_REVITALIZE] && tsc->data[SC_GT_REVITALIZE]->val2 )
 		def2 += tsc->data[SC_GT_REVITALIZE]->val4;
 
 	if( tsc && tsc->data[SC_CAMOUFLAGE] ){
@@ -4380,7 +4392,7 @@ struct Damage battle_calc_weapon_final_atk_modifiers(struct Damage wd, struct bl
 			status_change_end(target, SC_REJECTSWORD, INVALID_TIMER);
 	}
 
-	if( tsc && tsc->data[SC_CRESCENTELBOW] && !is_boss(src) && rnd()%100 < tsc->data[SC_CRESCENTELBOW]->val2 ) {
+	if( tsc && tsc->data[SC_CRESCENTELBOW] && !is_boss(src) && wd.flag&BF_SHORT && rnd()%100 < tsc->data[SC_CRESCENTELBOW]->val2 ) {
 		//ATK [{(Target HP / 100) x Skill Level} x Caster Base Level / 125] % + [Received damage x {1 + (Skill Level x 0.2)}]
 		int64 rdamage = 0;
 		int ratio = (int64)(status_get_hp(src) / 100) * tsc->data[SC_CRESCENTELBOW]->val1 * status_get_lv(target) / 125;
@@ -5595,7 +5607,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		}
 
 #ifndef RENEWAL
-        ad.damage += battle_calc_cardfix(BF_MAGIC, src, target, nk, s_ele, 0, ad.damage, 0, ad.flag);
+	ad.damage += battle_calc_cardfix(BF_MAGIC, src, target, nk, s_ele, 0, ad.damage, 0, ad.flag);
 #endif
 	}
 
@@ -6420,7 +6432,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			if( sc->data[SC_RAISINGDRAGON] )
 				spheres += sc->data[SC_RAISINGDRAGON]->val1;
 
-			if( sd && rnd()%100 < 10 + 5 * sc->data[SC_GT_ENERGYGAIN]->val1)
+			if( sd && rnd()%100 < sc->data[SC_GT_ENERGYGAIN]->val3 )
 				pc_addspiritball(sd, skill_get_time2(SR_GENTLETOUCH_ENERGYGAIN, sc->data[SC_GT_ENERGYGAIN]->val1), spheres);
 		}
 		if( sc && sc->data[SC_CRUSHSTRIKE] ){
@@ -6430,20 +6442,21 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				return ATK_DEF;
 			return ATK_MISS;
 		}
-		if (tsc && tsc->data[SC_MTF_MLEATKED] && rnd()%100 < 20)
-			clif_skill_nodamage(target, target, SM_ENDURE, 5, sc_start(src, target, SC_ENDURE, 100, 5, skill_get_time(SM_ENDURE, 5)));
 	}
+
+	if (tsc && tsc->data[SC_MTF_MLEATKED] && rnd()%100 < 20)
+		clif_skill_nodamage(target, target, SM_ENDURE, 5, sc_start(src, target, SC_ENDURE, 100, 5, skill_get_time(SM_ENDURE, 5)));
 
 	if(tsc && tsc->data[SC_KAAHI] && tsc->data[SC_KAAHI]->val4 == INVALID_TIMER && tstatus->hp < tstatus->max_hp)
 		tsc->data[SC_KAAHI]->val4 = add_timer(tick + skill_get_time2(SL_KAAHI,tsc->data[SC_KAAHI]->val1), kaahi_heal_timer, target->id, SC_KAAHI); //Activate heal.
 
-	if( tsc && tsc->data[SC_GT_ENERGYGAIN] ) {
+	if( tsc && tsc->data[SC_GT_ENERGYGAIN] && tsc->data[SC_GT_ENERGYGAIN]->val2 ) {
 		int spheres = 5;
 
-		if( tsc->data[SC_RAISINGDRAGON])
-			spheres += sc->data[SC_RAISINGDRAGON]->val1;
+		if( tsc->data[SC_RAISINGDRAGON] )
+			spheres += tsc->data[SC_RAISINGDRAGON]->val1;
 
-		if( tsd && rnd()%100 < 10 + 5 * tsc->data[SC_GT_ENERGYGAIN]->val1)
+		if( tsd && rnd()%100 < tsc->data[SC_GT_ENERGYGAIN]->val3 )
 			pc_addspiritball(tsd, skill_get_time2(SR_GENTLETOUCH_ENERGYGAIN, tsc->data[SC_GT_ENERGYGAIN]->val1), spheres);
 	}
 

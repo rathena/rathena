@@ -12951,9 +12951,17 @@ BUILDIN_FUNC(skilleffect)
 	struct script_data *data = script_getdata(st, 2);
 
 	get_val(st, data); // Convert into value in case of a variable
-	skill_id=( data_isstring(data) ? skill_name2id(script_getstr(st,2)) : script_getnum(st,2) );
-	skill_lv=script_getnum(st,3);
-	sd=script_rid2sd(st);
+	skill_id = ( data_isstring(data) ? skill_name2id(script_getstr(st,2)) : script_getnum(st,2) );
+	skill_lv = script_getnum(st,3);
+	sd = script_rid2sd(st);
+
+	/* Ensure we're standing because the following packet causes the client to virtually set the char to stand,
+	 * which leaves the server thinking it still is sitting. */
+	if( pc_issit(sd) ) {
+		pc_setstand(sd);
+		skill_sit(sd, 0);
+		clif_standing(&sd->bl);
+	}
 
 	clif_skill_nodamage(&sd->bl,&sd->bl,skill_id,skill_lv,1);
 	return SCRIPT_CMD_SUCCESS;
@@ -18066,9 +18074,8 @@ BUILDIN_FUNC(sit)
 		return SCRIPT_CMD_FAILURE;
 
 	if( !pc_issit(sd) ) {
-		unit_stop_walking(&sd->bl, 1|4);
-		pc_setsit(sd);
 		skill_sit(sd, 1);
+		pc_setsit(sd);
 		clif_sitting(&sd->bl);
 	}
 	return SCRIPT_CMD_SUCCESS;

@@ -10286,8 +10286,8 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 			break;
 
 		sd->idletime = last_tick;
+		skill_sit(sd, 1);
 		pc_setsit(sd);
-		skill_sit(sd,1);
 		clif_sitting(&sd->bl);
 	break;
 	case 0x03: // standup
@@ -10299,7 +10299,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 
 		sd->idletime = last_tick;
 		pc_setstand(sd);
-		skill_sit(sd,0);
+		skill_sit(sd, 0);
 		clif_standing(&sd->bl);
 	break;
 	}

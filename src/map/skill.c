@@ -609,23 +609,6 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 				return true;
 			}
 			break;
-		case WS_CARTBOOST:
-		case BS_HAMMERFALL:
-		case BS_ADRENALINE:
-		case MC_CARTREVOLUTION:
-		case MC_MAMMONITE:
-		case WS_MELTDOWN:
-		case MG_SIGHT:
-		case TF_HIDING:
-			/**
-			 * These skills cannot be used while in mado gear (credits to Xantara)
-			 **/
-			if( pc_ismadogear(sd) ) {
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-				return true;
-			}
-			break;
-
 		case WM_SIRCLEOFNATURE:
 		case WM_SOUND_OF_DESTRUCTION:
 		case SC_MANHOLE:
@@ -775,7 +758,7 @@ struct s_skill_unit_layout* skill_get_unit_layout (uint16 skill_id, uint16 skill
 		return &skill_unit_layout [firewall_unit_pos + dir];
 	else if (skill_id == WZ_ICEWALL)
 		return &skill_unit_layout [icewall_unit_pos + dir];
-	else if( skill_id == WL_EARTHSTRAIN ) //Warlock
+	else if( skill_id == WL_EARTHSTRAIN )
 		return &skill_unit_layout [earthstrain_unit_pos + dir];
 	else if( skill_id == RL_FIRE_RAIN )
 		return &skill_unit_layout[firerain_unit_pos + dir];
@@ -3678,8 +3661,8 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 					if( target->type == BL_PC ) {
 						struct map_session_data *tsd = NULL;
 						if( (tsd = ((TBL_PC*)target)) && !pc_issit(tsd) ) {
+							skill_sit(tsd, 1);
 							pc_setsit(tsd);
-							skill_sit(tsd,1);
 							clif_sitting(&tsd->bl);
 						}
 					}
@@ -9256,7 +9239,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SR_GENTLETOUCH_CHANGE:
 	case SR_GENTLETOUCH_REVITALIZE:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
-			sc_start2(src,bl,type,100,skill_lv,src->id,skill_get_time(skill_id,skill_lv)));
+			sc_start2(src,bl,type,100,skill_lv,bl->id,skill_get_time(skill_id,skill_lv)));
 		break;
 	case SR_FLASHCOMBO:
 		if( sd )
@@ -11669,15 +11652,15 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, uint16 skill
 
 	switch( skill_id ) {
 	case MH_STEINWAND:
+		val2 = 4 + skill_lv;
+		val3 = 300 * skill_lv + 65 * ( status->int_ +  status_get_lv(src) ) + status->max_sp; //nb hp
+		break;
 	case MG_SAFETYWALL:
-	#ifdef RENEWAL
-		if(skill_id == MH_STEINWAND)
-			val2 = 300 * skill_lv + 65 * ( status->int_ +  status_get_lv(src) ) + status->max_sp; //nb hp
-		else
-			val2 = status_get_max_hp(src) * 3;
-	#else
+#ifdef RENEWAL
+		val2 = status_get_max_hp(src) * 3;
+#else
 		val2 = skill_lv+1;
-	#endif
+#endif
 		break;
 	case MG_FIREWALL:
 		if(sc && sc->data[SC_VIOLENTGALE])
@@ -11800,9 +11783,9 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, uint16 skill
 		break;
 	case DC_HUMMING:
 		val1 = 2*skill_lv+status->dex/10; // Hit increase
-		#ifdef RENEWAL
+#ifdef RENEWAL
 			val1 *= 2;
-		#endif
+#endif
 		if(sd)
 			val1 += pc_checkskill(sd,DC_DANCINGLESSON);
 		break;
@@ -12070,6 +12053,7 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, uint16 skill
 			break;
 		case GN_WALLOFTHORN:
 			val1 = 2000 + 2000 * skill_lv;
+			val2 = 20;
 			break;
 		default:
 			if (group->state.song_dance&0x1)
@@ -15704,19 +15688,18 @@ static int skill_sit_count (struct block_list *bl, va_list ap)
 static int skill_sit_in (struct block_list *bl, va_list ap)
 {
 	struct map_session_data *sd;
-	int type =va_arg(ap,int);
+	int type = va_arg(ap,int);
 
-	sd=(struct map_session_data*)bl;
+	sd = (struct map_session_data*)bl;
 
 	if(!pc_issit(sd))
 		return 0;
 
 	if(type&1 && pc_checkskill(sd,RG_GANGSTER) > 0)
-		sd->state.gangsterparadise=1;
+		sd->state.gangsterparadise = 1;
 
-	if(type&2 && (pc_checkskill(sd,TK_HPTIME) > 0 || pc_checkskill(sd,TK_SPTIME) > 0 ))
-	{
-		sd->state.rest=1;
+	if(type&2 && (pc_checkskill(sd,TK_HPTIME) > 0 || pc_checkskill(sd,TK_SPTIME) > 0 )) {
+		sd->state.rest = 1;
 		status_calc_regen(bl, &sd->battle_status, &sd->regen);
 		status_calc_regen_rate(bl, &sd->regen, &sd->sc);
 	}
@@ -15727,12 +15710,14 @@ static int skill_sit_in (struct block_list *bl, va_list ap)
 static int skill_sit_out (struct block_list *bl, va_list ap)
 {
 	struct map_session_data *sd;
-	int type =va_arg(ap,int);
-	sd=(struct map_session_data*)bl;
+	int type = va_arg(ap,int);
+
+	sd = (struct map_session_data*)bl;
+
 	if(sd->state.gangsterparadise && type&1)
-		sd->state.gangsterparadise=0;
+		sd->state.gangsterparadise = 0;
 	if(sd->state.rest && type&2) {
-		sd->state.rest=0;
+		sd->state.rest = 0;
 		status_calc_regen(bl, &sd->battle_status, &sd->regen);
 		status_calc_regen_rate(bl, &sd->regen, &sd->sc);
 	}
@@ -15745,27 +15730,25 @@ int skill_sit (struct map_session_data *sd, int type)
 	int range = 0, lv;
 	nullpo_ret(sd);
 
-
-	if((lv = pc_checkskill(sd,RG_GANGSTER)) > 0) {
-		flag|=1;
+	if((lv = pc_checkskill(sd, RG_GANGSTER)) > 0) {
+		flag |= 1;
 		range = skill_get_splash(RG_GANGSTER, lv);
 	}
-	if((lv = pc_checkskill(sd,TK_HPTIME)) > 0) {
-		flag|=2;
+	if((lv = pc_checkskill(sd, TK_HPTIME)) > 0) {
+		flag |= 2;
 		range = skill_get_splash(TK_HPTIME, lv);
-	}
-	else if ((lv = pc_checkskill(sd,TK_SPTIME)) > 0) {
-		flag|=2;
+	} else if ((lv = pc_checkskill(sd, TK_SPTIME)) > 0) {
+		flag |= 2;
 		range = skill_get_splash(TK_SPTIME, lv);
 	}
 
 	if( type ) {
-		clif_status_load(&sd->bl,SI_SIT,1);
 		// TODO: Include the case of using the Insert key
-		pc_stop_attack(sd); // Stop players who may be attacking to not de-sync
-	} else {
-		clif_status_load(&sd->bl,SI_SIT,0);
-	}
+		pc_stop_walking(sd, 1|4); // Stop players who may be walking
+		pc_stop_attack(sd); // Stop players who may be attacking
+		clif_status_load(&sd->bl, SI_SIT, 1);
+	} else
+		clif_status_load(&sd->bl, SI_SIT, 0);
 
 	if (!flag) return 0;
 
@@ -17029,7 +17012,7 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 			case UNT_WALLOFTHORN:
 				if( unit->val1 <= 0 ) {
 					group->unit_id = UNT_USED_TRAPS;
-					group->limit = DIFF_TICK(tick, group->tick) + 1500;
+					group->limit = DIFF_TICK(tick, group->tick);
 				}
 				break;
 		}
@@ -18582,7 +18565,7 @@ void skill_init_unit_layout (void) {
 			switch (i) {
 				case MG_FIREWALL:
 				case WZ_ICEWALL:
-				case WL_EARTHSTRAIN://Warlock
+				case WL_EARTHSTRAIN:
 				case RL_FIRE_RAIN:
 					// these will be handled later
 					break;
