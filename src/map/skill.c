@@ -11794,16 +11794,16 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, uint16 skill
 		//For some reason at level 10 the base delay reduction is 50%.
 		val2 = (skill_lv<10?3*skill_lv:50)+status->int_/5; // After-cast delay reduction
 		if(sd){
-			val1 += 2*pc_checkskill(sd,BA_MUSICALLESSON);
+			val1 += pc_checkskill(sd,BA_MUSICALLESSON);
 			val2 += 2*pc_checkskill(sd,BA_MUSICALLESSON);
 		}
 		break;
 	case DC_DONTFORGETME:
-		val1 = status->dex/10 + 3*skill_lv + 5; // ASPD decrease
-		val2 = status->agi/10 + 3*skill_lv + 5; // Movement speed adjustment.
+		val1 = 30 * skill_lv + status->dex; // ASPD decrease
+		val2 = 20 * skill_lv + status->agi; // Movement speed adjustment.
 		if(sd){
 			val1 += pc_checkskill(sd,DC_DANCINGLESSON);
-			val2 += pc_checkskill(sd,DC_DANCINGLESSON);
+			val2 += 10 * ((pc_checkskill(sd,DC_DANCINGLESSON) + 1) / 2);
 		}
 		break;
 	case DC_SERVICEFORYOU:

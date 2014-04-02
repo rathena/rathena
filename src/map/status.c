@@ -5921,7 +5921,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 * @param bl: Object to change aspd [PC|MOB|HOM|MER|ELEM]
 * @param sc: Object's status change information
 * @param flag:	flag&1 - fixed value [malufett]
-* 		flag&2 - percentage value
+* 				flag&2 - percentage value
 * @return modified aspd
 **/
 static short status_calc_aspd(struct block_list *bl, struct status_change *sc, short flag)
@@ -5938,13 +5938,11 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, s
 		pots += sc->data[i]->val1;
 
 	if( !sc->data[SC_QUAGMIRE] ) {
-		if(sc->data[SC_STAR_COMFORT])
-			skills1 = 5; // Needs more info
-
 		if(sc->data[SC_TWOHANDQUICKEN] && skills1 < 7)
 			skills1 = 7;
 
-		if(sc->data[SC_ONEHAND] && skills1 < 7) skills1 = 7;
+		if(sc->data[SC_ONEHAND] && skills1 < 7)
+			skills1 = 7;
 
 		if(sc->data[SC_MERC_QUICKEN] && skills1 < 7) // Needs more info
 			skills1 = 7;
@@ -5958,49 +5956,29 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, s
 		if(sc->data[SC_SPEARQUICKEN] && skills1 < 7)
 			skills1 = 7;
 
-		if(sc->data[SC_GATLINGFEVER] && skills1 < 9) // Needs more info
-			skills1 = 9;
-
 		if(sc->data[SC_FLEET] && skills1 < 5)
 			skills1 = 5;
-
-		if(sc->data[SC_ASSNCROS] && skills1 < sc->data[SC_ASSNCROS]->val2/10) {
-			if (bl->type!=BL_PC)
-				skills1 = sc->data[SC_ASSNCROS]->val2/10;
-			else
-				switch(((TBL_PC*)bl)->status.weapon) {
-					case W_BOW:
-					case W_REVOLVER:
-					case W_RIFLE:
-					case W_GATLING:
-					case W_SHOTGUN:
-					case W_GRENADE:
-						break;
-					default:
-						skills1 = sc->data[SC_ASSNCROS]->val2/10;
-				}
-		}
 	}
 
 	if(sc->data[SC_BERSERK] && skills1 < 15)
 		skills1 = 15;
-	else if(sc->data[SC_MADNESSCANCEL] && skills1 < 15) // Needs more info
-		skills1 = 15;
+	else if(sc->data[SC_MADNESSCANCEL] && skills1 < 20)
+		skills1 = 20;
 
 	if(sc->data[SC_DONTFORGETME])
-		skills2 -= sc->data[SC_DONTFORGETME]->val2; // Needs more info
+		skills2 -= sc->data[SC_DONTFORGETME]->val2 / 10;
 	if(sc->data[SC_LONGING])
-		skills2 -= sc->data[SC_LONGING]->val2; // Needs more info
+		skills2 -= sc->data[SC_LONGING]->val2 / 10;
 	if(sc->data[SC_STEELBODY])
 		skills2 -= 25;
 	if(sc->data[SC_SKA])
 		skills2 -= 25;
 	if(sc->data[SC_DEFENDER])
-		skills2 -= sc->data[SC_DEFENDER]->val4; // Needs more info
-	if(sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_ENEMY) // Needs more info
-		skills2 -= 25;
+		skills2 -= sc->data[SC_DEFENDER]->val4 / 10;
+	if(sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_ENEMY)
+		skills2 -= 75;
 	if(sc->data[SC_GRAVITATION])
-		skills2 -= sc->data[SC_GRAVITATION]->val2; // Needs more info
+		skills2 -= sc->data[SC_GRAVITATION]->val2 / 10; // Needs more info
 	if(sc->data[SC_JOINTBEAT]) { // Needs more info
 		if( sc->data[SC_JOINTBEAT]->val2&BREAK_WRIST )
 			skills2 -= 25;
@@ -6008,15 +5986,15 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, s
 			skills2 -= 10;
 	}
 	if( sc->data[SC_FREEZING] )
-		skills2 -= 30;
+		skills2 -= 15;
 	if( sc->data[SC_HALLUCINATIONWALK_POSTDELAY] )
 		skills2 -= 50;
 	if( sc->data[SC_PARALYSE] )
 		skills2 -= 10;
 	if( sc->data[SC__BODYPAINT] )
-		skills2 -=  2 + 5 * sc->data[SC__BODYPAINT]->val1;
+		skills2 -= 5 * sc->data[SC__BODYPAINT]->val1;
 	if( sc->data[SC__INVISIBILITY] )
-		skills2 -= sc->data[SC__INVISIBILITY]->val2 ;
+		skills2 -= sc->data[SC__INVISIBILITY]->val2;
 	if( sc->data[SC_SWINGDANCE] )
 		skills2 += sc->data[SC_SWINGDANCE]->val2;
 	if( sc->data[SC_DANCEWITHWUG] )
@@ -6029,14 +6007,40 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, s
 		skills2 += sc->data[SC_GT_CHANGE]->val3;
 	if( sc->data[SC_MELON_BOMB] )
 		skills2 -= sc->data[SC_MELON_BOMB]->val1;
+	if( sc->data[SC_PAIN_KILLER] )
+		skills2 -= sc->data[SC_PAIN_KILLER]->val2;
 	if( sc->data[SC_BOOST500] )
 		skills2 += sc->data[SC_BOOST500]->val1;
 	if( sc->data[SC_EXTRACT_SALAMINE_JUICE] )
 		skills2 += sc->data[SC_EXTRACT_SALAMINE_JUICE]->val1;
+	if( sc->data[SC_GOLDENE_FERSE] )
+		skills2 += sc->data[SC_GOLDENE_FERSE]->val3;
 	if( sc->data[SC_INCASPDRATE] )
 		skills2 += sc->data[SC_INCASPDRATE]->val1;
+	if( sc->data[SC_GATLINGFEVER] )
+		skills2 += sc->data[SC_GATLINGFEVER]->val1;
+	if( sc->data[SC_STAR_COMFORT] )
+		skills2 += sc->data[SC_STAR_COMFORT]->val1;
 	if( sc->data[SC_HEAT_BARREL] )
 		skills2 += sc->data[SC_HEAT_BARREL]->val3;
+
+	if(sc->data[SC_ASSNCROS] && !skills1) {
+		if (bl->type!=BL_PC)
+			skills2 += sc->data[SC_ASSNCROS]->val2/10;
+		else
+			switch(((TBL_PC*)bl)->status.weapon) {
+				case W_BOW:
+				case W_REVOLVER:
+				case W_RIFLE:
+				case W_GATLING:
+				case W_SHOTGUN:
+				case W_GRENADE:
+					break;
+				default:
+					skills2 += sc->data[SC_ASSNCROS]->val2/10;
+					break;
+			}
+	}
 
 	return ( flag&1? (skills1 + pots) : skills2 );
 }
@@ -6156,7 +6160,7 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		aspd_rate -= sc->data[i]->val2;
 
 	if(sc->data[SC_DONTFORGETME])
-		aspd_rate += 10 * sc->data[SC_DONTFORGETME]->val2;
+		aspd_rate += sc->data[SC_DONTFORGETME]->val2;
 	if(sc->data[SC_LONGING])
 		aspd_rate += sc->data[SC_LONGING]->val2;
 	if(sc->data[SC_STEELBODY])
@@ -6176,15 +6180,13 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 			aspd_rate += 100;
 	}
 	if( sc->data[SC_FREEZING] )
-		aspd_rate += 300;
+		aspd_rate += 150;
 	if( sc->data[SC_HALLUCINATIONWALK_POSTDELAY] )
 		aspd_rate += 500;
-	if( sc->data[SC_FIGHTINGSPIRIT] && sc->data[SC_FIGHTINGSPIRIT]->val2 )
-		aspd_rate -= sc->data[SC_FIGHTINGSPIRIT]->val2;
 	if( sc->data[SC_PARALYSE] )
 		aspd_rate += 100;
 	if( sc->data[SC__BODYPAINT] )
-		aspd_rate +=  200 + 50 * sc->data[SC__BODYPAINT]->val1;
+		aspd_rate +=  50 * sc->data[SC__BODYPAINT]->val1;
 	if( sc->data[SC__INVISIBILITY] )
 		aspd_rate += sc->data[SC__INVISIBILITY]->val2 * 10 ;
 	if( sc->data[SC__GROOMY] )
@@ -8266,10 +8268,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_VIOLENTGALE:
 			val2 = val1*3; // Flee increase
-		#ifndef RENEWAL
+#ifndef RENEWAL
 			if (status->def_ele != ELE_WIND)
 				val2 = 0;
-		#endif
+#endif
 			break;
 		case SC_DELUGE:
 			val2 = deluge_eff[val1-1]; // HP increase
@@ -8989,7 +8991,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		/* Arch Bishop */
 		case SC_RENOVATIO:
 			val4 = tick / 5000;
-			tick = -1; // Duration sent to the client should be infinite
 			tick_time = 5000;
 			break;
 		case SC_SECRAMENT:
@@ -9001,7 +9002,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_WEAPONBLOCKING:
 			val2 = 10 + 2 * val1; // Chance
 			val4 = tick / 3000;
-			tick = -1; // Duration sent to the client should be infinite
 			tick_time = 3000; // [GodLesZ] tick time
 			break;
 		case SC_TOXIN:
@@ -9153,7 +9153,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_GN_CARTBOOST:
 			if( val1 < 3 )
 				val2 = 50;
-			else if( val1 < 5 )
+			else if( val1 > 2 && val1 < 5 )
 				val2 = 75;
 			else
 				val2 = 100;
@@ -9177,17 +9177,17 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = 100; // [GodLesZ] tick time
 			break;
 		case SC_SWINGDANCE:
-			val3 = (5 * val1) + val2; // Walk speed and aspd reduction.
+			val3 = 5 * val1 + val2; // Walk speed and aspd reduction.
 			break;
 		case SC_SYMPHONYOFLOVER:
-			val3 = (12 * val1) + val2 + ((sd?sd->status.job_level:50) / 4); // MDEF Increase in %
+			val3 = 12 * val1 + val2 + (sd?sd->status.job_level:50) / 4; // MDEF Increase in %
 			break;
 		case SC_MOONLITSERENADE: // MATK Increase
 		case SC_RUSHWINDMILL: // ATK Increase
-			val3 = (6 * val1) + val2 + ((sd?sd->status.job_level:50) / 5);
+			val3 = 6 * val1 + val2 + (sd?sd->status.job_level:50) / 5;
 			break;
 		case SC_ECHOSONG:
-			val3 = (6 * val1) + val2 + ((sd?sd->status.job_level:50) / 4); // DEF Increase in %
+			val3 = 6 * val1 + val2 + (sd?sd->status.job_level:50) / 4; // DEF Increase in %
 			break;
 		case SC_HARMONIZE:
 			val2 = 5 + 5 * val1;
@@ -9207,7 +9207,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = 1000; // [GodLesZ] tick time
 			break;
 		case SC_SONGOFMANA:
-			val3 = 10 + (5 * val2);
+			val3 = 10 + min(5 * val2, 35);
 			val4 = tick/5000;
 			tick_time = 5000; // [GodLesZ] tick time
 			break;
@@ -9243,35 +9243,34 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val4 = 20 + 10 * val2; // Fixed Cast Time Reduction
 			break;
 		case SC_LERADSDEW:
-			val3 = 200 * val1 + 300 * val2; // MaxHP Increase
+			val3 = 200 * val1 + min(300 * val2, 2500); // MaxHP Increase
 			break;
 		case SC_MELODYOFSINK:
-			val3 = val1 * 2 + val2; // INT Reduction.
+			val3 = val1 * val2; // INT Reduction.
 			val4 = tick/1000;
 			tick_time = 1000;
 			break;
 		case SC_BEYONDOFWARCRY:
-			val3 = val1 * (2 + val2); // STR and CRIT Reduction
-			val4 = 4 * val1 + 4 * val2; // MaxHP Reduction
+			val3 = val1 * val2; // STR and CRIT Reduction
+			val4 = 4 * val1 + min(4 * (val2 - 2), 40); // MaxHP Reduction
 			break;
 		case SC_UNLIMITEDHUMMINGVOICE:
 			{
 				struct unit_data *ud = unit_bl2ud(bl);
 				if( ud == NULL ) return 0;
 				ud->state.skillcastcancel = 0;
-				val3 = 15 - (3 * val2);
+				val3 = 15 - min(3 * val2, 15);
 			}
 			break;
 		case SC_REFLECTDAMAGE:
 			val2 = 15 + 5 * val1; // Reflect amount
 			val3 = val1*5 + 25; // Number of reflects
 			val4 = tick/1000; // Number of SP cycles (duration)
-			tick = -1; // Duration sent to the client should be infinite
 			tick_time = 1000; // [GodLesZ] tick time
 			break;
-		case SC_FORCEOFVANGUARD: // This is not the official way to handle it but I think we should use it. [pakpil]
-			val2 = 8 + (12 * val1); // Chance
-			val3 = 5 + (2 * val1); // Max rage counters
+		case SC_FORCEOFVANGUARD:
+			val2 = 8 + 12 * val1; // Chance
+			val3 = 5 + 2 * val1; // Max rage counters
 			tick = -1; // Endless duration in the client
 			tick_time = 10000; // [GodLesZ] tick time
 			break;
@@ -9289,7 +9288,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val1 += (10 * pc_checkskill(sd,CR_DEFENDER)) * (status_get_lv(bl) / 100);
 			break;
 		case SC_BANDING:
-			tick = -1; // Duration sent to the client should be infinite
 			tick_time = 5000; // [GodLesZ] tick time
 			break;
 		case SC_MAGNETICFIELD:
@@ -9298,11 +9296,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_INSPIRATION:
 			if( sd ) {
-				val2 = (status_get_lv(bl) / 10) + ((sd?sd->status.job_level:50) / 5); // All stat bonus
+				val2 = status_get_lv(bl) / 10 + (sd?sd->status.job_level:50) / 5; // All stat bonus
 				val3 = (sd?sd->status.job_level:50);
 			}
 			val4 = tick / 5000;
-			tick = -1; // Duration sent to the client should be infinite
 			tick_time = 5000; // [GodLesZ] tick time
 			status_change_clear_buffs(bl,3); // Remove buffs/debuffs
 			break;
@@ -9430,7 +9427,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_MELON_BOMB:
 		case SC_BANANA_BOMB:
-			val1 = 15;
+			val1 = 20;
 			break;
 		case SC_STOMACHACHE:
 			val2 = 8; // SP consume.
@@ -9538,16 +9535,14 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val4 = 50;
 			break;
 		case SC_FULL_THROTTLE:
-			val2 = 6 - val1;
+			val2 = 7 - val1;
 			tick_time = 1000;
 			val4 = tick / tick_time;
-			tick = -1; // Duration sent to the client should be infinite
 			break;
 		case SC_KINGS_GRACE:
 			val2 = 3 + val1; //HP Recover rate
 			tick_time = 1000;
 			val4 = tick / tick_time;
-			tick = -1; // Duration sent to the client should be infinite
 			break;
 		case SC_TELEKINESIS_INTENSE:
 			val2 = 10 * val1; // sp consum / casttime reduc %
@@ -9562,7 +9557,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val3 = 1000 + 100 * val1; // healing
 			tick_time = 10000;
 			val4 = tick / tick_time;
-			tick = -1; // Duration sent to the client should be infinite
 			break;
 		case SC_FLASHCOMBO:
 			val2 = (20 * val1) + 20; // atk bonus
