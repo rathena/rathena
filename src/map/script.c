@@ -15533,7 +15533,7 @@ BUILDIN_FUNC(npcshopattach)
 	if( script_hasdata(st,3) )
 		flag = script_getnum(st,3);
 
-	if( !nd || nd->subtype != SHOP )
+	if( !nd || ( nd->subtype != SHOP && nd->subtype != CASHSHOP && nd->subtype != ITEMSHOP && nd->subtype != POINTSHOP ) )
 	{	//Not found.
 		script_pushint(st,0);
 		return 0;
