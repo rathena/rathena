@@ -64,12 +64,6 @@ int current_equip_item_index; /// Contains inventory index of an equipped item. 
 int current_equip_card_id; /// To prevent card-stacking (from jA) [Skotlex]
 // We need it for new cards 15 Feb 2005, to check if the combo cards are insrerted into the CURRENT weapon only to avoid cards exploits
 
-static sc_type SkillStatusChangeTable[MAX_SKILL];  /// skill  -> status
-static unsigned int StatusChangeFlagTable[SC_MAX]; /// status -> flags
-static int StatusSkillChangeTable[SC_MAX];         /// status -> skill
-static int StatusRelevantBLTypes[SI_MAX];          /// "icon" -> enum bl_type (for clif_status_change to identify for which bl types to send packets)
-static unsigned int StatusChangeStateTable[SC_MAX]; /// status -> flags
-
 static unsigned short status_calc_str(struct block_list *,struct status_change *,int);
 static unsigned short status_calc_agi(struct block_list *,struct status_change *,int);
 static unsigned short status_calc_vit(struct block_list *,struct status_change *,int);
@@ -209,6 +203,7 @@ void initChangeTables(void)
 	memset(StatusSkillChangeTable, 0, sizeof(StatusSkillChangeTable));
 	memset(StatusChangeFlagTable, 0, sizeof(StatusChangeFlagTable));
 	memset(StatusChangeStateTable, 0, sizeof(StatusChangeStateTable));
+	memset(StatusDisplayType, 0, sizeof(StatusDisplayType));
 
 
 	/* First we define the skill for common ailments. These are used in skill_additional_effect through sc cards. [Skotlex] */
@@ -1070,6 +1065,46 @@ void initChangeTables(void)
 
 	if( !battle_config.display_hallucination ) // Disable Hallucination.
 		StatusIconChangeTable[SC_HALLUCINATION] = SI_BLANK;
+
+	/* StatusDisplayType Table [Ind] */
+	StatusDisplayType[SC_ALL_RIDING]	  = true;
+	StatusDisplayType[SC_PUSH_CART]		  = true;
+	StatusDisplayType[SC_SPHERE_1]		  = true;
+	StatusDisplayType[SC_SPHERE_2]		  = true;
+	StatusDisplayType[SC_SPHERE_3]		  = true;
+	StatusDisplayType[SC_SPHERE_4]		  = true;
+	StatusDisplayType[SC_SPHERE_5]		  = true;
+	StatusDisplayType[SC_CAMOUFLAGE]	  = true;
+	StatusDisplayType[SC_DUPLELIGHT]	  = true;
+	StatusDisplayType[SC_ORATIO]		  = true;
+	StatusDisplayType[SC_FREEZING]		  = true;
+	StatusDisplayType[SC_VENOMIMPRESS]	  = true;
+	StatusDisplayType[SC_HALLUCINATIONWALK]	  = true;
+	StatusDisplayType[SC_ROLLINGCUTTER]	  = true;
+	StatusDisplayType[SC_BANDING]		  = true;
+	StatusDisplayType[SC_CRYSTALIZE]	  = true;
+	StatusDisplayType[SC_DEEPSLEEP]		  = true;
+	StatusDisplayType[SC_CURSEDCIRCLE_ATKER]  = true;
+	StatusDisplayType[SC_CURSEDCIRCLE_TARGET] = true;
+	StatusDisplayType[SC_NETHERWORLD]	  = true;
+	StatusDisplayType[SC_VOICEOFSIREN]	  = true;
+	StatusDisplayType[SC_BLOODSUCKER]	  = true;
+	StatusDisplayType[SC__SHADOWFORM]	  = true;
+	StatusDisplayType[SC__MANHOLE]		  = true;
+	StatusDisplayType[SC_JYUMONJIKIRI]	  = true;
+	StatusDisplayType[SC_AKAITSUKI]		  = true;
+	StatusDisplayType[SC_MONSTER_TRANSFORM]	  = true;
+	StatusDisplayType[SC_DARKCROW]		  = true;
+	StatusDisplayType[SC_OFFERTORIUM]	  = true;
+	StatusDisplayType[SC_TELEKINESIS_INTENSE] = true;
+	StatusDisplayType[SC_UNLIMIT]		  = true;
+	StatusDisplayType[SC_ILLUSIONDOPING]	  = true;
+	StatusDisplayType[SC_C_MARKER]		  = true;
+	StatusDisplayType[SC_ANTI_M_BLAST]	  = true;
+	StatusDisplayType[SC_MOONSTAR]		  = true;
+	StatusDisplayType[SC_SUPER_STAR]	  = true;
+	StatusDisplayType[SC_STRANGELIGHTS]	  = true;
+	StatusDisplayType[SC_DECORATION_OF_MUSIC] = true;
 
 	/* StatusChangeState (SCS_) NOMOVE */
 	StatusChangeStateTable[SC_ANKLE]		|= SCS_NOMOVE;
@@ -7242,6 +7277,78 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 }
 
 /**
+* Applies SC effect to the player
+* @param sd: Source to apply effect [PC]
+* @param type: Status change (SC_*)
+* @param dval1~3: Depends on type of status change
+* Author: Ind
+**/
+void status_display_add(struct map_session_data *sd, enum sc_type type, int dval1, int dval2, int dval3) {
+	struct sc_display_entry *entry;
+	int i;
+
+	for( i = 0; i < sd->sc_display_count; i++ ) {
+		if( sd->sc_display[i]->type == type )
+			break;
+	}
+
+	if( i != sd->sc_display_count ) {
+		sd->sc_display[i]->val1 = dval1;
+		sd->sc_display[i]->val2 = dval2;
+		sd->sc_display[i]->val3 = dval3;
+		return;
+	}
+
+	entry = ers_alloc(pc_sc_display_ers, struct sc_display_entry);
+
+	entry->type = type;
+	entry->val1 = dval1;
+	entry->val2 = dval2;
+	entry->val3 = dval3;
+
+	RECREATE(sd->sc_display, struct sc_display_entry *, ++sd->sc_display_count);
+	sd->sc_display[sd->sc_display_count - 1] = entry;
+}
+
+/**
+* Removes SC effect of the player
+* @param sd: Source to remove effect [PC]
+* @param type: Status change (SC_*)
+* Author: Ind
+**/
+void status_display_remove(struct map_session_data *sd, enum sc_type type) {
+	int i;
+
+	for( i = 0; i < sd->sc_display_count; i++ ) {
+		if( sd->sc_display[i]->type == type )
+			break;
+	}
+
+	if( i != sd->sc_display_count ) {
+		int cursor;
+
+		ers_free(pc_sc_display_ers, sd->sc_display[i]);
+		sd->sc_display[i] = NULL;
+
+		/* The all-mighty compact-o-matic */
+		for( i = 0, cursor = 0; i < sd->sc_display_count; i++ ) {
+			if( sd->sc_display[i] == NULL )
+				continue;
+
+			if( i != cursor )
+				sd->sc_display[cursor] = sd->sc_display[i];
+
+			cursor++;
+		}
+
+		if( !(sd->sc_display_count = cursor) ) {
+			aFree(sd->sc_display);
+			sd->sc_display = NULL;
+		}
+	}
+}
+
+/**
 * Applies SC defense to a given status change
 * This function also determines whether or not the status change will be applied
 * @param src: Source of the status change [PC|MOB|HOM|MER|ELEM|NPC]
@@ -9706,6 +9813,21 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 	}
 
+	/* [Ind] */
+	if (sd && StatusDisplayType[type]) {
+		int dval1 = 0, dval2 = 0, dval3 = 0;
+
+		switch (type) {
+			case SC_ALL_RIDING:
+				dval1 = 1;
+				break;
+			default: /* All others: just copy val1 */
+				dval1 = val1;
+				break;
+		}
+		status_display_add(sd,type,dval1,dval2,dval3);
+	}
+
 	// Those that make you stop attacking/walking....
 	switch (type) {
 		case SC_FREEZE:
@@ -9941,7 +10063,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		calc_flag&=~SCB_DYE;
 	}
 
-	clif_status_change(bl,StatusIconChangeTable[type],1,tick,(val_flag&1)?val1:1,(val_flag&2)?val2:0,(val_flag&4)?val3:0);
+	if(!(flag&4 && StatusDisplayType[type]))
+		clif_status_change(bl,StatusIconChangeTable[type],1,tick,(val_flag&1)?val1:1,(val_flag&2)?val2:0,(val_flag&4)?val3:0);
 
 	// Used as temporary storage for scs with interval ticks, so that the actual duration is sent to the client first.
 	if( tick_time )
@@ -10247,6 +10370,9 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	}
 
 	sc->data[type] = NULL;
+
+	if (sd && StatusDisplayType[type])
+		status_display_remove(sd,type);
 
 	vd = status_get_viewdata(bl);
 	calc_flag = StatusChangeFlagTable[type];

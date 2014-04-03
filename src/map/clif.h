@@ -508,7 +508,8 @@ void clif_bladestop(struct block_list *src, int dst_id, int active);
 void clif_changemapcell(int fd, int16 m, int x, int y, int type, enum send_target target);
 
 #define clif_status_load(bl, type, flag) clif_status_change((bl), (type), (flag), 0, 0, 0, 0)
-void clif_status_change(struct block_list *bl,int type,int flag,int tick,int val1, int val2, int val3);
+void clif_status_change(struct block_list *bl, int type, int flag, int tick, int val1, int val2, int val3);
+void clif_status_change2(struct block_list *bl, int tid, enum send_target target, int type, int val1, int val2, int val3);
 
 void clif_wis_message(int fd, const char* nick, const char* mes, int mes_len);
 void clif_wis_end(int fd, int flag);
@@ -805,10 +806,6 @@ int clif_magicdecoy_list(struct map_session_data *sd, uint16 skill_lv, short x, 
 int clif_poison_list(struct map_session_data *sd, uint16 skill_lv);
 
 int clif_autoshadowspell_list(struct map_session_data *sd);
-
-int clif_status_load_notick(struct block_list *bl,int type,int flag,int val1, int val2, int val3);
-int clif_status_load_single(int fd, int id,int type,int flag,int val1, int val2, int val3);
-
 
 int clif_skill_itemlistwindow( struct map_session_data *sd, uint16 skill_id, uint16 skill_lv );
 void clif_elemental_info(struct map_session_data *sd);

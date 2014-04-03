@@ -5,6 +5,7 @@
 #define _PC_H_
 
 #include "../common/mmo.h" // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus
+#include "../common/ers.h"
 #include "../common/timer.h" // INVALID_TIMER
 #include "map.h" // RC_ALL
 #include "atcommand.h" // AtCommandType
@@ -560,6 +561,10 @@ struct map_session_data {
 	unsigned char fontcolor; /* debug-only */
 	unsigned int channel_tick;
 
+	/* [Ind] */
+	struct sc_display_entry **sc_display;
+	unsigned char sc_display_count;
+
 	// temporary debugging of bug #3504
 	const char* delunit_prevfile;
 	int delunit_prevline;
@@ -593,6 +598,7 @@ struct map_session_data {
 	time_t expiration_time;
 };
 
+struct eri *pc_sc_display_ers;
 /* Global Expiration Timer ID */
 extern int pc_expiration_tid;
 
