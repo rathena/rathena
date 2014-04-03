@@ -5341,8 +5341,8 @@ int pc_jobid2mapid(unsigned short b_class)
 		case JOB_XMAS:                  return MAPID_XMAS;
 		case JOB_SUMMER:                return MAPID_SUMMER;
 		case JOB_HANBOK:                return MAPID_HANBOK;
-		case JOB_OKTOBERFEST:           return MAPID_OKTOBERFEST;
 		case JOB_GANGSI:                return MAPID_GANGSI;
+		case JOB_OKTOBERFEST:           return MAPID_OKTOBERFEST;
 	//2-1 Jobs
 		case JOB_SUPER_NOVICE:          return MAPID_SUPER_NOVICE;
 		case JOB_KNIGHT:                return MAPID_KNIGHT;
@@ -5485,8 +5485,8 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_XMAS:                  return JOB_XMAS;
 		case MAPID_SUMMER:                return JOB_SUMMER;
 		case MAPID_HANBOK:                return JOB_HANBOK;
-		case MAPID_OKTOBERFEST:           return JOB_OKTOBERFEST;
 		case MAPID_GANGSI:                return JOB_GANGSI;
+		case MAPID_OKTOBERFEST:           return JOB_OKTOBERFEST;
 	//2-1 Jobs
 		case MAPID_SUPER_NOVICE:          return JOB_SUPER_NOVICE;
 		case MAPID_KNIGHT:                return JOB_KNIGHT;
@@ -8050,31 +8050,6 @@ void pc_setoption(struct map_session_data *sd,int type)
 	if (type&OPTION_FLYING && !(p_type&OPTION_FLYING))
 		new_look = JOB_STAR_GLADIATOR2;
 	else if (!(type&OPTION_FLYING) && p_type&OPTION_FLYING)
-		new_look = -1;
-
-	if (type&OPTION_WEDDING && !(p_type&OPTION_WEDDING))
-		new_look = JOB_WEDDING;
-	else if (!(type&OPTION_WEDDING) && p_type&OPTION_WEDDING)
-		new_look = -1;
-
-	if (type&OPTION_XMAS && !(p_type&OPTION_XMAS))
-		new_look = JOB_XMAS;
-	else if (!(type&OPTION_XMAS) && p_type&OPTION_XMAS)
-		new_look = -1;
-
-	if (type&OPTION_SUMMER && !(p_type&OPTION_SUMMER))
-		new_look = JOB_SUMMER;
-	else if (!(type&OPTION_SUMMER) && p_type&OPTION_SUMMER)
-		new_look = -1;
-
-	if (type&OPTION_HANBOK && !(p_type&OPTION_HANBOK))
-		new_look = JOB_HANBOK;
-	else if (!(type&OPTION_HANBOK) && p_type&OPTION_HANBOK)
-		new_look = -1;
-
-	if (type&OPTION_OKTOBERFEST && !(p_type&OPTION_OKTOBERFEST))
-		new_look = JOB_OKTOBERFEST;
-	else if (!(type&OPTION_OKTOBERFEST) && p_type&OPTION_OKTOBERFEST)
 		new_look = -1;
 
 	if (sd->disguise || !new_look)

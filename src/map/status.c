@@ -6812,17 +6812,7 @@ void status_set_viewdata(struct block_list *bl, int class_)
 		{
 			TBL_PC* sd = (TBL_PC*)bl;
 			if (pcdb_checkid(class_)) {
-				if (sd->sc.option&OPTION_WEDDING)
-					class_ = JOB_WEDDING;
-				else if (sd->sc.option&OPTION_SUMMER)
-					class_ = JOB_SUMMER;
-				else if (sd->sc.option&OPTION_XMAS)
-					class_ = JOB_XMAS;
-				else if (sd->sc.option&OPTION_HANBOK)
-					class_ = JOB_HANBOK;
-				else if (sd->sc.option&OPTION_OKTOBERFEST)
-					class_ = JOB_OKTOBERFEST;
-				else if (sd->sc.option&OPTION_RIDING) {
+				if (sd->sc.option&OPTION_RIDING) {
 					switch (class_) { // Adapt class to a Mounted one.
 						case JOB_KNIGHT:
 							class_ = JOB_KNIGHT2;
@@ -6853,6 +6843,19 @@ void status_set_viewdata(struct block_list *bl, int class_)
 				sd->vd.hair_color = cap_value(sd->status.hair_color,0,battle_config.max_hair_color);
 				sd->vd.cloth_color = cap_value(sd->status.clothes_color,0,battle_config.max_cloth_color);
 				sd->vd.sex = sd->status.sex;
+
+				if (sd->vd.cloth_color) {
+					if(sd->sc.option&OPTION_WEDDING && battle_config.wedding_ignorepalette)
+						sd->vd.cloth_color = 0;
+					if(sd->sc.option&OPTION_XMAS && battle_config.xmas_ignorepalette)
+						sd->vd.cloth_color = 0;
+					if(sd->sc.option&OPTION_SUMMER && battle_config.summer_ignorepalette)
+						sd->vd.cloth_color = 0;
+					if(sd->sc.option&OPTION_HANBOK && battle_config.hanbok_ignorepalette)
+						sd->vd.cloth_color = 0;
+					if(sd->sc.option&OPTION_OKTOBERFEST && battle_config.oktoberfest_ignorepalette)
+						sd->vd.cloth_color = 0;
+				}
 			} else if (vd)
 				memcpy(&sd->vd, vd, sizeof(struct view_data));
 			else
@@ -6922,15 +6925,6 @@ void status_set_viewdata(struct block_list *bl, int class_)
 		}
 		break;
 	}
-	vd = status_get_viewdata(bl);
-	if (vd && vd->cloth_color && (
-		(vd->class_==JOB_WEDDING && battle_config.wedding_ignorepalette)
-		|| (vd->class_==JOB_XMAS && battle_config.xmas_ignorepalette)
-		|| (vd->class_==JOB_SUMMER && battle_config.summer_ignorepalette)
-		|| (vd->class_ == JOB_HANBOK && battle_config.hanbok_ignorepalette)
-		|| (vd->class_ == JOB_OKTOBERFEST && battle_config.oktoberfest_ignorepalette)
-	))
-		vd->cloth_color = 0;
 }
 
 /**
@@ -8444,15 +8438,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_OKTOBERFEST:
 			if (!vd) return 0;
 			// Store previous values as they could be removed.
-			val1 = vd->class_;
-			val2 = vd->weapon;
-			val3 = vd->shield;
-			val4 = vd->cloth_color;
 			unit_stop_attack(bl);
-			clif_changelook(bl,LOOK_WEAPON,0);
-			clif_changelook(bl,LOOK_SHIELD,0);
-			clif_changelook(bl,LOOK_BASE,type==SC_WEDDING?JOB_WEDDING:type==SC_XMAS?JOB_XMAS:type==SC_SUMMER?JOB_SUMMER:type==SC_HANBOK?JOB_HANBOK:JOB_OKTOBERFEST);
-			clif_changelook(bl,LOOK_CLOTHES_COLOR,vd->cloth_color);
 			break;
 		case SC_NOCHAT:
 			// !FIXME: is this correct? a hardcoded interval of 60sec? what about configuration ?_?
@@ -9743,10 +9729,12 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_SUMMER:
 			case SC_HANBOK:
 			case SC_OKTOBERFEST:
+				if( !vd )
+					break;
+				clif_changelook(bl,LOOK_BASE,vd->class_);
 				clif_changelook(bl,LOOK_WEAPON,0);
 				clif_changelook(bl,LOOK_SHIELD,0);
-				clif_changelook(bl,LOOK_BASE,type==SC_WEDDING?JOB_WEDDING:type==SC_XMAS?JOB_XMAS:type==SC_SUMMER?JOB_SUMMER:type==SC_HANBOK?JOB_HANBOK:JOB_OKTOBERFEST);
-				clif_changelook(bl,LOOK_CLOTHES_COLOR,val4);
+				clif_changelook(bl,LOOK_CLOTHES_COLOR,vd->cloth_color);
 				break;
 			case SC_KAAHI:
 				val4 = INVALID_TIMER;
@@ -10028,18 +10016,23 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_WEDDING:
 			sc->option |= OPTION_WEDDING;
+			opt_flag |= 0x4;
 			break;
 		case SC_XMAS:
 			sc->option |= OPTION_XMAS;
+			opt_flag |= 0x4;
 			break;
 		case SC_SUMMER:
 			sc->option |= OPTION_SUMMER;
+			opt_flag |= 0x4;
 			break;
 		case SC_HANBOK:
 			sc->option |= OPTION_HANBOK;
+			opt_flag |= 0x4;
 			break;
 		case SC_OKTOBERFEST:
 			sc->option |= OPTION_OKTOBERFEST;
+			opt_flag |= 0x4;
 			break;
 		case SC_ORCISH:
 			sc->option |= OPTION_ORCISH;
@@ -10052,9 +10045,15 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	// On Aegis, when turning on a status change, first goes the option packet, then the sc packet.
-	if(opt_flag)
+	if(opt_flag) {
 		clif_changeoption(bl);
-
+		if(sd && (opt_flag&0x4)) {
+			clif_changelook(bl,LOOK_BASE,vd->class_);
+			clif_changelook(bl,LOOK_WEAPON,0);
+			clif_changelook(bl,LOOK_SHIELD,0);
+			clif_changelook(bl,LOOK_CLOTHES_COLOR,vd->cloth_color);
+		}
+	}
 	if (calc_flag&SCB_DYE) { // Reset DYE color
 		if (vd && vd->cloth_color) {
 			val4 = vd->cloth_color;
@@ -10252,8 +10251,13 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_S_LIFEPOTION:
 			case SC_L_LIFEPOTION:
 			case SC_PUSH_CART:
+			case SC_ALL_RIDING:
 			case SC_STYLE_CHANGE:
+			case SC_MOONSTAR:
+			case SC_SUPER_STAR:
 			case SC_HEAT_BARREL_AFTER:
+			case SC_STRANGELIGHTS:
+			case SC_DECORATION_OF_MUSIC:
 			case SC_QUEST_BUFF1:
 			case SC_QUEST_BUFF2:
 			case SC_QUEST_BUFF3:
@@ -10266,8 +10270,12 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_WEIGHT90:
 			case SC_NOCHAT:
 			case SC_PUSH_CART:
+			case SC_ALL_RIDING:
 			case SC_STYLE_CHANGE:
 			case SC_MOONSTAR:
+			case SC_SUPER_STAR:
+			case SC_STRANGELIGHTS:
+			case SC_DECORATION_OF_MUSIC:
 				continue;
 			}
 		}
@@ -10389,30 +10397,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			if(bl->type == BL_PC)
 				skill_break_equip(bl,bl,EQP_WEAPON,10000,BCT_SELF);
 			break;
-		case SC_WEDDING:
-		case SC_XMAS:
-		case SC_SUMMER:
-		case SC_HANBOK:
-		case SC_OKTOBERFEST:
-			if (!vd) break;
-			if (sd) {
-				// Load data from sd->status.* as the stored values could have changed.
-				// Must remove OPTION to prevent class being rechanged.
-				sc->option &= type==SC_WEDDING?~OPTION_WEDDING:type==SC_XMAS?~OPTION_XMAS:type==SC_SUMMER?~OPTION_SUMMER:type==SC_HANBOK?~OPTION_HANBOK:~OPTION_OKTOBERFEST;
-				clif_changeoption(&sd->bl);
-				status_set_viewdata(bl, sd->status.class_);
-			} else {
-				vd->class_ = sce->val1;
-				vd->weapon = sce->val2;
-				vd->shield = sce->val3;
-				vd->cloth_color = sce->val4;
-			}
-			clif_changelook(bl,LOOK_BASE,vd->class_);
-			clif_changelook(bl,LOOK_CLOTHES_COLOR,vd->cloth_color);
-			clif_changelook(bl,LOOK_WEAPON,vd->weapon);
-			clif_changelook(bl,LOOK_SHIELD,vd->shield);
-			if(sd) clif_skillinfoblock(sd);
-		break;
 		case SC_RUN:
 		{
 			struct unit_data *ud = unit_bl2ud(bl);
@@ -10879,18 +10863,23 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		break;
 	case SC_WEDDING:
 		sc->option &= ~OPTION_WEDDING;
+		opt_flag |= 0x4;
 		break;
 	case SC_XMAS:
 		sc->option &= ~OPTION_XMAS;
+		opt_flag |= 0x4;
 		break;
 	case SC_SUMMER:
 		sc->option &= ~OPTION_SUMMER;
+		opt_flag |= 0x4;
 		break;
 	case SC_HANBOK:
 		sc->option &= ~OPTION_HANBOK;
+		opt_flag |= 0x4;
 		break;
 	case SC_OKTOBERFEST:
 		sc->option &= ~OPTION_OKTOBERFEST;
+		opt_flag |= 0x4;
 		break;
 	case SC_ORCISH:
 		sc->option &= ~OPTION_ORCISH;

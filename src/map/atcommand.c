@@ -9397,6 +9397,64 @@ ACMD_FUNC(fullstrip) {
 	return 0;
 }
 
+ACMD_FUNC(costume) {
+	const char* names[] = {
+		"Wedding",
+		"Xmas",
+		"Summer",
+		"Hanbok",
+		"Oktoberfest",
+	};
+	const int name2id[] = {
+		SC_WEDDING,
+		SC_XMAS,
+		SC_SUMMER,
+		SC_HANBOK,
+		SC_OKTOBERFEST
+	};
+	unsigned short k = 0, len = ARRAYLENGTH(names);
+
+	if( !message || !*message ) {
+		for( k = 0; k < len; k++ ) {
+			if( sd->sc.data[name2id[k]] ) {
+				sprintf(atcmd_output, msg_txt(sd, 1505), names[k]); // Costume '%s' removed.
+				clif_displaymessage(sd->fd, atcmd_output);
+				status_change_end(&sd->bl, (sc_type)name2id[k], INVALID_TIMER);
+				return 0;
+			}
+		}
+
+		clif_displaymessage(sd->fd, msg_txt(sd, 1504)); // Available Costumes
+		for( k = 0; k < len; k++ ) {
+			sprintf(atcmd_output, msg_txt(sd, 1503), names[k]); // -- %s
+			clif_displaymessage(sd->fd, atcmd_output);
+		}
+		return -1;
+	}
+
+	for( k = 0; k < len; k++ ) {
+		if( sd->sc.data[name2id[k]] ) {
+			sprintf(atcmd_output, msg_txt(sd, 1502), names[k]); // You're already with a '%s' costume, type '@costume' to remove it.
+			clif_displaymessage(sd->fd, atcmd_output);
+			return -1;
+		}
+	}
+
+	for( k = 0; k < len; k++ )
+		if( strcmpi(message, names[k]) == 0 )
+			break;
+
+	if( k == len ) {
+		sprintf(atcmd_output, msg_txt(sd, 1501), message); // '%s' is not a known costume
+		clif_displaymessage(sd->fd, atcmd_output);
+		return -1;
+	}
+
+	sc_start(&sd->bl, &sd->bl, (sc_type)name2id[k], 100, 0, -1);
+
+	return 0;
+}
+
 #include "../custom/atcommand.inc"
 
 /**
@@ -9684,6 +9742,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(showrate),
 #endif
 		ACMD_DEF(fullstrip),
+		ACMD_DEF(costume),
 	};
 	AtCommandInfo* atcommand;
 	int i;
