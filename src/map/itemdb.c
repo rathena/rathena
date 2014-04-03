@@ -674,7 +674,7 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 	while (fgets(line,sizeof(line),fp)) {
 		uint16 nameid;
 		int j, group_id, prob = 1, amt = 1, rand_group = 1, announced = 0, dur = 0, named = 0, bound = 0;
-		char *str[3], *p, w1[1024], w2[1024];
+		char *str[3], *p;
 		bool found = false;
 		struct s_item_group_random *random;
 
@@ -682,6 +682,8 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 		if (line[0] == '/' && line[1] == '/')
 			continue;
 		if (strstr(line,"import")) {
+			char w1[1024], w2[1024];
+
 			if (sscanf(line,"%[^:]: %[^\r\n]",w1,w2) == 2 &&
 				strcmpi(w1,"import") == 0)
 			{

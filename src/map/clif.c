@@ -8689,7 +8689,7 @@ void clif_refresh(struct map_session_data *sd)
 void clif_charnameack (int fd, struct block_list *bl)
 {
 	unsigned char buf[103];
-	int cmd = 0x95, i, ps = -1;
+	int cmd = 0x95;
 
 	nullpo_retv(bl);
 
@@ -8703,6 +8703,7 @@ void clif_charnameack (int fd, struct block_list *bl)
 			struct map_session_data *ssd = (struct map_session_data *)bl;
 			struct party_data *p = NULL;
 			struct guild *g = NULL;
+			int ps = -1;
 
 			//Requesting your own "shadow" name. [Skotlex]
 			if (ssd->fd == fd && ssd->disguise)
@@ -8721,6 +8722,8 @@ void clif_charnameack (int fd, struct block_list *bl)
 			}
 			if( ssd->status.guild_id ) {
 				if( ( g = ssd->guild ) != NULL ) {
+					int i;
+
 					ARR_FIND(0, g->max_member, i, g->member[i].account_id == ssd->status.account_id && g->member[i].char_id == ssd->status.char_id);
 					if( i < g->max_member ) ps = g->member[i].position;
 				}
@@ -10631,7 +10634,7 @@ void clif_parse_UseItem(int fd, struct map_session_data *sd)
 /// 0998 <index>.W <position>.L (CZ_REQ_WEAR_EQUIP_V5)
 void clif_parse_EquipItem(int fd,struct map_session_data *sd)
 {
-	int index, req_pos;
+	int index;
 	struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
 
 	if(pc_isdead(sd)) {
@@ -10666,6 +10669,8 @@ void clif_parse_EquipItem(int fd,struct map_session_data *sd)
 	if(sd->inventory_data[index]->type == IT_AMMO)
 		pc_equipitem(sd,index,EQP_AMMO);
 	else {
+	int req_pos;
+
 #if PACKETVER  >= 20120925
 		req_pos = RFIFOL(fd,info->pos[1]);
 #else
@@ -12379,13 +12384,14 @@ void clif_parse_OpenVending(int fd, struct map_session_data* sd){
 	struct s_packet_db* info = &packet_db[sd->packet_ver][cmd];
 	short len = (short)RFIFOW(fd,info->pos[0]);
 	const char* message = (char*)RFIFOP(fd,info->pos[1]);
-	bool flag;
 	const uint8* data = (uint8*)RFIFOP(fd,info->pos[3]);
 
 	if(cmd == 0x12f){ // (CZ_REQ_OPENSTORE)
 		len -= 84;
 	}
 	else { //(CZ_REQ_OPENSTORE2)
+		bool flag;
+
 		len -= 85;
 		flag = (bool)RFIFOB(fd,info->pos[2]);
 		if( !flag )
@@ -12527,10 +12533,11 @@ void clif_parse_GuildRequestEmblem(int fd,struct map_session_data *sd)
 
 
 /// Validates data of a guild emblem (compressed bitmap)
-static bool clif_validate_emblem(const uint8* emblem, unsigned long emblem_len){
+static bool clif_validate_emblem(const uint8* emblem, unsigned long emblem_len)
+{
 	uint8 buf[1800];  // no well-formed emblem bitmap is larger than 1782 (24 bit) / 1654 (8 bit) bytes
 	unsigned long buf_len = sizeof(buf);
-	int i,j, transcount=1, offset=0, tmp[3];
+	int offset = 0;
 
 	if(!(( decode_zip(buf, &buf_len, emblem, emblem_len) == 0 && buf_len >= 18 )  // sizeof(BITMAPFILEHEADER) + sizeof(biSize) of the following info header struct
 		&& RBUFW(buf,0) == 0x4d42   // BITMAPFILEHEADER.bfType (signature)
@@ -12539,11 +12546,12 @@ static bool clif_validate_emblem(const uint8* emblem, unsigned long emblem_len){
 		))
 		return -1;
 
-	if(battle_config.emblem_transparency_limit != 100){
-		for(i=offset; i<buf_len-1; i++){
+	if(battle_config.emblem_transparency_limit != 100) {
+		int i, j, transcount = 1, tmp[3];
+		for(i = offset; i < buf_len-1; i++) {
 			j = i%3;
 			tmp[j] = RBUFL(buf,i);
-			if(j==2 && (tmp[0] == 0xFFFF00FF) && (tmp[1] == 0xFFFF00) && (tmp[2] == 0xFF00FFFF)) //if pixel is transparent
+			if(j == 2 && (tmp[0] == 0xFFFF00FF) && (tmp[1] == 0xFFFF00) && (tmp[2] == 0xFF00FFFF)) //if pixel is transparent
 				transcount++;
 		}
 		if(((transcount*300)/(buf_len-offset)) > battle_config.emblem_transparency_limit) //convert in % to chk
@@ -16937,7 +16945,7 @@ void clif_parse_client_version(int fd,struct map_session_data *sd){
 void clif_sub_ranklist(unsigned char *buf,int idx,struct map_session_data* sd, int16 rankingtype){
 	const char* name;
 	struct fame_list* list;
-	int i, skip=0;
+	int skip = 0;
 
 	switch(rankingtype+1) //to keep the same case as char.c
 	{
@@ -16947,7 +16955,9 @@ void clif_sub_ranklist(unsigned char *buf,int idx,struct map_session_data* sd, i
 	default: skip=1; break;
 	}
 
-	if(!skip){
+	if(!skip) {
+		int i;
+
 		//Packet size limits this list to 10 elements. [Skotlex]
 		for (i = 0; i < min(10,MAX_FAME_LIST); i++) {
 			if (list[i].id > 0) {

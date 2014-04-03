@@ -665,7 +665,6 @@ int npc_timerevent_start(struct npc_data* nd, int rid)
 int npc_timerevent_stop(struct npc_data* nd)
 {
 	struct map_session_data *sd = NULL;
-	const struct TimerData *td = NULL;
 	int *tid;
 
 	nullpo_ret(nd);
@@ -683,6 +682,8 @@ int npc_timerevent_stop(struct npc_data* nd)
 	// Delete timer
 	if ( *tid != INVALID_TIMER )
 	{
+		const struct TimerData *td = NULL;
+
 		td = get_timer(*tid);
 		if( td && td->data )
 			ers_free(timer_event_ers, (void*)td->data);
@@ -2675,7 +2676,6 @@ static const char* npc_skip_script(const char* start, const char* buffer, const 
  */
 static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath, bool runOnInit) {
 	int x, y, dir = 0, m, xs = 0, ys = 0;	// [Valaris] thanks to fov
-	char mapname[32];
 	struct script_code *script;
 	int i;
 	const char* end;
@@ -2693,6 +2693,8 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 	}
 	else
 	{// npc in a map
+		char mapname[32];
+
 		if( sscanf(w1, "%31[^,],%d,%d,%d", mapname, &x, &y, &dir) != 4 )
 		{
 			ShowError("npc_parse_script: Invalid placement format for a script in file '%s', line '%d'. Skipping the rest of file...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
@@ -2814,7 +2816,6 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
 	int x, y, dir, m, xs = -1, ys = -1;
-	char mapname[32];
 	char srcname[128];
 	int i;
 	const char* end;
@@ -2849,6 +2850,8 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 		x = y = dir = 0;
 		m = -1;
 	} else {
+		char mapname[32];
+
 		if( sscanf(w1, "%31[^,],%d,%d,%d", mapname, &x, &y, &dir) != 4 ) { // <map name>,<x>,<y>,<facing>
 			ShowError("npc_parse_duplicate: Invalid placement format for duplicate in file '%s', line '%d'. Skipping line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 			return end;// next line, try to continue

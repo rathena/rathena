@@ -406,25 +406,6 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 }
 
 /*==========================================
- * Calculates damage for a specific rate (cardfix) with 100% (precision).
- *------------------------------------------*/
-inline int64 bcc_damage_rate(int64 damage, short rate) {
-	if (rate == 1000)
-		return damage;
-	return ((int64)(damage * rate) / 1000);
-}
-
-/*==========================================
- * Calculates cardfix (damage percentage) after adding a different effect with 100% (effect_precision) by multiplying damage rate.
- * Note: Can be negative for damage reduction.
- *------------------------------------------*/
-inline short bcc_multi_damage_rate(short cardfix, short effect_rate) {
-	if (effect_rate == 100)
-		return cardfix;
-	return ((cardfix * (effect_rate + 100)) / 100);
-}
-
-/*==========================================
  * Calculates card bonuses damage adjustments.
  *------------------------------------------*/
 int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_list *target, int nk, int s_ele, int s_ele_, int64 damage, int left, int flag){
@@ -447,284 +428,270 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 	tstatus = status_get_status_data(target);
 	s_race2 = status_get_race2(src);
 
-	switch(attack_type){
+	switch( attack_type ) {
 		case BF_MAGIC:
-			if ( sd && !(nk&NK_NO_CARDFIX_ATK) ) {
-				cardfix = bcc_multi_damage_rate(cardfix, sd->magic_addrace[tstatus->race] + sd->magic_addrace[RC_ALL]);
-				if (!(nk&NK_NO_ELEFIX))
-					cardfix = bcc_multi_damage_rate(cardfix, sd->magic_addele[tstatus->def_ele] + sd->magic_addele[ELE_ALL]);
-				cardfix = bcc_multi_damage_rate(cardfix, sd->magic_addsize[tstatus->size] + sd->magic_addsize[SZ_ALL]);
-				cardfix = bcc_multi_damage_rate(cardfix, sd->magic_addclass[tstatus->class_] + sd->magic_addclass[CLASS_ALL]);
-				cardfix = bcc_multi_damage_rate(cardfix, sd->magic_atk_ele[s_ele] + sd->magic_atk_ele[ELE_ALL]);
-				for(i=0; i< ARRAYLENGTH(sd->add_mdmg) && sd->add_mdmg[i].rate;i++) {
-					if(sd->add_mdmg[i].class_ == t_class) {
-						cardfix = bcc_multi_damage_rate(cardfix, sd->add_mdmg[i].rate);
+			if( sd && !(nk&NK_NO_CARDFIX_ATK) ) {
+				cardfix = cardfix * (100 + sd->magic_addrace[tstatus->race] + sd->magic_addrace[RC_ALL]) / 100;
+				if( !(nk&NK_NO_ELEFIX) )
+					cardfix = cardfix * (100 + sd->magic_addele[tstatus->def_ele] + sd->magic_addele[ELE_ALL]) / 100;
+				cardfix = cardfix * (100 + sd->magic_addsize[tstatus->size] + sd->magic_addsize[SZ_ALL]) / 100;
+				cardfix = cardfix * (100 + sd->magic_addclass[tstatus->class_] + sd->magic_addclass[CLASS_ALL]) / 100;
+				cardfix = cardfix * (100 + sd->magic_atk_ele[s_ele] + sd->magic_atk_ele[ELE_ALL]) / 100;
+				for( i = 0; i < ARRAYLENGTH(sd->add_mdmg) && sd->add_mdmg[i].rate; i++ ) {
+					if( sd->add_mdmg[i].class_ == t_class ) {
+						cardfix = cardfix * (100 + sd->add_mdmg[i].rate) / 100;
 						break;
 					}
 				}
-				damage = bcc_damage_rate(damage, cardfix);
+				if( cardfix != 1000 )
+					damage = damage * cardfix / 1000;
 			}
+			if( tsd && !(nk&NK_NO_CARDFIX_DEF) ) { // Target cards.
+				cardfix = 1000; // reset var for target
 
-			if( tsd && !(nk&NK_NO_CARDFIX_DEF) )
-			{ // Target cards.
-				cardfix = 1000; //reset var for target
-
-				if (!(nk&NK_NO_ELEFIX))
-				{
+				if( !(nk&NK_NO_ELEFIX) ) {
 					int ele_fix = tsd->subele[s_ele] + tsd->subele[ELE_ALL];
-					for (i = 0; ARRAYLENGTH(tsd->subele2) > i && tsd->subele2[i].rate != 0; i++)
-					{
-						if(tsd->subele2[i].ele != s_ele) continue;
-						if(!( ((tsd->subele2[i].flag)&flag)&BF_WEAPONMASK &&
-							  ((tsd->subele2[i].flag)&flag)&BF_RANGEMASK &&
-							  ((tsd->subele2[i].flag)&flag)&BF_SKILLMASK))
+
+					for( i = 0; ARRAYLENGTH(tsd->subele2) > i && tsd->subele2[i].rate != 0; i++ ) {
+						if( tsd->subele2[i].ele != s_ele )
+							continue;
+						if( !(((tsd->subele2[i].flag)&flag)&BF_WEAPONMASK &&
+							((tsd->subele2[i].flag)&flag)&BF_RANGEMASK &&
+							((tsd->subele2[i].flag)&flag)&BF_SKILLMASK) )
 							continue;
 						ele_fix += tsd->subele2[i].rate;
 					}
-					cardfix = bcc_multi_damage_rate(cardfix, -ele_fix);
+					cardfix = cardfix * (100 - ele_fix) / 100;
 				}
-				cardfix = bcc_multi_damage_rate(cardfix, -(tsd->subsize[sstatus->size] + tsd->subsize[SZ_ALL]));
-				cardfix = bcc_multi_damage_rate(cardfix, -tsd->subrace2[s_race2]);
-				cardfix = bcc_multi_damage_rate(cardfix, -(tsd->subrace[sstatus->race] + tsd->subrace[RC_ALL]));
-				cardfix = bcc_multi_damage_rate(cardfix, -(tsd->subclass[sstatus->class_] + tsd->subclass[CLASS_ALL]));
+				cardfix = cardfix * (100 - tsd->subsize[sstatus->size] + tsd->subsize[SZ_ALL]) / 100;
+				cardfix = cardfix * (100 - tsd->subrace2[s_race2]) / 100;
+				cardfix = cardfix * (100 - tsd->subrace[sstatus->race] + tsd->subrace[RC_ALL]) / 100;
+				cardfix = cardfix * (100 - tsd->subclass[sstatus->class_] + tsd->subclass[CLASS_ALL]) / 100;
 
-				for(i=0; i < ARRAYLENGTH(tsd->add_mdef) && tsd->add_mdef[i].rate;i++) {
-					if(tsd->add_mdef[i].class_ == s_class) {
-						cardfix = bcc_multi_damage_rate(cardfix, -tsd->add_mdef[i].rate);
+				for( i = 0; i < ARRAYLENGTH(tsd->add_mdef) && tsd->add_mdef[i].rate; i++ ) {
+					if( tsd->add_mdef[i].class_ == s_class ) {
+						cardfix = cardfix * (100 - tsd->add_mdef[i].rate) / 100;
 						break;
 					}
 				}
+#ifndef RENEWAL
 				//It was discovered that ranged defense also counts vs magic! [Skotlex]
-				if ( flag&BF_SHORT )
-					cardfix = bcc_multi_damage_rate(cardfix, -tsd->bonus.near_attack_def_rate);
+				if( flag&BF_SHORT )
+					cardfix = cardfix * (100 - tsd->bonus.near_attack_def_rate) / 100;
 				else
-					cardfix = bcc_multi_damage_rate(cardfix, -tsd->bonus.long_attack_def_rate);
-
-				cardfix = bcc_multi_damage_rate(cardfix, -tsd->bonus.magic_def_rate);
+					cardfix = cardfix * (100 - tsd->bonus.long_attack_def_rate) / 100;
+#endif
+				cardfix = cardfix * (100 - tsd->bonus.magic_def_rate) / 100;
 
 				if( tsd->sc.data[SC_MDEF_RATE] )
-					cardfix = bcc_multi_damage_rate(cardfix, -tsd->sc.data[SC_MDEF_RATE]->val1);
-
-				damage = bcc_damage_rate(damage, cardfix);
+					cardfix = cardfix * (100 - tsd->sc.data[SC_MDEF_RATE]->val1) / 100;
+				if( cardfix != 1000 )
+					damage = damage * cardfix / 1000;
 			}
 			break;
 		case BF_WEAPON:
 			t_race2 = status_get_race2(target);
-			if( sd && !(nk&NK_NO_CARDFIX_ATK) && (left&2) ) //Attacker cards should be checked
-			{
-				short cardfix_left = 1000;
-				if(sd->state.arrow_atk)
-				{
-					cardfix = bcc_multi_damage_rate(cardfix, sd->right_weapon.addrace[tstatus->race] + sd->arrow_addrace[tstatus->race]
-															+ sd->right_weapon.addrace[RC_ALL] + sd->arrow_addrace[RC_ALL]);
-					if (!(nk&NK_NO_ELEFIX))
-					{
-						int ele_fix = sd->right_weapon.addele[tstatus->def_ele] + sd->arrow_addele[tstatus->def_ele]
-									+ sd->right_weapon.addele[ELE_ALL] + sd->arrow_addele[ELE_ALL];
-						for (i = 0; ARRAYLENGTH(sd->right_weapon.addele2) > i && sd->right_weapon.addele2[i].rate != 0; i++) {
-							if (sd->right_weapon.addele2[i].ele != tstatus->def_ele) continue;
-							if(!( ((sd->right_weapon.addele2[i].flag)&flag)&BF_WEAPONMASK &&
-								  ((sd->right_weapon.addele2[i].flag)&flag)&BF_RANGEMASK &&
-								  ((sd->right_weapon.addele2[i].flag)&flag)&BF_SKILLMASK))
-									continue;
+			if( sd && !(nk&NK_NO_CARDFIX_ATK) && (left&2) ) { //Attacker cards should be checked
+				short cardfix_ = 1000;
+
+				if( sd->state.arrow_atk ) {
+					cardfix = cardfix * (100 + sd->right_weapon.addrace[tstatus->race] + sd->arrow_addrace[tstatus->race] +
+						sd->right_weapon.addrace[RC_ALL] + sd->arrow_addrace[RC_ALL]) / 100;
+					if( !(nk&NK_NO_ELEFIX) ) {
+						int ele_fix = sd->right_weapon.addele[tstatus->def_ele] + sd->arrow_addele[tstatus->def_ele] +
+							sd->right_weapon.addele[ELE_ALL] + sd->arrow_addele[ELE_ALL];
+
+						for( i = 0; ARRAYLENGTH(sd->right_weapon.addele2) > i && sd->right_weapon.addele2[i].rate != 0; i++ ) {
+							if( sd->right_weapon.addele2[i].ele != tstatus->def_ele )
+								continue;
+							if( !(((sd->right_weapon.addele2[i].flag)&flag)&BF_WEAPONMASK &&
+								((sd->right_weapon.addele2[i].flag)&flag)&BF_RANGEMASK &&
+								((sd->right_weapon.addele2[i].flag)&flag)&BF_SKILLMASK) )
+								continue;
 							ele_fix += sd->right_weapon.addele2[i].rate;
 						}
-						cardfix = bcc_multi_damage_rate(cardfix, ele_fix);
+						cardfix = cardfix * (100 + ele_fix) / 100;
 					}
-					cardfix = bcc_multi_damage_rate(cardfix, sd->right_weapon.addsize[tstatus->size]+sd->arrow_addsize[tstatus->size]
-															+ sd->right_weapon.addsize[SZ_ALL]+sd->arrow_addsize[SZ_ALL]);
-					cardfix = bcc_multi_damage_rate(cardfix, sd->right_weapon.addrace2[t_race2]);
-					cardfix = bcc_multi_damage_rate(cardfix, sd->right_weapon.addclass[tstatus->class_]+sd->arrow_addclass[tstatus->class_]
-															+ sd->right_weapon.addclass[CLASS_ALL]+sd->arrow_addclass[CLASS_ALL]);
-				}
-				else
-				{ // Melee attack
-					int skill_learnlv=0;
-					if( !battle_config.left_cardfix_to_right )
-					{
-						cardfix = bcc_multi_damage_rate(cardfix, sd->right_weapon.addrace[tstatus->race] + sd->right_weapon.addrace[RC_ALL]);
-						if (!(nk&NK_NO_ELEFIX)) {
+					cardfix = cardfix * (100 + sd->right_weapon.addsize[tstatus->size] + sd->arrow_addsize[tstatus->size] +
+						sd->right_weapon.addsize[SZ_ALL] + sd->arrow_addsize[SZ_ALL]) / 100;
+					cardfix = cardfix * (100 + sd->right_weapon.addrace2[t_race2]) / 100;
+					cardfix = cardfix * (100 + sd->right_weapon.addclass[tstatus->class_] + sd->arrow_addclass[tstatus->class_] +
+						sd->right_weapon.addclass[CLASS_ALL] + sd->arrow_addclass[CLASS_ALL]) / 100;
+				} else { // Melee attack
+					int skill = 0;
+
+					if( !battle_config.left_cardfix_to_right ) {
+						cardfix = cardfix * (100 + sd->right_weapon.addrace[tstatus->race] + sd->right_weapon.addrace[RC_ALL]) / 100;
+						if( !(nk&NK_NO_ELEFIX) ) {
 							int ele_fix = sd->right_weapon.addele[tstatus->def_ele] + sd->right_weapon.addele[ELE_ALL];
-							for (i = 0; ARRAYLENGTH(sd->right_weapon.addele2) > i && sd->right_weapon.addele2[i].rate != 0; i++) {
-								if (sd->right_weapon.addele2[i].ele != tstatus->def_ele) continue;
-								if(!( ((sd->right_weapon.addele2[i].flag)&flag)&BF_WEAPONMASK &&
-									  ((sd->right_weapon.addele2[i].flag)&flag)&BF_RANGEMASK &&
-									  ((sd->right_weapon.addele2[i].flag)&flag)&BF_SKILLMASK))
-										continue;
+
+							for( i = 0; ARRAYLENGTH(sd->right_weapon.addele2) > i && sd->right_weapon.addele2[i].rate != 0; i++ ) {
+								if( sd->right_weapon.addele2[i].ele != tstatus->def_ele )
+									continue;
+								if( !(((sd->right_weapon.addele2[i].flag)&flag)&BF_WEAPONMASK &&
+									((sd->right_weapon.addele2[i].flag)&flag)&BF_RANGEMASK &&
+									((sd->right_weapon.addele2[i].flag)&flag)&BF_SKILLMASK) )
+									continue;
 								ele_fix += sd->right_weapon.addele2[i].rate;
 							}
-							cardfix = bcc_multi_damage_rate(cardfix, ele_fix);
+							cardfix = cardfix * (100 + ele_fix) / 100;
 						}
-						cardfix = bcc_multi_damage_rate(cardfix, sd->right_weapon.addsize[tstatus->size] + sd->right_weapon.addsize[SZ_ALL]);
-						cardfix = bcc_multi_damage_rate(cardfix, sd->right_weapon.addrace2[t_race2]);
-						cardfix = bcc_multi_damage_rate(cardfix, sd->right_weapon.addclass[tstatus->class_] + sd->right_weapon.addclass[CLASS_ALL]);
+						cardfix = cardfix * (100 + sd->right_weapon.addsize[tstatus->size] + sd->right_weapon.addsize[SZ_ALL]) / 100;
+						cardfix = cardfix * (100 + sd->right_weapon.addrace2[t_race2]) / 100;
+						cardfix = cardfix * (100 + sd->right_weapon.addclass[tstatus->class_] + sd->right_weapon.addclass[CLASS_ALL]) / 100;
 
-						if( left&1 )
-						{
-							cardfix_left = bcc_multi_damage_rate(cardfix_left, sd->left_weapon.addrace[tstatus->race] + sd->left_weapon.addrace[RC_ALL]);
-							if (!(nk&NK_NO_ELEFIX))	{
+						if( left&1 ) {
+							cardfix_ = cardfix_ * (100 + sd->left_weapon.addrace[tstatus->race] + sd->left_weapon.addrace[RC_ALL]) / 100;
+							if( !(nk&NK_NO_ELEFIX) ) {
 								int ele_fix_lh = sd->left_weapon.addele[tstatus->def_ele] + sd->left_weapon.addele[ELE_ALL];
-								for (i = 0; ARRAYLENGTH(sd->left_weapon.addele2) > i && sd->left_weapon.addele2[i].rate != 0; i++) {
-									if (sd->left_weapon.addele2[i].ele != tstatus->def_ele) continue;
-									if(!( ((sd->left_weapon.addele2[i].flag)&flag)&BF_WEAPONMASK &&
-										  ((sd->left_weapon.addele2[i].flag)&flag)&BF_RANGEMASK &&
-										  ((sd->left_weapon.addele2[i].flag)&flag)&BF_SKILLMASK))
-											continue;
+
+								for( i = 0; ARRAYLENGTH(sd->left_weapon.addele2) > i && sd->left_weapon.addele2[i].rate != 0; i++ ) {
+									if( sd->left_weapon.addele2[i].ele != tstatus->def_ele )
+										continue;
+									if( !(((sd->left_weapon.addele2[i].flag)&flag)&BF_WEAPONMASK &&
+										((sd->left_weapon.addele2[i].flag)&flag)&BF_RANGEMASK &&
+										((sd->left_weapon.addele2[i].flag)&flag)&BF_SKILLMASK) )
+										continue;
 									ele_fix_lh += sd->left_weapon.addele2[i].rate;
 								}
-								cardfix_left = bcc_multi_damage_rate(cardfix_left, ele_fix_lh);
+								cardfix_ = cardfix_ * (100 + ele_fix_lh) / 100;
 							}
-							cardfix_left = bcc_multi_damage_rate(cardfix_left, sd->left_weapon.addsize[tstatus->size] + sd->left_weapon.addsize[SZ_ALL]);
-							cardfix_left = bcc_multi_damage_rate(cardfix_left, sd->left_weapon.addrace2[t_race2]);
-							cardfix_left = bcc_multi_damage_rate(cardfix_left, sd->left_weapon.addclass[tstatus->class_] + sd->left_weapon.addclass[CLASS_ALL]);
+							cardfix_ = cardfix_ * (100 + sd->left_weapon.addsize[tstatus->size] + sd->left_weapon.addsize[SZ_ALL]) / 100;
+							cardfix_ = cardfix_ * (100 + sd->left_weapon.addrace2[t_race2]) / 100;
+							cardfix_ = cardfix_ * (100 + sd->left_weapon.addclass[tstatus->class_] + sd->left_weapon.addclass[CLASS_ALL]) / 100;
 						}
-					}
-					else
-					{
+					} else {
 						int ele_fix = sd->right_weapon.addele[tstatus->def_ele] + sd->left_weapon.addele[tstatus->def_ele]
 									+ sd->right_weapon.addele[ELE_ALL] + sd->left_weapon.addele[ELE_ALL];
-						for (i = 0; ARRAYLENGTH(sd->right_weapon.addele2) > i && sd->right_weapon.addele2[i].rate != 0; i++) {
-							if (sd->right_weapon.addele2[i].ele != tstatus->def_ele) continue;
-							if(!( ((sd->right_weapon.addele2[i].flag)&flag)&BF_WEAPONMASK &&
-								  ((sd->right_weapon.addele2[i].flag)&flag)&BF_RANGEMASK &&
-								  ((sd->right_weapon.addele2[i].flag)&flag)&BF_SKILLMASK))
-									continue;
+
+						for( i = 0; ARRAYLENGTH(sd->right_weapon.addele2) > i && sd->right_weapon.addele2[i].rate != 0; i++ ) {
+							if( sd->right_weapon.addele2[i].ele != tstatus->def_ele )
+								continue;
+							if( !(((sd->right_weapon.addele2[i].flag)&flag)&BF_WEAPONMASK &&
+								((sd->right_weapon.addele2[i].flag)&flag)&BF_RANGEMASK &&
+								((sd->right_weapon.addele2[i].flag)&flag)&BF_SKILLMASK) )
+								continue;
 							ele_fix += sd->right_weapon.addele2[i].rate;
 						}
-						for (i = 0; ARRAYLENGTH(sd->left_weapon.addele2) > i && sd->left_weapon.addele2[i].rate != 0; i++) {
-							if (sd->left_weapon.addele2[i].ele != tstatus->def_ele) continue;
-							if(!( ((sd->left_weapon.addele2[i].flag)&flag)&BF_WEAPONMASK &&
-								  ((sd->left_weapon.addele2[i].flag)&flag)&BF_RANGEMASK &&
-								  ((sd->left_weapon.addele2[i].flag)&flag)&BF_SKILLMASK))
-									continue;
+						for( i = 0; ARRAYLENGTH(sd->left_weapon.addele2) > i && sd->left_weapon.addele2[i].rate != 0; i++ ) {
+							if( sd->left_weapon.addele2[i].ele != tstatus->def_ele )
+								continue;
+							if( !(((sd->left_weapon.addele2[i].flag)&flag)&BF_WEAPONMASK &&
+								((sd->left_weapon.addele2[i].flag)&flag)&BF_RANGEMASK &&
+								((sd->left_weapon.addele2[i].flag)&flag)&BF_SKILLMASK) )
+								continue;
 							ele_fix += sd->left_weapon.addele2[i].rate;
 						}
-
-						cardfix = bcc_multi_damage_rate(cardfix, sd->right_weapon.addrace[tstatus->race] + sd->left_weapon.addrace[tstatus->race]
-																+ sd->right_weapon.addrace[RC_ALL] + sd->left_weapon.addrace[RC_ALL]);
-						cardfix = bcc_multi_damage_rate(cardfix, ele_fix);
-						cardfix = bcc_multi_damage_rate(cardfix, sd->right_weapon.addsize[tstatus->size] + sd->left_weapon.addsize[tstatus->size]
-																+ sd->right_weapon.addsize[SZ_ALL] + sd->left_weapon.addsize[SZ_ALL]);
-						cardfix = bcc_multi_damage_rate(cardfix, sd->right_weapon.addrace2[t_race2] + sd->left_weapon.addrace2[t_race2]);
-						cardfix = bcc_multi_damage_rate(cardfix, sd->right_weapon.addclass[tstatus->class_] + sd->left_weapon.addclass[tstatus->class_]
-																+ sd->right_weapon.addclass[CLASS_ALL] + sd->left_weapon.addclass[CLASS_ALL]);
+						cardfix = cardfix * (100 + sd->right_weapon.addrace[tstatus->race] + sd->left_weapon.addrace[tstatus->race] +
+							sd->right_weapon.addrace[RC_ALL] + sd->left_weapon.addrace[RC_ALL]) / 100;
+						cardfix = cardfix * (100 + ele_fix) / 100;
+						cardfix = cardfix * (100 + sd->right_weapon.addsize[tstatus->size] + sd->left_weapon.addsize[tstatus->size] +
+							sd->right_weapon.addsize[SZ_ALL] + sd->left_weapon.addsize[SZ_ALL]) / 100;
+						cardfix = cardfix * (100 + sd->right_weapon.addrace2[t_race2] + sd->left_weapon.addrace2[t_race2]) / 100;
+						cardfix = cardfix * (100 + sd->right_weapon.addclass[tstatus->class_] + sd->left_weapon.addclass[tstatus->class_] +
+							sd->right_weapon.addclass[CLASS_ALL] + sd->left_weapon.addclass[CLASS_ALL]) / 100;
 					}
-					if (sd->status.weapon == W_KATAR && (skill_learnlv=pc_checkskill(sd,ASC_KATAR)) > 0) { // Adv. Katar Mastery functions similar to a +%ATK card on official [helvetica]
-						cardfix = bcc_multi_damage_rate(cardfix, (10 + 2 * skill_learnlv));
-					}
+					if( sd->status.weapon == W_KATAR && (skill = pc_checkskill(sd,ASC_KATAR)) > 0 ) // Adv. Katar Mastery functions similar to a +%ATK card on official [helvetica]
+						cardfix = cardfix * (100 + (10 + 2 * skill)) / 100;
 				}
-				for( i = 0; i < ARRAYLENGTH(sd->right_weapon.add_dmg) && sd->right_weapon.add_dmg[i].rate; i++ )
-				{
-					if( sd->right_weapon.add_dmg[i].class_ == t_class )
-					{
-						cardfix = bcc_multi_damage_rate(cardfix, sd->right_weapon.add_dmg[i].rate);
+				for( i = 0; i < ARRAYLENGTH(sd->right_weapon.add_dmg) && sd->right_weapon.add_dmg[i].rate; i++ ) {
+					if( sd->right_weapon.add_dmg[i].class_ == t_class ) {
+						cardfix = cardfix * (100 + sd->right_weapon.add_dmg[i].rate) / 100;
 						break;
 					}
 				}
-
-				if( left&1 )
-				{
-					for( i = 0; i < ARRAYLENGTH(sd->left_weapon.add_dmg) && sd->left_weapon.add_dmg[i].rate; i++ )
-					{
-						if( sd->left_weapon.add_dmg[i].class_ == t_class )
-						{
-							cardfix_left = bcc_multi_damage_rate(cardfix, sd->left_weapon.add_dmg[i].rate);
+				if( left&1 ) {
+					for( i = 0; i < ARRAYLENGTH(sd->left_weapon.add_dmg) && sd->left_weapon.add_dmg[i].rate; i++ ) {
+						if( sd->left_weapon.add_dmg[i].class_ == t_class ) {
+							cardfix_ = cardfix_ * (100 + sd->left_weapon.add_dmg[i].rate) / 100;
 							break;
 						}
 					}
 				}
-
 #ifndef RENEWAL
 				if( flag&BF_LONG )
-					cardfix = bcc_multi_damage_rate(cardfix, sd->bonus.long_attack_atk_rate);
+					cardfix = cardfix * (100 + sd->bonus.long_attack_atk_rate) / 100;
 #endif
-
-				if( (left&1) )
-					damage = bcc_damage_rate(damage, cardfix_left);
-				else
-					damage = bcc_damage_rate(damage, cardfix);
-
-			} else if( tsd && !(nk&NK_NO_CARDFIX_DEF) && !(left&2) ){ //Target cards should be checked
-				if( !(nk&NK_NO_ELEFIX) )
-				{
+				if( (left&1) && cardfix_ != 1000 )
+					damage = damage * cardfix_ / 1000;
+				else if( cardfix != 1000 )
+					damage = damage * cardfix / 1000;
+			} else if( tsd && !(nk&NK_NO_CARDFIX_DEF) && !(left&2) ) { //Target cards should be checked
+				if( !(nk&NK_NO_ELEFIX) ) {
 					int ele_fix = tsd->subele[s_ele] + tsd->subele[ELE_ALL];
-					for (i = 0; ARRAYLENGTH(tsd->subele2) > i && tsd->subele2[i].rate != 0; i++)
-					{
-						if(tsd->subele2[i].ele != s_ele) continue;
-						if(!( ((tsd->subele2[i].flag)&flag)&BF_WEAPONMASK &&
-							  ((tsd->subele2[i].flag)&flag)&BF_RANGEMASK &&
-							  ((tsd->subele2[i].flag)&flag)&BF_SKILLMASK))
+
+					for( i = 0; ARRAYLENGTH(tsd->subele2) > i && tsd->subele2[i].rate != 0; i++ ) {
+						if( tsd->subele2[i].ele != s_ele )
+							continue;
+						if( !(((tsd->subele2[i].flag)&flag)&BF_WEAPONMASK &&
+							((tsd->subele2[i].flag)&flag)&BF_RANGEMASK &&
+							((tsd->subele2[i].flag)&flag)&BF_SKILLMASK) )
 							continue;
 						ele_fix += tsd->subele2[i].rate;
 					}
-					cardfix = bcc_multi_damage_rate(cardfix, -ele_fix);
-					if( left&1 && s_ele_ != s_ele )
-					{
+					cardfix = cardfix * (100 - ele_fix) / 100;
+					if( left&1 && s_ele_ != s_ele ) {
 						int ele_fix_lh = tsd->subele[s_ele_] + tsd->subele[ELE_ALL];
-						for (i = 0; ARRAYLENGTH(tsd->subele2) > i && tsd->subele2[i].rate != 0; i++)
-						{
-							if(tsd->subele2[i].ele != s_ele_) continue;
-							if(!( ((tsd->subele2[i].flag)&flag)&BF_WEAPONMASK &&
-								  ((tsd->subele2[i].flag)&flag)&BF_RANGEMASK &&
-								  ((tsd->subele2[i].flag)&flag)&BF_SKILLMASK))
+
+						for( i = 0; ARRAYLENGTH(tsd->subele2) > i && tsd->subele2[i].rate != 0; i++ ) {
+							if( tsd->subele2[i].ele != s_ele_ )
+								continue;
+							if( !(((tsd->subele2[i].flag)&flag)&BF_WEAPONMASK &&
+								((tsd->subele2[i].flag)&flag)&BF_RANGEMASK &&
+								((tsd->subele2[i].flag)&flag)&BF_SKILLMASK) )
 								continue;
 							ele_fix_lh += tsd->subele2[i].rate;
 						}
-						cardfix = bcc_multi_damage_rate(cardfix, -ele_fix_lh);
+						cardfix = cardfix * (100 - ele_fix_lh) / 100;
 					}
 				}
-				cardfix = bcc_multi_damage_rate(cardfix, -(tsd->subsize[sstatus->size] + tsd->subsize[SZ_ALL]));
-	 			cardfix = bcc_multi_damage_rate(cardfix, -tsd->subrace2[s_race2]);
-				cardfix = bcc_multi_damage_rate(cardfix, -(tsd->subrace[sstatus->race] + tsd->subrace[RC_ALL]));
-				cardfix = bcc_multi_damage_rate(cardfix, -(tsd->subclass[sstatus->class_] + tsd->subclass[CLASS_ALL]));
-
-				for( i = 0; i < ARRAYLENGTH(tsd->add_def) && tsd->add_def[i].rate;i++ ) {
+				cardfix = cardfix * (100 - tsd->subsize[sstatus->size] + tsd->subsize[SZ_ALL]) / 100;
+				cardfix = cardfix * (100 - tsd->subrace2[s_race2]) / 100;
+				cardfix = cardfix * (100 - tsd->subrace[sstatus->race] + tsd->subrace[RC_ALL]) / 100;
+				cardfix = cardfix * (100 - tsd->subclass[sstatus->class_] + tsd->subclass[CLASS_ALL]) / 100;
+				for( i = 0; i < ARRAYLENGTH(tsd->add_def) && tsd->add_def[i].rate; i++ ) {
 					if( tsd->add_def[i].class_ == s_class ) {
-						cardfix = bcc_multi_damage_rate(cardfix, tsd->add_def[i].rate);
+						cardfix = cardfix * (100 - tsd->add_def[i].rate) / 100;
 						break;
 					}
 				}
-
 				if( flag&BF_SHORT )
-					cardfix = bcc_multi_damage_rate(cardfix, -tsd->bonus.near_attack_def_rate);
+					cardfix = cardfix * (100 - tsd->bonus.near_attack_def_rate) / 100;
 				else	// BF_LONG (there's no other choice)
-					cardfix = bcc_multi_damage_rate(cardfix, -tsd->bonus.long_attack_def_rate);
-
+					cardfix = cardfix * (100 - tsd->bonus.long_attack_def_rate) / 100;
 				if( tsd->sc.data[SC_DEF_RATE] )
-					cardfix = bcc_multi_damage_rate(cardfix, -tsd->sc.data[SC_DEF_RATE]->val1);
-
-				damage = bcc_damage_rate(damage, cardfix);
+					cardfix = cardfix * (100 - tsd->sc.data[SC_DEF_RATE]->val1) / 100;
+				if( cardfix != 1000 )
+					damage = damage * cardfix / 1000;
 			}
 			break;
 		case BF_MISC:
-			if( tsd && !(nk&NK_NO_CARDFIX_DEF) ){
-			// misc damage reduction from equipment
-				if (!(nk&NK_NO_ELEFIX))
-				{
+			if( tsd && !(nk&NK_NO_CARDFIX_DEF) ) { // misc damage reduction from equipment
+				if( !(nk&NK_NO_ELEFIX) ) {
 					int ele_fix = tsd->subele[s_ele] + tsd->subele[ELE_ALL];
-					for (i = 0; ARRAYLENGTH(tsd->subele2) > i && tsd->subele2[i].rate != 0; i++)
-					{
-						if(tsd->subele2[i].ele != s_ele) continue;
-						if(!( ((tsd->subele2[i].flag)&flag)&BF_WEAPONMASK &&
-							  ((tsd->subele2[i].flag)&flag)&BF_RANGEMASK &&
-							  ((tsd->subele2[i].flag)&flag)&BF_SKILLMASK))
+
+					for( i = 0; ARRAYLENGTH(tsd->subele2) > i && tsd->subele2[i].rate != 0; i++ ) {
+						if( tsd->subele2[i].ele != s_ele )
+							continue;
+						if( !(((tsd->subele2[i].flag)&flag)&BF_WEAPONMASK &&
+							((tsd->subele2[i].flag)&flag)&BF_RANGEMASK &&
+							((tsd->subele2[i].flag)&flag)&BF_SKILLMASK))
 							continue;
 						ele_fix += tsd->subele2[i].rate;
 					}
-					cardfix = bcc_multi_damage_rate(cardfix, -ele_fix);
+					cardfix = cardfix * (100 - ele_fix) / 100;
 				}
-				cardfix = bcc_multi_damage_rate(cardfix, -(tsd->subsize[sstatus->size] + tsd->subsize[SZ_ALL]));
-				cardfix = bcc_multi_damage_rate(cardfix, -tsd->subrace2[s_race2]);
-				cardfix = bcc_multi_damage_rate(cardfix, -(tsd->subrace[sstatus->race] + tsd->subrace[RC_ALL]));
-				cardfix = bcc_multi_damage_rate(cardfix, -(tsd->subclass[sstatus->class_] + tsd->subclass[CLASS_ALL]));
-
-				cardfix = bcc_multi_damage_rate(cardfix, -tsd->bonus.misc_def_rate);
+				cardfix = cardfix * (100 - tsd->subsize[sstatus->size] + tsd->subsize[SZ_ALL]) / 100;
+				cardfix = cardfix * (100 - tsd->subrace2[s_race2]) / 100;
+				cardfix = cardfix * (100 - tsd->subrace[sstatus->race] + tsd->subrace[RC_ALL]) / 100;
+				cardfix = cardfix * (100 - tsd->subclass[sstatus->class_] + tsd->subclass[CLASS_ALL]) / 100;
+				cardfix = cardfix * (100 - tsd->bonus.misc_def_rate) / 100;
 				if( flag&BF_SHORT )
-					cardfix = bcc_multi_damage_rate(cardfix, -tsd->bonus.near_attack_def_rate);
+					cardfix = cardfix * (100 - tsd->bonus.near_attack_def_rate) / 100;
 				else	// BF_LONG (there's no other choice)
-					cardfix = bcc_multi_damage_rate(cardfix, -tsd->bonus.long_attack_def_rate);
-
-				damage = bcc_damage_rate(damage, cardfix);
+					cardfix = cardfix * (100 - tsd->bonus.long_attack_def_rate) / 100;
+				if( cardfix != 10000 )
+					damage = damage * cardfix / 1000;
 			}
 			break;
 	}
@@ -733,7 +700,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 }
 
 /*==========================================
- * Check dammage trough status.
+ * Check damage trough status.
  * ATK may be MISS, BLOCKED FAIL, reduc, increase, end status...
  * After this we apply bg/gvg reduction
  *------------------------------------------*/
@@ -5394,16 +5361,15 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						else
 							skillratio += 110 + 20 * skill_lv;
 						break;
-					case KO_KAIHOU: {
+					case KO_KAIHOU:
+						if(sd) {
 							int ttype;
 
-							if(sd) {
-								ARR_FIND(1, 6, ttype, sd->talisman[ttype] > 0);
-								if(ttype < 5) {
-									skillratio += -100 + 200 * sd->talisman[ttype];
-									RE_LVL_DMOD(100);
-									pc_del_talisman(sd, sd->talisman[ttype], ttype);
-								}
+							ARR_FIND(1, 6, ttype, sd->talisman[ttype] > 0);
+							if(ttype < 5) {
+								skillratio += -100 + 200 * sd->talisman[ttype];
+								RE_LVL_DMOD(100);
+								pc_del_talisman(sd, sd->talisman[ttype], ttype);
 							}
 						}
 						break;
