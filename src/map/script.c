@@ -16723,10 +16723,11 @@ BUILDIN_FUNC(questinfo)
 BUILDIN_FUNC(setquest)
 {
 	struct map_session_data *sd = script_rid2sd(st);
-	int i, quest_id;
+	unsigned short i;
+	int quest_id;
 
-	nullpo_ret(sd);
-	
+	nullpo_retr(1, sd);
+
 	quest_id = script_getnum(st, 2);
 
 	quest_add(sd, quest_id);
@@ -16775,12 +16776,12 @@ BUILDIN_FUNC(changequest)
 BUILDIN_FUNC(checkquest)
 {
 	struct map_session_data *sd = script_rid2sd(st);
-	quest_check_type type = HAVEQUEST;
+	enum quest_check_type type = HAVEQUEST;
 
 	nullpo_ret(sd);
 
 	if( script_hasdata(st, 3) )
-		type = (quest_check_type)script_getnum(st, 3);
+		type = (enum quest_check_type)script_getnum(st, 3);
 
 	script_pushint(st, quest_check(sd, script_getnum(st, 2), type));
 
@@ -16794,7 +16795,7 @@ BUILDIN_FUNC(isbegin_quest)
 
 	nullpo_ret(sd);
 
-	i = quest_check(sd, script_getnum(st, 2), (quest_check_type) HAVEQUEST);
+	i = quest_check(sd, script_getnum(st, 2), (enum quest_check_type) HAVEQUEST);
 	script_pushint(st, i + (i < 1));
 
 	return SCRIPT_CMD_SUCCESS;

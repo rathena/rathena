@@ -2659,6 +2659,11 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				aFree(sd->sc_display);
 				sd->sc_display = NULL;
 			}
+			if( sd->quest_log != NULL ) {
+				aFree(sd->quest_log);
+				sd->quest_log = NULL;
+				sd->num_quests = sd->avail_quests = 0;
+			}
 			break;
 		}
 		case BL_PET:

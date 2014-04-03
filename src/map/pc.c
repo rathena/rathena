@@ -1101,6 +1101,11 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	for( i = 0; i < 3; i++ )
 		sd->hate_mob[i] = -1;
 
+	sd->quest_log = NULL;
+	sd->num_quests = 0;
+	sd->avail_quests = 0;
+	sd->save_quest = false;
+
 	//warp player
 	if ((i=pc_setpos(sd,sd->status.last_point.map, sd->status.last_point.x, sd->status.last_point.y, CLR_OUTSIGHT)) != 0) {
 		ShowError ("Last_point_map %s - id %d not found (error code %d)\n", mapindex_id2name(sd->status.last_point.map), sd->status.last_point.map, i);
@@ -6275,7 +6280,7 @@ int pc_maxparameterincrease(struct map_session_data* sd, int type)
 	}
 	final_val--;
 
-	return final_val > base ? final_val-base : 0;
+	return (final_val > base ? final_val-base : 0);
 }
 
 /**
@@ -6309,7 +6314,7 @@ bool pc_statusup(struct map_session_data* sd, int type, int increase)
 		clif_statusupack(sd, type, 0, 0);
 		return false;
 	}
-	
+
 	// check status points
 	needed_points = pc_need_status_point(sd, type, increase);
 	if (needed_points < 0 || needed_points > sd->status.status_point) { // Sanity check
