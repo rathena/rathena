@@ -4835,7 +4835,7 @@ ACMD_FUNC(disguise)
 	}
 
 	if (sd->sc.data[SC_MONSTER_TRANSFORM]) {
-		clif_displaymessage(fd, msg_txt(sd,1499)); // Character cannot be disguised while in monster transform.
+		clif_displaymessage(fd, msg_txt(sd,730)); // Character cannot be disguised while in monster transform.
 		return -1;
 	}
 
@@ -9417,16 +9417,16 @@ ACMD_FUNC(costume) {
 	if( !message || !*message ) {
 		for( k = 0; k < len; k++ ) {
 			if( sd->sc.data[name2id[k]] ) {
-				sprintf(atcmd_output, msg_txt(sd, 1505), names[k]); // Costume '%s' removed.
+				sprintf(atcmd_output, msg_txt(sd, 727), names[k]); // '%s' Costume removed.
 				clif_displaymessage(sd->fd, atcmd_output);
 				status_change_end(&sd->bl, (sc_type)name2id[k], INVALID_TIMER);
 				return 0;
 			}
 		}
 
-		clif_displaymessage(sd->fd, msg_txt(sd, 1504)); // Available Costumes
+		clif_displaymessage(sd->fd, msg_txt(sd, 726)); // Available Costumes
 		for( k = 0; k < len; k++ ) {
-			sprintf(atcmd_output, msg_txt(sd, 1503), names[k]); // -- %s
+			sprintf(atcmd_output, msg_txt(sd, 725), names[k]); // -- %s
 			clif_displaymessage(sd->fd, atcmd_output);
 		}
 		return -1;
@@ -9434,7 +9434,7 @@ ACMD_FUNC(costume) {
 
 	for( k = 0; k < len; k++ ) {
 		if( sd->sc.data[name2id[k]] ) {
-			sprintf(atcmd_output, msg_txt(sd, 1502), names[k]); // You're already with a '%s' costume, type '@costume' to remove it.
+			sprintf(atcmd_output, msg_txt(sd, 724), names[k]); // You're already wearing a(n) '%s' costume, type '@costume' to remove it.
 			clif_displaymessage(sd->fd, atcmd_output);
 			return -1;
 		}
@@ -9445,7 +9445,7 @@ ACMD_FUNC(costume) {
 			break;
 
 	if( k == len ) {
-		sprintf(atcmd_output, msg_txt(sd, 1501), message); // '%s' is not a known costume
+		sprintf(atcmd_output, msg_txt(sd, 723), message); // '%s' is an unknown costume
 		clif_displaymessage(sd->fd, atcmd_output);
 		return -1;
 	}

@@ -18631,16 +18631,16 @@ BUILDIN_FUNC(montransform) {
 		struct mob_db *monster =  mob_db(mob_id);
 
 		if (battle_config.mon_trans_disable_in_gvg && map_flag_gvg2(sd->bl.m)) {
-			clif_displaymessage(sd->fd, msg_txt(sd,1500)); // Transforming into monster is not allowed in Guild Wars.
+			clif_displaymessage(sd->fd, msg_txt(sd,731)); // Transforming into monster is not allowed in Guild Wars.
 			return SCRIPT_CMD_FAILURE;
 		}
 
 		if (sd->disguise){
-			clif_displaymessage(sd->fd, msg_txt(sd,1498)); // Cannot transform into monster while in disguise.
+			clif_displaymessage(sd->fd, msg_txt(sd,729)); // Cannot transform into monster while in disguise.
 			return SCRIPT_CMD_FAILURE;
 		}
 
-		sprintf(msg, msg_txt(sd,1497), monster->name); // Traaaansformation-!! %s form!!
+		sprintf(msg, msg_txt(sd,728), monster->name); // Traaaansformation-!! %s form!!
 		clif_disp_overhead(&sd->bl, msg);
 		status_change_end(&sd->bl, SC_MONSTER_TRANSFORM, INVALID_TIMER); // Clear previous
 		sc_start2(NULL, &sd->bl, SC_MONSTER_TRANSFORM, 100, mob_id, type, tick);
