@@ -1084,6 +1084,7 @@
 2324,3,8,1,-1,0,0,5,3,yes,0,0,0,weapon,0,0x0,	LG_HESPERUSLIT,Hesperus Lit
 2325,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0,0x0,	LG_INSPIRATION,Inspiration
 2519,1,6,1,-1,0x2,0,5,1,yes,0,0,0,weapon,3:4:5:6:7,0x0, LG_OVERBRAND_BRANDISH,Overbrand Brandish
+2520,1,6,1,-1,0x40,0,5,1,no,0,0,0,weapon,0,0,	LG_OVERBRAND_PLUSATK,Overbrand Plus Attack
 
 //****
 // SR Sura

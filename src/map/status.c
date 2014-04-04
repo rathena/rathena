@@ -620,7 +620,7 @@ void initChangeTables(void)
 	add_sc( RA_VERDURETRAP		, SC_ELEMENTALCHANGE	);
 	add_sc( RA_FIRINGTRAP		, SC_BURNING		);
 	set_sc_with_vfx( RA_ICEBOUNDTRAP, SC_FREEZING		, SI_FROSTMISTY		, SCB_NONE );
-	set_sc( RA_UNLIMIT		, SC_UNLIMIT		, SI_UNLIMIT		, SCB_NONE );
+	set_sc( RA_UNLIMIT		, SC_UNLIMIT		, SI_UNLIMIT		, SCB_DEF|SCB_DEF2|SCB_MDEF|SCB_MDEF2 );
 
 	/* Mechanic */
 	set_sc( NC_ACCELERATION		, SC_ACCELERATION	, SI_ACCELERATION	, SCB_SPEED );
@@ -942,19 +942,24 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_CURSED_SOIL] = SI_CURSED_SOIL;
 	StatusIconChangeTable[SC_UPHEAVAL] = SI_UPHEAVAL;
 
-	StatusIconChangeTable[SC_PUSH_CART] = SI_ON_PUSH_CART;
 	StatusIconChangeTable[SC_REBOUND] = SI_REBOUND;
 	StatusIconChangeTable[SC_MONSTER_TRANSFORM] = SI_MONSTER_TRANSFORM;
+	StatusIconChangeTable[SC_ALL_RIDING] = SI_ALL_RIDING;
+	StatusIconChangeTable[SC_PUSH_CART] = SI_ON_PUSH_CART;
+	StatusIconChangeTable[SC_MTF_ASPD] = SI_MTF_ASPD;
+	StatusIconChangeTable[SC_MTF_RANGEATK] = SI_MTF_RANGEATK;
+	StatusIconChangeTable[SC_MTF_MATK] = SI_MTF_MATK;
+	StatusIconChangeTable[SC_MTF_MLEATKED] = SI_MTF_MLEATKED;
+	StatusIconChangeTable[SC_MTF_CRIDAMAGE] = SI_MTF_CRIDAMAGE;
 	StatusIconChangeTable[SC_MOONSTAR] = SI_MOONSTAR;
 	StatusIconChangeTable[SC_SUPER_STAR] = SI_SUPER_STAR;
-	StatusIconChangeTable[SC_STRANGELIGHTS] = SI_STRANGELIGHTS;
-	StatusIconChangeTable[SC_DECORATION_OF_MUSIC] = SI_DECORATION_OF_MUSIC;
 	StatusIconChangeTable[SC_BURNING] = SI_BURNT;
 
 	StatusIconChangeTable[SC_H_MINE] = SI_H_MINE;
 	StatusIconChangeTable[SC_QD_SHOT_READY] = SI_E_QD_SHOT_READY;
 	StatusIconChangeTable[SC_HEAT_BARREL_AFTER] = SI_HEAT_BARREL_AFTER;
-
+	StatusIconChangeTable[SC_STRANGELIGHTS] = SI_STRANGELIGHTS;
+	StatusIconChangeTable[SC_DECORATION_OF_MUSIC] = SI_DECORATION_OF_MUSIC;
 	StatusIconChangeTable[SC_QUEST_BUFF1] = SI_QUEST_BUFF1;
 	StatusIconChangeTable[SC_QUEST_BUFF2] = SI_QUEST_BUFF2;
 	StatusIconChangeTable[SC_QUEST_BUFF3] = SI_QUEST_BUFF3;
@@ -1045,15 +1050,16 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_EXTRACT_SALAMINE_JUICE] |= SCB_ASPD;
 	StatusChangeFlagTable[SC_DEFSET] |= SCB_DEF;
 	StatusChangeFlagTable[SC_MDEFSET] |= SCB_MDEF;
+	StatusChangeFlagTable[SC_WEDDING] |= SCB_SPEED;
+	StatusChangeFlagTable[SC_ALL_RIDING] |= SCB_SPEED;
+	StatusChangeFlagTable[SC_PUSH_CART] |= SCB_SPEED;
+	StatusChangeFlagTable[SC_MTF_ASPD] |= SCB_ASPD|SCB_HIT;
+	StatusChangeFlagTable[SC_MTF_MATK] |= SCB_MATK;
+	StatusChangeFlagTable[SC_MTF_MLEATKED] |= SCB_ALL;
 	StatusChangeFlagTable[SC_MOONSTAR] |= SCB_NONE;
 	StatusChangeFlagTable[SC_SUPER_STAR] |= SCB_NONE;
 	StatusChangeFlagTable[SC_STRANGELIGHTS] |= SCB_NONE;
 	StatusChangeFlagTable[SC_DECORATION_OF_MUSIC] |= SCB_NONE;
-
-	StatusChangeFlagTable[SC_MTF_ASPD] = SCB_ASPD|SCB_HIT;
-	StatusChangeFlagTable[SC_MTF_MATK] = SCB_MATK;
-	StatusChangeFlagTable[SC_MTF_MLEATKED] |= SCB_ALL;
-
 	StatusChangeFlagTable[SC_QUEST_BUFF1] |= SCB_BATK|SCB_MATK;
 	StatusChangeFlagTable[SC_QUEST_BUFF2] |= SCB_BATK|SCB_MATK;
 	StatusChangeFlagTable[SC_QUEST_BUFF3] |= SCB_BATK|SCB_MATK;
@@ -3327,7 +3333,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		status->def = cap_value(i, DEFTYPE_MIN, DEFTYPE_MAX);
 	}
 
-	if(pc_isriding(sd) && pc_checkskill(sd, NC_MAINFRAME) > 0)
+	if(pc_ismadogear(sd) && pc_checkskill(sd, NC_MAINFRAME) > 0)
 		status->def += 20 + (pc_checkskill(sd, NC_MAINFRAME) * 20);
 
 #ifndef RENEWAL
@@ -5560,7 +5566,7 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 	if(sc->data[SC_EARTH_INSIGNIA] && sc->data[SC_EARTH_INSIGNIA]->val1 == 2)
 		def += 50;
 	if(sc->data[SC_ODINS_POWER])
-		def -= 20;
+		def -= 20 * sc->data[SC_ODINS_POWER]->val1;
 	if( sc->data[SC_ANGRIFFS_MODUS] )
 		def -= 30 + 20 * sc->data[SC_ANGRIFFS_MODUS]->val1;
 	if(sc->data[SC_STONEHARDSKIN])
@@ -5733,7 +5739,7 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 			return 0;
 	}
 	if (sc->data[SC_ODINS_POWER])
-		mdef -= 20;
+		mdef -= 20 * sc->data[SC_ODINS_POWER]->val1;
 	if(sc->data[SC_UNLIMIT])
 		return 1;
 
@@ -9877,6 +9883,31 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if (!map_flag_gvg(bl->m))
 				unit_stop_walking(bl, 1);
 		break;
+		/* Show Buff Icons */
+		case SC_ITEMSCRIPT:
+			if (sd) {
+				switch (val1) {
+					case ITEMID_GHOSTRING_CARD:
+						clif_status_change(bl, SI_ARMOR_PROPERTY, 1, tick, 0, 0, 0);
+						break;
+					case ITEMID_PHREEONI_CARD:
+						clif_status_change(bl, SI_FOODHIT, 1, tick, 0, 0, 0);
+						break;
+					case ITEMID_MISTRESS_CARD:
+						clif_status_change(bl, SI_MVPCARD_MISTRESS, 1, tick, 0, 0, 0);
+						break;
+					case ITEMID_ORC_LORD_CARD:
+						clif_status_change(bl, SI_MVPCARD_ORCLORD, 1, tick, 0, 0, 0);
+						break;
+					case ITEMID_ORC_HERO_CARD:
+						clif_status_change(bl, SI_MVPCARD_ORCHERO, 1, tick, 0, 0, 0);
+						break;
+					case ITEMID_TAO_GUNKA_CARD:
+						clif_status_change(bl, SI_MVPCARD_TAOGUNKA, 1, tick, 0, 0, 0);
+						break;
+				}
+			}
+			break;
 	}
 
 	// Set option as needed.
@@ -10777,6 +10808,30 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			break;
 		case SC_FULL_THROTTLE:
 			sc_start(bl, bl, SC_REBOUND, 100, sce->val1, skill_get_time2(ALL_FULL_THROTTLE, sce->val1));
+			break;
+		case SC_ITEMSCRIPT:
+			if (sd) {
+				switch (sce->val1) {
+					case ITEMID_GHOSTRING_CARD:
+						clif_status_load(bl, SI_ARMOR_PROPERTY, 0);
+						break;
+					case ITEMID_PHREEONI_CARD:
+						clif_status_load(bl, SI_FOODHIT, 0);
+						break;
+					case ITEMID_MISTRESS_CARD:
+						clif_status_load(bl, SI_MVPCARD_MISTRESS, 0);
+						break;
+					case ITEMID_ORC_LORD_CARD:
+						clif_status_load(bl, SI_MVPCARD_ORCLORD, 0);
+						break;
+					case ITEMID_ORC_HERO_CARD:
+						clif_status_load(bl, SI_MVPCARD_ORCHERO, 0);
+						break;
+					case ITEMID_TAO_GUNKA_CARD:
+						clif_status_load(bl, SI_MVPCARD_TAOGUNKA, 0);
+						break;
+				}
+			}
 			break;
 		case SC_HEAT_BARREL:
 			if (sd)

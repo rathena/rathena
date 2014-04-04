@@ -1983,10 +1983,10 @@ static int is_attack_piercing(struct Damage wd, struct block_list *src, struct b
 		struct status_data *tstatus = status_get_status_data(target);
 #ifdef RENEWAL
 		if( skill_id != PA_SACRIFICE && skill_id != CR_GRANDCROSS && skill_id != NPC_GRANDDARKNESS
-			&& skill_id != PA_SHIELDCHAIN && skill_id != ASC_BREAKER ) // Renewal: Soul Breaker no longer gains ice pick effect and ice pick effect gets crit benefit [helvetica]
+			&& skill_id != PA_SHIELDCHAIN && skill_id != KO_HAPPOKUNAI && skill_id != ASC_BREAKER ) // Renewal: Soul Breaker no longer gains ice pick effect and ice pick effect gets crit benefit [helvetica]
 #else
 		if( skill_id != PA_SACRIFICE && skill_id != CR_GRANDCROSS && skill_id != NPC_GRANDDARKNESS
-			&& skill_id != PA_SHIELDCHAIN && !is_attack_critical(wd, src, target, skill_id, skill_lv, false) )
+			&& skill_id != PA_SHIELDCHAIN && skill_id != KO_HAPPOKUNAI && !is_attack_critical(wd, src, target, skill_id, skill_lv, false) )
 #endif
 		{ //Elemental/Racial adjustments
 			if( sd && (sd->right_weapon.def_ratio_atk_ele & (1<<tstatus->def_ele) || sd->right_weapon.def_ratio_atk_ele & (1<<ELE_ALL) ||
@@ -2365,6 +2365,7 @@ static struct Damage battle_calc_element_damage(struct Damage wd, struct block_l
 
 			switch( skill_id ) {
 				case MC_CARTREVOLUTION: //Cart Revolution apply the element fix once more with neutral element
+				case KO_BAKURETSU:
 					wd.damage = battle_attr_fix(src, target, wd.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 					break;
 				case GS_GROUNDDRIFT:
@@ -2728,6 +2729,10 @@ struct Damage battle_calc_skill_base_damage(struct Damage wd, struct block_list 
 					ATK_ADDRATE(wd.damage, wd.damage2, sd->bonus.crit_atk_rate);
 				}
 #endif
+				if(is_attack_critical(wd, src, target, skill_id, skill_lv, false) && sc && sc->data[SC_MTF_CRIDAMAGE]) {
+					ATK_ADDRATE(wd.damage, wd.damage2, 25);
+					RE_ALLATK_ADDRATE(wd, 25); //Temporary it should be 'bonus.crit_atk_rate'
+				}
 				if(sd->status.party_id && (skill=pc_checkskill(sd,TK_POWER)) > 0) {
 					if( (i = party_foreachsamemap(party_sub_count, sd, 0)) > 1 ) { // exclude the player himself [Inkfish]
 						ATK_ADDRATE(wd.damage, wd.damage2, 2*skill*i);
@@ -3624,26 +3629,36 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			skillratio += 700;
 			break;
 		case KO_JYUMONJIKIRI:
-			skillratio += -100 + 150 * skill_lv;
+			skillratio = 150 * skill_lv;
+			RE_LVL_DMOD(120);
+			if(tsc && tsc->data[SC_JYUMONJIKIRI])
+				skillratio += skill_lv * status_get_lv(src);
 			break;
 		case KO_HUUMARANKA:
-			skillratio += -100 + 150 * skill_lv + sstatus->dex/2 + sstatus->agi/2; // needs more info
+			skillratio = 150 * skill_lv + sstatus->agi + sstatus->dex + (sd ? pc_checkskill(sd,NJ_HUUMA) * 100 : 0);
 			break;
 		case KO_SETSUDAN:
 			skillratio += 100 * (skill_lv-1);
+			RE_LVL_DMOD(100);
+			if(tsc && tsc->data[SC_SPIRIT])
+				skillratio += 200 * tsc->data[SC_SPIRIT]->val1;
 			break;
 		case KO_BAKURETSU:
-			skillratio = 50 * skill_lv * (sd?pc_checkskill(sd,NJ_TOBIDOUGU):10);
+			skillratio = (sd ? pc_checkskill(sd,NJ_TOBIDOUGU) : 1) * (50 + sstatus->dex / 4) * skill_lv * 4 / 10;
+			RE_LVL_DMOD(120);
+			skillratio += 10 * (sd ? sd->status.job_level : 1);
+			break;
+		case KO_MAKIBISHI:
+			skillratio = 20 * skill_lv;
 			break;
 		case MH_NEEDLE_OF_PARALYZE:
 			skillratio += 600 + 100 * skill_lv;
 			break;
 		case MH_STAHL_HORN:
-			skillratio += 400 + 100 * skill_lv * status_get_lv(src);
-			skillratio = skillratio/100; //@TODO uv1 factor need to be confirmed
+			skillratio += 400 + 100 * skill_lv * status_get_lv(src) / 150;
 			break;
 		case MH_LAVA_SLIDE:
-			skillratio += -100 + 70 * skill_lv;
+			skillratio = 70 * skill_lv;
 			break;
 		case MH_SONIC_CRAW:
 			skillratio = 40 * skill_lv;
@@ -3796,16 +3811,6 @@ static int battle_calc_skill_constant_addition(struct Damage wd, struct block_li
 				atk += ( (tsd->weight/10) * status_get_dex(src) / 120 );
 			else
 				atk += ( status_get_lv(target) * 50 ); //mobs
-			break;
-		case KO_SETSUDAN:
-			if( tsc && tsc->data[SC_SPIRIT] ){
-#ifdef RENEWAL
-				atk = ((wd.equipAtk + wd.weaponAtk + wd.statusAtk + wd.masteryAtk) * (10*tsc->data[SC_SPIRIT]->val1)) / 100;// +10% custom value.
-#else
-				atk = (int) ((wd.damage) * (10*tsc->data[SC_SPIRIT]->val1)) / 100;// +10% custom value.
-#endif
-				status_change_end(target,SC_SPIRIT,INVALID_TIMER);
-			}
 			break;
 	}
 	return atk;
@@ -4741,8 +4746,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	if(is_attack_critical(wd, src, target, skill_id, skill_lv, false)) {
 		if(sd) { // check for player so we don't crash out, monsters don't have bonus crit rates [helvetica]
 			wd.damage = (int)floor((double)(wd.damage * 1.4 * (100 + sd->bonus.crit_atk_rate)) / 100);
-			if (sc && sc->data[SC_MTF_CRIDAMAGE]) // Monster Transformation Bonus
-				wd.damage *= (int)1.25;
 		}
 		else
 			wd.damage = (int)floor((double)wd.damage * 1.4);
@@ -4795,11 +4798,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	// skills forced to neutral gain benefits from weapon element
 	// but final damage is considered "neutral" and resistances are applied again
 	switch (skill_id) {
-		case GN_CARTCANNON: // Cart Cannon gets forced to element of cannon ball (neutral or holy/shadow/ghost)
-			wd.damage = battle_attr_fix(src, target, wd.damage, (sd && sd->bonus.arrow_ele) ? sd->bonus.arrow_ele : ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
-			break;
 		case MC_CARTREVOLUTION: // Cart Revolution gets forced to neutral element
 		case MO_INVESTIGATE:
+		case KO_BAKURETSU:
 			wd.damage = battle_attr_fix(src, target, wd.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 			break;
 		case CR_SHIELDBOOMERANG:
@@ -4834,6 +4835,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 						wd.damage = battle_attr_fix(src, target, wd.damage, right_element, tstatus->def_ele, tstatus->ele_lv);
 				}
 			}
+			break;
+		case GN_CARTCANNON: // Cart Cannon gets forced to element of cannon ball (neutral or holy/shadow/ghost)
+			wd.damage = battle_attr_fix(src, target, wd.damage, (sd && sd->bonus.arrow_ele) ? sd->bonus.arrow_ele : ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 			break;
 	}
 
@@ -5886,9 +5890,6 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		//[{( Hell Plant Skill Level x Casters Base Level ) x 10 } + {( Casters INT x 7 ) / 2 } x { 18 + ( Casters Job Level / 4 )] x ( 5 / ( 10 - Summon Flora Skill Level ))
 		md.damage = ( skill_lv * status_get_lv(src) * 10 ) + ( status_get_int(src) * 7 / 2 ) * ( 18 + (sd?sd->status.job_level:0) / 4 ) * ( 5 / (10 - ((sd) ? pc_checkskill(sd,AM_CANNIBALIZE) : skill_get_max(AM_CANNIBALIZE))) );
 		break;
-	case KO_MAKIBISHI:
-		md.damage = 20 * skill_lv;
-		break;
 	case RL_B_TRAP:
 		md.damage = (200 + status_get_int(src) + status_get_dex(src)) * skill_lv * 10; //(custom)
 		break;
@@ -6825,6 +6826,9 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 					case ASC_METEORASSAULT:
 					case RG_RAID:
 					case MC_CARTREVOLUTION:
+					case HT_CLAYMORETRAP:
+					case RA_ICEBOUNDTRAP:
+					case RA_FIRINGTRAP:
 #endif
 						state |= BCT_ENEMY;
 						strip_enemy = 0;
