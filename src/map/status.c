@@ -10996,9 +10996,16 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 
 	if( opt_flag&8 ) // bugreport:681
 		clif_changeoption2(bl);
-	else if(opt_flag)
+	else if(opt_flag) {
 		clif_changeoption(bl);
-
+		if (sd && (opt_flag&0x4)) {
+			clif_changelook(bl,LOOK_BASE,sd->vd.class_);
+			clif_get_weapon_view(sd,&sd->vd.weapon,&sd->vd.shield);
+			clif_changelook(bl,LOOK_WEAPON,sd->vd.weapon);
+			clif_changelook(bl,LOOK_SHIELD,sd->vd.shield);
+			clif_changelook(bl,LOOK_CLOTHES_COLOR,cap_value(sd->status.clothes_color,0,battle_config.max_cloth_color));
+		}
+	}
 	if (calc_flag)
 		status_calc_bl(bl,calc_flag);
 
