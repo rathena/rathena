@@ -25,8 +25,8 @@ const char* _msg_txt(int msg_number,int size, char ** msg_table)
  */
 int _msg_config_read(const char* cfgName,int size, char ** msg_table)
 {
-	int msg_number;
-	char line[1024], w1[1024], w2[1024];
+	uint16 msg_number, msg_count = 0, line_num = 0;
+	char line[1024], w1[8], w2[512];
 	FILE *fp;
 	static int called = 1;
 
@@ -39,9 +39,10 @@ int _msg_config_read(const char* cfgName,int size, char ** msg_table)
 		memset(msg_table, 0, sizeof (msg_table[0]) * size);
 
 	while (fgets(line, sizeof (line), fp)) {
+		line_num++;
 		if (line[0] == '/' && line[1] == '/')
 			continue;
-		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) != 2)
+		if (sscanf(line, "%7[^:]: %511[^\r\n]", w1, w2) != 2)
 			continue;
 
 		if (strcmpi(w1, "import") == 0)
@@ -53,12 +54,15 @@ int _msg_config_read(const char* cfgName,int size, char ** msg_table)
 					aFree(msg_table[msg_number]);
 				msg_table[msg_number] = (char *) aMalloc((strlen(w2) + 1) * sizeof (char));
 				strcpy(msg_table[msg_number], w2);
+				msg_count++;
 			}
+			else
+				ShowWarning("Invalid message ID '%s' at line %d from '%s' file.\n",w1,line_num,cfgName);
 		}
 	}
 
 	fclose(fp);
-	ShowInfo("Finished reading %s.\n",cfgName);
+	ShowInfo("Done reading "CL_WHITE"'%d'"CL_RESET" messages in "CL_WHITE"'%s'"CL_RESET".\n",msg_count,cfgName);
 
 	return 0;
 }
