@@ -801,6 +801,11 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			return 0;
 		}
 
+		if( sc->data[SC_ELEMENTAL_SHIELD] && flag&BF_MAGIC ) {
+			d->dmg_lv = ATK_BLOCK;
+			return 0;
+		}
+
 		if( sc->data[SC_PNEUMA] && (flag&(BF_MAGIC|BF_LONG)) == BF_LONG ) {
 			d->dmg_lv = ATK_BLOCK;
 			skill_blown(src,bl,skill_get_blewcount(skill_id,skill_lv),-1,0);

@@ -3230,7 +3230,8 @@ static int skill_check_unit_range_sub (struct block_list *bl, va_list ap)
 		case MG_SAFETYWALL:
 		case AL_PNEUMA:
 		case SC_MAELSTROM:
-			if(g_skill_id != MH_STEINWAND && g_skill_id != MG_SAFETYWALL && g_skill_id != AL_PNEUMA && g_skill_id != SC_MAELSTROM)
+		case SO_ELEMENTAL_SHIELD:
+			if(g_skill_id != MH_STEINWAND && g_skill_id != MG_SAFETYWALL && g_skill_id != AL_PNEUMA && g_skill_id != SC_MAELSTROM && g_skill_id != SO_ELEMENTAL_SHIELD)
 				return 0;
 			break;
 		case AL_WARP:
@@ -5454,6 +5455,39 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					return 0;
 				}
 				return skill_castend_damage_id (src, bl, skill_id, skill_lv, tick, flag);
+			}
+			break;
+		case SO_ELEMENTAL_SHIELD: {
+				struct party_data *p;
+				short ret = 0;
+				int x0, y0, x1, y1, range;
+
+				if(sd == NULL || !sd->ed)
+					break;
+				if((p = party_search(sd->status.party_id)) == NULL)
+					break;
+				range = skill_get_splash(skill_id,skill_lv);
+				x0 = sd->bl.x - range;
+				y0 = sd->bl.y - range;
+				x1 = sd->bl.x + range;
+				y1 = sd->bl.y + range;
+				elemental_delete(sd->ed,0);
+				if(!skill_check_unit_range(src,src->x,src->y,skill_id,skill_lv))
+					ret = skill_castend_pos2(src,src->x,src->y,skill_id,skill_lv,tick,flag);
+				for(i = 0; i < MAX_PARTY; i++) {
+					struct map_session_data *psd = p->data[i].sd;
+
+					if(!psd)
+						continue;
+					if(psd->bl.m != sd->bl.m || !psd->bl.prev)
+						continue;
+					if(range && (psd->bl.x < x0 || psd->bl.y < y0 ||
+						psd->bl.x > x1 || psd->bl.y > y1))
+						continue;
+					if(!skill_check_unit_range(bl,psd->bl.x,psd->bl.y,skill_id,skill_lv))
+						ret |= skill_castend_pos2(bl,psd->bl.x,psd->bl.y,skill_id,skill_lv,tick,flag);
+				}
+				return ret;
 			}
 			break;
 		case NPC_SMOKING: //Since it is a self skill, this one ends here rather than in damage_id. [Skotlex]
@@ -8724,15 +8758,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 
-	case SO_ELEMENTAL_SHIELD:
-		if( !sd->ed ) break;
-			elemental_delete(sd->ed,0);
-		if( !sd->status.party_id || flag&1 )
-			skill_unitsetting(src,MG_SAFETYWALL,skill_lv,bl->x,bl->y,0);
-		else if( sd )
-			party_foreachsamemap(skill_area_sub,sd,AREA_SIZE,src,skill_id,skill_lv,tick,flag|BCT_PARTY|1,skill_castend_nodamage_id);
-		break;
-
 	case WL_WHITEIMPRISON:
 		if( (src == bl || battle_check_target(src, bl, BCT_ENEMY)>0) && !is_boss(bl) )// Should not work with bosses.
 		{
@@ -10814,6 +10839,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case MH_STEINWAND:
 	case MH_XENO_SLASHER:
 	case NC_MAGMA_ERUPTION:
+	case SO_ELEMENTAL_SHIELD:
 	case RL_B_TRAP:
 		if (skill_id == RL_B_TRAP && sd)
 			sd->skill_id_old = skill_id;
@@ -13230,6 +13256,7 @@ int skill_unit_onleft (uint16 skill_id, struct block_list *bl, unsigned int tick
 		case SO_WIND_INSIGNIA:
 		case SO_EARTH_INSIGNIA:
 		case SC_BLOODYLUST:
+		case SO_ELEMENTAL_SHIELD:
 			if (sce)
 				status_change_end(bl, type, INVALID_TIMER);
 			break;
