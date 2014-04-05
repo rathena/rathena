@@ -194,8 +194,8 @@ void pc_addspiritball(struct map_session_data *sd,int interval,int max)
 
 	nullpo_retv(sd);
 
-	if(max > MAX_SKILL_LEVEL)
-		max = MAX_SKILL_LEVEL;
+	if(max > MAX_SPIRITBALL)
+		max = MAX_SPIRITBALL;
 	if(sd->spiritball < 0)
 		sd->spiritball = 0;
 
@@ -243,8 +243,8 @@ void pc_delspiritball(struct map_session_data *sd,int count,int type)
 	if(count > sd->spiritball)
 		count = sd->spiritball;
 	sd->spiritball -= count;
-	if(count > MAX_SKILL_LEVEL)
-		count = MAX_SKILL_LEVEL;
+	if(count > MAX_SPIRITBALL)
+		count = MAX_SPIRITBALL;
 
 	for(i=0;i<count;i++) {
 		if(sd->spirit_timer[i] != INVALID_TIMER) {
@@ -252,7 +252,7 @@ void pc_delspiritball(struct map_session_data *sd,int count,int type)
 			sd->spirit_timer[i] = INVALID_TIMER;
 		}
 	}
-	for(i=count;i<MAX_SKILL_LEVEL;i++) {
+	for(i=count;i<MAX_SPIRITBALL;i++) {
 		sd->spirit_timer[i-count] = sd->spirit_timer[i];
 		sd->spirit_timer[i] = INVALID_TIMER;
 	}
@@ -1051,7 +1051,7 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	sd->canskill_tick = tick;
 	sd->cansendmail_tick = tick;
 
-	for(i = 0; i < MAX_SKILL_LEVEL; i++)
+	for(i = 0; i < MAX_SPIRITBALL; i++)
 		sd->spirit_timer[i] = INVALID_TIMER;
 	for(i = 0; i < ARRAYLENGTH(sd->autobonus); i++)
 		sd->autobonus[i].active = INVALID_TIMER;

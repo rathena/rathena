@@ -26,6 +26,7 @@
 #define MAX_PC_FEELHATE 3
 #define DAMAGELOG_SIZE_PC 100	// Any idea for this value?
 #define MAX_PC_BONUS_SCRIPT 20
+#define MAX_SPIRITBALL 15
 
 //Update this max as necessary. 55 is the value needed for Super Baby currently
 //Raised to 84 since Expanded Super Novice needs it.
@@ -415,7 +416,7 @@ struct map_session_data {
 	short catch_target_class; // pet catching, stores a pet class to catch (short now) [zzo]
 
 	short spiritball, spiritball_old;
-	int spirit_timer[MAX_SKILL_LEVEL];
+	int spirit_timer[MAX_SPIRITBALL];
 	short talisman[ELE_POISON+1]; // There are actually 5 talisman Fire, Ice, Wind, Earth & Poison maybe because its color violet.
 	int talisman_timer[ELE_POISON+1][10];
 

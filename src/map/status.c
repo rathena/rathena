@@ -9884,30 +9884,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if (!map_flag_gvg(bl->m))
 				unit_stop_walking(bl, 1);
 		break;
-		/* Show Buff Icons */
-		case SC_ITEMSCRIPT:
-			if (sd) {
-				switch (val1) {
-					case ITEMID_GHOSTRING_CARD:
-						clif_status_change(bl, SI_ARMOR_PROPERTY, 1, tick, 0, 0, 0);
-						break;
-					case ITEMID_PHREEONI_CARD:
-						clif_status_change(bl, SI_FOODHIT, 1, tick, 0, 0, 0);
-						break;
-					case ITEMID_MISTRESS_CARD:
-						clif_status_change(bl, SI_MVPCARD_MISTRESS, 1, tick, 0, 0, 0);
-						break;
-					case ITEMID_ORC_LORD_CARD:
-						clif_status_change(bl, SI_MVPCARD_ORCLORD, 1, tick, 0, 0, 0);
-						break;
-					case ITEMID_ORC_HERO_CARD:
-						clif_status_change(bl, SI_MVPCARD_ORCHERO, 1, tick, 0, 0, 0);
-						break;
-					case ITEMID_TAO_GUNKA_CARD:
-						clif_status_change(bl, SI_MVPCARD_TAOGUNKA, 1, tick, 0, 0, 0);
-						break;
-				}
-			}
+		case SC_ITEMSCRIPT: // Shows Buff Icons
+			if (sd && val2)
+				clif_status_change(bl, (enum si_type)val2, 1, tick, 0, 0, 0);
 			break;
 	}
 
@@ -10810,29 +10789,9 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_FULL_THROTTLE:
 			sc_start(bl, bl, SC_REBOUND, 100, sce->val1, skill_get_time2(ALL_FULL_THROTTLE, sce->val1));
 			break;
-		case SC_ITEMSCRIPT:
-			if (sd) {
-				switch (sce->val1) {
-					case ITEMID_GHOSTRING_CARD:
-						clif_status_load(bl, SI_ARMOR_PROPERTY, 0);
-						break;
-					case ITEMID_PHREEONI_CARD:
-						clif_status_load(bl, SI_FOODHIT, 0);
-						break;
-					case ITEMID_MISTRESS_CARD:
-						clif_status_load(bl, SI_MVPCARD_MISTRESS, 0);
-						break;
-					case ITEMID_ORC_LORD_CARD:
-						clif_status_load(bl, SI_MVPCARD_ORCLORD, 0);
-						break;
-					case ITEMID_ORC_HERO_CARD:
-						clif_status_load(bl, SI_MVPCARD_ORCHERO, 0);
-						break;
-					case ITEMID_TAO_GUNKA_CARD:
-						clif_status_load(bl, SI_MVPCARD_TAOGUNKA, 0);
-						break;
-				}
-			}
+		case SC_ITEMSCRIPT: // Removes Buff Icons
+			if (sd && sce->val2)
+				clif_status_load(bl, (enum si_type)sce->val2, 0);
 			break;
 		case SC_HEAT_BARREL:
 			if (sd)
