@@ -3804,6 +3804,18 @@ void npc_parsesrcfile(const char* filepath, bool runOnInit)
 	}
 	fclose(fp);
 
+	if ((unsigned char)buffer[0] == 0xEF && (unsigned char)buffer[1] == 0xBB && (unsigned char)buffer[2] == 0xBF) {
+		// UTF-8 BOM. This is most likely an error on the user's part, because:
+		// - BOM is discouraged in UTF-8, and the only place where you see it is Notepad and such.
+		// - It's unlikely that the user wants to use UTF-8 data here, since we don't really support it, nor does the client by default.
+		// - If the user really wants to use UTF-8 (instead of latin1, EUC-KR, SJIS, etc), then they can still do it <without BOM>.
+		// More info at http://unicode.org/faq/utf_bom.html#bom5 and http://en.wikipedia.org/wiki/Byte_order_mark#UTF-8
+		ShowError("npc_parsesrcfile: Detected unsupported UTF-8 BOM in file '%s'. Stopping (please consider using another character set).\n", filepath);
+		aFree(buffer);
+		fclose(fp);
+		return;
+	}
+
 	// parse buffer
 	for( p = skip_space(buffer); p && *p ; p = skip_space(p) )
 	{
