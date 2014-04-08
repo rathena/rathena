@@ -317,6 +317,7 @@ int skill_get_delay( uint16 skill_id ,uint16 skill_lv );
 int skill_get_walkdelay( uint16 skill_id ,uint16 skill_lv );
 int skill_get_time( uint16 skill_id ,uint16 skill_lv );
 int skill_get_time2( uint16 skill_id ,uint16 skill_lv );
+int skill_get_cooldown( uint16 skill_id, uint16 skill_lv );
 int skill_get_castnodex( uint16 skill_id ,uint16 skill_lv );
 int skill_get_castdef( uint16 skill_id );
 int skill_get_nocast( uint16 skill_id );

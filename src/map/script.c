@@ -18085,7 +18085,7 @@ BUILDIN_FUNC(cleanmap)
 BUILDIN_FUNC(npcskill)
 {
 	uint16 skill_id;
-	unsigned short skill_level;
+	unsigned short skill_lv;
 	unsigned int stat_point;
 	unsigned int npc_level;
 	struct npc_data *nd;
@@ -18095,7 +18095,7 @@ BUILDIN_FUNC(npcskill)
 	data = script_getdata(st, 2);
 	get_val(st, data); // Convert into value in case of a variable
 	skill_id	= data_isstring(data) ? skill_name2id(script_getstr(st, 2)) : script_getnum(st, 2);
-	skill_level	= script_getnum(st, 3);
+	skill_lv	= script_getnum(st, 3);
 	stat_point	= script_getnum(st, 4);
 	npc_level	= script_getnum(st, 5);
 	sd			= script_rid2sd(st);
@@ -18123,9 +18123,9 @@ BUILDIN_FUNC(npcskill)
 	}
 
 	if (skill_get_inf(skill_id)&INF_GROUND_SKILL) {
-		unit_skilluse_pos(&nd->bl, sd->bl.x, sd->bl.y, skill_id, skill_level);
+		unit_skilluse_pos(&nd->bl, sd->bl.x, sd->bl.y, skill_id, skill_lv);
 	} else {
-		unit_skilluse_id(&nd->bl, sd->bl.id, skill_id, skill_level);
+		unit_skilluse_id(&nd->bl, sd->bl.id, skill_id, skill_lv);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
