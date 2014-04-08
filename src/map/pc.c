@@ -5186,17 +5186,15 @@ int pc_memo(struct map_session_data* sd, int pos)
  * @param lv : skill lv
  * @return player skill cooldown
  */
-int pc_get_skillcooldown(struct map_session_data *sd, int id, int lv) {
-	int i, cooldown=0;
-	int idx = skill_get_index (id);
-	int cooldownlen = ARRAYLENGTH(sd->skillcooldown);
+int pc_get_skillcooldown(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv) {
+	int i, cooldown = 0;
+	uint8 cooldownlen = ARRAYLENGTH(sd->skillcooldown);
 	
-	if (!idx) return 0;
-	if (skill_db[idx].cooldown[lv - 1])
-		cooldown = skill_db[idx].cooldown[lv - 1];
+	if (skill_get_index (skill_id) < 0) return 0;
+	cooldown = skill_get_cooldown(skill_id, skill_lv);
 
-	ARR_FIND(0, cooldownlen, i, sd->skillcooldown[i].id == id);
-	if(i<cooldownlen){
+	ARR_FIND(0, cooldownlen, i, sd->skillcooldown[i].id == skill_id);
+	if (i < cooldownlen) {
 		cooldown += sd->skillcooldown[i].val;
 		cooldown = max(0,cooldown);
 	}

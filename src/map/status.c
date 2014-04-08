@@ -107,8 +107,8 @@ static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned
  **/
 sc_type status_skill2sc(int skill)
 {
-	int idx = skill_get_index(skill);
-	if( idx == 0 ) {
+	int16 idx = skill_get_index(skill);
+	if( idx < 0 ) {
 		ShowError("status_skill2sc: Unsupported skill id %d\n", skill);
 		return SC_NONE;
 	}
@@ -167,8 +167,8 @@ int status_type2relevant_bl_types(int type)
 
 static void set_sc(uint16 skill_id, sc_type sc, int icon, unsigned int flag)
 {
-	uint16 idx = skill_get_index(skill_id);
-	if( idx == 0 ) {
+	int16 idx = skill_get_index(skill_id);
+	if( idx < 0 ) {
 		ShowError("set_sc: Unsupported skill id %d\n", skill_id);
 		return;
 	}
@@ -9885,7 +9885,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				unit_stop_walking(bl, 1);
 		break;
 		case SC_ITEMSCRIPT: // Shows Buff Icons
-			if (sd && val2)
+			if (sd && val2 != SI_BLANK)
 				clif_status_change(bl, (enum si_type)val2, 1, tick, 0, 0, 0);
 			break;
 	}
@@ -10790,7 +10790,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			sc_start(bl, bl, SC_REBOUND, 100, sce->val1, skill_get_time2(ALL_FULL_THROTTLE, sce->val1));
 			break;
 		case SC_ITEMSCRIPT: // Removes Buff Icons
-			if (sd && sce->val2)
+			if (sd && sce->val2 != SI_BLANK)
 				clif_status_load(bl, (enum si_type)sce->val2, 0);
 			break;
 		case SC_HEAT_BARREL:

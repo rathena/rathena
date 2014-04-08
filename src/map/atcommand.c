@@ -5473,7 +5473,7 @@ ACMD_FUNC(skillid) {
 	iter = db_iterator(skilldb_name2id);
 
 	for( data = iter->first(iter,&key); iter->exists(iter); data = iter->next(iter,&key) ) {
-		int idx = skill_get_index(db_data2i(data));
+		int16 idx = skill_get_index(db_data2i(data));
 		if (strnicmp(key.str, message, skillen) == 0 || strnicmp(skill_db[idx].desc, message, skillen) == 0) {
 			sprintf(atcmd_output, msg_txt(sd,1164), db_data2i(data), skill_db[idx].desc, key.str); // skill %d: %s (%s)
 			clif_displaymessage(fd, atcmd_output);
