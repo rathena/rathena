@@ -4413,6 +4413,17 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 	else if( itemdb_is_poison(nameid) && (sd->class_&MAPID_THIRDMASK) != MAPID_GUILLOTINE_CROSS )
 		return 0;
 
+	/*if( item->group ) { //@TODO
+		if( pc_is90overweight(sd) ) {
+			clif_msgtable(sd->fd,ITEM_CANT_OBTAIN_WEIGHT);
+			return 0;
+		}
+		if( !pc_inventoryblank(sd) ) {
+			clif_colormes(sd,color_table[COLOR_RED],msg_txt(1477)); //Item cannot be open when inventory is full
+			return 0;
+		}
+	}*/
+
 	//Gender check
 	if(item->sex != 2 && sd->status.sex != item->sex)
 		return 0;
@@ -4549,6 +4560,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 
 	/* on restricted maps the item is consumed but the effect is not used */
 	if (!pc_has_permission(sd,PC_PERM_ITEM_UNCONDITIONAL) && itemdb_isNoEquip(id,sd->bl.m)) {
+		clif_msg(sd,ITEM_CANT_USE_AREA); // This item cannot be used within this area
 		if( battle_config.allow_consume_restricted_item && !id->flag.delay_consume ) { //need confirmation for delayed consumption items
 			clif_useitemack(sd,n,item.amount-1,true);
 			pc_delitem(sd,n,1,1,0,LOG_TYPE_CONSUME);

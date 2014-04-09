@@ -529,7 +529,7 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 		(map_flag_gvg(m) && skill_get_nocast (skill_id) & 4) ||
 		(map[m].flag.battleground && skill_get_nocast (skill_id) & 8) ||
 		(map[m].flag.restricted && map[m].zone && skill_get_nocast (skill_id) & (8*map[m].zone)) ){
-			clif_msg(sd, 0x536); // This skill cannot be used within this area
+			clif_msg(sd, SKILL_CANT_USE_AREA); // This skill cannot be used within this area
 			return true;
 	}
 
@@ -14622,18 +14622,24 @@ bool skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id,
 			continue;
 		index[i] = pc_search_inventory(sd,require.itemid[i]);
 		if( index[i] < 0 || sd->status.inventory[index[i]].amount < require.amount[i] ) {
-			//if( require.itemid[i] == ITEMID_RED_GEMSTONE )
-			//	clif_skill_fail(sd,skill_id,USESKILL_FAIL_REDJAMSTONE,0);// red gemstone required
-			//else if( require.itemid[i] == ITEMID_BLUE_GEMSTONE )
-			//	clif_skill_fail(sd,skill_id,USESKILL_FAIL_BLUEJAMSTONE,0);// blue gemstone required
-			//else {
+			if( require.itemid[i] == ITEMID_HOLY_WATER )
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_HOLYWATER,0); //Holy water is required.
+			else if( require.itemid[i] == ITEMID_RED_GEMSTONE )
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_REDJAMSTONE,0); //Red gemstone is required.
+			else if( require.itemid[i] == ITEMID_BLUE_GEMSTONE )
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_BLUEJAMSTONE,0); //Blue gemstone is required.
+			else if( require.itemid[i] == ITEMID_PAINT_BRUSH )
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_PAINTBRUSH,0); //Paint brush is required.
+			else if( require.itemid[i] == ITEMID_ANCILLA )
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_ANCILLA,0); //Ancilla is required.
+			else {
+				char output[128];
+
 				//Official is using msgstringtable.txt for each requirement failure
-				char output[CHAT_SIZE_MAX];
 				//clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-				//sprintf(output, "You need itemid=%d, amount=%d", require.itemid[i], require.amount[i]);
 				sprintf(output, msg_txt(sd,720), itemdb_jname(require.itemid[i])); // %s is required.
 				clif_colormes(sd,color_table[COLOR_RED],output);
-			//}
+			}
 			return false;
 		}
 	}
@@ -14727,6 +14733,7 @@ void skill_consume_requirement( struct map_session_data *sd, uint16 skill_id, ui
 				case SA_VIOLENTGALE:
 					if( sc && sc->data[SC_WILD_STORM_OPTION] && rnd()%100 < 50 )
 						continue;
+					break;
 				case RL_H_MINE:
 					if (sd->flicker)
 						continue;
@@ -17505,7 +17512,7 @@ int skill_produce_mix (struct map_session_data *sd, uint16 skill_id, int nameid,
 			for( i = 0; i < MAX_INVENTORY; i++ ) {
 				if( sd->status.inventory[i].nameid == nameid ) {
 					if( sd->status.inventory[i].amount >= data->stack.amount ) {
-						clif_msgtable(sd->fd,0x61b);
+						clif_msgtable(sd->fd,RUNE_CANT_CREATE);
 						return 0;
 					} else {
 						/**
@@ -17947,8 +17954,8 @@ int skill_produce_mix (struct map_session_data *sd, uint16 skill_id, int nameid,
 					}
 					break;
 				}
-			if( k ){
-				clif_msg_skill(sd,skill_id,0x627);
+			if( k ) {
+				clif_msg_skill(sd,skill_id,ITEM_PRODUCE_SUCCESS);
 				return 1;
 			}
 		} else if (tmp_item.amount) { //Success
@@ -17957,7 +17964,7 @@ int skill_produce_mix (struct map_session_data *sd, uint16 skill_id, int nameid,
 				map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 			}
 			if( skill_id == GN_MIX_COOKING || skill_id == GN_MAKEBOMB || skill_id ==  GN_S_PHARMACY )
-				clif_msg_skill(sd,skill_id,0x627);
+				clif_msg_skill(sd,skill_id,ITEM_PRODUCE_SUCCESS);
 			return 1;
 		}
 	}
@@ -18008,13 +18015,13 @@ int skill_produce_mix (struct map_session_data *sd, uint16 skill_id, int nameid,
 						clif_additem(sd,0,0,flag);
 						map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 					}
-					clif_msg_skill(sd,skill_id,0x628);
+					clif_msg_skill(sd,skill_id,ITEM_PRODUCE_FAIL);
 				}
 				break;
 			case GN_MAKEBOMB:
 			case GN_S_PHARMACY:
 			case GN_CHANGEMATERIAL:
-				clif_msg_skill(sd,skill_id,0x628);
+				clif_msg_skill(sd,skill_id,ITEM_PRODUCE_FAIL);
 				break;
 			default:
 				if( skill_produce_db[idx].itemlv > 10 && skill_produce_db[idx].itemlv <= 20 )
@@ -18340,7 +18347,7 @@ int skill_changematerial(struct map_session_data *sd, int n, unsigned short *ite
 							nameid = sd->status.inventory[idx].nameid;
 							amount = item_list[k*2+1];
 							if( nameid > 0 && sd->status.inventory[idx].identify == 0 ){
-								clif_msg_skill(sd,GN_CHANGEMATERIAL,0x62D);
+								clif_msg_skill(sd,GN_CHANGEMATERIAL,ITEM_UNIDENTIFIED);
 								return 0;
 							}
 							if( nameid == skill_produce_db[i].mat_id[j] && (amount-p*skill_produce_db[i].mat_amount[j]) >= skill_produce_db[i].mat_amount[j]
@@ -18362,7 +18369,7 @@ int skill_changematerial(struct map_session_data *sd, int n, unsigned short *ite
 	}
 
 	if( p == 0)
-		clif_msg_skill(sd,GN_CHANGEMATERIAL,0x623);
+		clif_msg_skill(sd,GN_CHANGEMATERIAL,ITEM_CANT_COMBINE);
 
 	return 0;
 }
@@ -19344,7 +19351,7 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	else if( strcmpi(split[10],"elementalspirit")     == 0 ) skill_db[idx].require.state = ST_ELEMENTALSPIRIT;
 	else if( strcmpi(split[10],"peco")                == 0 ) skill_db[idx].require.state = ST_PECO;
 	else skill_db[idx].require.state = ST_NONE;	// Unknown or no state
-	
+
 	//Status requirements
 	trim(split[11]);
 	if (split[11][0] != '\0') {
@@ -19355,9 +19362,9 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 				skill_db[idx].require.status[i] = (sc_type)require[i];
 		}
 	}
-	
+
 	skill_split_atoi(split[12],skill_db[idx].require.spiritball);
-	
+
 	for( i = 0; i < MAX_SKILL_ITEM_REQUIRE; i++ ) {
 		skill_db[idx].require.itemid[i] = atoi(split[13+ 2*i]);
 		skill_db[idx].require.amount[i] = atoi(split[14+ 2*i]);

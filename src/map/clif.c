@@ -5473,7 +5473,7 @@ void clif_cooking_list(struct map_session_data *sd, int trigger, uint16 skill_id
 	} else {
 		clif_menuskill_clear(sd);
 #if PACKETVER >= 20090922
-			clif_msg_skill(sd,skill_id,0x625);
+			clif_msg_skill(sd,skill_id,INVENTORY_SPACE_FULL);
 #else
 			WFIFOW(fd,2) = 6 + 2 * c;
 			WFIFOSET(fd,WFIFOW(fd,2));
