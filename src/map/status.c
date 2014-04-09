@@ -7110,6 +7110,10 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			tick_def = 0; // Linear reduction instead
 			tick_def2 = (b_status->int_ + status_get_lv(bl))*50; // kRO balance update lists this formula
 			break;
+		case SC_NETHERWORLD:
+			tick_def2 = (status_get_lv(bl) > 150 ? 150 : status_get_lv(bl)) * 20 +
+				(sd ? (sd->status.job_level > 50 ? 50 : sd->status.job_level) * 100 : 0);
+			break;
 		case SC_MAGICMIRROR:
 		case SC_ARMORCHANGE:
 			if (sd) // Duration greatly reduced for players.
@@ -7827,8 +7831,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC__LAZINESS:
 			case SC__UNLUCKY:
 			case SC__WEAKNESS:
-
-			// Exploit prevention - kRO Fix
 			case SC_PYREXIA:
 			case SC_DEATHHURT:
 			case SC_TOXIN:
@@ -7837,12 +7839,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_MAGICMUSHROOM:
 			case SC_OBLIVIONCURSE:
 			case SC_LEECHESEND:
-
-			// Ranger Effects
 			case SC_BITE:
 			case SC_ELECTRICSHOCKER:
 			case SC_MAGNETICFIELD:
-
+			case SC_NETHERWORLD:
 				return 0;
 		}
 	}
@@ -9885,7 +9885,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				unit_stop_walking(bl, 1);
 		break;
 		case SC_ITEMSCRIPT: // Shows Buff Icons
-			if (sd && val2)
+			if (sd && val2 != SI_BLANK)
 				clif_status_change(bl, (enum si_type)val2, 1, tick, 0, 0, 0);
 			break;
 	}
@@ -10790,7 +10790,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			sc_start(bl, bl, SC_REBOUND, 100, sce->val1, skill_get_time2(ALL_FULL_THROTTLE, sce->val1));
 			break;
 		case SC_ITEMSCRIPT: // Removes Buff Icons
-			if (sd && sce->val2)
+			if (sd && sce->val2 != SI_BLANK)
 				clif_status_load(bl, (enum si_type)sce->val2, 0);
 			break;
 		case SC_HEAT_BARREL:

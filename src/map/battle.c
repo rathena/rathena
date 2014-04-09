@@ -463,10 +463,10 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 					}
 					cardfix = cardfix * (100 - ele_fix) / 100;
 				}
-				cardfix = cardfix * (100 - tsd->subsize[sstatus->size] + tsd->subsize[SZ_ALL]) / 100;
+				cardfix = cardfix * (100 - tsd->subsize[sstatus->size] - tsd->subsize[SZ_ALL]) / 100;
 				cardfix = cardfix * (100 - tsd->subrace2[s_race2]) / 100;
-				cardfix = cardfix * (100 - tsd->subrace[sstatus->race] + tsd->subrace[RC_ALL]) / 100;
-				cardfix = cardfix * (100 - tsd->subclass[sstatus->class_] + tsd->subclass[CLASS_ALL]) / 100;
+				cardfix = cardfix * (100 - tsd->subrace[sstatus->race] - tsd->subrace[RC_ALL]) / 100;
+				cardfix = cardfix * (100 - tsd->subclass[sstatus->class_] - tsd->subclass[CLASS_ALL]) / 100;
 
 				for( i = 0; i < ARRAYLENGTH(tsd->add_mdef) && tsd->add_mdef[i].rate; i++ ) {
 					if( tsd->add_mdef[i].class_ == s_class ) {
@@ -645,10 +645,10 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 						cardfix = cardfix * (100 - ele_fix_lh) / 100;
 					}
 				}
-				cardfix = cardfix * (100 - tsd->subsize[sstatus->size] + tsd->subsize[SZ_ALL]) / 100;
+				cardfix = cardfix * (100 - tsd->subsize[sstatus->size] - tsd->subsize[SZ_ALL]) / 100;
 				cardfix = cardfix * (100 - tsd->subrace2[s_race2]) / 100;
-				cardfix = cardfix * (100 - tsd->subrace[sstatus->race] + tsd->subrace[RC_ALL]) / 100;
-				cardfix = cardfix * (100 - tsd->subclass[sstatus->class_] + tsd->subclass[CLASS_ALL]) / 100;
+				cardfix = cardfix * (100 - tsd->subrace[sstatus->race] - tsd->subrace[RC_ALL]) / 100;
+				cardfix = cardfix * (100 - tsd->subclass[sstatus->class_] - tsd->subclass[CLASS_ALL]) / 100;
 				for( i = 0; i < ARRAYLENGTH(tsd->add_def) && tsd->add_def[i].rate; i++ ) {
 					if( tsd->add_def[i].class_ == s_class ) {
 						cardfix = cardfix * (100 - tsd->add_def[i].rate) / 100;
@@ -681,10 +681,10 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 					}
 					cardfix = cardfix * (100 - ele_fix) / 100;
 				}
-				cardfix = cardfix * (100 - tsd->subsize[sstatus->size] + tsd->subsize[SZ_ALL]) / 100;
+				cardfix = cardfix * (100 - tsd->subsize[sstatus->size] - tsd->subsize[SZ_ALL]) / 100;
 				cardfix = cardfix * (100 - tsd->subrace2[s_race2]) / 100;
-				cardfix = cardfix * (100 - tsd->subrace[sstatus->race] + tsd->subrace[RC_ALL]) / 100;
-				cardfix = cardfix * (100 - tsd->subclass[sstatus->class_] + tsd->subclass[CLASS_ALL]) / 100;
+				cardfix = cardfix * (100 - tsd->subrace[sstatus->race] - tsd->subrace[RC_ALL]) / 100;
+				cardfix = cardfix * (100 - tsd->subclass[sstatus->class_] - tsd->subclass[CLASS_ALL]) / 100;
 				cardfix = cardfix * (100 - tsd->bonus.misc_def_rate) / 100;
 				if( flag&BF_SHORT )
 					cardfix = cardfix * (100 - tsd->bonus.near_attack_def_rate) / 100;
@@ -2001,9 +2001,10 @@ static int is_attack_piercing(struct Damage wd, struct block_list *src, struct b
 				if (weapon_position == EQI_HAND_R)
 					return 1;
 
-			if( sd && (sd->left_weapon.def_ratio_atk_ele & (1<<tstatus->def_ele) ||
-				sd->left_weapon.def_ratio_atk_race & (1<<tstatus->race) ||
-				sd->left_weapon.def_ratio_atk_class & (1<<tstatus->class_)) )
+			if(sd && (sd->left_weapon.def_ratio_atk_ele & (1<<tstatus->def_ele) || sd->left_weapon.def_ratio_atk_ele & (1<<ELE_ALL) ||
+				sd->left_weapon.def_ratio_atk_race & (1<<tstatus->race) || sd->left_weapon.def_ratio_atk_race & (1<<RC_ALL) ||
+				sd->left_weapon.def_ratio_atk_class & (1<<tstatus->class_) || sd->left_weapon.def_ratio_atk_class & (1<<CLASS_ALL))
+			)
 			{ //Pass effect onto right hand if configured so. [Skotlex]
 				if (battle_config.left_cardfix_to_right && is_attack_right_handed(src, skill_id)){
 					if (weapon_position == EQI_HAND_R)
@@ -2366,7 +2367,7 @@ static struct Damage battle_calc_element_damage(struct Damage wd, struct block_l
 	{	//Elemental attribute fix
 		if( wd.damage > 0 )
 		{
-			wd.damage=battle_attr_fix(src, target, wd.damage, right_element, tstatus->def_ele, tstatus->ele_lv);
+			wd.damage = battle_attr_fix(src, target, wd.damage, right_element, tstatus->def_ele, tstatus->ele_lv);
 
 			switch( skill_id ) {
 				case MC_CARTREVOLUTION: //Cart Revolution apply the element fix once more with neutral element
@@ -2477,7 +2478,18 @@ static struct Damage battle_calc_attack_masteries(struct Damage wd, struct block
 			ATK_ADD(wd.masteryAtk, wd.masteryAtk2, 3*skill);
 #endif
 		}
+
+#ifdef RENEWAL
+		//General skill masteries
+		if (skill_id != CR_SHIELDBOOMERANG)
+			ATK_ADD2(wd.masteryAtk, wd.masteryAtk2, wd.div_ * sd->right_weapon.star, wd.div_ * sd->left_weapon.star);
+		if (skill_id == MO_FINGEROFFENSIVE) {
+			ATK_ADD(wd.masteryAtk, wd.masteryAtk2, wd.div_ * sd->spiritball_old * 3);
+		} else
+			ATK_ADD(wd.masteryAtk, wd.masteryAtk2, wd.div_ * sd->spiritball * 3);
+#endif
 	}
+
 	return wd;
 }
 
@@ -3511,8 +3523,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			RE_LVL_DMOD(100);
 			break;
 		case SR_GATEOFHELL:
-			if( sc && sc->data[SC_COMBO]
-				&& sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE )
+			if( sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE )
 				skillratio += 700 * skill_lv;
 			else
 				skillratio += 400 * skill_lv;
@@ -3756,7 +3767,6 @@ static int battle_calc_skill_constant_addition(struct Damage wd, struct block_li
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
 	struct map_session_data *tsd = BL_CAST(BL_PC, target);
 	struct status_change *sc = status_get_sc(src);
-	struct status_change *tsc = status_get_sc(target);
 	struct status_data *sstatus = status_get_status_data(src);
 	struct status_data *tstatus = status_get_status_data(target);
 	int atk = 0;
@@ -3776,11 +3786,10 @@ static int battle_calc_skill_constant_addition(struct Damage wd, struct block_li
 				atk = 10*pc_checkskill(sd, TK_RUN);
 			break;
 		case GS_MAGICALBULLET:
-			if(sstatus->matk_max>sstatus->matk_min) {
+			if(sstatus->matk_max>sstatus->matk_min)
 				atk = sstatus->matk_min+rnd()%(sstatus->matk_max-sstatus->matk_min);
-			} else {
+			else
 				atk = sstatus->matk_min;
-			}
 			break;
 		case NJ_SYURIKEN:
 			atk = 4*skill_lv;
@@ -3789,20 +3798,13 @@ static int battle_calc_skill_constant_addition(struct Damage wd, struct block_li
 			if(sd)
 				atk = ( 40 * pc_checkskill(sd, RA_RESEARCHTRAP) );
 			break;
-		case RA_WUGDASH ://(Caster Current Weight x 10 / 8)
+		case RA_WUGDASH:
 			if( sd && sd->weight )
 				atk = ( sd->weight / 8 );
 		case RA_WUGSTRIKE:
 		case RA_WUGBITE:
 			if(sd)
-				atk = (30*pc_checkskill(sd, RA_TOOTHOFWUG));
-			break;
-		case SR_GATEOFHELL:
-			atk = (status_get_max_hp(src) - status_get_hp(src));
-			if(sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE)
-				atk += ( ((int64)status_get_max_sp(src) * (1 + skill_lv * 2 / 10)) + 40 * status_get_lv(src) );
-			else
-				atk += ( ((int64)status_get_sp(src) * (1 + skill_lv * 2 / 10)) + 10 * status_get_lv(src) );
+				atk += (30 * pc_checkskill(sd, RA_TOOTHOFWUG));
 			break;
 		case SR_TIGERCANNON: // (Tiger Cannon skill level x 240) + (Target Base Level x 40)
 			if( sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE ) // (Tiger Cannon skill level x 500) + (Target Base Level x 40)
@@ -4652,22 +4654,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		wd.type = 0x0a;
 
 	// check if we're landing a hit
-	if(!is_attack_hitting(wd, src, target, skill_id, skill_lv, true)) {
+	if(!is_attack_hitting(wd, src, target, skill_id, skill_lv, true))
 		wd.dmg_lv = ATK_FLEE;
-		if(skill_id == SR_GATEOFHELL) {
-			if(wd.dmg_lv != ATK_FLEE) {
-				int ratio;
+	else if(!target_has_infinite_defense(target, skill_id)) { //no need for math against plants
+		int ratio, i;
 
-				wd.flag = BF_WEAPON;
-				ratio = battle_calc_attack_skill_ratio(wd, src, target, skill_id, skill_lv);
-
-				ATK_RATE(wd.damage, wd.damage2, ratio);
-			} else
-				wd.dmg_lv = ATK_DEF;
-		}
-	} else if(!target_has_infinite_defense(target, skill_id)) { //no need for math against plants
-		int ratio;
-		int i;
 		wd = battle_calc_skill_base_damage(wd, src, target, skill_id, skill_lv); // base skill damage
 		ratio = battle_calc_attack_skill_ratio(wd, src, target, skill_id, skill_lv); // skill level ratios
 
@@ -4683,9 +4674,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			struct status_data *sstatus = status_get_status_data(src);
 			if (sstatus->matk_max > sstatus->matk_min) {
 				ATK_ADD(wd.weaponAtk, wd.weaponAtk2, sstatus->matk_min+rnd()%(sstatus->matk_max-sstatus->matk_min));
-			} else {
+			} else
 				ATK_ADD(wd.weaponAtk, wd.weaponAtk2, sstatus->matk_min);
-			}
 		}
 #endif
 		// add any miscellaneous player ATK bonuses
@@ -4757,14 +4747,28 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	}
 #endif
 
-	if(sd) {
-		if (skill_id != CR_SHIELDBOOMERANG) //Only Shield boomerang doesn't takes the Star Crumbs bonus.
-			ATK_ADD2(wd.damage, wd.damage2, wd.div_*sd->right_weapon.star, wd.div_*sd->left_weapon.star);
-		if (skill_id==MO_FINGEROFFENSIVE) { //The finger offensive spheres on moment of attack do count. [Skotlex]
-			ATK_ADD(wd.damage, wd.damage2, wd.div_*sd->spiritball_old*3);
-		} else {
-			ATK_ADD(wd.damage, wd.damage2, wd.div_*sd->spiritball*3);
+	switch(skill_id) {
+		case SR_GATEOFHELL: {
+			struct status_data *sstatus = status_get_status_data(src);
+
+			ATK_ADD(wd.damage, wd.damage2, sstatus->max_hp - status_get_hp(src));
+			if(sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE) {
+				ATK_ADD(wd.damage, wd.damage2, (sstatus->max_sp * (1 + skill_lv * 2 / 10)) + 40 * status_get_lv(src));
+			} else
+				ATK_ADD(wd.damage, wd.damage2, (sstatus->sp * (1 + skill_lv * 2 / 10)) + 10 * status_get_lv(src));
 		}
+		break;
+	}
+
+	if(sd) {
+#ifndef RENEWAL
+		if (skill_id != CR_SHIELDBOOMERANG) //Only Shield boomerang doesn't takes the Star Crumbs bonus.
+			ATK_ADD2(wd.damage, wd.damage2, wd.div_ * sd->right_weapon.star, wd.div_ * sd->left_weapon.star);
+		if (skill_id == MO_FINGEROFFENSIVE) { //The finger offensive spheres on moment of attack do count. [Skotlex]
+			ATK_ADD(wd.damage, wd.damage2, wd.div_ * sd->spiritball_old * 3);
+		} else
+			ATK_ADD(wd.damage, wd.damage2, wd.div_ * sd->spiritball * 3);
+#endif
 
 		if( skill_id == CR_SHIELDBOOMERANG || skill_id == PA_SHIELDCHAIN )
 		{ //Refine bonus applies after cards and elements.
@@ -4803,9 +4807,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	// skills forced to neutral gain benefits from weapon element
 	// but final damage is considered "neutral" and resistances are applied again
 	switch (skill_id) {
-		case MC_CARTREVOLUTION: // Cart Revolution gets forced to neutral element
+		case MC_CARTREVOLUTION:
 		case MO_INVESTIGATE:
+		case CR_ACIDDEMONSTRATION:
 		case KO_BAKURETSU:
+			// Forced to neutral element
 			wd.damage = battle_attr_fix(src, target, wd.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 			break;
 		case CR_SHIELDBOOMERANG:
