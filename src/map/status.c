@@ -431,7 +431,7 @@ void initChangeTables(void)
 	add_sc( SL_STUN			, SC_STUN		);
 	set_sc( SL_SWOO			, SC_SWOO		, SI_SWOO		, SCB_SPEED );
 	set_sc( SL_SKE			, SC_SKE		, SI_BLANK		, SCB_BATK|SCB_WATK|SCB_DEF|SCB_DEF2 );
-	set_sc( SL_SKA			, SC_SKA		, SI_BLANK		, SCB_DEF|SCB_MDEF|SCB_ASPD );
+	set_sc( SL_SKA			, SC_SKA		, SI_BLANK		, SCB_DEF|SCB_MDEF|SCB_SPEED|SCB_ASPD );
 	set_sc( SL_SMA			, SC_SMA		, SI_SMA		, SCB_NONE );
 	set_sc( SM_SELFPROVOKE		, SC_PROVOKE		, SI_PROVOKE		, SCB_DEF|SCB_DEF2|SCB_BATK|SCB_WATK );
 	set_sc( ST_PRESERVE		, SC_PRESERVE		, SI_PRESERVE		, SCB_NONE );
@@ -5866,6 +5866,8 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 				val = max( val, sc->data[SC_SUITON]->val3 );
 			if( sc->data[SC_SWOO] )
 				val = max( val, 300 );
+			if( sc->data[SC_SKA] )
+				val = max( val, 25 );
 			if( sc->data[SC_FREEZING] )
 				val = max( val, 50 );
 			if( sc->data[SC_MARSHOFABYSS] )
@@ -5890,6 +5892,9 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 		}
 		speed_rate += val;
 		val = 0;
+
+		if( sc->data[SC_MARSHOFABYSS] && speed_rate > 150 )
+			speed_rate = 150;
 
 		// GetMoveHasteValue1()
 		if( sc->data[SC_SPEEDUP1] ) // !FIXME: used both by NPC_AGIUP and Speed Potion script
@@ -9415,7 +9420,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = 5000; // [GodLesZ] tick time
 			break;
 		case SC_GT_ENERGYGAIN:
-			val3 = 10 + 5 * val1; // Sphere gain chance.
+			val2 = 10 + 5 * val1; // Sphere gain chance.
 			break;
 		case SC_GT_CHANGE:
 			{ // Take note there is no def increase as skill desc says. [malufett]

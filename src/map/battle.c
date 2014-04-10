@@ -1121,7 +1121,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			TBL_HOM *hd = BL_CAST(BL_HOM,bl); // We add a sphere for when the Homunculus is being hit
 			if (hd && (rnd()%100<50) ) hom_addspiritball(hd, 10); // According to WarpPortal, this is a flat 50% chance
 		}
-		if( sd && (sce = sc->data[SC_GT_ENERGYGAIN]) && flag&BF_WEAPON && rnd()%100 < sce->val3 ) {
+		if( sd && (sce = sc->data[SC_GT_ENERGYGAIN]) && flag&BF_WEAPON && rnd()%100 < sce->val2 ) {
 			int spheres = 5;
 
 			if( sc->data[SC_RAISINGDRAGON] )
@@ -1387,10 +1387,10 @@ int64 battle_addmastery(struct map_session_data *sd,struct block_list *target,in
 		weapon = sd->weapontype2;
 	switch(weapon) {
 		case W_1HSWORD:
-			#ifdef RENEWAL
-				if((skill = pc_checkskill(sd,AM_AXEMASTERY)) > 0)
-					damage += (skill * 3);
-			#endif
+#ifdef RENEWAL
+			if((skill = pc_checkskill(sd,AM_AXEMASTERY)) > 0)
+				damage += (skill * 3);
+#endif
 		case W_DAGGER:
 			if((skill = pc_checkskill(sd,SM_SWORD)) > 0)
 				damage += (skill * 4);
@@ -1398,10 +1398,10 @@ int64 battle_addmastery(struct map_session_data *sd,struct block_list *target,in
 				damage += skill * 10;
 			break;
 		case W_2HSWORD:
-			#ifdef RENEWAL
-				if((skill = pc_checkskill(sd,AM_AXEMASTERY)) > 0)
-					damage += (skill * 3);
-			#endif
+#ifdef RENEWAL
+			if((skill = pc_checkskill(sd,AM_AXEMASTERY)) > 0)
+				damage += (skill * 3);
+#endif
 			if((skill = pc_checkskill(sd,SM_TWOHAND)) > 0)
 				damage += (skill * 4);
 			break;
@@ -1429,7 +1429,7 @@ int64 battle_addmastery(struct map_session_data *sd,struct block_list *target,in
 			if((skill = pc_checkskill(sd,PR_MACEMASTERY)) > 0)
 				damage += (skill * 3);
 			if((skill = pc_checkskill(sd,NC_TRAININGAXE)) > 0)
-				damage += (skill * 5);
+				damage += (skill * 4);
 			break;
 		case W_FIST:
 			if((skill = pc_checkskill(sd,TK_RUN)) > 0)
@@ -1459,9 +1459,6 @@ int64 battle_addmastery(struct map_session_data *sd,struct block_list *target,in
 
 	if(sd && (skill=pc_checkskill(sd,BS_WEAPONRESEARCH)) > 0) // weapon research bonus applies to all weapons
 		damage += skill*2;
-
-	if(sd->sc.data[SC_GN_CARTBOOST]) // cart boost adds mastery type damage
-		damage += 10*sd->sc.data[SC_GN_CARTBOOST]->val1;
 
 	return damage;
 }
@@ -2253,13 +2250,8 @@ static int battle_calc_equip_attack(struct block_list *src, int skill_id)
 	if(src != NULL) {
 		int eatk=0;
 		struct status_data *status = status_get_status_data(src);
-		struct status_change *sc = status_get_sc(src);
 		struct map_session_data *sd = BL_CAST(BL_PC, src);
 
-		if(sc){
-			if(sc->data[SC_CAMOUFLAGE] )
-				eatk += 30 * min(10,sc->data[SC_CAMOUFLAGE]->val3); //max +300atk
-		}
 		if(sd) eatk += is_skill_using_arrow(src, skill_id) ? sd->bonus.arrow_atk : 0; // add arrow atk if using an applicable skill
 		return eatk + status->eatk;
 	}
@@ -2456,6 +2448,19 @@ static struct Damage battle_calc_attack_masteries(struct Damage wd, struct block
 #ifdef RENEWAL
 			wd.masteryAtk2 = (int)battle_addmastery(sd,target,wd.weaponAtk2,1);
 #endif
+
+			if (sc->data[SC_CAMOUFLAGE]) {
+				ATK_ADD(wd.damage, wd.damage2, 30 * min(10, sc->data[SC_CAMOUFLAGE]->val3));
+#ifdef RENEWAL
+				ATK_ADD(wd.masteryAtk, wd.masteryAtk2, 30 * min(10, sc->data[SC_CAMOUFLAGE]->val3));
+#endif
+			}
+			if (sc->data[SC_GN_CARTBOOST]) {
+				ATK_ADD(wd.damage, wd.damage2, 10 * sc->data[SC_GN_CARTBOOST]->val1);
+#ifdef RENEWAL
+				ATK_ADD(wd.masteryAtk, wd.masteryAtk2, 10 * sc->data[SC_GN_CARTBOOST]->val1);
+#endif
+			}
 		}
 
 		if (sc && sc->data[SC_MIRACLE])
@@ -2481,6 +2486,8 @@ static struct Damage battle_calc_attack_masteries(struct Damage wd, struct block
 
 #ifdef RENEWAL
 		//General skill masteries
+		if(skill_id == TF_POISON) //Additional ATK from Envenom is treated as mastery type damage [helvetica]
+			ATK_ADD(wd.masteryAtk, wd.masteryAtk2, 15 * skill_lv);
 		if (skill_id != CR_SHIELDBOOMERANG)
 			ATK_ADD2(wd.masteryAtk, wd.masteryAtk2, wd.div_ * sd->right_weapon.star, wd.div_ * sd->left_weapon.star);
 		if (skill_id == MO_FINGEROFFENSIVE) {
@@ -2633,11 +2640,6 @@ struct Damage battle_calc_skill_base_damage(struct Damage wd, struct block_list 
 			}
 #endif
 			break;
-		case TF_POISON: // Additional 15*skill level damage
-			ATK_ADD(wd.damage, wd.damage2, 15*skill_lv);
-#ifdef RENEWAL
-			wd.masteryAtk += 15*skill_lv; // ATK from Envenom is treated as mastery type damage [helvetica]
-#endif
 		case CR_SHIELDBOOMERANG:
 		case PA_SHIELDCHAIN:
 		case LG_SHIELDPRESS:
@@ -4762,6 +4764,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 	if(sd) {
 #ifndef RENEWAL
+		if(skill_id == TF_POISON)
+			ATK_ADD(wd.damage, wd.damage2, 15 * skill_lv);
 		if (skill_id != CR_SHIELDBOOMERANG) //Only Shield boomerang doesn't takes the Star Crumbs bonus.
 			ATK_ADD2(wd.damage, wd.damage2, wd.div_ * sd->right_weapon.star, wd.div_ * sd->left_weapon.star);
 		if (skill_id == MO_FINGEROFFENSIVE) { //The finger offensive spheres on moment of attack do count. [Skotlex]
@@ -6264,7 +6268,7 @@ int battle_damage_area( struct block_list *bl, va_list ap) {
 	return 0;
 }
 /*==========================================
- * Do a basic physical attack (call trough unit_attack_timer)
+ * Do a basic physical attack (call through unit_attack_timer)
  *------------------------------------------*/
 enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* target, unsigned int tick, int flag) {
 	struct map_session_data *sd = NULL, *tsd = NULL;
@@ -6404,13 +6408,13 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				return ATK_DEF;
 			return ATK_MISS;
 		}
-		if( sc->data[SC_GT_ENERGYGAIN] && sc->data[SC_GT_ENERGYGAIN]->val2 ) {
+		if( sc->data[SC_GT_ENERGYGAIN] ) {
 			int spheres = 5;
 
 			if( sc->data[SC_RAISINGDRAGON] )
 				spheres += sc->data[SC_RAISINGDRAGON]->val1;
 
-			if( sd && rnd()%100 < sc->data[SC_GT_ENERGYGAIN]->val3 )
+			if( sd && rnd()%100 < sc->data[SC_GT_ENERGYGAIN]->val2 )
 				pc_addspiritball(sd, skill_get_time2(SR_GENTLETOUCH_ENERGYGAIN, sc->data[SC_GT_ENERGYGAIN]->val1), spheres);
 		}
 		if( sc && sc->data[SC_CRUSHSTRIKE] ){
@@ -6428,13 +6432,13 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	if(tsc && tsc->data[SC_KAAHI] && tsc->data[SC_KAAHI]->val4 == INVALID_TIMER && tstatus->hp < tstatus->max_hp)
 		tsc->data[SC_KAAHI]->val4 = add_timer(tick + skill_get_time2(SL_KAAHI,tsc->data[SC_KAAHI]->val1), kaahi_heal_timer, target->id, SC_KAAHI); //Activate heal.
 
-	if( tsc && tsc->data[SC_GT_ENERGYGAIN] && tsc->data[SC_GT_ENERGYGAIN]->val2 ) {
+	if( tsc && tsc->data[SC_GT_ENERGYGAIN] ) {
 		int spheres = 5;
 
 		if( tsc->data[SC_RAISINGDRAGON] )
 			spheres += tsc->data[SC_RAISINGDRAGON]->val1;
 
-		if( tsd && rnd()%100 < tsc->data[SC_GT_ENERGYGAIN]->val3 )
+		if( tsd && rnd()%100 < tsc->data[SC_GT_ENERGYGAIN]->val2 )
 			pc_addspiritball(tsd, skill_get_time2(SR_GENTLETOUCH_ENERGYGAIN, tsc->data[SC_GT_ENERGYGAIN]->val1), spheres);
 	}
 
