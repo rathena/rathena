@@ -407,7 +407,7 @@ int instance_destroy(short instance_id)
 {
 	struct instance_data *im;
 	struct party_data *p;
-	int i, type = 0, count = 0;
+	int i, type = 0;
 	unsigned int now = (unsigned int)time(NULL);
 
 	if(instance_id <= 0 || instance_id > MAX_INSTANCE_DATA)
@@ -447,7 +447,7 @@ int instance_destroy(short instance_id)
 			type = 3;
 
 		for(i = 0; i < MAX_MAP_PER_INSTANCE; i++)
-			count += map_delinstancemap(im->map[i].m);
+			map_delinstancemap(im->map[i].m);
 	}
 
 	if(im->keep_timer != -1) {

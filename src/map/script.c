@@ -9464,7 +9464,7 @@ BUILDIN_FUNC(clone)
 	TBL_PC *sd, *msd=NULL;
 	int char_id,master_id=0,x,y, mode = 0, flag = 0, m;
 	unsigned int duration = 0;
-	const char *map,*event="";
+	const char *map,*event;
 
 	map=script_getstr(st,2);
 	x=script_getnum(st,3);
@@ -18054,7 +18054,7 @@ static int atcommand_cleanfloor_sub(struct block_list *bl, va_list ap)
 BUILDIN_FUNC(cleanmap)
 {
 	const char *map;
-	int16 m = -1;
+	int16 m;
 	int16 x0 = 0, y0 = 0, x1 = 0, y1 = 0;
 
 	map = script_getstr(st, 2);

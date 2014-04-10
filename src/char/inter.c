@@ -915,7 +915,6 @@ int mapif_parse_broadcast(int fd)
 int mapif_parse_WisRequest(int fd)
 {
 	struct WisData* wd;
-	static int wisid = 0;
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1];// escaped name
 	char* data;
@@ -964,6 +963,7 @@ int mapif_parse_WisRequest(int fd)
 		}
 		else
 		{
+			static int wisid = 0;
 
 			CREATE(wd, struct WisData, 1);
 

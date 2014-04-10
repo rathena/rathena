@@ -2414,12 +2414,11 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 
 	switch(type) {
 		case ITEMSHOP: {
-			struct item_data* tmp;
 			if (sscanf(p,",%d:%d,",&nameid,&is_discount) < 1) {
 				ShowError("npc_parse_shop: Invalid item cost definition in file '%s', line '%d'. Ignoring the rest of the line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 				return strchr(start,'\n'); // skip and continue
 			}
-			if ((tmp = itemdb_exists(nameid)) == NULL) {
+			if (itemdb_exists(nameid) == NULL) {
 				ShowWarning("npc_parse_shop: Invalid item ID cost in file '%s', line '%d' (id '%d').\n", filepath, strline(buffer,start-buffer), nameid);
 				return strchr(start,'\n'); // skip and continue
 			}
@@ -3339,7 +3338,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 		return strchr(start,'\n');// skip and continue
 	}
 
-	if( (mob.state.size < 0 || mob.state.size > 2) && size != -1 )
+	if( mob.state.size > 2 && size != -1 )
 	{
 		ShowError("npc_parse_mob: Invalid size number %d for mob ID %d (file '%s', line '%d').\n", mob.state.size, class_, filepath, strline(buffer, start - buffer));
 		return strchr(start, '\n');
@@ -3812,7 +3811,6 @@ void npc_parsesrcfile(const char* filepath, bool runOnInit)
 		// More info at http://unicode.org/faq/utf_bom.html#bom5 and http://en.wikipedia.org/wiki/Byte_order_mark#UTF-8
 		ShowError("npc_parsesrcfile: Detected unsupported UTF-8 BOM in file '%s'. Stopping (please consider using another character set).\n", filepath);
 		aFree(buffer);
-		fclose(fp);
 		return;
 	}
 
