@@ -863,7 +863,7 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, uns
 		if (DIFF_TICK(tick, pd->ud.canmove_tick) < 0)
 			return 0; //Can't move yet.
 		pd->status.speed = (sd->battle_status.speed>>1);
-		if(pd->status.speed <= 0)
+		if(pd->status.speed == 0)
 			pd->status.speed = 1;
 		if (!unit_walktobl(&pd->bl, &sd->bl, 3, 0))
 			pet_randomwalk(pd,tick);

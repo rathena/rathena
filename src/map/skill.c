@@ -535,7 +535,7 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 		(map_flag_gvg(m) && skill_get_nocast (skill_id) & 4) ||
 		(map[m].flag.battleground && skill_get_nocast (skill_id) & 8) ||
 		(map[m].flag.restricted && map[m].zone && skill_get_nocast (skill_id) & (8*map[m].zone)) ){
-			clif_msg(sd, 0x536); // This skill cannot be used within this area
+			clif_msg(sd, SKILL_CANT_USE_AREA); // This skill cannot be used within this area
 			return true;
 	}
 
@@ -2599,22 +2599,25 @@ static void skill_do_copy(struct block_list* src,struct block_list *bl, uint16 s
 			case WL_CHAINLIGHTNING_ATK:
 				skill_id = WL_CHAINLIGHTNING;
 				break;
+			case LG_OVERBRAND_BRANDISH:
+			case LG_OVERBRAND_PLUSATK:
+				skill_id = LG_OVERBRAND;
+				break;
 			case WM_REVERBERATION_MELEE:
 			case WM_REVERBERATION_MAGIC:
 				skill_id = WM_REVERBERATION;
 				break;
 			case WM_SEVERE_RAINSTORM_MELEE:
 				skill_id = WM_SEVERE_RAINSTORM;
-			break;
+				break;
 			case GN_CRAZYWEED_ATK:
 				skill_id = GN_CRAZYWEED;
 				break;
 			case GN_HELLS_PLANT_ATK:
 				skill_id = GN_HELLS_PLANT;
 				break;
-			case LG_OVERBRAND_BRANDISH:
-			case LG_OVERBRAND_PLUSATK:
-				skill_id = LG_OVERBRAND;
+			case GN_SLINGITEM_RANGEMELEEATK:
+				skill_id = GN_SLINGITEM;
 				break;
 		}
 
@@ -3756,8 +3759,8 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 					skill_unitsetting(src,skl->skill_id,skl->skill_lv,skl->x,skl->y,(skl->type<<16)|skl->flag);
 					break;
 				case LG_OVERBRAND_BRANDISH: {
+						int i, dir = map_calc_dir(src,skl->x,skl->y);
 						int x = src->x, y = src->y;
-						int i, dir = map_calc_dir(src,x,y);
 						struct s_skill_nounit_layout *layout = skill_get_nounit_layout(skl->skill_id,skl->skill_lv,src,x,y,dir);
 
 						for( i = 0; i < layout->count; i++ )
@@ -7490,14 +7493,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case NPC_RUN:
-		{
-			const int mask[8][2] = {{0,-1},{1,-1},{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1}};
-			uint8 dir = (bl == src)?unit_getdir(src):map_calc_dir(src,bl->x,bl->y); //If cast on self, run forward, else run away.
-			unit_stop_attack(src);
-			//Run skillv tiles overriding the can-move check.
-			if (unit_walktoxy(src, src->x + skill_lv * mask[dir][0], src->y + skill_lv * mask[dir][1], 2) && md)
-				md->state.skillstate = MSS_WALK; //Otherwise it isn't updated in the ai.
-		}
+		if (md && unit_escape(src, bl, rnd()%10 + 1))
+			mob_unlocktarget(md, tick);
 		break;
 
 	case NPC_TRANSFORMATION:
@@ -9305,7 +9302,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SR_GENTLETOUCH_CHANGE:
 	case SR_GENTLETOUCH_REVITALIZE:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
-			sc_start2(src,bl,type,100,skill_lv,bl->id,skill_get_time(skill_id,skill_lv)));
+			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
 	case SR_FLASHCOMBO:
 		if( sd )
@@ -11233,11 +11230,12 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 
 	case LG_OVERBRAND: {
 			int dir = map_calc_dir(src,x,y);
-			struct s_skill_nounit_layout *layout = skill_get_nounit_layout(skill_id,skill_lv,src,x,y,dir);
+			int sx = src->x, sy = src->y;
+			struct s_skill_nounit_layout *layout = skill_get_nounit_layout(skill_id,skill_lv,src,sx,sy,dir);
 
 			for( i = 0; i < layout->count; i++ )
-				map_foreachincell(skill_area_sub,src->m,src->x+layout->dx[i],src->y+layout->dy[i],BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|SD_ANIMATION|1,skill_castend_damage_id);
-			skill_addtimerskill(src,gettick() + status_get_amotion(src),0,0,0,LG_OVERBRAND_BRANDISH,skill_lv,dir,flag);
+				map_foreachincell(skill_area_sub,src->m,sx+layout->dx[i],sy+layout->dy[i],BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|SD_ANIMATION|1,skill_castend_damage_id);
+			skill_addtimerskill(src,gettick() + status_get_amotion(src),0,x,y,LG_OVERBRAND_BRANDISH,skill_lv,dir,flag);
 		}
 		break;
 
@@ -14629,18 +14627,24 @@ bool skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id,
 			continue;
 		index[i] = pc_search_inventory(sd,require.itemid[i]);
 		if( index[i] < 0 || sd->status.inventory[index[i]].amount < require.amount[i] ) {
-			//if( require.itemid[i] == ITEMID_RED_GEMSTONE )
-			//	clif_skill_fail(sd,skill_id,USESKILL_FAIL_REDJAMSTONE,0);// red gemstone required
-			//else if( require.itemid[i] == ITEMID_BLUE_GEMSTONE )
-			//	clif_skill_fail(sd,skill_id,USESKILL_FAIL_BLUEJAMSTONE,0);// blue gemstone required
-			//else {
+			if( require.itemid[i] == ITEMID_HOLY_WATER )
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_HOLYWATER,0); //Holy water is required.
+			else if( require.itemid[i] == ITEMID_RED_GEMSTONE )
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_REDJAMSTONE,0); //Red gemstone is required.
+			else if( require.itemid[i] == ITEMID_BLUE_GEMSTONE )
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_BLUEJAMSTONE,0); //Blue gemstone is required.
+			else if( require.itemid[i] == ITEMID_PAINT_BRUSH )
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_PAINTBRUSH,0); //Paint brush is required.
+			else if( require.itemid[i] == ITEMID_ANCILLA )
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_ANCILLA,0); //Ancilla is required.
+			else {
+				char output[128];
+
 				//Official is using msgstringtable.txt for each requirement failure
-				char output[CHAT_SIZE_MAX];
 				//clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-				//sprintf(output, "You need itemid=%d, amount=%d", require.itemid[i], require.amount[i]);
 				sprintf(output, msg_txt(sd,720), itemdb_jname(require.itemid[i])); // %s is required.
 				clif_colormes(sd,color_table[COLOR_RED],output);
-			//}
+			}
 			return false;
 		}
 	}
@@ -14734,6 +14738,7 @@ void skill_consume_requirement( struct map_session_data *sd, uint16 skill_id, ui
 				case SA_VIOLENTGALE:
 					if( sc && sc->data[SC_WILD_STORM_OPTION] && rnd()%100 < 50 )
 						continue;
+					break;
 				case RL_H_MINE:
 					if (sd->flicker)
 						continue;
@@ -16329,8 +16334,8 @@ static int skill_trap_splash (struct block_list *bl, va_list ap)
 						clif_changetraplook(bl, UNT_USED_TRAPS);
 						su->group->limit = DIFF_TICK(gettick(),su->group->tick) + 1500;
 						su->group->unit_id = UNT_USED_TRAPS;
+						break;
 				}
-				break;
 			}
 		default:
 			skill_attack(skill_get_type(sg->skill_id),ss,src,bl,sg->skill_id,sg->skill_lv,tick,0);
@@ -17509,7 +17514,7 @@ int skill_produce_mix (struct map_session_data *sd, uint16 skill_id, int nameid,
 			for( i = 0; i < MAX_INVENTORY; i++ ) {
 				if( sd->status.inventory[i].nameid == nameid ) {
 					if( sd->status.inventory[i].amount >= data->stack.amount ) {
-						clif_msgtable(sd->fd,0x61b);
+						clif_msgtable(sd->fd,RUNE_CANT_CREATE);
 						return 0;
 					} else {
 						/**
@@ -17951,8 +17956,8 @@ int skill_produce_mix (struct map_session_data *sd, uint16 skill_id, int nameid,
 					}
 					break;
 				}
-			if( k ){
-				clif_msg_skill(sd,skill_id,0x627);
+			if( k ) {
+				clif_msg_skill(sd,skill_id,ITEM_PRODUCE_SUCCESS);
 				return 1;
 			}
 		} else if (tmp_item.amount) { //Success
@@ -17961,7 +17966,7 @@ int skill_produce_mix (struct map_session_data *sd, uint16 skill_id, int nameid,
 				map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 			}
 			if( skill_id == GN_MIX_COOKING || skill_id == GN_MAKEBOMB || skill_id ==  GN_S_PHARMACY )
-				clif_msg_skill(sd,skill_id,0x627);
+				clif_msg_skill(sd,skill_id,ITEM_PRODUCE_SUCCESS);
 			return 1;
 		}
 	}
@@ -18012,13 +18017,13 @@ int skill_produce_mix (struct map_session_data *sd, uint16 skill_id, int nameid,
 						clif_additem(sd,0,0,flag);
 						map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 					}
-					clif_msg_skill(sd,skill_id,0x628);
+					clif_msg_skill(sd,skill_id,ITEM_PRODUCE_FAIL);
 				}
 				break;
 			case GN_MAKEBOMB:
 			case GN_S_PHARMACY:
 			case GN_CHANGEMATERIAL:
-				clif_msg_skill(sd,skill_id,0x628);
+				clif_msg_skill(sd,skill_id,ITEM_PRODUCE_FAIL);
 				break;
 			default:
 				if( skill_produce_db[idx].itemlv > 10 && skill_produce_db[idx].itemlv <= 20 )
@@ -18344,7 +18349,7 @@ int skill_changematerial(struct map_session_data *sd, int n, unsigned short *ite
 							nameid = sd->status.inventory[idx].nameid;
 							amount = item_list[k*2+1];
 							if( nameid > 0 && sd->status.inventory[idx].identify == 0 ){
-								clif_msg_skill(sd,GN_CHANGEMATERIAL,0x62D);
+								clif_msg_skill(sd,GN_CHANGEMATERIAL,ITEM_UNIDENTIFIED);
 								return 0;
 							}
 							if( nameid == skill_produce_db[i].mat_id[j] && (amount-p*skill_produce_db[i].mat_amount[j]) >= skill_produce_db[i].mat_amount[j]
@@ -18366,7 +18371,7 @@ int skill_changematerial(struct map_session_data *sd, int n, unsigned short *ite
 	}
 
 	if( p == 0)
-		clif_msg_skill(sd,GN_CHANGEMATERIAL,0x623);
+		clif_msg_skill(sd,GN_CHANGEMATERIAL,ITEM_CANT_COMBINE);
 
 	return 0;
 }
@@ -19346,7 +19351,7 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	else if( strcmpi(split[10],"elementalspirit")     == 0 ) skill_db[idx].require.state = ST_ELEMENTALSPIRIT;
 	else if( strcmpi(split[10],"peco")                == 0 ) skill_db[idx].require.state = ST_PECO;
 	else skill_db[idx].require.state = ST_NONE;	// Unknown or no state
-	
+
 	//Status requirements
 	trim(split[11]);
 	if (split[11][0] != '\0') {
@@ -19357,9 +19362,9 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 				skill_db[idx].require.status[i] = (sc_type)require[i];
 		}
 	}
-	
+
 	skill_split_atoi(split[12],skill_db[idx].require.spiritball);
-	
+
 	for( i = 0; i < MAX_SKILL_ITEM_REQUIRE; i++ ) {
 		skill_db[idx].require.itemid[i] = atoi(split[13+ 2*i]);
 		skill_db[idx].require.amount[i] = atoi(split[14+ 2*i]);

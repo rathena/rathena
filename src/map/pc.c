@@ -4413,6 +4413,17 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 	else if( itemdb_is_poison(nameid) && (sd->class_&MAPID_THIRDMASK) != MAPID_GUILLOTINE_CROSS )
 		return 0;
 
+	/*if( item->group ) { //@TODO
+		if( pc_is90overweight(sd) ) {
+			clif_msgtable(sd->fd,ITEM_CANT_OBTAIN_WEIGHT);
+			return 0;
+		}
+		if( !pc_inventoryblank(sd) ) {
+			clif_colormes(sd,color_table[COLOR_RED],msg_txt(1477)); //Item cannot be open when inventory is full
+			return 0;
+		}
+	}*/
+
 	//Gender check
 	if(item->sex != 2 && sd->status.sex != item->sex)
 		return 0;
@@ -4549,6 +4560,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 
 	/* on restricted maps the item is consumed but the effect is not used */
 	if (!pc_has_permission(sd,PC_PERM_ITEM_UNCONDITIONAL) && itemdb_isNoEquip(id,sd->bl.m)) {
+		clif_msg(sd,ITEM_CANT_USE_AREA); // This item cannot be used within this area
 		if( battle_config.allow_consume_restricted_item && !id->flag.delay_consume ) { //need confirmation for delayed consumption items
 			clif_useitemack(sd,n,item.amount-1,true);
 			pc_delitem(sd,n,1,1,0,LOG_TYPE_CONSUME);
@@ -6283,14 +6295,15 @@ int pc_maxparameterincrease(struct map_session_data* sd, int type)
 
 /**
  * Raises a stat by the specified amount.
+ *
  * Obeys max_parameter limits.
- * Subtracts stat points.
+ * Subtracts status points according to the cost of the increased stat points.
  *
  * @param sd       The target character.
  * @param type     The stat to change (see enum _sp)
- * @param increase The stat increase amount.
- * @return true if the stat was increased by any amount, false if there were no
- *         changes.
+ * @param increase The stat increase (strictly positive) amount.
+ * @retval true  if the stat was increased by any amount.
+ * @retval false if there were no changes.
  */
 bool pc_statusup(struct map_session_data* sd, int type, int increase)
 {
@@ -6340,12 +6353,18 @@ bool pc_statusup(struct map_session_data* sd, int type, int increase)
 	return true;
 }
 
-/// Raises a stat by the specified amount.
-/// Obeys max_parameter limits.
-/// Does not subtract stat points.
-///
-/// @param type The stat to change (see enum _sp)
-/// @param val The stat increase amount.
+/**
+ * Raises a stat by the specified amount.
+ *
+ * Obeys max_parameter limits.
+ * Does not subtract status points for the cost of the modified stat points.
+ *
+ * @param sd   The target character.
+ * @param type The stat to change (see enum _sp)
+ * @param val  The stat increase (or decrease) amount.
+ * @return the stat increase amount.
+ * @retval 0 if no changes were made.
+ */
 int pc_statusup2(struct map_session_data* sd, int type, int val)
 {
 	int max, need;
@@ -6354,7 +6373,7 @@ int pc_statusup2(struct map_session_data* sd, int type, int val)
 	if( type < SP_STR || type > SP_LUK )
 	{
 		clif_statusupack(sd,type,0,0);
-		return 1;
+		return 0;
 	}
 
 	need = pc_need_status_point(sd,type,1);
@@ -6373,7 +6392,7 @@ int pc_statusup2(struct map_session_data* sd, int type, int val)
 	if( val > 255 )
 		clif_updatestatus(sd,type); // send after the 'ack' to override the truncated value
 
-	return 0;
+	return val;
 }
 
 /*==========================================

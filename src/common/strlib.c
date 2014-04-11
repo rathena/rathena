@@ -155,14 +155,15 @@ char* trim(char* str)
 // that pointer with the returned value, since the original pointer must be
 // deallocated using the same allocator with which it was allocated.  The return
 // value must NOT be deallocated using free() etc.
-char *trim2(char *str,char flag){
-	char *end;
-	if(flag&1){ // Trim leading space
+char *trim2(char *str,char flag) {
+	if(flag&1) { // Trim leading space
 		while(isspace(*str)) str++;
 		if(*str == 0)  // All spaces?
 			return str;
 	}
-	if(flag&2){ // Trim trailing space
+	if(flag&2) { // Trim trailing space
+		char *end;
+
 		end = str + strlen(str) - 1;
 		while(end > str && isspace(*end)) end--;
 		*(end+1) = 0; // Write new null terminator
