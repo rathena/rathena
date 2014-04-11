@@ -12871,6 +12871,10 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 				}
 				hp = tstatus->max_hp * hp / 100;
 				sp = tstatus->max_sp * sp / 100;
+				if (tstatus->hp < tstatus->max_hp)
+					clif_skill_nodamage(&src->bl, bl, AL_HEAL, hp, 1);
+				if (tstatus->sp < tstatus->max_sp)
+					clif_skill_nodamage(&src->bl, bl, MG_SRECOVERY, sp, 1);
 				if (tsc && tsc->data[SC_AKAITSUKI] && hp)
 					hp = ~hp + 1;
 				status_heal(bl, hp, sp, 3);
@@ -17572,7 +17576,7 @@ int skill_produce_mix (struct map_session_data *sd, uint16 skill_id, int nameid,
 						make_per = 100000; // Star Crumbs are 100% success crafting rate? (made 1000% so it succeeds even after penalties) [Skotlex]
 						break;
 					default: // Enchanted Stones
-						make_per += 1000+i*500; // Enchantedstone Craft bonus: +15/+20/+25/+30/+35
+						make_per += 1000+i*500; // Enchanted stone Craft bonus: +15/+20/+25/+30/+35
 					break;
 				}
 				break;
@@ -17620,7 +17624,7 @@ int skill_produce_mix (struct map_session_data *sd, uint16 skill_id, int nameid,
 					case ITEMID_COATING_BOTTLE:
 						make_per -= (1+rnd()%100)*10;
 						break;
-					//Common items, recieve no bonus or penalty, listed just because they are commonly produced
+					//Common items, receive no bonus or penalty, listed just because they are commonly produced
 					case ITEMID_BLUE_POTION:
 					case ITEMID_RED_SLIM_POTION:
 					case ITEMID_ANODYNE:
@@ -17668,7 +17672,7 @@ int skill_produce_mix (struct map_session_data *sd, uint16 skill_id, int nameid,
 				break;
 			    }
 			/**
-			 * Guilotine Cross
+			 * Guillotine Cross
 			 **/
 			case GC_CREATENEWPOISON:
 				make_per = 3000 + 500 * pc_checkskill(sd,GC_RESEARCHNEWPOISON);
@@ -19773,11 +19777,10 @@ static void skill_readdb(void) {
 		char* dbsubpath1 = (char*)aMalloc(n1+1);
 		char* dbsubpath2 = (char*)aMalloc(n2+1);
 
-		if(i==0) {
+		if (i == 0) {
 			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
 			safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
-		}
-		else {
+		} else {
 			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
 			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
 		}
@@ -19792,9 +19795,9 @@ static void skill_readdb(void) {
 		sv_readdb(dbsubpath1, "produce_db.txt"        , ',',   4,  4+2*MAX_PRODUCE_RESOURCE, MAX_SKILL_PRODUCE_DB, skill_parse_row_producedb, i);
 		sv_readdb(dbsubpath1, "create_arrow_db.txt"   , ',', 1+2,  1+2*MAX_ARROW_RESOURCE, MAX_SKILL_ARROW_DB, skill_parse_row_createarrowdb, i);
 		sv_readdb(dbsubpath1, "abra_db.txt"           , ',',   3,  3, MAX_SKILL_ABRA_DB, skill_parse_row_abradb, i);
-		sv_readdb(dbsubpath1, "spellbook_db.txt"      , ',',   3,  3, MAX_SKILL_SPELLBOOK_DB, skill_parse_row_spellbookdb, i); //Warlock
-		sv_readdb(dbsubpath1, "magicmushroom_db.txt"  , ',',   1,  1, MAX_SKILL_MAGICMUSHROOM_DB, skill_parse_row_magicmushroomdb, i); //Guillotine Cross
-		sv_readdb(dbsubpath1, "skill_copyable_db.txt"       , ',',    2,  4, MAX_SKILL_DB, skill_parse_row_copyabledb, i);
+		sv_readdb(dbsubpath1, "spellbook_db.txt"      , ',',   3,  3, MAX_SKILL_SPELLBOOK_DB, skill_parse_row_spellbookdb, i);
+		sv_readdb(dbsubpath1, "magicmushroom_db.txt"  , ',',   1,  1, MAX_SKILL_MAGICMUSHROOM_DB, skill_parse_row_magicmushroomdb, i);
+		sv_readdb(dbsubpath1, "skill_copyable_db.txt"       , ',',   2,  4, MAX_SKILL_DB, skill_parse_row_copyabledb, i);
 		sv_readdb(dbsubpath1, "skill_improvise_db.txt"      , ',',   2,  2, MAX_SKILL_IMPROVISE_DB, skill_parse_row_improvisedb, i);
 		sv_readdb(dbsubpath1, "skill_changematerial_db.txt" , ',',   4,  4+2*5, MAX_SKILL_PRODUCE_DB, skill_parse_row_changematerialdb, i);
 		sv_readdb(dbsubpath1, "skill_nonearnpc_db.txt"      , ',',   2,  3, MAX_SKILL_DB, skill_parse_row_nonearnpcrangedb, i);
