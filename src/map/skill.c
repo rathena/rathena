@@ -1539,8 +1539,8 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 		sc_start(src,bl,SC_DARKCROW,100,skill_lv,skill_get_time(skill_id,skill_lv));
 		break;
 	case GN_ILLUSIONDOPING:
-		if( sc_start(src,bl,SC_ILLUSIONDOPING,10 * skill_lv,skill_lv,skill_get_time(skill_id, skill_lv)) ) //Custom rate
-			sc_start(src,bl,SC_HALLUCINATION,100,skill_lv,skill_get_time(skill_id, skill_lv));
+		if( sc_start(src,bl,SC_ILLUSIONDOPING,100 - skill_lv * 10,skill_lv,skill_get_time(skill_id,skill_lv)) )
+			sc_start(src,bl,SC_HALLUCINATION,100,skill_lv,skill_get_time(skill_id,skill_lv));
 		break;
 
 	case RL_MASS_SPIRAL:
@@ -5156,6 +5156,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			clif_skill_nodamage(src, bl, skill_id, 0, 1);
 			skill_addtimerskill(src, gettick() + skill_get_time(skill_id, skill_lv) - 1000, bl->id, 0, 0, skill_id, skill_lv, 0, 0);
 		}
+		break;
+
+	case GN_DEMONIC_FIRE:
+	case GN_FIRE_EXPANSION_ACID:
+		if (flag&1)
+			skill_attack(BF_MAGIC, src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
 
 	case KO_JYUMONJIKIRI: {
@@ -10818,8 +10824,6 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case GN_WALLOFTHORN:
 	case GN_THORNS_TRAP:
 	case GN_DEMONIC_FIRE:
-	case GN_FIRE_EXPANSION_SMOKE_POWDER:
-	case GN_FIRE_EXPANSION_TEAR_GAS:
 	case GN_HELLS_PLANT:
 	case SO_EARTHGRAVE:
 	case SO_DIAMONDDUST:
@@ -11289,28 +11293,37 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			if( ud->skillunit[i]->skill_id == GN_DEMONIC_FIRE &&
 			   distance_xy(x, y, ud->skillunit[i]->unit->bl.x, ud->skillunit[i]->unit->bl.y) < 4 ) {
 				switch( skill_lv ) {
+					case 1:
+						ud->skillunit[i]->unit->val2 = skill_lv;
+						ud->skillunit[i]->unit->group->val2 = skill_lv;
+						break;
+					case 2:
+						map_foreachinarea(skill_area_sub,src->m,
+							ud->skillunit[i]->unit->bl.x - 2,ud->skillunit[i]->unit->bl.y - 2,
+							ud->skillunit[i]->unit->bl.x + 2,ud->skillunit[i]->unit->bl.y + 2, BL_CHAR,
+							src, GN_DEMONIC_FIRE, skill_lv + 20, tick, flag|BCT_ENEMY|SD_LEVEL|1, skill_castend_damage_id);
+						skill_delunit(ud->skillunit[i]->unit);
+						break;
 					case 3:
-						ud->skillunit[i]->unit_id = UNT_FIRE_EXPANSION_SMOKE_POWDER;
-						clif_changetraplook(&ud->skillunit[i]->unit->bl, UNT_FIRE_EXPANSION_SMOKE_POWDER);
+						skill_delunit(ud->skillunit[i]->unit);
+						skill_unitsetting(src, GN_FIRE_EXPANSION_SMOKE_POWDER, 1, x, y, 0);
+						flag |= 1;
 						break;
 					case 4:
-						ud->skillunit[i]->unit_id = UNT_FIRE_EXPANSION_TEAR_GAS;
-						clif_changetraplook(&ud->skillunit[i]->unit->bl, UNT_FIRE_EXPANSION_TEAR_GAS);
+						skill_delunit(ud->skillunit[i]->unit);
+						skill_unitsetting(src, GN_FIRE_EXPANSION_TEAR_GAS, 1, x, y, 0);
+						flag |= 1;
 						break;
 					case 5: {
 						int acid_lv = 5; // Cast at Acid Demonstration at level 5 unless the user has a higher level learned.
 						if( sd && pc_checkskill(sd, CR_ACIDDEMONSTRATION) > 5 )
 							acid_lv = pc_checkskill(sd, CR_ACIDDEMONSTRATION);
 						map_foreachinarea(skill_area_sub, src->m,
-										  ud->skillunit[i]->unit->bl.x - 3, ud->skillunit[i]->unit->bl.y - 3,
-										  ud->skillunit[i]->unit->bl.x + 3, ud->skillunit[i]->unit->bl.y + 3, BL_CHAR,
-										  src, CR_ACIDDEMONSTRATION, acid_lv, tick, flag|BCT_ENEMY|1|SD_LEVEL, skill_castend_damage_id);
+										  ud->skillunit[i]->unit->bl.x - 2, ud->skillunit[i]->unit->bl.y - 2,
+										  ud->skillunit[i]->unit->bl.x + 2, ud->skillunit[i]->unit->bl.y + 2, BL_CHAR,
+										  src, CR_ACIDDEMONSTRATION, acid_lv, tick, flag|BCT_ENEMY|SD_LEVEL|1, skill_castend_damage_id);
 						skill_delunit(ud->skillunit[i]->unit);
 						}
-						break;
-					default:
-						ud->skillunit[i]->unit->val2 = skill_lv;
-						ud->skillunit[i]->unit->group->val2 = skill_lv;
 						break;
 					}
 				}
@@ -11992,6 +12005,10 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, uint16 skill
 			limit = 3000;
 		val3 = (x<<16)|y;
 		break;
+	case GN_FIRE_EXPANSION_SMOKE_POWDER:
+	case GN_FIRE_EXPANSION_TEAR_GAS:
+		limit = ((sd ? pc_checkskill(sd,GN_DEMONIC_FIRE) : 1) + 1) * limit;
+		break;
 	case KO_ZENKAI:
 		if( sd ){
 			ARR_FIND(1, 6, i, sd->talisman[i] > 0);
@@ -12371,6 +12388,17 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 				break;	// iRO Wiki says that this skill don't affect to Boss monsters.
 			if( map_flag_vs(bl->m) || bl->id == src->bl.id || battle_check_target(&src->bl,bl, BCT_ENEMY) == 1 )
 				skill_attack(skill_get_type(sg->skill_id), ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
+			break;
+
+		case UNT_FIRE_EXPANSION_SMOKE_POWDER:
+			if( !sce )
+				sc_start(ss, bl, type, 100, sg->skill_lv, sg->limit);
+			break;
+
+		case UNT_FIRE_EXPANSION_TEAR_GAS:
+			if( !sce )
+				if( sc_start4(ss, bl, type, 100, sg->skill_lv, 0, ss->id,0, sg->limit) )
+					sc_start(ss, bl, SC_TEARGAS_SOB, 100, sg->skill_lv, sg->limit);
 			break;
 
 		case UNT_VOLCANIC_ASH:
@@ -12944,28 +12972,14 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			}
 			break;
 
-		case UNT_DEMONIC_FIRE: {
-				TBL_PC* sd =  BL_CAST(BL_PC, ss);
-				switch( sg->val2 ) {
-					case 1:
-					case 2:
-					default:
-						sc_start(ss, bl, SC_BURNING, 4 + 4 * sg->skill_lv, sg->skill_lv, skill_get_time2(sg->skill_id, sg->skill_lv));
-						skill_attack(skill_get_type(sg->skill_id), ss, &src->bl, bl, sg->skill_id, sg->skill_lv + 10 * sg->val2, tick, 0);
-						break;
-					case 3:
-						skill_attack(skill_get_type(CR_ACIDDEMONSTRATION), ss, &src->bl, bl, CR_ACIDDEMONSTRATION, ((sd) ? pc_checkskill(sd, CR_ACIDDEMONSTRATION) : sg->skill_lv), tick, 0);
-						break;
-				}
+		case UNT_DEMONIC_FIRE:
+			switch( sg->val2 ) {
+				case 1:
+				default:
+					sc_start(ss, bl, SC_BURNING, 4 + 4 * sg->skill_lv, sg->skill_lv, skill_get_time2(sg->skill_id, sg->skill_lv));
+					skill_attack(skill_get_type(skill_id), ss, &src->bl, bl, sg->skill_id, sg->skill_lv + 10 * sg->val2, tick, 0);
+					break;
 			}
-			break;
-
-		case UNT_FIRE_EXPANSION_SMOKE_POWDER:
-			sc_start(ss, bl, status_skill2sc(GN_FIRE_EXPANSION_SMOKE_POWDER), 100, sg->skill_lv, skill_get_time2(sg->skill_id, sg->skill_lv));
-			break;
-
-		case UNT_FIRE_EXPANSION_TEAR_GAS:
-			sc_start(ss, bl, status_skill2sc(GN_FIRE_EXPANSION_TEAR_GAS), 100, sg->skill_lv, skill_get_time2(sg->skill_id, sg->skill_lv));
 			break;
 
 		case UNT_HELLS_PLANT:
@@ -13258,6 +13272,8 @@ int skill_unit_onleft (uint16 skill_id, struct block_list *bl, unsigned int tick
 		case SO_WIND_INSIGNIA:
 		case SO_EARTH_INSIGNIA:
 		case SC_BLOODYLUST:
+		case GN_FIRE_EXPANSION_SMOKE_POWDER:
+		case GN_FIRE_EXPANSION_TEAR_GAS:
 		case SO_ELEMENTAL_SHIELD:
 			if (sce)
 				status_change_end(bl, type, INVALID_TIMER);

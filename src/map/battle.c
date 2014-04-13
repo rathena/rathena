@@ -4794,8 +4794,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 #ifdef RENEWAL
 			case NJ_ISSEN:
 			case ASC_BREAKER:
-#endif
 			case CR_ACIDDEMONSTRATION:
+			case GN_FIRE_EXPANSION_ACID:
+#endif
 			case KO_HAPPOKUNAI:
 				break;
 			default:
@@ -4814,6 +4815,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		case MC_CARTREVOLUTION:
 		case MO_INVESTIGATE:
 		case CR_ACIDDEMONSTRATION:
+		case GN_FIRE_EXPANSION_ACID:
 		case KO_BAKURETSU:
 			// Forced to neutral element
 			wd.damage = battle_attr_fix(src, target, wd.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
@@ -4871,8 +4873,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 #ifdef RENEWAL
 		case NJ_ISSEN:
 		case ASC_BREAKER:
-#endif
 		case CR_ACIDDEMONSTRATION:
+		case GN_FIRE_EXPANSION_ACID:
+#endif
 		case KO_HAPPOKUNAI:
 			return wd;
 		default:
@@ -5063,6 +5066,16 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			case AB_RENOVATIO:
 				ad.damage = status_get_lv(src) * 10 + sstatus->int_;
 				break;
+#ifndef RENEWAL
+			case GN_FIRE_EXPANSION_ACID:
+				if(tstatus->vit + sstatus->int_)
+					ad.damage = (int64)(7 * tstatus->vit * sstatus->int_ * sstatus->int_ / (10 * (tstatus->vit + sstatus->int_)));
+				else
+					ad.damage = 0;
+				if(tsd)
+					ad.damage >>= 1;
+				break;
+#endif
 			default: {
 				if (sstatus->matk_max > sstatus->matk_min) {
 					MATK_ADD(sstatus->matk_min+rnd()%(sstatus->matk_max-sstatus->matk_min));
@@ -5374,11 +5387,12 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case GN_DEMONIC_FIRE:
 						if( skill_lv > 20)	// Fire expansion Lv.2
-							skillratio += 110 + 20 * (skill_lv - 20) + status_get_int(src) * 10;
-						else if( skill_lv > 10 )	// Fire expansion Lv.1
-							skillratio += 110 + 20 * (skill_lv - 10) + status_get_int(src) + ((sd) ? sd->status.job_level : 50);
-						else
-							skillratio += 110 + 20 * skill_lv;
+							skillratio += 10 + 20 * (skill_lv - 20) + status_get_int(src) * 10;
+						else if( skill_lv > 10 ) { // Fire expansion Lv.1
+							skillratio += 10 + 20 * (skill_lv - 10) + status_get_int(src) + ((sd) ? sd->status.job_level : 50);
+							RE_LVL_DMOD(100);
+						} else
+							skillratio += 10 + 20 * skill_lv;
 						break;
 					case KO_KAIHOU:
 						if(sd) {
@@ -5604,9 +5618,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	switch(skill_id) { // These skills will do a GVG fix later
 #ifdef RENEWAL
 		case ASC_BREAKER:
-#endif
 		case CR_ACIDDEMONSTRATION:
-			return ad;
+			return ad; //These skills will do a GVG fix later
+#endif
 		default:
 			ad.damage=battle_calc_damage(src,target,&ad,ad.damage,skill_id,skill_lv);
 			if( map_flag_gvg2(target->m) )
@@ -5620,8 +5634,17 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			struct Damage wd = battle_calc_weapon_attack(src,target,skill_id,skill_lv,mflag);
 			if(!flag.infdef && ad.damage > 1)
 				ad.damage += wd.damage;
-			break;
 		}
+		break;
+#ifdef RENEWAL
+		case GN_FIRE_EXPANSION_ACID: {
+			struct Damage wd = battle_calc_weapon_attack(src, target, skill_id, skill_lv, 0);
+
+			ad.damage = (int64)(7 * ((wd.damage / skill_lv + ad.damage / skill_lv) * tstatus->vit / 100));
+			damage_div_fix(ad.damage, ad.div_);
+		}
+		break;
+#endif
 		//case HM_ERASER_CUTTER:
 	}
 

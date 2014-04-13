@@ -898,6 +898,7 @@ void initChangeTables(void)
 
 	StatusIconChangeTable[SC_CURSEDCIRCLE_ATKER] = SI_CURSEDCIRCLE_ATKER;
 
+	StatusIconChangeTable[SC_TEARGAS_SOB] = SI_BLANK;
 	StatusIconChangeTable[SC_STOMACHACHE] = SI_STOMACHACHE;
 	StatusIconChangeTable[SC_MYSTERIOUS_POWDER] = SI_MYSTERIOUS_POWDER;
 	StatusIconChangeTable[SC_MELON_BOMB] = SI_MELON_BOMB;
@@ -5400,7 +5401,7 @@ static signed short status_calc_hit(struct block_list *bl, struct status_change 
 	if (sc->data[SC_TEARGAS])
 		hit -= hit * 50 / 100;
 	if(sc->data[SC_ILLUSIONDOPING])
-		hit -= hit * (5 + sc->data[SC_ILLUSIONDOPING]->val1) / 100; // Custom
+		hit -= 50;
 	if (sc->data[SC_MTF_ASPD])
 		hit += 5;
 
@@ -7836,6 +7837,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC__LAZINESS:
 			case SC__UNLUCKY:
 			case SC__WEAKNESS:
+			case SC_TEARGAS:
+			case SC_TEARGAS_SOB:
 			case SC_PYREXIA:
 			case SC_DEATHHURT:
 			case SC_TOXIN:
@@ -9521,10 +9524,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 20; //HP rate bonus
 			break;
 		case SC_TEARGAS:
-			val3 = status_get_max_hp(bl) * 5 / 100; // Drain 5% HP
+			val2 = status_get_max_hp(bl) * 5 / 100; // Drain 5% HP
 			val4 = tick / 2000;
 			tick_time = 2000;
-			sc_start(src, bl, SC_TEARGAS_SOB, 100, 0, 1|2|8); // Sob Emoticon
 			break;
 		case SC_TEARGAS_SOB:
 			val4 = tick / 3000;
@@ -9643,6 +9645,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 7 - val1;
 			tick_time = 1000;
 			val4 = tick / tick_time;
+			tick = -1;
 			break;
 		case SC_KINGS_GRACE:
 			val2 = 3 + val1; //HP Recover rate
@@ -10791,8 +10794,12 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_INTRAVISION:
 			calc_flag = SCB_ALL; // Required for overlapping
 			break;
-		case SC_FULL_THROTTLE:
-			sc_start(bl, bl, SC_REBOUND, 100, sce->val1, skill_get_time2(ALL_FULL_THROTTLE, sce->val1));
+		case SC_FULL_THROTTLE: {
+				int sec = skill_get_time2(status_sc2skill(type), sce->val1);
+
+				clif_status_change(bl, SI_DECREASEAGI, 1, sec, 0, 0, 0);
+				sc_start(bl, bl, SC_REBOUND, 100, sce->val1, sec);
+			}
 			break;
 		case SC_ITEMSCRIPT: // Removes Buff Icons
 			if (sd && sce->val2 != SI_BLANK)
@@ -11826,9 +11833,19 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		return 0;
 
 	case SC_TEARGAS:
-		if(!status_charge(bl, 0, sce->val3))
-			break; // Not enough HP to continue.
-		sc_timer_next(2000 + tick, status_change_timer, bl->id, data);
+		if( --(sce->val4) >= 0 ) {
+			struct block_list *src = map_id2bl(sce->val3);
+			int damage = sce->val2;
+
+			map_freeblock_lock();
+			clif_damage(bl, bl, tick, 0, 0, damage, 1, 9, 0);
+			status_damage(src, bl, damage,0, 0, 1);
+			if( sc->data[type] ) {
+				sc_timer_next(2000 + tick, status_change_timer, bl->id, data);
+			}
+			map_freeblock_unlock();
+			return 0;
+		}
 		break;
 	case SC_TEARGAS_SOB:
 		if( --(sce->val4) >= 0 ) {
@@ -11890,7 +11907,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 	    break;
 	case SC_FULL_THROTTLE:
 		if( --(sce->val4) > 0 ) {
-			status_percent_damage(bl, bl, sce->val2, sce->val2, false);
+			status_percent_damage(bl, bl, 0, sce->val2, false);
 			sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
 			return 0;
 		}
