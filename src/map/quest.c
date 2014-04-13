@@ -355,72 +355,77 @@ int quest_check(TBL_PC *sd, int quest_id, enum quest_check_type type) {
  * @return Number of loaded quests, or -1 if the file couldn't be read.
  */
 int quest_read_db(void) {
-	//@TODO[Haru]: This duplicates some sv_readdb functionalities, and it would be
-	//nice if it could be replaced by it. The reason why it wasn't is probably
-	//because we need to accept commas (which is also used as delimiter) in the
-	//last field (quest name), and sv_readdb isn't capable of doing so.
-	FILE *fp;
-	char line[1024];
-	int i, count = 0;
-	char *str[20], *p, *np;
-	struct quest_db entry;
+	const char* dbsubpath[] = {
+		"",
+		DBIMPORT"/",
+	};
+	int f;
 
-	sprintf(line, "%s/quest_db.txt", db_path);
-	if( (fp = fopen(line, "r")) == NULL ) {
-		ShowError("can't read %s\n", line);
-		return -1;
-	}
+	for (f = 0; f < ARRAYLENGTH(dbsubpath); f++) {
+		FILE *fp;
+		char line[1024];
+		int i, count = 0;
+		char *str[20], *p, *np;
+		char filename[256];
+		struct quest_db entry;
 
-	while( fgets(line, sizeof(line), fp) ) {
-		if( line[0] == '/' && line[1] == '/' )
-			continue;
-		memset(str, 0, sizeof(str));
+		sprintf(filename, "%s/%s%s", db_path, dbsubpath[f], "quest_db.txt");
+		if( (fp = fopen(filename, "r")) == NULL ) {
+			if (f == 0)
+				ShowError("Can't read %s\n", filename);
+			return -1;
+		}
+		while( fgets(line, sizeof(line), fp) ) {
+			if( line[0] == '/' && line[1] == '/' )
+				continue;
+			memset(str, 0, sizeof(str));
 
-		for( i = 0, p = line; i < 8; i++ ) {
-			if( (np = strchr(p, ',')) != NULL ) {
-				str[i] = p;
-				*np = 0;
-				p = np + 1;
-			} else if( str[0] == NULL )
-				break;
-			else {
-				ShowError("quest_read_db: insufficient columns in line %s\n", line);
+			for( i = 0, p = line; i < 8; i++ ) {
+				if( (np = strchr(p, ',')) != NULL ) {
+					str[i] = p;
+					*np = 0;
+					p = np + 1;
+				} else if( str[0] == NULL )
+					break;
+				else {
+					ShowError("quest_read_db: Insufficient columns in line %s\n", line);
+					continue;
+				}
+			}
+			if( str[0] == NULL )
+				continue;
+
+			memset(&entry, 0, sizeof(entry));
+
+			entry.id = atoi(str[0]);
+
+			if( entry.id < 0 || entry.id >= MAX_QUEST_DB ) {
+				ShowError("quest_read_db: Invalid quest ID '%d' in line '%s' (min: 0, max: %d.)\n", entry.id, line, MAX_QUEST_DB);
 				continue;
 			}
+
+			entry.time = atoi(str[1]);
+
+			for( i = 0; i < MAX_QUEST_OBJECTIVES; i++ ) {
+				entry.mob[i] = atoi(str[2 * i + 2]);
+				entry.count[i] = atoi(str[2 * i + 3]);
+
+				if( !entry.mob[i] || !entry.count[i] )
+					break;
+			}
+
+			entry.num_objectives = i;
+
+			if( quest_db_data[entry.id] == NULL )
+				quest_db_data[entry.id] = aMalloc(sizeof(struct quest_db));
+
+			memcpy(quest_db_data[entry.id], &entry, sizeof(struct quest_db));
+			count++;
 		}
-		if( str[0] == NULL )
-			continue;
-
-		memset(&entry, 0, sizeof(entry));
-
-		entry.id = atoi(str[0]);
-
-		if( entry.id < 0 || entry.id >= MAX_QUEST_DB ) {
-			ShowError("quest_read_db: Invalid quest ID '%d' in line '%s' (min: 0, max: %d.)\n", entry.id, line, MAX_QUEST_DB);
-			continue;
-		}
-
-		entry.time = atoi(str[1]);
-
-		for( i = 0; i < MAX_QUEST_OBJECTIVES; i++ ) {
-			entry.mob[i] = atoi(str[2 * i + 2]);
-			entry.count[i] = atoi(str[2 * i + 3]);
-
-			if( !entry.mob[i] || !entry.count[i] )
-				break;
-		}
-
-		entry.num_objectives = i;
-
-		if( quest_db_data[entry.id] == NULL )
-			quest_db_data[entry.id] = aMalloc(sizeof(struct quest_db));
-
-		memcpy(quest_db_data[entry.id], &entry, sizeof(struct quest_db));
-		count++;
+		fclose(fp);
+		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, filename);
 	}
 
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, "quest_db.txt");
 	return 0;
 }
 
