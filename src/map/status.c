@@ -873,6 +873,7 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_SPELLBOOK5] = SI_SPELLBOOK5;
 	StatusIconChangeTable[SC_SPELLBOOK6] = SI_SPELLBOOK6;
 	StatusIconChangeTable[SC_MAXSPELLBOOK] = SI_SPELLBOOK7;
+	StatusIconChangeTable[SC_FREEZE_SP] = SI_FREEZE_SP;
 
 	StatusIconChangeTable[SC_NEUTRALBARRIER_MASTER] = SI_NEUTRALBARRIER_MASTER;
 	StatusIconChangeTable[SC_STEALTHFIELD_MASTER] = SI_STEALTHFIELD_MASTER;
@@ -898,7 +899,6 @@ void initChangeTables(void)
 
 	StatusIconChangeTable[SC_CURSEDCIRCLE_ATKER] = SI_CURSEDCIRCLE_ATKER;
 
-	StatusIconChangeTable[SC_TEARGAS_SOB] = SI_BLANK;
 	StatusIconChangeTable[SC_STOMACHACHE] = SI_STOMACHACHE;
 	StatusIconChangeTable[SC_MYSTERIOUS_POWDER] = SI_MYSTERIOUS_POWDER;
 	StatusIconChangeTable[SC_MELON_BOMB] = SI_MELON_BOMB;
@@ -8051,13 +8051,15 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	case SC_LERADSDEW:
 	case SC_MELODYOFSINK:
 	case SC_BEYONDOFWARCRY:
-	case SC_UNLIMITEDHUMMINGVOICE: // Group B
+	case SC_UNLIMITEDHUMMINGVOICE:
+	case SC_SIRCLEOFNATURE: // Group B
 		if (type != SC_VOICEOFSIREN) status_change_end(bl, SC_VOICEOFSIREN, INVALID_TIMER);
 		if (type != SC_DEEPSLEEP) status_change_end(bl, SC_DEEPSLEEP, INVALID_TIMER);
 		if (type != SC_LERADSDEW) status_change_end(bl, SC_LERADSDEW, INVALID_TIMER);
 		if (type != SC_MELODYOFSINK) status_change_end(bl, SC_MELODYOFSINK, INVALID_TIMER);
 		if (type != SC_BEYONDOFWARCRY) status_change_end(bl, SC_BEYONDOFWARCRY, INVALID_TIMER);
 		if (type != SC_UNLIMITEDHUMMINGVOICE) status_change_end(bl, SC_UNLIMITEDHUMMINGVOICE, INVALID_TIMER);
+		if (type != SC_SIRCLEOFNATURE) status_change_end(bl, SC_SIRCLEOFNATURE, INVALID_TIMER);
 		if (type != SC_GLOOMYDAY) {
 			status_change_end(bl, SC_GLOOMYDAY, INVALID_TIMER);
 			status_change_end(bl, SC_GLOOMYDAY_SK, INVALID_TIMER);
@@ -8290,16 +8292,12 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = val1*20; // SP gained
 			break;
 		case SC_KYRIE:
-			if( sd )
-				val1 = min(val1,pc_checkskill(sd,PR_KYRIE)); // Use skill level to determine barrier health.
-			val2 = (int64)status->max_hp * (val1 * 2 + 10) / 100; // %Max HP to absorb
-			// val4 holds current amount of party members when casting Praefatio
-			// as Praefatio's barrier has more health and blocks more hits than Kyrie Elesion.
-			if( val4 < 1 ) // == PR_KYRIE
+			if( val4 ) { // Formulas for Praefatio
+				val2 = (status->max_hp * (val1 * 2 + 10) / 100) + val4 * 2; //%Max HP to absorb
+				val3 = 6 + val1; //Hits
+			} else { // Formulas for Kyrie Eleison
+				val2 = status->max_hp * (val1 * 2 + 10) / 100;
 				val3 = (val1 / 2 + 5);
-			else { // == AB_PRAEFATIO
-				val2 += val4 * 2; // Increase barrier strength per party member.
-				val3 = 6 + val1;
 			}
 			break;
 		case SC_MAGICPOWER:
@@ -8456,7 +8454,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			unit_stop_attack(bl);
 			break;
 		case SC_NOCHAT:
-			// !FIXME: is this correct? a hardcoded interval of 60sec? what about configuration ?_?
+			// A hardcoded interval of 60 seconds is expected, as the time that SC_NOCHAT uses is defined by
+			// mmocharstatus.manner, each negative point results in 1 minute with this status activated.
+			// This is done this way because the message that the client displays is hardcoded, and only
+			// shows how many minutes are remaining. [Panikon]
 			tick = 60000;
 			val1 = battle_config.manner_system; // Mute filters.
 			if (sd) {
@@ -9153,9 +9154,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val2 = 6 * val1; // AGI and DEX Reduction
 			val3 = 10 * val1; // Movement Speed Reduction
 			break;
-		case SC_READING_SB:
-			// val2 = sp reduction per second
-			tick_time = 5000; // [GodLesZ] tick time
+		case SC_FREEZE_SP:
+			// val2 = sp drain per 10 seconds
+			tick_time = 10000; // [GodLesZ] tick time
 			break;
 		case SC_SPHERE_1:
 		case SC_SPHERE_2:
@@ -11589,7 +11590,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		}
 		break;
 
-	case SC_READING_SB:
+	case SC_FREEZE_SP:
 		if( !status_charge(bl, 0, sce->val2) ) {
 			int i;
 			for(i = SC_SPELLBOOK1; i <= SC_MAXSPELLBOOK; i++) // Also remove stored spell as well.
@@ -12054,7 +12055,6 @@ void status_change_clear_buffs (struct block_list* bl, int type)
 			case SC_GLORYWOUNDS:
 			case SC_SOULCOLD:
 			case SC_HAWKEYES:
-			case SC_GUILDAURA:
 			case SC_SAFETYWALL:
 			case SC_PNEUMA:
 			case SC_NOCHAT:

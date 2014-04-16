@@ -399,9 +399,6 @@ int skill_unit_move_unit_group( struct skill_unit_group *group, int16 m,int16 dx
 
 struct skill_unit_group *skill_check_dancing( struct block_list *src );
 
-// Guild skills [celest]
-int skill_guildaura_sub (struct map_session_data* sd, int id, int strvit, int agidex);
-
 // Chant canceled
 int skill_castcancel(struct block_list *bl,int type);
 

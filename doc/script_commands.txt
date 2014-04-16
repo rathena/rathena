@@ -5131,6 +5131,11 @@ Examples:
 	// This will end the Freezing status for the invoking character.
 	sc_end SC_FREEZE;
 
+Note: to use SC_NOCHAT you should alter Manner
+	set Manner, -5;	// Will mute a user for 5 minutes
+	set Manner, 0;	// Will unmute a user
+	set Manner, 5;	// Will unmute a user and prevent the next use of 'Manner'
+
 ---------------------------------------
 
 *getstatus(<effect type>{,<type>})
