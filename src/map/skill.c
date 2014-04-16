@@ -8859,7 +8859,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 
-	case WL_FREEZE_SP:
+	case WL_READING_SB:
 		if( sd ) {
 			struct status_change *sc = status_get_sc(bl);
 
@@ -8867,7 +8867,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				if( sc && !sc->data[i] )
 					break;
 			if( i == SC_MAXSPELLBOOK ) {
-				clif_skill_fail(sd, WL_FREEZE_SP, USESKILL_FAIL_SPELLBOOK_READING, 0);
+				clif_skill_fail(sd, WL_READING_SB, USESKILL_FAIL_SPELLBOOK_READING, 0);
 				break;
 			}
 
@@ -18210,7 +18210,7 @@ int skill_spellbook (struct map_session_data *sd, int nameid) {
 
 	for(i=SC_SPELLBOOK1; i <= SC_MAXSPELLBOOK; i++) if( sc && !sc->data[i] ) break;
 	if( i > SC_MAXSPELLBOOK ) {
-		clif_skill_fail(sd, WL_FREEZE_SP, USESKILL_FAIL_SPELLBOOK_READING, 0);
+		clif_skill_fail(sd, WL_READING_SB, USESKILL_FAIL_SPELLBOOK_READING, 0);
 		return 0;
 	}
 
@@ -18218,8 +18218,8 @@ int skill_spellbook (struct map_session_data *sd, int nameid) {
 	if( i == MAX_SKILL_SPELLBOOK_DB ) return 0;
 
 	if( !pc_checkskill(sd, (skill_id = skill_spellbook_db[i].skill_id)) ) { // User don't know the skill
-		sc_start(&sd->bl,&sd->bl, SC_SLEEP, 100, 1, skill_get_time(WL_FREEZE_SP, pc_checkskill(sd,WL_FREEZE_SP)));
-		clif_skill_fail(sd, WL_FREEZE_SP, USESKILL_FAIL_SPELLBOOK_DIFFICULT_SLEEP, 0);
+		sc_start(&sd->bl,&sd->bl, SC_SLEEP, 100, 1, skill_get_time(WL_READING_SB, pc_checkskill(sd,WL_READING_SB)));
+		clif_skill_fail(sd, WL_READING_SB, USESKILL_FAIL_SPELLBOOK_DIFFICULT_SLEEP, 0);
 		return 0;
 	}
 
@@ -18228,7 +18228,7 @@ int skill_spellbook (struct map_session_data *sd, int nameid) {
 
 	if( sc && sc->data[SC_FREEZE_SP] ) {
 		if( (sc->data[SC_FREEZE_SP]->val2 + point) > max_preserve ) {
-			clif_skill_fail(sd, WL_FREEZE_SP, USESKILL_FAIL_SPELLBOOK_PRESERVATION_POINT, 0);
+			clif_skill_fail(sd, WL_READING_SB, USESKILL_FAIL_SPELLBOOK_PRESERVATION_POINT, 0);
 			return 0;
 		}
 		for(i = SC_MAXSPELLBOOK; i >= SC_SPELLBOOK1; i--){ // This is how official saves spellbook. [malufett]
