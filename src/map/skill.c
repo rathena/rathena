@@ -1619,7 +1619,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 					case SC_REFRESH:		case SC_STONEHARDSKIN:	case SC_VITALITYACTIVATION:
 					case SC_FIGHTINGSPIRIT:	case SC_ABUNDANCE:		case SC__SHADOWFORM:
 					case SC_LEADERSHIP:		case SC_GLORYWOUNDS:	case SC_SOULCOLD:
-					case SC_HAWKEYES:		case SC_GUILDAURA:		case SC_PUSH_CART:
+					case SC_HAWKEYES:		case SC_PUSH_CART:
 					case SC_RAISINGDRAGON:	case SC_GT_ENERGYGAIN:	case SC_GT_CHANGE:
 					case SC_GT_REVITALIZE:	case SC_REFLECTDAMAGE:	case SC_INSPIRATION:
 					case SC_EXEEDBREAK:		case SC_FORCEOFVANGUARD:	case SC_BANDING:
@@ -3376,24 +3376,6 @@ static int skill_check_unit_range2 (struct block_list *bl, int x, int y, uint16 
 		map_foreachinarea(npc_isnear_sub,bl->m,x - range,y - range,x + range,y + range,type,skill_id);
 }
 
-int skill_guildaura_sub (struct map_session_data* sd, int id, int strvit, int agidex)
-{
-	if(id == sd->bl.id && battle_config.guild_aura&16)
-		return 0;  // Do not affect guild leader
-
-	if (sd->sc.data[SC_GUILDAURA]) {
-		struct status_change_entry *sce = sd->sc.data[SC_GUILDAURA];
-		if( sce->val3 != strvit || sce->val4 != agidex ) {
-			sce->val3 = strvit;
-			sce->val4 = agidex;
-			status_calc_bl(&sd->bl, status_sc2scb_flag(SC_GUILDAURA));
-		}
-		return 0;
-	}
-	sc_start4(&sd->bl,&sd->bl, SC_GUILDAURA,100, 1, id, strvit, agidex, 1000);
-	return 1;
-}
-
 /*==========================================
  * Checks that you have the requirements for casting a skill for homunculus/mercenary.
  * Flag:
@@ -4191,49 +4173,48 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 #ifndef RENEWAL
 	case NJ_ISSEN:
-		status_change_end(src, SC_NEN, INVALID_TIMER);
-		status_change_end(src, SC_HIDING, INVALID_TIMER);
 #endif
-		// fall through
 	case MO_EXTREMITYFIST:
 		{
-			short x, y, i = 2; // Move 2 cells for Issen(from target)
-			struct block_list *mbl = bl;
-			short dir = 0;
+			struct block_list *mbl = bl; // For NJ_ISSEN
+			short x, y, i = 2; // Move 2 cells (From target)
+			short dir = map_calc_dir(src,bl->x,bl->y);
 
+			if (skill_id == MO_EXTREMITYFIST) {
+				mbl = src; // For MO_EXTREMITYFIST
+				i = 3; // Move 3 cells (From caster)
+			}
+			if (dir > 0 && dir < 4)
+				x = -i;
+			else if (dir > 4)
+				x = i;
+			else
+				x = 0;
+			if (dir > 2 && dir < 6)
+				y = -i;
+			else if (dir == 7 || dir < 2)
+				y = i;
+			else
+				y = 0;
+			// Ashura Strike still has slide effect in GVG
+			if ((mbl == src || (!map_flag_gvg2(src->m) && !map[src->m].flag.battleground)) &&
+				unit_movepos(src, mbl->x + x, mbl->y + y, 1, 1)) {
+				clif_slide(src, mbl->x + x, mbl->y + y);
+				clif_fixpos(src);
+				clif_spiritball(src);
+			}
 			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-
-			if( skill_id == MO_EXTREMITYFIST )
-			{
-				mbl = src;
-				i = 3; // for Asura(from caster)
+			if (skill_id == MO_EXTREMITYFIST) {
 				status_set_sp(src, 0, 0);
 				status_change_end(src, SC_EXPLOSIONSPIRITS, INVALID_TIMER);
 				status_change_end(src, SC_BLADESTOP, INVALID_TIMER);
 #ifdef RENEWAL
 				sc_start(src,src,SC_EXTREMITYFIST2,100,skill_lv,skill_get_time(skill_id,skill_lv));
 #endif
-			}else
-				status_set_hp(src,
-#ifdef RENEWAL
-				max(status_get_max_hp(src)/100, 1)
-#else
-				1
-#endif
-				, 0);
-
-			dir = map_calc_dir(src,bl->x,bl->y);
-			if( dir > 0 && dir < 4) x = -i;
-			else if( dir > 4 ) x = i;
-			else x = 0;
-			if( dir > 2 && dir < 6 ) y = -i;
-			else if( dir == 7 || dir < 2 ) y = i;
-			else y = 0;
-			if( (mbl == src || (!map_flag_gvg(src->m) && !map[src->m].flag.battleground) ) && // only NJ_ISSEN don't have slide effect in GVG
-				unit_movepos(src, mbl->x+x, mbl->y+y, 1, 1) ) {
-				clif_slide(src, src->x, src->y);
-				//uncomment this if you want to remove MO_EXTREMITYFIST glitchy walking effect. [malufett]
-				//clif_fixpos(src);
+			} else {
+				status_set_hp(src, 1, 0);
+				status_change_end(src, SC_NEN, INVALID_TIMER);
+				status_change_end(src, SC_HIDING, INVALID_TIMER);
 			}
 		}
 		break;
@@ -4627,34 +4608,36 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		skill_attack(BF_MISC,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 #ifdef RENEWAL
-	case NJ_ISSEN: // teleport for Issen
-		{
-			short x, y, i = 2; // Move 2 cells for Issen(from target)
-			struct block_list *mbl = bl;
-			short dir = 0;
+	case NJ_ISSEN: {
+		short x, y;
+		short dir = map_calc_dir(src, bl->x, bl->y);
 
-			status_change_end(src, SC_NEN, INVALID_TIMER);
-			status_change_end(src, SC_HIDING, INVALID_TIMER);
-
-			skill_attack(BF_MISC,src,src,bl,skill_id,skill_lv,tick,flag);
-
-			status_set_hp(src,max(status_get_max_hp(src)/100, 1),0);
-
-			dir = map_calc_dir(src,bl->x,bl->y);
-			if( dir > 0 && dir < 4) x = -i;
-			else if( dir > 4 ) x = i;
-			else x = 0;
-			if( dir > 2 && dir < 6 ) y = -i;
-			else if( dir == 7 || dir < 2 ) y = i;
-			else y = 0;
-			if( (mbl == src || (!map_flag_gvg(src->m) && !map[src->m].flag.battleground) ) && // only NJ_ISSEN don't have slide effect in GVG
-				unit_movepos(src, mbl->x+x, mbl->y+y, 1, 1) ) {
-				clif_slide(src, src->x, src->y);
-				//uncomment this if you want to remove MO_EXTREMITYFIST glitchy walking effect. [malufett]
-				//clif_fixpos(src);
-			}
+		// Move 2 cells (From target)
+		if (dir > 0 && dir < 4)
+			x = -2;
+		else if (dir > 4)
+			x = 2;
+		else
+			x = 0;
+		if (dir > 2 && dir < 6)
+			y = -2;
+		else if (dir == 7 || dir < 2)
+			y = 2;
+		else
+			y = 0;
+		// Doesn't have slide effect in GVG
+		if (!map_flag_gvg2(src->m) && !map[src->m].flag.battleground &&
+			unit_movepos(src, bl->x + x, bl->y + y, 1, 1)) {
+			clif_slide(src, bl->x + x, bl->y + y);
+			clif_fixpos(src);
+			clif_spiritball(src);
 		}
-		break;
+		skill_attack(BF_MISC, src, src, bl, skill_id, skill_lv, tick, flag);
+		status_set_hp(src, max(status_get_max_hp(src) / 100, 1), 0);
+		status_change_end(src, SC_NEN, INVALID_TIMER);
+		status_change_end(src, SC_HIDING, INVALID_TIMER);
+	}
+	break;
 #endif
 	/**
 	 * Rune Knight
@@ -4877,7 +4860,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		{
 			int i;
 			// Priority is to release SpellBook
-			if( sc && sc->data[SC_READING_SB] )
+			if( sc && sc->data[SC_FREEZE_SP] )
 			{ // SpellBook
 				uint16 skill_id, skill_lv, point, s = 0;
 				int spell[SC_MAXSPELLBOOK-SC_SPELLBOOK1 + 1];
@@ -4898,10 +4881,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				}else //something went wrong :(
 					break;
 
-				if( sc->data[SC_READING_SB]->val2 > point )
-					sc->data[SC_READING_SB]->val2 -= point;
+				if( sc->data[SC_FREEZE_SP]->val2 > point )
+					sc->data[SC_FREEZE_SP]->val2 -= point;
 				else // Last spell to be released
-					status_change_end(src, SC_READING_SB, INVALID_TIMER);
+					status_change_end(src, SC_FREEZE_SP, INVALID_TIMER);
 
 				if( bl->type != BL_SKILL ) /* skill types will crash the client */
 					clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
@@ -7200,7 +7183,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				case SC_REFRESH:		case SC_STONEHARDSKIN:	case SC_VITALITYACTIVATION:
 				case SC_FIGHTINGSPIRIT:	case SC_ABUNDANCE:		case SC__SHADOWFORM:
 				case SC_LEADERSHIP:		case SC_GLORYWOUNDS:	case SC_SOULCOLD:
-				case SC_HAWKEYES:		case SC_GUILDAURA:		case SC_PUSH_CART:
+				case SC_HAWKEYES:		case SC_PUSH_CART:
 				case SC_RAISINGDRAGON:	case SC_GT_ENERGYGAIN:	case SC_GT_CHANGE:
 				case SC_GT_REVITALIZE:	case SC_REFLECTDAMAGE:	case SC_INSPIRATION:
 				case SC_EXEEDBREAK:		case SC_FORCEOFVANGUARD:	case SC_BANDING:
@@ -8066,7 +8049,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			uint8 j = 0, calls = 0, called = 0;
 			struct guild *g;
 			// i don't know if it actually summons in a circle, but oh well. ;P
-			g = sd?sd->state.gmaster_flag:guild_search(status_get_guild_id(src));
+			g = sd?sd->guild:guild_search(status_get_guild_id(src));
 			if (!g)
 				break;
 
@@ -8553,7 +8536,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case AB_PRAEFATIO:
 		if( sd == NULL || sd->status.party_id == 0 || flag&1 )
-			clif_skill_nodamage(bl, bl, skill_id, skill_lv, sc_start4(src,bl, type, 100, skill_lv, 0, 0, 1, skill_get_time(skill_id, skill_lv)));
+			clif_skill_nodamage(bl, bl, skill_id, skill_lv, sc_start4(src, bl, type, 100, skill_lv, 0, 0, ( sd->status.party_id ? party_foreachsamemap(party_sub_count, sd, 0) : 1 ), skill_get_time(skill_id, skill_lv)));
 		else if( sd )
 			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
 		break;
@@ -8561,10 +8544,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case AB_CHEAL:
 		if( sd == NULL || sd->status.party_id == 0 || flag&1 ) {
 			if( sd && tstatus && !battle_check_undead(tstatus->race, tstatus->def_ele) && !tsc->data[SC_BERSERK] ) {
+				int partycount = ( sd->status.party_id ? party_foreachsamemap(party_sub_count, sd, 0) : 0 );
+
 				i = skill_calc_heal(src, bl, AL_HEAL, pc_checkskill(sd, AL_HEAL), true);
 
+				if( partycount > 1 )
+					i += (i / 100) * (partycount * 10) / 4;
 				if( (dstsd && pc_ismadogear(dstsd)) || status_isimmune(bl))
-						i = 0; // Should heal by 0 or won't do anything?? in iRO it breaks the healing to members.. [malufett]
+					i = 0; // Should heal by 0 or won't do anything?? in iRO it breaks the healing to members.. [malufett]
 
 				clif_skill_nodamage(bl, bl, skill_id, i, 1);
 				if( tsc && tsc->data[SC_AKAITSUKI] && i )
@@ -8690,7 +8677,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				case SC_NEUTRALBARRIER_MASTER: case SC_NEUTRALBARRIER:
 				case SC_STEALTHFIELD_MASTER: case SC_STEALTHFIELD:
 				case SC_LEADERSHIP:		case SC_GLORYWOUNDS:	case SC_SOULCOLD:
-				case SC_HAWKEYES:		case SC_GUILDAURA:	case SC_PUSH_CART:
+				case SC_HAWKEYES:		case SC_PUSH_CART:
 				case SC_PARTYFLEE:		case SC_GT_REVITALIZE:
 				case SC_RAISINGDRAGON:	case SC_GT_ENERGYGAIN:	case SC_GT_CHANGE:
 				case SC_ANGEL_PROTECT: case SC_MONSTER_TRANSFORM:
@@ -14196,7 +14183,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			sd->spiritball_old = require.spiritball = sd->spiritball;
 			break;
 		case LG_RAYOFGENESIS:
-			if( sc && sc->data[SC_INSPIRATION]  )
+			if( sc && sc->data[SC_INSPIRATION] )
 				return true;	// Don't check for partner.
 			if( !(sc && sc->data[SC_BANDING]) ) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL,0);
@@ -14205,7 +14192,9 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				return false; // Just fails, no msg here.
 			break;
 		case LG_HESPERUSLIT:
-			if( !sc || !sc->data[SC_BANDING] ) {
+			if( sc && sc->data[SC_INSPIRATION] )
+				return true;
+			if( sc && sc->data[SC_BANDING] && sc->data[SC_BANDING]->val2 < 3 ) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				return false;
 			}
@@ -15268,14 +15257,14 @@ int skill_vfcastfix (struct block_list *bl, double time, uint16 skill_id, uint16
 		// Fixed cast non percentage bonuses
 		if( sc->data[SC_MANDRAGORA] )
 			fixed += sc->data[SC_MANDRAGORA]->val1 * 1000 / 2;
-		if (sc->data[SC_IZAYOI]  && (skill_id >= NJ_TOBIDOUGU && skill_id <= NJ_ISSEN))
-			fixed = 0;
 		if( sc->data[SC_GUST_OPTION] || sc->data[SC_BLAST_OPTION] || sc->data[SC_WILD_STORM_OPTION] )
 			fixed -= 1000;
 		if (sc->data[SC_DANCEWITHWUG])
 			fixed -= fixed * sc->data[SC_DANCEWITHWUG]->val4 / 100;
 		if( sc->data[SC_HEAT_BARREL] )
 			fixcast_r = max(fixcast_r, sc->data[SC_HEAT_BARREL]->val2);
+		if (sc->data[SC_IZAYOI])
+			fixed = 0;
 	}
 
 	if( sd && !(skill_get_castnodex(skill_id, skill_lv)&4) ){
@@ -18239,22 +18228,25 @@ int skill_spellbook (struct map_session_data *sd, int nameid) {
 	max_preserve = 4 * pc_checkskill(sd, WL_FREEZE_SP) + status_get_int(&sd->bl) / 10 + sd->status.base_level / 10;
 	point = skill_spellbook_db[i].point;
 
-	if( sc && sc->data[SC_READING_SB] ) {
-		if( (sc->data[SC_READING_SB]->val2 + point) > max_preserve ) {
+	if( sc && sc->data[SC_FREEZE_SP] ) {
+		if( (sc->data[SC_FREEZE_SP]->val2 + point) > max_preserve ) {
 			clif_skill_fail(sd, WL_READING_SB, USESKILL_FAIL_SPELLBOOK_PRESERVATION_POINT, 0);
 			return 0;
 		}
 		for(i = SC_MAXSPELLBOOK; i >= SC_SPELLBOOK1; i--){ // This is how official saves spellbook. [malufett]
 			if( !sc->data[i] ){
-				sc->data[SC_READING_SB]->val2 += point; // increase points
+				sc->data[SC_FREEZE_SP]->val2 += point; // increase points
 				sc_start4(&sd->bl,&sd->bl, (sc_type)i, 100, skill_id, pc_checkskill(sd,skill_id), point, 0, INVALID_TIMER);
 				break;
 			}
 		}
 	} else {
-		sc_start2(&sd->bl,&sd->bl, SC_READING_SB, 100, 0, point, INVALID_TIMER);
+		sc_start2(&sd->bl,&sd->bl, SC_FREEZE_SP, 100, 0, point, INVALID_TIMER);
 		sc_start4(&sd->bl,&sd->bl, SC_MAXSPELLBOOK, 100, skill_id, pc_checkskill(sd,skill_id), point, 0, INVALID_TIMER);
 	}
+
+	// Reading Spell Book SP cost same as the sealed spell.
+	status_zap(&sd->bl, 0, skill_get_sp(skill_id, pc_checkskill(sd, skill_id)));
 
 	return 1;
 }

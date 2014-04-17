@@ -2310,6 +2310,10 @@ static int battle_get_weapon_element(struct Damage wd, struct block_list *src, s
 			if (!sd)
 				element = ELE_NEUTRAL; //forced neutral for monsters
 			break;
+		case LG_HESPERUSLIT:
+			if (sc && sc->data[SC_BANDING] && sc->data[SC_BANDING]->val2 > 4)
+				element = ELE_HOLY;
+			break;
 		case RL_H_MINE:
 			if (sd && sd->skill_id_old == RL_FLICKER) //Force RL_H_MINE deals fire damage if activated by RL_FLICKER
 				element = ELE_FIRE;
@@ -2608,7 +2612,7 @@ struct Damage battle_calc_skill_base_damage(struct Damage wd, struct block_list 
 			}
 #else
 		case NJ_ISSEN:
-			wd.damage = (40 * sstatus->str) + (8 / 100 * skill_lv * sstatus->hp);
+			wd.damage = (40 * sstatus->str) + (8 * skill_lv / 100 * sstatus->hp);
 			wd.damage2 = 0;
 			break;
 		case LK_SPIRALPIERCE:
@@ -3457,11 +3461,11 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			skillratio = 120 * skill_lv;
 			if( sc && sc->data[SC_BANDING] )
 				skillratio += 200 * sc->data[SC_BANDING]->val2;
+			RE_LVL_DMOD(100);
 			if( sc && sc->data[SC_BANDING] && sc->data[SC_BANDING]->val2 > 5 )
 				skillratio = skillratio * 150 / 100;
 			if( sc && sc->data[SC_INSPIRATION] )
 				skillratio += 600;
-			RE_LVL_DMOD(100);
 			break;
 		case SR_DRAGONCOMBO:
 			skillratio += 40 * skill_lv;
@@ -5995,16 +5999,16 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		md.damage = 0;
 	else if(md.damage && tstatus->mode&MD_PLANT){
 		switch(skill_id){
+			case NJ_ISSEN: // Final Strike will MISS on "plant"-type mobs [helvetica]
+				md.damage = 0;
+				md.dmg_lv = ATK_FLEE;
+				break;
 			case HT_LANDMINE:
 			case MA_LANDMINE:
 			case HT_BLASTMINE:
 			case HT_CLAYMORETRAP:
 			case RA_CLUSTERBOMB:
 #ifdef RENEWAL
-				break;
-			case NJ_ISSEN: // Final Strike will MISS on "plant"-type mobs [helvetica]
-				md.damage = 0;
-				md.dmg_lv=ATK_FLEE;
 				break;
 #endif
 			default:
@@ -7564,6 +7568,7 @@ static const struct _battle_data {
 	{ "taekwon_mission_mobname",            &battle_config.taekwon_mission_mobname,         0,      0,      2,              },
 	{ "teleport_on_portal",                 &battle_config.teleport_on_portal,              0,      0,      1,              },
 	{ "cart_revo_knockback",                &battle_config.cart_revo_knockback,             1,      0,      1,              },
+	{ "guild_notice_changemap",             &battle_config.guild_notice_changemap,          2,      0,      2,              },
 };
 #ifndef STATS_OPT_OUT
 /**

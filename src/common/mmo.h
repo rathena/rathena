@@ -341,7 +341,7 @@ struct mmo_charstatus {
 	unsigned int status_point,skill_point;
 	int hp,max_hp,sp,max_sp;
 	unsigned int option;
-	short manner;
+	short manner; // Defines how many minutes a char will be muted, each negative point is equivalent to a minute.
 	unsigned char karma;
 	short hair,hair_color,clothes_color;
 	int party_id,guild_id,pet_id,hom_id,mer_id,ele_id;

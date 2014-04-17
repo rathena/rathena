@@ -7267,10 +7267,10 @@ void pc_revive(struct map_session_data *sd,unsigned int hp, unsigned int sp) {
 		pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
 
 	if( sd->state.gmaster_flag ) {
-		guild_guildaura_refresh(sd,GD_LEADERSHIP,guild_checkskill(sd->state.gmaster_flag,GD_LEADERSHIP));
-		guild_guildaura_refresh(sd,GD_GLORYWOUNDS,guild_checkskill(sd->state.gmaster_flag,GD_GLORYWOUNDS));
-		guild_guildaura_refresh(sd,GD_SOULCOLD,guild_checkskill(sd->state.gmaster_flag,GD_SOULCOLD));
-		guild_guildaura_refresh(sd,GD_HAWKEYES,guild_checkskill(sd->state.gmaster_flag,GD_HAWKEYES));
+		guild_guildaura_refresh(sd,GD_LEADERSHIP,guild_checkskill(sd->guild,GD_LEADERSHIP));
+		guild_guildaura_refresh(sd,GD_GLORYWOUNDS,guild_checkskill(sd->guild,GD_GLORYWOUNDS));
+		guild_guildaura_refresh(sd,GD_SOULCOLD,guild_checkskill(sd->guild,GD_SOULCOLD));
+		guild_guildaura_refresh(sd,GD_HAWKEYES,guild_checkskill(sd->guild,GD_HAWKEYES));
 	}
 }
 // script
@@ -7547,7 +7547,13 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 		break;
 	case SP_MANNER:
 		sd->status.manner = val;
-		break;
+		if( val < 0 )
+			sc_start(NULL, &sd->bl, SC_NOCHAT, 100, 0, 0);
+		else {
+			status_change_end(&sd->bl, SC_NOCHAT, INVALID_TIMER);
+			clif_manner_message(sd, 5);
+		}
+		return true; // status_change_start/status_change_end already sends packets warning the client
 	case SP_FAME:
 		sd->status.fame = val;
 		break;

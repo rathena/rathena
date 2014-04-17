@@ -538,6 +538,7 @@ extern struct Battle_Config
 	int taekwon_mission_mobname;
 	int teleport_on_portal;
 	int cart_revo_knockback;
+	int guild_notice_changemap;
 } battle_config;
 
 void do_init_battle(void);

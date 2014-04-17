@@ -392,7 +392,7 @@ typedef enum sc_type {
 	SC_SPHERE_4,//340
 	SC_SPHERE_5,
 	SC_READING_SB,
-	SC_FREEZINGSPELL,
+	SC_FREEZE_SP,
 	/**
 	 * Ranger
 	 **/

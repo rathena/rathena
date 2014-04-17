@@ -7505,7 +7505,7 @@ void clif_guild_belonginfo(struct map_session_data *sd, struct guild *g)
 	WFIFOL(fd,2)=g->guild_id;
 	WFIFOL(fd,6)=g->emblem_id;
 	WFIFOL(fd,10)=g->position[ps].mode;
-	WFIFOB(fd,14)=(bool)(sd->state.gmaster_flag==g);
+	WFIFOB(fd,14)=(bool)(sd->state.gmaster_flag==1);
 	WFIFOL(fd,15)=0;  // InterSID (unknown purpose)
 	memcpy(WFIFOP(fd,19),g->name,NAME_LENGTH);
 	WFIFOSET(fd,packet_len(0x16c));
@@ -9472,6 +9472,7 @@ void clif_parse_WantToConnection(int fd, struct map_session_data* sd)
 void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 {
 	int i;
+	bool guild_notice = false;
 
 	if(sd->bl.prev != NULL)
 		return;
@@ -9624,6 +9625,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	if(sd->state.connect_new) {
 		int lv;
+		guild_notice = true;
 		sd->state.connect_new = 0;
 		clif_skillinfoblock(sd);
 		clif_hotkeys_send(sd);
@@ -9640,6 +9642,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			clif_status_load(&sd->bl, SI_RIDING, 1);
 		else if (sd->sc.option&OPTION_WUGRIDER)
 			clif_status_load(&sd->bl, SI_WUGRIDER, 1);
+		else if (sd->sc.data[SC_ALL_RIDING])
+			clif_status_load(&sd->bl, SI_ALL_RIDING, 1);
 
 		if(sd->status.manner < 0)
 			sc_start(&sd->bl,&sd->bl,SC_NOCHAT,100,0,0);
@@ -9700,6 +9704,10 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			//clif_vip_display_info(sd,ZC_PERSONAL_INFOMATION_CHN);
 		}
 #endif
+
+		if (sd->guild && battle_config.guild_notice_changemap == 1)
+			clif_guild_notice(sd, sd->guild); // Displays after VIP
+
 		if( (battle_config.bg_flee_penalty != 100 || battle_config.gvg_flee_penalty != 100) &&
 			(map_flag_gvg(sd->state.pmap) || map_flag_gvg(sd->bl.m) || map[sd->state.pmap].flag.battleground || map[sd->bl.m].flag.battleground) )
 			status_calc_bl(&sd->bl, SCB_FLEE); //Refresh flee penalty
@@ -9742,10 +9750,11 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		sd->state.changemap = false;
 
 		// Instances do not need their own channels
-		if( Channel_Config.map_enable && Channel_Config.map_autojoin && !map[sd->bl.m].flag.chmautojoin && !map[sd->bl.m].instance_id ) {
+		if( Channel_Config.map_enable && Channel_Config.map_autojoin && !map[sd->bl.m].flag.chmautojoin && !map[sd->bl.m].instance_id )
 			channel_mjoin(sd); //join new map
-		}
-	}
+	} else if (sd->guild && (battle_config.guild_notice_changemap == 2 || guild_notice))
+		clif_guild_notice(sd, sd->guild); // Displays at end
+
 
 	mail_clear(sd);
 
@@ -9753,10 +9762,10 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	/* Guild Aura Init */
 	if( sd->state.gmaster_flag ) {
-		guild_guildaura_refresh(sd,GD_LEADERSHIP,guild_checkskill(sd->state.gmaster_flag,GD_LEADERSHIP));
-		guild_guildaura_refresh(sd,GD_GLORYWOUNDS,guild_checkskill(sd->state.gmaster_flag,GD_GLORYWOUNDS));
-		guild_guildaura_refresh(sd,GD_SOULCOLD,guild_checkskill(sd->state.gmaster_flag,GD_SOULCOLD));
-		guild_guildaura_refresh(sd,GD_HAWKEYES,guild_checkskill(sd->state.gmaster_flag,GD_HAWKEYES));
+		guild_guildaura_refresh(sd,GD_LEADERSHIP,guild_checkskill(sd->guild,GD_LEADERSHIP));
+		guild_guildaura_refresh(sd,GD_GLORYWOUNDS,guild_checkskill(sd->guild,GD_GLORYWOUNDS));
+		guild_guildaura_refresh(sd,GD_SOULCOLD,guild_checkskill(sd->guild,GD_SOULCOLD));
+		guild_guildaura_refresh(sd,GD_HAWKEYES,guild_checkskill(sd->guild,GD_HAWKEYES));
 	}
 
 	if( sd->state.vending ) { /* show we have a vending */
@@ -11275,8 +11284,15 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 #endif
 	}
 
-	if( (pc_cant_act2(sd) || sd->chatID) && skill_id != RK_REFRESH && !(skill_id == SR_GENTLETOUCH_CURE && (sd->sc.opt1 == OPT1_STONE || sd->sc.opt1 == OPT1_FREEZE || sd->sc.opt1 == OPT1_STUN)) )
+	if( (pc_cant_act2(sd) || sd->chatID) && skill_id != RK_REFRESH && !(skill_id == SR_GENTLETOUCH_CURE &&
+		(sd->sc.opt1 == OPT1_STONE || sd->sc.opt1 == OPT1_FREEZE || sd->sc.opt1 == OPT1_STUN)) &&
+		sd->state.storage_flag && !(tmp&INF_SELF_SKILL) ) //SELF skills can be used with the storage open, issue: 8027
 		return;
+
+	//Some self skills need to close the storage to work properly
+	if( skill_id == AL_TELEPORT && sd->state.storage_flag )
+		storage_storageclose(sd);
+
 	if( pc_issit(sd) )
 		return;
 
@@ -11324,7 +11340,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 
 	if( skill_id >= GD_SKILLBASE ) {
 		if( sd->state.gmaster_flag )
-			skill_lv = guild_checkskill(sd->state.gmaster_flag, skill_id);
+			skill_lv = guild_checkskill(sd->guild, skill_id);
 		else
 			skill_lv = 0;
 	} else {
