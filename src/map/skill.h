@@ -150,8 +150,8 @@ struct s_skill_require {
 
 /// Database skills
 struct s_skill_db {
-	char name[NAME_LENGTH];
-	char desc[40];
+	char name[SKILL_NAME_LENGTH];
+	char desc[SKILL_DESC_LENGTH];
 	int range[MAX_SKILL_LEVEL],hit,inf,element[MAX_SKILL_LEVEL],nk,splash[MAX_SKILL_LEVEL],max;
 	int num[MAX_SKILL_LEVEL];
 	int cast[MAX_SKILL_LEVEL],walkdelay[MAX_SKILL_LEVEL],delay[MAX_SKILL_LEVEL];
@@ -311,7 +311,7 @@ const char*	skill_get_desc( uint16 skill_id ); 	// [Skotlex]
 int skill_tree_get_max( uint16 skill_id, int b_class );	// Celest
 
 // Accessor to the skills database
-int skill_get_index( uint16 skill_id );
+uint16 skill_get_index( uint16 skill_id );
 int skill_get_type( uint16 skill_id );
 int skill_get_hit( uint16 skill_id );
 int skill_get_inf( uint16 skill_id );
@@ -357,7 +357,7 @@ int skill_get_spiritball( uint16 skill_id, uint16 skill_lv );
 int skill_get_itemid( uint16 skill_id, int idx );
 int skill_get_itemqty( uint16 skill_id, int idx );
 
-int skill_name2id(const char* name);
+uint16 skill_name2id(const char* name);
 
 int skill_isammotype(struct map_session_data *sd, int skill);
 int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data);

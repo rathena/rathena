@@ -11241,7 +11241,7 @@ BUILDIN_FUNC(getmapflag)
 						case 2: ret_val = map[m].adjust.damage.mob; break;
 						case 3: ret_val = map[m].adjust.damage.boss; break;
 						case 4: ret_val = map[m].adjust.damage.other; break;
-						case 5: ret_val = map[m].adjust.damage.caster; break;
+						case 5: ret_val = map[m].adjust.damage.src; break;
 						default: ret_val = map[m].flag.skill_damage; break;
 					}
 					script_pushint(st,ret_val); break;
@@ -11364,7 +11364,7 @@ BUILDIN_FUNC(setmapflag)
 						case 2: map[m].adjust.damage.mob = val; break;
 						case 3: map[m].adjust.damage.boss = val; break;
 						case 4: map[m].adjust.damage.other = val; break;
-						case 5: map[m].adjust.damage.caster = val; break;
+						case 5: map[m].adjust.damage.src = val; break;
 					}
 					map[m].flag.skill_damage = 1;
 				} break;
@@ -11469,7 +11469,8 @@ BUILDIN_FUNC(removemapflag)
 			case MF_SKILL_DAMAGE:
 				{
 					map[m].flag.skill_damage = 0;
-					memset(&map[m].adjust.damage,0,sizeof(map[m].adjust.damage));
+					memset(map[m].skill_damage, 0, sizeof(map[m].skill_damage));
+					memset(&map[m].adjust.damage, 0, sizeof(map[m].adjust.damage));
 				} break;
 #endif
 		}

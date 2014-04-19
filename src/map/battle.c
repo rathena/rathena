@@ -1694,36 +1694,43 @@ static int battle_blewcount_bonus(struct map_session_data *sd, uint16 skill_id)
  * battle_skill_damage_map() - map based
  *------------------------------------------*/
 #ifdef ADJUST_SKILL_DAMAGE
-static bool battle_skill_damage_iscaster(uint8 caster, enum bl_type type)
-{
-	if (caster == 0)
+/** Checking caster type for skill damage adjustment
+* @param src Caster type of skill
+* @param caster_type Caster object's type that casts the skill (bl_type)
+*/
+static bool battle_skill_damage_isCaster(uint8 src, enum bl_type caster_type) {
+	if (!src)
 		return false;
 
-	while (1) {
-		if (caster&SDC_PC && type == BL_PC) break;
-		if (caster&SDC_MOB && type == BL_MOB) break;
-		if (caster&SDC_PET && type == BL_PET) break;
-		if (caster&SDC_HOM && type == BL_HOM) break;
-		if (caster&SDC_MER && type == BL_MER) break;
-		if (caster&SDC_ELEM && type == BL_ELEM) break;
-		return false;
+	switch (caster_type) {
+		case BL_PC: if (src&SDC_PC) return true;
+		case BL_MOB: if (src&SDC_MOB) return true;
+		case BL_PET: if (src&SDC_PET) return true;
+		case BL_HOM: if (src&SDC_HOM) return true;
+		case BL_MER: if (src&SDC_MER) return true;
+		case BL_ELEM: if (src&SDC_ELEM) return true;
 	}
-	return true;
+
+	return false;
 }
 
-static int battle_skill_damage_skill(struct block_list *src, struct block_list *target, uint16 skill_id)
-{
-	unsigned short m = src->m;
-	int idx;
+/** Gets skill damage rate from a skill (based on skill_damage_db.txt)
+* @param src
+* @param target
+* @param skill_id
+* @return Skill damage rate
+*/
+static int battle_skill_damage_skill(struct block_list *src, struct block_list *target, uint16 skill_id) {
+	uint16 idx = skill_get_index(skill_id), m = src->m;
 	struct s_skill_damage *damage = NULL;
 
-	if ((idx = skill_get_index(skill_id)) < 0 || !skill_db[idx].damage.map)
+	if (!idx || !skill_db[idx].damage.map)
 		return 0;
 
 	damage = &skill_db[idx].damage;
 
 	//check the adjustment works for specified type
-	if (!battle_skill_damage_iscaster(damage->caster,src->type))
+	if (!battle_skill_damage_isCaster(damage->src, src->type))
 		return 0;
 
 	if ((damage->map&1 && (!map[m].flag.pvp && !map_flag_gvg(m) && !map[m].flag.battleground && !map[m].flag.skill_damage && !map[m].flag.restricted)) ||
@@ -1745,12 +1752,16 @@ static int battle_skill_damage_skill(struct block_list *src, struct block_list *
 				return damage->other;
 		}
 	}
-
 	return 0;
 }
 
-static int battle_skill_damage_map(struct block_list *src, struct block_list *target, uint16 skill_id)
-{
+/** Gets skill damage rate from a skill (based on 'skill_damage' mapflag)
+* @param src
+* @param target
+* @param skill_id
+* @return Skill damage rate
+*/
+static int battle_skill_damage_map(struct block_list *src, struct block_list *target, uint16 skill_id) {
 	int rate = 0;
 	uint16 m = src->m;
 	uint8 i;
@@ -1758,8 +1769,8 @@ static int battle_skill_damage_map(struct block_list *src, struct block_list *ta
 	if (!map[m].flag.skill_damage)
 		return 0;
 
-	/* modifier for all skills */
-	if (battle_skill_damage_iscaster(map[m].adjust.damage.caster,src->type)) {
+	// Damage rate for all skills at this map
+	if (battle_skill_damage_isCaster(map[m].adjust.damage.src, src->type)) {
 		switch (target->type) {
 			case BL_PC:
 				rate = map[m].adjust.damage.pc;
@@ -1776,10 +1787,10 @@ static int battle_skill_damage_map(struct block_list *src, struct block_list *ta
 		}
 	}
 
-	/* modifier for specified map */
-	ARR_FIND(0,MAX_MAP_SKILL_MODIFIER,i,map[m].skill_damage[i].skill_id == skill_id);
-	if (i < MAX_MAP_SKILL_MODIFIER) {
-		if (battle_skill_damage_iscaster(map[m].skill_damage[i].caster,src->type)) {
+	// Damage rate for specified skill at this map
+	ARR_FIND(0, ARRAYLENGTH(map[m].skill_damage), i, map[m].skill_damage[i].skill_id == skill_id);
+	if (i < ARRAYLENGTH(map[m].skill_damage)) {
+		if (battle_skill_damage_isCaster(map[m].skill_damage[i].src, src->type)) {
 			switch (target->type) {
 				case BL_PC:
 					rate += map[m].skill_damage[i].pc;
@@ -1799,11 +1810,16 @@ static int battle_skill_damage_map(struct block_list *src, struct block_list *ta
 	return rate;
 }
 
-static int battle_skill_damage(struct block_list *src, struct block_list *target, uint16 skill_id)
-{
+/** Check skill damage adjustment based on mapflags and skill_damage_db.txt for specified skill
+* @param src
+* @param target
+* @param skill_id
+* @return Total damage rate
+*/
+static int battle_skill_damage(struct block_list *src, struct block_list *target, uint16 skill_id) {
 	if (!target)
 		return 0;
-	return battle_skill_damage_skill(src,target,skill_id) + battle_skill_damage_map(src,target,skill_id);
+	return min(battle_skill_damage_skill(src,target,skill_id) + battle_skill_damage_map(src,target,skill_id), INT_MAX);
 }
 #endif
 
@@ -4436,7 +4452,7 @@ struct Damage battle_calc_weapon_final_atk_modifiers(struct Damage wd, struct bl
 #endif
 	}
 
-	/* Skill damage adjustment */
+	// Skill damage adjustment
 #ifdef ADJUST_SKILL_DAMAGE
 	if ((skill_damage = battle_skill_damage(src, target, skill_id)) != 0)
 		ATK_ADDRATE(wd.damage, wd.damage2, skill_damage);
@@ -5652,7 +5668,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		//case HM_ERASER_CUTTER:
 	}
 
-	/* Skill damage adjustment */
+	// Skill damage adjustment
 #ifdef ADJUST_SKILL_DAMAGE
 	if ((skill_damage = battle_skill_damage(src,target,skill_id)) != 0)
 		MATK_ADDRATE(skill_damage);
@@ -6049,7 +6065,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		break;
 	}
 
-	/* Skill damage adjustment */
+	// Skill damage adjustment
 #ifdef ADJUST_SKILL_DAMAGE
 	if ((skill_damage = battle_skill_damage(src,target,skill_id)) != 0)
 		md.damage += (int64)md.damage * skill_damage / 100;

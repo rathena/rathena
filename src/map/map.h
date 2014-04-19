@@ -575,7 +575,7 @@ struct s_skill_damage {
 		mob,
 		boss,
 		other;
-	uint8 caster;	/* caster type */
+	uint8 src;	/// caster type: 1- Player, 2 - Monster, 4 - Pet, 8 - Homunculus, 16 - Mercenary, 32 - Elemental
 };
 #define MAX_MAP_SKILL_MODIFIER 5
 #endif

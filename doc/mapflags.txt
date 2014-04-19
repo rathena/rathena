@@ -299,7 +299,7 @@ This mapflag can also be used to adjust the damage of one skill by a percentage:
 	 8 = Homunculus
 	16 = Mercenary
 	32 = Elemental
- - damage: percent adjustment rate (between -100 and 100000).
+ - damage: percent adjustment rate (between -100 and INT_MAX).
 	1 = against player
 	2 = against normal monster
 	3 = against boss monster

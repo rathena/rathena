@@ -562,10 +562,10 @@ int elemental_unlocktarget(struct elemental_data *ed) {
 }
 
 bool elemental_skillnotok(uint16 skill_id, struct elemental_data *ed) {
-	int16 idx;
+	uint16 idx = skill_get_index(skill_id);
 	nullpo_retr(true,ed);
 
-	if ((idx = skill_get_index(skill_id)) < 0)
+	if (!idx)
 		return true; // invalid skill id
 
 	return skill_isNotOk(skill_id,ed->master);
@@ -573,11 +573,11 @@ bool elemental_skillnotok(uint16 skill_id, struct elemental_data *ed) {
 
 struct skill_condition elemental_skill_get_requirements(uint16 skill_id, uint16 skill_lv){
 	struct skill_condition req;
-	int16 idx;
+	uint16 idx = skill_get_index(skill_id);
 
 	memset(&req,0,sizeof(req));
 
-	if( (idx = skill_get_index(skill_id)) < 0 ) // invalid skill id
+	if( !idx ) // invalid skill id
   		return req;
 	
 	cap_value(skill_lv,1,MAX_SKILL_LEVEL);

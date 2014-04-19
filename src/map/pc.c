@@ -5197,9 +5197,9 @@ int pc_get_skillcooldown(struct map_session_data *sd, uint16 skill_id, uint16 sk
 	int i, cooldown = 0;
 	uint8 cooldownlen = ARRAYLENGTH(sd->skillcooldown);
 	
-	if (skill_get_index (skill_id) < 0) return 0;
+	if (!skill_get_index(skill_id))
+		return 0;
 	cooldown = skill_get_cooldown(skill_id, skill_lv);
-
 	ARR_FIND(0, cooldownlen, i, sd->skillcooldown[i].id == skill_id);
 	if (i < cooldownlen) {
 		cooldown += sd->skillcooldown[i].val;

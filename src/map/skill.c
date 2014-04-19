@@ -126,7 +126,7 @@ static inline int splash_target(struct block_list* bl) {
 }
 
 /// Returns the id of the skill, or 0 if not found.
-int skill_name2id(const char* name) {
+uint16 skill_name2id(const char* name) {
 	if( name == NULL )
 		return 0;
 
@@ -135,7 +135,7 @@ int skill_name2id(const char* name) {
 
 /// Maps skill ids to skill db offsets.
 /// Returns the skill's array index, or 0 (Unknown Skill).
-int skill_get_index( uint16 skill_id ) {
+uint16 skill_get_index( uint16 skill_id ) {
 	// avoid ranges reserved for mapping guild/homun/mercenary skills
 	if( (skill_id >= GD_SKILLRANGEMIN && skill_id <= GD_SKILLRANGEMAX)
 	||  (skill_id >= HM_SKILLRANGEMIN && skill_id <= HM_SKILLRANGEMAX)
@@ -161,15 +161,15 @@ int skill_get_index( uint16 skill_id ) {
 }
 
 const char* skill_get_name( uint16 skill_id ) {
-	int16 idx = skill_get_index(skill_id);
-	if (idx < 0)
+	uint16 idx = skill_get_index(skill_id);
+	if (!idx)
 		return "UNKNOWN_SKILL";
 	return skill_db[idx].name;
 }
 
 const char* skill_get_desc( uint16 skill_id ) {
-	int16 idx = skill_get_index(skill_id);
-	if (idx < 0)
+	uint16 idx = skill_get_index(skill_id);
+	if (!idx)
 		return "Unknown Skill";
 	return skill_db[idx].desc;
 }
@@ -452,10 +452,10 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 * @author Aru - for previous check; Jobbie for class restriction idea; Cydh expands the copyable skill
 */
 static char skill_isCopyable(struct map_session_data *sd, uint16 skill_id) {
-	int16 idx = skill_get_index(skill_id);
+	uint16 idx = skill_get_index(skill_id);
 
 	// Only copy skill that player doesn't have or the skill is old clone
-	if (idx < 0 || sd->status.skill[idx].id != 0 && sd->status.skill[idx].flag != SKILL_FLAG_PLAGIARIZED)
+	if (!idx || sd->status.skill[idx].id != 0 && sd->status.skill[idx].flag != SKILL_FLAG_PLAGIARIZED)
 		return 0;
 
 	// Check if the skill is copyable by class
@@ -492,11 +492,11 @@ static char skill_isCopyable(struct map_session_data *sd, uint16 skill_id) {
 */
 bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 {
-	int16 idx = skill_get_index(skill_id), m;
+	uint16 idx = skill_get_index(skill_id), m;
 	nullpo_retr(1,sd);
 	m = sd->bl.m;
 
-	if (idx < 0)
+	if (!idx)
 		return true; // invalid skill id
 
 	if (pc_has_permission(sd,PC_PERM_SKILL_UNCONDITIONAL))
@@ -638,10 +638,10 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 */
 bool skill_isNotOk_hom(uint16 skill_id, struct homun_data *hd)
 {
-	int16 idx = skill_get_index(skill_id);
+	uint16 idx = skill_get_index(skill_id);
 	nullpo_retr(1,hd);
 
-	if (idx < 0)
+	if (!idx)
 		return true; // invalid skill id
 
 	if (hd->blockskill[idx] > 0)
@@ -704,10 +704,10 @@ bool skill_isNotOk_hom(uint16 skill_id, struct homun_data *hd)
 */
 bool skill_isNotOk_mercenary(uint16 skill_id, struct mercenary_data *md)
 {
-	int16 idx = skill_get_index(skill_id);
+	uint16 idx = skill_get_index(skill_id);
 	nullpo_retr(1,md);
 
-	if( idx < 0 )
+	if( !idx )
 		return true; // Invalid Skill ID
 	if( md->blockskill[idx] > 0 )
 		return true;
@@ -727,7 +727,7 @@ bool skill_isNotOk_mercenary(uint16 skill_id, struct mercenary_data *md)
 bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skill_lv, int pos_x, int pos_y) {
 	int inf;
 
-	if (!src || skill_get_index(skill_id) < 0)
+	if (!src || !skill_get_index(skill_id))
 		return false;
 
 	if (src->type == BL_PC && pc_has_permission(BL_CAST(BL_PC,src),PC_PERM_SKILL_UNCONDITIONAL))
@@ -2587,7 +2587,7 @@ static void skill_do_copy(struct block_list* src,struct block_list *bl, uint16 s
 	else if (&tsd->sc && tsd->sc.data[SC_PRESERVE] && !tsd->sc.data[SC__REPRODUCE])
 		return;
 	else {
-		short idx;
+		uint16 idx;
 		unsigned char lv;
 
 		// Copy Referal: dummy skills should point to their source upon copying
@@ -2621,8 +2621,7 @@ static void skill_do_copy(struct block_list* src,struct block_list *bl, uint16 s
 				break;
 		}
 
-		//Use skill index, avoiding out-of-bound array [Cydh]
-		if ((idx = skill_get_index(skill_id)) < 0)
+		if (!(idx = skill_get_index(skill_id)))
 			return;
 
 		switch (skill_isCopyable(tsd,skill_id)) {
@@ -3001,7 +3000,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 
 	map_freeblock_lock();
 
-	if (bl->type == BL_PC && skill_id && skill_get_index(skill_id) >= 0 && skill_db[skill_get_index(skill_id)].copyable.option && //Only copy skill that copyable [Cydh]
+	if (bl->type == BL_PC && skill_id && skill_get_index(skill_id) && skill_db[skill_get_index(skill_id)].copyable.option && //Only copy skill that copyable [Cydh]
 		dmg.flag&BF_SKILL && dmg.damage+dmg.damage2 > 0 && damage < status_get_hp(bl)) //Cannot copy skills if the blow will kill you. [Skotlex]
 		skill_do_copy(src,bl,skill_id,skill_lv);
 
@@ -3387,7 +3386,7 @@ static int skill_check_condition_mercenary(struct block_list *bl, uint16 skill_i
 	struct status_data *status;
 	struct map_session_data *sd = NULL;
 	int i, hp, sp, hp_rate, sp_rate, state, mhp;
-	int16 idx;
+	uint16 idx;
 	int itemid[MAX_SKILL_ITEM_REQUIRE],amount[ARRAYLENGTH(itemid)],index[ARRAYLENGTH(itemid)];
 
 	nullpo_ret(bl);
@@ -3401,7 +3400,7 @@ static int skill_check_condition_mercenary(struct block_list *bl, uint16 skill_i
 	}
 
 	status = status_get_status_data(bl);
-	if( (idx = skill_get_index(skill_id)) < 0 )
+	if( !(idx = skill_get_index(skill_id)) )
 		return 0;
 
 	// Requeriments
@@ -14773,7 +14772,7 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
 	struct status_data *status;
 	struct status_change *sc;
 	int i,hp_rate,sp_rate, sp_skill_rate_bonus = 100;
-	int16 idx;
+	uint16 idx;
 
 	memset(&req,0,sizeof(req));
 
@@ -14791,7 +14790,7 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
 	if( sc && skill_disable_check(sc,skill_id) )
 		return req;
 
-	if( (idx = skill_get_index(skill_id)) < 0 ) // invalid skill id
+	if( !(idx = skill_get_index(skill_id)) ) // invalid skill id
   		return req;
 	
 	cap_value(skill_lv,1,MAX_SKILL_LEVEL);
@@ -18510,11 +18509,11 @@ int skill_blockhomun_end(int tid, unsigned int tick, int id, intptr_t data)	//[o
 
 int skill_blockhomun_start(struct homun_data *hd, uint16 skill_id, int tick)	//[orn]
 {
-	int16 idx = skill_get_index(skill_id);
+	uint16 idx = skill_get_index(skill_id);
 	nullpo_retr (-1, hd);
 
 
-	if (idx < 0)
+	if (!idx)
 		return -1;
 
 	if (tick < 1) {
@@ -18537,10 +18536,10 @@ int skill_blockmerc_end(int tid, unsigned int tick, int id, intptr_t data)	//[or
 
 int skill_blockmerc_start(struct mercenary_data *md, uint16 skill_id, int tick)
 {
-	int16 idx = skill_get_index(skill_id);
+	uint16 idx = skill_get_index(skill_id);
 	nullpo_retr (-1, md);
 
-	if (idx < 0)
+	if( !idx )
 		return -1;
 	if( tick < 1 )
 	{
@@ -19212,11 +19211,9 @@ int skill_get_elemental_type( uint16 skill_id , uint16 skill_lv ) {
  * sub-function of DB reading.
  * skill_db.txt
  *------------------------------------------*/
-
 static bool skill_parse_row_skilldb(char* split[], int columns, int current)
 {// id,range,hit,inf,element,nk,splash,max,list_num,castcancel,cast_defence_rate,inf2,maxcount,skill_type,blow_count,name,description
-	uint16 skill_id = atoi(split[0]);
-	int16 idx;
+	uint16 skill_id = atoi(split[0]), idx;
 	if( (skill_id >= GD_SKILLRANGEMIN && skill_id <= GD_SKILLRANGEMAX)
 	||  (skill_id >= HM_SKILLRANGEMIN && skill_id <= HM_SKILLRANGEMAX)
 	||  (skill_id >= MC_SKILLRANGEMIN && skill_id <= MC_SKILLRANGEMAX)
@@ -19225,7 +19222,7 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current)
 		return false;
 	}
 
-	if( (idx = skill_get_index(skill_id)) < 0 ) // invalid skill id
+	if( !(idx = skill_get_index(skill_id)) ) // invalid skill id
 		return false;
 
 	skill_split_atoi(split[1],skill_db[idx].range);
@@ -19305,9 +19302,9 @@ static void skill_destroy_requirement(void) {
 static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 {// skill_id,HPCost,MaxHPTrigger,SPCost,HPRateCost,SPRateCost,ZenyCost,RequiredWeapons,RequiredAmmoTypes,RequiredAmmoAmount,RequiredState,RequiredStatuss,SpiritSphereCost,RequiredItemID1,RequiredItemAmount1,RequiredItemID2,RequiredItemAmount2,RequiredItemID3,RequiredItemAmount3,RequiredItemID4,RequiredItemAmount4,RequiredItemID5,RequiredItemAmount5,RequiredItemID6,RequiredItemAmount6,RequiredItemID7,RequiredItemAmount7,RequiredItemID8,RequiredItemAmount8,RequiredItemID9,RequiredItemAmount9,RequiredItemID10,RequiredItemAmount10
 	char* p;
-	int16 skill_id = atoi(split[0]), idx, i;
+	uint16 idx = skill_get_index(atoi(split[0])), i;
 
-	if ((idx = skill_get_index(skill_id)) < 0) // invalid skill id
+	if (!idx) // invalid skill id
 		return false;
 
 	skill_split_atoi(split[1],skill_db[idx].require.hp);
@@ -19400,9 +19397,8 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 * SkillID,CastingTime,AfterCastActDelay,AfterCastWalkDelay,Duration1,Duration2,Cooldown{,Fixedcast}
 */
 static bool skill_parse_row_castdb(char* split[], int columns, int current) {
-	uint16 skill_id = atoi(split[0]);
-	int16 idx = skill_get_index(skill_id);
-	if( idx < 0 ) // invalid skill id
+	uint16 idx = skill_get_index(atoi(split[0]));
+	if( !idx ) // invalid skill id
 		return false;
 
 	skill_split_atoi(split[1],skill_db[idx].cast);
@@ -19421,9 +19417,8 @@ static bool skill_parse_row_castdb(char* split[], int columns, int current) {
 * SkillID,Cast,Delay (optional)
 */
 static bool skill_parse_row_castnodexdb(char* split[], int columns, int current) {
-	uint16 skill_id = atoi(split[0]);
-	int16 idx = skill_get_index(skill_id);
-	if( idx < 0 ) // invalid skill id
+	uint16 idx = skill_get_index(atoi(split[0]));
+	if( !idx ) // invalid skill id
 		return false;
 
 	skill_split_atoi(split[1],skill_db[idx].castnodex);
@@ -19437,9 +19432,8 @@ static bool skill_parse_row_castnodexdb(char* split[], int columns, int current)
 * SkillID,Flag
 */
 static bool skill_parse_row_nocastdb(char* split[], int columns, int current) {
-	uint16 skill_id = atoi(split[0]);
-	int16 idx = skill_get_index(skill_id);
-	if( idx < 0 ) // invalid skill id
+	uint16 idx = skill_get_index(atoi(split[0]));
+	if( !idx ) // invalid skill id
 		return false;
 
 	skill_db[idx].nocast |= atoi(split[1]);
@@ -19451,9 +19445,8 @@ static bool skill_parse_row_nocastdb(char* split[], int columns, int current) {
 * ID,unit ID,unit ID 2,layout,range,interval,target,flag
 */
 static bool skill_parse_row_unitdb(char* split[], int columns, int current) {
-	uint16 skill_id = atoi(split[0]);
-	int16 idx = skill_get_index(skill_id);
-	if( idx < 0 ) // invalid skill id
+	uint16 idx = skill_get_index(atoi(split[0]));
+	if( !idx ) // invalid skill id
 		return false;
 
 	skill_db[idx].unit_id[0] = strtol(split[1],NULL,16);
@@ -19615,16 +19608,16 @@ static bool skill_parse_row_magicmushroomdb(char* split[], int column, int curre
 * SkillID,Option{,JobAllowed{,RequirementRemoved}}
 */
 static bool skill_parse_row_copyabledb(char* split[], int column, int current) {
-	int16 id;
+	uint16 id;
 	uint8 option;
 
 	trim(split[0]);
 	if(ISDIGIT(split[0][0]))
-		id = atoi(split[0]);
+		id = skill_get_index(atoi(split[0]));
 	else
 		id = skill_name2id(split[0]);
 
-	if ((id = skill_get_index(id)) < 0) {
+	if (!id) {
 		ShowError("skill_parse_row_copyabledb: Invalid skill '%s'\n",split[0]);
 		return false;
 	}
@@ -19646,15 +19639,15 @@ static bool skill_parse_row_copyabledb(char* split[], int column, int current) {
 * SkillID,AdditionalRange{,NPC Type}
 */
 static bool skill_parse_row_nonearnpcrangedb(char* split[], int column, int current) {
-	int16 id;
+	uint16 id;
 
 	trim(split[0]);
 	if(ISDIGIT(split[0][0]))
-		id = atoi(split[0]);
+		id = skill_get_index(atoi(split[0]));
 	else
 		id = skill_name2id(split[0]);
 
-	if ((id = skill_get_index(id)) < 0) { // invalid skill id
+	if (!id) { // invalid skill id
 		ShowError("skill_parse_row_nonearnpcrangedb: Invalid skill '%s'\n",split[0]);
 		return false;
 	}
@@ -19725,23 +19718,29 @@ static bool skill_parse_row_changematerialdb(char* split[], int columns, int cur
  * Manage Skill Damage database [Lilith]
  *------------------------------------------*/
 #ifdef ADJUST_SKILL_DAMAGE
-static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
-{
-	uint16 skill_id = skill_name2id(split[0]), idx;
-	if ((idx = skill_get_index(skill_id)) < 0) { // invalid skill id
-		ShowWarning("skill_parse_row_skilldamage: Invalid skill '%s'. Skipping..",split[0]);
+static bool skill_parse_row_skilldamage(char* split[], int columns, int current) {
+	uint16 id;
+	
+	trim(split[0]);
+	if (ISDIGIT(split[0][0]))
+		id = skill_get_index(atoi(split[0]));
+	else
+		id = skill_name2id(split[0]);
+
+	if (!id) { // invalid skill id
+		ShowWarning("skill_parse_row_skilldamage: Invalid skill '%s'. Skipping..", split[0]);
 		return false;
 	}
-	memset(&skill_db[idx].damage,0,sizeof(struct s_skill_damage));
-	skill_db[idx].damage.caster |= atoi(split[1]);
-	skill_db[idx].damage.map |= atoi(split[2]);
-	skill_db[idx].damage.pc = cap_value(atoi(split[3]),-100,MAX_SKILL_DAMAGE_RATE);
+	memset(&skill_db[id].damage,0,sizeof(struct s_skill_damage));
+	skill_db[id].damage.src |= atoi(split[1]);
+	skill_db[id].damage.map |= atoi(split[2]);
+	skill_db[id].damage.pc = cap_value(atoi(split[3]), -100, INT_MAX);
 	if (split[3])
-		skill_db[idx].damage.mob = cap_value(atoi(split[4]),-100,MAX_SKILL_DAMAGE_RATE);
+		skill_db[id].damage.mob = cap_value(atoi(split[4]), -100, INT_MAX);
 	if (split[4])
-		skill_db[idx].damage.boss = cap_value(atoi(split[5]),-100,MAX_SKILL_DAMAGE_RATE);
+		skill_db[id].damage.boss = cap_value(atoi(split[5]), -100, INT_MAX);
 	if (split[5])
-		skill_db[idx].damage.other = cap_value(atoi(split[6]),-100,MAX_SKILL_DAMAGE_RATE);
+		skill_db[id].damage.other = cap_value(atoi(split[6]), -100, INT_MAX);
 	return true;
 }
 #endif
