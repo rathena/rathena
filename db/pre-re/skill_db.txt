@@ -44,6 +44,7 @@
 // 13 maxcount: max amount of skill instances to place on the ground when
 //    player_land_skill_limit/monster_land_skill_limit is enabled. For skills
 //    that attack using a path, this is the path length to be used.
+//    Default maxcount is MAX_SKILLUNITGROUP in skill.h
 // 14 attack type (none, weapon, magic, misc)
 // 15 Blowcount (amount of tiles skill knockbacks)
 // 16 inf3 (skill information 3):
