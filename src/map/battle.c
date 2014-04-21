@@ -2367,6 +2367,7 @@ static struct Damage battle_calc_element_damage(struct Damage wd, struct block_l
 
 			switch( skill_id ) {
 				case MC_CARTREVOLUTION: //Cart Revolution apply the element fix once more with neutral element
+				case SR_GATEOFHELL:
 				case KO_BAKURETSU:
 					wd.damage = battle_attr_fix(src, target, wd.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 					break;
@@ -2612,7 +2613,7 @@ struct Damage battle_calc_skill_base_damage(struct Damage wd, struct block_list 
 			}
 #else
 		case NJ_ISSEN:
-			wd.damage = (40 * sstatus->str) + (8 * skill_lv / 100 * sstatus->hp);
+			wd.damage = (40 * sstatus->str) + ((sstatus->hp * (8 * skill_lv)) / 100);
 			wd.damage2 = 0;
 			break;
 		case LK_SPIRALPIERCE:
@@ -2924,6 +2925,18 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 		case MER_CRASH:
 			skillratio += 10*skill_lv;
+			break;
+		case KN_AUTOCOUNTER:
+			if(sc && sc->data[SC_CRUSHSTRIKE]) {
+				if(sd) {
+					// ATK [{Weapon Level * (Weapon Upgrade Level + 6) * 100} + (Weapon ATK) + (Weapon Weight)]%
+					short index = sd->equip_index[EQI_HAND_R];
+
+					if(index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_WEAPON)
+						skillratio = sd->inventory_data[index]->weight / 10 + sstatus->rhw.atk +
+							100 * sd->inventory_data[index]->wlv * (sd->status.inventory[index].refine + 6);
+				}
+			}
 			break;
 		case KN_SPEARSTAB:
 			skillratio += 15*skill_lv;
@@ -4820,6 +4833,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		case MO_INVESTIGATE:
 		case CR_ACIDDEMONSTRATION:
 		case GN_FIRE_EXPANSION_ACID:
+		case SR_GATEOFHELL:
 		case KO_BAKURETSU:
 			// Forced to neutral element
 			wd.damage = battle_attr_fix(src, target, wd.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
@@ -5116,7 +5130,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case MG_COLDBOLT:
 					case MG_LIGHTNINGBOLT:
 						if ( sc && sc->data[SC_SPELLFIST] && mflag&BF_SHORT )  {
-							skillratio += (sc->data[SC_SPELLFIST]->val4 * 100) + (sc->data[SC_SPELLFIST]->val2 * 50) - 100;// val4 = used bolt level, val2 = used spellfist level. [Rytech]
+							skillratio += (sc->data[SC_SPELLFIST]->val4 * 100) + (sc->data[SC_SPELLFIST]->val1 * 50) - 100;// val4 = used bolt level, val2 = used spellfist level. [Rytech]
 							ad.div_ = 1;// ad mods, to make it work similar to regular hits [Xazax]
 							ad.flag = BF_WEAPON|BF_SHORT;
 							ad.type = 0;
@@ -6380,6 +6394,8 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			clif_damage(src, target, tick, sstatus->amotion, 1, 0, 1, 0, 0); //Display MISS.
 			status_change_end(target, SC_AUTOCOUNTER, INVALID_TIMER);
 			skill_attack(BF_WEAPON,target,target,src,KN_AUTOCOUNTER,skill_lv,tick,0);
+			if (tsc->data[SC_CRUSHSTRIKE])
+				status_change_end(target, SC_CRUSHSTRIKE, INVALID_TIMER);
 			return ATK_BLOCK;
 		}
 	}
@@ -6480,7 +6496,9 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			if( --(sc->data[SC_SPELLFIST]->val1) >= 0 ){
 				struct Damage ad = battle_calc_attack(BF_MAGIC,src,target,sc->data[SC_SPELLFIST]->val3,sc->data[SC_SPELLFIST]->val4,flag|BF_SHORT);
 				wd.damage = ad.damage;
-			}else
+				if (wd.div_ > 1)
+					wd.damage *= 2; // Double the damage for multiple hits.
+			} else
 				status_change_end(src,SC_SPELLFIST,INVALID_TIMER);
 		}
 		if( sc->data[SC_GIANTGROWTH] && (wd.flag&BF_SHORT) && rnd()%100 < sc->data[SC_GIANTGROWTH]->val2 )

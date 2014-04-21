@@ -62,6 +62,7 @@
 //    0x1000- Spell that does not affect user that has NC_HOVERING active
 //    0x2000- spell that can be using while riding warg
 //    0x4000- spell that can't be used while in mado
+//    0x8000- spell that can be used to target while under Man Hole effect
 // 17 Name
 // 18 Description
 1,0,0,0,0,0,0,9,0,no,0,0,0,none,0,0x0,		NV_BASIC,Basic Skill
@@ -1043,7 +1044,7 @@
 2284,1,6,1,-1,0x2,1,5,1,no,0,0,0,weapon,0,0x0,	SC_FATALMENACE,Fatal Menace
 2285,0,6,4,0,0x1,0,10,1,no,0,0,0,none,0,0x0,	SC_REPRODUCE,Reproduce
 2286,0,6,4,0,0x1,0,10,1,yes,0,0,0,none,0,0x0,	SC_AUTOSHADOWSPELL,Auto Shadow Spell
-2287,5,6,1,0,0x1,0,5,1,no,0,0,0,none,0,0x40,		SC_SHADOWFORM,Shadow Form
+2287,5,6,1,0,0x1,0,5,1,no,0,0,0,none,0,0x8040,		SC_SHADOWFORM,Shadow Form
 2288,7:7:7:9:9:9:9:11:11:11,8,1,-1,0,0,10,-3,yes,0,0,0,weapon,3,0x0,	SC_TRIANGLESHOT,Triangle Shot
 2289,0,6,4,0,0x3,2,5,1,no,0,0,0,none,0,0x0,		SC_BODYPAINT,Body Painting
 2290,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0,0x0,	SC_INVISIBILITY,Invisibility
@@ -1054,7 +1055,7 @@
 2295,3,6,1,0,0x1,0,3,1,yes,0,0,0,none,0,0x20,	SC_LAZINESS,Masquerade - Laziness
 2296,3,6,1,0,0x1,0,3,1,yes,0,0,0,none,0,0x20,	SC_UNLUCKY,Masquerade - Unlucky
 2297,3,6,1,0,0x1,0,3,1,yes,0,0,0,none,0,0x20,	SC_WEAKNESS,Masquerade - Weakness
-2298,3,6,1,0,0x1,0,5,1,yes,0,0,0,weapon,0,0x20,	SC_STRIPACCESSARY,Strip Accessory //CHECK Is weapon attack type needed?
+2298,3,6,1,0,0x1,0,5,1,yes,0,0,0,weapon,0,0x8020,	SC_STRIPACCESSARY,Strip Accessory //CHECK Is weapon attack type needed?
 2299,7,6,2,0,0x1,0,3,1,yes,0,0,3,none,0,0x0,	SC_MANHOLE,Man Hole
 2300,7,6,2,0,0x1,0,3,1,yes,0,0,1,none,0,0x0,	SC_DIMENSIONDOOR,Dimension Door
 2301,7,6,2,0,0x1,0,3,1,yes,0,0x20000,0,none,0,0x0,	SC_CHAOSPANIC,Chaos Panic
@@ -1105,7 +1106,7 @@
 2340,0,6,4,0,0x3,2,1,1,no,0,0,0,none,0,0x0,	SR_ASSIMILATEPOWER,Assimilate Power
 2341,3,6,16,0,0x1,0,1,1,yes,0,0x200,0,none,0,0x0,	SR_POWERVELOCITY,Power Velocity
 2342,1,6,1,-1,0x20,0,5,1,no,0,0,0,weapon,7,0x0,	SR_CRESCENTELBOW_AUTOSPELL,Crescent Elbow Autospell
-2343,1:2:3:3:4:4:5:5:6:7,8,1,0,0,0,10,-7,yes,0,0,0,weapon,0,0x0,	SR_GATEOFHELL,Gate of Hell
+2343,1:2:3:3:4:4:5:5:6:7,8,1,-1,0,0,10,-7,yes,0,0,0,weapon,0,0x0,	SR_GATEOFHELL,Gate of Hell
 2344,2,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,	SR_GENTLETOUCH_QUIET,Gentle Touch - Quiet
 2345,2,6,16,0,0x1,0,5,1,no,0,0,0,none,0,0x0,	SR_GENTLETOUCH_CURE,Gentle Touch - Cure
 2346,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0,0x0,	SR_GENTLETOUCH_ENERGYGAIN,Gentle Touch - Energy Gain
