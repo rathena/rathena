@@ -46,7 +46,6 @@ enum item_itemid {
 	ITEMID_WHITE_SLIM_POTION			= 547,
 	ITEMID_WING_OF_FLY					= 601,
 	ITEMID_WING_OF_BUTTERFLY			= 602,
-	ITEMID_BRANCH_OF_DEAD_TREE			= 604,
 	ITEMID_ANODYNE						= 605,
 	ITEMID_ALOEBERA						= 606,
 	ITEMID_EMPTY_BOTTLE					= 713,
@@ -86,9 +85,6 @@ enum item_itemid {
 	ITEMID_SKULL_						= 7420,
 	ITEMID_TOKEN_OF_SIEGFRIED			= 7621,
 	ITEMID_TRAP_ALLOY					= 7940,
-	ITEMID_RED_POUCH_OF_SURPRISE		= 12024,
-	ITEMID_BLOODY_DEAD_BRANCH			= 12103,
-	ITEMID_PORING_BOX					= 12109,
 	ITEMID_MERCENARY_RED_POTION			= 12184,
 	ITEMID_MERCENARY_BLUE_POTION		= 12185,
 	ITEMID_BATTLE_MANUAL				= 12208,
@@ -105,7 +101,6 @@ enum item_itemid {
 	ITEMID_REINS_OF_MOUNT				= 12622,
 	ITEMID_COMP_BUBBLE_GUM				= 12264,
 	ITEMID_NOBLE_NAMEPLATE				= 12705,
-	ITEMID_TREASURE_CHEST_SUMMONED_II	= 12863,
 	ITEMID_DUN_TELE_SCROLL1				= 14527,
 	ITEMID_BATTLE_MANUAL25				= 14532,
 	ITEMID_BATTLE_MANUAL100				= 14533,
@@ -369,6 +364,8 @@ struct item_data {
 		unsigned trade_restriction : 9;	//Item restrictions mask [Skotlex]
 		unsigned autoequip: 1;
 		unsigned buyingstore : 1;
+		unsigned dead_branch : 1; // As dead branch item. Logged at `branchlog` table and cannot be used at 'nobranch' mapflag [Cydh]
+		unsigned group : 1; // As item group container [Cydh]
 	} flag;
 	struct {// item stacking limitation
 		unsigned short amount;

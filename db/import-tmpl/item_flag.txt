@@ -1,0 +1,6 @@
+// Flagged Items
+// <ItemID>,<Flag>
+//
+// <Flag>:
+// 1 - As Dead Branch item (will be logged at `branchlog` table and cannot be used at 'nobranch' mapflag)
+// 2 - As item group container, check player's inventory and weight before consumed
