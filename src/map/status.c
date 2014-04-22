@@ -1115,72 +1115,75 @@ void initChangeTables(void)
 	StatusDisplayType[SC_DECORATION_OF_MUSIC] = true;
 
 	/* StatusChangeState (SCS_) NOMOVE */
-	StatusChangeStateTable[SC_ANKLE]		|= SCS_NOMOVE;
-	StatusChangeStateTable[SC_AUTOCOUNTER]		|= SCS_NOMOVE;
-	StatusChangeStateTable[SC_TRICKDEAD]		|= SCS_NOMOVE;
-	StatusChangeStateTable[SC_BLADESTOP]		|= SCS_NOMOVE;
-	StatusChangeStateTable[SC_BLADESTOP_WAIT]	|= SCS_NOMOVE;
-	StatusChangeStateTable[SC_GOSPEL]		|= SCS_NOMOVE|SCS_NOMOVECOND;
-	StatusChangeStateTable[SC_BASILICA]		|= SCS_NOMOVE|SCS_NOMOVECOND;
-	StatusChangeStateTable[SC_STOP]			|= SCS_NOMOVE;
-	StatusChangeStateTable[SC_CLOSECONFINE]		|= SCS_NOMOVE;
-	StatusChangeStateTable[SC_CLOSECONFINE2]	|= SCS_NOMOVE;
-	StatusChangeStateTable[SC_TINDER_BREAKER]	|= SCS_NOMOVE;
-	StatusChangeStateTable[SC_TINDER_BREAKER2]	|= SCS_NOMOVE;
-	StatusChangeStateTable[SC_MADNESSCANCEL]	|= SCS_NOMOVE;
-	StatusChangeStateTable[SC_GRAVITATION]		|= SCS_NOMOVE|SCS_NOMOVECOND;
-	StatusChangeStateTable[SC_WHITEIMPRISON]	|= SCS_NOMOVE;
-	StatusChangeStateTable[SC_ELECTRICSHOCKER]	|= SCS_NOMOVE;
-	StatusChangeStateTable[SC_BITE]			|= SCS_NOMOVE;
-	StatusChangeStateTable[SC_THORNSTRAP]		|= SCS_NOMOVE;
-	StatusChangeStateTable[SC_MAGNETICFIELD]	|= SCS_NOMOVE;
-	StatusChangeStateTable[SC__MANHOLE]		|= SCS_NOMOVE;
+	StatusChangeStateTable[SC_ANKLE]				|= SCS_NOMOVE;
+	StatusChangeStateTable[SC_AUTOCOUNTER]			|= SCS_NOMOVE;
+	StatusChangeStateTable[SC_TRICKDEAD]			|= SCS_NOMOVE;
+	StatusChangeStateTable[SC_BLADESTOP]			|= SCS_NOMOVE;
+	StatusChangeStateTable[SC_BLADESTOP_WAIT]		|= SCS_NOMOVE;
+	StatusChangeStateTable[SC_GOSPEL]				|= SCS_NOMOVE|SCS_NOMOVECOND;
+	StatusChangeStateTable[SC_BASILICA]				|= SCS_NOMOVE|SCS_NOMOVECOND;
+	StatusChangeStateTable[SC_STOP]					|= SCS_NOMOVE;
+	StatusChangeStateTable[SC_CLOSECONFINE]			|= SCS_NOMOVE;
+	StatusChangeStateTable[SC_CLOSECONFINE2]		|= SCS_NOMOVE;
+	StatusChangeStateTable[SC_TINDER_BREAKER]		|= SCS_NOMOVE;
+	StatusChangeStateTable[SC_TINDER_BREAKER2]		|= SCS_NOMOVE;
+	StatusChangeStateTable[SC_MADNESSCANCEL]		|= SCS_NOMOVE;
+	StatusChangeStateTable[SC_GRAVITATION]			|= SCS_NOMOVE|SCS_NOMOVECOND;
+	StatusChangeStateTable[SC_WHITEIMPRISON]		|= SCS_NOMOVE;
+	StatusChangeStateTable[SC_ELECTRICSHOCKER]		|= SCS_NOMOVE;
+	StatusChangeStateTable[SC_BITE]					|= SCS_NOMOVE;
+	StatusChangeStateTable[SC_THORNSTRAP]			|= SCS_NOMOVE;
+	StatusChangeStateTable[SC_MAGNETICFIELD]		|= SCS_NOMOVE|SCS_NOMOVECOND;
+	StatusChangeStateTable[SC__MANHOLE]				|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_CURSEDCIRCLE_ATKER]	|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_CURSEDCIRCLE_TARGET]	|= SCS_NOMOVE;
-	StatusChangeStateTable[SC_CRYSTALIZE]		|= SCS_NOMOVE|SCS_NOMOVECOND;
-	StatusChangeStateTable[SC_NETHERWORLD]		|= SCS_NOMOVE;
-	StatusChangeStateTable[SC_CAMOUFLAGE]		|= SCS_NOMOVE|SCS_NOMOVECOND;
-	StatusChangeStateTable[SC_MEIKYOUSISUI]		|= SCS_NOMOVE;
-	StatusChangeStateTable[SC_KAGEHUMI]		|= SCS_NOMOVE;
-	StatusChangeStateTable[SC_KYOUGAKU]		|= SCS_NOMOVE;
-	StatusChangeStateTable[SC_PARALYSIS]		|= SCS_NOMOVE;
+	StatusChangeStateTable[SC_CRYSTALIZE]			|= SCS_NOMOVE|SCS_NOMOVECOND;
+	StatusChangeStateTable[SC_NETHERWORLD]			|= SCS_NOMOVE;
+	StatusChangeStateTable[SC_CAMOUFLAGE]			|= SCS_NOMOVE|SCS_NOMOVECOND;
+	StatusChangeStateTable[SC_MEIKYOUSISUI]			|= SCS_NOMOVE;
+	StatusChangeStateTable[SC_KAGEHUMI]				|= SCS_NOMOVE;
+	StatusChangeStateTable[SC_KYOUGAKU]				|= SCS_NOMOVE;
+	StatusChangeStateTable[SC_PARALYSIS]			|= SCS_NOMOVE;
 
 	/* StatusChangeState (SCS_) NOPICKUPITEMS */
-	StatusChangeStateTable[SC_HIDING]		|= SCS_NOPICKITEM;
-	StatusChangeStateTable[SC_CLOAKING]		|= SCS_NOPICKITEM;
-	StatusChangeStateTable[SC_TRICKDEAD]		|= SCS_NOPICKITEM;
-	StatusChangeStateTable[SC_BLADESTOP]		|= SCS_NOPICKITEM;
-	StatusChangeStateTable[SC_CLOAKINGEXCEED]	|= SCS_NOPICKITEM;
-	StatusChangeStateTable[SC__FEINTBOMB]	|= SCS_NOPICKITEM;
-	StatusChangeStateTable[SC_NOCHAT]		|= SCS_NOPICKITEM|SCS_NOPICKITEMCOND;
+	StatusChangeStateTable[SC_HIDING]				|= SCS_NOPICKITEM;
+	StatusChangeStateTable[SC_CLOAKING]				|= SCS_NOPICKITEM;
+	StatusChangeStateTable[SC_TRICKDEAD]			|= SCS_NOPICKITEM;
+	StatusChangeStateTable[SC_BLADESTOP]			|= SCS_NOPICKITEM;
+	StatusChangeStateTable[SC_CLOAKINGEXCEED]		|= SCS_NOPICKITEM;
+	StatusChangeStateTable[SC__FEINTBOMB]			|= SCS_NOPICKITEM;
+	StatusChangeStateTable[SC_NOCHAT]				|= SCS_NOPICKITEM|SCS_NOPICKITEMCOND;
 
 	/* StatusChangeState (SCS_) NODROPITEMS */
-	StatusChangeStateTable[SC_AUTOCOUNTER]		|= SCS_NODROPITEM;
-	StatusChangeStateTable[SC_BLADESTOP]		|= SCS_NODROPITEM;
-	StatusChangeStateTable[SC_NOCHAT]		|= SCS_NODROPITEM|SCS_NODROPITEMCOND;
+	StatusChangeStateTable[SC_AUTOCOUNTER]			|= SCS_NODROPITEM;
+	StatusChangeStateTable[SC_BLADESTOP]			|= SCS_NODROPITEM;
+	StatusChangeStateTable[SC_NOCHAT]				|= SCS_NODROPITEM|SCS_NODROPITEMCOND;
 
 	/* StatusChangeState (SCS_) NOCAST (skills) */
-	StatusChangeStateTable[SC_SILENCE]		|= SCS_NOCAST;
-	StatusChangeStateTable[SC_STEELBODY]		|= SCS_NOCAST;
-	StatusChangeStateTable[SC_BERSERK]		|= SCS_NOCAST;
-	StatusChangeStateTable[SC__BLOODYLUST]		|= SCS_NOCAST;
-	StatusChangeStateTable[SC_OBLIVIONCURSE]	|= SCS_NOCAST;
-	StatusChangeStateTable[SC_WHITEIMPRISON]	|= SCS_NOCAST;
-	StatusChangeStateTable[SC__INVISIBILITY]	|= SCS_NOCAST;
-	StatusChangeStateTable[SC_CRYSTALIZE]		|= SCS_NOCAST|SCS_NOCASTCOND;
-	StatusChangeStateTable[SC__IGNORANCE]		|= SCS_NOCAST;
-	StatusChangeStateTable[SC_DEEPSLEEP]		|= SCS_NOCAST;
+	StatusChangeStateTable[SC_SILENCE]				|= SCS_NOCAST;
+	StatusChangeStateTable[SC_STEELBODY]			|= SCS_NOCAST;
+	StatusChangeStateTable[SC_BASILICA]				|= SCS_NOCAST;
+	StatusChangeStateTable[SC_BERSERK]				|= SCS_NOCAST;
+	StatusChangeStateTable[SC__BLOODYLUST]			|= SCS_NOCAST;
+	StatusChangeStateTable[SC_DEATHBOUND]			|= SCS_NOCAST;
+	StatusChangeStateTable[SC_OBLIVIONCURSE]		|= SCS_NOCAST;
+	StatusChangeStateTable[SC_WHITEIMPRISON]		|= SCS_NOCAST;
+	StatusChangeStateTable[SC__SHADOWFORM]			|= SCS_NOCAST;
+	StatusChangeStateTable[SC__INVISIBILITY]		|= SCS_NOCAST;
+	StatusChangeStateTable[SC_CRYSTALIZE]			|= SCS_NOCAST|SCS_NOCASTCOND;
+	StatusChangeStateTable[SC__IGNORANCE]			|= SCS_NOCAST;
+	StatusChangeStateTable[SC__MANHOLE]				|= SCS_NOCAST;
+	StatusChangeStateTable[SC_DEEPSLEEP]			|= SCS_NOCAST;
 	StatusChangeStateTable[SC_SATURDAYNIGHTFEVER]	|= SCS_NOCAST;
 	StatusChangeStateTable[SC_CURSEDCIRCLE_TARGET]	|= SCS_NOCAST;
-	StatusChangeStateTable[SC_KINGS_GRACE]		|= SCS_NOCAST;
+	StatusChangeStateTable[SC_KINGS_GRACE]			|= SCS_NOCAST;
 	StatusChangeStateTable[SC_HEAT_BARREL_AFTER]	|= SCS_NOCAST;
 
 	/* StatusChangeState (SCS_) NOCHAT (skills) */
-	StatusChangeStateTable[SC_BERSERK]		|= SCS_NOCHAT;
+	StatusChangeStateTable[SC_BERSERK]				|= SCS_NOCHAT;
 	StatusChangeStateTable[SC_SATURDAYNIGHTFEVER]	|= SCS_NOCHAT;
-	StatusChangeStateTable[SC_DEEPSLEEP]		|= SCS_NOCHAT;
-	StatusChangeStateTable[SC_NOCHAT]		|= SCS_NOCHAT|SCS_NOCHATCOND;
-
+	StatusChangeStateTable[SC_DEEPSLEEP]			|= SCS_NOCHAT;
+	StatusChangeStateTable[SC_NOCHAT]				|= SCS_NOCHAT|SCS_NOCHATCOND;
 }
 
 static void initDummyData(void)
@@ -1850,19 +1853,9 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, uin
 				(sc->data[SC_NOCHAT] && sc->data[SC_NOCHAT]->val1&MANNER_NOSKILL)
 			)
 				return 0;
-
-			if( sc->data[SC__MANHOLE] || ((tsc = status_get_sc(target)) && tsc->data[SC__MANHOLE]) ) {
-				switch(skill_id) { // !TODO: make this a flag in skill_db?
-					// Skills that can be used even under Man Hole effects.
-					case SC_SHADOWFORM:
-					case SC_STRIPACCESSARY:
-						break;
-					default:
-						return 0;
-				}
-			}
-
 		}
+		if (sc->data[SC_ALL_RIDING])
+			return 0; //You can't use skills while in the new mounts (The client doesn't let you, this is to make cheat-safe)
 	}
 
 	if (sc) {
@@ -1874,8 +1867,6 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, uin
 			if (sc->option&OPTION_CHASEWALK && skill_id != ST_CHASEWALK)
 				return 0;
 		}
-		if (sc->data[SC_ALL_RIDING])
-			return 0; //You can't use skills while in the new mounts (The client doesn't let you, this is to make cheat-safe)
 	}
 
 	if (target == NULL || target == src) // No further checking needed.
@@ -1897,6 +1888,9 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, uin
 			return 0;
 		if(skill_id == PR_LEXAETERNA && (tsc->data[SC_FREEZE] || (tsc->data[SC_STONE] && tsc->opt1 == OPT1_STONE)))
 			return 0;
+		if (tsc->data[SC__MANHOLE])
+			if (!(skill_get_inf3(skill_id)&INF3_USABLE_MANHOLE))
+				return 0;
 	}
 
 	// If targetting, cloak+hide protect you, otherwise only hiding does.
@@ -3941,6 +3935,9 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 #ifndef RENEWAL
 		(bl->type == BL_PC && (((TBL_PC*)bl)->class_&MAPID_UPPERMASK) == MAPID_MONK &&
 		(sc->data[SC_EXTREMITYFIST] || sc->data[SC_EXPLOSIONSPIRITS]) && (!sc->data[SC_SPIRIT] || sc->data[SC_SPIRIT]->val2 != SL_MONK)) ||
+#else
+		(bl->type == BL_PC && (((TBL_PC*)bl)->class_&MAPID_UPPERMASK) == MAPID_MONK &&
+		sc->data[SC_EXTREMITYFIST] && (!sc->data[SC_SPIRIT] || sc->data[SC_SPIRIT]->val2 != SL_MONK)) ||
 #endif
 		sc->data[SC_OBLIVIONCURSE] || sc->data[SC_VITALITYACTIVATION])
 		regen->flag &= ~RGN_SP; // No natural SP regen
@@ -4001,18 +3998,18 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, enum sc
 
 	// Can't move
 	if( flag&SCS_NOMOVE ) {
-		if( !(flag&SCS_NOMOVECOND) ) {
+		if( !(flag&SCS_NOMOVECOND) )
 			sc->cant.move += ( start ? 1 : -1 );
-			sc->cant.move = max(sc->cant.move,0); // safecheck
-		} else if(
+		else if(
 				     (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF)	// cannot move while gospel is in effect
 				  || (sc->data[SC_BASILICA] && sc->data[SC_BASILICA]->val4 == bl->id) // Basilica caster cannot move
 				  || (sc->data[SC_GRAVITATION] && sc->data[SC_GRAVITATION]->val3 == BCT_SELF)
 				  || (sc->data[SC_CRYSTALIZE] && bl->type != BL_MOB)
 				  || (sc->data[SC_CAMOUFLAGE] && sc->data[SC_CAMOUFLAGE]->val1 < 3)
-				 ) {
+				  || (sc->data[SC_MAGNETICFIELD] && sc->data[SC_MAGNETICFIELD]->val2 != bl->id)
+				 )
 			sc->cant.move += ( start ? 1 : -1 );
-		}
+		sc->cant.move = max(sc->cant.move,0); // safecheck
 	}
 
 	// Can't use skills
@@ -6043,6 +6040,8 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, s
 		skills2 -= 5 * sc->data[SC__BODYPAINT]->val1;
 	if( sc->data[SC__INVISIBILITY] )
 		skills2 -= sc->data[SC__INVISIBILITY]->val2;
+	if( sc->data[SC__GROOMY] )
+		skills2 -= sc->data[SC__GROOMY]->val2;
 	if( sc->data[SC_SWINGDANCE] )
 		skills2 += sc->data[SC_SWINGDANCE]->val2;
 	if( sc->data[SC_DANCEWITHWUG] )
@@ -9643,7 +9642,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val4 = 50;
 			break;
 		case SC_FULL_THROTTLE:
-			val2 = 7 - val1;
+			val2 = ( val1 == 1 ? 6 : 5 - val1 );
 			tick_time = 1000;
 			val4 = tick / tick_time;
 			tick = -1;
@@ -9868,6 +9867,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_MEIKYOUSISUI:
 		case SC_KYOUGAKU:
 		case SC_PARALYSIS:
+		case SC_MAGNETICFIELD:
 			unit_stop_walking(bl,1);
 		break;
 		case SC_ANKLE:
@@ -10801,6 +10801,9 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				clif_status_change(bl, SI_DECREASEAGI, 1, sec, 0, 0, 0);
 				sc_start(bl, bl, SC_REBOUND, 100, sce->val1, sec);
 			}
+			break;
+		case SC_REBOUND:
+			clif_status_load(bl, SI_DECREASEAGI, 0);
 			break;
 		case SC_ITEMSCRIPT: // Removes Buff Icons
 			if (sd && sce->val2 != SI_BLANK)
@@ -11856,7 +11859,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		}
 		break;
 	case SC_STOMACHACHE:
-		if( --(sce->val4) > 0 ) {
+		if( --(sce->val4) >= 0 ) {
 			status_charge(bl,0,sce->val2);	// Reduce 8 every 10 seconds.
 			if( sd && !pc_issit(sd) ) { // Force to sit every 10 seconds.
 				skill_sit(sd, 1);
@@ -11875,7 +11878,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		sc_timer_next(600000 + tick, status_change_timer, bl->id, data);
 		return 0;
 	case SC_MEIKYOUSISUI:
-		if( --(sce->val4) > 0 ) {
+		if( --(sce->val4) >= 0 ) {
 			status_heal(bl, status->max_hp * (sce->val1+1) / 100, status->max_sp * sce->val1 / 100, 0);
 			sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
 			return 0;
@@ -11883,7 +11886,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		break;
 	case SC_IZAYOI:
 	case SC_KAGEMUSYA:
-		if( --(sce->val2) > 0 ) {
+		if( --(sce->val2) >= 0 ) {
 			if(!status_charge(bl, 0, 1)) break;
 			sc_timer_next(1000+tick, status_change_timer, bl->id, data);
 			return 0;
@@ -11907,28 +11910,28 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 	    }
 	    break;
 	case SC_FULL_THROTTLE:
-		if( --(sce->val4) > 0 ) {
+		if( --(sce->val4) >= 0 ) {
 			status_percent_damage(bl, bl, 0, sce->val2, false);
 			sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
 			return 0;
 		}
 		break;
 	case SC_KINGS_GRACE:
-		if( --(sce->val4) > 0 ) {
+		if( --(sce->val4) >= 0 ) {
 			status_percent_heal(bl, sce->val2, 0);
 			sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
 			return 0;
 		}
 		break;
 	case SC_FRIGG_SONG:
-		if( --(sce->val4) > 0 ) {
+		if( --(sce->val4) >= 0 ) {
 			status_heal(bl, sce->val3, 0, 0);
 			sc_timer_next(10000 + tick, status_change_timer, bl->id, data);
 			return 0;
 		}
 		break;
 	case SC_C_MARKER:
-		if( --(sce->val3) > 0 ) {
+		if( --(sce->val3) >= 0 ) {
 			TBL_PC *tsd = map_id2sd(sce->val2);
 			if (!tsd || tsd->bl.m != bl->m) //End the SC if caster isn't in same map
 				break;

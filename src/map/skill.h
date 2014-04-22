@@ -89,6 +89,7 @@ enum e_skill_inf3 {
 	INF3_NO_EFF_HOVERING	= 0x1000,	// Spell that does not affect user that has SC_HOVERING active
 	INF3_USABLE_WARG		= 0x2000,	// spell that can be use while riding warg
 	INF3_DIS_MADO			= 0x4000,	// spell that can't be used while in mado
+	INF3_USABLE_MANHOLE		= 0x8000,	// spell that can be used to target while under Man Hole effect
 	//... add other spell list option here
 };
 
