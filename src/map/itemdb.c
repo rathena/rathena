@@ -985,14 +985,17 @@ static bool itemdb_read_flag(char* fields[], int columns, int current) {
 	uint16 nameid = atoi(fields[0]);
 	uint8 flag = atoi(fields[1]);
 	struct item_data *id;
+
 	if (!(id = itemdb_exists(nameid))) {
 		ShowError("itemdb_read_flag: Invalid item item with id %d\n", nameid);
 		return true;
 	}
+
 	if (flag&1)
 		id->flag.dead_branch = 1;
 	if (flag&2)
 		id->flag.group = 1;
+
 	return true;
 }
 

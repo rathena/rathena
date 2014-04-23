@@ -4414,7 +4414,7 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 			return 0;
 		}
 		if( !pc_inventoryblank(sd) ) {
-			clif_colormes(sd, color_table[COLOR_RED], msg_txt(sd, 732)); //Item cannot be open when inventory is full
+			clif_colormes(sd, color_table[COLOR_RED], msg_txt(sd, 1477)); //Item cannot be open when inventory is full
 			return 0;
 		}
 	}
@@ -4455,7 +4455,7 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 		return 0;
 
 	//Dead Branch items
-	if (item->flag.dead_branch)
+	if( item->flag.dead_branch )
 		log_branch(sd);
 
 	return 1;
