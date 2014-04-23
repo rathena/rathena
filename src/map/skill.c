@@ -175,21 +175,21 @@ const char* skill_get_desc( uint16 skill_id ) {
 }
 
 /// out of bounds error checking [celest]
-static void skill_chk(int16 *skill_id) {
+static void skill_chk(uint16 *skill_id) {
 	*skill_id = skill_get_index(*skill_id); // checks/adjusts id
 }
 // checks/adjusts level
-static void skill_chk2(int16 *skill_lv) {
-	*skill_lv = (*skill_lv < 1) ? 1 : (*skill_lv > MAX_SKILL_LEVEL) ? MAX_SKILL_LEVEL : *skill_lv;
+static void skill_chk2(uint16 *skill_lv) {
+	*skill_lv = cap_value(*skill_lv, 1, MAX_SKILL_LEVEL);
 }
 // checks/adjusts index. make sure we don't use negative index
 static void skill_chk3(int *idx) {
 	if (*idx < 0) *idx = 0;
 }
 
-#define skill_get(var,id) { skill_chk(&id); if(!id) return 0; return var; }
+#define skill_get(var,id)     { skill_chk(&id); if (!id) return 0; return var; }
 #define skill_get2(var,id,lv) { skill_chk(&id); if (!id) return 0; skill_chk2(&lv); return var; }
-#define skill_get3(var,id,x) { skill_chk(&id); if (!id) return 0; skill_chk3(&x); return var; }
+#define skill_get3(var,id,x)  { skill_chk(&id); if (!id) return 0; skill_chk3(&x); return var; }
 
 // Skill DB
 int skill_get_hit( uint16 skill_id )               { skill_get (skill_db[skill_id].hit, skill_id); }
