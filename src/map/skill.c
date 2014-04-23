@@ -19622,11 +19622,11 @@ static bool skill_parse_row_copyabledb(char* split[], int column, int current) {
 
 	trim(split[0]);
 	if(ISDIGIT(split[0][0]))
-		id = skill_get_index(atoi(split[0]));
+		id = atoi(split[0]);
 	else
 		id = skill_name2id(split[0]);
 
-	if (!id) {
+	if (!(id = skill_get_index(id))) {
 		ShowError("skill_parse_row_copyabledb: Invalid skill '%s'\n",split[0]);
 		return false;
 	}
@@ -19652,11 +19652,11 @@ static bool skill_parse_row_nonearnpcrangedb(char* split[], int column, int curr
 
 	trim(split[0]);
 	if(ISDIGIT(split[0][0]))
-		id = skill_get_index(atoi(split[0]));
+		id = atoi(split[0]);
 	else
 		id = skill_name2id(split[0]);
 
-	if (!id) { // invalid skill id
+	if (!(id = skill_get_index(id))) { // invalid skill id
 		ShowError("skill_parse_row_nonearnpcrangedb: Invalid skill '%s'\n",split[0]);
 		return false;
 	}
@@ -19732,11 +19732,11 @@ static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
 	
 	trim(split[0]);
 	if (ISDIGIT(split[0][0]))
-		id = skill_get_index(atoi(split[0]));
+		id = atoi(split[0]);
 	else
 		id = skill_name2id(split[0]);
 
-	if (!id) { // invalid skill id
+	if (!(id = skill_get_index(id))) { // invalid skill id
 		ShowWarning("skill_parse_row_skilldamage: Invalid skill '%s'. Skipping..", split[0]);
 		return false;
 	}
