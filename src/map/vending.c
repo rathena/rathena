@@ -345,11 +345,12 @@ bool vending_openvending(struct map_session_data* sd, const char* message, const
 		sd->vending[i].amount = amount;
 		sd->vending[i].value = min(value, (unsigned int)battle_config.vending_max_value);
 
-		//player just moved item to cart and we don't have the correct cart ID yet
+		// Player just moved item to cart and we don't have the correct cart ID yet.
 		if (sd->status.cart[sd->vending[i].index].id == 0) {
 			struct item_data *idb = itemdb_search(sd->status.cart[index].nameid);
 			char msg[256];
-			snprintf(msg, 256, "Item %s is not yet saved. Please re-log in order to correctly save your vending.", idb->jname);
+
+			sprintf(msg, msg_txt(sd, 733), idb->jname);
 			clif_displaymessage(sd->fd, msg);
 			clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0);
 			return false;
@@ -377,7 +378,7 @@ bool vending_openvending(struct map_session_data* sd, const char* message, const
 		Sql_ShowDebug(mmysql_handle);
 	}
 
-	for( i = 0; i < count; i++ ){
+	for( i = 0; i < count; i++ ) {
 		if( Sql_Query( mmysql_handle, "INSERT INTO `%s`(`vending_id`,`index`,`cartinventory_id`,`amount`,`price`) VALUES( %d, %d, %d, %d, %d );", vending_items_db, sd->vender_id, i, sd->status.cart[sd->vending[i].index].id, sd->vending[i].amount, sd->vending[i].value ) != SQL_SUCCESS ){
 			Sql_ShowDebug(mmysql_handle);
 		}
