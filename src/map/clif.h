@@ -6,8 +6,8 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/db.h" //dbmap
-
 //#include "../common/mmo.h"
+
 struct Channel;
 struct item;
 struct storage_data;
@@ -32,10 +32,9 @@ struct quest;
 struct party_booking_ad_info;
 #include <stdarg.h>
 
-enum
-{// packet DB
+enum { // packet DB
 	MAX_PACKET_DB  = 0xf00,
-	MAX_PACKET_VER = 45,
+	MAX_PACKET_VER = 46,
 	MAX_PACKET_POS = 20,
 };
 
@@ -523,7 +522,7 @@ void clif_status_change(struct block_list *bl, int type, int flag, int tick, int
 void clif_status_change2(struct block_list *bl, int tid, enum send_target target, int type, int val1, int val2, int val3);
 
 void clif_wis_message(int fd, const char* nick, const char* mes, int mes_len);
-void clif_wis_end(int fd, int flag);
+void clif_wis_end(int fd, int result);
 
 void clif_solved_charname(int fd, int charid, const char* name);
 void clif_charnameack(int fd, struct block_list *bl);
@@ -693,6 +692,7 @@ int clif_hom_food(struct map_session_data *sd,int foodid,int fail);	//[orn]
 void clif_send_homdata(struct map_session_data *sd, int state, int param);	//[orn]
 
 void clif_equiptickack(struct map_session_data* sd, int flag);
+void clif_partytickack(struct map_session_data* sd, bool flag);
 void clif_viewequip_ack(struct map_session_data* sd, struct map_session_data* tsd);
 void clif_equipcheckbox(struct map_session_data* sd);
 
