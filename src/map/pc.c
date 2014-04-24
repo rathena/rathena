@@ -4633,6 +4633,9 @@ int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amoun
 	if( (w = data->weight*amount) + sd->cart_weight > sd->cart_weight_max )
 		return 1;
 
+	//id no longer points to inventory/kafra id, while we get a new one, we don't want to mess up vending creation
+	item_data->id = 0;
+
 	i = MAX_CART;
 	if( itemdb_isstackable2(data) && !item_data->expire_time )
 	{
