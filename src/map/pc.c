@@ -9059,6 +9059,8 @@ bool pc_unequipitem(struct map_session_data *sd,int n,int flag) {
 		return false;
 	}
 	if (&sd->sc) {
+		if (sd->sc.data[SC_HOVERING] && sd->inventory_data[n]->type == IT_ARMOR && sd->inventory_data[n]->nameid == ITEMID_HOVERING_BOOSTER)
+			status_change_end(&sd->bl, SC_HOVERING, INVALID_TIMER);
 		if (sd->sc.data[SC_HEAT_BARREL])
 			status_change_end(&sd->bl,SC_HEAT_BARREL,INVALID_TIMER);
 		if (sd->sc.data[SC_P_ALTER] && (sd->inventory_data[n]->type == IT_WEAPON || sd->inventory_data[n]->type == IT_AMMO))

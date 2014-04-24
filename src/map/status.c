@@ -1050,8 +1050,8 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_EXTRACT_WHITE_POTION_Z] |= SCB_REGEN;
 	StatusChangeFlagTable[SC_VITATA_500] |= SCB_REGEN;
 	StatusChangeFlagTable[SC_EXTRACT_SALAMINE_JUICE] |= SCB_ASPD;
-	StatusChangeFlagTable[SC_DEFSET] |= SCB_DEF;
-	StatusChangeFlagTable[SC_MDEFSET] |= SCB_MDEF;
+	StatusChangeFlagTable[SC_DEFSET] |= SCB_DEF|SCB_DEF2;
+	StatusChangeFlagTable[SC_MDEFSET] |= SCB_MDEF|SCB_MDEF2;
 	StatusChangeFlagTable[SC_WEDDING] |= SCB_SPEED;
 	StatusChangeFlagTable[SC_ALL_RIDING] |= SCB_SPEED;
 	StatusChangeFlagTable[SC_PUSH_CART] |= SCB_SPEED;
@@ -5551,6 +5551,10 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 	if(sc->data[SC_STEELBODY])
 		return 90;
 #endif
+	if(sc->data[SC_DEFSET])
+		return sc->data[SC_DEFSET]->val1;
+	if(sc->data[SC_UNLIMIT])
+		return 1;
 
 	if(sc->data[SC_ARMORCHANGE])
 		def += sc->data[SC_ARMORCHANGE]->val2;
@@ -5612,8 +5616,6 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 		def -= def * sc->data[SC_ASH]->val3/100;
 	if( sc->data[SC_OVERED_BOOST] )
 		def -= def * sc->data[SC_OVERED_BOOST]->val3 / 100;
-	if(sc->data[SC_UNLIMIT])
-		return 1;
 
 	return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);;
 }
@@ -5638,6 +5640,11 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 		return 0;
 	if(sc->data[SC_ETERNALCHAOS])
 		return 0;
+	if(sc->data[SC_DEFSET])
+		return sc->data[SC_DEFSET]->val1;
+	if(sc->data[SC_UNLIMIT])
+		return 1;
+
 	if(sc->data[SC_SUN_COMFORT])
 		def2 += sc->data[SC_SUN_COMFORT]->val2;
 	if( sc->data[SC_SHIELDSPELL_REF] && sc->data[SC_SHIELDSPELL_REF]->val1 == 2 )
@@ -5678,8 +5685,6 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 		def2 -= def2 * sc->data[SC_PARALYSIS]->val2 / 100;
 	if(sc->data[SC_EQC])
 		def2 -= def2 * sc->data[SC_EQC]->val2 / 100;
-	if(sc->data[SC_UNLIMIT])
-		return 1;
 
 #ifdef RENEWAL
 	return (short)cap_value(def2,SHRT_MIN,SHRT_MAX);
@@ -5711,6 +5716,10 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 	if(sc->data[SC_STEELBODY])
 		return 90;
 #endif
+	if(sc->data[SC_MDEFSET])
+		return sc->data[SC_MDEFSET]->val1;
+	if(sc->data[SC_UNLIMIT])
+		return 1;
 
 	if(sc->data[SC_ARMORCHANGE])
 		mdef += sc->data[SC_ARMORCHANGE]->val3;
@@ -5739,8 +5748,6 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 	}
 	if (sc->data[SC_ODINS_POWER])
 		mdef -= 20 * sc->data[SC_ODINS_POWER]->val1;
-	if(sc->data[SC_UNLIMIT])
-		return 1;
 
 	return (defType)cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX);
 }
@@ -5761,17 +5768,19 @@ static signed short status_calc_mdef2(struct block_list *bl, struct status_chang
 		return (short)cap_value(mdef2,1,SHRT_MAX);
 #endif
 
-
 	if(sc->data[SC_BERSERK])
 		return 0;
 	if(sc->data[SC_SKA])
 		return 90;
+	if(sc->data[SC_MDEFSET])
+		return sc->data[SC_MDEFSET]->val1;
+	if(sc->data[SC_UNLIMIT])
+		return 1;
+
 	if(sc->data[SC_MINDBREAKER])
 		mdef2 -= mdef2 * sc->data[SC_MINDBREAKER]->val3/100;
 	if(sc->data[SC_ANALYZE])
 		mdef2 -= mdef2 * ( 14 * sc->data[SC_ANALYZE]->val1 ) / 100;
-	if(sc->data[SC_UNLIMIT])
-		return 1;
 
 #ifdef RENEWAL
 	return (short)cap_value(mdef2,SHRT_MIN,SHRT_MAX);
@@ -7155,8 +7164,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			sc_def2 = status->agi*25;
 			break;
 		case SC_ELECTRICSHOCKER:
-			if( bl->type == BL_MOB )
-				tick_def2 = status->agi*100;
+			tick_def2 = (status->vit + status->agi) * 70;
 			break;
 		case SC_CRYSTALIZE:
 			tick_def2 = b_status->vit*100;
@@ -9853,8 +9861,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_CLOSECONFINE2:
 		case SC_TINDER_BREAKER:
 		case SC_TINDER_BREAKER2:
-		case SC_SPIDERWEB:
-		case SC_ELECTRICSHOCKER:
 		case SC_BITE:
 		case SC_THORNSTRAP:
 		case SC__MANHOLE:
@@ -9871,8 +9877,16 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			unit_stop_walking(bl,1);
 		break;
 		case SC_ANKLE:
-			if( battle_config.skill_trap_type || !map_flag_gvg(bl->m) )
-				unit_stop_walking(bl,1);
+		case SC_SPIDERWEB:
+		case SC_ELECTRICSHOCKER:
+			{
+				int knockback_immune = sd ? !sd->special_state.no_knockback : !(status->mode&(MD_KNOCKBACK_IMMUNE|MD_BOSS));
+
+				if (knockback_immune) {
+					if (battle_config.skill_trap_type && !map_flag_gvg2(bl->m))
+						unit_stop_walking(bl, 1);
+				}
+			}
 		break;
 		case SC_HIDING:
 		case SC_CLOAKING:
@@ -11605,7 +11619,8 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 
 	case SC_ELECTRICSHOCKER:
 		if( --(sce->val4) >= 0 ) {
-			status_charge(bl, 0, status->max_sp / 100 * sce->val1 * 5 );
+			if (!status_charge(bl, 0, 5 * sce->val1 * status->max_sp / 100))
+				; // Keep immobilize status even the SP is already running out.
 			sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
 			return 0;
 		}
