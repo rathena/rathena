@@ -2603,7 +2603,7 @@
 4595,Cenere_Card,Cenere Card,6,20,,10,,,,,,,,4,,,,,{ bonus bAspdRate,2*(readparam(bAgi)/10); bonus bDelayrate,-2*(readparam(bAgi)/10); },{},{}
 4596,Antique_Book_Card,Antique Book Card,6,20,,10,,,,,,,,4,,,,,{ bonus bMatk,5*(readparam(bInt)/10); },{},{}
 4597,Lichtern_Blue_Card,Lichtern Blue Card,6,20,,10,,,,,,,,769,,,,,{ bonus bMatk,10; bonus2 bMagicAtkEle,Ele_Water,(getrefine()>=9)?10:5; },{},{}
-4598,Lichtern_Green_Card,Lichtern Green Card,6,20,,10,,,,,,,,769,,,,,{ bonus bMatk,10; bMagicAtkEle,Ele_Ghost,(getrefine()>=9)?10:5; },{},{}
+4598,Lichtern_Green_Card,Lichtern Green Card,6,20,,10,,,,,,,,769,,,,,{ bonus bMatk,10; bonus2 bMagicAtkEle,Ele_Ghost,(getrefine()>=9)?10:5; },{},{}
 4599,Lichtern_Red_Card,Lichtern Red Card,6,20,,10,,,,,,,,769,,,,,{ bonus bMatk,10; bonus2 bMagicAtkEle,Ele_Fire,(getrefine()>=9)?10:5; },{},{}
 4600,Lichtern_Yellow_Card,Lichtern Yellow Card,6,20,,10,,,,,,,,769,,,,,{ bonus bMatk,10; bonus2 bMagicAtkEle,Ele_Earth,(getrefine()>=9)?10:5; },{},{}
 4601,Amdarais_Card,Amdarais Card,6,20,,10,,,,,,,,16,,,,,{ bonus bAtkRate,15; bonus bMatkRate,15; bonus2 bHPLossRate,666,4000; bonus2 bSPLossRate,66,4000; },{},{ heal -6666,-666; }
@@ -5507,8 +5507,8 @@
 11533,Satay,Satay,0,15,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(17,23),0; },{},{}
 11534,Coco_Juice,Coconut Juice,0,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(17,23),0; },{},{}
 11535,Almond_Chocolate,Almond Chocolate,0,190,,200,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal 0,rand(8,16); },{},{}
-11536,Cat_Hard_Biscuit,Cat Biscuit,0,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(70,110),0; },{},{}
-11537,Rice_Weevil_Bug,Rice Weevil Bug,0,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(100,150),0; },{},{}
+11536,Cat_Hard_Biscuit,Cat Biscuit,0,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(70,110),0; callfunc "F_Cat_Hard_Biscuit"; },{},{}
+11537,Rice_Weevil_Bug,Rice Weevil Bug,0,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(100,150),0; callfunc "F_Rice_Weevil_Bug"; },{},{}
 11538,Fresh_Octopus_Legs,Fresh Octopus Legs,0,20,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(35,60),rand(5,10); },{},{}
 11539,Athale_Choco,Athale Choco,0,1,,80,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal 50,50; },{},{}
 11540,Shyai_Choco,Shyai Choco,0,1,,80,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal 50,50; },{},{}
@@ -5522,10 +5522,10 @@
 11548,Woe_White_Potion,Siege White Potion,0,0,,80,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 10,0; },{},{}
 11549,Woe_Blue_Potion,Siege Blue Potion,0,0,,80,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 0,10; },{},{}
 11550,Pumpkin_Cake,Pumpkin Cake,0,10,,80,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 5,5; },{},{}
-11551,Savory_Herb_Salad,Savory Herb Salad,0,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal rand(20,30),0; sc_start SC_STRFOOD,180000,1; },{},{}
-11552,Apple_Carrot_Salad,Apple Carrot Salad,0,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal rand(20,30),0; sc_start SC_AGIFOOD,180000,1; },{},{}
-11553,Casual_Stew,Casual Stew,0,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal rand(20,30),0; sc_start SC_VITFOOD,180000,1; },{},{}
-11554,Golden_Roasted_Apple,Golden Roasted Apple,0,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal rand(20,30),0; sc_start SC_DEXFOOD,180000,1; },{},{}
+11551,Savory_Herb_Salad,Savory Herb Salad,0,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(20,30),0; sc_start SC_STRFOOD,180000,1; },{},{}
+11552,Apple_Carrot_Salad,Apple Carrot Salad,0,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(20,30),0; sc_start SC_AGIFOOD,180000,1; },{},{}
+11553,Casual_Stew,Casual Stew,0,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(20,30),0; sc_start SC_VITFOOD,180000,1; },{},{}
+11554,Golden_Roasted_Apple,Golden Roasted Apple,0,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(20,30),0; sc_start SC_DEXFOOD,180000,1; },{},{}
 11589,Iceflake,Cold Snow Cone,0,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 5,5; },{},{}
 11590,Meat_Skewer5,Skewer No.5,0,5000,,300,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(760,810),10; },{},{}
 11596,Blood_In_Skull,Blood In Skull,0,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(600,800),0; },{},{}

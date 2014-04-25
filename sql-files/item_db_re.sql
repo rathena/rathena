@@ -2634,7 +2634,7 @@ REPLACE INTO `item_db_re` VALUES (4594,'Petal_Card','Petal Card',6,20,NULL,10,NU
 REPLACE INTO `item_db_re` VALUES (4595,'Cenere_Card','Cenere Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,NULL,NULL,'bonus bAspdRate,2*(readparam(bAgi)/10); bonus bDelayrate,-2*(readparam(bAgi)/10);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4596,'Antique_Book_Card','Antique Book Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,NULL,NULL,'bonus bMatk,5*(readparam(bInt)/10);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4597,'Lichtern_Blue_Card','Lichtern Blue Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,769,NULL,NULL,NULL,NULL,'bonus bMatk,10; bonus2 bMagicAtkEle,Ele_Water,(getrefine()>=9)?10:5;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (4598,'Lichtern_Green_Card','Lichtern Green Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,769,NULL,NULL,NULL,NULL,'bonus bMatk,10; bMagicAtkEle,Ele_Ghost,(getrefine()>=9)?10:5;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (4598,'Lichtern_Green_Card','Lichtern Green Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,769,NULL,NULL,NULL,NULL,'bonus bMatk,10; bonus2 bMagicAtkEle,Ele_Ghost,(getrefine()>=9)?10:5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4599,'Lichtern_Red_Card','Lichtern Red Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,769,NULL,NULL,NULL,NULL,'bonus bMatk,10; bonus2 bMagicAtkEle,Ele_Fire,(getrefine()>=9)?10:5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4600,'Lichtern_Yellow_Card','Lichtern Yellow Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,769,NULL,NULL,NULL,NULL,'bonus bMatk,10; bonus2 bMagicAtkEle,Ele_Earth,(getrefine()>=9)?10:5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4601,'Amdarais_Card','Amdarais Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL,NULL,'bonus bAtkRate,15; bonus bMatkRate,15; bonus2 bHPLossRate,666,4000; bonus2 bSPLossRate,66,4000;',NULL,'heal -6666,-666;');
@@ -5538,8 +5538,8 @@ REPLACE INTO `item_db_re` VALUES (11532,'Nasi_Goreng','Nasi Goreng',0,15,NULL,20
 REPLACE INTO `item_db_re` VALUES (11533,'Satay','Satay',0,15,NULL,20,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(17,23),0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (11534,'Coco_Juice','Coconut Juice',0,20,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(17,23),0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (11535,'Almond_Chocolate','Almond Chocolate',0,190,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal 0,rand(8,16);',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (11536,'Cat_Hard_Biscuit','Cat Biscuit',0,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(70,110),0;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (11537,'Rice_Weevil_Bug','Rice Weevil Bug',0,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(100,150),0;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (11536,'Cat_Hard_Biscuit','Cat Biscuit',0,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(70,110),0; callfunc "F_Cat_Hard_Biscuit";',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (11537,'Rice_Weevil_Bug','Rice Weevil Bug',0,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(100,150),0; callfunc "F_Rice_Weevil_Bug";',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (11538,'Fresh_Octopus_Legs','Fresh Octopus Legs',0,20,NULL,30,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(35,60),rand(5,10);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (11539,'Athale_Choco','Athale Choco',0,1,NULL,80,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal 50,50;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (11540,'Shyai_Choco','Shyai Choco',0,1,NULL,80,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal 50,50;',NULL,NULL);
@@ -5553,10 +5553,10 @@ REPLACE INTO `item_db_re` VALUES (11547,'Woe_Violet_Potion','Siege Purple Potion
 REPLACE INTO `item_db_re` VALUES (11548,'Woe_White_Potion','Siege White Potion',0,0,NULL,80,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'percentheal 10,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (11549,'Woe_Blue_Potion','Siege Blue Potion',0,0,NULL,80,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'percentheal 0,10;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (11550,'Pumpkin_Cake','Pumpkin Cake',0,10,NULL,80,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'percentheal 5,5;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (11551,'Savory_Herb_Salad','Savory Herb Salad',0,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'percentheal rand(20,30),0; sc_start SC_STRFOOD,180000,1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (11552,'Apple_Carrot_Salad','Apple Carrot Salad',0,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'percentheal rand(20,30),0; sc_start SC_AGIFOOD,180000,1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (11553,'Casual_Stew','Casual Stew',0,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'percentheal rand(20,30),0; sc_start SC_VITFOOD,180000,1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (11554,'Golden_Roasted_Apple','Golden Roasted Apple',0,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'percentheal rand(20,30),0; sc_start SC_DEXFOOD,180000,1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (11551,'Savory_Herb_Salad','Savory Herb Salad',0,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(20,30),0; sc_start SC_STRFOOD,180000,1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (11552,'Apple_Carrot_Salad','Apple Carrot Salad',0,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(20,30),0; sc_start SC_AGIFOOD,180000,1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (11553,'Casual_Stew','Casual Stew',0,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(20,30),0; sc_start SC_VITFOOD,180000,1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (11554,'Golden_Roasted_Apple','Golden Roasted Apple',0,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(20,30),0; sc_start SC_DEXFOOD,180000,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (11589,'Iceflake','Cold Snow Cone',0,20,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'percentheal 5,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (11590,'Meat_Skewer5','Skewer No.5',0,5000,NULL,300,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(760,810),10;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (11596,'Blood_In_Skull','Blood In Skull',0,20,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(600,800),0;',NULL,NULL);
