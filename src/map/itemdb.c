@@ -228,7 +228,7 @@ static void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, uint16 grou
 		else if (!flag && group->isAnnounced) { ///TODO: Move this broadcast to proper behavior (it should on at different packet)
 			char output[CHAT_SIZE_MAX];
 			sprintf(output,msg_txt(NULL,717),sd->status.name,itemdb_jname(group->nameid),itemdb_jname(sd->itemid));
-			clif_broadcast(&sd->bl,output,strlen(output),0,ALL_CLIENT);
+			clif_broadcast(&sd->bl,output,strlen(output),BC_DEFAULT,ALL_CLIENT);
 			//clif_broadcast_obtain_special_item();
 		}
 		if (itemdb_isstackable(group->nameid))

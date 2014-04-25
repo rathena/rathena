@@ -1309,7 +1309,7 @@ int npc_buysellsel(struct map_session_data* sd, int id, int type)
 
 		if (id) {
 			sprintf(output,msg_txt(sd,714),id->jname,id->nameid); // Item Shop List: %s (%d)
-			clif_broadcast(&sd->bl,output,strlen(output) + 1,0x10,SELF);
+			clif_broadcast(&sd->bl,output,strlen(output) + 1,BC_BLUE,SELF);
 		}
 	} else if (nd->subtype == POINTSHOP) {
 		char output[CHAT_SIZE_MAX];
@@ -1317,7 +1317,7 @@ int npc_buysellsel(struct map_session_data* sd, int id, int type)
 		memset(output,'\0',sizeof(output));
 
 		sprintf(output,msg_txt(sd,715),nd->u.shop.pointshop_str); // Point Shop List: '%s'
-		clif_broadcast(&sd->bl,output,strlen(output) + 1,0x10,SELF);
+		clif_broadcast(&sd->bl,output,strlen(output) + 1,BC_BLUE,SELF);
 	}
 
 	// reset the callshop state for future calls

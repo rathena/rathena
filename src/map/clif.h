@@ -83,7 +83,7 @@ typedef enum send_target {
 	AREA_WOS,			// area, without self
 	AREA_WOC,			// area, without chatrooms
 	AREA_WOSC,			// area, without own chatroom
-	AREA_CHAT_WOC,			// hearable area, without chatrooms
+	AREA_CHAT_WOC,		// hearable area, without chatrooms
 	CHAT,				// current chatroom
 	CHAT_WOS,			// current chatroom, without self
 	PARTY,
@@ -110,6 +110,25 @@ typedef enum send_target {
 	BG_AREA,
 	BG_AREA_WOS,
 } send_target;
+
+typedef enum broadcast_flags {
+	BC_ALL			= 0,
+	BC_MAP			= 1,
+	BC_AREA			= 2,
+	BC_SELF			= 3,
+	BC_TARGET_MASK	= 0x07,
+
+	BC_PC			= 0x00,
+	BC_NPC			= 0x08,
+	BC_SOURCE_MASK	= 0x08, // BC_PC|BC_NPC
+
+	BC_YELLOW		= 0x00,
+	BC_BLUE			= 0x10,
+	BC_WOE			= 0x20,
+	BC_COLOR_MASK	= 0x30, // BC_YELLOW|BC_BLUE|BC_WOE
+
+	BC_DEFAULT		= BC_ALL|BC_PC|BC_YELLOW
+} broadcast_flags;
 
 typedef enum emotion_type {
 	E_GASP = 0,     // /!

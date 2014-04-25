@@ -5596,14 +5596,14 @@ void clif_displaymessage(const int fd, const char* mes)
 /// 009a <packet len>.W <message>.?B
 void clif_broadcast(struct block_list* bl, const char* mes, int len, int type, enum send_target target)
 {
-	int lp = type ? 4 : 0;
+	int lp = (type&BC_COLOR_MASK) ? 4 : 0;
 	unsigned char *buf = (unsigned char*)aMalloc((4 + lp + len)*sizeof(unsigned char));
 
 	WBUFW(buf,0) = 0x9a;
 	WBUFW(buf,2) = 4 + lp + len;
-	if (type == 0x10) // bc_blue
+	if (type&BC_BLUE)
 		WBUFL(buf,4) = 0x65756c62; //If there's "blue" at the beginning of the message, game client will display it in blue instead of yellow.
-	else if (type == 0x20) // bc_woe
+	else if (type&BC_WOE)
 		WBUFL(buf,4) = 0x73737373; //If there's "ssss", game client will recognize message as 'WoE broadcast'.
 	memcpy(WBUFP(buf, 4 + lp), mes, len);
 	clif_send(buf, WBUFW(buf,2), bl, target);
@@ -9749,8 +9749,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		if( map[sd->bl.m].flag.allowks && !map_flag_ks(sd->bl.m) )
 		{
 			char output[128];
-			safesnprintf(output,sizeof(output),"[ Kill Steal Protection Disable. KS is allowed in this map ]");
-			clif_broadcast(&sd->bl, output, strlen(output) + 1, 0x10, SELF);
+			sprintf(output, "[ Kill Steal Protection Disable. KS is allowed in this map ]");
+			clif_broadcast(&sd->bl, output, strlen(output) + 1, BC_BLUE, SELF);
 		}
 
 		if( pc_has_permission(sd,PC_PERM_VIEW_HPMETER) ) {
