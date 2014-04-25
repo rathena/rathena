@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20140211
+//= 20140425
 //===== Description: =========================================
 //= List of available atcommands and their functions.
 //============================================================
@@ -721,16 +721,16 @@ Valid item types:
      0 = Healing Items
      2 = Useable Items
      3 = Etc Items
-     4 = Weapons
-     5 = Armors
+     4 = Armors
+     5 = Weapons
      6 = Cards
      7 = Pet Eggs
      8 = Pet Armors
      10 = Ammunition Items
 
 Example:
-To drop all weapons in inventory.
-@dropall 4
+To drop all weapons in inventory...
+@dropall 5
 
 ---------------------------------------
 
