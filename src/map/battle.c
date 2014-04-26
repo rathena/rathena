@@ -3754,8 +3754,8 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 		case RL_D_TAIL:
 			skillratio += -100 + (2500 + 500 * skill_lv );
-			if (sd && &sd->c_marker)
-				skillratio /= max(sd->c_marker.count,1);
+			//if (sd && &sd->c_marker)
+			//	skillratio /= max(sd->c_marker.count,1);
 			break;
 		case RL_R_TRIP:
 			skillratio += -100 + (150 * skill_lv); //(custom)
@@ -3777,6 +3777,9 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 		case RL_FIRE_RAIN:
 			skillratio += -100 + 2000 + status_get_dex(src); //(custom) //kRO Update 2013-07-24. 2,000% + caster's DEX (?) [Cydh]
+			break;
+		case RL_AM_BLAST:
+			skillratio += -100 + (skill_lv * status_get_dex(src) / 2); //(custom)
 			break;
 	}
 	return skillratio;

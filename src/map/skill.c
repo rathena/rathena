@@ -1555,10 +1555,9 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 	case RL_SLUGSHOT:
 		if (bl->type != BL_PC)
 			sc_start(src,bl,SC_STUN,10 * skill_lv + rnd()%50,skill_lv,skill_get_time2(skill_id,skill_lv)); //(custom)
-		else if (dstsd) {
-			pc_setsit(dstsd);
-			clif_sitting(bl);
-		}
+		else if (dstsd)
+			//sit duration 2+skill_lv
+			status_change_start(src,bl,SC_SITDOWN_FORCE,10000,skill_lv,0,0,0,(2+skill_lv)*1000,1|2|8); 
 		break;
 	case RL_BANISHING_BUSTER:
 		{
@@ -10083,8 +10082,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			status_zap(src,0,skill_get_sp(skill_id,skill_lv));
 			skill_area_temp[1] = 0;
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-			if (sd->c_marker.count)
-				map_foreachinrange(skill_area_sub,bl,skill_get_splash(skill_id,skill_lv),splash_target(src),src,skill_id,skill_lv,tick,flag|BCT_ENEMY|SD_SPLASH|1,skill_castend_damage_id);
+			map_foreachinrange(skill_area_sub,bl,skill_get_splash(skill_id,skill_lv),splash_target(src),src,skill_id,skill_lv,tick,flag|BCT_ENEMY|SD_SPLASH|1,skill_castend_damage_id);
 			sd->c_marker.count = 0;
 		}
 		break;

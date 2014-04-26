@@ -2289,6 +2289,7 @@ void script_hardcoded_constants(void) {
 	script_set_constant("Option_Invisible",OPTION_INVISIBLE,false);
 	script_set_constant("Option_Orcish",OPTION_ORCISH,false);
 	script_set_constant("Option_Wedding",OPTION_WEDDING,false);
+	script_set_constant("Option_Ruwach",OPTION_RUWACH,false);
 	script_set_constant("Option_Chasewalk",OPTION_CHASEWALK,false);
 	script_set_constant("Option_Flying",OPTION_FLYING,false);
 	script_set_constant("Option_Xmas",OPTION_XMAS,false);

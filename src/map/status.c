@@ -775,11 +775,11 @@ void initChangeTables(void)
 	add_sc( RL_HAMMER_OF_GOD	, SC_STUN );
 	set_sc( RL_B_TRAP		, SC_B_TRAP		, SI_B_TRAP		, SCB_SPEED );
 	set_sc( RL_E_CHAIN		, SC_E_CHAIN	, SI_E_CHAIN	, SCB_NONE );
-	set_sc( RL_P_ALTER		, SC_P_ALTER	, SI_P_ALTER	, SCB_BATK );
+	set_sc( RL_P_ALTER		, SC_P_ALTER	, SI_P_ALTER	, SCB_NONE );
 	set_sc( RL_SLUGSHOT		, SC_STUN		, SI_SLUGSHOT	, SCB_NONE );
-	set_sc( RL_HEAT_BARREL	, SC_HEAT_BARREL	, SI_HEAT_BARREL	, SCB_BATK|SCB_ASPD|SCB_HIT );
-	set_sc_with_vfx( RL_C_MARKER	, SC_C_MARKER		, SI_C_MARKER		, SCB_SPEED );
-	set_sc_with_vfx( RL_AM_BLAST	, SC_ANTI_M_BLAST	, SI_ANTI_M_BLAST	, SCB_DEF_ELE );
+	set_sc( RL_HEAT_BARREL	, SC_HEAT_BARREL	, SI_HEAT_BARREL	, SCB_FLEE|SCB_ASPD );
+	set_sc_with_vfx( RL_C_MARKER	, SC_C_MARKER		, SI_C_MARKER		, SCB_FLEE );
+	set_sc_with_vfx( RL_AM_BLAST	, SC_ANTI_M_BLAST	, SI_ANTI_M_BLAST	, SCB_NONE );
 
 	set_sc_with_vfx( SC_ALL_RIDING		, SC_ALL_RIDING		, SI_ALL_RIDING		, SCB_SPEED );
 
@@ -5496,7 +5496,7 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 	if (sc->data[SC_TEARGAS])
 		flee -= flee * 50 / 100;
 	if( sc->data[SC_C_MARKER] )
-		flee -= 10;
+		flee -= flee * sc->data[SC_C_MARKER]->val3 / 100;
 	if(sc->data[SC_HEAT_BARREL])
 		flee -= sc->data[SC_HEAT_BARREL]->val4;
 
@@ -9703,8 +9703,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_C_MARKER:
 			val2 = src->id;
+			val3 = 10; //-10% flee
 			//Start timer to send mark on mini map
-			val3 = tick/1000;
+			val4 = tick/1000;
 			tick_time = 1000;
 			break;
 		case SC_H_MINE:
@@ -9717,7 +9718,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				if (sd) n = sd->spiritball_old;
 				val2 = val1 * 5; // -fixed casttime (custom)
 				val3 = val1 * n / 5; // +aspd (custom)
-				val4 = 75 - val1 * 5; // -flee
+				val4 = 75 - val1 * 5; // -flee (70:65:60:55:50)
 			}
 			break;
 		case SC_P_ALTER:
@@ -11946,7 +11947,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		}
 		break;
 	case SC_C_MARKER:
-		if( --(sce->val3) >= 0 ) {
+		if( --(sce->val4) >= 0 ) {
 			TBL_PC *tsd = map_id2sd(sce->val2);
 			if (!tsd || tsd->bl.m != bl->m) //End the SC if caster isn't in same map
 				break;
