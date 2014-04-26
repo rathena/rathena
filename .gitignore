@@ -2,7 +2,12 @@
 /autom4te.cache/requests
 /autom4te.cache/traces.0
 #Global
+.Apple*
 .DS_Store
+.clang_complete
+.local.vimrc
+.ycm_extra_conf.py*
+Thumbs.db
 
 # /
 /*_fifo

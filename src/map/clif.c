@@ -5596,14 +5596,14 @@ void clif_displaymessage(const int fd, const char* mes)
 /// 009a <packet len>.W <message>.?B
 void clif_broadcast(struct block_list* bl, const char* mes, int len, int type, enum send_target target)
 {
-	int lp = type ? 4 : 0;
+	int lp = (type&BC_COLOR_MASK) ? 4 : 0;
 	unsigned char *buf = (unsigned char*)aMalloc((4 + lp + len)*sizeof(unsigned char));
 
 	WBUFW(buf,0) = 0x9a;
 	WBUFW(buf,2) = 4 + lp + len;
-	if (type == 0x10) // bc_blue
+	if (type&BC_BLUE)
 		WBUFL(buf,4) = 0x65756c62; //If there's "blue" at the beginning of the message, game client will display it in blue instead of yellow.
-	else if (type == 0x20) // bc_woe
+	else if (type&BC_WOE)
 		WBUFL(buf,4) = 0x73737373; //If there's "ssss", game client will recognize message as 'WoE broadcast'.
 	memcpy(WBUFP(buf, 4 + lp), mes, len);
 	clif_send(buf, WBUFW(buf,2), bl, target);
@@ -5898,12 +5898,25 @@ void clif_wis_message(int fd, const char* nick, const char* mes, int mes_len)
 ///     1 = target character is not loged in
 ///     2 = ignored by target
 ///     3 = everyone ignored by target
-void clif_wis_end(int fd, int flag)
+void clif_wis_end(int fd, int result)
 {
+	struct map_session_data *sd = (session_isValid(fd) ? session[fd]->session_data : NULL);
+
+	if (!sd)
+		return;
+
+#if PACKETVER >= 20131223
+	WFIFOHEAD(fd,packet_len(0x9df));
+	WFIFOW(fd,0) = 0x9df;
+	WFIFOB(fd,2) = (char)result;
+	WFIFOL(fd,3) = 0;
+	WFIFOSET(fd,packet_len(0x9df));
+#else
 	WFIFOHEAD(fd,packet_len(0x98));
 	WFIFOW(fd,0) = 0x98;
-	WFIFOW(fd,2) = flag;
+	WFIFOB(fd,2) = (char)result;
 	WFIFOSET(fd,packet_len(0x98));
+#endif
 }
 
 
@@ -9736,8 +9749,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		if( map[sd->bl.m].flag.allowks && !map_flag_ks(sd->bl.m) )
 		{
 			char output[128];
-			safesnprintf(output,sizeof(output),"[ Kill Steal Protection Disable. KS is allowed in this map ]");
-			clif_broadcast(&sd->bl, output, strlen(output) + 1, 0x10, SELF);
+			sprintf(output, "[ Kill Steal Protection Disable. KS is allowed in this map ]");
+			clif_broadcast(&sd->bl, output, strlen(output) + 1, BC_BLUE, SELF);
 		}
 
 		if( pc_has_permission(sd,PC_PERM_VIEW_HPMETER) ) {
@@ -13081,30 +13094,64 @@ void clif_parse_GMRecall2(int fd, struct map_session_data* sd)
 
 
 /// /item /monster (CZ_ITEM_CREATE).
-/// Request to make items or spawn monsters.
+/// Request to execute GM commands.
+/// Usage:
+/// /item n - summon n monster or acquire n item/s
+/// /item money - grants 2147483647 zenies
+/// /item whereisboss - locate boss mob in current map.(not yet implemented)
+/// /item regenboss_n t - regenerate n boss monster by t millisecond.(not yet implemented)
+/// /item onekillmonster - toggle an ability to kill mobs in one hit.(not yet implemented)
+/// /item bossinfo - display the information of a boss monster in current map.(not yet implemented)
+/// /item cap_n - capture n monster as pet.(not yet implemented)
+/// /item agitinvest - reset current global agit investments.(not yet implemented)
 /// 013f <item/mob name>.24B
-void clif_parse_GM_Monster_Item(int fd, struct map_session_data *sd)
+/// 09ce <item/mob name>.100B [Ind/Yommy]
+void clif_parse_GM_Item_Monster(int fd, struct map_session_data *sd)
 {
-	char *monster_item_name;
-	char command[NAME_LENGTH+10];
+	int i, count;
+	char *item_monster_name;
+	struct item_data *item_array[10];
+	struct mob_db *mob_array[10];
+	char command[256];
+#if PACKETVER >= 20131218
+	char str[100];
+#else
+	char str[24];
+#endif
 
-	monster_item_name = (char*)RFIFOP(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
-	monster_item_name[NAME_LENGTH-1] = '\0';
+	item_monster_name = str;
+	item_monster_name[(sizeof(str) - 2) - 1] = '\0';
 
-	// FIXME: Should look for item first, then for monster.
-	// FIXME: /monster takes mob_db Sprite_Name as argument
-	if( mobdb_searchname(monster_item_name) ) {
-		safesnprintf(command, sizeof(command)-1, "%cmonster %s", atcommand_symbol, monster_item_name);
+	if( (count = itemdb_searchname_array(item_array, 10, item_monster_name)) > 0 ) {
+		for( i = 0; i < count; i++ )
+			if( !item_array[i] )
+				continue;
+
+		if( i < count ) {
+			if( item_array[i]->type == IT_WEAPON || item_array[i]->type == IT_ARMOR ) //Nonstackable
+				safesnprintf(command, sizeof(command) - 1, "%citem2 %d 1 0 0 0 0 0 0 0", atcommand_symbol, item_array[i]->nameid);
+			else
+				safesnprintf(command, sizeof(command) - 1, "%citem %d 20", atcommand_symbol, item_array[i]->nameid);
+			is_atcommand(fd, sd, command, 1);
+			return;
+		}
+	}
+
+	if( strcmp(item_monster_name, "money") == 0 ) {
+		safesnprintf(command, sizeof(command) - 1, "%czeny %d", atcommand_symbol, INT_MAX);
 		is_atcommand(fd, sd, command, 1);
 		return;
 	}
-	// FIXME: Stackables have a quantity of 20.
-	// FIXME: Equips are supposed to be unidentified.
 
-	if( itemdb_searchname(monster_item_name) ) {
-		safesnprintf(command, sizeof(command)-1, "%citem %s", atcommand_symbol, monster_item_name);
-		is_atcommand(fd, sd, command, 1);
-		return;
+	if( (count = mobdb_searchname_array(mob_array, 10, item_monster_name)) > 0 ) {
+		for( i = 0; i < count; i++ )
+			if( !mob_array[i] )
+				continue;
+
+		if( i < count ) {
+			safesnprintf(command, sizeof(command) - 1, "%cmonster %s", atcommand_symbol, mob_array[i]->sprite);
+			is_atcommand(fd, sd, command, 1);
+		}
 	}
 }
 
@@ -15033,7 +15080,7 @@ void clif_cashshop_result( struct map_session_data *sd, uint16 item_id, uint16 r
 /// 0288 <name id>.W <amount>.W <kafra points>.L (PACKETVER >= 20070711)
 /// 0288 <packet len>.W <kafra points>.L <count>.W { <amount>.W <name id>.W }.4B*count (PACKETVER >= 20100803)
 /// 0848 <packet len>.W <count>.W <packet len>.W <kafra points>.L <count>.W { <amount>.W <name id>.W <tab>.W }.6B*count (PACKETVER >= 20130000)
-void clif_parse_cashshop_buy(int fd, struct map_session_data *sd){
+void clif_parse_cashshop_buy(int fd, struct map_session_data *sd) {
 	struct s_packet_db* info;
 	int cmd = RFIFOW(fd,0);
 
@@ -15044,8 +15091,7 @@ void clif_parse_cashshop_buy(int fd, struct map_session_data *sd){
 	if( sd->state.trading || !sd->npc_shopid ) {
 		clif_cashshop_ack(sd,1);
 		return;
-	}
-	else {
+	} else {
 #if PACKETVER < 20101116
 		short nameid = RFIFOW(fd,info->pos[0]);
 		short amount = RFIFOW(fd,info->pos[1]);
@@ -15059,11 +15105,11 @@ void clif_parse_cashshop_buy(int fd, struct map_session_data *sd){
 		int count  = RFIFOW(fd,info->pos[2]);
 		unsigned short* item_list = (unsigned short*)RFIFOP(fd,info->pos[3]);
 
-		if( len < 10 || len != 10 + count * s_itl){
+		if( len < 10 || len != 10 + count * s_itl) {
 			ShowWarning("Player %u sent incorrect cash shop buy packet (len %u:%u)!\n", sd->status.char_id, len, 10 + count * s_itl);
 			return;
 		}
-		if(cmd==0x848){
+		if(cmd == 0x848) {
 			if (cashshop_buylist( sd, points, count, item_list))
 				clif_cashshop_ack(sd,0);
 			return;
@@ -15228,6 +15274,16 @@ void clif_parse_EquipTick(int fd, struct map_session_data* sd)
 	clif_equiptickack(sd, flag);
 }
 
+/// Request to change party invitation tick.
+/// value:
+///	 0 = disabled
+///	 1 = enabled
+void clif_parse_PartyTick(int fd, struct map_session_data* sd)
+{
+	bool flag = RFIFOB(fd,6) ? true : false;
+	sd->status.allow_party = flag;
+	clif_partytickack(sd, flag);
+}
 
 /// Questlog System [Kevin] [Inkfish]
 ///
@@ -16922,6 +16978,18 @@ void clif_monster_hp_bar( struct mob_data* md, int fd ) {
 #endif
 }
 
+/* [Ind] placeholder for unsupported incoming packets (avoids server disconnecting client) */
+void __attribute__ ((unused)) clif_parse_dull(int fd, struct map_session_data *sd) {
+	return;
+}
+
+void clif_partytickack(struct map_session_data* sd, bool flag) {
+	WFIFOHEAD(sd->fd, packet_len(0x2c9));
+	WFIFOW(sd->fd,0) = 0x2c9; 
+	WFIFOB(sd->fd,2) = flag;
+	WFIFOSET(sd->fd, packet_len(0x2c9)); 
+}
+
 /// Ack world info (ZC_ACK_BEFORE_WORLD_INFO)
 /// 0979 <world name>.24B <char name>.24B
 void clif_ackworldinfo(struct map_session_data* sd) {
@@ -16954,7 +17022,7 @@ void clif_parse_blocking_playcancel(int fd,struct map_session_data *sd){
 
 /// req world info (CZ_CLIENT_VERSION)
 /// 044A <version>.L
-void clif_parse_client_version(int fd,struct map_session_data *sd){
+void clif_parse_client_version(int fd, struct map_session_data *sd) {
 	//if(sd)
 	;
 }
@@ -17001,9 +17069,9 @@ void clif_sub_ranklist(unsigned char *buf,int idx,struct map_session_data* sd, i
 }
 
 /// 097d <RankingType>.W {<CharName>.24B <point>L}*10 <mypoint>L (ZC_ACK_RANKING)
-void clif_ranklist(struct map_session_data *sd, int16 rankingType){
+void clif_ranklist(struct map_session_data *sd, int16 rankingType) {
 	unsigned char buf[MAX_FAME_LIST * sizeof(struct fame_list)];
-	int mypoint=0;
+	int mypoint = 0;
 
 	WBUFW(buf,0) = 0x97d;
 	WBUFW(buf,2) = rankingType;
@@ -17027,14 +17095,14 @@ void clif_ranklist(struct map_session_data *sd, int16 rankingType){
  *  2: /taekwon
  *  3: /pk
  * */
-void clif_parse_ranklist(int fd,struct map_session_data *sd){
+void clif_parse_ranklist(int fd,struct map_session_data *sd) {
 	struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
 	int16 rankingtype = RFIFOW(fd,info->pos[0]); //type
 	if(rankingtype != 3) clif_ranklist(sd,rankingtype); // pk_list unsuported atm
 }
 
 // 097e <RankingType>.W <point>.L <TotalPoint>.L (ZC_UPDATE_RANKING_POINT)
-void clif_update_rankingpoint(struct map_session_data *sd, int rankingtype, int point){
+void clif_update_rankingpoint(struct map_session_data *sd, int rankingtype, int point) {
 #if PACKETVER < 20130710
 	switch(rankingtype){
 		case 0: clif_fame_blacksmith(sd,point); break;  // Blacksmith
@@ -17644,7 +17712,7 @@ void packetdb_readdb(void)
 #if PACKETVER < 20130000
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 #else
-	    0,  0,  0,  0,  0,  0,  0,  0,  0,  16,  0,  19,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0, 16,  0, 19,  0,  0,  0,  0,
 #endif
 	    0,  0,  0,  0,  0,  0, -1, -1, -1, -1,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -17674,7 +17742,11 @@ void packetdb_readdb(void)
 		31, 0,  0,  0,  0,  0,  0, -1,  8, 11,  9,  8,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0, 12, 10, 14, 10, 14,  6,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  6,  4,  6,  4,  0,  0,  0,  0,  0,  0,
-
+	//#0x09C0
+		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,102,  0,
+		0,  0,  0,  0,  2,  0, -1,  0,  2,  0,  0,  0,  0,  0,  0,  7,
+		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	};
 	struct {
 		void (*func)(int, struct map_session_data *);
@@ -17797,7 +17869,7 @@ void packetdb_readdb(void)
 		{clif_parse_GMKickAll,"killall"},
 		{clif_parse_GMRecall,"recall"},
 		{clif_parse_GMRecall,"summon"},
-		{clif_parse_GM_Monster_Item,"itemmonster"},
+		{clif_parse_GM_Item_Monster,"itemmonster"},
 		{clif_parse_GMShift,"remove"},
 		{clif_parse_GMShift,"shift"},
 		{clif_parse_GMChangeMapType,"changemaptype"},
@@ -17890,6 +17962,8 @@ void packetdb_readdb(void)
 		{ clif_parse_CashShopReqTab, "cashshopreqtab"},
 		/* */
 		{ clif_parse_MoveItem , "moveitem" },
+		{ clif_parse_PartyTick, "partytick" },
+		{ clif_parse_dull, "dull" },
 		{ clif_parse_GuildInvite2 , "guildinvite2" },
 		{ clif_parse_reqworldinfo, "reqworldinfo"},
 		{ clif_parse_client_version, "clientversion"},
@@ -17917,7 +17991,7 @@ void packetdb_readdb(void)
 	memset(packet_db,0,sizeof(packet_db));
 	for( i = 0; i < ARRAYLENGTH(packet_len_table); ++i )
 		packet_len(i) = packet_len_table[i];
-	
+
 	clif_config.packet_db_ver = MAX_PACKET_VER;
 	for(f = 0; f<ARRAYLENGTH(filename); f++){
 		entries = 0;
@@ -17939,7 +18013,7 @@ void packetdb_readdb(void)
 			{
 				if(strcmpi(w1,"packet_ver")==0) {
 					int prev_ver = packet_ver;
-					skip_ver = 0;
+					skip_ver = false;
 					packet_ver = atoi(w2);
 					if ( packet_ver > MAX_PACKET_VER )
 					{	//Check to avoid overflowing. [Skotlex]

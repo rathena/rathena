@@ -6,8 +6,8 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/db.h" //dbmap
-
 //#include "../common/mmo.h"
+
 struct Channel;
 struct item;
 struct storage_data;
@@ -32,10 +32,9 @@ struct quest;
 struct party_booking_ad_info;
 #include <stdarg.h>
 
-enum
-{// packet DB
+enum { // packet DB
 	MAX_PACKET_DB  = 0xf00,
-	MAX_PACKET_VER = 45,
+	MAX_PACKET_VER = 46,
 	MAX_PACKET_POS = 20,
 };
 
@@ -84,7 +83,7 @@ typedef enum send_target {
 	AREA_WOS,			// area, without self
 	AREA_WOC,			// area, without chatrooms
 	AREA_WOSC,			// area, without own chatroom
-	AREA_CHAT_WOC,			// hearable area, without chatrooms
+	AREA_CHAT_WOC,		// hearable area, without chatrooms
 	CHAT,				// current chatroom
 	CHAT_WOS,			// current chatroom, without self
 	PARTY,
@@ -111,6 +110,25 @@ typedef enum send_target {
 	BG_AREA,
 	BG_AREA_WOS,
 } send_target;
+
+typedef enum broadcast_flags {
+	BC_ALL			= 0,
+	BC_MAP			= 1,
+	BC_AREA			= 2,
+	BC_SELF			= 3,
+	BC_TARGET_MASK	= 0x07,
+
+	BC_PC			= 0x00,
+	BC_NPC			= 0x08,
+	BC_SOURCE_MASK	= 0x08, // BC_PC|BC_NPC
+
+	BC_YELLOW		= 0x00,
+	BC_BLUE			= 0x10,
+	BC_WOE			= 0x20,
+	BC_COLOR_MASK	= 0x30, // BC_YELLOW|BC_BLUE|BC_WOE
+
+	BC_DEFAULT		= BC_ALL|BC_PC|BC_YELLOW
+} broadcast_flags;
 
 typedef enum emotion_type {
 	E_GASP = 0,     // /!
@@ -523,7 +541,7 @@ void clif_status_change(struct block_list *bl, int type, int flag, int tick, int
 void clif_status_change2(struct block_list *bl, int tid, enum send_target target, int type, int val1, int val2, int val3);
 
 void clif_wis_message(int fd, const char* nick, const char* mes, int mes_len);
-void clif_wis_end(int fd, int flag);
+void clif_wis_end(int fd, int result);
 
 void clif_solved_charname(int fd, int charid, const char* name);
 void clif_charnameack(int fd, struct block_list *bl);
@@ -693,6 +711,7 @@ int clif_hom_food(struct map_session_data *sd,int foodid,int fail);	//[orn]
 void clif_send_homdata(struct map_session_data *sd, int state, int param);	//[orn]
 
 void clif_equiptickack(struct map_session_data* sd, int flag);
+void clif_partytickack(struct map_session_data* sd, bool flag);
 void clif_viewequip_ack(struct map_session_data* sd, struct map_session_data* tsd);
 void clif_equipcheckbox(struct map_session_data* sd);
 

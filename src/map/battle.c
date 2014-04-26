@@ -2246,7 +2246,8 @@ static bool battle_skill_stacks_masteries_vvs(uint16 skill_id)
 #ifndef RENEWAL
 		skill_id == PA_SHIELDCHAIN || skill_id == CR_SHIELDBOOMERANG ||
 #endif
-		skill_id == LG_SHIELDPRESS || skill_id == LG_EARTHDRIVE || skill_id == RK_DRAGONBREATH_WATER)
+		skill_id == RK_DRAGONBREATH || skill_id == RK_DRAGONBREATH_WATER || skill_id == NC_SELFDESTRUCTION ||
+		skill_id == LG_SHIELDPRESS || skill_id == LG_EARTHDRIVE)
 			return false;
 
 	return true;
@@ -2663,8 +2664,6 @@ struct Damage battle_calc_skill_base_damage(struct Damage wd, struct block_list 
 			break;
 		case CR_SHIELDBOOMERANG:
 		case PA_SHIELDCHAIN:
-		case LG_SHIELDPRESS:
-		case LG_EARTHDRIVE:
 			wd.damage = sstatus->batk;
 			if (sd) {
 				short index = sd->equip_index[EQI_HAND_L];
@@ -3421,16 +3420,13 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 		case LG_SHIELDPRESS:
 			skillratio = 150 * skill_lv + status_get_str(src);
-			if( sd ) {
+			if (sd) {
 				short index = sd->equip_index[EQI_HAND_L];
-				if( index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR ) {
+
+				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR)
 					skillratio += sd->inventory_data[index]->weight / 10;
-					RE_LVL_DMOD(100);
-					skillratio += status_get_vit(src) * sd->status.inventory[index].refine;
-				}
-			} else {
-				RE_LVL_DMOD(100);
 			}
+			RE_LVL_DMOD(100);
 			break;
 		case LG_PINPOINTATTACK:
 			skillratio = (100 * skill_lv) + (5 * status_get_agi(src));
@@ -3475,17 +3471,14 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			RE_LVL_DMOD(100);
 			break;
 		case LG_EARTHDRIVE:
-			{
-				int16 sh_w = 0;
-				if (sd && sd->equip_index[EQI_HAND_L] >= 0) {
-					int16 idx = sd->equip_index[EQI_HAND_L];
-					if (sd->inventory_data[idx] && sd->inventory_data[idx]->type == IT_ARMOR)
-						sh_w = sd->inventory_data[idx]->weight/10;
-				}
-				skillratio += -100 + (skill_lv+1) * max(sh_w,1);
-				RE_LVL_DMOD(100);
-				break;
+			if (sd) {
+				short index = sd->equip_index[EQI_HAND_L];
+
+				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR)
+					skillratio += -100 + (skill_lv + 1) * sd->inventory_data[index]->weight / 10;
 			}
+			RE_LVL_DMOD(100);
+			break;
 		case LG_HESPERUSLIT:
 			skillratio = 120 * skill_lv;
 			if( sc && sc->data[SC_BANDING] )
@@ -3840,6 +3833,16 @@ static int battle_calc_skill_constant_addition(struct Damage wd, struct block_li
 		case RA_WUGBITE:
 			if(sd)
 				atk += (30 * pc_checkskill(sd, RA_TOOTHOFWUG));
+			break;
+		case LG_SHIELDPRESS:
+			if (sd) {
+				int damagevalue = 0;
+				short index = sd->equip_index[EQI_HAND_L];
+
+				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR)
+					damagevalue = sstatus->vit * sd->status.inventory[index].refine;
+				atk = damagevalue;
+			}
 			break;
 		case SR_TIGERCANNON: // (Tiger Cannon skill level x 240) + (Target Base Level x 40)
 			if( sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE ) // (Tiger Cannon skill level x 500) + (Target Base Level x 40)
@@ -4862,8 +4865,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		case RK_DRAGONBREATH:
 		case RK_DRAGONBREATH_WATER:
 		case NC_SELFDESTRUCTION:
-		case LG_SHIELDPRESS:
-		case LG_EARTHDRIVE:
 		case KO_HAPPOKUNAI: {
 				int64 tmp = wd.damage;
 
@@ -6548,9 +6549,17 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		skill_castend_damage_id(src, target, 0, 1, tick, 0);
 	if ( target->type == BL_SKILL && damage > 0 ){
 		TBL_SKILL *su = (TBL_SKILL*)target;
-		if( su->group && su->group->skill_id == HT_BLASTMINE)
-			skill_blown(src, target, 3, -1, 0);
+
+		if (su->group) {
+			if (su->group->skill_id == HT_BLASTMINE)
+				skill_blown(src, target, 3, -1, 0);
+			if (su->group->skill_id == GN_WALLOFTHORN) {
+				if (--su->val2 <= 0)
+					skill_delunit(su);
+			}
+		}
 	}
+
 	map_freeblock_lock();
 
 	if( skill_check_shadowform(target, damage, wd.div_) ) {
@@ -6916,11 +6925,10 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 						}else
 							return 0;
 				}
-			} else if (su->group->skill_id==WZ_ICEWALL ||
-					   su->group->skill_id == GN_WALLOFTHORN) {
+			} else if (su->group->skill_id == WZ_ICEWALL || su->group->skill_id == GN_WALLOFTHORN) {
 				state |= BCT_ENEMY;
 				strip_enemy = 0;
-			} else	//Excepting traps and icewall, you should not be able to target skills.
+			} else	//Excepting traps, Icewall, and Wall of Thorns, you should not be able to target skills.
 				return 0;
 		}
 			break;
