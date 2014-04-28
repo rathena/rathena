@@ -89,6 +89,7 @@ enum e_skill_inf3 {
 	INF3_NO_EFF_HOVERING	= 0x1000,	// Spell that does not affect user that has SC_HOVERING active
 	INF3_USABLE_WARG		= 0x2000,	// spell that can be use while riding warg
 	INF3_DIS_MADO			= 0x4000,	// spell that can't be used while in mado
+	INF3_USABLE_MANHOLE		= 0x8000,	// spell that can be used to target while under Man Hole effect
 	//... add other spell list option here
 };
 
@@ -179,7 +180,7 @@ struct s_skill_db {
 };
 extern struct s_skill_db skill_db[MAX_SKILL_DB];
 
-#define MAX_SKILL_UNIT_LAYOUT	50
+#define MAX_SKILL_UNIT_LAYOUT	55
 #define MAX_SQUARE_LAYOUT		5	// 11*11 Placement of a maximum unit
 #define MAX_SKILL_UNIT_COUNT ((MAX_SQUARE_LAYOUT*2+1)*(MAX_SQUARE_LAYOUT*2+1))
 struct s_skill_unit_layout {
@@ -398,9 +399,6 @@ int skill_unit_move(struct block_list *bl,unsigned int tick,int flag);
 int skill_unit_move_unit_group( struct skill_unit_group *group, int16 m,int16 dx,int16 dy);
 
 struct skill_unit_group *skill_check_dancing( struct block_list *src );
-
-// Guild skills [celest]
-int skill_guildaura_sub (struct map_session_data* sd, int id, int strvit, int agidex);
 
 // Chant canceled
 int skill_castcancel(struct block_list *bl,int type);

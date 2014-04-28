@@ -5,6 +5,7 @@
 #define _PC_H_
 
 #include "../common/mmo.h" // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus
+#include "../common/ers.h"
 #include "../common/timer.h" // INVALID_TIMER
 #include "map.h" // RC_ALL
 #include "atcommand.h" // AtCommandType
@@ -25,6 +26,7 @@
 #define MAX_PC_FEELHATE 3
 #define DAMAGELOG_SIZE_PC 100	// Any idea for this value?
 #define MAX_PC_BONUS_SCRIPT 20
+#define MAX_SPIRITBALL 15
 
 //Update this max as necessary. 55 is the value needed for Super Baby currently
 //Raised to 84 since Expanded Super Novice needs it.
@@ -201,7 +203,7 @@ struct map_session_data {
 		unsigned short autoloottype;
 		unsigned int autolooting : 1; //performance-saver, autolooting state for @alootid
 		unsigned short autobonus; //flag to indicate if an autobonus is activated. [Inkfish]
-		struct guild *gmaster_flag;
+		unsigned int gmaster_flag : 1;
 		unsigned int prevend : 1;//used to flag wheather you've spent 40sp to open the vending or not.
 		unsigned int warping : 1;//states whether you're in the middle of a warp processing
 		unsigned int permanent_speed : 1; // When 1, speed cannot be changed through status_calc_pc().
@@ -414,7 +416,7 @@ struct map_session_data {
 	short catch_target_class; // pet catching, stores a pet class to catch (short now) [zzo]
 
 	short spiritball, spiritball_old;
-	int spirit_timer[MAX_SKILL_LEVEL];
+	int spirit_timer[MAX_SPIRITBALL];
 	short talisman[ELE_POISON+1]; // There are actually 5 talisman Fire, Ice, Wind, Earth & Poison maybe because its color violet.
 	int talisman_timer[ELE_POISON+1][10];
 
@@ -506,12 +508,11 @@ struct map_session_data {
 		bool changed; // if true, should sync with charserver on next mailbox request
 	} mail;
 
-	//Quest log system [Kevin] [Inkfish]
-	int num_quests;
-	int avail_quests;
-	int quest_index[MAX_QUEST_DB];
-	struct quest quest_log[MAX_QUEST_DB];
-	bool save_quest;
+	//Quest log system
+	int num_quests;          ///< Number of entries in quest_log
+	int avail_quests;        ///< Number of Q_ACTIVE and Q_INACTIVE entries in quest log (index of the first Q_COMPLETE entry)
+	struct quest *quest_log; ///< Quest log entries (note: Q_COMPLETE quests follow the first <avail_quests>th enties
+	bool save_quest;         ///< Whether the quest_log entries were modified and are waitin to be saved
 
 	// temporary debug [flaviojs]
 	const char* debug_file;
@@ -560,6 +561,10 @@ struct map_session_data {
 	unsigned char fontcolor; /* debug-only */
 	unsigned int channel_tick;
 
+	/* [Ind] */
+	struct sc_display_entry **sc_display;
+	unsigned char sc_display_count;
+
 	// temporary debugging of bug #3504
 	const char* delunit_prevfile;
 	int delunit_prevline;
@@ -587,7 +592,15 @@ struct map_session_data {
 		int16 icon;
 		int tid;
 	} bonus_script[MAX_PC_BONUS_SCRIPT];
+
+	/* Expiration Timer ID */
+	int expiration_tid;
+	time_t expiration_time;
 };
+
+struct eri *pc_sc_display_ers;
+/* Global Expiration Timer ID */
+extern int pc_expiration_tid;
 
 enum weapon_type {
 	W_FIST,	//Bare hands
@@ -778,7 +791,7 @@ short pc_maxparameter(struct map_session_data *sd, enum e_params param);
 	#define pc_leftside_mdef(sd) ((sd)->battle_status.mdef2)
 	#define pc_rightside_mdef(sd) ((sd)->battle_status.mdef)
 #define pc_leftside_matk(sd) (status_base_matk(status_get_status_data(&(sd)->bl), (sd)->status.base_level))
-#define pc_rightside_matk(sd) ((sd)->battle_status.rhw.matk+(sd)->battle_status.lhw.matk+(sd)->bonus.ematk+((sd)->battle_status.matk_min-(sd)->base_status.matk_min))
+#define pc_rightside_matk(sd) ((sd)->battle_status.rhw.matk+(sd)->battle_status.lhw.matk+(sd)->bonus.ematk)
 #else
 	#define pc_leftside_atk(sd) ((sd)->battle_status.batk + (sd)->battle_status.rhw.atk + (sd)->battle_status.lhw.atk)
 	#define pc_rightside_atk(sd) ((sd)->battle_status.rhw.atk2 + (sd)->battle_status.lhw.atk2)
@@ -830,6 +843,10 @@ int pc_get_skillcooldown(struct map_session_data *sd, int id, int lv);
 int pc_checkskill(struct map_session_data *sd,uint16 skill_id);
 short pc_checkequip(struct map_session_data *sd,int pos);
 bool pc_checkequip2(struct map_session_data *sd,int nameid,int min, int max);
+
+int pc_expiration_timer(int tid, unsigned int tick, int id, intptr_t data);
+int pc_global_expiration_timer(int tid, unsigned tick, int id, intptr_t data);
+void pc_expire_check(struct map_session_data *sd);
 
 int pc_calc_skilltree(struct map_session_data *sd);
 int pc_calc_skilltree_normalize_job(struct map_session_data *sd);

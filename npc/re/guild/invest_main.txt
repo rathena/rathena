@@ -224,7 +224,7 @@ function	script	F_Invest_Abyss	{
 	}
 }
 
-// Script Core
+// Script Core :: agit_fund
 //============================================================
 prt_gld,1,1,0	script	#fund_master	844,{
 	end;
@@ -1252,7 +1252,7 @@ L_Enter:
 	}
 }
 
-// Item Investments
+// Item Investments :: tooja_namis
 //============================================================
 malangdo,218,126,4	script	Cat Paw Merchants Notice	857,{
 	mes "<< Cat Paw Merchants Notice >>";
@@ -1458,7 +1458,7 @@ OnTouch:
 	end;
 }
 
-// Investment Rewards
+// Investment Rewards :: tooja_japanki
 //============================================================
 malangdo,215,119,4	script	Thanks Ticket Machine	564,{
 	if (MaxWeight - Weight < 4500 || checkweight(1201,1) == 0) {

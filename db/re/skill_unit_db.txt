@@ -32,7 +32,7 @@
  21,0x86,    ,  0, 2,1000,enemy, 0x018	//MG_THUNDERSTORM
  25,0x85,    ,  1, 0,  -1,all,   0x2003	//AL_PNEUMA
  27,0x81,0x80,  0, 0,  -1,all,   0x00E	//AL_WARP
- 47,0x86,    ,  0, 2,1000,enemy, 0x080	//AC_SHOWER
+ 47,0x86,    ,  0, 2:2:2:2:2:3:3:3:3:3,1000,enemy, 0x080	//AC_SHOWER
  70,0x83,    , -1, 1,1000,all,   0x018	//PR_SANCTUARY
  79,0x84,    , -1, 1,3000,enemy, 0x018	//PR_MAGNUS
  80,0x87,0x88,  0, 1,2000,enemy, 0x006	//WZ_FIREPILLAR
@@ -98,7 +98,7 @@
 527,0xbc,    , -1, 0,2000,enemy, 0x018	//NJ_TATAMIGAESHI
 535,0xbd,    , -1, 0,  20,enemy, 0x010	//NJ_KAENSIN
 538,0xbb,    ,  1:1:1:2:2:2:3:3:3:4,0,-1,all,0x010	//NJ_SUITON
-541,0x86,    ,  0, 3:3:4:4:5, 100,enemy, 0x018	//NJ_RAIGEKISAI
+541,0x86,    ,  0, 3:3:4:4:5,1000,enemy, 0x018	//NJ_RAIGEKISAI
 670,0xc7,    ,  1, 4:7:10:13:16:19:22:25:28:31,1000,all,0x008	//NPC_EVILLAND
 
 //706,0xfd,    ,  0, 0,1000,all, 0x000	//NPC_VENOMFOG
@@ -120,28 +120,28 @@
 2253,0xd6,    ,  0, 1,1000,enemy, 0x002	//RA_FIRINGTRAP
 2254,0xd7,    ,  0, 1,1000,enemy, 0x002	//RA_ICEBOUNDTRAP
 
-2273,0xe2,    ,  2, 0, 500,friend,0x000	//NC_NEUTRALBARRIER
-2274,0xe3,    ,  2, 0, 500,all,   0x000	//NC_STEALTHFIELD
+2273,0xe2,    ,  2, 0, 500,all,   0x000	//NC_NEUTRALBARRIER
+2274,0xe3,    ,  2, 0, 500,friend,0x000	//NC_STEALTHFIELD
 
-2299,0xcc,    ,  0, 1,1000,all,   0x006	//SC_MANHOLE
-2300,0xcd,    ,  0, 1,1000,all,   0x006	//SC_DIMENSIONDOOR
-2301,0xce,    ,  0, 2,  -1,all,   0x200E	//SC_CHAOSPANIC
-2302,0xcf,    ,  0, 2,  -1,enemy, 0x002	//SC_MAELSTROM
-2303,0xd0,    ,  0, 2,  -1,all,   0x2018	//SC_BLOODYLUST
-2304,0xd1,    ,  0, 2,1000,enemy, 0x018	//SC_FEINTBOMB
+2299,0xcc,    ,  0, 1,1000,all,   0x006	 //SC_MANHOLE
+2300,0xcd,    ,  0, 0,1000,all,   0x006	 //SC_DIMENSIONDOOR
+2301,0xce,    ,  2, 0,  -1,all,   0x200E //SC_CHAOSPANIC
+2302,0xcf,    ,  2, 0,  -1,all,   0x2002 //SC_MAELSTROM
+2303,0xd0,    ,  3, 0,  -1,all,   0x201A //SC_BLOODYLUST
+2304,0xd1,    ,  0, 2, 500,enemy, 0x018  //SC_FEINTBOMB
 
 2319,0xec,    ,  0, 3,5000,all,   0x000	//LG_BANDING
 
-2414,0xda,    ,  0, 1,1000,enemy, 0x008	//WM_REVERBERATION
+2414,0xda,    ,  0, 0,1000,enemy, 0x008	//WM_REVERBERATION
 2418,0xdb,    ,  0, 5, 300,enemy, 0x800	//WM_SEVERE_RAINSTORM
-2419,0xde,    ,  0, 1,1000,enemy, 0x014  //WM_POEMOFNETHERWORLD
+2419,0xde,    ,  0, 1,1000,enemy, 0x014 //WM_POEMOFNETHERWORLD
 
 2443,0xdc,    ,  0, 0,1000,enemy, 0x00A	//SO_FIREWALK
 2444,0xdd,    ,  0, 0,1000,enemy, 0x00A	//SO_ELECTRICWALK
 2446,0x86,    ,  0, 3:3:3:4:4,1000,enemy, 0x018	//SO_EARTHGRAVE
 2447,0x86,    ,  0, 3:3:3:4:4,1000,enemy, 0x018	//SO_DIAMONDDUST
 2449,0xdf,    ,  0, 3:3:4:4:5,500,enemy,  0x018	//SO_PSYCHIC_WAVE
-2450,0xe0,    ,  3, 0, 500,enemy, 0x010	//SO_CLOUD_KILL
+2450,0xe0,    ,  0, 3, 500,enemy, 0x010	//SO_CLOUD_KILL
 2452,0xe4,    ,  0, 3,3000,all,   0x010	//SO_WARMER
 2453,0xeb,    ,  0, 1:1:2:2:3,500,enemy,0x010	//SO_VACUUM_EXTREME
 2465,0xf1,    ,  0, 1,1000,all,   0x010	//SO_FIRE_INSIGNIA
@@ -150,22 +150,24 @@
 2468,0xf4,    ,  0, 1,1000,all,   0x010	//SO_EARTH_INSIGNIA
 
 2479,0xe5,    ,  0, 1,1000,enemy, 0x006	//GN_THORNS_TRAP
-2482,0xe6,0x7f, -1, 2,  -1,all,   0x000	//GN_WALLOFTHORN
+2482,0xe6,0x7f,  0, 1, 100,all,   0x000	//GN_WALLOFTHORN
 2484,0x86,    ,  0, 1, 100,enemy, 0x080	//GN_CRAZYWEED_ATK
 2485,0xe7,    ,  0, 2,2000,enemy, 0x098	//GN_DEMONIC_FIRE
-2487,0xe8,    ,  0, 2, 500,enemy, 0x000	//GN_FIRE_EXPANSION_SMOKE_POWDER
-2488,0xe9,    ,  0, 2, 500,enemy, 0x000	//GN_FIRE_EXPANSION_TEAR_GAS
+2487,0xe8,    ,  2, 0,  -1,all,   0x2000	//GN_FIRE_EXPANSION_SMOKE_POWDER
+2488,0xe9,    ,  2, 0,  -1,all,   0x2000	//GN_FIRE_EXPANSION_TEAR_GAS
 2490,0xea,    ,  0, 1,1000,enemy, 0x002	//GN_HELLS_PLANT
 
 2555,0x104,   ,  0, 1:2:2:3:3,500,enemy,0x6	//RL_B_TRAP
-2567,0x105,   , -1, 0,1000,enemy, 0x98	//RL_FIRE_RAIN
+2567,0xe7,    , -1, 0,1000,enemy, 0x98	//RL_FIRE_RAIN
 
-3006,0x86,    ,  0, 2,1000,enemy, 0x018	//KO_BAKURETSU
-3008,0x86,    ,  0, 2,1000,enemy, 0x018	//KO_MUCHANAGE
-3009,0x86,    ,  0, 3,1000,enemy, 0x018	//KO_HUUMARANKA
-3020,0xf8,    ,  0, 3, 100,all,   0x018	//KO_ZENKAI
-3010,0xfc,    ,  0, 1,1000,enemy, 0x020	//KO_MAKIBISHI
+3006,0x86,    ,  0, 1,1000,enemy, 0x018	//KO_BAKURETSU
+3008,0x86,    ,  0, 1:1:1:1:1:1:1:1:1:2,1000,enemy, 0x018 //KO_MUCHANAGE
+3009,0x86,    ,  0, 3,1000,enemy, 0x018 //KO_HUUMARANKA
+3010,0xfc,    ,  0, 1,5000,enemy, 0x018 //KO_MAKIBISHI
+3020,0xf8,    ,  0, 2, 500,all, 0x018   //KO_ZENKAI
+
 5006,0x101,   ,  0, 3,2000,enemy, 0x018	//NC_MAGMA_ERUPTION
+5008,0x85,    ,  0, 0,  -1,all,   0x003	//SO_ELEMENTAL_SHIELD
 5010,0xfe,    ,  0, 2,  -1,enemy, 0x000	//SC_ESCAPE
 
 8020,0xf5,    ,  3, 0,2300:2100:1900:1700:1500,enemy,   0x018	//MH_POISON_MIST

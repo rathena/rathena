@@ -1964,6 +1964,64 @@ with this command when a script is parsed.
 
 ---------------------------------------
 
+*switch (expression);
+
+The switch statement is similar to a series of if statements on the same expression.
+In many occasions, you may want to compare the same variable (or expression)
+with many different values, and execute a different piece of code depending
+on which value it equals to. This is exactly what the switch statement is for.
+
+It is important to understand how the switch statement is executed in order
+to avoid mistakes. The switch statement executes line by line (actually, statement by statement).
+In the beginning, no code is executed. Only when a case statement is found
+with a value that matches the value of the switch expression the case statement(s)
+will to executed. The parser continues to execute the statements until the end
+of the switch block, or the first time it sees a break statement. If you don't
+write a break statement at the end of a case's statement list, the parser will
+go on executing the statements of the following case (fall-through).
+
+Example 1:
+	
+	switch(select("Yes:No")) {
+		case 1:
+			mes "You said yes!";
+			break;
+		case 2:
+			mes "Aww, why?";
+			break;
+	}
+	close;
+
+The example above would work like a menu and would go to the first case if
+the user selects option, otherwise, would go to the second one.
+
+Example 2:
+	
+	switch(getgroupid()) {
+		case 1:
+			mes "Wow, you're super!";
+			break;
+		case 2:
+			mes "A helping hand!";
+			break;
+		case 3:
+			mes "10001010010011";
+			break;
+		case 4:
+			mes "Yes, milord?";
+			break;
+		default:
+			mes "Hello there!";
+			break;		
+	}
+
+The example above would print a message depending on the player's groupid.
+If there is no statement declared for the corresponding groupid, the script
+would use the 'default' statement that applies to rest of possible values,
+similar to 'else' in the if-else statement.
+
+---------------------------------------
+
 *while (<condition>) <statement>;
 
 This is probably the simplest and most frequently used loop structure. The 'while' 
@@ -4428,11 +4486,31 @@ database. If the name is not found, nothing will be deleted.
 
 ---------------------------------------
 
+*cartdelitem <item id>,<amount>{,<account ID>};
+*cartdelitem "<item name>",<amount>{,<account ID>};
+*storagedelitem <item id>,<amount>{,<account ID>};
+*storagedelitem "<item name>",<amount>{,<account ID>};
+
+Same like delitem, but deletes item from cart or storage.
+If cart is not mounted, it will be failed.
+
+---------------------------------------
+
 *delitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 *delitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 
 This command will remove a specified amount of items from the invoking/target character. 
 See 'getitem2' for an explanation of the expanded parameters.
+
+---------------------------------------
+
+*cartdelitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+*cartdelitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+*storageitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+*storageitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+
+Same like delitem2, but deletes item from cart or storage.
+If cart is not mounted, it will be failed.
 
 ---------------------------------------
 
@@ -4458,6 +4536,16 @@ adding up strings:
     
 ---------------------------------------
 
+*cartcountitem(<item id>)
+*cartcountitem("<item name>")
+*storagecountitem(<item id>)
+*storagecountitem("<item name>")
+
+Same like countitem, but counts item from cart or storage.
+If cart is not mounted, -1 will be returned.
+
+---------------------------------------
+
 *countitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
 *countitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
 
@@ -4466,6 +4554,16 @@ Expanded version of 'countitem' function, used for created/carded/forged items.
 This function will return the number of items for the specified item ID and
 other parameters that the invoking character has in the inventory.
 See 'getitem2' for an explanation of the expanded parameters.
+
+---------------------------------------
+
+*cartcountitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
+*cartcountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
+*storagecountitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
+*storagecountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
+
+Same like countitem2, but counts item from cart or storage.
+If cart is not mounted, -1 will be returned.
 
 ---------------------------------------
 
@@ -5032,6 +5130,11 @@ Examples:
 
 	// This will end the Freezing status for the invoking character.
 	sc_end SC_FREEZE;
+
+Note: to use SC_NOCHAT you should alter Manner
+	set Manner, -5;	// Will mute a user for 5 minutes
+	set Manner, 0;	// Will unmute a user
+	set Manner, 5;	// Will unmute a user and prevent the next use of 'Manner'
 
 ---------------------------------------
 
@@ -7575,9 +7678,55 @@ if (instance_check_party(getcharid(1),2,2,149)) {
 =========================
 ---------------------------------------
 
+*questinfo <Quest ID>, <Icon> {, <Map Mark Color>{, <Job Class>}};
+
+This is esentially a combination of checkquest and showevent. Use this only
+in an OnInit label. For the Quest ID, specify the quest ID that you want
+checked if it has been started yet.
+
+For Icon, use one of the following:
+
+No Icon			: QTYPE_NONE
+! Quest Icon	: QTYPE_QUEST
+? Quest Icon	: QTYPE_QUEST2
+! Job Icon		: QTYPE_JOB
+? Job Icon		: QTYPE_JOB2
+! Event Icon	: QTYPE_EVENT
+? Event Icon	: QTYPE_EVENT2
+Warg			: QTYPE_WARG
+Warg Face		: QTYPE_WARG2 (Only for packetver >= 20120410)
+
+Map Mark Color, when used, creates a mark in the user's mini map on the position of the NPC,
+the available color values are:
+
+0 - No Marker
+1 - Yellow Marker
+2 - Green Marker
+3 - Purple Marker
+
+When a user shows up on a map, each NPC is checked for questinfo that has been set.
+If questinfo is present, it will check if the quest has been started, if it has not, the bubble will appear.
+
+Optionally, you can also specify a Job Class if the quest bubble should only appear for a certain class.
+
+Example
+izlude,100,100,4	script	Test	844,{
+	mes "[Test]";
+	mes "Hello World.";
+	close;
+
+	OnInit:
+		questinfo 1001, QTYPE_QUEST, 0, Job_Novice;
+		end;
+}
+
+---------------------------------------
+
 *setquest <ID>;
 
 Place quest of <ID> in the users quest log, the state of which is "active".
+
+If *questinfo is set, and the same ID is specified here, the icon will be cleared when the quest is set.
 
 ---------------------------------------
 
@@ -7631,23 +7780,30 @@ Return the state of the quest:
 
 ---------------------------------------
 
-*showevent <state>, <color>;
+*showevent <icon>{,<mark color>}
 
-Show a colored mark in the mini-map like "viewpoint" and an emotion on top of a NPC.
-This is used to indicate that a NPC has a quest or an event to certain players.
+Show an emotion on top of a NPC, and optionally,
+a colored mark in the mini-map like "viewpoint".
+This is used to indicate that a NPC has a quest or an event to 
+a certain player. 
 
-state can be:
-	0 = disable (Used to disable and remove the mark and the emotion from the NPC.)
-	1 = exclamation emotion (Used to show an important quest event to certain player.)
-	2 = interrogation emotion (Used to show an non-important quest event to certain player.)
-	Other values may cause client crashes.
+Available Icons:
 
-color can be:
-	0 = yellow "Quest"
-	1 = orange "Job"
-	2 = green "Event"
-	3 = an MVP flag
-	Other values show a transparent mark in the mini-map.
+Remove Icon		: QTYPE_NONE
+! Quest Icon	: QTYPE_QUEST
+? Quest Icon	: QTYPE_QUEST2
+! Job Icon		: QTYPE_JOB
+? Job Icon		: QTYPE_JOB2
+! Event Icon	: QTYPE_EVENT
+? Event Icon	: QTYPE_EVENT2
+Warg			: QTYPE_WARG
+Warg Face		: QTYPE_WARG2 (Only for packetver >= 20120410)
+
+Mark Color:
+0 - No Mark
+1 - Yellow Mark
+2 - Green Mark
+3 - Purple Mark
 
 ---------------------------------------
 

@@ -665,7 +665,6 @@ int npc_timerevent_start(struct npc_data* nd, int rid)
 int npc_timerevent_stop(struct npc_data* nd)
 {
 	struct map_session_data *sd = NULL;
-	const struct TimerData *td = NULL;
 	int *tid;
 
 	nullpo_ret(nd);
@@ -683,6 +682,8 @@ int npc_timerevent_stop(struct npc_data* nd)
 	// Delete timer
 	if ( *tid != INVALID_TIMER )
 	{
+		const struct TimerData *td = NULL;
+
 		td = get_timer(*tid);
 		if( td && td->data )
 			ers_free(timer_event_ers, (void*)td->data);
@@ -1308,7 +1309,7 @@ int npc_buysellsel(struct map_session_data* sd, int id, int type)
 
 		if (id) {
 			sprintf(output,msg_txt(sd,714),id->jname,id->nameid); // Item Shop List: %s (%d)
-			clif_broadcast(&sd->bl,output,strlen(output) + 1,0x10,SELF);
+			clif_broadcast(&sd->bl,output,strlen(output) + 1,BC_BLUE,SELF);
 		}
 	} else if (nd->subtype == POINTSHOP) {
 		char output[CHAT_SIZE_MAX];
@@ -1316,7 +1317,7 @@ int npc_buysellsel(struct map_session_data* sd, int id, int type)
 		memset(output,'\0',sizeof(output));
 
 		sprintf(output,msg_txt(sd,715),nd->u.shop.pointshop_str); // Point Shop List: '%s'
-		clif_broadcast(&sd->bl,output,strlen(output) + 1,0x10,SELF);
+		clif_broadcast(&sd->bl,output,strlen(output) + 1,BC_BLUE,SELF);
 	}
 
 	// reset the callshop state for future calls
@@ -1945,6 +1946,9 @@ int npc_unload(struct npc_data* nd, bool single) {
 			aFree(nd->path);/* remove now that no other instances exist */
 		}
 	}
+	
+	if( single && nd->bl.m != -1 )
+		map_remove_questinfo(nd->bl.m, nd);
 
 	if( (nd->subtype == SHOP || nd->subtype == CASHSHOP || nd->subtype == ITEMSHOP || nd->subtype == POINTSHOP) && nd->src_id == 0) //src check for duplicate shops [Orcao]
 		aFree(nd->u.shop.shop_item);
@@ -2410,12 +2414,11 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 
 	switch(type) {
 		case ITEMSHOP: {
-			struct item_data* tmp;
 			if (sscanf(p,",%d:%d,",&nameid,&is_discount) < 1) {
 				ShowError("npc_parse_shop: Invalid item cost definition in file '%s', line '%d'. Ignoring the rest of the line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 				return strchr(start,'\n'); // skip and continue
 			}
-			if ((tmp = itemdb_exists(nameid)) == NULL) {
+			if (itemdb_exists(nameid) == NULL) {
 				ShowWarning("npc_parse_shop: Invalid item ID cost in file '%s', line '%d' (id '%d').\n", filepath, strline(buffer,start-buffer), nameid);
 				return strchr(start,'\n'); // skip and continue
 			}
@@ -2672,7 +2675,6 @@ static const char* npc_skip_script(const char* start, const char* buffer, const 
  */
 static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath, bool runOnInit) {
 	int x, y, dir = 0, m, xs = 0, ys = 0;	// [Valaris] thanks to fov
-	char mapname[32];
 	struct script_code *script;
 	int i;
 	const char* end;
@@ -2690,6 +2692,8 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 	}
 	else
 	{// npc in a map
+		char mapname[32];
+
 		if( sscanf(w1, "%31[^,],%d,%d,%d", mapname, &x, &y, &dir) != 4 )
 		{
 			ShowError("npc_parse_script: Invalid placement format for a script in file '%s', line '%d'. Skipping the rest of file...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
@@ -2811,7 +2815,6 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
 	int x, y, dir, m, xs = -1, ys = -1;
-	char mapname[32];
 	char srcname[128];
 	int i;
 	const char* end;
@@ -2846,6 +2849,8 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 		x = y = dir = 0;
 		m = -1;
 	} else {
+		char mapname[32];
+
 		if( sscanf(w1, "%31[^,],%d,%d,%d", mapname, &x, &y, &dir) != 4 ) { // <map name>,<x>,<y>,<facing>
 			ShowError("npc_parse_duplicate: Invalid placement format for duplicate in file '%s', line '%d'. Skipping line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 			return end;// next line, try to continue
@@ -3333,7 +3338,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 		return strchr(start,'\n');// skip and continue
 	}
 
-	if( (mob.state.size < 0 || mob.state.size > 2) && size != -1 )
+	if( mob.state.size > 2 && size != -1 )
 	{
 		ShowError("npc_parse_mob: Invalid size number %d for mob ID %d (file '%s', line '%d').\n", mob.state.size, class_, filepath, strline(buffer, start - buffer));
 		return strchr(start, '\n');
@@ -3797,6 +3802,17 @@ void npc_parsesrcfile(const char* filepath, bool runOnInit)
 		return;
 	}
 	fclose(fp);
+
+	if ((unsigned char)buffer[0] == 0xEF && (unsigned char)buffer[1] == 0xBB && (unsigned char)buffer[2] == 0xBF) {
+		// UTF-8 BOM. This is most likely an error on the user's part, because:
+		// - BOM is discouraged in UTF-8, and the only place where you see it is Notepad and such.
+		// - It's unlikely that the user wants to use UTF-8 data here, since we don't really support it, nor does the client by default.
+		// - If the user really wants to use UTF-8 (instead of latin1, EUC-KR, SJIS, etc), then they can still do it <without BOM>.
+		// More info at http://unicode.org/faq/utf_bom.html#bom5 and http://en.wikipedia.org/wiki/Byte_order_mark#UTF-8
+		ShowError("npc_parsesrcfile: Detected unsupported UTF-8 BOM in file '%s'. Stopping (please consider using another character set).\n", filepath);
+		aFree(buffer);
+		return;
+	}
 
 	// parse buffer
 	for( p = skip_space(buffer); p && *p ; p = skip_space(p) )

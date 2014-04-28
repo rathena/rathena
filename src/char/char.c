@@ -2657,11 +2657,12 @@ int parse_frommap(int fd)
 			char_send_fame_list(fd); //Send fame list.
 
 			{
-			unsigned char buf[16384];
 			int x;
 			if (j == 0) {
 				ShowWarning("Map-server %d has NO maps.\n", id);
 			} else {
+				unsigned char buf[16384];
+
 				// Transmitting maps information to the other map-servers
 				WBUFW(buf,0) = 0x2b04;
 				WBUFW(buf,2) = j * 4 + 10;
@@ -3213,7 +3214,7 @@ int parse_frommap(int fd)
 			struct auth_node* node;
 			struct mmo_charstatus* cd;
 			struct mmo_charstatus char_dat;
-			bool autotrade = false;
+			bool autotrade;
 
 			account_id = RFIFOL(fd,2);
 			char_id    = RFIFOL(fd,6);

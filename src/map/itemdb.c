@@ -228,7 +228,7 @@ static void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, uint16 grou
 		else if (!flag && group->isAnnounced) { ///TODO: Move this broadcast to proper behavior (it should on at different packet)
 			char output[CHAT_SIZE_MAX];
 			sprintf(output,msg_txt(NULL,717),sd->status.name,itemdb_jname(group->nameid),itemdb_jname(sd->itemid));
-			clif_broadcast(&sd->bl,output,strlen(output),0,ALL_CLIENT);
+			clif_broadcast(&sd->bl,output,strlen(output),BC_DEFAULT,ALL_CLIENT);
 			//clif_broadcast_obtain_special_item();
 		}
 		if (itemdb_isstackable(group->nameid))
@@ -674,7 +674,7 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 	while (fgets(line,sizeof(line),fp)) {
 		uint16 nameid;
 		int j, group_id, prob = 1, amt = 1, rand_group = 1, announced = 0, dur = 0, named = 0, bound = 0;
-		char *str[3], *p, w1[1024], w2[1024];
+		char *str[3], *p;
 		bool found = false;
 		struct s_item_group_random *random;
 
@@ -682,6 +682,8 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 		if (line[0] == '/' && line[1] == '/')
 			continue;
 		if (strstr(line,"import")) {
+			char w1[1024], w2[1024];
+
 			if (sscanf(line,"%[^:]: %[^\r\n]",w1,w2) == 2 &&
 				strcmpi(w1,"import") == 0)
 			{
@@ -970,6 +972,29 @@ static bool itemdb_read_nouse(char* fields[], int columns, int current) {
 
 	id->item_usage.flag = flag;
 	id->item_usage.override = override;
+
+	return true;
+}
+
+/** Misc Item flags
+* <item_id>,<flag>
+* &1 - Log as dead branch
+* &2 - As item container
+*/
+static bool itemdb_read_flag(char* fields[], int columns, int current) {
+	uint16 nameid = atoi(fields[0]);
+	uint8 flag = atoi(fields[1]);
+	struct item_data *id;
+
+	if (!(id = itemdb_exists(nameid))) {
+		ShowError("itemdb_read_flag: Invalid item item with id %d\n", nameid);
+		return true;
+	}
+
+	if (flag&1)
+		id->flag.dead_branch = 1;
+	if (flag&2)
+		id->flag.group = 1;
 
 	return true;
 }
@@ -1593,6 +1618,7 @@ static void itemdb_read(void) {
 		sv_readdb(dbsubpath2, "item_trade.txt",         ',', 3, 3, -1, &itemdb_read_itemtrade, i);
 		sv_readdb(dbsubpath2, "item_delay.txt",         ',', 2, 2, -1, &itemdb_read_itemdelay, i);
 		sv_readdb(dbsubpath2, "item_buyingstore.txt",   ',', 1, 1, -1, &itemdb_read_buyingstore, i);
+		sv_readdb(dbsubpath2, "item_flag.txt",          ',', 2, 2, -1, &itemdb_read_flag, i);
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
 	}

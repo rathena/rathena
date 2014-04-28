@@ -62,8 +62,10 @@ static unsigned int level_penalty[3][CLASS_MAX][MAX_LEVEL*2+1];
 // h-files are for declarations, not for implementations... [Shinomori]
 struct skill_tree_entry skill_tree[CLASS_COUNT][MAX_SKILL_TREE];
 // timer for night.day implementation
-int day_timer_tid;
-int night_timer_tid;
+int day_timer_tid = INVALID_TIMER;
+int night_timer_tid = INVALID_TIMER;
+
+int pc_expiration_tid = INVALID_TIMER;
 
 struct fame_list smith_fame_list[MAX_FAME_LIST];
 struct fame_list chemist_fame_list[MAX_FAME_LIST];
@@ -192,8 +194,8 @@ void pc_addspiritball(struct map_session_data *sd,int interval,int max)
 
 	nullpo_retv(sd);
 
-	if(max > MAX_SKILL_LEVEL)
-		max = MAX_SKILL_LEVEL;
+	if(max > MAX_SPIRITBALL)
+		max = MAX_SPIRITBALL;
 	if(sd->spiritball < 0)
 		sd->spiritball = 0;
 
@@ -241,8 +243,8 @@ void pc_delspiritball(struct map_session_data *sd,int count,int type)
 	if(count > sd->spiritball)
 		count = sd->spiritball;
 	sd->spiritball -= count;
-	if(count > MAX_SKILL_LEVEL)
-		count = MAX_SKILL_LEVEL;
+	if(count > MAX_SPIRITBALL)
+		count = MAX_SPIRITBALL;
 
 	for(i=0;i<count;i++) {
 		if(sd->spirit_timer[i] != INVALID_TIMER) {
@@ -250,7 +252,7 @@ void pc_delspiritball(struct map_session_data *sd,int count,int type)
 			sd->spirit_timer[i] = INVALID_TIMER;
 		}
 	}
-	for(i=count;i<MAX_SKILL_LEVEL;i++) {
+	for(i=count;i<MAX_SPIRITBALL;i++) {
 		sd->spirit_timer[i-count] = sd->spirit_timer[i];
 		sd->spirit_timer[i] = INVALID_TIMER;
 	}
@@ -1033,6 +1035,7 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	sd->invincible_timer = INVALID_TIMER;
 	sd->npc_timer_id = INVALID_TIMER;
 	sd->pvp_timer = INVALID_TIMER;
+	sd->expiration_tid = INVALID_TIMER;
 
 #ifdef SECURE_NPCTIMEOUT
 	// Initialize to defaults/expected
@@ -1048,7 +1051,7 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	sd->canskill_tick = tick;
 	sd->cansendmail_tick = tick;
 
-	for(i = 0; i < MAX_SKILL_LEVEL; i++)
+	for(i = 0; i < MAX_SPIRITBALL; i++)
 		sd->spirit_timer[i] = INVALID_TIMER;
 	for(i = 0; i < ARRAYLENGTH(sd->autobonus); i++)
 		sd->autobonus[i].active = INVALID_TIMER;
@@ -1098,6 +1101,11 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	for( i = 0; i < 3; i++ )
 		sd->hate_mob[i] = -1;
 
+	sd->quest_log = NULL;
+	sd->num_quests = 0;
+	sd->avail_quests = 0;
+	sd->save_quest = false;
+
 	//warp player
 	if ((i=pc_setpos(sd,sd->status.last_point.map, sd->status.last_point.x, sd->status.last_point.y, CLR_OUTSIGHT)) != 0) {
 		ShowError ("Last_point_map %s - id %d not found (error code %d)\n", mapindex_id2name(sd->status.last_point.map), sd->status.last_point.map, i);
@@ -1138,12 +1146,8 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 				clif_displaymessage(sd->fd, motd_text[i]);
 		}
 
-		// message of the limited time of the account
-		if (expiration_time != 0) { // don't display if it's unlimited or unknow value
-			char tmpstr[1024];
-			strftime(tmpstr, sizeof(tmpstr) - 1, msg_txt(sd,501), localtime(&expiration_time)); // "Your account time limit is: %d-%m-%Y %H:%M:%S."
-			clif_wis_message(sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
-		}
+		if (expiration_time != 0)
+			sd->expiration_time = expiration_time;
 
 		/**
 		 * Fixes login-without-aura glitch (the screen won't blink at this point, don't worry :P)
@@ -1163,6 +1167,10 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 			pc_delitem(sd,idxlist[i],sd->status.inventory[idxlist[i]].amount,0,1,LOG_TYPE_OTHER);
 	}
 #endif
+
+	/* [Ind] */
+	sd->sc_display = NULL;
+	sd->sc_display_count = 0;
 
 	// Player has not yet received the CashShop list
 	sd->status.cashshop_sent = false;
@@ -1343,6 +1351,15 @@ int pc_reg_received(struct map_session_data *sd)
 	
 	if( sd->state.autotrade ){
 		clif_parse_LoadEndAck(sd->fd, sd);
+	}
+
+	if (sd->expiration_time != 0) { // don't display if it's unlimited or an unknown value
+		time_t exp_time = sd->expiration_time;
+		char tmpstr[1024];
+			strftime(tmpstr, sizeof(tmpstr) - 1, msg_txt(sd,501), localtime(&exp_time)); // "Your account time limit is: %d-%m-%Y %H:%M:%S."
+			clif_wis_message(sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
+
+		pc_expire_check(sd);
 	}
 
 	return 1;
@@ -4304,6 +4321,9 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 		return 0; // You cannot use this item while storage is open.
 	}
 
+	if (item->flag.dead_branch && (map[sd->bl.m].flag.nobranch || map_flag_gvg(sd->bl.m)))
+		return 0;
+
 	switch( nameid ) {
 		case ITEMID_ANODYNE:
 			if( map_flag_gvg(sd->bl.m) )
@@ -4332,14 +4352,6 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 				return 0;
 			}
 			if( nameid != 601 && nameid != 12212 && map[sd->bl.m].flag.noreturn )
-				return 0;
-			break;
-		case ITEMID_BRANCH_OF_DEAD_TREE:
-		case ITEMID_RED_POUCH_OF_SURPRISE:
-		case ITEMID_BLOODY_DEAD_BRANCH:
-		case ITEMID_PORING_BOX:
-		case ITEMID_TREASURE_CHEST_SUMMONED_II:
-			if( map[sd->bl.m].flag.nobranch || map_flag_gvg(sd->bl.m) )
 				return 0;
 			break;
 		case ITEMID_BUBBLE_GUM:
@@ -4396,6 +4408,17 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 	else if( itemdb_is_poison(nameid) && (sd->class_&MAPID_THIRDMASK) != MAPID_GUILLOTINE_CROSS )
 		return 0;
 
+	if( item->flag.group ) {
+		if( pc_is90overweight(sd) ) {
+			clif_msgtable(sd->fd, ITEM_CANT_OBTAIN_WEIGHT);
+			return 0;
+		}
+		if( !pc_inventoryblank(sd) ) {
+			clif_colormes(sd, color_table[COLOR_RED], msg_txt(sd, 1477)); //Item cannot be open when inventory is full
+			return 0;
+		}
+	}
+
 	//Gender check
 	if(item->sex != 2 && sd->status.sex != item->sex)
 		return 0;
@@ -4431,8 +4454,8 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 	if (!pc_isItemClass(sd,item))
 		return 0;
 
-	//Dead Branch & Bloody Branch & Porings Box
-	if( nameid == ITEMID_BRANCH_OF_DEAD_TREE || nameid == ITEMID_BLOODY_DEAD_BRANCH || nameid == ITEMID_PORING_BOX || nameid == ITEMID_TREASURE_CHEST_SUMMONED_II )
+	//Dead Branch items
+	if( item->flag.dead_branch )
 		log_branch(sd);
 
 	return 1;
@@ -4532,6 +4555,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 
 	/* on restricted maps the item is consumed but the effect is not used */
 	if (!pc_has_permission(sd,PC_PERM_ITEM_UNCONDITIONAL) && itemdb_isNoEquip(id,sd->bl.m)) {
+		clif_msg(sd,ITEM_CANT_USE_AREA); // This item cannot be used within this area
 		if( battle_config.allow_consume_restricted_item && !id->flag.delay_consume ) { //need confirmation for delayed consumption items
 			clif_useitemack(sd,n,item.amount-1,true);
 			pc_delitem(sd,n,1,1,0,LOG_TYPE_CONSUME);
@@ -4608,6 +4632,9 @@ int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amoun
 
 	if( (w = data->weight*amount) + sd->cart_weight > sd->cart_weight_max )
 		return 1;
+
+	// ID no longer points to inventory/kafra ID. While we get a new one we don't want to mess up vending creation.
+	item_data->id = 0;
 
 	i = MAX_CART;
 	if( itemdb_isstackable2(data) && !item_data->expire_time )
@@ -4868,7 +4895,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skil
 		i_data = itemdb_search(itemid);
 		sprintf (message, msg_txt(sd,542), (sd->status.name != NULL)?sd->status.name :"GM", md->db->jname, i_data->jname, (float)md->db->dropitem[i].p/100);
 		//MSG: "'%s' stole %s's %s (chance: %0.02f%%)"
-		intif_broadcast(message,strlen(message)+1,0);
+		intif_broadcast(message, strlen(message) + 1, BC_DEFAULT);
 	}
 	return 1;
 }
@@ -5324,8 +5351,8 @@ int pc_jobid2mapid(unsigned short b_class)
 		case JOB_XMAS:                  return MAPID_XMAS;
 		case JOB_SUMMER:                return MAPID_SUMMER;
 		case JOB_HANBOK:                return MAPID_HANBOK;
-		case JOB_OKTOBERFEST:           return MAPID_OKTOBERFEST;
 		case JOB_GANGSI:                return MAPID_GANGSI;
+		case JOB_OKTOBERFEST:           return MAPID_OKTOBERFEST;
 	//2-1 Jobs
 		case JOB_SUPER_NOVICE:          return MAPID_SUPER_NOVICE;
 		case JOB_KNIGHT:                return MAPID_KNIGHT;
@@ -5468,8 +5495,8 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_XMAS:                  return JOB_XMAS;
 		case MAPID_SUMMER:                return JOB_SUMMER;
 		case MAPID_HANBOK:                return JOB_HANBOK;
-		case MAPID_OKTOBERFEST:           return JOB_OKTOBERFEST;
 		case MAPID_GANGSI:                return JOB_GANGSI;
+		case MAPID_OKTOBERFEST:           return JOB_OKTOBERFEST;
 	//2-1 Jobs
 		case MAPID_SUPER_NOVICE:          return JOB_SUPER_NOVICE;
 		case MAPID_KNIGHT:                return JOB_KNIGHT;
@@ -6263,19 +6290,20 @@ int pc_maxparameterincrease(struct map_session_data* sd, int type)
 	}
 	final_val--;
 
-	return final_val > base ? final_val-base : 0;
+	return (final_val > base ? final_val-base : 0);
 }
 
 /**
  * Raises a stat by the specified amount.
+ *
  * Obeys max_parameter limits.
- * Subtracts stat points.
+ * Subtracts status points according to the cost of the increased stat points.
  *
  * @param sd       The target character.
  * @param type     The stat to change (see enum _sp)
- * @param increase The stat increase amount.
- * @return true if the stat was increased by any amount, false if there were no
- *         changes.
+ * @param increase The stat increase (strictly positive) amount.
+ * @retval true  if the stat was increased by any amount.
+ * @retval false if there were no changes.
  */
 bool pc_statusup(struct map_session_data* sd, int type, int increase)
 {
@@ -6297,7 +6325,7 @@ bool pc_statusup(struct map_session_data* sd, int type, int increase)
 		clif_statusupack(sd, type, 0, 0);
 		return false;
 	}
-	
+
 	// check status points
 	needed_points = pc_need_status_point(sd, type, increase);
 	if (needed_points < 0 || needed_points > sd->status.status_point) { // Sanity check
@@ -6325,12 +6353,18 @@ bool pc_statusup(struct map_session_data* sd, int type, int increase)
 	return true;
 }
 
-/// Raises a stat by the specified amount.
-/// Obeys max_parameter limits.
-/// Does not subtract stat points.
-///
-/// @param type The stat to change (see enum _sp)
-/// @param val The stat increase amount.
+/**
+ * Raises a stat by the specified amount.
+ *
+ * Obeys max_parameter limits.
+ * Does not subtract status points for the cost of the modified stat points.
+ *
+ * @param sd   The target character.
+ * @param type The stat to change (see enum _sp)
+ * @param val  The stat increase (or decrease) amount.
+ * @return the stat increase amount.
+ * @retval 0 if no changes were made.
+ */
 int pc_statusup2(struct map_session_data* sd, int type, int val)
 {
 	int max, need;
@@ -6339,7 +6373,7 @@ int pc_statusup2(struct map_session_data* sd, int type, int val)
 	if( type < SP_STR || type > SP_LUK )
 	{
 		clif_statusupack(sd,type,0,0);
-		return 1;
+		return 0;
 	}
 
 	need = pc_need_status_point(sd,type,1);
@@ -6358,7 +6392,7 @@ int pc_statusup2(struct map_session_data* sd, int type, int val)
 	if( val > 255 )
 		clif_updatestatus(sd,type); // send after the 'ack' to override the truncated value
 
-	return 0;
+	return val;
 }
 
 /*==========================================
@@ -7238,10 +7272,10 @@ void pc_revive(struct map_session_data *sd,unsigned int hp, unsigned int sp) {
 		pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
 
 	if( sd->state.gmaster_flag ) {
-		guild_guildaura_refresh(sd,GD_LEADERSHIP,guild_checkskill(sd->state.gmaster_flag,GD_LEADERSHIP));
-		guild_guildaura_refresh(sd,GD_GLORYWOUNDS,guild_checkskill(sd->state.gmaster_flag,GD_GLORYWOUNDS));
-		guild_guildaura_refresh(sd,GD_SOULCOLD,guild_checkskill(sd->state.gmaster_flag,GD_SOULCOLD));
-		guild_guildaura_refresh(sd,GD_HAWKEYES,guild_checkskill(sd->state.gmaster_flag,GD_HAWKEYES));
+		guild_guildaura_refresh(sd,GD_LEADERSHIP,guild_checkskill(sd->guild,GD_LEADERSHIP));
+		guild_guildaura_refresh(sd,GD_GLORYWOUNDS,guild_checkskill(sd->guild,GD_GLORYWOUNDS));
+		guild_guildaura_refresh(sd,GD_SOULCOLD,guild_checkskill(sd->guild,GD_SOULCOLD));
+		guild_guildaura_refresh(sd,GD_HAWKEYES,guild_checkskill(sd->guild,GD_HAWKEYES));
 	}
 }
 // script
@@ -7518,7 +7552,13 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 		break;
 	case SP_MANNER:
 		sd->status.manner = val;
-		break;
+		if( val < 0 )
+			sc_start(NULL, &sd->bl, SC_NOCHAT, 100, 0, 0);
+		else {
+			status_change_end(&sd->bl, SC_NOCHAT, INVALID_TIMER);
+			clif_manner_message(sd, 5);
+		}
+		return true; // status_change_start/status_change_end already sends packets warning the client
 	case SP_FAME:
 		sd->status.fame = val;
 		break;
@@ -8035,31 +8075,6 @@ void pc_setoption(struct map_session_data *sd,int type)
 	else if (!(type&OPTION_FLYING) && p_type&OPTION_FLYING)
 		new_look = -1;
 
-	if (type&OPTION_WEDDING && !(p_type&OPTION_WEDDING))
-		new_look = JOB_WEDDING;
-	else if (!(type&OPTION_WEDDING) && p_type&OPTION_WEDDING)
-		new_look = -1;
-
-	if (type&OPTION_XMAS && !(p_type&OPTION_XMAS))
-		new_look = JOB_XMAS;
-	else if (!(type&OPTION_XMAS) && p_type&OPTION_XMAS)
-		new_look = -1;
-
-	if (type&OPTION_SUMMER && !(p_type&OPTION_SUMMER))
-		new_look = JOB_SUMMER;
-	else if (!(type&OPTION_SUMMER) && p_type&OPTION_SUMMER)
-		new_look = -1;
-
-	if (type&OPTION_HANBOK && !(p_type&OPTION_HANBOK))
-		new_look = JOB_HANBOK;
-	else if (!(type&OPTION_HANBOK) && p_type&OPTION_HANBOK)
-		new_look = -1;
-
-	if (type&OPTION_OKTOBERFEST && !(p_type&OPTION_OKTOBERFEST))
-		new_look = JOB_OKTOBERFEST;
-	else if (!(type&OPTION_OKTOBERFEST) && p_type&OPTION_OKTOBERFEST)
-		new_look = -1;
-
 	if (sd->disguise || !new_look)
 		return; //Disguises break sprite changes
 
@@ -8105,7 +8120,7 @@ bool pc_setcart(struct map_session_data *sd,int type) {
 				clif_cartlist(sd);
 			clif_updatestatus(sd, SP_CARTINFO);
 			sc_start(&sd->bl,&sd->bl, SC_PUSH_CART, 100, type, 0);
-			clif_status_load_notick(&sd->bl, SI_ON_PUSH_CART, 2 , type, 0, 0);
+			clif_status_change2(&sd->bl, sd->bl.id, AREA, SI_ON_PUSH_CART, type, 0, 0);
 			if( sd->sc.data[SC_PUSH_CART] )/* forcefully update */
 				sd->sc.data[SC_PUSH_CART]->val1 = type;
 			break;
@@ -9047,6 +9062,8 @@ bool pc_unequipitem(struct map_session_data *sd,int n,int flag) {
 		return false;
 	}
 	if (&sd->sc) {
+		if (sd->sc.data[SC_HOVERING] && sd->inventory_data[n]->type == IT_ARMOR && sd->inventory_data[n]->nameid == ITEMID_HOVERING_BOOSTER)
+			status_change_end(&sd->bl, SC_HOVERING, INVALID_TIMER);
 		if (sd->sc.data[SC_HEAT_BARREL])
 			status_change_end(&sd->bl,SC_HEAT_BARREL,INVALID_TIMER);
 		if (sd->sc.data[SC_P_ALTER] && (sd->inventory_data[n]->type == IT_WEAPON || sd->inventory_data[n]->type == IT_AMMO))
@@ -9600,7 +9617,7 @@ int map_day_timer(int tid, unsigned int tick, int id, intptr_t data)
 	night_flag = 0; // 0=day, 1=night [Yor]
 	map_foreachpc(pc_daynight_timer_sub);
 	strcpy(tmp_soutput, (data == 0) ? msg_txt(NULL,502) : msg_txt(NULL,60)); // The day has arrived!
-	intif_broadcast(tmp_soutput, strlen(tmp_soutput) + 1, 0);
+	intif_broadcast(tmp_soutput, strlen(tmp_soutput) + 1, BC_DEFAULT);
 	return 0;
 }
 
@@ -9621,7 +9638,7 @@ int map_night_timer(int tid, unsigned int tick, int id, intptr_t data)
 	night_flag = 1; // 0=day, 1=night [Yor]
 	map_foreachpc(pc_daynight_timer_sub);
 	strcpy(tmp_soutput, (data == 0) ? msg_txt(NULL,503) : msg_txt(NULL,59)); // The night has fallen...
-	intif_broadcast(tmp_soutput, strlen(tmp_soutput) + 1, 0);
+	intif_broadcast(tmp_soutput, strlen(tmp_soutput) + 1, BC_DEFAULT);
 	return 0;
 }
 
@@ -10501,6 +10518,56 @@ void pc_damage_log_clear(struct map_session_data *sd, int id)
 	}
 }
 
+int pc_expiration_timer(int tid, unsigned int tick, int id, intptr_t data) {
+	struct map_session_data *sd = map_id2sd(id);
+
+	if( !sd ) return 0;
+
+	sd->expiration_tid = INVALID_TIMER;
+
+	if( sd->fd )
+		clif_authfail_fd(sd->fd,10);
+
+	map_quit(sd);
+
+	return 0;
+}
+
+/* this timer exists only when a character with a expire timer > 24h is online */
+/* it loops thru online players once an hour to check whether a new < 24h is available */
+int pc_global_expiration_timer(int tid, unsigned int tick, int id, intptr_t data) {
+	struct s_mapiterator* iter;
+	struct map_session_data* sd;
+
+	iter = mapit_getallusers();
+
+	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
+		if( sd->expiration_time )
+			pc_expire_check(sd);
+
+	mapit_free(iter);
+
+  return 0;
+}
+
+void pc_expire_check(struct map_session_data *sd) {  
+	/* ongoing timer */
+	if( sd->expiration_tid != INVALID_TIMER )
+		return;
+
+	/* not within the next 24h, enable the global check */
+	if( sd->expiration_time > (time(NULL) + ((60 * 60) * 24)) ) {
+
+		/* global check not running, enable */
+		if( pc_expiration_tid == INVALID_TIMER ) /* Starts in 1h, repeats every hour */
+			pc_expiration_tid = add_timer_interval(gettick() + ((1000 * 60) * 60), pc_global_expiration_timer, 0, 0, ((1000 * 60) * 60));
+
+		return;
+	}
+
+	sd->expiration_tid = add_timer(gettick() + (unsigned int)(sd->expiration_time - time(NULL)) * 1000, pc_expiration_timer, sd->bl.id, 0);
+}
+
 /**
 * Deposit some money to bank
 * @param sd
@@ -10716,6 +10783,8 @@ void do_final_pc(void) {
 	db_destroy(itemcd_db);
 
 	do_final_pc_groups();
+
+	ers_destroy(pc_sc_display_ers);
 }
 
 void do_init_pc(void) {
@@ -10734,6 +10803,8 @@ void do_init_pc(void) {
 	add_timer_func_list(pc_follow_timer, "pc_follow_timer");
 	add_timer_func_list(pc_endautobonus, "pc_endautobonus");
 	add_timer_func_list(pc_talisman_timer, "pc_talisman_timer");
+	add_timer_func_list(pc_global_expiration_timer, "pc_global_expiration_timer");
+	add_timer_func_list(pc_expiration_timer, "pc_expiration_timer");
 
 	add_timer(gettick() + autosave_interval, pc_autosave, 0, 0);
 
@@ -10752,4 +10823,6 @@ void do_init_pc(void) {
 	}
 
 	do_init_pc_groups();
+
+	pc_sc_display_ers = ers_new(sizeof(struct sc_display_entry), "pc.c:pc_sc_display_ers", ERS_OPT_NONE);
 }

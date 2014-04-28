@@ -392,7 +392,7 @@ typedef enum sc_type {
 	SC_SPHERE_4,//340
 	SC_SPHERE_5,
 	SC_READING_SB,
-	SC_FREEZINGSPELL,
+	SC_FREEZE_SP,
 	/**
 	 * Ranger
 	 **/
@@ -699,6 +699,8 @@ typedef enum sc_type {
 
 	SC_TEARGAS_SOB,
 	SC__FEINTBOMB,
+	SC__CHAOS,
+	SC_ELEMENTAL_SHIELD,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
@@ -1481,6 +1483,8 @@ enum si_type {
 	SI_HEAT_BARREL_AFTER = 778,
 	SI_DECORATION_OF_MUSIC = 779,
 	SI_OVERSEAEXPUP = 780,
+	SI_CLOWN_N_GYPSY_CARD = 781,
+	SI_OPEN_NPC_MARKET = 782,
 	SI_BEEF_RIB_STEW = 783,
 	SI_PORK_RIB_STEW = 784,
 	SI_CHUSEOK_MONDAY = 785,
@@ -1534,29 +1538,29 @@ extern int current_equip_item_index;
 extern int current_equip_card_id;
 
 //Mode definitions to clear up code reading. [Skotlex]
-enum e_mode
-{
-	MD_CANMOVE		= 0x000001,
-	MD_LOOTER		= 0x000002,
-	MD_AGGRESSIVE		= 0x000004,
-	MD_ASSIST		= 0x000008,
-	MD_CASTSENSOR_IDLE	= 0x000010,
-	MD_BOSS			= 0x000020,
-	MD_PLANT		= 0x000040,
-	MD_CANATTACK		= 0x000080,
-	MD_DETECTOR		= 0x000100,
-	MD_CASTSENSOR_CHASE	= 0x000200,
-	MD_CHANGECHASE		= 0x000400,
-	MD_ANGRY		= 0x000800,
+enum e_mode {
+	MD_CANMOVE				= 0x000001,
+	MD_LOOTER				= 0x000002,
+	MD_AGGRESSIVE			= 0x000004,
+	MD_ASSIST				= 0x000008,
+	MD_CASTSENSOR_IDLE		= 0x000010,
+	MD_BOSS					= 0x000020,
+	MD_PLANT				= 0x000040,
+	MD_CANATTACK			= 0x000080,
+	MD_DETECTOR				= 0x000100,
+	MD_CASTSENSOR_CHASE		= 0x000200,
+	MD_CHANGECHASE			= 0x000400,
+	MD_ANGRY				= 0x000800,
 	MD_CHANGETARGET_MELEE	= 0x001000,
 	MD_CHANGETARGET_CHASE	= 0x002000,
-	MD_TARGETWEAK		= 0x004000,
-	MD_IGNOREMELEE		= 0x010000, //takes 1 HP damage from melee physical attacks
-	MD_IGNOREMAGIC		= 0x020000, //takes 1 HP damage from magic
-	MD_IGNORERANGED		= 0x040000, //takes 1 HP damage from ranged physical attacks
-	MD_MVP			= 0x080000, //MVP - instant kill / coma-like skills don't work
-	MD_IGNOREMISC		= 0x100000, //takes 1 HP damage from "none" attack type
-	MD_KNOCKBACK_IMMUNE	= 0x200000, //can't be knocked back
+	MD_TARGETWEAK			= 0x004000,
+	MD_RANDOMTARGET			= 0x008000,
+	MD_IGNOREMELEE			= 0x010000,
+	MD_IGNOREMAGIC			= 0x020000,
+	MD_IGNORERANGED			= 0x040000,
+	MD_MVP					= 0x080000,
+	MD_IGNOREMISC			= 0x100000,
+	MD_KNOCKBACK_IMMUNE		= 0x200000,
 };
 #define MD_MASK 0x00FFFF
 #define ATR_MASK 0xFF0000
@@ -1757,6 +1761,13 @@ struct weapon_atk {
 #endif
 };
 
+sc_type SkillStatusChangeTable[MAX_SKILL];   // skill  -> status
+int StatusIconChangeTable[SC_MAX];           // status -> "icon" (icon is a bit of a misnomer, since there exist values with no icon associated)
+unsigned int StatusChangeFlagTable[SC_MAX];  // status -> flags
+int StatusSkillChangeTable[SC_MAX];          // status -> skill
+int StatusRelevantBLTypes[SI_MAX];           // "icon" -> enum bl_type (for clif->status_change to identify for which bl types to send packets)
+unsigned int StatusChangeStateTable[SC_MAX]; // status -> flags
+bool StatusDisplayType[SC_MAX];
 
 ///For holding basic status (which can be modified by status changes)
 struct status_data {
@@ -1838,6 +1849,12 @@ struct regen_data {
 
 	//skill-regen, sitting-skill-regen (since not all chars with regen need it)
 	struct regen_data_sub *sregen, *ssregen;
+};
+
+///Status display entry
+struct sc_display_entry {
+	enum sc_type type;
+	int val1, val2, val3;
 };
 
 ///Status change entry

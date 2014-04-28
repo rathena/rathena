@@ -46,8 +46,8 @@ struct login_session_data {
 ///Struct describing 1 char-serv attach to us
 struct mmo_char_server {
 	char name[20];	///char-serv name
-	int fd;		///char-serv socket (well actually file descriptor)
-	uint32 ip;	///char-serv IP
+	int fd;			///char-serv socket (well actually file descriptor)
+	uint32 ip;		///char-serv IP
 	uint16 port;	///char-serv rt
 	uint16 users;	/// user count on this server
 	uint16 type;	/// 0=normal, 1=maintenance, 2=over 18, 3=paying, 4=P2P
@@ -55,9 +55,9 @@ struct mmo_char_server {
 };
 
 struct client_hash_node {
-	int group_id;		///group
-	uint8 hash[16];		///hash required for that groupid or below
-	struct client_hash_node *next; ///next entry
+	unsigned int group_id;			///group
+	uint8 hash[16];					///hash required for that groupid or below
+	struct client_hash_node *next;	///next entry
 };
 
 struct Login_Config {

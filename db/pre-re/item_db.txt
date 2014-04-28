@@ -1594,7 +1594,7 @@
 2773,Krieger_Ring2,Glorious Mass-Production Ring,4,20,,0,,0,,0,0xFFFFFFFE,7,2,136,,61,0,0,{ bonus bAllStats,2; },{},{}
 2774,Krieger_Ring3,Glorious Popularized Ring,4,20,,0,,0,,0,0xFFFFFFFE,7,2,136,,0,0,0,{ bonus bAllStats,1; },{},{}
 2775,Lure,Lure,4,20,,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{},{},{}
-2776,Cool_Towel,Adventurer's Trusty Towel,4,20,,100,,,,0,0xFFFFFFFF,7,2,136,,0,0,0,{},{ setoption Option_Summer,1; },{ setoption Option_Summer,0; }
+2776,Cool_Towel,Adventurer's Trusty Towel,4,20,,100,,,,0,0xFFFFFFFF,7,2,136,,0,0,0,{},{ sc_start SC_SUMMER,-1,0; },{ sc_end SC_SUMMER; }
 2777,Shaman_Ring,Shaman Ring,4,20,,100,,0,,1,0xFFFFFFFF,7,2,136,,30,0,0,{ bonus bUseSPrate,-5; },{},{}
 2778,Shaman_Earing,Shaman Earrings,4,20,,100,,0,,0,0xFFFFFFFF,7,2,136,,30,0,0,{ bonus bInt,2; },{},{}
 2779,Dark_Knight_Belt,Dark Knight Belt,4,20,,500,,1,,0,0xFFFFFFFF,7,2,136,,30,0,0,{ bonus bStr,2; bonus bAgi,1; },{},{}
@@ -4968,13 +4968,13 @@
 12419,Mana_Plus,Mana Plus,2,100,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_MANA_PLUS,500000,50; },{},{}
 12420,Stamina_Up_M,Stamina Up M,2,100,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_MUSTLE_M,500000,5; },{},{}
 12421,Falmons_F,Falmons F,3,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_LIFE_FORCE_F,500000,5; },{},{}
-12422,HP_Increase_Potion_(Small),HP Increase Potion (Small),0,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INCMHP,500000,(500+(BaseLevel*10/3)); percentheal 1,0; },{},{}
-12423,HP_Increase_Potion_(Medium),HP Increase Potion (Medium),0,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INCMHP,500000,(1500+(BaseLevel*10/3)); percentheal 2,0; },{},{}
-12424,HP_Increase_Potion_(Large),HP Increase Potion (Large),0,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INCMHP,500000,(2500+(BaseLevel*10/3)); percentheal 5,0; },{},{}
-12425,SP_Increase_Potion_(Small),SP Increase Potion (Small),0,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INCMSPRATE,500000,((BaseLevel/10)-5); percentheal 0,2; },{},{}
-12426,SP_Increase_Potion_(Medium),SP Increase Potion (Medium),0,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INCMSPRATE,500000,(BaseLevel/10); percentheal 0,4; },{},{}
-12427,SP_Increase_Potion_(Large),SP Increase Potion (Large),0,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INCMSPRATE,500000,((BaseLevel/10)+5); percentheal 0,8; },{},{}
-12428,Concentrated_White_Potion_Z,Concentrated White Potion Z,0,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXTRACT_WHITE_POTION_Z,500000,0; heal 1000,0; },{},{}
+12422,HP_Increase_Potion_(Small),HP Increase Potion (Small),0,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCMHP,500000,(500+(BaseLevel*10/3)); percentheal 1,0; },{},{}
+12423,HP_Increase_Potion_(Medium),HP Increase Potion (Medium),0,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCMHP,500000,(1500+(BaseLevel*10/3)); percentheal 2,0; },{},{}
+12424,HP_Increase_Potion_(Large),HP Increase Potion (Large),0,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCMHP,500000,(2500+(BaseLevel*10/3)); percentheal 5,0; },{},{}
+12425,SP_Increase_Potion_(Small),SP Increase Potion (Small),0,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCMSPRATE,500000,((BaseLevel/10)-5); percentheal 0,2; },{},{}
+12426,SP_Increase_Potion_(Medium),SP Increase Potion (Medium),0,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCMSPRATE,500000,(BaseLevel/10); percentheal 0,4; },{},{}
+12427,SP_Increase_Potion_(Large),SP Increase Potion (Large),0,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCMSPRATE,500000,((BaseLevel/10)+5); percentheal 0,8; },{},{}
+12428,Concentrated_White_Potion_Z,Concentrated White Potion Z,0,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXTRACT_WHITE_POTION_Z,500000,20; heal 1000,0; },{},{}
 12429,Savage_Full_Roast,Savage Full Roast,2,,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_SAVAGE_STEAK,300000,20; },{},{}
 12430,Cocktail_Warg_Blood,Cocktail Warg Blood,2,,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_COCKTAIL_WARG_BLOOD,300000,20; },{},{}
 12431,Minor_Stew,Minor Stew,2,,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_MINOR_BBQ,300000,20; },{},{}
@@ -6411,15 +6411,15 @@
 14594,Quagmire_Scroll,Quagmire Scroll,11,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "WZ_QUAGMIRE",5; },{},{}
 14595,Unsealed_Magic_Spell,Unsealed Magic Spell,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ warp "yuno_fild09",255,127; },{},{}
 14596,Pierre_Treasurebox,Pierre's Treasure Box,2,0,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ getrandgroupitem(IG_Pierre_Treasurebox),1; getrandgroupitem(IG_Pierre_Treasurebox),1; getrandgroupitem(IG_Pierre_Treasurebox),1; getrandgroupitem(IG_Pierre_Treasurebox),1; getrandgroupitem(IG_Pierre_Treasurebox),1; getrandgroupitem(IG_Pierre_Treasurebox),1; },{},{}
-14597,PhreeoniS,Phreeoni Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ITEMSCRIPT,180000,4121; },{},{}
-14598,GhostringS,Ghostring Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ITEMSCRIPT,60000,4047; },{},{}
+14597,PhreeoniS,Phreeoni Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,180000,4121,SI_FOODHIT; },{},{}
+14598,GhostringS,Ghostring Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,60000,4047,SI_ARMOR_PROPERTY; },{},{}
 14599,Greed_Scroll_C,Greed Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 14600,Mental_Potion,Mental Potion,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 14601,Tyr's_Blessing,Tyr's Blessing,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCFLEE,300000,30; sc_start SC_INCHIT,300000,30; sc_start SC_ATKPOTION,300000,20; sc_start SC_MATKPOTION,300000,20; },{},{}
-14602,TaogunkaS,Tao Gunka Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ITEMSCRIPT,180000,4302; },{},{}
-14603,MistressS,Mistress Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ITEMSCRIPT,180000,4132; },{},{}
-14604,Orc_HeroS,Orc Hero Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ITEMSCRIPT,60000,4143; },{},{}
-14605,Orc_LoadS,Orc Lord Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ITEMSCRIPT,180000,4135; },{},{}
+14602,TaogunkaS,Tao Gunka Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,180000,4302,SI_MVPCARD_TAOGUNKA; },{},{}
+14603,MistressS,Mistress Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,180000,4132,SI_MVPCARD_MISTRESS; },{},{}
+14604,Orc_HeroS,Orc Hero Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,60000,4143,SI_MVPCARD_ORCHERO; },{},{}
+14605,Orc_LoadS,Orc Lord Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,180000,4135,SI_MVPCARD_ORCLORD; },{},{}
 14606,Job_Manual25,JOB Battle Manual,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 14607,Luxurious_Dinner_W,Luxurious Western Food,2,10000,,600,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCALLSTATUS,3600000,3; },{},{}
 14608,Luxurious_Dinner_E,Manchu-Han Imperial Feast,2,20000,,1200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCALLSTATUS,3600000,6; },{},{}

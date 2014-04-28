@@ -138,7 +138,7 @@
 2479:2580:2890:15042,{ bonus bAspd,2; bonus2 bSkillAtk,"RA_ARROWSTORM",50; bonus bLongAtkRate,30; bonus3 bAutoSpell,"AC_DOUBLE",(getskilllv("AC_DOUBLE") < 3)?3:getskilllv("AC_DOUBLE"),20; }
 2480:2581:2891:15043,{ bonus bMaxHPRate,15; bonus bFlee2,20; bonus2 bSkillAtk,"RA_CLUSTERBOMB",20; bonus bLongAtkRate,-30; bonus bAspd,-7; }
 2483:2586:15046,{ bonus2 bSubRace,RC_DemiHuman,15; bonus2 bSubRace,RC_Player,15; }
-2484:2587:15047,{ bonus bDex,5; bonus2 bSubRace,RC_DemiHuman,15; bonus2 bSubRace,RC_Player,15; }
+2484:2586:15047,{ bonus bDex,5; bonus2 bSubRace,RC_DemiHuman,15; bonus2 bSubRace,RC_Player,15; }
 2485:2587:15048,{ bonus bInt,5; bonus bMdef,10; bonus2 bSubRace,RC_DemiHuman,15; bonus2 bSubRace,RC_Player,15; }
 2518:2648:2649:5126,{ bonus bInt,5; bonus bMdef,11; bonus bMaxSPrate,20; bonus bNoCastCancel,0; bonus bVariableCastrate,25; }
 2519:2650:2651:5127,{ bonus bStr,2; bonus bLuk,9; bonus bCritical,13; bonus bBaseAtk,18; bonus bFlee2,13; }

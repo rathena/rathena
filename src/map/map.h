@@ -140,8 +140,8 @@ enum {
 	MAPID_XMAS,
 	MAPID_SUMMER,
 	MAPID_HANBOK,
-	MAPID_OKTOBERFEST,
 	MAPID_GANGSI,
+	MAPID_OKTOBERFEST,
 //2-1 Jobs
 	MAPID_SUPER_NOVICE = JOBL_2_1|0x0,
 	MAPID_KNIGHT,
@@ -580,6 +580,15 @@ struct s_skill_damage {
 #define MAX_MAP_SKILL_MODIFIER 5
 #endif
 
+struct questinfo {
+	struct npc_data *nd;
+	unsigned short icon;
+	unsigned char color;
+	int quest_id;
+	bool hasJob;
+	unsigned short job;/* perhaps a mapid mask would be most flexible? */
+};
+
 struct map_data {
 	char name[MAP_NAME_LENGTH];
 	uint16 index; // The map index used by the mapindex* functions.
@@ -688,6 +697,10 @@ struct map_data {
 
 	/* rAthena Local Chat */
 	struct Channel *channel;
+
+	/* ShowEvent Data Cache */
+	struct questinfo *qi_data;
+	unsigned short qi_count;
 	
 	/* speeds up clif_updatestatus processing by causing hpmeter to run only when someone with the permission can view it */
 	unsigned short hpmeter_visible;
@@ -805,6 +818,9 @@ struct mob_data * map_id2boss(int id);
 
 // reload config file looking only for npcs
 void map_reloadnpc(bool clear);
+
+void map_add_questinfo(int m, struct questinfo *qi);
+bool map_remove_questinfo(int m, struct npc_data *nd);
 
 /// Bitfield of flags for the iterator.
 enum e_mapitflags

@@ -157,6 +157,7 @@ Examples:
 	
 * rAthena IRC Channel
 	* irc://irc.rizon.net/rathena
+	* Web Chat: http://rathena.org/board/page/chat.html
 
 
 6. More Documentation

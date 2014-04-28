@@ -80,7 +80,7 @@ int intif_homunculus_requestsave(int account_id, struct s_homunculus* sh);
 int intif_homunculus_requestdelete(int homun_id);
 
 /******QUEST SYTEM*******/
-int intif_request_questlog(struct map_session_data * sd);
+void intif_request_questlog(struct map_session_data * sd);
 int intif_quest_save(struct map_session_data * sd);
 
 // MERCENARY SYSTEM
