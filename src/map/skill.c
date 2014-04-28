@@ -71,34 +71,41 @@ struct skill_usave {
 	uint16 skill_id, skill_lv;
 };
 
-struct s_skill_db skill_db[MAX_SKILL_DB];
-struct s_skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
-struct s_skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
-struct s_skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
+struct s_skill_db skill_db[MAX_SKILL_DB]; /// Skill DB
+struct s_skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB]; /// Produce DB
+struct s_skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB]; /// Arrow creation DB
+struct s_skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB]; /// Abracadabra DB
+/// Struct of Improvise DB
 struct s_skill_improvise_db {
 	uint16 skill_id;
-	short per;//1-10000
+	short per; /// 1-10000
 };
-struct s_skill_improvise_db skill_improvise_db[MAX_SKILL_IMPROVISE_DB];
+struct s_skill_improvise_db skill_improvise_db[MAX_SKILL_IMPROVISE_DB]; /// Improvise DB
 
+/// Struct of Change Material DB
 struct s_skill_changematerial_db {
-	int itemid;
-	short rate;
-	int qty[5];
-	short qty_rate[5];
+	uint16 itemid; /// Material ID
+	uint16 rate; /// Success rate
+	uint8 qty[5]; /// Gained Item
+	uint16 qty_rate[5]; /// Gained amount
 };
-struct s_skill_changematerial_db skill_changematerial_db[MAX_SKILL_PRODUCE_DB];
+struct s_skill_changematerial_db skill_changematerial_db[MAX_SKILL_PRODUCE_DB]; /// Change Material DB
 
-//Warlock
+/// Struct of Spellbook DB
 struct s_skill_spellbook_db {
-	int nameid;
-	uint16 skill_id;
-	int point;
+	uint16 nameid; /// Book ID
+	uint16 skill_id; /// Skill ID
+	uint8 point; /// Point
 };
+struct s_skill_spellbook_db skill_spellbook_db[MAX_SKILL_SPELLBOOK_DB]; /// Spellbook DB
 
-struct s_skill_spellbook_db skill_spellbook_db[MAX_SKILL_SPELLBOOK_DB];
-//Guillotine Cross
 struct s_skill_magicmushroom_db skill_magicmushroom_db[MAX_SKILL_MAGICMUSHROOM_DB];
+
+static uint16 skill_arrow_count; /// Arrow creation DB count
+static uint16 skill_abra_count; /// Abracadabra DB count
+static uint16 skill_improvise_count; /// Improvise DB count
+static uint16 skill_spellbook_count; /// Spellbook DB count
+static uint16 skill_magicmushroom_count; /// Magic Mushroom DB count
 
 struct s_skill_unit_layout skill_unit_layout[MAX_SKILL_UNIT_LAYOUT];
 int firewall_unit_pos;
@@ -160,19 +167,14 @@ uint16 skill_get_index( uint16 skill_id ) {
 	return skill_id;
 }
 
-const char* skill_get_name( uint16 skill_id ) {
-	uint16 idx = skill_get_index(skill_id);
-	if (!idx)
-		return "UNKNOWN_SKILL";
-	return skill_db[idx].name;
-}
-
-const char* skill_get_desc( uint16 skill_id ) {
-	uint16 idx = skill_get_index(skill_id);
-	if (!idx)
-		return "Unknown Skill";
-	return skill_db[idx].desc;
-}
+/** Get skill name
+* @param skill_id
+* @return skill name, if skill is invalid, will returns "UNKNOWN_SKILL" */
+const char* skill_get_name( uint16 skill_id ) { return skill_db[skill_get_index(skill_id)].name; }
+/** Get skill desc
+* @param skill_id
+* @return skill description, if skill is invalid, will returns "Unknown Skill" */
+const char* skill_get_desc( uint16 skill_id ) { return skill_db[skill_get_index(skill_id)].desc; }
 
 /// out of bounds error checking [celest]
 static void skill_chk(uint16 *skill_id) {
@@ -745,6 +747,14 @@ bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skil
 	return skill_check_unit_range2(src,pos_x,pos_y,skill_id,skill_lv,true);
 }
 
+/** Get skill unit layout
+* @param skill_id
+* @param skill_lv
+* @param src Object who casts the skill
+* @param x
+* @param y
+* @return Skill layout, if layout for skill is not found, it will return default 1x1
+*/
 struct s_skill_unit_layout* skill_get_unit_layout (uint16 skill_id, uint16 skill_lv, struct block_list* src, int x, int y) {
 	int pos = skill_get_unit_layout_type(skill_id,skill_lv);
 	uint8 dir;
@@ -772,6 +782,15 @@ struct s_skill_unit_layout* skill_get_unit_layout (uint16 skill_id, uint16 skill
 	return &skill_unit_layout[0]; // default 1x1 layout
 }
 
+/** Get skill unit layout
+* @param skill_id
+* @param skill_lv
+* @param src Object who casts the skill
+* @param x
+* @param y
+* @param dir Object direction
+* @return Skill layout, if layout for skill is not found, it will return default 1x1
+*/
 struct s_skill_nounit_layout* skill_get_nounit_layout(uint16 skill_id, uint16 skill_lv, struct block_list* src, int x, int y, int dir)
 {
 	if( skill_id == LG_OVERBRAND )
@@ -783,10 +802,15 @@ struct s_skill_nounit_layout* skill_get_nounit_layout(uint16 skill_id, uint16 sk
 	return &skill_nounit_layout[0];
 }
 
-/*==========================================
- * Add effect to skill when hit succesfully target
- *------------------------------------------*/
-int skill_additional_effect (struct block_list* src, struct block_list *bl, uint16 skill_id, uint16 skill_lv, int attack_type, int dmg_lv, unsigned int tick)
+/** Add effect to skill/normal attack when hit succesfully to the target, item effect bonus also applied here
+* @param src Attacker
+* @param bl Target
+* @param skill_id
+* @param attack_type BF_WEAPON|BF_MAGIC|BF_MISC|BF_SHORT|BF_LONG|BF_SKILL|BF_NORMAL
+* @param dmg_lv see enum damage_lv
+* @param tick
+*/
+void skill_additional_effect (struct block_list* src, struct block_list *bl, uint16 skill_id, uint16 skill_lv, int attack_type, int dmg_lv, unsigned int tick)
 {
 	struct map_session_data *sd, *dstsd;
 	struct mob_data *md, *dstmd;
@@ -798,13 +822,13 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 	int rate;
 	int chorusbonus = 0;
 
-	nullpo_ret(src);
-	nullpo_ret(bl);
+	nullpo_retv(src);
+	nullpo_retv(bl);
 
-	if(skill_id > 0 && !skill_lv) return 0;	// don't forget auto attacks! - celest
+	if(skill_id > 0 && !skill_lv) return;	// don't forget auto attacks! - celest
 
 	if( dmg_lv < ATK_BLOCK ) // Don't apply effect if miss.
-		return 0;
+		return;
 
 	sd = BL_CAST(BL_PC, src);
 	md = BL_CAST(BL_MOB, src);
@@ -817,7 +841,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 	tstatus = status_get_status_data(bl);
 	if (!tsc) //skill additional effect is about adding effects to the target...
 		//So if the target can't be inflicted with statuses, this is pointless.
-		return 0;
+		return;
 
 	// Minstrel/Wanderer number check for chorus skills.
 	// Bonus remains 0 unless 3 or more Minstrels/Wanderers are in the party.
@@ -893,7 +917,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 	}
 
 	if( dmg_lv < ATK_DEF ) // no damage, return;
-		return 0;
+		return;
 
 	switch(skill_id) {
 		case 0:
@@ -1899,16 +1923,20 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 		if (skill < 2000)
 			mob_class_change(dstmd,class_);
 	}
-
-	return 0;
 }
 
-int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, uint16 skill_id, unsigned int tick) {
+/** Autocast skill on skill usage (item bonus autospell)
+* @param sd Player who casts skill
+* @param bl Target
+* @param skill_id Used skill
+* @param tick
+*/
+static void skill_onskillusage(struct map_session_data *sd, struct block_list *bl, uint16 skill_id, unsigned int tick) {
 	uint8 i;
 	struct block_list *tbl;
 
 	if( sd == NULL || !skill_id )
-		return 0;
+		return;
 
 	for( i = 0; i < ARRAYLENGTH(sd->autospell3) && sd->autospell3[i].flag; i++ ) {
 		int skill, skill_lv, type;
@@ -1989,28 +2017,32 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, uint1
 			pc_exeautobonus(sd,&sd->autobonus3[i]);
 		}
 	}
-
-	return 1;
 }
 
-/* Splitted off from skill_additional_effect, which is never called when the
- * attack skill kills the enemy. Place in this function counter status effects
- * when using skills (eg: Asura's sp regen penalty, or counter-status effects
- * from cards) that will take effect on the source, not the target. [Skotlex]
- * Note: Currently this function only applies to Extremity Fist and BF_WEAPON
- * type of skills, so not every instance of skill_additional_effect needs a call
- * to this one.
- */
-int skill_counter_additional_effect (struct block_list* src, struct block_list *bl, uint16 skill_id, uint16 skill_lv, int attack_type, unsigned int tick)
+/** Splitted off from skill_additional_effect, which is never called when the
+* attack skill kills the enemy. Place in this function counter status effects
+* when using skills (eg: Asura's sp regen penalty, or counter-status effects
+* from cards) that will take effect on the source, not the target. [Skotlex]
+* Note: Currently this function only applies to Extremity Fist and BF_WEAPON
+* type of skills, so not every instance of skill_additional_effect needs a call
+* to this one.
+* @param src Attacker
+* @param bl Target
+* @param skill_id
+* @param skill_lv
+* @param attack_type
+* @param tick
+*/
+void skill_counter_additional_effect (struct block_list* src, struct block_list *bl, uint16 skill_id, uint16 skill_lv, int attack_type, unsigned int tick)
 {
 	int rate;
 	struct map_session_data *sd=NULL;
 	struct map_session_data *dstsd=NULL;
 
-	nullpo_ret(src);
-	nullpo_ret(bl);
+	nullpo_retv(src);
+	nullpo_retv(bl);
 
-	if(skill_id > 0 && !skill_lv) return 0;	// don't forget auto attacks! - celest
+	if(skill_id > 0 && !skill_lv) return;	// don't forget auto attacks! - celest
 
 	sd = BL_CAST(BL_PC, src);
 	dstsd = BL_CAST(BL_PC, bl);
@@ -2216,16 +2248,17 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			pc_exeautobonus(dstsd,&dstsd->autobonus2[i]);
 		}
 	}
-
-	return 0;
 }
-/*=========================================================================
- Breaks equipment. On-non players causes the corresponding strip effect.
- - rate goes from 0 to 10000 (100.00%)
- - flag is a BCT_ flag to indicate which type of adjustment should be used
-   (BCT_ENEMY/BCT_PARTY/BCT_SELF) are the valid values.
---------------------------------------------------------------------------*/
-int skill_break_equip (struct block_list *src,struct block_list *bl, unsigned short where, int rate, int flag)
+
+/** Breaks equipment. On-non players causes the corresponding strip effect.
+* @param src Attacker
+* @param bl Target
+* @param where Equip location: see enum equip_pos, EQP_WEAPON|EQP_SHIELD|EQP_ARMS|EQP_HELM|EQP_ACC|EQP_COSTUME|EQP_SHADOW_GEAR|EQP_SHADOW_ACC
+* @param rate Success chance from 0 to 10000 (100.00%)
+* @param flag BCT_ flag to indicate which type of adjustment should be used (BCT_ENEMY/BCT_PARTY/BCT_SELF) are the valid values.
+* @return true if equip is success, false if failed
+*/
+bool skill_break_equip (struct block_list *src,struct block_list *bl, unsigned int where, int rate, int flag)
 {
 	const int where_list[4]     = {EQP_WEAPON, EQP_ARMOR, EQP_SHIELD, EQP_HELM};
 	const enum sc_type scatk[4] = {SC_STRIPWEAPON, SC_STRIPARMOR, SC_STRIPSHIELD, SC_STRIPHELM};
@@ -2276,7 +2309,7 @@ int skill_break_equip (struct block_list *src,struct block_list *bl, unsigned sh
 		}
 	}
 	if (!where) //Nothing to break.
-		return 0;
+		return false;
 	if (sd) {
 		for (i = 0; i < EQI_MAX; i++) {
 			int j = sd->equip_index[i];
@@ -2313,10 +2346,19 @@ int skill_break_equip (struct block_list *src,struct block_list *bl, unsigned sh
 		clif_equiplist(sd);
 	}
 
-	return where; //Return list of pieces broken.
+	return where?true:false; //Return list of pieces broken.
 }
 
-int skill_strip_equip(struct block_list *src,struct block_list *bl, unsigned short where, int rate, int lv, int time)
+/** Strip target's equipment(s)
+* @param src Attacker
+* @param bl Target
+* @param where Equip location: see enum equip_pos, EQP_WEAPON|EQP_SHIELD|EQP_ARMS|EQP_HELM|EQP_ACC|EQP_COSTUME|EQP_SHADOW_GEAR|EQP_SHADOW_ACC
+* @param rate Success chance from 0 to 100 (100%)
+* @param lv Used for strip skill level
+* @param time Strip duration
+* @return true if success, false if failed
+*/
+bool skill_strip_equip(struct block_list *src,struct block_list *bl, unsigned int where, int rate, int lv, int time)
 {
 	struct status_change *sc;
 	const int pos[5]             = {EQP_WEAPON, EQP_SHIELD, EQP_ARMOR, EQP_HELM, EQP_ACC};
@@ -2325,33 +2367,35 @@ int skill_strip_equip(struct block_list *src,struct block_list *bl, unsigned sho
 	int i;
 
 	if (rnd()%100 >= rate)
-		return 0;
+		return false;
 
 	sc = status_get_sc(bl);
 	if (!sc || sc->option&OPTION_MADOGEAR ) //Mado Gear cannot be divested [Ind]
-		return 0;
+		return false;
 
 	for (i = 0; i < ARRAYLENGTH(pos); i++) {
 		if (where&pos[i] && sc_def[i] > SC_NONE && sc->data[sc_def[i]])
 			where&=~pos[i];
 	}
-	if (!where) return 0;
+	if (!where) return false;
 
 	for (i = 0; i < ARRAYLENGTH(pos); i++) {
 		if (where&pos[i] && !sc_start(src,bl, sc_atk[i], 100, lv, time))
 			where&=~pos[i];
 	}
-	return where?1:0;
+	return where?true:false;
 }
+
 //Early declaration
 static int skill_area_temp[8];
-/*=========================================================================
- Used to knock back players, monsters, traps, etc
- - 'count' is the number of squares to knock back
- - 'direction' indicates the way OPPOSITE to the knockback direction (or -1 for default behavior)
- - if 'flag&0x1', position update packets must not be sent.
- - if 'flag&0x2', skill blown ignores players' special_state.no_knockback
- -------------------------------------------------------------------------*/
+/** Used to knock back players, monsters, traps, etc
+* @param src
+* @param target
+* @param count Number of squares to knock back
+* @param dir Indicates the way OPPOSITE to the knockback direction (or -1 for default behavior)
+* @param flag 0x1 - position update packets must not be sent, 0x2 - skill blown ignores players special_state.no_knockback
+* @return Number of knocked back cells
+*/
 int skill_blown(struct block_list* src, struct block_list* target, int count, int8 dir, int flag) {
 	int dx = 0, dy = 0;
 	struct skill_unit* su = NULL;
@@ -2411,11 +2455,12 @@ int skill_blown(struct block_list* src, struct block_list* target, int count, in
 }
 
 
-// Checks if 'bl' should reflect back a spell cast by 'src'.
-// type is the type of magic attack: 0: indirect (aoe), 1: direct (targetted)
-// In case of success returns type of reflection, otherwise 0
-//		1 - Regular reflection (Maya)
-//		2 - SL_KAITE reflection
+/** Checks if 'bl' should reflect back a spell cast by 'src'.
+* @param src Caster
+* @param bl Target
+* @param type Type of magic attack: 0: indirect (aoe), 1: direct (targetted)
+* @return In case of success returns type of reflection, otherwise 0; 1 - Regular reflection (Maya); 2 - SL_KAITE reflection
+*/
 static int skill_magic_reflect(struct block_list* src, struct block_list* bl, int type)
 {
 	struct status_change *sc = status_get_sc(bl);
@@ -2449,9 +2494,11 @@ static int skill_magic_reflect(struct block_list* src, struct block_list* bl, in
 	return 0;
 }
 
-/*
- * Combo handler, start stop combo status
- */
+/** Combo handler, start stop combo status
+* @param bl
+* @param skill_id
+* @param inf
+*/
 void skill_combo_toogle_inf(struct block_list* bl, uint16 skill_id, int inf){
 	TBL_PC *sd = BL_CAST(BL_PC, bl);
 	switch (skill_id) {
@@ -2487,7 +2534,15 @@ void skill_combo_toogle_inf(struct block_list* bl, uint16 skill_id, int inf){
 	}
 }
 
-void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_list *bl, uint16 skill_id, uint16 skill_lv, int tick){
+/** Check skill combo availability
+* @param src Caster
+* @param dsrc
+* @param bl
+* @param skill_id
+* @param skill_lv
+* @param tick
+*/
+static void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_list *bl, uint16 skill_id, uint16 skill_lv, int tick){
 	int duration = 0, delay=0; //Used to signal if this skill can be combo'ed later on.
 	struct status_change_entry *sce;
 	TBL_PC *sd = BL_CAST(BL_PC,src);
@@ -2684,20 +2739,22 @@ static void skill_do_copy(struct block_list* src,struct block_list *bl, uint16 s
 		clif_addskill(tsd,skill_id);
 	}
 }
-/*
- * =========================================================================
- * Does a skill attack with the given properties.
- * src is the master behind the attack (player/mob/pet)
- * dsrc is the actual originator of the damage, can be the same as src, or a BL_SKILL
- * bl is the target to be attacked.
- * flag can hold a bunch of information:
- * flag&0xFFF is passed to the underlying battle_calc_attack for processing
- *      (usually holds number of targets, or just 1 for simple splash attacks)
- * flag&0x1000 is used to tag that this is a splash-attack (so the damage
- *      packet shouldn't display a skill animation)
- * flag&0x2000 is used to signal that the skill_lv should be passed as -1 to the
- *      client (causes player characters to not scream skill name)
- *-------------------------------------------------------------------------*/
+/** Does a skill attack with the given properties.
+* @param src Master behind the attack (player/mob/pet)
+* @param dsrc Actual originator of the damage, can be the same as src, or a BL_SKILL
+* @param bl Target to be attacked.
+* @param skill_id
+* @param skill_lv
+* @param tick
+* @param flag Holds a bunch of information:
+*   0xFFF is passed to the underlying battle_calc_attack for processing
+*      (usually holds number of targets, or just 1 for simple splash attacks)
+*   0x1000 is used to tag that this is a splash-attack (so the damage
+*      packet shouldn't display a skill animation)
+*   0x2000 is used to signal that the skill_lv should be passed as -1 to the
+*      client (causes player characters to not scream skill name)
+* @return damage of skill
+*/
 int64 skill_attack (int attack_type, struct block_list* src, struct block_list *dsrc, struct block_list *bl, uint16 skill_id, uint16 skill_lv, unsigned int tick, int flag)
 {
 	struct Damage dmg;
@@ -3187,12 +3244,20 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 	return damage;
 }
 
-/*==========================================
- * sub fonction for recursive skill call.
- * Checking bl battle flag and display dammage
- * then call func with source,target,skill_id,skill_lv,tick,flag
- *------------------------------------------*/
+/** Skill function that called by skill_area_sub, such skill_castend_damage_id, skill_area_sub_count
+* @param src
+* @param target
+* @param skill_id
+* @param skill_lv
+* @param tick
+* @param flag
+*/
 typedef int (*SkillFunc)(struct block_list *, struct block_list *, int, int, unsigned int, int);
+
+/** Sub function for recursive skill call.
+* Checking bl battle flag and display damage
+* then call func with source,target,skill_id,skill_lv,tick,flag
+*/
 int skill_area_sub (struct block_list *bl, va_list ap) {
 	struct block_list *src;
 	uint16 skill_id,skill_lv;
@@ -8694,7 +8759,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				case SC_FULL_THROTTLE: case SC_REBOUND: case SC_TELEKINESIS_INTENSE:
 				case SC_HEAT_BARREL:	case SC_HEAT_BARREL_AFTER:	case SC_P_ALTER:
 				case SC_E_CHAIN:		case SC_C_MARKER:		case SC_B_TRAP:
-				case SC_H_MINE:			case SC_RECOGNIZEDSPELL:
+				case SC_H_MINE:			case SC_RECOGNIZEDSPELL:	case SC_CHASEWALK2:
 				case SC_MTF_ASPD:		case SC_MTF_RANGEATK:	case SC_MTF_MATK:
 				case SC_MTF_MLEATKED:	case SC_MTF_CRIDAMAGE:	case SC_GN_CARTBOOST:
 #ifdef RENEWAL
@@ -19537,21 +19602,30 @@ static bool skill_parse_row_unitdb(char* split[], int columns, int current) {
 * ProduceItemID,ItemLV,RequireSkill,Requireskill_lv,MaterialID1,MaterialAmount1,......
 */
 static bool skill_parse_row_producedb(char* split[], int columns, int current) {
-	int x,y;
+	uint16 nameid = atoi(split[0]), x, y;
+	bool add = false;
 
-	int i = atoi(split[0]);
-	if( !i )
+	if( !itemdb_exists(nameid) ) {
+		ShowError("skill_parse_row_producedb: Invalid product item id '%s'.\n", split[0]);
 		return false;
-
-	skill_produce_db[current].nameid = i;
-	skill_produce_db[current].itemlv = atoi(split[1]);
-	skill_produce_db[current].req_skill = atoi(split[2]);
-	skill_produce_db[current].req_skill_lv = atoi(split[3]);
+	}
 
 	for( x = 4, y = 0; x+1 < columns && split[x] && split[x+1] && y < MAX_PRODUCE_RESOURCE; x += 2, y++ ) {
+		if (!itemdb_exists(atoi(split[x])))
+			continue;
 		skill_produce_db[current].mat_id[y] = atoi(split[x]);
 		skill_produce_db[current].mat_amount[y] = atoi(split[x+1]);
+		add = true;
 	}
+	
+	if( add ) {
+		skill_produce_db[current].nameid = nameid;
+		skill_produce_db[current].itemlv = atoi(split[1]);
+		skill_produce_db[current].req_skill = atoi(split[2]);
+		skill_produce_db[current].req_skill_lv = atoi(split[3]);
+	}
+	else
+		ShowError("skill_parse_row_producedb: No valid material items found for '%s'.\n", split[0]);
 
 	return true;
 }
@@ -19560,17 +19634,43 @@ static bool skill_parse_row_producedb(char* split[], int columns, int current) {
 * SourceID,MakeID1,MakeAmount1,...,MakeID5,MakeAmount5
 */
 static bool skill_parse_row_createarrowdb(char* split[], int columns, int current) {
-	int x,y;
+	uint8 x, y;
+	uint16 nameid = atoi(split[0]), i;
+	bool add = false;
 
-	int i = atoi(split[0]);
-	if( !i )
-		return false;
+	if( !itemdb_exists(nameid) ) {
+		ShowError("skill_parse_row_createarrowdb: Invalid material ID '%s'\n", split[0]);
+		return true;
+	}
 
-	skill_arrow_db[current].nameid = i;
+	// Import supported
+	ARR_FIND(0, skill_arrow_count, i, skill_arrow_db[i].nameid == nameid);
+	if (i < skill_arrow_count) {
+		memset(skill_arrow_db[i].cre_id, 0, sizeof(skill_arrow_db[i].cre_id));
+		memset(skill_arrow_db[i].cre_amount, 0, sizeof(skill_arrow_db[i].cre_amount));
+	}
+	else {
+		if( skill_arrow_count >= MAX_SKILL_ARROW_DB) {
+			ShowError("skill_parse_row_createarrowdb: MAX_SKILL_ARROW_DB is %d.\n", MAX_SKILL_ARROW_DB);
+			return true;
+		}
+		skill_arrow_count++;
+	}
 
 	for( x = 1, y = 0; x+1 < columns && split[x] && split[x+1] && y < MAX_ARROW_RESOURCE; x += 2, y++ ) {
-		skill_arrow_db[current].cre_id[y] = atoi(split[x]);
-		skill_arrow_db[current].cre_amount[y] = atoi(split[x+1]);
+		if (!itemdb_exists(atoi(split[x])))
+			continue;
+
+		skill_arrow_db[i].cre_id[y] = atoi(split[x]);
+		skill_arrow_db[i].cre_amount[y] = atoi(split[x+1]);
+		add = true;
+	}
+
+	if (add)
+		skill_arrow_db[i].nameid = nameid;
+	else {
+		ShowError("skill_parse_row_createarrowdb: No valid arrow creation for material ID '%s'\n", split[0]);
+		return true;
 	}
 
 	return true;
@@ -19580,22 +19680,31 @@ static bool skill_parse_row_createarrowdb(char* split[], int columns, int curren
 * SkillID,PreservePoints
 */
 static bool skill_parse_row_spellbookdb(char* split[], int columns, int current) {
-
-	uint16 skill_id = atoi(split[0]);
-	int points = atoi(split[1]);
-	int nameid = atoi(split[2]);
+	uint16 skill_id = atoi(split[0]), i;
+	uint8 points = atoi(split[1]);
+	uint16 nameid = atoi(split[2]);
 
 	if( !skill_get_index(skill_id) || !skill_get_max(skill_id) )
-		ShowError("spellbook_db: Invalid skill ID %d\n", skill_id);
-	if ( !skill_get_inf(skill_id) )
-		ShowError("spellbook_db: Passive skills cannot be memorized (%d/%s)\n", skill_id, skill_get_name(skill_id));
-	if( points < 1 )
-		ShowError("spellbook_db: PreservePoints have to be 1 or above! (%d/%s)\n", skill_id, skill_get_name(skill_id));
+		ShowError("skill_parse_row_spellbookdb: Invalid skill ID %d\n", skill_id);
+	if( !skill_get_inf(skill_id) )
+		ShowError("skill_parse_row_spellbookdb: Passive skills cannot be memorized (%d/%s)\n", skill_id, skill_get_name(skill_id));
+	if( !points )
+		ShowError("skill_parse_row_spellbookdb: PreservePoints have to be 1 or above! (%d/%s)\n", skill_id, skill_get_name(skill_id));
 	else {
-		skill_spellbook_db[current].skill_id = skill_id;
-		skill_spellbook_db[current].point = points;
-		skill_spellbook_db[current].nameid = nameid;
+		uint16 i;
+		// Import supported
+		ARR_FIND(0, skill_spellbook_count, i, skill_spellbook_db[i].skill_id == skill_id);
+		if (i > skill_spellbook_count) {
+			if( skill_spellbook_count >= MAX_SKILL_SPELLBOOK_DB) {
+				ShowError("skill_parse_row_spellbookdb: MAX_SKILL_SPELLBOOK_DB is %d.\n", MAX_SKILL_SPELLBOOK_DB);
+				return true;
+			}
+			skill_arrow_count++;
+		}
 
+		skill_spellbook_db[i].skill_id = skill_id;
+		skill_spellbook_db[i].point = points;
+		skill_spellbook_db[i].nameid = nameid;
 		return true;
 	}
 
@@ -19606,14 +19715,14 @@ static bool skill_parse_row_spellbookdb(char* split[], int columns, int current)
 * SkillID,Rate
 */
 static bool skill_parse_row_improvisedb(char* split[], int columns, int current) {
-	uint16 skill_id = atoi(split[0]);
+	uint16 skill_id = atoi(split[0]), i;
 	short j = atoi(split[1]);
-
+	
 	if( !skill_get_index(skill_id) || !skill_get_max(skill_id) ) {
 		ShowError("skill_improvise_db: Invalid skill ID %d\n", skill_id);
 		return false;
 	}
-	if ( !skill_get_inf(skill_id) ) {
+	if( !skill_get_inf(skill_id) ) {
 		ShowError("skill_improvise_db: Passive skills cannot be casted (%d/%s)\n", skill_id, skill_get_name(skill_id));
 		return false;
 	}
@@ -19621,11 +19730,17 @@ static bool skill_parse_row_improvisedb(char* split[], int columns, int current)
 		ShowError("skill_improvise_db: Chances have to be 1 or above! (%d/%s)\n", skill_id, skill_get_name(skill_id));
 		return false;
 	}
-	if( current >= MAX_SKILL_IMPROVISE_DB ) {
-		ShowError("skill_improvise_db: Maximum amount of entries reached (%d), increase MAX_SKILL_IMPROVISE_DB\n",MAX_SKILL_IMPROVISE_DB);
+	// Import supported
+	ARR_FIND(0, skill_improvise_count, i, skill_improvise_db[i].skill_id == skill_id);
+	if (i > skill_improvise_count) {
+		if( skill_improvise_count >= MAX_SKILL_IMPROVISE_DB) {
+			ShowError("skill_improvise_db: Maximum amount of entries reached (%d), increase MAX_SKILL_IMPROVISE_DB\n", MAX_SKILL_IMPROVISE_DB);
+			return true;
+		}
+		skill_improvise_count++;
 	}
-	skill_improvise_db[current].skill_id = skill_id;
-	skill_improvise_db[current].per = j; // Still need confirm it.
+	skill_improvise_db[i].skill_id = skill_id;
+	skill_improvise_db[i].per = j; // Still need confirm it.
 
 	return true;
 }
@@ -19634,20 +19749,27 @@ static bool skill_parse_row_improvisedb(char* split[], int columns, int current)
 * SkillID
 */
 static bool skill_parse_row_magicmushroomdb(char* split[], int column, int current) {
-	uint16 skill_id = atoi(split[0]);
+	uint16 skill_id = atoi(split[0]), i;
 
-	if( !skill_get_index(skill_id) || !skill_get_max(skill_id) )
-	{
+	if( !skill_get_index(skill_id) || !skill_get_max(skill_id) ) {
 		ShowError("magicmushroom_db: Invalid skill ID %d\n", skill_id);
 		return false;
 	}
-	if ( !skill_get_inf(skill_id) )
-	{
+	if ( !skill_get_inf(skill_id) ) {
 		ShowError("magicmushroom_db: Passive skills cannot be casted (%d/%s)\n", skill_id, skill_get_name(skill_id));
 		return false;
 	}
+	// Import supported
+	ARR_FIND(0, skill_magicmushroom_count, i, skill_magicmushroom_db[i].skill_id == skill_id);
+	if (i > skill_magicmushroom_count) {
+		if( skill_magicmushroom_count >= MAX_SKILL_MAGICMUSHROOM_DB) {
+			ShowError("magicmushroom_db: Maximum amount of entries reached (%d), increase MAX_SKILL_MAGICMUSHROOM_DB\n", MAX_SKILL_MAGICMUSHROOM_DB);
+			return true;
+		}
+		skill_magicmushroom_count++;
+	}
 
-	skill_magicmushroom_db[current].skill_id = skill_id;
+	skill_magicmushroom_db[i].skill_id = skill_id;
 
 	return true;
 }
@@ -19710,21 +19832,28 @@ static bool skill_parse_row_nonearnpcrangedb(char* split[], int column, int curr
 * SkillID,DummyName,RatePerLvl
 */
 static bool skill_parse_row_abradb(char* split[], int columns, int current) {
-	uint16 skill_id = atoi(split[0]);
-	if( !skill_get_index(skill_id) || !skill_get_max(skill_id) )
-	{
+	uint16 skill_id = atoi(split[0]), i;
+	if( !skill_get_index(skill_id) || !skill_get_max(skill_id) ) {
 		ShowError("abra_db: Invalid skill ID %d\n", skill_id);
 		return false;
 	}
-	if ( !skill_get_inf(skill_id) )
-	{
+	if ( !skill_get_inf(skill_id) ) {
 		ShowError("abra_db: Passive skills cannot be casted (%d/%s)\n", skill_id, skill_get_name(skill_id));
 		return false;
 	}
+	// Import supported
+	ARR_FIND(0, skill_abra_count, i, skill_improvise_db[i].skill_id == skill_id);
+	if (i > skill_abra_count) {
+		if( skill_abra_count >= MAX_SKILL_ABRA_DB) {
+			ShowError("abra_db: Maximum amount of entries reached (%d), increase MAX_SKILL_ABRA_DB\n", MAX_SKILL_ABRA_DB);
+			return true;
+		}
+		skill_abra_count++;
+	}
 
-	skill_abra_db[current].skill_id = skill_id;
-	safestrncpy(skill_abra_db[current].name, trim(split[1]), sizeof(skill_abra_db[current].name)); //store dummyname
-	skill_split_atoi(split[2],skill_abra_db[current].per);
+	skill_abra_db[i].skill_id = skill_id;
+	safestrncpy(skill_abra_db[i].name, trim(split[1]), sizeof(skill_abra_db[i].name)); //store dummyname
+	skill_split_atoi(split[2],skill_abra_db[i].per);
 
 	return true;
 }
@@ -19733,27 +19862,27 @@ static bool skill_parse_row_abradb(char* split[], int columns, int current) {
 * ProductID,BaseRate,MakeAmount1,MakeAmountRate1...,MakeAmount5,MakeAmountRate5
 */
 static bool skill_parse_row_changematerialdb(char* split[], int columns, int current) {
-	uint16 skill_id = atoi(split[0]);
-	short j = atoi(split[1]);
-	int x,y;
+	uint16 nameid, rate = atoi(split[1]), x, y;
 
-	for(x=0; x<MAX_SKILL_PRODUCE_DB; x++){
-		if( skill_produce_db[x].nameid == skill_id )
-			if( skill_produce_db[x].req_skill == GN_CHANGEMATERIAL )
-				break;
+	if (!itemdb_exists(nameid = atoi(split[0]))) {
+		ShowError("changematerial_db: Invalid item with ID '%s'.\n", split[0]);
+		return false;
 	}
 
+	ARR_FIND(0, MAX_SKILL_PRODUCE_DB, x, skill_produce_db[x].nameid == nameid && skill_produce_db[x].req_skill == GN_CHANGEMATERIAL);
+
 	if( x >= MAX_SKILL_PRODUCE_DB ){
-		ShowError("changematerial_db: Not supported item ID(%d) for Change Material. \n", skill_id);
+		ShowError("changematerial_db: Not supported item ID(%d) for Change Material.\n", nameid);
 		return false;
 	}
 
 	if( current >= MAX_SKILL_PRODUCE_DB ) {
-		ShowError("skill_changematerial_db: Maximum amount of entries reached (%d), increase MAX_SKILL_PRODUCE_DB\n",MAX_SKILL_PRODUCE_DB);
+		ShowError("skill_changematerial_db: Maximum amount of entries reached (%d), increase MAX_SKILL_PRODUCE_DB\n" ,MAX_SKILL_PRODUCE_DB);
+		return false;
 	}
 
-	skill_changematerial_db[current].itemid = skill_id;
-	skill_changematerial_db[current].rate = j;
+	skill_changematerial_db[current].itemid = nameid;
+	skill_changematerial_db[current].rate = rate;
 
 	for( x = 2, y = 0; x+1 < columns && split[x] && split[x+1] && y < 5; x += 2, y++ ) {
 		skill_changematerial_db[current].qty[y] = atoi(split[x]);
@@ -19763,9 +19892,9 @@ static bool skill_parse_row_changematerialdb(char* split[], int columns, int cur
 	return true;
 }
 
-/*==========================================
- * Manage Skill Damage database [Lilith]
- *------------------------------------------*/
+/** Reads manage Skill Damage database file
+* @author Lilith
+*/
 #ifdef ADJUST_SKILL_DAMAGE
 static bool skill_parse_row_skilldamage(char* split[], int columns, int current) {
 	uint16 id;
@@ -19794,18 +19923,7 @@ static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
 }
 #endif
 
-/*===============================
- * DB reading.
- * skill_db.txt
- * skill_require_db.txt
- * skill_cast_db.txt
- * skill_castnodex_db.txt
- * skill_nocast_db.txt
- * skill_unit_db.txt
- * produce_db.txt
- * create_arrow_db.txt
- * abra_db.txt
- *------------------------------*/
+/** Reads skill database files */
 static void skill_readdb(void) {
 	int i;
 	const char* dbsubpath[] = {
@@ -19823,10 +19941,19 @@ static void skill_readdb(void) {
 	memset(skill_spellbook_db,0,sizeof(skill_spellbook_db));
 	memset(skill_magicmushroom_db,0,sizeof(skill_magicmushroom_db));
 	memset(skill_changematerial_db,0,sizeof(skill_changematerial_db));
-	// load skill databases
+
+	// Reset counts
+	skill_arrow_count = 0;
+	skill_abra_count = 0;
+	skill_improvise_count = 0;
+	skill_spellbook_count = 0;
+	skill_magicmushroom_count = 0;
+	
+	// init skill name and desc for unknown skill
 	safestrncpy(skill_db[0].name, "UNKNOWN_SKILL", sizeof(skill_db[0].name));
 	safestrncpy(skill_db[0].desc, "Unknown Skill", sizeof(skill_db[0].desc));
 
+	// load skill databases
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
 		int n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
 		int n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;

@@ -274,27 +274,34 @@ enum e_unit_flag {
     UF_RANGEDSINGLEUNIT = 0x2000 /// hack for ranged layout, only display center
 };
 
-/// Create Database item
+/// Struct of Item production database
 struct s_skill_produce_db {
-	int nameid, trigger;
-	int req_skill,req_skill_lv,itemlv;
-	int mat_id[MAX_PRODUCE_RESOURCE],mat_amount[MAX_PRODUCE_RESOURCE];
+	uint16 nameid; /// Product Item ID
+	uint16 req_skill, /// Required Skill ID
+		req_skill_lv; /// Required Skill level
+	uint8 itemlv; /// Item Level
+	uint16 mat_id[MAX_PRODUCE_RESOURCE], /// Material item ID
+		mat_amount[MAX_PRODUCE_RESOURCE]; /// Material amount
 };
+/// Item production database
 extern struct s_skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
 
-/// Creating database arrow
+/// Struct of Arrow creation database
 struct s_skill_arrow_db {
-	int nameid, trigger;
-	int cre_id[MAX_ARROW_RESOURCE],cre_amount[MAX_ARROW_RESOURCE];
+	uint16 nameid, /// Material Item ID
+		cre_id[MAX_ARROW_RESOURCE], /// Possible results arrow ID
+		cre_amount[MAX_ARROW_RESOURCE]; /// Arrow count gained
 };
+/// Arrow creation database
 extern struct s_skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
 
-/// Abracadabra database
+/// Struct of Abracadabra database
 struct s_skill_abra_db {
-	uint16 skill_id;
-	char name[NAME_LENGTH];
-	int per[MAX_SKILL_LEVEL];
+	uint16 skill_id; /// Possible skill ID
+	char name[NAME_LENGTH]; /// Skill name
+	uint16 per[MAX_SKILL_LEVEL]; /// Appareance rate
 };
+/// Abracadabra database
 extern struct s_skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
 
 extern int enchant_eff[5];
@@ -369,11 +376,11 @@ int skill_cleartimerskill(struct block_list *src);
 int skill_addtimerskill(struct block_list *src,unsigned int tick,int target,int x,int y,uint16 skill_id,uint16 skill_lv,int type,int flag);
 
 // Results? Added
-int skill_additional_effect( struct block_list* src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,int attack_type,int dmg_lv,unsigned int tick);
-int skill_counter_additional_effect( struct block_list* src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,int attack_type,unsigned int tick);
+void skill_additional_effect( struct block_list* src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,int attack_type,int dmg_lv,unsigned int tick);
+void skill_counter_additional_effect( struct block_list* src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,int attack_type,unsigned int tick);
 int skill_blown(struct block_list* src, struct block_list* target, int count, int8 dir, int flag);
-int skill_break_equip(struct block_list *src,struct block_list *bl, unsigned short where, int rate, int flag);
-int skill_strip_equip(struct block_list *src,struct block_list *bl, unsigned short where, int rate, int lv, int time);
+bool skill_break_equip(struct block_list *src,struct block_list *bl, unsigned int where, int rate, int flag);
+bool skill_strip_equip(struct block_list *src,struct block_list *bl, unsigned int where, int rate, int lv, int time);
 // Skills unit
 struct skill_unit_group* skill_id2group(int group_id);
 struct skill_unit_group *skill_unitsetting(struct block_list* src, uint16 skill_id, uint16 skill_lv, short x, short y, int flag);
@@ -1976,10 +1983,11 @@ int skill_block_check(struct block_list *bl, enum sc_type type, uint16 skill_id)
  * Guilottine Cross
  **/
 #define MAX_SKILL_MAGICMUSHROOM_DB 23
+/// Struct of Magicmushroom DB
 struct s_skill_magicmushroom_db {
-	uint16 skill_id;
+	uint16 skill_id; /// Skill ID
 };
-extern struct s_skill_magicmushroom_db skill_magicmushroom_db[MAX_SKILL_MAGICMUSHROOM_DB];
+extern struct s_skill_magicmushroom_db skill_magicmushroom_db[MAX_SKILL_MAGICMUSHROOM_DB]; /// Magicmushroom DB
 int skill_maelstrom_suction(struct block_list *bl, va_list ap);
 bool skill_check_shadowform(struct block_list *bl, int64 damage, int hit);
 /**
@@ -2005,7 +2013,6 @@ int skill_changematerial(struct map_session_data *sd, int n, unsigned short *ite
 int skill_get_elemental_type(uint16 skill_id, uint16 skill_lv);
 
 void skill_combo_toogle_inf(struct block_list* bl, uint16 skill_id, int inf);
-void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_list *bl, uint16 skill_id, uint16 skill_lv, int tick);
 
 #ifdef ADJUST_SKILL_DAMAGE
 /// Skill Damage target

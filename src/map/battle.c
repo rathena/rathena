@@ -1703,12 +1703,12 @@ static bool battle_skill_damage_isCaster(uint8 src, enum bl_type caster_type) {
 		return false;
 
 	switch (caster_type) {
-		case BL_PC: if (src&SDC_PC) return true;
-		case BL_MOB: if (src&SDC_MOB) return true;
-		case BL_PET: if (src&SDC_PET) return true;
-		case BL_HOM: if (src&SDC_HOM) return true;
-		case BL_MER: if (src&SDC_MER) return true;
-		case BL_ELEM: if (src&SDC_ELEM) return true;
+		case BL_PC: if (src&SDC_PC) return true; break;
+		case BL_MOB: if (src&SDC_MOB) return true; break;
+		case BL_PET: if (src&SDC_PET) return true; break;
+		case BL_HOM: if (src&SDC_HOM) return true; break;
+		case BL_MER: if (src&SDC_MER) return true; break;
+		case BL_ELEM: if (src&SDC_ELEM) return true; break;
 	}
 
 	return false;
