@@ -95,7 +95,7 @@ bool mapif_homunculus_save(struct s_homunculus* hd)
 		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` "
 			"(`char_id`, `class`,`prev_class`,`name`,`level`,`exp`,`intimacy`,`hunger`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `hp`,`max_hp`,`sp`,`max_sp`,`skill_point`, `rename_flag`, `vaporize`) "
 			"VALUES ('%d', '%d', '%d', '%s', '%d', '%u', '%u', '%d', '%d', %d, '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
-			homunculus_db, hd->char_id, hd->class_, hd->prev_class, esc_name, hd->level, hd->exp, hd->intimacy, hd->hunger, hd->str, hd->agi, hd->vit, hd->int_, hd->dex, hd->luk,
+			schema_config.homunculus_db, hd->char_id, hd->class_, hd->prev_class, esc_name, hd->level, hd->exp, hd->intimacy, hd->hunger, hd->str, hd->agi, hd->vit, hd->int_, hd->dex, hd->luk,
 			hd->hp, hd->max_hp, hd->sp, hd->max_sp, hd->skillpts, hd->rename_flag, hd->vaporize) )
 		{
 			Sql_ShowDebug(sql_handle);
@@ -109,7 +109,7 @@ bool mapif_homunculus_save(struct s_homunculus* hd)
 	else
 	{
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `char_id`='%d', `class`='%d',`prev_class`='%d',`name`='%s',`level`='%d',`exp`='%u',`intimacy`='%u',`hunger`='%d', `str`='%d', `agi`='%d', `vit`='%d', `int`='%d', `dex`='%d', `luk`='%d', `hp`='%d',`max_hp`='%d',`sp`='%d',`max_sp`='%d',`skill_point`='%d', `rename_flag`='%d', `vaporize`='%d' WHERE `homun_id`='%d'",
-			homunculus_db, hd->char_id, hd->class_, hd->prev_class, esc_name, hd->level, hd->exp, hd->intimacy, hd->hunger, hd->str, hd->agi, hd->vit, hd->int_, hd->dex, hd->luk,
+			schema_config.homunculus_db, hd->char_id, hd->class_, hd->prev_class, esc_name, hd->level, hd->exp, hd->intimacy, hd->hunger, hd->str, hd->agi, hd->vit, hd->int_, hd->dex, hd->luk,
 			hd->hp, hd->max_hp, hd->sp, hd->max_sp, hd->skillpts, hd->rename_flag, hd->vaporize, hd->hom_id) )
 		{
 			Sql_ShowDebug(sql_handle);
@@ -121,7 +121,7 @@ bool mapif_homunculus_save(struct s_homunculus* hd)
 			int i;
 
 			stmt = SqlStmt_Malloc(sql_handle);
-			if( SQL_ERROR == SqlStmt_Prepare(stmt, "REPLACE INTO `%s` (`homun_id`, `id`, `lv`) VALUES (%d, ?, ?)", skill_homunculus_db, hd->hom_id) )
+			if( SQL_ERROR == SqlStmt_Prepare(stmt, "REPLACE INTO `%s` (`homun_id`, `id`, `lv`) VALUES (%d, ?, ?)", schema_config.skill_homunculus_db, hd->hom_id) )
 				SqlStmt_ShowDebug(stmt);
 			for( i = 0; i < MAX_HOMUNSKILL; ++i )
 			{
@@ -155,7 +155,8 @@ bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd)
 
 	memset(hd, 0, sizeof(*hd));
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `homun_id`,`char_id`,`class`,`prev_class`,`name`,`level`,`exp`,`intimacy`,`hunger`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `hp`,`max_hp`,`sp`,`max_sp`,`skill_point`,`rename_flag`, `vaporize` FROM `%s` WHERE `homun_id`='%u'", homunculus_db, homun_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `homun_id`,`char_id`,`class`,`prev_class`,`name`,`level`,`exp`,`intimacy`,`hunger`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `hp`,`max_hp`,`sp`,`max_sp`,`skill_point`,`rename_flag`, `vaporize` FROM `%s` WHERE `homun_id`='%u'",
+		schema_config.homunculus_db, homun_id) )
 	{
 		Sql_ShowDebug(sql_handle);
 		return false;
@@ -201,7 +202,7 @@ bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd)
 	hd->hunger = cap_value(hd->hunger, 0, 100);
 
 	// Load Homunculus Skill
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `id`,`lv` FROM `%s` WHERE `homun_id`=%d", skill_homunculus_db, homun_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `id`,`lv` FROM `%s` WHERE `homun_id`=%d", schema_config.skill_homunculus_db, homun_id) )
 	{
 		Sql_ShowDebug(sql_handle);
 		return false;
@@ -223,7 +224,7 @@ bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd)
 	}
 	Sql_FreeResult(sql_handle);
 
-	if( save_log )
+	if( charserv_config.save_log )
 		ShowInfo("Homunculus loaded (%d - %s).\n", hd->hom_id, hd->name);
 
 	return true;
@@ -231,8 +232,8 @@ bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd)
 
 bool mapif_homunculus_delete(int homun_id)
 {
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `homun_id` = '%u'", homunculus_db, homun_id)
-	||	SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `homun_id` = '%u'", skill_homunculus_db, homun_id)
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `homun_id` = '%u'", schema_config.homunculus_db, homun_id)
+	||	SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `homun_id` = '%u'", schema_config.skill_homunculus_db, homun_id)
 	) {
 		Sql_ShowDebug(sql_handle);
 		return false;
@@ -245,16 +246,16 @@ bool mapif_homunculus_rename(char *name)
 	int i;
 
 	// Check Authorised letters/symbols in the name of the homun
-	if( char_name_option == 1 )
+	if( charserv_config.char_config.char_name_option == 1 )
 	{// only letters/symbols in char_name_letters are authorised
 		for( i = 0; i < NAME_LENGTH && name[i]; i++ )
-			if( strchr(char_name_letters, name[i]) == NULL )
+			if( strchr(charserv_config.char_config.char_name_letters, name[i]) == NULL )
 				return false;
 	} else
-	if( char_name_option == 2 )
+	if( charserv_config.char_config.char_name_option == 2 )
 	{// letters/symbols in char_name_letters are forbidden
 		for( i = 0; i < NAME_LENGTH && name[i]; i++ )
-			if( strchr(char_name_letters, name[i]) != NULL )
+			if( strchr(charserv_config.char_config.char_name_letters, name[i]) != NULL )
 				return false;
 	}
 

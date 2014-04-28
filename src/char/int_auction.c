@@ -10,6 +10,7 @@
 #include "../common/sql.h"
 #include "../common/timer.h"
 #include "char.h"
+#include "char_mapif.h"
 #include "inter.h"
 #include "int_mail.h"
 #include "int_auction.h"
@@ -50,7 +51,7 @@ void auction_save(struct auction_data *auction)
 
 	StringBuf_Init(&buf);
 	StringBuf_Printf(&buf, "UPDATE `%s` SET `seller_id` = '%d', `seller_name` = ?, `buyer_id` = '%d', `buyer_name` = ?, `price` = '%d', `buynow` = '%d', `hours` = '%d', `timestamp` = '%lu', `nameid` = '%d', `item_name` = ?, `type` = '%d', `refine` = '%d', `attribute` = '%d'",
-		auction_db, auction->seller_id, auction->buyer_id, auction->price, auction->buynow, auction->hours, (unsigned long)auction->timestamp, auction->item.nameid, auction->type, auction->item.refine, auction->item.attribute);
+		schema_config.auction_db, auction->seller_id, auction->buyer_id, auction->price, auction->buynow, auction->hours, (unsigned long)auction->timestamp, auction->item.nameid, auction->type, auction->item.refine, auction->item.attribute);
 	for( j = 0; j < MAX_SLOTS; j++ )
 		StringBuf_Printf(&buf, ", `card%d` = '%d'", j, auction->item.card[j]);
 	StringBuf_Printf(&buf, " WHERE `auction_id` = '%d'", auction->auction_id);
@@ -81,7 +82,7 @@ unsigned int auction_create(struct auction_data *auction)
 	auction->timestamp = time(NULL) + (auction->hours * 3600);
 
 	StringBuf_Init(&buf);
-	StringBuf_Printf(&buf, "INSERT INTO `%s` (`seller_id`,`seller_name`,`buyer_id`,`buyer_name`,`price`,`buynow`,`hours`,`timestamp`,`nameid`,`item_name`,`type`,`refine`,`attribute`,`unique_id`", auction_db);
+	StringBuf_Printf(&buf, "INSERT INTO `%s` (`seller_id`,`seller_name`,`buyer_id`,`buyer_name`,`price`,`buynow`,`hours`,`timestamp`,`nameid`,`item_name`,`type`,`refine`,`attribute`,`unique_id`", schema_config.auction_db);
 	for( j = 0; j < MAX_SLOTS; j++ )
 		StringBuf_Printf(&buf, ",`card%d`", j);
 	StringBuf_Printf(&buf, ") VALUES ('%d',?,'%d',?,'%d','%d','%d','%lu','%d',?,'%d','%d','%d','%"PRIu64"'",
@@ -135,7 +136,7 @@ static void mapif_Auction_message(int char_id, unsigned char result)
 	WBUFW(buf,0) = 0x3854;
 	WBUFL(buf,2) = char_id;
 	WBUFL(buf,6) = result;
-	mapif_sendall(buf,7);
+	chmapif_sendall(buf,7);
 }
 
 static int auction_end_timer(int tid, unsigned int tick, int id, intptr_t data)
@@ -165,7 +166,7 @@ void auction_delete(struct auction_data *auction)
 {
 	unsigned int auction_id = auction->auction_id;
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `auction_id` = '%d'", auction_db, auction_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `auction_id` = '%d'", schema_config.auction_db, auction_id) )
 		Sql_ShowDebug(sql_handle);
 
 	if( auction->auction_end_timer != INVALID_TIMER )
@@ -187,7 +188,7 @@ void inter_auctions_fromsql(void)
 		"`price`,`buynow`,`hours`,`timestamp`,`nameid`,`item_name`,`type`,`refine`,`attribute`,`unique_id`");
 	for( i = 0; i < MAX_SLOTS; i++ )
 		StringBuf_Printf(&buf, ",`card%d`", i);
-	StringBuf_Printf(&buf, " FROM `%s` ORDER BY `auction_id` DESC", auction_db);
+	StringBuf_Printf(&buf, " FROM `%s` ORDER BY `auction_id` DESC", schema_config.auction_db);
 
 	if( SQL_ERROR == Sql_Query(sql_handle, StringBuf_Value(&buf)) )
 		Sql_ShowDebug(sql_handle);
