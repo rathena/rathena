@@ -15,7 +15,7 @@ LIBCONFIG_INCLUDE = -I../../3rdparty/libconfig
 COMMON_SQL_OBJ = ../common/obj_sql/sql.o
 COMMON_H = ../common/sql.h
 
-CHAR_OBJ = $(shell ls *.c | sed -e "s/.c/.o/g")
+CHAR_OBJ = $(shell ls *.c | sed -e "s/\.c/\.o/g")
 #CHAR_OBJ = char.o char_clif.o char_logif.o char_mapif.o char_cnslif.o \
 	inter.o int_party.o int_guild.o int_storage.o int_pet.o int_homun.o int_mail.o int_auction.o int_quest.o int_mercenary.o int_elemental.o
 CHAR_SQL_OBJ = $(CHAR_OBJ:%=obj_sql/%)

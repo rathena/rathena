@@ -22,7 +22,6 @@
 void chlogif_on_ready(void);
 void chlogif_on_disconnect(void);
 
-
 int chlogif_pincode_notifyLoginPinError( int account_id ){
 	if (login_fd > 0 && session[login_fd] && !session[login_fd]->flag.eof){
 		WFIFOHEAD(login_fd,6);
@@ -183,7 +182,7 @@ void chlogif_send_setallaccoffline(int fd){
 }
 
 int chlogif_send_setaccoffline(int fd, int aid){
-	if (loginif_isconnected()){
+	if (chlogif_isconnected()){
 		WFIFOHEAD(fd,6);
 		WFIFOW(fd,0) = 0x272c;
 		WFIFOL(fd,2) = aid;
@@ -492,9 +491,94 @@ int chlogif_parse_updip(int fd, struct char_session_data* sd){
 	return 1;
 }
 
+/**
+ * Send to login-serv the request of banking operation from map
+ * HA 0x2740<aid>L <type>B <data>L
+ * @param account_id
+ * @param type : 0 = select, 1 = update
+ * @param data
+ * @return
+ */
+int chlogif_BankingReq(int32 account_id, int8 type, int32 data){
+	loginif_check(-1);
+
+	WFIFOHEAD(login_fd,11);
+	WFIFOW(login_fd,0) = 0x2740;
+	WFIFOL(login_fd,2) = account_id;
+	WFIFOB(login_fd,6) = type;
+	WFIFOL(login_fd,7) = data;
+	WFIFOSET(login_fd,11);
+	return 0;
+}
+
+/*
+ * Received the banking data from login and transmit it to all map-serv
+ * AH 0x2741<aid>L <bank_vault>L <not_fw>B
+ * HZ 0x2b29 <aid>L <bank_vault>L
+ */
+int chlogif_parse_BankingAck(int fd){
+	if (RFIFOREST(fd) < 11)
+            return -1;
+	else {
+		uint32 aid = RFIFOL(fd,2);
+		int32 bank_vault = RFIFOL(fd,6);
+		char not_fw = RFIFOB(fd,10);
+		RFIFOSKIP(fd,11);
+
+		if(not_fw==0) chmapif_BankingAck(aid, bank_vault);
+	}
+	return 1;
+}
+
+/*
+ * AH 0x2743
+ * We received the info from login-serv, transmit it to map
+ */
+int chlogif_parse_vipack(int fd) {
+#ifdef VIP_ENABLE
+	if (RFIFOREST(fd) < 20)
+		return -1;
+	else {
+		uint32 aid = RFIFOL(fd,2); //aid
+		uint32 vip_time = RFIFOL(fd,6); //vip_time
+		uint8 isvip = RFIFOB(fd,10); //isvip
+		uint32 groupid = RFIFOL(fd,11); //new group id
+		uint8 isgm = RFIFOB(fd,15); //isgm
+		int mapfd = RFIFOL(fd,16); //link to mapserv for ack
+		RFIFOSKIP(fd,20);
+		mapif_vipack(mapfd,aid,vip_time,isvip,isgm,groupid);
+	}
+#endif
+	return 1;
+}
+
+/**
+ * HZ 0x2b2b
+ * Request vip data from loginserv
+ * @param aid : account_id to request the vip data
+ * @param type : &2 define new duration, &1 load info
+ * @param add_vip_time : tick to add to vip timestamp
+ * @param mapfd: link to mapserv for ack
+ * @return 0 if success
+ */
+int chlogif_reqvipdata(uint32 aid, uint8 type, int32 timediff, int mapfd) {
+	loginif_check(-1);
+#ifdef VIP_ENABLE
+	WFIFOHEAD(login_fd,15);
+	WFIFOW(login_fd,0) = 0x2742;
+	WFIFOL(login_fd,2) = aid; //aid
+	WFIFOB(login_fd,6) = type; //type
+	WFIFOL(login_fd,7) = timediff; //req_inc_duration
+	WFIFOL(login_fd,11) = mapfd; //req_inc_duration
+	WFIFOSET(login_fd,15);
+#endif
+	return 0;
+}
+
+
 int chlogif_parse(int fd) {
 	struct char_session_data* sd = NULL;
-
+        int next=0;
 	// only process data from the login-server
 	if( fd != login_fd ) {
 		ShowDebug("parse_fromlogin: Disconnecting invalid session #%d (is not the login-server)\n", fd);
@@ -524,30 +608,30 @@ int chlogif_parse(int fd) {
 
 	while(RFIFOREST(fd) >= 2) {
 		uint16 command = RFIFOW(fd,0);
+                if(next==-1) return 0; //do not parse next data
 
 		switch( command )
 		{
-                case 0x2741: loginif_parse_BankingAck(fd); break;
-		case 0x2743: loginif_parse_vipack(fd); break;
-                
+                case 0x2741: next=chlogif_parse_BankingAck(fd); break;
+		case 0x2743: next=chlogif_parse_vipack(fd); break;
 		// acknowledgement of connect-to-loginserver request
-		case 0x2711: chlogif_parse_ackconnect(fd,sd); break;
+		case 0x2711: next=chlogif_parse_ackconnect(fd,sd); break;
 		// acknowledgement of account authentication request
-		case 0x2713: chlogif_parse_ackaccreq(fd, sd); break;
+		case 0x2713: next=chlogif_parse_ackaccreq(fd, sd); break;
 		// account data
-		case 0x2717: chlogif_parse_reqaccdata(fd, sd); break;
+		case 0x2717: next=chlogif_parse_reqaccdata(fd, sd); break;
 		// login-server alive packet
-		case 0x2718: chlogif_parse_keepalive(fd, sd); break;
+		case 0x2718: next=chlogif_parse_keepalive(fd, sd); break;
 		// changesex reply
-		case 0x2723: chlogif_parse_ackchangesex(fd, sd); break;
+		case 0x2723: next=chlogif_parse_ackchangesex(fd, sd); break;
 		// reply to an account_reg2 registry request
-		case 0x2729: chlogif_parse_ackacc2req(fd, sd); break;
+		case 0x2729: next=chlogif_parse_ackacc2req(fd, sd); break;
 		// State change of account/ban notification (from login-server)
-		case 0x2731: chlogif_parse_accbannotification(fd, sd); break;
+		case 0x2731: next=chlogif_parse_accbannotification(fd, sd); break;
 		// Login server request to kick a character out. [Skotlex]
-		case 0x2734: chlogif_parse_askkick(fd,sd); break;
+		case 0x2734: next=chlogif_parse_askkick(fd,sd); break;
 		// ip address update signal from login server
-		case 0x2735: chlogif_parse_updip(fd,sd); break;
+		case 0x2735: next=chlogif_parse_updip(fd,sd); break;
 		default:
 			ShowError("Unknown packet 0x%04x received from login-server, disconnecting.\n", command);
 			set_eof(fd);
@@ -591,6 +675,10 @@ int chlogif_check_connect_logserver(int tid, unsigned int tick, int id, intptr_t
 }
 
 
+
+int chlogif_isconnected(){
+	return (login_fd > 0 && session[login_fd] && !session[login_fd]->flag.eof);
+}
 
 void do_init_chlogif(void) {
 	// establish char-login connection if not present

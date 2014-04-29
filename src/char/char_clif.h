@@ -46,6 +46,7 @@ int chclif_parse_delchar(int fd,struct char_session_data* sd, int cmd);
 int chclif_parse_keepalive(int fd);
 int chclif_parse_reqrename(int fd, struct char_session_data* sd, int cmd);
 int chclif_parse_ackrename(int fd, struct char_session_data* sd);
+int chclif_ack_captcha(int fd);
 int chclif_parse_reqcaptcha(int fd);
 int chclif_parse_chkcaptcha(int fd);
 

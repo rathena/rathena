@@ -35,7 +35,14 @@ int chlogif_parse_accbannotification(int fd, struct char_session_data* sd);
 int chlogif_parse_askkick(int fd, struct char_session_data* sd);
 int chlogif_parse_updip(int fd, struct char_session_data* sd);
 
+int chlogif_BankingReq(int32 account_id, int8 type, int32 data);
+int chlogif_parse_BankingAck(int fd);
+int chlogif_parse_vipack(int fd);
+int chlogif_reqvipdata(uint32 aid, uint8 type, int32 timediff, int mapfd);
+
 int chlogif_parse(int fd);
+
+int chlogif_isconnected();
 int chlogif_check_connect_logserver(int tid, unsigned int tick, int id, intptr_t data);
 void do_init_chlogif(void);
 void chlogif_reset(void);
@@ -43,6 +50,9 @@ void chlogif_check_shutdown(void);
 void chlogif_on_disconnect(void);
 void chlogif_on_ready(void);
 void do_final_chlogif(void);
+
+
+#define loginif_check(a) { if(!chlogif_isconnected()) return a; }
 
 #ifdef	__cplusplus
 }

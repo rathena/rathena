@@ -241,16 +241,12 @@ int char_married(int pl1,int pl2);
 int char_child(int parent_id, int child_id);
 int char_family(int pl1,int pl2,int pl3);
 
-int request_accreg2(int account_id, int char_id);
-int save_accreg2(unsigned char* buf, int len);
+int char_request_accreg2(int account_id, int char_id);
+int char_save_accreg2(unsigned char* buf, int len);
 
 //extern bool char_gm_read;
 int char_loadName(int char_id, char* name);
 int char_check_char_name(char * name, char * esc_name);
-
-//Bonus Script
-void bonus_script_get(int fd);///Get bonus_script data
-void bonus_script_save(int fd); ///Save bonus_script data
 
 void char_pincode_decrypt( uint32 userSeed, char* pin );
 int char_pincode_compare( int fd, struct char_session_data* sd, char* pin );
