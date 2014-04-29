@@ -2253,7 +2253,7 @@ void skill_counter_additional_effect (struct block_list* src, struct block_list 
 /** Breaks equipment. On-non players causes the corresponding strip effect.
 * @param src Attacker
 * @param bl Target
-* @param where Equip location: see enum equip_pos, EQP_WEAPON|EQP_SHIELD|EQP_ARMS|EQP_HELM|EQP_ACC|EQP_COSTUME|EQP_SHADOW_GEAR|EQP_SHADOW_ACC
+* @param where Equip location: EQP_WEAPON|EQP_ARMOR|EQP_SHIELD|EQP_HELM
 * @param rate Success chance from 0 to 10000 (100.00%)
 * @param flag BCT_ flag to indicate which type of adjustment should be used (BCT_ENEMY/BCT_PARTY/BCT_SELF) are the valid values.
 * @return true if equip is success, false if failed
@@ -19680,7 +19680,7 @@ static bool skill_parse_row_createarrowdb(char* split[], int columns, int curren
 * SkillID,PreservePoints
 */
 static bool skill_parse_row_spellbookdb(char* split[], int columns, int current) {
-	uint16 skill_id = atoi(split[0]), i;
+	uint16 skill_id = atoi(split[0]);
 	uint8 points = atoi(split[1]);
 	uint16 nameid = atoi(split[2]);
 
@@ -19853,7 +19853,7 @@ static bool skill_parse_row_abradb(char* split[], int columns, int current) {
 
 	skill_abra_db[i].skill_id = skill_id;
 	safestrncpy(skill_abra_db[i].name, trim(split[1]), sizeof(skill_abra_db[i].name)); //store dummyname
-	skill_split_atoi(split[2],skill_abra_db[i].per);
+	skill_split_atoi(split[2],(int *)skill_abra_db[i].per);
 
 	return true;
 }
