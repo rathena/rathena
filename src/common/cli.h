@@ -34,6 +34,7 @@ extern "C" {
  extern char* MSG_CONF_NAME_EN; //all
 
 extern void display_helpscreen(bool exit);
+bool cli_hasevent();
 void display_versionscreen(bool do_exit);
 bool opt_has_next_value(const char* option, int i, int argc);
 int cli_get_options(int argc, char ** argv);

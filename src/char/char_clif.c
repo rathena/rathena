@@ -10,6 +10,7 @@
 #include "../common/malloc.h"
 #include "../common/strlib.h"
 #include "../common/utils.h"
+#include "../common/timer.h"
 #include "inter.h"
 #include "char.h"
 #include "char_logif.h"
@@ -225,13 +226,6 @@ void chclif_charlist_notify( int fd, struct char_session_data* sd ){
 	// pages to req / send them all in 1 until mmo_chars_fromsql can split them up
 	WFIFOL(fd, 2) = (sd->char_slots>3)?sd->char_slots/3:1; //int TotalCnt (nb page to load)
 	WFIFOSET(fd,6);
-}
-
-void chclif_block_character( int fd, struct char_session_data* sd ){
-	WFIFOHEAD(fd, 4);
-	WFIFOW(fd, 0) = 0x20d;
-	WFIFOW(fd, 2) = 4; //packet len
-	WFIFOSET(fd,4);
 }
 
 //----------------------------------------
@@ -985,6 +979,65 @@ int chclif_parse_reqrename(int fd, struct char_session_data* sd, int cmd){
     WFIFOW(fd,2) = i;
     WFIFOSET(fd,4);
     return 1;
+}
+
+
+int charblock_timer(int tid, unsigned int tick, int id, intptr_t data)
+{
+	struct char_session_data* sd=NULL;
+	int i=0;
+	ARR_FIND( 0, fd_max, i, session[i] && (sd = (struct char_session_data*)session[i]->session_data) && sd->account_id == id);
+
+	if(sd == NULL || sd->charblock_timer==INVALID_TIMER) //has disconected or was required to stop
+		return 0;
+	if (sd->charblock_timer != tid){
+		sd->charblock_timer = INVALID_TIMER;
+		return 0;
+	}
+	chclif_block_character(i,sd);
+	return 0;
+}
+
+/*
+ * 0x20d <PacketLength>.W <TAG_CHARACTER_BLOCK_INFO>24B (HC_BLOCK_CHARACTER)
+ * <GID>L <szExpireDate>20B (TAG_CHARACTER_BLOCK_INFO)
+ */
+void chclif_block_character( int fd, struct char_session_data* sd){
+	int i=0, j=0, len=4;
+	time_t now = time(NULL);
+
+	WFIFOHEAD(fd, 4+MAX_CHARS*24);
+	WFIFOW(fd, 0) = 0x20d;
+
+	for(i=0; i<MAX_CHARS; i++){
+		if(sd->found_char[i] == -1)
+			continue;
+		if(sd->unban_time[i]){
+			if( sd->unban_time[i] > now ) {
+				char szExpireDate[21];
+				WFIFOL(fd, 4+j*24) = sd->found_char[i];
+				timestamp2string(szExpireDate, 20, sd->unban_time[i], "%Y-%m-%d %H:%M:%S");
+				memcpy(WFIFOP(fd,8+j*24),szExpireDate,20);
+			}
+			else {
+				WFIFOL(fd, 4+j*24) = 0;
+				sd->unban_time[i] = 0;
+				if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `unban_time`='0' WHERE `char_id`='%d' LIMIT 1", schema_config.char_db, sd->found_char[i]) )
+					Sql_ShowDebug(sql_handle);
+			}
+			len+=24;
+			j++; //pkt list idx
+		}
+	}
+	WFIFOW(fd, 2) = len; //packet len
+	WFIFOSET(fd,len);
+
+	ARR_FIND(0, MAX_CHARS, i, sd->unban_time[i] > now); //sd->charslot only have productible char
+	if(i < MAX_CHARS ){
+		sd->charblock_timer = add_timer(
+			gettick() + 10000,	// each 10s resend that list
+			charblock_timer, sd->account_id, 0);
+	}
 }
 
 // 0x28f <char_id>.L

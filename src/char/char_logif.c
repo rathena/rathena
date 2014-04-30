@@ -94,8 +94,16 @@ static int chlogif_send_acc_tologin_sub(DBKey key, DBData *data, va_list ap) {
 	return 0;
 }
 
+/**
+ * Timered function to send all account_id connected to login-serv
+ * @param tid : Timer id
+ * @param tick : Scheduled tick
+ * @param id : GID linked to that timered call
+ * @param data : data transmited for delayed function
+ * @return 
+ */
 int chlogif_send_acc_tologin(int tid, unsigned int tick, int id, intptr_t data) {
-	if (login_fd > 0 && session[login_fd]){
+	if ( chlogif_isconnected() ){
 		DBMap*  online_char_db = char_get_onlinedb();
 		// send account list to login server
 		int users = online_char_db->size(online_char_db);
@@ -122,6 +130,35 @@ int chlogif_send_usercount(int users){
 		WFIFOSET(login_fd,6);
 		return 1;
 	}
+	return 0;
+}
+
+
+int chlogif_broadcast_user_count(int tid, unsigned int tick, int id, intptr_t data)
+{
+	uint8 buf[6];
+	int users = char_count_users();
+
+	// only send an update when needed
+	static int prev_users = 0;
+	if( prev_users == users )
+		return 0;
+	prev_users = users;
+
+	if( chlogif_isconnected() )
+	{
+		// send number of user to login server
+		WFIFOHEAD(login_fd,6);
+		WFIFOW(login_fd,0) = 0x2714;
+		WFIFOL(login_fd,2) = users;
+		WFIFOSET(login_fd,6);
+	}
+
+	// send number of players to all map-servers
+	WBUFW(buf,0) = 0x2b00;
+	WBUFL(buf,2) = users;
+	chmapif_sendall(buf,6);
+
 	return 0;
 }
 

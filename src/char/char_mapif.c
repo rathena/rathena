@@ -1,3 +1,5 @@
+
+
 /**
  * @file char_mapif.c
  * Module purpose is to handle incoming and outgoing requests with map-server.

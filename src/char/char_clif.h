@@ -49,6 +49,7 @@ int chclif_parse_ackrename(int fd, struct char_session_data* sd);
 int chclif_ack_captcha(int fd);
 int chclif_parse_reqcaptcha(int fd);
 int chclif_parse_chkcaptcha(int fd);
+void chclif_block_character( int fd, struct char_session_data* sd);
 
 int chclif_parse(int fd);
 

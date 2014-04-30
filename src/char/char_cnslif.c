@@ -32,6 +32,28 @@ void display_helpscreen(bool do_exit)
 		exit(EXIT_SUCCESS);
 }
 
+/**
+ * Timered function to check if the console has a new event to be read.
+ * @param tid: timer id
+ * @param tick: tick of execution
+ * @param id: user account id
+ * @param data: unused
+ * @return 0
+ */
+int cnslif_console_timer(int tid, unsigned int tick, int id, intptr_t data) {
+	char buf[MAX_CONSOLE_IN]; //max cmd atm is 63+63+63+3+3
+
+	memset(buf,0,MAX_CONSOLE_IN); //clear out buf
+
+	if(cli_hasevent()){
+		if(fgets(buf, MAX_CONSOLE_IN, stdin)==NULL)
+			return -1;
+		else if(strlen(buf)>MIN_CONSOLE_IN)
+			cnslif_parse(buf);
+	}
+	return 0;
+}
+
 // Console Command Parser [Wizputer]
 int cnslif_parse(const char* buf)
 {
@@ -71,7 +93,7 @@ int cnslif_parse(const char* buf)
 
 void do_init_chcnslif(void){
 	if( charserv_config.console ){ //start listening
-		add_timer_func_list(parse_console_timer, "parse_console_timer");
-		add_timer_interval(gettick()+1000, parse_console_timer, 0, 0, 1000); //start in 1s each 1sec
+		add_timer_func_list(cnslif_console_timer, "cnslif_console_timer");
+		add_timer_interval(gettick()+1000, cnslif_console_timer, 0, 0, 1000); //start in 1s each 1sec
 	}
 }
