@@ -362,13 +362,18 @@ int pc_banding(struct map_session_data *sd, uint16 skill_lv) {
 	return c;
 }
 
-// Increases a player's fame points and displays a notice to him
-void pc_addfame(struct map_session_data *sd,int count)
+/** Increases a player's fame points and displays a notice to him
+* @param sd
+* @param count If 0 adds none
+*/
+void pc_addfame(struct map_session_data *sd, unsigned short count)
 {
-	int ranktype=-1;
+	int8 ranktype = -1;
 	nullpo_retv(sd);
+	if (!count)
+		return;
 	sd->status.fame += count;
-	if(sd->status.fame > MAX_FAME)
+	if (sd->status.fame > MAX_FAME)
 		sd->status.fame = MAX_FAME;
 
 	switch(sd->class_&MAPID_UPPERMASK){

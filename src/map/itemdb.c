@@ -666,8 +666,8 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 	int ln=0, entries=0;
 	char line[1024];
 
-	if ((fp=fopen(filename,"r")) == NULL) {
-		if(silent == 0) ShowError("Can't read %s\n", filename);
+	if ((fp = fopen(filename, "r")) == NULL) {
+		if (silent == 0) ShowError("Can't read %s\n", filename);
 		return;
 	}
 	
