@@ -927,32 +927,6 @@ static bool itemdb_read_stack(char* fields[], int columns, int current) {
 	return true;
 }
 
-/** Reads items allowed to be sold in buying stores
-* <nameid>
-*/
-static bool itemdb_read_buyingstore(char* fields[], int columns, int current) {
-	int nameid;
-	struct item_data* id;
-
-	nameid = atoi(fields[0]);
-
-	if( ( id = itemdb_exists(nameid) ) == NULL )
-	{
-		ShowWarning("itemdb_read_buyingstore: Invalid item id %d.\n", nameid);
-		return false;
-	}
-
-	if( !itemdb_isstackable2(id) )
-	{
-		ShowWarning("itemdb_read_buyingstore: Non-stackable item id %d cannot be enabled for buying store.\n", nameid);
-		return false;
-	}
-
-	id->flag.buyingstore = true;
-
-	return true;
-}
-
 /** Item usage restriction (item_nouse.txt)
 * <nameid>,<flag>,<override>
 */
@@ -978,23 +952,27 @@ static bool itemdb_read_nouse(char* fields[], int columns, int current) {
 
 /** Misc Item flags
 * <item_id>,<flag>
-* &1 - Log as dead branch
+* &1 - As dead branch item
 * &2 - As item container
+* &4 - Can be sold to buying store
 */
 static bool itemdb_read_flag(char* fields[], int columns, int current) {
 	uint16 nameid = atoi(fields[0]);
-	uint8 flag = atoi(fields[1]);
+	uint8 flag;
+	bool set;
 	struct item_data *id;
 
 	if (!(id = itemdb_exists(nameid))) {
 		ShowError("itemdb_read_flag: Invalid item item with id %d\n", nameid);
-		return true;
+		return false;
 	}
 
-	if (flag&1)
-		id->flag.dead_branch = 1;
-	if (flag&2)
-		id->flag.group = 1;
+	flag = abs(atoi(fields[1]));
+	set = atoi(fields[1]) > 0;
+
+	if (flag&1) id->flag.dead_branch = set ? 1 : 0;
+	if (flag&2) id->flag.group = set ? 1 : 0;
+	if (flag&4) id->flag.buyingstore = set ? 1 : 0;
 
 	return true;
 }
@@ -1617,7 +1595,6 @@ static void itemdb_read(void) {
 		sv_readdb(dbsubpath2, "item_noequip.txt",       ',', 2, 2, -1, &itemdb_read_noequip, i);
 		sv_readdb(dbsubpath2, "item_trade.txt",         ',', 3, 3, -1, &itemdb_read_itemtrade, i);
 		sv_readdb(dbsubpath2, "item_delay.txt",         ',', 2, 2, -1, &itemdb_read_itemdelay, i);
-		sv_readdb(dbsubpath2, "item_buyingstore.txt",   ',', 1, 1, -1, &itemdb_read_buyingstore, i);
 		sv_readdb(dbsubpath2, "item_flag.txt",          ',', 2, 2, -1, &itemdb_read_flag, i);
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
