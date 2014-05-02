@@ -1,26 +1,36 @@
 
-LIBCONFIG_OBJ = libconfig.o grammar.o scanctx.o scanner.o strbuf.o
-LIBCONFIG_H = libconfig.h grammar.h parsectx.h scanctx.h scanner.h strbuf.h wincompat.h
+LIBCONFIG_OBJ =  $(shell ls *.c | sed -e "s/\.c/\.o/g")
+LIBCONFIG_DIR_OBJ = $(LIBCONFIG_OBJ:%=obj/%)
+LIBCONFIG_H =  $(shell ls *.h)
+LIBCONFIG_AR = obj/libconfig.a
 
 @SET_MAKE@
 
 #####################################################################
 .PHONY : all clean help
 
-all: $(LIBCONFIG_OBJ)
+all: $(LIBCONFIG_AR)
 
 clean:
 	@echo "	CLEAN	libconfig"
-	@rm -rf *.o
+	@rm -rf obj *.o
 
 help:
 	@echo "possible targets are 'all' 'clean' 'help'"
-	@echo "'all'    - builds $(LIBCONFIG_OBJ)"
-	@echo "'clean'  - deletes $(LIBCONFIG_OBJ)"
+	@echo "'all'    - builds $(LIBCONFIG_DIR_OBJ)"
+	@echo "'clean'  - deletes $(LIBCONFIG_DIR_OBJ)"
 	@echo "'help'   - outputs this message"
 
 #####################################################################
 
-%.o: %.c $(LIBCONFIG_H)
+obj_dir:
+	@echo "	MKDIR	obj"
+	@-mkdir obj
+	
+obj/%.o: %.c $(LIBCONFIG_H)
 	@echo "	CC	$<"
 	@@CC@ @CFLAGS@ @DEFS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+
+$(LIBCONFIG_AR): obj_dir $(LIBCONFIG_DIR_OBJ)
+	@echo "	AR	$@"
+	@@AR@ rcs obj/libconfig.a $(LIBCONFIG_DIR_OBJ)
