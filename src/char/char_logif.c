@@ -269,9 +269,9 @@ int chlogif_parse_ackaccreq(int fd, struct char_session_data* sd){
 			int client_fd = request_id;
 			sd->version = version;
 			sd->clienttype = clienttype;
-                        if(sd->version != date2version(PACKETVER))
-                            ShowWarning("s aid=%d has an incorect version=%d in clientinfo. Server compiled for %d\n",
-                                sd->account_id,sd->version,date2version(PACKETVER));
+			if(sd->version != date2version(PACKETVER))
+				ShowWarning("s aid=%d has an incorect version=%d in clientinfo. Server compiled for %d\n",
+					sd->account_id,sd->version,date2version(PACKETVER));
 
 			switch( result )
 			{
@@ -498,33 +498,29 @@ int chlogif_parse_askkick(int fd, struct char_session_data* sd){
 }
 
 int chlogif_parse_updip(int fd, struct char_session_data* sd){
-	if (RFIFOREST(fd) < 2)
-		return 0;
-	{
-		unsigned char buf[2];
-		uint32 new_ip = 0;
+	unsigned char buf[2];
+	uint32 new_ip = 0;
 
-		WBUFW(buf,0) = 0x2b1e;
-		chmapif_sendall(buf, 2);
+	WBUFW(buf,0) = 0x2b1e;
+	chmapif_sendall(buf, 2);
 
-		new_ip = host2ip(charserv_config.login_ip_str);
-		if (new_ip && new_ip != charserv_config.login_ip)
-			charserv_config.login_ip = new_ip; //Update login ip, too.
+	new_ip = host2ip(charserv_config.login_ip_str);
+	if (new_ip && new_ip != charserv_config.login_ip)
+		charserv_config.login_ip = new_ip; //Update login ip, too.
 
-		new_ip = host2ip(charserv_config.char_ip_str);
-		if (new_ip && new_ip != charserv_config.char_ip)
-		{	//Update ip.
-			charserv_config.char_ip = new_ip;
-			ShowInfo("Updating IP for [%s].\n", charserv_config.char_ip_str);
-			// notify login server about the change
-			WFIFOHEAD(fd,6);
-			WFIFOW(fd,0) = 0x2736;
-			WFIFOL(fd,2) = htonl(charserv_config.char_ip);
-			WFIFOSET(fd,6);
-		}
-
-		RFIFOSKIP(fd,2);
+	new_ip = host2ip(charserv_config.char_ip_str);
+	if (new_ip && new_ip != charserv_config.char_ip)
+	{	//Update ip.
+		charserv_config.char_ip = new_ip;
+		ShowInfo("Updating IP for [%s].\n", charserv_config.char_ip_str);
+		// notify login server about the change
+		WFIFOHEAD(fd,6);
+		WFIFOW(fd,0) = 0x2736;
+		WFIFOL(fd,2) = htonl(charserv_config.char_ip);
+		WFIFOSET(fd,6);
 	}
+
+	RFIFOSKIP(fd,2);
 	return 1;
 }
 
@@ -555,7 +551,7 @@ int chlogif_BankingReq(int32 account_id, int8 type, int32 data){
  */
 int chlogif_parse_BankingAck(int fd){
 	if (RFIFOREST(fd) < 11)
-            return -1;
+            return 0;
 	else {
 		uint32 aid = RFIFOL(fd,2);
 		int32 bank_vault = RFIFOL(fd,6);
@@ -574,7 +570,7 @@ int chlogif_parse_BankingAck(int fd){
 int chlogif_parse_vipack(int fd) {
 #ifdef VIP_ENABLE
 	if (RFIFOREST(fd) < 20)
-		return -1;
+		return 0;
 	else {
 		uint32 aid = RFIFOL(fd,2); //aid
 		uint32 vip_time = RFIFOL(fd,6); //vip_time
@@ -615,7 +611,7 @@ int chlogif_reqvipdata(uint32 aid, uint8 type, int32 timediff, int mapfd) {
 
 int chlogif_parse(int fd) {
 	struct char_session_data* sd = NULL;
-        int next=0;
+        
 	// only process data from the login-server
 	if( fd != login_fd ) {
 		ShowDebug("parse_fromlogin: Disconnecting invalid session #%d (is not the login-server)\n", fd);
@@ -644,36 +640,36 @@ int chlogif_parse(int fd) {
 	sd = (struct char_session_data*)session[fd]->session_data;
 
 	while(RFIFOREST(fd) >= 2) {
+		int next=1;
 		uint16 command = RFIFOW(fd,0);
-                if(next==-1) return 0; //do not parse next data
-
 		switch( command )
 		{
-                case 0x2741: next=chlogif_parse_BankingAck(fd); break;
-		case 0x2743: next=chlogif_parse_vipack(fd); break;
-		// acknowledgement of connect-to-loginserver request
-		case 0x2711: next=chlogif_parse_ackconnect(fd,sd); break;
-		// acknowledgement of account authentication request
-		case 0x2713: next=chlogif_parse_ackaccreq(fd, sd); break;
-		// account data
-		case 0x2717: next=chlogif_parse_reqaccdata(fd, sd); break;
-		// login-server alive packet
-		case 0x2718: next=chlogif_parse_keepalive(fd, sd); break;
-		// changesex reply
-		case 0x2723: next=chlogif_parse_ackchangesex(fd, sd); break;
-		// reply to an account_reg2 registry request
-		case 0x2729: next=chlogif_parse_ackacc2req(fd, sd); break;
-		// State change of account/ban notification (from login-server)
-		case 0x2731: next=chlogif_parse_accbannotification(fd, sd); break;
-		// Login server request to kick a character out. [Skotlex]
-		case 0x2734: next=chlogif_parse_askkick(fd,sd); break;
-		// ip address update signal from login server
-		case 0x2735: next=chlogif_parse_updip(fd,sd); break;
-		default:
-			ShowError("Unknown packet 0x%04x received from login-server, disconnecting.\n", command);
-			set_eof(fd);
-			return 0;
+			case 0x2741: next=chlogif_parse_BankingAck(fd); break;
+			case 0x2743: next=chlogif_parse_vipack(fd); break;
+			// acknowledgement of connect-to-loginserver request
+			case 0x2711: next=chlogif_parse_ackconnect(fd,sd); break;
+			// acknowledgement of account authentication request
+			case 0x2713: next=chlogif_parse_ackaccreq(fd, sd); break;
+			// account data
+			case 0x2717: next=chlogif_parse_reqaccdata(fd, sd); break;
+			// login-server alive packet
+			case 0x2718: next=chlogif_parse_keepalive(fd, sd); break;
+			// changesex reply
+			case 0x2723: next=chlogif_parse_ackchangesex(fd, sd); break;
+			// reply to an account_reg2 registry request
+			case 0x2729: next=chlogif_parse_ackacc2req(fd, sd); break;
+			// State change of account/ban notification (from login-server)
+			case 0x2731: next=chlogif_parse_accbannotification(fd, sd); break;
+			// Login server request to kick a character out. [Skotlex]
+			case 0x2734: next=chlogif_parse_askkick(fd,sd); break;
+			// ip address update signal from login server
+			case 0x2735: next=chlogif_parse_updip(fd,sd); break;
+			default:
+				ShowError("Unknown packet 0x%04x received from login-server, disconnecting.\n", command);
+				set_eof(fd);
+				return 0;
 		}
+		if(next==0) return 0; //do not parse next data
 	}
 
 	RFIFOFLUSH(fd);

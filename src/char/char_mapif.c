@@ -175,7 +175,7 @@ void chmapif_sendall_playercount(int users){
 int chmapif_parse_getmapname(int fd, int id){
 	int j = 0, i = 0;
 	if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
-		return -1;
+		return 0;
 
 	//Retain what map-index that map-serv contains
 	memset(map_server[id].map, 0, sizeof(map_server[id].map));
@@ -202,7 +202,7 @@ int chmapif_parse_getmapname(int fd, int id){
 		if (j == 0) {
 			ShowWarning("Map-server %d has NO maps.\n", id);
 		} else {
-                        unsigned char buf[16384];
+			unsigned char buf[16384];
 			// Transmitting maps information to the other map-servers
 			WBUFW(buf,0) = 0x2b04;
 			WBUFW(buf,2) = j * 4 + 10;
@@ -241,7 +241,7 @@ int chmapif_parse_getmapname(int fd, int id){
  */
 int chmapif_parse_askscdata(int fd){
 	if (RFIFOREST(fd) < 10)
-		return -1;
+		return 0;
 	{
 #ifdef ENABLE_SC_SAVING
 		int aid, cid;
@@ -251,7 +251,7 @@ int chmapif_parse_askscdata(int fd){
 			schema_config.scdata_db, aid, cid) )
 		{
 			Sql_ShowDebug(sql_handle);
-			return 0;
+			return 1;
 		}
 		if( Sql_NumRows(sql_handle) > 0 )
 		{
@@ -297,7 +297,7 @@ int chmapif_parse_askscdata(int fd){
  */
 int chmapif_parse_getusercount(int fd, int id){
 	if (RFIFOREST(fd) < 4)
-		return -1;
+		return 0;
 	if (RFIFOW(fd,2) != map_server[id].users) {
 		map_server[id].users = RFIFOW(fd,2);
 		ShowInfo("User Count: %d (Server: %d)\n", map_server[id].users, id);
@@ -313,12 +313,11 @@ int chmapif_parse_getusercount(int fd, int id){
  * @return : 0 not enough data received, 1 success
  */
 int chmapif_parse_regmapuser(int fd, int id){
-	int i;
 	if (RFIFOREST(fd) < 6 || RFIFOREST(fd) < RFIFOW(fd,2))
-		return -1;
+		return 0;
 	{
 		//TODO: When data mismatches memory, update guild/party online/offline states.
-		int aid, cid;
+		int aid, cid, i;
 		struct online_char_data* character;
 		DBMap* online_char_db = char_get_onlinedb();
 
@@ -352,7 +351,7 @@ int chmapif_parse_regmapuser(int fd, int id){
  */
 int chmapif_parse_reqsavechar(int fd, int id){
 	if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
-            return -1;
+            return 0;
 	{
 		int aid = RFIFOL(fd,4), cid = RFIFOL(fd,8), size = RFIFOW(fd,2);
 		struct online_char_data* character;
@@ -362,7 +361,7 @@ int chmapif_parse_reqsavechar(int fd, int id){
 		{
 			ShowError("parse_from_map (save-char): Size mismatch! %d != %d\n", size-13, sizeof(struct mmo_charstatus));
 			RFIFOSKIP(fd,size);
-			return 0;
+			return 1;
 		}
 		//Check account only if this ain't final save. Final-save goes through because of the char-map reconnect
 		if (RFIFOB(fd,12) || RFIFOB(fd,13) || (
@@ -398,7 +397,7 @@ int chmapif_parse_reqsavechar(int fd, int id){
  */
 int chmapif_parse_authok(int fd){
 	if( RFIFOREST(fd) < 19 )
-		return -1;
+		return 0;
 	else{
 		int account_id = RFIFOL(fd,2);
 		uint32 login_id1 = RFIFOL(fd,6);
@@ -426,7 +425,7 @@ int chmapif_parse_authok(int fd){
 			node->login_id2 = login_id2;
 			//node->sex = 0;
 			node->ip = ntohl(ip);
-                        node->version = version; //upd version for mapserv
+			node->version = version; //upd version for mapserv
 			//node->expiration_time = 0; // unlimited/unknown time by default (not display in map-server)
 			//node->gmlevel = 0;
 			idb_put(auth_db, account_id, node);
@@ -453,7 +452,7 @@ int chmapif_parse_authok(int fd){
 //Request to save skill cooldown data
 int chmapif_parse_req_saveskillcooldown(int fd){
 	if( RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2) )
-            return -1;
+            return 0;
 	else {
 		int count, aid, cid;
 		aid = RFIFOL(fd,4);
@@ -486,16 +485,17 @@ int chmapif_parse_req_saveskillcooldown(int fd){
 //Request skillcooldown data 0x2b0a
 int chmapif_parse_req_skillcooldown(int fd){
 	if (RFIFOREST(fd) < 10)
-		return -1;
+		return 0;
 	else {
 		int aid, cid;
 		aid = RFIFOL(fd,2);
 		cid = RFIFOL(fd,6);
+		RFIFOSKIP(fd, 10);
 		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT skill, tick FROM `%s` WHERE `account_id` = '%d' AND `char_id`='%d'",
 			schema_config.skillcooldown_db, aid, cid) )
 		{
 			Sql_ShowDebug(sql_handle);
-			return 0;
+			return 1;
 		}
 		if( Sql_NumRows(sql_handle) > 0 )
 		{
@@ -526,7 +526,6 @@ int chmapif_parse_req_skillcooldown(int fd){
 			}
 		}
 		Sql_FreeResult(sql_handle);
-		RFIFOSKIP(fd, 10);
 	}
 	return 1;
 }
@@ -538,7 +537,7 @@ int chmapif_parse_req_skillcooldown(int fd){
  */
 int chmapif_parse_reqchangemapserv(int fd){
 	if (RFIFOREST(fd) < 39)
-		return -1;
+		return 0;
 	{
 		int map_id, map_fd = -1;
 		struct mmo_charstatus* char_data;
@@ -615,7 +614,7 @@ int chmapif_parse_reqchangemapserv(int fd){
  */
 int chmapif_parse_askrmfriend(int fd){
 	if (RFIFOREST(fd) < 10)
-		return -1;
+		return 0;
 	{
 		int char_id, friend_id;
 		char_id = RFIFOL(fd,2);
@@ -623,7 +622,7 @@ int chmapif_parse_askrmfriend(int fd){
 		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id`='%d' AND `friend_id`='%d' LIMIT 1",
 			schema_config.friend_db, char_id, friend_id) ) {
 			Sql_ShowDebug(sql_handle);
-			return 0;
+			return 1;
 		}
 		RFIFOSKIP(fd,10);
 	}
@@ -638,7 +637,7 @@ int chmapif_parse_askrmfriend(int fd){
  */
 int chmapif_parse_reqcharname(int fd){
 	if (RFIFOREST(fd) < 6)
-		return -1;
+		return 0;
 
 	WFIFOHEAD(fd,30);
 	WFIFOW(fd,0) = 0x2b09;
@@ -658,7 +657,7 @@ int chmapif_parse_reqcharname(int fd){
  */
 int chmapif_parse_reqnewemail(int fd){
 	if (RFIFOREST(fd) < 86)
-		return -1;
+		return 0;
 	if (chlogif_isconnected()) { // don't send request if no login-server
 		WFIFOHEAD(login_fd,86);
 		memcpy(WFIFOP(login_fd,0), RFIFOP(fd,0),86); // 0x2722 <account_id>.L <actual_e-mail>.40B <new_e-mail>.40B
@@ -676,7 +675,7 @@ int chmapif_parse_reqnewemail(int fd){
  */
 int chmapif_parse_fwlog_changestatus(int fd){
 	if (RFIFOREST(fd) < 44)
-		return -1;
+		return 0;
 	else {
 		int result = 0; // 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline, 4-current group level > VIP group level
 		char esc_name[NAME_LENGTH*2+1];
@@ -783,7 +782,7 @@ int chmapif_parse_fwlog_changestatus(int fd){
  */
 int chmapif_parse_req_alter_acc(int fd){
 	if (RFIFOREST(fd) < 11)
-		return -1;
+		return 0;
 	{
 		int cid = RFIFOL(fd, 2);
 		int fame = RFIFOL(fd, 6);
@@ -856,7 +855,7 @@ void chmapif_send_ackdivorce(int partner_id1, int partner_id2){
  */
 int chmapif_parse_reqdivorce(int fd){
 	if( RFIFOREST(fd) < 10 )
-		return -1;
+		return 0;
 	char_divorce_char_sql(RFIFOL(fd,2), RFIFOL(fd,6));
 	RFIFOSKIP(fd,10);
 	return 1;
@@ -870,7 +869,7 @@ int chmapif_parse_reqdivorce(int fd){
  */
 int chmapif_parse_updmapinfo(int fd){
 	if( RFIFOREST(fd) < 14 )
-		return -1;
+		return 0;
 	{
 		char esc_server_name[sizeof(charserv_config.server_name)*2+1];
 		Sql_EscapeString(sql_handle, esc_server_name, charserv_config.server_name);
@@ -890,7 +889,7 @@ int chmapif_parse_updmapinfo(int fd){
  */
 int chmapif_parse_setcharoffline(int fd){
 	if (RFIFOREST(fd) < 6)
-		return -1;
+		return 0;
 	char_set_char_offline(RFIFOL(fd,2),RFIFOL(fd,6));
 	RFIFOSKIP(fd,10);
 	return 1;
@@ -919,7 +918,7 @@ int chmapif_parse_setalloffline(int fd, int id){
  */
 int chmapif_parse_setcharonline(int fd, int id){
 	if (RFIFOREST(fd) < 10)
-		return -1;
+		return 0;
 	char_set_char_online(id, RFIFOL(fd,2),RFIFOL(fd,6));
 	RFIFOSKIP(fd,10);
 	return 1;
@@ -934,7 +933,7 @@ int chmapif_parse_setcharonline(int fd, int id){
  */
 int chmapif_parse_reqfamelist(int fd){
 	if (RFIFOREST(fd) < 2)
-		return -1;
+		return 0;
 	char_read_fame_list();
 	chmapif_send_fame_list(-1);
 	RFIFOSKIP(fd,2);
@@ -949,7 +948,7 @@ int chmapif_parse_reqfamelist(int fd){
  */
 int chmapif_parse_save_scdata(int fd){
 	if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
-		return -1;
+		return 0;
 	{
 #ifdef ENABLE_SC_SAVING
 		int count, aid, cid;
@@ -958,10 +957,10 @@ int chmapif_parse_save_scdata(int fd){
 		cid = RFIFOL(fd, 8);
 		count = RFIFOW(fd, 12);
 
-                // Whatever comes from the mapserver, now is the time to drop previous entries
-                if( Sql_Query( sql_handle, "DELETE FROM `%s` where `account_id` = %d and `char_id` = %d;", schema_config.scdata_db, aid, cid ) != SQL_SUCCESS ){
-                        Sql_ShowDebug( sql_handle );
-                }
+		// Whatever comes from the mapserver, now is the time to drop previous entries
+		if( Sql_Query( sql_handle, "DELETE FROM `%s` where `account_id` = %d and `char_id` = %d;", schema_config.scdata_db, aid, cid ) != SQL_SUCCESS ){
+				Sql_ShowDebug( sql_handle );
+		}
 		else if( count > 0 )
 		{
 			struct status_change_data data;
@@ -1008,7 +1007,7 @@ int chmapif_parse_keepalive(int fd){
  */
 int chmapif_parse_reqauth(int fd, int id){
     if (RFIFOREST(fd) < 20)
-            return -1;
+            return 0;
 
     {
         int account_id;
@@ -1019,7 +1018,7 @@ int chmapif_parse_reqauth(int fd, int id){
         struct auth_node* node;
         struct mmo_charstatus* cd;
         struct mmo_charstatus char_dat;
-        bool autotrade;
+        bool autotrade = false;
 
         DBMap*  auth_db = char_get_authdb();
         DBMap* char_db_ = char_get_chardb();
@@ -1104,7 +1103,7 @@ int chmapif_parse_reqauth(int fd, int id){
  */
 int chmapif_parse_updmapip(int fd, int id){
 	if (RFIFOREST(fd) < 6) 
-            return -1;
+            return 0;
 	map_server[id].ip = ntohl(RFIFOL(fd, 2));
 	ShowInfo("Updated IP address of map-server #%d to %d.%d.%d.%d.\n", id, CONVIP(map_server[id].ip));
 	RFIFOSKIP(fd,6);
@@ -1118,7 +1117,7 @@ int chmapif_parse_updmapip(int fd, int id){
  */
 int chmapif_parse_fw_configstats(int fd){
 	if( RFIFOREST(fd) < RFIFOW(fd,4) )
-		return -1;/* packet wasn't fully received yet (still fragmented) */
+		return 0;/* packet wasn't fully received yet (still fragmented) */
 	else {
 		int sfd;/* stat server fd */
 		RFIFOSKIP(fd, 2);/* we skip first 2 bytes which are the 0x3008, so we end up with a buffer equal to the one we send */
@@ -1141,7 +1140,7 @@ int chmapif_parse_fw_configstats(int fd){
 
 int chmapif_parse_updfamelist(int fd){
     if (RFIFOREST(fd) < 11)
-        return -1;
+        return 0;
     {
             int cid = RFIFOL(fd, 2);
             int fame = RFIFOL(fd, 6);
@@ -1224,7 +1223,7 @@ int chmapif_vipack(int mapfd, uint32 aid, uint32 vip_time, uint8 isvip, uint8 is
 
 int chmapif_parse_reqcharban(int fd){
 	if (RFIFOREST(fd) < 10+NAME_LENGTH)
-		return -1;
+		return 0;
 	else {
 		//int aid = RFIFOL(fd,2); aid of player who as requested the ban
 		int timediff = RFIFOL(fd,6);
@@ -1234,12 +1233,12 @@ int chmapif_parse_reqcharban(int fd){
 		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`char_id`,`unban_time` FROM `%s` WHERE `name` = '%s'", schema_config.char_db, name) )
 			Sql_ShowDebug(sql_handle);
 		else if( Sql_NumRows(sql_handle) == 0 ){
-			return -1; // 1-player not found
+			return 1; // 1-player not found
 		}
 		else if( SQL_SUCCESS != Sql_NextRow(sql_handle) ){
 			Sql_ShowDebug(sql_handle);
 			Sql_FreeResult(sql_handle);
-			return -1;
+			return 1;
 		} else {
 			int t_cid=0,t_aid=0;
 			char* data;
@@ -1252,7 +1251,8 @@ int chmapif_parse_reqcharban(int fd){
 			Sql_GetData(sql_handle, 2, &data, NULL); unban_time = atol(data);
 			Sql_FreeResult(sql_handle);
 
-			if(timediff<0 && unban_time==0) return 0; //attemp to reduce time of a non banned account ?!?
+			if(timediff<0 && unban_time==0) 
+				return 1; //attemp to reduce time of a non banned account ?!?
 			else if(unban_time<now) unban_time=now; //new entry
 			unban_time += timediff; //alterate the time
 			if( unban_time < now ) unban_time=0; //we have totally reduce the time
@@ -1267,7 +1267,7 @@ int chmapif_parse_reqcharban(int fd){
 				) {
 				SqlStmt_ShowDebug(stmt);
 				SqlStmt_Free(stmt);
-				return -1;
+				return 1;
 			}
 			SqlStmt_Free(stmt);
 
@@ -1284,22 +1284,22 @@ int chmapif_parse_reqcharban(int fd){
 			}
 		}
 	}
-	return 0;
+	return 1;
 }
 
 int chmapif_parse_reqcharunban(int fd){
 	if (RFIFOREST(fd) < 6)
-            return -1;
+            return 0;
 	else {
 		int cid = RFIFOL(fd,2);
 		RFIFOSKIP(fd,6);
 
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `unban_time` = '0' WHERE `char_id` = '%d' LIMIT 1", schema_config.char_db, cid) ) {
 			Sql_ShowDebug(sql_handle);
-			return -1;
+			return 1;
 		}
 	}
-	return 0;
+	return 1;
 }
 
 /** [Cydh]
@@ -1308,7 +1308,7 @@ int chmapif_parse_reqcharunban(int fd){
 */
 int chmapif_bonus_script_get(int fd) {
 	if (RFIFOREST(fd) < 6)
-            return -1;
+            return 0;
 	else {
 		int cid;
 		cid = RFIFOL(fd,2);
@@ -1318,7 +1318,7 @@ int chmapif_bonus_script_get(int fd) {
 			schema_config.bonus_script_db,cid))
 		{
 			Sql_ShowDebug(sql_handle);
-			return 0;
+			return 1;
 		}
 		if (Sql_NumRows(sql_handle) > 0) {
 			struct bonus_script_data bsdata;
@@ -1351,7 +1351,7 @@ int chmapif_bonus_script_get(int fd) {
 		}
 		Sql_FreeResult(sql_handle);
 	}
-        return 1;
+	return 1;
 }
 
 /** [Cydh]
@@ -1360,7 +1360,7 @@ int chmapif_bonus_script_get(int fd) {
 */
 int chmapif_bonus_script_save(int fd) {
 	if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
-            return -1;
+            return 0;
 	else {
 		int count, cid;
 
@@ -1389,7 +1389,7 @@ int chmapif_bonus_script_save(int fd) {
 		}
 		RFIFOSKIP(fd,RFIFOW(fd,2));
 	}
-        return 1;
+	return 1;
 }
 
 /**
@@ -1401,7 +1401,7 @@ int chmapif_bonus_script_save(int fd) {
  */
 int chmapif_parse(int fd){
 	int id; //mapserv id
-        int next=0;
+        
 	ARR_FIND( 0, ARRAYLENGTH(map_server), id, map_server[id].fd == fd );
 	if( id == ARRAYLENGTH(map_server) )
 	{// not a map server
@@ -1418,9 +1418,8 @@ int chmapif_parse(int fd){
 	}
 
 	while(RFIFOREST(fd) >= 2){
-            if(next==-1) return 0; //avoid processing rest of packet
-            
-            switch(RFIFOW(fd,0)){
+		int next=1;
+		switch(RFIFOW(fd,0)){
             case 0x2736: next=chmapif_parse_updmapip(fd,id); break;
             case 0x2afa: next=chmapif_parse_getmapname(fd,id); break;
             case 0x2afc: next=chmapif_parse_askscdata(fd); break;
@@ -1433,7 +1432,7 @@ int chmapif_parse(int fd){
             case 0x2b08: next=chmapif_parse_reqcharname(fd); break;
             case 0x2b0a: next=chmapif_parse_req_skillcooldown(fd); break;
             case 0x2b0c: next=chmapif_parse_reqnewemail(fd); break;
-            case 0x2b0e: next=chmapif_parse_req_alter_acc(fd); break;
+            case 0x2b0e: next=chmapif_parse_fwlog_changestatus(fd); break;
             case 0x2b10: next=chmapif_parse_updfamelist(fd); break;
             case 0x2b11: next=chmapif_parse_reqdivorce(fd); break;
             case 0x2b15: next=chmapif_parse_req_saveskillcooldown(fd); break;
@@ -1462,9 +1461,9 @@ int chmapif_parse(int fd){
                     set_eof(fd);
                     return 0;
             }
-            } // switch
+		} // switch
+		if(next==0) return 0; //avoid processing rest of packet
 	} // while
-
 	return 1;
 }
 
