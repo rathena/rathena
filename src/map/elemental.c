@@ -580,7 +580,7 @@ struct skill_condition elemental_skill_get_requirements(uint16 skill_id, uint16 
 	if( !idx ) // invalid skill id
   		return req;
 	
-	cap_value(skill_lv,1,MAX_SKILL_LEVEL);
+	skill_lv = cap_value(skill_lv,1,MAX_SKILL_LEVEL);
 	req.hp = skill_db[idx].require.hp[skill_lv-1];
 	req.sp = skill_db[idx].require.sp[skill_lv-1];
 

@@ -4114,7 +4114,7 @@ static void mob_read_randommonster_sub(const char *filepath, bool silent) {
 			trim(str[1]);
 			if (ISDIGIT(str[1][0])) {
 				mob_id = atoi(str[1]);
-				if ((md = mob_db(mob_id)) == mob_dummy) {
+				if (mob_db(mob_id) == mob_dummy) {
 					ShowError("mob_readdb_mobrandom: Invalid monster '%s'\n", str[1]);
 					continue;
 				}
@@ -4123,6 +4123,7 @@ static void mob_read_randommonster_sub(const char *filepath, bool silent) {
 				ShowError("mob_readdb_mobrandom: Invalid monster '%s'\n", str[1]);
 				continue;
 			}
+			md = mob_db(mob_id);
 			// Mob with rate 0, means it has default for fallback check in this group
 			if (atoi(str[2]) < 1) {
 				mob_db_data[0]->summonper[rand_id] = mob_id;

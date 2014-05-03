@@ -457,7 +457,7 @@ static char skill_isCopyable(struct map_session_data *sd, uint16 skill_id) {
 	uint16 idx = skill_get_index(skill_id);
 
 	// Only copy skill that player doesn't have or the skill is old clone
-	if (!idx || sd->status.skill[idx].id != 0 && sd->status.skill[idx].flag != SKILL_FLAG_PLAGIARIZED)
+	if (!idx || sd->status.skill[idx].id != 0 || sd->status.skill[idx].flag != SKILL_FLAG_PLAGIARIZED)
 		return 0;
 
 	// Check if the skill is copyable by class
@@ -3466,7 +3466,7 @@ static int skill_check_condition_mercenary(struct block_list *bl, uint16 skill_i
 
 	nullpo_ret(bl);
 
-	cap_value(skill_lv,1,MAX_SKILL_LEVEL);
+	skill_lv = cap_value(skill_lv,1,MAX_SKILL_LEVEL);
 
 	switch( bl->type )
 	{
@@ -13823,7 +13823,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 		}
 	}
 
-	cap_value(skill_lv,1,MAX_SKILL_LEVEL);
+	skill_lv = cap_value(skill_lv,1,MAX_SKILL_LEVEL);
 	require = skill_get_requirement(sd,skill_id,skill_lv);
 
 	//Can only update state when weapon/arrow info is checked.
@@ -14904,7 +14904,7 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
 	if( !(idx = skill_get_index(skill_id)) ) // invalid skill id
   		return req;
 	
-	cap_value(skill_lv,1,MAX_SKILL_LEVEL);
+	skill_lv = cap_value(skill_lv,1,MAX_SKILL_LEVEL);
 	status = &sd->battle_status;
 
 	req.hp = skill_db[idx].require.hp[skill_lv-1];
