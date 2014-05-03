@@ -775,66 +775,6 @@ int chmapif_parse_fwlog_changestatus(int fd){
 }
 
 /**
- * Received an update of fame point  for char_id cid
- * Update the list associated and transmit the new ranking
- * @param fd: wich fd to parse from
- * @return : 0 not enough data received, 1 success
- */
-int chmapif_parse_req_alter_acc(int fd){
-	if (RFIFOREST(fd) < 11)
-		return 0;
-	{
-		int cid = RFIFOL(fd, 2);
-		int fame = RFIFOL(fd, 6);
-		char type = RFIFOB(fd, 10);
-		int size;
-		struct fame_list* list;
-		int player_pos;
-		int fame_pos;
-
-		switch(type)
-		{
-			case 1:  size = fame_list_size_smith;   list = smith_fame_list;   break;
-			case 2:  size = fame_list_size_chemist; list = chemist_fame_list; break;
-			case 3:  size = fame_list_size_taekwon; list = taekwon_fame_list; break;
-			default: size = 0;                      list = NULL;              break;
-		}
-
-		ARR_FIND(0, size, player_pos, list[player_pos].id == cid);// position of the player
-		ARR_FIND(0, size, fame_pos, list[fame_pos].fame <= fame);// where the player should be
-
-		if( player_pos == size && fame_pos == size )
-			;// not on list and not enough fame to get on it
-		else if( fame_pos == player_pos )
-		{// same position
-			list[player_pos].fame = fame;
-			chmapif_update_fame_list(type, player_pos, fame);
-		}
-		else
-		{// move in the list
-			if( player_pos == size )
-			{// new ranker - not in the list
-				ARR_MOVE(size - 1, fame_pos, list, struct fame_list);
-				list[fame_pos].id = cid;
-				list[fame_pos].fame = fame;
-				char_loadName(cid, list[fame_pos].name);
-			}
-			else
-			{// already in the list
-				if( fame_pos == size )
-					--fame_pos;// move to the end of the list
-				ARR_MOVE(player_pos, fame_pos, list, struct fame_list);
-				list[fame_pos].fame = fame;
-			}
-			chmapif_send_fame_list(-1);
-		}
-
-		RFIFOSKIP(fd,11);
-	}
-	return 1;
-}
-
-/**
  * Transmit the acknolegement of divorce of partner_id1 and partner_id2
  * Update the list associated and transmit the new ranking
  * @param partner_id1: char id1 divorced
@@ -1138,6 +1078,12 @@ int chmapif_parse_fw_configstats(int fd){
 	return 1;
 }
 
+/**
+ * Received an update of fame point  for char_id cid
+ * Update the list associated and transmit the new ranking
+ * @param fd: wich fd to parse from
+ * @return : 0 not enough data received, 1 success
+ */
 int chmapif_parse_updfamelist(int fd){
     if (RFIFOREST(fd) < 11)
         return 0;
