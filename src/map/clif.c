@@ -1357,7 +1357,7 @@ int clif_spawn(struct block_list *bl)
 				if (sc && (sc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_INVISIBLE|OPTION_CHASEWALK)))
 					clif_status_change2(&sd->bl,sd->bl.id,AREA,SI_BLANK,0,0,0);
 				else
-					clif_status_change2(&sd->bl,sd->bl.id,AREA,StatusIconChangeTable[sd->sc_display[i]->type],sd->sc_display[i]->val1,sd->sc_display[i]->val2,sd->sc_display[i]->val3);
+					clif_status_change2(&sd->bl,sd->bl.id,AREA,status_sc_get_icon(sd->sc_display[i]->type),sd->sc_display[i]->val1,sd->sc_display[i]->val2,sd->sc_display[i]->val3);
 			}
 			if (sd->status.robe)
 				clif_refreshlook(bl,bl->id,LOOK_ROBE,sd->status.robe,AREA);
@@ -4173,7 +4173,7 @@ static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_d
 		if (dstsd->sc.option&(OPTION_HIDE|OPTION_CLOAK|OPTION_INVISIBLE|OPTION_CHASEWALK))
 			clif_status_change2(&sd->bl, dstsd->bl.id, SELF, SI_BLANK, 0, 0, 0);
 		else
-			clif_status_change2(&sd->bl, dstsd->bl.id, SELF, StatusIconChangeTable[dstsd->sc_display[i]->type], dstsd->sc_display[i]->val1, dstsd->sc_display[i]->val2, dstsd->sc_display[i]->val3);
+			clif_status_change2(&sd->bl, dstsd->bl.id, SELF, status_sc_get_icon(dstsd->sc_display[i]->type), dstsd->sc_display[i]->val1, dstsd->sc_display[i]->val2, dstsd->sc_display[i]->val3);
 	}
 	if( (sd->status.party_id && dstsd->status.party_id == sd->status.party_id) || //Party-mate, or hpdisp setting.
 		(sd->bg_id && sd->bg_id == dstsd->bg_id) || //BattleGround
@@ -5492,6 +5492,7 @@ void clif_status_change(struct block_list *bl,int type,int flag,int tick,int val
 {
 	unsigned char buf[32];
 	struct map_session_data *sd;
+	uint16 bl_type = status_si_get_bl_type((enum si_type)type);
 
 	if (type == SI_BLANK)  //It shows nothing on the client...
 		return;
@@ -5500,7 +5501,7 @@ void clif_status_change(struct block_list *bl,int type,int flag,int tick,int val
 
 	sd = BL_CAST(BL_PC, bl);
 
-	if (!(status_type2relevant_bl_types(type)&bl->type)) // only send status changes that actually matter to the client
+	if (!(bl_type&bl->type)) // only send status changes that actually matter to the client
 		return;
 #if PACKETVER >= 20120618
 	if(flag && battle_config.display_status_timers && sd)
@@ -13424,7 +13425,7 @@ void clif_parse_NoviceExplosionSpirits(int fd, struct map_session_data *sd)
 			int percent = (int)( ( (float)sd->status.base_exp/(float)next )*1000. );
 
 			if( percent && ( percent%100 ) == 0 ) {// 10.0%, 20.0%, ..., 90.0%
-				sc_start(&sd->bl,&sd->bl, status_skill2sc(MO_EXPLOSIONSPIRITS), 100, 17, skill_get_time(MO_EXPLOSIONSPIRITS, 5)); //Lv17-> +50 critical (noted by Poki) [Skotlex]
+				sc_start(&sd->bl,&sd->bl, skill_get_sc(MO_EXPLOSIONSPIRITS), 100, 17, skill_get_time(MO_EXPLOSIONSPIRITS, 5)); //Lv17-> +50 critical (noted by Poki) [Skotlex]
 				clif_skill_nodamage(&sd->bl, &sd->bl, MO_EXPLOSIONSPIRITS, 5, 1);  // prayer always shows successful Lv5 cast and disregards noskill restrictions
 			}
 		}

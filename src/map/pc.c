@@ -312,7 +312,7 @@ int pc_banding(struct map_session_data *sd, uint16 skill_lv) {
 		if( (sc = status_get_sc(&sd->bl)) != NULL  && sc->data[SC_BANDING] )
 		{
 			sc->data[SC_BANDING]->val2 = 0; // Reset the counter
-			status_calc_bl(&sd->bl, status_sc2scb_flag(SC_BANDING));
+			status_calc_bl(&sd->bl, status_sc_get_calc_flag(SC_BANDING));
 		}
 		return 0;
 	}
@@ -354,7 +354,7 @@ int pc_banding(struct map_session_data *sd, uint16 skill_lv) {
 			if( (sc = status_get_sc(&bsd->bl)) != NULL  && sc->data[SC_BANDING] )
 			{
 				sc->data[SC_BANDING]->val2 = c; // Set the counter. It doesn't count your self.
-				status_calc_bl(&bsd->bl, status_sc2scb_flag(SC_BANDING));	// Set atk and def.
+				status_calc_bl(&bsd->bl, status_sc_get_flag(SC_BANDING));	// Set atk and def.
 			}
 		}
 	}
@@ -4311,6 +4311,8 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 		return 1;
 	if(map[sd->bl.m].flag.noitemconsumption) //consumable but mapflag prevent it
 		return 0;
+	if (sd->sc.cant.consume)
+		return 0;
 	//Prevent mass item usage. [Skotlex]
 	if( DIFF_TICK(sd->canuseitem_tick,gettick()) > 0 ||
 		(itemdb_iscashfood(nameid) && DIFF_TICK(sd->canusecashfood_tick,gettick()) > 0)
@@ -4441,19 +4443,6 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 		(1<<(sd->class_&MAPID_BASEMASK)) &
 		(item->class_base[sd->class_&JOBL_2_1?1:(sd->class_&JOBL_2_2?2:0)])
 	))
-		return 0;
-	
-	if (sd->sc.count && (
-		sd->sc.data[SC_BERSERK] || sd->sc.data[SC_SATURDAYNIGHTFEVER] ||
-		(sd->sc.data[SC_GRAVITATION] && sd->sc.data[SC_GRAVITATION]->val3 == BCT_SELF) ||
-		sd->sc.data[SC_TRICKDEAD] ||
-		sd->sc.data[SC_HIDING] ||
-		sd->sc.data[SC__SHADOWFORM] ||
-		sd->sc.data[SC__INVISIBILITY] ||
-		sd->sc.data[SC__MANHOLE] ||
-		sd->sc.data[SC_KAGEHUMI] ||
-		(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOITEM) ||
-		sd->sc.data[SC_HEAT_BARREL_AFTER]))
 		return 0;
 	
 	if (!pc_isItemClass(sd,item))
@@ -5270,7 +5259,7 @@ static void pc_checkallowskill(struct map_session_data *sd)
 		if( scw_list[i] == SC_DANCING && !battle_config.dancing_weaponswitch_fix )
 			continue;
 		if(sd->sc.data[scw_list[i]] &&
-			!pc_check_weapontype(sd,skill_get_weapontype(status_sc2skill(scw_list[i]))))
+			!pc_check_weapontype(sd,skill_get_weapontype(status_sc_get_skill(scw_list[i]))))
 			status_change_end(&sd->bl, scw_list[i], INVALID_TIMER);
 	}
 
@@ -5947,16 +5936,16 @@ int pc_checkbaselevelup(struct map_session_data *sd) {
 	status_percent_heal(&sd->bl,100,100);
 
 	if((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE) {
-		sc_start(&sd->bl,&sd->bl,status_skill2sc(PR_KYRIE),100,1,skill_get_time(PR_KYRIE,1));
-		sc_start(&sd->bl,&sd->bl,status_skill2sc(PR_IMPOSITIO),100,1,skill_get_time(PR_IMPOSITIO,1));
-		sc_start(&sd->bl,&sd->bl,status_skill2sc(PR_MAGNIFICAT),100,1,skill_get_time(PR_MAGNIFICAT,1));
-		sc_start(&sd->bl,&sd->bl,status_skill2sc(PR_GLORIA),100,1,skill_get_time(PR_GLORIA,1));
-		sc_start(&sd->bl,&sd->bl,status_skill2sc(PR_SUFFRAGIUM),100,1,skill_get_time(PR_SUFFRAGIUM,1));
+		sc_start(&sd->bl,&sd->bl,skill_get_sc(PR_KYRIE),100,1,skill_get_time(PR_KYRIE,1));
+		sc_start(&sd->bl,&sd->bl,skill_get_sc(PR_IMPOSITIO),100,1,skill_get_time(PR_IMPOSITIO,1));
+		sc_start(&sd->bl,&sd->bl,skill_get_sc(PR_MAGNIFICAT),100,1,skill_get_time(PR_MAGNIFICAT,1));
+		sc_start(&sd->bl,&sd->bl,skill_get_sc(PR_GLORIA),100,1,skill_get_time(PR_GLORIA,1));
+		sc_start(&sd->bl,&sd->bl,skill_get_sc(PR_SUFFRAGIUM),100,1,skill_get_time(PR_SUFFRAGIUM,1));
 		if (sd->state.snovice_dead_flag)
 			sd->state.snovice_dead_flag = 0; //Reenable steelbody resurrection on dead.
 	} else if( (sd->class_&MAPID_BASEMASK) == MAPID_TAEKWON ) {
-		sc_start(&sd->bl,&sd->bl,status_skill2sc(AL_INCAGI),100,10,600000);
-		sc_start(&sd->bl,&sd->bl,status_skill2sc(AL_BLESSING),100,10,600000);
+		sc_start(&sd->bl,&sd->bl,skill_get_sc(AL_INCAGI),100,10,600000);
+		sc_start(&sd->bl,&sd->bl,skill_get_sc(AL_BLESSING),100,10,600000);
 	}
 	clif_misceffect(&sd->bl,0);
 	npc_script_event(sd, NPCE_BASELVUP); //LORDALFA - LVLUPEVENT
@@ -6970,7 +6959,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			clif_resurrection(&sd->bl, 1);
 			if(battle_config.pc_invincible_time)
 				pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
-			sc_start(&sd->bl,&sd->bl,status_skill2sc(MO_STEELBODY),100,5,skill_get_time(MO_STEELBODY,5));
+			sc_start(&sd->bl,&sd->bl,skill_get_sc(MO_STEELBODY),100,5,skill_get_time(MO_STEELBODY,5));
 			if(map_flag_gvg(sd->bl.m))
 				pc_respawn_timer(INVALID_TIMER, gettick(), sd->bl.id, 0);
 			return 0;
@@ -7133,7 +7122,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	if(battle_config.death_penalty_type
 		&& (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE	// only novices will receive no penalty
 		&& !map[sd->bl.m].flag.noexppenalty && !map_flag_gvg(sd->bl.m)
-		&& !sd->sc.data[SC_BABY] && !sd->sc.data[SC_LIFEINSURANCE])
+		&& !sd->sc.data[SC_PROTECTEXP] && !sd->sc.data[SC_LIFEINSURANCE])
 	{
 		uint32 base_penalty = battle_config.death_penalty_base;
 		uint32 job_penalty = battle_config.death_penalty_job;
@@ -7818,7 +7807,7 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 		short id;
 		for(i = 0; i < MAX_SKILL_TREE && (id = skill_tree[class_][i].id) > 0; i++) {
 			//Remove status specific to your current tree skills.
-			enum sc_type sc = status_skill2sc(id);
+			enum sc_type sc = skill_get_sc(id);
 			if (sc > SC_COMMON_MAX && sd->sc.data[sc])
 				status_change_end(&sd->bl, sc, INVALID_TIMER);
 		}
@@ -8054,22 +8043,18 @@ void pc_setoption(struct map_session_data *sd,int type)
 		}
 	}
 	if( (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC ) {
-		if( type&OPTION_MADOGEAR && !(p_type&OPTION_MADOGEAR) ) {
+		uint16 i;
+		if( (type&OPTION_MADOGEAR && !(p_type&OPTION_MADOGEAR)) || //Madogear is set
+			(!(type&OPTION_MADOGEAR) && p_type&OPTION_MADOGEAR) ) //Madogear is unset
+		{
 			status_calc_pc(sd, 0);
-			status_change_end(&sd->bl,SC_MAXIMIZEPOWER,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_OVERTHRUST,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_WEAPONPERFECTION,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_ADRENALINE,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_CARTBOOST,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_MELTDOWN,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_MAXOVERTHRUST,INVALID_TIMER);
-		} else if( !(type&OPTION_MADOGEAR) && p_type&OPTION_MADOGEAR ) {
-			status_calc_pc(sd, 0);
-			status_change_end(&sd->bl,SC_SHAPESHIFT,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_HOVERING,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_ACCELERATION,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_OVERHEAT_LIMITPOINT,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_OVERHEAT,INVALID_TIMER);
+			for (i = 0; i < SC_MAX; i++) {
+				if (!sd->sc.data[i] || !(status_sc_get_flag((sc_type)i)&SCF_NO_MADO))
+					continue;
+				if (i == SC_BERSERK || i == SC_SATURDAYNIGHTFEVER)
+					sd->sc.data[i]->val2 = 0;
+				status_change_end(&sd->bl,(sc_type)i,INVALID_TIMER);
+			}
 		}
 	}
 
@@ -8835,13 +8820,11 @@ bool pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 		return false;
 	}
 
-	if( sd->sc.count && (
-		(sd->sc.data[SC_PYROCLASTIC] && sd->inventory_data[n]->type == IT_WEAPON) ||
-		sd->sc.data[SC_BERSERK] || 
-		sd->sc.data[SC_SATURDAYNIGHTFEVER]) )
-	{
-		clif_equipitemack(sd,0,0,0);
-		return false;
+	if (sd->sc.cant.equip) {
+		if (!sd->sc.data[SC_PYROCLASTIC] || (sd->sc.data[SC_PYROCLASTIC] && sd->inventory_data[n]->type == IT_WEAPON)) {
+			clif_equipitemack(sd,0,0,0);
+			return false;
+		}
 	}
 
 	if( DIFF_TICK(sd->canequip_tick,gettick()) > 0 ) {
@@ -9054,16 +9037,13 @@ bool pc_unequipitem(struct map_session_data *sd,int n,int flag) {
 	}
 
 	// status change that makes player cannot unequip equipment
-	if( !(flag&2) && sd->sc.count && (
-		sd->sc.data[SC_BERSERK] ||
-		sd->sc.data[SC_SATURDAYNIGHTFEVER] ||
-		sd->sc.data[SC__BLOODYLUST] ||
-		sd->sc.data[SC_KYOUGAKU] ||
-		(sd->sc.data[SC_PYROCLASTIC] && sd->inventory_data[n]->type == IT_WEAPON)) )	// can't switch weapon
-	{
-		clif_unequipitemack(sd,n,0,0);
-		return false;
+	if( !(flag&2) && sd->sc.cant.unequip ) {
+		if (!sd->sc.data[SC_PYROCLASTIC] || (sd->sc.data[SC_PYROCLASTIC] && sd->inventory_data[n]->type == IT_WEAPON)) {
+			clif_unequipitemack(sd,n,0,0);
+			return false;
+		}
 	}
+
 	if (&sd->sc) {
 		if (sd->sc.data[SC_HOVERING] && sd->inventory_data[n]->type == IT_ARMOR && sd->inventory_data[n]->nameid == ITEMID_HOVERING_BOOSTER)
 			status_change_end(&sd->bl, SC_HOVERING, INVALID_TIMER);

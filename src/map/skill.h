@@ -181,6 +181,7 @@ struct s_skill_db {
 		uint8 option;
 		uint16 joballowed, req_opt;
 	} copyable;
+	enum sc_type sc; // Default SC for skill
 };
 extern struct s_skill_db skill_db[MAX_SKILL_DB];
 
@@ -2013,6 +2014,8 @@ int skill_changematerial(struct map_session_data *sd, int n, unsigned short *ite
 int skill_get_elemental_type(uint16 skill_id, uint16 skill_lv);
 
 void skill_combo_toogle_inf(struct block_list* bl, uint16 skill_id, int inf);
+
+enum sc_type skill_get_sc(int16 skill_id);
 
 #ifdef ADJUST_SKILL_DAMAGE
 /// Skill Damage target

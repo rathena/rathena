@@ -593,6 +593,9 @@ struct map_session_data {
 		int tid;
 	} bonus_script[MAX_PC_BONUS_SCRIPT];
 
+	enum sc_type *sc_scripts; /// List of SC's id that active and has script [Cydh]
+	uint8 sc_scripts_count; /// Number of list of SC's id
+
 	/* Expiration Timer ID */
 	int expiration_tid;
 	time_t expiration_time;
