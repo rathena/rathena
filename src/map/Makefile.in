@@ -1,23 +1,18 @@
 
 COMMON_H = $(shell ls ../common/*.h)
+COMMON_AR = ../common/obj_all/common.a
+COMMON_SQL_AR = ../common/obj_sql/common_sql.a
+COMMON_INCLUDE = -I../common/
 
 MT19937AR_OBJ = ../../3rdparty/mt19937ar/mt19937ar.o
 MT19937AR_H = ../../3rdparty/mt19937ar/mt19937ar.h
 MT19937AR_INCLUDE = -I../../3rdparty/mt19937ar
 
-LIBCONFIG_OBJ = ../../3rdparty/libconfig/libconfig.o ../../3rdparty/libconfig/grammar.o \
-	../../3rdparty/libconfig/scanctx.o ../../3rdparty/libconfig/scanner.o ../../3rdparty/libconfig/strbuf.o
-LIBCONFIG_H = ../../3rdparty/libconfig/libconfig.h ../../3rdparty/libconfig/grammar.h \
-	../../3rdparty/libconfig/parsectx.h ../../3rdparty/libconfig/scanctx.h ../../3rdparty/libconfig/scanner.h \
-	../../3rdparty/libconfig/strbuf.h ../../3rdparty/libconfig/wincompat.h
+LIBCONFIG_H = $(shell ls ../../3rdparty/libconfig/*.h)
+LIBCONFIG_AR = ../../3rdparty/libconfig/obj/libconfig.a
 LIBCONFIG_INCLUDE = -I../../3rdparty/libconfig
 
-MAP_OBJ = map.o chrif.o clif.o pc.o status.o npc.o \
-	npc_chat.o chat.o path.o itemdb.o mob.o script.o \
-	storage.o skill.o atcommand.o battle.o battleground.o \
-	intif.o trade.o party.o vending.o guild.o pet.o \
-	log.o mail.o date.o unit.o homunculus.o mercenary.o quest.o instance.o \
-	buyingstore.o searchstore.o duel.o pc_groups.o elemental.o cashshop.o channel.o mapreg_sql.o
+MAP_OBJ = $(shell ls *.c | sed -e "s/\.c/\.o/g")
 MAP_SQL_OBJ = $(MAP_OBJ:%=obj_sql/%)
 MAP_H = $(shell ls ../map/*.h) \
 	$(shell ls ../config/*.h) 
@@ -71,26 +66,26 @@ obj_sql:
 
 # executables
 
-map-server: obj_sql $(MAP_SQL_OBJ) ../common/obj_sql/common_sql.a ../common/obj_all/common.a
+map-server: obj_sql $(MAP_SQL_OBJ) $(COMMON_SQL_AR) $(COMMON_AR) $(LIBCONFIG_AR)
 	@echo "	LD	@OMAP@@EXEEXT@"
-	@@CC@ @LDFLAGS@ -o ../../@OMAP@@EXEEXT@ $(MAP_SQL_OBJ) ../common/obj_sql/common_sql.a ../common/obj_all/common.a $(MT19937AR_OBJ) $(LIBCONFIG_OBJ) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
+	@@CC@ @LDFLAGS@ -o ../../@OMAP@@EXEEXT@ $(MAP_SQL_OBJ) $(COMMON_SQL_AR) $(COMMON_AR) $(MT19937AR_OBJ) $(LIBCONFIG_AR) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
 
 
 # map object files
 
 obj_sql/%.o: %.c $(MAP_H) $(COMMON_H)  $(MT19937AR_H) $(LIBCONFIG_H)
 	@echo "	CC	$<"
-	@@CC@ @CFLAGS@ $(MT19937AR_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@@CC@ @CFLAGS@ $(COMMON_INCLUDE) $(MT19937AR_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing object files
-../common/obj_all/common.a:
+$(COMMON_AR):
 	@$(MAKE) -C ../common sql
 
-../common/obj_sql/common_sql.a:
+$(COMMON_SQL_AR):
 	@$(MAKE) -C ../common sql
 
-MT19937AR_OBJ:
+$(MT19937AR_OBJ):
 	@$(MAKE) -C ../../3rdparty/mt19937ar
 
-LIBCONFIG_OBJ:
+$(LIBCONFIG_AR):
 	@$(MAKE) -C ../../3rdparty/libconfig
