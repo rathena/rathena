@@ -1,25 +1,21 @@
 
-COMMON_OBJ = obj_all/core.o obj_all/socket.o obj_all/timer.o obj_all/db.o \
-	obj_all/nullpo.o obj_all/malloc.o obj_all/showmsg.o obj_all/strlib.o obj_all/utils.o \
-	obj_all/grfio.o obj_all/mapindex.o obj_all/ers.o obj_all/md5calc.o \
-	obj_all/minicore.o obj_all/minisocket.o obj_all/minimalloc.o obj_all/random.o obj_all/des.o \
-	obj_all/conf.o obj_all/thread.o obj_all/mutex.o obj_all/raconf.o obj_all/mempool.o \
-	obj_all/msg_conf.o obj_all/cli.o
-
+#COMMON_OBJ = $(ls *.c | grep -viw sql.c | sed -e "s/\.c/\.o/g")
+COMMON_OBJ = core.o socket.o timer.o db.o nullpo.o malloc.o showmsg.o strlib.o utils.o \
+	grfio.o mapindex.o ers.o md5calc.o minicore.o minisocket.o minimalloc.o random.o des.o \
+	conf.o thread.o mutex.o raconf.o mempool.o msg_conf.o cli.o
+COMMON_DIR_OBJ = $(COMMON_OBJ:%=obj_all/%)
 COMMON_H = $(shell ls ../common/*.h)
-
 COMMON_SQL_OBJ = obj_sql/sql.o
 COMMON_SQL_H = sql.h
+COMMON_AR = obj_all/common.a
+COMMON_SQL_AR = obj_sql/common_sql.a
 
 MT19937AR_OBJ = ../../3rdparty/mt19937ar/mt19937ar.o
 MT19937AR_H = ../../3rdparty/mt19937ar/mt19937ar.h
 MT19937AR_INCLUDE = -I../../3rdparty/mt19937ar
 
-LIBCONFIG_OBJ = ../../3rdparty/libconfig/libconfig.o ../../3rdparty/libconfig/grammar.o \
-	../../3rdparty/libconfig/scanctx.o ../../3rdparty/libconfig/scanner.o ../../3rdparty/libconfig/strbuf.o
-LIBCONFIG_H = ../../3rdparty/libconfig/libconfig.h ../../3rdparty/libconfig/grammar.h \
-	../../3rdparty/libconfig/parsectx.h ../../3rdparty/libconfig/scanctx.h ../../3rdparty/libconfig/scanner.h \
-	../../3rdparty/libconfig/strbuf.h ../../3rdparty/libconfig/wincompat.h
+LIBCONFIG_H = $(shell ls ../../3rdparty/libconfig/*.h)
+LIBCONFIG_AR = ../../3rdparty/libconfig/obj/libconfig.a
 LIBCONFIG_INCLUDE = -I../../3rdparty/libconfig
 
 HAVE_MYSQL=@HAVE_MYSQL@
@@ -64,18 +60,18 @@ obj_sql:
 	@echo "	MKDIR	obj_sql"
 	@-mkdir obj_sql
 
-obj_all/common.a: $(COMMON_OBJ)
+$(COMMON_AR): $(COMMON_DIR_OBJ)
 	@echo "	AR	$@"
-	@@AR@ rcs obj_all/common.a $(COMMON_OBJ)
+	@@AR@ rcs $(COMMON_AR) $(COMMON_DIR_OBJ)
 
-obj_sql/common_sql.a: $(COMMON_SQL_OBJ)
+$(COMMON_SQL_AR): $(COMMON_SQL_OBJ)
 	@echo "	AR	$@"
-	@@AR@ rcs obj_sql/common_sql.a $(COMMON_SQL_OBJ)
+	@@AR@ rcs $(COMMON_SQL_AR) $(COMMON_SQL_OBJ)
 
 
-common: obj_all $(COMMON_OBJ) $(MT19937AR_OBJ) $(LIBCONFIG_OBJ) obj_all/common.a
+common: obj_all $(COMMON_DIR_OBJ) $(MT19937AR_OBJ) $(LIBCONFIG_AR) $(COMMON_AR)
 
-common_sql: obj_sql $(COMMON_SQL_OBJ) obj_sql/common_sql.a
+common_sql: obj_sql $(COMMON_SQL_OBJ) $(COMMON_SQL_AR)
 
 obj_all/%.o: %.c $(COMMON_H) $(MT19937AR_H) $(LIBCONFIG_H)
 	@echo "	CC	$<"
@@ -91,8 +87,8 @@ obj_sql/%.o: %.c $(COMMON_H) $(COMMON_SQL_H) $(LIBCONFIG_H)
 
 
 # missing object files
-MT19937AR_OBJ:
+$(MT19937AR_OBJ):
 	@$(MAKE) -C ../../3rdparty/mt19937ar
 
-LIBCONFIG_OBJ:
+$(LIBCONFIG_AR):
 	@$(MAKE) -C ../../3rdparty/libconfig
