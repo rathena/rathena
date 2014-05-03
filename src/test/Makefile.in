@@ -5,11 +5,8 @@ MT19937AR_OBJ = ../../3rdparty/mt19937ar/mt19937ar.o
 MT19937AR_H = ../../3rdparty/mt19937ar/mt19937ar.h
 MT19937AR_INCLUDE = -I../../3rdparty/mt19937ar
 
-LIBCONFIG_OBJ = ../../3rdparty/libconfig/libconfig.o ../../3rdparty/libconfig/grammar.o \
-	../../3rdparty/libconfig/scanctx.o ../../3rdparty/libconfig/scanner.o ../../3rdparty/libconfig/strbuf.o
-LIBCONFIG_H = ../../3rdparty/libconfig/libconfig.h ../../3rdparty/libconfig/grammar.h \
-	../../3rdparty/libconfig/parsectx.h ../../3rdparty/libconfig/scanctx.h ../../3rdparty/libconfig/scanner.h \
-	../../3rdparty/libconfig/strbuf.h ../../3rdparty/libconfig/wincompat.h
+LIBCONFIG_H = $(shell ls ../../3rdparty/libconfig/*.h)
+LIBCONFIG_AR = ../../3rdparty/libconfig/obj/libconfig.a
 LIBCONFIG_INCLUDE = -I../../3rdparty/libconfig
 
 TEST_SPINLOCK_OBJ=obj/test_spinlock.o
@@ -40,7 +37,7 @@ help:
 
 test_spinlock: $(TEST_SPINLOCK_DEPENDS)
 	@echo "	LD	$@"
-	@@CC@ @LDFLAGS@ -o ../../test_spinlock@EXEEXT@ $(TEST_SPINLOCK_OBJ) ../common/obj_sql/common_sql.a ../common/obj_all/common.a $(MT19937AR_OBJ) $(LIBCONFIG_OBJ) @LIBS@ @MYSQL_LIBS@
+	@@CC@ @LDFLAGS@ -o ../../test_spinlock@EXEEXT@ $(TEST_SPINLOCK_OBJ) ../common/obj_sql/common_sql.a ../common/obj_all/common.a $(MT19937AR_OBJ) $(LIBCONFIG_AR) @LIBS@ @MYSQL_LIBS@
 
 # object directories
 
@@ -64,5 +61,5 @@ obj/%.o: %.c $(COMMON_H) $(MT19937AR_H) $(LIBCONFIG_H)
 MT19937AR_OBJ:
 	@$(MAKE) -C ../../3rdparty/mt19937ar
 
-LIBCONFIG_OBJ:
+LIBCONFIG_AR:
 	@$(MAKE) -C ../../3rdparty/libconfig
