@@ -162,9 +162,9 @@ Option: Special option/client effect when status is active. Use "|" as delimiter
 Flag: Various status flags for specifc usage
       SCF_BLEFFECT            = Status should has BL_SCEFFECT as relevant effect, must has SI. (display on BL_PC|BL_HOM|BL_MER|BL_MOB|BL_ELEM) By defaut effect only for BL_PC.
       SCF_DISPLAY             = Displays status effect when player logged in.
-      SCF_NO_CLEAR            = Cannot be removed on status_change_clear().
+      SCF_PERMANENT           = As permanent effect, avoid to be removed by 'sc_end SC_ALL', 'status_change_clear(block_list,3)'.
       SCF_NO_CLEARBUFF        = Cannot be removed on status_change_clear_buffs(). This has priority check than SCF_REM_ON_REFRESH, SCF_REM_ON_LUXANIMA, and .
-      SCF_NO_REM_ONDEAD       = Cannot be romoved when dead. status_change_clear().
+      SCF_NO_REM_ONDEAD       = Cannot be romoved when dead. 'status_change_clear(block_list,0)'.
       SCF_NO_MADO             = Cannot be removed when Madogear is activated/deactivated.
       SCF_NO_DISPELL          = Cannot be removed by Dispell (SA_DISPELL).
       SCF_NO_CLEARANCE        = Cannot be removed by Clearance (AB_CLEARANCE).
@@ -186,3 +186,22 @@ Flag: Various status flags for specifc usage
 Type: This is will deciding which status the is Buff or Debuff and the status will be removed on status_change_clear_buffs()
       0 = Buff (default)
       1 = Debuff
+
+---------------------------------------
+
+Notes:
+
+By default, statuses are 'Buff' type (or type 0), which removable by 'status_change_clear_buffs', function that
+being used by Tarot (CG_TAROTCARD), Refresh (RK_REFESH), Luxanima (RK_LUXANIMA), Wand of Hermode (CG_HERMODE),
+Gospel (PA_GOSPEL), and Inspiration (LG_INSPIRATION).
+
+SCF_NO_CLEARBUFF prevents some permanent statuses and some statuses that cannot be removed by those skills
+doesn't matter if the active statuses are buff or debuff or the skill that attempts to remove it.
+
+Tarot and Wand of Hermode are removing status as Buff, not removing Debuff or except status with type 1.
+While, Gospel and Inspiration are removing Buffs and Debuffs.
+
+Refresh and Luxanima are only removing status that has flag SCF_REM_ON_REFRESH or SCF_REM_ON_LUXANIMA. Actually
+just like Dispell (SA_DISPELL), Clearance (AB_CLEARANCE), and Banishing Buster (RL_BANISHING_BUSTER) that have
+effect to remove buffs or debuffs. But, statuses that can be removed by Refresh and Luxanima are less than those
+3 skills.

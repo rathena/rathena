@@ -6892,6 +6892,9 @@ void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int h
 		elemental_set_target(sd,src);
 
 	sd->canlog_tick = gettick();
+
+	//Remove bonus_script when receives damage
+	pc_bonus_script_clear(sd,BSF_REM_ON_DAMAGED);
 }
 
 int pc_close_npc_timer(int tid, unsigned int tick, int id, intptr_t data)
@@ -7116,7 +7119,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	}
 	
 	//Remove bonus_script when dead
-	pc_bonus_script_clear(sd,BONUS_FLAG_REM_ON_DEAD);
+	pc_bonus_script_clear(sd,BSF_REM_ON_DEAD);
 
 	// changed penalty options, added death by player if pk_mode [Valaris]
 	if(battle_config.death_penalty_type
@@ -8056,6 +8059,9 @@ void pc_setoption(struct map_session_data *sd,int type)
 				status_change_end(&sd->bl,(sc_type)i,INVALID_TIMER);
 			}
 		}
+
+		//Removes bonus_script by Madogear changes
+		pc_bonus_script_clear(sd,BSF_REM_ON_MADOGEAR);
 	}
 
 	if (type&OPTION_FLYING && !(p_type&OPTION_FLYING))
@@ -10693,15 +10699,15 @@ void pc_bonus_script_remove(struct map_session_data *sd, uint8 i) {
 **/
 void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag) {
 	uint8 i, count = 0;
-	if (!sd)
+	if (!sd || !flag)
 		return;
 
 	for (i = 0; i < MAX_PC_BONUS_SCRIPT; i++) {
 		if (&sd->bonus_script[i] && sd->bonus_script[i].script &&
 			(sd->bonus_script[i].flag&flag || //Remove bonus script based on e_bonus_script_flags
 			(sd->bonus_script[i].type && (
-				(flag&BONUS_FLAG_REM_BUFF && sd->bonus_script[i].type == 1) || //Remove bonus script based on buff type
-				(flag&BONUS_FLAG_REM_DEBUFF && sd->bonus_script[i].type == 2)) //Remove bonus script based on debuff type
+				(flag&BSF_REM_BUFF && sd->bonus_script[i].type == 1) || //Remove bonus script based on buff type
+				(flag&BSF_REM_DEBUFF && sd->bonus_script[i].type == 2)) //Remove bonus script based on debuff type
 			))) 
 		{
 			delete_timer(sd->bonus_script[i].tid,pc_bonus_script_timer);
@@ -10709,7 +10715,7 @@ void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag) {
 			count++;
 		}
 	}
-	if (count && !(flag&BONUS_FLAG_REM_ON_LOGOUT)) //Don't need to do this if log out
+	if (count && !(flag&BSF_REM_ON_LOGOUT)) //Don't need to calculate status when logout
 		status_calc_pc(sd,false);
 }
 

@@ -1688,7 +1688,7 @@ int map_quit(struct map_session_data *sd) {
 				if (battle_config.debuff_on_logout) {
 					bool isDebuff = status_sc_isDebuff((sc_type)i);
 					if ((battle_config.debuff_on_logout&1 && !isDebuff) || //Removes buffs
-						battle_config.debuff_on_logout&1 && isDebuff) //Removes debuffs
+						battle_config.debuff_on_logout&2 && isDebuff) //Removes debuffs
 					{
 						status_change_end(&sd->bl,(sc_type)i,INVALID_TIMER);
 						continue;

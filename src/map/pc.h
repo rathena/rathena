@@ -587,7 +587,7 @@ struct map_session_data {
 		struct script_code *script;
 		char script_str[MAX_BONUS_SCRIPT_LENGTH]; //Used for comparing and storing on table
 		uint32 tick;
-		uint8 flag;
+		uint16 flag;
 		char type; //0 - Ignore; 1 - Buff; 2 - Debuff
 		int16 icon;
 		int tid;

@@ -1736,12 +1736,19 @@ enum scb_flag
 
 ///Enum for bonus_script's flag
 enum e_bonus_script_flags {
-	BONUS_FLAG_REM_ON_DEAD		= 0x01,	//Remove bonus when dead
-	BONUS_FLAG_REM_ON_DISPELL	= 0x02,	//Removable by Dispell
-	BONUS_FLAG_REM_ON_CLEARANCE	= 0x04,	//Removable by Clearance
-	BONUS_FLAG_REM_ON_LOGOUT	= 0x08,	//Remove bonus when player logged out
-	BONUS_FLAG_REM_BUFF			= 0x10,	//Remove bonus when player logged out
-	BONUS_FLAG_REM_DEBUFF		= 0x20,	//Remove bonus when player logged out
+	BSF_REM_ON_DEAD				= 0x001, ///Removed when dead
+	BSF_REM_ON_DISPELL			= 0x002, ///Removed by Dispell
+	BSF_REM_ON_CLEARANCE		= 0x004, ///Removed by Clearance
+	BSF_REM_ON_LOGOUT			= 0x008, ///Removed when player logged out
+	BSF_REM_ON_BANISHING_BUSTER	= 0x010, ///Removed by Banishing Buster
+	BSF_REM_ON_REFRESH			= 0x020, ///Removed by Refresh
+	BSF_REM_ON_LUXANIMA			= 0x040, ///Removed by Luxanima
+	BSF_REM_ON_MADOGEAR			= 0x080, ///Removed when Madogear is activated or deactivated
+	BSF_REM_ON_DAMAGED			= 0x100, ///Removed when receive damage
+
+
+	BSF_REM_BUFF	= 0x400,	///Remove positive buff
+	BSF_REM_DEBUFF	= 0x800,	///Remove negative buff
 };
 
 ///Enum for status_get_hpbonus and status_get_spbonus
@@ -1754,7 +1761,7 @@ enum e_status_bonus {
 enum e_status_change_flag {
 	SCF_BLEFFECT			= 0x000001,
 	SCF_DISPLAY				= 0x000002,
-	SCF_NO_CLEAR			= 0x000004,
+	SCF_PERMANENT			= 0x000004,
 	SCF_NO_CLEARBUFF		= 0x000008,
 	SCF_NO_REM_ONDEAD		= 0x000010,
 	SCF_NO_MADO				= 0x000020,

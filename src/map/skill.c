@@ -1623,6 +1623,10 @@ void skill_additional_effect (struct block_list* src, struct block_list *bl, uin
 				status_change_end(bl, (sc_type)i, INVALID_TIMER);
 				n--;
 			}
+
+			//Remove bonus_script by Banishing Buster
+			if (dstsd)
+				pc_bonus_script_clear(dstsd,BSF_REM_ON_BANISHING_BUSTER);
 		}
 		break;
 	case RL_S_STORM:
@@ -7155,9 +7159,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if(status_isimmune(bl))
 				break;
 
-			//Remove bonus_script when dispelled
+			//Remove bonus_script by Dispell
 			if (dstsd)
-				pc_bonus_script_clear(dstsd,BONUS_FLAG_REM_ON_DISPELL);
+				pc_bonus_script_clear(dstsd,BSF_REM_ON_DISPELL);
 
 			if(!tsc || !tsc->count)
 				break;
@@ -8598,9 +8602,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if(status_isimmune(bl))
 				break;
 
-			//Remove bonus_script when cleared
+			//Remove bonus_script by Clearance
 			if (dstsd)
-				pc_bonus_script_clear(dstsd,BONUS_FLAG_REM_ON_CLEARANCE);
+				pc_bonus_script_clear(dstsd,BSF_REM_ON_CLEARANCE);
 
 			if(!tsc || !tsc->count)
 				break;
@@ -12692,7 +12696,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 						status_heal(bl,heal,0,0);
 						break;
 					case 1: // End all negative status
-						status_change_clear_buffs(bl,14);
+						status_change_clear_buffs(bl,2|4|8);
 						if (tsd) clif_gospel_info(tsd, 0x15);
 						break;
 					case 2: // Immunity to all status

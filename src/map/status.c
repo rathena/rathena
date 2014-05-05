@@ -8779,7 +8779,7 @@ int status_change_clear(struct block_list* bl, int type)
 			}
 		}
 
-		if (type == 3 && StatusChange[i].flag&SCF_NO_CLEAR)
+		if (type == 3 && StatusChange[i].flag&SCF_PERMANENT)
 			continue;
 
 		status_change_end(bl, (sc_type)i, INVALID_TIMER);
@@ -10414,7 +10414,7 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 *	&4: Clear specific statuses by RK_REFRESH
 *	&8: Clear specific statuses by RK_LUXANIMA
 **/
-void status_change_clear_buffs (struct block_list* bl, int type)
+void status_change_clear_buffs(struct block_list* bl, int type)
 {
 	uint16 i;
 	struct status_change *sc = status_get_sc(bl);
@@ -10433,7 +10433,7 @@ void status_change_clear_buffs (struct block_list* bl, int type)
 			continue;
 		if (!(type&2) && StatusChange[i].isDebuff) //If not &2, don't clear Debuffs
 			continue;
-		if (!(type&1) && !StatusChange[i].isDebuff) //If not &2, don't clear Buffs
+		if (!(type&1) && !StatusChange[i].isDebuff) //If not &1, don't clear Buffs
 			continue;
 		if (i == SC_SATURDAYNIGHTFEVER || i == SC_BERSERK) // Mark to not lose hp
 			sc->data[i]->val2 = 0;
@@ -10447,6 +10447,10 @@ void status_change_clear_buffs (struct block_list* bl, int type)
 	sc->sg_counter = 0;
 #endif
 	sc->bs_counter = 0;
+
+	//Removes bonus_script by Refresh or Luxanima
+	if (bl->type == BL_PC && type&(4|8))
+		pc_bonus_script_clear(BL_CAST(BL_PC,bl),((type&4) ? BSF_REM_ON_REFRESH : 0)|((type&8) ? BSF_REM_ON_LUXANIMA : 0));
 
 	return;
 }
