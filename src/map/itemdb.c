@@ -18,15 +18,16 @@
 #include <stdlib.h>
 #include <string.h>
 
-static struct item_data* itemdb_array[MAX_ITEMDB];
-static DBMap*            itemdb_other;// int nameid -> struct item_data*
+static struct item_data* itemdb_array[MAX_ITEMDB]; /// Item DB
+static DBMap*            itemdb_other; /// int nameid -> struct item_data*
 
-static struct s_item_group_db itemgroup_db[MAX_ITEMGROUP];
+static struct s_item_group_db itemgroup_db[MAX_ITEMGROUP]; /// Item group DB
 
-struct item_data dummy_item; //This is the default dummy item used for non-existant items. [Skotlex]
+struct item_data dummy_item; /// Default dummy item used for non-existant items. [Skotlex]
 
-static DBMap *itemdb_combo;
+static DBMap *itemdb_combo; /// Item Combo DB
 
+/// Get itemdb_combo
 DBMap * itemdb_get_combodb(){
 	return itemdb_combo;
 }
@@ -57,9 +58,10 @@ static int itemdb_searchname_sub(DBKey key, DBData *data, va_list ap)
 	return 0;
 }
 
-/*==========================================
- * Return item data from item name. (lookup)
- *------------------------------------------*/
+/** Return item data from item name. (lookup)
+* @param str Item name
+* @return item_data
+*/
 struct item_data* itemdb_searchname(const char *str)
 {
 	struct item_data* item;
@@ -103,9 +105,13 @@ static int itemdb_searchname_array_sub(DBKey key, DBData data, va_list ap)
 	return strcmpi(item->jname,str);
 }
 
-/*==========================================
- * Founds up to N matches. Returns number of matches [Skotlex]
- *------------------------------------------*/
+/** Founds up to N matches. Returns number of matches
+* @author [Skotlex]
+* @param data Item data array
+* @param size Maximum matches
+* @param str Item name
+* @return Number of item found
+*/
 int itemdb_searchname_array(struct item_data** data, int size, const char *str)
 {
 	struct item_data* item;
@@ -275,25 +281,29 @@ char itemdb_pc_get_itemgroup(uint16 group_id, struct map_session_data *sd) {
 	return 0;
 }
 
-/*==========================================
- * Calculates total item-group related bonuses for the given item
- *------------------------------------------*/
-int itemdb_group_bonus(struct map_session_data* sd, int itemid)
+/** Calculates total item-group related bonuses for the given item
+* @param sd Player
+* @param nameid Item ID
+* @return bonus
+*/
+int itemdb_group_bonus(struct map_session_data* sd, uint16 nameid)
 {
-	int bonus = 0, i, j;
+	uint16 bonus = 0, i, j;
 	for (i=0; i < MAX_ITEMGROUP; i++) {
 		if (!sd->itemgrouphealrate[i])
 			continue;
-		ARR_FIND(0,itemgroup_db[i].random[0].data_qty,j,itemgroup_db[i].random[0].data[j].nameid == itemid );
+		ARR_FIND(0,itemgroup_db[i].random[0].data_qty,j,itemgroup_db[i].random[0].data[j].nameid == nameid );
 		if( j < itemgroup_db[i].random[0].data_qty )
 			bonus += sd->itemgrouphealrate[i];
 	}
 	return bonus;
 }
 
-/// Searches for the item_data.
-/// Returns the item_data or NULL if it does not exist.
-struct item_data* itemdb_exists(int nameid)
+/** Searches for the item_data.
+* @param nameid Item ID
+* @return The item_data or NULL if it does not exist
+*/
+struct item_data* itemdb_exists(uint16 nameid)
 {
 	struct item_data* item;
 
@@ -305,7 +315,10 @@ struct item_data* itemdb_exists(int nameid)
 	return item;
 }
 
-/// Returns name type of ammunition [Cydh]
+/** Gets name of ammunition [Cydh]
+* @param ammo Type of ammunition (enum e_item_ammo)
+* @return AMmo name
+*/
 const char *itemdb_typename_ammo (enum e_item_ammo ammo) {
 	switch (ammo) {
 		case AMMO_ARROW:			return "Arrow";
@@ -321,8 +334,10 @@ const char *itemdb_typename_ammo (enum e_item_ammo ammo) {
 	return "Ammunition";
 }
 
-/// Returns human readable name for given item type.
-/// @param type Type id to retrieve name for ( IT_* ).
+/** Gets name of item type
+* @param type Item type (enum item_types)
+* @return Item type name
+*/
 const char* itemdb_typename(enum item_types type)
 {
 	switch(type)
@@ -343,10 +358,11 @@ const char* itemdb_typename(enum item_types type)
 	return "Unknown Type";
 }
 
-/*==========================================
- * Converts the jobid from the format in itemdb
- * to the format used by the map server. [Skotlex]
- *------------------------------------------*/
+/** Converts the jobid from the format in itemdb to the format used by the map server
+* @author [Skotlex]
+* @param bclass
+* @param jobmask
+*/
 static void itemdb_jobid2mapid(unsigned int *bclass, unsigned int jobmask)
 {
 	int i;
@@ -416,6 +432,7 @@ static void itemdb_jobid2mapid(unsigned int *bclass, unsigned int jobmask)
 		bclass[1] |= 1<<MAPID_GUNSLINGER;
 }
 
+/** Creates dummy item */
 static void create_dummy_data(void)
 {
 	memset(&dummy_item, 0, sizeof(struct item_data));
@@ -428,6 +445,10 @@ static void create_dummy_data(void)
 	dummy_item.view_id=UNKNOWN_ITEM_ID;
 }
 
+/** Creates new item data
+* @param nameid New Item ID
+* @return Created item data
+*/
 static struct item_data* create_item_data(int nameid)
 {
 	struct item_data *id;
@@ -438,9 +459,10 @@ static struct item_data* create_item_data(int nameid)
 	return id;
 }
 
-/*==========================================
- * Loads (and creates if not found) an item from the db.
- *------------------------------------------*/
+/** Loads (and creates if not found) an item from the db.
+* @param nameid
+* @return item_data
+*/
 struct item_data* itemdb_load(int nameid)
 {
 	struct item_data *id;
@@ -462,10 +484,11 @@ struct item_data* itemdb_load(int nameid)
 	return id;
 }
 
-/*==========================================
- * Loads an item from the db. If not found, it will return the dummy item.
- *------------------------------------------*/
-struct item_data* itemdb_search(int nameid)
+/** Loads an item from the db
+* @param nameid Item ID
+* @return Item data or if not found, it will return the dummy item
+*/
+struct item_data* itemdb_search(uint16 nameid)
 {
 	struct item_data* id;
 	if( nameid >= 0 && nameid < ARRAYLENGTH(itemdb_array) )
@@ -482,26 +505,10 @@ struct item_data* itemdb_search(int nameid)
 	return id;
 }
 
-/*==========================================
- * Returns if given item is a player-equippable piece.
- *------------------------------------------*/
-bool itemdb_isequip(int nameid)
-{
-	int type=itemdb_type(nameid);
-	switch (type) {
-		case IT_WEAPON:
-		case IT_ARMOR:
-		case IT_AMMO:
-		case IT_SHADOWGEAR:
-			return true;
-		default:
-			return false;
-	}
-}
-
-/*==========================================
- * Alternate version of itemdb_isequip
- *------------------------------------------*/
+/** Checks if item is equip type or not
+* @param data Itemdata
+* @return True if item is equip, false otherwise
+*/
 bool itemdb_isequip2(struct item_data *data)
 {
 	nullpo_ret(data);
@@ -516,27 +523,10 @@ bool itemdb_isequip2(struct item_data *data)
 	}
 }
 
-/*==========================================
- * Returns if given item's type is stackable.
- *------------------------------------------*/
-bool itemdb_isstackable(uint16 nameid)
-{
-  uint8 type = itemdb_type(nameid);
-  switch(type) {
-	  case IT_WEAPON:
-	  case IT_ARMOR:
-	  case IT_PETEGG:
-	  case IT_PETARMOR:
-	  case IT_SHADOWGEAR:
-		  return false;
-	  default:
-		  return true;
-  }
-}
-
-/*==========================================
- * Alternate version of itemdb_isstackable
- *------------------------------------------*/
+/** Checks if item is stackable or not
+* @param data Itemdata
+* @return True if item is stackable, false otherwise
+*/
 bool itemdb_isstackable2(struct item_data *data)
 {
   nullpo_ret(data);
@@ -552,46 +542,104 @@ bool itemdb_isstackable2(struct item_data *data)
   }
 }
 
-
-/*==========================================
- * Trade Restriction functions [Skotlex]
- *------------------------------------------*/
+/** Check if item can be dropped
+* @author [Skotlex]
+* @param item Item Data
+* @param gmlv GM Level
+* @return True if can be dropped, False otherwise
+*/
 int itemdb_isdropable_sub(struct item_data *item, int gmlv, int unused) {
 	return (item && (!(item->flag.trade_restriction&1) || gmlv >= item->gm_lv_trade_override));
 }
 
+/** Check if item can be traded
+* @author [Skotlex]
+* @param item Item Data
+* @param gmlv GM Level
+* @return True if can be traded, False otherwise
+*/
 int itemdb_cantrade_sub(struct item_data* item, int gmlv, int gmlv2) {
 	return (item && (!(item->flag.trade_restriction&2) || gmlv >= item->gm_lv_trade_override || gmlv2 >= item->gm_lv_trade_override));
 }
 
+/** Check if item can be traded with partner (regardless the restriction &2)
+* @author [Skotlex]
+* @param item Item Data
+* @param gmlv GM Level
+* @return True if can be traded with partner, False otherwise
+*/
 int itemdb_canpartnertrade_sub(struct item_data* item, int gmlv, int gmlv2) {
 	return (item && (item->flag.trade_restriction&4 || gmlv >= item->gm_lv_trade_override || gmlv2 >= item->gm_lv_trade_override));
 }
 
+/** Check if item can be sold
+* @author [Skotlex]
+* @param item Item Data
+* @param gmlv GM Level
+* @return True if can be sold, False otherwise
+*/
 int itemdb_cansell_sub(struct item_data* item, int gmlv, int unused) {
 	return (item && (!(item->flag.trade_restriction&8) || gmlv >= item->gm_lv_trade_override));
 }
 
+/** Check if item can be stored on cart
+* @author [Skotlex]
+* @param item Item Data
+* @param gmlv GM Level
+* @return True if can be stored on cart, False otherwise
+*/
 int itemdb_cancartstore_sub(struct item_data* item, int gmlv, int unused) {
 	return (item && (!(item->flag.trade_restriction&16) || gmlv >= item->gm_lv_trade_override));
 }
 
+/** Check if item can be stored to own storage
+* @author [Skotlex]
+* @param item Item Data
+* @param gmlv GM Level
+* @return True if can be stored to own storage, False otherwise
+*/
 int itemdb_canstore_sub(struct item_data* item, int gmlv, int unused) {
 	return (item && (!(item->flag.trade_restriction&32) || gmlv >= item->gm_lv_trade_override));
 }
 
+/** Check if item can be stored on guild storage
+* @author [Skotlex]
+* @param item Item Data
+* @param gmlv GM Level
+* @return True if can be stored on guild storage, False otherwise
+*/
 int itemdb_canguildstore_sub(struct item_data* item, int gmlv, int unused) {
 	return (item && (!(item->flag.trade_restriction&64) || gmlv >= item->gm_lv_trade_override));
 }
 
+/** Check if item can be attached on mail
+* @author [Skotlex]
+* @param item Item Data
+* @param gmlv GM Level
+* @return True if can be attached on mail, False otherwise
+*/
 int itemdb_canmail_sub(struct item_data* item, int gmlv, int unused) {
 	return (item && (!(item->flag.trade_restriction&128) || gmlv >= item->gm_lv_trade_override));
 }
 
+/** Check if item can be placed in auction
+* @author [Skotlex]
+* @param item Item Data
+* @param gmlv GM Level
+* @return True if can be placed in auction, False otherwise
+*/
 int itemdb_canauction_sub(struct item_data* item, int gmlv, int unused) {
 	return (item && (!(item->flag.trade_restriction&256) || gmlv >= item->gm_lv_trade_override));
 }
 
+/** Check item restriction
+* @author [Skotlex]
+* @param item Item
+* @param gmlv GM Level
+* @param gmlv2 GM Level2
+* @param function
+* @return True if allowed for transaction, False otherwise
+*/
 bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, int (*func)(struct item_data*, int, int))
 {
 	struct item_data* item_data = itemdb_search(item->nameid);
@@ -797,6 +845,7 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 	return;
 }
 
+/** Read item_group main file */
 static void itemdb_read_itemgroup(const char* basedir, bool silent) {
 	char filepath[256];
 	sprintf(filepath, "%s/%s", basedir, "item_group_db.txt");
@@ -999,7 +1048,8 @@ static int itemdb_combo_split_atoi (char *str, int *val) {
 
 	return i;
 }
-/**
+
+/** Read item combo data from item_combo_db.txt file
  * <combo{:combo{:combo:{..}}}>,<{ script }>
  **/
 static void itemdb_read_combos(const char* basedir, bool silent) {
@@ -1127,10 +1177,11 @@ static void itemdb_read_combos(const char* basedir, bool silent) {
 }
 
 
-
-/*======================================
- * Applies gender restrictions according to settings. [Skotlex]
- *======================================*/
+/** Applies gender restrictions according to settings
+* @author [Skotlex]
+* @param id Item Data
+* @return 0 - for female, 1 - for male, 2 - both
+*/
 static char itemdb_gendercheck(struct item_data *id)
 {
 	if (id->nameid == WEDDING_RING_M) //Grom Ring
@@ -1144,12 +1195,16 @@ static char itemdb_gendercheck(struct item_data *id)
 
 	return (battle_config.ignore_items_gender) ? 2 : id->sex;
 }
+
+#ifdef RENEWAL
 /**
  * [RRInd]
  * For backwards compatibility, in Renewal mode, MATK from weapons comes from the atk slot
  * We use a ':' delimiter which, if not found, assumes the weapon does not provide any matk.
+ * @param str
+ * @param atk
+ * @param matk
  **/
-#ifdef RENEWAL
 static void itemdb_re_split_atoi(char *str, int *atk, int *matk) {
 	int i, val[2];
 
@@ -1175,8 +1230,12 @@ static void itemdb_re_split_atoi(char *str, int *atk, int *matk) {
 	return;
 }
 #endif
-/**
-* Processes one itemdb entry
+
+/** Processes one itemdb entry
+* @param str
+* @param source Source file
+* @param line Line of source file
+* @param scriptopt Script Option
 */
 static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scriptopt) {
 	/*
@@ -1310,7 +1369,6 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 
 /**
 * Read item from item db
-* item_db2 overwriting item_db
 */
 static int itemdb_readdb(void){
 	const char* filename[] = {
@@ -1437,7 +1495,7 @@ static int itemdb_readdb(void){
 }
 
 /**
-* Read item_db table
+* Read item_db sql table
 */
 static int itemdb_read_sqldb(void) {
 
@@ -1495,7 +1553,7 @@ static int itemdb_read_sqldb(void) {
 * 3/other
 * @param value
 * @return last value
-*------------------------------------------*/
+*/
 uint64 itemdb_unique_id(int8 flag, int64 value) {
 	static uint64 item_uid = 0;
 
