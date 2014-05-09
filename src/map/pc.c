@@ -3629,81 +3629,83 @@ int pc_bonus5(struct map_session_data *sd,int type,int type2,int type3,int type4
 	return 0;
 }
 
-/*==========================================
- *	Grants a player a given skill. Flag values are:
- *	0 - Grant permanent skill to be bound to skill tree
- *	1 - Grant an item skill (temporary)
- *	2 - Like 1, except the level granted can stack with previously learned level.
- *	4 - Like 0, except the skill will ignore skill tree (saves through job changes and resets).
- *------------------------------------------*/
-int pc_skill(TBL_PC* sd, int id, int level, int flag)
+/**	Grants a player a given skill
+* @param sd Player
+* @param skill_id
+* @param skill_lv
+* @param flag Flags:
+*	0 - Grant permanent skill to be bound to skill tree
+*	1 - Grant an item skill (temporary)
+*	2 - Like 1, except the level granted can stack with previously learned level.
+*	4 - Like 0, except the skill will ignore skill tree (saves through job changes and resets).
+*/
+void pc_skill(struct map_session_data* sd, uint16 skill_id, int8 skill_lv, int8 flag)
 {
-	nullpo_ret(sd);
+	uint16 idx = skill_get_index(skill_id);
 
-	if( id <= 0 || id >= MAX_SKILL || skill_db[id].name == NULL) {
-		ShowError("pc_skill: Skill with id %d does not exist in the skill database\n", id);
-		return 0;
+	nullpo_retv(sd);
+
+	if( !idx || idx >= MAX_SKILL || skill_db[idx].name == NULL) {
+		ShowError("pc_skill: Skill with id %d does not exist in the skill database\n", skill_id);
+		return;
 	}
-	if( level > MAX_SKILL_LEVEL ) {
-		ShowError("pc_skill: Skill level %d too high. Max lv supported is %d\n", level, MAX_SKILL_LEVEL);
-		return 0;
+	if( skill_lv > MAX_SKILL_LEVEL ) {
+		ShowError("pc_skill: Skill level %d too high. Max lv supported is %d\n", skill_lv, MAX_SKILL_LEVEL);
+		return;
 	}
-	if( flag == 2 && sd->status.skill[id].lv + level > MAX_SKILL_LEVEL ) {
-		ShowError("pc_skill: Skill level bonus %d too high. Max lv supported is %d. Curr lv is %d\n", level, MAX_SKILL_LEVEL, sd->status.skill[id].lv);
-		return 0;
+	if( flag == 2 && sd->status.skill[idx].lv + skill_lv > MAX_SKILL_LEVEL ) {
+		ShowError("pc_skill: Skill level bonus %d too high. Max lv supported is %d. Curr lv is %d\n", skill_lv, MAX_SKILL_LEVEL, sd->status.skill[idx].lv);
+		return;
 	}
 
 	switch( flag ){
 		case 0: //Set skill data overwriting whatever was there before.
-			sd->status.skill[id].id   = id;
-			sd->status.skill[id].lv   = level;
-			sd->status.skill[id].flag = SKILL_FLAG_PERMANENT;
-			if( level == 0 ) { //Remove skill.
-				sd->status.skill[id].id = 0;
-				clif_deleteskill(sd,id);
+			sd->status.skill[idx].id   = skill_id;
+			sd->status.skill[idx].lv   = skill_lv;
+			sd->status.skill[idx].flag = SKILL_FLAG_PERMANENT;
+			if( skill_lv == 0 ) { //Remove skill.
+				sd->status.skill[idx].id = 0;
+				clif_deleteskill(sd,skill_id);
 			} else
-				clif_addskill(sd,id);
-			if( !skill_get_inf(id) ) //Only recalculate for passive skills.
+				clif_addskill(sd,skill_id);
+			if( !skill_get_inf(skill_id) ) //Only recalculate for passive skills.
 				status_calc_pc(sd, 0);
 			break;
 		case 1: //Item bonus skill.
-			if( sd->status.skill[id].id == id ){
-				if( sd->status.skill[id].lv >= level )
-					return 0;
-				if( sd->status.skill[id].flag == SKILL_FLAG_PERMANENT ) //Non-granted skill, store it's level.
-					sd->status.skill[id].flag = SKILL_FLAG_REPLACED_LV_0 + sd->status.skill[id].lv;
+			if( sd->status.skill[idx].id == skill_id ){
+				if( sd->status.skill[idx].lv >= skill_lv )
+					return;
+				if( sd->status.skill[idx].flag == SKILL_FLAG_PERMANENT ) //Non-granted skill, store it's level.
+					sd->status.skill[idx].flag = SKILL_FLAG_REPLACED_LV_0 + sd->status.skill[idx].lv;
 			} else {
-				sd->status.skill[id].id   = id;
-				sd->status.skill[id].flag = SKILL_FLAG_TEMPORARY;
+				sd->status.skill[idx].id   = skill_id;
+				sd->status.skill[idx].flag = SKILL_FLAG_TEMPORARY;
 			}
-			sd->status.skill[id].lv = level;
+			sd->status.skill[idx].lv = skill_lv;
 			break;
 		case 2: //Add skill bonus on top of what you had.
-			if( sd->status.skill[id].id == id ){
-				if( sd->status.skill[id].flag == SKILL_FLAG_PERMANENT )
-					sd->status.skill[id].flag = SKILL_FLAG_REPLACED_LV_0 + sd->status.skill[id].lv; // Store previous level.
+			if( sd->status.skill[idx].id == skill_id ){
+				if( sd->status.skill[idx].flag == SKILL_FLAG_PERMANENT )
+					sd->status.skill[idx].flag = SKILL_FLAG_REPLACED_LV_0 + sd->status.skill[idx].lv; // Store previous level.
 			} else {
-				sd->status.skill[id].id   = id;
-				sd->status.skill[id].flag = SKILL_FLAG_TEMPORARY; //Set that this is a bonus skill.
+				sd->status.skill[idx].id   = skill_id;
+				sd->status.skill[idx].flag = SKILL_FLAG_TEMPORARY; //Set that this is a bonus skill.
 			}
-			sd->status.skill[id].lv += level;
+			sd->status.skill[idx].lv += skill_lv;
 			break;
 		case 4: //Permanent granted skills ignore the skill tree
-			sd->status.skill[id].id   = id;
-			sd->status.skill[id].lv   = level;
-			sd->status.skill[id].flag = SKILL_FLAG_PERM_GRANTED;
-			if( level == 0 ) { //Remove skill.
-				sd->status.skill[id].id = 0;
-				clif_deleteskill(sd,id);
+			sd->status.skill[idx].id   = skill_id;
+			sd->status.skill[idx].lv   = skill_lv;
+			sd->status.skill[idx].flag = SKILL_FLAG_PERM_GRANTED;
+			if( skill_lv == 0 ) { //Remove skill.
+				sd->status.skill[idx].id = 0;
+				clif_deleteskill(sd,skill_id);
 			} else
-				clif_addskill(sd,id);
-			if( !skill_get_inf(id) ) //Only recalculate for passive skills.
+				clif_addskill(sd,skill_id);
+			if( !skill_get_inf(skill_id) ) //Only recalculate for passive skills.
 				status_calc_pc(sd, 0);
 			break;
-		default: //Unknown flag?
-			return 0;
 	}
-	return 1;
 }
 /*==========================================
  * Append a card to an item ?
@@ -6535,8 +6537,8 @@ int pc_resetlvl(struct map_session_data* sd,int type)
 		if(sd->status.class_ == JOB_NOVICE_HIGH) {
 			sd->status.status_point=100;	// not 88 [celest]
 			// give platinum skills upon changing
-			pc_skill(sd,142,1,0);
-			pc_skill(sd,143,1,0);
+			pc_skill(sd,NV_FIRSTAID,1,0);
+			pc_skill(sd,NV_TRICKDEAD,1,0);
 		}
 	}
 
