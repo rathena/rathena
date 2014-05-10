@@ -376,7 +376,7 @@ struct mmo_charstatus {
 	struct point last_point,save_point,memo_point[MAX_MEMOPOINTS];
 	struct item inventory[MAX_INVENTORY],cart[MAX_CART];
 	struct storage_data storage;
-	struct s_skill skill[MAX_SKILL];
+	struct s_skill skill[MAX_SKILL]; /// Skills, array is using Skill Index, NOT Skill ID
 
 	struct s_friend friends[MAX_FRIENDS]; //New friend system [Skotlex]
 #ifdef HOTKEY_SAVING

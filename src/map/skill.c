@@ -132,7 +132,10 @@ static inline int splash_target(struct block_list* bl) {
 #endif
 }
 
-/// Returns the id of the skill, or 0 if not found.
+/** Check the skill by skill name
+* @param name Skill Name
+* @return If skill is found, return the Skill ID (NOT the skill index), or 0 if skill not found
+*/
 uint16 skill_name2id(const char* name) {
 	if( name == NULL )
 		return 0;
@@ -171,20 +174,30 @@ uint16 skill_get_index( uint16 skill_id ) {
 * @param skill_id
 * @return skill name, if skill is invalid, will returns "UNKNOWN_SKILL" */
 const char* skill_get_name( uint16 skill_id ) { return skill_db[skill_get_index(skill_id)].name; }
+
 /** Get skill desc
 * @param skill_id
 * @return skill description, if skill is invalid, will returns "Unknown Skill" */
 const char* skill_get_desc( uint16 skill_id ) { return skill_db[skill_get_index(skill_id)].desc; }
 
-/// out of bounds error checking [celest]
+/** out of bounds error checking
+* @author [celest]
+* @param skill_id
+*/
 static void skill_chk(uint16 *skill_id) {
 	*skill_id = skill_get_index(*skill_id); // checks/adjusts id
 }
-// checks/adjusts level
+
+/** Checks/adjusts level
+* @param skill_lv
+*/
 static void skill_chk2(uint16 *skill_lv) {
 	*skill_lv = cap_value(*skill_lv, 1, MAX_SKILL_LEVEL);
 }
-// checks/adjusts index. make sure we don't use negative index
+
+/** Checks/adjusts index. make sure we don't use negative index
+* @param idx
+*/
 static void skill_chk3(int *idx) {
 	if (*idx < 0) *idx = 0;
 }

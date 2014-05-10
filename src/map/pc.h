@@ -903,7 +903,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val);
 int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val);
 int pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type4,int val);
 int pc_bonus5(struct map_session_data *sd,int type,int type2,int type3,int type4,int type5,int val);
-int pc_skill(struct map_session_data* sd, int skill_id, int skill_lv, int flag);
+void pc_skill(struct map_session_data* sd, uint16 skill_id, int8 skill_lv, int8 flag);
 
 int pc_insert_card(struct map_session_data *sd,int idx_card,int idx_equip);
 
