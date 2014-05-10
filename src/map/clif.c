@@ -10288,16 +10288,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 	case 0x00: // once attack
 	case 0x07: // continuous attack
 
-		if( pc_cant_act(sd) || sd->sc.option&OPTION_HIDE )
-			return;
-
-		if( sd->sc.option&OPTION_COSTUME )
-			return;
-
-		if( sd->sc.option&OPTION_COSTUME )
-			return;
-
-		if( sd->sc.data[SC_BASILICA] || sd->sc.data[SC__SHADOWFORM] )
+		if( pc_cant_act(sd) || sd->sc.cant.attack )
 			return;
 
 		if (!battle_config.sdelay_attack_enable && pc_checkskill(sd, SA_FREECAST) <= 0) {
@@ -10607,11 +10598,7 @@ void clif_parse_DropItem(int fd, struct map_session_data *sd){
 		if (pc_cant_act2(sd) || sd->npc_id)
 			break;
 
-		if (sd->sc.count && (
-			sd->sc.data[SC_AUTOCOUNTER] ||
-			sd->sc.data[SC_BLADESTOP] ||
-			(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOITEM)
-		))
+		if (sd->sc.cant.drop)
 			break;
 
 		if (!pc_dropitem(sd, item_index, item_amount))

@@ -11412,7 +11412,7 @@ int skill_castend_map (struct map_session_data *sd, uint16 skill_id, const char 
 		return 0;
 	}
 
-	if( ( sd->sc.opt1 && sd->sc.opt1 != OPT1_BURNING ) || sd->sc.option&OPTION_HIDE ) {
+	if( sd->sc.cant.cast ) {
 		skill_failed(sd);
 		return 0;
 	}
@@ -13418,10 +13418,10 @@ int skill_check_condition_char_sub (struct block_list *bl, va_list ap)
 	if (bl == src)
 		return 0;
 
-	if(pc_isdead(tsd))
+	if (pc_isdead(tsd))
 		return 0;
 
-	if (tsd->sc.data[SC_SILENCE] || ( tsd->sc.opt1 && tsd->sc.opt1 != OPT1_BURNING ))
+	if (tsd->sc.cant.cast)
 		return 0;
 
 	if( skill_get_inf2(skill_id)&INF2_CHORUS_SKILL ) {
@@ -13429,7 +13429,6 @@ int skill_check_condition_char_sub (struct block_list *bl, va_list ap)
 			p_sd[(*c)++] = tsd->bl.id;
 		return 1;
 	} else {
-
 		switch(skill_id) {
 			case PR_BENEDICTIO: {
 				uint8 dir = map_calc_dir(&sd->bl,tsd->bl.x,tsd->bl.y);
@@ -19127,8 +19126,11 @@ int skill_block_check(struct block_list *bl, sc_type type , uint16 skill_id) {
 
 /* Determines whether a skill is currently active or not
  * Used for purposes of cancelling SP usage when disabling a skill
+ * @param sc
+ * @param skill_id
+ * @return True - disable check, False - enable check
  */
-int skill_disable_check(struct status_change *sc, uint16 skill_id)
+bool skill_disable_check(struct status_change *sc, uint16 skill_id)
 {
 	switch( skill_id ){ // HP & SP Consumption Check
 		case BS_MAXIMIZE:
@@ -19154,21 +19156,21 @@ int skill_disable_check(struct status_change *sc, uint16 skill_id)
 		case RA_WUGDASH:
 		case RA_CAMOUFLAGE:
 			if( sc->data[skill_get_sc(skill_id)] )
-				return 1;
+				return true;
 			break;
 
 		// These 2 skills contain a master and are not correctly pulled using skill2sc
 		case NC_NEUTRALBARRIER:
 			if( sc->data[SC_NEUTRALBARRIER_MASTER] )
-				return 1;
+				return true;
 			break;
 		case NC_STEALTHFIELD:
 			if( sc->data[SC_STEALTHFIELD_MASTER] )
-				return 1;
+				return true;
 			break;
 	}
 
-	return 0;
+	return false;
 }
 
 int skill_get_elemental_type( uint16 skill_id , uint16 skill_lv ) {

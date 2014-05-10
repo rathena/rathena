@@ -86,7 +86,7 @@ int unit_wugdash(struct block_list *bl, struct map_session_data *sd);
 
 // Causes the target object to stop moving.
 int unit_stop_walking(struct block_list *bl,int type);
-int unit_can_move(struct block_list *bl);
+bool unit_can_move(struct block_list *bl);
 int unit_is_walking(struct block_list *bl);
 int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int type);
 

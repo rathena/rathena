@@ -67,7 +67,7 @@ int current_equip_card_id; /// To prevent card-stacking (from jA) [Skotlex]
 /// Struct of SC configs [Cydh]
 struct s_status_change_db {
 	enum si_type icon; /// SI_
-	uint16 state; /// SCS_
+	uint32 state; /// SCS_
 	uint32 calc_flag; /// SCB_ flags
 	uint8 opt1; /// OPT1_
 	uint16 opt2; /// OPT2_
@@ -210,6 +210,7 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type);
 static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type);
 static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned int stat, bool isHP);
 
+/** Init StatusChange data each SC */
 static void initStatusChange(void) {
 	uint16 i;
 	for (i = 0; i < SC_MAX; i++) {
@@ -221,6 +222,7 @@ static void initStatusChange(void) {
 	memset(StatusChangeIcon, BL_PC, sizeof(StatusChangeIcon));
 }
 
+/** Creates dummy status */
 static void initDummyData(void) {
 	memset(&dummy_status, 0, sizeof(dummy_status));
 	dummy_status.hp =
@@ -814,7 +816,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, uin
 			return 0;
 		}
 
-		if (skill_id != RK_REFRESH && sc->opt1 >0 && !(sc->opt1 == OPT1_CRYSTALIZE && src->type == BL_MOB) && sc->opt1 != OPT1_BURNING && skill_id != SR_GENTLETOUCH_CURE) { // Stuned/Frozen/etc
+		if (skill_id != RK_REFRESH && sc->cant.cast && skill_id != SR_GENTLETOUCH_CURE) { // Stuned/Frozen/etc
 			if (flag != 1) // Can't cast, casted stuff can't damage.
 				return 0;
 			if (!(skill_get_inf(skill_id)&INF_GROUND_SKILL)) 
@@ -3028,7 +3030,7 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 * @param flag: Which state to apply to bl
 * @param start: (1) start state, (0) remove state
 **/
-void status_calc_state( struct block_list *bl, struct status_change *sc, enum scs_flag flag, bool start ) {
+void status_calc_state( struct block_list *bl, struct status_change *sc, uint32 flag, bool start ) {
 	/// No sc at all, we can zero without any extra weight over our conciousness
 	if( !sc->count ) {
 		memset(&sc->cant, 0, sizeof (sc->cant));
@@ -3046,6 +3048,14 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, enum sc
 				  || (sc->data[SC_CRYSTALIZE] && bl->type != BL_MOB)
 				  || (sc->data[SC_CAMOUFLAGE] && sc->data[SC_CAMOUFLAGE]->val1 < 3)
 				  || (sc->data[SC_MAGNETICFIELD] && sc->data[SC_MAGNETICFIELD]->val2 != bl->id)
+				  || (sc->data[SC_FEAR] && sc->data[SC_FEAR]->val2 > 0)
+				  || (sc->data[SC_SPIDERWEB] && sc->data[SC_SPIDERWEB]->val1)
+				  || (sc->data[SC_HIDING] && (bl->type != BL_PC || (pc_checkskill(BL_CAST(BL_PC,bl),RG_TUNNELDRIVE) <= 0)))
+				  || (sc->data[SC_DANCING] && sc->data[SC_DANCING]->val4 && (
+						!sc->data[SC_LONGING] ||
+						(sc->data[SC_DANCING]->val1&0xFFFF) == CG_MOONLIT ||
+						(sc->data[SC_DANCING]->val1&0xFFFF) == CG_HERMODE
+						))
 				 )
 			sc->cant.move = ( start ? 1 : 0 );
 	}
@@ -3064,6 +3074,14 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, enum sc
 			sc->cant.chat = ( start ? 1 : 0 );
 		else if(sc->data[SC_NOCHAT] && sc->data[SC_NOCHAT]->val1&MANNER_NOCHAT)
 			sc->cant.chat = ( start ? 1 : 0 );
+	}
+
+	// Can't attack
+	if( flag&SCS_NOATTACK ) {
+		if( !(flag&SCS_NOATTACKCOND) )
+			sc->cant.attack = ( start ? 1 : 0 );
+		/*else if( )
+			sc->cant.attack = ( start ? 1 : 0 );*/
 	}
 
 	// Player-only states
@@ -6583,7 +6601,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			return 0;
 	break;
 	case SC_AETERNA:
-		if( (sc->data[SC_STONE] && sc->opt1 == OPT1_STONE) )
+		if( sc->data[SC_STONE] && sc->opt1 == OPT1_STONE )
 			return 0;
 	break;
 	case SC_KYRIE:
@@ -7912,7 +7930,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC__UNLUCKY:
 		{
-			short rand_eff; 
+			enum sc_type rand_eff; 
 			switch(rand() % 3) {
 				case 1: rand_eff = SC_BLIND; break;
 				case 2: rand_eff = SC_SILENCE; break;
@@ -8535,11 +8553,17 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	if (battle_config.sc_castcancel&bl->type && StatusChange[type].flag&SCF_STOP_CASTING)
 		unit_skillcastcancel(bl,0);
 
-	// Set option as needed.
-	if (StatusChange[type].opt1)
+	opt_flag = 0;
+	// Set option as needed
+	// Set opt_flag, depends on OPT1, OPT2, OPT3, and OPTION that carried by SC. TODO: Clean me later
+	if (StatusChange[type].opt1) {
 		sc->opt1 = StatusChange[type].opt1;
-	if (StatusChange[type].opt2)
+		opt_flag |= 1;
+	}
+	if (StatusChange[type].opt2) {
 		sc->opt2 |= StatusChange[type].opt2;
+		opt_flag |= 1;
+	}
 	if (StatusChange[type].opt3) {
 		switch(type) {
 			case SC_DANCING:
@@ -8547,65 +8571,20 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					break;
 			default:
 				sc->opt3 |= StatusChange[type].opt3;
+				opt_flag |= 1;
 				break;
 		}
 	}
-	if (StatusChange[type].look)
+	if (StatusChange[type].look) {
 		sc->option |= StatusChange[type].look;
-	
-	switch(type) {
-		// opt_flag = 0
-		case SC_INCATKRATE:
-			if (bl->type == BL_MOB)
-				break;
-		case SC_DEEPSLEEP:
-		case SC_TWOHANDQUICKEN:
-		case SC_ONEHAND:
-		case SC_SPEARQUICKEN:
-		case SC_CONCENTRATION:
-		case SC_MERC_QUICKEN:
-		case SC_MAXOVERTHRUST:
-		case SC_OVERTHRUST:
-		case SC_SWOO:
-		case SC_ENERGYCOAT:
-		case SC_SKE:
-		case SC_EXPLOSIONSPIRITS:
-		case SC_STEELBODY:
-		case SC_SKA:
-		case SC_BLADESTOP:
-		case SC_BERSERK:
-		case SC_DANCING:
-		case SC_MARIONETTE:
-		case SC_MARIONETTE2:
-		case SC_ASSUMPTIO:
-		case SC_WARM:
-		case SC_KAITE:
-		case SC_BUNSINJYUTSU:
-		case SC_SPIRIT:
-		case SC_CHANGEUNDEAD:
-			opt_flag = 0;
-			break;
-		// opt_flag = 0x2
-		case SC_HIDING:
-		case SC_CLOAKING:
-		case SC_CLOAKINGEXCEED:
-		case SC__INVISIBILITY:
-		case SC_CHASEWALK:
-		case SC__FEINTBOMB:
-			opt_flag = 0x2;
-			break;
-		// opt_flag = 0x4
-		case SC_WEDDING:
-		case SC_XMAS:
-		case SC_SUMMER:
-		case SC_HANBOK:
-		case SC_OKTOBERFEST:
-			opt_flag = 0x4;
-			break;
-		// opt_flag = 0x1
-		default:
-			opt_flag = 0x1;
-			break;
+		opt_flag |= 4;
+		switch (StatusChange[type].look) {
+			case OPTION_CLOAK:
+			case OPTION_INVISIBLE:
+			case OPTION_HIDE:
+			case OPTION_CHASEWALK:
+				opt_flag |= 2;
+		}
 	}
 	
 	// On Aegis, when turning on a status change, first goes the option packet, then the sc packet.
@@ -8656,8 +8635,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	if (calc_flag)
 		status_calc_bl(bl,calc_flag);
 
-	if ( sc_isnew && StatusChange[type].state ) // Non-zero
-		status_calc_state(bl,sc,( enum scs_flag ) StatusChange[type].state,true);
+	if ( sc_isnew && StatusChange[type].state && type != SC_STONE ) // Non-zero
+		status_calc_state(bl,sc,StatusChange[type].state,true);
 
 	if(sd && sd->pd)
 		pet_sc_check(sd, type); // Skotlex: Pet Status Effect Healing
@@ -8872,7 +8851,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	(sc->count)--;
 
 	if ( StatusChange[type].state )
-		status_calc_state(bl,sc,( enum scs_flag ) StatusChange[type].state,false);
+		status_calc_state(bl,sc,StatusChange[type].state,false);
 
 	switch (type) {
 		case SC_H_MINE:		temp_n = sc->data[type]->val3;	break;	// If ended by RL_FLICKER, don't drop the trap
@@ -9327,10 +9306,24 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			break;
 	}
 
-	if (StatusChange[type].opt1)
+	// Reset the options as needed
+	// Set opt_flag, depends on OPT1, OPT2, OPT3, and OPTION that carried by SC. TODO: Clean me later
+	switch (type) {
+		case SC_SWOO:
+			opt_flag = 8;
+			break;
+		default:
+			opt_flag = 0;
+	}
+
+	if (StatusChange[type].opt1) {
 		sc->opt1 = 0;
-	if (StatusChange[type].opt2)
+		opt_flag |= 1;
+	}
+	if (StatusChange[type].opt2) {
 		sc->opt2 &= ~(StatusChange[type].opt2);
+		opt_flag |= 1;
+	}
 	if (StatusChange[type].opt3) {
 		switch (type) {
 			case SC_DANCING:
@@ -9338,60 +9331,21 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 					break;
 			default:
 				sc->opt3 &= ~(StatusChange[type].opt3);
+				opt_flag |= 1;
 				break;
 		}
 	}
-	if (StatusChange[type].look)
+	if (StatusChange[type].look) {
 		sc->option &= ~(StatusChange[type].look);
-	
-	opt_flag = 1;
-	switch(type) {
-		case SC_STONE:
-		case SC_FREEZE:
-		case SC_STUN:
-		case SC_SLEEP:
-		case SC_DEEPSLEEP:
-		case SC_BURNING:
-		case SC_WHITEIMPRISON:
-		case SC_CRYSTALIZE:
-		case SC_POISON:
-		case SC_CURSE:
-		case SC_SILENCE:
-		case SC_BLIND:
-		case SC_DPOISON:
-		case SC_SIGNUMCRUCIS:
-		case SC_SIGHT:
-		case SC_ORCISH:
-		case SC_RUWACH:
-		case SC_FUSION:
-			break;
-		case SC_HIDING:
-			opt_flag |= 2|4; // Check for warp trigger + AoE trigger
-			break;
-		case SC_CLOAKING:
-		case SC_CLOAKINGEXCEED:
-		case SC__INVISIBILITY:
-		case SC_CAMOUFLAGE:
-		case SC_CHASEWALK:
-		case SC__FEINTBOMB:
-			opt_flag |= 2;
-			break;
-		case SC_WEDDING:
-		case SC_XMAS:
-		case SC_SUMMER:
-		case SC_HANBOK:
-		case SC_OKTOBERFEST:
-			opt_flag |= 0x4;
-			break;
-		case SC_SWOO:
-			opt_flag = 8;
-			break;
-		case SC_INCATKRATE:
-			if (bl->type == BL_MOB)
-				break;
-		default:
-			opt_flag = 0;
-			break;
+		opt_flag |= 4;
+		// Check for warp trigger + AoE trigger
+		switch (StatusChange[type].look) {
+			case OPTION_CLOAK:
+			case OPTION_INVISIBLE:
+			case OPTION_HIDE:
+			case OPTION_CHASEWALK:
+				opt_flag |= 2;
+		}
 	}
 
 	if (calc_flag&SCB_DYE) { // Restore DYE color
@@ -9586,6 +9540,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			unit_stop_walking(bl,1);
 			unit_stop_attack(bl);
 			sc->opt1 = OPT1_STONE;
+			status_calc_state(bl,sc,status_sc_get_calc_flag(SC_STONE),1);
 			clif_changeoption(bl);
 			sc_timer_next(1000+tick,status_change_timer, bl->id, data );
 			status_calc_bl(bl, StatusChange[type].calc_flag);
@@ -10211,7 +10166,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		if( !status_charge(bl,0,sce->val2) ) {
 			struct block_list *s_bl = battle_get_master(bl);
 			if( s_bl )
-				status_change_end(s_bl,type+1,INVALID_TIMER);
+				status_change_end(s_bl,(sc_type)(type+1),INVALID_TIMER);
 			status_change_end(bl,type,INVALID_TIMER);
 			break;
 		}
@@ -10414,8 +10369,7 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 *	&4: Clear specific statuses by RK_REFRESH
 *	&8: Clear specific statuses by RK_LUXANIMA
 **/
-void status_change_clear_buffs(struct block_list* bl, int type)
-{
+void status_change_clear_buffs(struct block_list* bl, uint8 type) {
 	uint16 i;
 	struct status_change *sc = status_get_sc(bl);
 
@@ -10427,16 +10381,22 @@ void status_change_clear_buffs(struct block_list* bl, int type)
 		uint32 flag = StatusChange[i].flag;
 		if (!sc->data[i] || flag&SCF_NO_CLEARBUFF) //Skip status with SCF_NO_CLEARBUFF, no matter what
 			continue;
-		if (!(type&8) && flag&SCF_REM_ON_LUXANIMA) //If not &8, don't clear status with SCF_REM_ON_LUXANIMA
+		// &8 : Cleared by RK_LUXANIMA
+		if (!(type&8) && flag&SCF_REM_ON_LUXANIMA)
 			continue;
-		if (!(type&4) && flag&SCF_REM_ON_REFRESH) //If not &4, don't clear status with SCF_REM_ON_REFRESH
+		// &4 : Cleared by RK_REFRESH
+		if (!(type&4) && flag&SCF_REM_ON_REFRESH)
 			continue;
-		if (!(type&2) && StatusChange[i].isDebuff) //If not &2, don't clear Debuffs
+		// &2 : Clears debuffs
+		if (!(type&2) && StatusChange[i].isDebuff)
 			continue;
-		if (!(type&1) && !StatusChange[i].isDebuff) //If not &1, don't clear Buffs
+		// &1 : Clears buffs
+		if (!(type&1) && !StatusChange[i].isDebuff)
 			continue;
+
 		if (i == SC_SATURDAYNIGHTFEVER || i == SC_BERSERK) // Mark to not lose hp
 			sc->data[i]->val2 = 0;
+
 		status_change_end(bl,(sc_type)i, INVALID_TIMER);
 	}
 
@@ -10976,8 +10936,6 @@ static bool status_readdb_scconfig(char* fields[], int columns, int current) {
 			opt1 = atoi(fields[4]);
 		else
 			script_get_constant(fields[4], &opt1);
-		if (opt1 >= OPT1_MAX)
-			ShowWarning("status_readdb_scconfig: Invalid OPT1 value '%s'.\n",fields[4]);
 	}
 
 	//Get the OPT2_
@@ -11258,6 +11216,7 @@ void status_readdb(void) {
 				attr_fix_table[i][j][k]=100;
 
 	status_sc_free();
+	initStatusChange();
 
 	// read databases
 	// path,filename,separator,mincol,maxcol,maxrow,func_parsor

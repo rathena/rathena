@@ -4494,7 +4494,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 	// Store information for later use before it is lost (via pc_delitem) [Paradox924X]
 	nameid = id->nameid;
 
-	if (nameid != ITEMID_NAUTHIZ && sd->sc.opt1 > 0 && sd->sc.opt1 != OPT1_STONEWAIT && sd->sc.opt1 != OPT1_BURNING)
+	if (nameid != ITEMID_NAUTHIZ && sd->sc.opt1 && sd->sc.opt1 != OPT1_STONEWAIT && sd->sc.opt1 != OPT1_BURNING)
 		return 0;
 
 	/* Items with delayed consume are not meant to work while in mounts except reins of mount(12622) */

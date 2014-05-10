@@ -1580,7 +1580,6 @@ enum sc_opt1 {
 	OPT1_BURNING,
 	OPT1_IMPRISON,
 	OPT1_CRYSTALIZE,
-	OPT1_MAX,
 };
 
 ///opt2: Stackable status changes.
@@ -1676,22 +1675,24 @@ enum manner_flags
 /* Status Change State Flags */
 enum scs_flag {
 	SCS_NONE				= 0x0,
-	SCS_NOMOVECOND			= 0x0001, /* cond flag for nomove */
-	SCS_NOMOVE				= 0x0002, /* unit unable to move */
-	SCS_NOPICKITEMCOND		= 0x0004, /* cond flag for nopickitem */
-	SCS_NOPICKITEM			= 0x0008, /* player unable to pick up items */
-	SCS_NODROPITEMCOND		= 0x0010, /* cond flag for nodropitem */
-	SCS_NODROPITEM			= 0x0020, /* player unable to drop items */
-	SCS_NOCASTCOND			= 0x0040, /* cond flag for nocast */
-	SCS_NOCAST				= 0x0080, /* unit unable to cast skills */
-	SCS_NOCHAT				= 0x0100, /* unit can't talk */
-	SCS_NOCHATCOND			= 0x0200, /* cond flag for notalk */
-	SCS_NOEQUIPITEM			= 0x0400,
-	SCS_NOEQUIPITEMCOND		= 0x0800,
-	SCS_NOUNEQUIPITEM		= 0x1000,
-	SCS_NOUNEQUIPITEMCOND	= 0x2000,
-	SCS_NOCONSUMEITEM		= 0x4000,
-	SCS_NOCONSUMEITEMCOND	= 0x8000,
+	SCS_NOMOVECOND			= 0x00001, /* cond flag for SCS_NOMOVE */
+	SCS_NOMOVE				= 0x00002, /* unit unable to move */
+	SCS_NOPICKITEMCOND		= 0x00004, /* cond flag for SCS_NOPICKITEM */
+	SCS_NOPICKITEM			= 0x00008, /* player unable to pick up items */
+	SCS_NODROPITEMCOND		= 0x00010, /* cond flag for SCS_NODROPITEM */
+	SCS_NODROPITEM			= 0x00020, /* player unable to drop items */
+	SCS_NOCASTCOND			= 0x00040, /* cond flag for SCS_NOCAST */
+	SCS_NOCAST				= 0x00080, /* unit unable to cast skills */
+	SCS_NOCHAT				= 0x00100, /* unit can't talk */
+	SCS_NOCHATCOND			= 0x00200, /* cond flag for SCS_NOCHAT */
+	SCS_NOEQUIPITEM			= 0x00400, /* player can't puts on equip */
+	SCS_NOEQUIPITEMCOND		= 0x00800, /* cond flag for SCS_NOEQUIPITEM */
+	SCS_NOUNEQUIPITEM		= 0x01000, /* player can't puts off equip */
+	SCS_NOUNEQUIPITEMCOND	= 0x02000, /* cond flag for SCS_NOUNEQUIPITEM */
+	SCS_NOCONSUMEITEM		= 0x04000, /* player can't consumes equip */
+	SCS_NOCONSUMEITEMCOND	= 0x08000, /* cond flag for SCS_NOCONSUMEITEM */
+	SCS_NOATTACK			= 0x10000, /* unit can't attack */
+	SCS_NOATTACKCOND		= 0x20000, /* cond flag for SCS_NOATTACK */
 };
 
 ///Define flags for the status_calc_bl function. [Skotlex]
@@ -1734,7 +1735,7 @@ enum scb_flag
 	SCB_ALL		= 0x3FFFFFFF
 };
 
-///Enum for bonus_script's flag
+///Enum for bonus_script's flag [Cydh]
 enum e_bonus_script_flags {
 	BSF_REM_ON_DEAD				= 0x001, ///Removed when dead
 	BSF_REM_ON_DISPELL			= 0x002, ///Removed by Dispell
@@ -1757,7 +1758,7 @@ enum e_status_bonus {
 	STATUS_BONUS_RATE = 1,
 };
 
-///Enum of Status Change Flags
+///Enum of Status Change Flags [Cydh]
 enum e_status_change_flag {
 	SCF_BLEFFECT			= 0x000001,
 	SCF_DISPLAY				= 0x000002,
@@ -1913,6 +1914,7 @@ struct status_change {
 		unsigned char equip : 1;
 		unsigned char unequip : 1;
 		unsigned char consume : 1;
+		unsigned char attack : 1;
 	} cant;/* status change state flags */
 	//int sg_id; //ID of the previous Storm gust that hit you
 	short comet_x, comet_y; // Point where src casted Comet - required to calculate damage from this point
@@ -2020,7 +2022,7 @@ int kaahi_heal_timer(int tid, unsigned int tick, int id, intptr_t data);
 int status_change_timer(int tid, unsigned int tick, int id, intptr_t data);
 int status_change_timer_sub(struct block_list* bl, va_list ap);
 int status_change_clear(struct block_list* bl, int type);
-void status_change_clear_buffs(struct block_list* bl, int type);
+void status_change_clear_buffs(struct block_list* bl, uint8 type);
 
 #define status_calc_bl(bl, flag) status_calc_bl_(bl, (enum scb_flag)(flag), false)
 #define status_calc_mob(md, first) status_calc_bl_(&(md)->bl, SCB_ALL, first)
@@ -2042,6 +2044,7 @@ int status_calc_elemental_(struct elemental_data *ed, bool first);
 void status_calc_misc(struct block_list *bl, struct status_data *status, int level);
 void status_calc_regen(struct block_list *bl, struct status_data *status, struct regen_data *regen);
 void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, struct status_change *sc);
+void status_calc_state(struct block_list *bl, struct status_change *sc, uint32 flag, bool start);
 
 int status_check_skilluse(struct block_list *src, struct block_list *target, uint16 skill_id, int flag); // [Skotlex]
 int status_check_visibility(struct block_list *src, struct block_list *target); //[Skotlex]
