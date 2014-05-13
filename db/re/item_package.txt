@@ -3147,3 +3147,12 @@ IG_Sg_Weapon_Supply_Box,Velum_Spear,8,1,1
 IG_Sg_Weapon_Supply_Box,Velum_Stunner,3,1,1
 IG_Sg_Weapon_Supply_Box,Siege_Arrow_Quiver_A,13,1,1
 IG_Sg_Weapon_Supply_Box,Siege_Arrow_Quiver_S,13,1,1
+
+IG_Adventurer_Returns_Support_Box,16505,1
+IG_Adventurer_Returns_Support_Box,16506,1
+IG_Adventurer_Returns_Support_Box,16507,1
+IG_Adventurer_Returns_Support_Box,16508,1
+IG_Adventurer_Returns_Support_Box,16509,1
+IG_Adventurer_Returns_Support_Box,16510,1
+IG_Adventurer_Returns_Support_Box,16514,1
+IG_Adventurer_Returns_Support_Box,16515,1

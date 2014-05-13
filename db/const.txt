@@ -1124,6 +1124,7 @@ IG_Sg_Weapon_Supply_Box	388
 IG_Candy_Holder	389
 IG_Lucky_Bag	390
 IG_Holy_Egg_2	391
+IG_Adventurer_Returns_Support_Box	392
 
 SC_ALL	-1
 SC_STONE	0
