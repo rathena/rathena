@@ -1729,11 +1729,10 @@ void clif_changemapserver(struct map_session_data* sd, unsigned short map_index,
 }
 
 
-void clif_blown(struct block_list *bl) //FIXME: This needs a better behaviour than just sending 2 position fixes
+void clif_blown(struct block_list *bl)
 {
-//Aegis packets says fixpos, but it's unsure whether slide works better or not.
-	clif_fixpos(bl);
 	clif_slide(bl, bl->x, bl->y);
+	//clif_fixpos(bl); //Aegis packets says fixpos, but it's unsure whether slide works better or not.
 }
 
 
@@ -10269,7 +10268,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 
 	if (sd->sc.count &&
 		(sd->sc.data[SC_TRICKDEAD] ||
-		sd->sc.data[SC_AUTOCOUNTER] ||
+		(sd->sc.data[SC_AUTOCOUNTER] && action_type != 0x07) ||
 		 sd->sc.data[SC_BLADESTOP] ||
 		 sd->sc.data[SC__MANHOLE] ||
 		 sd->sc.data[SC_CURSEDCIRCLE_ATKER] ||
@@ -14069,18 +14068,27 @@ void clif_parse_HomMenu(int fd, struct map_session_data *sd)
 void clif_parse_AutoRevive(int fd, struct map_session_data *sd)
 {
 	int item_position = pc_search_inventory(sd, ITEMID_TOKEN_OF_SIEGFRIED);
+	int hpsp = 100;
 
-	if (item_position < 0)
-		return;
+	if (item_position < 0) {
+		if (sd->sc.data[SC_LIGHT_OF_REGENE])
+			hpsp = sd->sc.data[SC_LIGHT_OF_REGENE]->val2;
+		else
+			return;
+	}
 
 	if (sd->sc.data[SC_HELLPOWER]) //Cannot res while under the effect of SC_HELLPOWER.
 		return;
 
-	if (!status_revive(&sd->bl, 100, 100))
+	if (!status_revive(&sd->bl, hpsp, hpsp))
 		return;
 
-	clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,4,1);
-	pc_delitem(sd, item_position, 1, 0, 1, LOG_TYPE_CONSUME);
+	if (item_position < 0)
+		status_change_end(&sd->bl, SC_LIGHT_OF_REGENE, INVALID_TIMER);
+	else
+		pc_delitem(sd, item_position, 1, 0, 1, LOG_TYPE_CONSUME);
+
+	clif_skill_nodamage(&sd->bl, &sd->bl, ALL_RESURRECTION, 4, 1);
 }
 
 
@@ -18152,6 +18160,7 @@ void do_init_clif(void) {
 	const char* colors[COLOR_MAX] = {
 		"0xFF0000",
 		"0xFFFFFF",
+		"0xFFFF00",
 	};
 	int i;
 	/**

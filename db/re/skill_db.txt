@@ -891,7 +891,7 @@
 2009,0,6,4,0,0x3,3:4:5:6:7,5,1,no,0,0,0,none,0,0x0,	RK_DRAGONHOWLING,Dragon Howling
 2010,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,		RK_RUNEMASTERY,Rune Mastery
 2011,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,0x0,	RK_MILLENNIUMSHIELD,Millenium Shield
-2012,1,6,4,-1,0,0,1,1,yes,0,0,0,weapon,0,0x0,	RK_CRUSHSTRIKE,Crush Strike
+2012,1,6,4,-1,0,0,1,1,yes,0,0,0,none,0,0x0,	RK_CRUSHSTRIKE,Crush Strike
 2013,0,6,4,0,0x1,0,1,1,yes,0,0,0,none,0,0x0,	RK_REFRESH,Refresh
 2014,0,6,4,0,0x1,0,1,1,yes,0,0,0,none,0,0x0,	RK_GIANTGROWTH,Giant Growth
 2015,0,6,4,0,0x1,0,1,1,yes,0,0,0,none,0,0x0,	RK_STONEHARDSKIN,Stone Hard Skin
@@ -994,7 +994,7 @@
 2240,0,6,4,0,0,0,1,1,no,0,0,0,none,0,0x0,		RA_WUGMASTERY,Warg Mastery
 2241,0,6,4,0,0,0,3,1,no,0,0,0,none,0,0x2000,		RA_WUGRIDER,Warg Rider
 2242,0,6,4,-1,0x42,1,1,0,no,0,0,0,weapon,0,0x2000,	RA_WUGDASH,Warg Dash
-2243,9,6,1,0,0x40,0,5,1,no,0,0,0,misc,0,0x2000,	RA_WUGSTRIKE,Warg Strike
+2243,9,6,1,0,0x40,0,5,1,no,0,0,0,weapon,0,0x2000,	RA_WUGSTRIKE,Warg Strike
 2244,9,6,1,0,0x40,0,5,1,no,0,0,0,weapon,0,0x80,	RA_WUGBITE,Warg Bite
 2245,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,		RA_TOOTHOFWUG,Tooth of Warg
 2246,0,6,4,0,0x2,3:4:5:6:7,5,1,no,0,0,0,weapon,0,0x0,	RA_SENSITIVEKEEN,Sensitive Keen
@@ -1346,9 +1346,9 @@
 8021,1,6,16,0,0x1,0,5,1,no,0,0,0,none,0,0x0,		MH_PAIN_KILLER,Pain Killer
 8022,0,6,4,0,0,0x1,5,1,no,0,0,0,none,0,0x0,		MH_LIGHT_OF_REGENE,Light of Regene
 8023,0,6,4,0,0,0x1,5,1,no,0,0,0,none,0,0x0,		MH_OVERED_BOOST,Overed Boost
-8024,7,6,1,4:0:4:0:4,0,0,5,1,no,0,0,0,magic,0,0x0,	MH_ERASER_CUTTER,Eraser Cutter
-8025,7,6,2,4:0:4:0:4,0,0,5,1,no,0,0,0,magic,0,0x0,	MH_XENO_SLASHER,Xeno Slasher
-8026,5:5:7:7:9,6,16,0,0x1,0,5,1,no,0,0,0,magic,0,0x0,	MH_SILENT_BREEZE,Silent Breeze
+8024,7,8,1,4:0:4:0:4,0,0,5,-6,yes,0,0,0,magic,0,0x0,	MH_ERASER_CUTTER,Eraser Cutter
+8025,7,8,2,4:0:4:0:4,0x2,2:2:3:3:4,5,-6,no,0,0,0,magic,0,0x0,	MH_XENO_SLASHER,Xeno Slasher
+8026,5:5:7:7:9,6,6,0,0x1,0,5,1,no,0,0,0,magic,0,0x0,	MH_SILENT_BREEZE,Silent Breeze
 8027,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,0x0,		MH_STYLE_CHANGE,Style Change
 8028,1,8,1,0,0,0,5,1,no,0,0x0200,0,weapon,0,0x0,		MH_SONIC_CRAW,Sonic Claw
 8029,1,6,4,0,0,0,5,1,no,0,0x200,0,weapon,0,0x0,	MH_SILVERVEIN_RUSH,Silver Bain Rush

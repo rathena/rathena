@@ -65,6 +65,7 @@ struct skill_tree_entry skill_tree[CLASS_COUNT][MAX_SKILL_TREE];
 int day_timer_tid = INVALID_TIMER;
 int night_timer_tid = INVALID_TIMER;
 
+struct eri *pc_sc_display_ers = NULL;
 int pc_expiration_tid = INVALID_TIMER;
 
 struct fame_list smith_fame_list[MAX_FAME_LIST];
@@ -4380,7 +4381,7 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 		case ITEMID_M_BERSERK_POTION:
 			if( sd->md == NULL || sd->md->db == NULL )
 				return 0;
-			if (sd->md->sc.data[SC_BERSERK] || sd->md->sc.data[SC_SATURDAYNIGHTFEVER])
+			if( sd->md->sc.data[SC_BERSERK] )
 				return 0;
 			if( nameid == ITEMID_M_AWAKENING_POTION && sd->md->db->lv < 40 )
 				return 0;
@@ -4526,14 +4527,12 @@ int pc_useitem(struct map_session_data *sd,int n)
 					int e_tick = DIFF_TICK(sd->item_delay[i].tick, tick)/1000;
 					char e_msg[100];
 					if( e_tick > 99 )
-						sprintf(e_msg,msg_txt(sd,379), //Item Failed. [%s] is cooling down. Wait %.1f minutes.
-										itemdb_jname(item.nameid),
+						sprintf(e_msg,msg_txt(sd,379), //Able to use %.1f min later.
 										(double)e_tick / 60);
 					else
-						sprintf(e_msg,msg_txt(sd,380), //Item Failed. [%s] is cooling down. Wait %d seconds.
-										itemdb_jname(item.nameid),
+						sprintf(e_msg,msg_txt(sd,380), //Able to use %d sec later.
 										e_tick+1);
-					clif_colormes(sd,color_table[COLOR_RED],e_msg);
+					clif_colormes(sd,color_table[COLOR_YELLOW],e_msg);
 					return 0; // Delay has not expired yet
 				}
 			} else {// not yet used item (all slots are initially empty)
@@ -6808,10 +6807,8 @@ int pc_skillatk_bonus(struct map_session_data *sd, uint16 skill_id)
 	nullpo_ret(sd);
 
 	ARR_FIND(0, ARRAYLENGTH(sd->skillatk), i, sd->skillatk[i].id == skill_id);
-	if( i < ARRAYLENGTH(sd->skillatk) ) bonus = sd->skillatk[i].val;
-
-	if(sd->sc.data[SC_PYROTECHNIC_OPTION] || sd->sc.data[SC_AQUAPLAY_OPTION])
-		bonus += 10;
+	if( i < ARRAYLENGTH(sd->skillatk) )
+		bonus = sd->skillatk[i].val;
 
 	return bonus;
 }
@@ -6999,7 +6996,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	}
 
 	if (sd->status.hom_id > 0) {
-		if(battle_config.homunculus_auto_vapor && sd->hd && !sd->hd->sc.data[SC_LIGHT_OF_REGENE])
+		if(battle_config.homunculus_auto_vapor && sd->hd)
 			hom_vaporize(sd, HOM_ST_ACTIVE);
 	}
 
@@ -8831,16 +8828,6 @@ bool pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 		clif_equipitemack(sd,0,0,0);
 		return false;
 	}
-
-	if( sd->sc.count && (
-		(sd->sc.data[SC_PYROCLASTIC] && sd->inventory_data[n]->type == IT_WEAPON) ||
-		sd->sc.data[SC_BERSERK] || 
-		sd->sc.data[SC_SATURDAYNIGHTFEVER]) )
-	{
-		clif_equipitemack(sd,0,0,0);
-		return false;
-	}
-
 	if( DIFF_TICK(sd->canequip_tick,gettick()) > 0 ) {
 		clif_equipitemack(sd,n,0,0);
 		return false;
@@ -8858,7 +8845,11 @@ bool pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 		clif_equipitemack(sd,n,0,0);	// fail
 		return false;
 	}
-
+	if( sd->sc.count && (sd->sc.data[SC_BERSERK] || sd->sc.data[SC_SATURDAYNIGHTFEVER] ||
+		sd->sc.data[SC_KYOUGAKU] || (sd->sc.data[SC_PYROCLASTIC] && sd->inventory_data[n]->type == IT_WEAPON)) ) {
+		clif_equipitemack(sd,n,0,0); //Fail
+		return false;
+	}
 	if(pos == EQP_ACC) { //Accesories should only go in one of the two,
 		pos = req_pos&EQP_ACC;
 		if (pos == EQP_ACC) //User specified both slots..

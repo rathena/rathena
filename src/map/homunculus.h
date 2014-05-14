@@ -141,6 +141,8 @@ void hom_reload(void);
 int hom_addspiritball(TBL_HOM *hd, int max);
 int hom_delspiritball(TBL_HOM *hd, int count, int type);
 
+uint8 hom_get_intimacy_grade(struct homun_data *hd);
+
 void do_final_homunculus(void);
 void do_init_homunculus(void);
 
