@@ -1383,6 +1383,12 @@ int64 battle_addmastery(struct map_session_data *sd,struct block_list *target,in
 			damage += sd->status.str;
 	}
 
+#ifdef RENEWAL
+	//Weapon Research bonus applies to all weapons
+	if((skill = pc_checkskill(sd,BS_WEAPONRESEARCH)) > 0)
+		damage += (skill * 2);
+#endif
+
 	if(type == 0)
 		weapon = sd->weapontype1;
 	else
@@ -1458,9 +1464,6 @@ int64 battle_addmastery(struct map_session_data *sd,struct block_list *target,in
 				damage += (skill * 3);
 			break;
 	}
-
-	if(sd && (skill=pc_checkskill(sd,BS_WEAPONRESEARCH)) > 0) // weapon research bonus applies to all weapons
-		damage += skill*2;
 
 	return damage;
 }
@@ -2163,9 +2166,11 @@ static bool is_attack_hitting(struct Damage wd, struct block_list *src, struct b
 
 	if( sd ) {
 		int skill = 0;
+#ifdef RENEWAL
 		// Weaponry Research hidden bonus
 		if ((skill = pc_checkskill(sd,BS_WEAPONRESEARCH)) > 0)
 			hitrate += hitrate * ( 2 * skill ) / 100;
+#endif
 
 		if( (sd->status.weapon == W_1HSWORD || sd->status.weapon == W_DAGGER) &&
 			(skill = pc_checkskill(sd, GN_TRAINING_SWORD))>0 )
@@ -2469,6 +2474,8 @@ static struct Damage battle_calc_attack_masteries(struct Damage wd, struct block
 			ATK_ADD(wd.masteryAtk, wd.masteryAtk2, 15 * skill_lv);
 		if (skill_id != CR_SHIELDBOOMERANG)
 			ATK_ADD2(wd.masteryAtk, wd.masteryAtk2, wd.div_ * sd->right_weapon.star, wd.div_ * sd->left_weapon.star);
+		if (skill_id != MC_CARTREVOLUTION && pc_checkskill(sd, BS_HILTBINDING) > 0)
+			ATK_ADD(wd.masteryAtk, wd.masteryAtk2, 4);
 		if (skill_id == MO_FINGEROFFENSIVE) {
 			ATK_ADD(wd.masteryAtk, wd.masteryAtk2, wd.div_ * sd->spiritball_old * 3);
 		} else
@@ -4893,10 +4900,14 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 	if(sd) {
 #ifndef RENEWAL
-		if(skill_id == TF_POISON)
+		if (pc_checkskill(sd, BS_WEAPONRESEARCH) > 0)
+			ATK_ADD(wd.damage, wd.damage2, skill_lv * 2);
+		if (skill_id == TF_POISON)
 			ATK_ADD(wd.damage, wd.damage2, 15 * skill_lv);
 		if (skill_id != CR_SHIELDBOOMERANG) //Only Shield boomerang doesn't takes the Star Crumbs bonus.
 			ATK_ADD2(wd.damage, wd.damage2, wd.div_ * sd->right_weapon.star, wd.div_ * sd->left_weapon.star);
+		if (skill_id != MC_CARTREVOLUTION && pc_checkskill(sd, BS_HILTBINDING) > 0)
+			ATK_ADD(wd.damage, wd.damage2, 4);
 		if (skill_id == MO_FINGEROFFENSIVE) { //The finger offensive spheres on moment of attack do count. [Skotlex]
 			ATK_ADD(wd.damage, wd.damage2, wd.div_ * sd->spiritball_old * 3);
 		} else
