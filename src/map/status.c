@@ -2014,8 +2014,8 @@ int status_check_visibility(struct block_list *src, struct block_list *target)
 	if (src->m != target->m || !check_distance_bl(src, target, view_range))
 		return 0;
 
-	if( tsc && tsc->data[SC_STEALTHFIELD] )
-		return 0;
+	if ( src->type == BL_NPC) // NPCs don't care for the rest
+		return 1;
 
 	switch (target->type) {	// Check for chase-walk/hiding/cloaking opponents.
 		case BL_PC:
@@ -2025,7 +2025,7 @@ int status_check_visibility(struct block_list *src, struct block_list *target)
 			if ( tsc && tsc->data[SC_CLOAKINGEXCEED] && !(status->mode&MD_BOSS) &&
 				( ((TBL_PC*)target)->special_state.perfect_hiding || (status->mode&MD_DETECTOR) ) )
 				return 0;
-			if ( tsc && tsc->data[SC__FEINTBOMB] && !(status->mode&MD_BOSS|MD_DETECTOR) )
+			if ( tsc && tsc->data[SC__FEINTBOMB] && !(status->mode&(MD_BOSS|MD_DETECTOR) ) )
 				return 0;
 			break;
 		default:
@@ -2166,10 +2166,10 @@ unsigned int status_weapon_atk(struct weapon_atk wa, struct status_data *status)
 #endif
 
 #ifndef RENEWAL
-static inline unsigned short status_base_matk_min(const struct status_data* status) { return status->int_+(status->int_/7)*(status->int_/7); }
-static inline unsigned short status_base_matk_max(const struct status_data* status) { return status->int_+(status->int_/5)*(status->int_/5); }
+	unsigned short status_base_matk_min(const struct status_data* status) { return status->int_ + (status->int_ / 7) * (status->int_ / 7); }
+	unsigned short status_base_matk_max(const struct status_data* status) { return status->int_ + (status->int_ / 5) * (status->int_ / 5); }
 #else
-unsigned short status_base_matk(const struct status_data* status, int level) { return status->int_+(status->int_/2)+(status->dex/5)+(status->luk/3)+(level/4); }
+	unsigned short status_base_matk(const struct status_data* status, int level) { return status->int_ + (status->int_ / 2) + (status->dex / 5) + (status->luk / 3) + (level / 4); }
 #endif
 
 /**
