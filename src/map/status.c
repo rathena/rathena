@@ -2015,8 +2015,8 @@ int status_check_visibility(struct block_list *src, struct block_list *target)
 	if (src->m != target->m || !check_distance_bl(src, target, view_range))
 		return 0;
 
-	if( tsc && tsc->data[SC_STEALTHFIELD] )
-		return 0;
+	if ( src->type == BL_NPC) // NPCs don't care for the rest
+		return 1;
 
 	switch (target->type) {	// Check for chase-walk/hiding/cloaking opponents.
 		case BL_PC:
@@ -2026,7 +2026,7 @@ int status_check_visibility(struct block_list *src, struct block_list *target)
 			if ( tsc && tsc->data[SC_CLOAKINGEXCEED] && !(status->mode&MD_BOSS) &&
 				( ((TBL_PC*)target)->special_state.perfect_hiding || (status->mode&MD_DETECTOR) ) )
 				return 0;
-			if ( tsc && tsc->data[SC__FEINTBOMB] && !(status->mode&MD_BOSS|MD_DETECTOR) )
+			if ( tsc && tsc->data[SC__FEINTBOMB] && !(status->mode&(MD_BOSS|MD_DETECTOR) ) )
 				return 0;
 			break;
 		default:
@@ -2167,10 +2167,10 @@ unsigned int status_weapon_atk(struct weapon_atk wa, struct status_data *status)
 #endif
 
 #ifndef RENEWAL
-static inline unsigned short status_base_matk_min(const struct status_data* status) { return status->int_+(status->int_/7)*(status->int_/7); }
-static inline unsigned short status_base_matk_max(const struct status_data* status) { return status->int_+(status->int_/5)*(status->int_/5); }
+	unsigned short status_base_matk_min(const struct status_data* status) { return status->int_ + (status->int_ / 7) * (status->int_ / 7); }
+	unsigned short status_base_matk_max(const struct status_data* status) { return status->int_ + (status->int_ / 5) * (status->int_ / 5); }
 #else
-unsigned short status_base_matk(const struct status_data* status, int level) { return status->int_+(status->int_/2)+(status->dex/5)+(status->luk/3)+(level/4); }
+	unsigned short status_base_matk(const struct status_data* status, int level) { return status->int_ + (status->int_ / 2) + (status->dex / 5) + (status->luk / 3) + (level / 4); }
 #endif
 
 /**
@@ -2978,10 +2978,11 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 			sd->status.inventory[index].refine = MAX_REFINE;
 
 		if(sd->inventory_data[index]->type == IT_WEAPON) {
-			int r,wlv = sd->inventory_data[index]->wlv;
+			int r = sd->status.inventory[index].refine, wlv = sd->inventory_data[index]->wlv;
 			struct weapon_data *wd;
 			struct weapon_atk *wa;
-			if (wlv >= REFINE_TYPE_MAX)
+
+			if(wlv >= REFINE_TYPE_MAX)
 				wlv = REFINE_TYPE_MAX - 1;
 			if(i == EQI_HAND_L && sd->status.inventory[index].equip == EQP_HAND_L) {
 				wd = &sd->left_weapon; // Left-hand weapon
@@ -2991,20 +2992,16 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 				wa = &status->rhw;
 			}
 			wa->atk += sd->inventory_data[index]->atk;
-			if ( (r = sd->status.inventory[index].refine) )
+			if(r)
 				wa->atk2 = refine_info[wlv].bonus[r-1] / 100;
-
 #ifdef RENEWAL
 			wa->matk += sd->inventory_data[index]->matk;
 			wa->wlv = wlv;
-			if( r ) // Renewal magic attack refine bonus
+			if(r && sd->weapontype1 != W_BOW) // Renewal magic attack refine bonus
 				wa->matk += refine_info[wlv].bonus[r-1] / 100;
 #endif
-
-			// Overrefine bonus.
-			if (r)
+			if(r) // Overrefine bonus.
 				wd->overrefine = refine_info[wlv].randombonus_max[r-1] / 100;
-
 			wa->range += sd->inventory_data[index]->range;
 			if(sd->inventory_data[index]->script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(sd->inventory_data[index],sd->bl.m))) {
 				if (wd == &sd->left_weapon) {
@@ -3016,19 +3013,17 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 				if (!calculating) // Abort, run_script retriggered this. [Skotlex]
 					return 1;
 			}
-
 			if(sd->status.inventory[index].card[0]==CARD0_FORGE) { // Forged weapon
 				wd->star += (sd->status.inventory[index].card[1]>>8);
 				if(wd->star >= 15) wd->star = 40; // 3 Star Crumbs now give +40 dmg
 				if(pc_famerank(MakeDWord(sd->status.inventory[index].card[2],sd->status.inventory[index].card[3]) ,MAPID_BLACKSMITH))
 					wd->star += 10;
-
 				if (!wa->ele) // Do not overwrite element from previous bonuses.
 					wa->ele = (sd->status.inventory[index].card[1]&0x0f);
 			}
-		}
-		else if(sd->inventory_data[index]->type == IT_ARMOR) {
+		} else if(sd->inventory_data[index]->type == IT_ARMOR) {
 			int r;
+
 			if ( (r = sd->status.inventory[index].refine) )
 				refinedef += refine_info[REFINE_TYPE_ARMOR].bonus[r-1];
 			if(sd->inventory_data[index]->script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(sd->inventory_data[index],sd->bl.m))) {
@@ -3040,8 +3035,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 				if (!calculating) // Abort, run_script retriggered this. [Skotlex]
 					return 1;
 			}
-		}
-		else if( sd->inventory_data[index]->type == IT_SHADOWGEAR ) { // Shadow System
+		} else if( sd->inventory_data[index]->type == IT_SHADOWGEAR ) { // Shadow System
 			run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
 			if( !calculating )
 				return 1;
@@ -3261,7 +3255,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 
 // ----- HP MAX CALCULATION -----
 	status->max_hp = sd->status.max_hp = status_calc_maxhpsp_pc(sd,status->vit,true);
-	
+
 	if(battle_config.hp_rate != 100)
 		status->max_hp = (unsigned int)(battle_config.hp_rate * (status->max_hp/100.));
 
@@ -3295,7 +3289,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		if( !status->sp ) // The minimum for the respawn setting is SP:1
 			status->sp = 1;
 	}
-	
+
 // ----- MISC CALCULATION -----
 	status_calc_misc(&sd->bl, status, sd->status.base_level);
 
@@ -3341,8 +3335,10 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 // ----- HIT CALCULATION -----
 
 	// Absolute modifiers from passive skills
+#ifndef RENEWAL
 	if((skill=pc_checkskill(sd,BS_WEAPONRESEARCH))>0)
 		status->hit += skill*2;
+#endif
 	if((skill=pc_checkskill(sd,AC_VULTURE))>0) {
 #ifndef RENEWAL
 		status->hit += skill;
@@ -3358,6 +3354,11 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 			status->rhw.range += skill;
 		}
 	}
+	if((sd->status.weapon == W_1HAXE || sd->status.weapon == W_2HAXE) && (skill = pc_checkskill(sd,NC_TRAININGAXE)) > 0)
+		status->hit += skill * 3;
+	if((sd->status.weapon == W_MACE || sd->status.weapon == W_2HMACE) && (skill = pc_checkskill(sd,NC_TRAININGAXE)) > 0)
+		status->hit += skill * 2;
+
 
 // ----- FLEE CALCULATION -----
 
@@ -3498,12 +3499,12 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		sd->subele[ELE_NEUTRAL] += skill;
 		sd->subele[ELE_FIRE] += skill*4;
 	}
-	if((skill=pc_checkskill(sd,NC_RESEARCHFE))>0) {
-		sd->subele[ELE_EARTH] += skill*10;
-		sd->subele[ELE_FIRE] += skill*10;
-	}
 	if((skill=pc_checkskill(sd,SA_DRAGONOLOGY))>0) {
-		skill = skill*4;
+#ifdef RENEWAL
+		skill = skill * 2;
+#else
+		skill = skill * 4;
+#endif
 		sd->right_weapon.addrace[RC_DRAGON]+=skill;
 		sd->left_weapon.addrace[RC_DRAGON]+=skill;
 		sd->magic_addrace[RC_DRAGON]+=skill;

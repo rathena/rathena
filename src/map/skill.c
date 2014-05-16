@@ -3141,11 +3141,14 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 					skill_addtimerskill(src, tick + status_get_amotion(src), bl->id, 0, 0, LG_OVERBRAND_PLUSATK, skill_lv, BF_WEAPON, flag|SD_ANIMATION);
 				break;
 			case SR_KNUCKLEARROW:
-				if( skill_blown(dsrc,bl,dmg.blewcount,dir,0) && !(flag&4) ) {
-					short dir_x, dir_y;
-					dir_x = dirx[(dir+4)%8];
-					dir_y = diry[(dir+4)%8];
-					if( map_getcell(bl->m, bl->x+dir_x, bl->y+dir_y, CELL_CHKNOPASS) != 0 )
+				if (!(flag&4)) {
+					short i = skill_blown(dsrc, bl, dmg.blewcount, dir, 0);
+
+					if (!map_flag_gvg2(src->m) && !map[src->m].flag.battleground && unit_movepos(src,bl->x,bl->y,1,1)) {
+						clif_slide(src, bl->x, bl->y);
+						clif_fixpos(src); //Aegis send this packet too
+					}
+					if (i < dmg.blewcount)
 						skill_addtimerskill(src, tick + 300 * ((flag&2) ? 1 : 2), bl->id, 0, 0, skill_id, skill_lv, BF_WEAPON, flag|4);
 				}
 				break;
