@@ -333,11 +333,7 @@ void initChangeTables(void)
 	set_sc( MO_STEELBODY		, SC_STEELBODY		, SI_STEELBODY		, SCB_DEF|SCB_MDEF|SCB_ASPD|SCB_SPEED );
 	add_sc( MO_BLADESTOP		, SC_BLADESTOP_WAIT	);
 	set_sc( MO_BLADESTOP		, SC_BLADESTOP	, SI_BLADESTOP	, SCB_NONE );
-	set_sc( MO_EXPLOSIONSPIRITS	, SC_EXPLOSIONSPIRITS	, SI_EXPLOSIONSPIRITS	, SCB_CRI
-#ifndef RENEWAL
-			|SCB_REGEN
-#endif
-			);
+	set_sc( MO_EXPLOSIONSPIRITS	, SC_EXPLOSIONSPIRITS	, SI_EXPLOSIONSPIRITS	, SCB_CRI|SCB_REGEN );
 	set_sc( MO_EXTREMITYFIST	, SC_EXTREMITYFIST	, SI_BLANK			, SCB_REGEN );
 #ifdef RENEWAL
 	set_sc( MO_EXTREMITYFIST	, SC_EXTREMITYFIST2	, SI_EXTREMITYFIST	, SCB_NONE );
@@ -685,7 +681,7 @@ void initChangeTables(void)
 	set_sc( LG_EXEEDBREAK		, SC_EXEEDBREAK		, SI_EXEEDBREAK		, SCB_NONE );
 	set_sc( LG_PRESTIGE		, SC_PRESTIGE		, SI_PRESTIGE		, SCB_DEF );
 	set_sc( LG_BANDING		, SC_BANDING		, SI_BANDING		,
-#ifndef RENWAL
+#ifndef RENEWAL
 			SCB_DEF );
 #else
 			SCB_DEF2 );
@@ -9952,8 +9948,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				int knockback_immune = (sd ? !sd->special_state.no_knockback : !(status->mode&(MD_KNOCKBACK_IMMUNE|MD_BOSS)));
 
 				if (knockback_immune) {
-					if (battle_config.skill_trap_type && !map_flag_gvg2(bl->m))
-						unit_stop_walking(bl, 1);
+					if (!battle_config.skill_trap_type && map_flag_gvg2(bl->m))
+						break;
+					else
+						unit_stop_walking(bl,1);
 				}
 			}
 		break;
@@ -12393,7 +12391,7 @@ int status_change_spread( struct block_list *src, struct block_list *bl )
 
 /**
 * Applying natural heal bonuses (sit, skill, homun, etc...)
-* TODO: the va_list doesn't see to be used, safe to remove?
+* TODO: the va_list doesn't seem to be used, safe to remove?
 * @param bl: Object applying bonuses to [PC|HOM|MER|ELEM]
 * @param args: va_list arguments
 * @return which regeneration bonuses have been applied (flag)
@@ -12455,6 +12453,13 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 		}
 		if(flag&(RGN_SSP)) { // Sitting SP regen
 			val = natural_heal_diff_tick * sregen->rate.sp;
+
+#ifdef RENEWAL
+			if (bl->type == BL_PC && (((TBL_PC*)bl)->class_&MAPID_UPPERMASK) == MAPID_MONK &&
+				sc->data[SC_EXPLOSIONSPIRITS] && (!sc->data[SC_SPIRIT] || sc->data[SC_SPIRIT]->val2 != SL_MONK))
+					val >>= 1; // Half as fast when in Fury State
+#endif
+
 			if (regen->state.overweight)
 				val>>=1; // Half as fast when overweight.
 			sregen->tick.sp += val;
@@ -12516,12 +12521,6 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 		rate = natural_heal_diff_tick*(regen->rate.sp+bonus);
 		// Homun SP regen fix (they should regen as if they were sitting (twice as fast)
 		if(bl->type==BL_HOM) rate *=2;
-
-#ifdef RENEWAL
-		if (bl->type == BL_PC && (((TBL_PC*)bl)->class_&MAPID_UPPERMASK) == MAPID_MONK &&
-			sc->data[SC_EXPLOSIONSPIRITS] && (!sc->data[SC_SPIRIT] || sc->data[SC_SPIRIT]->val2 != SL_MONK))
-			rate /= 2; // Half as fast when in Fury State
-#endif
 
 		regen->tick.sp += rate;
 
