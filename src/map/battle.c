@@ -1101,12 +1101,13 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			return 0;
 
 		if( (sce = sc->data[SC_LIGHTNINGWALK]) && flag&BF_LONG && rnd()%100 < sce->val1 ) {
-			int dx[8]={0,-1,-1,-1,0,1,1,1};
-			int dy[8]={1,1,0,-1,-1,-1,0,1};
+			int dx[8] = { 0,-1,-1,-1,0,1,1,1 };
+			int dy[8] = { 1,1,0,-1,-1,-1,0,1 };
 			uint8 dir = map_calc_dir(bl, src->x, src->y);
 
 			if( unit_movepos(bl, src->x-dx[dir], src->y-dy[dir], 1, 1) ) {
-				clif_slide(bl,src->x-dx[dir],src->y-dy[dir]);
+				clif_slide(bl,src->x, src->y);
+				clif_fixpos(bl); // The official server sends these two packets
 				unit_setdir(bl, dir);
 			}
 			d->dmg_lv = ATK_DEF;
@@ -4118,7 +4119,9 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 		}
 		if(sc->data[SC_FLASHCOMBO]) {
 			ATK_ADD(wd.damage, wd.damage2, sc->data[SC_FLASHCOMBO]->val2);
-			RE_ALLATK_ADD(wd, sc->data[SC_FLASHCOMBO]->val2);
+#ifdef RENEWAL
+			ATK_ADD(wd.equipAtk, wd.equipAtk2, sc->data[SC_FLASHCOMBO]->val2);
+#endif
 		}
 		if(sc->data[SC_MTF_RANGEATK] && (wd.flag&(BF_LONG|BF_MAGIC)) == BF_LONG) { // Monster Transformation bonus
 			ATK_ADDRATE(wd.damage, wd.damage2, 25);
@@ -7725,6 +7728,7 @@ static const struct _battle_data {
 	{ "item_flooritem_check",               &battle_config.item_onfloor,                    1,      0,      1,              },
 	{ "bowling_bash_area",                  &battle_config.bowling_bash_area,               0,      0,      20,             },
 	{ "drop_rateincrease",                  &battle_config.drop_rateincrease,               0,      0,      1,              },
+	{ "feature.auction",                    &battle_config.feature_auction,                 0,      0,      2,              },
 	{ "feature.banking",                    &battle_config.feature_banking,                 1,      0,      1,              },
 #ifdef VIP_ENABLE
 	{ "vip_storage_increase",               &battle_config.vip_storage_increase,            0,      0,      MAX_STORAGE-MIN_STORAGE, },
