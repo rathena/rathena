@@ -16427,7 +16427,7 @@ BUILDIN_FUNC(openauction)
 		return 0;
 
 	if( !battle_config.feature_auction ) {
-		clif_colormes(sd, color_table[COLOR_RED], msg_txt(517));
+		clif_colormes(sd, color_table[COLOR_RED], msg_txt(sd, 517));
 		return 0;
 	}
 
