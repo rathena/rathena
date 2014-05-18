@@ -313,7 +313,7 @@ int pc_banding(struct map_session_data *sd, uint16 skill_lv) {
 		if( (sc = status_get_sc(&sd->bl)) != NULL  && sc->data[SC_BANDING] )
 		{
 			sc->data[SC_BANDING]->val2 = 0; // Reset the counter
-			status_calc_bl(&sd->bl, status_sc2scb_flag(SC_BANDING));
+			status_calc_bl(&sd->bl, status_sc_get_calc_flag(SC_BANDING));
 		}
 		return 0;
 	}
@@ -355,7 +355,7 @@ int pc_banding(struct map_session_data *sd, uint16 skill_lv) {
 			if( (sc = status_get_sc(&bsd->bl)) != NULL  && sc->data[SC_BANDING] )
 			{
 				sc->data[SC_BANDING]->val2 = c; // Set the counter. It doesn't count your self.
-				status_calc_bl(&bsd->bl, status_sc2scb_flag(SC_BANDING));	// Set atk and def.
+				status_calc_bl(&bsd->bl, status_sc_get_flag(SC_BANDING));	// Set atk and def.
 			}
 		}
 	}
@@ -363,13 +363,18 @@ int pc_banding(struct map_session_data *sd, uint16 skill_lv) {
 	return c;
 }
 
-// Increases a player's fame points and displays a notice to him
-void pc_addfame(struct map_session_data *sd,int count)
+/** Increases a player's fame points and displays a notice to him
+* @param sd
+* @param count If 0 adds none
+*/
+void pc_addfame(struct map_session_data *sd, unsigned short count)
 {
-	int ranktype=-1;
+	int8 ranktype = -1;
 	nullpo_retv(sd);
+	if (!count)
+		return;
 	sd->status.fame += count;
-	if(sd->status.fame > MAX_FAME)
+	if (sd->status.fame > MAX_FAME)
 		sd->status.fame = MAX_FAME;
 
 	switch(sd->class_&MAPID_UPPERMASK){
@@ -3625,81 +3630,83 @@ int pc_bonus5(struct map_session_data *sd,int type,int type2,int type3,int type4
 	return 0;
 }
 
-/*==========================================
- *	Grants a player a given skill. Flag values are:
- *	0 - Grant permanent skill to be bound to skill tree
- *	1 - Grant an item skill (temporary)
- *	2 - Like 1, except the level granted can stack with previously learned level.
- *	4 - Like 0, except the skill will ignore skill tree (saves through job changes and resets).
- *------------------------------------------*/
-int pc_skill(TBL_PC* sd, int id, int level, int flag)
+/**	Grants a player a given skill
+* @param sd Player
+* @param skill_id
+* @param skill_lv
+* @param flag Flags:
+*	0 - Grant permanent skill to be bound to skill tree
+*	1 - Grant an item skill (temporary)
+*	2 - Like 1, except the level granted can stack with previously learned level.
+*	4 - Like 0, except the skill will ignore skill tree (saves through job changes and resets).
+*/
+void pc_skill(struct map_session_data* sd, uint16 skill_id, int8 skill_lv, int8 flag)
 {
-	nullpo_ret(sd);
+	uint16 idx = skill_get_index(skill_id);
 
-	if( id <= 0 || id >= MAX_SKILL || skill_db[id].name == NULL) {
-		ShowError("pc_skill: Skill with id %d does not exist in the skill database\n", id);
-		return 0;
+	nullpo_retv(sd);
+
+	if( !idx || idx >= MAX_SKILL || skill_db[idx].name == NULL) {
+		ShowError("pc_skill: Skill with id %d does not exist in the skill database\n", skill_id);
+		return;
 	}
-	if( level > MAX_SKILL_LEVEL ) {
-		ShowError("pc_skill: Skill level %d too high. Max lv supported is %d\n", level, MAX_SKILL_LEVEL);
-		return 0;
+	if( skill_lv > MAX_SKILL_LEVEL ) {
+		ShowError("pc_skill: Skill level %d too high. Max lv supported is %d\n", skill_lv, MAX_SKILL_LEVEL);
+		return;
 	}
-	if( flag == 2 && sd->status.skill[id].lv + level > MAX_SKILL_LEVEL ) {
-		ShowError("pc_skill: Skill level bonus %d too high. Max lv supported is %d. Curr lv is %d\n", level, MAX_SKILL_LEVEL, sd->status.skill[id].lv);
-		return 0;
+	if( flag == 2 && sd->status.skill[idx].lv + skill_lv > MAX_SKILL_LEVEL ) {
+		ShowError("pc_skill: Skill level bonus %d too high. Max lv supported is %d. Curr lv is %d\n", skill_lv, MAX_SKILL_LEVEL, sd->status.skill[idx].lv);
+		return;
 	}
 
 	switch( flag ){
 		case 0: //Set skill data overwriting whatever was there before.
-			sd->status.skill[id].id   = id;
-			sd->status.skill[id].lv   = level;
-			sd->status.skill[id].flag = SKILL_FLAG_PERMANENT;
-			if( level == 0 ) { //Remove skill.
-				sd->status.skill[id].id = 0;
-				clif_deleteskill(sd,id);
+			sd->status.skill[idx].id   = skill_id;
+			sd->status.skill[idx].lv   = skill_lv;
+			sd->status.skill[idx].flag = SKILL_FLAG_PERMANENT;
+			if( skill_lv == 0 ) { //Remove skill.
+				sd->status.skill[idx].id = 0;
+				clif_deleteskill(sd,skill_id);
 			} else
-				clif_addskill(sd,id);
-			if( !skill_get_inf(id) ) //Only recalculate for passive skills.
+				clif_addskill(sd,skill_id);
+			if( !skill_get_inf(skill_id) ) //Only recalculate for passive skills.
 				status_calc_pc(sd, 0);
 			break;
 		case 1: //Item bonus skill.
-			if( sd->status.skill[id].id == id ){
-				if( sd->status.skill[id].lv >= level )
-					return 0;
-				if( sd->status.skill[id].flag == SKILL_FLAG_PERMANENT ) //Non-granted skill, store it's level.
-					sd->status.skill[id].flag = SKILL_FLAG_REPLACED_LV_0 + sd->status.skill[id].lv;
+			if( sd->status.skill[idx].id == skill_id ){
+				if( sd->status.skill[idx].lv >= skill_lv )
+					return;
+				if( sd->status.skill[idx].flag == SKILL_FLAG_PERMANENT ) //Non-granted skill, store it's level.
+					sd->status.skill[idx].flag = SKILL_FLAG_REPLACED_LV_0 + sd->status.skill[idx].lv;
 			} else {
-				sd->status.skill[id].id   = id;
-				sd->status.skill[id].flag = SKILL_FLAG_TEMPORARY;
+				sd->status.skill[idx].id   = skill_id;
+				sd->status.skill[idx].flag = SKILL_FLAG_TEMPORARY;
 			}
-			sd->status.skill[id].lv = level;
+			sd->status.skill[idx].lv = skill_lv;
 			break;
 		case 2: //Add skill bonus on top of what you had.
-			if( sd->status.skill[id].id == id ){
-				if( sd->status.skill[id].flag == SKILL_FLAG_PERMANENT )
-					sd->status.skill[id].flag = SKILL_FLAG_REPLACED_LV_0 + sd->status.skill[id].lv; // Store previous level.
+			if( sd->status.skill[idx].id == skill_id ){
+				if( sd->status.skill[idx].flag == SKILL_FLAG_PERMANENT )
+					sd->status.skill[idx].flag = SKILL_FLAG_REPLACED_LV_0 + sd->status.skill[idx].lv; // Store previous level.
 			} else {
-				sd->status.skill[id].id   = id;
-				sd->status.skill[id].flag = SKILL_FLAG_TEMPORARY; //Set that this is a bonus skill.
+				sd->status.skill[idx].id   = skill_id;
+				sd->status.skill[idx].flag = SKILL_FLAG_TEMPORARY; //Set that this is a bonus skill.
 			}
-			sd->status.skill[id].lv += level;
+			sd->status.skill[idx].lv += skill_lv;
 			break;
 		case 4: //Permanent granted skills ignore the skill tree
-			sd->status.skill[id].id   = id;
-			sd->status.skill[id].lv   = level;
-			sd->status.skill[id].flag = SKILL_FLAG_PERM_GRANTED;
-			if( level == 0 ) { //Remove skill.
-				sd->status.skill[id].id = 0;
-				clif_deleteskill(sd,id);
+			sd->status.skill[idx].id   = skill_id;
+			sd->status.skill[idx].lv   = skill_lv;
+			sd->status.skill[idx].flag = SKILL_FLAG_PERM_GRANTED;
+			if( skill_lv == 0 ) { //Remove skill.
+				sd->status.skill[idx].id = 0;
+				clif_deleteskill(sd,skill_id);
 			} else
-				clif_addskill(sd,id);
-			if( !skill_get_inf(id) ) //Only recalculate for passive skills.
+				clif_addskill(sd,skill_id);
+			if( !skill_get_inf(skill_id) ) //Only recalculate for passive skills.
 				status_calc_pc(sd, 0);
 			break;
-		default: //Unknown flag?
-			return 0;
 	}
-	return 1;
 }
 /*==========================================
  * Append a card to an item ?
@@ -4307,6 +4314,8 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 		return 1;
 	if(map[sd->bl.m].flag.noitemconsumption) //consumable but mapflag prevent it
 		return 0;
+	if (sd->sc.cant.consume)
+		return 0;
 	//Prevent mass item usage. [Skotlex]
 	if( DIFF_TICK(sd->canuseitem_tick,gettick()) > 0 ||
 		(itemdb_iscashfood(nameid) && DIFF_TICK(sd->canusecashfood_tick,gettick()) > 0)
@@ -4439,19 +4448,6 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 	))
 		return 0;
 	
-	if (sd->sc.count && (
-		sd->sc.data[SC_BERSERK] || sd->sc.data[SC_SATURDAYNIGHTFEVER] ||
-		(sd->sc.data[SC_GRAVITATION] && sd->sc.data[SC_GRAVITATION]->val3 == BCT_SELF) ||
-		sd->sc.data[SC_TRICKDEAD] ||
-		sd->sc.data[SC_HIDING] ||
-		sd->sc.data[SC__SHADOWFORM] ||
-		sd->sc.data[SC__INVISIBILITY] ||
-		sd->sc.data[SC__MANHOLE] ||
-		sd->sc.data[SC_KAGEHUMI] ||
-		(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOITEM) ||
-		sd->sc.data[SC_HEAT_BARREL_AFTER]))
-		return 0;
-	
 	if (!pc_isItemClass(sd,item))
 		return 0;
 
@@ -4499,7 +4495,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 	// Store information for later use before it is lost (via pc_delitem) [Paradox924X]
 	nameid = id->nameid;
 
-	if (nameid != ITEMID_NAUTHIZ && sd->sc.opt1 > 0 && sd->sc.opt1 != OPT1_STONEWAIT && sd->sc.opt1 != OPT1_BURNING)
+	if (nameid != ITEMID_NAUTHIZ && sd->sc.opt1 && sd->sc.opt1 != OPT1_STONEWAIT && sd->sc.opt1 != OPT1_BURNING)
 		return 0;
 
 	/* Items with delayed consume are not meant to work while in mounts except reins of mount(12622) */
@@ -5195,17 +5191,15 @@ int pc_memo(struct map_session_data* sd, int pos)
  * @param lv : skill lv
  * @return player skill cooldown
  */
-int pc_get_skillcooldown(struct map_session_data *sd, int id, int lv) {
-	int i, cooldown=0;
-	int idx = skill_get_index (id);
-	int cooldownlen = ARRAYLENGTH(sd->skillcooldown);
+int pc_get_skillcooldown(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv) {
+	int i, cooldown = 0;
+	uint8 cooldownlen = ARRAYLENGTH(sd->skillcooldown);
 	
-	if (!idx) return 0;
-	if (skill_db[idx].cooldown[lv - 1])
-		cooldown = skill_db[idx].cooldown[lv - 1];
-
-	ARR_FIND(0, cooldownlen, i, sd->skillcooldown[i].id == id);
-	if(i<cooldownlen){
+	if (!skill_get_index(skill_id))
+		return 0;
+	cooldown = skill_get_cooldown(skill_id, skill_lv);
+	ARR_FIND(0, cooldownlen, i, sd->skillcooldown[i].id == skill_id);
+	if (i < cooldownlen) {
 		cooldown += sd->skillcooldown[i].val;
 		cooldown = max(0,cooldown);
 	}
@@ -5266,7 +5260,7 @@ static void pc_checkallowskill(struct map_session_data *sd)
 		if( scw_list[i] == SC_DANCING && !battle_config.dancing_weaponswitch_fix )
 			continue;
 		if(sd->sc.data[scw_list[i]] &&
-			!pc_check_weapontype(sd,skill_get_weapontype(status_sc2skill(scw_list[i]))))
+			!pc_check_weapontype(sd,skill_get_weapontype(status_sc_get_skill(scw_list[i]))))
 			status_change_end(&sd->bl, scw_list[i], INVALID_TIMER);
 	}
 
@@ -5943,16 +5937,16 @@ int pc_checkbaselevelup(struct map_session_data *sd) {
 	status_percent_heal(&sd->bl,100,100);
 
 	if((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE) {
-		sc_start(&sd->bl,&sd->bl,status_skill2sc(PR_KYRIE),100,1,skill_get_time(PR_KYRIE,1));
-		sc_start(&sd->bl,&sd->bl,status_skill2sc(PR_IMPOSITIO),100,1,skill_get_time(PR_IMPOSITIO,1));
-		sc_start(&sd->bl,&sd->bl,status_skill2sc(PR_MAGNIFICAT),100,1,skill_get_time(PR_MAGNIFICAT,1));
-		sc_start(&sd->bl,&sd->bl,status_skill2sc(PR_GLORIA),100,1,skill_get_time(PR_GLORIA,1));
-		sc_start(&sd->bl,&sd->bl,status_skill2sc(PR_SUFFRAGIUM),100,1,skill_get_time(PR_SUFFRAGIUM,1));
+		sc_start(&sd->bl,&sd->bl,skill_get_sc(PR_KYRIE),100,1,skill_get_time(PR_KYRIE,1));
+		sc_start(&sd->bl,&sd->bl,skill_get_sc(PR_IMPOSITIO),100,1,skill_get_time(PR_IMPOSITIO,1));
+		sc_start(&sd->bl,&sd->bl,skill_get_sc(PR_MAGNIFICAT),100,1,skill_get_time(PR_MAGNIFICAT,1));
+		sc_start(&sd->bl,&sd->bl,skill_get_sc(PR_GLORIA),100,1,skill_get_time(PR_GLORIA,1));
+		sc_start(&sd->bl,&sd->bl,skill_get_sc(PR_SUFFRAGIUM),100,1,skill_get_time(PR_SUFFRAGIUM,1));
 		if (sd->state.snovice_dead_flag)
 			sd->state.snovice_dead_flag = 0; //Reenable steelbody resurrection on dead.
 	} else if( (sd->class_&MAPID_BASEMASK) == MAPID_TAEKWON ) {
-		sc_start(&sd->bl,&sd->bl,status_skill2sc(AL_INCAGI),100,10,600000);
-		sc_start(&sd->bl,&sd->bl,status_skill2sc(AL_BLESSING),100,10,600000);
+		sc_start(&sd->bl,&sd->bl,skill_get_sc(AL_INCAGI),100,10,600000);
+		sc_start(&sd->bl,&sd->bl,skill_get_sc(AL_BLESSING),100,10,600000);
 	}
 	clif_misceffect(&sd->bl,0);
 	npc_script_event(sd, NPCE_BASELVUP); //LORDALFA - LVLUPEVENT
@@ -6531,8 +6525,8 @@ int pc_resetlvl(struct map_session_data* sd,int type)
 		if(sd->status.class_ == JOB_NOVICE_HIGH) {
 			sd->status.status_point=100;	// not 88 [celest]
 			// give platinum skills upon changing
-			pc_skill(sd,142,1,0);
-			pc_skill(sd,143,1,0);
+			pc_skill(sd,NV_FIRSTAID,1,0);
+			pc_skill(sd,NV_TRICKDEAD,1,0);
 		}
 	}
 
@@ -6897,6 +6891,9 @@ void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int h
 		elemental_set_target(sd,src);
 
 	sd->canlog_tick = gettick();
+
+	//Remove bonus_script when receives damage
+	pc_bonus_script_clear(sd,BSF_REM_ON_DAMAGED);
 }
 
 int pc_close_npc_timer(int tid, unsigned int tick, int id, intptr_t data)
@@ -6964,7 +6961,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			clif_resurrection(&sd->bl, 1);
 			if(battle_config.pc_invincible_time)
 				pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
-			sc_start(&sd->bl,&sd->bl,status_skill2sc(MO_STEELBODY),100,5,skill_get_time(MO_STEELBODY,5));
+			sc_start(&sd->bl,&sd->bl,skill_get_sc(MO_STEELBODY),100,5,skill_get_time(MO_STEELBODY,5));
 			if(map_flag_gvg(sd->bl.m))
 				pc_respawn_timer(INVALID_TIMER, gettick(), sd->bl.id, 0);
 			return 0;
@@ -7121,13 +7118,13 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	}
 	
 	//Remove bonus_script when dead
-	pc_bonus_script_clear(sd,BONUS_FLAG_REM_ON_DEAD);
+	pc_bonus_script_clear(sd,BSF_REM_ON_DEAD);
 
 	// changed penalty options, added death by player if pk_mode [Valaris]
 	if(battle_config.death_penalty_type
 		&& (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE	// only novices will receive no penalty
 		&& !map[sd->bl.m].flag.noexppenalty && !map_flag_gvg(sd->bl.m)
-		&& !sd->sc.data[SC_BABY] && !sd->sc.data[SC_LIFEINSURANCE])
+		&& !sd->sc.data[SC_PROTECTEXP] && !sd->sc.data[SC_LIFEINSURANCE])
 	{
 		uint32 base_penalty = battle_config.death_penalty_base;
 		uint32 job_penalty = battle_config.death_penalty_job;
@@ -7812,7 +7809,7 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 		short id;
 		for(i = 0; i < MAX_SKILL_TREE && (id = skill_tree[class_][i].id) > 0; i++) {
 			//Remove status specific to your current tree skills.
-			enum sc_type sc = status_skill2sc(id);
+			enum sc_type sc = skill_get_sc(id);
 			if (sc > SC_COMMON_MAX && sd->sc.data[sc])
 				status_change_end(&sd->bl, sc, INVALID_TIMER);
 		}
@@ -8048,23 +8045,22 @@ void pc_setoption(struct map_session_data *sd,int type)
 		}
 	}
 	if( (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC ) {
-		if( type&OPTION_MADOGEAR && !(p_type&OPTION_MADOGEAR) ) {
+		uint16 i;
+		if( (type&OPTION_MADOGEAR && !(p_type&OPTION_MADOGEAR)) || //Madogear is set
+			(!(type&OPTION_MADOGEAR) && p_type&OPTION_MADOGEAR) ) //Madogear is unset
+		{
 			status_calc_pc(sd, 0);
-			status_change_end(&sd->bl,SC_MAXIMIZEPOWER,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_OVERTHRUST,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_WEAPONPERFECTION,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_ADRENALINE,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_CARTBOOST,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_MELTDOWN,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_MAXOVERTHRUST,INVALID_TIMER);
-		} else if( !(type&OPTION_MADOGEAR) && p_type&OPTION_MADOGEAR ) {
-			status_calc_pc(sd, 0);
-			status_change_end(&sd->bl,SC_SHAPESHIFT,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_HOVERING,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_ACCELERATION,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_OVERHEAT_LIMITPOINT,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_OVERHEAT,INVALID_TIMER);
+			for (i = 0; i < SC_MAX; i++) {
+				if (!sd->sc.data[i] || !(status_sc_get_flag((sc_type)i)&SCF_NO_MADO))
+					continue;
+				if (i == SC_BERSERK || i == SC_SATURDAYNIGHTFEVER)
+					sd->sc.data[i]->val2 = 0;
+				status_change_end(&sd->bl,(sc_type)i,INVALID_TIMER);
+			}
 		}
+
+		//Removes bonus_script by Madogear changes
+		pc_bonus_script_clear(sd,BSF_REM_ON_MADOGEAR);
 	}
 
 	if (type&OPTION_FLYING && !(p_type&OPTION_FLYING))
@@ -8828,6 +8824,7 @@ bool pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 		clif_equipitemack(sd,0,0,0);
 		return false;
 	}
+
 	if( DIFF_TICK(sd->canequip_tick,gettick()) > 0 ) {
 		clif_equipitemack(sd,n,0,0);
 		return false;
@@ -8845,11 +8842,14 @@ bool pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 		clif_equipitemack(sd,n,0,0);	// fail
 		return false;
 	}
-	if( sd->sc.count && (sd->sc.data[SC_BERSERK] || sd->sc.data[SC_SATURDAYNIGHTFEVER] ||
-		sd->sc.data[SC_KYOUGAKU] || (sd->sc.data[SC_PYROCLASTIC] && sd->inventory_data[n]->type == IT_WEAPON)) ) {
-		clif_equipitemack(sd,n,0,0); //Fail
-		return false;
+
+	if (sd->sc.cant.equip) {
+		if (!sd->sc.data[SC_PYROCLASTIC] || (sd->sc.data[SC_PYROCLASTIC] && sd->inventory_data[n]->type == IT_WEAPON)) {
+			clif_equipitemack(sd,0,0,0);
+			return false;
+		}
 	}
+
 	if(pos == EQP_ACC) { //Accesories should only go in one of the two,
 		pos = req_pos&EQP_ACC;
 		if (pos == EQP_ACC) //User specified both slots..
@@ -9042,16 +9042,13 @@ bool pc_unequipitem(struct map_session_data *sd,int n,int flag) {
 	}
 
 	// status change that makes player cannot unequip equipment
-	if( !(flag&2) && sd->sc.count && (
-		sd->sc.data[SC_BERSERK] ||
-		sd->sc.data[SC_SATURDAYNIGHTFEVER] ||
-		sd->sc.data[SC__BLOODYLUST] ||
-		sd->sc.data[SC_KYOUGAKU] ||
-		(sd->sc.data[SC_PYROCLASTIC] && sd->inventory_data[n]->type == IT_WEAPON)) )	// can't switch weapon
-	{
-		clif_unequipitemack(sd,n,0,0);
-		return false;
+	if( !(flag&2) && sd->sc.cant.unequip ) {
+		if (!sd->sc.data[SC_PYROCLASTIC] || (sd->sc.data[SC_PYROCLASTIC] && sd->inventory_data[n]->type == IT_WEAPON)) {
+			clif_unequipitemack(sd,n,0,0);
+			return false;
+		}
 	}
+
 	if (&sd->sc) {
 		if (sd->sc.data[SC_HOVERING] && sd->inventory_data[n]->type == IT_ARMOR && sd->inventory_data[n]->nameid == ITEMID_HOVERING_BOOSTER)
 			status_change_end(&sd->bl, SC_HOVERING, INVALID_TIMER);
@@ -10701,15 +10698,15 @@ void pc_bonus_script_remove(struct map_session_data *sd, uint8 i) {
 **/
 void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag) {
 	uint8 i, count = 0;
-	if (!sd)
+	if (!sd || !flag)
 		return;
 
 	for (i = 0; i < MAX_PC_BONUS_SCRIPT; i++) {
 		if (&sd->bonus_script[i] && sd->bonus_script[i].script &&
 			(sd->bonus_script[i].flag&flag || //Remove bonus script based on e_bonus_script_flags
 			(sd->bonus_script[i].type && (
-				(flag&BONUS_FLAG_REM_BUFF && sd->bonus_script[i].type == 1) || //Remove bonus script based on buff type
-				(flag&BONUS_FLAG_REM_DEBUFF && sd->bonus_script[i].type == 2)) //Remove bonus script based on debuff type
+				(flag&BSF_REM_BUFF && sd->bonus_script[i].type == 1) || //Remove bonus script based on buff type
+				(flag&BSF_REM_DEBUFF && sd->bonus_script[i].type == 2)) //Remove bonus script based on debuff type
 			))) 
 		{
 			delete_timer(sd->bonus_script[i].tid,pc_bonus_script_timer);
@@ -10717,7 +10714,7 @@ void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag) {
 			count++;
 		}
 	}
-	if (count && !(flag&BONUS_FLAG_REM_ON_LOGOUT)) //Don't need to do this if log out
+	if (count && !(flag&BSF_REM_ON_LOGOUT)) //Don't need to calculate status when logout
 		status_calc_pc(sd,false);
 }
 

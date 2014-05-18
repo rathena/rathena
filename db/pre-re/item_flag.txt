@@ -4,15 +4,22 @@
 // <Flag>:
 // 1 - As Dead Branch item (will be logged at `branchlog` table and cannot be used at 'nobranch' mapflag)
 // 2 - As item group container, check player's inventory and weight before consumed
+// 4 - Can be sold to buying store
+//
+// NOTE: For importing support, if want to remove the original values here, use '-' sign before the flag value.
+//       Example want to remove '12355' (Xmas_Gift) from buyingstore list:
+//       12355,-4
 
-// Logged as Dead Branch item
+//****
+// Dead Branch items
 604,1 //Branch_Of_Dead_Tree
 12103,1 //Bloody_Dead_Branch
 12109,1 //Poring_Box
 12024,1 //Red_Pouch_Of_Surprise
 12258,1 //Bombring_Box
 
-// Item group container
+//****
+// Item group containers
 603,2 //Old_Blue_Box
 616,2 //Old_Card_Album
 617,2 //Old_Violet_Box
@@ -51,3 +58,1227 @@
 12702,2 //Old_Bleu_Box
 12714,2 //Easter_Scroll
 14596,2 //Pierre_Treasurebox
+
+//****
+// Buying store items
+//--- 2014 / 01 / 29
+12490,4	//Vivid_Notation
+//22516
+//22534
+//11563
+//11564
+//--- 2013 / 12 / 23
+//6832
+//11597
+//22699
+//22679
+//22687
+//6615
+//--- 2013 / 08 / 02
+//6750
+//6751
+//22648
+//22649
+//6797
+//11556
+//6770
+//6771
+//6772
+//6773
+//6774
+//6775
+//6776
+//6777
+//6778
+//6779
+//6780
+//6781
+//6782
+//11589
+//11590
+//22620
+//22621
+//--- 2013 / 04 / 16
+//6557
+//6558
+//6559
+//6560
+//6561
+//12812
+//12813
+//12814
+//12815
+//6592
+//6594
+//6595
+//6596
+//6597
+//6598
+//6599
+//6600
+//6601
+//6602
+//6603
+//6604
+//6605
+//6668
+7056,4	//Payroll_Of_Kafra
+//11557
+//11558
+//6607
+//6608
+//6609
+//6610
+//6611
+//6612
+//6613
+7228,4	//Gold_Bullion
+7229,4	//Silver_Bullion
+7230,4	//White_Gold_Bullion
+//6699
+//6700
+//6701
+//6702
+//6703
+//6704
+//6705
+//6706
+//6683
+//7640
+//7642
+//7643
+//7644
+//6521
+//6522
+//6531
+//6557
+//6558
+//6559
+//6560
+//6561
+//12812
+//12813
+//12814
+//12815
+714,4	//Emperium
+6381,4	//Field_Shovel
+6382,4	//Urn
+6393,4	//Round_Feather
+6394,4	//Golden_Feather
+6395,4	//Angel_Magic_Power
+//6403
+//6404
+//6405
+//6423
+//6469
+//6470
+//6471
+//6493
+//6496
+//6497
+//6498
+//6499
+//6508
+//6509
+//6510
+//6511
+//6512
+//6513
+//6514
+//6515
+//6516
+//6517
+//6518
+//6523
+//6524
+//6525
+7347,4	//Lab_Staff_Record
+7760,4	//Yaga_Magic_Book
+7762,4	//Yaga_Pestle
+7824,4	//Spirit_Liquor
+11519,4	//Beef_Toast
+11520,4	//Mora_Mandarin
+11521,4	//Pingui_Berry_Juice
+11522,4	//Red_Raffle_Sap
+11523,4	//Yellow_Raffle_Sap
+11524,4	//White_Raffle_Sap
+11525,4	//Mora_Hip_Tea
+11526,4	//Rafflecino
+//11532
+//11533
+//11534
+//11536
+//11537
+//11547
+//11548
+//11549
+12329,4	//Recall_MaleGM
+12330,4	//Recall_FemaleGM
+12342,4	//Manuk's_Opportunity
+12343,4	//Manuk's_Courage
+12344,4	//Pinguicula's_fruit_Jam
+12345,4	//Luciola's_Honey_Jam
+12348,4	//Manuk's_Faith
+12349,4	//Cornus'_Tears
+12350,4	//Angeling_Potion
+12351,4	//Shout_Megaphone
+12354,4	//Buche_De_Noel
+12355,4	//Xmas_Gift
+12356,4	//Louise_Costume_Box
+12418,4	//Full_SwingK
+12419,4	//Mana_Plus
+12422,4	//HP_Increase_Potion_(Small)
+12423,4	//HP_Increase_Potion_(Medium)
+12424,4	//HP_Increase_Potion_(Large)
+12425,4	//SP_Increase_Potion_(Small)
+12426,4	//SP_Increase_Potion_(Medium)
+12427,4	//SP_Increase_Potion_(Large)
+12428,4	//Concentrated_White_Potion_Z
+12429,4	//Savage_Full_Roast
+12430,4	//Cocktail_Warg_Blood
+12431,4	//Minor_Stew
+12432,4	//Siroma_Iced_Tea
+12433,4	//Drosera_Herb_Salad
+12434,4	//Petite_Tail_Noodles
+12436,4	//Vitata_500
+12437,4	//Concentrated_Ceromain_Soup
+12475,4	//Cure_Free
+12536,4	//NY_Rice_Cake_Soup
+12539,4	//Splendid_Box
+12561,4	//Mysterious_Seed
+12574,4	//Mora_Berry
+12575,4	//Arrow_Of_Elf_Cntr
+12576,4	//Hunting_Arrow_Cntr
+//12582
+//12608
+//12609
+//12612
+//12613
+//12614
+//12615
+//12616
+//12617
+//12618
+//12619
+//12620
+//12621
+//12623
+//12675
+//12676
+//12677
+//12678
+//12679
+//12680
+//12683
+//12690
+//12691
+//12692
+//12693
+//12694
+//12695
+//12698
+//12699
+//12700
+//12775
+//--- 2010 / 03 / 12
+601,4	//Wing_Of_Fly
+602,4	//Wing_Of_Butterfly
+603,4	//Old_Blue_Box
+604,4	//Branch_Of_Dead_Tree
+605,4	//Anodyne
+606,4	//Aloebera
+607,4	//Yggdrasilberry
+608,4	//Seed_Of_Yggdrasil
+609,4	//Amulet
+610,4	//Leaf_Of_Yggdrasil
+611,4	//Spectacles
+612,4	//Portable_Furnace
+613,4	//Iron_Hammer
+614,4	//Golden_Hammer
+615,4	//Oridecon_Hammer
+616,4	//Old_Card_Album
+617,4	//Old_Violet_Box
+618,4	//Worn_Out_Scroll
+619,4	//Unripe_Apple
+620,4	//Orange_Juice
+621,4	//Bitter_Herb
+622,4	//Rainbow_Carrot
+623,4	//Earthworm_The_Dude
+624,4	//Rotten_Fish
+625,4	//Lusty_Iron
+626,4	//Monster_Juice
+627,4	//Sweet_Milk
+628,4	//Well_Dried_Bone
+629,4	//Singing_Flower
+630,4	//Dew_Laden_Moss
+631,4	//Deadly_Noxious_Herb
+632,4	//Fatty_Chubby_Earthworm
+633,4	//Baked_Yam
+634,4	//Tropical_Banana
+635,4	//Horror_Of_Tribe
+636,4	//No_Recipient
+637,4	//Old_Broom
+638,4	//Silver_Knife_Of_Chaste
+639,4	//Armlet_Of_Obedience
+640,4	//Shining_Stone
+641,4	//Contracts_In_Shadow
+642,4	//Book_Of_Devil
+643,4	//Pet_Incubator
+644,4	//Gift_Box
+645,4	//Center_Potion
+656,4	//Awakening_Potion
+657,4	//Berserk_Potion
+658,4	//Union_Of_Tribe
+659,4	//Heart_Of_Her
+660,4	//Prohibition_Red_Candle
+661,4	//Sway_Apron
+662,4	//Inspector_Certificate
+663,4	//Korea_Rice_Cake
+664,4	//Gift_Box_1
+665,4	//Gift_Box_2
+666,4	//Gift_Box_3
+667,4	//Gift_Box_4
+668,4	//Handsei
+669,4	//Rice_Cake_Soup
+678,4	//Poison_Bottle
+679,4	//Gold_Pill
+681,4	//Memory_Of_Wedding
+682,4	//Realgar_Wine
+683,4	//Exorcize_Herb
+684,4	//Durian
+686,4	//Earth_Scroll_1_3
+687,4	//Earth_Scroll_1_5
+688,4	//Cold_Scroll_1_3
+689,4	//Cold_Scroll_1_5
+690,4	//Fire_Scroll_1_3
+691,4	//Fire_Scroll_1_5
+692,4	//Wind_Scroll_1_3
+693,4	//Wind_Scroll_1_5
+694,4	//Ghost_Scroll_1_3
+695,4	//Ghost_Scroll_1_5
+696,4	//Fire_Scroll_2_1
+697,4	//Fire_Scroll_2_5
+698,4	//Fire_Scroll_3_1
+699,4	//Fire_Scroll_3_5
+700,4	//Cold_Scroll_2_1
+12000,4	//Cold_Scroll_2_5
+12001,4	//Holy_Scroll_1_3
+12002,4	//Holy_Scroll_1_5
+12003,4	//Holy_Scroll_2_1
+12004,4	//Arrow_Container
+12005,4	//Iron_Arrow_Container
+12006,4	//Steel_Arrow_Container
+12007,4	//Ori_Arrow_Container
+12008,4	//Fire_Arrow_Container
+12009,4	//Silver_Arrow_Container
+12010,4	//Wind_Arrow_Container
+12011,4	//Stone_Arrow_Container
+12012,4	//Crystal_Arrow_Container
+12013,4	//Shadow_Arrow_Container
+12014,4	//Imma_Arrow_Container
+12015,4	//Rusty_Arrow_Container
+12016,4	//Speed_Up_Potion
+12017,4	//Slow_Down_Potion
+12018,4	//Fire_Cracker
+12020,4	//Water_Of_Darkness
+12027,4	//Giggling_Box
+12028,4	//Box_Of_Thunder
+12029,4	//Gloomy_Box
+12030,4	//Box_Of_Grudge
+12031,4	//Sleepy_Box
+12032,4	//Box_Of_Storm
+12033,4	//Box_Of_Sunlight
+12034,4	//Painting_Box
+12040,4	//Stone_Of_Intelligence_
+12041,4	//Str_Dish01
+12042,4	//Str_Dish02
+12043,4	//Str_Dish03
+12044,4	//Str_Dish04
+12045,4	//Str_Dish05
+12046,4	//Int_Dish01
+12047,4	//Int_Dish02
+12048,4	//Int_Dish03
+12049,4	//Int_Dish04
+12050,4	//Int_Dish05
+12051,4	//Vit_Dish01
+12052,4	//Vit_Dish02
+12053,4	//Vit_Dish03
+12054,4	//Vit_Dish04
+12055,4	//Vit_Dish05
+12056,4	//Agi_Dish01
+12057,4	//Agi_Dish02
+12058,4	//Agi_Dish03
+12059,4	//Agi_Dish04
+12060,4	//Agi_Dish05
+12061,4	//Dex_Dish01
+12062,4	//Dex_Dish02
+12063,4	//Dex_Dish03
+12064,4	//Dex_Dish04
+12065,4	//Dex_Dish05
+12066,4	//Luk_Dish01
+12067,4	//Luk_Dish02
+12068,4	//Luk_Dish03
+12069,4	//Luk_Dish04
+12070,4	//Luk_Dish05
+12071,4	//Str_Dish06
+12072,4	//Str_Dish07
+12073,4	//Str_Dish08
+12074,4	//Str_Dish09
+12075,4	//Str_Dish10
+12076,4	//Int_Dish06
+12077,4	//Int_Dish07
+12078,4	//Int_Dish08
+12079,4	//Int_Dish09
+12080,4	//Int_Dish10
+12081,4	//Vit_Dish06
+12082,4	//Vit_Dish07
+12083,4	//Vit_Dish08
+12084,4	//Vit_Dish09
+12085,4	//Vit_Dish10
+12086,4	//Agi_Dish06
+12087,4	//Agi_Dish07
+12088,4	//Agi_Dish08
+12089,4	//Agi_Dish09
+12090,4	//Agi_Dish10
+12091,4	//Dex_Dish06
+12092,4	//Dex_Dish07
+12093,4	//Dex_Dish08
+12094,4	//Dex_Dish09
+12095,4	//Dex_Dish10
+12096,4	//Luk_Dish06
+12097,4	//Luk_Dish07
+12098,4	//Luk_Dish08
+12099,4	//Luk_Dish09
+12100,4	//Luk_Dish10
+12101,4	//Citron
+12102,4	//Meat_Skewer
+12103,4	//Bloody_Dead_Branch
+12104,4	//Random_Quiver
+12105,4	//Set_Of_Taiming_Item
+12106,4	//Accessory_Box
+12107,4	//Wrapped_Mask
+12108,4	//Bundle_Of_Magic_Scroll
+12109,4	//Poring_Box
+12110,4	//First_Aid_Kit
+12111,4	//Food_Package
+12112,4	//Tropical_Sograt
+12113,4	//Vermilion_The_Beach
+12114,4	//Elemental_Fire
+12115,4	//Elemental_Water
+12116,4	//Elemental_Earth
+12117,4	//Elemental_Wind
+12118,4	//Resist_Fire
+12119,4	//Resist_Water
+12120,4	//Resist_Earth
+12121,4	//Resist_Wind
+12122,4	//Sesame_Pastry
+12123,4	//Honey_Pastry
+12124,4	//Rainbow_Cake
+12125,4	//Outdoor_Cooking_Kits
+12126,4	//Indoor_Cooking_Kits
+12127,4	//High_end_Cooking_Kits
+12128,4	//Imperial_Cooking_Kits
+12129,4	//Fantastic_Cooking_Kits
+12130,4	//Cookie_Bag
+12132,4	//Red_Bag
+12144,4	//Sphere_Case_Wind
+12145,4	//Sphere_Case_Darkness
+12146,4	//Sphere_Case_Poison
+12147,4	//Sphere_Case_Water
+12148,4	//Sphere_Case_Fire
+12149,4	//Bullet_Case
+12150,4	//Bullet_Case_Blood
+12151,4	//Bullet_Case_Silver
+12183,4	//Holy_Arrow_Quiver
+12184,4	//Mercenary_Red_Potion
+12185,4	//Mercenary_Blue_Potion
+12194,4	//Hometown_Gift
+12195,4	//Plain_Rice_Cake
+12196,4	//Hearty_Rice_Cake
+12197,4	//Salty_Rice_Cake
+12198,4	//Lucky_Rice_Cake
+12241,4	//M_Center_Potion
+12242,4	//M_Awakening_Potion
+12243,4	//M_Berserk_Potion
+12246,4	//Magic_Card_Album
+12260,4	//Cool_Summer_Outfit
+12290,4	//Mysterious_Can
+12291,4	//Mysterious_PET_Bottle
+12292,4	//Unripe_Fruit
+12293,4	//Dried_Yggdrasilberry
+12341,4	//Special_Alloy_Trap_Box
+12346,4	//Unripe_Acorn
+12347,4	//Acorn_Jelly
+12353,4	//Tiny_Waterbottle
+12358,4	//Fan_Of_Wind
+12359,4	//Very_Soft_Plant
+12360,4	//Very_Red_Juice
+12362,4	//Kuloren
+12364,4	//Staff_Of_Leader
+12365,4	//Charming_Lotus
+12366,4	//Gril_Doll
+12367,4	//Luxury_Whisky_Bottle
+12368,4	//Splendid_Mirror
+12369,4	//Oilpalm_Coconut
+12371,4	//Magical_Lithography
+12372,4	//Hell_Contract
+12373,4	//Boy's_Naivety
+12374,4	//Flaming_Ice
+12376,4	//Mysterious_Can2
+12377,4	//Mysterious_PET_Bottle2
+12379,4	//Pope's_Cookie
+12383,4	//Vulcan_Bullet_Magazine
+12392,4	//Repair_A
+12393,4	//Repair_B
+12394,4	//Repair_C
+12395,4	//Tantanmen
+12414,4	//Guarana_Candy
+12717,4	//Poison_Paralysis
+12718,4	//Poison_Leech
+12719,4	//Poison_Oblivion
+12720,4	//Poison_Disheart
+12721,4	//Poison_Numb
+12722,4	//Poison_Fever
+12723,4	//Poison_Laughing
+12724,4	//Poison_Fatigue
+12734,4	//Runstone_Quality
+12735,4	//Runstone_Ancient
+12736,4	//Runstone_Mystic
+12737,4	//Runstone_Ordinary
+12738,4	//Runstone_Rare
+506,4	//Green_Potion
+507,4	//Red_Herb
+508,4	//Yellow_Herb
+509,4	//White_Herb
+510,4	//Blue_Herb
+511,4	//Green_Herb
+512,4	//Apple
+513,4	//Banana
+514,4	//Grape
+515,4	//Carrot
+516,4	//Sweet_Potato
+517,4	//Meat
+518,4	//Honey
+519,4	//Milk
+520,4	//Leaflet_Of_Hinal
+521,4	//Leaflet_Of_Aloe
+522,4	//Fruit_Of_Mastela
+523,4	//Holy_Water
+525,4	//Panacea
+526,4	//Royal_Jelly
+528,4	//Monster's_Feed
+529,4	//Candy
+530,4	//Candy_Striper
+531,4	//Apple_Juice
+532,4	//Banana_Juice
+533,4	//Grape_Juice
+534,4	//Carrot_Juice
+535,4	//Pumpkin
+536,4	//Ice_Cream
+537,4	//Pet_Food
+538,4	//Well_Baked_Cookie
+539,4	//Piece_Of_Cake
+544,4	//Fish_Slice
+548,4	//Cheese
+549,4	//Nice_Sweet_Potato
+550,4	//Popped_Rice
+551,4	//Shusi
+553,4	//Bun
+564,4	//Rice_Ball
+566,4	//Tomyumkung
+567,4	//Prawn
+568,4	//Lemon
+569,4	//Novice_Potion
+570,4	//Lucky_Candy
+571,4	//Lucky_Candy_Cane
+572,4	//Lucky_Cookie
+574,4	//Egg
+576,4	//Prickly_Fruit
+577,4	//Grain
+578,4	//Strawberry
+579,4	//Delicious_Fish
+580,4	//Bread
+581,4	//Mushroom
+582,4	//Orange
+584,4	//Fish_Ball_Soup
+587,4	//Prickly_Fruit_
+591,4	//Caviar_Pancake
+592,4	//Jam_Pancake
+593,4	//Honey_Pancake
+594,4	//Sour_Cream_Pancake
+595,4	//Mushroom_Pancake
+11513,4	//Protect_Neck_Candy
+11515,4	//Coconut
+11516,4	//Asai_Fruit
+11517,4	//Puri_Potion
+701,4	//Ora_Ora
+702,4	//Animal_Blood
+703,4	//Hinalle
+704,4	//Aloe
+705,4	//Clover
+706,4	//Four_Leaf_Clover
+707,4	//Singing_Plant
+708,4	//Ment
+709,4	//Izidor
+710,4	//Illusion_Flower
+711,4	//Shoot
+712,4	//Flower
+713,4	//Empty_Bottle
+715,4	//Yellow_Gemstone
+716,4	//Red_Gemstone
+717,4	//Blue_Gemstone
+718,4	//Dark_Red_Jewel
+719,4	//Violet_Jewel
+720,4	//Skyblue_Jewel
+721,4	//Azure_Jewel
+722,4	//Scarlet_Jewel
+723,4	//Cardinal_Jewel
+724,4	//Cardinal_Jewel_
+725,4	//Red_Jewel
+726,4	//Blue_Jewel
+727,4	//White_Jewel
+728,4	//Golden_Jewel
+729,4	//Bluish_Green_Jewel
+730,4	//Crystal_Jewel
+731,4	//Crystal_Jewel_
+732,4	//Crystal_Jewel__
+733,4	//Crystal_Jewel___
+734,4	//Red_Frame
+735,4	//Blue_Porcelain
+736,4	//White_Platter
+737,4	//Black_Ladle
+738,4	//Pencil_Case
+739,4	//Rouge
+740,4	//Stuffed_Doll
+741,4	//Poring_Doll
+742,4	//Chonchon_Doll
+743,4	//Spore_Doll
+744,4	//Bunch_Of_Flowers
+745,4	//Wedding_Bouquet
+746,4	//Glass_Bead
+747,4	//Crystal_Mirror
+748,4	//Witherless_Rose
+749,4	//Frozen_Rose
+750,4	//Baphomet_Doll
+751,4	//Osiris_Doll
+752,4	//Grasshopper_Doll
+753,4	//Monkey_Doll
+754,4	//Raccoondog_Doll
+756,4	//Oridecon_Stone
+757,4	//Elunium_Stone
+901,4	//Danggie
+902,4	//Tree_Root
+903,4	//Reptile_Tongue
+904,4	//Scorpion's_Tail
+905,4	//Stem
+906,4	//Pointed_Scale
+907,4	//Resin
+908,4	//Spawn
+909,4	//Jellopy
+910,4	//Garlet
+911,4	//Scell
+912,4	//Zargon
+913,4	//Tooth_Of_Bat
+914,4	//Fluff
+915,4	//Chrysalis
+916,4	//Feather_Of_Birds
+917,4	//Talon
+918,4	//Sticky_Webfoot
+919,4	//Animal's_Skin
+920,4	//Claw_Of_Wolves
+921,4	//Mushroom_Spore
+922,4	//Orcish_Cuspid
+923,4	//Evil_Horn
+924,4	//Powder_Of_Butterfly
+925,4	//Bill_Of_Birds
+926,4	//Scale_Of_Snakes
+928,4	//Insect_Feeler
+929,4	//Immortal_Heart
+930,4	//Rotten_Bandage
+931,4	//Orcish_Voucher
+932,4	//Skel_Bone
+934,4	//Mementos
+935,4	//Shell
+936,4	//Scales_Shell
+937,4	//Posionous_Canine
+938,4	//Sticky_Mucus
+939,4	//Bee_Sting
+940,4	//Grasshopper's_Leg
+941,4	//Nose_Ring
+942,4	//Yoyo_Tail
+943,4	//Solid_Shell
+944,4	//Horseshoe
+945,4	//Raccoon_Leaf
+946,4	//Snail's_Shell
+947,4	//Horn
+948,4	//Bear's_Foot
+949,4	//Feather
+950,4	//Heart_Of_Mermaid
+951,4	//Fin
+952,4	//Cactus_Needle
+953,4	//Stone_Heart
+954,4	//Shining_Scales
+955,4	//Worm_Peelings
+956,4	//Gill
+957,4	//Decayed_Nail
+958,4	//Horrendous_Mouth
+959,4	//Rotten_Scale
+960,4	//Nipper
+961,4	//Conch
+962,4	//Tentacle
+963,4	//Sharp_Scale
+964,4	//Crap_Shell
+965,4	//Clam_Shell
+966,4	//Flesh_Of_Clam
+967,4	//Turtle_Shell
+968,4	//Voucher_Of_Orcish_Hero
+969,4	//Gold
+971,4	//Detrimindexta
+972,4	//Karvodailnirol
+973,4	//Counteragent
+974,4	//Mixture
+975,4	//Scarlet_Dyestuffs
+976,4	//Lemon_Dyestuffs
+978,4	//Cobaltblue_Dyestuffs
+979,4	//Darkgreen_Dyestuffs
+980,4	//Orange_Dyestuffs
+981,4	//Violet_Dyestuffs
+982,4	//White_Dyestuffs
+983,4	//Black_Dyestuffs
+984,4	//Oridecon
+985,4	//Elunium
+986,4	//Anvil
+987,4	//Oridecon_Anvil
+988,4	//Golden_Anvil
+989,4	//Emperium_Anvil
+990,4	//Boody_Red
+991,4	//Crystal_Blue
+992,4	//Wind_Of_Verdure
+993,4	//Yellow_Live
+994,4	//Flame_Heart
+995,4	//Mistic_Frozen
+996,4	//Rough_Wind
+997,4	//Great_Nature
+998,4	//Iron
+999,4	//Steel
+1000,4	//Star_Crumb
+1001,4	//Sparkling_Dust
+1002,4	//Iron_Ore
+1003,4	//Coal
+1004,4	//Patriotism_Marks
+1005,4	//Hammer_Of_Blacksmith
+1006,4	//Old_Magic_Book
+1007,4	//Penetration
+1008,4	//Frozen_Heart
+1009,4	//Sacred_Marks
+1010,4	//Phracon
+1011,4	//Emveretarcon
+1012,4	//Lizard_Scruff
+1013,4	//Colorful_Shell
+1014,4	//Jaws_Of_Ant
+1015,4	//Thin_N'_Long_Tongue
+1016,4	//Rat_Tail
+1017,4	//Moustache_Of_Mole
+1018,4	//Nail_Of_Mole
+1019,4	//Wooden_Block
+1020,4	//Long_Hair
+1021,4	//Dokkaebi_Horn
+1022,4	//Fox_Tail
+1023,4	//Fish_Tail
+1024,4	//Chinese_Ink
+1025,4	//Spiderweb
+1026,4	//Acorn
+1027,4	//Porcupine_Spike
+1028,4	//Wild_Boar's_Mane
+1029,4	//Tiger's_Skin
+1030,4	//Tiger_Footskin
+1031,4	//Limb_Of_Mantis
+1032,4	//Blossom_Of_Maneater
+1033,4	//Root_Of_Maneater
+1034,4	//Cobold_Hair
+1035,4	//Dragon_Canine
+1036,4	//Dragon_Scale
+1037,4	//Dragon_Train
+1038,4	//Petite_DiablOfs_Horn
+1039,4	//Petite_DiablOfs_Wing
+1040,4	//Elder_Pixie's_Beard
+1041,4	//Lantern
+1042,4	//Short_Leg
+1043,4	//Nail_Of_Orc
+1044,4	//Tooth_Of_
+1045,4	//Sacred_Masque
+1046,4	//Tweezer
+1047,4	//Head_Of_Medusa
+1048,4	//Slender_Snake
+1049,4	//Skirt_Of_Virgin
+1050,4	//Tendon
+1051,4	//Detonator
+1052,4	//Single_Cell
+1053,4	//Tooth_Of_Ancient_Fish
+1054,4	//Lip_Of_Ancient_Fish
+1055,4	//Earthworm_Peeling
+1056,4	//Grit
+1057,4	//Moth_Dust
+1058,4	//Wing_Of_Moth
+1059,4	//Transparent_Cloth
+1060,4	//Golden_Hair
+1061,4	//Starsand_Of_Witch
+1062,4	//Pumpkin_Head
+1063,4	//Sharpened_Cuspid
+1064,4	//Reins
+1065,4	//Booby_Trap
+1066,4	//Tree_Of_Archer_1
+1067,4	//Tree_Of_Archer_2
+1068,4	//Tree_Of_Archer_3
+1088,4	//Morocc_Potion
+1089,4	//Payon_Potion
+1092,4	//Empty_Cylinder
+1093,4	//Empty_Potion
+1094,4	//Short_Daenggie
+1095,4	//Needle_Of_Alarm
+1096,4	//Round_Shell
+1097,4	//Worn_Out_Page
+1098,4	//Manacles
+1099,4	//Worn_Out_Prison_Uniform
+6001,4	//Essence_Of_Fire
+6002,4	//Token_Of_Apostle
+6003,4	//Soul_Pendant
+6004,4	//Bapho_Doll
+6008,4	//Wood
+6010,4	//Pickaxe
+6020,4	//Fur
+6021,4	//Peaked_Hat
+6022,4	//Hard_Skin
+6023,4	//Mystic_Horn
+6032,4	//Horn_Of_Hilsrion
+6033,4	//Horn_Of_Tendrilion
+6073,4	//Dragon's_Mane
+6075,4	//Crystalized_Teardrop
+6086,4	//Withered_Flower
+6087,4	//Crystal_Of_Soul_01
+6088,4	//Crystal_Of_Soul_02
+6089,4	//Piece_Of_Darkness
+6090,4	//Purified_Bradium
+6091,4	//Dark_Red_Scale
+6095,4	//Flavored_Alcohol
+6096,4	//Fish_With_Blue_Back
+6097,4	//Pumpkin_Pie_
+6098,4	//Small_Snow_Flower
+6099,4	//Grilled_Rice_Cake
+6100,4	//Damp_Darkness
+6104,4	//Big_Cell
+6105,4	//Morning_Dew
+6106,4	//Well_Ripened_Berry
+6107,4	//Sunset_On_The_Rock
+6108,4	//Apple_Pudding
+6109,4	//Plant_Neutrient
+6110,4	//Vital_Flower
+6111,4	//Mystic_Stone
+6112,4	//Fresh_Plant
+6113,4	//Vital_Flower_
+6114,4	//Flame_Gemstone
+6115,4	//Bun_
+6120,4	//Face_Paint
+6123,4	//Surface_Paint
+6128,4	//Guillotine_Antidote
+6144,4	//Heartbroken_Tears
+6145,4	//Vulcan_Bullet
+6146,4	//Magic_Gear_Fuel
+6147,4	//Liquid_Condensed_Bullet
+6186,4	//Monkey_Wrench
+6189,4	//Magic_Book_FB
+6190,4	//Magic_Book_CB
+6191,4	//Magic_Book_LB
+6192,4	//Magic_Book_SG
+6193,4	//Magic_Book_LOV
+6194,4	//Magic_Book_MS
+6195,4	//Magic_Book_CM
+6196,4	//Magic_Book_TV
+6197,4	//Magic_Book_TS
+6198,4	//Magic_Book_JT
+6199,4	//Magic_Book_WB
+6200,4	//Magic_Book_HD
+6201,4	//Magic_Book_ES
+6202,4	//Magic_Book_ES_
+6203,4	//Magic_Book_CL
+6204,4	//Magic_Book_CR
+6205,4	//Magic_Book_DL
+6210,4	//Seed_Of_Horny_Plant
+6211,4	//Bloodsuck_Plant_Seed
+6212,4	//Bomb_Mushroom_Spore
+6213,4	//Explosive_Powder
+6214,4	//Smoke_Powder
+6215,4	//Tear_Gas
+6216,4	//Oil_Bottle
+6217,4	//Mandragora_Flowerpot
+6223,4	//Carnium
+6224,4	//Bradium
+6244,4	//Gun_Powder
+6245,4	//Black_Powder
+6246,4	//Yellow_Powder
+6247,4	//White_Powder
+6248,4	//Melange_Pot
+6249,4	//Savage_Meat
+6250,4	//Cooking_Skewer
+6251,4	//Black_Charcoal
+6252,4	//Wolf_Blood
+6253,4	//Cold_Ice
+6254,4	//Beef_Head_Meat
+6255,4	//Large_Cookpot
+6256,4	//Ice_Fragment
+6257,4	//Ice_Crystal
+6258,4	//Comodo_Tropic_Fruit
+6259,4	//Drocera_Tentacle
+6260,4	//Petti_Tail
+6261,4	//Fine_Noodle
+6262,4	//Cool_Gravy
+6263,4	//Coconut_Fruit
+6264,4	//Melon
+6265,4	//Pineapple
+6279,4	//Apple_Bomb_CB
+6280,4	//Pinepple_Bomb_CB
+6281,4	//Coconut_Bomb_CB
+6282,4	//Melon_Bomb_CB
+6283,4	//Banana_Bomb_CB
+6284,4	//Plant_Genetic_Grow
+6285,4	//Quality_Potion_Book
+6297,4	//Bottle_To_Throw
+6321,4	//Rakehorn_Helm
+6322,4	//Antler_Helm
+6323,4	//Twinhorn_Helm
+6324,4	//Singlehorn_Helm
+6325,4	//White_Spider_Limb
+6326,4	//Queen_Wing_Piece
+6360,4	//Scarlet_Pts
+6361,4	//Indigo_Pts
+6362,4	//Yellow_Wish_Pts
+6363,4	//Lime_Green_Pts
+7001,4	//Mould_Powder
+7002,4	//Ogre_Tooth
+7003,4	//Anolian_Skin
+7004,4	//Mud_Lump
+7005,4	//Skull
+7006,4	//Wing_Of_Red_Bat
+7007,4	//Claw_Of_Rat
+7008,4	//Stiff_Horn
+7009,4	//Glitter_Shell
+7010,4	//Tail_Of_Steel_Scorpion
+7011,4	//Claw_Of_Monkey
+7012,4	//Tough_Scalelike_Stem
+7013,4	//Coral_Reef
+7014,4	//Old_Portrait
+7015,4	//Bookclip_In_Memory
+7016,4	//Spoon_Stub
+7017,4	//Executioner's_Mitten
+7018,4	//Young_Twig
+7019,4	//Loki's_Whispers
+7020,4	//Mother's_Nightmare
+7021,4	//Foolishness_Of_Blind
+7022,4	//Old_Hilt
+7023,4	//Blade_Lost_In_Darkness
+7024,4	//Bloody_Edge
+7026,4	//Key_Of_Clock_Tower
+7027,4	//Underground_Key
+7030,4	//Claw_Of_Desert_Wolf
+7031,4	//Old_Frying_Pan
+7032,4	//Piece_Of_Egg_Shell
+7033,4	//Poison_Spore
+7034,4	//Red_Socks_With_Holes
+7035,4	//Matchstick
+7036,4	//Fang_Of_Garm
+7038,4	//Yarn
+7041,4	//Fine_Grit
+7043,4	//Fine_Sand
+7047,4	//Alice's_Apron
+7048,4	//Talon_Of_Griffin
+7049,4	//Stone
+7053,4	//Cyfar
+7054,4	//Brigan
+7055,4	//Animal_Pooopoo
+7056,4	//Payroll_Of_Kafra
+7057,4	//Gallar_Horn
+7058,4	//Gullraifnir
+7063,4	//Soft_Feather
+7064,4	//Dragon_Fly_Wing
+7065,4	//Sea_Otter_Leather
+7066,4	//Ice_Piece
+7067,4	//Stone_Piece
+7068,4	//Burn_Tree
+7069,4	//Broken_Armor_Piece
+7070,4	//Broken_Shell
+7071,4	//Tatters_Clothes
+7072,4	//Rust_Suriken
+7073,4	//Jewel_Of_Prayer
+7074,4	//Iron_Glove
+7075,4	//Iron_Maiden
+7076,4	//Mystery_Wheel
+7077,4	//Silver_Fancy
+7078,4	//Anger_Of_Valkurye
+7079,4	//Feather_Of_Angel
+7080,4	//Foot_Step_Of_Cat
+7081,4	//Beard_Of_Women
+7082,4	//Root_Of_Stone
+7083,4	//Soul_Of_Fish
+7084,4	//Saliva_Of_Bird
+7085,4	//Tendon_Of_Bear
+7086,4	//Symbol_Of_Sun
+7087,4	//Breath_Of_Soul
+7088,4	//Crystal_Of_Snow
+7089,4	//Indication_Of_Tempest
+7090,4	//Slilince_Wave
+7091,4	//Rough_Billows
+7092,4	//Air_Stream
+7093,4	//Wheel
+7094,4	//Mystery_Piece
+7095,4	//Broken_Steel_Piece
+7096,4	//Cold_Magma
+7097,4	//Burning_Heart
+7098,4	//Live_Coal
+7099,4	//Old_Magic_Circle
+7100,4	//Sharp_Leaf
+7101,4	//Peco_Wing_Feather
+7102,4	//Hideous_Dream
+7103,4	//Unknown_Liquid_Bottle
+7104,4	//Fake_Angel_Wing
+7105,4	//Fake_Angel_Loop
+7106,4	//Goat's_Horn
+7107,4	//Gaoat's_Skin
+7108,4	//Boroken_Shiled_Piece
+7109,4	//Shine_Spear_Blade
+7110,4	//Vroken_Sword
+7111,4	//Smooth_Paper
+7112,4	//Fright_Paper_Blade
+7113,4	//Broken_Pharaoh_Symbol
+7114,4	//Tutankhamen's_Mask
+7115,4	//Harpy's_Feather
+7116,4	//Harpy's_Claw
+7117,4	//Rent_Spell_Book
+7118,4	//Rent_Scroll
+7119,4	//Spawns
+7120,4	//Burning_Horse_Shoe
+7121,4	//Honey_Jar
+7122,4	//Hot_Hair
+7123,4	//Dragon's_Skin
+7124,4	//Sand_Lump
+7125,4	//Scropion's_Nipper
+7126,4	//Large_Jellopy
+7127,4	//Alcol_Create_Book
+7128,4	//FireBottle_Create_Book
+7129,4	//Acid_Create_Book
+7130,4	//Plant_Create_Book
+7131,4	//Mine_Create_Book
+7132,4	//Coating_Create_Book
+7133,4	//Slim_Potion_Create_Book
+7134,4	//Medicine_Bowl
+7140,4	//Seed_Of_Life
+7141,4	//Yggdrasilberry_Dew
+7143,4	//Life_Force_Pot
+7144,4	//Normal_Potion_Book
+7147,4	//Jasmin
+7149,4	//Yellow_Plate
+7150,4	//Bamboo_Cut
+7151,4	//Oil_Paper
+7152,4	//Glossy_Hair
+7153,4	//Old_Japaness_Clothes
+7154,4	//Poison_Powder
+7155,4	//Poison_Toad's_Skin
+7156,4	//Broken_Shuriken
+7157,4	//Black_Mask
+7158,4	//Broken_Wine_Vessel
+7159,4	//Tengu's_Nose
+7160,4	//Lord's_Passable_Ticket
+7161,4	//Black_Bear's_Skin
+7162,4	//Cloud_Piece
+7163,4	//Sharp_Feeler
+7164,4	//Hard_Peach
+7165,4	//Limpid_Celestial_Robe
+7166,4	//Soft_Silk_Cloth
+7167,4	//Mystery_Iron_Bit
+7168,4	//Great_Wing
+7169,4	//Taegeuk_Plate
+7170,4	//Tuxedo
+7171,4	//Leopard_Skin
+7172,4	//Leopard_Talon
+7174,4	//Packing_Ribbon
+7175,4	//Packing_Paper
+7182,4	//Cacao
+7186,4	//Thin_Stem
+7187,4	//Festival_Mask
+7188,4	//Browny_Root
+7189,4	//Heart_Of_Tree
+7190,4	//Solid_Peeling
+7191,4	//Lamplight
+7192,4	//Blade_Of_Pinwheel
+7193,4	//Germinating_Sprout
+7194,4	//Soft_Leaf
+7195,4	//Air_Rifle
+7196,4	//Shoulder_Protection
+7197,4	//Tough_Vines
+7198,4	//Great_Leaf
+7200,4	//Flexible_String
+7201,4	//Log
+7202,4	//Beetle_Nipper
+7203,4	//Solid_Twig
+7204,4	//Gunpowder
+7205,4	//Piece_Of_Black_Cloth
+7206,4	//Black_Kitty_Doll
+7207,4	//Old_Manteau
+7208,4	//Rusty_Cleaver
+7209,4	//Dullahan's_Helm
+7210,4	//Dullahan_Armor
+7211,4	//Rojerta_Piece
+7212,4	//Hanging_Doll
+7213,4	//Needle_Pouch
+7214,4	//Bat_Cage
+7215,4	//Broken_Needle
+7216,4	//Red_Scarf
+7217,4	//Spool
+7218,4	//Rotten_Rope
+7219,4	//Striped_Socks
+7220,4	//Ectoplasm
+7221,4	//Tangled_Chain
+7222,4	//Tree_Knot
+7223,4	//Distorted_Portrait
+7225,4	//Pumpkin_Bucket
+7226,4	//Pill
+7262,4	//Fan
+7263,4	//Cat_Eyed_Stone
+7264,4	//Dried_Sand
+7265,4	//Dragon_Horn
+7266,4	//Dragon_Fang
+7267,4	//Tiger_Skin_Panties
+7268,4	//Little_Blacky_Ghost
+7269,4	//Bib
+7270,4	//Milk_Bottle
+7277,4	//Munak_Doll
+7286,4	//Chilli
+7289,4	//Olivine
+7290,4	//Phlogopite
+7291,4	//Agate
+7292,4	//Muscovite
+7293,4	//Rose_Quartz
+7294,4	//Turquoise
+7295,4	//Citrine
+7296,4	//Pyroxene
+7297,4	//Biotite
+7298,4	//Leaf_Clothes
+7299,4	//Bamboo_Basket
+7300,4	//Gemstone
+7301,4	//Sword_Accessory
+7303,4	//Bag_Of_Rice
+7312,4	//Jubilee
+7315,4	//Dark_Crystal_Fragment
+7316,4	//Long_Limb
+7317,4	//Screw
+7318,4	//Old_Pick
+7319,4	//Old_Steel_Plate
+7320,4	//Air_Pollutant
+7321,4	//Fragment_Of_Crystal
+7322,4	//Poisonous_Gas
+7323,4	//Battered_Kettle
+7325,4	//Tube
+7326,4	//Fluorescent_Liquid
+7327,4	//Headlamp
+7340,4	//Will_Of_Darkness
+7345,4	//Armlet_Of_Prisoner
+7352,4	//Transparent_Plate01
+7353,4	//Transparent_Plate02
+7354,4	//Transparent_Plate03
+7355,4	//Transparent_Plate04
+7356,4	//Piece_Of_Crest1
+7357,4	//Piece_Of_Crest2
+7358,4	//Piece_Of_Crest3
+7359,4	//Piece_Of_Crest4
+7419,4	//Embryo_HandBook
+7433,4	//Scroll
+7434,4	//Elemental_Potion_Book
+7435,4	//Golden_Bracelet
+7436,4	//Piece_Of_Memory_Green
+7437,4	//Piece_Of_Memory_Purple
+7438,4	//Piece_Of_Memory_Blue
+7439,4	//Piece_Of_Memory_Red
+7440,4	//Red_Feather
+7441,4	//Blue_Feather
+7442,4	//Cursed_Seal
+7443,4	//Tri_Headed_Dragon_Head
+7444,4	//Treasure_Box
+7445,4	//Dragonball_Green
+7446,4	//Dragonball_Blue
+7447,4	//Dragonball_Red
+7448,4	//Dragonball_Yellow
+7449,4	//Bloody_Page
+7450,4	//Piece_Of_Bone_Armor
+7451,4	//Scale_Of_Red_Dragon
+7452,4	//Yellow_Spice
+7453,4	//Sweet_Sauce
+7454,4	//Plain_Sauce
+7455,4	//Hot_Sauce
+7456,4	//Red_Spice
+7457,4	//Cooking_Oil
+7472,4	//Cookbook01
+7473,4	//Cookbook02
+7474,4	//Cookbook03
+7475,4	//Cookbook04
+7476,4	//Cookbook05
+7477,4	//Cookbook06
+7478,4	//Cookbook07
+7479,4	//Cookbook08
+7480,4	//Cookbook09
+7481,4	//Cookbook10
+7482,4	//Pot
+7507,4	//Sturdy_Iron_Piece
+7510,4	//Valhalla_Flower
+7511,4	//Rune_Of_Darkness
+7512,4	//Burnt_Parts
+7513,4	//Pocket_Watch
+7521,4	//Flame_Stone
+7522,4	//Ice_Stone
+7523,4	//Wind_Stone
+7524,4	//Shadow_Orb
+7561,4	//Ice_Heart
+7562,4	//Ice_Scale
+7563,4	//Bloody_Rune
+7564,4	//Rotten_Meat
+7565,4	//Sticky_Poison
+7566,4	//Will_Of_Darkness_
+7567,4	//Suspicious_Hat
+7568,4	//White_Mask
+7574,4	//Ice_Particle
+7751,4	//Old_White_Cloth
+7752,4	//Clattering_Skull
+7753,4	//Broken_Farming_Utensil
+7754,4	//Broken_Crown
+7830,4	//Goddess_Tear
+7831,4	//Valkyrie_Token
+7832,4	//Brynhild_Armor_Piece
+7833,4	//Hero_Remains
+7834,4	//Andvari_Ring
+7835,4	//Dusk_Glow
+7836,4	//Dawn_Essence
+7837,4	//Cold_Moonlight
+7838,4	//Hazy_Starlight
+7931,4	//Poison_Kit
+7932,4	//Poison_Herb_Nerium
+7933,4	//Poison_Herb_Rantana
+7934,4	//Poison_Herb_Makulata
+7935,4	//Poison_Herb_Seratum
+7936,4	//Poison_Herb_Scopolia
+7937,4	//Poison_Herb_Amoena
+7938,4	//Light_Granule
+7939,4	//Elder_Branch
+7940,4	//Special_Alloy_Trap
+11000,4	//Prontera_Book_01
+11001,4	//Adventure_Story01
+11002,4	//Great_Chef_Orleans01
+11003,4	//Legend_Of_Kafra01
+11004,4	//Mercenary_Rebellion
+11005,4	//Tyrant_Schmidt
+11006,4	//Blood_Flower01
+11007,4	//Blood_Flower02
+11008,4	//Barmund
+11009,4	//Adventure_Story02
+11020,4	//Japan_Book1
+11021,4	//Japan_Book2
+11022,4	//Mix_Cook_Book
+11023,4	//Increase_Stamina_Study
+11024,4	//Vital_Drink_CB

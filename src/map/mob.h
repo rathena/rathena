@@ -285,7 +285,7 @@ int mob_timer_delete(int tid, unsigned int tick, int id, intptr_t data);
 int mob_deleteslave(struct mob_data *md);
 
 int mob_random_class (int *value, size_t count);
-int mob_get_random_id(int type, int flag, int lv);
+uint16 mob_get_random_id(uint8 type, uint8 flag, uint16 lv);
 int mob_class_change(struct mob_data *md,int mob_id);
 int mob_warpslave(struct block_list *bl, int range);
 int mob_linksearch(struct block_list *bl,va_list ap);

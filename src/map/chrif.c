@@ -1816,11 +1816,11 @@ int chrif_save_bsdata(struct map_session_data *sd) {
 	WFIFOW(char_fd,0) = 0x2b2e;
 	WFIFOL(char_fd,4) = sd->status.char_id;
 	
-	i = BONUS_FLAG_REM_ON_LOGOUT; //Remove bonus with this flag
+	i = BSF_REM_ON_LOGOUT; //Remove bonus with this flag
 	if (battle_config.debuff_on_logout&1) //Remove negative buffs
-		i |= BONUS_FLAG_REM_DEBUFF;
+		i |= BSF_REM_DEBUFF;
 	if (battle_config.debuff_on_logout&2) //Remove positive buffs
-		i |= BONUS_FLAG_REM_BUFF;
+		i |= BSF_REM_BUFF;
 	
 	//Clear data that won't be stored
 	pc_bonus_script_clear(sd,i);

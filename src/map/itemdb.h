@@ -10,31 +10,34 @@
 
 /// 32k array entries in array (the rest goes to the db)
 #define MAX_ITEMDB 0x8000
-///Use apple for unknown items.
+/// Use apple for unknown items.
 #define UNKNOWN_ITEM_ID 512
 /// The maximum number of item delays
 #define MAX_ITEMDELAYS	10
-///Designed for search functions, species max number of matches to display.
+/// Designed for search functions, species max number of matches to display.
 #define MAX_SEARCH	5
-///Maximum amount of items a combo may require
+/// Maximum amount of items a combo may require
 #define MAX_ITEMS_PER_COMBO 6
 
-//The only item group required by the code to be known. See const.txt for the full list.
+// The only item group required by the code to be known. See const.txt for the full list.
+/// Finding Ore item group ID
 #define IG_FINDINGORE 6
+/// Potion group ID
 #define IG_POTION 37
 
-#define MAX_ITEMGROUP 400 ///The max. item group count (increase this when needed). TODO: Remove this limit and use dynamic size or DBMap if needed
-
-#define MAX_ITEMGROUP_RANDGROUP 4	///Max group for random item (increase this when needed). TODO: Remove this limit and use dynamic size if needed
+///The max. item group count (increase this when needed). TODO: Remove this limit and use dynamic size or DBMap if needed
+#define MAX_ITEMGROUP 400
+///Max group for random item (increase this when needed). TODO: Remove this limit and use dynamic size if needed
+#define MAX_ITEMGROUP_RANDGROUP 4
 
 #define CARD0_FORGE 0x00FF
 #define CARD0_CREATE 0x00FE
 #define CARD0_PET ((short)0xFF00)
 
-///Marks if the card0 given is "special" (non-item id used to mark pets/created items. [Skotlex]
+/// Marks if the card0 given is "special" (non-item id used to mark pets/created items. [Skotlex]
 #define itemdb_isspecial(i) (i == CARD0_FORGE || i == CARD0_CREATE || i == CARD0_PET)
 
-///Enum of item id (for hardcoded purpose)
+/// Enum of item id (for hardcoded purpose)
 enum item_itemid {
 	ITEMID_RED_POTION					= 501,
 	ITEMID_YELLOW_POTION				= 503,
@@ -114,7 +117,7 @@ enum item_itemid {
 	ITEMID_JOB_MANUAL50					= 14592,
 };
 
-///Mercenary Scrolls
+/// Mercenary Scrolls
 enum mercenary_scroll_item_list {
 	ITEMID_BOW_MERCENARY_SCROLL1 = 12153,
 	ITEMID_BOW_MERCENARY_SCROLL2,
@@ -148,7 +151,7 @@ enum mercenary_scroll_item_list {
 	ITEMID_SPEARMERCENARY_SCROLL10,
 };
 
-///Rune Knight
+/// Rune Knight items
 enum rune_item_list {
 	ITEMID_NAUTHIZ		= 12725,
 	ITEMID_RAIDO,
@@ -162,7 +165,7 @@ enum rune_item_list {
 	ITEMID_LUX_ANIMA	= 22540,
 };
 
-///Mechanic
+/// Mechanic items
 enum mechanic_item_list {
 	ITEMID_ACCELERATOR				= 2800,
 	ITEMID_HOVERING_BOOSTER,
@@ -184,7 +187,7 @@ enum mechanic_item_list {
 	ITEMID_REPAIR_C,
 };
 
-///Genetic
+/// Genetic items
 enum genetic_item_list {
 	ITEMID_SEED_OF_HORNY_PLANT			= 6210,
 	ITEMID_BLOODSUCK_PLANT_SEED			= 6211,
@@ -239,7 +242,7 @@ enum genetic_item_list {
 	ITEMID_BLACK_THING_TO_THROW,
 };
 
-///Guillotine Cross
+/// Guillotine Cross poison items
 enum poison_item_list {
 	ITEMID_PARALYSE = 12717,
 	ITEMID_LEECHESEND,
@@ -251,7 +254,7 @@ enum poison_item_list {
 	ITEMID_VENOMBLEED,
 };
 
-///Spell Books
+/// Spell Books
 enum spell_book_item_list {
 	ITEMID_MAGIC_BOOK_FB = 6189,
 	ITEMID_MAGIC_BOOK_CB,
@@ -272,7 +275,7 @@ enum spell_book_item_list {
 	ITEMID_MAGIC_BOOK_DL,
 };
 
-///Cash Food
+/// Cash Food
 enum cash_food_item_list {
 	ITEMID_STR_DISH10_  = 12202,
 	ITEMID_AGI_DISH10_,
@@ -282,12 +285,13 @@ enum cash_food_item_list {
 	ITEMID_VIT_DISH10_,
 };
 
-///Item No Use List
+/// Item No Use flags
 enum item_nouse_list {
 	NOUSE_SITTING = 0x01,
+	//! TODO
 };
 
-///Item job
+/// Item job
 enum e_item_job {
 	ITEMJ_NORMAL      = 0x01,
 	ITEMJ_UPPER       = 0x02,
@@ -297,6 +301,7 @@ enum e_item_job {
 	ITEMJ_THIRD_BABY  = 0x20,
 };
 
+/// Ammo type
 enum e_item_ammo {
 	AMMO_ARROW = 1,
 	AMMO_THROWABLE_DAGGER,
@@ -309,143 +314,148 @@ enum e_item_ammo {
 	AMMO_THROWABLE_ITEM, ///Sling items
 };
 
-///Item combo struct
+/// Item combo struct
 struct item_combo {
-	struct script_code *script;
-	unsigned short *nameid;/* nameid array */
-	unsigned char count;
-	unsigned short id;/* id of this combo */
-	bool isRef;/* whether this struct is a reference or the master */
+	struct script_code *script; /// Script
+	unsigned short *nameid; /// Item ID Array
+	unsigned char count; /// Number of item needed
+	unsigned short id; /// Combo ID
+	bool isRef; /// Whether this struct is a reference or the master
 };
 
-///Main item data struct
+/// Main item data struct
 struct item_data {
-	uint16 nameid;
-	char name[ITEM_NAME_LENGTH],jname[ITEM_NAME_LENGTH];
+	uint16 nameid; /// Item ID
+	char name[ITEM_NAME_LENGTH], /// AEGIS name
+		jname[ITEM_NAME_LENGTH]; /// English name
 
 	//Do not add stuff between value_buy and view_id (see how getiteminfo works)
-	int value_buy;
-	int value_sell;
-	int type;
-	int maxchance; //For logs, for external game info, for scripts: Max drop chance of this item (e.g. 0.01% , etc.. if it = 0, then monsters don't drop it, -1 denotes items sold in shops only) [Lupus]
-	int sex;
-	int equip;
-	int weight;
-	int atk;
-	int def;
-	int range;
-	int slot;
+	int value_buy; /// Buy value
+	int value_sell; /// Sell value
+	int type; /// Item type
+	int maxchance; /// For logs, for external game info, for scripts: Max drop chance of this item (e.g. 0.01% , etc.. if it = 0, then monsters don't drop it, -1 denotes items sold in shops only) [Lupus]
+	int sex; /// Gender restriction
+	int equip; /// Equip position (enum equip_pos EQP_*)
+	int weight; /// Weight
+	int atk; /// Attack power
+	int def; /// Defense power
+	int range; /// Range
+	int slot; /// Slot
 	int look;
-	int elv;
-	int wlv;
-	int view_id;
+	int elv; /// Required Base Level
+	int wlv; /// Weapon Level
+	int view_id; /// View ID
 #ifdef RENEWAL
-	int matk;
-	int elvmax;/* maximum level for this item */
+	int matk; /// MAtk
+	int elvmax; /// aximum level for this item
 #endif
-
-	int delay;
+	int delay; /// Delay usage
 //Lupus: I rearranged order of these fields due to compatibility with ITEMINFO script command
 //		some script commands should be revised as well...
-	unsigned int class_base[3];	//Specifies if the base can wear this item (split in 3 indexes per type: 1-1, 2-1, 2-2)
-	unsigned class_upper : 6; //Specifies if the class-type can equip it (0x01: normal, 0x02: trans, 0x04: baby, 0x08:third, 0x10:trans-third, 0x20-third-baby)
+	unsigned int class_base[3];	/// Specifies if the base can wear this item (split in 3 indexes per type: 1-1, 2-1, 2-2)
+	unsigned class_upper : 6; /// Specifies if the class-type can equip it (0x01: normal, 0x02: trans, 0x04: baby, 0x08:third, 0x10:trans-third, 0x20-third-baby)
 	struct {
-		unsigned short chance;
-		int id;
-	} mob[MAX_SEARCH]; //Holds the mobs that have the highest drop rate for this item. [Skotlex]
-	struct script_code *script;	//Default script for everything.
-	struct script_code *equip_script;	//Script executed once when equipping.
-	struct script_code *unequip_script;//Script executed once when unequipping.
+		unsigned short chance; /// Chance
+		int id; /// Monster ID
+	} mob[MAX_SEARCH]; /// Holds the mobs that have the highest drop rate for this item. [Skotlex]
+	struct script_code *script; /// Default script for everything.
+	struct script_code *equip_script; /// Script executed once when equipping.
+	struct script_code *unequip_script; /// Script executed once when unequipping.
 	struct {
-		unsigned available : 1;
-		uint32 no_equip;
-		unsigned no_refine : 1;	// [celest]
-		unsigned delay_consume : 1;	// Signifies items that are not consumed immediately upon double-click [Skotlex]
-		unsigned trade_restriction : 9;	//Item restrictions mask [Skotlex]
-		unsigned autoequip: 1;
-		unsigned buyingstore : 1;
-		unsigned dead_branch : 1; // As dead branch item. Logged at `branchlog` table and cannot be used at 'nobranch' mapflag [Cydh]
-		unsigned group : 1; // As item group container [Cydh]
-	} flag;
-	struct {// item stacking limitation
-		unsigned short amount;
-		unsigned int inventory:1;
-		unsigned int cart:1;
-		unsigned int storage:1;
-		unsigned int guildstorage:1;
-	} stack;
-	struct {// used by item_nouse.txt
-		unsigned int flag;
-		unsigned short override;
-	} item_usage;
-	short gm_lv_trade_override;	//GM-level to override trade_restriction
+		unsigned available : 1; /// Using other item view ID
+		uint32 no_equip; /// No Equip in restriction map
+		unsigned no_refine : 1;	/// Cannot be refined [celest]
+		unsigned delay_consume : 1;	/// Signifies items that are not consumed immediately upon double-click [Skotlex]
+		unsigned trade_restriction : 9;	/// Item trade restrictions mask [Skotlex]
+		unsigned autoequip: 1; /// Auto equip
+		unsigned buyingstore : 1; /// Can be sold to buying store
+		unsigned dead_branch : 1; /// As dead branch item. Logged at `branchlog` table and cannot be used at 'nobranch' mapflag [Cydh]
+		unsigned group : 1; /// As item group container [Cydh]
+	} flag; /// Item Flags
+	struct {
+		unsigned short amount; /// Max amount
+		unsigned int inventory:1; /// Check stack amount in inventory
+		unsigned int cart:1; /// Check stack amount in cart
+		unsigned int storage:1; /// Check stack amount in storage
+		unsigned int guildstorage:1; /// Check stack amount in guild storage
+	} stack; /// Item stacking limitation
+	struct {
+		unsigned int flag; /// Flag: &1 - cannot be used while sitting
+		unsigned short override; /// GM Level to override
+	} item_usage; /// Item usage restrictions
+	short gm_lv_trade_override;	/// GM-level to override trade_restriction
 	/* bugreport:309 */
-	struct item_combo **combos;
-	unsigned char combos_count;
+	struct item_combo **combos; /// Combo avaiable for this item
+	unsigned char combos_count; /// Number of available combos
 };
 
 /* Struct of item group entry */
 struct s_item_group {
-	uint16 nameid, ///item id
-		duration; ///duration if item as rental item (in minute)
-	uint16 amount; ///amount of item will be obtained
-	bool isAnnounced, ///broadcast if player get this item
-		isNamed; ///named the item (if possible)
-	char bound; ///makes the item as bound item (according to bound type)
+	uint16 nameid, /// Item ID
+		duration; /// Duration if item as rental item (in minute)
+	uint16 amount; /// Amount of item will be obtained
+	bool isAnnounced, /// Broadcast if player get this item
+		isNamed; /// Named the item (if possible)
+	char bound; /// Makes the item as bound item (according to bound type)
 };
 
 /* Struct of random group */
 struct s_item_group_random {
-	struct s_item_group *data;
-	uint16 data_qty;
+	struct s_item_group *data; /// Random group entries
+	uint16 data_qty; /// Number of random entries
 };
 
 /* Struct of item group that will be used for db */
 struct s_item_group_db {
-	struct s_item_group *must;
-	uint16 must_qty;
+	struct s_item_group *must; /// Must items
+	uint16 must_qty; /// Number of must items
 	struct s_item_group_random random[MAX_ITEMGROUP_RANDGROUP]; //! TODO: Move this fixed array to dynamic size if needed.
 };
 
 struct item_data* itemdb_searchname(const char *name);
 int itemdb_searchname_array(struct item_data** data, int size, const char *str);
 struct item_data* itemdb_load(int nameid);
-struct item_data* itemdb_search(int nameid);
-struct item_data* itemdb_exists(int nameid);
-#define itemdb_name(n) itemdb_search(n)->name
-#define itemdb_jname(n) itemdb_search(n)->jname
-#define itemdb_type(n) itemdb_search(n)->type
-#define itemdb_atk(n) itemdb_search(n)->atk
-#define itemdb_def(n) itemdb_search(n)->def
+struct item_data* itemdb_search(uint16 nameid);
+struct item_data* itemdb_exists(uint16 nameid);
+
+// Item Accessors
+#define itemdb_name(n) itemdb_search(n)->name /// 'AEGIS' name
+#define itemdb_jname(n) itemdb_search(n)->jname /// 'English' name
+#define itemdb_type(n) itemdb_search(n)->type /// Item type
+#define itemdb_value_buy(n) itemdb_search(n)->value_buy /// Buy value
+#define itemdb_value_sell(n) itemdb_search(n)->value_sell /// Sell value
+#define itemdb_atk(n) itemdb_search(n)->atk /// Attack
+#define itemdb_def(n) itemdb_search(n)->def /// Defense
 #define itemdb_look(n) itemdb_search(n)->look
-#define itemdb_weight(n) itemdb_search(n)->weight
-#define itemdb_equip(n) itemdb_search(n)->equip
-#define itemdb_usescript(n) itemdb_search(n)->script
-#define itemdb_equipscript(n) itemdb_search(n)->script
-#define itemdb_wlv(n) itemdb_search(n)->wlv
-#define itemdb_range(n) itemdb_search(n)->range
-#define itemdb_slot(n) itemdb_search(n)->slot
-#define itemdb_available(n) (itemdb_search(n)->flag.available)
-#define itemdb_traderight(n) (itemdb_search(n)->flag.trade_restriction)
-#define itemdb_viewid(n) (itemdb_search(n)->view_id)
-#define itemdb_autoequip(n) (itemdb_search(n)->flag.autoequip)
-#define itemdb_is_rune(n) ((n >= ITEMID_NAUTHIZ && n <= ITEMID_HAGALAZ) || n == ITEMID_LUX_ANIMA)
-#define itemdb_is_element(n) (n >= ITEMID_SCARLET_PTS && n <= ITEMID_LIME_GREEN_PTS)
-#define itemdb_is_spellbook(n) (n >= ITEMID_MAGIC_BOOK_FB && n <= ITEMID_MAGIC_BOOK_DL)
-#define itemdb_is_poison(n) (n >= ITEMID_PARALYSE && n <= ITEMID_VENOMBLEED)
-#define itemid_isgemstone(id) ( (id) >= ITEMID_YELLOW_GEMSTONE && (id) <= ITEMID_BLUE_GEMSTONE )
-#define itemdb_iscashfood(id) ( (id) >= ITEMID_STR_DISH10_ && (id) <= ITEMID_VIT_DISH10_ )
-#define itemdb_is_GNbomb(n) (n >= ITEMID_APPLE_BOMB && n <= ITEMID_VERY_HARD_LUMP)
-#define itemdb_is_GNthrowable(n) (n >= ITEMID_MYSTERIOUS_POWDER && n <= ITEMID_BLACK_THING_TO_THROW)
+#define itemdb_weight(n) itemdb_search(n)->weight /// Weight
+#define itemdb_equip(n) itemdb_search(n)->equip /// Equip position
+#define itemdb_usescript(n) itemdb_search(n)->script /// Script
+#define itemdb_equipscript(n) itemdb_search(n)->equip_script /// Equip script
+#define itemdb_unequipscript(n) itemdb_search(n)->unequip_script /// Unequip script
+#define itemdb_wlv(n) itemdb_search(n)->wlv /// Weapon level
+#define itemdb_range(n) itemdb_search(n)->range /// Range
+#define itemdb_slot(n) itemdb_search(n)->slot /// Slots
+#define itemdb_viewid(n) (itemdb_search(n)->view_id) /// View ID
+#define itemdb_available(n) (itemdb_search(n)->flag.available) /// Using other item sprite's ID 'item_avail'
+#define itemdb_traderight(n) (itemdb_search(n)->flag.trade_restriction) /// Has trade restriction
+#define itemdb_autoequip(n) (itemdb_search(n)->flag.autoequip) /// Auto equip
+#define itemdb_canrefine(n) (!itemdb_search(n)->flag.no_refine) /// Is refinable
+
+#define itemdb_is_rune(n) ((n >= ITEMID_NAUTHIZ && n <= ITEMID_HAGALAZ) || n == ITEMID_LUX_ANIMA) /// Rune Items
+#define itemdb_is_element(n) (n >= ITEMID_SCARLET_PTS && n <= ITEMID_LIME_GREEN_PTS) /// Element items (elemental stones)
+#define itemdb_is_spellbook(n) (n >= ITEMID_MAGIC_BOOK_FB && n <= ITEMID_MAGIC_BOOK_DL) /// Spell books
+#define itemdb_is_poison(n) (n >= ITEMID_PARALYSE && n <= ITEMID_VENOMBLEED) /// Poison items
+#define itemid_isgemstone(id) ( (id) >= ITEMID_YELLOW_GEMSTONE && (id) <= ITEMID_BLUE_GEMSTONE ) /// Gemstone items
+#define itemdb_iscashfood(id) ( (id) >= ITEMID_STR_DISH10_ && (id) <= ITEMID_VIT_DISH10_ ) /// Cash foods
+#define itemdb_is_GNbomb(n) (n >= ITEMID_APPLE_BOMB && n <= ITEMID_VERY_HARD_LUMP) /// Bombs
+#define itemdb_is_GNthrowable(n) (n >= ITEMID_MYSTERIOUS_POWDER && n <= ITEMID_BLACK_THING_TO_THROW) /// Sling items
+
 const char* itemdb_typename(enum item_types type);
 const char *itemdb_typename_ammo (enum e_item_ammo ammo);
 
-int itemdb_group_bonus(struct map_session_data* sd, int itemid);
+int itemdb_group_bonus(struct map_session_data* sd, uint16 nameid);
 unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group);
 
-#define itemdb_value_buy(n) itemdb_search(n)->value_buy
-#define itemdb_value_sell(n) itemdb_search(n)->value_sell
-#define itemdb_canrefine(n) (!itemdb_search(n)->flag.no_refine)
 //Item trade restrictions [Skotlex]
 int itemdb_isdropable_sub(struct item_data *, int, int);
 int itemdb_cantrade_sub(struct item_data*, int, int);
@@ -457,21 +467,27 @@ int itemdb_canguildstore_sub(struct item_data*, int, int);
 int itemdb_canmail_sub(struct item_data*, int, int);
 int itemdb_canauction_sub(struct item_data*, int, int);
 bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, int (*func)(struct item_data*, int, int));
-#define itemdb_isdropable(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_isdropable_sub)
-#define itemdb_cantrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_cantrade_sub)
-#define itemdb_canpartnertrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_canpartnertrade_sub)
-#define itemdb_cansell(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_cansell_sub)
-#define itemdb_cancartstore(item, gmlv)  itemdb_isrestricted(item, gmlv, 0, itemdb_cancartstore_sub)
-#define itemdb_canstore(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_canstore_sub)
-#define itemdb_canguildstore(item, gmlv) itemdb_isrestricted(item , gmlv, 0, itemdb_canguildstore_sub)
-#define itemdb_canmail(item, gmlv) itemdb_isrestricted(item , gmlv, 0, itemdb_canmail_sub)
-#define itemdb_canauction(item, gmlv) itemdb_isrestricted(item , gmlv, 0, itemdb_canauction_sub)
+#define itemdb_isdropable(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_isdropable_sub) /// Is dropable?
+#define itemdb_cantrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_cantrade_sub) /// Is tradable?
+#define itemdb_canpartnertrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_canpartnertrade_sub) /// Is tradeable with partner?
+#define itemdb_cansell(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_cansell_sub) /// Is can be sold?
+#define itemdb_cancartstore(item, gmlv)  itemdb_isrestricted(item, gmlv, 0, itemdb_cancartstore_sub) /// Is can be placed to the cart?
+#define itemdb_canstore(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_canstore_sub) /// Is can be store in own storage?
+#define itemdb_canguildstore(item, gmlv) itemdb_isrestricted(item , gmlv, 0, itemdb_canguildstore_sub) /// Is can be stored in guild storage?
+#define itemdb_canmail(item, gmlv) itemdb_isrestricted(item , gmlv, 0, itemdb_canmail_sub) /// Is can be attached in mail?
+#define itemdb_canauction(item, gmlv) itemdb_isrestricted(item , gmlv, 0, itemdb_canauction_sub) /// Is can be placed in auction?
 
-bool itemdb_isequip(int);
-bool itemdb_isequip2(struct item_data *);
-char itemdb_isidentified(int);
-bool itemdb_isstackable(uint16 nameid);
+bool itemdb_isequip2(struct item_data *data);
+/** Check if item is equip
+* @param nameid
+* @return true is equip, false otherwise */
+#define itemdb_isequip(nameid) itemdb_isequip2(itemdb_search(nameid))
+char itemdb_isidentified(int nameid);
 bool itemdb_isstackable2(struct item_data *data);
+/** Check if item is stackable
+* @param nameid
+* @return true is stackable, false otherwise */
+#define itemdb_isstackable(nameid) itemdb_isstackable2(itemdb_search(nameid))
 uint64 itemdb_unique_id(int8 flag, int64 value); // Unique Item ID
 bool itemdb_isNoEquip(struct item_data *id, uint16 m);
 

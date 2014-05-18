@@ -1,0 +1,2 @@
+// Direct usage : MOB_<random group>,MobID,Rate
+// Importing    : import: path/to/your.file

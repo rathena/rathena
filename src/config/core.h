@@ -60,14 +60,9 @@
 //#define SHOW_SERVER_STATS
 
 /// Uncomment to enable skills damage adjustments
-/// By enabling this, db/skill_damage.txt and the skill_damage mapflag will adjust the
+/// By enabling this, db/skill_damage_db.txt and the skill_damage mapflag will adjust the
 /// damage rate of specified skills.
 //#define ADJUST_SKILL_DAMAGE
-
-/// The skill damage adjustment rate is capped at 100000.
-#ifdef ADJUST_SKILL_DAMAGE
-#define MAX_SKILL_DAMAGE_RATE 100000
-#endif
 
 /// Uncomment to enable the job base HP/SP table (job_basehpsp_db.txt)
 //#define HP_SP_TABLES

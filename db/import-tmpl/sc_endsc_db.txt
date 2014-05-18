@@ -1,0 +1,8 @@
+// List of SC that will be removed if there is SC that will be activated
+//
+// SC,RemoveSC,Return
+//
+// SC        : Incoming SC
+// RemoveSC  : SC that will be removed. Some SC still needs hardcodes check. For multiple values, use ':' delimiter
+// Return    : When SC is ending SCs, it will gives no effect from itself.
+//
