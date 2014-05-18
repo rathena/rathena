@@ -1100,6 +1100,26 @@ int hom_shuffle(struct homun_data *hd)
 	return 1;
 }
 
+uint8 hom_get_intimacy_grade(struct homun_data *hd)
+{
+	unsigned int val = hd->homunculus.intimacy / 100;
+
+	if( val > 100 ) {
+		if( val > 250 ) {
+			if( val > 750 ) {
+				if ( val > 900 )
+					return 4;
+				else
+					return 3;
+			} else
+				return 2;
+		} else
+			return 1;
+	}
+
+	return 0;
+}
+
 static bool read_homunculusdb_sub(char* str[], int columns, int current)
 {
 	int classid;
