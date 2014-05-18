@@ -14615,6 +14615,9 @@ void clif_Auction_openwindow(struct map_session_data *sd)
 	if( sd->state.storage_flag || sd->state.vending || sd->state.buyingstore || sd->state.trading )
 		return;
 
+	if( !battle_config.feature_auction )
+		return;
+
 	WFIFOHEAD(fd,packet_len(0x25f));
 	WFIFOW(fd,0) = 0x25f;
 	WFIFOL(fd,2) = 0;
@@ -14705,6 +14708,9 @@ void clif_parse_Auction_setitem(int fd, struct map_session_data *sd){
 	int amount = RFIFOL(fd,info->pos[1]); // Always 1
 	struct item_data *item;
 
+	if( !battle_config.feature_auction )
+		return;
+
 	if( sd->auction.amount > 0 )
 		sd->auction.amount = 0;
 
@@ -14781,6 +14787,9 @@ void clif_parse_Auction_register(int fd, struct map_session_data *sd)
 	struct auction_data auction;
 	struct item_data *item;
 	struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
+
+	if( !battle_config.feature_auction )
+		return;
 
 	auction.price = RFIFOL(fd,info->pos[0]);
 	auction.buynow = RFIFOL(fd,info->pos[1]);
@@ -14914,6 +14923,9 @@ void clif_parse_Auction_search(int fd, struct map_session_data* sd){
 	int price = RFIFOL(fd,info->pos[1]);  // FIXME: bug #5071
 	int page = RFIFOW(fd,info->pos[3]);
 
+	if( !battle_config.feature_auction )
+		return; 
+
 	clif_parse_Auction_cancelreg(fd, sd);
 
 	safestrncpy(search_text, (char*)RFIFOP(fd,info->pos[2]), sizeof(search_text));
@@ -14929,6 +14941,10 @@ void clif_parse_Auction_search(int fd, struct map_session_data* sd){
 void clif_parse_Auction_buysell(int fd, struct map_session_data* sd)
 {
 	short type = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]) + 6;
+
+	if( !battle_config.feature_auction )
+		return;
+
 	clif_parse_Auction_cancelreg(fd, sd);
 
 	intif_Auction_requestlist(sd->status.char_id, type, 0, "", 1);

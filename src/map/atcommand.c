@@ -8315,6 +8315,11 @@ ACMD_FUNC(auction)
 {
 	nullpo_ret(sd);
 
+	if (!battle_config.feature_auction) {
+		clif_colormes(sd, color_table[COLOR_RED], msg_txt(sd, 517));
+		return 0;
+	}
+
 	clif_Auction_openwindow(sd);
 
 	return 0;
