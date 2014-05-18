@@ -143,7 +143,7 @@ struct s_skill_require {
 		spiritball[MAX_SKILL_LEVEL], /// Spirit ball cost
 		itemid[MAX_SKILL_ITEM_REQUIRE], /// Required items
 		amount[MAX_SKILL_ITEM_REQUIRE]; /// Amount of required item
-	short *eqItem; /// Equipped item
+	uint16 *eqItem; /// Equipped item
 	enum sc_type *status; /// Required status (SC_)
 	uint8 status_count, /// Count of required status
 		eqItem_count; /// Count of required equipped item

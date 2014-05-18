@@ -14368,10 +14368,9 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			break;
 	}
 
-	/* check the status required */
+	// Check the status required, allow multiple statuses
 	if (require.status_count) {
 		uint8 i;
-		/* May has multiple requirements */
 		//if (!sc) {
 		//	clif_skill_fail(sd, skill_id, USESKILL_FAIL_CONDITION, 0);
 		//	return false;
@@ -14382,7 +14381,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				continue;
 
 			switch (req_sc) {
-				/* Official fail msg */
+				// Official fail messages
 				case SC_PUSH_CART:
 					if (!sc || !sc->data[SC_PUSH_CART]) {
 						clif_skill_fail(sd,skill_id,USESKILL_FAIL_CART,0);
@@ -14406,13 +14405,13 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 		}
 	}
 
-	//check if equiped item
+	// Check the equipped item requirements
 	if (require.eqItem_count) {
 		for (i = 0; i < require.eqItem_count; i++) {
 			int reqeqit = require.eqItem[i];
 			if(!reqeqit) break; //no more required item get out of here
 			if (!pc_checkequip2(sd,reqeqit,EQI_ACC_L,EQI_MAX)) {
-				char output[128];
+				char output[CHAT_SIZE_MAX];
 				//Official use msgstringtable.txt for each skill failure
 				sprintf(output,msg_txt(sd,722),itemdb_jname(reqeqit));
 				clif_colormes(sd,color_table[COLOR_RED],output);
@@ -19239,32 +19238,37 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current)
 	return true;
 }
 
-/** Split string to int or constanta value (const.txt)
+/** Split string to int by constanta value (const.txt) or atoi()
 * @param *str: String input
 * @param *val: Temporary storage
 * @param *delim: Delimiter (for multiple value support)
-* @param useConst: 'true' uses const.txt as reference, 'false' uses atoi()
-* @param min_range: Min value of each const. Example: SC has min value SC_NONE (-1), so the value that less or equal won't be counted
+* @param min_value: Minimum value. If the splitted value is less or equal than this, will be skipped
 * @param max: Maximum number that can be allocated
 * @return count: Number of success
 */
-uint8 skill_split2(char *str, int *val, const char *delim, bool useConst, short min_range, uint16 max) {
+uint8 skill_split_atoi2(char *str, int *val, const char *delim, int min_value, uint16 max) {
 	uint8 i = 0;
-	char *p = strtok(str,delim);
+	char *p = strtok(str, delim);
 
 	while (p != NULL) {
-		int n = -1;
-		if (useConst)
-			script_get_constant(trim(p),&n);
-		else
+		int n = min_value;
+		trim(p);
+
+		if (ISDIGIT(p[0])) // If using numeric
 			n = atoi(p);
-		if (n > min_range) {
+		else if (!script_get_constant(p, &n)) { // If using constant value
+			ShowError("skill_split_atoi2: Invalid value: '%s'\n", p);
+			p = strtok(NULL, delim);
+			continue;
+		}
+
+		if (n > min_value) {
 			val[i] = n;
 			i++;
 			if (i >= max)
 				break;
 		}
-		p = strtok(NULL,delim);
+		p = strtok(NULL, delim);
 	}
 	return i;
 }
@@ -19346,11 +19350,12 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	else skill_db[idx].require.state = ST_NONE;	// Unknown or no state
 
 	//Status requirements
+	//FIXME: Currently, if single SC requirement is 0, will be skipped. Must change the db file from 0 to SC_ALL or -1 for no SC required
 	trim(split[11]);
-	if (split[11][0] != '\0') {
+	if (split[11][0] != '\0' || atoi(split[11])) {
 		int require[MAX_SKILL_STATUS_REQUIRE];
-		if ((skill_db[idx].require.status_count = skill_split2(split[11],require,":",true,SC_NONE,MAX_SKILL_STATUS_REQUIRE))) {
-			skill_db[idx].require.status = aMalloc(skill_db[idx].require.status_count * sizeof(sc_type));
+		if ((skill_db[idx].require.status_count = skill_split_atoi2(split[11], require, ":", SC_NONE, ARRAYLENGTH(require)))) {
+			CREATE(skill_db[idx].require.status, enum sc_type, skill_db[idx].require.status_count);
 			for (i = 0; i < skill_db[idx].require.status_count; i++)
 				skill_db[idx].require.status[i] = (sc_type)require[i];
 		}
@@ -19366,10 +19371,10 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	//Equipped Item requirements.
 	//NOTE: We don't check the item is exist or not here
 	trim(split[33]);
-	if (split[33][0] != '\0') {
+	if (split[33][0] != '\0' || atoi(split[33])) {
 		int require[MAX_SKILL_EQUIP_REQUIRE];
-		if ((skill_db[idx].require.eqItem_count = skill_split2(split[33],require,":",false,501,MAX_SKILL_ITEM_REQUIRE))) {
-			skill_db[idx].require.eqItem = aMalloc(skill_db[idx].require.eqItem_count * sizeof(short));
+		if ((skill_db[idx].require.eqItem_count = skill_split_atoi2(split[33], require, ":", 500, ARRAYLENGTH(require)))) {
+			CREATE(skill_db[idx].require.eqItem, uint16, skill_db[idx].require.eqItem_count);
 			for (i = 0; i < skill_db[idx].require.eqItem_count; i++)
 				skill_db[idx].require.eqItem[i] = require[i];
 		}
@@ -19804,8 +19809,8 @@ enum sc_type skill_get_sc(int16 skill_id) {
 	return skill_db[skill_id].sc;
 }
 
-/** Reads "skill_sc_assoc_db.txt" for setting SC-Skill association and Default SC for skill
-* <SkillID>,<SC>,<SI>
+/** Reads "skill_sc_assoc_db.txt" for setting SC-Skill association, default SC for skill, and listed ended SC
+* <Skill>,<SC Assoc>
 * @author Cydh
 */
 static bool skill_parse_row_skillscassocdb(char* split[], int columns, int current) {
@@ -19818,29 +19823,27 @@ static bool skill_parse_row_skillscassocdb(char* split[], int columns, int curre
 		skill_id = skill_name2id(trim(split[0])); // Finds by name
 
 	if (!(idx = skill_get_index(skill_id))) {
-		ShowWarning("skill_parse_row_skillscassocdb: Invalid skill '%s'. Skipping..",split[0]);
+		ShowWarning("skill_parse_row_skillscassocdb: Invalid skill '%s'. Skipping..", split[0]);
 		return false;
 	}
 
 	// SC checks
 	trim(split[1]);
-	if (split[1][0] != '\0') {
+	if (split[1][0] != '\0' || atoi(split[1])) {
 		int scs[3];
 		uint8 i;
-		if (skill_split2(split[1], scs, ":", true, SC_NONE, ARRAYLENGTH(scs)) > ARRAYLENGTH(scs))
+		if (skill_split_atoi2(split[1], scs, ":", SC_NONE, ARRAYLENGTH(scs)) > ARRAYLENGTH(scs))
 			ShowWarning("skill_parse_row_skillscassocdb: Skill '%s' associated status entries than %d. Ignore the rest.\n", split[0], ARRAYLENGTH(scs));
+
 		//! TODO: Skill only has 1 effect yet
 		if ((sc_type)scs[0] > SC_NONE && (sc_type)scs[0] < SC_MAX)
 			skill_db[idx].sc = (sc_type)scs[0];
+		
 		// Adds SC-Skill assoc
 		for (i = 0; i < ARRAYLENGTH(scs); i++) {
 			if ((sc_type)scs[i] > SC_NONE && (sc_type)scs[i] < SC_MAX)
 				status_sc_set_assoc((sc_type)scs[i], skill_id);
 		}
-	}
-	else {
-		ShowWarning("skill_parse_row_skillscassocdb: Invalid SC for skill '%s'. Skipping..",split[0]);
-		return false;
 	}
 	return true;
 }

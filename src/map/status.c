@@ -6459,14 +6459,13 @@ void status_sc_script_add(struct map_session_data *sd, sc_type type) {
 		return;
 	if (sd->sc_scripts_count) {
 		uint8 i;
-		// Finds duplicate
+		// Don't add if the SC is already listed
 		ARR_FIND(0, sd->sc_scripts_count, i, sd->sc_scripts[i] == type);
 		if (i < sd->sc_scripts_count)
 			return;
+		if (sd->sc_scripts_count)
+			RECREATE(sd->sc_scripts, enum sc_type, sd->sc_scripts_count+1);
 	}
-
-	if (sd->sc_scripts_count)
-		RECREATE(sd->sc_scripts, enum sc_type, sd->sc_scripts_count+1);
 	else
 		CREATE(sd->sc_scripts, enum sc_type, 1);
 	sd->sc_scripts[sd->sc_scripts_count++] = type;
@@ -6478,16 +6477,17 @@ void status_sc_script_add(struct map_session_data *sd, sc_type type) {
 * @author Cydh
 */
 void status_sc_script_remove(struct map_session_data *sd, sc_type type) {
-	if (!sd || !sd->sc_scripts_count || !StatusChange[type].script)
+	if (!sd || !sd->sc_scripts_count)
 		return;
 	else {
 		uint8 i;
 		ARR_FIND(0, sd->sc_scripts_count, i, &sd->sc_scripts[i] && sd->sc_scripts[i] == type);
 		if (i < sd->sc_scripts_count) {
-			if (i != sd->sc_scripts_count-1)
-				sd->sc_scripts[i] = sd->sc_scripts[sd->sc_scripts_count-1];
-			sd->sc_scripts_count--;
+			if (i != --sd->sc_scripts_count) // Move the last entry to the removed SC position
+				sd->sc_scripts[i] = sd->sc_scripts[sd->sc_scripts_count];
 		}
+		if (sd->sc_scripts_count == 0)
+			aFree(sd->sc_scripts);
 	}
 }
 
@@ -10863,19 +10863,23 @@ static bool status_readdb_attrfix(const char *basedir,bool silent)
 * @param useConst Will looks up const.txt values
 * @return value after bitmasking
 */
-uint32 status_split_bit(char *str, const char *delim, bool useConst) {
-	char *p = strtok(str, delim);
+uint32 status_split_bit(char *str, const char *delim) {
 	int ret = 0;
+	char *p = strtok(str, delim);
+
 	while (p != NULL) {
-		int sub = 0;
+		int n = 0;
 		trim(p);
-		if (useConst)
-			script_get_constant(p, &sub);
-		else
-			sub = atol(p);
-		if (!sub)
-			ShowError("status_split_bit: Invalid const:'%s'\n", p);
-		ret |= sub;
+
+		if (ISDIGIT(p[0])) // If using numeric
+			n = atol(p);
+		else if (!script_get_constant(p, &n)) { // If using constant value
+			ShowError("status_split_bit: Invalid constant: '%s'\n", p);
+			p = strtok(NULL, delim);
+			continue;
+		}
+		
+		ret |= n;			
 		p = strtok(NULL, delim);
 	}
 	return ret;
@@ -10922,12 +10926,12 @@ static bool status_readdb_scconfig(char* fields[], int columns, int current) {
 	//Get the SCS_
 	trim(fields[2]);
 	if (fields[2][0] != '\0')
-		scs = status_split_bit(fields[2],"|",true);
+		scs = status_split_bit(fields[2],"|");
 
 	//Get the SCB_
 	trim(fields[3]);
 	if (fields[3][0] != '\0')
-		scb = status_split_bit(fields[3],"|",true);
+		scb = status_split_bit(fields[3],"|");
 
 	//Get the OPT1_
 	trim(fields[4]);
@@ -10941,22 +10945,22 @@ static bool status_readdb_scconfig(char* fields[], int columns, int current) {
 	//Get the OPT2_
 	trim(fields[5]);
 	if (fields[5][0] != '\0')
-		opt2 = status_split_bit(fields[5],"|",true);
+		opt2 = status_split_bit(fields[5],"|");
 
 	//Get the OPT3_
 	trim(fields[6]);
 	if (fields[6][0] != '\0')
-		opt3 = status_split_bit(fields[6],"|",true);
+		opt3 = status_split_bit(fields[6],"|");
 	
 	//Get the Option
 	trim(fields[7]);
 	if (fields[7][0] != '\0')
-		look_option = status_split_bit(fields[7],"|",true);
+		look_option = status_split_bit(fields[7],"|");
 	
 	//Get the Flags
 	trim(fields[8]);
 	if (fields[8][0] != '\0')
-		flag = status_split_bit(fields[8],"|",true);
+		flag = status_split_bit(fields[8],"|");
 
 	StatusChange[status].icon = (enum si_type)icon; //Set the SI
 	StatusChange[status].state = scs; //Set the SCS
