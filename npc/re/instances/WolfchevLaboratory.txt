@@ -459,8 +459,8 @@ lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
 					break;
 				case 2:
 					mes "<<Giant Shield[1]>>";
-			    	mes "Decrease 5% of Damage from Large Monsters, if Refine Lv is 9, decrease 5% more of the Damage.";
-			    	mes "Shield / Def 130 / Weight 280 / Required Lv 100 / Socket 1 / for 3rd Swordman Classes";
+					mes "Decrease 5% of Damage from Large Monsters, if Refine Lv is 9, decrease 5% more of the Damage.";
+					mes "Shield / Def 130 / Weight 280 / Required Lv 100 / Socket 1 / for 3rd Swordman Classes";
 					callsub L_Reward, 2160, 100, 50, 35; //Giant_Shield
 					break;
 				case 3:
@@ -524,7 +524,7 @@ lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
 				} else {
 					.@weapon$[.@i] = "^FF0000";
 				}
-		  	}
+			}
 			while(1) {
 				switch(select(
 					"Show me other items.",
@@ -866,57 +866,57 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 		close;
 	case 2:
 		if (!getequipisequiped(EQI_ARMOR)) {
-		  mes "[Pudding]";
-		  mes "Hey..Where is the armor?";
-		  close;
+			mes "[Pudding]";
+			mes "Hey..Where is the armor?";
+			close;
 		}
 		.@part = EQI_ARMOR;
 		break;
 	case 3:
 		if (!getequipisequiped(EQI_HAND_L)) {
-		  mes "[Pudding]";
-		  mes "Well.. You are not equipping anything on the left hand.";
-		  close;
+			mes "[Pudding]";
+			mes "Well.. You are not equipping anything on the left hand.";
+			close;
 		}
 		.@part = EQI_HAND_L;
 		break;
 	case 4:
 		if (!getequipisequiped(EQI_HAND_R)) {
-		  mes "[Pudding]";
-		  mes "Well.. You are not equipping anything on the right hand.";
-		  close;
+			mes "[Pudding]";
+			mes "Well.. You are not equipping anything on the right hand.";
+			close;
 		}
 		.@part = EQI_HAND_R;
 		break;
 	case 5:
 		if (!getequipisequiped(EQI_GARMENT)) {
-		  mes "[Pudding]";
-		  mes "Um.... Where's your robe?";
-		  close;
+			mes "[Pudding]";
+			mes "Um.... Where's your robe?";
+			close;
 		}
 		.@part = EQI_GARMENT;
 		break;
 	case 6:
 		if (!getequipisequiped(EQI_ACC_L)) {
-		  mes "[Pudding]";
-		  mes ".....Where's the accessory?";
-		  close;
+			mes "[Pudding]";
+			mes ".....Where's the accessory?";
+			close;
 		}
 		.@part = EQI_ACC_L;
 		break;
 	case 7:
 		if (!getequipisequiped(EQI_ACC_R)) {
-		  mes "[Pudding]";
-		  mes ".....Where's the accessory?";
-		  close;
+			mes "[Pudding]";
+			mes ".....Where's the accessory?";
+			close;
 		}
 		.@part = EQI_ACC_R;
 		break;
 	case 8:
 		if (!getequipisequiped(EQI_HEAD_LOW)) {
-		  mes "[Pudding]";
-		  mes "Hey.. Are you not wearing any Helm?";
-		  close;
+			mes "[Pudding]";
+			mes "Hey.. Are you not wearing any Helm?";
+			close;
 		}
 		.@part = EQI_HEAD_LOW;
 		break;
@@ -1352,39 +1352,39 @@ que_lhz,206,74,4	script	Researcher#02	4_LGTSCIENCE,3,3,{
 
 OnTouch:
 	if (lght_duk01 == 2) {
-	  emotion e_omg, 1;
-	  mes "["+ strcharinfo(0) +"]";
-	  mes "You!!!! are Wolfchev?";
-	  next;
-	  emotion e_gg, "Researcher#02";
-	  mes "[Wolfchev]";
-	  mes "A Human! kaahaha. People tend to hate this place, why are you here?";
-	  next;
-	  mes "["+ strcharinfo(0) +"]";
-	  mes "You!!! I heard that you were committing human experimentation. Wolfchev!!";
-	  next;
-	  mes "["+ strcharinfo(0) +"]";
-	  mes "And I see that you are still committing that!!!";
-	  next;
-	  emotion e_gg, "Researcher#02";
-	  mes "[Wolfchev]";
-	  mes "Kihihihi. I can see that you know something about me. Is that you who accused me?";
-	  mes "How dare you come back to me after you did that. Kihihih";
-	  next;
-	  mes "[Wolfchev]";
-	  mes "I feel good to see a human";
-	  mes "in a long time, but I gotta go. Kihihihi.";
-	  next;
-	  mes "- Wolfchev ran away giving a awkward laughing sound. -";
-	  next;
-	  erasequest 5109;
-	  setquest 5110;
-	  lght_duk01 = 3;
-	  emotion e_omg, 1;
-	  mes "["+ strcharinfo(0) +"]";
-	  mes "Whoa! Wolfchev, stop!";
-	  close2;
-	  warp "que_lhz", 96, 136;
+		emotion e_omg, 1;
+		mes "["+ strcharinfo(0) +"]";
+		mes "You!!!! are Wolfchev?";
+		next;
+		emotion e_gg, "Researcher#02";
+		mes "[Wolfchev]";
+		mes "A Human! kaahaha. People tend to hate this place, why are you here?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "You!!! I heard that you were committing human experimentation. Wolfchev!!";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "And I see that you are still committing that!!!";
+		next;
+		emotion e_gg, "Researcher#02";
+		mes "[Wolfchev]";
+		mes "Kihihihi. I can see that you know something about me. Is that you who accused me?";
+		mes "How dare you come back to me after you did that. Kihihih";
+		next;
+		mes "[Wolfchev]";
+		mes "I feel good to see a human";
+		mes "in a long time, but I gotta go. Kihihihi.";
+		next;
+		mes "- Wolfchev ran away giving a awkward laughing sound. -";
+		next;
+		erasequest 5109;
+		setquest 5110;
+		lght_duk01 = 3;
+		emotion e_omg, 1;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Whoa! Wolfchev, stop!";
+		close2;
+		warp "que_lhz", 96, 136;
 	}
 	end;
 }
@@ -2497,9 +2497,9 @@ OnDisable:
 
 OnMyMobDead:
 	if (mobcount(instance_mapname("1@lhz"),instance_npcname("MobCtrl2#mob02")+"::OnMyMobDead") < 1) {
-	  donpcevent instance_npcname("#potal_02")+"::OnEnable";
-	  donpcevent instance_npcname("Lab2#2_1")+"::OnDisable";
-	  mapannounce instance_mapname("1@lhz"),"[Security System] The Security system of The Lab No.2 has been stopped.",bc_map,"0xff9977";
+		donpcevent instance_npcname("#potal_02")+"::OnEnable";
+		donpcevent instance_npcname("Lab2#2_1")+"::OnDisable";
+		mapannounce instance_mapname("1@lhz"),"[Security System] The Security system of The Lab No.2 has been stopped.",bc_map,"0xff9977";
 	}
 	end;
 }
@@ -2546,16 +2546,13 @@ OnTimer3000:
 	end;
 
 OnInstanceInit:
+OnDisable:
 	disablenpc instance_npcname("#potal_02");
 	end;
 
 OnEnable:
 	mapannounce instance_mapname("1@lhz"),"[Management System] The door which connects to the Lab No.3 is now open.",bc_map,"0xff99ff";
 	enablenpc instance_npcname("#potal_02");
-	end;
-
-OnDisable:
-	disablenpc instance_npcname("#potal_02");
 	end;
 
 OnTouch:
@@ -2745,7 +2742,7 @@ OnMyMobDead:
 // The Lab No.3 >> Boss's Room Warp portal
 //============================================================
 1@lhz,83,62,0	script	#potal_03	WARPNPC,2,2,{
-  end;
+	end;
 
 OnInstanceInit:
 	disablenpc instance_npcname("#potal_03");
@@ -3054,7 +3051,7 @@ OnMyMobDead:
 			mes "The button was supposed to be pressed for an emergency case...but..";
 			next;
 			mes "[Wolfchev]";
-			mes "Hey.. You and I met by a bad connection....";
+			mes "Hey... You and I met by a bad connection....";
 			next;
 			mes "[Wolfchev]";
 			mes "But...., you helped me... How could you do that?";
@@ -3066,7 +3063,7 @@ OnMyMobDead:
 			mes "But actually, you did that because you was lonely,.. you just concentrated on that for this reason, huh?";
 			next;
 			mes "[Wolfchev]";
-			mes "HAHAHAHa. Loneliness.. You say?";
+			mes "HAHAHAHA. Loneliness... you say?";
 			next;
 			mes "[Wolfchev]";
 			mes "It might be seen like that to you. But, it isn't. Loneliness is just a good and easy excuse of the losers.";
@@ -3124,7 +3121,7 @@ OnMyMobDead:
 			next;
 		} else {
 			mes "[Wolfchev]";
-			mes "kakakaah.. Thank you. You handled those Boss creatures well..";
+			mes "kakakaah.. Thank you. You handled those Boss creatures well...";
 			next;
 		}
 		if (lght_duk01 == 7) {
@@ -3133,10 +3130,10 @@ OnMyMobDead:
 			mes "While you were struggling...";
 			next;
 			mes "[Wolfchev]";
-			mes "I figured out something..and there's a system error which doesn't let us come and go freely, so you could help me in 72 hours... Go somewhere to take rest before you come back..";
+			mes "I figured something out... and there's a system error which doesn't let us come and go freely, so you could help me in 72 hours... Go somewhere to rest before you come back.";
 			next;
 			mes "[Wolfchev]";
-			mes "Ah.. and I can send you out of my laboratory. Do you want?";
+			mes "Ah... and I can send you out of my laboratory. Do you want?";
 			next;
 		} else {
 			mes "[Wolfchev]";
@@ -3160,18 +3157,18 @@ L_Reward:
 		erasequest .@i;
 	}
 	.@r = rand(1, 1000);
-	if      (.@r < 84)                getitem 2582, 1;  //Salvage_Cape
-	else if (.@r >= 84  && .@r < 167) getitem 18570, 1; //Ancient_Gold_Deco
-	else if (.@r >= 167 && .@r < 250) getitem 1490, 1;  //Giant_Lance
-	else if (.@r >= 250 && .@r < 333) getitem 16017, 1; //Bloody_Cross
-	else if (.@r >= 333 && .@r < 416) getitem 1291, 1;  //Guillotine_Katar
-	else if (.@r >= 416 && .@r < 499) getitem 1584, 1;  //Chilly_Spell_Book
-	else if (.@r >= 499 && .@r < 582) getitem 6471, 10; //Goast_Chill
-	else if (.@r >= 582 && .@r < 665) getitem 6470, 10; //Blood_Thirst
-	else if (.@r >= 665 && .@r < 748) getitem 6469, 10; //Will_Of_Warrior
-	else if (.@r >= 748 && .@r < 831) getitem 6471, 20; //Goast_Chill
-	else if (.@r >= 831 && .@r < 914) getitem 6470, 20; //Blood_Thirst
-	else                              getitem 6469, 20; //Will_Of_Warrior
+	if      (.@r < 84)  getitem 2582,  1; //Salvage_Cape
+	else if (.@r < 167) getitem 18570, 1; //Ancient_Gold_Deco
+	else if (.@r < 250) getitem 1490,  1; //Giant_Lance
+	else if (.@r < 333) getitem 16017, 1; //Bloody_Cross
+	else if (.@r < 416) getitem 1291,  1; //Guillotine_Katar
+	else if (.@r < 499) getitem 1584,  1; //Chilly_Spell_Book
+	else if (.@r < 582) getitem 6471, 10; //Goast_Chill
+	else if (.@r < 665) getitem 6470, 10; //Blood_Thirst
+	else if (.@r < 748) getitem 6469, 10; //Will_Of_Warrior
+	else if (.@r < 831) getitem 6471, 20; //Goast_Chill
+	else if (.@r < 914) getitem 6470, 20; //Blood_Thirst
+	else                getitem 6469, 20; //Will_Of_Warrior
 	return;
 
 OnInstanceInit:
