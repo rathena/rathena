@@ -1212,7 +1212,7 @@ int pet_skill_support_timer(int tid, unsigned int tick, int id, intptr_t data)
  * pet_db2.txt
  *------------------------------------------*/
 void read_petdb(){
-	char* filename[] = {"pet_db.txt",DBIMPORT"/pet_db.txt"};
+	char* filename[] = {DBPATH"pet_db.txt",DBIMPORT"/pet_db.txt"};
 	FILE *fp;
 	int nameid,i,j,k;
 

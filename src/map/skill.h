@@ -13,15 +13,15 @@ struct skill_unit;
 struct skill_unit_group;
 struct status_change_entry;
 
-#define MAX_SKILL_DB			MAX_SKILL
-#define MAX_SKILL_PRODUCE_DB	270
-#define MAX_PRODUCE_RESOURCE	12
-#define MAX_SKILL_ARROW_DB		150
-#define MAX_ARROW_RESOURCE		5
-#define MAX_SKILL_ABRA_DB		350
-#define MAX_SKILL_IMPROVISE_DB 50
-#define MAX_SKILL_LEVEL 100
-#define MAX_SKILL_CRIMSON_MARKER 3
+#define MAX_SKILL_DB			MAX_SKILL /// Max skill_db entries
+#define MAX_SKILL_PRODUCE_DB	270 /// Max produce entries
+#define MAX_PRODUCE_RESOURCE	12 /// Max resources of each produce item
+#define MAX_SKILL_ARROW_DB		150 /// Max arrow creation entries
+#define MAX_ARROW_RESOURCE		5 /// Max resources of each arrow creation
+#define MAX_SKILL_ABRA_DB		350 /// Max available skills of SA_ABRACADABRA
+#define MAX_SKILL_IMPROVISE_DB 50 /// Max improvise skills
+#define MAX_SKILL_LEVEL 100 /// Max skill level
+#define MAX_SKILL_CRIMSON_MARKER 3 /// Max Crimson Marker targets
 
 DBMap* skilldb_name2id;
 
@@ -104,51 +104,55 @@ enum e_skill_display {
 	SD_PREAMBLE  = 0x8000, // skill_area_sub will transmit a 'magic' damage packet (-30000 dmg) for the first target selected
 };
 
-#define MAX_SKILL_ITEM_REQUIRE	10
-#define MAX_SKILL_STATUS_REQUIRE 3
-#define MAX_SKILL_EQUIP_REQUIRE 10
+#define MAX_SKILL_ITEM_REQUIRE	10 /// Max item requirements for skill
+#define MAX_SKILL_STATUS_REQUIRE 3 /// Max status requirements for skill (SC_)
+#define MAX_SKILL_EQUIP_REQUIRE 10 /// Max equipped item requirements for skill
+/// Skill condition is used to holds requirement of skill in specified level
 struct skill_condition {
-	int hp,
-		mhp,
-		sp,
-		hp_rate,
-		sp_rate,
-		ammo,
-		ammo_qty,
-		weapon,
-		zeny,
-		state,
-		spiritball,
-		itemid[MAX_SKILL_ITEM_REQUIRE],
-		amount[MAX_SKILL_ITEM_REQUIRE];
-	short *eqItem;
-	enum sc_type *status;
-	uint8 status_count, eqItem_count;
+	int hp, /// HP cost
+		mhp, /// Max HP
+		sp, /// SP cost
+		hp_rate, /// HP rate cost
+		sp_rate, /// SP rate cost
+		zeny, /// Zeny cost
+		weapon, /// Weapon type
+		ammo, /// Ammo type
+		ammo_qty, /// Ammo's ammount neededtype
+		state, /// Required state
+		spiritball, /// Spirit ball cost
+		itemid[MAX_SKILL_ITEM_REQUIRE], /// Required items
+		amount[MAX_SKILL_ITEM_REQUIRE]; /// Amount of required item
+	short *eqItem; /// Equipped item
+	enum sc_type *status; /// Required status (SC_)
+	uint8 status_count, /// Count of required status
+		eqItem_count; /// Count of required equipped item
 };
 
+/// Struct of skill requirements
 struct s_skill_require {
-	int hp[MAX_SKILL_LEVEL],
-		mhp[MAX_SKILL_LEVEL],
-		sp[MAX_SKILL_LEVEL],
-		hp_rate[MAX_SKILL_LEVEL],
-		sp_rate[MAX_SKILL_LEVEL],
-		zeny[MAX_SKILL_LEVEL],
-		weapon,
-		ammo,
-		ammo_qty[MAX_SKILL_LEVEL],
-		state,
-		spiritball[MAX_SKILL_LEVEL],
-		itemid[MAX_SKILL_ITEM_REQUIRE],
-		amount[MAX_SKILL_ITEM_REQUIRE];
-	short *eqItem;
-	enum sc_type *status;
-	uint8 status_count, eqItem_count;
+	int hp[MAX_SKILL_LEVEL], /// HP cost
+		mhp[MAX_SKILL_LEVEL], /// Max HP
+		sp[MAX_SKILL_LEVEL], /// SP cost
+		hp_rate[MAX_SKILL_LEVEL], /// HP rate cost
+		sp_rate[MAX_SKILL_LEVEL], /// SP rate cost
+		zeny[MAX_SKILL_LEVEL], /// Zeny cost
+		weapon, /// Weapon type
+		ammo, /// Ammo type
+		ammo_qty[MAX_SKILL_LEVEL], /// Ammo's ammount needed
+		state, /// Required state
+		spiritball[MAX_SKILL_LEVEL], /// Spirit ball cost
+		itemid[MAX_SKILL_ITEM_REQUIRE], /// Required items
+		amount[MAX_SKILL_ITEM_REQUIRE]; /// Amount of required item
+	short *eqItem; /// Equipped item
+	enum sc_type *status; /// Required status (SC_)
+	uint8 status_count, /// Count of required status
+		eqItem_count; /// Count of required equipped item
 };
 
 /// Database skills
 struct s_skill_db {
-	char name[NAME_LENGTH];
-	char desc[40];
+	char name[SKILL_NAME_LENGTH];
+	char desc[SKILL_DESC_LENGTH];
 	int range[MAX_SKILL_LEVEL],hit,inf,element[MAX_SKILL_LEVEL],nk,splash[MAX_SKILL_LEVEL],max;
 	int num[MAX_SKILL_LEVEL];
 	int cast[MAX_SKILL_LEVEL],walkdelay[MAX_SKILL_LEVEL],delay[MAX_SKILL_LEVEL];
@@ -180,22 +184,25 @@ struct s_skill_db {
 };
 extern struct s_skill_db skill_db[MAX_SKILL_DB];
 
-#define MAX_SKILL_UNIT_LAYOUT	55
-#define MAX_SQUARE_LAYOUT		5	// 11*11 Placement of a maximum unit
-#define MAX_SKILL_UNIT_COUNT ((MAX_SQUARE_LAYOUT*2+1)*(MAX_SQUARE_LAYOUT*2+1))
+#define MAX_SKILL_UNIT_LAYOUT	55	/// Max skill unit layout
+#define MAX_SQUARE_LAYOUT		5	/// Max skill unit square layout. 11*11 Placement of a maximum unit
+#define MAX_SKILL_UNIT_COUNT ((MAX_SQUARE_LAYOUT*2+1)*(MAX_SQUARE_LAYOUT*2+1)) /// Max skill unit count
+/// Skill unit layout's struct
 struct s_skill_unit_layout {
 	int count;
 	int dx[MAX_SKILL_UNIT_COUNT];
 	int dy[MAX_SKILL_UNIT_COUNT];
 };
 
+/// Skill "no" unit layout. Skill that doesn't have skill_unit_db.txt entry
 struct s_skill_nounit_layout {
 	int count;
 	int dx[MAX_SKILL_UNIT_COUNT];
 	int dy[MAX_SKILL_UNIT_COUNT];
 };
 
-#define MAX_SKILLTIMERSKILL 15
+#define MAX_SKILLTIMERSKILL 15 /// Max of timer skill (used for skill_addtimerskill)
+/// Timer Skill
 struct skill_timerskill {
 	int timer;
 	int src_id;
@@ -207,7 +214,8 @@ struct skill_timerskill {
 	int flag;
 };
 
-#define MAX_SKILLUNITGROUP 25
+#define MAX_SKILLUNITGROUP 25 /// Default Maxcount of skill unit
+/// Skill unit group
 struct skill_unit_group {
 	int src_id;
 	int party_id;
@@ -233,6 +241,7 @@ struct skill_unit_group {
 	} state;
 };
 
+/// Skill unit
 struct skill_unit {
 	struct block_list bl;
 	struct skill_unit_group *group;
@@ -241,50 +250,58 @@ struct skill_unit {
 	short alive,range;
 };
 
-#define MAX_SKILLUNITGROUPTICKSET 25
+#define MAX_SKILLUNITGROUPTICKSET 25 /// Max skill unit group tickset
+/// Skill unit group tickset
 struct skill_unit_group_tickset {
 	unsigned int tick;
 	int id;
 };
 
-
-enum {
-	UF_DEFNOTENEMY   = 0x0001,	// If 'defunit_not_enemy' is set, the target is changed to 'friend'
-	UF_NOREITERATION = 0x0002,	// Spell cannot be stacked
-	UF_NOFOOTSET     = 0x0004,	// Spell cannot be cast near/on targets
-	UF_NOOVERLAP     = 0x0008,	// Spell effects do not overlap
-	UF_PATHCHECK     = 0x0010,	// Only cells with a shootable path will be placed
-	UF_NOPC          = 0x0020,	// May not target players
-	UF_NOMOB         = 0x0040,	// May not target mobs
-	UF_SKILL         = 0x0080,	// May target skills
-	UF_DANCE         = 0x0100,	// Dance
-	UF_ENSEMBLE      = 0x0200,	// Duet
-	UF_SONG          = 0x0400,	// Song
-	UF_DUALMODE      = 0x0800,	// Spells should trigger both ontimer and onplace/onout/onleft effects.
-    UF_RANGEDSINGLEUNIT = 0x2000 // hack for ranged layout, only display center
+/// Skill unit flags
+enum e_unit_flag {
+	UF_DEFNOTENEMY   = 0x0001,	/// If 'defunit_not_enemy' is set, the target is changed to 'friend'
+	UF_NOREITERATION = 0x0002,	/// Cannot be stacked
+	UF_NOFOOTSET     = 0x0004,	/// Cannot be cast near/on targets
+	UF_NOOVERLAP     = 0x0008,	/// Effects do not overlap
+	UF_PATHCHECK     = 0x0010,	/// Only cells with a shootable path will be placed
+	UF_NOPC          = 0x0020,	/// May not target players
+	UF_NOMOB         = 0x0040,	/// May not target mobs
+	UF_SKILL         = 0x0080,	/// May target skills
+	UF_DANCE         = 0x0100,	/// Dance
+	UF_ENSEMBLE      = 0x0200,	/// Duet
+	UF_SONG          = 0x0400,	/// Song
+	UF_DUALMODE      = 0x0800,	/// Should trigger both ontimer and onplace/onout/onleft effects.
+    UF_RANGEDSINGLEUNIT = 0x2000 /// hack for ranged layout, only display center
 };
 
-/// Create Database item
+/// Struct of Item production database
 struct s_skill_produce_db {
-	int nameid, trigger;
-	int req_skill,req_skill_lv,itemlv;
-	int mat_id[MAX_PRODUCE_RESOURCE],mat_amount[MAX_PRODUCE_RESOURCE];
+	uint16 nameid; /// Product Item ID
+	uint16 req_skill, /// Required Skill ID
+		req_skill_lv; /// Required Skill level
+	uint8 itemlv; /// Item Level
+	uint16 mat_id[MAX_PRODUCE_RESOURCE], /// Material item ID
+		mat_amount[MAX_PRODUCE_RESOURCE]; /// Material amount
 };
+/// Item production database
 extern struct s_skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
 
-/// Creating database arrow
+/// Struct of Arrow creation database
 struct s_skill_arrow_db {
-	int nameid, trigger;
-	int cre_id[MAX_ARROW_RESOURCE],cre_amount[MAX_ARROW_RESOURCE];
+	uint16 nameid, /// Material Item ID
+		cre_id[MAX_ARROW_RESOURCE], /// Possible results arrow ID
+		cre_amount[MAX_ARROW_RESOURCE]; /// Arrow count gained
 };
+/// Arrow creation database
 extern struct s_skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
 
-/// Abracadabra database
+/// Struct of Abracadabra database
 struct s_skill_abra_db {
-	uint16 skill_id;
-	char name[NAME_LENGTH];
-	int per[MAX_SKILL_LEVEL];
+	uint16 skill_id; /// Possible skill ID
+	char name[NAME_LENGTH]; /// Skill name
+	uint16 per[MAX_SKILL_LEVEL]; /// Appareance rate
 };
+/// Abracadabra database
 extern struct s_skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
 
 extern int enchant_eff[5];
@@ -302,7 +319,7 @@ const char*	skill_get_desc( uint16 skill_id ); 	// [Skotlex]
 int skill_tree_get_max( uint16 skill_id, int b_class );	// Celest
 
 // Accessor to the skills database
-int skill_get_index( uint16 skill_id );
+uint16 skill_get_index( uint16 skill_id );
 int skill_get_type( uint16 skill_id );
 int skill_get_hit( uint16 skill_id );
 int skill_get_inf( uint16 skill_id );
@@ -318,6 +335,7 @@ int skill_get_delay( uint16 skill_id ,uint16 skill_lv );
 int skill_get_walkdelay( uint16 skill_id ,uint16 skill_lv );
 int skill_get_time( uint16 skill_id ,uint16 skill_lv );
 int skill_get_time2( uint16 skill_id ,uint16 skill_lv );
+int skill_get_cooldown( uint16 skill_id, uint16 skill_lv );
 int skill_get_castnodex( uint16 skill_id ,uint16 skill_lv );
 int skill_get_castdef( uint16 skill_id );
 int skill_get_nocast( uint16 skill_id );
@@ -347,7 +365,7 @@ int skill_get_spiritball( uint16 skill_id, uint16 skill_lv );
 int skill_get_itemid( uint16 skill_id, int idx );
 int skill_get_itemqty( uint16 skill_id, int idx );
 
-int skill_name2id(const char* name);
+uint16 skill_name2id(const char* name);
 
 int skill_isammotype(struct map_session_data *sd, int skill);
 int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data);
@@ -358,11 +376,11 @@ int skill_cleartimerskill(struct block_list *src);
 int skill_addtimerskill(struct block_list *src,unsigned int tick,int target,int x,int y,uint16 skill_id,uint16 skill_lv,int type,int flag);
 
 // Results? Added
-int skill_additional_effect( struct block_list* src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,int attack_type,int dmg_lv,unsigned int tick);
-int skill_counter_additional_effect( struct block_list* src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,int attack_type,unsigned int tick);
+void skill_additional_effect( struct block_list* src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,int attack_type,int dmg_lv,unsigned int tick);
+void skill_counter_additional_effect( struct block_list* src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,int attack_type,unsigned int tick);
 int skill_blown(struct block_list* src, struct block_list* target, int count, int8 dir, int flag);
-int skill_break_equip(struct block_list *src,struct block_list *bl, unsigned short where, int rate, int flag);
-int skill_strip_equip(struct block_list *src,struct block_list *bl, unsigned short where, int rate, int lv, int time);
+bool skill_break_equip(struct block_list *src,struct block_list *bl, unsigned int where, int rate, int flag);
+bool skill_strip_equip(struct block_list *src,struct block_list *bl, unsigned int where, int rate, int lv, int time);
 // Skills unit
 struct skill_unit_group* skill_id2group(int group_id);
 struct skill_unit_group *skill_unitsetting(struct block_list* src, uint16 skill_id, uint16 skill_lv, short x, short y, int flag);
@@ -1965,10 +1983,11 @@ int skill_block_check(struct block_list *bl, enum sc_type type, uint16 skill_id)
  * Guilottine Cross
  **/
 #define MAX_SKILL_MAGICMUSHROOM_DB 23
+/// Struct of Magicmushroom DB
 struct s_skill_magicmushroom_db {
-	uint16 skill_id;
+	uint16 skill_id; /// Skill ID
 };
-extern struct s_skill_magicmushroom_db skill_magicmushroom_db[MAX_SKILL_MAGICMUSHROOM_DB];
+extern struct s_skill_magicmushroom_db skill_magicmushroom_db[MAX_SKILL_MAGICMUSHROOM_DB]; /// Magicmushroom DB
 int skill_maelstrom_suction(struct block_list *bl, va_list ap);
 bool skill_check_shadowform(struct block_list *bl, int64 damage, int hit);
 /**
@@ -1994,7 +2013,6 @@ int skill_changematerial(struct map_session_data *sd, int n, unsigned short *ite
 int skill_get_elemental_type(uint16 skill_id, uint16 skill_lv);
 
 void skill_combo_toogle_inf(struct block_list* bl, uint16 skill_id, int inf);
-void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_list *bl, uint16 skill_id, uint16 skill_lv, int tick);
 
 #ifdef ADJUST_SKILL_DAMAGE
 /// Skill Damage target

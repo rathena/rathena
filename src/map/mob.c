@@ -76,10 +76,12 @@ static struct item_drop_ratio *item_drop_ratio_db[MAX_ITEMDB];
 static struct eri *item_drop_ers; //For loot drops delay structures.
 static struct eri *item_drop_list_ers;
 
-static struct {
-	int qty;
-	int mob_id[350];
-} summon[MAX_RANDOMMONSTER];
+static struct s_mob_random {
+	uint16 qty; /// Number of available monster for this group
+	uint16 *mob_id; /// Available monster id
+} mob_random_db[MAX_RANDOMMONSTER];
+
+static void mob_random_clear(void);
 
 //Defines the Manuk/Splendide mob groups for the status reductions [Epoque]
 const int mob_manuk[8] = { MOBID_TATACHO, MOBID_CENTIPEDE, MOBID_NEPENTHES, MOBID_HILLSRION, MOBID_HARDROCK_MOMMOTH, MOBID_G_TATACHO, MOBID_G_HILLSRION, MOBID_CENTIPEDE_LARVA };
@@ -294,32 +296,39 @@ struct mob_data* mob_spawn_dataset(struct spawn_data *data)
 	return md;
 }
 
-/*==========================================
- * Fetches a random mob_id [Skotlex]
- * type: Where to fetch from:
+/** Fetches a random mob_id
+ * @param type Where to fetch from:
  * 0: dead branch list
- * 1: poring list
+ * 1: poring box list
  * 2: bloody branch list
- * flag:
+ * 3: red pouch list
+ * 4: summon monster list
+ * @param flag
  * &1: Apply the summon success chance found in the list (otherwise get any monster from the db)
  * &2: Apply a monster check level.
  * &4: Selected monster should not be a boss type
  * &8: Selected monster must have normal spawn.
- * lv: Mob level to check against
- *------------------------------------------*/
-int mob_get_random_id(int type, int flag, int lv)
+ * @param lv Mob level to check against
+ * @return mob_id if found, 0 otherwise
+ * @author [Skotlex]
+ */
+uint16 mob_get_random_id(uint8 type, uint8 flag, uint16 lv)
 {
 	struct mob_db *mob;
-	int i=0, mob_id;
-	if(type < 0 || type >= MAX_RANDOMMONSTER) {
+	uint16 i = 0, mob_id, qty;
+	if (type >= MAX_RANDOMMONSTER) {
 		ShowError("mob_get_random_id: Invalid type (%d) of random monster.\n", type);
 		return 0;
 	}
+	qty = mob_random_db[type].qty;
+	if (!qty) { //No entry? Put the default
+		return mob_db_data[0]->summonper[type];
+	}
 	do {
-		if (type)
-			mob_id = summon[type].mob_id[rnd()%summon[type].qty];
-		else //Dead branch
-			mob_id = rnd() % MAX_MOB_DB;
+		if (flag&1)
+			mob_id = mob_random_db[type].mob_id[rnd()%qty];
+		else
+			mob_id = rnd()%MAX_MOB_DB;
 		mob = mob_db(mob_id);
 	} while ((mob == mob_dummy ||
 		mob_is_clone(mob_id) ||
@@ -329,7 +338,7 @@ int mob_get_random_id(int type, int flag, int lv)
 		(flag&8 && mob->spawn[0].qty < 1)
 	) && (i++) < MAX_MOB_DB);
 
-	if(i >= MAX_MOB_DB)  // no suitable monster found, use fallback for given list
+	if (i >= MAX_MOB_DB)  // no suitable monster found, use fallback for given list
 		mob_id = mob_db_data[0]->summonper[type];
 	return mob_id;
 }
@@ -2591,9 +2600,10 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		if( sd ) {
 			if( sd->mission_mobid == md->mob_id ||
 				( battle_config.taekwon_mission_mobname == 1 && mob_is_goblin(md, sd->mission_mobid) ) ||
-				( battle_config.taekwon_mission_mobname == 2 && mob_is_samename(md, sd->mission_mobid) ) ) { //TK_MISSION [Skotlex]
-				if( ++sd->mission_count >= 100 && (temp = mob_get_random_id(0, 0xE, sd->status.base_level)) ) {
-					pc_addfame(sd, 1);
+				( battle_config.taekwon_mission_mobname == 2 && mob_is_samename(md, sd->mission_mobid) ) )
+			{ //TK_MISSION [Skotlex]
+				if( ++sd->mission_count >= 100 && (temp = mob_get_random_id(0, battle_config.taekwon_mission_mobtype, sd->status.base_level)) ) {
+					pc_addfame(sd, battle_config.fame_taekwon_mission);
 					sd->mission_mobid = temp;
 					pc_setglobalreg(sd,"TK_MISSION_ID", temp);
 					sd->mission_count = 0;
@@ -4033,79 +4043,114 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current)
 	return true;
 }
 
-/*==========================================
- * Reading of random monster data
- *------------------------------------------*/
-static int mob_read_randommonster(void)
-{
-	int i;
-	const char* mobfile[] = {
-		DBPATH"mob_branch.txt",
-		DBPATH"mob_poring.txt",
-		DBPATH"mob_boss.txt",
-		"mob_pouch.txt",
-		"mob_classchange.txt",
-		DBIMPORT"/mob_branch.txt",
-		DBIMPORT"/mob_poring.txt",
-		DBIMPORT"/mob_boss.txt",
-		DBIMPORT"/mob_pouch.txt",
-		DBIMPORT"/mob_classchange.txt"
-	};
+/** Reading of random monster data */
+static void mob_read_randommonster_sub(const char *filepath, bool silent) {
+	FILE *fp;
+	uint16 ln = 0, entries = 0;
+	char line[1024];
 
-	memset(&summon, 0, sizeof(summon));
+	if ((fp = fopen(filepath,"r")) == NULL) {
+		if (silent == 0) ShowError("Can't read %s\n", filepath);
+		return;
+	}
 
-	for( i = 0; i < ARRAYLENGTH(mobfile); i++ )
-	{ // MobID,DummyName,Rate
-		FILE *fp;
-		char line[1024];
-		char *str[10],*p;
-		int j, entries=0, k;
-		
-		k = (i >= MAX_RANDOMMONSTER) ? i - MAX_RANDOMMONSTER : i;
-		mob_db_data[0]->summonper[k] = MOBID_PORING;	// Default fallback value, in case the database does not provide one
-		sprintf(line, "%s/%s", db_path, mobfile[i]);
-		if( (fp=fopen(line,"r")) == NULL ) {
-			if( i <= k ) ShowError("mob_read_randommonster: can't read %s\n",line);
-			return -1;
-		}
-		while(fgets(line, sizeof(line), fp))
-		{
-			int mob_id;
-			if(line[0] == '/' && line[1] == '/')
+	while (fgets(line, sizeof(line), fp)) {
+		if (line[0] == '/' && line[1] == '/')
+			continue;
+		if (strstr(line,"import")) {
+			char w1[16], w2[32];
+
+			if (sscanf(line, "%15[^:]: %31[^\r\n]", w1, w2) == 2 &&
+				strcmpi(w1, "import") == 0)
+			{
+				mob_read_randommonster_sub(w2, 0);
 				continue;
-			memset(str,0,sizeof(str));
-			for(j=0,p=line;j<3 && p;j++){
-				str[j]=p;
-				p=strchr(p,',');
-				if(p) *p++=0;
+			}
+		}
+		else {
+			int rand_id = -1;
+			uint16 mob_id = 0, qty = 0, i;
+			struct mob_db *md;
+			char *str[3], *p;
+
+			ln++;
+			memset(str,'\0',sizeof(str));
+			for (i = 0, p = line; i < 3 && p; i++) {
+				str[i] = p;
+				p = strchr(p,',');
+				if (p) *p++=0;
+			}
+			if (str[0] == NULL)
+				continue;
+			if (i < 3) {
+				if (i > 1)
+					ShowWarning("mob_read_randommonster_sub: Insufficient fields for entry at %s:%d\n", filepath, ln);
+				continue;
+			}
+	
+			trim(str[0]);
+			if (ISDIGIT(str[0][0]))
+				rand_id = atoi(str[0])-1;
+			else {
+				script_get_constant(str[0], &rand_id);
+				rand_id--;
 			}
 
-			if(str[0]==NULL || str[2]==NULL)
+			if (rand_id < 0 || rand_id >= MAX_RANDOMMONSTER) {
+				ShowError("mob_readdb_mobrandom: Invalid random group '%s'\n", str[0]);
 				continue;
+			}
 
-			mob_id = atoi(str[0]);
-			if(mob_db(mob_id) == mob_dummy)
+			// Import supported, clear entry first by using clear instead of mob_id
+			if (!strcmp(str[1], "clear")) {
+				if (mob_random_db[rand_id].qty)
+					aFree(mob_random_db[rand_id].mob_id);
+				mob_random_db[rand_id].qty = 0;
+				mob_db_data[0]->summonper[rand_id] = MOBID_PORING;
+				ShowInfo("mob_readdb_mobrandom: Monster random type '"CL_WHITE"%s"CL_RESET"' is cleared.\n", str[0]);
 				continue;
-			mob_db_data[mob_id]->summonper[k]=atoi(str[2]);
-			if (i) {
-				if( summon[k].qty < ARRAYLENGTH(summon[k].mob_id) ) //MvPs
-					summon[k].mob_id[summon[k].qty++] = mob_id;
-				else {
-					ShowDebug("Can't store more random mobs from %s/%s, increase size of mob.c:summon variable!\n", db_path, mobfile[i]);
-					break;
+			}
+
+			trim(str[1]);
+			if (ISDIGIT(str[1][0])) {
+				mob_id = atoi(str[1]);
+				if (mob_db(mob_id) == mob_dummy) {
+					ShowError("mob_readdb_mobrandom: Invalid monster '%s'\n", str[1]);
+					continue;
 				}
 			}
+			else if (!(mob_id = mobdb_searchname(str[1]))) {
+				ShowError("mob_readdb_mobrandom: Invalid monster '%s'\n", str[1]);
+				continue;
+			}
+			md = mob_db(mob_id);
+			// Mob with rate 0, means it has default for fallback check in this group
+			if (atoi(str[2]) < 1) {
+				mob_db_data[0]->summonper[rand_id] = mob_id;
+				entries++;
+				continue;
+			}
+			// If mob_id already exists, just change the rate as importing support
+			qty = mob_random_db[rand_id].qty;
+			ARR_FIND(0, qty, i, mob_random_db[rand_id].mob_id[i] == mob_id);
+			if (i < qty) {
+				md->summonper[rand_id] = max(atoi(str[2]),1);
+				entries++;
+				continue;
+			}
+			if (qty)
+				RECREATE(mob_random_db[rand_id].mob_id, uint16, qty+1);
+			else
+				CREATE(mob_random_db[rand_id].mob_id, uint16, 1);
+	
+			mob_random_db[rand_id].mob_id[qty] = mob_id;
+			mob_random_db[rand_id].qty++;
+			md->summonper[rand_id] = max(atoi(str[2]),1);
 			entries++;
 		}
-		if (i && !summon[k].qty)
-		{ //At least have the default here.
-			summon[k].mob_id[0] = mob_db_data[0]->summonper[k];
-			summon[k].qty = 1;
-		}
-		fclose(fp);
-		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s/%s"CL_RESET"'.\n", entries, db_path, mobfile[i]);
 	}
-	return 0;
+	fclose(fp);
+	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", entries, filepath);
 }
 
 //processes one mob_chat_db entry [SnakeDrak]
@@ -4541,8 +4586,34 @@ static bool mob_readdb_itemratio(char* str[], int columns, int current)
 	return true;
 }
 
+/** Reads random monster database files */
+static void mob_read_randommonster(void) {
+	const char *path[] = { DBPATH, DBIMPORT"/" };
+	char filepath[32];
+	int i;
+
+	mob_random_clear();
+
+	//Set summon default
+	for (i = 0; i < MAX_RANDOMMONSTER; i++) {
+		mob_db_data[0]->summonper[i] = MOBID_PORING;
+	}
+
+	for (i = 0; i < ARRAYLENGTH(path); i++) {
+		sprintf(filepath, "%s/%s%s", db_path, path[i], "mob_random.txt");
+		mob_read_randommonster_sub(filepath, i);
+	}
+	return;
+}
+
+/** Reads mob_db.txt files before mob_skill_db.txt is being read. To avoid mob_skill is cleared when imported mob_db is being read. */
+static void mob_readdb(void) {
+	sv_readdb(db_path, DBPATH"mob_db.txt",    ',', 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, -1, &mob_readdb_sub, 0);
+	sv_readdb(db_path, DBIMPORT"/mob_db.txt", ',', 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, -1, &mob_readdb_sub, 1);
+}
+
 /**
- * read all mob-related databases
+ * Reads all mob-related databases
  */
 static void mob_load(void)
 {
@@ -4575,7 +4646,8 @@ static void mob_load(void)
 			mob_read_sqldb();
 			mob_read_sqlskilldb();
 		} else {
-			sv_readdb(dbsubpath2, "mob_db.txt", ',', 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, -1, &mob_readdb_sub, i);
+			if (i == 0) //original and imported files are being read at once
+				mob_readdb();
 			mob_readskilldb(dbsubpath2,i);
 		}
 		sv_readdb(dbsubpath1, "mob_avail.txt", ',', 2, 12, -1, &mob_readdb_mobavail, i);
@@ -4639,11 +4711,21 @@ void do_init_mob(void){
 	add_timer_interval(gettick()+MIN_MOBTHINKTIME*10,mob_ai_lazy,0,0,MIN_MOBTHINKTIME*10);
 }
 
+static void mob_random_clear(void) {
+	uint8 i;
+	for (i = 0; i < MAX_RANDOMMONSTER; i++) {
+		if (mob_random_db[i].qty)
+			aFree(mob_random_db[i].mob_id);
+		mob_random_db[i].qty = 0;
+	}
+}
+
 /*==========================================
  * Clean memory usage.
  *------------------------------------------*/
 void do_final_mob(void){
 	int i;
+	mob_random_clear();
 	if (mob_dummy)
 	{
 		aFree(mob_dummy);

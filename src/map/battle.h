@@ -540,6 +540,16 @@ extern struct Battle_Config
 	int teleport_on_portal;
 	int cart_revo_knockback;
 	int guild_notice_changemap;
+	int taekwon_mission_mobtype; /// Taekwon Misson monster criteria
+	int fame_taekwon_mission; /// Taekwon Mission fame point
+	int fame_refine_lv1; /// Success to refine to +10 a lv1 weapon you forged
+	int fame_refine_lv2; /// Success to refine to +10 a lv2 weapon you forged
+	int fame_refine_lv3; /// Success to refine to +10 a lv3 weapon you forged
+	int fame_forge; /// Success to forge a lv3 weapon with 3 additional ingredients
+	int fame_pharmacy_3; /// Success to prepare 3 Condensed Potions in a row
+	int fame_pharmacy_5; /// Success to prepare 5 Condensed Potions in a row
+	int fame_pharmacy_7; /// Success to prepare 7 Condensed Potions in a row
+	int fame_pharmacy_10; /// Success to prepare 10 Condensed Potions in a row
 } battle_config;
 
 void do_init_battle(void);

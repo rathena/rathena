@@ -4,3 +4,8 @@
 // <Flag>:
 // 1 - As Dead Branch item (will be logged at `branchlog` table and cannot be used at 'nobranch' mapflag)
 // 2 - As item group container, check player's inventory and weight before consumed
+// 4 - Can be sold to buying store
+//
+// NOTE: For importing support, if want to remove the original values here, use '-' sign before the flag value.
+//       Example want to remove '12355' (Xmas_Gift) from buyingstore list:
+//       12355,-4

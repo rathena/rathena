@@ -2289,6 +2289,7 @@ void script_hardcoded_constants(void) {
 	script_set_constant("Option_Invisible",OPTION_INVISIBLE,false);
 	script_set_constant("Option_Orcish",OPTION_ORCISH,false);
 	script_set_constant("Option_Wedding",OPTION_WEDDING,false);
+	script_set_constant("Option_Ruwach",OPTION_RUWACH,false);
 	script_set_constant("Option_Chasewalk",OPTION_CHASEWALK,false);
 	script_set_constant("Option_Flying",OPTION_FLYING,false);
 	script_set_constant("Option_Xmas",OPTION_XMAS,false);
@@ -8023,13 +8024,13 @@ BUILDIN_FUNC(successrefitem)
 		){ // Fame point system [DracoRPG]
 			switch (sd->inventory_data[i]->wlv){
 				case 1:
-					pc_addfame(sd,1); // Success to refine to +10 a lv1 weapon you forged = +1 fame point
+					pc_addfame(sd,battle_config.fame_refine_lv1); // Success to refine to +10 a lv1 weapon you forged = +1 fame point
 					break;
 				case 2:
-					pc_addfame(sd,25); // Success to refine to +10 a lv2 weapon you forged = +25 fame point
+					pc_addfame(sd,battle_config.fame_refine_lv2); // Success to refine to +10 a lv2 weapon you forged = +25 fame point
 					break;
 				case 3:
-					pc_addfame(sd,1000); // Success to refine to +10 a lv3 weapon you forged = +1000 fame point
+					pc_addfame(sd,battle_config.fame_refine_lv3); // Success to refine to +10 a lv3 weapon you forged = +1000 fame point
 					break;
 			 }
 		}
@@ -11243,7 +11244,7 @@ BUILDIN_FUNC(getmapflag)
 						case 2: ret_val = map[m].adjust.damage.mob; break;
 						case 3: ret_val = map[m].adjust.damage.boss; break;
 						case 4: ret_val = map[m].adjust.damage.other; break;
-						case 5: ret_val = map[m].adjust.damage.caster; break;
+						case 5: ret_val = map[m].adjust.damage.src; break;
 						default: ret_val = map[m].flag.skill_damage; break;
 					}
 					script_pushint(st,ret_val); break;
@@ -11366,7 +11367,7 @@ BUILDIN_FUNC(setmapflag)
 						case 2: map[m].adjust.damage.mob = val; break;
 						case 3: map[m].adjust.damage.boss = val; break;
 						case 4: map[m].adjust.damage.other = val; break;
-						case 5: map[m].adjust.damage.caster = val; break;
+						case 5: map[m].adjust.damage.src = val; break;
 					}
 					map[m].flag.skill_damage = 1;
 				} break;
@@ -11471,7 +11472,8 @@ BUILDIN_FUNC(removemapflag)
 			case MF_SKILL_DAMAGE:
 				{
 					map[m].flag.skill_damage = 0;
-					memset(&map[m].adjust.damage,0,sizeof(map[m].adjust.damage));
+					memset(map[m].skill_damage, 0, sizeof(map[m].skill_damage));
+					memset(&map[m].adjust.damage, 0, sizeof(map[m].adjust.damage));
 				} break;
 #endif
 		}
@@ -18092,7 +18094,7 @@ BUILDIN_FUNC(cleanmap)
 BUILDIN_FUNC(npcskill)
 {
 	uint16 skill_id;
-	unsigned short skill_level;
+	unsigned short skill_lv;
 	unsigned int stat_point;
 	unsigned int npc_level;
 	struct npc_data *nd;
@@ -18102,7 +18104,7 @@ BUILDIN_FUNC(npcskill)
 	data = script_getdata(st, 2);
 	get_val(st, data); // Convert into value in case of a variable
 	skill_id	= data_isstring(data) ? skill_name2id(script_getstr(st, 2)) : script_getnum(st, 2);
-	skill_level	= script_getnum(st, 3);
+	skill_lv	= script_getnum(st, 3);
 	stat_point	= script_getnum(st, 4);
 	npc_level	= script_getnum(st, 5);
 	sd			= script_rid2sd(st);
@@ -18130,9 +18132,9 @@ BUILDIN_FUNC(npcskill)
 	}
 
 	if (skill_get_inf(skill_id)&INF_GROUND_SKILL) {
-		unit_skilluse_pos(&nd->bl, sd->bl.x, sd->bl.y, skill_id, skill_level);
+		unit_skilluse_pos(&nd->bl, sd->bl.x, sd->bl.y, skill_id, skill_lv);
 	} else {
-		unit_skilluse_id(&nd->bl, sd->bl.id, skill_id, skill_level);
+		unit_skilluse_id(&nd->bl, sd->bl.id, skill_id, skill_lv);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }

@@ -130,7 +130,7 @@ static void cashshop_read_db_txt( void ){
 
 		fclose(fp);
 
-		ShowStatus( "Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, filename[fi] );
+		ShowStatus( "Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, path );
 	}
 }
 

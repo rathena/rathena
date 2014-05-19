@@ -3917,7 +3917,7 @@ ACMD_FUNC(mapinfo) {
 			,map[m_id].adjust.damage.mob
 			,map[m_id].adjust.damage.boss
 			,map[m_id].adjust.damage.other
-			,map[m_id].adjust.damage.caster);
+			,map[m_id].adjust.damage.src);
 		clif_displaymessage(fd, atcmd_output);
 		if (map[m_id].skill_damage[0].skill_id) {
 			clif_displaymessage(fd," > [Map Skill] Name : Player, Monster, Boss Monster, Other | Caster");
@@ -3925,12 +3925,12 @@ ACMD_FUNC(mapinfo) {
 				if (map[m_id].skill_damage[j].skill_id) {
 					sprintf(atcmd_output,"     %d. %s : %d%%, %d%%, %d%%, %d%% | %d"
 						,j+1
-						,skill_db[skill_get_index(map[m_id].skill_damage[j].skill_id)].name
+						,skill_get_name(map[m_id].skill_damage[j].skill_id)
 						,map[m_id].skill_damage[j].pc
 						,map[m_id].skill_damage[j].mob
 						,map[m_id].skill_damage[j].boss
 						,map[m_id].skill_damage[j].other
-						,map[m_id].skill_damage[j].caster);
+						,map[m_id].skill_damage[j].src);
 					clif_displaymessage(fd,atcmd_output);
 				}
 			}
@@ -5473,7 +5473,7 @@ ACMD_FUNC(skillid) {
 	iter = db_iterator(skilldb_name2id);
 
 	for( data = iter->first(iter,&key); iter->exists(iter); data = iter->next(iter,&key) ) {
-		int idx = skill_get_index(db_data2i(data));
+		uint16 idx = skill_get_index(db_data2i(data));
 		if (strnicmp(key.str, message, skillen) == 0 || strnicmp(skill_db[idx].desc, message, skillen) == 0) {
 			sprintf(atcmd_output, msg_txt(sd,1164), db_data2i(data), skill_db[idx].desc, key.str); // skill %d: %s (%s)
 			clif_displaymessage(fd, atcmd_output);

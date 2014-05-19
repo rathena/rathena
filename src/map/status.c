@@ -107,8 +107,8 @@ static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned
  **/
 sc_type status_skill2sc(int skill)
 {
-	int idx = skill_get_index(skill);
-	if( idx == 0 ) {
+	uint16 idx = skill_get_index(skill);
+	if( !idx ) {
 		ShowError("status_skill2sc: Unsupported skill id %d\n", skill);
 		return SC_NONE;
 	}
@@ -168,7 +168,7 @@ int status_type2relevant_bl_types(int type)
 static void set_sc(uint16 skill_id, sc_type sc, int icon, unsigned int flag)
 {
 	uint16 idx = skill_get_index(skill_id);
-	if( idx == 0 ) {
+	if( !idx ) {
 		ShowError("set_sc: Unsupported skill id %d\n", skill_id);
 		return;
 	}
@@ -821,11 +821,11 @@ void initChangeTables(void)
 	add_sc( RL_HAMMER_OF_GOD	, SC_STUN );
 	set_sc( RL_B_TRAP		, SC_B_TRAP		, SI_B_TRAP		, SCB_SPEED );
 	set_sc( RL_E_CHAIN		, SC_E_CHAIN	, SI_E_CHAIN	, SCB_NONE );
-	set_sc( RL_P_ALTER		, SC_P_ALTER	, SI_P_ALTER	, SCB_BATK );
+	set_sc( RL_P_ALTER		, SC_P_ALTER	, SI_P_ALTER	, SCB_NONE );
 	set_sc( RL_SLUGSHOT		, SC_STUN		, SI_SLUGSHOT	, SCB_NONE );
-	set_sc( RL_HEAT_BARREL	, SC_HEAT_BARREL	, SI_HEAT_BARREL	, SCB_BATK|SCB_ASPD|SCB_HIT );
-	set_sc_with_vfx( RL_C_MARKER	, SC_C_MARKER		, SI_C_MARKER		, SCB_SPEED );
-	set_sc_with_vfx( RL_AM_BLAST	, SC_ANTI_M_BLAST	, SI_ANTI_M_BLAST	, SCB_DEF_ELE );
+	set_sc( RL_HEAT_BARREL	, SC_HEAT_BARREL	, SI_HEAT_BARREL	, SCB_FLEE|SCB_ASPD );
+	set_sc_with_vfx( RL_C_MARKER	, SC_C_MARKER		, SI_C_MARKER		, SCB_FLEE );
+	set_sc_with_vfx( RL_AM_BLAST	, SC_ANTI_M_BLAST	, SI_ANTI_M_BLAST	, SCB_NONE );
 
 	set_sc_with_vfx( SC_ALL_RIDING		, SC_ALL_RIDING		, SI_ALL_RIDING		, SCB_SPEED );
 
@@ -855,7 +855,7 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_ASPDPOTION3] = SI_ASPDPOTIONINFINITY;
 	StatusIconChangeTable[SC_SPEEDUP0] = SI_MOVHASTE_HORSE;
 	StatusIconChangeTable[SC_SPEEDUP1] = SI_SPEEDPOTION1;
-	StatusIconChangeTable[SC_INCSTR] = SI_INCSTR;
+	StatusIconChangeTable[SC_CHASEWALK2] = SI_CHASEWALK2;
 	StatusIconChangeTable[SC_MIRACLE] = SI_SPIRIT;
 	StatusIconChangeTable[SC_INTRAVISION] = SI_INTRAVISION;
 	StatusIconChangeTable[SC_STRFOOD] = SI_FOODSTR;
@@ -1055,6 +1055,7 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_WALKSPEED] |= SCB_SPEED;
 	StatusChangeFlagTable[SC_ITEMSCRIPT] |= SCB_ALL;
 	StatusChangeFlagTable[SC_SLOWDOWN] |= SCB_SPEED;
+	StatusChangeFlagTable[SC_CHASEWALK2] |= SCB_STR;
 
 	/* Cash Items */
 	StatusChangeFlagTable[SC_FOOD_STR_CASH] = SCB_STR;
@@ -4738,6 +4739,8 @@ static unsigned short status_calc_str(struct block_list *bl, struct status_chang
 		return 50;
 	if(sc->data[SC_INCALLSTATUS])
 		str += sc->data[SC_INCALLSTATUS]->val1;
+	if(sc->data[SC_CHASEWALK2])
+		str += sc->data[SC_CHASEWALK2]->val1;
 	if(sc->data[SC_INCSTR])
 		str += sc->data[SC_INCSTR]->val1;
 	if(sc->data[SC_STRFOOD])
@@ -5532,7 +5535,7 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 	if (sc->data[SC_TEARGAS])
 		flee -= flee * 50 / 100;
 	if( sc->data[SC_C_MARKER] )
-		flee -= 10;
+		flee -= flee * sc->data[SC_C_MARKER]->val3 / 100;
 	if(sc->data[SC_HEAT_BARREL])
 		flee -= sc->data[SC_HEAT_BARREL]->val4;
 
@@ -9764,8 +9767,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_C_MARKER:
 			val2 = src->id;
+			val3 = 10; //-10% flee
 			//Start timer to send mark on mini map
-			val3 = tick/1000;
+			val4 = tick/1000;
 			tick_time = 1000;
 			break;
 		case SC_H_MINE:
@@ -9778,7 +9782,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				if (sd) n = sd->spiritball_old;
 				val2 = val1 * 5; // -fixed casttime (custom)
 				val3 = val1 * n / 5; // +aspd (custom)
-				val4 = 75 - val1 * 5; // -flee
+				val4 = 75 - val1 * 5; // -flee (70:65:60:55:50)
 			}
 			break;
 		case SC_P_ALTER:
@@ -11242,8 +11246,8 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		if(!status_charge(bl, 0, sce->val4))
 			break; // Not enough SP to continue.
 
-		if (!sc->data[SC_INCSTR]) {
-			sc_start(bl,bl, SC_INCSTR,100,1<<(sce->val1-1),
+		if (!sc->data[SC_CHASEWALK2]) {
+			sc_start(bl,bl, SC_CHASEWALK2,100,1<<(sce->val1-1),
 				(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_ROGUE?10:1) // SL bonus -> x10 duration
 				*skill_get_time2(status_sc2skill(type),sce->val1));
 		}
@@ -12025,7 +12029,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		}
 		break;
 	case SC_C_MARKER:
-		if( --(sce->val3) >= 0 ) {
+		if( --(sce->val4) >= 0 ) {
 			TBL_PC *tsd = map_id2sd(sce->val2);
 			if (!tsd || tsd->bl.m != bl->m) //End the SC if caster isn't in same map
 				break;
