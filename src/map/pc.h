@@ -207,6 +207,7 @@ struct map_session_data {
 		unsigned int prevend : 1;//used to flag wheather you've spent 40sp to open the vending or not.
 		unsigned int warping : 1;//states whether you're in the middle of a warp processing
 		unsigned int permanent_speed : 1; // When 1, speed cannot be changed through status_calc_pc().
+		unsigned int hold_recalc : 1;
 		unsigned int banking : 1; //1 when we using the banking system 0 when closed
 		unsigned int hpmeter_visible : 1;
 		bool disable_atcommand_on_npc; //Prevent to use atcommand while talking with NPC [Kichi]
@@ -564,6 +565,8 @@ struct map_session_data {
 	/* [Ind] */
 	struct sc_display_entry **sc_display;
 	unsigned char sc_display_count;
+
+	unsigned char delayed_damage; //[Ind]
 
 	// temporary debugging of bug #3504
 	const char* delunit_prevfile;

@@ -1897,7 +1897,7 @@ int chrif_load_bsdata(int fd) {
 		calc = true;
 	}
 	if (calc)
-		status_calc_pc(sd,false);
+		status_calc_pc(sd,SCO_NONE);
 	return 0;
 }
 

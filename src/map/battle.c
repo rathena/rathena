@@ -213,16 +213,22 @@ struct delay_damage {
 	enum damage_lv dmg_lv;
 	unsigned short attack_type;
 	bool additional_effects;
+	enum bl_type src_type;
 };
 
 int battle_delay_damage_sub(int tid, unsigned int tick, int id, intptr_t data) {
 	struct delay_damage *dat = (struct delay_damage *)data;
 
 	if ( dat ) {
-		struct block_list* src;
+		struct block_list* src = NULL;
 		struct block_list* target = map_id2bl(dat->target_id);
 
-		if( !target || status_isdead(target) ) {/* nothing we can do */
+		if( !target || status_isdead(target) ) { /* Nothing we can do */
+			if( dat->src_type == BL_PC && (src = map_id2bl(dat->src_id)) &&
+				--((TBL_PC*)src)->delayed_damage == 0 && ((TBL_PC*)src)->state.hold_recalc ) {
+				((TBL_PC*)src)->state.hold_recalc = 0;
+				status_calc_pc(((TBL_PC*)src), SCO_FORCE);
+			}
 			ers_free(delay_damage_ers, dat);
 			return 0;
 		}
@@ -248,12 +254,17 @@ int battle_delay_damage_sub(int tid, unsigned int tick, int id, intptr_t data) {
 			status_fix_damage(target, target, dat->damage, dat->delay);
 			map_freeblock_unlock();
 		}
+
+		if( src && src->type == BL_PC && --((TBL_PC*)src)->delayed_damage == 0 && ((TBL_PC*)src)->state.hold_recalc ) {
+			((TBL_PC*)src)->state.hold_recalc = 0;
+			status_calc_pc(((TBL_PC*)src), SCO_FORCE);
+		}
 	}
 	ers_free(delay_damage_ers, dat);
 	return 0;
 }
 
-int battle_delay_damage (unsigned int tick, int amotion, struct block_list *src, struct block_list *target, int attack_type, uint16 skill_id, uint16 skill_lv, int64 damage, enum damage_lv dmg_lv, int ddelay, bool additional_effects)
+int battle_delay_damage(unsigned int tick, int amotion, struct block_list *src, struct block_list *target, int attack_type, uint16 skill_id, uint16 skill_lv, int64 damage, enum damage_lv dmg_lv, int ddelay, bool additional_effects)
 {
 	struct delay_damage *dat;
 	struct status_change *sc;
@@ -286,18 +297,24 @@ int battle_delay_damage (unsigned int tick, int amotion, struct block_list *src,
 	dat->delay = ddelay;
 	dat->distance = distance_bl(src, target)+10; //Attack should connect regardless unless you teleported.
 	dat->additional_effects = additional_effects;
+	dat->src_type = src->type;
 	if (src->type != BL_PC && amotion > 1000)
 		amotion = 1000; //Aegis places a damage-delay cap of 1 sec to non player attacks. [Skotlex]
+
+	if( src->type == BL_PC )
+		((TBL_PC*)src)->delayed_damage++;
 
 	add_timer(tick+amotion, battle_delay_damage_sub, 0, (intptr_t)dat);
 
 	return 0;
 }
-int battle_attr_ratio(int atk_elem,int def_type, int def_lv){
+
+int battle_attr_ratio(int atk_elem,int def_type, int def_lv) {
 	if (atk_elem < ELE_NEUTRAL || atk_elem >= ELE_ALL)
 		return 100;
 	if (def_type < ELE_NEUTRAL || def_type > ELE_ALL || def_lv < 1 || def_lv > 4)
 		return 100;
+
 	return attr_fix_table[def_lv-1][atk_elem][def_type];
 }
 
@@ -2569,12 +2586,10 @@ struct Damage battle_calc_damage_parts(struct Damage wd, struct block_list *src,
 	wd.statusAtk += battle_calc_status_attack(sstatus, EQI_HAND_R);
 	wd.statusAtk2 += battle_calc_status_attack(sstatus, EQI_HAND_L);
 
-	if (skill_id || (sd && sd->sc.data[SC_SEVENWIND])) {
-		 // Mild Wind applies element to status ATK as well as weapon ATK [helvetica]
+	if (skill_id || (sd && sd->sc.data[SC_SEVENWIND])) { // Mild Wind applies element to status ATK as well as weapon ATK [helvetica]
 		wd.statusAtk = (int)battle_attr_fix(src, target, wd.statusAtk, right_element, tstatus->def_ele, tstatus->ele_lv);
 		wd.statusAtk2 = (int)battle_attr_fix(src, target, wd.statusAtk, left_element, tstatus->def_ele, tstatus->ele_lv);
-	}
-	else { // status atk is considered neutral on normal attacks [helvetica]
+	} else { // status atk is considered neutral on normal attacks [helvetica]
 		wd.statusAtk = (int)battle_attr_fix(src, target, wd.statusAtk, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 		wd.statusAtk2 = (int)battle_attr_fix(src, target, wd.statusAtk, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 	}
@@ -4775,6 +4790,7 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 		}
 	}
 }
+
 /*============================================
  * Calculate "weapon"-type attacks and skills
  *--------------------------------------------
@@ -5886,7 +5902,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 
 	memset(&md,0,sizeof(md));
 
-	if( src == NULL || target == NULL ){
+	if (src == NULL || target == NULL) {
 		nullpo_info(NLP_MARK);
 		return md;
 	}
@@ -5918,8 +5934,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	//Skill Range Criteria
 	md.flag |= battle_range_type(src, target, skill_id, skill_lv);
 
-	switch( skill_id )
-	{
+	switch (skill_id) {
 	case NC_MAGMA_ERUPTION:
 		md.damage = 1200 + 400 * skill_lv;
 		break;
@@ -7281,7 +7296,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			if(s_guild && t_guild && (s_guild == t_guild || (!(flag&BCT_SAMEGUILD) && guild_isallied(s_guild, t_guild))))
 				state |= BCT_GUILD;
 		}
-    } //end non pvp/gvg chk rivality
+	} //end non pvp/gvg chk rivality
 
 	if( !state ) //If not an enemy, nor a guild, nor party, nor yourself, it's neutral.
 		state = BCT_NEUTRAL;

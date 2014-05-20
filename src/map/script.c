@@ -10998,7 +10998,6 @@ static void script_detach_rid(struct script_state* st)
 	}
 }
 
-
 /*=========================================================================
  * Attaches a set of RIDs to the current script. [digitalhamster]
  * addrid(<type>{,<flag>{,<parameters>}});
@@ -11016,17 +11015,17 @@ static void script_detach_rid(struct script_state* st)
  *	0 : Players are always attached. (default)
  *	1 : Players currently running another script will not be attached.
  *-------------------------------------------------------------------------*/
-
 static int buildin_addrid_sub(struct block_list *bl,va_list ap)
 {
 	int forceflag;
 	struct map_session_data *sd = (TBL_PC *)bl;
 	struct script_state* st;
 
-	st=va_arg(ap,struct script_state*);
-	forceflag=va_arg(ap,int);
-	if(!forceflag||!sd->st)
-		if(sd->status.account_id!=st->rid)
+	st = va_arg(ap,struct script_state*);
+	forceflag = va_arg(ap,int);
+
+	if(!forceflag || !sd->st)
+		if(sd->status.account_id != st->rid)
 			run_script(st->script,st->pos,sd->status.account_id,st->oid);
 	return 0;
 }
@@ -11036,46 +11035,48 @@ BUILDIN_FUNC(addrid)
 	struct s_mapiterator* iter;
 	struct block_list *bl;
 	TBL_PC *sd;
-	if(st->rid<1){
+
+	if(st->rid < 1) {
 		st->state = END;
-		bl=map_id2bl(st->oid);
+		bl = map_id2bl(st->oid);
 	} else
-		bl=map_id2bl(st->rid); //if run without rid it'd error,also oid if npc, else rid for map
+		bl = map_id2bl(st->rid); //if run without rid it'd error,also oid if npc, else rid for map
 	iter = mapit_getallusers();
-	switch(script_getnum(st,2)){
+
+	switch(script_getnum(st,2)) {
 		case 0:
-			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)){
-				if(!script_getnum(st,3)||!sd->st)
-					if(sd->status.account_id!=st->rid) //attached player already runs.
+			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
+				if(!script_getnum(st,3) || !sd->st)
+					if(sd->status.account_id != st->rid) //attached player already runs.
 						run_script(st->script,st->pos,sd->status.account_id,st->oid);
 			}
 			break;
 		case 1:
-			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)){
-				if(!script_getnum(st,3)||!sd->st)
-					if((sd->bl.m == bl->m)&&(sd->status.account_id!=st->rid))
+			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
+				if(!script_getnum(st,3) || !sd->st)
+					if((sd->bl.m == bl->m) && (sd->status.account_id != st->rid))
 						run_script(st->script,st->pos,sd->status.account_id,st->oid);
 			}
 			break;
 		case 2:
-			if(script_getnum(st,4)==0){
+			if(script_getnum(st,4) == 0) {
 				script_pushint(st,0);
 				return 0;
 			}
-			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)){
-				if(!script_getnum(st,3)||!sd->st)
-					if((sd->status.account_id!=st->rid)&&(sd->status.party_id==script_getnum(st,4))) //attached player already runs.
+			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
+				if(!script_getnum(st,3) || !sd->st)
+					if((sd->status.account_id != st->rid) && (sd->status.party_id == script_getnum(st,4))) //attached player already runs.
 						run_script(st->script,st->pos,sd->status.account_id,st->oid);
 			}
 			break;
 		case 3:
-			if(script_getnum(st,4)==0){
+			if(script_getnum(st,4) == 0) {
 				script_pushint(st,0);
 				return 0;
 			}
-			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)){
-				if(!script_getnum(st,3)||!sd->st)
-					if((sd->status.account_id!=st->rid)&&(sd->status.guild_id==script_getnum(st,4))) //attached player already runs.
+			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
+				if(!script_getnum(st,3) || !sd->st)
+					if((sd->status.account_id != st->rid) && (sd->status.guild_id == script_getnum(st,4))) //attached player already runs.
 						run_script(st->script,st->pos,sd->status.account_id,st->oid);
 			}
 			break;
@@ -11085,11 +11086,11 @@ BUILDIN_FUNC(addrid)
 			st,script_getnum(st,3));//4-x0 , 5-y0 , 6-x1, 7-y1
 			break;
 		default:
-			if((map_id2sd(script_getnum(st,2)))==NULL){ // Player not found.
+			if((map_id2sd(script_getnum(st,2))) == NULL) { // Player not found.
 				script_pushint(st,0);
 				return 0;
 			}
-			if(!script_getnum(st,3)||!map_id2sd(script_getnum(st,2))->st) {
+			if(!script_getnum(st,3) || !map_id2sd(script_getnum(st,2))->st) {
 				run_script(st->script,st->pos,script_getnum(st,2),st->oid);
 				script_pushint(st,1);
 			}
@@ -13170,11 +13171,11 @@ BUILDIN_FUNC(nude)
 	}
 
 	if( calcflag )
-		status_calc_pc(sd,0);
+		status_calc_pc(sd,SCO_NONE);
 	return SCRIPT_CMD_SUCCESS;
 }
 
-int atcommand_sub(struct script_state* st,int type){
+int atcommand_sub(struct script_state* st,int type) {
 	TBL_PC dummy_sd;
 	TBL_PC* sd;
 	int fd;
@@ -13627,11 +13628,10 @@ BUILDIN_FUNC(npcwalkto)
 	y=script_getnum(st,3);
 
 	if(nd) {
-		if (!nd->status.hp) {
-			status_calc_npc(nd, true);
-		} else {
-			status_calc_npc(nd, false);
-		}
+		if (!nd->status.hp)
+			status_calc_npc(nd, SCO_FIRST);
+		else
+			status_calc_npc(nd, SCO_NONE);
 		unit_walktoxy(&nd->bl,x,y,0);
 	}
 	return SCRIPT_CMD_SUCCESS;
@@ -18123,17 +18123,16 @@ BUILDIN_FUNC(npcskill)
 	nd->level = npc_level;
 	nd->stat_point = stat_point;
 
-	if (!nd->status.hp) {
-		status_calc_npc(nd, true);
-	} else {
-		status_calc_npc(nd, false);
-	}
+	if (!nd->status.hp)
+		status_calc_npc(nd, SCO_FIRST);
+	else
+		status_calc_npc(nd, SCO_NONE);
 
-	if (skill_get_inf(skill_id)&INF_GROUND_SKILL) {
+	if (skill_get_inf(skill_id)&INF_GROUND_SKILL)
 		unit_skilluse_pos(&nd->bl, sd->bl.x, sd->bl.y, skill_id, skill_level);
-	} else {
+	else
 		unit_skilluse_id(&nd->bl, sd->bl.id, skill_id, skill_level);
-	}
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -18723,7 +18722,7 @@ BUILDIN_FUNC(bonus_script) {
 	if (sd->bonus_script[i].icon != SI_BLANK) //Gives status icon if exist
 		clif_status_change(&sd->bl,sd->bonus_script[i].icon,1,dur,1,0,0);
 
-	status_calc_pc(sd,false);
+	status_calc_pc(sd,SCO_NONE);
 	return SCRIPT_CMD_SUCCESS;
 }
 

@@ -341,7 +341,8 @@ void merc_contract_init(struct mercenary_data *md) {
  * @param flag : if inter-serv request was sucessfull
  * @return false:failure, true:sucess
  */
-bool mercenary_recv_data(struct s_mercenary *merc, bool flag){
+bool mercenary_recv_data(struct s_mercenary *merc, bool flag)
+{
 	struct map_session_data *sd;
 	struct mercenary_data *md;
 	struct s_mercenary_db *db;
@@ -349,15 +350,13 @@ bool mercenary_recv_data(struct s_mercenary *merc, bool flag){
 
 	if( (sd = map_charid2sd(merc->char_id)) == NULL )
 		return false;
-	if( !flag || i < 0 )
-	{ // Not created - loaded - DB info
+	if( !flag || i < 0 ) { // Not created - loaded - DB info
 		sd->status.mer_id = 0;
 		return false;
 	}
 
 	db = &mercenary_db[i];
-	if( !sd->md )
-	{
+	if( !sd->md ) {
 		sd->md = md = (struct mercenary_data*)aCalloc(1,sizeof(struct mercenary_data));
 		md->bl.type = BL_MER;
 		md->bl.id = npc_get_new_npc_id();
@@ -379,13 +378,11 @@ bool mercenary_recv_data(struct s_mercenary *merc, bool flag){
 		md->bl.y = md->ud.to_y;
 
 		map_addiddb(&md->bl);
-		status_calc_mercenary(md,1);
+		status_calc_mercenary(md, SCO_FIRST);
 		md->contract_timer = INVALID_TIMER;
 		md->masterteleport_timer = INVALID_TIMER;
 		merc_contract_init(md);
-	}
-	else
-	{
+	} else {
 		memcpy(&sd->md->mercenary, merc, sizeof(struct s_mercenary));
 		md = sd->md;
 	}
@@ -394,8 +391,7 @@ bool mercenary_recv_data(struct s_mercenary *merc, bool flag){
 		mercenary_set_calls(md, 1);
 	sd->status.mer_id = merc->mercenary_id;
 
-	if( md && md->bl.prev == NULL && sd->bl.prev != NULL )
-	{
+	if( md && md->bl.prev == NULL && sd->bl.prev != NULL ) {
 		if(map_addblock(&md->bl))
 			return false;
 		clif_spawn(&md->bl);

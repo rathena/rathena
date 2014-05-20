@@ -9758,7 +9758,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		}
 
 		map_iwall_get(sd); // Updates Walls Info on this Map to Client
-		status_calc_pc(sd, false); // Some conditions are map-dependent so we must recalculate
+		status_calc_pc(sd, SCO_NONE); // Some conditions are map-dependent so we must recalculate
 		sd->state.changemap = false;
 
 		// Instances do not need their own channels

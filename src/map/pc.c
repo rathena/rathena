@@ -1093,6 +1093,8 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	sd->guild_x = -1;
 	sd->guild_y = -1;
 
+	sd->delayed_damage = 0;
+
 	// Event Timers
 	for( i = 0; i < MAX_EVENTTIMER; i++ )
 		sd->eventtimer[i] = INVALID_TIMER;
@@ -1313,7 +1315,7 @@ int pc_reg_received(struct map_session_data *sd)
 	pc_check_available_item(sd); // Check for invalid(ated) items.
 	pc_load_combo(sd);
 
-	status_calc_pc(sd,1);
+	status_calc_pc(sd, (enum e_status_calc_opt)(SCO_FIRST|SCO_FORCE));
 	chrif_scdata_request(sd->status.account_id, sd->status.char_id);
 	chrif_skillcooldown_request(sd->status.account_id, sd->status.char_id);
 	chrif_bsdata_request(sd->status.char_id);
@@ -2070,7 +2072,7 @@ void pc_exeautobonus(struct map_session_data *sd,struct s_autobonus *autobonus)
 
 	autobonus->active = add_timer(gettick()+autobonus->duration, pc_endautobonus, sd->bl.id, (intptr_t)autobonus);
 	sd->state.autobonus |= autobonus->pos;
-	status_calc_pc(sd,0);
+	status_calc_pc(sd,SCO_NONE);
 }
 
 int pc_endautobonus(int tid, unsigned int tick, int id, intptr_t data)
@@ -2083,7 +2085,7 @@ int pc_endautobonus(int tid, unsigned int tick, int id, intptr_t data)
 
 	autobonus->active = INVALID_TIMER;
 	sd->state.autobonus &= ~autobonus->pos;
-	status_calc_pc(sd,0);
+	status_calc_pc(sd,SCO_NONE);
 	return 0;
 }
 
@@ -3660,10 +3662,10 @@ int pc_skill(TBL_PC* sd, int id, int level, int flag)
 			} else
 				clif_addskill(sd,id);
 			if( !skill_get_inf(id) ) //Only recalculate for passive skills.
-				status_calc_pc(sd, 0);
+				status_calc_pc(sd, SCO_NONE);
 			break;
 		case 1: //Item bonus skill.
-			if( sd->status.skill[id].id == id ){
+			if( sd->status.skill[id].id == id ) {
 				if( sd->status.skill[id].lv >= level )
 					return 0;
 				if( sd->status.skill[id].flag == SKILL_FLAG_PERMANENT ) //Non-granted skill, store it's level.
@@ -3675,7 +3677,7 @@ int pc_skill(TBL_PC* sd, int id, int level, int flag)
 			sd->status.skill[id].lv = level;
 			break;
 		case 2: //Add skill bonus on top of what you had.
-			if( sd->status.skill[id].id == id ){
+			if( sd->status.skill[id].id == id ) {
 				if( sd->status.skill[id].flag == SKILL_FLAG_PERMANENT )
 					sd->status.skill[id].flag = SKILL_FLAG_REPLACED_LV_0 + sd->status.skill[id].lv; // Store previous level.
 			} else {
@@ -3694,7 +3696,7 @@ int pc_skill(TBL_PC* sd, int id, int level, int flag)
 			} else
 				clif_addskill(sd,id);
 			if( !skill_get_inf(id) ) //Only recalculate for passive skills.
-				status_calc_pc(sd, 0);
+				status_calc_pc(sd, SCO_NONE);
 			break;
 		default: //Unknown flag?
 			return 0;
@@ -4314,6 +4316,7 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 		return 0;
 
 	if( (item->item_usage.flag&NOUSE_SITTING) && (pc_issit(sd) == 1) && (pc_get_group_level(sd) < item->item_usage.override) ) {
+		clif_msgtable(sd->fd,ITEM_NOUSE_SITTING);
 		return 0; // You cannot use this item while sitting.
 	}
 
@@ -4478,7 +4481,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 
 	nullpo_ret(sd);
 
-	if( sd->npc_id ){
+	if (sd->npc_id) {
 #ifdef RENEWAL
 		clif_msg(sd, USAGE_FAIL); // TODO look for the client date that has this message.
 		return 0;
@@ -4489,7 +4492,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 	}
 	item = sd->status.inventory[n];
 	id = sd->inventory_data[n];
-	
+
 	if (item.nameid <= 0 || item.amount <= 0)
 		return 0;
 
@@ -5933,13 +5936,13 @@ int pc_checkbaselevelup(struct map_session_data *sd) {
 	} while ((next=pc_nextbaseexp(sd)) > 0 && sd->status.base_exp >= next);
 
 	if (battle_config.pet_lv_rate && sd->pd)	//<Skotlex> update pet's level
-		status_calc_pet(sd->pd,0);
+		status_calc_pet(sd->pd,SCO_NONE);
 
 	clif_updatestatus(sd,SP_STATUSPOINT);
 	clif_updatestatus(sd,SP_BASELEVEL);
 	clif_updatestatus(sd,SP_BASEEXP);
 	clif_updatestatus(sd,SP_NEXTBASEEXP);
-	status_calc_pc(sd,0);
+	status_calc_pc(sd,SCO_FORCE);
 	status_percent_heal(&sd->bl,100,100);
 
 	if((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE) {
@@ -5999,7 +6002,7 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 	clif_updatestatus(sd,SP_JOBEXP);
 	clif_updatestatus(sd,SP_NEXTJOBEXP);
 	clif_updatestatus(sd,SP_SKILLPOINT);
-	status_calc_pc(sd,0);
+	status_calc_pc(sd,SCO_FORCE);
 	clif_misceffect(&sd->bl,1);
 	if (pc_checkskill(sd, SG_DEVIL) && !pc_nextjobexp(sd))
 		clif_status_change(&sd->bl,SI_DEVIL, 1, 0, 0, 0, 1); //Permanent blind effect from SG_DEVIL.
@@ -6336,7 +6339,7 @@ bool pc_statusup(struct map_session_data* sd, int type, int increase)
 	final_value = pc_setstat(sd, type, current + increase);
 	sd->status.status_point -= needed_points;
 
-	status_calc_pc(sd, 0);
+	status_calc_pc(sd,SCO_NONE);
 
 	// update increase cost indicator
 	clif_updatestatus(sd, SP_USTR + type-SP_STR);
@@ -6380,7 +6383,7 @@ int pc_statusup2(struct map_session_data* sd, int type, int val)
 
 	val = pc_setstat(sd, type, cap_value(pc_getstat(sd,type) + val, 1, max));
 
-	status_calc_pc(sd,0);
+	status_calc_pc(sd,SCO_NONE);
 
 	// update increase cost indicator
 	if( need != pc_need_status_point(sd,type,1) )
@@ -6426,7 +6429,7 @@ int pc_skillup(struct map_session_data *sd,uint16 skill_id)
 		sd->status.skill[skill_id].lv++;
 		sd->status.skill_point--;
 		if( !skill_get_inf(skill_id) )
-			status_calc_pc(sd,0); // Only recalculate for passive skills.
+			status_calc_pc(sd,SCO_NONE); // Only recalculate for passive skills.
 		else if( sd->status.skill_point == 0 && (sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && pc_famerank(sd->status.char_id, MAPID_TAEKWON) )
 			pc_calc_skilltree(sd); // Required to grant all TK Ranker skills.
 		else
@@ -6494,7 +6497,7 @@ int pc_allskillup(struct map_session_data *sd)
 			sd->status.skill[id].lv = skill_tree_get_max(id, sd->status.class_);	// celest
 		}
 	}
-	status_calc_pc(sd,0);
+	status_calc_pc(sd,SCO_NONE);
 	//Required because if you could level up all skills previously,
 	//the update will not be sent as only the lv variable changes.
 	clif_skillinfoblock(sd);
@@ -6584,7 +6587,7 @@ int pc_resetlvl(struct map_session_data* sd,int type)
 	if ((type == 1 || type == 2 || type == 3) && sd->status.party_id)
 		party_send_levelup(sd);
 
-	status_calc_pc(sd,0);
+	status_calc_pc(sd, SCO_FORCE);
 	clif_skillinfoblock(sd);
 
 	return 0;
@@ -6649,7 +6652,7 @@ int pc_resetstate(struct map_session_data* sd)
 		pc_setglobalreg(sd,"TK_MISSION_ID", 0);
 	}
 
-	status_calc_pc(sd,0);
+	status_calc_pc(sd, SCO_NONE);
 
 	return 1;
 }
@@ -6760,11 +6763,10 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 
 	sd->status.skill_point += skill_point;
 
-	if( flag&1 )
-	{
+	if (flag&1) {
 		clif_updatestatus(sd,SP_SKILLPOINT);
 		clif_skillinfoblock(sd);
-		status_calc_pc(sd,0);
+		status_calc_pc(sd, SCO_FORCE);
 	}
 
 	return skill_point;
@@ -7053,7 +7055,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			) { 	// monster level up [Valaris]
 				clif_misceffect(&md->bl,0);
 				md->level++;
-				status_calc_mob(md, 0);
+				status_calc_mob(md, SCO_NONE);
 				status_percent_heal(src,10,0);
 
 				if( battle_config.show_mob_info&4 )
@@ -7450,11 +7452,9 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 		clif_updatestatus(sd, SP_NEXTBASEEXP);
 		clif_updatestatus(sd, SP_STATUSPOINT);
 		clif_updatestatus(sd, SP_BASEEXP);
-		status_calc_pc(sd, 0);
+		status_calc_pc(sd, SCO_NONE);
 		if(sd->status.party_id)
-		{
 			party_send_levelup(sd);
-		}
 		break;
 	case SP_JOBLEVEL:
 		if ((unsigned int)val >= sd->status.job_level) {
@@ -7900,7 +7900,7 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 	if(sd->status.manner < 0)
 		clif_changestatus(sd,SP_MANNER,sd->status.manner);
 
-	status_calc_pc(sd,0);
+	status_calc_pc(sd,SCO_FORCE);
 	pc_checkallowskill(sd);
 	pc_equiplookall(sd);
 
@@ -8012,12 +8012,12 @@ void pc_setoption(struct map_session_data *sd,int type)
 	if( (type&OPTION_RIDING && !(p_type&OPTION_RIDING)) || (type&OPTION_DRAGON && !(p_type&OPTION_DRAGON) && pc_checkskill(sd,RK_DRAGONTRAINING) > 0) )
 	{ // Mounting
 		clif_status_load(&sd->bl,SI_RIDING,1);
-		status_calc_pc(sd,0);
+		status_calc_pc(sd,SCO_NONE);
 	}
 	else if( (!(type&OPTION_RIDING) && p_type&OPTION_RIDING) || (!(type&OPTION_DRAGON) && p_type&OPTION_DRAGON && pc_checkskill(sd,RK_DRAGONTRAINING) > 0) )
 	{ // Dismount
 		clif_status_load(&sd->bl,SI_RIDING,0);
-		status_calc_pc(sd,0);
+		status_calc_pc(sd,SCO_NONE);
 	}
 
 #ifndef NEW_CARTS
@@ -8025,7 +8025,7 @@ void pc_setoption(struct map_session_data *sd,int type)
 		clif_cartlist(sd);
 		clif_updatestatus(sd, SP_CARTINFO);
 		if(pc_checkskill(sd, MC_PUSHCART) < 10)
-			status_calc_pc(sd,0); //Apply speed penalty.
+			status_calc_pc(sd,SCO_NONE); //Apply speed penalty.
 	} else if( !( type&OPTION_CART ) && p_type&OPTION_CART ){ //Cart Off
 		clif_clearcart(sd->fd);
 		if(pc_checkskill(sd, MC_PUSHCART) < 10)
@@ -8041,15 +8041,15 @@ void pc_setoption(struct map_session_data *sd,int type)
 	if( (sd->class_&MAPID_THIRDMASK) == MAPID_RANGER ) {
 		if( type&OPTION_WUGRIDER && !(p_type&OPTION_WUGRIDER) ) { // Mounting
 			clif_status_load(&sd->bl,SI_WUGRIDER,1);
-			status_calc_pc(sd,0);
+			status_calc_pc(sd,SCO_NONE);
 		} else if( !(type&OPTION_WUGRIDER) && p_type&OPTION_WUGRIDER ) { // Dismount
 			clif_status_load(&sd->bl,SI_WUGRIDER,0);
-			status_calc_pc(sd,0);
+			status_calc_pc(sd,SCO_NONE);
 		}
 	}
 	if( (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC ) {
 		if( type&OPTION_MADOGEAR && !(p_type&OPTION_MADOGEAR) ) {
-			status_calc_pc(sd, 0);
+			status_calc_pc(sd,SCO_NONE);
 			status_change_end(&sd->bl,SC_MAXIMIZEPOWER,INVALID_TIMER);
 			status_change_end(&sd->bl,SC_OVERTHRUST,INVALID_TIMER);
 			status_change_end(&sd->bl,SC_WEAPONPERFECTION,INVALID_TIMER);
@@ -8058,7 +8058,7 @@ void pc_setoption(struct map_session_data *sd,int type)
 			status_change_end(&sd->bl,SC_MELTDOWN,INVALID_TIMER);
 			status_change_end(&sd->bl,SC_MAXOVERTHRUST,INVALID_TIMER);
 		} else if( !(type&OPTION_MADOGEAR) && p_type&OPTION_MADOGEAR ) {
-			status_calc_pc(sd, 0);
+			status_calc_pc(sd,SCO_NONE);
 			status_change_end(&sd->bl,SC_SHAPESHIFT,INVALID_TIMER);
 			status_change_end(&sd->bl,SC_HOVERING,INVALID_TIMER);
 			status_change_end(&sd->bl,SC_ACCELERATION,INVALID_TIMER);
@@ -8124,7 +8124,7 @@ bool pc_setcart(struct map_session_data *sd,int type) {
 	}
 
 	if(pc_checkskill(sd, MC_PUSHCART) < 10)
-		status_calc_pc(sd,0); //Recalc speed penalty.
+		status_calc_pc(sd,SCO_NONE); //Recalc speed penalty.
 #else
 	// Update option
 	option = sd->sc.option;
@@ -8368,15 +8368,12 @@ bool pc_setregistry(struct map_session_data *sd,const char *reg,int val,int type
 	switch( type )
 	{
 	case 3: //Char reg
-		if( !strcmp(reg,"PC_DIE_COUNTER") && sd->die_counter != val )
-		{
+		if( !strcmp(reg,"PC_DIE_COUNTER") && sd->die_counter != val ) {
 			i = (!sd->die_counter && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE);
 			sd->die_counter = val;
 			if( i )
-				status_calc_pc(sd,0); // Lost the bonus.
-		}
-		else if( !strcmp(reg,"COOK_MASTERY") && sd->cook_mastery != val )
-		{
+				status_calc_pc(sd,SCO_NONE); // Lost the bonus.
+		} else if( !strcmp(reg,"COOK_MASTERY") && sd->cook_mastery != val ) {
 			val = cap_value(val, 0, 1999);
 			sd->cook_mastery = val;
 		}
@@ -8385,13 +8382,10 @@ bool pc_setregistry(struct map_session_data *sd,const char *reg,int val,int type
 		regmax = GLOBAL_REG_NUM;
 	break;
 	case 2: //Account reg
-		if( !strcmp(reg,"#CASHPOINTS") && sd->cashPoints != val )
-		{
+		if( !strcmp(reg,"#CASHPOINTS") && sd->cashPoints != val ) {
 			val = cap_value(val, 0, MAX_ZENY);
 			sd->cashPoints = val;
-		}
-		else if( !strcmp(reg,"#KAFRAPOINTS") && sd->kafraPoints != val )
-		{
+		} else if( !strcmp(reg,"#KAFRAPOINTS") && sd->kafraPoints != val ) {
 			val = cap_value(val, 0, MAX_ZENY);
 			sd->kafraPoints = val;
 		}
@@ -8995,7 +8989,7 @@ bool pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 		}
 	}
 
-	status_calc_pc(sd,0);
+	status_calc_pc(sd,SCO_NONE);
 	if (flag) //Update skill data
 		clif_skillinfoblock(sd);
 
@@ -9169,7 +9163,7 @@ bool pc_unequipitem(struct map_session_data *sd,int n,int flag) {
 
 	if(flag&1 || status_cacl) {
 		pc_checkallowskill(sd);
-		status_calc_pc(sd,0);
+		status_calc_pc(sd,SCO_NONE);
 	}
 
 	if(sd->sc.data[SC_SIGNUMCRUCIS] && !battle_check_undead(sd->battle_status.race,sd->battle_status.def_ele))
@@ -9235,10 +9229,8 @@ void pc_checkitem(struct map_session_data *sd) {
 
 	if( calc_flag && sd->state.active ) {
 		pc_checkallowskill(sd);
-		status_calc_pc(sd,0);
+		status_calc_pc(sd,SCO_NONE);
 	}
-
-	return;
 }
 
 /*==========================================
@@ -9536,7 +9528,7 @@ void pc_setsavepoint(struct map_session_data *sd, short mapindex,int x,int y)
 }
 
 /*==========================================
- * Save 1 player data  at autosave intervalle
+ * Save 1 player data at autosave interval
  *------------------------------------------*/
 static int pc_autosave(int tid, unsigned int tick, int id, intptr_t data)
 {
@@ -10671,7 +10663,7 @@ int pc_bonus_script_timer(int tid, unsigned int tick, int id, intptr_t data) {
 	}
 
 	pc_bonus_script_remove(sd,i);
-	status_calc_pc(sd,false);
+	status_calc_pc(sd,SCO_NONE);
 	return 0;
 }
 
@@ -10718,7 +10710,7 @@ void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag) {
 		}
 	}
 	if (count && !(flag&BONUS_FLAG_REM_ON_LOGOUT)) //Don't need to do this if log out
-		status_calc_pc(sd,false);
+		status_calc_pc(sd,SCO_NONE);
 }
 
 /** [Cydh]
