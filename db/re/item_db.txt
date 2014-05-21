@@ -9461,7 +9461,7 @@
 24007,T_DEX2_Weapon_Shadow,T DEX2 Weapon Shadow,12,10,,0,,,,0,0xFFFFFFFF,63,2,131072,,30,,,{ bonus bDex,2; },{},{}
 24008,T_LUK2_Shield_Shadow,T LUK2 Shield Shadow,12,10,,0,,,,0,0xFFFFFFFF,63,2,262144,,60,,,{ bonus bLuk,2; },{},{}
 24009,T_AGI2_Shoes_Shadow,T AGI2 Shoes Shadow,12,10,,0,,,,0,0xFFFFFFFF,63,2,524288,,90,,,{ bonus bAgi,2; },{},{}
-24010,T_VIT2_Earrings_Shadow(R),T VIT2 Earrings Shadow(R),12,10,,0,,,,0,0xFFFFFFFF,63,2,1048576,,120,,,{ bonus bVit,2; },{},{}{}
+24010,T_VIT2_Earrings_Shadow(R),T VIT2 Earrings Shadow(R),12,10,,0,,,,0,0xFFFFFFFF,63,2,1048576,,120,,,{ bonus bVit,2; },{},{}
 24011,T_INT2_Pendant_Shadow(L),T INT2 Pendant Shadow(L),12,10,,0,,,,0,0xFFFFFFFF,63,2,2097152,,150,,,{ bonus bInt,2; },{},{}
 24012,Promotional_Weapon_Shadow,Promotional Weapon Shadow,12,10,,0,,,,0,0xFFFFFFFF,63,2,131072,,1,,,{ bonus bDex,1; },{},{}
 24013,Promotional_Armor_Shadow,Promotional Armor Shadow,12,10,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,,,{ bonus bLuk,1; },{},{}
