@@ -972,6 +972,22 @@ If no position is given, the command defaults to headgear.
 
 ---------------------------------------
 
+@costume {<costume name>}
+
+Changes the player's visible appearance to that of the selected costume.
+
+Available costumes:
+Wedding,
+Xmas,
+Summer,
+Hanbok,
+Oktoberfest
+
+Typing the command without a costume name will display available costumes. If the
+player is wearing a costume it will be removed.
+
+---------------------------------------
+
 @fakename {<text string>}
 
 Temporarily changes name to the specified string (lasts until player logs out).
