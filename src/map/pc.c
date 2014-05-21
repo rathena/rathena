@@ -2197,22 +2197,22 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			break;
 		case SP_BASE_ATK:
 			if(sd->state.lr_flag != 2) {
-	#ifdef RENEWAL
+#ifdef RENEWAL
 				sd->bonus.eatk += val;
-	#else
+#else
 				bonus = status->batk + val;
 				status->batk = cap_value(bonus, 0, USHRT_MAX);
-	#endif
+#endif
 			}
 			break;
 		case SP_DEF1:
 			if(sd->state.lr_flag != 2) {
 				bonus = status->def + val;
-	#ifdef RENEWAL
+#ifdef RENEWAL
 				status->def = cap_value(bonus, SHRT_MIN, SHRT_MAX);
-	#else
+#else
 				status->def = cap_value(bonus, CHAR_MIN, CHAR_MAX);
-	#endif
+#endif
 			}
 			break;
 		case SP_DEF2:
@@ -2224,11 +2224,11 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		case SP_MDEF1:
 			if(sd->state.lr_flag != 2) {
 				bonus = status->mdef + val;
-	#ifdef RENEWAL
+#ifdef RENEWAL
 				status->mdef = cap_value(bonus, SHRT_MIN, SHRT_MAX);
-	#else
+#else
 				status->mdef = cap_value(bonus, CHAR_MIN, CHAR_MAX);
-	#endif
+#endif
 				if( sd->state.lr_flag == 3 ) {//Shield, used for royal guard
 					sd->bonus.shieldmdef += bonus;
 				}
@@ -2315,9 +2315,9 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 				break;
 			sd->bonus.sp += val;
 			break;
-	#ifndef RENEWAL_CAST
+#ifndef RENEWAL_CAST
 		case SP_VARCASTRATE:
-	#endif
+#endif
 		case SP_CASTRATE:
 			if(sd->state.lr_flag != 2)
 				sd->castrate+=val;
@@ -2369,11 +2369,11 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			break;
 		case SP_ASPD_RATE:	//Stackable increase - Made it linear as per rodatazone
 			if(sd->state.lr_flag != 2)
-	#ifndef RENEWAL_ASPD
+#ifndef RENEWAL_ASPD
 				status->aspd_rate -= 10*val;
-	#else
+#else
 				status->aspd_rate2 += val;
-	#endif
+#endif
 			break;
 		case SP_HP_RECOV_RATE:
 			if(sd->state.lr_flag != 2)
@@ -2752,7 +2752,7 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			if(sd->state.lr_flag != 2)
 				sd->bonus.add_fixcast += val;
 			break;
-	#ifdef RENEWAL_CAST
+#ifdef RENEWAL_CAST
 		case SP_VARCASTRATE:
 			if(sd->state.lr_flag != 2)
 				sd->bonus.varcastrate -= val;
@@ -2761,7 +2761,7 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			if(sd->state.lr_flag != 2)
 				sd->bonus.add_varcast += val;
 			break;
-	#endif
+#endif
 		case SP_ADDMAXWEIGHT:
 			if (sd->state.lr_flag != 2)
 				sd->max_weight += val;

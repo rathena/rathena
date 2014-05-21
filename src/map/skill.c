@@ -997,9 +997,9 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 	/**
 	 * Storm Gust counter was dropped in renewal
 	 **/
-	#ifdef RENEWAL
+#ifdef RENEWAL
 		sc_start(src,bl,SC_FREEZE,65-(5*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
-	#else
+#else
 		//On third hit, there is a 150% to freeze the target
 		if(tsc->sg_counter >= 3 &&
 			sc_start(src,bl,SC_FREEZE,150,skill_lv,skill_get_time2(skill_id,skill_lv)))
@@ -1009,7 +1009,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 		 **/
 		else if( tsc->sg_counter > 250 )
 			tsc->sg_counter = 0;
-	#endif
+#endif
 		break;
 
 	case WZ_METEOR:
@@ -8958,10 +8958,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case NC_SELFDESTRUCTION:
 		if( sd ) {
 			if( pc_ismadogear(sd) )
-				 pc_setmadogear(sd, 0);
+				pc_setmadogear(sd, 0);
+			skill_area_temp[1] = 0;
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-			skill_castend_damage_id(src, src, skill_id, skill_lv, tick, flag);
+			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), splash_target(src), src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 			status_set_sp(src, 0, 0);
+			skill_clear_unitgroup(src);
 		}
 		break;
 
@@ -9587,7 +9589,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			int rate = (4 * skill_lv) + ((sd) ? pc_checkskill(sd,WM_LESSON)*2 + sd->status.job_level/5 : skill_get_max(WM_LESSON)) + status_get_lv(src) / 15;
 			if( bl != src )
 				sc_start(src,bl,type,rate,skill_lv,skill_get_time(skill_id,skill_lv));
-		}else {
+		} else {
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR,
 							   src, skill_id, skill_lv, tick, flag|BCT_ALL|1, skill_castend_nodamage_id);
@@ -9846,7 +9848,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if(sd){
 			struct mob_data *md;
 
-			md = mob_once_spawn_sub(src, src->m, src->x, src->y, status_get_name(src), 2308, "", SZ_SMALL, AI_NONE);
+			md = mob_once_spawn_sub(src, src->m, src->x, src->y, status_get_name(src), MOBID_ZANZOU, "", SZ_SMALL, AI_NONE);
 			if( md )
 			{
 				md->master_id = src->id;
@@ -9880,7 +9882,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 		break;
 	case KO_GENWAKU:
-		if ( !map_flag_gvg(src->m) && ( dstsd || dstmd ) && battle_check_target(src,bl,BCT_ENEMY) > 0 ) {
+		if ( !map_flag_gvg2(src->m) && ( dstsd || dstmd ) && !(tstatus->mode&MD_PLANT) && battle_check_target(src,bl,BCT_ENEMY) > 0 ) {
 			int x = src->x, y = src->y;
 
 			if( sd && rnd()%100 > ((45+5*skill_lv) - status_get_int(bl)/10) ){//[(Base chance of success) - (Intelligence Objectives / 10)]%.
@@ -9893,8 +9895,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				clif_slide(src, bl->x, bl->y);
 				clif_fixpos(src);
 				sc_start(src,src,SC_CONFUSION,25,skill_lv,skill_get_time(skill_id,skill_lv));
-				if (unit_movepos(bl,x,y,0,0))
-				{
+				if (unit_movepos(bl,x,y,0,0)) {
 					clif_skill_damage(bl,bl,tick, status_get_amotion(src), 0, -30000, 1, skill_id, -1, 6);
 					if( bl->type == BL_PC && pc_issit((TBL_PC*)bl))
 						clif_sitting(bl); //Avoid sitting sync problem
@@ -11077,7 +11078,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			if (rnd()%100 < 50) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 			} else {
-				TBL_MOB* md = mob_once_spawn_sub(src, src->m, x, y, "--ja--",(skill_lv < 2 ? 1084+rnd()%2 : 1078+rnd()%6),"", SZ_SMALL, AI_NONE);
+				TBL_MOB* md = mob_once_spawn_sub(src, src->m, x, y, "--ja--",(skill_lv < 2 ? MOBID_BLACK_MUSHROOM + rnd()%2 : MOBID_RED_PLANT + rnd()%6),"", SZ_SMALL, AI_NONE);
 				int i;
 				if (!md) break;
 				if ((i = skill_get_time(skill_id, skill_lv)) > 0)
@@ -11194,7 +11195,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 					case 2: sx = x - i; break;
 					case 6: sx = x + i; break;
 				}
-				skill_addtimerskill(src,gettick() + (150 * i),0,sx,sy,skill_id,skill_lv,dir,flag&2);
+				skill_addtimerskill(src,gettick() + (140 * i),0,sx,sy,skill_id,skill_lv,dir,flag&2);
 			}
 		}
 		break;
@@ -11224,10 +11225,9 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 
 	case NC_SILVERSNIPER:
 		{
-			int class_ = MOBID_SILVERSNIPER;
 			struct mob_data *md;
 
-			md = mob_once_spawn_sub(src, src->m, x, y, status_get_name(src), class_, "", SZ_SMALL, AI_NONE);
+			md = mob_once_spawn_sub(src, src->m, x, y, status_get_name(src), MOBID_SILVERSNIPER, "", SZ_SMALL, AI_NONE);
 			if( md ) {
 				md->master_id = src->id;
 				md->special_state.ai = AI_FAW;
@@ -12909,6 +12909,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		case UNT_ELECTRICWALK:
 		case UNT_PSYCHIC_WAVE:
 		case UNT_MAGMA_ERUPTION:
+		case UNT_MAKIBISHI:
 			skill_attack(skill_get_type(sg->skill_id),ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			break;
 
@@ -13160,12 +13161,6 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 				}
 			} else
 				sc_start2(ss, bl,type,100,sg->val1,sg->val2,skill_get_time2(sg->skill_id, sg->skill_lv));
-			break;
-
-		case UNT_MAKIBISHI:
-			skill_attack(BF_MISC, ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
-			sg->limit = DIFF_TICK(tick, sg->tick);
-			sg->unit_id = UNT_USED_TRAPS;
 			break;
 
 		case UNT_LAVA_SLIDE:
@@ -14655,7 +14650,7 @@ bool skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id,
 		case KO_ZANZOU: {
 				int c = 0;
 
-				i = map_foreachinmap(skill_check_condition_mob_master_sub, sd->bl.m, BL_MOB, sd->bl.id, 2308, skill_id, &c);
+				i = map_foreachinmap(skill_check_condition_mob_master_sub, sd->bl.m, BL_MOB, sd->bl.id, MOBID_ZANZOU, skill_id, &c);
 				if( c >= skill_get_maxcount(skill_id,skill_lv) || c != i) {
 					clif_skill_fail(sd , skill_id, USESKILL_FAIL_LEVEL, 0);
 					return false;

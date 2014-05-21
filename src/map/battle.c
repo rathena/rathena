@@ -2711,9 +2711,7 @@ struct Damage battle_calc_skill_base_damage(struct Damage wd, struct block_list 
 			if (sd) {
 				short index = sd->equip_index[EQI_HAND_L];
 
-				if (index >= 0 &&
-					sd->inventory_data[index] &&
-					sd->inventory_data[index]->type == IT_ARMOR)
+				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR)
 					ATK_ADD(wd.damage, wd.damage2, sd->inventory_data[index]->weight/10);
 			} else
 				ATK_ADD(wd.damage, wd.damage2, sstatus->rhw.atk2); //Else use Atk2
@@ -2721,6 +2719,44 @@ struct Damage battle_calc_skill_base_damage(struct Damage wd, struct block_list 
 			wd.weaponAtk = (int)wd.damage;
 			wd.weaponAtk2 = (int)wd.damage2;
 #endif
+			break;
+		case RK_DRAGONBREATH:
+		case RK_DRAGONBREATH_WATER:
+			{
+				int damagevalue = 0;
+
+				wd.damage = wd.damage2 = 0;
+#ifdef RENEWAL
+				wd.weaponAtk = wd.weaponAtk2 = 0;
+#endif
+				damagevalue = ((sstatus->hp / 50) + (status_get_max_sp(src) / 4)) * skill_lv;
+				if(status_get_lv(src) > 100)
+					damagevalue = damagevalue * status_get_lv(src) / 150;
+				if(sd)
+					damagevalue = damagevalue * (100 + 5 * (pc_checkskill(sd,RK_DRAGONTRAINING) - 1)) / 100;
+				ATK_ADD(wd.damage, wd.damage2, damagevalue);
+#ifdef RENEWAL
+				ATK_ADD(wd.weaponAtk, wd.weaponAtk2, damagevalue);
+#endif
+				wd.flag |= BF_LONG;
+			}
+			break;
+		case NC_SELFDESTRUCTION: {
+				int damagevalue = 0;
+
+				wd.damage = wd.damage2 = 0;
+#ifdef RENEWAL
+				wd.weaponAtk = wd.weaponAtk2 = 0;
+#endif
+				damagevalue = (skill_lv + 1) * ((sd ? pc_checkskill(sd,NC_MAINFRAME) : 0) + 8) * (status_get_sp(src) + sstatus->vit);
+				if(status_get_lv(src) > 100)
+					damagevalue = damagevalue * status_get_lv(src) / 100;
+				damagevalue = damagevalue + sstatus->hp;
+				ATK_ADD(wd.damage, wd.damage2, damagevalue);
+#ifdef RENEWAL
+				ATK_ADD(wd.weaponAtk, wd.weaponAtk2, damagevalue);
+#endif
+			}
 			break;
 		case KO_HAPPOKUNAI: {
 				int damagevalue = 0;
@@ -2745,9 +2781,8 @@ struct Damage battle_calc_skill_base_damage(struct Damage wd, struct block_list 
 			}
 			break;
 		case HFLI_SBR44:	//[orn]
-			if(src->type == BL_HOM) {
+			if(src->type == BL_HOM)
 				wd.damage = ((TBL_HOM*)src)->homunculus.intimacy ;
-			}
 			break;
 
 		default:
@@ -2802,6 +2837,7 @@ struct Damage battle_calc_skill_base_damage(struct Damage wd, struct block_list 
 			//Add any bonuses that modify the base atk (pre-skills)
 			if(sd) {
 				int skill;
+
 				if (sd->bonus.atk_rate) {
 					ATK_ADDRATE(wd.damage, wd.damage2, sd->bonus.atk_rate);
 					RE_ALLATK_ADDRATE(wd, sd->bonus.atk_rate);
@@ -5928,8 +5964,15 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	s_ele = skill_get_ele(skill_id, skill_lv);
 	if (s_ele < 0 && s_ele != -3) //Attack that takes weapon's element for misc attacks? Make it neutral [Skotlex]
 		s_ele = ELE_NEUTRAL;
-	else if (s_ele == -3) //Use random element
-		s_ele = rnd()%ELE_ALL;
+	else if (s_ele == -3) { //Use random element
+		if (skill_id == SN_FALCONASSAULT) {
+			if (sstatus->rhw.ele && !status_get_attack_sc_element(src, status_get_sc(src)))
+				s_ele = sstatus->rhw.ele;
+			else
+				s_ele = status_get_attack_sc_element(src, status_get_sc(src));
+		} else
+			s_ele = rnd()%ELE_ALL;
+	}
 
 	//Skill Range Criteria
 	md.flag |= battle_range_type(src, target, skill_id, skill_lv);
@@ -6118,24 +6161,14 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
  	case RA_ICEBOUNDTRAP:
 		md.damage = skill_lv * status_get_dex(src) + status_get_int(src) * 5 ;
 		RE_LVL_TMDMOD();
-		if(sd)
-		{
+		if(sd) {
 			int researchskill_lv = pc_checkskill(sd,RA_RESEARCHTRAP);
 			if(researchskill_lv)
 				md.damage = (int64)md.damage * 20 * researchskill_lv / (skill_id == RA_CLUSTERBOMB?50:100);
 			else
 				md.damage = 0;
-		}else
+		} else
 			md.damage = (int64)md.damage * 200 / (skill_id == RA_CLUSTERBOMB?50:100);
-
-		break;
-	case NC_SELFDESTRUCTION:
-		{
-			short totaldef = status_get_def2(target) + (short)status_get_def(target);
-			md.damage = ( ((sd) ? pc_checkskill(sd,NC_MAINFRAME) : skill_get_max(NC_MAINFRAME)) + 8 ) * ( skill_lv + 1 ) * ( status_get_sp(src) + status_get_vit(src) );
-			RE_LVL_MDMOD(100);
-			md.damage += status_get_hp(src) - totaldef;
-		}
 		break;
 	case GN_THORNS_TRAP:
 		md.damage = 100 + 200 * skill_lv + status_get_int(src);
