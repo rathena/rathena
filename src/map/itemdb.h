@@ -23,8 +23,6 @@
 #define IG_FINDINGORE 6
 #define IG_POTION 37
 
-#define MAX_ITEMGROUP 420 ///The max. item group count (increase this when needed). TODO: Remove this limit and use dynamic size or DBMap if needed
-
 #define MAX_ITEMGROUP_RANDGROUP 4	///Max group for random item (increase this when needed). TODO: Remove this limit and use dynamic size if needed
 
 #define CARD0_FORGE 0x00FF
@@ -318,6 +316,33 @@ struct item_combo {
 	bool isRef;/* whether this struct is a reference or the master */
 };
 
+
+/// Struct of item group entry
+struct s_item_group_entry {
+	uint16 nameid, /// Item ID
+		duration; /// Duration if item as rental item (in minutes)
+	uint16 amount; /// Amount of item will be obtained
+	bool isAnnounced, /// Broadcast if player get this item
+		isNamed; /// Named the item (if possible)
+	char bound; /// Makes the item as bound item (according to bound type)
+};
+
+/// Struct of random group
+struct s_item_group_random {
+	struct s_item_group_entry *data;
+	uint16 data_qty;
+};
+
+/// Struct of item group that will be used for db
+struct s_item_group_db {
+	uint16 id;
+	struct s_item_group_entry *must;
+	uint16 must_qty;
+	struct s_item_group_random random[MAX_ITEMGROUP_RANDGROUP]; //! TODO: Move this fixed array to dynamic size if needed.
+};
+
+static uint16 itemdb_itemgroup_count; /// Number of Item Groups
+
 ///Main item data struct
 struct item_data {
 	uint16 nameid;
@@ -384,29 +409,6 @@ struct item_data {
 	unsigned char combos_count;
 };
 
-/* Struct of item group entry */
-struct s_item_group {
-	uint16 nameid, ///item id
-		duration; ///duration if item as rental item (in minute)
-	uint16 amount; ///amount of item will be obtained
-	bool isAnnounced, ///broadcast if player get this item
-		isNamed; ///named the item (if possible)
-	char bound; ///makes the item as bound item (according to bound type)
-};
-
-/* Struct of random group */
-struct s_item_group_random {
-	struct s_item_group *data;
-	uint16 data_qty;
-};
-
-/* Struct of item group that will be used for db */
-struct s_item_group_db {
-	struct s_item_group *must;
-	uint16 must_qty;
-	struct s_item_group_random random[MAX_ITEMGROUP_RANDGROUP]; //! TODO: Move this fixed array to dynamic size if needed.
-};
-
 struct item_data* itemdb_searchname(const char *name);
 int itemdb_searchname_array(struct item_data** data, int size, const char *str);
 struct item_data* itemdb_load(int nameid);
@@ -440,7 +442,6 @@ struct item_data* itemdb_exists(int nameid);
 const char* itemdb_typename(enum item_types type);
 const char *itemdb_typename_ammo (enum e_item_ammo ammo);
 
-int itemdb_group_bonus(struct map_session_data* sd, int itemid);
 unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group);
 
 #define itemdb_value_buy(n) itemdb_search(n)->value_buy
@@ -479,6 +480,7 @@ char itemdb_pc_get_itemgroup(uint16 group_id, struct map_session_data *sd);
 uint16 itemdb_get_randgroupitem_count(uint16 group_id, uint8 sub_group, uint16 nameid);
 
 DBMap * itemdb_get_combodb();
+DBMap * itemdb_get_groupdb();
 
 void itemdb_reload(void);
 

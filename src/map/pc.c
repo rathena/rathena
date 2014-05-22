@@ -66,6 +66,7 @@ int day_timer_tid = INVALID_TIMER;
 int night_timer_tid = INVALID_TIMER;
 
 struct eri *pc_sc_display_ers = NULL;
+struct eri *pc_itemgrouphealrate_ers = NULL;
 int pc_expiration_tid = INVALID_TIMER;
 
 struct fame_list smith_fame_list[MAX_FAME_LIST];
@@ -2154,6 +2155,56 @@ int pc_bonus_subele(struct map_session_data* sd, unsigned char ele, short rate, 
 	return 0;
 }
 
+/** Add item group heal rate bonus to player
+* @param sd Player
+* @param group_id Item Group ID
+* @param rate
+* @author Cydh
+*/
+void pc_itemgrouphealrate(struct map_session_data *sd, uint16 group_id, short rate) {
+	struct s_pc_itemgrouphealrate *entry;
+	uint8 i;
+
+	for (i = 0; i < sd->itemgrouphealrate_count; i++) {
+		if (sd->itemgrouphealrate[i]->group_id == group_id)
+			break;
+	}
+
+	if (i != sd->itemgrouphealrate_count) {
+		sd->itemgrouphealrate[i]->rate += rate;
+		return;
+	}
+
+	if (i >= UINT8_MAX) {
+		ShowError("pc_itemgrouphealrate_add: Reached max (%d) possible bonuses for this player %d\n", UINT8_MAX);
+		return;
+	}
+
+	entry = ers_alloc(pc_itemgrouphealrate_ers, struct s_pc_itemgrouphealrate);
+	entry->group_id = group_id;
+	entry->rate = rate;
+
+	RECREATE(sd->itemgrouphealrate, struct s_pc_itemgrouphealrate *, sd->itemgrouphealrate_count+1);
+	sd->itemgrouphealrate[sd->itemgrouphealrate_count++] = entry;
+}
+
+/** Clear item group heal rate from player
+* @param sd Player
+* @author Cydh
+*/
+void pc_itemgrouphealrate_clear(struct map_session_data *sd) {
+	if (!sd || !sd->itemgrouphealrate_count)
+		return;
+	else {
+		uint8 i;
+		for( i = 0; i < sd->itemgrouphealrate_count; i++ )
+			ers_free(pc_itemgrouphealrate_ers, sd->itemgrouphealrate[i]);
+		sd->itemgrouphealrate_count = 0;
+		aFree(sd->itemgrouphealrate);
+		sd->itemgrouphealrate = NULL;
+	}
+}
+
 /*==========================================
  * Add a bonus(type) to player sd
  *------------------------------------------*/
@@ -3217,8 +3268,8 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 	case SP_ADD_ITEM_HEAL_RATE:
 		if(sd->state.lr_flag == 2)
 			break;
-		if (type2 < MAX_ITEMGROUP) {	//Group bonus
-			sd->itemgrouphealrate[type2] += val;
+		if (type2 < itemdb_itemgroup_count) {	//Group bonus
+			pc_itemgrouphealrate(sd, type2, val);
 			break;
 		}
 		//Standard item bonus.
@@ -7616,7 +7667,7 @@ int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp)
 		//All item bonuses.
 		bonus += sd->bonus.itemhealrate2;
 		//Item Group bonuses
-		bonus += bonus*itemdb_group_bonus(sd, itemid)/100;
+		bonus += bonus*pc_get_itemgroup_bonus(sd, itemid)/100;
 		//Individual item bonuses.
 		for(i = 0; i < ARRAYLENGTH(sd->itemhealrate) && sd->itemhealrate[i].nameid; i++)
 		{
@@ -10758,16 +10809,63 @@ short pc_maxparameter(struct map_session_data *sd, enum e_params param) {
 		((class_&JOBL_UPPER) ? battle_config.max_trans_parameter : battle_config.max_parameter)));
 }
 
+
+/**
+* Calculates total item-group related bonuses for the given item
+* @param sd Player
+* @param nameid Item ID
+* @return Heal rate
+**/
+short pc_get_itemgroup_bonus(struct map_session_data* sd, uint16 nameid) {
+	short bonus = 0;
+	uint8 i;
+
+	if (!sd->itemgrouphealrate_count)
+		return bonus;
+	for (i = 0; i < sd->itemgrouphealrate_count; i++) {
+		uint16 group_id = sd->itemgrouphealrate[i]->group_id, j;
+		struct s_item_group_db *group = (struct s_item_group_db *) idb_get(itemdb_get_groupdb(), group_id);
+		if (!group)
+			continue;
+		
+		for (j = 0; j < group->random[0].data_qty; j++) {
+			if (group->random[0].data[j].nameid == nameid) {
+				bonus += sd->itemgrouphealrate[i]->rate;
+				break;
+			}
+		}
+	}
+	return bonus;
+}
+
+/**
+* Calculates total item-group related bonuses for the given item group
+* @param sd Player
+* @param group_id Item Group ID
+* @return Heal rate
+**/
+short pc_get_itemgroup_bonus_group(struct map_session_data* sd, uint16 group_id) {
+	short bonus = 0;
+	uint8 i;
+
+	if (!sd->itemgrouphealrate_count)
+		return bonus;
+	for (i = 0; i < sd->itemgrouphealrate_count; i++) {
+		if (sd->itemgrouphealrate[i]->group_id == group_id)
+			return sd->itemgrouphealrate[i]->rate;
+	}
+	return bonus;
+}
+
 /*==========================================
  * pc Init/Terminate
  *------------------------------------------*/
 void do_final_pc(void) {
-
 	db_destroy(itemcd_db);
-
 	do_final_pc_groups();
 
 	ers_destroy(pc_sc_display_ers);
+	ers_destroy(pc_itemgrouphealrate_ers);
 }
 
 void do_init_pc(void) {
@@ -10808,4 +10906,5 @@ void do_init_pc(void) {
 	do_init_pc_groups();
 
 	pc_sc_display_ers = ers_new(sizeof(struct sc_display_entry), "pc.c:pc_sc_display_ers", ERS_OPT_NONE);
+	pc_itemgrouphealrate_ers = ers_new(sizeof(struct s_pc_itemgrouphealrate), "pc.c:pc_itemgrouphealrate_ers", ERS_OPT_NONE);
 }

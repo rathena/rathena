@@ -2866,7 +2866,6 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		+ sizeof(sd->ignore_def_by_race)
 		+ sizeof(sd->ignore_mdef_by_race)
 		+ sizeof(sd->ignore_mdef_by_class)
-		+ sizeof(sd->itemgrouphealrate)
 		+ sizeof(sd->sp_gain_race)
 		+ sizeof(sd->sp_gain_race_attack)
 		+ sizeof(sd->hp_gain_race_attack)
@@ -2937,6 +2936,8 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	pc_delautobonus(sd,sd->autobonus,ARRAYLENGTH(sd->autobonus),true);
 	pc_delautobonus(sd,sd->autobonus2,ARRAYLENGTH(sd->autobonus2),true);
 	pc_delautobonus(sd,sd->autobonus3,ARRAYLENGTH(sd->autobonus3),true);
+
+	pc_itemgrouphealrate_clear(sd);
 
 	npc_script_event(sd, NPCE_STATCALC);
 
