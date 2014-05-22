@@ -23,7 +23,7 @@
 #define IG_FINDINGORE 6
 #define IG_POTION 37
 
-#define MAX_ITEMGROUP 400 ///The max. item group count (increase this when needed). TODO: Remove this limit and use dynamic size or DBMap if needed
+#define MAX_ITEMGROUP 420 ///The max. item group count (increase this when needed). TODO: Remove this limit and use dynamic size or DBMap if needed
 
 #define MAX_ITEMGROUP_RANDGROUP 4	///Max group for random item (increase this when needed). TODO: Remove this limit and use dynamic size if needed
 
