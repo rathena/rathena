@@ -5736,11 +5736,11 @@
 12032,Box_Of_Storm,Box of Storms,11,1000,,200,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "ITEM_ENCHANTARMS",2; },{},{}
 12033,Box_Of_Sunlight,Box of Sunlight,2,1000,,200,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_Intravision,30000,0; },{},{}
 12034,Painting_Box,Box of Panting,2,1000,,200,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 0,9; sc_start SC_Silence,30000,0,3000,0; },{},{}
-12035,Lotto_Box01,Lotto Box 01,2,0,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem rand(7361,7370),1; },{},{}
-12036,Lotto_Box02,Lotto Box 02,2,0,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem rand(7371,7380),1; },{},{}
-12037,Lotto_Box03,Lotto Box 03,2,0,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem rand(7381,7390),1; },{},{}
-12038,Lotto_Box04,Lotto Box 04,2,0,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_LottoBox),1; },{},{}
-12039,Lotto_Box05,Lotto Box 05,2,0,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem rand(7542,7546),1; },{},{}
+12035,Lotto_Box01,Lotto Box 01,2,0,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_LottoBox1),1; },{},{}
+12036,Lotto_Box02,Lotto Box 02,2,0,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_LottoBox2),1; },{},{}
+12037,Lotto_Box03,Lotto Box 03,2,0,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_LottoBox3),1; },{},{}
+12038,Lotto_Box04,Lotto Box 04,2,0,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_LottoBox4),1; },{},{}
+12039,Lotto_Box05,Lotto Box 05,2,0,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_LottoBox5),1; },{},{}
 12040,Stone_Of_Intelligence_,Stone of Sage,2,100000,,300,,,,,0xFFFFFFFF,63,2,,,,,,{ homevolution; },{},{}
 12041,Str_Dish01,Fried Grasshopper Legs,0,2000,,60,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_STRFOOD,1200000,1; percentheal 5,0; },{},{}
 12042,Str_Dish02,Seasoned Sticky Webfoot,0,4000,,500,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_STRFOOD,1200000,2; percentheal 5,0; },{},{}

@@ -1129,6 +1129,11 @@ IG_Support_Package	393
 IG_Support_Package10	394
 IG_Event_Almighty_Box	395
 IG_Event_Almighty_Box10	396
+IG_LottoBox1	397
+IG_LottoBox2	398
+IG_LottoBox3	399
+IG_LottoBox4	400
+IG_LottoBox5	401
 
 SC_ALL	-1
 SC_STONE	0
