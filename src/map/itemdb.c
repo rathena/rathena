@@ -664,7 +664,8 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 		int group_id = -1;
 		unsigned int j, prob = 1;
 		uint16 nameid, amt = 1, dur = 0;
-		char *str[9], *p, rand_group = 1, announced = 0, named = 0, bound = 0;
+		uint8 rand_group = 1;
+		char *str[9], *p, announced = 0, named = 0, bound = 0;
 		struct s_item_group_random *random = NULL;
 		struct s_item_group_db *group = NULL;
 		bool found = false;

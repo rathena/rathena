@@ -88,7 +88,7 @@ static void cashshop_read_db_txt( void ){
 		}
 
 		while( fgets( line, sizeof( line ), fp ) ){
-			char *str[2], *p;
+			char *str[3], *p;
 			int i;
 			lines++;
 
@@ -103,7 +103,7 @@ static void cashshop_read_db_txt( void ){
 			if( *p == '\0' )
 				continue;
 
-			for( i = 0; i < 2; ++i ){
+			for( i = 0; i < 3; ++i ){
 				str[i] = p;
 				p = strchr( p, ',' );
 
