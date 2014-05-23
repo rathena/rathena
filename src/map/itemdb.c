@@ -765,10 +765,8 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 			group->must_qty++;
 			// If 'must' item isn't set as random item, skip the next process
 			if (!prob) {
-				if (!found) {
+				if (!found)
 					idb_put(itemdb_group, group->id, group);
-					itemdb_itemgroup_count++;
-				}
 				entries++;
 				continue;
 			}
@@ -798,10 +796,8 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 		}
 		random->data_qty += prob;
 
-		if (!found) {
+		if (!found)
 			idb_put(itemdb_group, group->id, group);
-			itemdb_itemgroup_count++;
-		}
 		entries++;
 	}
 	fclose(fp);
@@ -1601,8 +1597,6 @@ static void itemdb_read(void) {
 		itemdb_read_sqldb();
 	else
 		itemdb_readdb();
-
-	itemdb_itemgroup_count = 0;
 	
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
 		uint8 n1 = strlen(db_path)+strlen(dbsubpath[i])+1;

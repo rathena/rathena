@@ -3268,8 +3268,8 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 	case SP_ADD_ITEM_HEAL_RATE:
 		if(sd->state.lr_flag == 2)
 			break;
-		if (type2 < itemdb_itemgroup_count) {	//Group bonus
-			pc_itemgrouphealrate(sd, type2, val);
+		if (!itemdb_exists(type2)) {
+			ShowError("pc_bonus2: SP_ADD_ITEM_HEAL_RATE Invalid item with id %d\n", type2);
 			break;
 		}
 		//Standard item bonus.
@@ -3280,6 +3280,16 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		}
 		sd->itemhealrate[i].nameid = type2;
 		sd->itemhealrate[i].rate += val;
+		break;
+	case SP_ADD_ITEMGROUP_HEAL_RATE:
+		{
+			struct s_item_group_db *group = (struct s_item_group_db *) idb_get(itemdb_get_groupdb(), type2);
+			if (!group) {
+				ShowError("pc_bonus2: SP_ADD_ITEMGROUP_HEAL_RATE Invalid item group with id %d\n", type2);
+				break;
+			}
+			pc_itemgrouphealrate(sd, type2, val);
+		}
 		break;
 	case SP_EXP_ADDRACE:
 		if(sd->state.lr_flag != 2)
