@@ -11514,10 +11514,15 @@ int skill_castend_map (struct map_session_data *sd, uint16 skill_id, const char 
 	{
 	case AL_TELEPORT:
 	case ALL_ODINS_RECALL:
-		if(strcmp(map,"Random")==0)
+		//The storage window is closed automatically by the client when there's
+		//any kind of map change, so we need to restore it automatically
+		//bugreport:8027
+		if(strcmp(map,"Random") == 0)
 			pc_randomwarp(sd,CLR_TELEPORT);
 		else if (sd->menuskill_val > 1 || skill_id == ALL_ODINS_RECALL) //Need lv2 to be able to warp here.
 			pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
+
+		clif_refresh_storagewindow(sd);
 		break;
 
 	case AL_WARP:

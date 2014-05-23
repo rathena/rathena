@@ -460,6 +460,7 @@ void clif_changechatowner(struct chat_data* cd, struct map_session_data* sd);	//
 void clif_clearchat(struct chat_data *cd,int fd);	// area or fd
 void clif_leavechat(struct chat_data* cd, struct map_session_data* sd, bool flag);	// chat
 void clif_changechatstatus(struct chat_data* cd);	// chat
+void clif_refresh_storagewindow(struct map_session_data *sd);
 void clif_refresh(struct map_session_data *sd);	// self
 
 void clif_fame_blacksmith(struct map_session_data *sd, int points);
