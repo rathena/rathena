@@ -706,7 +706,7 @@
 61,1473,1	// Wizardy_Staff
 61,1474,1	// Gae_Bolg
 61,1477,1	// Spectral_Spear
-61,1478,1	// Ahlspiess,
+61,1478,1	// Ahlspiess
 61,1479,1	// Spectral_Spear_
 61,1480,1	// Gae_Bolg_
 61,1481,1	// Zephyrus_

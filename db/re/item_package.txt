@@ -1149,24 +1149,24 @@ IG_Ox_Tail_Scroll,Eyes_Of_Ifrit,5,1,1,1,0,1
 IG_Ox_Tail_Scroll,Majoruros_Horn,100,1,1,1,0,1
 IG_Ox_Tail_Scroll,Sealed_D_Lord_Card,5,1,1,1,0,1
 
-IG_Buddah_Scroll,Mental_Potion,1,3,1,0,0,0
+IG_Buddah_Scroll,Mental_Potion,0,3,0,0,0,0
 IG_Buddah_Scroll,Bubble_Gum_Box,1400,1,1,0,0,0
 IG_Buddah_Scroll,Str_Dish_Box,1400,1,1,0,0,0
 IG_Buddah_Scroll,Megaphone_Box,1400,1,1,0,0,0
-IG_Buddah_Scroll,Battle_Manual_Box,1352,1,,0,0,0,0
+IG_Buddah_Scroll,Battle_Manual_Box,1352,1,1,0,0,0,0
 IG_Buddah_Scroll,Token_Of_Siegfried_Box,1250,1,1,0,0,0
 IG_Buddah_Scroll,Shadow_Armor_S_Box10,1400,1,1,0,0,0
 IG_Buddah_Scroll,Guyak_Pudding,1400,10,1,0,0,0
-IG_Buddah_Scroll,Poker_Card_In_Mouth,30,1,0,0,0,0
-IG_Buddah_Scroll,Sleeping_Kitty_Cat,100,1,0,0,0,0
-IG_Buddah_Scroll,18600,10,1,0,0,0,0
-IG_Buddah_Scroll,Guarantee_Weapon_5Up,70,1,0,0,0,0
-IG_Buddah_Scroll,Red_Hood,100,0,1,0,0,0
-IG_Buddah_Scroll,Spirit_Of_Chung_E,20,1,0,0,0,0
-IG_Buddah_Scroll,Guarantee_Weapon_9Up,5,1,0,0,0,0
-IG_Buddah_Scroll,Sealed_Samurai_Card,3,1,0,0,0,0
-IG_Buddah_Scroll,Kirin_Wing,10,1,0,0,0,0
-IG_Buddah_Scroll,Unbreak_Weap_Box,50,1,0,0,0,0
+IG_Buddah_Scroll,Poker_Card_In_Mouth,30,1,1,1,0,0
+IG_Buddah_Scroll,Sleeping_Kitty_Cat,100,1,1,1,0,0
+IG_Buddah_Scroll,18600,10,1,1,1,0,0
+IG_Buddah_Scroll,Guarantee_Weapon_5Up,70,1,1,1,0,0
+IG_Buddah_Scroll,Red_Hood,100,1,1,1,0,0
+IG_Buddah_Scroll,Spirit_Of_Chung_E,20,1,1,1,0,0
+IG_Buddah_Scroll,Guarantee_Weapon_9Up,5,1,1,1,0,0
+IG_Buddah_Scroll,Sealed_Samurai_Card,3,1,1,1,0,0
+IG_Buddah_Scroll,Kirin_Wing,10,1,1,1,0,0
+IG_Buddah_Scroll,Unbreak_Weap_Box,50,1,1,1,0,0
 
 IG_Evil_Incarnation,Dead_Tree_Branch_Box2,224,1,1,0,0,1
 IG_Evil_Incarnation,Guyak_Pudding,124,10,1,0,0,1

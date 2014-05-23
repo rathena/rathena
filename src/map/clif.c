@@ -17025,7 +17025,7 @@ void clif_ackworldinfo(struct map_session_data* sd) {
 	WFIFOHEAD(fd,packet_len(0x979));
 	WFIFOW(fd,0)=0x979;
 	//AID -> world name ?
-	safestrncpy((char*)WFIFOP(fd,2), '\0' /* World name */, 24);
+	safestrncpy((char*)WFIFOP(fd,2), "" /* World name */, 24);
 	safestrncpy((char*)WFIFOP(fd,26), sd->status.name, NAME_LENGTH);
 	WFIFOSET(fd,packet_len(0x979));
 }

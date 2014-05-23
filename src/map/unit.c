@@ -2664,6 +2664,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				sd->quest_log = NULL;
 				sd->num_quests = sd->avail_quests = 0;
 			}
+			pc_itemgrouphealrate_clear(sd);
 			break;
 		}
 		case BL_PET:

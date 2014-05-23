@@ -149,6 +149,12 @@ enum npc_timeout_type {
 	NPCT_WAIT  = 2,
 };
 
+/// Item Group heal rate struct
+struct s_pc_itemgrouphealrate {
+	uint16 group_id; /// Item Group ID
+	short rate; /// Rate
+};
+
 struct map_session_data {
 	struct block_list bl;
 	struct unit_data ud;
@@ -323,7 +329,6 @@ struct map_session_data {
 	int ignore_mdef_by_race[RC_MAX];
 	int ignore_mdef_by_class[CLASS_MAX];
 	int ignore_def_by_race[RC_MAX];
-	int itemgrouphealrate[MAX_ITEMGROUP];
 	short sp_gain_race[RC_MAX];
 	short sp_gain_race_attack[RC_MAX];
 	short hp_gain_race_attack[RC_MAX];
@@ -595,13 +600,18 @@ struct map_session_data {
 		int16 icon;
 		int tid;
 	} bonus_script[MAX_PC_BONUS_SCRIPT];
+	
+	struct s_pc_itemgrouphealrate **itemgrouphealrate; /// List of Item Group Heal rate bonus
+	uint8 itemgrouphealrate_count; /// Number of rate bonuses
 
 	/* Expiration Timer ID */
 	int expiration_tid;
 	time_t expiration_time;
 };
 
-struct eri *pc_sc_display_ers;
+struct eri *pc_sc_display_ers; /// Player's SC display table
+struct eri *pc_itemgrouphealrate_ers; /// Player's Item Group Heal Rate table
+
 /* Global Expiration Timer ID */
 extern int pc_expiration_tid;
 
@@ -1104,6 +1114,10 @@ void pc_bonus_script_remove(struct map_session_data *sd, uint8 i);
 void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag);
 
 void pc_cell_basilica(struct map_session_data *sd);
+
+void pc_itemgrouphealrate_clear(struct map_session_data *sd);
+short pc_get_itemgroup_bonus(struct map_session_data* sd, uint16 nameid);
+short pc_get_itemgroup_bonus_group(struct map_session_data* sd, uint16 group_id);
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_class, int type);

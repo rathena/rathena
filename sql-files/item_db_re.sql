@@ -2629,7 +2629,7 @@ REPLACE INTO `item_db_re` VALUES (4566,'Gypsy_Trentini_Card','Gypsy Trentini Car
 REPLACE INTO `item_db_re` VALUES (4567,'Alphoccio_Card','Alphoccio Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,NULL,NULL,'bonus bFlee,10; if(BaseJob==Job_Bard) { bonus bMaxHPrate,10; bonus bMaxSPrate,5;}',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4568,'Celia_Card','Celia Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,NULL,NULL,'bonus bFlee,10; skill "SA_ABRACADABRA",1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4569,'Chen_Card','Chen Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,NULL,NULL,'bonus bFlee,10; skill "MO_CALLSPIRITS",2;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (4570,'Flamel_Card','Flamel Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,NULL,NULL,'bonus bFlee,10; bonus2 bAddItemHealRate,70,200;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (4570,'Flamel_Card','Flamel Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,NULL,NULL,'bonus bFlee,10; bonus2 bAddItemHealRate,IG_Flamel_Card,200;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4571,'Gertie_Card','Gertie Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,NULL,NULL,'bonus bFlee,10; skill "RG_CLOSECONFINE",1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4572,'Randel_Card','Randel Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,NULL,NULL,'bonus bFlee,10; skill "CR_AUTOGUARD",3;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4573,'Trentini_Card','Trentini Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,NULL,NULL,'bonus bFlee,10; if(BaseJob==Job_Dancer) { bonus bMaxHPrate,10; bonus bMaxSPrate,5;}',NULL,NULL);
