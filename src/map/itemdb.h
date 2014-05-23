@@ -341,8 +341,6 @@ struct s_item_group_db {
 	struct s_item_group_random random[MAX_ITEMGROUP_RANDGROUP]; //! TODO: Move this fixed array to dynamic size if needed.
 };
 
-static uint16 itemdb_itemgroup_count; /// Number of Item Groups
-
 ///Main item data struct
 struct item_data {
 	uint16 nameid;
