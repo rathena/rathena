@@ -1709,9 +1709,10 @@ void itemdb_reload(void) {
 	int i,d,k;
 
 	// clear the previous itemdb data
-	for( i = 0; i < ARRAYLENGTH(itemdb_array); ++i )
+	for( i = 0; i < ARRAYLENGTH(itemdb_array); ++i ) {
 		if( itemdb_array[i] )
 			destroy_item_data(itemdb_array[i], true);
+	}
 
 	itemdb_group->clear(itemdb_group, itemdb_group_free);
 	itemdb_other->clear(itemdb_other, itemdb_final_sub);

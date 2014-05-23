@@ -437,10 +437,10 @@ int pc_setrestartvalue(struct map_session_data *sd,int type) {
 static int pc_inventory_rental_end(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct map_session_data *sd = map_id2sd(id);
+
 	if( sd == NULL )
 		return 0;
-	if( tid != sd->rental_timer )
-	{
+	if( tid != sd->rental_timer ) {
 		ShowError("pc_inventory_rental_end: invalid timer id.\n");
 		return 0;
 	}
@@ -451,8 +451,7 @@ static int pc_inventory_rental_end(int tid, unsigned int tick, int id, intptr_t 
 
 int pc_inventory_rental_clear(struct map_session_data *sd)
 {
-	if( sd->rental_timer != INVALID_TIMER )
-	{
+	if( sd->rental_timer != INVALID_TIMER ) {
 		delete_timer(sd->rental_timer, pc_inventory_rental_end);
 		sd->rental_timer = INVALID_TIMER;
 	}
@@ -460,24 +459,89 @@ int pc_inventory_rental_clear(struct map_session_data *sd)
 	return 1;
 }
 
+/* Assumes I is valid (from default areas where it is called, it is) */
+void pc_rental_expire(struct map_session_data *sd, int i)
+{
+	short nameid = sd->status.inventory[i].nameid;
+
+	/* Soon to be dropped, we got plans to integrate it with item db */
+	switch( nameid ) {
+		case ITEMID_REINS_OF_MOUNT:
+			if( &sd->sc && sd->sc.data[SC_ALL_RIDING] )
+				status_change_end(&sd->bl, SC_ALL_RIDING, INVALID_TIMER);
+			break;
+		case ITEMID_LOVE_ANGEL:
+			if( sd->status.font == 1 ) {
+				sd->status.font = 0;
+				clif_font(sd);
+			}
+			break;
+		case ITEMID_SQUIRREL:
+			if( sd->status.font == 2 ) {
+				sd->status.font = 0;
+				clif_font(sd);
+			}
+			break;
+		case ITEMID_GOGO:
+			if( sd->status.font == 3 ) {
+				sd->status.font = 0;
+				clif_font(sd);
+			}
+			break;
+		case ITEMID_PICTURE_DIARY:
+			if( sd->status.font == 4 ) {
+				sd->status.font = 0;
+				clif_font(sd);
+			}
+			break;
+		case ITEMID_MINI_HEART:
+			if( sd->status.font == 5 ) {
+				sd->status.font = 0;
+				clif_font(sd);
+			}
+			break;
+		case ITEMID_NEWCOMER:
+			if( sd->status.font == 6 ) {
+				sd->status.font = 0;
+				clif_font(sd);
+			}
+			break;
+		case ITEMID_KID:
+			if( sd->status.font == 7 ) {
+				sd->status.font = 0;
+				clif_font(sd);
+			}
+			break;
+		case ITEMID_MAGIC_CASTLE:
+			if( sd->status.font == 8 ) {
+				sd->status.font = 0;
+				clif_font(sd);
+			}
+			break;
+		case ITEMID_BULGING_HEAD:
+			if( sd->status.font == 9 ) {
+				sd->status.font = 0;
+				clif_font(sd);
+			}
+			break;
+	}
+	clif_rental_expired(sd->fd, i, sd->status.inventory[i].nameid);
+	pc_delitem(sd, i, sd->status.inventory[i].amount, 0, 0, LOG_TYPE_OTHER);
+}
+
 void pc_inventory_rentals(struct map_session_data *sd)
 {
 	int i, c = 0;
 	unsigned int expire_tick, next_tick = UINT_MAX;
 
-	for( i = 0; i < MAX_INVENTORY; i++ )
-	{ // Check for Rentals on Inventory
+	for( i = 0; i < MAX_INVENTORY; i++ ) { // Check for Rentals on Inventory
 		if( sd->status.inventory[i].nameid == 0 )
 			continue; // Nothing here
 		if( sd->status.inventory[i].expire_time == 0 )
 			continue;
-
-		if( sd->status.inventory[i].expire_time <= time(NULL) ) {
-			if( sd->status.inventory[i].nameid == ITEMID_REINS_OF_MOUNT && &sd->sc && sd->sc.data[SC_ALL_RIDING] )
-				status_change_end(&sd->bl, SC_ALL_RIDING, INVALID_TIMER);
-			clif_rental_expired(sd->fd, i, sd->status.inventory[i].nameid);
-			pc_delitem(sd, i, sd->status.inventory[i].amount, 0, 0, LOG_TYPE_OTHER);
-		} else {
+		if( sd->status.inventory[i].expire_time <= time(NULL) )
+			pc_rental_expire(sd, i);
+		else {
 			expire_tick = (unsigned int)(sd->status.inventory[i].expire_time - time(NULL)) * 1000;
 			clif_rental_time(sd->fd, sd->status.inventory[i].nameid, (int)(expire_tick / 1000));
 			next_tick = min(expire_tick, next_tick);
@@ -498,17 +562,15 @@ void pc_inventory_rental_add(struct map_session_data *sd, int seconds)
 	if( sd == NULL )
 		return;
 
-	if( sd->rental_timer != INVALID_TIMER )
-	{
+	if( sd->rental_timer != INVALID_TIMER ) {
 		const struct TimerData * td;
+
 		td = get_timer(sd->rental_timer);
-		if( DIFF_TICK(td->tick, gettick()) > tick )
-		{ // Update Timer as this one ends first than the current one
+		if( DIFF_TICK(td->tick, gettick()) > tick ) { // Update Timer as this one ends first than the current one
 			pc_inventory_rental_clear(sd);
 			sd->rental_timer = add_timer(gettick() + tick, pc_inventory_rental_end, sd->bl.id, 0);
 		}
-	}
-	else
+	} else
 		sd->rental_timer = add_timer(gettick() + min(tick,3600000), pc_inventory_rental_end, sd->bl.id, 0);
 }
 
@@ -545,8 +607,7 @@ int pc_makesavestatus(struct map_session_data *sd)
 #else
 	sd->status.option = sd->sc.option&(OPTION_INVISIBLE|OPTION_CART|OPTION_FALCON|OPTION_RIDING|OPTION_DRAGON|OPTION_WUG|OPTION_WUGRIDER|OPTION_MADOGEAR);
 #endif
-	if (sd->sc.data[SC_JAILED])
-	{	//When Jailed, do not move last point.
+	if (sd->sc.data[SC_JAILED]) { //When Jailed, do not move last point.
 		if(pc_isdead(sd)){
 			pc_setrestartvalue(sd,0);
 		} else {
@@ -1253,9 +1314,9 @@ int pc_reg_received(struct map_session_data *sd)
 	}
 
 	//SG map and mob read [Komurka]
-	for(i=0;i<MAX_PC_FEELHATE;i++) //for now - someone need to make reading from txt/sql
-	{
+	for(i=0;i<MAX_PC_FEELHATE;i++) { //for now - someone need to make reading from txt/sql
 		uint16 j;
+
 		if ((j = pc_readglobalreg(sd,sg_info[i].feel_var))!=0) {
 			sd->feel_map[i].index = j;
 			sd->feel_map[i].m = map_mapindex2mapid(j);
@@ -1327,7 +1388,7 @@ int pc_reg_received(struct map_session_data *sd)
 	sd->vip.time = 0;
 	sd->vip.enabled = 0;
 	chrif_req_login_operation(sd->status.account_id, sd->status.name, 6, 0, 1, 0);  // request VIP informations
-#endif	
+#endif
 	intif_Mail_requestinbox(sd->status.char_id, 0); // MAIL SYSTEM - Request Mail Inbox
 	intif_request_questlog(sd);
 
@@ -1335,8 +1396,6 @@ int pc_reg_received(struct map_session_data *sd)
 		sd->state.connect_new = 1;
 		clif_parse_LoadEndAck(sd->fd, sd);
 	}
-
-	pc_inventory_rentals(sd);
 
 	if( sd->sc.option&OPTION_INVISIBLE ) {
 		sd->vd.class_ = INVISIBLE_CLASS;
@@ -1352,19 +1411,9 @@ int pc_reg_received(struct map_session_data *sd)
 
 		clif_changeoption( &sd->bl );
 	}
-	
-	if( sd->state.autotrade ){
+
+	if( sd->state.autotrade )
 		clif_parse_LoadEndAck(sd->fd, sd);
-	}
-
-	if (sd->expiration_time != 0) { // don't display if it's unlimited or an unknown value
-		time_t exp_time = sd->expiration_time;
-		char tmpstr[1024];
-			strftime(tmpstr, sizeof(tmpstr) - 1, msg_txt(sd,501), localtime(&exp_time)); // "Your account time limit is: %d-%m-%Y %H:%M:%S."
-			clif_wis_message(sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
-
-		pc_expire_check(sd);
-	}
 
 	return 1;
 }
@@ -10562,6 +10611,21 @@ void pc_damage_log_clear(struct map_session_data *sd, int id)
 	}
 }
 
+/* Status change data arrived from char-server */
+void pc_scdata_received(struct map_session_data *sd) {
+	pc_inventory_rentals(sd);
+
+	if( sd->expiration_time != 0 ) { //Don't display if it's unlimited or unknow value
+		time_t exp_time = sd->expiration_time;
+		char tmpstr[1024];
+
+		strftime(tmpstr,sizeof(tmpstr) - 1,msg_txt(sd,501),localtime(&exp_time)); // "Your account time limit is: %d-%m-%Y %H:%M:%S."
+		clif_wis_message(sd->fd,wisp_server_name,tmpstr,strlen(tmpstr) + 1);
+
+		pc_expire_check(sd);
+	}
+}
+
 int pc_expiration_timer(int tid, unsigned int tick, int id, intptr_t data) {
 	struct map_session_data *sd = map_id2sd(id);
 
@@ -10619,7 +10683,7 @@ void pc_expire_check(struct map_session_data *sd) {
 **/
 enum e_BANKING_DEPOSIT_ACK pc_bank_deposit(struct map_session_data *sd, int money) {
 	unsigned int limit_check = money+sd->status.bank_vault;
-	
+
 	if( money <= 0 || limit_check > MAX_BANK_ZENY ) {
 		return BDA_OVERFLOW;
 	} else if ( money > sd->status.zeny ) {

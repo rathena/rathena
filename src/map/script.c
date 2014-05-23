@@ -17384,13 +17384,14 @@ BUILDIN_FUNC(setfont)
 {
 	struct map_session_data *sd = script_rid2sd(st);
 	int font = script_getnum(st,2);
+
 	if( sd == NULL )
 		return 0;
 
-	if( sd->user_font != font )
-		sd->user_font = font;
+	if( sd->status.font != font )
+		sd->status.font = font;
 	else
-		sd->user_font = 0;
+		sd->status.font = 0;
 
 	clif_font(sd);
 	return SCRIPT_CMD_SUCCESS;
@@ -17401,8 +17402,8 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 	TBL_MOB* md		= (TBL_MOB*)bl;
 	struct block_list *tbl;
 	int mobid		= va_arg(ap,int);
-	uint16 skill_id		= va_arg(ap,int);
-	uint16 skill_lv		= va_arg(ap,int);
+	uint16 skill_id	= va_arg(ap,int);
+	uint16 skill_lv	= va_arg(ap,int);
 	int casttime	= va_arg(ap,int);
 	int cancel		= va_arg(ap,int);
 	int emotion		= va_arg(ap,int);
@@ -17412,8 +17413,7 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 		return 0;
 
 	// 0:self, 1:target, 2:master, default:random
-	switch( target )
-	{
+	switch( target ) {
 		case 0: tbl = map_id2bl(md->bl.id); break;
 		case 1: tbl = map_id2bl(md->target_id); break;
 		case 2: tbl = map_id2bl(md->master_id); break;
@@ -17435,6 +17435,7 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 
 	return SCRIPT_CMD_SUCCESS;
 }
+
 /*==========================================
  * areamobuseskill "Map Name",<x>,<y>,<range>,<Mob ID>,"Skill Name"/<Skill ID>,<Skill Lv>,<Cast Time>,<Cancelable>,<Emotion>,<Target Type>;
  *------------------------------------------*/
