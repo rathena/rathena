@@ -5333,11 +5333,16 @@ logs out.
 Note that the maximum number of 'bonus_script' commands that can run simultaneously
 for a player is 10 (MAX_PC_BONUS_SCRIPT in 'src/map/pc.h').
 
-Flags: (Default is 0)
-	&1: Remove when dead.
-	&2: Removable by Dispell.
-	&4: Removable by Clearance.
-	&8: Remove when player logs out.
+Flags (bitmask):
+	1  : Remove when dead.
+	2  : Removable by Dispell.
+	4  : Removable by Clearance.
+	8  : Remove when player logs out.
+	16 : Removeable by Banishing Buster.
+	32 : Removable by Refresh.
+	128: Removable by Luxanima.
+	256: Remove when Madogear is activated or deactivated.
+	512: Remove when receive damage.
 
 Types:
 	This will be used to decide negative or positive buff for 'debuff_on_logout'.

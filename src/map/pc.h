@@ -594,7 +594,7 @@ struct map_session_data {
 		struct script_code *script;
 		char script_str[MAX_BONUS_SCRIPT_LENGTH]; //Used for comparing and storing on table
 		uint32 tick;
-		uint8 flag;
+		uint16 flag;
 		char type; //0 - Ignore; 1 - Buff; 2 - Debuff
 		int16 icon;
 		int tid;
@@ -602,6 +602,9 @@ struct map_session_data {
 	
 	struct s_pc_itemgrouphealrate **itemgrouphealrate; /// List of Item Group Heal rate bonus
 	uint8 itemgrouphealrate_count; /// Number of rate bonuses
+
+	enum sc_type *sc_scripts; /// List of SC's id that active and has script [Cydh]
+	uint8 sc_scripts_count; /// Number of list of SC's id
 
 	/* Expiration Timer ID */
 	int expiration_tid;

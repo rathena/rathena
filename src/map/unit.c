@@ -1113,9 +1113,9 @@ int unit_is_walking(struct block_list *bl)
  * Some statuses are still checked here due too specific variables
  * @author [Skotlex]
  * @param bl: Object to check
- * @return Can move(1); Can't move(0)
+ * @return True - can move; False - can't move
  */
-int unit_can_move(struct block_list *bl) {
+bool unit_can_move(struct block_list *bl) {
 	struct map_session_data *sd;
 	struct unit_data *ud;
 	struct status_change *sc;
@@ -1126,13 +1126,13 @@ int unit_can_move(struct block_list *bl) {
 	sd = BL_CAST(BL_PC, bl);
 
 	if (!ud)
-		return 0;
+		return false;
 
 	if (ud->skilltimer != INVALID_TIMER && ud->skill_id != LG_EXEEDBREAK && (!sd || !pc_checkskill(sd, SA_FREECAST) || skill_get_inf2(ud->skill_id)&INF2_GUILD_SKILL))
-		return 0; // Prevent moving while casting
+		return false; // Prevent moving while casting
 
 	if (DIFF_TICK(ud->canmove_tick, gettick()) > 0)
-		return 0;
+		return false;
 
 	if (sd && (
 		pc_issit(sd) ||
@@ -1140,28 +1140,11 @@ int unit_can_move(struct block_list *bl) {
 		sd->state.buyingstore ||
 		sd->state.blockedmove
 	))
-		return 0; // Can't move
+		return false; // Can't move
 
-	if (sc) {
-		if( sc->cant.move // status placed here are ones that cannot be cached by sc->cant.move for they depend on other conditions other than their availability
-			|| (sc->data[SC_FEAR] && sc->data[SC_FEAR]->val2 > 0)
-			|| (sc->data[SC_SPIDERWEB] && sc->data[SC_SPIDERWEB]->val1)
-			|| (sc->data[SC_DANCING] && sc->data[SC_DANCING]->val4 && (
-				!sc->data[SC_LONGING] ||
-				(sc->data[SC_DANCING]->val1&0xFFFF) == CG_MOONLIT ||
-				(sc->data[SC_DANCING]->val1&0xFFFF) == CG_HERMODE
-				) )
-			)
-			return 0;
-
-		if (sc->opt1 > 0 && sc->opt1 != OPT1_STONEWAIT && sc->opt1 != OPT1_BURNING && !(sc->opt1 == OPT1_CRYSTALIZE && bl->type == BL_MOB))
-			return 0;
-
-		if ((sc->option & OPTION_HIDE) && (!sd || pc_checkskill(sd, RG_TUNNELDRIVE) <= 0))
-			return 0;
-
-	}
-	return 1;
+	if (sc && sc->cant.move)
+		return false;
+	return true;
 }
 
 /**
@@ -1179,10 +1162,10 @@ int unit_resume_running(int tid, unsigned int tick, int id, intptr_t data)
 
 	if(sd && pc_isridingwug(sd))
 		clif_skill_nodamage(ud->bl,ud->bl,RA_WUGDASH,ud->skill_lv,
-			sc_start4(ud->bl,ud->bl,status_skill2sc(RA_WUGDASH),100,ud->skill_lv,unit_getdir(ud->bl),0,0,1));
+			sc_start4(ud->bl,ud->bl,skill_get_sc(RA_WUGDASH),100,ud->skill_lv,unit_getdir(ud->bl),0,0,1));
 	else
 		clif_skill_nodamage(ud->bl,ud->bl,TK_RUN,ud->skill_lv,
-			sc_start4(ud->bl,ud->bl,status_skill2sc(TK_RUN),100,ud->skill_lv,unit_getdir(ud->bl),0,0,0));
+			sc_start4(ud->bl,ud->bl,skill_get_sc(TK_RUN),100,ud->skill_lv,unit_getdir(ud->bl),0,0,0));
 
 	if (sd) clif_walkok(sd);
 
@@ -2044,6 +2027,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 	struct status_data *sstatus;
 	struct map_session_data *sd = NULL;
 	struct mob_data *md = NULL;
+	struct status_change *sc;
 	int range;
 
 	if( (ud=unit_bl2ud(src))==NULL )
@@ -2069,7 +2053,8 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 	   )
 		return 0; // Can't attack under these conditions
 
-	if (sd && &sd->sc && sd->sc.count && sd->sc.data[SC_HEAT_BARREL_AFTER])
+	sc = status_get_sc(src);
+	if (sc && sc->cant.attack)
 		return 0;
 
 	if( src->m != target->m ) {
@@ -2654,6 +2639,12 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				aFree(sd->combos.id);
 				sd->combos.count = 0;
 			}
+			if (sd->sc_scripts_count) {
+				aFree(sd->sc_scripts);
+				sd->sc_scripts_count = 0;
+			}
+			pc_itemgrouphealrate_clear(sd);
+
 			/* [Ind] */
 			if( sd->sc_display_count ) {
 				for( i = 0; i < sd->sc_display_count; i++ )
@@ -2667,7 +2658,6 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				sd->quest_log = NULL;
 				sd->num_quests = sd->avail_quests = 0;
 			}
-			pc_itemgrouphealrate_clear(sd);
 			break;
 		}
 		case BL_PET:

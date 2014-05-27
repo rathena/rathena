@@ -1,0 +1,11 @@
+// SC Script Database
+//
+// SC that active, will run the script that attached
+//
+// Structure:
+//	SC,{ Script }
+//
+// SC         : Status Change ID (see db/const.txt)
+// { Script } : Script that will be executed
+//              NOTE:
+//              - Please don't use this script for nested script effect like to run 'bonus_script', 'sc_start'

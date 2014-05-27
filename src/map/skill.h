@@ -22,6 +22,8 @@ struct status_change_entry;
 #define MAX_SKILL_IMPROVISE_DB 50
 #define MAX_SKILL_LEVEL 100
 #define MAX_SKILL_CRIMSON_MARKER 3
+#define SKILL_NAME_LENGTH 31
+#define SKILL_DESC_LENGTH 31
 
 DBMap* skilldb_name2id;
 
@@ -121,7 +123,7 @@ struct skill_condition {
 		spiritball,
 		itemid[MAX_SKILL_ITEM_REQUIRE],
 		amount[MAX_SKILL_ITEM_REQUIRE];
-	short *eqItem;
+	uint16 *eqItem;
 	enum sc_type *status;
 	uint8 status_count, eqItem_count;
 };
@@ -140,15 +142,15 @@ struct s_skill_require {
 		spiritball[MAX_SKILL_LEVEL],
 		itemid[MAX_SKILL_ITEM_REQUIRE],
 		amount[MAX_SKILL_ITEM_REQUIRE];
-	short *eqItem;
+	uint16 *eqItem;
 	enum sc_type *status;
 	uint8 status_count, eqItem_count;
 };
 
 /// Database skills
 struct s_skill_db {
-	char name[NAME_LENGTH];
-	char desc[40];
+	char name[SKILL_NAME_LENGTH];
+	char desc[SKILL_DESC_LENGTH];
 	int range[MAX_SKILL_LEVEL],hit,inf,element[MAX_SKILL_LEVEL],nk,splash[MAX_SKILL_LEVEL],max;
 	int num[MAX_SKILL_LEVEL];
 	int cast[MAX_SKILL_LEVEL],walkdelay[MAX_SKILL_LEVEL],delay[MAX_SKILL_LEVEL];
@@ -177,6 +179,7 @@ struct s_skill_db {
 		uint8 option;
 		uint16 joballowed, req_opt;
 	} copyable;
+	enum sc_type sc; // Default SC for skill
 };
 extern struct s_skill_db skill_db[MAX_SKILL_DB];
 
@@ -261,7 +264,7 @@ enum {
 	UF_ENSEMBLE      = 0x0200,	// Duet
 	UF_SONG          = 0x0400,	// Song
 	UF_DUALMODE      = 0x0800,	// Spells should trigger both ontimer and onplace/onout/onleft effects.
-    UF_RANGEDSINGLEUNIT = 0x2000 // hack for ranged layout, only display center
+	UF_RANGEDSINGLEUNIT = 0x2000 // hack for ranged layout, only display center
 };
 
 /// Create Database item
@@ -1995,6 +1998,8 @@ int skill_get_elemental_type(uint16 skill_id, uint16 skill_lv);
 
 void skill_combo_toogle_inf(struct block_list* bl, uint16 skill_id, int inf);
 void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_list *bl, uint16 skill_id, uint16 skill_lv, int tick);
+
+enum sc_type skill_get_sc(int16 skill_id);
 
 #ifdef ADJUST_SKILL_DAMAGE
 /// Skill Damage target
