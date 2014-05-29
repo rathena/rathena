@@ -10,7 +10,6 @@
 12103,1 //Bloody_Dead_Branch
 12109,1 //Poring_Box
 12024,1 //Red_Pouch_Of_Surprise
-12258,1 //Bombring_Box
 
 // Item group container
 603,2 //Old_Blue_Box

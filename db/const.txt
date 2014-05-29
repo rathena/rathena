@@ -1135,6 +1135,23 @@ IG_LottoBox2	398
 IG_LottoBox3	399
 IG_LottoBox4	400
 IG_LottoBox5	401
+IG_Support_Package_III	402
+IG_Support_Package_III10	403
+IG_Unlimited_Box	404
+IG_Unlimited_Box10	405
+IG_Unlimited_Box_II	406
+IG_Unlimited_Box_II10	407
+IG_Three_Master_Package_III	408
+IG_Three_Master_Package_III10	409
+IG_2013_RWC_Scroll	410
+IG_Support_Package_II	411
+IG_Support_Package_II10	412
+IG_Level_Up_Box100	413
+IG_Level_Up_Box120	414
+IG_Level_Up_Box130	415
+IG_Level_Up_Box140	416
+IG_Level_Up_Box150	417
+IG_Level_Up_Box160	418
 
 SC_ALL	-1
 SC_STONE	0

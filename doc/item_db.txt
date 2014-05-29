@@ -132,8 +132,8 @@ Loc: Equipment's placement. Values are:
 	2^5      032 = Shield
 	2^2      004 = Garment
 	2^6      064 = Footgear
-	2^3      008 = Accessory 1
-	2^7      128 = Accessory 2
+	2^3      008 = Accessory Right
+	2^7      128 = Accessory Left
 	2^10    1024 = Costume Top Headgear
 	2^11    2048 = Costume Mid Headgear
 	2^12    4096 = Costume Low Headgear
@@ -143,8 +143,8 @@ Loc: Equipment's placement. Values are:
 	2^17  131072 = Shadow Weapon
 	2^18  262144 = Shadow Shield
 	2^18  524288 = Shadow Shoes
-	2^20 1048576 = Shadow Accessory 2
-	2^21 2097152 = Shadow Accessory 1
+	2^20 1048576 = Shadow Accessory Right (Earring)
+	2^21 2097152 = Shadow Accessory Left (Pendant)
 
 ---------------------------------------
 

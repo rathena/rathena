@@ -3227,3 +3227,117 @@ IG_LottoBox5,Lotto42,1,1,1
 IG_LottoBox5,Lotto43,1,1,1
 IG_LottoBox5,Lotto44,1,1,1
 IG_LottoBox5,Lotto45,1,1,1
+
+//TODO: Confirm the items & rates
+IG_Support_Package_III,Battle_Manual,1,2,1
+IG_Support_Package_III,Bubble_Gum,1,2,1
+IG_Support_Package_III,Almighty,1,2,1
+IG_Support_Package_III,Mental_Potion,1,2,1
+//IG_Support_Package_III,,1,6,1 //6x Mysterious Water of Life
+IG_Support_Package_III,Sealed_Bacsojin_Scroll,1,1,1
+
+//TODO: Confirm the items & rates
+IG_Support_Package_III10,Battle_Manual,1,20,1
+IG_Support_Package_III10,Bubble_Gum,1,20,1
+IG_Support_Package_III10,Almighty,1,20,1
+IG_Support_Package_III10,Mental_Potion,1,20,1
+//IG_Support_Package_III10,,1,60,1 //60x Mysterious Water of Life
+IG_Support_Package_III10,Sealed_Bacsojin_Scroll,1,11,1
+
+//TODO: Confirm the items & rates
+//IG_Unlimited_Box,,0,5,0 //5 ASPD Enhanced Potion
+//IG_Unlimited_Box,,0,10,0 //10 Red Boost
+IG_Unlimited_Box,Golden_Treasure_Box,0,1,0
+
+//TODO: Confirm the items & rates
+//IG_Unlimited_Box_II,,0,5,0 //50 ASPD Enhanced Potion
+//IG_Unlimited_Box_II,,0,10,0 //100 Red Boost
+IG_Unlimited_Box_II,Golden_Treasure_Box,0,11,0
+
+//TODO: Confirm the items & rates
+//IG_Unlimited_Box_II,,0,5,0 //5 ASPD Enhanced Potion
+//IG_Unlimited_Box_II,,0,10,0 //10 Red Boost
+IG_Unlimited_Box_II,Sealed_Pharaoh_Scroll,0,1,0
+
+//TODO: Confirm the items & rates
+//IG_Unlimited_Box_II10,,0,5,0 //50 ASPD Enhanced Potion
+//IG_Unlimited_Box_II10,,0,10,0 //100 Red Boost
+IG_Unlimited_Box_II10,Sealed_Pharaoh_Scroll,0,11,0
+
+//TODO: Confirm the items & rates
+IG_Three_Master_Package_III,Small_Life_Potion,1,20,1
+IG_Three_Master_Package_III,Med_Life_Potion,1,20,1
+//IG_Three_Master_Package_III,,1,20,1 //60x Mysterious Water of Life
+IG_Three_Master_Package_III,Sealed_Moonlight_Flower_Scroll,1,1,1
+
+//TODO: Confirm the items & rates
+IG_Three_Master_Package_III10,Small_Life_Potion,1,200,1
+IG_Three_Master_Package_III10,Med_Life_Potion,1,200,1
+//IG_Three_Master_Package_III10,,1,200,1 //200x Mysterious Water of Life
+IG_Three_Master_Package_III10,Sealed_Moonlight_Flower_Scroll,1,11,1
+
+//TODO: Confirm the items & rates
+IG_2013_RWC_Scroll,Neutral_Shadow_Weapon,0,1,0
+IG_2013_RWC_Scroll,Neutral_Shadow_Earring,0,1,0
+IG_2013_RWC_Scroll,Neutral_Shadow_Pendant,0,1,0
+IG_2013_RWC_Scroll,Frozen_Curse_Shadow_Earring,0,1,0
+IG_2013_RWC_Scroll,Frozen_Curse_Shadow_Pendant,0,1,0
+IG_2013_RWC_Scroll,Guarantee_Weapon_11Up,0,1,0
+IG_2013_RWC_Scroll,Guarantee_Armor_11Up,0,1,0
+IG_2013_RWC_Scroll,Guarantee_Weapon_9Up,0,1,0
+IG_2013_RWC_Scroll,Guarantee_Armor_9Up,0,1,0
+IG_2013_RWC_Scroll,C_Wings_Of_Victory,0,1,0
+IG_2013_RWC_Scroll,Succu_Pet_Coupon,0,1,0
+
+//TODO: Confirm the items & rates
+IG_Support_Package_II,Battle_Manual,1,2,1
+IG_Support_Package_II,Bubble_Gum,1,2,1
+IG_Support_Package_II,Almighty,1,2,1
+IG_Support_Package_II,Mental_Potion,1,2,1
+//IG_Support_Package_II,,1,6,1 //6x Mysterious Water of Life
+IG_Support_Package_II,14717,1,1,1 //1x 2013_RWC_Scroll
+
+//TODO: Confirm the items & rates
+IG_Support_Package_II10,Battle_Manual,1,20,1
+IG_Support_Package_II10,Bubble_Gum,1,20,1
+IG_Support_Package_II10,Almighty,1,20,1
+IG_Support_Package_II10,Mental_Potion,1,20,1
+//IG_Support_Package_II10,,1,60,1 //60x Mysterious Water of Life
+IG_Support_Package_II10,14717,1,1,1 //1x 2013_RWC_Scroll
+
+IG_Level_Up_Box100,Guarantee_Weapon_6Up,0,1,0
+IG_Level_Up_Box100,Level_Up_Box120,0,1,0
+
+IG_Level_Up_Box120,Battle_Manual,0,5,0
+IG_Level_Up_Box120,Bubble_Gum,0,5,0
+IG_Level_Up_Box120,Insurance,0,5,0
+IG_Level_Up_Box120,Job_Manual50,0,5,0
+IG_Level_Up_Box120,Guarantee_Armor_6Up,0,1,0
+IG_Level_Up_Box120,Level_Up_Box130,0,1,0
+
+IG_Level_Up_Box130,Battle_Manual,0,5,0
+IG_Level_Up_Box130,Bubble_Gum,0,5,0
+IG_Level_Up_Box130,Insurance,0,5,0
+IG_Level_Up_Box130,Job_Manual50,0,5,0
+IG_Level_Up_Box130,Guarantee_Weapon_7Up,0,1,0
+IG_Level_Up_Box130,Level_Up_Box140,0,1,0
+
+IG_Level_Up_Box140,Battle_Manual,0,5,0
+IG_Level_Up_Box140,Bubble_Gum,0,5,0
+IG_Level_Up_Box140,Insurance,0,5,0
+IG_Level_Up_Box140,Job_Manual50,0,5,0
+IG_Level_Up_Box140,Guarantee_Armor_7Up,0,1,0
+IG_Level_Up_Box140,Level_Up_Box150,0,1,0
+
+IG_Level_Up_Box150,Battle_Manual,0,5,0
+IG_Level_Up_Box150,Bubble_Gum,0,5,0
+IG_Level_Up_Box150,Insurance,0,5,0
+IG_Level_Up_Box150,Job_Manual50,0,5,0
+IG_Level_Up_Box150,Guarantee_Weapon_8Up,0,1,0
+IG_Level_Up_Box150,Level_Up_Box160,0,1,0
+
+IG_Level_Up_Box160,Battle_Manual,0,5,0
+IG_Level_Up_Box160,Bubble_Gum,0,5,0
+IG_Level_Up_Box160,Insurance,0,5,0
+IG_Level_Up_Box160,Job_Manual50,0,5,0
+IG_Level_Up_Box160,Guarantee_Armor_8Up,0,2,0
