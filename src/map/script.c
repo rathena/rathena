@@ -15716,7 +15716,7 @@ BUILDIN_FUNC(getmonsterinfo)
 			script_pushconststr(st,"null");
 		else
 			script_pushint(st,-1);
-		return -1;
+		return 0;
 	}
 	mob = mob_db(mob_id);
 	switch ( script_getnum(st,3) ) {
