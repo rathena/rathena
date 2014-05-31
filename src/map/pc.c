@@ -4132,15 +4132,17 @@ int pc_getzeny(struct map_session_data *sd,int zeny, enum e_log_pick_type type, 
 	return 0;
 }
 
-/*==========================================
+/**
  * Searching a specified itemid in inventory and return his stored index
- *------------------------------------------*/
-int pc_search_inventory(struct map_session_data *sd,int item_id)
-{
+ * @param sd Player
+ * @param nameid Find this Item!
+ * @return Stored index in inventory, or -1 if not found.
+ **/
+short pc_search_inventory(struct map_session_data *sd, uint16 nameid) {
 	int16 i;
 	nullpo_retr(-1, sd);
 
-	ARR_FIND( 0, MAX_INVENTORY, i, sd->status.inventory[i].nameid == item_id && (sd->status.inventory[i].amount > 0 || item_id == 0) );
+	ARR_FIND( 0, MAX_INVENTORY, i, sd->status.inventory[i].nameid == nameid && (sd->status.inventory[i].amount > 0 || nameid == 0) );
 	return ( i < MAX_INVENTORY ) ? i : -1;
 }
 
@@ -4736,7 +4738,7 @@ int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amoun
 		return 1;
 	}
 
-	if( !itemdb_cancartstore(item_data, pc_get_group_level(sd)) || (item_data->bound > 1 && !pc_can_give_bounded_items(sd)))
+	if( !itemdb_cancartstore(item_data, pc_get_group_level(sd)) || (item_data->bound > BOUND_ACCOUNT && !pc_can_give_bounded_items(sd)))
 	{ // Check item trade restrictions	[Skotlex]
 		clif_displaymessage (sd->fd, msg_txt(sd,264));
 		return 1;
@@ -4896,7 +4898,7 @@ int pc_getitemfromcart(struct map_session_data *sd,int idx,int amount)
  * 3 Party Bound
  * 4 Character Bound
  *------------------------------------------*/
-int pc_bound_chk(TBL_PC *sd,int type,int *idxlist)
+int pc_bound_chk(TBL_PC *sd,enum bound_type type,int *idxlist)
 {
 	int i=0, j=0;
 	for(i=0;i<MAX_INVENTORY;i++){
@@ -5308,17 +5310,17 @@ int pc_memo(struct map_session_data* sd, int pos)
  * @param lv : skill lv
  * @return player skill cooldown
  */
-int pc_get_skillcooldown(struct map_session_data *sd, int id, int lv) {
-	int i, cooldown=0;
-	int idx = skill_get_index (id);
-	int cooldownlen = ARRAYLENGTH(sd->skillcooldown);
+int pc_get_skillcooldown(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv) {
+	uint8 i;
+	uint16 idx = skill_get_index(skill_id);
+	int cooldown = 0, cooldownlen = ARRAYLENGTH(sd->skillcooldown);
 	
 	if (!idx) return 0;
-	if (skill_db[idx].cooldown[lv - 1])
-		cooldown = skill_db[idx].cooldown[lv - 1];
+	if (skill_db[idx].cooldown[skill_lv - 1])
+		cooldown = skill_db[idx].cooldown[skill_lv - 1];
 
-	ARR_FIND(0, cooldownlen, i, sd->skillcooldown[i].id == id);
-	if(i<cooldownlen){
+	ARR_FIND(0, cooldownlen, i, sd->skillcooldown[i].id == skill_id);
+	if (i < cooldownlen) {
 		cooldown += sd->skillcooldown[i].val;
 		cooldown = max(0,cooldown);
 	}

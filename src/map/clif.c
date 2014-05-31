@@ -2261,7 +2261,7 @@ void clif_additem(struct map_session_data *sd, int n, int amount, int fail)
 		WFIFOL(fd,offs+23)=sd->status.inventory[n].expire_time;
 #endif
 #if PACKETVER >= 20071002
-		WFIFOW(fd,offs+27)=sd->status.inventory[n].bound ? 2 : 0;
+		WFIFOW(fd,offs+27)=sd->status.inventory[n].bound ? BOUND_GUILD : 0;
 #endif
 	}
 
@@ -2367,7 +2367,7 @@ void clif_item_sub(unsigned char *buf, int n, int idx, struct item *i, struct it
 		clif_addcards(WBUFP(buf, n+12), i); //8B
 #if PACKETVER >= 20071002
 		WBUFL(buf,n+20)=i->expire_time;
-		WBUFW(buf,n+24)=i->bound ? 2 : 0;
+		WBUFW(buf,n+24)=i->bound ? BOUND_GUILD : 0;
 #endif
 #if PACKETVER >= 20100629
 		WBUFW(buf,n+26)= (id->equip&EQP_VISIBLE)?id->look:0;

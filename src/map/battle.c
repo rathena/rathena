@@ -1066,7 +1066,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			DAMAGE_SUBRATE(sc->data[SC_GRANITIC_ARMOR]->val2)
 
 		if(sc->data[SC_PAIN_KILLER])
-			DAMAGE_SUBRATE(sc->data[SC_PAIN_KILLER]->val3);
+			damage -= sc->data[SC_PAIN_KILLER]->val3;
 
 		if( sc->data[SC_DARKCROW] && (flag&(BF_SHORT|BF_MAGIC)) == BF_SHORT )
 			DAMAGE_ADDRATE(sc->data[SC_DARKCROW]->val2);
@@ -1723,45 +1723,44 @@ static int battle_blewcount_bonus(struct map_session_data *sd, uint16 skill_id)
 	return 0;
 }
 
-/*==========================================
- * Damage calculation for adjusting skill damage
- * Credits:
-		[Lilith] for the first release of this
-		[Cydh] finishing and adding mapflag
- * battle_skill_damage_skill() - skill_id based
- * battle_skill_damage_map() - map based
- *------------------------------------------*/
+/** Damage calculation for adjusting skill damage
+ * @param caster Applied caster type for damage skill
+ * @param type BL_Type of attacker
+ * @author [Lilith] for the first release of this, [Cydh]
+ **/
 #ifdef ADJUST_SKILL_DAMAGE
-static bool battle_skill_damage_iscaster(uint8 caster, enum bl_type type)
-{
+static bool battle_skill_damage_iscaster(uint8 caster, enum bl_type src_type) {
 	if (caster == 0)
 		return false;
 
-	while (1) {
-		if (caster&SDC_PC && type == BL_PC) break;
-		if (caster&SDC_MOB && type == BL_MOB) break;
-		if (caster&SDC_PET && type == BL_PET) break;
-		if (caster&SDC_HOM && type == BL_HOM) break;
-		if (caster&SDC_MER && type == BL_MER) break;
-		if (caster&SDC_ELEM && type == BL_ELEM) break;
-		return false;
+	switch (src_type) {
+		case BL_PC: if (caster&SDC_PC) return true; break;
+		case BL_MOB: if (caster&SDC_MOB) return true; break;
+		case BL_PET: if (caster&SDC_PET) return true; break;
+		case BL_HOM: if (caster&SDC_HOM) return true; break;
+		case BL_MER: if (caster&SDC_MER) return true; break;
+		case BL_ELEM: if (caster&SDC_ELEM) return true; break;
 	}
-	return true;
+	return false;
 }
 
-static int battle_skill_damage_skill(struct block_list *src, struct block_list *target, uint16 skill_id)
-{
-	unsigned short m = src->m;
-	int idx;
+/** Gets skill damage rate from a skill (based on skill_damage_db.txt)
+* @param src
+* @param target
+* @param skill_id
+* @return Skill damage rate
+*/
+static int battle_skill_damage_skill(struct block_list *src, struct block_list *target, uint16 skill_id) {
+	uint16 idx = skill_get_index(skill_id), m = src->m;
 	struct s_skill_damage *damage = NULL;
 
-	if ((idx = skill_get_index(skill_id)) < 0 || !skill_db[idx].damage.map)
+	if (!idx || !skill_db[idx].damage.map)
 		return 0;
 
 	damage = &skill_db[idx].damage;
 
 	//check the adjustment works for specified type
-	if (!battle_skill_damage_iscaster(damage->caster,src->type))
+	if (!battle_skill_damage_iscaster(damage->caster, src->type))
 		return 0;
 
 	if ((damage->map&1 && (!map[m].flag.pvp && !map_flag_gvg(m) && !map[m].flag.battleground && !map[m].flag.skill_damage && !map[m].flag.restricted)) ||
@@ -1787,8 +1786,13 @@ static int battle_skill_damage_skill(struct block_list *src, struct block_list *
 	return 0;
 }
 
-static int battle_skill_damage_map(struct block_list *src, struct block_list *target, uint16 skill_id)
-{
+/** Gets skill damage rate from a skill (based on 'skill_damage' mapflag)
+* @param src
+* @param target
+* @param skill_id
+* @return Skill damage rate
+*/
+static int battle_skill_damage_map(struct block_list *src, struct block_list *target, uint16 skill_id) {
 	int rate = 0;
 	uint16 m = src->m;
 	uint8 i;
@@ -1796,8 +1800,8 @@ static int battle_skill_damage_map(struct block_list *src, struct block_list *ta
 	if (!map[m].flag.skill_damage)
 		return 0;
 
-	/* modifier for all skills */
-	if (battle_skill_damage_iscaster(map[m].adjust.damage.caster,src->type)) {
+	// Damage rate for all skills at this map
+	if (battle_skill_damage_iscaster(map[m].adjust.damage.caster, src->type)) {
 		switch (target->type) {
 			case BL_PC:
 				rate = map[m].adjust.damage.pc;
@@ -1814,10 +1818,10 @@ static int battle_skill_damage_map(struct block_list *src, struct block_list *ta
 		}
 	}
 
-	/* modifier for specified map */
-	ARR_FIND(0,MAX_MAP_SKILL_MODIFIER,i,map[m].skill_damage[i].skill_id == skill_id);
-	if (i < MAX_MAP_SKILL_MODIFIER) {
-		if (battle_skill_damage_iscaster(map[m].skill_damage[i].caster,src->type)) {
+	// Damage rate for specified skill at this map
+	ARR_FIND(0, ARRAYLENGTH(map[m].skill_damage), i, map[m].skill_damage[i].skill_id == skill_id);
+	if (i < ARRAYLENGTH(map[m].skill_damage)) {
+		if (battle_skill_damage_iscaster(map[m].skill_damage[i].caster, src->type)) {
 			switch (target->type) {
 				case BL_PC:
 					rate += map[m].skill_damage[i].pc;
@@ -1837,11 +1841,16 @@ static int battle_skill_damage_map(struct block_list *src, struct block_list *ta
 	return rate;
 }
 
-static int battle_skill_damage(struct block_list *src, struct block_list *target, uint16 skill_id)
-{
+/** Check skill damage adjustment based on mapflags and skill_damage_db.txt for specified skill
+* @param src
+* @param target
+* @param skill_id
+* @return Total damage rate
+*/
+static int battle_skill_damage(struct block_list *src, struct block_list *target, uint16 skill_id) {
 	if (!target)
 		return 0;
-	return battle_skill_damage_skill(src,target,skill_id) + battle_skill_damage_map(src,target,skill_id);
+	return battle_skill_damage_skill(src, target, skill_id) + battle_skill_damage_map(src, target, skill_id);
 }
 #endif
 
@@ -2865,9 +2874,9 @@ struct Damage battle_calc_skill_base_damage(struct Damage wd, struct block_list 
 }
 
 //For quick div adjustment.
-#define damage_div_fix(dmg, div) { if (div > 1) (dmg)*=div; else if (div < 0) (div)*=-1; }
-#define damage_div_fix2(dmg, div) { if (div > 1) (dmg)*=div; }
-#define damage_div_fix_renewal(wd, div) { damage_div_fix2(wd.statusAtk, div); damage_div_fix2(wd.weaponAtk, div); damage_div_fix2(wd.equipAtk, div); damage_div_fix2(wd.masteryAtk, div); }
+#define DAMAGE_DIV_FIX(dmg, div) { if (div > 1) (dmg)*=div; else if (div < 0) (div)*=-1; }
+#define DAMAGE_DIV_FIX2(dmg, div) { if (div > 1) (dmg)*=div; }
+#define DAMAGE_DIV_FIX_RENEWAL(wd, div) { DAMAGE_DIV_FIX2(wd.statusAtk, div); DAMAGE_DIV_FIX2(wd.weaponAtk, div); DAMAGE_DIV_FIX2(wd.equipAtk, div); DAMAGE_DIV_FIX2(wd.masteryAtk, div); }
 /*=======================================
  * Check for and calculate multi attacks
  *---------------------------------------
@@ -3825,8 +3834,8 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 		case RL_D_TAIL:
 			skillratio += -100 + (2500 + 500 * skill_lv );
-			if (sd && &sd->c_marker)
-				skillratio /= max(sd->c_marker.count,1);
+			//if (sd && &sd->c_marker)
+			//	skillratio /= max(sd->c_marker.count,1);
 			break;
 		case RL_R_TRIP:
 			skillratio += -100 + (150 * skill_lv); //(custom)
@@ -3848,6 +3857,9 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 		case RL_FIRE_RAIN:
 			skillratio += -100 + 2000 + status_get_dex(src); //(custom) //kRO Update 2013-07-24. 2,000% + caster's DEX (?) [Cydh]
+			break;
+		case RL_AM_BLAST:
+			skillratio += -100 + (skill_lv * status_get_dex(src) / 2); //(custom)
 			break;
 	}
 	return skillratio;
@@ -4656,7 +4668,7 @@ struct Damage battle_calc_weapon_final_atk_modifiers(struct Damage wd, struct bl
 #endif
 	}
 
-	/* Skill damage adjustment */
+	// Skill damage adjustment
 #ifdef ADJUST_SKILL_DAMAGE
 	if ((skill_damage = battle_skill_damage(src, target, skill_id)) != 0)
 		ATK_ADDRATE(wd.damage, wd.damage2, skill_damage);
@@ -5118,9 +5130,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	}
 
 	// perform multihit calculations
-	damage_div_fix_renewal(wd, wd.div_);
+	DAMAGE_DIV_FIX_RENEWAL(wd, wd.div_);
 #endif
-	damage_div_fix(wd.damage, wd.div_);
+	DAMAGE_DIV_FIX(wd.damage, wd.div_);
 
 	// only do 1 dmg to plant, no need to calculate rest
 	if(target_has_infinite_defense(target, skill_id))
@@ -5886,7 +5898,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 #endif
 	}
 
-	damage_div_fix(ad.damage, ad.div_);
+	DAMAGE_DIV_FIX(ad.damage, ad.div_);
 
 	if (flag.infdef && ad.damage)
 		ad.damage = ad.damage>0?1:-1;
@@ -5906,7 +5918,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			break;
 	}
 
-	/* Skill damage adjustment */
+	// Skill damage adjustment
 #ifdef ADJUST_SKILL_DAMAGE
 	if ((skill_damage = battle_skill_damage(src,target,skill_id)) != 0)
 		MATK_ADDRATE(skill_damage);
@@ -6015,7 +6027,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 
 		if (skill_id == SN_FALCONASSAULT) {
 			//Div fix of Blitzbeat
-			damage_div_fix2(md.damage, skill_get_num(HT_BLITZBEAT, 5));
+			DAMAGE_DIV_FIX2(md.damage, skill_get_num(HT_BLITZBEAT, 5));
 
 			//Falcon Assault Modifier
 			md.damage=(int64)md.damage*(150+70*skill_lv)/100;
@@ -6189,7 +6201,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			ShowError("0 enemies targeted by %d:%s, divide per 0 avoided!\n", skill_id, skill_get_name(skill_id));
 	}
 
-	damage_div_fix(md.damage, md.div_);
+	DAMAGE_DIV_FIX(md.damage, md.div_);
 
 	if (!(nk&NK_IGNORE_FLEE))
 	{
@@ -6294,7 +6306,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		break;
 	}
 
-	/* Skill damage adjustment */
+	// Skill damage adjustment
 #ifdef ADJUST_SKILL_DAMAGE
 	if ((skill_damage = battle_skill_damage(src,target,skill_id)) != 0)
 		md.damage += (int64)md.damage * skill_damage / 100;

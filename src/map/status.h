@@ -701,6 +701,7 @@ typedef enum sc_type {
 	SC__FEINTBOMB,
 	SC__CHAOS,
 	SC_ELEMENTAL_SHIELD,
+	SC_CHASEWALK2,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
@@ -893,7 +894,7 @@ enum si_type {
 //	SI_DEFENCE = 179,
 //	SI_SLOWDOWN = 180,
 	SI_PRESERVE		= 181,
-	SI_INCSTR		= 182,
+	SI_CHASEWALK2	= 182,
 //	SI_NOT_EXTREMITYFIST = 183,
 	SI_INTRAVISION		= 184,
 //	SI_MOVESLOW_POTION = 185,

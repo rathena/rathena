@@ -1198,7 +1198,7 @@ ACMD_FUNC(heal)
 ACMD_FUNC(item)
 {
 	char item_name[100];
-	int number = 0, flag = 0, bound = 0;
+	int number = 0, flag = 0, bound = BOUND_NONE;
 	struct item item_tmp;
 	struct item_data *item_data[10];
 	int get_count, i, j=0;
@@ -1207,12 +1207,19 @@ ACMD_FUNC(item)
 	nullpo_retr(-1, sd);
 	memset(item_name, '\0', sizeof(item_name));
 
-	if (!strcmpi(command+1,"itembound") && (!message || !*message || (
-		sscanf(message, "\"%99[^\"]\" %d %d", item_name, &number, &bound) < 2 &&
-		sscanf(message, "%99s %d %d", item_name, &number, &bound) < 2
-	))) {
-		clif_displaymessage(fd, msg_txt(sd,295)); // Please enter an item name or ID (usage: @item <item name/ID> <quantity> <bound_type>).
-		return -1;
+	if (!strcmpi(command+1,"itembound")) {
+		if (!message || !*message || (
+			sscanf(message, "\"%99[^\"]\" %d %d", item_name, &number, &bound) < 3 &&
+			sscanf(message, "%99s %d %d", item_name, &number, &bound) < 3))
+		{
+			clif_displaymessage(fd, msg_txt(sd,295)); // Please enter an item name or ID (usage: @item <item name/ID> <quantity> <bound_type>).
+			clif_displaymessage(fd, msg_txt(sd,298)); // Invalid bound type
+			return -1;
+		}
+		if( bound <= BOUND_NONE || bound >= BOUND_MAX ) {
+			clif_displaymessage(fd, msg_txt(sd,298)); // Invalid bound type
+			return -1;
+		}
 	} else if (!message || !*message || (
 		sscanf(message, "\"%99[^\"]\" %d", item_name, &number) < 1 &&
 		sscanf(message, "%99s %d", item_name, &number) < 1
@@ -1229,11 +1236,6 @@ ACMD_FUNC(item)
 		}
 		itemlist = strtok(NULL, ":"); //next itemline
 		j++;
-	}
-
-	if( bound < 0 || bound > 4 ) {
-		clif_displaymessage(fd, msg_txt(sd,298)); // Invalid bound type
-		return -1;
 	}
 
 	if (number <= 0)
@@ -1273,19 +1275,27 @@ ACMD_FUNC(item2)
 	struct item item_tmp;
 	struct item_data *item_data;
 	char item_name[100];
-	int item_id, number = 0, bound = 0;
+	int item_id, number = 0, bound = BOUND_NONE;
 	int identify = 0, refine = 0, attr = 0;
 	int c1 = 0, c2 = 0, c3 = 0, c4 = 0;
 	nullpo_retr(-1, sd);
 
 	memset(item_name, '\0', sizeof(item_name));
 
-	if (!strcmpi(command+1,"itembound2") && (!message || !*message || (
-		sscanf(message, "\"%99[^\"]\" %d %d %d %d %d %d %d %d %d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4, &bound) < 10 &&
-		sscanf(message, "%99s %d %d %d %d %d %d %d %d %d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4, &bound) < 10 ))) {
-		clif_displaymessage(fd, msg_txt(sd,296)); // Please enter all parameters (usage: @item2 <item name/ID> <quantity>
-		clif_displaymessage(fd, msg_txt(sd,297)); //   <identify_flag> <refine> <attribute> <card1> <card2> <card3> <card4> <bound_type>).
-		return -1;
+	if (!strcmpi(command+1,"itembound2")) {
+		if (!message || !*message || (
+			sscanf(message, "\"%99[^\"]\" %d %d %d %d %d %d %d %d %d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4, &bound) < 10 &&
+			sscanf(message, "%99s %d %d %d %d %d %d %d %d %d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4, &bound) < 10 ))
+		{
+			clif_displaymessage(fd, msg_txt(sd,296)); // Please enter all parameters (usage: @item2 <item name/ID> <quantity>
+			clif_displaymessage(fd, msg_txt(sd,297)); //   <identify_flag> <refine> <attribute> <card1> <card2> <card3> <card4> <bound_type>).
+			clif_displaymessage(fd, msg_txt(sd,298)); // Invalid bound type
+			return -1;
+		}
+		if( bound <= BOUND_NONE || bound >= BOUND_MAX ) {
+			clif_displaymessage(fd, msg_txt(sd,298)); // Invalid bound type
+			return -1;
+		}
 	} else if ( !message || !*message || (
 		sscanf(message, "\"%99[^\"]\" %d %d %d %d %d %d %d %d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4) < 9 &&
 		sscanf(message, "%99s %d %d %d %d %d %d %d %d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4) < 9
@@ -1297,11 +1307,6 @@ ACMD_FUNC(item2)
 
 	if (number <= 0)
 		number = 1;
-
-	if( bound < 0 || bound > 4 ) {
-		clif_displaymessage(fd, msg_txt(sd,298)); // Invalid bound type
-		return -1;
-	}
 
 	item_id = 0;
 	if ((item_data = itemdb_searchname(item_name)) != NULL ||
@@ -3926,7 +3931,7 @@ ACMD_FUNC(mapinfo) {
 				if (map[m_id].skill_damage[j].skill_id) {
 					sprintf(atcmd_output,"     %d. %s : %d%%, %d%%, %d%%, %d%% | %d"
 						,j+1
-						,skill_db[skill_get_index(map[m_id].skill_damage[j].skill_id)].name
+						,skill_get_name(map[m_id].skill_damage[j].skill_id)
 						,map[m_id].skill_damage[j].pc
 						,map[m_id].skill_damage[j].mob
 						,map[m_id].skill_damage[j].boss

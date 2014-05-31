@@ -4353,10 +4353,10 @@ in this manner cannot be dropped, sold, vended, auctioned, or mailed, and in
 some cases cannot be traded or stored.
 
 Valid bound types are:
- 1 - Account Bound
- 2 - Guild Bound
- 3 - Party Bound
- 4 - Character Bound
+ Bound_Account : Account Bound item
+ Bound_Guild   : Guild Bound item
+ Bound_Party   : Party Bound item
+ Bound_Char    : Character Bound item
 
 ---------------------------------------
 
@@ -4506,8 +4506,8 @@ See 'getitem2' for an explanation of the expanded parameters.
 
 *cartdelitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 *cartdelitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
-*storageitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
-*storageitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+*storagedelitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+*storagedelitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 
 Same like delitem2, but deletes item from cart or storage.
 If cart is not mounted, it will be failed.

@@ -184,7 +184,7 @@ static bool mail_loadmessage(int mail_id, struct mail_message* msg)
 		Sql_GetData(sql_handle,14, &data, NULL); msg->item.identify = atoi(data);
 		Sql_GetData(sql_handle,15, &data, NULL); msg->item.unique_id = strtoull(data, NULL, 10);
 		msg->item.expire_time = 0;
-		msg->item.bound = 0;
+		msg->item.bound = BOUND_NONE;
 
 		for( j = 0; j < MAX_SLOTS; j++ )
 		{

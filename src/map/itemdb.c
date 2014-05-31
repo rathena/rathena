@@ -471,13 +471,14 @@ struct item_data* itemdb_search(int nameid)
 	return id;
 }
 
-/*==========================================
- * Returns if given item is a player-equippable piece.
- *------------------------------------------*/
-bool itemdb_isequip(int nameid)
+/** Checks if item is equip type or not
+* @param id Item data
+* @return True if item is equip, false otherwise
+*/
+bool itemdb_isequip2(struct item_data *id)
 {
-	int type=itemdb_type(nameid);
-	switch (type) {
+	nullpo_ret(id);
+	switch(id->type) {
 		case IT_WEAPON:
 		case IT_ARMOR:
 		case IT_AMMO:
@@ -488,48 +489,14 @@ bool itemdb_isequip(int nameid)
 	}
 }
 
-/*==========================================
- * Alternate version of itemdb_isequip
- *------------------------------------------*/
-bool itemdb_isequip2(struct item_data *data)
+/** Checks if item is stackable or not
+* @param id Item data
+* @return True if item is stackable, false otherwise
+*/
+bool itemdb_isstackable2(struct item_data *id)
 {
-	nullpo_ret(data);
-	switch(data->type) {
-		case IT_WEAPON:
-		case IT_ARMOR:
-		case IT_AMMO:
-		case IT_SHADOWGEAR:
-			return true;
-		default:
-			return false;
-	}
-}
-
-/*==========================================
- * Returns if given item's type is stackable.
- *------------------------------------------*/
-bool itemdb_isstackable(uint16 nameid)
-{
-  uint8 type = itemdb_type(nameid);
-  switch(type) {
-	  case IT_WEAPON:
-	  case IT_ARMOR:
-	  case IT_PETEGG:
-	  case IT_PETARMOR:
-	  case IT_SHADOWGEAR:
-		  return false;
-	  default:
-		  return true;
-  }
-}
-
-/*==========================================
- * Alternate version of itemdb_isstackable
- *------------------------------------------*/
-bool itemdb_isstackable2(struct item_data *data)
-{
-  nullpo_ret(data);
-  switch(data->type) {
+  nullpo_ret(id);
+  switch(id->type) {
 	  case IT_WEAPON:
 	  case IT_ARMOR:
 	  case IT_PETEGG:
@@ -665,7 +632,7 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 		unsigned int j, prob = 1;
 		uint16 nameid, amt = 1, dur = 0;
 		uint8 rand_group = 1;
-		char *str[9], *p, announced = 0, named = 0, bound = 0;
+		char *str[9], *p, announced = 0, named = 0, bound = BOUND_NONE;
 		struct s_item_group_random *random = NULL;
 		struct s_item_group_db *group = NULL;
 		bool found = false;
@@ -739,7 +706,7 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 		if (str[5] != NULL) announced = atoi(str[5]);
 		if (str[6] != NULL) dur = cap_value(atoi(str[6]),0,UINT16_MAX);
 		if (str[7] != NULL) named = atoi(str[7]);
-		if (str[8] != NULL) bound = cap_value(atoi(str[8]),0,4);
+		if (str[8] != NULL) bound = cap_value(atoi(str[8]),BOUND_NONE,BOUND_MAX-1);
 
 		found = true;
 		if (!(group = (struct s_item_group_db *) idb_get(itemdb_group, group_id))) {
@@ -986,23 +953,25 @@ static bool itemdb_read_nouse(char* fields[], int columns, int current) {
 
 /** Misc Item flags
 * <item_id>,<flag>
-* &1 - Log as dead branch
+* &1 - As dead branch item
 * &2 - As item container
 */
 static bool itemdb_read_flag(char* fields[], int columns, int current) {
 	uint16 nameid = atoi(fields[0]);
-	uint8 flag = atoi(fields[1]);
+	uint8 flag;
+	bool set;
 	struct item_data *id;
 
 	if (!(id = itemdb_exists(nameid))) {
 		ShowError("itemdb_read_flag: Invalid item item with id %d\n", nameid);
 		return true;
 	}
+	
+	flag = abs(atoi(fields[1]));
+	set = atoi(fields[1]) > 0;
 
-	if (flag&1)
-		id->flag.dead_branch = 1;
-	if (flag&2)
-		id->flag.group = 1;
+	if (flag&1) id->flag.dead_branch = set ? 1 : 0;
+	if (flag&2) id->flag.group = set ? 1 : 0;
 
 	return true;
 }
@@ -1653,7 +1622,8 @@ static void destroy_item_data(struct item_data* self, bool free_self) {
 		for( i = 0; i < self->combos_count; i++ ) {
 			if( !self->combos[i]->isRef ) {
 				aFree(self->combos[i]->nameid);
-				script_free_code(self->combos[i]->script);
+				if (self->combos[i]->script)
+					script_free_code(self->combos[i]->script);
 			}
 			aFree(self->combos[i]);
 		}

@@ -1807,7 +1807,7 @@ int guild_break(struct map_session_data *sd,char *name) {
 	//Guild bound item check - Removes the bound flag
 	j = pc_bound_chk(sd,2,idxlist);
 	for(i=0;i<j;i++)
-		sd->status.inventory[idxlist[i]].bound = 0;
+		sd->status.inventory[idxlist[i]].bound = BOUND_NONE;
 #endif
 
 	intif_guild_break(g->guild_id);

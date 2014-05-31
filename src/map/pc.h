@@ -827,7 +827,7 @@ int pc_isequip(struct map_session_data *sd,int n);
 int pc_equippoint(struct map_session_data *sd,int n);
 int pc_setinventorydata(struct map_session_data *sd);
 
-int pc_get_skillcooldown(struct map_session_data *sd, int id, int lv);
+int pc_get_skillcooldown(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 int pc_checkskill(struct map_session_data *sd,uint16 skill_id);
 short pc_checkequip(struct map_session_data *sd,int pos);
 bool pc_checkequip2(struct map_session_data *sd,int nameid,int min, int max);
@@ -851,14 +851,14 @@ int pc_memo(struct map_session_data* sd, int pos);
 
 int pc_checkadditem(struct map_session_data*,int,int);
 int pc_inventoryblank(struct map_session_data*);
-int pc_search_inventory(struct map_session_data *sd,int item_id);
+short pc_search_inventory(struct map_session_data *sd, uint16 nameid);
 int pc_payzeny(struct map_session_data*,int, enum e_log_pick_type type, struct map_session_data*);
 char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_pick_type log_type);
 int pc_getzeny(struct map_session_data*,int, enum e_log_pick_type, struct map_session_data*);
 int pc_delitem(struct map_session_data *sd,int n,int amount,int type, short reason, e_log_pick_type log_type);
 
 //Bound items
-int pc_bound_chk(TBL_PC *sd,int type,int *idxlist);
+int pc_bound_chk(TBL_PC *sd,enum bound_type type,int *idxlist);
 
 // Special Shop System
 int pc_paycash( struct map_session_data *sd, int price, int points, e_log_pick_type type );

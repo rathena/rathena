@@ -475,11 +475,11 @@ bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, int (*func)(str
 #define itemdb_canmail(item, gmlv) itemdb_isrestricted(item , gmlv, 0, itemdb_canmail_sub)
 #define itemdb_canauction(item, gmlv) itemdb_isrestricted(item , gmlv, 0, itemdb_canauction_sub)
 
-bool itemdb_isequip(int);
-bool itemdb_isequip2(struct item_data *);
+bool itemdb_isequip2(struct item_data *id);
+#define itemdb_isequip(nameid) itemdb_isequip2(itemdb_search(nameid))
 char itemdb_isidentified(int);
-bool itemdb_isstackable(uint16 nameid);
-bool itemdb_isstackable2(struct item_data *data);
+bool itemdb_isstackable2(struct item_data *id);
+#define itemdb_isstackable(nameid) itemdb_isstackable2(itemdb_search(nameid))
 uint64 itemdb_unique_id(int8 flag, int64 value); // Unique Item ID
 bool itemdb_isNoEquip(struct item_data *id, uint16 m);
 

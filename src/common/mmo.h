@@ -785,6 +785,16 @@ enum {
 	SEX_SERVER
 };
 
+/// Item Bound Type
+enum bound_type {
+	BOUND_NONE = 0, /// No bound
+	BOUND_ACCOUNT, /// 1- Account Bound
+	BOUND_GUILD, /// 2 - Guild Bound
+	BOUND_PARTY, /// 3 - Party Bound
+	BOUND_CHAR, /// 4 - Character Bound
+	BOUND_MAX
+};
+
 // sanity checks...
 #if MAX_ZENY > INT_MAX
 #error MAX_ZENY is too big
