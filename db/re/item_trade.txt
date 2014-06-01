@@ -2482,3 +2482,12 @@
 20053,475,100	//C_White_King_Tiger_Doll_Hat
 20063,475,100	//C_Yellow_Brain_Hat
 20064,475,100	//C_Blue_Brain_Hat
+
+// kRO 2014-05-28
+6885,475,100	//Piece_Of_Soul_Dragon
+6886,475,100	//Strong_Piece_Of_Soul_Dragon
+20086,475,100	//C_Dragon_Cintamani_Hat1
+20087,475,100	//C_Dragon_Cintamani_Hat2
+20088,475,100	//C_Dragon_Cintamani_Hat3
+20089,475,100	//C_Dragon_Cintamani_Hat4
+
