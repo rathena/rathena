@@ -16753,7 +16753,7 @@ int clif_spellbook_list(struct map_session_data *sd)
 		if( itemdb_is_spellbook(sd->status.inventory[i].nameid) )
 		{
 			WFIFOW(fd, c * 2 + 4) = sd->status.inventory[i].nameid;
-			c ++;
+			c++;
 		}
 	}
 

@@ -4866,7 +4866,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		{
 			int i;
 			// Priority is to release SpellBook
-			if( sc && sc->data[SC_FREEZE_SP] )
+			if( sc && sc->data[SC_READING_SB] )
 			{ // SpellBook
 				uint16 skill_id, skill_lv, point, s = 0;
 				int spell[SC_MAXSPELLBOOK-SC_SPELLBOOK1 + 1];
@@ -4887,10 +4887,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				}else //something went wrong :(
 					break;
 
-				if( sc->data[SC_FREEZE_SP]->val2 > point )
-					sc->data[SC_FREEZE_SP]->val2 -= point;
+				if( sc->data[SC_READING_SB]->val2 > point )
+					sc->data[SC_READING_SB]->val2 -= point;
 				else // Last spell to be released
-					status_change_end(src, SC_FREEZE_SP, INVALID_TIMER);
+					status_change_end(src, SC_READING_SB, INVALID_TIMER);
 
 				if( bl->type != BL_SKILL ) /* skill types will crash the client */
 					clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
@@ -5066,8 +5066,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case LG_SHIELDSPELL:
-		// flag&1: Phisycal Attack, flag&2: Magic Attack.
-		skill_attack((flag&1)?BF_WEAPON:BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
+		if (skill_lv == 1)
+			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
+		else if (skill_lv == 2)
+			skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 
 	case SR_DRAGONCOMBO:
@@ -8977,7 +8979,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case NC_MAGNETICFIELD:
 		if( (i = sc_start2(src,bl,type,100,skill_lv,src->id,skill_get_time(skill_id,skill_lv))) )
 		{
-			map_foreachinrange(skill_area_sub,src,skill_get_splash(skill_id,skill_lv),splash_target(src),src,skill_id,skill_lv,tick,flag|BCT_ENEMY|SD_SPLASH|1,skill_castend_damage_id);;
+			map_foreachinrange(skill_area_sub,src,skill_get_splash(skill_id,skill_lv),splash_target(src),src,skill_id,skill_lv,tick,flag|BCT_ENEMY|SD_SPLASH|1,skill_castend_damage_id);
 			clif_skill_damage(src,src,tick,status_get_amotion(src),0,-30000,1,skill_id,skill_lv,6);
 			if (sd) pc_overheat(sd,1);
 		}
@@ -9316,7 +9318,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SR_GENTLETOUCH_CHANGE:
 	case SR_GENTLETOUCH_REVITALIZE:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
-			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
+			sc_start2(src,bl,type,100,skill_lv,bl->id,skill_get_time(skill_id,skill_lv)));
 		break;
 	case SR_FLASHCOMBO:
 		if( sd )
@@ -18292,20 +18294,20 @@ int skill_spellbook (struct map_session_data *sd, int nameid) {
 	max_preserve = 4 * pc_checkskill(sd, WL_FREEZE_SP) + status_get_int(&sd->bl) / 10 + sd->status.base_level / 10;
 	point = skill_spellbook_db[i].point;
 
-	if( sc && sc->data[SC_FREEZE_SP] ) {
-		if( (sc->data[SC_FREEZE_SP]->val2 + point) > max_preserve ) {
+	if( sc && sc->data[SC_READING_SB] ) {
+		if( (sc->data[SC_READING_SB]->val2 + point) > max_preserve ) {
 			clif_skill_fail(sd, WL_READING_SB, USESKILL_FAIL_SPELLBOOK_PRESERVATION_POINT, 0);
 			return 0;
 		}
 		for(i = SC_MAXSPELLBOOK; i >= SC_SPELLBOOK1; i--){ // This is how official saves spellbook. [malufett]
 			if( !sc->data[i] ){
-				sc->data[SC_FREEZE_SP]->val2 += point; // increase points
+				sc->data[SC_READING_SB]->val2 += point; // increase points
 				sc_start4(&sd->bl,&sd->bl, (sc_type)i, 100, skill_id, pc_checkskill(sd,skill_id), point, 0, INVALID_TIMER);
 				break;
 			}
 		}
 	} else {
-		sc_start2(&sd->bl,&sd->bl, SC_FREEZE_SP, 100, 0, point, INVALID_TIMER);
+		sc_start2(&sd->bl,&sd->bl, SC_READING_SB, 100, 0, point, INVALID_TIMER);
 		sc_start4(&sd->bl,&sd->bl, SC_MAXSPELLBOOK, 100, skill_id, pc_checkskill(sd,skill_id), point, 0, INVALID_TIMER);
 	}
 

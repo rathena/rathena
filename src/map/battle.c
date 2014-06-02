@@ -1141,11 +1141,12 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		if( sd && (sce = sc->data[SC_FORCEOFVANGUARD]) && flag&BF_WEAPON && rnd()%100 < sce->val2 )
 			pc_addspiritball(sd,skill_get_time(LG_FORCEOFVANGUARD,sce->val1),sce->val3);
 
-		if( sd && (sce = sc->data[SC_GT_ENERGYGAIN]) && flag&BF_WEAPON && rnd()%100 < sce->val2 ) {
+		if( sd && (sce = sc->data[SC_GT_ENERGYGAIN]) && flag&BF_WEAPON && rnd()%100 < sce->val3 ) {
 			int spheres = 5;
 
 			if( sc->data[SC_RAISINGDRAGON] )
 				spheres += sc->data[SC_RAISINGDRAGON]->val1;
+
 			pc_addspiritball(sd, skill_get_time2(SR_GENTLETOUCH_ENERGYGAIN, sce->val1), spheres);
 		}
 
@@ -2987,7 +2988,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			skill_break_equip(src,src,EQP_WEAPON,2000,BCT_SELF);
 		}
 		if (sc->data[SC_EXEEDBREAK] && !skill_id) {
-			skillratio += -100 + sc->data[SC_EXEEDBREAK]->val2;
+			skillratio += -100 + sc->data[SC_EXEEDBREAK]->val1;
 			status_change_end(src,SC_EXEEDBREAK,INVALID_TIMER);
 		}
 		if(sc->data[SC_HEAT_BARREL])
@@ -5226,6 +5227,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		s_ele = rnd()%ELE_ALL;
 
 	switch( skill_id ) {
+		case LG_SHIELDSPELL:
+			if (skill_lv == 2)
+				s_ele = ELE_HOLY;
+			break;
 		case SO_PSYCHIC_WAVE:
 			if( sc && sc->count ) {
 				if( sc->data[SC_HEATER_OPTION] ) s_ele = sc->data[SC_HEATER_OPTION]->val3;
@@ -6692,15 +6697,25 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				return ATK_DEF;
 			return ATK_MISS;
 		}
-		if( sc->data[SC_GT_ENERGYGAIN] ) {
+		if( sc->data[SC_GT_ENERGYGAIN] && sc->data[SC_GT_ENERGYGAIN]->val2 ) {
 			int spheres = 5;
 
 			if( sc->data[SC_RAISINGDRAGON] )
 				spheres += sc->data[SC_RAISINGDRAGON]->val1;
 
-			if( sd && rnd()%100 < sc->data[SC_GT_ENERGYGAIN]->val2 )
+			if( sd && rnd()%100 < sc->data[SC_GT_ENERGYGAIN]->val3 )
 				pc_addspiritball(sd, skill_get_time2(SR_GENTLETOUCH_ENERGYGAIN, sc->data[SC_GT_ENERGYGAIN]->val1), spheres);
 		}
+	}
+
+	if( tsc && tsc->data[SC_GT_ENERGYGAIN] && tsc->data[SC_GT_ENERGYGAIN]->val2 ) {
+		int spheres = 5;
+
+		if( tsc->data[SC_RAISINGDRAGON] )
+			spheres += tsc->data[SC_RAISINGDRAGON]->val1;
+
+		if( tsd && rnd()%100 < tsc->data[SC_GT_ENERGYGAIN]->val3 )
+			pc_addspiritball(tsd, skill_get_time2(SR_GENTLETOUCH_ENERGYGAIN, tsc->data[SC_GT_ENERGYGAIN]->val1), spheres);
 	}
 
 	if (tsc && tsc->data[SC_MTF_MLEATKED] && rnd()%100 < 20)
@@ -6708,16 +6723,6 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 
 	if(tsc && tsc->data[SC_KAAHI] && tsc->data[SC_KAAHI]->val4 == INVALID_TIMER && tstatus->hp < tstatus->max_hp)
 		tsc->data[SC_KAAHI]->val4 = add_timer(tick + skill_get_time2(SL_KAAHI,tsc->data[SC_KAAHI]->val1), kaahi_heal_timer, target->id, SC_KAAHI); //Activate heal.
-
-	if( tsc && tsc->data[SC_GT_ENERGYGAIN] ) {
-		int spheres = 5;
-
-		if( tsc->data[SC_RAISINGDRAGON] )
-			spheres += tsc->data[SC_RAISINGDRAGON]->val1;
-
-		if( tsd && rnd()%100 < tsc->data[SC_GT_ENERGYGAIN]->val2 )
-			pc_addspiritball(tsd, skill_get_time2(SR_GENTLETOUCH_ENERGYGAIN, tsc->data[SC_GT_ENERGYGAIN]->val1), spheres);
-	}
 
 	wd = battle_calc_attack(BF_WEAPON, src, target, 0, 0, flag);
 

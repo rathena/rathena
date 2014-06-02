@@ -9497,7 +9497,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = 5000; // [GodLesZ] tick time
 			break;
 		case SC_GT_ENERGYGAIN:
-			val2 = 10 + 5 * val1; // Sphere gain chance.
+			val3 = 10 + 5 * val1; // Sphere gain chance.
 			break;
 		case SC_GT_CHANGE:
 			{ // Take note there is no def increase as skill desc says. [malufett]
@@ -11897,7 +11897,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			if( --(sce->val3) <= 0 )
 				break; // Time out
 			if( sce->val2 == bl->id ) {
-				if( !status_charge(bl,0,14 + (3 * sce->val1)) )
+				if( !status_charge(bl,0,50) )
 					break; // No more SP status should end, and in the next second will end for the other affected players
 			} else {
 				struct block_list *src = map_id2bl(sce->val2);
