@@ -2483,11 +2483,44 @@
 20063,475,100	//C_Yellow_Brain_Hat
 20064,475,100	//C_Blue_Brain_Hat
 
-// kRO 2014-05-28
-6885,475,100	//Piece_Of_Soul_Dragon
+// kRO 2014-04-23
+6866,475,100        //Piece_Of_Soul_Rabbit
+14739,475,100        //Sealed_General_Egnigem_Cenia_Scroll
+17491,475,100        //Refinement_Ore_Box_VII
+17492,475,100        //Refinement_Ore_Box_VII(10)
+
+// kRO 2014-04-30
+6864,475,100        //Safe_to_19_Weapon_Certificate
+6865,475,100        //Safe_to_19_Armor_Certificate
+6870,475,100        //Safe_to_13_Weapon_Certificate
+6871,475,100        //Safe_to_14_Weapon_Certificate
+6872,475,100        //Safe_to_15_Weapon_Certificate
+6873,475,100        //Safe_to_16_Weapon_Certificate
+6874,475,100        //Safe_to_17_Weapon_Certificate
+6875,475,100        //Safe_to_18_Weapon_Certificate
+6876,475,100        //Safe_to_13_Armor_Certificate
+6877,475,100        //Safe_to_14_Armor_Certificate
+6878,475,100        //Safe_to_15_Armor_Certificate
+6879,475,100        //Safe_to_16_Armor_Certificate
+6880,475,100        //Safe_to_17_Armor_Certificate
+6881,475,100        //Safe_to_18_Armor_Certificate
+6883,475,100        //Pet_Snow_Bunny_Exchange_Ticket
+6884,475,100        //Pet_Tikbalang_Exchange_Ticket
+22764,475,100        //Pet_Exchange_Ticket_Box
+
+// kRO 2014-05-14
+22777,475,100        //Gift_Buff_Set
+
+// kRO 2014-05-21
+14740,475,100        //Sealed_Vesper_Scroll
+17285,475,100        //Events_Beauty_Gift_Box
+17495,475,100        //Lucky_Silvervine_Fruit_Box_III10
+17496,475,100        //Lucky_Silvervine_Fruit_Box_III110
 6886,475,100	//Strong_Piece_Of_Soul_Dragon
 20086,475,100	//C_Dragon_Cintamani_Hat1
 20087,475,100	//C_Dragon_Cintamani_Hat2
 20088,475,100	//C_Dragon_Cintamani_Hat3
 20089,475,100	//C_Dragon_Cintamani_Hat4
 
+// kRO 2014-05-28
+6885,475,100	//Piece_Of_Soul_Dragon

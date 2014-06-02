@@ -1152,6 +1152,9 @@ IG_Level_Up_Box130	415
 IG_Level_Up_Box140	416
 IG_Level_Up_Box150	417
 IG_Level_Up_Box160	418
+IG_Gift_Buff_Set        419
+IG_Lucky_Silvervine_Fruit_Box_III10        420
+IG_Lucky_Silvervine_Fruit_Box_III110        421
 
 SC_ALL	-1
 SC_STONE	0
