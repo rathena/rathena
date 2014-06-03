@@ -65,7 +65,7 @@ char default_codepage[32] = "";
 int map_server_port = 3306;
 char map_server_ip[32] = "127.0.0.1";
 char map_server_id[32] = "ragnarok";
-char map_server_pw[32] = "ragnarok";
+char map_server_pw[32] = "";
 char map_server_db[32] = "ragnarok";
 Sql* mmysql_handle;
 

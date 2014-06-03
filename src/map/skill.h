@@ -106,45 +106,47 @@ enum e_skill_display {
 	SD_PREAMBLE  = 0x8000, // skill_area_sub will transmit a 'magic' damage packet (-30000 dmg) for the first target selected
 };
 
-#define MAX_SKILL_ITEM_REQUIRE	10
-#define MAX_SKILL_STATUS_REQUIRE 3
-#define MAX_SKILL_EQUIP_REQUIRE 10
+#define MAX_SKILL_ITEM_REQUIRE	10 /// Maximum required items
+#define MAX_SKILL_STATUS_REQUIRE 3 /// Maximum required statuses
+#define MAX_SKILL_EQUIP_REQUIRE 10 /// Maximum required equipped item
 struct skill_condition {
-	int hp,
-		mhp,
-		sp,
-		hp_rate,
-		sp_rate,
-		ammo,
-		ammo_qty,
-		weapon,
-		zeny,
-		state,
-		spiritball,
-		itemid[MAX_SKILL_ITEM_REQUIRE],
-		amount[MAX_SKILL_ITEM_REQUIRE];
-	uint16 *eqItem;
-	enum sc_type *status;
-	uint8 status_count, eqItem_count;
+	int hp, /// HP cost
+		mhp, /// Max HP to trigger
+		sp, /// SP cost
+		hp_rate, /// HP cost (%)
+		sp_rate, /// SP cost (%)
+		ammo, /// Ammo type
+		ammo_qty, /// Amount of ammo
+		weapon, /// Weapon type
+		zeny, /// Zeny cost
+		state, /// State/condition
+		spiritball, /// Spiritball cost
+		itemid[MAX_SKILL_ITEM_REQUIRE], /// Required item
+		amount[MAX_SKILL_ITEM_REQUIRE]; /// Amount of item
+	uint16 *eqItem; /// List of equipped item
+	enum sc_type *status; /// List of Status required (SC)
+	uint8 status_count, /// Count of SC
+		eqItem_count; /// Count of equipped item
 };
 
 struct s_skill_require {
-	int hp[MAX_SKILL_LEVEL],
-		mhp[MAX_SKILL_LEVEL],
-		sp[MAX_SKILL_LEVEL],
-		hp_rate[MAX_SKILL_LEVEL],
-		sp_rate[MAX_SKILL_LEVEL],
-		zeny[MAX_SKILL_LEVEL],
-		weapon,
-		ammo,
-		ammo_qty[MAX_SKILL_LEVEL],
-		state,
-		spiritball[MAX_SKILL_LEVEL],
-		itemid[MAX_SKILL_ITEM_REQUIRE],
-		amount[MAX_SKILL_ITEM_REQUIRE];
-	uint16 *eqItem;
-	enum sc_type *status;
-	uint8 status_count, eqItem_count;
+	int hp[MAX_SKILL_LEVEL], /// HP cost
+		mhp[MAX_SKILL_LEVEL], /// Max HP to trigger
+		sp[MAX_SKILL_LEVEL], /// SP cost
+		hp_rate[MAX_SKILL_LEVEL], /// HP cost (%)
+		sp_rate[MAX_SKILL_LEVEL], /// SP cost (%)
+		zeny[MAX_SKILL_LEVEL], /// Zeny cost
+		weapon, /// Weapon type
+		ammo, /// Ammo type
+		ammo_qty[MAX_SKILL_LEVEL], /// Amount of ammo
+		state, /// State/condition
+		spiritball[MAX_SKILL_LEVEL], /// Spiritball cost
+		itemid[MAX_SKILL_ITEM_REQUIRE], /// Required item
+		amount[MAX_SKILL_ITEM_REQUIRE]; /// Amount of item
+	uint16 *eqItem; /// List of equipped item
+	enum sc_type *status; /// List of Status required (SC)
+	uint8 status_count, /// Count of SC
+		eqItem_count; /// Count of equipped item
 };
 
 /// Database skills

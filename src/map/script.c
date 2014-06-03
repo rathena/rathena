@@ -6456,22 +6456,24 @@ BUILDIN_FUNC(getitem)
 
 	if( !strcmp(script_getfuncname(st),"getitembound") ) {
 		char bound = script_getnum(st,4);
-		if( bound < 1 || bound > 4) { //Not a correct bound type
-			ShowError("script_getitembound: Not a correct bound type! Type=%d\n",bound);
-			return 1;
+		if( bound > BOUND_NONE && bound < BOUND_MAX ) {
+			it.bound = bound;
+			if( script_hasdata(st,5) )
+				sd=map_id2sd(script_getnum(st,5));
+			else
+				sd=script_rid2sd(st); // Attached player
 		}
-		it.bound = bound;
-		if( script_hasdata(st,5) )
-			sd=map_id2sd(script_getnum(st,5));
-		else
-			sd=script_rid2sd(st); // Attached player
+		else { //Not a correct bound type
+			ShowError("script_getitembound: Not a correct bound type! Type=%d\n",bound);
+			return SCRIPT_CMD_FAILURE;
+		}
 	} else if( script_hasdata(st,4) )
 		sd=map_id2sd(script_getnum(st,4)); // <Account ID>
 	else
 		sd=script_rid2sd(st); // Attached player
 
 	if( sd == NULL ) // no target
-		return 0;
+		return SCRIPT_CMD_SUCCESS;
 
 	//Check if it's stackable.
 	if (!itemdb_isstackable(nameid))
@@ -6500,9 +6502,9 @@ BUILDIN_FUNC(getitem)
  *------------------------------------------*/
 BUILDIN_FUNC(getitem2)
 {
-	int nameid,amount,get_count,i,flag = 0;
-	int iden,ref,attr,c1,c2,c3,c4;
-	char bound=0;
+	int nameid, amount, get_count, i, flag = 0;
+	int iden, ref, attr, c1, c2, c3, c4;
+	char bound = BOUND_NONE;
 	struct item_data *item_data;
 	struct item item_tmp;
 	TBL_PC *sd;
@@ -6510,21 +6512,23 @@ BUILDIN_FUNC(getitem2)
 
 	if( !strcmp(script_getfuncname(st),"getitembound2") ) {
 		bound = script_getnum(st,11);
-		if( bound < 1 || bound > 3) { //Not a correct bound type
-			ShowError("script_getitembound2: Not a correct bound type! Type=%d\n",bound);
-			return 1;
+		if( bound > BOUND_NONE && bound < BOUND_MAX ) {
+			if( script_hasdata(st,12) )
+				sd=map_id2sd(script_getnum(st,12));
+			else
+				sd=script_rid2sd(st); // Attached player
 		}
-		if( script_hasdata(st,12) )
-			sd=map_id2sd(script_getnum(st,12));
-		else
-			sd=script_rid2sd(st); // Attached player
+		else {
+			ShowError("script_getitembound2: Not a correct bound type! Type=%d\n",bound);
+			return SCRIPT_CMD_FAILURE;
+		}
 	} else if( script_hasdata(st,11) )
 		sd=map_id2sd(script_getnum(st,11)); // <Account ID>
 	else
 		sd=script_rid2sd(st); // Attached player
 
 	if( sd == NULL ) // no target
-		return 0;
+		return SCRIPT_CMD_SUCCESS;
 
 	data=script_getdata(st,2);
 	get_val(st,data);
@@ -6653,7 +6657,7 @@ BUILDIN_FUNC(rentitem) {
 	it.nameid = nameid;
 	it.identify = 1;
 	it.expire_time = (unsigned int)(time(NULL) + seconds);
-	it.bound = 0;
+	it.bound = BOUND_NONE;
 
 	if( (flag = pc_additem(sd, &it, 1, LOG_TYPE_SCRIPT)) )
 	{
@@ -11463,7 +11467,8 @@ BUILDIN_FUNC(removemapflag)
 			case MF_SKILL_DAMAGE:
 				{
 					map[m].flag.skill_damage = 0;
-					memset(&map[m].adjust.damage,0,sizeof(map[m].adjust.damage));
+					memset(map[m].skill_damage, 0, sizeof(map[m].skill_damage));
+					memset(&map[m].adjust.damage, 0, sizeof(map[m].adjust.damage));
 				} break;
 #endif
 		}
@@ -15707,7 +15712,7 @@ BUILDIN_FUNC(getmonsterinfo)
 			script_pushconststr(st,"null");
 		else
 			script_pushint(st,-1);
-		return -1;
+		return 0;
 	}
 	mob = mob_db(mob_id);
 	switch ( script_getnum(st,3) ) {
@@ -18219,24 +18224,24 @@ BUILDIN_FUNC(stand)
 
 /** Creates an array of bounded item IDs
  * countbound {<type>};
- * @param type: 1 - Account Bound; 2 - Guild Bound; 3 - Party Bound
+ * @param type: 0 - All bound items; 1 - Account Bound; 2 - Guild Bound; 3 - Party Bound
  * @return amt: Amount of items found
  */
 BUILDIN_FUNC(countbound)
 {
-	int i, type, j=0, k=0;
+	int i, type, j = 0, k = 0;
 	TBL_PC *sd;
 
 	if( (sd = script_rid2sd(st)) == NULL )
 		return SCRIPT_CMD_FAILURE;
 
-	type = script_hasdata(st,2)?script_getnum(st,2):0;
+	type = script_getnum(st,2);
 
-	for(i=0;i<MAX_INVENTORY;i++){
-		if(sd->status.inventory[i].nameid > 0 && (
-			(!type && sd->status.inventory[i].bound > 0) ||
-			(type && sd->status.inventory[i].bound == type)
-		)) {
+	for( i = 0; i < MAX_INVENTORY; i ++ ) {
+		if( sd->status.inventory[i].nameid > 0 && (
+			(!type && sd->status.inventory[i].bound) || (type && sd->status.inventory[i].bound == type)
+			))
+		{
 			pc_setreg(sd,reference_uid(add_str("@bound_items"), k),sd->status.inventory[i].nameid);
 			k++;
 			j += sd->status.inventory[i].amount;

@@ -4200,7 +4200,7 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 	if(sc->data[SC__ENERVATION])
 		batk -= batk * sc->data[SC__ENERVATION]->val2 / 100;
 	if( sc->data[SC_ZANGETSU] )
-		batk += batk * sc->data[SC_ZANGETSU]->val2 / 100;
+		batk += sc->data[SC_ZANGETSU]->val2;
 	if(sc->data[SC_EQC])
 		batk -= batk * sc->data[SC_EQC]->val3 / 100;
 	if(sc->data[SC_QUEST_BUFF1])
@@ -4569,7 +4569,7 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 	if (sc->data[SC_TEARGAS])
 		flee -= flee * 50 / 100;
 	if( sc->data[SC_C_MARKER] )
-		flee -= 10;
+		flee -= (flee * sc->data[SC_C_MARKER]->val3) / 100;
 	if(sc->data[SC_HEAT_BARREL])
 		flee -= sc->data[SC_HEAT_BARREL]->val4;
 
@@ -8098,7 +8098,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = 5000; // [GodLesZ] tick time
 			break;
 		case SC_GT_ENERGYGAIN:
-			val2 = 10 + 5 * val1; // Sphere gain chance.
+			val3 = 10 + 5 * val1; // Sphere gain chance.
 			break;
 		case SC_GT_CHANGE:
 			{ // Take note there is no def increase as skill desc says. [malufett]
@@ -8299,7 +8299,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_PAIN_KILLER: // Yommy leak need confirm
 			val2 = 10 * val1; // aspd reduction %
-			val3 = (( 200 * val1 ) * status_get_lv(src)) / 150; // dmg reduction linear
+			val3 = min((( 200 * val1 ) * status_get_lv(src)) / 150, 1000); // dmg reduction linear. upto a maximum of 1000 [iRO Wiki]
 			if(sc->data[SC_PARALYSIS])
 				sc_start(src,bl, SC_ENDURE, 100, val1, tick); // Start endure for same duration
 			break;
@@ -8379,8 +8379,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_C_MARKER:
 			val2 = src->id;
+			val3 = 10; //-10% flee
 			//Start timer to send mark on mini map
-			val3 = tick/1000;
+			val4 = tick/1000;
 			tick_time = 1000;
 			break;
 		case SC_H_MINE:
@@ -10133,7 +10134,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			if( --(sce->val3) <= 0 )
 				break; // Time out
 			if( sce->val2 == bl->id ) {
-				if( !status_charge(bl,0,14 + (3 * sce->val1)) )
+				if( !status_charge(bl,0,50) )
 					break; // No more SP status should end, and in the next second will end for the other affected players
 			} else {
 				struct block_list *src = map_id2bl(sce->val2);
@@ -10279,7 +10280,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		}
 		break;
 	case SC_C_MARKER:
-		if( --(sce->val3) >= 0 ) {
+		if( --(sce->val4) >= 0 ) {
 			TBL_PC *tsd = map_id2sd(sce->val2);
 			if (!tsd || tsd->bl.m != bl->m) //End the SC if caster isn't in same map
 				break;

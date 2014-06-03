@@ -289,7 +289,7 @@ int mapif_parse_itembound_retrieve(int fd)
 		SqlStmt_BindColumn(stmt, 9+j, SQLDT_SHORT, &item.card[j], 0, NULL, NULL);
 
 	while( SQL_SUCCESS == SqlStmt_NextRow(stmt) ) {
-		if(item.bound == 2) {
+		if(item.bound == BOUND_GUILD) {
 			memcpy(&items[i],&item,sizeof(struct item));
 			i++;
 		}

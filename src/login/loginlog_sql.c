@@ -13,7 +13,7 @@
 static char   global_db_hostname[32] = "127.0.0.1";
 static uint16 global_db_port = 3306;
 static char   global_db_username[32] = "ragnarok";
-static char   global_db_password[32] = "ragnarok";
+static char   global_db_password[32] = "";
 static char   global_db_database[32] = "ragnarok";
 static char   global_codepage[32] = "";
 // local sql settings

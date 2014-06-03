@@ -103,7 +103,7 @@ static void cashshop_read_db_txt( void ){
 			if( *p == '\0' )
 				continue;
 
-			for( i = 0; i < 3; ++i ){
+			for( i = 0; i < 2; ++i ){
 				str[i] = p;
 				p = strchr( p, ',' );
 
@@ -186,7 +186,7 @@ static int cashshop_read_db_sql( void ){
 static void cashshop_read_db( void ){
 	if( db_use_sqldbs ){
 		cashshop_read_db_sql();
-	}else{
+	} else {
 		cashshop_read_db_txt();
 	}
 }

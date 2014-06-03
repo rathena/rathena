@@ -131,7 +131,8 @@ function Job_Menu {
 			mes "You are now "+callfunc("F_InsertArticle",jobname(.@i))+"!";
 			if (.@i==4001 && .LastJob) set lastJob, Class;
 			jobchange .@i;
-			if (.@i==4001 || .@i==4023) resetlvl(1);
+			if (.@i==4001) resetlvl(1);
+			else if (.@i==Job_Baby) resetstatus;
 			specialeffect2 EF_ANGEL2; specialeffect2 EF_ELECTRIC;
 			if (.Platinum) callsub Get_Platinum;
 			close;

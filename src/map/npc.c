@@ -124,9 +124,9 @@ int npc_isnear_sub(struct block_list* bl, va_list args) {
 	int skill_id = va_arg(args, int);
 
 	if (skill_id > 0) { //If skill_id > 0 that means is used for INF2_NO_NEARNPC [Cydh]
-		int16 idx = skill_get_index(skill_id);
+		uint16 idx = skill_get_index(skill_id);
 
-		if (idx >= 0 && skill_db[idx].unit_nonearnpc_type) {
+		if (idx > 0 && skill_db[idx].unit_nonearnpc_type) {
 			while (1) {
 				if (skill_db[idx].unit_nonearnpc_type&1 && nd->subtype == WARP) break;
 				if (skill_db[idx].unit_nonearnpc_type&2 && nd->subtype == SHOP) break;
@@ -3723,40 +3723,46 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 		map[m].flag.notomb = state;
 	else if (!strcmpi(w3,"skill_damage")) {
 #ifdef ADJUST_SKILL_DAMAGE
-		char skill[NAME_LENGTH];
+		char skill[SKILL_NAME_LENGTH];
 		int pc = 0, mob = 0, boss = 0, other = 0, caster = 0;
 
-		memset(skill,0,sizeof(skill));
-		map[m].flag.skill_damage = state;	//set the mapflag
+		memset(skill, 0, sizeof(skill));
+		map[m].flag.skill_damage = state;	// Set the mapflag
 
-		if (sscanf(w4,"%24[^,],%d,%d,%d,%d,%d[^\n]",skill,&caster,&pc,&mob,&boss,&other) >= 3) {
-			caster = (!caster) ? SDC_ALL : caster;
-			pc = cap_value(pc,-100,MAX_SKILL_DAMAGE_RATE);
-			mob = cap_value(mob,-100,MAX_SKILL_DAMAGE_RATE);
-			boss = cap_value(boss,-100,MAX_SKILL_DAMAGE_RATE);
-			other = cap_value(other,-100,MAX_SKILL_DAMAGE_RATE);
+		if (!state) {
+			memset(map[m].skill_damage, 0, sizeof(map[m].skill_damage));
+			memset(&map[m].adjust.damage, 0, sizeof(map[m].adjust.damage));
+		}
+		else {
+			if (sscanf(w4, "%30[^,],%d,%d,%d,%d,%d[^\n]", skill, &caster, &pc, &mob, &boss, &other) >= 3) {
+				caster = (!caster) ? SDC_ALL : caster;
+				pc = cap_value(pc, -100, INT_MAX);
+				mob = cap_value(mob, -100, INT_MAX);
+				boss = cap_value(boss, -100, INT_MAX);
+				other = cap_value(other, -100, INT_MAX);
 
-			if (strcmp(skill,"all") == 0) {	//adjust damages for all skills
-				map[m].adjust.damage.caster = caster;
-				map[m].adjust.damage.pc = pc;
-				map[m].adjust.damage.mob = mob;
-				map[m].adjust.damage.boss = boss;
-				map[m].adjust.damage.other = other;
-			}
-			else if (skill_name2id(skill) <= 0)
-				ShowWarning("npc_parse_mapflag: skill_damage: Invalid skill name '%s'. Skipping (file '%s', line '%d')\n",skill,filepath,strline(buffer,start-buffer));
-			else {	//damages for specified skill
-				int i;
-				ARR_FIND(0,MAX_MAP_SKILL_MODIFIER,i,map[m].skill_damage[i].skill_id <= 0);
-				if (i >= MAX_SKILL)
-					ShowWarning("npc_parse_mapflag: skill_damage: Skill damage for map '%s' is overflow.\n",map[m].name);
-				else {
-					map[m].skill_damage[i].skill_id = skill_name2id(skill);
-					map[m].skill_damage[i].caster = caster;
-					map[m].skill_damage[i].pc = pc;
-					map[m].skill_damage[i].mob = mob;
-					map[m].skill_damage[i].boss = boss;
-					map[m].skill_damage[i].other = other;
+				if (strcmp(skill,"all") == 0) {	// Adjust damages for all skills
+					map[m].adjust.damage.caster = caster;
+					map[m].adjust.damage.pc = pc;
+					map[m].adjust.damage.mob = mob;
+					map[m].adjust.damage.boss = boss;
+					map[m].adjust.damage.other = other;
+				}
+				else if (skill_name2id(skill) <= 0)
+					ShowWarning("npc_parse_mapflag: skill_damage: Invalid skill name '%s'. Skipping (file '%s', line '%d')\n", skill, filepath, strline(buffer,start-buffer));
+				else {	//damages for specified skill
+					uint8 i;
+					ARR_FIND(0, ARRAYLENGTH(map[m].skill_damage), i, map[m].skill_damage[i].skill_id <= 0);
+					if (i >= ARRAYLENGTH(map[m].skill_damage))
+						ShowWarning("npc_parse_mapflag: skill_damage: Skill damage for map '%s' is overflow.\n", map[m].name);
+					else {
+						map[m].skill_damage[i].skill_id = skill_name2id(skill);
+						map[m].skill_damage[i].caster = caster;
+						map[m].skill_damage[i].pc = pc;
+						map[m].skill_damage[i].mob = mob;
+						map[m].skill_damage[i].boss = boss;
+						map[m].skill_damage[i].other = other;
+					}
 				}
 			}
 		}
