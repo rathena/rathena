@@ -457,6 +457,38 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\char\char_clif.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\char\char_clif.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\char\char_cnslif.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\char\char_cnslif.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\char\char_logif.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\char\char_logif.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\char\char_mapif.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\char\char_mapif.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\char\int_auction.c"
 				>
 			</File>

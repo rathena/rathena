@@ -949,8 +949,9 @@ int chclif_parse_reqrename(int fd, struct char_session_data* sd, int cmd){
             RFIFOSKIP(fd,30);
     }
     else if(cmd == 0x28d) {
-            FIFOSD_CHECK(34)
-            int aid = RFIFOL(fd,2);
+            int aid;
+            FIFOSD_CHECK(34);
+            aid = RFIFOL(fd,2);
             cid =RFIFOL(fd,6);
             safestrncpy(name, (char *)RFIFOP(fd,10), NAME_LENGTH);
             RFIFOSKIP(fd,34);
