@@ -422,8 +422,14 @@ int mapif_parse_itembound_retrieve(int fd)
 	//Finally reload storage and tell map we're done
 	mapif_load_guild_storage(fd,aid,guild_id,0);
 
-	//If character is logged in char, disconnect
-	disconnect_player(aid);
+	//If character is logged in char, disconnect, 
+	/* @CHECKME [lighta]
+	 * I suppose this was an attempt to avoid item duplication if the expelled user reconnect during the operation.
+	 * well it's kinda ugly to expel someone like this, so I consider this as a hack.
+	 * we better flag them so that they not allowed to reconnect during operation or flag it so we will flush those item on ram with the map ack.
+	 * both way seem nicer for player.
+	 */
+	char_disconnect_player(aid);
 
 	//Tell map-server the operation is over and it can unlock the storage
 	mapif_itembound_ack(fd,aid,guild_id);
