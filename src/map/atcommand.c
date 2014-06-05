@@ -1198,7 +1198,7 @@ ACMD_FUNC(heal)
 ACMD_FUNC(item)
 {
 	char item_name[100];
-	int number = 0, flag = 0, bound = 0;
+	int number = 0, flag = 0, bound = BOUND_NONE;
 	struct item item_tmp;
 	struct item_data *item_data[10];
 	int get_count, i, j=0;
@@ -1207,12 +1207,19 @@ ACMD_FUNC(item)
 	nullpo_retr(-1, sd);
 	memset(item_name, '\0', sizeof(item_name));
 
-	if (!strcmpi(command+1,"itembound") && (!message || !*message || (
-		sscanf(message, "\"%99[^\"]\" %d %d", item_name, &number, &bound) < 2 &&
-		sscanf(message, "%99s %d %d", item_name, &number, &bound) < 2
-	))) {
-		clif_displaymessage(fd, msg_txt(sd,295)); // Please enter an item name or ID (usage: @item <item name/ID> <quantity> <bound_type>).
-		return -1;
+	if (!strcmpi(command+1,"itembound")) {
+		if (!message || !*message || (
+			sscanf(message, "\"%99[^\"]\" %d %d", item_name, &number, &bound) < 3 &&
+			sscanf(message, "%99s %d %d", item_name, &number, &bound) < 3))
+		{
+			clif_displaymessage(fd, msg_txt(sd,295)); // Please enter an item name or ID (usage: @item <item name/ID> <quantity> <bound_type>).
+			clif_displaymessage(fd, msg_txt(sd,298)); // Invalid bound type
+			return -1;
+		}
+		if( bound <= BOUND_NONE || bound >= BOUND_MAX ) {
+			clif_displaymessage(fd, msg_txt(sd,298)); // Invalid bound type
+			return -1;
+		}
 	} else if (!message || !*message || (
 		sscanf(message, "\"%99[^\"]\" %d", item_name, &number) < 1 &&
 		sscanf(message, "%99s %d", item_name, &number) < 1
@@ -1229,11 +1236,6 @@ ACMD_FUNC(item)
 		}
 		itemlist = strtok(NULL, ":"); //next itemline
 		j++;
-	}
-
-	if( bound < 0 || bound > 4 ) {
-		clif_displaymessage(fd, msg_txt(sd,298)); // Invalid bound type
-		return -1;
 	}
 
 	if (number <= 0)
@@ -1273,19 +1275,27 @@ ACMD_FUNC(item2)
 	struct item item_tmp;
 	struct item_data *item_data;
 	char item_name[100];
-	int item_id, number = 0, bound = 0;
+	int item_id, number = 0, bound = BOUND_NONE;
 	int identify = 0, refine = 0, attr = 0;
 	int c1 = 0, c2 = 0, c3 = 0, c4 = 0;
 	nullpo_retr(-1, sd);
 
 	memset(item_name, '\0', sizeof(item_name));
 
-	if (!strcmpi(command+1,"itembound2") && (!message || !*message || (
-		sscanf(message, "\"%99[^\"]\" %d %d %d %d %d %d %d %d %d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4, &bound) < 10 &&
-		sscanf(message, "%99s %d %d %d %d %d %d %d %d %d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4, &bound) < 10 ))) {
-		clif_displaymessage(fd, msg_txt(sd,296)); // Please enter all parameters (usage: @item2 <item name/ID> <quantity>
-		clif_displaymessage(fd, msg_txt(sd,297)); //   <identify_flag> <refine> <attribute> <card1> <card2> <card3> <card4> <bound_type>).
-		return -1;
+	if (!strcmpi(command+1,"itembound2")) {
+		if (!message || !*message || (
+			sscanf(message, "\"%99[^\"]\" %d %d %d %d %d %d %d %d %d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4, &bound) < 10 &&
+			sscanf(message, "%99s %d %d %d %d %d %d %d %d %d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4, &bound) < 10 ))
+		{
+			clif_displaymessage(fd, msg_txt(sd,296)); // Please enter all parameters (usage: @item2 <item name/ID> <quantity>
+			clif_displaymessage(fd, msg_txt(sd,297)); //   <identify_flag> <refine> <attribute> <card1> <card2> <card3> <card4> <bound_type>).
+			clif_displaymessage(fd, msg_txt(sd,298)); // Invalid bound type
+			return -1;
+		}
+		if( bound <= BOUND_NONE || bound >= BOUND_MAX ) {
+			clif_displaymessage(fd, msg_txt(sd,298)); // Invalid bound type
+			return -1;
+		}
 	} else if ( !message || !*message || (
 		sscanf(message, "\"%99[^\"]\" %d %d %d %d %d %d %d %d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4) < 9 &&
 		sscanf(message, "%99s %d %d %d %d %d %d %d %d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4) < 9
@@ -1297,11 +1307,6 @@ ACMD_FUNC(item2)
 
 	if (number <= 0)
 		number = 1;
-
-	if( bound < 0 || bound > 4 ) {
-		clif_displaymessage(fd, msg_txt(sd,298)); // Invalid bound type
-		return -1;
-	}
 
 	item_id = 0;
 	if ((item_data = itemdb_searchname(item_name)) != NULL ||
@@ -1398,6 +1403,7 @@ ACMD_FUNC(baselevelup)
 
 		sd->status.status_point += status_point;
 		sd->status.base_level += (unsigned int)level;
+		status_calc_pc(sd, SCO_FORCE);
 		status_percent_heal(&sd->bl, 100, 100);
 		clif_misceffect(&sd->bl, 0);
 		clif_displaymessage(fd, msg_txt(sd,21)); // Base level raised.
@@ -1419,13 +1425,13 @@ ACMD_FUNC(baselevelup)
 			sd->status.status_point -= status_point;
 		sd->status.base_level -= (unsigned int)level;
 		clif_displaymessage(fd, msg_txt(sd,22)); // Base level lowered.
+		status_calc_pc(sd, SCO_FORCE);
 	}
 	sd->status.base_exp = 0;
 	clif_updatestatus(sd, SP_STATUSPOINT);
 	clif_updatestatus(sd, SP_BASELEVEL);
 	clif_updatestatus(sd, SP_BASEEXP);
 	clif_updatestatus(sd, SP_NEXTBASEEXP);
-	status_calc_pc(sd, 0);
 	pc_baselevelchanged(sd);
 	if(sd->status.party_id)
 		party_send_levelup(sd);
@@ -1479,7 +1485,7 @@ ACMD_FUNC(joblevelup)
 	clif_updatestatus(sd, SP_JOBEXP);
 	clif_updatestatus(sd, SP_NEXTJOBEXP);
 	clif_updatestatus(sd, SP_SKILLPOINT);
-	status_calc_pc(sd, 0);
+	status_calc_pc(sd, SCO_FORCE);
 
 	return 0;
 }
@@ -2539,7 +2545,7 @@ ACMD_FUNC(param)
 		*status[i] = new_value;
 		clif_updatestatus(sd, SP_STR + i);
 		clif_updatestatus(sd, SP_USTR + i);
-		status_calc_pc(sd, 0);
+		status_calc_pc(sd, SCO_FORCE);
 		clif_displaymessage(fd, msg_txt(sd,42)); // Stat changed.
 	} else {
 		if (value < 0)
@@ -2610,7 +2616,7 @@ ACMD_FUNC(stat_all)
 	}
 
 	if (count > 0) { // if at least 1 stat modified
-		status_calc_pc(sd, 0);
+		status_calc_pc(sd, SCO_FORCE);
 		clif_displaymessage(fd, msg_txt(sd,84)); // All stats changed!
 	} else {
 		if (value < 0)
@@ -3925,7 +3931,7 @@ ACMD_FUNC(mapinfo) {
 				if (map[m_id].skill_damage[j].skill_id) {
 					sprintf(atcmd_output,"     %d. %s : %d%%, %d%%, %d%%, %d%% | %d"
 						,j+1
-						,skill_db[skill_get_index(map[m_id].skill_damage[j].skill_id)].name
+						,skill_get_name(map[m_id].skill_damage[j].skill_id)
 						,map[m_id].skill_damage[j].pc
 						,map[m_id].skill_damage[j].mob
 						,map[m_id].skill_damage[j].boss
@@ -7146,13 +7152,14 @@ ACMD_FUNC(homlevel)
 
 	for (i = 1; i <= level && hd->exp_next; i++){
 		hd->homunculus.exp += hd->exp_next;
-		if( !hom_levelup(hd) ){
+		if( !hom_levelup(hd) )
 			break;
-		}
 	}
-	status_calc_homunculus(hd,0);
+
+	status_calc_homunculus(hd, SCO_NONE);
 	status_percent_heal(&hd->bl, 100, 100);
 	clif_specialeffect(&hd->bl,568,AREA);
+
 	return 0;
 }
 
@@ -8315,6 +8322,11 @@ ACMD_FUNC(auction)
 {
 	nullpo_ret(sd);
 
+	if (!battle_config.feature_auction) {
+		clif_colormes(sd, color_table[COLOR_RED], msg_txt(sd, 517));
+		return 0;
+	}
+
 	clif_Auction_openwindow(sd);
 
 	return 0;
@@ -8405,35 +8417,26 @@ ACMD_FUNC(itemlist)
 
 	nullpo_retr(-1, sd);
 
-	if( strcmp(command+1, "storagelist") == 0 )
-	{
+	if( strcmp(command+1, "storagelist") == 0 ) {
 		location = "storage";
 		items = sd->status.storage.items;
 		size = sd->storage_size;
-	}
-	else
-	if( strcmp(command+1, "cartlist") == 0 )
-	{
+	} else if( strcmp(command+1, "cartlist") == 0 ) {
 		location = "cart";
 		items = sd->status.cart;
 		size = MAX_CART;
-	}
-	else
-	if( strcmp(command+1, "itemlist") == 0 )
-	{
+	} else if( strcmp(command+1, "itemlist") == 0 ) {
 		location = "inventory";
 		items = sd->status.inventory;
 		size = MAX_INVENTORY;
-	}
-	else
+	} else
 		return 1;
 
 	StringBuf_Init(&buf);
 
 	count = 0; // total slots occupied
 	counter = 0; // total items found
-	for( i = 0; i < size; ++i )
-	{
+	for( i = 0; i < size; ++i ) {
 		const struct item* it = &items[i];
 		struct item_data* itd;
 
@@ -8443,8 +8446,7 @@ ACMD_FUNC(itemlist)
 		counter += it->amount;
 		count++;
 
-		if( count == 1 )
-		{
+		if( count == 1 ) {
 			StringBuf_Printf(&buf, msg_txt(sd,1332), location, sd->status.name); // ------ %s items list of '%s' ------
 			clif_displaymessage(fd, StringBuf_Value(&buf));
 			StringBuf_Clear(&buf);
@@ -8455,38 +8457,70 @@ ACMD_FUNC(itemlist)
 		else
 			StringBuf_Printf(&buf, "%d %s (%s, id: %d)", it->amount, itd->jname, itd->name, it->nameid);
 
-		if( it->equip )
-		{
+		if( it->equip ) {
 			char equipstr[CHAT_SIZE_MAX];
-			strcpy(equipstr, msg_txt(sd,1333)); //  | equipped:
-			if( it->equip & EQP_GARMENT )
-				strcat(equipstr, msg_txt(sd,1334)); // garment,
-			if( it->equip & EQP_ACC_L )
-				strcat(equipstr, msg_txt(sd,1335)); // left accessory,
-			if( it->equip & EQP_ARMOR )
-				strcat(equipstr, msg_txt(sd,1336)); // body/armor,
-			if( (it->equip & EQP_ARMS) == EQP_HAND_R )
-				strcat(equipstr, msg_txt(sd,1337)); // right hand,
-			if( (it->equip & EQP_ARMS) == EQP_HAND_L )
-				strcat(equipstr, msg_txt(sd,1338)); // left hand,
-			if( (it->equip & EQP_ARMS) == EQP_ARMS )
-				strcat(equipstr, msg_txt(sd,1339)); // both hands,
-			if( it->equip & EQP_SHOES )
-				strcat(equipstr, msg_txt(sd,1340)); // feet,
-			if( it->equip & EQP_ACC_R )
-				strcat(equipstr, msg_txt(sd,1341)); // right accessory,
-			if( (it->equip & EQP_HELM) == EQP_HEAD_LOW )
-				strcat(equipstr, msg_txt(sd,1342)); // lower head,
-			if( (it->equip & EQP_HELM) == EQP_HEAD_TOP )
-				strcat(equipstr, msg_txt(sd,1343)); // top head,
-			if( (it->equip & EQP_HELM) == (EQP_HEAD_LOW|EQP_HEAD_TOP) )
-				strcat(equipstr, msg_txt(sd,1344)); // lower/top head,
-			if( (it->equip & EQP_HELM) == EQP_HEAD_MID )
-				strcat(equipstr, msg_txt(sd,1345)); // mid head,
-			if( (it->equip & EQP_HELM) == (EQP_HEAD_LOW|EQP_HEAD_MID) )
-				strcat(equipstr, msg_txt(sd,1346)); // lower/mid head,
-			if( (it->equip & EQP_HELM) == EQP_HELM )
-				strcat(equipstr, msg_txt(sd,1347)); // lower/mid/top head,
+
+			strcpy(equipstr, msg_txt(sd,1333)); // | Equipped:
+			if( it->equip&EQP_GARMENT )
+				strcat(equipstr, msg_txt(sd,1334)); // Robe,
+			if( it->equip&EQP_ACC_L )
+				strcat(equipstr, msg_txt(sd,1335)); // Left Accessory,
+			if( it->equip&EQP_ARMOR )
+				strcat(equipstr, msg_txt(sd,1336)); // Body/Armor,
+			if( (it->equip&EQP_ARMS) == EQP_HAND_R )
+				strcat(equipstr, msg_txt(sd,1337)); // Right Hand,
+			if( (it->equip&EQP_ARMS) == EQP_HAND_L )
+				strcat(equipstr, msg_txt(sd,1338)); // Left Hand,
+			if( (it->equip&EQP_ARMS) == EQP_ARMS )
+				strcat(equipstr, msg_txt(sd,1339)); // Both Hands,
+			if( it->equip&EQP_SHOES )
+				strcat(equipstr, msg_txt(sd,1340)); // Shoes,
+			if( it->equip&EQP_ACC_R )
+				strcat(equipstr, msg_txt(sd,1341)); // Right Accessory,
+			if( (it->equip&EQP_HELM) == EQP_HEAD_LOW )
+				strcat(equipstr, msg_txt(sd,1342)); // Lower Head,
+			if( (it->equip&EQP_HELM) == EQP_HEAD_TOP )
+				strcat(equipstr, msg_txt(sd,1343)); // Top Head,
+			if( (it->equip&EQP_HELM) == (EQP_HEAD_LOW|EQP_HEAD_TOP) )
+				strcat(equipstr, msg_txt(sd,1344)); // Top/Lower Head,
+			if( (it->equip&EQP_HELM) == EQP_HEAD_MID )
+				strcat(equipstr, msg_txt(sd,1345)); // Mid Head,
+			if( (it->equip&EQP_HELM) == (EQP_HEAD_LOW|EQP_HEAD_MID) )
+				strcat(equipstr, msg_txt(sd,1346)); // Mid/Lower Head,
+			if( (it->equip&EQP_HELM) == EQP_HELM )
+				strcat(equipstr, msg_txt(sd,1347)); // Top/Mid/Lower Head,
+			if( (it->equip&EQP_COSTUME_HELM) == EQP_COSTUME_HEAD_LOW )
+				strcat(equipstr, msg_txt(sd,518));
+			if( (it->equip&EQP_COSTUME_HELM) == EQP_COSTUME_HEAD_TOP )
+				strcat(equipstr, msg_txt(sd,519));
+			if( (it->equip&EQP_COSTUME_HELM) == (EQP_COSTUME_HEAD_LOW|EQP_COSTUME_HEAD_TOP) )
+				strcat(equipstr, msg_txt(sd,520));
+			if( (it->equip&EQP_COSTUME_HELM) == EQP_COSTUME_HEAD_MID )
+				strcat(equipstr, msg_txt(sd,521));
+			if( (it->equip&EQP_COSTUME_HELM) == (EQP_COSTUME_HEAD_LOW|EQP_COSTUME_HEAD_MID) )
+				strcat(equipstr, msg_txt(sd,522));
+			if( (it->equip&EQP_COSTUME_HELM) == EQP_COSTUME_HELM )
+				strcat(equipstr, msg_txt(sd,523));
+			if( it->equip&EQP_COSTUME_GARMENT )
+				strcat(equipstr, msg_txt(sd,524));
+			//if( it->equip&EQP_COSTUME_FLOOR )
+				//strcat(equipstr, msg_txt(sd,525));
+			if( it->equip&EQP_AMMO )
+				strcat(equipstr, msg_txt(sd,526));
+			if( it->equip&EQP_SHADOW_ARMOR )
+				strcat(equipstr, msg_txt(sd,527));
+			if( (it->equip&EQP_SHADOW_ARMS) == EQP_SHADOW_WEAPON )
+				strcat(equipstr, msg_txt(sd,528));
+			if( (it->equip&EQP_SHADOW_ARMS) == EQP_SHADOW_SHIELD )
+				strcat(equipstr, msg_txt(sd,529));
+			if( (it->equip&EQP_SHADOW_ARMS) == EQP_SHADOW_ARMS )
+				strcat(equipstr, msg_txt(sd,530));
+			if( it->equip&EQP_SHADOW_SHOES )
+				strcat(equipstr, msg_txt(sd,531));
+			if( it->equip&EQP_SHADOW_ACC_R )
+				strcat(equipstr, msg_txt(sd,532));
+			if( it->equip&EQP_SHADOW_ACC_L )
+				strcat(equipstr, msg_txt(sd,533));
 			// remove final ', '
 			equipstr[strlen(equipstr) - 2] = '\0';
 			StringBuf_AppendStr(&buf, equipstr);
@@ -8495,29 +8529,19 @@ ACMD_FUNC(itemlist)
 		clif_displaymessage(fd, StringBuf_Value(&buf));
 		StringBuf_Clear(&buf);
 
-		if( it->card[0] == CARD0_PET )
-		{// pet egg
+		if( it->card[0] == CARD0_PET ) { // pet egg
 			if (it->card[3])
 				StringBuf_Printf(&buf, msg_txt(sd,1348), (unsigned int)MakeDWord(it->card[1], it->card[2])); //  -> (pet egg, pet id: %u, named)
 			else
 				StringBuf_Printf(&buf, msg_txt(sd,1349), (unsigned int)MakeDWord(it->card[1], it->card[2])); //  -> (pet egg, pet id: %u, unnamed)
-		}
-		else
-		if(it->card[0] == CARD0_FORGE)
-		{// forged item
+		} else if(it->card[0] == CARD0_FORGE) { // forged item
 			StringBuf_Printf(&buf, msg_txt(sd,1350), (unsigned int)MakeDWord(it->card[2], it->card[3]), it->card[1]>>8, it->card[1]&0x0f); //  -> (crafted item, creator id: %u, star crumbs %d, element %d)
-		}
-		else
-		if(it->card[0] == CARD0_CREATE)
-		{// created item
+		} else if(it->card[0] == CARD0_CREATE) { // created item
 			StringBuf_Printf(&buf, msg_txt(sd,1351), (unsigned int)MakeDWord(it->card[2], it->card[3])); //  -> (produced item, creator id: %u)
-		}
-		else
-		{// normal item
+		} else { // normal item
 			int counter2 = 0;
 
-			for( j = 0; j < itd->slot; ++j )
-			{
+			for( j = 0; j < itd->slot; ++j ) {
 				struct item_data* card;
 
 				if( it->card[j] == 0 || (card = itemdb_exists(it->card[j])) == NULL )
@@ -8691,29 +8715,22 @@ ACMD_FUNC(font)
 	nullpo_retr(-1,sd);
 
 	font_id = atoi(message);
-	if( font_id == 0 )
-	{
-		if( sd->user_font )
-		{
-			sd->user_font = 0;
+	if( font_id == 0 ) {
+		if( sd->status.font ) {
+			sd->status.font = 0;
 			clif_displaymessage(fd, msg_txt(sd,1356)); // Returning to normal font.
 			clif_font(sd);
-		}
-		else
-		{
+		} else {
 			clif_displaymessage(fd, msg_txt(sd,1357)); // Use @font <1-9> to change your message font.
 			clif_displaymessage(fd, msg_txt(sd,1358)); // Use 0 or no parameter to return to normal font.
 		}
-	}
-	else if( font_id < 0 || font_id > 9 )
+	} else if( font_id < 0 || font_id > 9 )
 		clif_displaymessage(fd, msg_txt(sd,1359)); // Invalid font. Use a value from 0 to 9.
-	else if( font_id != sd->user_font )
-	{
-		sd->user_font = font_id;
+	else if( font_id != sd->status.font ) {
+		sd->status.font = font_id;
 		clif_font(sd);
 		clif_displaymessage(fd, msg_txt(sd,1360)); // Font changed.
-	}
-	else
+	} else
 		clif_displaymessage(fd, msg_txt(sd,1361)); // Already using this font.
 
 	return 0;

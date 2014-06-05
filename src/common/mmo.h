@@ -186,6 +186,32 @@ struct item {
 	uint64 unique_id;
 };
 
+//Equip position constants
+enum equip_pos {
+	EQP_HEAD_LOW         = 0x000001,
+	EQP_HEAD_MID         = 0x000200, // 512
+	EQP_HEAD_TOP         = 0x000100, // 256
+	EQP_HAND_R           = 0x000002, // 2
+	EQP_HAND_L           = 0x000020, // 32
+	EQP_ARMOR            = 0x000010, // 16
+	EQP_SHOES            = 0x000040, // 64
+	EQP_GARMENT          = 0x000004, // 4
+	EQP_ACC_L            = 0x000008, // 8
+	EQP_ACC_R            = 0x000080, // 128
+	EQP_COSTUME_HEAD_TOP = 0x000400, // 1024
+	EQP_COSTUME_HEAD_MID = 0x000800, // 2048
+	EQP_COSTUME_HEAD_LOW = 0x001000, // 4096
+	EQP_COSTUME_GARMENT  = 0x002000, // 8192
+	//EQP_COSTUME_FLOOR  = 0x004000, // 16384
+	EQP_AMMO             = 0x008000, // 32768
+	EQP_SHADOW_ARMOR     = 0x010000, // 65536
+	EQP_SHADOW_WEAPON    = 0x020000, // 131072
+	EQP_SHADOW_SHIELD    = 0x040000, // 262144
+	EQP_SHADOW_SHOES     = 0x080000, // 524288
+	EQP_SHADOW_ACC_R     = 0x100000, // 1048576
+	EQP_SHADOW_ACC_L     = 0x200000, // 2097152
+};
+
 struct point {
 	unsigned short map;
 	short x,y;
@@ -389,6 +415,8 @@ struct mmo_charstatus {
 
 	// Char server addon system
 	unsigned int character_moves;
+
+	unsigned char font;
 
 	bool cashshop_sent; // Whether the player has received the CashShop list
 };
@@ -756,6 +784,16 @@ enum {
 	SEX_FEMALE = 0,
 	SEX_MALE,
 	SEX_SERVER
+};
+
+/// Item Bound Type
+enum bound_type {
+	BOUND_NONE = 0, /// No bound
+	BOUND_ACCOUNT, /// 1- Account Bound
+	BOUND_GUILD, /// 2 - Guild Bound
+	BOUND_PARTY, /// 3 - Party Bound
+	BOUND_CHAR, /// 4 - Character Bound
+	BOUND_MAX
 };
 
 // sanity checks...

@@ -4,13 +4,13 @@
 // <Flag>:
 // 1 - As Dead Branch item (will be logged at `branchlog` table and cannot be used at 'nobranch' mapflag)
 // 2 - As item group container, check player's inventory and weight before consumed
+// NOTE: For removing flag by import file, use "-" to remove the flag. Example, 604,-1 will removes flag 1 from Branch_Of_Dead_Tree
 
 // Logged as Dead Branch item
 604,1 //Branch_Of_Dead_Tree
 12103,1 //Bloody_Dead_Branch
 12109,1 //Poring_Box
 12024,1 //Red_Pouch_Of_Surprise
-12258,1 //Bombring_Box
 
 // Item group container
 603,2 //Old_Blue_Box

@@ -701,6 +701,7 @@ typedef enum sc_type {
 	SC__FEINTBOMB,
 	SC__CHAOS,
 	SC_ELEMENTAL_SHIELD,
+	SC_CHASEWALK2,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
@@ -893,7 +894,7 @@ enum si_type {
 //	SI_DEFENCE = 179,
 //	SI_SLOWDOWN = 180,
 	SI_PRESERVE		= 181,
-	SI_INCSTR		= 182,
+	SI_CHASEWALK2	= 182,
 //	SI_NOT_EXTREMITYFIST = 183,
 	SI_INTRAVISION		= 184,
 //	SI_MOVESLOW_POTION = 185,
@@ -1725,6 +1726,12 @@ enum scb_flag
 	SCB_ALL		= 0x3FFFFFFF
 };
 
+enum e_status_calc_opt {
+	SCO_NONE  = 0x0,
+	SCO_FIRST = 0x1, /* Trigger the calculations that should take place only onspawn/once */
+	SCO_FORCE = 0x2, /* Only relevant to BL_PC types, ensures call bypasses the queue caused by delayed damage */
+};
+
 ///Enum for bonus_script's flag
 enum e_bonus_script_flags {
 	BONUS_FLAG_REM_ON_DEAD		= 0x01,	//Remove bonus when dead
@@ -1992,22 +1999,23 @@ int status_change_timer_sub(struct block_list* bl, va_list ap);
 int status_change_clear(struct block_list* bl, int type);
 void status_change_clear_buffs(struct block_list* bl, int type);
 
-#define status_calc_bl(bl, flag) status_calc_bl_(bl, (enum scb_flag)(flag), false)
-#define status_calc_mob(md, first) status_calc_bl_(&(md)->bl, SCB_ALL, first)
-#define status_calc_pet(pd, first) status_calc_bl_(&(pd)->bl, SCB_ALL, first)
-#define status_calc_pc(sd, first) status_calc_bl_(&(sd)->bl, SCB_ALL, first)
-#define status_calc_homunculus(hd, first) status_calc_bl_(&(hd)->bl, SCB_ALL, first)
-#define status_calc_mercenary(md, first) status_calc_bl_(&(md)->bl, SCB_ALL, first)
-#define status_calc_elemental(ed, first) status_calc_bl_(&(ed)->bl, SCB_ALL, first)
-#define status_calc_npc(nd, first) status_calc_bl_(&(nd)->bl, SCB_ALL, first)
+#define status_calc_bl(bl, flag) status_calc_bl_(bl, (enum scb_flag)(flag), SCO_NONE)
+#define status_calc_mob(md, opt) status_calc_bl_(&(md)->bl, SCB_ALL, opt)
+#define status_calc_pet(pd, opt) status_calc_bl_(&(pd)->bl, SCB_ALL, opt)
+#define status_calc_pc(sd, opt) status_calc_bl_(&(sd)->bl, SCB_ALL, opt)
+#define status_calc_homunculus(hd, opt) status_calc_bl_(&(hd)->bl, SCB_ALL, opt)
+#define status_calc_mercenary(md, opt) status_calc_bl_(&(md)->bl, SCB_ALL, opt)
+#define status_calc_elemental(ed, opt) status_calc_bl_(&(ed)->bl, SCB_ALL, opt)
+#define status_calc_npc(nd, opt) status_calc_bl_(&(nd)->bl, SCB_ALL, opt)
 
-void status_calc_bl_(struct block_list *bl, enum scb_flag flag, bool first);
-int status_calc_mob_(struct mob_data* md, bool first);
-int status_calc_pet_(struct pet_data* pd, bool first);
-int status_calc_pc_(struct map_session_data* sd, bool first);
-int status_calc_homunculus_(struct homun_data *hd, bool first);
-int status_calc_mercenary_(struct mercenary_data *md, bool first);
-int status_calc_elemental_(struct elemental_data *ed, bool first);
+void status_calc_bl_(struct block_list *bl, enum scb_flag flag, enum e_status_calc_opt opt);
+int status_calc_mob_(struct mob_data* md, enum e_status_calc_opt opt);
+int status_calc_pet_(struct pet_data* pd, enum e_status_calc_opt opt);
+int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt);
+int status_calc_homunculus_(struct homun_data *hd, enum e_status_calc_opt opt);
+int status_calc_mercenary_(struct mercenary_data *md, enum e_status_calc_opt opt);
+int status_calc_elemental_(struct elemental_data *ed, enum e_status_calc_opt opt);
+int status_calc_npc_(struct npc_data *nd, enum e_status_calc_opt opt);
 
 void status_calc_misc(struct block_list *bl, struct status_data *status, int level);
 void status_calc_regen(struct block_list *bl, struct status_data *status, struct regen_data *regen);
@@ -2018,9 +2026,12 @@ int status_check_visibility(struct block_list *src, struct block_list *target); 
 
 int status_change_spread( struct block_list *src, struct block_list *bl );
 
-#ifdef RENEWAL
-unsigned int status_weapon_atk(struct weapon_atk wa, struct status_data *status);
-unsigned short status_base_matk(const struct status_data* status, int level);
+#ifndef RENEWAL
+	unsigned short status_base_matk_min(const struct status_data* status);
+	unsigned short status_base_matk_max(const struct status_data* status);
+#else
+	unsigned int status_weapon_atk(struct weapon_atk wa, struct status_data *status);
+	unsigned short status_base_matk(const struct status_data* status, int level);
 #endif
 
 int status_readdb(void);

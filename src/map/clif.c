@@ -649,7 +649,7 @@ void clif_authok(struct map_session_data *sd)
 	WFIFOB(fd, 9) = 5; // ignored
 	WFIFOB(fd,10) = 5; // ignored
 #if PACKETVER >= 20080102
-	WFIFOW(fd,11) = sd->user_font;  // FIXME: Font is currently not saved.
+	WFIFOW(fd,11) = sd->status.font;
 #endif
 	WFIFOSET(fd,packet_len(cmd));
 }
@@ -1076,7 +1076,7 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 		return packet_len(WBUFW(buffer,0));
 #endif
 #if PACKETVER >= 20080102
-	WBUFW(buf,53) = sd?sd->user_font:0;
+	WBUFW(buf,53) = (sd ? sd->status.font : 0);
 #endif
 #if PACKETVER >= 20091103
 	memcpy((char*)WBUFP(buf,55), name, NAME_LENGTH);
@@ -1183,7 +1183,7 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	WBUFB(buf,57) = (sd)? 5 : 0;
 	WBUFW(buf,58) = clif_setlevel(bl);
 #if PACKETVER >= 20080102
-	WBUFW(buf,60) = sd?sd->user_font:0;
+	WBUFW(buf,60) = (sd ? sd->status.font : 0);
 #endif
 #if PACKETVER >= 20091103
 	memcpy((char*)WBUFP(buf,62), name, NAME_LENGTH);
@@ -1729,11 +1729,10 @@ void clif_changemapserver(struct map_session_data* sd, unsigned short map_index,
 }
 
 
-void clif_blown(struct block_list *bl) //FIXME: This needs a better behaviour than just sending 2 position fixes
+void clif_blown(struct block_list *bl)
 {
-//Aegis packets says fixpos, but it's unsure whether slide works better or not.
-	clif_fixpos(bl);
 	clif_slide(bl, bl->x, bl->y);
+	//clif_fixpos(bl); //Aegis packets says fixpos, but it's unsure whether slide works better or not.
 }
 
 
@@ -2262,7 +2261,7 @@ void clif_additem(struct map_session_data *sd, int n, int amount, int fail)
 		WFIFOL(fd,offs+23)=sd->status.inventory[n].expire_time;
 #endif
 #if PACKETVER >= 20071002
-		WFIFOW(fd,offs+27)=sd->status.inventory[n].bound ? 2 : 0;
+		WFIFOW(fd,offs+27)=sd->status.inventory[n].bound ? BOUND_GUILD : 0;
 #endif
 	}
 
@@ -2368,7 +2367,7 @@ void clif_item_sub(unsigned char *buf, int n, int idx, struct item *i, struct it
 		clif_addcards(WBUFP(buf, n+12), i); //8B
 #if PACKETVER >= 20071002
 		WBUFL(buf,n+20)=i->expire_time;
-		WBUFW(buf,n+24)=i->bound ? 2 : 0;
+		WBUFW(buf,n+24)=i->bound ? BOUND_GUILD : 0;
 #endif
 #if PACKETVER >= 20100629
 		WBUFW(buf,n+26)= (id->equip&EQP_VISIBLE)?id->look:0;
@@ -8633,6 +8632,34 @@ void clif_messagecolor(struct block_list* bl, unsigned long color, const char* m
 	clif_send(buf, WBUFW(buf,2), bl, AREA_CHAT_WOC);
 }
 
+/**
+ * Notifies the client that the storage window is still open
+ *
+ * Should only be used in cases where the client closed the 
+ * storage window without server's consent
+ */
+void clif_refresh_storagewindow(struct map_session_data *sd) {
+	// Notify the client that the storage is open
+	if( sd->state.storage_flag == 1 ) {
+		storage_sortitem(sd->status.storage.items, ARRAYLENGTH(sd->status.storage.items));
+		clif_storagelist(sd, sd->status.storage.items, ARRAYLENGTH(sd->status.storage.items));
+		clif_updatestorageamount(sd, sd->status.storage.storage_amount, MAX_STORAGE);
+	}
+	// Notify the client that the gstorage is open otherwise it will
+	// remain locked forever and nobody will be able to access it
+	if( sd->state.storage_flag == 2 ) {
+		struct guild_storage *gstor = guild2storage2(sd->status.guild_id);
+
+		if( !gstor ) // Shouldn't happen. The information should already be at the map-server
+			intif_request_guild_storage(sd->status.account_id, sd->status.guild_id);
+		else {
+			storage_sortitem(gstor->items, ARRAYLENGTH(gstor->items));
+			clif_storagelist(sd, gstor->items, ARRAYLENGTH(gstor->items));
+			clif_updatestorageamount(sd, gstor->storage_amount, MAX_GUILD_STORAGE);
+		}
+	}
+}
+
 // refresh the client's screen, getting rid of any effects
 void clif_refresh(struct map_session_data *sd)
 {
@@ -8693,6 +8720,7 @@ void clif_refresh(struct map_session_data *sd)
 		pc_disguise(sd, 0);
 		pc_disguise(sd, disguise);
 	}
+	clif_refresh_storagewindow(sd);
 }
 
 
@@ -9759,7 +9787,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		}
 
 		map_iwall_get(sd); // Updates Walls Info on this Map to Client
-		status_calc_pc(sd, false); // Some conditions are map-dependent so we must recalculate
+		status_calc_pc(sd, SCO_NONE); // Some conditions are map-dependent so we must recalculate
 		sd->state.changemap = false;
 
 		// Instances do not need their own channels
@@ -10269,7 +10297,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 
 	if (sd->sc.count &&
 		(sd->sc.data[SC_TRICKDEAD] ||
-		sd->sc.data[SC_AUTOCOUNTER] ||
+		(sd->sc.data[SC_AUTOCOUNTER] && action_type != 0x07) ||
 		 sd->sc.data[SC_BLADESTOP] ||
 		 sd->sc.data[SC__MANHOLE] ||
 		 sd->sc.data[SC_CURSEDCIRCLE_ATKER] ||
@@ -11302,10 +11330,6 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 		sd->state.storage_flag && !(tmp&INF_SELF_SKILL) ) //SELF skills can be used with the storage open, issue: 8027
 		return;
 
-	//Some self skills need to close the storage to work properly
-	if( skill_id == AL_TELEPORT && sd->state.storage_flag )
-		storage_storageclose(sd);
-
 	if( pc_issit(sd) )
 		return;
 
@@ -11499,7 +11523,8 @@ void clif_parse_UseSkillMap(int fd, struct map_session_data* sd)
 	if(skill_id != sd->menuskill_id)
 		return;
 
-	if( pc_cant_act(sd) ) {
+	//It is possible to use teleport with the storage window open bugreport:8027
+	if (pc_cant_act(sd) && !sd->state.storage_flag && skill_id != AL_TELEPORT) {
 		clif_menuskill_clear(sd);
 		return;
 	}
@@ -14069,18 +14094,27 @@ void clif_parse_HomMenu(int fd, struct map_session_data *sd)
 void clif_parse_AutoRevive(int fd, struct map_session_data *sd)
 {
 	int item_position = pc_search_inventory(sd, ITEMID_TOKEN_OF_SIEGFRIED);
+	int hpsp = 100;
 
-	if (item_position < 0)
-		return;
+	if (item_position < 0) {
+		if (sd->sc.data[SC_LIGHT_OF_REGENE])
+			hpsp = sd->sc.data[SC_LIGHT_OF_REGENE]->val2;
+		else
+			return;
+	}
 
 	if (sd->sc.data[SC_HELLPOWER]) //Cannot res while under the effect of SC_HELLPOWER.
 		return;
 
-	if (!status_revive(&sd->bl, 100, 100))
+	if (!status_revive(&sd->bl, hpsp, hpsp))
 		return;
 
-	clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,4,1);
-	pc_delitem(sd, item_position, 1, 0, 1, LOG_TYPE_CONSUME);
+	if (item_position < 0)
+		status_change_end(&sd->bl, SC_LIGHT_OF_REGENE, INVALID_TIMER);
+	else
+		pc_delitem(sd, item_position, 1, 0, 1, LOG_TYPE_CONSUME);
+
+	clif_skill_nodamage(&sd->bl, &sd->bl, ALL_RESURRECTION, 4, 1);
 }
 
 
@@ -14607,6 +14641,9 @@ void clif_Auction_openwindow(struct map_session_data *sd)
 	if( sd->state.storage_flag || sd->state.vending || sd->state.buyingstore || sd->state.trading )
 		return;
 
+	if( !battle_config.feature_auction )
+		return;
+
 	WFIFOHEAD(fd,packet_len(0x25f));
 	WFIFOW(fd,0) = 0x25f;
 	WFIFOL(fd,2) = 0;
@@ -14697,6 +14734,9 @@ void clif_parse_Auction_setitem(int fd, struct map_session_data *sd){
 	int amount = RFIFOL(fd,info->pos[1]); // Always 1
 	struct item_data *item;
 
+	if( !battle_config.feature_auction )
+		return;
+
 	if( sd->auction.amount > 0 )
 		sd->auction.amount = 0;
 
@@ -14773,6 +14813,9 @@ void clif_parse_Auction_register(int fd, struct map_session_data *sd)
 	struct auction_data auction;
 	struct item_data *item;
 	struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
+
+	if( !battle_config.feature_auction )
+		return;
 
 	auction.price = RFIFOL(fd,info->pos[0]);
 	auction.buynow = RFIFOL(fd,info->pos[1]);
@@ -14906,6 +14949,9 @@ void clif_parse_Auction_search(int fd, struct map_session_data* sd){
 	int price = RFIFOL(fd,info->pos[1]);  // FIXME: bug #5071
 	int page = RFIFOW(fd,info->pos[3]);
 
+	if( !battle_config.feature_auction )
+		return; 
+
 	clif_parse_Auction_cancelreg(fd, sd);
 
 	safestrncpy(search_text, (char*)RFIFOP(fd,info->pos[2]), sizeof(search_text));
@@ -14921,6 +14967,10 @@ void clif_parse_Auction_search(int fd, struct map_session_data* sd){
 void clif_parse_Auction_buysell(int fd, struct map_session_data* sd)
 {
 	short type = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]) + 6;
+
+	if( !battle_config.feature_auction )
+		return;
+
 	clif_parse_Auction_cancelreg(fd, sd);
 
 	intif_Auction_requestlist(sd->status.char_id, type, 0, "", 1);
@@ -15855,7 +15905,7 @@ void clif_font(struct map_session_data *sd)
 	nullpo_retv(sd);
 	WBUFW(buf,0) = 0x2ef;
 	WBUFL(buf,2) = sd->bl.id;
-	WBUFW(buf,6) = sd->user_font;
+	WBUFW(buf,6) = sd->status.font;
 	clif_send(buf, packet_len(0x2ef), &sd->bl, AREA);
 #endif
 }
@@ -16703,7 +16753,7 @@ int clif_spellbook_list(struct map_session_data *sd)
 		if( itemdb_is_spellbook(sd->status.inventory[i].nameid) )
 		{
 			WFIFOW(fd, c * 2 + 4) = sd->status.inventory[i].nameid;
-			c ++;
+			c++;
 		}
 	}
 
@@ -17001,7 +17051,7 @@ void clif_ackworldinfo(struct map_session_data* sd) {
 	WFIFOHEAD(fd,packet_len(0x979));
 	WFIFOW(fd,0)=0x979;
 	//AID -> world name ?
-	safestrncpy((char*)WFIFOP(fd,2), '\0' /* World name */, 24);
+	safestrncpy((char*)WFIFOP(fd,2), "" /* World name */, 24);
 	safestrncpy((char*)WFIFOP(fd,26), sd->status.name, NAME_LENGTH);
 	WFIFOSET(fd,packet_len(0x979));
 }
@@ -18152,6 +18202,7 @@ void do_init_clif(void) {
 	const char* colors[COLOR_MAX] = {
 		"0xFF0000",
 		"0xFFFFFF",
+		"0xFFFF00",
 	};
 	int i;
 	/**

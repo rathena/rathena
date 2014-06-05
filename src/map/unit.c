@@ -2392,11 +2392,14 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 				trade_tradecancel(sd);
 			buyingstore_close(sd);
 			searchstore_close(sd);
-			if(sd->state.storage_flag == 1)
-				storage_storage_quit(sd,0);
-			else if (sd->state.storage_flag == 2)
-				storage_guild_storage_quit(sd,0);
-			sd->state.storage_flag = 0; // Force close it when being warped.
+			if (sd->menuskill_id != AL_TELEPORT) { //bugreport:8027
+				if (sd->state.storage_flag == 1)
+					storage_storage_quit(sd,0);
+				else if (sd->state.storage_flag == 2)
+					storage_guild_storage_quit(sd,0);
+
+				sd->state.storage_flag = 0; //Force close it when being warped.
+			}
 			if(sd->party_invite>0)
 				party_reply_invite(sd,sd->party_invite,0);
 			if(sd->guild_invite>0)
@@ -2664,6 +2667,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				sd->quest_log = NULL;
 				sd->num_quests = sd->avail_quests = 0;
 			}
+			pc_itemgrouphealrate_clear(sd);
 			break;
 		}
 		case BL_PET:

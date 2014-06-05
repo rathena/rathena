@@ -251,9 +251,10 @@ int mapif_parse_itembound_retrieve(int fd)
 	StringBuf buf;
 	SqlStmt* stmt;
 	struct item item;
-	int j, i=0, s;
-	bool found=false;
+	int j, i = 0, s = 0, bound_qt = 0;
+	bool found = false;
 	struct item items[MAX_INVENTORY];
+	unsigned int bound_item[MAX_INVENTORY] = { 0 };
 	int char_id = RFIFOL(fd,2);
 	int aid = RFIFOL(fd,6);
 	int guild_id = RFIFOW(fd,10);
@@ -288,7 +289,7 @@ int mapif_parse_itembound_retrieve(int fd)
 		SqlStmt_BindColumn(stmt, 9+j, SQLDT_SHORT, &item.card[j], 0, NULL, NULL);
 
 	while( SQL_SUCCESS == SqlStmt_NextRow(stmt) ) {
-		if(item.bound == 2) {
+		if(item.bound == BOUND_GUILD) {
 			memcpy(&items[i],&item,sizeof(struct item));
 			i++;
 		}
@@ -311,6 +312,24 @@ int mapif_parse_itembound_retrieve(int fd)
 		else
 			found = true;
 		StringBuf_Printf(&buf, " `id`=%d",items[j].id);
+
+		if( items[j].bound && items[j].equip ) {
+			//Only the items that are also stored in `char` `equip`
+			if( (items[j].equip&EQP_HAND_R) ||
+				(items[j].equip&EQP_HAND_L) ||
+				(items[j].equip&EQP_HEAD_TOP) ||
+				(items[j].equip&EQP_HEAD_MID) ||
+				(items[j].equip&EQP_HEAD_LOW) ||
+				(items[j].equip&EQP_GARMENT) ||
+				(items[j].equip&EQP_COSTUME_HEAD_TOP) ||
+				(items[j].equip&EQP_COSTUME_HEAD_MID) ||
+				(items[j].equip&EQP_COSTUME_HEAD_LOW) ||
+				(items[j].equip&EQP_COSTUME_GARMENT) )
+			{
+				bound_item[bound_qt] = items[j].equip;
+				bound_qt++;
+			}
+		}
 	}
 
 	if( SQL_ERROR == SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf))
@@ -323,12 +342,54 @@ int mapif_parse_itembound_retrieve(int fd)
 		return 1;
 	}
 
+	if( bound_qt ) { //Removes any view id that was set by an item that was removed
+/* Verifies equip bitmasks (see item.equip) and handles the sql statement */
+#define CHECK_REMOVE(var,mask,token) do { \
+	if( (var)&(mask) ) { \
+		if( (var) != (mask) && s ) StringBuf_AppendStr(&buf, ","); \
+		StringBuf_AppendStr(&buf, "`"#token"`='0'"); \
+		(var) &= ~(mask); \
+		s++; \
+	} \
+} while( 0 )
+
+		StringBuf_Clear(&buf);
+		StringBuf_Printf(&buf, "UPDATE `%s` SET ", schema_config.char_db);
+		for( j = 0; j < bound_qt; j++ ) {
+			//Equips can be at more than one slot at the same time
+			CHECK_REMOVE(bound_item[j],EQP_HAND_R,weapon);
+			CHECK_REMOVE(bound_item[j],EQP_HAND_L,shield);
+			CHECK_REMOVE(bound_item[j],EQP_HEAD_TOP|EQP_COSTUME_HEAD_TOP,head_top);
+			CHECK_REMOVE(bound_item[j],EQP_HEAD_MID|EQP_COSTUME_HEAD_MID,head_mid);
+			CHECK_REMOVE(bound_item[j],EQP_HEAD_LOW|EQP_COSTUME_HEAD_LOW,head_bottom);
+			CHECK_REMOVE(bound_item[j],EQP_GARMENT|EQP_COSTUME_GARMENT,robe);
+		}
+		StringBuf_Printf(&buf, " WHERE `char_id`='%d'", char_id);
+
+		if( SQL_ERROR == SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf)) ||
+			SQL_ERROR == SqlStmt_Execute(stmt) )
+		{
+			SqlStmt_ShowDebug(stmt);
+			SqlStmt_Free(stmt);
+			StringBuf_Destroy(&buf);
+			mapif_itembound_ack(fd,aid,guild_id);
+			return 1;
+		}
+#undef CHECK_REMOVE
+	}
+
 	//Now let's update the guild storage with those deleted items
+	//@TODO/FIXME:
+	//This approach is basically the same as the one from memitemdata_to_sql, but
+	//the latter compares current database values and this is not needed in this case
+	//maybe sometime separate memitemdata_to_sql into different methods in order to use
+	//call that function here as well [Panikon]
 	found = false;
 	StringBuf_Clear(&buf);
-	StringBuf_Printf(&buf, "INSERT INTO `%s` (`guild_id`, `nameid`, `amount`, `identify`, `refine`, `attribute`, `expire_time`, `bound`", schema_config.guild_storage_db);
-	for( j = 0; j < MAX_SLOTS; ++j )
-		StringBuf_Printf(&buf, ", `card%d`", j);
+	StringBuf_Printf(&buf, "INSERT INTO `%s` (`guild_id`, `nameid`, `amount`, `equip`, `identify`, `refine`,"
+		"`attribute`, `expire_time`, `bound`", schema_config.guild_storage_db);
+	for( s = 0; s < MAX_SLOTS; ++s )
+		StringBuf_Printf(&buf, ", `card%d`", s);
 	StringBuf_AppendStr(&buf, ") VALUES ");
 
 	for( j = 0; j < i; ++j ) {
@@ -337,8 +398,9 @@ int mapif_parse_itembound_retrieve(int fd)
 		else
 			found = true;
 
-		StringBuf_Printf(&buf, "('%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d'",
-			guild_id, items[j].nameid, items[j].amount, items[j].identify, items[j].refine, items[j].attribute, items[j].expire_time, items[j].bound);
+		StringBuf_Printf(&buf, "('%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d'",
+			guild_id, items[j].nameid, items[j].amount, items[j].equip, items[j].identify, items[j].refine,
+			items[j].attribute, items[j].expire_time, items[j].bound);
 		for( s = 0; s < MAX_SLOTS; ++s )
 			StringBuf_Printf(&buf, ", '%d'", items[j].card[s]);
 		StringBuf_AppendStr(&buf, ")");
@@ -359,6 +421,11 @@ int mapif_parse_itembound_retrieve(int fd)
 
 	//Finally reload storage and tell map we're done
 	mapif_load_guild_storage(fd,aid,guild_id,0);
+
+	//If character is logged in char, disconnect
+	disconnect_player(aid);
+
+	//Tell map-server the operation is over and it can unlock the storage
 	mapif_itembound_ack(fd,aid,guild_id);
 	return 0;
 }

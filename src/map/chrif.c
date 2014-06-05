@@ -1372,11 +1372,14 @@ int chrif_load_scdata(int fd) {
 
 	for (i = 0; i < count; i++) {
 		struct status_change_data *data = (struct status_change_data*)RFIFOP(fd,14 + i*sizeof(struct status_change_data));
+
 		status_change_start(NULL,&sd->bl, (sc_type)data->type, 10000, data->val1, data->val2, data->val3, data->val4, data->tick, 1|2|4|8);
 	}
+
+	pc_scdata_received(sd);
 #endif
 
-	if( sd->state.autotrade ){
+	if( sd->state.autotrade ) {
 		buyingstore_reopen( sd );
 		vending_reopen( sd );
 	}
@@ -1897,7 +1900,7 @@ int chrif_load_bsdata(int fd) {
 		calc = true;
 	}
 	if (calc)
-		status_calc_pc(sd,false);
+		status_calc_pc(sd,SCO_NONE);
 	return 0;
 }
 

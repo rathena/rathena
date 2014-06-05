@@ -2289,6 +2289,7 @@ void script_hardcoded_constants(void) {
 	script_set_constant("Option_Invisible",OPTION_INVISIBLE,false);
 	script_set_constant("Option_Orcish",OPTION_ORCISH,false);
 	script_set_constant("Option_Wedding",OPTION_WEDDING,false);
+	script_set_constant("Option_Ruwach",OPTION_RUWACH,false);
 	script_set_constant("Option_Chasewalk",OPTION_CHASEWALK,false);
 	script_set_constant("Option_Flying",OPTION_FLYING,false);
 	script_set_constant("Option_Xmas",OPTION_XMAS,false);
@@ -6455,22 +6456,24 @@ BUILDIN_FUNC(getitem)
 
 	if( !strcmp(script_getfuncname(st),"getitembound") ) {
 		char bound = script_getnum(st,4);
-		if( bound < 1 || bound > 4) { //Not a correct bound type
-			ShowError("script_getitembound: Not a correct bound type! Type=%d\n",bound);
-			return 1;
+		if( bound > BOUND_NONE && bound < BOUND_MAX ) {
+			it.bound = bound;
+			if( script_hasdata(st,5) )
+				sd=map_id2sd(script_getnum(st,5));
+			else
+				sd=script_rid2sd(st); // Attached player
 		}
-		it.bound = bound;
-		if( script_hasdata(st,5) )
-			sd=map_id2sd(script_getnum(st,5));
-		else
-			sd=script_rid2sd(st); // Attached player
+		else { //Not a correct bound type
+			ShowError("script_getitembound: Not a correct bound type! Type=%d\n",bound);
+			return SCRIPT_CMD_FAILURE;
+		}
 	} else if( script_hasdata(st,4) )
 		sd=map_id2sd(script_getnum(st,4)); // <Account ID>
 	else
 		sd=script_rid2sd(st); // Attached player
 
 	if( sd == NULL ) // no target
-		return 0;
+		return SCRIPT_CMD_SUCCESS;
 
 	//Check if it's stackable.
 	if (!itemdb_isstackable(nameid))
@@ -6499,9 +6502,9 @@ BUILDIN_FUNC(getitem)
  *------------------------------------------*/
 BUILDIN_FUNC(getitem2)
 {
-	int nameid,amount,get_count,i,flag = 0;
-	int iden,ref,attr,c1,c2,c3,c4;
-	char bound=0;
+	int nameid, amount, get_count, i, flag = 0;
+	int iden, ref, attr, c1, c2, c3, c4;
+	char bound = BOUND_NONE;
 	struct item_data *item_data;
 	struct item item_tmp;
 	TBL_PC *sd;
@@ -6509,21 +6512,23 @@ BUILDIN_FUNC(getitem2)
 
 	if( !strcmp(script_getfuncname(st),"getitembound2") ) {
 		bound = script_getnum(st,11);
-		if( bound < 1 || bound > 3) { //Not a correct bound type
-			ShowError("script_getitembound2: Not a correct bound type! Type=%d\n",bound);
-			return 1;
+		if( bound > BOUND_NONE && bound < BOUND_MAX ) {
+			if( script_hasdata(st,12) )
+				sd=map_id2sd(script_getnum(st,12));
+			else
+				sd=script_rid2sd(st); // Attached player
 		}
-		if( script_hasdata(st,12) )
-			sd=map_id2sd(script_getnum(st,12));
-		else
-			sd=script_rid2sd(st); // Attached player
+		else {
+			ShowError("script_getitembound2: Not a correct bound type! Type=%d\n",bound);
+			return SCRIPT_CMD_FAILURE;
+		}
 	} else if( script_hasdata(st,11) )
 		sd=map_id2sd(script_getnum(st,11)); // <Account ID>
 	else
 		sd=script_rid2sd(st); // Attached player
 
 	if( sd == NULL ) // no target
-		return 0;
+		return SCRIPT_CMD_SUCCESS;
 
 	data=script_getdata(st,2);
 	get_val(st,data);
@@ -6652,7 +6657,7 @@ BUILDIN_FUNC(rentitem) {
 	it.nameid = nameid;
 	it.identify = 1;
 	it.expire_time = (unsigned int)(time(NULL) + seconds);
-	it.bound = 0;
+	it.bound = BOUND_NONE;
 
 	if( (flag = pc_additem(sd, &it, 1, LOG_TYPE_SCRIPT)) )
 	{
@@ -10998,7 +11003,6 @@ static void script_detach_rid(struct script_state* st)
 	}
 }
 
-
 /*=========================================================================
  * Attaches a set of RIDs to the current script. [digitalhamster]
  * addrid(<type>{,<flag>{,<parameters>}});
@@ -11016,17 +11020,17 @@ static void script_detach_rid(struct script_state* st)
  *	0 : Players are always attached. (default)
  *	1 : Players currently running another script will not be attached.
  *-------------------------------------------------------------------------*/
-
 static int buildin_addrid_sub(struct block_list *bl,va_list ap)
 {
 	int forceflag;
 	struct map_session_data *sd = (TBL_PC *)bl;
 	struct script_state* st;
 
-	st=va_arg(ap,struct script_state*);
-	forceflag=va_arg(ap,int);
-	if(!forceflag||!sd->st)
-		if(sd->status.account_id!=st->rid)
+	st = va_arg(ap,struct script_state*);
+	forceflag = va_arg(ap,int);
+
+	if(!forceflag || !sd->st)
+		if(sd->status.account_id != st->rid)
 			run_script(st->script,st->pos,sd->status.account_id,st->oid);
 	return 0;
 }
@@ -11036,46 +11040,48 @@ BUILDIN_FUNC(addrid)
 	struct s_mapiterator* iter;
 	struct block_list *bl;
 	TBL_PC *sd;
-	if(st->rid<1){
+
+	if(st->rid < 1) {
 		st->state = END;
-		bl=map_id2bl(st->oid);
+		bl = map_id2bl(st->oid);
 	} else
-		bl=map_id2bl(st->rid); //if run without rid it'd error,also oid if npc, else rid for map
+		bl = map_id2bl(st->rid); //if run without rid it'd error,also oid if npc, else rid for map
 	iter = mapit_getallusers();
-	switch(script_getnum(st,2)){
+
+	switch(script_getnum(st,2)) {
 		case 0:
-			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)){
-				if(!script_getnum(st,3)||!sd->st)
-					if(sd->status.account_id!=st->rid) //attached player already runs.
+			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
+				if(!script_getnum(st,3) || !sd->st)
+					if(sd->status.account_id != st->rid) //attached player already runs.
 						run_script(st->script,st->pos,sd->status.account_id,st->oid);
 			}
 			break;
 		case 1:
-			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)){
-				if(!script_getnum(st,3)||!sd->st)
-					if((sd->bl.m == bl->m)&&(sd->status.account_id!=st->rid))
+			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
+				if(!script_getnum(st,3) || !sd->st)
+					if((sd->bl.m == bl->m) && (sd->status.account_id != st->rid))
 						run_script(st->script,st->pos,sd->status.account_id,st->oid);
 			}
 			break;
 		case 2:
-			if(script_getnum(st,4)==0){
+			if(script_getnum(st,4) == 0) {
 				script_pushint(st,0);
 				return 0;
 			}
-			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)){
-				if(!script_getnum(st,3)||!sd->st)
-					if((sd->status.account_id!=st->rid)&&(sd->status.party_id==script_getnum(st,4))) //attached player already runs.
+			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
+				if(!script_getnum(st,3) || !sd->st)
+					if((sd->status.account_id != st->rid) && (sd->status.party_id == script_getnum(st,4))) //attached player already runs.
 						run_script(st->script,st->pos,sd->status.account_id,st->oid);
 			}
 			break;
 		case 3:
-			if(script_getnum(st,4)==0){
+			if(script_getnum(st,4) == 0) {
 				script_pushint(st,0);
 				return 0;
 			}
-			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)){
-				if(!script_getnum(st,3)||!sd->st)
-					if((sd->status.account_id!=st->rid)&&(sd->status.guild_id==script_getnum(st,4))) //attached player already runs.
+			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
+				if(!script_getnum(st,3) || !sd->st)
+					if((sd->status.account_id != st->rid) && (sd->status.guild_id == script_getnum(st,4))) //attached player already runs.
 						run_script(st->script,st->pos,sd->status.account_id,st->oid);
 			}
 			break;
@@ -11085,11 +11091,11 @@ BUILDIN_FUNC(addrid)
 			st,script_getnum(st,3));//4-x0 , 5-y0 , 6-x1, 7-y1
 			break;
 		default:
-			if((map_id2sd(script_getnum(st,2)))==NULL){ // Player not found.
+			if((map_id2sd(script_getnum(st,2))) == NULL) { // Player not found.
 				script_pushint(st,0);
 				return 0;
 			}
-			if(!script_getnum(st,3)||!map_id2sd(script_getnum(st,2))->st) {
+			if(!script_getnum(st,3) || !map_id2sd(script_getnum(st,2))->st) {
 				run_script(st->script,st->pos,script_getnum(st,2),st->oid);
 				script_pushint(st,1);
 			}
@@ -11471,7 +11477,8 @@ BUILDIN_FUNC(removemapflag)
 			case MF_SKILL_DAMAGE:
 				{
 					map[m].flag.skill_damage = 0;
-					memset(&map[m].adjust.damage,0,sizeof(map[m].adjust.damage));
+					memset(map[m].skill_damage, 0, sizeof(map[m].skill_damage));
+					memset(&map[m].adjust.damage, 0, sizeof(map[m].adjust.damage));
 				} break;
 #endif
 		}
@@ -13170,11 +13177,11 @@ BUILDIN_FUNC(nude)
 	}
 
 	if( calcflag )
-		status_calc_pc(sd,0);
+		status_calc_pc(sd,SCO_NONE);
 	return SCRIPT_CMD_SUCCESS;
 }
 
-int atcommand_sub(struct script_state* st,int type){
+int atcommand_sub(struct script_state* st,int type) {
 	TBL_PC dummy_sd;
 	TBL_PC* sd;
 	int fd;
@@ -13627,11 +13634,10 @@ BUILDIN_FUNC(npcwalkto)
 	y=script_getnum(st,3);
 
 	if(nd) {
-		if (!nd->status.hp) {
-			status_calc_npc(nd, true);
-		} else {
-			status_calc_npc(nd, false);
-		}
+		if (!nd->status.hp)
+			status_calc_npc(nd, SCO_FIRST);
+		else
+			status_calc_npc(nd, SCO_NONE);
 		unit_walktoxy(&nd->bl,x,y,0);
 	}
 	return SCRIPT_CMD_SUCCESS;
@@ -15716,7 +15722,7 @@ BUILDIN_FUNC(getmonsterinfo)
 			script_pushconststr(st,"null");
 		else
 			script_pushint(st,-1);
-		return -1;
+		return 0;
 	}
 	mob = mob_db(mob_id);
 	switch ( script_getnum(st,3) ) {
@@ -16425,6 +16431,11 @@ BUILDIN_FUNC(openauction)
 	sd = script_rid2sd(st);
 	if( sd == NULL )
 		return 0;
+
+	if( !battle_config.feature_auction ) {
+		clif_colormes(sd, color_table[COLOR_RED], msg_txt(sd, 517));
+		return 0;
+	}
 
 	clif_Auction_openwindow(sd);
 
@@ -17379,13 +17390,14 @@ BUILDIN_FUNC(setfont)
 {
 	struct map_session_data *sd = script_rid2sd(st);
 	int font = script_getnum(st,2);
+
 	if( sd == NULL )
 		return 0;
 
-	if( sd->user_font != font )
-		sd->user_font = font;
+	if( sd->status.font != font )
+		sd->status.font = font;
 	else
-		sd->user_font = 0;
+		sd->status.font = 0;
 
 	clif_font(sd);
 	return SCRIPT_CMD_SUCCESS;
@@ -17396,8 +17408,8 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 	TBL_MOB* md		= (TBL_MOB*)bl;
 	struct block_list *tbl;
 	int mobid		= va_arg(ap,int);
-	uint16 skill_id		= va_arg(ap,int);
-	uint16 skill_lv		= va_arg(ap,int);
+	uint16 skill_id	= va_arg(ap,int);
+	uint16 skill_lv	= va_arg(ap,int);
 	int casttime	= va_arg(ap,int);
 	int cancel		= va_arg(ap,int);
 	int emotion		= va_arg(ap,int);
@@ -17407,8 +17419,7 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 		return 0;
 
 	// 0:self, 1:target, 2:master, default:random
-	switch( target )
-	{
+	switch( target ) {
 		case 0: tbl = map_id2bl(md->bl.id); break;
 		case 1: tbl = map_id2bl(md->target_id); break;
 		case 2: tbl = map_id2bl(md->master_id); break;
@@ -17430,6 +17441,7 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 
 	return SCRIPT_CMD_SUCCESS;
 }
+
 /*==========================================
  * areamobuseskill "Map Name",<x>,<y>,<range>,<Mob ID>,"Skill Name"/<Skill ID>,<Skill Lv>,<Cast Time>,<Cancelable>,<Emotion>,<Target Type>;
  *------------------------------------------*/
@@ -18118,17 +18130,16 @@ BUILDIN_FUNC(npcskill)
 	nd->level = npc_level;
 	nd->stat_point = stat_point;
 
-	if (!nd->status.hp) {
-		status_calc_npc(nd, true);
-	} else {
-		status_calc_npc(nd, false);
-	}
+	if (!nd->status.hp)
+		status_calc_npc(nd, SCO_FIRST);
+	else
+		status_calc_npc(nd, SCO_NONE);
 
-	if (skill_get_inf(skill_id)&INF_GROUND_SKILL) {
+	if (skill_get_inf(skill_id)&INF_GROUND_SKILL)
 		unit_skilluse_pos(&nd->bl, sd->bl.x, sd->bl.y, skill_id, skill_level);
-	} else {
+	else
 		unit_skilluse_id(&nd->bl, sd->bl.id, skill_id, skill_level);
-	}
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -18223,24 +18234,24 @@ BUILDIN_FUNC(stand)
 
 /** Creates an array of bounded item IDs
  * countbound {<type>};
- * @param type: 1 - Account Bound; 2 - Guild Bound; 3 - Party Bound
+ * @param type: 0 - All bound items; 1 - Account Bound; 2 - Guild Bound; 3 - Party Bound
  * @return amt: Amount of items found
  */
 BUILDIN_FUNC(countbound)
 {
-	int i, type, j=0, k=0;
+	int i, type, j = 0, k = 0;
 	TBL_PC *sd;
 
 	if( (sd = script_rid2sd(st)) == NULL )
 		return SCRIPT_CMD_FAILURE;
 
-	type = script_hasdata(st,2)?script_getnum(st,2):0;
+	type = script_getnum(st,2);
 
-	for(i=0;i<MAX_INVENTORY;i++){
-		if(sd->status.inventory[i].nameid > 0 && (
-			(!type && sd->status.inventory[i].bound > 0) ||
-			(type && sd->status.inventory[i].bound == type)
-		)) {
+	for( i = 0; i < MAX_INVENTORY; i ++ ) {
+		if( sd->status.inventory[i].nameid > 0 && (
+			(!type && sd->status.inventory[i].bound) || (type && sd->status.inventory[i].bound == type)
+			))
+		{
 			pc_setreg(sd,reference_uid(add_str("@bound_items"), k),sd->status.inventory[i].nameid);
 			k++;
 			j += sd->status.inventory[i].amount;
@@ -18718,7 +18729,7 @@ BUILDIN_FUNC(bonus_script) {
 	if (sd->bonus_script[i].icon != SI_BLANK) //Gives status icon if exist
 		clif_status_change(&sd->bl,sd->bonus_script[i].icon,1,dur,1,0,0);
 
-	status_calc_pc(sd,false);
+	status_calc_pc(sd,SCO_NONE);
 	return SCRIPT_CMD_SUCCESS;
 }
 

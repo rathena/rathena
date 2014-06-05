@@ -237,6 +237,8 @@ int char_rename_char_sql(struct char_session_data *sd, int char_id);
 int char_divorce_char_sql(int partner_id1, int partner_id2);
 int char_memitemdata_to_sql(const struct item items[], int max, int id, int tableswitch);
 
+void disconnect_player(int account_id);
+
 int char_married(int pl1,int pl2);
 int char_child(int parent_id, int child_id);
 int char_family(int pl1,int pl2,int pl3);

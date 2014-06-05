@@ -53,23 +53,21 @@ static int storage_comp_item(const void *_i1, const void *_i2)
  * @param items : list of items to sort
  * @param size : number of item in list
  */
-static void storage_sortitem(struct item* items, unsigned int size)
+void storage_sortitem(struct item* items, unsigned int size)
 {
 	nullpo_retv(items);
 
 	if( battle_config.client_sort_storage )
-	{
 		qsort(items, size, sizeof(struct item), storage_comp_item);
-	}
 }
 
 /**
  * Initiate storage module
  * Called from map.c::do_init()
- * @return 1
  */
-void do_init_storage(void){
-	guild_storage_db=idb_alloc(DB_OPT_RELEASE_DATA);
+void do_init_storage(void)
+{
+	guild_storage_db = idb_alloc(DB_OPT_RELEASE_DATA);
 }
 
 /**
@@ -182,7 +180,7 @@ static int storage_additem(struct map_session_data* sd, struct item* item_data, 
 		return 1;
 	}
 
-	if( (item_data->bound > 1) && !pc_can_give_bounded_items(sd) ) {
+	if( (item_data->bound > BOUND_ACCOUNT) && !pc_can_give_bounded_items(sd) ) {
 		clif_displaymessage(sd->fd, msg_txt(sd,294));
 		return 1;
 	}
@@ -521,7 +519,7 @@ int guild_storage_additem(struct map_session_data* sd, struct guild_storage* sto
 		return 1;
 	}
 
-	if( (item_data->bound == 1 || item_data->bound > 2) && !pc_can_give_bounded_items(sd) ) {
+	if( (item_data->bound == BOUND_ACCOUNT || item_data->bound > BOUND_GUILD) && !pc_can_give_bounded_items(sd) ) {
 		clif_displaymessage(sd->fd, msg_txt(sd,294));
 		return 1;
 	}

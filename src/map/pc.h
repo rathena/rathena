@@ -149,6 +149,12 @@ enum npc_timeout_type {
 	NPCT_WAIT  = 2,
 };
 
+/// Item Group heal rate struct
+struct s_pc_itemgrouphealrate {
+	uint16 group_id; /// Item Group ID
+	short rate; /// Rate
+};
+
 struct map_session_data {
 	struct block_list bl;
 	struct unit_data ud;
@@ -207,6 +213,7 @@ struct map_session_data {
 		unsigned int prevend : 1;//used to flag wheather you've spent 40sp to open the vending or not.
 		unsigned int warping : 1;//states whether you're in the middle of a warp processing
 		unsigned int permanent_speed : 1; // When 1, speed cannot be changed through status_calc_pc().
+		unsigned int hold_recalc : 1;
 		unsigned int banking : 1; //1 when we using the banking system 0 when closed
 		unsigned int hpmeter_visible : 1;
 		bool disable_atcommand_on_npc; //Prevent to use atcommand while talking with NPC [Kichi]
@@ -322,7 +329,6 @@ struct map_session_data {
 	int ignore_mdef_by_race[RC_MAX];
 	int ignore_mdef_by_class[CLASS_MAX];
 	int ignore_def_by_race[RC_MAX];
-	int itemgrouphealrate[MAX_ITEMGROUP];
 	short sp_gain_race[RC_MAX];
 	short sp_gain_race_attack[RC_MAX];
 	short hp_gain_race_attack[RC_MAX];
@@ -520,7 +526,6 @@ struct map_session_data {
 	const char* debug_func;
 
 	unsigned int bg_id;
-	unsigned short user_font;
 
 #ifdef SECURE_NPCTIMEOUT
 	/**
@@ -558,12 +563,14 @@ struct map_session_data {
 	unsigned char channel_count;
 	struct Channel *gcbind;
 	bool stealth;
-	unsigned char fontcolor; /* debug-only */
+	unsigned char fontcolor;
 	unsigned int channel_tick;
 
 	/* [Ind] */
 	struct sc_display_entry **sc_display;
 	unsigned char sc_display_count;
+
+	unsigned char delayed_damage; //[Ind]
 
 	// temporary debugging of bug #3504
 	const char* delunit_prevfile;
@@ -592,13 +599,18 @@ struct map_session_data {
 		int16 icon;
 		int tid;
 	} bonus_script[MAX_PC_BONUS_SCRIPT];
+	
+	struct s_pc_itemgrouphealrate **itemgrouphealrate; /// List of Item Group Heal rate bonus
+	uint8 itemgrouphealrate_count; /// Number of rate bonuses
 
 	/* Expiration Timer ID */
 	int expiration_tid;
 	time_t expiration_time;
 };
 
-struct eri *pc_sc_display_ers;
+struct eri *pc_sc_display_ers; /// Player's SC display table
+struct eri *pc_itemgrouphealrate_ers; /// Player's Item Group Heal Rate table
+
 /* Global Expiration Timer ID */
 extern int pc_expiration_tid;
 
@@ -649,32 +661,6 @@ enum ammo_type {
 	A_THROWWEAPON	//9
 };
 
-//Equip position constants
-enum equip_pos {
-	EQP_HEAD_LOW           = 0x000001,
-	EQP_HEAD_MID           = 0x000200, // 512
-	EQP_HEAD_TOP           = 0x000100, // 256
-	EQP_HAND_R             = 0x000002, // 2
-	EQP_HAND_L             = 0x000020, // 32
-	EQP_ARMOR              = 0x000010, // 16
-	EQP_SHOES              = 0x000040, // 64
-	EQP_GARMENT            = 0x000004, // 4
-	EQP_ACC_L              = 0x000008, // 8
-	EQP_ACC_R              = 0x000080, // 128
-	EQP_COSTUME_HEAD_TOP   = 0x000400, // 1024
-	EQP_COSTUME_HEAD_MID   = 0x000800, // 2048
-	EQP_COSTUME_HEAD_LOW   = 0x001000, // 4096
-	EQP_COSTUME_GARMENT    = 0x002000, // 8192
-	//EQP_COSTUME_FLOOR    = 0x004000, // 16384
-	EQP_AMMO               = 0x008000, // 32768
-	EQP_SHADOW_ARMOR       = 0x010000, // 65536
-	EQP_SHADOW_WEAPON      = 0x020000, // 131072
-	EQP_SHADOW_SHIELD      = 0x040000, // 262144
-	EQP_SHADOW_SHOES       = 0x080000, // 524288
-	EQP_SHADOW_ACC_R       = 0x100000, // 1048576
-	EQP_SHADOW_ACC_L       = 0x200000, // 2097152
-};
-
 struct {
 	unsigned int base_hp[MAX_LEVEL], base_sp[MAX_LEVEL]; //Storage for the first calculation with hp/sp factor and multiplicator
 	int hp_factor, hp_multiplicator, sp_factor;
@@ -698,8 +684,10 @@ struct {
 #define EQP_HELM (EQP_HEAD_LOW|EQP_HEAD_MID|EQP_HEAD_TOP)
 #define EQP_ACC (EQP_ACC_L|EQP_ACC_R)
 #define EQP_COSTUME (EQP_COSTUME_HEAD_TOP|EQP_COSTUME_HEAD_MID|EQP_COSTUME_HEAD_LOW|EQP_COSTUME_GARMENT)
+#define EQP_COSTUME_HELM (EQP_COSTUME_HEAD_TOP|EQP_COSTUME_HEAD_MID|EQP_COSTUME_HEAD_LOW)
 #define EQP_SHADOW_GEAR (EQP_SHADOW_ARMOR|EQP_SHADOW_WEAPON|EQP_SHADOW_SHIELD|EQP_SHADOW_SHOES|EQP_SHADOW_ACC_R|EQP_SHADOW_ACC_L)
 #define EQP_SHADOW_ACC (EQP_SHADOW_ACC_R|EQP_SHADOW_ACC_L)
+#define EQP_SHADOW_ARMS (EQP_SHADOW_WEAPON|EQP_SHADOW_SHIELD)
 
 /// Equip positions that use a visible sprite
 #if PACKETVER < 20110111
@@ -839,11 +827,12 @@ int pc_isequip(struct map_session_data *sd,int n);
 int pc_equippoint(struct map_session_data *sd,int n);
 int pc_setinventorydata(struct map_session_data *sd);
 
-int pc_get_skillcooldown(struct map_session_data *sd, int id, int lv);
+int pc_get_skillcooldown(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 int pc_checkskill(struct map_session_data *sd,uint16 skill_id);
 short pc_checkequip(struct map_session_data *sd,int pos);
 bool pc_checkequip2(struct map_session_data *sd,int nameid,int min, int max);
 
+void pc_scdata_received(struct map_session_data *sd);
 int pc_expiration_timer(int tid, unsigned int tick, int id, intptr_t data);
 int pc_global_expiration_timer(int tid, unsigned tick, int id, intptr_t data);
 void pc_expire_check(struct map_session_data *sd);
@@ -862,14 +851,14 @@ int pc_memo(struct map_session_data* sd, int pos);
 
 int pc_checkadditem(struct map_session_data*,int,int);
 int pc_inventoryblank(struct map_session_data*);
-int pc_search_inventory(struct map_session_data *sd,int item_id);
+short pc_search_inventory(struct map_session_data *sd, uint16 nameid);
 int pc_payzeny(struct map_session_data*,int, enum e_log_pick_type type, struct map_session_data*);
 char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_pick_type log_type);
 int pc_getzeny(struct map_session_data*,int, enum e_log_pick_type, struct map_session_data*);
 int pc_delitem(struct map_session_data *sd,int n,int amount,int type, short reason, e_log_pick_type log_type);
 
 //Bound items
-int pc_bound_chk(TBL_PC *sd,int type,int *idxlist);
+int pc_bound_chk(TBL_PC *sd,enum bound_type type,int *idxlist);
 
 // Special Shop System
 int pc_paycash( struct map_session_data *sd, int price, int points, e_log_pick_type type );
@@ -1068,6 +1057,7 @@ int map_night_timer(int tid, unsigned int tick, int id, intptr_t data); // by [y
 void pc_inventory_rentals(struct map_session_data *sd);
 int pc_inventory_rental_clear(struct map_session_data *sd);
 void pc_inventory_rental_add(struct map_session_data *sd, int seconds);
+void pc_rental_expire(struct map_session_data *sd, int i);
 
 int pc_read_motd(void); // [Valaris]
 int pc_disguise(struct map_session_data *sd, int class_);
@@ -1101,6 +1091,10 @@ void pc_bonus_script_remove(struct map_session_data *sd, uint8 i);
 void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag);
 
 void pc_cell_basilica(struct map_session_data *sd);
+
+void pc_itemgrouphealrate_clear(struct map_session_data *sd);
+short pc_get_itemgroup_bonus(struct map_session_data* sd, uint16 nameid);
+short pc_get_itemgroup_bonus_group(struct map_session_data* sd, uint16 group_id);
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_class, int type);
