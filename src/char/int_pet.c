@@ -32,7 +32,7 @@ int inter_pet_tosql(int pet_id, struct s_pet* p)
 		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` "
 			"(`class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incuvate`) "
 			"VALUES ('%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
-			pet_db, p->class_, esc_name, p->account_id, p->char_id, p->level, p->egg_id,
+			schema_config.pet_db, p->class_, esc_name, p->account_id, p->char_id, p->level, p->egg_id,
 			p->equip, p->intimate, p->hungry, p->rename_flag, p->incuvate) )
 		{
 			Sql_ShowDebug(sql_handle);
@@ -43,7 +43,7 @@ int inter_pet_tosql(int pet_id, struct s_pet* p)
 	else
 	{// Update pet.
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `class`='%d',`name`='%s',`account_id`='%d',`char_id`='%d',`level`='%d',`egg_id`='%d',`equip`='%d',`intimate`='%d',`hungry`='%d',`rename_flag`='%d',`incuvate`='%d' WHERE `pet_id`='%d'",
-			pet_db, p->class_, esc_name, p->account_id, p->char_id, p->level, p->egg_id,
+			schema_config.pet_db, p->class_, esc_name, p->account_id, p->char_id, p->level, p->egg_id,
 			p->equip, p->intimate, p->hungry, p->rename_flag, p->incuvate, p->pet_id) )
 		{
 			Sql_ShowDebug(sql_handle);
@@ -51,7 +51,7 @@ int inter_pet_tosql(int pet_id, struct s_pet* p)
 		}
 	}
 
-	if (save_log)
+	if (charserv_config.save_log)
 		ShowInfo("Pet saved %d - %s.\n", pet_id, p->name);
 	return 1;
 }
@@ -68,7 +68,7 @@ int inter_pet_fromsql(int pet_id, struct s_pet* p)
 
 	//`pet` (`pet_id`, `class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incuvate`)
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `pet_id`, `class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incuvate` FROM `%s` WHERE `pet_id`='%d'", pet_db, pet_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `pet_id`, `class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incuvate` FROM `%s` WHERE `pet_id`='%d'", schema_config.pet_db, pet_id) )
 	{
 		Sql_ShowDebug(sql_handle);
 		return 0;
@@ -94,7 +94,7 @@ int inter_pet_fromsql(int pet_id, struct s_pet* p)
 		p->hungry = cap_value(p->hungry, 0, 100);
 		p->intimate = cap_value(p->intimate, 0, 1000);
 
-		if( save_log )
+		if( charserv_config.save_log )
 			ShowInfo("Pet loaded (%d - %s).\n", pet_id, p->name);
 	}
 	return 0;
@@ -114,7 +114,7 @@ void inter_pet_sql_final(void){
 int inter_pet_delete(int pet_id){
 	ShowInfo("delete pet request: %d...\n",pet_id);
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `pet_id`='%d'", pet_db, pet_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `pet_id`='%d'", schema_config.pet_db, pet_id) )
 		Sql_ShowDebug(sql_handle);
 	return 0;
 }

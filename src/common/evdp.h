@@ -136,7 +136,7 @@ bool evdp_outgoingconnection_established(int32 fd, EVDP_DATA *ep);
  *	the connection must be already added (as client or listener)
  * 
  *
- * @return sucess indicator
+ * @return success indicator
  */
 bool evdp_writable_add(int32 fd, EVDP_DATA *ep);
 

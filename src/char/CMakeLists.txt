@@ -12,6 +12,10 @@ if( BUILD_SQL_SERVERS )
 message( STATUS "Creating target char-server_sql" )
 set( SQL_CHAR_HEADERS
 	"${CMAKE_CURRENT_SOURCE_DIR}/char.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/char_clif.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/char_cnslif.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/char_logif.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/char_mapif.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/int_auction.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/int_elemental.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/int_guild.h"
@@ -26,6 +30,10 @@ set( SQL_CHAR_HEADERS
 	)
 set( SQL_CHAR_SOURCES
 	"${CMAKE_CURRENT_SOURCE_DIR}/char.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/char_clif.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/char_cnslif.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/char_logif.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/char_mapif.c"
 	"${CMAKE_CURRENT_SOURCE_DIR}/int_auction.c"
 	"${CMAKE_CURRENT_SOURCE_DIR}/int_elemental.c"
 	"${CMAKE_CURRENT_SOURCE_DIR}/int_guild.c"
