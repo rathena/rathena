@@ -1167,7 +1167,6 @@ void initChangeTables(void)
 
 	/* StatusChangeState (SCS_) NOMOVE */
 	StatusChangeStateTable[SC_ANKLE]				|= SCS_NOMOVE;
-	StatusChangeStateTable[SC_SPIDERWEB]			|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_AUTOCOUNTER]			|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_TRICKDEAD]			|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_BLADESTOP]			|= SCS_NOMOVE;
@@ -1943,23 +1942,24 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, uin
 
 	switch( target->type ) {
 		case BL_PC: {
-				struct map_session_data *sd = (TBL_PC*) target;
+				struct map_session_data *tsd = (TBL_PC*)target;
 				bool is_boss = (status->mode&MD_BOSS);
 				bool is_detect = ((status->mode&MD_DETECTOR)?true:false);// god-knows-why gcc doesn't shut up until this happens
+
 				if (pc_isinvisible(sd))
 					return 0;
-				if ((tsc->option&hide_flag) && !(status->mode&MD_BOSS) &&
-					(((TBL_PC*)target)->special_state.perfect_hiding || !(status->mode&MD_DETECTOR)))
-					return 0;
-				if (tsc->data[SC_CLOAKINGEXCEED] && !is_boss &&
-					(((TBL_PC*)target)->special_state.perfect_hiding || !is_detect) )
-					return 0;
-				if( tsc->data[SC__FEINTBOMB] && (is_boss || is_detect))
-					return 0;
-				if( tsc->data[SC_CAMOUFLAGE] && !(is_boss || is_detect) && !skill_id )
-					return 0;
-				if( tsc->data[SC_STEALTHFIELD] && !(is_boss || is_detect) )
-					return 0;
+				if (tsc) {
+					if ((tsc->option&hide_flag) && !(status->mode&MD_BOSS) && (tsd->special_state.perfect_hiding || !is_detect))
+						return 0;
+					if (tsc->data[SC_CLOAKINGEXCEED] && !(status->mode&MD_BOSS) && (tsd->special_state.perfect_hiding || is_detect))
+						return 0;
+					if (tsc->data[SC__FEINTBOMB] && (is_boss || is_detect))
+						return 0;
+					if (tsc->data[SC_CAMOUFLAGE] && !(is_boss || is_detect) && !skill_id)
+						return 0;
+					if (tsc->data[SC_STEALTHFIELD] && !(is_boss || is_detect))
+						return 0;
+				}
 			}
 			break;
 		case BL_ITEM: // Allow targetting of items to pick'em up (or in the case of mobs, to loot them).
@@ -2015,18 +2015,21 @@ int status_check_visibility(struct block_list *src, struct block_list *target)
 		return 1;
 
 	switch (target->type) {	// Check for chase-walk/hiding/cloaking opponents.
-		case BL_PC:
-			if( ( tsc && (tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK) || tsc->data[SC_STEALTHFIELD] || tsc->data[SC_CAMOUFLAGE])) && !(status->mode&MD_BOSS) &&
-				( ((TBL_PC*)target)->special_state.perfect_hiding || !(status->mode&MD_DETECTOR) ) )
-				return 0;
-			if ( tsc && tsc->data[SC_CLOAKINGEXCEED] && !(status->mode&MD_BOSS) &&
-				( ((TBL_PC*)target)->special_state.perfect_hiding || (status->mode&MD_DETECTOR) ) )
-				return 0;
-			if ( tsc && tsc->data[SC__FEINTBOMB] && !(status->mode&(MD_BOSS|MD_DETECTOR) ) )
-				return 0;
+		case BL_PC: {
+				struct map_session_data *tsd = (TBL_PC*)target;
+				bool is_boss = (status->mode&MD_BOSS);
+				bool is_detect = ((status->mode&MD_DETECTOR)?true:false);// god-knows-why gcc doesn't shut up until this happens
+
+				if ((tsc && (tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK) || tsc->data[SC_STEALTHFIELD] || tsc->data[SC_CAMOUFLAGE])) && !is_boss && (tsd->special_state.perfect_hiding || !is_detect))
+					return 0;
+				if (tsc && tsc->data[SC_CLOAKINGEXCEED] && !is_boss && (tsd->special_state.perfect_hiding || is_detect))
+					return 0;
+				if (tsc && tsc->data[SC__FEINTBOMB] && !(is_boss || is_detect))
+					return 0;
+			}
 			break;
 		default:
-			if( tsc && (tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK) || tsc->data[SC_STEALTHFIELD] || tsc->data[SC_CAMOUFLAGE]) && !(status->mode&(MD_BOSS|MD_DETECTOR)) )
+			if (tsc && (tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK) || tsc->data[SC_STEALTHFIELD] || tsc->data[SC_CAMOUFLAGE]) && !(is_boss || is_detect))
 				return 0;
 	}
 
@@ -6295,7 +6298,7 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 	if( sc->data[SC__BODYPAINT] )
 		aspd_rate +=  50 * sc->data[SC__BODYPAINT]->val1;
 	if( sc->data[SC__INVISIBILITY] )
-		aspd_rate += sc->data[SC__INVISIBILITY]->val2 * 10 ;
+		aspd_rate += sc->data[SC__INVISIBILITY]->val2 * 10;
 	if( sc->data[SC__GROOMY] )
 		aspd_rate += sc->data[SC__GROOMY]->val2 * 10;
 	if( sc->data[SC_SWINGDANCE] )
@@ -6437,6 +6440,8 @@ static unsigned char status_calc_element_lv(struct block_list *bl, struct status
 	if(sc->data[SC_ELEMENTALCHANGE])
 		return sc->data[SC_ELEMENTALCHANGE]->val1;
 	if(sc->data[SC_SHAPESHIFT])
+		return 1;
+	if(sc->data[SC__INVISIBILITY])
 		return 1;
 
 	return (unsigned char)cap_value(lv,1,4);
@@ -8235,6 +8240,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_PYREXIA:
 			case SC_OBLIVIONCURSE:
 			case SC_LEECHESEND:
+			case SC__INVISIBILITY:
 			case SC__ENERVATION:
 			case SC__GROOMY:
 			case SC__IGNORANCE:
@@ -9937,6 +9943,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_CLOSECONFINE2:
 		case SC_TINDER_BREAKER:
 		case SC_TINDER_BREAKER2:
+		case SC_SPIDERWEB:
+		case SC_ELECTRICSHOCKER:
 		case SC_BITE:
 		case SC_THORNSTRAP:
 		case SC__MANHOLE:
@@ -9952,19 +9960,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			unit_stop_walking(bl,1);
 		break;
 		case SC_ANKLE:
-		case SC_SPIDERWEB:
-		case SC_ELECTRICSHOCKER:
-		case SC_CURSEDCIRCLE_TARGET:
-			{
-				int knockback_immune = (sd ? !sd->special_state.no_knockback : !(status->mode&(MD_KNOCKBACK_IMMUNE|MD_BOSS)));
-
-				if (knockback_immune) {
-					if (!battle_config.skill_trap_type && map_flag_gvg2(bl->m))
-						break;
-					else
-						unit_stop_walking(bl,1);
-				}
-			}
+			if( battle_config.skill_trap_type || !map_flag_gvg(bl->m) )
+				unit_stop_walking(bl,1);
 		break;
 		case SC_HIDING:
 		case SC_CLOAKING:
@@ -12091,8 +12088,7 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 		break;
 	case SC_RUWACH: // Reveal hidden target and deal little dammages if enemy
 		if (tsc && (tsc->data[SC_HIDING] || tsc->data[SC_CLOAKING] ||
-				tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_CLOAKINGEXCEED] ||
-					tsc->data[SC__INVISIBILITY])) { // this sc should hit only
+				tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_CLOAKINGEXCEED])) {
 			status_change_end(bl, SC_HIDING, INVALID_TIMER);
 			status_change_end(bl, SC_CLOAKING, INVALID_TIMER);
 			status_change_end(bl, SC_CAMOUFLAGE, INVALID_TIMER);
