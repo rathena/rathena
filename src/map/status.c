@@ -1946,7 +1946,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, uin
 				bool is_boss = (status->mode&MD_BOSS);
 				bool is_detect = ((status->mode&MD_DETECTOR)?true:false);// god-knows-why gcc doesn't shut up until this happens
 
-				if (pc_isinvisible(sd))
+				if (pc_isinvisible(tsd))
 					return 0;
 				if (tsc) {
 					if ((tsc->option&hide_flag) && !(status->mode&MD_BOSS) && (tsd->special_state.perfect_hiding || !is_detect))
@@ -2017,20 +2017,18 @@ int status_check_visibility(struct block_list *src, struct block_list *target)
 	switch (target->type) {	// Check for chase-walk/hiding/cloaking opponents.
 		case BL_PC: {
 				struct map_session_data *tsd = (TBL_PC*)target;
-				bool is_boss = (status->mode&MD_BOSS);
-				bool is_detect = ((status->mode&MD_DETECTOR)?true:false);// god-knows-why gcc doesn't shut up until this happens
 
-				if ((tsc && (tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK) || tsc->data[SC_STEALTHFIELD] || tsc->data[SC_CAMOUFLAGE])) && !is_boss && (tsd->special_state.perfect_hiding || !is_detect))
+				if (((tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)) || tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_STEALTHFIELD]) && !(status->mode&MD_BOSS) && (tsd->special_state.perfect_hiding || !(status->mode&MD_DETECTOR)))
 					return 0;
-				if (tsc && tsc->data[SC_CLOAKINGEXCEED] && !is_boss && (tsd->special_state.perfect_hiding || is_detect))
+				if (tsc->data[SC_CLOAKINGEXCEED] && !(status->mode&MD_BOSS) && (tsd->special_state.perfect_hiding || (status->mode&MD_DETECTOR)))
 					return 0;
-				if (tsc && tsc->data[SC__FEINTBOMB] && !(is_boss || is_detect))
+				if (tsc && tsc->data[SC__FEINTBOMB] && !(status->mode&MD_BOSS|MD_DETECTOR))
 					return 0;
 			}
 			break;
 		default:
-			if (tsc && (tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK) || tsc->data[SC_STEALTHFIELD] || tsc->data[SC_CAMOUFLAGE]) && !(is_boss || is_detect))
-				return 0;
+				if (((tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)) || tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_STEALTHFIELD]) && !(status->mode&(MD_BOSS|MD_DETECTOR)))
+					return 0;
 	}
 
 	return 1;
