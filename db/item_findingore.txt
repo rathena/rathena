@@ -3,23 +3,23 @@
 // Structure of Database:
 // GroupID,ItemID,Rate
 
-6,714,3	//Emperium
-6,756,20	//Rough Oridecon
-6,757,20	//Rough Elunium
-6,969,2	//Gold
-6,984,10	//Oridecon
-6,985,10	//Elunium
-6,990,30	//Red Blood
-6,991,30	//Crystal Blue
-6,992,30	//Wind of Verdure
-6,993,30	//Green Live
-6,994,15	//Flame Heart
-6,995,15	//Mystic Frozen
-6,996,15	//Rough Wind
-6,997,15	//Great Nature
-6,998,80	//Iron
-6,999,50	//Steel
-6,1002,100	//Iron Ore
-6,1003,60	//Coal
-6,1010,95	//Phracon
-6,1011,55	//Emveretarcon
+IG_FingingOre,714,3		//Emperium
+IG_FingingOre,756,20	//Rough Oridecon
+IG_FingingOre,757,20	//Rough Elunium
+IG_FingingOre,969,2		//Gold
+IG_FingingOre,984,10	//Oridecon
+IG_FingingOre,985,10	//Elunium
+IG_FingingOre,990,30	//Red Blood
+IG_FingingOre,991,30	//Crystal Blue
+IG_FingingOre,992,30	//Wind of Verdure
+IG_FingingOre,993,30	//Green Live
+IG_FingingOre,994,15	//Flame Heart
+IG_FingingOre,995,15	//Mystic Frozen
+IG_FingingOre,996,15	//Rough Wind
+IG_FingingOre,997,15	//Great Nature
+IG_FingingOre,998,80	//Iron
+IG_FingingOre,999,50	//Steel
+IG_FingingOre,1002,100	//Iron Ore
+IG_FingingOre,1003,60	//Coal
+IG_FingingOre,1010,95	//Phracon
+IG_FingingOre,1011,55	//Emveretarcon
