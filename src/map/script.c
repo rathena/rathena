@@ -10325,8 +10325,21 @@ BUILDIN_FUNC(sc_end)
 		if (!sce)
 			return 0;
 
-		if (status_sc_get_flag((sc_type)type)&SCF_PERMANENT)
-			return 0;
+		//if (status_sc_get_flag((sc_type)type)&SCF_PERMANENT)
+		//	return 0;
+
+
+		switch (type)
+		{
+			case SC_WEIGHT50:
+			case SC_WEIGHT90:
+			case SC_NOCHAT:
+			case SC_PUSH_CART:
+				return 0;
+
+			default:
+				break;
+		}
 
 		//This should help status_change_end force disabling the SC in case it has no limit.
 		sce->val1 = sce->val2 = sce->val3 = sce->val4 = 0;
