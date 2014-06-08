@@ -73,6 +73,7 @@
 #define MAX_GUILDLEVEL 50 ///Max Guild level
 #define MAX_GUARDIANS 8	///Local max per castle. If this value is increased, need to add more fields on MySQL `guild_castle` table [Skotlex]
 #define MAX_QUEST_OBJECTIVES 3 ///Max quest objectives for a quest
+#define MAX_PC_BONUS_SCRIPT 20
 
 // for produce
 #define MIN_ATTRIBUTE 0
@@ -582,14 +583,14 @@ struct fame_list {
 	char name[NAME_LENGTH];
 };
 
-enum { //Change Guild Infos
+enum e_guild_info { //Change Guild Infos
 	GBI_EXP	=1,		// Guild Experience (EXP)
 	GBI_GUILDLV,		// Guild level
 	GBI_SKILLPOINT,		// Guild skillpoints
 	GBI_SKILLLV,		// Guild skill_lv ?? seem unused
 };
 
-enum { //Change Member Infos
+enum e_guild_member_info { //Change Member Infos
 	GMI_POSITION	=0,
 	GMI_EXP,
 	GMI_HAIR,
@@ -622,7 +623,7 @@ enum e_guild_skill {
 
 
 //These mark the ID of the jobs, as expected by the client. [Skotlex]
-enum {
+enum e_job {
 	JOB_NOVICE,
 	JOB_SWORDMAN,
 	JOB_MAGE,
@@ -780,7 +781,7 @@ enum {
 	JOB_MAX,
 };
 
-enum {
+enum e_sex {
 	SEX_FEMALE = 0,
 	SEX_MALE,
 	SEX_SERVER
@@ -799,6 +800,13 @@ enum bound_type {
 // sanity checks...
 #if MAX_ZENY > INT_MAX
 #error MAX_ZENY is too big
+#endif
+
+#if (MIN_CHARS + MAX_CHAR_VIP + MAX_CHAR_BILLING) > MAX_CHARS
+#error Config of MAX_CHARS is invalid
+#endif
+#if MIN_STORAGE > MAX_STORAGE
+#error Config of MIN_STORAGE is invalid
 #endif
 
 #endif /* _MMO_H_ */

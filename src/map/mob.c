@@ -2590,9 +2590,11 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		if( sd ) {
 			if( sd->mission_mobid == md->mob_id ||
 				( battle_config.taekwon_mission_mobname == 1 && mob_is_goblin(md, sd->mission_mobid) ) ||
-				( battle_config.taekwon_mission_mobname == 2 && mob_is_samename(md, sd->mission_mobid) ) ) { //TK_MISSION [Skotlex]
-				if( ++sd->mission_count >= 100 && (temp = mob_get_random_id(0, 0xE, sd->status.base_level)) ) {
-					pc_addfame(sd, 1);
+				( battle_config.taekwon_mission_mobname == 2 && mob_is_samename(md, sd->mission_mobid) ) )
+			{ //TK_MISSION [Skotlex]
+				if( ++sd->mission_count >= 100 && (temp = mob_get_random_id(0, 0xE, sd->status.base_level)) )
+				{
+					pc_addfame(sd, battle_config.fame_taekwon_mission);
 					sd->mission_mobid = temp;
 					pc_setglobalreg(sd,"TK_MISSION_ID", temp);
 					sd->mission_count = 0;

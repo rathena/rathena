@@ -579,7 +579,7 @@ int chlogif_parse_vipack(int fd) {
 		uint8 isgm = RFIFOB(fd,15); //isgm
 		int mapfd = RFIFOL(fd,16); //link to mapserv for ack
 		RFIFOSKIP(fd,20);
-		mapif_vipack(mapfd,aid,vip_time,isvip,isgm,groupid);
+		chmapif_vipack(mapfd,aid,vip_time,isvip,isgm,groupid);
 	}
 #endif
 	return 1;

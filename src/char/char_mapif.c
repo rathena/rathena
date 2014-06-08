@@ -1,5 +1,3 @@
-
-
 /**
  * @file char_mapif.c
  * Module purpose is to handle incoming and outgoing requests with map-server.
@@ -1274,7 +1272,7 @@ int chmapif_bonus_script_get(int fd) {
 			WFIFOHEAD(fd,10+50*sizeof(struct bonus_script_data));
 			WFIFOW(fd,0) = 0x2b2f;
 			WFIFOL(fd,4) = cid;
-			for (count = 0; count < 20 && SQL_SUCCESS == Sql_NextRow(sql_handle); ++count) {
+			for (count = 0; count < MAX_PC_BONUS_SCRIPT && SQL_SUCCESS == Sql_NextRow(sql_handle); ++count) {
 				Sql_GetData(sql_handle,0,&data,NULL); memcpy(bsdata.script,data,strlen(data)+1);
 				Sql_GetData(sql_handle,1,&data,NULL); bsdata.tick = atoi(data);
 				Sql_GetData(sql_handle,2,&data,NULL); bsdata.flag = atoi(data);
@@ -1282,7 +1280,7 @@ int chmapif_bonus_script_get(int fd) {
 				Sql_GetData(sql_handle,4,&data,NULL); bsdata.icon = atoi(data);
 				memcpy(WFIFOP(fd,10+count*sizeof(struct bonus_script_data)),&bsdata,sizeof(struct bonus_script_data));
 			}
-			if (count >= 20)
+			if (count >= MAX_PC_BONUS_SCRIPT)
 				ShowWarning("Too many bonus_script for %d, some of them were not loaded.\n",cid);
 			if (count > 0) {
 				WFIFOW(fd,2) = 10 + count*sizeof(struct bonus_script_data);

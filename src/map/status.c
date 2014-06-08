@@ -2575,10 +2575,8 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 			int8 i;
 
 			bonus += sd->bonus.hp;
-			if ((i=pc_checkskill(sd,CR_TRUST)) > 0)
+			if ((i = pc_checkskill(sd,CR_TRUST)) > 0)
 				bonus += i * 200;
-			if ((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && pc_famerank(sd->status.char_id, MAPID_TAEKWON))
-				bonus *= 3; // Triple max HP for top ranking Taekwons over level 90.
 			if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.base_level >= 99)
 				bonus += 2000; // Supernovice lvl99 hp bonus.
 		}
@@ -2608,7 +2606,7 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 			bonus -= 100; //Default hprate is 100, so it should be add 0%
 
 			//+200% for top ranking Taekwons over level 90.
-			if ((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && pc_famerank(sd->status.char_id,MAPID_TAEKWON))
+			if ((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= battle_config.taekwon_ranker_min_lv && pc_famerank(sd->status.char_id,MAPID_TAEKWON))
 				bonus += 200;
 		}
 
@@ -2719,7 +2717,7 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += 2 * i;
 
 			//+200% for top ranking Taekwons over level 90.
-			if ((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && pc_famerank(sd->status.char_id, MAPID_TAEKWON))
+			if ((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= battle_config.taekwon_ranker_min_lv && pc_famerank(sd->status.char_id, MAPID_TAEKWON))
 				bonus += 200;
 		}
 

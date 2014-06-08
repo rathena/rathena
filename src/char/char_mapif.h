@@ -7,7 +7,6 @@
  * @author rAthena Dev Team
  */
 
-
 #ifndef CHAR_MAPIF_H
 #define	CHAR_MAPIF_H
 

@@ -13914,7 +13914,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				status_change_end(&sd->bl, SC_COMBO, INVALID_TIMER);
 				return false;
 			}
-			if(sc->data[SC_COMBO]->val1 != skill_id && !( sd && sd->status.base_level >= 90 && pc_famerank(sd->status.char_id, MAPID_TAEKWON) )) {	//Cancel combo wait.
+			if(sc->data[SC_COMBO]->val1 != skill_id && !( sd && sd->status.base_level >= battle_config.taekwon_ranker_min_lv && pc_famerank(sd->status.char_id, MAPID_TAEKWON) )) {	//Cancel combo wait.
 				unit_cancel_combo(&sd->bl);
 				return false;
 			}
@@ -15717,13 +15717,13 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 				{ // Fame point system [DracoRPG]
 					switch(ditem->wlv){
 						case 1:
-							pc_addfame(sd,1); // Success to refine to +10 a lv1 weapon you forged = +1 fame point
+							pc_addfame(sd, battle_config.fame_refine_lv1); // Success to refine to +10 a lv1 weapon you forged = +1 fame point
 							break;
 						case 2:
-							pc_addfame(sd,25); // Success to refine to +10 a lv2 weapon you forged = +25 fame point
+							pc_addfame(sd, battle_config.fame_refine_lv2); // Success to refine to +10 a lv2 weapon you forged = +25 fame point
 							break;
 						case 3:
-							pc_addfame(sd,1000); // Success to refine to +10 a lv3 weapon you forged = +1000 fame point
+							pc_addfame(sd, battle_config.fame_refine_lv3); // Success to refine to +10 a lv3 weapon you forged = +1000 fame point
 							break;
 					}
 				}
@@ -17926,7 +17926,7 @@ int skill_produce_mix (struct map_session_data *sd, uint16 skill_id, int nameid,
 			clif_produceeffect(sd,0,nameid);
 			clif_misceffect(&sd->bl,3);
 			if(itemdb_wlv(nameid) >= 3 && ((ele? 1 : 0) + sc) >= 3) // Fame point system [DracoRPG]
-				pc_addfame(sd,10); // Success to forge a lv3 weapon with 3 additional ingredients = +10 fame point
+				pc_addfame(sd, battle_config.fame_forge); // Success to forge a lv3 weapon with 3 additional ingredients = +10 fame point
 		} else {
 			int fame = 0;
 			tmp_item.amount = 0;
@@ -17948,16 +17948,16 @@ int skill_produce_mix (struct map_session_data *sd, uint16 skill_id, int nameid,
 					//Add fame as needed.
 					switch(++sd->potion_success_counter) {
 						case 3:
-							fame+=1; // Success to prepare 3 Condensed Potions in a row
+							fame += battle_config.fame_pharmacy_3; // Success to prepare 3 Condensed Potions in a row
 							break;
 						case 5:
-							fame+=3; // Success to prepare 5 Condensed Potions in a row
+							fame += battle_config.fame_pharmacy_5; // Success to prepare 5 Condensed Potions in a row
 							break;
 						case 7:
-							fame+=10; // Success to prepare 7 Condensed Potions in a row
+							fame += battle_config.fame_pharmacy_7; // Success to prepare 7 Condensed Potions in a row
 							break;
 						case 10:
-							fame+=50; // Success to prepare 10 Condensed Potions in a row
+							fame += battle_config.fame_pharmacy_10; // Success to prepare 10 Condensed Potions in a row
 							sd->potion_success_counter = 0;
 							break;
 					}
