@@ -9,6 +9,8 @@
 #include "../common/socket.h"
 #include "../common/timer.h"
 #include "char.h"
+#include "char_logif.h"
+#include "char_mapif.h"
 #include "inter.h"
 #include "int_party.h"
 #include "int_guild.h"
@@ -389,7 +391,7 @@ void mapif_parse_accinfo(int fd) {
 	account_id = atoi(query);
 
 	if (account_id < START_ACCOUNT_NUM) {	// is string
-		if ( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`name`,`class`,`base_level`,`job_level`,`online` FROM `%s` WHERE `name` LIKE '%s' LIMIT 10", char_db, query_esq)
+		if ( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`name`,`class`,`base_level`,`job_level`,`online` FROM `%s` WHERE `name` LIKE '%s' LIMIT 10", schema_config.char_db, query_esq)
 				|| Sql_NumRows(sql_handle) == 0 ) {
 			if( Sql_NumRows(sql_handle) == 0 ) {
 				inter_to_fd(fd, u_fd, aid, "No matches were found for your criteria, '%s'",query);
@@ -523,12 +525,12 @@ int inter_accreg_tosql(int account_id, int char_id, struct accreg* reg, int type
 	switch( type )
 	{
 	case 3: //Char Reg
-		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `type`=3 AND `char_id`='%d'", reg_db, char_id) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `type`=3 AND `char_id`='%d'", schema_config.reg_db, char_id) )
 			Sql_ShowDebug(sql_handle);
 		account_id = 0;
 		break;
 	case 2: //Account Reg
-		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `type`=2 AND `account_id`='%d'", reg_db, account_id) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `type`=2 AND `account_id`='%d'", schema_config.reg_db, account_id) )
 			Sql_ShowDebug(sql_handle);
 		char_id = 0;
 		break;
@@ -544,7 +546,7 @@ int inter_accreg_tosql(int account_id, int char_id, struct accreg* reg, int type
 		return 0;
 
 	StringBuf_Init(&buf);
-	StringBuf_Printf(&buf, "INSERT INTO `%s` (`type`,`account_id`,`char_id`,`str`,`value`) VALUES ", reg_db);
+	StringBuf_Printf(&buf, "INSERT INTO `%s` (`type`,`account_id`,`char_id`,`str`,`value`) VALUES ", schema_config.reg_db);
 
 	for( i = 0; i < reg->reg_num; ++i ) {
 		r = &reg->reg[i];
@@ -590,11 +592,11 @@ int inter_accreg_fromsql(int account_id,int char_id, struct accreg *reg, int typ
 	switch( type )
 	{
 	case 3: //char reg
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `str`, `value` FROM `%s` WHERE `type`=3 AND `char_id`='%d'", reg_db, char_id) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `str`, `value` FROM `%s` WHERE `type`=3 AND `char_id`='%d'", schema_config.reg_db, char_id) )
 			Sql_ShowDebug(sql_handle);
 		break;
 	case 2: //account reg
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `str`, `value` FROM `%s` WHERE `type`=2 AND `account_id`='%d'", reg_db, account_id) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `str`, `value` FROM `%s` WHERE `type`=2 AND `account_id`='%d'", schema_config.reg_db, account_id) )
 			Sql_ShowDebug(sql_handle);
 		break;
 	case 1: //account2 reg
@@ -669,7 +671,7 @@ static int inter_config_read(const char* cfgName)
 		else if(!strcmpi(w1,"party_share_level"))
 			party_share_level = (unsigned int)atof(w2);
 		else if(!strcmpi(w1,"log_inter"))
-			log_inter = atoi(w2);
+			charserv_config.log_inter = atoi(w2);
 		else if(!strcmpi(w1,"import"))
 			inter_config_read(w2);
 	}
@@ -692,7 +694,7 @@ int inter_log(char* fmt, ...)
 	va_end(ap);
 
 	Sql_EscapeStringLen(sql_handle, esc_str, str, strnlen(str, sizeof(str)));
-	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`time`, `log`) VALUES (NOW(),  '%s')", interlog_db, esc_str) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`time`, `log`) VALUES (NOW(),  '%s')", schema_config.interlog_db, esc_str) )
 		Sql_ShowDebug(sql_handle);
 
 	return 0;
@@ -769,8 +771,7 @@ int inter_mapif_init(int fd)
 int mapif_broadcast(unsigned char *mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, int sfd)
 {
 	unsigned char *buf = (unsigned char*)aMalloc((len)*sizeof(unsigned char));
-	if (buf == NULL) return 1;
-		
+
 	WBUFW(buf,0) = 0x3800;
 	WBUFW(buf,2) = len;
 	WBUFL(buf,4) = fontColor;
@@ -779,7 +780,7 @@ int mapif_broadcast(unsigned char *mes, int len, unsigned long fontColor, short 
 	WBUFW(buf,12) = fontAlign;
 	WBUFW(buf,14) = fontY;
 	memcpy(WBUFP(buf,16), mes, len - 16);
-	mapif_sendallwos(sfd, buf, len);
+	chmapif_sendallwos(sfd, buf, len);
 
 	aFree(buf);
 	return 0;
@@ -797,7 +798,7 @@ int mapif_wis_message(struct WisData *wd)
 	memcpy(WBUFP(buf, 8), wd->src, NAME_LENGTH);
 	memcpy(WBUFP(buf,32), wd->dst, NAME_LENGTH);
 	memcpy(WBUFP(buf,56), wd->msg, wd->len);
-	wd->count = mapif_sendall(buf,WBUFW(buf,2));
+	wd->count = chmapif_sendall(buf,WBUFW(buf,2));
 
 	return 0;
 }
@@ -810,7 +811,7 @@ int mapif_wis_end(struct WisData *wd, int flag)
 	WBUFW(buf, 0)=0x3802;
 	memcpy(WBUFP(buf, 2),wd->src,24);
 	WBUFB(buf,26)=flag;
-	mapif_send(wd->fd,buf,27);
+	chmapif_send(wd->fd,buf,27);
 	return 0;
 }
 
@@ -818,7 +819,7 @@ int mapif_wis_end(struct WisData *wd, int flag)
 static void mapif_account_reg(int fd, unsigned char *src)
 {
 	WBUFW(src,0)=0x3804; //NOTE: writing to RFIFO
-	mapif_sendallwos(fd, src, WBUFW(src,2));
+	chmapif_sendallwos(fd, src, WBUFW(src,2));
 }
 
 // Send the requested account_reg
@@ -934,7 +935,7 @@ int mapif_parse_WisRequest(int fd)
 	safestrncpy(name, (char*)RFIFOP(fd,28), NAME_LENGTH); //Received name may be too large and not contain \0! [Skotlex]
 
 	Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `name` FROM `%s` WHERE `name`='%s'", char_db, esc_name) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `name` FROM `%s` WHERE `name`='%s'", schema_config.char_db, esc_name) )
 		Sql_ShowDebug(sql_handle);
 
 	// search if character exists before to ask all map-servers
@@ -944,7 +945,7 @@ int mapif_parse_WisRequest(int fd)
 		WBUFW(buf, 0) = 0x3802;
 		memcpy(WBUFP(buf, 2), RFIFOP(fd, 4), NAME_LENGTH);
 		WBUFB(buf,26) = 1; // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
-		mapif_send(fd, buf, 27);
+		chmapif_send(fd, buf, 27);
 	}
 	else
 	{// Character exists. So, ask all map-servers
@@ -959,7 +960,7 @@ int mapif_parse_WisRequest(int fd)
 			WBUFW(buf, 0) = 0x3802;
 			memcpy(WBUFP(buf, 2), RFIFOP(fd, 4), NAME_LENGTH);
 			WBUFB(buf,26) = 1; // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
-			mapif_send(fd, buf, 27);
+			chmapif_send(fd, buf, 27);
 		}
 		else
 		{
@@ -1014,7 +1015,7 @@ int mapif_parse_WisToGM(int fd)
 
 	memcpy(WBUFP(buf,0), RFIFOP(fd,0), RFIFOW(fd,2));
 	WBUFW(buf, 0) = 0x3803;
-	mapif_sendall(buf, RFIFOW(fd,2));
+	chmapif_sendall(buf, RFIFOW(fd,2));
 
 	return 0;
 }
@@ -1034,7 +1035,7 @@ int mapif_parse_Registry(int fd)
 		max = ACCOUNT_REG_NUM;
 	break;
 	case 1: //Account2 registry, must be sent over to login server.
-		return save_accreg2(RFIFOP(fd,4), RFIFOW(fd,2)-4);
+		return chlogif_save_accreg2(RFIFOP(fd,4), RFIFOW(fd,2)-4);
 	default:
 		return 1;
 	}
@@ -1061,7 +1062,7 @@ int mapif_parse_RegistryRequest(int fd)
 	//Load Account Registry
 	if (RFIFOB(fd,11)) mapif_account_reg_reply(fd,RFIFOL(fd,2),RFIFOL(fd,6),2);
 	//Ask Login Server for Account2 values.
-	if (RFIFOB(fd,10)) request_accreg2(RFIFOL(fd,2),RFIFOL(fd,6));
+	if (RFIFOB(fd,10)) chlogif_request_accreg2(RFIFOL(fd,2),RFIFOL(fd,6));
 	return 1;
 }
 
@@ -1089,15 +1090,15 @@ int mapif_parse_NameChangeRequest(int fd)
 	name = (char*)RFIFOP(fd,11);
 
 	// Check Authorised letters/symbols in the name
-	if (char_name_option == 1) { // only letters/symbols in char_name_letters are authorised
+	if (charserv_config.char_config.char_name_option == 1) { // only letters/symbols in char_name_letters are authorised
 		for (i = 0; i < NAME_LENGTH && name[i]; i++)
-		if (strchr(char_name_letters, name[i]) == NULL) {
+		if (strchr(charserv_config.char_config.char_name_letters, name[i]) == NULL) {
 			mapif_namechange_ack(fd, account_id, char_id, type, 0, name);
 			return 0;
 		}
-	} else if (char_name_option == 2) { // letters/symbols in char_name_letters are forbidden
+	} else if (charserv_config.char_config.char_name_option == 2) { // letters/symbols in char_name_letters are forbidden
 		for (i = 0; i < NAME_LENGTH && name[i]; i++)
-		if (strchr(char_name_letters, name[i]) != NULL) {
+		if (strchr(charserv_config.char_config.char_name_letters, name[i]) != NULL) {
 			mapif_namechange_ack(fd, account_id, char_id, type, 0, name);
 			return 0;
 		}

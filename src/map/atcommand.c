@@ -978,7 +978,7 @@ ACMD_FUNC(hide)
 		// increment the number of pvp players on the map
 		map[sd->bl.m].users_pvp++;
 
-		if( map[sd->bl.m].flag.pvp && !map[sd->bl.m].flag.pvp_nocalcrank )
+		if( !battle_config.pk_mode && map[sd->bl.m].flag.pvp && !map[sd->bl.m].flag.pvp_nocalcrank )
 		{// register the player for ranking calculations
 			sd->pvp_timer = add_timer( gettick() + 200, pc_calc_pvprank_timer, sd->bl.id, 0 );
 		}
@@ -1052,7 +1052,7 @@ ACMD_FUNC(jobchange)
 
 	if (pcdb_checkid(job))
 	{
-		if (pc_jobchange(sd, job, upper) == 0)
+		if (pc_jobchange(sd, job, upper))
 			clif_displaymessage(fd, msg_txt(sd,12)); // Your job has been changed.
 		else {
 			clif_displaymessage(fd, msg_txt(sd,155)); // You are unable to change your job.

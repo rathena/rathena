@@ -25,7 +25,6 @@
 #define MAX_PC_SKILL_REQUIRE 5
 #define MAX_PC_FEELHATE 3
 #define DAMAGELOG_SIZE_PC 100	// Any idea for this value?
-#define MAX_PC_BONUS_SCRIPT 20
 #define MAX_SPIRITBALL 15
 
 //Update this max as necessary. 55 is the value needed for Super Baby currently
@@ -942,7 +941,7 @@ void pc_revive(struct map_session_data *sd,unsigned int hp, unsigned int sp);
 void pc_heal(struct map_session_data *sd,unsigned int hp,unsigned int sp, int type);
 int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp);
 int pc_percentheal(struct map_session_data *sd,int,int);
-int pc_jobchange(struct map_session_data *,int, int);
+bool pc_jobchange(struct map_session_data *sd, int job, char upper);
 void pc_setoption(struct map_session_data *,int);
 bool pc_setcart(struct map_session_data* sd, int type);
 void pc_setfalcon(struct map_session_data* sd, int flag);

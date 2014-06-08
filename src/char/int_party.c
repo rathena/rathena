@@ -11,6 +11,7 @@
 #include "../common/mapindex.h"
 #include "../common/sql.h"
 #include "char.h"
+#include "char_mapif.h"
 #include "inter.h"
 #include "int_party.h"
 
@@ -129,9 +130,9 @@ int inter_party_tosql(struct party *p, int flag, int index)
 	if( flag & PS_BREAK )
 	{// Break the party
 		// we'll skip name-checking and just reset everyone with the same party id [celest]
-		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `party_id`='0' WHERE `party_id`='%d'", char_db, party_id) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `party_id`='0' WHERE `party_id`='%d'", schema_config.char_db, party_id) )
 			Sql_ShowDebug(sql_handle);
-		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `party_id`='%d'", party_db, party_id) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `party_id`='%d'", schema_config.party_db, party_id) )
 			Sql_ShowDebug(sql_handle);
 		//Remove from memory
 		idb_remove(party_db_, party_id);
@@ -143,7 +144,7 @@ int inter_party_tosql(struct party *p, int flag, int index)
 		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` "
 			"(`name`, `exp`, `item`, `leader_id`, `leader_char`) "
 			"VALUES ('%s', '%d', '%d', '%d', '%d')",
-			party_db, esc_name, p->exp, p->item, p->member[index].account_id, p->member[index].char_id) )
+			schema_config.party_db, esc_name, p->exp, p->item, p->member[index].account_id, p->member[index].char_id) )
 		{
 			Sql_ShowDebug(sql_handle);
 			return 0;
@@ -154,32 +155,32 @@ int inter_party_tosql(struct party *p, int flag, int index)
 	if( flag & PS_BASIC )
 	{// Update party info.
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `name`='%s', `exp`='%d', `item`='%d' WHERE `party_id`='%d'",
-			party_db, esc_name, p->exp, p->item, party_id) )
+			schema_config.party_db, esc_name, p->exp, p->item, party_id) )
 			Sql_ShowDebug(sql_handle);
 	}
 
 	if( flag & PS_LEADER )
 	{// Update leader
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s`  SET `leader_id`='%d', `leader_char`='%d' WHERE `party_id`='%d'",
-			party_db, p->member[index].account_id, p->member[index].char_id, party_id) )
+			schema_config.party_db, p->member[index].account_id, p->member[index].char_id, party_id) )
 			Sql_ShowDebug(sql_handle);
 	}
-	
+
 	if( flag & PS_ADDMEMBER )
 	{// Add one party member.
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `party_id`='%d' WHERE `account_id`='%d' AND `char_id`='%d'",
-			char_db, party_id, p->member[index].account_id, p->member[index].char_id) )
+			schema_config.char_db, party_id, p->member[index].account_id, p->member[index].char_id) )
 			Sql_ShowDebug(sql_handle);
 	}
 
 	if( flag & PS_DELMEMBER )
 	{// Remove one party member.
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `party_id`='0' WHERE `party_id`='%d' AND `account_id`='%d' AND `char_id`='%d'",
-			char_db, party_id, p->member[index].account_id, p->member[index].char_id) )
+			schema_config.char_db, party_id, p->member[index].account_id, p->member[index].char_id) )
 			Sql_ShowDebug(sql_handle);
 	}
 
-	if( save_log )
+	if( charserv_config.save_log )
 		ShowInfo("Party Saved (%d - %s)\n", party_id, p->name);
 	return 1;
 }
@@ -200,7 +201,7 @@ struct party_data *inter_party_fromsql(int party_id)
 #endif
 	if( party_id <= 0 )
 		return NULL;
-	
+
 	//Load from memory
 	p = (struct party_data*)idb_get(party_db_, party_id);
 	if( p != NULL )
@@ -209,7 +210,7 @@ struct party_data *inter_party_fromsql(int party_id)
 	p = party_pt;
 	memset(p, 0, sizeof(struct party_data));
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `party_id`, `name`,`exp`,`item`, `leader_id`, `leader_char` FROM `%s` WHERE `party_id`='%d'", party_db, party_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `party_id`, `name`,`exp`,`item`, `leader_id`, `leader_char` FROM `%s` WHERE `party_id`='%d'", schema_config.party_db, party_id) )
 	{
 		Sql_ShowDebug(sql_handle);
 		return NULL;
@@ -227,7 +228,7 @@ struct party_data *inter_party_fromsql(int party_id)
 	Sql_FreeResult(sql_handle);
 
 	// Load members
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`char_id`,`name`,`base_level`,`last_map`,`online`,`class` FROM `%s` WHERE `party_id`='%d'", char_db, party_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`char_id`,`name`,`base_level`,`last_map`,`online`,`class` FROM `%s` WHERE `party_id`='%d'", schema_config.char_db, party_id) )
 	{
 		Sql_ShowDebug(sql_handle);
 		return NULL;
@@ -246,7 +247,7 @@ struct party_data *inter_party_fromsql(int party_id)
 	}
 	Sql_FreeResult(sql_handle);
 
-	if( save_log )
+	if( charserv_config.save_log )
 		ShowInfo("Party loaded (%d - %s).\n", party_id, p->party.name);
 	//Add party to memory.
 	CREATE(p, struct party_data, 1);
@@ -291,7 +292,7 @@ struct party_data* search_partyname(char* str)
 	struct party_data* p = NULL;
 
 	Sql_EscapeStringLen(sql_handle, esc_name, str, safestrnlen(str, NAME_LENGTH));
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `party_id` FROM `%s` WHERE `name`='%s'", party_db, esc_name) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `party_id` FROM `%s` WHERE `name`='%s'", schema_config.party_db, esc_name) )
 		Sql_ShowDebug(sql_handle);
 	else if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
 	{
@@ -370,9 +371,9 @@ static void mapif_party_info(int fd, struct party* p, int char_id)
 	memcpy(WBUFP(buf,8), p, sizeof(struct party));
 
 	if(fd<0)
-		mapif_sendall(buf,WBUFW(buf,2));
+		chmapif_sendall(buf,WBUFW(buf,2));
 	else
-		mapif_send(fd,buf,WBUFW(buf,2));
+		chmapif_send(fd,buf,WBUFW(buf,2));
 }
 
 //Whether or not additional party members
@@ -399,9 +400,9 @@ int mapif_party_optionchanged(int fd,struct party *p,int account_id,int flag)
 	WBUFW(buf,12)=p->item;
 	WBUFB(buf,14)=flag;
 	if(flag==0)
-		mapif_sendall(buf,15);
+		chmapif_sendall(buf,15);
 	else
-		mapif_send(fd,buf,15);
+		chmapif_send(fd,buf,15);
 	return 0;
 }
 
@@ -413,7 +414,7 @@ int mapif_party_withdraw(int party_id,int account_id, int char_id) {
 	WBUFL(buf,2) = party_id;
 	WBUFL(buf,6) = account_id;
 	WBUFL(buf,10) = char_id;
-	mapif_sendall(buf, 14);
+	chmapif_sendall(buf, 14);
 	return 0;
 }
 
@@ -429,7 +430,7 @@ int mapif_party_membermoved(struct party *p,int idx)
 	WBUFW(buf,14) = p->member[idx].map;
 	WBUFB(buf,16) = p->member[idx].online;
 	WBUFW(buf,17) = p->member[idx].lv;
-	mapif_sendall(buf, 19);
+	chmapif_sendall(buf, 19);
 	return 0;
 }
 
@@ -440,7 +441,7 @@ int mapif_party_broken(int party_id,int flag)
 	WBUFW(buf,0)=0x3826;
 	WBUFL(buf,2)=party_id;
 	WBUFB(buf,6)=flag;
-	mapif_sendall(buf,7);
+	chmapif_sendall(buf,7);
 	//printf("int_party: broken %d\n",party_id);
 	return 0;
 }
@@ -454,7 +455,7 @@ int mapif_party_message(int party_id,int account_id,char *mes,int len, int sfd)
 	WBUFL(buf,4)=party_id;
 	WBUFL(buf,8)=account_id;
 	memcpy(WBUFP(buf,12),mes,len);
-	mapif_sendallwos(sfd, buf,len+12);
+	chmapif_sendallwos(sfd, buf,len+12);
 	return 0;
 }
 
@@ -472,9 +473,9 @@ int mapif_parse_CreateParty(int fd, char *name, int item, int item2, struct part
 		return 0;
 	}
 	// Check Authorised letters/symbols in the name of the character
-	if (char_name_option == 1) { // only letters/symbols in char_name_letters are authorised
+	if (charserv_config.char_config.char_name_option == 1) { // only letters/symbols in char_name_letters are authorised
 		for (i = 0; i < NAME_LENGTH && name[i]; i++)
-			if (strchr(char_name_letters, name[i]) == NULL) {
+			if (strchr(charserv_config.char_config.char_name_letters, name[i]) == NULL) {
 				if( name[i] == '"' ) { /* client-special-char */
 					normalize_name(name,"\"");
 					mapif_parse_CreateParty(fd,name,item,item2,leader);
@@ -483,16 +484,16 @@ int mapif_parse_CreateParty(int fd, char *name, int item, int item2, struct part
 				mapif_party_created(fd,leader->account_id,leader->char_id,NULL);
 				return 0;
 			}
-	} else if (char_name_option == 2) { // letters/symbols in char_name_letters are forbidden
+	} else if (charserv_config.char_config.char_name_option == 2) { // letters/symbols in char_name_letters are forbidden
 		for (i = 0; i < NAME_LENGTH && name[i]; i++)
-			if (strchr(char_name_letters, name[i]) != NULL) {
+			if (strchr(charserv_config.char_config.char_name_letters, name[i]) != NULL) {
 				mapif_party_created(fd,leader->account_id,leader->char_id,NULL);
 				return 0;
 			}
 	}
 
 	p = (struct party_data*)aCalloc(1, sizeof(struct party_data));
-	
+
 	memcpy(p->party.name,name,NAME_LENGTH);
 	p->party.exp=0;
 	p->party.item=(item?1:0)|(item2?2:0);
@@ -596,7 +597,7 @@ int mapif_parse_PartyLeave(int fd, int party_id, int account_id, int char_id)
 	p = inter_party_fromsql(party_id);
 	if( p == NULL )
 	{// Party does not exists?
-		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `party_id`='0' WHERE `party_id`='%d'", char_db, party_id) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `party_id`='0' WHERE `party_id`='%d'", schema_config.char_db, party_id) )
 			Sql_ShowDebug(sql_handle);
 		return 0;
 	}
@@ -633,7 +634,7 @@ int mapif_parse_PartyLeave(int fd, int party_id, int account_id, int char_id)
 			int_party_check_lv(p);
 		}
 	}
-		
+
 	if (party_check_empty(p) == 0)
 		mapif_party_info(-1, &p->party, 0);
 	return 0;
@@ -648,7 +649,7 @@ int mapif_parse_PartyChangeMap(int fd, int party_id, int account_id, int char_id
 	if (p == NULL)
 		return 0;
 
-	for(i = 0; i < MAX_PARTY && 
+	for(i = 0; i < MAX_PARTY &&
 		(p->party.member[i].account_id != account_id ||
 		p->party.member[i].char_id != char_id); i++);
 
@@ -662,7 +663,7 @@ int mapif_parse_PartyChangeMap(int fd, int party_id, int account_id, int char_id
 		else
 			p->party.count--;
 		// Even share check situations: Family state (always breaks)
-		// character logging on/off is max/min level (update level range) 
+		// character logging on/off is max/min level (update level range)
 		// or character logging on/off has a different level (update level range using new level)
 		if (p->family ||
 			(p->party.member[i].lv <= p->min_lv || p->party.member[i].lv >= p->max_lv) ||
@@ -727,7 +728,7 @@ int mapif_parse_PartyLeaderChange(int fd,int party_id,int account_id,int char_id
 
 	for (i = 0; i < MAX_PARTY; i++)
 	{
-		if(p->party.member[i].leader) 
+		if(p->party.member[i].leader)
 			p->party.member[i].leader = 0;
 		if(p->party.member[i].account_id == account_id &&
 			p->party.member[i].char_id == char_id)
@@ -799,7 +800,7 @@ int inter_party_CharOnline(int char_id, int party_id)
 	{// Get party_id from the database
 		char* data;
 
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT party_id FROM `%s` WHERE char_id='%d'", char_db, char_id) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT party_id FROM `%s` WHERE char_id='%d'", schema_config.char_db, char_id) )
 		{
 			Sql_ShowDebug(sql_handle);
 			return 0;
@@ -814,7 +815,7 @@ int inter_party_CharOnline(int char_id, int party_id)
 	}
 	if (party_id == 0)
 		return 0; //No party...
-	
+
 	p = inter_party_fromsql(party_id);
 	if(!p) {
 		ShowError("Character %d's party %d not found!\n", char_id, party_id);
@@ -845,7 +846,7 @@ int inter_party_CharOffline(int char_id, int party_id) {
 	{// Get guild_id from the database
 		char* data;
 
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT party_id FROM `%s` WHERE char_id='%d'", char_db, char_id) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT party_id FROM `%s` WHERE char_id='%d'", schema_config.char_db, char_id) )
 		{
 			Sql_ShowDebug(sql_handle);
 			return 0;
@@ -860,7 +861,7 @@ int inter_party_CharOffline(int char_id, int party_id) {
 	}
 	if (party_id == 0)
 		return 0; //No party...
-	
+
 	//Character has a party, set character offline and check if they were the only member online
 	if ((p = inter_party_fromsql(party_id)) == NULL)
 		return 0;

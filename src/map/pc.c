@@ -386,7 +386,7 @@ void pc_addfame(struct map_session_data *sd,int count)
 // Check whether a player ID is in the fame rankers' list of its job, returns his/her position if so, 0 else
 unsigned char pc_famerank(int char_id, int job)
 {
-	int i;
+	uint8 i;
 
 	switch(job){
 		case MAPID_BLACKSMITH: // Blacksmith
@@ -901,7 +901,7 @@ bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd,
 	jobexp = b_sd->status.job_exp;
 
 	job = pc_mapid2jobid(b_sd->class_|JOBL_BABY, b_sd->status.sex);
-	if( job != -1 && !pc_jobchange(b_sd, job, 0) )
+	if( job != -1 && pc_jobchange(b_sd, job, 0) )
 	{ // Success, proceed to configure parents and baby skills
 		p1_sd->status.child = b_sd->status.char_id;
 		p2_sd->status.child = b_sd->status.char_id;
@@ -1508,6 +1508,19 @@ int pc_calc_skilltree(struct map_session_data *sd)
 		}
 	}
 
+	// Removes Taekwon Ranker skill bonus
+	if ((sd->class_&MAPID_UPPERMASK) != MAPID_TAEKWON) {
+		uint16 c_ = pc_class2idx(JOB_TAEKWON);
+		for (i = 0; i < MAX_SKILL_TREE; i++) {
+			uint16 x = skill_get_index(skill_tree[c_][i].id), id;
+			if ((id = sd->status.skill[x].id)) {
+				if (id == NV_BASIC || id == NV_FIRSTAID || id == WE_CALLBABY)
+					continue;
+				sd->status.skill[x].id = 0;
+			}
+		}
+	}
+
 	if( pc_has_permission(sd, PC_PERM_ALL_SKILL) ) {
 		for( i = 0; i < MAX_SKILL; i++ ) {
 			switch(i) {
@@ -1601,7 +1614,7 @@ int pc_calc_skilltree(struct map_session_data *sd)
 		}
 	} while(flag);
 
-	if( c > 0 && (sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && sd->status.skill_point == 0 && pc_famerank(sd->status.char_id, MAPID_TAEKWON) ) {
+	if( c > 0 && (sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= battle_config.taekwon_ranker_min_lv && sd->status.skill_point == 0 && pc_famerank(sd->status.char_id, MAPID_TAEKWON) ) {
 		/* Taekwon Ranker Bonus Skill Tree
 		============================================
 		- Grant All Taekwon Tree, but only as Bonus Skills in case they drop from ranking.
@@ -5066,7 +5079,7 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 		return 1;
 	}
 
-	if( pc_isdead(sd) ) { //Revive dead people before warping them
+	if( battle_config.revive_onwarp && pc_isdead(sd) ) { //Revive dead people before warping them
 		pc_setstand(sd);
 		pc_setrestartvalue(sd,1);
 	}
@@ -6542,7 +6555,7 @@ int pc_skillup(struct map_session_data *sd,uint16 skill_id)
 		sd->status.skill_point--;
 		if( !skill_get_inf(skill_id) )
 			status_calc_pc(sd,SCO_NONE); // Only recalculate for passive skills.
-		else if( sd->status.skill_point == 0 && (sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && pc_famerank(sd->status.char_id, MAPID_TAEKWON) )
+		else if( sd->status.skill_point == 0 && (sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= battle_config.taekwon_ranker_min_lv && pc_famerank(sd->status.char_id, MAPID_TAEKWON) )
 			pc_calc_skilltree(sd); // Required to grant all TK Ranker skills.
 		else
 			pc_check_skilltree(sd, skill_id); // Check if a new skill can Lvlup
@@ -6788,7 +6801,7 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 		/**
 		 * It has been confirmed on official servers that when you reset skills with a ranked Taekwon your skills are not reset (because you have all of them anyway)
 		 **/
-		if( (sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && pc_famerank(sd->status.char_id, MAPID_TAEKWON) )
+		if( (sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= battle_config.taekwon_ranker_min_lv && pc_famerank(sd->status.char_id, MAPID_TAEKWON) )
 			return 0;
 
 		if( pc_checkskill(sd, SG_DEVIL) &&  !pc_nextjobexp(sd) )
@@ -7836,24 +7849,28 @@ static int jobchange_killclone(struct block_list *bl, va_list ap)
 	return 1;
 }
 
-/*==========================================
+/**
  * Called when player changes job
  * Rewrote to make it tidider [Celest]
- *------------------------------------------*/
-int pc_jobchange(struct map_session_data *sd,int job, int upper)
+ * @param sd
+ * @param job JOB ID. See enum e_job
+ * @param upper 1 - JOBL_UPPER; 2 - JOBL_BABY
+ * @return True if success, false if failed
+ **/
+bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 {
-	int i, fame_flag=0;
+	int i, fame_flag = 0;
 	int b_class;
 
-	nullpo_ret(sd);
+	nullpo_retr(false,sd);
 
 	if (job < 0)
-		return 1;
+		return false;
 
 	//Normalize job.
 	b_class = pc_jobid2mapid(job);
 	if (b_class == -1)
-		return 1;
+		return false;
 	switch (upper) {
 		case 1:
 			b_class|= JOBL_UPPER;
@@ -7866,10 +7883,10 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 	//That is, if you try to jobchange into dancer, it will turn you to bard.
 	job = pc_mapid2jobid(b_class, sd->status.sex);
 	if (job == -1)
-		return 1;
+		return false;
 
 	if ((unsigned short)b_class == sd->class_)
-		return 1; //Nothing to change.
+		return false; //Nothing to change.
 
 	// changing from 1st to 2nd job
 	if ((b_class&JOBL_2) && !(sd->class_&JOBL_2) && (b_class&MAPID_UPPERMASK) != MAPID_SUPER_NOVICE) {
@@ -7908,14 +7925,14 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 
 	// Give or reduce transcendent status points
 	if( (b_class&JOBL_UPPER) && !(sd->class_&JOBL_UPPER) ){ // Change from a non t class to a t class -> give points
-		sd->status.status_point += 52;
+		sd->status.status_point += battle_config.transcendent_status_points;
 		clif_updatestatus(sd,SP_STATUSPOINT);
 	}else if( !(b_class&JOBL_UPPER) && (sd->class_&JOBL_UPPER) ){ // Change from a t class to a non t class -> remove points
-		if( sd->status.status_point < 52 ){
+		if( sd->status.status_point < battle_config.transcendent_status_points ){
 			// The player already used his bonus points, so we have to reset his status points
 			pc_resetstate(sd);
 		}
-		sd->status.status_point -= 52;
+		sd->status.status_point -= battle_config.transcendent_status_points;
 		clif_updatestatus(sd,SP_STATUSPOINT);
 	}
 
@@ -8032,7 +8049,7 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 		}
 	}
 
-	return 0;
+	return true;
 }
 
 /*==========================================

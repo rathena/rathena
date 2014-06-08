@@ -46,6 +46,18 @@
     <ClCompile Include="..\src\char\char.c">
       <Filter>char_sql</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\char\char_clif.c">
+      <Filter>char_sql</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\char\char_cnslif.c">
+      <Filter>char_sql</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\char\char_logif.c">
+      <Filter>char_sql</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\char\char_mapif.c">
+      <Filter>char_sql</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\char\int_auction.c">
       <Filter>char_sql</Filter>
     </ClCompile>
@@ -165,6 +177,18 @@
       <Filter>char_sql</Filter>
     </ClInclude>
     <ClInclude Include="..\src\char\char.h">
+      <Filter>char_sql</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\char\char_clif.h">
+      <Filter>char_sql</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\char\char_cnslif.h">
+      <Filter>char_sql</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\char\char_logif.h">
+      <Filter>char_sql</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\char\char_mapif.h">
       <Filter>char_sql</Filter>
     </ClInclude>
     <ClInclude Include="..\src\char\int_auction.h">

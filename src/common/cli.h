@@ -1,8 +1,10 @@
-/*
- * File:   cli.h
- * Author: lighta
- *
- * Created on February 21, 2013, 6:15 PM
+/**
+ * @file cli.h
+ * Module purpose is to handle the console (cli=console line input) while the servers launch and run.
+ *  This contains functions common to all servers, but then dispatches them to a specific parser on each server.
+ * Licensed under GNU GPL.
+ *  For more information, see LICENCE in the main folder.
+ * @author rAthena Dev Team
  */
 
 #ifndef CLI_H
@@ -32,6 +34,9 @@ extern "C" {
  extern char* MSG_CONF_NAME_EN; //all
 
 extern void display_helpscreen(bool exit);
+bool cli_hasevent();
+void display_versionscreen(bool do_exit);
+bool opt_has_next_value(const char* option, int i, int argc);
 int cli_get_options(int argc, char ** argv);
 int parse_console_timer(int tid, unsigned int tick, int id, intptr_t data);
 extern int parse_console(const char* buf); //particular for each serv

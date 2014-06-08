@@ -540,6 +540,20 @@ extern struct Battle_Config
 	int teleport_on_portal;
 	int cart_revo_knockback;
 	int guild_notice_changemap;
+	int transcendent_status_points;
+	int taekwon_ranker_min_lv;
+	int revive_onwarp;
+
+	// Fame points
+	int fame_taekwon_mission;
+	int fame_refine_lv1;
+	int fame_refine_lv2;
+	int fame_refine_lv3;
+	int fame_forge;
+	int fame_pharmacy_3;
+	int fame_pharmacy_5;
+	int fame_pharmacy_7;
+	int fame_pharmacy_10;
 } battle_config;
 
 void do_init_battle(void);
