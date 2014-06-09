@@ -9683,7 +9683,7 @@ REPLACE INTO `item_db_re` VALUES (22708,'Thrilling_Box','Thrilling Box',2,10,NUL
 #
 REPLACE INTO `item_db_re` VALUES (22721,'?_Box','? Box',18,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*No clue the random item yet*/',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22734,'Revolution_Quiz_Box','Revolution Quiz Box',18,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 6635,2; getitem 6423,1; /*1x Enchanted Letter Introduction*/',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (22735,'Sealed_Moonlight_Flower_Scroll','Sealed Moonlight Flower Scroll',18,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*TODO: Confirm the rates*/ getitem callfunc("F_Rand",6228,6232,24150,19934,6635,17474),1; },{','}{',NULL);
+REPLACE INTO `item_db_re` VALUES (22735,'Sealed_Moonlight_Flower_Scroll','Sealed Moonlight Flower Scroll',18,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*TODO: Confirm the rates*/ getitem callfunc("F_Rand",6228,6232,24150,19934,6635,17474),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22737,'Bloody_Cartridge','Bloody Cartridge',18,10,NULL,250,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 13222,500;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22738,'Silver_Cartridge','Silver Cartridge',18,10,NULL,250,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 13221,500;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22739,'Lightning_Sphere_Pack','Lightning Sphere Pack',18,10,NULL,350,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 13224,500;',NULL,NULL);
