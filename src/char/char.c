@@ -1431,9 +1431,9 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`account_id`, `char_num`, `name`, `zeny`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
 		"`max_sp`, `sp`, `hair`, `hair_color`, `last_map`, `last_x`, `last_y`, `save_map`, `save_x`, `save_y`) VALUES ("
 		"'%d', '%d', '%s', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d','%d', '%d','%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d')",
-		char_db, sd->account_id , slot, esc_name, start_zeny, str, agi, vit, int_, dex, luk,
+		schema_config.char_db, sd->account_id , slot, esc_name, charserv_config.start_zeny, str, agi, vit, int_, dex, luk,
 		(40 * (100 + vit)/100) , (40 * (100 + vit)/100 ),  (11 * (100 + int_)/100), (11 * (100 + int_)/100), hair_style, hair_color,
-		mapindex_id2name(start_point.map), start_point.x, start_point.y, mapindex_id2name(start_point.map), start_point.x, start_point.y) )
+		mapindex_id2name(charserv_config.start_point.map), charserv_config.start_point.x, charserv_config.start_point.y, mapindex_id2name(charserv_config.start_point.map), charserv_config.start_point.x, charserv_config.start_point.y) )
 	{
 		Sql_ShowDebug(sql_handle);
 		return -2; //No, stop the procedure!
@@ -2718,12 +2718,12 @@ int char_config_read(const char* cfgName){
 			charserv_config.guild_exp_rate = atoi(w2);
 		} else if (strcmpi(w1, "pincode_enabled") == 0) {
 			charserv_config.pincode_config.pincode_enabled = config_switch(w2);
-			#if PACKETVER < 20110309
-			if( pincode_config.pincode_enabled ) {
+#if PACKETVER < 20110309
+			if( charserv_config.pincode_config.pincode_enabled ) {
 				ShowWarning("pincode_enabled requires PACKETVER 20110309 or higher. Disabling...\n");
-				pincode_config.pincode_enabled = false;
+				charserv_config.pincode_config.pincode_enabled = false;
 			}
-			#endif
+#endif
 		} else if (strcmpi(w1, "pincode_changetime") == 0) {
 			charserv_config.pincode_config.pincode_changetime = atoi(w2)*60*60*24;
 		} else if (strcmpi(w1, "pincode_maxtry") == 0) {

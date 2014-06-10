@@ -819,16 +819,13 @@ int chclif_parse_createnewchar(int fd, struct char_session_data* sd,int cmd){
 	if( (charserv_config.char_new)==0 ) //turn character creation on/off [Kevin]
 		i = -2;
 	else {
-		if (cmd == 0x970){
-			i = char_make_new_char_sql(sd, (char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29));
-			RFIFOSKIP(fd,31);
-		}
-		else if(cmd == 0x67){
 #if PACKETVER < 20120307
 			i = char_make_new_char_sql(sd, (char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOB(fd,27),RFIFOB(fd,28),RFIFOB(fd,29),RFIFOB(fd,30),RFIFOB(fd,31),RFIFOB(fd,32),RFIFOW(fd,33),RFIFOW(fd,35));
 			RFIFOSKIP(fd,37);
+#else
+			i = char_make_new_char_sql(sd, (char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29));
+			RFIFOSKIP(fd,31);
 #endif
-		}
 	}
 
 	//'Charname already exists' (-1), 'Char creation denied' (-2) and 'You are underaged' (-3)
