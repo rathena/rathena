@@ -6384,7 +6384,7 @@ int pc_need_status_point(struct map_session_data* sd, int type, int val)
 		swap(low, high);
 
 	for ( ; low < high; low++ )
-#ifdef RENEWAL // renewal status point cost formula
+#ifdef RENEWAL_STAT // renewal status point cost formula
 		sp += (low < 100) ? (2 + (low - 1) / 10) : (16 + 4 * ((low - 100) / 5));
 #else
 		sp += ( 1 + (low + 9) / 10 );
@@ -6408,7 +6408,7 @@ int pc_maxparameterincrease(struct map_session_data* sd, int type)
 	base = final_val = pc_getstat(sd, type);
 
 	while (final_val <= pc_maxparameter(sd, (enum e_params)(type-SP_STR)) && status_points >= 0) {
-#ifdef RENEWAL // renewal status point cost formula
+#ifdef RENEWAL_STAT // renewal status point cost formula
 		status_points -= (final_val < 100) ? (2 + (final_val - 1) / 10) : (16 + 4 * ((final_val - 100) / 5));
 #else
 		status_points -= ( 1 + (final_val + 9) / 10 );

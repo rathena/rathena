@@ -10114,6 +10114,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		skill_attack(skill_get_type(RL_QD_SHOT),src,src,bl,skill_id,skill_lv,tick,flag|BCT_ENEMY|SD_LEVEL|SD_ANIMATION);
 		break;
 
+	case SO_ELEMENTAL_SHIELD:
+		// Used to avoid displaying the warning below.
+		break;
+
 	default:
 		ShowWarning("skill_castend_nodamage_id: Unknown skill used:%d\n",skill_id);
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);

@@ -57,8 +57,8 @@ int chclif_parse_moveCharSlot( int fd, struct char_session_data* sd){
 		return 1;
 	}
 
-	// We dont even have a character on the chosen slot?
-	if( sd->found_char[from] <= 0 ){
+	// We don't even have a character on the chosen slot?
+	if( sd->found_char[from] <= 0 || to >= sd->char_slots ){
 		chclif_moveCharSlotReply( fd, sd, from, 1 );
 		return 1;
 	}
@@ -78,7 +78,7 @@ int chclif_parse_moveCharSlot( int fd, struct char_session_data* sd){
 				return 1;
 			}
 		}else{
-			// Admin doesnt allow us to
+			// Admin doesn't allow us to
 			chclif_moveCharSlotReply( fd, sd, from, 1 );
 			return 1;
 		}

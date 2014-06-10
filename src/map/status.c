@@ -2022,7 +2022,7 @@ int status_check_visibility(struct block_list *src, struct block_list *target)
 					return 0;
 				if (tsc->data[SC_CLOAKINGEXCEED] && !(status->mode&MD_BOSS) && (tsd->special_state.perfect_hiding || (status->mode&MD_DETECTOR)))
 					return 0;
-				if (tsc && tsc->data[SC__FEINTBOMB] && !(status->mode&MD_BOSS|MD_DETECTOR))
+				if (tsc && tsc->data[SC__FEINTBOMB] && !(status->mode&(MD_BOSS|MD_DETECTOR)))
 					return 0;
 			}
 			break;
