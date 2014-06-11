@@ -4501,8 +4501,8 @@ database. If the name is not found, nothing will be deleted.
 *storagedelitem <item id>,<amount>{,<account ID>};
 *storagedelitem "<item name>",<amount>{,<account ID>};
 
-Same like delitem, but deletes item from cart or storage.
-If cart is not mounted, it will be failed.
+This command behaves identically to 'delitem', but deletes items from the player's
+cart or storage. If no cart is mounted, 'cartdelitem' will fail.
 
 ---------------------------------------
 
@@ -4519,8 +4519,8 @@ See 'getitem2' for an explanation of the expanded parameters.
 *storagedelitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 *storagedelitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 
-Same like delitem2, but deletes item from cart or storage.
-If cart is not mounted, it will be failed.
+This command behaves identically to 'delitem2', but deletes items from the player's
+cart or storage. If no cart is mounted, 'cartdelitem2' will fail.
 
 ---------------------------------------
 
@@ -4551,8 +4551,8 @@ adding up strings:
 *storagecountitem(<item id>)
 *storagecountitem("<item name>")
 
-Same like countitem, but counts item from cart or storage.
-If cart is not mounted, -1 will be returned.
+This command behaves identically to 'countitem', but counts items from the player's
+cart or storage. If no cart is mounted, 'cartcountitem' will return -1.
 
 ---------------------------------------
 
@@ -4572,8 +4572,8 @@ See 'getitem2' for an explanation of the expanded parameters.
 *storagecountitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
 *storagecountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
 
-Same like countitem2, but counts item from cart or storage.
-If cart is not mounted, -1 will be returned.
+This command behaves identically to 'countitem2', but counts items from the player's
+cart or storage. If no cart is mounted, 'cartcountitem2' will return -1.
 
 ---------------------------------------
 

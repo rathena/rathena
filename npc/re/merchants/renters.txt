@@ -29,12 +29,12 @@ job3_rune01,88,62,5	script	Dragon Breeder	105,{
 				mes "Please learn how to ride a Dragon first.";
 				close;
 			}
-			else if (checkriding()) {
+			else if (checkdragon()) {
 				mes "[Dragon Breeder]";
 				mes "You already have a Dragon.";
 				close;
 			}
-			else if(ismounting()) {
+			else if (ismounting()) {
 				mes "[Dragon Breeder]";
 				mes "Please remove your cash mount.";
 				close;
@@ -67,12 +67,12 @@ prontera,130,213,5	script	Riding Creature Master	105,{
 				mes "Please learn how to ride a Dragon first.";
 				close;
 			}
-			else if (checkriding()) {
+			else if (checkdragon()) {
 				mes "[Riding Creature Master]";
 				mes "You already have a Dragon.";
 				close;
 			}
-			else if(ismounting()) {
+			else if (ismounting()) {
 				mes "[Riding Creature Master]";
 				mes "Please remove your cash mount.";
 				close;
@@ -90,7 +90,7 @@ prontera,130,213,5	script	Riding Creature Master	105,{
 		next;
 		switch(select("Yes:No")) {
 		case 1:
-			if(!getskilllv("KN_RIDING")) {
+			if (!getskilllv("KN_RIDING")) {
 				mes "[Riding Creature Master]";
 				mes "Please learn how to ride a Gryphon first.";
 				close;
@@ -100,7 +100,7 @@ prontera,130,213,5	script	Riding Creature Master	105,{
 				mes "You already have a Gryphon.";
 				close;
 			}
-			else if(ismounting()) {
+			else if (ismounting()) {
 				mes "[Riding Creature Master]";
 				mes "Please remove your cash mount.";
 				close;

@@ -8806,7 +8806,7 @@ BUILDIN_FUNC(checkriding)
 	if( sd == NULL )
 		return 0;// no player attached, report source
 
-	if( pc_isriding(sd) || pc_isridingwug(sd) || pc_isridingdragon(sd) )
+	if( pc_isriding(sd) )
 		script_pushint(st, 1);
 	else
 		script_pushint(st, 0);
