@@ -1,3 +1,10 @@
+UPDATE `auction` SET `card0` = 256 WHERE `card0` = -256;
+UPDATE `cart_inventory` SET `card0` = 256 WHERE `card0` = -256;
+UPDATE `guild_storage` SET `card0` = 256 WHERE `card0` = -256;
+UPDATE `inventory` SET `card0` = 256 WHERE `card0` = -256;
+UPDATE `mail` SET `card0` = 256 WHERE `card0` = -256;
+UPDATE `storage` SET `card0` = 256 WHERE `card0` = -256;
+
 ALTER TABLE `auction` MODIFY `nameid` smallint(5) unsigned NOT NULL default '0';
 ALTER TABLE `auction` MODIFY `card0` smallint(5) unsigned NOT NULL default '0';
 ALTER TABLE `auction` MODIFY `card1` smallint(5) unsigned NOT NULL default '0';
@@ -85,10 +92,3 @@ ALTER TABLE `mob_db_re` MODIFY `Drop7id` smallint(5) unsigned NOT NULL default '
 ALTER TABLE `mob_db_re` MODIFY `Drop8id` smallint(5) unsigned NOT NULL default '0';
 ALTER TABLE `mob_db_re` MODIFY `Drop9id` smallint(5) unsigned NOT NULL default '0';
 ALTER TABLE `mob_db_re` MODIFY `DropCardid` smallint(5) unsigned NOT NULL default '0';
-
-UPDATE `auction` SET `card0` = 256 WHERE `card0` = -256;
-UPDATE `cart_inventory` SET `card0` = 256 WHERE `card0` = -256;
-UPDATE `guild_storage` SET `card0` = 256 WHERE `card0` = -256;
-UPDATE `inventory` SET `card0` = 256 WHERE `card0` = -256;
-UPDATE `mail` SET `card0` = 256 WHERE `card0` = -256;
-UPDATE `storage` SET `card0` = 256 WHERE `card0` = -256;
