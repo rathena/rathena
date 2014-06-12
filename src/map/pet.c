@@ -71,7 +71,7 @@ void pet_set_intimate(struct pet_data *pd, int value)
 		status_calc_pc(sd,SCO_NONE);
 }
 
-int pet_create_egg(struct map_session_data *sd, int item_id)
+int pet_create_egg(struct map_session_data *sd, unsigned short item_id)
 {
 	int pet_id = search_petDB_index(item_id, PET_EGG);
 	if (pet_id < 0) return 0; //No pet egg here.
@@ -669,7 +669,7 @@ int pet_change_name_ack(struct map_session_data *sd, char* name, int flag)
 int pet_equipitem(struct map_session_data *sd,int index)
 {
 	struct pet_data *pd;
-	int nameid;
+	unsigned short nameid;
 
 	nullpo_retr(1, sd);
 	pd = sd->pd;
@@ -706,7 +706,7 @@ int pet_equipitem(struct map_session_data *sd,int index)
 static int pet_unequipitem(struct map_session_data *sd, struct pet_data *pd)
 {
 	struct item tmp_item;
-	int nameid,flag;
+	unsigned short nameid, flag;
 
 	if(pd->pet.equip == 0)
 		return 1;
@@ -1211,7 +1211,8 @@ int pet_skill_support_timer(int tid, unsigned int tick, int id, intptr_t data)
 void read_petdb(){
 	char* filename[] = {"pet_db.txt",DBIMPORT"/pet_db.txt"};
 	FILE *fp;
-	int nameid,i,j,k;
+	unsigned short nameid;
+	int i,j,k;
 
 	// Remove any previous scripts in case reloaddb was invoked.
 	for( j = 0; j < MAX_PET_DB; j++ )
@@ -1304,7 +1305,7 @@ void read_petdb(){
 
 			if( !mobdb_checkid(nameid) )
 			{
-				ShowWarning("pet_db reading: Invalid mob-class %d, pet not read.\n", nameid);
+				ShowWarning("pet_db reading: Invalid mob-class %hu, pet not read.\n", nameid);
 				continue;
 			}
 

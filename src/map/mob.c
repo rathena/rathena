@@ -1802,7 +1802,7 @@ static int mob_ai_hard(int tid, unsigned int tick, int id, intptr_t data)
 /*==========================================
  * Initializes the delay drop structure for mob-dropped items.
  *------------------------------------------*/
-static struct item_drop* mob_setdropitem(int nameid, int qty)
+static struct item_drop* mob_setdropitem(unsigned short nameid, int qty)
 {
 	struct item_drop *drop = ers_alloc(item_drop_ers, struct item_drop);
 	memset(&drop->item_data, 0, sizeof(struct item));
@@ -3668,7 +3668,7 @@ static unsigned int mob_drop_adjust(int baserate, int rate_adjust, unsigned shor
  * @param mob_id ID of the monster
  * @param rate_adjust pointer to store ratio if found
  */
-static void item_dropratio_adjust(int nameid, int mob_id, int *rate_adjust)
+static void item_dropratio_adjust(unsigned short nameid, int mob_id, int *rate_adjust)
 {
 	if( item_drop_ratio_db[nameid] ) {
 		if( item_drop_ratio_db[nameid]->mob_id[0] ) { // only for listed mobs
@@ -4529,12 +4529,13 @@ static bool mob_readdb_race2(char* fields[], int columns, int current)
  */
 static bool mob_readdb_itemratio(char* str[], int columns, int current)
 {
-	int nameid, ratio, i;
+	unsigned short nameid;
+	int ratio, i;
 	nameid = atoi(str[0]);
 
 	if( itemdb_exists(nameid) == NULL )
 	{
-		ShowWarning("itemdb_read_itemratio: Invalid item id %d.\n", nameid);
+		ShowWarning("itemdb_read_itemratio: Invalid item id %hu.\n", nameid);
 		return false;
 	}
 

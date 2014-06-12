@@ -175,13 +175,13 @@ struct quest {
 
 struct item {
 	int id;
-	short nameid;
+	unsigned short nameid;
 	short amount;
 	unsigned int equip; // location(s) where item is equipped (using enum equip_pos for bitmasking)
 	char identify;
 	char refine;
 	char attribute;
-	short card[MAX_SLOTS];
+	unsigned short card[MAX_SLOTS];
 	unsigned int expire_time;
 	char favorite, bound;
 	uint64 unique_id;

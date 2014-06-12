@@ -6212,13 +6212,14 @@ BUILDIN_FUNC(countitem)
 	}
 
 	if( !i ) { // For count/cart/storagecountitem function
-		int nameid = id->nameid;
+		unsigned short nameid = id->nameid;
 		for( i = 0; i < size; i++ )
 			if( &items[i] && items[i].nameid == nameid )
 				count += items[i].amount;
 	}
 	else { // For count/cart/storagecountitem2 function
-		int nameid, iden, ref, attr, c1, c2, c3, c4;
+		unsigned short nameid;
+		int iden, ref, attr, c1, c2, c3, c4;
 
 		nameid = id->nameid;
 		iden = script_getnum(st,3);
@@ -6244,10 +6245,11 @@ BUILDIN_FUNC(countitem)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-int checkweight_sub(TBL_PC *sd,int nbargs,int32 *eitemid,int32 *eamount)
+int checkweight_sub(TBL_PC *sd, int nbargs, unsigned short *eitemid, int32 *eamount)
 {
 	struct item_data* id = NULL;
-	int nameid,amount;
+	unsigned short nameid;
+	int amount;
 	uint32 weight=0;
 	uint16 amount2=0,slots,i;
 
@@ -6258,7 +6260,7 @@ int checkweight_sub(TBL_PC *sd,int nbargs,int32 *eitemid,int32 *eamount)
 			continue;
 		id = itemdb_exists(eitemid[i]);
 		if( id == NULL ) {
-			ShowError("checkweight_sub: Invalid item '%d'.\n", eitemid[i]);
+			ShowError("checkweight_sub: Invalid item '%hu'.\n", eitemid[i]);
 			return 0;
 		}
 		nameid = id->nameid;
@@ -6303,7 +6305,8 @@ BUILDIN_FUNC(checkweight)
 	struct map_session_data* sd;
 	struct script_data* data;
 	struct item_data* id = NULL;
-	int32 nameid[SCRIPT_MAX_ARRAYSIZE], amount[SCRIPT_MAX_ARRAYSIZE];
+	unsigned short nameid[SCRIPT_MAX_ARRAYSIZE];
+	int32 amount[SCRIPT_MAX_ARRAYSIZE];
 	uint16 nbargs,i,j=0;
 
 	if( ( sd = script_rid2sd(st) ) == NULL )
@@ -6339,7 +6342,8 @@ BUILDIN_FUNC(checkweight)
 
 BUILDIN_FUNC(checkweight2){
 	//variable sub checkweight
-	int32 nameid[SCRIPT_MAX_ARRAYSIZE], amount[SCRIPT_MAX_ARRAYSIZE], i;
+	unsigned short nameid[SCRIPT_MAX_ARRAYSIZE];
+	int32 amount[SCRIPT_MAX_ARRAYSIZE], i;
 
 	//variable for array parsing
 	struct script_data* data_it;
@@ -6618,7 +6622,8 @@ BUILDIN_FUNC(rentitem) {
 	struct script_data *data;
 	struct item it;
 	int seconds;
-	int nameid = 0, flag;
+	unsigned short nameid = 0;
+	int flag;
 
 	data = script_getdata(st,2);
 	get_val(st,data);
@@ -6640,9 +6645,9 @@ BUILDIN_FUNC(rentitem) {
 	else if( data_isint(data) )
 	{
 		nameid = conv_num(st,data);
-		if( nameid <= 0 || !itemdb_exists(nameid) )
+		if( nameid == 0 || !itemdb_exists(nameid) )
 		{
-			ShowError("buildin_rentitem: Nonexistant item %d requested.\n", nameid);
+			ShowError("buildin_rentitem: Nonexistant item %hu requested.\n", nameid);
 			return SCRIPT_CMD_FAILURE;
 		}
 	}
@@ -6677,7 +6682,7 @@ BUILDIN_FUNC(rentitem2) {
 	struct item it;
 	struct item_data *id;
 	int seconds, flag;
-	uint16 nameid = 0;
+	unsigned short nameid = 0;
 	int iden,ref,attr,c1,c2,c3,c4;
 
 	data = script_getdata(st,2);
@@ -6698,7 +6703,7 @@ BUILDIN_FUNC(rentitem2) {
 	else if( data_isint(data) ) {
 		nameid = conv_num(st,data);
 		if( !(id = itemdb_search(nameid))) {
-			ShowError("buildin_rentitem2: Nonexistant item %d requested.\n", nameid);
+			ShowError("buildin_rentitem2: Nonexistant item %hu requested.\n", nameid);
 			return SCRIPT_CMD_FAILURE;
 		}
 	}
@@ -6756,7 +6761,7 @@ BUILDIN_FUNC(rentitem2) {
  *------------------------------------------*/
 BUILDIN_FUNC(getnameditem)
 {
-	int nameid;
+	unsigned short nameid;
 	struct item item_tmp;
 	TBL_PC *sd, *tsd;
 	struct script_data *data;
@@ -7204,7 +7209,7 @@ BUILDIN_FUNC(delitem)
 		it.nameid = conv_num(st,data);// <item id>
 		if( !itemdb_exists( it.nameid ) )
 		{
-			ShowError("buildin_%s: unknown item \"%d\".\n", command, it.nameid);
+			ShowError("buildin_%s: unknown item \"%hu\".\n", command, it.nameid);
 			st->state = END;
 			return 1;
 		}
@@ -7220,7 +7225,7 @@ BUILDIN_FUNC(delitem)
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	ShowError("buildin_%s: failed to delete %d items (AID=%d item_id=%d).\n", command, it.amount, sd->status.account_id, it.nameid);
+	ShowError("buildin_%s: failed to delete %d items (AID=%d item_id=%hu).\n", command, it.amount, sd->status.account_id, it.nameid);
 	st->state = END;
 	st->mes_active = 0;
 	clif_scriptclose(sd, st->oid);
@@ -7292,7 +7297,7 @@ BUILDIN_FUNC(delitem2)
 		it.nameid = conv_num(st,data);// <item id>
 		if( !itemdb_exists( it.nameid ) )
 		{
-			ShowError("buildin_%s: unknown item \"%d\".\n", command, it.nameid);
+			ShowError("buildin_%s: unknown item \"%hu\".\n", command, it.nameid);
 			st->state = END;
 			return 1;
 		}
@@ -7315,7 +7320,7 @@ BUILDIN_FUNC(delitem2)
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	ShowError("buildin_%s: failed to delete %d items (AID=%d item_id=%d).\n", command, it.amount, sd->status.account_id, it.nameid);
+	ShowError("buildin_%s: failed to delete %d items (AID=%d item_id=%hu).\n", command, it.amount, sd->status.account_id, it.nameid);
 	st->state = END;
 	st->mes_active = 0;
 	clif_scriptclose(sd, st->oid);
@@ -12399,7 +12404,7 @@ BUILDIN_FUNC(guardianinfo)
  *------------------------------------------*/
 BUILDIN_FUNC(getitemname)
 {
-	int item_id=0;
+	unsigned short item_id = 0;
 	struct item_data *i_data;
 	char *item_name;
 	struct script_data *data;
@@ -12433,7 +12438,7 @@ BUILDIN_FUNC(getitemname)
  *------------------------------------------*/
 BUILDIN_FUNC(getitemslots)
 {
-	int item_id;
+	unsigned short item_id;
 	struct item_data *i_data;
 
 	item_id=script_getnum(st,2);
@@ -12473,7 +12478,7 @@ BUILDIN_FUNC(getitemslots)
  *------------------------------------------*/
 BUILDIN_FUNC(getiteminfo)
 {
-	int item_id,n;
+	unsigned short item_id,n;
 	int *item_arr;
 	struct item_data *i_data;
 
@@ -12514,7 +12519,8 @@ BUILDIN_FUNC(getiteminfo)
  *------------------------------------------*/
 BUILDIN_FUNC(setiteminfo)
 {
-	int item_id,n,value;
+	unsigned short item_id;
+	int n,value;
 	int *item_arr;
 	struct item_data *i_data;
 
@@ -14168,7 +14174,8 @@ BUILDIN_FUNC(unequip)
 
 BUILDIN_FUNC(equip)
 {
-	int nameid=0,i;
+	unsigned short nameid = 0;
+	int i;
 	TBL_PC *sd;
 	struct item_data *item_data;
 
@@ -14177,7 +14184,7 @@ BUILDIN_FUNC(equip)
 	nameid=script_getnum(st,2);
 	if((item_data = itemdb_exists(nameid)) == NULL)
 	{
-		ShowError("wrong item ID : equipitem(%i)\n",nameid);
+		ShowError("wrong item ID : equipitem(%hu)\n",nameid);
 		return 1;
 	}
 	ARR_FIND( 0, MAX_INVENTORY, i, sd->status.inventory[i].nameid == nameid );
@@ -14189,20 +14196,21 @@ BUILDIN_FUNC(equip)
 
 BUILDIN_FUNC(autoequip)
 {
-	int nameid, flag;
+	unsigned short nameid;
+	int flag;
 	struct item_data *item_data;
 	nameid=script_getnum(st,2);
 	flag=script_getnum(st,3);
 
 	if( ( item_data = itemdb_exists(nameid) ) == NULL )
 	{
-		ShowError("buildin_autoequip: Invalid item '%d'.\n", nameid);
+		ShowError("buildin_autoequip: Invalid item '%hu'.\n", nameid);
 		return SCRIPT_CMD_FAILURE;
 	}
 
 	if( !itemdb_isequip2(item_data) )
 	{
-		ShowError("buildin_autoequip: Item '%d' cannot be equipped.\n", nameid);
+		ShowError("buildin_autoequip: Item '%hu' cannot be equipped.\n", nameid);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -15497,7 +15505,7 @@ BUILDIN_FUNC(npcshopdelitem)
 {
 	const char* npcname = script_getstr(st,2);
 	struct npc_data* nd = npc_name2id(npcname);
-	unsigned int nameid;
+	unsigned short nameid;
 	int n, i;
 	int amount;
 	int size;
@@ -15567,7 +15575,8 @@ BUILDIN_FUNC(npcshopattach)
  *------------------------------------------*/
 BUILDIN_FUNC(setitemscript)
 {
-	int item_id,n=0;
+	unsigned short item_id;
+	int n = 0;
 	const char *script;
 	struct item_data *i_data;
 	struct script_code **dstscript;
@@ -15615,7 +15624,8 @@ BUILDIN_FUNC(addmonsterdrop)
 {
 	struct mob_db *mob;
 	struct script_data *data;
-	int item_id,rate,i,c = 0;
+	unsigned short item_id;
+	int rate,i,c = 0;
 
 	data = script_getdata(st, 2);
 	get_val(st, data); // Convert into value in case of a variable
@@ -15628,7 +15638,7 @@ BUILDIN_FUNC(addmonsterdrop)
 	rate=script_getnum(st,4);
 
 	if(!itemdb_exists(item_id)){
-		ShowError("addmonsterdrop: Nonexistant item %d requested.\n", item_id );
+		ShowError("addmonsterdrop: Nonexistant item %hu requested.\n", item_id );
 		return 1;
 	}
 
@@ -15670,7 +15680,8 @@ BUILDIN_FUNC(delmonsterdrop)
 {
 	struct mob_db *mob;
 	struct script_data *data;
-	int item_id,i;
+	unsigned short item_id;
+	int i;
 
 	data = script_getdata(st, 2);
 	get_val(st, data); // Convert into value in case of a variable
@@ -15682,7 +15693,7 @@ BUILDIN_FUNC(delmonsterdrop)
 	item_id=script_getnum(st,3);
 
 	if(!itemdb_exists(item_id)){
-		ShowError("delmonsterdrop: Nonexistant item %d requested.\n", item_id );
+		ShowError("delmonsterdrop: Nonexistant item %hu requested.\n", item_id );
 		return 1;
 	}
 
@@ -17990,7 +18001,8 @@ BUILDIN_FUNC(checkre)
 BUILDIN_FUNC(getrandgroupitem) {
 	TBL_PC* sd;
 	int i, get_count = 0, flag;
-	uint16 nameid, group = script_getnum(st,2), qty = script_getnum(st,3);
+	unsigned short nameid;
+	uint16 group = script_getnum(st,2), qty = script_getnum(st,3);
 	uint8 sub_group = script_getnum(st,4);
 	struct item item_tmp;
 
@@ -18167,10 +18179,10 @@ BUILDIN_FUNC(consumeitem)
 			return SCRIPT_CMD_FAILURE;
 		}
 	}else if( data_isint( data ) ){
-		int nameid = conv_num( st, data );
+		unsigned short nameid = conv_num( st, data );
 
 		if( ( item_data = itemdb_exists( nameid ) ) == NULL ){
-			ShowError("buildin_consumeitem: Nonexistant item %d requested.\n", nameid );
+			ShowError("buildin_consumeitem: Nonexistant item %hu requested.\n", nameid );
 			return SCRIPT_CMD_FAILURE;
 		}
 	}else{

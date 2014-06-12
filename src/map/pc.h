@@ -97,7 +97,8 @@ struct weapon_data {
 };
 
 struct s_autospell {
-	short id, lv, rate, card_id, flag;
+	short id, lv, rate, flag;
+	unsigned short card_id;
 	bool lock;  // bAutoSpellOnSkill: blocks autospell from triggering again, while being executed
 };
 
@@ -115,7 +116,7 @@ struct s_addeffectonskill {
 
 ///Struct of add drop item/group rate
 struct s_add_drop {
-	uint16 nameid, ///Item ID
+	unsigned short nameid, ///Item ID
 		group; ///Group ID
 	int rate; ///Rate, 1 ~ 10000, -1 ~ -100000
 	short race; ///Target Race, bitwise value of 1<<x. if < 0 means Monster ID
@@ -291,7 +292,7 @@ struct map_session_data {
 	unsigned int ks_floodprotect_tick; // [Kill Steal Protection]
 
 	struct s_item_delay {
-		short nameid;
+		unsigned short nameid;
 		unsigned int tick;
 	} item_delay[MAX_ITEMDELAYS]; // [Paradox924X]
 
@@ -351,7 +352,7 @@ struct map_session_data {
 	}	add_def[MAX_PC_BONUS], add_mdef[MAX_PC_BONUS], add_mdmg[MAX_PC_BONUS];
 	struct s_add_drop add_drop[MAX_PC_BONUS];
 	struct s_healrate {
-		int nameid;
+		unsigned short nameid;
 		int rate;
 	} itemhealrate[MAX_PC_BONUS];
 	struct s_subele2 {
@@ -507,7 +508,7 @@ struct map_session_data {
 
 	// Mail System [Zephyrus]
 	struct s_mail {
-		short nameid;
+		unsigned short nameid;
 		int index, amount, zeny;
 		struct mail_data inbox;
 		bool changed; // if true, should sync with charserver on next mailbox request
@@ -829,7 +830,7 @@ int pc_setinventorydata(struct map_session_data *sd);
 int pc_get_skillcooldown(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 int pc_checkskill(struct map_session_data *sd,uint16 skill_id);
 short pc_checkequip(struct map_session_data *sd,int pos);
-bool pc_checkequip2(struct map_session_data *sd,int nameid,int min, int max);
+bool pc_checkequip2(struct map_session_data *sd, unsigned short nameid, int min, int max);
 
 void pc_scdata_received(struct map_session_data *sd);
 int pc_expiration_timer(int tid, unsigned int tick, int id, intptr_t data);
@@ -848,9 +849,9 @@ void pc_setsavepoint(struct map_session_data *sd, short mapindex,int x,int y);
 int pc_randomwarp(struct map_session_data *sd,clr_type type);
 int pc_memo(struct map_session_data* sd, int pos);
 
-int pc_checkadditem(struct map_session_data*,int,int);
+int pc_checkadditem(struct map_session_data*, unsigned short, int);
 int pc_inventoryblank(struct map_session_data*);
-short pc_search_inventory(struct map_session_data *sd, uint16 nameid);
+short pc_search_inventory(struct map_session_data *sd, unsigned short nameid);
 int pc_payzeny(struct map_session_data*,int, enum e_log_pick_type type, struct map_session_data*);
 char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_pick_type log_type);
 int pc_getzeny(struct map_session_data*,int, enum e_log_pick_type, struct map_session_data*);
@@ -872,7 +873,7 @@ int pc_cartitem_amount(struct map_session_data *sd,int idx,int amount);
 int pc_takeitem(struct map_session_data*,struct flooritem_data*);
 int pc_dropitem(struct map_session_data*,int,int);
 
-bool pc_isequipped(struct map_session_data *sd, int nameid);
+bool pc_isequipped(struct map_session_data *sd, unsigned short nameid);
 bool pc_can_Adopt(struct map_session_data *p1_sd, struct map_session_data *p2_sd, struct map_session_data *b_sd );
 bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd, struct map_session_data *b_sd);
 
@@ -1060,7 +1061,7 @@ void pc_rental_expire(struct map_session_data *sd, int i);
 
 int pc_read_motd(void); // [Valaris]
 int pc_disguise(struct map_session_data *sd, int class_);
-bool pc_isautolooting(struct map_session_data *sd, int nameid);
+bool pc_isautolooting(struct map_session_data *sd, unsigned short nameid);
 
 void pc_overheat(struct map_session_data *sd, int val);
 
@@ -1092,7 +1093,7 @@ void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag);
 void pc_cell_basilica(struct map_session_data *sd);
 
 void pc_itemgrouphealrate_clear(struct map_session_data *sd);
-short pc_get_itemgroup_bonus(struct map_session_data* sd, uint16 nameid);
+short pc_get_itemgroup_bonus(struct map_session_data* sd, unsigned short nameid);
 short pc_get_itemgroup_bonus_group(struct map_session_data* sd, uint16 group_id);
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)

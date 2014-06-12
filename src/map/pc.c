@@ -91,10 +91,10 @@ const struct sg_data sg_info[MAX_PC_FEELHATE] = {
  * to keep cooldowns in memory between player log-ins.
  * All cooldowns are reset when server is restarted.
  **/
-DBMap* itemcd_db = NULL; // char_id -> struct skill_cd
+DBMap* itemcd_db = NULL; // char_id -> struct item_cd
 struct item_cd {
-	unsigned int tick[MAX_ITEMDELAYS];//tick
-	short nameid[MAX_ITEMDELAYS];//skill id
+	unsigned int tick[MAX_ITEMDELAYS]; //tick
+	unsigned short nameid[MAX_ITEMDELAYS]; //item id
 };
 
 //Converts a class to its array index for CLASS_COUNT defined arrays.
@@ -462,7 +462,7 @@ int pc_inventory_rental_clear(struct map_session_data *sd)
 /* Assumes I is valid (from default areas where it is called, it is) */
 void pc_rental_expire(struct map_session_data *sd, int i)
 {
-	short nameid = sd->status.inventory[i].nameid;
+	unsigned short nameid = sd->status.inventory[i].nameid;
 
 	/* Soon to be dropped, we got plans to integrate it with item db */
 	switch( nameid ) {
@@ -697,7 +697,7 @@ int pc_setinventorydata(struct map_session_data *sd)
 	nullpo_retr(1,sd);
 
 	for(i=0;i<MAX_INVENTORY;i++) {
-		uint16 id = sd->status.inventory[i].nameid;
+		unsigned short id = sd->status.inventory[i].nameid;
 		sd->inventory_data[i] = id?itemdb_search(id):NULL;
 	}
 	return 0;
@@ -812,7 +812,7 @@ int pc_setequipindex(struct map_session_data *sd)
  * @param nameid : itemid
  * @return 1:yes, 0:no
  */
-bool pc_isequipped(struct map_session_data *sd, int nameid)
+bool pc_isequipped(struct map_session_data *sd, unsigned short nameid)
 {
 	uint8 i;
 
@@ -1873,7 +1873,7 @@ int pc_disguise(struct map_session_data *sd, int class_)
 	return 1;
 }
 
-static int pc_bonus_autospell(struct s_autospell *spell, int max, short id, short lv, short rate, short flag, short card_id)
+static int pc_bonus_autospell(struct s_autospell *spell, int max, short id, short lv, short rate, short flag, unsigned short card_id)
 {
 	int i;
 
@@ -1909,7 +1909,7 @@ static int pc_bonus_autospell(struct s_autospell *spell, int max, short id, shor
 	return 1;
 }
 
-static int pc_bonus_autospell_onskill(struct s_autospell *spell, int max, short src_skill, short id, short lv, short rate, short card_id)
+static int pc_bonus_autospell_onskill(struct s_autospell *spell, int max, short src_skill, short id, short lv, short rate, unsigned short card_id)
 {
 	int i;
 
@@ -1995,11 +1995,11 @@ static int pc_bonus_addeff_onskill(struct s_addeffectonskill* effect, int max, e
 * @param race: target race. if < 0, means monster_id
 * @param rate: rate value: 1 ~ 10000. If < 0, it will be multiplied with mob level/10
 */
-static void pc_bonus_item_drop(struct s_add_drop *drop, const short max, uint16 nameid, uint16 group, int class_, short race, int rate)
+static void pc_bonus_item_drop(struct s_add_drop *drop, const short max, unsigned short nameid, uint16 group, int class_, short race, int rate)
 {
 	uint8 i;
 	if (nameid && !group && !itemdb_exists(nameid)) {
-		ShowWarning("pc_bonus_item_drop: Invalid item id\n",nameid);
+		ShowWarning("pc_bonus_item_drop: Invalid item id %hu\n",nameid);
 		return;
 	}
 	//Apply config rate adjustment settings.
@@ -2038,7 +2038,7 @@ static void pc_bonus_item_drop(struct s_add_drop *drop, const short max, uint16 
 	}
 	ARR_FIND(0,max,i,!&drop[i] || (drop[i].nameid == 0 && drop[i].group == 0));
 	if (i >= max) {
-		ShowWarning("pc_bonus_item_drop: Reached max (%d) number of added drops per character! (nameid:%d group:%d class_:%d race:%d rate:%d)\n",max,nameid,group,class_,race,rate);
+		ShowWarning("pc_bonus_item_drop: Reached max (%d) number of added drops per character! (nameid:%hu group:%d class_:%d race:%d rate:%d)\n",max,nameid,group,class_,race,rate);
 		return;
 	}
 	drop[i].nameid = nameid;
@@ -3832,7 +3832,7 @@ int pc_skill(TBL_PC* sd, int id, int level, int flag)
 int pc_insert_card(struct map_session_data* sd, int idx_card, int idx_equip)
 {
 	int i;
-	int nameid;
+	unsigned short nameid;
 
 	nullpo_ret(sd);
 
@@ -3924,7 +3924,7 @@ int pc_modifysellvalue(struct map_session_data *sd,int orig_value)
  * Checking if we have enough place on inventory for new item
  * Make sure to take 30k as limit (for client I guess)
  *------------------------------------------*/
-int pc_checkadditem(struct map_session_data *sd,int nameid,int amount)
+int pc_checkadditem(struct map_session_data *sd, unsigned short nameid, int amount)
 {
 	int i;
 	struct item_data* data;
@@ -4151,7 +4151,7 @@ int pc_getzeny(struct map_session_data *sd,int zeny, enum e_log_pick_type type, 
  * @param nameid Find this Item!
  * @return Stored index in inventory, or -1 if not found.
  **/
-short pc_search_inventory(struct map_session_data *sd, uint16 nameid) {
+short pc_search_inventory(struct map_session_data *sd, unsigned short nameid) {
 	int16 i;
 	nullpo_retr(-1, sd);
 
@@ -4416,7 +4416,7 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 int pc_isUseitem(struct map_session_data *sd,int n)
 {
 	struct item_data *item;
-	int nameid;
+	unsigned short nameid;
 
 	nullpo_ret(sd);
 
@@ -4599,7 +4599,8 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 int pc_useitem(struct map_session_data *sd,int n)
 {
 	unsigned int tick = gettick();
-	int amount, nameid;
+	int amount;
+	unsigned short nameid;
 	struct script_code *script;
 	struct item item;
 	struct item_data *id;
@@ -4669,7 +4670,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 			if( !(nameid == ITEMID_REINS_OF_MOUNT && sd->sc.option&(OPTION_WUGRIDER|OPTION_RIDING|OPTION_DRAGON|OPTION_MADOGEAR)) )
 				sd->item_delay[i].tick = tick + sd->inventory_data[n]->delay;
 		} else {// should not happen
-			ShowError("pc_useitem: Exceeded item delay array capacity! (nameid=%d, char_id=%d)\n", nameid, sd->status.char_id);
+			ShowError("pc_useitem: Exceeded item delay array capacity! (nameid=%hu, char_id=%d)\n", nameid, sd->status.char_id);
 		}
 		//clean up used delays so we can give room for more
 		for(i = 0; i < MAX_ITEMDELAYS; i++) {
@@ -5443,7 +5444,7 @@ short pc_checkequip(struct map_session_data *sd,int pos)
  * @max : see pc.h enum equip_index for @min to ?
  * -return true,false
  *------------------------------------------*/
-bool pc_checkequip2(struct map_session_data *sd,int nameid, int min, int max){
+bool pc_checkequip2(struct map_session_data *sd, unsigned short nameid, int min, int max){
 	int i;
 	for(i=min;i<max;i++){
 		if(equip_pos[i]){
@@ -8961,7 +8962,7 @@ bool pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 	pos = pc_equippoint(sd,n); //With a few exceptions, item should go in all specified slots.
 
 	if(battle_config.battle_log)
-		ShowInfo("equip %d(%d) %x:%x\n",sd->status.inventory[n].nameid,n,id?id->equip:0,req_pos);
+		ShowInfo("equip %hu(%d) %x:%x\n",sd->status.inventory[n].nameid,n,id?id->equip:0,req_pos);
 
 	if(!pc_isequip(sd,n) || !(pos&req_pos) || sd->status.inventory[n].equip != 0 || sd->status.inventory[n].attribute==1 ) { // [Valaris]
 		// FIXME: pc_isequip: equip level failure uses 2 instead of 0
@@ -9376,9 +9377,9 @@ void pc_check_available_item(struct map_session_data *sd) {
 			it = sd->status.inventory[i].nameid;
 
 			if( it && !itemdb_available(it) ) {
-				sprintf(output, msg_txt(sd, 709), it); // Item %d has been removed from your inventory.
+				sprintf(output, msg_txt(sd, 709), it); // Item %hu has been removed from your inventory.
 				clif_displaymessage(sd->fd, output);
-				ShowWarning("Removed invalid/disabled item id %d from inventory (amount=%d, char_id=%d).\n", it, sd->status.inventory[i].amount, sd->status.char_id);
+				ShowWarning("Removed invalid/disabled item id %hu from inventory (amount=%d, char_id=%d).\n", it, sd->status.inventory[i].amount, sd->status.char_id);
 				pc_delitem(sd, i, sd->status.inventory[i].amount, 0, 0, LOG_TYPE_OTHER);
 			}
 		}
@@ -9389,9 +9390,9 @@ void pc_check_available_item(struct map_session_data *sd) {
 			it = sd->status.cart[i].nameid;
 
 			if( it && !itemdb_available(it) ) {
-				sprintf(output, msg_txt(sd, 710), it); // Item %d has been removed from your cart.
+				sprintf(output, msg_txt(sd, 710), it); // Item %hu has been removed from your cart.
 				clif_displaymessage(sd->fd, output);
-				ShowWarning("Removed invalid/disabled item id %d from cart (amount=%d, char_id=%d).\n", it, sd->status.cart[i].amount, sd->status.char_id);
+				ShowWarning("Removed invalid/disabled item id %hu from cart (amount=%d, char_id=%d).\n", it, sd->status.cart[i].amount, sd->status.char_id);
 				pc_cart_delitem(sd, i, sd->status.cart[i].amount, 0, LOG_TYPE_OTHER);
 			}
 		}
@@ -9402,9 +9403,9 @@ void pc_check_available_item(struct map_session_data *sd) {
 			it = sd->status.storage.items[i].nameid;
 
 			if( it && !itemdb_available(it) ) {
-				sprintf(output, msg_txt(sd, 711), it); // Item %d has been removed from your storage.
+				sprintf(output, msg_txt(sd, 711), it); // Item %hu has been removed from your storage.
 				clif_displaymessage(sd->fd, output);
-				ShowWarning("Removed invalid/disabled item id %d from storage (amount=%d, char_id=%d).\n", it, sd->status.storage.items[i].amount, sd->status.char_id);
+				ShowWarning("Removed invalid/disabled item id %hu from storage (amount=%d, char_id=%d).\n", it, sd->status.storage.items[i].amount, sd->status.char_id);
 				storage_delitem(sd, i, sd->status.storage.items[i].amount);
 			}
  		}
@@ -9793,7 +9794,7 @@ void pc_overheat(struct map_session_data *sd, int val) {
 /**
  * Check if player is autolooting given itemID.
  */
-bool pc_isautolooting(struct map_session_data *sd, int nameid)
+bool pc_isautolooting(struct map_session_data *sd, unsigned short nameid)
 {
 	uint8 i = 0;
 
@@ -10909,7 +10910,7 @@ short pc_maxparameter(struct map_session_data *sd, enum e_params param) {
 * @param nameid Item ID
 * @return Heal rate
 **/
-short pc_get_itemgroup_bonus(struct map_session_data* sd, uint16 nameid) {
+short pc_get_itemgroup_bonus(struct map_session_data* sd, unsigned short nameid) {
 	short bonus = 0;
 	uint8 i;
 

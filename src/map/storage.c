@@ -503,7 +503,7 @@ int guild_storage_additem(struct map_session_data* sd, struct guild_storage* sto
 	nullpo_retr(1, stor);
 	nullpo_retr(1, item_data);
 
-	if(item_data->nameid <= 0 || amount <= 0)
+	if(item_data->nameid == 0 || amount <= 0)
 		return 1;
 
 	data = itemdb_search(item_data->nameid);
@@ -597,7 +597,7 @@ int storage_guild_storageadd(struct map_session_data* sd, int index, int amount)
 	if( index<0 || index>=MAX_INVENTORY )
 		return 0;
 
-	if( sd->status.inventory[index].nameid <= 0 )
+	if( sd->status.inventory[index].nameid == 0 )
 		return 0;
 
 	if( amount < 1 || amount > sd->status.inventory[index].amount )
@@ -639,7 +639,7 @@ int storage_guild_storageget(struct map_session_data* sd, int index, int amount)
 	if(index<0 || index>=MAX_GUILD_STORAGE)
 		return 0;
 
-	if(stor->items[index].nameid <= 0)
+	if(stor->items[index].nameid == 0)
 		return 0;
 
 	if(amount < 1 || amount > stor->items[index].amount)
@@ -681,7 +681,7 @@ int storage_guild_storageaddfromcart(struct map_session_data* sd, int index, int
 	if( index < 0 || index >= MAX_CART )
 		return 0;
 
-	if( sd->status.cart[index].nameid <= 0 )
+	if( sd->status.cart[index].nameid == 0 )
 		return 0;
 
 	if( amount < 1 || amount > sd->status.cart[index].amount )
@@ -714,7 +714,7 @@ int storage_guild_storagegettocart(struct map_session_data* sd, int index, int a
 	if(index<0 || index>=MAX_GUILD_STORAGE)
 	  	return 0;
 
-	if(stor->items[index].nameid<=0)
+	if(stor->items[index].nameid == 0)
 		return 0;
 
 	if(amount < 1 || amount > stor->items[index].amount)
