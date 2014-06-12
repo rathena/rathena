@@ -115,7 +115,7 @@ int mail_savemessage(struct mail_message* msg)
 	StringBuf_Printf(&buf, ") VALUES (?, '%d', ?, '%d', ?, ?, '%lu', '%d', '%d', '%d', '%hu', '%d', '%d', '%d', '%"PRIu64"'",
 		msg->send_id, msg->dest_id, (unsigned long)msg->timestamp, msg->status, msg->zeny, msg->item.amount, msg->item.nameid, msg->item.refine, msg->item.attribute, msg->item.identify, msg->item.unique_id);
 	for (j = 0; j < MAX_SLOTS; j++)
-		StringBuf_Printf(&buf, ", '%d'", msg->item.card[j]);
+		StringBuf_Printf(&buf, ", '%hu'", msg->item.card[j]);
 	StringBuf_AppendStr(&buf, ")");
 
 	//Unique Non Stackable Item ID

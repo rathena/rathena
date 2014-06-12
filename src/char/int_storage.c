@@ -402,7 +402,7 @@ int mapif_parse_itembound_retrieve(int fd)
 			guild_id, items[j].nameid, items[j].amount, items[j].equip, items[j].identify, items[j].refine,
 			items[j].attribute, items[j].expire_time, items[j].bound);
 		for( s = 0; s < MAX_SLOTS; ++s )
-			StringBuf_Printf(&buf, ", '%d'", items[j].card[s]);
+			StringBuf_Printf(&buf, ", '%hu'", items[j].card[s]);
 		StringBuf_AppendStr(&buf, ")");
 	}
 
