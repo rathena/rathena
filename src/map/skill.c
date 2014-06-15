@@ -6869,7 +6869,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case TF_PICKSTONE:
 		if(sd) {
-			int eflag;
+			unsigned char eflag;
 			struct item item_tmp;
 			struct block_list tbl;
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
@@ -18075,7 +18075,7 @@ int skill_produce_mix (struct map_session_data *sd, uint16 skill_id, unsigned sh
 					tmp_item.nameid = compensation[i];
 					tmp_item.amount = qty;
 					tmp_item.identify = 1;
-					if( pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE) ) {
+					if( (flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE)) ) {
 						clif_additem(sd,0,0,flag);
 						map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 					}
@@ -18101,7 +18101,7 @@ int skill_produce_mix (struct map_session_data *sd, uint16 skill_id, unsigned sh
 
 int skill_arrow_create (struct map_session_data *sd, unsigned short nameid)
 {
-	int i,j,flag,index=-1;
+	int i, j, index =- 1;
 	struct item tmp_item;
 
 	nullpo_ret(sd);
@@ -18120,6 +18120,7 @@ int skill_arrow_create (struct map_session_data *sd, unsigned short nameid)
 
 	pc_delitem(sd,j,1,0,0,LOG_TYPE_PRODUCE);
 	for(i=0;i<MAX_ARROW_RESOURCE;i++) {
+		unsigned char flag = 0;
 		memset(&tmp_item,0,sizeof(tmp_item));
 		tmp_item.identify = 1;
 		tmp_item.nameid = skill_arrow_db[index].cre_id[i];
@@ -18383,7 +18384,7 @@ int skill_elementalanalysis(struct map_session_data* sd, int n, uint16 skill_lv,
 		tmp_item.identify = 1;
 
 		if( tmp_item.amount ) {
-			int flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_CONSUME);
+			unsigned char flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_CONSUME);
 			if( flag != 0 ) {
 				clif_additem(sd,0,0,flag);
 				map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);

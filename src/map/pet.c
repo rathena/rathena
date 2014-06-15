@@ -293,7 +293,7 @@ static int pet_performance(struct map_session_data *sd, struct pet_data *pd)
 static int pet_return_egg(struct map_session_data *sd, struct pet_data *pd)
 {
 	struct item tmp_item;
-	int flag;
+	unsigned char flag = 0;
 
 	pet_lootitem_drop(pd,sd);
 	memset(&tmp_item,0,sizeof(tmp_item));
@@ -552,7 +552,8 @@ int pet_get_egg(int account_id,int pet_id,int flag)
 {	//This function is invoked when a new pet has been created, and at no other time!
 	struct map_session_data *sd;
 	struct item tmp_item;
-	int i=0,ret=0;
+	int i=0;
+	unsigned char ret = 0;
 
 	if(flag)
 		return 0;
@@ -706,7 +707,8 @@ int pet_equipitem(struct map_session_data *sd,int index)
 static int pet_unequipitem(struct map_session_data *sd, struct pet_data *pd)
 {
 	struct item tmp_item;
-	unsigned short nameid, flag;
+	unsigned short nameid;
+	unsigned char flag = 0;
 
 	if(pd->pet.equip == 0)
 		return 1;
@@ -1003,7 +1005,7 @@ static int pet_delay_item_drop(int tid, unsigned int tick, int id, intptr_t data
 
 int pet_lootitem_drop(struct pet_data *pd,struct map_session_data *sd)
 {
-	int i,flag=0;
+	int i;
 	struct item_drop_list *dlist;
 	struct item_drop *ditem;
 	struct item *it;
@@ -1021,6 +1023,7 @@ int pet_lootitem_drop(struct pet_data *pd,struct map_session_data *sd)
 	for(i=0;i<pd->loot->count;i++) {
 		it = &pd->loot->item[i];
 		if(sd){
+			unsigned char flag = 0;
 			if((flag = pc_additem(sd,it,it->amount,LOG_TYPE_PICKDROP_PLAYER))){
 				clif_additem(sd,0,0,flag);
 				ditem = ers_alloc(item_drop_ers, struct item_drop);

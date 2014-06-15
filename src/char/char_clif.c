@@ -323,7 +323,7 @@ void chclif_char_delete2_ack(int fd, int char_id, uint32 result, time_t delete_d
 	WFIFOW(fd,0) = 0x828;
 	WFIFOL(fd,2) = char_id;
 	WFIFOL(fd,6) = result;
-	WFIFOL(fd,10) = TOL(delete_date);
+	WFIFOL(fd,10) = TOL(delete_date-time(NULL));
 	WFIFOSET(fd,14);
 }
 

@@ -532,7 +532,6 @@ extern struct Battle_Config
 
 	int disp_serverbank_msg;
 	int warg_can_falcon;
-	int atcommand_enable_npc;
 	int path_blown_halt;
 	int rental_mount_speed_boost;
 	int warp_suggestions_enabled;

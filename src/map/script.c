@@ -3136,7 +3136,6 @@ struct script_state* script_alloc_state(struct script_code* script, int pos, int
 	st->oid = oid;
 	st->sleep.timer = INVALID_TIMER;
 	st->npc_item_flag = battle_config.item_enabled_npc;
-	st->atcommand_enable_npc = battle_config.atcommand_enable_npc;
 	return st;
 }
 
@@ -3761,7 +3760,7 @@ static void script_attach_state(struct script_state* st)
 		sd->st = st;
 		sd->npc_id = st->oid;
 		sd->npc_item_flag = st->npc_item_flag; // load default.
-		sd->state.disable_atcommand_on_npc = (pc_get_group_level(sd) >= st->atcommand_enable_npc) ? false : true;
+		sd->state.disable_atcommand_on_npc = !pc_has_permission(sd, PC_PERM_ENABLE_COMMAND);
 #ifdef SECURE_NPCTIMEOUT
 		if( sd->npc_idle_timer == INVALID_TIMER )
 			sd->npc_idle_timer = add_timer(gettick() + (SECURE_NPCTIMEOUT_INTERVAL*1000),npc_rr_secure_timeout_timer,sd->bl.id,0);
@@ -6416,10 +6415,11 @@ BUILDIN_FUNC(checkweight2){
  *------------------------------------------*/
 BUILDIN_FUNC(getitem)
 {
-	int nameid,amount,get_count,i,flag = 0;
+	int nameid,amount,get_count,i;
 	struct item it;
 	TBL_PC *sd;
 	struct script_data *data;
+	unsigned char flag = 0;
 
 	data=script_getdata(st,2);
 	get_val(st,data);
@@ -6506,11 +6506,12 @@ BUILDIN_FUNC(getitem)
  *------------------------------------------*/
 BUILDIN_FUNC(getitem2)
 {
-	int nameid, amount, get_count, i, flag = 0;
+	int nameid, amount, get_count, i;
 	int iden, ref, attr, c1, c2, c3, c4;
 	char bound = BOUND_NONE;
 	struct item_data *item_data;
 	struct item item_tmp;
+	unsigned char flag = 0;
 	TBL_PC *sd;
 	struct script_data *data;
 
@@ -6555,7 +6556,7 @@ BUILDIN_FUNC(getitem2)
 	c3=(short)script_getnum(st,9);
 	c4=(short)script_getnum(st,10);
 
-	if(nameid<0) { // Invalide nameid
+	if(nameid < 0) { // Invalid nameid
 		nameid = -nameid;
 		flag = 1;
 	}
@@ -6623,7 +6624,7 @@ BUILDIN_FUNC(rentitem) {
 	struct item it;
 	int seconds;
 	unsigned short nameid = 0;
-	int flag;
+	unsigned char flag = 0;
 
 	data = script_getdata(st,2);
 	get_val(st,data);
@@ -6681,8 +6682,9 @@ BUILDIN_FUNC(rentitem2) {
 	struct script_data *data;
 	struct item it;
 	struct item_data *id;
-	int seconds, flag;
+	int seconds;
 	unsigned short nameid = 0;
+	unsigned char flag = 0;
 	int iden,ref,attr,c1,c2,c3,c4;
 
 	data = script_getdata(st,2);
@@ -11913,7 +11915,7 @@ BUILDIN_FUNC(successremovecards) {
 
 	for( c = sd->inventory_data[i]->slot - 1; c >= 0; --c ) {
 		if( sd->status.inventory[i].card[c] && itemdb_type(sd->status.inventory[i].card[c]) == IT_CARD ) {// extract this card from the item
-			int flag;
+			unsigned char flag = 0;
 			struct item item_tmp;
 			memset(&item_tmp,0,sizeof(item_tmp));
 			cardflag = 1;
@@ -11928,7 +11930,7 @@ BUILDIN_FUNC(successremovecards) {
 	}
 
 	if(cardflag == 1) {//if card was remove remplace item with no card
-		int flag;
+		unsigned char flag = 0;
 		struct item item_tmp;
 		memset(&item_tmp,0,sizeof(item_tmp));
 
@@ -11980,7 +11982,7 @@ BUILDIN_FUNC(failedremovecards) {
 			cardflag = 1;
 
 			if(typefail == 2) {// add cards to inventory, clear
-				int flag;
+				unsigned char flag = 0;
 				struct item item_tmp;
 
 				memset(&item_tmp,0,sizeof(item_tmp));
@@ -12001,7 +12003,7 @@ BUILDIN_FUNC(failedremovecards) {
 			pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
 		}
 		if(typefail == 1){	// destroy the card
-			int flag;
+			unsigned char flag = 0;
 			struct item item_tmp;
 
 			memset(&item_tmp,0,sizeof(item_tmp));
@@ -13971,10 +13973,10 @@ BUILDIN_FUNC(isequippedcnt)
 		for (j=0; j<EQI_MAX; j++) {
 			int index;
 			index = sd->equip_index[j];
-			if(index < 0) continue;
-			if(j == EQI_HAND_R && sd->equip_index[EQI_HAND_L] == index) continue;
-			if(j == EQI_HEAD_MID && sd->equip_index[EQI_HEAD_LOW] == index) continue;
-			if(j == EQI_HEAD_TOP && (sd->equip_index[EQI_HEAD_MID] == index || sd->equip_index[EQI_HEAD_LOW] == index)) continue;
+			if(index < 0)
+				continue;
+			if (pc_is_same_equip_index((enum equip_index)j, sd->equip_index, index))
+				continue;
 
 			if(!sd->inventory_data[index])
 				continue;
@@ -14028,10 +14030,10 @@ BUILDIN_FUNC(isequipped)
 		flag = 0;
 		for (j=0; j<EQI_MAX; j++) {
 			index = sd->equip_index[j];
-			if(index < 0) continue;
-			if(j == EQI_HAND_R && sd->equip_index[EQI_HAND_L] == index) continue;
-			if(j == EQI_HEAD_MID && sd->equip_index[EQI_HEAD_LOW] == index) continue;
-			if(j == EQI_HEAD_TOP && (sd->equip_index[EQI_HEAD_MID] == index || sd->equip_index[EQI_HEAD_LOW] == index)) continue;
+			if(index < 0)
+				continue;
+			if (pc_is_same_equip_index((enum equip_index)i, sd->equip_index, index))
+				continue;
 
 			if(!sd->inventory_data[index])
 				continue;
@@ -18000,7 +18002,7 @@ BUILDIN_FUNC(checkre)
 /* getrandgroupitem <group_id>,<quantity>{,<sub_group>} */
 BUILDIN_FUNC(getrandgroupitem) {
 	TBL_PC* sd;
-	int i, get_count = 0, flag;
+	int i, get_count = 0;
 	unsigned short nameid;
 	uint16 group = script_getnum(st,2), qty = script_getnum(st,3);
 	uint8 sub_group = script_getnum(st,4);
@@ -18038,6 +18040,7 @@ BUILDIN_FUNC(getrandgroupitem) {
 	for (i = 0; i < get_count; i++) {
 		// if not pet egg
 		if (!pet_create_egg(sd, nameid)) {
+			unsigned char flag = 0;
 			if ((flag = pc_additem(sd,&item_tmp,item_tmp.amount,LOG_TYPE_SCRIPT))) {
 				clif_additem(sd,0,0,flag);
 				if (pc_candrop(sd,&item_tmp))
@@ -18752,7 +18755,7 @@ BUILDIN_FUNC(enable_command) {
 
 	if (!sd)
 		return SCRIPT_CMD_FAILURE;
-	sd->state.disable_atcommand_on_npc = false;
+	sd->state.disable_atcommand_on_npc = 0;
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -18763,7 +18766,7 @@ BUILDIN_FUNC(disable_command) {
 
 	if (!sd)
 		return SCRIPT_CMD_FAILURE;
-	sd->state.disable_atcommand_on_npc = true;
+	sd->state.disable_atcommand_on_npc = 1;
 	return SCRIPT_CMD_SUCCESS;
 }
 

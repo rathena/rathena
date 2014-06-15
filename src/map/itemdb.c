@@ -228,7 +228,7 @@ static void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, struct s_it
 	}
 	// Do loop for non-stackable item
 	for (i = 0; i < data->amount; i++) {
-		char flag;
+		char flag = 0;
 		if ((flag = pc_additem(sd, &tmp, tmp.amount, LOG_TYPE_SCRIPT)))
 			clif_additem(sd, 0, 0, flag);
 		else if (!flag && data->isAnnounced) { ///TODO: Move this broadcast to proper behavior (it should on at different packet)

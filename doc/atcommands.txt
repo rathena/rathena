@@ -1089,6 +1089,20 @@ Give or remove a cart to a player and also change the cart skin based on ID:
 
 ---------------------------------------
 
+@cloneequip <char_id>
+@cloneequip "<char name>"
+
+'Clone' other player's equipments then equip them.
+
+---------------------------------------
+
+@clonestat <char_id>
+@clonestat "<char name>"
+
+'Clone' other player's stats.
+
+---------------------------------------
+
 ==============================
 | 5. Administrative Commands |
 ==============================

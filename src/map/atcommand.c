@@ -1198,7 +1198,8 @@ ACMD_FUNC(heal)
 ACMD_FUNC(item)
 {
 	char item_name[100];
-	int number = 0, flag = 0, bound = BOUND_NONE;
+	int number = 0, bound = BOUND_NONE;
+	char flag = 0;
 	struct item item_tmp;
 	struct item_data *item_data[10];
 	int get_count, i, j=0;
@@ -1315,8 +1316,8 @@ ACMD_FUNC(item2)
 		item_id = item_data->nameid;
 
 	if (item_id > 500) {
-		int flag = 0;
 		int loop, get_count, i;
+		char flag = 0;
 		loop = 1;
 		get_count = number;
 		if (item_data->type == IT_WEAPON || item_data->type == IT_ARMOR ||
@@ -2192,12 +2193,9 @@ ACMD_FUNC(refine)
 		int i;
 		if ((i = sd->equip_index[j]) < 0)
 			continue;
-		if(j == EQI_AMMO) continue;
-		if(j == EQI_HAND_R && sd->equip_index[EQI_HAND_L] == i)
+		if(j == EQI_AMMO)
 			continue;
-		if(j == EQI_HEAD_MID && sd->equip_index[EQI_HEAD_LOW] == i)
-			continue;
-		if(j == EQI_HEAD_TOP && (sd->equip_index[EQI_HEAD_MID] == i || sd->equip_index[EQI_HEAD_LOW] == i))
+		if (pc_is_same_equip_index((enum equip_index)j, sd->equip_index, i))
 			continue;
 
 		if(position && !(sd->status.inventory[i].equip & position))
@@ -2261,7 +2259,7 @@ ACMD_FUNC(produce)
 	item_id = item_data->nameid;
 
 	if (itemdb_isequip2(item_data)) {
-		int flag = 0;
+		char flag = 0;
 		if (attribute < MIN_ATTRIBUTE || attribute > MAX_ATTRIBUTE)
 			attribute = ATTRIBUTE_NORMAL;
 		if (star < MIN_STAR || star > MAX_STAR)
@@ -5633,7 +5631,7 @@ ACMD_FUNC(skilltree)
 // Hand a ring with partners name on it to this char
 void getring (struct map_session_data* sd)
 {
-	int flag;
+	char flag = 0;
 	unsigned short item_id;
 	struct item item_tmp;
 	item_id = (sd->status.sex) ? WEDDING_RING_M : WEDDING_RING_F;
@@ -9476,6 +9474,172 @@ ACMD_FUNC(costume) {
 	return 0;
 }
 
+/**
+* Clone other player's equipments
+* Usage: @cloneequip <char_id or "char name">
+* http://rathena.org/board/topic/95076-new-atcommands-suggestion/
+* @author [Cydh], [Antares]
+*/
+ACMD_FUNC(cloneequip) {
+	struct map_session_data *pl_sd;
+	int char_id = 0;
+
+	nullpo_retr(-1, sd);
+
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	if( !message || !*message || (sscanf(message, "%d", &char_id) < 1 && sscanf(message, "\"%23[^\"]\"", atcmd_output) < 1) ) {
+		clif_displaymessage(fd, msg_txt(sd, 735)); // Please enter char_id or \"char name\".
+		return -1;
+	}
+
+	if (char_id)
+		pl_sd = map_charid2sd(char_id);
+	else
+		pl_sd = map_nick2sd(atcmd_output);
+
+	if (!pl_sd) {
+		clif_displaymessage(fd, msg_txt(sd, 3));
+		return -1;
+	}
+
+	if (sd == pl_sd) {
+		memset(atcmd_output, '\0', sizeof(atcmd_output));
+		sprintf(atcmd_output, msg_txt(sd, 734), "equip"); // Cannot clone your own %.
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+
+	if (pc_get_group_level(sd) < pc_get_group_level(pl_sd)) {
+		memset(atcmd_output, '\0', sizeof(atcmd_output));
+		sprintf(atcmd_output, msg_txt(sd, 736), "equip"); // Cannot clone %s from this player.
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+	else {
+		int8 i;
+		for (i = 0; i < EQI_MAX; i++) {
+			int8 idx;
+			char flag = 0;
+			struct item tmp_item;
+			if ((idx = pl_sd->equip_index[i]) < 0)
+				continue;
+			if (i == EQI_AMMO)
+				continue;
+			if (pc_is_same_equip_index((enum equip_index) i, pl_sd->equip_index, idx))
+				continue;
+
+			tmp_item = pl_sd->status.inventory[idx];
+			if (itemdb_isspecial(tmp_item.card[0]))
+				memset(tmp_item.card, 0, sizeof(tmp_item.card));
+			tmp_item.bound = 0;
+			tmp_item.expire_time = 0;
+			tmp_item.unique_id = 0;
+			tmp_item.favorite = 0;
+			tmp_item.amount = 1;
+
+			if ((flag = pc_additem(sd, &tmp_item, 1, LOG_TYPE_COMMAND)))
+				clif_additem(sd, 0, 0, flag);
+			else
+				pc_equipitem(sd, sd->last_addeditem_index, itemdb_equip(tmp_item.nameid));
+		}
+	}
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	sprintf(atcmd_output, msg_txt(sd, 738), "status");
+	clif_displaymessage(fd, atcmd_output);
+
+	return 0;
+}
+
+/**
+* Clone other player's statuses/parameters using method same like ACMD_FUNC(param), doesn't use stat point
+* Usage: @clonestat <char_id or "char name">
+* http://rathena.org/board/topic/95076-new-atcommands-suggestion/
+* @author [Cydh], [Antares]
+*/
+ACMD_FUNC(clonestat) {
+	struct map_session_data *pl_sd;
+	int char_id = 0;
+
+	nullpo_retr(-1, sd);
+
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	if( !message || !*message || (sscanf(message, "%d", &char_id) < 1 && sscanf(message, "\"%23[^\"]\"", atcmd_output) < 1) ) {
+		clif_displaymessage(fd, msg_txt(sd, 735)); // Please enter char_id or \"char name\".
+		return -1;
+	}
+
+	if (char_id)
+		pl_sd = map_charid2sd(char_id);
+	else
+		pl_sd = map_nick2sd(atcmd_output);
+
+	if (!pl_sd) {
+		clif_displaymessage(fd, msg_txt(sd, 3));
+		return -1;
+	}
+
+	if (sd == pl_sd) {
+		memset(atcmd_output, '\0', sizeof(atcmd_output));
+		sprintf(atcmd_output, msg_txt(sd, 734), "status"); // Cannot clone your own %.
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+
+	if (pc_get_group_level(sd) < pc_get_group_level(pl_sd)) {
+		memset(atcmd_output, '\0', sizeof(atcmd_output));
+		sprintf(atcmd_output, msg_txt(sd, 736), "status"); // Cannot clone %s from this player.
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+	else {
+		uint8 i;
+		short max_status[6];
+
+		pc_resetstate(sd);
+		if (pc_has_permission(sd, PC_PERM_BYPASS_STAT_ONCLONE))
+			max_status[0] = max_status[1] = max_status[2] = max_status[3] = max_status[4] = max_status[5] = SHRT_MAX;
+		else {
+			max_status[0] = pc_maxparameter(sd, PARAM_STR);
+			max_status[1] = pc_maxparameter(sd, PARAM_AGI);
+			max_status[2] = pc_maxparameter(sd, PARAM_VIT);
+			max_status[3] = pc_maxparameter(sd, PARAM_INT);
+			max_status[4] = pc_maxparameter(sd, PARAM_DEX);
+			max_status[5] = pc_maxparameter(sd, PARAM_LUK);
+		}
+
+#define clonestat_check(cmd,stat)\
+		{\
+			memset(atcmd_output, '\0', sizeof(atcmd_output));\
+			if (pl_sd->status.cmd > max_status[(stat)]) {\
+				sprintf(atcmd_output, msg_txt(sd, 737), #cmd, pl_sd->status.cmd, max_status[(stat)]);\
+				clif_displaymessage(fd, atcmd_output);\
+				sd->status.cmd = max_status[(stat)];\
+			}\
+			else\
+				sd->status.cmd = pl_sd->status.cmd;\
+		}
+
+		clonestat_check(str, PARAM_STR);
+		clonestat_check(agi, PARAM_AGI);
+		clonestat_check(vit, PARAM_VIT);
+		clonestat_check(int_, PARAM_INT);
+		clonestat_check(dex, PARAM_DEX);
+		clonestat_check(luk, PARAM_LUK);
+
+		for (i = 0; i < PARAM_MAX; i++) {
+			clif_updatestatus(sd, SP_STR + i);
+			clif_updatestatus(sd, SP_USTR + i);
+		}
+		status_calc_pc(sd, SCO_FORCE);
+	}
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	sprintf(atcmd_output, msg_txt(sd, 738), "status");
+	clif_displaymessage(fd, atcmd_output);
+
+#undef clonestat_check
+	return 0;
+}
+
 #include "../custom/atcommand.inc"
 
 /**
@@ -9764,6 +9928,8 @@ void atcommand_basecommands(void) {
 #endif
 		ACMD_DEF(fullstrip),
 		ACMD_DEF(costume),
+		ACMD_DEF(cloneequip),
+		ACMD_DEF(clonestat),
 	};
 	AtCommandInfo* atcommand;
 	int i;
