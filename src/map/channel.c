@@ -395,33 +395,30 @@ int channel_chk(char *chname, char *chpass, int type){
  * @chname : channel name
  * @sd : can be NULL, use to solve #map and #ally case
  * @flag&1 : create channel if not exist (map or ally only)
- * @flag&3 : join channel if not exist (map or ally only)
+ * @flag&2 : join the channel (map or ally only)
  * return
  *  NULL : channel not found
  */
 struct Channel* channel_name2channel(char *chname, struct map_session_data *sd, int flag){
-	struct Channel *channel;
-	if(channel_chk(chname, NULL, 1)) return NULL;
+	if(channel_chk(chname, NULL, 1))
+		return NULL;
 	if(sd && strcmpi(chname + 1,Channel_Config.map_chname) == 0){
-		channel = map[sd->bl.m].channel;
-		if(flag&1 && !channel) {
-			channel = channel_create(Channel_Config.map_chname,NULL,Channel_Config.map_chcolor,CHAN_TYPE_MAP,sd->bl.m);
-			if(flag&2) channel_mjoin(sd);
-			map[sd->bl.m].channel = channel;
-		}
+		if(flag&1 && !map[sd->bl.m].channel)
+			map[sd->bl.m].channel = channel_create(Channel_Config.map_chname,NULL,Channel_Config.map_chcolor,CHAN_TYPE_MAP,sd->bl.m);
+		if(flag&2)
+			channel_mjoin(sd);
+		return map[sd->bl.m].channel;
 	}
 	else if(sd && (strcmpi(chname + 1,Channel_Config.ally_chname) == 0) && sd->guild){
-		channel = sd->guild->channel;
-		if(flag&1 && !channel) {
-			channel = channel_create(Channel_Config.ally_chname,NULL,Channel_Config.ally_chcolor,CHAN_TYPE_ALLY,sd->guild->guild_id);
-			if(flag&2) channel_gjoin(sd,3);
-			sd->guild->channel = channel;
-		}
+		if(flag&1 && !sd->guild->channel)
+			sd->guild->channel = channel_create(Channel_Config.ally_chname,NULL,Channel_Config.ally_chcolor,CHAN_TYPE_ALLY,sd->guild->guild_id);
+		if(flag&2)
+			channel_gjoin(sd,3);
+		return sd->guild->channel;
 	}
-	else if( !(channel = strdb_get(channel_db, chname + 1)) ) {
-		return NULL;
-	}
-	return channel;
+	else
+		return (struct Channel*) strdb_get(channel_db, chname + 1);
+	return NULL;
 }
 
 /*
