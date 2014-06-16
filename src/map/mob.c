@@ -2489,7 +2489,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	}
 
 	if(mvp_sd && md->db->mexp > 0 && !md->special_state.ai) {
-		int log_mvp[2] = {0};
+		unsigned int log_mvp[2] = {0};
 		unsigned int mexp;
 		struct item item;
 		double exp;
