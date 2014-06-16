@@ -4953,13 +4953,14 @@ void pc_getitemfromcart(struct map_session_data *sd,int idx,int amount)
 
 	item_data=&sd->status.cart[idx];
 
-	if(item_data->nameid==0 || amount < 1 || item_data->amount<amount || sd->state.vending )
+	if(item_data->nameid == 0 || amount < 1 || item_data->amount<amount || sd->state.vending )
 		return;
 	if((flag = pc_additem(sd,item_data,amount,LOG_TYPE_NONE)) == 0)
 		pc_cart_delitem(sd,idx,amount,0,LOG_TYPE_NONE);
-	else
+	else {
 		clif_dropitem(sd,idx,0);
-	clif_additem(sd,0,0,flag);
+		clif_additem(sd,0,0,flag);
+	}
 }
 
 /*==========================================
