@@ -1637,10 +1637,16 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 
 		if(tbl->type == BL_PC)
 			mob_log_damage(md, tbl, 0); //Log interaction (counts as 'attacker' for the exp bonus)
-		if( !(md->sc.option&OPTION_HIDE) )
+
+		if( !(mode&MD_RANDOMTARGET) )
 			unit_attack(&md->bl,tbl->id,1);
-		else
-			mobskill_use(md, tick, -1);
+		else { // Attack once and find a new random target
+			int search_size = (view_range < md->status.rhw.range) ? view_range : md->status.rhw.range;
+			unit_attack(&md->bl, tbl->id, 0);
+			tbl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md), search_size);
+			md->target_id = tbl->id;
+			md->min_chase = md->db->range3;
+		}
 		return true;
 	}
 
@@ -1796,7 +1802,7 @@ static int mob_ai_hard(int tid, unsigned int tick, int id, intptr_t data)
 /*==========================================
  * Initializes the delay drop structure for mob-dropped items.
  *------------------------------------------*/
-static struct item_drop* mob_setdropitem(int nameid, int qty)
+static struct item_drop* mob_setdropitem(unsigned short nameid, int qty)
 {
 	struct item_drop *drop = ers_alloc(item_drop_ers, struct item_drop);
 	memset(&drop->item_data, 0, sizeof(struct item));
@@ -2483,7 +2489,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	}
 
 	if(mvp_sd && md->db->mexp > 0 && !md->special_state.ai) {
-		int log_mvp[2] = {0};
+		unsigned int log_mvp[2] = {0};
 		unsigned int mexp;
 		struct item item;
 		double exp;
@@ -3122,6 +3128,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 	struct block_list *bl;
 	struct mob_data *fmd = NULL;
 	int i,j,n;
+	short skill_target;
 
 	nullpo_ret(md);
 	nullpo_ret(ms = md->db->skill);
@@ -3221,10 +3228,11 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 			continue; //Skill requisite failed to be fulfilled.
 
 		//Execute skill
+		skill_target = (md->db->status.mode&MD_RANDOMTARGET) ? MST_RANDOM : ms[i].target;
 		if (skill_get_casttype(ms[i].skill_id) == CAST_GROUND)
 		{	//Ground skill.
 			short x, y;
-			switch (ms[i].target) {
+			switch (skill_target) {
 				case MST_RANDOM: //Pick a random enemy within skill range.
 					bl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md),
 						skill_get_range2(&md->bl, ms[i].skill_id, ms[i].skill_lv));
@@ -3254,10 +3262,10 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 			x = bl->x;
 		  	y = bl->y;
 			// Look for an area to cast the spell around...
-			if (ms[i].target >= MST_AROUND1 || ms[i].target >= MST_AROUND5) {
-				j = ms[i].target >= MST_AROUND1?
-					(ms[i].target-MST_AROUND1) +1:
-					(ms[i].target-MST_AROUND5) +1;
+			if (skill_target >= MST_AROUND1 || skill_target >= MST_AROUND5) {
+				j = skill_target >= MST_AROUND1?
+					(skill_target-MST_AROUND1) +1:
+					(skill_target-MST_AROUND5) +1;
 				map_search_freecell(&md->bl, md->bl.m, &x, &y, j, j, 3);
 			}
 			md->skill_idx = i;
@@ -3270,7 +3278,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 			}
 		} else {
 			//Targetted skill
-			switch (ms[i].target) {
+			switch (skill_target) {
 				case MST_RANDOM: //Pick a random enemy within skill range.
 					bl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md),
 						skill_get_range2(&md->bl, ms[i].skill_id, ms[i].skill_lv));
@@ -3660,7 +3668,7 @@ static unsigned int mob_drop_adjust(int baserate, int rate_adjust, unsigned shor
  * @param mob_id ID of the monster
  * @param rate_adjust pointer to store ratio if found
  */
-static void item_dropratio_adjust(int nameid, int mob_id, int *rate_adjust)
+static void item_dropratio_adjust(unsigned short nameid, int mob_id, int *rate_adjust)
 {
 	if( item_drop_ratio_db[nameid] ) {
 		if( item_drop_ratio_db[nameid]->mob_id[0] ) { // only for listed mobs
@@ -4521,12 +4529,13 @@ static bool mob_readdb_race2(char* fields[], int columns, int current)
  */
 static bool mob_readdb_itemratio(char* str[], int columns, int current)
 {
-	int nameid, ratio, i;
+	unsigned short nameid;
+	int ratio, i;
 	nameid = atoi(str[0]);
 
 	if( itemdb_exists(nameid) == NULL )
 	{
-		ShowWarning("itemdb_read_itemratio: Invalid item id %d.\n", nameid);
+		ShowWarning("itemdb_read_itemratio: Invalid item id %hu.\n", nameid);
 		return false;
 	}
 

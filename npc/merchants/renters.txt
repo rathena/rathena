@@ -162,7 +162,7 @@ hu_in01,381,304,5	script	Falcon Breeder#hnt	105,{
 
 	mes "[Falcon Breeder]";
 	if (BaseJob == Job_Hunter) {
-		if (checkoption(Option_Wug) || checkoption(Option_Wugrider)) {
+		if (checkwug()) {
 			mes "Um...";
 			mes "You can't rent a Falcon";
 			mes "until you dismiss your warg first!";
@@ -175,7 +175,7 @@ hu_in01,381,304,5	script	Falcon Breeder#hnt	105,{
 		next;
 		switch(select("Rent Falcon:Cancel")) {
 		case 1:
-			if (checkoption(Option_Wug) || checkoption(Option_Wugrider)) {
+			if (checkwug()) {
 				mes "[Falcon Breeder]";
 				mes "Um...";
 				mes "You can't rent a Falcon";

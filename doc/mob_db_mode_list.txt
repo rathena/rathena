@@ -26,7 +26,7 @@ MD_ANGRY              | 0x000800 |   2048
 MD_CHANGETARGET_MELEE | 0x001000 |   4096
 MD_CHANGETARGET_CHASE | 0x002000 |   8192
 MD_TARGETWEAK         | 0x004000 |  16384
-MD_RANDOMTARGET       | 0x008000 |  32768 (not implemented)
+MD_RANDOMTARGET       | 0x008000 |  32768
 MD_IGNOREMELEE        | 0x010000 |  65536
 MD_IGNOREMAGIC        | 0x020000 |  131072
 MD_IGNORERANGED       | 0x040000 |  262144
@@ -81,7 +81,6 @@ Target Weak: Allows aggressive monsters to only be aggressive against
 	For example, a monster of level 104 will not pick fights with a level 99.
 
 Random Target: Picks a new random target in range on each attack / skill.
-	(not implemented)
 
 Ignore Melee: The mob will take 1 HP damage from physical attacks.
 

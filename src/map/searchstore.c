@@ -343,7 +343,7 @@ void searchstore_clearremote(struct map_session_data* sd) {
 
 
 /// receives results from a store-specific callback
-bool searchstore_result(struct map_session_data* sd, int store_id, int account_id, const char* store_name, unsigned short nameid, unsigned short amount, unsigned int price, const short* card, unsigned char refine)
+bool searchstore_result(struct map_session_data* sd, int store_id, int account_id, const char* store_name, unsigned short nameid, unsigned short amount, unsigned int price, const unsigned short* card, unsigned char refine)
 {
 	struct s_search_store_info_item* ssitem;
 

@@ -69,7 +69,7 @@ void log_atcommand(struct map_session_data* sd, const char* message);
 
 /// old, but useful logs
 void log_branch(struct map_session_data* sd);
-void log_mvpdrop(struct map_session_data* sd, int monster_id, int* log_mvp);
+void log_mvpdrop(struct map_session_data* sd, int monster_id, unsigned int* log_mvp);
 
 int log_config_read(const char* cfgName);
 

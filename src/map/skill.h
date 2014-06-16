@@ -271,7 +271,8 @@ enum {
 
 /// Create Database item
 struct s_skill_produce_db {
-	int nameid, trigger;
+	unsigned short nameid;
+	int trigger;
 	int req_skill,req_skill_lv,itemlv;
 	int mat_id[MAX_PRODUCE_RESOURCE],mat_amount[MAX_PRODUCE_RESOURCE];
 };
@@ -279,7 +280,8 @@ extern struct s_skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
 
 /// Creating database arrow
 struct s_skill_arrow_db {
-	int nameid, trigger;
+	unsigned short nameid;
+	int trigger;
 	int cre_id[MAX_ARROW_RESOURCE],cre_amount[MAX_ARROW_RESOURCE];
 };
 extern struct s_skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
@@ -431,10 +433,10 @@ bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skil
 int skill_chastle_mob_changetarget(struct block_list *bl,va_list ap);
 
 // Item creation
-int skill_can_produce_mix( struct map_session_data *sd, int nameid, int trigger, int qty);
-int skill_produce_mix( struct map_session_data *sd, uint16 skill_id, int nameid, int slot1, int slot2, int slot3, int qty );
+int skill_can_produce_mix( struct map_session_data *sd, unsigned short nameid, int trigger, int qty);
+int skill_produce_mix( struct map_session_data *sd, uint16 skill_id, unsigned short nameid, int slot1, int slot2, int slot3, int qty );
 
-int skill_arrow_create( struct map_session_data *sd,int nameid);
+int skill_arrow_create( struct map_session_data *sd, unsigned short nameid);
 
 // skills for the mob
 int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,unsigned int tick,int flag );
@@ -1964,7 +1966,7 @@ enum wl_spheres {
 	WLS_WATER,
 	WLS_STONE,
 };
-int skill_spellbook (struct map_session_data *sd, int nameid);
+int skill_spellbook (struct map_session_data *sd, unsigned short nameid);
 int skill_block_check(struct block_list *bl, enum sc_type type, uint16 skill_id);
 /**
  * Guilottine Cross
@@ -1984,11 +1986,11 @@ bool skill_check_camouflage(struct block_list *bl, struct status_change_entry *s
 /**
  * Mechanic
  **/
-int skill_magicdecoy(struct map_session_data *sd, int nameid);
+int skill_magicdecoy(struct map_session_data *sd, unsigned short nameid);
 /**
  * Guiltoine Cross
  **/
-int skill_poisoningweapon( struct map_session_data *sd, int nameid);
+int skill_poisoningweapon( struct map_session_data *sd, unsigned short nameid);
 /**
  * Auto Shadow Spell (Shadow Chaser)
  **/

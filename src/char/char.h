@@ -68,15 +68,15 @@ struct Schema_Config {
 };
 extern struct Schema_Config schema_config;
 
-// Pincode system
+/// Pincode system
 enum pincode_state {
-	PINCODE_OK = 0,
-	PINCODE_ASK,
-	PINCODE_NOTSET,
-	PINCODE_EXPIRED,
-	PINCODE_NEW,
-	PINCODE_PASSED,
-	PINCODE_WRONG,
+	PINCODE_OK		= 0,
+	PINCODE_ASK		= 1,
+	PINCODE_NOTSET	= 2,
+	PINCODE_EXPIRED	= 3,
+	PINCODE_NEW		= 4,
+	PINCODE_PASSED	= 7,
+	PINCODE_WRONG	= 8,
 	PINCODE_MAXSTATE
 };
 struct Pincode_Config {

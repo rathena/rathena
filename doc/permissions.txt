@@ -187,3 +187,15 @@ Allows player to use the client command /check (displays character status).
 Allows player to use the client command /changemaptype.
 
 ---------------------------------------
+
+*command_enable
+
+Enable to use atcommand while talking with NPC.
+
+---------------------------------------
+
+*bypass_stat_onclone
+
+Bypass max parameter limit while using @clonestat
+
+---------------------------------------

@@ -271,7 +271,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 	}
 	vsd->vend_num = cursor;
 
-	//Always save BOTH: buyer and customer
+	//Always save BOTH: customer (buyer) and vender
 	if( save_settings&2 ) {
 		chrif_save(sd,0);
 		chrif_save(vsd,0);
@@ -321,6 +321,9 @@ bool vending_openvending(struct map_session_data* sd, const char* message, const
 		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0);
 		return false;
 	}
+
+	if (save_settings&2) // Avoid invalid data from saving
+		chrif_save(sd, 0);
 
 	// filter out invalid items
 	i = 0;

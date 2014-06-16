@@ -994,7 +994,7 @@ int status_check_visibility(struct block_list *src, struct block_list *target)
 					return 0;
 				if (tsc->data[SC_CLOAKINGEXCEED] && !(status->mode&MD_BOSS) && (tsd->special_state.perfect_hiding || (status->mode&MD_DETECTOR)))
 					return 0;
-				if (tsc && tsc->data[SC__FEINTBOMB] && !(status->mode&MD_BOSS|MD_DETECTOR))
+				if (tsc && tsc->data[SC__FEINTBOMB] && !(status->mode&(MD_BOSS|MD_DETECTOR)))
 					return 0;
 			}
 			break;
@@ -1544,7 +1544,7 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 		//Only for BL_PC
 		if (bl->type == BL_PC) {
 			struct map_session_data *sd = map_id2sd(bl->id);
-			int8 i;
+			uint8 i;
 
 			bonus += sd->bonus.hp;
 			if ((i = pc_checkskill(sd,CR_TRUST)) > 0)
@@ -1654,7 +1654,7 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 		//Only for BL_PC
 		if (bl->type == BL_PC) {
 			struct map_session_data *sd = map_id2sd(bl->id);
-			int8 i;
+			uint8 i;
 
 			bonus += sd->bonus.sp;
 			if ((i = pc_checkskill(sd,SL_KAINA)) > 0)
@@ -1678,14 +1678,14 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 		//Only for BL_PC
 		if (bl->type == BL_PC) {
 			struct map_session_data *sd = map_id2sd(bl->id);
-			int8 i;
+			uint8 i;
 
 			bonus += sd->sprate;
 			bonus -= 100; //Default sprate is 100, so it should be add 0%
 
-			if((i=pc_checkskill(sd,HP_MEDITATIO)) > 0)
+			if((i = pc_checkskill(sd,HP_MEDITATIO)) > 0)
 				bonus += i;
-			if((i=pc_checkskill(sd,HW_SOULDRAIN)) > 0)
+			if((i = pc_checkskill(sd,HW_SOULDRAIN)) > 0)
 				bonus += 2 * i;
 
 			//+200% for top ranking Taekwons over level 90.
@@ -1930,16 +1930,9 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		current_equip_item_index = index = sd->equip_index[i]; // We pass INDEX to current_equip_item_index - for EQUIP_SCRIPT (new cards solution) [Lupus]
 		if(index < 0)
 			continue;
-		if(i == EQI_AMMO) continue;
-		if(i == EQI_HAND_R && sd->equip_index[EQI_HAND_L] == index)
+		if(i == EQI_AMMO)
 			continue;
-		if(i == EQI_HEAD_MID && sd->equip_index[EQI_HEAD_LOW] == index)
-			continue;
-		if(i == EQI_HEAD_TOP && (sd->equip_index[EQI_HEAD_MID] == index || sd->equip_index[EQI_HEAD_LOW] == index))
-			continue;
-		if(i == EQI_COSTUME_MID && sd->equip_index[EQI_COSTUME_LOW] == index)
-			continue;
-		if(i == EQI_COSTUME_TOP && (sd->equip_index[EQI_COSTUME_MID] == index || sd->equip_index[EQI_COSTUME_LOW] == index))
+		if (pc_is_same_equip_index((enum equip_index)i, sd->equip_index, index))
 			continue;
 		if(!sd->inventory_data[index])
 			continue;
@@ -2075,12 +2068,9 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		current_equip_item_index = index = sd->equip_index[i]; // We pass INDEX to current_equip_item_index - for EQUIP_SCRIPT (new cards solution) [Lupus]
 		if(index < 0)
 			continue;
-		if(i == EQI_AMMO) continue;
-		if(i == EQI_HAND_R && sd->equip_index[EQI_HAND_L] == index)
+		if(i == EQI_AMMO)
 			continue;
-		if(i == EQI_HEAD_MID && sd->equip_index[EQI_HEAD_LOW] == index)
-			continue;
-		if(i == EQI_HEAD_TOP && (sd->equip_index[EQI_HEAD_MID] == index || sd->equip_index[EQI_HEAD_LOW] == index))
+		if (pc_is_same_equip_index((enum equip_index)i, sd->equip_index, index))
 			continue;
 
 		if(sd->inventory_data[index]) {

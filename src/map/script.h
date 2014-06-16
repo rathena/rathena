@@ -135,7 +135,6 @@ struct script_state {
 	unsigned npc_item_flag : 1;
 	unsigned mes_active : 1;  // Store if invoking character has a NPC dialog box open.
 	unsigned char* funcname; // Stores the current running function name
-	uint8 atcommand_enable_npc;
 };
 
 struct script_reg {

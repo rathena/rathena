@@ -277,7 +277,7 @@ int mapif_parse_itembound_retrieve(int fd)
 	}
 
 	SqlStmt_BindColumn(stmt, 0, SQLDT_INT,       &item.id,          0, NULL, NULL);
-	SqlStmt_BindColumn(stmt, 1, SQLDT_SHORT,     &item.nameid,      0, NULL, NULL);
+	SqlStmt_BindColumn(stmt, 1, SQLDT_USHORT,    &item.nameid,      0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 2, SQLDT_SHORT,     &item.amount,      0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 3, SQLDT_USHORT,    &item.equip,       0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 4, SQLDT_CHAR,      &item.identify,    0, NULL, NULL);
@@ -398,11 +398,11 @@ int mapif_parse_itembound_retrieve(int fd)
 		else
 			found = true;
 
-		StringBuf_Printf(&buf, "('%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d'",
+		StringBuf_Printf(&buf, "('%d', '%hu', '%d', '%d', '%d', '%d', '%d', '%d', '%d'",
 			guild_id, items[j].nameid, items[j].amount, items[j].equip, items[j].identify, items[j].refine,
 			items[j].attribute, items[j].expire_time, items[j].bound);
 		for( s = 0; s < MAX_SLOTS; ++s )
-			StringBuf_Printf(&buf, ", '%d'", items[j].card[s]);
+			StringBuf_Printf(&buf, ", '%hu'", items[j].card[s]);
 		StringBuf_AppendStr(&buf, ")");
 	}
 

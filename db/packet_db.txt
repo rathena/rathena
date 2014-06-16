@@ -2275,6 +2275,7 @@ packet_ver: 46
 0x09D8,2,dull,0 //npcmarketclosed
 0x09D6,-1,dull,0 //npcmarketpurchase
 0x09DF,7
+0x09B4,6,dull,0 // Cash Shop - Special Tab
 
 //Add new packets here
 //packet_ver: 47

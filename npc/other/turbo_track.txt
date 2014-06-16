@@ -4602,7 +4602,7 @@ OnTouch:
 		mes "things using the Kafra Service.^000000";
 		close;
 	}
-	if ((BaseJob == Job_Knight || BaseJob == Job_Crusader) && checkriding()) {
+	if ((BaseJob == Job_Knight || BaseJob == Job_Crusader) && (checkriding() || checkdragon())) {
 		if (MaxWeight-Weight < 20000) {
 			if (!(eaclass()&EAJL_THIRD)) {
 				set .@mount$,(BaseJob == Job_Knight)?"Peco Peco":"Grand Peco";

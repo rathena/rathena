@@ -428,7 +428,7 @@ void clif_scriptinput(struct map_session_data *sd, int npcid);	//self
 void clif_scriptinputstr(struct map_session_data *sd, int npcid);	// self
 void clif_cutin(struct map_session_data* sd, const char* image, int type);	//self
 void clif_viewpoint(struct map_session_data *sd, int npc_id, int type, int x, int y, int id, int color);	//self
-void clif_additem(struct map_session_data *sd, int n, int amount, int fail); // self
+void clif_additem(struct map_session_data *sd, int n, int amount, unsigned char fail); // self
 void clif_dropitem(struct map_session_data *sd,int n,int amount);	//self
 void clif_delitem(struct map_session_data *sd,int n,int amount, short reason); //self
 void clif_updatestatus(struct map_session_data *sd,int type);	//self
@@ -523,7 +523,7 @@ void clif_skill_teleportmessage(struct map_session_data *sd, int type);
 void clif_skill_produce_mix_list(struct map_session_data *sd, int skill_id, int trigger);
 void clif_cooking_list(struct map_session_data *sd, int trigger, uint16 skill_id, int qty, int list_type);
 
-void clif_produceeffect(struct map_session_data* sd,int flag,int nameid);
+void clif_produceeffect(struct map_session_data* sd,int flag, unsigned short nameid);
 
 void clif_skill_setunit(struct skill_unit *unit);
 void clif_skill_delunit(struct skill_unit *unit);
@@ -570,7 +570,7 @@ void clif_item_refine_list(struct map_session_data *sd);
 void clif_item_skill(struct map_session_data *sd,uint16 skill_id,uint16 skill_lv);
 
 void clif_mvp_effect(struct map_session_data *sd);
-void clif_mvp_item(struct map_session_data *sd,int nameid);
+void clif_mvp_item(struct map_session_data *sd, unsigned short nameid);
 void clif_mvp_exp(struct map_session_data *sd, unsigned int exp);
 void clif_mvp_noitem(struct map_session_data* sd);
 void clif_changed_dir(struct block_list *bl, enum send_target target);
@@ -661,7 +661,7 @@ void clif_maptypeproperty2(struct block_list *bl,enum send_target t);
 void clif_pvpset(struct map_session_data *sd, int pvprank, int pvpnum,int type);
 void clif_map_property_mapall(int map, enum map_property property);
 void clif_refine(int fd, int fail, int index, int val);
-void clif_upgrademessage(int fd, int result, int item_id);
+void clif_upgrademessage(int fd, int result, unsigned short item_id);
 
 //petsystem
 void clif_catch_process(struct map_session_data *sd);
@@ -763,8 +763,8 @@ void clif_mercenary_message(struct map_session_data* sd, int message);
 void clif_mercenary_updatestatus(struct map_session_data *sd, int type);
 
 // RENTAL SYSTEM
-void clif_rental_time(int fd, int nameid, int seconds);
-void clif_rental_expired(int fd, int index, int nameid);
+void clif_rental_time(int fd, unsigned short nameid, int seconds);
+void clif_rental_expired(int fd, int index, unsigned short nameid);
 
 // BOOK READING
 void clif_readbook(int fd, int book_id, int page);
@@ -815,7 +815,7 @@ void clif_open_search_store_info(struct map_session_data* sd);
 void clif_search_store_info_click_ack(struct map_session_data* sd, short x, short y);
 
 /// Cash Shop
-void clif_cashshop_result( struct map_session_data* sd, uint16 item_id, uint16 result );
+void clif_cashshop_result( struct map_session_data* sd, unsigned short item_id, uint16 result );
 void clif_cashshop_open( struct map_session_data* sd );
 
 void clif_display_pinfo(struct map_session_data *sd, int type);

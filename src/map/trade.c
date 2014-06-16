@@ -541,7 +541,6 @@ void trade_tradecommit(struct map_session_data *sd)
 {
 	struct map_session_data *tsd;
 	int trade_i;
-	int flag;
 
 	if (!sd->state.trading || !sd->state.deal_locked) //Locked should be 1 (pressed ok) before you can press trade.
 		return;
@@ -577,6 +576,7 @@ void trade_tradecommit(struct map_session_data *sd)
 	for( trade_i = 0; trade_i < 10; trade_i++ )
 	{
 		int n;
+		unsigned char flag = 0;
 		if (sd->deal.item[trade_i].amount)
 		{
 			n = sd->deal.item[trade_i].index;

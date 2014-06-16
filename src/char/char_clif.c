@@ -57,8 +57,8 @@ int chclif_parse_moveCharSlot( int fd, struct char_session_data* sd){
 		return 1;
 	}
 
-	// We dont even have a character on the chosen slot?
-	if( sd->found_char[from] <= 0 ){
+	// We don't even have a character on the chosen slot?
+	if( sd->found_char[from] <= 0 || to >= sd->char_slots ){
 		chclif_moveCharSlotReply( fd, sd, from, 1 );
 		return 1;
 	}
@@ -78,7 +78,7 @@ int chclif_parse_moveCharSlot( int fd, struct char_session_data* sd){
 				return 1;
 			}
 		}else{
-			// Admin doesnt allow us to
+			// Admin doesn't allow us to
 			chclif_moveCharSlotReply( fd, sd, from, 1 );
 			return 1;
 		}
@@ -323,7 +323,7 @@ void chclif_char_delete2_ack(int fd, int char_id, uint32 result, time_t delete_d
 	WFIFOW(fd,0) = 0x828;
 	WFIFOL(fd,2) = char_id;
 	WFIFOL(fd,6) = result;
-	WFIFOL(fd,10) = TOL(delete_date);
+	WFIFOL(fd,10) = TOL(delete_date-time(NULL));
 	WFIFOSET(fd,14);
 }
 
@@ -819,16 +819,13 @@ int chclif_parse_createnewchar(int fd, struct char_session_data* sd,int cmd){
 	if( (charserv_config.char_new)==0 ) //turn character creation on/off [Kevin]
 		i = -2;
 	else {
-		if (cmd == 0x970){
-			i = char_make_new_char_sql(sd, (char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29));
-			RFIFOSKIP(fd,31);
-		}
-		else if(cmd == 0x67){
 #if PACKETVER < 20120307
 			i = char_make_new_char_sql(sd, (char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOB(fd,27),RFIFOB(fd,28),RFIFOB(fd,29),RFIFOB(fd,30),RFIFOB(fd,31),RFIFOB(fd,32),RFIFOW(fd,33),RFIFOW(fd,35));
 			RFIFOSKIP(fd,37);
+#else
+			i = char_make_new_char_sql(sd, (char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29));
+			RFIFOSKIP(fd,31);
 #endif
-		}
 	}
 
 	//'Charname already exists' (-1), 'Char creation denied' (-2) and 'You are underaged' (-3)

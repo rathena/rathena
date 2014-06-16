@@ -9652,7 +9652,7 @@
 //
 22721,?_Box,? Box,18,10,,0,,,,0,0xFFFFFFFF,63,2,,,,,,{ /*No clue the random item yet*/ },{},{}
 22734,Revolution_Quiz_Box,Revolution Quiz Box,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 6635,2; getitem 6423,1; /*1x Enchanted Letter Introduction*/ },{},{}
-22735,Sealed_Moonlight_Flower_Scroll,Sealed Moonlight Flower Scroll,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ /*TODO: Confirm the rates*/ getitem callfunc("F_Rand",6228,6232,24150,19934,6635,17474),1; },{},{}{},{}
+22735,Sealed_Moonlight_Flower_Scroll,Sealed Moonlight Flower Scroll,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ /*TODO: Confirm the rates*/ getitem callfunc("F_Rand",6228,6232,24150,19934,6635,17474),1; },{},{}
 22737,Bloody_Cartridge,Bloody Cartridge,18,10,,250,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 13222,500; },{},{}
 22738,Silver_Cartridge,Silver Cartridge,18,10,,250,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 13221,500; },{},{}
 22739,Lightning_Sphere_Pack,Lightning Sphere Pack,18,10,,350,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 13224,500; },{},{}
