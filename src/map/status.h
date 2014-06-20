@@ -1752,10 +1752,11 @@ enum e_bonus_script_flags {
 	BSF_REM_ON_LUXANIMA			= 0x040, ///Removed by Luxanima
 	BSF_REM_ON_MADOGEAR			= 0x080, ///Removed when Madogear is activated or deactivated
 	BSF_REM_ON_DAMAGED			= 0x100, ///Removed when receive damage
+	BSF_PERMANENT				= 0x200, ///Cannot be removed by sc_end SC_ALL
 
-
-	BSF_REM_BUFF	= 0x0800,	///Remove positive buff
-	BSF_REM_DEBUFF	= 0x1000,	///Remove negative buff
+	// These flags better in the last of everything
+	BSF_REM_BUFF	= 0x1000,	///Remove positive buff
+	BSF_REM_DEBUFF	= 0x2000,	///Remove negative buff
 };
 
 ///Enum for status_get_hpbonus and status_get_spbonus

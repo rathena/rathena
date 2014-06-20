@@ -67,11 +67,12 @@ struct mob_chat *mob_chat(short id) { if(id<=0 || id>MAX_MOB_CHAT || mob_chat_db
 
 //Dynamic item drop ratio database for per-item drop ratio modifiers overriding global drop ratios.
 #define MAX_ITEMRATIO_MOBS 10
-struct item_drop_ratio {
+struct s_mob_item_drop_ratio {
+	unsigned short nameid;
 	int drop_ratio;
-	int mob_id[MAX_ITEMRATIO_MOBS];
+	unsigned short mob_id[MAX_ITEMRATIO_MOBS];
 };
-static struct item_drop_ratio *item_drop_ratio_db[MAX_ITEMDB];
+static DBMap *mob_item_drop_ratio;
 
 static struct eri *item_drop_ers; //For loot drops delay structures.
 static struct eri *item_drop_list_ers;
@@ -1643,9 +1644,10 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 		else { // Attack once and find a new random target
 			int search_size = (view_range < md->status.rhw.range) ? view_range : md->status.rhw.range;
 			unit_attack(&md->bl, tbl->id, 0);
-			tbl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md), search_size);
-			md->target_id = tbl->id;
-			md->min_chase = md->db->range3;
+			if ((tbl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md), search_size))) {
+				md->target_id = tbl->id;
+				md->min_chase = md->db->range3;
+			}
 		}
 		return true;
 	}
@@ -3670,15 +3672,16 @@ static unsigned int mob_drop_adjust(int baserate, int rate_adjust, unsigned shor
  */
 static void item_dropratio_adjust(unsigned short nameid, int mob_id, int *rate_adjust)
 {
-	if( item_drop_ratio_db[nameid] ) {
-		if( item_drop_ratio_db[nameid]->mob_id[0] ) { // only for listed mobs
+	struct s_mob_item_drop_ratio *item_ratio = (struct s_mob_item_drop_ratio *)idb_get(mob_item_drop_ratio, nameid);
+	if( item_ratio) {
+		if( item_ratio->mob_id[0] ) { // only for listed mobs
 			int i;
-			ARR_FIND(0, MAX_ITEMRATIO_MOBS, i, item_drop_ratio_db[nameid]->mob_id[i] == mob_id);
-			if(i < MAX_ITEMRATIO_MOBS) // found
-				*rate_adjust = item_drop_ratio_db[nameid]->drop_ratio;
+			ARR_FIND(0, MAX_ITEMRATIO_MOBS, i, item_ratio->mob_id[i] == mob_id);
+			if( i < MAX_ITEMRATIO_MOBS ) // found
+				*rate_adjust = item_ratio->drop_ratio;
 		}
 		else // for all mobs
-			*rate_adjust = item_drop_ratio_db[nameid]->drop_ratio;
+			*rate_adjust = item_ratio->drop_ratio;
 	}
 }
 
@@ -4531,24 +4534,34 @@ static bool mob_readdb_itemratio(char* str[], int columns, int current)
 {
 	unsigned short nameid;
 	int ratio, i;
+	struct s_mob_item_drop_ratio *item_ratio;
 	nameid = atoi(str[0]);
 
-	if( itemdb_exists(nameid) == NULL )
-	{
+	if (itemdb_exists(nameid) == NULL) {
 		ShowWarning("itemdb_read_itemratio: Invalid item id %hu.\n", nameid);
 		return false;
 	}
 
 	ratio = atoi(str[1]);
 
-	if(item_drop_ratio_db[nameid] == NULL)
-		item_drop_ratio_db[nameid] = (struct item_drop_ratio*)aCalloc(1, sizeof(struct item_drop_ratio));
+	if (!(item_ratio = (struct s_mob_item_drop_ratio *)idb_get(mob_item_drop_ratio,nameid)))
+		CREATE(item_ratio, struct s_mob_item_drop_ratio, 1);
 
-	item_drop_ratio_db[nameid]->drop_ratio = ratio;
-	for(i = 0; i < columns-2; i++)
-		item_drop_ratio_db[nameid]->mob_id[i] = atoi(str[i+2]);
+	item_ratio->drop_ratio = ratio;
+	memset(item_ratio->mob_id, 0, sizeof(item_ratio->mob_id));
+	for (i = 0; i < columns-2; i++)
+		item_ratio->mob_id[i] = atoi(str[i+2]);
+
+	if (!item_ratio->nameid)
+		idb_put(mob_item_drop_ratio, nameid, item_ratio);
 
 	return true;
+}
+
+static int mob_item_drop_ratio_free(DBKey key, DBData *data, va_list ap) {
+	struct s_mob_item_drop_ratio *item_ratio = db_data2ptr(data);
+	aFree(item_ratio);
+	return 0;
 }
 
 /**
@@ -4601,19 +4614,15 @@ void mob_reload(void) {
 	int i;
 
 	//Mob skills need to be cleared before re-reading them. [Skotlex]
-	for (i = 0; i < MAX_MOB_DB; i++)
+	for (i = 0; i < MAX_MOB_DB; i++) {
 		if (mob_db_data[i]) {
 			memset(&mob_db_data[i]->skill,0,sizeof(mob_db_data[i]->skill));
 			mob_db_data[i]->maxskill=0;
 		}
+	}
 
 	// Clear item_drop_ratio_db
-	for (i = 0; i < MAX_ITEMDB; i++) {
-		if (item_drop_ratio_db[i]) {
-			aFree(item_drop_ratio_db[i]);
-			item_drop_ratio_db[i] = NULL;
-		}
-	}
+	mob_item_drop_ratio->clear(mob_item_drop_ratio, mob_item_drop_ratio_free);
 
 	mob_load();
 }
@@ -4635,7 +4644,7 @@ void do_init_mob(void){
 	mob_makedummymobdb(0); //The first time this is invoked, it creates the dummy mob
 	item_drop_ers = ers_new(sizeof(struct item_drop),"mob.c::item_drop_ers",ERS_OPT_NONE);
 	item_drop_list_ers = ers_new(sizeof(struct item_drop_list),"mob.c::item_drop_list_ers",ERS_OPT_NONE);
-
+	mob_item_drop_ratio = idb_alloc(DB_OPT_BASE);
 	mob_load();
 
 	add_timer_func_list(mob_delayspawn,"mob_delayspawn");
@@ -4675,14 +4684,7 @@ void do_final_mob(void){
 			mob_chat_db[i] = NULL;
 		}
 	}
-	for (i = 0; i < MAX_ITEMDB; i++)
-	{
-		if (item_drop_ratio_db[i] != NULL)
-		{
-			aFree(item_drop_ratio_db[i]);
-			item_drop_ratio_db[i] = NULL;
-		}
-	}
+	mob_item_drop_ratio->destroy(mob_item_drop_ratio,mob_item_drop_ratio_free);
 	ers_destroy(item_drop_ers);
 	ers_destroy(item_drop_list_ers);
 }

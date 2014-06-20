@@ -8,8 +8,8 @@
 #include "../common/mmo.h" // ITEM_NAME_LENGTH
 #include "map.h"
 
-/// 65,535 entries in array (the rest goes to the db)
-#define MAX_ITEMDB 0x10000
+///Maximum allowed Item ID (range: 1 ~ 65,534)
+#define MAX_ITEMID USHRT_MAX
 ///Use apple for unknown items.
 #define UNKNOWN_ITEM_ID 512
 /// The maximum number of item delays
@@ -27,7 +27,7 @@
 
 #define CARD0_FORGE 0x00FF
 #define CARD0_CREATE 0x00FE
-#define CARD0_PET ((unsigned short)0xFF00)
+#define CARD0_PET 0x0100
 
 ///Marks if the card0 given is "special" (non-item id used to mark pets/created items. [Skotlex]
 #define itemdb_isspecial(i) (i == CARD0_FORGE || i == CARD0_CREATE || i == CARD0_PET)
@@ -418,7 +418,6 @@ struct item_data {
 
 struct item_data* itemdb_searchname(const char *name);
 int itemdb_searchname_array(struct item_data** data, int size, const char *str);
-struct item_data* itemdb_load(unsigned short nameid);
 struct item_data* itemdb_search(unsigned short nameid);
 struct item_data* itemdb_exists(unsigned short nameid);
 #define itemdb_name(n) itemdb_search(n)->name

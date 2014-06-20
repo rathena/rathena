@@ -1159,6 +1159,8 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 		sd->autobonus2[i].active = INVALID_TIMER;
 	for(i = 0; i < ARRAYLENGTH(sd->autobonus3); i++)
 		sd->autobonus3[i].active = INVALID_TIMER;
+	for(i = 0; i < ARRAYLENGTH(sd->bonus_script); i++)
+		sd->bonus_script[i].tid = INVALID_TIMER;
 
 	if (battle_config.item_auto_get)
 		sd->state.autoloot = 10000;
@@ -7313,7 +7315,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		item_tmp.card[3]=GetWord(sd->status.char_id,1);
 		map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 	}
-	
+
 	//Remove bonus_script when dead
 	pc_bonus_script_clear(sd,BSF_REM_ON_DEAD);
 
@@ -8253,6 +8255,7 @@ void pc_setoption(struct map_session_data *sd,int type)
 			status_change_end(&sd->bl,SC_CARTBOOST,INVALID_TIMER);
 			status_change_end(&sd->bl,SC_MELTDOWN,INVALID_TIMER);
 			status_change_end(&sd->bl,SC_MAXOVERTHRUST,INVALID_TIMER);
+			pc_bonus_script_clear(sd,BSF_REM_ON_MADOGEAR);
 		} else if( !(type&OPTION_MADOGEAR) && p_type&OPTION_MADOGEAR ) {
 			status_calc_pc(sd,SCO_NONE);
 			status_change_end(&sd->bl,SC_SHAPESHIFT,INVALID_TIMER);
@@ -8260,6 +8263,7 @@ void pc_setoption(struct map_session_data *sd,int type)
 			status_change_end(&sd->bl,SC_ACCELERATION,INVALID_TIMER);
 			status_change_end(&sd->bl,SC_OVERHEAT_LIMITPOINT,INVALID_TIMER);
 			status_change_end(&sd->bl,SC_OVERHEAT,INVALID_TIMER);
+			pc_bonus_script_clear(sd,BSF_REM_ON_MADOGEAR);
 		}
 	}
 
@@ -10872,28 +10876,30 @@ int pc_bonus_script_timer(int tid, unsigned int tick, int id, intptr_t data) {
 		return 0;
 	}
 
-	pc_bonus_script_remove(sd,i);
+	pc_bonus_script_remove(&sd->bonus_script[i]);
 	status_calc_pc(sd,SCO_NONE);
 	return 0;
 }
 
 /** [Cydh]
-* Remove bonus_script data from sd (not deleting timer)
+* Remove bonus_script data from player
 * @param sd: Target player
 * @param i: Bonus script index
 **/
-void pc_bonus_script_remove(struct map_session_data *sd, uint8 i) {
-	if (!sd || i >= MAX_PC_BONUS_SCRIPT)
+void pc_bonus_script_remove(struct s_bonus_script *bscript) {
+	if (!bscript)
 		return;
 
-	script_free_code(sd->bonus_script[i].script);
-	memset(&sd->bonus_script[i].script,0,sizeof(sd->bonus_script[i].script));
-	sd->bonus_script[i].script_str[0] = '\0';
-	sd->bonus_script[i].tick = 0;
-	sd->bonus_script[i].tid = 0;
-	sd->bonus_script[i].flag = 0;
-	clif_status_change(&sd->bl,sd->bonus_script[i].icon,0,0,0,0,0);
-	sd->bonus_script[i].icon = SI_BLANK;
+	if (bscript->script)
+		script_free_code(bscript->script);
+	bscript->script = NULL;
+	memset(bscript->script_str, '\0', sizeof(bscript->script_str));
+	bscript->tick = 0;
+	bscript->flag = 0;
+	bscript->icon = SI_BLANK;
+	if (bscript->tid != INVALID_TIMER)
+		delete_timer(bscript->tid,pc_bonus_script_timer);
+	bscript->tid = INVALID_TIMER;
 }
 
 /** [Cydh]
@@ -10914,13 +10920,36 @@ void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag) {
 				(flag&BSF_REM_DEBUFF && sd->bonus_script[i].type == 2)) //Remove bonus script based on debuff type
 			))) 
 		{
-			delete_timer(sd->bonus_script[i].tid,pc_bonus_script_timer);
-			pc_bonus_script_remove(sd,i);
+			clif_status_change(&sd->bl,sd->bonus_script[i].icon,0,0,0,0,0);
+			pc_bonus_script_remove(&sd->bonus_script[i]);
 			count++;
 		}
 	}
 	if (count && !(flag&BSF_REM_ON_LOGOUT)) //Don't need to do this if log out
 		status_calc_pc(sd,SCO_NONE);
+}
+
+/**
+* Clear all bonus script from player
+* @param sd
+* @param permanent If true, will removes permanent bonus script.
+* @author [Cydh]
+*/
+void pc_bonus_script_clear_all(struct map_session_data *sd, bool permanent) {
+	uint8 i, count = 0;
+	if (!sd)
+		return;
+
+	for (i = 0; i < MAX_PC_BONUS_SCRIPT; i++) {
+		if (!&sd->bonus_script[i] && !sd->bonus_script[i].script)
+			continue;
+		if (!permanent && sd->bonus_script[i].flag&BSF_PERMANENT)
+			continue;
+		clif_status_change(&sd->bl,sd->bonus_script[i].icon,0,0,0,0,0);
+		pc_bonus_script_remove(&sd->bonus_script[i]);
+		count++;
+	}
+	status_calc_pc(sd,SCO_NONE);
 }
 
 /** [Cydh]
