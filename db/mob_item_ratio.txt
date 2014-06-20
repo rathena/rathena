@@ -2,7 +2,7 @@
 // Overrides for global item_rate* values from conf/battle/drops.conf
 //
 // Structure of Database:
-// ItemID,Ratio{,MonsterID}
+// ItemID,Ratio{,MonsterID1,...,MonsterID10}
 //
 // Result:
 // ItemID base drop rates defined in mob_db will not get multiplied
