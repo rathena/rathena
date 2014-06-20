@@ -1432,6 +1432,9 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 			if(sc->data[SC_KAGEMUSYA] && --(sc->data[SC_KAGEMUSYA]->val3) <= 0)
 				status_change_end(target, SC_KAGEMUSYA, INVALID_TIMER);
 		}
+
+		if (target->type == BL_PC)
+			pc_bonus_script_clear(BL_CAST(BL_PC,target),BSF_REM_ON_DAMAGED);
 		unit_skillcastcancel(target, 2);
 	}
 
@@ -3134,7 +3137,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	for (i = 0; i < MAX_PC_BONUS_SCRIPT; i++) { //Process script Bonus [Cydh]
 		if (!(&sd->bonus_script[i]) || !sd->bonus_script[i].script)
 			continue;
-		if (!sd->bonus_script[i].tid) //Just add timer only for new attached script
+		if (sd->bonus_script[i].tid == INVALID_TIMER) //Just add timer only for new attached script
 			sd->bonus_script[i].tid = add_timer(sd->bonus_script[i].tick,pc_bonus_script_timer,sd->bl.id,i);
 		run_script(sd->bonus_script[i].script,0,sd->bl.id,0);
 	}
@@ -12271,6 +12274,16 @@ void status_change_clear_buffs (struct block_list* bl, int type)
 				break;
 		}
 		status_change_end(bl, (sc_type)i, INVALID_TIMER);
+	}
+
+	//Removes bonus_script
+	if (bl->type == BL_PC) {
+		i = 0;
+		if (type&1) i |= BSF_REM_BUFF;
+		if (type&2) i |= BSF_REM_DEBUFF;
+		if (type&4) i |= BSF_REM_ON_REFRESH;
+		if (type&8) i |= BSF_REM_ON_LUXANIMA;
+		pc_bonus_script_clear(BL_CAST(BL_PC,bl),i);
 	}
 
 	// Cleaning all extras vars

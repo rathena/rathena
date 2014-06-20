@@ -73,7 +73,7 @@
 #define MAX_GUILDLEVEL 50 ///Max Guild level
 #define MAX_GUARDIANS 8	///Local max per castle. If this value is increased, need to add more fields on MySQL `guild_castle` table [Skotlex]
 #define MAX_QUEST_OBJECTIVES 3 ///Max quest objectives for a quest
-#define MAX_PC_BONUS_SCRIPT 20
+#define MAX_PC_BONUS_SCRIPT 20 ///Max bonus script
 
 // for produce
 #define MIN_ATTRIBUTE 0

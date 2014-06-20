@@ -2309,6 +2309,12 @@ void script_hardcoded_constants(void) {
 	/* status option compounds */
 	script_set_constant("Option_Dragon",OPTION_DRAGON,false);
 	script_set_constant("Option_Costume",OPTION_COSTUME,false);
+
+	/* bonus_script commands */
+	script_set_constant("BSF_REM_BUFF",BSF_REM_BUFF,false);
+	script_set_constant("BSF_REM_DEBUFF",BSF_REM_DEBUFF,false);
+	script_set_constant("BSF_ALL",BSF_ALL,false);
+	script_set_constant("BSF_CLEARALL",BSF_CLEARALL,false);
 }
 
 /*==========================================
@@ -18678,13 +18684,15 @@ BUILDIN_FUNC(montransform) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/** [Cydh]
+/**
+ * Attach script to player for certain duration
  * bonus_script "<script code>",<duration>{,<flag>{,<type>{,<status_icon>{,<char_id>}}}};
  * @param "script code"
  * @param duration
  * @param flag
  * @param icon
  * @param char_id
+* @author [Cydh]
  **/
 BUILDIN_FUNC(bonus_script) {
 	uint8 i, flag = 0;
@@ -18748,8 +18756,36 @@ BUILDIN_FUNC(bonus_script) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+* Removes all bonus script from player
+* bonus_script_clear {<flag>,{<char_id>}};
+* @param flag 0 - Except permanent bonus, 1 - With permanent bonus
+* @param char_id Clear script from this character
+* @author [Cydh]
+*/
+BUILDIN_FUNC(bonus_script_clear) {
+	TBL_PC* sd;
+	bool flag = 0;
+
+	if (script_hasdata(st,2))
+		flag = script_getnum(st,2);
+
+	if (script_hasdata(st,3))
+		sd = map_charid2sd(script_getnum(st,3));
+	else
+		sd = script_rid2sd(st);
+
+	if (sd == NULL)
+		return SCRIPT_CMD_FAILURE;
+
+	pc_bonus_script_clear_all(sd,flag); /// Don't remove permanent script
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /** Allows player to use atcommand while talking with NPC
-* @author [Cydh], [Kichi] */
+* enable_command;
+* @author [Cydh], [Kichi]
+*/
 BUILDIN_FUNC(enable_command) {
 	TBL_PC* sd = script_rid2sd(st);
 
@@ -18760,7 +18796,9 @@ BUILDIN_FUNC(enable_command) {
 }
 
 /** Prevents player to use atcommand while talking with NPC
-* @author [Cydh], [Kichi] */
+* disable_command;
+* @author [Cydh], [Kichi]
+*/
 BUILDIN_FUNC(disable_command) {
 	TBL_PC* sd = script_rid2sd(st);
 
@@ -19419,6 +19457,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(vip_status,"i?"),
 	BUILDIN_DEF(vip_time,"i?"),
 	BUILDIN_DEF(bonus_script,"si????"),
+	BUILDIN_DEF(bonus_script_clear,"??"),
 	BUILDIN_DEF(getgroupitem,"i"),
 	BUILDIN_DEF(enable_command,""),
 	BUILDIN_DEF(disable_command,""),

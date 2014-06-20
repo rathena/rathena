@@ -1643,9 +1643,10 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 		else { // Attack once and find a new random target
 			int search_size = (view_range < md->status.rhw.range) ? view_range : md->status.rhw.range;
 			unit_attack(&md->bl, tbl->id, 0);
-			tbl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md), search_size);
-			md->target_id = tbl->id;
-			md->min_chase = md->db->range3;
+			if (tbl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md), search_size)) {
+				md->target_id = tbl->id;
+				md->min_chase = md->db->range3;
+			}
 		}
 		return true;
 	}

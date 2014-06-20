@@ -5343,11 +5343,17 @@ logs out.
 Note that the maximum number of 'bonus_script' commands that can run simultaneously
 for a player is 10 (MAX_PC_BONUS_SCRIPT in 'src/map/pc.h').
 
-Flags: (Default is 0)
-	&1: Remove when dead.
-	&2: Removable by Dispell.
-	&4: Removable by Clearance.
-	&8: Remove when player logs out.
+Flags (bitmask):
+	1   : Remove when dead.
+	2   : Removable by Dispell.
+	4   : Removable by Clearance.
+	8   : Remove when player logs out.
+	16  : Removeable by Banishing Buster.
+	32  : Removable by Refresh.
+	128 : Removable by Luxanima.
+	256 : Remove when Madogear is activated or deactivated.
+	512 : Remove when receive damage.
+	1024: Script is permanent, cannot be cleared by bonus_script_clear
 
 Types:
 	This will be used to decide negative or positive buff for 'debuff_on_logout'.
@@ -5360,6 +5366,16 @@ Status_icon: See "Status Icon" section in 'db/const.txt'. Default is SI_BLANK (-
 Example:
 	// Apple gives you +5 Str bonus for 1 minute when it's consumed.
 	512,Apple,Apple,0,15,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "{ bonus bStr,5; }",60; },{},{}
+
+---------------------------------------
+
+*bonus_script_clear {<flag>,{<char_id>}};
+
+Removes atatched bonus_script from player. If no 'char_id' given, it will removes
+from the invoker.
+
+If 'flag' is 1, means will clears all scripts even it's Permanent effect. By default,
+it just removes non-permanent script.
 
 ---------------------------------------
 
