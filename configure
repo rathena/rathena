@@ -633,6 +633,8 @@ MYSQL_CFLAGS
 MYSQL_VERSION
 HAVE_MYSQL
 MYSQL_CONFIG_HOME
+WITH_PLUGINS
+SOFLAGS
 AR
 SET_MAKE
 OMAP
@@ -1327,8 +1329,7 @@ Optional Features:
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
   --enable-manager=ARG    memory managers: no, builtin, memwatch, dmalloc,
                           gcollect, bcheck (defaults to builtin)
-  --enable-packetver=ARG  Sets the PACKETVER define of the map-server. (see
-                          src/map/clif.h)
+  --enable-packetver=ARG  Sets the PACKETVER define. (see src/common/mmo.h)
   --enable-debug[=ARG]    Compiles extra debug code. (disabled by default)
                           (available options: yes, no, gdb)
   --enable-prere[=ARG]    Compiles serv in prere mode. (disabled by default)
@@ -3628,19 +3629,19 @@ fi
 if test "${with_maxconn+set}" = set; then :
   withval=$with_maxconn;
 		if test "$withval" == "no";	 then
-			CFLAGS="$CFLAGS -DMAXCONN=16384"
+			CPPFLAGS="$CPPFLAGS -DMAXCONN=16384"
 		else
 
 			if ! test "$withval" -ge 0 -o "$withval" -lt 0 2>&- ; then
 				as_fn_error $? "Invalid argument --with-maxconn=$withval ... stopping" "$LINENO" 5
 			else
-				CFLAGS="$CFLAGS -DMAXCONN=$withval"
+				CPPFLAGS="$CPPFLAGS -DMAXCONN=$withval"
 			fi
 		fi
 
 else
 
-		CFLAGS="$CFLAGS -DMAXCONN=16384"
+		CPPFLAGS="$CPPFLAGS -DMAXCONN=16384"
 
 
 fi
@@ -4849,8 +4850,44 @@ if ac_fn_c_try_run "$LINENO"; then :
 
 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC supports -march=i686 (and we can run it)" >&5
+$as_echo_n "checking whether $CC supports -march=i686 (and we can run it)... " >&6; }
+		OLD_CFLAGS="$CFLAGS"
+		OLD_LDFLAGS="$LDFLAGS"
 		CFLAGS="$CFLAGS -march=i686"
 		LDFLAGS="$LDFLAGS -march=i686"
+		if test "$cross_compiling" = yes; then :
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: guessing no" >&5
+$as_echo "guessing no" >&6; }
+				CFLAGS="$OLD_CFLAGS"
+				LDFLAGS="$OLD_LDFLAGS"
+
+
+else
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+				int main(int argc, char **argv) { return 0; }
+
+_ACEOF
+if ac_fn_c_try_run "$LINENO"; then :
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+else
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+				CFLAGS="$OLD_CFLAGS"
+				LDFLAGS="$OLD_LDFLAGS"
+
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext
+fi
+
 
 else
 
@@ -4891,7 +4928,7 @@ if ac_fn_c_try_run "$LINENO"; then :
 
 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
-		CFLAGS="$CFLAGS -DHAS_TLS"
+		CPPFLAGS="$CPPFLAGS -DHAS_TLS"
 
 else
 
@@ -4903,30 +4940,6 @@ fi
 rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
   conftest.$ac_objext conftest.beam conftest.$ac_ext
 fi
-
-
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC supports -Wno-unused-parameter" >&5
-$as_echo_n "checking whether $CC supports -Wno-unused-parameter... " >&6; }
-OLD_CFLAGS="$CFLAGS"
-CFLAGS="$CFLAGS -Wno-unused-parameter"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-int foo;
-_ACEOF
-if ac_fn_c_try_compile "$LINENO"; then :
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-else
-
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-		PROD_WARN="$PROD_WARN -Wno-unused-parameter"
-
-
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-CFLAGS="$OLD_CFLAGS"
 
 
 #
@@ -4953,8 +4966,8 @@ else
 /* end confdefs.h.  */
 
 			int main(int argc, char **argv){
-               return 0;
-           }
+				return 0;
+			}
 
 _ACEOF
 if ac_fn_c_try_run "$LINENO"; then :
@@ -4978,23 +4991,278 @@ fi
 
 
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC supports -Wno-pointer-sign" >&5
-$as_echo_n "checking whether $CC supports -Wno-pointer-sign... " >&6; }
-OLD_CFLAGS="$CFLAGS"
-CFLAGS="$CFLAGS -Wno-pointer-sign"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+
+
+
+
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC supports -Wno-unused-parameter" >&5
+$as_echo_n "checking whether $CC supports -Wno-unused-parameter... " >&6; }
+		OLD_CFLAGS="$CFLAGS"
+		CFLAGS="$CFLAGS -Werror -Wno-unused-parameter"
+		cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 int foo;
 _ACEOF
 if ac_fn_c_try_compile "$LINENO"; then :
 
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+				# Recent versions of gcc don't fail if -Wno-foo is not recognized
+				# (unless there are also other warnings), so we also check for -Wfoo
+				# which always fails if not supported
+				CFLAGS="$OLD_CFLAGS -Werror -Wunused-parameter"
+				cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+int foo;
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+						{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC can actually use -Wno-pointer-sign" >&5
-$as_echo_n "checking whether $CC can actually use -Wno-pointer-sign... " >&6; }
-		# This option causes warnings in C++ mode
-		# Note: -Werror must be before -Wno-pointer-sign, otherwise it does not do anything
-		CFLAGS="$OLD_CFLAGS -Werror -Wno-pointer-sign"
+						CFLAGS="$OLD_CFLAGS -Wno-unused-parameter"
+						# Optionally, run a test
+						if test "xint foo(int bar) { return 0; }" != "x"; then
+							{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC can actually use -Wno-unused-parameter" >&5
+$as_echo_n "checking whether $CC can actually use -Wno-unused-parameter... " >&6; }
+							CFLAGS="$OLD_CFLAGS -Werror -Wunused-parameter"
+							cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+int foo(int bar) { return 0; }
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+									{ $as_echo "$as_me:${as_lineno-$LINENO}: result: not needed but enabled" >&5
+$as_echo "not needed but enabled" >&6; }
+									CFLAGS="$OLD_CFLAGS"
+
+else
+
+									CFLAGS="$OLD_CFLAGS -Werror -Wno-unused-parameter"
+									cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+int foo(int bar) { return 0; }
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+											{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+											CFLAGS="$OLD_CFLAGS -Wno-unused-parameter"
+
+else
+
+											{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+											CFLAGS="$OLD_CFLAGS"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+						fi
+
+else
+
+						{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+						CFLAGS="$OLD_CFLAGS"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+else
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+				CFLAGS="$OLD_CFLAGS"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+
+
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC supports -Wno-maybe-uninitialized" >&5
+$as_echo_n "checking whether $CC supports -Wno-maybe-uninitialized... " >&6; }
+		OLD_CFLAGS="$CFLAGS"
+		CFLAGS="$CFLAGS -Werror -Wno-maybe-uninitialized"
+		cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+int foo;
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+				# Recent versions of gcc don't fail if -Wno-foo is not recognized
+				# (unless there are also other warnings), so we also check for -Wfoo
+				# which always fails if not supported
+				CFLAGS="$OLD_CFLAGS -Werror -Wmaybe-uninitialized"
+				cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+int foo;
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+						{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+						CFLAGS="$OLD_CFLAGS -Wno-maybe-uninitialized"
+						# Optionally, run a test
+						if test "x" != "x"; then
+							{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC can actually use -Wno-maybe-uninitialized" >&5
+$as_echo_n "checking whether $CC can actually use -Wno-maybe-uninitialized... " >&6; }
+							CFLAGS="$OLD_CFLAGS -Werror -Wmaybe-uninitialized"
+							cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+									{ $as_echo "$as_me:${as_lineno-$LINENO}: result: not needed but enabled" >&5
+$as_echo "not needed but enabled" >&6; }
+									CFLAGS="$OLD_CFLAGS"
+
+else
+
+									CFLAGS="$OLD_CFLAGS -Werror -Wno-maybe-uninitialized"
+									cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+											{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+											CFLAGS="$OLD_CFLAGS -Wno-maybe-uninitialized"
+
+else
+
+											{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+											CFLAGS="$OLD_CFLAGS"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+						fi
+
+else
+
+						{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+						CFLAGS="$OLD_CFLAGS"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+else
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+				CFLAGS="$OLD_CFLAGS"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+
+
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC supports -Wno-clobbered" >&5
+$as_echo_n "checking whether $CC supports -Wno-clobbered... " >&6; }
+		OLD_CFLAGS="$CFLAGS"
+		CFLAGS="$CFLAGS -Werror -Wno-clobbered"
+		cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+int foo;
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+				# Recent versions of gcc don't fail if -Wno-foo is not recognized
+				# (unless there are also other warnings), so we also check for -Wfoo
+				# which always fails if not supported
+				CFLAGS="$OLD_CFLAGS -Werror -Wclobbered"
+				cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+int foo;
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+						{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+						CFLAGS="$OLD_CFLAGS -Wno-clobbered"
+						# Optionally, run a test
+						if test "x" != "x"; then
+							{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC can actually use -Wno-clobbered" >&5
+$as_echo_n "checking whether $CC can actually use -Wno-clobbered... " >&6; }
+							CFLAGS="$OLD_CFLAGS -Werror -Wclobbered"
+							cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+									{ $as_echo "$as_me:${as_lineno-$LINENO}: result: not needed but enabled" >&5
+$as_echo "not needed but enabled" >&6; }
+									CFLAGS="$OLD_CFLAGS"
+
+else
+
+									CFLAGS="$OLD_CFLAGS -Werror -Wno-clobbered"
+									cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+											{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+											CFLAGS="$OLD_CFLAGS -Wno-clobbered"
+
+else
+
+											{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+											CFLAGS="$OLD_CFLAGS"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+						fi
+
+else
+
+						{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+						CFLAGS="$OLD_CFLAGS"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+else
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+				CFLAGS="$OLD_CFLAGS"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+
+
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC supports -Wempty-body" >&5
+$as_echo_n "checking whether $CC supports -Wempty-body... " >&6; }
+		OLD_CFLAGS="$CFLAGS"
+		CFLAGS="$CFLAGS -Werror -Wempty-body"
 		cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 int foo;
@@ -5003,50 +5271,599 @@ if ac_fn_c_try_compile "$LINENO"; then :
 
 				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
-				PROD_WARN="$PROD_WARN -Wno-pointer-sign"
+				CFLAGS="$OLD_CFLAGS -Wempty-body"
+				# Optionally, run a test
+				if test "x" != "x"; then
+					{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC can actually use -Wempty-body" >&5
+$as_echo_n "checking whether $CC can actually use -Wempty-body... " >&6; }
+					CFLAGS="$OLD_CFLAGS -Werror -Wempty-body"
+					cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+							{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+							CFLAGS="$OLD_CFLAGS"
+
+
+							{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+							CFLAGS="$OLD_CFLAGS -Wempty-body"
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+				fi
 
 else
 
 				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
+				CFLAGS="$OLD_CFLAGS"
 
 
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
 
-else
-
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
 
 
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-CFLAGS="$OLD_CFLAGS"
-
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC supports -Wno-switch" >&5
-$as_echo_n "checking whether $CC supports -Wno-switch... " >&6; }
-OLD_CFLAGS="$CFLAGS"
-CFLAGS="$CFLAGS -Wno-switch"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC supports -Wnewline-eof" >&5
+$as_echo_n "checking whether $CC supports -Wnewline-eof... " >&6; }
+		OLD_CFLAGS="$CFLAGS"
+		CFLAGS="$CFLAGS -Werror -Wnewline-eof"
+		cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 int foo;
 _ACEOF
 if ac_fn_c_try_compile "$LINENO"; then :
-  	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
+				CFLAGS="$OLD_CFLAGS -Wnewline-eof"
+				# Optionally, run a test
+				if test "x" != "x"; then
+					{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC can actually use -Wnewline-eof" >&5
+$as_echo_n "checking whether $CC can actually use -Wnewline-eof... " >&6; }
+					CFLAGS="$OLD_CFLAGS -Werror -Wnewline-eof"
+					cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+							{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+							CFLAGS="$OLD_CFLAGS"
+
+
+							{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+							CFLAGS="$OLD_CFLAGS -Wnewline-eof"
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+				fi
 
 else
 
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-		CFLAGS="$OLD_CFLAGS"
+				CFLAGS="$OLD_CFLAGS"
 
 
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
 
+
+
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC supports -Wint-conversion" >&5
+$as_echo_n "checking whether $CC supports -Wint-conversion... " >&6; }
+		OLD_CFLAGS="$CFLAGS"
+		CFLAGS="$CFLAGS -Werror -Wint-conversion"
+		cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+int foo;
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+				CFLAGS="$OLD_CFLAGS -Wint-conversion"
+				# Optionally, run a test
+				if test "x" != "x"; then
+					{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC can actually use -Wint-conversion" >&5
+$as_echo_n "checking whether $CC can actually use -Wint-conversion... " >&6; }
+					CFLAGS="$OLD_CFLAGS -Werror -Wint-conversion"
+					cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+							{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+							CFLAGS="$OLD_CFLAGS"
+
+
+							{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+							CFLAGS="$OLD_CFLAGS -Wint-conversion"
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+				fi
+
+else
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+				CFLAGS="$OLD_CFLAGS"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+
+
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC supports -Wenum-conversion" >&5
+$as_echo_n "checking whether $CC supports -Wenum-conversion... " >&6; }
+		OLD_CFLAGS="$CFLAGS"
+		CFLAGS="$CFLAGS -Werror -Wenum-conversion"
+		cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+int foo;
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+				CFLAGS="$OLD_CFLAGS -Wenum-conversion"
+				# Optionally, run a test
+				if test "x" != "x"; then
+					{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC can actually use -Wenum-conversion" >&5
+$as_echo_n "checking whether $CC can actually use -Wenum-conversion... " >&6; }
+					CFLAGS="$OLD_CFLAGS -Werror -Wenum-conversion"
+					cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+							{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+							CFLAGS="$OLD_CFLAGS"
+
+
+							{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+							CFLAGS="$OLD_CFLAGS -Wenum-conversion"
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+				fi
+
+else
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+				CFLAGS="$OLD_CFLAGS"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+
+
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC supports -Wshorten-64-to-32" >&5
+$as_echo_n "checking whether $CC supports -Wshorten-64-to-32... " >&6; }
+		OLD_CFLAGS="$CFLAGS"
+		CFLAGS="$CFLAGS -Werror -Wshorten-64-to-32"
+		cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+int foo;
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+				CFLAGS="$OLD_CFLAGS -Wshorten-64-to-32"
+				# Optionally, run a test
+				if test "x" != "x"; then
+					{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC can actually use -Wshorten-64-to-32" >&5
+$as_echo_n "checking whether $CC can actually use -Wshorten-64-to-32... " >&6; }
+					CFLAGS="$OLD_CFLAGS -Werror -Wshorten-64-to-32"
+					cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+							{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+							CFLAGS="$OLD_CFLAGS"
+
+
+							{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+							CFLAGS="$OLD_CFLAGS -Wshorten-64-to-32"
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+				fi
+
+else
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+				CFLAGS="$OLD_CFLAGS"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+
+
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC supports -Wconstant-conversion" >&5
+$as_echo_n "checking whether $CC supports -Wconstant-conversion... " >&6; }
+		OLD_CFLAGS="$CFLAGS"
+		CFLAGS="$CFLAGS -Werror -Wconstant-conversion"
+		cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+int foo;
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+				CFLAGS="$OLD_CFLAGS -Wconstant-conversion"
+				# Optionally, run a test
+				if test "x" != "x"; then
+					{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC can actually use -Wconstant-conversion" >&5
+$as_echo_n "checking whether $CC can actually use -Wconstant-conversion... " >&6; }
+					CFLAGS="$OLD_CFLAGS -Werror -Wconstant-conversion"
+					cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+							{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+							CFLAGS="$OLD_CFLAGS"
+
+
+							{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+							CFLAGS="$OLD_CFLAGS -Wconstant-conversion"
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+				fi
+
+else
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+				CFLAGS="$OLD_CFLAGS"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+
+
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC supports -Wbool-conversion" >&5
+$as_echo_n "checking whether $CC supports -Wbool-conversion... " >&6; }
+		OLD_CFLAGS="$CFLAGS"
+		CFLAGS="$CFLAGS -Werror -Wbool-conversion"
+		cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+int foo;
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+				CFLAGS="$OLD_CFLAGS -Wbool-conversion"
+				# Optionally, run a test
+				if test "x" != "x"; then
+					{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC can actually use -Wbool-conversion" >&5
+$as_echo_n "checking whether $CC can actually use -Wbool-conversion... " >&6; }
+					CFLAGS="$OLD_CFLAGS -Werror -Wbool-conversion"
+					cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+							{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+							CFLAGS="$OLD_CFLAGS"
+
+
+							{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+							CFLAGS="$OLD_CFLAGS -Wbool-conversion"
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+				fi
+
+else
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+				CFLAGS="$OLD_CFLAGS"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+
+
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC supports -Wno-switch" >&5
+$as_echo_n "checking whether $CC supports -Wno-switch... " >&6; }
+		OLD_CFLAGS="$CFLAGS"
+		CFLAGS="$CFLAGS -Werror -Wno-switch"
+		cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+int foo;
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+				# Recent versions of gcc don't fail if -Wno-foo is not recognized
+				# (unless there are also other warnings), so we also check for -Wfoo
+				# which always fails if not supported
+				CFLAGS="$OLD_CFLAGS -Werror -Wswitch"
+				cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+int foo;
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+						{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+						CFLAGS="$OLD_CFLAGS -Wno-switch"
+						# Optionally, run a test
+						if test "x" != "x"; then
+							{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC can actually use -Wno-switch" >&5
+$as_echo_n "checking whether $CC can actually use -Wno-switch... " >&6; }
+							CFLAGS="$OLD_CFLAGS -Werror -Wswitch"
+							cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+									{ $as_echo "$as_me:${as_lineno-$LINENO}: result: not needed but enabled" >&5
+$as_echo "not needed but enabled" >&6; }
+									CFLAGS="$OLD_CFLAGS"
+
+else
+
+									CFLAGS="$OLD_CFLAGS -Werror -Wno-switch"
+									cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+											{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+											CFLAGS="$OLD_CFLAGS -Wno-switch"
+
+else
+
+											{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+											CFLAGS="$OLD_CFLAGS"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+						fi
+
+else
+
+						{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+						CFLAGS="$OLD_CFLAGS"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+else
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+				CFLAGS="$OLD_CFLAGS"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+
+
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC supports -Wno-missing-field-initializers" >&5
+$as_echo_n "checking whether $CC supports -Wno-missing-field-initializers... " >&6; }
+		OLD_CFLAGS="$CFLAGS"
+		CFLAGS="$CFLAGS -Werror -Wno-missing-field-initializers"
+		cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+int foo;
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+				# Recent versions of gcc don't fail if -Wno-foo is not recognized
+				# (unless there are also other warnings), so we also check for -Wfoo
+				# which always fails if not supported
+				CFLAGS="$OLD_CFLAGS -Werror -Wmissing-field-initializers"
+				cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+int foo;
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+						{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+						CFLAGS="$OLD_CFLAGS -Wno-missing-field-initializers"
+						# Optionally, run a test
+						if test "x" != "x"; then
+							{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC can actually use -Wno-missing-field-initializers" >&5
+$as_echo_n "checking whether $CC can actually use -Wno-missing-field-initializers... " >&6; }
+							CFLAGS="$OLD_CFLAGS -Werror -Wmissing-field-initializers"
+							cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+									{ $as_echo "$as_me:${as_lineno-$LINENO}: result: not needed but enabled" >&5
+$as_echo "not needed but enabled" >&6; }
+									CFLAGS="$OLD_CFLAGS"
+
+else
+
+									CFLAGS="$OLD_CFLAGS -Werror -Wno-missing-field-initializers"
+									cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+											{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+											CFLAGS="$OLD_CFLAGS -Wno-missing-field-initializers"
+
+else
+
+											{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+											CFLAGS="$OLD_CFLAGS"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+						fi
+
+else
+
+						{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+						CFLAGS="$OLD_CFLAGS"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+else
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+				CFLAGS="$OLD_CFLAGS"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+
+
+# Certain versions of gcc make -Wshadow completely useless by making it flood
+# you with unnecessary warnings <https://lkml.org/lkml/2006/11/28/239>
+# Let's check if we can really use it
+SAVED_OLD_CFLAGS="$CFLAGS"
+
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC supports -Wshadow" >&5
+$as_echo_n "checking whether $CC supports -Wshadow... " >&6; }
+		OLD_CFLAGS="$CFLAGS"
+		CFLAGS="$CFLAGS -Werror -Wshadow"
+		cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+int foo;
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+				CFLAGS="$OLD_CFLAGS -Wshadow"
+				# Optionally, run a test
+				if test "x" != "x"; then
+					{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC can actually use -Wshadow" >&5
+$as_echo_n "checking whether $CC can actually use -Wshadow... " >&6; }
+					CFLAGS="$OLD_CFLAGS -Werror -Wshadow"
+					cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+							{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+							CFLAGS="$OLD_CFLAGS"
+
+
+							{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+							CFLAGS="$OLD_CFLAGS -Wshadow"
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+				fi
+
+else
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+				CFLAGS="$OLD_CFLAGS"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+
+if test "x$CFLAGS" != "x$SAVED_OLD_CFLAGS"; then
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC can efficiently use -Wshadow" >&5
+$as_echo_n "checking whether $CC can efficiently use -Wshadow... " >&6; }
+	NEW_CFLAGS="$CFLAGS"
+	CFLAGS="$CFLAGS -Werror -Wshadow"
+	cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+			int foo(void) {
+				return 0;
+			}
+			int bar(void) {
+				int foo = 0;
+				return foo + 1;
+			}
+
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+			{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+			CFLAGS="$NEW_CFLAGS"
+
+else
+
+			{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+			CFLAGS="$SAVED_OLD_CFLAGS"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+fi
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC supports -fPIC" >&5
 $as_echo_n "checking whether $CC supports -fPIC... " >&6; }
@@ -5073,6 +5890,206 @@ fi
 rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
 CFLAGS="$OLD_CFLAGS"
 
+#
+# option for shared objects
+#
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking how to make shared objects" >&5
+$as_echo_n "checking how to make shared objects... " >&6; }
+OLD_CFLAGS="$CFLAGS"
+compiler_shared_objects=""
+compiler_supports_shared_objects="no"
+if test "$compiler_supports_pic" = "yes" ; then
+	my_shared_test_flags="$CFLAGS -fPIC"
+fi
+# default
+CFLAGS="$my_shared_test_flags -shared"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+		int bar = 0;
+
+		int foo(void)
+		{
+			return bar;
+		}
+
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+
+		compiler_shared_objects="-shared"
+		compiler_supports_shared_objects="yes"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+# BeOS specific
+CFLAGS="$my_shared_test_flags -nostart"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+		int bar = 0;
+
+		int foo(void)
+		{
+			return bar;
+		}
+
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+
+		compiler_shared_objects="-nostart"
+		compiler_supports_shared_objects="yes"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+CFLAGS="$OLD_CFLAGS"
+if test "$compiler_supports_shared_objects" = "no" ; then
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: not supported" >&5
+$as_echo "not supported" >&6; }
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: compiler is unable to generate shared objects, disabled plugins (optional)" >&5
+$as_echo "$as_me: compiler is unable to generate shared objects, disabled plugins (optional)" >&6;}
+	WITH_PLUGINS="no"
+else
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $compiler_shared_objects $compiler_supports_shared_objects" >&5
+$as_echo "$compiler_shared_objects $compiler_supports_shared_objects" >&6; }
+	SOFLAGS="$SOFLAGS $compiler_shared_objects"
+
+
+	#
+	# On certain platforms, undefined references on shared libraries won't be checked
+	# unless explicitly required with the --no-undefined linker option
+	#
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC needs -Wl,--no-undefined to check for undefined references in shared objects" >&5
+$as_echo_n "checking whether $CC needs -Wl,--no-undefined to check for undefined references in shared objects... " >&6; }
+	OLD_CFLAGS="$CFLAGS"
+	CFLAGS="$SOFLAGS"
+	cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+			void foo(void) {
+				foobar();
+			}
+
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+
+			CFLAGS="$SOFLAGS -Wl,--no-undefined"
+			cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+					int bar = 0;
+
+					int foo(void) {
+						return bar;
+					}
+
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+
+					{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+					SOFLAGS="$SOFLAGS -Wl,--no-undefined"
+
+else
+
+					{ $as_echo "$as_me:${as_lineno-$LINENO}: result: unsupported (undefined references check will be ignored)" >&5
+$as_echo "unsupported (undefined references check will be ignored)" >&6; }
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+
+else
+
+			{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+	CFLAGS="$OLD_CFLAGS"
+
+	#
+	# shared objects need position independent code; some platforms emit
+	# it always, others need -fPIC
+	#
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC needs -fPIC for shared objects" >&5
+$as_echo_n "checking whether $CC needs -fPIC for shared objects... " >&6; }
+	OLD_CFLAGS="$CFLAGS"
+	CFLAGS="$CFLAGS $SOFLAGS"
+	WITH_PLUGINS="yes"
+	cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+			int bar = 0;
+
+			int foo(void)
+			{
+				return bar;
+			}
+
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+
+			{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+			CFLAGS="$OLD_CFLAGS"
+
+else
+
+			if test "$compiler_supports_pic" = "yes" ; then
+				# Verify if -shared really fails due to lack of -fPIC or something else
+				CFLAGS="$CFLAGS -fPIC"
+				cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+						int bar = 0;
+
+						int foo(void)
+						{
+							return bar;
+						}
+
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+
+						{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+						CFLAGS="$OLD_CFLAGS -fPIC"
+
+else
+
+						{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no, but fails for another reason" >&5
+$as_echo "no, but fails for another reason" >&6; }
+						as_fn_error $? "compiler is unable to compile shared objects for an unhandled reason, please report this with attached config.log... stopping" "$LINENO" 5
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+			else
+				# Disable compilation of plugins (optional), so 'make all' does not fail
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes, but unsupported" >&5
+$as_echo "yes, but unsupported" >&6; }
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: compiler is unable to generate position independent code, disabled plugins (optional)" >&5
+$as_echo "$as_me: compiler is unable to generate position independent code, disabled plugins (optional)" >&6;}
+				WITH_PLUGINS="no"
+			fi
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+
+fi
+my_shared_test_flags=""
+
+
 
 #
 # -O2 implies -fstrict-aliasing, but the code is not safe for that
@@ -5098,31 +6115,6 @@ $as_echo "no" >&6; }
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
 
-#
-# check if support conversion check
-#
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC supports -Wconversion" >&5
-$as_echo_n "checking whether $CC supports -Wconversion... " >&6; }
-OLD_CFLAGS="$CFLAGS"
-CFLAGS="$CFLAGS -Wconversion"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-int foo;
-_ACEOF
-if ac_fn_c_try_compile "$LINENO"; then :
-
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-		EXTRA_WARN="-Wconversion"
-
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-CFLAGS="$OLD_CFLAGS"
-
 
 ###############################################################################
 # Check for libraries and header files.
@@ -5134,7 +6126,7 @@ CFLAGS="$OLD_CFLAGS"
 #
 ac_fn_c_check_func "$LINENO" "setrlimit" "ac_cv_func_setrlimit"
 if test "x$ac_cv_func_setrlimit" = xyes; then :
-  CFLAGS="$CFLAGS -DHAVE_SETRLIMIT"
+  CPPFLAGS="$CPPFLAGS -DHAVE_SETRLIMIT"
 fi
 
 
@@ -5144,7 +6136,7 @@ fi
 #
 ac_fn_c_check_func "$LINENO" "strnlen" "ac_cv_func_strnlen"
 if test "x$ac_cv_func_strnlen" = xyes; then :
-  CFLAGS="$CFLAGS -DHAVE_STRNLEN"
+  CPPFLAGS="$CPPFLAGS -DHAVE_STRNLEN"
 fi
 
 
@@ -5184,7 +6176,12 @@ done
 
 for ac_header in xlocale.h
 do :
-  ac_fn_c_check_header_mongrel "$LINENO" "xlocale.h" "ac_cv_header_xlocale_h" "$ac_includes_default"
+  ac_fn_c_check_header_compile "$LINENO" "xlocale.h" "ac_cv_header_xlocale_h" "
+#ifdef HAVE_XLOCALE_H
+     # include <xlocale.h>
+     #endif
+
+"
 if test "x$ac_cv_header_xlocale_h" = xyes; then :
   cat >>confdefs.h <<_ACEOF
 #define HAVE_XLOCALE_H 1
@@ -5200,13 +6197,13 @@ done
 #
 case $enable_manager in
 	"no")
-		CFLAGS="$CFLAGS -DNO_MEMMGR"
+		CPPFLAGS="$CPPFLAGS -DNO_MEMMGR"
 		;;
 	"builtin")
 		# enabled by default
 		;;
 	"memwatch")
-		CFLAGS="$CFLAGS -DMEMWATCH"
+		CPPFLAGS="$CPPFLAGS -DMEMWATCH"
 		ac_fn_c_check_header_mongrel "$LINENO" "memwatch.h" "ac_cv_header_memwatch_h" "$ac_includes_default"
 if test "x$ac_cv_header_memwatch_h" = xyes; then :
 
@@ -5217,7 +6214,7 @@ fi
 
 		;;
 	"dmalloc")
-		CFLAGS="$CFLAGS -DDMALLOC -DDMALLOC_FUNC_CHECK"
+		CPPFLAGS="$CPPFLAGS -DDMALLOC -DDMALLOC_FUNC_CHECK"
 		LIBS="$LIBS -ldmalloc"
 		ac_fn_c_check_header_mongrel "$LINENO" "dmalloc.h" "ac_cv_header_dmalloc_h" "$ac_includes_default"
 if test "x$ac_cv_header_dmalloc_h" = xyes; then :
@@ -5229,7 +6226,7 @@ fi
 
 		;;
 	"gcollect")
-		CFLAGS="$CFLAGS -DGCOLLECT"
+		CPPFLAGS="$CPPFLAGS -DGCOLLECT"
 		LIBS="$LIBS -lgc"
 		ac_fn_c_check_header_mongrel "$LINENO" "gc.h" "ac_cv_header_gc_h" "$ac_includes_default"
 if test "x$ac_cv_header_gc_h" = xyes; then :
@@ -5241,7 +6238,7 @@ fi
 
 		;;
 	"bcheck")
-		CFLAGS="$CFLAGS -DBCHECK"
+		CPPFLAGS="$CPPFLAGS -DBCHECK"
 		;;
 esac
 
@@ -5250,7 +6247,7 @@ esac
 # Packetver
 #
 if test -n "$enable_packetver" ; then
-	CFLAGS="$CFLAGS -DPACKETVER=$enable_packetver"
+	CPPFLAGS="$CPPFLAGS -DPACKETVER=$enable_packetver"
 fi
 
 
@@ -5260,14 +6257,14 @@ fi
 case $enable_debug in
 	"no")
 		# default value
-		CFLAGS="$CFLAGS"
+		CPPFLAGS="$CPPFLAGS"
 		;;
 	"yes")
-		CFLAGS="$CFLAGS -g -DDEBUG"
+		CPPFLAGS="$CPPFLAGS -g -DDEBUG"
 		LDFLAGS="$LDFLAGS -g"
 		;;
 	"gdb")
-		CFLAGS="$CFLAGS -ggdb -DDEBUG"
+		CPPFLAGS="$CPPFLAGS -ggdb -DDEBUG"
 		LDFLAGS="$LDFLAGS -g"
 		;;
 esac
@@ -5278,10 +6275,10 @@ esac
 case $enable_prere in
 	"no")
 		# default value
-		CFLAGS="$CFLAGS"
+		CPPFLAGS="$CPPFLAGS"
 		;;
 	"yes")
-		CFLAGS="$CFLAGS -DPRERE"
+		CPPFLAGS="$CPPFLAGS -DPRERE"
 		;;
 esac
 
@@ -5290,13 +6287,13 @@ esac
 #
 case $enable_warn in
 	"no") #default
-		CFLAGS="$CFLAGS $PROD_WARN"
+		CPPFLAGS="$CPPFLAGS $PROD_WARN"
 		;;
 	"yes")
-		CFLAGS="$CFLAGS"
+		CPPFLAGS="$CPPFLAGS"
 		;;
 	"extra")
-		CFLAGS="$CFLAGS $EXTRA_WARN"
+		CPPFLAGS="$CPPFLAGS $EXTRA_WARN"
 		;;
 esac
 
@@ -5308,7 +6305,7 @@ case $enable_buildbot in
 		# default value
 		;;
 	"yes")
-		CFLAGS="$CFLAGS -DBUILDBOT"
+		CPPFLAGS="$CPPFLAGS -DBUILDBOT"
 		;;
 esac
 
@@ -5320,7 +6317,7 @@ case $enable_rdtsc in
 		#default value
 		;;
 	1)
-		CFLAGS="$CFLAGS -DENABLE_RDTSC"
+		CPPFLAGS="$CPPFLAGS -DENABLE_RDTSC"
 		;;
 esac
 
@@ -5346,13 +6343,12 @@ if test -n "${ZLIB_HOME}" ; then
 	LDFLAGS="$LDFLAGS -L${ZLIB_HOME}/lib"
 	CPPFLAGS="$CPPFLAGS -I${ZLIB_HOME}/include"
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for inflateEnd in -lz" >&5
-$as_echo_n "checking for inflateEnd in -lz... " >&6; }
-if ${ac_cv_lib_z_inflateEnd+:} false; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing inflateEnd" >&5
+$as_echo_n "checking for library containing inflateEnd... " >&6; }
+if ${ac_cv_search_inflateEnd+:} false; then :
   $as_echo_n "(cached) " >&6
 else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lz  $LIBS"
+  ac_func_search_save_LIBS=$LIBS
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -5371,29 +6367,45 @@ return inflateEnd ();
   return 0;
 }
 _ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_z_inflateEnd=yes
-else
-  ac_cv_lib_z_inflateEnd=no
+for ac_lib in '' z; do
+  if test -z "$ac_lib"; then
+    ac_res="none required"
+  else
+    ac_res=-l$ac_lib
+    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
+  fi
+  if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_search_inflateEnd=$ac_res
 fi
 rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
+    conftest$ac_exeext
+  if ${ac_cv_search_inflateEnd+:} false; then :
+  break
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_z_inflateEnd" >&5
-$as_echo "$ac_cv_lib_z_inflateEnd" >&6; }
-if test "x$ac_cv_lib_z_inflateEnd" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBZ 1
-_ACEOF
+done
+if ${ac_cv_search_inflateEnd+:} false; then :
 
-  LIBS="-lz $LIBS"
+else
+  ac_cv_search_inflateEnd=no
+fi
+rm conftest.$ac_ext
+LIBS=$ac_func_search_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_search_inflateEnd" >&5
+$as_echo "$ac_cv_search_inflateEnd" >&6; }
+ac_res=$ac_cv_search_inflateEnd
+if test "$ac_res" != no; then :
+  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
 
 else
   as_fn_error $? "zlib library not found or incompatible, please specify the correct path with --with-zlib=DIR... stopping" "$LINENO" 5
 fi
 
-ac_fn_c_check_header_mongrel "$LINENO" "zlib.h" "ac_cv_header_zlib_h" "$ac_includes_default"
+ac_fn_c_check_header_compile "$LINENO" "zlib.h" "ac_cv_header_zlib_h" "#ifdef HAVE_ZLIB_H
+     # include <zlib.h>
+     #endif
+
+"
 if test "x$ac_cv_header_zlib_h" = xyes; then :
 
 else
@@ -5563,7 +6575,7 @@ if ac_fn_c_try_run "$LINENO"; then :
 
 			{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
-			CFLAGS="$CFLAGS -DHAVE_MONOTONIC_CLOCK"
+			CPPFLAGS="$CPPFLAGS -DHAVE_MONOTONIC_CLOCK"
 
 else
 
@@ -5583,13 +6595,12 @@ fi
 #
 # pthread
 #
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for pthread_create in -lpthread" >&5
-$as_echo_n "checking for pthread_create in -lpthread... " >&6; }
-if ${ac_cv_lib_pthread_pthread_create+:} false; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing pthread_create" >&5
+$as_echo_n "checking for library containing pthread_create... " >&6; }
+if ${ac_cv_search_pthread_create+:} false; then :
   $as_echo_n "(cached) " >&6
 else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lpthread  $LIBS"
+  ac_func_search_save_LIBS=$LIBS
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -5608,35 +6619,46 @@ return pthread_create ();
   return 0;
 }
 _ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_pthread_pthread_create=yes
-else
-  ac_cv_lib_pthread_pthread_create=no
+for ac_lib in '' pthread; do
+  if test -z "$ac_lib"; then
+    ac_res="none required"
+  else
+    ac_res=-l$ac_lib
+    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
+  fi
+  if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_search_pthread_create=$ac_res
 fi
 rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
+    conftest$ac_exeext
+  if ${ac_cv_search_pthread_create+:} false; then :
+  break
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_pthread_pthread_create" >&5
-$as_echo "$ac_cv_lib_pthread_pthread_create" >&6; }
-if test "x$ac_cv_lib_pthread_pthread_create" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBPTHREAD 1
-_ACEOF
+done
+if ${ac_cv_search_pthread_create+:} false; then :
 
-  LIBS="-lpthread $LIBS"
+else
+  ac_cv_search_pthread_create=no
+fi
+rm conftest.$ac_ext
+LIBS=$ac_func_search_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_search_pthread_create" >&5
+$as_echo "$ac_cv_search_pthread_create" >&6; }
+ac_res=$ac_cv_search_pthread_create
+if test "$ac_res" != no; then :
+  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
 
 else
   as_fn_error $? "pthread library not found or incompatible" "$LINENO" 5
 fi
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for pthread_sigmask in -lpthread" >&5
-$as_echo_n "checking for pthread_sigmask in -lpthread... " >&6; }
-if ${ac_cv_lib_pthread_pthread_sigmask+:} false; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing pthread_sigmask" >&5
+$as_echo_n "checking for library containing pthread_sigmask... " >&6; }
+if ${ac_cv_search_pthread_sigmask+:} false; then :
   $as_echo_n "(cached) " >&6
 else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lpthread  $LIBS"
+  ac_func_search_save_LIBS=$LIBS
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -5655,35 +6677,46 @@ return pthread_sigmask ();
   return 0;
 }
 _ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_pthread_pthread_sigmask=yes
-else
-  ac_cv_lib_pthread_pthread_sigmask=no
+for ac_lib in '' pthread; do
+  if test -z "$ac_lib"; then
+    ac_res="none required"
+  else
+    ac_res=-l$ac_lib
+    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
+  fi
+  if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_search_pthread_sigmask=$ac_res
 fi
 rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
+    conftest$ac_exeext
+  if ${ac_cv_search_pthread_sigmask+:} false; then :
+  break
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_pthread_pthread_sigmask" >&5
-$as_echo "$ac_cv_lib_pthread_pthread_sigmask" >&6; }
-if test "x$ac_cv_lib_pthread_pthread_sigmask" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBPTHREAD 1
-_ACEOF
+done
+if ${ac_cv_search_pthread_sigmask+:} false; then :
 
-  LIBS="-lpthread $LIBS"
+else
+  ac_cv_search_pthread_sigmask=no
+fi
+rm conftest.$ac_ext
+LIBS=$ac_func_search_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_search_pthread_sigmask" >&5
+$as_echo "$ac_cv_search_pthread_sigmask" >&6; }
+ac_res=$ac_cv_search_pthread_sigmask
+if test "$ac_res" != no; then :
+  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
 
 else
   as_fn_error $? "pthread library not found or incompatible" "$LINENO" 5
 fi
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for pthread_attr_init in -lpthread" >&5
-$as_echo_n "checking for pthread_attr_init in -lpthread... " >&6; }
-if ${ac_cv_lib_pthread_pthread_attr_init+:} false; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing pthread_attr_init" >&5
+$as_echo_n "checking for library containing pthread_attr_init... " >&6; }
+if ${ac_cv_search_pthread_attr_init+:} false; then :
   $as_echo_n "(cached) " >&6
 else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lpthread  $LIBS"
+  ac_func_search_save_LIBS=$LIBS
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -5702,35 +6735,46 @@ return pthread_attr_init ();
   return 0;
 }
 _ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_pthread_pthread_attr_init=yes
-else
-  ac_cv_lib_pthread_pthread_attr_init=no
+for ac_lib in '' pthread; do
+  if test -z "$ac_lib"; then
+    ac_res="none required"
+  else
+    ac_res=-l$ac_lib
+    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
+  fi
+  if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_search_pthread_attr_init=$ac_res
 fi
 rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
+    conftest$ac_exeext
+  if ${ac_cv_search_pthread_attr_init+:} false; then :
+  break
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_pthread_pthread_attr_init" >&5
-$as_echo "$ac_cv_lib_pthread_pthread_attr_init" >&6; }
-if test "x$ac_cv_lib_pthread_pthread_attr_init" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBPTHREAD 1
-_ACEOF
+done
+if ${ac_cv_search_pthread_attr_init+:} false; then :
 
-  LIBS="-lpthread $LIBS"
+else
+  ac_cv_search_pthread_attr_init=no
+fi
+rm conftest.$ac_ext
+LIBS=$ac_func_search_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_search_pthread_attr_init" >&5
+$as_echo "$ac_cv_search_pthread_attr_init" >&6; }
+ac_res=$ac_cv_search_pthread_attr_init
+if test "$ac_res" != no; then :
+  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
 
 else
   as_fn_error $? "pthread library not found or incompatible" "$LINENO" 5
 fi
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for pthread_attr_setstacksize in -lpthread" >&5
-$as_echo_n "checking for pthread_attr_setstacksize in -lpthread... " >&6; }
-if ${ac_cv_lib_pthread_pthread_attr_setstacksize+:} false; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing pthread_attr_setstacksize" >&5
+$as_echo_n "checking for library containing pthread_attr_setstacksize... " >&6; }
+if ${ac_cv_search_pthread_attr_setstacksize+:} false; then :
   $as_echo_n "(cached) " >&6
 else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lpthread  $LIBS"
+  ac_func_search_save_LIBS=$LIBS
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -5749,35 +6793,46 @@ return pthread_attr_setstacksize ();
   return 0;
 }
 _ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_pthread_pthread_attr_setstacksize=yes
-else
-  ac_cv_lib_pthread_pthread_attr_setstacksize=no
+for ac_lib in '' pthread; do
+  if test -z "$ac_lib"; then
+    ac_res="none required"
+  else
+    ac_res=-l$ac_lib
+    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
+  fi
+  if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_search_pthread_attr_setstacksize=$ac_res
 fi
 rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
+    conftest$ac_exeext
+  if ${ac_cv_search_pthread_attr_setstacksize+:} false; then :
+  break
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_pthread_pthread_attr_setstacksize" >&5
-$as_echo "$ac_cv_lib_pthread_pthread_attr_setstacksize" >&6; }
-if test "x$ac_cv_lib_pthread_pthread_attr_setstacksize" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBPTHREAD 1
-_ACEOF
+done
+if ${ac_cv_search_pthread_attr_setstacksize+:} false; then :
 
-  LIBS="-lpthread $LIBS"
+else
+  ac_cv_search_pthread_attr_setstacksize=no
+fi
+rm conftest.$ac_ext
+LIBS=$ac_func_search_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_search_pthread_attr_setstacksize" >&5
+$as_echo "$ac_cv_search_pthread_attr_setstacksize" >&6; }
+ac_res=$ac_cv_search_pthread_attr_setstacksize
+if test "$ac_res" != no; then :
+  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
 
 else
   as_fn_error $? "pthread library not found or incompatible" "$LINENO" 5
 fi
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for pthread_attr_destroy in -lpthread" >&5
-$as_echo_n "checking for pthread_attr_destroy in -lpthread... " >&6; }
-if ${ac_cv_lib_pthread_pthread_attr_destroy+:} false; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing pthread_attr_destroy" >&5
+$as_echo_n "checking for library containing pthread_attr_destroy... " >&6; }
+if ${ac_cv_search_pthread_attr_destroy+:} false; then :
   $as_echo_n "(cached) " >&6
 else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lpthread  $LIBS"
+  ac_func_search_save_LIBS=$LIBS
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -5796,35 +6851,46 @@ return pthread_attr_destroy ();
   return 0;
 }
 _ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_pthread_pthread_attr_destroy=yes
-else
-  ac_cv_lib_pthread_pthread_attr_destroy=no
+for ac_lib in '' pthread; do
+  if test -z "$ac_lib"; then
+    ac_res="none required"
+  else
+    ac_res=-l$ac_lib
+    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
+  fi
+  if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_search_pthread_attr_destroy=$ac_res
 fi
 rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
+    conftest$ac_exeext
+  if ${ac_cv_search_pthread_attr_destroy+:} false; then :
+  break
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_pthread_pthread_attr_destroy" >&5
-$as_echo "$ac_cv_lib_pthread_pthread_attr_destroy" >&6; }
-if test "x$ac_cv_lib_pthread_pthread_attr_destroy" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBPTHREAD 1
-_ACEOF
+done
+if ${ac_cv_search_pthread_attr_destroy+:} false; then :
 
-  LIBS="-lpthread $LIBS"
+else
+  ac_cv_search_pthread_attr_destroy=no
+fi
+rm conftest.$ac_ext
+LIBS=$ac_func_search_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_search_pthread_attr_destroy" >&5
+$as_echo "$ac_cv_search_pthread_attr_destroy" >&6; }
+ac_res=$ac_cv_search_pthread_attr_destroy
+if test "$ac_res" != no; then :
+  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
 
 else
   as_fn_error $? "pthread library not found or incompatible" "$LINENO" 5
 fi
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for pthread_cancel in -lpthread" >&5
-$as_echo_n "checking for pthread_cancel in -lpthread... " >&6; }
-if ${ac_cv_lib_pthread_pthread_cancel+:} false; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing pthread_cancel" >&5
+$as_echo_n "checking for library containing pthread_cancel... " >&6; }
+if ${ac_cv_search_pthread_cancel+:} false; then :
   $as_echo_n "(cached) " >&6
 else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lpthread  $LIBS"
+  ac_func_search_save_LIBS=$LIBS
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -5843,35 +6909,46 @@ return pthread_cancel ();
   return 0;
 }
 _ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_pthread_pthread_cancel=yes
-else
-  ac_cv_lib_pthread_pthread_cancel=no
+for ac_lib in '' pthread; do
+  if test -z "$ac_lib"; then
+    ac_res="none required"
+  else
+    ac_res=-l$ac_lib
+    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
+  fi
+  if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_search_pthread_cancel=$ac_res
 fi
 rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
+    conftest$ac_exeext
+  if ${ac_cv_search_pthread_cancel+:} false; then :
+  break
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_pthread_pthread_cancel" >&5
-$as_echo "$ac_cv_lib_pthread_pthread_cancel" >&6; }
-if test "x$ac_cv_lib_pthread_pthread_cancel" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBPTHREAD 1
-_ACEOF
+done
+if ${ac_cv_search_pthread_cancel+:} false; then :
 
-  LIBS="-lpthread $LIBS"
+else
+  ac_cv_search_pthread_cancel=no
+fi
+rm conftest.$ac_ext
+LIBS=$ac_func_search_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_search_pthread_cancel" >&5
+$as_echo "$ac_cv_search_pthread_cancel" >&6; }
+ac_res=$ac_cv_search_pthread_cancel
+if test "$ac_res" != no; then :
+  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
 
 else
   as_fn_error $? "pthread library not found or incompatible" "$LINENO" 5
 fi
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for pthread_join in -lpthread" >&5
-$as_echo_n "checking for pthread_join in -lpthread... " >&6; }
-if ${ac_cv_lib_pthread_pthread_join+:} false; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing pthread_join" >&5
+$as_echo_n "checking for library containing pthread_join... " >&6; }
+if ${ac_cv_search_pthread_join+:} false; then :
   $as_echo_n "(cached) " >&6
 else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lpthread  $LIBS"
+  ac_func_search_save_LIBS=$LIBS
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -5890,30 +6967,40 @@ return pthread_join ();
   return 0;
 }
 _ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_pthread_pthread_join=yes
-else
-  ac_cv_lib_pthread_pthread_join=no
+for ac_lib in '' pthread; do
+  if test -z "$ac_lib"; then
+    ac_res="none required"
+  else
+    ac_res=-l$ac_lib
+    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
+  fi
+  if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_search_pthread_join=$ac_res
 fi
 rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
+    conftest$ac_exeext
+  if ${ac_cv_search_pthread_join+:} false; then :
+  break
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_pthread_pthread_join" >&5
-$as_echo "$ac_cv_lib_pthread_pthread_join" >&6; }
-if test "x$ac_cv_lib_pthread_pthread_join" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBPTHREAD 1
-_ACEOF
+done
+if ${ac_cv_search_pthread_join+:} false; then :
 
-  LIBS="-lpthread $LIBS"
+else
+  ac_cv_search_pthread_join=no
+fi
+rm conftest.$ac_ext
+LIBS=$ac_func_search_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_search_pthread_join" >&5
+$as_echo "$ac_cv_search_pthread_join" >&6; }
+ac_res=$ac_cv_search_pthread_join
+if test "$ac_res" != no; then :
+  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
 
 else
   as_fn_error $? "pthread library not found or incompatible" "$LINENO" 5
 fi
 
-
-LDFLAGS="$LDFLAGS -lpthread"
 
 
 #
@@ -6240,8 +7327,8 @@ else
 $as_echo "no" >&6; }
 fi
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: Configure finish, CFLAGS= $CFLAGS" >&5
-$as_echo "$as_me: Configure finish, CFLAGS= $CFLAGS" >&6;}
+{ $as_echo "$as_me:${as_lineno-$LINENO}: Configure finish, CPPFLAGS= $CPPFLAGS" >&5
+$as_echo "$as_me: Configure finish, CPPFLAGS= $CPPFLAGS" >&6;}
 { $as_echo "$as_me:${as_lineno-$LINENO}: LDFLAGS=$LDFLAGS" >&5
 $as_echo "$as_me: LDFLAGS=$LDFLAGS" >&6;}
 #AC_MSG_NOTICE([PROD_WARN= $PROD_WARN])

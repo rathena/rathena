@@ -45,7 +45,7 @@ AC_ARG_ENABLE(
 	[packetver],
 	AC_HELP_STRING(
 		[--enable-packetver=ARG],
-		[Sets the PACKETVER define of the map-server. (see src/map/clif.h)]
+		[Sets the PACKETVER define. (see src/common/mmo.h)]
 	),
 	[enable_packetver="$enableval"],
 	[enable_packetver=""]
@@ -247,18 +247,18 @@ AC_ARG_WITH(
 	),
 	[
 		if test "$withval" == "no";	 then
-			CFLAGS="$CFLAGS -DMAXCONN=16384"
+			CPPFLAGS="$CPPFLAGS -DMAXCONN=16384"
 		else
 
 			if ! test "$withval" -ge 0 -o "$withval" -lt 0 2>&- ; then
 				AC_MSG_ERROR([Invalid argument --with-maxconn=$withval ... stopping])
 			else
-				CFLAGS="$CFLAGS -DMAXCONN=$withval"
+				CPPFLAGS="$CPPFLAGS -DMAXCONN=$withval"
 			fi
 		fi
 	],
 	[
-		CFLAGS="$CFLAGS -DMAXCONN=16384"
+		CPPFLAGS="$CPPFLAGS -DMAXCONN=16384"
 	]
 )
 
@@ -455,16 +455,37 @@ fi
 #
 AC_MSG_CHECKING([whether $CC produces 32bit code])
 AC_RUN_IFELSE(
-	[
+	[AC_LANG_SOURCE([
 		int main(int argc, char **argv){
 			if(sizeof(void*) == 4) return 0;
 			else return 1;
 		}
-	],
+	])],
 	[
 		AC_MSG_RESULT([yes])
+		AC_MSG_CHECKING([whether $CC supports -march=i686 (and we can run it)])
+		OLD_CFLAGS="$CFLAGS"
+		OLD_LDFLAGS="$LDFLAGS"
 		CFLAGS="$CFLAGS -march=i686"
 		LDFLAGS="$LDFLAGS -march=i686"
+		AC_RUN_IFELSE(
+			[AC_LANG_SOURCE([
+				int main(int argc, char **argv) { return 0; }
+			])],
+			[
+				AC_MSG_RESULT([yes])
+			],
+			[
+				AC_MSG_RESULT([no])
+				CFLAGS="$OLD_CFLAGS"
+				LDFLAGS="$OLD_LDFLAGS"
+			],
+			[
+				AC_MSG_RESULT([guessing no])
+				CFLAGS="$OLD_CFLAGS"
+				LDFLAGS="$OLD_LDFLAGS"
+			]
+		)
 	],
 	[
 		AC_MSG_RESULT([no])
@@ -481,37 +502,22 @@ AC_RUN_IFELSE(
 #
 AC_MSG_CHECKING([whether $CC supports __thread specifier (TLS)])
 AC_RUN_IFELSE(
-	[
+	[AC_LANG_SOURCE([
 		__thread int g_Test = -1;
 
 		int main(int argc, char **argv){
 			g_Test = 0;
 			return g_Test;
 		}
-	],
+	])],
 	[
 		AC_MSG_RESULT([yes])
-		CFLAGS="$CFLAGS -DHAS_TLS"
+		CPPFLAGS="$CPPFLAGS -DHAS_TLS"
 	],
 	[
 		AC_MSG_RESULT([no])
 	]
 )
-
-
-AC_MSG_CHECKING([whether $CC supports -Wno-unused-parameter])
-OLD_CFLAGS="$CFLAGS"
-CFLAGS="$CFLAGS -Wno-unused-parameter"
-AC_COMPILE_IFELSE(
-	[int foo;],
-	[AC_MSG_RESULT([no])],
-	[
-		AC_MSG_RESULT([yes])
-		PROD_WARN="$PROD_WARN -Wno-unused-parameter"
-	]
-)
-CFLAGS="$OLD_CFLAGS"
-
 
 #
 # LTO Support test
@@ -526,11 +532,11 @@ if test "$enable_lto" != "no" ; then
 
 	AC_MSG_CHECKING([whether $CC supports -flto])
 	AC_RUN_IFELSE(
-		[
+		[AC_LANG_SOURCE([
 			int main(int argc, char **argv){
-               return 0;
-           }
-		],
+				return 0;
+			}
+		])],
 		[
 			AC_MSG_RESULT([yes])
 		],
@@ -546,55 +552,147 @@ if test "$enable_lto" != "no" ; then
 fi
 
 
-
-AC_MSG_CHECKING([whether $CC supports -Wno-pointer-sign])
-OLD_CFLAGS="$CFLAGS"
-CFLAGS="$CFLAGS -Wno-pointer-sign"
-AC_COMPILE_IFELSE(
-	[int foo;],
+AC_DEFUN(AC_CHECK_COMPILER_WFLAG,
 	[
-		AC_MSG_RESULT([yes])
-		AC_MSG_CHECKING([whether $CC can actually use -Wno-pointer-sign])
-		# This option causes warnings in C++ mode
-		# Note: -Werror must be before -Wno-pointer-sign, otherwise it does not do anything
-		CFLAGS="$OLD_CFLAGS -Werror -Wno-pointer-sign"
+		AC_MSG_CHECKING([whether $CC supports -W$1])
+		OLD_CFLAGS="$CFLAGS"
+		CFLAGS="$CFLAGS -Werror -W$1"
 		AC_COMPILE_IFELSE(
-			[int foo;],
+			[AC_LANG_SOURCE([int foo;])],
 			[
 				AC_MSG_RESULT([yes])
-				PROD_WARN="$PROD_WARN -Wno-pointer-sign"
+				CFLAGS="$OLD_CFLAGS -W$1"
+				# Optionally, run a test
+				if test "x$2" != "x"; then
+					AC_MSG_CHECKING([whether $CC can actually use -W$1])
+					CFLAGS="$OLD_CFLAGS -Werror -W$1"
+					AC_COMPILE_IFELSE(
+						[AC_LANG_SOURCE([$2])],
+						[
+							AC_MSG_RESULT([no])
+							CFLAGS="$OLD_CFLAGS"
+						]
+						[
+							AC_MSG_RESULT([yes])
+							CFLAGS="$OLD_CFLAGS -W$1"
+						],
+					)
+				fi
 			],
 			[
 				AC_MSG_RESULT([no])
+				CFLAGS="$OLD_CFLAGS"
 			]
 		)
-	],
-	[
-		AC_MSG_RESULT([no])
-	]
-)
-CFLAGS="$OLD_CFLAGS"
-
-
-AC_MSG_CHECKING([whether $CC supports -Wno-switch])
-OLD_CFLAGS="$CFLAGS"
-CFLAGS="$CFLAGS -Wno-switch"
-AC_COMPILE_IFELSE(
-	[int foo;],
-	[	AC_MSG_RESULT([yes])
-	],
-	[
-		AC_MSG_RESULT([no])
-		CFLAGS="$OLD_CFLAGS"
 	]
 )
 
+AC_DEFUN(AC_CHECK_COMPILER_WNOFLAG,
+	[
+		AC_MSG_CHECKING([whether $CC supports -Wno-$1])
+		OLD_CFLAGS="$CFLAGS"
+		CFLAGS="$CFLAGS -Werror -Wno-$1"
+		AC_COMPILE_IFELSE(
+			[AC_LANG_SOURCE([int foo;])],
+			[
+				# Recent versions of gcc don't fail if -Wno-foo is not recognized
+				# (unless there are also other warnings), so we also check for -Wfoo
+				# which always fails if not supported
+				CFLAGS="$OLD_CFLAGS -Werror -W$1"
+				AC_COMPILE_IFELSE(
+					[AC_LANG_SOURCE([int foo;])],
+					[
+						AC_MSG_RESULT([yes])
+						CFLAGS="$OLD_CFLAGS -Wno-$1"
+						# Optionally, run a test
+						if test "x$2" != "x"; then
+							AC_MSG_CHECKING([whether $CC can actually use -Wno-$1])
+							CFLAGS="$OLD_CFLAGS -Werror -W$1"
+							AC_COMPILE_IFELSE(
+								[AC_LANG_SOURCE([$2])],
+								[
+									AC_MSG_RESULT([not needed but enabled])
+									CFLAGS="$OLD_CFLAGS"
+								],
+								[
+									CFLAGS="$OLD_CFLAGS -Werror -Wno-$1"
+									AC_COMPILE_IFELSE(
+										[AC_LANG_SOURCE([$2])],
+										[
+											AC_MSG_RESULT([yes])
+											CFLAGS="$OLD_CFLAGS -Wno-$1"
+										],
+										[
+											AC_MSG_RESULT([no])
+											CFLAGS="$OLD_CFLAGS"
+										]
+									)
+								]
+							)
+						fi
+					],
+					[
+						AC_MSG_RESULT([no])
+						CFLAGS="$OLD_CFLAGS"
+					]
+				)
+			],
+			[
+				AC_MSG_RESULT([no])
+				CFLAGS="$OLD_CFLAGS"
+			]
+		)
+	]
+)
+
+AC_CHECK_COMPILER_WNOFLAG(unused-parameter, [int foo(int bar) { return 0; }])
+AC_CHECK_COMPILER_WNOFLAG(maybe-uninitialized)
+AC_CHECK_COMPILER_WNOFLAG(clobbered)
+AC_CHECK_COMPILER_WFLAG(empty-body)
+AC_CHECK_COMPILER_WFLAG(newline-eof)
+AC_CHECK_COMPILER_WFLAG(int-conversion)
+AC_CHECK_COMPILER_WFLAG(enum-conversion)
+AC_CHECK_COMPILER_WFLAG(shorten-64-to-32)
+AC_CHECK_COMPILER_WFLAG(constant-conversion)
+AC_CHECK_COMPILER_WFLAG(bool-conversion)
+AC_CHECK_COMPILER_WNOFLAG(switch)
+AC_CHECK_COMPILER_WNOFLAG(missing-field-initializers)
+
+# Certain versions of gcc make -Wshadow completely useless by making it flood
+# you with unnecessary warnings <https://lkml.org/lkml/2006/11/28/239>
+# Let's check if we can really use it
+SAVED_OLD_CFLAGS="$CFLAGS"
+AC_CHECK_COMPILER_WFLAG(shadow)
+if test "x$CFLAGS" != "x$SAVED_OLD_CFLAGS"; then
+	AC_MSG_CHECKING([whether $CC can efficiently use -Wshadow])
+	NEW_CFLAGS="$CFLAGS"
+	CFLAGS="$CFLAGS -Werror -Wshadow"
+	AC_COMPILE_IFELSE(
+		[AC_LANG_SOURCE([
+			int foo(void) {
+				return 0;
+			}
+			int bar(void) {
+				int foo = 0;
+				return foo + 1;
+			}
+		])],
+		[
+			AC_MSG_RESULT([yes])
+			CFLAGS="$NEW_CFLAGS"
+		],
+		[
+			AC_MSG_RESULT([no])
+			CFLAGS="$SAVED_OLD_CFLAGS"
+		]
+	)
+fi
 
 AC_MSG_CHECKING([whether $CC supports -fPIC])
 OLD_CFLAGS="$CFLAGS"
 CFLAGS="$CFLAGS -fPIC"
 AC_COMPILE_IFELSE(
-	[int foo;],
+	[AC_LANG_SOURCE([int foo;])],
 	[
 		AC_MSG_RESULT([yes])
 		compiler_supports_pic="yes"
@@ -606,6 +704,152 @@ AC_COMPILE_IFELSE(
 )
 CFLAGS="$OLD_CFLAGS"
 
+#
+# option for shared objects
+#
+AC_MSG_CHECKING([how to make shared objects])
+OLD_CFLAGS="$CFLAGS"
+compiler_shared_objects=""
+compiler_supports_shared_objects="no"
+if test "$compiler_supports_pic" = "yes" ; then
+	my_shared_test_flags="$CFLAGS -fPIC"
+fi
+# default
+CFLAGS="$my_shared_test_flags -shared"
+AC_LINK_IFELSE(
+	[AC_LANG_SOURCE([
+		int bar = 0;
+
+		int foo(void)
+		{
+			return bar;
+		}
+	])],
+	[
+		compiler_shared_objects="-shared"
+		compiler_supports_shared_objects="yes"
+	]
+)
+# BeOS specific
+CFLAGS="$my_shared_test_flags -nostart"
+AC_LINK_IFELSE(
+	[AC_LANG_SOURCE([
+		int bar = 0;
+
+		int foo(void)
+		{
+			return bar;
+		}
+	])],
+	[
+		compiler_shared_objects="-nostart"
+		compiler_supports_shared_objects="yes"
+	]
+)
+CFLAGS="$OLD_CFLAGS"
+if test "$compiler_supports_shared_objects" = "no" ; then
+	AC_MSG_RESULT([not supported])
+	AC_MSG_NOTICE([compiler is unable to generate shared objects, disabled plugins (optional)])
+	WITH_PLUGINS="no"
+else
+	AC_MSG_RESULT([$compiler_shared_objects $compiler_supports_shared_objects])
+	SOFLAGS="$SOFLAGS $compiler_shared_objects"
+	AC_SUBST([SOFLAGS])
+
+	#
+	# On certain platforms, undefined references on shared libraries won't be checked
+	# unless explicitly required with the --no-undefined linker option
+	#
+	AC_MSG_CHECKING([whether $CC needs -Wl,--no-undefined to check for undefined references in shared objects])
+	OLD_CFLAGS="$CFLAGS"
+	CFLAGS="$SOFLAGS"
+	AC_LINK_IFELSE(
+		[AC_LANG_SOURCE([
+			void foo(void) {
+				foobar();
+			}
+		])],
+		[
+			CFLAGS="$SOFLAGS -Wl,--no-undefined"
+			AC_LINK_IFELSE(
+				[AC_LANG_SOURCE([
+					int bar = 0;
+
+					int foo(void) {
+						return bar;
+					}
+				])],
+				[
+					AC_MSG_RESULT([yes])
+					SOFLAGS="$SOFLAGS -Wl,--no-undefined"
+				],
+				[
+					AC_MSG_RESULT([unsupported (undefined references check will be ignored)])
+				]
+			)
+		],
+		[
+			AC_MSG_RESULT([no])
+		]
+	)
+	CFLAGS="$OLD_CFLAGS"
+
+	#
+	# shared objects need position independent code; some platforms emit
+	# it always, others need -fPIC
+	#
+	AC_MSG_CHECKING([whether $CC needs -fPIC for shared objects])
+	OLD_CFLAGS="$CFLAGS"
+	CFLAGS="$CFLAGS $SOFLAGS"
+	WITH_PLUGINS="yes"
+	AC_LINK_IFELSE(
+		[AC_LANG_SOURCE([
+			int bar = 0;
+
+			int foo(void)
+			{
+				return bar;
+			}
+		])],
+		[
+			AC_MSG_RESULT([no])
+			CFLAGS="$OLD_CFLAGS"
+		],
+		[
+			if test "$compiler_supports_pic" = "yes" ; then
+				# Verify if -shared really fails due to lack of -fPIC or something else
+				CFLAGS="$CFLAGS -fPIC"
+				AC_LINK_IFELSE(
+					[AC_LANG_SOURCE([
+						int bar = 0;
+
+						int foo(void)
+						{
+							return bar;
+						}
+					])],
+					[
+						AC_MSG_RESULT([yes])
+						CFLAGS="$OLD_CFLAGS -fPIC"
+					],
+					[
+						AC_MSG_RESULT([no, but fails for another reason])
+						AC_MSG_ERROR([compiler is unable to compile shared objects for an unhandled reason, please report this with attached config.log... stopping])
+					]
+				)
+			else
+				# Disable compilation of plugins (optional), so 'make all' does not fail
+				AC_MSG_RESULT([yes, but unsupported])
+				AC_MSG_NOTICE([compiler is unable to generate position independent code, disabled plugins (optional)])
+				WITH_PLUGINS="no"
+			fi
+		]
+	)
+
+fi
+my_shared_test_flags=""
+AC_SUBST([WITH_PLUGINS])
+
 
 #
 # -O2 implies -fstrict-aliasing, but the code is not safe for that
@@ -614,29 +858,13 @@ AC_MSG_CHECKING([whether $CC supports -fno-strict-aliasing])
 OLD_CFLAGS="$CFLAGS"
 CFLAGS="$CFLAGS -fno-strict-aliasing"
 AC_COMPILE_IFELSE(
-	[int foo;],
+	[AC_LANG_SOURCE([int foo;])],
 	[AC_MSG_RESULT([yes])],
 	[
 		AC_MSG_RESULT([no])
 		CFLAGS="$OLD_CFLAGS"
 	]
 )
-
-#
-# check if support conversion check
-#
-AC_MSG_CHECKING([whether $CC supports -Wconversion])
-OLD_CFLAGS="$CFLAGS"
-CFLAGS="$CFLAGS -Wconversion"
-AC_COMPILE_IFELSE(
-	[int foo;],
-	[
-		AC_MSG_RESULT([yes])
-		EXTRA_WARN="-Wconversion"
-	],
-	[AC_MSG_RESULT([no])]
-)
-CFLAGS="$OLD_CFLAGS"
 
 
 ###############################################################################
@@ -647,46 +875,50 @@ CFLAGS="$OLD_CFLAGS"
 #
 # setrlimit - used to set the socket limit
 #
-AC_CHECK_FUNC([setrlimit],[CFLAGS="$CFLAGS -DHAVE_SETRLIMIT"])
+AC_CHECK_FUNC([setrlimit],[CPPFLAGS="$CPPFLAGS -DHAVE_SETRLIMIT"])
 
 
 #
 # strnlen - string length with upper scan bound
 #
-AC_CHECK_FUNC([strnlen],[CFLAGS="$CFLAGS -DHAVE_STRNLEN"])
+AC_CHECK_FUNC([strnlen],[CPPFLAGS="$CPPFLAGS -DHAVE_STRNLEN"])
 
 # libconfig
 AC_CHECK_FUNCS([uselocale])
 AC_CHECK_FUNCS([newlocale])
 AC_CHECK_FUNCS([freelocale])
-AC_CHECK_HEADERS([xlocale.h])
+AC_CHECK_HEADERS([xlocale.h], [], [], [
+AC_LANG_SOURCE([#ifdef HAVE_XLOCALE_H
+     # include <xlocale.h>
+     #endif
+     ])])
 
 #
 # Memory manager
 #
 case $enable_manager in
 	"no")
-		CFLAGS="$CFLAGS -DNO_MEMMGR"
+		CPPFLAGS="$CPPFLAGS -DNO_MEMMGR"
 		;;
 	"builtin")
 		# enabled by default
 		;;
 	"memwatch")
-		CFLAGS="$CFLAGS -DMEMWATCH"
+		CPPFLAGS="$CPPFLAGS -DMEMWATCH"
 		AC_CHECK_HEADER([memwatch.h], , [AC_MSG_ERROR([memwatch header not found... stopping])])
 		;;
 	"dmalloc")
-		CFLAGS="$CFLAGS -DDMALLOC -DDMALLOC_FUNC_CHECK"
+		CPPFLAGS="$CPPFLAGS -DDMALLOC -DDMALLOC_FUNC_CHECK"
 		LIBS="$LIBS -ldmalloc"
 		AC_CHECK_HEADER([dmalloc.h], , [AC_MSG_ERROR([dmalloc header not found... stopping])])
 		;;
 	"gcollect")
-		CFLAGS="$CFLAGS -DGCOLLECT"
+		CPPFLAGS="$CPPFLAGS -DGCOLLECT"
 		LIBS="$LIBS -lgc"
 		AC_CHECK_HEADER([gc.h], , [AC_MSG_ERROR([gcollect header not found... stopping])])
 		;;
 	"bcheck")
-		CFLAGS="$CFLAGS -DBCHECK"
+		CPPFLAGS="$CPPFLAGS -DBCHECK"
 		;;
 esac
 
@@ -695,7 +927,7 @@ esac
 # Packetver
 #
 if test -n "$enable_packetver" ; then
-	CFLAGS="$CFLAGS -DPACKETVER=$enable_packetver"
+	CPPFLAGS="$CPPFLAGS -DPACKETVER=$enable_packetver"
 fi
 
 
@@ -705,14 +937,14 @@ fi
 case $enable_debug in
 	"no")
 		# default value
-		CFLAGS="$CFLAGS"
+		CPPFLAGS="$CPPFLAGS"
 		;;
 	"yes")
-		CFLAGS="$CFLAGS -g -DDEBUG"
+		CPPFLAGS="$CPPFLAGS -g -DDEBUG"
 		LDFLAGS="$LDFLAGS -g"
 		;;
 	"gdb")
-		CFLAGS="$CFLAGS -ggdb -DDEBUG"
+		CPPFLAGS="$CPPFLAGS -ggdb -DDEBUG"
 		LDFLAGS="$LDFLAGS -g"
 		;;
 esac
@@ -723,10 +955,10 @@ esac
 case $enable_prere in
 	"no")
 		# default value
-		CFLAGS="$CFLAGS"
+		CPPFLAGS="$CPPFLAGS"
 		;;
 	"yes")
-		CFLAGS="$CFLAGS -DPRERE"
+		CPPFLAGS="$CPPFLAGS -DPRERE"
 		;;
 esac
 
@@ -735,13 +967,13 @@ esac
 #
 case $enable_warn in
 	"no") #default
-		CFLAGS="$CFLAGS $PROD_WARN"
+		CPPFLAGS="$CPPFLAGS $PROD_WARN"
 		;;
 	"yes")
-		CFLAGS="$CFLAGS"
+		CPPFLAGS="$CPPFLAGS"
 		;;
 	"extra")
-		CFLAGS="$CFLAGS $EXTRA_WARN"
+		CPPFLAGS="$CPPFLAGS $EXTRA_WARN"
 		;;
 esac
 
@@ -753,7 +985,7 @@ case $enable_buildbot in
 		# default value
 		;;
 	"yes")
-		CFLAGS="$CFLAGS -DBUILDBOT"
+		CPPFLAGS="$CPPFLAGS -DBUILDBOT"
 		;;
 esac
 
@@ -765,7 +997,7 @@ case $enable_rdtsc in
 		#default value
 		;;
 	1)
-		CFLAGS="$CFLAGS -DENABLE_RDTSC"
+		CPPFLAGS="$CPPFLAGS -DENABLE_RDTSC"
 		;;
 esac
 
@@ -791,8 +1023,12 @@ if test -n "${ZLIB_HOME}" ; then
 	LDFLAGS="$LDFLAGS -L${ZLIB_HOME}/lib"
 	CPPFLAGS="$CPPFLAGS -I${ZLIB_HOME}/include"
 fi
-AC_CHECK_LIB([z], [inflateEnd], [],[AC_MSG_ERROR([zlib library not found or incompatible, please specify the correct path with --with-zlib=DIR... stopping])])
-AC_CHECK_HEADER([zlib.h], [], [AC_MSG_ERROR([zlib header not found, please specify the correct path with --with-zlib=DIR... stopping])])
+AC_SEARCH_LIBS([inflateEnd], [z], [],[AC_MSG_ERROR([zlib library not found or incompatible, please specify the correct path with --with-zlib=DIR... stopping])])
+AC_CHECK_HEADER([zlib.h], [], [AC_MSG_ERROR([zlib header not found, please specify the correct path with --with-zlib=DIR... stopping])],
+[AC_LANG_SOURCE([#ifdef HAVE_ZLIB_H
+     # include <zlib.h>
+     #endif
+ ])])
 
 
 #
@@ -818,20 +1054,20 @@ AC_SEARCH_LIBS([clock_gettime], [rt])
 if test "$ac_cv_search_clock_gettime" != "no" ; then
 	AC_MSG_CHECKING([whether CLOCK_MONOTONIC is supported and works])
 	AC_RUN_IFELSE(
-		[
+		[AC_LANG_SOURCE([
 			#include <sys/time.h>
 			#include <time.h>
 			#include <unistd.h>
-
+			
 			int main(int argc, char** argv)
 			{
 				struct timespec tval;
 				return clock_gettime(CLOCK_MONOTONIC, &tval);
 			}
-		],
+		])],
 		[
 			AC_MSG_RESULT([yes])
-			CFLAGS="$CFLAGS -DHAVE_MONOTONIC_CLOCK"
+			CPPFLAGS="$CPPFLAGS -DHAVE_MONOTONIC_CLOCK"
 		],
 		[
 			# either it failed to compile (CLOCK_MONOTONIC undefined)
@@ -848,15 +1084,13 @@ fi
 #
 # pthread
 #
-AC_CHECK_LIB([pthread], [pthread_create], [], [AC_MSG_ERROR([pthread library not found or incompatible])])
-AC_CHECK_LIB([pthread], [pthread_sigmask], [], [AC_MSG_ERROR([pthread library not found or incompatible])])
-AC_CHECK_LIB([pthread], [pthread_attr_init], [], [AC_MSG_ERROR([pthread library not found or incompatible])])
-AC_CHECK_LIB([pthread], [pthread_attr_setstacksize], [], [AC_MSG_ERROR([pthread library not found or incompatible])])
-AC_CHECK_LIB([pthread], [pthread_attr_destroy], [], [AC_MSG_ERROR([pthread library not found or incompatible])])
-AC_CHECK_LIB([pthread], [pthread_cancel], [], [AC_MSG_ERROR([pthread library not found or incompatible])])
-AC_CHECK_LIB([pthread], [pthread_join], [], [AC_MSG_ERROR([pthread library not found or incompatible])])
-
-LDFLAGS="$LDFLAGS -lpthread"
+AC_SEARCH_LIBS([pthread_create], [pthread], [], [AC_MSG_ERROR([pthread library not found or incompatible])])
+AC_SEARCH_LIBS([pthread_sigmask], [pthread], [], [AC_MSG_ERROR([pthread library not found or incompatible])])
+AC_SEARCH_LIBS([pthread_attr_init], [pthread], [], [AC_MSG_ERROR([pthread library not found or incompatible])])
+AC_SEARCH_LIBS([pthread_attr_setstacksize], [pthread], [], [AC_MSG_ERROR([pthread library not found or incompatible])])
+AC_SEARCH_LIBS([pthread_attr_destroy], [pthread], [], [AC_MSG_ERROR([pthread library not found or incompatible])])
+AC_SEARCH_LIBS([pthread_cancel], [pthread], [], [AC_MSG_ERROR([pthread library not found or incompatible])])
+AC_SEARCH_LIBS([pthread_join], [pthread], [], [AC_MSG_ERROR([pthread library not found or incompatible])])
 
 
 #
@@ -990,7 +1224,7 @@ else
 	AC_MSG_RESULT([no])
 fi
 
-AC_MSG_NOTICE([Configure finish, CFLAGS= $CFLAGS])
+AC_MSG_NOTICE([Configure finish, CPPFLAGS= $CPPFLAGS])
 AC_MSG_NOTICE([LDFLAGS=$LDFLAGS])
 #AC_MSG_NOTICE([PROD_WARN= $PROD_WARN])
 #AC_MSG_NOTICE([EXTRA_WARN= $EXTRA_WARN])

@@ -6,13 +6,12 @@
 #include <string.h>
 #include "nullpo.h"
 #include "../common/showmsg.h"
-// #include "logs.h" // 布石してみる
 
 static void nullpo_info_core(const char *file, int line, const char *func, 
                              const char *fmt, va_list ap);
 
 /*======================================
- * Nullチェック 及び 情報出力
+ * Null Information output and check
  *--------------------------------------*/
 int nullpo_chk_f(const char *file, int line, const char *func, const void *target,
                  const char *fmt, ...)
@@ -30,16 +29,17 @@ int nullpo_chk_f(const char *file, int line, const char *func, const void *targe
 
 int nullpo_chk(const char *file, int line, const char *func, const void *target)
 {
+        va_list ap;
 	if (target != NULL)
 		return 0;
 	
-	nullpo_info_core(file, line, func, NULL, NULL);
+	nullpo_info_core(file, line, func, NULL, ap);
 	return 1;
 }
 
 
 /*======================================
- * nullpo情報出力(外部呼出し向けラッパ)
+ * nullpo Information output (external call)
  *--------------------------------------*/
 void nullpo_info_f(const char *file, int line, const char *func, 
                  const char *fmt, ...)
@@ -53,12 +53,13 @@ void nullpo_info_f(const char *file, int line, const char *func,
 
 void nullpo_info(const char *file, int line, const char *func)
 {
-	nullpo_info_core(file, line, func, NULL, NULL);
+        va_list ap;
+	nullpo_info_core(file, line, func, NULL, ap);
 }
 
 
 /*======================================
- * nullpo情報出力(Main)
+ * nullpo intelligence Output (Main)
  *--------------------------------------*/
 static void nullpo_info_core(const char *file, int line, const char *func, 
                              const char *fmt, va_list ap)
@@ -79,13 +80,10 @@ static void nullpo_info_core(const char *file, int line, const char *func,
 		{
 			vprintf(fmt, ap);
 			
-			// 最後に改行したか確認
+			// Check whether the new line at the end
 			if (fmt[strlen(fmt)-1] != '\n')
 				ShowMessage("\n");
 		}
 	}
 	ShowMessage("--- end nullpo info ----------------------------------------\n");
-	
-	// ここらでnullpoログをファイルに書き出せたら
-	// まとめて提出できるなと思っていたり。
 }
