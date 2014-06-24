@@ -121,18 +121,18 @@ int inter_pet_delete(int pet_id){
 //------------------------------------------------------
 int mapif_pet_created(int fd, int account_id, struct s_pet *p)
 {
-	WFIFOHEAD(fd, 11);
-	WFIFOW(fd, 0) =0x3880;
-	WFIFOL(fd, 2) =account_id;
+	WFIFOHEAD(fd, 12);
+	WFIFOW(fd, 0) = 0x3880;
+	WFIFOL(fd, 2) = account_id;
 	if(p!=NULL){
-		WFIFOB(fd, 6)=0;
-		WFIFOL(fd, 7) =p->pet_id;
+		WFIFOW(fd, 6) = p->class_;
+		WFIFOL(fd, 8) = p->pet_id;
 		ShowInfo("int_pet: created pet %d - %s\n", p->pet_id, p->name);
 	}else{
-		WFIFOB(fd, 6)=1;
-		WFIFOL(fd, 7)=0;
+		WFIFOB(fd, 6) = 0;
+		WFIFOL(fd, 8) = 0;
 	}
-	WFIFOSET(fd, 11);
+	WFIFOSET(fd, 12);
 
 	return 0;
 }

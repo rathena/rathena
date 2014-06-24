@@ -956,7 +956,7 @@ int chmapif_parse_reqauth(int fd, int id){
         struct auth_node* node;
         struct mmo_charstatus* cd;
         struct mmo_charstatus char_dat;
-        bool autotrade = false;
+        bool autotrade;
 
         DBMap*  auth_db = char_get_authdb();
         DBMap* char_db_ = char_get_chardb();
@@ -966,7 +966,7 @@ int chmapif_parse_reqauth(int fd, int id){
         login_id1  = RFIFOL(fd,10);
         sex        = RFIFOB(fd,14);
         ip         = ntohl(RFIFOL(fd,15));
-        autotrade = RFIFOB(fd,19);
+        autotrade  = RFIFOB(fd,19);
         RFIFOSKIP(fd,20);
 
         node = (struct auth_node*)idb_get(auth_db, account_id);

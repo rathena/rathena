@@ -3264,7 +3264,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 			x = bl->x;
 		  	y = bl->y;
 			// Look for an area to cast the spell around...
-			if (skill_target >= MST_AROUND1 || skill_target >= MST_AROUND5) {
+			if (skill_target >= MST_AROUND5) {
 				j = skill_target >= MST_AROUND1?
 					(skill_target-MST_AROUND1) +1:
 					(skill_target-MST_AROUND5) +1;

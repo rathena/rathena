@@ -115,7 +115,7 @@ int pet_recv_petdata(int account_id,struct s_pet *p,int flag);
 int pet_select_egg(struct map_session_data *sd,short egg_index);
 int pet_catch_process1(struct map_session_data *sd,int target_class);
 int pet_catch_process2(struct map_session_data *sd,int target_id);
-int pet_get_egg(int account_id,int pet_id,int flag);
+bool pet_get_egg(int account_id, short pet_class, int pet_id);
 int pet_menu(struct map_session_data *sd,int menunum);
 int pet_change_name(struct map_session_data *sd,char *name);
 int pet_change_name_ack(struct map_session_data *sd, char* name, int flag);

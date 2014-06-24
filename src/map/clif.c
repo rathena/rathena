@@ -753,7 +753,7 @@ void clif_dropflooritem(struct flooritem_data* fitem)
 
 	nullpo_retv(fitem);
 
-	if (fitem->item_data.nameid <= 0)
+	if (fitem->item_data.nameid == 0)
 		return;
 
 	WBUFW(buf, offset+0) = header;

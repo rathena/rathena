@@ -4247,7 +4247,7 @@ char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_p
 	nullpo_retr(1, sd);
 	nullpo_retr(1, item);
 
-	if( item->nameid <= 0 || amount <= 0 )
+	if( item->nameid == 0 || amount <= 0 )
 		return ADDITEM_INVALID;
 	if( amount > MAX_AMOUNT )
 		return ADDITEM_OVERAMOUNT;
@@ -4686,7 +4686,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 	item = sd->status.inventory[n];
 	id = sd->inventory_data[n];
 
-	if (item.nameid <= 0 || item.amount <= 0)
+	if (item.nameid == 0 || item.amount <= 0)
 		return 0;
 
 	if( !pc_isUseitem(sd,n) )
@@ -4812,7 +4812,7 @@ unsigned char pc_cart_additem(struct map_session_data *sd,struct item *item,int 
 	nullpo_retr(1, sd);
 	nullpo_retr(1, item);
 
-	if(item->nameid <= 0 || amount <= 0)
+	if(item->nameid == 0 || amount <= 0)
 		return 1;
 	data = itemdb_search(item->nameid);
 

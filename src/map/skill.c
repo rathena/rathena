@@ -12229,8 +12229,6 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 {
 	struct skill_unit_group *sg;
 	struct block_list *ss;
-	TBL_PC* sd;
-	struct status_data *status;
 	struct status_change *sc;
 	struct status_change_entry *sce;
 	enum sc_type type;
@@ -12252,9 +12250,7 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 	if( skill_get_inf2(sg->skill_id)&(INF2_SONG_DANCE|INF2_ENSEMBLE_SKILL) && map_getcell(bl->m, bl->x, bl->y, CELL_CHKBASILICA) )
 		return 0; //Songs don't work in Basilica
 
-	sd = BL_CAST(BL_PC,bl);
 	sc = status_get_sc(bl);
-	status = status_get_status_data(bl);
 
 	if (sc && sc->option&OPTION_HIDE && sg->skill_id != WZ_HEAVENDRIVE && sg->skill_id != WL_EARTHSTRAIN)
 		return 0; //Hidden characters are immune to AoE skills except to these. [Skotlex]
@@ -15617,7 +15613,7 @@ void skill_repairweapon (struct map_session_data *sd, int idx) {
 		return; //Invalid index??
 
 	item = &target_sd->status.inventory[idx];
-	if( item->nameid <= 0 || item->attribute == 0 )
+	if( item->nameid == 0 || item->attribute == 0 )
 		return; //Again invalid item....
 
 	if( sd != target_sd && !battle_check_range(&sd->bl,&target_sd->bl, skill_get_range2(&sd->bl, sd->menuskill_id,sd->menuskill_val2) ) ){
@@ -18134,7 +18130,7 @@ int skill_arrow_create (struct map_session_data *sd, unsigned short nameid)
 			tmp_item.card[2]=GetWord(sd->status.char_id,0); // CharId
 			tmp_item.card[3]=GetWord(sd->status.char_id,1);
 		}
-		if(tmp_item.nameid <= 0 || tmp_item.amount <= 0)
+		if(tmp_item.nameid == 0 || tmp_item.amount <= 0)
 			continue;
 		if((flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE))) {
 			clif_additem(sd,0,0,flag);

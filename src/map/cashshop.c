@@ -232,9 +232,8 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 			clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_UNKONWN_ITEM );
 			return false;
 		}else if( !itemdb_isstackable( nameid ) && quantity > 1 ){
-			uint32* quantity_ptr = (uint32*)item_list + i * 5 + 2;
-			ShowWarning( "Player %s (%d:%d) sent a hexed packet trying to buy %d of nonstackable cash item %hu!\n", sd->status.name, sd->status.account_id, sd->status.char_id, quantity, nameid );
-			*quantity_ptr = 1;
+			/* ShowWarning( "Player %s (%d:%d) sent a hexed packet trying to buy %d of nonstackable cash item %hu!\n", sd->status.name, sd->status.account_id, sd->status.char_id, quantity, nameid ); */
+			quantity = 1;
 		}
 
 		switch( pc_checkadditem( sd, nameid, quantity ) ){
@@ -271,9 +270,10 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 		unsigned short nameid = *( item_list + i * 5 );
 		uint32 quantity = *( item_list + i * 5 + 2 );
 
-		if( itemdb_type( nameid ) == IT_PETEGG ){
-			pet_create_egg( sd, nameid );
-		}else{
+		if (!itemdb_isstackable(nameid) && quantity > 1)
+			quantity = 1;
+
+		if (!pet_create_egg(sd, nameid)) {
 			struct item item_tmp;
 			memset( &item_tmp, 0, sizeof( item_tmp ) );
 

@@ -533,11 +533,10 @@ int chclif_parse_char_delete2_cancel(int fd, struct char_session_data* sd) {
  * charserv can handle a MAX_SERVERS mapservs
  */
 int chclif_parse_maplogin(int fd){
-	int i;
-
 	if (RFIFOREST(fd) < 60)
 		return 0;
 	else {
+		int i;
 		char* l_user = (char*)RFIFOP(fd,2);
 		char* l_pass = (char*)RFIFOP(fd,26);
 		l_user[23] = '\0';
@@ -810,7 +809,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 // S 0970 <name>.24B <slot>.B <hair color>.W <hair style>.W
 // S 0067 <name>.24B <str>.B <agi>.B <vit>.B <int>.B <dex>.B <luk>.B <slot>.B <hair color>.W <hair style>.W
 int chclif_parse_createnewchar(int fd, struct char_session_data* sd,int cmd){
-	int i=0, ch;
+	int i = 0;
 
 	if (cmd == 0x970) FIFOSD_CHECK(31) //>=20120307
 	else if (cmd == 0x67) FIFOSD_CHECK(37)
@@ -843,7 +842,7 @@ int chclif_parse_createnewchar(int fd, struct char_session_data* sd,int cmd){
 		}
 		WFIFOSET(fd,3);
 	} else {
-		int len;
+		int len, ch;
 		// retrieve data
 		struct mmo_charstatus char_dat;
 		char_mmo_char_fromsql(i, &char_dat, false); //Only the short data is needed.
@@ -1093,7 +1092,6 @@ int chclif_parse_chkcaptcha(int fd){
  * @param fd: file descriptor to parse, (link to client)
  */
 int chclif_parse(int fd) {
-	unsigned short cmd;
 	struct char_session_data* sd = (struct char_session_data*)session[fd]->session_data;
 	uint32 ipl = session[fd]->client_addr;
     
@@ -1118,7 +1116,9 @@ int chclif_parse(int fd) {
 
 	while( RFIFOREST(fd) >= 2 )
 	{
-		int next=1;
+		int next = 1;
+		unsigned short cmd;
+
 		cmd = RFIFOW(fd,0);
 		switch( cmd )
 		{

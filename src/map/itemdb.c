@@ -750,7 +750,7 @@ static bool itemdb_read_itemtrade(char* str[], int columns, int current) {
 	flag = atoi(str[1]);
 	gmlv = atoi(str[2]);
 
-	if( flag < 0 || flag > 511 ) {//Check range
+	if( flag > 511 ) {//Check range
 		ShowWarning("itemdb_read_itemtrade: Invalid trading mask %hu for item id %hu.\n", flag, nameid);
 		return false;
 	}
