@@ -437,43 +437,43 @@ bool itemdb_isstackable2(struct item_data *id)
 /*==========================================
  * Trade Restriction functions [Skotlex]
  *------------------------------------------*/
-int itemdb_isdropable_sub(struct item_data *item, int gmlv, int unused) {
+bool itemdb_isdropable_sub(struct item_data *item, int gmlv, int unused) {
 	return (item && (!(item->flag.trade_restriction&1) || gmlv >= item->gm_lv_trade_override));
 }
 
-int itemdb_cantrade_sub(struct item_data* item, int gmlv, int gmlv2) {
+bool itemdb_cantrade_sub(struct item_data* item, int gmlv, int gmlv2) {
 	return (item && (!(item->flag.trade_restriction&2) || gmlv >= item->gm_lv_trade_override || gmlv2 >= item->gm_lv_trade_override));
 }
 
-int itemdb_canpartnertrade_sub(struct item_data* item, int gmlv, int gmlv2) {
+bool itemdb_canpartnertrade_sub(struct item_data* item, int gmlv, int gmlv2) {
 	return (item && (item->flag.trade_restriction&4 || gmlv >= item->gm_lv_trade_override || gmlv2 >= item->gm_lv_trade_override));
 }
 
-int itemdb_cansell_sub(struct item_data* item, int gmlv, int unused) {
+bool itemdb_cansell_sub(struct item_data* item, int gmlv, int unused) {
 	return (item && (!(item->flag.trade_restriction&8) || gmlv >= item->gm_lv_trade_override));
 }
 
-int itemdb_cancartstore_sub(struct item_data* item, int gmlv, int unused) {
+bool itemdb_cancartstore_sub(struct item_data* item, int gmlv, int unused) {
 	return (item && (!(item->flag.trade_restriction&16) || gmlv >= item->gm_lv_trade_override));
 }
 
-int itemdb_canstore_sub(struct item_data* item, int gmlv, int unused) {
+bool itemdb_canstore_sub(struct item_data* item, int gmlv, int unused) {
 	return (item && (!(item->flag.trade_restriction&32) || gmlv >= item->gm_lv_trade_override));
 }
 
-int itemdb_canguildstore_sub(struct item_data* item, int gmlv, int unused) {
+bool itemdb_canguildstore_sub(struct item_data* item, int gmlv, int unused) {
 	return (item && (!(item->flag.trade_restriction&64) || gmlv >= item->gm_lv_trade_override));
 }
 
-int itemdb_canmail_sub(struct item_data* item, int gmlv, int unused) {
+bool itemdb_canmail_sub(struct item_data* item, int gmlv, int unused) {
 	return (item && (!(item->flag.trade_restriction&128) || gmlv >= item->gm_lv_trade_override));
 }
 
-int itemdb_canauction_sub(struct item_data* item, int gmlv, int unused) {
+bool itemdb_canauction_sub(struct item_data* item, int gmlv, int unused) {
 	return (item && (!(item->flag.trade_restriction&256) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, int (*func)(struct item_data*, int, int))
+bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, bool (*func)(struct item_data*, int, int))
 {
 	struct item_data* item_data = itemdb_search(item->nameid);
 	int i;

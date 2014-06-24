@@ -454,16 +454,16 @@ unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group);
 #define itemdb_value_sell(n) itemdb_search(n)->value_sell
 #define itemdb_canrefine(n) (!itemdb_search(n)->flag.no_refine)
 //Item trade restrictions [Skotlex]
-int itemdb_isdropable_sub(struct item_data *, int, int);
-int itemdb_cantrade_sub(struct item_data*, int, int);
-int itemdb_canpartnertrade_sub(struct item_data*, int, int);
-int itemdb_cansell_sub(struct item_data*,int, int);
-int itemdb_cancartstore_sub(struct item_data*, int, int);
-int itemdb_canstore_sub(struct item_data*, int, int);
-int itemdb_canguildstore_sub(struct item_data*, int, int);
-int itemdb_canmail_sub(struct item_data*, int, int);
-int itemdb_canauction_sub(struct item_data*, int, int);
-bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, int (*func)(struct item_data*, int, int));
+bool itemdb_isdropable_sub(struct item_data *itd, int gmlv, int unused);
+bool itemdb_cantrade_sub(struct item_data *itd, int gmlv, int gmlv2);
+bool itemdb_canpartnertrade_sub(struct item_data *itd, int gmlv, int gmlv2);
+bool itemdb_cansell_sub(struct item_data *itd, int gmlv, int unused);
+bool itemdb_cancartstore_sub(struct item_data *itd, int gmlv, int unused);
+bool itemdb_canstore_sub(struct item_data *itd, int gmlv, int unused);
+bool itemdb_canguildstore_sub(struct item_data *itd, int gmlv, int unused);
+bool itemdb_canmail_sub(struct item_data *itd, int gmlv, int unused);
+bool itemdb_canauction_sub(struct item_data *itd, int gmlv, int unused);
+bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, bool (*func)(struct item_data*, int, int));
 #define itemdb_isdropable(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_isdropable_sub)
 #define itemdb_cantrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_cantrade_sub)
 #define itemdb_canpartnertrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_canpartnertrade_sub)
@@ -476,7 +476,7 @@ bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, int (*func)(str
 
 bool itemdb_isequip2(struct item_data *id);
 #define itemdb_isequip(nameid) itemdb_isequip2(itemdb_search(nameid))
-char itemdb_isidentified(unsigned short);
+char itemdb_isidentified(unsigned short nameid);
 bool itemdb_isstackable2(struct item_data *id);
 #define itemdb_isstackable(nameid) itemdb_isstackable2(itemdb_search(nameid))
 uint64 itemdb_unique_id(int8 flag, int64 value); // Unique Item ID
