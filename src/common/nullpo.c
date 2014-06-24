@@ -7,8 +7,8 @@
 #include "nullpo.h"
 #include "../common/showmsg.h"
 
-static void nullpo_info_core(const char *file, int line, const char *func, 
-                             const char *fmt, va_list ap);
+static void nullpo_info_core(const char *file, int line, const char *func, const char *fmt, va_list ap);
+static void nullpo_info_core_(const char *file, int line, const char *func);
 
 /*======================================
  * Null Information output and check
@@ -29,11 +29,9 @@ int nullpo_chk_f(const char *file, int line, const char *func, const void *targe
 
 int nullpo_chk(const char *file, int line, const char *func, const void *target)
 {
-        va_list ap;
-	if (target != NULL)
+ 	if (target != NULL)
 		return 0;
-	
-	nullpo_info_core(file, line, func, NULL, ap);
+	nullpo_info_core_(file, line, func);
 	return 1;
 }
 
@@ -53,17 +51,10 @@ void nullpo_info_f(const char *file, int line, const char *func,
 
 void nullpo_info(const char *file, int line, const char *func)
 {
-        va_list ap;
-	nullpo_info_core(file, line, func, NULL, ap);
+	nullpo_info_core_(file, line, func);
 }
 
-
-/*======================================
- * nullpo intelligence Output (Main)
- *--------------------------------------*/
-static void nullpo_info_core(const char *file, int line, const char *func, 
-                             const char *fmt, va_list ap)
-{
+static void nullpo_info_core_(const char *file, int line, const char *func){
 	if (file == NULL)
 		file = "??";
 	
@@ -74,6 +65,15 @@ static void nullpo_info_core(const char *file, int line, const char *func,
 	
 	ShowMessage("--- nullpo info --------------------------------------------\n");
 	ShowMessage("%s:%d: in func `%s'\n", file, line, func);
+}
+
+/*======================================
+ * nullpo intelligence Output (Main)
+ *--------------------------------------*/
+static void nullpo_info_core(const char *file, int line, const char *func, 
+                             const char *fmt, va_list ap)
+{
+	nullpo_info_core_(file,line,func);
 	if (fmt != NULL)
 	{
 		if (fmt[0] != '\0')
