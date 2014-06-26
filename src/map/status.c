@@ -2609,7 +2609,7 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 			bonus -= 100; //Default hprate is 100, so it should be add 0%
 
 			//+200% for top ranking Taekwons over level 90.
-			if ((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= battle_config.taekwon_ranker_min_lv && pc_famerank(sd->status.char_id,MAPID_TAEKWON))
+			if (pc_is_taekwon_ranker(sd))
 				bonus += 200;
 		}
 
@@ -2720,7 +2720,7 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += 2 * i;
 
 			//+200% for top ranking Taekwons over level 90.
-			if ((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= battle_config.taekwon_ranker_min_lv && pc_famerank(sd->status.char_id, MAPID_TAEKWON))
+			if (pc_is_taekwon_ranker(sd))
 				bonus += 200;
 		}
 
@@ -3050,13 +3050,12 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 
 	// We've got combos to process and check
 	if( sd->combos.count ) {
-		DBMap *combo_db = itemdb_get_combodb();
 		for (i = 0; i < sd->combos.count; i++) {
 			uint8 j = 0;
 			bool no_run = false;
-			struct item_combo *combo = (struct item_combo *)idb_get(combo_db,sd->combos.id[i]);
+			struct item_combo *combo = NULL;
 
-			if (!sd->combos.bonus[i])
+			if (!sd->combos.bonus[i] || !(combo = itemdb_combo_exists(sd->combos.id[i])))
 				continue;
 			// Check combo items
 			while (j < combo->count) {

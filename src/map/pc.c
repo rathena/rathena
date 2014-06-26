@@ -401,7 +401,7 @@ void pc_addfame(struct map_session_data *sd,int count)
 }
 
 /**
- * Check whether a player ID is in the fame rankers' list of its job, returns his/her position if so, 0 else
+ * Check whether a player ID is in the fame rankers list of its job, returns his/her position if so, 0 else
  * @param sd
  * @param job Job use enum e_mapid
  * @return Rank
@@ -1654,7 +1654,7 @@ void pc_calc_skilltree(struct map_session_data *sd)
 		}
 	} while(flag);
 
-	if( c > 0 && (sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= battle_config.taekwon_ranker_min_lv && sd->status.skill_point == 0 && pc_famerank(sd->status.char_id, MAPID_TAEKWON) ) {
+	if( c > 0 && sd->status.skill_point == 0 && pc_is_taekwon_ranker(sd) ) {
 		/* Taekwon Ranker Bonus Skill Tree
 		============================================
 		- Grant All Taekwon Tree, but only as Bonus Skills in case they drop from ranking.
@@ -2031,10 +2031,16 @@ static void pc_bonus_addeff_onskill(struct s_addeffectonskill* effect, int max, 
 static void pc_bonus_item_drop(struct s_add_drop *drop, const short max, unsigned short nameid, uint16 group, int class_, short race, int rate)
 {
 	uint8 i;
-	if (nameid && !group && !itemdb_exists(nameid)) {
+	struct s_item_group_db *group_ = NULL;
+	if (nameid && !itemdb_exists(nameid)) {
 		ShowWarning("pc_bonus_item_drop: Invalid item id %hu\n",nameid);
 		return;
 	}
+	if (!group || (group_ = itemdb_group_exists(group)) == NULL) {
+		ShowWarning("pc_bonus_item_drop: Invalid Item Group %hu\n",group);
+		return;
+	}
+
 	//Apply config rate adjustment settings.
 	if (rate >= 0) { //Absolute drop.
 		if (battle_config.item_rate_adddrop != 100)
@@ -3382,8 +3388,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		break;
 	case SP_ADD_ITEMGROUP_HEAL_RATE:
 		{
-			struct s_item_group_db *group = (struct s_item_group_db *) idb_get(itemdb_get_groupdb(), type2);
-			if (!group) {
+			if (!type2 || !itemdb_group_exists(type)) {
 				ShowError("pc_bonus2: SP_ADD_ITEMGROUP_HEAL_RATE Invalid item group with id %d\n", type2);
 				break;
 			}
@@ -6624,7 +6629,7 @@ int pc_skillup(struct map_session_data *sd,uint16 skill_id)
 		sd->status.skill_point--;
 		if( !skill_get_inf(skill_id) )
 			status_calc_pc(sd,SCO_NONE); // Only recalculate for passive skills.
-		else if( sd->status.skill_point == 0 && (sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= battle_config.taekwon_ranker_min_lv && pc_famerank(sd->status.char_id, MAPID_TAEKWON) )
+		else if( sd->status.skill_point == 0 && pc_is_taekwon_ranker(sd) )
 			pc_calc_skilltree(sd); // Required to grant all TK Ranker skills.
 		else
 			pc_check_skilltree(sd, skill_id); // Check if a new skill can Lvlup
@@ -6866,11 +6871,10 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 		return 0;
 
 	if( !(flag&2) ) { //Remove stuff lost when resetting skills.
-
 		/**
 		 * It has been confirmed on official servers that when you reset skills with a ranked Taekwon your skills are not reset (because you have all of them anyway)
 		 **/
-		if( (sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= battle_config.taekwon_ranker_min_lv && pc_famerank(sd->status.char_id, MAPID_TAEKWON) )
+		if( pc_is_taekwon_ranker(sd) )
 			return 0;
 
 		if( pc_checkskill(sd, SG_DEVIL) &&  !pc_nextjobexp(sd) )
@@ -11012,8 +11016,8 @@ short pc_get_itemgroup_bonus(struct map_session_data* sd, unsigned short nameid)
 		return bonus;
 	for (i = 0; i < sd->itemgrouphealrate_count; i++) {
 		uint16 group_id = sd->itemgrouphealrate[i]->group_id, j;
-		struct s_item_group_db *group = (struct s_item_group_db *) idb_get(itemdb_get_groupdb(), group_id);
-		if (!group)
+		struct s_item_group_db *group = NULL;
+		if (!group_id || !(group = itemdb_group_exists(group_id)))
 			continue;
 		
 		for (j = 0; j < group->random[0].data_qty; j++) {

@@ -1107,6 +1107,8 @@ short pc_get_itemgroup_bonus(struct map_session_data* sd, unsigned short nameid)
 short pc_get_itemgroup_bonus_group(struct map_session_data* sd, uint16 group_id);
 
 bool pc_is_same_equip_index(enum equip_index eqi, int *equip_index, int8 index);
+/// Check if player is Taekwon Ranker and the level is >= 90 (battle_config.taekwon_ranker_min_lv)
+#define pc_is_taekwon_ranker(sd) (((sd)->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && (sd)->status.base_level >= battle_config.taekwon_ranker_min_lv && pc_famerank((sd)->status.char_id,MAPID_TAEKWON))
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_class, int type);

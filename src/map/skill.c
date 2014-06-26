@@ -13917,7 +13917,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				status_change_end(&sd->bl, SC_COMBO, INVALID_TIMER);
 				return false;
 			}
-			if(sc->data[SC_COMBO]->val1 != skill_id && !( sd && sd->status.base_level >= battle_config.taekwon_ranker_min_lv && pc_famerank(sd->status.char_id, MAPID_TAEKWON) )) {	//Cancel combo wait.
+			if(sc->data[SC_COMBO]->val1 != skill_id && !pc_is_taekwon_ranker(sd)) {	//Cancel combo wait.
 				unit_cancel_combo(&sd->bl);
 				return false;
 			}

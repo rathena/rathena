@@ -482,11 +482,11 @@ bool itemdb_isstackable2(struct item_data *id);
 uint64 itemdb_unique_id(int8 flag, int64 value); // Unique Item ID
 bool itemdb_isNoEquip(struct item_data *id, uint16 m);
 
+struct item_combo *itemdb_combo_exists(unsigned short combo_id);
+
+struct s_item_group_db *itemdb_group_exists(unsigned short group_id);
 char itemdb_pc_get_itemgroup(uint16 group_id, struct map_session_data *sd);
 uint16 itemdb_get_randgroupitem_count(uint16 group_id, uint8 sub_group, unsigned short nameid);
-
-DBMap * itemdb_get_combodb();
-DBMap * itemdb_get_groupdb();
 
 void itemdb_reload(void);
 

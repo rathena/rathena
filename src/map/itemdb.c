@@ -18,18 +18,28 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct item_data *dummy_item; /// This is the default dummy item used for non-existant items. [Skotlex]
-
-static DBMap* itemdb; /// Item DB
+static DBMap *itemdb; /// Item DB
 static DBMap *itemdb_combo; /// Item Combo DB
 static DBMap *itemdb_group; /// Item Group DB
 
-DBMap * itemdb_get_combodb(){
-	return itemdb_combo;
+struct item_data *dummy_item; /// This is the default dummy item used for non-existant items. [Skotlex]
+
+/**
+* Check if combo exists
+* @param combo_id
+* @return NULL if not exist, or struct item_combo*
+*/
+struct item_combo *itemdb_combo_exists(unsigned short combo_id) {
+	return (struct item_combo *)idb_get(itemdb_combo, combo_id);
 }
 
-DBMap * itemdb_get_groupdb() {
-	return itemdb_group;
+/**
+* Check if item group exists
+* @param group_id
+* @return NULL if not exist, or s_item_group_db *
+*/
+struct s_item_group_db *itemdb_group_exists(unsigned short group_id) {
+	return (struct s_item_group_db *)idb_get(itemdb_group, group_id);
 }
 
 /**
@@ -44,17 +54,15 @@ static int itemdb_searchname_sub(DBKey key, DBData *data, va_list ap)
 	str = va_arg(ap,char *);
 	dst = va_arg(ap,struct item_data **);
 	dst2 = va_arg(ap,struct item_data **);
+
 	if (item == dummy_item)
 		return 0;
 
 	//Absolute priority to Aegis code name.
-	if (*dst != NULL)
-		return 0;
 	if (strcmpi(item->name,str) == 0)
 		*dst = item;
 
 	//Second priority to Client displayed name.
-	if (*dst2 != NULL) return 0;
 	if (strcmpi(item->jname,str) == 0)
 		*dst2 = item;
 	return 0;
@@ -67,8 +75,7 @@ static int itemdb_searchname_sub(DBKey key, DBData *data, va_list ap)
  *------------------------------------------*/
 struct item_data* itemdb_searchname(const char *str)
 {
-	struct item_data* item = NULL;
-	struct item_data* item2 = NULL;
+	struct item_data *item = NULL, * item2 = NULL;
 
 	itemdb->foreach(itemdb,itemdb_searchname_sub,str,&item,&item2);
 	return item ? item : item2;
@@ -82,8 +89,10 @@ static int itemdb_searchname_array_sub(DBKey key, DBData data, va_list ap)
 	struct item_data *item = db_data2ptr(&data);
 	char *str;
 	str = va_arg(ap,char *);
-	if (item == dummy_item)
-		return 1; //Invalid item.
+
+	if (item && dummy_item)
+		return 1;
+
 	if (stristr(item->jname,str))
 		return 0;
 	if (stristr(item->name,str))
@@ -369,8 +378,7 @@ static void itemdb_jobid2mapid(unsigned int *bclass, unsigned int jobmask)
 /**
 * Create dummy item data
 */
-static void create_dummy_data(void)
-{
+static void create_dummy_data(void) {
 	CREATE(dummy_item, struct item_data, 1);
 
 	memset(dummy_item, 0, sizeof(struct item_data));
@@ -381,6 +389,7 @@ static void create_dummy_data(void)
 	safestrncpy(dummy_item->name, "UNKNOWN_ITEM", sizeof(dummy_item->name));
 	safestrncpy(dummy_item->jname, "Unknown Item", sizeof(dummy_item->jname));
 	dummy_item->view_id = UNKNOWN_ITEM_ID;
+	idb_put(itemdb, dummy_item->nameid, dummy_item);
 }
 
 /*==========================================
@@ -392,7 +401,8 @@ struct item_data* itemdb_search(unsigned short nameid) {
 	struct item_data* id = (struct item_data*)idb_get(itemdb, nameid);
 	if (id)
 		return id;
-	ShowWarning("itemdb_search: Item ID %hu does not exists in the item_db. Using dummy data.\n", nameid);
+	if (nameid != dummy_item->nameid) // Avoid previous item that assigned with dummy_item to shows this message again
+		ShowWarning("itemdb_search: Item ID %hu does not exists in the item_db. Using dummy data.\n", nameid);
 	return dummy_item;
 }
 
@@ -1674,10 +1684,10 @@ void itemdb_reload(void) {
 * Finalizing Item DB
 */
 void do_final_itemdb(void) {
+	db_destroy(itemdb_combo);
 	itemdb_group->destroy(itemdb_group, itemdb_group_free);
 	itemdb->destroy(itemdb, itemdb_final_sub);
 	destroy_item_data(dummy_item);
-	db_destroy(itemdb_combo);
 }
 
 /**
@@ -1687,7 +1697,6 @@ void do_init_itemdb(void) {
 	itemdb = idb_alloc(DB_OPT_BASE);
 	itemdb_combo = idb_alloc(DB_OPT_BASE);
 	itemdb_group = idb_alloc(DB_OPT_BASE);
-	create_dummy_data(); //Dummy data item.
-	
+	create_dummy_data(); //Dummy data item.	
 	itemdb_read();
 }
