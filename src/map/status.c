@@ -8548,9 +8548,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				if (status->hp - diff < status->max_hp>>2)
 					diff = status->hp - (status->max_hp>>2);
 				if( val2 && bl->type == BL_MOB ) {
-					struct block_list* src = map_id2bl(val2);
-					if( src )
-						mob_log_damage((TBL_MOB*)bl,src,diff);
+					struct block_list* src2 = map_id2bl(val2);
+					if( src2 )
+						mob_log_damage((TBL_MOB*)bl,src2,diff);
 				}
 				status_zap(bl, diff, 0);
 			}
@@ -8757,7 +8757,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			struct status_change *psc = pbl?status_get_sc(pbl):NULL;
 			struct status_change_entry *psce = psc?psc->data[SC_MARIONETTE]:NULL;
 			// Fetch target's stats
-			struct status_data* status = status_get_status_data(bl); // Battle status
+			struct status_data* status2 = status_get_status_data(bl); // Battle status
 
 			if (!psce)
 				return 0;
@@ -8765,12 +8765,12 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val3 = 0;
 			val4 = 0;
 			max_stat = battle_config.max_parameter; // Cap to 99 (default)
-			stat = (psce->val3 >>16)&0xFF; stat = min(stat, max_stat - status->str ); val3 |= cap_value(stat,0,0xFF)<<16;
-			stat = (psce->val3 >> 8)&0xFF; stat = min(stat, max_stat - status->agi ); val3 |= cap_value(stat,0,0xFF)<<8;
-			stat = (psce->val3 >> 0)&0xFF; stat = min(stat, max_stat - status->vit ); val3 |= cap_value(stat,0,0xFF);
-			stat = (psce->val4 >>16)&0xFF; stat = min(stat, max_stat - status->int_); val4 |= cap_value(stat,0,0xFF)<<16;
-			stat = (psce->val4 >> 8)&0xFF; stat = min(stat, max_stat - status->dex ); val4 |= cap_value(stat,0,0xFF)<<8;
-			stat = (psce->val4 >> 0)&0xFF; stat = min(stat, max_stat - status->luk ); val4 |= cap_value(stat,0,0xFF);
+			stat = (psce->val3 >>16)&0xFF; stat = min(stat, max_stat - status2->str ); val3 |= cap_value(stat,0,0xFF)<<16;
+			stat = (psce->val3 >> 8)&0xFF; stat = min(stat, max_stat - status2->agi ); val3 |= cap_value(stat,0,0xFF)<<8;
+			stat = (psce->val3 >> 0)&0xFF; stat = min(stat, max_stat - status2->vit ); val3 |= cap_value(stat,0,0xFF);
+			stat = (psce->val4 >>16)&0xFF; stat = min(stat, max_stat - status2->int_); val4 |= cap_value(stat,0,0xFF)<<16;
+			stat = (psce->val4 >> 8)&0xFF; stat = min(stat, max_stat - status2->dex ); val4 |= cap_value(stat,0,0xFF)<<8;
+			stat = (psce->val4 >> 0)&0xFF; stat = min(stat, max_stat - status2->luk ); val4 |= cap_value(stat,0,0xFF);
 			break;
 		}
 		case SC_REJECTSWORD:
@@ -8817,9 +8817,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 		case SC_COMA: // Coma. Sends a char to 1HP. If val2, do not zap sp
 			if( val3 && bl->type == BL_MOB ) {
-				struct block_list* src = map_id2bl(val3);
-				if( src )
-					mob_log_damage((TBL_MOB*)bl,src,status->hp - 1);
+				struct block_list* src2 = map_id2bl(val3);
+				if( src2 )
+					mob_log_damage((TBL_MOB*)bl,src2,status->hp - 1);
 			}
 			status_zap(bl, status->hp-1, val2?0:status->sp);
 			return 1;
@@ -8827,18 +8827,18 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_TINDER_BREAKER2:
 		case SC_CLOSECONFINE2:
 		{
-			struct block_list *src = val2?map_id2bl(val2):NULL;
-			struct status_change *sc2 = src?status_get_sc(src):NULL;
+			struct block_list *src2 = val2?map_id2bl(val2):NULL;
+			struct status_change *sc2 = src2?status_get_sc(src2):NULL;
 			enum sc_type type2 = ((type == SC_TINDER_BREAKER2)?SC_TINDER_BREAKER:SC_CLOSECONFINE);
 			struct status_change_entry *sce2 = sc2?sc2->data[type2]:NULL;
 
-			if (src && sc2) {
+			if (src2 && sc2) {
 				if (!sce2) // Start lock on caster.
-					sc_start4(src,src,type2,100,val1,1,0,0,tick+1000);
+					sc_start4(src2,src2,type2,100,val1,1,0,0,tick+1000);
 				else { // Increase count of locked enemies and refresh time.
 					(sce2->val2)++;
 					delete_timer(sce2->timer, status_change_timer);
-					sce2->timer = add_timer(gettick()+tick+1000, status_change_timer, src->id, type2);
+					sce2->timer = add_timer(gettick()+tick+1000, status_change_timer, src2->id, type2);
 				}
 			} else // Status failed.
 				return 0;
@@ -9011,11 +9011,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if (sd) {
 				if (sd->mapindex != val2) {
 					int pos =  (bl->x&0xFFFF)|(bl->y<<16), // Current Coordinates
-					map =  sd->mapindex; // Current Map
+					map_idx =  sd->mapindex; // Current Map
 					// 1. Place in Jail (val2 -> Jail Map, val3 -> x, val4 -> y
 					pc_setpos(sd,(unsigned short)val2,val3,val4, CLR_TELEPORT);
 					// 2. Set restore point (val3 -> return map, val4 return coords
-					val3 = map;
+					val3 = map_idx;
 					val4 = pos;
 				} else if (!val3 || val3 == sd->mapindex) { // Use save point.
 					val3 = sd->status.save_point.map;
@@ -9495,20 +9495,20 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_GT_CHANGE:
 			{ // Take note there is no def increase as skill desc says. [malufett]
-				struct block_list * src;
+				struct block_list * src2;
 				val3 = status->agi * val1 / 60; // ASPD increase: [(Target AGI x Skill Level) / 60] %
-				if( (src = map_id2bl(val2)) )
-					val4 = ( 200/status_get_int(src) ) * val1; // MDEF decrease: MDEF [(200 / Caster INT) x Skill Level]
+				if( (src2 = map_id2bl(val2)) )
+					val4 = ( 200/status_get_int(src2) ) * val1; // MDEF decrease: MDEF [(200 / Caster INT) x Skill Level]
 				if( val4 < 0 )
 					val4 = 0;
 			}
 			break;
 		case SC_GT_REVITALIZE:
 			{ // Take note there is no vit,aspd,speed increase as skill desc says. [malufett]
-				struct block_list * src;
+				struct block_list * src2;
 				val3 = val1 * 30 + 50; // Natural HP recovery increase: [(Skill Level x 30) + 50] %
-				if( (src = map_id2bl(val2)) ) // The stat def is not shown in the status window and it is process differently
-					val4 = ( status_get_vit(src)/4 ) * val1; // STAT DEF increase: [(Caster VIT / 4) x Skill Level]
+				if( (src2 = map_id2bl(val2)) ) // The stat def is not shown in the status window and it is process differently
+					val4 = ( status_get_vit(src2)/4 ) * val1; // STAT DEF increase: [(Caster VIT / 4) x Skill Level]
 			}
 			break;
 		case SC_PYROTECHNIC_OPTION:
@@ -10562,15 +10562,15 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 
 		case SC_BLADESTOP:
 			if(sce->val4) {
-				int tid = sce->val4;
-				struct block_list *tbl = map_id2bl(tid);
+				int tid2 = sce->val4; //stop the status for the other guy of bladestop as well
+				struct block_list *tbl = map_id2bl(tid2);
 				struct status_change *tsc = status_get_sc(tbl);
 				sce->val4 = 0;
 				if(tbl && tsc && tsc->data[SC_BLADESTOP]) {
 					tsc->data[SC_BLADESTOP]->val4 = 0;
 					status_change_end(tbl, SC_BLADESTOP, INVALID_TIMER);
 				}
-				clif_bladestop(bl, tid, 0);
+				clif_bladestop(bl, tid2, 0);
 			}
 			break;
 		case SC_DANCING:
@@ -10844,8 +10844,8 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_CURSEDCIRCLE_TARGET:
 			{
 				struct block_list *src = map_id2bl(sce->val2);
-				struct status_change *sc = status_get_sc(src);
-				if( sc && sc->data[SC_CURSEDCIRCLE_ATKER] && --(sc->data[SC_CURSEDCIRCLE_ATKER]->val2) == 0 ) {
+				struct status_change *sc2 = status_get_sc(src);
+				if( sc2 && sc2->data[SC_CURSEDCIRCLE_ATKER] && --(sc2->data[SC_CURSEDCIRCLE_ATKER]->val2) == 0 ) {
 					status_change_end(src, SC_CURSEDCIRCLE_ATKER, INVALID_TIMER);
 					clif_bladestop(bl, sce->val2, 0);
 				}
@@ -10855,8 +10855,8 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			if( sce->val2 ) {
 				struct block_list *src = map_id2bl(sce->val2);
 				if(src) {
-					struct status_change *sc = status_get_sc(src);
-					sc->bs_counter--;
+					struct status_change *sc2 = status_get_sc(src);
+					sc2->bs_counter--;
 				}
 			}
 			break;
@@ -11701,8 +11701,8 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 
 	case SC_ELECTRICSHOCKER:
 		if( --(sce->val4) >= 0 ) {
-			if (!status_charge(bl, 0, 5 * sce->val1 * status->max_sp / 100))
-				; // Keep immobilize status even the SP is already running out.
+			status_charge(bl, 0, 5 * sce->val1 * status->max_sp / 100);
+			// Keep immobilize status even the SP is already running out.
 			sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
 			return 0;
 		}

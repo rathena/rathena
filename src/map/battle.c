@@ -361,17 +361,17 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 		if( atk_elem == ELE_FIRE && battle_getcurrentskill(target) == GN_WALLOFTHORN ) {
 			struct skill_unit *su = (struct skill_unit*)target;
 			struct skill_unit_group *sg;
-			struct block_list *src;
+			struct block_list *src2;
 
 			if( !su || !su->alive || (sg = su->group) == NULL || !sg || sg->val3 == -1 ||
-			   (src = map_id2bl(sg->src_id)) == NULL || status_isdead(src) )
+			   (src2 = map_id2bl(sg->src_id)) == NULL || status_isdead(src2) )
 				return 0;
 
 			if( sg->unit_id != UNT_FIREWALL ) {
 				int x,y;
 				x = sg->val3 >> 16;
 				y = sg->val3 & 0xffff;
-				skill_unitsetting(src,su->group->skill_id,su->group->skill_lv,x,y,1);
+				skill_unitsetting(src2,su->group->skill_id,su->group->skill_lv,x,y,1);
 				sg->val3 = -1;
 				sg->limit = DIFF_TICK(gettick(),sg->tick)+300;
 			}
@@ -4236,9 +4236,8 @@ struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list 
 		//Kagerou/Oboro Earth Charm effect +5% eDEF
 		ARR_FIND(1, 6, type, sd->talisman[type] > 0);
 		if (type == 2) {
-			short i = 5 * sd->talisman[type];
-
-			def1 = (def1 * (100 + i)) / 100;
+			short j = 5 * sd->talisman[type];
+			def1 = (def1 * (100 + j)) / 100;
 		}
 	}
 

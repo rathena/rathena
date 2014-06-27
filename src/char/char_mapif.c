@@ -688,7 +688,7 @@ int chmapif_parse_fwlog_changestatus(int fd){
 		RFIFOSKIP(fd,44);
 
 		Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`name`,`char_id`,`unban_time` FROM `%s` WHERE `name` = '%s'", schema_config.char_db, esc_name) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id` FROM `%s` WHERE `name` = '%s'", schema_config.char_db, esc_name) )
 			Sql_ShowDebug(sql_handle);
 		else if( Sql_NumRows(sql_handle) == 0 ) {
 			result = 1; // 1-player not found
@@ -697,12 +697,10 @@ int chmapif_parse_fwlog_changestatus(int fd){
 			Sql_ShowDebug(sql_handle);
 			result = 1;
 		} else {
-			char name[NAME_LENGTH];
-			int account_id;
+			int t_aid; //targit account id
 			char* data;
 
-			Sql_GetData(sql_handle, 0, &data, NULL); account_id = atoi(data);
-			Sql_GetData(sql_handle, 1, &data, NULL); safestrncpy(name, data, sizeof(name));
+			Sql_GetData(sql_handle, 0, &data, NULL); t_aid = atoi(data);
 			Sql_FreeResult(sql_handle);
 
 			if(!chlogif_isconnected())
@@ -715,40 +713,40 @@ int chmapif_parse_fwlog_changestatus(int fd){
 				case 1: // block
 					WFIFOHEAD(login_fd,10);
 					WFIFOW(login_fd,0) = 0x2724;
-					WFIFOL(login_fd,2) = account_id;
+					WFIFOL(login_fd,2) = t_aid;
 					WFIFOL(login_fd,6) = 5; // new account status
 					WFIFOSET(login_fd,10);
 				break;
 				case 2: // ban
 					WFIFOHEAD(login_fd,10);
 					WFIFOW(login_fd, 0) = 0x2725;
-					WFIFOL(login_fd, 2) = account_id;
+					WFIFOL(login_fd, 2) = t_aid;
 					WFIFOL(login_fd, 6) = timediff;
 					WFIFOSET(login_fd,10);
 				break;
 				case 3: // unblock
 					WFIFOHEAD(login_fd,10);
 					WFIFOW(login_fd,0) = 0x2724;
-					WFIFOL(login_fd,2) = account_id;
+					WFIFOL(login_fd,2) = t_aid;
 					WFIFOL(login_fd,6) = 0; // new account status
 					WFIFOSET(login_fd,10);
 				break;
 				case 4: // unban
 					WFIFOHEAD(login_fd,6);
 					WFIFOW(login_fd,0) = 0x272a;
-					WFIFOL(login_fd,2) = account_id;
+					WFIFOL(login_fd,2) = t_aid;
 					WFIFOSET(login_fd,6);
 				break;
 				case 5: // changesex
 					answer = false;
 					WFIFOHEAD(login_fd,6);
 					WFIFOW(login_fd,0) = 0x2727;
-					WFIFOL(login_fd,2) = account_id;
+					WFIFOL(login_fd,2) = t_aid;
 					WFIFOSET(login_fd,6);
 				break;
 				case 6:
 					answer = (val1&4); // vip_req val1=type, &1 login send return, &2 update timestamp, &4 map send answer
-					chlogif_reqvipdata(account_id, val1, timediff, fd);
+					chlogif_reqvipdata(t_aid, val1, timediff, fd);
 					break;
 				case 7:
 					answer = (val1&1); //val&1 request answer, val1&2 save data

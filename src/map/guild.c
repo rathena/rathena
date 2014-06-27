@@ -1587,10 +1587,10 @@ int guild_allianceack(int guild_id1,int guild_id2,int account_id1,int account_id
 	for (i = 0; i < 2 - (flag & 1); i++) { // Retransmission of the relationship list to all members
 		if(g[i]!=NULL)
 			for(j=0;j<g[i]->max_member;j++) {
-				struct map_session_data *sd = g[i]->member[j].sd;
-				if( sd!=NULL){
-					clif_guild_allianceinfo(sd);
-					channel_gjoin(sd,2); //join ally join
+				struct map_session_data *sd_mem = g[i]->member[j].sd;
+				if( sd_mem!=NULL){
+					clif_guild_allianceinfo(sd_mem);
+					channel_gjoin(sd_mem,2); //join ally join
 				}
 			}
 	}

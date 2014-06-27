@@ -2893,7 +2893,6 @@ ACMD_FUNC(char_ban)
 	char * modif_p;
 	int32 timediff=0; //don't set this as uint as we may want to decrease banned time
 	int bantype=0; //2=account block, 6=char specific
-	char output[256];
 
 	nullpo_retr(-1, sd);
 
@@ -2933,9 +2932,11 @@ ACMD_FUNC(char_ban)
 	else 
 		chrif_req_charban(sd->status.account_id, atcmd_player_name,timediff);
 	
-	safesnprintf(output,sizeof(output),msg_txt(sd,88),bantype==6?"char":"login"); // Sending request to %s server...
-	clif_displaymessage(fd, output);
-
+	{
+		char output[256];
+		safesnprintf(output,sizeof(output),msg_txt(sd,88),bantype==6?"char":"login"); // Sending request to %s server...
+		clif_displaymessage(fd, output);
+	}
 	return 0;
 }
 

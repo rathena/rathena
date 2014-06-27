@@ -3796,7 +3796,7 @@ void clif_joinchatok(struct map_session_data *sd,struct chat_data* cd)
 /// 00dc <users>.W <name>.24B
 void clif_addchat(struct chat_data* cd,struct map_session_data *sd)
 {
-	unsigned char buf[32];
+	unsigned char buf[29];
 
 	nullpo_retv(sd);
 	nullpo_retv(cd);
@@ -5816,14 +5816,14 @@ void clif_pvpset(struct map_session_data *sd,int pvprank,int pvpnum,int type)
 /*==========================================
  *
  *------------------------------------------*/
-void clif_map_property_mapall(int map, enum map_property property)
+void clif_map_property_mapall(int map_idx, enum map_property property)
 {
 	struct block_list bl;
 	unsigned char buf[16];
 
 	bl.id = 0;
 	bl.type = BL_NUL;
-	bl.m = map;
+	bl.m = map_idx;
 	WBUFW(buf,0)=0x199;
 	WBUFW(buf,2)=property;
 	clif_send(buf,packet_len(0x199),&bl,ALL_SAMEMAP);
@@ -15917,7 +15917,7 @@ void clif_instance_create(struct map_session_data *sd, const char *name, int num
 	if(!sd) return;
 
 	WBUFW(buf,0) = 0x2cb;
-	safestrncpy( WBUFP(buf,2), name, 62 );
+	safestrncpy((char *)WBUFP(buf,2), name, 62 );
 	WBUFW(buf,63) = num;
 	if(flag) // A timer has changed or been added
 		clif_send(buf,packet_len(0x2cb),&sd->bl,PARTY);
@@ -15954,7 +15954,7 @@ void clif_instance_status(struct map_session_data *sd, const char *name, unsigne
 	if(!sd) return; //party_getavailablesd can return NULL
 
 	WBUFW(buf,0) = 0x2cd;
-	safestrncpy( WBUFP(buf,2), name, 62 );
+	safestrncpy((char *)WBUFP(buf,2), name, 62 );
 	WBUFL(buf,63) = limit1;
 	WBUFL(buf,67) = limit2;
 	if(flag) // A timer has changed or been added

@@ -409,15 +409,15 @@ bool path_search(struct walkpath_data *wpd,int16 m,int16 x0,int16 y0,int16 x1,in
 	wpd->path_len = len;
 	wpd->path_pos = 0;
 	for(i=rp,j=len-1;j>=0;i=tp[i].before,j--) {
-		int dx  = tp[i].x - tp[tp[i].before].x;
-		int dy  = tp[i].y - tp[tp[i].before].y;
+		int dx2  = tp[i].x - tp[tp[i].before].x;
+		int dy2  = tp[i].y - tp[tp[i].before].y;
 		uint8 dir;
-		if( dx == 0 ) {
-			dir = (dy > 0 ? 0 : 4);
-		} else if( dx > 0 ) {
-			dir = (dy == 0 ? 6 : (dy < 0 ? 5 : 7) );
+		if( dx2 == 0 ) {
+			dir = (dy2 > 0 ? 0 : 4);
+		} else if( dx2 > 0 ) {
+			dir = (dy2 == 0 ? 6 : (dy2 < 0 ? 5 : 7) );
 		} else {
-			dir = (dy == 0 ? 2 : (dy > 0 ? 1 : 3) );
+			dir = (dy2 == 0 ? 2 : (dy2 > 0 ? 1 : 3) );
 		}
 		wpd->path[j] = dir;
 	}

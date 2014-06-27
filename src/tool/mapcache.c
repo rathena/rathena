@@ -14,6 +14,7 @@
 #include "../common/malloc.h"
 #include "../common/mmo.h"
 #include "../common/showmsg.h"
+#include "../common/utils.h"
 
 #include "../config/renewal.h"
 

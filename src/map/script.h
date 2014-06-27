@@ -134,7 +134,7 @@ struct script_state {
 	unsigned op2ref : 1;// used by op_2
 	unsigned npc_item_flag : 1;
 	unsigned mes_active : 1;  // Store if invoking character has a NPC dialog box open.
-	unsigned char* funcname; // Stores the current running function name
+	char* funcname; // Stores the current running function name
 };
 
 struct script_reg {

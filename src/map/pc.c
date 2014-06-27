@@ -1489,7 +1489,7 @@ static int pc_calc_skillpoint(struct map_session_data* sd)
  *------------------------------------------*/
 void pc_calc_skilltree(struct map_session_data *sd)
 {
-	int i,id=0,flag;
+	int i,flag;
 	int c=0;
 
 	nullpo_retv(sd);
@@ -1552,9 +1552,10 @@ void pc_calc_skilltree(struct map_session_data *sd)
 	if ((sd->class_&MAPID_UPPERMASK) != MAPID_TAEKWON) {
 		uint16 c_ = pc_class2idx(JOB_TAEKWON);
 		for (i = 0; i < MAX_SKILL_TREE; i++) {
-			uint16 x = skill_get_index(skill_tree[c_][i].id), id;
-			if ((id = sd->status.skill[x].id)) {
-				if (id == NV_BASIC || id == NV_FIRSTAID || id == WE_CALLBABY)
+			uint16 x = skill_get_index(skill_tree[c_][i].id);
+			uint16 skid;
+			if ((skid = sd->status.skill[x].id)) {
+				if (skid == NV_BASIC || skid == NV_FIRSTAID || skid == WE_CALLBABY)
 					continue;
 				sd->status.skill[x].id = 0;
 			}
@@ -1596,11 +1597,12 @@ void pc_calc_skilltree(struct map_session_data *sd)
 	}
 
 	do {
+		short skid=0;
 		flag = 0;
-		for( i = 0; i < MAX_SKILL_TREE && (id = skill_tree[c][i].id) > 0; i++ )
+		for( i = 0; i < MAX_SKILL_TREE && (skid = skill_tree[c][i].id) > 0; i++ )
 		{
 			int f;
-			if( sd->status.skill[id].id )
+			if( sd->status.skill[skid].id )
 				continue; //Skill already known.
 
 			f = 1;
@@ -1634,20 +1636,20 @@ void pc_calc_skilltree(struct map_session_data *sd)
 
 			if( f ) {
 				int inf2;
-				inf2 = skill_get_inf2(id);
+				inf2 = skill_get_inf2(skid);
 
-				if(!sd->status.skill[id].lv && (
+				if(!sd->status.skill[skid].lv && (
 					(inf2&INF2_QUEST_SKILL && !battle_config.quest_skill_learn) ||
 					inf2&INF2_WEDDING_SKILL ||
 					(inf2&INF2_SPIRIT_SKILL && !sd->sc.data[SC_SPIRIT])
 				))
 					continue; //Cannot be learned via normal means. Note this check DOES allows raising already known skills.
 
-				sd->status.skill[id].id = id;
+				sd->status.skill[skid].id = skid;
 
 				if(inf2&INF2_SPIRIT_SKILL) { //Spirit skills cannot be learned, they will only show up on your tree when you get buffed.
-					sd->status.skill[id].lv = 1; // need to manually specify a skill level
-					sd->status.skill[id].flag = SKILL_FLAG_TEMPORARY; //So it is not saved, and tagged as a "bonus" skill.
+					sd->status.skill[skid].lv = 1; // need to manually specify a skill level
+					sd->status.skill[skid].flag = SKILL_FLAG_TEMPORARY; //So it is not saved, and tagged as a "bonus" skill.
 				}
 				flag = 1; // skill list has changed, perform another pass
 			}
@@ -1655,23 +1657,22 @@ void pc_calc_skilltree(struct map_session_data *sd)
 	} while(flag);
 
 	if( c > 0 && sd->status.skill_point == 0 && pc_is_taekwon_ranker(sd) ) {
+		short skid=0;
 		/* Taekwon Ranker Bonus Skill Tree
 		============================================
 		- Grant All Taekwon Tree, but only as Bonus Skills in case they drop from ranking.
 		- (c > 0) to avoid grant Novice Skill Tree in case of Skill Reset (need more logic)
 		- (sd->status.skill_point == 0) to wait until all skill points are assigned to avoid problems with Job Change quest. */
 
-		for( i = 0; i < MAX_SKILL_TREE && (id = skill_tree[c][i].id) > 0; i++ ) {
-			if( (skill_get_inf2(id)&(INF2_QUEST_SKILL|INF2_WEDDING_SKILL)) )
+		for( i = 0; i < MAX_SKILL_TREE && (skid = skill_tree[c][i].id) > 0; i++ ) {
+			if( (skill_get_inf2(skid)&(INF2_QUEST_SKILL|INF2_WEDDING_SKILL)) )
 				continue; //Do not include Quest/Wedding skills.
-
-			if( sd->status.skill[id].id == 0 ) {
-				sd->status.skill[id].id = id;
-				sd->status.skill[id].flag = SKILL_FLAG_TEMPORARY; // So it is not saved, and tagged as a "bonus" skill.
-			} else if( id != NV_BASIC )
-				sd->status.skill[id].flag = SKILL_FLAG_REPLACED_LV_0 + sd->status.skill[id].lv; // Remember original level
-
-			sd->status.skill[id].lv = skill_tree_get_max(id, sd->status.class_);
+			if( sd->status.skill[skid].id == 0 ) { //do we really want skid as index ? //Lighta
+				sd->status.skill[skid].id = skid;
+				sd->status.skill[skid].flag = SKILL_FLAG_TEMPORARY; // So it is not saved, and tagged as a "bonus" skill.
+			} else if( skid != NV_BASIC )
+				sd->status.skill[skid].flag = SKILL_FLAG_REPLACED_LV_0 + sd->status.skill[skid].lv; // Remember original level
+			sd->status.skill[skid].lv = skill_tree_get_max(skid, sd->status.class_);
 		}
 	}
 }
@@ -7393,10 +7394,10 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 						|| (type == 2 && sd->status.inventory[i].equip)
 						||  type == 3)
 					{
-						int k;
-						ARR_FIND( 0, MAX_INVENTORY, k, eq_n[k] <= 0 );
-						if( k < MAX_INVENTORY )
-							eq_n[k] = i;
+						int l;
+						ARR_FIND( 0, MAX_INVENTORY, l, eq_n[l] <= 0 );
+						if( l < MAX_INVENTORY )
+							eq_n[l] = i;
 
 						eq_num++;
 					}
@@ -8847,21 +8848,24 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 	uint16 i;
 	int success = 0;
 	for( i = 0; i < data->combos_count; i++ ) {
-		int16 *combo_idx = NULL, idx, j;
+		short *combo_idx = NULL, idx, j;
+		int nb_itemCombo;
 		/* ensure this isn't a duplicate combo */
 		if( sd->combos.bonus != NULL ) {
 			int x;
 			ARR_FIND( 0, sd->combos.count, x, sd->combos.id[x] == data->combos[i]->id );
-
 			/* found a match, skip this combo */
 			if( x < sd->combos.count )
 				continue;
 		}
 
-		CREATE(combo_idx,int16,data->combos[i]->count);
-		memset(combo_idx,-1,data->combos[i]->count * sizeof(int16));
-
-		for( j = 0; j < data->combos[i]->count; j++ ) {
+		nb_itemCombo = data->combos[i]->count;
+		if(nb_itemCombo<2) //a combo with less then 2 item ?? how that possible
+			continue;
+		CREATE(combo_idx,short,nb_itemCombo);
+		memset(combo_idx,-1,nb_itemCombo * sizeof(short));
+			
+		for( j = 0; j < nb_itemCombo; j++ ) {
 			uint16 id = data->combos[i]->nameid[j], k;
 			bool found = false;
 			
@@ -8877,7 +8881,7 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 					continue;
 				if( j > 0 ) {
 					uint8 z;
-					for (z = 0; z < data->combos[i]->count; z++)
+					for (z = 0; z < nb_itemCombo; z++)
 						if(combo_idx[z] == index) //we already have that index recorded
 							do_continue=true;
 					if(do_continue)
@@ -8891,9 +8895,10 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 					found = true;
 					break;
 				} else { //Cards
-					uint16 z;
+					//uint16 z;
 					if ( sd->inventory_data[index]->slot == 0 || itemdb_isspecial(sd->status.inventory[index].card[0]) )
 						continue;
+					/* WIP this will break some combo currently
 					for (z = 0; z < sd->inventory_data[index]->slot; z++) {
 						if (sd->status.inventory[index].card[z] != id)
 							continue;
@@ -8901,6 +8906,7 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 						found = true;
 						break;
 					}
+					*/
 				}
 			}
 			if( !found )
@@ -8908,7 +8914,7 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 		}
 		aFree(combo_idx);
 		/* means we broke out of the count loop w/o finding all ids, we can move to the next combo */
-		if( j < data->combos[i]->count )
+		if( j < nb_itemCombo )
 			continue;
 		/* we got here, means all items in the combo are matching */
 		idx = sd->combos.count;

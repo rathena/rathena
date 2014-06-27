@@ -574,9 +574,9 @@ static bool mmo_auth_fromsql(AccountDB_SQL* db, struct mmo_account* acc, int acc
 
 	while( SQL_SUCCESS == Sql_NextRow(sql_handle) )
 	{
-		char* data;
-		Sql_GetData(sql_handle, 0, &data, NULL); safestrncpy(acc->account_reg2[i].str, data, sizeof(acc->account_reg2[i].str));
-		Sql_GetData(sql_handle, 1, &data, NULL); safestrncpy(acc->account_reg2[i].value, data, sizeof(acc->account_reg2[i].value));
+		char* data_tmp;
+		Sql_GetData(sql_handle, 0, &data_tmp, NULL); safestrncpy(acc->account_reg2[i].str, data_tmp, sizeof(acc->account_reg2[i].str));
+		Sql_GetData(sql_handle, 1, &data_tmp, NULL); safestrncpy(acc->account_reg2[i].value, data_tmp, sizeof(acc->account_reg2[i].value));
 		++i;
 	}
 	Sql_FreeResult(sql_handle);

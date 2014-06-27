@@ -866,17 +866,17 @@ static void add_scriptl(int l)
 /*==========================================
  * Resolve the label
  *------------------------------------------*/
-void set_label(int l,int pos, const char* script_pos)
+void set_label(int l,int pos, const char* script_pos_cur)
 {
 	int i,next;
 
 	if(str_data[l].type==C_INT || str_data[l].type==C_PARAM || str_data[l].type==C_FUNC)
 	{	//Prevent overwriting constants values, parameters and built-in functions [Skotlex]
-		disp_error_message("set_label: invalid label name",script_pos);
+		disp_error_message("set_label: invalid label name",script_pos_cur);
 		return;
 	}
 	if(str_data[l].label!=-1){
-		disp_error_message("set_label: dup label ",script_pos);
+		disp_error_message("set_label: dup label ",script_pos_cur);
 		return;
 	}
 	str_data[l].type=(str_data[l].type == C_USERFUNC ? C_USERFUNC_POS : C_POS);
@@ -2051,15 +2051,15 @@ const char* parse_syntax_close_sub(const char* p,int* flag)
 		}
 		return p;
 	} else if(syntax.curly[pos].type == TYPE_DO) {
-		int l;
-		char label[256];
+		int l2;
+		char label2[256];
 		const char *p2;
 
 		if(syntax.curly[pos].flag) {
 			// (Come here continue) to form the label here
-			sprintf(label,"__DO%x_NXT",syntax.curly[pos].index);
-			l=add_str(label);
-			set_label(l,script_pos,p);
+			sprintf(label2,"__DO%x_NXT",syntax.curly[pos].index);
+			l2=add_str(label2);
+			set_label(l2,script_pos,p);
 		}
 
 		// Skip to the end point if the condition is false
@@ -2076,24 +2076,24 @@ const char* parse_syntax_close_sub(const char* p,int* flag)
 		// do-block end is a new line
 		parse_nextline(false, p);
 
-		sprintf(label,"__DO%x_FIN",syntax.curly[pos].index);
+		sprintf(label2,"__DO%x_FIN",syntax.curly[pos].index);
 		add_scriptl(add_str("jump_zero"));
 		add_scriptc(C_ARG);
 		p=parse_expr(p);
 		p=skip_space(p);
-		add_scriptl(add_str(label));
+		add_scriptl(add_str(label2));
 		add_scriptc(C_FUNC);
 
 		// Skip to the starting point
-		sprintf(label,"goto __DO%x_BGN;",syntax.curly[pos].index);
+		sprintf(label2,"goto __DO%x_BGN;",syntax.curly[pos].index);
 		syntax.curly[syntax.curly_count++].type = TYPE_NULL;
-		parse_line(label);
+		parse_line(label2);
 		syntax.curly_count--;
 
 		// Form label of the end point conditions
-		sprintf(label,"__DO%x_FIN",syntax.curly[pos].index);
-		l=add_str(label);
-		set_label(l,script_pos,p);
+		sprintf(label2,"__DO%x_FIN",syntax.curly[pos].index);
+		l2=add_str(label2);
+		set_label(l2,script_pos,p);
 		p = skip_space(p);
 		if(*p != ';') {
 			disp_error_message("parse_syntax: expected ';'",p);
@@ -2135,19 +2135,19 @@ const char* parse_syntax_close_sub(const char* p,int* flag)
 		syntax.curly_count--;
 		return p;
 	} else if(syntax.curly[syntax.curly_count-1].type == TYPE_USERFUNC) {
-		int pos = syntax.curly_count-1;
-		char label[256];
-		int l;
+		int pos2 = syntax.curly_count-1;
+		char label2[256];
+		int l2;
 		// Back
-		sprintf(label,"return;");
+		sprintf(label2,"return;");
 		syntax.curly[syntax.curly_count++].type = TYPE_NULL;
-		parse_line(label);
+		parse_line(label2);
 		syntax.curly_count--;
 
 		// Put the label of the location
-		sprintf(label,"__FN%x_FIN",syntax.curly[pos].index);
-		l=add_str(label);
-		set_label(l,script_pos,p);
+		sprintf(label2,"__FN%x_FIN",syntax.curly[pos2].index);
+		l2=add_str(label2);
+		set_label(l2,script_pos,p);
 		syntax.curly_count--;
 		return p;
 	} else {
@@ -2338,7 +2338,7 @@ static const char* script_print_line(StringBuf* buf, const char* p, const char* 
 	return p+i+(p[i] == '\n' ? 1 : 0);
 }
 
-void script_errorwarning_sub(StringBuf *buf, const char* src, const char* file, int start_line, const char* error_msg, const char* error_pos) {
+void script_errorwarning_sub(StringBuf *buf, const char* src, const char* file, int start_line, const char* error_msg_cur, const char* error_pos_cur) {
 	// Find the line where the error occurred
 	int j;
 	int line = start_line;
@@ -2347,7 +2347,7 @@ void script_errorwarning_sub(StringBuf *buf, const char* src, const char* file, 
 
 	for(p=src;p && *p;line++){
 		const char *lineend=strchr(p,'\n');
-		if(lineend==NULL || error_pos<lineend){
+		if(lineend==NULL || error_pos_cur<lineend){
 			break;
 		}
 		for( j = 0; j < 4; j++ ) {
@@ -2358,34 +2358,34 @@ void script_errorwarning_sub(StringBuf *buf, const char* src, const char* file, 
 	}
 
 	StringBuf_Printf(buf, "script error on %s line %d\n", file, line);
-	StringBuf_Printf(buf, "    %s\n", error_msg);
+	StringBuf_Printf(buf, "    %s\n", error_msg_cur);
 	for(j = 0; j < 5; j++ ) {
 		script_print_line(buf, linestart[j], NULL, line + j - 5);
 	}
-	p = script_print_line(buf, p, error_pos, -line);
+	p = script_print_line(buf, p, error_pos_cur, -line);
 	for(j = 0; j < 5; j++) {
 		p = script_print_line(buf, p, NULL, line + j + 1 );
 	}
 }
 
-void script_error(const char* src, const char* file, int start_line, const char* error_msg, const char* error_pos) {
+void script_error(const char* src, const char* file, int start_line, const char* error_msg_cur, const char* error_pos_cur) {
 	StringBuf buf;
 
 	StringBuf_Init(&buf);
 	StringBuf_AppendStr(&buf, "\a\n");
 
-	script_errorwarning_sub(&buf, src, file, start_line, error_msg, error_pos);
+	script_errorwarning_sub(&buf, src, file, start_line, error_msg_cur, error_pos_cur);
 
 	ShowError("%s", StringBuf_Value(&buf));
 	StringBuf_Destroy(&buf);
 }
 
-void script_warning(const char* src, const char* file, int start_line, const char* error_msg, const char* error_pos) {
+void script_warning(const char* src, const char* file, int start_line, const char* error_msg_cur, const char* error_pos_cur) {
 	StringBuf buf;
 
 	StringBuf_Init(&buf);
 
-	script_errorwarning_sub(&buf, src, file, start_line, error_msg, error_pos);
+	script_errorwarning_sub(&buf, src, file, start_line, error_msg_cur, error_pos_cur);
 
 	ShowWarning("%s", StringBuf_Value(&buf));
 	StringBuf_Destroy(&buf);
@@ -2430,7 +2430,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 
 	if( setjmp( error_jump ) != 0 ) {
 		//Restore program state when script has problems. [from jA]
-		int i;
+		int j;
 		const int size = ARRAYLENGTH(syntax.curly);
 		if( error_report )
 			script_error(src,file,line,error_msg,error_pos);
@@ -2439,10 +2439,10 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 		script_pos  = 0;
 		script_size = 0;
 		script_buf  = NULL;
-		for(i=LABEL_START;i<str_num;i++)
-			if(str_data[i].type == C_NOP) str_data[i].type = C_NAME;
-		for(i=0; i<size; i++)
-			linkdb_final(&syntax.curly[i].case_label);
+		for(j=LABEL_START;j<str_num;j++)
+			if(str_data[j].type == C_NOP) str_data[j].type = C_NAME;
+		for(j=0; j<size; j++)
+			linkdb_final(&syntax.curly[j].case_label);
 		return NULL;
 	}
 
@@ -6545,9 +6545,9 @@ BUILDIN_FUNC(getitem2)
 	get_val(st,data);
 	if( data_isstring(data) ) {
 		const char *name=conv_str(st,data);
-		struct item_data *item_data = itemdb_searchname(name);
-		if( item_data )
-			nameid=item_data->nameid;
+		struct item_data *item_data_tmp = itemdb_searchname(name);
+		if( item_data_tmp )
+			nameid=item_data_tmp->nameid;
 		else
 			nameid=UNKNOWN_ITEM_ID;
 	} else
@@ -8917,7 +8917,7 @@ BUILDIN_FUNC(savepoint)
 {
 	int x;
 	int y;
-	short map;
+	short map_idx;
 	const char* str;
 	TBL_PC* sd;
 
@@ -8928,9 +8928,9 @@ BUILDIN_FUNC(savepoint)
 	str = script_getstr(st, 2);
 	x   = script_getnum(st,3);
 	y   = script_getnum(st,4);
-	map = mapindex_name2id(str);
-	if( map )
-		pc_setsavepoint(sd, map, x, y);
+	map_idx = mapindex_name2id(str);
+	if( map_idx )
+		pc_setsavepoint(sd, map_idx, x, y);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -9482,9 +9482,9 @@ BUILDIN_FUNC(clone)
 	TBL_PC *sd, *msd=NULL;
 	int char_id,master_id=0,x,y, mode = 0, flag = 0, m;
 	unsigned int duration = 0;
-	const char *map,*event;
+	const char *mapname,*event;
 
-	map=script_getstr(st,2);
+	mapname=script_getstr(st,2);
 	x=script_getnum(st,3);
 	y=script_getnum(st,4);
 	event=script_getstr(st,5);
@@ -9504,7 +9504,7 @@ BUILDIN_FUNC(clone)
 
 	check_event(st, event);
 
-	m = map_mapname2mapid(map);
+	m = map_mapname2mapid(mapname);
 	if (m < 0) return 0;
 
 	sd = map_charid2sd(char_id);
@@ -12299,11 +12299,11 @@ BUILDIN_FUNC(strmobinfo)
 BUILDIN_FUNC(guardian)
 {
 	int class_=0,x=0,y=0,guardian=0;
-	const char *str,*map,*evt="";
+	const char *str,*mapname,*evt="";
 	struct script_data *data;
 	bool has_index = false;
 
-	map	  =script_getstr(st,2);
+	mapname	  =script_getstr(st,2);
 	x	  =script_getnum(st,3);
 	y	  =script_getnum(st,4);
 	str	  =script_getstr(st,5);
@@ -12332,7 +12332,7 @@ BUILDIN_FUNC(guardian)
 	}
 
 	check_event(st, evt);
-	script_pushint(st, mob_spawn_guardian(map,x,y,str,class_,evt,guardian,has_index));
+	script_pushint(st, mob_spawn_guardian(mapname,x,y,str,class_,evt,guardian,has_index));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -12341,11 +12341,11 @@ BUILDIN_FUNC(guardian)
  *------------------------------------------*/
 BUILDIN_FUNC(setwall)
 {
-	const char *map, *name;
+	const char *mapname, *name;
 	int x, y, m, size, dir;
 	bool shootable;
 
-	map = script_getstr(st,2);
+	mapname = script_getstr(st,2);
 	x = script_getnum(st,3);
 	y = script_getnum(st,4);
 	size = script_getnum(st,5);
@@ -12353,7 +12353,7 @@ BUILDIN_FUNC(setwall)
 	shootable = script_getnum(st,7);
 	name = script_getstr(st,8);
 
-	if( (m = map_mapname2mapid(map)) < 0 )
+	if( (m = map_mapname2mapid(mapname)) < 0 )
 		return 0; // Invalid Map
 
 	map_iwall_set(m, x, y, size, dir, shootable, name);
@@ -12822,18 +12822,18 @@ BUILDIN_FUNC(playBGMall)
 	name = script_getstr(st,2);
 
 	if( script_hasdata(st,7) ) {// specified part of map
-		const char* map = script_getstr(st,3);
+		const char* mapname = script_getstr(st,3);
 		int x0 = script_getnum(st,4);
 		int y0 = script_getnum(st,5);
 		int x1 = script_getnum(st,6);
 		int y1 = script_getnum(st,7);
 
-		map_foreachinarea(playBGM_sub, map_mapname2mapid(map), x0, y0, x1, y1, BL_PC, name);
+		map_foreachinarea(playBGM_sub, map_mapname2mapid(mapname), x0, y0, x1, y1, BL_PC, name);
 	}
 	else if( script_hasdata(st,3) ) {// entire map
-		const char* map = script_getstr(st,3);
+		const char* mapname = script_getstr(st,3);
 
-		map_foreachinmap(playBGM_sub, map_mapname2mapid(map), BL_PC, name);
+		map_foreachinmap(playBGM_sub, map_mapname2mapid(mapname), BL_PC, name);
 	}
 	else {// entire server
 		map_foreachpc(&playBGM_foreachpc_sub, name);
@@ -12892,18 +12892,18 @@ BUILDIN_FUNC(soundeffectall)
 	else
 	if(!script_hasdata(st,5))
 	{	// entire map
-		const char* map = script_getstr(st,4);
-		map_foreachinmap(soundeffect_sub, map_mapname2mapid(map), BL_PC, name, type);
+		const char* mapname = script_getstr(st,4);
+		map_foreachinmap(soundeffect_sub, map_mapname2mapid(mapname), BL_PC, name, type);
 	}
 	else
 	if(script_hasdata(st,8))
 	{	// specified part of map
-		const char* map = script_getstr(st,4);
+		const char* mapname = script_getstr(st,4);
 		int x0 = script_getnum(st,5);
 		int y0 = script_getnum(st,6);
 		int x1 = script_getnum(st,7);
 		int y1 = script_getnum(st,8);
-		map_foreachinarea(soundeffect_sub, map_mapname2mapid(map), x0, y0, x1, y1, BL_PC, name, type);
+		map_foreachinarea(soundeffect_sub, map_mapname2mapid(mapname), x0, y0, x1, y1, BL_PC, name, type);
 	}
 	else
 	{
@@ -13283,7 +13283,7 @@ int recovery_sub(struct map_session_data* sd, int revive)
 BUILDIN_FUNC(recovery)
 {
 	TBL_PC *sd;
-	int map = 0, type = 0, revive = 1;
+	int map_idx = 0, type = 0, revive = 1;
 
 	type = script_getnum(st,2);
 
@@ -13305,8 +13305,8 @@ BUILDIN_FUNC(recovery)
 			//When no party given, we use invoker party
 			int p_id = 0, i;
 			if(script_hasdata(st,5)) {//Bad maps shouldn't cause issues
-				map = map_mapname2mapid(script_getstr(st,5));
-				if(map < 1) { //But we'll check anyways
+				map_idx = map_mapname2mapid(script_getstr(st,5));
+				if(map_idx < 1) { //But we'll check anyways
 					ShowDebug("recovery: bad map name given (%s)\n", script_getstr(st,5));
 					return 1;
 				}
@@ -13320,7 +13320,7 @@ BUILDIN_FUNC(recovery)
 				return 0;
 			for (i = 0; i < MAX_PARTY; i++) {
 				if((!(pl_sd = p->data[i].sd) || pl_sd->status.party_id != p_id)
-					|| (map && pl_sd->bl.m != map))
+					|| (map_idx && pl_sd->bl.m != map_idx))
 					continue;
 				recovery_sub(pl_sd, revive);
 			}
@@ -13333,8 +13333,8 @@ BUILDIN_FUNC(recovery)
 			//When no guild given, we use invoker guild
 			int g_id = 0, i;
 			if(script_hasdata(st,5)) {//Bad maps shouldn't cause issues
-				map = map_mapname2mapid(script_getstr(st,5));
-				if(map < 1) { //But we'll check anyways
+				map_idx = map_mapname2mapid(script_getstr(st,5));
+				if(map_idx < 1) { //But we'll check anyways
 					ShowDebug("recovery: bad map name given (%s)\n", script_getstr(st,5));
 					return 1;
 				}
@@ -13348,7 +13348,7 @@ BUILDIN_FUNC(recovery)
 				return 0;
 			for (i = 0; i < MAX_GUILD; i++) {
 				if((!(pl_sd = g->member[i].sd) || pl_sd->status.guild_id != g_id)
-					|| (map && pl_sd->bl.m != map))
+					|| (map_idx && pl_sd->bl.m != map_idx))
 					continue;
 				recovery_sub(pl_sd, revive);
 			}
@@ -13356,10 +13356,10 @@ BUILDIN_FUNC(recovery)
 		}
 		case 3:
 			if(script_hasdata(st,3))
-				map = map_mapname2mapid(script_getstr(st,3));
+				map_idx = map_mapname2mapid(script_getstr(st,3));
 			else if((sd = script_rid2sd(st)))
-				map = sd->bl.m;
-			if(map < 1)
+				map_idx = sd->bl.m;
+			if(map_idx < 1)
 				return 1; //No sd and no map given - return
 		case 4:
 		{
@@ -13371,7 +13371,7 @@ BUILDIN_FUNC(recovery)
 				revive = script_getnum(st,3); // recovery 4,<revive_flag>;
 			iter = mapit_getallusers();
 			for (sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
-				if(type == 3 && sd->bl.m != map)
+				if(type == 3 && sd->bl.m != map_idx)
 					continue;
 				recovery_sub(sd, revive);
 			}
@@ -16026,7 +16026,7 @@ BUILDIN_FUNC(unitkill)
 BUILDIN_FUNC(unitwarp)
 {
 	int unit_id;
-	int map;
+	int map_idx;
 	short x;
 	short y;
 	struct block_list* bl;
@@ -16043,12 +16043,12 @@ BUILDIN_FUNC(unitwarp)
 		bl = map_id2bl(unit_id);
 
 	if( strcmp(mapname,"this") == 0 )
-		map = bl?bl->m:-1;
+		map_idx = bl?bl->m:-1;
 	else
-		map = map_mapname2mapid(mapname);
+		map_idx = map_mapname2mapid(mapname);
 
-	if( map >= 0 && bl != NULL )
-		script_pushint(st, unit_warp(bl,map,x,y,CLR_OUTSIGHT));
+	if( map_idx >= 0 && bl != NULL )
+		script_pushint(st, unit_warp(bl,map_idx,x,y,CLR_OUTSIGHT));
 	else
 		script_pushint(st, 0);
 
@@ -16990,17 +16990,17 @@ BUILDIN_FUNC(bg_warp)
 BUILDIN_FUNC(bg_monster)
 {
 	int class_ = 0, x = 0, y = 0, bg_id = 0;
-	const char *str,*map, *evt="";
+	const char *str,*mapname, *evt="";
 
 	bg_id  = script_getnum(st,2);
-	map    = script_getstr(st,3);
+	mapname    = script_getstr(st,3);
 	x      = script_getnum(st,4);
 	y      = script_getnum(st,5);
 	str    = script_getstr(st,6);
 	class_ = script_getnum(st,7);
 	if( script_hasdata(st,8) ) evt = script_getstr(st,8);
 	check_event(st, evt);
-	script_pushint(st, mob_spawn_bg(map,x,y,str,class_,evt,bg_id));
+	script_pushint(st, mob_spawn_bg(mapname,x,y,str,class_,evt,bg_id));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -18088,12 +18088,12 @@ static int atcommand_cleanfloor_sub(struct block_list *bl, va_list ap)
 
 BUILDIN_FUNC(cleanmap)
 {
-	const char *map;
+	const char *mapname;
 	int16 m;
 	int16 x0 = 0, y0 = 0, x1 = 0, y1 = 0;
 
-	map = script_getstr(st, 2);
-	m = map_mapname2mapid(map);
+	mapname = script_getstr(st, 2);
+	m = map_mapname2mapid(mapname);
 	if (!m)
 		return 1;
 

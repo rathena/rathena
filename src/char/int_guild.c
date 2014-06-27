@@ -445,16 +445,16 @@ struct guild * inter_guild_fromsql(int guild_id)
 	while( SQL_SUCCESS == Sql_NextRow(sql_handle) )
 	{
 		int position;
-		struct guild_position* p;
+		struct guild_position* gpos;
 
 		Sql_GetData(sql_handle, 0, &data, NULL); position = atoi(data);
 		if( position < 0 || position >= MAX_GUILDPOSITION )
 			continue;// invalid position
-		p = &g->position[position];
-		Sql_GetData(sql_handle, 1, &data, &len); memcpy(p->name, data, min(len, NAME_LENGTH));
-		Sql_GetData(sql_handle, 2, &data, NULL); p->mode = atoi(data);
-		Sql_GetData(sql_handle, 3, &data, NULL); p->exp_mode = atoi(data);
-		p->modified = GS_POSITION_UNMODIFIED;
+		gpos = &g->position[position];
+		Sql_GetData(sql_handle, 1, &data, &len); memcpy(gpos->name, data, min(len, NAME_LENGTH));
+		Sql_GetData(sql_handle, 2, &data, NULL); gpos->mode = atoi(data);
+		Sql_GetData(sql_handle, 3, &data, NULL); gpos->exp_mode = atoi(data);
+		gpos->modified = GS_POSITION_UNMODIFIED;
 	}
 
 	//printf("- Read guild_alliance %d from sql \n",guild_id);

@@ -767,7 +767,7 @@ int party_changeleader(struct map_session_data *sd, struct map_session_data *tsd
 /// - changes maps
 /// - logs in or out
 /// - gains a level (disabled)
-int party_recv_movemap(int party_id,int account_id,int char_id, unsigned short map,int online,int lv)
+int party_recv_movemap(int party_id,int account_id,int char_id, unsigned short map_idx,int online,int lv)
 {
 	struct party_member* m;
 	struct party_data* p;
@@ -785,7 +785,7 @@ int party_recv_movemap(int party_id,int account_id,int char_id, unsigned short m
 	}
 
 	m = &p->party.member[i];
-	m->map = map;
+	m->map = map_idx;
 	m->online = online;
 	m->lv = lv;
 	//Check if they still exist on this map server
