@@ -605,7 +605,7 @@ CREATE TABLE IF NOT EXISTS `pet` (
   `intimate` smallint(9) unsigned NOT NULL default '0',
   `hungry` smallint(9) unsigned NOT NULL default '0',
   `rename_flag` tinyint(4) unsigned NOT NULL default '0',
-  `incuvate` int(11) unsigned NOT NULL default '0',
+  `incubate` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`pet_id`)
 ) ENGINE=MyISAM;
 

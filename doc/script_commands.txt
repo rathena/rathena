@@ -4236,19 +4236,6 @@ referred to by their database ID number found inside 'db/(pre-)re/item_db.txt'.
     getitem 502,10 // The person will receive 10 apples
     getitem 617,1  // The person will receive 1 Old Violet Box
 
-Giving an item ID of -1 will give a specified number of random items from the 
-list of those that fall out of Old Blue Box. Unlike in all other cases, these 
-will be unidentified, if they turn out to be equipment. This is exactly what's 
-written in the Old Blue Box's item script.
-
-Other negative IDs also correspond to other random item generating item tables:
-
-Giving an item ID of -2 will produce the effects of Old Violet Box.
-Giving an item ID of -3 will produce the effects of Old Card Album.
-Giving an item ID of -4 will produce the effects of Gift Box.
-Giving an item ID of -5 will produce the effects of Worn Out Scroll, which, in 
-current SVN, drops only Jellopies anyway.
-
 This transaction is logged if the log script generated transactions option is 
 enabled.
 
@@ -4271,8 +4258,8 @@ quite a few item scripts. For more examples check just about any official script
 This command will give an amount of specified items to the invoking character. 
 If an optional account ID is specified, and the target character is currently 
 online, items will be created in their inventory instead. If they are not 
-online, nothing will happen. It works essentially the same as 'getitem' (it even 
-works for negative ID numbers the same way) but is a lot more flexible.
+online, nothing will happen. It works essentially the same as 'getitem' but is
+a lot more flexible.
 
 Those parameters that are different from 'getitem' are:
 

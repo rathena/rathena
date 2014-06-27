@@ -6421,11 +6421,13 @@ BUILDIN_FUNC(checkweight2){
  *------------------------------------------*/
 BUILDIN_FUNC(getitem)
 {
-	int nameid,amount,get_count,i;
+	int amount,get_count,i;
+	unsigned short nameid;
 	struct item it;
 	TBL_PC *sd;
 	struct script_data *data;
 	unsigned char flag = 0;
+	const char* command = script_getfuncname(st);
 
 	data=script_getdata(st,2);
 	get_val(st,data);
@@ -6439,12 +6441,7 @@ BUILDIN_FUNC(getitem)
 		nameid=item_data->nameid;
 	} else if( data_isint(data) ) {// <item id>
 		nameid=conv_num(st,data);
-		//Violet Box, Blue Box, etc - random item pick
-		if( nameid < 0 ) {
-			nameid = -nameid;
-			flag = 1;
-		}
-		if( nameid <= 0 || !itemdb_exists(nameid) ){
+		if( !itemdb_exists(nameid) ){
 			ShowError("buildin_getitem: Nonexistant item %d requested.\n", nameid);
 			return 1; //No item created.
 		}
@@ -6459,12 +6456,9 @@ BUILDIN_FUNC(getitem)
 
 	memset(&it,0,sizeof(it));
 	it.nameid=nameid;
-	if(!flag)
-		it.identify=1;
-	else
-		it.identify=itemdb_isidentified(nameid);
+	it.identify=itemdb_isidentified(nameid);
 
-	if( !strcmp(script_getfuncname(st),"getitembound") ) {
+	if( !strcmp(command,"getitembound") ) {
 		char bound = script_getnum(st,4);
 		if( bound > BOUND_NONE && bound < BOUND_MAX ) {
 			it.bound = bound;
@@ -6512,7 +6506,8 @@ BUILDIN_FUNC(getitem)
  *------------------------------------------*/
 BUILDIN_FUNC(getitem2)
 {
-	int nameid, amount, get_count, i;
+	int amount, get_count, i;
+	unsigned short nameid;
 	int iden, ref, attr, c1, c2, c3, c4;
 	char bound = BOUND_NONE;
 	struct item_data *item_data;
@@ -6520,8 +6515,9 @@ BUILDIN_FUNC(getitem2)
 	unsigned char flag = 0;
 	TBL_PC *sd;
 	struct script_data *data;
+	const char* command = script_getfuncname(st);
 
-	if( !strcmp(script_getfuncname(st),"getitembound2") ) {
+	if( !strcmp(command,"getitembound2") ) {
 		bound = script_getnum(st,11);
 		if( bound > BOUND_NONE && bound < BOUND_MAX ) {
 			if( script_hasdata(st,12) )
@@ -6562,11 +6558,6 @@ BUILDIN_FUNC(getitem2)
 	c3=(short)script_getnum(st,9);
 	c4=(short)script_getnum(st,10);
 
-	if(nameid < 0) { // Invalid nameid
-		nameid = -nameid;
-		flag = 1;
-	}
-
 	if(nameid > 0) {
 		memset(&item_tmp,0,sizeof(item_tmp));
 		item_data=itemdb_exists(nameid);
@@ -6585,10 +6576,7 @@ BUILDIN_FUNC(getitem2)
 		}
 
 		item_tmp.nameid=nameid;
-		if(!flag)
-			item_tmp.identify=iden;
-		else if(item_data->type==IT_WEAPON || item_data->type==IT_ARMOR || item_data->type==IT_SHADOWGEAR )
-			item_tmp.identify=0;
+		item_tmp.identify=iden;
 		item_tmp.refine=ref;
 		item_tmp.attribute=attr;
 		item_tmp.card[0]=(short)c1;

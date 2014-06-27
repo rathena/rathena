@@ -59,7 +59,7 @@ int CheckForCharServer(void)
 
 // pet
 int intif_create_pet(int account_id,int char_id,short pet_class,short pet_lv,short pet_egg_id,
-	short pet_equip,short intimate,short hungry,char rename_flag,char incuvate,char *pet_name)
+	short pet_equip,short intimate,short hungry,char rename_flag,char incubate,char *pet_name)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -74,7 +74,7 @@ int intif_create_pet(int account_id,int char_id,short pet_class,short pet_lv,sho
 	WFIFOW(inter_fd,18) = intimate;
 	WFIFOW(inter_fd,20) = hungry;
 	WFIFOB(inter_fd,22) = rename_flag;
-	WFIFOB(inter_fd,23) = incuvate;
+	WFIFOB(inter_fd,23) = incubate;
 	memcpy(WFIFOP(inter_fd,24),pet_name,NAME_LENGTH);
 	WFIFOSET(inter_fd,24+NAME_LENGTH);
 

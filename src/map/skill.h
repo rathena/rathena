@@ -429,7 +429,7 @@ bool skill_isNotOk_mercenary(uint16 skill_id, struct mercenary_data *md);
 
 bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skill_lv, int pos_x, int pos_y);
 
-int skill_chastle_mob_changetarget(struct block_list *bl,va_list ap);
+int skill_changetarget(struct block_list *bl,va_list ap);
 
 // Item creation
 int skill_can_produce_mix( struct map_session_data *sd, unsigned short nameid, int trigger, int qty);

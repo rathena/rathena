@@ -2475,6 +2475,29 @@ void map_removemobs(int16 m)
 }
 
 /*==========================================
+ * Check for map_name from map_id
+ *------------------------------------------*/
+const char* map_mapid2mapname(int m)
+{
+	if (map[m].instance_id) { // Instance map check
+		struct instance_data *im = &instance_data[map[m].instance_id];
+
+		if (!im) // This shouldn't happen but if it does give them the map we intended to give
+			return map[m].name;
+		else {
+			int i;
+
+			for (i = 0; i < MAX_MAP_PER_INSTANCE; i++) { // Loop to find the src map we want
+				if (im->map[i].m == m)
+					return map[im->map[i].src_m].name;
+			}
+		}
+	}
+
+	return map[m].name;
+}
+
+/*==========================================
  * Hookup, get map_id from map_name
  *------------------------------------------*/
 int16 map_mapname2mapid(const char* name)

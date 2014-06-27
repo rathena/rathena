@@ -115,8 +115,6 @@ void aFree_(void *p, const char *file, int line, const char *func)
 	// ShowMessage("%s:%d: in func %s: aFree %p\n",file,line,func,p);
 	if (p)
 		FREE(p, file, line, func);
-
-	p = NULL;
 }
 
 

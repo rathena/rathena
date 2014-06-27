@@ -802,6 +802,7 @@ struct block_list * map_id2bl(int id);
 bool map_blid_exists( int id );
 
 #define map_id2index(id) map[(id)].index
+const char* map_mapid2mapname(int m);
 int16 map_mapindex2mapid(unsigned short mapindex);
 int16 map_mapname2mapid(const char* name);
 int map_mapname2ipport(unsigned short name, uint32* ip, uint16* port);

@@ -3917,7 +3917,6 @@ ACMD_FUNC(mapinfo) {
 	/* Skill damage adjustment info [Cydh] */
 #ifdef ADJUST_SKILL_DAMAGE
 	if (map[m_id].flag.skill_damage) {
-		int j;
 		clif_displaymessage(fd,msg_txt(sd,1052));	// Skill Damage Adjustments:
 		sprintf(atcmd_output," > [Map] %d%%, %d%%, %d%%, %d%% | Caster:%d"
 			,map[m_id].adjust.damage.pc
@@ -3927,6 +3926,8 @@ ACMD_FUNC(mapinfo) {
 			,map[m_id].adjust.damage.caster);
 		clif_displaymessage(fd, atcmd_output);
 		if (map[m_id].skill_damage[0].skill_id) {
+			int j;
+
 			clif_displaymessage(fd," > [Map Skill] Name : Player, Monster, Boss Monster, Other | Caster");
 			for (j = 0; j < MAX_MAP_SKILL_MODIFIER; j++) {
 				if (map[m_id].skill_damage[j].skill_id) {

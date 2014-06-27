@@ -2017,21 +2017,23 @@ int status_check_visibility(struct block_list *src, struct block_list *target)
 	if ( src->type == BL_NPC) // NPCs don't care for the rest
 		return 1;
 
-	switch (target->type) {	// Check for chase-walk/hiding/cloaking opponents.
-		case BL_PC: {
-				struct map_session_data *tsd = (TBL_PC*)target;
+	if (tsc) {
+		switch (target->type) {	// Check for chase-walk/hiding/cloaking opponents.
+			case BL_PC: {
+					struct map_session_data *tsd = (TBL_PC*)target;
 
-				if (((tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)) || tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_STEALTHFIELD]) && !(status->mode&MD_BOSS) && (tsd->special_state.perfect_hiding || !(status->mode&MD_DETECTOR)))
+					if (((tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)) || tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_STEALTHFIELD]) && !(status->mode&MD_BOSS) && (tsd->special_state.perfect_hiding || !(status->mode&MD_DETECTOR)))
+						return 0;
+					if (tsc->data[SC_CLOAKINGEXCEED] && !(status->mode&MD_BOSS) && ((tsd && tsd->special_state.perfect_hiding) || (status->mode&MD_DETECTOR)))
+						return 0;
+					if (tsc->data[SC__FEINTBOMB] && !(status->mode&(MD_BOSS|MD_DETECTOR)))
+						return 0;
+				}
+				break;
+			default:
+				if (((tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)) || tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_STEALTHFIELD]) && !(status->mode&(MD_BOSS|MD_DETECTOR)))
 					return 0;
-				if (tsc->data[SC_CLOAKINGEXCEED] && !(status->mode&MD_BOSS) && ((tsd &&tsd->special_state.perfect_hiding) || (status->mode&MD_DETECTOR)))
-					return 0;
-				if (tsc && tsc->data[SC__FEINTBOMB] && !(status->mode&(MD_BOSS|MD_DETECTOR)))
-					return 0;
-			}
-			break;
-		default:
-			if (tsc && ((tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)) || tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_STEALTHFIELD]) && !(status->mode&(MD_BOSS|MD_DETECTOR)))
-				return 0;
+		}
 	}
 
 	return 1;
@@ -2645,7 +2647,7 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 			if(sc->data[SC_PETROLOGY_OPTION])
 				bonus += sc->data[SC_PETROLOGY_OPTION]->val2;
 			if(sc->data[SC_POWER_OF_GAIA])
-				bonus += sc->data[SC_POWER_OF_GAIA]->val2;
+				bonus += sc->data[SC_POWER_OF_GAIA]->val3;
 			if(sc->data[SC_CURSED_SOIL_OPTION])
 				bonus += sc->data[SC_CURSED_SOIL_OPTION]->val2;
 			if(sc->data[SC_UPHEAVAL_OPTION])
@@ -7919,10 +7921,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 	// Before overlapping fail, one must check for status cured.
 	switch (type) {
-	case SC_ENDURE:
-		if (val4)
-			status_change_end(bl, SC_CONCENTRATION, INVALID_TIMER);
-		break;
 	case SC_BLESSING:
 		// !TODO: Blessing and Agi up should do 1 damage against players on Undead Status, even on PvM
 		// !but cannot be plagiarized (this requires aegis investigation on packets and official behavior) [Brainstorm]
@@ -9567,6 +9565,22 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_STONE_SHIELD_OPTION:
 			val2 = 100; // Elemental modifier.
 			break;
+		case SC_TROPIC:
+		case SC_CHILLY_AIR:
+		case SC_WILD_STORM:
+		case SC_UPHEAVAL:
+			val2 += 10;
+		case SC_HEATER:
+		case SC_COOLER:
+		case SC_BLAST:
+		case SC_CURSED_SOIL:
+			val2 += 10;
+		case SC_PYROTECHNIC:
+		case SC_AQUAPLAY:
+		case SC_GUST:
+		case SC_PETROLOGY:
+			val2 += 5;
+			val3 += 9000;
 		case SC_CIRCLE_OF_FIRE:
 		case SC_FIRE_CLOAK:
 		case SC_WATER_DROP:
@@ -9575,12 +9589,13 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_WIND_STEP:
 		case SC_STONE_SHIELD:
 		case SC_SOLID_SKIN:
-			val2 = 10;
-			tick_time = 2000; // [GodLesZ] tick time
+			val2 += 5;
+			val3 += 1000;
+			tick_time = val3; // [GodLesZ] tick time
 			break;
 		case SC_WATER_BARRIER:
 			val2 = 40; // Increasement. Mdef1 ???
-			val3 = 20; // Reductions. Atk2, Flee1, Matk1 ????
+			val3 = 30; // Reductions. Atk2, Flee1, Matk1 ????
 			break;
 		case SC_ZEPHYR:
 			val2 = 25; // Flee.
@@ -9590,10 +9605,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_ROCK_CRUSHER:
 		case SC_ROCK_CRUSHER_ATK:
-			val2 = 33;
-			break;
 		case SC_POWER_OF_GAIA:
-			val2 = 20; //HP rate bonus
+			val2 = 33; //Def rate bonus/Speed rate reduction
+			val3 = 20; //HP rate bonus
 			break;
 		case SC_TEARGAS:
 			val2 = status_get_max_hp(bl) * 5 / 100; // Drain 5% HP
@@ -11702,7 +11716,6 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 	case SC_ELECTRICSHOCKER:
 		if( --(sce->val4) >= 0 ) {
 			status_charge(bl, 0, 5 * sce->val1 * status->max_sp / 100);
-			// Keep immobilize status even the SP is already running out.
 			sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
 			return 0;
 		}
@@ -11915,6 +11928,18 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		}
 		break;
 
+	case SC_TROPIC:
+	case SC_CHILLY_AIR:
+	case SC_WILD_STORM:
+	case SC_UPHEAVAL:
+	case SC_HEATER:
+	case SC_COOLER:
+	case SC_BLAST:
+	case SC_CURSED_SOIL:
+	case SC_PYROTECHNIC:
+	case SC_AQUAPLAY:
+	case SC_GUST:
+	case SC_PETROLOGY:
 	case SC_CIRCLE_OF_FIRE:
 	case SC_FIRE_CLOAK:
 	case SC_WATER_DROP:
@@ -11925,12 +11950,14 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 	case SC_SOLID_SKIN:
 		if( !status_charge(bl,0,sce->val2) ) {
 			struct block_list *s_bl = battle_get_master(bl);
+			if (bl->type == BL_ELEM)
+				elemental_change_mode(BL_CAST(BL_ELEM, bl), MAX_ELESKILLTREE);
 			if( s_bl )
 				status_change_end(s_bl,type+1,INVALID_TIMER);
 			status_change_end(bl,type,INVALID_TIMER);
 			break;
 		}
-		sc_timer_next(2000 + tick, status_change_timer, bl->id, data);
+		sc_timer_next(sce->val3 + tick, status_change_timer, bl->id, data);
 		return 0;
 
 	case SC_TEARGAS:

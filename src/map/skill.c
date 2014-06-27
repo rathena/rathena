@@ -1456,7 +1456,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 	case SO_DIAMONDDUST:
 		rate = 5 + 5 * skill_lv;
 		if( sc && sc->data[SC_COOLER_OPTION] )
-			rate += sd ? sd->status.job_level / 5 : 0;
+			rate += (sd ? sd->status.job_level / 5 : 0);
 		sc_start(src,bl, SC_CRYSTALIZE, rate, skill_lv, skill_get_time2(skill_id, skill_lv));
 		break;
 	case SO_VARETYR_SPEAR:
@@ -5156,7 +5156,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		else {
 			clif_skill_nodamage(src, bl, skill_id, 0, 1);
-			skill_addtimerskill(src, gettick() + skill_get_time(skill_id, skill_lv) - 1000, bl->id, 0, 0, skill_id, skill_lv, 0, 0);
+			skill_addtimerskill(src, gettick() + skill_get_time(skill_id, skill_lv), bl->id, 0, 0, skill_id, skill_lv, 0, 0);
 		}
 		break;
 
@@ -8147,14 +8147,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case HAMI_CASTLE:	//[orn]
-		if(rnd()%100 < 20*skill_lv && src != bl)
-		{
-			int x,y;
-			x = src->x;
-			y = src->y;
-			if (hd)
-				skill_blockhomun_start(hd, skill_id, skill_get_time2(skill_id,skill_lv));
+		if (rnd()%100 < 20 * skill_lv && src != bl) {
+			int x = src->x, y = src->y;
 
+			if (hd)
+				skill_blockhomun_start(hd,skill_id,skill_get_time2(skill_id,skill_lv));
 			if (unit_movepos(src,bl->x,bl->y,0,0)) {
 				clif_skill_nodamage(src,src,skill_id,skill_lv,1); // Homunc
 				clif_slide(src, bl->x, bl->y);
@@ -8162,16 +8159,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				if (unit_movepos(bl,x,y,0,0)) {
 					clif_skill_nodamage(bl,bl,skill_id,skill_lv,1); // Master
 					clif_slide(bl, x, y);
-					clif_fixpos(src);
+					clif_fixpos(bl);
 				}
-
-				//TODO: Shouldn't also players and the like switch targets?
-				map_foreachinrange(skill_chastle_mob_changetarget,src,
-					AREA_SIZE, BL_MOB, bl, src);
+				//TODO: Make casted skill also change its target
+				map_foreachinrange(skill_changetarget,src,AREA_SIZE,BL_CHAR,bl,src);
 			}
-		}
-		// Failed
-		else if (hd && hd->master)
+		} else if (hd && hd->master) // Failed
 			clif_skill_fail(hd->master, skill_id, USESKILL_FAIL_LEVEL, 0);
 		else if (sd)
 			clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
@@ -12422,12 +12415,12 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 			break;
 
 		case UNT_FIRE_EXPANSION_SMOKE_POWDER:
-			if( !sce )
+			if (!sce && battle_check_target(&sg->unit->bl, bl, sg->target_flag) > 0)
 				sc_start(ss, bl, type, 100, sg->skill_lv, sg->limit);
 			break;
 
 		case UNT_FIRE_EXPANSION_TEAR_GAS:
-			if( !sce )
+			if (!sce && battle_check_target(&sg->unit->bl, bl, sg->target_flag) > 0)
 				if( sc_start4(ss, bl, type, 100, sg->skill_lv, 0, ss->id,0, sg->limit) )
 					sc_start(ss, bl, SC_TEARGAS_SOB, 100, sg->skill_lv, sg->limit);
 			break;
@@ -13047,10 +13040,13 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 
 		case UNT_WARMER:
 			if( bl->type == BL_PC && !battle_check_undead(tstatus->race, tstatus->def_ele) && tstatus->race != RC_DEMON ) {
-				int hp = tstatus->max_hp * sg->skill_lv / 100;
+				int hp = 0;
 				struct status_change *ssc = status_get_sc(ss);
+
 				if( ssc && ssc->data[SC_HEATER_OPTION] )
-					hp *= 3 / 100;
+					hp = tstatus->max_hp * 3 * sg->skill_lv / 100;
+				else
+					hp = tstatus->max_hp * sg->skill_lv / 100;
 				if( tstatus->hp != tstatus->max_hp )
 					clif_skill_nodamage(&src->bl, bl, AL_HEAL, hp, 0);
 				if( tsc && tsc->data[SC_AKAITSUKI] && hp )
@@ -15092,7 +15088,7 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
 			break;
 		case SO_PSYCHIC_WAVE:
 			if( sc && (sc->data[SC_HEATER_OPTION] || sc->data[SC_COOLER_OPTION] || sc->data[SC_CURSED_SOIL_OPTION] || sc->data[SC_BLAST_OPTION]) )
-				req.sp += req.sp * 50 / 100;
+				req.sp += req.sp / 2; // 1.5x SP cost
 			break;
 	}
 
@@ -16273,15 +16269,12 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 /*==========================================
  *
  *------------------------------------------*/
-int skill_chastle_mob_changetarget(struct block_list *bl,va_list ap)
+int skill_changetarget(struct block_list *bl, va_list ap)
 {
-	struct mob_data* md;
-	struct unit_data*ud = unit_bl2ud(bl);
-	struct block_list *from_bl;
-	struct block_list *to_bl;
-	md = (struct mob_data*)bl;
-	from_bl = va_arg(ap,struct block_list *);
-	to_bl = va_arg(ap,struct block_list *);
+	struct mob_data *md = (struct mob_data *)bl;
+	struct unit_data *ud = unit_bl2ud(bl);
+	struct block_list *from_bl = va_arg(ap,struct block_list *);
+	struct block_list *to_bl = va_arg(ap,struct block_list *);
 
 	if(ud && ud->target == from_bl->id)
 		ud->target = to_bl->id;
@@ -17753,22 +17746,28 @@ int skill_produce_mix (struct map_session_data *sd, uint16 skill_id, unsigned sh
 								(sd->status.base_level-100) + pc_checkskill(sd, AM_LEARNINGPOTION) + pc_checkskill(sd, CR_FULLPROTECTION)*(4+rnd()%6); // (Caster?s Base Level - 100) + (Potion Research x 5) + (Full Chemical Protection Skill Level) x (Random number between 4 ~ 10)
 
 					switch(nameid){// difficulty factor
-						case ITEMID_HP_INCREASE_POTION_SMALL:	case ITEMID_SP_INCREASE_POTION_SMALL:
+						case ITEMID_HP_INCREASE_POTION_SMALL:
+						case ITEMID_SP_INCREASE_POTION_SMALL:
 						case ITEMID_CONCENTRATED_WHITE_POTION_Z:
 							difficulty += 10;
 							break;
-						case ITEMID_BOMB_MUSHROOM_SPORE:		case ITEMID_SP_INCREASE_POTION_MEDIUM:
+						case ITEMID_BOMB_MUSHROOM_SPORE:
+						case ITEMID_SP_INCREASE_POTION_MEDIUM:
 							difficulty += 15;
 							break;
-						case ITEMID_BANANA_BOMB:				case ITEMID_HP_INCREASE_POTION_MEDIUM:
-						case ITEMID_SP_INCREASE_POTION_LARGE:	case ITEMID_VITATA500:
+						case ITEMID_BANANA_BOMB:
+						case ITEMID_HP_INCREASE_POTION_MEDIUM:
+						case ITEMID_SP_INCREASE_POTION_LARGE:
+						case ITEMID_VITATA500:
 							difficulty += 20;
 							break;
-						case ITEMID_SEED_OF_HORNY_PLANT:		case ITEMID_BLOODSUCK_PLANT_SEED:
+						case ITEMID_SEED_OF_HORNY_PLANT:
+						case ITEMID_BLOODSUCK_PLANT_SEED:
 						case ITEMID_CONCENTRATED_CEROMAIN_SOUP:
 							difficulty += 30;
 							break;
-						case ITEMID_HP_INCREASE_POTION_LARGE:	case ITEMID_CURE_FREE:
+						case ITEMID_HP_INCREASE_POTION_LARGE:
+						case ITEMID_CURE_FREE:
 							difficulty += 40;
 							break;
 					}

@@ -1711,7 +1711,7 @@ static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* 
 {
 	char npc_ev[EVENT_NAME_LENGTH];
 	char card_slot[NAME_LENGTH];
-	int i, j, idx;
+	int i, j;
 	int key_nameid = 0;
 	int key_amount = 0;
 	int key_refine = 0;
@@ -1736,6 +1736,8 @@ static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* 
 	// save list of to be sold items
 	for( i = 0; i < n; i++ )
 	{
+		int idx;
+
 		idx = item_list[i*2]-2;
 
 		script_setarray_pc(sd, "@sold_nameid", i, (void*)(intptr_t)sd->status.inventory[idx].nameid, &key_nameid);

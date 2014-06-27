@@ -549,7 +549,6 @@ int instance_reqinfo(struct map_session_data *sd, short instance_id)
 {
 	struct instance_data *im;
 	struct instance_db *db;
-	int i;
 
 	nullpo_retr(1, sd);
 
@@ -563,6 +562,8 @@ int instance_reqinfo(struct map_session_data *sd, short instance_id)
 
 	// Say it's created if instance is not busy
 	if(im->state == INSTANCE_IDLE) {
+		int i;
+
 		for(i = 0; i < instance_wait.count; i++) {
 			if(instance_wait.id[i] == instance_id) {
 				clif_instance_create(sd, db->name, i+1, 0);

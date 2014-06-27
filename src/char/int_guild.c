@@ -1725,6 +1725,7 @@ int mapif_parse_GuildNotice(int fd,int guild_id,const char *mes1,const char *mes
 	memcpy(g->mes1,mes1,MAX_GUILDMES1);
 	memcpy(g->mes2,mes2,MAX_GUILDMES2);
 	g->save_flag |= GS_MES;	//Change mes of guild
+	inter_guild_tosql(g, g->save_flag);
 	return mapif_guild_notice(g);
 }
 

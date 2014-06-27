@@ -391,8 +391,6 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 			}
 			if( tsc->data[SC_THORNSTRAP])
 				status_change_end(target, SC_THORNSTRAP, INVALID_TIMER);
-			if( tsc->data[SC_FIRE_CLOAK_OPTION])
-				DAMAGE_SUBRATE(tsc->data[SC_FIRE_CLOAK_OPTION]->val2)
 			if( tsc->data[SC_CRYSTALIZE] && target->type != BL_MOB)
 				status_change_end(target, SC_CRYSTALIZE, INVALID_TIMER);
 			if( tsc->data[SC_EARTH_INSIGNIA]) ratio += 150;
@@ -787,7 +785,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			}
 		}
 
-		if(sc->data[SC_ZEPHYR] && (flag&(BF_LONG|BF_SHORT)) == (BF_SHORT|BF_LONG)) {
+		if( sc->data[SC_ZEPHYR] && !(flag&BF_MAGIC && skill_id) && !(skill_get_inf(skill_id)&(INF_GROUND_SKILL|INF_SELF_SKILL)) ) {
 			d->dmg_lv = ATK_BLOCK;
 			return 0;
 		}
@@ -2973,8 +2971,10 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			skillratio += 100;
 #else
 			skillratio += 200;
-		if( sc && sc->data[SC_TRUESIGHT] )
+		if (sc && sc->data[SC_TRUESIGHT])
 			skillratio += 2*sc->data[SC_TRUESIGHT]->val1;
+		if (sc->data[SC_CONCENTRATION])
+			skillratio += sc->data[SC_CONCENTRATION]->val2;
 #endif
 		if (sc->data[SC_CRUSHSTRIKE] && (!skill_id || skill_id == KN_AUTOCOUNTER)) {
 			if (sd) { //ATK [{Weapon Level * (Weapon Upgrade Level + 6) * 100} + (Weapon ATK) + (Weapon Weight)]%
@@ -3673,9 +3673,13 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			skillratio = (1000 * skill_lv) + (((sd) ? pc_checkskill(sd, WM_LESSON) : skill_get_max(WM_LESSON)) * status_get_int(src));
 			break;
 		case GN_CART_TORNADO: { // ATK [( Skill Level x 50 ) + ( Cart Weight / ( 150 - Caster Base STR ))] + ( Cart Remodeling Skill Level x 50 )] %
-			skillratio = 50 * skill_lv;
-			if( sd && sd->cart_weight)
-				skillratio += sd->cart_weight/10 / max((150-status_get_base_status(src)->str),1) + pc_checkskill(sd, GN_REMODELING_CART) * 50;
+				int strbonus = status_get_base_status(src)->str; // Only use base STR
+
+				if(strbonus > 130)
+					strbonus = 130;
+				skillratio = 50 * skill_lv;
+				if(sd && sd->cart_weight)
+					skillratio += sd->cart_weight / 10 / (150 - strbonus) + pc_checkskill(sd,GN_REMODELING_CART) * 50;
 			}
 			break;
 		case GN_CARTCANNON:
@@ -3723,7 +3727,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			skillratio = 50 * skill_lv + ((sd) ? pc_checkskill(sd, SO_STRIKING) * 50 : skill_get_max(SO_STRIKING));
 			RE_LVL_DMOD(100);
 			if( sc && sc->data[SC_BLAST_OPTION] )
-				skillratio += sd ? sd->status.job_level * 5 : 0;
+				skillratio += (sd ? sd->status.job_level * 5 : 0);
 			break;
 			// Physical Elemantal Spirits Attack Skills
 		case EL_CIRCLE_OF_FIRE:
@@ -5624,47 +5628,50 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio = 60 * skill_lv;
 						RE_LVL_DMOD(100);
 						if( sc && sc->data[SC_HEATER_OPTION] )
-							skillratio += sd ? sd->status.job_level / 2 : 0;
+							skillratio += (sd ? sd->status.job_level / 2 : 0);
 						break;
 					case SO_ELECTRICWALK:
 						skillratio = 60 * skill_lv;
 						RE_LVL_DMOD(100);
 						if( sc && sc->data[SC_BLAST_OPTION] )
-							skillratio += sd ? sd->status.job_level / 2 : 0;
+							skillratio += (sd ? sd->status.job_level / 2 : 0);
 						break;
 					case SO_EARTHGRAVE:
 						skillratio = ( 200 * ((sd) ? pc_checkskill(sd, SA_SEISMICWEAPON) : skill_get_max(SA_SEISMICWEAPON)) + sstatus->int_ * skill_lv );
 						RE_LVL_DMOD(100);
 						if( sc && sc->data[SC_CURSED_SOIL_OPTION] )
-							skillratio += sd ? sd->status.job_level * 5 : 0;
+							skillratio += (sd ? sd->status.job_level * 5 : 0);
 						break;
 					case SO_DIAMONDDUST:
 						skillratio = ( 200 * ((sd) ? pc_checkskill(sd, SA_FROSTWEAPON) : skill_get_max(SA_FROSTWEAPON)) + sstatus->int_ * skill_lv );
 						RE_LVL_DMOD(100);
 						if( sc && sc->data[SC_COOLER_OPTION] )
-							skillratio += sd ? sd->status.job_level * 5 : 0;
+							skillratio += (sd ? sd->status.job_level * 5 : 0);
 						break;
 					case SO_POISON_BUSTER:
 						skillratio += 900 + 300 * skill_lv;
 						RE_LVL_DMOD(120);
 						if( sc && sc->data[SC_CURSED_SOIL_OPTION] )
-							skillratio += sd ? sd->status.job_level * 5 : 0;
+							skillratio += (sd ? sd->status.job_level * 5 : 0);
 						break;
 					case SO_PSYCHIC_WAVE:
 						skillratio = skill_lv * 70 + (sstatus->int_ * 3);
 						RE_LVL_DMOD(100);
+						if (sc && (sc->data[SC_HEATER_OPTION] || sc->data[SC_COOLER_OPTION] ||
+							sc->data[SC_BLAST_OPTION] || sc->data[SC_CURSED_SOIL_OPTION]))
+							skillratio += 20;
 						break;
 					case SO_VARETYR_SPEAR: //MATK [{( Endow Tornado skill level x 50 ) + ( Caster INT x Varetyr Spear Skill level )} x Caster Base Level / 100 ] %
 						skillratio = status_get_int(src) * skill_lv + ((sd) ? pc_checkskill(sd, SA_LIGHTNINGLOADER) * 50 : skill_get_max(SA_LIGHTNINGLOADER));
 						RE_LVL_DMOD(100);
 						if( sc && sc->data[SC_BLAST_OPTION] )
-							skillratio += sd ? sd->status.job_level * 5 : 0;
+							skillratio += (sd ? sd->status.job_level * 5 : 0);
 						break;
 					case SO_CLOUD_KILL:
 						skillratio = skill_lv * 40;
 						RE_LVL_DMOD(100);
 						if( sc && sc->data[SC_CURSED_SOIL_OPTION] )
-							skillratio += sd ? sd->status.job_level : 0;
+							skillratio += (sd ? sd->status.job_level : 0);
 						break;
 					case GN_DEMONIC_FIRE:
 						if( skill_lv > 20)	// Fire expansion Lv.2
@@ -5858,14 +5865,23 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			switch(skill_id) {
 				case MG_LIGHTNINGBOLT:
 				case MG_THUNDERSTORM:
+					if(sc->data[SC_GUST_OPTION])
+						ad.damage += (6 + sstatus->int_ / 4) + max(sstatus->dex - 10, 0) / 30;
+					break;
 				case MG_FIREBOLT:
 				case MG_FIREWALL:
+					if(sc->data[SC_PYROTECHNIC_OPTION])
+						ad.damage += (6 + sstatus->int_ / 4) + max(sstatus->dex - 10, 0) / 30;
+					break;
 				case MG_COLDBOLT:
 				case MG_FROSTDIVER:
+					if(sc->data[SC_AQUAPLAY_OPTION])
+						ad.damage += (6 + sstatus->int_ / 4) + max(sstatus->dex - 10, 0) / 30;
+					break;
 				case WZ_EARTHSPIKE:
 				case WZ_HEAVENDRIVE:
-					if(sc->data[SC_GUST_OPTION] || sc->data[SC_PETROLOGY_OPTION] || sc->data[SC_PYROTECHNIC_OPTION] || sc->data[SC_AQUAPLAY_OPTION])
-						ad.damage += (6 + sstatus->int_/4) + max(sstatus->dex-10,0)/30;
+					if(sc->data[SC_PETROLOGY_OPTION])
+						ad.damage += (6 + sstatus->int_ / 4) + max(sstatus->dex - 10, 0) / 30;
 					break;
 			}
 		}
@@ -6340,7 +6356,7 @@ struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct bl
 		case BF_MAGIC:  d = battle_calc_magic_attack(bl,target,skill_id,skill_lv,count);  break;
 		case BF_MISC:   d = battle_calc_misc_attack(bl,target,skill_id,skill_lv,count);   break;
 		default:
-			ShowError("battle_calc_attack: unknown attack type! %d\n",attack_type);
+			ShowError("battle_calc_attack: unknown attack type! %d (skill_id=%d, skill_lv=%d)\n", attack_type, skill_id, skill_lv);
 			memset(&d,0,sizeof(d));
 			break;
 		}
@@ -6801,13 +6817,15 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			}
 			else
 				status_change_end(target, SC_DEVOTION, INVALID_TIMER);
-		} else if( tsc->data[SC_CIRCLE_OF_FIRE_OPTION] && (wd.flag&BF_SHORT) && target->type == BL_PC ) {
+		}
+		if( target->type == BL_PC && (wd.flag&BF_SHORT) && tsc->data[SC_CIRCLE_OF_FIRE_OPTION] ) {
 			struct elemental_data *ed = ((TBL_PC*)target)->ed;
 			if( ed ) {
 				clif_skill_damage(&ed->bl, target, tick, status_get_amotion(src), 0, -30000, 1, EL_CIRCLE_OF_FIRE, tsc->data[SC_CIRCLE_OF_FIRE_OPTION]->val1, 6);
-				skill_attack(BF_MAGIC,&ed->bl,&ed->bl,src,EL_CIRCLE_OF_FIRE,tsc->data[SC_CIRCLE_OF_FIRE_OPTION]->val1,tick,wd.flag);
+				skill_attack(BF_WEAPON,&ed->bl,&ed->bl,src,EL_CIRCLE_OF_FIRE,tsc->data[SC_CIRCLE_OF_FIRE_OPTION]->val1,tick,wd.flag);
 			}
-		} else if( tsc->data[SC_WATER_SCREEN_OPTION] && tsc->data[SC_WATER_SCREEN_OPTION]->val1 ) {
+		}
+		if( tsc->data[SC_WATER_SCREEN_OPTION] && tsc->data[SC_WATER_SCREEN_OPTION]->val1 ) {
 			struct block_list *e_bl = map_id2bl(tsc->data[SC_WATER_SCREEN_OPTION]->val1);
 			if( e_bl && !status_isdead(e_bl) ) {
 				clif_damage(e_bl,e_bl,tick,wd.amotion,wd.dmotion,damage,wd.div_,wd.type,wd.damage2);
@@ -6815,7 +6833,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				// Just show damage in target.
 				clif_damage(src, target, tick, wd.amotion, wd.dmotion, damage, wd.div_, wd.type, wd.damage2 );
 				map_freeblock_unlock();
-				return ATK_NONE;
+				return ATK_BLOCK;
 			}
 		}
 	}
@@ -6904,20 +6922,6 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				sd->ud.canact_tick = tick + skill_delayfix(src, r_skill, r_lv);
 				clif_status_change(src, SI_ACTIONDELAY, 1, skill_delayfix(src, r_skill, r_lv), 0, 0, 1);
 			}
-		}
-
-		if( sd && sc && (sc->data[SC_TROPIC_OPTION] || sc->data[SC_CHILLY_AIR_OPTION] || sc->data[SC_WILD_STORM_OPTION] || sc->data[SC_UPHEAVAL_OPTION]) )
-		{	// Autocast one Bolt depending on status change.
-			int skill_id = 0;
-			if( sc->data[SC_TROPIC_OPTION] ) skill_id = sc->data[SC_TROPIC_OPTION]->val3;
-			else if( sc->data[SC_CHILLY_AIR_OPTION] ) skill_id = sc->data[SC_CHILLY_AIR_OPTION]->val3;
-			else if( sc->data[SC_WILD_STORM_OPTION] ) skill_id = sc->data[SC_WILD_STORM_OPTION]->val2;
-			else if( sc->data[SC_UPHEAVAL_OPTION] ) skill_id = sc->data[SC_UPHEAVAL_OPTION]->val2;
-
-			sd->state.autocast = 1;
-			if( skill_id && rand()%100 < (sd->status.job_level / 2) )
-				skill_castend_damage_id(src, target, skill_id, (int)floor(sd->status.job_level / 10), tick, flag);
-			sd->state.autocast = 0;
 		}
 
 		if (wd.flag & BF_WEAPON && src != target && damage > 0) {

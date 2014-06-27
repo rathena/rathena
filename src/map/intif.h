@@ -66,7 +66,7 @@ void intif_itembound_req(int char_id, int aid, int guild_id);
 #endif
 
 int intif_create_pet(int account_id, int char_id, short pet_type, short pet_lv, short pet_egg_id,
-                     short pet_equip, short intimate, short hungry, char rename_flag, char incuvate, char *pet_name);
+                     short pet_equip, short intimate, short hungry, char rename_flag, char incubate, char *pet_name);
 int intif_request_petdata(int account_id, int char_id, int pet_id);
 int intif_save_petdata(int account_id, struct s_pet *p);
 int intif_delete_petdata(int pet_id);
