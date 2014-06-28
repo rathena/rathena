@@ -329,8 +329,8 @@ struct item_combo {
 /// Struct of item group entry
 struct s_item_group_entry {
 	unsigned short nameid, /// Item ID
-		duration; /// Duration if item as rental item (in minutes)
-	uint16 amount; /// Amount of item will be obtained
+		duration, /// Duration if item as rental item (in minutes)
+		amount; /// Amount of item will be obtained
 	bool isAnnounced, /// Broadcast if player get this item
 		isNamed; /// Named the item (if possible)
 	char bound; /// Makes the item as bound item (according to bound type)
@@ -338,15 +338,15 @@ struct s_item_group_entry {
 
 /// Struct of random group
 struct s_item_group_random {
-	struct s_item_group_entry *data;
-	uint16 data_qty;
+	struct s_item_group_entry *data; /// Random group entry
+	unsigned short data_qty; /// Number of item in random group
 };
 
 /// Struct of item group that will be used for db
 struct s_item_group_db {
-	uint16 id;
-	struct s_item_group_entry *must;
-	uint16 must_qty;
+	unsigned short id, /// Item Group ID
+		must_qty; /// Number of must item at this group
+	struct s_item_group_entry *must; /// Must item entry
 	struct s_item_group_random random[MAX_ITEMGROUP_RANDGROUP]; //! TODO: Move this fixed array to dynamic size if needed.
 };
 

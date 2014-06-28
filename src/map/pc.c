@@ -1552,9 +1552,8 @@ void pc_calc_skilltree(struct map_session_data *sd)
 	if ((sd->class_&MAPID_UPPERMASK) != MAPID_TAEKWON) {
 		uint16 c_ = pc_class2idx(JOB_TAEKWON);
 		for (i = 0; i < MAX_SKILL_TREE; i++) {
-			uint16 x = skill_get_index(skill_tree[c_][i].id);
-			uint16 skid;
-			if ((skid = sd->status.skill[x].id)) {
+			uint16 x = skill_get_index(skill_tree[c_][i].id), skid = sd->status.skill[x].id;
+			if (skid && x > 0 && sd->status.skill[x].flag != SKILL_FLAG_PLAGIARIZED && sd->status.skill[x].flag != SKILL_FLAG_PERM_GRANTED) {
 				if (skid == NV_BASIC || skid == NV_FIRSTAID || skid == WE_CALLBABY)
 					continue;
 				sd->status.skill[x].id = 0;

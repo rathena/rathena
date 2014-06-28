@@ -87,12 +87,10 @@ struct item_data* itemdb_searchname(const char *str)
 static int itemdb_searchname_array_sub(DBKey key, DBData data, va_list ap)
 {
 	struct item_data *item = db_data2ptr(&data);
-	char *str;
-	str = va_arg(ap,char *);
+	char *str = va_arg(ap,char *);
 
 	if (item && dummy_item)
 		return 1;
-
 	if (stristr(item->jname,str))
 		return 0;
 	if (stristr(item->name,str))
@@ -378,7 +376,7 @@ static void itemdb_jobid2mapid(unsigned int *bclass, unsigned int jobmask)
 /**
 * Create dummy item data
 */
-static void create_dummy_data(void) {
+static void itemdb_create_dummy(void) {
 	CREATE(dummy_item, struct item_data, 1);
 
 	memset(dummy_item, 0, sizeof(struct item_data));
@@ -392,18 +390,34 @@ static void create_dummy_data(void) {
 	idb_put(itemdb, dummy_item->nameid, dummy_item);
 }
 
+/**
+* Create new item data
+* @param nameid
+*/
+static struct item_data *itemdb_create_item(unsigned short nameid) {
+	struct item_data *id;
+	CREATE(id, struct item_data, 1);
+	memset(id, 0, sizeof(struct item_data));
+	dummy_item->nameid = nameid;
+	dummy_item->type = IT_ETC; //Etc item
+	idb_put(itemdb, nameid, id);
+	return id;
+}
+
 /*==========================================
  * Loads an item from the db. If not found, it will return the dummy item.
  * @param nameid
  * @return *item_data or *dummy_item if item not found
  *------------------------------------------*/
 struct item_data* itemdb_search(unsigned short nameid) {
-	struct item_data* id = (struct item_data*)idb_get(itemdb, nameid);
-	if (id)
-		return id;
-	if (nameid != dummy_item->nameid) // Avoid previous item that assigned with dummy_item to shows this message again
+	struct item_data* id = NULL;
+	if (nameid == dummy_item->nameid)
+		id = dummy_item;
+	else if (!(id = (struct item_data*)idb_get(itemdb, nameid))) {
 		ShowWarning("itemdb_search: Item ID %hu does not exists in the item_db. Using dummy data.\n", nameid);
-	return dummy_item;
+		id = dummy_item;
+	}
+	return id;
 }
 
 /** Checks if item is equip type or not
@@ -565,12 +579,11 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 	while (fgets(line,sizeof(line),fp)) {
 		int group_id = -1;
 		unsigned int j, prob = 1;
-		unsigned short nameid;
-		uint16 amt = 1, dur = 0;
 		uint8 rand_group = 1;
-		char *str[9], *p, announced = 0, named = 0, bound = BOUND_NONE;
+		char *str[9], *p;
 		struct s_item_group_random *random = NULL;
 		struct s_item_group_db *group = NULL;
+		struct s_item_group_entry entry;
 		bool found = false;
 
 		ln++;
@@ -600,6 +613,10 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 			continue;
 		}
 
+		memset(&entry, 0, sizeof(entry));
+		entry.amount = 1;
+		entry.bound = BOUND_NONE;
+
 		// Checking group_id
 		trim(str[0]);
 		if (ISDIGIT(str[0][0]))
@@ -614,7 +631,8 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 
 		// Checking sub group
 		prob = atoi(str[2]);
-		if (str[4] != NULL) rand_group = atoi(str[4]);
+		if (str[4] != NULL)
+			rand_group = atoi(str[4]);
 		if (rand_group < 0 || rand_group > MAX_ITEMGROUP_RANDGROUP) {
 			ShowWarning("itemdb_read_itemgroup: Invalid sub group '%d' for group '%s' in %s:%d\n", rand_group, str[0], filename, ln);
 			continue;
@@ -628,13 +646,13 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 		// Checking item
 		trim(str[1]);
 		if (ISDIGIT(str[1][0])) {
-			if (itemdb_exists((nameid = atoi(str[1]))))
+			if (itemdb_exists((entry.nameid = atoi(str[1]))))
 				found = true;
 		}
 		else {
 			struct item_data *id = itemdb_searchname(str[1]);
 			if (id) {
-				nameid = id->nameid;
+				entry.nameid = id->nameid;
 				found = true;
 			}
 		}
@@ -643,17 +661,16 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 			continue;
 		}
 
-		if (str[3] != NULL) amt = cap_value(atoi(str[3]),1,MAX_AMOUNT);
-		if (str[5] != NULL) announced = atoi(str[5]);
-		if (str[6] != NULL) dur = cap_value(atoi(str[6]),0,UINT16_MAX);
-		if (str[7] != NULL) named = atoi(str[7]);
-		if (str[8] != NULL) bound = cap_value(atoi(str[8]),BOUND_NONE,BOUND_MAX-1);
+		if (str[3] != NULL) entry.amount = cap_value(atoi(str[3]),1,MAX_AMOUNT);
+		if (str[5] != NULL) entry.isAnnounced= atoi(str[5]);
+		if (str[6] != NULL) entry.duration = cap_value(atoi(str[6]),0,UINT16_MAX);
+		if (str[7] != NULL) entry.isNamed = atoi(str[7]);
+		if (str[8] != NULL) entry.bound = cap_value(atoi(str[8]),BOUND_NONE,BOUND_MAX-1);
 
-		found = true;
 		if (!(group = (struct s_item_group_db *) idb_get(itemdb_group, group_id))) {
-			found = false;
 			CREATE(group, struct s_item_group_db, 1);
 			group->id = group_id;
+			idb_put(itemdb_group, group->id, group);
 		}
 
 		// Must item (rand_group == 0), place it here
@@ -664,17 +681,11 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 			else
 				RECREATE(group->must, struct s_item_group_entry, idx+1);
 
-			group->must[idx].nameid = nameid;
-			group->must[idx].amount = amt;
-			group->must[idx].isAnnounced = announced;
-			group->must[idx].duration = dur;
-			group->must[idx].isNamed = named;
-			group->must[idx].bound = bound;
+			group->must[idx] = entry;
 			group->must_qty++;
+
 			// If 'must' item isn't set as random item, skip the next process
 			if (!prob) {
-				if (!found)
-					idb_put(itemdb_group, group->id, group);
 				entries++;
 				continue;
 			}
@@ -693,19 +704,11 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 		else
 			RECREATE(random->data, struct s_item_group_entry, random->data_qty+prob);
 
-		//Now put the entry to its rand_group
-		for (j = random->data_qty; j < random->data_qty+prob; j++) {
-			random->data[j].nameid = nameid;
-			random->data[j].amount = amt;
-			random->data[j].isAnnounced = announced;
-			random->data[j].duration = dur;
-			random->data[j].isNamed = named;
-			random->data[j].bound = bound;
-		}
-		random->data_qty += prob;
+		// Put the entry to its rand_group
+		for (j = random->data_qty; j < random->data_qty+prob; j++)
+			random->data[j] = entry;
 
-		if (!found)
-			idb_put(itemdb_group, group->id, group);
+		random->data_qty += prob;
 		entries++;
 	}
 	fclose(fp);
@@ -1130,7 +1133,7 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 	unsigned short nameid;
 	struct item_data* id;
 
-	if( atoi(str[0]) <= 0 || atoi(str[0]) >= MAX_ITEMID )
+	if( atoi(str[0]) <= 0 || atoi(str[0]) >= MAX_ITEMID || atoi(str[0]) == dummy_item->nameid )
 	{
 		ShowWarning("itemdb_parse_dbrow: Invalid id %d in line %d of \"%s\", skipping.\n", atoi(str[0]), line, source);
 		return false;
@@ -1139,7 +1142,7 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 
 	//ID,Name,Jname,Type,Price,Sell,Weight,ATK,DEF,Range,Slot,Job,Job Upper,Gender,Loc,wLV,eLV,refineable,View
 	if (!(id = itemdb_exists(nameid)))
-		CREATE(id, struct item_data, 1);
+		id = itemdb_create_item(nameid);
 
 	safestrncpy(id->name, str[1], sizeof(id->name));
 	safestrncpy(id->jname, str[2], sizeof(id->jname));
@@ -1697,6 +1700,6 @@ void do_init_itemdb(void) {
 	itemdb = idb_alloc(DB_OPT_BASE);
 	itemdb_combo = idb_alloc(DB_OPT_BASE);
 	itemdb_group = idb_alloc(DB_OPT_BASE);
-	create_dummy_data(); //Dummy data item.	
+	itemdb_create_dummy(); //Dummy data item.	
 	itemdb_read();
 }
