@@ -21,11 +21,11 @@ struct s_homunculus_db {
 	long hungryDelay ;
 	unsigned char element, race, base_size, evo_size;
 };
-
 extern struct s_homunculus_db homunculus_db[MAX_HOMUNCULUS_CLASS];
+
 enum { HOMUNCULUS_CLASS, HOMUNCULUS_FOOD };
 
-enum { MH_MD_FIGHTING=1, MH_MD_GRAPPLING };
+enum { MH_MD_FIGHTING = 1, MH_MD_GRAPPLING };
 
 enum {
 	HOM_ST_ACTIVE	= 0,
@@ -72,7 +72,8 @@ struct homun_skill_tree_entry {
 #define HOM_S 0x200 //512
 #define HOM_REG 0x1000 //4096
 
-enum {
+/// Houmunculus ID
+enum homun_mapid {
 // Normal Homunculus
 	MAPID_LIF = HOM_REG|0x0,
 	MAPID_AMISTR,
@@ -90,6 +91,8 @@ enum {
 	MAPID_DIETER,
 	MAPID_ELANOR,
 };
+
+/// Homunculus type
 enum homun_type {
 	HT_REG		= 0x1,
 	HT_EVO		= 0x2,
@@ -97,6 +100,19 @@ enum homun_type {
 	HT_INVALID	= -1,
 };
 
+/// Homunculus battle_config setting
+enum homun_setting {
+	HOMSET_NO_SUPPORT_SKILL				= 0x01, /// Cannot be targetted by support skills, except for their master
+	HOMSET_NO_INSTANT_LAND_SKILL		= 0x02, /// Unit/land skill doesn't applied immediately
+	HOMSET_FIRST_TARGET					= 0x04, /// Mobs will always go after them instead of players until attacked
+	HOMSET_COPY_SPEED					= 0x08, /// Copy their master's speed on spawn/map-change
+	HOMSET_DISPLAY_LUK					= 0x10, /// They display luk/3+1 instead of their actual critical in the stat window, by default they don't crit
+	HOMSET_SAME_MATK					= 0x20, /// Their Min-Matk is always the same as their max
+	HOMSET_RESET_REUSESKILL_VAPORIZED	= 0x40, /// Skill re-use delay is reset when they are vaporized.
+	HOMSET_RESET_REUSESKILL_TELEPORTED	= 0x80, /// Skill re-use delay is reset when they are warped (by skill or item) with player.
+};
+
+/// Check Homunculus Class ID
 #define homdb_checkid(id) (id >=  HM_CLASS_BASE && id <= HM_CLASS_MAX)
 
 // merc_is_hom_alive(struct homun_data *)

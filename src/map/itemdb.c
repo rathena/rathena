@@ -55,9 +55,6 @@ static int itemdb_searchname_sub(DBKey key, DBData *data, va_list ap)
 	dst = va_arg(ap,struct item_data **);
 	dst2 = va_arg(ap,struct item_data **);
 
-	if (item == dummy_item)
-		return 0;
-
 	//Absolute priority to Aegis code name.
 	if (strcmpi(item->name,str) == 0)
 		*dst = item;
@@ -89,8 +86,6 @@ static int itemdb_searchname_array_sub(DBKey key, DBData data, va_list ap)
 	struct item_data *item = db_data2ptr(&data);
 	char *str = va_arg(ap,char *);
 
-	if (item && dummy_item)
-		return 1;
 	if (stristr(item->jname,str))
 		return 0;
 	if (stristr(item->name,str))
@@ -387,7 +382,6 @@ static void itemdb_create_dummy(void) {
 	safestrncpy(dummy_item->name, "UNKNOWN_ITEM", sizeof(dummy_item->name));
 	safestrncpy(dummy_item->jname, "Unknown Item", sizeof(dummy_item->jname));
 	dummy_item->view_id = UNKNOWN_ITEM_ID;
-	idb_put(itemdb, dummy_item->nameid, dummy_item);
 }
 
 /**
@@ -398,8 +392,8 @@ static struct item_data *itemdb_create_item(unsigned short nameid) {
 	struct item_data *id;
 	CREATE(id, struct item_data, 1);
 	memset(id, 0, sizeof(struct item_data));
-	dummy_item->nameid = nameid;
-	dummy_item->type = IT_ETC; //Etc item
+	id->nameid = nameid;
+	id->type = IT_ETC; //Etc item
 	idb_put(itemdb, nameid, id);
 	return id;
 }
