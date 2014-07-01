@@ -1120,7 +1120,7 @@ REPLACE INTO `item_db` VALUES (2118,'Arm_Guard_','Arm Guard',4,10000,NULL,150,NU
 REPLACE INTO `item_db` VALUES (2119,'Improved_Arm_Guard','Advanced Arm Guard',4,40000,NULL,150,NULL,4,NULL,0,0x02000000,7,2,32,NULL,50,1,1,'bonus bMdef,5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2120,'Improved_Arm_Guard_','Advanced Arm Guard',4,40000,NULL,150,NULL,4,NULL,1,0x02000000,7,2,32,NULL,50,1,1,'bonus bMdef,5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2121,'Memorize_Book_','Memory Book',4,20,NULL,1000,NULL,3,NULL,1,0x00810204,7,2,32,NULL,0,1,5,'bonus bInt,1; bonus bMdef,2;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (2122,'Platinum_Shield','Platinum Shield',4,20,NULL,1200,NULL,5,NULL,0,0xFFFFFFFE,2,2,32,NULL,68,1,4,'bonus bMdef,5; bonus2 bSubSize,Size_Medium,15; bonus2 bSubSize,Size_Large,15; bonus2 bSubRace,RC_Undead,10; bonus5 bAutoSpellWhenHit,"NPC_MAGICMIRROR",2,150,BF_MAGIC,0;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (2122,'Platinum_Shield','Platinum Shield',4,20,NULL,1200,NULL,5,NULL,0,0xFFFFFFFE,2,2,32,NULL,68,1,4,'bonus bMdef,5; bonus2 bSubSize,Size_Medium,15; bonus2 bSubSize,Size_Large,15; bonus2 bSubRace,RC_Undead,10; bonus5 bAutoSpellWhenHit,"NPC_MAGICMIRROR",7,150,BF_MAGIC,0;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2123,'Orleans_Server','Orleans\'s Server',4,20,NULL,1000,NULL,5,NULL,1,0xFFFFFFFE,2,2,32,NULL,55,1,4,'bonus bMdef,2; bonus bMagicDamageReturn,5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2124,'Thorny_Buckler','Thorny Buckler',4,20,NULL,1000,NULL,5,NULL,1,0xFFFFFFFE,2,2,32,NULL,55,1,2,'bonus bMdef,2;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2125,'Strong_Shield','Strong Shield',4,20,NULL,2500,NULL,4,NULL,1,0xFFFFFFFE,2,2,32,NULL,75,1,4,'bonus bNoKnockback,0; bonus2 bSubEle,Ele_Neutral,-20; bonus2 bSubEle,Ele_Fire,-20; bonus2 bSubEle,Ele_Water,-20; bonus2 bSubEle,Ele_Wind,-20; bonus2 bSubEle,Ele_Earth,-20; bonus2 bSubEle,Ele_Dark,-20; bonus2 bSubEle,Ele_Holy,-20; bonus2 bSubEle,Ele_Ghost,-20;',NULL,NULL);
@@ -1425,8 +1425,8 @@ REPLACE INTO `item_db` VALUES (2527,'Dragon_Breath','Dragon Breath',4,20,NULL,60
 REPLACE INTO `item_db` VALUES (2528,'Wool_Scarf','Wool Scarf',4,20,NULL,500,NULL,3,NULL,1,0xFFFFFFFE,2,2,4,NULL,55,1,0,'bonus bMdef,4;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2529,'Rider_Insignia','Rider Insignia',4,20,NULL,500,NULL,4,NULL,0,0xFFFFFFFE,2,2,4,NULL,55,1,0,'bonus bAgi,2;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2530,'Rider_Insignia_','Rider Insignia',4,20,NULL,500,NULL,4,NULL,1,0xFFFFFFFE,2,2,4,NULL,55,1,0,'bonus bAgi,2;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (2531,'Ulfhedinn','Ulfhedinn',4,20,NULL,700,NULL,3,NULL,1,0x000654E2,2,2,4,NULL,70,1,0,'bonus3 bAutoSpellWhenHit,"NPC_STONESKIN",1,20;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (2532,'Mithril_Magic_Cape','Mithril Magic Cape',4,20,NULL,400,NULL,3,NULL,1,0x00098B1C,2,2,4,NULL,70,1,0,'bonus bMdef,3; bonus5 bAutoSpellWhenHit,"NPC_ANTIMAGIC",1,200,BF_MAGIC,0;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (2531,'Ulfhedinn','Ulfhedinn',4,20,NULL,700,NULL,3,NULL,1,0x000654E2,2,2,4,NULL,70,1,0,'bonus3 bAutoSpellWhenHit,"NPC_STONESKIN",6,20;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (2532,'Mithril_Magic_Cape','Mithril Magic Cape',4,20,NULL,400,NULL,3,NULL,1,0x00098B1C,2,2,4,NULL,70,1,0,'bonus bMdef,3; bonus5 bAutoSpellWhenHit,"NPC_ANTIMAGIC",6,200,BF_MAGIC,0;',NULL,NULL);
 #REPLACE INTO `item_db` VALUES (2533,'Freyja_Cape','Freyja Cape',4,0,NULL,200,NULL,10,NULL,0,0xFFFFFFFE,7,2,4,NULL,0,0,0,'bonus2 bSubRace,RC_DemiHuman,15; bonus2 bSubRace,RC_Player,15;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2534,'Ruffler','Ruffler',4,20,NULL,0,NULL,10,NULL,0,0xFFFFFFFF,7,2,4,NULL,0,0,0,'bonus2 bSubEle,Ele_Neutral,17; bonus bFlee,17;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2535,'Cloak_Of_Survival_C','Cloak Of Survival',4,1,NULL,0,NULL,5,NULL,0,0x00810204,7,2,4,NULL,0,0,0,'bonus bVit,10; bonus bMdef,10;',NULL,NULL);
@@ -1446,7 +1446,7 @@ REPLACE INTO `item_db` VALUES (2548,'Muffler_C','Neo Muffler',4,0,NULL,0,NULL,5,
 REPLACE INTO `item_db` VALUES (2549,'Krieger_Muffler1','Glorious Muffler',4,20,NULL,0,NULL,0,NULL,0,0xFFFFFFFE,7,2,4,NULL,81,1,0,'bonus bMaxHPRate,5; bonus2 bSubRace,RC_DemiHuman,5; bonus2 bSubRace,RC_Player,5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2550,'Fisher\'s_Muffler','Fisher\'s Muffler',4,20,NULL,200,NULL,0,NULL,0,0xFFFFFFFF,7,2,4,NULL,0,1,0,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (2551,'Rider_Insignia_M','Crest of the Rider',4,20,NULL,500,NULL,4,NULL,1,0xFFFFFFFE,2,2,4,NULL,55,1,0,'bonus bAgi,2;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (2552,'Mithril_Magic_Cape_M','Mithril Magic Manteau',4,20,NULL,400,NULL,3,NULL,1,0x00098B1C,2,2,4,NULL,70,1,0,'bonus bMdef,3; bonus5 bAutoSpellWhenHit,"NPC_ANTIMAGIC",1,200,BF_MAGIC,0;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (2552,'Mithril_Magic_Cape_M','Mithril Magic Manteau',4,20,NULL,400,NULL,3,NULL,1,0x00098B1C,2,2,4,NULL,70,1,0,'bonus bMdef,3; bonus5 bAutoSpellWhenHit,"NPC_ANTIMAGIC",6,200,BF_MAGIC,0;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2553,'Dragon_Manteau','Dragon Manteau',4,20,NULL,1000,NULL,5,NULL,1,0xFFFFFFFE,2,2,4,NULL,0,1,0,'bonus bAgi,1; bonus bMdef,5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2554,'Piece_Of_Angent_Skin','Nydhorgg\'s Shadow Garb',4,20,NULL,400,NULL,5,NULL,1,0xFFFFFFFE,2,2,4,NULL,90,1,0,'bonus2 bSubEle,Ele_Neutral,7; bonus2 bSubEle,Ele_Water,7; bonus2 bSubEle,Ele_Earth,7; bonus2 bSubEle,Ele_Fire,7; bonus2 bSubEle,Ele_Wind,7; bonus2 bSubEle,Ele_Poison,7; bonus2 bSubEle,Ele_Holy,7; bonus2 bSubEle,Ele_Dark,7; bonus2 bSubEle,Ele_Ghost,7; bonus2 bSubEle,Ele_Undead,7; bonus bMaxSP,(BaseLevel/3)+(getrefine()*10); bonus3 bSPDrainRate,10,1,0; bonus bMdef,3;',NULL,NULL);
 # Accessories
@@ -2880,7 +2880,7 @@ REPLACE INTO `item_db` VALUES (5671,'Drooping_Morocc_Minion','Drooping Morocc Mi
 #REPLACE INTO `item_db` VALUES (5679,'Engineer_Cap','Engineer Cap',4,20,NULL,200,NULL,2,NULL,1,0xFFFFFFFF,7,2,256,NULL,10,1,608,NULL,NULL,NULL);
 #REPLACE INTO `item_db` VALUES (5680,'Hawkeyes','Hawkeyes',4,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,512,NULL,10,0,609,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (5681,'F_Ribbon_Green','Green Ribbon',4,800,NULL,100,NULL,1,NULL,0,0xFFFFFFFF,7,0,256,NULL,0,1,244,'bonus bMdef,3;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (5682,'Triangle_Rune_Cap','Triangle Rune Cap',4,20,NULL,300,NULL,5,NULL,1,0xFFFFFFFF,7,2,256,NULL,1,1,610,'bonus bInt,1;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (5682,'Triangle_Rune_Cap','Triangle Rune Cap',4,20,NULL,300,NULL,5,NULL,1,0xFFFFFFFF,7,2,256,NULL,1,1,610,'bonus bHealPower,2; if (getrefine() > 6) { bonus bMatk,10; bonus5 bAutoSpellWhenHit,"NPC_MAGICMIRROR",8,150,BF_MAGIC,0; } else { bonus5 bAutoSpellWhenHit,"NPC_MAGICMIRROR",7,150,BF_MAGIC,0; }',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5683,'Majestic_Goat_Repl','Baphomet Horns',4,20,NULL,100,NULL,5,NULL,0,0xFFFFFFFF,7,2,256,NULL,1,1,41,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (5684,'Jewel_Crown_Repl','Ornate Crown',4,20,NULL,100,NULL,5,NULL,0,0xFFFFFFFF,7,2,256,NULL,1,1,88,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (5685,'Prontera_Army_Cap_Repl','Army Cap',4,20,NULL,100,NULL,5,NULL,0,0xFFFFFFFF,7,2,256,NULL,1,1,48,NULL,NULL,NULL);

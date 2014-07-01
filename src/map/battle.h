@@ -542,6 +542,7 @@ extern struct Battle_Config
 	int transcendent_status_points;
 	int taekwon_ranker_min_lv;
 	int revive_onwarp;
+	int mail_delay;
 
 	// Fame points
 	int fame_taekwon_mission;

@@ -14526,7 +14526,7 @@ void clif_parse_Mail_setattach(int fd, struct map_session_data *sd){
 		return;
 
 	flag = mail_setitem(sd, idx, amount);
-	clif_Mail_setattachment(fd,idx,flag);
+	clif_Mail_setattachment(fd,idx,!flag);
 }
 
 
@@ -14551,13 +14551,9 @@ void clif_parse_Mail_winopen(int fd, struct map_session_data *sd)
 /// 0248 <packet len>.W <recipient>.24B <title>.40B <body len>.B <body>.?B
 void clif_parse_Mail_send(int fd, struct map_session_data *sd)
 {
-	struct mail_message msg;
-	int body_len;
 	struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
 
 	if( !chrif_isconnected() )
-		return;
-	if( sd->state.trading )
 		return;
 
 	if( RFIFOW(fd,info->pos[0]) < 69 ) {
@@ -14565,45 +14561,7 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd)
 		return;
 	}
 
-	if( DIFF_TICK(sd->cansendmail_tick, gettick()) > 0 ) {
-		clif_displaymessage(sd->fd,msg_txt(sd,675)); //"Cannot send mails too fast!!."
-		clif_Mail_send(fd, true); // fail
-		return;
-	}
-
-	body_len = RFIFOB(fd,info->pos[3]);
-
-	if (body_len > MAIL_BODY_LENGTH)
-		body_len = MAIL_BODY_LENGTH;
-
-	if( !mail_setattachment(sd, &msg) ) { // Invalid Append condition
-		clif_Mail_send(sd->fd, true); // fail
-		mail_removeitem(sd,0);
-		mail_removezeny(sd,0);
-		return;
-	}
-
-	msg.id = 0; // id will be assigned by charserver
-	msg.send_id = sd->status.char_id;
-	msg.dest_id = 0; // will attempt to resolve name
-	safestrncpy(msg.send_name, sd->status.name, NAME_LENGTH);
-	safestrncpy(msg.dest_name, (char*)RFIFOP(fd,info->pos[1]), NAME_LENGTH);
-	safestrncpy(msg.title, (char*)RFIFOP(fd,info->pos[2]), MAIL_TITLE_LENGTH);
-
-	if (msg.title[0] == '\0') {
-		return; // Message has no length and somehow client verification was skipped.
-	}
-
-	if (body_len)
-		safestrncpy(msg.body, (char*)RFIFOP(fd,info->pos[4]), body_len + 1);
-	else
-		memset(msg.body, 0x00, MAIL_BODY_LENGTH);
-
-	msg.timestamp = time(NULL);
-	if( !intif_Mail_send(sd->status.account_id, &msg) )
-		mail_deliveryfail(sd, &msg);
-
-	sd->cansendmail_tick = gettick() + 1000; // 1 Second flood Protection
+	mail_send(sd, (char*)RFIFOP(fd,info->pos[1]), (char*)RFIFOP(fd,info->pos[2]), (char*)RFIFOP(fd,info->pos[4]), RFIFOB(fd,info->pos[3]));
 }
 
 

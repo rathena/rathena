@@ -5598,7 +5598,7 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 		return 1;
 
 	if(sc->data[SC_ARMORCHANGE])
-		def += sc->data[SC_ARMORCHANGE]->val2;
+		def += (def * sc->data[SC_ARMORCHANGE]->val2) / 100;
 	if(sc->data[SC_DRUMBATTLE])
 		def += sc->data[SC_DRUMBATTLE]->val3;
 #ifndef RENEWAL
@@ -5763,7 +5763,7 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 		return 1;
 
 	if(sc->data[SC_ARMORCHANGE])
-		mdef += sc->data[SC_ARMORCHANGE]->val3;
+		mdef += (mdef * sc->data[SC_ARMORCHANGE]->val3) / 100;
 	if(sc->data[SC_EARTH_INSIGNIA] && sc->data[SC_EARTH_INSIGNIA]->val1 == 3)
 		mdef += 50;
 	if(sc->data[SC_ENDURE]) // It has been confirmed that Eddga card grants 1 MDEF, not 0, not 10, but 1.
@@ -9061,6 +9061,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 20*val1; // Heal effectiveness decrease
 			break;
 		case SC_MAGICMIRROR:
+			// Level 1 ~ 5 & 6 ~ 10 has different duration
+			// Level 6 ~ 10 use effect of level 1 ~ 5
+			val1 %= 5;
 		case SC_SLOWCAST:
 			val2 = 20*val1; // Magic reflection/cast rate
 			break;
@@ -9073,8 +9076,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val2 = 20;
 				val3 =-20;
 			}
-			val2*=val1; // 20% per level
-			val3*=val1;
+			// Level 1 ~ 5 & 6 ~ 10 has different duration
+			// Level 6 ~ 10 use effect of level 1 ~ 5
+			val1 %= 5;
+			val2 *= val1; // 20% per level
+			val3 *= val1;
 			break;
 		case SC_EXPBOOST:
 		case SC_JEXPBOOST:

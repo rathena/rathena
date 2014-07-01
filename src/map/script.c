@@ -6421,7 +6421,7 @@ BUILDIN_FUNC(checkweight2){
  *------------------------------------------*/
 BUILDIN_FUNC(getitem)
 {
-	int amount,get_count,i;
+	int amount, get_count, i;
 	unsigned short nameid;
 	struct item it;
 	TBL_PC *sd;
@@ -6432,49 +6432,49 @@ BUILDIN_FUNC(getitem)
 	data=script_getdata(st,2);
 	get_val(st,data);
 	if( data_isstring(data) ) {// "<item name>"
-		const char *name=conv_str(st,data);
+		const char *name = conv_str(st,data);
 		struct item_data *item_data = itemdb_searchname(name);
 		if( item_data == NULL ){
 			ShowError("buildin_getitem: Nonexistant item %s requested.\n", name);
-			return 1; //No item created.
+			return SCRIPT_CMD_FAILURE; //No item created.
 		}
-		nameid=item_data->nameid;
+		nameid = item_data->nameid;
 	} else if( data_isint(data) ) {// <item id>
-		nameid=conv_num(st,data);
+		nameid = conv_num(st,data);
 		if( !itemdb_exists(nameid) ){
 			ShowError("buildin_getitem: Nonexistant item %d requested.\n", nameid);
-			return 1; //No item created.
+			return SCRIPT_CMD_FAILURE; //No item created.
 		}
 	} else {
 		ShowError("buildin_getitem: invalid data type for argument #1 (%d).", data->type);
-		return 1;
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	// <amount>
-	if( (amount=script_getnum(st,3)) <= 0)
-		return 0; //return if amount <=0, skip the useles iteration
+	if( (amount = script_getnum(st,3)) <= 0)
+		return SCRIPT_CMD_SUCCESS; //return if amount <=0, skip the useles iteration
 
 	memset(&it,0,sizeof(it));
-	it.nameid=nameid;
-	it.identify=itemdb_isidentified(nameid);
+	it.nameid = nameid;
+	it.identify = 1;
 
 	if( !strcmp(command,"getitembound") ) {
 		char bound = script_getnum(st,4);
 		if( bound > BOUND_NONE && bound < BOUND_MAX ) {
 			it.bound = bound;
 			if( script_hasdata(st,5) )
-				sd=map_id2sd(script_getnum(st,5));
+				sd = map_id2sd(script_getnum(st,5));
 			else
-				sd=script_rid2sd(st); // Attached player
+				sd = script_rid2sd(st); // Attached player
 		}
 		else { //Not a correct bound type
 			ShowError("script_getitembound: Not a correct bound type! Type=%d\n",bound);
 			return SCRIPT_CMD_FAILURE;
 		}
 	} else if( script_hasdata(st,4) )
-		sd=map_id2sd(script_getnum(st,4)); // <Account ID>
+		sd = map_id2sd(script_getnum(st,4)); // <Account ID>
 	else
-		sd=script_rid2sd(st); // Attached player
+		sd = script_rid2sd(st); // Attached player
 
 	if( sd == NULL ) // no target
 		return SCRIPT_CMD_SUCCESS;
@@ -6510,7 +6510,7 @@ BUILDIN_FUNC(getitem2)
 	unsigned short nameid;
 	int iden, ref, attr, c1, c2, c3, c4;
 	char bound = BOUND_NONE;
-	struct item_data *item_data;
+	struct item_data *item_data = NULL;
 	struct item item_tmp;
 	unsigned char flag = 0;
 	TBL_PC *sd;
@@ -6521,49 +6521,50 @@ BUILDIN_FUNC(getitem2)
 		bound = script_getnum(st,11);
 		if( bound > BOUND_NONE && bound < BOUND_MAX ) {
 			if( script_hasdata(st,12) )
-				sd=map_id2sd(script_getnum(st,12));
+				sd = map_id2sd(script_getnum(st,12));
 			else
-				sd=script_rid2sd(st); // Attached player
+				sd = script_rid2sd(st); // Attached player
 		}
 		else {
 			ShowError("script_getitembound2: Not a correct bound type! Type=%d\n",bound);
 			return SCRIPT_CMD_FAILURE;
 		}
 	} else if( script_hasdata(st,11) )
-		sd=map_id2sd(script_getnum(st,11)); // <Account ID>
+		sd = map_id2sd(script_getnum(st,11)); // <Account ID>
 	else
-		sd=script_rid2sd(st); // Attached player
+		sd = script_rid2sd(st); // Attached player
 
 	if( sd == NULL ) // no target
 		return SCRIPT_CMD_SUCCESS;
 
-	data=script_getdata(st,2);
+	data = script_getdata(st,2);
 	get_val(st,data);
 	if( data_isstring(data) ) {
-		const char *name=conv_str(st,data);
-		struct item_data *item_data_tmp = itemdb_searchname(name);
-		if( item_data_tmp )
-			nameid=item_data_tmp->nameid;
-		else
-			nameid=UNKNOWN_ITEM_ID;
-	} else
-		nameid=conv_num(st,data);
+		const char *name = conv_str(st,data);
+		if( (item_data = itemdb_searchname(name)) == NULL ){
+			ShowError("buildin_getitem2: Nonexistant item %s requested.\n", name);
+			return SCRIPT_CMD_FAILURE; //No item created.
+		}
+	} else {
+		nameid = conv_num(st,data);
+		if( !(item_data == itemdb_exists(nameid)) ){
+			ShowError("buildin_getitem2: Nonexistant item %d requested.\n", nameid);
+			return SCRIPT_CMD_FAILURE; //No item created.
+		}
+	}
 
-	amount=script_getnum(st,3);
-	iden=script_getnum(st,4);
-	ref=script_getnum(st,5);
-	attr=script_getnum(st,6);
-	c1=(short)script_getnum(st,7);
-	c2=(short)script_getnum(st,8);
-	c3=(short)script_getnum(st,9);
-	c4=(short)script_getnum(st,10);
+	amount = script_getnum(st,3);
+	iden = script_getnum(st,4);
+	ref = script_getnum(st,5);
+	attr = script_getnum(st,6);
+	c1 = (short)script_getnum(st,7);
+	c2 = (short)script_getnum(st,8);
+	c3 = (short)script_getnum(st,9);
+	c4 = (short)script_getnum(st,10);
 
-	if(nameid > 0) {
+	if(item_data) {
 		memset(&item_tmp,0,sizeof(item_tmp));
-		item_data=itemdb_exists(nameid);
-		if (item_data == NULL)
-			return -1;
-		if(item_data->type==IT_WEAPON || item_data->type==IT_ARMOR || item_data->type==IT_SHADOWGEAR ) {
+		if(item_data->type == IT_WEAPON || item_data->type == IT_ARMOR || item_data->type == IT_SHADOWGEAR ) {
 			if(ref > MAX_REFINE) ref = MAX_REFINE;
 		}
 		else if(item_data->type==IT_PETEGG) {
@@ -6575,15 +6576,15 @@ BUILDIN_FUNC(getitem2)
 			ref = attr = 0;
 		}
 
-		item_tmp.nameid=nameid;
-		item_tmp.identify=iden;
-		item_tmp.refine=ref;
-		item_tmp.attribute=attr;
-		item_tmp.card[0]=(short)c1;
-		item_tmp.card[1]=(short)c2;
-		item_tmp.card[2]=(short)c3;
-		item_tmp.card[3]=(short)c4;
-		item_tmp.bound=bound;
+		item_tmp.nameid = nameid;
+		item_tmp.identify = iden;
+		item_tmp.refine = ref;
+		item_tmp.attribute = attr;
+		item_tmp.card[0] = (short)c1;
+		item_tmp.card[1] = (short)c2;
+		item_tmp.card[2] = (short)c3;
+		item_tmp.card[3] = (short)c4;
+		item_tmp.bound = bound;
 
 		//Check if it's stackable.
 		if (!itemdb_isstackable(nameid))
@@ -18797,7 +18798,7 @@ BUILDIN_FUNC(disable_command) {
 }
 
 /** Get the information of the members of a guild by type.
- * getguildmember  <guild_id>{,<type>};
+ * getguildmember <guild_id>{,<type>};
  * @param guild_id: ID of guild
  * @param type: Type of option (optional)
  */
@@ -18834,6 +18835,7 @@ BUILDIN_FUNC(getguildmember)
 }
 
 /** Adds spirit ball to player for 'duration' in milisecond
+* addspiritball <count>,<duration>{,<char_id>};
 * @param count How many spirit ball will be added
 * @param duration How long spiritball is active until it disappears
 * @param char_id Target player (Optional)
@@ -18848,7 +18850,7 @@ BUILDIN_FUNC(addspiritball) {
 		return SCRIPT_CMD_SUCCESS;
 
 	if (script_hasdata(st,4)) {
-		if (script_isstring(st,4))
+		if (!script_isstring(st,4))
 			sd = map_charid2sd(script_getnum(st,4));
 		else
 			sd = map_nick2sd(script_getstr(st,4));
@@ -18864,6 +18866,7 @@ BUILDIN_FUNC(addspiritball) {
 }
 
 /** Deletes the spirit ball(s) from player
+* delspiritball <count>{,<char_id>};
 * @param count How many spirit ball will be deleted
 * @param char_id Target player (Optional)
 * @author [Cydh]
@@ -18876,7 +18879,7 @@ BUILDIN_FUNC(delspiritball) {
 		count = 1;
 	
 	if (script_hasdata(st,3)) {
-		if (script_isstring(st,3))
+		if (!script_isstring(st,3))
 			sd = map_charid2sd(script_getnum(st,3));
 		else
 			sd = map_nick2sd(script_getstr(st,3));
@@ -18891,6 +18894,7 @@ BUILDIN_FUNC(delspiritball) {
 }
 
 /** Counts the spirit ball that player has
+* countspiritball {,<char_id>};
 * @param char_id Target player (Optional)
 * @author [Cydh]
 */
@@ -18898,7 +18902,7 @@ BUILDIN_FUNC(countspiritball) {
 	struct map_session_data *sd;
 
 	if (script_hasdata(st,2)) {
-		if (script_isstring(st,2))
+		if (!script_isstring(st,2))
 			sd = map_charid2sd(script_getnum(st,2));
 		else
 			sd = map_nick2sd(script_getstr(st,2));

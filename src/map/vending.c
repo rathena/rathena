@@ -508,7 +508,7 @@ void vending_reopen( struct map_session_data* sd ){
 			}
 
 			*index = entry->index + 2;
-			*amount = entry->amount;
+			*amount = itemdb_isstackable(sd->status.cart[entry->index].id) ? entry->amount : 1;
 			*value = entry->price;
 
 			p += 8;
