@@ -8847,7 +8847,11 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 	uint16 i;
 	int success = 0;
 	for( i = 0; i < data->combos_count; i++ ) {
-		short *combo_idx = NULL, idx, j;
+		struct itemchk {
+			int idx;
+			short card[MAX_SLOTS];
+		} *combo_idx;
+		int idx, j;
 		int nb_itemCombo;
 		/* ensure this isn't a duplicate combo */
 		if( sd->combos.bonus != NULL ) {
@@ -8861,15 +8865,17 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 		nb_itemCombo = data->combos[i]->count;
 		if(nb_itemCombo<2) //a combo with less then 2 item ?? how that possible
 			continue;
-		CREATE(combo_idx,short,nb_itemCombo);
-		memset(combo_idx,-1,nb_itemCombo * sizeof(short));
+		CREATE(combo_idx,struct itemchk,nb_itemCombo);
+		for(j=0; j < nb_itemCombo; j++){
+			combo_idx[j].idx=-1;
+			memset(combo_idx[j].card,-1,MAX_SLOTS);
+		}
 			
 		for( j = 0; j < nb_itemCombo; j++ ) {
 			uint16 id = data->combos[i]->nameid[j], k;
 			bool found = false;
 			
 			for( k = 0; k < EQI_MAX; k++ ) {
-				bool do_continue = false; //used to continue that specific loop with some check that also use some loop
 				int8 index;
 				index = sd->equip_index[k];
 				if( index < 0 )
@@ -8878,34 +8884,50 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 					continue;
 				if (!sd->inventory_data[index] )
 					continue;
-				if( j > 0 ) {
-					uint8 z;
-					for (z = 0; z < nb_itemCombo; z++)
-						if(combo_idx[z] == index) //we already have that index recorded
-							do_continue=true;
-					if(do_continue)
-						continue;
-				}
 				
 				if ( itemdb_type(id) != IT_CARD ) {
 					if ( sd->inventory_data[index]->nameid != id )
 						continue;
-					combo_idx[j] = index;
+					if(j>0){ //check if this item not already used
+						bool do_continue = false; //used to continue that specific loop with some check that also use some loop
+						uint8 z;
+						for (z = 0; z < nb_itemCombo-1; z++)
+							if(combo_idx[z].idx == index) //we already have that index recorded
+								do_continue=true;
+						if(do_continue)
+							continue;
+					}
+					combo_idx[j].idx = index;
 					found = true;
 					break;
 				} else { //Cards
-					//uint16 z;
+					uint16 z;
 					if ( sd->inventory_data[index]->slot == 0 || itemdb_isspecial(sd->status.inventory[index].card[0]) )
 						continue;
-					/* WIP this will break some combo currently
 					for (z = 0; z < sd->inventory_data[index]->slot; z++) {
+						bool do_continue=false;			
 						if (sd->status.inventory[index].card[z] != id)
 							continue;
-						combo_idx[j] = index;
+						if(j>0){
+							int c1, c2;
+							for (c1 = 0; c1 < nb_itemCombo-1; c1++){
+								if(combo_idx[c1].idx == index){
+									for (c2 = 0; c2 < sd->inventory_data[index]->slot; c2++){
+										if(combo_idx[c1].card[c2] == id){ //we already have that card recorded (at this same idx)
+											do_continue = true;
+											break;
+										}
+									}
+								}
+							}
+						}
+						if(do_continue)
+							continue;
+						combo_idx[j].idx = index;
+						combo_idx[j].card[z] = id;
 						found = true;
-						break;
-					}
-					*/
+ 						break;
+ 					}
 				}
 			}
 			if( !found )

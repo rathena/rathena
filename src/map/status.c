@@ -12745,7 +12745,7 @@ static bool status_readdb_attrfix(const char *basedir,bool silent)
 				continue;
 
 			for(j=0,p=line;j<n && j<ELE_ALL && p;j++) {
-				while(*p==32 && *p>0)
+				while(*p>0 && *p==32) //skipping newline and space (32=' ')
 					p++;
 				attr_fix_table[lv-1][i][j]=atoi(p);
 				if(battle_config.attr_recover == 0 && attr_fix_table[lv-1][i][j] < 0)
