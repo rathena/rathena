@@ -169,11 +169,11 @@ const char* skill_get_desc( uint16 skill_id ) {
 }
 
 /// out of bounds error checking [celest]
-static void skill_chk(int16 *skill_id) {
+static void skill_chk(uint16 *skill_id) {
 	*skill_id = skill_get_index(*skill_id); // checks/adjusts id
 }
 // checks/adjusts level
-static void skill_chk2(int16 *skill_lv) {
+static void skill_chk2(uint16 *skill_lv) {
 	*skill_lv = (*skill_lv < 1) ? 1 : (*skill_lv > MAX_SKILL_LEVEL) ? MAX_SKILL_LEVEL : *skill_lv;
 }
 // checks/adjusts index. make sure we don't use negative index
