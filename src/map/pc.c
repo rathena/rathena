@@ -3388,7 +3388,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		break;
 	case SP_ADD_ITEMGROUP_HEAL_RATE:
 		{
-			if (!type2 || !itemdb_group_exists(type)) {
+			if (!type2 || !itemdb_group_exists(type2)) {
 				ShowError("pc_bonus2: SP_ADD_ITEMGROUP_HEAL_RATE Invalid item group with id %d\n", type2);
 				break;
 			}
