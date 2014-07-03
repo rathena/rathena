@@ -30,7 +30,7 @@ struct item_data *dummy_item; /// This is the default dummy item used for non-ex
 * @return NULL if not exist, or struct item_combo*
 */
 struct item_combo *itemdb_combo_exists(unsigned short combo_id) {
-	return (struct item_combo *)idb_get(itemdb_combo, combo_id);
+	return (struct item_combo *)uidb_get(itemdb_combo, combo_id);
 }
 
 /**
@@ -39,7 +39,7 @@ struct item_combo *itemdb_combo_exists(unsigned short combo_id) {
 * @return NULL if not exist, or s_item_group_db *
 */
 struct s_item_group_db *itemdb_group_exists(unsigned short group_id) {
-	return (struct s_item_group_db *)idb_get(itemdb_group, group_id);
+	return (struct s_item_group_db *)uidb_get(itemdb_group, group_id);
 }
 
 /**
@@ -121,7 +121,7 @@ int itemdb_searchname_array(struct item_data** data, int size, const char *str)
 */
 unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group)
 {
-	struct s_item_group_db *group = (struct s_item_group_db *) idb_get(itemdb_group, group_id);
+	struct s_item_group_db *group = (struct s_item_group_db *) uidb_get(itemdb_group, group_id);
 	if (sub_group)
 		sub_group -= 1;
 	if (!group) {
@@ -149,7 +149,7 @@ unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group)
 */
 uint16 itemdb_get_randgroupitem_count(uint16 group_id, uint8 sub_group, unsigned short nameid) {
 	uint16 i, amt = 1;
-	struct s_item_group_db *group = (struct s_item_group_db *) idb_get(itemdb_group, group_id);
+	struct s_item_group_db *group = (struct s_item_group_db *) uidb_get(itemdb_group, group_id);
 	
 	if (sub_group)
 		sub_group -= 1;
@@ -223,7 +223,7 @@ char itemdb_pc_get_itemgroup(uint16 group_id, struct map_session_data *sd) {
 
 	nullpo_retr(1,sd);
 	
-	if (!(group = (struct s_item_group_db *) idb_get(itemdb_group, group_id))) {
+	if (!(group = (struct s_item_group_db *) uidb_get(itemdb_group, group_id))) {
 		ShowError("itemdb_pc_get_itemgroup: Invalid group id '%d' specified.",group_id);
 		return 2;
 	}
@@ -254,7 +254,7 @@ char itemdb_pc_get_itemgroup(uint16 group_id, struct map_session_data *sd) {
 * @return *item_data if item is exist, or NULL if not
 */
 struct item_data* itemdb_exists(unsigned short nameid) {
-	return ((struct item_data*)idb_get(itemdb,nameid));
+	return ((struct item_data*)uidb_get(itemdb,nameid));
 }
 
 /// Returns name type of ammunition [Cydh]
@@ -394,7 +394,7 @@ static struct item_data *itemdb_create_item(unsigned short nameid) {
 	memset(id, 0, sizeof(struct item_data));
 	id->nameid = nameid;
 	id->type = IT_ETC; //Etc item
-	idb_put(itemdb, nameid, id);
+	uidb_put(itemdb, nameid, id);
 	return id;
 }
 
@@ -407,7 +407,7 @@ struct item_data* itemdb_search(unsigned short nameid) {
 	struct item_data* id = NULL;
 	if (nameid == dummy_item->nameid)
 		id = dummy_item;
-	else if (!(id = (struct item_data*)idb_get(itemdb, nameid))) {
+	else if (!(id = (struct item_data*)uidb_get(itemdb, nameid))) {
 		ShowWarning("itemdb_search: Item ID %hu does not exists in the item_db. Using dummy data.\n", nameid);
 		id = dummy_item;
 	}
@@ -661,10 +661,10 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 		if (str[7] != NULL) entry.isNamed = atoi(str[7]);
 		if (str[8] != NULL) entry.bound = cap_value(atoi(str[8]),BOUND_NONE,BOUND_MAX-1);
 
-		if (!(group = (struct s_item_group_db *) idb_get(itemdb_group, group_id))) {
+		if (!(group = (struct s_item_group_db *) uidb_get(itemdb_group, group_id))) {
 			CREATE(group, struct s_item_group_db, 1);
 			group->id = group_id;
-			idb_put(itemdb_group, group->id, group);
+			uidb_put(itemdb_group, group->id, group);
 		}
 
 		// Must item (rand_group == 0), place it here
@@ -1053,7 +1053,7 @@ static void itemdb_read_combos(const char* basedir, bool silent) {
 				/* we flag this way to ensure we don't double-dealloc same data */
 				it->combos[index]->isRef = true;
 			}
-			idb_put(itemdb_combo,id->combos[idx]->id,id->combos[idx]);
+			uidb_put(itemdb_combo,id->combos[idx]->id,id->combos[idx]);
 		}
 		count++;
 	}
@@ -1247,7 +1247,7 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 
 	if (!id->nameid) {
 		id->nameid = nameid;
-		idb_put(itemdb, nameid, id);
+		uidb_put(itemdb, nameid, id);
 	}
 	return true;
 }
@@ -1691,9 +1691,9 @@ void do_final_itemdb(void) {
 * Initializing Item DB
 */
 void do_init_itemdb(void) {
-	itemdb = idb_alloc(DB_OPT_BASE);
-	itemdb_combo = idb_alloc(DB_OPT_BASE);
-	itemdb_group = idb_alloc(DB_OPT_BASE);
+	itemdb = uidb_alloc(DB_OPT_BASE);
+	itemdb_combo = uidb_alloc(DB_OPT_BASE);
+	itemdb_group = uidb_alloc(DB_OPT_BASE);
 	itemdb_create_dummy(); //Dummy data item.	
 	itemdb_read();
 }

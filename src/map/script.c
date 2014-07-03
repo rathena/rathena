@@ -2921,6 +2921,7 @@ int conv_num(struct script_state* st, struct script_data* data)
 	get_val(st, data);
 	if( data_isint(data) )
 	{// nothing to convert
+		
 	}
 	else if( data_isstring(data) )
 	{// string -> int
@@ -6542,13 +6543,13 @@ BUILDIN_FUNC(getitem2)
 	if( data_isstring(data) ) {
 		const char *name = conv_str(st,data);
 		if( (item_data = itemdb_searchname(name)) == NULL ){
-			ShowError("buildin_getitem2: Nonexistant item %s requested.\n", name);
+			ShowError("buildin_getitem2: Nonexistant item %s requested (by conv_str).\n", name);
 			return SCRIPT_CMD_FAILURE; //No item created.
 		}
 	} else {
 		nameid = conv_num(st,data);
-		if( !(item_data == itemdb_exists(nameid)) ){
-			ShowError("buildin_getitem2: Nonexistant item %d requested.\n", nameid);
+		if( (item_data = itemdb_exists(nameid)) == NULL ){
+			ShowError("buildin_getitem2: Nonexistant item %d requested (by conv_num).\n", nameid);
 			return SCRIPT_CMD_FAILURE; //No item created.
 		}
 	}
