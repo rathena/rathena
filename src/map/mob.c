@@ -3770,7 +3770,7 @@ static bool mob_parse_dbrow(char** str)
 	i = atoi(str[24]); //Element
 	status->def_ele = i%10;
 	status->ele_lv = i/20;
-	if (status->def_ele >= ELE_ALL) {
+	if (!CHK_ELEMENT(status->def_ele)) {
 		ShowError("mob_parse_dbrow: Invalid element type %d for monster ID %d (max=%d).\n", status->def_ele, mob_id, ELE_ALL-1);
 		return false;
 	}
@@ -4508,7 +4508,7 @@ static bool mob_readdb_race2(char* fields[], int columns, int current)
 
 	race = atoi(fields[0]);
 
-	if (race < RC2_NONE || race >= RC2_MAX)
+	if (!CHK_RACE2(race))
 	{
 		ShowWarning("mob_readdb_race2: Unknown race2 %d.\n", race);
 		return false;

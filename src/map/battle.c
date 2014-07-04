@@ -35,7 +35,7 @@
 #include <string.h>
 #include <math.h>
 
-int attr_fix_table[4][ELE_NONE][ELE_NONE];
+int attr_fix_table[4][ELE_MAX][ELE_MAX];
 
 struct Battle_Config battle_config;
 static struct eri *delay_damage_ers; //For battle delay damage structures.
@@ -310,9 +310,9 @@ int battle_delay_damage(unsigned int tick, int amotion, struct block_list *src, 
 }
 
 int battle_attr_ratio(int atk_elem,int def_type, int def_lv) {
-	if (atk_elem < ELE_NEUTRAL || atk_elem >= ELE_ALL)
+	if (!CHK_ELEMENT(atk_elem))
 		return 100;
-	if (def_type < ELE_NEUTRAL || def_type > ELE_ALL || def_lv < 1 || def_lv > 4)
+	if (!CHK_ELEMENT(def_type) || def_lv < 1 || def_lv > 4)
 		return 100;
 
 	return attr_fix_table[def_lv-1][atk_elem][def_type];
@@ -331,10 +331,10 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 	if (src) sc = status_get_sc(src);
 	if (target) tsc = status_get_sc(target);
 
-	if (atk_elem < ELE_NEUTRAL || atk_elem >= ELE_ALL)
+	if (!CHK_ELEMENT(atk_elem))
 		atk_elem = rnd()%ELE_ALL;
 
-	if (def_type < ELE_NEUTRAL || def_type > ELE_ALL ||
+	if (!CHK_ELEMENT(def_type) ||
 		def_lv < 1 || def_lv > 4) {
 		ShowError("battle_attr_fix: unknown attr type: atk=%d def_type=%d def_lv=%d\n",atk_elem,def_type,def_lv);
 		return damage;

@@ -6509,7 +6509,8 @@ BUILDIN_FUNC(getitem2)
 {
 	int amount, get_count, i;
 	unsigned short nameid;
-	int iden, ref, attr, c1, c2, c3, c4;
+	int iden, ref, attr;
+	unsigned short c1, c2, c3, c4;
 	char bound = BOUND_NONE;
 	struct item_data *item_data = NULL;
 	struct item item_tmp;
@@ -6546,6 +6547,7 @@ BUILDIN_FUNC(getitem2)
 			ShowError("buildin_getitem2: Nonexistant item %s requested (by conv_str).\n", name);
 			return SCRIPT_CMD_FAILURE; //No item created.
 		}
+		nameid = item_data->nameid;
 	} else {
 		nameid = conv_num(st,data);
 		if( (item_data = itemdb_exists(nameid)) == NULL ){
@@ -6558,17 +6560,18 @@ BUILDIN_FUNC(getitem2)
 	iden = script_getnum(st,4);
 	ref = script_getnum(st,5);
 	attr = script_getnum(st,6);
-	c1 = (short)script_getnum(st,7);
-	c2 = (short)script_getnum(st,8);
-	c3 = (short)script_getnum(st,9);
-	c4 = (short)script_getnum(st,10);
+	c1 = (unsigned short)script_getnum(st,7);
+	c2 = (unsigned short)script_getnum(st,8);
+	c3 = (unsigned short)script_getnum(st,9);
+	c4 = (unsigned short)script_getnum(st,10);
 
-	if(item_data) {
+	if( item_data ) {
 		memset(&item_tmp,0,sizeof(item_tmp));
-		if(item_data->type == IT_WEAPON || item_data->type == IT_ARMOR || item_data->type == IT_SHADOWGEAR ) {
-			if(ref > MAX_REFINE) ref = MAX_REFINE;
+		if( item_data->type == IT_WEAPON || item_data->type == IT_ARMOR || item_data->type == IT_SHADOWGEAR ) {
+			if(ref > MAX_REFINE)
+				ref = MAX_REFINE;
 		}
-		else if(item_data->type==IT_PETEGG) {
+		else if( item_data->type == IT_PETEGG ) {
 			iden = 1;
 			ref = 0;
 		}
@@ -6581,10 +6584,10 @@ BUILDIN_FUNC(getitem2)
 		item_tmp.identify = iden;
 		item_tmp.refine = ref;
 		item_tmp.attribute = attr;
-		item_tmp.card[0] = (short)c1;
-		item_tmp.card[1] = (short)c2;
-		item_tmp.card[2] = (short)c3;
-		item_tmp.card[3] = (short)c4;
+		item_tmp.card[0] = c1;
+		item_tmp.card[1] = c2;
+		item_tmp.card[2] = c3;
+		item_tmp.card[3] = c4;
 		item_tmp.bound = bound;
 
 		//Check if it's stackable.
