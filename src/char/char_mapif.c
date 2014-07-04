@@ -315,16 +315,15 @@ int chmapif_parse_regmapuser(int fd, int id){
 		return 0;
 	{
 		//TODO: When data mismatches memory, update guild/party online/offline states.
-		int aid, cid, i;
-		struct online_char_data* character;
 		DBMap* online_char_db = char_get_onlinedb();
+		int i;
 
 		map_server[id].users = RFIFOW(fd,4);
 		online_char_db->foreach(online_char_db,char_db_setoffline,id); //Set all chars from this server as 'unknown'
 		for(i = 0; i < map_server[id].users; i++) {
-			aid = RFIFOL(fd,6+i*8);
-			cid = RFIFOL(fd,6+i*8+4);
-			character = idb_ensure(online_char_db, aid, char_create_online_data);
+			int aid = RFIFOL(fd,6+i*8);
+			int cid = RFIFOL(fd,6+i*8+4);
+			struct online_char_data* character = idb_ensure(online_char_db, aid, char_create_online_data);
 			if( character->server > -1 && character->server != id )
 			{
 				ShowNotice("Set map user: Character (%d:%d) marked on map server %d, but map server %d claims to have (%d:%d) online!\n",

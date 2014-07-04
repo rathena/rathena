@@ -606,7 +606,7 @@ static void script_reportdata(struct script_data* data)
 /// Reports on the console information about the current built-in function.
 static void script_reportfunc(struct script_state* st)
 {
-	int i, params, id;
+	int params, id;
 	struct script_data* data;
 
 	if( !script_hasdata(st,0) )
@@ -626,6 +626,7 @@ static void script_reportfunc(struct script_state* st)
 
 	if( params > 0 )
 	{
+		int i;
 		ShowDebug("Function: %s (%d parameter%s):\n", get_str(id), params, ( params == 1 ) ? "" : "s");
 
 		for( i = 2; i <= script_lastdata(st); i++ )
@@ -729,7 +730,7 @@ static int search_str(const char* p)
 /// If an identical string is already present, returns its id instead.
 int add_str(const char* p)
 {
-	int i, h;
+	int h;
 	int len;
 
 	h = calc_hash(p);
@@ -740,6 +741,7 @@ int add_str(const char* p)
 	}
 	else
 	{// scan for end of list, or occurence of identical string
+		int i;
 		for( i = str_hash[h]; ; i = str_data[i].next )
 		{
 			if( strcasecmp(get_str(i),p) == 0 )
@@ -868,7 +870,7 @@ static void add_scriptl(int l)
  *------------------------------------------*/
 void set_label(int l,int pos, const char* script_pos_cur)
 {
-	int i,next;
+	int i;
 
 	if(str_data[l].type==C_INT || str_data[l].type==C_PARAM || str_data[l].type==C_FUNC)
 	{	//Prevent overwriting constants values, parameters and built-in functions [Skotlex]
@@ -882,7 +884,7 @@ void set_label(int l,int pos, const char* script_pos_cur)
 	str_data[l].type=(str_data[l].type == C_USERFUNC ? C_USERFUNC_POS : C_POS);
 	str_data[l].label=pos;
 	for(i=str_data[l].backpatch;i>=0 && i!=0x00ffffff;){
-		next=GETVALUE(script_buf,i);
+		int next=GETVALUE(script_buf,i);
 		script_buf[i-1]=(str_data[l].type == C_USERFUNC ? C_USERFUNC_POS : C_POS);
 		SETVALUE(script_buf,i,pos);
 		i=next;
@@ -1105,7 +1107,7 @@ static void parse_nextline(bool first, const char* p)
 /// @param p script position where the function should run from
 /// @return NULL if not a variable assignment, the new position otherwise
 const char* parse_variable(const char* p) {
-	int i, j, word;
+	int word;
 	c_op type = C_NOP;
 	const char *p2 = NULL;
 	const char *var = p;
@@ -1119,6 +1121,7 @@ const char* parse_variable(const char* p) {
 	}
 
 	if( *p == '[' ) {// array variable so process the array as appropriate
+		int i,j;
 		for( p2 = p, i = 0, j = 1; p; ++ i ) {
 			if( *p ++ == ']' && --(j) == 0 ) break;
 			if( *p == '[' ) ++ j;
@@ -1238,6 +1241,43 @@ const char* parse_variable(const char* p) {
 	return p;
 }
 
+/*
+ * Checks whether the gives string is a number literal
+ *
+ * Mainly necessary to differentiate between number literals and NPC name
+ * constants, since several of those start with a digit.
+ *
+ * All this does is to check if the string begins with an optional + or - sign,
+ * followed by a hexadecimal or decimal number literal literal and is NOT
+ * followed by a underscore or letter.
+ *
+ * @author : Hercules.ws
+ * @param p Pointer to the string to check
+ * @return Whether the string is a number literal
+ */
+bool is_number(const char *p) {
+	const char *np;
+	if (!p)
+		return false;
+	if (*p == '-' || *p == '+')
+		p++;
+	np = p;
+	if (*p == '0' && p[1] == 'x') {
+		p+=2;
+		np = p;
+		// Hexadecimal
+		while (ISXDIGIT(*np))
+			np++;
+	} else {
+		// Decimal
+		while (ISDIGIT(*np))
+			np++;
+	}
+	if (p != np && *np != '_' && !ISALPHA(*np)) // At least one digit, and next isn't a letter or _
+		return true;
+	return false;
+}
+
 /*==========================================
  * Analysis section
  *------------------------------------------*/
@@ -1265,7 +1305,7 @@ const char* parse_simpleexpr(const char *p)
 		if( *p != ')' )
 			disp_error_message("parse_simpleexpr: unmatched ')'",p);
 		++p;
-	} else if(ISDIGIT(*p) || ((*p=='-' || *p=='+') && ISDIGIT(p[1]))){
+	} else if(is_number(p)) {
 		char *np;
 		while(*p == '0' && ISDIGIT(p[1])) p++;
 		i=strtoll(p,&np,0);
@@ -1353,12 +1393,11 @@ const char* parse_simpleexpr(const char *p)
 const char* parse_subexpr(const char* p,int limit)
 {
 	int op,opl,len;
-	const char* tmpp;
 
 	p=skip_space(p);
 
 	if( *p == '-' ){
-		 tmpp = skip_space(p+1);
+		const char* tmpp = skip_space(p+1);
 		if( *tmpp == ';' || *tmpp == ',' ){
 			add_scriptl(LABEL_NEXTLINE);
 			p++;
@@ -1611,21 +1650,23 @@ const char* parse_syntax(const char* p)
 					disp_error_message("parse_syntax: expected a space ' '",p);
 				}
 				// check whether case label is integer or not
-				v = strtol(p,&np,0);
-				if(np == p) { //Check for constants
+				if(is_number(p)) {
+					//Numeric value
+					v = (int)strtol(p,&np,0);
+					if((*p == '-' || *p == '+') && ISDIGIT(p[1])) // pre-skip because '-' can not skip_word
+						p++;
+					p = skip_word(p);
+					if(np != p)
+						disp_error_message("parse_syntax: 'case' label is not an integer",np);
+				} else {
+					//Check for constants
 					p2 = skip_word(p);
-					v = p2-p; // length of word at p2
+					v = (int)(size_t) (p2-p); // length of word at p2
 					memcpy(label,p,v);
 					label[v]='\0';
 					if( !script_get_constant(label, &v) )
 						disp_error_message("parse_syntax: 'case' label is not an integer",p);
 					p = skip_word(p);
-				} else { //Numeric value
-					if((*p == '-' || *p == '+') && ISDIGIT(p[1]))	// pre-skip because '-' can not skip_word
-						p++;
-					p = skip_word(p);
-					if(np != p)
-						disp_error_message("parse_syntax: 'case' label is not an integer",np);
 				}
 				p = skip_space(p);
 				if(*p != ':')
@@ -2161,8 +2202,7 @@ const char* parse_syntax_close_sub(const char* p,int* flag)
  *------------------------------------------*/
 static void add_buildin_func(void)
 {
-	int i,n;
-	const char* p;
+	int i;
 	for( i = 0; buildin_func[i].func; i++ )
 	{
 		// arg must follow the pattern: (v|s|i|r|l)*\?*\*?
@@ -2173,7 +2213,7 @@ static void add_buildin_func(void)
 		// 'l' - label
 		// '?' - one optional parameter
 		// '*' - unknown number of optional parameters
-		p = buildin_func[i].arg;
+		const char* p = buildin_func[i].arg;
 		while( *p == 'v' || *p == 's' || *p == 'i' || *p == 'r' || *p == 'l' ) ++p;
 		while( *p == '?' ) ++p;
 		if( *p == '*' ) ++p;
@@ -2182,15 +2222,15 @@ static void add_buildin_func(void)
 		} else if( *skip_word(buildin_func[i].name) != 0 ){
 			ShowWarning("add_buildin_func: ignoring function with invalid name \"%s\" (must be a word).\n", buildin_func[i].name);
 		} else {
-			n = add_str(buildin_func[i].name);
+			int n = add_str(buildin_func[i].name);
 			str_data[n].type = C_FUNC;
 			str_data[n].val = i;
 			str_data[n].func = buildin_func[i].func;
 
-		if (!strcmp(buildin_func[i].name, "set")) buildin_set_ref = n;
-		else if (!strcmp(buildin_func[i].name, "callsub")) buildin_callsub_ref = n;
-		else if (!strcmp(buildin_func[i].name, "callfunc")) buildin_callfunc_ref = n;
-		else if( !strcmp(buildin_func[i].name, "getelementofarray") ) buildin_getelementofarray_ref = n;
+			if (!strcmp(buildin_func[i].name, "set")) buildin_set_ref = n;
+			else if (!strcmp(buildin_func[i].name, "callsub")) buildin_callsub_ref = n;
+			else if (!strcmp(buildin_func[i].name, "callfunc")) buildin_callfunc_ref = n;
+			else if( !strcmp(buildin_func[i].name, "getelementofarray") ) buildin_getelementofarray_ref = n;
 		}
 	}
 }
@@ -2238,6 +2278,7 @@ static void read_constdb(void)
 	FILE *fp;
 	char line[1024],name[1024],val[1024];
 	int type;
+	int entries=0, skipped=0, linenum=0;
 
 	sprintf(line, "%s/const.txt", db_path);
 	fp=fopen(line, "r");
@@ -2247,15 +2288,28 @@ static void read_constdb(void)
 	}
 	while(fgets(line, sizeof(line), fp))
 	{
-		if(line[0]=='/' && line[1]=='/')
+		linenum++;
+		if( line[0] == '\0' || line[0] == '\n' || line[0] == '\r') //ignore empty line
 			continue;
+		if(line[0]=='/' && line[1]=='/') //ignore commented line
+			continue;
+		
 		type=0;
-		if(sscanf(line,"%[A-Za-z0-9_],%[-0-9xXA-Fa-f],%d",name,val,&type)>=2 ||
-		   sscanf(line,"%[A-Za-z0-9_] %[-0-9xXA-Fa-f] %d",name,val,&type)>=2){
+		if(sscanf(line,"%1023[A-Za-z0-9/_],%1023[A-Za-z0-9/_-],%d",name,val,&type)>=2 ||
+		   sscanf(line,"%1023[A-Za-z0-9/_] %1023[A-Za-z0-9/_-] %d",name,val,&type)>=2){
+			entries++;
 			script_set_constant(name, (int)strtol(val, NULL, 0), (bool)type);
+		}
+		else {
+			skipped++;
+			ShowWarning("Skipping line '"CL_WHITE"%d"CL_RESET"', invalide constant definition\n",linenum);
 		}
 	}
 	fclose(fp);
+	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s/const.txt"CL_RESET"'.\n", entries, db_path);
+	if(skipped){
+		ShowWarning("Skipped '"CL_WHITE"%d"CL_RESET"', entries\n",skipped);
+	}
 }
 
 /**
@@ -2521,11 +2575,11 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	// default unknown references to variables
 	for(i=LABEL_START;i<str_num;i++){
 		if(str_data[i].type==C_NOP){
-			int j,next;
+			int j;
 			str_data[i].type=C_NAME;
 			str_data[i].label=i;
 			for(j=str_data[i].backpatch;j>=0 && j!=0x00ffffff;){
-				next=GETVALUE(script_buf,j);
+				int next=GETVALUE(script_buf,j);
 				SETVALUE(script_buf,j,i);
 				j=next;
 			}
@@ -2915,9 +2969,6 @@ const char* conv_str(struct script_state* st, struct script_data* data)
 /// Converts the data to an int
 int conv_num(struct script_state* st, struct script_data* data)
 {
-	char* p;
-	long num;
-
 	get_val(st, data);
 	if( data_isint(data) )
 	{// nothing to convert
@@ -2927,7 +2978,9 @@ int conv_num(struct script_state* st, struct script_data* data)
 	{// string -> int
 		// the result does not overflow or underflow, it is capped instead
 		// ex: 999999999999 is capped to INT_MAX (2147483647)
-		p = data->u.str;
+		char* p = data->u.str;
+		long num;
+		
 		errno = 0;
 		num = strtol(data->u.str, NULL, 10);// change radix to 0 to support octal numbers "o377" and hex numbers "0xFF"
 		if( errno == ERANGE
@@ -3465,15 +3518,13 @@ void op_1(struct script_state* st, int op)
 /// @param func Built-in function for which the arguments are intended.
 static void script_check_buildin_argtype(struct script_state* st, int func)
 {
-	char type;
 	int idx, invalid = 0;
-	script_function* sf = &buildin_func[str_data[func].val];
 
 	for( idx = 2; script_hasdata(st, idx); idx++ )
 	{
 		struct script_data* data = script_getdata(st, idx);
-
-		type = sf->arg[idx-2];
+		script_function* sf = &buildin_func[str_data[func].val];
+		char type = sf->arg[idx-2];
 
 		if( type == '?' || type == '*' )
 		{// optional argument or unknown number of optional parameters ( no types are after this )
@@ -3922,7 +3973,6 @@ void run_script_main(struct script_state *st)
 				intif_saveregistry(sd,1);
 		}
 		script_free_state(st);
-		st = NULL;
 	}
 }
 
@@ -3942,7 +3992,7 @@ int script_config_read(char *cfgName)
 	{
 		if(line[0] == '/' && line[1] == '/')
 			continue;
-		i=sscanf(line,"%[^:]: %[^\r\n]",w1,w2);
+		i=sscanf(line,"%1023[^:]: %1023[^\r\n]",w1,w2);
 		if(i!=2)
 			continue;
 

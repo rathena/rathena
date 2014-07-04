@@ -7447,7 +7447,7 @@ void clif_mvp_exp(struct map_session_data *sd, unsigned int exp)
 	fd=sd->fd;
 	WFIFOHEAD(fd,packet_len(0x10b));
 	WFIFOW(fd,0)=0x10b;
-	WFIFOL(fd,2)=cap_value(exp,0,INT32_MAX);
+	WFIFOL(fd,2)=min(exp,UINT32_MAX);
 	WFIFOSET(fd,packet_len(0x10b));
 }
 
@@ -15478,7 +15478,7 @@ void clif_mercenary_updatestatus(struct map_session_data *sd, int type)
 			}
 			break;
 		case SP_MATK1:
-			WFIFOL(fd,4) = cap_value(status->matk_max, 0, INT16_MAX);
+			WFIFOL(fd,4) = min(status->matk_max, UINT16_MAX);
 			break;
 		case SP_HIT:
 			WFIFOL(fd,4) = status->hit;
@@ -15545,7 +15545,7 @@ void clif_mercenary_info(struct map_session_data *sd)
 	// Mercenary shows ATK as a random value between ATK ~ ATK2
 	atk = rnd()%(status->rhw.atk2 - status->rhw.atk + 1) + status->rhw.atk;
 	WFIFOW(fd,6) = cap_value(atk, 0, INT16_MAX);
-	WFIFOW(fd,8) = cap_value(status->matk_max, 0, INT16_MAX);
+	WFIFOW(fd,8) = min(status->matk_max, UINT16_MAX);
 	WFIFOW(fd,10) = status->hit;
 	WFIFOW(fd,12) = status->cri/10;
 	WFIFOW(fd,14) = status->def;
@@ -15572,7 +15572,7 @@ void clif_mercenary_info(struct map_session_data *sd)
 void clif_mercenary_skillblock(struct map_session_data *sd)
 {
 	struct mercenary_data *md;
-	int fd, i, len = 4, id, j;
+	int fd, i, len = 4;
 
 	if( sd == NULL || (md = sd->md) == NULL )
 		return;
@@ -15582,6 +15582,7 @@ void clif_mercenary_skillblock(struct map_session_data *sd)
 	WFIFOW(fd,0) = 0x29d;
 	for( i = 0; i < MAX_MERCSKILL; i++ )
 	{
+		int id, j;
 		if( (id = md->db->skill[i].id) == 0 )
 			continue;
 		j = id - MC_SKILLBASE;
@@ -17487,8 +17488,8 @@ void packetdb_readdb(void)
 {
 	FILE *fp;
 	char line[1024];
-	int ln=0, entries=0;
-	int cmd,i,j,packet_ver;
+	int ln=0;
+	int cmd,i,j;
 	int max_cmd=-1;
 	bool skip_ver = false;
 	int warned = 0;
@@ -17984,7 +17985,9 @@ void packetdb_readdb(void)
 
 	clif_config.packet_db_ver = MAX_PACKET_VER;
 	for(f = 0; f<ARRAYLENGTH(filename); f++){
-		entries = 0;
+		int entries = 0;
+		int packet_ver = MAX_PACKET_VER;	// read into packet_db's version by default
+		
 		sprintf(line, "%s/%s", db_path,filename[f]);
 		if( (fp=fopen(line,"r"))==NULL ){
 			if(f==0) {
@@ -17993,7 +17996,7 @@ void packetdb_readdb(void)
 			}
 			return;
 		}
-		packet_ver = MAX_PACKET_VER;	// read into packet_db's version by default
+		
 		while( fgets(line, sizeof(line), fp) )
 		{
 			ln++;

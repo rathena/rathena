@@ -3613,8 +3613,9 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			if( sc && sc->data[SC_EXPLOSIONSPIRITS] ) {
 				skillratio += sc->data[SC_EXPLOSIONSPIRITS]->val1 * 20;
 				RE_LVL_DMOD(120);
-			} else
+			} else {
 				RE_LVL_DMOD(150);
+			}
 			break;
 		case SR_KNUCKLEARROW:
 			if( wd.miscflag&4 ){  // ATK [(Skill Level x 150) + (1000 x Target current weight / Maximum weight) + (Target Base Level x 5) x (Caster Base Level / 150)] %
