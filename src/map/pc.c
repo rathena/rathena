@@ -1940,7 +1940,7 @@ static void pc_bonus_autospell(struct s_autospell *spell, int max, short id, sho
 		}
 	}
 	if (i == max) {
-		ShowWarning("pc_bonus: Reached max (%d) number of autospells per character!\n", max);
+		ShowWarning("pc_bonus_autospell: Reached max (%d) number of autospells per character!\n", max);
 		return;
 	}
 	spell[i].id = id;
@@ -1971,7 +1971,7 @@ static void pc_bonus_autospell_onskill(struct s_autospell *spell, int max, short
 
 	if( i == max )
 	{
-		ShowWarning("pc_bonus: Reached max (%d) number of autospells per character!\n", max);
+		ShowWarning("pc_bonus_autospell_onskill: Reached max (%d) number of autospells per character!\n", max);
 		return;
 	}
 
@@ -2002,7 +2002,7 @@ static void pc_bonus_addeff(struct s_addeffect* effect, int max, enum sc_type id
 		}
 	}
 	if (i == max) {
-		ShowWarning("pc_bonus: Reached max (%d) number of add effects per character!\n", max);
+		ShowWarning("pc_bonus_addeff: Reached max (%d) number of add effects per character!\n", max);
 		return;
 	}
 	effect[i].id = id;
@@ -2023,7 +2023,7 @@ static void pc_bonus_addeff_onskill(struct s_addeffectonskill* effect, int max, 
 		}
 	}
 	if( i == max ) {
-		ShowWarning("pc_bonus: Reached max (%d) number of add effects on skill per character!\n", max);
+		ShowWarning("pc_bonus_addeff_onskill: Reached max (%d) number of add effects on skill per character!\n", max);
 		return;
 	}
 	effect[i].id = id;
@@ -2044,12 +2044,16 @@ static void pc_bonus_addeff_onskill(struct s_addeffectonskill* effect, int max, 
 static void pc_bonus_item_drop(struct s_add_drop *drop, const short max, unsigned short nameid, uint16 group, int class_, short race, int rate)
 {
 	uint8 i;
-	struct s_item_group_db *group_ = NULL;
+
+	if (!nameid && !group) {
+		ShowWarning("pc_bonus_item_drop: No Item ID nor Item Group ID specified.\n");
+		return;
+	}
 	if (nameid && !itemdb_exists(nameid)) {
 		ShowWarning("pc_bonus_item_drop: Invalid item id %hu\n",nameid);
 		return;
 	}
-	if (!group || (group_ = itemdb_group_exists(group)) == NULL) {
+	if (group && !itemdb_group_exists(group)) {
 		ShowWarning("pc_bonus_item_drop: Invalid Item Group %hu\n",group);
 		return;
 	}
@@ -2215,7 +2219,7 @@ static void pc_bonus_addele(struct map_session_data* sd, unsigned char ele, shor
 
 	if (i == MAX_PC_BONUS)
 	{
-		ShowWarning("pc_addele: Reached max (%d) possible bonuses for this player.\n", MAX_PC_BONUS);
+		ShowWarning("pc_bonus_addele: Reached max (%d) possible bonuses for this player.\n", MAX_PC_BONUS);
 		return;
 	}
 
@@ -2244,7 +2248,7 @@ static void pc_bonus_subele(struct map_session_data* sd, unsigned char ele, shor
 
 	if (i == MAX_PC_BONUS)
 	{
-		ShowWarning("pc_subele: Reached max (%d) possible bonuses for this player.\n", MAX_PC_BONUS);
+		ShowWarning("pc_bonus_subele: Reached max (%d) possible bonuses for this player.\n", MAX_PC_BONUS);
 		return;
 	}
 
