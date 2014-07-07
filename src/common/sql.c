@@ -833,8 +833,6 @@ int SqlStmt_NextRow(SqlStmt* self)
 	int err;
 	size_t i;
 	size_t cols;
-	MYSQL_BIND* column;
-	unsigned long length;
 
 	if( self == NULL )
 		return SQL_ERROR;
@@ -864,7 +862,7 @@ int SqlStmt_NextRow(SqlStmt* self)
 		cols = SqlStmt_NumColumns(self);
 		for( i = 0; i < cols; ++i )
 		{
-			column = &self->columns[i];
+			MYSQL_BIND* column = &self->columns[i];
 			column->error = &truncated;
 			mysql_stmt_fetch_column(self->stmt, column, (unsigned int)i, 0);
 			column->error = NULL;
@@ -889,8 +887,8 @@ int SqlStmt_NextRow(SqlStmt* self)
 	cols = SqlStmt_NumColumns(self);
 	for( i = 0; i < cols; ++i )
 	{
-		length = self->column_lengths[i].length;
-		column = &self->columns[i];
+		unsigned long length = self->column_lengths[i].length;
+		MYSQL_BIND* column = &self->columns[i];
 #if !defined(MYSQL_DATA_TRUNCATED)
 		// MySQL 4.1/(below?) returns success even if data is truncated, so we test truncation manually [FlavioJS]
 		if( column->buffer_length < length )
@@ -965,10 +963,10 @@ void SqlStmt_Free(SqlStmt* self)
 
 /// Receives MySQL error codes during runtime (not on first-time-connects).
 void ra_mysql_error_handler(unsigned int ecode) {
-	static unsigned int retry = 1;
 	switch( ecode ) {
 		case 2003:// Can't connect to MySQL (this error only happens here when failing to reconnect)
 			if( mysql_reconnect_type == 1 ) {
+				static unsigned int retry = 1;
 				if( ++retry > mysql_reconnect_count ) {
 					ShowFatalError("MySQL has been unreachable for too long, %d reconnects were attempted. Shutting Down\n", retry);
 					exit(EXIT_FAILURE);
@@ -979,7 +977,6 @@ void ra_mysql_error_handler(unsigned int ecode) {
 }
 
 void Sql_inter_server_read(const char* cfgName, bool first) {
-	int i;
 	char line[1024], w1[1024], w2[1024];
 	FILE* fp;
 
@@ -994,7 +991,7 @@ void Sql_inter_server_read(const char* cfgName, bool first) {
 	}
 
 	while(fgets(line, sizeof(line), fp)) {
-		i = sscanf(line, "%[^:]: %[^\r\n]", w1, w2);
+		int i = sscanf(line, "%1023[^:]: %1023[^\r\n]", w1, w2);
 		if(i != 2)
 			continue;
 

@@ -2025,12 +2025,14 @@ int char_pincode_compare( int fd, struct char_session_data* sd, char* pin ){
 
 
 void char_pincode_decrypt( uint32 userSeed, char* pin ){
-	int i, pos;
+	int i;
 	char tab[10] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 	char *buf;
-	uint32 multiplier = 0x3498, baseSeed = 0x881234;
-
+	
 	for( i = 1; i < 10; i++ ){
+		int pos;
+		uint32 multiplier = 0x3498, baseSeed = 0x881234;
+		
 		userSeed = baseSeed + userSeed * multiplier;
 		pos = userSeed % ( i + 1 );
 		if( i != pos ){
@@ -2651,14 +2653,14 @@ int char_config_read(const char* cfgName){
 			if (charserv_config.start_zeny < 0)
 				charserv_config.start_zeny = 0;
 		} else if (strcmpi(w1, "start_items") == 0) {
-			int i=0, n=0;
+			int i=0;
 			char *lineitem, **fields;
 			int fields_length = 3+1;
 			fields = (char**)aMalloc(fields_length*sizeof(char*));
 
 			lineitem = strtok(w2, ":");
 			while (lineitem != NULL) {
-				n = sv_split(lineitem, strlen(lineitem), 0, ',', fields, fields_length, SV_NOESCAPE_NOTERMINATE);
+				int n = sv_split(lineitem, strlen(lineitem), 0, ',', fields, fields_length, SV_NOESCAPE_NOTERMINATE);
 				if(n+1 < fields_length){
 					ShowDebug("start_items: not enough arguments for %s! Skipping...\n",lineitem);
 					lineitem = strtok(NULL, ":"); //next itemline

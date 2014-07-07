@@ -1909,6 +1909,19 @@ int pc_disguise(struct map_session_data *sd, int class_)
 	return 1;
 }
 
+/// Show error message
+#define PC_BONUS_SHOW_ERROR(type,type2,val) { ShowError("%s: %s: Invalid %s %d.\n",__FUNCTION__,#type,#type2,(val)); break; }
+/// Check for valid Element, break & show error message if invalid Element
+#define PC_BONUS_CHK_ELEMENT(ele,bonus) { if (!CHK_ELEMENT(ele)) { PC_BONUS_SHOW_ERROR(bonus,Element,(ele)); }}
+/// Check for valid Race, break & show error message if invalid Race
+#define PC_BONUS_CHK_RACE(rc,bonus) { if (!CHK_RACE(rc)) { PC_BONUS_SHOW_ERROR(bonus,Race,(rc)); }}
+/// Check for valid Race2, break & show error message if invalid Race2
+#define PC_BONUS_CHK_RACE2(rc2,bonus) { if (!CHK_RACE2(rc2)) { PC_BONUS_SHOW_ERROR(bonus,Race2,(rc2)); }}
+/// Check for valid Class, break & show error message if invalid Class
+#define PC_BONUS_CHK_CLASS(cl,bonus) { if (!CHK_CLASS(cl)) { PC_BONUS_SHOW_ERROR(bonus,Class,(cl)); }}
+/// Check for valid Size, break & show error message if invalid Size
+#define PC_BONUS_CHK_SIZE(sz,bonus) { if (!CHK_MOBSIZE(sz)) { PC_BONUS_SHOW_ERROR(bonus,Size,(sz)); }}
+
 static void pc_bonus_autospell(struct s_autospell *spell, int max, short id, short lv, short rate, short flag, unsigned short card_id)
 {
 	uint8 i;
@@ -1927,7 +1940,7 @@ static void pc_bonus_autospell(struct s_autospell *spell, int max, short id, sho
 		}
 	}
 	if (i == max) {
-		ShowWarning("pc_bonus: Reached max (%d) number of autospells per character!\n", max);
+		ShowWarning("pc_bonus_autospell: Reached max (%d) number of autospells per character!\n", max);
 		return;
 	}
 	spell[i].id = id;
@@ -1958,7 +1971,7 @@ static void pc_bonus_autospell_onskill(struct s_autospell *spell, int max, short
 
 	if( i == max )
 	{
-		ShowWarning("pc_bonus: Reached max (%d) number of autospells per character!\n", max);
+		ShowWarning("pc_bonus_autospell_onskill: Reached max (%d) number of autospells per character!\n", max);
 		return;
 	}
 
@@ -1989,7 +2002,7 @@ static void pc_bonus_addeff(struct s_addeffect* effect, int max, enum sc_type id
 		}
 	}
 	if (i == max) {
-		ShowWarning("pc_bonus: Reached max (%d) number of add effects per character!\n", max);
+		ShowWarning("pc_bonus_addeff: Reached max (%d) number of add effects per character!\n", max);
 		return;
 	}
 	effect[i].id = id;
@@ -2010,7 +2023,7 @@ static void pc_bonus_addeff_onskill(struct s_addeffectonskill* effect, int max, 
 		}
 	}
 	if( i == max ) {
-		ShowWarning("pc_bonus: Reached max (%d) number of add effects on skill per character!\n", max);
+		ShowWarning("pc_bonus_addeff_onskill: Reached max (%d) number of add effects on skill per character!\n", max);
 		return;
 	}
 	effect[i].id = id;
@@ -2031,12 +2044,16 @@ static void pc_bonus_addeff_onskill(struct s_addeffectonskill* effect, int max, 
 static void pc_bonus_item_drop(struct s_add_drop *drop, const short max, unsigned short nameid, uint16 group, int class_, short race, int rate)
 {
 	uint8 i;
-	struct s_item_group_db *group_ = NULL;
+
+	if (!nameid && !group) {
+		ShowWarning("pc_bonus_item_drop: No Item ID nor Item Group ID specified.\n");
+		return;
+	}
 	if (nameid && !itemdb_exists(nameid)) {
 		ShowWarning("pc_bonus_item_drop: Invalid item id %hu\n",nameid);
 		return;
 	}
-	if (!group || (group_ = itemdb_group_exists(group)) == NULL) {
+	if (group && !itemdb_group_exists(group)) {
 		ShowWarning("pc_bonus_item_drop: Invalid Item Group %hu\n",group);
 		return;
 	}
@@ -2202,7 +2219,7 @@ static void pc_bonus_addele(struct map_session_data* sd, unsigned char ele, shor
 
 	if (i == MAX_PC_BONUS)
 	{
-		ShowWarning("pc_addele: Reached max (%d) possible bonuses for this player.\n", MAX_PC_BONUS);
+		ShowWarning("pc_bonus_addele: Reached max (%d) possible bonuses for this player.\n", MAX_PC_BONUS);
 		return;
 	}
 
@@ -2231,7 +2248,7 @@ static void pc_bonus_subele(struct map_session_data* sd, unsigned char ele, shor
 
 	if (i == MAX_PC_BONUS)
 	{
-		ShowWarning("pc_subele: Reached max (%d) possible bonuses for this player.\n", MAX_PC_BONUS);
+		ShowWarning("pc_bonus_subele: Reached max (%d) possible bonuses for this player.\n", MAX_PC_BONUS);
 		return;
 	}
 
@@ -2419,10 +2436,7 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 				sd->bonus.arrow_cri += val*10;
 			break;
 		case SP_ATKELE:
-			if(val > ELE_ALL) {
-				ShowError("pc_bonus: SP_ATKELE: Invalid element %d\n", val);
-				break;
-			}
+			PC_BONUS_CHK_ELEMENT(val,SP_ATKELE);
 			switch (sd->state.lr_flag)
 			{
 			case 2:
@@ -2450,10 +2464,7 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 			}
 			break;
 		case SP_DEFELE:
-			if(val > ELE_ALL) {
-				ShowError("pc_bonus: SP_DEFELE: Invalid element %d\n", val);
-				break;
-			}
+			PC_BONUS_CHK_ELEMENT(val,SP_DEFELE);
 			if(sd->state.lr_flag != 2)
 				status->def_ele=val;
 			break;
@@ -2560,22 +2571,21 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 				sd->matk_rate += val;
 			break;
 		case SP_IGNORE_DEF_ELE:
-			if(val > ELE_ALL) {
-				ShowError("pc_bonus: SP_IGNORE_DEF_ELE: Invalid element %d\n", val);
-				break;
-			}
+			PC_BONUS_CHK_ELEMENT(val,SP_IGNORE_DEF_ELE);
 			if(!sd->state.lr_flag)
 				sd->right_weapon.ignore_def_ele |= 1<<val;
 			else if(sd->state.lr_flag == 1)
 				sd->left_weapon.ignore_def_ele |= 1<<val;
 			break;
 		case SP_IGNORE_DEF_RACE:
+			PC_BONUS_CHK_RACE(val,SP_IGNORE_DEF_RACE);
 			if(!sd->state.lr_flag)
 				sd->right_weapon.ignore_def_race |= 1<<val;
 			else if(sd->state.lr_flag == 1)
 				sd->left_weapon.ignore_def_race |= 1<<val;
 			break;
 		case SP_IGNORE_DEF_CLASS:
+			PC_BONUS_CHK_CLASS(val,SP_IGNORE_DEF_CLASS);
 			if(!sd->state.lr_flag)
 				sd->right_weapon.ignore_def_class |= 1<<val;
 			else if(sd->state.lr_flag == 1)
@@ -2594,14 +2604,12 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 				sd->bonus.misc_def_rate += val;
 			break;
 		case SP_IGNORE_MDEF_ELE:
-			if(val > ELE_ALL) {
-				ShowError("pc_bonus: SP_IGNORE_MDEF_ELE: Invalid element %d\n", val);
-				break;
-			}
+			PC_BONUS_CHK_ELEMENT(val,SP_IGNORE_MDEF_ELE);
 			if(sd->state.lr_flag != 2)
 				sd->bonus.ignore_mdef_ele |= 1<<val;
 			break;
 		case SP_IGNORE_MDEF_RACE:
+			PC_BONUS_CHK_RACE(val,SP_IGNORE_MDEF_RACE);
 			if(sd->state.lr_flag != 2)
 				sd->bonus.ignore_mdef_race |= 1<<val;
 			break;
@@ -2618,30 +2626,21 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 				sd->critical_rate+=val;
 			break;
 		case SP_DEF_RATIO_ATK_ELE:
-			if(val > ELE_ALL) {
-				ShowError("pc_bonus: SP_DEF_RATIO_ATK_ELE: Invalid element %d\n", val);
-				break;
-			}
+			PC_BONUS_CHK_ELEMENT(val,SP_DEF_RATIO_ATK_ELE);
 			if(!sd->state.lr_flag)
 				sd->right_weapon.def_ratio_atk_ele |= 1<<val;
 			else if(sd->state.lr_flag == 1)
 				sd->left_weapon.def_ratio_atk_ele |= 1<<val;
 			break;
 		case SP_DEF_RATIO_ATK_RACE:
-			if(val > RC_ALL) {
-				ShowError("pc_bonus: SP_DEF_RATIO_ATK_RACE: Invalid race %d\n", val);
-				break;
-			}
+			PC_BONUS_CHK_RACE(val,SP_DEF_RATIO_ATK_RACE);
 			if(!sd->state.lr_flag)
 				sd->right_weapon.def_ratio_atk_race |= 1<<val;
 			else if(sd->state.lr_flag == 1)
 				sd->left_weapon.def_ratio_atk_race |= 1<<val;
 			break;
 		case SP_DEF_RATIO_ATK_CLASS:
-			if(val > CLASS_ALL) {
-				ShowError("pc_bonus: SP_DEF_RATIO_ATK_CLASS: Invalid class %d\n", val);
-				break;
-			}
+			PC_BONUS_CHK_CLASS(val,SP_DEF_RATIO_ATK_CLASS);
 			if(!sd->state.lr_flag)
 				sd->right_weapon.def_ratio_atk_class |= 1<<val;
 			else if(sd->state.lr_flag == 1)
@@ -2939,11 +2938,8 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 	nullpo_retv(sd);
 
 	switch(type){
-	case SP_ADDELE:
-		if(type2 > ELE_ALL) {
-			ShowError("pc_bonus2: SP_ADDELE: Invalid element %d\n", type2);
-			break;
-		}
+	case SP_ADDELE: // bonus2 bAddEle,e,x;
+		PC_BONUS_CHK_ELEMENT(type2,SP_ADDELE);
 		if(!sd->state.lr_flag)
 			sd->right_weapon.addele[type2]+=val;
 		else if(sd->state.lr_flag == 1)
@@ -2951,7 +2947,8 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		else if(sd->state.lr_flag == 2)
 			sd->arrow_addele[type2]+=val;
 		break;
-	case SP_ADDRACE:
+	case SP_ADDRACE: // bonus2 bAddRace,r,x;
+		PC_BONUS_CHK_RACE(type2,SP_ADDRACE);
 		if(!sd->state.lr_flag)
 			sd->right_weapon.addrace[type2]+=val;
 		else if(sd->state.lr_flag == 1)
@@ -2959,7 +2956,8 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		else if(sd->state.lr_flag == 2)
 			sd->arrow_addrace[type2]+=val;
 		break;
-	case SP_ADDCLASS:
+	case SP_ADDCLASS: // bonus2 bAddClass,c,x;
+		PC_BONUS_CHK_CLASS(type2,SP_ADDCLASS);
 		if(!sd->state.lr_flag)
 			sd->right_weapon.addclass[type2]+=val;
 		else if(sd->state.lr_flag == 1)
@@ -2967,7 +2965,8 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		else if(sd->state.lr_flag == 2)
 			sd->arrow_addclass[type2]+=val;
 		break;
-	case SP_ADDSIZE:
+	case SP_ADDSIZE: // bonus2 bAddSize,s,x;
+		PC_BONUS_CHK_SIZE(type2,SP_ADDSIZE);
 		if(!sd->state.lr_flag)
 			sd->right_weapon.addsize[type2]+=val;
 		else if(sd->state.lr_flag == 1)
@@ -2975,41 +2974,40 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		else if(sd->state.lr_flag == 2)
 			sd->arrow_addsize[type2]+=val;
 		break;
-	case SP_SUBELE:
-		if(type2 > ELE_ALL) {
-			ShowError("pc_bonus2: SP_SUBELE: Invalid element %d\n", type2);
-			break;
-		}
+	case SP_SUBELE: // bonus2 bSubEle,e,x;
+		PC_BONUS_CHK_ELEMENT(type2,SP_SUBELE);
 		if(sd->state.lr_flag != 2)
 			sd->subele[type2]+=val;
 		break;
-	case SP_SUBRACE:
+	case SP_SUBRACE: // bonus2 bSubRace,r,x;
+		PC_BONUS_CHK_RACE(type2,SP_SUBRACE);
 		if(sd->state.lr_flag != 2)
 			sd->subrace[type2]+=val;
 		break;
-	case SP_SUBCLASS:
+	case SP_SUBCLASS: // bonus2 bSubClass,c,x;
+		PC_BONUS_CHK_CLASS(type2,SP_SUBCLASS);
 		if(sd->state.lr_flag != 2)
 			sd->subclass[type2]+=val;
 		break;
-	case SP_ADDEFF:
+	case SP_ADDEFF: // bonus2 bAddEff,eff,n;
 		if (type2 <= SC_NONE || type2 >= SC_MAX) {
-			ShowWarning("pc_bonus2 (Add Effect): %d is not supported.\n", type2);
+			ShowError("pc_bonus2: SP_ADDEFF: %d invalid effect.\n", type2);
 			break;
 		}
 		pc_bonus_addeff(sd->addeff, ARRAYLENGTH(sd->addeff), (sc_type)type2,
 			sd->state.lr_flag!=2?val:0, sd->state.lr_flag==2?val:0, 0);
 		break;
-	case SP_ADDEFF2:
+	case SP_ADDEFF2: // bonus2 bAddEff2,eff,n;
 		if (type2 <= SC_NONE || type2 >= SC_MAX) {
-			ShowWarning("pc_bonus2 (Add Effect2): %d is not supported.\n", type2);
+			ShowError("pc_bonus2: SP_ADDEFF2: %d is invalid effect.\n", type2);
 			break;
 		}
 		pc_bonus_addeff(sd->addeff, ARRAYLENGTH(sd->addeff), (sc_type)type2,
 			sd->state.lr_flag!=2?val:0, sd->state.lr_flag==2?val:0, ATF_SELF);
 		break;
-	case SP_RESEFF:
+	case SP_RESEFF: // bonus2 bResEff,eff,n;
 		if (type2 < SC_COMMON_MIN || type2 > SC_COMMON_MAX) {
-			ShowWarning("pc_bonus2 (Resist Effect): %d is not supported.\n", type2);
+			ShowError("pc_bonus2: SP_RESEFF: %d is invalid effect.\n", type2);
 			break;
 		}
 		if(sd->state.lr_flag == 2)
@@ -3017,65 +3015,66 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		i = sd->reseff[type2]+val;
 		sd->reseff[type2]= cap_value(i, -10000, 10000);
 		break;
-	case SP_MAGIC_ADDELE:
-		if(type2 > ELE_ALL) {
-			ShowError("pc_bonus2: SP_MAGIC_ADDELE: Invalid element %d\n", type2);
-			break;
-		}
+	case SP_MAGIC_ADDELE: // bonus2 bMagicAddEle,e,x;
+		PC_BONUS_CHK_ELEMENT(type2,SP_MAGIC_ADDELE);
 		if(sd->state.lr_flag != 2)
 			sd->magic_addele[type2]+=val;
 		break;
-	case SP_MAGIC_ADDRACE:
+	case SP_MAGIC_ADDRACE: // bonus2 bMagicAddRace,r,x;
+		PC_BONUS_CHK_RACE(type2,SP_MAGIC_ADDRACE);
 		if(sd->state.lr_flag != 2)
 			sd->magic_addrace[type2]+=val;
 		break;
-	case SP_MAGIC_ADDCLASS:
+	case SP_MAGIC_ADDCLASS: // bonus2 bMagicAddClass,c,x;
+		PC_BONUS_CHK_CLASS(type2,SP_MAGIC_ADDCLASS);
 		if(sd->state.lr_flag != 2)
 			sd->magic_addclass[type2]+=val;
 		break;
-	case SP_MAGIC_ADDSIZE:
+	case SP_MAGIC_ADDSIZE: // bonus2 bMagicAddSize,s,x;
+		PC_BONUS_CHK_SIZE(type2,SP_MAGIC_ADDSIZE);
 		if(sd->state.lr_flag != 2)
 			sd->magic_addsize[type2]+=val;
 		break;
-	case SP_MAGIC_ATK_ELE:
+	case SP_MAGIC_ATK_ELE: // bonus2 bMagicAtkEle,e,x;
+		PC_BONUS_CHK_ELEMENT(type2,SP_MAGIC_ATK_ELE);
 		if(sd->state.lr_flag != 2)
 			sd->magic_atk_ele[type2]+=val;
 		break;
-	case SP_ADD_DAMAGE_CLASS:
+	case SP_ADD_DAMAGE_CLASS: // bonus2 bAddDamageClass,mid,x;
 		switch (sd->state.lr_flag) {
-		case 0: //Right hand
-			ARR_FIND(0, ARRAYLENGTH(sd->right_weapon.add_dmg), i, sd->right_weapon.add_dmg[i].rate == 0 || sd->right_weapon.add_dmg[i].class_ == type2);
-			if (i == ARRAYLENGTH(sd->right_weapon.add_dmg))
-			{
-				ShowWarning("pc_bonus2: Reached max (%d) number of add Class dmg bonuses per character!\n", ARRAYLENGTH(sd->right_weapon.add_dmg));
+			case 0: //Right hand
+				ARR_FIND(0, ARRAYLENGTH(sd->right_weapon.add_dmg), i, sd->right_weapon.add_dmg[i].rate == 0 || sd->right_weapon.add_dmg[i].class_ == type2);
+				if (i == ARRAYLENGTH(sd->right_weapon.add_dmg))
+				{
+					ShowError("pc_bonus2: SP_ADD_DAMAGE_CLASS: Reached max (%d) number of add Class dmg bonuses per character!\n", ARRAYLENGTH(sd->right_weapon.add_dmg));
+					break;
+				}
+				sd->right_weapon.add_dmg[i].class_ = type2;
+				sd->right_weapon.add_dmg[i].rate += val;
+				if (!sd->right_weapon.add_dmg[i].rate) //Shift the rest of elements up.
+					memmove(&sd->right_weapon.add_dmg[i], &sd->right_weapon.add_dmg[i+1], sizeof(sd->right_weapon.add_dmg) - (i+1)*sizeof(sd->right_weapon.add_dmg[0]));
+				break;
+			case 1: //Left hand
+				ARR_FIND(0, ARRAYLENGTH(sd->left_weapon.add_dmg), i, sd->left_weapon.add_dmg[i].rate == 0 || sd->left_weapon.add_dmg[i].class_ == type2);
+				if (i == ARRAYLENGTH(sd->left_weapon.add_dmg))
+				{
+					ShowError("pc_bonus2: SP_ADD_DAMAGE_CLASS: Reached max (%d) number of add Class dmg bonuses per character!\n", ARRAYLENGTH(sd->left_weapon.add_dmg));
+					break;
+				}
+				sd->left_weapon.add_dmg[i].class_ = type2;
+				sd->left_weapon.add_dmg[i].rate += val;
+				if (!sd->left_weapon.add_dmg[i].rate) //Shift the rest of elements up.
+					memmove(&sd->left_weapon.add_dmg[i], &sd->left_weapon.add_dmg[i+1], sizeof(sd->left_weapon.add_dmg) - (i+1)*sizeof(sd->left_weapon.add_dmg[0]));
 				break;
 			}
-			sd->right_weapon.add_dmg[i].class_ = type2;
-			sd->right_weapon.add_dmg[i].rate += val;
-			if (!sd->right_weapon.add_dmg[i].rate) //Shift the rest of elements up.
-				memmove(&sd->right_weapon.add_dmg[i], &sd->right_weapon.add_dmg[i+1], sizeof(sd->right_weapon.add_dmg) - (i+1)*sizeof(sd->right_weapon.add_dmg[0]));
-			break;
-		case 1: //Left hand
-			ARR_FIND(0, ARRAYLENGTH(sd->left_weapon.add_dmg), i, sd->left_weapon.add_dmg[i].rate == 0 || sd->left_weapon.add_dmg[i].class_ == type2);
-			if (i == ARRAYLENGTH(sd->left_weapon.add_dmg))
-			{
-				ShowWarning("pc_bonus2: Reached max (%d) number of add Class dmg bonuses per character!\n", ARRAYLENGTH(sd->left_weapon.add_dmg));
-				break;
-			}
-			sd->left_weapon.add_dmg[i].class_ = type2;
-			sd->left_weapon.add_dmg[i].rate += val;
-			if (!sd->left_weapon.add_dmg[i].rate) //Shift the rest of elements up.
-				memmove(&sd->left_weapon.add_dmg[i], &sd->left_weapon.add_dmg[i+1], sizeof(sd->left_weapon.add_dmg) - (i+1)*sizeof(sd->left_weapon.add_dmg[0]));
-			break;
-		}
 		break;
-	case SP_ADD_MAGIC_DAMAGE_CLASS:
+	case SP_ADD_MAGIC_DAMAGE_CLASS: // bonus2 bAddMagicDamageClass,mid,x;
 		if(sd->state.lr_flag == 2)
 			break;
 		ARR_FIND(0, ARRAYLENGTH(sd->add_mdmg), i, sd->add_mdmg[i].rate == 0 || sd->add_mdmg[i].class_ == type2);
 		if (i == ARRAYLENGTH(sd->add_mdmg))
 		{
-			ShowWarning("pc_bonus2: Reached max (%d) number of add Class magic dmg bonuses per character!\n", ARRAYLENGTH(sd->add_mdmg));
+			ShowError("pc_bonus2: SP_ADD_MAGIC_DAMAGE_CLASS: Reached max (%d) number of add Class magic dmg bonuses per character!\n", ARRAYLENGTH(sd->add_mdmg));
 			break;
 		}
 		sd->add_mdmg[i].class_ = type2;
@@ -3083,13 +3082,13 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if (!sd->add_mdmg[i].rate) //Shift the rest of elements up.
 			memmove(&sd->add_mdmg[i], &sd->add_mdmg[i+1], sizeof(sd->add_mdmg) - (i+1)*sizeof(sd->add_mdmg[0]));
 		break;
-	case SP_ADD_DEF_MONSTER:
+	case SP_ADD_DEF_MONSTER: // bonus2 bAddDefMonster,mid,x;
 		if(sd->state.lr_flag == 2)
 			break;
 		ARR_FIND(0, ARRAYLENGTH(sd->add_def), i, sd->add_def[i].rate == 0 || sd->add_def[i].class_ == type2);
 		if (i == ARRAYLENGTH(sd->add_def))
 		{
-			ShowWarning("pc_bonus2: Reached max (%d) number of add Class def bonuses per character!\n", ARRAYLENGTH(sd->add_def));
+			ShowError("pc_bonus2: SP_ADD_DEF_MONSTER: Reached max (%d) number of add Class def bonuses per character!\n", ARRAYLENGTH(sd->add_def));
 			break;
 		}
 		sd->add_def[i].class_ = type2;
@@ -3097,13 +3096,13 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if (!sd->add_def[i].rate) //Shift the rest of elements up.
 			memmove(&sd->add_def[i], &sd->add_def[i+1], sizeof(sd->add_def) - (i+1)*sizeof(sd->add_def[0]));
 		break;
-	case SP_ADD_MDEF_MONSTER:
+	case SP_ADD_MDEF_MONSTER: // bonus2 bAddMDefMonster,mid,x;
 		if(sd->state.lr_flag == 2)
 			break;
 		ARR_FIND(0, ARRAYLENGTH(sd->add_mdef), i, sd->add_mdef[i].rate == 0 || sd->add_mdef[i].class_ == type2);
 		if (i == ARRAYLENGTH(sd->add_mdef))
 		{
-			ShowWarning("pc_bonus2: Reached max (%d) number of add Class mdef bonuses per character!\n", ARRAYLENGTH(sd->add_mdef));
+			ShowError("pc_bonus2: SP_ADD_MDEF_MONSTER: Reached max (%d) number of add Class mdef bonuses per character!\n", ARRAYLENGTH(sd->add_mdef));
 			break;
 		}
 		sd->add_mdef[i].class_ = type2;
@@ -3111,7 +3110,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if (!sd->add_mdef[i].rate) //Shift the rest of elements up.
 			memmove(&sd->add_mdef[i], &sd->add_mdef[i+1], sizeof(sd->add_mdef) - (i+1)*sizeof(sd->add_mdef[0]));
 		break;
-	case SP_HP_DRAIN_RATE:
+	case SP_HP_DRAIN_RATE: // bonus2 bHPDrainRate,n,x;
 		if(!sd->state.lr_flag) {
 			sd->right_weapon.hp_drain_class[CLASS_NORMAL].rate += type2;
 			sd->right_weapon.hp_drain_class[CLASS_NORMAL].per += val;
@@ -3125,7 +3124,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->left_weapon.hp_drain_class[CLASS_BOSS].per += val;
 		}
 		break;
-	case SP_HP_DRAIN_VALUE:
+	case SP_HP_DRAIN_VALUE: // bonus2 bHPDrainValue,n,x;
 		if(!sd->state.lr_flag) {
 			sd->right_weapon.hp_drain_class[CLASS_NORMAL].value += type2;
 			sd->right_weapon.hp_drain_class[CLASS_NORMAL].type = val;
@@ -3139,7 +3138,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->left_weapon.hp_drain_class[CLASS_BOSS].type = val;
 		}
 		break;
-	case SP_SP_DRAIN_RATE:
+	case SP_SP_DRAIN_RATE: // bonus2 bSPDrainRate,n,x;
 		if(!sd->state.lr_flag) {
 			sd->right_weapon.sp_drain_class[CLASS_NORMAL].rate += type2;
 			sd->right_weapon.sp_drain_class[CLASS_NORMAL].per += val;
@@ -3153,7 +3152,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->left_weapon.sp_drain_class[CLASS_BOSS].per += val;
 		}
 		break;
-	case SP_SP_DRAIN_VALUE:
+	case SP_SP_DRAIN_VALUE: // bonus2 bSPDrainValue,n,x;
 		if(!sd->state.lr_flag) {
 			sd->right_weapon.sp_drain_class[CLASS_NORMAL].value += type2;
 			sd->right_weapon.sp_drain_class[CLASS_NORMAL].type = val;
@@ -3167,79 +3166,79 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->left_weapon.sp_drain_class[CLASS_BOSS].type = val;
 		}
 		break;
-	case SP_SP_VANISH_RATE:
+	case SP_SP_VANISH_RATE: // bonus2 bSPVanishRate,n,x;
 		if(sd->state.lr_flag != 2) {
 			sd->bonus.sp_vanish_rate += type2;
 			sd->bonus.sp_vanish_per += val;
 		}
 		break;
-	case SP_HP_VANISH_RATE:
+	case SP_HP_VANISH_RATE: // bonus2 bHPVanishRate,n,x;
 		if(sd->state.lr_flag != 2) {
 			sd->bonus.hp_vanish_rate += type2;
 			sd->bonus.hp_vanish_per += val;
 		}
 		break;
-	case SP_GET_ZENY_NUM:
+	case SP_GET_ZENY_NUM: // bonus2 bGetZenyNum,x,n;
 		if(sd->state.lr_flag != 2 && sd->bonus.get_zeny_rate < val) {
 			sd->bonus.get_zeny_rate = val;
 			sd->bonus.get_zeny_num = type2;
 		}
 		break;
-	case SP_ADD_GET_ZENY_NUM:
+	case SP_ADD_GET_ZENY_NUM: // bonus2 bAddGetZenyNum,x,n;
 		if(sd->state.lr_flag != 2) {
 			sd->bonus.get_zeny_rate += val;
 			sd->bonus.get_zeny_num += type2;
 		}
 		break;
-	case SP_WEAPON_COMA_ELE:
-		if(type2 > ELE_ALL) {
-			ShowError("pc_bonus2: SP_WEAPON_COMA_ELE: Invalid element %d\n", type2);
-			break;
-		}
+	case SP_WEAPON_COMA_ELE: // bonus2 bWeaponComaEle,e,n;
+		PC_BONUS_CHK_ELEMENT(type2,SP_WEAPON_COMA_ELE);
 		if(sd->state.lr_flag == 2)
 			break;
 		sd->weapon_coma_ele[type2] += val;
 		sd->special_state.bonus_coma = 1;
 		break;
-	case SP_WEAPON_COMA_RACE:
+	case SP_WEAPON_COMA_RACE: // bonus2 bWeaponComaRace,r,n;
+		PC_BONUS_CHK_RACE(type2,SP_WEAPON_COMA_RACE);
 		if(sd->state.lr_flag == 2)
 			break;
 		sd->weapon_coma_race[type2] += val;
 		sd->special_state.bonus_coma = 1;
 		break;
-	case SP_WEAPON_COMA_CLASS:
+	case SP_WEAPON_COMA_CLASS: // bonus2 bWeaponComaClass,c,n;
+		PC_BONUS_CHK_CLASS(type2,SP_WEAPON_COMA_CLASS);
 		if(sd->state.lr_flag == 2)
 			break;
 		sd->weapon_coma_class[type2] += val;
 		sd->special_state.bonus_coma = 1;
 		break;
-	case SP_WEAPON_ATK:
+	case SP_WEAPON_ATK: // bonus2 bWeaponAtk,w,n;
 		if(sd->state.lr_flag != 2)
 			sd->weapon_atk[type2]+=val;
 		break;
-	case SP_WEAPON_ATK_RATE:
+	case SP_WEAPON_ATK_RATE: // bonus2 bWeaponAtkRate,w,n;
 		if(sd->state.lr_flag != 2)
 			sd->weapon_atk_rate[type2]+=val;
 		break;
-	case SP_CRITICAL_ADDRACE:
+	case SP_CRITICAL_ADDRACE: // bonus2 bCriticalAddRace,r,n;
+		PC_BONUS_CHK_RACE(type2,SP_CRITICAL_ADDRACE);
 		if(sd->state.lr_flag != 2)
 			sd->critaddrace[type2] += val*10;
 		break;
-	case SP_ADDEFF_WHENHIT:
+	case SP_ADDEFF_WHENHIT: // bonus2 bAddEffWhenHit,eff,n;
 		if (type2 <= SC_NONE || type2 >= SC_MAX) {
-			ShowWarning("pc_bonus2 (Add Effect when hit): %d is not supported.\n", type2);
+			ShowError("pc_bonus2: SP_ADDEFF_WHENHIT: %d is invalid effect.\n", type2);
 			break;
 		}
 		if(sd->state.lr_flag != 2)
 			pc_bonus_addeff(sd->addeff2, ARRAYLENGTH(sd->addeff2), (sc_type)type2, val, 0, 0);
 		break;
-	case SP_SKILL_ATK:
+	case SP_SKILL_ATK: // bonus2 bSkillAtk,sk,n;
 		if(sd->state.lr_flag == 2)
 			break;
 		ARR_FIND(0, ARRAYLENGTH(sd->skillatk), i, sd->skillatk[i].id == 0 || sd->skillatk[i].id == type2);
 		if (i == ARRAYLENGTH(sd->skillatk))
 		{	//Better mention this so the array length can be updated. [Skotlex]
-			ShowDebug("run_script: bonus2 bSkillAtk reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillatk), type2, val);
+			ShowError("pc_bonus2: SP_SKILL_ATK: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillatk), type2, val);
 			break;
 		}
 		if (sd->skillatk[i].id == type2)
@@ -3249,13 +3248,13 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->skillatk[i].val = val;
 		}
 		break;
-	case SP_SKILL_HEAL:
+	case SP_SKILL_HEAL: // bonus2 bSkillHeal,sk,n;
 		if(sd->state.lr_flag == 2)
 			break;
 		ARR_FIND(0, ARRAYLENGTH(sd->skillheal), i, sd->skillheal[i].id == 0 || sd->skillheal[i].id == type2);
 		if (i == ARRAYLENGTH(sd->skillheal))
 		{ // Better mention this so the array length can be updated. [Skotlex]
-			ShowDebug("run_script: bonus2 bSkillHeal reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillheal), type2, val);
+			ShowError("pc_bonus2: SP_SKILL_HEAL: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillheal), type2, val);
 			break;
 		}
 		if (sd->skillheal[i].id == type2)
@@ -3265,13 +3264,13 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->skillheal[i].val = val;
 		}
 		break;
-	case SP_SKILL_HEAL2:
+	case SP_SKILL_HEAL2: // bonus2 bSkillHeal2,sk,n;
 		if(sd->state.lr_flag == 2)
 			break;
 		ARR_FIND(0, ARRAYLENGTH(sd->skillheal2), i, sd->skillheal2[i].id == 0 || sd->skillheal2[i].id == type2);
 		if (i == ARRAYLENGTH(sd->skillheal2))
 		{ // Better mention this so the array length can be updated. [Skotlex]
-			ShowDebug("run_script: bonus2 bSkillHeal2 reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillheal2), type2, val);
+			ShowError("pc_bonus2: SP_SKILL_HEAL2: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillheal2), type2, val);
 			break;
 		}
 		if (sd->skillheal2[i].id == type2)
@@ -3281,13 +3280,13 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->skillheal2[i].val = val;
 		}
 		break;
-	case SP_ADD_SKILL_BLOW:
+	case SP_ADD_SKILL_BLOW: // bonus2 bAddSkillBlow,sk,n;
 		if(sd->state.lr_flag == 2)
 			break;
 		ARR_FIND(0, ARRAYLENGTH(sd->skillblown), i, sd->skillblown[i].id == 0 || sd->skillblown[i].id == type2);
 		if (i == ARRAYLENGTH(sd->skillblown))
 		{	//Better mention this so the array length can be updated. [Skotlex]
-			ShowDebug("run_script: bonus2 bSkillBlown reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillblown), type2, val);
+			ShowError("pc_bonus2: SP_ADD_SKILL_BLOW: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillblown), type2, val);
 			break;
 		}
 		if(sd->skillblown[i].id == type2)
@@ -3298,20 +3297,20 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		}
 		break;
 #ifndef RENEWAL_CAST
-	case SP_VARCASTRATE:
+	case SP_VARCASTRATE: // bonus2 bVariableCastrate,sk,n;
 #endif
-	case SP_CASTRATE:
+	case SP_CASTRATE: // bonus2 bCastrate,sk,n;
 		if(sd->state.lr_flag == 2)
 			break;
 		ARR_FIND(0, ARRAYLENGTH(sd->skillcast), i, sd->skillcast[i].id == 0 || sd->skillcast[i].id == type2);
 		if (i == ARRAYLENGTH(sd->skillcast))
 		{	//Better mention this so the array length can be updated. [Skotlex]
-			ShowDebug("run_script: bonus2 %s reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n",
+			ShowError("run_script: %s: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n",
 
 #ifndef RENEWAL_CAST
-				"bCastRate",
+				"SP_VARCASTRATE",
 #else
-				"bVariableCastrate",
+				"SP_CASTRATE",
 #endif
 
 				ARRAYLENGTH(sd->skillcast), type2, val);
@@ -3324,13 +3323,13 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->skillcast[i].val = val;
 		}
 		break;
-	case SP_FIXCASTRATE:
+	case SP_FIXCASTRATE: // bonus2 bFixedCastrate,sk,n;
 		if(sd->state.lr_flag == 2)
 			break;
 		ARR_FIND(0, ARRAYLENGTH(sd->skillfixcastrate), i, sd->skillfixcastrate[i].id == 0 || sd->skillfixcastrate[i].id == type2);
 		if (i == ARRAYLENGTH(sd->skillfixcastrate))
 		{
-			ShowDebug("run_script: bonus2 bFixedCastrate reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillfixcastrate), type2, val);
+			ShowError("run_script: SP_FIXCASTRATE: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillfixcastrate), type2, val);
 			break;
 		}
 		if(sd->skillfixcastrate[i].id == type2)
@@ -3340,94 +3339,96 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->skillfixcastrate[i].val = val;
 		}
 		break;
-	case SP_HP_LOSS_RATE:
+	case SP_HP_LOSS_RATE: // bonus2 bHPLossRate,n,t;
 		if(sd->state.lr_flag != 2) {
 			sd->hp_loss.value = type2;
 			sd->hp_loss.rate = val;
 		}
 		break;
-	case SP_HP_REGEN_RATE:
+	case SP_HP_REGEN_RATE: // bonus2 bHPRegenRate,n,t;
 		if(sd->state.lr_flag != 2) {
 			sd->hp_regen.value = type2;
 			sd->hp_regen.rate = val;
 		}
 		break;
-	case SP_ADDRACE2:
-		if (!(type2 > RC2_NONE && type2 < RC2_MAX))
-			break;
+	case SP_ADDRACE2: // bonus2 bAddRace2,mr,x;
+		PC_BONUS_CHK_RACE2(type2,SP_ADDRACE2);
 		if(sd->state.lr_flag != 2)
 			sd->right_weapon.addrace2[type2] += val;
 		else
 			sd->left_weapon.addrace2[type2] += val;
 		break;
-	case SP_SUBSIZE:
+	case SP_SUBSIZE: // bonus2 bSubSize,s,x;
+		PC_BONUS_CHK_SIZE(type2,SP_SUBSIZE);
 		if(sd->state.lr_flag != 2)
 			sd->subsize[type2]+=val;
 		break;
-	case SP_SUBRACE2:
-		if (!(type2 > RC2_NONE && type2 < RC2_MAX))
-			break;
+	case SP_SUBRACE2: // bonus2 bSubRace2,mr,x;
+		PC_BONUS_CHK_RACE2(type2,SP_SUBRACE2);
 		if(sd->state.lr_flag != 2)
 			sd->subrace2[type2]+=val;
 		break;
-	case SP_ADD_ITEM_HEAL_RATE:
+	case SP_ADD_ITEM_HEAL_RATE: // bonus2 bAddItemHealRate,iid,n;
 		if(sd->state.lr_flag == 2)
 			break;
 		if (!itemdb_exists(type2)) {
 			ShowError("pc_bonus2: SP_ADD_ITEM_HEAL_RATE Invalid item with id %d\n", type2);
 			break;
 		}
-		//Standard item bonus.
 		for(i=0; i < ARRAYLENGTH(sd->itemhealrate) && sd->itemhealrate[i].nameid && sd->itemhealrate[i].nameid != type2; i++);
 		if(i == ARRAYLENGTH(sd->itemhealrate)) {
-			ShowWarning("pc_bonus2: Reached max (%d) number of item heal bonuses per character!\n", ARRAYLENGTH(sd->itemhealrate));
+			ShowError("pc_bonus2: SP_ADD_ITEM_HEAL_RATE: Reached max (%d) number of item heal bonuses per character!\n", ARRAYLENGTH(sd->itemhealrate));
 			break;
 		}
 		sd->itemhealrate[i].nameid = type2;
 		sd->itemhealrate[i].rate += val;
 		break;
-	case SP_ADD_ITEMGROUP_HEAL_RATE:
-		{
-			if (!type2 || !itemdb_group_exists(type2)) {
-				ShowError("pc_bonus2: SP_ADD_ITEMGROUP_HEAL_RATE Invalid item group with id %d\n", type2);
-				break;
-			}
-			pc_itemgrouphealrate(sd, type2, val);
+	case SP_ADD_ITEMGROUP_HEAL_RATE: // bonus2 bAddItemGroupHealRate,ig,n;
+		if (sd->state.lr_flag == 2)
+			break;
+		if (!type2 || !itemdb_group_exists(type2)) {
+			ShowError("pc_bonus2: SP_ADD_ITEMGROUP_HEAL_RATE: Invalid item group with id %d\n", type2);
+			break;
 		}
+		pc_itemgrouphealrate(sd, type2, val);
 		break;
-	case SP_EXP_ADDRACE:
+	case SP_EXP_ADDRACE: // bonus2 bExpAddRace,r,x;
+		PC_BONUS_CHK_RACE(type2,SP_EXP_ADDRACE);
 		if(sd->state.lr_flag != 2)
 			sd->expaddrace[type2]+=val;
 		break;
-	case SP_EXP_ADDCLASS:
+	case SP_EXP_ADDCLASS: // bonus2 bExpAddClass,c,x;
+		PC_BONUS_CHK_CLASS(type2,SP_EXP_ADDCLASS);
 		if(sd->state.lr_flag != 2)
 			sd->expaddclass[type2]+=val;
 		break;
-	case SP_SP_GAIN_RACE:
+	case SP_SP_GAIN_RACE: // bonus2 bSPGainRace,r,n;
+		PC_BONUS_CHK_RACE(type2,SP_SP_GAIN_RACE);
 		if(sd->state.lr_flag != 2)
 			sd->sp_gain_race[type2]+=val;
 		break;
-	case SP_ADD_MONSTER_DROP_ITEM:
+	case SP_ADD_MONSTER_DROP_ITEM: // bonus2 bAddMonsterDropItem,iid,n;
 		if (sd->state.lr_flag != 2)
 			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), type2, 0, CLASS_ALL, RC_NONE_, val);
 		break;
-	case SP_ADD_MONSTER_DROP_ITEMGROUP:
+	case SP_ADD_MONSTER_DROP_ITEMGROUP: // bonus2 bAddMonsterDropItemGroup,ig,n;
 		if (sd->state.lr_flag != 2)
 			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), 0, type2, CLASS_ALL, RC_NONE_, val);
 		break;
-	case SP_SP_LOSS_RATE:
+	case SP_SP_LOSS_RATE: // bonus2 bSPLossRate,n,t;
 		if(sd->state.lr_flag != 2) {
 			sd->sp_loss.value = type2;
 			sd->sp_loss.rate = val;
 		}
 		break;
-	case SP_SP_REGEN_RATE:
+	case SP_SP_REGEN_RATE: // bonus2 bSPRegenRate,n,t;
 		if(sd->state.lr_flag != 2) {
 			sd->sp_regen.value = type2;
 			sd->sp_regen.rate = val;
 		}
 		break;
-	case SP_HP_DRAIN_VALUE_RACE:
+	case SP_HP_DRAIN_VALUE_RACE: // bonus2 bHPDrainValueRace,r,n;
+		PC_BONUS_CHK_RACE(type2,SP_HP_DRAIN_VALUE_RACE);
 		if(!sd->state.lr_flag) {
 			sd->right_weapon.hp_drain_race[type2].value += val;
 		}
@@ -3435,7 +3436,8 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->left_weapon.hp_drain_race[type2].value += val;
 		}
 		break;
-	case SP_SP_DRAIN_VALUE_RACE:
+	case SP_SP_DRAIN_VALUE_RACE: // bonus2 bSPDrainValueRace,r,n;
+		PC_BONUS_CHK_RACE(type2,SP_SP_DRAIN_VALUE_RACE);
 		if(!sd->state.lr_flag) {
 			sd->right_weapon.sp_drain_race[type2].value += val;
 		}
@@ -3443,7 +3445,8 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->left_weapon.sp_drain_race[type2].value += val;
 		}
 		break;
-	case SP_HP_DRAIN_VALUE_CLASS:
+	case SP_HP_DRAIN_VALUE_CLASS: // bonus2 bSpDrainValueClass,c,n;
+		PC_BONUS_CHK_CLASS(type2,SP_HP_DRAIN_VALUE_CLASS);
 		if(!sd->state.lr_flag) {
 			sd->right_weapon.hp_drain_class[type2].value += val;
 		}
@@ -3451,7 +3454,8 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->left_weapon.hp_drain_class[type2].value += val;
 		}
 		break;
-	case SP_SP_DRAIN_VALUE_CLASS:
+	case SP_SP_DRAIN_VALUE_CLASS: // bonus2 bSPDrainValue,n,x;
+		PC_BONUS_CHK_CLASS(type2,SP_SP_DRAIN_VALUE_CLASS);
 		if(!sd->state.lr_flag) {
 			sd->right_weapon.sp_drain_class[type2].value += val;
 		}
@@ -3459,32 +3463,37 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->left_weapon.sp_drain_class[type2].value += val;
 		}
 		break;
-	case SP_IGNORE_MDEF_RACE_RATE:
+	case SP_IGNORE_MDEF_RACE_RATE: // bonus2 bIgnoreMdefRaceRate,r,n;
+		PC_BONUS_CHK_RACE(type2,SP_IGNORE_MDEF_RACE_RATE);
 		if(sd->state.lr_flag != 2)
 			sd->ignore_mdef_by_race[type2] += val;
 		break;
-	case SP_IGNORE_MDEF_CLASS_RATE:
+	case SP_IGNORE_MDEF_CLASS_RATE: // bonus2 bIgnoreMdefClassRate,c,n;
+		PC_BONUS_CHK_CLASS(type2,SP_IGNORE_MDEF_CLASS_RATE);
 		if(sd->state.lr_flag != 2)
 			sd->ignore_mdef_by_class[type2] += val;
 		break;
-	case SP_IGNORE_DEF_RACE_RATE:
+	case SP_IGNORE_DEF_RACE_RATE: // bonus2 bIgnoreDefRaceRate,r,n;
+		PC_BONUS_CHK_RACE(type2,SP_IGNORE_DEF_RACE_RATE);
 		if(sd->state.lr_flag != 2)
 			sd->ignore_def_by_race[type2] += val;
 		break;
-	case SP_SP_GAIN_RACE_ATTACK:
+	case SP_SP_GAIN_RACE_ATTACK: // bonus2 bSPGainRaceAttack,r,n;
+		PC_BONUS_CHK_RACE(type2,SP_SP_GAIN_RACE_ATTACK);
 		if(sd->state.lr_flag != 2)
 			sd->sp_gain_race_attack[type2] = cap_value(sd->sp_gain_race_attack[type2] + val, 0, INT16_MAX);
 		break;
-	case SP_HP_GAIN_RACE_ATTACK:
+	case SP_HP_GAIN_RACE_ATTACK: // bonus2 bHPGainRaceAttack,r,n;
+		PC_BONUS_CHK_RACE(type2,SP_HP_GAIN_RACE_ATTACK);
 		if(sd->state.lr_flag != 2)
 			sd->hp_gain_race_attack[type2] = cap_value(sd->hp_gain_race_attack[type2] + val, 0, INT16_MAX);
 		break;
-	case SP_SKILL_USE_SP_RATE: //bonus2 bSkillUseSPrate,n,x;
+	case SP_SKILL_USE_SP_RATE: // bonus2 bSkillUseSPrate,sk,n;
 		if(sd->state.lr_flag == 2)
 			break;
 		ARR_FIND(0, ARRAYLENGTH(sd->skillusesprate), i, sd->skillusesprate[i].id == 0 || sd->skillusesprate[i].id == type2);
 		if (i == ARRAYLENGTH(sd->skillusesprate)) {
-			ShowDebug("run_script: bonus2 bSkillUseSPrate reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillusesprate), type2, val);
+			ShowError("pc_bonus2: SP_SKILL_USE_SP_RATE: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillusesprate), type2, val);
 			break;
 		}
 		if (sd->skillusesprate[i].id == type2)
@@ -3494,13 +3503,13 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->skillusesprate[i].val = val;
 		}
 		break;
-	case SP_SKILL_COOLDOWN:
+	case SP_SKILL_COOLDOWN: // bonus2 bSkillCooldown,sk,t;
 		if(sd->state.lr_flag == 2)
 			break;
 		ARR_FIND(0, ARRAYLENGTH(sd->skillcooldown), i, sd->skillcooldown[i].id == 0 || sd->skillcooldown[i].id == type2);
 		if (i == ARRAYLENGTH(sd->skillcooldown))
 		{
-			ShowDebug("run_script: bonus2 bSkillCoolDown reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillcooldown), type2, val);
+			ShowError("pc_bonus2: SP_SKILL_COOLDOWN: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillcooldown), type2, val);
 			break;
 		}
 		if (sd->skillcooldown[i].id == type2)
@@ -3510,13 +3519,13 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->skillcooldown[i].val = val;
 		}
 		break;
-	case SP_SKILL_FIXEDCAST:
+	case SP_SKILL_FIXEDCAST: // bonus2 bSkillFixedCast,sk,t;
 		if(sd->state.lr_flag == 2)
 			break;
 		ARR_FIND(0, ARRAYLENGTH(sd->skillfixcast), i, sd->skillfixcast[i].id == 0 || sd->skillfixcast[i].id == type2);
 		if (i == ARRAYLENGTH(sd->skillfixcast))
 		{
-			ShowDebug("run_script: bonus2 bSkillFixedCast reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillfixcast), type2, val);
+			ShowError("pc_bonus2: SP_SKILL_FIXEDCAST: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillfixcast), type2, val);
 			break;
 		}
 		if (sd->skillfixcast[i].id == type2)
@@ -3526,13 +3535,13 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->skillfixcast[i].val = val;
 		}
 		break;
-	case SP_SKILL_VARIABLECAST:
+	case SP_SKILL_VARIABLECAST: // bonus2 bSkillVariableCast,sk,t;
 		if(sd->state.lr_flag == 2)
 			break;
 		ARR_FIND(0, ARRAYLENGTH(sd->skillvarcast), i, sd->skillvarcast[i].id == 0 || sd->skillvarcast[i].id == type2);
 		if (i == ARRAYLENGTH(sd->skillvarcast))
 		{
-			ShowDebug("run_script: bonus2 bSkillVariableCast reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillvarcast), type2, val);
+			ShowError("pc_bonus2: SP_SKILL_VARIABLECAST: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillvarcast), type2, val);
 			break;
 		}
 		if (sd->skillvarcast[i].id == type2)
@@ -3543,13 +3552,13 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		}
 		break;
 #ifdef RENEWAL_CAST
-	case SP_VARCASTRATE:
+	case SP_VARCASTRATE: // bonus2 bVariableCastrate,sk,n;
 		if(sd->state.lr_flag == 2)
 			break;
 		ARR_FIND(0, ARRAYLENGTH(sd->skillcast), i, sd->skillcast[i].id == 0 || sd->skillcast[i].id == type2);
 		if (i == ARRAYLENGTH(sd->skillcast))
 		{
-			ShowDebug("run_script: bonus2 bVariableCastrate reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n",ARRAYLENGTH(sd->skillcast), type2, val);
+			ShowError("pc_bonus2: SP_VARCASTRATE: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n",ARRAYLENGTH(sd->skillcast), type2, val);
 			break;
 		}
 		if(sd->skillcast[i].id == type2)
@@ -3560,12 +3569,12 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		}
 		break;
 #endif
-	case SP_SKILL_USE_SP: //bonus2 bSkillUseSP,n,x;
+	case SP_SKILL_USE_SP: // bonus2 bSkillUseSP,sk,n;
 		if(sd->state.lr_flag == 2)
 			break;
 		ARR_FIND(0, ARRAYLENGTH(sd->skillusesp), i, sd->skillusesp[i].id == 0 || sd->skillusesp[i].id == type2);
 		if (i == ARRAYLENGTH(sd->skillusesp)) {
-			ShowDebug("run_script: bonus2 bSkillUseSP reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillusesp), type2, val);
+			ShowError("pc_bonus2: SP_SKILL_USE_SP: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillusesp), type2, val);
 			break;
 		}
 		if (sd->skillusesp[i].id == type2)
@@ -3593,19 +3602,19 @@ void pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 	nullpo_retv(sd);
 
 	switch(type){
-	case SP_ADD_MONSTER_DROP_ITEM:
+	case SP_ADD_MONSTER_DROP_ITEM: // bonus3 bAddMonsterDropItem,iid,r,n;
 		if(sd->state.lr_flag != 2)
 			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), type2, 0, CLASS_NONE, type3, val);
 		break;
-	case SP_ADD_MONSTER_ID_DROP_ITEM:
+	case SP_ADD_MONSTER_ID_DROP_ITEM: // bonus3 bAddMonsterIdDropItem,iid,mid,n;
 		if(sd->state.lr_flag != 2)
 			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), type2, 0, CLASS_NONE, -type3, val);
 		break;
-	case SP_ADD_CLASS_DROP_ITEM:
+	case SP_ADD_CLASS_DROP_ITEM: // bonus3 bAddClassDropItem,iid,c,n;
 		if(sd->state.lr_flag != 2)
 			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), type2, 0, type3, RC_NONE_, val);
 		break;
-	case SP_AUTOSPELL:
+	case SP_AUTOSPELL: // bonus3 bAutoSpell,sk,y,n;
 		if(sd->state.lr_flag != 2)
 		{
 			int target = skill_get_inf(type2); //Support or Self (non-auto-target) skills should pick self.
@@ -3614,7 +3623,7 @@ void pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 				target?-type2:type2, type3, val, 0, current_equip_card_id);
 		}
 		break;
-	case SP_AUTOSPELL_WHENHIT:
+	case SP_AUTOSPELL_WHENHIT: // bonus3 bAutoSpellWhenHit,sk,y,n;
 		if(sd->state.lr_flag != 2)
 		{
 			int target = skill_get_inf(type2); //Support or Self (non-auto-target) skills should pick self.
@@ -3623,7 +3632,7 @@ void pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 				target?-type2:type2, type3, val, BF_NORMAL|BF_SKILL, current_equip_card_id);
 		}
 		break;
-	case SP_SP_DRAIN_RATE:
+	case SP_SP_DRAIN_RATE: // bonus3 bSPDrainRate,n,x,y;
 		if(!sd->state.lr_flag) {
 			sd->right_weapon.sp_drain_class[CLASS_NORMAL].rate += type2;
 			sd->right_weapon.sp_drain_class[CLASS_NORMAL].per += type3;
@@ -3642,56 +3651,50 @@ void pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 			sd->left_weapon.sp_drain_class[CLASS_BOSS].type = val;
 		}
 		break;
-	case SP_ADD_MONSTER_DROP_ITEMGROUP:
+	case SP_ADD_MONSTER_DROP_ITEMGROUP: // bonus3 bAddMonsterDropItemGroup,ig,r,n;
 		if (sd->state.lr_flag != 2)
 			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), 0, type2, CLASS_NONE, type3, val);
 		break;
-	case SP_ADD_CLASS_DROP_ITEMGROUP:
+	case SP_ADD_CLASS_DROP_ITEMGROUP: // bonus3 bAddClassDropItemGroup,ig,c,n;
 		if (sd->state.lr_flag != 2)
 			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), 0, type2, type3, RC_NONE_, val);
 		break;
 
-	case SP_ADDEFF:
+	case SP_ADDEFF: // bonus3 bAddEff,eff,n,y;
 		if (type2 <= SC_NONE || type2 >= SC_MAX) {
-			ShowWarning("pc_bonus3 (Add Effect): %d is not supported.\n", type2);
+			ShowError("pc_bonus3: SP_ADDEFF: %d is not supported.\n", type2);
 			break;
 		}
 		pc_bonus_addeff(sd->addeff, ARRAYLENGTH(sd->addeff), (sc_type)type2,
 			sd->state.lr_flag!=2?type3:0, sd->state.lr_flag==2?type3:0, val);
 		break;
 
-	case SP_ADDEFF_WHENHIT:
+	case SP_ADDEFF_WHENHIT: // bonus3 bAddEffWhenHit,eff,n,y;
 		if (type2 <= SC_NONE || type2 >= SC_MAX) {
-			ShowWarning("pc_bonus3 (Add Effect when hit): %d is not supported.\n", type2);
+			ShowError("pc_bonus3: SP_ADDEFF_WHENHIT: %d is not supported.\n", type2);
 			break;
 		}
 		if(sd->state.lr_flag != 2)
 			pc_bonus_addeff(sd->addeff2, ARRAYLENGTH(sd->addeff2), (sc_type)type2, type3, 0, val);
 		break;
 
-	case SP_ADDEFF_ONSKILL:
+	case SP_ADDEFF_ONSKILL: // bonus3 bAddEffOnSkill,sk,eff,n;
 		if (type3 <= SC_NONE || type3 >= SC_MAX) {
-			ShowWarning("pc_bonus3 (Add Effect on skill): %d is not supported.\n", type3);
+			ShowError("pc_bonus3: SP_ADDEFF_ONSKILL: %d is not supported.\n", type3);
 			break;
 		}
 		if( sd->state.lr_flag != 2 )
 			pc_bonus_addeff_onskill(sd->addeff3, ARRAYLENGTH(sd->addeff3), (sc_type)type3, val, type2, ATF_TARGET);
 		break;
 
-	case SP_ADDELE:
-		if (type2 > ELE_ALL) {
-			ShowWarning("pc_bonus3 (SP_ADDELE): element %d is out of range.\n", type2);
-			break;
-		}
+	case SP_ADDELE: // bonus3 bAddEle,e,x,bf;
+		PC_BONUS_CHK_ELEMENT(type2,SP_ADDELE);
 		if (sd->state.lr_flag != 2)
 			pc_bonus_addele(sd, (unsigned char)type2, type3, val);
 		break;
 
-	case SP_SUBELE:
-		if (type2 > ELE_ALL) {
-			ShowWarning("pc_bonus3 (SP_SUBELE): element %d is out of range.\n", type2);
-			break;
-		}
+	case SP_SUBELE: // bonus3 bSubEle,e,x,bf;
+		PC_BONUS_CHK_ELEMENT(type2,SP_SUBELE);
 		if (sd->state.lr_flag != 2)
 			pc_bonus_subele(sd, (unsigned char)type2, type3, val);
 		break;
@@ -3715,17 +3718,17 @@ void pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type
 	nullpo_retv(sd);
 
 	switch(type){
-	case SP_AUTOSPELL:
+	case SP_AUTOSPELL: // bonus4 bAutoSpell,sk,y,n,i;
 		if(sd->state.lr_flag != 2)
 			pc_bonus_autospell(sd->autospell, ARRAYLENGTH(sd->autospell), (val&1?type2:-type2), (val&2?-type3:type3), type4, 0, current_equip_card_id);
 		break;
 
-	case SP_AUTOSPELL_WHENHIT:
+	case SP_AUTOSPELL_WHENHIT: // bonus4 bAutoSpellWhenHit,sk,y,n,i;
 		if(sd->state.lr_flag != 2)
 			pc_bonus_autospell(sd->autospell2, ARRAYLENGTH(sd->autospell2), (val&1?type2:-type2), (val&2?-type3:type3), type4, BF_NORMAL|BF_SKILL, current_equip_card_id);
 		break;
 
-	case SP_AUTOSPELL_ONSKILL:
+	case SP_AUTOSPELL_ONSKILL: // bonus4 bAutoSpellOnSkill,sk,x,y,n;
 		if(sd->state.lr_flag != 2)
 		{
 			int target = skill_get_inf(type2); //Support or Self (non-auto-target) skills should pick self.
@@ -3735,20 +3738,17 @@ void pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type
 		}
 		break;
 
-	case SP_ADDEFF_ONSKILL:
+	case SP_ADDEFF_ONSKILL: // bonus4 bAddEffOnSkill,sk,eff,n,y;
 		if (type2 <= SC_NONE || type2 >= SC_MAX) {
-			ShowWarning("pc_bonus4 (Add Effect on skill): %d is not supported.\n", type2);
+			ShowError("pc_bonus4: SP_ADDEFF_ONSKILL: %d is not supported.\n", type2);
 			break;
 		}
 		if( sd->state.lr_flag != 2 )
 			pc_bonus_addeff_onskill(sd->addeff3, ARRAYLENGTH(sd->addeff3), (sc_type)type3, type4, type2, val);
 		break;
 
-	case SP_DEF_SET: //bonus4 bSetDefRace,n,x,r,y;
-		if( type2 > RC_ALL ) {
-			ShowWarning("pc_bonus4 (DEF_SET): %d is not supported.\n", type2);
-			break;
-		}
+	case SP_SET_DEF_RACE: // bonus4 bSetDefRace,r,n,t,y;
+		PC_BONUS_CHK_RACE(type2,SP_SET_DEF_RACE);
 		if(sd->state.lr_flag == 2)
 			break;
 		sd->def_set_race[type2].rate = type3;
@@ -3756,11 +3756,8 @@ void pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type
 		sd->def_set_race[type2].value = val;
 		break;
 
-	case SP_MDEF_SET: //bonus4 bSetMDefRace,n,x,r,y;
-		if( type2 > RC_ALL ) {
-			ShowWarning("pc_bonus4 (MDEF_SET): %d is not supported.\n", type2);
-			break;
-		}
+	case SP_SET_MDEF_RACE: // bonus4 bSetMDefRace,r,n,t,y;
+		PC_BONUS_CHK_RACE(type2,SP_SET_MDEF_RACE);
 		if(sd->state.lr_flag == 2)
 			break;
 		sd->mdef_set_race[type2].rate = type3;
@@ -3788,17 +3785,17 @@ void pc_bonus5(struct map_session_data *sd,int type,int type2,int type3,int type
 	nullpo_retv(sd);
 
 	switch(type){
-	case SP_AUTOSPELL:
+	case SP_AUTOSPELL: // bonus5 bAutoSpell,sk,y,n,bf,i;
 		if(sd->state.lr_flag != 2)
 			pc_bonus_autospell(sd->autospell, ARRAYLENGTH(sd->autospell), (val&1?type2:-type2), (val&2?-type3:type3), type4, type5, current_equip_card_id);
 		break;
 
-	case SP_AUTOSPELL_WHENHIT:
+	case SP_AUTOSPELL_WHENHIT: // bonus5 bAutoSpellWhenHit,sk,y,n,bf,i;
 		if(sd->state.lr_flag != 2)
 			pc_bonus_autospell(sd->autospell2, ARRAYLENGTH(sd->autospell2), (val&1?type2:-type2), (val&2?-type3:type3), type4, type5, current_equip_card_id);
 		break;
 
-	case SP_AUTOSPELL_ONSKILL:
+	case SP_AUTOSPELL_ONSKILL: // bonus5 bAutoSpellOnSkill,sk,x,y,n,i;
 		if(sd->state.lr_flag != 2)
 			pc_bonus_autospell_onskill(sd->autospell3, ARRAYLENGTH(sd->autospell3), type2, (val&1?-type3:type3), (val&2?-type4:type4), type5, current_equip_card_id);
 		break;
@@ -10180,7 +10177,7 @@ static bool pc_readdb_levelpenalty(char* fields[], int columns, int current)
 		return false;
 	}
 
-	if( class_ < 0 || class_ > CLASS_ALL ){
+	if( !CHK_CLASS(class_) ){
 		ShowWarning("pc_readdb_levelpenalty: Invalid class %d specified.\n", class_);
 		return false;
 	}

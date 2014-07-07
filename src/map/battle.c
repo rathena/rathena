@@ -35,7 +35,7 @@
 #include <string.h>
 #include <math.h>
 
-int attr_fix_table[4][ELE_NONE][ELE_NONE];
+int attr_fix_table[4][ELE_MAX][ELE_MAX];
 
 struct Battle_Config battle_config;
 static struct eri *delay_damage_ers; //For battle delay damage structures.
@@ -310,9 +310,9 @@ int battle_delay_damage(unsigned int tick, int amotion, struct block_list *src, 
 }
 
 int battle_attr_ratio(int atk_elem,int def_type, int def_lv) {
-	if (atk_elem < ELE_NEUTRAL || atk_elem >= ELE_ALL)
+	if (!CHK_ELEMENT(atk_elem))
 		return 100;
-	if (def_type < ELE_NEUTRAL || def_type > ELE_ALL || def_lv < 1 || def_lv > 4)
+	if (!CHK_ELEMENT(def_type) || def_lv < 1 || def_lv > 4)
 		return 100;
 
 	return attr_fix_table[def_lv-1][atk_elem][def_type];
@@ -331,10 +331,10 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 	if (src) sc = status_get_sc(src);
 	if (target) tsc = status_get_sc(target);
 
-	if (atk_elem < ELE_NEUTRAL || atk_elem >= ELE_ALL)
+	if (!CHK_ELEMENT(atk_elem))
 		atk_elem = rnd()%ELE_ALL;
 
-	if (def_type < ELE_NEUTRAL || def_type > ELE_ALL ||
+	if (!CHK_ELEMENT(def_type) ||
 		def_lv < 1 || def_lv > 4) {
 		ShowError("battle_attr_fix: unknown attr type: atk=%d def_type=%d def_lv=%d\n",atk_elem,def_type,def_lv);
 		return damage;
@@ -1270,7 +1270,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
-int64 battle_calc_bg_damage(struct block_list *src, struct block_list *bl, int64 damage, int div_, uint16 skill_id, uint16 skill_lv, int flag)
+int64 battle_calc_bg_damage(struct block_list *src, struct block_list *bl, int64 damage, uint16 skill_id, int flag)
 {
 	if( !damage )
 		return 0;
@@ -1326,7 +1326,7 @@ bool battle_can_hit_gvg_target(struct block_list *src,struct block_list *bl,uint
 /*==========================================
  * Calculates GVG related damage adjustments.
  *------------------------------------------*/
-int64 battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int64 damage,int div_,uint16 skill_id,uint16 skill_lv,int flag)
+int64 battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int64 damage,uint16 skill_id,int flag)
 {
 	if (!damage) //No reductions to make.
 		return 0;
@@ -2523,9 +2523,9 @@ static struct Damage battle_calc_attack_masteries(struct Damage wd, struct block
 		if (skill_id != MC_CARTREVOLUTION && pc_checkskill(sd, BS_HILTBINDING) > 0)
 			ATK_ADD(wd.masteryAtk, wd.masteryAtk2, 4);
 		if (skill_id == MO_FINGEROFFENSIVE) {
-			ATK_ADD(wd.masteryAtk, wd.masteryAtk2, wd.div_ * sd->spiritball_old * 3);
+			ATK_ADD(wd.masteryAtk, wd.masteryAtk2, ((wd.div_ < 1) ? 1 : wd.div_) * sd->spiritball_old * 3);
 		} else
-			ATK_ADD(wd.masteryAtk, wd.masteryAtk2, wd.div_ * sd->spiritball * 3);
+			ATK_ADD(wd.masteryAtk, wd.masteryAtk2, ((wd.div_ < 1) ? 1 : wd.div_) * sd->spiritball * 3);
 #endif
 
 		if (sc) { // Status change considered as masteries
@@ -3613,8 +3613,9 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			if( sc && sc->data[SC_EXPLOSIONSPIRITS] ) {
 				skillratio += sc->data[SC_EXPLOSIONSPIRITS]->val1 * 20;
 				RE_LVL_DMOD(120);
-			} else
+			} else {
 				RE_LVL_DMOD(150);
+			}
 			break;
 		case SR_KNUCKLEARROW:
 			if( wd.miscflag&4 ){  // ATK [(Skill Level x 150) + (1000 x Target current weight / Maximum weight) + (Target Base Level x 5) x (Caster Base Level / 150)] %
@@ -4466,10 +4467,10 @@ struct Damage battle_calc_attack_plant(struct Damage wd, struct block_list *src,
 		}
 		if (wd.damage > 0) {
 			wd.damage = battle_attr_fix(src, target, wd.damage, right_element, tstatus->def_ele, tstatus->ele_lv);
-			wd.damage = battle_calc_gvg_damage(src, target, wd.damage, wd.div_, skill_id, skill_lv, wd.flag);
+			wd.damage = battle_calc_gvg_damage(src, target, wd.damage, skill_id, wd.flag);
 		} else if (wd.damage2 > 0) {
 			wd.damage2 = battle_attr_fix(src, target, wd.damage2, left_element, tstatus->def_ele, tstatus->ele_lv);
-			wd.damage2 = battle_calc_gvg_damage(src, target, wd.damage2, wd.div_, skill_id, skill_lv, wd.flag);
+			wd.damage2 = battle_calc_gvg_damage(src, target, wd.damage2, skill_id, wd.flag);
 		}
 		return wd;
 	}
@@ -4551,24 +4552,24 @@ struct Damage battle_calc_attack_gvg_bg(struct Damage wd, struct block_list *src
 		if(!wd.damage2) {
 			wd.damage = battle_calc_damage(src,target,&wd,wd.damage,skill_id,skill_lv);
 			if( map_flag_gvg2(target->m) )
-				wd.damage=battle_calc_gvg_damage(src,target,wd.damage,wd.div_,skill_id,skill_lv,wd.flag);
+				wd.damage=battle_calc_gvg_damage(src,target,wd.damage,skill_id,wd.flag);
 			else if( map[target->m].flag.battleground )
-				wd.damage=battle_calc_bg_damage(src,target,wd.damage,wd.div_,skill_id,skill_lv,wd.flag);
+				wd.damage=battle_calc_bg_damage(src,target,wd.damage,skill_id,wd.flag);
 		}
 		else if(!wd.damage) {
 			wd.damage2 = battle_calc_damage(src,target,&wd,wd.damage2,skill_id,skill_lv);
 			if( map_flag_gvg2(target->m) )
-				wd.damage2 = battle_calc_gvg_damage(src,target,wd.damage2,wd.div_,skill_id,skill_lv,wd.flag);
+				wd.damage2 = battle_calc_gvg_damage(src,target,wd.damage2,skill_id,wd.flag);
 			else if( map[target->m].flag.battleground )
-				wd.damage2 = battle_calc_bg_damage(src,target,wd.damage2,wd.div_,skill_id,skill_lv,wd.flag);
+				wd.damage2 = battle_calc_bg_damage(src,target,wd.damage2,skill_id,wd.flag);
 		}
 		else {
 			int64 d1 = wd.damage + wd.damage2,d2 = wd.damage2;
 			wd.damage = battle_calc_damage(src,target,&wd,d1,skill_id,skill_lv);
 			if( map_flag_gvg2(target->m) )
-				wd.damage = battle_calc_gvg_damage(src,target,wd.damage,wd.div_,skill_id,skill_lv,wd.flag);
+				wd.damage = battle_calc_gvg_damage(src,target,wd.damage,skill_id,wd.flag);
 			else if( map[target->m].flag.battleground )
-				wd.damage = battle_calc_bg_damage(src,target,wd.damage,wd.div_,skill_id,skill_lv,wd.flag);
+				wd.damage = battle_calc_bg_damage(src,target,wd.damage,skill_id,wd.flag);
 			wd.damage2 = (int64)d2*100/d1 * wd.damage/100;
 			if(wd.damage > 1 && wd.damage2 < 1) wd.damage2 = 1;
 			wd.damage-=wd.damage2;
@@ -5047,9 +5048,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		if (skill_id != MC_CARTREVOLUTION && pc_checkskill(sd, BS_HILTBINDING) > 0)
 			ATK_ADD(wd.damage, wd.damage2, 4);
 		if (skill_id == MO_FINGEROFFENSIVE) { //The finger offensive spheres on moment of attack do count. [Skotlex]
-			ATK_ADD(wd.damage, wd.damage2, wd.div_ * sd->spiritball_old * 3);
+			ATK_ADD(wd.damage, wd.damage2, ((wd.div_ < 1) ? 1 : wd.div_) * sd->spiritball_old * 3);
 		} else
-			ATK_ADD(wd.damage, wd.damage2, wd.div_ * sd->spiritball * 3);
+			ATK_ADD(wd.damage, wd.damage2, ((wd.div_ < 1) ? 1 : wd.div_) * sd->spiritball * 3);
 #endif
 		if( skill_id == CR_SHIELDBOOMERANG || skill_id == PA_SHIELDCHAIN ) { //Refine bonus applies after cards and elements.
 			short index = sd->equip_index[EQI_HAND_L];
@@ -5932,9 +5933,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		default:
 			ad.damage=battle_calc_damage(src,target,&ad,ad.damage,skill_id,skill_lv);
 			if( map_flag_gvg2(target->m) )
-				ad.damage=battle_calc_gvg_damage(src,target,ad.damage,ad.div_,skill_id,skill_lv,ad.flag);
+				ad.damage=battle_calc_gvg_damage(src,target,ad.damage,skill_id,ad.flag);
 			else if( map[target->m].flag.battleground )
-				ad.damage=battle_calc_bg_damage(src,target,ad.damage,ad.div_,skill_id,skill_lv,ad.flag);
+				ad.damage=battle_calc_bg_damage(src,target,ad.damage,skill_id,ad.flag);
 			break;
 	}
 
@@ -6302,9 +6303,9 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 
 	md.damage=battle_calc_damage(src,target,&md,md.damage,skill_id,skill_lv);
 	if( map_flag_gvg2(target->m) )
-		md.damage=battle_calc_gvg_damage(src,target,md.damage,md.div_,skill_id,skill_lv,md.flag);
+		md.damage=battle_calc_gvg_damage(src,target,md.damage,skill_id,md.flag);
 	else if( map[target->m].flag.battleground )
-		md.damage=battle_calc_bg_damage(src,target,md.damage,md.div_,skill_id,skill_lv,md.flag);
+		md.damage=battle_calc_bg_damage(src,target,md.damage,skill_id,md.flag);
 
 	switch( skill_id ) {
 		case RA_FIRINGTRAP:
@@ -7779,7 +7780,6 @@ static const struct _battle_data {
 	{ "max_trans_parameter",				&battle_config.max_trans_parameter,				99,		10,		SHRT_MAX,		},
 	{ "max_third_trans_parameter",			&battle_config.max_third_trans_parameter,		135,	10,		SHRT_MAX,		},
 	{ "max_extended_parameter",				&battle_config.max_extended_parameter,			125,	10,		SHRT_MAX,		},
-	{ "atcommand_max_stat_bypass",          &battle_config.atcommand_max_stat_bypass,       0,      0,      100,            },
 	{ "skill_amotion_leniency",             &battle_config.skill_amotion_leniency,          90,     0,      300             },
 	{ "mvp_tomb_enabled",                   &battle_config.mvp_tomb_enabled,                1,      0,      1               },
 	{ "feature.atcommand_suggestions",      &battle_config.atcommand_suggestions_enabled,   0,      0,      1               },

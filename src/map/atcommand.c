@@ -2523,7 +2523,7 @@ ACMD_FUNC(param)
 	status[4] = &sd->status.dex;
 	status[5] = &sd->status.luk;
 
-	if( battle_config.atcommand_max_stat_bypass )
+	if( pc_has_permission(sd, PC_PERM_BYPASS_MAX_STAT) )
 		max_status[0] = max_status[1] = max_status[2] = max_status[3] = max_status[4] = max_status[5] = SHRT_MAX;
 	else {
 		max_status[0] = pc_maxparameter(sd,PARAM_STR);
@@ -2585,7 +2585,7 @@ ACMD_FUNC(stat_all)
 		max_status[5] = pc_maxparameter(sd,PARAM_LUK);
 		value = SHRT_MAX;
 	} else {
-		if( battle_config.atcommand_max_stat_bypass )
+		if( pc_has_permission(sd, PC_PERM_BYPASS_MAX_STAT) )
 			max_status[0] = max_status[1] = max_status[2] = max_status[3] = max_status[4] = max_status[5] = SHRT_MAX;
 		else {
 			max_status[0] = pc_maxparameter(sd,PARAM_STR);
@@ -10073,7 +10073,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 		return false;
 
 	//If cannot use atcomamnd while talking with NPC [Kichi]
-	if (sd->npc_id && sd->state.disable_atcommand_on_npc)
+	if (type == 1 && sd->npc_id && sd->state.disable_atcommand_on_npc)
 		return false;
 
 	//Block NOCHAT but do not display it as a normal message
