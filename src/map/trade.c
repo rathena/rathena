@@ -246,7 +246,6 @@ int trade_check(struct map_session_data *sd, struct map_session_data *tsd)
 	struct item inventory2[MAX_INVENTORY];
 	struct item_data *data;
 	int trade_i, i, n;
-	short amount;
 
 	// check zenys value against hackers (Zeny was already checked on time of adding, but you never know when you lost some zeny since then.
 	if(sd->deal.zeny > sd->status.zeny || (tsd->status.zeny > MAX_ZENY - sd->deal.zeny))
@@ -260,6 +259,8 @@ int trade_check(struct map_session_data *sd, struct map_session_data *tsd)
 
 	// check free slot in both inventory
 	for(trade_i = 0; trade_i < 10; trade_i++) {
+		short amount;
+
 		amount = sd->deal.item[trade_i].amount;
 		if (amount) {
 			n = sd->deal.item[trade_i].index;
@@ -379,7 +380,7 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 		return;
 	}
 
-	if( ((item->bound == 1 || item->bound > 2) || (item->bound == 2 && sd->status.guild_id != target_sd->status.guild_id)) && !pc_can_give_bounded_items(sd) ) { // Item Bound
+	if( ((item->bound == BOUND_ACCOUNT || item->bound > BOUND_GUILD) || (item->bound == BOUND_GUILD && sd->status.guild_id != target_sd->status.guild_id)) && !pc_can_give_bounded_items(sd) ) { // Item Bound
 		clif_displaymessage(sd->fd, msg_txt(sd,293));
 		clif_tradeitemok(sd, index+2, 1);
 		return;
@@ -541,7 +542,6 @@ void trade_tradecommit(struct map_session_data *sd)
 {
 	struct map_session_data *tsd;
 	int trade_i;
-	int flag;
 
 	if (!sd->state.trading || !sd->state.deal_locked) //Locked should be 1 (pressed ok) before you can press trade.
 		return;
@@ -577,6 +577,7 @@ void trade_tradecommit(struct map_session_data *sd)
 	for( trade_i = 0; trade_i < 10; trade_i++ )
 	{
 		int n;
+		unsigned char flag = 0;
 		if (sd->deal.item[trade_i].amount)
 		{
 			n = sd->deal.item[trade_i].index;

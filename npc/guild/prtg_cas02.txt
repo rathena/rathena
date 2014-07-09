@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= War of Emperium (Prontera)
+//= War of Emperium (Prontera) - Swanhild
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
@@ -111,7 +111,6 @@ prtg_cas02,94,61,4	duplicate(cm)	Roy#prtg_cas02	55
 // Treasure Room Exit
 //============================================================
 prtg_cas02,207,228,0	script	#Lever_PR02	111,{
-
 	mes " ";
 	mes "There's a small lever. Will you pull it?";
 	next;

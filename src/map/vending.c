@@ -271,7 +271,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 	}
 	vsd->vend_num = cursor;
 
-	//Always save BOTH: buyer and customer
+	//Always save BOTH: customer (buyer) and vender
 	if( save_settings&2 ) {
 		chrif_save(sd,0);
 		chrif_save(vsd,0);
@@ -322,6 +322,9 @@ bool vending_openvending(struct map_session_data* sd, const char* message, const
 		return false;
 	}
 
+	if (save_settings&2) // Avoid invalid data from saving
+		chrif_save(sd, 0);
+
 	// filter out invalid items
 	i = 0;
 	for( j = 0; j < count; j++ ) {
@@ -345,6 +348,17 @@ bool vending_openvending(struct map_session_data* sd, const char* message, const
 		sd->vending[i].amount = amount;
 		sd->vending[i].value = min(value, (unsigned int)battle_config.vending_max_value);
 
+		// Player just moved item to cart and we don't have the correct cart ID yet.
+		if (sd->status.cart[sd->vending[i].index].id == 0) {
+			struct item_data *idb = itemdb_search(sd->status.cart[index].nameid);
+			char msg[256];
+
+			sprintf(msg, msg_txt(sd, 733), idb->jname);
+			clif_displaymessage(sd->fd, msg);
+			clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0);
+			return false;
+		}
+
 		i++; // item successfully added
 	}
 
@@ -367,7 +381,7 @@ bool vending_openvending(struct map_session_data* sd, const char* message, const
 		Sql_ShowDebug(mmysql_handle);
 	}
 
-	for( i = 0; i < count; i++ ){
+	for( i = 0; i < count; i++ ) {
 		if( Sql_Query( mmysql_handle, "INSERT INTO `%s`(`vending_id`,`index`,`cartinventory_id`,`amount`,`price`) VALUES( %d, %d, %d, %d, %d );", vending_items_db, sd->vender_id, i, sd->status.cart[sd->vending[i].index].id, sd->vending[i].amount, sd->vending[i].value ) != SQL_SUCCESS ){
 			Sql_ShowDebug(mmysql_handle);
 		}
@@ -494,7 +508,7 @@ void vending_reopen( struct map_session_data* sd ){
 			}
 
 			*index = entry->index + 2;
-			*amount = entry->amount;
+			*amount = itemdb_isstackable(sd->status.cart[entry->index].id) ? entry->amount : 1;
 			*value = entry->price;
 
 			p += 8;

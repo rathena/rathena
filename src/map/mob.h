@@ -102,8 +102,14 @@ struct mob_db {
 	short range2,range3;
 	short race2;	// celest
 	unsigned short lv;
-	struct { int nameid,p; } dropitem[MAX_MOB_DROP];
-	struct { int nameid,p; } mvpitem[MAX_MVP_DROP];
+	struct {
+		unsigned short nameid;
+		int p;
+	} dropitem[MAX_MOB_DROP];
+	struct {
+		unsigned short nameid;
+		int p;
+	} mvpitem[MAX_MVP_DROP];
 	struct status_data status;
 	struct view_data vd;
 	unsigned int option;
@@ -274,10 +280,12 @@ void mob_heal(struct mob_data *md,unsigned int heal);
 #define mob_is_gvg(md) (map[(md)->bl.m].flag.gvg_castle && ( (md)->mob_id == MOBID_EMPERIUM || (md)->mob_id == MOBID_BARRICADE1 || (md)->mob_id == MOBID_GUARIDAN_STONE1 || (md)->mob_id == MOBID_GUARIDAN_STONE2) )
 #define mob_is_treasure(md) (((md)->mob_id >= MOBID_TREAS01 && (md)->mob_id <= MOBID_TREAS40) || ((md)->mob_id >= MOBID_TREAS41 && (md)->mob_id <= MOBID_TREAS49))
 #define mob_is_guardian(mob_id) ((mob_id >= MOBID_A_GUARDIAN && mob_id <= MOBID_S_GUARDIAN) || mob_id == MOBID_S_GUARDIAN_ || mob_id == MOBID_A_GUARDIAN_)
+#define mob_is_goblin(md, mid) (((md)->mob_id >= MOBID_GOBLIN_1 && (md)->mob_id <= MOBID_GOBLIN_5) && (mid >= MOBID_GOBLIN_1 && mid <= MOBID_GOBLIN_5))
+#define mob_is_samename(md, mid) (strcmp(mob_db((md)->mob_id)->jname, mob_db(mid)->jname) == 0)
 
 void mob_clear_spawninfo();
-int do_init_mob(void);
-int do_final_mob(void);
+void do_init_mob(void);
+void do_final_mob(void);
 
 int mob_timer_delete(int tid, unsigned int tick, int id, intptr_t data);
 int mob_deleteslave(struct mob_data *md);
@@ -306,5 +314,7 @@ void mob_reload(void);
 // MvP Tomb System
 void mvptomb_create(struct mob_data *md, char *killer, time_t time);
 void mvptomb_destroy(struct mob_data *md);
+
+#define CHK_MOBSIZE(size) ((size) >= SZ_SMALL && (size) < SZ_MAX) /// Check valid Monster Size
 
 #endif /* _MOB_H_ */

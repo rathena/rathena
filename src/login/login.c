@@ -30,7 +30,7 @@ static char* msg_table[LOGIN_MAX_MSG];	/// Login Server messages_conf
 struct Login_Config login_config;		/// Configuration of login-serv
 
 int login_fd; // login server socket
-struct mmo_char_server server[MAX_SERVERS]; // char server data
+struct mmo_char_server ch_server[MAX_SERVERS]; // char server data
 
 // Account engines available
 static struct{
@@ -220,9 +220,9 @@ int charif_sendallwos(int sfd, uint8* buf, size_t len)
 {
 	int i, c;
 
-	for( i = 0, c = 0; i < ARRAYLENGTH(server); ++i )
+	for( i = 0, c = 0; i < ARRAYLENGTH(ch_server); ++i )
 	{
-		int fd = server[i].fd;
+		int fd = ch_server[i].fd;
 		if( session_isValid(fd) && fd != sfd )
 		{
 			WFIFOHEAD(fd,len);
@@ -239,18 +239,18 @@ int charif_sendallwos(int sfd, uint8* buf, size_t len)
 /// Initializes a server structure.
 void chrif_server_init(int id)
 {
-	memset(&server[id], 0, sizeof(server[id]));
-	server[id].fd = -1;
+	memset(&ch_server[id], 0, sizeof(ch_server[id]));
+	ch_server[id].fd = -1;
 }
 
 
 /// Destroys a server structure.
 void chrif_server_destroy(int id)
 {
-	if( server[id].fd != -1 )
+	if( ch_server[id].fd != -1 )
 	{
-		do_close(server[id].fd);
-		server[id].fd = -1;
+		do_close(ch_server[id].fd);
+		ch_server[id].fd = -1;
 	}
 }
 
@@ -267,7 +267,7 @@ void chrif_server_reset(int id)
 /// Called when the connection to Char Server is disconnected.
 void chrif_on_disconnect(int id)
 {
-	ShowStatus("Char-server '%s' has disconnected.\n", server[id].name);
+	ShowStatus("Char-server '%s' has disconnected.\n", ch_server[id].name);
 	chrif_server_reset(id);
 }
 
@@ -463,7 +463,7 @@ int chrif_send_accdata(int fd, uint32 aid) {
 #ifdef VIP_ENABLE
 		char_vip = login_config.vip_sys.char_increase;
 		if( acc.vip_time > time(NULL) ) {
-			isvip=true;
+			isvip = true;
 			char_slots = login_config.char_per_account + char_vip;
 		} else
 			char_slots = login_config.char_per_account;
@@ -495,13 +495,13 @@ int chrif_parse_reqaccdata(int fd, int cid, char *ip) {
 		uint32 aid = RFIFOL(fd,2);
 		RFIFOSKIP(fd,6);
 		if( chrif_send_accdata(fd,aid) < 0 )
-			ShowNotice("Char-server '%s': account %d NOT found (ip: %s).\n", server[cid].name, aid, ip);
+			ShowNotice("Char-server '%s': account %d NOT found (ip: %s).\n", ch_server[cid].name, aid, ip);
 	}
 	return 0;
 }
 
 
-int chrif_sendvipdata(int fd, struct mmo_account acc, char isvip, int mapfd) {
+int chrif_sendvipdata(int fd, struct mmo_account acc, char isvip, char isgm, int mapfd) {
 #ifdef VIP_ENABLE
 	WFIFOHEAD(fd,19);
 	WFIFOW(fd,0) = 0x2743;
@@ -509,8 +509,9 @@ int chrif_sendvipdata(int fd, struct mmo_account acc, char isvip, int mapfd) {
 	WFIFOL(fd,6) = (int)acc.vip_time;
 	WFIFOB(fd,10) = isvip;
 	WFIFOL(fd,11) = acc.group_id; //new group id
-	WFIFOL(fd,15) = mapfd; //link to mapserv
-	WFIFOSET(fd,19);
+	WFIFOL(fd,15) = isgm;
+	WFIFOL(fd,16) = mapfd; //link to mapserv
+	WFIFOSET(fd,20);
 	chrif_send_accdata(fd,acc.account_id); //refresh char with new setting
 #endif
 	return 1;
@@ -522,7 +523,7 @@ int chrif_sendvipdata(int fd, struct mmo_account acc, char isvip, int mapfd) {
  *  &1 : Select info and update old_groupid
  *  &2 : Update vip time
  * @param fd link to charserv
- * @return 0 missing data, 1 succeed
+ * @return 0 missing data, 1 succeeded
  */
 int chrif_parse_reqvipdata(int fd) {
 #ifdef VIP_ENABLE
@@ -533,19 +534,23 @@ int chrif_parse_reqvipdata(int fd) {
 		int aid = RFIFOL(fd,2);
 		int8 type = RFIFOB(fd,6);
 		int32 timediff = RFIFOL(fd,7);
-		int mapfd =  RFIFOL(fd,11);
+		int mapfd = RFIFOL(fd,11);
 		RFIFOSKIP(fd,15);
 		
-		if( accounts->load_num(accounts, &acc, aid ) ){
+		if( accounts->load_num(accounts, &acc, aid ) ) {
 			time_t now = time(NULL);
 			time_t vip_time = acc.vip_time;
 			bool isvip = false;
 
-			if( type&2 ){
+			if( acc.group_id > login_config.vip_sys.group ) { //Don't change group if it's higher.
+				chrif_sendvipdata(fd,acc,false,true,mapfd);
+				return 1;
+			}
+			if( type&2 ) {
 				if(!vip_time) vip_time = now; //new entry
-				vip_time +=  timediff; // set new duration
-			} 
-			if( now < vip_time) { //isvip
+				vip_time += timediff; // set new duration
+			}
+			if( now < vip_time ) { //isvip
 				if(acc.group_id != login_config.vip_sys.group) //only upd this if we're not vip already
 					acc.old_group = acc.group_id;
 				acc.group_id = login_config.vip_sys.group;
@@ -553,14 +558,14 @@ int chrif_parse_reqvipdata(int fd) {
 				isvip = true;
 			} else { //expired or @vip -xx
 				vip_time = 0;
-				if(acc.group_id == login_config.vip_sys.group) //prevent alteration in case we wasn't registered vip yet
+				if(acc.group_id == login_config.vip_sys.group) //prevent alteration in case account wasn't registered as vip yet
 					acc.group_id = acc.old_group;
 				acc.old_group = 0;
 				acc.char_slots = login_config.char_per_account;
 			}
 			acc.vip_time = vip_time;
 			accounts->save(accounts,&acc);
-			if( type&1 ) chrif_sendvipdata(fd,acc,isvip,mapfd);
+			if( type&1 ) chrif_sendvipdata(fd,acc,isvip,false,mapfd);
 		}
 	}
 #endif
@@ -576,8 +581,8 @@ int parse_fromchar(int fd){
 	uint32 ipl;
 	char ip[16];
 
-	ARR_FIND( 0, ARRAYLENGTH(server), id, server[id].fd == fd );
-	if( id == ARRAYLENGTH(server) ){// not a char server
+	ARR_FIND( 0, ARRAYLENGTH(ch_server), id, ch_server[id].fd == fd );
+	if( id == ARRAYLENGTH(ch_server) ){// not a char server
 		ShowDebug("parse_fromchar: Disconnecting invalid session #%d (is not a char-server)\n", fd);
 		set_eof(fd);
 		do_close(fd);
@@ -586,12 +591,12 @@ int parse_fromchar(int fd){
 
 	if( session[fd]->flag.eof ){
 		do_close(fd);
-		server[id].fd = -1;
+		ch_server[id].fd = -1;
 		chrif_on_disconnect(id);
 		return 0;
 	}
 
-	ipl = server[id].ip;
+	ipl = ch_server[id].ip;
 	ip2str(ipl, ip);
 
 	while( RFIFOREST(fd) >= 2 ){
@@ -638,7 +643,7 @@ int parse_fromchar(int fd){
 					// each auth entry can only be used once
 					idb_remove(auth_db, account_id);
 				}else{// authentication not found
-					ShowStatus("Char-server '%s': authentication of the account %d REFUSED (ip: %s).\n", server[id].name, account_id, ip);
+					ShowStatus("Char-server '%s': authentication of the account %d REFUSED (ip: %s).\n", ch_server[id].name, account_id, ip);
 					WFIFOHEAD(fd,25);
 					WFIFOW(fd,0) = 0x2713;
 					WFIFOL(fd,2) = account_id;
@@ -662,10 +667,10 @@ int parse_fromchar(int fd){
 				RFIFOSKIP(fd,6);
 
 				// how many users on world? (update)
-				if( server[id].users != users ){
-					ShowStatus("set users %s : %d\n", server[id].name, users);
+				if( ch_server[id].users != users ){
+					ShowStatus("set users %s : %d\n", ch_server[id].name, users);
 
-					server[id].users = users;
+					ch_server[id].users = users;
 				}
 			}
 		break;
@@ -682,12 +687,12 @@ int parse_fromchar(int fd){
 				RFIFOSKIP(fd,46);
 
 				if( e_mail_check(email) == 0 )
-					ShowNotice("Char-server '%s': Attempt to create an e-mail on an account with a default e-mail REFUSED - e-mail is invalid (account: %d, ip: %s)\n", server[id].name, account_id, ip);
+					ShowNotice("Char-server '%s': Attempt to create an e-mail on an account with a default e-mail REFUSED - e-mail is invalid (account: %d, ip: %s)\n", ch_server[id].name, account_id, ip);
 				else if( !accounts->load_num(accounts, &acc, account_id) || strcmp(acc.email, "a@a.com") == 0 || acc.email[0] == '\0' )
-					ShowNotice("Char-server '%s': Attempt to create an e-mail on an account with a default e-mail REFUSED - account doesn't exist or e-mail of account isn't default e-mail (account: %d, ip: %s).\n", server[id].name, account_id, ip);
+					ShowNotice("Char-server '%s': Attempt to create an e-mail on an account with a default e-mail REFUSED - account doesn't exist or e-mail of account isn't default e-mail (account: %d, ip: %s).\n", ch_server[id].name, account_id, ip);
 				else{
 					memcpy(acc.email, email, 40);
-					ShowNotice("Char-server '%s': Create an e-mail on an account with a default e-mail (account: %d, new e-mail: %s, ip: %s).\n", server[id].name, account_id, email, ip);
+					ShowNotice("Char-server '%s': Create an e-mail on an account with a default e-mail (account: %d, new e-mail: %s, ip: %s).\n", ch_server[id].name, account_id, email, ip);
 					// Save
 					accounts->save(accounts, &acc);
 				}
@@ -718,18 +723,18 @@ int parse_fromchar(int fd){
 				RFIFOSKIP(fd, 86);
 
 				if( e_mail_check(actual_email) == 0 )
-					ShowNotice("Char-server '%s': Attempt to modify an e-mail on an account (@email GM command), but actual email is invalid (account: %d, ip: %s)\n", server[id].name, account_id, ip);
+					ShowNotice("Char-server '%s': Attempt to modify an e-mail on an account (@email GM command), but actual email is invalid (account: %d, ip: %s)\n", ch_server[id].name, account_id, ip);
 				else if( e_mail_check(new_email) == 0 )
-					ShowNotice("Char-server '%s': Attempt to modify an e-mail on an account (@email GM command) with a invalid new e-mail (account: %d, ip: %s)\n", server[id].name, account_id, ip);
+					ShowNotice("Char-server '%s': Attempt to modify an e-mail on an account (@email GM command) with a invalid new e-mail (account: %d, ip: %s)\n", ch_server[id].name, account_id, ip);
 				else if( strcmpi(new_email, "a@a.com") == 0 )
-					ShowNotice("Char-server '%s': Attempt to modify an e-mail on an account (@email GM command) with a default e-mail (account: %d, ip: %s)\n", server[id].name, account_id, ip);
+					ShowNotice("Char-server '%s': Attempt to modify an e-mail on an account (@email GM command) with a default e-mail (account: %d, ip: %s)\n", ch_server[id].name, account_id, ip);
 				else if( !accounts->load_num(accounts, &acc, account_id) )
-					ShowNotice("Char-server '%s': Attempt to modify an e-mail on an account (@email GM command), but account doesn't exist (account: %d, ip: %s).\n", server[id].name, account_id, ip);
+					ShowNotice("Char-server '%s': Attempt to modify an e-mail on an account (@email GM command), but account doesn't exist (account: %d, ip: %s).\n", ch_server[id].name, account_id, ip);
 				else if( strcmpi(acc.email, actual_email) != 0 )
-					ShowNotice("Char-server '%s': Attempt to modify an e-mail on an account (@email GM command), but actual e-mail is incorrect (account: %d (%s), actual e-mail: %s, proposed e-mail: %s, ip: %s).\n", server[id].name, account_id, acc.userid, acc.email, actual_email, ip);
+					ShowNotice("Char-server '%s': Attempt to modify an e-mail on an account (@email GM command), but actual e-mail is incorrect (account: %d (%s), actual e-mail: %s, proposed e-mail: %s, ip: %s).\n", ch_server[id].name, account_id, acc.userid, acc.email, actual_email, ip);
 				else{
 					safestrncpy(acc.email, new_email, 40);
-					ShowNotice("Char-server '%s': Modify an e-mail on an account (@email GM command) (account: %d (%s), new e-mail: %s, ip: %s).\n", server[id].name, account_id, acc.userid, new_email, ip);
+					ShowNotice("Char-server '%s': Modify an e-mail on an account (@email GM command) (account: %d (%s), new e-mail: %s, ip: %s).\n", ch_server[id].name, account_id, acc.userid, new_email, ip);
 					// Save
 					accounts->save(accounts, &acc);
 				}
@@ -747,11 +752,11 @@ int parse_fromchar(int fd){
 				RFIFOSKIP(fd,10);
 
 				if( !accounts->load_num(accounts, &acc, account_id) )
-					ShowNotice("Char-server '%s': Error of Status change (account: %d not found, suggested status %d, ip: %s).\n", server[id].name, account_id, state, ip);
+					ShowNotice("Char-server '%s': Error of Status change (account: %d not found, suggested status %d, ip: %s).\n", ch_server[id].name, account_id, state, ip);
 				else if( acc.state == state )
-					ShowNotice("Char-server '%s':  Error of Status change - actual status is already the good status (account: %d, status %d, ip: %s).\n", server[id].name, account_id, state, ip);
+					ShowNotice("Char-server '%s':  Error of Status change - actual status is already the good status (account: %d, status %d, ip: %s).\n", ch_server[id].name, account_id, state, ip);
 				else{
-					ShowNotice("Char-server '%s': Status change (account: %d, new status %d, ip: %s).\n", server[id].name, account_id, state, ip);
+					ShowNotice("Char-server '%s': Status change (account: %d, new status %d, ip: %s).\n", ch_server[id].name, account_id, state, ip);
 
 					acc.state = state;
 					// Save
@@ -781,7 +786,7 @@ int parse_fromchar(int fd){
 				RFIFOSKIP(fd,10);
 
 				if( !accounts->load_num(accounts, &acc, account_id) )
-					ShowNotice("Char-server '%s': Error of ban request (account: %d not found, ip: %s).\n", server[id].name, account_id, ip);
+					ShowNotice("Char-server '%s': Error of ban request (account: %d not found, ip: %s).\n", ch_server[id].name, account_id, ip);
 				else{
 					time_t timestamp;
 					if (acc.unban_time == 0 || acc.unban_time < time(NULL))
@@ -790,14 +795,14 @@ int parse_fromchar(int fd){
 						timestamp = acc.unban_time; // add to existing ban
 					timestamp += timediff;
 					if (timestamp == -1)
-						ShowNotice("Char-server '%s': Error of ban request (account: %d, invalid date, ip: %s).\n", server[id].name, account_id, ip);
+						ShowNotice("Char-server '%s': Error of ban request (account: %d, invalid date, ip: %s).\n", ch_server[id].name, account_id, ip);
 					else if( timestamp <= time(NULL) || timestamp == 0 )
-						ShowNotice("Char-server '%s': Error of ban request (account: %d, new date unbans the account, ip: %s).\n", server[id].name, account_id, ip);
+						ShowNotice("Char-server '%s': Error of ban request (account: %d, new date unbans the account, ip: %s).\n", ch_server[id].name, account_id, ip);
 					else{
 						uint8 buf[11];
 						char tmpstr[24];
 						timestamp2string(tmpstr, sizeof(tmpstr), timestamp, login_config.date_format);
-						ShowNotice("Char-server '%s': Ban request (account: %d, new final date of banishment: %d (%s), ip: %s).\n", server[id].name, account_id, timestamp, tmpstr, ip);
+						ShowNotice("Char-server '%s': Ban request (account: %d, new final date of banishment: %d (%s), ip: %s).\n", ch_server[id].name, account_id, timestamp, tmpstr, ip);
 
 						acc.unban_time = timestamp;
 
@@ -824,14 +829,14 @@ int parse_fromchar(int fd){
 				RFIFOSKIP(fd,6);
 
 				if( !accounts->load_num(accounts, &acc, account_id) )
-					ShowNotice("Char-server '%s': Error of sex change (account: %d not found, ip: %s).\n", server[id].name, account_id, ip);
+					ShowNotice("Char-server '%s': Error of sex change (account: %d not found, ip: %s).\n", ch_server[id].name, account_id, ip);
 				else if( acc.sex == 'S' )
-					ShowNotice("Char-server '%s': Error of sex change - account to change is a Server account (account: %d, ip: %s).\n", server[id].name, account_id, ip);
+					ShowNotice("Char-server '%s': Error of sex change - account to change is a Server account (account: %d, ip: %s).\n", ch_server[id].name, account_id, ip);
 				else{
 					unsigned char buf[7];
 					char sex = ( acc.sex == 'M' ) ? 'F' : 'M'; //Change gender
 
-					ShowNotice("Char-server '%s': Sex change (account: %d, new sex %c, ip: %s).\n", server[id].name, account_id, sex, ip);
+					ShowNotice("Char-server '%s': Sex change (account: %d, new sex %c, ip: %s).\n", ch_server[id].name, account_id, sex, ip);
 
 					acc.sex = sex;
 					// Save
@@ -855,11 +860,11 @@ int parse_fromchar(int fd){
 				int account_id = RFIFOL(fd,4);
 
 				if( !accounts->load_num(accounts, &acc, account_id) )
-					ShowStatus("Char-server '%s': receiving (from the char-server) of account_reg2 (account: %d not found, ip: %s).\n", server[id].name, account_id, ip);
+					ShowStatus("Char-server '%s': receiving (from the char-server) of account_reg2 (account: %d not found, ip: %s).\n", ch_server[id].name, account_id, ip);
 				else{
 					int len;
 					int p;
-					ShowNotice("char-server '%s': receiving (from the char-server) of account_reg2 (account: %d, ip: %s).\n", server[id].name, account_id, ip);
+					ShowNotice("char-server '%s': receiving (from the char-server) of account_reg2 (account: %d, ip: %s).\n", ch_server[id].name, account_id, ip);
 					for( j = 0, p = 13; j < ACCOUNT_REG2_NUM && p < RFIFOW(fd,2); ++j ){
 						sscanf((char*)RFIFOP(fd,p), "%31c%n", acc.account_reg2[j].str, &len);
 						acc.account_reg2[j].str[len]='\0';
@@ -893,11 +898,11 @@ int parse_fromchar(int fd){
 				RFIFOSKIP(fd,6);
 
 				if( !accounts->load_num(accounts, &acc, account_id) )
-					ShowNotice("Char-server '%s': Error of UnBan request (account: %d not found, ip: %s).\n", server[id].name, account_id, ip);
+					ShowNotice("Char-server '%s': Error of UnBan request (account: %d not found, ip: %s).\n", ch_server[id].name, account_id, ip);
 				else if( acc.unban_time == 0 )
-					ShowNotice("Char-server '%s': Error of UnBan request (account: %d, no change for unban date, ip: %s).\n", server[id].name, account_id, ip);
+					ShowNotice("Char-server '%s': Error of UnBan request (account: %d, no change for unban date, ip: %s).\n", ch_server[id].name, account_id, ip);
 				else{
-					ShowNotice("Char-server '%s': UnBan request (account: %d, ip: %s).\n", server[id].name, account_id, ip);
+					ShowNotice("Char-server '%s': UnBan request (account: %d, ip: %s).\n", ch_server[id].name, account_id, ip);
 					acc.unban_time = 0;
 					accounts->save(accounts, &acc);
 				}
@@ -973,8 +978,8 @@ int parse_fromchar(int fd){
 		case 0x2736: // WAN IP update from char-server
 			if( RFIFOREST(fd) < 6 )
 				return 0;
-			server[id].ip = ntohl(RFIFOL(fd,2));
-			ShowInfo("Updated IP of Server #%d to %d.%d.%d.%d.\n",id, CONVIP(server[id].ip));
+			ch_server[id].ip = ntohl(RFIFOL(fd,2));
+			ShowInfo("Updated IP of Server #%d to %d.%d.%d.%d.\n",id, CONVIP(ch_server[id].ip));
 			RFIFOSKIP(fd,6);
 		break;
 
@@ -1033,7 +1038,7 @@ int parse_fromchar(int fd){
 				RFIFOSKIP(fd,11);
 
 				if( !accounts->load_num(accounts, &acc, account_id) )
-					ShowNotice("Char-server '%s': Error on banking  (account: %d not found, ip: %s).\n", server[id].name, account_id, ip);
+					ShowNotice("Char-server '%s': Error on banking  (account: %d not found, ip: %s).\n", ch_server[id].name, account_id, ip);
 				else{
 					unsigned char buf[12];
 					if(type==2){ // upd and Save
@@ -1300,8 +1305,8 @@ void login_auth_ok(struct login_session_data* sd)
 	}
 
 	server_num = 0;
-	for( i = 0; i < ARRAYLENGTH(server); ++i )
-		if( session_isActive(server[i].fd) )
+	for( i = 0; i < ARRAYLENGTH(ch_server); ++i )
+		if( session_isActive(ch_server[i].fd) )
 			server_num++;
 
 	if( server_num == 0 )
@@ -1359,18 +1364,18 @@ void login_auth_ok(struct login_session_data* sd)
 	memset(WFIFOP(fd,20), 0, 24);
 	WFIFOW(fd,44) = 0; // unknown
 	WFIFOB(fd,46) = sex_str2num(sd->sex);
-	for( i = 0, n = 0; i < ARRAYLENGTH(server); ++i )
+	for( i = 0, n = 0; i < ARRAYLENGTH(ch_server); ++i )
 	{
-		if( !session_isValid(server[i].fd) )
+		if( !session_isValid(ch_server[i].fd) )
 			continue;
 
 		subnet_char_ip = lan_subnetcheck(ip); // Advanced subnet check [LuzZza]
-		WFIFOL(fd,47+n*32) = htonl((subnet_char_ip) ? subnet_char_ip : server[i].ip);
-		WFIFOW(fd,47+n*32+4) = ntows(htons(server[i].port)); // [!] LE byte order here [!]
-		memcpy(WFIFOP(fd,47+n*32+6), server[i].name, 20);
-		WFIFOW(fd,47+n*32+26) = server[i].users;
-		WFIFOW(fd,47+n*32+28) = server[i].type;
-		WFIFOW(fd,47+n*32+30) = server[i].new_;
+		WFIFOL(fd,47+n*32) = htonl((subnet_char_ip) ? subnet_char_ip : ch_server[i].ip);
+		WFIFOW(fd,47+n*32+4) = ntows(htons(ch_server[i].port)); // [!] LE byte order here [!]
+		memcpy(WFIFOP(fd,47+n*32+6), ch_server[i].name, 20);
+		WFIFOW(fd,47+n*32+26) = ch_server[i].users;
+		WFIFOW(fd,47+n*32+28) = ch_server[i].type;
+		WFIFOW(fd,47+n*32+30) = ch_server[i].new_;
 		n++;
 	}
 	WFIFOSET(fd,47+32*server_num);
@@ -1679,17 +1684,17 @@ int parse_login(int fd)
 			if( runflag == LOGINSERVER_ST_RUNNING &&
 				result == -1 &&
 				sd->sex == 'S' &&
-				sd->account_id >= 0 && sd->account_id < ARRAYLENGTH(server) &&
-				!session_isValid(server[sd->account_id].fd) )
+				sd->account_id >= 0 && sd->account_id < ARRAYLENGTH(ch_server) &&
+				!session_isValid(ch_server[sd->account_id].fd) )
 			{
 				ShowStatus("Connection of the char-server '%s' accepted.\n", server_name);
-				safestrncpy(server[sd->account_id].name, server_name, sizeof(server[sd->account_id].name));
-				server[sd->account_id].fd = fd;
-				server[sd->account_id].ip = server_ip;
-				server[sd->account_id].port = server_port;
-				server[sd->account_id].users = 0;
-				server[sd->account_id].type = type;
-				server[sd->account_id].new_ = new_;
+				safestrncpy(ch_server[sd->account_id].name, server_name, sizeof(ch_server[sd->account_id].name));
+				ch_server[sd->account_id].fd = fd;
+				ch_server[sd->account_id].ip = server_ip;
+				ch_server[sd->account_id].port = server_port;
+				ch_server[sd->account_id].users = 0;
+				ch_server[sd->account_id].type = type;
+				ch_server[sd->account_id].new_ = new_;
 
 				session[fd]->func_parse = parse_fromchar;
 				session[fd]->flag.server = 1;
@@ -1837,12 +1842,11 @@ int login_config_read(const char* cfgName)
 
 			if (sscanf(w2, "%3d, %32s", &group, md5) == 2) {
 				struct client_hash_node *nnode;
-				int i;
 				CREATE(nnode, struct client_hash_node, 1);
-
 				if (strcmpi(md5, "disabled") == 0) {
 					nnode->hash[0] = '\0';
 				} else {
+					int i;
 					for (i = 0; i < 32; i += 2) {
 						char buf[3];
 						unsigned int byte;
@@ -1854,10 +1858,8 @@ int login_config_read(const char* cfgName)
 						nnode->hash[i / 2] = (uint8)(byte & 0xFF);
 					}
 				}
-
 				nnode->group_id = group;
 				nnode->next = login_config.client_hash_nodes;
-
 				login_config.client_hash_nodes = nnode;
 			}
 		} else if(strcmpi(w1, "chars_per_account") == 0) { //maxchars per account [Sirius]
@@ -1961,7 +1963,7 @@ void do_final(void)
 	online_db->destroy(online_db, NULL);
 	auth_db->destroy(auth_db, NULL);
 
-	for( i = 0; i < ARRAYLENGTH(server); ++i )
+	for( i = 0; i < ARRAYLENGTH(ch_server); ++i )
 		chrif_server_destroy(i);
 
 	if( login_fd != -1 )
@@ -1996,7 +1998,7 @@ void do_shutdown(void)
 		runflag = LOGINSERVER_ST_SHUTDOWN;
 		ShowStatus("Shutting down...\n");
 		// TODO proper shutdown procedure; kick all characters, wait for acks, ...  [FlavioJS]
-		for( id = 0; id < ARRAYLENGTH(server); ++id )
+		for( id = 0; id < ARRAYLENGTH(ch_server); ++id )
 			chrif_server_reset(id);
 		flush_fifos();
 		runflag = CORE_ST_STOP;
@@ -2031,7 +2033,7 @@ int do_init(int argc, char** argv)
 
 	rnd_init();
 
-	for( i = 0; i < ARRAYLENGTH(server); ++i )
+	for( i = 0; i < ARRAYLENGTH(ch_server); ++i )
 		chrif_server_init(i);
 
 	// initialize logging

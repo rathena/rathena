@@ -407,7 +407,7 @@ int instance_destroy(short instance_id)
 {
 	struct instance_data *im;
 	struct party_data *p;
-	int i, type = 0, count = 0;
+	int i, type = 0;
 	unsigned int now = (unsigned int)time(NULL);
 
 	if(instance_id <= 0 || instance_id > MAX_INSTANCE_DATA)
@@ -447,7 +447,7 @@ int instance_destroy(short instance_id)
 			type = 3;
 
 		for(i = 0; i < MAX_MAP_PER_INSTANCE; i++)
-			count += map_delinstancemap(im->map[i].m);
+			map_delinstancemap(im->map[i].m);
 	}
 
 	if(im->keep_timer != -1) {
@@ -485,6 +485,19 @@ int instance_destroy(short instance_id)
  *------------------------------------------*/
 int instance_enter(struct map_session_data *sd, const char *name)
 {
+	struct instance_db *db = instance_searchname_db(name);
+
+	if(db == NULL)
+		return 3;
+
+	return instance_enter_position(sd, name, db->enter.x, db->enter.y);
+}
+
+/*==========================================
+ * Warp a user into instance
+ *------------------------------------------*/
+int instance_enter_position(struct map_session_data *sd, const char *name, short x, short y)
+{
 	struct instance_data *im;
 	struct instance_db *db = instance_searchname_db(name);
 	struct party_data *p;
@@ -517,7 +530,7 @@ int instance_enter(struct map_session_data *sd, const char *name)
 	if((m = instance_mapname2mapid(db->enter.mapname, p->instance_id)) < 0)
 		return 3;
 
-	if(pc_setpos(sd, map_id2index(m), db->enter.x, db->enter.y, 0))
+	if(pc_setpos(sd, map_id2index(m), x, y, 0))
 		return 3;
 
 	// If there was an idle timer, let's stop it
@@ -536,7 +549,6 @@ int instance_reqinfo(struct map_session_data *sd, short instance_id)
 {
 	struct instance_data *im;
 	struct instance_db *db;
-	int i;
 
 	nullpo_retr(1, sd);
 
@@ -550,6 +562,8 @@ int instance_reqinfo(struct map_session_data *sd, short instance_id)
 
 	// Say it's created if instance is not busy
 	if(im->state == INSTANCE_IDLE) {
+		int i;
+
 		for(i = 0; i < instance_wait.count; i++) {
 			if(instance_wait.id[i] == instance_id) {
 				clif_instance_create(sd, db->name, i+1, 0);

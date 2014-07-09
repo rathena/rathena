@@ -7,7 +7,7 @@
 // Up to 5 ID/Amount pairs can be specified.
 // Rate = n/10%
 
-703,4,800,2,200		// Hinalle 
+703,1000,4,800,2,200		// Hinalle 
 958,800,9,1000		// Horrendous_Mouth
 959,800,7,1000		// Rotten_Scale
 960,1000,6,800,9,200	// Nipper 
@@ -30,8 +30,8 @@
 1010,800,8,1000		// Phracon
 1011,800,4,1000		// Emveretarcon
 1012,800,3,1000		// Lizard_Scruff
-1013,9,800,13,200	// Colorful_Shell
-1014,4,800,6,200	// Jaws_Of_Ant
+1013,1000,9,800,13,200	// Colorful_Shell
+1014,1000,4,800,6,200	// Jaws_Of_Ant
 1016,1000,7,800,10,200	// Rat_Tail 
 1019,800,2,1000		// Wooden_Block
 1020,1000,4,800,6,200	// Long_Hair 

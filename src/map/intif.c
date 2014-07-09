@@ -42,7 +42,7 @@ static const int packet_len_table[]={
 	-1,-1, 7, 7,  7,11, 8, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3850  Auctions [Zephyrus] itembound[Akinari]
 	-1, 7, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3860  Quests [Kevin] [Inkfish]
 	-1, 3, 3, 0,  0, 0, 0, 0,  0, 0, 0, 0, -1, 3,  3, 0, //0x3870  Mercenaries [Zephyrus] / Elemental [pakpil]
-	11,-1, 7, 3,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3880
+	12,-1, 7, 3,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3880
 	-1,-1, 7, 3,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3890  Homunculus [albator]
 };
 
@@ -59,7 +59,7 @@ int CheckForCharServer(void)
 
 // pet
 int intif_create_pet(int account_id,int char_id,short pet_class,short pet_lv,short pet_egg_id,
-	short pet_equip,short intimate,short hungry,char rename_flag,char incuvate,char *pet_name)
+	short pet_equip,short intimate,short hungry,char rename_flag,char incubate,char *pet_name)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -74,7 +74,7 @@ int intif_create_pet(int account_id,int char_id,short pet_class,short pet_lv,sho
 	WFIFOW(inter_fd,18) = intimate;
 	WFIFOW(inter_fd,20) = hungry;
 	WFIFOB(inter_fd,22) = rename_flag;
-	WFIFOB(inter_fd,23) = incuvate;
+	WFIFOB(inter_fd,23) = incubate;
 	memcpy(WFIFOP(inter_fd,24),pet_name,NAME_LENGTH);
 	WFIFOSET(inter_fd,24+NAME_LENGTH);
 
@@ -139,7 +139,7 @@ int intif_rename(struct map_session_data *sd, int type, char *name)
 // GM Send a message
 int intif_broadcast(const char* mes, int len, int type)
 {
-	int lp = type ? 4 : 0;
+	int lp = (type|BC_COLOR_MASK) ? 4 : 0;
 
 	// Send to the local players
 	clif_broadcast(NULL, mes, len, type, ALL_CLIENT);
@@ -158,9 +158,9 @@ int intif_broadcast(const char* mes, int len, int type)
 	WFIFOW(inter_fd,10) = 0; // fontSize not used with standard broadcast
 	WFIFOW(inter_fd,12) = 0; // fontAlign not used with standard broadcast
 	WFIFOW(inter_fd,14) = 0; // fontY not used with standard broadcast
-	if (type == 0x10) // bc_blue
+	if (type|BC_BLUE)
 		WFIFOL(inter_fd,16) = 0x65756c62; //If there's "blue" at the beginning of the message, game client will display it in blue instead of yellow.
-	else if (type == 0x20) // bc_woe
+	else if (type|BC_WOE)
 		WFIFOL(inter_fd,16) = 0x73737373; //If there's "ssss", game client will recognize message as 'WoE broadcast'.
 	memcpy(WFIFOP(inter_fd,16 + lp), mes, len);
 	WFIFOSET(inter_fd, WFIFOW(inter_fd,2));
@@ -1294,7 +1294,7 @@ int intif_parse_GuildMasterChanged(int fd)
 // Request pet creation
 int intif_parse_CreatePet(int fd)
 {
-	pet_get_egg(RFIFOL(fd,2),RFIFOL(fd,7),RFIFOB(fd,6));
+	pet_get_egg(RFIFOL(fd,2),RFIFOW(fd,6),RFIFOL(fd,8));
 	return 0;
 }
 
@@ -1349,7 +1349,7 @@ int intif_parse_ChangeNameOk(int fd)
 		pet_change_name_ack(sd, (char*)RFIFOP(fd,12), RFIFOB(fd,11));
 		break;
 	case 2: //Hom
-		merc_hom_change_name_ack(sd, (char*)RFIFOP(fd,12), RFIFOB(fd,11));
+		hom_change_name_ack(sd, (char*)RFIFOP(fd,12), RFIFOB(fd,11));
 		break;
 	}
 	return 0;
@@ -1367,7 +1367,7 @@ int intif_parse_CreateHomunculus(int fd)
 			ShowError("intif: create homun data: data size error %d != %d\n",sizeof(struct s_homunculus),len);
 		return 0;
 	}
-	merc_hom_recv_data(RFIFOL(fd,4), (struct s_homunculus*)RFIFOP(fd,9), RFIFOB(fd,8)) ;
+	hom_recv_data(RFIFOL(fd,4), (struct s_homunculus*)RFIFOP(fd,9), RFIFOB(fd,8)) ;
 	return 0;
 }
 
@@ -1382,7 +1382,7 @@ int intif_parse_RecvHomunculusData(int fd)
 			ShowError("intif: homun data: data size error %d %d\n",sizeof(struct s_homunculus),len);
 		return 0;
 	}
-	merc_hom_recv_data(RFIFOL(fd,4), (struct s_homunculus*)RFIFOP(fd,9), RFIFOB(fd,8));
+	hom_recv_data(RFIFOL(fd,4), (struct s_homunculus*)RFIFOP(fd,9), RFIFOB(fd,8));
 	return 0;
 }
 
@@ -1408,54 +1408,73 @@ QUESTLOG SYSTEM FUNCTIONS
 
 ***************************************/
 
-int intif_request_questlog(TBL_PC *sd)
+/**
+ * Requests a character's quest log entries to the inter server.
+ *
+ * @param sd Character's data
+ */
+void intif_request_questlog(TBL_PC *sd)
 {
 	WFIFOHEAD(inter_fd,6);
 	WFIFOW(inter_fd,0) = 0x3060;
 	WFIFOL(inter_fd,2) = sd->status.char_id;
 	WFIFOSET(inter_fd,6);
-	return 0;
 }
 
-int intif_parse_questlog(int fd)
+void intif_parse_questlog(int fd)
 {
-	int char_id = RFIFOL(fd, 4);
-	int i;
-	TBL_PC * sd = map_charid2sd(char_id);
+	int char_id = RFIFOL(fd,4), num_received = (RFIFOW(fd,2) - 8) / sizeof(struct quest);
+	TBL_PC *sd = map_charid2sd(char_id);
 
-	//User not online anymore
-	if(!sd)
-		return -1;
+	if(!sd) // User not online anymore
+		return;
 
-	sd->avail_quests = sd->num_quests = (RFIFOW(fd, 2)-8)/sizeof(struct quest);
+	sd->num_quests = sd->avail_quests = 0;
 
-	memset(&sd->quest_log, 0, sizeof(sd->quest_log));
-
-	for( i = 0; i < sd->num_quests; i++ )
-	{
-		memcpy(&sd->quest_log[i], RFIFOP(fd, i*sizeof(struct quest)+8), sizeof(struct quest));
-
-		sd->quest_index[i] = quest_search_db(sd->quest_log[i].quest_id);
-
-		if( sd->quest_index[i] < 0 )
-		{
-			ShowError("intif_parse_questlog: quest %d not found in DB.\n",sd->quest_log[i].quest_id);
-			sd->avail_quests--;
-			sd->num_quests--;
-			i--;
-			continue;
+	if(num_received == 0) {
+		if(sd->quest_log) {
+			aFree(sd->quest_log);
+			sd->quest_log = NULL;
 		}
+	} else {
+		struct quest *received = (struct quest *)RFIFOP(fd,8);
+		int i, k = num_received;
 
-		if( sd->quest_log[i].state == Q_COMPLETE )
-			sd->avail_quests--;
+		if(sd->quest_log)
+			RECREATE(sd->quest_log, struct quest, num_received);
+		else
+			CREATE(sd->quest_log, struct quest, num_received);
+
+		for(i = 0; i < num_received; i++) {
+			if(quest_db(received[i].quest_id) == &quest_dummy) {
+				ShowError("intif_parse_QuestLog: quest %d not found in DB.\n", received[i].quest_id);
+				continue;
+			}
+			if(received[i].state != Q_COMPLETE) // Insert at the beginning
+				memcpy(&sd->quest_log[sd->avail_quests++], &received[i], sizeof(struct quest));
+			else // Insert at the end
+				memcpy(&sd->quest_log[--k], &received[i], sizeof(struct quest));
+			sd->num_quests++;
+		}
+		if(sd->avail_quests < k) {
+			// sd->avail_quests and k didn't meet in the middle: some entries were skipped
+			if(k < num_received) // Move the entries at the end to fill the gap
+				memmove(&sd->quest_log[k], &sd->quest_log[sd->avail_quests], sizeof(struct quest) * (num_received - k));
+			sd->quest_log = aRealloc(sd->quest_log, sizeof(struct quest) * sd->num_quests);
+		}
 	}
 
 	quest_pc_login(sd);
-
-	return 0;
 }
 
-int intif_parse_questsave(int fd)
+/**
+ * Parses the quest log save ack for a character from the inter server.
+ *
+ * Received in reply to the requests made by intif_quest_save.
+ *
+ * @see intif_parse
+ */
+void intif_parse_questsave(int fd)
 {
 	int cid = RFIFOL(fd, 2);
 	TBL_PC *sd = map_id2sd(cid);
@@ -1464,25 +1483,27 @@ int intif_parse_questsave(int fd)
 		ShowError("intif_parse_questsave: Failed to save quest(s) for character %d!\n", cid);
 	else if( sd )
 		sd->save_quest = false;
-
-	return 0;
 }
 
+/**
+ * Requests to the inter server to save a character's quest log entries.
+ *
+ * @param sd Character's data
+ * @return 0 in case of success, nonzero otherwise
+ */
 int intif_quest_save(TBL_PC *sd)
 {
-	int len;
+	int len = sizeof(struct quest) * sd->num_quests + 8;
 
 	if(CheckForCharServer())
-		return 0;
-
-	len = sizeof(struct quest)*sd->num_quests + 8;
+		return 1;
 
 	WFIFOHEAD(inter_fd, len);
 	WFIFOW(inter_fd,0) = 0x3061;
 	WFIFOW(inter_fd,2) = len;
 	WFIFOL(inter_fd,4) = sd->status.char_id;
 	if( sd->num_quests )
-		memcpy(WFIFOP(inter_fd,8), &sd->quest_log, sizeof(struct quest)*sd->num_quests);
+		memcpy(WFIFOP(inter_fd,8), sd->quest_log, sizeof(struct quest)*sd->num_quests);
 	WFIFOSET(inter_fd,  len);
 
 	return 0;
@@ -1985,7 +2006,7 @@ int intif_parse_mercenary_received(int fd)
 		return 0;
 	}
 
-	merc_data_received((struct s_mercenary*)RFIFOP(fd,5), RFIFOB(fd,4));
+	mercenary_recv_data((struct s_mercenary*)RFIFOP(fd,5), RFIFOB(fd,4));
 	return 0;
 }
 
@@ -2217,7 +2238,7 @@ int intif_parse(int fd)
 	switch(cmd){
 	case 0x3800:
 		if (RFIFOL(fd,4) == 0xFF000000) //Normal announce.
-			clif_broadcast(NULL, (char *) RFIFOP(fd,16), packet_len-16, 0, ALL_CLIENT);
+			clif_broadcast(NULL, (char *) RFIFOP(fd,16), packet_len-16, BC_DEFAULT, ALL_CLIENT);
 		else //Color announce.
 			clif_broadcast2(NULL, (char *) RFIFOP(fd,16), packet_len-16, RFIFOL(fd,4), RFIFOW(fd,8), RFIFOW(fd,10), RFIFOW(fd,12), RFIFOW(fd,14), ALL_CLIENT);
 		break;

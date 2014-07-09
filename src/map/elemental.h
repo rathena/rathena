@@ -92,7 +92,7 @@ void elemental_summon_stop(struct elemental_data *ed);
 int elemental_get_lifetime(struct elemental_data *ed);
 
 int elemental_unlocktarget(struct elemental_data *ed);
-int elemental_skillnotok(uint16 skill_id, struct elemental_data *ed);
+bool elemental_skillnotok(uint16 skill_id, struct elemental_data *ed);
 int elemental_set_target( struct map_session_data *sd, struct block_list *bl );
 int elemental_clean_single_effect(struct elemental_data *ed, uint16 skill_id);
 int elemental_clean_effect(struct elemental_data *ed);
@@ -102,10 +102,10 @@ struct skill_condition elemental_skill_get_requirements(uint16 skill_id, uint16 
 #define elemental_stop_walking(ed, type) unit_stop_walking(&(ed)->bl, type)
 #define elemental_stop_attack(ed) unit_stop_attack(&(ed)->bl)
 
-int read_elemental_skilldb(void);
+void read_elemental_skilldb(void);
 void reload_elementaldb(void);
 void reload_elemental_skilldb(void);
-int do_init_elemental(void);
+void do_init_elemental(void);
 void do_final_elemental(void);
 
 #endif /* _ELEMENTAL_H_ */

@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= War of Emperium (Payon)
+//= War of Emperium (Payon) - Bamboo Grove Hill
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
-//= NPCs that relate to Payon Guild Castle 1
+//= NPCs that relate to Payon Guild Castle 5
 //===== Additional Comments: =================================
 //= 1.0 First Version. No longer uses functions. [L0ne_W0lf]
 //= 1.1 Corrected flag-in spawn point. [L0ne_W0lf]
@@ -106,7 +106,6 @@ payg_cas05,277,249,3	duplicate(cm)	Nahzarf#payg_cas05	55
 // Treasure Room Exit
 //============================================================
 payg_cas05,161,136,0	script	#lever_PA05	111,{
-
 	mes " ";
 	mes "There's a small lever. Will you pull it?";
 	next;

@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= War of Emperium (Al De Baran)
+//= War of Emperium (Al De Baran) - Neuschwanstein
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
@@ -115,7 +115,6 @@ aldeg_cas01,218,175,0	duplicate(cm)	Alfredo#aldeg_cas01	55
 // Treasure Room Exit
 //============================================================
 aldeg_cas01,123,223,0	script	#lever_A01	111,{
-
 	mes " ";
 	mes "There's a small lever. Will you pull it?";
 	next;

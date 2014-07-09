@@ -3,1223 +3,1223 @@
 // GroupID,ItemID,Rate
 //
 // Cookie Bag
-7,529,5		//Candy
-7,530,5		//Candy Cane
-7,538,5		//Well-baked Cookie
-7,539,5		//Piece of Cake
-7,558,1		//Chocolate
-7,559,1		//Hand-made Chocolate
-7,560,1		//Hand-made White Chocolate
-7,561,1		//White Chocolate
-7,564,5		//Rice Ball
-7,570,5		//Lucky Candy
-7,571,5		//Lucky Candy Cane
-7,572,5		//Lucky Cookie
-7,573,1		//Chocolate Drink
-7,12122,1	//Sesame Pastry
-7,12123,1	//Honey Pastry
-7,12124,1	//Rainbow Cake
+IG_CookieBag,529,5		//Candy
+IG_CookieBag,530,5		//Candy Cane
+IG_CookieBag,538,5		//Well-baked Cookie
+IG_CookieBag,539,5		//Piece of Cake
+IG_CookieBag,558,1		//Chocolate
+IG_CookieBag,559,1		//Hand-made Chocolate
+IG_CookieBag,560,1		//Hand-made White Chocolate
+IG_CookieBag,561,1		//White Chocolate
+IG_CookieBag,564,5		//Rice Ball
+IG_CookieBag,570,5		//Lucky Candy
+IG_CookieBag,571,5		//Lucky Candy Cane
+IG_CookieBag,572,5		//Lucky Cookie
+IG_CookieBag,573,1		//Chocolate Drink
+IG_CookieBag,12122,1	//Sesame Pastry
+IG_CookieBag,12123,1	//Honey Pastry
+IG_CookieBag,12124,1	//Rainbow Cake
 // First Aid Kit
-8,501,5		// Red Potion
-8,502,5		// Orange Potion
-8,503,5		// Yellow Potion
-8,504,5		// White Potion
-8,505,5		// Blue Potion
-8,506,5		// Green Potion
-8,545,5		// Condensed Red Potion
-8,546,5		// Condensed Yellow Potion
-8,547,5		// Condensed White Potion
-8,569,5		// Novice Potion
-8,605,5		// Anodyne
-8,645,5		// Concentration Potion
-8,656,5		// Awakening Potion
-8,657,5		// Berserk Potion
-8,678,1		// Poison Bottle
-8,12016,5	// Speed Potion
-8,12017,5	// Slow Potion
-8,12020,5	// Cursed_Water
+IG_FirstAid,501,5		// Red Potion
+IG_FirstAid,502,5		// Orange Potion
+IG_FirstAid,503,5		// Yellow Potion
+IG_FirstAid,504,5		// White Potion
+IG_FirstAid,505,5		// Blue Potion
+IG_FirstAid,506,5		// Green Potion
+IG_FirstAid,545,5		// Condensed Red Potion
+IG_FirstAid,546,5		// Condensed Yellow Potion
+IG_FirstAid,547,5		// Condensed White Potion
+IG_FirstAid,569,5		// Novice Potion
+IG_FirstAid,605,5		// Anodyne
+IG_FirstAid,645,5		// Concentration Potion
+IG_FirstAid,656,5		// Awakening Potion
+IG_FirstAid,657,5		// Berserk Potion
+IG_FirstAid,678,1		// Poison Bottle
+IG_FirstAid,12016,5	// Speed Potion
+IG_FirstAid,12017,5	// Slow Potion
+IG_FirstAid,12020,5	// Cursed_Water
 // Herbs
-9,507,1		// Red Herb
-9,508,1		// Yellow Herb
-9,509,1		// White Herb
+IG_Herb,507,1		// Red Herb
+IG_Herb,508,1		// Yellow Herb
+IG_Herb,509,1		// White Herb
 // Fruits
-10,512,1	// Apple
-10,513,1	// Banana
-10,514,1	// Grape
-10,515,1	// Carrot
-10,516,1	// Potato
+IG_Fruit,512,1	// Apple
+IG_Fruit,513,1	// Banana
+IG_Fruit,514,1	// Grape
+IG_Fruit,515,1	// Carrot
+IG_Fruit,516,1	// Potato
 // Meat
-11,517,1	// Meat
-11,528,1	// Monster Food
+IG_Meat,517,1	// Meat
+IG_Meat,528,1	// Monster Food
 // Candy
-12,529,1	// Candy
-12,530,1	// Candy Cane
+IG_Candy,529,1	// Candy
+IG_Candy,530,1	// Candy Cane
 // Juice
-13,531,1	// Apple Juice
-13,532,1	// Banana Juice
-13,534,1	// Carrot Juice
+IG_Juice,531,1	// Apple Juice
+IG_Juice,532,1	// Banana Juice
+IG_Juice,534,1	// Carrot Juice
 // Fish
-14,544,1	// Raw Fish
-14,551,1	// Sushi
+IG_Fish,544,1	// Raw Fish
+IG_Fish,551,1	// Sushi
 // Boxes
-15,603,1	// Old Blue Box
-15,617,1	// Old Purple Box
-15,644,1	// Gift Box
+IG_Box,603,1	// Old Blue Box
+IG_Box,617,1	// Old Purple Box
+IG_Box,644,1	// Gift Box
 // Gemstones
-16,715,1	// Yellow Gemstone
-16,716,1	// Red Gemstone
-16,717,1	// Blue Gemstone
+IG_Gemstone,715,1	// Yellow Gemstone
+IG_Gemstone,716,1	// Red Gemstone
+IG_Gemstone,717,1	// Blue Gemstone
 // Elemental Resist Potions
-17,12118,1	// Fire Resist Potion
-17,12119,1	// Cold Resist Potion
-17,12120,1	// Earth Resist Potion
-17,12121,1	// Thunder Resist Potion
+IG_Resist,12118,1	// Fire Resist Potion
+IG_Resist,12119,1	// Cold Resist Potion
+IG_Resist,12120,1	// Earth Resist Potion
+IG_Resist,12121,1	// Thunder Resist Potion
 // Ores
-18,1002,30	// Iron_Ore
-18,998,28	// Iron
-18,993,26	// Yellow_Live
-18,1003,24	// Coal
-18,992,22	// Wind_Of_Verdure
-18,1010,20	// Phracon
-18,991,18	// Crystal_Blue
-18,990,16	// Boody_Red
-18,999,14	// Steel
-18,1011,12	// Emveretarcon
-18,757,10	// Elunium_Stone
-18,756,9	// Oridecon_Stone
-18,997,8	// Great_Nature
-18,996,7	// Rough_Wind
-18,995,6	// Mistic_Frozen
-18,994,5	// Flame_Heart
-18,985,4	// Elunium
-18,984,3	// Oridecon
-18,969,2	// Gold
-18,714,1	// Emperium
+IG_Ore,1002,30	// Iron_Ore
+IG_Ore,998,28	// Iron
+IG_Ore,993,26	// Yellow_Live
+IG_Ore,1003,24	// Coal
+IG_Ore,992,22	// Wind_Of_Verdure
+IG_Ore,1010,20	// Phracon
+IG_Ore,991,18	// Crystal_Blue
+IG_Ore,990,16	// Boody_Red
+IG_Ore,999,14	// Steel
+IG_Ore,1011,12	// Emveretarcon
+IG_Ore,757,10	// Elunium_Stone
+IG_Ore,756,9	// Oridecon_Stone
+IG_Ore,997,8	// Great_Nature
+IG_Ore,996,7	// Rough_Wind
+IG_Ore,995,6	// Mistic_Frozen
+IG_Ore,994,5	// Flame_Heart
+IG_Ore,985,4	// Elunium
+IG_Ore,984,3	// Oridecon
+IG_Ore,969,2	// Gold
+IG_Ore,714,1	// Emperium
 // Food Types
-19,526,5	// Royal_Jelly
-19,12042,10	// Str_Dish02
-19,12057,10	// Agi_Dish02
-19,12053,10	// Vit_Dish03
-19,12062,10	// Dex_Dish02
-19,12068,10	// Luk_Dish03
-19,12047,10	// Int_Dish02
-19,531,30	// Apple_Juice
-19,532,30	// Banana_Juice
-19,533,30	// Grape_Juice
-19,534,30	// Carrot_Juice
-19,538,30	// Well_Baked_Cookie
-19,536,50	// Ice_Cream
-19,544,50	// Fish_Slice
-19,548,50	// Cheese
-19,551,50	// Shusi
-19,553,50	// Bun
-19,554,50	// Mojji
-19,535,50	// Pumpkin
-19,516,100	// Sweet_Potato
-19,513,100	// Banana
-19,512,600	// Apple
+IG_Food,526,5	// Royal_Jelly
+IG_Food,12042,10	// Str_Dish02
+IG_Food,12057,10	// Agi_Dish02
+IG_Food,12053,10	// Vit_Dish03
+IG_Food,12062,10	// Dex_Dish02
+IG_Food,12068,10	// Luk_Dish03
+IG_Food,12047,10	// Int_Dish02
+IG_Food,531,30	// Apple_Juice
+IG_Food,532,30	// Banana_Juice
+IG_Food,533,30	// Grape_Juice
+IG_Food,534,30	// Carrot_Juice
+IG_Food,538,30	// Well_Baked_Cookie
+IG_Food,536,50	// Ice_Cream
+IG_Food,544,50	// Fish_Slice
+IG_Food,548,50	// Cheese
+IG_Food,551,50	// Shusi
+IG_Food,553,50	// Bun
+IG_Food,554,50	// Mojji
+IG_Food,535,50	// Pumpkin
+IG_Food,516,100	// Sweet_Potato
+IG_Food,513,100	// Banana
+IG_Food,512,600	// Apple
 // Recovery Types
-20,522,5	// Fruit_Of_Mastela
-20,521,5	// Leaflet_Of_Aloe
-20,520,10	// Leaflet_Of_Hinal
-20,545,10	// Red_Slim_Potion
-20,12118,10	// Resist_Earth
-20,508,20	// Yellow_Herb
-20,501,20	// Red_Potion
-20,511,30	// Green_Herb
-20,507,30	// Red_Herb
-20,569,50	// Novice_Potion
-20,549,50	// Nice_Sweet_Potato
-20,529,100	// Candy
-20,528,200	// Monster's_Feed
-20,550,600	// Popped_Rice
+IG_Recovery,522,5	// Fruit_Of_Mastela
+IG_Recovery,521,5	// Leaflet_Of_Aloe
+IG_Recovery,520,10	// Leaflet_Of_Hinal
+IG_Recovery,545,10	// Red_Slim_Potion
+IG_Recovery,12118,10	// Resist_Earth
+IG_Recovery,508,20	// Yellow_Herb
+IG_Recovery,501,20	// Red_Potion
+IG_Recovery,511,30	// Green_Herb
+IG_Recovery,507,30	// Red_Herb
+IG_Recovery,569,50	// Novice_Potion
+IG_Recovery,549,50	// Nice_Sweet_Potato
+IG_Recovery,529,100	// Candy
+IG_Recovery,528,200	// Monster's_Feed
+IG_Recovery,550,600	// Popped_Rice
 // Minerals - Unused
-21,714,1	// Emperium
-21,756,1	// Rough Oridecon
-21,757,1	// Rough Elunium
-21,969,1	// Gold
-21,984,1	// Oridecon
-21,985,1	// Elunium
-21,990,1	// Red Blood
-21,991,1	// Crystal Blue
-21,992,1	// Wind of Verdure
-21,993,1	// Green Live
-21,994,1	// Flame Heart
-21,995,1	// Mystic Frozen
-21,996,1	// Rough Wind
-21,997,1	// Great Nature
-21,998,1	// Iron
-21,999,1	// Steel
-21,1002,1	// Iron Ore
-21,1003,1	// Coal
-21,1010,1	// Phracon
-21,1011,1	// Emveretarcon
+IG_Mineral,714,1	// Emperium
+IG_Mineral,756,1	// Rough Oridecon
+IG_Mineral,757,1	// Rough Elunium
+IG_Mineral,969,1	// Gold
+IG_Mineral,984,1	// Oridecon
+IG_Mineral,985,1	// Elunium
+IG_Mineral,990,1	// Red Blood
+IG_Mineral,991,1	// Crystal Blue
+IG_Mineral,992,1	// Wind of Verdure
+IG_Mineral,993,1	// Green Live
+IG_Mineral,994,1	// Flame Heart
+IG_Mineral,995,1	// Mystic Frozen
+IG_Mineral,996,1	// Rough Wind
+IG_Mineral,997,1	// Great Nature
+IG_Mineral,998,1	// Iron
+IG_Mineral,999,1	// Steel
+IG_Mineral,1002,1	// Iron Ore
+IG_Mineral,1003,1	// Coal
+IG_Mineral,1010,1	// Phracon
+IG_Mineral,1011,1	// Emveretarcon
 // Set Of Taiming Item
-22,619,1	// Unripe Apple
-22,620,1	// Orange Juice
-22,621,1	// Bitter Herb
-22,622,1	// Rainbow Carrot
-22,623,1	// Earthworm the Dude
-22,624,1	// Rotten Fish
-22,625,1	// Rusty Iron
-22,626,1	// Monster Juice
-22,627,1	// Sweet Milk
-22,628,1	// Well-Dried Bone
-22,629,1	// Singing Flower
-22,630,1	// Dew Laden Moss
-22,631,1	// Deadly Noxious Herb
-22,632,1	// Fatty Chubby Earthworm
-22,633,1	// Sweet Potato
-22,634,1	// Tropical Banana
-22,635,1	// Orc Trophy
-22,636,1	// No Recipient
-22,637,1	// Old Broom
-22,638,1	// Silver Knife of Chastity
-22,639,1	// Armlet of Obedience
-22,640,1	// Shining Stone
-22,641,1	// Contracts in Shadow
-22,642,1	// Book of the Devil
-22,659,1	// Her Heart
-22,660,1	// Forbidden Red Candle
-22,661,1	// Soft Apron
-22,10001,1	// Skull Helm
-22,10002,1	// Monster Oxygen Mask
-22,10003,1	// Transparent Headgear
-22,10004,1	// Pacifier
-22,10005,1	// Wig
-22,10006,1	// Queen's Hair Ornament
-22,10007,1	// Silk Ribbon
-22,10008,1	// Punisher
-22,10009,1	// Wild Flower
-22,10010,1	// Battered Pot
-22,10011,1	// Stellar Hairpin
-22,10012,1	// Tiny Egg Shell
-22,10013,1	// Backpack
-22,10014,1	// Rocker Glasses
-22,10015,1	// Green Lace
-22,10016,1	// Golden Bell
-22,10017,1	// Bark Shorts
-22,10018,1	// Monkey Circlet
-22,10019,1	// Red Scarf
-22,10020,1	// Grave Keeper's Sword
-22,12373,1	// Boy's Pure Heart
-22,12374,1	// Ice Fireworks
-22,12395,1	// Tantan Noodle
+IG_Taming,619,1	// Unripe Apple
+IG_Taming,620,1	// Orange Juice
+IG_Taming,621,1	// Bitter Herb
+IG_Taming,622,1	// Rainbow Carrot
+IG_Taming,623,1	// Earthworm the Dude
+IG_Taming,624,1	// Rotten Fish
+IG_Taming,625,1	// Rusty Iron
+IG_Taming,626,1	// Monster Juice
+IG_Taming,627,1	// Sweet Milk
+IG_Taming,628,1	// Well-Dried Bone
+IG_Taming,629,1	// Singing Flower
+IG_Taming,630,1	// Dew Laden Moss
+IG_Taming,631,1	// Deadly Noxious Herb
+IG_Taming,632,1	// Fatty Chubby Earthworm
+IG_Taming,633,1	// Sweet Potato
+IG_Taming,634,1	// Tropical Banana
+IG_Taming,635,1	// Orc Trophy
+IG_Taming,636,1	// No Recipient
+IG_Taming,637,1	// Old Broom
+IG_Taming,638,1	// Silver Knife of Chastity
+IG_Taming,639,1	// Armlet of Obedience
+IG_Taming,640,1	// Shining Stone
+IG_Taming,641,1	// Contracts in Shadow
+IG_Taming,642,1	// Book of the Devil
+IG_Taming,659,1	// Her Heart
+IG_Taming,660,1	// Forbidden Red Candle
+IG_Taming,661,1	// Soft Apron
+IG_Taming,10001,1	// Skull Helm
+IG_Taming,10002,1	// Monster Oxygen Mask
+IG_Taming,10003,1	// Transparent Headgear
+IG_Taming,10004,1	// Pacifier
+IG_Taming,10005,1	// Wig
+IG_Taming,10006,1	// Queen's Hair Ornament
+IG_Taming,10007,1	// Silk Ribbon
+IG_Taming,10008,1	// Punisher
+IG_Taming,10009,1	// Wild Flower
+IG_Taming,10010,1	// Battered Pot
+IG_Taming,10011,1	// Stellar Hairpin
+IG_Taming,10012,1	// Tiny Egg Shell
+IG_Taming,10013,1	// Backpack
+IG_Taming,10014,1	// Rocker Glasses
+IG_Taming,10015,1	// Green Lace
+IG_Taming,10016,1	// Golden Bell
+IG_Taming,10017,1	// Bark Shorts
+IG_Taming,10018,1	// Monkey Circlet
+IG_Taming,10019,1	// Red Scarf
+IG_Taming,10020,1	// Grave Keeper's Sword
+IG_Taming,12373,1	// Boy's Pure Heart
+IG_Taming,12374,1	// Ice Fireworks
+IG_Taming,12395,1	// Tantan Noodle
 // Bundle Of Magic Scroll
-23,686,1	// Level 3 Earth Spike
-23,687,1	// Level 5 Earth Spike
-23,688,1	// Level 3 Cold Bolt
-23,689,1	// Level 5 Cold Bolt
-23,690,1	// Level 3 Fire Bolt
-23,691,1	// Level 5 Fire Bolt
-23,692,1	// Level 3 Lightening Bolt
-23,693,1	// Level 5 Lightening Bolt
-23,694,1	// Level 3 Soul Strike
-23,695,1	// Level 5 Soul Strike
-23,696,1	// Level 1 Fire Ball
-23,697,1	// Level 5 Fire Ball
-23,698,1	// Level 1 Fire Wall
-23,699,1	// Level 5 Fire Wall
-23,700,1	// Level 1 Frost Diver
-23,12000,1	// Level 5 Frost Diver
-23,12001,1	// Level 3 Heal
-23,12002,1	// Level 5 Heal
+IG_Scroll,686,1	// Level 3 Earth Spike
+IG_Scroll,687,1	// Level 5 Earth Spike
+IG_Scroll,688,1	// Level 3 Cold Bolt
+IG_Scroll,689,1	// Level 5 Cold Bolt
+IG_Scroll,690,1	// Level 3 Fire Bolt
+IG_Scroll,691,1	// Level 5 Fire Bolt
+IG_Scroll,692,1	// Level 3 Lightening Bolt
+IG_Scroll,693,1	// Level 5 Lightening Bolt
+IG_Scroll,694,1	// Level 3 Soul Strike
+IG_Scroll,695,1	// Level 5 Soul Strike
+IG_Scroll,696,1	// Level 1 Fire Ball
+IG_Scroll,697,1	// Level 5 Fire Ball
+IG_Scroll,698,1	// Level 1 Fire Wall
+IG_Scroll,699,1	// Level 5 Fire Wall
+IG_Scroll,700,1	// Level 1 Frost Diver
+IG_Scroll,12000,1	// Level 5 Frost Diver
+IG_Scroll,12001,1	// Level 3 Heal
+IG_Scroll,12002,1	// Level 5 Heal
 // Random Quiver
-24,12004,1	// Quiver
-24,12005,1	// Iron Arrow Quiver
-24,12006,1	// Steel Arrow Quiver
-24,12007,1	// Oridecon Arrow Quiver
-24,12008,1	// Fire Arrow Quiver
-24,12009,1	// Silver Arrow Quiver
-24,12010,1	// Wind Arrow Quiver
-24,12011,1	// Stone Arrow Quiver
-24,12012,1	// Crystal Arrow Quiver
-24,12013,1	// Shadow Arrow Quiver
-24,12014,1	// Immaterial Arrow Quiver
-24,12015,1	// Rusty Arrow Quiver
-24,12183,2	// Holy Arrow Quiver
+IG_Quiver,12004,1	// Quiver
+IG_Quiver,12005,1	// Iron Arrow Quiver
+IG_Quiver,12006,1	// Steel Arrow Quiver
+IG_Quiver,12007,1	// Oridecon Arrow Quiver
+IG_Quiver,12008,1	// Fire Arrow Quiver
+IG_Quiver,12009,1	// Silver Arrow Quiver
+IG_Quiver,12010,1	// Wind Arrow Quiver
+IG_Quiver,12011,1	// Stone Arrow Quiver
+IG_Quiver,12012,1	// Crystal Arrow Quiver
+IG_Quiver,12013,1	// Shadow Arrow Quiver
+IG_Quiver,12014,1	// Immaterial Arrow Quiver
+IG_Quiver,12015,1	// Rusty Arrow Quiver
+IG_Quiver,12183,2	// Holy Arrow Quiver
 // Wrapped Mask
-25,2278,10	// Mr. Smile
-25,2281,10	// Opera Masque
-25,2288,10	// Mr. Scream
-25,2292,10	// Welding Mask
-25,2297,10	// Goblin Mask
-25,5005,10	// Gas Mask
-25,5086,10	// Alarm Mask
-25,5087,10	// Poker Face
-25,5088,10	// Surprised Mask
-25,5089,10	// Annoyed Mask
-25,5090,10	// Goblin Leader Mask
-25,5121,1	// Zherlthsh Mask
-25,5176,2	// Hahoe Mask
+IG_Mask,2278,10	// Mr. Smile
+IG_Mask,2281,10	// Opera Masque
+IG_Mask,2288,10	// Mr. Scream
+IG_Mask,2292,10	// Welding Mask
+IG_Mask,2297,10	// Goblin Mask
+IG_Mask,5005,10	// Gas Mask
+IG_Mask,5086,10	// Alarm Mask
+IG_Mask,5087,10	// Poker Face
+IG_Mask,5088,10	// Surprised Mask
+IG_Mask,5089,10	// Annoyed Mask
+IG_Mask,5090,10	// Goblin Leader Mask
+IG_Mask,5121,1	// Zherlthsh Mask
+IG_Mask,5176,2	// Hahoe Mask
 // Accessory Box
-26,2601,10	// Ring
-26,2602,11	// Earring
-26,2603,12	// Necklace
-26,2604,12	// Glove
-26,2605,12	// Brooch
-26,2607,12	// Clip
-26,2608,14	// Rosary
-26,2609,14	// Skull Ring
-26,2610,14	// Gold Ring
-26,2611,14	// Silver Ring
-26,2612,14	// Flower Ring
-26,2613,11	// Diamond Ring
-26,2615,1	// Safety Ring
-26,2616,1	// Critical Ring
-26,2617,10	// Celebrant's Mitten
-26,2618,11	// Matyr's Leash
-26,2619,10	// Bow Thimble
-26,2621,1	// Ring
-26,2622,1	// Earring
-26,2623,10	// Necklace
-26,2624,1	// Glove
-26,2625,1	// Brooch
-26,2626,1	// Rosary
-26,2627,10	// Belt
-26,2628,14	// Novice Armlet
-26,2654,1	// Shinobi Sash
-26,2656,1	// Armor Charm
-26,2658,10	// Nile Rose
-26,2659,2	// Vesper Core 01
-26,2660,2	// Vesper Core 02
-26,2661,2	// Vesper Core 03
-26,2662,2	// Vesper Core 04
-26,2671,1	// Bow Thimble
-26,2677,1	// Spiritual Ring
-26,2680,9	// Ring of Minor Spirits
-26,2700,2	// Red Silk of Seal
-26,2701,1	// Glove of Orleans
-26,2703,1	// Expert Ring
-26,2716,1	// Librarian Glove
-26,2717,1	// Pocket Watch
-26,2718,1	// Lunatic Brooch
-26,2719,1	// Iron Wrist
+IG_Accesory,2601,10	// Ring
+IG_Accesory,2602,11	// Earring
+IG_Accesory,2603,12	// Necklace
+IG_Accesory,2604,12	// Glove
+IG_Accesory,2605,12	// Brooch
+IG_Accesory,2607,12	// Clip
+IG_Accesory,2608,14	// Rosary
+IG_Accesory,2609,14	// Skull Ring
+IG_Accesory,2610,14	// Gold Ring
+IG_Accesory,2611,14	// Silver Ring
+IG_Accesory,2612,14	// Flower Ring
+IG_Accesory,2613,11	// Diamond Ring
+IG_Accesory,2615,1	// Safety Ring
+IG_Accesory,2616,1	// Critical Ring
+IG_Accesory,2617,10	// Celebrant's Mitten
+IG_Accesory,2618,11	// Matyr's Leash
+IG_Accesory,2619,10	// Bow Thimble
+IG_Accesory,2621,1	// Ring
+IG_Accesory,2622,1	// Earring
+IG_Accesory,2623,10	// Necklace
+IG_Accesory,2624,1	// Glove
+IG_Accesory,2625,1	// Brooch
+IG_Accesory,2626,1	// Rosary
+IG_Accesory,2627,10	// Belt
+IG_Accesory,2628,14	// Novice Armlet
+IG_Accesory,2654,1	// Shinobi Sash
+IG_Accesory,2656,1	// Armor Charm
+IG_Accesory,2658,10	// Nile Rose
+IG_Accesory,2659,2	// Vesper Core 01
+IG_Accesory,2660,2	// Vesper Core 02
+IG_Accesory,2661,2	// Vesper Core 03
+IG_Accesory,2662,2	// Vesper Core 04
+IG_Accesory,2671,1	// Bow Thimble
+IG_Accesory,2677,1	// Spiritual Ring
+IG_Accesory,2680,9	// Ring of Minor Spirits
+IG_Accesory,2700,2	// Red Silk of Seal
+IG_Accesory,2701,1	// Glove of Orleans
+IG_Accesory,2703,1	// Expert Ring
+IG_Accesory,2716,1	// Librarian Glove
+IG_Accesory,2717,1	// Pocket Watch
+IG_Accesory,2718,1	// Lunatic Brooch
+IG_Accesory,2719,1	// Iron Wrist
 // jewels
-27,715,100	// Yellow_Gemstone
-27,716,100	// Red_Gemstone
-27,717,100	// Blue_Gemstone
-27,718,10	// Dark_Red_Jewel
-27,719,10	// Violet_Jewel
-27,720,10	// Skyblue_Jewel
-27,721,10	// Azure_Jewel
-27,722,10	// Scarlet_Jewel
-27,723,10	// Cardinal_Jewel
-27,724,10	// Cardinal_Jewel_
-27,725,10	// Red_Jewel
-27,726,10	// Blue_Jewel
-27,727,10	// White_Jewel
-27,728,10	// Golden_Jewel
-27,729,10	// Bluish_Green_Jewel 
-27,730,5	// Crystal_Jewel
-27,731,4	// Crystal_Jewel_
-27,732,3	// Crystal_Jewel__
-27,733,27	// Crystal_Jewel___
-27,746,50	// Glass_Bead
+IG_Jewel,715,100	// Yellow_Gemstone
+IG_Jewel,716,100	// Red_Gemstone
+IG_Jewel,717,100	// Blue_Gemstone
+IG_Jewel,718,10	// Dark_Red_Jewel
+IG_Jewel,719,10	// Violet_Jewel
+IG_Jewel,720,10	// Skyblue_Jewel
+IG_Jewel,721,10	// Azure_Jewel
+IG_Jewel,722,10	// Scarlet_Jewel
+IG_Jewel,723,10	// Cardinal_Jewel
+IG_Jewel,724,10	// Cardinal_Jewel_
+IG_Jewel,725,10	// Red_Jewel
+IG_Jewel,726,10	// Blue_Jewel
+IG_Jewel,727,10	// White_Jewel
+IG_Jewel,728,10	// Golden_Jewel
+IG_Jewel,729,10	// Bluish_Green_Jewel 
+IG_Jewel,730,5	// Crystal_Jewel
+IG_Jewel,731,4	// Crystal_Jewel_
+IG_Jewel,732,3	// Crystal_Jewel__
+IG_Jewel,733,27	// Crystal_Jewel___
+IG_Jewel,746,50	// Glass_Bead
 // Egg Boy
-32,514,300	// Grape
-32,564,522	// Rice Ball
-32,660,20	// Forbidden Red Candle
-32,682,100	// Distilled Fighting Spirit
-32,683,50	// Herb of Incantation
-32,2274,5	// Ghost Bandana
-32,5072,2	// Incubus Horn
+IG_EggBoy,514,300	// Grape
+IG_EggBoy,564,522	// Rice Ball
+IG_EggBoy,660,20	// Forbidden Red Candle
+IG_EggBoy,682,100	// Distilled Fighting Spirit
+IG_EggBoy,683,50	// Herb of Incantation
+IG_EggBoy,2274,5	// Ghost Bandana
+IG_EggBoy,5072,2	// Incubus Horn
 // Egg Girl
-33,514,300	// Grape
-33,564,522	// Rice Ball
-33,661,20	// Soft Apron
-33,682,100	// Distilled Fighting Spirit
-33,683,50	// Herb of Incantation
-33,5042,5	// Bao Bao
-33,5066,2	// Succubus Horn
+IG_EggGirl,514,300	// Grape
+IG_EggGirl,564,522	// Rice Ball
+IG_EggGirl,661,20	// Soft Apron
+IG_EggGirl,682,100	// Distilled Fighting Spirit
+IG_EggGirl,683,50	// Herb of Incantation
+IG_EggGirl,5042,5	// Bao Bao
+IG_EggGirl,5066,2	// Succubus Horn
 // Lotto Box
-35,7391,1	// Lotto Ball 31
-35,7392,1	// Lotto Ball 32
-35,7393,1	// Lotto Ball 33
-35,7394,1	// Lotto Ball 34
-35,7395,1	// Lotto Ball 35
-35,7396,1	// Lotto Ball 36
-35,7397,1	// Lotto Ball 37
-35,7398,1	// Lotto Ball 38
-35,7540,1	// Lotto Ball 39
-35,7541,1	// Lotto Ball 40
+IG_LottoBox,7391,1	// Lotto Ball 31
+IG_LottoBox,7392,1	// Lotto Ball 32
+IG_LottoBox,7393,1	// Lotto Ball 33
+IG_LottoBox,7394,1	// Lotto Ball 34
+IG_LottoBox,7395,1	// Lotto Ball 35
+IG_LottoBox,7396,1	// Lotto Ball 36
+IG_LottoBox,7397,1	// Lotto Ball 37
+IG_LottoBox,7398,1	// Lotto Ball 38
+IG_LottoBox,7540,1	// Lotto Ball 39
+IG_LottoBox,7541,1	// Lotto Ball 40
 // Food Package
-36,512,1	// Apple
-36,513,1	// Banana
-36,514,1	// Grape
-36,515,1	// Carrot
-36,516,1	// Potato
-36,517,1	// Meat
-36,518,1	// Honey
-36,519,1	// Milk
-36,520,1	// Hinalle Leaflet
-36,521,1	// Aloe Leaflet
-36,522,1	// Mastela Fruit
-36,526,1	// Royal Jelly
-36,529,1	// Candy
-36,530,1	// Candy Cane
-36,531,1	// Apple Juice
-36,532,1	// Banana Juice
-36,533,1	// Grape Juice
-36,534,1	// Carrot Juice
-36,536,1	// Ice Cream
-36,538,1	// Well-baked Cookie
-36,539,1	// Piece of Cake
-36,544,1	// Raw Fish
-36,548,1	// Cheese
-36,549,1	// Yam
-36,550,1	// Rice Cake
-36,551,1	// Sushi
-36,553,1	// Bao
-36,554,1	// Mochi
-36,555,1	// Traditional Rice Cake
-36,556,1	// Rice Cake Stick
-36,557,1	// Neatly Sliced Rice Cake
-36,558,1	// Chocolate
-36,559,1	// Hand-made Chocolate
-36,560,1	// Hand-made White Chocolate
-36,561,1	// White Chocolate
-36,564,1	// Rice Ball
-36,566,1	// Tom Yum Goong
-36,567,1	// Shrimp
-36,568,1	// Lemon
-36,576,1	// Prickly Fruit
-36,607,1	// Yggdrasil Berry
-36,608,1	// Yggdrasil Seed
-36,663,1	// Songpyun
-36,669,1	// Rice-Cake Soup
+IG_FoodBag,512,1	// Apple
+IG_FoodBag,513,1	// Banana
+IG_FoodBag,514,1	// Grape
+IG_FoodBag,515,1	// Carrot
+IG_FoodBag,516,1	// Potato
+IG_FoodBag,517,1	// Meat
+IG_FoodBag,518,1	// Honey
+IG_FoodBag,519,1	// Milk
+IG_FoodBag,520,1	// Hinalle Leaflet
+IG_FoodBag,521,1	// Aloe Leaflet
+IG_FoodBag,522,1	// Mastela Fruit
+IG_FoodBag,526,1	// Royal Jelly
+IG_FoodBag,529,1	// Candy
+IG_FoodBag,530,1	// Candy Cane
+IG_FoodBag,531,1	// Apple Juice
+IG_FoodBag,532,1	// Banana Juice
+IG_FoodBag,533,1	// Grape Juice
+IG_FoodBag,534,1	// Carrot Juice
+IG_FoodBag,536,1	// Ice Cream
+IG_FoodBag,538,1	// Well-baked Cookie
+IG_FoodBag,539,1	// Piece of Cake
+IG_FoodBag,544,1	// Raw Fish
+IG_FoodBag,548,1	// Cheese
+IG_FoodBag,549,1	// Yam
+IG_FoodBag,550,1	// Rice Cake
+IG_FoodBag,551,1	// Sushi
+IG_FoodBag,553,1	// Bao
+IG_FoodBag,554,1	// Mochi
+IG_FoodBag,555,1	// Traditional Rice Cake
+IG_FoodBag,556,1	// Rice Cake Stick
+IG_FoodBag,557,1	// Neatly Sliced Rice Cake
+IG_FoodBag,558,1	// Chocolate
+IG_FoodBag,559,1	// Hand-made Chocolate
+IG_FoodBag,560,1	// Hand-made White Chocolate
+IG_FoodBag,561,1	// White Chocolate
+IG_FoodBag,564,1	// Rice Ball
+IG_FoodBag,566,1	// Tom Yum Goong
+IG_FoodBag,567,1	// Shrimp
+IG_FoodBag,568,1	// Lemon
+IG_FoodBag,576,1	// Prickly Fruit
+IG_FoodBag,607,1	// Yggdrasil Berry
+IG_FoodBag,608,1	// Yggdrasil Seed
+IG_FoodBag,663,1	// Songpyun
+IG_FoodBag,669,1	// Rice-Cake Soup
 // Potions
-37,501,1	// Red Potion
-37,502,1	// Orange Potion
-37,503,1	// Yellow Potion
-37,504,1	// White Potion
+IG_Potion,501,1	// Red Potion
+IG_Potion,502,1	// Orange Potion
+IG_Potion,503,1	// Yellow Potion
+IG_Potion,504,1	// White Potion
 // Red Box_
-38,5137,1	// Alice Doll
-38,5138,9	// Magic Eyes
-38,5139,10	// Lotus
-38,5140,10	// Kawaii Ribbon
+IG_RedBox_2,5137,1	// Alice Doll
+IG_RedBox_2,5138,9	// Magic Eyes
+IG_RedBox_2,5139,10	// Lotus
+IG_RedBox_2,5140,10	// Kawaii Ribbon
 // Old Bleu Box
-39,519,1	// Milk
-39,538,1	// Well-baked Cookie
-39,644,1	// Gift Box
-39,687,1	// Level 5 Earth Spike
-39,689,1	// Level 5 Cold Bolt
-39,691,1	// Level 5 Fire Bolt
-39,693,1	// Level 5 Lightening Bolt
-39,697,1	// Level 5 Fire Ball
-39,699,1	// Level 5 Fire Wall
-39,12000,1	// Level 5 Frost Diver
-39,12002,1	// Level 5 Heal
+IG_BleuBox,519,1	// Milk
+IG_BleuBox,538,1	// Well-baked Cookie
+IG_BleuBox,644,1	// Gift Box
+IG_BleuBox,687,1	// Level 5 Earth Spike
+IG_BleuBox,689,1	// Level 5 Cold Bolt
+IG_BleuBox,691,1	// Level 5 Fire Bolt
+IG_BleuBox,693,1	// Level 5 Lightening Bolt
+IG_BleuBox,697,1	// Level 5 Fire Ball
+IG_BleuBox,699,1	// Level 5 Fire Wall
+IG_BleuBox,12000,1	// Level 5 Frost Diver
+IG_BleuBox,12002,1	// Level 5 Heal
 // Red Box
-40,5099,1	// Neko Mimi
-40,5137,11	// Alice Doll
-40,5138,11	// Magic Eyes
-40,5139,11	// Lotus
-40,5140,11	// Kawaii Ribbon
-40,5142,11	// Crescent Helm
-40,5143,12	// Kabuki Mask
-40,5152,1	// Phoenix Crown
-40,5181,11	// Helm of Darkness
-40,5182,1	// Puppy Hat
-40,5183,11	// Nest Hat
-40,5185,11	// Laurel Crown
-40,5186,11	// Geographer Decoration
-40,5187,10	// Twin Ribbon
+IG_RedBox,5099,1	// Neko Mimi
+IG_RedBox,5137,11	// Alice Doll
+IG_RedBox,5138,11	// Magic Eyes
+IG_RedBox,5139,11	// Lotus
+IG_RedBox,5140,11	// Kawaii Ribbon
+IG_RedBox,5142,11	// Crescent Helm
+IG_RedBox,5143,12	// Kabuki Mask
+IG_RedBox,5152,1	// Phoenix Crown
+IG_RedBox,5181,11	// Helm of Darkness
+IG_RedBox,5182,1	// Puppy Hat
+IG_RedBox,5183,11	// Nest Hat
+IG_RedBox,5185,11	// Laurel Crown
+IG_RedBox,5186,11	// Geographer Decoration
+IG_RedBox,5187,10	// Twin Ribbon
 // Green Box
-41,573,100	// Chocolate Drink
-41,607,99	// Yggdrasil Berry
-41,608,100	// Yggdrasil Seed
-41,5182,1	// Puppy Hat
-41,12018,100	// Firecracker
-41,12075,100	// Steamed Tongue
-41,12080,100	// Dragon Breath Cocktail
-41,12085,100	// Immortal Stew
-41,12090,100	// Steamed Desert Scorpions
-41,12095,100	// Hwergelmir's Tonic
-41,12100,100	// Cooked Nine Tail
+IG_GreenBox,573,100	// Chocolate Drink
+IG_GreenBox,607,99	// Yggdrasil Berry
+IG_GreenBox,608,100	// Yggdrasil Seed
+IG_GreenBox,5182,1	// Puppy Hat
+IG_GreenBox,12018,100	// Firecracker
+IG_GreenBox,12075,100	// Steamed Tongue
+IG_GreenBox,12080,100	// Dragon Breath Cocktail
+IG_GreenBox,12085,100	// Immortal Stew
+IG_GreenBox,12090,100	// Steamed Desert Scorpions
+IG_GreenBox,12095,100	// Hwergelmir's Tonic
+IG_GreenBox,12100,100	// Cooked Nine Tail
 // Old Yellow Box
-42,5259,1	// Elephant Hat
-42,5260,1	// Cookie Hat
-42,5261,1	// Silver Tiara
-42,5262,1	// Golden Tiara
+IG_YellowBox,5259,1	// Elephant Hat
+IG_YellowBox,5260,1	// Cookie Hat
+IG_YellowBox,5261,1	// Silver Tiara
+IG_YellowBox,5262,1	// Golden Tiara
 // Hometown Gift
-45,663,1	// Korean Rice Cake
-45,12122,1	// Sesame Pastry
-45,12123,1	// Honey Pastry
-45,12124,1	// Rainbow Cake
-45,12195,1	// Plain Rice Cake
-45,12196,1	// Hearty Rice Cake
-45,12197,1	// Salty Rice Cake
-45,12198,1	// Lucky Rice Cake
+IG_HometownGift,663,1	// Korean Rice Cake
+IG_HometownGift,12122,1	// Sesame Pastry
+IG_HometownGift,12123,1	// Honey Pastry
+IG_HometownGift,12124,1	// Rainbow Cake
+IG_HometownGift,12195,1	// Plain Rice Cake
+IG_HometownGift,12196,1	// Hearty Rice Cake
+IG_HometownGift,12197,1	// Salty Rice Cake
+IG_HometownGift,12198,1	// Lucky Rice Cake
 // Masquerade Ball Box
-46,5296,10	// Drooping Nine Tail
-46,5297,1	// Soul Wing
-46,5298,10	// Dokebi's Wig
-46,5299,10	// Pagdayaw
+IG_Masquerade,5296,10	// Drooping Nine Tail
+IG_Masquerade,5297,1	// Soul Wing
+IG_Masquerade,5298,10	// Dokebi's Wig
+IG_Masquerade,5299,10	// Pagdayaw
 // Tresure Box WoE
-47,603,6	// Old Blue Box
-47,658,6	// Tribal Solidarity
-47,678,3	// Poison Bottle
-47,732,9	// 3carat Diamond
-47,12010,24	// Wind Arrow Quiver
-47,12011,25	// Stone Arrow Quiver
-47,12012,26	// Crystal Arrow Quiver
-47,12105,12	// Taming Gift Set
-47,12107,2	// Wrapped Mask
-47,12108,9	// Scroll Package
-47,12110,9	// First Aid Kit
-47,12111,36	// Bundle of Food
-47,12130,48	// Cookie Bag
-47,12149,27	// Bullet Casing
-47,12150,27	// Shell of Blood Casing
-47,12151,27	// Silver Bullet Casing
-47,12183,7	// Holy Arrow Quiver
-47,12194,6	// Present from Home
-47,12260,22	// Summer Event Suit
-47,12702,8	// Old Bleu Box
+IG_Tresure_Box_WoE,603,6	// Old Blue Box
+IG_Tresure_Box_WoE,658,6	// Tribal Solidarity
+IG_Tresure_Box_WoE,678,3	// Poison Bottle
+IG_Tresure_Box_WoE,732,9	// 3carat Diamond
+IG_Tresure_Box_WoE,12010,24	// Wind Arrow Quiver
+IG_Tresure_Box_WoE,12011,25	// Stone Arrow Quiver
+IG_Tresure_Box_WoE,12012,26	// Crystal Arrow Quiver
+IG_Tresure_Box_WoE,12105,12	// Taming Gift Set
+IG_Tresure_Box_WoE,12107,2	// Wrapped Mask
+IG_Tresure_Box_WoE,12108,9	// Scroll Package
+IG_Tresure_Box_WoE,12110,9	// First Aid Kit
+IG_Tresure_Box_WoE,12111,36	// Bundle of Food
+IG_Tresure_Box_WoE,12130,48	// Cookie Bag
+IG_Tresure_Box_WoE,12149,27	// Bullet Casing
+IG_Tresure_Box_WoE,12150,27	// Shell of Blood Casing
+IG_Tresure_Box_WoE,12151,27	// Silver Bullet Casing
+IG_Tresure_Box_WoE,12183,7	// Holy Arrow Quiver
+IG_Tresure_Box_WoE,12194,6	// Present from Home
+IG_Tresure_Box_WoE,12260,22	// Summer Event Suit
+IG_Tresure_Box_WoE,12702,8	// Old Bleu Box
 // Masquerade Ball Box2
-48,5211,1	// Ribbon Hat
-48,5213,13	// Rabbit Ears
-48,5289,10	// Vanilmirth Hat
-48,5304,10	// Executioner Hood
+IG_Masquerade_2,5211,1	// Ribbon Hat
+IG_Masquerade_2,5213,13	// Rabbit Ears
+IG_Masquerade_2,5289,10	// Vanilmirth Hat
+IG_Masquerade_2,5304,10	// Executioner Hood
 // Easter Scroll
-49,636,110	// No Recipient
-49,637,110	// Old Broom
-49,638,110	// Silver Knife of Chastity
-49,639,110	// Armlet of Obedience
-49,640,110	// Shining Stone
-49,641,110	// Contracts in Shadow
-49,642,110	// Book of the Devil
-49,643,205	// Pet Incubator
-49,659,110	// Her Heart
-49,2264,1	// Munak Hat
-49,2274,1	// Ghost Bandana
-49,5046,1	// Bongun Hat
-49,5167,1	// Munak Hat [1]
-49,5168,1	// Bongun Hat [1]
+IG_Easter_Scroll,636,110	// No Recipient
+IG_Easter_Scroll,637,110	// Old Broom
+IG_Easter_Scroll,638,110	// Silver Knife of Chastity
+IG_Easter_Scroll,639,110	// Armlet of Obedience
+IG_Easter_Scroll,640,110	// Shining Stone
+IG_Easter_Scroll,641,110	// Contracts in Shadow
+IG_Easter_Scroll,642,110	// Book of the Devil
+IG_Easter_Scroll,643,205	// Pet Incubator
+IG_Easter_Scroll,659,110	// Her Heart
+IG_Easter_Scroll,2264,1	// Munak Hat
+IG_Easter_Scroll,2274,1	// Ghost Bandana
+IG_Easter_Scroll,5046,1	// Bongun Hat
+IG_Easter_Scroll,5167,1	// Munak Hat [1]
+IG_Easter_Scroll,5168,1	// Bongun Hat [1]
 // Pierre Treasurebox
-50,603,11	// Old Blue Box
-50,604,3	// Dead Branch
-50,617,5	// Old Purple Box
-50,644,3	// Gift Box
-50,975,3	// Scarlet Dyestuff
-50,976,3	// Lemon Dyestuff
-50,978,3	// Cobaltblue Dyestuff
-50,979,3	// Darkgreen Dyestuff
-50,980,3	// Orange Dyestuff
-50,981,3	// Violet Dyestuff
-50,982,3	// White Dyestuff
-50,983,3	// Black Dyestuff
-50,7289,3	// Peridot
-50,7290,3	// Phlogopite
-50,7291,3	// Agate
-50,7292,3	// Muscovite
-50,7293,3	// Rose Quartz
-50,7294,3	// Turquoise
-50,7295,3	// Citrin
-50,7296,3	// Pyroxene
-50,7297,3	// Biotite
-50,12018,3	// Firecracker
-50,12075,3	// Steamed Tongue
-50,12085,3	// Immortal Stew
-50,12090,3	// Steamed Desert Scorpions
-50,12095,3	// Hwergelmir's Tonic
-50,12100,3	// Cooked Nine Tail
-50,12103,1	// Bloody Branch
+IG_Pierre_Treasurebox,603,11	// Old Blue Box
+IG_Pierre_Treasurebox,604,3	// Dead Branch
+IG_Pierre_Treasurebox,617,5	// Old Purple Box
+IG_Pierre_Treasurebox,644,3	// Gift Box
+IG_Pierre_Treasurebox,975,3	// Scarlet Dyestuff
+IG_Pierre_Treasurebox,976,3	// Lemon Dyestuff
+IG_Pierre_Treasurebox,978,3	// Cobaltblue Dyestuff
+IG_Pierre_Treasurebox,979,3	// Darkgreen Dyestuff
+IG_Pierre_Treasurebox,980,3	// Orange Dyestuff
+IG_Pierre_Treasurebox,981,3	// Violet Dyestuff
+IG_Pierre_Treasurebox,982,3	// White Dyestuff
+IG_Pierre_Treasurebox,983,3	// Black Dyestuff
+IG_Pierre_Treasurebox,7289,3	// Peridot
+IG_Pierre_Treasurebox,7290,3	// Phlogopite
+IG_Pierre_Treasurebox,7291,3	// Agate
+IG_Pierre_Treasurebox,7292,3	// Muscovite
+IG_Pierre_Treasurebox,7293,3	// Rose Quartz
+IG_Pierre_Treasurebox,7294,3	// Turquoise
+IG_Pierre_Treasurebox,7295,3	// Citrin
+IG_Pierre_Treasurebox,7296,3	// Pyroxene
+IG_Pierre_Treasurebox,7297,3	// Biotite
+IG_Pierre_Treasurebox,12018,3	// Firecracker
+IG_Pierre_Treasurebox,12075,3	// Steamed Tongue
+IG_Pierre_Treasurebox,12085,3	// Immortal Stew
+IG_Pierre_Treasurebox,12090,3	// Steamed Desert Scorpions
+IG_Pierre_Treasurebox,12095,3	// Hwergelmir's Tonic
+IG_Pierre_Treasurebox,12100,3	// Cooked Nine Tail
+IG_Pierre_Treasurebox,12103,1	// Bloody Branch
 // Cherish Box
-51,5454,1	// Puppy Hat
-51,5455,4	// Decorative Geographer
-51,5456,5	// Summer Hat
+IG_Cherish_Box,5454,1	// Puppy Hat
+IG_Cherish_Box,5455,4	// Decorative Geographer
+IG_Cherish_Box,5456,5	// Summer Hat
 // Cherish Box Ori
-52,2712,3	// Collector's Edition Book
-52,5212,2	// Solar Panels
-52,5256,1	// Valkyrie Feather Band
-52,5305,2	// Pirate Dagger
-52,5332,2	// Loki Mask
+IG_Cherish_Box_Ori,2712,3	// Collector's Edition Book
+IG_Cherish_Box_Ori,5212,2	// Solar Panels
+IG_Cherish_Box_Ori,5256,1	// Valkyrie Feather Band
+IG_Cherish_Box_Ori,5305,2	// Pirate Dagger
+IG_Cherish_Box_Ori,5332,2	// Loki Mask
 // Louise_Costume_Box
-53,12132,18	// Red_Bag
-53,12260,2	// Cool_Summer_Outfit
+IG_Louise_Costume_Box,12132,18	// Red_Bag
+IG_Louise_Costume_Box,12260,2	// Cool_Summer_Outfit
 // Xmas_Gift
-54,559,18	// Light_Orange_Pot
-54,560,18	// HandMade_Chocolate_
-54,573,18	// Chocolate_Drink
-54,603,24	// Old_Blue_Box
-54,644,66	// Gift_Box
-54,732,12	// Crystal_Jewel__
-54,5136,12	// Santa's_Hat_
-54,12016,12	// Speed_Up_Potion
-54,12017,12	// Slow_Down_Potion
-54,12105,6	// Set_Of_Taiming_Item
-54,12107,6	// Wrapped_Mask
-54,12108,12	// Bundle_Of_Magic_Scroll
-54,12110,12	// First_Aid_Kit
-54,12130,12	// Cookie_Bag
-54,12132,6	// Red_Bag
-54,12354,24	// Buche_De_Noel
-54,12702,36	// Old_Bleu_Box
-54,14546,6	// Fire_Cracker_Love
-54,14550,6	// Fire_Cracker_Xmas
+IG_Xmas_Gift,559,18	// Light_Orange_Pot
+IG_Xmas_Gift,560,18	// HandMade_Chocolate_
+IG_Xmas_Gift,573,18	// Chocolate_Drink
+IG_Xmas_Gift,603,24	// Old_Blue_Box
+IG_Xmas_Gift,644,66	// Gift_Box
+IG_Xmas_Gift,732,12	// Crystal_Jewel__
+IG_Xmas_Gift,5136,12	// Santa's_Hat_
+IG_Xmas_Gift,12016,12	// Speed_Up_Potion
+IG_Xmas_Gift,12017,12	// Slow_Down_Potion
+IG_Xmas_Gift,12105,6	// Set_Of_Taiming_Item
+IG_Xmas_Gift,12107,6	// Wrapped_Mask
+IG_Xmas_Gift,12108,12	// Bundle_Of_Magic_Scroll
+IG_Xmas_Gift,12110,12	// First_Aid_Kit
+IG_Xmas_Gift,12130,12	// Cookie_Bag
+IG_Xmas_Gift,12132,6	// Red_Bag
+IG_Xmas_Gift,12354,24	// Buche_De_Noel
+IG_Xmas_Gift,12702,36	// Old_Bleu_Box
+IG_Xmas_Gift,14546,6	// Fire_Cracker_Love
+IG_Xmas_Gift,14550,6	// Fire_Cracker_Xmas
 // Fruit Basket
-55,512,6	// Apple
-55,513,5	// Banana
-55,514,4	// Grape
-55,522,3	// Mastela Fruit
-55,535,2	// Pumpkin
-55,568,6	// Lemon
-55,576,2	// Prickly Fruit
-55,578,4	// Strawberry
-55,582,3	// Orange
-55,587,2	// Red Prickly Fruit
-55,607,1	// Yggdrasil Berry
-55,608,1	// Yggdrasil Seed
-55,7164,5	// Solid Peach
-55,7182,4	// Cacao
-55,11520,5	// Mora Mandarin
-55,12574,4	// Mora Berry
+IG_Fruit_Basket,512,6	// Apple
+IG_Fruit_Basket,513,5	// Banana
+IG_Fruit_Basket,514,4	// Grape
+IG_Fruit_Basket,522,3	// Mastela Fruit
+IG_Fruit_Basket,535,2	// Pumpkin
+IG_Fruit_Basket,568,6	// Lemon
+IG_Fruit_Basket,576,2	// Prickly Fruit
+IG_Fruit_Basket,578,4	// Strawberry
+IG_Fruit_Basket,582,3	// Orange
+IG_Fruit_Basket,587,2	// Red Prickly Fruit
+IG_Fruit_Basket,607,1	// Yggdrasil Berry
+IG_Fruit_Basket,608,1	// Yggdrasil Seed
+IG_Fruit_Basket,7164,5	// Solid Peach
+IG_Fruit_Basket,7182,4	// Cacao
+IG_Fruit_Basket,11520,5	// Mora Mandarin
+IG_Fruit_Basket,12574,4	// Mora Berry
 // Improved Coin Bag
-56,6080,5	// Manuk Coin
-56,6081,5	// Splendide Coin
-56,6304,5	// Proof Of Sapha's Honor
-56,6380,5	// Mora Village Coin
-56,6418,1	// A Grade Coin
-56,6419,2	// B Grade Coin
-56,6420,1	// C Grade Coin
-56,12636,8	// Malangdo Canned Specialties
+IG_Improved_Coin_Bag,6080,5	// Manuk Coin
+IG_Improved_Coin_Bag,6081,5	// Splendide Coin
+IG_Improved_Coin_Bag,6304,5	// Proof Of Sapha's Honor
+IG_Improved_Coin_Bag,6380,5	// Mora Village Coin
+IG_Improved_Coin_Bag,6418,1	// A Grade Coin
+IG_Improved_Coin_Bag,6419,2	// B Grade Coin
+IG_Improved_Coin_Bag,6420,1	// C Grade Coin
+IG_Improved_Coin_Bag,12636,8	// Malangdo Canned Specialties
 // Intermediate Coin Bag
-57,6080,4	// Manuk Coin
-57,6081,4	// Splendide Coin
-57,6304,4	// Proof Of Sapha's Honor
-57,6380,4	// Mora Village Coin
-57,6419,1	// B Grade Coin
-57,6420,2	// C Grade Coin
-57,6421,1	// D Grade Coin
-57,12636,9	// Malangdo Canned Specialties
+IG_Intermediate_Coin_Bag,6080,4	// Manuk Coin
+IG_Intermediate_Coin_Bag,6081,4	// Splendide Coin
+IG_Intermediate_Coin_Bag,6304,4	// Proof Of Sapha's Honor
+IG_Intermediate_Coin_Bag,6380,4	// Mora Village Coin
+IG_Intermediate_Coin_Bag,6419,1	// B Grade Coin
+IG_Intermediate_Coin_Bag,6420,2	// C Grade Coin
+IG_Intermediate_Coin_Bag,6421,1	// D Grade Coin
+IG_Intermediate_Coin_Bag,12636,9	// Malangdo Canned Specialties
 // Minor Coin Bag
-58,6080,3	// Manuk Coin
-58,6081,3	// Splendide Coin
-58,6304,3	// Proof Of Sapha's Honor
-58,6380,3	// Mora Village Coin
-58,6420,1	// C Grade Coin
-58,6421,2	// D Grade Coin
-58,6422,1	// E Grade Coin
-58,12636,10	// Malangdo Canned Specialties
+IG_Minor_Coin_Bag,6080,3	// Manuk Coin
+IG_Minor_Coin_Bag,6081,3	// Splendide Coin
+IG_Minor_Coin_Bag,6304,3	// Proof Of Sapha's Honor
+IG_Minor_Coin_Bag,6380,3	// Mora Village Coin
+IG_Minor_Coin_Bag,6420,1	// C Grade Coin
+IG_Minor_Coin_Bag,6421,2	// D Grade Coin
+IG_Minor_Coin_Bag,6422,1	// E Grade Coin
+IG_Minor_Coin_Bag,12636,10	// Malangdo Canned Specialties
 // S Grade Coin Bag
-59,6423,3	// Sea God's Wrath
-59,6418,2	// A Grade Coin
-59,6419,1	// B Grade Coin
+IG_S_Grade_Coin_Bag,6423,3	// Sea God's Wrath
+IG_S_Grade_Coin_Bag,6418,2	// A Grade Coin
+IG_S_Grade_Coin_Bag,6419,1	// B Grade Coin
 // A Grade Coin Bag
-60,6418,3	// A Grade Coin
-60,6419,2	// B Grade Coin
-60,6420,1	// C Grade Coin
+IG_A_Grade_Coin_Bag,6418,3	// A Grade Coin
+IG_A_Grade_Coin_Bag,6419,2	// B Grade Coin
+IG_A_Grade_Coin_Bag,6420,1	// C Grade Coin
 // Advanced Weapons Box
-61,1130,1	// Nagan
-61,1131,1	// Ice_Falchon
-61,1132,1	// Edge
-61,1133,1	// Fire_Brand
-61,1134,1	// Caesar's Sword
-61,1135,1	// Cutlas
-61,1136,1	// Solar_Sword
-61,1137,1	// Excalibur
-61,1138,1	// Mysteltainn
-61,1139,1	// Tirfing
-61,1140,1	// Byeollungum
-61,1141,1	// Immaterial_Sword
-61,1148,1	// Star_Dust_Blade
-61,1164,1	// Muramasa
-61,1165,1	// Masamune
-61,1166,1	// Dragon_Slayer
-61,1167,1	// Schweizersabel
-61,1168,1	// Zweihander
-61,1169,1	// Executioner
-61,1170,1	// Katzbalger
-61,1171,1	// Zweihander_
-61,1175,1	// Altas_Weapon
-61,1176,1	// Muscle_Cutter
-61,1178,1	// Schweizersabel_
-61,1179,1	// Executioner__
-61,1180,1	// Dragon_Slayer_
-61,1181,1	// Tae_Goo_Lyeon
-61,1182,1	// Bloody_Eater
-61,1185,1	// Violet_Fear
-61,1186,1	// Death_Guidance
-61,1188,1	// Veteran_Sword
-61,1189,1	// Krasnaya
-61,1196,1	// Chrome_Metal_Two-Hand_Sword
-61,1223,1	// Forturn_Sword
-61,1224,1	// Sword_Breaker
-61,1225,1	// Mail_Breaker
-61,1227,1	// Weeder_Knife
-61,1228,1	// Combat_Knife
-61,1229,1	// Kitchen_Knife
-61,1230,1	// Ice_Pick
-61,1231,1	// Bazerald
-61,1232,1	// Assasin_Dagger
-61,1233,1	// Exorciser
-61,1234,1	// Moonlight_Dagger
-61,1235,1	// Azoth
-61,1236,1	// Sucsamad
-61,1237,1	// Grimtooth
-61,1240,1	// Princess_Knife
-61,1241,1	// Cursed_Dagger
-61,1242,1	// Counter_Dagger
-61,1244,1	// Holy_Dagger
-61,1261,1	// Infiltrator
-61,1263,1	// Unholy_Touch
-61,1265,1	// Bloody_Roar
-61,1266,1	// Infiltrator_
-61,1268,1	// Wild_Beast_Claw
-61,1269,1	// Inverse_Scale
-61,1270,1	// Drill_Katar
-61,1271,1	// Blood_Tears
-61,1284,1	// Krishna
-61,1285,1	// Chakram
-61,1305,1	// Cleaver
-61,1311,1	// Vecer_Axe
-61,1363,1	// Bloody_Axe
-61,1364,1	// Great_Axe
-61,1365,1	// Sabbath
-61,1366,1	// Light Epsilon
-61,1367,1	// Slaughter
-61,1368,1	// Tomahawk
-61,1369,1	// Guillotine
-61,1370,1	// Doom_Slayer
-61,1371,1	// Doom_Slayer_
-61,1376,1	// Heart_Breaker
-61,1377,1	// Hurricane_Fury
-61,1385,1	// Bradium_Stonehammer
-61,1387,1	// Giant_Axe
-61,1413,1	// Gungnir
-61,1414,1	// Gelerdria
-61,1415,1	// Brocca
-61,1416,1	// Tjungkuletti
-61,1418,1	// Gungnir_
-61,1420,1	// Long_Horn
-61,1421,1	// Battle_Hook
-61,1422,1	// Hunting_Spear
-61,1433,1	// Imperial_Spear
-61,1466,1	// Crescent_Scythe
-61,1467,1	// Bill_Guisarme
-61,1468,1	// Zephyrus
-61,1469,1	// Longinus's_Spear
-61,1470,1	// Brionac
-61,1471,1	// Hell_Fire
-61,1473,1	// Wizardy_Staff
-61,1474,1	// Gae_Bolg
-61,1477,1	// Spectral_Spear
-61,1478,1	// Ahlspiess,
-61,1479,1	// Spectral_Spear_
-61,1480,1	// Gae_Bolg_
-61,1481,1	// Zephyrus_
-61,1484,1	// Cardo
-61,1523,1	// Spike
-61,1524,1	// Golden_Mace
-61,1525,1	// Long_Mace
-61,1527,1	// Quadrille
-61,1528,1	// Grand_Cross
-61,1538,1	// Spike_
-61,1539,1	// Golden_Mace_
-61,1540,1	// Grand_Cross_
-61,1541,1	// Nemesis
-61,1557,1	// Book_Of_The_Apocalypse
-61,1558,1	// Girl's_Diary
-61,1559,1	// Legacy_Of_Dragon
-61,1561,1	// Hardcover_Book
-61,1562,1	// Battlefield_Textbook
-61,1565,1	// Ledger of Death
-61,1616,1	// Wing Staff
-61,1629,1	// Gentleman's Staff
-61,1631,1	// Holy_Stick
-61,1636,1	// Thorn_Staff
-61,1637,1	// Eraser
-61,1643,1	// Dead_Tree_Cane
-61,1654,1	// Mental_Stick
-61,1719,1	// Bow_Of_Roguemaster
-61,1720,1	// Bow_Of_Rudra
-61,1722,1	// Ballista
-61,1724,1	// Dragon_Wing
-61,1725,1	// Bow_Of_Minstrel
-61,1727,1	// Balistar_
-61,1737,1	// Ixion_Wing
-61,1740,1	// Nepenthes_Bow
-61,1741,1	// Cursed_Lyre
-61,1745,1	// Falken_Blitz
-61,1813,1	// Kaiser_Knuckle
-61,1814,1	// Berserk
-61,1815,1	// Claw_Of_Garm
-61,1816,1	// Berserk_
-61,1830,1	// Great_King's_Dance
-61,1913,1	// Electronic_Guitar
-61,1918,1	// Oriental_Lute
-61,1920,1	// Berserk_Guitar
-61,1922,1	// Oriental_Lute_
-61,1926,1	// Harp_Of_Nepenthes
-61,1930,1	// Green_Whistle
-61,1962,1	// Lariat_Whip
-61,1963,1	// Rapture_Rose
-61,1964,1	// Chemeti_Whip
-61,1969,1	// Blade_Whip
-61,1970,1	// Queen's_Whip
-61,1972,1	// Electric_Eel
-61,1973,1	// Sea_Witch_Foot
-61,1974,1	// Carrot_Whip
-61,1976,1	// Queen's_Whip_
-61,1979,1	// Stem_Of_Nepenthes
-61,1984,1	// Stem_Whip
-61,1985,1	// Rose_Vine
-61,2000,1	// Destruction_Rod
-61,2001,1	// Divine_Cross
-61,2004,1	// Kronos
-61,2005,1	// Dea_Staff
-61,13046,1	// Krieg
-61,13047,1	// Weihna
-61,13061,1	// Black_Wing
-61,13062,1	// Ancient_Dagger
-61,13421,1	// Ruber
-61,13431,1	// Chrome_Metal_Sword
-61,16000,1	// Erde
-61,16001,1	// Red_Square_Bag
-61,16010,1	// Red_Ether_Bag
-61,18103,1	// Mystic_Bow
+IG_Advanced_Weapons_Box,1130,1	// Nagan
+IG_Advanced_Weapons_Box,1131,1	// Ice_Falchon
+IG_Advanced_Weapons_Box,1132,1	// Edge
+IG_Advanced_Weapons_Box,1133,1	// Fire_Brand
+IG_Advanced_Weapons_Box,1134,1	// Caesar's Sword
+IG_Advanced_Weapons_Box,1135,1	// Cutlas
+IG_Advanced_Weapons_Box,1136,1	// Solar_Sword
+IG_Advanced_Weapons_Box,1137,1	// Excalibur
+IG_Advanced_Weapons_Box,1138,1	// Mysteltainn
+IG_Advanced_Weapons_Box,1139,1	// Tirfing
+IG_Advanced_Weapons_Box,1140,1	// Byeollungum
+IG_Advanced_Weapons_Box,1141,1	// Immaterial_Sword
+IG_Advanced_Weapons_Box,1148,1	// Star_Dust_Blade
+IG_Advanced_Weapons_Box,1164,1	// Muramasa
+IG_Advanced_Weapons_Box,1165,1	// Masamune
+IG_Advanced_Weapons_Box,1166,1	// Dragon_Slayer
+IG_Advanced_Weapons_Box,1167,1	// Schweizersabel
+IG_Advanced_Weapons_Box,1168,1	// Zweihander
+IG_Advanced_Weapons_Box,1169,1	// Executioner
+IG_Advanced_Weapons_Box,1170,1	// Katzbalger
+IG_Advanced_Weapons_Box,1171,1	// Zweihander_
+IG_Advanced_Weapons_Box,1175,1	// Altas_Weapon
+IG_Advanced_Weapons_Box,1176,1	// Muscle_Cutter
+IG_Advanced_Weapons_Box,1178,1	// Schweizersabel_
+IG_Advanced_Weapons_Box,1179,1	// Executioner__
+IG_Advanced_Weapons_Box,1180,1	// Dragon_Slayer_
+IG_Advanced_Weapons_Box,1181,1	// Tae_Goo_Lyeon
+IG_Advanced_Weapons_Box,1182,1	// Bloody_Eater
+IG_Advanced_Weapons_Box,1185,1	// Violet_Fear
+IG_Advanced_Weapons_Box,1186,1	// Death_Guidance
+IG_Advanced_Weapons_Box,1188,1	// Veteran_Sword
+IG_Advanced_Weapons_Box,1189,1	// Krasnaya
+IG_Advanced_Weapons_Box,1196,1	// Chrome_Metal_Two-Hand_Sword
+IG_Advanced_Weapons_Box,1223,1	// Forturn_Sword
+IG_Advanced_Weapons_Box,1224,1	// Sword_Breaker
+IG_Advanced_Weapons_Box,1225,1	// Mail_Breaker
+IG_Advanced_Weapons_Box,1227,1	// Weeder_Knife
+IG_Advanced_Weapons_Box,1228,1	// Combat_Knife
+IG_Advanced_Weapons_Box,1229,1	// Kitchen_Knife
+IG_Advanced_Weapons_Box,1230,1	// Ice_Pick
+IG_Advanced_Weapons_Box,1231,1	// Bazerald
+IG_Advanced_Weapons_Box,1232,1	// Assasin_Dagger
+IG_Advanced_Weapons_Box,1233,1	// Exorciser
+IG_Advanced_Weapons_Box,1234,1	// Moonlight_Dagger
+IG_Advanced_Weapons_Box,1235,1	// Azoth
+IG_Advanced_Weapons_Box,1236,1	// Sucsamad
+IG_Advanced_Weapons_Box,1237,1	// Grimtooth
+IG_Advanced_Weapons_Box,1240,1	// Princess_Knife
+IG_Advanced_Weapons_Box,1241,1	// Cursed_Dagger
+IG_Advanced_Weapons_Box,1242,1	// Counter_Dagger
+IG_Advanced_Weapons_Box,1244,1	// Holy_Dagger
+IG_Advanced_Weapons_Box,1261,1	// Infiltrator
+IG_Advanced_Weapons_Box,1263,1	// Unholy_Touch
+IG_Advanced_Weapons_Box,1265,1	// Bloody_Roar
+IG_Advanced_Weapons_Box,1266,1	// Infiltrator_
+IG_Advanced_Weapons_Box,1268,1	// Wild_Beast_Claw
+IG_Advanced_Weapons_Box,1269,1	// Inverse_Scale
+IG_Advanced_Weapons_Box,1270,1	// Drill_Katar
+IG_Advanced_Weapons_Box,1271,1	// Blood_Tears
+IG_Advanced_Weapons_Box,1284,1	// Krishna
+IG_Advanced_Weapons_Box,1285,1	// Chakram
+IG_Advanced_Weapons_Box,1305,1	// Cleaver
+IG_Advanced_Weapons_Box,1311,1	// Vecer_Axe
+IG_Advanced_Weapons_Box,1363,1	// Bloody_Axe
+IG_Advanced_Weapons_Box,1364,1	// Great_Axe
+IG_Advanced_Weapons_Box,1365,1	// Sabbath
+IG_Advanced_Weapons_Box,1366,1	// Light Epsilon
+IG_Advanced_Weapons_Box,1367,1	// Slaughter
+IG_Advanced_Weapons_Box,1368,1	// Tomahawk
+IG_Advanced_Weapons_Box,1369,1	// Guillotine
+IG_Advanced_Weapons_Box,1370,1	// Doom_Slayer
+IG_Advanced_Weapons_Box,1371,1	// Doom_Slayer_
+IG_Advanced_Weapons_Box,1376,1	// Heart_Breaker
+IG_Advanced_Weapons_Box,1377,1	// Hurricane_Fury
+IG_Advanced_Weapons_Box,1385,1	// Bradium_Stonehammer
+IG_Advanced_Weapons_Box,1387,1	// Giant_Axe
+IG_Advanced_Weapons_Box,1413,1	// Gungnir
+IG_Advanced_Weapons_Box,1414,1	// Gelerdria
+IG_Advanced_Weapons_Box,1415,1	// Brocca
+IG_Advanced_Weapons_Box,1416,1	// Tjungkuletti
+IG_Advanced_Weapons_Box,1418,1	// Gungnir_
+IG_Advanced_Weapons_Box,1420,1	// Long_Horn
+IG_Advanced_Weapons_Box,1421,1	// Battle_Hook
+IG_Advanced_Weapons_Box,1422,1	// Hunting_Spear
+IG_Advanced_Weapons_Box,1433,1	// Imperial_Spear
+IG_Advanced_Weapons_Box,1466,1	// Crescent_Scythe
+IG_Advanced_Weapons_Box,1467,1	// Bill_Guisarme
+IG_Advanced_Weapons_Box,1468,1	// Zephyrus
+IG_Advanced_Weapons_Box,1469,1	// Longinus's_Spear
+IG_Advanced_Weapons_Box,1470,1	// Brionac
+IG_Advanced_Weapons_Box,1471,1	// Hell_Fire
+IG_Advanced_Weapons_Box,1473,1	// Wizardy_Staff
+IG_Advanced_Weapons_Box,1474,1	// Gae_Bolg
+IG_Advanced_Weapons_Box,1477,1	// Spectral_Spear
+IG_Advanced_Weapons_Box,1478,1	// Ahlspiess
+IG_Advanced_Weapons_Box,1479,1	// Spectral_Spear_
+IG_Advanced_Weapons_Box,1480,1	// Gae_Bolg_
+IG_Advanced_Weapons_Box,1481,1	// Zephyrus_
+IG_Advanced_Weapons_Box,1484,1	// Cardo
+IG_Advanced_Weapons_Box,1523,1	// Spike
+IG_Advanced_Weapons_Box,1524,1	// Golden_Mace
+IG_Advanced_Weapons_Box,1525,1	// Long_Mace
+IG_Advanced_Weapons_Box,1527,1	// Quadrille
+IG_Advanced_Weapons_Box,1528,1	// Grand_Cross
+IG_Advanced_Weapons_Box,1538,1	// Spike_
+IG_Advanced_Weapons_Box,1539,1	// Golden_Mace_
+IG_Advanced_Weapons_Box,1540,1	// Grand_Cross_
+IG_Advanced_Weapons_Box,1541,1	// Nemesis
+IG_Advanced_Weapons_Box,1557,1	// Book_Of_The_Apocalypse
+IG_Advanced_Weapons_Box,1558,1	// Girl's_Diary
+IG_Advanced_Weapons_Box,1559,1	// Legacy_Of_Dragon
+IG_Advanced_Weapons_Box,1561,1	// Hardcover_Book
+IG_Advanced_Weapons_Box,1562,1	// Battlefield_Textbook
+IG_Advanced_Weapons_Box,1565,1	// Ledger of Death
+IG_Advanced_Weapons_Box,1616,1	// Wing Staff
+IG_Advanced_Weapons_Box,1629,1	// Gentleman's Staff
+IG_Advanced_Weapons_Box,1631,1	// Holy_Stick
+IG_Advanced_Weapons_Box,1636,1	// Thorn_Staff
+IG_Advanced_Weapons_Box,1637,1	// Eraser
+IG_Advanced_Weapons_Box,1643,1	// Dead_Tree_Cane
+IG_Advanced_Weapons_Box,1654,1	// Mental_Stick
+IG_Advanced_Weapons_Box,1719,1	// Bow_Of_Roguemaster
+IG_Advanced_Weapons_Box,1720,1	// Bow_Of_Rudra
+IG_Advanced_Weapons_Box,1722,1	// Ballista
+IG_Advanced_Weapons_Box,1724,1	// Dragon_Wing
+IG_Advanced_Weapons_Box,1725,1	// Bow_Of_Minstrel
+IG_Advanced_Weapons_Box,1727,1	// Balistar_
+IG_Advanced_Weapons_Box,1737,1	// Ixion_Wing
+IG_Advanced_Weapons_Box,1740,1	// Nepenthes_Bow
+IG_Advanced_Weapons_Box,1741,1	// Cursed_Lyre
+IG_Advanced_Weapons_Box,1745,1	// Falken_Blitz
+IG_Advanced_Weapons_Box,1813,1	// Kaiser_Knuckle
+IG_Advanced_Weapons_Box,1814,1	// Berserk
+IG_Advanced_Weapons_Box,1815,1	// Claw_Of_Garm
+IG_Advanced_Weapons_Box,1816,1	// Berserk_
+IG_Advanced_Weapons_Box,1830,1	// Great_King's_Dance
+IG_Advanced_Weapons_Box,1913,1	// Electronic_Guitar
+IG_Advanced_Weapons_Box,1918,1	// Oriental_Lute
+IG_Advanced_Weapons_Box,1920,1	// Berserk_Guitar
+IG_Advanced_Weapons_Box,1922,1	// Oriental_Lute_
+IG_Advanced_Weapons_Box,1926,1	// Harp_Of_Nepenthes
+IG_Advanced_Weapons_Box,1930,1	// Green_Whistle
+IG_Advanced_Weapons_Box,1962,1	// Lariat_Whip
+IG_Advanced_Weapons_Box,1963,1	// Rapture_Rose
+IG_Advanced_Weapons_Box,1964,1	// Chemeti_Whip
+IG_Advanced_Weapons_Box,1969,1	// Blade_Whip
+IG_Advanced_Weapons_Box,1970,1	// Queen's_Whip
+IG_Advanced_Weapons_Box,1972,1	// Electric_Eel
+IG_Advanced_Weapons_Box,1973,1	// Sea_Witch_Foot
+IG_Advanced_Weapons_Box,1974,1	// Carrot_Whip
+IG_Advanced_Weapons_Box,1976,1	// Queen's_Whip_
+IG_Advanced_Weapons_Box,1979,1	// Stem_Of_Nepenthes
+IG_Advanced_Weapons_Box,1984,1	// Stem_Whip
+IG_Advanced_Weapons_Box,1985,1	// Rose_Vine
+IG_Advanced_Weapons_Box,2000,1	// Destruction_Rod
+IG_Advanced_Weapons_Box,2001,1	// Divine_Cross
+IG_Advanced_Weapons_Box,2004,1	// Kronos
+IG_Advanced_Weapons_Box,2005,1	// Dea_Staff
+IG_Advanced_Weapons_Box,13046,1	// Krieg
+IG_Advanced_Weapons_Box,13047,1	// Weihna
+IG_Advanced_Weapons_Box,13061,1	// Black_Wing
+IG_Advanced_Weapons_Box,13062,1	// Ancient_Dagger
+IG_Advanced_Weapons_Box,13421,1	// Ruber
+IG_Advanced_Weapons_Box,13431,1	// Chrome_Metal_Sword
+IG_Advanced_Weapons_Box,16000,1	// Erde
+IG_Advanced_Weapons_Box,16001,1	// Red_Square_Bag
+IG_Advanced_Weapons_Box,16010,1	// Red_Ether_Bag
+IG_Advanced_Weapons_Box,18103,1	// Mystic_Bow
 // Splendid Box
-62,1189,1	// Krasnaya
-62,1191,1	// Alca Bringer
-62,1196,1	// Two-Handed Chrome Metal Sword
-62,1284,1	// Krishna
-62,1285,1	// Chakram
-62,1287,1	// Durga
-62,1311,1	// Vecer Axe
-62,1387,1	// Giant Axe
-62,1433,1	// Imperial Spear
-62,1649,1	// Laphine Staff
-62,1745,1	// Falken Blitz
-62,1746,1	// Elven Bow
-62,1930,1	// Green Whistle
-62,1984,1	// Stem Whip
-62,2148,1	// Rosa Shield
-62,2153,1	// Imperial Guard
-62,13046,1	// Krieg
-62,13047,1	// Weihna
-62,13061,1	// Black Wing
-62,13421,1	// Ruber
-62,15000,1	// Bone Plate
-62,15014,1	// Ebone Armor
-62,16000,1	// Erde
-62,16001,1	// Red Square Bag
-62,16003,1	// Carga Mace
-62,16010,1	// Red Ether Bag
-62,18103,2	// Mystic Bow
+IG_Splendid_Box,1189,1	// Krasnaya
+IG_Splendid_Box,1191,1	// Alca Bringer
+IG_Splendid_Box,1196,1	// Two-Handed Chrome Metal Sword
+IG_Splendid_Box,1284,1	// Krishna
+IG_Splendid_Box,1285,1	// Chakram
+IG_Splendid_Box,1287,1	// Durga
+IG_Splendid_Box,1311,1	// Vecer Axe
+IG_Splendid_Box,1387,1	// Giant Axe
+IG_Splendid_Box,1433,1	// Imperial Spear
+IG_Splendid_Box,1649,1	// Laphine Staff
+IG_Splendid_Box,1745,1	// Falken Blitz
+IG_Splendid_Box,1746,1	// Elven Bow
+IG_Splendid_Box,1930,1	// Green Whistle
+IG_Splendid_Box,1984,1	// Stem Whip
+IG_Splendid_Box,2148,1	// Rosa Shield
+IG_Splendid_Box,2153,1	// Imperial Guard
+IG_Splendid_Box,13046,1	// Krieg
+IG_Splendid_Box,13047,1	// Weihna
+IG_Splendid_Box,13061,1	// Black Wing
+IG_Splendid_Box,13421,1	// Ruber
+IG_Splendid_Box,15000,1	// Bone Plate
+IG_Splendid_Box,15014,1	// Ebone Armor
+IG_Splendid_Box,16000,1	// Erde
+IG_Splendid_Box,16001,1	// Red Square Bag
+IG_Splendid_Box,16003,1	// Carga Mace
+IG_Splendid_Box,16010,1	// Red Ether Bag
+IG_Splendid_Box,18103,2	// Mystic Bow
 // Armor Card Album
-63,4001,1	// Poring Card
-63,4003,1	// Pupa Card
-63,4008,1	// Picky Card
-63,4011,1	// Picky Egg Card
-63,4014,1	// Roda Frog Card
-63,4016,1	// Thief Bug Card
-63,4021,1	// Rocker Card
-63,4023,1	// Baby Desert Wolf Card
-63,4031,1	// Peco Peco Card
-63,4042,1	// Steel Chonchon Card
-63,4061,1	// Cornutus Card
-63,4078,1	// Savage Card
-63,4089,1	// Swordfish Card
-63,4098,1	// Dokebi Card
-63,4099,1	// Pasana Card
-63,4101,1	// Sandman Card
-63,4105,1	// Marc Card
-63,4114,1	// Argiope Card
-63,4119,1	// Bathory Card
-63,4141,1	// Evil Druid Card
-63,4150,1	// Goat Card
-63,4158,1	// Sky Deleter Card
-63,4162,1	// Grizzly Card
-63,4166,1	// Nightmare Terror Card
-63,4170,1	// Dark Frame Card
-63,4173,1	// Demon Pungus Card
-63,4181,1	// Disguise Card
-63,4189,1	// Wraith Dead Card
-63,4191,1	// Loli Ruri Card
-63,4194,1	// Rybio Card
-63,4201,1	// Majoruros Card
-63,4213,1	// Brilight Card
-63,4216,1	// Sasquatch Card
-63,4218,1	// Succubus Card
-63,4220,1	// Solider Card
-63,4222,1	// Skeleton Prisoner Card
-63,4233,1	// Baby Leopard Card
-63,4234,1	// Anolian Card
-63,4242,1	// Apocalipse Card
-63,4259,1	// Wooden Golem Card
-63,4270,1	// Giant Spider Card
-63,4279,1	// Earth Deleter Card
-63,4280,1	// Geographer Card
-63,4286,1	// Karakasa Card
-63,4295,1	// Kraben Card
-63,4298,1	// Creamy Fear Card
-63,4299,1	// Clock Card
-63,4300,1	// Chimera Card
-63,4301,1	// Killer Mantis Card
-63,4315,1	// Pest Card
-63,4332,1	// Waste Stove Card
-63,4333,1	// Venomous Card
-63,4337,1	// Porcellio Card
-63,4338,1	// Obsidian Card
-63,4339,1	// Mineral Card
-63,4346,1	// Egnigem Cenia Card
-63,4353,1	// Remover Card
-63,4369,1	// Venatu Card
-63,4370,1	// Dimik Card
-63,4371,1	// Archdam Card
-63,4382,1	// Yellow Novus Card
-63,4383,1	// Red Novus Card
-63,4387,1	// Ancient Mimic Card
-63,4392,1	// Dame of Sentinel Card
-63,4393,1	// Mistress of Shelter Card
-63,4400,1	// Aliza Card
-63,4401,1	// Alicel Card
-63,4404,1	// Skogul Card
-63,4405,1	// Frus Card
-63,4409,1	// Agav Card
-63,4410,1	// Echio Card
-63,4426,1	// Byorgue Card
-63,4450,1	// Banshee Master Card
+IG_CardAlbum_Armor,4001,1	// Poring Card
+IG_CardAlbum_Armor,4003,1	// Pupa Card
+IG_CardAlbum_Armor,4008,1	// Picky Card
+IG_CardAlbum_Armor,4011,1	// Picky Egg Card
+IG_CardAlbum_Armor,4014,1	// Roda Frog Card
+IG_CardAlbum_Armor,4016,1	// Thief Bug Card
+IG_CardAlbum_Armor,4021,1	// Rocker Card
+IG_CardAlbum_Armor,4023,1	// Baby Desert Wolf Card
+IG_CardAlbum_Armor,4031,1	// Peco Peco Card
+IG_CardAlbum_Armor,4042,1	// Steel Chonchon Card
+IG_CardAlbum_Armor,4061,1	// Cornutus Card
+IG_CardAlbum_Armor,4078,1	// Savage Card
+IG_CardAlbum_Armor,4089,1	// Swordfish Card
+IG_CardAlbum_Armor,4098,1	// Dokebi Card
+IG_CardAlbum_Armor,4099,1	// Pasana Card
+IG_CardAlbum_Armor,4101,1	// Sandman Card
+IG_CardAlbum_Armor,4105,1	// Marc Card
+IG_CardAlbum_Armor,4114,1	// Argiope Card
+IG_CardAlbum_Armor,4119,1	// Bathory Card
+IG_CardAlbum_Armor,4141,1	// Evil Druid Card
+IG_CardAlbum_Armor,4150,1	// Goat Card
+IG_CardAlbum_Armor,4158,1	// Sky Deleter Card
+IG_CardAlbum_Armor,4162,1	// Grizzly Card
+IG_CardAlbum_Armor,4166,1	// Nightmare Terror Card
+IG_CardAlbum_Armor,4170,1	// Dark Frame Card
+IG_CardAlbum_Armor,4173,1	// Demon Pungus Card
+IG_CardAlbum_Armor,4181,1	// Disguise Card
+IG_CardAlbum_Armor,4189,1	// Wraith Dead Card
+IG_CardAlbum_Armor,4191,1	// Loli Ruri Card
+IG_CardAlbum_Armor,4194,1	// Rybio Card
+IG_CardAlbum_Armor,4201,1	// Majoruros Card
+IG_CardAlbum_Armor,4213,1	// Brilight Card
+IG_CardAlbum_Armor,4216,1	// Sasquatch Card
+IG_CardAlbum_Armor,4218,1	// Succubus Card
+IG_CardAlbum_Armor,4220,1	// Solider Card
+IG_CardAlbum_Armor,4222,1	// Skeleton Prisoner Card
+IG_CardAlbum_Armor,4233,1	// Baby Leopard Card
+IG_CardAlbum_Armor,4234,1	// Anolian Card
+IG_CardAlbum_Armor,4242,1	// Apocalipse Card
+IG_CardAlbum_Armor,4259,1	// Wooden Golem Card
+IG_CardAlbum_Armor,4270,1	// Giant Spider Card
+IG_CardAlbum_Armor,4279,1	// Earth Deleter Card
+IG_CardAlbum_Armor,4280,1	// Geographer Card
+IG_CardAlbum_Armor,4286,1	// Karakasa Card
+IG_CardAlbum_Armor,4295,1	// Kraben Card
+IG_CardAlbum_Armor,4298,1	// Creamy Fear Card
+IG_CardAlbum_Armor,4299,1	// Clock Card
+IG_CardAlbum_Armor,4300,1	// Chimera Card
+IG_CardAlbum_Armor,4301,1	// Killer Mantis Card
+IG_CardAlbum_Armor,4315,1	// Pest Card
+IG_CardAlbum_Armor,4332,1	// Waste Stove Card
+IG_CardAlbum_Armor,4333,1	// Venomous Card
+IG_CardAlbum_Armor,4337,1	// Porcellio Card
+IG_CardAlbum_Armor,4338,1	// Obsidian Card
+IG_CardAlbum_Armor,4339,1	// Mineral Card
+IG_CardAlbum_Armor,4346,1	// Egnigem Cenia Card
+IG_CardAlbum_Armor,4353,1	// Remover Card
+IG_CardAlbum_Armor,4369,1	// Venatu Card
+IG_CardAlbum_Armor,4370,1	// Dimik Card
+IG_CardAlbum_Armor,4371,1	// Archdam Card
+IG_CardAlbum_Armor,4382,1	// Yellow Novus Card
+IG_CardAlbum_Armor,4383,1	// Red Novus Card
+IG_CardAlbum_Armor,4387,1	// Ancient Mimic Card
+IG_CardAlbum_Armor,4392,1	// Dame of Sentinel Card
+IG_CardAlbum_Armor,4393,1	// Mistress of Shelter Card
+IG_CardAlbum_Armor,4400,1	// Aliza Card
+IG_CardAlbum_Armor,4401,1	// Alicel Card
+IG_CardAlbum_Armor,4404,1	// Skogul Card
+IG_CardAlbum_Armor,4405,1	// Frus Card
+IG_CardAlbum_Armor,4409,1	// Agav Card
+IG_CardAlbum_Armor,4410,1	// Echio Card
+IG_CardAlbum_Armor,4426,1	// Byorgue Card
+IG_CardAlbum_Armor,4450,1	// Banshee Master Card
 // Headgear Card Album
-64,4010,1	// Willow Card
-64,4039,1	// Stainer Card
-64,4041,1	// Coco Card
-64,4046,1	// Martin Card
-64,4052,1	// Elder Willow Card
-64,4087,1	// Giearth Card
-64,4110,1	// Ghoul Card
-64,4112,1	// Marduk Card
-64,4122,1	// Deviruchi Card
-64,4127,1	// Nightmare Card
-64,4161,1	// Grand Peco Card
-64,4169,1	// Dark Illusion Card
-64,4177,1	// Dryad Card
-64,4185,1	// Rideword Card
-64,4188,1	// Leib Olmai Card
-64,4195,1	// Leaf Cat Card
-64,4206,1	// Myst Case Card
-64,4223,1	// Stalactic Golem Card
-64,4229,1	// Tower Keeper Card
-64,4241,1	// Arc Angeling Card
-64,4258,1	// Evil Nymph Card
-64,4260,1	// Wootan Shooter Card
-64,4261,1	// Wootan Fighter Card
-64,4269,1	// Incubus Card
-64,4271,1	// Giant Hornet Card
-64,4278,1	// Gibbet Card
-64,4288,1	// Carat Card
-64,4296,1	// Cramp Card
-64,4311,1	// Permeter Card
-64,4336,1	// Ungoliant Card
-64,4343,1	// Holden Card
-64,4354,1	// Gemini-S58 Card
-64,4358,1	// Seyren Windsor Card
-64,4364,1	// Margaretha Sorin Card
-64,4366,1	// Kathryne Keyron Card
-64,4379,1	// Blue Acidus Card
-64,4411,1	// Vanberk Card
-64,4412,1	// Isilla Card
-64,4434,1	// Knocker Card
-64,4438,1	// Banshee Card
+IG_CardAlbum_Helm,4010,1	// Willow Card
+IG_CardAlbum_Helm,4039,1	// Stainer Card
+IG_CardAlbum_Helm,4041,1	// Coco Card
+IG_CardAlbum_Helm,4046,1	// Martin Card
+IG_CardAlbum_Helm,4052,1	// Elder Willow Card
+IG_CardAlbum_Helm,4087,1	// Giearth Card
+IG_CardAlbum_Helm,4110,1	// Ghoul Card
+IG_CardAlbum_Helm,4112,1	// Marduk Card
+IG_CardAlbum_Helm,4122,1	// Deviruchi Card
+IG_CardAlbum_Helm,4127,1	// Nightmare Card
+IG_CardAlbum_Helm,4161,1	// Grand Peco Card
+IG_CardAlbum_Helm,4169,1	// Dark Illusion Card
+IG_CardAlbum_Helm,4177,1	// Dryad Card
+IG_CardAlbum_Helm,4185,1	// Rideword Card
+IG_CardAlbum_Helm,4188,1	// Leib Olmai Card
+IG_CardAlbum_Helm,4195,1	// Leaf Cat Card
+IG_CardAlbum_Helm,4206,1	// Myst Case Card
+IG_CardAlbum_Helm,4223,1	// Stalactic Golem Card
+IG_CardAlbum_Helm,4229,1	// Tower Keeper Card
+IG_CardAlbum_Helm,4241,1	// Arc Angeling Card
+IG_CardAlbum_Helm,4258,1	// Evil Nymph Card
+IG_CardAlbum_Helm,4260,1	// Wootan Shooter Card
+IG_CardAlbum_Helm,4261,1	// Wootan Fighter Card
+IG_CardAlbum_Helm,4269,1	// Incubus Card
+IG_CardAlbum_Helm,4271,1	// Giant Hornet Card
+IG_CardAlbum_Helm,4278,1	// Gibbet Card
+IG_CardAlbum_Helm,4288,1	// Carat Card
+IG_CardAlbum_Helm,4296,1	// Cramp Card
+IG_CardAlbum_Helm,4311,1	// Permeter Card
+IG_CardAlbum_Helm,4336,1	// Ungoliant Card
+IG_CardAlbum_Helm,4343,1	// Holden Card
+IG_CardAlbum_Helm,4354,1	// Gemini-S58 Card
+IG_CardAlbum_Helm,4358,1	// Seyren Windsor Card
+IG_CardAlbum_Helm,4364,1	// Margaretha Sorin Card
+IG_CardAlbum_Helm,4366,1	// Kathryne Keyron Card
+IG_CardAlbum_Helm,4379,1	// Blue Acidus Card
+IG_CardAlbum_Helm,4411,1	// Vanberk Card
+IG_CardAlbum_Helm,4412,1	// Isilla Card
+IG_CardAlbum_Helm,4434,1	// Knocker Card
+IG_CardAlbum_Helm,4438,1	// Banshee Card
 // Accessory Card Album
-65,4022,1	// Spore Card
-65,4027,1	// Kukre Card
-65,4028,1	// Tarou Card
-65,4033,1	// Poporing Card
-65,4034,1	// Wormtail Card
-65,4036,1	// Muka Card
-65,4044,1	// Smokie Card
-65,4048,1	// Poison Spore Card
-65,4051,1	// Yoyo Card
-65,4053,1	// Vitata Card
-65,4064,1	// Zerom Card
-65,4073,1	// Pirate Skeleton Card
-65,4077,1	// Phen Card
-65,4079,1	// Mantis Card
-65,4084,1	// Marine Sphere Card
-65,4091,1	// Kobold Card
-65,4093,1	// Obeaune Card
-65,4103,1	// Horong Card
-65,4139,1	// Joker Card
-65,4149,1	// Gargoyle Card
-65,4152,1	// Galapago Card
-65,4154,1	// Dumpling Child Card
-65,4175,1	// Poisonous Toad Card
-65,4187,1	// Raydric Archer Card
-65,4190,1	// Wraith Card
-65,4193,1	// Lude Card
-65,4196,1	// Marin Card
-65,4205,1	// Mimic Card
-65,4209,1	// Violy Card
-65,4212,1	// Bongun Card
-65,4215,1	// Blazer Card
-65,4219,1	// Sage Worm Card
-65,4224,1	// Stem Worm Card
-65,4227,1	// Spring Rabbit Card
-65,4228,1	// Sleeper Card
-65,4230,1	// Shinobi Card
-65,4232,1	// Hermit Plant Card
-65,4237,1	// Owl Duke Card
-65,4238,1	// Owl Baron Card
-65,4252,1	// Alligator Card
-65,4256,1	// Orc Archer Card
-65,4262,1	// Cloud Hermit Card
-65,4264,1	// Wind Ghost Card
-65,4265,1	// Jing Guai Card
-65,4272,1	// Zhu Po Long Card
-65,4282,1	// Tengu Card
-65,4283,1	// Greatest General Card
-65,4293,1	// Cookie Card
-65,4294,1	// Quve Card
-65,4321,1	// Hylozoist Card
-65,4326,1	// Sea-Otter Card
-65,4327,1	// Bloody Butterfly Card
-65,4331,1	// Heater Card
-65,4344,1	// Anopheles Card
-65,4347,1	// Armeyer Dinze Card
-65,4348,1	// Wickebine Tres Card
-65,4349,1	// Errende Ebecee Card
-65,4355,1	// Gremlin Card
-65,4356,1	// Beholder Card
-65,4377,1	// Grove Card
-65,4384,1	// Hydrolancer Card
-65,4385,1	// Dragon Egg Card
-65,4389,1	// Plasma Card
-65,4391,1	// Baroness of Retribution Card
-65,4415,1	// Snowier Card
-65,4416,1	// Siroma Card
-65,4418,1	// Gazeti Card
-65,4423,1	// Galion Card
-65,4424,1	// Stapo Card
-65,4433,1	// Imp Card
-65,4436,1	// Ragged Zombie Card
-65,4437,1	// Hell Poodle Card
+IG_CardAlbum_Acc,4022,1	// Spore Card
+IG_CardAlbum_Acc,4027,1	// Kukre Card
+IG_CardAlbum_Acc,4028,1	// Tarou Card
+IG_CardAlbum_Acc,4033,1	// Poporing Card
+IG_CardAlbum_Acc,4034,1	// Wormtail Card
+IG_CardAlbum_Acc,4036,1	// Muka Card
+IG_CardAlbum_Acc,4044,1	// Smokie Card
+IG_CardAlbum_Acc,4048,1	// Poison Spore Card
+IG_CardAlbum_Acc,4051,1	// Yoyo Card
+IG_CardAlbum_Acc,4053,1	// Vitata Card
+IG_CardAlbum_Acc,4064,1	// Zerom Card
+IG_CardAlbum_Acc,4073,1	// Pirate Skeleton Card
+IG_CardAlbum_Acc,4077,1	// Phen Card
+IG_CardAlbum_Acc,4079,1	// Mantis Card
+IG_CardAlbum_Acc,4084,1	// Marine Sphere Card
+IG_CardAlbum_Acc,4091,1	// Kobold Card
+IG_CardAlbum_Acc,4093,1	// Obeaune Card
+IG_CardAlbum_Acc,4103,1	// Horong Card
+IG_CardAlbum_Acc,4139,1	// Joker Card
+IG_CardAlbum_Acc,4149,1	// Gargoyle Card
+IG_CardAlbum_Acc,4152,1	// Galapago Card
+IG_CardAlbum_Acc,4154,1	// Dumpling Child Card
+IG_CardAlbum_Acc,4175,1	// Poisonous Toad Card
+IG_CardAlbum_Acc,4187,1	// Raydric Archer Card
+IG_CardAlbum_Acc,4190,1	// Wraith Card
+IG_CardAlbum_Acc,4193,1	// Lude Card
+IG_CardAlbum_Acc,4196,1	// Marin Card
+IG_CardAlbum_Acc,4205,1	// Mimic Card
+IG_CardAlbum_Acc,4209,1	// Violy Card
+IG_CardAlbum_Acc,4212,1	// Bongun Card
+IG_CardAlbum_Acc,4215,1	// Blazer Card
+IG_CardAlbum_Acc,4219,1	// Sage Worm Card
+IG_CardAlbum_Acc,4224,1	// Stem Worm Card
+IG_CardAlbum_Acc,4227,1	// Spring Rabbit Card
+IG_CardAlbum_Acc,4228,1	// Sleeper Card
+IG_CardAlbum_Acc,4230,1	// Shinobi Card
+IG_CardAlbum_Acc,4232,1	// Hermit Plant Card
+IG_CardAlbum_Acc,4237,1	// Owl Duke Card
+IG_CardAlbum_Acc,4238,1	// Owl Baron Card
+IG_CardAlbum_Acc,4252,1	// Alligator Card
+IG_CardAlbum_Acc,4256,1	// Orc Archer Card
+IG_CardAlbum_Acc,4262,1	// Cloud Hermit Card
+IG_CardAlbum_Acc,4264,1	// Wind Ghost Card
+IG_CardAlbum_Acc,4265,1	// Jing Guai Card
+IG_CardAlbum_Acc,4272,1	// Zhu Po Long Card
+IG_CardAlbum_Acc,4282,1	// Tengu Card
+IG_CardAlbum_Acc,4283,1	// Greatest General Card
+IG_CardAlbum_Acc,4293,1	// Cookie Card
+IG_CardAlbum_Acc,4294,1	// Quve Card
+IG_CardAlbum_Acc,4321,1	// Hylozoist Card
+IG_CardAlbum_Acc,4326,1	// Sea-Otter Card
+IG_CardAlbum_Acc,4327,1	// Bloody Butterfly Card
+IG_CardAlbum_Acc,4331,1	// Heater Card
+IG_CardAlbum_Acc,4344,1	// Anopheles Card
+IG_CardAlbum_Acc,4347,1	// Armeyer Dinze Card
+IG_CardAlbum_Acc,4348,1	// Wickebine Tres Card
+IG_CardAlbum_Acc,4349,1	// Errende Ebecee Card
+IG_CardAlbum_Acc,4355,1	// Gremlin Card
+IG_CardAlbum_Acc,4356,1	// Beholder Card
+IG_CardAlbum_Acc,4377,1	// Grove Card
+IG_CardAlbum_Acc,4384,1	// Hydrolancer Card
+IG_CardAlbum_Acc,4385,1	// Dragon Egg Card
+IG_CardAlbum_Acc,4389,1	// Plasma Card
+IG_CardAlbum_Acc,4391,1	// Baroness of Retribution Card
+IG_CardAlbum_Acc,4415,1	// Snowier Card
+IG_CardAlbum_Acc,4416,1	// Siroma Card
+IG_CardAlbum_Acc,4418,1	// Gazeti Card
+IG_CardAlbum_Acc,4423,1	// Galion Card
+IG_CardAlbum_Acc,4424,1	// Stapo Card
+IG_CardAlbum_Acc,4433,1	// Imp Card
+IG_CardAlbum_Acc,4436,1	// Ragged Zombie Card
+IG_CardAlbum_Acc,4437,1	// Hell Poodle Card
 // Shoes Card Album
-66,4009,1	// Chonchon Card
-66,4038,1	// Zombie Card
-66,4050,1	// Male Thief Bug Card
-66,4070,1	// Eggyra Card
-66,4097,1	// Matyr Card
-66,4100,1	// Sohee Card
-66,4107,1	// Verit Card
-66,4151,1	// Gajomart Card
-66,4160,1	// Firelock Soldier Card
-66,4164,1	// Gullinbursti Card
-66,4186,1	// Raggler Card
-66,4199,1	// Merman Card
-66,4200,1	// Megalith Card
-66,4204,1	// Mini Demon Card
-66,4208,1	// Miyabi Doll Card
-66,4221,1	// Skeleton General Card
-66,4235,1	// Christmas Cookie Card
-66,4239,1	// Iron Fist Card
-66,4244,1	// Alarm Card
-66,4245,1	// Am Mut Card
-66,4249,1	// Ancient Worm Card
-66,4257,1	// Wild Rose Card
-66,4267,1	// Explosion Card
-66,4275,1	// Zombie Prisoner Card
-66,4290,1	// Cat O' Nine Tails Card
-66,4319,1	// Freezer Card
-66,4378,1	// Gold Acidus Card
-66,4381,1	// Green Ferus Card
-66,4396,1	// Odium of Thanatos Card
-66,4417,1	// Ice Titan Card
-66,4435,1	// Zombie Slaughter Card
+IG_CardAlbum_Shoes,4009,1	// Chonchon Card
+IG_CardAlbum_Shoes,4038,1	// Zombie Card
+IG_CardAlbum_Shoes,4050,1	// Male Thief Bug Card
+IG_CardAlbum_Shoes,4070,1	// Eggyra Card
+IG_CardAlbum_Shoes,4097,1	// Matyr Card
+IG_CardAlbum_Shoes,4100,1	// Sohee Card
+IG_CardAlbum_Shoes,4107,1	// Verit Card
+IG_CardAlbum_Shoes,4151,1	// Gajomart Card
+IG_CardAlbum_Shoes,4160,1	// Firelock Soldier Card
+IG_CardAlbum_Shoes,4164,1	// Gullinbursti Card
+IG_CardAlbum_Shoes,4186,1	// Raggler Card
+IG_CardAlbum_Shoes,4199,1	// Merman Card
+IG_CardAlbum_Shoes,4200,1	// Megalith Card
+IG_CardAlbum_Shoes,4204,1	// Mini Demon Card
+IG_CardAlbum_Shoes,4208,1	// Miyabi Doll Card
+IG_CardAlbum_Shoes,4221,1	// Skeleton General Card
+IG_CardAlbum_Shoes,4235,1	// Christmas Cookie Card
+IG_CardAlbum_Shoes,4239,1	// Iron Fist Card
+IG_CardAlbum_Shoes,4244,1	// Alarm Card
+IG_CardAlbum_Shoes,4245,1	// Am Mut Card
+IG_CardAlbum_Shoes,4249,1	// Ancient Worm Card
+IG_CardAlbum_Shoes,4257,1	// Wild Rose Card
+IG_CardAlbum_Shoes,4267,1	// Explosion Card
+IG_CardAlbum_Shoes,4275,1	// Zombie Prisoner Card
+IG_CardAlbum_Shoes,4290,1	// Cat O' Nine Tails Card
+IG_CardAlbum_Shoes,4319,1	// Freezer Card
+IG_CardAlbum_Shoes,4378,1	// Gold Acidus Card
+IG_CardAlbum_Shoes,4381,1	// Green Ferus Card
+IG_CardAlbum_Shoes,4396,1	// Odium of Thanatos Card
+IG_CardAlbum_Shoes,4417,1	// Ice Titan Card
+IG_CardAlbum_Shoes,4435,1	// Zombie Slaughter Card
 // Shield Card Album
-67,4012,1	// Thief Bug Egg Card
-67,4013,1	// Andre Egg Card
-67,4032,1	// Ambernite Card
-67,4045,1	// Horn Card
-67,4058,1	// Thara Frog Card
-67,4066,1	// Orc Warrior Card
-67,4067,1	// Megalodon Card
-67,4074,1	// Bigfoot Card
-67,4075,1	// Argos Card
-67,4083,1	// Rafflesia Card
-67,4090,1	// Munak Card
-67,4120,1	// Sky Petite Card
-67,4124,1	// Medusa Card
-67,4136,1	// Khalitzburg Card
-67,4138,1	// Anubis Card
-67,4207,1	// Mysteltainn Card
-67,4217,1	// Enchanted Peach Tree Card
-67,4226,1	// Sting Card
-67,4231,1	// Mi Gao Card
-67,4240,1	// Arclouze Card
-67,4248,1	// Ancient Mummy Card
-67,4250,1	// Executioner Card
-67,4253,1	// Alice Card
-67,4254,1	// Ogretooth Card
-67,4277,1	// Zealotus Card
-67,4304,1	// Tamruan Card
-67,4309,1	// Parasite Card
-67,4314,1	// Penomena Card
-67,4322,1	// High Orc Card
-67,4340,1	// Teddy Bear Card
-67,4397,1	// Despero of Thanatos Card
-67,4413,1	// Hodremlin Card
-67,4414,1	// Seeker Card
-67,4420,1	// Muscipular Card
-67,4439,1	// Flame Skull Card
-67,4442,1	// Tatacho Card
-67,4443,1	// Aqua Elemental Card
-67,4444,1	// Draco Card
-67,4445,1	// Luciola Vespa Card
-67,4447,1	// Centipede Card
-67,4448,1	// Cornus Card
-67,4449,1	// Dark Shadow Card
+IG_CardAlbum_Shield,4012,1	// Thief Bug Egg Card
+IG_CardAlbum_Shield,4013,1	// Andre Egg Card
+IG_CardAlbum_Shield,4032,1	// Ambernite Card
+IG_CardAlbum_Shield,4045,1	// Horn Card
+IG_CardAlbum_Shield,4058,1	// Thara Frog Card
+IG_CardAlbum_Shield,4066,1	// Orc Warrior Card
+IG_CardAlbum_Shield,4067,1	// Megalodon Card
+IG_CardAlbum_Shield,4074,1	// Bigfoot Card
+IG_CardAlbum_Shield,4075,1	// Argos Card
+IG_CardAlbum_Shield,4083,1	// Rafflesia Card
+IG_CardAlbum_Shield,4090,1	// Munak Card
+IG_CardAlbum_Shield,4120,1	// Sky Petite Card
+IG_CardAlbum_Shield,4124,1	// Medusa Card
+IG_CardAlbum_Shield,4136,1	// Khalitzburg Card
+IG_CardAlbum_Shield,4138,1	// Anubis Card
+IG_CardAlbum_Shield,4207,1	// Mysteltainn Card
+IG_CardAlbum_Shield,4217,1	// Enchanted Peach Tree Card
+IG_CardAlbum_Shield,4226,1	// Sting Card
+IG_CardAlbum_Shield,4231,1	// Mi Gao Card
+IG_CardAlbum_Shield,4240,1	// Arclouze Card
+IG_CardAlbum_Shield,4248,1	// Ancient Mummy Card
+IG_CardAlbum_Shield,4250,1	// Executioner Card
+IG_CardAlbum_Shield,4253,1	// Alice Card
+IG_CardAlbum_Shield,4254,1	// Ogretooth Card
+IG_CardAlbum_Shield,4277,1	// Zealotus Card
+IG_CardAlbum_Shield,4304,1	// Tamruan Card
+IG_CardAlbum_Shield,4309,1	// Parasite Card
+IG_CardAlbum_Shield,4314,1	// Penomena Card
+IG_CardAlbum_Shield,4322,1	// High Orc Card
+IG_CardAlbum_Shield,4340,1	// Teddy Bear Card
+IG_CardAlbum_Shield,4397,1	// Despero of Thanatos Card
+IG_CardAlbum_Shield,4413,1	// Hodremlin Card
+IG_CardAlbum_Shield,4414,1	// Seeker Card
+IG_CardAlbum_Shield,4420,1	// Muscipular Card
+IG_CardAlbum_Shield,4439,1	// Flame Skull Card
+IG_CardAlbum_Shield,4442,1	// Tatacho Card
+IG_CardAlbum_Shield,4443,1	// Aqua Elemental Card
+IG_CardAlbum_Shield,4444,1	// Draco Card
+IG_CardAlbum_Shield,4445,1	// Luciola Vespa Card
+IG_CardAlbum_Shield,4447,1	// Centipede Card
+IG_CardAlbum_Shield,4448,1	// Cornus Card
+IG_CardAlbum_Shield,4449,1	// Dark Shadow Card
 // Weapon Card Album
-68,4002,1	// Fabre Card
-68,4004,1	// Drops Card
-68,4005,1	// Santa Poring Card
-68,4006,1	// Lunatic Card
-68,4007,1	// Peco Peco Egg Card
-68,4017,1	// Savage Babe Card
-68,4018,1	// Andre Larva Card
-68,4019,1	// Hornet Card
-68,4020,1	// Familiar Card
-68,4024,1	// Plankton Card
-68,4025,1	// Skeleton Card
-68,4026,1	// Female Thief Bug Card
-68,4029,1	// Wolf Card
-68,4030,1	// Mandragora Card
-68,4035,1	// Hydra Card
-68,4037,1	// Snake Card
-68,4043,1	// Andre Card
-68,4049,1	// Vadon Card
-68,4055,1	// Marina Card
-68,4057,1	// Metaller Card
-68,4060,1	// Goblin Card
-68,4062,1	// Anacondaq Card
-68,4063,1	// Caramel Card
-68,4065,1	// Kaho Card
-68,4068,1	// Scorpion Card
-68,4069,1	// Drainliar Card
-68,4072,1	// Golem Card
-68,4076,1	// Magnolia Card
-68,4080,1	// Flora Card
-68,4082,1	// Desert Wolf Card
-68,4085,1	// Orc Skeleton Card
-68,4086,1	// Soldier Skeleton Card
-68,4092,1	// Skeleton Worker Card
-68,4094,1	// Archer Skeleton Card
-68,4096,1	// Zenorc Card
-68,4104,1	// Requiem Card
-68,4106,1	// Mummy Card
-68,4111,1	// Strouf Card
-68,4115,1	// Hunter Fly Card
-68,4117,1	// Sidewinder Card
-68,4118,1	// Earth Petite Card
-68,4125,1	// Deviace Card
-68,4126,1	// Minorous Card
-68,4130,1	// Scorpion King Card
-68,4140,1	// Abysmal Knight Card
-68,4153,1	// Crab Card
-68,4155,1	// Goblin Leader Card
-68,4156,1	// Goblin Steamrider Card
-68,4157,1	// Goblin Archer Card
-68,4163,1	// Gryphon Card
-68,4165,1	// Gig Card
-68,4167,1	// Nereid Card
-68,4171,1	// Dark Priest Card
-68,4172,1	// The Paper Card
-68,4176,1	// Dullahan Card
-68,4180,1	// Driller Card
-68,4182,1	// Diabolic Card
-68,4184,1	// Lava Golem Card
-68,4192,1	// Rotar Zairo Card
-68,4202,1	// Mao Guai Card
-68,4203,1	// Mutant Dragonoid Card
-68,4214,1	// Bloody Murderer Card
-68,4225,1	// Stone Shooter Card
-68,4246,1	// Assaulter Card
-68,4247,1	// Aster Card
-68,4251,1	// Elder Card
-68,4255,1	// Orc Lady Card
-68,4268,1	// Injustice Card
-68,4273,1	// Shell Fish Card
-68,4274,1	// Zombie Master Card
-68,4281,1	// Zipper Bear Card
-68,4284,1	// Chepet Card
-68,4289,1	// Caterpillar Card
-68,4291,1	// Kobold Leader Card
-68,4292,1	// Kobold Archer Card
-68,4297,1	// Cruiser Card
-68,4307,1	// Beetle King Card
-68,4308,1	// Tri Joint Card
-68,4310,1	// Panzer Goblin Card
-68,4312,1	// Seal Card
-68,4316,1	// False Angel Card
-68,4317,1	// Mobster Card
-68,4320,1	// Bloody Knight Card
-68,4323,1	// Hatii Babe Card
-68,4329,1	// Phendark Card
-68,4335,1	// Pitman Card
-68,4341,1	// Metaling Card
-68,4345,1	// Hill Wind Card
-68,4350,1	// Laurell Weinder Card
-68,4360,1	// Eremes Guile Card
-68,4362,1	// Howard Alt-Eisen Card
-68,4368,1	// Cecil Damon Card
-68,4380,1	// Red Ferus Card
-68,4388,1	// Death Word Card
-68,4390,1	// Breeze Card
-68,4394,1	// Lady Solace Card
-68,4395,1	// Maero of Thanatos Card
-68,4398,1	// Dolor of Thanatos Card
-68,4406,1	// Skeggiold Card
-68,4421,1	// Drosera Card
-68,4427,1	// Sword Guardian Card
-68,4428,1	// Bow Guardian Card
-68,4440,1	// Necromancer Card
-68,4452,1	// Centipede Larva Card
-68,4453,1	// Hillsrion Card
+IG_CardAlbum_Weapon,4002,1	// Fabre Card
+IG_CardAlbum_Weapon,4004,1	// Drops Card
+IG_CardAlbum_Weapon,4005,1	// Santa Poring Card
+IG_CardAlbum_Weapon,4006,1	// Lunatic Card
+IG_CardAlbum_Weapon,4007,1	// Peco Peco Egg Card
+IG_CardAlbum_Weapon,4017,1	// Savage Babe Card
+IG_CardAlbum_Weapon,4018,1	// Andre Larva Card
+IG_CardAlbum_Weapon,4019,1	// Hornet Card
+IG_CardAlbum_Weapon,4020,1	// Familiar Card
+IG_CardAlbum_Weapon,4024,1	// Plankton Card
+IG_CardAlbum_Weapon,4025,1	// Skeleton Card
+IG_CardAlbum_Weapon,4026,1	// Female Thief Bug Card
+IG_CardAlbum_Weapon,4029,1	// Wolf Card
+IG_CardAlbum_Weapon,4030,1	// Mandragora Card
+IG_CardAlbum_Weapon,4035,1	// Hydra Card
+IG_CardAlbum_Weapon,4037,1	// Snake Card
+IG_CardAlbum_Weapon,4043,1	// Andre Card
+IG_CardAlbum_Weapon,4049,1	// Vadon Card
+IG_CardAlbum_Weapon,4055,1	// Marina Card
+IG_CardAlbum_Weapon,4057,1	// Metaller Card
+IG_CardAlbum_Weapon,4060,1	// Goblin Card
+IG_CardAlbum_Weapon,4062,1	// Anacondaq Card
+IG_CardAlbum_Weapon,4063,1	// Caramel Card
+IG_CardAlbum_Weapon,4065,1	// Kaho Card
+IG_CardAlbum_Weapon,4068,1	// Scorpion Card
+IG_CardAlbum_Weapon,4069,1	// Drainliar Card
+IG_CardAlbum_Weapon,4072,1	// Golem Card
+IG_CardAlbum_Weapon,4076,1	// Magnolia Card
+IG_CardAlbum_Weapon,4080,1	// Flora Card
+IG_CardAlbum_Weapon,4082,1	// Desert Wolf Card
+IG_CardAlbum_Weapon,4085,1	// Orc Skeleton Card
+IG_CardAlbum_Weapon,4086,1	// Soldier Skeleton Card
+IG_CardAlbum_Weapon,4092,1	// Skeleton Worker Card
+IG_CardAlbum_Weapon,4094,1	// Archer Skeleton Card
+IG_CardAlbum_Weapon,4096,1	// Zenorc Card
+IG_CardAlbum_Weapon,4104,1	// Requiem Card
+IG_CardAlbum_Weapon,4106,1	// Mummy Card
+IG_CardAlbum_Weapon,4111,1	// Strouf Card
+IG_CardAlbum_Weapon,4115,1	// Hunter Fly Card
+IG_CardAlbum_Weapon,4117,1	// Sidewinder Card
+IG_CardAlbum_Weapon,4118,1	// Earth Petite Card
+IG_CardAlbum_Weapon,4125,1	// Deviace Card
+IG_CardAlbum_Weapon,4126,1	// Minorous Card
+IG_CardAlbum_Weapon,4130,1	// Scorpion King Card
+IG_CardAlbum_Weapon,4140,1	// Abysmal Knight Card
+IG_CardAlbum_Weapon,4153,1	// Crab Card
+IG_CardAlbum_Weapon,4155,1	// Goblin Leader Card
+IG_CardAlbum_Weapon,4156,1	// Goblin Steamrider Card
+IG_CardAlbum_Weapon,4157,1	// Goblin Archer Card
+IG_CardAlbum_Weapon,4163,1	// Gryphon Card
+IG_CardAlbum_Weapon,4165,1	// Gig Card
+IG_CardAlbum_Weapon,4167,1	// Nereid Card
+IG_CardAlbum_Weapon,4171,1	// Dark Priest Card
+IG_CardAlbum_Weapon,4172,1	// The Paper Card
+IG_CardAlbum_Weapon,4176,1	// Dullahan Card
+IG_CardAlbum_Weapon,4180,1	// Driller Card
+IG_CardAlbum_Weapon,4182,1	// Diabolic Card
+IG_CardAlbum_Weapon,4184,1	// Lava Golem Card
+IG_CardAlbum_Weapon,4192,1	// Rotar Zairo Card
+IG_CardAlbum_Weapon,4202,1	// Mao Guai Card
+IG_CardAlbum_Weapon,4203,1	// Mutant Dragonoid Card
+IG_CardAlbum_Weapon,4214,1	// Bloody Murderer Card
+IG_CardAlbum_Weapon,4225,1	// Stone Shooter Card
+IG_CardAlbum_Weapon,4246,1	// Assaulter Card
+IG_CardAlbum_Weapon,4247,1	// Aster Card
+IG_CardAlbum_Weapon,4251,1	// Elder Card
+IG_CardAlbum_Weapon,4255,1	// Orc Lady Card
+IG_CardAlbum_Weapon,4268,1	// Injustice Card
+IG_CardAlbum_Weapon,4273,1	// Shell Fish Card
+IG_CardAlbum_Weapon,4274,1	// Zombie Master Card
+IG_CardAlbum_Weapon,4281,1	// Zipper Bear Card
+IG_CardAlbum_Weapon,4284,1	// Chepet Card
+IG_CardAlbum_Weapon,4289,1	// Caterpillar Card
+IG_CardAlbum_Weapon,4291,1	// Kobold Leader Card
+IG_CardAlbum_Weapon,4292,1	// Kobold Archer Card
+IG_CardAlbum_Weapon,4297,1	// Cruiser Card
+IG_CardAlbum_Weapon,4307,1	// Beetle King Card
+IG_CardAlbum_Weapon,4308,1	// Tri Joint Card
+IG_CardAlbum_Weapon,4310,1	// Panzer Goblin Card
+IG_CardAlbum_Weapon,4312,1	// Seal Card
+IG_CardAlbum_Weapon,4316,1	// False Angel Card
+IG_CardAlbum_Weapon,4317,1	// Mobster Card
+IG_CardAlbum_Weapon,4320,1	// Bloody Knight Card
+IG_CardAlbum_Weapon,4323,1	// Hatii Babe Card
+IG_CardAlbum_Weapon,4329,1	// Phendark Card
+IG_CardAlbum_Weapon,4335,1	// Pitman Card
+IG_CardAlbum_Weapon,4341,1	// Metaling Card
+IG_CardAlbum_Weapon,4345,1	// Hill Wind Card
+IG_CardAlbum_Weapon,4350,1	// Laurell Weinder Card
+IG_CardAlbum_Weapon,4360,1	// Eremes Guile Card
+IG_CardAlbum_Weapon,4362,1	// Howard Alt-Eisen Card
+IG_CardAlbum_Weapon,4368,1	// Cecil Damon Card
+IG_CardAlbum_Weapon,4380,1	// Red Ferus Card
+IG_CardAlbum_Weapon,4388,1	// Death Word Card
+IG_CardAlbum_Weapon,4390,1	// Breeze Card
+IG_CardAlbum_Weapon,4394,1	// Lady Solace Card
+IG_CardAlbum_Weapon,4395,1	// Maero of Thanatos Card
+IG_CardAlbum_Weapon,4398,1	// Dolor of Thanatos Card
+IG_CardAlbum_Weapon,4406,1	// Skeggiold Card
+IG_CardAlbum_Weapon,4421,1	// Drosera Card
+IG_CardAlbum_Weapon,4427,1	// Sword Guardian Card
+IG_CardAlbum_Weapon,4428,1	// Bow Guardian Card
+IG_CardAlbum_Weapon,4440,1	// Necromancer Card
+IG_CardAlbum_Weapon,4452,1	// Centipede Larva Card
+IG_CardAlbum_Weapon,4453,1	// Hillsrion Card
 // Garment Card Album
-69,4015,32	// Condor Card
-69,4056,32	// Dustiness Card
-69,4071,32	// Orc Zombie Card
-69,4081,32	// Hode Card
-69,4088,32	// Frilldora Card
-69,4095,32	// Marse Card
-69,4102,32	// Whisper Card
-69,4108,32	// Myst Card
-69,4109,32	// Jakk Card
-69,4113,32	// Marionette Card
-69,4116,32	// Isis Card
-69,4129,32	// Bapho Jr. Card
-69,4133,32	// Raydric Card
-69,4159,32	// Nine Tail Card
-69,4174,1	// Deviling Card
-69,4178,32	// Dragon Tail Card
-69,4179,32	// Dragon Fly Card
-69,4183,1	// Vagabond Wolf Card
-69,4197,1	// Mastering Card
-69,4210,1	// Wanderer Card
-69,4211,1	// Vocal Card
-69,4266,32	// Eclipse Card
-69,4285,32	// Choco Card
-69,4287,32	// Kapha Card
-69,4303,32	// Giant Whisper Card
-69,4306,1	// Toad Card
-69,4313,32	// Punk Card
-69,4325,32	// Harpy Card
-69,4328,32	// Yao Jun Card
-69,4334,32	// Noxious Card
-69,4351,1	// Kavach Icarus Card
-69,4373,32	// Green Maiden Card
-69,4375,32	// Orc Baby Card
-69,4402,32	// Aliot Card
-69,4422,32	// Roween Card
-69,4429,32	// Salamander Card
-69,4431,32	// Kasa Card
-69,4432,33	// Magmaring Card
+IG_CardAlbum_Garment,4015,32	// Condor Card
+IG_CardAlbum_Garment,4056,32	// Dustiness Card
+IG_CardAlbum_Garment,4071,32	// Orc Zombie Card
+IG_CardAlbum_Garment,4081,32	// Hode Card
+IG_CardAlbum_Garment,4088,32	// Frilldora Card
+IG_CardAlbum_Garment,4095,32	// Marse Card
+IG_CardAlbum_Garment,4102,32	// Whisper Card
+IG_CardAlbum_Garment,4108,32	// Myst Card
+IG_CardAlbum_Garment,4109,32	// Jakk Card
+IG_CardAlbum_Garment,4113,32	// Marionette Card
+IG_CardAlbum_Garment,4116,32	// Isis Card
+IG_CardAlbum_Garment,4129,32	// Bapho Jr. Card
+IG_CardAlbum_Garment,4133,32	// Raydric Card
+IG_CardAlbum_Garment,4159,32	// Nine Tail Card
+IG_CardAlbum_Garment,4174,1	// Deviling Card
+IG_CardAlbum_Garment,4178,32	// Dragon Tail Card
+IG_CardAlbum_Garment,4179,32	// Dragon Fly Card
+IG_CardAlbum_Garment,4183,1	// Vagabond Wolf Card
+IG_CardAlbum_Garment,4197,1	// Mastering Card
+IG_CardAlbum_Garment,4210,1	// Wanderer Card
+IG_CardAlbum_Garment,4211,1	// Vocal Card
+IG_CardAlbum_Garment,4266,32	// Eclipse Card
+IG_CardAlbum_Garment,4285,32	// Choco Card
+IG_CardAlbum_Garment,4287,32	// Kapha Card
+IG_CardAlbum_Garment,4303,32	// Giant Whisper Card
+IG_CardAlbum_Garment,4306,1	// Toad Card
+IG_CardAlbum_Garment,4313,32	// Punk Card
+IG_CardAlbum_Garment,4325,32	// Harpy Card
+IG_CardAlbum_Garment,4328,32	// Yao Jun Card
+IG_CardAlbum_Garment,4334,32	// Noxious Card
+IG_CardAlbum_Garment,4351,1	// Kavach Icarus Card
+IG_CardAlbum_Garment,4373,32	// Green Maiden Card
+IG_CardAlbum_Garment,4375,32	// Orc Baby Card
+IG_CardAlbum_Garment,4402,32	// Aliot Card
+IG_CardAlbum_Garment,4422,32	// Roween Card
+IG_CardAlbum_Garment,4429,32	// Salamander Card
+IG_CardAlbum_Garment,4431,32	// Kasa Card
+IG_CardAlbum_Garment,4432,33	// Magmaring Card
 // Flamel Card
-70,545,1		// Condensed Red Potion
-70,546,1		// Condensed Yellow Potion
-70,547,1		// Condensed White Potion
+IG_Flamel_Card,545,1		// Condensed Red Potion
+IG_Flamel_Card,546,1		// Condensed Yellow Potion
+IG_Flamel_Card,547,1		// Condensed White Potion
 //Candy Holder
 IG_Candy_Holder,518,10 //Honey
 IG_Candy_Holder,529,20	//Candy

@@ -1,0 +1,53 @@
+// Flagged Items
+// <ItemID>,<Flag>
+//
+// <Flag>:
+// 1 - As Dead Branch item (will be logged at `branchlog` table and cannot be used at 'nobranch' mapflag)
+// 2 - As item group container, check player's inventory and weight before consumed
+// NOTE: For removing flag by import file, use "-" to remove the flag. Example, 604,-1 will removes flag 1 from Branch_Of_Dead_Tree
+
+// Logged as Dead Branch item
+604,1 //Branch_Of_Dead_Tree
+12103,1 //Bloody_Dead_Branch
+12109,1 //Poring_Box
+12024,1 //Red_Pouch_Of_Surprise
+
+// Item group container
+603,2 //Old_Blue_Box
+616,2 //Old_Card_Album
+617,2 //Old_Violet_Box
+618,2 //Worn_Out_Scroll
+644,2 //Gift_Box
+664,2 //Gift_Box_1
+665,2 //Gift_Box_2
+666,2 //Gift_Box_3
+667,2 //Gift_Box_4
+12023,2 //Giftbox_China
+12025,2 //Egg_Boy
+12026,2 //Egg_Girl
+12038,2 //Lotto_Box04
+12104,2 //Random_Quiver
+12105,2 //Set_Of_Taiming_Item
+12106,2 //Accessory_Box
+12107,2 //Wrapped_Mask
+12108,2 //Bundle_Of_Magic_Scroll
+12110,2 //First_Aid_Kit
+12111,2 //Food_Package
+12130,2 //Cookie_Bag
+12186,2 //Red_Box
+12187,2 //Green_Box
+12189,2 //Red_Box_
+12194,2 //Hometown_Gift
+12240,2 //Old_Yellow_Box
+12244,2 //Old_Gift_Box
+12246,2 //Magic_Card_Album
+12248,2 //Masquerade_Ball_Box
+12281,2 //Tresure_Box_WoE
+12286,2 //Masquerade_Ball_Box2
+12334,2 //Cherish_Box
+12339,2 //Cherish_Box_Ori
+12355,2 //Xmas_Gift
+12356,2 //Louise_Costume_Box
+12702,2 //Old_Bleu_Box
+12714,2 //Easter_Scroll
+14596,2 //Pierre_Treasurebox

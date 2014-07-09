@@ -46,7 +46,7 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 	11,10,10, 0,11, -1,266,10,	// 2b10-2b17: U->2b10, U->2b11, U->2b12, F->2b13, U->2b14, U->2b15, U->2b16, U->2b17
 	 2,10, 2,-1,-1,-1, 2, 7,	// 2b18-2b1f: U->2b18, U->2b19, U->2b1a, U->2b1b, U->2b1c, U->2b1d, U->2b1e, U->2b1f
 	-1,10, 8, 2, 2,14,19,19,	// 2b20-2b27: U->2b20, U->2b21, U->2b22, U->2b23, U->2b24, U->2b25, U->2b26, U->2b27
-	-1,10, 6,15, 0, 6,-1,-1,	// 2b28-2b2f: U->2b28, U->2b29, U->2b2a, U->2b2b, F->2b2c, U->2b2d, U->2b2e, U->2b2f
+	-1,10, 6,16, 0, 6,-1,-1,	// 2b28-2b2f: U->2b28, U->2b29, U->2b2a, U->2b2b, F->2b2c, U->2b2d, U->2b2e, U->2b2f
  };
 
 //Used Packets:
@@ -341,8 +341,8 @@ int chrif_save(struct map_session_data *sd, int flag) {
 
 	if( sd->status.pet_id > 0 && sd->pd )
 		intif_save_petdata(sd->status.account_id,&sd->pd->pet);
-	if( sd->hd && merc_is_hom_active(sd->hd) )
-		merc_save(sd->hd);
+	if( sd->hd && hom_is_active(sd->hd) )
+		hom_save(sd->hd);
 	if( sd->md && mercenary_get_lifetime(sd->md) > 0 )
 		mercenary_save(sd->md);
 	if( sd->ed && elemental_get_lifetime(sd->ed) > 0 )
@@ -876,15 +876,15 @@ int chrif_changesex(struct map_session_data *sd) {
 /**
  * R 2b0f <accid>.l <name>.24B <type>.w <answer>.w
  * Processing a reply to chrif_req_login_operation() (request to modify an account).
- * NB: That ack is received just after the char as sent the request to login and therefore didn't have login reply yet
+ * NB: That ack is received just after the char has sent the request to login and therefore didn't have login reply yet
  * @param aid : player account id the request was concerning
  * @param player_name : name the request was concerning
  * @param type : code of operation done:
  *   1: block, 2: ban, 3: unblock, 4: unban, 5: changesex, 6: vip, 7: bank
- * @param awnser : type of anwser \n
- *   0: login-server request done \n
- *   1: player not found \n
- *   2: gm level too low \n
+ * @param answer : type of answer
+ *   0: login-server request done
+ *   1: player not found
+ *   2: gm level too low
  *   3: login-server offline
  */
 static void chrif_ack_login_req(int aid, const char* player_name, uint16 type, uint16 answer) {
@@ -901,21 +901,20 @@ static void chrif_ack_login_req(int aid, const char* player_name, uint16 type, u
 	
 	if( type > 0 && type <= 5 )
 		snprintf(action,25,"%s",msg_txt(sd,427+type)); //block|ban|unblock|unban|change the sex of
-	else if(type==6) snprintf(action,25,"%s","vip"); //TODO make some place for those type in msg_conf
-	else if(type==7){
+	else if(type == 6) snprintf(action,25,"%s",msg_txt(sd,436)); //VIP
+	else if(type == 7) {
 		if (!battle_config.disp_serverbank_msg)
 			return;
 		snprintf(action,25,"%s","bank");
-	}
-	else
+	} else
 		snprintf(action,25,"???");
 
 	switch( answer ) {
-		case 0 : sprintf(output, msg_txt(sd,424), action, NAME_LENGTH, player_name); break; //login-serv has been asked to %s the player '%.*s'.
-		case 1 : sprintf(output, msg_txt(sd,425), NAME_LENGTH, player_name); break;
-		case 2 : sprintf(output, msg_txt(sd,426), action, NAME_LENGTH, player_name); break;
-		case 3 : sprintf(output, msg_txt(sd,427), action, NAME_LENGTH, player_name); break;
-		case 4 : sprintf(output, msg_txt(sd,424), action, NAME_LENGTH, player_name); break;
+		case 0: sprintf(output, msg_txt(sd,424), action, NAME_LENGTH, player_name); break; //Login-serv has been asked to %s '%.*s'.
+		case 1: sprintf(output, msg_txt(sd,425), NAME_LENGTH, player_name); break;
+		case 2: sprintf(output, msg_txt(sd,426), action, NAME_LENGTH, player_name); break;
+		case 3: sprintf(output, msg_txt(sd,427), action, NAME_LENGTH, player_name); break;
+		case 4: sprintf(output, msg_txt(sd,424), action, NAME_LENGTH, player_name); break;
 		default: output[0] = '\0'; break;
 	}
 	clif_displaymessage(sd->fd, output);
@@ -1373,11 +1372,14 @@ int chrif_load_scdata(int fd) {
 
 	for (i = 0; i < count; i++) {
 		struct status_change_data *data = (struct status_change_data*)RFIFOP(fd,14 + i*sizeof(struct status_change_data));
+
 		status_change_start(NULL,&sd->bl, (sc_type)data->type, 10000, data->val1, data->val2, data->val3, data->val4, data->tick, 1|2|4|8);
 	}
+
+	pc_scdata_received(sd);
 #endif
 
-	if( sd->state.autotrade ){
+	if( sd->state.autotrade ) {
 		buyingstore_reopen( sd );
 		vending_reopen( sd );
 	}
@@ -1551,13 +1553,19 @@ void chrif_parse_ack_vipActive(int fd) {
 	int aid = RFIFOL(fd,2);
 	uint32 vip_time = RFIFOL(fd,6);
 	bool isvip = RFIFOB(fd,10);
-	uint32 groupid = RFIFOL(fd,11);
+	bool isgm = RFIFOB(fd,11);
+	uint32 groupid = RFIFOL(fd,12);
 	TBL_PC *sd = map_id2sd(aid);
 
-	if(sd == NULL) return ;
+	if(sd == NULL) return;
 
 	sd->group_id = groupid;
 	pc_group_pc_load(sd);
+
+	if(isgm) {
+		clif_displaymessage(sd->fd,msg_txt(sd,437));
+		return;
+	}
 	if(isvip) {
 		sd->vip.enabled = 1;
 		sd->vip.time = vip_time;
@@ -1570,13 +1578,12 @@ void chrif_parse_ack_vipActive(int fd) {
 		// Magic Stone requirement avoidance for VIP.
 		if (battle_config.vip_gemstone)
 			sd->special_state.no_gemstone = 2; // need to be done after status_calc_bl(bl,first);
-	}
-	else if (sd->vip.enabled){
+	} else if (sd->vip.enabled) {
 		sd->vip.enabled = 0;
 		sd->vip.time = 0;
 		sd->storage_size = MIN_STORAGE;
 		sd->special_state.no_gemstone = 0;
-		clif_displaymessage(sd->fd,"You're no longer a VIP_Member");
+		clif_displaymessage(sd->fd,msg_txt(sd,438));
 	}
 #endif
 }
@@ -1812,11 +1819,11 @@ int chrif_save_bsdata(struct map_session_data *sd) {
 	WFIFOW(char_fd,0) = 0x2b2e;
 	WFIFOL(char_fd,4) = sd->status.char_id;
 	
-	i = BONUS_FLAG_REM_ON_LOGOUT; //Remove bonus with this flag
+	i = BSF_REM_ON_LOGOUT; //Remove bonus with this flag
 	if (battle_config.debuff_on_logout&1) //Remove negative buffs
-		i |= BONUS_FLAG_REM_DEBUFF;
+		i |= BSF_REM_DEBUFF;
 	if (battle_config.debuff_on_logout&2) //Remove positive buffs
-		i |= BONUS_FLAG_REM_BUFF;
+		i |= BSF_REM_BUFF;
 	
 	//Clear data that won't be stored
 	pc_bonus_script_clear(sd,i);
@@ -1836,8 +1843,7 @@ int chrif_save_bsdata(struct map_session_data *sd) {
 		bs.icon = sd->bonus_script[i].icon;
 
 		memcpy(WFIFOP(char_fd,10+count*sizeof(struct bonus_script_data)),&bs,sizeof(struct bonus_script_data));
-		delete_timer(sd->bonus_script[i].tid,pc_bonus_script_timer);
-		pc_bonus_script_remove(sd,i);
+		pc_bonus_script_remove(&sd->bonus_script[i]);
 		count++;
 	}
 
@@ -1893,7 +1899,7 @@ int chrif_load_bsdata(int fd) {
 		calc = true;
 	}
 	if (calc)
-		status_calc_pc(sd,false);
+		status_calc_pc(sd,SCO_NONE);
 	return 0;
 }
 
@@ -1917,7 +1923,7 @@ int auth_db_final(DBKey key, DBData *data, va_list ap) {
 /*==========================================
  * Destructor
  *------------------------------------------*/
-int do_final_chrif(void) {
+void do_final_chrif(void) {
 
 	if( char_fd != -1 ) {
 		do_close(char_fd);
@@ -1927,14 +1933,12 @@ int do_final_chrif(void) {
 	auth_db->destroy(auth_db, auth_db_final);
 
 	ers_destroy(auth_db_ers);
-
-	return 0;
 }
 
 /*==========================================
  *
  *------------------------------------------*/
-int do_init_chrif(void) {
+void do_init_chrif(void) {
 	if(sizeof(struct mmo_charstatus) > 0xFFFF){
 		ShowError("mmo_charstatus size = %d is too big to be transmitted. (must be below 0xFFFF) \n",
 			sizeof(struct mmo_charstatus));
@@ -1954,6 +1958,4 @@ int do_init_chrif(void) {
 
 	// send the user count every 10 seconds, to hide the charserver's online counting problem
 	add_timer_interval(gettick() + 1000, send_usercount_tochar, 0, 0, UPDATE_INTERVAL);
-
-	return 0;
 }

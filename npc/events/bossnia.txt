@@ -66,7 +66,7 @@ prontera,132,125,4	script	Bossnia Staff#1	908,{
 
 	// If the VIP system is enabled, players pay a Reset Stone for 5 entrances (with a choice of warps).
 	// If it's disabled, players pay 5,000z per entrance.
-	if (getserverdef(VAR_VIP_SCRIPT)) {
+	if (VIP_SCRIPT) {
 		mes "a grudge against me. It'll cost you 1 Reset Stone for 5 access.";
 		next;
 		mes "[Riss]";

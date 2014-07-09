@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= War of Emperium (Payon)
+//= War of Emperium (Payon) - Holy Shadow
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
-//= NPCs that relate to Payon Guild Castle 1
+//= NPCs that relate to Payon Guild Castle 3
 //===== Additional Comments: =================================
 //= 1.0 First Version. No longer uses functions. [L0ne_W0lf]
 //= 1.1 Corrected flag-in spawn point. [L0ne_W0lf]
@@ -106,7 +106,6 @@ payg_cas03,50,261,3	duplicate(cm)	Gheriot#payg_cas03	55
 // Treasure Room Exit
 //============================================================
 payg_cas03,163,167,0	script	#lever_PA03	111,{
-
 	mes " ";
 	mes "There's a small lever. Will you pull it?";
 	next;

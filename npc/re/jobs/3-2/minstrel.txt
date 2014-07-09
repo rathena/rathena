@@ -117,7 +117,7 @@ alberta,196,133,4	script	Bard#job_min	486,{
 				mes "See you later~";
 				close;
 			}
-			if (getserverdef(VAR_VIP_SCRIPT)) {
+			if (VIP_SCRIPT) {
 				callfunc "VIP_Third_Class";
 				set job_min,1;
 				setquest 11135;

@@ -18,6 +18,8 @@
 //= 1.0 Added Malangdo Refiner "Holink". [Euphy]
 //============================================================
 
+// Main NPC :: mal_jerun
+//============================================================
 malangdo,221,174,6	script	Holink#mal_cash	559,{
 	disable_items;
 	mes "[Holink]";

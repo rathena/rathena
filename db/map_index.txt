@@ -914,6 +914,44 @@ evt_bomb
 1@sara
 1@gef_in
 dali
+dali02
+1@ge_st
+1@spa
+1@tnm1
+1@tnm2
+1@tnm3
+1@dth1
+1@dth2
+1@dth3
+1@eom
+1@jtb
+1@rev
+1@xm_d
+moro_cav
+moro_vol
+silk_lair
+c_tower2_
+c_tower3_
+1@mcd
+ver_eju
+ver_tunn
+verus03
+verus04
+job_gun
+1@air1
+1@air2
+1@glast
+lhz_dun_n
+1@gl_kh
+2@gl_kh
+1@lab
+1@uns
+un_bk_q
+un_bunker
+un_myst
+verus01
+verus02
+paramk
 
 // Only add maps under this line if they are not standard maps!
 

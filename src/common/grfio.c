@@ -300,9 +300,9 @@ static FILELIST* filelist_find(const char* fname)
 // returns the original file name
 char* grfio_find_file(const char* fname)
 {
-	FILELIST *filelist = filelist_find(fname);
-	if (!filelist) return NULL;
-	return (!filelist->fnd ? filelist->fn : filelist->fnd);
+	FILELIST *filelist_res = filelist_find(fname);
+	if (!filelist_res) return NULL;
+	return (!filelist_res->fnd ? filelist_res->fn : filelist_res->fnd);
 }
 
 // adds a FILELIST entry into the list of loaded files

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: ========================================= 
@@ -16,40 +16,43 @@
 //= 1.2 Removed redundent input. [L0ne_W0lf]
 //= 1.3 Duplicates now spawned from floating NPCs. [L0ne_W0lf]
 //= 1.4 Optimized and fixed wrong item id. [Joseph]
+//= 1.5 Added Mercenary Guild Switch & fixed a bug
+//=		in izlude duplicate. [Capuche]
+//= 1.5a Change to F_GM_NPC function in Mercenary Guild Switch
 //============================================================ 
 
 -	script	Mercenary Manager#main	-1,{
 	setarray .@name$, 	"Spear", 			"Sword", 			"Bow";
 	setarray .@faith$, 	"SPEAR_MERC_GUILD",	"SWORD_MERC_GUILD",	"ARCH_MERC_GUILD";
 	setarray .@item, 	12182,				12172,				12162;
-	set .@npc$, strnpcinfo(2);
-	for (set .@size, getarraysize(.@name$); .@i < .@size; set .@i, .@i + 1)
-		if (.@npc$ == .@name$[.@i]) set .@type, .@i;
-	set .@faith_merc, mercenary_get_faith(getd(.@faith$[.@type]));
+	.@npc$ = strnpcinfo(2);
+	for (.@size = getarraysize(.@name$); .@type < .@size; .@type++)
+		if( compare( .@npc$,.@name$[.@type] ) ) break;
+	.@faith_merc = mercenary_get_faith(getd(.@faith$[.@type]));
 	mes "[Mercenary Manager]";
 	mes "Welcome to the";
-	mes .@npc$ + " Mercenary Guild.";
+	mes .@name$[.@type] + " Mercenary Guild.";
 	mes "What can I do for you?";
 	next;
 	switch(select("Hire Mercenary:Mercenary Info:Nothing:10th Grade Mercenaries")) {
 		case 1:
 			mes "[Mercenary Manager]";
 			mes "You want to hire a";
-			mes .@npc$ + " Mercenary?";
+			mes .@name$[.@type] + " Mercenary?";
 			mes "Which Grade were you";
 			mes "interested in hiring?";
 			next;
-			for (set .@i, 1; .@i <= 9; set .@i, .@i + 1)
-				set .@menu$, .@menu$ + callfunc("F_GetNumSuffix",.@i) + " Grade " + .@npc$ + " Mercenary:";
-			set .@Grade, select(.@menu$);
-			set .@BaseLevel, 5 + (.@Grade * 10);
-			set .@BaseLevel, (.@val > 90)? 90 : .@BaseLevel;
-			set .@ZenyCost, 7 * .@Grade;
+			for (.@i = 1; .@i <= 9; .@i++)
+				.@menu$ = .@menu$ + callfunc("F_GetNumSuffix",.@i) + " Grade " + .@name$[.@type] + " Mercenary:";
+			.@Grade = select(.@menu$);
+			.@BaseLevel = 5 + (.@Grade * 10);
+			.@BaseLevel = (.@val > 90)? 90 : .@BaseLevel;
+			.@ZenyCost = 7 * .@Grade;
 			setarray .@FaithCost[7], 50,100,300;
-			set .@FaithCost, .@FaithCost[.@Grade];
+			.@FaithCost = .@FaithCost[.@Grade];
 			mes "[Mercenary Manager]";
 			mes "So you want to hire a " + callfunc("F_GetNumSuffix",.@Grade);
-			mes "Grade " + .@npc$ + " Mercenary?";
+			mes "Grade " + .@name$[.@type] + " Mercenary?";
 			mes "You need to have attained";
 			mes "Base Level " + .@BaseLevel + " or higher, and";
 			mes "must pay the " + .@ZenyCost + ",000 zeny fee.";
@@ -66,7 +69,7 @@
 			else if(.@FaithCost && .@faith_merc < .@FaithCost) {
 				mes "[Mercenary Manager]";
 				mes "Oh... Your Loyalty rating";
-				mes "with the " + .@npc$ + " Mercenary";
+				mes "with the " + .@name$[.@type] + " Mercenary";
 				mes "Guild isn't high enough to";
 				mes "hire this Mercenary. Please";
 				mes "come back after you earn";
@@ -95,7 +98,7 @@
 				mes "Summoned Mercenaries will";
 				mes "offer their support to you for";
 				mes "30 minutes. Take care now.";
-				set Zeny, Zeny - (.@ZenyCost * 1000);
+				Zeny = Zeny - (.@ZenyCost * 1000);
 				getitem .@item[.@type] - 10 + .@Grade, 1;
 			}
 			close;
@@ -207,8 +210,8 @@
 			close;
 	}
 }
-prontera,41,337,5	duplicate(Mercenary Manager#main)	Mercenary Manager#Spear	105
-pay_arche,99,167,4	duplicate(Mercenary Manager#main)	Mercenary Manager#Bow	732
+prontera,41,337,5	duplicate(Mercenary Manager#main)	Mercenary Manager#Spear	8W_SOLDIER
+pay_arche,99,167,4	duplicate(Mercenary Manager#main)	Mercenary Manager#Bow	4_M_JOB_HUNTER
 
 // Mercenary Merchant NPCs
 //============================================================
@@ -222,12 +225,12 @@ pay_arche,99,167,4	duplicate(Mercenary Manager#main)	Mercenary Manager#Bow	732
 	next;
 	setarray .@item, 12184,	12185,	12241,	12242,	12243;
 	setarray .@cost, 1750,	3000,	560,	1050,	2100;
-	for (set .@size, getarraysize(.@item); .@i < .@size; set .@i, .@i + 1)
-		set .@menu$, .@menu$ + getitemname(.@item[.@i]) + ":";
-	set .@m, select(.@menu$)-1;
-	set .@str$, .@cost[.@m] + "";
-	set .@len, getstrlen(.@str$);
-	set .@str_cost$, (.@len <= 3)? .@str$ : insertchar(.@str$,",",.@len-3);
+	for (.@size = getarraysize(.@item); .@i < .@size; .@i++)
+		.@menu$ = .@menu$ + getitemname(.@item[.@i]) + ":";
+	.@m = select(.@menu$)-1;
+	.@str$ = .@cost[.@m] + "";
+	.@len = getstrlen(.@str$);
+	.@str_cost$ = (.@len <= 3)? .@str$ : insertchar(.@str$,",",.@len-3);
 	mes "[Mercenary Goods Merchant]";
 	mes getitemname(.@item[.@m]);
 	mes "each cost " + .@str_cost$ + " zeny.";
@@ -281,9 +284,49 @@ pay_arche,99,167,4	duplicate(Mercenary Manager#main)	Mercenary Manager#Bow	732
 	mes "Thank you, and please come";
 	mes "again when you need more";
 	mes "potions for your Mercenaries.";
-	set Zeny, Zeny - .@total_po;
+	Zeny = Zeny - .@total_po;
 	getitem .@item[.@m], .@input;
 	close;
 }
-prontera,30,337,4	duplicate(MercMerchant)	Mercenary Merchant#Spear	700
-pay_arche,102,167,5	duplicate(MercMerchant)	Mercenary Merchant#Bow	879
+prontera,30,337,4	duplicate(MercMerchant)	Mercenary Merchant#Spear	8_F_GIRL
+pay_arche,102,167,5	duplicate(MercMerchant)	Mercenary Merchant#Bow	4_F_CAPEGIRL
+
+// Mercenary Switch NPCs
+//============================================================
+-	script	Mercenary_Switch	-1,{
+
+	setarray .@name$, "Spear","Sword","Bow";
+	.@npc$ = strnpcinfo(2);
+	for (.@size = getarraysize(.@name$); .@type < .@size; .@type++)
+		if (.@npc$ == .@name$[.@type]) break;
+
+	mes "[Checker]";
+	mes "Please input a password.";
+	next;
+	.@i = callfunc("F_GM_NPC",1854,0,0,10000);
+	mes "[Checker]";
+	if (.@i == -2)
+		mes "Error.";
+	else if (.@i == 0)
+		mes "Wrong number";
+	else if (.@i == 1) {
+		mes "Please select.";
+		next;
+		switch( select( "Turn off Mercenary NPC","Turn on Mercenary NPC" ) ) {
+		case 1:
+			mes "NPCs are turned off.";
+			disablenpc "Mercenary Manager#" + .@name$[.@type];
+			disablenpc "Mercenary Merchant#" + .@name$[.@type];
+			break;
+		case 2:
+			mes "NPCs are turned on.";
+			enablenpc "Mercenary Manager#" + .@name$[.@type];
+			enablenpc "Mercenary Merchant#" + .@name$[.@type];
+			break;
+		}
+	}
+	close;
+}
+prontera,299,379,5	duplicate(Mercenary_Switch)	Mercenary Switch#Spear	8W_SOLDIER
+pay_arche,170,185,5	duplicate(Mercenary_Switch)	Mercenary Switch#Bow	4_F_CAPEGIRL
+izlude,245,250,4	duplicate(Mercenary_Switch)	Mercenary Switch#Sword	4_F_HUWOMAN

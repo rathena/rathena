@@ -20,7 +20,8 @@ struct npc_label_list {
 	int pos;
 };
 struct npc_item_list {
-	unsigned int nameid,value;
+	unsigned short nameid;
+	unsigned int value;
 };
 
 struct npc_data {
@@ -58,7 +59,7 @@ struct npc_data {
 		struct {
 			struct npc_item_list *shop_item;
 			uint16 count;
-			int itemshop_nameid; // Item Shop cost item ID
+			unsigned short itemshop_nameid; // Item Shop cost item ID
 			char pointshop_str[32]; // Point Shop cost variable name
 			bool discount;
 		} shop;
@@ -112,6 +113,7 @@ enum npce_event {
 	NPCE_DIE,
 	NPCE_KILLPC,
 	NPCE_KILLNPC,
+	NPCE_STATCALC,
 	NPCE_MAX
 };
 struct view_data* npc_get_viewdata(int class_);
@@ -149,8 +151,8 @@ void npc_addsrcfile(const char* name);
 void npc_delsrcfile(const char* name);
 void npc_parsesrcfile(const char* filepath, bool runOnInit);
 void do_clear_npc(void);
-int do_final_npc(void);
-int do_init_npc(void);
+void do_final_npc(void);
+void do_init_npc(void);
 void npc_event_do_oninit(void);
 int npc_do_ontimer(int npc_id, int option);
 
@@ -172,7 +174,7 @@ int npc_script_event(struct map_session_data* sd, enum npce_event type);
 
 int npc_duplicate4instance(struct npc_data *snd, int16 m);
 int npc_instanceinit(struct npc_data* nd);
-int npc_cashshop_buy(struct map_session_data *sd, int nameid, int amount, int points);
+int npc_cashshop_buy(struct map_session_data *sd, unsigned short nameid, int amount, int points);
 
 extern struct npc_data* fake_nd;
 

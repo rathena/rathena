@@ -30,7 +30,7 @@
 1105,0,1513,50,0,0,0,0,"Solo at Louyang!"
 1106,0,1375,20,0,0,0,0,"Solo at Amatsu Dungeon!"
 1107,0,1403,40,0,0,0,0,"Solo at Amatsu Dungeon!"
-1108,0,1519,20,0,0,0,0,"Solo at Louyang!"
+1108,0,1631,20,0,0,0,0,"Solo at Louyang!"
 
 // Ropewa & Yuridi Quest
 1109,0,0,0,0,0,0,0,"Ropewa & Yuridi - Survivors of the Labyrinth"

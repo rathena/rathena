@@ -40,9 +40,9 @@ hu_fild02,283,28,0	warp	hugel009a	1,1,hu_fild04,289,376
 //hu_fild03,288,19,0	warp	hugel010a	1,1,hu_fild05,276,346
 hu_fild05,353,126,0	warp	hugel011	1,1,hu_fild06,34,119
 hu_fild06,28,119,0	warp	hugel011a	1,1,hu_fild05,347,130
-hu_fild02,374,339,0	warp	hugel012	1,1,hu_fild03,24,337
+//hu_fild02,374,339,0	warp	hugel012	1,1,hu_fild03,24,337
 //hu_fild03,20,338,0	warp	hugel012a	1,1,hu_fild02,370,339
-hu_fild02,378,162,0	warp	hugel013	1,1,hu_fild03,30,163
+//hu_fild02,378,162,0	warp	hugel013	1,1,hu_fild03,30,163
 //hu_fild03,25,163,0	warp	hugel013a	1,1,hu_fild02,373,160
 //yuno_fild09,377,184,0	warp	hugel014	1,1,yuno_fild10,44,183
 //yuno_fild10,39,183,0	warp	hugel014a	1,1,yuno_fild09,371,184

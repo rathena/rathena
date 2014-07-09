@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -11,11 +11,12 @@
 //= Quests for Kagerou/Oboro weapons and armor.
 //===== Additional Comments: =================================
 //= 1.0 First version. [Euphy]
+//= 1.1 Little clean-up. [Capuche]
 //============================================================
 
 // Armor and Weapon NPCs :: kaboro_gearmix
 //============================================================
-que_ng,21,72,6	script	Master Armor Craftsman	934,{
+que_ng,21,72,6	script	Master Armor Craftsman	4_M_RASWORD,{
 	mes "[Gyo]";
 	mes "How would you define victory?";
 	mes "To fell the enemy...";
@@ -102,56 +103,27 @@ que_ng,21,72,6	script	Master Armor Craftsman	934,{
 	close;
 
 L_Select:
-	switch(select("Check Ingredients.:Check Stats.:Combine.:Quit.")) {
-	case 1:
-		callsub L_Ingredients, getarg(0);
-		switch(select("Check Stats.:Combine.:Quit.")) {
+	.@string1$ = "Check Ingredients.";
+	.@string2$ = "Check Stats.";
+	while(1) {
+		switch(select(.@string1$,.@string2$,"Combine.","Quit.")) {
 		case 1:
-			callsub L_Stats, getarg(0);
-			switch(select("Combine.:Quit.")) {
-			case 1:
-				callsub L_Combine;
-				return;
-			case 2:
-				break;
-			}
-			break;
-		case 2:
-			callsub L_Combine;
-			return;
-		case 3:
-			break;
-		}
-		break;
-	case 2:
-		callsub L_Stats, getarg(0);
-		switch(select("Check Ingredients.:Combine.:Quit.")) {
-		case 1:
+			.@string1$ = "";
 			callsub L_Ingredients, getarg(0);
-			switch(select("Combine.:Quit.")) {
-			case 1:
-				callsub L_Combine;
-				return;
-			case 2:
-				break;
-			}
 			break;
 		case 2:
+			.@string2$ = "";
+			callsub L_Stats, getarg(0);
+			break;
+		case 3:
 			callsub L_Combine;
 			return;
-		case 3:
-			break;
+		case 4:
+			mes "[Gyo]";
+			mes "Looks like you need more time to decide.";
+			close;
 		}
-		break;
-	case 3:
-		callsub L_Combine;
-		return;
-	case 4:
-		break;
 	}
-	mes "[Gyo]";
-	mes "Looks like you need more time to decide.";
-	close;
 
 L_Ingredients:
 	mes "[Gyo]";
@@ -227,7 +199,7 @@ L_Combine:
 	end;
 }
 
-que_ng,23,70,3	script	Master Weapon Craftsman	939,{
+que_ng,23,70,3	script	Master Weapon Craftsman	4_DST_SOLDIER,{
 	mes "[Ki]";
 	mes "To attack is the best means of defense.";
 	mes "A powerful weapon ill make you truly complete.";
@@ -300,56 +272,27 @@ que_ng,23,70,3	script	Master Weapon Craftsman	939,{
 	close;
 
 L_Select:
-	switch(select("Check Ingredients.:Check Stats.:Combine.:Quit.")) {
-	case 1:
-		callsub L_Ingredients, getarg(0);
-		switch(select("Check Stats.:Combine.:Quit.")) {
+	.@string1$ = "Check Ingredients.";
+	.@string2$ = "Check Stats.";
+	while(1) {
+		switch(select(.@string1$,.@string2$,"Combine.","Quit.")) {
 		case 1:
-			callsub L_Stats, getarg(0);
-			switch(select("Combine.:Quit.")) {
-			case 1:
-				callsub L_Combine;
-				return;
-			case 2:
-				break;
-			}
-			break;
-		case 2:
-			callsub L_Combine;
-			return;
-		case 3:
-			break;
-		}
-		break;
-	case 2:
-		callsub L_Stats, getarg(0);
-		switch(select("Check Ingredients.:Combine.:Quit.")) {
-		case 1:
+			.@string1$ = "";
 			callsub L_Ingredients, getarg(0);
-			switch(select("Combine.:Quit.")) {
-			case 1:
-				callsub L_Combine;
-				return;
-			case 2:
-				break;
-			}
 			break;
 		case 2:
+			.@string2$ = "";
+			callsub L_Stats, getarg(0);
+			break;
+		case 3:
 			callsub L_Combine;
 			return;
-		case 3:
-			break;
+		case 4:
+			mes "[Ki]";
+			mes "Think carefully~~";
+			close;
 		}
-		break;
-	case 3:
-		callsub L_Combine;
-		return;
-	case 4:
-		break;
 	}
-	mes "[Ki]";
-	mes "Think carefully~~";
-	close;
 
 L_Ingredients:
 	mes "[Ki]";

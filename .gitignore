@@ -2,7 +2,12 @@
 /autom4te.cache/requests
 /autom4te.cache/traces.0
 #Global
+.Apple*
 .DS_Store
+.clang_complete
+.local.vimrc
+.ycm_extra_conf.py*
+Thumbs.db
 
 # /
 /*_fifo
@@ -35,6 +40,7 @@
 # /3rdparty/libconfig/
 /3rdparty/libconfig/Makefile
 /3rdparty/libconfig/*.o
+/3rdparty/libconfig/obj
 
 # /3rdparty/mt19937ar/
 /3rdparty/mt19937ar/Makefile
@@ -118,3 +124,4 @@
 /vcproj-9/login-server_sql
 /vcproj-9/map-server_sql
 /vcproj-9/mapcache
+/conf/.tmp-desd_conf.yml

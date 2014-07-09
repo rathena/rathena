@@ -110,7 +110,7 @@ prt_castle,48,161,3	script	Middle-aged Gentleman#rg	57,{
 		next;
 		switch(select("I want to know more.:Stop talking.")) {
 		case 1:
-			if (getserverdef(VAR_VIP_SCRIPT)) {
+			if (VIP_SCRIPT) {
 				callfunc "VIP_Third_Class";
 				set job_royal,1;
 				setquest 12090;

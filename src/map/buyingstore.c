@@ -21,7 +21,7 @@
 struct s_autotrade_entry {
 	uint16 amount;
 	int price;
-	uint16 item_id;
+	unsigned short item_id;
 };
 
 /// Struct of autotrader
@@ -64,7 +64,7 @@ enum e_buyingstore_failure
 
 
 static unsigned int buyingstore_nextid = 0;
-static const short buyingstore_blankslots[MAX_SLOTS] = { 0 };  // used when checking whether or not an item's card slots are blank
+static const unsigned short buyingstore_blankslots[MAX_SLOTS] = { 0 };  // used when checking whether or not an item's card slots are blank
 
 
 /// Returns unique buying store id
@@ -228,7 +228,7 @@ bool buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 	}
 
 	for( i = 0; i < sd->buyingstore.slots; i++ ){
-		if( Sql_Query( mmysql_handle, "INSERT INTO `%s`(`buyingstore_id`,`index`,`item_id`,`amount`,`price`) VALUES( %d, %d, %d, %d, %d );", buyingstore_items_db, sd->buyer_id, i, sd->buyingstore.items[i].nameid, sd->buyingstore.items[i].amount, sd->buyingstore.items[i].price ) != SQL_SUCCESS ){
+		if( Sql_Query( mmysql_handle, "INSERT INTO `%s`(`buyingstore_id`,`index`,`item_id`,`amount`,`price`) VALUES( %d, %d, %hu, %d, %d );", buyingstore_items_db, sd->buyer_id, i, sd->buyingstore.items[i].nameid, sd->buyingstore.items[i].amount, sd->buyingstore.items[i].price ) != SQL_SUCCESS ){
 			Sql_ShowDebug(mmysql_handle);
 		}
 	}
@@ -564,7 +564,7 @@ void buyingstore_reopen( struct map_session_data* sd ){
 
 		for (j = 0, p = data, count = autotraders[i]->count; j < autotraders[i]->count; j++) {
 			struct s_autotrade_entry *entry = autotraders[i]->entries[j];
-			uint16 *item_id = (uint16*)(p + 0);
+			unsigned short *item_id = (uint16*)(p + 0);
 			uint16 *amount = (uint16*)(p + 2);
 			uint32 *price = (uint32*)(p + 4);
 

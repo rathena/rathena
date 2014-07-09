@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= War of Emperium (Al De Baran)
+//= War of Emperium (Al De Baran) - Rothenburg
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
@@ -111,7 +111,6 @@ aldeg_cas05,51,179,0	duplicate(cm)	Esmarehk#aldeg_cas05	55
 // Treasure Room Exit
 //============================================================
 aldeg_cas05,64,8,0	script	#lever_A05	111,{
-
 	mes " ";
 	mes "There's a small lever. Will you pull it?";
 	next;

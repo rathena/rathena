@@ -65,7 +65,7 @@ char default_codepage[32] = "";
 int map_server_port = 3306;
 char map_server_ip[32] = "127.0.0.1";
 char map_server_id[32] = "ragnarok";
-char map_server_pw[32] = "ragnarok";
+char map_server_pw[32] = "";
 char map_server_db[32] = "ragnarok";
 Sql* mmysql_handle;
 
@@ -1646,6 +1646,9 @@ int map_quit(struct map_session_data *sd) {
 		return 0;
 	}
 
+	if (sd->expiration_tid != INVALID_TIMER)
+		delete_timer(sd->expiration_tid, pc_expiration_timer);
+
 	if (sd->npc_timer_id != INVALID_TIMER) //Cancel the event timer.
 		npc_timerevent_quit(sd);
 
@@ -1674,6 +1677,7 @@ int map_quit(struct map_session_data *sd) {
 		status_change_end(&sd->bl, SC_GLORYWOUNDS, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_SOULCOLD, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_HAWKEYES, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_CHASEWALK2, INVALID_TIMER);
 		if(sd->sc.data[SC_ENDURE] && sd->sc.data[SC_ENDURE]->val4)
 			status_change_end(&sd->bl, SC_ENDURE, INVALID_TIMER); //No need to save infinite endure.
 		status_change_end(&sd->bl, SC_WEIGHT50, INVALID_TIMER);
@@ -1681,6 +1685,10 @@ int map_quit(struct map_session_data *sd) {
 		status_change_end(&sd->bl, SC_SATURDAYNIGHTFEVER, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_KYOUGAKU, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_C_MARKER, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_READYSTORM, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_READYDOWN, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_READYTURN, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_READYCOUNTER, INVALID_TIMER);
 		if (battle_config.debuff_on_logout&1) { //Remove negative buffs
 			status_change_end(&sd->bl, SC_ORCISH, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_STRIPWEAPON, INVALID_TIMER);
@@ -2253,6 +2261,13 @@ int map_addinstancemap(const char *name, int id)
 		snprintf(map[dst_m].name, sizeof(map[dst_m].name),"%.3d%s", id, iname);
 	map[dst_m].name[MAP_NAME_LENGTH-1] = '\0';
 
+	// Mimic questinfo
+	if( map[src_m].qi_count ) {
+		map[dst_m].qi_count = map[src_m].qi_count;
+		CREATE( map[dst_m].qi_data, struct questinfo, map[dst_m].qi_count );
+		memcpy( map[dst_m].qi_data, map[src_m].qi_data, map[dst_m].qi_count * sizeof(struct questinfo) );
+	}
+
 	map[dst_m].m = dst_m;
 	map[dst_m].instance_id = id;
 	map[dst_m].users = 0;
@@ -2348,6 +2363,9 @@ int map_delinstancemap(int m)
 
 	map_removemapdb(&map[m]);
 	memset(&map[m], 0x00, sizeof(map[0]));
+
+	if( map[m].qi_data )
+		aFree(map[m].qi_data);
 
 	// Make delete timers invalid to avoid errors
 	map[m].mob_delete_timer = INVALID_TIMER;
@@ -2454,6 +2472,29 @@ void map_removemobs(int16 m)
 		return; //Mobs are already scheduled for removal
 
 	map[m].mob_delete_timer = add_timer(gettick()+battle_config.mob_remove_delay, map_removemobs_timer, m, 0);
+}
+
+/*==========================================
+ * Check for map_name from map_id
+ *------------------------------------------*/
+const char* map_mapid2mapname(int m)
+{
+	if (map[m].instance_id) { // Instance map check
+		struct instance_data *im = &instance_data[map[m].instance_id];
+
+		if (!im) // This shouldn't happen but if it does give them the map we intended to give
+			return map[m].name;
+		else {
+			int i;
+
+			for (i = 0; i < MAX_MAP_PER_INSTANCE; i++) { // Loop to find the src map we want
+				if (im->map[i].m == m)
+					return map[im->map[i].src_m].name;
+			}
+		}
+	}
+
+	return map[m].name;
 }
 
 /*==========================================
@@ -2963,7 +3004,7 @@ static char *map_init_mapcache(FILE *fp)
 	nullpo_ret(buffer);
 
 	// Read file into buffer..
-	if(fread(buffer, sizeof(char), size, fp) != size) {
+	if(fread(buffer, 1, size, fp) != size) {
 		ShowError("map_init_mapcache: Could not read entire mapcache file\n");
 		return NULL;
 	}
@@ -3095,6 +3136,12 @@ void map_flags_init(void)
 		// adjustments
 		if( battle_config.pk_mode )
 			map[i].flag.pvp = 1; // make all maps pvp for pk_mode [Valaris]
+
+		if( map[i].qi_data )
+			aFree(map[i].qi_data);
+
+		map[i].qi_data = NULL;
+		map[i].qi_count = 0;
 	}
 }
 
@@ -3293,7 +3340,7 @@ static int char_ip_set = 0;
 int parse_console(const char* buf){
 	char type[64];
 	char command[64];
-	char map[64];
+	char mapname[64];
 	int16 x = 0;
 	int16 y = 0;
 	int16 m;
@@ -3303,7 +3350,7 @@ int parse_console(const char* buf){
 	memset(&sd, 0, sizeof(struct map_session_data));
 	strcpy(sd.status.name, "console");
 
-	if( ( n = sscanf(buf, "%63[^:]:%63[^:]:%63s %hd %hd[^\n]", type, command, map, &x, &y) ) < 5 ){
+	if( ( n = sscanf(buf, "%63[^:]:%63[^:]:%63s %hd %hd[^\n]", type, command, mapname, &x, &y) ) < 5 ){
 		if( ( n = sscanf(buf, "%63[^:]:%63[^\n]", type, command) ) < 2 )		{
 			if((n = sscanf(buf, "%63[^\n]", type))<1) return -1; //nothing to do no arg
 		}
@@ -3313,19 +3360,19 @@ int parse_console(const char* buf){
 		if( n < 2 ) {
 			ShowNotice("Type of command: '%s'\n", type);
 			command[0] = '\0';
-			map[0] = '\0';
+			mapname[0] = '\0';
 		}
 		else {
 			ShowNotice("Type of command: '%s' || Command: '%s'\n", type, command);
-			map[0] = '\0';
+			mapname[0] = '\0';
 		}
 	}
 	else
-		ShowNotice("Type of command: '%s' || Command: '%s' || Map: '%s' Coords: %d %d\n", type, command, map, x, y);
+		ShowNotice("Type of command: '%s' || Command: '%s' || Map: '%s' Coords: %d %d\n", type, command, mapname, x, y);
 
 	if(strcmpi("admin",type) == 0 ) {
 		if(strcmpi("map",command) == 0){
-			m = map_mapname2mapid(map);
+			m = map_mapname2mapid(mapname);
 			if( m < 0 ){
 				ShowWarning("Console: Unknown map.\n");
 				return 0;
@@ -3336,7 +3383,7 @@ int parse_console(const char* buf){
 				sd.bl.x = x;
 			if( y > 0 )
 				sd.bl.y = y;
-			ShowNotice("Now at: '%s' Coords: %d %d\n", map, x, y);
+			ShowNotice("Now at: '%s' Coords: %d %d\n", mapname, x, y);
 		}
 		else if( !is_atcommand(sd.fd, &sd, command, 2) )
 			ShowInfo("Console: Invalid atcommand.\n");
@@ -3671,6 +3718,37 @@ int log_sql_init(void)
 	return 0;
 }
 
+void map_add_questinfo(int m, struct questinfo *qi) {
+	unsigned short i;
+
+	/* duplicate, override */
+	for(i = 0; i < map[m].qi_count; i++) {
+		if( map[m].qi_data[i].nd == qi->nd )
+			break;
+	}
+
+	if( i == map[m].qi_count )
+		RECREATE(map[m].qi_data, struct questinfo, ++map[m].qi_count);
+
+	memcpy(&map[m].qi_data[i], qi, sizeof(struct questinfo));
+}
+
+bool map_remove_questinfo(int m, struct npc_data *nd) {
+	unsigned short i;
+
+	for(i = 0; i < map[m].qi_count; i++) {
+		struct questinfo *qi = &map[m].qi_data[i];
+		if( qi->nd == nd ) {
+			memset(&map[m].qi_data[i], 0, sizeof(struct questinfo));
+			if( i != --map[m].qi_count )
+				memmove(&map[m].qi_data[i],&map[m].qi_data[i+1],sizeof(struct questinfo)*(map[m].qi_count-i));
+			return true;
+		}
+	}
+
+	return false;
+}
+
 /**
  * @see DBApply
  */
@@ -3778,6 +3856,7 @@ void do_final(void)
 	do_final_chrif();
 	do_final_clif();
 	do_final_npc();
+	do_final_quest();
 	do_final_script();
 	do_final_instance();
 	do_final_itemdb();
@@ -3786,6 +3865,8 @@ void do_final(void)
 	do_final_party();
 	do_final_pc();
 	do_final_pet();
+	do_final_homunculus();
+	do_final_mercenary();
 	do_final_mob();
 	do_final_msg();
 	do_final_skill();
@@ -3804,6 +3885,7 @@ void do_final(void)
 		if(map[i].cell) aFree(map[i].cell);
 		if(map[i].block) aFree(map[i].block);
 		if(map[i].block_mob) aFree(map[i].block_mob);
+		if(map[i].qi_data) aFree(map[i].qi_data);
 		if(battle_config.dynamic_mobs) { //Dynamic mobs flag by [random]
 			if(map[i].mob_delete_timer != INVALID_TIMER)
 				delete_timer(map[i].mob_delete_timer, map_removemobs_timer);
@@ -4097,7 +4179,7 @@ int do_init(int argc, char *argv[])
 	do_init_guild();
 	do_init_storage();
 	do_init_pet();
-	do_init_merc();
+	do_init_homunculus();
 	do_init_mercenary();
 	do_init_elemental();
 	do_init_quest();

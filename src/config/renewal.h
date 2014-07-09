@@ -63,6 +63,12 @@
 /// - some skill/item ASPD bonuses won't stack
 #define RENEWAL_ASPD
 
+/// renewal stat calculations
+/// (disable by commenting the line)
+///
+/// leave this line to enable renewal calculation for increasing status/parameter points
+#define RENEWAL_STAT
+
 #endif
 
 #endif // _CONFIG_RENEWAL_H_

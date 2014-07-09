@@ -350,7 +350,7 @@ ra_in01,384,246,3	script	Vincent#ra_in01	47,{
 		mes "Jenny about Phobe?";
 		mes "Sure, sure, I'll do that.";
 		set lost_boy,10;
-		changequest 8097,8097;
+		changequest 8096,8097;
 		close;
 	}
 	else if (lost_boy == 10) {
@@ -6082,6 +6082,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 					mes "on business. She is highly";
 					mes "loved by the people, you know.";
 					set aru_em,9;
+					changequest 2131,2132;  // unconfirmed
 				}
 				else if ((aru_em == 9) || (aru_em == 10)) {
 					mes "[High Priest Zhed]";

@@ -104,7 +104,7 @@ S_RefineValidate:
 	set .@price, getarg(2);
 
 	// If the VIP system is enabled, the prices for non-VIP players are considerably higher.
-	if (getserverdef(VAR_VIP_SCRIPT) && !vip_status(1)) {
+	if (VIP_SCRIPT && !vip_status(1)) {
 		switch(getarg(0)){
 			case 0: set .@price, .@price * 10; break;
 			case 1: set .@price, .@price * 40; break;

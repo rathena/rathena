@@ -35,31 +35,31 @@ CREATE TABLE `mob_db_re` (
   `aMotion` smallint(6) unsigned NOT NULL default '0',
   `dMotion` smallint(6) unsigned NOT NULL default '0',
   `MEXP` mediumint(9) unsigned NOT NULL default '0',
-  `MVP1id` smallint(9) unsigned NOT NULL default '0',
+  `MVP1id` smallint(5) unsigned NOT NULL default '0',
   `MVP1per` smallint(9) unsigned NOT NULL default '0',
-  `MVP2id` smallint(9) unsigned NOT NULL default '0',
+  `MVP2id` smallint(5) unsigned NOT NULL default '0',
   `MVP2per` smallint(9) unsigned NOT NULL default '0',
-  `MVP3id` smallint(9) unsigned NOT NULL default '0',
+  `MVP3id` smallint(5) unsigned NOT NULL default '0',
   `MVP3per` smallint(9) unsigned NOT NULL default '0',
-  `Drop1id` smallint(9) unsigned NOT NULL default '0',
+  `Drop1id` smallint(5) unsigned NOT NULL default '0',
   `Drop1per` smallint(9) unsigned NOT NULL default '0',
-  `Drop2id` smallint(9) unsigned NOT NULL default '0',
+  `Drop2id` smallint(5) unsigned NOT NULL default '0',
   `Drop2per` smallint(9) unsigned NOT NULL default '0',
-  `Drop3id` smallint(9) unsigned NOT NULL default '0',
+  `Drop3id` smallint(5) unsigned NOT NULL default '0',
   `Drop3per` smallint(9) unsigned NOT NULL default '0',
-  `Drop4id` smallint(9) unsigned NOT NULL default '0',
+  `Drop4id` smallint(5) unsigned NOT NULL default '0',
   `Drop4per` smallint(9) unsigned NOT NULL default '0',
-  `Drop5id` smallint(9) unsigned NOT NULL default '0',
+  `Drop5id` smallint(5) unsigned NOT NULL default '0',
   `Drop5per` smallint(9) unsigned NOT NULL default '0',
-  `Drop6id` smallint(9) unsigned NOT NULL default '0',
+  `Drop6id` smallint(5) unsigned NOT NULL default '0',
   `Drop6per` smallint(9) unsigned NOT NULL default '0',
-  `Drop7id` smallint(9) unsigned NOT NULL default '0',
+  `Drop7id` smallint(5) unsigned NOT NULL default '0',
   `Drop7per` smallint(9) unsigned NOT NULL default '0',
-  `Drop8id` smallint(9) unsigned NOT NULL default '0',
+  `Drop8id` smallint(5) unsigned NOT NULL default '0',
   `Drop8per` smallint(9) unsigned NOT NULL default '0',
-  `Drop9id` smallint(9) unsigned NOT NULL default '0',
+  `Drop9id` smallint(5) unsigned NOT NULL default '0',
   `Drop9per` smallint(9) unsigned NOT NULL default '0',
-  `DropCardid` smallint(9) unsigned NOT NULL default '0',
+  `DropCardid` smallint(5) unsigned NOT NULL default '0',
   `DropCardper` smallint(9) unsigned NOT NULL default '0',
   PRIMARY KEY  (`ID`)
 ) ENGINE=MyISAM;
@@ -1394,7 +1394,7 @@ REPLACE INTO `mob_db_re` VALUES (2198,'KING_DRAMOH','King Kray','King Dramoh',11
 REPLACE INTO `mob_db_re` VALUES (2199,'SIORAVA','Siorava','Siorava',87,6500,1,600,600,1,450,660,20,40,10,40,66,70,67,10,10,12,0,0,21,0x83,250,1536,1296,576,0,0,0,0,0,0,0,12624,700,7005,500,932,500,958,500,7071,500,13034,1,1202,1,0,0,0,0,4530,1);
 
 # Izlude Dungeon F6
-#REPLACE INTO `mob_db_re` VALUES (2200,'J_TAINI','Taini','Taini',1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0x83,0,432,792,432,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+REPLACE INTO `mob_db_re` VALUES (2200,'J_TAINI','Taini','Taini',1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,20,0x83,0,432,792,432,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 REPLACE INTO `mob_db_re` VALUES (2201,'SROPHO','Sropho','Sropho',113,24002,0,1934,1900,1,571,856,44,91,100,50,30,70,90,30,10,12,1,5,41,0x3795,135,700,600,360,0,0,0,0,0,0,0,951,7000,7938,500,756,250,12012,25,1971,25,1972,10,0,0,0,0,0,0,4522,1);
 REPLACE INTO `mob_db_re` VALUES (2202,'KRAKEN','Kraken','Kraken',124,5602800,0,983332,961111,3,3823,4969,55,229,150,150,150,180,180,150,10,12,2,5,81,0x37B5,150,768,768,576,491666,607,5500,617,2250,616,450,962,9000,1422,1000,1484,500,1131,300,2347,100,7444,5000,0,0,0,0,0,0,4525,1);
 REPLACE INTO `mob_db_re` VALUES (2203,'POT_DOFLE','Pot Dofle','Pot Dofle',115,25211,0,2650,1350,1,1088,1632,122,55,100,50,50,70,100,30,10,12,0,5,41,0x1089,135,768,768,576,0,0,0,0,0,0,0,1056,3000,7013,1000,1024,500,6257,100,969,2,617,1,0,0,0,0,0,0,4523,1);
@@ -1442,8 +1442,7 @@ REPLACE INTO `mob_db_re` VALUES (2240,'B_ALPHOCCIO','Clown Alphoccio','Clown Alp
 REPLACE INTO `mob_db_re` VALUES (2241,'B_TRENTINI','Gypsy Trentini','Gypsy Trentini',160,3894278,0,4463758,2563096,1,1070,1498,181,112,176,258,155,132,309,95,10,12,1,7,84,0x37B5,100,76,384,288,2231879,0,0,0,0,0,0,12623,9000,12616,9000,616,9000,6224,9000,18103,5000,18110,5000,1963,5000,0,0,0,0,0,0);
 REPLACE INTO `mob_db_re` VALUES (2242,'MD_DESERT_WOLF','Desert Wolf','Desert Wolf',135,551578,0,0,0,1,1040,1158,151,39,93,69,63,61,82,42,10,12,1,6,20,0x37B5,200,1120,420,288,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 REPLACE INTO `mob_db_re` VALUES (2243,'MD_DESERT_WOLF_B','Desert Wolf','Desert Wolf',130,274531,0,0,0,1,66,82,13,0,10,12,8,5,17,7,10,12,0,6,20,0x37B5,300,1600,900,240,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
-# Fix me! 2244 needs new info.
-REPLACE INTO `mob_db_re` VALUES (2244,'QUEST_CHEN','Champion Chen','Champion Chen',99,15000,2000,0,0,1,1700,3000,216,134,126,74,71,123,99,65,10,12,1,7,68,0x37B5,180,1152,384,288,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+REPLACE INTO `mob_db_re` VALUES (2244,'QUEST_CHEN','Champion Chen','Champion Chen',130,300,1,0,0,1,103,126,25,56,122,81,83,130,201,61,10,12,1,7,81,0x37B5,300,200,768,288,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 REPLACE INTO `mob_db_re` VALUES (2245,'EXP_TEST','Exp Test','Exp Test',1,100,1,100,100,1,8,9,2,5,6,1,1,0,6,5,10,12,1,7,21,0x83,400,1000,480,288,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 REPLACE INTO `mob_db_re` VALUES (2246,'Q_WOOTAN_FIGHTER','Wootan Fighter','Wootan Fighter',95,9000,1,1400,2000,1,255,291,103,8,63,14,36,5,62,15,10,12,1,7,43,0x83,200,912,1344,480,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 REPLACE INTO `mob_db_re` VALUES (2247,'Q_INCREASE_SOIL','Increase Soil','Mi Gao',95,20000,1,1400,2000,1,365,395,112,39,67,23,41,49,94,30,10,12,1,0,62,0x83,445,106,1056,576,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);

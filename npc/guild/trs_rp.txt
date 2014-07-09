@@ -7,28 +7,29 @@
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: ========================================= 
-//= Warps every Player out of the Treasure Room except for the
-//= Guildleader.
+//= [Official Conversion]
+//= Restricts Treasure Room entry to Guild Masters only.
 //===== Additional Comments: ================================= 
 //= 1.0 Converted from the official script.
 //= 1.1 Reverted back and optimized. [Daegaladh]
 //============================================================ 
 
+// Main NPC :: ban_stealer
+//============================================================
 -	script	Gld_Trea_Protect::Gld_Trea_Protect	-1,{
-
+	end;
 OnTouch:
-	// Store the Guild ID of castle occupant.
 	set .@GID, getcastledata(strnpcinfo(2),1);
-		if (strcharinfo(0) != getguildmaster(.@GID)) {
-			if (compare(strnpcinfo(2),"aldeg"))
-				warp "aldebaran",143,112;
-			else if (compare(strnpcinfo(2),"gefg"))
-				warp "geffen",120,38;
-			else if (compare(strnpcinfo(2),"payg"))
-				warp "payon",100,100;
-			else if (compare(strnpcinfo(2),"prtg"))
-				warp "prontera",119,64;
-		}
+	if (strcharinfo(0) != getguildmaster(.@GID)) {
+		if (compare(strnpcinfo(2),"aldeg"))
+			warp "aldebaran",143,112;
+		else if (compare(strnpcinfo(2),"gefg"))
+			warp "geffen",120,38;
+		else if (compare(strnpcinfo(2),"payg"))
+			warp "payon",100,100;
+		else if (compare(strnpcinfo(2),"prtg"))
+			warp "prontera",119,64;
+	}
 	end;
 }
 

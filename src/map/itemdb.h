@@ -8,8 +8,8 @@
 #include "../common/mmo.h" // ITEM_NAME_LENGTH
 #include "map.h"
 
-/// 32k array entries in array (the rest goes to the db)
-#define MAX_ITEMDB 0x8000
+///Maximum allowed Item ID (range: 1 ~ 65,534)
+#define MAX_ITEMID USHRT_MAX
 ///Use apple for unknown items.
 #define UNKNOWN_ITEM_ID 512
 /// The maximum number of item delays
@@ -23,13 +23,11 @@
 #define IG_FINDINGORE 6
 #define IG_POTION 37
 
-#define MAX_ITEMGROUP 400 ///The max. item group count (increase this when needed). TODO: Remove this limit and use dynamic size or DBMap if needed
-
 #define MAX_ITEMGROUP_RANDGROUP 4	///Max group for random item (increase this when needed). TODO: Remove this limit and use dynamic size if needed
 
 #define CARD0_FORGE 0x00FF
 #define CARD0_CREATE 0x00FE
-#define CARD0_PET ((short)0xFF00)
+#define CARD0_PET 0x0100
 
 ///Marks if the card0 given is "special" (non-item id used to mark pets/created items. [Skotlex]
 #define itemdb_isspecial(i) (i == CARD0_FORGE || i == CARD0_CREATE || i == CARD0_PET)
@@ -40,12 +38,12 @@ enum item_itemid {
 	ITEMID_YELLOW_POTION				= 503,
 	ITEMID_WHITE_POTION					= 504,
 	ITEMID_BLUE_POTION					= 505,
+	ITEMID_HOLY_WATER					= 523,
 	ITEMID_RED_SLIM_POTION				= 545,
 	ITEMID_YELLOW_SLIM_POTION			= 546,
 	ITEMID_WHITE_SLIM_POTION			= 547,
 	ITEMID_WING_OF_FLY					= 601,
 	ITEMID_WING_OF_BUTTERFLY			= 602,
-	ITEMID_BRANCH_OF_DEAD_TREE			= 604,
 	ITEMID_ANODYNE						= 605,
 	ITEMID_ALOEBERA						= 606,
 	ITEMID_EMPTY_BOTTLE					= 713,
@@ -73,6 +71,7 @@ enum item_itemid {
 	ITEMID_PHRACON						= 1010,
 	ITEMID_EMVERETARCON					= 1011,
 	ITEMID_TRAP							= 1065,
+	ITEMID_PAINT_BRUSH					= 6122,
 	ITEMID_STRANGE_EMBRYO				= 6415,
 	ITEMID_STONE						= 7049,
 	ITEMID_FIRE_BOTTLE					= 7135,
@@ -84,9 +83,6 @@ enum item_itemid {
 	ITEMID_SKULL_						= 7420,
 	ITEMID_TOKEN_OF_SIEGFRIED			= 7621,
 	ITEMID_TRAP_ALLOY					= 7940,
-	ITEMID_RED_POUCH_OF_SURPRISE		= 12024,
-	ITEMID_BLOODY_DEAD_BRANCH			= 12103,
-	ITEMID_PORING_BOX					= 12109,
 	ITEMID_MERCENARY_RED_POTION			= 12184,
 	ITEMID_MERCENARY_BLUE_POTION		= 12185,
 	ITEMID_BATTLE_MANUAL				= 12208,
@@ -97,13 +93,21 @@ enum item_itemid {
 	ITEMID_M_AWAKENING_POTION			= 12242,
 	ITEMID_M_BERSERK_POTION				= 12243,
 	ITEMID_COMP_BATTLE_MANUAL			= 12263,
+	ITEMID_LOVE_ANGEL					= 12287,
+	ITEMID_SQUIRREL						= 12288,
+	ITEMID_GOGO							= 12289,
+	ITEMID_PICTURE_DIARY				= 12304,
+	ITEMID_MINI_HEART					= 12305,
+	ITEMID_NEWCOMER						= 12306,
+	ITEMID_KID							= 12307,
+	ITEMID_MAGIC_CASTLE					= 12308,
+	ITEMID_BULGING_HEAD					= 12309,
 	ITEMID_THICK_BATTLE_MANUAL			= 12312,
 	ITEMID_ANCILLA						= 12333,
 	ITEMID_DUN_TELE_SCROLL3				= 12352,
 	ITEMID_REINS_OF_MOUNT				= 12622,
 	ITEMID_COMP_BUBBLE_GUM				= 12264,
 	ITEMID_NOBLE_NAMEPLATE				= 12705,
-	ITEMID_TREASURE_CHEST_SUMMONED_II	= 12863,
 	ITEMID_DUN_TELE_SCROLL1				= 14527,
 	ITEMID_BATTLE_MANUAL25				= 14532,
 	ITEMID_BATTLE_MANUAL100				= 14533,
@@ -182,6 +186,9 @@ enum mechanic_item_list {
 	ITEMID_INDIGO_PTS,
 	ITEMID_YELLOW_WISH_PTS,
 	ITEMID_LIME_GREEN_PTS,
+	ITEMID_REPAIR_A              = 12392,
+	ITEMID_REPAIR_B,
+	ITEMID_REPAIR_C,
 };
 
 ///Genetic
@@ -318,9 +325,34 @@ struct item_combo {
 	bool isRef;/* whether this struct is a reference or the master */
 };
 
+
+/// Struct of item group entry
+struct s_item_group_entry {
+	unsigned short nameid, /// Item ID
+		duration, /// Duration if item as rental item (in minutes)
+		amount; /// Amount of item will be obtained
+	bool isAnnounced, /// Broadcast if player get this item
+		isNamed; /// Named the item (if possible)
+	char bound; /// Makes the item as bound item (according to bound type)
+};
+
+/// Struct of random group
+struct s_item_group_random {
+	struct s_item_group_entry *data; /// Random group entry
+	unsigned short data_qty; /// Number of item in random group
+};
+
+/// Struct of item group that will be used for db
+struct s_item_group_db {
+	unsigned short id, /// Item Group ID
+		must_qty; /// Number of must item at this group
+	struct s_item_group_entry *must; /// Must item entry
+	struct s_item_group_random random[MAX_ITEMGROUP_RANDGROUP]; //! TODO: Move this fixed array to dynamic size if needed.
+};
+
 ///Main item data struct
 struct item_data {
-	uint16 nameid;
+	unsigned short nameid;
 	char name[ITEM_NAME_LENGTH],jname[ITEM_NAME_LENGTH];
 
 	//Do not add stuff between value_buy and view_id (see how getiteminfo works)
@@ -364,6 +396,8 @@ struct item_data {
 		unsigned trade_restriction : 9;	//Item restrictions mask [Skotlex]
 		unsigned autoequip: 1;
 		unsigned buyingstore : 1;
+		unsigned dead_branch : 1; // As dead branch item. Logged at `branchlog` table and cannot be used at 'nobranch' mapflag [Cydh]
+		unsigned group : 1; // As item group container [Cydh]
 	} flag;
 	struct {// item stacking limitation
 		unsigned short amount;
@@ -382,34 +416,10 @@ struct item_data {
 	unsigned char combos_count;
 };
 
-/* Struct of item group entry */
-struct s_item_group {
-	uint16 nameid, ///item id
-		duration; ///duration if item as rental item (in minute)
-	uint16 amount; ///amount of item will be obtained
-	bool isAnnounced, ///broadcast if player get this item
-		isNamed; ///named the item (if possible)
-	char bound; ///makes the item as bound item (according to bound type)
-};
-
-/* Struct of random group */
-struct s_item_group_random {
-	struct s_item_group *data;
-	uint16 data_qty;
-};
-
-/* Struct of item group that will be used for db */
-struct s_item_group_db {
-	struct s_item_group *must;
-	uint16 must_qty;
-	struct s_item_group_random random[MAX_ITEMGROUP_RANDGROUP]; //! TODO: Move this fixed array to dynamic size if needed.
-};
-
 struct item_data* itemdb_searchname(const char *name);
 int itemdb_searchname_array(struct item_data** data, int size, const char *str);
-struct item_data* itemdb_load(int nameid);
-struct item_data* itemdb_search(int nameid);
-struct item_data* itemdb_exists(int nameid);
+struct item_data* itemdb_search(unsigned short nameid);
+struct item_data* itemdb_exists(unsigned short nameid);
 #define itemdb_name(n) itemdb_search(n)->name
 #define itemdb_jname(n) itemdb_search(n)->jname
 #define itemdb_type(n) itemdb_search(n)->type
@@ -438,23 +448,22 @@ struct item_data* itemdb_exists(int nameid);
 const char* itemdb_typename(enum item_types type);
 const char *itemdb_typename_ammo (enum e_item_ammo ammo);
 
-int itemdb_group_bonus(struct map_session_data* sd, int itemid);
 unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group);
 
 #define itemdb_value_buy(n) itemdb_search(n)->value_buy
 #define itemdb_value_sell(n) itemdb_search(n)->value_sell
 #define itemdb_canrefine(n) (!itemdb_search(n)->flag.no_refine)
 //Item trade restrictions [Skotlex]
-int itemdb_isdropable_sub(struct item_data *, int, int);
-int itemdb_cantrade_sub(struct item_data*, int, int);
-int itemdb_canpartnertrade_sub(struct item_data*, int, int);
-int itemdb_cansell_sub(struct item_data*,int, int);
-int itemdb_cancartstore_sub(struct item_data*, int, int);
-int itemdb_canstore_sub(struct item_data*, int, int);
-int itemdb_canguildstore_sub(struct item_data*, int, int);
-int itemdb_canmail_sub(struct item_data*, int, int);
-int itemdb_canauction_sub(struct item_data*, int, int);
-bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, int (*func)(struct item_data*, int, int));
+bool itemdb_isdropable_sub(struct item_data *itd, int gmlv, int unused);
+bool itemdb_cantrade_sub(struct item_data *itd, int gmlv, int gmlv2);
+bool itemdb_canpartnertrade_sub(struct item_data *itd, int gmlv, int gmlv2);
+bool itemdb_cansell_sub(struct item_data *itd, int gmlv, int unused);
+bool itemdb_cancartstore_sub(struct item_data *itd, int gmlv, int unused);
+bool itemdb_canstore_sub(struct item_data *itd, int gmlv, int unused);
+bool itemdb_canguildstore_sub(struct item_data *itd, int gmlv, int unused);
+bool itemdb_canmail_sub(struct item_data *itd, int gmlv, int unused);
+bool itemdb_canauction_sub(struct item_data *itd, int gmlv, int unused);
+bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, bool (*func)(struct item_data*, int, int));
 #define itemdb_isdropable(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_isdropable_sub)
 #define itemdb_cantrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_cantrade_sub)
 #define itemdb_canpartnertrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_canpartnertrade_sub)
@@ -465,22 +474,23 @@ bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, int (*func)(str
 #define itemdb_canmail(item, gmlv) itemdb_isrestricted(item , gmlv, 0, itemdb_canmail_sub)
 #define itemdb_canauction(item, gmlv) itemdb_isrestricted(item , gmlv, 0, itemdb_canauction_sub)
 
-bool itemdb_isequip(int);
-bool itemdb_isequip2(struct item_data *);
-char itemdb_isidentified(int);
-bool itemdb_isstackable(uint16 nameid);
-bool itemdb_isstackable2(struct item_data *data);
+bool itemdb_isequip2(struct item_data *id);
+#define itemdb_isequip(nameid) itemdb_isequip2(itemdb_search(nameid))
+char itemdb_isidentified(unsigned short nameid);
+bool itemdb_isstackable2(struct item_data *id);
+#define itemdb_isstackable(nameid) itemdb_isstackable2(itemdb_search(nameid))
 uint64 itemdb_unique_id(int8 flag, int64 value); // Unique Item ID
 bool itemdb_isNoEquip(struct item_data *id, uint16 m);
 
-char itemdb_pc_get_itemgroup(uint16 group_id, struct map_session_data *sd);
-uint16 itemdb_get_randgroupitem_count(uint16 group_id, uint8 sub_group, uint16 nameid);
+struct item_combo *itemdb_combo_exists(unsigned short combo_id);
 
-DBMap * itemdb_get_combodb();
+struct s_item_group_db *itemdb_group_exists(unsigned short group_id);
+char itemdb_pc_get_itemgroup(uint16 group_id, struct map_session_data *sd);
+uint16 itemdb_get_randgroupitem_count(uint16 group_id, uint8 sub_group, unsigned short nameid);
 
 void itemdb_reload(void);
 
 void do_final_itemdb(void);
-int do_init_itemdb(void);
+void do_init_itemdb(void);
 
 #endif /* _ITEMDB_H_ */

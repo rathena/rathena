@@ -14,6 +14,8 @@
 //=     Updated dialogue to match the official script.
 //============================================================ 
 
+// Main NPC :: craft_book_alche_skill_npc
+//============================================================
 alde_alche,31,186,3	script	Craft Book Merchant#alde	883,{
 	mes "[Craft Book Merchant]";
 	mes "Welcome.";

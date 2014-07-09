@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `skillcooldown` (
   `tick` int(11) NOT NULL,
   KEY `account_id` (`account_id`),
   KEY `char_id` (`char_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `auction`
@@ -26,15 +26,15 @@ CREATE TABLE IF NOT EXISTS `auction` (
   `buynow` int(11) unsigned NOT NULL default '0',
   `hours` smallint(6) NOT NULL default '0',
   `timestamp` int(11) unsigned NOT NULL default '0',
-  `nameid` int(11) unsigned NOT NULL default '0',
+  `nameid` smallint(5) unsigned NOT NULL default '0',
   `item_name` varchar(50) NOT NULL default '',
   `type` smallint(6) NOT NULL default '0',
   `refine` tinyint(3) unsigned NOT NULL default '0',
   `attribute` tinyint(4) unsigned NOT NULL default '0',
-  `card0` smallint(11) NOT NULL default '0',
-  `card1` smallint(11) NOT NULL default '0',
-  `card2` smallint(11) NOT NULL default '0',
-  `card3` smallint(11) NOT NULL default '0',
+  `card0` smallint(5) unsigned NOT NULL default '0',
+  `card1` smallint(5) unsigned NOT NULL default '0',
+  `card2` smallint(5) unsigned NOT NULL default '0',
+  `card3` smallint(5) unsigned NOT NULL default '0',
   `unique_id` bigint(20) unsigned NOT NULL default '0',
   PRIMARY KEY  (`auction_id`)
 ) ENGINE=MyISAM;
@@ -46,16 +46,16 @@ CREATE TABLE IF NOT EXISTS `auction` (
 CREATE TABLE IF NOT EXISTS `cart_inventory` (
   `id` int(11) NOT NULL auto_increment,
   `char_id` int(11) NOT NULL default '0',
-  `nameid` int(11) NOT NULL default '0',
+  `nameid` smallint(5) unsigned NOT NULL default '0',
   `amount` int(11) NOT NULL default '0',
   `equip` int(11) unsigned NOT NULL default '0',
   `identify` smallint(6) NOT NULL default '0',
   `refine` tinyint(3) unsigned NOT NULL default '0',
   `attribute` tinyint(4) NOT NULL default '0',
-  `card0` smallint(11) NOT NULL default '0',
-  `card1` smallint(11) NOT NULL default '0',
-  `card2` smallint(11) NOT NULL default '0',
-  `card3` smallint(11) NOT NULL default '0',
+  `card0` smallint(5) unsigned NOT NULL default '0',
+  `card1` smallint(5) unsigned NOT NULL default '0',
+  `card2` smallint(5) unsigned NOT NULL default '0',
+  `card3` smallint(5) unsigned NOT NULL default '0',
   `expire_time` int(11) unsigned NOT NULL default '0',
   `bound` tinyint(3) unsigned NOT NULL default '0',
   `unique_id` bigint(20) unsigned NOT NULL default '0',
@@ -123,6 +123,7 @@ CREATE TABLE IF NOT EXISTS `char` (
   `delete_date` INT(11) UNSIGNED NOT NULL DEFAULT '0',
   `moves` int(11) unsigned NOT NULL DEFAULT '0',
   `unban_time` int(11) unsigned NOT NULL default '0',
+  `font` tinyint(3) unsigned NOT NULL default '0',
   PRIMARY KEY  (`char_id`),
   UNIQUE KEY `name_key` (`name`),
   KEY `account_id` (`account_id`),
@@ -345,16 +346,16 @@ CREATE TABLE IF NOT EXISTS `guild_skill` (
 CREATE TABLE IF NOT EXISTS `guild_storage` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `guild_id` int(11) unsigned NOT NULL default '0',
-  `nameid` int(11) unsigned NOT NULL default '0',
+  `nameid` smallint(5) unsigned NOT NULL default '0',
   `amount` int(11) unsigned NOT NULL default '0',
   `equip` int(11) unsigned NOT NULL default '0',
   `identify` smallint(6) unsigned NOT NULL default '0',
   `refine` tinyint(3) unsigned NOT NULL default '0',
   `attribute` tinyint(4) unsigned NOT NULL default '0',
-  `card0` smallint(11) NOT NULL default '0',
-  `card1` smallint(11) NOT NULL default '0',
-  `card2` smallint(11) NOT NULL default '0',
-  `card3` smallint(11) NOT NULL default '0',
+  `card0` smallint(5) unsigned NOT NULL default '0',
+  `card1` smallint(5) unsigned NOT NULL default '0',
+  `card2` smallint(5) unsigned NOT NULL default '0',
+  `card3` smallint(5) unsigned NOT NULL default '0',
   `expire_time` int(11) unsigned NOT NULL default '0',
   `bound` tinyint(3) unsigned NOT NULL default '0',
   `unique_id` bigint(20) unsigned NOT NULL default '0',
@@ -409,16 +410,16 @@ CREATE TABLE IF NOT EXISTS `interlog` (
 CREATE TABLE IF NOT EXISTS `inventory` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `char_id` int(11) unsigned NOT NULL default '0',
-  `nameid` int(11) unsigned NOT NULL default '0',
+  `nameid` smallint(5) unsigned NOT NULL default '0',
   `amount` int(11) unsigned NOT NULL default '0',
   `equip` int(11) unsigned NOT NULL default '0',
   `identify` smallint(6) NOT NULL default '0',
   `refine` tinyint(3) unsigned NOT NULL default '0',
   `attribute` tinyint(4) unsigned NOT NULL default '0',
-  `card0` smallint(11) NOT NULL default '0',
-  `card1` smallint(11) NOT NULL default '0',
-  `card2` smallint(11) NOT NULL default '0',
-  `card3` smallint(11) NOT NULL default '0',
+  `card0` smallint(5) unsigned NOT NULL default '0',
+  `card1` smallint(5) unsigned NOT NULL default '0',
+  `card2` smallint(5) unsigned NOT NULL default '0',
+  `card3` smallint(5) unsigned NOT NULL default '0',
   `expire_time` int(11) unsigned NOT NULL default '0',
   `favorite` tinyint(3) unsigned NOT NULL default '0',
   `bound` tinyint(3) unsigned NOT NULL default '0',
@@ -516,15 +517,15 @@ CREATE TABLE IF NOT EXISTS `mail` (
   `time` int(11) unsigned NOT NULL default '0',
   `status` tinyint(2) NOT NULL default '0',
   `zeny` int(11) unsigned NOT NULL default '0',
-  `nameid` int(11) unsigned NOT NULL default '0',
+  `nameid` smallint(5) unsigned NOT NULL default '0',
   `amount` int(11) unsigned NOT NULL default '0',
   `refine` tinyint(3) unsigned NOT NULL default '0',
   `attribute` tinyint(4) unsigned NOT NULL default '0',
   `identify` smallint(6) NOT NULL default '0',
-  `card0` smallint(11) NOT NULL default '0',
-  `card1` smallint(11) NOT NULL default '0',
-  `card2` smallint(11) NOT NULL default '0',
-  `card3` smallint(11) NOT NULL default '0',
+  `card0` smallint(5) unsigned NOT NULL default '0',
+  `card1` smallint(5) unsigned NOT NULL default '0',
+  `card2` smallint(5) unsigned NOT NULL default '0',
+  `card3` smallint(5) unsigned NOT NULL default '0',
   `unique_id` bigint(20) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM;
@@ -599,12 +600,12 @@ CREATE TABLE IF NOT EXISTS `pet` (
   `account_id` int(11) unsigned NOT NULL default '0',
   `char_id` int(11) unsigned NOT NULL default '0',
   `level` smallint(4) unsigned NOT NULL default '0',
-  `egg_id` smallint(11) unsigned NOT NULL default '0',
+  `egg_id` smallint(5) unsigned NOT NULL default '0',
   `equip` mediumint(8) unsigned NOT NULL default '0',
   `intimate` smallint(9) unsigned NOT NULL default '0',
   `hungry` smallint(9) unsigned NOT NULL default '0',
   `rename_flag` tinyint(4) unsigned NOT NULL default '0',
-  `incuvate` int(11) unsigned NOT NULL default '0',
+  `incubate` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`pet_id`)
 ) ENGINE=MyISAM;
 
@@ -675,16 +676,16 @@ CREATE TABLE IF NOT EXISTS `sstatus` (
 CREATE TABLE IF NOT EXISTS `storage` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `account_id` int(11) unsigned NOT NULL default '0',
-  `nameid` int(11) unsigned NOT NULL default '0',
+  `nameid` smallint(5) unsigned NOT NULL default '0',
   `amount` smallint(11) unsigned NOT NULL default '0',
   `equip` int(11) unsigned NOT NULL default '0',
   `identify` smallint(6) unsigned NOT NULL default '0',
   `refine` tinyint(3) unsigned NOT NULL default '0',
   `attribute` tinyint(4) unsigned NOT NULL default '0',
-  `card0` smallint(11) NOT NULL default '0',
-  `card1` smallint(11) NOT NULL default '0',
-  `card2` smallint(11) NOT NULL default '0',
-  `card3` smallint(11) NOT NULL default '0',
+  `card0` smallint(5) unsigned NOT NULL default '0',
+  `card1` smallint(5) unsigned NOT NULL default '0',
+  `card2` smallint(5) unsigned NOT NULL default '0',
+  `card3` smallint(5) unsigned NOT NULL default '0',
   `expire_time` int(11) unsigned NOT NULL default '0',
   `bound` tinyint(3) unsigned NOT NULL default '0',
   `unique_id` bigint(20) unsigned NOT NULL default '0',
@@ -711,7 +712,7 @@ CREATE TABLE IF NOT EXISTS `bonus_script` (
   `flag` varchar(3) NOT NULL DEFAULT '0',
   `type` char(1) NOT NULL DEFAULT '0',
   `icon` varchar(3) NOT NULL DEFAULT '-1'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `vending_items` (
   `vending_id` int(10) unsigned NOT NULL,
@@ -719,7 +720,7 @@ CREATE TABLE IF NOT EXISTS `vending_items` (
   `cartinventory_id` int(10) unsigned NOT NULL,
   `amount` smallint(5) unsigned NOT NULL,
   `price` int(10) unsigned NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 CREATE TABLE IF NOT EXISTS `vendings` (
   `id` int(10) unsigned NOT NULL,
@@ -732,7 +733,7 @@ CREATE TABLE IF NOT EXISTS `vendings` (
   `title` varchar(80) NOT NULL,
   `autotrade` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 CREATE TABLE IF NOT EXISTS `buyingstore_items` (
   `buyingstore_id` int(10) unsigned NOT NULL,
@@ -740,7 +741,7 @@ CREATE TABLE IF NOT EXISTS `buyingstore_items` (
   `item_id` int(10) unsigned NOT NULL,
   `amount` smallint(5) unsigned NOT NULL,
   `price` int(10) unsigned NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 CREATE TABLE IF NOT EXISTS `buyingstores` (
   `id` int(10) unsigned NOT NULL,
@@ -754,4 +755,4 @@ CREATE TABLE IF NOT EXISTS `buyingstores` (
   `limit` int(10) unsigned NOT NULL,
   `autotrade` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;

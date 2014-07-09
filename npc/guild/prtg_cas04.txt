@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= War of Emperium (Prontera)
+//= War of Emperium (Prontera) - Skoegul
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
@@ -109,7 +109,6 @@ prtg_cas04,259,265,4	duplicate(cm)	Van Dreth#prtg_cas04	55
 // Treasure Room Exit
 //============================================================
 prtg_cas04,275,160,0	script	#Lever_PR04	111,{
-
 	mes " ";
 	mes "There's a small lever. Will you pull it?";
 	next;

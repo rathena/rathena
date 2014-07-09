@@ -54,6 +54,13 @@ void map_msg_reload(void);
 /** Added definitions for WoESE objects and other [L0ne_W0lf], [aleos] */
 enum MOBID {
 	MOBID_PORING			= 1002,
+	MOBID_RED_PLANT			= 1078,
+	MOBID_BLACK_MUSHROOM	= 1084,
+	MOBID_GOBLIN_1			= 1122,
+	MOBID_GOBLIN_2,
+	MOBID_GOBLIN_3,
+	MOBID_GOBLIN_4,
+	MOBID_GOBLIN_5,
 	MOBID_MARINE_SPHERE		= 1142,
 	MOBID_A_GUARDIAN		= 1285,
 	MOBID_K_GUARDIAN,
@@ -95,6 +102,7 @@ enum MOBID {
 	MOBID_MAGICDECOY_WATER,
 	MOBID_MAGICDECOY_EARTH,
 	MOBID_MAGICDECOY_WIND,
+	MOBID_ZANZOU			= 2308,
 	MOBID_S_HORNET			= 2158,
 	MOBID_S_GIANT_HORNET,
 	MOBID_S_LUCIOLA_VESPA,
@@ -119,7 +127,7 @@ enum MOBID {
 //First Jobs
 //Note the oddity of the novice:
 //Super Novices are considered the 2-1 version of the novice! Novices are considered a first class type, too...
-enum {
+enum e_mapid {
 //Novice And 1-1 Jobs
 	MAPID_NOVICE = 0x0,
 	MAPID_SWORDMAN,
@@ -135,8 +143,8 @@ enum {
 	MAPID_XMAS,
 	MAPID_SUMMER,
 	MAPID_HANBOK,
-	MAPID_OKTOBERFEST,
 	MAPID_GANGSI,
+	MAPID_OKTOBERFEST,
 //2-1 Jobs
 	MAPID_SUPER_NOVICE = JOBL_2_1|0x0,
 	MAPID_KNIGHT,
@@ -333,6 +341,7 @@ enum e_race2 {
 };
 
 enum e_elemen {
+	ELE_NONE=-1,
 	ELE_NEUTRAL=0,
 	ELE_WATER,
 	ELE_EARTH,
@@ -344,7 +353,7 @@ enum e_elemen {
 	ELE_GHOST,
 	ELE_UNDEAD,
 	ELE_ALL,
-	ELE_NONE
+	ELE_MAX
 };
 
 enum mob_ai {
@@ -468,11 +477,11 @@ enum _sp {
 	SP_EMATK, SP_SP_GAIN_RACE_ATTACK, SP_HP_GAIN_RACE_ATTACK, SP_SKILL_USE_SP_RATE, //2046-2049
 	SP_SKILL_COOLDOWN,SP_SKILL_FIXEDCAST, SP_SKILL_VARIABLECAST, SP_FIXCASTRATE, SP_VARCASTRATE, //2050-2054
 	SP_SKILL_USE_SP,SP_MAGIC_ATK_ELE, SP_ADD_FIXEDCAST, SP_ADD_VARIABLECAST,  //2055-2058
-	SP_DEF_SET,SP_MDEF_SET,SP_HP_VANISH_RATE,  //2059-2061
+	SP_SET_DEF_RACE,SP_SET_MDEF_RACE,SP_HP_VANISH_RATE,  //2059-2061
 
 	SP_IGNORE_DEF_CLASS, SP_DEF_RATIO_ATK_CLASS, SP_ADDCLASS, SP_SUBCLASS, SP_MAGIC_ADDCLASS, //2062-2066
 	SP_WEAPON_COMA_CLASS, SP_IGNORE_MDEF_CLASS_RATE, SP_EXP_ADDCLASS, SP_ADD_CLASS_DROP_ITEM, //2067-2070
-	SP_ADD_CLASS_DROP_ITEMGROUP, SP_ADDMAXWEIGHT  // 2071-2072
+	SP_ADD_CLASS_DROP_ITEMGROUP, SP_ADDMAXWEIGHT, SP_ADD_ITEMGROUP_HEAL_RATE  // 2071-2073
 };
 
 enum _look {
@@ -510,25 +519,25 @@ typedef enum {
 
 // used by map_getcell()
 typedef enum {
-	CELL_GETTYPE,		// retrieves a cell's 'gat' type
+	CELL_GETTYPE,			// Retrieves a cell's 'gat' type
 
-	CELL_CHKWALL,		// wall (gat type 1)
-	CELL_CHKWATER,		// water (gat type 3)
-	CELL_CHKCLIFF,		// cliff/gap (gat type 5)
+	CELL_CHKWALL,			// Whether the cell is a wall (gat type 1)
+	CELL_CHKWATER,			// Whether the cell is water (gat type 3)
+	CELL_CHKCLIFF,			// Whether the cell is a cliff/gap (gat type 5)
 
-	CELL_CHKPASS,		// passable cell (gat type non-1/5)
-	CELL_CHKREACH,		// Same as PASS, but ignores the cell-stacking mod.
-	CELL_CHKNOPASS,		// non-passable cell (gat types 1 and 5)
-	CELL_CHKNOREACH,	// Same as NOPASS, but ignores the cell-stacking mod.
-	CELL_CHKSTACK,		// whether cell is full (reached cell stacking limit)
+	CELL_CHKPASS,			// Whether the cell is passable (gat type not 1 and 5)
+	CELL_CHKREACH,			// Whether the cell is passable, but ignores the cell stacking limit
+	CELL_CHKNOPASS,			// Whether the cell is non-passable (gat types 1 and 5)
+	CELL_CHKNOREACH,		// Whether the cell is non-passable, but ignores the cell stacking limit
+	CELL_CHKSTACK,			// Whether the cell is full (reached cell stacking limit)
 
-	CELL_CHKNPC,
-	CELL_CHKBASILICA,
-	CELL_CHKLANDPROTECTOR,
-	CELL_CHKNOVENDING,
-	CELL_CHKNOCHAT,
-	CELL_CHKMAELSTROM,
-	CELL_CHKICEWALL,
+	CELL_CHKNPC,			// Whether the cell has an OnTouch NPC
+	CELL_CHKBASILICA,		// Whether the cell has Basilica
+	CELL_CHKLANDPROTECTOR,	// Whether the cell has Land Protector
+	CELL_CHKNOVENDING,		// Whether the cell denies MC_VENDING skill
+	CELL_CHKNOCHAT,			// Whether the cell denies Player Chat Window
+	CELL_CHKMAELSTROM,		// Whether the cell has Maelstrom
+	CELL_CHKICEWALL,		// Whether the cell has Ice Wall
 
 } cell_chk;
 
@@ -574,6 +583,15 @@ struct s_skill_damage {
 };
 #define MAX_MAP_SKILL_MODIFIER 5
 #endif
+
+struct questinfo {
+	struct npc_data *nd;
+	unsigned short icon;
+	unsigned char color;
+	int quest_id;
+	bool hasJob;
+	unsigned short job;/* perhaps a mapid mask would be most flexible? */
+};
 
 struct map_data {
 	char name[MAP_NAME_LENGTH];
@@ -683,6 +701,10 @@ struct map_data {
 
 	/* rAthena Local Chat */
 	struct Channel *channel;
+
+	/* ShowEvent Data Cache */
+	struct questinfo *qi_data;
+	unsigned short qi_count;
 	
 	/* speeds up clif_updatestatus processing by causing hpmeter to run only when someone with the permission can view it */
 	unsigned short hpmeter_visible;
@@ -781,6 +803,7 @@ struct block_list * map_id2bl(int id);
 bool map_blid_exists( int id );
 
 #define map_id2index(id) map[(id)].index
+const char* map_mapid2mapname(int m);
 int16 map_mapindex2mapid(unsigned short mapindex);
 int16 map_mapname2mapid(const char* name);
 int map_mapname2ipport(unsigned short name, uint32* ip, uint16* port);
@@ -800,6 +823,9 @@ struct mob_data * map_id2boss(int id);
 
 // reload config file looking only for npcs
 void map_reloadnpc(bool clear);
+
+void map_add_questinfo(int m, struct questinfo *qi);
+bool map_remove_questinfo(int m, struct npc_data *nd);
 
 /// Bitfield of flags for the iterator.
 enum e_mapitflags
@@ -840,6 +866,11 @@ void map_removemobs(int16 m); // [Wizputer]
 void do_reconnect_map(void); //Invoked on map-char reconnection [Skotlex]
 void map_addmap2db(struct map_data *m);
 void map_removemapdb(struct map_data *m);
+
+#define CHK_ELEMENT(ele) ((ele) > ELE_NONE && (ele) < ELE_MAX) /// Check valid Element
+#define CHK_RACE(race) ((race) > RC_NONE_ && (race) < RC_MAX) /// Check valid Race
+#define CHK_RACE2(race2) ((race2) >= RC2_NONE && (race2) < RC2_MAX) /// Check valid Race2
+#define CHK_CLASS(class_) ((class_) > CLASS_NONE && (class_) < CLASS_MAX) /// Check valid Class
 
 //Options read in cli
 extern char *INTER_CONF_NAME;

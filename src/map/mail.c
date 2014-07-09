@@ -3,6 +3,7 @@
 
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
+#include "../common/strlib.h"
 
 #include "mail.h"
 #include "atcommand.h"
@@ -10,6 +11,7 @@
 #include "clif.h"
 #include "pc.h"
 #include "log.h"
+#include "intif.h"
 
 #include <time.h>
 #include <string.h>
@@ -55,40 +57,46 @@ int mail_removezeny(struct map_session_data *sd, short flag)
 	return 1;
 }
 
-unsigned char mail_setitem(struct map_session_data *sd, int idx, int amount) {
+/**
+* Attempt to set item or zeny
+* @param sd
+* @param idx 0 - Zeny; >= 2 - Inventory item
+* @param amount
+* @return True if item/zeny can be set, False if failed
+*/
+bool mail_setitem(struct map_session_data *sd, short idx, unsigned short amount) {
 
 	if( pc_istrading(sd) )
-		return 1;
+		return false;
 
 	if( idx == 0 ) { // Zeny Transfer
 		if( amount < 0 || !pc_can_give_items(sd) )
-			return 1;
+			return false;
 
 		if( amount > sd->status.zeny )
 			amount = sd->status.zeny;
 
 		sd->mail.zeny = amount;
 		// clif_updatestatus(sd, SP_ZENY);
-		return 0;
+		return true;
 	} else { // Item Transfer
 		idx -= 2;
 		mail_removeitem(sd, 0);
 
 		if( idx < 0 || idx >= MAX_INVENTORY )
-			return 1;
+			return false;
 		if( amount < 0 || amount > sd->status.inventory[idx].amount )
-			return 1;
+			return false;
 		if( !pc_can_give_items(sd) || sd->status.inventory[idx].expire_time
 			|| !itemdb_available(sd->status.inventory[idx].nameid)
 			|| !itemdb_canmail(&sd->status.inventory[idx],pc_get_group_level(sd))
 			|| (sd->status.inventory[idx].bound && !pc_can_give_bounded_items(sd)) )
-			return 1;
+			return false;
 
 		sd->mail.index = idx;
 		sd->mail.nameid = sd->status.inventory[idx].nameid;
 		sd->mail.amount = amount;
-
-		return 0;
+		return true;
 	}
 }
 
@@ -184,4 +192,59 @@ bool mail_invalid_operation(struct map_session_data *sd)
 	}
 
 	return false;
+}
+
+/**
+* Attempt to send mail
+* @param sd Sender
+* @param dest_name Destination name
+* @param title Mail title
+* @param body_msg Mail message
+* @param body_len Message's length
+*/
+void mail_send(struct map_session_data *sd, const char *dest_name, const char *title, const char *body_msg, int body_len) {
+	struct mail_message msg;
+
+	nullpo_retv(sd);
+
+	if( sd->state.trading )
+		return;
+
+	if( DIFF_TICK(sd->cansendmail_tick, gettick()) > 0 ) {
+		clif_displaymessage(sd->fd,msg_txt(sd,675)); //"Cannot send mails too fast!!."
+		clif_Mail_send(sd->fd, true); // fail
+		return;
+	}
+
+	if( body_len > MAIL_BODY_LENGTH )
+		body_len = MAIL_BODY_LENGTH;
+
+	if( !mail_setattachment(sd, &msg) ) { // Invalid Append condition
+		clif_Mail_send(sd->fd, true); // fail
+		mail_removeitem(sd,0);
+		mail_removezeny(sd,0);
+		return;
+	}
+
+	msg.id = 0; // id will be assigned by charserver
+	msg.send_id = sd->status.char_id;
+	msg.dest_id = 0; // will attempt to resolve name
+	safestrncpy(msg.send_name, sd->status.name, NAME_LENGTH);
+	safestrncpy(msg.dest_name, (char*)dest_name, NAME_LENGTH);
+	safestrncpy(msg.title, (char*)title, MAIL_TITLE_LENGTH);
+
+	if (msg.title[0] == '\0') {
+		return; // Message has no length and somehow client verification was skipped.
+	}
+
+	if (body_len)
+		safestrncpy(msg.body, (char*)body_msg, body_len + 1);
+	else
+		memset(msg.body, 0x00, MAIL_BODY_LENGTH);
+
+	msg.timestamp = time(NULL);
+	if( !intif_Mail_send(sd->status.account_id, &msg) )
+		mail_deliveryfail(sd, &msg);
+
+	sd->cansendmail_tick = gettick() + battle_config.mail_delay; // Flood Protection
 }

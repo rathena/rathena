@@ -11,7 +11,7 @@
 /// Max number of items on @autolootid list
 #define AUTOLOOTITEM_SIZE 10
 
-/// The maximum number of atcommand suggestions
+/// The maximum number of atcommand and @warp suggestions
 #define MAX_SUGGESTIONS 10
 
 /// Comment to disable the official walk path
@@ -62,12 +62,7 @@
 /// Uncomment to enable skills damage adjustments
 /// By enabling this, db/skill_damage.txt and the skill_damage mapflag will adjust the
 /// damage rate of specified skills.
-//#define ADJUST_SKILL_DAMAGE
-
-/// The skill damage adjustment rate is capped at 100000.
-#ifdef ADJUST_SKILL_DAMAGE
-#define MAX_SKILL_DAMAGE_RATE 100000
-#endif
+#define ADJUST_SKILL_DAMAGE
 
 /// Uncomment to enable the job base HP/SP table (job_basehpsp_db.txt)
 //#define HP_SP_TABLES
@@ -91,12 +86,6 @@
 	#define MIN_CHARS MAX_CHARS // Default number of characters per account.
 	#define MAX_CHAR_BILLING 0
 	#define MAX_CHAR_VIP 0
-#endif
-#if (MIN_CHARS + MAX_CHAR_VIP + MAX_CHAR_BILLING) > MAX_CHARS
-	#error "Config of MAX_CHARS is invalid"
-#endif
-#if MIN_STORAGE > MAX_STORAGE
-	#error "Config of MIN_STORAGE is invalid"
 #endif
 
 /**

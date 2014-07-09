@@ -102,8 +102,8 @@ REPLACE INTO `mob_skill_db` VALUES (1010,'Willow@NPC_GROUNDATTACK','attack',185,
 REPLACE INTO `mob_skill_db` VALUES (1010,'Willow@NPC_TELEKINESISATTACK','attack',191,5,500,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,'9',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1010,'Willow@NPC_TELEKINESISATTACK','chase',191,5,500,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,'9',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1011,'Chonchon@NPC_WINDATTACK','attack',187,1,2000,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db` VALUES (1011,'Chonchon@NPC_RUN','attack',354,1,10000,0,3000,'no','self','always','0',NULL,0x181,NULL,NULL,NULL,'19',NULL);
-#REPLACE INTO `mob_skill_db` VALUES (1011,'Chonchon@NPC_RUN','chase',354,1,10000,0,3000,'no','self','always','0',NULL,0x181,NULL,NULL,NULL,'19',NULL);
+#REPLACE INTO `mob_skill_db` VALUES (1011,'Chonchon@NPC_RUN','attack',354,1,10000,0,3000,'no','self','always','0',NULL,0x181,NULL,NULL,NULL,'26',NULL);
+#REPLACE INTO `mob_skill_db` VALUES (1011,'Chonchon@NPC_RUN','chase',354,1,10000,0,3000,'no','self','always','0',NULL,0x181,NULL,NULL,NULL,'26',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1012,'Roda Frog@NPC_WATERATTACK','attack',184,1,2000,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1013,'Wolf@NPC_GROUNDATTACK','attack',185,2,500,500,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'6',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1013,'Wolf@NPC_PROVOCATION','chase',194,1,200,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,'19',NULL);
@@ -117,7 +117,7 @@ REPLACE INTO `mob_skill_db` VALUES (1015,'Zombie@NPC_UNDEADATTACK','attack',347,
 REPLACE INTO `mob_skill_db` VALUES (1015,'Zombie@NPC_UNDEADATTACK','angry',347,1,2000,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1016,'Archer Skeleton@AC_DOUBLE','attack',46,1,500,1000,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1016,'Archer Skeleton@NPC_UNDEADATTACK','attack',347,2,500,500,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db` VALUES (1016,'Archer Skeleton@NPC_RUN','attack',354,1,500,0,5000,'yes','self','attackpcge','1',NULL,NULL,NULL,NULL,NULL,'19',NULL);
+#REPLACE INTO `mob_skill_db` VALUES (1016,'Archer Skeleton@NPC_RUN','attack',354,1,500,0,5000,'yes','self','attackpcge','1',NULL,NULL,NULL,NULL,NULL,'26',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1018,'Creamy@AL_TELEPORT','attack',26,1,500,0,5000,'yes','self','myhpltmaxrate','30',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1018,'Creamy@AL_TELEPORT','idle',26,1,500,0,5000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1018,'Creamy@NPC_SLEEPATTACK','attack',182,3,500,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
@@ -344,8 +344,8 @@ REPLACE INTO `mob_skill_db` VALUES (1061,'Nightmare@NPC_MENTALBREAKER','attack',
 REPLACE INTO `mob_skill_db` VALUES (1061,'Nightmare@NPC_TELEKINESISATTACK','attack',191,5,500,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1062,'Santa Poring@NPC_EMOTION','loot',197,1,2000,0,5000,'yes','self','always','0',2,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1062,'Santa Poring@NPC_HOLYATTACK','attack',189,1,2000,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db` VALUES (1063,'Lunatic@NPC_RUN','attack',354,1,10000,0,3000,'no','self','always','0',NULL,0x81,NULL,NULL,NULL,'19',NULL);
-#REPLACE INTO `mob_skill_db` VALUES (1063,'Lunatic@NPC_RUN','chase',354,1,10000,0,3000,'no','self','always','0',NULL,0x81,NULL,NULL,NULL,'19',NULL);
+#REPLACE INTO `mob_skill_db` VALUES (1063,'Lunatic@NPC_RUN','attack',354,1,10000,0,3000,'no','self','always','0',NULL,0x81,NULL,NULL,NULL,'26',NULL);
+#REPLACE INTO `mob_skill_db` VALUES (1063,'Lunatic@NPC_RUN','chase',354,1,10000,0,3000,'no','self','always','0',NULL,0x81,NULL,NULL,NULL,'26',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1064,'Megalodon@NPC_CHANGETELEKINESIS','attack',169,1,500,2000,5000,'no','self','myhpltmaxrate','30',NULL,NULL,NULL,NULL,NULL,'7',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1064,'Megalodon@NPC_UNDEADATTACK','attack',347,2,500,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1065,'Strouf@MG_FROSTDIVER','attack',15,9,1000,1000,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
@@ -741,7 +741,7 @@ REPLACE INTO `mob_skill_db` VALUES (1140,'Marduk@NPC_MAGICALATTACK','attack',192
 REPLACE INTO `mob_skill_db` VALUES (1141,'Marina@NPC_CRITICALSLASH','attack',170,1,500,500,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'6',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1141,'Marina@NPC_EMOTION','walk',197,1,2000,0,5000,'yes','self','always','0',19,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1141,'Marina@NPC_WATERATTACK','attack',184,2,500,500,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'6',NULL);
-REPLACE INTO `mob_skill_db` VALUES (1142,'Marine Sphere@NPC_RUN','idle',354,7,10000,0,30000,'no','master','alchemist',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db` VALUES (1142,'Marine Sphere@NPC_RUN','idle',354,7,10000,0,30000,'no','master','alchemist',NULL,NULL,NULL,NULL,NULL,NULL,'26',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1142,'Marine Sphere@NPC_SELFDESTRUCTION','any',173,1,10000,3000,0,'no','self','afterskill','354',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1142,'Marine Sphere@NPC_SELFDESTRUCTION','idle',173,1,500,2000,5000,'no','self','myhpltmaxrate','99',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1142,'Marine Sphere@NPC_SELFDESTRUCTION','idle',173,1,10000,2000,5000,'no','self','skillused','173',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
@@ -960,7 +960,7 @@ REPLACE INTO `mob_skill_db` VALUES (1189,'Orc Archer@AC_SHOWER','attack',47,5,20
 REPLACE INTO `mob_skill_db` VALUES (1189,'Orc Archer@HT_ANKLESNARE','idle',117,5,500,0,300000,'yes','around2','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1189,'Orc Archer@NPC_EMOTION','idle',197,1,2000,0,5000,'yes','self','always','0',5,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1189,'Orc Archer@NPC_GROUNDATTACK','attack',185,2,500,500,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db` VALUES (1189,'Orc Archer@NPC_RUN','attack',354,1,500,0,5000,'yes','self','attackpcge','1',NULL,NULL,NULL,NULL,NULL,'19',NULL);
+#REPLACE INTO `mob_skill_db` VALUES (1189,'Orc Archer@NPC_RUN','attack',354,1,500,0,5000,'yes','self','attackpcge','1',NULL,NULL,NULL,NULL,NULL,'26',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1190,'Orc Lord@AL_INCAGI','chase',29,10,2000,700,300000,'no','self','always','0',NULL,NULL,NULL,NULL,NULL,'6',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1190,'Orc Lord@AL_TELEPORT','idle',26,1,10000,0,0,'yes','self','rudeattacked',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1190,'Orc Lord@AL_TELEPORT','idle',26,1,5000,0,5000,'yes','self','rudeattacked',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
@@ -1128,11 +1128,11 @@ REPLACE INTO `mob_skill_db` VALUES (1246,'Christmas Cookie@SA_REVERSEORCISH','ch
 REPLACE INTO `mob_skill_db` VALUES (1247,'Antonio@AL_TELEPORT','attack',26,1,1000,0,5000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1247,'Antonio@AL_TELEPORT','idle',26,1,1000,0,5000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1247,'Antonio@AL_TELEPORT','chase',26,1,1000,0,5000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
-REPLACE INTO `mob_skill_db` VALUES (1247,'Antonio@NPC_RUN','attack',354,1,10000,0,0,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
-REPLACE INTO `mob_skill_db` VALUES (1247,'Antonio@NPC_RUN','chase',354,1,10000,0,0,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
+REPLACE INTO `mob_skill_db` VALUES (1247,'Antonio@NPC_RUN','attack',354,1,10000,0,0,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,'26',NULL);
+REPLACE INTO `mob_skill_db` VALUES (1247,'Antonio@NPC_RUN','chase',354,1,10000,0,0,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,'26',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1248,'Cruiser@NPC_COMBOATTACK','attack',171,1,500,700,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'24',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1248,'Cruiser@NPC_EMOTION','chase',197,1,2000,0,5000,'yes','self','always','0',27,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db` VALUES (1248,'Cruiser@NPC_RUN','attack',354,1,500,0,5000,'yes','self','attackpcge','1',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db` VALUES (1248,'Cruiser@NPC_RUN','attack',354,1,500,0,5000,'yes','self','attackpcge','1',NULL,NULL,NULL,NULL,NULL,'26',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1249,'Myst Case@AL_TELEPORT','idle',26,1,10000,0,0,'yes','self','rudeattacked',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1249,'Myst Case@KN_SPEARSTAB','attack',58,5,500,800,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1249,'Myst Case@MC_MAMMONITE','attack',42,5,500,800,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'8',NULL);
@@ -1194,7 +1194,7 @@ REPLACE INTO `mob_skill_db` VALUES (1253,'Gargoyle@AL_TELEPORT','idle',26,1,1000
 REPLACE INTO `mob_skill_db` VALUES (1253,'Gargoyle@NPC_BLINDATTACK','attack',177,5,500,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1253,'Gargoyle@NPC_KEEPING','attack',201,1,2000,0,5000,'yes','self','myhpltmaxrate','30',NULL,NULL,NULL,NULL,NULL,'9',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1253,'Gargoyle@NPC_WINDATTACK','attack',187,1,2000,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db` VALUES (1253,'Gargoyle@NPC_RUN','attack',354,1,500,0,5000,'yes','self','attackpcge','1',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db` VALUES (1253,'Gargoyle@NPC_RUN','attack',354,1,500,0,5000,'yes','self','attackpcge','1',NULL,NULL,NULL,NULL,NULL,'26',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1254,'Raggler@NPC_COMBOATTACK','attack',171,2,500,700,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'6',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1254,'Raggler@NPC_EMOTION','chase',197,1,200,0,5000,'yes','self','always','0',19,0x81,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1254,'Raggler@NPC_EMOTION','idle',197,1,2000,0,5000,'yes','self','always','0',6,0x3695,NULL,NULL,NULL,NULL,NULL);
@@ -1213,7 +1213,7 @@ REPLACE INTO `mob_skill_db` VALUES (1257,'Injustice@NPC_DARKNESSATTACK','attack'
 REPLACE INTO `mob_skill_db` VALUES (1258,'Goblin Archer@NPC_EMOTION','chase',197,1,2000,0,5000,'yes','self','always','0',16,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1258,'Goblin Archer@NPC_POISON','attack',176,1,500,800,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1258,'Goblin Archer@NPC_POISONATTACK','attack',188,2,500,500,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db` VALUES (1258,'Goblin Archer@NPC_RUN','attack',354,1,500,0,5000,'yes','self','attackpcge','1',NULL,NULL,NULL,NULL,NULL,'19',NULL);
+#REPLACE INTO `mob_skill_db` VALUES (1258,'Goblin Archer@NPC_RUN','attack',354,1,500,0,5000,'yes','self','attackpcge','1',NULL,NULL,NULL,NULL,NULL,'26',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1259,'Gryphon@KN_PIERCE','attack',56,10,500,700,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'6',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1259,'Gryphon@NPC_CRITICALSLASH','attack',170,1,500,500,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'6',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1259,'Gryphon@NPC_WINDATTACK','attack',187,1,2000,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
@@ -1253,8 +1253,8 @@ REPLACE INTO `mob_skill_db` VALUES (1265,'Cookie@AL_HEAL','chase',28,5,10000,500
 REPLACE INTO `mob_skill_db` VALUES (1265,'Cookie@NPC_EMOTION','walk',197,1,2000,0,5000,'yes','self','always','0',2,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1265,'Cookie@NPC_TELEKINESISATTACK','attack',191,5,500,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,'4',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1265,'Cookie@NPC_TELEKINESISATTACK','chase',191,5,500,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,'4',NULL);
-#REPLACE INTO `mob_skill_db` VALUES (1266,'Aster@NPC_RUN','attack',354,1,10000,0,3000,'no','self','always','0',NULL,0x81,NULL,NULL,NULL,'19',NULL);
-#REPLACE INTO `mob_skill_db` VALUES (1266,'Aster@NPC_RUN','chase',354,1,10000,0,3000,'no','self','always','0',NULL,0x81,NULL,NULL,NULL,'19',NULL);
+#REPLACE INTO `mob_skill_db` VALUES (1266,'Aster@NPC_RUN','attack',354,1,10000,0,3000,'no','self','always','0',NULL,0x81,NULL,NULL,NULL,'26',NULL);
+#REPLACE INTO `mob_skill_db` VALUES (1266,'Aster@NPC_RUN','chase',354,1,10000,0,3000,'no','self','always','0',NULL,0x81,NULL,NULL,NULL,'26',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1267,'Carat@AL_TELEPORT','attack',26,1,500,0,5000,'yes','self','myhpltmaxrate','30',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1267,'Carat@AL_TELEPORT','idle',26,1,10000,0,0,'yes','self','rudeattacked',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1267,'Carat@AL_TELEPORT','idle',26,1,500,0,5000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
@@ -1317,7 +1317,7 @@ REPLACE INTO `mob_skill_db` VALUES (1275,'Alice@NPC_EMOTION','idle',197,1,2000,0
 REPLACE INTO `mob_skill_db` VALUES (1275,'Alice@NPC_SUMMONSLAVE','idle',196,1,500,2000,60000,'no','self','slavele','0',1744,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1276,'Raydric Archer@AC_CHARGEARROW','attack',148,1,500,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,'9',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1276,'Raydric Archer@NPC_DARKNESSATTACK','attack',190,3,500,500,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'9',NULL);
-#REPLACE INTO `mob_skill_db` VALUES (1276,'Raydric Archer@NPC_RUN','attack',354,1,500,0,5000,'yes','self','attackpcge','1',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db` VALUES (1276,'Raydric Archer@NPC_RUN','attack',354,1,500,0,5000,'yes','self','attackpcge','1',NULL,NULL,NULL,NULL,NULL,'26',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1276,'Raydric Archer@CR_AUTOGUARD','chase',249,2,2000,0,300000,'yes','self','longrangeattacked',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1276,'Raydric Archer@CR_AUTOGUARD','attack',249,2,500,0,300000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1277,'Greatest General@NPC_BLINDATTACK','idle',177,3,10000,1500,5000,'no','randomtarget','longrangeattacked',NULL,NULL,NULL,NULL,NULL,NULL,'6',NULL);
@@ -1345,7 +1345,7 @@ REPLACE INTO `mob_skill_db` VALUES (1281,'Sage Worm@SA_DISPELL','attack',289,5,0
 REPLACE INTO `mob_skill_db` VALUES (1282,'Kobold Archer@AC_DOUBLE','attack',46,1,500,1000,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'6',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1282,'Kobold Archer@NPC_EMOTION','idle',197,1,2000,0,5000,'yes','self','always','0',20,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1282,'Kobold Archer@NPC_FIREATTACK','attack',186,2,500,500,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'6',NULL);
-#REPLACE INTO `mob_skill_db` VALUES (1282,'Kobold Archer@NPC_RUN','attack',354,1,500,0,5000,'yes','self','attackpcge','1',NULL,NULL,NULL,NULL,NULL,'19',NULL);
+#REPLACE INTO `mob_skill_db` VALUES (1282,'Kobold Archer@NPC_RUN','attack',354,1,500,0,5000,'yes','self','attackpcge','1',NULL,NULL,NULL,NULL,NULL,'26',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1283,'Chimera@AL_TELEPORT','idle',26,1,10000,0,0,'yes','self','rudeattacked',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1283,'Chimera@NPC_FIREATTACK','attack',186,3,500,500,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'6',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1283,'Chimera@NPC_SPLASHATTACK','attack',174,1,2000,0,5000,'yes','target','attackpcge','2',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
@@ -1682,7 +1682,7 @@ REPLACE INTO `mob_skill_db` VALUES (1377,'Elder@MG_FROSTDIVER','chase',15,9,1000
 REPLACE INTO `mob_skill_db` VALUES (1377,'Elder@MG_LIGHTNINGBOLT','chase',20,7,10000,1500,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,'12',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1377,'Elder@MG_STONECURSE','attack',16,10,10000,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,'11',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1377,'Elder@SA_DISPELL','attack',289,1,0,0,30000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db` VALUES (1377,'Elder@NPC_RUN','attack',354,1,2000,500,0,'no','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db` VALUES (1377,'Elder@NPC_RUN','attack',354,1,2000,500,0,'no','self','always','0',NULL,NULL,NULL,NULL,NULL,'26',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1377,'Elder@NPC_SILENCEATTACK','attack',178,5,500,700,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 #REPLACE INTO `mob_skill_db` VALUES (1377,'Elder@NPC_EMOTION','idle',197,1,200,0,30000,'yes','self','always','0',9,0x91,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1377,'Elder@MG_FIREBOLT','idle',19,7,10000,1500,5000,'yes','randomtarget','always','0',NULL,NULL,NULL,NULL,NULL,'11',NULL);
@@ -1820,7 +1820,7 @@ REPLACE INTO `mob_skill_db` VALUES (1390,'Violy@NPC_DARKSTRIKE','attack',340,5,5
 REPLACE INTO `mob_skill_db` VALUES (1390,'Violy@NPC_CURSEATTACK','attack',181,3,500,800,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'2',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1390,'Violy@NPC_DARKBREATH','attack',202,2,500,800,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1390,'Violy@PR_LEXDIVINA','attack',76,5,500,1000,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,'2',NULL);
-#REPLACE INTO `mob_skill_db` VALUES (1390,'Violy@NPC_RUN','attack',354,1,500,0,5000,'yes','self','attackpcge','1',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db` VALUES (1390,'Violy@NPC_RUN','attack',354,1,500,0,5000,'yes','self','attackpcge','1',NULL,NULL,NULL,NULL,NULL,'26',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1391,'Galapago@AM_POTIONPITCHER','idle',231,4,500,500,5000,'yes','self','myhpltmaxrate','99',NULL,NULL,NULL,NULL,NULL,'2',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1391,'Galapago@NPC_EMOTION','chase',197,1,200,0,5000,'yes','self','always','0',19,0x81,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1391,'Galapago@NPC_EMOTION','idle',197,1,2000,0,5000,'yes','self','always','0',1,0x108B,NULL,NULL,NULL,NULL,NULL);
@@ -1986,13 +1986,13 @@ REPLACE INTO `mob_skill_db` VALUES (1410,'Live Peach Tree@AM_POTIONPITCHER','idl
 REPLACE INTO `mob_skill_db` VALUES (1410,'Live Peach Tree@AM_POTIONPITCHER','chase',231,2,10000,500,5000,'no','self','myhpltmaxrate','30',NULL,NULL,NULL,NULL,NULL,'19',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1410,'Live Peach Tree@NPC_GUIDEDATTACK','attack',172,3,500,1000,20000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'6',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1410,'Live Peach Tree@NPC_GUIDEDATTACK','chase',172,2,500,1000,20000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'6',NULL);
-#REPLACE INTO `mob_skill_db` VALUES (1410,'Live Peach Tree@NPC_RUN','attack',354,1,500,0,5000,'yes','self','attackpcge','1',NULL,NULL,NULL,NULL,NULL,'19',NULL);
+#REPLACE INTO `mob_skill_db` VALUES (1410,'Live Peach Tree@NPC_RUN','attack',354,1,500,0,5000,'yes','self','attackpcge','1',NULL,NULL,NULL,NULL,NULL,'26',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1412,'Taoist Hermit@AL_TELEPORT','attack',26,1,500,0,5000,'yes','self','myhpltmaxrate','30',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1412,'Taoist Hermit@MG_LIGHTNINGBOLT','attack',20,5,2000,1500,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,'6',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1412,'Taoist Hermit@MG_LIGHTNINGBOLT','chase',20,5,2000,1500,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,'6',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1412,'Taoist Hermit@NPC_BLINDATTACK','attack',177,3,500,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1412,'Taoist Hermit@NPC_BLINDATTACK','chase',177,3,500,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
-#REPLACE INTO `mob_skill_db` VALUES (1412,'Taoist Cloud Hermit@NPC_RUN','attack',354,1,500,0,5000,'yes','self','attackpcge','1',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db` VALUES (1412,'Taoist Cloud Hermit@NPC_RUN','attack',354,1,500,0,5000,'yes','self','attackpcge','1',NULL,NULL,NULL,NULL,NULL,'26',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1413,'Wild Ginseng@NPC_BARRIER','attack',204,1,2000,3000,5000,'no','self','myhpltmaxrate','30',NULL,NULL,NULL,NULL,NULL,'9',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1413,'Wild Ginseng@NPC_MAGICALATTACK','attack',192,1,500,1000,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'7',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1415,'Baby Leopard@NPC_CRITICALSLASH','attack',170,1,500,500,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'6',NULL);
@@ -2515,7 +2515,7 @@ REPLACE INTO `mob_skill_db` VALUES (1494,'Beetle King@NPC_GROUNDATTACK','attack'
 REPLACE INTO `mob_skill_db` VALUES (1494,'Beetle King@NPC_KEEPING','attack',201,1,2000,0,5000,'yes','self','myhpltmaxrate','30',NULL,NULL,NULL,NULL,NULL,'19',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1495,'Stone Shooter@NPC_FIREATTACK','attack',186,2,500,500,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'6',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1495,'Stone Shooter@NPC_PIERCINGATT','attack',158,2,500,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,'6',NULL);
-#REPLACE INTO `mob_skill_db` VALUES (1495,'Stone Shooter@NPC_RUN','attack',354,1,500,0,5000,'yes','self','attackpcge','1',NULL,NULL,NULL,NULL,NULL,'19',NULL);
+#REPLACE INTO `mob_skill_db` VALUES (1495,'Stone Shooter@NPC_RUN','attack',354,1,500,0,5000,'yes','self','attackpcge','1',NULL,NULL,NULL,NULL,NULL,'26',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1497,'Wooden Golem@AL_HEAL','idle',28,1,2000,0,5000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1497,'Wooden Golem@NPC_SPLASHATTACK','attack',174,1,2000,0,5000,'yes','target','attackpcge','2',NULL,NULL,NULL,NULL,NULL,'9',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1497,'Wooden Golem@NPC_STUNATTACK','attack',179,2,500,1500,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
@@ -2523,7 +2523,7 @@ REPLACE INTO `mob_skill_db` VALUES (1498,'Wootan Shooter@NPC_GUIDEDATTACK','atta
 REPLACE INTO `mob_skill_db` VALUES (1498,'Wootan Shooter@NPC_STUNATTACK','attack',179,2,500,1500,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'2',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1499,'Wootan Fighter@KN_TWOHANDQUICKEN','attack',60,9,2000,0,120000,'yes','self','myhpltmaxrate','30',NULL,NULL,NULL,NULL,NULL,'6',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1499,'Wootan Fighter@SM_MAGNUM','attack',7,5,500,500,5000,'no','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db` VALUES (1498,'Wootan Shooter@NPC_RUN','attack',354,1,500,0,5000,'yes','self','attackpcge','1',NULL,NULL,NULL,NULL,NULL,'19',NULL);
+#REPLACE INTO `mob_skill_db` VALUES (1498,'Wootan Shooter@NPC_RUN','attack',354,1,500,0,5000,'yes','self','attackpcge','1',NULL,NULL,NULL,NULL,NULL,'26',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1500,'Parasite@NPC_CURSEATTACK','attack',181,3,500,800,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'9',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1500,'Parasite@NPC_PETRIFYATTACK','attack',180,3,500,500,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'9',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1500,'Parasite@NPC_POISON','attack',176,3,500,800,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'9',NULL);

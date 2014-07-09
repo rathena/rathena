@@ -391,6 +391,7 @@ schg_que01	mapflag	noteleport
 arug_que01	mapflag	noteleport
 man_in01	mapflag	noteleport
 spl_in01	mapflag	noteleport
+spl_in02	mapflag	noteleport
 
 //Orc's Memory ===================
 1@orcs	mapflag	noteleport

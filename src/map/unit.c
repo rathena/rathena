@@ -55,7 +55,7 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 
 /**
  * Get the unit_data related to the bl
- * @param bl : Object to get the unit_data from \n
+ * @param bl : Object to get the unit_data from
  *	valid type are : BL_PC|BL_MOB|BL_PET|BL_NPC|BL_HOM|BL_MER|BL_ELEM
  * @return unit_data of bl or NULL
  */
@@ -141,10 +141,10 @@ TBL_PC* unit_get_master(struct block_list *bl)
 {
 	if(bl)
 		switch(bl->type) {
-			case BL_HOM : return (((TBL_HOM *)bl)->master);
-			case BL_ELEM : return (((TBL_ELEM *)bl)->master);
-			case BL_PET : return (((TBL_PET *)bl)->master);
-			case BL_MER : return (((TBL_MER *)bl)->master);
+			case BL_HOM: return (((TBL_HOM *)bl)->master);
+			case BL_ELEM: return (((TBL_ELEM *)bl)->master);
+			case BL_PET: return (((TBL_PET *)bl)->master);
+			case BL_MER: return (((TBL_MER *)bl)->master);
 		}
 	return NULL;
 }
@@ -167,7 +167,7 @@ int* unit_get_masterteleport_timer(struct block_list *bl)
 }
 
 /**
- * Warps a unit to its master master has gone out of site (3 second default) \n
+ * Warps a unit to its master if the master has gone out of sight (3 second default)
  * Can be any object with a master [MOB|PET|HOM|MER|ELEM]
  * @param tid: Timer
  * @param tick: tick (unused)
@@ -197,23 +197,23 @@ int unit_teleport_timer(int tid, unsigned int tick, int id, intptr_t data)
 }
 
 /**
- * Checks if a slave unit is outside their max distance from master \n
- * If so, starts a timer for (default: 3 seconds) which will teleport the unit back to master
+ * Checks if a slave unit is outside their max distance from master
+ * If so, starts a timer (default: 3 seconds) which will teleport the unit back to master
  * @param sbl: Object with a master [MOB|PET|HOM|MER|ELEM]
  * @return 0
  */
 int unit_check_start_teleport_timer(struct block_list *sbl)
 {
 	TBL_PC *msd = unit_get_master(sbl);
-	int max_dist=0;
-	switch(sbl->type){
-		case BL_HOM: max_dist = AREA_SIZE; break;
-		case BL_ELEM: max_dist = MAX_ELEDISTANCE; break;
-		case BL_PET : max_dist = AREA_SIZE; break;
-		case BL_MER : max_dist = MAX_MER_DISTANCE; break;
+	int max_dist = 0;
+	switch(sbl->type) {
+		case BL_HOM:	max_dist = AREA_SIZE;			break;
+		case BL_ELEM:	max_dist = MAX_ELEDISTANCE;		break;
+		case BL_PET:	max_dist = AREA_SIZE;			break;
+		case BL_MER:	max_dist = MAX_MER_DISTANCE;	break;
 	}
 	// If there is a master and it's a valid type
-	if(msd && (msd->bl.type&BL_PC) && max_dist){ ///TODO the bl.type is an hotfix please dig it to remove it
+	if(msd && (msd->bl.type&BL_PC) && max_dist) { ///TODO the bl.type is an hotfix please dig it to remove it
 		int *msd_tid = unit_get_masterteleport_timer(sbl);
 		if(msd_tid == NULL) return 0;
 		if (!check_distance_bl(&msd->bl, sbl, max_dist)) {
@@ -230,7 +230,7 @@ int unit_check_start_teleport_timer(struct block_list *sbl)
 }
 
 /**
- * Defines when to refresh the walking character to object and restart the timer if applicable \n
+ * Defines when to refresh the walking character to object and restart the timer if applicable
  * Also checks for speed update, target location, and slave teleport timers
  * @param tid: Timer ID
  * @param tick: Current tick to decide next timer update
@@ -441,14 +441,14 @@ int unit_delay_walktobl_timer(int tid, unsigned int tick, int id, intptr_t data)
 }
 
 /**
- * Begins the function of walking a unit to an x,y location \n
+ * Begins the function of walking a unit to an x,y location
  * This is where the path searches and unit can_move checks are done
  * @param bl: Object to send to x,y coordinate
  * @param x: X coordinate where the object will be walking to
  * @param y: Y coordinate where the object will be walking to
- * @param flag: Parameter to decide how to walk \n
- *	&1: Easy walk (fail if CELL_CHKNOPASS is in direct path) \n
- *	&2: Force walking (override can_move) \n
+ * @param flag: Parameter to decide how to walk
+ *	&1: Easy walk (fail if CELL_CHKNOPASS is in direct path)
+ *	&2: Force walking (override can_move)
  *	&4: Delay walking for can_move
  * @return 1: Success 0: Fail or unit_walktoxy_sub()
  */
@@ -509,7 +509,7 @@ int unit_walktoxy( struct block_list *bl, short x, short y, int flag)
 }
 
 /**
- * Sets a mob's CHASE/FOLLOW state \n
+ * Sets a mob's CHASE/FOLLOW state
  * This should not be done if there's no path to reach
  * @param bl: Mob to set state on
  * @param flag: Whether to set state or not
@@ -523,7 +523,7 @@ static inline void set_mobstate(struct block_list* bl, int flag)
 }
 
 /**
- * Timer to walking a unit to another unit's location \n
+ * Timer to walking a unit to another unit's location
  * Calls unit_walktoxy_sub once determined the unit can move
  * @param tid: Object's timer ID
  * @param id: Object's ID
@@ -551,8 +551,8 @@ static int unit_walktobl_sub(int tid, unsigned int tick, int id, intptr_t data)
  * @param bl: Object that is walking to target
  * @param tbl: Target object
  * @param range: How close to get to target (or attack range if flag&2)
- * @param flag: Extra behaviour \n
- *	&1: Use hard path seek (obstacles will be walked around if possible) \n
+ * @param flag: Extra behaviour
+ *	&1: Use hard path seek (obstacles will be walked around if possible)
  *	&2: Start attacking upon arrival within range, otherwise just walk to target
  * @return 1: Started walking or set timer 0: Failed
  */
@@ -832,14 +832,14 @@ int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool
 		if( sd->status.pet_id > 0 && sd->pd && sd->pd->pet.intimate > 0 ){
 			// Check if pet needs to be teleported. [Skotlex]
 			int flag = 0;
-			struct block_list* bl = &sd->pd->bl;
-			if( !checkpath && !path_search(NULL,bl->m,bl->x,bl->y,dst_x,dst_y,0,CELL_CHKNOPASS) )
+			struct block_list* pbl = &sd->pd->bl;
+			if( !checkpath && !path_search(NULL,pbl->m,pbl->x,pbl->y,dst_x,dst_y,0,CELL_CHKNOPASS) )
 				flag = 1;
-			else if (!check_distance_bl(&sd->bl, bl, AREA_SIZE)) // Too far, teleport.
+			else if (!check_distance_bl(&sd->bl, pbl, AREA_SIZE)) // Too far, teleport.
 				flag = 2;
 			if( flag ) {
-				unit_movepos(bl,sd->bl.x,sd->bl.y, 0, 0);
-				clif_slide(bl,bl->x,bl->y);
+				unit_movepos(pbl,sd->bl.x,sd->bl.y, 0, 0);
+				clif_slide(pbl,pbl->x,pbl->y);
 			}
 		}
 	}
@@ -880,7 +880,7 @@ uint8 unit_getdir(struct block_list *bl)
 }
 
 /**
- * Pushes a unit in a direction by a given amount of cells \n
+ * Pushes a unit in a direction by a given amount of cells
  * There is no path check, only map cell restrictions are respected
  * @param bl: Object to push
  * @param dx: Destination cell X
@@ -948,8 +948,8 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag)
 }
 
 /**
- * Warps a unit to a map/position \n
- * pc_setpos is used for player warping \n
+ * Warps a unit to a map/position
+ * pc_setpos is used for player warping
  * This function checks for "no warp" map flags, so it's safe to call without doing nowarpto/nowarp checks
  * @param bl: Object to warp
  * @param m: Map ID from bl structure (NOT index)
@@ -1027,10 +1027,10 @@ int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
 /**
  * Stops a unit from walking
  * @param bl: Object to stop walking
- * @param type: Options \n
- *	&0x1: Issue a fixpos packet afterwards \n
- *	&0x2: Force the unit to move one cell if it hasn't yet \n
- *	&0x4: Enable moving to the next cell when unit was already half-way there \n
+ * @param type: Options
+ *	&0x1: Issue a fixpos packet afterwards
+ *	&0x2: Force the unit to move one cell if it hasn't yet
+ *	&0x4: Enable moving to the next cell when unit was already half-way there
  *		(may cause on-touch/place side-effects, such as a scripted map change)
  * @return Success(1); Failed(0);
  */
@@ -1108,8 +1108,8 @@ int unit_is_walking(struct block_list *bl)
 }
 
 /** 
- * Checks if a unit is able to move based on status changes \n
- * View the StatusChangeStateTable in status.c for a list of statuses \n
+ * Checks if a unit is able to move based on status changes
+ * View the StatusChangeStateTable in status.c for a list of statuses
  * Some statuses are still checked here due too specific variables
  * @author [Skotlex]
  * @param bl: Object to check
@@ -1195,8 +1195,8 @@ int unit_resume_running(int tid, unsigned int tick, int id, intptr_t data)
  * @param bl: Object to apply walk delay to
  * @param tick: Current tick
  * @param delay: Amount of time to set walk delay
- * @param type: Type of delay \n
- *	0: Damage induced delay; Do not change previous delay \n
+ * @param type: Type of delay
+ *	0: Damage induced delay; Do not change previous delay
  *	1: Skill induced delay; Walk delay can only be increased, not decreased
  * @return Success(1); Fail(0);
  */
@@ -1862,7 +1862,7 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 	ud->state.attack_continue = continuous;
 	unit_set_target(ud, target_id);
 
-	if (continuous) // If you're to attack continously, set to auto-case character
+	if (continuous) // If you're to attack continously, set to auto-chase character
 		ud->chaserange = status_get_range(src);
 
 	// Just change target/type. [Skotlex]
@@ -1883,7 +1883,7 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 }
 
 /** 
- * Cancels an ongoing combo, resets attackable time, and restarts the \n
+ * Cancels an ongoing combo, resets attackable time, and restarts the
  * attack timer to resume attack after amotion time
  * @author [Skotlex]
  * @param bl: Object to cancel combo
@@ -2189,8 +2189,8 @@ static int unit_attack_timer(int tid, unsigned int tick, int id, intptr_t data)
 /**
  * Cancels a skill's cast
  * @param bl: Object to cancel cast
- * @param type: Cancel check flag \n
- *	&1: Cast-Cancel invoked \n
+ * @param type: Cancel check flag
+ *	&1: Cast-Cancel invoked
  *	&2: Cancel only if skill is cancellable
  * @return Success(1); Fail(0);
  */
@@ -2305,11 +2305,11 @@ int unit_changeviewsize(struct block_list *bl,short size)
 }
 
 /**
- * Removes a bl/ud from the map \n
+ * Removes a bl/ud from the map
  * On kill specifics are not performed here, check status_damage()
  * @param bl: Object to remove from map
- * @param clrtype: How bl is being removed \n
- *	0: Assume bl is being warped \n
+ * @param clrtype: How bl is being removed
+ *	0: Assume bl is being warped
  *	1: Death, appropriate cleanup performed
  * @param file, line, func: Call information for debug purposes
  * @return Success(1); Couldn't be removed or bl was free'd(0)
@@ -2392,11 +2392,14 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 				trade_tradecancel(sd);
 			buyingstore_close(sd);
 			searchstore_close(sd);
-			if(sd->state.storage_flag == 1)
-				storage_storage_quit(sd,0);
-			else if (sd->state.storage_flag == 2)
-				storage_guild_storage_quit(sd,0);
-			sd->state.storage_flag = 0; // Force close it when being warped.
+			if (sd->menuskill_id != AL_TELEPORT) { //bugreport:8027
+				if (sd->state.storage_flag == 1)
+					storage_storage_quit(sd,0);
+				else if (sd->state.storage_flag == 2)
+					storage_guild_storage_quit(sd,0);
+
+				sd->state.storage_flag = 0; //Force close it when being warped.
+			}
 			if(sd->party_invite>0)
 				party_reply_invite(sd,sd->party_invite,0);
 			if(sd->guild_invite>0)
@@ -2543,19 +2546,20 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 /**
  * Removes units of a master when the master is removed from map
  * @param sd: Player
- * @param clrtype: How bl is being removed \n
- *	0: Assume bl is being warped \n
+ * @param clrtype: How bl is being removed
+ *	0: Assume bl is being warped
  *	1: Death, appropriate cleanup performed
  */
 void unit_remove_map_pc(struct map_session_data *sd, clr_type clrtype)
 {
 	unit_remove_map(&sd->bl,clrtype);
 
-	if (clrtype == CLR_TELEPORT) clrtype = CLR_OUTSIGHT; // CLR_TELEPORT is the warp from logging out, but pets/homunc need to just 'vanish' instead of showing the warping out animation.
+	//CLR_RESPAWN is the warp from logging out, CLR_TELEPORT is the warp from teleporting, but pets/homunc need to just 'vanish' instead of showing the warping animation.
+	if (clrtype == CLR_RESPAWN || clrtype == CLR_TELEPORT) clrtype = CLR_OUTSIGHT;
 
 	if(sd->pd)
 		unit_remove_map(&sd->pd->bl, clrtype);
-	if(merc_is_hom_active(sd->hd))
+	if(hom_is_active(sd->hd))
 		unit_remove_map(&sd->hd->bl, clrtype);
 	if(sd->md)
 		unit_remove_map(&sd->md->bl, clrtype);
@@ -2580,8 +2584,8 @@ void unit_free_pc(struct map_session_data *sd)
 /**
  * Frees all related resources to the unit
  * @param bl: Object being removed from map
- * @param clrtype: How bl is being removed \n
- *	0: Assume bl is being warped \n
+ * @param clrtype: How bl is being removed
+ *	0: Assume bl is being warped
  *	1: Death, appropriate cleanup performed
  * @return 0
  */
@@ -2632,10 +2636,10 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				sd->reg_num = 0;
 			}
 			if( sd->regstr ) {
-				int i;
-				for( i = 0; i < sd->regstr_num; ++i )
-					if( sd->regstr[i].data )
-						aFree(sd->regstr[i].data);
+				int j;
+				for( j = 0; j < sd->regstr_num; ++j )
+					if( sd->regstr[j].data )
+						aFree(sd->regstr[j].data);
 				aFree(sd->regstr);
 				sd->regstr = NULL;
 				sd->regstr_num = 0;
@@ -2650,6 +2654,20 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				aFree(sd->combos.id);
 				sd->combos.count = 0;
 			}
+			/* [Ind] */
+			if( sd->sc_display_count ) {
+				for( i = 0; i < sd->sc_display_count; i++ )
+					ers_free(pc_sc_display_ers, sd->sc_display[i]);
+				sd->sc_display_count = 0;
+				aFree(sd->sc_display);
+				sd->sc_display = NULL;
+			}
+			if( sd->quest_log != NULL ) {
+				aFree(sd->quest_log);
+				sd->quest_log = NULL;
+				sd->num_quests = sd->avail_quests = 0;
+			}
+			pc_itemgrouphealrate_clear(sd);
 			break;
 		}
 		case BL_PET:
@@ -2751,9 +2769,9 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 		{
 			struct homun_data *hd = (TBL_HOM*)bl;
 			struct map_session_data *sd = hd->master;
-			merc_hom_hungry_timer_delete(hd);
+			hom_hungry_timer_delete(hd);
 			if( hd->homunculus.intimacy > 0 )
-				merc_save(hd);
+				hom_save(hd);
 			else {
 				intif_homunculus_requestdelete(hd->homunculus.hom_id);
 				if( sd )
@@ -2777,7 +2795,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			if( sd )
 				sd->md = NULL;
 
-			merc_contract_stop(md);
+			mercenary_contract_stop(md);
 			break;
 		}
 		case BL_ELEM: {
@@ -2811,15 +2829,13 @@ int unit_free(struct block_list *bl, clr_type clrtype)
  * Initialization function for unit on map start
  * called in map::do_init
  */
-int do_init_unit(void)
-{
+void do_init_unit(void){
 	add_timer_func_list(unit_attack_timer,  "unit_attack_timer");
 	add_timer_func_list(unit_walktoxy_timer,"unit_walktoxy_timer");
 	add_timer_func_list(unit_walktobl_sub, "unit_walktobl_sub");
 	add_timer_func_list(unit_delay_walktoxy_timer,"unit_delay_walktoxy_timer");
 	add_timer_func_list(unit_delay_walktobl_timer,"unit_delay_walktobl_timer");
 	add_timer_func_list(unit_teleport_timer,"unit_teleport_timer");
-	return 0;
 }
 
 /**
@@ -2827,8 +2843,6 @@ int do_init_unit(void)
  * called in map::do_final
  * @return 0
  */
-int do_final_unit(void)
-{
+void do_final_unit(void){
 	// Nothing to do
-	return 0;
 }

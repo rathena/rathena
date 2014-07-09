@@ -88,7 +88,6 @@
 1815,EVENT_RICECAKE,Rice Cake,0,9028,0,511,80,60,50,100,250,20,2000,150,1,0,500,500,200,{ petskillsupport "CR_DEFENDER",3,240,50,100; },{ bonus2 bSubEle,Ele_Neutral,1; bonus bMaxHPrate,-1; }
 1245,GOBLINE_XMAS,Christmas Goblin,12225,9029,0,911,80,60,50,100,250,20,2000,150,0,0,300,300,800,{ petskillattack "MG_SIGHT",5,5,5; },{ bonus bMaxHP,30; bonus2 bSubEle,Ele_Water,1; }
 
-// Newest pets.
 1519,CHUNG_E,Green Maiden,12395,9030,0,6115,80,60,50,100,250,20,2000,150,0,0,300,300,800,{ petskillattack "CR_SHIELDCHARGE",5,5,5; },{ bonus bDef,1; bonus2 bSubRace,RC_DemiHuman,1; }
 1879,ECLIPSE_P,Spring Rabbit,0,9031,0,7766,80,60,50,100,250,20,2000,150,0,0,300,300,800,{ petskillattack "TF_THROWSTONE",1,5,5; },{}
 1122,GOBLIN_1,Goblin,14569,9032,0,7821,80,60,50,100,250,20,800,150,0,0,300,300,800,{ petskillattack "NPC_WINDATTACK",5,5,5; },{}
@@ -123,3 +122,10 @@
 // Brasilis Quest - Suspicious Beach [UNHATCHABLE]
 2057,E_CRAMP,Strange Cramp,12408,6221,0,0,0,0,0,0,0,0,50,0,0,0,350,400,800,{},{} // kRO version
 2081,E_HYDRA,Strange Hydra,12408,6221,0,0,0,0,0,0,0,0,50,0,0,0,350,400,800,{},{} // iRO/cRO version
+
+// New pets (FIX ME: pet bonuses for 2210 and 2313 do not require loyalty)
+2200,J_TAINI,Tiny,0,9057,0,512,80,60,10,100,250,20,0,150,1,0,300,300,800,{},{}
+2210,XMAS_LUNATIC,Christmas Snow Rabbit,0,9058,0,529,80,60,10,100,250,20,0,150,1,0,300,300,800,{},{ bonus2 bExpAddRace,RC_All,5; }
+2313,TIKBALANG,Tikbalang,12699,9059,0,528,80,60,10,100,250,20,1000,150,1,0,300,300,800,{},{ bonus2 bAddDamageClass,2320,10; bonus2 bAddDamageClass,2321,10; bonus2 bAddDamageClass,2322,10; bonus2 bAddDamageClass,2317,10; bonus2 bAddDamageClass,2318,10; bonus2 bAddDamageClass,2327,10; bonus2 bAddDamageClass,2319,10; bonus2 bAddDamageClass,2333,10; bonus2 bAddDamageClass,2332,10; }
+1242,MARIN,Marin,12789,9061,10039,6534,80,60,50,100,250,20,2000,150,1,0,300,300,800,{},{}
+2398,LITTLE_PORING,Novice Poring,12846,9062,0,531,80,60,1000,0,250,0,5000,150,0,0,300,300,800,{},{ bonus bHPrecovRate,50; }

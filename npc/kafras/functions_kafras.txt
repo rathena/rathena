@@ -649,7 +649,7 @@ function	script	F_KafSet	{
 	}
 
 	// VIP pricing varies across the regional servers; this is most practical.
-	if (getserverdef(VAR_VIP_SCRIPT) && !vip_status(1)) {
+	if (VIP_SCRIPT && !vip_status(1)) {
 		for (set .@i, 0; .@i < getarraysize(@wrpD$); set .@i, .@i + 1)
 			setd "@wrpP["+.@i+"]",getd("@wrpP["+.@i+"]") * 2;
 	}

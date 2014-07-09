@@ -101,7 +101,7 @@ struct pet_data {
 
 
 
-int pet_create_egg(struct map_session_data *sd, int item_id);
+int pet_create_egg(struct map_session_data *sd, unsigned short item_id);
 int pet_hungry_val(struct pet_data *pd);
 void pet_set_intimate(struct pet_data *pd, int value);
 int pet_target_check(struct map_session_data *sd,struct block_list *bl,int type);
@@ -115,7 +115,7 @@ int pet_recv_petdata(int account_id,struct s_pet *p,int flag);
 int pet_select_egg(struct map_session_data *sd,short egg_index);
 int pet_catch_process1(struct map_session_data *sd,int target_class);
 int pet_catch_process2(struct map_session_data *sd,int target_id);
-int pet_get_egg(int account_id,int pet_id,int flag);
+bool pet_get_egg(int account_id, short pet_class, int pet_id);
 int pet_menu(struct map_session_data *sd,int menunum);
 int pet_change_name(struct map_session_data *sd,char *name);
 int pet_change_name_ack(struct map_session_data *sd, char* name, int flag);
@@ -130,8 +130,8 @@ int pet_heal_timer(int tid, unsigned int tick, int id, intptr_t data); // [Valar
 #define pet_stop_walking(pd, type) unit_stop_walking(&(pd)->bl, type)
 #define pet_stop_attack(pd) unit_stop_attack(&(pd)->bl)
 
-int read_petdb(void);
-int do_init_pet(void);
-int do_final_pet(void);
+void read_petdb(void);
+void do_init_pet(void);
+void do_final_pet(void);
 
 #endif /* _PET_H_ */

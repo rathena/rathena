@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20140211
+//= 20140313
 //===== Description: =========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -551,6 +551,20 @@ notable exception is Zeny, which you can and often will address directly -
 setting it will make the character own this number of Zeny.
 If you try to set Zeny to a negative number, the script will be terminated with an error.
 
+Some source-end constants can also be accessed in scripts. This list is located in
+'src/map/script.c' in the 'script_hardcoded_constants' function, which contains
+constants such as server defines and status options:
+
+    PACKETVER, MAX_LEVEL, MAX_STORAGE, MAX_INVENTORY, MAX_CART, MAX_ZENY, MAX_PARTY,
+    MAX_GUILD, MAX_GUILDLEVEL, MAX_GUILD_STORAGE, MAX_BG_MEMBERS, MAX_CHAT_USERS,
+    VIP_SCRIPT, MIN_STORAGE
+
+    Option_Nothing, Option_Sight, Option_Hide, Option_Cloak, Option_Falcon, Option_Riding,
+    Option_Invisible, Option_Orcish, Option_Wedding, Option_Chasewalk, Option_Flying,
+    Option_Xmas, Option_Transform, Option_Summer, Option_Dragon1, Option_Wug,
+    Option_Wugrider, Option_Madogear, Option_Dragon2, Option_Dragon3, Option_Dragon4,
+    Option_Dragon5, Option_Hanbok, Option_Oktoberfest, Option_Dragon, Option_Costume
+
 Assigning variables
 --------- ---------
 
@@ -945,11 +959,25 @@ This special label triggers when a player kills a monster. The variable
 
 OnPCLoadMapEvent:
 
-This special label will trigger once a player steps in a map marked with the 
-'loadevent' mapflag and attach its RID. The fact that this label requires a 
+This special label triggers when a player steps in a map marked with the 
+'loadevent' mapflag and attaches its RID. The fact that this label requires a 
 mapflag for it to work is because, otherwise, it'd be server-wide and trigger
 every time a player would change maps. Imagine the server load with 1,000 players
 (oh the pain...)
+
+OnPCStatCalcEvent:
+
+This special label triggers when a player's stats are recalculated, such as when
+changing stats, equipment, or maps, as well as when logging in, leveling up, and
+mounting a job mount. This can be used to grant additional item bonuses to certain
+player groups, for instance.
+
+OnWhisperGlobal:
+
+This special label triggers when a player whispers the NPC, and will run with the
+player's RID attached. It can accept up to ten parameters, which will be stored
+into separate temporary character string variables @whispervar0$ to @whispervar9$.
+See 'doc/whisper_sys.txt' for further documentation.
 
 Only the special labels which are not associated with any script command are 
 listed here. There are other kinds of labels which may be triggered in a similar 
@@ -1210,7 +1238,7 @@ Examples:
   setd ".@var$", "Poporing";
   mes .@var$; // Displays "Poporing".
 
-  setd ".@" + $var$ + "123$", "Poporing is cool";
+  setd ".@" + .@var$ + "123$", "Poporing is cool";
   mes .@Poporing123$; // Displays "Poporing is cool".
 
 ---------------------------------------
@@ -1936,6 +1964,64 @@ with this command when a script is parsed.
 
 ---------------------------------------
 
+*switch (expression);
+
+The switch statement is similar to a series of if statements on the same expression.
+In many occasions, you may want to compare the same variable (or expression)
+with many different values, and execute a different piece of code depending
+on which value it equals to. This is exactly what the switch statement is for.
+
+It is important to understand how the switch statement is executed in order
+to avoid mistakes. The switch statement executes line by line (actually, statement by statement).
+In the beginning, no code is executed. Only when a case statement is found
+with a value that matches the value of the switch expression the case statement(s)
+will to executed. The parser continues to execute the statements until the end
+of the switch block, or the first time it sees a break statement. If you don't
+write a break statement at the end of a case's statement list, the parser will
+go on executing the statements of the following case (fall-through).
+
+Example 1:
+	
+	switch(select("Yes:No")) {
+		case 1:
+			mes "You said yes!";
+			break;
+		case 2:
+			mes "Aww, why?";
+			break;
+	}
+	close;
+
+The example above would work like a menu and would go to the first case if
+the user selects option, otherwise, would go to the second one.
+
+Example 2:
+	
+	switch(getgroupid()) {
+		case 1:
+			mes "Wow, you're super!";
+			break;
+		case 2:
+			mes "A helping hand!";
+			break;
+		case 3:
+			mes "10001010010011";
+			break;
+		case 4:
+			mes "Yes, milord?";
+			break;
+		default:
+			mes "Hello there!";
+			break;		
+	}
+
+The example above would print a message depending on the player's groupid.
+If there is no statement declared for the corresponding groupid, the script
+would use the 'default' statement that applies to rest of possible values,
+similar to 'else' in the if-else statement.
+
+---------------------------------------
+
 *while (<condition>) <statement>;
 
 This is probably the simplest and most frequently used loop structure. The 'while' 
@@ -2369,6 +2455,24 @@ negative value will decrease time.
 NOTE: This command is only available if the VIP System is enabled.
 
 ---------------------------------------
+
+*addspiritball <count>,<duration>{,<char_id>};
+
+Adds spirit ball to player for 'duration' in milisecond.
+
+---------------------------------------
+
+*delspiritball <count>{,<char_id>};
+
+Deletes the spirit ball(s) from player.
+
+---------------------------------------
+
+*countspiritball {<char_id>};
+
+Counts the spirit ball that player has.
+
+---------------------------------------
 \\
 2,2 Item-related commands
 \\
@@ -2699,14 +2803,24 @@ and return the info set by TYPE argument.
 It will return -1 if there is no such item.
 
 Valid types are:
-	0 - Buy Price; 1 - Sell Price; 2 - Item Type;
-	3 - maxchance (max drop chance of this item, e.g. 1 = 0.01%)
-		if = 0, then monsters don't drop it at all (rare or a quest item)
-		if = 10000, then this item is sold in NPC shops only
-	4 - sex; 5 - equip; 6 - weight; 7 - atk; 8 - def; 9 - range;
-	10 - slot; 11 - look; 12 - elv; 13 - wlv; 14 - view id (from 'db/item_avail.txt')
-	
-	If RENEWAL is defined, 15 - matk
+	0  - Buy Price
+	1  - Sell Price
+	2  - Type
+	3  - maxchance (max drop chance of this item, e.g. 1 = 0.01%)
+		 if = 0, then monsters don't drop it at all (rare or a quest item)
+		 if = 10000, then this item is sold in NPC shops only
+	4  - Gender
+	5  - Loc
+	6  - Weight
+	7  - ATK
+	8  - DEF
+	9  - Range
+	10 - Slot
+	11 - View
+	12 - eLV
+	13 - wLV
+	14 - SpriteID from 'db/item_avail.txt'
+	15 - matk if RENEWAL is defined
 
 See the sample in 'doc/sample/getiteminfo.txt'.
 
@@ -2753,7 +2867,7 @@ the specified name will be located. If type is 3, the search will locate the
 current pet of the character who's name is given in the search string, it will 
 NOT locate a pet by name.
 
-What a mess. Example, a working and tested one now:
+Example:
 
     prontera,164,301,3%TAB%script%TAB%Meh%TAB%730,{
         mes "My name is Meh. I'm here so that Nyah can find me.";
@@ -2763,36 +2877,34 @@ What a mess. Example, a working and tested one now:
     prontera,164,299,3%TAB%script%TAB%Nyah%TAB%730,{
         mes "My name is Nyah.";
         mes "I will now search for Meh all across the world!";
-        if (getmapxy(@mapname$,@mapx,@mapy,1,"Meh")!=0) goto Notfound;
+        if (getmapxy(@mapname$,@mapx,@mapy,1,"Meh")!=0) {
+                mes "I can't seem to find Meh anywhere!";
+                close;
+        }
         mes "And I found him on map "+@mapname$+" at X:"+@mapx+" Y:"+@mapy+" !";
         close;
-    Notfound:
-        mes "I can't seem to find Meh anywhere!";
-        close;
    }
-   
+
 Notice that NPC objects disabled with 'disablenpc' will still be located.
 
 ---------------------------------------
 
 *getgmlevel()
 
-This function will return the (GM) level of player group the account to which the 
-invoking character belongs. If this is somehow executed from a console command,
+This function will return the (GM) level associated with the player group to which
+the invoking character belongs. If this is somehow executed from a console command,
 99 will be returned, and 0 will be returned if the account has no GM level.
 
 This allows you to make NPC's only accessible for certain GM levels, or behave 
 specially when talked to by GMs.
 
    if (getgmlevel()) mes "What is your command, your godhood?";
-   if (getgmlevel()) goto Wherever;
 
 ---------------------------------------
 
 *getgroupid()
 
-This function will return the id of player group the account to which the 
-invoking player belongs.
+This function will return the group id to which the invoking player belongs.
 
 ---------------------------------------
 
@@ -3537,24 +3649,6 @@ Available types are:
  1 - client date (YYYYMMDD)
 
 ---------------------------------------
-
-*getserverdef(<type>)
-
-Returns a server definition. Valid types are listed in 'db/const.txt':
-	VAR_PACKETVER	0
-	VAR_MAX_LEVEL	1
-	VAR_MAX_STORAGE	2
-	VAR_MAX_INVENTORY	3
-	VAR_MAX_ZENY	4
-	VAR_MAX_PARTY	5
-	VAR_MAX_GUILD	6
-	VAR_MAX_GUILDLEVEL	7
-	VAR_MAX_GUILD_STORAGE	8
-	VAR_MAX_BG_MEMBERS	9
-	VAR_VIP_SCRIPT	10
-	VAR_MIN_STORAGE	11
-
----------------------------------------
 \\
 3,1.- Item-related commands
 \\
@@ -3815,16 +3909,18 @@ character and produces no other output whatsoever.
 
 *itemheal <hp>,<sp>;
 
-This command heals given absolute amounts of HP and/or SP on the invoking
-character. Unlike heal, this command is intended for use in item scripts. It
-applies potion-related bonuses, such as alchemist ranking, cards and status
-changes. When used inside an NPC script, certain bonuses are omitted.
+This command heals relative amounts of HP and/or SP on the invoking character.
+Unlike heal, this command is intended for use in item scripts. It applies
+potion-related bonuses, such as alchemist ranking, cards, and status changes.
+When used inside an NPC script, certain bonuses are omitted.
 
-There is also a nice example on using this with the 'rand' function, to give you 
-a random amount of healing.
+The command also applies a SP/VIT-related bonus:
+    heal = heal * [(100 + STATUS*2) / 100]
 
-    // This will heal anything thing from 100 to 150 HP and no SP
-    itemheal rand(100,150),0;
+Example:
+    // If the player has 50 vit and no bonuses, this will heal
+    // anything from 200 to 300 HP and 5 SP
+    itemheal rand(100,150),5;
 
 ---------------------------------------
 
@@ -4140,19 +4236,6 @@ referred to by their database ID number found inside 'db/(pre-)re/item_db.txt'.
     getitem 502,10 // The person will receive 10 apples
     getitem 617,1  // The person will receive 1 Old Violet Box
 
-Giving an item ID of -1 will give a specified number of random items from the 
-list of those that fall out of Old Blue Box. Unlike in all other cases, these 
-will be unidentified, if they turn out to be equipment. This is exactly what's 
-written in the Old Blue Box's item script.
-
-Other negative IDs also correspond to other random item generating item tables:
-
-Giving an item ID of -2 will produce the effects of Old Violet Box.
-Giving an item ID of -3 will produce the effects of Old Card Album.
-Giving an item ID of -4 will produce the effects of Gift Box.
-Giving an item ID of -5 will produce the effects of Worn Out Scroll, which, in 
-current SVN, drops only Jellopies anyway.
-
 This transaction is logged if the log script generated transactions option is 
 enabled.
 
@@ -4175,8 +4258,8 @@ quite a few item scripts. For more examples check just about any official script
 This command will give an amount of specified items to the invoking character. 
 If an optional account ID is specified, and the target character is currently 
 online, items will be created in their inventory instead. If they are not 
-online, nothing will happen. It works essentially the same as 'getitem' (it even 
-works for negative ID numbers the same way) but is a lot more flexible.
+online, nothing will happen. It works essentially the same as 'getitem' but is
+a lot more flexible.
 
 Those parameters that are different from 'getitem' are:
 
@@ -4267,10 +4350,10 @@ in this manner cannot be dropped, sold, vended, auctioned, or mailed, and in
 some cases cannot be traded or stored.
 
 Valid bound types are:
- 1 - Account Bound
- 2 - Guild Bound
- 3 - Party Bound
- 4 - Character Bound
+ Bound_Account : Account Bound item
+ Bound_Guild   : Guild Bound item
+ Bound_Party   : Party Bound item
+ Bound_Char    : Character Bound item
 
 ---------------------------------------
 
@@ -4400,11 +4483,31 @@ database. If the name is not found, nothing will be deleted.
 
 ---------------------------------------
 
+*cartdelitem <item id>,<amount>{,<account ID>};
+*cartdelitem "<item name>",<amount>{,<account ID>};
+*storagedelitem <item id>,<amount>{,<account ID>};
+*storagedelitem "<item name>",<amount>{,<account ID>};
+
+This command behaves identically to 'delitem', but deletes items from the player's
+cart or storage. If no cart is mounted, 'cartdelitem' will fail.
+
+---------------------------------------
+
 *delitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 *delitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 
 This command will remove a specified amount of items from the invoking/target character. 
 See 'getitem2' for an explanation of the expanded parameters.
+
+---------------------------------------
+
+*cartdelitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+*cartdelitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+*storagedelitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+*storagedelitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+
+This command behaves identically to 'delitem2', but deletes items from the player's
+cart or storage. If no cart is mounted, 'cartdelitem2' will fail.
 
 ---------------------------------------
 
@@ -4430,6 +4533,16 @@ adding up strings:
     
 ---------------------------------------
 
+*cartcountitem(<item id>)
+*cartcountitem("<item name>")
+*storagecountitem(<item id>)
+*storagecountitem("<item name>")
+
+This command behaves identically to 'countitem', but counts items from the player's
+cart or storage. If no cart is mounted, 'cartcountitem' will return -1.
+
+---------------------------------------
+
 *countitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
 *countitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
 
@@ -4438,6 +4551,16 @@ Expanded version of 'countitem' function, used for created/carded/forged items.
 This function will return the number of items for the specified item ID and
 other parameters that the invoking character has in the inventory.
 See 'getitem2' for an explanation of the expanded parameters.
+
+---------------------------------------
+
+*cartcountitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
+*cartcountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
+*storagecountitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
+*storagecountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
+
+This command behaves identically to 'countitem2', but counts items from the player's
+cart or storage. If no cart is mounted, 'cartcountitem2' will return -1.
 
 ---------------------------------------
 
@@ -5005,6 +5128,11 @@ Examples:
 	// This will end the Freezing status for the invoking character.
 	sc_end SC_FREEZE;
 
+Note: to use SC_NOCHAT you should alter Manner
+	set Manner, -5;	// Will mute a user for 5 minutes
+	set Manner, 0;	// Will unmute a user
+	set Manner, 5;	// Will unmute a user and prevent the next use of 'Manner'
+
 ---------------------------------------
 
 *getstatus(<effect type>{,<type>})
@@ -5202,11 +5330,17 @@ logs out.
 Note that the maximum number of 'bonus_script' commands that can run simultaneously
 for a player is 10 (MAX_PC_BONUS_SCRIPT in 'src/map/pc.h').
 
-Flags: (Default is 0)
-	&1: Remove when dead.
-	&2: Removable by Dispell.
-	&4: Removable by Clearance.
-	&8: Remove when player logs out.
+Flags (bitmask):
+	1   : Remove when dead.
+	2   : Removable by Dispell.
+	4   : Removable by Clearance.
+	8   : Remove when player logs out.
+	16  : Removeable by Banishing Buster.
+	32  : Removable by Refresh.
+	128 : Removable by Luxanima.
+	256 : Remove when Madogear is activated or deactivated.
+	512 : Remove when receive damage.
+	1024: Script is permanent, cannot be cleared by bonus_script_clear
 
 Types:
 	This will be used to decide negative or positive buff for 'debuff_on_logout'.
@@ -5219,6 +5353,16 @@ Status_icon: See "Status Icon" section in 'db/const.txt'. Default is SI_BLANK (-
 Example:
 	// Apple gives you +5 Str bonus for 1 minute when it's consumed.
 	512,Apple,Apple,0,15,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "{ bonus bStr,5; }",60; },{},{}
+
+---------------------------------------
+
+*bonus_script_clear {<flag>,{<char_id>}};
+
+Removes atatched bonus_script from player. If no 'char_id' given, it will removes
+from the invoker.
+
+If 'flag' is 1, means will clears all scripts even it's Permanent effect. By default,
+it just removes non-permanent script.
 
 ---------------------------------------
 
@@ -5336,31 +5480,30 @@ players, telling them they are now divorced.
 *pcfollow <id>,<target id>;
 *pcstopfollow <id>;
 
-Makes a character follow or stop following someone. This command does the same as the @follow command.
-The main difference is that @follow can use character names, and this commands needs the Account ID for the target.
+Makes a character follow or stop following someone. This command does the same
+as the @follow command. The main difference is that @follow can use character
+names, and this commands needs the account ID for the target.
 
 Examples:
+	// This will make Aaron follow Bullah, when both of these characters are online.
+	pcfollow getCharID(3,"Aaron"),getCharID(3,"Bullah");
 
-// This will make Aaron follow Bullah, when both of these characters are online.
-	PCFollow getCharID(3,"Aaron"),getCharID(3,"Bullah");
-	
-// Makes Aaron stop following whoever he is following.
-	PCStopFollow getCharID(3,"Aaron");
+	// Makes Aaron stop following whoever he is following.
+	pcstopfollow getCharID(3,"Aaron");
 	
 ---------------------------------------
 
 *pcblockmove <id>,<option>;
 
-Prevents the given ID from moving when the option != 0, and 0 enables the ID to
-move again. The ID can either be the GID of a monster/NPC or account ID of a
-character, and will run for the attached player if zero is supplied.
+Prevents the given GID from moving when the option is 1, and enables the ID to
+move again when the option is 0. This command will run for the attached player
+if the given GID is zero.
 
 Examples:
-
-// Prevents the current char from moving away.
+	// Prevents the current char from moving away.
 	pcblockmove getcharid(3),1;
-	
-// Enables the current char to move again.
+
+	// Enables the current char to move again.
 	pcblockmove getcharid(3),0;
 
 --------------------------------------- 
@@ -5507,6 +5650,8 @@ command, simply use 1 for type. Any other number won't be recognized.
 
 This function will return information about a monster record in the database, as 
 per 'db/(pre-)re/mob_db.txt'. Type is the kind of information returned. Valid types are:
+It will return 0 if there is no such monster (or the type value is invalid),
+or an empty string if you requested the monster's name.
 
  1 - 'english name' field in the database, a string.
  2 - 'japanese name' field in the database, a string.
@@ -7462,7 +7607,7 @@ the script will come to a halt.
 
 ---------------------------------------
 
-*instance_enter("<instance name>");
+*instance_enter("<instance name>"{,<x>,<y>});
 
 Warps player to the specified instance after the script terminates. The map and
 coordinates are located in 'db/(pre-)re/instance_db.txt'.
@@ -7548,9 +7693,55 @@ if (instance_check_party(getcharid(1),2,2,149)) {
 =========================
 ---------------------------------------
 
+*questinfo <Quest ID>, <Icon> {, <Map Mark Color>{, <Job Class>}};
+
+This is esentially a combination of checkquest and showevent. Use this only
+in an OnInit label. For the Quest ID, specify the quest ID that you want
+checked if it has been started yet.
+
+For Icon, use one of the following:
+
+No Icon			: QTYPE_NONE
+! Quest Icon	: QTYPE_QUEST
+? Quest Icon	: QTYPE_QUEST2
+! Job Icon		: QTYPE_JOB
+? Job Icon		: QTYPE_JOB2
+! Event Icon	: QTYPE_EVENT
+? Event Icon	: QTYPE_EVENT2
+Warg			: QTYPE_WARG
+Warg Face		: QTYPE_WARG2 (Only for packetver >= 20120410)
+
+Map Mark Color, when used, creates a mark in the user's mini map on the position of the NPC,
+the available color values are:
+
+0 - No Marker
+1 - Yellow Marker
+2 - Green Marker
+3 - Purple Marker
+
+When a user shows up on a map, each NPC is checked for questinfo that has been set.
+If questinfo is present, it will check if the quest has been started, if it has not, the bubble will appear.
+
+Optionally, you can also specify a Job Class if the quest bubble should only appear for a certain class.
+
+Example
+izlude,100,100,4	script	Test	844,{
+	mes "[Test]";
+	mes "Hello World.";
+	close;
+
+	OnInit:
+		questinfo 1001, QTYPE_QUEST, 0, Job_Novice;
+		end;
+}
+
+---------------------------------------
+
 *setquest <ID>;
 
 Place quest of <ID> in the users quest log, the state of which is "active".
+
+If *questinfo is set, and the same ID is specified here, the icon will be cleared when the quest is set.
 
 ---------------------------------------
 
@@ -7604,23 +7795,30 @@ Return the state of the quest:
 
 ---------------------------------------
 
-*showevent <state>, <color>;
+*showevent <icon>{,<mark color>}
 
-Show a colored mark in the mini-map like "viewpoint" and an emotion on top of a NPC.
-This is used to indicate that a NPC has a quest or an event to certain players.
+Show an emotion on top of a NPC, and optionally,
+a colored mark in the mini-map like "viewpoint".
+This is used to indicate that a NPC has a quest or an event to 
+a certain player. 
 
-state can be:
-	0 = disable (Used to disable and remove the mark and the emotion from the NPC.)
-	1 = exclamation emotion (Used to show an important quest event to certain player.)
-	2 = interrogation emotion (Used to show an non-important quest event to certain player.)
-	Other values may cause client crashes.
+Available Icons:
 
-color can be:
-	0 = yellow "Quest"
-	1 = orange "Job"
-	2 = green "Event"
-	3 = an MVP flag
-	Other values show a transparent mark in the mini-map.
+Remove Icon		: QTYPE_NONE
+! Quest Icon	: QTYPE_QUEST
+? Quest Icon	: QTYPE_QUEST2
+! Job Icon		: QTYPE_JOB
+? Job Icon		: QTYPE_JOB2
+! Event Icon	: QTYPE_EVENT
+? Event Icon	: QTYPE_EVENT2
+Warg			: QTYPE_WARG
+Warg Face		: QTYPE_WARG2 (Only for packetver >= 20120410)
+
+Mark Color:
+0 - No Mark
+1 - Yellow Mark
+2 - Green Mark
+3 - Purple Mark
 
 ---------------------------------------
 

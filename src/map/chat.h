@@ -13,6 +13,8 @@ extern "C" {
 struct map_session_data;
 struct chat_data;
 
+#define MAX_CHAT_USERS 20
+
 struct chat_data {
 	struct block_list bl;            // data for this map object
 	char title[CHATROOM_TITLE_SIZE]; // room title 
@@ -24,7 +26,7 @@ struct chat_data {
 	uint32 zeny;						 // required zeny to join
 	uint32 minLvl;					 // minimum base level to join
 	uint32 maxLvl;					 // maximum base level allowed to join
-	struct map_session_data* usersd[20];
+	struct map_session_data* usersd[MAX_CHAT_USERS];
 	struct block_list* owner;
 	char npc_event[EVENT_NAME_LENGTH];
 	DBMap* kick_list;				//DBMap of users who were kicked from this chat

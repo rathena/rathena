@@ -111,7 +111,7 @@ gef_tower,102,34,5	script	Merito	742,{
 		next;
 		switch(select("I will take the test.:I'll do it later.")) {
 		case 1:
-			if (getserverdef(VAR_VIP_SCRIPT)) {
+			if (VIP_SCRIPT) {
 				callfunc "VIP_Third_Class";
 				set job_soc,2;
 				setquest 12096;

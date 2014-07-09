@@ -2,7 +2,7 @@
 // For more information, see LICENCE in the main folder
 
 #ifndef _INTIF_H_
-#define _INFIF_H_
+#define _INTIF_H_
 
 //#include "../common/mmo.h"
 struct party_member;
@@ -66,7 +66,7 @@ void intif_itembound_req(int char_id, int aid, int guild_id);
 #endif
 
 int intif_create_pet(int account_id, int char_id, short pet_type, short pet_lv, short pet_egg_id,
-                     short pet_equip, short intimate, short hungry, char rename_flag, char incuvate, char *pet_name);
+                     short pet_equip, short intimate, short hungry, char rename_flag, char incubate, char *pet_name);
 int intif_request_petdata(int account_id, int char_id, int pet_id);
 int intif_save_petdata(int account_id, struct s_pet *p);
 int intif_delete_petdata(int pet_id);
@@ -80,7 +80,7 @@ int intif_homunculus_requestsave(int account_id, struct s_homunculus* sh);
 int intif_homunculus_requestdelete(int homun_id);
 
 /******QUEST SYTEM*******/
-int intif_request_questlog(struct map_session_data * sd);
+void intif_request_questlog(struct map_session_data * sd);
 int intif_quest_save(struct map_session_data * sd);
 
 // MERCENARY SYSTEM

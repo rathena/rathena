@@ -155,14 +155,15 @@ char* trim(char* str)
 // that pointer with the returned value, since the original pointer must be
 // deallocated using the same allocator with which it was allocated.  The return
 // value must NOT be deallocated using free() etc.
-char *trim2(char *str,char flag){
-	char *end;
-	if(flag&1){ // Trim leading space
+char *trim2(char *str,char flag) {
+	if(flag&1) { // Trim leading space
 		while(isspace(*str)) str++;
 		if(*str == 0)  // All spaces?
 			return str;
 	}
-	if(flag&2){ // Trim trailing space
+	if(flag&2) { // Trim trailing space
+		char *end;
+
 		end = str + strlen(str) - 1;
 		while(end > str && isspace(*end)) end--;
 		*(end+1) = 0; // Write new null terminator
@@ -988,9 +989,10 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 	int lines = 0;
 	int entries = 0;
 	char** fields; // buffer for fields ([0] is reserved)
-	int columns, fields_length;
-	char path[1024], *line, colsize[512];
+	int columns, nb_cols;
+	char path[1024], *line;
 	char* match;
+	const short colsize=512;
 
 	snprintf(path, sizeof(path), "%s/%s", directory, filename);
 
@@ -1003,12 +1005,12 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 	}
 
 	// allocate enough memory for the maximum requested amount of columns plus the reserved one
-	fields_length = maxcols+1;
-	fields = (char**)aMalloc(fields_length*sizeof(char*));
-	line = (char*)aMalloc(fields_length*sizeof(colsize));
+	nb_cols = maxcols+1;
+	fields = (char**)aMalloc(nb_cols*sizeof(char*));
+	line = (char*)aMalloc(nb_cols*colsize);
 
 	// process rows one by one
-	while( fgets(line, fields_length*sizeof(colsize), fp) )
+	while( fgets(line, maxcols*colsize, fp) )
 	{
 		lines++;
 
@@ -1022,7 +1024,7 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 		if( line[0] == '\0' || line[0] == '\n' || line[0] == '\r')
 			continue;
 
-		columns = sv_split(line, strlen(line), 0, delim, fields, fields_length, (e_svopt)(SV_TERMINATE_LF|SV_TERMINATE_CRLF));
+		columns = sv_split(line, strlen(line), 0, delim, fields, nb_cols, (e_svopt)(SV_TERMINATE_LF|SV_TERMINATE_CRLF));
 
 		if( columns < mincols )
 		{
