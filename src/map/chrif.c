@@ -1382,6 +1382,11 @@ int chrif_load_scdata(int fd) {
 	if( sd->state.autotrade ) {
 		buyingstore_reopen( sd );
 		vending_reopen( sd );
+
+		if (!sd->vender_id && !sd->buyer_id) {
+			sd->state.autotrade = 0;
+			map_quit(sd);
+		}
 	}
 
 	return 0;

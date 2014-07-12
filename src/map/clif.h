@@ -389,6 +389,22 @@ enum e_personalinfo {
 	PINFO_MAX,
 };
 
+enum e_damage_type {
+	DMG_NORMAL = 0,			/// damage [ damage: total damage, div: amount of hits, damage2: assassin dual-wield damage ]
+	DMG_PICKUP_ITEM,		/// pick up item
+	DMG_SIT_DOWN,			/// sit down
+	DMG_STAND_UP,			/// stand up
+	DMG_ENDURE,				/// damage (endure)
+	DMG_SPLASH,				/// (splash?)
+	DMG_SKILL,				/// (skill?)
+	DMG_REPEAT,				/// (repeat damage?)
+	DMG_MULTI_HIT,			/// multi-hit damage
+	DMG_MULTI_HIT_ENDURE,	/// multi-hit damage (endure)
+	DMG_CRITICAL,			/// critical hit
+	DMG_LUCY_DODGE,			/// lucky dodge
+	DMG_TOUCH,				/// (touch skill?)
+};
+
 int clif_setip(const char* ip);
 void clif_setbindip(const char* ip);
 void clif_setport(uint16 port);

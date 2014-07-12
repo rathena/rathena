@@ -4273,17 +4273,17 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 
 //Modifies the type of damage according to status changes [Skotlex]
 //Aegis data specifies that: 4 endure against single hit sources, 9 against multi-hit.
-static inline int clif_calc_delay(int type, int div, int64 damage, int delay)
+static enum e_damage_type clif_calc_delay(char type, int div, int64 damage, int delay)
 {
-	return ( delay == 0 && damage > 0 ) ? ( div > 1 ? 9 : 4 ) : type;
+	return ( delay == 0 && damage > 0 ) ? ( div > 1 ? DMG_MULTI_HIT_ENDURE : DMG_ENDURE ) : (enum e_damage_type)type;
 }
 
 /*==========================================
  * Estimates walk delay based on the damage criteria. [Skotlex]
  *------------------------------------------*/
-static int clif_calc_walkdelay(struct block_list *bl,int delay, int type, int64 damage, int div_)
+static int clif_calc_walkdelay(struct block_list *bl,int delay, char type, int64 damage, int div_)
 {
-	if (type == 4 || type == 9 || damage <=0)
+	if (type == DMG_ENDURE || type == DMG_MULTI_HIT_ENDURE || damage <= 0)
 		return 0;
 
 	if (bl->type == BL_PC) {
@@ -4296,7 +4296,7 @@ static int clif_calc_walkdelay(struct block_list *bl,int delay, int type, int64 
 	if (div_ > 1) //Multi-hit skills mean higher delays.
 		delay += battle_config.multihit_delay*(div_-1);
 
-	return delay>0?delay:1; //Return 1 to specify there should be no noticeable delay, but you should stop walking.
+	return (delay > 0) ? delay:1; //Return 1 to specify there should be no noticeable delay, but you should stop walking.
 }
 
 
@@ -4317,7 +4317,7 @@ static int clif_calc_walkdelay(struct block_list *bl,int delay, int type, int64 
 ///     10 = critical hit
 ///     11 = lucky dodge
 ///     12 = (touch skill?)
-int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tick, int sdelay, int ddelay, int64 sdamage, int div, int type, int64 sdamage2)
+int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tick, int sdelay, int ddelay, int64 sdamage, int div, enum e_damage_type type, int64 sdamage2)
 {
 	unsigned char buf[33];
 	struct status_change *sc;
@@ -14954,7 +14954,8 @@ void clif_parse_CashShopReqTab(int fd, struct map_session_data *sd) {
 	WFIFOW(fd, 8) = cash_shop_items[tab].count;
 
 	for( j = 0; j < cash_shop_items[tab].count; j++ ) {
-		WFIFOW(fd, 10 + ( 6 * j ) ) = cash_shop_items[tab].item[j]->nameid;
+		struct item_data *id = itemdb_search(cash_shop_items[tab].item[j]->nameid);
+		WFIFOW(fd, 10 + ( 6 * j ) ) = (id->view_id) ? id->view_id : cash_shop_items[tab].item[j]->nameid;
 		WFIFOL(fd, 12 + ( 6 * j ) ) = cash_shop_items[tab].item[j]->price;
 	}
 
@@ -14976,7 +14977,8 @@ void clif_cashshop_list( int fd ){
 		WFIFOW( fd, 6 ) = tab;
 
 		for( i = 0, offset = 8; i < cash_shop_items[tab].count; i++, offset += 6 ){
-			WFIFOW( fd, offset ) = cash_shop_items[tab].item[i]->nameid;
+			struct item_data *id = itemdb_search(cash_shop_items[tab].item[i]->nameid);
+			WFIFOW( fd, offset ) = (id->view_id) ? id->view_id : cash_shop_items[tab].item[i]->nameid;
 			WFIFOL( fd, offset + 2 ) = cash_shop_items[tab].item[i]->price;
 		}
 

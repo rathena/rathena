@@ -1556,11 +1556,11 @@ static int battle_calc_base_weapon_attack(struct block_list *src, struct status_
  *------------------------------------------
  * Pass damage2 as NULL to not calc it.
  * Flag values:
- * &1: Critical hit
- * &2: Arrow attack
- * &4: Skill is Magic Crasher
- * &8: Skip target size adjustment (Extremity Fist?)
- *&16: Arrow attack but BOW, REVOLVER, RIFLE, SHOTGUN, GATLING or GRENADE type weapon not equipped (i.e. shuriken, kunai and venom knives not affected by DEX)
+ * &1 : Critical hit
+ * &2 : Arrow attack
+ * &4 : Skill is Magic Crasher
+ * &8 : Skip target size adjustment (Extremity Fist?)
+ * &16: Arrow attack but BOW, REVOLVER, RIFLE, SHOTGUN, GATLING or GRENADE type weapon not equipped (i.e. shuriken, kunai and venom knives not affected by DEX)
  *
  * Credits:
  *	Original coder Skoltex
@@ -1675,7 +1675,7 @@ void battle_consume_ammo(TBL_PC*sd, int skill, int lv)
 		if (!qty) qty = 1;
 	}
 
-	if(sd->equip_index[EQI_AMMO]>=0) //Qty check should have been done in skill_check_condition
+	if (sd->equip_index[EQI_AMMO] >= 0) //Qty check should have been done in skill_check_condition
 		pc_delitem(sd,sd->equip_index[EQI_AMMO],qty,0,1,LOG_TYPE_CONSUME);
 
 	sd->state.arrow_atk = 0;
@@ -1967,12 +1967,12 @@ static bool is_attack_critical(struct Damage wd, struct block_list *src, struct 
 	struct map_session_data *tsd = BL_CAST(BL_PC, target);
 
 	if (!first_call)
-		return (wd.type == 0x0a);
+		return (wd.type == DMG_CRITICAL);
 
 	if (skill_id == NPC_CRITICALSLASH || skill_id == LG_PINPOINTATTACK) //Always critical skills
 		return true;
 
-	if( !(wd.type&0x08) && sstatus->cri && (!skill_id ||
+	if( !(wd.type&DMG_MULTI_HIT) && sstatus->cri && (!skill_id ||
 		skill_id == KN_AUTOCOUNTER || skill_id == SN_SHARPSHOOTING ||
 		skill_id == MA_SHARPSHOOTING || skill_id == NJ_KIRIKAGE))
 	{
@@ -1989,7 +1989,7 @@ static bool is_attack_critical(struct Damage wd, struct block_list *src, struct 
 
 		//The official equation is *2, but that only applies when sd's do critical.
 		//Therefore, we use the old value 3 on cases when an sd gets attacked by a mob
-		cri -= tstatus->luk*(!sd&&tsd?3:2);
+		cri -= tstatus->luk * ((!sd && tsd) ? 3 : 2);
 
 		if( tsc && tsc->data[SC_SLEEP] )
 			cri <<= 1;
@@ -2203,7 +2203,7 @@ static bool is_attack_hitting(struct Damage wd, struct block_list *src, struct b
 					hitrate -= (10 - (skill_lv - 1));
 				break;
 		}
-	} else if (sd && wd.type&0x08 && wd.div_ == 2) // +1 hit per level of Double Attack on a successful double attack (making sure other multi attack skills do not trigger this) [helvetica]
+	} else if (sd && wd.type&DMG_MULTI_HIT && wd.div_ == 2) // +1 hit per level of Double Attack on a successful double attack (making sure other multi attack skills do not trigger this) [helvetica]
 		hitrate += pc_checkskill(sd,TF_DOUBLE);
 
 	if (sd) {
@@ -2776,9 +2776,8 @@ struct Damage battle_calc_skill_base_damage(struct Damage wd, struct block_list 
 				if(sd) {
 					short index = sd->equip_index[EQI_AMMO];
 
-					damagevalue = (3 * (sstatus->batk + sstatus->rhw.atk + sd->inventory_data[index]->atk)) * (skill_lv + 5) / 5;
-					if(index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_AMMO)
-						ATK_ADD(wd.damage, wd.damage2, damagevalue);
+					damagevalue = (3 * (sstatus->batk + sstatus->rhw.atk + ((index >= 0 && sd->inventory_data[index]) ? sd->inventory_data[index]->atk : 0))) * (skill_lv + 5) / 5;
+					ATK_ADD(wd.damage, wd.damage2, damagevalue);
 				} else {
 					damagevalue = 5000;
 					ATK_ADD(wd.damage, wd.damage2, damagevalue);
@@ -2851,11 +2850,11 @@ struct Damage battle_calc_skill_base_damage(struct Damage wd, struct block_list 
 					RE_ALLATK_ADDRATE(wd, sd->bonus.atk_rate);
 				}
 #ifndef RENEWAL
-				if(is_attack_critical(wd, src, target, skill_id, skill_lv, false) && sd->bonus.crit_atk_rate) { // add +crit damage bonuses here in pre-renewal mode [helvetica]
+				if(sd->bonus.crit_atk_rate && is_attack_critical(wd, src, target, skill_id, skill_lv, false)) { // add +crit damage bonuses here in pre-renewal mode [helvetica]
 					ATK_ADDRATE(wd.damage, wd.damage2, sd->bonus.crit_atk_rate);
 				}
 #endif
-				if(is_attack_critical(wd, src, target, skill_id, skill_lv, false) && sc && sc->data[SC_MTF_CRIDAMAGE]) {
+				if(sc && sc->data[SC_MTF_CRIDAMAGE] && is_attack_critical(wd, src, target, skill_id, skill_lv, false)) {
 					ATK_ADDRATE(wd.damage, wd.damage2, 25);
 					RE_ALLATK_ADDRATE(wd, 25); //Temporary it should be 'bonus.crit_atk_rate'
 				}
@@ -2899,7 +2898,7 @@ static struct Damage battle_calc_multi_attack(struct Damage wd, struct block_lis
 		{	//Success chance is not added, the higher one is used [Skotlex]
 			if( rnd()%100 < ( 5*skill_lv > sd->bonus.double_rate ? 5*skill_lv : sc && sc->data[SC_KAGEMUSYA]?sc->data[SC_KAGEMUSYA]->val1*3:sd->bonus.double_rate ) ) {
 				wd.div_ = skill_get_num(TF_DOUBLE,skill_lv?skill_lv:1);
-				wd.type = 0x08;
+				wd.type = DMG_MULTI_HIT;
 			}
 		}
 		else if( ((sd->weapontype1 == W_REVOLVER && (skill_lv = pc_checkskill(sd,GS_CHAINACTION)) > 0) //Normal Chain Action effect
@@ -2907,14 +2906,13 @@ static struct Damage battle_calc_multi_attack(struct Damage wd, struct block_lis
 			&& rnd()%100 < 5*skill_lv ) //Success rate
 		{
 			wd.div_ = skill_get_num(GS_CHAINACTION,skill_lv);
-			wd.type = 0x08;
+			wd.type = DMG_MULTI_HIT;
 			sc_start(src,src,SC_QD_SHOT_READY,100,target->id,skill_get_time(RL_QD_SHOT,1));
 		}
 		else if(sc && sc->data[SC_FEARBREEZE] && sd->weapontype1==W_BOW
 			&& (i = sd->equip_index[EQI_AMMO]) >= 0 && sd->inventory_data[i] && sd->status.inventory[i].amount > 1)
 		{
 			int chance = rnd()%100;
-			wd.type = 0x08;
 			switch(sc->data[SC_FEARBREEZE]->val1) {
 				case 5: if( chance < 4) { wd.div_ = 5; break; } // 3 % chance to attack 5 times.
 				case 4: if( chance < 7) { wd.div_ = 4; break; } // 6 % chance to attack 4 times.
@@ -2924,6 +2922,8 @@ static struct Damage battle_calc_multi_attack(struct Damage wd, struct block_lis
 			}
 			wd.div_ = min(wd.div_,sd->status.inventory[i].amount);
 			sc->data[SC_FEARBREEZE]->val4 = wd.div_-1;
+			if (wd.div_ > 1)
+				wd.type = DMG_MULTI_HIT;
 		}
 	}
 
@@ -3463,7 +3463,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			if( sd ) {
 				short index = sd->equip_index[EQI_HAND_R];
 				if( index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_WEAPON )
-				skillratio += sd->inventory_data[index]->weight / 10;// Weight is divided by 10 since 10 weight in coding make 1 whole actual weight. [Rytech]
+					skillratio += sd->inventory_data[index]->weight / 10;// Weight is divided by 10 since 10 weight in coding make 1 whole actual weight. [Rytech]
 			}
 			RE_LVL_DMOD(100);
 			break;
@@ -3522,13 +3522,10 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 		case LG_SHIELDSPELL:// [(Casters Base Level x 4) + (Shield DEF x 10) + (Casters VIT x 2)] %
 			if (sd && skill_lv == 1) {
 				int index = sd->equip_index[EQI_HAND_L];
-				struct item_data *shield_data = NULL;
 
 				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR)
-					shield_data = sd->inventory_data[index];
+					skillratio += sd->inventory_data[index]->def * 10;
 				skillratio = status_get_lv(src) * 4 + status_get_vit(src) * 2;
-				if (shield_data)
-					skillratio += shield_data->def * 10;
 			} else
 				skillratio = 0; // Prevent damage since level 2 is MATK. [Aleos]
 			break;
@@ -3829,11 +3826,8 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			{
 				uint16 w = 50;
 				int16 idx = 0;
-				if (sd && (idx = sd->equip_index[EQI_AMMO]) > 0) {
-					struct item_data *id = NULL;
-					if ((id = itemdb_exists(sd->status.inventory[idx].nameid)))
-						w = id->weight;
-				}
+				if (sd && (idx = sd->equip_index[EQI_AMMO]) >= 0 && sd->inventory_data[idx])
+					w = sd->inventory_data[idx]->weight;
 				w /= 10;
 				skillratio += -100 + (max(w,1) * skill_lv * 30); //(custom)
 			}
@@ -4697,14 +4691,14 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
 	struct Damage wd;
 
-	wd.type=0; //Normal attack
-	wd.div_=skill_id?skill_get_num(skill_id,skill_lv):1;
-	wd.amotion=(skill_id && skill_get_inf(skill_id)&INF_GROUND_SKILL)?0:sstatus->amotion; //Amotion should be 0 for ground skills.
+	wd.type = DMG_NORMAL; //Normal attack
+	wd.div_ = skill_id?skill_get_num(skill_id,skill_lv):1;
+	wd.amotion = (skill_id && skill_get_inf(skill_id)&INF_GROUND_SKILL)?0:sstatus->amotion; //Amotion should be 0 for ground skills.
 	// counter attack DOES obey ASPD delay on official, uncomment if you want the old (bad) behavior [helvetica]
 	/*if(skill_id == KN_AUTOCOUNTER)
 		wd.amotion >>= 1; */
-	wd.dmotion=tstatus->dmotion;
-	wd.blewcount=skill_get_blewcount(skill_id,skill_lv);
+	wd.dmotion = tstatus->dmotion;
+	wd.blewcount =skill_get_blewcount(skill_id,skill_lv);
 	wd.miscflag = wflag;
 	wd.flag = BF_WEAPON; //Initial Flag
 	wd.flag |= (skill_id||wd.miscflag)?BF_SKILL:BF_NORMAL; // Baphomet card's splash damage is counted as a skill. [Inkfish]
@@ -4745,7 +4739,7 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 
 			case TF_DOUBLE: //For NPC used skill.
 			case GS_CHAINACTION:
-				wd.type = 0x08;
+				wd.type = DMG_MULTI_HIT;
 				break;
 
 			case GS_GROUNDDRIFT:
@@ -4754,14 +4748,14 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 			case MS_BOWLINGBASH:
 			case MO_BALKYOUNG:
 			case TK_TURNKICK:
-				wd.blewcount=0;
+				wd.blewcount = 0;
 				break;
 
 			case KN_AUTOCOUNTER:
-				wd.flag=(wd.flag&~BF_SKILLMASK)|BF_NORMAL;
+				wd.flag = (wd.flag&~BF_SKILLMASK)|BF_NORMAL;
 				break;
 			case LK_SPIRALPIERCE:
-				if (!sd) wd.flag=(wd.flag&~(BF_RANGEMASK|BF_WEAPONMASK))|BF_LONG|BF_MISC;
+				if (!sd) wd.flag = (wd.flag&~(BF_RANGEMASK|BF_WEAPONMASK))|BF_LONG|BF_MISC;
 				break;
 
 			// The number of hits is set to 3 by default for use in Inspiration status.
@@ -4883,7 +4877,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 	//Check for Lucky Dodge
 	if ((!skill_id || skill_id == PA_SACRIFICE) && tstatus->flee2 && rnd()%1000 < tstatus->flee2) {
-		wd.type = 0x0b;
+		wd.type = DMG_LUCY_DODGE;
 		wd.dmg_lv = ATK_LUCKY;
 		if(wd.div_ < 0)
 			wd.div_ *= -1;
@@ -4895,7 +4889,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 	// crit check is next since crits always hit on official [helvetica]
 	if (is_attack_critical(wd, src, target, skill_id, skill_lv, true))
-		wd.type = 0x0a;
+		wd.type = DMG_CRITICAL;
 
 	// check if we're landing a hit
 	if(!is_attack_hitting(wd, src, target, skill_id, skill_lv, true))
@@ -5401,7 +5395,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							skillratio += (sc->data[SC_SPELLFIST]->val4 * 100) + (sc->data[SC_SPELLFIST]->val1 * 50) - 100;// val4 = used bolt level, val2 = used spellfist level. [Rytech]
 							ad.div_ = 1;// ad mods, to make it work similar to regular hits [Xazax]
 							ad.flag = BF_WEAPON|BF_SHORT;
-							ad.type = 0;
+							ad.type = DMG_NORMAL;
 						}
 						break;
 					case MG_THUNDERSTORM:
@@ -6609,34 +6603,35 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		if (sd->state.arrow_atk)
 		{
 			int index = sd->equip_index[EQI_AMMO];
-			if (index<0) {
+			if (index < 0) {
 				clif_arrow_fail(sd,0);
 				return ATK_NONE;
 			}
 			//Ammo check by Ishizu-chan
-			if (sd->inventory_data[index])
-			switch (sd->status.weapon) {
-			case W_BOW:
-				if (sd->inventory_data[index]->look != A_ARROW) {
-					clif_arrow_fail(sd,0);
-					return ATK_NONE;
+			if (sd->inventory_data[index]) {
+				switch (sd->status.weapon) {
+					case W_BOW:
+						if (sd->inventory_data[index]->look != A_ARROW) {
+							clif_arrow_fail(sd,0);
+							return ATK_NONE;
+						}
+						break;
+					case W_REVOLVER:
+					case W_RIFLE:
+					case W_GATLING:
+					case W_SHOTGUN:
+						if (sd->inventory_data[index]->look != A_BULLET) {
+							clif_arrow_fail(sd,0);
+							return ATK_NONE;
+						}
+						break;
+					case W_GRENADE:
+						if (sd->inventory_data[index]->look != A_GRENADE) {
+							clif_arrow_fail(sd,0);
+							return ATK_NONE;
+						}
+						break;
 				}
-			break;
-			case W_REVOLVER:
-			case W_RIFLE:
-			case W_GATLING:
-			case W_SHOTGUN:
-				if (sd->inventory_data[index]->look != A_BULLET) {
-					clif_arrow_fail(sd,0);
-					return ATK_NONE;
-				}
-			break;
-			case W_GRENADE:
-				if (sd->inventory_data[index]->look != A_GRENADE) {
-					clif_arrow_fail(sd,0);
-					return ATK_NONE;
-				}
-			break;
 			}
 		}
 	}
@@ -6755,9 +6750,12 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		if( sc->data[SC_GIANTGROWTH] && (wd.flag&BF_SHORT) && rnd()%100 < sc->data[SC_GIANTGROWTH]->val2 )
 			wd.damage *= 3; // Triple Damage
 
-		if( sd && sc->data[SC_FEARBREEZE] && sc->data[SC_FEARBREEZE]->val4 > 0 && sd->status.inventory[sd->equip_index[EQI_AMMO]].amount >= sc->data[SC_FEARBREEZE]->val4 && battle_config.arrow_decrement){
-			pc_delitem(sd,sd->equip_index[EQI_AMMO],sc->data[SC_FEARBREEZE]->val4,0,1,LOG_TYPE_CONSUME);
-			sc->data[SC_FEARBREEZE]->val4 = 0;
+		if( sd && battle_config.arrow_decrement && sc->data[SC_FEARBREEZE] && sc->data[SC_FEARBREEZE]->val4 > 0) {
+			short idx = sd->equip_index[EQI_AMMO];
+			if (idx >= 0 && sd->status.inventory[idx].amount >= sc->data[SC_FEARBREEZE]->val4) {
+				pc_delitem(sd,idx,sc->data[SC_FEARBREEZE]->val4,0,1,LOG_TYPE_CONSUME);
+				sc->data[SC_FEARBREEZE]->val4 = 0;
+			}
 		}
 	}
 	if (sd && sd->state.arrow_atk) //Consume arrow.

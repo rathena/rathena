@@ -9,6 +9,7 @@
 //
 // NOTE: Replaces an item client-side while keeping them separate server-side.
 // Think of it as a way to disguise items.
+// Don't sell the item in same shop with the source. Example, don't put 2240 & 2241 in same place!
 
 2240,2241 //Beard - Grampa Beard
 

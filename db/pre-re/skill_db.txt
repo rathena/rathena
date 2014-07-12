@@ -1341,8 +1341,8 @@
 8019,5,6,1,5,0,0,5,1,no,0,0,0,weapon,0,0x0,		MH_NEEDLE_OF_PARALYZE,Needle of Paralyze
 8020,5,6,2,5,0,0,5,1,no,0,0,1,weapon,0,0x0,		MH_POISON_MIST,Poison Mist
 8021,1,6,16,0,0x1,0,5,1,no,0,0,0,none,0,0x0,		MH_PAIN_KILLER,Pain Killer
-8022,0,6,4,0,0,0x1,5,1,no,0,0,0,none,0,0x0,		MH_LIGHT_OF_REGENE,Light of Regene
-8023,0,6,4,0,0,0x1,5,1,no,0,0,0,none,0,0x0,		MH_OVERED_BOOST,Overed Boost
+8022,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0,		MH_LIGHT_OF_REGENE,Light of Regene
+8023,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0,		MH_OVERED_BOOST,Overed Boost
 8024,7,8,1,4:0:4:0:4,0,0,5,-6,yes,0,0,0,magic,0,0x0,	MH_ERASER_CUTTER,Eraser Cutter
 8025,7,8,2,4:0:4:0:4,0x2,2:2:3:3:4,5,-6,no,0,0,0,magic,0,0x0,	MH_XENO_SLASHER,Xeno Slasher
 8026,5:5:7:7:9,6,6,0,0x1,0,5,1,no,0,0,0,magic,0,0x0,	MH_SILENT_BREEZE,Silent Breeze

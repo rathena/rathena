@@ -9786,7 +9786,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case EL_WIND_STEP: {
 			struct elemental_data *ele = BL_CAST(BL_ELEM, src);
 			if( ele ) {
-				sc_type type2 = type-1;
+				sc_type type2 = (sc_type)(type-1);
 				struct status_change *sc = status_get_sc(&ele->bl);
 
 				if( (sc && sc->data[type2]) || (tsc && tsc->data[type]) ) {
@@ -9814,7 +9814,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			struct elemental_data *ele = BL_CAST(BL_ELEM, src);
 			if( ele ) {
 				struct status_change *sc = status_get_sc(&ele->bl);
-				sc_type type2 = type-1;
+				sc_type type2 = (sc_type)(type-1);
 
 				clif_skill_nodamage(src,src,skill_id,skill_lv,1);
 				if( (sc && sc->data[type2]) || (tsc && tsc->data[type]) ) {
