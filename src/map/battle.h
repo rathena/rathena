@@ -60,7 +60,7 @@ struct Damage {
 #endif
 	int64 damage, /// Right hand damage
 		damage2; /// Left hand damage
-	char type; /// chk clif_damage for type @TODO add an enum ?
+	enum e_damage_type type; /// chk clif_damage for type
 	short div_; /// Number of hit
 	int amotion,
 		dmotion;
