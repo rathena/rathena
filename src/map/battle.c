@@ -6776,7 +6776,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		}
 	}
 
-	wd.dmotion = clif_damage(src, target, tick, wd.amotion, wd.dmotion, wd.damage, wd.div_ , wd.type, wd.damage2);
+	wd.dmotion = clif_damage(src, target, tick, wd.amotion, wd.dmotion, wd.damage, wd.div_ , (enum e_damage_type)wd.type, wd.damage2);
 
 	if (sd && sd->bonus.splash_range > 0 && damage > 0)
 		skill_castend_damage_id(src, target, 0, 1, tick, 0);
@@ -6828,10 +6828,10 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		if( tsc->data[SC_WATER_SCREEN_OPTION] && tsc->data[SC_WATER_SCREEN_OPTION]->val1 ) {
 			struct block_list *e_bl = map_id2bl(tsc->data[SC_WATER_SCREEN_OPTION]->val1);
 			if( e_bl && !status_isdead(e_bl) ) {
-				clif_damage(e_bl,e_bl,tick,wd.amotion,wd.dmotion,damage,wd.div_,wd.type,wd.damage2);
+				clif_damage(e_bl,e_bl,tick,wd.amotion,wd.dmotion,damage,wd.div_,(enum e_damage_type)wd.type,wd.damage2);
 				status_damage(target,e_bl,damage,0,0,0);
 				// Just show damage in target.
-				clif_damage(src, target, tick, wd.amotion, wd.dmotion, damage, wd.div_, wd.type, wd.damage2 );
+				clif_damage(src, target, tick, wd.amotion, wd.dmotion, damage, wd.div_, (enum e_damage_type)wd.type, wd.damage2 );
 				map_freeblock_unlock();
 				return ATK_BLOCK;
 			}

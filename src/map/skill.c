@@ -2907,7 +2907,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 	//Skills that need be passed as a normal attack for the client to display correctly.
 	case HVAN_EXPLOSION:
 	case NPC_SELFDESTRUCTION:
-		if(src->type==BL_PC)
+		if(src->type == BL_PC)
 			dmg.blewcount = 10;
 		dmg.amotion = 0; //Disable delay or attack will do no damage since source is dead by the time it takes effect. [Skotlex]
 		// fall through
@@ -2915,7 +2915,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 	case NPC_CRITICALSLASH:
 	case TF_DOUBLE:
 	case GS_CHAINACTION:
-		dmg.dmotion = clif_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,dmg.type,dmg.damage2);
+		dmg.dmotion = clif_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,(enum e_damage_type)dmg.type,dmg.damage2);
 		break;
 
 	case AS_SPLASHER:
