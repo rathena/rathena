@@ -190,7 +190,7 @@ brasilis,192,133,6	script	Lucia#brasilis	4_F_BRZ_WOMAN,{
 			mes "See you then.";
 			close;
 		case 3:
-		L_whathappen:
+		L_WhatHappen:
 			mes "[Lucia]";
 			mes "One day ^FF0000Strange Hydra^000000s";
 			mes "came here and surrounded the town.";
@@ -261,7 +261,7 @@ brasilis,192,133,6	script	Lucia#brasilis	4_F_BRZ_WOMAN,{
 					mes "Ok, please do me a favor.";
 					close;
 				case 2:
-					goto L_whathappen;
+					goto L_WhatHappen;
 				}
 			}
 		}
@@ -297,7 +297,7 @@ brasilis,192,133,6	script	Lucia#brasilis	4_F_BRZ_WOMAN,{
 				mes "See you then.";
 				close;
 			case 3:
-				goto L_whathappen;
+				goto L_WhatHappen;
 			}
 		}
 	}
