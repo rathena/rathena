@@ -8220,7 +8220,7 @@ REPLACE INTO `item_db_re` VALUES (15117,'Tarlock\'s_Armor','Tarlock\'s Armor',4,
 REPLACE INTO `item_db_re` VALUES (15121,'Sarah_Combat_Robe','Sarah Combat Robe',4,10,NULL,800,NULL,35,NULL,1,0xFFFFFFFF,63,2,16,NULL,'145',1,NULL,'/*TODO: Confirm the real rate and additional MAtk*/ autobonus "{ bonus bMatk,20; }",100,(10+((getrefine()) ? getrefine()*8 : 0))*1000,BF_MAGIC;',NULL,NULL);
 
 # More Maces
-REPLACE INTO `item_db_re` VALUES (16000,'Erde','Erde',5,20,NULL,500,'130',NULL,1,2,0x0004C5B2,18,2,2,4,'50',1,8,'bonus2 bSkillAtk,"AM_ACIDTERROR",20; bonus2 bSkillAtk,"AM_DEMONSTRATION",20; bonus bMaxSP,50; bonus bHealPower,10;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (16000,'Erde','Erde',5,20,NULL,500,'130',NULL,1,2,0x0004C5B2,18,2,2,3,'50',1,8,'bonus2 bSkillAtk,"AM_ACIDTERROR",20; bonus2 bSkillAtk,"AM_DEMONSTRATION",20; bonus bMaxSP,50; bonus bHealPower,10;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (16001,'Red_Square_Bag','Red Square Bag',5,20,NULL,500,'130',NULL,1,2,0x0004C5B2,18,2,2,3,'50',1,8,'bonus bMaxHP,200; bonus2 bSkillAtk,"AM_ACIDTERROR",20; bonus2 bSkillAtk,"AM_DEMONSTRATION",20; bonus2 bAddMonsterDropItem,501,50; bonus2 bAddMonsterDropItem,502,20; bonus2 bAddMonsterDropItem,503,20; bonus2 bAddMonsterDropItem,504,20; bonus2 bAddMonsterDropItem,505,10; if(readparam(bStr)>=95) bonus2 bAddEff,Eff_Stun,500;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (16002,'Stunner_C','Stunner',5,0,NULL,0,'175',NULL,1,0,0x00008110,63,2,2,3,'1',0,8,'bonus2 bAddEff,Eff_Stun,1000; bonus2 bAddSize,Size_All,40;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (16003,'Carga_Mace','Carga Mace',5,20,NULL,1500,'175',NULL,1,2,0x0004C5B2,63,2,2,3,'100',1,8,NULL,NULL,NULL);

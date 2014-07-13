@@ -8189,7 +8189,7 @@
 15121,Sarah_Combat_Robe,Sarah Combat Robe,4,10,,800,,35,,1,0xFFFFFFFF,63,2,16,,145,1,,{ /*TODO: Confirm the real rate and additional MAtk*/ autobonus "{ bonus bMatk,20; }",100,(10+((getrefine()) ? getrefine()*8 : 0))*1000,BF_MAGIC;},{},{}
 
 // More Maces
-16000,Erde,Erde,5,20,,500,130,,1,2,0x0004C5B2,18,2,2,4,50,1,8,{ bonus2 bSkillAtk,"AM_ACIDTERROR",20; bonus2 bSkillAtk,"AM_DEMONSTRATION",20; bonus bMaxSP,50; bonus bHealPower,10; },{},{}
+16000,Erde,Erde,5,20,,500,130,,1,2,0x0004C5B2,18,2,2,3,50,1,8,{ bonus2 bSkillAtk,"AM_ACIDTERROR",20; bonus2 bSkillAtk,"AM_DEMONSTRATION",20; bonus bMaxSP,50; bonus bHealPower,10; },{},{}
 16001,Red_Square_Bag,Red Square Bag,5,20,,500,130,,1,2,0x0004C5B2,18,2,2,3,50,1,8,{ bonus bMaxHP,200; bonus2 bSkillAtk,"AM_ACIDTERROR",20; bonus2 bSkillAtk,"AM_DEMONSTRATION",20; bonus2 bAddMonsterDropItem,501,50; bonus2 bAddMonsterDropItem,502,20; bonus2 bAddMonsterDropItem,503,20; bonus2 bAddMonsterDropItem,504,20; bonus2 bAddMonsterDropItem,505,10; if(readparam(bStr)>=95) bonus2 bAddEff,Eff_Stun,500; },{},{}
 16002,Stunner_C,Stunner,5,0,,0,175,,1,0,0x00008110,63,2,2,3,1,0,8,{ bonus2 bAddEff,Eff_Stun,1000; bonus2 bAddSize,Size_All,40; },{},{}
 16003,Carga_Mace,Carga Mace,5,20,,1500,175,,1,2,0x0004C5B2,63,2,2,3,100,1,8,{},{},{}
