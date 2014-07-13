@@ -12219,8 +12219,8 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, uint16 skill
 /*==========================================
  *
  *------------------------------------------*/
-void ext_skill_unit_onplace(struct skill_unit *src, struct block_list *bl, unsigned int tick){skill_unit_onplace(src, bl, tick);}
-static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned int tick)
+void ext_skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, unsigned int tick){skill_unit_onplace(unit, bl, tick);}
+static int skill_unit_onplace (struct skill_unit *unit, struct block_list *bl, unsigned int tick)
 {
 	struct skill_unit_group *sg;
 	struct block_list *ss;
@@ -12229,14 +12229,14 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 	enum sc_type type;
 	uint16 skill_id;
 
-	nullpo_ret(src);
+	nullpo_ret(unit);
 	nullpo_ret(bl);
 
-	if(bl->prev==NULL || !src->alive || status_isdead(bl))
+	if(bl->prev == NULL || !unit->alive || status_isdead(bl))
 		return 0;
 
-	nullpo_ret(sg=src->group);
-	nullpo_ret(ss=map_id2bl(sg->src_id));
+	nullpo_ret(sg = unit->group);
+	nullpo_ret(ss = map_id2bl(sg->src_id));
 
 	if( (skill_get_type(sg->skill_id) == BF_MAGIC && map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR) && sg->skill_id != SA_LANDPROTECTOR) ||
 		map_getcell(bl->m, bl->x, bl->y, CELL_CHKMAELSTROM) )
@@ -12271,7 +12271,7 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 					const struct TimerData* td = sc->data[type]?get_timer(sc->data[type]->timer):NULL;
 					if( td )
 						sec = DIFF_TICK(td->tick, tick);
-					map_moveblock(bl, src->bl.x, src->bl.y, tick);
+					map_moveblock(bl, unit->bl.x, unit->bl.y, tick);
 					clif_fixpos(bl);
 					sg->val2 = bl->id;
 				}
@@ -12306,7 +12306,7 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 			if(bl->type==BL_PC && !working){
 				struct map_session_data *sd = (struct map_session_data *)bl;
 				if((!sd->chatID || battle_config.chat_warpportal)
-					&& sd->ud.to_x == src->bl.x && sd->ud.to_y == src->bl.y)
+					&& sd->ud.to_x == unit->bl.x && sd->ud.to_y == unit->bl.y)
 				{
 					int x = sg->val2>>16;
 					int y = sg->val2&0xffff;
@@ -12346,12 +12346,12 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 		case UNT_SUITON:
 			if(!sce)
 				sc_start4(ss, bl,type,100,sg->skill_lv,
-				map_flag_vs(bl->m) || battle_check_target(&src->bl,bl,BCT_ENEMY)>0?1:0, //Send val3 =1 to reduce agi.
+				map_flag_vs(bl->m) || battle_check_target(&unit->bl,bl,BCT_ENEMY)>0?1:0, //Send val3 =1 to reduce agi.
 				0,0,sg->limit);
 			break;
 
 		case UNT_HERMODE:
-			if (sg->src_id!=bl->id && battle_check_target(&src->bl,bl,BCT_PARTY|BCT_GUILD) > 0)
+			if (sg->src_id!=bl->id && battle_check_target(&unit->bl,bl,BCT_PARTY|BCT_GUILD) > 0)
 				status_change_clear_buffs(bl,1); //Should dispell only allies.
 		case UNT_RICHMANKIM:
 		case UNT_ETERNALCHAOS:
@@ -12391,7 +12391,7 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 			if (!sce)
 			{
 				sc_start4(ss, bl, type, 100, sg->skill_lv, sg->val1, sg->val2, sg->group_id, sg->limit);
-				if (battle_check_target(&src->bl,bl,BCT_ENEMY)>0)
+				if (battle_check_target(&unit->bl,bl,BCT_ENEMY)>0)
 					skill_additional_effect (ss, bl, sg->skill_id, sg->skill_lv, BF_MISC, ATK_DEF, tick);
 			}
 			break;
@@ -12403,9 +12403,9 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 
 		// officially, icewall has no problems existing on occupied cells [ultramage]
 		//	case UNT_ICEWALL: //Destroy the cell. [Skotlex]
-		//		src->val1 = 0;
-		//		if(src->limit + sg->tick > tick + 700)
-		//			src->limit = DIFF_TICK(tick+700,sg->tick);
+		//		unit->val1 = 0;
+		//		if(unit->limit + sg->tick > tick + 700)
+		//			unit->limit = DIFF_TICK(tick+700,sg->tick);
 		//		break;
 
 		case UNT_MOONLIT:
@@ -13441,33 +13441,33 @@ static int skill_unit_effect (struct block_list* bl, va_list ap)
 /*==========================================
  *
  *------------------------------------------*/
-int64 skill_unit_ondamaged (struct skill_unit *src, struct block_list *bl, int64 damage, unsigned int tick)
+int64 skill_unit_ondamaged (struct skill_unit *unit, struct block_list *bl, int64 damage, unsigned int tick)
 {
 	struct skill_unit_group *sg;
 
-	nullpo_ret(src);
-	nullpo_ret(sg=src->group);
+	nullpo_ret(unit);
+	nullpo_ret(sg = unit->group);
 
 	switch( sg->unit_id ) {
-	case UNT_BLASTMINE:
-	case UNT_SKIDTRAP:
-	case UNT_LANDMINE:
-	case UNT_SHOCKWAVE:
-	case UNT_SANDMAN:
-	case UNT_FLASHER:
-	case UNT_CLAYMORETRAP:
-	case UNT_FREEZINGTRAP:
-	case UNT_TALKIEBOX:
-	case UNT_ANKLESNARE:
-	case UNT_ICEWALL:
-	case UNT_REVERBERATION:
-	case UNT_WALLOFTHORN:
-	case UNT_NETHERWORLD:
-		src->val1-=(int)cap_value(damage,INT_MIN,INT_MAX);
-		break;
-	default:
-		damage = 0;
-		break;
+		case UNT_BLASTMINE:
+		case UNT_SKIDTRAP:
+		case UNT_LANDMINE:
+		case UNT_SHOCKWAVE:
+		case UNT_SANDMAN:
+		case UNT_FLASHER:
+		case UNT_CLAYMORETRAP:
+		case UNT_FREEZINGTRAP:
+		case UNT_TALKIEBOX:
+		case UNT_ANKLESNARE:
+		case UNT_ICEWALL:
+		case UNT_REVERBERATION:
+		case UNT_WALLOFTHORN:
+		case UNT_NETHERWORLD:
+			unit->val1 -= (int)cap_value(damage,INT_MIN,INT_MAX);
+			break;
+		default:
+			damage = 0;
+			break;
 	}
 	return damage;
 }

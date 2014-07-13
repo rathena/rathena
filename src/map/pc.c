@@ -11081,22 +11081,22 @@ short pc_get_itemgroup_bonus_group(struct map_session_data* sd, uint16 group_id)
 * @return True if item in same inventory index, False if doesn't
 */
 bool pc_is_same_equip_index(enum equip_index eqi, int *equip_index, int8 index) {
-	if (index < 0 || index >= ARRAYLENGTH(equip_index))
-		return false;
+	if (index < 0 || index >= MAX_INVENTORY)
+		return true;
 	// Dual weapon checks
 	if (eqi == EQI_HAND_R && equip_index[EQI_HAND_L] == index)
 		return true;
 	// Headgear with Mid & Low location
-	else if (eqi == EQI_HEAD_MID && equip_index[EQI_HEAD_LOW] == index)
+	if (eqi == EQI_HEAD_MID && equip_index[EQI_HEAD_LOW] == index)
 		return true;
 	// Headgear with Top & Mid or Low location
-	else if (eqi == EQI_HEAD_TOP && (equip_index[EQI_HEAD_MID] == index || equip_index[EQI_HEAD_LOW] == index))
+	if (eqi == EQI_HEAD_TOP && (equip_index[EQI_HEAD_MID] == index || equip_index[EQI_HEAD_LOW] == index))
 		return true;
 	// Headgear with Mid & Low location
-	else if (eqi == EQI_COSTUME_MID && equip_index[EQI_COSTUME_LOW] == index)
+	if (eqi == EQI_COSTUME_MID && equip_index[EQI_COSTUME_LOW] == index)
 		return true;
 	// Headgear with Top & Mid or Low location
-	else if (eqi == EQI_COSTUME_TOP && (equip_index[EQI_COSTUME_MID] == index || equip_index[EQI_COSTUME_LOW] == index))
+	if (eqi == EQI_COSTUME_TOP && (equip_index[EQI_COSTUME_MID] == index || equip_index[EQI_COSTUME_LOW] == index))
 		return true;
 	return false;
 }

@@ -1462,11 +1462,13 @@ int npc_cashshop_buy(struct map_session_data *sd, unsigned short nameid, int amo
 	if( (item = itemdb_exists(nameid)) == NULL )
 		return 5; // Invalid Item
 
-	ARR_FIND(0, nd->u.shop.count, i, nd->u.shop.shop_item[i].nameid == nameid);
+	ARR_FIND(0, nd->u.shop.count, i, nd->u.shop.shop_item[i].nameid == nameid || itemdb_viewid(nd->u.shop.shop_item[i].nameid) == nameid);
 	if( i == nd->u.shop.count )
 		return 5;
 	if( nd->u.shop.shop_item[i].value <= 0 )
 		return 5;
+
+	nameid = nd->u.shop.shop_item[i].nameid; //item_avail replacement
 
 	if(!itemdb_isstackable(nameid) && amount > 1)
 	{

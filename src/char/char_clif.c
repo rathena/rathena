@@ -337,6 +337,15 @@ void chclif_char_delete2_ack(int fd, int char_id, uint32 result, time_t delete_d
 /// Any (0x718): An unknown error has occurred.
 /// HC: <082a>.W <char id>.L <Msg:0-5>.L
 void chclif_char_delete2_accept_ack(int fd, int char_id, uint32 result) {
+	if(result == 1 ){
+		struct char_session_data* sd;
+		sd = (struct char_session_data*)session[fd]->session_data;
+
+		if( sd->version >= date2version(20130000) ){
+			chclif_mmo_char_send(fd, sd);
+		}
+	}
+
 	WFIFOHEAD(fd,10);
 	WFIFOW(fd,0) = 0x82a;
 	WFIFOL(fd,2) = char_id;
