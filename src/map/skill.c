@@ -2447,6 +2447,36 @@ static int skill_magic_reflect(struct block_list* src, struct block_list* bl, in
 	return 0;
 }
 
+/**
+ * Checks whether a skill can be used in combos or not
+ * @param skill_id: Target skill
+ * @return true: Skill is a combo, false: otherwise
+ * @author Panikon
+ **/
+bool skill_is_combo(int skill_id) {
+	switch(skill_id) {
+		case MO_CHAINCOMBO:
+		case MO_COMBOFINISH:
+		case CH_TIGERFIST:
+		case CH_CHAINCRUSH:
+		case MO_EXTREMITYFIST:
+		case TK_TURNKICK:
+		case TK_STORMKICK:
+		case TK_DOWNKICK:
+		case TK_COUNTER:
+		case TK_JUMPKICK:
+		case HT_POWER:
+		case GC_COUNTERSLASH:
+		case GC_WEAPONCRUSH:
+		case SR_FALLENEMPIRE:
+		case SR_DRAGONCOMBO:
+		case SR_TIGERCANNON:
+		case SR_GATEOFHELL:
+			return true;
+	}
+	return false;
+}
+
 /*
  * Combo handler, start stop combo status
  */
@@ -8843,32 +8873,33 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case WL_SUMMONWB:
 	case WL_SUMMONSTONE:
 		{
-			short element = 0, sctype = 0, pos = -1;
+			short element = 0, sctype = 0, pos = -1, j = 0;
 			struct status_change *sc = status_get_sc(src);
-			if( !sc ) break;
 
-			for( i = SC_SPHERE_1; i <= SC_SPHERE_5; i++ )
-			{
+			if( !sc )
+				break;
+
+			for( i = SC_SPHERE_1; i <= SC_SPHERE_5; i++ ) {
 				if( !sctype && !sc->data[i] )
 					sctype = i; // Take the free SC
-				if( sc->data[i] )
+				if( sc->data[i] ) {
 					pos = max(sc->data[i]->val2,pos);
+					j++;
+				}
 			}
 
-			if( !sctype )
-			{
+			if( !sctype || j >= skill_lv ) {
 				if( sd ) // No free slots to put SC
 					clif_skill_fail(sd,skill_id,USESKILL_FAIL_SUMMON,0);
 				break;
 			}
 
 			pos++; // Used in val2 for SC. Indicates the order of this ball
-			switch( skill_id )
-			{ // Set val1. The SC element for this ball
-			case WL_SUMMONFB:    element = WLS_FIRE;  break;
-			case WL_SUMMONBL:    element = WLS_WIND;  break;
-			case WL_SUMMONWB:    element = WLS_WATER; break;
-			case WL_SUMMONSTONE: element = WLS_STONE; break;
+			switch( skill_id ) { // Set val1. The SC element for this ball
+				case WL_SUMMONFB:    element = WLS_FIRE;  break;
+				case WL_SUMMONBL:    element = WLS_WIND;  break;
+				case WL_SUMMONWB:    element = WLS_WATER; break;
+				case WL_SUMMONSTONE: element = WLS_STONE; break;
 			}
 
 			sc_start4(src,src,(enum sc_type)sctype,100,element,pos,skill_lv,0,skill_get_time(skill_id,skill_lv));

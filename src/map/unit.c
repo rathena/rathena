@@ -1142,6 +1142,7 @@ int unit_can_move(struct block_list *bl) {
 	))
 		return 0; // Can't move
 
+	// Status changes that block movement
 	if (sc) {
 		if( sc->cant.move // status placed here are ones that cannot be cached by sc->cant.move for they depend on other conditions other than their availability
 			|| (sc->data[SC_FEAR] && sc->data[SC_FEAR]->val2 > 0)
@@ -1268,7 +1269,9 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		sc = NULL; // Unneeded
 
 	// temp: used to signal combo-skills right now.
-	if (sc && sc->data[SC_COMBO] && (sc->data[SC_COMBO]->val1 == skill_id ||
+	if (sc && sc->data[SC_COMBO] &&
+		skill_is_combo(skill_id) &&
+		(sc->data[SC_COMBO]->val1 == skill_id ||
 		(sd?skill_check_condition_castbegin(sd,skill_id,skill_lv):0) ))
 	{
 		if (sc->data[SC_COMBO]->val2)
@@ -1854,6 +1857,10 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 			unit_stop_attack(src);
 			return 0;
 		}
+		if( !pc_can_attack(sd, target_id) ) {
+			unit_stop_attack(src);
+			return 0;
+		}
 	}
 	if( battle_check_target(src,target,BCT_ENEMY) <= 0 || !status_check_skilluse(src, target, 0, 0) ) {
 		unit_unattackable(src);
@@ -2066,7 +2073,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 #ifdef OFFICIAL_WALKPATH
 	   || !path_search_long(NULL, src->m, src->x, src->y, target->x, target->y, CELL_CHKWALL)
 #endif
-	   )
+	   || (sd && !pc_can_attack(sd, target->id)) )
 		return 0; // Can't attack under these conditions
 
 	if (sd && &sd->sc && sd->sc.count && sd->sc.data[SC_HEAT_BARREL_AFTER])

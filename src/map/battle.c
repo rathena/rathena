@@ -792,20 +792,29 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 		if( sc->data[SC_SAFETYWALL] && (flag&(BF_SHORT|BF_MAGIC))==BF_SHORT ) {
 			struct skill_unit_group* group = skill_id2group(sc->data[SC_SAFETYWALL]->val3);
-			//uint16 skill_id = sc->data[SC_SAFETYWALL]->val2; (safetywall or steinwand)
+			uint16 skill_id = sc->data[SC_SAFETYWALL]->val2;
 			if (group) {
-			//in RE, SW possesses a lifetime equal to group val2, (3x caster hp, or homon formula)
-#ifdef RENEWAL
 				d->dmg_lv = ATK_BLOCK;
+
+				if (skill_id == MH_STEINWAND) {
+					if (--group->val2 <= 0)
+						skill_delunitgroup(group);
+					if( (group->val3 - damage) > 0 )
+						group->val3 -= (int)cap_value(damage, INT_MIN, INT_MAX);
+					else
+						skill_delunitgroup(group);
+					return 0;
+				}
+				//in RE, SW possesses a lifetime equal to group val2, (3x caster hp, or homon formula)
+#ifdef RENEWAL
 				if ( ( group->val2 - damage) > 0 ) {
-					group->val2 -= (int)cap_value(damage,INT_MIN,INT_MAX);
+					group->val2 -= (int)cap_value(damage, INT_MIN, INT_MAX);
 				} else
 					skill_delunitgroup(group);
 				return 0;
 #else
-				if (--group->val2<=0)
+				if (--group->val2 <= 0)
 					skill_delunitgroup(group);
-				d->dmg_lv = ATK_BLOCK;
 				return 0;
 #endif
 			}
@@ -1493,6 +1502,10 @@ int64 battle_addmastery(struct map_session_data *sd,struct block_list *target,in
 			break;
 	}
 
+
+	if(sd->sc.data[SC_GN_CARTBOOST]) // cart boost adds mastery type damage
+		damage += 10*sd->sc.data[SC_GN_CARTBOOST]->val1;
+
 	return damage;
 }
 
@@ -1852,6 +1865,26 @@ static int battle_skill_damage(struct block_list *src, struct block_list *target
 	return battle_skill_damage_skill(src, target, skill_id) + battle_skill_damage_map(src, target, skill_id);
 }
 #endif
+
+/**
+ * Calculates Minstrel/Wanderer bonus for Chorus skills.
+ * @param sd Player who has Chorus skill active
+ * @return Bonus value based on party count
+ */
+static int battle_calc_chorusbonus(struct map_session_data *sd) {
+	int members = 0;
+
+	if (!sd || !sd->status.party_id)
+		return 0;
+
+	members = party_foreachsamemap(party_sub_count_class, sd, MAPID_THIRDMASK, MAPID_MINSTRELWANDERER);
+
+	if (members < 3)
+		return 0; // Bonus remains 0 unless 3 or more Minstrels/Wanderers are in the party.
+	if (members > 7)
+		return 5; // Maximum effect possible from 7 or more Minstrels/Wanderers.
+	return members - 2; // Effect bonus from additional Minstrels/Wanderers if not above the max possible.
+}
 
 struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list *target,uint16 skill_id,uint16 skill_lv,int mflag);
 struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *target,uint16 skill_id,uint16 skill_lv,int mflag);
@@ -2530,11 +2563,6 @@ static struct Damage battle_calc_attack_masteries(struct Damage wd, struct block
 
 		if (sc) { // Status change considered as masteries
 			uint8 i;
-
-#ifdef RENEWAL
-			if(sc->data[SC_NIBELUNGEN]) //With renewal, the level 4 weapon limitation has beed removed
-				ATK_ADD(wd.masteryAtk, wd.masteryAtk2, sc->data[SC_NIBELUNGEN]->val2);
-#endif
 
 			if (sc->data[SC_MIRACLE])
 				i = 2; //Star anger
@@ -3418,9 +3446,13 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 		case RA_WUGDASH:// ATK 300%
 			skillratio += 200;
+			if (sc && sc->data[SC_DANCEWITHWUG])
+				skillratio += 10 * sc->data[SC_DANCEWITHWUG]->val1 * (2 + battle_calc_chorusbonus(sd));
 			break;
 		case RA_WUGSTRIKE:
 			skillratio += -100 + 200 * skill_lv;
+			if (sc && sc->data[SC_DANCEWITHWUG])
+				skillratio += 10 * sc->data[SC_DANCEWITHWUG]->val1 * (2 + battle_calc_chorusbonus(sd));
 			break;
 		case RA_WUGBITE:
 			skillratio += 300 + 200 * skill_lv;
@@ -3905,11 +3937,15 @@ static int battle_calc_skill_constant_addition(struct Damage wd, struct block_li
 		case RA_WUGDASH:
 			if( sd && sd->weight )
 				atk = (sd->weight / 8) + (30 * pc_checkskill(sd,RA_TOOTHOFWUG));
+			if (sc && sc->data[SC_DANCEWITHWUG])
+				atk += 10 * sc->data[SC_DANCEWITHWUG]->val1 * (2 + battle_calc_chorusbonus(sd));
 			break;
 		case RA_WUGSTRIKE:
 		case RA_WUGBITE:
 			if(sd)
 				atk = (30 * pc_checkskill(sd, RA_TOOTHOFWUG));
+			if (sc && sc->data[SC_DANCEWITHWUG])
+				atk += 10 * sc->data[SC_DANCEWITHWUG]->val1 * (2 + battle_calc_chorusbonus(sd));
 			break;
 		case GC_COUNTERSLASH:
 			atk = sstatus->agi * 2 + (sd ? sd->status.job_level * 4 : 0);
@@ -3949,27 +3985,14 @@ static int battle_calc_skill_constant_addition(struct Damage wd, struct block_li
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
-struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, struct block_list *target, uint16 skill_id)
+struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, uint16 skill_id)
 {
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
 	struct status_change *sc = status_get_sc(src);
 	struct status_data *sstatus = status_get_status_data(src);
-#ifdef RENEWAL
-	struct status_data *tstatus = status_get_status_data(target);
-#endif
-	int chorusbonus = 0;
 
 	if( sd ) {
 		int type;
-		// Minstrel/Wanderer number check for chorus skills.
-		// Bonus remains 0 unless 3 or more Minstrels/Wanderers are in the party.
-		if( sd->status.party_id ) {
-			chorusbonus = party_foreachsamemap(party_sub_count_class, sd, MAPID_THIRDMASK, MAPID_MINSTRELWANDERER);
-			if( chorusbonus > 7 )
-				chorusbonus = 5; // Maximum effect possible from 7 or more Minstrels/Wanderers
-			else if( chorusbonus > 2 )
-				chorusbonus = chorusbonus - 2; // Effect bonus from additional Minstrels/Wanderers if not above the max possible.
-		}
 
 		// Kagerou/Oboro Earth Charm effect +15% wATK
 		ARR_FIND(1, 6, type, sd->talisman[type] > 0);
@@ -3983,35 +4006,19 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 
 	//The following are applied on top of current damage and are stackable.
 	if (sc) {
-#ifdef RENEWAL
-		if(sc->data[SC_WATK_ELEMENT])
-			if(skill_id != ASC_METEORASSAULT)
-				ATK_ADDRATE(wd.weaponAtk, wd.weaponAtk2, sc->data[SC_WATK_ELEMENT]->val2);
-		if(sc->data[SC_IMPOSITIO])
-			ATK_ADD(wd.equipAtk, wd.equipAtk2, sc->data[SC_IMPOSITIO]->val2);
-		if(sc->data[SC_VOLCANO])
-			ATK_ADD(wd.equipAtk, wd.equipAtk2, sc->data[SC_VOLCANO]->val2);
-		if(sc->data[SC_DRUMBATTLE]) {
-			if(tstatus->size == SZ_SMALL) {
-				ATK_ADD(wd.equipAtk, wd.equipAtk2, sc->data[SC_DRUMBATTLE]->val2);
-			} else if(tstatus->size == SZ_MEDIUM)
-				ATK_ADD(wd.equipAtk, wd.equipAtk2, 10 * sc->data[SC_DRUMBATTLE]->val1);
-		}
-		if(sc->data[SC_MADNESSCANCEL])
-			ATK_ADD(wd.equipAtk, wd.equipAtk2, 100);
-		if(sc->data[SC_GATLINGFEVER]) {
-			if(tstatus->size == SZ_SMALL) {
-				ATK_ADD(wd.equipAtk, wd.equipAtk2, 10 * sc->data[SC_GATLINGFEVER]->val1);
-			} else if(tstatus->size == SZ_MEDIUM) {
-				ATK_ADD(wd.equipAtk, wd.equipAtk2, 5 * sc->data[SC_GATLINGFEVER]->val1);
-			} else if(tstatus->size == SZ_BIG)
-				ATK_ADD(wd.equipAtk, wd.equipAtk2, sc->data[SC_GATLINGFEVER]->val1);
-		}
-#endif
 #ifndef RENEWAL
 		if( sc->data[SC_TRUESIGHT] )
 			ATK_ADDRATE(wd.damage, wd.damage2, 2*sc->data[SC_TRUESIGHT]->val1);
 #endif
+		if( sc->data[SC_GLOOMYDAY_SK] &&
+		( skill_id == LK_SPIRALPIERCE || skill_id == KN_BRANDISHSPEAR ||
+		  skill_id == CR_SHIELDBOOMERANG || skill_id == PA_SHIELDCHAIN ||
+		  skill_id == RK_HUNDREDSPEAR || skill_id == LG_SHIELDPRESS ) ) {
+			ATK_ADDRATE(wd.damage, wd.damage2, sc->data[SC_GLOOMYDAY_SK]->val2);
+#ifdef RENEWAL
+			ATK_ADDRATE(wd.weaponAtk, wd.weaponAtk2, sc->data[SC_GLOOMYDAY_SK]->val2);
+#endif
+		}
 		if (sc->data[SC_SPIRIT]) {
 			if(skill_id == AS_SONICBLOW && sc->data[SC_SPIRIT]->val2 == SL_ASSASIN){
 				ATK_ADDRATE(wd.damage, wd.damage2, map_flag_gvg(src->m)?25:100); //+25% dmg on woe/+100% dmg on nonwoe
@@ -4067,93 +4074,7 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 #endif
 			}
 		}
-		if(sc->data[SC_FIGHTINGSPIRIT]) {
-			ATK_ADD(wd.damage, wd.damage2, sc->data[SC_FIGHTINGSPIRIT]->val1);
-#ifdef RENEWAL
-			ATK_ADD(wd.equipAtk, wd.equipAtk2, sc->data[SC_FIGHTINGSPIRIT]->val1);
-#endif
-		}
-		if(sc->data[SC_SHIELDSPELL_DEF] && sc->data[SC_SHIELDSPELL_DEF]->val1 == 3) {
-			ATK_ADD(wd.damage, wd.damage2, sc->data[SC_SHIELDSPELL_DEF]->val2);
-#ifdef RENEWAL
-			ATK_ADD(wd.equipAtk, wd.equipAtk2, sc->data[SC_SHIELDSPELL_DEF]->val2);
-#endif
-		}
-		if(sc->data[SC_BANDING] && sc->data[SC_BANDING]->val2 > 1) {
-			ATK_ADD(wd.damage, wd.damage2, (10 + 10 * sc->data[SC_BANDING]->val1) * sc->data[SC_BANDING]->val2);
-#ifdef RENEWAL
-			ATK_ADD(wd.equipAtk, wd.equipAtk2, (10 + 10 * sc->data[SC_BANDING]->val1) * sc->data[SC_BANDING]->val2);
-#endif
-		}
-		if(sc->data[SC_INSPIRATION]) {
-			ATK_ADD(wd.damage, wd.damage2, 40 * sc->data[SC_INSPIRATION]->val1 + 3 * sc->data[SC_INSPIRATION]->val2);
-#ifdef RENEWAL
-			ATK_ADD(wd.equipAtk, wd.equipAtk2, 40 * sc->data[SC_INSPIRATION]->val1 + 3 * sc->data[SC_INSPIRATION]->val2);
-#endif
-		}
-		if(sc->data[SC_GT_CHANGE] && sc->data[SC_GT_CHANGE]->val2) {
-			struct block_list *bl; // ATK increase: ATK [{(Caster DEX / 4) + (Caster STR / 2)} x Skill Level / 5]
 
-			if( (bl = map_id2bl(sc->data[SC_GT_CHANGE]->val2)) ) {
-				ATK_ADD(wd.damage, wd.damage2, ( status_get_dex(bl)/4 + status_get_str(bl)/2 ) * sc->data[SC_GT_CHANGE]->val1 / 5 );
-#ifdef RENEWAL
-				ATK_ADD(wd.equipAtk, wd.equipAtk2, (status_get_dex(bl) / 4 + status_get_str(bl) / 2) * sc->data[SC_GT_CHANGE]->val1 / 5);
-#endif
-			}
-		}
-		if(sc->data[SC_PYROTECHNIC_OPTION]) {
-			ATK_ADD(wd.damage, wd.damage2, sc->data[SC_PYROTECHNIC_OPTION]->val2);
-#ifdef RENEWAL
-			ATK_ADD(wd.equipAtk, wd.equipAtk2, sc->data[SC_PYROTECHNIC_OPTION]->val2);
-#endif
-		}
-		if(sc->data[SC_HEATER_OPTION]) {
-			ATK_ADD(wd.damage, wd.damage2, sc->data[SC_HEATER_OPTION]->val2);
-#ifdef RENEWAL
-			ATK_ADD(wd.equipAtk, wd.equipAtk2, sc->data[SC_HEATER_OPTION]->val2);
-#endif
-		}
-		if(sc->data[SC_TROPIC_OPTION]) {
-			ATK_ADD(wd.damage, wd.damage2, sc->data[SC_TROPIC_OPTION]->val2);
-#ifdef RENEWAL
-			ATK_ADD(wd.equipAtk, wd.equipAtk2, sc->data[SC_TROPIC_OPTION]->val2);
-#endif
-		}
-		if(sc->data[SC_GN_CARTBOOST]) {
-			ATK_ADD(wd.damage, wd.damage2, 10 * sc->data[SC_GN_CARTBOOST]->val1);
-#ifdef RENEWAL
-			ATK_ADD(wd.equipAtk, wd.equipAtk2, 10 * sc->data[SC_GN_CARTBOOST]->val1);
-#endif
-		}
-		if(sc->data[SC_RUSHWINDMILL]) {
-			ATK_ADD(wd.damage, wd.damage2, sc->data[SC_RUSHWINDMILL]->val3);
-#ifdef RENEWAL
-			ATK_ADD(wd.equipAtk, wd.equipAtk2, sc->data[SC_RUSHWINDMILL]->val3);
-#endif
-		}
-		if( sc->data[SC_GLOOMYDAY_SK] &&
-		( skill_id == LK_SPIRALPIERCE || skill_id == KN_BRANDISHSPEAR ||
-		  skill_id == CR_SHIELDBOOMERANG || skill_id == PA_SHIELDCHAIN ||
-		  skill_id == RK_HUNDREDSPEAR || skill_id == LG_SHIELDPRESS ) ) {
-			ATK_ADDRATE(wd.damage, wd.damage2, sc->data[SC_GLOOMYDAY_SK]->val2);
-			RE_ALLATK_ADDRATE(wd, sc->data[SC_GLOOMYDAY_SK]->val2);
-		}
-		if( sc->data[SC_DANCEWITHWUG] ) {
-			ATK_ADDRATE(wd.damage, wd.damage2, sc->data[SC_DANCEWITHWUG]->val1 * 2 * chorusbonus);
-#ifdef RENEWAL
-			ATK_ADDRATE(wd.equipAtk, wd.equipAtk2, sc->data[SC_DANCEWITHWUG]->val1 * 2 * chorusbonus);
-#endif
-			if( skill_id == RA_WUGSTRIKE || skill_id == RA_WUGBITE || skill_id == RA_WUGDASH ) {
-				ATK_ADDRATE(wd.damage, wd.damage2, sc->data[SC_DANCEWITHWUG]->val1 * 10 * chorusbonus);
-				RE_ALLATK_ADDRATE(wd, sc->data[SC_DANCEWITHWUG]->val1 * 10 * chorusbonus);
-			}
-		}
-		if(sc->data[SC_SATURDAYNIGHTFEVER]) {
-			ATK_ADD(wd.damage, wd.damage2, 100 * sc->data[SC_SATURDAYNIGHTFEVER]->val1);
-#ifdef RENEWAL
-			ATK_ADD(wd.equipAtk, wd.equipAtk2, 100 * sc->data[SC_SATURDAYNIGHTFEVER]->val1);
-#endif
-		}
 		if(sc->data[SC_ZENKAI] && sstatus->rhw.ele == sc->data[SC_ZENKAI]->val2) {
 			ATK_ADD(wd.damage, wd.damage2, 200);
 #ifdef RENEWAL
@@ -4936,7 +4857,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		}
 
 		// final attack bonuses that aren't affected by cards
-		wd = battle_attack_sc_bonus(wd, src, target, skill_id);
+		wd = battle_attack_sc_bonus(wd, src, skill_id);
 
 		if (sd) { //monsters, homuns and pets have their damage computed directly
 			wd.damage = wd.statusAtk + wd.weaponAtk + wd.equipAtk + wd.masteryAtk;
@@ -6380,10 +6301,11 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 	struct map_session_data* sd;
 	int64 rdamage = 0, damage = *dmg;
 	int max_damage = status_get_max_hp(bl);
-	struct status_change* sc;
+	struct status_change *sc, *ssc;
 
 	sd = BL_CAST(BL_PC, bl);
 	sc = status_get_sc(bl);
+	ssc = status_get_sc(src);
 
 	if (flag & BF_SHORT) {//Bounces back part of the damage.
 		if ( !status_reflect && sd && sd->bonus.short_weapon_damage_return ) {
@@ -6428,6 +6350,16 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 			rdamage += damage * sd->bonus.long_weapon_damage_return / 100;
 			if (rdamage < 1) rdamage = 1;
 		}
+	}
+
+	if (ssc && ssc->data[SC_INSPIRATION]) {
+		rdamage += damage / 100;
+#ifdef RENEWAL
+		rdamage = cap_value(rdamage, 1, max_damage);
+#else
+		if( rdamage < 1 )
+			rdamage = 1;
+#endif
 	}
 
 	if( sc && sc->data[SC_KYOMU] ) // Nullify reflecting ability
