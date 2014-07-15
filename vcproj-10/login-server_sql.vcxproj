@@ -147,6 +147,9 @@
     <ClInclude Include="..\src\login\account.h" />
     <ClInclude Include="..\src\login\ipban.h" />
     <ClInclude Include="..\src\login\login.h" />
+    <ClInclude Include="..\src\login\loginchrif.h" />
+    <ClInclude Include="..\src\login\loginclif.h" />
+    <ClInclude Include="..\src\login\logincnslif.h" />
     <ClInclude Include="..\src\login\loginlog.h" />
     <ClInclude Include="..\src\common\cbasetypes.h" />
     <ClInclude Include="..\src\common\core.h" />
@@ -178,10 +181,13 @@
     <ClCompile Include="..\src\common\mutex.c" />
     <ClCompile Include="..\src\common\raconf.c" />
     <ClCompile Include="..\src\common\thread.c" />
-    <ClCompile Include="..\src\login\account_sql.c" />
-    <ClCompile Include="..\src\login\ipban_sql.c" />
+    <ClCompile Include="..\src\login\account.c" />
+    <ClCompile Include="..\src\login\ipban.c" />
     <ClCompile Include="..\src\login\login.c" />
-    <ClCompile Include="..\src\login\loginlog_sql.c" />
+    <ClCompile Include="..\src\login\loginchrif.c" />
+    <ClCompile Include="..\src\login\loginclif.c" />
+    <ClCompile Include="..\src\login\logincnslif.c" />
+    <ClCompile Include="..\src\login\loginlog.c" />
     <ClCompile Include="..\src\common\core.c" />
     <ClCompile Include="..\src\common\db.c" />
     <ClCompile Include="..\src\common\ers.c" />
