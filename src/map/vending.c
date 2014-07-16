@@ -510,7 +510,7 @@ void vending_reopen( struct map_session_data* sd ){
 			}
 
 			*index = entry->index + 2;
-			*amount = itemdb_isstackable(sd->status.cart[entry->index].id) ? entry->amount : 1;
+			*amount = itemdb_isstackable(sd->status.cart[entry->index].nameid) ? entry->amount : 1;
 			*value = entry->price;
 
 			p += 8;
@@ -609,7 +609,7 @@ void do_init_vending_autotrade( void ) {
 				pc_setnewpc(autotraders[i]->sd, autotraders[i]->account_id, autotraders[i]->char_id, 0, gettick(), autotraders[i]->sex, 0);
 			
 				autotraders[i]->sd->state.autotrade = 1;
-				autotraders[i]->sd->state.monster_ignore = 1;
+				autotraders[i]->sd->state.monster_ignore = (battle_config.autotrade_monsterignore);
 				chrif_authreq(autotraders[i]->sd, true);
 				i++;
 			}

@@ -5752,7 +5752,8 @@ ACMD_FUNC(autotrade) {
 	}
 
 	sd->state.autotrade = 1;
-	sd->state.monster_ignore = 1;
+	if (battle_config.autotrade_monsterignore)
+		sd->state.monster_ignore = 1;
 
 	if( sd->state.vending ){
 		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", vendings_db, sd->vender_id ) != SQL_SUCCESS ){

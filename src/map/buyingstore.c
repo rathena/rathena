@@ -692,6 +692,7 @@ void do_init_buyingstore_autotrade( void ) {
 				pc_setnewpc(autotraders[i]->sd, autotraders[i]->account_id, autotraders[i]->char_id, 0, gettick(), autotraders[i]->sex, 0);
 			
 				autotraders[i]->sd->state.autotrade = 1;
+				autotraders[i]->sd->state.monster_ignore = (battle_config.autotrade_monsterignore);
 				chrif_authreq(autotraders[i]->sd, true);
 				i++;
 			}

@@ -563,6 +563,7 @@ extern struct Battle_Config
 	int taekwon_ranker_min_lv;
 	int revive_onwarp;
 	int mail_delay;
+	int autotrade_monsterignore;
 } battle_config;
 
 void do_init_battle(void);
