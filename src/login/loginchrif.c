@@ -203,9 +203,9 @@ int logchrif_send_accdata(int fd, uint32 aid) {
 	int bank_vault = 0;
 	char isvip = false;
 	uint8 char_slots = MIN_CHARS, char_vip = 0;
+	AccountDB* accounts = login_get_accounts_db();
 
 	memset(pincode,0,PINCODE_LENGTH+1);
-	AccountDB* accounts = login_get_accounts_db();
 	if( !accounts->load_num(accounts, &acc, aid) )
 		return -1;
 	else {
@@ -353,9 +353,10 @@ int logchrif_parse_requpdaccstate(int fd, int id, char* ip){
 
 		int account_id = RFIFOL(fd,2);
 		unsigned int state = RFIFOL(fd,6);
+		AccountDB* accounts = login_get_accounts_db();
+
 		RFIFOSKIP(fd,10);
 
-		AccountDB* accounts = login_get_accounts_db();
 		if( !accounts->load_num(accounts, &acc, account_id) )
 			ShowNotice("Char-server '%s': Error of Status change (account: %d not found, suggested status %d, ip: %s).\n", ch_server[id].name, account_id, state, ip);
 		else if( acc.state == state )
@@ -741,9 +742,10 @@ int logchrif_parse_bankvault(int fd, int id, char* ip){
 		int account_id = RFIFOL(fd,2);
 		char type = RFIFOB(fd,6);
 		int32 data = RFIFOL(fd,7);
+		AccountDB* accounts = login_get_accounts_db();
+
 		RFIFOSKIP(fd,11);
 
-		AccountDB* accounts = login_get_accounts_db();
 		if( !accounts->load_num(accounts, &acc, account_id) )
 			ShowNotice("Char-server '%s': Error on banking  (account: %d not found, ip: %s).\n", ch_server[id].name, account_id, ip);
 		else{

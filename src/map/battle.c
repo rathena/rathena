@@ -4869,7 +4869,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		}
 #else
 		// final attack bonuses that aren't affected by cards
-		wd = battle_attack_sc_bonus(wd, src, target, skill_id);
+		wd = battle_attack_sc_bonus(wd, src, skill_id);
 #endif
 
 		if (wd.damage + wd.damage2) { //Check if attack ignores DEF
