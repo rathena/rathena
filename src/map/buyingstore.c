@@ -73,27 +73,32 @@ static unsigned int buyingstore_getuid(void)
 	return ++buyingstore_nextid;
 }
 
-
-bool buyingstore_setup(struct map_session_data* sd, unsigned char slots){
+/**
+* Attempt to setup buying store fast check before create new one
+* @param sd
+* @param slots Number of item on the list
+* @return 0 If success, 1 - Cannot open, 2 - Manner penalty, 3 - Mapflag restiction, 4 - Cell restriction
+*/
+char buyingstore_setup(struct map_session_data* sd, unsigned char slots){
 	if (!battle_config.feature_buying_store || sd->state.vending || sd->state.buyingstore || sd->state.trading || slots == 0) {
-		return false;
+		return 1;
 	}
 
 	if( sd->sc.data[SC_NOCHAT] && (sd->sc.data[SC_NOCHAT]->val1&MANNER_NOROOM) )
 	{// custom: mute limitation
-		return false;
+		return 2;
 	}
 
 	if( map[sd->bl.m].flag.novending )
 	{// custom: no vending maps
 		clif_displaymessage(sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
-		return false;
+		return 3;
 	}
 
 	if( map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOVENDING) )
 	{// custom: no vending cells
 		clif_displaymessage(sd->fd, msg_txt(sd,204)); // "You can't open a shop on this cell."
-		return false;
+		return 4;
 	}
 
 	if( slots > MAX_BUYINGSTORE_SLOTS )
@@ -105,25 +110,34 @@ bool buyingstore_setup(struct map_session_data* sd, unsigned char slots){
 	sd->buyingstore.slots = slots;
 	clif_buyingstore_open(sd);
 
-	return true;
+	return 0;
 }
 
-
-bool buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned char result, const char* storename, const uint8* itemlist, unsigned int count)
+/**
+* Attempt to create new buying store
+* @param sd
+* @param zenylimit
+* @param result
+* @param storename
+* @param *itemlist { <nameid>.W, <amount>.W, <price>.L }*
+* @param count Number of item on the itemlist
+* @return 0 If success, 1 - Cannot open, 2 - Manner penalty, 3 - Mapflag restiction, 4 - Cell restriction, 5 - Invalid count/result, 6 - Cannot give item, 7 - Will be overweight
+*/
+char buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned char result, const char* storename, const uint8* itemlist, unsigned int count)
 {
 	unsigned int i, weight, listidx;
 	char message_sql[MESSAGE_SIZE*2];
 
 	if( !result || count == 0 )
 	{// canceled, or no items
-		return false;
+		return 5;
 	}
 
 	if( !battle_config.feature_buying_store || pc_istrading(sd) || sd->buyingstore.slots == 0 || count > sd->buyingstore.slots || zenylimit <= 0 || zenylimit > sd->status.zeny || !storename[0] )
 	{// disabled or invalid input
 		sd->buyingstore.slots = 0;
 		clif_buyingstore_open_failed(sd, BUYINGSTORE_CREATE, 0);
-		return false;
+		return 1;
 	}
 
 	if( !pc_can_give_items(sd) )
@@ -131,24 +145,24 @@ bool buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 		sd->buyingstore.slots = 0;
 		clif_displaymessage(sd->fd, msg_txt(sd,246));
 		clif_buyingstore_open_failed(sd, BUYINGSTORE_CREATE, 0);
-		return false;
+		return 6;
 	}
 
 	if( sd->sc.data[SC_NOCHAT] && (sd->sc.data[SC_NOCHAT]->val1&MANNER_NOROOM) )
 	{// custom: mute limitation
-		return false;
+		return 2;
 	}
 
 	if( map[sd->bl.m].flag.novending )
 	{// custom: no vending maps
 		clif_displaymessage(sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
-		return false;
+		return 3;
 	}
 
 	if( map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOVENDING) )
 	{// custom: no vending cells
 		clif_displaymessage(sd->fd, msg_txt(sd,204)); // "You can't open a shop on this cell."
-		return false;
+		return 4;
 	}
 
 	weight = sd->weight;
@@ -204,14 +218,14 @@ bool buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 	{// invalid item/amount/price
 		sd->buyingstore.slots = 0;
 		clif_buyingstore_open_failed(sd, BUYINGSTORE_CREATE, 0);
-		return false;
+		return 5;
 	}
 
 	if( (sd->max_weight*90)/100 < weight )
 	{// not able to carry all wanted items without getting overweight (90%)
 		sd->buyingstore.slots = 0;
 		clif_buyingstore_open_failed(sd, BUYINGSTORE_CREATE_OVERWEIGHT, weight);
-		return false;
+		return 7;
 	}
 
 	// success
@@ -236,10 +250,13 @@ bool buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 	clif_buyingstore_myitemlist(sd);
 	clif_buyingstore_entry(sd);
 
-	return true;
+	return 0;
 }
 
-
+/**
+* Close buying store
+* @param sd
+*/
 void buyingstore_close(struct map_session_data* sd)
 {
 	if( sd->state.buyingstore )
@@ -262,7 +279,11 @@ void buyingstore_close(struct map_session_data* sd)
 	}
 }
 
-
+/**
+* Open buying store from buyer
+* @param sd Player
+* @param account_id Buyer account ID
+*/
 void buyingstore_open(struct map_session_data* sd, int account_id)
 {
 	struct map_session_data* pl_sd;
@@ -292,7 +313,13 @@ void buyingstore_open(struct map_session_data* sd, int account_id)
 	clif_buyingstore_itemlist(sd, pl_sd);
 }
 
-
+/**
+* Start transaction
+* @param sd Player/Seller
+* @param account_id Buyer account ID
+* @param *itemlist List of sold items { <index>.W, <nameid>.W, <amount>.W }*
+* @param count Number of item on the itemlist
+*/
 void buyingstore_trade(struct map_session_data* sd, int account_id, unsigned int buyer_id, const uint8* itemlist, unsigned int count)
 {
 	int zeny = 0;
@@ -544,14 +571,15 @@ bool buyingstore_searchall(struct map_session_data* sd, const struct s_search_st
 	return true;
 }
 
-/** Open buyingstore for Autotrader
+/**
+* Open buyingstore for Autotrader
 * @param sd Player as autotrader
 */
 void buyingstore_reopen( struct map_session_data* sd ){
 	// Ready to open buyingstore for this char
 	if ( sd && autotrader_count > 0 && autotraders){
 		uint16 i;
-		uint8 *data, *p;
+		uint8 *data, *p, fail = 0;
 		uint16 j, count;
 
 		ARR_FIND(0,autotrader_count,i,autotraders[i] && autotraders[i]->char_id == sd->status.char_id);
@@ -576,11 +604,11 @@ void buyingstore_reopen( struct map_session_data* sd ){
 		}
 
 		// Open the buyingstore again
-		if( buyingstore_setup( sd, (unsigned char)autotraders[i]->count ) &&
-			buyingstore_create( sd, autotraders[i]->limit, 1, autotraders[i]->title, data, autotraders[i]->count ) )
+		if( (fail = buyingstore_setup( sd, (unsigned char)autotraders[i]->count ) == 0) &&
+			(fail = buyingstore_create( sd, autotraders[i]->limit, 1, autotraders[i]->title, data, autotraders[i]->count ) == 0) )
 		{
-			ShowInfo("Loaded autotrade buyingstore data for '"CL_WHITE"%s"CL_RESET"' with '"CL_WHITE"%d"CL_RESET"' items at "CL_WHITE"%s (%d,%d)"CL_RESET"\n",
-				sd->status.name,count,mapindex_id2name(sd->mapindex),sd->bl.x,sd->bl.y);
+			ShowInfo("Loaded buyingstore for '"CL_WHITE"%s"CL_RESET"' with '"CL_WHITE"%d"CL_RESET"' items at "CL_WHITE"%s (%d,%d)"CL_RESET"\n",
+				sd->status.name, count, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y);
 
 			// Set him to autotrade
 			if (Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;",
@@ -594,9 +622,12 @@ void buyingstore_reopen( struct map_session_data* sd ){
 
 			if( battle_config.feature_autotrade_sit )
 				pc_setsit(sd);
+
+			// Immediate save
+			chrif_save(sd, 3);
 		}else{
 			// Failed to open the buyingstore, set him offline
-			ShowWarning("Failed to load autotrade buyingstore data for '"CL_WHITE"%s"CL_RESET"' with '"CL_WHITE"%d"CL_RESET"' items\n", sd->status.name, count );
+			ShowError("Failed (%d) to load autotrade buyingstore data for '"CL_WHITE"%s"CL_RESET"' with '"CL_WHITE"%d"CL_RESET"' items\n", fail, sd->status.name, count );
 
 			map_quit( sd );
 		}

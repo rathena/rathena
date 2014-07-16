@@ -610,6 +610,7 @@ struct map_session_data {
 	time_t expiration_time;
 
 	short last_addeditem_index; /// Index of latest item added
+	int autotrade_tid;
 };
 
 struct eri *pc_sc_display_ers; /// Player's SC display table
@@ -837,6 +838,7 @@ short pc_checkequip(struct map_session_data *sd,int pos);
 bool pc_checkequip2(struct map_session_data *sd, unsigned short nameid, int min, int max);
 
 void pc_scdata_received(struct map_session_data *sd);
+void pc_check_expiration(struct map_session_data *sd);
 int pc_expiration_timer(int tid, unsigned int tick, int id, intptr_t data);
 int pc_global_expiration_timer(int tid, unsigned tick, int id, intptr_t data);
 void pc_expire_check(struct map_session_data *sd);
@@ -1110,6 +1112,8 @@ short pc_get_itemgroup_bonus_group(struct map_session_data* sd, uint16 group_id)
 bool pc_is_same_equip_index(enum equip_index eqi, int *equip_index, int8 index);
 /// Check if player is Taekwon Ranker and the level is >= 90 (battle_config.taekwon_ranker_min_lv)
 #define pc_is_taekwon_ranker(sd) (((sd)->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && (sd)->status.base_level >= battle_config.taekwon_ranker_min_lv && pc_famerank((sd)->status.char_id,MAPID_TAEKWON))
+
+int pc_autotrade_timer(int tid, unsigned int tick, int id, intptr_t data);
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_class, int type);

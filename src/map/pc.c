@@ -1136,6 +1136,7 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	sd->npc_timer_id = INVALID_TIMER;
 	sd->pvp_timer = INVALID_TIMER;
 	sd->expiration_tid = INVALID_TIMER;
+	sd->autotrade_tid = INVALID_TIMER;
 
 #ifdef SECURE_NPCTIMEOUT
 	// Initialize to defaults/expected
@@ -1453,8 +1454,12 @@ void pc_reg_received(struct map_session_data *sd)
 		clif_changeoption( &sd->bl );
 	}
 
-	if( sd->state.autotrade )
+	pc_check_expiration(sd);
+
+	if( sd->state.autotrade ) {
 		clif_parse_LoadEndAck(sd->fd, sd);
+		sd->autotrade_tid = add_timer(gettick() + battle_config.feature_autotrade_open_delay, pc_autotrade_timer, sd->bl.id, 0);
+	}
 }
 
 static int pc_calc_skillpoint(struct map_session_data* sd)
@@ -8228,7 +8233,7 @@ void pc_setoption(struct map_session_data *sd,int type)
 	} else if( !( type&OPTION_CART ) && p_type&OPTION_CART ){ //Cart Off
 		clif_clearcart(sd->fd);
 		if(pc_checkskill(sd, MC_PUSHCART) < 10)
-			status_calc_pc(sd,0); //Remove speed penalty.
+			status_calc_pc(sd,SCO_NONE); //Remove speed penalty.
 	}
 #endif
 
@@ -10757,9 +10762,17 @@ void pc_damage_log_clear(struct map_session_data *sd, int id)
 
 /* Status change data arrived from char-server */
 void pc_scdata_received(struct map_session_data *sd) {
+	// Nothing todo yet
+	return;
+}
+
+/** Check expiration time and rental items
+* @param sd
+*/
+void pc_check_expiration(struct map_session_data *sd) {
 	pc_inventory_rentals(sd);
 
-	if( sd->expiration_time != 0 ) { //Don't display if it's unlimited or unknow value
+	if (sd->expiration_time != 0) { //Don't display if it's unlimited or unknow value
 		time_t exp_time = sd->expiration_time;
 		char tmpstr[1024];
 
@@ -10781,6 +10794,25 @@ int pc_expiration_timer(int tid, unsigned int tick, int id, intptr_t data) {
 		clif_authfail_fd(sd->fd,10);
 
 	map_quit(sd);
+
+	return 0;
+}
+
+int pc_autotrade_timer(int tid, unsigned int tick, int id, intptr_t data) {
+	struct map_session_data *sd = map_id2sd(id);
+
+	if (!sd)
+		return 0;
+
+	sd->autotrade_tid = INVALID_TIMER;
+
+	buyingstore_reopen(sd);
+	vending_reopen(sd);
+
+	if (sd && !sd->vender_id && !sd->buyer_id) {
+		sd->state.autotrade = 0;
+		map_quit(sd);
+	}
 
 	return 0;
 }
@@ -11157,6 +11189,7 @@ void do_init_pc(void) {
 	add_timer_func_list(pc_talisman_timer, "pc_talisman_timer");
 	add_timer_func_list(pc_global_expiration_timer, "pc_global_expiration_timer");
 	add_timer_func_list(pc_expiration_timer, "pc_expiration_timer");
+	add_timer_func_list(pc_autotrade_timer, "pc_autotrade_timer");
 
 	add_timer(gettick() + autosave_interval, pc_autosave, 0, 0);
 

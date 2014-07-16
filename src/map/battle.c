@@ -7754,6 +7754,7 @@ static const struct _battle_data {
 	{ "feature.autotrade",					&battle_config.feature_autotrade,				1,		0,		1,				},
 	{ "feature.autotrade_direction",		&battle_config.feature_autotrade_direction,		4,		0,		7,				},
 	{ "feature.autotrade_sit",				&battle_config.feature_autotrade_sit,			1,		0,		1,				},
+	{ "feature.autotrade_open_delay",		&battle_config.feature_autotrade_open_delay,	5000,	1000,	INT_MAX,		},
 	{ "disp_serverbank_msg",				&battle_config.disp_serverbank_msg,				0,		0,		1,				},
 	{ "warg_can_falcon",                    &battle_config.warg_can_falcon,                 0,      0,      1,              },
 	{ "path_blown_halt",                    &battle_config.path_blown_halt,                 1,      0,      1,              },

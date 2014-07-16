@@ -1652,6 +1652,9 @@ int map_quit(struct map_session_data *sd) {
 	if (sd->npc_timer_id != INVALID_TIMER) //Cancel the event timer.
 		npc_timerevent_quit(sd);
 
+	if (sd->autotrade_tid != INVALID_TIMER)
+		delete_timer(sd->autotrade_tid, pc_autotrade_timer);
+
 	if (sd->npc_id)
 		npc_event_dequeue(sd);
 

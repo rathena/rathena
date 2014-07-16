@@ -2266,13 +2266,21 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 			if (map[m].flag.nobaseexp || !md->db->base_exp)
 				base_exp = 0;
-			else
-				base_exp = (unsigned int)cap_value(md->db->base_exp * per * bonus/100. * map[m].adjust.bexp/100., 1, UINT_MAX);
+			else {
+				double exp = apply_rate2(md->db->base_exp, per, 1);
+				exp = apply_rate(exp, bonus);
+				exp = apply_rate(exp, map[m].adjust.bexp);
+				base_exp = (unsigned int)cap_value(exp, 1, UINT_MAX);
+			}
 
 			if (map[m].flag.nojobexp || !md->db->job_exp || md->dmglog[i].flag == MDLF_HOMUN) //Homun earned job-exp is always lost.
 				job_exp = 0;
-			else
-				job_exp = (unsigned int)cap_value(md->db->job_exp * per * bonus/100. * map[m].adjust.jexp/100., 1, UINT_MAX);
+			else {
+				double exp = apply_rate2(md->db->job_exp, per, 1);
+				exp = apply_rate(exp, bonus);
+				exp = apply_rate(exp, map[m].adjust.jexp);
+				job_exp = (unsigned int)cap_value(exp, 1, UINT_MAX);
+			}
 
 			if ( ( temp = tmpsd[i]->status.party_id)>0 ) {
 				int j;
@@ -2310,8 +2318,10 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 					if( md->dmglog[i].flag != MDLF_PET || battle_config.pet_attack_exp_to_master ) {
 #ifdef RENEWAL_EXP
 						int rate = pc_level_penalty_mod(tmpsd[i], md->level, md->status.class_, 1);
-						base_exp = (unsigned int)cap_value(base_exp * rate / 100, 1, UINT_MAX);
-						job_exp = (unsigned int)cap_value(job_exp * rate / 100, 1, UINT_MAX);
+						if (rate != 100) {
+							base_exp = (unsigned int)cap_value(apply_rate(base_exp, rate), 1, UINT_MAX);
+							job_exp = (unsigned int)cap_value(apply_rate(job_exp, rate), 1, UINT_MAX);
+						}
 #endif
 						pc_gainexp(tmpsd[i], &md->bl, base_exp, job_exp, false);
 					}
@@ -2395,7 +2405,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			}
 #ifdef RENEWAL_DROP
 			if( drop_modifier != 100 ) {
-				drop_rate = drop_rate * drop_modifier / 100;
+				drop_rate = apply_rate(drop_rate, drop_modifier);
 				if( drop_rate < 1 )
 					drop_rate = 1;
 			}

@@ -9703,8 +9703,10 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		// Set the initial idle time
 		sd->idletime = last_tick;
 
-		//Login Event
-		npc_script_event(sd, NPCE_LOGIN);
+		if (!sd->state.autotrade) { // Don't trigger NPC event or opening vending/buyingstore will be failed
+			//Login Event
+			npc_script_event(sd, NPCE_LOGIN);
+		}
 	} else {
 		//For some reason the client "loses" these on warp/map-change.
 		clif_updatestatus(sd,SP_STR);
@@ -9803,7 +9805,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_showvendingboard(&sd->bl,sd->message,0);
 	}
 
-	if(map[sd->bl.m].flag.loadevent) // Lance
+	// Don't trigger NPC event or opening vending/buyingstore will be failed
+	if(!sd->state.autotrade && map[sd->bl.m].flag.loadevent) // Lance
 		npc_script_event(sd, NPCE_LOADMAP);
 
 	if (pc_checkskill(sd, SG_DEVIL) && !pc_nextjobexp(sd))

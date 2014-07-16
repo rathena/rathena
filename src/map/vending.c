@@ -297,29 +297,30 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
  *	data := {<index>.w <amount>.w <value>.l}[count]
  * @param count : number of different items
  */
-bool vending_openvending(struct map_session_data* sd, const char* message, const uint8* data, int count) {
+char vending_openvending(struct map_session_data* sd, const char* message, const uint8* data, int count) {
 	int i, j;
 	int vending_skill_lvl;
 	char message_sql[MESSAGE_SIZE*2];
 	
 	nullpo_retr(false,sd);
 
-	if ( pc_isdead(sd) || !sd->state.prevend || pc_istrading(sd))
-		return false; // can't open vendings lying dead || didn't use via the skill (wpe/hack) || can't have 2 shops at once
+	if ( pc_isdead(sd) || !sd->state.prevend || pc_istrading(sd)) {
+		return 1; // can't open vendings lying dead || didn't use via the skill (wpe/hack) || can't have 2 shops at once
+	}
 
 	vending_skill_lvl = pc_checkskill(sd, MC_VENDING);
 	
 	// skill level and cart check
 	if( !vending_skill_lvl || !pc_iscarton(sd) ) {
 		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0);
-		return false;
+		return 2;
 	}
 
 	// check number of items in shop
 	if( count < 1 || count > MAX_VENDING || count > 2 + vending_skill_lvl )
 	{	// invalid item count
 		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0);
-		return false;
+		return 3;
 	}
 
 	if (save_settings&2) // Avoid invalid data from saving
@@ -356,7 +357,7 @@ bool vending_openvending(struct map_session_data* sd, const char* message, const
 			sprintf(msg, msg_txt(sd, 733), idb->jname);
 			clif_displaymessage(sd->fd, msg);
 			clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0);
-			return false;
+			return 4;
 		}
 
 		i++; // item successfully added
@@ -367,7 +368,7 @@ bool vending_openvending(struct map_session_data* sd, const char* message, const
 
 	if( i == 0 ) { // no valid item found
 		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0); // custom reply packet
-		return false;
+		return 5;
 	}
 	sd->state.prevend = 0;
 	sd->state.vending = true;
@@ -392,7 +393,7 @@ bool vending_openvending(struct map_session_data* sd, const char* message, const
 
 	idb_put(vending_db, sd->status.char_id, sd);
 
-	return true;
+	return 0;
 }
 
 /**
@@ -475,14 +476,15 @@ bool vending_searchall(struct map_session_data* sd, const struct s_search_store_
 	return true;
 }
 
-/** Open vending for Autotrader
+/**
+* Open vending for Autotrader
 * @param sd Player as autotrader
 */
 void vending_reopen( struct map_session_data* sd ){
 	// Ready to open vending for this char
 	if ( sd && autotrader_count > 0 && autotraders){
 		uint16 i;
-		uint8 *data, *p;
+		uint8 *data, *p, fail = 0;
 		uint16 j, count;
 
 		ARR_FIND(0,autotrader_count,i,autotraders[i] && autotraders[i]->char_id == sd->status.char_id);
@@ -517,8 +519,12 @@ void vending_reopen( struct map_session_data* sd ){
 		// Set him into a hacked prevend state
 		sd->state.prevend = 1;
 
+		// Make sure abort all NPCs
+		npc_event_dequeue(sd);
+		pc_cleareventtimer(sd);
+
 		// Open the vending again
-		if( vending_openvending(sd, autotraders[i]->title, data, count) ){
+		if( (fail = vending_openvending(sd, autotraders[i]->title, data, count)) == 0 ){
 			// Set him to autotrade
 			if (Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;",
 				vendings_db, sd->vender_id ) != SQL_SUCCESS )
@@ -532,11 +538,14 @@ void vending_reopen( struct map_session_data* sd ){
 			if( battle_config.feature_autotrade_sit )
 				pc_setsit(sd);
 
-			ShowInfo("Loaded autotrade vending data for '"CL_WHITE"%s"CL_RESET"' with '"CL_WHITE"%d"CL_RESET"' items at "CL_WHITE"%s (%d,%d)"CL_RESET"\n",
-				sd->status.name,count,mapindex_id2name(sd->mapindex),sd->bl.x,sd->bl.y);
+			// Immediate save
+			chrif_save(sd, 3);
+
+			ShowInfo("Loaded vending for '"CL_WHITE"%s"CL_RESET"' with '"CL_WHITE"%d"CL_RESET"' items at "CL_WHITE"%s (%d,%d)"CL_RESET"\n",
+				sd->status.name, count, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y);
 		}else{
 			// Failed to open the vending, set him offline
-			ShowWarning("Failed to load autotrade vending data for '"CL_WHITE"%s"CL_RESET"' with '"CL_WHITE"%d"CL_RESET"' items\n", sd->status.name, count );
+			ShowError("Failed (%d) to load autotrade vending data for '"CL_WHITE"%s"CL_RESET"' with '"CL_WHITE"%d"CL_RESET"' items\n", fail, sd->status.name, count );
 
 			map_quit( sd );
 		}
@@ -600,6 +609,7 @@ void do_init_vending_autotrade( void ) {
 				pc_setnewpc(autotraders[i]->sd, autotraders[i]->account_id, autotraders[i]->char_id, 0, gettick(), autotraders[i]->sex, 0);
 			
 				autotraders[i]->sd->state.autotrade = 1;
+				autotraders[i]->sd->state.monster_ignore = 1;
 				chrif_authreq(autotraders[i]->sd, true);
 				i++;
 			}
