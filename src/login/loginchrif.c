@@ -258,7 +258,7 @@ int logchrif_sendvipdata(int fd, struct mmo_account acc, char isvip, char isgm, 
 	WFIFOL(fd,15) = isgm;
 	WFIFOL(fd,16) = mapfd; //link to mapserv
 	WFIFOSET(fd,20);
-	chrif_send_accdata(fd,acc.account_id); //refresh char with new setting
+	logchrif_send_accdata(fd,acc.account_id); //refresh char with new setting
 #endif
 	return 1;
 }
@@ -781,6 +781,7 @@ int logchrif_parse_reqvipdata(int fd) {
 		return 0;
 	else { //request vip info
 		struct mmo_account acc;
+		AccountDB* accounts = login_get_accounts_db();
 		int aid = RFIFOL(fd,2);
 		int8 type = RFIFOB(fd,6);
 		int32 timediff = RFIFOL(fd,7);
@@ -793,11 +794,12 @@ int logchrif_parse_reqvipdata(int fd) {
 			bool isvip = false;
 
 			if( acc.group_id > login_config.vip_sys.group ) { //Don't change group if it's higher.
-				chrif_sendvipdata(fd,acc,false,true,mapfd);
+				logchrif_sendvipdata(fd,acc,false,true,mapfd);
 				return 1;
 			}
 			if( type&2 ) {
-				if(!vip_time) vip_time = now; //new entry
+				if(!vip_time)
+					vip_time = now; //new entry
 				vip_time += timediff; // set new duration
 			}
 			if( now < vip_time ) { //isvip
@@ -815,7 +817,8 @@ int logchrif_parse_reqvipdata(int fd) {
 			}
 			acc.vip_time = vip_time;
 			accounts->save(accounts,&acc);
-			if( type&1 ) chrif_sendvipdata(fd,acc,isvip,false,mapfd);
+			if( type&1 )
+				logchrif_sendvipdata(fd,acc,isvip,false,mapfd);
 		}
 	}
 #endif
