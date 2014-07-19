@@ -6466,6 +6466,7 @@ BUILDIN_FUNC(checkweight2){
  * getitembound <item id>,<amount>,<type>{,<account ID>};
  * getitembound "<item id>",<amount>,<type>{,<account ID>};
  * Type:
+ *	0 - No bound
  *	1 - Account Bound
  *	2 - Guild Bound
  *	3 - Party Bound
@@ -6509,20 +6510,19 @@ BUILDIN_FUNC(getitem)
 	memset(&it,0,sizeof(it));
 	it.nameid = nameid;
 	it.identify = 1;
+	it.bound = BOUND_NONE;
 
 	if( !strcmp(command,"getitembound") ) {
 		char bound = script_getnum(st,4);
-		if( bound > BOUND_NONE && bound < BOUND_MAX ) {
-			it.bound = bound;
-			if( script_hasdata(st,5) )
-				sd = map_id2sd(script_getnum(st,5));
-			else
-				sd = script_rid2sd(st); // Attached player
-		}
-		else { //Not a correct bound type
+		if( bound < BOUND_NONE || bound >= BOUND_MAX ) {
 			ShowError("script_getitembound: Not a correct bound type! Type=%d\n",bound);
 			return SCRIPT_CMD_FAILURE;
 		}
+		if( script_hasdata(st,5) )
+			sd = map_id2sd(script_getnum(st,5));
+		else
+			sd = script_rid2sd(st); // Attached player
+		it.bound = bound;
 	} else if( script_hasdata(st,4) )
 		sd = map_id2sd(script_getnum(st,4)); // <Account ID>
 	else
@@ -6554,7 +6554,17 @@ BUILDIN_FUNC(getitem)
 }
 
 /*==========================================
+ * getitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+ * getitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
  *
+ * getitembound2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<bound type>{,<account ID>};
+ * getitembound2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<bound type>{,<account ID>};
+ * Type:
+ *	0 - No bound
+ *	1 - Account Bound
+ *	2 - Guild Bound
+ *	3 - Party Bound
+ *	4 - Character Bound
  *------------------------------------------*/
 BUILDIN_FUNC(getitem2)
 {
@@ -6572,16 +6582,14 @@ BUILDIN_FUNC(getitem2)
 
 	if( !strcmp(command,"getitembound2") ) {
 		bound = script_getnum(st,11);
-		if( bound > BOUND_NONE && bound < BOUND_MAX ) {
-			if( script_hasdata(st,12) )
-				sd = map_id2sd(script_getnum(st,12));
-			else
-				sd = script_rid2sd(st); // Attached player
-		}
-		else {
+		if( bound < BOUND_NONE || bound >= BOUND_MAX ) {
 			ShowError("script_getitembound2: Not a correct bound type! Type=%d\n",bound);
 			return SCRIPT_CMD_FAILURE;
 		}
+		if( script_hasdata(st,12) )
+			sd = map_id2sd(script_getnum(st,12));
+		else
+			sd = script_rid2sd(st); // Attached player
 	} else if( script_hasdata(st,11) )
 		sd = map_id2sd(script_getnum(st,11)); // <Account ID>
 	else

@@ -3778,14 +3778,14 @@ static bool mob_parse_dbrow(char** str)
 	status->race = atoi(str[23]);
 
 	i = atoi(str[24]); //Element
-	status->def_ele = i%10;
-	status->ele_lv = i/20;
+	status->def_ele = i%20;
+	status->ele_lv = (unsigned char)floor(i/20.);
 	if (!CHK_ELEMENT(status->def_ele)) {
 		ShowError("mob_parse_dbrow: Invalid element type %d for monster ID %d (max=%d).\n", status->def_ele, mob_id, ELE_ALL-1);
 		return false;
 	}
-	if (status->ele_lv < 1 || status->ele_lv > 4) {
-		ShowError("mob_parse_dbrow: Invalid element level %d for monster ID %d, must be in range 1-4.\n", status->ele_lv, mob_id);
+	if (!CHK_ELEMENT_LEVEL(status->ele_lv)) {
+		ShowError("mob_parse_dbrow: Invalid element level %d for monster ID %d, must be in range 1-%d.\n", status->ele_lv, mob_id, MAX_ELE_LEVEL);
 		return false;
 	}
 

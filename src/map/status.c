@@ -12693,47 +12693,42 @@ static bool status_readdb_refine(char* fields[], int columns, int current)
 static bool status_readdb_attrfix(const char *basedir,bool silent)
 {
 	FILE *fp;
-	char line[512], path[512],*p;
-	int entries=0;
+	char line[512], path[512];
+	int entries = 0;
 
 
 	sprintf(path, "%s/attr_fix.txt", basedir);
-	fp=fopen(path,"r");
-	if(fp==NULL) {
-		if(silent==0) ShowError("can't read %s\n", path);
+	fp = fopen(path,"r");
+	if (fp == NULL) {
+		if (silent==0)
+			ShowError("Can't read %s\n", path);
 		return 1;
 	}
-	while(fgets(line, sizeof(line), fp))
-	{
-		char *split[10];
-		int lv,n,i,j;
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		for(j=0,p=line;j<3 && p;j++) {
-			split[j]=p;
-			p=strchr(p,',');
-			if(p) *p++=0;
-		}
-		if( j < 2 )
+	while (fgets(line, sizeof(line), fp)) {
+		int lv, i, j;
+		if (line[0] == '/' && line[1] == '/')
 			continue;
 
-		lv=atoi(split[0]);
-		n=atoi(split[1]);
+		lv = atoi(line);
+		if (!CHK_ELEMENT_LEVEL(lv))
+			continue;
 
-		for(i=0;i<n && i<ELE_ALL;) {
-			if( !fgets(line, sizeof(line), fp) )
+		for (i = 0; i < ELE_ALL;) {
+			char *p;
+			if (!fgets(line, sizeof(line), fp))
 				break;
-			if(line[0]=='/' && line[1]=='/')
+			if (line[0]=='/' && line[1]=='/')
 				continue;
 
-			for(j=0,p=line;j<n && j<ELE_ALL && p;j++) {
-				while(*p>0 && *p==32) //skipping newline and space (32=' ')
+			for (j = 0, p = line; j < ELE_ALL && p; j++) {
+				while (*p > 0 && *p == 32) //skipping newline and space (32=' ')
 					p++;
-				attr_fix_table[lv-1][i][j]=atoi(p);
-				if(battle_config.attr_recover == 0 && attr_fix_table[lv-1][i][j] < 0)
+				attr_fix_table[lv-1][i][j] = atoi(p);
+				if (battle_config.attr_recover == 0 && attr_fix_table[lv-1][i][j] < 0)
 					attr_fix_table[lv-1][i][j] = 0;
-				p=strchr(p,',');
-				if(p) *p++=0;
+				p = strchr(p,',');
+				if(p)
+					*p++=0;
 			}
 
 			i++;

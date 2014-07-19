@@ -309,10 +309,14 @@ int battle_delay_damage(unsigned int tick, int amotion, struct block_list *src, 
 	return 0;
 }
 
+/**
+* Get attribute ratio
+* @param atk_elem Attack element enum e_element
+* @param def_type Defense element enum e_element
+* @param def_lv Element level 1 ~ MAX_ELE_LEVEL
+*/
 int battle_attr_ratio(int atk_elem,int def_type, int def_lv) {
-	if (!CHK_ELEMENT(atk_elem))
-		return 100;
-	if (!CHK_ELEMENT(def_type) || def_lv < 1 || def_lv > 4)
+	if (!CHK_ELEMENT(atk_elem) || !CHK_ELEMENT(def_type) || !CHK_ELEMENT_LEVEL(def_lv))
 		return 100;
 
 	return attr_fix_table[def_lv-1][atk_elem][def_type];
@@ -334,8 +338,7 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 	if (!CHK_ELEMENT(atk_elem))
 		atk_elem = rnd()%ELE_ALL;
 
-	if (!CHK_ELEMENT(def_type) ||
-		def_lv < 1 || def_lv > 4) {
+	if (!CHK_ELEMENT(def_type) || !CHK_ELEMENT_LEVEL(def_lv)) {
 		ShowError("battle_attr_fix: unknown attr type: atk=%d def_type=%d def_lv=%d\n",atk_elem,def_type,def_lv);
 		return damage;
 	}
@@ -343,18 +346,18 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 	ratio = attr_fix_table[def_lv-1][atk_elem][def_type];
 	if (sc && sc->count) { //increase dmg by src status
 		switch(atk_elem){
-		case ELE_FIRE:
-			if(sc->data[SC_VOLCANO]) ratio += enchant_eff[sc->data[SC_VOLCANO]->val1-1];
-			break;
-		case ELE_WIND:
-			if(sc->data[SC_VIOLENTGALE]) ratio += enchant_eff[sc->data[SC_VIOLENTGALE]->val1-1];
-			break;
-		case ELE_WATER:
-			if(sc->data[SC_DELUGE]) ratio += enchant_eff[sc->data[SC_DELUGE]->val1-1];
-			break;
-		case ELE_GHOST:
-			if(sc->data[SC_TELEKINESIS_INTENSE]) ratio += (sc->data[SC_TELEKINESIS_INTENSE]->val3);
-			break;
+			case ELE_FIRE:
+				if(sc->data[SC_VOLCANO]) ratio += enchant_eff[sc->data[SC_VOLCANO]->val1-1];
+				break;
+			case ELE_WIND:
+				if(sc->data[SC_VIOLENTGALE]) ratio += enchant_eff[sc->data[SC_VIOLENTGALE]->val1-1];
+				break;
+			case ELE_WATER:
+				if(sc->data[SC_DELUGE]) ratio += enchant_eff[sc->data[SC_DELUGE]->val1-1];
+				break;
+			case ELE_GHOST:
+				if(sc->data[SC_TELEKINESIS_INTENSE]) ratio += (sc->data[SC_TELEKINESIS_INTENSE]->val3);
+				break;
 		}
 	}
 	if( target && target->type == BL_SKILL ) {
