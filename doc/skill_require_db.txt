@@ -133,7 +133,7 @@ RequiredItemID1-10: These items will be used when players use the skill. Maximum
 ---------------------------------------
 
 RequiredItemAmount1-10: Amount of item used when player uses the skill.
-
+0 means the item is required to be in inventory but won't be consumed.
 ---------------------------------------
 
 RequiredEquipment: Player needs to equip these equipments to use the skill. (Use Item ID).
@@ -141,3 +141,5 @@ Example usage of multiple values = item1:item2:item3
 Maximum multiple value is 10. (Refer to skill.h: MAX_SKILL_EQUIP_REQUIRE)
 
 ---------------------------------------
+
+Note: On some fields, ":" delimiter means for each skill level, but there are some level dependent check. (Refer to https://github.com/rathena/rathena/blob/master/src/map/skill.c#L14963)
