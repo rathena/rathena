@@ -41,12 +41,57 @@ ZenyCost: Amount of Zeny needed to use the skill.
 
 ---------------------------------------
 
-RequiredWeapons: Player needs to equip this weapon to use the skill. (Use Item ID).
+RequiredWeapons: Player needs to equip this type of weapon, in order to use the skill.
+	0: bare fist
+	1: Daggers
+	2: One-handed swords
+	3: Two-handed swords
+	4: One-handed spears
+	5: Two-handed spears
+	6: One-handed axes
+	7: Two-handed axes
+	8: Maces
+	9: Unused
+	10: Staves
+	11: Bows
+	12: Knuckles
+	13: Musical Instruments
+	14: Whips
+	15: Books
+	16: Katars
+	17: Revolvers
+	18: Rifles
+	19: Gatling guns
+	20: Shotguns
+	21: Grenade launchers
+	22: Fuuma Shurikens
+	23: Two-handed staves
+	24: Max Type
+	25: Dual-wield Daggers
+	26: Dual-wield Swords
+	27: Dual-wield Axes
+	28: Dagger + Sword
+	29: Dagger + Axe
+	30: Sword + Axe
+	
+Example usage of multiple values = type1:type2:type3
+Maximum multiple value is 30.
 
 ---------------------------------------
 
-RequiredAmmoTypes: Player needs to equip this ammo to use the skill. (Use Item ID).
+RequiredAmmoTypes: Player needs to equip this type of ammo to use the skill.
+	1: Arrows
+	2: Throwable daggers
+	3: Bullets
+	4: Shells
+	5: Grenades
+	6: Shuriken
+	7: Kunai
+	8: Cannonballs
+	9: Throwable Items (Sling Item)
 
+Example usage of multiple values = type1:type2:type3
+Maximum multiple value is 9.
 ---------------------------------------
 
 RequiredAmmoAmount: Amount of ammo needed to use the skill.
