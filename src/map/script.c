@@ -314,7 +314,7 @@ int potion_hp=0, potion_per_hp=0, potion_sp=0, potion_per_sp=0;
 int potion_target=0;
 
 /// Check 'item' for spesified 'flag' criteria. Used for countitem, buildin_delitem, and buildin_delitem2
-#define chk_item_flag(item, flag) ( !(flag) || ((flag) && (!(item)->expire_time && flag&(1<<((item)->bound+1)) || (item)->expire_time && (flag)&2)) )
+#define chk_item_flag(item, flag) ( !(flag) || ((flag) && ((!(item)->expire_time && flag&(1<<((item)->bound+1))) || ((item)->expire_time && (flag)&2))) )
 
 c_op get_com(unsigned char *script,int *pos);
 int get_num(unsigned char *script,int *pos);
