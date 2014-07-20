@@ -4481,6 +4481,8 @@ and the script will terminate with an error.
 Like 'getitem', this command will also accept an 'english name' field from the 
 database. If the name is not found, nothing will be deleted.
 
+NOTE: Regardless the item is bound or rental item
+
 ---------------------------------------
 
 *cartdelitem <item id>,<amount>{,<account ID>};
@@ -4499,6 +4501,8 @@ cart or storage. If no cart is mounted, 'cartdelitem' will fail.
 This command will remove a specified amount of items from the invoking/target character. 
 See 'getitem2' for an explanation of the expanded parameters.
 
+NOTE: Regardless the item is bound or rental item
+
 ---------------------------------------
 
 *cartdelitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
@@ -4511,8 +4515,8 @@ cart or storage. If no cart is mounted, 'cartdelitem2' will fail.
 
 ---------------------------------------
 
-*countitem(<item id>)
-*countitem("<item name>")
+*countitem(<item id>{,<account_id>})
+*countitem("<item name>"{,<account_id>})
 
 This function will return the number of items for the specified item ID that the 
 invoking character has in the inventory.
@@ -4530,21 +4534,23 @@ adding up strings:
     mes "[Item Checker]";
     mes "Hmmm, the total number of apples you are holding is "+countitem("APPLE");
     close;
+
+NOTE: Regardless the item is bound or rental item
     
 ---------------------------------------
 
-*cartcountitem(<item id>)
-*cartcountitem("<item name>")
-*storagecountitem(<item id>)
-*storagecountitem("<item name>")
+*cartcountitem(<item id>{,<account_id>})
+*cartcountitem("<item name>"{,<account_id>})
+*storagecountitem(<item id>{,<account_id>})
+*storagecountitem("<item name>"{,<account_id>})
 
 This command behaves identically to 'countitem', but counts items from the player's
 cart or storage. If no cart is mounted, 'cartcountitem' will return -1.
 
 ---------------------------------------
 
-*countitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
-*countitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
+*countitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account_id>})
+*countitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account_id>})
 
 Expanded version of 'countitem' function, used for created/carded/forged items.
 
@@ -4552,12 +4558,14 @@ This function will return the number of items for the specified item ID and
 other parameters that the invoking character has in the inventory.
 See 'getitem2' for an explanation of the expanded parameters.
 
+NOTE: Regardless the item is bound or rental item
+
 ---------------------------------------
 
-*cartcountitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
-*cartcountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
-*storagecountitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
-*storagecountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
+*cartcountitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account_id>})
+*cartcountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account_id>})
+*storagecountitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account_id>})
+*storagecountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account_id>})
 
 This command behaves identically to 'countitem2', but counts items from the player's
 cart or storage. If no cart is mounted, 'cartcountitem2' will return -1.
@@ -4581,6 +4589,74 @@ Example:
 	close;
 
 ---------------------------------------
+
+*countitem3(<item id>,<flag>{,<account_id>})
+*countitem3("<item name>",<flag>{,<account_id>})
+
+*cartcountitem3(<item id>,<flag>{,<account_id>})
+*cartcountitem3("<item name>",<flag>{,<account_id>})
+
+*storagecountitem3(<item id>,<flag>{,<account_id>})
+*storagecountitem3("<item name>",<flag>{,<account_id>})
+
+Works like 'countitem'/'cartcountitem'/'storagecountitem', just needs 'flag' for item criteria.
+
+'flag' is using bitmask:
+	0	- Ignore criteria, works like 'countitem' itself
+	1	- Count Rental item
+	2	- Count non-bound & non-rental item (1<<(Bound_None+1))
+	4	- Count Account bound item (1<<(Bound_Account+1))
+	8	- Count Guild bound item (1<<(Bound_Guild+1))
+	16	- Count Party bound item (1<<(Bound_Party+1))
+	32	- Count Char bound item (1<<(Bound_Char+1))
+
+---------------------------------------
+
+*countitem4(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<flag>{,<account_id>})
+*countitem4("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<flag>{,<account_id>})
+
+*cartcountitem4(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<flag>{,<account_id>})
+*cartcountitem4("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<flag>{,<account_id>})
+
+*storagecountitem4(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<flag>{,<account_id>})
+*storagecountitem4("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<flag>{,<account_id>})
+
+Works like 'countitem2'/'cartcountitem2'/'storagecountitem2', just needs 'flag' for item criteria.
+
+'flag' values are same like 'countitem3'
+
+---------------------------------------
+
+*delitem3 <item id>,<amount>,<flag>{,<account ID>};
+*delitem3 "<item name>",<amount>,<flag>{,<account ID>};
+
+*cartdelitem3 <item id>,<amount>,<flag>{,<account ID>};
+*cartdelitem3 "<item name>",<amount>,<flag>{,<account ID>};
+
+*storagedelitem3 <item id>,<amount>,<flag>{,<account ID>};
+*storagedelitem3 "<item name>",<amount>,<flag>{,<account ID>};
+
+Works like 'delitem'/'cartdelitem'/'storagedelitem', just needs 'flag' for item criteria.
+
+'flag' values are same like 'countitem3'
+
+---------------------------------------
+
+*delitem4 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+*delitem4 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+
+*cartdelitem4 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+*cartdelitem4 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+
+*storagedelitem4 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+*storagedelitem4 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+
+Works like 'delitem2'/'cartdelitem2'/'storagedelitem2', just needs 'flag' for item criteria.
+
+'flag' values are same like 'countitem3'
+
+---------------------------------------
+
 
 *groupranditem <group id>{,<sub_group>};
 
