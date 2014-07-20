@@ -313,6 +313,8 @@ int potion_flag=0; //For use on Alchemist improved potions/Potion Pitcher. [Skot
 int potion_hp=0, potion_per_hp=0, potion_sp=0, potion_per_sp=0;
 int potion_target=0;
 
+/// Check 'item' for spesified 'flag' criteria. Used for countitem, buildin_delitem, and buildin_delitem2
+#define chk_item_flag(item, flag) ( !(flag) || ((flag) && (!(item)->expire_time && flag&(1<<((item)->bound+1)) || (item)->expire_time && (flag)&2)) )
 
 c_op get_com(unsigned char *script,int *pos);
 int get_num(unsigned char *script,int *pos);
@@ -6210,16 +6212,24 @@ BUILDIN_FUNC(countitem)
 	struct item_data* id = NULL;
 	struct script_data* data;
 	char *command = (char *)script_getfuncname(st);
+	unsigned char flag = 0;
 	uint8 loc = 0;
 	uint16 size;
 	struct item *items;
 	TBL_PC *sd = NULL;
+	char p = command[strlen(command)-1];
 
-	if( command[strlen(command)-1] == '2' ) {
+	if( p == '2' || p == '4' ) {
 		i = 1;
 		aid = 10;
 	}
-	
+
+	// countitem3, countitem4
+	if (p == '3' || p == '4') {
+		flag = script_getnum(st, aid);
+		aid++;
+	}
+
 	if( script_hasdata(st,aid) ) {
 		if( !(sd = map_id2sd( (aid = script_getnum(st, aid)) )) ) {
 			ShowError("buildin_%s: player not found (AID=%d).\n", command, aid);
@@ -6271,7 +6281,7 @@ BUILDIN_FUNC(countitem)
 	if( !i ) { // For count/cart/storagecountitem function
 		unsigned short nameid = id->nameid;
 		for( i = 0; i < size; i++ )
-			if( &items[i] && items[i].nameid == nameid )
+			if( &items[i] && items[i].nameid == nameid && chk_item_flag(&items[i], flag))
 				count += items[i].amount;
 	}
 	else { // For count/cart/storagecountitem2 function
@@ -6289,6 +6299,7 @@ BUILDIN_FUNC(countitem)
 
 		for( i = 0; i < size; i++ )
 			if( &items[i] && items[i].nameid > 0 && items[i].nameid == nameid &&
+				chk_item_flag(&items[i], flag) &&
 				items[i].amount > 0 && items[i].identify == iden &&
 				items[i].refine == ref && items[i].attribute == attr &&
 				items[i].card[0] == c1 && items[i].card[1] == c2 &&
@@ -7076,7 +7087,7 @@ static void buildin_delitem_delete(struct map_session_data* sd, int idx, int* am
 /// Relies on all input data being already fully valid.
 /// @param exact_match will also match item attributes and cards, not just name id
 /// @return true when all items could be deleted, false when there were not enough items to delete
-static bool buildin_delitem_search(struct map_session_data* sd, struct item* it, bool exact_match, uint8 loc)
+static bool buildin_delitem_search(struct map_session_data* sd, struct item* it, bool exact_match, uint8 loc, unsigned char flag)
 {
 	bool delete_items = false;
 	int i, amount, important, size;
@@ -7119,10 +7130,13 @@ static bool buildin_delitem_search(struct map_session_data* sd, struct item* it,
 		{
 			struct item *itm = NULL;
 
-			if( !&items[i] || !(itm = &items[i])->nameid || itm->nameid != it->nameid )
+			if( !&items[i] || !(itm = &items[i])->nameid || itm->nameid != it->nameid)
 			{// wrong/invalid item
 				continue;
 			}
+
+			if (!chk_item_flag(itm, flag))
+				continue;
 
 			if( itm->equip != it->equip || itm->refine != it->refine )
 			{// not matching attributes
@@ -7170,6 +7184,9 @@ static bool buildin_delitem_search(struct map_session_data* sd, struct item* it,
 			{// wrong/invalid item
 				continue;
 			}
+
+			if (!chk_item_flag(itm, flag))
+				continue;
 
 			if( itemdb_type(itm->nameid) == IT_PETEGG && itm->card[0] == CARD0_PET && CheckForCharServer() )
 			{// pet which cannot be deleted
@@ -7219,17 +7236,23 @@ BUILDIN_FUNC(delitem)
 	struct item it;
 	struct script_data *data;
 	uint8 loc = 0;
-	char* command = (char*)script_getfuncname(st);
+	char* command = (char*)script_getfuncname(st), aid = 4;
+	unsigned char flag = 0;
 
 	if(!strncmp(command, "cart", 4))
 		loc = 1;
 	else if(!strncmp(command, "storage", 7))
 		loc = 2;
 	//TODO: 3 - Guild Storage
-	
-	if( script_hasdata(st,4) )
+
+	if (stristr(command,"3") != NULL) {
+		flag = script_getnum(st, aid);
+		aid++;
+	}
+
+	if( script_hasdata(st,aid) )
 	{
-		int account_id = script_getnum(st,4);
+		int account_id = script_getnum(st,aid);
 		sd = map_id2sd(account_id); // <account id>
 		if( sd == NULL )
 		{
@@ -7280,7 +7303,7 @@ BUILDIN_FUNC(delitem)
 	if( it.amount <= 0 )
 		return 0;// nothing to do
 
-	if( buildin_delitem_search(sd, &it, false, loc) )
+	if( buildin_delitem_search(sd, &it, false, loc, flag) )
 	{// success
 		return SCRIPT_CMD_SUCCESS;
 	}
@@ -7306,7 +7329,8 @@ BUILDIN_FUNC(delitem2)
 	struct item it;
 	struct script_data *data;
 	uint8 loc = 0;
-	char* command = (char*)script_getfuncname(st);
+	char* command = (char*)script_getfuncname(st), aid = 11;
+	unsigned char flag = 0;
 
 	if(!strncmp(command, "cart", 4))
 		loc = 1;
@@ -7314,9 +7338,14 @@ BUILDIN_FUNC(delitem2)
 		loc = 2;
 	//TODO: 3 - Guild Storage
 
-	if( script_hasdata(st,11) )
+	if (stristr(command, "4") != NULL) {
+		flag = script_getnum(st, aid);
+		aid++;
+	}
+
+	if( script_hasdata(st,aid) )
 	{
-		int account_id = script_getnum(st,11);
+		int account_id = script_getnum(st,aid);
 		sd = map_id2sd(account_id); // <account id>
 		if( sd == NULL )
 		{
@@ -7363,19 +7392,19 @@ BUILDIN_FUNC(delitem2)
 		}
 	}
 
-	it.amount=script_getnum(st,3);
-	it.identify=script_getnum(st,4);
-	it.refine=script_getnum(st,5);
-	it.attribute=script_getnum(st,6);
-	it.card[0]=(short)script_getnum(st,7);
-	it.card[1]=(short)script_getnum(st,8);
-	it.card[2]=(short)script_getnum(st,9);
-	it.card[3]=(short)script_getnum(st,10);
+	it.amount = script_getnum(st,3);
+	it.identify = script_getnum(st,4);
+	it.refine = script_getnum(st,5);
+	it.attribute = script_getnum(st,6);
+	it.card[0] = (short)script_getnum(st,7);
+	it.card[1] = (short)script_getnum(st,8);
+	it.card[2] = (short)script_getnum(st,9);
+	it.card[3] = (short)script_getnum(st,10);
 
 	if( it.amount <= 0 )
 		return 0;// nothing to do
 
-	if( buildin_delitem_search(sd, &it, true, loc) )
+	if( buildin_delitem_search(sd, &it, true, loc, flag) )
 	{// success
 		return SCRIPT_CMD_SUCCESS;
 	}
@@ -19498,6 +19527,21 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(getitem,"getitembound","vii?"),
 	BUILDIN_DEF2(getitem2,"getitembound2","viiiiiiiii?"),
 	BUILDIN_DEF(countbound, "?"),
+
+	// countitem & delitem support Bound & Rental Item [Cydh]
+	BUILDIN_DEF2(countitem,"countitem3","vi?"),
+	BUILDIN_DEF2(countitem,"storagecountitem3","vi?"),
+	BUILDIN_DEF2(countitem,"cartcountitem3","vi?"),
+	BUILDIN_DEF2(countitem,"countitem4","viiiiiiii?"),
+	BUILDIN_DEF2(countitem,"storagecountitem4","viiiiiiii?"),
+	BUILDIN_DEF2(countitem,"cartcountitem4","viiiiiiii?"),
+
+	BUILDIN_DEF2(delitem,"delitem3","vii?"),
+	BUILDIN_DEF2(delitem,"storagedelitem3","vii?"),
+	BUILDIN_DEF2(delitem,"cartdelitem3","vii?"),
+	BUILDIN_DEF2(delitem2,"delitem4","viiiiiiiii?"),
+	BUILDIN_DEF2(delitem2,"storagedelitem4","viiiiiiiii?"),
+	BUILDIN_DEF2(delitem2,"cartdelitem4","viiiiiiiii?"),
 
 	// Party related
 	BUILDIN_DEF(party_create,"s???"),
