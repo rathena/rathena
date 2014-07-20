@@ -18978,6 +18978,36 @@ BUILDIN_FUNC(countspiritball) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/** Get guild level
+* getguildlv {<guild_id>};
+* @param guild_id
+* @return Guild Level or 0 if guild not found
+* @author [Cydh]
+*/
+BUILDIN_FUNC(getguildlv) {
+	struct map_session_data *sd = NULL;
+	struct guild *g = NULL;
+
+	if (!script_hasdata(st,2)) {
+		if (!(sd = script_rid2sd(st)))
+			return SCRIPT_CMD_SUCCESS;
+
+		if (!sd->status.guild_id || !(g = sd->guild)) {
+			ShowWarning("buildin_getguildlv: Player doesn't join in any guild.\n");
+			script_pushint(st, 0);
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+	else if (!(g = guild_search(script_getnum(st,2)))) {
+		ShowWarning("buildin_getguildlv: Guild with id '%d' is not found.\n", script_getnum(st,2));
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st, g ? g->guild_lv : 0);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -19520,6 +19550,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(addspiritball,"ii?"),
 	BUILDIN_DEF(delspiritball,"i?"),
 	BUILDIN_DEF(countspiritball,"?"),
+	BUILDIN_DEF(getguildlv,"?"),
 
 #include "../custom/script_def.inc"
 
