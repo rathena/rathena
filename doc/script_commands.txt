@@ -3155,6 +3155,12 @@ Example:
 mes "You have "+getMapGuildUsers("prontera",getcharid(2))+" guild members in Prontera.";
 
 ---------------------------------------
+
+*getguildlv {<guild id>}
+
+Get guild level from 'guild_id' or guild from invoker. Return 0 if guild is not found.
+
+---------------------------------------
 //
 2,2.- End of guild-related commands
 //
