@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Kisuka, $ephiroth
 //===== Current Version: =====================================
-//= 1.4
+//= 2.0
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -13,13 +13,14 @@
 //= 1.1, 1.2 Updated from jA [$ephiroth]
 //= 1.3 Added warp npcs. Removed place holder warps. [Kisuka]
 //= 1.4 Fixed cords on milestone 1-3. [Kisuka]
+//= 2.0 Clean-up. [Capuche]
 //============================================================
 
 mosk_fild02,190,257,0	warp	moscoviawarp0401	1,1,mosk_dun01,189,45
 mosk_dun01,189,42,0	warp	moscoviawarp0501	1,1,mosk_fild02,190,254
 mosk_in,215,36,0	warp	babayagaout		1,1,mosk_dun02,53,217
 
-mosk_dun02,53,220,4	script	#babayagain	45,1,1,{
+mosk_dun02,53,220,4	script	#babayagain	WARPNPC,1,1,{
 	end;
 OnTouch:
 	if (mos_nowinter == 11) {
@@ -47,7 +48,7 @@ OnTouch:
 		warp "mosk_in",125,92;
 		end;
 	}
-	else if (mos_nowinter == 12) {
+	else if (mos_nowinter == 12 || mos_nowinter == 13) {
 		donpcevent "Soldier1#mos::OnEnable";
 		donpcevent "Soldier2#mos::OnEnable";
 		donpcevent "Soldier3#mos::OnEnable";
@@ -61,51 +62,17 @@ OnTouch:
 			mes "I should get out of here...";
 			close2;
 			warp "mosk_dun02",100,100;
-			donpcevent "Soldier1#mos::OnInit";
-			donpcevent "Soldier2#mos::OnInit";
-			donpcevent "Soldier3#mos::OnInit";
-			end;
 		}
-		mes "-I explain what happend until now.-";
-		next;
-		mes "[Soldier]";
-		mes "If you have something to say, speak";
-		mes "to the Csar.";
-		mes "If you leave to this place,";
-		mes "you will be considered as our enemy.";
-		close2;
-		donpcevent "Soldier1#mos::OnInit";
-		donpcevent "Soldier2#mos::OnInit";
-		donpcevent "Soldier3#mos::OnInit";
-		end;
-	}
-	else if (mos_nowinter == 13) {
-		donpcevent "Soldier1#mos::OnEnable";
-		donpcevent "Soldier2#mos::OnEnable";
-		donpcevent "Soldier3#mos::OnEnable";
-		mes "[Soldier]";
-		mes "We expected";
-		mes "that you would appear again.";
-		mes "What is your business with the Csar?";
-		next;
-		if(select("Run away.:Explain the situation.") == 1) {
-			mes "["+strcharinfo(0)+"]";
-			mes "I should get out of here...";
+		else {
+			mes "-I explain what happend until now.-";
+			next;
+			mes "[Soldier]";
+			mes "If you have something to say, speak";
+			mes "to the Csar.";
+			mes "If you leave to this place,";
+			mes "you will be considered as our enemy.";
 			close2;
-			warp "mosk_dun02",100,100;
-			donpcevent "Soldier1#mos::OnInit";
-			donpcevent "Soldier2#mos::OnInit";
-			donpcevent "Soldier3#mos::OnInit";
-			end;
 		}
-		mes "-I explain what happend until now.-";
-		next;
-		mes "[Soldier]";
-		mes "If you have something to say, speak";
-		mes "to the Csar.";
-		mes "If you leave to this place,";
-		mes "you will be considered as our enemy.";
-		close2;
 		donpcevent "Soldier1#mos::OnInit";
 		donpcevent "Soldier2#mos::OnInit";
 		donpcevent "Soldier3#mos::OnInit";
@@ -117,7 +84,7 @@ OnTouch:
 	}
 }
 
-mosk_dun02,53,215,3	script	Soldier1#mos	966,{
+mosk_dun02,53,215,3	script	Soldier1#mos	4_M_RUSKNIGHT,{
 	mes "[Soldier]";
 	mes "We're the Csar's soldiers.";
 	mes "We're called out for emergencies,";
@@ -125,55 +92,23 @@ mosk_dun02,53,215,3	script	Soldier1#mos	966,{
 	close;
 	
 OnInit:
-	hideonnpc "Soldier1#mos";
+	hideonnpc strnpcinfo(0);
 	end;
-
 OnEnable:
-	hideoffnpc "Soldier1#mos";
+	hideoffnpc strnpcinfo(0);
 	end;
 }
+mosk_dun02,50,217,3	duplicate(Soldier1#mos)	Soldier2#mos	4_M_RUSKNIGHT
+mosk_dun02,56,217,5	duplicate(Soldier1#mos)	Soldier3#mos	4_M_RUSKNIGHT
 
-mosk_dun02,50,217,3	script	Soldier2#mos	966,{
-	mes "[Soldier]";
-	mes "We're the Csar's soldiers.";
-	mes "We're called out for emergencies,";
-	mes "don't disturb us anymore.";
-	close;
-	
-OnInit:
-	hideonnpc "Soldier2#mos";
-	end;
-
-OnEnable:
-	hideoffnpc "Soldier2#mos";
-	end;
-}
-
-
-mosk_dun02,56,217,5	script	Soldier3#mos	966,{
-	mes "[Soldier]";
-	mes "We're the Csar's soldiers.";
-	mes "We're called out for emergencies,";
-	mes "don't disturb us anymore.";
-	close;
-	
-OnInit:
-	hideonnpc "Soldier3#mos";
-	end;
-
-OnEnable:
-	hideoffnpc "Soldier3#mos";
-	end;
-}
-
-mosk_dun01,170,164,3	script	Milestone#1	111,{
+mosk_dun01,170,164,3	script	Milestone#1	HIDDEN_NPC,{
 	mes "- There is writing on a big rock. -";
 	next;
 	mes "^3131FF- Those who serve the Sun will die, Go to the North. -^000000";
 	close;
 }
 
-mosk_dun01,207,276,3	script	Milestone#1-2	111,{
+mosk_dun01,207,276,3	script	Milestone#1-2	HIDDEN_NPC,{
 	mes "- There is writing on a big rock. -";
 	next;
 	mes "^3131FF- Those who advance may get hurt but are courageous of heart and those who move back will remain safe.";
@@ -189,7 +124,7 @@ mosk_dun01,207,276,3	script	Milestone#1-2	111,{
 	close;
 }
 
-mosk_dun01,264,191,3	script	Milestone#1-3	111,{
+mosk_dun01,264,191,3	script	Milestone#1-3	HIDDEN_NPC,{
 	mes "- There is writing on a big rock. -";
 	next;
 	mes "^3131FF- Those who advance may get hurt but are brave of heart and those who move back will remain safe.";
@@ -205,7 +140,7 @@ mosk_dun01,264,191,3	script	Milestone#1-3	111,{
 	close;
 }
 
-mosk_dun02,168,28,3	script	Milestone#2-1	111,{
+mosk_dun02,168,28,3	script	Milestone#2-1	HIDDEN_NPC,{
 	mes "- There is writing on a big rock. -";
 	next;
 	mes "^3131FF- Those who advance may get hurt but are valorous of heart and those who move back will remain safe.";
@@ -221,7 +156,7 @@ mosk_dun02,168,28,3	script	Milestone#2-1	111,{
 	close;
 }
 
-mosk_dun02,268,117,3	script	Milestone#2-3	111,{
+mosk_dun02,268,117,3	script	Milestone#2-3	HIDDEN_NPC,{
 	mes "- There is writing on a big rock. -";
 	next;
 	mes "^3131FF- Those who step forward will gain honor but may die, those who step backward will have courage but may still get hurt.";
@@ -237,7 +172,7 @@ mosk_dun02,268,117,3	script	Milestone#2-3	111,{
 	close;
 }
 
-mosk_dun03,27,131,3	script	Milestone#3-2	111,{
+mosk_dun03,27,131,3	script	Milestone#3-2	HIDDEN_NPC,{
 	mes "- There is writing on a big rock. -";
 	next;
 	mes "^3131FF- Those who stay may die but will gain honor, those who go back may get hurt but will gain courage.";
@@ -253,7 +188,7 @@ mosk_dun03,27,131,3	script	Milestone#3-2	111,{
 	close;
 }
 
-mosk_dun03,119,46,3	script	Milestone#3-1	111,{
+mosk_dun03,119,46,3	script	Milestone#3-1	HIDDEN_NPC,{
 	mes "There is writing on a big rock.";
 	next;
 	mes "^3131FF- Those who stay may die but will gain honor, those who go back may get hurt but will gain courage.";
@@ -269,14 +204,14 @@ mosk_dun03,119,46,3	script	Milestone#3-1	111,{
 	close;
 }
 
-mosk_dun01,194,43,3	script	Milestone#1-1	111,{
+mosk_dun01,194,43,3	script	Milestone#1-1	HIDDEN_NPC,{
 	mes "- There is writing on a big rock. -";
 	next;
 	mes "- If you want to protect your life, go back -";
 	close;
 }
 
-mosk_fild02,198,53,3	script	Ship#mos_dun	111,{
+mosk_fild02,198,53,3	script	Ship#mos_dun	HIDDEN_NPC,{
 	mes "- You find a ship at anchor. -";
 	next;
 	if(select("Take the ship and go back to the village.:Explore more.") == 1) {
