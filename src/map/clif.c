@@ -8368,8 +8368,16 @@ void clif_GM_kick(struct map_session_data *sd,struct map_session_data *tsd)
 
 	if( fd > 0 )
 		clif_authfail_fd(fd, 15);
-	else
+	else {
+		// Close vending/buyingstore
+		if (sd) {
+			if (tsd->state.vending)
+				vending_closevending(tsd);
+			else if (tsd->state.buyingstore)
+				buyingstore_close(tsd);
+		}
 		map_quit(tsd);
+	}
 
 	if( sd )
 		clif_GM_kickack(sd,tsd->status.account_id);
@@ -10357,6 +10365,12 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 		if (!pc_issit(sd)) {
 			//Bugged client? Just refresh them.
 			clif_standing(&sd->bl);
+			return;
+		}
+
+		// Cannot stand yet
+		// TODO: Move to SCS_NOSTAND [Cydh]
+		if (&sd->sc && (sd->sc.data[SC_SITDOWN_FORCE] || sd->sc.data[SC_BANANA_BOMB_SITDOWN])) {
 			return;
 		}
 
@@ -12975,43 +12989,43 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 	}
 
 	switch (target->type) {
-	case BL_PC:
-	{
-		char command[NAME_LENGTH+6];
-		safesnprintf(command,sizeof(command),"%ckick %s", atcommand_symbol, status_get_name(target));
-		is_atcommand(fd, sd, command, 1);
-	}
-	break;
+		case BL_PC:
+		{
+			char command[NAME_LENGTH+6];
+			safesnprintf(command,sizeof(command),"%ckick %s", atcommand_symbol, status_get_name(target));
+			is_atcommand(fd, sd, command, 1);
+		}
+		break;
 
-	/**
-	 * This one does not invoke any atcommand, so we need to check for permissions.
-	 */
-	case BL_MOB:
-	{
-		char command[100];
-		if( !pc_can_use_command(sd, "killmonster", COMMAND_ATCOMMAND)) {
+		/**
+		 * This one does not invoke any atcommand, so we need to check for permissions.
+		 */
+		case BL_MOB:
+		{
+			char command[100];
+			if( !pc_can_use_command(sd, "killmonster", COMMAND_ATCOMMAND)) {
+				clif_GM_kickack(sd, 0);
+				return;
+			}
+			safesnprintf(command,sizeof(command),"/kick %s (%d)", status_get_name(target), status_get_class(target));
+			log_atcommand(sd, command);
+			status_percent_damage(&sd->bl, target, 100, 0, true); // can invalidate 'target'
+		}
+		break;
+
+		case BL_NPC:
+		{
+			struct npc_data* nd = (struct npc_data *)target;
+			if( pc_can_use_command(sd, "unloadnpc", COMMAND_ATCOMMAND)) {
+				npc_unload_duplicates(nd);
+				npc_unload(nd,true);
+				npc_read_event_script();
+			}
+		}
+		break;
+
+		default:
 			clif_GM_kickack(sd, 0);
-			return;
-		}
-		safesnprintf(command,sizeof(command),"/kick %s (%d)", status_get_name(target), status_get_class(target));
-		log_atcommand(sd, command);
-		status_percent_damage(&sd->bl, target, 100, 0, true); // can invalidate 'target'
-	}
-	break;
-
-	case BL_NPC:
-	{
-		struct npc_data* nd = (struct npc_data *)target;
-		if( pc_can_use_command(sd, "unloadnpc", COMMAND_ATCOMMAND)) {
-			npc_unload_duplicates(nd);
-			npc_unload(nd,true);
-			npc_read_event_script();
-		}
-	}
-	break;
-
-	default:
-		clif_GM_kickack(sd, 0);
 	}
 }
 

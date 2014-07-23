@@ -536,6 +536,7 @@ extern struct Battle_Config
 	// autotrade persistency
 	int feature_autotrade;
 	int feature_autotrade_direction;
+	int feature_autotrade_head_direction;
 	int feature_autotrade_sit;
 	int feature_autotrade_open_delay;
 

@@ -1130,6 +1130,9 @@ int chrif_disconnectplayer(int fd) {
 			if( sd->state.vending ){
 				vending_closevending(sd);
 			}
+			else if( sd->state.buyingstore ){
+				buyingstore_close(sd);
+			}
 
 			map_quit(sd); //Remove it.
 		}

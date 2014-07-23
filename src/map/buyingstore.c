@@ -31,7 +31,7 @@ struct s_autotrade {
 	int buyer_id;
 	int m;
 	uint16 x, y;
-	unsigned char sex;
+	unsigned char sex, dir, head_dir, sit;
 	char title[MESSAGE_SIZE];
 	int limit;
 	uint16 count;
@@ -41,7 +41,7 @@ struct s_autotrade {
 
 //Autotrader
 static struct s_autotrade **autotraders; ///Autotraders Storage
-static uint16 autotrader_count; ///Autotrader count
+static uint16 autotrader_count, autotrader_loaded_count; ///Autotrader count
 static void do_final_buyingstore_autotrade(void);
 
 /// constants (client-side restrictions)
@@ -237,7 +237,9 @@ char buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 
 	Sql_EscapeString( mmysql_handle, message_sql, sd->message );
 
-	if( Sql_Query( mmysql_handle, "INSERT INTO `%s`(`id`,`account_id`,`char_id`,`sex`,`map`,`x`,`y`,`title`,`limit`,`autotrade`) VALUES( %d, %d, %d, '%c', '%s', %d, %d, '%s', %d, %d );", buyingstore_db, sd->buyer_id, sd->status.account_id, sd->status.char_id, sd->status.sex == 0 ? 'F' : 'M', map[sd->bl.m].name, sd->bl.x, sd->bl.y, message_sql, sd->buyingstore.zenylimit, sd->state.autotrade ) != SQL_SUCCESS ){
+	if( Sql_Query( mmysql_handle, "INSERT INTO `%s`(`id`,`account_id`,`char_id`,`sex`,`map`,`x`,`y`,`title`,`limit`,`autotrade`, `body_direction`, `head_direction`, `sit`) "
+		"VALUES( %d, %d, %d, '%c', '%s', %d, %d, '%s', %d, %d, '%d', '%d', '%d' );",
+		buyingstore_db, sd->buyer_id, sd->status.account_id, sd->status.char_id, sd->status.sex == 0 ? 'F' : 'M', map[sd->bl.m].name, sd->bl.x, sd->bl.y, message_sql, sd->buyingstore.zenylimit, sd->state.autotrade, sd->ud.dir, sd->head_dir, pc_issit(sd) ) != SQL_SUCCESS ){
 		Sql_ShowDebug(mmysql_handle);
 	}
 
@@ -603,6 +605,10 @@ void buyingstore_reopen( struct map_session_data* sd ){
 			p += 8;
 		}
 
+		// Make sure abort all NPCs
+		npc_event_dequeue(sd);
+		pc_cleareventtimer(sd);
+
 		// Open the buyingstore again
 		if( (fail = buyingstore_setup( sd, (unsigned char)autotraders[i]->count ) == 0) &&
 			(fail = buyingstore_create( sd, autotraders[i]->limit, 1, autotraders[i]->title, data, autotraders[i]->count ) == 0) )
@@ -611,16 +617,17 @@ void buyingstore_reopen( struct map_session_data* sd ){
 				sd->status.name, count, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y);
 
 			// Set him to autotrade
-			if (Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;",
-				buyingstore_db, sd->buyer_id ) != SQL_SUCCESS )
+			if (Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1, `body_direction` = '%d', `head_direction` = '%d', `sit` = '%d' "
+				"WHERE `id` = %d;",
+				buyingstore_db, autotraders[i]->dir, autotraders[i]->head_dir, autotraders[i]->sit, sd->buyer_id ) != SQL_SUCCESS )
 			{
 				Sql_ShowDebug( mmysql_handle );
 			}
 
-			// Make him look perfect
-			unit_setdir(&sd->bl,battle_config.feature_autotrade_direction);
-
-			if( battle_config.feature_autotrade_sit )
+			// Make buyer look perfect
+			pc_setdir(sd, autotraders[i]->dir, autotraders[i]->head_dir);
+			clif_changed_dir(&sd->bl, AREA_WOS);
+			if( autotraders[i]->sit )
 				pc_setsit(sd);
 
 			// Immediate save
@@ -635,7 +642,7 @@ void buyingstore_reopen( struct map_session_data* sd ){
 		aFree(data);
 
 		//If the last autotrade is loaded, clear autotraders [Cydh]
-		if (i+1 >= autotrader_count)
+		if (++autotrader_loaded_count >= autotrader_count)
 			do_final_buyingstore_autotrade();
 	}
 }
@@ -646,21 +653,22 @@ void buyingstore_reopen( struct map_session_data* sd ){
 void do_init_buyingstore_autotrade( void ) {
 	if(battle_config.feature_autotrade) {
 		uint16 i, items = 0;
-		autotrader_count = 0;
+		autotrader_count = autotrader_loaded_count = 0;
 
 		// Get autotrader from table. `map`, `x`, and `y`, aren't used here
 		// Just read player that has data at buyingstore_items [Cydh]
 		if (Sql_Query(mmysql_handle,
-			"SELECT `id`, `account_id`, `char_id`, `sex`, `title`, `limit` "
+			"SELECT `id`, `account_id`, `char_id`, `sex`, `title`, `limit`, `body_direction`, `head_direction`, `sit` "
 			"FROM `%s` "
-			"WHERE `autotrade` = 1 AND `limit` > 0 AND (SELECT COUNT(`buyingstore_id`) FROM `%s` WHERE `buyingstore_id` = `id`) > 0;",
+			"WHERE `autotrade` = 1 AND `limit` > 0 AND (SELECT COUNT(`buyingstore_id`) FROM `%s` WHERE `buyingstore_id` = `id`) > 0 "
+			"ORDER BY `id`;",
 			buyingstore_db, buyingstore_items_db ) != SQL_SUCCESS )
 		{
 			Sql_ShowDebug(mmysql_handle);
 			return;
 		}
 
-		if( (autotrader_count = (uint32)Sql_NumRows(mmysql_handle)) > 0 ){
+		if( (autotrader_count = (uint16)Sql_NumRows(mmysql_handle)) > 0 ){
 			// Init autotraders
 			CREATE(autotraders, struct s_autotrade *, autotrader_count);
 
@@ -675,49 +683,59 @@ void do_init_buyingstore_autotrade( void ) {
 			while (SQL_SUCCESS == Sql_NextRow(mmysql_handle) && i < autotrader_count) {
 				size_t len;
 				char* data;
+				struct s_autotrade *at = NULL;
 
 				CREATE(autotraders[i], struct s_autotrade, 1);
+				at = autotraders[i];
 
-				Sql_GetData(mmysql_handle, 0, &data, NULL); autotraders[i]->buyer_id = atoi(data);
-				Sql_GetData(mmysql_handle, 1, &data, NULL); autotraders[i]->account_id = atoi(data);
-				Sql_GetData(mmysql_handle, 2, &data, NULL); autotraders[i]->char_id = atoi(data);
-				Sql_GetData(mmysql_handle, 3, &data, NULL); autotraders[i]->sex = (data[0] == 'F') ? 0 : 1;
-				Sql_GetData(mmysql_handle, 4, &data, &len); safestrncpy(autotraders[i]->title, data, min(len + 1, MESSAGE_SIZE));
-				Sql_GetData(mmysql_handle, 5, &data, NULL); autotraders[i]->limit = atoi(data);
-				autotraders[i]->count = 0;
+				Sql_GetData(mmysql_handle, 0, &data, NULL); at->buyer_id = atoi(data);
+				Sql_GetData(mmysql_handle, 1, &data, NULL); at->account_id = atoi(data);
+				Sql_GetData(mmysql_handle, 2, &data, NULL); at->char_id = atoi(data);
+				Sql_GetData(mmysql_handle, 3, &data, NULL); at->sex = (data[0] == 'F') ? 0 : 1;
+				Sql_GetData(mmysql_handle, 4, &data, &len); safestrncpy(at->title, data, min(len + 1, MESSAGE_SIZE));
+				Sql_GetData(mmysql_handle, 5, &data, NULL); at->limit = atoi(data);
+				Sql_GetData(mmysql_handle, 6, &data, NULL); at->dir = atoi(data);
+				Sql_GetData(mmysql_handle, 7, &data, NULL); at->head_dir = atoi(data);
+				Sql_GetData(mmysql_handle, 8, &data, NULL); at->sit = atoi(data);
+				at->count = 0;
+
+				if (battle_config.feature_autotrade_direction >= 0)
+					at->dir = battle_config.feature_autotrade_direction;
+				if (battle_config.feature_autotrade_head_direction >= 0)
+					at->head_dir = battle_config.feature_autotrade_head_direction;
+				if (battle_config.feature_autotrade_sit >= 0)
+					at->sit = battle_config.feature_autotrade_sit;
 
 				// initialize player
-				CREATE(autotraders[i]->sd, struct map_session_data, 1);
-			
-				pc_setnewpc(autotraders[i]->sd, autotraders[i]->account_id, autotraders[i]->char_id, 0, gettick(), autotraders[i]->sex, 0);
-			
-				autotraders[i]->sd->state.autotrade = 1;
-				autotraders[i]->sd->state.monster_ignore = (battle_config.autotrade_monsterignore);
-				chrif_authreq(autotraders[i]->sd, true);
+				CREATE(at->sd, struct map_session_data, 1);
+				pc_setnewpc(at->sd, at->account_id, at->char_id, 0, gettick(), at->sex, 0);
+				at->sd->state.autotrade = 1;
+				at->sd->state.monster_ignore = (battle_config.autotrade_monsterignore);
+				chrif_authreq(at->sd, true);
 				i++;
 			}
 			Sql_FreeResult(mmysql_handle);
 
-			//Init items on vending list each autotrader
+			//Init items on buying list each autotrader
 			for (i = 0; i < autotrader_count; i++){
 				struct s_autotrade *at = NULL;
 				uint16 j;
 
-				if (autotraders[i] == NULL)
+				if ((at = autotraders[i]) == NULL)
 					continue;
-				at = autotraders[i];
 
 				if (SQL_ERROR == Sql_Query(mmysql_handle,
 					"SELECT `item_id`, `amount`, `price` "
 					"FROM `%s` "
 					"WHERE `buyingstore_id` = %d "
-					"ORDER BY `index` ASC;", buyingstore_items_db, at->buyer_id ) )
+					"ORDER BY `index` ASC;",
+					buyingstore_items_db, at->buyer_id ) )
 				{
 					Sql_ShowDebug(mmysql_handle);
 					continue;
 				}
 
-				if (!(at->count = (uint32)Sql_NumRows(mmysql_handle))) {
+				if (!(at->count = (uint16)Sql_NumRows(mmysql_handle))) {
 					map_quit(at->sd);
 					continue;
 				}
