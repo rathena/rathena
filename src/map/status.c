@@ -726,7 +726,6 @@ void initChangeTables(void)
 	set_sc( GN_CARTBOOST			, SC_GN_CARTBOOST	, SI_GN_CARTBOOST			, SCB_SPEED );
 	set_sc( GN_THORNS_TRAP			, SC_THORNSTRAP		, SI_THORNTRAP			, SCB_NONE );
 	set_sc_with_vfx( GN_BLOOD_SUCKER	, SC_BLOODSUCKER	, SI_BLOODSUCKER		, SCB_NONE );
-	add_sc( GN_WALLOFTHORN			, SC_STOP		);
 	set_sc( GN_FIRE_EXPANSION_SMOKE_POWDER	, SC_SMOKEPOWDER	, SI_FIRE_EXPANSION_SMOKE_POWDER, SCB_FLEE );
 	set_sc( GN_FIRE_EXPANSION_TEAR_GAS	, SC_TEARGAS		, SI_FIRE_EXPANSION_TEAR_GAS	, SCB_HIT|SCB_FLEE );
 	set_sc( GN_MANDRAGORA			, SC_MANDRAGORA		, SI_MANDRAGORA			, SCB_INT );
@@ -2849,11 +2848,18 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		clif_status_load(&sd->bl, SI_INTRAVISION, 0);
 
 	memset(&sd->special_state,0,sizeof(sd->special_state));
-	memset(&status->max_hp, 0, sizeof(struct status_data)-(sizeof(status->hp)+sizeof(status->sp)));
+
+	if (!sd->state.permanent_speed) {
+		memset(&status->max_hp, 0, sizeof(struct status_data)-(sizeof(status->hp)+sizeof(status->sp)));
+		status->speed = DEFAULT_WALK_SPEED;
+	} else {
+		int pSpeed = status->speed;
+
+		memset(&status->max_hp, 0, sizeof(struct status_data)-(sizeof(status->hp)+sizeof(status->sp)));
+		status->speed = pSpeed;
+	}
 
 	// !FIXME: Most of these stuff should be calculated once, but how do I fix the memset above to do that? [Skotlex]
-	if (!sd->state.permanent_speed)
-		status->speed = DEFAULT_WALK_SPEED;
 	// Give them all modes except these (useful for clones)
 	status->mode = MD_MASK&~(MD_BOSS|MD_PLANT|MD_DETECTOR|MD_ANGRY|MD_TARGETWEAK);
 
@@ -4247,6 +4253,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 
 	if(flag&SCB_SPEED) {
 		struct unit_data *ud = unit_bl2ud(bl);
+
 		status->speed = status_calc_speed(bl, sc, b_status->speed);
 
 		/** [Skotlex]
@@ -4257,7 +4264,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 		if (ud)
 			ud->state.change_walk_target = ud->state.speed_changed = 1;
 
-		if( bl->type&BL_PC && status->speed < battle_config.max_walk_speed )
+		if( bl->type&BL_PC && !(sd && sd->state.permanent_speed) && status->speed < battle_config.max_walk_speed )
 			status->speed = battle_config.max_walk_speed;
 
 		if( bl->type&BL_HOM && battle_config.hom_setting&HOMSET_COPY_SPEED && ((TBL_HOM*)bl)->master)
@@ -4266,8 +4273,6 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			status->speed = status_get_speed(&((TBL_MER*)bl)->master->bl);
 		if( bl->type&BL_ELEM && ((TBL_ELEM*)bl)->master)
 			status->speed = status_get_speed(&((TBL_ELEM*)bl)->master->bl);
-
-
 	}
 
 	if(flag&SCB_CRI && b_status->cri) {
@@ -4279,7 +4284,6 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 		/// After status_calc_critical so the bonus is applied despite if you have or not a sc bugreport:5240
 		if( bl->type == BL_PC && ((TBL_PC*)bl)->status.weapon == W_KATAR )
 			status->cri <<= 1;
-
 	}
 
 	if(flag&SCB_FLEE2 && b_status->flee2) {
@@ -5826,11 +5830,8 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 	TBL_PC* sd = BL_CAST(BL_PC, bl);
 	int speed_rate = 100;
 
-	if( sc == NULL )
-		return cap_value(speed,10,USHRT_MAX);
-
-	if (sd && sd->state.permanent_speed)
-		return (short)cap_value(speed,10,USHRT_MAX);
+	if (sc == NULL || (sd && sd->state.permanent_speed))
+		return (unsigned short)cap_value(speed, MIN_WALK_SPEED, MAX_WALK_SPEED);
 
 	if( sd && sd->ud.skilltimer != INVALID_TIMER && (pc_checkskill(sd,SA_FREECAST) > 0 || sd->ud.skill_id == LG_EXEEDBREAK) ) {
 		if( sd->ud.skill_id == LG_EXEEDBREAK )
@@ -5992,7 +5993,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 	if( sc->data[SC_REBOUND] )
 		speed += max(speed, 100);
 
-	return (short)cap_value(speed,10,USHRT_MAX);
+	return (unsigned short)cap_value(speed, MIN_WALK_SPEED, MAX_WALK_SPEED);
 }
 
 #ifdef RENEWAL_ASPD
@@ -8195,7 +8196,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_MARIONETTE:
 			case SC_MARIONETTE2:
 			case SC_NOCHAT:
-			case SC_CHANGE: // Otherwise your Hp/Sp would get refilled while still within effect of the last invocation.
 			case SC_ABUNDANCE:
 			case SC_FEAR:
 			case SC_TOXIN:
@@ -10212,9 +10212,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			}
 			sce->val2 = 5 * status->max_hp / 100;
 			break;
-		case SC_CHANGE:
-			status_percent_heal(bl, 100, 100);
-			break;
 		case SC_RUN:
 			{
 				struct unit_data *ud = unit_bl2ud(bl);
@@ -10762,7 +10759,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 
 		/* 3rd Stuff */
 		case SC_MILLENNIUMSHIELD:
-			clif_millenniumshield(sd,0);
+			clif_millenniumshield(bl, 0);
 			break;
 		case SC_HALLUCINATIONWALK:
 			sc_start(bl,bl,SC_HALLUCINATIONWALK_POSTDELAY,100,sce->val1,skill_get_time2(GC_HALLUCINATIONWALK,sce->val1));

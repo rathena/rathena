@@ -231,7 +231,7 @@ void pc_addspiritball(struct map_session_data *sd,int interval,int max)
 	sd->spirit_timer[i] = tid;
 	sd->spiritball++;
 	if( (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD )
-		clif_millenniumshield(sd,sd->spiritball);
+		clif_millenniumshield(&sd->bl,sd->spiritball);
 	else
 		clif_spiritball(&sd->bl);
 }
@@ -274,7 +274,7 @@ void pc_delspiritball(struct map_session_data *sd,int count,int type)
 
 	if(!type) {
 		if( (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD )
-			clif_millenniumshield(sd,sd->spiritball);
+			clif_millenniumshield(&sd->bl,sd->spiritball);
 		else
 			clif_spiritball(&sd->bl);
 	}
@@ -6217,38 +6217,41 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsigned int *job_exp, struct block_list *src)
 {
 	int bonus = 0, vip_bonus_base = 0, vip_bonus_job = 0;
-	struct status_data *status = status_get_status_data(src);
 
-	if( sd->expaddrace[status->race] )
-		bonus += sd->expaddrace[status->race];
-	if( sd->expaddrace[RC_ALL] )
-		bonus += sd->expaddrace[RC_ALL];
-	if( sd->expaddclass[status->class_] )
-		bonus += sd->expaddclass[status->class_];
-	if( sd->expaddclass[CLASS_ALL] )
-		bonus += sd->expaddclass[CLASS_ALL];
+	if (src) {
+		struct status_data *status = status_get_status_data(src);
 
-	if (battle_config.pk_mode &&
-		(int)(status_get_lv(src) - sd->status.base_level) >= 20)
-		bonus += 15; // pk_mode additional exp if monster >20 levels [Valaris]
+		if( sd->expaddrace[status->race] )
+			bonus += sd->expaddrace[status->race];
+		if( sd->expaddrace[RC_ALL] )
+			bonus += sd->expaddrace[RC_ALL];
+		if( sd->expaddclass[status->class_] )
+			bonus += sd->expaddclass[status->class_];
+		if( sd->expaddclass[CLASS_ALL] )
+			bonus += sd->expaddclass[CLASS_ALL];
 
-	if (sd->sc.data[SC_EXPBOOST]) {	
- 		bonus += sd->sc.data[SC_EXPBOOST]->val1;
+		if (battle_config.pk_mode &&
+			(int)(status_get_lv(src) - sd->status.base_level) >= 20)
+			bonus += 15; // pk_mode additional exp if monster >20 levels [Valaris]
+
+#ifdef VIP_ENABLE
+		//EXP bonus for VIP player
+		if (src && src->type == BL_MOB && pc_isvip(sd)) {
+			vip_bonus_base = battle_config.vip_base_exp_increase;
+			vip_bonus_job = battle_config.vip_job_exp_increase;
+		}
+#endif
+	}
+
+	if (&sd->sc && sd->sc.data[SC_EXPBOOST]) {
+		bonus += sd->sc.data[SC_EXPBOOST]->val1;
 		if( battle_config.vip_bm_increase && pc_isvip(sd) ) // Increase Battle Manual EXP rate for VIP.
 			bonus += ( sd->sc.data[SC_EXPBOOST]->val1 / battle_config.vip_bm_increase );
 	}
 
-#ifdef VIP_ENABLE
-	//EXP bonus for VIP player
-	if (src && src->type == BL_MOB && pc_isvip(sd)) {
-		vip_bonus_base = battle_config.vip_base_exp_increase;
-		vip_bonus_job = battle_config.vip_job_exp_increase;
-	}
-#endif
-
 	*base_exp = (unsigned int) cap_value(*base_exp + (double)*base_exp * (bonus + vip_bonus_base)/100., 1, UINT_MAX);
-	
-	if (sd->sc.data[SC_JEXPBOOST])
+
+	if (&sd->sc && sd->sc.data[SC_JEXPBOOST])
 		bonus += sd->sc.data[SC_JEXPBOOST]->val1;
 
 	*job_exp = (unsigned int) cap_value(*job_exp + (double)*job_exp * (bonus + vip_bonus_job)/100., 1, UINT_MAX);
@@ -6258,10 +6261,11 @@ static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsi
 /*==========================================
  * Give x exp at sd player and calculate remaining exp for next lvl
  *------------------------------------------*/
-int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int base_exp,unsigned int job_exp,bool quest)
+int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int base_exp, unsigned int job_exp, bool quest)
 {
-	float nextbp=0, nextjp=0;
-	unsigned int nextb=0, nextj=0;
+	float nextbp = 0, nextjp = 0;
+	unsigned int nextb = 0, nextj = 0;
+
 	nullpo_ret(sd);
 
 	if(sd->bl.prev == NULL || pc_isdead(sd))
@@ -6273,7 +6277,7 @@ int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int
 	if(sd->status.guild_id>0)
 		base_exp-=guild_payexp(sd,base_exp);
 
-	if(src) pc_calcexp(sd, &base_exp, &job_exp, src);
+	pc_calcexp(sd, &base_exp, &job_exp, src); // Give (J)EXPBOOST for quests even if src is NULL.
 
 	nextb = pc_nextbaseexp(sd);
 	nextj = pc_nextjobexp(sd);

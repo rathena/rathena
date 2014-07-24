@@ -862,15 +862,21 @@ ACMD_FUNC(speed)
 		return -1;
 	}
 
-	if (speed < 0) {
+	sd->state.permanent_speed = 0; // Remove lock when set back to default speed.
+
+	if (speed < 0)
 		sd->base_status.speed = DEFAULT_WALK_SPEED;
-		sd->state.permanent_speed = 0; // Remove lock when set back to default speed.
-	} else {
+	else
 		sd->base_status.speed = cap_value(speed, MIN_WALK_SPEED, MAX_WALK_SPEED);
+
+	if (sd->base_status.speed != DEFAULT_WALK_SPEED) {
 		sd->state.permanent_speed = 1; // Set lock when set to non-default speed.
-	}
+		clif_displaymessage(fd, msg_txt(sd,8)); // Speed changed.
+	} else
+		clif_displaymessage(fd, msg_txt(sd,389)); // Speed returned to normal.
+
 	status_calc_bl(&sd->bl, SCB_SPEED);
-	clif_displaymessage(fd, msg_txt(sd,8)); // Speed changed.
+
 	return 0;
 }
 
@@ -7849,6 +7855,8 @@ ACMD_FUNC(fakename)
 		{
 			sd->fakename[0] = '\0';
 			clif_charnameack(0, &sd->bl);
+			if (sd->disguise)
+				clif_charnameack(sd->fd, &sd->bl);
 			clif_displaymessage(sd->fd, msg_txt(sd,1307)); // Returned to real name.
 			return 0;
 		}
@@ -7865,6 +7873,8 @@ ACMD_FUNC(fakename)
 
 	safestrncpy(sd->fakename, message, sizeof(sd->fakename));
 	clif_charnameack(0, &sd->bl);
+	if (sd->disguise) // Another packet should be sent so the client updates the name for sd
+		clif_charnameack(sd->fd, &sd->bl);
 	clif_displaymessage(sd->fd, msg_txt(sd,1310)); // Fake name enabled.
 
 	return 0;

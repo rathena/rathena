@@ -844,7 +844,7 @@ void clif_msgtable_num(int fd, int line, int num);
 
 int clif_elementalconverter_list(struct map_session_data *sd);
 
-void clif_millenniumshield(struct map_session_data *sd, short shields );
+void clif_millenniumshield(struct block_list *bl, short shields);
 
 int clif_spellbook_list(struct map_session_data *sd);
 

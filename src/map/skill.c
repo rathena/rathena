@@ -8378,7 +8378,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			int8 rate = rnd()%100;
 			int16 shields = ((rate < 20) ? 4 : (rate < 50) ? 3 : 2);
 			sc_start4(src,bl,type,100,skill_lv,shields,1000,0,skill_get_time(skill_id,skill_lv));
-			clif_millenniumshield(sd,shields);
+			clif_millenniumshield(bl,shields);
 			clif_skill_nodamage(src,bl,skill_id,1,1);
 		}
 		break;
@@ -8427,7 +8427,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				if( skill_area_temp[5]&0x10 ) {
 					if( dstsd ) {
 						i = (rnd()%100 < 50) ? 4 : ((rnd()%100 < 80) ? 3 : 2);
-						clif_millenniumshield(dstsd,i);
+						clif_millenniumshield(bl,i);
 						skill_area_temp[5] &= ~0x10;
 						type = SC_MILLENNIUMSHIELD;
 					}
