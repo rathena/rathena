@@ -42,7 +42,7 @@ static const int packet_len_table[]={
 	-1,-1, 7, 7,  7,11, 8, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3850  Auctions [Zephyrus] itembound[Akinari]
 	-1, 7, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3860  Quests [Kevin] [Inkfish]
 	-1, 3, 3, 0,  0, 0, 0, 0,  0, 0, 0, 0, -1, 3,  3, 0, //0x3870  Mercenaries [Zephyrus] / Elemental [pakpil]
-	11,-1, 7, 3,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3880
+	12,-1, 7, 3,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3880
 	-1,-1, 7, 3,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3890  Homunculus [albator]
 };
 
@@ -59,7 +59,7 @@ int CheckForCharServer(void)
 
 // pet
 int intif_create_pet(int account_id,int char_id,short pet_class,short pet_lv,short pet_egg_id,
-	short pet_equip,short intimate,short hungry,char rename_flag,char incuvate,char *pet_name)
+	short pet_equip,short intimate,short hungry,char rename_flag,char incubate,char *pet_name)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -74,7 +74,7 @@ int intif_create_pet(int account_id,int char_id,short pet_class,short pet_lv,sho
 	WFIFOW(inter_fd,18) = intimate;
 	WFIFOW(inter_fd,20) = hungry;
 	WFIFOB(inter_fd,22) = rename_flag;
-	WFIFOB(inter_fd,23) = incuvate;
+	WFIFOB(inter_fd,23) = incubate;
 	memcpy(WFIFOP(inter_fd,24),pet_name,NAME_LENGTH);
 	WFIFOSET(inter_fd,24+NAME_LENGTH);
 
@@ -1294,7 +1294,7 @@ int intif_parse_GuildMasterChanged(int fd)
 // Request pet creation
 int intif_parse_CreatePet(int fd)
 {
-	pet_get_egg(RFIFOL(fd,2),RFIFOL(fd,7),RFIFOB(fd,6));
+	pet_get_egg(RFIFOL(fd,2),RFIFOW(fd,6),RFIFOL(fd,8));
 	return 0;
 }
 

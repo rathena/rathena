@@ -1081,7 +1081,7 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 			!(status_get_mode(&md->bl)&MD_BOSS))
 			return 0; //Gangster paradise protection.
 	default:
-		if (battle_config.hom_setting&0x4 &&
+		if (battle_config.hom_setting&HOMSET_FIRST_TARGET &&
 			(*target) && (*target)->type == BL_HOM && bl->type != BL_HOM)
 			return 0; //For some reason Homun targets are never overriden.
 
@@ -2266,13 +2266,21 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 			if (map[m].flag.nobaseexp || !md->db->base_exp)
 				base_exp = 0;
-			else
-				base_exp = (unsigned int)cap_value(md->db->base_exp * per * bonus/100. * map[m].adjust.bexp/100., 1, UINT_MAX);
+			else {
+				double exp = apply_rate2(md->db->base_exp, per, 1);
+				exp = apply_rate(exp, bonus);
+				exp = apply_rate(exp, map[m].adjust.bexp);
+				base_exp = (unsigned int)cap_value(exp, 1, UINT_MAX);
+			}
 
 			if (map[m].flag.nojobexp || !md->db->job_exp || md->dmglog[i].flag == MDLF_HOMUN) //Homun earned job-exp is always lost.
 				job_exp = 0;
-			else
-				job_exp = (unsigned int)cap_value(md->db->job_exp * per * bonus/100. * map[m].adjust.jexp/100., 1, UINT_MAX);
+			else {
+				double exp = apply_rate2(md->db->job_exp, per, 1);
+				exp = apply_rate(exp, bonus);
+				exp = apply_rate(exp, map[m].adjust.jexp);
+				job_exp = (unsigned int)cap_value(exp, 1, UINT_MAX);
+			}
 
 			if ( ( temp = tmpsd[i]->status.party_id)>0 ) {
 				int j;
@@ -2310,8 +2318,10 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 					if( md->dmglog[i].flag != MDLF_PET || battle_config.pet_attack_exp_to_master ) {
 #ifdef RENEWAL_EXP
 						int rate = pc_level_penalty_mod(tmpsd[i], md->level, md->status.class_, 1);
-						base_exp = (unsigned int)cap_value(base_exp * rate / 100, 1, UINT_MAX);
-						job_exp = (unsigned int)cap_value(job_exp * rate / 100, 1, UINT_MAX);
+						if (rate != 100) {
+							base_exp = (unsigned int)cap_value(apply_rate(base_exp, rate), 1, UINT_MAX);
+							job_exp = (unsigned int)cap_value(apply_rate(job_exp, rate), 1, UINT_MAX);
+						}
 #endif
 						pc_gainexp(tmpsd[i], &md->bl, base_exp, job_exp, false);
 					}
@@ -2395,7 +2405,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			}
 #ifdef RENEWAL_DROP
 			if( drop_modifier != 100 ) {
-				drop_rate = drop_rate * drop_modifier / 100;
+				drop_rate = apply_rate(drop_rate, drop_modifier);
 				if( drop_rate < 1 )
 					drop_rate = 1;
 			}
@@ -2436,7 +2446,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			for (i = 0; i < ARRAYLENGTH(sd->add_drop); i++) {
 				if (!&sd->add_drop[i] || (!sd->add_drop[i].nameid && !sd->add_drop[i].group))
 					continue;
-				if ((sd->add_drop[i].race < 0 && sd->add_drop[i].race == -md->mob_id) || //Race < 0, use mob_id
+				if ((sd->add_drop[i].race < RC_NONE_ && sd->add_drop[i].race == -md->mob_id) || //Race < RC_NONE_, use mob_id
 					(sd->add_drop[i].race == RC_ALL || sd->add_drop[i].race == status->race) || //Matched race
 					(sd->add_drop[i].class_ == CLASS_ALL || sd->add_drop[i].class_ == status->class_)) //Matched class
 				{
@@ -3264,7 +3274,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 			x = bl->x;
 		  	y = bl->y;
 			// Look for an area to cast the spell around...
-			if (skill_target >= MST_AROUND1 || skill_target >= MST_AROUND5) {
+			if (skill_target >= MST_AROUND5) {
 				j = skill_target >= MST_AROUND1?
 					(skill_target-MST_AROUND1) +1:
 					(skill_target-MST_AROUND5) +1;
@@ -3768,14 +3778,14 @@ static bool mob_parse_dbrow(char** str)
 	status->race = atoi(str[23]);
 
 	i = atoi(str[24]); //Element
-	status->def_ele = i%10;
-	status->ele_lv = i/20;
-	if (status->def_ele >= ELE_ALL) {
+	status->def_ele = i%20;
+	status->ele_lv = (unsigned char)floor(i/20.);
+	if (!CHK_ELEMENT(status->def_ele)) {
 		ShowError("mob_parse_dbrow: Invalid element type %d for monster ID %d (max=%d).\n", status->def_ele, mob_id, ELE_ALL-1);
 		return false;
 	}
-	if (status->ele_lv < 1 || status->ele_lv > 4) {
-		ShowError("mob_parse_dbrow: Invalid element level %d for monster ID %d, must be in range 1-4.\n", status->ele_lv, mob_id);
+	if (!CHK_ELEMENT_LEVEL(status->ele_lv)) {
+		ShowError("mob_parse_dbrow: Invalid element level %d for monster ID %d, must be in range 1-%d.\n", status->ele_lv, mob_id, MAX_ELE_LEVEL);
 		return false;
 	}
 
@@ -4508,7 +4518,7 @@ static bool mob_readdb_race2(char* fields[], int columns, int current)
 
 	race = atoi(fields[0]);
 
-	if (race < RC2_NONE || race >= RC2_MAX)
+	if (!CHK_RACE2(race))
 	{
 		ShowWarning("mob_readdb_race2: Unknown race2 %d.\n", race);
 		return false;

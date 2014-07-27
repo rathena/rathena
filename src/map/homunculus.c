@@ -177,7 +177,7 @@ int hom_vaporize(struct map_session_data *sd, int flag)
 	//Delete timers when vaporized.
 	hom_hungry_timer_delete(hd);
 	hd->homunculus.vaporize = flag ? flag : HOM_ST_REST;
-	if(battle_config.hom_setting&0x40)
+	if(battle_config.hom_setting&HOMSET_RESET_REUSESKILL_VAPORIZED)
 		memset(hd->blockskill, 0, sizeof(hd->blockskill));
 	clif_hominfo(sd, sd->hd, 0);
 	hom_save(hd);
@@ -457,7 +457,7 @@ int hom_evolution(struct homun_data *hd)
 	hom->sp = hd->battle_status.sp;
 	status_calc_homunculus(hd, SCO_FIRST);
 
-	if (!(battle_config.hom_setting&0x2))
+	if (!(battle_config.hom_setting&HOMSET_NO_INSTANT_LAND_SKILL))
 		skill_unit_move(&sd->hd->bl,gettick(),1); // apply land skills immediately
 
 	return 1 ;
@@ -511,7 +511,7 @@ int hom_mutate(struct homun_data *hd, int homun_id)
 	hom->prev_class = prev_class;
 	status_calc_homunculus(hd, SCO_FIRST);
 
-	if (!(battle_config.hom_setting&0x2))
+	if (!(battle_config.hom_setting&HOMSET_NO_INSTANT_LAND_SKILL))
 		skill_unit_move(&sd->hd->bl,gettick(),1); // apply land skills immediately
 
 	return 1;

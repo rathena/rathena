@@ -298,7 +298,7 @@ struct s_pet {
 	short hungry;//pet hungry
 	char name[NAME_LENGTH];
 	char rename_flag;
-	char incuvate;
+	char incubate;
 };
 
 struct s_homunculus {	//[orn]

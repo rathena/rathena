@@ -8,61 +8,70 @@
 #include "../config/core.h"
 #include "map.h" //ELE_MAX
 
-// state of a single attack attempt; used in flee/def penalty calculations when mobbed
+/// State of a single attack attempt; used in flee/def penalty calculations when mobbed
 typedef enum damage_lv {
-	ATK_NONE,    // not an attack
-	ATK_LUCKY,   // attack was lucky-dodged
-	ATK_FLEE,    // attack was dodged
-	ATK_MISS,    // attack missed because of element/race modifier.
-	ATK_BLOCK,   // attack was blocked by some skills.
-	ATK_DEF      // attack connected
+	ATK_NONE,    /// Not an attack
+	ATK_LUCKY,   /// Attack was lucky-dodged
+	ATK_FLEE,    /// Attack was dodged
+	ATK_MISS,    /// Attack missed because of element/race modifier.
+	ATK_BLOCK,   /// Attack was blocked by some skills.
+	ATK_DEF      /// Attack connected
 } damage_lv;
 
-enum {	// Flag of the final calculation
-	BF_WEAPON	= 0x0001,
-	BF_MAGIC	= 0x0002,
-	BF_MISC		= 0x0004,
-	BF_SHORT	= 0x0010,
-	BF_LONG		= 0x0040,
-	BF_SKILL	= 0x0100,
-	BF_NORMAL	= 0x0200,
-	BF_WEAPONMASK=0x000f,
-	BF_RANGEMASK= 0x00f0,
-	BF_SKILLMASK= 0x0f00,
+/// Flag of the final calculation
+enum e_battle_flag {
+	BF_WEAPON	= 0x0001, /// Weapon attack
+	BF_MAGIC	= 0x0002, /// Magic attack
+	BF_MISC		= 0x0004, /// Misc attack
+
+	BF_SHORT	= 0x0010, /// Short attack
+	BF_LONG		= 0x0040, /// Long attack
+
+	BF_SKILL	= 0x0100, /// Skill attack
+	BF_NORMAL	= 0x0200, /// Normal attack
+
+	BF_WEAPONMASK	= BF_WEAPON|BF_MAGIC|BF_MISC, /// Weapon attack mask
+	BF_RANGEMASK	= BF_SHORT|BF_LONG, /// Range attack mask
+	BF_SKILLMASK	= BF_SKILL|BF_NORMAL, /// Skill attack mask
 };
 
-enum e_battle_check_target
-{//New definitions [Skotlex]
-	BCT_NOONE		= 0x000000,
-	BCT_SELF		= 0x010000,
-	BCT_ENEMY		= 0x020000,
-	BCT_PARTY		= 0x040000,
-	BCT_GUILDALLY	= 0x080000, // Only allies, NOT guildmates
-	BCT_NEUTRAL		= 0x100000,
-	BCT_SAMEGUILD	= 0x200000, // No Guild Allies
-	BCT_GUILD		= 0x280000, // Guild AND Allies (BCT_SAMEGUILD|BCT_GUILDALLY)
-	BCT_NOGUILD		= 0x170000, // This should be (~BCT_GUILD&BCT_ALL)
-	BCT_NOPARTY		= 0x3b0000, // This should be (~BCT_PARTY&BCT_ALL)
-	BCT_NOENEMY		= 0x3d0000, // This should be (~BCT_ENEMY&BCT_ALL)
-	BCT_ALL			= 0x3f0000,
+/// Battle check target [Skotlex]
+enum e_battle_check_target {
+	BCT_NOONE		= 0x000000, /// No one
+	BCT_SELF		= 0x010000, /// Self
+	BCT_ENEMY		= 0x020000, /// Enemy
+	BCT_PARTY		= 0x040000, /// Party members
+	BCT_GUILDALLY	= 0x080000, /// Only allies, NOT guildmates
+	BCT_NEUTRAL		= 0x100000, /// Neutral target
+	BCT_SAMEGUILD	= 0x200000, /// Guildmates, No Guild Allies
+
+	BCT_ALL			= 0x3F0000, /// All targets
+
+	BCT_GUILD		= BCT_SAMEGUILD|BCT_GUILDALLY, /// Guild AND Allies (BCT_SAMEGUILD|BCT_GUILDALLY)
+	BCT_NOGUILD		= BCT_ALL&~BCT_GUILD, /// Except guildmates
+	BCT_NOPARTY		= BCT_ALL&~BCT_PARTY, /// Except party members
+	BCT_NOENEMY		= BCT_ALL&~BCT_ENEMY, /// Except enemy
 };
 
-// dammage structure
+/// Damage structure
 struct Damage {
 #ifdef RENEWAL
 	int statusAtk, statusAtk2, weaponAtk, weaponAtk2, equipAtk, equipAtk2, masteryAtk, masteryAtk2;
 #endif
-	int64 damage,damage2; //right, left dmg
-	int type,div_; //chk clif_damage for type @TODO add an enum ? ;  nb of hit
-	int amotion,dmotion;
-	int blewcount; //nb of knockback
-	int flag; //chk BF_* flag, (enum below)
-	int miscflag; //
-	enum damage_lv dmg_lv;	//ATK_LUCKY,ATK_FLEE,ATK_DEF
+	int64 damage, /// Right hand damage
+		damage2; /// Left hand damage
+	char type; /// chk clif_damage for type (clif.h enum e_damage_type)
+	short div_; /// Number of hit
+	int amotion,
+		dmotion;
+	int blewcount; /// Number of knockback
+	int flag; /// chk e_battle_flag
+	int miscflag;
+	enum damage_lv dmg_lv; /// ATK_LUCKY,ATK_FLEE,ATK_DEF
 };
 
 //(Used in read pc.c,) attribute table (battle_attr_fix)
-extern int attr_fix_table[4][ELE_NONE][ELE_NONE];
+extern int attr_fix_table[4][ELE_MAX][ELE_MAX];
 
 struct map_session_data;
 struct mob_data;
@@ -82,8 +91,8 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 
 // Final calculation Damage
 int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damage *d,int64 damage,uint16 skill_id,uint16 skill_lv);
-int64 battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int64 damage,int div_,uint16 skill_id,uint16 skill_lv,int flag);
-int64 battle_calc_bg_damage(struct block_list *src,struct block_list *bl,int64 damage,int div_,uint16 skill_id,uint16 skill_lv,int flag);
+int64 battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int64 damage,uint16 skill_id,int flag);
+int64 battle_calc_bg_damage(struct block_list *src,struct block_list *bl,int64 damage,uint16 skill_id,int flag);
 
 int battle_delay_damage (unsigned int tick, int amotion, struct block_list *src, struct block_list *target, int attack_type, uint16 skill_id, uint16 skill_lv, int64 damage, enum damage_lv dmg_lv, int ddelay, bool additional_effects);
 
@@ -486,7 +495,6 @@ extern struct Battle_Config
 	int max_trans_parameter;
 	int max_third_trans_parameter;
 	int max_extended_parameter;
-	int atcommand_max_stat_bypass;
 	int max_third_aspd;
 	int vcast_stat_scale;
 
@@ -528,7 +536,20 @@ extern struct Battle_Config
 	// autotrade persistency
 	int feature_autotrade;
 	int feature_autotrade_direction;
+	int feature_autotrade_head_direction;
 	int feature_autotrade_sit;
+	int feature_autotrade_open_delay;
+
+	// Fame points
+	int fame_taekwon_mission;
+	int fame_refine_lv1;
+	int fame_refine_lv2;
+	int fame_refine_lv3;
+	int fame_forge;
+	int fame_pharmacy_3;
+	int fame_pharmacy_5;
+	int fame_pharmacy_7;
+	int fame_pharmacy_10;
 
 	int disp_serverbank_msg;
 	int warg_can_falcon;
@@ -542,17 +563,8 @@ extern struct Battle_Config
 	int transcendent_status_points;
 	int taekwon_ranker_min_lv;
 	int revive_onwarp;
-
-	// Fame points
-	int fame_taekwon_mission;
-	int fame_refine_lv1;
-	int fame_refine_lv2;
-	int fame_refine_lv3;
-	int fame_forge;
-	int fame_pharmacy_3;
-	int fame_pharmacy_5;
-	int fame_pharmacy_7;
-	int fame_pharmacy_10;
+	int mail_delay;
+	int autotrade_monsterignore;
 } battle_config;
 
 void do_init_battle(void);

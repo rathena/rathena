@@ -1,11 +1,18 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
-// For more information, see LICENCE in the main folder
+/**
+ * @file account.h
+ * Module purpose is to save, load, and update changes into the account table or file.
+ * Licensed under GNU GPL.
+ *  For more information, see LICENCE in the main folder.
+ * @author Athena Dev Teams < r15k
+ * @author rAthena Dev Team
+ */
 
 #ifndef __ACCOUNT_H_INCLUDED__
 #define __ACCOUNT_H_INCLUDED__
 
 #include "../common/cbasetypes.h"
 #include "../common/mmo.h" // ACCOUNT_REG2_NUM
+#include "../config/core.h"
 
 typedef struct AccountDB AccountDB;
 typedef struct AccountDBIterator AccountDBIterator;
@@ -61,8 +68,7 @@ struct mmo_account {
 };
 
 
-struct AccountDBIterator
-{
+struct AccountDBIterator {
 	/// Destroys this iterator, releasing all allocated memory (including itself).
 	///
 	/// @param self Iterator
@@ -77,8 +83,7 @@ struct AccountDBIterator
 };
 
 
-struct AccountDB
-{
+struct AccountDB {
 	/// Initializes this database, making it ready for use.
 	/// Call this after setting the properties.
 	///

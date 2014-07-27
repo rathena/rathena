@@ -4,7 +4,7 @@
 // Columns - attacker's weapon element
 // Rows    - target's defense element
 
-1,10	// lv1 Attribute table
+1	// lv1 Attribute table
 //Neut Watr Erth Fire Wind Pois Holy Shdw Gho  Und
   100, 100, 100, 100, 100, 100, 100, 100,  70, 100,  // Neutral
   100,  25, 100, 150,  90, 100,  75, 100, 100, 100,  // Water
@@ -17,7 +17,7 @@
    70, 100, 100, 100, 100, 100,  75,  75, 125, 100,  // Ghost
   100, 100, 100, 100, 100,  50, 100,   0, 100,   0,  // Undead
 
-2,10	// lv2 Attribute table
+2	// lv2 Attribute table
 //Neut Watr Erth Fire Wind Pois Holy Shdw Gho  Und
   100, 100, 100, 100, 100, 100, 100, 100,  50, 100,  // Neutral
   100,   0, 100, 175,  80, 100,  50,  75, 100, 100,  // Water
@@ -30,7 +30,7 @@
    50,  75,  75,  75,  75,  75,  50,  50, 150, 125,  // Ghost
   100,  75,  75,  75,  75,  25, 125,   0, 100,   0,  // Undead
 
-3,10	// lv3 Attribute table
+3	// lv3 Attribute table
 //Neut Watr Erth Fire Wind Pois Holy Shdw Gho  Und
   100, 100, 100, 100, 100, 100, 100, 100,   0, 100,  // Neutral
   100, -25, 100, 200,  70, 100,  25,  50, 100, 125,  // Water
@@ -43,7 +43,7 @@
     0,  50,  50,  50,  50,  50,  25,  25, 175, 150,  // Ghost
   100,  50,  50,  50,  50,   0, 150,   0, 100,   0,  // Undead
 
-4,10	// lv4 Attribute table
+4	// lv4 Attribute table
 //Neut Watr Erth Fire Wind Pois Holy Shdw Gho  Und
   100, 100, 100, 100, 100, 100, 100, 100,   0, 100,  // Neutral
   100, -50, 100, 200,  60,  75,   0,  25, 100, 150,  // Water

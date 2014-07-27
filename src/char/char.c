@@ -1536,7 +1536,7 @@ int char_delete_char_sql(int char_id){
 
 	/* delete char's pet */
 	//Delete the hatched pet if you have one...
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id`='%d' AND `incuvate` = '0'", schema_config.pet_db, char_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id`='%d' AND `incubate` = '0'", schema_config.pet_db, char_id) )
 		Sql_ShowDebug(sql_handle);
 
 	//Delete all pets that are stored in eggs (inventory + cart)
@@ -1968,42 +1968,10 @@ int char_lan_subnetcheck(uint32 ip){
 }
 
 // Console Command Parser [Wizputer]
-int parse_console(const char* buf)
-{
-	char type[64];
-	char command[64];
-	int n=0;
-
-	if( ( n = sscanf(buf, "%63[^:]:%63[^\n]", type, command) ) < 2 ){
-		if((n = sscanf(buf, "%63[^\n]", type))<1) return -1; //nothing to do no arg
-	}
-	if( n != 2 ){ //end string
-		ShowNotice("Type: '%s'\n",type);
-		command[0] = '\0';
-	}
-	else
-		ShowNotice("Type of command: '%s' || Command: '%s'\n",type,command);
-
-	if( n == 2 && strcmpi("server", type) == 0 ){
-		if( strcmpi("shutdown", command) == 0 || strcmpi("exit", command) == 0 || strcmpi("quit", command) == 0 ){
-			runflag = CHARSERVER_ST_SHUTDOWN;
-		}
-		else if( strcmpi("alive", command) == 0 || strcmpi("status", command) == 0 )
-			ShowInfo(CL_CYAN"Console: "CL_BOLD"I'm Alive."CL_RESET"\n");
-	}
-	else if( strcmpi("ers_report", type) == 0 ){
-		ers_report();
-	}
-	else if( strcmpi("help", type) == 0 ){
-		ShowInfo("Available commands:\n");
-		ShowInfo("\t server:shutdown => Stops the server.\n");
-		ShowInfo("\t server:alive => Checks if the server is running.\n");
-		ShowInfo("\t ers_report => Displays database usage.\n");
-	}
-
-	return 0;
+//FIXME to be remove (moved to cnslif / will be done once map/char/login, all have their cnslif interface ready)
+int parse_console(const char* buf){
+	return cnslif_parse(buf);
 }
-
 
 //------------------------------------------------
 //Pincode system
@@ -2025,12 +1993,14 @@ int char_pincode_compare( int fd, struct char_session_data* sd, char* pin ){
 
 
 void char_pincode_decrypt( uint32 userSeed, char* pin ){
-	int i, pos;
+	int i;
 	char tab[10] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 	char *buf;
-	uint32 multiplier = 0x3498, baseSeed = 0x881234;
-
+	
 	for( i = 1; i < 10; i++ ){
+		int pos;
+		uint32 multiplier = 0x3498, baseSeed = 0x881234;
+		
 		userSeed = baseSeed + userSeed * multiplier;
 		pos = userSeed % ( i + 1 );
 		if( i != pos ){
@@ -2266,7 +2236,7 @@ bool char_checkdb(void){
 	}
 	//checking pet_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `pet_id`,`class`,`name`,`account_id`,`char_id`,`level`,"
-			"`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incuvate`"
+			"`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incubate`"
 			" from `%s`;", schema_config.pet_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
@@ -2651,14 +2621,14 @@ int char_config_read(const char* cfgName){
 			if (charserv_config.start_zeny < 0)
 				charserv_config.start_zeny = 0;
 		} else if (strcmpi(w1, "start_items") == 0) {
-			int i=0, n=0;
+			int i=0;
 			char *lineitem, **fields;
 			int fields_length = 3+1;
 			fields = (char**)aMalloc(fields_length*sizeof(char*));
 
 			lineitem = strtok(w2, ":");
 			while (lineitem != NULL) {
-				n = sv_split(lineitem, strlen(lineitem), 0, ',', fields, fields_length, SV_NOESCAPE_NOTERMINATE);
+				int n = sv_split(lineitem, strlen(lineitem), 0, ',', fields, fields_length, SV_NOESCAPE_NOTERMINATE);
 				if(n+1 < fields_length){
 					ShowDebug("start_items: not enough arguments for %s! Skipping...\n",lineitem);
 					lineitem = strtok(NULL, ":"); //next itemline

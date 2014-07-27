@@ -255,7 +255,6 @@ int party_recv_info(struct party* sp, int char_id)
 	int removed_count = 0;
 	int added[MAX_PARTY];// member_id in new data
 	int added_count = 0;
-	int i;
 	int member_id;
 
 	nullpo_ret(sp);
@@ -263,6 +262,8 @@ int party_recv_info(struct party* sp, int char_id)
 	p = (struct party_data*)idb_get(party_db, sp->party_id);
 	if( p != NULL )// diff members
 	{
+		int i;
+
 		for( member_id = 0; member_id < MAX_PARTY; ++member_id )
 		{
 			member = &p->party.member[member_id];
@@ -537,8 +538,6 @@ int party_removemember(struct map_session_data* sd, int account_id, char* name)
 
 int party_removemember2(struct map_session_data *sd,int char_id,int party_id)
 {
-	struct party_data *p;
-
 	if( sd ) {
 		if( !sd->status.party_id )
 			return -3;
@@ -546,6 +545,8 @@ int party_removemember2(struct map_session_data *sd,int char_id,int party_id)
 		return 1;
 	} else {
 		int i;
+		struct party_data *p;
+
 		if( !(p = party_search(party_id)) )
 			return -2;
 
@@ -767,7 +768,7 @@ int party_changeleader(struct map_session_data *sd, struct map_session_data *tsd
 /// - changes maps
 /// - logs in or out
 /// - gains a level (disabled)
-int party_recv_movemap(int party_id,int account_id,int char_id, unsigned short map,int online,int lv)
+int party_recv_movemap(int party_id,int account_id,int char_id, unsigned short map_idx,int online,int lv)
 {
 	struct party_member* m;
 	struct party_data* p;
@@ -785,7 +786,7 @@ int party_recv_movemap(int party_id,int account_id,int char_id, unsigned short m
 	}
 
 	m = &p->party.member[i];
-	m->map = map;
+	m->map = map_idx;
 	m->online = online;
 	m->lv = lv;
 	//Check if they still exist on this map server

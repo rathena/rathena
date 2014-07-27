@@ -315,16 +315,15 @@ int chmapif_parse_regmapuser(int fd, int id){
 		return 0;
 	{
 		//TODO: When data mismatches memory, update guild/party online/offline states.
-		int aid, cid, i;
-		struct online_char_data* character;
 		DBMap* online_char_db = char_get_onlinedb();
+		int i;
 
 		map_server[id].users = RFIFOW(fd,4);
 		online_char_db->foreach(online_char_db,char_db_setoffline,id); //Set all chars from this server as 'unknown'
 		for(i = 0; i < map_server[id].users; i++) {
-			aid = RFIFOL(fd,6+i*8);
-			cid = RFIFOL(fd,6+i*8+4);
-			character = idb_ensure(online_char_db, aid, char_create_online_data);
+			int aid = RFIFOL(fd,6+i*8);
+			int cid = RFIFOL(fd,6+i*8+4);
+			struct online_char_data* character = idb_ensure(online_char_db, aid, char_create_online_data);
 			if( character->server > -1 && character->server != id )
 			{
 				ShowNotice("Set map user: Character (%d:%d) marked on map server %d, but map server %d claims to have (%d:%d) online!\n",
@@ -349,7 +348,7 @@ int chmapif_parse_regmapuser(int fd, int id){
  */
 int chmapif_parse_reqsavechar(int fd, int id){
 	if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
-            return 0;
+		return 0;
 	{
 		int aid = RFIFOL(fd,4), cid = RFIFOL(fd,8), size = RFIFOW(fd,2);
 		struct online_char_data* character;
@@ -450,7 +449,7 @@ int chmapif_parse_authok(int fd){
 //Request to save skill cooldown data
 int chmapif_parse_req_saveskillcooldown(int fd){
 	if( RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2) )
-            return 0;
+		return 0;
 	else {
 		int count, aid, cid;
 		aid = RFIFOL(fd,4);
@@ -688,7 +687,7 @@ int chmapif_parse_fwlog_changestatus(int fd){
 		RFIFOSKIP(fd,44);
 
 		Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`name`,`char_id`,`unban_time` FROM `%s` WHERE `name` = '%s'", schema_config.char_db, esc_name) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id` FROM `%s` WHERE `name` = '%s'", schema_config.char_db, esc_name) )
 			Sql_ShowDebug(sql_handle);
 		else if( Sql_NumRows(sql_handle) == 0 ) {
 			result = 1; // 1-player not found
@@ -697,12 +696,10 @@ int chmapif_parse_fwlog_changestatus(int fd){
 			Sql_ShowDebug(sql_handle);
 			result = 1;
 		} else {
-			char name[NAME_LENGTH];
-			int account_id;
+			int t_aid; //targit account id
 			char* data;
 
-			Sql_GetData(sql_handle, 0, &data, NULL); account_id = atoi(data);
-			Sql_GetData(sql_handle, 1, &data, NULL); safestrncpy(name, data, sizeof(name));
+			Sql_GetData(sql_handle, 0, &data, NULL); t_aid = atoi(data);
 			Sql_FreeResult(sql_handle);
 
 			if(!chlogif_isconnected())
@@ -715,40 +712,40 @@ int chmapif_parse_fwlog_changestatus(int fd){
 				case 1: // block
 					WFIFOHEAD(login_fd,10);
 					WFIFOW(login_fd,0) = 0x2724;
-					WFIFOL(login_fd,2) = account_id;
+					WFIFOL(login_fd,2) = t_aid;
 					WFIFOL(login_fd,6) = 5; // new account status
 					WFIFOSET(login_fd,10);
 				break;
 				case 2: // ban
 					WFIFOHEAD(login_fd,10);
 					WFIFOW(login_fd, 0) = 0x2725;
-					WFIFOL(login_fd, 2) = account_id;
+					WFIFOL(login_fd, 2) = t_aid;
 					WFIFOL(login_fd, 6) = timediff;
 					WFIFOSET(login_fd,10);
 				break;
 				case 3: // unblock
 					WFIFOHEAD(login_fd,10);
 					WFIFOW(login_fd,0) = 0x2724;
-					WFIFOL(login_fd,2) = account_id;
+					WFIFOL(login_fd,2) = t_aid;
 					WFIFOL(login_fd,6) = 0; // new account status
 					WFIFOSET(login_fd,10);
 				break;
 				case 4: // unban
 					WFIFOHEAD(login_fd,6);
 					WFIFOW(login_fd,0) = 0x272a;
-					WFIFOL(login_fd,2) = account_id;
+					WFIFOL(login_fd,2) = t_aid;
 					WFIFOSET(login_fd,6);
 				break;
 				case 5: // changesex
 					answer = false;
 					WFIFOHEAD(login_fd,6);
 					WFIFOW(login_fd,0) = 0x2727;
-					WFIFOL(login_fd,2) = account_id;
+					WFIFOL(login_fd,2) = t_aid;
 					WFIFOSET(login_fd,6);
 				break;
 				case 6:
 					answer = (val1&4); // vip_req val1=type, &1 login send return, &2 update timestamp, &4 map send answer
-					chlogif_reqvipdata(account_id, val1, timediff, fd);
+					chlogif_reqvipdata(t_aid, val1, timediff, fd);
 					break;
 				case 7:
 					answer = (val1&1); //val&1 request answer, val1&2 save data
@@ -956,7 +953,7 @@ int chmapif_parse_reqauth(int fd, int id){
         struct auth_node* node;
         struct mmo_charstatus* cd;
         struct mmo_charstatus char_dat;
-        bool autotrade = false;
+        bool autotrade;
 
         DBMap*  auth_db = char_get_authdb();
         DBMap* char_db_ = char_get_chardb();
@@ -966,7 +963,7 @@ int chmapif_parse_reqauth(int fd, int id){
         login_id1  = RFIFOL(fd,10);
         sex        = RFIFOB(fd,14);
         ip         = ntohl(RFIFOL(fd,15));
-        autotrade = RFIFOB(fd,19);
+        autotrade  = RFIFOB(fd,19);
         RFIFOSKIP(fd,20);
 
         node = (struct auth_node*)idb_get(auth_db, account_id);

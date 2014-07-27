@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `zenylog` (
   `time` datetime NOT NULL default '0000-00-00 00:00:00',
   `char_id` int(11) NOT NULL default '0',
   `src_id` int(11) NOT NULL default '0',
-  `type` enum('T','V','P','M','S','N','D','C','A','E','I','B') NOT NULL default 'S',
+  `type` enum('T','V','P','M','S','N','D','C','A','E','I','B','K') NOT NULL default 'S',
   `amount` int(11) NOT NULL default '0',
   `map` varchar(11) NOT NULL default '',
   PRIMARY KEY  (`id`),

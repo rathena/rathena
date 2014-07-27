@@ -307,7 +307,7 @@ static int pet_return_egg(struct map_session_data *sd, struct pet_data *pd)
 		clif_additem(sd,0,0,flag);
 		map_addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 	}
-	pd->pet.incuvate = 1;
+	pd->pet.incubate = 1;
 	unit_free(&pd->bl,CLR_OUTSIGHT);
 
 	status_calc_pc(sd,SCO_NONE);
@@ -331,8 +331,8 @@ int pet_data_init(struct map_session_data *sd, struct s_pet *pet)
 	}
 	if (sd->status.pet_id != pet->pet_id) {
 		if (sd->status.pet_id) {
-			//Wrong pet?? Set incuvate to no and send it back for saving.
-			pet->incuvate = 1;
+			//Wrong pet?? Set incubate to no and send it back for saving.
+			pet->incubate = 1;
 			intif_save_petdata(sd->status.account_id,pet);
 			sd->status.pet_id = 0;
 			return 1;
@@ -397,12 +397,12 @@ int pet_birth_process(struct map_session_data *sd, struct s_pet *pet)
 
 	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->master == sd);
 
-	if(sd->status.pet_id && pet->incuvate == 1) {
+	if(sd->status.pet_id && pet->incubate == 1) {
 		sd->status.pet_id = 0;
 		return 1;
 	}
 
-	pet->incuvate = 0;
+	pet->incubate = 0;
 	pet->account_id = sd->status.account_id;
 	pet->char_id = sd->status.char_id;
 	sd->status.pet_id = pet->pet_id;
@@ -440,7 +440,7 @@ int pet_recv_petdata(int account_id,struct s_pet *p,int flag)
 		sd->status.pet_id = 0;
 		return 1;
 	}
-	if(p->incuvate == 1) {
+	if(p->incubate == 1) {
 		int i;
 		//Delete egg from inventory. [Skotlex]
 		for (i = 0; i < MAX_INVENTORY; i++) {
@@ -548,26 +548,38 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 	return 0;
 }
 
-int pet_get_egg(int account_id,int pet_id,int flag)
-{	//This function is invoked when a new pet has been created, and at no other time!
+/**
+ * Is invoked _only_ when a new pet has been created is a product of packet 0x3880
+ * see mapif_pet_created@int_pet.c for more information
+ * Handles new pet data from inter-server and prepares item information
+ * to add pet egg
+ *
+ * pet_id - Should contain pet id otherwise means failure
+ * returns true on success
+ **/
+bool pet_get_egg(int account_id, short pet_class, int pet_id ) {
 	struct map_session_data *sd;
 	struct item tmp_item;
-	int i=0;
-	unsigned char ret = 0;
+	int i = 0, ret = 0;
 
-	if(flag)
-		return 0;
+	if( pet_id == 0 || pet_class == 0 )
+		return false;
 
 	sd = map_id2sd(account_id);
-	if(sd == NULL)
-		return 0;
+	if( sd == NULL )
+		return false;
 
-	i = search_petDB_index(sd->catch_target_class,PET_CLASS);
+	// i = pet_search_petDB_index(sd->catch_target_class,PET_CLASS);
+	// issue: 8150
+	// Before this change in cases where more than one pet egg were requested in a short
+	// period of time it wasn't possible to know which kind of egg was being requested after
+	// the first request. [Panikon]
+	i = search_petDB_index(pet_class,PET_CLASS);
 	sd->catch_target_class = -1;
 
 	if(i < 0) {
 		intif_delete_petdata(pet_id);
-		return 0;
+		return false;
 	}
 
 	memset(&tmp_item,0,sizeof(tmp_item));
@@ -582,7 +594,7 @@ int pet_get_egg(int account_id,int pet_id,int flag)
 		map_addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 	}
 
-	return 1;
+	return true;
 }
 
 static int pet_unequipitem(struct map_session_data *sd, struct pet_data *pd);
@@ -598,7 +610,7 @@ int pet_menu(struct map_session_data *sd,int menunum)
 		return 1;
 
 	//You lost the pet already.
-	if(!sd->status.pet_id || sd->pd->pet.intimate <= 0 || sd->pd->pet.incuvate)
+	if(!sd->status.pet_id || sd->pd->pet.intimate <= 0 || sd->pd->pet.incubate)
 		return 1;
 
 	egg_id = itemdb_exists(sd->pd->petDB->EggID);
@@ -796,32 +808,35 @@ static int pet_randomwalk(struct pet_data *pd,unsigned int tick)
 	Assert((pd->master == 0) || (pd->master->pd == pd));
 
 	if(DIFF_TICK(pd->next_walktime,tick) < 0 && unit_can_move(&pd->bl)) {
-		const int retrycount=20;
-		int i,x,y,c,d=12-pd->move_fail_count;
-		if(d<5) d=5;
-		for(i=0;i<retrycount;i++){
-			int r=rnd();
-			x=pd->bl.x+r%(d*2+1)-d;
-			y=pd->bl.y+r/(d*2+1)%(d*2+1)-d;
-			if(map_getcell(pd->bl.m,x,y,CELL_CHKPASS) && unit_walktoxy(&pd->bl,x,y,0)){
-				pd->move_fail_count=0;
+		const int retrycount = 20;
+		int i, c, d = 12-pd->move_fail_count;
+
+		if(d < 5)
+			d = 5;
+		for(i = 0; i < retrycount; i++) {
+			int r = rnd(), x, y;
+
+			x = pd->bl.x+r%(d*2+1)-d;
+			y = pd->bl.y+r/(d*2+1)%(d*2+1)-d;
+			if(map_getcell(pd->bl.m,x,y,CELL_CHKPASS) && unit_walktoxy(&pd->bl,x,y,0)) {
+				pd->move_fail_count = 0;
 				break;
 			}
-			if(i+1>=retrycount){
+			if(i + 1 >= retrycount) {
 				pd->move_fail_count++;
-				if(pd->move_fail_count>1000){
-					ShowWarning("PET can't move. hold position %d, class = %d\n",pd->bl.id,pd->pet.class_);
-					pd->move_fail_count=0;
+				if(pd->move_fail_count > 1000) {
+					ShowWarning("Pet can't move. Holding position %d, class = %d\n",pd->bl.id,pd->pet.class_);
+					pd->move_fail_count = 0;
 					pd->ud.canmove_tick = tick + 60000;
 					return 0;
 				}
 			}
 		}
-		for(i=c=0;i<pd->ud.walkpath.path_len;i++){
+		for(i = c = 0; i < pd->ud.walkpath.path_len; i++) {
 			if(pd->ud.walkpath.path[i]&1)
-				c+=pd->status.speed*14/10;
+				c += pd->status.speed*14/10;
 			else
-				c+=pd->status.speed;
+				c += pd->status.speed;
 		}
 		pd->next_walktime = tick+rnd()%3000+3000+c;
 
@@ -1008,7 +1023,6 @@ int pet_lootitem_drop(struct pet_data *pd,struct map_session_data *sd)
 	int i;
 	struct item_drop_list *dlist;
 	struct item_drop *ditem;
-	struct item *it;
 	if(!pd || !pd->loot || !pd->loot->count)
 		return 0;
 	dlist = ers_alloc(item_drop_list_ers, struct item_drop_list);
@@ -1021,6 +1035,8 @@ int pet_lootitem_drop(struct pet_data *pd,struct map_session_data *sd)
 	dlist->item = NULL;
 
 	for(i=0;i<pd->loot->count;i++) {
+		struct item *it;
+
 		it = &pd->loot->item[i];
 		if(sd){
 			unsigned char flag = 0;

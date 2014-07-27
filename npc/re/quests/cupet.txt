@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Z3R0
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -11,10 +11,11 @@
 //= Exchanges Hunted Items for Tames
 //===== Additional Comments: =================================
 //= 1.0 First / Optimized Version
+//= 1.1 Little clean-up & added a delitem. [Capuche]
 //============================================================
 
 // 1st NPC
--	script	CPM1	750,{
+-	script	CPM1	-1,{
 	
 	set .@npc$, "[Cute Pet Manager]";
 	
@@ -45,7 +46,7 @@
 }
 
 // 2nd NPC
--	script	CPM2	750,{
+-	script	CPM2	-1,{
 	
 	set .@npc$, "[Cute Pet Manager]";
 	
@@ -53,7 +54,6 @@
 	setarray .@tame_amount[0],2,2,2,2,2,2,2,2,2,2,2,2;
 	setarray .@hunt_id[0],938,935,925,7033,945,942,931,901,1094,1021,936,1035;
 	setarray .@hunt_amount[0],500,600,500,300,500,500,500,500,500,500,500,500;
-	setarray .@hunt_item_count[0],1,1,1,1,1,1,1,1,1;
 	setarray .@mob_id[0],1031,1042,1019,1077,1056,1057,1023,1026,1188,1110,1029;
 	set .@tame_gets, 2;
 
@@ -77,7 +77,7 @@
 }
 
 // 3rd NPC
--	script	CPM3	750,{
+-	script	CPM3	-1,{
 	
 	set .@npc$, "[Cute Pet Manager]";
 	
@@ -115,7 +115,7 @@ function	script	cute_pet_manager	{
 	// getarg(2) -> .@hunt_id Array
 	// getarg(3) -> .@hunt_amount Array
 	// getarg(4) -> .@mob_id Array
-	// getarg(5) -> Attempt Variable
+	// getarg(5) ->  Attempt Variable
 	// getarg(6) -> .@tame_gets Variable
 	// getarg(7) -> .@hunt_id2 Array
 	// getarg(8) -> .@hunt_amount2 Array
@@ -135,6 +135,7 @@ function	script	cute_pet_manager	{
 	mes "that you can tame with the item.";
 	next;
 	
+	mes "[Cute Pet Manager]";
 	mes "Also I will explain what materials";
 	mes "you need to bring in order to";
 	mes "get the taming item.";
@@ -160,9 +161,9 @@ function	script	cute_pet_manager	{
 	next;
 	
 	// Create Menu System
-	for (set .@a, 0; .@a < getarraysize(getarg(0)); set .@a, .@a + 1) { 
+	set .@size, getarraysize(getarg(0));
+	for (set .@a, 0; .@a < .@size; set .@a, .@a + 1)
 		set .@menu$, .@menu$ + (.@menu$ == "" ? "" : ":") + getitemname(getelementofarray(getarg(0), .@a));
-	}
 	
 	// Query Player Choice
 	set .@choice, select(.@menu$) - 1;
@@ -175,34 +176,34 @@ function	script	cute_pet_manager	{
 	set .@mob_id, getelementofarray(getarg(4), .@choice);
 	set .@hunt_id2, getelementofarray(getarg(7), .@choice);
 	set .@hunt_amount2, getelementofarray(getarg(8), .@choice);
-	
-	dispbottom "Tame ID: " + .@tame_id;
-	dispbottom "Tame Amount: " + .@tame_amount;
-	dispbottom "Hunt ID: " + .@hunt_id;
-	dispbottom "Hunt Name: " + getitemname(.@hunt_id);
-	dispbottom "Hunt Amount: " + .@hunt_amount;
-	dispbottom "Mob ID: " + .@mob_id;
-	dispbottom "Hunt ID2: " + .@hunt_id2;
-	dispbottom "Hunt Amount2: " + .@hunt_amount2;
-	
-	if (.@hunt_id2) { set .@hunt2_count, countitem(.@hunt_id2); }
-	if (countitem(.@hunt_id) >= .@hunt_amount && countitem(6083) > 0 && .@hunt2_count >= .@hunt_amount2) {
 
+	// dispbottom "Tame ID: " + .@tame_id;
+	// dispbottom "Tame Amount: " + .@tame_amount;
+	// dispbottom "Hunt ID: " + .@hunt_id;
+	// dispbottom "Hunt Name: " + getitemname(.@hunt_id);
+	// dispbottom "Hunt Amount: " + .@hunt_amount;
+	// dispbottom "Mob ID: " + .@mob_id;
+	if (.@hunt_id2) { 
+		// dispbottom "Hunt ID2: " + .@hunt_id2;
+		// dispbottom "Hunt Amount2: " + .@hunt_amount2;
+		set .@hunt2_count, countitem(.@hunt_id2);
+	}
+	if (countitem(.@hunt_id) >= .@hunt_amount && countitem(6083) > 0 && .@hunt2_count >= .@hunt_amount2) {
 		mes "[Cute Pet Manager]";
 		mes "Ah, you have gathered all items";
 		mes "with your friends. You can now";
 		mes "exchange for an " + getitemname(.@tame_id) + ".";
 		mes "Do you want to exchange with me?";
 		next;
-		
 		if  (select("Exchange:Don't Exchange") == 2) { 
 			mes "[Cute Pet Manager]";
 			mes "You don't? You will come back again.";
 			close;
 		}
-		
 		delitem .@hunt_id, .@hunt_amount;
 		delitem 6083, 1;
+		if (.@hunt_id2)
+			delitem .@hunt_id2, .@hunt_amount2;
 		set getarg(5), getarg(5) + 1;
 		getitem .@tame_id, .@tame_amount;
 		
@@ -217,7 +218,7 @@ function	script	cute_pet_manager	{
 		mes "^FF0000" + strmobinfo(1,.@mob_id) + "^000000 monsters.";
 		next;
 		mes "[Cute Pet Manager]";
-		mes "Bring ^FF0000" + .@hunt_amount + " " + getitemname(.@hunt_id) + "^000000s " + (.@hunt_id2 ? ", ^FF0000" + .@hunt_amount2 + " " + getitemname(.@hunt_id2) : "") + " ^000000 and ^FF00001 Dolly Capsule^000000";
+		mes "Bring ^FF0000" + .@hunt_amount + " " + getitemname(.@hunt_id) + "^000000" + (.@hunt_id2 ? ", ^FF0000" + .@hunt_amount2 + " " + getitemname(.@hunt_id2) : "") + " ^000000 and ^FF00001 Dolly Capsule^000000";
 		mes "then you can exchange them";
 		mes "for an " + getitemname(.@tame_id) + ".";
 		close;
@@ -225,18 +226,18 @@ function	script	cute_pet_manager	{
 }
 
 // NPC Duplicates
-prontera,67,212,5	duplicate(CPM1)	Cute Pet Manager#1	750
-prontera,242,92,3	duplicate(CPM2)	Cute Pet Manager#2	750
-prontera,179,92,3	duplicate(CPM3)	Cute Pet Manager#3	750
+prontera,67,212,5	duplicate(CPM1)	Cute Pet Manager#1	4_M_ALCHE_C
+prontera,242,92,3	duplicate(CPM2)	Cute Pet Manager#2	4_M_ALCHE_C
+prontera,179,92,3	duplicate(CPM3)	Cute Pet Manager#3	4_M_ALCHE_C
 
-geffen,180,125,5	duplicate(CPM1)	Cute Pet Manager#4	750
-geffen,152,66,3	duplicate(CPM2)	Cute Pet Manager#5	750
-geffen,197,95,3	duplicate(CPM3)	Cute Pet Manager#6	750
+geffen,180,125,5	duplicate(CPM1)	Cute Pet Manager#4	4_M_ALCHE_C
+geffen,152,66,3	duplicate(CPM2)	Cute Pet Manager#5	4_M_ALCHE_C
+geffen,197,95,3	duplicate(CPM3)	Cute Pet Manager#6	4_M_ALCHE_C
 
-morocc,115,83,5	duplicate(CPM1)	Cute Pet Manager#7	750
-morocc,218,130,3	duplicate(CPM2)	Cute Pet Manager#8	750
-morocc,236,225,3	duplicate(CPM3)	Cute Pet Manager#9	750
+morocc,115,83,5	duplicate(CPM1)	Cute Pet Manager#7	4_M_ALCHE_C
+morocc,218,130,3	duplicate(CPM2)	Cute Pet Manager#8	4_M_ALCHE_C
+morocc,236,225,3	duplicate(CPM3)	Cute Pet Manager#9	4_M_ALCHE_C
 
-payon,109,278,5	duplicate(CPM1)	Cute Pet Manager#10	750
-payon,157,124,3	duplicate(CPM2)	Cute Pet Manager#11	750
-payon,85,237,3	duplicate(CPM3)	Cute Pet Manager#12	750
+payon,109,278,5	duplicate(CPM1)	Cute Pet Manager#10	4_M_ALCHE_C
+payon,157,124,3	duplicate(CPM2)	Cute Pet Manager#11	4_M_ALCHE_C
+payon,85,237,3	duplicate(CPM3)	Cute Pet Manager#12	4_M_ALCHE_C

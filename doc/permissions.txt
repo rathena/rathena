@@ -199,3 +199,10 @@ Enable to use atcommand while talking with NPC.
 Bypass max parameter limit while using @clonestat
 
 ---------------------------------------
+
+*bypass_max_stat
+
+Allow to bypass the maximum stat parameter (at conf/player.conf) to
+maximum value 32,767.
+
+---------------------------------------

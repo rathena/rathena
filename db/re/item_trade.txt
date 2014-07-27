@@ -2524,3 +2524,9 @@
 
 // kRO 2014-05-28
 6885,475,100	//Piece_Of_Soul_Dragon
+20014,475,100	//C_Lincoln_Hat
+20015,475,100	//C_Lincoln_Beard
+20016,475,100	//C_Cool_dinner_hat
+20018,475,100	//C_Holo_ear
+20019,475,100	//C_Beret_Of_Artist
+20038,475,100	//C_Alphonse_Helmet

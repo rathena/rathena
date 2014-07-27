@@ -42,12 +42,13 @@ struct map_session_data* bg_getavailablesd(struct battleground_data *bg)
 int bg_team_delete(int bg_id)
 { // Deletes BG Team from db
 	int i;
-	struct map_session_data *sd;
 	struct battleground_data *bg = bg_team_search(bg_id);
 
 	if( bg == NULL ) return 0;
 	for( i = 0; i < MAX_BG_MEMBERS; i++ )
 	{
+		struct map_session_data *sd;
+
 		if( (sd = bg->members[i].sd) == NULL )
 			continue;
 
@@ -79,7 +80,6 @@ int bg_team_join(int bg_id, struct map_session_data *sd)
 { // Player joins team
 	int i;
 	struct battleground_data *bg = bg_team_search(bg_id);
-	struct map_session_data *pl_sd;
 
 	if( bg == NULL || sd == NULL || sd->bg_id ) return 0;
 
@@ -96,6 +96,8 @@ int bg_team_join(int bg_id, struct map_session_data *sd)
 
 	for( i = 0; i < MAX_BG_MEMBERS; i++ )
 	{
+		struct map_session_data *pl_sd;
+
 		if( (pl_sd = bg->members[i].sd) != NULL && pl_sd != sd )
 			clif_hpmeter_single(sd->fd, pl_sd->bl.id, pl_sd->battle_status.hp, pl_sd->battle_status.max_hp);
 	}

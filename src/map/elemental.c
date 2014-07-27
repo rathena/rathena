@@ -808,14 +808,14 @@ static bool read_elementaldb_sub(char* str[], int columns, int current) {
 	status->race = atoi(str[20]);
 
 	ele = atoi(str[21]);
-	status->def_ele = ele%10;
-	status->ele_lv = ele/20;
-	if( status->def_ele >= ELE_ALL ) {
+	status->def_ele = ele%20;
+	status->ele_lv = (unsigned char)floor(ele/20.);
+	if( !CHK_ELEMENT(status->def_ele) ) {
 		ShowWarning("read_elementaldb_sub: Elemental %d has invalid element type %d (max element is %d)\n", db->class_, status->def_ele, ELE_ALL - 1);
 		status->def_ele = ELE_NEUTRAL;
 	}
-	if( status->ele_lv < 1 || status->ele_lv > 4 ) {
-		ShowWarning("read_elementaldb_sub: Elemental %d has invalid element level %d (max is 4)\n", db->class_, status->ele_lv);
+	if( !CHK_ELEMENT_LEVEL(status->ele_lv) ) {
+		ShowWarning("read_elementaldb_sub: Elemental %d has invalid element level %d (max is %d)\n", db->class_, status->ele_lv, MAX_ELE_LEVEL);
 		status->ele_lv = 1;
 	}
 

@@ -1165,7 +1165,7 @@ ACMD_FUNC(heal)
 
 	if ( hp < 0 && sp <= 0 ) {
 		status_damage(NULL, &sd->bl, -hp, -sp, 0, 0);
-		clif_damage(&sd->bl,&sd->bl, gettick(), 0, 0, -hp, 0, 4, 0);
+		clif_damage(&sd->bl,&sd->bl, gettick(), 0, 0, -hp, 0, DMG_ENDURE, 0);
 		clif_displaymessage(fd, msg_txt(sd,156)); // HP or/and SP modified.
 		return 0;
 	}
@@ -1176,7 +1176,7 @@ ACMD_FUNC(heal)
 			status_heal(&sd->bl, hp, 0, 0);
 		else {
 			status_damage(NULL, &sd->bl, -hp, 0, 0, 0);
-			clif_damage(&sd->bl,&sd->bl, gettick(), 0, 0, -hp, 0, 4, 0);
+			clif_damage(&sd->bl,&sd->bl, gettick(), 0, 0, -hp, 0, DMG_ENDURE, 0);
 		}
 	}
 
@@ -2523,7 +2523,7 @@ ACMD_FUNC(param)
 	status[4] = &sd->status.dex;
 	status[5] = &sd->status.luk;
 
-	if( battle_config.atcommand_max_stat_bypass )
+	if( pc_has_permission(sd, PC_PERM_BYPASS_MAX_STAT) )
 		max_status[0] = max_status[1] = max_status[2] = max_status[3] = max_status[4] = max_status[5] = SHRT_MAX;
 	else {
 		max_status[0] = pc_maxparameter(sd,PARAM_STR);
@@ -2585,7 +2585,7 @@ ACMD_FUNC(stat_all)
 		max_status[5] = pc_maxparameter(sd,PARAM_LUK);
 		value = SHRT_MAX;
 	} else {
-		if( battle_config.atcommand_max_stat_bypass )
+		if( pc_has_permission(sd, PC_PERM_BYPASS_MAX_STAT) )
 			max_status[0] = max_status[1] = max_status[2] = max_status[3] = max_status[4] = max_status[5] = SHRT_MAX;
 		else {
 			max_status[0] = pc_maxparameter(sd,PARAM_STR);
@@ -2893,7 +2893,6 @@ ACMD_FUNC(char_ban)
 	char * modif_p;
 	int32 timediff=0; //don't set this as uint as we may want to decrease banned time
 	int bantype=0; //2=account block, 6=char specific
-	char output[256];
 
 	nullpo_retr(-1, sd);
 
@@ -2933,9 +2932,11 @@ ACMD_FUNC(char_ban)
 	else 
 		chrif_req_charban(sd->status.account_id, atcmd_player_name,timediff);
 	
-	safesnprintf(output,sizeof(output),msg_txt(sd,88),bantype==6?"char":"login"); // Sending request to %s server...
-	clif_displaymessage(fd, output);
-
+	{
+		char output[256];
+		safesnprintf(output,sizeof(output),msg_txt(sd,88),bantype==6?"char":"login"); // Sending request to %s server...
+		clif_displaymessage(fd, output);
+	}
 	return 0;
 }
 
@@ -3916,7 +3917,6 @@ ACMD_FUNC(mapinfo) {
 	/* Skill damage adjustment info [Cydh] */
 #ifdef ADJUST_SKILL_DAMAGE
 	if (map[m_id].flag.skill_damage) {
-		int j;
 		clif_displaymessage(fd,msg_txt(sd,1052));	// Skill Damage Adjustments:
 		sprintf(atcmd_output," > [Map] %d%%, %d%%, %d%%, %d%% | Caster:%d"
 			,map[m_id].adjust.damage.pc
@@ -3926,6 +3926,8 @@ ACMD_FUNC(mapinfo) {
 			,map[m_id].adjust.damage.caster);
 		clif_displaymessage(fd, atcmd_output);
 		if (map[m_id].skill_damage[0].skill_id) {
+			int j;
+
 			clif_displaymessage(fd," > [Map Skill] Name : Player, Monster, Boss Monster, Other | Caster");
 			for (j = 0; j < MAX_MAP_SKILL_MODIFIER; j++) {
 				if (map[m_id].skill_damage[j].skill_id) {
@@ -5750,6 +5752,8 @@ ACMD_FUNC(autotrade) {
 	}
 
 	sd->state.autotrade = 1;
+	if (battle_config.autotrade_monsterignore)
+		sd->state.monster_ignore = 1;
 
 	if( sd->state.vending ){
 		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", vendings_db, sd->vender_id ) != SQL_SUCCESS ){
@@ -6926,9 +6930,9 @@ ACMD_FUNC(mail)
  *------------------------------------------*/
 ACMD_FUNC(mobinfo)
 {
-	unsigned char msize[3][7] = {"Small", "Medium", "Large"};
-	unsigned char mrace[12][11] = {"Formless", "Undead", "Beast", "Plant", "Insect", "Fish", "Demon", "Demi-Human", "Angel", "Dragon", "Boss", "Non-Boss"};
-	unsigned char melement[10][8] = {"Neutral", "Water", "Earth", "Fire", "Wind", "Poison", "Holy", "Dark", "Ghost", "Undead"};
+	unsigned char msize[SZ_ALL][7] = { "Small", "Medium", "Large" };
+	unsigned char mrace[RC_ALL][11] = { "Formless", "Undead", "Beast", "Plant", "Insect", "Fish", "Demon", "Demi-Human", "Angel", "Dragon", "Player" };
+	unsigned char melement[ELE_ALL][8] = { "Neutral", "Water", "Earth", "Fire", "Wind", "Poison", "Holy", "Dark", "Ghost", "Undead" };
 	char atcmd_output2[CHAT_SIZE_MAX];
 	struct item_data *item_data;
 	struct mob_db *mob, *mob_array[MAX_SEARCH];
@@ -10071,7 +10075,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 		return false;
 
 	//If cannot use atcomamnd while talking with NPC [Kichi]
-	if (sd->npc_id && sd->state.disable_atcommand_on_npc)
+	if (type == 1 && sd->npc_id && sd->state.disable_atcommand_on_npc)
 		return false;
 
 	//Block NOCHAT but do not display it as a normal message

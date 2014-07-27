@@ -39,7 +39,7 @@ function	script	F_GM_NPC	{
 	if (getarg(1) == 0) {
 		// Integer password
 		if (getarg(3,0)) {
-			set .@error, input(.@input,getarg(2),getarg(3));
+			.@error = input(.@input,getarg(2),getarg(3));
 			if (.@error)
 				return -2;
 		} else
@@ -151,5 +151,8 @@ List of GM Management NPCs (incomplete)
 - Monster Race Manager
 - Vote Globalvar Girl#yuno (disabled)
 - 2013questreset2#xmas (event, disabled)
-
+--------------------------
+- Mercenary Switch#Spear
+- Mercenary Switch#Bow
+- Mercenary Switch#Sword
 */

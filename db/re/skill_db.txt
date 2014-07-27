@@ -228,7 +228,7 @@
 128,0,0,0,0,0,0,10,0,no,0,0,0,misc,0,0x0,		HT_STEELCROW,Steel Crow
 129,5,8,1,0,0x42,1,5,1:2:3:4:5,yes,0,0,0,misc,0,0x80,	HT_BLITZBEAT,Blitz Beat
 130,3:5:7:9,6,2,0,0x3,3,4,1,no,0,0,0,misc,0,0x0,	HT_DETECTING,Detect
-131,4:5:6:7:8,6,32,0,0x1,0,5,1,no,0,0,0,misc,0,0x2000,	HT_SPRINGTRAP,Spring Trap
+131,4:5:6:7:8,6,32,0,0x1,0,5,1,no,0,0,0,misc,0,0x0,	HT_SPRINGTRAP,Spring Trap
 
 //****
 // Assassin
@@ -870,7 +870,7 @@
 1010,9,6,1,0,0x1,0,1,0,no,0,0x1,0,misc,0,0x0,	BA_PANGVOICE,Pang Voice
 1011,9,6,1,0,0x1,0,1,0,no,0,0x1,0,misc,0,0x0,	DC_WINKCHARM,Wink of Charm
 1012,0,0,0,0,0,0,1,0,no,0,0x1,0,weapon,0,0x4000,	BS_UNFAIRLYTRICK,Unfair Trick
-1013,0,6,4,0,0x3,2,1,0,no,0,0x1,0,weapon,0,0x0,	BS_GREED,Greed
+1013,0,6,4,0,0x3,2,1,0,no,0,0x1,0,weapon,0,0x2000,	BS_GREED,Greed
 1014,0,6,4,6,0x3,14,1,0,yes,0,0x1,0,magic,0,0x0,	PR_REDEMPTIO,Redemptio
 1015,9,6,16,0,0x1,0,1,1,no,0,0x401,0,weapon,0,0x0,	MO_KITRANSLATION,Ki Translation
 1016,-1,6,1,-1,0x2,1,1,1,no,0,0x1,0,weapon,5,0x0,	MO_BALKYOUNG,Ki Explosion
@@ -989,7 +989,7 @@
 2235,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,		RA_RANGERMAIN,Ranger Main
 2236,9,8,1,-1,0,0,10,1,yes,0,0,0,weapon,0,0x80,	RA_AIMEDBOLT,Aimed Bolt
 2237,9,6,2,0,0x3,3,1,1,no,0,0,0,none,0,0x2000,		RA_DETONATOR,Detonator
-2238,3,6,2,0,0x3,2,5,1,no,0,0x80,3,misc,0,0x0,	RA_ELECTRICSHOCKER,Electric Shocker
+2238,3,6,2,0,0x3,2,5,1,no,0,0x80,3,misc,0,0x2000,	RA_ELECTRICSHOCKER,Electric Shocker
 2239,3,6,2,0,0x42,3,5,1,no,0,0x80,3,misc,0,0x2800,	RA_CLUSTERBOMB,Cluster Bomb
 2240,0,6,4,0,0,0,1,1,no,0,0,0,none,0,0x0,		RA_WUGMASTERY,Warg Mastery
 2241,0,6,4,0,0,0,3,1,no,0,0,0,none,0,0x2000,		RA_WUGRIDER,Warg Rider
@@ -1000,10 +1000,10 @@
 2246,0,6,4,0,0x2,3:4:5:6:7,5,1,no,0,0,0,weapon,0,0x0,	RA_SENSITIVEKEEN,Sensitive Keen
 2247,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x42,		RA_CAMOUFLAGE,Camouflage
 2248,0,0,0,0,0,0,5,0,no,0,0,0,none,0,0x0,		RA_RESEARCHTRAP,Research Trap
-2249,3,6,2,3,0x43,2,1,1,no,0,0x80,1,misc,0,0x0,	RA_MAGENTATRAP,Magenta Trap
-2250,3,6,2,1,0x43,2,1,1,no,0,0x80,1,misc,0,0x0,	RA_COBALTTRAP,Cobalt Trap
-2251,3,6,2,2,0x43,2,1,1,no,0,0x80,1,misc,0,0x0,	RA_MAIZETRAP,Maize Trap
-2252,3,6,2,4,0x43,2,1,1,no,0,0x80,1,misc,0,0x0,	RA_VERDURETRAP,Verdure Trap
+2249,3,6,2,3,0x43,2,1,1,no,0,0x80,1,misc,0,0x2000,	RA_MAGENTATRAP,Magenta Trap
+2250,3,6,2,1,0x43,2,1,1,no,0,0x80,1,misc,0,0x2000,	RA_COBALTTRAP,Cobalt Trap
+2251,3,6,2,2,0x43,2,1,1,no,0,0x80,1,misc,0,0x2000,	RA_MAIZETRAP,Maize Trap
+2252,3,6,2,4,0x43,2,1,1,no,0,0x80,1,misc,0,0x2000,	RA_VERDURETRAP,Verdure Trap
 2253,3,6,2,3,0x42,2,5,1,no,0,0x80,2,misc,0,0x2800,	RA_FIRINGTRAP,Firing Trap
 2254,3,6,2,1,0x42,2,5,1,no,0,0x80,2,misc,0,0x2800,	RA_ICEBOUNDTRAP,Icebound Trap
 
@@ -1202,7 +1202,7 @@
 2487,9,6,2,0,0,0,1,1,no,0,0,0,none,0,0x0,		GN_FIRE_EXPANSION_SMOKE_POWDER,Fire Expansion Smoke Powder
 2488,9,6,2,0,0,0,1,1,no,0,0,0,none,0,0x0,		GN_FIRE_EXPANSION_TEAR_GAS,Fire Expansion Tear Gas
 2489,11,8,1,-1,0x28,0,10,1:2:3:4:5:6:7:8:9:10,no,0,0,0,magic,0,0x0,		GN_FIRE_EXPANSION_ACID,Fire Expansion Acid
-2490,9,6,2,0,0x3,1,5,1,yes,0,0x80,2:3:4:5:6,none,0,0x0,	GN_HELLS_PLANT,Hell's Plant
+2490,9,6,2,0,0x3,1,5,1,yes,0,0x80,2:3:4:5:6,misc,0,0x0,	GN_HELLS_PLANT,Hell's Plant
 2491,0,6,1,0,0x90,0,5,1,no,0,0,0,misc,0,0x0,	GN_HELLS_PLANT_ATK,Hell's Plant Attack
 2492,0,6,4,0,0x3,5:6:6:7:7,5,1,yes,0,0,0,none,0,0x0,	GN_MANDRAGORA,Howling of Mandragora
 2493,11,6,16,0,0x1,0,1,1,no,0,0,0,none,0,0x0,	GN_SLINGITEM,Sling Item
@@ -1344,8 +1344,8 @@
 8019,5,6,1,5,0,0,5,1,no,0,0,0,weapon,0,0x0,		MH_NEEDLE_OF_PARALYZE,Needle of Paralyze
 8020,5,6,2,5,0,0,5,1,no,0,0,1,weapon,0,0x0,		MH_POISON_MIST,Poison Mist
 8021,1,6,16,0,0x1,0,5,1,no,0,0,0,none,0,0x0,		MH_PAIN_KILLER,Pain Killer
-8022,0,6,4,0,0,0x1,5,1,no,0,0,0,none,0,0x0,		MH_LIGHT_OF_REGENE,Light of Regene
-8023,0,6,4,0,0,0x1,5,1,no,0,0,0,none,0,0x0,		MH_OVERED_BOOST,Overed Boost
+8022,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0,		MH_LIGHT_OF_REGENE,Light of Regene
+8023,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0,		MH_OVERED_BOOST,Overed Boost
 8024,7,8,1,4:0:4:0:4,0,0,5,-6,yes,0,0,0,magic,0,0x0,	MH_ERASER_CUTTER,Eraser Cutter
 8025,7,8,2,4:0:4:0:4,0x2,2:2:3:3:4,5,-6,no,0,0,0,magic,0,0x0,	MH_XENO_SLASHER,Xeno Slasher
 8026,5:5:7:7:9,6,6,0,0x1,0,5,1,no,0,0,0,magic,0,0x0,	MH_SILENT_BREEZE,Silent Breeze

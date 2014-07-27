@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Euphy
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: ========================================= 
@@ -11,11 +11,12 @@
 //= Organizes ores in a player's inventory.
 //===== Additional Comments: ================================= 
 //= 1.0 First version.
+//= 1.1 Clean-up. [Capuche]
 //============================================================ 
 
 // Main NPC :: stonechange
 //============================================================
-geffen_in,99,174,5	script	Ore Tester#sorty	700,{
+geffen_in,99,174,5	script	Ore Tester#sorty	8_F_GIRL,{
 	mes "[Ore Tester Sorty]";
 	mes "Do you have ^3131FFany same type of ores in your inventories^000000 which take many spaces?";
 	mes "I can distinguish your ores and organize them right away~!";
@@ -29,29 +30,32 @@ geffen_in,99,174,5	script	Ore Tester#sorty	700,{
 		mes "[Ore Tester Sorty]";
 		mes "So, would you like me to organize your ores?";
 		next;
-		set .@i, select("Steel, please.:Iron, please.:Iron Ore, please.:Rough Oridecon, please.:No, thanks.");
+		.@i = select("Steel, please.:Iron, please.:Iron Ore, please.:Rough Oridecon, please.:No, thanks.");
 		if (.@i == 5) {
 			mes "[Ore Tester Sorty]";
 			mes "Huh, I really hate messy people!";
 			close;
 		}
 		setarray .@ores[0],999,998,1002,756;
-		set .@item, .@ores[.@i-1];
+		.@item = .@ores[.@i-1];
 		if (countitem(.@item) == 0) {
 			mes "[Ore Tester Sorty]";
 			mes "You don't have any "+getitemname(.@item)+"...";
 			close;
 		}
-		while(1) {
-			if (countitem(.@item)) {
-				set .@count, countitem(.@item);
-				set .@total, .@total + .@count;
-				delitem .@item, .@count;
-			} else {
-				getitem .@item, .@total;
-				break;
-			}
-		}
+		// while(1) {
+			// if (countitem(.@item)) {
+				// set .@count, countitem(.@item);
+				// set .@total, .@total + .@count;
+				// delitem .@item, .@count;
+			// } else {
+				// getitem .@item, .@total;
+				// break;
+			// }
+		// }
+		.@count = countitem(.@item);
+		delitem .@item, .@count;
+		getitem .@item, .@count;
 		mes "[Ore Tester Sorty]";
 		mes "It's done. Looks great! Don't you think so?";
 		close;

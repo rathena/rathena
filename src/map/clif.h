@@ -389,6 +389,22 @@ enum e_personalinfo {
 	PINFO_MAX,
 };
 
+enum e_damage_type {
+	DMG_NORMAL = 0,			/// damage [ damage: total damage, div: amount of hits, damage2: assassin dual-wield damage ]
+	DMG_PICKUP_ITEM,		/// pick up item
+	DMG_SIT_DOWN,			/// sit down
+	DMG_STAND_UP,			/// stand up
+	DMG_ENDURE,				/// damage (endure)
+	DMG_SPLASH,				/// (splash?)
+	DMG_SKILL,				/// (skill?)
+	DMG_REPEAT,				/// (repeat damage?)
+	DMG_MULTI_HIT,			/// multi-hit damage
+	DMG_MULTI_HIT_ENDURE,	/// multi-hit damage (endure)
+	DMG_CRITICAL,			/// critical hit
+	DMG_LUCY_DODGE,			/// lucky dodge
+	DMG_TOUCH,				/// (touch skill?)
+};
+
 int clif_setip(const char* ip);
 void clif_setbindip(const char* ip);
 void clif_setport(uint16 port);
@@ -433,7 +449,7 @@ void clif_dropitem(struct map_session_data *sd,int n,int amount);	//self
 void clif_delitem(struct map_session_data *sd,int n,int amount, short reason); //self
 void clif_updatestatus(struct map_session_data *sd,int type);	//self
 void clif_changestatus(struct map_session_data* sd,int type,int val);	//area
-int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tick, int sdelay, int ddelay, int64 sdamage, int div, int type, int64 sdamage2);	// area
+int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tick, int sdelay, int ddelay, int64 sdamage, int div, enum e_damage_type type, int64 sdamage2);	// area
 void clif_takeitem(struct block_list* src, struct block_list* dst);
 void clif_sitting(struct block_list* bl);
 void clif_standing(struct block_list* bl);

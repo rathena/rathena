@@ -164,7 +164,7 @@ static int storage_additem(struct map_session_data* sd, struct item* item_data, 
 	struct item_data *data;
 	int i;
 
-	if( item_data->nameid <= 0 || amount <= 0 )
+	if( item_data->nameid == 0 || amount <= 0 )
 		return 1;
 
 	data = itemdb_search(item_data->nameid);

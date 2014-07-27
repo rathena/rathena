@@ -20,7 +20,7 @@ struct s_pet *pet_pt;
 //---------------------------------------------------------
 int inter_pet_tosql(int pet_id, struct s_pet* p)
 {
-	//`pet` (`pet_id`, `class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incuvate`)
+	//`pet` (`pet_id`, `class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incubate`)
 	char esc_name[NAME_LENGTH*2+1];// escaped pet name
 
 	Sql_EscapeStringLen(sql_handle, esc_name, p->name, strnlen(p->name, NAME_LENGTH));
@@ -30,10 +30,10 @@ int inter_pet_tosql(int pet_id, struct s_pet* p)
 	if( pet_id == -1 )
 	{// New pet.
 		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` "
-			"(`class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incuvate`) "
+			"(`class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incubate`) "
 			"VALUES ('%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
 			schema_config.pet_db, p->class_, esc_name, p->account_id, p->char_id, p->level, p->egg_id,
-			p->equip, p->intimate, p->hungry, p->rename_flag, p->incuvate) )
+			p->equip, p->intimate, p->hungry, p->rename_flag, p->incubate) )
 		{
 			Sql_ShowDebug(sql_handle);
 			return 0;
@@ -42,9 +42,9 @@ int inter_pet_tosql(int pet_id, struct s_pet* p)
 	}
 	else
 	{// Update pet.
-		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `class`='%d',`name`='%s',`account_id`='%d',`char_id`='%d',`level`='%d',`egg_id`='%d',`equip`='%d',`intimate`='%d',`hungry`='%d',`rename_flag`='%d',`incuvate`='%d' WHERE `pet_id`='%d'",
+		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `class`='%d',`name`='%s',`account_id`='%d',`char_id`='%d',`level`='%d',`egg_id`='%d',`equip`='%d',`intimate`='%d',`hungry`='%d',`rename_flag`='%d',`incubate`='%d' WHERE `pet_id`='%d'",
 			schema_config.pet_db, p->class_, esc_name, p->account_id, p->char_id, p->level, p->egg_id,
-			p->equip, p->intimate, p->hungry, p->rename_flag, p->incuvate, p->pet_id) )
+			p->equip, p->intimate, p->hungry, p->rename_flag, p->incubate, p->pet_id) )
 		{
 			Sql_ShowDebug(sql_handle);
 			return 0;
@@ -66,9 +66,9 @@ int inter_pet_fromsql(int pet_id, struct s_pet* p)
 #endif
 	memset(p, 0, sizeof(struct s_pet));
 
-	//`pet` (`pet_id`, `class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incuvate`)
+	//`pet` (`pet_id`, `class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incubate`)
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `pet_id`, `class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incuvate` FROM `%s` WHERE `pet_id`='%d'", schema_config.pet_db, pet_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `pet_id`, `class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incubate` FROM `%s` WHERE `pet_id`='%d'", schema_config.pet_db, pet_id) )
 	{
 		Sql_ShowDebug(sql_handle);
 		return 0;
@@ -87,7 +87,7 @@ int inter_pet_fromsql(int pet_id, struct s_pet* p)
 		Sql_GetData(sql_handle,  8, &data, NULL); p->intimate = atoi(data);
 		Sql_GetData(sql_handle,  9, &data, NULL); p->hungry = atoi(data);
 		Sql_GetData(sql_handle, 10, &data, NULL); p->rename_flag = atoi(data);
-		Sql_GetData(sql_handle, 11, &data, NULL); p->incuvate = atoi(data);
+		Sql_GetData(sql_handle, 11, &data, NULL); p->incubate = atoi(data);
 
 		Sql_FreeResult(sql_handle);
 
@@ -121,18 +121,18 @@ int inter_pet_delete(int pet_id){
 //------------------------------------------------------
 int mapif_pet_created(int fd, int account_id, struct s_pet *p)
 {
-	WFIFOHEAD(fd, 11);
-	WFIFOW(fd, 0) =0x3880;
-	WFIFOL(fd, 2) =account_id;
+	WFIFOHEAD(fd, 12);
+	WFIFOW(fd, 0) = 0x3880;
+	WFIFOL(fd, 2) = account_id;
 	if(p!=NULL){
-		WFIFOB(fd, 6)=0;
-		WFIFOL(fd, 7) =p->pet_id;
+		WFIFOW(fd, 6) = p->class_;
+		WFIFOL(fd, 8) = p->pet_id;
 		ShowInfo("int_pet: created pet %d - %s\n", p->pet_id, p->name);
 	}else{
-		WFIFOB(fd, 6)=1;
-		WFIFOL(fd, 7)=0;
+		WFIFOB(fd, 6) = 0;
+		WFIFOL(fd, 8) = 0;
 	}
-	WFIFOSET(fd, 11);
+	WFIFOSET(fd, 12);
 
 	return 0;
 }
@@ -181,11 +181,11 @@ int mapif_delete_pet_ack(int fd, int flag){
 }
 
 int mapif_create_pet(int fd, int account_id, int char_id, short pet_class, short pet_lv, short pet_egg_id,
-	short pet_equip, short intimate, short hungry, char rename_flag, char incuvate, char *pet_name)
+	short pet_equip, short intimate, short hungry, char rename_flag, char incubate, char *pet_name)
 {
 	memset(pet_pt, 0, sizeof(struct s_pet));
 	safestrncpy(pet_pt->name, pet_name, NAME_LENGTH);
-	if(incuvate == 1)
+	if(incubate == 1)
 		pet_pt->account_id = pet_pt->char_id = 0;
 	else {
 		pet_pt->account_id = account_id;
@@ -198,7 +198,7 @@ int mapif_create_pet(int fd, int account_id, int char_id, short pet_class, short
 	pet_pt->intimate = intimate;
 	pet_pt->hungry = hungry;
 	pet_pt->rename_flag = rename_flag;
-	pet_pt->incuvate = incuvate;
+	pet_pt->incubate = incubate;
 
 	if(pet_pt->hungry < 0)
 		pet_pt->hungry = 0;
@@ -224,7 +224,7 @@ int mapif_load_pet(int fd, int account_id, int char_id, int pet_id){
 	inter_pet_fromsql(pet_id, pet_pt);
 
 	if(pet_pt!=NULL) {
-		if(pet_pt->incuvate == 1) {
+		if(pet_pt->incubate == 1) {
 			pet_pt->account_id = pet_pt->char_id = 0;
 			mapif_pet_info(fd, account_id, pet_pt);
 		}

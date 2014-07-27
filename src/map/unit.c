@@ -52,7 +52,7 @@ const short diry[8]={1,1,0,-1,-1,-1,0,1}; ///lookup to know where will move to y
 //early declaration
 static int unit_attack_timer(int tid, unsigned int tick, int id, intptr_t data);
 static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data);
-
+int unit_unattackable(struct block_list *bl);
 /**
  * Get the unit_data related to the bl
  * @param bl : Object to get the unit_data from
@@ -204,8 +204,19 @@ int unit_teleport_timer(int tid, unsigned int tick, int id, intptr_t data)
  */
 int unit_check_start_teleport_timer(struct block_list *sbl)
 {
-	TBL_PC *msd = unit_get_master(sbl);
+	TBL_PC *msd=NULL;
 	int max_dist = 0;
+	switch(sbl->type) {
+		case BL_HOM:	
+		case BL_ELEM:	
+		case BL_PET:	
+		case BL_MER:	
+			msd = unit_get_master(sbl);
+			break;
+		default:
+			return 0;
+	}
+	
 	switch(sbl->type) {
 		case BL_HOM:	max_dist = AREA_SIZE;			break;
 		case BL_ELEM:	max_dist = MAX_ELEDISTANCE;		break;
@@ -213,7 +224,7 @@ int unit_check_start_teleport_timer(struct block_list *sbl)
 		case BL_MER:	max_dist = MAX_MER_DISTANCE;	break;
 	}
 	// If there is a master and it's a valid type
-	if(msd && (msd->bl.type&BL_PC) && max_dist) { ///TODO the bl.type is an hotfix please dig it to remove it
+	if(msd && max_dist) {
 		int *msd_tid = unit_get_masterteleport_timer(sbl);
 		if(msd_tid == NULL) return 0;
 		if (!check_distance_bl(&msd->bl, sbl, max_dist)) {
@@ -244,23 +255,16 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	uint8 dir;
 	struct block_list *bl;
 	struct unit_data *ud;
-	TBL_PC *sd;
-	TBL_MOB *md;
-	TBL_MER *mrd;
-	TBL_ELEM *ed;
-	TBL_PET *pd;
-	TBL_HOM *hd;
-
+	TBL_PC *sd=NULL;
+	TBL_MOB *md=NULL;
 
 	bl = map_id2bl(id);
 	if(bl == NULL)
 		return 0;
-	sd = BL_CAST(BL_PC, bl);
-	md = BL_CAST(BL_MOB, bl);
-	mrd = BL_CAST(BL_MER, bl);
-	ed = BL_CAST(BL_ELEM, bl);
-	pd = BL_CAST(BL_PET, bl);
-	hd = BL_CAST(BL_HOM, bl);
+	switch(bl->type){ //svoid useless cast, we can only be 1 type
+		case BL_PC: sd = BL_CAST(BL_PC, bl); break;
+		case BL_MOB: md = BL_CAST(BL_MOB, bl); break;
+	}
 	ud = unit_bl2ud(bl);
 
 	if(ud == NULL) return 0;
@@ -305,7 +309,8 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	map_foreachinmovearea(clif_insight, bl, AREA_SIZE, -dx, -dy, sd?BL_ALL:BL_PC, bl);
 	ud->walktimer = INVALID_TIMER;
 
-	if(sd) {
+	switch(bl->type){
+	case BL_PC: {
 		if( sd->touching_id )
 			npc_touchnext_areanpc(sd,false);
 		if(map_getcell(bl->m,x,y,CELL_CHKNPC)) {
@@ -314,14 +319,17 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 				return 0;
 		} else
 			sd->areanpc_id=0;
-
+		/* WIP disable [Lighta], currently unsuported 
+		 * this was meant to start the timer if the player move but not his slave...
 		if(sd->md) unit_check_start_teleport_timer(&sd->md->bl);
 		if(sd->ed) unit_check_start_teleport_timer(&sd->ed->bl);
 		if(sd->hd) unit_check_start_teleport_timer(&sd->hd->bl);
 		if(sd->pd) unit_check_start_teleport_timer(&sd->pd->bl);
-		
+		*/
 		pc_cell_basilica(sd);
-	} else if (md) {
+	}
+	break;
+	case BL_MOB: {
 		if( map_getcell(bl->m,x,y,CELL_CHKNPC) ) {
 			if( npc_touch_areanpc2(md) )
 				return 0; // Warped
@@ -342,10 +350,14 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 			clif_move(ud);
 		}
 	}
-	else if (hd) unit_check_start_teleport_timer(&hd->bl);
-	else if (ed) unit_check_start_teleport_timer(&ed->bl);
-	else if (pd) unit_check_start_teleport_timer(&pd->bl);
-	else if (mrd) unit_check_start_teleport_timer(&mrd->bl);
+	break;
+	case BL_HOM: 
+	case BL_ELEM:
+	case BL_PET:
+	case BL_MER:
+		unit_check_start_teleport_timer(bl);
+		break;
+	}
 
 	if(tid == INVALID_TIMER) // A directly invoked timer is from battle_stop_walking, therefore the rest is irrelevant.
 		return 0;
@@ -474,11 +486,14 @@ int unit_walktoxy( struct block_list *bl, short x, short y, int flag)
 	if( (battle_config.max_walk_path < wpd.path_len) && (bl->type != BL_NPC) )
 		return 0;
 
-	if (flag&4 && DIFF_TICK(ud->canmove_tick, gettick()) > 0 &&
-		DIFF_TICK(ud->canmove_tick, gettick()) < 2000)
-	{	// Delay walking command. [Skotlex]
-		add_timer(ud->canmove_tick+1, unit_delay_walktoxy_timer, bl->id, (x<<16)|(y&0xFFFF));
-		return 1;
+	if (flag&4){
+		unit_unattackable(bl);
+		unit_stop_attack(bl);
+		if(DIFF_TICK(ud->canmove_tick, gettick()) > 0 && DIFF_TICK(ud->canmove_tick, gettick()) < 2000)
+		{	// Delay walking command. [Skotlex]
+			add_timer(ud->canmove_tick+1, unit_delay_walktoxy_timer, bl->id, (x<<16)|(y&0xFFFF));
+			return 1;
+		}
 	}
 
 	if(!(flag&2) && (!(status_get_mode(bl)&MD_CANMOVE) || !unit_can_move(bl)))
@@ -504,7 +519,7 @@ int unit_walktoxy( struct block_list *bl, short x, short y, int flag)
 		delete_timer( ud->attacktimer, unit_attack_timer );
 		ud->attacktimer = INVALID_TIMER;
 	}
-
+	
 	return unit_walktoxy_sub(bl);
 }
 
@@ -832,14 +847,14 @@ int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool
 		if( sd->status.pet_id > 0 && sd->pd && sd->pd->pet.intimate > 0 ){
 			// Check if pet needs to be teleported. [Skotlex]
 			int flag = 0;
-			struct block_list* bl = &sd->pd->bl;
-			if( !checkpath && !path_search(NULL,bl->m,bl->x,bl->y,dst_x,dst_y,0,CELL_CHKNOPASS) )
+			struct block_list* pbl = &sd->pd->bl;
+			if( !checkpath && !path_search(NULL,pbl->m,pbl->x,pbl->y,dst_x,dst_y,0,CELL_CHKNOPASS) )
 				flag = 1;
-			else if (!check_distance_bl(&sd->bl, bl, AREA_SIZE)) // Too far, teleport.
+			else if (!check_distance_bl(&sd->bl, pbl, AREA_SIZE)) // Too far, teleport.
 				flag = 2;
 			if( flag ) {
-				unit_movepos(bl,sd->bl.x,sd->bl.y, 0, 0);
-				clif_slide(bl,bl->x,bl->y);
+				unit_movepos(pbl,sd->bl.x,sd->bl.y, 0, 0);
+				clif_slide(pbl,pbl->x,pbl->y);
 			}
 		}
 	}
@@ -1144,6 +1159,7 @@ bool unit_can_move(struct block_list *bl) {
 
 	if (sc && sc->cant.move)
 		return false;
+
 	return true;
 }
 
@@ -1251,7 +1267,9 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		sc = NULL; // Unneeded
 
 	// temp: used to signal combo-skills right now.
-	if (sc && sc->data[SC_COMBO] && (sc->data[SC_COMBO]->val1 == skill_id ||
+	if (sc && sc->data[SC_COMBO] &&
+		skill_is_combo(skill_id) &&
+		(sc->data[SC_COMBO]->val1 == skill_id ||
 		(sd?skill_check_condition_castbegin(sd,skill_id,skill_lv):0) ))
 	{
 		if (sc->data[SC_COMBO]->val2)
@@ -1797,6 +1815,7 @@ int unit_unattackable(struct block_list *bl)
 	struct unit_data *ud = unit_bl2ud(bl);
 	if (ud) {
 		ud->state.attack_continue = 0;
+		ud->target_to = 0;
 		unit_set_target(ud, 0);
 	}
 
@@ -1834,6 +1853,10 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 			return 0;
 		}
 		if( pc_is90overweight(sd) || pc_isridingwug(sd) ) { // Overweight or mounted on warg - stop attacking
+			unit_stop_attack(src);
+			return 0;
+		}
+		if( !pc_can_attack(sd, target_id) ) {
 			unit_stop_attack(src);
 			return 0;
 		}
@@ -2050,7 +2073,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 #ifdef OFFICIAL_WALKPATH
 	   || !path_search_long(NULL, src->m, src->x, src->y, target->x, target->y, CELL_CHKWALL)
 #endif
-	   )
+	   || (sd && !pc_can_attack(sd, target->id)) )
 		return 0; // Can't attack under these conditions
 
 	sc = status_get_sc(src);
@@ -2621,10 +2644,10 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				sd->reg_num = 0;
 			}
 			if( sd->regstr ) {
-				int i;
-				for( i = 0; i < sd->regstr_num; ++i )
-					if( sd->regstr[i].data )
-						aFree(sd->regstr[i].data);
+				int j;
+				for( j = 0; j < sd->regstr_num; ++j )
+					if( sd->regstr[j].data )
+						aFree(sd->regstr[j].data);
 				aFree(sd->regstr);
 				sd->regstr = NULL;
 				sd->regstr_num = 0;

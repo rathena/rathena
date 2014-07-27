@@ -371,7 +371,7 @@ int skill_blown(struct block_list* src, struct block_list* target, int count, in
 int skill_break_equip(struct block_list *src,struct block_list *bl, unsigned short where, int rate, int flag);
 int skill_strip_equip(struct block_list *src,struct block_list *bl, unsigned short where, int rate, int lv, int time);
 // Skills unit
-struct skill_unit_group* skill_id2group(int group_id);
+struct skill_unit_group *skill_id2group(int group_id);
 struct skill_unit_group *skill_unitsetting(struct block_list* src, uint16 skill_id, uint16 skill_lv, short x, short y, int flag);
 struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int x, int y, int val1, int val2);
 int skill_delunit(struct skill_unit *unit);
@@ -380,8 +380,8 @@ int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int li
 #define skill_delunitgroup(group) skill_delunitgroup_(group,__FILE__,__LINE__,__func__)
 int skill_clear_unitgroup(struct block_list *src);
 int skill_clear_group(struct block_list *bl, int flag);
-void ext_skill_unit_onplace(struct skill_unit *src, struct block_list *bl, unsigned int tick);
-int64 skill_unit_ondamaged(struct skill_unit *src,struct block_list *bl,int64 damage,unsigned int tick);
+void ext_skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, unsigned int tick);
+int64 skill_unit_ondamaged(struct skill_unit *unit,struct block_list *bl,int64 damage,unsigned int tick);
 
 int skill_castfix( struct block_list *bl, uint16 skill_id, uint16 skill_lv);
 int skill_castfix_sc( struct block_list *bl, int time);
@@ -430,7 +430,7 @@ bool skill_isNotOk_mercenary(uint16 skill_id, struct mercenary_data *md);
 
 bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skill_lv, int pos_x, int pos_y);
 
-int skill_chastle_mob_changetarget(struct block_list *bl,va_list ap);
+int skill_changetarget(struct block_list *bl,va_list ap);
 
 // Item creation
 int skill_can_produce_mix( struct map_session_data *sd, unsigned short nameid, int trigger, int qty);
@@ -2000,6 +2000,7 @@ int skill_elementalanalysis(struct map_session_data *sd, int n, uint16 skill_lv,
 int skill_changematerial(struct map_session_data *sd, int n, unsigned short *item_list);	// Genetic Change Material.
 int skill_get_elemental_type(uint16 skill_id, uint16 skill_lv);
 
+bool skill_is_combo(int skill_id);
 void skill_combo_toogle_inf(struct block_list* bl, uint16 skill_id, int inf);
 void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_list *bl, uint16 skill_id, uint16 skill_lv, int tick);
 
