@@ -1002,7 +1002,6 @@ void pc_regen (struct map_session_data *sd, unsigned int diff_tick);
 
 void pc_setstand(struct map_session_data *sd);
 bool pc_candrop(struct map_session_data *sd,struct item *item);
-bool pc_can_attack(struct map_session_data *sd, int target_id);
 
 int pc_jobid2mapid(unsigned short b_class);	// Skotlex
 int pc_mapid2jobid(unsigned short class_, int sex);	// Skotlex

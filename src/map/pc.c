@@ -8396,26 +8396,6 @@ bool pc_candrop(struct map_session_data *sd, struct item *item)
 	return (itemdb_isdropable(item, pc_get_group_level(sd)));
 }
 
-/**
- * Determines whether a player can attack based on status changes
- *  Why not use status_check_skilluse?
- *  "src MAY be null to indicate we shouldn't check it, this is a ground-based skill attack."
- *  Even ground-based attacks should be blocked by these statuses
- * Called from unit_attack and unit_attack_timer_sub
- * @retval true Can attack
- **/
-bool pc_can_attack( struct map_session_data *sd, int target_id ) {
-	nullpo_retr(false, sd);
-
-	if (!&sd->sc)
-		return true;
-
-	if (sd->sc.data[SC_VOICEOFSIREN] && sd->sc.data[SC_VOICEOFSIREN]->val2 == target_id)
-		return false;
-
-	return true;
-}
-
 /*==========================================
  * Read ram register for player sd
  * get val (int) from reg for player sd

@@ -1837,6 +1837,7 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 {
 	struct block_list *target;
 	struct unit_data  *ud;
+	struct status_change *sc;
 
 	nullpo_ret(ud = unit_bl2ud(src));
 
@@ -1856,10 +1857,11 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 			unit_stop_attack(src);
 			return 0;
 		}
-		if( !pc_can_attack(sd, target_id) ) {
-			unit_stop_attack(src);
-			return 0;
-		}
+	}
+	sc = status_get_sc(src);
+	if( (sc && sc->cant.attack) || !unit_can_attack(src, target_id) ) {
+		unit_stop_attack(src);
+		return 0;
 	}
 	if( battle_check_target(src,target,BCT_ENEMY) <= 0 || !status_check_skilluse(src, target, 0, 0) ) {
 		unit_unattackable(src);
@@ -2073,7 +2075,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 #ifdef OFFICIAL_WALKPATH
 	   || !path_search_long(NULL, src->m, src->x, src->y, target->x, target->y, CELL_CHKWALL)
 #endif
-	   || (sd && !pc_can_attack(sd, target->id)) )
+	   || !unit_can_attack(src, target->id) )
 		return 0; // Can't attack under these conditions
 
 	sc = status_get_sc(src);
@@ -2192,6 +2194,27 @@ static int unit_attack_timer(int tid, unsigned int tick, int id, intptr_t data)
 	if(bl && unit_attack_timer_sub(bl, tid, tick) == 0)
 		unit_unattackable(bl);
 	return 0;
+}
+
+/**
+ * Determines whether a player can attack based on status changes
+ *  Why not use status_check_skilluse?
+ *  "src MAY be null to indicate we shouldn't check it, this is a ground-based skill attack."
+ *  Even ground-based attacks should be blocked by these statuses
+ * Called from unit_attack and unit_attack_timer_sub
+ * @retval true Can attack
+ **/
+bool unit_can_attack(struct block_list *bl, int target_id) {
+	struct status_change *sc;
+	nullpo_retr(false, bl);
+
+	if (!(sc = status_get_sc(bl)))
+		return true;
+
+	if (sc->data[SC_VOICEOFSIREN] && sc->data[SC_VOICEOFSIREN]->val2 == target_id)
+		return false;
+
+	return true;
 }
 
 /**
