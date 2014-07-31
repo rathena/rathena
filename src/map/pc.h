@@ -666,6 +666,19 @@ enum ammo_type {
 	A_THROWWEAPON	//9
 };
 
+enum idletime_option {
+	IDLE_WALK          = 0x001,
+	IDLE_USESKILLTOID  = 0x002,
+	IDLE_USESKILLTOPOS = 0x004,
+	IDLE_USEITEM       = 0x008,
+	IDLE_ATTACK        = 0x010,
+	IDLE_CHAT          = 0x020,
+	IDLE_SIT           = 0x040,
+	IDLE_EMOTION       = 0x080,
+	IDLE_DROPITEM      = 0x100,
+	IDLE_ATCOMMAND     = 0x200,
+};
+
 struct {
 	unsigned int base_hp[MAX_LEVEL], base_sp[MAX_LEVEL]; //Storage for the first calculation with hp/sp factor and multiplicator
 	int hp_factor, hp_multiplicator, sp_factor;

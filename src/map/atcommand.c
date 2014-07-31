@@ -10160,6 +10160,9 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 		sprintf(atcmd_msg, "%s", message);
 	}
 
+	if (battle_config.idletime_option&IDLE_ATCOMMAND)
+		sd->idletime = last_tick;
+
 	//Clearing these to be used once more.
 	memset(command, '\0', sizeof(command));
 	memset(params, '\0', sizeof(params));
