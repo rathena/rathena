@@ -29,6 +29,9 @@ void buyingstore_open(struct map_session_data* sd, int account_id);
 void buyingstore_trade(struct map_session_data* sd, int account_id, unsigned int buyer_id, const uint8* itemlist, unsigned int count);
 bool buyingstore_search(struct map_session_data* sd, unsigned short nameid);
 bool buyingstore_searchall(struct map_session_data* sd, const struct s_search_store_search* s);
+DBMap *buyingstore_getdb(void);
+void do_final_buyingstore(void);
+void do_init_buyingstore(void);
 
 void do_init_buyingstore_autotrade( void );
 void buyingstore_reopen( struct map_session_data* sd );

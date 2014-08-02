@@ -849,7 +849,7 @@ bool pc_isequipped(struct map_session_data *sd, unsigned short nameid)
 
 	for( i = 0; i < EQI_MAX; i++ )
 	{
-		int8 index = sd->equip_index[i], j;
+		short index = sd->equip_index[i], j;
 		if( index < 0 )
 			continue;
 		if( pc_is_same_equip_index((enum equip_index)i, sd->equip_index, index) )
@@ -5152,8 +5152,11 @@ char pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int 
 		return 1;
 	}
 
+	if ( sd->state.autotrade && (sd->vender_id || sd->buyer_id) ) // Player with autotrade just causes clif glitch! @ FIXME
+		return 1;
+
 	if( battle_config.revive_onwarp && pc_isdead(sd) ) { //Revive dead people before warping them
-		pc_setstand(sd);
+		pc_setstand(sd, true);
 		pc_setrestartvalue(sd,1);
 	}
 
@@ -7059,7 +7062,7 @@ void pc_respawn(struct map_session_data* sd, clr_type clrtype)
 	if( sd->bg_id && bg_member_respawn(sd) )
 		return; // member revived by battleground
 
-	pc_setstand(sd);
+	pc_setstand(sd, true);
 	pc_setrestartvalue(sd,3);
 	if( pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, clrtype) )
 		clif_resurrection(&sd->bl, 1); //If warping fails, send a normal stand up packet.
@@ -7090,7 +7093,7 @@ void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int h
 		return;
 
 	if( pc_issit(sd) ) {
-		pc_setstand(sd);
+		pc_setstand(sd, true);
 		skill_sit(sd,0);
 	}
 
@@ -7471,7 +7474,7 @@ void pc_revive(struct map_session_data *sd,unsigned int hp, unsigned int sp) {
 	if(hp) clif_updatestatus(sd,SP_HP);
 	if(sp) clif_updatestatus(sd,SP_SP);
 
-	pc_setstand(sd);
+	pc_setstand(sd, true);
 	if(battle_config.pc_invincible_time > 0)
 		pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
 
@@ -8076,6 +8079,8 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 		elemental_delete(sd->ed, 0);
 	if (sd->state.vending)
 		vending_closevending(sd);
+	if (sd->state.buyingstore)
+		buyingstore_close(sd);
 
 	map_foreachinmap(jobchange_killclone, sd->bl.m, BL_MOB, sd->bl.id);
 
@@ -8910,8 +8915,7 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 			bool found = false;
 			
 			for( k = 0; k < EQI_MAX; k++ ) {
-				int8 index;
-				index = sd->equip_index[k];
+				short index = sd->equip_index[k];
 				if( index < 0 )
 					continue;
 				if( pc_is_same_equip_index((enum equip_index)k, sd->equip_index, index) )
@@ -9051,8 +9055,8 @@ int pc_load_combo(struct map_session_data *sd) {
 	int i, ret = 0;
 	for( i = 0; i < EQI_MAX; i++ ) {
 		struct item_data *id = NULL;
-		int idx = sd->equip_index[i];
-		if( sd->equip_index[i] < 0 || !(id = sd->inventory_data[idx] ) )
+		short idx = sd->equip_index[i];
+		if( idx < 0 || !(id = sd->inventory_data[idx] ) )
 			continue;
 		if( id->combos_count )
 			ret += pc_checkcombo(sd,id);
@@ -9889,8 +9893,19 @@ int map_night_timer(int tid, unsigned int tick, int id, intptr_t data)
 	return 0;
 }
 
-void pc_setstand(struct map_session_data *sd){
-	nullpo_retv(sd);
+/**
+* Attempt to stand up a player
+* @param sd
+* @param force Ignore the check, ask player to stand up. Used in some cases like pc_damage(), pc_revive(), etc
+* @return True if success, Fals if failed
+*/
+bool pc_setstand(struct map_session_data *sd, bool force){
+	nullpo_ret(sd);
+
+	// Cannot stand yet
+	// TODO: Move to SCS_NOSTAND [Cydh]
+	if (!force && &sd->sc && (sd->sc.data[SC_SITDOWN_FORCE] || sd->sc.data[SC_BANANA_BOMB_SITDOWN]))
+		return false;
 
 	status_change_end(&sd->bl, SC_TENSIONRELAX, INVALID_TIMER);
 	clif_status_load(&sd->bl,SI_SIT,0);
@@ -9898,6 +9913,7 @@ void pc_setstand(struct map_session_data *sd){
 	//Reset sitting tick.
 	sd->ssregen.tick.hp = sd->ssregen.tick.sp = 0;
 	sd->state.dead_sit = sd->vd.dead_sit = 0;
+	return true;
 }
 
 /**
@@ -11144,7 +11160,7 @@ short pc_get_itemgroup_bonus_group(struct map_session_data* sd, uint16 group_id)
 * @param index Known index item in inventory from sd->equip_index[] to compare with specified EQI in *equip_index
 * @return True if item in same inventory index, False if doesn't
 */
-bool pc_is_same_equip_index(enum equip_index eqi, int *equip_index, int8 index) {
+bool pc_is_same_equip_index(enum equip_index eqi, short *equip_index, short index) {
 	if (index < 0 || index >= MAX_INVENTORY)
 		return true;
 	// Dual weapon checks

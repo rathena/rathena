@@ -2413,7 +2413,6 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 				chat_leavechat(sd,0);
 			if(sd->trade_partner)
 				trade_tradecancel(sd);
-			buyingstore_close(sd);
 			searchstore_close(sd);
 			if (sd->menuskill_id != AL_TELEPORT) { //bugreport:8027
 				if (sd->state.storage_flag == 1)
@@ -2451,8 +2450,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			if(sd->duel_group > 0)
 				duel_leave(sd->duel_group, sd);
 
-			if(pc_issit(sd)) {
-				pc_setstand(sd);
+			if(pc_issit(sd) && pc_setstand(sd, false)) {
 				skill_sit(sd,0);
 			}
 			party_send_dot_remove(sd);// minimap dot fix [Kevin]

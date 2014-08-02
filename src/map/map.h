@@ -936,7 +936,7 @@ extern int db_use_sqldbs;
 extern Sql* mmysql_handle;
 extern Sql* logmysql_handle;
 
-extern char buyingstore_db[32];
+extern char buyingstores_db[32];
 extern char buyingstore_items_db[32];
 extern char item_db_db[32];
 extern char item_db2_db[32];

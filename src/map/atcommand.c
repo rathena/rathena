@@ -3545,7 +3545,7 @@ ACMD_FUNC(recallall)
 				count++;
 			else {
 				if (pc_isdead(pl_sd)) { //Wake them up
-					pc_setstand(pl_sd);
+					pc_setstand(pl_sd, true);
 					pc_setrestartvalue(pl_sd,1);
 				}
 				pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);
@@ -5766,7 +5766,7 @@ ACMD_FUNC(autotrade) {
 			Sql_ShowDebug( mmysql_handle );
 		}
 	}else if( sd->state.buyingstore ){
-		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", buyingstore_db, sd->buyer_id ) != SQL_SUCCESS ){
+		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", buyingstores_db, sd->buyer_id ) != SQL_SUCCESS ){
 			Sql_ShowDebug( mmysql_handle );
 		}
 	}
@@ -5778,7 +5778,7 @@ ACMD_FUNC(autotrade) {
 
 	channel_pcquit(sd,0xF); //leave all chan
 	clif_authfail_fd(sd->fd, 15);
-	
+
 	chrif_save(sd,3);
 
 	return 0;
@@ -9532,7 +9532,7 @@ ACMD_FUNC(cloneequip) {
 	else {
 		int8 i;
 		for (i = 0; i < EQI_MAX; i++) {
-			int8 idx;
+			short idx;
 			char flag = 0;
 			struct item tmp_item;
 			if ((idx = pl_sd->equip_index[i]) < 0)

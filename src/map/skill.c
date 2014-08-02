@@ -2081,7 +2081,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	 	!(skill_get_inf(skill_id)&(INF_GROUND_SKILL|INF_SELF_SKILL)) &&
 		(rate=pc_checkskill(sd,HW_SOULDRAIN))>0
 	){	//Soul Drain should only work on targetted spells [Skotlex]
-		if (pc_issit(sd)) pc_setstand(sd); //Character stuck in attacking animation while 'sitting' fix. [Skotlex]
+		if (pc_issit(sd)) pc_setstand(sd, true); //Character stuck in attacking animation while 'sitting' fix. [Skotlex]
 		clif_skill_nodamage(src,bl,HW_SOULDRAIN,rate,1);
 		status_heal(src, 0, status_get_lv(bl)*(95+15*rate)/100, 2);
 	}
@@ -2277,7 +2277,7 @@ int skill_break_equip (struct block_list *src,struct block_list *bl, unsigned sh
 		return 0;
 	if (sd) {
 		for (i = 0; i < EQI_MAX; i++) {
-			int j = sd->equip_index[i];
+			short j = sd->equip_index[i];
 			if (j < 0 || sd->status.inventory[j].attribute == 1 || !sd->inventory_data[j])
 				continue;
 
@@ -8117,8 +8117,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 						continue;
 					if(map_getcell(src->m,src->x+dx[j],src->y+dy[j],CELL_CHKNOREACH))
 						dx[j] = dy[j] = 0;
-					pc_setpos(dstsd, map_id2index(src->m), src->x+dx[j], src->y+dy[j], CLR_RESPAWN);
-					called++;
+					if (!pc_setpos(dstsd, map_id2index(src->m), src->x+dx[j], src->y+dy[j], CLR_RESPAWN))
+						called++;
 				}
 			}
 			if (sd)
@@ -9141,11 +9141,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		else if( sd ) {
 			int opt = rnd()%3 + 1;
 			int val = 0, splash = 0;
-			int index = sd->equip_index[EQI_HAND_L];
+			short index = sd->equip_index[EQI_HAND_L];
 			struct item_data *shield_data = NULL;
-			if( index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR )
-				shield_data = sd->inventory_data[index];
-			if( !shield_data || shield_data->type != IT_ARMOR ) {	// No shield?
+			if( index < 0 || !(shield_data = sd->inventory_data[index]) || shield_data->type == IT_ARMOR ) {	// No shield?
 				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
 				break;
 			}
@@ -9215,8 +9213,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 				case 3: // refine based
 					{
-						struct item *shield = &sd->status.inventory[sd->equip_index[EQI_HAND_L]];
-						if( !shield || !shield->refine ) {
+						struct item *shield = NULL;
+						if( sd->equip_index[EQI_HAND_L] < 0 || !(shield = &sd->status.inventory[sd->equip_index[EQI_HAND_L]]) || !shield->refine ) {
 							clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 							break;
 						}
@@ -9753,7 +9751,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if( sd ) {
 			short ammo_id;
 			i = sd->equip_index[EQI_AMMO];
-			if( i <= 0 )
+			if( i < 0 )
 				break; // No ammo.
 			ammo_id = sd->inventory_data[i]->nameid;
 			if( ammo_id <= 0 )

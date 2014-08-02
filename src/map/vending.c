@@ -85,6 +85,7 @@ void vending_closevending(struct map_session_data* sd)
 		}
 		
 		sd->state.vending = false;
+		sd->vender_id = 0;
 		clif_closevendingboard(&sd->bl, 0);
 		idb_remove(vending_db, sd->status.char_id);
 	}
@@ -483,8 +484,10 @@ bool vending_searchall(struct map_session_data* sd, const struct s_search_store_
 * @param sd Player as autotrader
 */
 void vending_reopen( struct map_session_data* sd ){
+	nullpo_retv(sd);
+
 	// Ready to open vending for this char
-	if ( sd && autotrader_count > 0 && autotraders){
+	if ( autotrader_count > 0 && autotraders){
 		uint16 i;
 		uint8 *data, *p, fail = 0;
 		uint16 j, count;
@@ -538,8 +541,11 @@ void vending_reopen( struct map_session_data* sd ){
 			// Make vendor look perfect
 			pc_setdir(sd, autotraders[i]->dir, autotraders[i]->head_dir);
 			clif_changed_dir(&sd->bl, AREA_WOS);
-			if( autotraders[i]->sit )
+			if( autotraders[i]->sit ) {
 				pc_setsit(sd);
+				skill_sit(sd, 1);
+				clif_sitting(&sd->bl);
+			}
 
 			// Immediate save
 			chrif_save(sd, 3);
@@ -671,7 +677,7 @@ void do_init_vending_autotrade( void ) {
 				Sql_FreeResult(mmysql_handle);
 			}
 
-			ShowStatus("Done loading '"CL_WHITE"%d"CL_RESET"' autotraders with '"CL_WHITE"%d"CL_RESET"' items.\n", autotrader_count, items);
+			ShowStatus("Done loading '"CL_WHITE"%d"CL_RESET"' vending autotraders with '"CL_WHITE"%d"CL_RESET"' items.\n", autotrader_count, items);
 		}
 	}
 

@@ -60,7 +60,7 @@ static int atkmods[3][MAX_WEAPON_TYPE];	/// ATK weapon modification for size (si
 static struct eri *sc_data_ers; /// For sc_data entries
 static struct status_data dummy_status;
 
-int current_equip_item_index; /// Contains inventory index of an equipped item. To pass it into the EQUP_SCRIPT [Lupus]
+short current_equip_item_index; /// Contains inventory index of an equipped item. To pass it into the EQUP_SCRIPT [Lupus]
 int current_equip_card_id; /// To prevent card-stacking (from jA) [Skotlex]
 // We need it for new cards 15 Feb 2005, to check if the combo cards are insrerted into the CURRENT weapon only to avoid cards exploits
 
@@ -2755,7 +2755,8 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	const struct status_change *sc = &sd->sc;
 	struct s_skill b_skill[MAX_SKILL]; ///< Previous skill tree
 	int b_weight, b_max_weight, b_cart_weight_max, ///< Previous weight
-	i, index, skill,refinedef=0;
+	i, skill,refinedef=0;
+	short index = -1;
 
 	if (++calculating > 10) // Too many recursive calls!
 		return -1;
@@ -5183,7 +5184,7 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 		#ifndef RENEWAL
 		else {
 			TBL_PC *sd = (TBL_PC*)bl;
-			int index = sd->equip_index[sd->state.lr_flag?EQI_HAND_L:EQI_HAND_R];
+			short index = sd->equip_index[sd->state.lr_flag?EQI_HAND_L:EQI_HAND_R];
 
 			if(index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->wlv == 4)
 				watk += sc->data[SC_NIBELUNGEN]->val2;
@@ -6499,7 +6500,7 @@ const char* status_get_name(struct block_list *bl)
 }
 
 /**
-* Gets the class of the given bl
+* Gets the class/sprite id of the given bl
 * @param bl: Object whose class to get [PC|MOB|PET|HOM|MER|NPC|ELEM]
 * @return class or 0 if any other bl->type than noted above
 **/
@@ -7664,7 +7665,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	// Strip skills, need to divest something or it fails.
 	case SC_STRIPWEAPON:
 		if (sd && !(flag&4)) { // Apply sc anyway if loading saved sc_data
-			int i;
+			short i;
 			opt_flag = 0; // Reuse to check success condition.
 			if(sd->bonus.unstripable_equip&EQP_WEAPON)
 				return 0;
@@ -7687,7 +7688,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		if( val2 == 1 ) val2 = 0; // GX effect. Do not take shield off..
 		else
 		if (sd && !(flag&4)) {
-			int i;
+			short i;
 			if(sd->bonus.unstripable_equip&EQP_SHIELD)
 				return 0;
 			i = sd->equip_index[EQI_HAND_L];
@@ -7699,7 +7700,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	break;
 	case SC_STRIPARMOR:
 		if (sd && !(flag&4)) {
-			int i;
+			short i;
 			if(sd->bonus.unstripable_equip&EQP_ARMOR)
 				return 0;
 			i = sd->equip_index[EQI_ARMOR];
@@ -7711,7 +7712,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	break;
 	case SC_STRIPHELM:
 		if (sd && !(flag&4)) {
-			int i;
+			short i;
 			if(sd->bonus.unstripable_equip&EQP_HELM)
 				return 0;
 			i = sd->equip_index[EQI_HEAD_TOP];
@@ -7783,7 +7784,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	break;
 	case SC__STRIPACCESSORY:
 		if( sd ) {
-			int i = -1;
+			short i = -1;
 			if( !(sd->bonus.unstripable_equip&EQP_ACC_L) ) {
 				i = sd->equip_index[EQI_ACC_L];
 				if( i >= 0 && sd->inventory_data[i] && sd->inventory_data[i]->type == IT_ARMOR )
@@ -9435,10 +9436,13 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = 10000; // [GodLesZ] tick time
 			break;
 		case SC_EXEEDBREAK:
-			val1 *= 100; // 100 * skill_lv
-			if( sd && sd->inventory_data[sd->equip_index[EQI_HAND_R]] ) {
-				val1 += (sd->inventory_data[sd->equip_index[EQI_HAND_R]]->weight/10 * sd->inventory_data[sd->equip_index[EQI_HAND_R]]->wlv * status_get_lv(bl) / 100);
-				val1 += 10 * sd->status.job_level;
+			{
+				short idx = -1;
+				val1 *= 100; // 100 * skill_lv
+				if( sd && (idx = sd->equip_index[EQI_HAND_R]) >= 0 && sd->inventory_data[idx] ) {
+					val1 += (sd->inventory_data[idx]->weight/10 * sd->inventory_data[idx]->wlv * status_get_lv(bl) / 100);
+					val1 += 10 * sd->status.job_level;
+				}
 			}
 			break;
 		case SC_PRESTIGE:
@@ -9919,7 +9923,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_STONE:
 		case SC_DEEPSLEEP:
 			if (sd && pc_issit(sd)) // Avoid sprite sync problems.
-				pc_setstand(sd);
+				pc_setstand(sd, true);
 		case SC_TRICKDEAD:
 			status_change_end(bl, SC_DANCING, INVALID_TIMER);
 			// Cancel cast when get status [LuzZza]
@@ -10803,8 +10807,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			sc_start(bl, bl,SC_SITDOWN_FORCE,100,sce->val1,skill_get_time2(WM_SATURDAY_NIGHT_FEVER,sce->val1));
 			break;
 		case SC_SITDOWN_FORCE:
-			if( sd && pc_issit(sd) ) {
-				pc_setstand(sd);
+			if( sd && pc_issit(sd) && pc_setstand(sd, false) ) {
 				clif_standing(bl);
 			}
 			break;
@@ -10863,8 +10866,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			status_change_end(bl,SC_TEARGAS_SOB,INVALID_TIMER);
 			break;
 		case SC_BANANA_BOMB_SITDOWN:
-			if( sd && pc_issit(sd) ) {
-				pc_setstand(sd);
+			if( sd && pc_issit(sd) && pc_setstand(sd, false) ) {
 				skill_sit(sd,0);
 				clif_standing(bl);
 			}

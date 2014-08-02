@@ -889,7 +889,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			(flag&BF_LONG || sc->data[SC_SPURT])
 			&& rnd()%100 < 20)
 		{
-			if (sd && pc_issit(sd)) pc_setstand(sd); //Stand it to dodge.
+			if (sd && pc_issit(sd)) pc_setstand(sd, true); //Stand it to dodge.
 			clif_skill_nodamage(bl,bl,TK_DODGE,1,1);
 			if (!sc->data[SC_COMBO])
 				sc_start4(src,bl, SC_COMBO, 100, TK_JUMPKICK, src->id, 1, 0, 2000);
@@ -3556,7 +3556,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 		case LG_SHIELDSPELL:// [(Casters Base Level x 4) + (Shield DEF x 10) + (Casters VIT x 2)] %
 			if (sd && skill_lv == 1) {
-				int index = sd->equip_index[EQI_HAND_L];
+				short index = sd->equip_index[EQI_HAND_L];
 
 				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR)
 					skillratio += sd->inventory_data[index]->def * 10;
@@ -6379,6 +6379,9 @@ void battle_drain(TBL_PC *sd, struct block_list *tbl, int64 rdamage, int64 ldama
 	struct weapon_data *wd;
 	int64 *damage;
 	int thp = 0, tsp = 0, rhp = 0, rsp = 0, hp=0, sp=0, i;
+	if (!CHK_RACE(race) && !CHK_CLASS(class_))
+		return;
+
 	for (i = 0; i < 4; i++) {
 		//First two iterations: Right hand
 		if (i < 2) { wd = &sd->right_weapon; damage = &rdamage; }
@@ -6538,7 +6541,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		sd->state.arrow_atk = (sd->status.weapon == W_BOW || (sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE));
 		if (sd->state.arrow_atk)
 		{
-			int index = sd->equip_index[EQI_AMMO];
+			short index = sd->equip_index[EQI_AMMO];
 			if (index < 0) {
 				clif_arrow_fail(sd,0);
 				return ATK_NONE;

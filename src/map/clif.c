@@ -10372,18 +10372,12 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 			return;
 		}
 
-		// Cannot stand yet
-		// TODO: Move to SCS_NOSTAND [Cydh]
-		if (&sd->sc && (sd->sc.data[SC_SITDOWN_FORCE] || sd->sc.data[SC_BANANA_BOMB_SITDOWN])) {
-			return;
+		if (pc_setstand(sd, false)) {
+			if (battle_config.idletime_option&IDLE_SIT)
+				sd->idletime = last_tick;
+			skill_sit(sd, 0);
+			clif_standing(&sd->bl);
 		}
-
-		if (battle_config.idletime_option&IDLE_SIT)
-			sd->idletime = last_tick;
-
-		pc_setstand(sd);
-		skill_sit(sd, 0);
-		clif_standing(&sd->bl);
 	break;
 	}
 }

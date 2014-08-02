@@ -115,6 +115,7 @@ void searchstore_query(struct map_session_data* sd, unsigned char type, unsigned
 	searchstore_searchall_t store_searchall;
 	time_t querytime;
 	DBMap *vending_db = vending_getdb();
+	DBMap *buyingstore_db = buyingstore_getdb();
 
 	if( !battle_config.feature_search_stores ) {
 		return;
@@ -179,7 +180,7 @@ void searchstore_query(struct map_session_data* sd, unsigned char type, unsigned
 	s.card_count = card_count;
 	s.min_price  = min_price;
 	s.max_price  = max_price;
-	iter         = db_iterator(vending_db);
+	iter         = db_iterator((type == SEARCHTYPE_VENDING) ?  vending_db : buyingstore_db);
 
 	for( pl_sd = dbi_first(iter); dbi_exists(iter);  pl_sd = dbi_next(iter) ) {
 		if( sd == pl_sd ) {// skip own shop, if any
