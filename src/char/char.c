@@ -1968,42 +1968,10 @@ int char_lan_subnetcheck(uint32 ip){
 }
 
 // Console Command Parser [Wizputer]
-int parse_console(const char* buf)
-{
-	char type[64];
-	char command[64];
-	int n=0;
-
-	if( ( n = sscanf(buf, "%63[^:]:%63[^\n]", type, command) ) < 2 ){
-		if((n = sscanf(buf, "%63[^\n]", type))<1) return -1; //nothing to do no arg
-	}
-	if( n != 2 ){ //end string
-		ShowNotice("Type: '%s'\n",type);
-		command[0] = '\0';
-	}
-	else
-		ShowNotice("Type of command: '%s' || Command: '%s'\n",type,command);
-
-	if( n == 2 && strcmpi("server", type) == 0 ){
-		if( strcmpi("shutdown", command) == 0 || strcmpi("exit", command) == 0 || strcmpi("quit", command) == 0 ){
-			runflag = CHARSERVER_ST_SHUTDOWN;
-		}
-		else if( strcmpi("alive", command) == 0 || strcmpi("status", command) == 0 )
-			ShowInfo(CL_CYAN"Console: "CL_BOLD"I'm Alive."CL_RESET"\n");
-	}
-	else if( strcmpi("ers_report", type) == 0 ){
-		ers_report();
-	}
-	else if( strcmpi("help", type) == 0 ){
-		ShowInfo("Available commands:\n");
-		ShowInfo("\t server:shutdown => Stops the server.\n");
-		ShowInfo("\t server:alive => Checks if the server is running.\n");
-		ShowInfo("\t ers_report => Displays database usage.\n");
-	}
-
-	return 0;
+//FIXME to be remove (moved to cnslif / will be done once map/char/login, all have their cnslif interface ready)
+int parse_console(const char* buf){
+	return cnslif_parse(buf);
 }
-
 
 //------------------------------------------------
 //Pincode system

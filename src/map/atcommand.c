@@ -862,15 +862,21 @@ ACMD_FUNC(speed)
 		return -1;
 	}
 
-	if (speed < 0) {
+	sd->state.permanent_speed = 0; // Remove lock when set back to default speed.
+
+	if (speed < 0)
 		sd->base_status.speed = DEFAULT_WALK_SPEED;
-		sd->state.permanent_speed = 0; // Remove lock when set back to default speed.
-	} else {
+	else
 		sd->base_status.speed = cap_value(speed, MIN_WALK_SPEED, MAX_WALK_SPEED);
+
+	if (sd->base_status.speed != DEFAULT_WALK_SPEED) {
 		sd->state.permanent_speed = 1; // Set lock when set to non-default speed.
-	}
+		clif_displaymessage(fd, msg_txt(sd,8)); // Speed changed.
+	} else
+		clif_displaymessage(fd, msg_txt(sd,389)); // Speed returned to normal.
+
 	status_calc_bl(&sd->bl, SCB_SPEED);
-	clif_displaymessage(fd, msg_txt(sd,8)); // Speed changed.
+
 	return 0;
 }
 
@@ -1165,7 +1171,7 @@ ACMD_FUNC(heal)
 
 	if ( hp < 0 && sp <= 0 ) {
 		status_damage(NULL, &sd->bl, -hp, -sp, 0, 0);
-		clif_damage(&sd->bl,&sd->bl, gettick(), 0, 0, -hp, 0, 4, 0);
+		clif_damage(&sd->bl,&sd->bl, gettick(), 0, 0, -hp, 0, DMG_ENDURE, 0);
 		clif_displaymessage(fd, msg_txt(sd,156)); // HP or/and SP modified.
 		return 0;
 	}
@@ -1176,7 +1182,7 @@ ACMD_FUNC(heal)
 			status_heal(&sd->bl, hp, 0, 0);
 		else {
 			status_damage(NULL, &sd->bl, -hp, 0, 0, 0);
-			clif_damage(&sd->bl,&sd->bl, gettick(), 0, 0, -hp, 0, 4, 0);
+			clif_damage(&sd->bl,&sd->bl, gettick(), 0, 0, -hp, 0, DMG_ENDURE, 0);
 		}
 	}
 
@@ -3539,7 +3545,7 @@ ACMD_FUNC(recallall)
 				count++;
 			else {
 				if (pc_isdead(pl_sd)) { //Wake them up
-					pc_setstand(pl_sd);
+					pc_setstand(pl_sd, true);
 					pc_setrestartvalue(pl_sd,1);
 				}
 				pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);
@@ -5752,13 +5758,15 @@ ACMD_FUNC(autotrade) {
 	}
 
 	sd->state.autotrade = 1;
+	if (battle_config.autotrade_monsterignore)
+		sd->state.monster_ignore = 1;
 
 	if( sd->state.vending ){
 		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", vendings_db, sd->vender_id ) != SQL_SUCCESS ){
 			Sql_ShowDebug( mmysql_handle );
 		}
 	}else if( sd->state.buyingstore ){
-		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", buyingstore_db, sd->buyer_id ) != SQL_SUCCESS ){
+		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", buyingstores_db, sd->buyer_id ) != SQL_SUCCESS ){
 			Sql_ShowDebug( mmysql_handle );
 		}
 	}
@@ -5770,7 +5778,7 @@ ACMD_FUNC(autotrade) {
 
 	channel_pcquit(sd,0xF); //leave all chan
 	clif_authfail_fd(sd->fd, 15);
-	
+
 	chrif_save(sd,3);
 
 	return 0;
@@ -6928,9 +6936,9 @@ ACMD_FUNC(mail)
  *------------------------------------------*/
 ACMD_FUNC(mobinfo)
 {
-	unsigned char msize[3][7] = {"Small", "Medium", "Large"};
-	unsigned char mrace[12][11] = {"Formless", "Undead", "Beast", "Plant", "Insect", "Fish", "Demon", "Demi-Human", "Angel", "Dragon", "Boss", "Non-Boss"};
-	unsigned char melement[10][8] = {"Neutral", "Water", "Earth", "Fire", "Wind", "Poison", "Holy", "Dark", "Ghost", "Undead"};
+	unsigned char msize[SZ_ALL][7] = { "Small", "Medium", "Large" };
+	unsigned char mrace[RC_ALL][11] = { "Formless", "Undead", "Beast", "Plant", "Insect", "Fish", "Demon", "Demi-Human", "Angel", "Dragon", "Player" };
+	unsigned char melement[ELE_ALL][8] = { "Neutral", "Water", "Earth", "Fire", "Wind", "Poison", "Holy", "Dark", "Ghost", "Undead" };
 	char atcmd_output2[CHAT_SIZE_MAX];
 	struct item_data *item_data;
 	struct mob_db *mob, *mob_array[MAX_SEARCH];
@@ -7847,6 +7855,8 @@ ACMD_FUNC(fakename)
 		{
 			sd->fakename[0] = '\0';
 			clif_charnameack(0, &sd->bl);
+			if (sd->disguise)
+				clif_charnameack(sd->fd, &sd->bl);
 			clif_displaymessage(sd->fd, msg_txt(sd,1307)); // Returned to real name.
 			return 0;
 		}
@@ -7863,6 +7873,8 @@ ACMD_FUNC(fakename)
 
 	safestrncpy(sd->fakename, message, sizeof(sd->fakename));
 	clif_charnameack(0, &sd->bl);
+	if (sd->disguise) // Another packet should be sent so the client updates the name for sd
+		clif_charnameack(sd->fd, &sd->bl);
 	clif_displaymessage(sd->fd, msg_txt(sd,1310)); // Fake name enabled.
 
 	return 0;
@@ -9520,7 +9532,7 @@ ACMD_FUNC(cloneequip) {
 	else {
 		int8 i;
 		for (i = 0; i < EQI_MAX; i++) {
-			int8 idx;
+			short idx;
 			char flag = 0;
 			struct item tmp_item;
 			if ((idx = pl_sd->equip_index[i]) < 0)
@@ -10147,6 +10159,9 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 		//pass through the rest of the code compatible with both symbols
 		sprintf(atcmd_msg, "%s", message);
 	}
+
+	if (battle_config.idletime_option&IDLE_ATCOMMAND)
+		sd->idletime = last_tick;
 
 	//Clearing these to be used once more.
 	memset(command, '\0', sizeof(command));

@@ -1,16 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="..\src\login\account_sql.c">
+    <ClCompile Include="..\src\login\account.c">
       <Filter>login_sql</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\login\ipban_sql.c">
+    <ClCompile Include="..\src\login\ipban.c">
       <Filter>login_sql</Filter>
     </ClCompile>
     <ClCompile Include="..\src\login\login.c">
       <Filter>login_sql</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\login\loginlog_sql.c">
+    <ClCompile Include="..\src\login\loginchrif.c">
+      <Filter>login_sql</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\login\loginclif.c">
+      <Filter>login_sql</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\login\logincnslif.c">
+      <Filter>login_sql</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\login\loginlog.c">
       <Filter>login_sql</Filter>
     </ClCompile>
     <ClCompile Include="..\src\common\core.c">
@@ -93,10 +102,19 @@
     <ClInclude Include="..\src\login\ipban.h">
       <Filter>login_sql</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\login\loginlog.h">
+    <ClInclude Include="..\src\login\login.h">
       <Filter>login_sql</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\login\login.h">
+    <ClInclude Include="..\src\login\loginchrif.h">
+      <Filter>login_sql</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\login\loginclif.h">
+      <Filter>login_sql</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\login\logincnslif.h">
+      <Filter>login_sql</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\login\loginlog.h">
       <Filter>login_sql</Filter>
     </ClInclude>
     <ClInclude Include="..\src\common\cbasetypes.h">

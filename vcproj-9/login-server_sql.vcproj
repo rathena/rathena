@@ -211,7 +211,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\login\account_sql.c"
+				RelativePath="..\src\login\account.c"
 				>
 			</File>
 			<File
@@ -219,7 +219,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\login\ipban_sql.c"
+				RelativePath="..\src\login\ipban.c"
 				>
 			</File>
 			<File
@@ -231,11 +231,35 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\login\loginchrif.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\login\loginchrif.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\login\loginclif.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\login\loginclif.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\login\logincnslif.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\login\logincnslif.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\login\loginlog.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\login\loginlog_sql.c"
+				RelativePath="..\src\login\loginlog.c"
 				>
 			</File>
 		</Filter>

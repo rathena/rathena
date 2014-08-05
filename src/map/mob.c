@@ -2266,13 +2266,21 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 			if (map[m].flag.nobaseexp || !md->db->base_exp)
 				base_exp = 0;
-			else
-				base_exp = (unsigned int)cap_value(md->db->base_exp * per * bonus/100. * map[m].adjust.bexp/100., 1, UINT_MAX);
+			else {
+				double exp = apply_rate2(md->db->base_exp, per, 1);
+				exp = apply_rate(exp, bonus);
+				exp = apply_rate(exp, map[m].adjust.bexp);
+				base_exp = (unsigned int)cap_value(exp, 1, UINT_MAX);
+			}
 
 			if (map[m].flag.nojobexp || !md->db->job_exp || md->dmglog[i].flag == MDLF_HOMUN) //Homun earned job-exp is always lost.
 				job_exp = 0;
-			else
-				job_exp = (unsigned int)cap_value(md->db->job_exp * per * bonus/100. * map[m].adjust.jexp/100., 1, UINT_MAX);
+			else {
+				double exp = apply_rate2(md->db->job_exp, per, 1);
+				exp = apply_rate(exp, bonus);
+				exp = apply_rate(exp, map[m].adjust.jexp);
+				job_exp = (unsigned int)cap_value(exp, 1, UINT_MAX);
+			}
 
 			if ( ( temp = tmpsd[i]->status.party_id)>0 ) {
 				int j;
@@ -2310,8 +2318,10 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 					if( md->dmglog[i].flag != MDLF_PET || battle_config.pet_attack_exp_to_master ) {
 #ifdef RENEWAL_EXP
 						int rate = pc_level_penalty_mod(tmpsd[i], md->level, md->status.class_, 1);
-						base_exp = (unsigned int)cap_value(base_exp * rate / 100, 1, UINT_MAX);
-						job_exp = (unsigned int)cap_value(job_exp * rate / 100, 1, UINT_MAX);
+						if (rate != 100) {
+							base_exp = (unsigned int)cap_value(apply_rate(base_exp, rate), 1, UINT_MAX);
+							job_exp = (unsigned int)cap_value(apply_rate(job_exp, rate), 1, UINT_MAX);
+						}
 #endif
 						pc_gainexp(tmpsd[i], &md->bl, base_exp, job_exp, false);
 					}
@@ -2395,7 +2405,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			}
 #ifdef RENEWAL_DROP
 			if( drop_modifier != 100 ) {
-				drop_rate = drop_rate * drop_modifier / 100;
+				drop_rate = apply_rate(drop_rate, drop_modifier);
 				if( drop_rate < 1 )
 					drop_rate = 1;
 			}
@@ -3768,14 +3778,14 @@ static bool mob_parse_dbrow(char** str)
 	status->race = atoi(str[23]);
 
 	i = atoi(str[24]); //Element
-	status->def_ele = i%10;
-	status->ele_lv = i/20;
+	status->def_ele = i%20;
+	status->ele_lv = (unsigned char)floor(i/20.);
 	if (!CHK_ELEMENT(status->def_ele)) {
 		ShowError("mob_parse_dbrow: Invalid element type %d for monster ID %d (max=%d).\n", status->def_ele, mob_id, ELE_ALL-1);
 		return false;
 	}
-	if (status->ele_lv < 1 || status->ele_lv > 4) {
-		ShowError("mob_parse_dbrow: Invalid element level %d for monster ID %d, must be in range 1-4.\n", status->ele_lv, mob_id);
+	if (!CHK_ELEMENT_LEVEL(status->ele_lv)) {
+		ShowError("mob_parse_dbrow: Invalid element level %d for monster ID %d, must be in range 1-%d.\n", status->ele_lv, mob_id, MAX_ELE_LEVEL);
 		return false;
 	}
 
@@ -4009,9 +4019,9 @@ static int mob_read_sqldb(void)
  *------------------------------------------*/
 static bool mob_readdb_mobavail(char* str[], int columns, int current)
 {
-	int mob_id, k;
+	int mob_id, sprite_id;
 
-	mob_id=atoi(str[0]);
+	mob_id = atoi(str[0]);
 
 	if(mob_db(mob_id) == mob_dummy)	// invalid class (probably undefined in db)
 	{
@@ -4019,13 +4029,13 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current)
 		return false;
 	}
 
-	k=atoi(str[1]);
+	sprite_id = atoi(str[1]);
 
 	memset(&mob_db_data[mob_id]->vd, 0, sizeof(struct view_data));
-	mob_db_data[mob_id]->vd.class_=k;
+	mob_db_data[mob_id]->vd.class_ = sprite_id;
 
 	//Player sprites
-	if(pcdb_checkid(k) && columns==12) {
+	if(pcdb_checkid(sprite_id) && columns==12) {
 		mob_db_data[mob_id]->vd.sex=atoi(str[2]);
 		mob_db_data[mob_id]->vd.hair_style=atoi(str[3]);
 		mob_db_data[mob_id]->vd.hair_color=atoi(str[4]);

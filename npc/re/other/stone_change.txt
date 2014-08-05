@@ -43,6 +43,16 @@ geffen_in,99,174,5	script	Ore Tester#sorty	8_F_GIRL,{
 			mes "You don't have any "+getitemname(.@item)+"...";
 			close;
 		}
+		// while(1) {
+			// if (countitem(.@item)) {
+				// set .@count, countitem(.@item);
+				// set .@total, .@total + .@count;
+				// delitem .@item, .@count;
+			// } else {
+				// getitem .@item, .@total;
+				// break;
+			// }
+		// }
 		.@count = countitem(.@item);
 		delitem .@item, .@count;
 		getitem .@item, .@count;

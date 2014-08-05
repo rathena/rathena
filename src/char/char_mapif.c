@@ -348,7 +348,7 @@ int chmapif_parse_regmapuser(int fd, int id){
  */
 int chmapif_parse_reqsavechar(int fd, int id){
 	if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
-            return 0;
+		return 0;
 	{
 		int aid = RFIFOL(fd,4), cid = RFIFOL(fd,8), size = RFIFOW(fd,2);
 		struct online_char_data* character;
@@ -449,7 +449,7 @@ int chmapif_parse_authok(int fd){
 //Request to save skill cooldown data
 int chmapif_parse_req_saveskillcooldown(int fd){
 	if( RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2) )
-            return 0;
+		return 0;
 	else {
 		int count, aid, cid;
 		aid = RFIFOL(fd,4);

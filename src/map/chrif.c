@@ -287,12 +287,12 @@ int chrif_save(struct map_session_data *sd, int flag) {
 
 	if (flag && sd->state.active) { //Store player data which is quitting
 		//FIXME: SC are lost if there's no connection at save-time because of the way its related data is cleared immediately after this function. [Skotlex]
-	if (chrif_isconnected()) {
-		chrif_save_scdata(sd);
-		chrif_skillcooldown_save(sd);
-		chrif_save_bsdata(sd);
-		chrif_req_login_operation(sd->status.account_id, sd->status.name, 7, 0, 2, sd->status.bank_vault); //save Bank data
-	}
+		if (chrif_isconnected()) {
+			chrif_save_scdata(sd);
+			chrif_skillcooldown_save(sd);
+			chrif_save_bsdata(sd);
+			chrif_req_login_operation(sd->status.account_id, sd->status.name, 7, 0, 2, sd->status.bank_vault); //save Bank data
+		}
 		if ( flag != 3 && !chrif_auth_logout(sd,flag == 1 ? ST_LOGOUT : ST_MAPCHANGE) )
 			ShowError("chrif_save: Failed to set up player %d:%d for proper quitting!\n", sd->status.account_id, sd->status.char_id);
 	}
@@ -1130,6 +1130,9 @@ int chrif_disconnectplayer(int fd) {
 			if( sd->state.vending ){
 				vending_closevending(sd);
 			}
+			else if( sd->state.buyingstore ){
+				buyingstore_close(sd);
+			}
 
 			map_quit(sd); //Remove it.
 		}
@@ -1378,12 +1381,6 @@ int chrif_load_scdata(int fd) {
 
 	pc_scdata_received(sd);
 #endif
-
-	if( sd->state.autotrade ) {
-		buyingstore_reopen( sd );
-		vending_reopen( sd );
-	}
-
 	return 0;
 }
 

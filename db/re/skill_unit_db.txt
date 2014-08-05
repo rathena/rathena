@@ -153,8 +153,8 @@
 2482,0xe6,0x7f,  0, 1, 100,all,   0x000	//GN_WALLOFTHORN
 2484,0x86,    ,  0, 1, 100,enemy, 0x080	//GN_CRAZYWEED_ATK
 2485,0xe7,    ,  0, 2,2000,enemy, 0x098	//GN_DEMONIC_FIRE
-2487,0xe8,    ,  2, 0,  -1,all,   0x2000	//GN_FIRE_EXPANSION_SMOKE_POWDER
-2488,0xe9,    ,  2, 0,  -1,all,   0x2000	//GN_FIRE_EXPANSION_TEAR_GAS
+2487,0xe8,    ,  2, 0,  -1,enemy, 0x2000	//GN_FIRE_EXPANSION_SMOKE_POWDER
+2488,0xe9,    ,  2, 0,  -1,enemy, 0x2000	//GN_FIRE_EXPANSION_TEAR_GAS
 2490,0xea,    ,  0, 1,1000,enemy, 0x002	//GN_HELLS_PLANT
 
 2555,0x104,   ,  0, 1:2:2:3:3,500,enemy,0x6	//RL_B_TRAP
