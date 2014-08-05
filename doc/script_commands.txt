@@ -1196,7 +1196,7 @@ does not use 'mes'.
         npctalk "Look at that you are almost 2nd profession";
         end;
 
-Without the use of 'end' it would travel through the labels until the next 'end' or the end of the 
+Without the use of 'end' it would travel through the labels until the end of the 
 script. If you were lvl 10 or less, you would see all the speech lines, the use 
 of 'end' stops this, and ends the script.
 
