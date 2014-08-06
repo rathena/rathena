@@ -7651,41 +7651,61 @@ BUILDIN_FUNC(getguildmasterid)
  *	1 : party_name or ""
  *	2 : guild_name or ""
  *	3 : map_name
- *	- : ""
+ *	4 : group name or "" for Group ID 0
  *------------------------------------------*/
 BUILDIN_FUNC(strcharinfo)
 {
 	TBL_PC *sd;
 	int num;
-	struct guild* g;
-	struct party_data* p;
 
-	sd=script_rid2sd(st);
-	if (!sd) { //Avoid crashing....
-		script_pushconststr(st,"");
-		return 0;
+	if( script_hasdata(st, 3) ) {
+		if( !(sd = map_id2sd( script_getnum(st,3) )) ) {
+			ShowError("buildin_strcharinfo: player not found (AID=%d).\n", script_getnum(st,3));
+			script_pushconststr(st,"");
+			return SCRIPT_CMD_FAILURE;
+		}
 	}
-	num=script_getnum(st,2);
+	else {
+		if( !(sd = script_rid2sd(st)) ) {
+			script_pushconststr(st,"");
+			return SCRIPT_CMD_SUCCESS;
+		}
+	}
+
+	num = script_getnum(st,2);
 	switch(num){
 		case 0:
 			script_pushstrcopy(st,sd->status.name);
 			break;
 		case 1:
-			if( ( p = party_search(sd->status.party_id) ) != NULL ) {
-				script_pushstrcopy(st,p->party.name);
-			} else {
-				script_pushconststr(st,"");
+			{
+				struct party_data* p;
+				if( ( p = party_search(sd->status.party_id) ) != NULL ) {
+					script_pushstrcopy(st,p->party.name);
+				} else {
+					script_pushconststr(st,"");
+				}
 			}
 			break;
 		case 2:
-			if( ( g = sd->guild ) != NULL ) {
-				script_pushstrcopy(st,g->name);
-			} else {
-				script_pushconststr(st,"");
+			{
+				struct guild* g;
+				if( ( g = sd->guild ) != NULL ) {
+					script_pushstrcopy(st,g->name);
+				} else {
+					script_pushconststr(st,"");
+				}
 			}
 			break;
 		case 3:
 			script_pushconststr(st,map[sd->bl.m].name);
+			break;
+		case 4:
+			if( sd->group_id > 0 ) {
+				script_pushstrcopy(st, pc_group_id2name(sd->group_id));
+			} else {
+				script_pushconststr(st,"");
+			}
 			break;
 		default:
 			ShowWarning("buildin_strcharinfo: unknown parameter.\n");
@@ -19099,7 +19119,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getguildname,"i"),
 	BUILDIN_DEF(getguildmaster,"i"),
 	BUILDIN_DEF(getguildmasterid,"i"),
-	BUILDIN_DEF(strcharinfo,"i"),
+	BUILDIN_DEF(strcharinfo,"i?"),
 	BUILDIN_DEF(strnpcinfo,"i"),
 	BUILDIN_DEF(getequipid,"i"),
 	BUILDIN_DEF(getequipname,"i"),
