@@ -65,7 +65,7 @@ char default_codepage[32] = "";
 int map_server_port = 3306;
 char map_server_ip[32] = "127.0.0.1";
 char map_server_id[32] = "ragnarok";
-char map_server_pw[32] = "";
+char map_server_pw[64] = "";
 char map_server_db[32] = "ragnarok";
 Sql* mmysql_handle;
 
@@ -90,7 +90,7 @@ char vending_items_db[32] = "vending_items";
 char log_db_ip[32] = "127.0.0.1";
 int log_db_port = 3306;
 char log_db_id[32] = "ragnarok";
-char log_db_pw[32] = "ragnarok";
+char log_db_pw[64] = "ragnarok";
 char log_db_db[32] = "log";
 Sql* logmysql_handle;
 

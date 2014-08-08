@@ -19,14 +19,14 @@
 static char   global_db_hostname[32] = "127.0.0.1";
 static uint16 global_db_port = 3306;
 static char   global_db_username[32] = "ragnarok";
-static char   global_db_password[32] = ""; //empty by default since mysql is empty by default as well
+static char   global_db_password[64] = ""; //empty by default since mysql is empty by default as well
 static char   global_db_database[32] = "ragnarok";
 static char   global_codepage[32] = "";
 // local sql settings
 static char   log_db_hostname[32] = "";
 static uint16 log_db_port = 0;
 static char   log_db_username[32] = "";
-static char   log_db_password[32] = "";
+static char   log_db_password[64] = "";
 static char   log_db_database[32] = "";
 static char   log_codepage[32] = "";
 static char   log_login_db[256] = "loginlog";
