@@ -3899,7 +3899,7 @@ static int skill_reveal_trap (struct block_list *bl, va_list ap)
 	{	//Reveal trap.
 		//Change look is not good enough, the client ignores it as an actual trap still. [Skotlex]
 		//clif_changetraplook(bl, su->group->unit_id);
-		clif_skill_setunit(su);
+		clif_getareachar_skillunit(&su->bl, su, AREA);
 		return 1;
 	}
 	return 0;
@@ -11662,7 +11662,7 @@ static int skill_dance_overlap_sub(struct block_list* bl, va_list ap)
 	else //Remove dissonance
 		target->val2 &= ~UF_ENSEMBLE;
 
-	clif_skill_setunit(target); //Update look of affected cell.
+	clif_getareachar_skillunit(&target->bl, target, AREA); //Update look of affected cell.
 
 	return 1;
 }
@@ -13203,13 +13203,13 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			status_change_start(ss, bl, SC_BLIND, (10 + 10 * sg->skill_lv)*100, sg->skill_lv, sg->skill_id, 0, 0, skill_get_time2(sg->skill_id, sg->skill_lv), 2|8);
 			break;
 
-		case UNT_B_TRAP: //! FIXME: Unit ID isn't correct, it doesn't show proper client effect.
+		case UNT_B_TRAP:
 			sc_start(ss,bl,SC_B_TRAP,100,sg->skill_lv,max(status_get_str(bl) * 150,5000)); //(custom)
 			sg->unit_id = UNT_USED_TRAPS;
 			clif_changetraplook(&src->bl, UNT_USED_TRAPS);
-			sg->limit=DIFF_TICK(tick,sg->tick)+1500;
+			sg->limit = DIFF_TICK(tick,sg->tick)+1500;
 			break;
-		case UNT_FIRE_RAIN: //! FIXME: Unit ID isn't correct, it doesn't show proper client effect.
+		case UNT_FIRE_RAIN:
 			clif_skill_damage(ss,bl,tick,status_get_amotion(ss),0,
 				skill_attack(skill_get_type(sg->skill_id),ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,SD_ANIMATION|SD_SPLASH),
 				1,sg->skill_id,sg->skill_lv,6);
@@ -16640,7 +16640,7 @@ struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int 
 			break;
 	}
 
-	clif_skill_setunit(unit);
+	clif_getareachar_skillunit(&unit->bl, unit, AREA);
 
 	return unit;
 }
@@ -17473,7 +17473,7 @@ int skill_unit_move_unit_group (struct skill_unit_group *group, int16 m, int16 d
 		if (!(m_flag[i]&0x2)) { //We only moved the cell in 0-1
 			if (group->state.song_dance&0x1) //Check for dissonance effect.
 				skill_dance_overlap(unit1, 1);
-			clif_skill_setunit(unit1);
+			clif_getareachar_skillunit(&unit1->bl, unit1, AREA);
 			map_foreachincell(skill_unit_effect,unit1->bl.m,unit1->bl.x,unit1->bl.y,group->bl_flag,&unit1->bl,tick,1);
 		}
 	}
