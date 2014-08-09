@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 1.5
+//= 2.0
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -16,11 +16,12 @@
 //= 1.3 Updated to match AEGIS script. [Kisuka]
 //= 1.4 Updated to match AEGIS script again. [Masao]
 //= 1.5 Moved Izlude duplicate to pre-re/re paths. [Euphy]
+//= 2.0 Clean-up. [Capuche]
 //============================================================
 
-alberta,118,157,3	script	Magazine Dealer Kenny::mdk	83,{
+alberta,118,157,3	script	Magazine Dealer Kenny::mdk	4_M_01,{
+	mes "[Kenny]";
 	if (BaseJob == Job_Gunslinger) {
-		mes "[Kenny]";
 		mes "Welcome to my Magazine Shop.";
 		mes "As you may know, large numbers";
 		mes "of bullets can be carried more";
@@ -28,14 +29,14 @@ alberta,118,157,3	script	Magazine Dealer Kenny::mdk	83,{
 		mes "anything in particular?";
 		next;
 		switch(select("Wind Sphere Pack:Shadow Sphere Pack:Poison Sphere Pack:Water Sphere Pack:Fire Sphere Pack:Cartridge:Blood Cartridge:Silver Cartridge:Cancel")) {
-		case 1: callfunc "Func_Casing",13204,12144; break;
-		case 2: callfunc "Func_Casing",13206,12145; break;
-		case 3: callfunc "Func_Casing",13205,12146; break;
-		case 4: callfunc "Func_Casing",13207,12147; break;
-		case 5: callfunc "Func_Casing",13203,12148; break;
-		case 6: callfunc "Func_Casing",13200,12149; break;
-		case 7: callfunc "Func_Casing",13202,12150; break;
-		case 8: callfunc "Func_Casing",13201,12151; break;
+		case 1: callsub S_Casing,13204,12144;// <bullet id>, <pack id>
+		case 2: callsub S_Casing,13206,12145;
+		case 3: callsub S_Casing,13205,12146;
+		case 4: callsub S_Casing,13207,12147;
+		case 5: callsub S_Casing,13203,12148;
+		case 6: callsub S_Casing,13200,12149;
+		case 7: callsub S_Casing,13202,12150;
+		case 8: callsub S_Casing,13201,12151;
 		case 9:
 			mes "[Kenny]";
 			mes "Well, if you ever find";
@@ -46,7 +47,6 @@ alberta,118,157,3	script	Magazine Dealer Kenny::mdk	83,{
 			close;
 		}
 	}
-	mes "[Kenny]";
 	mes "Welcome to my shop.";
 	mes "Here, I provide Magazines";
 	mes "and Cartridges for Gunslingers.";
@@ -60,19 +60,21 @@ alberta,118,157,3	script	Magazine Dealer Kenny::mdk	83,{
 	mes "them my way. You can never";
 	mes "have too many bullets.";
 	close;
-}
 
-function	script	Func_Casing	{
+S_Casing:
+	.@bullet_id = getarg(0);
+	.@pack_id = getarg(1);
+
 	mes "[Kenny]";
 	mes "Now, you can trade";
-	mes callfunc("F_InsertPlural",500,getitemname(getarg(0)));
-	mes "and 500 zeny for 1 "+getitemname(getarg(1))+", so make sure";
+	mes callfunc("F_InsertPlural",500,getitemname(.@bullet_id));
+	mes "and 500 zeny for 1 "+getitemname(.@pack_id)+", so make sure";
 	mes "you have sufficient bullets";
 	mes "and zeny for this exchange.";
 	next;
 	mes "[Kenny]";
-	mes "You can exchange "+callfunc("F_InsertPlural",500,getitemname(getarg(0)))+" and 500 zeny";
-	mes "with 1 "+getitemname(getarg(1))+".";
+	mes "You can exchange "+callfunc("F_InsertPlural",500,getitemname(.@bullet_id))+" and 500 zeny";
+	mes "with 1 "+getitemname(.@pack_id)+".";
 	next;
 	mes "[Kenny]";
 	mes "Remember that I can't give";
@@ -82,56 +84,48 @@ function	script	Func_Casing	{
 	mes "want to receive. If you want to cancel, then just enter ''0.''";
 	next;
 	input .@amount;
+	mes "[Kenny]";
 	if (.@amount > 50 || .@amount == 0) {
-		mes "[Kenny]";
 		mes "Hey, I can't give you";
 		mes "that many Magazines.";
 		mes "Please try again, and";
 		mes "enter a number no";
 		mes "greater than 50.";
-		close;
 	}
-	if (countitem(getarg(0)) >= (500*.@amount)) {
+	else if (countitem(.@bullet_id) >= (500*.@amount)) {
 		if (Zeny >= (500*.@amount)) {
-			if (checkweight(getarg(1),.@amount) == 0) {
-				mes "[Kenny]";
+			if (checkweight(.@pack_id,.@amount) == 0) {
 				mes "Hey, you've got a lot";
 				mes "of junk crammed in your";
 				mes "Inventory. Free up some";
 				mes "space, and then come back";
 				mes "and trade your bullets for";
 				mes "some Magazines later, okay?";
-				close;
-			}else{
-				mes "[Kenny]";
+			} else {
 				mes "Alright, here are";
 				mes "your Magazines. Thanks";
 				mes "for visiting my shop, and";
 				mes "I hope that you use all";
 				mes "of your ammo wisely.";
-				set Zeny,Zeny-500*.@amount;
-				delitem getarg(0),500*.@amount;
-				getitem getarg(1),.@amount;
-				close;
+				Zeny = Zeny -500*.@amount;
+				delitem .@bullet_id,(500*.@amount);
+				getitem .@pack_id,.@amount;
 			}
 		} else {
-			mes "[Kenny]";
 			mes "Sorry, but you don't";
 			mes "have enough zeny for";
 			mes "this Magazine exchange.";
 			mes "Come back to my shop";
 			mes "after you've saved up";
 			mes "some more money.";
-			close;
 		}
 	} else {
-		mes "[Kenny]";
 		mes "Sorry, but you don't";
 		mes "have enough bullets for";
 		mes "this Magazine exchange.";
 		mes "Maybe you should double";
 		mes "check your Inventory, and";
 		mes "then come back to me later.";
-		close;
 	}
+	close;
 }
