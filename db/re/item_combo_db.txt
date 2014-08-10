@@ -384,3 +384,14 @@
 24168:24169:24178,{ bonus bMatk,5; if(getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L)>=25) bonus bIgnoreMDefRace,RC_Undead; }
 24168:24169:24179,{ bonus bMatk,5; if(getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L)>=25) bonus bIgnoreMDefRace,RC_Plant; }
 28326:28327,{ bonus bInt,8; bonus bStr,8; }
+24180:24181:24182:24183:24184:24185,{ set .@refine,getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_SHOES)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L; bonus bAllStats,1; if(.@refine)>=45) { bonus bMaxHPrate,(.@refine-60); /* +Endure */} }
+24186,,{ bonus2 bSubEle,Ele_Neutral,2; }
+24187,,{ bonus2 bSubEle,Ele_Dark,2; }
+24188,,{ bonus2 bSubEle,Ele_Water,2; }
+24189,,{ bonus2 bSubEle,Ele_Earth,2; }
+24190,,{ bonus2 bSubEle,Ele_Fire,2; }
+24191,,{ bonus2 bSubEle,Ele_Wind,2; }
+24192,24204,{ bonus2 bSubEle,Ele_Poison,2; }
+24193,,{ bonus2 bSubEle,Ele_Holy,2; }
+24194,,{ bonus2 bSubEle,Ele_Ghost,2; }
+24195,24207,{ bonus2 bSubEle,Ele_Undead,2; }
