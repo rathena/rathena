@@ -641,7 +641,10 @@ static int inter_config_read(const char* cfgName)
 	while(fgets(line, sizeof(line), fp)) {
 		char w1[24], w2[1024];
 
-		if (sscanf(line, "%23[^:]: %1023[^\r\n]", w1, w2) != 2);
+		if (line[0] == '/' && line[1] == '/')
+			continue;
+
+		if (sscanf(line, "%23[^:]: %1023[^\r\n]", w1, w2) != 2)
 			continue;
 
 		if(!strcmpi(w1,"char_server_ip"))

@@ -285,7 +285,6 @@ static bool account_db_sql_set_property(AccountDB* self, const char* key, const 
 	AccountDB_SQL* db = (AccountDB_SQL*)self;
 	const char* signature;
 
-
 	signature = "sql.";
 	if( strncmp(key, signature, strlen(signature)) == 0 )
 	{
