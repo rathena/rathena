@@ -584,9 +584,9 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 		if (line[0] == '/' && line[1] == '/')
 			continue;
 		if (strstr(line,"import")) {
-			char w1[1024], w2[1024];
+			char w1[16], w2[64];
 
-			if (sscanf(line,"%[^:]: %[^\r\n]",w1,w2) == 2 &&
+			if (sscanf(line,"%15[^:]: %63[^\r\n]",w1,w2) == 2 &&
 				strcmpi(w1,"import") == 0)
 			{
 				itemdb_read_itemgroup_sub(w2, 0);

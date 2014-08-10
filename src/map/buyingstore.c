@@ -630,8 +630,8 @@ void buyingstore_reopen( struct map_session_data* sd ){
 		pc_cleareventtimer(sd);
 
 		// Open the buyingstore again
-		if( (fail = buyingstore_setup( sd, (unsigned char)autotraders[i]->count ) == 0) &&
-			(fail = buyingstore_create( sd, autotraders[i]->limit, 1, autotraders[i]->title, data, autotraders[i]->count ) == 0) )
+		if( (fail = buyingstore_setup( sd, (unsigned char)autotraders[i]->count )) == 0 &&
+			(fail = buyingstore_create( sd, autotraders[i]->limit, 1, autotraders[i]->title, data, autotraders[i]->count )) == 0 )
 		{
 			ShowInfo("Loaded buyingstore for '"CL_WHITE"%s"CL_RESET"' with '"CL_WHITE"%d"CL_RESET"' items at "CL_WHITE"%s (%d,%d)"CL_RESET"\n",
 				sd->status.name, count, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y);

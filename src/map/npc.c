@@ -2020,11 +2020,9 @@ int npc_unload(struct npc_data* nd, bool single) {
 static void npc_clearsrcfile(void)
 {
 	struct npc_src_list* file = npc_src_files;
-	struct npc_src_list* file_tofree;
 
-	while( file != NULL )
-	{
-		file_tofree = file;
+	while( file != NULL ) {
+		struct npc_src_list* file_tofree = file;
 		file = file->next;
 		aFree(file_tofree);
 	}
@@ -3553,7 +3551,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 	else if (!strcmpi(w3, "pvp_nightmaredrop")) {
 		char drop_arg1[16], drop_arg2[16];
 		int drop_per = 0;
-		if (sscanf(w4, "%[^,],%[^,],%d", drop_arg1, drop_arg2, &drop_per) == 3) {
+		if (sscanf(w4, "%15[^,],%15[^,],%d", drop_arg1, drop_arg2, &drop_per) == 3) {
 			int drop_id = 0, drop_type = 0;
 			if (!strcmpi(drop_arg1, "random"))
 				drop_id = -1;
