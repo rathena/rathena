@@ -253,19 +253,22 @@ struct skill_unit_group_tickset {
 
 
 enum {
-	UF_DEFNOTENEMY   = 0x0001,	// If 'defunit_not_enemy' is set, the target is changed to 'friend'
-	UF_NOREITERATION = 0x0002,	// Spell cannot be stacked
-	UF_NOFOOTSET     = 0x0004,	// Spell cannot be cast near/on targets
-	UF_NOOVERLAP     = 0x0008,	// Spell effects do not overlap
-	UF_PATHCHECK     = 0x0010,	// Only cells with a shootable path will be placed
-	UF_NOPC          = 0x0020,	// May not target players
-	UF_NOMOB         = 0x0040,	// May not target mobs
-	UF_SKILL         = 0x0080,	// May target skills
-	UF_DANCE         = 0x0100,	// Dance
-	UF_ENSEMBLE      = 0x0200,	// Duet
-	UF_SONG          = 0x0400,	// Song
-	UF_DUALMODE      = 0x0800,	// Spells should trigger both ontimer and onplace/onout/onleft effects.
-	UF_RANGEDSINGLEUNIT = 0x2000 // hack for ranged layout, only display center
+	UF_DEFNOTENEMY      = 0x0001,	// If 'defunit_not_enemy' is set, the target is changed to 'friend'
+	UF_NOREITERATION    = 0x0002,	// Spell cannot be stacked
+	UF_NOFOOTSET        = 0x0004,	// Spell cannot be cast near/on targets
+	UF_NOOVERLAP        = 0x0008,	// Spell effects do not overlap
+	UF_PATHCHECK        = 0x0010,	// Only cells with a shootable path will be placed
+	UF_NOPC             = 0x0020,	// May not target players
+	UF_NOMOB            = 0x0040,	// May not target mobs
+	UF_SKILL            = 0x0080,	// May target skills
+	UF_DANCE            = 0x0100,	// Dance
+	UF_ENSEMBLE         = 0x0200,	// Duet
+	UF_SONG             = 0x0400,	// Song
+	UF_DUALMODE         = 0x0800,	// Spells should trigger both ontimer and onplace/onout/onleft effects.
+	UF_NOKNOCKBACK      = 0x1000,	// Skill unit cannot be knocked back
+	UF_RANGEDSINGLEUNIT = 0x2000,	// hack for ranged layout, only display center
+	UF_REM_CRAZYWEED    = 0x4000,	// removed by Crazyweed
+	UF_REM_FIRERAIN     = 0x8000,	// removed by Fire Rain
 };
 
 /// Create Database item
@@ -366,7 +369,7 @@ int skill_addtimerskill(struct block_list *src,unsigned int tick,int target,int 
 // Results? Added
 int skill_additional_effect( struct block_list* src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,int attack_type,int dmg_lv,unsigned int tick);
 int skill_counter_additional_effect( struct block_list* src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,int attack_type,unsigned int tick);
-int skill_blown(struct block_list* src, struct block_list* target, int count, int8 dir, int flag);
+short skill_blown(struct block_list* src, struct block_list* target, char count, int8 dir, unsigned char flag);
 int skill_break_equip(struct block_list *src,struct block_list *bl, unsigned short where, int rate, int flag);
 int skill_strip_equip(struct block_list *src,struct block_list *bl, unsigned short where, int rate, int lv, int time);
 // Skills unit

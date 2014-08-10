@@ -3701,6 +3701,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 				uint16 lv = skill_lv;
 				skillratio += 100 * skill_check_pc_partner(sd,skill_id,&lv,skill_get_splash(skill_id,skill_lv),0);
 			}
+			RE_LVL_DMOD(100);
 			break;
 		case WM_SOUND_OF_DESTRUCTION:
 			skillratio = (1000 * skill_lv) + (((sd) ? pc_checkskill(sd, WM_LESSON) : skill_get_max(WM_LESSON)) * status_get_int(src));
@@ -3874,6 +3875,9 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 		case RL_R_TRIP:
 			skillratio += -100 + (150 * skill_lv); //(custom)
+			break;
+		case RL_R_TRIP_PLUSATK:
+			skillratio += -100 + (50 * skill_lv); //(custom)
 			break;
 		case RL_H_MINE:
 			skillratio += 100 + (200 * skill_lv);

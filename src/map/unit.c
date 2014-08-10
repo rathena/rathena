@@ -464,7 +464,7 @@ int unit_delay_walktobl_timer(int tid, unsigned int tick, int id, intptr_t data)
  *	&4: Delay walking for can_move
  * @return 1: Success 0: Fail or unit_walktoxy_sub()
  */
-int unit_walktoxy( struct block_list *bl, short x, short y, int flag)
+int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
 {
 	struct unit_data* ud = NULL;
 	struct status_change* sc = NULL;
@@ -571,7 +571,7 @@ static int unit_walktobl_sub(int tid, unsigned int tick, int id, intptr_t data)
  *	&2: Start attacking upon arrival within range, otherwise just walk to target
  * @return 1: Started walking or set timer 0: Failed
  */
-int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, int flag)
+int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, unsigned char flag)
 {
 	struct unit_data *ud = NULL;
 	struct status_change *sc = NULL;

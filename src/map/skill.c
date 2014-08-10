@@ -110,6 +110,8 @@ struct s_skill_nounit_layout skill_nounit_layout[MAX_SKILL_UNIT_LAYOUT];
 int overbrand_nounit_pos;
 int overbrand_brandish_nounit_pos;
 
+static char dir_ka = -1; // Holds temporary direction to the target for SR_KNUCKLEARROW
+
 //early declaration
 int skill_block_check(struct block_list *bl, enum sc_type type, uint16 skill_id);
 static int skill_check_unit_range (struct block_list *bl, int x, int y, uint16 skill_id, uint16 skill_lv);
@@ -2345,67 +2347,68 @@ int skill_strip_equip(struct block_list *src,struct block_list *bl, unsigned sho
 static int skill_area_temp[8];
 /*=========================================================================
  Used to knock back players, monsters, traps, etc
- - 'count' is the number of squares to knock back
- - 'direction' indicates the way OPPOSITE to the knockback direction (or -1 for default behavior)
- - if 'flag&0x1', position update packets must not be sent.
- - if 'flag&0x2', skill blown ignores players' special_state.no_knockback
+ * @param src Object that give knock back
+ * @param target Object that receive knock back
+ * @param count Number of knock back cell requested
+ * @param dir Direction indicates the way OPPOSITE to the knockback direction (or -1 for default behavior)
+ * @param flag
+		0x01 - position update packets must not be sent;
+		0x02 - ignores players' special_state.no_knockback;
+		These flags "return 'count' instead of 0 if target is cannot be knocked back":
+		0x04 - at WOE/BG map;
+		0x08 - if target is MD_KNOCKBACK_IMMUNE|MD_BOSS;
+		0x10 - if target has 'special_state.no_knockback';
+		0x20 - if target is in Basilica area;
+ * @return Number of knocked back cells done
  -------------------------------------------------------------------------*/
-int skill_blown(struct block_list* src, struct block_list* target, int count, int8 dir, int flag) {
+short skill_blown(struct block_list* src, struct block_list* target, char count, int8 dir, unsigned char flag) {
 	int dx = 0, dy = 0;
-	struct skill_unit* su = NULL;
 
 	nullpo_ret(src);
+	nullpo_ret(target);
+
+	if (count == 0)
+		return count; // Actual knockback distance is 0.
 
 	if (src != target && (map_flag_gvg(target->m) || map[target->m].flag.battleground))
-		return 0; //No knocking back in WoE
-	if (count == 0)
-		return 0; //Actual knockback distance is 0.
+		return ((flag&0x04) ? count : 0); // No knocking back in WoE
 
 	switch (target->type) {
 		case BL_MOB: {
 				struct mob_data* md = BL_CAST(BL_MOB, target);
 				if( md->mob_id == MOBID_EMPERIUM )
-					return 0;
-				//Bosses or imune can't be knocked-back
+					return count;
+				// Bosses or imune can't be knocked-back
 				if(src != target && status_get_mode(target)&(MD_KNOCKBACK_IMMUNE|MD_BOSS))
-					return 0;
+					return ((flag&0x08) ? count : 0);
 			}
 			break;
 		case BL_PC: {
 				struct map_session_data *sd = BL_CAST(BL_PC, target);
 				if( sd->sc.data[SC_BASILICA] && sd->sc.data[SC_BASILICA]->val4 == sd->bl.id && !is_boss(src))
-					return 0; // Basilica caster can't be knocked-back by normal monsters.
+					return ((flag&0x20) ? count : 0); // Basilica caster can't be knocked-back by normal monsters.
 				if( !(flag&0x2) && src != target && sd->special_state.no_knockback )
-					return 0;
+					return ((flag&0x10) ? count : 0);
 			}
 			break;
-		case BL_SKILL:
-			su = (struct skill_unit *)target;
-
-			if (su && su->group) {
-				switch (su->group->unit_id) {
-					case UNT_ICEWALL:
-					case UNT_ANKLESNARE:
-					case UNT_ELECTRICSHOCKER:
-					case UNT_REVERBERATION:
-					case UNT_NETHERWORLD:
-					case UNT_WALLOFTHORN:
-						return 0; //Cannot be knocked back
-				}
+		case BL_SKILL: {
+				struct skill_unit* su = NULL;
+				su = (struct skill_unit *)target;
+				if (su && su->group && skill_get_unit_flag(su->group->skill_id)&UF_NOKNOCKBACK)
+					return count; // Cannot be knocked back
 			}
 			break;
 	}
 
 	if (dir == -1) // <optimized>: do the computation here instead of outside
-		dir = map_calc_dir(target, src->x, src->y); // direction from src to target, reversed
+		dir = map_calc_dir(target, src->x, src->y); // Direction from src to target, reversed
 
-	if (dir >= 0 && dir < 8)
-	{	// take the reversed 'direction' and reverse it
+	if (dir >= 0 && dir < 8) { // Take the reversed 'direction' and reverse it
 		dx = -dirx[dir];
 		dy = -diry[dir];
 	}
 
-	return unit_blown(target, dx, dy, count, flag);	// send over the proper flag
+	return unit_blown(target, dx, dy, count, flag);	// Send over the proper flag
 }
 
 
@@ -3032,6 +3035,9 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		case WZ_SIGHTBLASTER:
 			dmg.dmotion = clif_skill_damage(src,bl,tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, flag&SD_LEVEL?-1:skill_lv, 5);
 			break;
+		case RL_R_TRIP_PLUSATK:
+			dmg.dmotion = clif_skill_damage(dsrc,bl,tick,status_get_amotion(src),dmg.dmotion,damage,dmg.div_,skill_id,-1,5);
+			break;
 		case AB_DUPLELIGHT_MELEE:
 		case AB_DUPLELIGHT_MAGIC:
 			dmg.amotion = 300;/* makes the damage value not overlap with previous damage (when displayed by the client) */
@@ -3075,16 +3081,16 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 
 	//Only knockback if it's still alive, otherwise a "ghost" is left behind. [Skotlex]
 	//Reflected spells do not bounce back (bl == dsrc since it only happens for direct skills)
-	if (dmg.blewcount > 0 && bl!=dsrc && !status_isdead(bl)) {
-		int8 dir = -1; // default
-		switch(skill_id) {//direction
+	if (dmg.blewcount > 0 && bl != dsrc && !status_isdead(bl)) {
+		int8 dir = -1; // Default direction
+		// Skill spesific direction
+		switch (skill_id) {
 			case MG_FIREWALL:
 			case PR_SANCTUARY:
 			case SC_TRIANGLESHOT:
-			case SR_KNUCKLEARROW:
 			case GN_WALLOFTHORN:
 			case EL_FIRE_MANTLE:
-				dir = unit_getdir(bl);// backwards
+				dir = unit_getdir(bl); // Backwards
 				break;
 			// This ensures the storm randomly pushes instead of exactly a cell backwards per official mechanics.
 			case WZ_STORMGUST:
@@ -3097,24 +3103,41 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 				if (battle_config.cart_revo_knockback)
 					dir = 6; // Official servers push target to the West
 				break;
+			case AC_SHOWER:
+				// Direction between target to actual attacker location instead of the unit location (bugreport:1709)
+				if (dsrc != src)
+					dir = map_calc_dir(bl, src->x, src->y);
+				break;
 		}
-		//blown-specific handling
+		// Blown-specific handling
 		switch( skill_id ) {
 			case LG_OVERBRAND_BRANDISH:
-				if( skill_blown(dsrc,bl,dmg.blewcount,dir,0) < dmg.blewcount )
+				// Give knockback damage bonus only hits the wall. (bugreport:9096)
+				if( skill_blown(dsrc,bl,dmg.blewcount,dir,0x04|0x08|0x10|0x20) < dmg.blewcount )
 					skill_addtimerskill(src, tick + status_get_amotion(src), bl->id, 0, 0, LG_OVERBRAND_PLUSATK, skill_lv, BF_WEAPON, flag|SD_ANIMATION);
 				break;
 			case SR_KNUCKLEARROW:
 				if (!(flag&4)) {
-					short i = skill_blown(dsrc, bl, dmg.blewcount, dir, 0);
+					short x = bl->x, y = bl->y;
 
-					if (!map_flag_gvg2(src->m) && !map[src->m].flag.battleground && unit_movepos(src,bl->x,bl->y,1,1)) {
+					// Ignore knockback damage bonus if in WOE (player cannot be knocked in WOE)
+					// Boss & Immune Knockback (mode or from bonus bNoKnockBack) target still remains the damage bonus
+					// (bugreport:9096)
+					if (skill_blown(dsrc, bl, dmg.blewcount, dir_ka, 0x04) < dmg.blewcount)
+						skill_addtimerskill(src, tick + 300 * ((flag&2) ? 1 : 2), bl->id, 0, 0, skill_id, skill_lv, BF_WEAPON, flag|4);
+
+					dir_ka = -1;
+
+					// Move attacker to the target position after knocked back
+					if ((bl->x != x || bl->y != y) && unit_movepos(src,bl->x,bl->y,1,1)) {
 						clif_slide(src, bl->x, bl->y);
 						clif_fixpos(src);
 					}
-					if (i < dmg.blewcount)
-						skill_addtimerskill(src, tick + 300 * ((flag&2) ? 1 : 2), bl->id, 0, 0, skill_id, skill_lv, BF_WEAPON, flag|4);
 				}
+				break;
+			case RL_R_TRIP:
+				if( skill_blown(dsrc,bl,dmg.blewcount,dir,0) < dmg.blewcount )
+					skill_addtimerskill(src, tick + status_get_amotion(src), bl->id, 0, 0, RL_R_TRIP_PLUSATK, skill_lv, BF_WEAPON, flag|SD_ANIMATION);
 				break;
 			default:
 				skill_blown(dsrc,bl,dmg.blewcount,dir, 0x0 );
@@ -5120,15 +5143,18 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case SR_KNUCKLEARROW:
-			if( !map_flag_gvg(src->m) && !map[src->m].flag.battleground && unit_movepos(src, bl->x, bl->y, 1, 1) ) {
-				clif_slide(src, bl->x, bl->y);
-				clif_fixpos(src);
-			}
+		// Holds current direction of bl/target to src/attacker before the src is moved to bl location
+		dir_ka = map_calc_dir(bl, src->x, src->y);
+		// Has slide effect even in GVG
+		if( unit_movepos(src, bl->x, bl->y, 1, 1) ) {
+			clif_slide(src, bl->x, bl->y);
+			clif_fixpos(src);
+		}
 
-			if( flag&1 )
-				skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag|SD_LEVEL);
-			else
-				skill_addtimerskill(src, tick + 300, bl->id, 0, 0, skill_id, skill_lv, BF_WEAPON, flag|SD_LEVEL|2);
+		if( flag&1 )
+			skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag|SD_LEVEL);
+		else
+			skill_addtimerskill(src, tick + 300, bl->id, 0, 0, skill_id, skill_lv, BF_WEAPON, flag|SD_LEVEL|2);
 		break;
 
 	case SR_HOWLINGOFLION:
@@ -11490,7 +11516,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 					case 6: sx = x + w; break;
 					case 7: sy = y + w; sx = x + w; break;
 				}
-				skill_addtimerskill(src,gettick() + (140 * w),0,sx,sy,skill_id,skill_lv,dir,flag);
+				skill_addtimerskill(src,gettick() + (40 * w),0,sx,sy,skill_id,skill_lv,dir,flag);
 			}
 		}
 		break;
@@ -16259,43 +16285,17 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 			}
 			break;
 		case GN_CRAZYWEED_ATK:
-			switch(unit->group->unit_id) {
-				case UNT_WALLOFTHORN:
-				case UNT_THORNS_TRAP:
-				case UNT_MANHOLE:
-				case UNT_DIMENSIONDOOR:
-				case UNT_BLOODYLUST:
-				case UNT_CHAOSPANIC:
-				case UNT_MAELSTROM:
-				case UNT_FIREPILLAR_ACTIVE:
-				case UNT_LANDPROTECTOR:
-				case UNT_VOLCANO:
-				case UNT_DELUGE:
-				case UNT_VIOLENTGALE:
-				case UNT_SAFETYWALL:
-				case UNT_PNEUMA:
-					skill_delunit(unit);
-					return 1;
+			if (unit->group->skill_id == WZ_FIREPILLAR && unit->group->unit_id != UNT_FIREPILLAR_ACTIVE)
+				break;
+			if (skill_get_unit_flag(unit->group->skill_id)&UF_REM_CRAZYWEED) {
+				skill_delunit(unit);
+				return 1;
 			}
 			break;
 		case RL_FIRE_RAIN:
-			switch (unit->group->unit_id) {
-				case UNT_LANDPROTECTOR:	case UNT_ICEWALL:		case UNT_FIREWALL:
-				case UNT_WARMER:		case UNT_CLOUD_KILL:	case UNT_VACUUM_EXTREME:
-				case UNT_SPIDERWEB:		case UNT_FOGWALL:		case UNT_DELUGE:
-				case UNT_VIOLENTGALE:	case UNT_VOLCANO:		case UNT_QUAGMIRE:
-				case UNT_GRAVITATION:	case UNT_MAGNUS:		case UNT_THORNS_TRAP:
-				case UNT_WALLOFTHORN:	case UNT_DEMONIC_FIRE:	case UNT_HELLS_PLANT:
-				case UNT_POISONSMOKE:	case UNT_VENOMDUST:		case UNT_MAELSTROM:
-				case UNT_MANHOLE:		case UNT_DIMENSIONDOOR:	case UNT_GRAFFITI:
-				case UNT_LANDMINE:		case UNT_SANDMAN:		case UNT_SHOCKWAVE:
-				case UNT_SKIDTRAP:		case UNT_ANKLESNARE:	case UNT_CLAYMORETRAP:
-				case UNT_TALKIEBOX:		case UNT_FREEZINGTRAP:	case UNT_VERDURETRAP:
-				case UNT_ICEBOUNDTRAP:	case UNT_FIRINGTRAP:	case UNT_ELECTRICSHOCKER:
-				case UNT_DISSONANCE:	case UNT_ROKISWEIL:		case UNT_ETERNALCHAOS:
-				case UNT_SUITON:		case UNT_KAEN:
-					skill_delunit(unit);
-					return 1;
+			if (skill_get_unit_flag(unit->group->skill_id)&UF_REM_FIRERAIN) {
+				skill_delunit(unit);
+				return 1;
 			}
 			break;
 	}
