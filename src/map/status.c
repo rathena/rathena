@@ -240,7 +240,12 @@ void initChangeTables(void)
 	add_sc( TF_POISON		, SC_POISON		);
 	set_sc( KN_TWOHANDQUICKEN	, SC_TWOHANDQUICKEN	, SI_TWOHANDQUICKEN	, SCB_ASPD );
 	set_sc( KN_AUTOCOUNTER		, SC_AUTOCOUNTER	, SI_AUTOCOUNTER	, SCB_NONE );
-	set_sc( PR_IMPOSITIO		, SC_IMPOSITIO		, SI_IMPOSITIO		, SCB_WATK );
+	set_sc( PR_IMPOSITIO		, SC_IMPOSITIO		, SI_IMPOSITIO		,
+#ifndef RENEWAL
+		SCB_WATK );
+#else
+		SCB_NONE );
+#endif
 	set_sc( PR_SUFFRAGIUM		, SC_SUFFRAGIUM		, SI_SUFFRAGIUM		, SCB_NONE );
 	set_sc( PR_ASPERSIO		, SC_ASPERSIO		, SI_ASPERSIO		, SCB_ATK_ELE );
 	set_sc( PR_BENEDICTIO		, SC_BENEDICTIO		, SI_BENEDICTIO		, SCB_DEF_ELE );
@@ -347,7 +352,12 @@ void initChangeTables(void)
 	set_sc( BD_ENCORE		, SC_DANCING		, SI_BDPLAYING		, SCB_SPEED|SCB_REGEN );
 	set_sc( BD_RICHMANKIM		, SC_RICHMANKIM		, SI_RICHMANKIM	, SCB_NONE	);
 	set_sc( BD_ETERNALCHAOS		, SC_ETERNALCHAOS	, SI_ETERNALCHAOS	, SCB_DEF2 );
-	set_sc( BD_DRUMBATTLEFIELD	, SC_DRUMBATTLE		, SI_DRUMBATTLEFIELD	, SCB_WATK|SCB_DEF );
+	set_sc( BD_DRUMBATTLEFIELD	, SC_DRUMBATTLE		, SI_DRUMBATTLEFIELD	,
+#ifndef RENEWAL
+		SCB_WATK|SCB_DEF );
+#else
+		SCB_DEF );
+#endif
 	set_sc( BD_RINGNIBELUNGEN	, SC_NIBELUNGEN		, SI_RINGNIBELUNGEN		, SCB_WATK );
 	set_sc( BD_ROKISWEIL		, SC_ROKISWEIL	, SI_ROKISWEIL	, SCB_NONE );
 	set_sc( BD_INTOABYSS		, SC_INTOABYSS	, SI_INTOABYSS	, SCB_NONE );
@@ -453,10 +463,20 @@ void initChangeTables(void)
 	add_sc( GS_CRACKER		, SC_STUN		);
 	add_sc( GS_DISARM		, SC_STRIPWEAPON	);
 	add_sc( GS_PIERCINGSHOT		, SC_BLEEDING		);
-	set_sc( GS_MADNESSCANCEL	, SC_MADNESSCANCEL	, SI_MADNESSCANCEL	, SCB_BATK|SCB_ASPD );
+	set_sc( GS_MADNESSCANCEL	, SC_MADNESSCANCEL	, SI_MADNESSCANCEL	,
+#ifndef RENEWAL
+		SCB_BATK|SCB_ASPD );
+#else
+		SCB_ASPD );
+#endif
 	set_sc( GS_ADJUSTMENT		, SC_ADJUSTMENT		, SI_ADJUSTMENT		, SCB_HIT|SCB_FLEE );
 	set_sc( GS_INCREASING		, SC_INCREASING		, SI_ACCURACY		, SCB_AGI|SCB_DEX|SCB_HIT );
-	set_sc( GS_GATLINGFEVER		, SC_GATLINGFEVER	, SI_GATLINGFEVER	, SCB_BATK|SCB_FLEE|SCB_SPEED|SCB_ASPD );
+	set_sc( GS_GATLINGFEVER		, SC_GATLINGFEVER	, SI_GATLINGFEVER	,
+#ifndef RENEWAL
+		SCB_BATK|SCB_FLEE|SCB_SPEED|SCB_ASPD );
+#else
+		SCB_FLEE|SCB_SPEED|SCB_ASPD );
+#endif
 	add_sc( NJ_TATAMIGAESHI		, SC_TATAMIGAESHI	);
 	set_sc( NJ_SUITON		, SC_SUITON		, SI_BLANK		, SCB_AGI|SCB_SPEED );
 	add_sc( NJ_HYOUSYOURAKU		, SC_FREEZE		);
@@ -5099,10 +5119,12 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 		batk += sc->data[SC_ATKPOTION]->val1;
 	if(sc->data[SC_BATKFOOD])
 		batk += sc->data[SC_BATKFOOD]->val1;
+#ifndef RENEWAL
 	if(sc->data[SC_GATLINGFEVER])
 		batk += sc->data[SC_GATLINGFEVER]->val3;
 	if(sc->data[SC_MADNESSCANCEL])
 		batk += 100;
+#endif
 	if(sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 2)
 		batk += 50;
 	if(bl->type == BL_ELEM
@@ -5170,12 +5192,14 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 	if(!sc || !sc->count)
 		return cap_value(watk,0,USHRT_MAX);
 
+#ifndef RENEWAL
 	if(sc->data[SC_IMPOSITIO])
 		watk += sc->data[SC_IMPOSITIO]->val2;
-	if(sc->data[SC_WATKFOOD])
-		watk += sc->data[SC_WATKFOOD]->val1;
 	if(sc->data[SC_DRUMBATTLE])
 		watk += sc->data[SC_DRUMBATTLE]->val2;
+#endif
+	if(sc->data[SC_WATKFOOD])
+		watk += sc->data[SC_WATKFOOD]->val1;
 	if(sc->data[SC_VOLCANO])
 		watk += sc->data[SC_VOLCANO]->val2;
 	if(sc->data[SC_MERC_ATKUP])
@@ -5327,10 +5351,9 @@ static unsigned short status_calc_matk(struct block_list *bl, struct status_chan
 		matk += 50;
 	if (sc->data[SC_ODINS_POWER])
 		matk += 40 + 30 * sc->data[SC_ODINS_POWER]->val1; // 70 lvl1, 100lvl2
-	if (sc->data[SC_MOONLITSERENADE])
-		matk += sc->data[SC_MOONLITSERENADE]->val3;
 	if (sc->data[SC_IZAYOI])
 		matk += 25 * sc->data[SC_IZAYOI]->val1;
+#endif
 	if (sc->data[SC_ZANGETSU])
 		matk += sc->data[SC_ZANGETSU]->val3;
 	if (sc->data[SC_QUEST_BUFF1])
@@ -5339,13 +5362,14 @@ static unsigned short status_calc_matk(struct block_list *bl, struct status_chan
 		matk += sc->data[SC_QUEST_BUFF2]->val1;
 	if (sc->data[SC_QUEST_BUFF3])
 		matk += sc->data[SC_QUEST_BUFF3]->val1;
-#endif
 	if (sc->data[SC_MAGICPOWER] && sc->data[SC_MAGICPOWER]->val4)
 		matk += matk * sc->data[SC_MAGICPOWER]->val3/100;
 	if (sc->data[SC_MINDBREAKER])
 		matk += matk * sc->data[SC_MINDBREAKER]->val2/100;
 	if (sc->data[SC_INCMATKRATE])
 		matk += matk * sc->data[SC_INCMATKRATE]->val1/100;
+	if (sc->data[SC_MOONLITSERENADE])
+		matk += sc->data[SC_MOONLITSERENADE]->val3/100;
 	if (sc->data[SC_MTF_MATK])
 		matk += matk * 25 / 100;
 
@@ -8918,7 +8942,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 5*val1; // def increase
 			break;
 		case SC_IMPOSITIO:
+#ifndef RENEWAL
 			val2 = 5*val1; // Watk increase
+#endif
 			break;
 		case SC_MELTDOWN:
 			val2 = 100*val1; // Chance to break weapon
@@ -8944,7 +8970,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		// gs_something1 [Vicious]
 		case SC_GATLINGFEVER:
 			val2 = 20*val1; // Aspd increase
+#ifndef RENEWAL
 			val3 = 20+10*val1; // Atk increase
+#endif
 			val4 = 5*val1; // Flee decrease
 			break;
 

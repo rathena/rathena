@@ -1298,7 +1298,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 			const int pos[5] = { EQP_WEAPON, EQP_HELM, EQP_SHIELD, EQP_ARMOR, EQP_ACC };
 
 			for( i = 0; i < skill_lv; i++ )
-				skill_strip_equip(src,bl,pos[i],6 * skill_lv + status_get_lv(src) / 4 + status_get_dex(src) / 10,skill_lv,skill_get_time2(skill_id,skill_lv));
+				skill_strip_equip(src,bl,pos[i],5 * skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
 		}
 		break;
 	case WL_JACKFROST:
@@ -6013,7 +6013,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		map_foreachinrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_SKILL|BL_CHAR,
 			src,skill_id,skill_lv,tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
 		clif_skill_nodamage (src,src,skill_id,skill_lv,1);
-		// Initiate 10% of your damage becomes fire element.
+		// Initiate 20% of your damage becomes fire element.
 		sc_start4(src,src,SC_WATK_ELEMENT,100,3,20,0,0,skill_get_time2(skill_id, skill_lv));
 		if( sd )
 			skill_blockpc_start(sd, skill_id, skill_get_time(skill_id, skill_lv));
@@ -9172,104 +9172,116 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case LG_SHIELDSPELL:
-		if( flag&1 )
-			sc_start(src,bl,SC_SILENCE,100,skill_lv,(sd)?sd->bonus.shieldmdef * 2000 : 10000);
-		else if( sd ) {
-			int opt = rnd()%3 + 1;
-			int val = 0, splash = 0;
-			short index = sd->equip_index[EQI_HAND_L];
+		if (sd) {
+			int opt = 0;
+			short index = sd->equip_index[EQI_HAND_L], shield_def = 0, shield_mdef = 0, shield_refine = 0;
 			struct item_data *shield_data = NULL;
-			if( index < 0 || !(shield_data = sd->inventory_data[index]) || shield_data->type == IT_ARMOR ) {	// No shield?
-				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+
+			if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR)
+				shield_data = sd->inventory_data[index];
+			if (!shield_data || shield_data->type != IT_ARMOR) // Group with 'skill_unconditional' gets these as default
+				shield_def = shield_mdef = shield_refine = 10;
+			else {
+				shield_def = shield_data->def;
+				shield_mdef = sd->bonus.shieldmdef;
+				shield_refine = sd->status.inventory[sd->equip_index[EQI_HAND_L]].refine;
+			}
+			if (flag&1) {
+				sc_start(src,bl,SC_SILENCE,100,skill_lv,shield_mdef * 30000);
 				break;
 			}
-			switch( skill_lv ) {
-				case 1: // DEF based
-					val = shield_data->def;
-					if( !val ) {
-						clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
-						break;
-					}
-					switch( opt ) {
-						case 1: // Deals Neutral property damage around Self. Knocks them back 2 cells.
-							if( val < 41 )
-								splash = 1;
-							else if( val < 81 )
-								splash = 2;
-							else
-								splash = 3;
-							if( sc_start(src,bl,SC_SHIELDSPELL_DEF,100,opt,INVALID_TIMER) )
+
+			opt = rnd()%3 + 1; // Generates a number between 1 - 3. The number generated will determine which effect will be triggered.
+			switch(skill_lv) {
+				case 1: { // DEF Based
+						int splashrange = 0;
+
+#ifdef RENEWAL
+						if (shield_def >= 0 && shield_def <= 40)
+#else
+						if (shield_def >= 0 && shield_def <= 4)
+#endif
+							splashrange = 1;
+#ifdef RENEWAL
+						else if (shield_def >= 41 && shield_def <= 80)
+#else
+						else if (shield_def >= 5 && shield_def <= 9)
+#endif
+							splashrange = 2;
+						else
+							splashrange = 3;
+						switch(opt) {
+							case 1: // Splash AoE ATK
+								sc_start(src,bl,SC_SHIELDSPELL_DEF,100,opt,INVALID_TIMER);
+								clif_skill_damage(src,src,tick,status_get_amotion(src),0,-30000,1,skill_id,skill_lv,6);
+								map_foreachinrange(skill_area_sub,src,splashrange,BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
 								status_change_end(bl,SC_SHIELDSPELL_DEF,INVALID_TIMER);
-							clif_skill_damage(src,bl,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, 6);
-							map_foreachinrange(skill_area_sub,src,splash,BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
-							break;
-						case 2: // Reflects melee attacks. (Does not work against Bosses).
-							val = shield_data->def / 10;
-							sc_start2(src,bl,SC_SHIELDSPELL_DEF,100,opt,val,shield_data->def * 1000);
-							break;
-						case 3: // Increases ATK for the spell duration.
-							val = shield_data->def;
-							sc_start2(src,bl,SC_SHIELDSPELL_DEF,100,opt,val,shield_data->def * 3000);
-							break;
+								break;
+							case 2: // % Damage Reflecting Increase
+#ifdef RENEWAL
+								sc_start2(src,bl,SC_SHIELDSPELL_DEF,100,opt,shield_def / 10,shield_def * 1000);
+#else
+								sc_start2(src,bl,SC_SHIELDSPELL_DEF,100,opt,shield_def,shield_def * 1000 * 10);
+#endif
+								break;
+							case 3: // Equipment Attack Increase
+#ifdef RENEWAL
+								sc_start2(src,bl,SC_SHIELDSPELL_DEF,100,opt,shield_def,shield_def * 3000);
+#else
+								sc_start2(src,bl,SC_SHIELDSPELL_DEF,100,opt,shield_def * 10,shield_def * 3000 * 10);
+#endif
+								break;
+						}
 					}
 					break;
 
-				case 2: // MDEF based
-					val = sd->bonus.shieldmdef;
-					if( !val ) {
-						clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+				case 2: { // MDEF Based
+						int splashrange = 0;
+
+						if (shield_mdef >= 1 && shield_mdef <= 3)
+							splashrange = 1;
+						else if (shield_mdef >= 4 && shield_mdef <= 5)
+							splashrange = 2;
+						else
+							splashrange = 3;
+						switch(opt) {
+							case 1: // Splash AoE MATK
+								sc_start(src,bl,SC_SHIELDSPELL_MDEF,100,opt,INVALID_TIMER);
+								clif_skill_damage(src,src,tick,status_get_amotion(src),0,-30000,1,skill_id,skill_lv,6);
+								map_foreachinrange(skill_area_sub,src,splashrange,BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
+								status_change_end(bl,SC_SHIELDSPELL_MDEF,INVALID_TIMER);
+								break;
+							case 2: // Splash AoE Lex Divina
+								sc_start(src,bl,SC_SHIELDSPELL_MDEF,100,opt,shield_mdef * 2000);
+								clif_skill_damage(src,src,tick,status_get_amotion(src),0,-30000,1,skill_id,skill_lv,6);
+								map_foreachinrange(skill_area_sub,src,splashrange,BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_nodamage_id);
+								break;
+							case 3: // Casts Magnificat.
+								if (sc_start(src,bl,SC_SHIELDSPELL_MDEF,100,opt,shield_mdef * 30000))
+									clif_skill_nodamage(src,bl,PR_MAGNIFICAT,skill_lv,
+									sc_start(src,bl,SC_MAGNIFICAT,100,1,shield_mdef * 30000));
+								break;
+						}
+					}
+					break;
+
+				case 3: // Refine Based
+					switch(opt) {
+						case 1: // Allows you to break armor at a 100% rate when you do damage.
+							sc_start(src,bl,SC_SHIELDSPELL_REF,100,opt,shield_refine * 30000);
+							break;
+						case 2: // Increases DEF and Status Effect resistance depending on Shield refine rate.
+#ifdef RENEWAL
+							sc_start4(src,bl,SC_SHIELDSPELL_REF,100,opt,shield_refine * 10 * status_get_lv(src) / 100,(shield_refine * 2) + (sstatus->luk / 10),0,shield_refine * 20000);
+#else
+							sc_start4(src,bl,SC_SHIELDSPELL_REF,100,opt,shield_refine,(shield_refine * 2) + (sstatus->luk / 10),0,shield_refine * 20000);
+#endif
+							break;
+						case 3: // Recovers HP depending on Shield refine rate.
+							sc_start(src,bl,SC_SHIELDSPELL_REF,100,opt,INVALID_TIMER); //HP Recovery.
+							status_heal(bl,sstatus->max_hp * ((status_get_lv(src) / 10) + (shield_refine + 1)) / 100,0,2);
+							status_change_end(bl,SC_SHIELDSPELL_REF,INVALID_TIMER);
 						break;
-					}
-					if( val < 4 )
-						splash = 1;
-					else if( val < 6 )
-						splash = 2;
-					else
-						splash = 3;
-
-					switch( opt ) {
-						case 1: // Deals Holy property magic damage around Self.
-							if( sc_start(src,bl,SC_SHIELDSPELL_MDEF,100,opt,INVALID_TIMER) )
-								status_change_end(bl,SC_SHIELDSPELL_MDEF,INVALID_TIMER);
-							clif_skill_damage(src,bl,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, 6);
-							map_foreachinrange(skill_area_sub, src, splash, BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|2, skill_castend_damage_id);
-							break;
-						case 2: // Casts Lex Divina around Self.
-							if( sc_start(src,bl,SC_SHIELDSPELL_MDEF,100,opt,INVALID_TIMER) )
-								status_change_end(bl,SC_SHIELDSPELL_MDEF,INVALID_TIMER);
-							map_foreachinrange(skill_area_sub,src,splash,BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_nodamage_id);
-							break;
-						case 3: // Casts Magnificat.
-							if( sc_start(src,bl,SC_SHIELDSPELL_MDEF,100,opt,INVALID_TIMER) )
-								status_change_end(bl,SC_SHIELDSPELL_MDEF,INVALID_TIMER);
-							clif_skill_nodamage(src,bl,PR_MAGNIFICAT,skill_lv,sc_start(src,bl,SC_MAGNIFICAT,100,1,sd->bonus.shieldmdef * 30000));
-							break;
-					}
-					break;
-
-				case 3: // refine based
-					{
-						struct item *shield = NULL;
-						if( sd->equip_index[EQI_HAND_L] < 0 || !(shield = &sd->status.inventory[sd->equip_index[EQI_HAND_L]]) || !shield->refine ) {
-							clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-							break;
-						}
-						switch( opt ) {
-							case 1: // Allows you to break armor at a 100% rate when you do damage.
-								sc_start(src,bl,SC_SHIELDSPELL_REF,100,opt,min(shield->refine * 1500,30000)); // 30 sec duration on +20 shield.
-								break;
-							case 2: // Increases DEF and Status Effect resistance depending on Shield refine rate.
-								val = (10 * shield->refine) + (status_get_lv(src) / 100);
-								splash = (2 * shield->refine) + (status_get_luk(src) / 10);
-								sc_start4(src,bl,SC_SHIELDSPELL_REF,100,opt,val,splash,0,shield->refine * 20000);
-								break;
-							case 3: // Recovers HP depending on Shield refine rate.
-								if( sc_start(src,bl,SC_SHIELDSPELL_REF,100,opt,INVALID_TIMER) )
-									status_change_end(bl,SC_SHIELDSPELL_REF,INVALID_TIMER);
-								val = sstatus->max_hp * (status_get_lv(src) / 10 + shield->refine) / 100;
-								status_heal(bl,val,0,2);
-								break;
-						}
 					}
 				break;
 			}
@@ -14302,6 +14314,18 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				return false;
 			}
 			sd->spiritball_old = require.spiritball = sd->spiritball;
+			break;
+		case LG_SHIELDSPELL: {
+				short index = sd->equip_index[EQI_HAND_L];
+				struct item_data *shield_data = NULL;
+	
+				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR)
+					shield_data = sd->inventory_data[index];
+				if (!shield_data || shield_data->type != IT_ARMOR) { // Skill will first check if a shield is equipped. If none is found the skill will fail.
+					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+					break;
+				}
+			}
 			break;
 		case LG_RAYOFGENESIS:
 			if( sc && sc->data[SC_INSPIRATION] )
