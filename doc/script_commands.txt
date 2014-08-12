@@ -2228,7 +2228,7 @@ array, shifting all the elements beyond this towards the beginning.
 ======================================
 ---------------------------------------
 
-*strcharinfo(<type>)
+*strcharinfo(<type>{,<account_id>})
 
 This function will return either the name, party name or guild name for the 
 invoking character. Whatever it returns is determined by type.
@@ -2237,6 +2237,7 @@ invoking character. Whatever it returns is determined by type.
  1 - The name of the party they're in if any.
  2 - The name of the guild they're in if any.
  3 - The name of the map the character is in.
+ 4 - Group name if player has group id is not 0
  
 If a character is not a member of any party or guild, an empty string will be 
 returned when requesting that information.
