@@ -160,7 +160,7 @@ malaya,266,76,3	script	Rodel the Guard#malaya	570,4,4,{
 				getexp 200000,200000;
 				erasequest 7404;
 				setquest 7405;
-				if (rand(1))
+				if (rand(2))
 					$malayaNames$[1] = strcharinfo(0);
 //				SavePPL Jejellopy
 				close;
@@ -711,7 +711,7 @@ malaya,169,350,5	script	Imelda#malaya	475,{
 		else
 			getitem 6497, 1; // Lesser_Agimat
 		getexp 200000,200000;
-		if (rand(1))
+		if (rand(2))
 			$malayaNames$[0] = strcharinfo(0);
 		close;
 	} else {
@@ -817,7 +817,7 @@ malaya,169,350,5	script	Imelda#malaya	475,{
 				else
 					getitem 6497, 1; // Lesser_Agimat
 				getexp 200000,200000;
-				if (rand(1))
+				if (rand(2))
 					$malayaNames$[0] = strcharinfo(0);
 				close;
 			} else {

@@ -1259,9 +1259,11 @@ OnTouch:
 	set HNTR_Q,16;
 	changequest 4011,4012;
 	savepoint "payon",104,99;
-	if (rand(1))
+	if (rand(2))
 		warp "payon_in02",21,27;
-	warp "payon_in03",128,7;
+	else
+		warp "payon_in03",128,7;
+	end;
 }
 
 // Hunter Job test traps.

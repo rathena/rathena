@@ -157,7 +157,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 				set wizard_m1,rand(1,2);
 				mes "[Catherine]";
 				mes "The items you must collect are...";
-				if (rand(1)) {
+				if (rand(2)) {
 					set WIZ_Q,1;
 					setquest 9013;
 					mes "^3355FFRed Gemstone^000000 10 each,";
