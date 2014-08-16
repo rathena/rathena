@@ -566,6 +566,7 @@ extern struct Battle_Config
 	int mail_delay;
 	int autotrade_monsterignore;
 	int idletime_option;
+	int spawn_direction;
 } battle_config;
 
 void do_init_battle(void);

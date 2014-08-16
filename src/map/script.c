@@ -15344,13 +15344,13 @@ int buildin_query_sql_sub(struct script_state* st, Sql* handle)
 
 	if( SQL_ERROR == Sql_QueryStr(handle, query) ) {
 		Sql_ShowDebug(handle);
-		script_pushint(st, 0);
+		script_pushint(st, -1);
 		return 1;
 	}
 
 	if( Sql_NumRows(handle) == 0 ) { // No data received
 		Sql_FreeResult(handle);
-		script_pushint(st, 0);
+		script_pushint(st, -1);
 		return 0;
 	}
 

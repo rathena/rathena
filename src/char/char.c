@@ -2488,7 +2488,11 @@ void char_set_defaults(){
 	charserv_config.char_config.char_per_account = 0; //Maximum chars per account (default unlimited) [Sirius]
 	charserv_config.char_config.char_del_level = 0; //From which level u can delete character [Lupus]
 	charserv_config.char_config.char_del_delay = 86400;
+#if PACKETVER >= 20100803
 	charserv_config.char_config.char_del_option = 2;
+#else
+	charserv_config.char_config.char_del_option = 1;
+#endif
 
 //	charserv_config.userid[24];
 //	charserv_config.passwd[24];

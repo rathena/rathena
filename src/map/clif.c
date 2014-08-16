@@ -5726,27 +5726,27 @@ void clif_map_property(struct map_session_data* sd, enum map_property property)
 
 
 void clif_maptypeproperty2(struct block_list *bl,enum send_target t) {
-#if PACKETVER >= 20130000
-	uint8 buf[8];
+#if PACKETVER >= 20121010
+	unsigned char buf[8];
 
-	WBUFW(buf,0)=0x99b; //2
-	WBUFW(buf,2)=0x28; //2
+	unsigned int NotifyProperty =
+		((map[bl->m].flag.pvp?1:0)<<0)| // PARTY - Show attack cursor on non-party members (PvP)
+		((map_flag_gvg(bl->m)?1:0)<<1)| // GUILD - Show attack cursor on non-guild members (GvG)
+		((map_flag_gvg2(bl->m)?1:0)<<2)| // SIEGE - Show emblem over characters heads when in GvG (WoE castle)
+		((map[bl->m].flag.nomineeffect || !map_flag_gvg2(bl->m)?0:1)<<3)| // USE_SIMPLE_EFFECT - Automatically enable /mineffect
+		((map[bl->m].flag.nolockon?1:0)<<4)| // DISABLE_LOCKON - Unknown (By the name it might disable cursor lock-on)
+		((map[bl->m].flag.pvp?1:0)<<5)| // COUNT_PK - Show the PvP counter
+		((map[bl->m].flag.partylock?1:0)<<6)| // NO_PARTY_FORMATION - Prevents party creation/modification (Might be used for instance dungeons)
+		((map[bl->m].flag.battleground?1:0)<<7)| // BATTLEFIELD - Unknown (Does something for battlegrounds areas)
+		((map[bl->m].flag.noitemconsumption?1:0)<<8)| // DISABLE_COSTUMEITEM - Unknown - (Prevents wearing of costume items?)
+		((map[bl->m].flag.nousecart?0:1)<<9)| // USECART - Allow opening cart inventory (Well force it to always allow it)
+		((map[bl->m].flag.nosumstarmiracle?0:1)<<10); // SUNMOONSTAR_MIRACLE - Unknown - (Guessing it blocks Star Gladiator's Miracle from activating)
+		//(1<<11); // Unused bits. 1 - 10 is 0x1 length and 11 is 0x15 length. May be used for future settings.
 
-	WBUFB(buf,4) = ((map_flag_vs(bl->m))?0x01:0); //tvt ?
-	WBUFB(buf,4) |= ((map_flag_gvg(bl->m))?0x02:0); //gvg
-	WBUFB(buf,4) |= ((map_flag_gvg2(bl->m))?0x04:0); //siege
-	WBUFB(buf,4) |= (map[bl->m].flag.nomineeffect || !map_flag_gvg2(bl->m))?0:0x08; //disable mine effect on nomineeffect map and enable it on gvgmap by default
-	WBUFB(buf,4) |= ((map[bl->m].flag.nolockon)?0x10:0); //nolockon 0x10 @FIXME what this do
-	WBUFB(buf,4) |= ((map[bl->m].flag.pvp)?0x20:0); //countpk
-	WBUFB(buf,4) |= 0; //nopartyformation 0x40
-	WBUFB(buf,4) |= ((map[bl->m].flag.battleground)?0x80:0); //battleground
-
-	WBUFB(buf,5) = ((map[bl->m].flag.noitemconsumption)?0x01:0); //noitemconsumption
-	WBUFB(buf,5) |= ((map[bl->m].flag.nousecart)?0:0x02); // usecart
-	WBUFB(buf,5) |= ((map[bl->m].flag.nosumstarmiracle)?0:0x04); //summonstarmiracle
-//	WBUFB(buf,5) |= RBUFB(buf,5)&0xf8;  //sparebit[0-4]
-
-	WBUFW(buf,6) = 0; //sparebit [5-15], + extra[4]
+	WBUFW(buf,0)=0x99b;
+	WBUFW(buf,2)=0x28; // Type - What is it asking for? MAPPROPERTY? MAPTYPE? I don't know. Do we even need it? [Rytech]
+	WBUFL(buf,4)=NotifyProperty;
+	WBUFW(buf,6) = 0; // sparebit [5-15], + extra[4]
 
 	clif_send(buf,packet_len(0x99b),bl,t);
 #endif
@@ -9839,7 +9839,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_clearunit_area(&sd->bl, CLR_DEAD);
 	else {
 		skill_usave_trigger(sd);
-		clif_changed_dir(&sd->bl, SELF);
+		if (battle_config.spawn_direction)
+			clif_changed_dir(&sd->bl, SELF);
 	}
 
 	// Trigger skill effects if you appear standing on them

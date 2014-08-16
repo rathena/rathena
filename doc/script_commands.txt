@@ -7136,7 +7136,7 @@ Example:
 *query_logsql("your MySQL query"{, <array variable>{, <array variable>{, ...}}});
 
 Executes an SQL query. A 'select' query can fill array variables with up to 128 rows of values,
-and will return the number of rows (i.e. array size).
+and will return the number of rows (i.e. array size) or -1 on failure/empty array.
 
 Note that 'query_sql' runs on the main database while 'query_logsql' runs on the log database.
 
