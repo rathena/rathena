@@ -211,38 +211,43 @@ struct skill_timerskill {
 	int flag;
 };
 
-#define MAX_SKILLUNITGROUP 25
+#define MAX_SKILLUNITGROUP 25 /// Maximum skill unit group (for same skill each source)
+/// Skill unit group
 struct skill_unit_group {
-	int src_id;
-	int party_id;
-	int guild_id;
-	int bg_id;
-	int map;
-	int target_flag; //Holds BCT_* flag for battle_check_target
-	int bl_flag;	//Holds BL_* flag for map_foreachin* functions
-	unsigned int tick;
-	int limit,interval;
-	uint16 skill_id,skill_lv;
-	int val1,val2,val3;
-	char *valstr;
-	int unit_id;
-	int group_id;
-	int unit_count,alive_count;
-	int item_id; //store item used.
-	struct skill_unit *unit;
+	int src_id; /// Caster ID/RID, if player is account_id
+	int party_id; /// Party ID
+	int guild_id; /// Guild ID
+	int bg_id; /// Battleground ID
+	int map; /// Map
+	int target_flag; /// Holds BCT_* flag for battle_check_target
+	int bl_flag; /// Holds BL_* flag for map_foreachin* functions
+	unsigned int tick; /// Tick when skill unit initialized
+	int limit, /// Life time
+		interval; /// Timer interval
+	uint16 skill_id, /// Skill ID
+		skill_lv; /// Skill level
+	int val1, val2, val3; /// Values
+	char *valstr; /// String value, used for HT_TALKIEBOX & RG_GRAFFITI
+	int unit_id; /// Unit ID (for client effect)
+	int group_id; /// Skill Group ID
+	int unit_count, /// Number of unit at this group
+		alive_count; /// Number of alive unit
+	int item_id; /// Store item used.
+	struct skill_unit *unit; /// Skill Unit
 	struct {
-		unsigned ammo_consume : 1;
+		unsigned ammo_consume : 1; // Need to consume ammo
 		unsigned song_dance : 2; //0x1 Song/Dance, 0x2 Ensemble
-		unsigned guildaura : 1;
+		unsigned guildaura : 1; // Guild Aura
 	} state;
 };
 
+/// Skill unit
 struct skill_unit {
 	struct block_list bl;
-	struct skill_unit_group *group;
+	struct skill_unit_group *group; /// Skill group reference
 	int limit;
-	int val1,val2;
-	short alive,range;
+	int val1, val2;
+	short alive, range;
 };
 
 #define MAX_SKILLUNITGROUPTICKSET 25
@@ -358,7 +363,7 @@ int skill_get_itemqty( uint16 skill_id, int idx );
 
 int skill_name2id(const char* name);
 
-int skill_isammotype(struct map_session_data *sd, int skill);
+int skill_isammotype(struct map_session_data *sd, unsigned short skill_id);
 int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data);
 int skill_castend_pos(int tid, unsigned int tick, int id, intptr_t data);
 int skill_castend_map( struct map_session_data *sd,uint16 skill_id, const char *map);
@@ -380,10 +385,10 @@ int skill_delunit(struct skill_unit *unit);
 struct skill_unit_group *skill_initunitgroup(struct block_list* src, int count, uint16 skill_id, uint16 skill_lv, int unit_id, int limit, int interval);
 int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int line, const char* func);
 #define skill_delunitgroup(group) skill_delunitgroup_(group,__FILE__,__LINE__,__func__)
-int skill_clear_unitgroup(struct block_list *src);
+void skill_clear_unitgroup(struct block_list *src);
 int skill_clear_group(struct block_list *bl, int flag);
 void ext_skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, unsigned int tick);
-int64 skill_unit_ondamaged(struct skill_unit *unit,struct block_list *bl,int64 damage,unsigned int tick);
+int64 skill_unit_ondamaged(struct skill_unit *unit,struct block_list *bl,int64 damage);
 
 int skill_castfix( struct block_list *bl, uint16 skill_id, uint16 skill_lv);
 int skill_castfix_sc( struct block_list *bl, int time);
@@ -425,7 +430,7 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 bool skill_check_cloaking(struct block_list *bl, struct status_change_entry *sce);
 
 // Abnormal status
-int skill_enchant_elemental_end(struct block_list *bl, int type);
+void skill_enchant_elemental_end(struct block_list *bl, int type);
 bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd);
 bool skill_isNotOk_hom(uint16 skill_id, struct homun_data *hd);
 bool skill_isNotOk_mercenary(uint16 skill_id, struct mercenary_data *md);
