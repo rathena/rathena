@@ -286,7 +286,6 @@ int chrif_save(struct map_session_data *sd, int flag) {
 	pc_makesavestatus(sd);
 
 	if (flag && sd->state.active) { //Store player data which is quitting
-		//FIXME: SC are lost if there's no connection at save-time because of the way its related data is cleared immediately after this function. [Skotlex]
 		if (chrif_isconnected()) {
 			chrif_save_scdata(sd);
 			chrif_skillcooldown_save(sd);

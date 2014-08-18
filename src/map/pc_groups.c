@@ -467,6 +467,4 @@ void pc_groups_reload(void) {
 		pc_group_pc_load(sd);
 	}
 	mapit_free(iter);
-
-	
 }

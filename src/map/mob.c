@@ -149,7 +149,7 @@ void mvptomb_create(struct mob_data *md, char *killer, time_t time)
 
 	nd->class_ = 565;
 	nd->speed = 200;
-	nd->subtype = TOMB;
+	nd->subtype = NPCTYPE_TOMB;
 
 	nd->u.tomb.md = md;
 	nd->u.tomb.kill_time = time;
@@ -1192,7 +1192,7 @@ static int mob_warpchase_sub(struct block_list *bl,va_list ap) {
 
 	nd = (TBL_NPC*) bl;
 
-	if(nd->subtype != WARP)
+	if(nd->subtype != NPCTYPE_WARP)
 		return 0; //Not a warp
 
 	if(nd->u.warp.mapindex != map[target->m].index)

@@ -13,6 +13,10 @@ This file describes the usage of in-game commands and assumes that
 	atcommand_symbol : "@"
 	charcommand_symbol: "#"
 
+Some commands cannot be used from console or script command to prevent map-server crashed.
+See atcommand.c::atcommand_basecommands for restricted commands. Please tell us if any
+other atcommand that causes map-server crashed executed by console or script commands.
+
 To search for a command, write "@" before the command name (ex. @commands).
 The format of this file is as follows:
 	1. System Commands
@@ -799,6 +803,9 @@ Warps to predefined locations in major cities.
 If no ID is given, all available maps will be displayed in the chat window.
 Locations and coordinates are stored in '/src/map/atcommand.c'.
 
+Restriction:
+	- Used from console
+
 ---------------------------------------
 
 @warp <map> {<x> <y>}
@@ -807,6 +814,9 @@ Locations and coordinates are stored in '/src/map/atcommand.c'.
 
 Warps to the specified map.
 If no coordinates are entered, a random location will be chosen.
+
+Restriction:
+	- Used from console
 
 ---------------------------------------
 
@@ -850,6 +860,9 @@ Allows other players to attack you outside of PvP.
 @jlvl <+/- amount>
 
 Changes base or job level by the specified amount.
+
+Restriction:
+	- Used from console
 
 ---------------------------------------
 
@@ -907,6 +920,9 @@ Changes your job.
 An 'upper' value can be specified with a job ID to produce its normal (0), advanced (1), or baby (2) version.
 If no job is given, a list of all available jobs will be returned.
 Note that jobs 22 (Wedding), 26 (Summer), 27 (Christmas), and 28 (Hanbok) are not available via @job.
+
+Restriction:
+	- Used from console
 
 ---------------------------------------
 
@@ -1224,6 +1240,14 @@ If a time is not specified (jailfor), the player will be jailed indefinitely.
 ---------------------------------------
 
 @kick <player name/ID>
+
+Kick a player from the server.
+
+Restriction:
+	- Used from 'atcommand' or 'useatcmd' by autotrader
+
+---------------------------------------
+
 @kickall
 /killall
 
@@ -1317,7 +1341,10 @@ Affected files:
 -- questdb: quest_db.txt
 -- script: /npc/*.txt, /npc/*.conf
 -- skilldb: skill_db.txt, const.txt, skill_require_db.txt, skill_cast_db.txt, skill_castnodex_db.txt, skill_nocast_db.txt, skill_copyable_db.txt, skill_improvise_db.txt, skill_changematerial_db.txt, skill_nonearnpc_db.txt, skill_damage_db.txt, skill_unit_db.txt, abra_db.txt, create_arrow_db.txt, produce_db.txt, spellbook_db.txt, magicmushroom_db.txt
- -- statusdb: attr_fix.txt, size_fix.txt, refine_db.tx
+-- statusdb: attr_fix.txt, size_fix.txt, refine_db.tx
+
+Restriction:
+	- Used from 'atcommand' or 'useatcmd'. For @reload & @reloadscript
 
 ---------------------------------------
 

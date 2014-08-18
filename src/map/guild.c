@@ -511,7 +511,7 @@ int guild_recv_info(struct guild *sg) {
 		if( sd==NULL )
 			continue;
 		sd->guild = g;
-		if(Channel_Config.ally_autojoin ) {
+		if(channel_config.ally_autojoin ) {
 			channel_gjoin(sd,3); //make all member join guildchan+allieschan
 		}
 
@@ -676,7 +676,7 @@ void guild_member_joined(struct map_session_data *sd) {
 		g->member[i].sd = sd;
 		sd->guild = g;
 
-		if( Channel_Config.ally_enable && Channel_Config.ally_autojoin ) {
+		if( channel_config.ally_enable && channel_config.ally_autojoin ) {
 			channel_gjoin(sd,3);
 		}
 	}
@@ -1673,7 +1673,7 @@ int guild_broken(int guild_id,int flag) {
 	guild_db->foreach(guild_db,guild_broken_sub,guild_id);
 	castle_db->foreach(castle_db,castle_guild_broken_sub,guild_id);
 	guild_storage_delete(guild_id);
-	if( Channel_Config.ally_enable ) {
+	if( channel_config.ally_enable ) {
 		channel_delete(g->channel);
 	}
 	idb_remove(guild_db,guild_id);

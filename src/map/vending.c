@@ -297,6 +297,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
  * @param data : itemlist data \n
  *	data := {<index>.w <amount>.w <value>.l}[count]
  * @param count : number of different items
+ * @return 0 If success, 1 - Cannot open (die, not state.prevend, trading), 2 - No cart, 3 - Count issue, 4 - Cart data isn't saved yet, 5 - No valid item found
  */
 char vending_openvending(struct map_session_data* sd, const char* message, const uint8* data, int count) {
 	int i, j;

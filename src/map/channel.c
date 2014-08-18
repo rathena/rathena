@@ -18,8 +18,10 @@
 #include <stdlib.h>
 
 static DBMap* channel_db; // channels
-DBMap* channel_get_db(void){ return channel_db; }
 
+struct Channel_Config channel_config;
+
+DBMap* channel_get_db(void){ return channel_db; }
 
 struct chan_banentry {
 	int char_id;
@@ -163,12 +165,12 @@ int channel_mjoin(struct map_session_data *sd) {
 	if(!sd) return -1;
 
 	if( !map[sd->bl.m].channel ) {
-		map[sd->bl.m].channel = channel_create(Channel_Config.map_chname,NULL,Channel_Config.map_chcolor,CHAN_TYPE_MAP,sd->bl.m);
+		map[sd->bl.m].channel = channel_create(channel_config.map_chname,NULL,channel_config.map_chcolor,CHAN_TYPE_MAP,sd->bl.m);
 	}
 
 	if( !( map[sd->bl.m].channel->opt & CHAN_OPT_ANNOUNCE_JOIN ) ) {
 		char mout[60];
-		sprintf(mout, msg_txt(sd,1435),Channel_Config.map_chname,map[sd->bl.m].name); // You're now in the '#%s' channel for '%s'.
+		sprintf(mout, msg_txt(sd,1435),channel_config.map_chname,map[sd->bl.m].name); // You're now in the '#%s' channel for '%s'.
 		clif_disp_onlyself(sd, mout, strlen(mout));
 	}
 
@@ -219,7 +221,7 @@ int channel_gjoin(struct map_session_data *sd, int flag){
 
 	channel = g->channel;
 	if(!channel){
-		channel = channel_create(Channel_Config.ally_chname,NULL,Channel_Config.ally_chcolor,CHAN_TYPE_ALLY,g->guild_id);
+		channel = channel_create(channel_config.ally_chname,NULL,channel_config.ally_chcolor,CHAN_TYPE_ALLY,g->guild_id);
 		g->channel = channel;
 		channel_ajoin(g);
 	}
@@ -299,7 +301,7 @@ int channel_pcquit(struct map_session_data *sd, int type){
 	if(!sd) return -1;
 
 	// Leave all chat channels.
-	if(type&(1|2) && Channel_Config.ally_enable && sd->guild){ //quit guild and ally chan
+	if(type&(1|2) && channel_config.ally_enable && sd->guild){ //quit guild and ally chan
 		struct guild *g = sd->guild;
 		if(type&1 && channel_haspc(g->channel,sd)==1){
 			channel_clean(g->channel,sd,0); //leave guild chan
@@ -315,7 +317,7 @@ int channel_pcquit(struct map_session_data *sd, int type){
 			}
 		}
 	}
-	if(type&4 && Channel_Config.map_enable && channel_haspc(map[sd->bl.m].channel,sd)==1){ //quit map chan
+	if(type&4 && channel_config.map_enable && channel_haspc(map[sd->bl.m].channel,sd)==1){ //quit map chan
 		channel_clean(map[sd->bl.m].channel,sd,0);
 	}
 	if(type&8 && sd->channel_count ) { //quit all chan
@@ -376,8 +378,8 @@ int channel_chk(char *chname, char *chpass, int type){
 		if ( strlen(chname) < 3 || strlen(chname) > CHAN_NAME_LENGTH )
 			return -2;
 		if( (type&2) && (
-			strcmpi(chname + 1,Channel_Config.map_chname) == 0
-			|| strcmpi(chname + 1,Channel_Config.ally_chname) == 0
+			strcmpi(chname + 1,channel_config.map_chname) == 0
+			|| strcmpi(chname + 1,channel_config.ally_chname) == 0
 			|| strdb_exists(channel_db, chname + 1) )
 			) {
 			return -4;
@@ -402,16 +404,16 @@ int channel_chk(char *chname, char *chpass, int type){
 struct Channel* channel_name2channel(char *chname, struct map_session_data *sd, int flag){
 	if(channel_chk(chname, NULL, 1))
 		return NULL;
-	if(sd && strcmpi(chname + 1,Channel_Config.map_chname) == 0){
+	if(sd && strcmpi(chname + 1,channel_config.map_chname) == 0){
 		if(flag&1 && !map[sd->bl.m].channel)
-			map[sd->bl.m].channel = channel_create(Channel_Config.map_chname,NULL,Channel_Config.map_chcolor,CHAN_TYPE_MAP,sd->bl.m);
+			map[sd->bl.m].channel = channel_create(channel_config.map_chname,NULL,channel_config.map_chcolor,CHAN_TYPE_MAP,sd->bl.m);
 		if(flag&2)
 			channel_mjoin(sd);
 		return map[sd->bl.m].channel;
 	}
-	else if(sd && (strcmpi(chname + 1,Channel_Config.ally_chname) == 0) && sd->guild){
+	else if(sd && (strcmpi(chname + 1,channel_config.ally_chname) == 0) && sd->guild){
 		if(flag&1 && !sd->guild->channel)
-			sd->guild->channel = channel_create(Channel_Config.ally_chname,NULL,Channel_Config.ally_chcolor,CHAN_TYPE_ALLY,sd->guild->guild_id);
+			sd->guild->channel = channel_create(channel_config.ally_chname,NULL,channel_config.ally_chcolor,CHAN_TYPE_ALLY,sd->guild->guild_id);
 		if(flag&2)
 			channel_gjoin(sd,3);
 		return sd->guild->channel;
@@ -472,9 +474,6 @@ int channel_pc_haschan(struct map_session_data *sd, struct Channel *channel){
  *  -1 : fail
  */
 int channel_display_list(struct map_session_data *sd, char *options){
-	struct Channel *channel;
-	char output[128];
-	int k;
 
 	if(!sd || !options)
 		return -1;
@@ -482,10 +481,13 @@ int channel_display_list(struct map_session_data *sd, char *options){
 	//display availaible colors
 	if( options[0] != '\0' && strcmpi(options,"colors") == 0 ) {
 		char msg[40];
+		unsigned char k;
 		clif_displaymessage(sd->fd, msg_txt(sd,1444)); // ---- Available Colors ----
-		for( k = 0; k < Channel_Config.colors_count; k++ ) {
-			sprintf(msg, msg_txt(sd,1445),Channel_Config.colors_name[k]);// - '%s'
-			clif_colormes(sd,Channel_Config.colors[k],msg);
+		for( k = 0; k < channel_config.colors_count; k++ ) {
+			if (channel_config.colors[k]) {
+				sprintf(msg, msg_txt(sd,1445),channel_config.colors_name[k]);// - '%s'
+				clif_colormes(sd,channel_config.colors[k],msg);
+			}
 		}
 	}
 	else if( options[0] != '\0' && strcmpi(options,"mine") == 0 ) { //display chan I'm into
@@ -493,8 +495,12 @@ int channel_display_list(struct map_session_data *sd, char *options){
 		if(!sd->channel_count)
 			clif_displaymessage(sd->fd, msg_txt(sd,1476)); // You have not joined any channels.
 		else {
+			unsigned char k;
+			struct Channel *channel;
 			for(k=0; k<sd->channel_count; k++){
-				channel = sd->channels[k];
+				char output[128];
+				if (!(channel = sd->channels[k]))
+					continue;
 				sprintf(output, msg_txt(sd,1409), channel->name, db_size(channel->users));// - #%s (%d users)
 				clif_displaymessage(sd->fd, output);
 			}
@@ -503,17 +509,20 @@ int channel_display_list(struct map_session_data *sd, char *options){
 	else { //display public chanels
 		DBIterator *iter;
 		bool has_perm = pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) ? true : false;
+		struct Channel *channel;
+		char output[128];
 
 		clif_displaymessage(sd->fd, msg_txt(sd,1410)); // ---- Public Channels ----
-		if( Channel_Config.map_enable ) {
-			sprintf(output, msg_txt(sd,1409), Channel_Config.map_chname, map[sd->bl.m].channel ? db_size(map[sd->bl.m].channel->users) : 0);// - #%s (%d users)
+		if( channel_config.map_enable && map[sd->bl.m].channel ) {
+			sprintf(output, msg_txt(sd,1409), channel_config.map_chname, map[sd->bl.m].channel ? db_size(map[sd->bl.m].channel->users) : 0);// - #%s (%d users)
 			clif_displaymessage(sd->fd, output);
 		}
-		if( Channel_Config.ally_enable && sd->status.guild_id ) {
+		if( channel_config.ally_enable && sd->status.guild_id ) {
 			struct guild *g = sd->guild;
-			if( !g ) return -1; //how can this happen if status.guild_id true ?
-			sprintf(output, msg_txt(sd,1409), Channel_Config.ally_chname, db_size(((struct Channel *)g->channel)->users));// - #%s (%d users)
-			clif_displaymessage(sd->fd, output);
+			if (g && g->channel) {
+				sprintf(output, msg_txt(sd,1409), channel_config.ally_chname, db_size(((struct Channel *)g->channel)->users));// - #%s (%d users)
+				clif_displaymessage(sd->fd, output);
+			}
 		}
 		iter = db_iterator(channel_db);
 		for(channel = dbi_first(iter); dbi_exists(iter); channel = dbi_next(iter)) {
@@ -618,7 +627,7 @@ int channel_pcleave(struct map_session_data *sd, char *chname){
 		return -2; //channel doesn't exist or player don't have it
 	}
 
-	if( !Channel_Config.closing && (channel->opt & CHAN_OPT_ANNOUNCE_JOIN) ) {
+	if( !channel_config.closing && (channel->opt & CHAN_OPT_ANNOUNCE_JOIN) ) {
 		char message[60];
 		sprintf(message, "#%s '%s' left",channel->name,sd->status.name);
 		clif_channel_msg(channel,sd,message,channel->color);
@@ -726,14 +735,14 @@ int channel_pccolor(struct map_session_data *sd, char *chname, char *color){
 		return -1;
 	}
 
-	ARR_FIND(0,Channel_Config.colors_count,k,( strcmpi(color,Channel_Config.colors_name[k]) == 0 ) );
-	if( k >= Channel_Config.colors_count ) {
+	ARR_FIND(0,channel_config.colors_count,k,( strcmpi(color,channel_config.colors_name[k]) == 0 ) );
+	if( k >= channel_config.colors_count ) {
 		sprintf(output, msg_txt(sd,1411), color);// Unknown color '%s'.
 		clif_displaymessage(sd->fd, output);
 		return -1;
 	}
 	channel->color = k;
-	sprintf(output, msg_txt(sd,1413),chname,Channel_Config.colors_name[k]);// '%s' channel color updated to '%s'.
+	sprintf(output, msg_txt(sd,1413),chname,channel_config.colors_name[k]);// '%s' channel color updated to '%s'.
 	clif_displaymessage(sd->fd, output);
 	return 0;
 }
@@ -1031,74 +1040,74 @@ void channel_read_config(void) {
 
 		if( !config_setting_lookup_string(settings, "map_local_channel_name", &map_chname) )
 			map_chname = "map";
-		safestrncpy(Channel_Config.map_chname, map_chname, CHAN_NAME_LENGTH);
+		safestrncpy(channel_config.map_chname, map_chname, CHAN_NAME_LENGTH);
 
 		if( !config_setting_lookup_string(settings, "ally_channel_name", &ally_chname) )
 			ally_chname = "ally";
-		safestrncpy(Channel_Config.ally_chname, ally_chname, CHAN_NAME_LENGTH);
+		safestrncpy(channel_config.ally_chname, ally_chname, CHAN_NAME_LENGTH);
 
 		config_setting_lookup_bool(settings, "map_local_channel", &local_enabled);
 		config_setting_lookup_bool(settings, "ally_channel_enabled", &ally_enabled);
 
 		if( local_enabled )
-			Channel_Config.map_enable = true;
+			channel_config.map_enable = true;
 		if( ally_enabled )
-			Channel_Config.ally_enable = true;
+			channel_config.ally_enable = true;
 
 		config_setting_lookup_bool(settings, "map_local_channel_autojoin", &local_autojoin);
 		config_setting_lookup_bool(settings, "ally_channel_autojoin", &ally_autojoin);
 
 		if( local_autojoin )
-			Channel_Config.map_autojoin = true;
+			channel_config.map_autojoin = true;
 		if( ally_autojoin )
-			Channel_Config.ally_autojoin = true;
+			channel_config.ally_autojoin = true;
 
 		config_setting_lookup_bool(settings, "allow_user_channel_creation", &allow_user_channel_creation);
 
 		if( allow_user_channel_creation )
-			Channel_Config.user_chenable = true;
+			channel_config.user_chenable = true;
 
 		if( (colors = config_setting_get_member(settings, "colors")) != NULL ) {
 			int color_count = config_setting_length(colors);
-			CREATE( Channel_Config.colors, unsigned long, color_count );
-			CREATE( Channel_Config.colors_name, char *, color_count );
+			CREATE( channel_config.colors, unsigned long, color_count );
+			CREATE( channel_config.colors_name, char *, color_count );
 			for(i = 0; i < color_count; i++) {
 				config_setting_t *color = config_setting_get_elem(colors, i);
-				CREATE( Channel_Config.colors_name[i], char, CHAN_NAME_LENGTH );
+				CREATE( channel_config.colors_name[i], char, CHAN_NAME_LENGTH );
 
-				safestrncpy(Channel_Config.colors_name[i], config_setting_name(color), CHAN_NAME_LENGTH);
-				Channel_Config.colors[i] = strtoul(config_setting_get_string_elem(colors,i),NULL,0);
-				Channel_Config.colors[i] = (Channel_Config.colors[i] & 0x0000FF) << 16 | (Channel_Config.colors[i] & 0x00FF00) | (Channel_Config.colors[i] & 0xFF0000) >> 16;//RGB to BGR
+				safestrncpy(channel_config.colors_name[i], config_setting_name(color), CHAN_NAME_LENGTH);
+				channel_config.colors[i] = strtoul(config_setting_get_string_elem(colors,i),NULL,0);
+				channel_config.colors[i] = (channel_config.colors[i] & 0x0000FF) << 16 | (channel_config.colors[i] & 0x00FF00) | (channel_config.colors[i] & 0xFF0000) >> 16;//RGB to BGR
 			}
-			Channel_Config.colors_count = color_count;
+			channel_config.colors_count = color_count;
 		}
 
 		config_setting_lookup_string(settings, "map_local_channel_color", &map_color);
 
-		for (k = 0; k < Channel_Config.colors_count; k++) {
-			if( strcmpi(Channel_Config.colors_name[k],map_color) == 0 )
+		for (k = 0; k < channel_config.colors_count; k++) {
+			if( strcmpi(channel_config.colors_name[k],map_color) == 0 )
 				break;
 		}
 
-		if( k < Channel_Config.colors_count ) {
-			Channel_Config.map_chcolor = k;
+		if( k < channel_config.colors_count ) {
+			channel_config.map_chcolor = k;
 		} else {
 			ShowError("channels.conf: unknown color '%s' for 'map_local_channel_color', disabling '#%s'...\n",map_color,map_chname);
-			Channel_Config.map_enable = false;
+			channel_config.map_enable = false;
 		}
 
 		config_setting_lookup_string(settings, "ally_channel_color", &ally_color);
 
-		for (k = 0; k < Channel_Config.colors_count; k++) {
-			if( strcmpi(Channel_Config.colors_name[k],ally_color) == 0 )
+		for (k = 0; k < channel_config.colors_count; k++) {
+			if( strcmpi(channel_config.colors_name[k],ally_color) == 0 )
 				break;
 		}
 
-		if( k < Channel_Config.colors_count ) {
-			Channel_Config.ally_chcolor = k;
+		if( k < channel_config.colors_count ) {
+			channel_config.ally_chcolor = k;
 		} else {
 			ShowError("channels.conf: unknown color '%s' for 'ally_channel_color', disabling '#%s'...\n",ally_color,ally_chname);
-			Channel_Config.ally_enable = false;
+			channel_config.ally_enable = false;
 		}
 
 		if( (channels = config_setting_get_member(settings, "default_channels")) != NULL ) {
@@ -1108,15 +1117,15 @@ void channel_read_config(void) {
 				config_setting_t *channel = config_setting_get_elem(channels, i);
 				const char *color = config_setting_get_string_elem(channels,i);
 				char *name = config_setting_name(channel);
-				for (k = 0; k < Channel_Config.colors_count; k++) {
-					if( strcmpi(Channel_Config.colors_name[k],color) == 0 )
+				for (k = 0; k < channel_config.colors_count; k++) {
+					if( strcmpi(channel_config.colors_name[k],color) == 0 )
 						break;
 				}
-				if( k == Channel_Config.colors_count ) {
+				if( k == channel_config.colors_count ) {
 					ShowError("channels.conf: unknown color '%s' for channel '%s', skipping channel...\n",color,name);
 					continue;
 				}
-				if( strcmpi(name,Channel_Config.map_chname) == 0 || strcmpi(name,Channel_Config.ally_chname) == 0 || strdb_exists(channel_db, name) ) {
+				if( strcmpi(name,channel_config.map_chname) == 0 || strcmpi(name,channel_config.ally_chname) == 0 || strdb_exists(channel_db, name) ) {
 					ShowError("channels.conf: duplicate channel '%s', skipping channel...\n",name);
 					continue;
 				}
@@ -1136,7 +1145,7 @@ void channel_read_config(void) {
  */
 void do_init_channel(void) {
 	channel_db = stridb_alloc(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA, CHAN_NAME_LENGTH);
-	Channel_Config.ally_enable = Channel_Config.map_enable = Channel_Config.ally_autojoin = Channel_Config.map_autojoin = false;
+	channel_config.ally_enable = channel_config.map_enable = channel_config.ally_autojoin = channel_config.map_autojoin = false;
 	channel_read_config();
 }
 
@@ -1158,12 +1167,12 @@ void do_final_channel(void) {
 	db_destroy(channel_db);
 
 	//delete all color thing
-	if( Channel_Config.colors_count ) {
+	if( channel_config.colors_count ) {
 		int i=0;
-		for(i = 0; i < Channel_Config.colors_count; i++) {
-			aFree(Channel_Config.colors_name[i]);
+		for(i = 0; i < channel_config.colors_count; i++) {
+			aFree(channel_config.colors_name[i]);
 		}
-		aFree(Channel_Config.colors_name);
-		aFree(Channel_Config.colors);
+		aFree(channel_config.colors_name);
+		aFree(channel_config.colors);
 	}
 }

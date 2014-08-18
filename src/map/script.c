@@ -11814,7 +11814,7 @@ BUILDIN_FUNC(flagemblem)
 	nd = (TBL_NPC*)map_id2nd(st->oid);
 	if( nd == NULL ) {
 		ShowError("script:flagemblem: npc %d not found\n", st->oid);
-	} else if( nd->subtype != SCRIPT ) {
+	} else if( nd->subtype != NPCTYPE_SCRIPT ) {
 		ShowError("script:flagemblem: unexpected subtype %d for npc %d '%s'\n", nd->subtype, st->oid, nd->exname);
 	} else {
 		bool changed = ( nd->u.scr.guild_id != g_id )?true:false;
@@ -13242,10 +13242,9 @@ BUILDIN_FUNC(nude)
 }
 
 int atcommand_sub(struct script_state* st,int type) {
-	TBL_PC dummy_sd;
-	TBL_PC* sd;
+	TBL_PC *sd, dummy_sd;
 	int fd;
-	const char* cmd;
+	const char *cmd;
 
 	cmd = script_getstr(st,2);
 
@@ -13257,19 +13256,23 @@ int atcommand_sub(struct script_state* st,int type) {
 		fd = 0;
 
 		memset(&dummy_sd, 0, sizeof(TBL_PC));
-		if (st->oid)
-		{
+		if (st->oid) {
 			struct block_list* bl = map_id2bl(st->oid);
 			memcpy(&dummy_sd.bl, bl, sizeof(struct block_list));
 			if (bl->type == BL_NPC)
 				safestrncpy(dummy_sd.status.name, ((TBL_NPC*)bl)->name, NAME_LENGTH);
+			sd->mapindex = (bl->m > 0) ? bl->m : mapindex_name2id(MAP_DEFAULT);
 		}
+
+		// Init Group ID, Level, & permissions
+		sd->group_id = sd->group_level = 99;
+		sd->permissions |= PC_PERM_ALLPERMISSION;
 	}
 
 	if (!is_atcommand(fd, sd, cmd, type)) {
-		ShowWarning("script: buildin_atcommand: failed to execute command '%s'\n", cmd);
+		ShowWarning("buildin_atcommand: failed to execute command '%s'\n", cmd);
 		script_reportsrc(st);
-		return 1;
+		return SCRIPT_CMD_FAILURE;
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -15473,14 +15476,14 @@ BUILDIN_FUNC(callshop)
 	if( script_hasdata(st,3) )
 		flag = script_getnum(st,3);
 	nd = npc_name2id(shopname);
-	if( !nd || nd->bl.type != BL_NPC || (nd->subtype != SHOP && nd->subtype != CASHSHOP && nd->subtype != ITEMSHOP && nd->subtype != POINTSHOP) )
+	if( !nd || nd->bl.type != BL_NPC || (nd->subtype != NPCTYPE_SHOP && nd->subtype != NPCTYPE_CASHSHOP && nd->subtype != NPCTYPE_ITEMSHOP && nd->subtype != NPCTYPE_POINTSHOP) )
 	{
 		ShowError("buildin_callshop: Shop [%s] not found (or NPC is not shop type)\n", shopname);
 		script_pushint(st,0);
 		return 1;
 	}
 
-	if( nd->subtype == SHOP || nd->subtype == ITEMSHOP || nd->subtype == POINTSHOP )
+	if( nd->subtype == NPCTYPE_SHOP || nd->subtype == NPCTYPE_ITEMSHOP || nd->subtype == NPCTYPE_POINTSHOP )
 	{
 		// flag the user as using a valid script call for opening the shop (for floating NPCs)
 		sd->state.callshop = 1;
@@ -15507,7 +15510,7 @@ BUILDIN_FUNC(npcshopitem)
 	int n, i;
 	int amount;
 
-	if( !nd || ( nd->subtype != SHOP && nd->subtype != CASHSHOP && nd->subtype != ITEMSHOP && nd->subtype != POINTSHOP ) )
+	if( !nd || ( nd->subtype != NPCTYPE_SHOP && nd->subtype != NPCTYPE_CASHSHOP && nd->subtype != NPCTYPE_ITEMSHOP && nd->subtype != NPCTYPE_POINTSHOP ) )
 	{	//Not found.
 		script_pushint(st,0);
 		return 0;
@@ -15536,7 +15539,7 @@ BUILDIN_FUNC(npcshopadditem)
 	int n, i;
 	int amount;
 
-	if( !nd || ( nd->subtype != SHOP && nd->subtype != CASHSHOP && nd->subtype != ITEMSHOP && nd->subtype != POINTSHOP ) )
+	if( !nd || ( nd->subtype != NPCTYPE_SHOP && nd->subtype != NPCTYPE_CASHSHOP && nd->subtype != NPCTYPE_ITEMSHOP && nd->subtype != NPCTYPE_POINTSHOP ) )
 	{	//Not found.
 		script_pushint(st,0);
 		return 0;
@@ -15567,7 +15570,7 @@ BUILDIN_FUNC(npcshopdelitem)
 	int amount;
 	int size;
 
-	if( !nd || ( nd->subtype != SHOP && nd->subtype != CASHSHOP && nd->subtype != ITEMSHOP && nd->subtype != POINTSHOP ) )
+	if( !nd || ( nd->subtype != NPCTYPE_SHOP && nd->subtype != NPCTYPE_CASHSHOP && nd->subtype != NPCTYPE_ITEMSHOP && nd->subtype != NPCTYPE_POINTSHOP ) )
 	{	//Not found.
 		script_pushint(st,0);
 		return 0;
@@ -15606,7 +15609,7 @@ BUILDIN_FUNC(npcshopattach)
 	if( script_hasdata(st,3) )
 		flag = script_getnum(st,3);
 
-	if( !nd || ( nd->subtype != SHOP && nd->subtype != CASHSHOP && nd->subtype != ITEMSHOP && nd->subtype != POINTSHOP ) )
+	if( !nd || ( nd->subtype != NPCTYPE_SHOP && nd->subtype != NPCTYPE_CASHSHOP && nd->subtype != NPCTYPE_ITEMSHOP && nd->subtype != NPCTYPE_POINTSHOP ) )
 	{	//Not found.
 		script_pushint(st,0);
 		return 0;
@@ -16426,7 +16429,7 @@ BUILDIN_FUNC(getvariableofnpc)
 	}
 
 	nd = npc_name2id(script_getstr(st,3));
-	if( nd == NULL || nd->subtype != SCRIPT || nd->u.scr.script == NULL )
+	if( nd == NULL || nd->subtype != NPCTYPE_SCRIPT || nd->u.scr.script == NULL )
 	{// NPC not found or has no script
 		ShowError("script:getvariableofnpc: can't find npc %s\n", script_getstr(st,3));
 		script_pushnil(st);
@@ -16455,10 +16458,9 @@ BUILDIN_FUNC(warpportal)
 	struct block_list* bl;
 
 	bl = map_id2bl(st->oid);
-	if( bl == NULL )
-	{
-		ShowError("script:warpportal: npc is needed\n");
-		return 1;
+	if( bl == NULL ) {
+		ShowError("buildin_warpportal: NPC is needed\n");
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	spx = script_getnum(st,2);
@@ -16467,12 +16469,14 @@ BUILDIN_FUNC(warpportal)
 	tpx = script_getnum(st,5);
 	tpy = script_getnum(st,6);
 
-	if( mapindex == 0 )
-		return 0;// map not found
+	if( mapindex == 0 ) {
+		ShowError("buildin_warpportal: Target map not found %s.\n", script_getstr(st, 4));
+		return SCRIPT_CMD_FAILURE;
+	}
 
 	group = skill_unitsetting(bl, AL_WARP, 4, spx, spy, 0);
 	if( group == NULL )
-		return 0;// failed
+		return SCRIPT_CMD_FAILURE;// failed
 	group->val1 = (group->val1<<16)|(short)0;
 	group->val2 = (tpx<<16) | tpy;
 	group->val3 = mapindex;

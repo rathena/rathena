@@ -5657,7 +5657,7 @@ void clif_channel_msg(struct Channel *channel, struct map_session_data *sd, char
 	WFIFOW(sd->fd,0) = 0x2C1;
 	WFIFOW(sd->fd,2) = msg_len + 12;
 	WFIFOL(sd->fd,4) = 0;
-	WFIFOL(sd->fd,8) = Channel_Config.colors[color];
+	WFIFOL(sd->fd,8) = channel_config.colors[color];
 	safestrncpy((char*)WFIFOP(sd->fd,12), msg, msg_len);
 
 	iter = db_iterator(channel->users);
@@ -9784,7 +9784,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		sd->state.changemap = false;
 
 		// Instances do not need their own channels
-		if( Channel_Config.map_enable && Channel_Config.map_autojoin && !map[sd->bl.m].flag.chmautojoin && !map[sd->bl.m].instance_id )
+		if( channel_config.map_enable && channel_config.map_autojoin && !map[sd->bl.m].flag.chmautojoin && !map[sd->bl.m].instance_id )
 			channel_mjoin(sd); //join new map
 	} else if (sd->guild && (battle_config.guild_notice_changemap == 2 || guild_notice))
 		clif_guild_notice(sd, sd->guild); // Displays at end

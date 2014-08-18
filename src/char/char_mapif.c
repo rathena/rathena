@@ -894,7 +894,7 @@ int chmapif_parse_save_scdata(int fd){
 
 		// Whatever comes from the mapserver, now is the time to drop previous entries
 		if( Sql_Query( sql_handle, "DELETE FROM `%s` where `account_id` = %d and `char_id` = %d;", schema_config.scdata_db, aid, cid ) != SQL_SUCCESS ){
-				Sql_ShowDebug( sql_handle );
+			Sql_ShowDebug( sql_handle );
 		}
 		else if( count > 0 )
 		{
