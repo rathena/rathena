@@ -2031,8 +2031,12 @@ static void npc_clearsrcfile(void)
 	npc_src_files = NULL;
 }
 
-/// Adds a npc source file (or removes all)
-void npc_addsrcfile(const char* name)
+/**
+ * Adds a npc source file (or removes all)
+ * @param name : file to add
+ * @return 0=error, 1=sucess
+ */
+int npc_addsrcfile(const char* name)
 {
 	struct npc_src_list* file;
 	struct npc_src_list* file_prev = NULL;
@@ -2040,15 +2044,17 @@ void npc_addsrcfile(const char* name)
 	if( strcmpi(name, "clear") == 0 )
 	{
 		npc_clearsrcfile();
-		return;
+		return 1;
 	}
 
+    if(check_filepath(name)!=2) return 0; //this is not a file 
+        
 	// prevent multiple insert of source files
 	file = npc_src_files;
 	while( file != NULL )
 	{
 		if( strcmp(name, file->name) == 0 )
-			return;// found the file, no need to insert it again
+			return 0;// found the file, no need to insert it again
 		file_prev = file;
 		file = file->next;
 	}
@@ -2060,6 +2066,8 @@ void npc_addsrcfile(const char* name)
 		npc_src_files = file;
 	else
 		file_prev->next = file;
+        
+        return 1;
 }
 
 /// Removes a npc source file (or all)
@@ -3780,9 +3788,13 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 	return strchr(start,'\n');// continue
 }
 
-//Read file and create npc/func/mapflag/monster... accordingly.
-//@runOnInit should we exec OnInit when it's done ?
-void npc_parsesrcfile(const char* filepath, bool runOnInit)
+/**
+ * Read file and create npc/func/mapflag/monster... accordingly.
+ * @param filepath : Relative path of file from map-serv bin
+ * @param runOnInit :  should we exec OnInit when it's done ?
+ * @return 0:error, 1:success
+ */
+int npc_parsesrcfile(const char* filepath, bool runOnInit)
 {
 	int16 m, x, y;
 	int lines = 0;
@@ -3791,12 +3803,17 @@ void npc_parsesrcfile(const char* filepath, bool runOnInit)
 	char* buffer;
 	const char* p;
 
+	if(check_filepath(filepath)!=2) { //this is not a file 
+		ShowDebug("npc_parsesrcfile: Path doesn't seem to be a file skipping it : '%s'.\n", filepath);
+		return 0;
+	} 
+            
 	// read whole file to buffer
 	fp = fopen(filepath, "rb");
 	if( fp == NULL )
 	{
 		ShowError("npc_parsesrcfile: File not found '%s'.\n", filepath);
-		return;
+		return 0;
 	}
 	fseek(fp, 0, SEEK_END);
 	len = ftell(fp);
@@ -3809,7 +3826,7 @@ void npc_parsesrcfile(const char* filepath, bool runOnInit)
 		ShowError("npc_parsesrcfile: Failed to read file '%s' - %s\n", filepath, strerror(errno));
 		aFree(buffer);
 		fclose(fp);
-		return;
+		return 0;
 	}
 	fclose(fp);
 
@@ -3821,7 +3838,7 @@ void npc_parsesrcfile(const char* filepath, bool runOnInit)
 		// More info at http://unicode.org/faq/utf_bom.html#bom5 and http://en.wikipedia.org/wiki/Byte_order_mark#UTF-8
 		ShowError("npc_parsesrcfile: Detected unsupported UTF-8 BOM in file '%s'. Stopping (please consider using another character set).\n", filepath);
 		aFree(buffer);
-		return;
+		return 0;
 	}
 
 	// parse buffer
@@ -3943,7 +3960,7 @@ void npc_parsesrcfile(const char* filepath, bool runOnInit)
 	}
 	aFree(buffer);
 
-	return;
+	return 1;
 }
 
 int npc_script_event(struct map_session_data* sd, enum npce_event type)

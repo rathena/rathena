@@ -1456,7 +1456,17 @@ int mapif_parse_GuildBasicInfoChange(int fd,int guild_id,int type,const char *da
 	return 0;
 }
 
-// Modification of the guild
+/**
+ * Receive a modification request for the guildmember
+ * @param fd : map-serv link
+ * @param guild_id : Guild to alter
+ * @param account_id : Player aid to alter 
+ * @param char_id : Player cid to alter
+ * @param type : Type of modification
+ * @param data : Value of modification
+ * @param len : Size of value
+ * @return 
+ */
 int mapif_parse_GuildMemberInfoChange(int fd,int guild_id,int account_id,int char_id,int type,const char *data,int len)
 {
 	// Could make some improvement in speed, because only change guild_member
@@ -1662,7 +1672,16 @@ static int mapif_parse_GuildDeleteAlliance(struct guild *g, int guild_id, int ac
 	return 0;
 }
 
-// Alliance modification
+/**
+ * Alliance modification
+ * @param fd
+ * @param guild_id1
+ * @param guild_id2
+ * @param account_id1
+ * @param account_id2
+ * @param flag
+ * @return 
+ */
 int mapif_parse_GuildAlliance(int fd,int guild_id1,int guild_id2,int account_id1,int account_id2,int flag)
 {
 	// Could speed up
@@ -1710,7 +1729,7 @@ int mapif_parse_GuildAlliance(int fd,int guild_id1,int guild_id2,int account_id1
 	// Mark the two guild to be saved
 	g[0]->save_flag |= GS_ALLIANCE;
 	g[1]->save_flag |= GS_ALLIANCE;
-	return 0;
+	return 1;
 }
 
 // Change guild message

@@ -10091,6 +10091,7 @@ void pc_del_talisman(struct map_session_data *sd,int count,int type)
 int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_class, int type)
 {
 	int diff, rate = 100, i;
+	int tmp;
 
 	nullpo_ret(sd);
 
@@ -10099,9 +10100,11 @@ int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_
 	if( diff < 0 )
 		diff = MAX_LEVEL + ( ~diff + 1 );
 
+	if((tmp = level_penalty[type][mob_class][diff] ) > 0 ) //use mobclass directly
+		return tmp;
+	
+	//wtf is that for ? if penalty not found use the 1st one we found ?? ̂[lighta]
 	for( i = 0; i < CLASS_ALL; i++ ) {
-		int tmp;
-
 		if( ( tmp = level_penalty[type][i][diff] ) > 0 ) {
 			rate = tmp;
 			break;

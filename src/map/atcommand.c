@@ -4454,27 +4454,22 @@ ACMD_FUNC(hidenpc)
 
 ACMD_FUNC(loadnpc)
 {
-	FILE *fp;
-
 	if (!message || !*message) {
 		clif_displaymessage(fd, msg_txt(sd,1132)); // Please enter a script file name (usage: @loadnpc <file name>).
 		return -1;
 	}
 
-	// check if script file exists
-	if ((fp = fopen(message, "r")) == NULL) {
-		clif_displaymessage(fd, msg_txt(sd,261));
-		return -1;
-	}
-	fclose(fp);
-
 	// add to list of script sources and run it
-	npc_addsrcfile(message);
-	npc_parsesrcfile(message,true);
+        if( !npc_addsrcfile(message)  //try to read file
+            || !npc_parsesrcfile(message,true)
+        ){
+            clif_displaymessage(fd, msg_txt(sd,261));
+            return -1;
+        }	
+	
 	npc_read_event_script();
 
 	clif_displaymessage(fd, msg_txt(sd,262));
-
 	return 0;
 }
 

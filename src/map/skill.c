@@ -73,13 +73,17 @@ struct skill_usave {
 
 struct s_skill_db skill_db[MAX_SKILL_DB];
 struct s_skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
+int produce_count=0;
 struct s_skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
+int arrow_count=0;
 struct s_skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
+int abra_count=0;
 struct s_skill_improvise_db {
 	uint16 skill_id;
 	short per;//1-10000
 };
 struct s_skill_improvise_db skill_improvise_db[MAX_SKILL_IMPROVISE_DB];
+int impro_count=0;
 
 struct s_skill_changematerial_db {
 	int itemid;
@@ -88,6 +92,7 @@ struct s_skill_changematerial_db {
 	short qty_rate[5];
 };
 struct s_skill_changematerial_db skill_changematerial_db[MAX_SKILL_PRODUCE_DB];
+int chgmateriel_count=0;
 
 //Warlock
 struct s_skill_spellbook_db {
@@ -97,8 +102,10 @@ struct s_skill_spellbook_db {
 };
 
 struct s_skill_spellbook_db skill_spellbook_db[MAX_SKILL_SPELLBOOK_DB];
+int spell_count=0;
 //Guillotine Cross
 struct s_skill_magicmushroom_db skill_magicmushroom_db[MAX_SKILL_MAGICMUSHROOM_DB];
+int mushroom_count=0;
 
 struct s_skill_unit_layout skill_unit_layout[MAX_SKILL_UNIT_LAYOUT];
 int firewall_unit_pos;
@@ -19743,21 +19750,25 @@ static bool skill_parse_row_unitdb(char* split[], int columns, int current) {
 * ProduceItemID,ItemLV,RequireSkill,Requireskill_lv,MaterialID1,MaterialAmount1,......
 */
 static bool skill_parse_row_producedb(char* split[], int columns, int current) {
-	int x,y;
+	int x,y,j;
 
 	int i = atoi(split[0]);
 	if( !i )
 		return false;
-
-	skill_produce_db[current].nameid = i;
-	skill_produce_db[current].itemlv = atoi(split[1]);
-	skill_produce_db[current].req_skill = atoi(split[2]);
-	skill_produce_db[current].req_skill_lv = atoi(split[3]);
+	
+	//search if we override something, (if not j=last idx)
+	ARR_FIND(0, produce_count, j, skill_produce_db[j].nameid==i);
+	
+	skill_produce_db[j].nameid = i;
+	skill_produce_db[j].itemlv = atoi(split[1]);
+	skill_produce_db[j].req_skill = atoi(split[2]);
+	skill_produce_db[j].req_skill_lv = atoi(split[3]);
 
 	for( x = 4, y = 0; x+1 < columns && split[x] && split[x+1] && y < MAX_PRODUCE_RESOURCE; x += 2, y++ ) {
-		skill_produce_db[current].mat_id[y] = atoi(split[x]);
-		skill_produce_db[current].mat_amount[y] = atoi(split[x+1]);
+		skill_produce_db[j].mat_id[y] = atoi(split[x]);
+		skill_produce_db[j].mat_amount[y] = atoi(split[x+1]);
 	}
+	if(j==produce_count) produce_count++;
 
 	return true;
 }
@@ -19766,18 +19777,21 @@ static bool skill_parse_row_producedb(char* split[], int columns, int current) {
 * SourceID,MakeID1,MakeAmount1,...,MakeID5,MakeAmount5
 */
 static bool skill_parse_row_createarrowdb(char* split[], int columns, int current) {
-	int x,y;
+	int x,y,j;
 
 	int i = atoi(split[0]);
 	if( !i )
 		return false;
 
-	skill_arrow_db[current].nameid = i;
-
+	//search if we override something, (if not j=last idx)
+	ARR_FIND(0, arrow_count, j, skill_arrow_db[j].nameid==i);
+	
+	skill_arrow_db[j].nameid = i;
 	for( x = 1, y = 0; x+1 < columns && split[x] && split[x+1] && y < MAX_ARROW_RESOURCE; x += 2, y++ ) {
-		skill_arrow_db[current].cre_id[y] = atoi(split[x]);
-		skill_arrow_db[current].cre_amount[y] = atoi(split[x+1]);
+		skill_arrow_db[j].cre_id[y] = atoi(split[x]);
+		skill_arrow_db[j].cre_amount[y] = atoi(split[x+1]);
 	}
+	if(j==arrow_count) arrow_count++;
 
 	return true;
 }
@@ -19786,7 +19800,8 @@ static bool skill_parse_row_createarrowdb(char* split[], int columns, int curren
 * SkillID,PreservePoints
 */
 static bool skill_parse_row_spellbookdb(char* split[], int columns, int current) {
-
+	int j;
+	
 	uint16 skill_id = atoi(split[0]);
 	int points = atoi(split[1]);
 	unsigned short nameid = atoi(split[2]);
@@ -19798,12 +19813,16 @@ static bool skill_parse_row_spellbookdb(char* split[], int columns, int current)
 	if( points < 1 )
 		ShowError("spellbook_db: PreservePoints have to be 1 or above! (%d/%s)\n", skill_id, skill_get_name(skill_id));
 	else {
-		skill_spellbook_db[current].skill_id = skill_id;
-		skill_spellbook_db[current].point = points;
-		skill_spellbook_db[current].nameid = nameid;
+		ARR_FIND(0, spell_count, j, skill_spellbook_db[j].skill_id==skill_id);
+		
+		skill_spellbook_db[j].skill_id = skill_id;
+		skill_spellbook_db[j].point = points;
+		skill_spellbook_db[j].nameid = nameid;
 
+		if(j==spell_count) spell_count++;
 		return true;
 	}
+	
 
 	return false;
 }
@@ -19830,9 +19849,13 @@ static bool skill_parse_row_improvisedb(char* split[], int columns, int current)
 	if( current >= MAX_SKILL_IMPROVISE_DB ) {
 		ShowError("skill_improvise_db: Maximum amount of entries reached (%d), increase MAX_SKILL_IMPROVISE_DB\n",MAX_SKILL_IMPROVISE_DB);
 	}
-	skill_improvise_db[current].skill_id = skill_id;
-	skill_improvise_db[current].per = j; // Still need confirm it.
-
+	ARR_FIND(0, impro_count, j, skill_improvise_db[j].skill_id==skill_id);
+	
+	skill_improvise_db[j].skill_id = skill_id;
+	skill_improvise_db[j].per = j; // Still need confirm it.
+	
+	if(j==impro_count) impro_count++;
+	
 	return true;
 }
 
@@ -19840,6 +19863,7 @@ static bool skill_parse_row_improvisedb(char* split[], int columns, int current)
 * SkillID
 */
 static bool skill_parse_row_magicmushroomdb(char* split[], int column, int current) {
+	int j;
 	uint16 skill_id = atoi(split[0]);
 
 	if( !skill_get_index(skill_id) || !skill_get_max(skill_id) )
@@ -19852,8 +19876,11 @@ static bool skill_parse_row_magicmushroomdb(char* split[], int column, int curre
 		ShowError("magicmushroom_db: Passive skills cannot be casted (%d/%s)\n", skill_id, skill_get_name(skill_id));
 		return false;
 	}
-
-	skill_magicmushroom_db[current].skill_id = skill_id;
+	ARR_FIND(0, mushroom_count, j, skill_magicmushroom_db[j].skill_id==skill_id);
+	
+	skill_magicmushroom_db[j].skill_id = skill_id;
+	
+	if(j==mushroom_count) mushroom_count++;
 
 	return true;
 }
@@ -19916,6 +19943,7 @@ static bool skill_parse_row_nonearnpcrangedb(char* split[], int column, int curr
 * SkillID,DummyName,RatePerLvl
 */
 static bool skill_parse_row_abradb(char* split[], int columns, int current) {
+	int j;
 	uint16 skill_id = atoi(split[0]);
 	if( !skill_get_index(skill_id) || !skill_get_max(skill_id) )
 	{
@@ -19928,9 +19956,12 @@ static bool skill_parse_row_abradb(char* split[], int columns, int current) {
 		return false;
 	}
 
-	skill_abra_db[current].skill_id = skill_id;
-	safestrncpy(skill_abra_db[current].name, trim(split[1]), sizeof(skill_abra_db[current].name)); //store dummyname
-	skill_split_atoi(split[2],skill_abra_db[current].per);
+	ARR_FIND(0, abra_count, j, skill_abra_db[j].skill_id==skill_id);
+	
+	skill_abra_db[j].skill_id = skill_id;
+	safestrncpy(skill_abra_db[j].name, trim(split[1]), sizeof(skill_abra_db[j].name)); //store dummyname
+	skill_split_atoi(split[2],skill_abra_db[j].per);
+	if(j==abra_count) abra_count++;
 
 	return true;
 }
@@ -19939,18 +19970,18 @@ static bool skill_parse_row_abradb(char* split[], int columns, int current) {
 * ProductID,BaseRate,MakeAmount1,MakeAmountRate1...,MakeAmount5,MakeAmountRate5
 */
 static bool skill_parse_row_changematerialdb(char* split[], int columns, int current) {
-	uint16 skill_id = atoi(split[0]);
+	uint16 product_id = atoi(split[0]);
 	short j = atoi(split[1]);
-	int x,y;
+	int x,y,k;
 
 	for(x=0; x<MAX_SKILL_PRODUCE_DB; x++){
-		if( skill_produce_db[x].nameid == skill_id )
+		if( skill_produce_db[x].nameid == product_id )
 			if( skill_produce_db[x].req_skill == GN_CHANGEMATERIAL )
 				break;
 	}
 
 	if( x >= MAX_SKILL_PRODUCE_DB ){
-		ShowError("changematerial_db: Not supported item ID(%d) for Change Material. \n", skill_id);
+		ShowError("changematerial_db: Not supported item ID(%d) for Change Material. \n", product_id);
 		return false;
 	}
 
@@ -19958,13 +19989,16 @@ static bool skill_parse_row_changematerialdb(char* split[], int columns, int cur
 		ShowError("skill_changematerial_db: Maximum amount of entries reached (%d), increase MAX_SKILL_PRODUCE_DB\n",MAX_SKILL_PRODUCE_DB);
 	}
 
-	skill_changematerial_db[current].itemid = skill_id;
-	skill_changematerial_db[current].rate = j;
+	ARR_FIND(0, chgmateriel_count, k, skill_changematerial_db[k].itemid==product_id);
+	
+	skill_changematerial_db[k].itemid = product_id;
+	skill_changematerial_db[k].rate = j;
 
 	for( x = 2, y = 0; x+1 < columns && split[x] && split[x+1] && y < 5; x += 2, y++ ) {
-		skill_changematerial_db[current].qty[y] = atoi(split[x]);
-		skill_changematerial_db[current].qty_rate[y] = atoi(split[x+1]);
+		skill_changematerial_db[k].qty[y] = atoi(split[x]);
+		skill_changematerial_db[k].qty_rate[y] = atoi(split[x+1]);
 	}
+	if(k==chgmateriel_count) chgmateriel_count++;
 
 	return true;
 }

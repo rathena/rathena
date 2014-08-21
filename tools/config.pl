@@ -3,8 +3,15 @@
 #TODO list :
 #- don't always override import/file, sed grep ?
 
-use CPAN;
+use File::Basename;
+use DBI;
+use DBD::mysql;
+use YAML::XS;
+use Cwd;
+use Getopt::Long;
+use Net::Ping;
 use strict;
+
 use constant {
     SERV_UID => "Serv_userid",
     SERV_PW => "Serv_userpass",
@@ -28,13 +35,14 @@ use constant {
     MIN_PORT => 2000, #below are usually reserved for system
     MAX_PORT => 65535,
 };
-BEGIN { #check and install module
-    my @aCheckModule = ("File::Basename","DBI","DBD::mysql","YAML","YAML::XS","Cwd","Getopt::Long","Net::Ping");
-    my @aMarkInst = ();
-    foreach(@aCheckModule) { eval "require $_" or push(@aMarkInst,$_); }
-    CPAN::install("@aMarkInst") if(@aMarkInst > 0);
-    foreach(@aCheckModule) { $_->import(); }
-}
+#BEGIN { #check and install module
+#    my @aCheckModule = ("File::Basename","DBI","DBD::mysql","YAML","YAML::XS","Cwd","Getopt::Long","Net::Ping");
+#    my @aMarkInst = ();
+#    foreach(@aCheckModule) { eval "require $_" or push(@aMarkInst,$_); }
+#    CPAN::install("@aMarkInst") if(@aMarkInst > 0);
+#    foreach(@aCheckModule) { $_->import(); }
+#}
+
 # setup my defaults option
 my $sDsdFile    = DESD_CONF_FILE;
 my $sAutoyes    = 0;
@@ -186,13 +194,14 @@ sub InstallSoft {
     print "This autoinstall feature is experimental, package name varies from distri and version, couldn't support them all\n";
     $sOS = GetOS();
     if($sOS eq "quit"){ print "Skipping Software installation\n"; return; }
-    elsif($sOS =~ /Ubuntu|Debian/i) { #tested on ubuntu 12.10
+    elsif($sOS =~ /Ubuntu|Debian/i) { #tested on ubuntu 12.10,13.10
 	my @aListSoft = ("gcc","gdb","zlibc","zlib1g-dev","make","git","mysql-client","mysql-server","mysql-common","libmysqlclient-dev","phpmyadmin","libpcre3-dev");
 	print "Going to install: @aListSoft\n";
 	system("sudo apt-get install @aListSoft");
-    }
-    elsif($sOS =~ /Fedora|CentOs/i){ #tested on fedora 18 /centos 6
-	my @aListSoft = ("gcc","gdb","zlib","zlib-devel","make","git","mysql-server","mysql-devel","phpmyadmin","pcre-devel");
+	}
+	elsif($sOS =~ /Fedora|CentOs/i){ #tested on fedora 18,19,20 /centos 5,6,7
+	my @aListSoft = ("gcc","gdb","zlib","zlib-devel","make","git","mariadb-server","maria","mariadb-devel","phpmyadmin","pcre-devel");
+#	my @aListSoft = ("gcc","gdb","zlib","zlib-devel","make","git","mysql-server","mysql-devel","phpmyadmin","pcre-devel");
 	system("sudo yum install @aListSoft");
     }
     elsif($sOS =~ /FreeBSD/i){ #tested on FreeBSD 9.01

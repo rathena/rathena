@@ -147,9 +147,9 @@ bool npc_isnear(struct block_list * bl);
 
 int npc_get_new_npc_id(void);
 
-void npc_addsrcfile(const char* name);
+int npc_addsrcfile(const char* name);
 void npc_delsrcfile(const char* name);
-void npc_parsesrcfile(const char* filepath, bool runOnInit);
+int npc_parsesrcfile(const char* filepath, bool runOnInit);
 void do_clear_npc(void);
 void do_final_npc(void);
 void do_init_npc(void);

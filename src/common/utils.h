@@ -11,6 +11,7 @@
 void WriteDump(FILE* fp, const void* buffer, size_t length);
 void ShowDump(const void* buffer, size_t length);
 
+int check_filepath(const char* filepath);
 void findfile(const char *p, const char *pat, void (func)(const char*));
 bool exists(const char* filename);
 
