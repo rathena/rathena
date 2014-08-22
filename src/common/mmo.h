@@ -420,6 +420,8 @@ struct mmo_charstatus {
 	unsigned char font;
 
 	bool cashshop_sent; // Whether the player has received the CashShop list
+
+	uint32 uniqueitem_counter;
 };
 
 typedef enum mail_status {

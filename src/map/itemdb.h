@@ -479,7 +479,7 @@ bool itemdb_isequip2(struct item_data *id);
 char itemdb_isidentified(unsigned short nameid);
 bool itemdb_isstackable2(struct item_data *id);
 #define itemdb_isstackable(nameid) itemdb_isstackable2(itemdb_search(nameid))
-uint64 itemdb_unique_id(int8 flag, int64 value); // Unique Item ID
+uint64 itemdb_unique_id(struct map_session_data *sd); // Unique Item ID
 bool itemdb_isNoEquip(struct item_data *id, uint16 m);
 
 struct item_combo *itemdb_combo_exists(unsigned short combo_id);

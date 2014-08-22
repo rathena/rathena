@@ -7794,6 +7794,46 @@ BUILDIN_FUNC(getequipid)
 }
 
 /*==========================================
+ * GetEquipUniqueID(Pos);     Pos: 1-14
+ *------------------------------------------*/
+BUILDIN_FUNC(getequipuniqueid)
+{
+	int i, num;
+	TBL_PC* sd;
+	struct item* item;
+
+	sd = script_rid2sd(st);
+	if (sd == NULL)
+		return 0;
+
+	num = script_getnum(st,2) - 1;
+	if (num < 0 || num >= ARRAYLENGTH(equip)) {
+		script_pushconststr(st, "");
+		return 0;
+	}
+
+	// get inventory position of item
+	i = pc_checkequip(sd,equip[num]);
+	if (i < 0) {
+		script_pushconststr(st, "");
+		return 0;
+	}
+
+	item = &sd->status.inventory[i];
+	if (item != 0) {
+		char buf[256];
+
+		memset(buf, 0, sizeof(buf));
+		snprintf(buf, sizeof(buf)-1, "%llu", (unsigned long long)item->unique_id);
+
+		script_pushstr(st, buf);
+	} else
+		script_pushconststr(st, "");
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*==========================================
  * Get the equipement name at pos
  * return item jname or ""
  *------------------------------------------*/
@@ -19108,6 +19148,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(strcharinfo,"i"),
 	BUILDIN_DEF(strnpcinfo,"i"),
 	BUILDIN_DEF(getequipid,"i"),
+	BUILDIN_DEF(getequipuniqueid,"i"),
 	BUILDIN_DEF(getequipname,"i"),
 	BUILDIN_DEF(getbrokenid,"i"), // [Valaris]
 	BUILDIN_DEF(repair,"i"), // [Valaris]

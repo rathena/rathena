@@ -2540,7 +2540,15 @@ armor, but also don't want them to equip if after the check, you would do this:
 
 ---------------------------------------
 
-*getequipname(<equpment slot>)
+*getequipuniqueid(<equipment slot>)
+
+This function returns the unique ID (as a string) of the item equipped in the equipment slot 
+specified on the invoking character. If nothing is equipped there, it returns an empty string.
+See 'getequipid' for a full list of valid equipment slots.
+
+---------------------------------------
+
+*getequipname(<equipment slot>)
 
 Returns the jname of the item equipped in the specified equipment slot on the
 invoking character, or an empty string if nothing is equipped in that position.

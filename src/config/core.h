@@ -48,10 +48,6 @@
 /// - but is not the official behaviour.
 //#define CIRCULAR_AREA
 
-/// Uncomment to enable Non Stackable items unique ID
-/// By enabling it, the system will create an unique id for each new non stackable item created
-//#define NSI_UNIQUE_ID
-
 /// Comment to disable Guild/Party Bound item system
 /// By default, we recover/remove Guild/Party Bound items automatically
 #define BOUND_ITEMS

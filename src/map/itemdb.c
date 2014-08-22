@@ -1430,52 +1430,13 @@ static int itemdb_read_sqldb(void) {
 	return 0;
 }
 
-/** Unique item ID function
-* Only one operation by once
-* @param flag
-* 0 return new id
-* 1 set new value, checked with current value
-* 2 set new value bypassing anything
-* 3/other
-* @param value
-* @return last value
-*------------------------------------------*/
-uint64 itemdb_unique_id(int8 flag, int64 value) {
-	static uint64 item_uid = 0;
-
-	if(flag)
-	{
-		if(flag == 1)
-		{	if(item_uid < value)
-				return (item_uid = value);
-		}else if(flag == 2)
-			return (item_uid = value);
-
-		return item_uid;
-	}
-
-	return ++item_uid;
-}
-
 /**
-* Load Unique ID for Item
-*/
-static void itemdb_uid_load(void){
-
-	char * uid;
-	if (SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `value` FROM `interreg` WHERE `varname`='unique_id'"))
-		Sql_ShowDebug(mmysql_handle);
-
-	if( SQL_SUCCESS != Sql_NextRow(mmysql_handle) )
-	{
-		ShowError("itemdb_uid_load: Unable to fetch unique_id data\n");
-		Sql_FreeResult(mmysql_handle);
-		return;
-	}
-
-	Sql_GetData(mmysql_handle, 0, &uid, NULL);
-	itemdb_unique_id(1, (uint64)strtoull(uid, NULL, 10));
-	Sql_FreeResult(mmysql_handle);
+ * Unique item ID function
+ * @param sd : Player
+ * @return unique_id
+ */
+uint64 itemdb_unique_id(struct map_session_data *sd) {
+	return ((uint64)sd->status.char_id << 32) | sd->status.uniqueitem_counter++;
 }
 
 /** Check if the item is restricted by item_noequip.txt
@@ -1542,7 +1503,6 @@ static void itemdb_read(void) {
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
 	}
-	itemdb_uid_load();
 }
 
 /*==========================================
