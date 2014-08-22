@@ -119,7 +119,7 @@ prt_in,24,61,7	script	Perchik	47,{
 	if (!countitem2(.@id,1,.@ref,0,.@slot[0],.@slot[1],.@slot[2],.@slot[3])) {
 		mes "Where is "+getitemname(@id)+"...?";
 		npctalk "You're a snoozy cheater!";
-		logmes "CHEATER: Tried to sign an item not having it: "+getitemname(@id);
+		logmes "Hack: Tried to sign an item not having it: "+getitemname(@id);
 		emotion e_wah;
 		close;
 	}
