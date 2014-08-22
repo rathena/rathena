@@ -285,6 +285,11 @@
 
 	set .@equip_id, getequipid(.@equip_num);
 	set .@equip_refine, getequiprefinerycnt(.@equip_num);
+
+	// anti-hack
+	if (callfunc("F_IsEquipCardHack", .@equip_num, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]))
+		close;
+
 	delequip .@equip_num;
 
 	// Chance of retaining refine level.

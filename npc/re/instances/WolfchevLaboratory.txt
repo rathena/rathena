@@ -924,20 +924,20 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 	.@refine_count = getequiprefinerycnt(.@part);
 	.@equip_item = getequipid(.@part);
 	.@lhz_max_num = 4000;
-	if (.@equip_item == Agent_Katar || .@equip_item == Guillotine_Katar || .@equip_item == Ygnus_Stale || 
-	    .@equip_item == End_Sektura || .@equip_item = Cannon_Spear || .@equip_item == Giant_Lance || 
-	    .@equip_item == Aztoe_Nail || .@equip_item == Scarletto_Nail || .@equip_item == Bloody_Cross) {
+	if (.@equip_item == 13069 || .@equip_item == 1291 || .@equip_item == 1392 || 
+	    .@equip_item == 1393 || .@equip_item = 1435 || .@equip_item == 1490 || 
+	    .@equip_item == 13069 || .@equip_item == 13070 || .@equip_item == 16017) {
 		.@type = 1;
-		if (.@equip_item == Giant_Lance)
+		if (.@equip_item == 1490)
 			.@lhz_max_num = 4200;
-	} else if (.@equip_item == Catapult || .@equip_item == Big_CrossBow || .@equip_item == Creeper_Bow) {
+	} else if (.@equip_item == 18109 || .@equip_item == 18110 || .@equip_item == 18111) {
 		.@type = 2;
-	} else if (.@equip_item == Chilly_Spell_Book || .@equip_item == Recovery_Light) {
+	} else if (.@equip_item == 1584 || .@equip_item == 1659) {
 		.@type = 3;
-	} else if (.@equip_item== Giant_Shield || .@equip_item == Geffenia_Book_Water || .@equip_item == Bible_Of_Promise2 ||
-	           .@equip_item == Salvage_Cape || .@equip_item == Assassin_Handcuffs || .@equip_item == Green_Operation_Coat || 
-	           .@equip_item == Ancient_Gold_Deco) {
-		if (.@equip_item == Salvage_Cape || .@equip_item == Ancient_Gold_Deco)
+	} else if (.@equip_item == 2160 || .@equip_item == 2161 || .@equip_item == 2162 ||
+	           .@equip_item == 2582 || .@equip_item == 2892 || .@equip_item == 15044 || 
+	           .@equip_item == 18570) {
+		if (.@equip_item == 2582 || .@equip_item == 18570)
 			.@lhz_max_num = 4200;
 	} else {
 		mes "[Pudding]";
@@ -1258,12 +1258,6 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 		} else {
 			specialeffect2 EF_FIREHIT;
 			getitem2 .@equip_item, 1, 1, .@refine_count, 0, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3];
-			//dispbottom "1:"+ .@equip_item;
-			//dispbottom "1:"+ .@refine_count;
-			//dispbottom "1:"+ .@equip_card[0];
-			//dispbottom "1:"+ .@equip_card[1];
-			//dispbottom "1:"+ .@equip_card[2];
-			//dispbottom "1:"+ .@equip_card[3];
 			emotion e_ho;
 			mes "[Pudding]";
 			mes "Fortunately the power of "+((.@socket_type==3)?"'^952420Thirst for Blood^000000'":"'^F2766EWill of Warrior^000000'")+" has been dwelt well in your equipment...";

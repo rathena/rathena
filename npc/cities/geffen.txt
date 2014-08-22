@@ -125,7 +125,7 @@ geffen,147,26,0	script	Ralphie	97,{
 }
 
 geffen,111,48,0	script	Stacey	101,{
-	if (getequipid(1) == 2299) {
+	if (getequipid(EQI_HEAD_TOP) == 2299) {
 		mes "[Stacey]";
 		mes "Oh...!";
 		mes "Is that an Orc Helm you're wearing?! That's so cool! Wow...";
@@ -141,7 +141,7 @@ geffen,111,48,0	script	Stacey	101,{
 		}
 		close;
 	}
-	else if (getequipid(1) == 5094) {
+	else if (getequipid(EQI_HEAD_TOP) == 5094) {
 		mes "[Stacey]";
 		mes "Oh...";
 		mes "Wow...";
