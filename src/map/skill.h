@@ -184,7 +184,8 @@ struct s_skill_db {
 };
 extern struct s_skill_db skill_db[MAX_SKILL_DB];
 
-#define MAX_SKILL_UNIT_LAYOUT	55
+#define MAX_SKILL_UNIT_LAYOUT	52
+#define MAX_SKILL_UNIT_LAYOUT2	17
 #define MAX_SQUARE_LAYOUT		5	// 11*11 Placement of a maximum unit
 #define MAX_SKILL_UNIT_COUNT ((MAX_SQUARE_LAYOUT*2+1)*(MAX_SQUARE_LAYOUT*2+1))
 struct s_skill_unit_layout {
@@ -388,7 +389,7 @@ int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int li
 void skill_clear_unitgroup(struct block_list *src);
 int skill_clear_group(struct block_list *bl, int flag);
 void ext_skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, unsigned int tick);
-int64 skill_unit_ondamaged(struct skill_unit *unit,struct block_list *bl,int64 damage);
+int64 skill_unit_ondamaged(struct skill_unit *unit,int64 damage);
 
 int skill_castfix( struct block_list *bl, uint16 skill_id, uint16 skill_lv);
 int skill_castfix_sc( struct block_list *bl, int time);
@@ -410,7 +411,7 @@ int skill_check_pc_partner(struct map_session_data *sd, uint16 skill_id, uint16 
 int skill_check_unit_cell(uint16 skill_id,int16 m,int16 x,int16 y,int unit_id);
 int skill_unit_out_all( struct block_list *bl,unsigned int tick,int range);
 int skill_unit_move(struct block_list *bl,unsigned int tick,int flag);
-int skill_unit_move_unit_group( struct skill_unit_group *group, int16 m,int16 dx,int16 dy);
+void skill_unit_move_unit_group( struct skill_unit_group *group, int16 m,int16 dx,int16 dy);
 
 struct skill_unit_group *skill_check_dancing( struct block_list *src );
 
