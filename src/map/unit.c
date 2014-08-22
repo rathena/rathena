@@ -898,7 +898,7 @@ uint8 unit_getdir(struct block_list *bl)
  * @param dx: Destination cell X
  * @param dy: Destination cell Y
  * @param count: How many cells to push bl
- * @param flag: Whether or not to send position packet updates
+ * @param flag: &1 Whether or not to send position packet updates
  * @return count (can be modified due to map cell restrictions)
  */
 int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag)

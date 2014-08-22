@@ -360,7 +360,7 @@ prt_castle,164,32,1	script	Man in Anguish	733,{
 			mes "Let me take";
 			mes "a look at your face.";
 			next;
-			if(getequipid(7) != 2608 && getequipid(8) != 2608) {
+			if(getequipid(EQI_ACC_L) != 2608 && getequipid(EQI_ACC_R) != 2608) {
 				mes "[Murnak Mijoul]";
 				mes "Hmm. You wish to become a Crusader, but do not wear a Rosary? I have no business with you if you cannot uphold our customs.";
 				close;
@@ -401,7 +401,7 @@ prt_castle,164,32,1	script	Man in Anguish	733,{
 			mes "I'll let you retake the test as much as you like. But if you continuously fail, there's an inherent problem with your";
 			mes "state of mind.";
 			next;
-			if(getequipid(7) != 2608 && getequipid(8) != 2608) {
+			if(getequipid(EQI_ACC_L) != 2608 && getequipid(EQI_ACC_R) != 2608) {
 				mes "[Murnak Mijoul]";
 				mes "Wait...";
 				mes "Where have you left your Rosary? You can't let that lie around just anywhere. We are supposed to be warriors of holiness.";
@@ -888,7 +888,7 @@ prt_castle,35,151,5	script	Patron Knight	751,{
 		}
 		next;
 		if (select("I would like to begin.:Give me some time to prepare.") == 1) {
-			if(getequipid(7) != 2608 && getequipid(8) != 2608) {
+			if(getequipid(EQI_ACC_L) != 2608 && getequipid(EQI_ACC_R) != 2608) {
 				mes "[Bliant Piyord]";
 				mes "Just a second, you do not have a Rosary equipped. As a Crusader, you must always have a Rosary on your person.";
 				next;

@@ -394,19 +394,19 @@ OnTimer55000:
 
 //Subfunction: Checks that the groom/bride is still wearing their stuff.
 function SF_equip_check {
-	if (Sex && getequipid(2) != 7170) {
+	if (Sex && getequipid(EQI_ARMOR) != 7170) {
 		mes "["+@name$+"]";
 		mes "Child, what did you do with your "+getitemname(7170)+"?";
 		emotion e_dots;
 		return 0;
 	}
-	if (Sex == 0 && getequipid(2) != 2338) {
+	if (Sex == 0 && getequipid(EQI_ARMOR) != 2338) {
 		mes "["+@name$+"]";
 		mes "Child, you are supposed to wear a "+getitemname(2338)+" at all times during the ceremony...";
 		emotion e_dots;
 		return 0;
 	}
-	if (Sex == 0 && $@wed_veil && getequipid(1) != 2206) {
+	if (Sex == 0 && $@wed_veil && getequipid(EQI_HEAD_TOP) != 2206) {
 		mes "["+@name$+"]";
 		mes "Child, you can't take off your "+getitemname(2206)+" yet....";
 		emotion e_dots;
@@ -692,12 +692,12 @@ function SF_TryRegister {
 	else
 		set @item, 2338;
 	
-	if (getequipid(2) != @item) {
+	if (getequipid(EQI_ARMOR) != @item) {
 		mes "["+@name$+"]";
 		mes "You should be wearing a "+getitemname(@item)+" if you want to get married.";
 		close;
 	}
-	if (Sex == 0 && $@wed_veil && getequipid(1) != 2206) {
+	if (Sex == 0 && $@wed_veil && getequipid(EQI_HEAD_TOP) != 2206) {
 		mes "["+@name$+"]";
 		mes "Where is your "+getitemname(2206)+"? It's a necessary complement to your dress.";
 		close;
