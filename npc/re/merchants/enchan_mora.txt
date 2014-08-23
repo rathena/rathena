@@ -1110,13 +1110,6 @@ L_Socket:
 		}
 		delitem 6380,1; //Mora_Coin
 		set Zeny, Zeny-100000;
-
-		// anti-hack
-		if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) ||
-		    callfunc("F_IsEquipRefineHack", .@part, .@equip_refine) ||
-		    callfunc("F_IsEquipCardHack", .@part, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]))
-			close;
-
 		delequip .@part;
 		if (.@enchant == 9) {
 			specialeffect2 EF_SUI_EXPLOSION;
