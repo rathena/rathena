@@ -19093,9 +19093,9 @@ BUILDIN_FUNC(preg_match) {
 
 	return SCRIPT_CMD_SUCCESS;
 #else
-	ShowError("script:preg_match: cannot run without PCRE library enabled.\n");
+	ShowDebug("script:preg_match: cannot run without PCRE library enabled.\n");
 	script_pushint(st,0);
-	return SCRIPT_CMD_FAILURE;
+	return SCRIPT_CMD_SUCCESS;
 #endif
 }
 
