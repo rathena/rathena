@@ -447,6 +447,7 @@ struct item_data* itemdb_exists(unsigned short nameid);
 #define itemdb_is_GNthrowable(n) (n >= ITEMID_MYSTERIOUS_POWDER && n <= ITEMID_BLACK_THING_TO_THROW)
 const char* itemdb_typename(enum item_types type);
 const char *itemdb_typename_ammo (enum e_item_ammo ammo);
+bool itemdb_is_spellbook2(unsigned short nameid);
 
 unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group);
 

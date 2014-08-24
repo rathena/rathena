@@ -3,4 +3,6 @@
 //
 // Structure of Database:
 // SkillID,Rate
+//
+// - To remove entry by importing, put 0 on 'Rate'
 

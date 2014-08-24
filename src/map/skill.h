@@ -13,17 +13,17 @@ struct skill_unit;
 struct skill_unit_group;
 struct status_change_entry;
 
-#define MAX_SKILL_DB			MAX_SKILL
-#define MAX_SKILL_PRODUCE_DB	270
-#define MAX_PRODUCE_RESOURCE	12
-#define MAX_SKILL_ARROW_DB		150
-#define MAX_ARROW_RESOURCE		5
-#define MAX_SKILL_ABRA_DB		350
-#define MAX_SKILL_IMPROVISE_DB 50
-#define MAX_SKILL_LEVEL 100
-#define MAX_SKILL_CRIMSON_MARKER 3
-#define SKILL_NAME_LENGTH 31
-#define SKILL_DESC_LENGTH 31
+#define MAX_SKILL_DB			MAX_SKILL /// Max Skill DB
+#define MAX_SKILL_PRODUCE_DB	270 /// Max Produce DB
+#define MAX_PRODUCE_RESOURCE	12 /// Max Produce requirements
+#define MAX_SKILL_ARROW_DB		150 /// Max Arrow Creation DB
+#define MAX_ARROW_RESULT		5 /// Max Arrow results/created
+#define MAX_SKILL_ABRA_DB		350 /// Max Skill list of Abracadabra DB
+#define MAX_SKILL_IMPROVISE_DB 50 /// Max Skill for Improvise
+#define MAX_SKILL_LEVEL 100 /// Max Skill Level
+#define MAX_SKILL_CRIMSON_MARKER 3 /// Max Crimson Marker targets
+#define SKILL_NAME_LENGTH 31 /// Max Skill Name length
+#define SKILL_DESC_LENGTH 31 /// Max Skill Desc length
 
 DBMap* skilldb_name2id;
 
@@ -279,26 +279,28 @@ enum {
 
 /// Create Database item
 struct s_skill_produce_db {
-	unsigned short nameid;
-	int trigger;
-	int req_skill,req_skill_lv,itemlv;
-	int mat_id[MAX_PRODUCE_RESOURCE],mat_amount[MAX_PRODUCE_RESOURCE];
+	unsigned short nameid; /// Product ID
+	unsigned short req_skill; /// Required Skill
+	unsigned char req_skill_lv, /// Required Skill Level
+		itemlv; /// Item Level
+	unsigned short mat_id[MAX_PRODUCE_RESOURCE], /// Materials needed
+		mat_amount[MAX_PRODUCE_RESOURCE]; /// Amount of each materials
 };
 extern struct s_skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
 
 /// Creating database arrow
 struct s_skill_arrow_db {
-	unsigned short nameid;
-	int trigger;
-	int cre_id[MAX_ARROW_RESOURCE],cre_amount[MAX_ARROW_RESOURCE];
+	unsigned short nameid, /// Material ID
+		cre_id[MAX_ARROW_RESULT], /// Arrow created
+		cre_amount[MAX_ARROW_RESULT]; /// Amount of each arrow created
 };
 extern struct s_skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
 
 /// Abracadabra database
 struct s_skill_abra_db {
-	uint16 skill_id;
-	char name[NAME_LENGTH];
-	int per[MAX_SKILL_LEVEL];
+	uint16 skill_id; /// Skill ID
+	char name[SKILL_NAME_LENGTH]; /// Shouted skill name
+	int per[MAX_SKILL_LEVEL]; /// Probability summoned
 };
 extern struct s_skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
 
@@ -441,10 +443,10 @@ bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skil
 int skill_changetarget(struct block_list *bl,va_list ap);
 
 // Item creation
-int skill_can_produce_mix( struct map_session_data *sd, unsigned short nameid, int trigger, int qty);
-int skill_produce_mix( struct map_session_data *sd, uint16 skill_id, unsigned short nameid, int slot1, int slot2, int slot3, int qty );
+short skill_can_produce_mix( struct map_session_data *sd, unsigned short nameid, int trigger, int qty);
+bool skill_produce_mix( struct map_session_data *sd, uint16 skill_id, unsigned short nameid, int slot1, int slot2, int slot3, int qty );
 
-int skill_arrow_create( struct map_session_data *sd, unsigned short nameid);
+bool skill_arrow_create( struct map_session_data *sd, unsigned short nameid);
 
 // skills for the mob
 int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,unsigned int tick,int flag );
@@ -1959,11 +1961,13 @@ enum {
 
 	UNT_MAX = 0x190
 };
+
 /**
  * Skill Unit Save
  **/
 void skill_usave_add(struct map_session_data * sd, uint16 skill_id, uint16 skill_lv);
 void skill_usave_trigger(struct map_session_data *sd);
+
 /**
  * Warlock
  **/
@@ -1974,8 +1978,15 @@ enum wl_spheres {
 	WLS_WATER,
 	WLS_STONE,
 };
+struct s_skill_spellbook_db {
+	unsigned short nameid;
+	unsigned short skill_id;
+	unsigned short point;
+};
+extern struct s_skill_spellbook_db skill_spellbook_db[MAX_SKILL_SPELLBOOK_DB];
 int skill_spellbook (struct map_session_data *sd, unsigned short nameid);
 int skill_block_check(struct block_list *bl, enum sc_type type, uint16 skill_id);
+
 /**
  * Guilottine Cross
  **/
@@ -1986,19 +1997,23 @@ struct s_skill_magicmushroom_db {
 extern struct s_skill_magicmushroom_db skill_magicmushroom_db[MAX_SKILL_MAGICMUSHROOM_DB];
 int skill_maelstrom_suction(struct block_list *bl, va_list ap);
 bool skill_check_shadowform(struct block_list *bl, int64 damage, int hit);
+
 /**
  * Ranger
  **/
 int skill_detonator(struct block_list *bl, va_list ap);
 bool skill_check_camouflage(struct block_list *bl, struct status_change_entry *sce);
+
 /**
  * Mechanic
  **/
 int skill_magicdecoy(struct map_session_data *sd, unsigned short nameid);
+
 /**
  * Guiltoine Cross
  **/
 int skill_poisoningweapon( struct map_session_data *sd, unsigned short nameid);
+
 /**
  * Auto Shadow Spell (Shadow Chaser)
  **/

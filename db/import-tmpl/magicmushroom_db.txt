@@ -2,5 +2,7 @@
 // List of skills that are randomly used through Magic Mushroom status change.
 //
 // Structure of Database:
-// SkillID
+// SkillID{,RemoveFlag}
+//
+// - To remove entry by importing, put any value on 'RemoveFlag'
 
