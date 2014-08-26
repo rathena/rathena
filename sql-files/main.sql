@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `char` (
   `moves` int(11) unsigned NOT NULL DEFAULT '0',
   `unban_time` int(11) unsigned NOT NULL default '0',
   `font` tinyint(3) unsigned NOT NULL default '0',
-  `uniqueitem_counter` bigint(20) NOT NULL,
+  `uniqueitem_counter` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`char_id`),
   UNIQUE KEY `name_key` (`name`),
   KEY `account_id` (`account_id`),
