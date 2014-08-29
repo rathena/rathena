@@ -17719,17 +17719,17 @@ short skill_can_produce_mix (struct map_session_data *sd, unsigned short nameid,
 
 	// Check on player's inventory
 	for (j = 0; j < MAX_PRODUCE_RESOURCE; j++) {
-		unsigned short nameid;
-		if ((nameid = skill_produce_db[i].mat_id[j]) == 0 )
+		unsigned short nameid_produce;
+		if ((nameid_produce = skill_produce_db[i].mat_id[j]) == 0 )
 			continue;
 		if (skill_produce_db[i].mat_amount[j] == 0) {
-			if (pc_search_inventory(sd,nameid) < 0)
+			if (pc_search_inventory(sd,nameid_produce) < 0)
 				return 0;
 		}
 		else {
 			unsigned short idx, amt;
 			for (idx = 0, amt = 0; idx < MAX_INVENTORY; idx++)
-				if (sd->status.inventory[idx].nameid == nameid)
+				if (sd->status.inventory[idx].nameid == nameid_produce)
 					amt += sd->status.inventory[idx].amount;
 			if (amt < qty*skill_produce_db[i].mat_amount[j])
 				return 0;

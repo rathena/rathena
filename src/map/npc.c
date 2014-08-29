@@ -969,6 +969,11 @@ int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y)
 		case NPCTYPE_WARP:
 			if (pc_ishiding(sd) || (sd->sc.count && sd->sc.data[SC_CAMOUFLAGE]) || pc_isdead(sd))
 				break; // hidden or dead chars cannot use warps
+			if(sd->count_rewarp > 3){
+				ShowWarning("Prevent infinite warping loop, please fix script\n");
+				sd->count_rewarp=0;
+				break;
+			}
 			pc_setpos(sd,map[m].npc[i]->u.warp.mapindex,map[m].npc[i]->u.warp.x,map[m].npc[i]->u.warp.y,CLR_OUTSIGHT);
 			break;
 		case NPCTYPE_SCRIPT:
@@ -1068,10 +1073,17 @@ int npc_touch_areanpc2(struct mob_data *md)
 	return 0;
 }
 
-//Checks if there are any NPC on-touch objects on the given range.
-//Flag determines the type of object to check for:
-//&1: NPC Warps
-//&2: NPCs with on-touch events.
+/**
+ * Checks if there are any NPC on-touch objects on the given range.
+ * @param flag : Flag determines the type of object to check for
+ *	&1: NPC Warps
+ *	&2: NPCs with on-touch events.
+ * @param m : mapindex
+ * @param x : x coord
+ * @param y : y coord
+ * @param range : range to check
+ * @return 0: no npc on target cells, x: npc_id
+ */
 int npc_check_areanpc(int flag, int16 m, int16 x, int16 y, int16 range)
 {
 	int i;

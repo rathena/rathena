@@ -1211,6 +1211,7 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	sd->num_quests = 0;
 	sd->avail_quests = 0;
 	sd->save_quest = false;
+	sd->count_rewarp = 0;
 
 	//warp player
 	if ((i=pc_setpos(sd,sd->status.last_point.map, sd->status.last_point.x, sd->status.last_point.y, CLR_OUTSIGHT)) != 0) {
@@ -5299,6 +5300,12 @@ char pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int 
 	}
 
 	pc_cell_basilica(sd);
+	
+	//check if we gonna be rewarped [lighta]
+	if(npc_check_areanpc(1,m,x,y,1)){
+		sd->count_rewarp++;	
+	}
+	
 	return 0;
 }
 
