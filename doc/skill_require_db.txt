@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20140719
+//= 20140831
 //===== Description: =========================================
 //= Explanation of the skill_require_db.txt file and structure.
 //============================================================
@@ -13,7 +13,8 @@ SkillID,HPCost,MaxHPTrigger,SPCost,HPRateCost,SPRateCost,ZenyCost,RequiredWeapon
 
 ---------------------------------------
 
-SkillID: The ID of the skill. (See \db\[re|pre-re]\skill_db.txt for more details)
+SkillID: The ID of the skill.
+         See 'db\(pre-)re\skill_db.txt' for more details.
 
 ---------------------------------------
 
@@ -21,7 +22,7 @@ HPCost:	Amount of HP needed to use the skill.
 
 ---------------------------------------
 
-MaxHPTrigger: Player's HP has to be below this % of Max HP, in order to use the skill.
+MaxHPTrigger: Player's HP must be below this % of Max HP in order to use the skill.
 
 ---------------------------------------
 
@@ -29,11 +30,13 @@ SPCost: Amount of SP needed to use the skill.
 
 ---------------------------------------
 
-HPRateCost: If more than 0, it's a percentage of the player's current HP. If less than 0, it's a percentage of the player's Max HP.
+HPRateCost: If more than 0, the percentage of the player's current HP.
+            If less than 0, the percentage of the player's Max HP.
 
 ---------------------------------------
 
-SPRateCost: If more than 0, it's a percentage of the player's current SP. If less than 0, it's a percentage of the player's Max SP.
+SPRateCost: If more than 0, the percentage of the player's current SP.
+            If less than 0, the percentage of the player's Max SP.
 
 ---------------------------------------
 
@@ -41,7 +44,7 @@ ZenyCost: Amount of Zeny needed to use the skill.
 
 ---------------------------------------
 
-RequiredWeapons: Player needs to equip this type of weapon, in order to use the skill.
+RequiredWeapons: Weapon type needed to use the skill.
 	0: bare fist
 	1: Daggers
 	2: One-handed swords
@@ -74,12 +77,12 @@ RequiredWeapons: Player needs to equip this type of weapon, in order to use the 
 	29: Dagger + Axe
 	30: Sword + Axe
 	
-Example usage of multiple values = type1:type2:type3
-Maximum multiple value is 30.
+Up to 30 ':'-separated values can be used, e.g.
+    type1:type2:type3
 
 ---------------------------------------
 
-RequiredAmmoTypes: Player needs to equip this type of ammo to use the skill.
+RequiredAmmoTypes: Ammo type needed to use the skill.
 	1: Arrows
 	2: Throwable daggers
 	3: Bullets
@@ -90,20 +93,23 @@ RequiredAmmoTypes: Player needs to equip this type of ammo to use the skill.
 	8: Cannonballs
 	9: Throwable Items (Sling Item)
 
-Example usage of multiple values = type1:type2:type3
-Maximum multiple value is 9.
+Up to 9 ':'-separated values can be used, e.g.
+    type1:type2:type3
+
 ---------------------------------------
 
 RequiredAmmoAmount: Amount of ammo needed to use the skill.
 
 ---------------------------------------
 
-RequiredState: Specify the 'State' required to be active, in order to use the skill.
+RequiredState: The active 'State' needed to use the skill.
+
 none = Nothing special.
 hidden = Requires hidden status by using Hiding, Cloaking, or Chasewalk.
 riding = Requires the player to ride either a Peco or a Dragon.
 falcon = Requires a Falcon.
-cart = Requires a Pushcart (For renewal, this state can be replaced by SC_PUSH_CART in 'RequiredStatuses' field).
+cart = Requires a Pushcart.
+       For renewal, this state can be replaced by SC_PUSH_CART in 'RequiredStatuses' field.
 shield = Requires a shield equipped.
 recover_weight_rate = Requires to be less than 50% weight.
 move_enable = Requires to be able to move.
@@ -117,9 +123,14 @@ peco = Requires riding a Peco.
 
 ---------------------------------------
 
-RequiredStatuses: List of status needed to be active, in order to use the skill.
-Example usage of values = SC_STATUS1:SC_STATUS2:SC_STATUS3 (see db/const.txt for more details).
-Maximum multiple value is 3. (Refer to skill.h: MAX_SKILL_STATUS_REQUIRE)
+RequiredStatuses: The active statuses needed to use the skill.
+
+Up to 3 ':'-separated values can be used, e.g.
+    SC_STATUS1:SC_STATUS2:SC_STATUS3
+
+See MAX_SKILL_STATUS_REQUIRE in 'src/map/skill.h' to modify the max number
+of possible values, and 'db/const.txt' for a list of status constants.
+
 Use any number or SC_ALL to disable status requirements.
 
 ---------------------------------------
@@ -128,18 +139,25 @@ SpiritSphereCost: Amount of Spirit Sphere needed to use the skill.
 
 ---------------------------------------
 
-RequiredItemID1-10: These items will be used when players use the skill. Maximum of 10 items.
+RequiredItemID1..10: Items to be consumed when the skill is used (max 10).
 
 ---------------------------------------
 
-RequiredItemAmount1-10: Amount of item used when player uses the skill.
-0 means the item is required to be in inventory but won't be consumed.
----------------------------------------
-
-RequiredEquipment: Player needs to equip these equipments to use the skill. (Use Item ID).
-Example usage of multiple values = item1:item2:item3
-Maximum multiple value is 10. (Refer to skill.h: MAX_SKILL_EQUIP_REQUIRE)
+RequiredItemAmount1..10: Amount of each item consumed when the skill is used.
+                         If 0, the item is required to be in the inventory but won't be consumed.
 
 ---------------------------------------
 
-Note: On some fields, ":" delimiter means for each skill level, but there are some level dependent check. (Refer to https://github.com/rathena/rathena/blob/master/src/map/skill.c#L14963)
+RequiredEquipment: Specific equipment IDs needed to use the skill.
+
+Up to 10 ':'-separated values can be used, e.g.
+    item1:item2:item3
+
+See MAX_SKILL_EQUIP_REQUIRE in 'src/map/skill.h' to modify the max number
+of possible values.
+
+---------------------------------------
+
+NOTE: On some fields, the ':' delimiter means for each skill level, but there
+      are some level dependent checks.  See 'skill_get_requirement()' in
+      'src/map/skill.c'.

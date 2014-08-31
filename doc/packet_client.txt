@@ -5,7 +5,7 @@
 //===== Last Updated: ========================================
 //= 20140718
 //===== Description: =========================================
-//= List of all packet used by login-serv (A), char-serv (H), map-serv (Z)
-//= to communicate to client.
-//= See packet_interserv.txt for communication between servers 
+//= List of all packets used by login-serv (A), char-serv (H),
+//= and map-serv (Z) to communicate to the client.
+//= See packet_interserv.txt for communication between servers.
 //============================================================
