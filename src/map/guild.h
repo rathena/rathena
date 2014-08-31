@@ -44,16 +44,16 @@ int guild_getposition(struct guild *g, struct map_session_data *sd);
 unsigned int guild_payexp(struct map_session_data *sd,unsigned int exp);
 int guild_getexp(struct map_session_data *sd,int exp); // [Celest]
 
-int guild_create(struct map_session_data *sd, const char *name);
-int guild_created(int account_id,int guild_id);
+bool guild_create(struct map_session_data *sd, const char *name);
+void guild_created(int account_id,int guild_id);
 int guild_request_info(int guild_id);
-int guild_recv_noinfo(int guild_id);
-int guild_recv_info(struct guild *sg);
+void guild_recv_noinfo(int guild_id);
+void guild_recv_info(struct guild *sg);
 int guild_npc_request_info(int guild_id,const char *ev);
-int guild_invite(struct map_session_data *sd,struct map_session_data *tsd);
-int guild_reply_invite(struct map_session_data *sd,int guild_id,int flag);
+void guild_invite(struct map_session_data *sd,struct map_session_data *tsd);
+bool guild_reply_invite(struct map_session_data *sd,int guild_id,int flag);
 void guild_member_joined(struct map_session_data *sd);
-int guild_member_added(int guild_id,int account_id,int char_id,int flag);
+void guild_member_added(int guild_id,int account_id,int char_id,int flag);
 int guild_leave(struct map_session_data *sd,int guild_id,
 	int account_id,int char_id,const char *mes);
 int guild_member_withdraw(int guild_id,int account_id,int char_id,int flag,
@@ -104,6 +104,8 @@ void guild_agit2_end(void);
 void guild_flag_add(struct npc_data *nd);
 void guild_flag_remove(struct npc_data *nd);
 void guild_flags_clear(void);
+
+DBMap *guild_get_castle_db(void);
 
 void guild_guildaura_refresh(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 #ifdef BOUND_ITEMS

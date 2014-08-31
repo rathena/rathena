@@ -12490,8 +12490,13 @@ void clif_parse_CreateGuild(int fd,struct map_session_data *sd){
 	char* name = (char*)RFIFOP(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[1]);
 	name[NAME_LENGTH-1] = '\0';
 
-	if(map[sd->bl.m].flag.guildlock) { //Guild locked.
+	if (map[sd->bl.m].flag.guildlock) { //Guild locked.
 		clif_displaymessage(fd, msg_txt(sd,228));
+		return;
+	}
+
+	if (!(battle_config.guild_create&1)) {
+		clif_colormes(sd, color_table[COLOR_RED], msg_txt(sd, 740));
 		return;
 	}
 
@@ -12640,9 +12645,19 @@ void clif_parse_GuildChangeEmblem(int fd,struct map_session_data *sd){
 	if( !emblem_len || !sd->state.gmaster_flag )
 		return;
 
-	if(!(battle_config.emblem_woe_change) && (agit_flag || agit2_flag) ){
-		clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,385)); //"You not allowed to change emblem during woe"
-		return;
+	if (battle_config.guild_disable_change_emblem) {
+		if (battle_config.guild_disable_change_emblem&1 && (agit_flag || agit2_flag) ){
+			clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,385)); //"You not allowed to change emblem during woe"
+			return;
+		}
+		if (   (battle_config.guild_disable_change_emblem&2 && map[sd->bl.m].flag.gvg) //  Disable at GVG
+			|| (battle_config.guild_disable_change_emblem&4 && map[sd->bl.m].flag.gvg_castle) // Disable at Castle
+			|| (battle_config.guild_disable_change_emblem&8 && (!map[sd->bl.m].flag.gvg ||!map[sd->bl.m].flag.gvg_castle || !(agit_flag || agit2_flag))) // Disable at normal condition
+			)
+		{
+			clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,744));
+			return;
+		}
 	}
 	emb_val = clif_validate_emblem(emblem, emblem_len);
 	if(emb_val ==-1 ){
@@ -12904,6 +12919,10 @@ void clif_parse_GuildBreak(int fd, struct map_session_data *sd)
 {
 	if( map[sd->bl.m].flag.guildlock ) { //Guild locked.
 		clif_displaymessage(fd, msg_txt(sd,228));
+		return;
+	}
+	if (!(battle_config.guild_break&1)) {
+		clif_colormes(sd, color_table[COLOR_RED], msg_txt(sd, 741));
 		return;
 	}
 	guild_break(sd,(char*)RFIFOP(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]));

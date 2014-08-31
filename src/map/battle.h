@@ -527,7 +527,11 @@ extern struct Battle_Config
 	int vip_exp_penalty_job;
 	int vip_disp_rate;
 	int mon_trans_disable_in_gvg;
-	int emblem_woe_change;
+	int guild_disable_change_emblem;
+	int guild_create;
+	int guild_break;
+	int guild_disable_invite;
+	int guild_disable_expel;
 	int emblem_transparency_limit;
 	int discount_item_point_shop;
 	int update_enemy_position;
