@@ -927,13 +927,13 @@ extern char default_codepage[32];
 extern int map_server_port;
 extern char map_server_ip[32];
 extern char map_server_id[32];
-extern char map_server_pw[32];
+extern char map_server_pw[64];
 extern char map_server_db[32];
 
 extern char log_db_ip[32];
 extern int log_db_port;
 extern char log_db_id[32];
-extern char log_db_pw[32];
+extern char log_db_pw[64];
 extern char log_db_db[32];
 
 #endif

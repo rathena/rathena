@@ -65,7 +65,7 @@ char default_codepage[32] = "";
 int map_server_port = 3306;
 char map_server_ip[32] = "127.0.0.1";
 char map_server_id[32] = "ragnarok";
-char map_server_pw[32] = "";
+StringBuf* map_server_pw;
 char map_server_db[32] = "ragnarok";
 Sql* mmysql_handle;
 
@@ -90,7 +90,7 @@ char vending_items_db[32] = "vending_items";
 char log_db_ip[32] = "127.0.0.1";
 int log_db_port = 3306;
 char log_db_id[32] = "ragnarok";
-char log_db_pw[32] = "ragnarok";
+char log_db_pw[64] = "ragnarok";
 char log_db_db[32] = "log";
 Sql* logmysql_handle;
 
@@ -3631,7 +3631,7 @@ int inter_config_read(char *cfgName)
 			strcpy(map_server_id, w2);
 		else
 		if(strcmpi(w1,"map_server_pw")==0)
-			strcpy(map_server_pw, w2);
+			map_server_pw = StringBuf_FromStr(w2);
 		else
 		if(strcmpi(w1,"map_server_db")==0)
 			strcpy(map_server_db, w2);
@@ -3679,7 +3679,7 @@ int map_sql_init(void)
 	mmysql_handle = Sql_Malloc();
 
 	ShowInfo("Connecting to the Map DB Server....\n");
-	if( SQL_ERROR == Sql_Connect(mmysql_handle, map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db) )
+	if( SQL_ERROR == Sql_Connect(mmysql_handle, map_server_id, StringBuf_Value(map_server_pw), map_server_ip, map_server_port, map_server_db) )
 		exit(EXIT_FAILURE);
 	ShowStatus("Connect success! (Map Server Connection)\n");
 
