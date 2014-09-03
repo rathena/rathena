@@ -7,9 +7,9 @@ before_script:
   - uname -a  
 
 script: 
-  - ./configure && make sql
+  - ./configure && make server
   - make clean
-  - ./configure --enable-prere && make sql
+  - ./configure --enable-prere && make server
   
 notifications:
   email: false

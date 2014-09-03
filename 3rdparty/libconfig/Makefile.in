@@ -7,9 +7,9 @@ LIBCONFIG_AR = obj/libconfig.a
 @SET_MAKE@
 
 #####################################################################
-.PHONY : all clean help
+.PHONY : all clean help libconfig
 
-all: $(LIBCONFIG_AR)
+all: libconfig
 
 clean:
 	@echo "	CLEAN	libconfig"
@@ -17,13 +17,14 @@ clean:
 
 help:
 	@echo "possible targets are 'all' 'clean' 'help'"
-	@echo "'all'    - builds $(LIBCONFIG_DIR_OBJ)"
-	@echo "'clean'  - deletes $(LIBCONFIG_DIR_OBJ)"
-	@echo "'help'   - outputs this message"
+	@echo "'libconfig' - build $(LIBCONFIG_AR)
+	@echo "'all'       - builds $(LIBCONFIG_DIR_OBJ)"
+	@echo "'clean'     - deletes $(LIBCONFIG_DIR_OBJ)"
+	@echo "'help'      - outputs this message"
 
 #####################################################################
 
-obj_dir:
+obj:
 	@echo "	MKDIR	obj"
 	@-mkdir obj
 	
@@ -31,6 +32,8 @@ obj/%.o: %.c $(LIBCONFIG_H)
 	@echo "	CC	$<"
 	@@CC@ @CFLAGS@ @DEFS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
-$(LIBCONFIG_AR): obj_dir $(LIBCONFIG_DIR_OBJ)
+libconfig: obj $(LIBCONFIG_DIR_OBJ) $(LIBCONFIG_AR)
+
+$(LIBCONFIG_AR): $(LIBCONFIG_DIR_OBJ)
 	@echo "	AR	$@"
 	@@AR@ rcs obj/libconfig.a $(LIBCONFIG_DIR_OBJ)

@@ -9,14 +9,14 @@ check_files() {
     for i in ${L_SRV} ${C_SRV} ${M_SRV}
     do
         if [ ! -f ./$i ]; then
-            echo "$i does not exist extiting"
+            echo "$i does not exist... exiting..."
             exit 1;
         fi
     done
 }
 
 check_inst_right(){
-    if [ ! -w $INST_PATH ]; then echo "You must have sudo right to use this install (writte/read permission in /opt/ )" && exit; fi
+    if [ ! -w $INST_PATH ]; then echo "You must have sudo right to use this install (write/read permission in /opt/ )" && exit; fi
 }
 
 inst_launch_workaround(){

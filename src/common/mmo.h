@@ -553,8 +553,8 @@ struct guild {
 	struct guild_skill skill[MAX_GUILDSKILL];
 	struct Channel *channel;
 
-	/* TODO: still used for something? */
-	unsigned short save_flag; // for TXT saving
+	/* Used by char-server to save events for guilds */
+	unsigned short save_flag;
 };
 
 struct guild_castle {

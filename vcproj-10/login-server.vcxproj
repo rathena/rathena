@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -12,7 +12,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D356871D-58E1-450B-967A-E5E9646175AF}</ProjectGuid>
-    <RootNamespace>login-server_sql</RootNamespace>
+    <RootNamespace>login-server</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -20,12 +20,10 @@
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -47,8 +45,8 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectName)\$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">login-server_sql</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">login-server_sql</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">login-server</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">login-server</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -85,7 +83,6 @@
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
-      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -131,7 +128,6 @@
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
-      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -142,6 +138,7 @@
     <ClInclude Include="..\3rdparty\libconfig\scanner.h" />
     <ClInclude Include="..\3rdparty\libconfig\strbuf.h" />
     <ClInclude Include="..\3rdparty\libconfig\wincompat.h" />
+    <ClInclude Include="..\src\common\conf.h" />
     <ClInclude Include="..\src\common\mempool.h" />
     <ClInclude Include="..\src\common\mutex.h" />
     <ClInclude Include="..\src\common\raconf.h" />
@@ -150,13 +147,12 @@
     <ClInclude Include="..\src\login\account.h" />
     <ClInclude Include="..\src\login\ipban.h" />
     <ClInclude Include="..\src\login\login.h" />
-    <ClInclude Include="..\src\login\loginlog.h" />
     <ClInclude Include="..\src\login\loginchrif.h" />
     <ClInclude Include="..\src\login\loginclif.h" />
     <ClInclude Include="..\src\login\logincnslif.h" />
+    <ClInclude Include="..\src\login\loginlog.h" />
     <ClInclude Include="..\src\common\cbasetypes.h" />
     <ClInclude Include="..\src\common\core.h" />
-    <ClInclude Include="..\src\common\conf.h" />
     <ClInclude Include="..\src\common\db.h" />
     <ClInclude Include="..\src\common\ers.h" />
     <ClInclude Include="..\src\common\malloc.h" />
@@ -170,8 +166,8 @@
     <ClInclude Include="..\src\common\strlib.h" />
     <ClInclude Include="..\src\common\timer.h" />
     <ClInclude Include="..\src\common\utils.h" />
-    <ClInclude Include="..\src\common\cli.h" />
     <ClInclude Include="..\src\common\msg_conf.h" />
+    <ClInclude Include="..\src\common\cli.h" />
     <ClInclude Include="..\3rdparty\mt19937ar\mt19937ar.h" />
   </ItemGroup>
   <ItemGroup>
@@ -180,6 +176,7 @@
     <ClCompile Include="..\3rdparty\libconfig\scanctx.c" />
     <ClCompile Include="..\3rdparty\libconfig\scanner.c" />
     <ClCompile Include="..\3rdparty\libconfig\strbuf.c" />
+    <ClCompile Include="..\src\common\conf.c" />
     <ClCompile Include="..\src\common\mempool.c" />
     <ClCompile Include="..\src\common\mutex.c" />
     <ClCompile Include="..\src\common\raconf.c" />
@@ -187,12 +184,11 @@
     <ClCompile Include="..\src\login\account.c" />
     <ClCompile Include="..\src\login\ipban.c" />
     <ClCompile Include="..\src\login\login.c" />
-    <ClCompile Include="..\src\login\loginlog.c" />
     <ClCompile Include="..\src\login\loginchrif.c" />
     <ClCompile Include="..\src\login\loginclif.c" />
     <ClCompile Include="..\src\login\logincnslif.c" />
+    <ClCompile Include="..\src\login\loginlog.c" />
     <ClCompile Include="..\src\common\core.c" />
-    <ClCompile Include="..\src\common\conf.c" />
     <ClCompile Include="..\src\common\db.c" />
     <ClCompile Include="..\src\common\ers.c" />
     <ClCompile Include="..\src\common\malloc.c" />
@@ -205,8 +201,8 @@
     <ClCompile Include="..\src\common\strlib.c" />
     <ClCompile Include="..\src\common\timer.c" />
     <ClCompile Include="..\src\common\utils.c" />
-    <ClCompile Include="..\src\common\cli.c" />
     <ClCompile Include="..\src\common\msg_conf.c" />
+    <ClCompile Include="..\src\common\cli.c" />
     <ClCompile Include="..\3rdparty\mt19937ar\mt19937ar.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

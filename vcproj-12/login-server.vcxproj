@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -12,7 +12,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D356871D-58E1-450B-967A-E5E9646175AF}</ProjectGuid>
-    <RootNamespace>login-server_sql</RootNamespace>
+    <RootNamespace>login-server</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -20,12 +20,12 @@
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -47,8 +47,8 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectName)\$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">login-server_sql</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">login-server_sql</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">login-server</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">login-server</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -150,10 +150,10 @@
     <ClInclude Include="..\src\login\account.h" />
     <ClInclude Include="..\src\login\ipban.h" />
     <ClInclude Include="..\src\login\login.h" />
+    <ClInclude Include="..\src\login\loginlog.h" />
     <ClInclude Include="..\src\login\loginchrif.h" />
     <ClInclude Include="..\src\login\loginclif.h" />
     <ClInclude Include="..\src\login\logincnslif.h" />
-    <ClInclude Include="..\src\login\loginlog.h" />
     <ClInclude Include="..\src\common\cbasetypes.h" />
     <ClInclude Include="..\src\common\core.h" />
     <ClInclude Include="..\src\common\conf.h" />
@@ -187,10 +187,10 @@
     <ClCompile Include="..\src\login\account.c" />
     <ClCompile Include="..\src\login\ipban.c" />
     <ClCompile Include="..\src\login\login.c" />
+    <ClCompile Include="..\src\login\loginlog.c" />
     <ClCompile Include="..\src\login\loginchrif.c" />
     <ClCompile Include="..\src\login\loginclif.c" />
     <ClCompile Include="..\src\login\logincnslif.c" />
-    <ClCompile Include="..\src\login\loginlog.c" />
     <ClCompile Include="..\src\common\core.c" />
     <ClCompile Include="..\src\common\conf.c" />
     <ClCompile Include="..\src\common\db.c" />

@@ -1,29 +1,26 @@
-#
-# setup
-#
-set( LOGIN_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}  CACHE INTERNAL "" )
 
+#
 # login server
 #
 if( BUILD_SERVERS )
 message( STATUS "Creating target login-server" )
 set( LOGIN_HEADERS
-	"${LOGIN_SOURCE_DIR}/account.h"
-	"${LOGIN_SOURCE_DIR}/ipban.h"
-	"${LOGIN_SOURCE_DIR}/login.h"
-	"${LOGIN_SOURCE_DIR}/loginclif.h"
-	"${LOGIN_SOURCE_DIR}/loginchrif.h"
-	"${LOGIN_SOURCE_DIR}/logincnslif.h"
-	"${LOGIN_SOURCE_DIR}/loginlog.h"
+	"${SERVER_LOGIN_SOURCE_DIR}/account.h"
+	"${SERVER_LOGIN_SOURCE_DIR}/ipban.h"
+	"${SERVER_LOGIN_SOURCE_DIR}/login.h"
+	"${SERVER_LOGIN_SOURCE_DIR}/loginclif.h"
+	"${SERVER_LOGIN_SOURCE_DIR}/loginchrif.h"
+	"${SERVER_LOGIN_SOURCE_DIR}/logincnslif.h"
+	"${SERVER_LOGIN_SOURCE_DIR}/loginlog.h"
 	)
 set( LOGIN_SOURCES
-	"${LOGIN_SOURCE_DIR}/account.c"
-	"${LOGIN_SOURCE_DIR}/ipban.c"
-	"${LOGIN_SOURCE_DIR}/login.c"
-	"${LOGIN_SOURCE_DIR}/loginclif.c"
-	"${LOGIN_SOURCE_DIR}/loginchrif.c"
-	"${LOGIN_SOURCE_DIR}/logincnslif.c"
-	"${LOGIN_SOURCE_DIR}/loginlog.c"
+	"${SERVER_LOGIN_SOURCE_DIR}/account.c"
+	"${SERVER_LOGIN_SOURCE_DIR}/ipban.c"
+	"${SERVER_LOGIN_SOURCE_DIR}/login.c"
+	"${SERVER_LOGIN_SOURCE_DIR}/loginclif.c"
+	"${SERVER_LOGIN_SOURCE_DIR}/loginchrif.c"
+	"${SERVER_LOGIN_SOURCE_DIR}/logincnslif.c"
+	"${SERVER_LOGIN_SOURCE_DIR}/loginlog.c"
 	)
 set( DEPENDENCIES common )
 set( LIBRARIES ${GLOBAL_LIBRARIES} )

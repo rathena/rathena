@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="login-server_sql"
+	Name="login-server"
 	ProjectGUID="{D356871D-58E1-450B-967A-E5E9646175AF}"
-	RootNamespace="login-server_sql"
+	RootNamespace="login-server"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>
@@ -204,7 +204,7 @@
 	</References>
 	<Files>
 		<Filter
-			Name="login_sql"
+			Name="login"
 			>
 			<File
 				RelativePath="..\src\login\account.h"

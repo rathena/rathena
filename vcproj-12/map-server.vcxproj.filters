@@ -1,119 +1,119 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="..\src\map\atcommand.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\battle.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\battleground.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\buyingstore.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>  
     <ClCompile Include="..\src\map\channel.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\cashshop.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\chat.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\chrif.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\clif.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\date.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\duel.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\elemental.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\guild.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\homunculus.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\instance.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\intif.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\itemdb.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\log.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\mail.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\map.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\map\mapreg_sql.c">
-      <Filter>map_sql</Filter>
+    <ClCompile Include="..\src\map\mapreg.c">
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\mercenary.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\mob.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\npc.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\npc_chat.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\party.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\path.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\pc.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\pet.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\quest.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\script.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\searchstore.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\skill.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\status.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\storage.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\trade.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\unit.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\vending.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\common\core.c">
       <Filter>common</Filter>
@@ -164,7 +164,7 @@
       <Filter>common</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map\pc_groups.c">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\common\showmsg.c">
       <Filter>common</Filter>
@@ -208,115 +208,115 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\map\atcommand.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\battle.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\battleground.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\buyingstore.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\channel.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\cashshop.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\chat.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\chrif.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\clif.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\date.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\duel.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\elemental.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\guild.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\homunculus.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\instance.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\intif.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\itemdb.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\log.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\mail.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\map.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\mapreg.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\mercenary.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\mob.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\npc.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\party.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\path.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\pc.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\pet.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\quest.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\script.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\searchstore.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\skill.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\status.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\storage.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\trade.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\unit.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\vending.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\common\cbasetypes.h">
       <Filter>common</Filter>
@@ -378,7 +378,7 @@
       <Filter>common</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\pc_groups.h">
-      <Filter>map_sql</Filter>
+      <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\common\showmsg.h">
       <Filter>common</Filter>
@@ -433,7 +433,7 @@
     <Filter Include="common">
       <UniqueIdentifier>{3a137217-ebf7-44ee-95d9-3d7c51d2a199}</UniqueIdentifier>
     </Filter>
-    <Filter Include="map_sql">
+    <Filter Include="map">
       <UniqueIdentifier>{8c01a080-5a78-4fb7-96f2-862c33a02230}</UniqueIdentifier>
     </Filter>
     <Filter Include="3rdparty">

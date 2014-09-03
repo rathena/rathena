@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -12,7 +12,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D356871D-58E1-450B-967A-E4E9646175AF}</ProjectGuid>
-    <RootNamespace>char-server_sql</RootNamespace>
+    <RootNamespace>char-server</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <VCTargetsPath Condition="'$(VCTargetsPath11)' != '' and '$(VSVersion)' == '' and $(VisualStudioVersion) == ''">$(VCTargetsPath11)</VCTargetsPath>
   </PropertyGroup>
@@ -21,12 +21,11 @@
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -48,8 +47,8 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectName)\$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">char-server_sql</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">char-server_sql</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">char-server</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">char-server</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -86,7 +85,6 @@
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
-      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -128,7 +126,6 @@
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
-      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -141,8 +138,8 @@
     <ClInclude Include="..\3rdparty\libconfig\wincompat.h" />
     <ClInclude Include="..\3rdparty\mt19937ar\mt19937ar.h" />
     <ClInclude Include="..\src\common\cbasetypes.h" />
-    <ClInclude Include="..\src\common\core.h" />
     <ClInclude Include="..\src\common\conf.h" />
+    <ClInclude Include="..\src\common\core.h" />
     <ClInclude Include="..\src\common\db.h" />
     <ClInclude Include="..\src\common\ers.h" />
     <ClInclude Include="..\src\common\malloc.h" />
@@ -160,8 +157,8 @@
     <ClInclude Include="..\src\common\thread.h" />
     <ClInclude Include="..\src\common\timer.h" />
     <ClInclude Include="..\src\common\utils.h" />
-    <ClInclude Include="..\src\common\cli.h" />
     <ClInclude Include="..\src\common\msg_conf.h" />
+    <ClInclude Include="..\src\common\cli.h" />
     <ClInclude Include="..\src\char\char.h" />
     <ClInclude Include="..\src\char\char_clif.h" />
     <ClInclude Include="..\src\char\char_cnslif.h" />
@@ -187,8 +184,8 @@
     <ClCompile Include="..\3rdparty\libconfig\scanner.c" />
     <ClCompile Include="..\3rdparty\libconfig\strbuf.c" />
     <ClCompile Include="..\3rdparty\mt19937ar\mt19937ar.c" />
-    <ClCompile Include="..\src\common\core.c" />
     <ClCompile Include="..\src\common\conf.c" />
+    <ClCompile Include="..\src\common\core.c" />
     <ClCompile Include="..\src\common\db.c" />
     <ClCompile Include="..\src\common\ers.c" />
     <ClCompile Include="..\src\common\malloc.c" />
@@ -205,8 +202,8 @@
     <ClCompile Include="..\src\common\thread.c" />
     <ClCompile Include="..\src\common\timer.c" />
     <ClCompile Include="..\src\common\utils.c" />
-    <ClCompile Include="..\src\common\cli.c" />
     <ClCompile Include="..\src\common\msg_conf.c" />
+    <ClCompile Include="..\src\common\cli.c" />
     <ClCompile Include="..\src\char\char.c" />
     <ClCompile Include="..\src\char\char_clif.c" />
     <ClCompile Include="..\src\char\char_cnslif.c" />

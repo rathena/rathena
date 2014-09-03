@@ -2,7 +2,7 @@
 #source var/function
 . ./function.sh
 
-#read -p "WARNING: This target is experimental. Press Ctrl+C to cancel or Enter to continue." readEnterKey
+#read -p "WARNING: This script is experimental. Press Ctrl+C to cancel or Enter to continue." readEnterKey
 
 # NOTE: This requires GNU getopt.  On Mac OS X and FreeBSD, you have to install this
 # separately; see below.
@@ -40,4 +40,4 @@ ln -fs $PKG_PATH/var/$PKG/log/ $PKG_PATH/log
 ln -fs $PKG_PATH/etc/$PKG/conf/ $PKG_PATH/conf
 ln -fs $PKG_PATH/athena-start /usr/bin/$PKG
 for f in $(ls $PKG_PATH/bin/) ; do ln -fs $PKG_PATH/bin/$f $PKG_PATH/$f; done
-echo "Installation is done you can now control server with '$PKG start'"
+echo "Installation is done. You can now control the server with '$PKG start'"

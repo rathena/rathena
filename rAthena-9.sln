@@ -1,10 +1,10 @@
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "char-server_sql", "vcproj-9\char-server_sql.vcproj", "{D356871D-58E1-450B-967A-E4E9646175AF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "char-server", "vcproj-9\char-server.vcproj", "{D356871D-58E1-450B-967A-E4E9646175AF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "login-server_sql", "vcproj-9\login-server_sql.vcproj", "{D356871D-58E1-450B-967A-E5E9646175AF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "login-server", "vcproj-9\login-server.vcproj", "{D356871D-58E1-450B-967A-E5E9646175AF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "map-server_sql", "vcproj-9\map-server_sql.vcproj", "{D356871D-58E1-450B-967A-E6E9646175AF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "map-server", "vcproj-9\map-server.vcproj", "{D356871D-58E1-450B-967A-E6E9646175AF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mapcache", "vcproj-9\mapcache.vcproj", "{D356871D-58E1-450B-967A-E7E9646175AF}"
 EndProject

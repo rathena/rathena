@@ -102,7 +102,7 @@ can be solved simply by looking at the error messages given.
 
 Examples:
 
-* You get an error on your map-server_sql that looks something like this:
+* You get an error on your map-server that looks something like this:
 
 			[Error]: npc_parsesrcfile: Unable to parse, probably a missing or extra TAB in 
 				file 'npc/custom/jobmaster.txt', line '17'. Skipping line...
