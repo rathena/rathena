@@ -224,8 +224,7 @@ static bool account_db_sql_set_property(AccountDB* self, const char* key, const 
 	const char* signature;
 
 	signature = "login_server_";
-	if( strncmp(key, signature, strlen(signature)) == 0 )
-	{
+	if( strncmp(key, signature, strlen(signature)) == 0 ) {
 		key += strlen(signature);
 		if( strcmpi(key, "ip") == 0 )
 			safestrncpy(db->db_hostname, value, sizeof(db->db_hostname));
@@ -242,17 +241,24 @@ static bool account_db_sql_set_property(AccountDB* self, const char* key, const 
 		if( strcmpi(key, "db") == 0 )
 			safestrncpy(db->db_database, value, sizeof(db->db_database));
 		else
-		if( strcmpi(key, "codepage") == 0 )
-			safestrncpy(db->codepage, value, sizeof(db->codepage));
-		else
-		if( strcmpi(key, "case_sensitive") == 0 )
-			db->case_sensitive = config_switch(value);
-		else
 		if( strcmpi(key, "account_db") == 0 )
 			safestrncpy(db->account_db, value, sizeof(db->account_db));
 		else
 		if( strcmpi(key, "accreg_db") == 0 )
 			safestrncpy(db->accreg_db, value, sizeof(db->accreg_db));
+		else
+			return false;// not found
+		return true;
+	}
+
+	signature = "login_";
+	if( strncmpi(key, signature, strlen(signature)) == 0 ) {
+		key += strlen(signature);
+		if( strcmpi(key, "codepage") == 0 )
+			safestrncpy(db->codepage, value, sizeof(db->codepage));
+		else
+		if( strcmpi(key, "case_sensitive") == 0 )
+			db->case_sensitive = config_switch(value);
 		else
 			return false;// not found
 		return true;
