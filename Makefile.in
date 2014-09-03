@@ -20,7 +20,7 @@ endif
 
 
 #####################################################################
-.PHONY: all server  \
+.PHONY: all server sql \
 	common \
 	mt19937ar \
 	login \
@@ -34,7 +34,7 @@ endif
 
 all: $(ALL_DEPENDS)
 
-sql:
+sql: $(SERVER_DEPENDS)
 	@echo "-!- 'make sql' is now deprecated. Please run 'make server' to continue. -!-"
 
 server: $(SERVER_DEPENDS)
