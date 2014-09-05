@@ -30,32 +30,90 @@ prontera,128,200,6	script	Platinum Skill NPC	94,{
 		mes "Have a nice day... >.>";
 		close;
 	}
-	skill 142,1,0;
-	switch(BaseClass) {
-		case 0: if (Class !=23) skill 143,1,0; break;
-		case 1: skill 144,1,0; skill 145,1,0; skill 146,1,0; break;
-		case 2: skill 157,1,0; break;
-		case 3: skill 147,1,0; skill 148,1,0; break;
-		case 4: skill 156,1,0; break;
-		case 5: skill 153,1,0; skill 154,1,0; skill 155,1,0; break;
-		case 6: skill 149,1,0; skill 150,1,0; skill 151,1,0; skill 152,1,0; break;
-		default: break;
+	skill "NV_FIRSTAID",1,0;
+	switch (BaseClass) {
+	case Job_Novice:
+		if (Class != Job_SuperNovice)
+			skill "NV_TRICKDEAD",1,0;
+		break;
+	case Job_Swordman:
+		skill "SM_MOVINGRECOVERY",1,0;
+		skill "SM_FATALBLOW",1,0;
+		skill "SM_AUTOBERSERK",1,0;
+		break;
+	case Job_Mage:
+		skill "MG_ENERGYCOAT",1,0;
+		break;
+	case Job_Archer:
+		skill "AC_MAKINGARROW",1,0;
+		skill "AC_CHARGEARROW",1,0;
+		break;
+	case Job_Acolyte:
+		skill "AL_HOLYLIGHT",1,0;
+		break;
+	case Job_Merchant:
+		skill "MC_CARTREVOLUTION",1,0;
+		skill "MC_CHANGECART",1,0;
+		skill "MC_LOUD",1,0;
+		break;
+	case Job_Thief:
+		skill "TF_SPRINKLESAND",1,0;
+		skill "TF_BACKSLIDING",1,0;
+		skill "TF_PICKSTONE",1,0;
+		skill "TF_THROWSTONE",1,0;
+		break;
+	default:
+		break;
 	}
-	switch(BaseJob) {
-		case 7: skill 1001,1,0; break;
-		case 8: skill 1014,1,0; break;
-		case 9: skill 1006,1,0; break;
-		case 10: skill 1012,1,0; skill 1013,1,0; break;
-		case 11: skill 1009,1,0; break;
-		case 12: skill 1003,1,0; skill 1004,1,0; break;
-		case 14: skill 1002,1,0; break;
-		case 15: skill 1015,1,0; skill 1016,1,0; break;
-		case 16: skill 1007,1,0; skill 1008,1,0; skill 1017,1,0; skill 1018,1,0; skill 1019,1,0; break;
-		case 17: skill 1005,1,0; break;
-		case 18: skill 238,1,0; break;
-		case 19: skill 1010,1,0; break;
-		case 20: skill 1011,1,0; break;
-		default: break;
+	switch (BaseJob) {
+	case Job_Knight:
+		skill "KN_CHARGEATK",1,0;
+		break;
+	case Job_Priest:
+		skill "PR_REDEMPTIO",1,0;
+		break;
+	case Job_Wizard:
+		skill "WZ_SIGHTBLASTER",1,0;
+		break;
+	case Job_Blacksmith:
+		skill "BS_UNFAIRLYTRICK",1,0;
+		skill "BS_GREED",1,0;
+		break;
+	case Job_Hunter:
+		skill "HT_PHANTASMIC",1,0;
+		break;
+	case Job_Assassin:
+		skill "AS_SONICACCEL",1,0;
+		skill "AS_VENOMKNIFE",1,0;
+		break;
+	case Job_Crusader:
+		skill "CR_SHRINK",1,0;
+		break;
+	case Job_Monk:
+		skill "MO_KITRANSLATION",1,0;
+		skill "MO_BALKYOUNG",1,0;
+		break;
+	case Job_Sage:
+		skill "SA_CREATECON",1,0;
+		skill "SA_ELEMENTWATER",1,0;
+		skill "SA_ELEMENTGROUND",1,0;
+		skill "SA_ELEMENTFIRE",1,0;
+		skill "SA_ELEMENTWIND",1,0;
+		break;
+	case Job_Rogue:
+		skill "RG_CLOSECONFINE",1,0;
+		break;
+	case Job_Alchemist:
+		skill "AM_BIOETHICS",1,0;
+		break;
+	case Job_Bard:
+		skill "BA_PANGVOICE",1,0;
+		break;
+	case Job_Dancer:
+		skill "DC_WINKCHARM",1,0;
+		break;
+	default:
+		break;
 	}
 	mes "[Platinum Skill NPC]";
 	mes "There you go!";

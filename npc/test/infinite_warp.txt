@@ -1,0 +1,13 @@
+//===== rAthena Script =======================================
+//= Test: Infinite Warp Loop
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20140829
+//===== Description: ========================================= 
+//= Tests infinite warp loop prevention.
+//============================================================
+
+e_tower,74,116,0	warp	#inf_warp1	2,2,e_tower,81,108
+e_tower,81,108,0	warp	#inf_warp2	2,2,e_tower,75,84
+e_tower,75,84,0	warp	#inf_warp3	2,2,e_tower,74,116

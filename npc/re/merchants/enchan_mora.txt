@@ -1078,6 +1078,13 @@ L_Socket:
 			mes "Well I guess I was wrong...";
 			close;
 		}
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) ||
+		    callfunc("F_IsEquipRefineHack", .@part, .@equip_refine) ||
+		    callfunc("F_IsEquipCardHack", .@part, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]))
+			close;
+
 		if (.@equip_card[3] == 0 && getarg(2) < 4) {
 			set .@equip_card[3],.@enchant;
 		} else if (.@equip_card[2] == 0 && getarg(2) < 3) {

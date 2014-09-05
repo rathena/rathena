@@ -538,7 +538,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 			mes "Yes, that's it...!";
 			mes "Very well executed.";
 			mes "Good work, "+ strcharinfo(0) +".";
-			skill 1003,1,0;
+			skill "AS_SONICACCEL",1,0;
 			set ASSN_SK,7;
 			next;
 			mes "[Esmille]";

@@ -70,7 +70,7 @@ char map_server_db[32] = "ragnarok";
 Sql* mmysql_handle;
 
 int db_use_sqldbs = 0;
-char buyingstore_db[32] = "buyingstores";
+char buyingstores_db[32] = "buyingstores";
 char buyingstore_items_db[32] = "buyingstore_items";
 char item_db_db[32] = "item_db";
 char item_db2_db[32] = "item_db2";
@@ -1744,6 +1744,9 @@ int map_quit(struct map_session_data *sd) {
 	if (sd->state.vending)
 		idb_remove(vending_getdb(), sd->status.char_id);
 
+	if (sd->state.buyingstore)
+		idb_remove(buyingstore_getdb(), sd->status.char_id);
+
 	pc_damage_log_clear(sd,0);
 	party_booking_delete(sd); // Party Booking [Spiria]
 	pc_makesavestatus(sd);
@@ -3391,7 +3394,7 @@ int parse_console(const char* buf){
  *------------------------------------------*/
 int map_config_read(char *cfgName)
 {
-	char line[1024], w1[1024], w2[1024];
+	char line[1024], w1[32], w2[1024];
 	FILE *fp;
 
 	fp = fopen(cfgName,"r");
@@ -3409,7 +3412,7 @@ int map_config_read(char *cfgName)
 			continue;
 		if( (ptr = strstr(line, "//")) != NULL )
 			*ptr = '\n'; //Strip comments
-		if( sscanf(line, "%1023[^:]: %1023[^\t\r\n]", w1, w2) < 2 )
+		if( sscanf(line, "%31[^:]: %1023[^\t\r\n]", w1, w2) < 2 )
 			continue;
 
 		//Strip trailing spaces
@@ -3563,7 +3566,7 @@ int inter_config_read(char *cfgName)
 			continue;
 
 		if( strcmpi( w1, "buyingstore_db" ) == 0 )
-			strcpy( buyingstore_db, w2 );
+			strcpy( buyingstores_db, w2 );
 		else if( strcmpi( w1, "buyingstore_items_db" ) == 0 )
 			strcpy( buyingstore_items_db, w2 );
 		else if(strcmpi(w1,"item_db_db")==0)
@@ -3805,7 +3808,7 @@ void do_final(void)
 	struct s_mapiterator* iter;
 
 	ShowStatus("Terminating...\n");
-	Channel_Config.closing = true;
+	channel_config.closing = true;
 
 	//Ladies and babies first.
 	iter = mapit_getallusers();
@@ -3857,6 +3860,7 @@ void do_final(void)
 	do_final_cashshop();
 	do_final_channel(); //should be called after final guild
 	do_final_vending();
+	do_final_buyingstore();
 
 	map_db->destroy(map_db, map_db_final);
 
@@ -4167,6 +4171,7 @@ int do_init(int argc, char *argv[])
 	do_init_battleground();
 	do_init_duel();
 	do_init_vending();
+	do_init_buyingstore();
 
 	npc_event_do_oninit();	// Init npcs (OnInit)
 

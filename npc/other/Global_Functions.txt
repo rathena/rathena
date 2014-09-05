@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, kobra_k88
 //===== Current Version: ===================================== 
-//= 2.23
+//= 2.24
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: ========================================= 
@@ -46,6 +46,7 @@
 //= 2.21 Added format string to "F_InsertPlural" and more checks to "F_GetPlural". [Euphy]
 //= 2.22 Further improvements to "F_GetPlural". [Euphy]
 //= 2.23 Completed article function and added "F_GetArticle". [Euphy]
+//= 2.24 Added functions to check for equipment swap hacks. [Euphy]
 //============================================================ 
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -139,7 +140,7 @@ function	script	F_ClearGarbage	{
 //////////////////////////////////////////////////////////////////////////////////
 function	script	Job_Change	{
 	jobchange getarg(0),Upper;
-	logmes "CLASS CHANGE: " +strcharinfo(0)+ " become a "+jobname(Class);
+//	logmes "CLASS CHANGE: " +strcharinfo(0)+ " become a "+jobname(Class);
 	return;
 }
 
@@ -359,6 +360,47 @@ function	script	Time2Str	{
 		set .@Time$, .@Time$ + .@Time_Left + " second";
 	
 	return .@Time$;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// Checks if equipment has been swapped (i.e. via hacks).
+// The function checks the current equipment at a position against the supplied
+// values, and logs any mismatches.
+// Returns 0 if match, 1 if mismatch.
+// -- callfunc "F_IsEquipIDHack",<equip position>,<equip ID>
+// -- callfunc "F_IsEquipRefineHack",<equip position>,<refine>
+// -- callfunc "F_IsEquipCardHack",<equip position>,<card 0>,<card 1>,<card 2>,<card 3>
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_IsEquipIDHack	{
+	set .@id_chk, getequipid(getarg(0));
+	set .@id, getarg(1);
+	if (.@id != .@id_chk) {
+		logmes "Hack: Tried to swap equip " + getitemname(.@id) + " for " + getitemname(.@id_chk) + ".";
+		return 1;
+	}
+	return 0;
+}
+function	script	F_IsEquipRefineHack	{
+	set .@refine_chk, getequiprefinerycnt(getarg(0));
+	set .@refine, getarg(1);
+	if (.@refine != .@refine_chk) {
+		logmes "Hack: Tried to swap equip with refine +" + .@refine + " for +" + .@refine_chk + ".";
+		return 1;
+	}
+	return 0;
+}
+function	script	F_IsEquipCardHack	{
+	set .@pos, getarg(0);
+	for (set .@i,0; .@i < 4; set .@i, .@i+1) {
+		set .@card, getarg(.@i + 1);
+		set .@card_chk, getequipcardid(.@pos, .@i);
+		if (.@card != .@card_chk) {
+			logmes "Hack: Tried to swap card " + getitemname(.@card) + " for " + getitemname(.@card_chk) + ".";
+			return 1;
+		}
+	}
+	return 0;
 }
 
 

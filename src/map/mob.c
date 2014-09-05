@@ -149,7 +149,7 @@ void mvptomb_create(struct mob_data *md, char *killer, time_t time)
 
 	nd->class_ = 565;
 	nd->speed = 200;
-	nd->subtype = TOMB;
+	nd->subtype = NPCTYPE_TOMB;
 
 	nd->u.tomb.md = md;
 	nd->u.tomb.kill_time = time;
@@ -1192,7 +1192,7 @@ static int mob_warpchase_sub(struct block_list *bl,va_list ap) {
 
 	nd = (TBL_NPC*) bl;
 
-	if(nd->subtype != WARP)
+	if(nd->subtype != NPCTYPE_WARP)
 		return 0; //Not a warp
 
 	if(nd->u.warp.mapindex != map[target->m].index)
@@ -4019,9 +4019,9 @@ static int mob_read_sqldb(void)
  *------------------------------------------*/
 static bool mob_readdb_mobavail(char* str[], int columns, int current)
 {
-	int mob_id, k;
+	int mob_id, sprite_id;
 
-	mob_id=atoi(str[0]);
+	mob_id = atoi(str[0]);
 
 	if(mob_db(mob_id) == mob_dummy)	// invalid class (probably undefined in db)
 	{
@@ -4029,13 +4029,13 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current)
 		return false;
 	}
 
-	k=atoi(str[1]);
+	sprite_id = atoi(str[1]);
 
 	memset(&mob_db_data[mob_id]->vd, 0, sizeof(struct view_data));
-	mob_db_data[mob_id]->vd.class_=k;
+	mob_db_data[mob_id]->vd.class_ = sprite_id;
 
 	//Player sprites
-	if(pcdb_checkid(k) && columns==12) {
+	if(pcdb_checkid(sprite_id) && columns==12) {
 		mob_db_data[mob_id]->vd.sex=atoi(str[2]);
 		mob_db_data[mob_id]->vd.hair_style=atoi(str[3]);
 		mob_db_data[mob_id]->vd.hair_color=atoi(str[4]);

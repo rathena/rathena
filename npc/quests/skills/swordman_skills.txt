@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= kobra_k88
 //===== Current Version: =====================================
-//= 1.8
+//= 1.9
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -13,22 +13,95 @@
 //= 1.6 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //= 1.7 Updated to latest available official file. [Masao]
 //= 1.8 Fixed JobLevel requirements. [Euphy]
+//= 1.9 Moved Izlude NPC to pre-re/re paths. [Euphy]
+//=     Updated "Knight De Thomas" NPC to latest version.
 //============================================================
 
-izlude_in,175,130,2	script	Knight De Thomas	98,4,4,{
-	if ((BaseClass == Job_Swordman) && (sm_movingrecovery_x < 1)) {
+-	script	::KnightDeThomas	98,4,4,{
+	if ((BaseClass == Job_Swordman) && (JobLevel >= 35 || (BaseJob == Job_Knight || BaseJob == Job_Crusader))) {
+		if (getskilllv("SM_MOVINGRECOVERY") == 1) {
+			mes "[De Thomas]";
+			mes "Oh, it's you?";
+			mes "Long time no see!";
+			mes "You seem healthier than before.";
+			mes "Hahahaha!";
+			mes "Take care! See you again!";
+			close;
+		} else if (countitem(713) >= 200 && countitem(1058) >= 1) {
+			mes "[De Thomas]";
+			mes "Welcome back...";
+			mes "Are you ready to learn Body Movin'?";
+			next;
+			switch (select("Yes.:No, I'm not ready yet.")) {
+			case 1:
+				mes "[De Thomas]";
+				mes "Let's see.....";
+				next;
+				mes "[De Thomas]";
+				mes "Ok! I shall now teach you...";
+				mes "...The Body Movin' skill!";
+				next;
+				delitem 713,200; //Empty_Bottle
+				delitem 1058,1; //Wing_Of_Moth
+				skill "SM_MOVINGRECOVERY",1,0;
+				mes "[De Thomas]";
+				mes "There you go!";
+				mes "Try it yourself.";
+				mes "But don't overdo it.";
+				next;
+				mes "[De Thomas]";
+				mes "Oh yeah, I won't be needing your";
+				mes "armor so you can keep it.";
+				mes "Good luck now!";
+				close;
+			case 2:
+				mes "[De Thomas]";
+				mes "Is that so?";
+				mes "Then come when you are prepared.";
+				close;
+			}
+		} else {
+			mes "[De Thomas]";
+			mes "Hmmm... He's a swordsman...";
+			mes "You know that I am De Thomas Carlos, right?";
+			mes "Knight of Prontera's 3rd Calvary.";
+			mes "De Thomas Carlos!";
+			next;
+			mes "[De Thomas]";
+
+			// bug: official script always states that job level is too low
+			//mes "Wait a second, your Job level isn't above ^00880035^000000!";
+			//mes "Come back when it is.";
+
+			// custom: old dialog
+			mes "You do not have all the items I asked for.";
+			next;
+			mes "[De Thomas]";
+			mes "Remember, I need ^008800200 empty bottles^000000, your armor, and a ^008800Moth Wing^000000. Come back when you have it all.";
+			close;
+		}
+	} else {
+		mes "[De Thomas]";
+		mes "My name is De Thomas Carlos.";
+		mes "Knight of Prontera's 3rd Calvary.";
+		mes "I have a certain duty these days.";
+		mes "Ehem! Need I say more.";
+		close;
+	}
+	end;
+
+OnTouch:
+	if ((BaseClass == Job_Swordman) && (JobLevel >= 35 || (BaseJob == Job_Knight || BaseJob == Job_Crusader))) {
 		mes "[De Thomas]";
 		mes "Oh, no! You must have been hurt! Are you ok?";
 		mes "You must have fought hard to get such serious injuries..";
 		mes "Being a swordsman must come with a lot of responsibility and sacrifice.";
 		next;
 		mes "[De Thomas]";
-		if (Sex == 0) {
+		if (Sex == 0)
 			mes "For these swordsmen and knights, there is a wonderful skill.";
-		}
-		else {
+		else
 			mes "For these swordswomen and knights, there is a wonderful skill young lady.";
-		}
 		mes "I present to you - HP Recovery While Moving!";
 		mes "Body moving is a splendid skill";
 		mes "that allows you to regain strength(HP)";
@@ -66,8 +139,6 @@ izlude_in,175,130,2	script	Knight De Thomas	98,4,4,{
 			mes "Don't you think it is pitiful that I have to stay in once place everyday, not being able to go outside?";
 			mes "Please, find me one...*sniffsniff*";
 			mes "If you don't...";
-			set sm_movingrecovery_x,1;
-			mes "You won't get anything! Muahahaha.";
 			close;
 		case 2:
 			mes "[De Thomas]";
@@ -75,82 +146,10 @@ izlude_in,175,130,2	script	Knight De Thomas	98,4,4,{
 			close;
 		}
 	}
-	else if ((BaseClass == Job_Swordman) && (sm_movingrecovery_x > 1)) {
-		mes "[De Thomas]";
-		mes "Oh, it's you?";
-		mes "Long time no see!";
-		mes "You seem healthier than before.";
-		mes "Hahahaha!";
-		mes "Take care! See you again!";
-		close;
-	}
-	else if ((BaseClass == Job_Swordman) && (sm_movingrecovery_x == 1)) {
-		mes "[De Thomas]";
-		mes "Welcome back...";
-		mes "are you ready to learn Body Movin'?";
-		next;
-		switch (select("Yes.:No, I'm not ready yet.")) {
-		case 1:
-			if ((JobLevel > 34 || (BaseJob == Job_Knight || BaseJob == Job_Crusader)) && (countitem(713) > 199) && (countitem(1058) > 0)) {
-				mes "[De Thomas]";
-				mes "Let's see.....";
-				next;
-				mes "[De Thomas]";
-				mes "Ok! I shall now teach you...";
-				mes "...The Body Movin' skill!";
-				next;
-				delitem 713,200; //Empty_Bottle
-				delitem 1058,1; //Wing_Of_Moth
-				skill "SM_MOVINGRECOVERY",1,0;
-				set sm_movingrecovery_x,2;
-				mes "[De Thomas]";
-				mes "There you go!";
-				mes "Try it yourself.";
-				mes "But don't overdo it.";
-				next;
-				mes "[De Thomas]";
-				mes "Oh yeah, I won't be needing your";
-				mes "armor so you can keep it.";
-				mes "Good luck now!";
-				close;
-			}
-			else if (JobLevel < 35 && (BaseJob != Job_Knight && BaseJob != Job_Crusader)) {
-				mes "[De Thomas]";
-				mes "Wait a second, your Job level isn't above ^00880035^000000!";
-				mes "Come back when it is.";
-				close;
-			}
-			else if ((countitem(713) < 200) || (countitem(1058) < 1)) {
-				mes "[De Thomas]";
-				mes "You do not have all the items I asked for.";
-				next;
-				mes "[De Thomas]";
-				mes "Remember I need, ^008800200 empty bottles^000000, your armor, and a ^008800Moth Wing^000000. Come back when you have it all.";
-				close;
-			}
-			mes "[De Thomas]";
-			mes "You do not have all the items I asked for.";
-			next;
-			mes "[De Thomas]";
-			mes "Remember I need, ^008800200 empty bottles^000000, your armor, and a ^008800Moth Wing^000000. Come back when you have it all.";
-			close;
-		case 2:
-			mes "[De Thomas]";
-			mes "Is that so?";
-			mes "Then come when you are prepared.";
-			close;
-		}
-	}
-	mes "[De Thomas]";
-	mes "My name is De Thomas Carlos.";
-	mes "Knight of Prontera's 3rd Calvary.";
-	mes "I have a certain duty these days.";
-	mes "Ehem! Need I say more.";
-	close;
+	end;
 }
 
 prt_in,75,88,5	script	Leon Von Frich	85,3,3,{
-
 	if ((BaseClass == Job_Swordman) && (JobLevel >= 25 || (BaseJob == Job_Knight || BaseJob == Job_Crusader))) {
 		if (getskilllv("SM_FATALBLOW") == 1) {
 			mes "[Leon]";

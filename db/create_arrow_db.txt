@@ -8,7 +8,9 @@
 // 03. MakeAmount   Amount of MakeID item received from Arrow Crafting.
 // ...
 //
-// NOTE: Up to MAX_ARROW_RESOURCE (typically 5) ID/Amount pairs can be specified.
+// NOTE:
+// - Up to MAX_ARROW_RESULT (typically 5) ID/Amount pairs can be specified.
+// - To remove entry by importing, put 0 on 'MakeID'
 
 // Old Blue Box --> 50 Sharp Arrows, 50 Sleep Arrows
 603,1764,50,1768,50

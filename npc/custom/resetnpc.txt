@@ -17,15 +17,15 @@
 
 prontera,150,193,4	script	Reset Girl	124,{
 
-	set .@ResetStat,5000;	// Zeny for stat reset
-	set .@ResetSkill,5000;	// Zeny for skill reset
-	set .@ResetBoth,9000;	// Zeny for resetting both together
+	.@ResetStat  = 5000;	// Zeny for stat reset
+	.@ResetSkill = 5000;	// Zeny for skill reset
+	.@ResetBoth  = 9000;	// Zeny for resetting both together
 
 	mes "[Reset Girl]";
 	mes "I am the Reset Girl.";
-	mes "Reset Stats: "+ callfunc("F_InsertComma",.@ResetStat) +"z";
-	mes "Reset Skills: "+ callfunc("F_InsertComma",.@ResetSkill) +"z";
-	mes "Reset Both: "+ callfunc("F_InsertComma",.@ResetBoth) +"z";
+	mes "Reset Stats: "  + callfunc("F_InsertComma", .@ResetStat)  + "z";
+	mes "Reset Skills: " + callfunc("F_InsertComma", .@ResetSkill) + "z";
+	mes "Reset Both: "   + callfunc("F_InsertComma", .@ResetBoth)  + "z";
 	mes "Please select the service you want:";
 	next;
 	switch(select("^FF3355Reset Skills:Reset Stats:Reset Both^000000:Cancel")) {
@@ -35,9 +35,9 @@ prontera,150,193,4	script	Reset Girl	124,{
 			mes "Sorry, you don't have enough Zeny.";
 			close;
 		}
-		set Zeny, Zeny-.@ResetSkill;
+		Zeny -= .@ResetSkill;
 		sc_end SC_ALL;
-		ResetSkill;
+		resetskill;
 		mes "There you go!";
 		close;
 	case 2:
@@ -46,8 +46,8 @@ prontera,150,193,4	script	Reset Girl	124,{
 			mes "Sorry, you don't have enough Zeny.";
 			close;
 		}
-		set Zeny, Zeny-.@ResetStat;
-		ResetStatus;
+		Zeny -= .@ResetStat;
+		resetstatus;
 		mes "There you go!";
 		close;
 	case 3:
@@ -56,10 +56,10 @@ prontera,150,193,4	script	Reset Girl	124,{
 			mes "Sorry, you don't have enough Zeny.";
 			close;
 		}
-		set Zeny, Zeny-.@ResetBoth;
+		Zeny -= .@ResetBoth;
 		sc_end SC_ALL;
-		ResetSkill;
-		ResetStatus;
+		resetskill;
+		resetstatus;
 		mes "There you go!";
 		close;
 	case 4:

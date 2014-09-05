@@ -64,7 +64,7 @@ void ShowDump(const void* buffer, size_t length)
 
 	ShowDebug("--- 00-01-02-03-04-05-06-07-08-09-0A-0B-0C-0D-0E-0F   0123456789ABCDEF\n");
 	ascii[16] = 0;
-
+        
 	for( i = 0; i < length; i++ )
 	{
 		char c = RBUFB(buffer,i);
@@ -145,9 +145,39 @@ void findfile(const char *p, const char *pat, void (func)(const char*))
 	}
 	return;
 }
+
+int check_filepath(const char* filepath){
+	DWORD Attribute;
+	if( Attribute = GetFileAttributes(filepath) ){
+		if( (Attribute & INVALID_FILE_ATTRIBUTES) && GetLastError() == ERROR_FILE_NOT_FOUND ) return 3;
+		else if( Attribute & FILE_ATTRIBUTE_DIRECTORY ) return 1;
+		else return 2;
+	}
+	return 0;
+}
+
 #else
 
 #define MAX_DIR_PATH 2048
+
+
+/**
+ * Check if the path is a directory or file
+ * @param filepath
+ * @return 1=dir, 2=file, 3=else, 0=error
+ */
+int check_filepath(const char* filepath){
+    struct stat s;
+
+    if( stat(filepath,&s) == 0 ){
+            if( s.st_mode & S_IFDIR ) return 1;
+            else if( s.st_mode & S_IFREG )return 2;
+            else return 3;
+    }
+    else  {
+        return 0;
+    }
+}
 
 static char* checkpath(char *path, const char*srcpath)
 {	// just make sure the char*path is not const

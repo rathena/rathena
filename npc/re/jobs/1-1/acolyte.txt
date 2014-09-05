@@ -39,9 +39,9 @@ prt_church,184,41,4	script	Cleric#aco	60,{
 				mes "wish you luck on your";
 				mes "new life's journey.";
 				next;
-				skill 143,0,0;
+				skill "NV_TRICKDEAD",0,0;
 				jobchange Job_Acolyte_High;
-				skill 156,1,0;
+				skill "AL_HOLYLIGHT",1,0;
 				mes "[Father Mareusis]";
 				mes "Now, venture forth and seek those who need your help. May God light your path.";
 				close;

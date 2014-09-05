@@ -3,6 +3,8 @@
 //
 // Structure of Database:
 // SkillID,Rate
+//
+// - To remove entry by importing, put 0 on 'Rate'
 
 // Mage Skills
 10,5000	// Sight

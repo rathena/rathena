@@ -218,10 +218,13 @@ The following list describes each module and its purpose.
 
   Module         Description
   ------         -----------
-  account        persistence for account data
-  ipban          offers IP banishment
-  login          main module of login-serv
-  loginlog       records all operations into log for login-serv
+  account            persistence for account data
+  ipban              offers IP banishment
+  login              main module of login-serv
+  loginclif          client <=> login-serv connections interface (send and receive packets to/from client)
+  loginchrif         char-serv <=> login-serv connections interface (send and receive packets to char-serv)
+  logincsnlif        console <=> login-serv connections interface (send and receive packets to/from console (internal buffer))
+  loginlog           records all operations into log for login-serv
 
   =============
   | Char-serv |
@@ -234,6 +237,10 @@ The following list describes each module and its purpose.
   Module             Description
   ------             -----------
   char               currently holds all the char-serv (EA) process
+  -- char_clif       client <=> char-serv connections interface (send and receive packets to/from client)
+  -- char_csnlif     console <=> char-serv connections interface (send and receive packets to/from console (internal buffer))
+  -- char_mapif      map-serv <=> char-serv connections interface (send and receive packets to map-serv)
+  -- char_logif      login-serv <=> char-serv connections interface (send and receive packets to login-serv)
   inter              main entry to inter-serv; delegates packet handling to submodules
   -- int_auction     handles auction request and saving
   -- int_elemental   handles elemental data (BL_ELE => Sorcerer mob)

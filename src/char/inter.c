@@ -330,10 +330,10 @@ void geoip_readdb(void){
 const char* geoip_getcountry(uint32 ipnum){
 	int depth;
 	unsigned int x;
-	const unsigned char *buf;
 	unsigned int offset = 0;
 
 	for (depth = 31; depth >= 0; depth--) {
+		const unsigned char *buf;
 		buf = geoip_cache + (long)6 *offset;
 		if (ipnum & (1 << depth)) {
 			/* Take the right-hand branch */
@@ -512,7 +512,6 @@ void mapif_parse_accinfo(int fd) {
 // Save registry to sql
 int inter_accreg_tosql(int account_id, int char_id, struct accreg* reg, int type)
 {
-	struct global_reg* r;
 	StringBuf buf;
 	int i;
 
@@ -522,24 +521,23 @@ int inter_accreg_tosql(int account_id, int char_id, struct accreg* reg, int type
 	reg->char_id = char_id;
 
 	//`global_reg_value` (`type`, `account_id`, `char_id`, `str`, `value`)
-	switch( type )
-	{
-	case 3: //Char Reg
-		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `type`=3 AND `char_id`='%d'", schema_config.reg_db, char_id) )
-			Sql_ShowDebug(sql_handle);
-		account_id = 0;
-		break;
-	case 2: //Account Reg
-		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `type`=2 AND `account_id`='%d'", schema_config.reg_db, account_id) )
-			Sql_ShowDebug(sql_handle);
-		char_id = 0;
-		break;
-	case 1: //Account2 Reg
-		ShowError("inter_accreg_tosql: Char server shouldn't handle type 1 registry values (##). That is the login server's work!\n");
-		return 0;
-	default:
-		ShowError("inter_accreg_tosql: Invalid type %d\n", type);
-		return 0;
+	switch( type ) {
+		case 3: //Char Reg
+			if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `type`=3 AND `char_id`='%d'", schema_config.reg_db, char_id) )
+				Sql_ShowDebug(sql_handle);
+			account_id = 0;
+			break;
+		case 2: //Account Reg
+			if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `type`=2 AND `account_id`='%d'", schema_config.reg_db, account_id) )
+				Sql_ShowDebug(sql_handle);
+			char_id = 0;
+			break;
+		case 1: //Account2 Reg
+			ShowError("inter_accreg_tosql: Char server shouldn't handle type 1 registry values (##). That is the login server's work!\n");
+			return 0;
+		default:
+			ShowError("inter_accreg_tosql: Invalid type %d\n", type);
+			return 0;
 	}
 
 	if( reg->reg_num <= 0 )
@@ -549,7 +547,7 @@ int inter_accreg_tosql(int account_id, int char_id, struct accreg* reg, int type
 	StringBuf_Printf(&buf, "INSERT INTO `%s` (`type`,`account_id`,`char_id`,`str`,`value`) VALUES ", schema_config.reg_db);
 
 	for( i = 0; i < reg->reg_num; ++i ) {
-		r = &reg->reg[i];
+		struct global_reg* r = &reg->reg[i];
 		if( r->str[0] != '\0' && r->value[0] != '\0' ) {
 			char str[32];
 			char val[256];
@@ -576,7 +574,6 @@ int inter_accreg_tosql(int account_id, int char_id, struct accreg* reg, int type
 // Load account_reg from sql (type=2)
 int inter_accreg_fromsql(int account_id,int char_id, struct accreg *reg, int type)
 {
-	struct global_reg* r;
 	char* data;
 	size_t len;
 	int i;
@@ -589,26 +586,24 @@ int inter_accreg_fromsql(int account_id,int char_id, struct accreg *reg, int typ
 	reg->char_id = char_id;
 
 	//`global_reg_value` (`type`, `account_id`, `char_id`, `str`, `value`)
-	switch( type )
-	{
-	case 3: //char reg
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `str`, `value` FROM `%s` WHERE `type`=3 AND `char_id`='%d'", schema_config.reg_db, char_id) )
-			Sql_ShowDebug(sql_handle);
-		break;
-	case 2: //account reg
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `str`, `value` FROM `%s` WHERE `type`=2 AND `account_id`='%d'", schema_config.reg_db, account_id) )
-			Sql_ShowDebug(sql_handle);
-		break;
-	case 1: //account2 reg
-		ShowError("inter_accreg_fromsql: Char server shouldn't handle type 1 registry values (##). That is the login server's work!\n");
-		return 0;
-	default:
-		ShowError("inter_accreg_fromsql: Invalid type %d\n", type);
-		return 0;
+	switch( type ) {
+		case 3: //char reg
+			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `str`, `value` FROM `%s` WHERE `type`=3 AND `char_id`='%d'", schema_config.reg_db, char_id) )
+				Sql_ShowDebug(sql_handle);
+			break;
+		case 2: //account reg
+			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `str`, `value` FROM `%s` WHERE `type`=2 AND `account_id`='%d'", schema_config.reg_db, account_id) )
+				Sql_ShowDebug(sql_handle);
+			break;
+		case 1: //account2 reg
+			ShowError("inter_accreg_fromsql: Char server shouldn't handle type 1 registry values (##). That is the login server's work!\n");
+			return 0;
+		default:
+			ShowError("inter_accreg_fromsql: Invalid type %d\n", type);
+			return 0;
 	}
-	for( i = 0; i < MAX_REG_NUM && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
-	{
-		r = &reg->reg[i];
+	for( i = 0; i < MAX_REG_NUM && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i ) {
+		struct global_reg* r = &reg->reg[i];
 		// str
 		Sql_GetData(sql_handle, 0, &data, &len);
 		memcpy(r->str, data, min(len, sizeof(r->str)));
@@ -634,8 +629,7 @@ int inter_accreg_sql_init(void)
  *------------------------------------------*/
 static int inter_config_read(const char* cfgName)
 {
-	int i;
-	char line[1024], w1[1024], w2[1024];
+	char line[1024];
 	FILE* fp;
 
 	fp = fopen(cfgName, "r");
@@ -644,30 +638,27 @@ static int inter_config_read(const char* cfgName)
 		return 1;
 	}
 
-	while(fgets(line, sizeof(line), fp))
-	{
-		i = sscanf(line, "%[^:]: %[^\r\n]", w1, w2);
-		if(i != 2)
+	while(fgets(line, sizeof(line), fp)) {
+		char w1[24], w2[1024];
+
+		if (line[0] == '/' && line[1] == '/')
 			continue;
 
-		if(!strcmpi(w1,"char_server_ip")) {
+		if (sscanf(line, "%23[^:]: %1023[^\r\n]", w1, w2) != 2)
+			continue;
+
+		if(!strcmpi(w1,"char_server_ip"))
 			strcpy(char_server_ip,w2);
-		} else
-		if(!strcmpi(w1,"char_server_port")) {
+		else if(!strcmpi(w1,"char_server_port"))
 			char_server_port = atoi(w2);
-		} else
-		if(!strcmpi(w1,"char_server_id")) {
+		else if(!strcmpi(w1,"char_server_id"))
 			strcpy(char_server_id,w2);
-		} else
-		if(!strcmpi(w1,"char_server_pw")) {
+		else if(!strcmpi(w1,"char_server_pw"))
 			strcpy(char_server_pw,w2);
-		} else
-		if(!strcmpi(w1,"char_server_db")) {
+		else if(!strcmpi(w1,"char_server_db"))
 			strcpy(char_server_db,w2);
-		} else
-		if(!strcmpi(w1,"default_codepage")) {
+		else if(!strcmpi(w1,"default_codepage"))
 			strcpy(default_codepage,w2);
-		}
 		else if(!strcmpi(w1,"party_share_level"))
 			party_share_level = (unsigned int)atof(w2);
 		else if(!strcmpi(w1,"log_inter"))
@@ -1175,25 +1166,6 @@ int inter_parse_frommap(int fd)
 
 	RFIFOSKIP(fd, len);
 	return 1;
-}
-
-uint64 inter_chk_lastuid(int8 flag, uint64 value){
-	static uint64 last_updt_uid = 0;
-	static int8 update = 0;
-	if(flag)
-	{
-		if(last_updt_uid < value){
-			last_updt_uid = value;
-			update = 1;
-		}
-
-		return 0;
-	}else if(update)
-	{
-		update = 0;
-		return last_updt_uid;
-	}
-	return 0;
 }
 
 

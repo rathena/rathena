@@ -136,32 +136,32 @@ endif()
 
 
 #
-# common_sql
+# common
 #
 if( HAVE_common_base AND WITH_MYSQL )
-message( STATUS "Creating target common_sql" )
-set( COMMON_SQL_HEADERS
+message( STATUS "Creating target common" )
+set( COMMON_HEADERS
 	${COMMON_ALL_HEADERS}
 	"${CMAKE_CURRENT_SOURCE_DIR}/sql.h"
-	CACHE INTERNAL "common_sql headers" )
-set( COMMON_SQL_SOURCES
+	CACHE INTERNAL "common headers" )
+set( COMMON_SOURCES
 	"${CMAKE_CURRENT_SOURCE_DIR}/sql.c"
-	CACHE INTERNAL "common_sql sources" )
+	CACHE INTERNAL "common sources" )
 set( DEPENDENCIES common_base )
 set( LIBRARIES ${GLOBAL_LIBRARIES} ${MYSQL_LIBRARIES} )
 set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${MYSQL_INCLUDE_DIRS} )
 set( DEFINITIONS "${GLOBAL_DEFINITIONS}" )
-set( SOURCE_FILES ${COMMON_SQL_HEADERS} ${COMMON_SQL_SOURCES} )
-source_group( common FILES ${COMMON_SQL_HEADERS} ${COMMON_SQL_SOURCES} )
-add_library( common_sql ${SOURCE_FILES} )
-add_dependencies( common_sql ${DEPENDENCIES} )
-target_link_libraries( common_sql ${LIBRARIES} ${DEPENDENCIES} )
-set_target_properties( common_sql PROPERTIES COMPILE_FLAGS "${DEFINITIONS}" )
+set( SOURCE_FILES ${COMMON_HEADERS} ${COMMON_SOURCES} )
+source_group( common FILES ${COMMON_HEADERS} ${COMMON_SOURCES} )
+add_library( common ${SOURCE_FILES} )
+add_dependencies( common ${DEPENDENCIES} )
+target_link_libraries( common ${LIBRARIES} ${DEPENDENCIES} )
+set_target_properties( common PROPERTIES COMPILE_FLAGS "${DEFINITIONS}" )
 include_directories( ${INCLUDE_DIRS} )
-set( HAVE_common_sql ON  CACHE INTERNAL "" )
-set( TARGET_LIST ${TARGET_LIST} common_sql  CACHE INTERNAL "" )
-message( STATUS "Creating target common_sql - done" )
+set( HAVE_common ON  CACHE INTERNAL "" )
+set( TARGET_LIST ${TARGET_LIST} common  CACHE INTERNAL "" )
+message( STATUS "Creating target common - done" )
 else()
-message( STATUS "Skipping target common_sql (requires common_base and MYSQL)" )
-unset( HAVE_common_sql CACHE )
+message( STATUS "Skipping target common (requires common_base and MYSQL)" )
+unset( HAVE_common CACHE )
 endif()

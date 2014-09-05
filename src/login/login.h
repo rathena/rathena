@@ -86,28 +86,27 @@ struct Login_Config {
 	uint32 client_version_to_connect;               /// the client version needed to connect (if checking is enabled)
 
 	bool ipban;                                     /// perform IP blocking (via contents of `ipbanlist`) ?
-	bool dynamic_pass_failure_ban;                  /// automatic IP blocking due to failed login attemps ?
-	unsigned int dynamic_pass_failure_ban_interval; /// how far to scan the loginlog for password failures
+	bool dynamic_pass_failure_ban;                  /// automatic IP blocking due to failed login attempts ?
+	unsigned int dynamic_pass_failure_ban_interval; /// how far to scan the loginlog for password failures in minutes
 	unsigned int dynamic_pass_failure_ban_limit;    /// number of failures needed to trigger the ipban
-	unsigned int dynamic_pass_failure_ban_duration; /// duration of the ipban
+	unsigned int dynamic_pass_failure_ban_duration; /// duration of the ipban in minutes
 	bool use_dnsbl;                                 /// dns blacklist blocking ?
 	char dnsbl_servs[1024];                         /// comma-separated list of dnsbl servers
 
-	char account_engine[256];				// name of the engine to use (defaults to auto, for the first available engine)
-	int allowed_regs;					//max number of registration
-	int time_allowed;					//registration intervall in seconds
+	int allowed_regs;								/// max number of registration
+	int time_allowed;								/// registration interval in seconds
 
-	int client_hash_check;					// flags for checking client md5
-	struct client_hash_node *client_hash_nodes;		// linked list containg md5 hash for each gm group
-	char loginconf_name[256];				//name of main config file
-	char msgconf_name[256];					//name of msg_conf config file
-	char lanconf_name[256];					//name of lan config file
-	
-	int char_per_account;                           /// number of characters an account can have
+	int client_hash_check;							/// flags for checking client md5
+	struct client_hash_node *client_hash_nodes;		/// linked list containing md5 hash for each gm group
+	char loginconf_name[256];						/// name of main config file
+	char msgconf_name[256];							/// name of msg_conf config file
+	char lanconf_name[256];							/// name of lan config file
+
+	int char_per_account;							/// number of characters an account can have
 #ifdef VIP_ENABLE
 	struct {
-		unsigned int group;                     /// Vip groupid
-		unsigned int char_increase;             /// number of char-slot to increase in vip state
+		unsigned int group;							/// VIP group ID
+		unsigned int char_increase;					/// number of char-slot to increase in VIP state
 	} vip_sys;
 #endif
 };

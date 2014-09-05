@@ -541,9 +541,8 @@ void clif_cooking_list(struct map_session_data *sd, int trigger, uint16 skill_id
 
 void clif_produceeffect(struct map_session_data* sd,int flag, unsigned short nameid);
 
-void clif_skill_setunit(struct skill_unit *unit);
+void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, enum send_target target);
 void clif_skill_delunit(struct skill_unit *unit);
-
 void clif_skillunit_update(struct block_list* bl);
 
 void clif_autospell(struct map_session_data *sd,uint16 skill_lv);
@@ -844,7 +843,7 @@ void clif_msgtable_num(int fd, int line, int num);
 
 int clif_elementalconverter_list(struct map_session_data *sd);
 
-void clif_millenniumshield(struct map_session_data *sd, short shields );
+void clif_millenniumshield(struct block_list *bl, short shields);
 
 int clif_spellbook_list(struct map_session_data *sd);
 

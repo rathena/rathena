@@ -231,7 +231,7 @@ void pc_addspiritball(struct map_session_data *sd,int interval,int max)
 	sd->spirit_timer[i] = tid;
 	sd->spiritball++;
 	if( (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD )
-		clif_millenniumshield(sd,sd->spiritball);
+		clif_millenniumshield(&sd->bl,sd->spiritball);
 	else
 		clif_spiritball(&sd->bl);
 }
@@ -274,7 +274,7 @@ void pc_delspiritball(struct map_session_data *sd,int count,int type)
 
 	if(!type) {
 		if( (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD )
-			clif_millenniumshield(sd,sd->spiritball);
+			clif_millenniumshield(&sd->bl,sd->spiritball);
 		else
 			clif_spiritball(&sd->bl);
 	}
@@ -849,7 +849,7 @@ bool pc_isequipped(struct map_session_data *sd, unsigned short nameid)
 
 	for( i = 0; i < EQI_MAX; i++ )
 	{
-		int8 index = sd->equip_index[i], j;
+		short index = sd->equip_index[i], j;
 		if( index < 0 )
 			continue;
 		if( pc_is_same_equip_index((enum equip_index)i, sd->equip_index, index) )
@@ -1151,6 +1151,7 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	sd->cantalk_tick = tick;
 	sd->canskill_tick = tick;
 	sd->cansendmail_tick = tick;
+	sd->idletime = last_tick;
 
 	for(i = 0; i < MAX_SPIRITBALL; i++)
 		sd->spirit_timer[i] = INVALID_TIMER;
@@ -1210,6 +1211,7 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	sd->num_quests = 0;
 	sd->avail_quests = 0;
 	sd->save_quest = false;
+	sd->count_rewarp = 0;
 
 	//warp player
 	if ((i=pc_setpos(sd,sd->status.last_point.map, sd->status.last_point.x, sd->status.last_point.y, CLR_OUTSIGHT)) != 0) {
@@ -1588,6 +1590,7 @@ void pc_calc_skilltree(struct map_session_data *sd)
 				case LG_OVERBRAND_BRANDISH:
 				case LG_OVERBRAND_PLUSATK:
 				case WM_SEVERE_RAINSTORM_MELEE:
+				case RL_R_TRIP_PLUSATK:
 					continue;
 				default:
 					break;
@@ -4306,10 +4309,8 @@ char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_p
 		sd->last_addeditem_index = i;
 		clif_additem(sd,i,amount,0);
 	}
-#ifdef NSI_UNIQUE_ID
 	if( !itemdb_isstackable2(id) && !item->unique_id )
-		sd->status.inventory[i].unique_id = itemdb_unique_id(0,0);
-#endif
+		sd->status.inventory[i].unique_id = itemdb_unique_id(sd);
 	log_pick_pc(sd, log_type, amount, &sd->status.inventory[i]);
 
 	sd->weight += w;
@@ -4617,7 +4618,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 			return false;
 		}
 		if( !pc_inventoryblank(sd) ) {
-			clif_colormes(sd, color_table[COLOR_RED], msg_txt(sd, 1477)); //Item cannot be open when inventory is full
+			clif_colormes(sd, color_table[COLOR_RED], msg_txt(sd, 732)); //Item cannot be open when inventory is full
 			return false;
 		}
 	}
@@ -5151,8 +5152,11 @@ char pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int 
 		return 1;
 	}
 
+	if ( sd->state.autotrade && (sd->vender_id || sd->buyer_id) ) // Player with autotrade just causes clif glitch! @ FIXME
+		return 1;
+
 	if( battle_config.revive_onwarp && pc_isdead(sd) ) { //Revive dead people before warping them
-		pc_setstand(sd);
+		pc_setstand(sd, true);
 		pc_setrestartvalue(sd,1);
 	}
 
@@ -5296,6 +5300,12 @@ char pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int 
 	}
 
 	pc_cell_basilica(sd);
+	
+	//check if we gonna be rewarped [lighta]
+	if(npc_check_areanpc(1,m,x,y,1)){
+		sd->count_rewarp++;	
+	}
+	
 	return 0;
 }
 
@@ -6217,38 +6227,41 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsigned int *job_exp, struct block_list *src)
 {
 	int bonus = 0, vip_bonus_base = 0, vip_bonus_job = 0;
-	struct status_data *status = status_get_status_data(src);
 
-	if( sd->expaddrace[status->race] )
-		bonus += sd->expaddrace[status->race];
-	if( sd->expaddrace[RC_ALL] )
-		bonus += sd->expaddrace[RC_ALL];
-	if( sd->expaddclass[status->class_] )
-		bonus += sd->expaddclass[status->class_];
-	if( sd->expaddclass[CLASS_ALL] )
-		bonus += sd->expaddclass[CLASS_ALL];
+	if (src) {
+		struct status_data *status = status_get_status_data(src);
 
-	if (battle_config.pk_mode &&
-		(int)(status_get_lv(src) - sd->status.base_level) >= 20)
-		bonus += 15; // pk_mode additional exp if monster >20 levels [Valaris]
+		if( sd->expaddrace[status->race] )
+			bonus += sd->expaddrace[status->race];
+		if( sd->expaddrace[RC_ALL] )
+			bonus += sd->expaddrace[RC_ALL];
+		if( sd->expaddclass[status->class_] )
+			bonus += sd->expaddclass[status->class_];
+		if( sd->expaddclass[CLASS_ALL] )
+			bonus += sd->expaddclass[CLASS_ALL];
 
-	if (sd->sc.data[SC_EXPBOOST]) {	
- 		bonus += sd->sc.data[SC_EXPBOOST]->val1;
+		if (battle_config.pk_mode &&
+			(int)(status_get_lv(src) - sd->status.base_level) >= 20)
+			bonus += 15; // pk_mode additional exp if monster >20 levels [Valaris]
+
+#ifdef VIP_ENABLE
+		//EXP bonus for VIP player
+		if (src && src->type == BL_MOB && pc_isvip(sd)) {
+			vip_bonus_base = battle_config.vip_base_exp_increase;
+			vip_bonus_job = battle_config.vip_job_exp_increase;
+		}
+#endif
+	}
+
+	if (&sd->sc && sd->sc.data[SC_EXPBOOST]) {
+		bonus += sd->sc.data[SC_EXPBOOST]->val1;
 		if( battle_config.vip_bm_increase && pc_isvip(sd) ) // Increase Battle Manual EXP rate for VIP.
 			bonus += ( sd->sc.data[SC_EXPBOOST]->val1 / battle_config.vip_bm_increase );
 	}
 
-#ifdef VIP_ENABLE
-	//EXP bonus for VIP player
-	if (src && src->type == BL_MOB && pc_isvip(sd)) {
-		vip_bonus_base = battle_config.vip_base_exp_increase;
-		vip_bonus_job = battle_config.vip_job_exp_increase;
-	}
-#endif
-
 	*base_exp = (unsigned int) cap_value(*base_exp + (double)*base_exp * (bonus + vip_bonus_base)/100., 1, UINT_MAX);
-	
-	if (sd->sc.data[SC_JEXPBOOST])
+
+	if (&sd->sc && sd->sc.data[SC_JEXPBOOST])
 		bonus += sd->sc.data[SC_JEXPBOOST]->val1;
 
 	*job_exp = (unsigned int) cap_value(*job_exp + (double)*job_exp * (bonus + vip_bonus_job)/100., 1, UINT_MAX);
@@ -6258,10 +6271,11 @@ static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsi
 /*==========================================
  * Give x exp at sd player and calculate remaining exp for next lvl
  *------------------------------------------*/
-int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int base_exp,unsigned int job_exp,bool quest)
+int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int base_exp, unsigned int job_exp, bool quest)
 {
-	float nextbp=0, nextjp=0;
-	unsigned int nextb=0, nextj=0;
+	float nextbp = 0, nextjp = 0;
+	unsigned int nextb = 0, nextj = 0;
+
 	nullpo_ret(sd);
 
 	if(sd->bl.prev == NULL || pc_isdead(sd))
@@ -6273,7 +6287,7 @@ int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int
 	if(sd->status.guild_id>0)
 		base_exp-=guild_payexp(sd,base_exp);
 
-	if(src) pc_calcexp(sd, &base_exp, &job_exp, src);
+	pc_calcexp(sd, &base_exp, &job_exp, src); // Give (J)EXPBOOST for quests even if src is NULL.
 
 	nextb = pc_nextbaseexp(sd);
 	nextj = pc_nextjobexp(sd);
@@ -7054,7 +7068,7 @@ void pc_respawn(struct map_session_data* sd, clr_type clrtype)
 	if( sd->bg_id && bg_member_respawn(sd) )
 		return; // member revived by battleground
 
-	pc_setstand(sd);
+	pc_setstand(sd, true);
 	pc_setrestartvalue(sd,3);
 	if( pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, clrtype) )
 		clif_resurrection(&sd->bl, 1); //If warping fails, send a normal stand up packet.
@@ -7085,7 +7099,7 @@ void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int h
 		return;
 
 	if( pc_issit(sd) ) {
-		pc_setstand(sd);
+		pc_setstand(sd, true);
 		skill_sit(sd,0);
 	}
 
@@ -7466,7 +7480,7 @@ void pc_revive(struct map_session_data *sd,unsigned int hp, unsigned int sp) {
 	if(hp) clif_updatestatus(sd,SP_HP);
 	if(sp) clif_updatestatus(sd,SP_SP);
 
-	pc_setstand(sd);
+	pc_setstand(sd, true);
 	if(battle_config.pc_invincible_time > 0)
 		pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
 
@@ -8071,6 +8085,8 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 		elemental_delete(sd->ed, 0);
 	if (sd->state.vending)
 		vending_closevending(sd);
+	if (sd->state.buyingstore)
+		buyingstore_close(sd);
 
 	map_foreachinmap(jobchange_killclone, sd->bl.m, BL_MOB, sd->bl.id);
 
@@ -8878,8 +8894,7 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 			bool found = false;
 			
 			for( k = 0; k < EQI_MAX; k++ ) {
-				int8 index;
-				index = sd->equip_index[k];
+				short index = sd->equip_index[k];
 				if( index < 0 )
 					continue;
 				if( pc_is_same_equip_index((enum equip_index)k, sd->equip_index, index) )
@@ -9019,8 +9034,8 @@ int pc_load_combo(struct map_session_data *sd) {
 	int i, ret = 0;
 	for( i = 0; i < EQI_MAX; i++ ) {
 		struct item_data *id = NULL;
-		int idx = sd->equip_index[i];
-		if( sd->equip_index[i] < 0 || !(id = sd->inventory_data[idx] ) )
+		short idx = sd->equip_index[i];
+		if( idx < 0 || !(id = sd->inventory_data[idx] ) )
 			continue;
 		if( id->combos_count )
 			ret += pc_checkcombo(sd,id);
@@ -9357,7 +9372,7 @@ bool pc_unequipitem(struct map_session_data *sd,int n,int flag) {
 
 	if((sd->status.inventory[n].equip & EQP_ARMS) &&
 		sd->weapontype1 == 0 && sd->weapontype2 == 0 && (!sd->sc.data[SC_SEVENWIND] || sd->sc.data[SC_ASPERSIO])) //Check for seven wind (but not level seven!)
-		skill_enchant_elemental_end(&sd->bl,-1);
+		skill_enchant_elemental_end(&sd->bl,SC_NONE);
 
 	if(sd->status.inventory[n].equip & EQP_ARMOR) {
 		// On Armor Change...
@@ -9478,12 +9493,17 @@ void pc_check_available_item(struct map_session_data *sd) {
 		for( i = 0; i < MAX_INVENTORY; i++ ) {
 			it = sd->status.inventory[i].nameid;
 
-			if( it && !itemdb_available(it) ) {
+			if (!it)
+				continue;
+			if (!itemdb_available(it)) {
 				sprintf(output, msg_txt(sd, 709), it); // Item %hu has been removed from your inventory.
 				clif_displaymessage(sd->fd, output);
 				ShowWarning("Removed invalid/disabled item id %hu from inventory (amount=%d, char_id=%d).\n", it, sd->status.inventory[i].amount, sd->status.char_id);
 				pc_delitem(sd, i, sd->status.inventory[i].amount, 0, 0, LOG_TYPE_OTHER);
+				continue;
 			}
+			if (!sd->status.inventory[i].unique_id && !itemdb_isstackable(it))
+				sd->status.inventory[i].unique_id = itemdb_unique_id(sd);
 		}
 	}
 
@@ -9491,12 +9511,17 @@ void pc_check_available_item(struct map_session_data *sd) {
 		for( i = 0; i < MAX_CART; i++ ) {
 			it = sd->status.cart[i].nameid;
 
-			if( it && !itemdb_available(it) ) {
+			if (!it)
+				continue;
+			if (!itemdb_available(it)) {
 				sprintf(output, msg_txt(sd, 710), it); // Item %hu has been removed from your cart.
 				clif_displaymessage(sd->fd, output);
 				ShowWarning("Removed invalid/disabled item id %hu from cart (amount=%d, char_id=%d).\n", it, sd->status.cart[i].amount, sd->status.char_id);
 				pc_cart_delitem(sd, i, sd->status.cart[i].amount, 0, LOG_TYPE_OTHER);
+				continue;
 			}
+			if (!sd->status.cart[i].unique_id && !itemdb_isstackable(it))
+				sd->status.cart[i].unique_id = itemdb_unique_id(sd);
 		}
 	}
 
@@ -9504,12 +9529,17 @@ void pc_check_available_item(struct map_session_data *sd) {
 		for( i = 0; i < sd->storage_size; i++ ) {
 			it = sd->status.storage.items[i].nameid;
 
-			if( it && !itemdb_available(it) ) {
+			if (!it)
+				continue;
+			if (!itemdb_available(it)) {
 				sprintf(output, msg_txt(sd, 711), it); // Item %hu has been removed from your storage.
 				clif_displaymessage(sd->fd, output);
 				ShowWarning("Removed invalid/disabled item id %hu from storage (amount=%d, char_id=%d).\n", it, sd->status.storage.items[i].amount, sd->status.char_id);
 				storage_delitem(sd, i, sd->status.storage.items[i].amount);
+				continue;
 			}
+			if (!sd->status.storage.items[i].unique_id && !itemdb_isstackable(it))
+				sd->status.storage.items[i].unique_id = itemdb_unique_id(sd);
  		}
 	}
 }
@@ -9857,8 +9887,19 @@ int map_night_timer(int tid, unsigned int tick, int id, intptr_t data)
 	return 0;
 }
 
-void pc_setstand(struct map_session_data *sd){
-	nullpo_retv(sd);
+/**
+* Attempt to stand up a player
+* @param sd
+* @param force Ignore the check, ask player to stand up. Used in some cases like pc_damage(), pc_revive(), etc
+* @return True if success, Fals if failed
+*/
+bool pc_setstand(struct map_session_data *sd, bool force){
+	nullpo_ret(sd);
+
+	// Cannot stand yet
+	// TODO: Move to SCS_NOSTAND [Cydh]
+	if (!force && &sd->sc && (sd->sc.data[SC_SITDOWN_FORCE] || sd->sc.data[SC_BANANA_BOMB_SITDOWN]))
+		return false;
 
 	status_change_end(&sd->bl, SC_TENSIONRELAX, INVALID_TIMER);
 	clif_status_load(&sd->bl,SI_SIT,0);
@@ -9866,6 +9907,7 @@ void pc_setstand(struct map_session_data *sd){
 	//Reset sitting tick.
 	sd->ssregen.tick.hp = sd->ssregen.tick.sp = 0;
 	sd->state.dead_sit = sd->vd.dead_sit = 0;
+	return true;
 }
 
 /**
@@ -10039,6 +10081,7 @@ void pc_del_talisman(struct map_session_data *sd,int count,int type)
 int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_class, int type)
 {
 	int diff, rate = 100, i;
+	int tmp;
 
 	nullpo_ret(sd);
 
@@ -10047,9 +10090,11 @@ int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_
 	if( diff < 0 )
 		diff = MAX_LEVEL + ( ~diff + 1 );
 
+	if((tmp = level_penalty[type][mob_class][diff] ) > 0 ) //use mobclass directly
+		return tmp;
+	
+	//wtf is that for ? if penalty not found use the 1st one we found ?? ̂[lighta]
 	for( i = 0; i < CLASS_ALL; i++ ) {
-		int tmp;
-
 		if( ( tmp = level_penalty[type][i][diff] ) > 0 ) {
 			rate = tmp;
 			break;
@@ -11112,7 +11157,7 @@ short pc_get_itemgroup_bonus_group(struct map_session_data* sd, uint16 group_id)
 * @param index Known index item in inventory from sd->equip_index[] to compare with specified EQI in *equip_index
 * @return True if item in same inventory index, False if doesn't
 */
-bool pc_is_same_equip_index(enum equip_index eqi, int *equip_index, int8 index) {
+bool pc_is_same_equip_index(enum equip_index eqi, short *equip_index, short index) {
 	if (index < 0 || index >= MAX_INVENTORY)
 		return true;
 	// Dual weapon checks

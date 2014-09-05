@@ -447,6 +447,7 @@ struct item_data* itemdb_exists(unsigned short nameid);
 #define itemdb_is_GNthrowable(n) (n >= ITEMID_MYSTERIOUS_POWDER && n <= ITEMID_BLACK_THING_TO_THROW)
 const char* itemdb_typename(enum item_types type);
 const char *itemdb_typename_ammo (enum e_item_ammo ammo);
+bool itemdb_is_spellbook2(unsigned short nameid);
 
 unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group);
 
@@ -479,7 +480,7 @@ bool itemdb_isequip2(struct item_data *id);
 char itemdb_isidentified(unsigned short nameid);
 bool itemdb_isstackable2(struct item_data *id);
 #define itemdb_isstackable(nameid) itemdb_isstackable2(itemdb_search(nameid))
-uint64 itemdb_unique_id(int8 flag, int64 value); // Unique Item ID
+uint64 itemdb_unique_id(struct map_session_data *sd); // Unique Item ID
 bool itemdb_isNoEquip(struct item_data *id, uint16 m);
 
 struct item_combo *itemdb_combo_exists(unsigned short combo_id);

@@ -352,7 +352,6 @@ int chlogif_parse_ackchangesex(int fd, struct char_session_data* sd){
 		return 0;
 	{
 		unsigned char buf[7];
-		int i;
 
 		int acc = RFIFOL(fd,2);
 		int sex = RFIFOB(fd,6);
@@ -363,7 +362,7 @@ int chlogif_parse_ackchangesex(int fd, struct char_session_data* sd){
 			int char_id[MAX_CHARS];
 			int class_[MAX_CHARS];
 			int guild_id[MAX_CHARS];
-			int num;
+			unsigned char num, i;
 			char* data;
 			DBMap*  auth_db = char_get_authdb();
 

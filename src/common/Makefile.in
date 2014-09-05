@@ -2,13 +2,10 @@
 #COMMON_OBJ = $(ls *.c | grep -viw sql.c | sed -e "s/\.c/\.o/g")
 COMMON_OBJ = core.o socket.o timer.o db.o nullpo.o malloc.o showmsg.o strlib.o utils.o \
 	grfio.o mapindex.o ers.o md5calc.o minicore.o minisocket.o minimalloc.o random.o des.o \
-	conf.o thread.o mutex.o raconf.o mempool.o msg_conf.o cli.o
-COMMON_DIR_OBJ = $(COMMON_OBJ:%=obj_all/%)
+	conf.o thread.o mutex.o raconf.o mempool.o msg_conf.o cli.o sql.o
+COMMON_DIR_OBJ = $(COMMON_OBJ:%=obj/%)
 COMMON_H = $(shell ls ../common/*.h)
-COMMON_SQL_OBJ = obj_sql/sql.o
-COMMON_SQL_H = sql.h
-COMMON_AR = obj_all/common.a
-COMMON_SQL_AR = obj_sql/common_sql.a
+COMMON_AR = obj/common.a
 
 MT19937AR_OBJ = ../../3rdparty/mt19937ar/mt19937ar.o
 MT19937AR_H = ../../3rdparty/mt19937ar/mt19937ar.h
@@ -20,28 +17,28 @@ LIBCONFIG_INCLUDE = -I../../3rdparty/libconfig
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
-	SQL_DEPENDS=common common_sql
+	SERVER_DEPENDS=common
 else
-	SQL_DEPENDS=needs_mysql
+	SERVER_DEPENDS=needs_mysql
 endif
-ALL_DEPENDS=sql
+ALL_DEPENDS=server
 
 @SET_MAKE@
 
 #####################################################################
-.PHONY : all sql clean help
+.PHONY : all server clean help
 
 all: $(ALL_DEPENDS)
 
-sql: $(SQL_DEPENDS)
+server: $(SERVER_DEPENDS)
 
 clean:
 	@echo "	CLEAN	common"
-	@rm -rf *.o obj_all obj_sql
+	@rm -rf *.o obj
 
 help:
-	@echo "possible targets are 'sql' 'all' 'clean' 'help'"
-	@echo "'sql'    - builds object files used in sql servers"
+	@echo "possible targets are 'server' 'all' 'clean' 'help'"
+	@echo "'server' - builds object files used in servers"
 	@echo "'all'    - builds all above targets"
 	@echo "'clean'  - cleans builds and objects"
 	@echo "'help'   - outputs this message"
@@ -52,39 +49,23 @@ needs_mysql:
 	@echo "MySQL not found or disabled by the configure script"
 	@exit 1
 
-obj_all:
-	@echo "	MKDIR	obj_all"
-	@-mkdir obj_all
-
-obj_sql:
-	@echo "	MKDIR	obj_sql"
-	@-mkdir obj_sql
+obj:
+	@echo "	MKDIR	obj"
+	@-mkdir obj
 
 $(COMMON_AR): $(COMMON_DIR_OBJ)
 	@echo "	AR	$@"
 	@@AR@ rcs $(COMMON_AR) $(COMMON_DIR_OBJ)
 
-$(COMMON_SQL_AR): $(COMMON_SQL_OBJ)
-	@echo "	AR	$@"
-	@@AR@ rcs $(COMMON_SQL_AR) $(COMMON_SQL_OBJ)
+common: obj $(COMMON_DIR_OBJ) $(MT19937AR_OBJ) $(LIBCONFIG_AR) $(COMMON_AR)
 
-
-common: obj_all $(COMMON_DIR_OBJ) $(MT19937AR_OBJ) $(LIBCONFIG_AR) $(COMMON_AR)
-
-common_sql: obj_sql $(COMMON_SQL_OBJ) $(COMMON_SQL_AR)
-
-obj_all/%.o: %.c $(COMMON_H) $(MT19937AR_H) $(LIBCONFIG_H)
+obj/%.o: %.c $(COMMON_H) $(MT19937AR_H) $(LIBCONFIG_H)
 	@echo "	CC	$<"
-	@@CC@ @CFLAGS@ $(MT19937AR_INCLUDE) $(LIBCONFIG_INCLUDE) @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@@CC@ @CFLAGS@ $(MT19937AR_INCLUDE) $(LIBCONFIG_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
-obj_all/mini%.o: %.c $(COMMON_H) $(MT19937AR_H) $(LIBCONFIG_H)
+obj/mini%.o: %.c $(COMMON_H) $(MT19937AR_H) $(LIBCONFIG_H)
 	@echo "	CC	$<"
-	@@CC@ @CFLAGS@ $(MT19937AR_INCLUDE) $(LIBCONFIG_INCLUDE) -DMINICORE @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
-
-obj_sql/%.o: %.c $(COMMON_H) $(COMMON_SQL_H) $(LIBCONFIG_H)
-	@echo "	CC	$<"
-	@@CC@ @CFLAGS@ $(LIBCONFIG_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
-
+	@@CC@ @CFLAGS@ $(MT19937AR_INCLUDE) $(LIBCONFIG_INCLUDE) @MYSQL_CFLAGS@ -DMINICORE @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing object files
 $(MT19937AR_OBJ):

@@ -21,19 +21,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-// global sql settings
-static char   global_db_hostname[32] = "127.0.0.1";
-static uint16 global_db_port = 3306;
-static char   global_db_username[32] = "ragnarok";
-static char   global_db_password[32] = "ragnarok";
-static char   global_db_database[32] = "ragnarok";
-static char   global_codepage[32] = "";
-// local sql settings
-static char   ipban_db_hostname[32] = "";
-static uint16 ipban_db_port = 0;
-static char   ipban_db_username[32] = "";
-static char   ipban_db_password[32] = "";
-static char   ipban_db_database[32] = "";
+// login sql settings
+static char   ipban_db_hostname[32] = "127.0.0.1";
+static uint16 ipban_db_port = 3306;
+static char   ipban_db_username[32] = "ragnarok";
+static char   ipban_db_password[32] = "ragnarok";
+static char   ipban_db_database[32] = "ragnarok";
 static char   ipban_codepage[32] = "";
 static char   ipban_table[32] = "ipbanlist";
 
@@ -131,65 +124,39 @@ bool ipban_config_read(const char* key, const char* value) {
 	if( ipban_inited )
 		return false;// settings can only be changed before init
 
-	signature = "sql.";
+	signature = "ipban_db_";
 	if( strncmpi(key, signature, strlen(signature)) == 0 )
 	{
 		key += strlen(signature);
-		if( strcmpi(key, "db_hostname") == 0 )
-			safestrncpy(global_db_hostname, value, sizeof(global_db_hostname));
+		if( strcmpi(key, "ip") == 0 )
+			safestrncpy(ipban_db_hostname, value, sizeof(ipban_db_hostname));
 		else
-		if( strcmpi(key, "db_port") == 0 )
-			global_db_port = (uint16)strtoul(value, NULL, 10);
+		if( strcmpi(key, "port") == 0 )
+			ipban_db_port = (uint16)strtoul(value, NULL, 10);
 		else
-		if( strcmpi(key, "db_username") == 0 )
-			safestrncpy(global_db_username, value, sizeof(global_db_username));
+		if( strcmpi(key, "id") == 0 )
+			safestrncpy(ipban_db_username, value, sizeof(ipban_db_username));
 		else
-		if( strcmpi(key, "db_password") == 0 )
-			safestrncpy(global_db_password, value, sizeof(global_db_password));
+		if( strcmpi(key, "pw") == 0 )
+			safestrncpy(ipban_db_password, value, sizeof(ipban_db_password));
 		else
-		if( strcmpi(key, "db_database") == 0 )
-			safestrncpy(global_db_database, value, sizeof(global_db_database));
-		else
-		if( strcmpi(key, "codepage") == 0 )
-			safestrncpy(global_codepage, value, sizeof(global_codepage));
+		if( strcmpi(key, "db") == 0 )
+			safestrncpy(ipban_db_database, value, sizeof(ipban_db_database));
 		else
 			return false;// not found
 		return true;
 	}
 
-	signature = "ipban.sql.";
+	signature = "ipban_";
 	if( strncmpi(key, signature, strlen(signature)) == 0 )
 	{
 		key += strlen(signature);
-		if( strcmpi(key, "db_hostname") == 0 )
-			safestrncpy(ipban_db_hostname, value, sizeof(ipban_db_hostname));
-		else
-		if( strcmpi(key, "db_port") == 0 )
-			ipban_db_port = (uint16)strtoul(value, NULL, 10);
-		else
-		if( strcmpi(key, "db_username") == 0 )
-			safestrncpy(ipban_db_username, value, sizeof(ipban_db_username));
-		else
-		if( strcmpi(key, "db_password") == 0 )
-			safestrncpy(ipban_db_password, value, sizeof(ipban_db_password));
-		else
-		if( strcmpi(key, "db_database") == 0 )
-			safestrncpy(ipban_db_database, value, sizeof(ipban_db_database));
-		else
 		if( strcmpi(key, "codepage") == 0 )
 			safestrncpy(ipban_codepage, value, sizeof(ipban_codepage));
 		else
 		if( strcmpi(key, "ipban_table") == 0 )
 			safestrncpy(ipban_table, value, sizeof(ipban_table));
 		else
-			return false;// not found
-		return true;
-	}
-
-	signature = "ipban.";
-	if( strncmpi(key, signature, strlen(signature)) == 0 )
-	{
-		key += strlen(signature);
 		if( strcmpi(key, "enable") == 0 )
 			login_config.ipban = (bool)config_switch(value);
 		else
@@ -240,15 +207,6 @@ void ipban_init(void) {
 		port     = ipban_db_port;
 		database = ipban_db_database;
 		codepage = ipban_codepage;
-	}
-	else
-	{// global settings
-		username = global_db_username;
-		password = global_db_password;
-		hostname = global_db_hostname;
-		port     = global_db_port;
-		database = global_db_database;
-		codepage = global_codepage;
 	}
 
 	// establish connections

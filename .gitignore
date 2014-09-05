@@ -22,17 +22,17 @@ Thumbs.db
 /*.sdf
 /*.stackdump
 /*.suo
-/char-server_sql
+/char-server
 /char-server
 /config.log
 /config.status
 /core
 /ipch
-/login-server_sql
+/login-server
 /login-server
 /Makefile
 /Makefile.cache
-/map-server_sql
+/map-server
 /map-server
 /mapcache
 /nbproject
@@ -98,30 +98,30 @@ Thumbs.db
 /tools/*.pdb
 
 # /vcproj-13/
-/vcproj-13/char-server_sql
-/vcproj-13/login-server_sql
+/vcproj-13/char-server
+/vcproj-13/login-server
 /vcproj-13/mapcache
-/vcproj-13/map-server_sql
+/vcproj-13/map-server
 /vcproj-13/*.user
 
 # /vcproj-12/
-/vcproj-12/char-server_sql
-/vcproj-12/login-server_sql
+/vcproj-12/char-server
+/vcproj-12/login-server
 /vcproj-12/mapcache
-/vcproj-12/map-server_sql
+/vcproj-12/map-server
 /vcproj-12/*.user
 
 # /vcproj-10/
-/vcproj-10/char-server_sql
-/vcproj-10/login-server_sql
+/vcproj-10/char-server
+/vcproj-10/login-server
 /vcproj-10/mapcache
-/vcproj-10/map-server_sql
+/vcproj-10/map-server
 /vcproj-10/*.user
 
 # /vcproj-9/
 /vcproj-9/*.user
-/vcproj-9/char-server_sql
-/vcproj-9/login-server_sql
-/vcproj-9/map-server_sql
+/vcproj-9/char-server
+/vcproj-9/login-server
+/vcproj-9/map-server
 /vcproj-9/mapcache
 /conf/.tmp-desd_conf.yml

@@ -795,11 +795,11 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 		if( sc->data[SC_SAFETYWALL] && (flag&(BF_SHORT|BF_MAGIC))==BF_SHORT ) {
 			struct skill_unit_group* group = skill_id2group(sc->data[SC_SAFETYWALL]->val3);
-			uint16 skill_id = sc->data[SC_SAFETYWALL]->val2;
+			uint16 skill_id_val = sc->data[SC_SAFETYWALL]->val2;
 			if (group) {
 				d->dmg_lv = ATK_BLOCK;
 
-				if (skill_id == MH_STEINWAND) {
+				if (skill_id_val == MH_STEINWAND) {
 					if (--group->val2 <= 0)
 						skill_delunitgroup(group);
 					if( (group->val3 - damage) > 0 )
@@ -863,18 +863,18 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		}
 
 		if( (sce = sc->data[SC_MILLENNIUMSHIELD]) && sce->val2 > 0 && damage > 0 ) {
-			clif_skill_nodamage(bl, bl, RK_MILLENNIUMSHIELD, 1, 1);
 			sce->val3 -= (int)cap_value(damage,INT_MIN,INT_MAX); // absorb damage
 			d->dmg_lv = ATK_BLOCK;
-			sc_start(src,bl,SC_STUN,15,0,skill_get_time2(RK_MILLENNIUMSHIELD,sce->val1)); // There is a chance to be stunned when one shield is broken.
 			if( sce->val3 <= 0 ) { // Shield Down
 				sce->val2--;
-				if( sce->val2 > 0 ) {
-					if( sd )
-						clif_millenniumshield(sd,sce->val2);
-					sce->val3 = 1000; // Next Shield
-				} else
-					status_change_end(bl,SC_MILLENNIUMSHIELD,INVALID_TIMER); // All shields down
+				if( sce->val2 >= 0 ) {
+					clif_millenniumshield(bl,sce->val2);
+					if( !sce->val2 )
+						status_change_end(bl,SC_MILLENNIUMSHIELD,INVALID_TIMER); // All shields down
+					else
+						sce->val3 = 1000; // Next shield
+				}
+				status_change_start(src,bl,SC_STUN,10000,0,0,0,0,1000,2);
 			}
 			return 0;
 		}
@@ -889,7 +889,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			(flag&BF_LONG || sc->data[SC_SPURT])
 			&& rnd()%100 < 20)
 		{
-			if (sd && pc_issit(sd)) pc_setstand(sd); //Stand it to dodge.
+			if (sd && pc_issit(sd)) pc_setstand(sd, true); //Stand it to dodge.
 			clif_skill_nodamage(bl,bl,TK_DODGE,1,1);
 			if (!sc->data[SC_COMBO])
 				sc_start4(src,bl, SC_COMBO, 100, TK_JUMPKICK, src->id, 1, 0, 2000);
@@ -3556,7 +3556,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 		case LG_SHIELDSPELL:// [(Casters Base Level x 4) + (Shield DEF x 10) + (Casters VIT x 2)] %
 			if (sd && skill_lv == 1) {
-				int index = sd->equip_index[EQI_HAND_L];
+				short index = sd->equip_index[EQI_HAND_L];
 
 				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR)
 					skillratio += sd->inventory_data[index]->def * 10;
@@ -3701,6 +3701,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 				uint16 lv = skill_lv;
 				skillratio += 100 * skill_check_pc_partner(sd,skill_id,&lv,skill_get_splash(skill_id,skill_lv),0);
 			}
+			RE_LVL_DMOD(100);
 			break;
 		case WM_SOUND_OF_DESTRUCTION:
 			skillratio = (1000 * skill_lv) + (((sd) ? pc_checkskill(sd, WM_LESSON) : skill_get_max(WM_LESSON)) * status_get_int(src));
@@ -3875,6 +3876,9 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 		case RL_R_TRIP:
 			skillratio += -100 + (150 * skill_lv); //(custom)
 			break;
+		case RL_R_TRIP_PLUSATK:
+			skillratio += -100 + (50 * skill_lv); //(custom)
+			break;
 		case RL_H_MINE:
 			skillratio += 100 + (200 * skill_lv);
 			//If damaged by Flicker
@@ -4009,7 +4013,11 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, u
 
 	//The following are applied on top of current damage and are stackable.
 	if (sc) {
-#ifndef RENEWAL
+#ifdef RENEWAL
+		if (sc->data[SC_WATK_ELEMENT])
+			if (skill_id != ASC_METEORASSAULT)
+				ATK_ADDRATE(wd.weaponAtk, wd.weaponAtk2, sc->data[SC_WATK_ELEMENT]->val2);
+#else
 		if( sc->data[SC_TRUESIGHT] )
 			ATK_ADDRATE(wd.damage, wd.damage2, 2*sc->data[SC_TRUESIGHT]->val1);
 #endif
@@ -4703,7 +4711,7 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
  * @param wd : weapon damage
  * @param src : bl who did the attack
  * @param target : target of the attack
- * @parem skill_id : id of casted skill, 0 = basic atk
+ * @param skill_id : id of casted skill, 0 = basic atk
  * @param skill_lv : lvl of skill casted
  */
 void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* src, struct block_list* target, uint16 skill_id, uint16 skill_lv){
@@ -4730,7 +4738,8 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 					isDevotRdamage = true;
 			}
 			rdelay = clif_damage(src, (!isDevotRdamage) ? src : d_bl, tick, wd->amotion, sstatus->dmotion, rdamage, 1, DMG_ENDURE, 0);
-			if( tsd ) battle_drain(tsd, src, rdamage, rdamage, sstatus->race, sstatus->class_);
+			if( tsd )
+				battle_drain(tsd, src, rdamage, rdamage, sstatus->race, sstatus->class_);
 			//Use Reflect Shield to signal this kind of skill trigger. [Skotlex]
 			battle_delay_damage(tick, wd->amotion,target,(!isDevotRdamage) ? src : d_bl,0,CR_REFLECTSHIELD,0,rdamage,ATK_DEF,rdelay,true);
 			skill_additional_effect(target, (!isDevotRdamage) ? src : d_bl, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL,ATK_DEF,tick);
@@ -4749,11 +4758,12 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 					if (ssc && ssc->data[SC_DEVOTION] && (d_bl = map_id2bl(ssc->data[SC_DEVOTION]->val1)))
 						isDevotRdamage = true;
 				}
-				if(attack_type == BF_WEAPON && tsc->data[SC_REFLECTDAMAGE] ) // Don't reflect your own damage (Grand Cross)
+				if( attack_type == BF_WEAPON && tsc->data[SC_REFLECTDAMAGE] ) // Don't reflect your own damage (Grand Cross)
 					map_foreachinshootrange(battle_damage_area,target,skill_get_splash(LG_REFLECTDAMAGE,1),BL_CHAR,tick,target,wd->amotion,sstatus->dmotion,rdamage,tstatus->race);
-				else if(attack_type == BF_WEAPON || attack_type == BF_MISC) {
+				else if( attack_type == BF_WEAPON || attack_type == BF_MISC) {
 					rdelay = clif_damage(src, (!isDevotRdamage) ? src : d_bl, tick, wd->amotion, sstatus->dmotion, rdamage, 1, DMG_ENDURE, 0);
-					if( tsd ) battle_drain(tsd, src, rdamage, rdamage, sstatus->race, sstatus->class_);
+					if( tsd )
+						battle_drain(tsd, src, rdamage, rdamage, sstatus->race, sstatus->class_);
 					// It appears that official servers give skill reflect damage a longer delay
 					battle_delay_damage(tick, wd->amotion,target,(!isDevotRdamage) ? src : d_bl,0,CR_REFLECTSHIELD,0,rdamage,ATK_DEF,rdelay,true);
 					skill_additional_effect(target, (!isDevotRdamage) ? src : d_bl, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL,ATK_DEF,tick);
@@ -5864,7 +5874,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		MATK_ADDRATE(skill_damage);
 #endif
 
-	//battle_do_reflect(BF_MAGIC,&ad, src, target, skill_id, skill_lv); //WIP [lighta]
+	//battle_do_reflect(BF_MAGIC,&ad, src, target, skill_id, skill_lv); //WIP [lighta] Magic skill has own handler at skill_attack
 	return ad;
 }
 
@@ -6255,7 +6265,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	if(tstatus->mode&MD_IGNOREMISC && md.flag&(BF_MISC) )	//misc @TODO optimize me
 		md.damage = md.damage2 = 1;
 
-	//battle_do_reflect(BF_MISC,&md, src, target, skill_id, skill_lv); //WIP [lighta]
+	battle_do_reflect(BF_MISC,&md, src, target, skill_id, skill_lv); //WIP [lighta]
 
 	return md;
 }
@@ -6267,14 +6277,14 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
-struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct block_list *target,uint16 skill_id,uint16 skill_lv,int count)
+struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct block_list *target,uint16 skill_id,uint16 skill_lv,int flag)
 {
 	struct Damage d;
 
 	switch(attack_type) {
-		case BF_WEAPON: d = battle_calc_weapon_attack(bl,target,skill_id,skill_lv,count); break;
-		case BF_MAGIC:  d = battle_calc_magic_attack(bl,target,skill_id,skill_lv,count);  break;
-		case BF_MISC:   d = battle_calc_misc_attack(bl,target,skill_id,skill_lv,count);   break;
+		case BF_WEAPON: d = battle_calc_weapon_attack(bl,target,skill_id,skill_lv,flag); break;
+		case BF_MAGIC:  d = battle_calc_magic_attack(bl,target,skill_id,skill_lv,flag);  break;
+		case BF_MISC:   d = battle_calc_misc_attack(bl,target,skill_id,skill_lv,flag);   break;
 		default:
 			ShowError("battle_calc_attack: unknown attack type! %d (skill_id=%d, skill_lv=%d)\n", attack_type, skill_id, skill_lv);
 			memset(&d,0,sizeof(d));
@@ -6379,6 +6389,9 @@ void battle_drain(TBL_PC *sd, struct block_list *tbl, int64 rdamage, int64 ldama
 	struct weapon_data *wd;
 	int64 *damage;
 	int thp = 0, tsp = 0, rhp = 0, rsp = 0, hp=0, sp=0, i;
+	if (!CHK_RACE(race) && !CHK_CLASS(class_))
+		return;
+
 	for (i = 0; i < 4; i++) {
 		//First two iterations: Right hand
 		if (i < 2) { wd = &sd->right_weapon; damage = &rdamage; }
@@ -6538,7 +6551,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		sd->state.arrow_atk = (sd->status.weapon == W_BOW || (sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE));
 		if (sd->state.arrow_atk)
 		{
-			int index = sd->equip_index[EQI_AMMO];
+			short index = sd->equip_index[EQI_AMMO];
 			if (index < 0) {
 				clif_arrow_fail(sd,0);
 				return ATK_NONE;
@@ -7782,6 +7795,9 @@ static const struct _battle_data {
 	{ "fame_pharmacy_10",                   &battle_config.fame_pharmacy_10,                50,     0,      INT_MAX,        },
 	{ "mail_delay",                         &battle_config.mail_delay,                      1000,   1000,   INT_MAX,        },
 	{ "at_monsterignore",                   &battle_config.autotrade_monsterignore,         0,      0,      1,              },
+	{ "idletime_option",                    &battle_config.idletime_option,                 0x25,   1,      INT_MAX,        },
+	{ "spawn_direction",                    &battle_config.spawn_direction,                 0,      0,      1,              },
+	{ "arrow_shower_knockback",             &battle_config.arrow_shower_knockback,          1,      0,      1,              },
 };
 #ifndef STATS_OPT_OUT
 /**

@@ -485,7 +485,6 @@ int logchrif_parse_reqchgsex(int fd, int id, char* ip){
  * @return 0 not enough info transmitted, 1 success
  */
 int logchrif_parse_updreg2(int fd, int id, char* ip){
-	int j;
 	if( RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2) )
 		return 0;
 	else{
@@ -498,6 +497,7 @@ int logchrif_parse_updreg2(int fd, int id, char* ip){
 		else{
 			int len;
 			int p;
+			uint8 j;
 			ShowNotice("char-server '%s': receiving (from the char-server) of account_reg2 (account: %d, ip: %s).\n", ch_server[id].name, account_id, ip);
 			for( j = 0, p = 13; j < ACCOUNT_REG2_NUM && p < RFIFOW(fd,2); ++j ){
 				sscanf((char*)RFIFOP(fd,p), "%31c%n", acc.account_reg2[j].str, &len);
@@ -614,7 +614,6 @@ int logchrif_parse_updonlinedb(int fd, int id){
  * @return 0 not enough info transmitted, 1 success
  */
 int logchrif_parse_reqacc2reg(int fd){
-	int j;
 	if (RFIFOREST(fd) < 10)
 		return 0;
 	else{
@@ -634,6 +633,7 @@ int logchrif_parse_reqacc2reg(int fd){
 
 		off = 13;
 		if( accounts->load_num(accounts, &acc, account_id) ){
+			uint8 j;
 			for( j = 0; j < acc.account_reg2_num; j++ ){
 				if( acc.account_reg2[j].str[0] != '\0' ){
 					off += sprintf((char*)WFIFOP(fd,off), "%s", acc.account_reg2[j].str)+1; //We add 1 to consider the '\0' in place.

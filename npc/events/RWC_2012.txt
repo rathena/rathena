@@ -67,6 +67,11 @@ prontera,147,61,3	script	Driller#pron	87,{
 		mes "This item has already been enchanted. I can't work on this as it is against the rules.";
 		close;
 	}
+
+	// anti-hack
+	if (callfunc("F_IsEquipIDHack", .@part, .@equip_id))
+		close;
+
 	delequip .@part;
 	if (rand(1,10) > 5) {
 		getitem .@slotted,1;
@@ -113,7 +118,6 @@ prontera,147,59,3	script	Goldberg#pron	878,{
 		mes "Alright, then, see you next time...";
 		close;
 	}
-	set .@equip_refine, getequiprefinerycnt(.@part);
 	setarray .@equip_card[0], getequipcardid(.@part,0),getequipcardid(.@part,1),getequipcardid(.@part,2),getequipcardid(.@part,3);
 	if (.@select == 1) {
 		switch(getequipid(.@part)) {
@@ -257,6 +261,11 @@ prontera,147,59,3	script	Goldberg#pron	878,{
 		else if (.@i < 301) set .@enchant, .@enc[2];
 		else set .@enchant,9;
 
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) ||
+		    callfunc("F_IsEquipCardHack", .@part, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]))
+			close;
+
 		set .@equip_card[.@slot], .@enchant;
 		if (.@slot == 2 && .@enchant == 0) {
 			set .@equip_card[3],0;
@@ -269,6 +278,7 @@ prontera,147,59,3	script	Goldberg#pron	878,{
 			set .@equip_card[3],0;
 		}
 
+		set .@equip_refine, getequiprefinerycnt(.@part);
 		delequip .@part;
 		if (.@enchant == 9) {
 			mes "[Goldberg]";

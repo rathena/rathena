@@ -44,7 +44,7 @@ Windows
 	* MySQL Workbench (http://www.mysql.com/downloads/workbench/)
 	* MS Visual C++ (http://www.microsoft.com/visualstudio/en-us/products/2010-editions/visual-cpp-express)
 	* TortoiseGIT (http://code.google.com/p/tortoisegit/)
-	* MSysGit (http://code.google.com/p/msysgit/downloads/)
+	* MSysGit (http://code.google.com/p/msysgit/downloads/ or https://github.com/msysgit/git/releases)
 
 Linux (names of packages may require specific version numbers on certain distributions)
 	* gcc
@@ -109,7 +109,7 @@ can be solved simply by looking at the error messages given.
 
 Examples:
 
-1.) You get an error on your map-server_sql that looks something like this:
+1.) You get an error on your map-server that looks something like this:
 
 	[Error]: npc_parsesrcfile: Unable to parse, probably a missing or extra TAB in 
 	file 'npc/custom/jobmaster.txt', line '17'. Skipping line...
@@ -158,9 +158,16 @@ Examples:
 	Windows 	http://rathena.org/wiki/Installation_on_Windows
 	CentOS  	http://rathena.org/wiki/Installation_(CentOS)
 	Debian  	http://rathena.org/wiki/Installation_(Debian)
+	FreeBSD 	http://rathena.org/wiki/Installation_(FreeBSD)
 	
 * rAthena IRC Channel
 	irc://irc.rizon.net/rathena
+
+* rAthena Wiki
+	http://rathena.org/board/index.php?app=ipbwiki
+
+* Fork and Pull Request Q&A
+	http://rathena.org/board/topic/86913-pull-request-qa/
 
 
 ============================

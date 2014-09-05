@@ -14,9 +14,10 @@
 #   ENABLE_* : option to use an internal feature/code or not
 #   HAVE_*   : internal variable indicating if we have and are using something
 #
-# Maintainer: Fl�vio J. Saraiva (feel free to send complaints or suggestions)
+# Maintainers: Flavio J. Saraiva (feel free to send complaints or suggestions)
 #   flaviojs @ rAthena forum/irc
 #   flaviojs2005 \A-T/ gmail <D.o,T> com
+#   lightaisme \A-T/ gmail <D.o,T> com
 #
 #####################################################################
 
@@ -28,7 +29,7 @@
 #   CYGWIN no longer defines WIN32
 #   CMP0017: Prefer files from the CMake module directory when including from there.
 set( CMAKE_LEGACY_CYGWIN_WIN32 0 )
-cmake_minimum_required( VERSION 2.8.3 )
+cmake_minimum_required( VERSION 2.8.8 )
 project( rAthena C )
 if( CYGWIN )
 	unset( WIN32 )
@@ -82,6 +83,27 @@ include( CheckFunctionExists )
 include( FindFunctionLibrary )
 include( TestBigEndian )
 
+#
+# PACKETVER
+#
+set( PACKETVER CACHE STRING "Sets the PACKETVER define of the servers. (see src/common/mmo.h)" )
+if( PACKETVER )
+	list( APPEND GLOBAL_DEFINITIONS  PACKETVER=${PACKETVER} )
+endif()
+
+
+#
+# Find git
+#
+message( STATUS "Detecting git" )
+find_package(Git)
+if(GIT_FOUND)
+	if(GIT_VERSION_STRING)
+		message(STATUS "Found git : ${GIT_EXECUTABLE} version (${GIT_VERSION_STRING})")
+	else()
+		message(STATUS "Found git : ${GIT_EXECUTABLE}")
+	endif()
+endif()
 
 #
 # Find svnversion
@@ -93,24 +115,12 @@ if( SVNVERSION_EXECUTABLE )
 	message( STATUS "Found svnversion: ${SVNVERSION_EXECUTABLE}" )
 endif()
 message( STATUS "Detecting svnversion - done" )
-
-
 #
 # Find Subversion
 #
 message( STATUS "Detecting Subversion" )
 find_package( Subversion )
 message( STATUS "Detecting Subversion - done" )
-
-#
-# PACKETVER
-#
-set( PACKETVER CACHE STRING "Sets the PACKETVER define of the servers. (see src/common/mmo.h)" )
-if( PACKETVER )
-	list( APPEND GLOBAL_DEFINITIONS  PACKETVER=${PACKETVER} )
-endif()
-
-
 #
 # SVNVERSION
 #
@@ -123,7 +133,7 @@ if( SVNVERSION_EXECUTABLE )
 		set( SVNVERSION )
 	endif()
 	string( REGEX REPLACE "[^1234567890MSexported]" "_" SVNVERSION "${SVNVERSION}" )
-	message( STATUS "Found version: ${SVNVERSION}" )
+	message( STATUS "Found SVNversion: ${SVNVERSION}" )
 	message( STATUS "Getting svn version - done" )
 endif()
 if( Subversion_FOUND AND SVNVERSION )
@@ -471,15 +481,15 @@ set( DEVELOPMENT_DIRECTORIES
 	)
 set( RUNTIME_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/athena-start"
-	"${CMAKE_CURRENT_SOURCE_DIR}/charserv-sql.bat"
+	"${CMAKE_CURRENT_SOURCE_DIR}/charserv.bat"
 	"${CMAKE_CURRENT_SOURCE_DIR}/dbghelp.dll"
 	"${CMAKE_CURRENT_SOURCE_DIR}/libmysql.dll"
 	"${CMAKE_CURRENT_SOURCE_DIR}/LICENSE"
-	"${CMAKE_CURRENT_SOURCE_DIR}/logserv-sql.bat"
-	"${CMAKE_CURRENT_SOURCE_DIR}/mapserv-sql.bat"
+	"${CMAKE_CURRENT_SOURCE_DIR}/logserv.bat"
+	"${CMAKE_CURRENT_SOURCE_DIR}/mapserv.bat"
 	"${CMAKE_CURRENT_SOURCE_DIR}/pcre3.dll"
 	"${CMAKE_CURRENT_SOURCE_DIR}/README.txt"
-	"${CMAKE_CURRENT_SOURCE_DIR}/runserver-sql.bat"
+	"${CMAKE_CURRENT_SOURCE_DIR}/runserver.bat"
 	"${CMAKE_CURRENT_SOURCE_DIR}/serv.bat"
 	"${CMAKE_CURRENT_SOURCE_DIR}/zlib1.dll"
 	)

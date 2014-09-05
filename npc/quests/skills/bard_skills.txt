@@ -571,7 +571,7 @@ morocc_in,169,72,7	script	Spiteful-Looking Bard#bs	741,3,3,{
 				mes "spinning, head spinning...!''";
 				specialeffect2 EF_TALK_FROSTJOKE;
 				delitem 574,5; //Egg
-				skill 1010,1,0;
+				skill "BA_PANGVOICE",1,0;
 				set qskill_bard,9;
 				next;
 				mes "[Riott]";

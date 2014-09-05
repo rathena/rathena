@@ -1,22 +1,22 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Magician Class Tutorial and Job Specific Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Fix up by Jukka
-//===== Current Version: ===================================== 
-//= 1.5
-//===== Compatible With: ===================================== 
+//===== Current Version: =====================================
+//= 2.0
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Magician training quest.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 Fully working
 //= 1.1 Optimized [Lupus]
 //= 1.2 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //= 1.3 Misc. updates. [L0ne_W0lf]
 //= 1.4 Updated to match the official script. [Euphy]
-//= 1.5 Replaced occurrence of PcName and clean-up. [Capuche]
-//============================================================ 
+//= 2.0 Replaced occurrence of PcName and clean-up. [Capuche]
+//============================================================
 
 // Sign
 //============================================================
@@ -37,7 +37,7 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 		mes "a Mage first. Alright, dear?";
 		close;
 	}
-	if(BaseClass != Job_Mage){
+	if(BaseClass != Job_Mage || eaclass()&EAJL_BABY){
 		mes "You know, sometimes";
 		mes "other jobs might look a";
 		mes "little better in some battle";
@@ -46,7 +46,7 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 		mes "anyone can do what you do~";
 		close;
 	}
-	if(eaclass()&(EAJL_UPPER|EAJL_2|EAJL_THIRD) && tu_magician01 < 7){
+	if(Class != Job_Mage && tu_magician01 < 7){
 		mes "Although I offer magic";
 		mes "training, it's not very helpful";
 		mes "if you're already experienced";
@@ -164,8 +164,8 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 		mes "In other words, even the same properties";
 		mes "have different features that must be considered.";
 		mes "I will explain the properties now.";
-		next;
 		while((1)){
+			next;
 			switch(select("^ff0000Fire^000000", "^5C4033Earth^000000", "^93DB70Wind^000000", "^0000FFWater^000000", "^CFB53BGhost^000000", "Quit.")){
 			case 1:
 				mes "[Mana]";
@@ -211,7 +211,6 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 				mes "Fire Wall won't necessarily";
 				mes "block its approach. So beware!";
 				.@eread_1 = 1;
-				next;
 				break;
 			case 2:
 				mes "[Mana]";
@@ -246,7 +245,6 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 				mes "Fire Ball, to take advantage of";
 				mes "the monster's Earth property.";
 				.@eread_2 = 1;
-				next;
 				break;
 			case 3:
 				mes "[Mana]";
@@ -284,7 +282,6 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 				mes "that we Mages can use are";
 				mes "Lighning Bolt and Thunder Storm.";
 				.@eread_3 = 1;
-				next;
 				break;
 			case 4:
 				mes "[Mana]";
@@ -321,7 +318,6 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 				mes "While monsters are frozen by";
 				mes "Frost Diver, they're considered Water monsters. Interesting, huh?";
 				.@eread_4 = 1;
-				next;
 				break;
 			case 5:
 				mes "[Mana]";
@@ -354,7 +350,6 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 				mes "attacks or strong property";
 				mes "attacks, so be really careful!";
 				.@eread_5 = 1;
-				next;
 				break;
 			case 6:
 				mes "[Mana]";
@@ -476,7 +471,7 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 		}
 		next;
 		mes "[Mana]";
-		if (countitem(915) < 10){
+		if (countitem(915) < 10){// Chrysalis
 			if (tu_magician01 == 3) {
 				mes "Aw, you don't";
 				mes "have enough of";
@@ -512,8 +507,8 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 		mes "more advanced Mage";
 		mes "skills. Which one would";
 		mes "you like me to explain?";
-		next;
 		while(1){
+			next;
 			switch(select("Soul Strike:Safety Wall:Fire Ball:Frost Diver:Thunderstorm:Fire Wall:Energy Coat:Quit.")) {
 			case 1:
 				mes "[Mana]";
@@ -679,7 +674,6 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 				if (.@total) getexp (.@total*300),(.@total*100);
 				close;
 			}
-			next;
 		}
 		close;
 	case 6:

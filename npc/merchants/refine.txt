@@ -708,13 +708,9 @@ function	script	refinemain	{
 		set Zeny, Zeny-.@price;
 		delitem .@material,1;
 
-		//custom checks
-		if(getequipisequiped(.@part) == 0) { // hacker has removed the item (not changed, why?)
-			mes "[" + getarg(0) + "]";
-			mes "Look here... you don't have any Items on...";
-			close;
-		}
-		if(getequiprefinerycnt(.@part) != .@refinerycnt || getequipid(.@part) != .@refineitemid) { // hacker has changed the item
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) ||
+		    callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt)) {
 			mes "[" + getarg(0) + "]";
 			emotion e_an;
 			mes "Wait a second...";

@@ -1196,7 +1196,7 @@ does not use 'mes'.
         npctalk "Look at that you are almost 2nd profession";
         end;
 
-Without the use if 'end' it would travel through the labels until the end of the 
+Without the use of 'end' it would travel through the labels until the end of the 
 script. If you were lvl 10 or less, you would see all the speech lines, the use 
 of 'end' stops this, and ends the script.
 
@@ -2540,7 +2540,15 @@ armor, but also don't want them to equip if after the check, you would do this:
 
 ---------------------------------------
 
-*getequipname(<equpment slot>)
+*getequipuniqueid(<equipment slot>)
+
+This function returns the unique ID (as a string) of the item equipped in the equipment slot 
+specified on the invoking character. If nothing is equipped there, it returns an empty string.
+See 'getequipid' for a full list of valid equipment slots.
+
+---------------------------------------
+
+*getequipname(<equipment slot>)
 
 Returns the jname of the item equipped in the specified equipment slot on the
 invoking character, or an empty string if nothing is equipped in that position.
@@ -7136,7 +7144,7 @@ Example:
 *query_logsql("your MySQL query"{, <array variable>{, <array variable>{, ...}}});
 
 Executes an SQL query. A 'select' query can fill array variables with up to 128 rows of values,
-and will return the number of rows (i.e. array size).
+and will return the number of rows (i.e. array size) or -1 on failure/empty array.
 
 Note that 'query_sql' runs on the main database while 'query_logsql' runs on the log database.
 

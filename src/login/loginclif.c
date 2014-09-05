@@ -308,7 +308,7 @@ static int logclif_parse_reqauth(int fd, struct login_session_data *sd, int comm
 
 			version = RFIFOL(fd,4);
 
-			if(uAccLen > NAME_LENGTH - 1 || uAccLen <= 0 || uTokenLen > NAME_LENGTH - 1  || uTokenLen <= 0)
+			if(uAccLen > NAME_LENGTH - 1 || uAccLen == 0 || uTokenLen > NAME_LENGTH - 1  || uTokenLen == 0)
 			{
 				logclif_auth_failed(sd, 3);
 				return 0;

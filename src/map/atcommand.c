@@ -60,12 +60,19 @@ typedef struct AliasInfo AliasInfo;
 
 int atcmd_binding_count = 0;
 
+/// Atcommand restriction usage
+enum e_atcmd_restict {
+	ATCMD_NOCONSOLE    = 0x1, /// Cannot be used via console (is_atcommand type 2)
+	ATCMD_NOSCRIPT     = 0x2, /// Cannot be used via script command 'atcommand' or 'useatcmd' (is_atcommand type 0 and 3)
+	ATCMD_NOAUTOTRADE  = 0x4, /// Like ATCMD_NOSCRIPT, but if the player is autotrader. Example: atcommand "@kick "+strcharinfo(0);
+};
+
 struct AtCommandInfo {
 	char command[ATCOMMAND_LENGTH];
 	AtCommandFunc func;
-	char* at_groups;/* quick @commands "can-use" lookup */
-	char* char_groups;/* quick @charcommands "can-use" lookup */
-	int restriction; //prevent : 1 console, 2 script...
+	char* at_groups; /// Quick @commands "can-use" lookup
+	char* char_groups; /// Quick @charcommands "can-use" lookup
+	uint8 restriction; /// Restrictions see enum e_restict
 };
 
 struct AliasInfo {
@@ -862,15 +869,21 @@ ACMD_FUNC(speed)
 		return -1;
 	}
 
-	if (speed < 0) {
+	sd->state.permanent_speed = 0; // Remove lock when set back to default speed.
+
+	if (speed < 0)
 		sd->base_status.speed = DEFAULT_WALK_SPEED;
-		sd->state.permanent_speed = 0; // Remove lock when set back to default speed.
-	} else {
+	else
 		sd->base_status.speed = cap_value(speed, MIN_WALK_SPEED, MAX_WALK_SPEED);
+
+	if (sd->base_status.speed != DEFAULT_WALK_SPEED) {
 		sd->state.permanent_speed = 1; // Set lock when set to non-default speed.
-	}
+		clif_displaymessage(fd, msg_txt(sd,8)); // Speed changed.
+	} else
+		clif_displaymessage(fd, msg_txt(sd,389)); // Speed returned to normal.
+
 	status_calc_bl(&sd->bl, SCB_SPEED);
-	clif_displaymessage(fd, msg_txt(sd,8)); // Speed changed.
+
 	return 0;
 }
 
@@ -3539,7 +3552,7 @@ ACMD_FUNC(recallall)
 				count++;
 			else {
 				if (pc_isdead(pl_sd)) { //Wake them up
-					pc_setstand(pl_sd);
+					pc_setstand(pl_sd, true);
 					pc_setrestartvalue(pl_sd,1);
 				}
 				pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);
@@ -4441,27 +4454,22 @@ ACMD_FUNC(hidenpc)
 
 ACMD_FUNC(loadnpc)
 {
-	FILE *fp;
-
 	if (!message || !*message) {
 		clif_displaymessage(fd, msg_txt(sd,1132)); // Please enter a script file name (usage: @loadnpc <file name>).
 		return -1;
 	}
 
-	// check if script file exists
-	if ((fp = fopen(message, "r")) == NULL) {
-		clif_displaymessage(fd, msg_txt(sd,261));
-		return -1;
-	}
-	fclose(fp);
-
 	// add to list of script sources and run it
-	npc_addsrcfile(message);
-	npc_parsesrcfile(message,true);
+        if( !npc_addsrcfile(message)  //try to read file
+            || !npc_parsesrcfile(message,true)
+        ){
+            clif_displaymessage(fd, msg_txt(sd,261));
+            return -1;
+        }	
+	
 	npc_read_event_script();
 
 	clif_displaymessage(fd, msg_txt(sd,262));
-
 	return 0;
 }
 
@@ -5760,7 +5768,7 @@ ACMD_FUNC(autotrade) {
 			Sql_ShowDebug( mmysql_handle );
 		}
 	}else if( sd->state.buyingstore ){
-		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", buyingstore_db, sd->buyer_id ) != SQL_SUCCESS ){
+		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", buyingstores_db, sd->buyer_id ) != SQL_SUCCESS ){
 			Sql_ShowDebug( mmysql_handle );
 		}
 	}
@@ -5772,7 +5780,7 @@ ACMD_FUNC(autotrade) {
 
 	channel_pcquit(sd,0xF); //leave all chan
 	clif_authfail_fd(sd->fd, 15);
-	
+
 	chrif_save(sd,3);
 
 	return 0;
@@ -7849,6 +7857,8 @@ ACMD_FUNC(fakename)
 		{
 			sd->fakename[0] = '\0';
 			clif_charnameack(0, &sd->bl);
+			if (sd->disguise)
+				clif_charnameack(sd->fd, &sd->bl);
 			clif_displaymessage(sd->fd, msg_txt(sd,1307)); // Returned to real name.
 			return 0;
 		}
@@ -7865,6 +7875,8 @@ ACMD_FUNC(fakename)
 
 	safestrncpy(sd->fakename, message, sizeof(sd->fakename));
 	clif_charnameack(0, &sd->bl);
+	if (sd->disguise) // Another packet should be sent so the client updates the name for sd
+		clif_charnameack(sd->fd, &sd->bl);
 	clif_displaymessage(sd->fd, msg_txt(sd,1310)); // Fake name enabled.
 
 	return 0;
@@ -9126,7 +9138,7 @@ static inline void atcmd_channel_help(struct map_session_data *sd, const char *c
 {
 	int fd = sd->fd;
 	bool can_delete = pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN);
-	bool can_create = (can_delete || Channel_Config.user_chenable);
+	bool can_create = (can_delete || channel_config.user_chenable);
 	clif_displaymessage(fd, msg_txt(sd,1414));// ---- Available options:
 
 	//option create
@@ -9219,7 +9231,7 @@ ACMD_FUNC(channel) {
 		return 0;
 	}
 
-	if( strcmpi(key,"create") == 0 && ( Channel_Config.user_chenable || pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) ) ) {
+	if( strcmpi(key,"create") == 0 && ( channel_config.user_chenable || pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) ) ) {
 		if(sub3[0] != '\0'){
 			clif_displaymessage(fd, msg_txt(sd,1408)); // Channel password may not contain spaces.
 			return -1;
@@ -9267,8 +9279,8 @@ ACMD_FUNC(fontcolor)
 		sd->fontcolor = 0;
 	} else {
 		unsigned char k;
-		ARR_FIND(0,Channel_Config.colors_count,k,( strcmpi(message,Channel_Config.colors_name[k]) == 0 ));
-		if( k == Channel_Config.colors_count ) {
+		ARR_FIND(0,channel_config.colors_count,k,( strcmpi(message,channel_config.colors_name[k]) == 0 ));
+		if( k == channel_config.colors_count ) {
 			sprintf(atcmd_output, msg_txt(sd,1411), message);// Unknown color '%s'.
 			clif_displaymessage(fd, atcmd_output);
 			return -1;
@@ -9522,7 +9534,7 @@ ACMD_FUNC(cloneequip) {
 	else {
 		int8 i;
 		for (i = 0; i < EQI_MAX; i++) {
-			int8 idx;
+			short idx;
 			char flag = 0;
 			struct item tmp_item;
 			if ((idx = pl_sd->equip_index[i]) < 0)
@@ -9651,17 +9663,17 @@ ACMD_FUNC(clonestat) {
  **/
 #define ACMD_DEF(x) { #x, atcommand_ ## x, NULL, NULL, 0 }
 #define ACMD_DEF2(x2, x) { x2, atcommand_ ## x, NULL, NULL, 0 }
-//define with restriction
+// Define with restriction
 #define ACMD_DEFR(x, r) { #x, atcommand_ ## x, NULL, NULL, r }
 #define ACMD_DEF2R(x2, x, r) { x2, atcommand_ ## x, NULL, NULL, r }
 void atcommand_basecommands(void) {
 	/**
 	 * Command reference list, place the base of your commands here
-	 * TODO : all restricted command are crashing case, please look into it
+	 * TODO: List all commands that causing crash
 	 **/
 	AtCommandInfo atcommand_base[] = {
 #include "../custom/atcommand_def.inc"
-		ACMD_DEF2R("warp", mapmove, 1),
+		ACMD_DEF2R("warp", mapmove, ATCMD_NOCONSOLE),
 		ACMD_DEF(where),
 		ACMD_DEF(jumpto),
 		ACMD_DEF(jump),
@@ -9679,7 +9691,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(guildstorage),
 		ACMD_DEF(option),
 		ACMD_DEF(hide), // + /hide
-		ACMD_DEFR(jobchange, 1),
+		ACMD_DEFR(jobchange, ATCMD_NOCONSOLE),
 		ACMD_DEF(kill),
 		ACMD_DEF(alive),
 		ACMD_DEF(kami),
@@ -9695,7 +9707,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(clearstorage),
 		ACMD_DEF(cleargstorage),
 		ACMD_DEF(clearcart),
-		ACMD_DEF2R("blvl", baselevelup, 1),
+		ACMD_DEF2R("blvl", baselevelup, ATCMD_NOCONSOLE),
 		ACMD_DEF2("jlvl", joblevelup),
 		ACMD_DEF(help),
 		ACMD_DEF(pvpoff),
@@ -9703,7 +9715,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(gvgoff),
 		ACMD_DEF(gvgon),
 		ACMD_DEF(model),
-		ACMD_DEFR(go, 1),
+		ACMD_DEFR(go, ATCMD_NOCONSOLE),
 		ACMD_DEF(monster),
 		ACMD_DEF2("monstersmall", monster),
 		ACMD_DEF2("monsterbig", monster),
@@ -9736,7 +9748,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(doommap),
 		ACMD_DEF(raise),
 		ACMD_DEF(raisemap),
-		ACMD_DEF(kick), // + right click menu for GM "(name) force to quit"
+		ACMD_DEFR(kick,ATCMD_NOAUTOTRADE), // + right click menu for GM "(name) force to quit"
 		ACMD_DEF(kickall),
 		ACMD_DEF(allskill),
 		ACMD_DEF(questskill),
@@ -9752,11 +9764,11 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(broadcast), // + /b and /nb
 		ACMD_DEF(localbroadcast), // + /lb and /nlb
 		ACMD_DEF(recallall),
-		ACMD_DEFR(reload,2),
+		ACMD_DEFR(reload,ATCMD_NOSCRIPT),
 		ACMD_DEF2("reloaditemdb", reload),
 		ACMD_DEF2("reloadmobdb", reload),
 		ACMD_DEF2("reloadskilldb", reload),
-		ACMD_DEF2R("reloadscript", reload,2),
+		ACMD_DEF2R("reloadscript", reload, ATCMD_NOSCRIPT),
 		ACMD_DEF2("reloadatcommand", reload),
 		ACMD_DEF2("reloadbattleconf", reload),
 		ACMD_DEF2("reloadstatusdb", reload),
@@ -10047,12 +10059,15 @@ static void atcommand_get_suggestions(struct map_session_data* sd, const char *n
 	dbi_destroy(alias_iter);
 }
 
-/*
- *  Executes an at-command
- * \param type :
+/**
+ * Executes an at-command
+ * @param fd
+ * @param sd
+ * @param message
+ * @param type
  *  0 : script call (atcommand)
  *  1 : normal player @atcommand
- *  2 : console
+ *  2 : console (admin:@atcommand)
  *  3 : script call (useatcmd)
  */
 bool is_atcommand(const int fd, struct map_session_data* sd, const char* message, int type)
@@ -10133,7 +10148,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 				if( x >= 1 || y >= 1 ) { /* we have command */
 					info = get_atcommandinfo_byname(atcommand_checkalias(command + 1));
 					if( !info || info->char_groups[sd->group_pos] == 0 ) /* if we can't use or doesn't exist: don't even display the command failed message */
-							return false;
+						return false;
 				} else
 					return false;/* display as normal message */
 			}
@@ -10149,6 +10164,9 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 		//pass through the rest of the code compatible with both symbols
 		sprintf(atcmd_msg, "%s", message);
 	}
+
+	if (battle_config.idletime_option&IDLE_ATCOMMAND)
+		sd->idletime = last_tick;
 
 	//Clearing these to be used once more.
 	memset(command, '\0', sizeof(command));
@@ -10198,17 +10216,20 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	}
 
 	//check restriction
-	if(info->restriction){
-		if(info->restriction&1 && type == 2) //console prevent
+	if (info->restriction) {
+		if (info->restriction&ATCMD_NOCONSOLE && type == 2) //console prevent
 			return true;
-		if(info->restriction&2 && (type == 0 || type == 3) ) //scripts prevent
+		if (info->restriction&ATCMD_NOSCRIPT && (type == 0 || type == 3)) //scripts prevent
+			return true;
+		if (info->restriction&ATCMD_NOAUTOTRADE && (type == 0 || type == 3)
+			&& ((*atcmd_msg == atcommand_symbol && sd && sd->state.autotrade) || (ssd && ssd->state.autotrade)))
 			return true;
 	}
 
 	// type == 1 : player invoked
 	if (type == 1) {
 		if ((*command == atcommand_symbol && info->at_groups[sd->group_pos] == 0) ||
-		    (*command == charcommand_symbol && info->char_groups[sd->group_pos] == 0) ) {
+			(*command == charcommand_symbol && info->char_groups[sd->group_pos] == 0) ) {
 			return false;
 		}
 		if( pc_isdead(sd) && pc_has_permission(sd,PC_PERM_DISABLE_CMD_DEAD) ) {
@@ -10219,7 +10240,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 
 	// Check if target is valid only if confirmed that player can use command.
 	if (*message == charcommand_symbol &&
-	    (ssd = map_nick2sd(charname)) == NULL && (ssd = map_nick2sd(charname2)) == NULL ) {
+		(ssd = map_nick2sd(charname)) == NULL && (ssd = map_nick2sd(charname2)) == NULL ) {
 		sprintf(output, msg_txt(sd,1389), command); // %s failed. Player not found.
 		clif_displaymessage(fd, output);
 		return true;

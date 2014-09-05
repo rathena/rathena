@@ -578,7 +578,7 @@ function	script	F_EntKafCode	{
 	set @kafcode_try,@kafcode_try+1;
 	if(@kafcode_try>10) {
 		set @kafcode_try,0;
-		logmes "Hack: Tried to fit storage password.";
+		logmes "Tried to fit storage password.";
 	}
 	if(input(@code_) == 1) {
 		mes "You can't use such big password.";

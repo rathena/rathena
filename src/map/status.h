@@ -1535,7 +1535,7 @@ enum e_joint_break
 	BREAK_FLAGS	= BREAK_ANKLE | BREAK_WRIST | BREAK_KNEE | BREAK_SHOULDER | BREAK_WAIST | BREAK_NECK,
 };
 
-extern int current_equip_item_index;
+extern short current_equip_item_index;
 extern int current_equip_card_id;
 
 //Mode definitions to clear up code reading. [Skotlex]
@@ -1556,9 +1556,9 @@ enum e_mode {
 	MD_CHANGETARGET_CHASE	= 0x002000,
 	MD_TARGETWEAK			= 0x004000,
 	MD_RANDOMTARGET			= 0x008000,
-	MD_IGNOREMELEE			= 0x010000,
+	MD_IGNOREMELEE			= 0x010000, //! TODO: Unused yet
 	MD_IGNOREMAGIC			= 0x020000,
-	MD_IGNORERANGED			= 0x040000,
+	MD_IGNORERANGED			= 0x040000, //! TODO: Unused yet
 	MD_MVP					= 0x080000,
 	MD_IGNOREMISC			= 0x100000,
 	MD_KNOCKBACK_IMMUNE		= 0x200000,

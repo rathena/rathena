@@ -740,7 +740,12 @@ int mapif_parse_PartyLeaderChange(int fd,int party_id,int account_id,int char_id
 	return 1;
 }
 
-//Used to update party share level range in run time
+/**
+ * Used to update party share level range in run time
+ * @param fd : map-serv link
+ * @param share_lvl : Max level number of difference to share exp
+ * @return 
+ */
 int mapif_parse_PartyShareLevel(int fd,unsigned int share_lvl)
 {
 	struct party_data *p;

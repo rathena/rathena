@@ -4,19 +4,19 @@
 echo "My pkg path is $PKG_PATH"
 
 check_inst_right
-read -p "WARNING: This target dis experimental. Press Ctrl+C to cancel or Enter to continue." readEnterKey
+read -p "WARNING: This script is experimental. Press Ctrl+C to cancel or Enter to continue." readEnterKey
 case $1 in
 	'bin')
 		echo "Starting binary cleanup"
 		rm -rf $PKG_PATH/bin/*
-		echo "Binary file was deleted"
+		echo "Binary files have been deleted"
 	;;
 	'all')
-		echo "Starting uninstalling "
+		echo "Starting uninstall"
 		rm -rf $PKG_PATH
 		rm -rf /usr/bin/$PKG
-		echo "Uninstallation succed"
+		echo "Uninstallation has succeed"
 	;;
 	'*')
-		echo "Please enter a target usage './uninstall { all | bin }'"
+		echo "Usage: Please enter a target './uninstall { all | bin }'"
 esac

@@ -60,7 +60,7 @@
 #define ACCOUNT_REG2_NUM 16 ///Max permanent global account variables per account
 #define MAX_REG_NUM 256 ///Should hold the max of GLOBAL/ACCOUNT/ACCOUNT2 (needed for some arrays that hold all three)
 #define DEFAULT_WALK_SPEED 150 ///Default walk speed
-#define MIN_WALK_SPEED 0 ///Min walk speed
+#define MIN_WALK_SPEED 20 ///Min walk speed
 #define MAX_WALK_SPEED 1000 ///Max walk speed
 #define MAX_STORAGE 600 ///Max number of storage slots a player can have, (up to ~850 tested)
 #define MAX_GUILD_STORAGE 600 ///Max number of storage slots a guild
@@ -420,6 +420,8 @@ struct mmo_charstatus {
 	unsigned char font;
 
 	bool cashshop_sent; // Whether the player has received the CashShop list
+
+	uint32 uniqueitem_counter;
 };
 
 typedef enum mail_status {
@@ -551,8 +553,8 @@ struct guild {
 	struct guild_skill skill[MAX_GUILDSKILL];
 	struct Channel *channel;
 
-	/* TODO: still used for something? */
-	unsigned short save_flag; // for TXT saving
+	/* Used by char-server to save events for guilds */
+	unsigned short save_flag;
 };
 
 struct guild_castle {

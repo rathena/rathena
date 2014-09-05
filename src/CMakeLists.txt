@@ -3,10 +3,10 @@
 # setup and static libraries
 #
 add_subdirectory( common )
-if( HAVE_common_sql )
-	option( BUILD_SQL_SERVERS "build sql server executables" ON )
+if( HAVE_common )
+	option( BUILD_SERVERS "build server executables" ON )
 else()
-	message( STATUS "Disabled sql server targets (requires common_sql)" )
+	message( STATUS "Disabled server targets (requires common)" )
 endif()
 
 

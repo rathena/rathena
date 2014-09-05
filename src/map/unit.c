@@ -188,7 +188,7 @@ int unit_teleport_timer(int tid, unsigned int tick, int id, intptr_t data)
 		TBL_PC *msd = unit_get_master(bl);
 		if(msd && !check_distance_bl(&msd->bl, bl, data)) {
 			*mast_tid = INVALID_TIMER;
-			unit_warp(bl, msd->bl.id, msd->bl.x, msd->bl.y, CLR_TELEPORT );
+			unit_warp(bl, msd->bl.m, msd->bl.x, msd->bl.y, CLR_TELEPORT );
 		}
 		else // No timer needed
 			*mast_tid = INVALID_TIMER;
@@ -204,8 +204,9 @@ int unit_teleport_timer(int tid, unsigned int tick, int id, intptr_t data)
  */
 int unit_check_start_teleport_timer(struct block_list *sbl)
 {
-	TBL_PC *msd=NULL;
+	TBL_PC *msd = NULL;
 	int max_dist = 0;
+
 	switch(sbl->type) {
 		case BL_HOM:	
 		case BL_ELEM:	
@@ -216,7 +217,7 @@ int unit_check_start_teleport_timer(struct block_list *sbl)
 		default:
 			return 0;
 	}
-	
+
 	switch(sbl->type) {
 		case BL_HOM:	max_dist = AREA_SIZE;			break;
 		case BL_ELEM:	max_dist = MAX_ELEDISTANCE;		break;
@@ -319,17 +320,10 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 				return 0;
 		} else
 			sd->areanpc_id=0;
-		/* WIP disable [Lighta], currently unsuported 
-		 * this was meant to start the timer if the player move but not his slave...
-		if(sd->md) unit_check_start_teleport_timer(&sd->md->bl);
-		if(sd->ed) unit_check_start_teleport_timer(&sd->ed->bl);
-		if(sd->hd) unit_check_start_teleport_timer(&sd->hd->bl);
-		if(sd->pd) unit_check_start_teleport_timer(&sd->pd->bl);
-		*/
 		pc_cell_basilica(sd);
 	}
 	break;
-	case BL_MOB: {
+	case BL_MOB:
 		if( map_getcell(bl->m,x,y,CELL_CHKNPC) ) {
 			if( npc_touch_areanpc2(md) )
 				return 0; // Warped
@@ -349,13 +343,6 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 			// Resend walk packet for proper Self Destruction display.
 			clif_move(ud);
 		}
-	}
-	break;
-	case BL_HOM: 
-	case BL_ELEM:
-	case BL_PET:
-	case BL_MER:
-		unit_check_start_teleport_timer(bl);
 		break;
 	}
 
@@ -464,17 +451,21 @@ int unit_delay_walktobl_timer(int tid, unsigned int tick, int id, intptr_t data)
  *	&4: Delay walking for can_move
  * @return 1: Success 0: Fail or unit_walktoxy_sub()
  */
-int unit_walktoxy( struct block_list *bl, short x, short y, int flag)
+int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
 {
 	struct unit_data* ud = NULL;
 	struct status_change* sc = NULL;
 	struct walkpath_data wpd;
+	TBL_PC *sd = NULL;
 
 	nullpo_ret(bl);
 
 	ud = unit_bl2ud(bl);
 
-	if( ud == NULL) return 0;
+	if (ud == NULL) return 0;
+
+	if (bl->type == BL_PC)
+		sd = BL_CAST(BL_PC, bl);
 
 	path_search(&wpd, bl->m, bl->x, bl->y, x, y, flag&1, CELL_CHKNOPASS); // Count walk path cells
 #ifdef OFFICIAL_WALKPATH
@@ -519,7 +510,13 @@ int unit_walktoxy( struct block_list *bl, short x, short y, int flag)
 		delete_timer( ud->attacktimer, unit_attack_timer );
 		ud->attacktimer = INVALID_TIMER;
 	}
-	
+
+	// Start timer to recall summon
+	if (sd && sd->md) unit_check_start_teleport_timer(&sd->md->bl);
+	if (sd && sd->ed) unit_check_start_teleport_timer(&sd->ed->bl);
+	if (sd && sd->hd) unit_check_start_teleport_timer(&sd->hd->bl);
+	if (sd && sd->pd) unit_check_start_teleport_timer(&sd->pd->bl);
+
 	return unit_walktoxy_sub(bl);
 }
 
@@ -571,7 +568,7 @@ static int unit_walktobl_sub(int tid, unsigned int tick, int id, intptr_t data)
  *	&2: Start attacking upon arrival within range, otherwise just walk to target
  * @return 1: Started walking or set timer 0: Failed
  */
-int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, int flag)
+int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, unsigned char flag)
 {
 	struct unit_data *ud = NULL;
 	struct status_change *sc = NULL;
@@ -901,7 +898,7 @@ uint8 unit_getdir(struct block_list *bl)
  * @param dx: Destination cell X
  * @param dy: Destination cell Y
  * @param count: How many cells to push bl
- * @param flag: Whether or not to send position packet updates
+ * @param flag: &1 Whether or not to send position packet updates
  * @return count (can be modified due to map cell restrictions)
  */
 int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag)
@@ -1527,31 +1524,28 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		unit_stop_walking(src,1);// Even though this is not how official works but this will do the trick. bugreport:6829
 	// In official this is triggered even if no cast time.
 	clif_skillcasting(src, src->id, target_id, 0,0, skill_id, skill_get_ele(skill_id, skill_lv), casttime);
-	if( casttime > 0 || combo ) {
-		if (sd && target->type == BL_MOB) {
-			TBL_MOB *md = (TBL_MOB*)target;
-			mobskill_event(md, src, tick, -1); // Cast targetted skill event.
-			if (tstatus->mode&(MD_CASTSENSOR_IDLE|MD_CASTSENSOR_CHASE) &&
-				battle_check_target(target, src, BCT_ENEMY) > 0)
-			{
-				switch (md->state.skillstate) {
-					case MSS_RUSH:
-					case MSS_FOLLOW:
-						if (!(tstatus->mode&MD_CASTSENSOR_CHASE))
-							break;
-						md->target_id = src->id;
-						md->state.aggressive = (tstatus->mode&MD_ANGRY)?1:0;
-						md->min_chase = md->db->range3;
+	if (sd && target->type == BL_MOB) {
+		TBL_MOB *md = (TBL_MOB*)target;
+
+		mobskill_event(md, src, tick, -1); // Cast targetted skill event.
+		if (tstatus->mode&(MD_CASTSENSOR_IDLE|MD_CASTSENSOR_CHASE) && battle_check_target(target, src, BCT_ENEMY) > 0) {
+			switch (md->state.skillstate) {
+				case MSS_RUSH:
+				case MSS_FOLLOW:
+					if (!(tstatus->mode&MD_CASTSENSOR_CHASE))
 						break;
-					case MSS_IDLE:
-					case MSS_WALK:
-						if (!(tstatus->mode&MD_CASTSENSOR_IDLE))
-							break;
-						md->target_id = src->id;
-						md->state.aggressive = (tstatus->mode&MD_ANGRY)?1:0;
-						md->min_chase = md->db->range3;
+					md->target_id = src->id;
+					md->state.aggressive = (tstatus->mode&MD_ANGRY)?1:0;
+					md->min_chase = md->db->range3;
+					break;
+				case MSS_IDLE:
+				case MSS_WALK:
+					if (!(tstatus->mode&MD_CASTSENSOR_IDLE))
 						break;
-				}
+					md->target_id = src->id;
+					md->state.aggressive = (tstatus->mode&MD_ANGRY)?1:0;
+					md->min_chase = md->db->range3;
+					break;
 			}
 		}
 	}
@@ -2168,7 +2162,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 	}
 
 	if(ud->state.attack_continue) {
-		if( src->type == BL_PC )
+		if (src->type == BL_PC && battle_config.idletime_option&IDLE_ATTACK)
 			((TBL_PC*)src)->idletime = last_tick;
 		ud->attacktimer = add_timer(ud->attackabletime,unit_attack_timer,src->id,0);
 	}
@@ -2421,7 +2415,6 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 				chat_leavechat(sd,0);
 			if(sd->trade_partner)
 				trade_tradecancel(sd);
-			buyingstore_close(sd);
 			searchstore_close(sd);
 			if (sd->menuskill_id != AL_TELEPORT) { //bugreport:8027
 				if (sd->state.storage_flag == 1)
@@ -2459,8 +2452,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			if(sd->duel_group > 0)
 				duel_leave(sd->duel_group, sd);
 
-			if(pc_issit(sd)) {
-				pc_setstand(sd);
+			if(pc_issit(sd) && pc_setstand(sd, false)) {
 				skill_sit(sd,0);
 			}
 			party_send_dot_remove(sd);// minimap dot fix [Kevin]

@@ -727,7 +727,7 @@ void storage_guild_storagegettocart(struct map_session_data* sd, int index, int 
  * Request to save guild storage
  * @param account_id : account requesting the save
  * @param guild_id : guild to take the guild_storage
- * @param flag : ?
+ * @param flag : 1=char quitting, close the storage
  * @return 0 : fail (no storage), 1 : success (requested)
  */
 int storage_guild_storagesave(int account_id, int guild_id, int flag)

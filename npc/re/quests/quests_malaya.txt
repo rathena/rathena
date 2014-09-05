@@ -160,7 +160,7 @@ malaya,266,76,3	script	Rodel the Guard#malaya	570,4,4,{
 				getexp 200000,200000;
 				erasequest 7404;
 				setquest 7405;
-				if (rand(1))
+				if (rand(2))
 					$malayaNames$[1] = strcharinfo(0);
 //				SavePPL Jejellopy
 				close;
@@ -711,7 +711,7 @@ malaya,169,350,5	script	Imelda#malaya	475,{
 		else
 			getitem 6497, 1; // Lesser_Agimat
 		getexp 200000,200000;
-		if (rand(1))
+		if (rand(2))
 			$malayaNames$[0] = strcharinfo(0);
 		close;
 	} else {
@@ -817,7 +817,7 @@ malaya,169,350,5	script	Imelda#malaya	475,{
 				else
 					getitem 6497, 1; // Lesser_Agimat
 				getexp 200000,200000;
-				if (rand(1))
+				if (rand(2))
 					$malayaNames$[0] = strcharinfo(0);
 				close;
 			} else {
@@ -3773,7 +3773,7 @@ ma_fild01,158,243,6	script	Tribe Blacksmith#malaya	582,{
 		break;
 	}
 	
-	if (!(.@item)) {
+	if (!getequipisequiped(.@part)) {
 		mes "[Bayani]";
 		mes "You should wear the equipment to upgrade and not come without it on you.";
 		close;
@@ -3819,11 +3819,14 @@ ma_fild01,158,243,6	script	Tribe Blacksmith#malaya	582,{
 	mes "[Bayani]";
 	mes "BAM!!";
 	next;
-	
 	delitem 6499,20; //Ancient_Grudge
+
+	// anti-hack
+	if (callfunc("F_IsEquipIDHack", .@part, .@item))
+		close;
+
 	delequip .@part;
 	getitem .@newItem, 1; 
-	
 	mes "[Bayani]";
 	mes "Ha ha. Perfect.";
 	mes "Congratulations. Your armor is better than ever.";
