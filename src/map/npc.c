@@ -969,8 +969,8 @@ int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y)
 		case NPCTYPE_WARP:
 			if (pc_ishiding(sd) || (sd->sc.count && sd->sc.data[SC_CAMOUFLAGE]) || pc_isdead(sd))
 				break; // hidden or dead chars cannot use warps
-			if(sd->count_rewarp > 3){
-				ShowWarning("Prevent infinite warping loop, please fix script\n");
+			if(sd->count_rewarp > 10){
+				ShowWarning("Prevent infinite warping loop for player (%d:%d), please fix script npc:'%s', path:'%s' \n",sd->status.account_id, sd->status.char_id,map[m].npc[i]->exname,map[m].npc[i]->path);
 				sd->count_rewarp=0;
 				break;
 			}
