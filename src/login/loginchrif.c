@@ -682,18 +682,18 @@ int logchrif_parse_setalloffline(int fd, int id){
  * @return 0 fail (packet does not have enough data), 1 success
  */
 int logchrif_parse_updpincode(int fd){
-	if( RFIFOREST(fd) < 11 )
+	if( RFIFOREST(fd) < 8 + PINCODE_LENGTH+1 )
 		return 0;
 	else{
 		struct mmo_account acc;
 		AccountDB* accounts = login_get_accounts_db();
 
-		if( accounts->load_num(accounts, &acc, RFIFOL(fd,2) ) ){
-			strncpy( acc.pincode, (char*)RFIFOP(fd,6), 5 );
+		if( accounts->load_num(accounts, &acc, RFIFOL(fd,4) ) ){
+			strncpy( acc.pincode, (char*)RFIFOP(fd,8), PINCODE_LENGTH+1 );
 			acc.pincode_change = time( NULL );
 			accounts->save(accounts, &acc);
 		}
-		RFIFOSKIP(fd,11);
+		RFIFOSKIP(fd,8 + PINCODE_LENGTH+1);
 	}
 	return 1;
 }

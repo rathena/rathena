@@ -345,7 +345,7 @@ int intif_wis_message_to_gm(char *wisp_name, int permission, char *mes)
 	if (CheckForCharServer())
 		return 0;
 	mes_len = strlen(mes) + 1; // + null
-	WFIFOHEAD(inter_fd, mes_len + 32);
+	WFIFOHEAD(inter_fd, mes_len + 8 + NAME_LENGTH);
 	WFIFOW(inter_fd,0) = 0x3003;
 	WFIFOW(inter_fd,2) = mes_len + 32;
 	memcpy(WFIFOP(inter_fd,4), wisp_name, NAME_LENGTH);
@@ -1200,7 +1200,7 @@ int intif_parse_WisMessage(int fd)
 	}
 	//Success to send whisper.
 	clif_wis_message(sd->fd, wisp_source, (char*)RFIFOP(fd,56),RFIFOW(fd,2)-56);
-	intif_wis_replay(id,0);   // succes
+	intif_wis_replay(id,0);   // success
 	return 1;
 }
 
@@ -1258,12 +1258,12 @@ int mapif_parse_WisToGM(int fd)
 	char Wisp_name[NAME_LENGTH];
 	char *message;
 
-	mes_len =  RFIFOW(fd,2) - 32;
+	mes_len =  RFIFOW(fd,2) - 8+NAME_LENGTH;
 	message = (char *) aMalloc(mes_len);
 
-	permission = RFIFOL(fd,28);
+	permission = RFIFOL(fd,4+NAME_LENGTH);
 	safestrncpy(Wisp_name, (char*)RFIFOP(fd,4), NAME_LENGTH);
-	safestrncpy(message, (char*)RFIFOP(fd,32), mes_len);
+	safestrncpy(message, (char*)RFIFOP(fd,8+NAME_LENGTH), mes_len);
 	// information is sent to all online GM
 	map_foreachpc(mapif_parse_WisToGM_sub, permission, Wisp_name, message, mes_len);
 	aFree(message);
@@ -2891,7 +2891,7 @@ void intif_itembound_req(int char_id,int aid,int guild_id) {
 }
 
 /**
- * Acknoledge the good deletion of the bound item
+ * Acknowledge the good deletion of the bound item
  * (unlock the guild storage)
  * @struct : 0x3856 <aid>.L <gid>.W
  * @param fd : Char-serv link
@@ -2973,18 +2973,15 @@ int intif_parse(int fd)
 	case 0x3840:	intif_parse_GuildCastleDataLoad(fd); break;
 	case 0x3843:	intif_parse_GuildMasterChanged(fd); break;
 
-	//Quest system
-	case 0x3860:	intif_parse_questlog(fd); break;
-	case 0x3861:	intif_parse_questsave(fd); break;
-
-// Mail System
+	// Mail System
 	case 0x3848:	intif_parse_Mail_inboxreceived(fd); break;
 	case 0x3849:	intif_parse_Mail_new(fd); break;
 	case 0x384a:	intif_parse_Mail_getattach(fd); break;
 	case 0x384b:	intif_parse_Mail_delete(fd); break;
 	case 0x384c:	intif_parse_Mail_return(fd); break;
 	case 0x384d:	intif_parse_Mail_send(fd); break;
-// Auction System
+
+	// Auction System
 	case 0x3850:	intif_parse_Auction_results(fd); break;
 	case 0x3851:	intif_parse_Auction_register(fd); break;
 	case 0x3852:	intif_parse_Auction_cancel(fd); break;
@@ -2992,28 +2989,37 @@ int intif_parse(int fd)
 	case 0x3854:	intif_parse_Auction_message(fd); break;
 	case 0x3855:	intif_parse_Auction_bid(fd); break;
 
-//Bound items
+	//Bound items
 #ifdef BOUND_ITEMS
 	case 0x3856:	intif_parse_itembound_ack(fd); break;
 #endif
+
+	//Quest system
+	case 0x3860:	intif_parse_questlog(fd); break;
+	case 0x3861:	intif_parse_questsave(fd); break;
 
 	// Mercenary System
 	case 0x3870:	intif_parse_mercenary_received(fd); break;
 	case 0x3871:	intif_parse_mercenary_deleted(fd); break;
 	case 0x3872:	intif_parse_mercenary_saved(fd); break;
+
 	// Elemental System
 	case 0x387c:	intif_parse_elemental_received(fd); break;
 	case 0x387d:	intif_parse_elemental_deleted(fd); break;
 	case 0x387e:	intif_parse_elemental_saved(fd); break;
 
+	// Pet System
 	case 0x3880:	intif_parse_CreatePet(fd); break;
 	case 0x3881:	intif_parse_RecvPetData(fd); break;
 	case 0x3882:	intif_parse_SavePetOk(fd); break;
 	case 0x3883:	intif_parse_DeletePetOk(fd); break;
+
+	// Homunculus
 	case 0x3890:	intif_parse_CreateHomunculus(fd); break;
 	case 0x3891:	intif_parse_RecvHomunculusData(fd); break;
 	case 0x3892:	intif_parse_SaveHomunculusOk(fd); break;
 	case 0x3893:	intif_parse_DeleteHomunculusOk(fd); break;
+
 	default:
 		ShowError("intif_parse : unknown packet %d %x\n",fd,RFIFOW(fd,0));
 		return 0;
