@@ -35,11 +35,13 @@ int chlogif_pincode_notifyLoginPinError( int account_id ){
 
 int chlogif_pincode_notifyLoginPinUpdate( int account_id, char* pin ){
 	if (login_fd > 0 && session[login_fd] && !session[login_fd]->flag.eof){
-		WFIFOHEAD(login_fd,11);
+		int size = 8 + PINCODE_LENGTH+1;
+		WFIFOHEAD(login_fd,size);
 		WFIFOW(login_fd,0) = 0x2738;
-		WFIFOL(login_fd,2) = account_id;
-		strncpy( (char*)WFIFOP(login_fd,6), pin, PINCODE_LENGTH+1 );
-		WFIFOSET(login_fd,11);
+		WFIFOW(login_fd,2) = size;
+		WFIFOL(login_fd,4) = account_id;
+		strncpy( (char*)WFIFOP(login_fd,8), pin, PINCODE_LENGTH+1 );
+		WFIFOSET(login_fd,size);
 		return 1;
 	}
 	return 0;
@@ -47,6 +49,7 @@ int chlogif_pincode_notifyLoginPinUpdate( int account_id, char* pin ){
 
 void chlogif_pincode_start(int fd, struct char_session_data* sd){
 	if( charserv_config.pincode_config.pincode_enabled ){
+		ShowInfo("Asking to start pincode to AID: %d\n", sd->account_id);
 		// PIN code system enabled
 		if( sd->pincode[0] == '\0' ){
 			// No PIN code has been set yet
@@ -75,6 +78,7 @@ void chlogif_pincode_start(int fd, struct char_session_data* sd){
 		}
 	}else{
 		// PIN code system disabled
+		//ShowInfo("Pincode is disabled.\n");
 		chclif_pincode_sendstate( fd, sd, PINCODE_OK );
 	}
 }
@@ -329,10 +333,8 @@ int chlogif_parse_reqaccdata(int fd, struct char_session_data* sd){
 		} else {
 			// send characters to player
 			chclif_mmo_char_send(u_fd, sd);
-			if(sd->version >= date2version(20110309)){
-				ShowInfo("Asking to start pincode\n");
+			if(sd->version >= date2version(20110309))
 				chlogif_pincode_start(u_fd,sd);
-			}
 		}
 	}
 	RFIFOSKIP(fd,79);
