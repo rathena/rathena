@@ -124,6 +124,10 @@ int cnslif_parse(const char* buf){
 			}
 			else if( strcmpi("alive", command) == 0 || strcmpi("status", command) == 0 )
 				ShowInfo(CL_CYAN"Console: "CL_BOLD"I'm Alive."CL_RESET"\n");
+			else if( strcmpi("reloadconf", command) == 0 ) {
+				ShowInfo("Reloading config file \"%s\"\n", login_config.loginconf_name);
+				login_config_read(login_config.loginconf_name, false);
+			}
 		}
 		if( strcmpi("create",type) == 0 )
 		{
@@ -151,6 +155,7 @@ int cnslif_parse(const char* buf){
 		ShowInfo("Available commands:\n");
 		ShowInfo("\t server:shutdown => Stops the server.\n");
 		ShowInfo("\t server:alive => Checks if the server is running.\n");
+		ShowInfo("\t server:reloadconf => Reload config file: \"%s\"\n", login_config.loginconf_name);
 		ShowInfo("\t ers_report => Displays database usage.\n");
 		ShowInfo("\t create:<username> <password> <sex:M|F> => Creates a new account.\n");
 	}

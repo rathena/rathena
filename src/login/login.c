@@ -538,14 +538,15 @@ int login_lan_config_read(const char *lancfgName) {
 /**
  * Reading main configuration file.
  * @param cfgName: Name of the configuration (could be fullpath)
- * @return 0:success, 1:failure (file not found|readable)
+ * @param normal: Config read normally when server started
+ * @return True:success, Fals:failure (file not found|readable)
  */
-int login_config_read(const char* cfgName) {
+bool login_config_read(const char* cfgName, bool normal) {
 	char line[1024], w1[32], w2[1024];
 	FILE* fp = fopen(cfgName, "r");
 	if (fp == NULL) {
 		ShowError("Configuration file (%s) not found.\n", cfgName);
-		return 1;
+		return false;
 	}
 	while(fgets(line, sizeof(line), fp)) {
 		if (line[0] == '/' && line[1] == '/')
@@ -553,6 +554,21 @@ int login_config_read(const char* cfgName) {
 
 		if (sscanf(line, "%31[^:]: %1023[^\r\n]", w1, w2) < 2)
 			continue;
+
+		// Config that loaded only when server started, not by reloading config file
+		if (normal) {
+			if( !strcmpi(w1, "bind_ip") ) {
+				login_config.login_ip = host2ip(w2);
+				if( login_config.login_ip ) {
+					char ip_str[16];
+					ShowStatus("Login server binding IP address : %s -> %s\n", w2, ip2str(login_config.login_ip, ip_str));
+				}
+			}
+			else if( !strcmpi(w1, "login_port") )
+				login_config.login_port = (uint16)atoi(w2);
+			else if(!strcmpi(w1, "console"))
+				login_config.console = (bool)config_switch(w2);
+		}
 
 		if(!strcmpi(w1,"timestamp_format"))
 			safestrncpy(timestamp_format, w2, 20);
@@ -565,16 +581,7 @@ int login_config_read(const char* cfgName) {
 			if( msg_silent ) /* only bother if we actually have this enabled */
 				ShowInfo("Console Silent Setting: %d\n", atoi(w2));
 		}
-		else if( !strcmpi(w1, "bind_ip") ) {
-			login_config.login_ip = host2ip(w2);
-			if( login_config.login_ip ) {
-				char ip_str[16];
-				ShowStatus("Login server binding IP address : %s -> %s\n", w2, ip2str(login_config.login_ip, ip_str));
-			}
-		}
-		else if( !strcmpi(w1, "login_port") ) {
-			login_config.login_port = (uint16)atoi(w2);
-		} else if(!strcmpi(w1, "log_login"))
+		else if(!strcmpi(w1, "log_login"))
 			login_config.log_login = (bool)config_switch(w2);
 		else if(!strcmpi(w1, "new_account"))
 			login_config.new_account_flag = (bool)config_switch(w2);
@@ -594,8 +601,6 @@ int login_config_read(const char* cfgName) {
 			login_config.min_group_id_to_connect = atoi(w2);
 		else if(!strcmpi(w1, "date_format"))
 			safestrncpy(login_config.date_format, w2, sizeof(login_config.date_format));
-		else if(!strcmpi(w1, "console"))
-			login_config.console = (bool)config_switch(w2);
 		else if(!strcmpi(w1, "allowed_regs")) //account flood protection system
 			login_config.allowed_regs = atoi(w2);
 		else if(!strcmpi(w1, "time_allowed"))
@@ -657,8 +662,10 @@ int login_config_read(const char* cfgName) {
 		}
 #endif
 		else if(!strcmpi(w1, "import"))
-			login_config_read(w2);
+			login_config_read(w2, normal);
 		else {// try the account engines
+			if (!normal)
+				continue;
 			if (accounts && accounts->set_property(accounts, w1, w2))
 				continue;
 			// try others
@@ -668,7 +675,7 @@ int login_config_read(const char* cfgName) {
 	}
 	fclose(fp);
 	ShowInfo("Finished reading %s.\n", cfgName);
-	return 0;
+	return true;
 }
 
 /**
@@ -812,7 +819,7 @@ int do_init(int argc, char** argv) {
 	login_set_defaults();
 	logcnslif_get_options(argc,argv);
 
-	login_config_read(login_config.loginconf_name);
+	login_config_read(login_config.loginconf_name, true);
 	msg_config_read(login_config.msgconf_name);
 	login_lan_config_read(login_config.lanconf_name);
 	//end config

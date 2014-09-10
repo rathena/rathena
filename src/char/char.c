@@ -2527,13 +2527,13 @@ void char_set_defaults(){
 	charserv_config.guild_exp_rate = 100;
 }
 
-int char_config_read(const char* cfgName){
+bool char_config_read(const char* cfgName, bool normal){
 	char line[1024], w1[1024], w2[1024];
 	FILE* fp = fopen(cfgName, "r");
 
 	if (fp == NULL) {
 		ShowError("Configuration file not found: %s.\n", cfgName);
-		return 1;
+		return false;
 	}
 
 	while(fgets(line, sizeof(line), fp)) {
@@ -2545,6 +2545,49 @@ int char_config_read(const char* cfgName){
 
 		remove_control_chars(w1);
 		remove_control_chars(w2);
+
+		// Config that loaded only when server started, not by reloading config file
+		if (normal) {
+			if (strcmpi(w1, "userid") == 0) {
+				safestrncpy(charserv_config.userid, w2, sizeof(charserv_config.userid));
+			} else if (strcmpi(w1, "passwd") == 0) {
+				safestrncpy(charserv_config.passwd, w2, sizeof(charserv_config.passwd));
+			} else if (strcmpi(w1, "server_name") == 0) {
+				safestrncpy(charserv_config.server_name, w2, sizeof(charserv_config.server_name));
+			} else if (strcmpi(w1, "wisp_server_name") == 0) {
+				if (strlen(w2) >= 4) {
+					safestrncpy(charserv_config.wisp_server_name, w2, sizeof(charserv_config.wisp_server_name));
+				}
+			} else if (strcmpi(w1, "login_ip") == 0) {
+				charserv_config.login_ip = host2ip(w2);
+				if (charserv_config.login_ip) {
+					char ip_str[16];
+					safestrncpy(charserv_config.login_ip_str, w2, sizeof(charserv_config.login_ip_str));
+					ShowStatus("Login server IP address : %s -> %s\n", w2, ip2str(charserv_config.login_ip, ip_str));
+				}
+			} else if (strcmpi(w1, "login_port") == 0) {
+				charserv_config.login_port = atoi(w2);
+			} else if (strcmpi(w1, "char_ip") == 0) {
+				charserv_config.char_ip = host2ip(w2);
+				if (charserv_config.char_ip) {
+					char ip_str[16];
+					safestrncpy(charserv_config.char_ip_str, w2, sizeof(charserv_config.char_ip_str));
+					ShowStatus("Character server IP address : %s -> %s\n", w2, ip2str(charserv_config.char_ip, ip_str));
+				}
+			} else if (strcmpi(w1, "bind_ip") == 0) {
+				charserv_config.bind_ip = host2ip(w2);
+				if (charserv_config.bind_ip) {
+					char ip_str[16];
+					safestrncpy(charserv_config.bind_ip_str, w2, sizeof(charserv_config.bind_ip_str));
+					ShowStatus("Character server binding IP address : %s -> %s\n", w2, ip2str(charserv_config.bind_ip, ip_str));
+				}
+			} else if (strcmpi(w1, "char_port") == 0) {
+				charserv_config.char_port = atoi(w2);
+			} else if (strcmpi(w1, "console") == 0) {
+				charserv_config.console = config_switch(w2);
+			}
+		}
+
 		if(strcmpi(w1,"timestamp_format") == 0) {
 			safestrncpy(timestamp_format, w2, sizeof(timestamp_format));
 		} else if(strcmpi(w1,"console_silent")==0){
@@ -2553,41 +2596,6 @@ int char_config_read(const char* cfgName){
 				ShowInfo("Console Silent Setting: %d\n", atoi(w2));
 		} else if(strcmpi(w1,"stdout_with_ansisequence")==0){
 			stdout_with_ansisequence = config_switch(w2);
-		} else if (strcmpi(w1, "userid") == 0) {
-			safestrncpy(charserv_config.userid, w2, sizeof(charserv_config.userid));
-		} else if (strcmpi(w1, "passwd") == 0) {
-			safestrncpy(charserv_config.passwd, w2, sizeof(charserv_config.passwd));
-		} else if (strcmpi(w1, "server_name") == 0) {
-			safestrncpy(charserv_config.server_name, w2, sizeof(charserv_config.server_name));
-		} else if (strcmpi(w1, "wisp_server_name") == 0) {
-			if (strlen(w2) >= 4) {
-				safestrncpy(charserv_config.wisp_server_name, w2, sizeof(charserv_config.wisp_server_name));
-			}
-		} else if (strcmpi(w1, "login_ip") == 0) {
-			charserv_config.login_ip = host2ip(w2);
-			if (charserv_config.login_ip) {
-				char ip_str[16];
-				safestrncpy(charserv_config.login_ip_str, w2, sizeof(charserv_config.login_ip_str));
-				ShowStatus("Login server IP address : %s -> %s\n", w2, ip2str(charserv_config.login_ip, ip_str));
-			}
-		} else if (strcmpi(w1, "login_port") == 0) {
-			charserv_config.login_port = atoi(w2);
-		} else if (strcmpi(w1, "char_ip") == 0) {
-			charserv_config.char_ip = host2ip(w2);
-			if (charserv_config.char_ip) {
-				char ip_str[16];
-				safestrncpy(charserv_config.char_ip_str, w2, sizeof(charserv_config.char_ip_str));
-				ShowStatus("Character server IP address : %s -> %s\n", w2, ip2str(charserv_config.char_ip, ip_str));
-			}
-		} else if (strcmpi(w1, "bind_ip") == 0) {
-			charserv_config.bind_ip = host2ip(w2);
-			if (charserv_config.bind_ip) {
-				char ip_str[16];
-				safestrncpy(charserv_config.bind_ip_str, w2, sizeof(charserv_config.bind_ip_str));
-				ShowStatus("Character server binding IP address : %s -> %s\n", w2, ip2str(charserv_config.bind_ip, ip_str));
-			}
-		} else if (strcmpi(w1, "char_port") == 0) {
-			charserv_config.char_port = atoi(w2);
 		} else if (strcmpi(w1, "char_maintenance") == 0) {
 			charserv_config.char_maintenance = atoi(w2);
 		} else if (strcmpi(w1, "char_new") == 0) {
@@ -2664,8 +2672,6 @@ int char_config_read(const char* cfgName){
 			charserv_config.char_config.char_del_option = atoi(w2);
 		} else if(strcmpi(w1,"db_path")==0) {
 			safestrncpy(schema_config.db_path, w2, sizeof(schema_config.db_path));
-		} else if (strcmpi(w1, "console") == 0) {
-			charserv_config.console = config_switch(w2);
 		} else if (strcmpi(w1, "fame_list_alchemist") == 0) {
 			fame_list_size_chemist = atoi(w2);
 			if (fame_list_size_chemist > MAX_FAME_LIST) {
@@ -2709,13 +2715,13 @@ int char_config_read(const char* cfgName){
 		} else if (strcmpi(w1, "char_checkdb") == 0) {
 			charserv_config.char_check_db = config_switch(w2);
 		} else if (strcmpi(w1, "import") == 0) {
-			char_config_read(w2);
+			char_config_read(w2, normal);
 		}
 	}
 	fclose(fp);
 
 	ShowInfo("Done reading %s.\n", cfgName);
-	return 0;
+	return true;
 }
 
 
@@ -2811,7 +2817,7 @@ int do_init(int argc, char **argv)
 	cli_get_options(argc,argv);
 
 	char_set_defaults();
-	char_config_read(CHAR_CONF_NAME);
+	char_config_read(CHAR_CONF_NAME, true);
 	char_lan_config_read(LAN_CONF_NAME);
 	char_set_default_sql();
 	char_sql_config_read(SQL_CONF_NAME);
