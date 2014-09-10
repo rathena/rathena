@@ -61,10 +61,12 @@ sub GetArgs {
     'C=i'	=> \$sClean,	 #Clean (like force but remove before adding)
     'target=s'	=> \$sTarget,	 #Target (wich setup to run)
     'Force=i'	=> \$sForce,	 #Force (bypass verification)
+    'OS=s'	=> \$sOS, #OS (specify the os you wish to use)
     'help!' => \$sHelp,
     ) or $sHelp=1; #display help if invalid option
     my $sValidTarget = "All|Conf|DB|Inst|Dump";
-
+    
+	
     if( $sHelp ) {
 	print "Incorect option specified, available option are:\n"
 	    ."\t --f filename => file (specify desiredconf to use)\n"
@@ -72,6 +74,7 @@ sub GetArgs {
 	    ."\t --C => Clean (remove file, db, user before adding new)\n"
 	    ."\t --target => target (specify wich setup to run [$sValidTarget])\n"
 	    ."\t --Force => Force (bypass verification)\n";
+	    ."\t --OS => (specify the os you wish to use and avoid check)";
 	exit;
     }
     unless($sTarget =~ /$sValidTarget/i){
@@ -179,20 +182,30 @@ sub EnableCoredump {
 
 sub GetOS {
 	#yes we could $^0 or uname -r but $^0 only give perl binary build OS and uname hmm...
-	my @aSupportedOS = ("Debian","Ubuntu","Fedora","CentOs","FreeBSD");
-    my $sOSregex = join("|",@aSupportedOS); 
-    until($sOS =~ /$sOSregex/i){
-		print "Please enter your OS:[$sOSregex] or enter 'quit' to exit\n";
-		$sOS = <>; chomp($sOS);
-		last if($sOS eq "quit");
-    }
+	open PIPE,"lsb_release -i  |" or die $!;
+	my $sDistri = <PIPE>;
+	if($sDistri){
+		my @aDist =  split(":",$sDistri);
+		$sDistri = $aDist[1];
+		$sDistri =~ s/^\s+|\s+$//g;
+		$sOS = $sDistri;
+	}
+	else {
+		my @aSupportedOS = ("Debian","Ubuntu","Fedora","CentOs","FreeBSD");
+		my $sOSregex = join("|",@aSupportedOS); 
+		until($sOS =~ /$sOSregex/i){
+			print "Please enter your OS:[$sOSregex] or enter 'quit' to exit\n";
+			$sOS = <>; chomp($sOS);
+			last if($sOS eq "quit");
+		}
+	}
 	return $sOS;
 }
 
 sub InstallSoft {
     print "\n Starting InstallSoft \n";
     print "This autoinstall feature is experimental, package name varies from distri and version, couldn't support them all\n";
-    $sOS = GetOS();
+    $sOS = GetOS() unless $sOS;
     if($sOS eq "quit"){ print "Skipping Software installation\n"; return; }
     elsif($sOS =~ /Ubuntu|Debian/i) { #tested on ubuntu 12.10,13.10
 	my @aListSoft = ("gcc","gdb","zlibc","zlib1g-dev","make","git","mysql-client","mysql-server","mysql-common","libmysqlclient-dev","phpmyadmin","libpcre3-dev");

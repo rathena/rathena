@@ -471,10 +471,14 @@ set( DEVELOPMENT_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/configure.in"
 	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena-9.sln"
 	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena-10.sln"
+	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena-12.sln"
+	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena-13.sln"
 	)
 set( DEVELOPMENT_DIRECTORIES
 	"3rdparty"
 	"conf/import-tmpl"
+	"conf/msg_conf/import-tmpl"
+	"db/import-tmpl"
 	"src"
 	"vcproj-9"
 	"vcproj-10"
@@ -538,6 +542,8 @@ if( INSTALL_COMPONENT_RUNTIME )
 	# templates
 	set( _TEMPLATES
 		"conf/import-tmpl" "conf/import"
+		"conf/msg_conf/import-tmpl" "conf/msg_conf/import"
+		"db/import-tmpl" "db/import"
 		)
 	set( INSTALL_TEMPLATES_FILE "${CMAKE_CURRENT_BINARY_DIR}/InstallTemplates.cmake" )
 	file( WRITE "${INSTALL_TEMPLATES_FILE}"
