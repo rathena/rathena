@@ -121,6 +121,7 @@ extern struct Login_Config login_config;
 int login_msg_config_read(char *cfgName);
 const char* login_msg_txt(int msg_number);
 void login_do_final_msg(void);
+bool login_config_read(const char* cfgName, bool normal);
 
 /// Online User Database [Wizputer]
 struct online_login_data {

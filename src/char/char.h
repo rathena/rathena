@@ -271,6 +271,7 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 int char_msg_config_read(char *cfgName);
 const char* char_msg_txt(int msg_number);
 void char_do_final_msg(void);
+bool char_config_read(const char* cfgName, bool normal);
 
 
 #endif /* _CHAR_SQL_H_ */
