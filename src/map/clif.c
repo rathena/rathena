@@ -2250,7 +2250,8 @@ void clif_additem(struct map_session_data *sd, int n, int amount, unsigned char 
 		WFIFOL(fd,offs+23)=sd->status.inventory[n].expire_time;
 #endif
 #if PACKETVER >= 20071002
-		WFIFOW(fd,offs+27)=sd->status.inventory[n].bound ? BOUND_GUILD : 0;
+		/* Yellow color only for non-stackable item */
+		WFIFOW(fd,offs+27)=sd->status.inventory[n].bound && !itemdb_isstackable(sd->status.inventory[n].nameid) ? BOUND_DISPYELLOW : 0;
 #endif
 	}
 
@@ -2306,67 +2307,67 @@ void clif_delitem(struct map_session_data *sd,int n,int amount, short reason)
 #endif
 }
 
-void clif_item_sub_v5(unsigned char *buf, int n, int idx, struct item *i, struct item_data *id, int equip) {
+void clif_item_sub_v5(unsigned char *buf, int n, int idx, struct item *it, struct item_data *id, int equip) {
 	char normal = (equip < 0);
 
-	WBUFW(buf,n)=idx; //index
-	WBUFW(buf,n+2)= (id->view_id > 0)?id->view_id:i->nameid;
-	WBUFB(buf,n+4)=itemtype(id->nameid);
+	WBUFW(buf,n) = idx; //index
+	WBUFW(buf,n+2) = (id->view_id > 0) ? id->view_id : it->nameid;
+	WBUFB(buf,n+4) = itemtype(id->nameid);
 
-	if(!normal){ //equip 31B
-		WBUFL(buf,n+5)= equip; //location
-		WBUFL(buf,n+9)= i->equip; //wear state
-		WBUFB(buf,n+13)= i->refine; //refine lvl
-		clif_addcards(WBUFP(buf, n+14), i); //EQUIPSLOTINFO 8B
-		WBUFL(buf,n+22) = i->expire_time;
-		WBUFW(buf,n+26)= 0; //bindOnEquipType
-		WBUFW(buf,n+28)= (id->equip&EQP_VISIBLE)?id->look:0;
+	if (!normal){ //equip 31B
+		WBUFL(buf,n+5) = equip; //location
+		WBUFL(buf,n+9) = it->equip; //wear state
+		WBUFB(buf,n+13) = it->refine; //refine lvl
+		clif_addcards(WBUFP(buf, n+14), it); //EQUIPSLOTINFO 8B
+		WBUFL(buf,n+22) = it->expire_time;
+		WBUFW(buf,n+26) = it->bound ? BOUND_DISPYELLOW : 0; //bindOnEquipType
+		WBUFW(buf,n+28) = (id->equip&EQP_VISIBLE) ? id->look : 0;
 		//V5_ITEM_flag
-		WBUFB(buf,n+30)=i->identify; //0x1 IsIdentified
-		WBUFB(buf,n+30)|=(i->attribute)?0x2:0; //0x2 IsDamaged
-		WBUFB(buf,n+30)|= (i->favorite)?0x4:0; //0x4 PlaceETCTab
+		WBUFB(buf,n+30) = it->identify; //0x1 IsIdentified
+		WBUFB(buf,n+30) |= (it->attribute) ? 0x2 : 0; //0x2 IsDamaged
+		WBUFB(buf,n+30) |= (it->favorite) ? 0x4 : 0; //0x4 PlaceETCTab
 	}
 	else { //normal 24B
-		WBUFW(buf,n+5)=i->amount;
-		WBUFL(buf,n+7)=(equip == -2 && id->equip == EQP_AMMO)?id->equip:0; //wear state
-		clif_addcards(WBUFP(buf, n+11), i); //EQUIPSLOTINFO 8B
-		WBUFL(buf,n+19) = i->expire_time;
+		WBUFW(buf,n+5) = it->amount;
+		WBUFL(buf,n+7) = (equip == -2 && id->equip == EQP_AMMO)?id->equip:0; //wear state
+		clif_addcards(WBUFP(buf, n+11), it); //EQUIPSLOTINFO 8B
+		WBUFL(buf,n+19) = it->expire_time;
 		//V5_ITEM_flag
-		WBUFB(buf,n+23)=i->identify; //0x1 IsIdentified
-		WBUFB(buf,n+23)|= (i->favorite)?0x2:0; //0x4,0x2 PlaceETCTab
+		WBUFB(buf,n+23) = it->identify; //0x1 IsIdentified
+		WBUFB(buf,n+23) |= (it->favorite) ? 0x2 : 0; //0x4,0x2 PlaceETCTab
 	}
 }
 
 // Simplifies inventory/cart/storage packets by handling the packet section relevant to items. [Skotlex]
 // Equip is >= 0 for equippable items (holds the equip-point, is 0 for pet
 // armor/egg) -1 for stackable items, -2 for stackable items where arrows must send in the equip-point.
-void clif_item_sub(unsigned char *buf, int n, int idx, struct item *i, struct item_data *id, int equip) {
+void clif_item_sub(unsigned char *buf, int n, int idx, struct item *it, struct item_data *id, int equip) {
 #if PACKETVER >= 20120925
-	clif_item_sub_v5(buf, n, idx, i, id, equip);
+	clif_item_sub_v5(buf, n, idx, it, id, equip);
 #else
-	WBUFW(buf,n)=idx; //index
-	WBUFW(buf,n+2)=(id->view_id > 0)?id->view_id:i->nameid; //itid
-	WBUFB(buf,n+4)=itemtype(id->nameid);
-	WBUFB(buf,n+5)=i->identify;
+	WBUFW(buf,n) = idx; //index
+	WBUFW(buf,n+2) = (id->view_id > 0) ? id->view_id : it->nameid; //itid
+	WBUFB(buf,n+4) = itemtype(id->nameid);
+	WBUFB(buf,n+5) = it->identify;
 	if (equip >= 0) { //Equippable item 28.B
-		WBUFW(buf,n+6)=equip;
-		WBUFW(buf,n+8)=i->equip;
-		WBUFB(buf,n+10)=i->attribute;
-		WBUFB(buf,n+11)=i->refine;
-		clif_addcards(WBUFP(buf, n+12), i); //8B
+		WBUFW(buf,n+6) = equip;
+		WBUFW(buf,n+8) = it->equip;
+		WBUFB(buf,n+10) = it->attribute;
+		WBUFB(buf,n+11) = it->refine;
+		clif_addcards(WBUFP(buf, n+12), it); //8B
 #if PACKETVER >= 20071002
-		WBUFL(buf,n+20)=i->expire_time;
-		WBUFW(buf,n+24)=i->bound ? BOUND_GUILD : 0;
+		WBUFL(buf,n+20) = it->expire_time;
+		WBUFW(buf,n+24) = it->bound ? BOUND_DISPYELLOW : 0;
 #endif
 #if PACKETVER >= 20100629
-		WBUFW(buf,n+26)= (id->equip&EQP_VISIBLE)?id->look:0;
+		WBUFW(buf,n+26) = (id->equip&EQP_VISIBLE) ? id->look : 0;
 #endif
 	} else { //Stackable item. 22.B
-		WBUFW(buf,n+6)=i->amount;
-		WBUFW(buf,n+8)=(equip == -2 && id->equip == EQP_AMMO)?id->equip:0;
-		clif_addcards(WBUFP(buf, n+10), i); //8B
+		WBUFW(buf,n+6) = it->amount;
+		WBUFW(buf,n+8) = (equip == -2 && id->equip == EQP_AMMO) ? id->equip : 0;
+		clif_addcards(WBUFP(buf, n+10), it); //8B
 #if PACKETVER >= 20071002
-		WBUFL(buf,n+18)=i->expire_time;
+		WBUFL(buf,n+18) = it->expire_time;
 #endif
 	}
 #endif
@@ -4171,11 +4172,13 @@ static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_d
 		clif_hpmeter_single(sd->fd, dstsd->bl.id, dstsd->battle_status.hp, dstsd->battle_status.max_hp);
 
 	// display link (sd - dstsd) to sd
-	ARR_FIND( 0, 5, i, sd->devotion[i] == dstsd->bl.id );
-	if( i < 5 ) clif_devotion(&sd->bl, sd);
+	ARR_FIND( 0, MAX_DEVOTION, i, sd->devotion[i] == dstsd->bl.id );
+	if( i < MAX_DEVOTION )
+		clif_devotion(&sd->bl, sd);
 	// display links (dstsd - devotees) to sd
-	ARR_FIND( 0, 5, i, dstsd->devotion[i] > 0 );
-	if( i < 5 ) clif_devotion(&dstsd->bl, sd);
+	ARR_FIND( 0, MAX_DEVOTION, i, dstsd->devotion[i] > 0 );
+	if( i < MAX_DEVOTION )
+		clif_devotion(&dstsd->bl, sd);
 	// display link (dstsd - crusader) to sd
 	if( dstsd->sc.data[SC_DEVOTION] && (d_bl = map_id2bl(dstsd->sc.data[SC_DEVOTION]->val1)) != NULL )
 		clif_devotion(d_bl, sd);
@@ -7331,7 +7334,7 @@ void clif_devotion(struct block_list *src, struct map_session_data *tsd)
 		if( sd == NULL )
 			return;
 
-		for( i = 0; i < 5; i++ )
+		for( i = 0; i < 5 /*MAX_DEVOTION*/; i++ ) // Client only able show to 5 links
 			WBUFL(buf,6+4*i) = sd->devotion[i];
 		WBUFW(buf,26) = skill_get_range2(src, CR_DEVOTION, pc_checkskill(sd, CR_DEVOTION));
 	}
@@ -13140,50 +13143,56 @@ void clif_parse_GMRecall2(int fd, struct map_session_data* sd)
 /// 09ce <item/mob name>.100B [Ind/Yommy]
 void clif_parse_GM_Item_Monster(int fd, struct map_session_data *sd)
 {
-	int i, count;
-	char *item_monster_name;
-	struct item_data *item_array[10];
-	struct mob_db *mob_array[10];
-	char command[256];
-#if PACKETVER >= 20131218
-	char str[100];
-#else
-	char str[24];
-#endif
+	struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
+	int mob_id = 0;
+	struct item_data *id = NULL;
+	struct mob_db *mob = NULL;
+	StringBuf command;
+	char *str;
+//#if PACKETVER >= 20131218
+//	char str[100];
+//#else
+//	char str[24];
+//#endif
 
-	item_monster_name = str;
-	item_monster_name[(sizeof(str) - 2) - 1] = '\0';
+	str = (char*)RFIFOP(fd,info->pos[0]);
+	if (!str || str[0] == '\0')
+		return;
+	if (strcmpi(str,"SPPOINT") == 0 || strcmpi(str,"JOBLEVEL") == 0) //! TODO /sp sends these values
+		return;
+	trim(str);
 
-	if( (count = itemdb_searchname_array(item_array, 10, item_monster_name)) > 0 ) {
-		for( i = 0; i < count; i++ )
-			if( !item_array[i] )
-				continue;
-
-		if( i < count ) {
-			if( item_array[i]->type == IT_WEAPON || item_array[i]->type == IT_ARMOR ) //Nonstackable
-				safesnprintf(command, sizeof(command) - 1, "%citem2 %d 1 0 0 0 0 0 0 0", atcommand_symbol, item_array[i]->nameid);
-			else
-				safesnprintf(command, sizeof(command) - 1, "%citem %d 20", atcommand_symbol, item_array[i]->nameid);
-			is_atcommand(fd, sd, command, 1);
-			return;
-		}
-	}
-
-	if( strcmp(item_monster_name, "money") == 0 ) {
-		safesnprintf(command, sizeof(command) - 1, "%czeny %d", atcommand_symbol, INT_MAX);
-		is_atcommand(fd, sd, command, 1);
+	// Zeny
+	if( strcmpi(str, "money") == 0 ) {
+		StringBuf_Init(&command);
+		StringBuf_Printf(&command, "%czeny %d", atcommand_symbol, INT_MAX);
+		is_atcommand(fd, sd, StringBuf_Value(&command), 1);
+		StringBuf_Destroy(&command);
 		return;
 	}
 
-	if( (count = mobdb_searchname_array(mob_array, 10, item_monster_name)) > 0 ) {
-		for( i = 0; i < count; i++ )
-			if( !mob_array[i] )
-				continue;
+	// Item
+	if( (id = itemdb_searchname(str)) ) {
+		StringBuf_Init(&command);
+		if( id->type == IT_WEAPON || id->type == IT_ARMOR ) //Nonstackable
+			StringBuf_Printf(&command, "%citem2 %d 1 0 0 0 0 0 0 0", atcommand_symbol, id->nameid);
+		else
+			StringBuf_Printf(&command, "%citem %d 20", atcommand_symbol, id->nameid);
+		is_atcommand(fd, sd, StringBuf_Value(&command), 1);
+		StringBuf_Destroy(&command);
+		return;
+	}
 
-		if( i < count ) {
-			safesnprintf(command, sizeof(command) - 1, "%cmonster %s", atcommand_symbol, mob_array[i]->sprite);
-			is_atcommand(fd, sd, command, 1);
-		}
+	// Monster
+	if ((mob_id = mobdb_searchname(str)) == 0)
+		mob_id = mobdb_checkid(atoi(str));
+
+	if( (mob = mob_db(mob_id)) ) {
+		StringBuf_Init(&command);
+		StringBuf_Printf(&command, "%cmonster %s", atcommand_symbol, mob->sprite);
+		is_atcommand(fd, sd, StringBuf_Value(&command), 1);
+		StringBuf_Destroy(&command);
+		return;
 	}
 }
 
@@ -14722,8 +14731,10 @@ void clif_parse_Auction_setitem(int fd, struct map_session_data *sd){
 
 	if( !pc_can_give_items(sd) || sd->status.inventory[idx].expire_time ||
 			!sd->status.inventory[idx].identify ||
+			(sd->status.inventory[idx].bound && !pc_can_give_bounded_items(sd)) ||
 			!itemdb_available(sd->status.inventory[idx].nameid) ||
-			!itemdb_canauction(&sd->status.inventory[idx],pc_get_group_level(sd)) ) { // Quest Item or something else
+			!itemdb_canauction(&sd->status.inventory[idx],pc_get_group_level(sd)) // Quest Item or something else
+			) {
 		clif_Auction_setitem(sd->fd, idx, true);
 		return;
 	}

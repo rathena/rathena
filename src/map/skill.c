@@ -5781,6 +5781,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SA_ABRACADABRA:
 		{
 			int abra_skill_id = 0, abra_skill_lv;
+			if (!skill_abra_count) {
+				clif_skill_nodamage (src, bl, skill_id, skill_lv, 1);
+				break;
+			}
 			do {
 				i = rnd() % MAX_SKILL_ABRA_DB;
 				abra_skill_id = skill_abra_db[i].skill_id;
@@ -6345,7 +6349,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			}
 
 			i = 0;
-			count = (sd)? min(skill_lv,5) : 1; // Mercenary only can Devote owner
+			count = (sd)? min(skill_lv,MAX_DEVOTION) : 1; // Mercenary only can Devote owner
 			if( sd )
 			{ // Player Devoting Player
 				ARR_FIND(0, count, i, sd->devotion[i] == bl->id );
@@ -6366,7 +6370,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				mer->devotion_flag = 1; // Mercenary Devoting Owner
 
 			clif_skill_nodamage(src, bl, skill_id, skill_lv,
-				sc_start4(src, bl, type, 100, src->id, i, skill_get_range2(src,skill_id,skill_lv),0, skill_get_time2(skill_id, skill_lv)));
+				sc_start4(src, bl, type, 10000, src->id, i, skill_get_range2(src,skill_id,skill_lv), 0, skill_get_time2(skill_id, skill_lv)));
 			clif_devotion(src, NULL);
 		}
 		break;
@@ -9562,6 +9566,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case WM_RANDOMIZESPELL: {
 			int improv_skill_id = 0, improv_skill_lv;
+			if (!skill_improvise_count) {
+				clif_skill_nodamage (src, bl, skill_id, skill_lv, 1);
+				break;
+			}
 			do {
 				i = rnd() % MAX_SKILL_IMPROVISE_DB;
 				improv_skill_id = skill_improvise_db[i].skill_id;
@@ -12366,7 +12374,7 @@ static int skill_unit_onplace (struct skill_unit *unit, struct block_list *bl, u
 
 	sc = status_get_sc(bl);
 
-	if (sc && sc->option&OPTION_HIDE && sg->skill_id != WZ_HEAVENDRIVE && sg->skill_id != WL_EARTHSTRAIN)
+	if (sc && sc->option&OPTION_HIDE && !(skill_get_inf3(sg->skill_id)&INF3_HIT_HIDING))
 		return 0; //Hidden characters are immune to AoE skills except to these. [Skotlex]
 
 	if (sc && sc->data[SC_VACUUM_EXTREME] && map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR))
@@ -19861,34 +19869,33 @@ static bool skill_parse_row_producedb(char* split[], int columns, int current) {
 * SourceID,MakeID1,MakeAmount1,...,MakeID5,MakeAmount5
 */
 static bool skill_parse_row_createarrowdb(char* split[], int columns, int current) {
-	unsigned short x, y, j;
-	unsigned short material_id = atoi(split[0]);
+	unsigned short x, y, i, material_id = atoi(split[0]);
 
 	if (!(itemdb_exists(material_id))) {
 		ShowError("skill_parse_row_createarrowdb: Invalid item %d.\n", material_id);
 		return false;
 	}
 
-	//search if we override something, (if not j=last idx)
-	ARR_FIND(0, skill_arrow_count, j, skill_arrow_db[j].nameid == material_id);
-	if (j >= ARRAYLENGTH(skill_arrow_db)) {
+	//search if we override something, (if not i=last idx)
+	ARR_FIND(0, skill_arrow_count, i, skill_arrow_db[i].nameid == material_id);
+	if (i >= ARRAYLENGTH(skill_arrow_db)) {
 		ShowError("skill_parse_row_createarrowdb: Maximum db entries reached.\n");
 		return false;
 	}
 
 	// Import just for clearing/disabling from original data
 	if (atoi(split[1]) == 0) {
-		memset(&skill_arrow_db[j], 0, sizeof(skill_arrow_db[j]));
+		memset(&skill_arrow_db[i], 0, sizeof(skill_arrow_db[i]));
 		//ShowInfo("skill_parse_row_createarrowdb: Arrow creation with Material ID %d removed from list.\n", material_id);
 		return true;
 	}
 
-	skill_arrow_db[j].nameid = material_id;
+	skill_arrow_db[i].nameid = material_id;
 	for (x = 1, y = 0; x+1 < columns && split[x] && split[x+1] && y < MAX_ARROW_RESULT; x += 2, y++) {
-		skill_arrow_db[j].cre_id[y] = atoi(split[x]);
-		skill_arrow_db[j].cre_amount[y] = atoi(split[x+1]);
+		skill_arrow_db[i].cre_id[y] = atoi(split[x]);
+		skill_arrow_db[i].cre_amount[y] = atoi(split[x+1]);
 	}
-	if (j == skill_arrow_count)
+	if (i == skill_arrow_count)
 		skill_arrow_count++;
 
 	return true;
@@ -19898,33 +19905,33 @@ static bool skill_parse_row_createarrowdb(char* split[], int columns, int curren
 * SkillID,PreservePoints,RequiredBook
 */
 static bool skill_parse_row_spellbookdb(char* split[], int columns, int current) {
-	unsigned short j;
-	unsigned short skill_id = atoi(split[0]);
-	unsigned short points = atoi(split[1]);
-	unsigned short nameid = atoi(split[2]);
+	unsigned short i,
+		skill_id = atoi(split[0]),
+		points = atoi(split[1]),
+		nameid = atoi(split[2]);
 
 	if (!skill_get_index(skill_id) || !skill_get_max(skill_id))
 		ShowError("skill_parse_row_spellbookdb: Invalid skill ID %d\n", skill_id);
 	if (!skill_get_inf(skill_id))
 		ShowError("skill_parse_row_spellbookdb: Passive skills cannot be memorized (%d/%s)\n", skill_id, skill_get_name(skill_id));
 	else {
-		ARR_FIND(0, skill_spellbook_count, j, skill_spellbook_db[j].skill_id == skill_id);
-		if (j >= ARRAYLENGTH(skill_spellbook_db)) {
+		ARR_FIND(0, skill_spellbook_count, i, skill_spellbook_db[i].skill_id == skill_id);
+		if (i >= ARRAYLENGTH(skill_spellbook_db)) {
 			ShowError("skill_parse_row_spellbookdb: Maximum db entries reached.\n");
 			return false;
 		}
 		// Import just for clearing/disabling from original data
 		if (points == 0) {
-			memset(&skill_spellbook_db[j], 0, sizeof(skill_spellbook_db[j]));
+			memset(&skill_spellbook_db[i], 0, sizeof(skill_spellbook_db[i]));
 			//ShowInfo("skill_parse_row_spellbookdb: Skill %d removed from list.\n", skill_id);
 			return true;
 		}
 
-		skill_spellbook_db[j].skill_id = skill_id;
-		skill_spellbook_db[j].point = points;
-		skill_spellbook_db[j].nameid = nameid;
+		skill_spellbook_db[i].skill_id = skill_id;
+		skill_spellbook_db[i].point = points;
+		skill_spellbook_db[i].nameid = nameid;
 
-		if (j == skill_spellbook_count)
+		if (i == skill_spellbook_count)
 			skill_spellbook_count++;
 		return true;
 	}
@@ -19937,8 +19944,7 @@ static bool skill_parse_row_spellbookdb(char* split[], int columns, int current)
 * SkillID,Rate
 */
 static bool skill_parse_row_improvisedb(char* split[], int columns, int current) {
-	uint16 skill_id = atoi(split[0]);
-	unsigned short j = atoi(split[1]);
+	unsigned short skill_id = atoi(split[0]), per = atoi(split[1]), i;
 
 	if( !skill_get_index(skill_id) || !skill_get_max(skill_id) ) {
 		ShowError("skill_parse_row_improvisedb: Invalid skill ID %d\n", skill_id);
@@ -19948,22 +19954,22 @@ static bool skill_parse_row_improvisedb(char* split[], int columns, int current)
 		ShowError("skill_parse_row_improvisedb: Passive skills cannot be casted (%d/%s)\n", skill_id, skill_get_name(skill_id));
 		return false;
 	}
-	ARR_FIND(0, skill_improvise_count, j, skill_improvise_db[j].skill_id == skill_id);
-	if (j >= ARRAYLENGTH(skill_improvise_db)) {
+	ARR_FIND(0, skill_improvise_count, i, skill_improvise_db[i].skill_id == skill_id);
+	if (i >= ARRAYLENGTH(skill_improvise_db)) {
 		ShowError("skill_parse_row_improvisedb: Maximum amount of entries reached (%d), increase MAX_SKILL_IMPROVISE_DB\n",MAX_SKILL_IMPROVISE_DB);
 		return false;
 	}
 	// Import just for clearing/disabling from original data
-	if (j == 0) {
-		memset(&skill_improvise_db[j], 0, sizeof(skill_improvise_db[j]));
+	if (per == 0) {
+		memset(&skill_improvise_db[i], 0, sizeof(skill_improvise_db[i]));
 		//ShowInfo("skill_parse_row_improvisedb: Skill %d removed from list.\n", skill_id);
 		return true;
 	}
 
-	skill_improvise_db[j].skill_id = skill_id;
-	skill_improvise_db[j].per = j; // Still need confirm it.
+	skill_improvise_db[i].skill_id = skill_id;
+	skill_improvise_db[i].per = per; // Still need confirm it.
 	
-	if (j == skill_improvise_count)
+	if (i == skill_improvise_count)
 		skill_improvise_count++;
 	
 	return true;
@@ -19973,8 +19979,7 @@ static bool skill_parse_row_improvisedb(char* split[], int columns, int current)
 * SkillID{,<RemoveFlag>}
 */
 static bool skill_parse_row_magicmushroomdb(char* split[], int column, int current) {
-	int j;
-	uint16 skill_id = atoi(split[0]);
+	unsigned short i, skill_id = atoi(split[0]);
 
 	if (!skill_get_index(skill_id) || !skill_get_max(skill_id)) {
 		ShowError("skill_parse_row_magicmushroomdb: Invalid skill ID %d\n", skill_id);
@@ -19984,20 +19989,20 @@ static bool skill_parse_row_magicmushroomdb(char* split[], int column, int curre
 		ShowError("skill_parse_row_magicmushroomdb: Passive skills cannot be casted (%d/%s)\n", skill_id, skill_get_name(skill_id));
 		return false;
 	}
-	ARR_FIND(0, skill_magicmushroom_count, j, skill_magicmushroom_db[j].skill_id==skill_id);
-	if (j >= ARRAYLENGTH(skill_magicmushroom_db)) {
+	ARR_FIND(0, skill_magicmushroom_count, i, skill_magicmushroom_db[i].skill_id==skill_id);
+	if (i >= ARRAYLENGTH(skill_magicmushroom_db)) {
 		ShowError("skill_parse_row_magicmushroomdb: Maximum db entries reached.\n");
 		return false;
 	}
 	// Import just for clearing/disabling from original data
 	if (split[1] != NULL) {
-		memset(&skill_magicmushroom_db[j], 0, sizeof(skill_magicmushroom_db[j]));
+		memset(&skill_magicmushroom_db[i], 0, sizeof(skill_magicmushroom_db[i]));
 		//ShowInfo("skill_parse_row_magicmushroomdb: Skill %d removed from list.\n", skill_id);
 		return true;
 	}
 
-	skill_magicmushroom_db[j].skill_id = skill_id;	
-	if (j == skill_magicmushroom_count)
+	skill_magicmushroom_db[i].skill_id = skill_id;	
+	if (i == skill_magicmushroom_count)
 		skill_magicmushroom_count++;
 
 	return true;
@@ -20067,8 +20072,7 @@ static bool skill_parse_row_nonearnpcrangedb(char* split[], int column, int curr
 * SkillID,DummyName,RatePerLvl
 */
 static bool skill_parse_row_abradb(char* split[], int columns, int current) {
-	int j;
-	uint16 skill_id = atoi(split[0]);
+	unsigned short i, skill_id = atoi(split[0]);
 	if (!skill_get_index(skill_id) || !skill_get_max(skill_id)) {
 		ShowError("skill_parse_row_abradb: Invalid skill ID %d\n", skill_id);
 		return false;
@@ -20078,22 +20082,22 @@ static bool skill_parse_row_abradb(char* split[], int columns, int current) {
 		return false;
 	}
 
-	ARR_FIND(0, skill_abra_count, j, skill_abra_db[j].skill_id==skill_id);
-	if (j >= ARRAYLENGTH(skill_abra_db)) {
+	ARR_FIND(0, skill_abra_count, i, skill_abra_db[i].skill_id==skill_id);
+	if (i >= ARRAYLENGTH(skill_abra_db)) {
 		ShowError("skill_parse_row_abradb: Maximum db entries reached.\n");
 		return false;
 	}
 	// Import just for clearing/disabling from original data
 	if (strcmp(split[1],"clear") == 0) {
-		memset(&skill_abra_db[j], 0, sizeof(skill_abra_db[j]));
+		memset(&skill_abra_db[i], 0, sizeof(skill_abra_db[i]));
 		//ShowInfo("skill_parse_row_abradb: Skill %d removed from list.\n", skill_id);
 		return true;
 	}
 
-	skill_abra_db[j].skill_id = skill_id;
-	safestrncpy(skill_abra_db[j].name, trim(split[1]), sizeof(skill_abra_db[j].name)); //store dummyname
-	skill_split_atoi(split[2],skill_abra_db[j].per);
-	if (j == skill_abra_count)
+	skill_abra_db[i].skill_id = skill_id;
+	safestrncpy(skill_abra_db[i].name, trim(split[1]), sizeof(skill_abra_db[i].name)); //store dummyname
+	skill_split_atoi(split[2],skill_abra_db[i].per);
+	if (i == skill_abra_count)
 		skill_abra_count++;
 
 	return true;

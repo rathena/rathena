@@ -1408,6 +1408,19 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 				sd->skill_id_old = skill_id;
 				sd->skill_lv_old = skill_lv;
 				break;
+			case CR_DEVOTION:
+				if (target->type == BL_PC) {
+					uint8 i = 0, count = min(skill_lv, MAX_DEVOTION);
+					ARR_FIND(0, count, i, sd->devotion[i] == target_id);
+					if (i == count) {
+						ARR_FIND(0, count, i, sd->devotion[i] == 0);
+						if (i == count) { // No free slots, skill Fail
+							clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+							return 0;
+						}
+					}
+				}
+				break;
 		}
 		if (!skill_check_condition_castbegin(sd, skill_id, skill_lv))
 			return 0;

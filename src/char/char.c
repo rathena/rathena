@@ -2245,7 +2245,7 @@ bool char_checkdb(void){
 	//checking mail_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `id`,`send_name`,`send_id`,`dest_name`,`dest_id`,"
 			"`title`,`message`,`time`,`status`,`zeny`,`nameid`,`amount`,`refine`,`attribute`,`identify`,"
-			"`card0`,`card1`,`card2`,`card3`,`unique_id`"
+			"`card0`,`card1`,`card2`,`card3`,`unique_id`, `bound`"
 			" from `%s`;", schema_config.mail_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
@@ -2276,8 +2276,7 @@ bool char_checkdb(void){
 		return false;
 	}
 	//checking mercenary_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `mer_id`,`char_id`,`class`,`hp`,`sp`,`kill_counter`,`life_time` "
-                                                " from `%s`;", schema_config.mercenary_db) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `mer_id`,`char_id`,`class`,`hp`,`sp`,`kill_counter`,`life_time` from `%s`;", schema_config.mercenary_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}

@@ -64,7 +64,7 @@ int mail_removezeny(struct map_session_data *sd, short flag)
 * @param amount
 * @return True if item/zeny can be set, False if failed
 */
-bool mail_setitem(struct map_session_data *sd, short idx, unsigned short amount) {
+bool mail_setitem(struct map_session_data *sd, short idx, int amount) {
 
 	if( pc_istrading(sd) )
 		return false;
