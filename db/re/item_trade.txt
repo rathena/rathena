@@ -2530,3 +2530,38 @@
 20018,475,100	//C_Holo_ear
 20019,475,100	//C_Beret_Of_Artist
 20038,475,100	//C_Alphonse_Helmet
+
+// kRO 2014-06-04
+//22808,475,100	//Special_Gift_Box
+
+// kRO 2014-06-18
+22781,475,100	//PC_Bang_Normal_Box
+22782,475,100	//PC_Bang_Wooden_Box
+22783,475,100	//PC_Bang_Golden_Box
+22784,475,100	//PC_Bang_Platinum_Box
+
+// kRO 2014-06-25
+6904,475,100		//Piece_Of_Soul_Snake
+20110,475,100	//C_Coiledup_Snake
+22812,475,100	//Sealed_Dracula_Scroll
+22813,475,100	//Bearer's_Shadow_Box
+
+// kRO 2014-07-09
+22760,475,100	//Argiope_Transportin
+22761,475,100	//Luciola_Vespa_Transportin
+22762,475,100	//Centipede_Transportin
+
+// kRO 2014-07-16
+6397,475,100		//PR_Team_Ticket
+12811,475,100	//Event_Gift_Box_
+22802,475,100	//Safe_to_6_Equipment_Certificate
+
+// kRO 2014-07-23
+22823,475,100	//Sealed_Sniper_Scroll
+17501,475,100	//Support_Package_IV
+17502,475,100	//Support_Package_IV(10)
+
+// kRO 2014-07-30
+20139,475,100	//C_Horse_Hairpin
+20140,475,100	//C_Horse_Hairpin
+6907,475,100		//Piece_Of_Soul_Horse
