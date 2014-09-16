@@ -2251,7 +2251,7 @@ void clif_additem(struct map_session_data *sd, int n, int amount, unsigned char 
 #endif
 #if PACKETVER >= 20071002
 		/* Yellow color only for non-stackable item */
-		WFIFOW(fd,offs+27)=sd->status.inventory[n].bound && !itemdb_isstackable(sd->status.inventory[n].nameid) ? BOUND_DISPYELLOW : 0;
+		WFIFOW(fd,offs+27)=(sd->status.inventory[n].bound && !itemdb_isstackable(sd->status.inventory[n].nameid)) ? BOUND_DISPYELLOW : 0;
 #endif
 	}
 
