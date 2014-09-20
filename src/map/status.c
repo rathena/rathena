@@ -8731,8 +8731,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 		case SC_TENSIONRELAX:
 			if (sd) {
-				skill_sit(sd, 1);
 				pc_setsit(sd);
+				skill_sit(sd, 1);
 				clif_sitting(&sd->bl);
 			}
 			val2 = 12; // SP cost
@@ -9459,8 +9459,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_SITDOWN_FORCE:
 		case SC_BANANA_BOMB_SITDOWN:
 			if( sd && !pc_issit(sd) ) {
-				skill_sit(sd, 1);
 				pc_setsit(sd);
+				skill_sit(sd, 1);
 				clif_sitting(bl);
 			}
 			break;
@@ -12044,8 +12044,8 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		if( --(sce->val4) >= 0 ) {
 			status_charge(bl,0,sce->val2);	// Reduce 8 every 10 seconds.
 			if( sd && !pc_issit(sd) ) { // Force to sit every 10 seconds.
-				skill_sit(sd, 1);
 				pc_setsit(sd);
+				skill_sit(sd, 1);
 				clif_sitting(bl);
 			}
 			sc_timer_next(10000 + tick, status_change_timer, bl->id, data);

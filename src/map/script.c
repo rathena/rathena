@@ -3100,7 +3100,7 @@ struct script_data* push_copy(struct script_stack* stack, int pos)
 	}
 }
 
-/// Removes the values in indexes [start,end[ from the stack.
+/// Removes the values in indexes [start,end] from the stack.
 /// Adjusts all stack pointers.
 void pop_stack(struct script_state* st, int start, int end)
 {
@@ -18346,8 +18346,8 @@ BUILDIN_FUNC(sit)
 		return SCRIPT_CMD_FAILURE;
 
 	if( !pc_issit(sd) ) {
-		skill_sit(sd, 1);
 		pc_setsit(sd);
+		skill_sit(sd, 1);
 		clif_sitting(&sd->bl);
 	}
 	return SCRIPT_CMD_SUCCESS;

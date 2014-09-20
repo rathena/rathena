@@ -27,16 +27,6 @@ struct status_change_entry;
 
 DBMap* skilldb_name2id;
 
-/// Constants to identify the skill's inf value:
-enum e_skill_inf {
-	INF_ATTACK_SKILL  = 0x01,
-	INF_GROUND_SKILL  = 0x02,
-	INF_SELF_SKILL    = 0x04, // Skills casted on self where target is automatically chosen
-	// 0x08 not assigned
-	INF_SUPPORT_SKILL = 0x10,
-	INF_TARGET_TRAP   = 0x20,
-};
-
 /// Constants to identify a skill's nk value (damage properties)
 /// The NK value applies only to non INF_GROUND_SKILL skills
 /// when determining skill castend function to invoke.
@@ -51,49 +41,58 @@ enum e_skill_nk {
 	NK_NO_CARDFIX_DEF = 0x80,
 };
 
+/// Constants to identify the skill's inf value:
+enum e_skill_inf {
+	INF_ATTACK_SKILL  = 0x01,
+	INF_GROUND_SKILL  = 0x02,
+	INF_SELF_SKILL    = 0x04, // Skills casted on self where target is automatically chosen
+	// 0x08 not assigned
+	INF_SUPPORT_SKILL = 0x10,
+	INF_TARGET_TRAP   = 0x20,
+};
+
 /// A skill with 3 would be no damage + splash: area of effect.
 /// Constants to identify a skill's inf2 value.
 enum e_skill_inf2 {
-	INF2_QUEST_SKILL    = 0x00001,
-	INF2_NPC_SKILL      = 0x00002, //NPC skills are those that players can't have in their skill tree.
-	INF2_WEDDING_SKILL  = 0x00004,
-	INF2_SPIRIT_SKILL   = 0x00008,
-	INF2_GUILD_SKILL    = 0x00010,
-	INF2_SONG_DANCE     = 0x00020,
-	INF2_ENSEMBLE_SKILL = 0x00040,
-	INF2_TRAP           = 0x00080,
-	INF2_TARGET_SELF    = 0x00100, //Refers to ground placed skills that will target the caster as well (like Grandcross)
-	INF2_NO_TARGET_SELF = 0x00200,
-	INF2_PARTY_ONLY     = 0x00400,
-	INF2_GUILD_ONLY     = 0x00800,
-	INF2_NO_ENEMY       = 0x01000,
+	INF2_QUEST_SKILL     = 0x00001,
+	INF2_NPC_SKILL       = 0x00002, //NPC skills are those that players can't have in their skill tree.
+	INF2_WEDDING_SKILL   = 0x00004,
+	INF2_SPIRIT_SKILL    = 0x00008,
+	INF2_GUILD_SKILL     = 0x00010,
+	INF2_SONG_DANCE      = 0x00020,
+	INF2_ENSEMBLE_SKILL  = 0x00040,
+	INF2_TRAP            = 0x00080,
+	INF2_TARGET_SELF     = 0x00100, //Refers to ground placed skills that will target the caster as well (like Grandcross)
+	INF2_NO_TARGET_SELF  = 0x00200,
+	INF2_PARTY_ONLY      = 0x00400,
+	INF2_GUILD_ONLY      = 0x00800,
+	INF2_NO_ENEMY        = 0x01000,
 	INF2_AUTOSHADOWSPELL = 0x02000, // Skill that available for SC_AUTOSHADOWSPELL
-	INF2_CHORUS_SKILL	= 0x04000, // Chorus skill
-	INF2_NO_BG_DMG		= 0x08000, // spell that ignore bg reduction
-	INF2_NO_GVG_DMG		= 0x10000, // spell that ignore gvg reduction
-	INF2_NO_NEARNPC     = 0x20000, // disable to cast skill if near with NPC [Cydh]
+	INF2_CHORUS_SKILL	 = 0x04000, // Chorus skill
+	INF2_NO_BG_DMG		 = 0x08000, // Skill that ignore bg reduction
+	INF2_NO_GVG_DMG		 = 0x10000, // Skill that ignore gvg reduction
+	INF2_NO_NEARNPC      = 0x20000, // disable to cast skill if near with NPC [Cydh]
 };
 
 /// Skill info type 3
 enum e_skill_inf3 {
-	INF3_NOLP				= 0x00001,	// Spells that can ignore Land Protector
-	INF3_NOENDCAMOUFLAGE	= 0x00002,	// spell that doesn't end camouflage
-	INF3_USABLE_HIDING		= 0x00004,	// spell that can be use in hiding
-	INF3_USABLE_DANCE		= 0x00008,	// spell that can be use while in dancing state
-	INF3_HIT_EMP			= 0x00010,	// spell that could hit emperium
-	INF3_STATIS_BL			= 0x00020,	// spell blocked by statis
-	INF3_KAGEHUMI_BL		= 0x00040,	// spell blocked by kagehumi
-	INF3_EFF_VULTURE		= 0x00080,	// spell range affected by AC_VULTURE
-	INF3_EFF_SNAKEEYE		= 0x00100,	// spell range affected by GS_SNAKEEYE
-	INF3_EFF_SHADOWJUMP		= 0x00200,	// spell range affected by NJ_SHADOWJUMP
-	INF3_EFF_RADIUS			= 0x00400,	// spell range affected by WL_RADIUS
-	INF3_EFF_RESEARCHTRAP	= 0x00800,	// spell range affected by RA_RESEARCHTRAP
-	INF3_NO_EFF_HOVERING	= 0x01000,	// Spell that does not affect user that has SC_HOVERING active
-	INF3_USABLE_WARG		= 0x02000,	// spell that can be use while riding warg
-	INF3_DIS_MADO			= 0x04000,	// spell that can't be used while in mado
-	INF3_USABLE_MANHOLE		= 0x08000,	// spell that can be used to target while under Man Hole effect
-	INF3_HIT_HIDING			= 0x10000,	// spell that having an affect to hiding target
-	//... add other spell list option here
+	INF3_NOLP             = 0x00001, // Skill that can ignore Land Protector
+	INF3_NOENDCAMOUFLAGE  = 0x00002, // Skill that doesn't end camouflage
+	INF3_USABLE_HIDING    = 0x00004, // Skill that can be use in hiding
+	INF3_USABLE_DANCE     = 0x00008, // Skill that can be use while in dancing state
+	INF3_HIT_EMP          = 0x00010, // Skill that could hit emperium
+	INF3_STATIS_BL        = 0x00020, // Skill blocked by statis
+	INF3_KAGEHUMI_BL      = 0x00040, // Skill blocked by kagehumi
+	INF3_EFF_VULTURE      = 0x00080, // Skill range affected by AC_VULTURE
+	INF3_EFF_SNAKEEYE     = 0x00100, // Skill range affected by GS_SNAKEEYE
+	INF3_EFF_SHADOWJUMP   = 0x00200, // Skill range affected by NJ_SHADOWJUMP
+	INF3_EFF_RADIUS       = 0x00400, // Skill range affected by WL_RADIUS
+	INF3_EFF_RESEARCHTRAP = 0x00800, // Skill range affected by RA_RESEARCHTRAP
+	INF3_NO_EFF_HOVERING  = 0x01000, // Skill that does not affect user that has SC_HOVERING active
+	INF3_USABLE_WARG      = 0x02000, // Skill that can be use while riding warg
+	INF3_DIS_MADO         = 0x04000, // Skill that can't be used while in mado
+	INF3_USABLE_MANHOLE   = 0x08000, // Skill that can be used to target while under SC__MANHOLE effect
+	INF3_HIT_HIDING       = 0x10000, // Skill that affects hidden targets
 };
 
 /// Walk intervals at which chase-skills are attempted to be triggered.

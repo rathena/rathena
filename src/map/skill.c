@@ -3777,8 +3777,8 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 					if( target->type == BL_PC ) {
 						struct map_session_data *tsd = NULL;
 						if( (tsd = ((TBL_PC*)target)) && !pc_issit(tsd) ) {
-							skill_sit(tsd, 1);
 							pc_setsit(tsd);
+							skill_sit(tsd, 1);
 							clif_sitting(&tsd->bl);
 						}
 					}
@@ -16057,12 +16057,9 @@ int skill_sit (struct map_session_data *sd, int type)
 		range = skill_get_splash(TK_SPTIME, lv);
 	}
 
-	if( type ) {
-		// TODO: Include the case of using the Insert key
-		pc_stop_walking(sd, 1|4); // Stop players who may be walking
-		pc_stop_attack(sd); // Stop players who may be attacking
+	if (type)
 		clif_status_load(&sd->bl, SI_SIT, 1);
-	} else
+	else
 		clif_status_load(&sd->bl, SI_SIT, 0);
 
 	if (!flag) return 0;
