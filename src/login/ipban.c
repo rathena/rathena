@@ -192,7 +192,7 @@ void ipban_init(void) {
 	const char* hostname = ipban_db_hostname;
 	uint16      port     = ipban_db_port;
 	const char* database = ipban_db_database;
-	const char* codepage = ipban_db_codepage;
+	const char* codepage = ipban_codepage;
 
 	ipban_inited = true;
 
