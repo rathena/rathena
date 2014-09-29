@@ -834,7 +834,7 @@ static int pet_randomwalk(struct pet_data *pd,unsigned int tick)
 		}
 		for(i = c = 0; i < pd->ud.walkpath.path_len; i++) {
 			if(pd->ud.walkpath.path[i]&1)
-				c += pd->status.speed*14/10;
+				c += pd->status.speed*MOVE_DIAGONAL_COST/MOVE_COST;
 			else
 				c += pd->status.speed;
 		}

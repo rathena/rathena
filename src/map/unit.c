@@ -104,9 +104,9 @@ int unit_walktoxy_sub(struct block_list *bl)
 		   ud->walkpath.path_len--;
 			dir = ud->walkpath.path[ud->walkpath.path_len];
 			if(dir&1)
-				i-=14;
+				i -= MOVE_DIAGONAL_COST;
 			else
-				i-=10;
+				i -= MOVE_COST;
 			ud->to_x -= dirx[dir];
 			ud->to_y -= diry[dir];
 		}
@@ -123,7 +123,7 @@ int unit_walktoxy_sub(struct block_list *bl)
 	if(ud->walkpath.path_pos>=ud->walkpath.path_len)
 		i = -1;
 	else if(ud->walkpath.path[ud->walkpath.path_pos]&1)
-		i = status_get_speed(bl)*14/10;
+		i = status_get_speed(bl)*MOVE_DIAGONAL_COST/MOVE_COST;
 	else
 		i = status_get_speed(bl);
 	if( i > 0)
@@ -467,14 +467,17 @@ int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
 	if (bl->type == BL_PC)
 		sd = BL_CAST(BL_PC, bl);
 
-	path_search(&wpd, bl->m, bl->x, bl->y, x, y, flag&1, CELL_CHKNOPASS); // Count walk path cells
+	if (!path_search(&wpd, bl->m, bl->x, bl->y, x, y, flag&1, CELL_CHKNOPASS)) // Count walk path cells
+		return 0;
+
 #ifdef OFFICIAL_WALKPATH
 	if( !path_search_long(NULL, bl->m, bl->x, bl->y, x, y, CELL_CHKNOPASS) // Check if there is an obstacle between
 		&& wpd.path_len > 14	// Official number of walkable cells is 14 if and only if there is an obstacle between. [malufett]
 		&& (bl->type != BL_NPC) ) // If type is a NPC, please disregard.
 			return 0;
 #endif
-	if( (battle_config.max_walk_path < wpd.path_len) && (bl->type != BL_NPC) )
+
+	if ((wpd.path_len > battle_config.max_walk_path) && (bl->type != BL_NPC))
 		return 0;
 
 	if (flag&4){
