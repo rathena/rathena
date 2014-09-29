@@ -13441,6 +13441,9 @@ void clif_parse_NoviceDoriDori(int fd, struct map_session_data *sd)
 			if (!sd->state.rest)
 				break;
 		case MAPID_SUPER_NOVICE:
+		case MAPID_SUPER_BABY:
+		case MAPID_SUPER_NOVICE_E:
+		case MAPID_SUPER_BABY_E:
 			sd->state.doridori=1;
 			break;
 	}
@@ -13457,8 +13460,9 @@ void clif_parse_NoviceDoriDori(int fd, struct map_session_data *sd)
 ///       "Help me out~ Please~ T_T"
 void clif_parse_NoviceExplosionSpirits(int fd, struct map_session_data *sd)
 {
-	if( ( sd->class_&MAPID_UPPERMASK ) == MAPID_SUPER_NOVICE ) {
+	if( sd->class_&JOBL_SUPER_NOVICE ) {
 		unsigned int next = pc_nextbaseexp(sd);
+
 		if( next == 0 ) next = pc_thisbaseexp(sd);
 		if( next ) {
 			int percent = (int)( ( (float)sd->status.base_exp/(float)next )*1000. );

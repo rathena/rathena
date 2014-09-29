@@ -5387,7 +5387,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += 40*skill_lv;
 						break;
 					case HW_NAPALMVULCAN:
-						skillratio += 10*skill_lv-30;
+						skillratio += 25;
 						break;
 					case SL_STIN:
 						skillratio += (tstatus->size!=SZ_SMALL?-99:10*skill_lv); //target size must be small (0) for full damage.

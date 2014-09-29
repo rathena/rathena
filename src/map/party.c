@@ -237,6 +237,8 @@ static void party_check_state(struct party_data *p)
 		break;
 		case JOB_SUPER_NOVICE:
 		case JOB_SUPER_BABY:
+		case JOB_SUPER_NOVICE_E:
+		case JOB_SUPER_BABY_E:
 			p->state.snovice = 1;
 		break;
 		case JOB_TAEKWON:

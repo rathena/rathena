@@ -382,7 +382,7 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 				hp += hp * skill * 2 / 100;
 			else if( src->type == BL_HOM && (skill = hom_checkskill(((TBL_HOM*)src), HLIF_BRAIN)) > 0 )
 				hp += hp * skill * 2 / 100;
-			if( sd && tsd && sd->status.partner_id == tsd->status.char_id && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.sex == 0 )
+			if( sd && tsd && sd->status.partner_id == tsd->status.char_id && sd->class_&JOBL_SUPER_NOVICE && sd->status.sex == 0 )
 				hp *= 2;
 			break;
 	}
@@ -2747,11 +2747,10 @@ void skill_attack_blow(struct block_list *src, struct block_list *dsrc, struct b
 	if (!blewcount || target == dsrc || status_isdead(target))
 		return;
 
-	// Skill spesific direction
+	// Skill specific direction
 	switch (skill_id) {
 		case MG_FIREWALL:
 		case PR_SANCTUARY:
-		case SC_TRIANGLESHOT:
 		case GN_WALLOFTHORN:
 		case EL_FIRE_MANTLE:
 			dir = unit_getdir(target); // Backwards
@@ -8075,7 +8074,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SL_SUPERNOVICE:
 	case SL_WIZARD:
 		//NOTE: here, 'type' has the value of the associated MAPID, not of the SC_SPIRIT constant.
-		if (sd && !(dstsd && (dstsd->class_&MAPID_UPPERMASK) == type)) {
+		if (sd && !(dstsd && ((skill_id != SL_SUPERNOVICE && (dstsd->class_&MAPID_UPPERMASK) == type) || (skill_id == SL_SUPERNOVICE && !(dstsd->class_&JOBL_SUPER_NOVICE))))) {
 			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 			break;
 		}
@@ -8948,7 +8947,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case WL_SUMMONWB:
 	case WL_SUMMONSTONE:
 		{
-			short element = 0, sctype = 0, pos = -1, j = 0;
+			short element = 0, sctype = 0, pos = -1;
 			struct status_change *sc = status_get_sc(src);
 
 			if( !sc )
@@ -8957,13 +8956,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			for( i = SC_SPHERE_1; i <= SC_SPHERE_5; i++ ) {
 				if( !sctype && !sc->data[i] )
 					sctype = i; // Take the free SC
-				if( sc->data[i] ) {
+				if( sc->data[i] )
 					pos = max(sc->data[i]->val2,pos);
-					j++;
-				}
 			}
 
-			if( !sctype || j >= skill_lv ) {
+			if( !sctype ) {
 				if( sd ) // No free slots to put SC
 					clif_skill_fail(sd,skill_id,USESKILL_FAIL_SUMMON,0);
 				break;
@@ -12877,8 +12874,9 @@ int skill_unit_onplace_timer (struct skill_unit *unit, struct block_list *bl, un
 			if (sg->unit_id != UNT_FIREPILLAR_ACTIVE)
 				clif_changetraplook(&unit->bl,(sg->unit_id == UNT_LANDMINE ? UNT_FIREPILLAR_ACTIVE : UNT_USED_TRAPS));
 			sg->unit_id = UNT_USED_TRAPS; //Changed ID so it does not invoke a for each in area again.
-			sg->limit = DIFF_TICK(tick, sg->tick) + 1500 +
-				(sg->unit_id == UNT_CLUSTERBOMB || sg->unit_id == UNT_ICEBOUNDTRAP ? 1000 : 0); // Cluster Bomb/Icebound has 1s to disappear once activated.
+			sg->limit = DIFF_TICK(tick, sg->tick) +
+				(sg->unit_id == UNT_CLUSTERBOMB || sg->unit_id == UNT_ICEBOUNDTRAP ? 1000 : 0) + // Cluster Bomb/Icebound has 1s to disappear once activated.
+				(sg->unit_id == UNT_FIRINGTRAP ? 0 : 1500); // Firing Trap gets removed immediately once activated.
 			break;
 
 		case UNT_TALKIEBOX:
