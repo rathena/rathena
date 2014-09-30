@@ -114,7 +114,7 @@ enum MOBID {
 //These marks the "level" of the job.
 #define JOBL_2_1 0x100 //256
 #define JOBL_2_2 0x200 //512
-#define JOBL_2 0x300 //1024
+#define JOBL_2 0x300 //768
 
 #define JOBL_UPPER 0x1000 //4096
 #define JOBL_BABY 0x2000  //8192
