@@ -946,8 +946,8 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, uns
 		} else{
 			struct flooritem_data *fitem = (struct flooritem_data *)target;
 			if(pd->loot->count < pd->loot->max){
-				memcpy(&pd->loot->item[pd->loot->count++],&fitem->item_data,sizeof(pd->loot->item[0]));
-				pd->loot->weight += itemdb_weight(fitem->item_data.nameid)*fitem->item_data.amount;
+				memcpy(&pd->loot->item[pd->loot->count++],&fitem->item,sizeof(pd->loot->item[0]));
+				pd->loot->weight += itemdb_weight(fitem->item.nameid)*fitem->item.amount;
 				map_clearflooritem(target);
 			}
 			//Target is unlocked regardless of whether it was picked or not.

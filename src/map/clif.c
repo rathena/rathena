@@ -753,22 +753,22 @@ void clif_dropflooritem(struct flooritem_data* fitem)
 
 	nullpo_retv(fitem);
 
-	if (fitem->item_data.nameid == 0)
+	if (fitem->item.nameid == 0)
 		return;
 
 	WBUFW(buf, offset+0) = header;
 	WBUFL(buf, offset+2) = fitem->bl.id;
-	WBUFW(buf, offset+6) = ((view = itemdb_viewid(fitem->item_data.nameid)) > 0) ? view : fitem->item_data.nameid;
+	WBUFW(buf, offset+6) = ((view = itemdb_viewid(fitem->item.nameid)) > 0) ? view : fitem->item.nameid;
 #if PACKETVER >= 20130000
-	WBUFW(buf, offset+8) = itemtype(fitem->item_data.nameid);
+	WBUFW(buf, offset+8) = itemtype(fitem->item.nameid);
 	offset +=2;
 #endif
-	WBUFB(buf, offset+8) = fitem->item_data.identify;
+	WBUFB(buf, offset+8) = fitem->item.identify;
 	WBUFW(buf, offset+9) = fitem->bl.x;
 	WBUFW(buf, offset+11) = fitem->bl.y;
 	WBUFB(buf, offset+13) = fitem->subx;
 	WBUFB(buf, offset+14) = fitem->suby;
-	WBUFW(buf, offset+15) = fitem->item_data.amount;
+	WBUFW(buf, offset+15) = fitem->item.amount;
 
 	clif_send(buf, packet_len(header), &fitem->bl, AREA);
 }
@@ -4498,14 +4498,14 @@ void clif_getareachar_item(struct map_session_data* sd,struct flooritem_data* fi
 	WFIFOHEAD(fd,packet_len(0x9d));
 	WFIFOW(fd,0)=0x9d;
 	WFIFOL(fd,2)=fitem->bl.id;
-	if((view = itemdb_viewid(fitem->item_data.nameid)) > 0)
+	if((view = itemdb_viewid(fitem->item.nameid)) > 0)
 		WFIFOW(fd,6)=view;
 	else
-		WFIFOW(fd,6)=fitem->item_data.nameid;
-	WFIFOB(fd,8)=fitem->item_data.identify;
+		WFIFOW(fd,6)=fitem->item.nameid;
+	WFIFOB(fd,8)=fitem->item.identify;
 	WFIFOW(fd,9)=fitem->bl.x;
 	WFIFOW(fd,11)=fitem->bl.y;
-	WFIFOW(fd,13)=fitem->item_data.amount;
+	WFIFOW(fd,13)=fitem->item.amount;
 	WFIFOB(fd,15)=fitem->subx;
 	WFIFOB(fd,16)=fitem->suby;
 	WFIFOSET(fd,packet_len(0x9d));
@@ -13173,7 +13173,7 @@ void clif_parse_GM_Item_Monster(int fd, struct map_session_data *sd)
 	// Item
 	if( (id = itemdb_searchname(str)) ) {
 		StringBuf_Init(&command);
-		if( id->type == IT_WEAPON || id->type == IT_ARMOR ) //Nonstackable
+		if( !itemdb_isstackable2(id) ) //Nonstackable
 			StringBuf_Printf(&command, "%citem2 %d 1 0 0 0 0 0 0 0", atcommand_symbol, id->nameid);
 		else
 			StringBuf_Printf(&command, "%citem %d 20", atcommand_symbol, id->nameid);
@@ -17340,21 +17340,36 @@ void clif_parse_GMFullStrip(int fd, struct map_session_data *sd) {
 
 /**
 * Marks Crimson Marker target on mini-map to the caster
-* TODO: Please, check the proper packet for Crimson Marker [Cydh]
+* 09C1 <id>.L <x>.W <y>.W (ZC_C_MARKERINFO)
 * @param fd
 * @param bl Crimson Marker target
-* @param remove True remove the marker from map, false therwise
 **/
-void clif_crimson_marker(int fd, struct block_list *bl, bool remove) {
-	WFIFOHEAD(fd,packet_len(0x107));
-	WFIFOW(fd,0) = 0x107;
-	WFIFOL(fd,2) = bl->id;
-	WFIFOW(fd,6) = (remove) ? -1 : bl->x;
-	WFIFOW(fd,8) = (remove) ? -1 : bl->y;
-	WFIFOSET(fd,packet_len(0x107));
+void clif_crimson_marker(struct map_session_data *sd, struct block_list *bl, bool remove) {
+	struct s_packet_db* info;
+	int cmd = 0;
+	int16 len;
+	unsigned char buf[11];
+
+	nullpo_retv(sd);
+
+	cmd = packet_db_ack[sd->packet_ver][ZC_C_MARKERINFO];
+	if (!cmd)
+		cmd = 0x09C1; //default
+	info = &packet_db[sd->packet_ver][cmd];
+	if (!(len = info->len))
+		return;
+
+	WBUFW(buf, 0) = cmd;
+	WBUFL(buf, info->pos[0]) = bl->id;
+	WBUFW(buf, info->pos[1]) = (remove ? -1 : bl->x);
+	WBUFW(buf, info->pos[2]) = (remove ? -1 : bl->y);
+	clif_send(buf, len, &sd->bl, SELF);
 }
 
-///TODO: Special item that obtained, must be broadcasted by this packet
+/**
+* !TODO: Special item that obtained, must be broadcasted by this packet
+* 07fd ?? (ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN)
+*/
 //void clif_broadcast_obtain_special_item() {}
 
 #ifdef DUMP_UNKNOWN_PACKET
@@ -17531,7 +17546,7 @@ void packetdb_readdb(void)
 	int max_cmd=-1;
 	bool skip_ver = false;
 	int warned = 0;
-	char *str[64],*p,*str2[64],*p2,w1[256],w2[256];
+	int packet_ver = MAX_PACKET_VER;	// read into packet_db's version by default
 	int packet_len_table[MAX_PACKET_DB] = {
 	   10,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -18012,6 +18027,7 @@ void packetdb_readdb(void)
 		{ "ZC_PERSONAL_INFOMATION", ZC_PERSONAL_INFOMATION},
 		{ "ZC_PERSONAL_INFOMATION_CHN", ZC_PERSONAL_INFOMATION_CHN},
 		{ "ZC_CLEAR_DIALOG", ZC_CLEAR_DIALOG},
+		{ "ZC_C_MARKERINFO", ZC_C_MARKERINFO},
 	};
 	const char *filename[] = { "packet_db.txt", DBIMPORT"/packet_db.txt"};
 	int f;
@@ -18022,14 +18038,14 @@ void packetdb_readdb(void)
 		packet_len(i) = packet_len_table[i];
 
 	clif_config.packet_db_ver = MAX_PACKET_VER;
-	for(f = 0; f<ARRAYLENGTH(filename); f++){
+	for(f = 0; f < ARRAYLENGTH(filename); f++){
 		int ln=0;
 		int entries = 0;
-		int packet_ver = MAX_PACKET_VER;	// read into packet_db's version by default
-		
-		sprintf(line, "%s/%s", db_path,filename[f]);
-		if( (fp=fopen(line,"r"))==NULL ){
-			if(f==0) {
+		char *str[64],*p,*str2[64],*p2;
+
+		sprintf(line, "%s/%s", db_path, filename[f]);
+		if( (fp = fopen(line,"r")) == NULL ){
+			if (f == 0) {
 				ShowFatalError("Can't read %s\n", line);
 				exit(EXIT_FAILURE);
 			}
@@ -18037,12 +18053,12 @@ void packetdb_readdb(void)
 		}
 		
 		while( fgets(line, sizeof(line), fp) ) {
+			char w1[256],w2[256];
 			ln++;
 			if(line[0]=='/' && line[1]=='/')
 				continue;
-			if (sscanf(line,"%255[^:]: %255[^\r\n]",w1,w2) == 2)
-			{
-				if(strcmpi(w1,"packet_ver")==0) {
+			if (sscanf(line,"%255[^:]: %255[^\r\n]",w1,w2) == 2) {
+				if (strcmpi(w1,"packet_ver") == 0) {
 					int prev_ver = packet_ver;
 					skip_ver = false;
 					packet_ver = atoi(w2);
@@ -18080,7 +18096,7 @@ void packetdb_readdb(void)
 					memcpy(&packet_db_ack[packet_ver], &packet_db_ack[prev_ver], sizeof(packet_db_ack[0]));
 					continue;
 				} else if(strcmpi(w1,"packet_db_ver")==0) {
-					if(strcmpi(w2,"default")==0) //This is the preferred version.
+					if (strcmpi(w2,"default") == 0) //This is the preferred version.
 						clif_config.packet_db_ver = MAX_PACKET_VER;
 					else // to manually set the packet DB version
 						clif_config.packet_db_ver = cap_value(atoi(w2), 0, MAX_PACKET_VER);
@@ -18092,14 +18108,15 @@ void packetdb_readdb(void)
 				continue; // Skipping current packet version
 
 			memset(str,0,sizeof(str));
-			for(j=0,p=line;j<4 && p; ++j) {
-				str[j]=p;
-				p=strchr(p,',');
-				if(p) *p++=0;
+			for (j = 0, p = line; j < 4 && p; ++j) {
+				str[j] = p;
+				p = strchr(p,',');
+				if (p)
+					*p++=0;
 			}
-			if(str[0]==NULL)
+			if (str[0] == NULL)
 				continue;
-			cmd=strtol(str[0],(char **)NULL,0);
+			cmd = strtol(str[0],(char **)NULL,0);
 
 			if(max_cmd < cmd)
 				max_cmd = cmd;
@@ -18139,11 +18156,12 @@ void packetdb_readdb(void)
 				ShowError("packet_db: packet error\n");
 				exit(EXIT_FAILURE);
 			}
-			for(j=0,p2=str[3];p2;j++){
+			for(j = 0, p2 = str[3]; p2; j++){
 				short k;
-				str2[j]=p2;
-				p2=strchr(p2,':');
-				if(p2) *p2++=0;
+				str2[j] = p2;
+				p2 = strchr(p2,':');
+				if(p2)
+					*p2++=0;
 				k = atoi(str2[j]);
 				// if (packet_db[packet_ver][cmd].pos[j] != k && clif_config.prefer_packet_db)	// not used for now
 

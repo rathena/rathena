@@ -6,22 +6,23 @@
 // layout = -1:special, 0:1*1, 1:3*3, 2:5*5, up to 5:11*11
 // target = friend (party +guildmates +neutral players) / party / guild
 //          ally (party +guildmates) / all / sameguild (guild but no allies) / enemy
-// flag 0x0001(UF_DEFNOTENEMY)		If 'defunit_not_enemy' is set, the target is changed to 'friend'
-//      0x0002(UF_NOREITERRATION)	Spell cannot be stacked
-//      0x0004(UF_NOFOOTSET)		Spell cannot be cast near/on targets
-//      0x0008(UF_NOOVERLAP)		Spell effects do not overlap
-//      0x0010(UF_PATHCHECK)		Only cells with a shootable path will be placed
-//      0x0020(UF_NOPC)				Spell cannot affect players.
-//      0x0040(UF_NOMOB)			Spell cannot affect mobs.
-//      0x0080(UF_SKILL)			Spell CAN affect skills.
-//      0x0100(UF_DANCE)			Dance skill
-//      0x0200(UF_ENSEMBLE)			Ensemble skill
-//      0x0400(UF_SONG)				Song skill
-//      0x0800(UF_DUALMODE)			Spell has effects both at an interval and when you step in/out
-//      0x1000(UF_NOKNOCKBACK)		Cannot be knocked back (only unit that can be damaged)
-//      0x2000(UF_RANGEDSINGLEUNIT)	Layout hack, use layout range propriety but only display center.
-//      0x4000(UF_REM_CRAZYWEED)	Removed if be overlapped by GN_CRAZYWEED
-//      0x8000(UF_REM_FIRERAIN)		Removed if be overlapped by RL_FIRE_RAIN
+// flag 0x00001(UF_DEFNOTENEMY)			If 'defunit_not_enemy' is set, the target is changed to 'friend'
+//      0x00002(UF_NOREITERRATION)		Spell cannot be stacked
+//      0x00004(UF_NOFOOTSET)			Spell cannot be cast near/on targets
+//      0x00008(UF_NOOVERLAP)			Spell effects do not overlap
+//      0x00010(UF_PATHCHECK)			Only cells with a shootable path will be placed
+//      0x00020(UF_NOPC)				Spell cannot affect players.
+//      0x00040(UF_NOMOB)				Spell cannot affect mobs.
+//      0x00080(UF_SKILL)				Spell CAN affect skills.
+//      0x00100(UF_DANCE)				Dance skill
+//      0x00200(UF_ENSEMBLE)			Ensemble skill
+//      0x00400(UF_SONG)				Song skill
+//      0x00800(UF_DUALMODE)			Spell has effects both at an interval and when you step in/out
+//      0x01000(UF_NOKNOCKBACK)			Cannot be knocked back (only unit that can be damaged)
+//      0x02000(UF_RANGEDSINGLEUNIT)	Layout hack, use layout range propriety but only display center.
+//      0x04000(UF_REM_CRAZYWEED)		Removed if be overlapped by GN_CRAZYWEED
+//      0x08000(UF_REM_FIRERAIN)		Removed if be overlapped by RL_FIRE_RAIN
+//      0x10000(UF_KNOCKBACK_GROUP) 	Knock back a whole skill group (by default, skill unit is knocked back each unit)
 // 	Example: 0x006 = 0x002+0x004 -> Cannot be stacked nor cast near targets
 //
 // Notes:
@@ -128,8 +129,8 @@
 
 2299,0xcc,    ,  0, 1,1000,all,   0xC006 //SC_MANHOLE
 2300,0xcd,    ,  0, 0,1000,all,   0xC006 //SC_DIMENSIONDOOR
-2301,0xce,    ,  2, 0,  -1,all,   0xC00E //SC_CHAOSPANIC
-2302,0xcf,    ,  2, 0,  -1,all,   0xC002 //SC_MAELSTROM
+2301,0xce,    ,  2, 0,1000,all,   0xE00E //SC_CHAOSPANIC
+2302,0xcf,    ,  2, 0,  -1,all,   0xE002 //SC_MAELSTROM
 2303,0xd0,    ,  3, 0,  -1,all,   0xE058 //SC_BLOODYLUST
 2304,0xd1,    ,  0, 2, 500,enemy, 0x018  //SC_FEINTBOMB
 
@@ -153,7 +154,7 @@
 2468,0xf4,    ,  0, 1,1000,all,   0x010	//SO_EARTH_INSIGNIA
 
 2479,0xe5,    ,  0, 1,1000,enemy, 0xC006	//GN_THORNS_TRAP
-2482,0xe6,0x7f, -1, 1, 300,enemy, 0xD000	//GN_WALLOFTHORN
+2482,0xe6,0x7f, -1, 1, 300,enemy, 0xC000	//GN_WALLOFTHORN
 2484,0x86,    ,  0, 1, 100,enemy, 0x080	//GN_CRAZYWEED_ATK
 2485,0xe7,    ,  0, 2,2000,enemy, 0x8098	//GN_DEMONIC_FIRE
 2487,0xe8,    ,  2, 0,  -1,enemy, 0x2000	//GN_FIRE_EXPANSION_SMOKE_POWDER

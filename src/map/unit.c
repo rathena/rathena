@@ -934,8 +934,12 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag)
 		if(dx || dy) {
 			map_foreachinmovearea(clif_outsight, bl, AREA_SIZE, dx, dy, bl->type == BL_PC ? BL_ALL : BL_PC, bl);
 
-			if(su)
-				skill_unit_move_unit_group(su->group, bl->m, dx, dy);
+			if(su) {
+				if (su->group && skill_get_unit_flag(su->group->skill_id)&UF_KNOCKBACK_GROUP)
+					skill_unit_move_unit_group(su->group, bl->m, dx, dy);
+				else
+					skill_unit_move_unit(bl, nx, ny);
+			}
 			else
 				map_moveblock(bl, nx, ny, gettick());
 
@@ -1418,6 +1422,19 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 					if (i == count) {
 						ARR_FIND(0, count, i, sd->devotion[i] == 0);
 						if (i == count) { // No free slots, skill Fail
+							clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+							return 0;
+						}
+					}
+				}
+				break;
+			case RL_C_MARKER:
+				{
+					uint8 i = 0;
+					ARR_FIND(0, MAX_SKILL_CRIMSON_MARKER, i, sd->c_marker[i] == target_id);
+					if (i == MAX_SKILL_CRIMSON_MARKER) {
+						ARR_FIND(0, MAX_SKILL_CRIMSON_MARKER, i, sd->c_marker[i] == 0);
+						if (i == MAX_SKILL_CRIMSON_MARKER) { // No free slots, skill Fail
 							clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
 							return 0;
 						}

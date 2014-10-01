@@ -2369,6 +2369,14 @@ void script_hardcoded_constants(void) {
 	script_set_constant("BSF_REM_DEBUFF",BSF_REM_DEBUFF,false);
 	script_set_constant("BSF_ALL",BSF_ALL,false);
 	script_set_constant("BSF_CLEARALL",BSF_CLEARALL,false);
+
+	/* sc_start flags */
+	script_set_constant("SCSTART_NONE",SCSTART_NONE,false);
+	script_set_constant("SCSTART_NOAVOID",SCSTART_NOAVOID,false);
+	script_set_constant("SCSTART_NOTICKDEF",SCSTART_NOTICKDEF,false);
+	script_set_constant("SCSTART_LOADED",SCSTART_LOADED,false);
+	script_set_constant("SCSTART_NORATEDEF",SCSTART_NORATEDEF,false);
+	script_set_constant("SCSTART_NOICON",SCSTART_NOICON,false);
 }
 
 /*==========================================
@@ -7753,8 +7761,31 @@ BUILDIN_FUNC(strnpcinfo)
 }
 
 
-// aegis->athena slot position conversion table
-static unsigned int equip[] = {EQP_HEAD_TOP,EQP_ARMOR,EQP_HAND_L,EQP_HAND_R,EQP_GARMENT,EQP_SHOES,EQP_ACC_L,EQP_ACC_R,EQP_HEAD_MID,EQP_HEAD_LOW,EQP_COSTUME_HEAD_LOW,EQP_COSTUME_HEAD_MID,EQP_COSTUME_HEAD_TOP,EQP_COSTUME_GARMENT,EQP_AMMO,EQP_SHADOW_ARMOR,EQP_SHADOW_WEAPON,EQP_SHADOW_SHIELD,EQP_SHADOW_SHOES,EQP_SHADOW_ACC_R,EQP_SHADOW_ACC_L};
+/// aegis->athena slot position conversion table
+/// Index is used by EQI_ in db/const.txt
+static unsigned int equip[] = {
+	EQP_HEAD_TOP,
+	EQP_ARMOR,
+	EQP_HAND_L,
+	EQP_HAND_R,
+	EQP_GARMENT,
+	EQP_SHOES,
+	EQP_ACC_L,
+	EQP_ACC_R,
+	EQP_HEAD_MID,
+	EQP_HEAD_LOW,
+	EQP_COSTUME_HEAD_LOW,
+	EQP_COSTUME_HEAD_MID,
+	EQP_COSTUME_HEAD_TOP,
+	EQP_COSTUME_GARMENT,
+	EQP_AMMO,
+	EQP_SHADOW_ARMOR,
+	EQP_SHADOW_WEAPON,
+	EQP_SHADOW_SHIELD,
+	EQP_SHADOW_SHOES,
+	EQP_SHADOW_ACC_R,
+	EQP_SHADOW_ACC_L
+};
 
 /*==========================================
  * GetEquipID(Pos);     Pos: 1-14
@@ -10267,12 +10298,12 @@ BUILDIN_FUNC(getareausers)
  *------------------------------------------*/
 static int buildin_getareadropitem_sub(struct block_list *bl,va_list ap)
 {
-	int item=va_arg(ap,int);
+	int nameid=va_arg(ap,int);
 	int *amount=va_arg(ap,int *);
 	struct flooritem_data *drop=(struct flooritem_data *)bl;
 
-	if(drop->item_data.nameid==item)
-		(*amount)+=drop->item_data.amount;
+	if(drop->item.nameid==nameid)
+		(*amount)+=drop->item.amount;
 
 	return 0;
 }
@@ -10280,7 +10311,7 @@ BUILDIN_FUNC(getareadropitem)
 {
 	const char *str;
 	int16 m,x0,y0,x1,y1;
-	int item,amount=0;
+	int nameid,amount=0;
 	struct script_data *data;
 
 	str=script_getstr(st,2);
@@ -10294,18 +10325,18 @@ BUILDIN_FUNC(getareadropitem)
 	if( data_isstring(data) ){
 		const char *name=conv_str(st,data);
 		struct item_data *item_data = itemdb_searchname(name);
-		item=UNKNOWN_ITEM_ID;
+		nameid=UNKNOWN_ITEM_ID;
 		if( item_data )
-			item=item_data->nameid;
+			nameid=item_data->nameid;
 	}else
-		item=conv_num(st,data);
+		nameid=conv_num(st,data);
 
 	if( (m=map_mapname2mapid(str))< 0){
 		script_pushint(st,-1);
 		return 0;
 	}
 	map_foreachinarea(buildin_getareadropitem_sub,
-		m,x0,y0,x1,y1,BL_ITEM,item,&amount);
+		m,x0,y0,x1,y1,BL_ITEM,nameid,&amount);
 	script_pushint(st,amount);
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -10492,7 +10523,7 @@ BUILDIN_FUNC(getscrate)
 		bl = map_id2bl(st->rid);
 
 	if (bl)
-		rate = status_get_sc_def(NULL,bl, (sc_type)type, 10000, 10000, 0);
+		rate = status_get_sc_def(NULL,bl, (sc_type)type, 10000, 10000, SCSTART_NONE);
 
 	script_pushint(st,rate);
 	return SCRIPT_CMD_SUCCESS;
@@ -16674,7 +16705,7 @@ BUILDIN_FUNC(mercenary_sc_start)
 	tick = script_getnum(st,3);
 	val1 = script_getnum(st,4);
 
-	status_change_start(NULL, &sd->md->bl, type, 10000, val1, 0, 0, 0, tick, 2);
+	status_change_start(NULL, &sd->md->bl, type, 10000, val1, 0, 0, 0, tick, SCSTART_NOTICKDEF);
 	return SCRIPT_CMD_SUCCESS;
 }
 

@@ -425,7 +425,7 @@ struct flooritem_data {
 	int cleartimer;
 	int first_get_charid,second_get_charid,third_get_charid;
 	unsigned int first_get_tick,second_get_tick,third_get_tick;
-	struct item item_data;
+	struct item item;
 };
 
 enum _sp {
@@ -795,7 +795,7 @@ bool map_addnpc(int16 m,struct npc_data *);
 int map_clearflooritem_timer(int tid, unsigned int tick, int id, intptr_t data);
 int map_removemobs_timer(int tid, unsigned int tick, int id, intptr_t data);
 void map_clearflooritem(struct block_list* bl);
-int map_addflooritem(struct item *item_data,int amount,int16 m,int16 x,int16 y,int first_charid,int second_charid,int third_charid,int flags);
+int map_addflooritem(struct item *item,int amount,int16 m,int16 x,int16 y,int first_charid,int second_charid,int third_charid,int flags);
 
 // instances
 int map_addinstancemap(const char*,int);

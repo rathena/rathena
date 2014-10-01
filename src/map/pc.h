@@ -591,11 +591,8 @@ struct map_session_data {
 
 	uint16 dmglog[DAMAGELOG_SIZE_PC]; ///target ids
 
-	struct s_crimson_marker { ///Store target that marked by Crimson Marker [Cydh]
-		int target[MAX_SKILL_CRIMSON_MARKER]; //Target id storage
-		uint8 count; //Count of target for skill used (i.e. RL_D_TAIL).
-	} c_marker;
-	bool flicker; ///Is Flicker Skill skill as player's last action? [Cydh]
+	int c_marker[MAX_SKILL_CRIMSON_MARKER]; /// Store target that marked by Crimson Marker [Cydh]
+	bool flicker; /// Check RL_FLICKER usage status [Cydh]
 
 	int storage_size; /// Holds player storage size (VIP system).
 #ifdef VIP_ENABLE
@@ -878,6 +875,8 @@ char pc_payzeny(struct map_session_data *sd, int zeny, enum e_log_pick_type type
 char pc_additem(struct map_session_data *sd, struct item *item, int amount, e_log_pick_type log_type);
 char pc_getzeny(struct map_session_data *sd, int zeny, enum e_log_pick_type type, struct map_session_data *tsd);
 char pc_delitem(struct map_session_data *sd, int n, int amount, int type, short reason, e_log_pick_type log_type);
+
+uint64 pc_generate_unique_id(struct map_session_data *sd);
 
 //Bound items
 int pc_bound_chk(TBL_PC *sd,enum bound_type type,int *idxlist);

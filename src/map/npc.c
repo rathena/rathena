@@ -4175,6 +4175,8 @@ bool npc_unloadfile( const char* path ) {
 	if( found ) /* refresh event cache */
 		npc_read_event_script();
 
+	npc_delsrcfile(path);
+
 	return found;
 }
 

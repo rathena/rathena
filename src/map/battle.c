@@ -347,16 +347,16 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 	if (sc && sc->count) { //increase dmg by src status
 		switch(atk_elem){
 			case ELE_FIRE:
-				if(sc->data[SC_VOLCANO]) ratio += enchant_eff[sc->data[SC_VOLCANO]->val1-1];
+				if (sc->data[SC_VOLCANO]) ratio += sc->data[SC_VOLCANO]->val3;
 				break;
 			case ELE_WIND:
-				if(sc->data[SC_VIOLENTGALE]) ratio += enchant_eff[sc->data[SC_VIOLENTGALE]->val1-1];
+				if (sc->data[SC_VIOLENTGALE]) ratio += sc->data[SC_VIOLENTGALE]->val3;
 				break;
 			case ELE_WATER:
-				if(sc->data[SC_DELUGE]) ratio += enchant_eff[sc->data[SC_DELUGE]->val1-1];
+				if (sc->data[SC_DELUGE]) ratio += sc->data[SC_DELUGE]->val3;
 				break;
 			case ELE_GHOST:
-				if(sc->data[SC_TELEKINESIS_INTENSE]) ratio += (sc->data[SC_TELEKINESIS_INTENSE]->val3);
+				if (sc->data[SC_TELEKINESIS_INTENSE]) ratio += (sc->data[SC_TELEKINESIS_INTENSE]->val3);
 				break;
 		}
 	}
@@ -886,7 +886,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 					else
 						sce->val3 = 1000; // Next shield
 				}
-				status_change_start(src,bl,SC_STUN,10000,0,0,0,0,1000,2);
+				status_change_start(src,bl,SC_STUN,10000,0,0,0,0,1000,SCSTART_NOTICKDEF);
 			}
 			return 0;
 		}
@@ -2247,8 +2247,15 @@ static bool is_attack_hitting(struct Damage wd, struct block_list *src, struct b
 				hitrate -= 35 - 5 * skill_lv;
 				break;
 			case RL_SLUGSHOT:
-				if (distance_bl(src,target) > 3)
-					hitrate -= (10 - (skill_lv - 1));
+				{
+					int8 dist = distance_bl(src, target);
+					if (dist > 3) {
+						// Reduce n hitrate for each cell after initial 3 cells. Different each level
+						// -10:-9:-8:-7:-6
+						dist -= 3;
+						hitrate -= ((11 - skill_lv) * dist);
+					}
+				}
 				break;
 		}
 	} else if (sd && wd.type&DMG_MULTI_HIT && wd.div_ == 2) // +1 hit per level of Double Attack on a successful double attack (making sure other multi attack skills do not trigger this) [helvetica]
@@ -2422,7 +2429,7 @@ static int battle_get_weapon_element(struct Damage wd, struct block_list *src, s
 				element = ELE_HOLY;
 			break;
 		case RL_H_MINE:
-			if (sd && sd->skill_id_old == RL_FLICKER) //Force RL_H_MINE deals fire damage if activated by RL_FLICKER
+			if (sd && sd->flicker) //Force RL_H_MINE deals fire damage if activated by RL_FLICKER
 				element = ELE_FIRE;
 			break;
 	}
@@ -3034,9 +3041,10 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			skillratio += -100 + sc->data[SC_EXEEDBREAK]->val1;
 			status_change_end(src,SC_EXEEDBREAK,INVALID_TIMER);
 		}
-		if(sc->data[SC_HEAT_BARREL])
+		//!TODO: Verify this placement & skills that affected by these effects [Cydh]
+		if (sc->data[SC_HEAT_BARREL])
 			skillratio += 200;
-		if(sc->data[SC_P_ALTER])
+		if (sc->data[SC_P_ALTER])
 			skillratio += sc->data[SC_P_ALTER]->val2;
 	}
 
@@ -3858,9 +3866,11 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 		 * Rebellion
 		 **/
 		case RL_MASS_SPIRAL:
+			// 200%:400%:600%:800%:1000%
 			skillratio += -100 + (200 * skill_lv);
 			break;
 		case RL_FIREDANCE:
+			// 100%:200%:300%:400%:500% (+Level ??)
 			skillratio += -100 + (100 * skill_lv);
 			skillratio += (skillratio * status_get_lv(src)) / 300; //(custom)
 			break;
@@ -3873,7 +3883,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 		case RL_SLUGSHOT:
 			{
 				uint16 w = 50;
-				int16 idx = 0;
+				int16 idx = -1;
 				if (sd && (idx = sd->equip_index[EQI_AMMO]) >= 0 && sd->inventory_data[idx])
 					w = sd->inventory_data[idx]->weight;
 				w /= 10;
@@ -3881,9 +3891,8 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			}
 			break;
 		case RL_D_TAIL:
+			// 3000%:3500%:4000%:4500%:5000%
 			skillratio += -100 + (2500 + 500 * skill_lv );
-			//if (sd && &sd->c_marker)
-			//	skillratio /= max(sd->c_marker.count,1);
 			break;
 		case RL_R_TRIP:
 			skillratio += -100 + (150 * skill_lv); //(custom)
@@ -3892,10 +3901,11 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			skillratio += -100 + (50 * skill_lv); //(custom)
 			break;
 		case RL_H_MINE:
-			skillratio += 100 + (200 * skill_lv);
-			//If damaged by Flicker
-			if (sd && sd->skill_id_old == RL_FLICKER && tsc && tsc->data[SC_H_MINE] && tsc->data[SC_H_MINE]->val2 == src->id)
-				skillratio += 400 + (300 * skill_lv);
+			// 400%:600%:800%:1000%:1200%
+			skillratio += -100 + (200 + 200 * skill_lv);
+			//If damaged by Flicker, explosion damage (800%:1100%:1400%:1700%:2000%)
+			if (sd && sd->flicker)
+				skillratio += 300 + (100 * skill_lv);
 			break;
 		case RL_HAMMER_OF_GOD:
 			//! TODO: Please check the right formula. [Cydh]
@@ -6156,7 +6166,8 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		md.damage = ( skill_lv * status_get_lv(src) * 10 ) + ( status_get_int(src) * 7 / 2 ) * ( 18 + (sd?sd->status.job_level:0) / 4 ) * ( 5 / (10 - ((sd) ? pc_checkskill(sd,AM_CANNIBALIZE) : skill_get_max(AM_CANNIBALIZE))) );
 		break;
 	case RL_B_TRAP:
-		md.damage = (200 + status_get_int(src) + status_get_dex(src)) * skill_lv * 10; //(custom)
+		// kRO 2014-02-12: Damage: Caster's DEX, Target's current HP, Skill Level
+		md.damage = ((200 + status_get_dex(src)) * skill_lv * 10) + sstatus->hp; // (custom)
 		break;
 	}
 

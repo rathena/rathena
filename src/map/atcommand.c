@@ -5775,7 +5775,7 @@ ACMD_FUNC(autotrade) {
 
 	if( battle_config.at_timeout ) {
 		int timeout = atoi(message);
-		status_change_start(NULL,&sd->bl, SC_AUTOTRADE, 10000, 0, 0, 0, 0, ((timeout > 0) ? min(timeout,battle_config.at_timeout) : battle_config.at_timeout) * 60000, 0);
+		status_change_start(NULL,&sd->bl, SC_AUTOTRADE, 10000, 0, 0, 0, 0, ((timeout > 0) ? min(timeout,battle_config.at_timeout) : battle_config.at_timeout) * 60000, SCSTART_NONE);
 	}
 
 	channel_pcquit(sd,0xF); //leave all chan

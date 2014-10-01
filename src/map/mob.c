@@ -417,7 +417,7 @@ bool mob_ksprotected (struct block_list *src, struct block_list *target)
 		return true;
 	} while(0);
 
-	status_change_start(src, target, SC_KSPROTECTED, 10000, sd->bl.id, sd->state.noks, sd->status.party_id, sd->status.guild_id, battle_config.ksprotection, 0);
+	status_change_start(src, target, SC_KSPROTECTED, 10000, sd->bl.id, sd->state.noks, sd->status.party_id, sd->status.guild_id, battle_config.ksprotection, SCSTART_NOAVOID);
 
 	return false;
 }
@@ -1603,15 +1603,15 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 
 		fitem = (struct flooritem_data *)tbl;
 		//Logs items, taken by (L)ooter Mobs [Lupus]
-		log_pick_mob(md, LOG_TYPE_LOOT, fitem->item_data.amount, &fitem->item_data);
+		log_pick_mob(md, LOG_TYPE_LOOT, fitem->item.amount, &fitem->item);
 
 		if (md->lootitem_count < LOOTITEM_SIZE) {
-			memcpy (&md->lootitem[md->lootitem_count++], &fitem->item_data, sizeof(md->lootitem[0]));
+			memcpy (&md->lootitem[md->lootitem_count++], &fitem->item, sizeof(md->lootitem[0]));
 		} else {	//Destroy first looted item...
 			if (md->lootitem[0].card[0] == CARD0_PET)
 				intif_delete_petdata( MakeDWord(md->lootitem[0].card[1],md->lootitem[0].card[2]) );
 			memmove(&md->lootitem[0], &md->lootitem[1], (LOOTITEM_SIZE-1)*sizeof(md->lootitem[0]));
-			memcpy (&md->lootitem[LOOTITEM_SIZE-1], &fitem->item_data, sizeof(md->lootitem[0]));
+			memcpy (&md->lootitem[LOOTITEM_SIZE-1], &fitem->item, sizeof(md->lootitem[0]));
 		}
 		if (pcdb_checkid(md->vd->class_))
 		{	//Give them walk act/delay to properly mimic players. [Skotlex]
