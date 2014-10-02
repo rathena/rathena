@@ -65,7 +65,7 @@ DBMap* skillunit_db = NULL; // int id -> struct skill_unit*
 
 /**
  * Skill Unit Persistency during endack routes (mostly for songs see bugreport:4574)
- **/
+ */
 DBMap* skillusave_db = NULL; // char_id -> struct skill_usave
 struct skill_usave {
 	uint16 skill_id, skill_lv;
@@ -329,14 +329,15 @@ int skill_get_range2 (struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
 	return range;
 }
 
-/** Calculates heal value of skill's effect
-* @param src
-* @param target
-* @param skill_id
-* @param skill_lv
-* @param heal
-* @return modified heal value
-*/
+/**
+ * Calculates heal value of skill's effect
+ * @param src
+ * @param target
+ * @param skill_id
+ * @param skill_lv
+ * @param heal
+ * @return modified heal value
+ */
 int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, bool heal) {
 	int skill, hp = 0;
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
@@ -348,11 +349,11 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 
 	switch( skill_id ) {
 		case BA_APPLEIDUN:
-		#ifdef RENEWAL
+#ifdef RENEWAL
 			hp = 100+5*skill_lv+5*(status_get_vit(src)/10); // HP recovery
-		#else
+#else
 			hp = 30+5*skill_lv+5*(status_get_vit(src)/10); // HP recovery
-		#endif
+#endif
 			if( sd )
 				hp += 5*pc_checkskill(sd,BA_MUSICALLESSON);
 			break;
@@ -365,15 +366,15 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 		default:
 			if (skill_lv >= battle_config.max_heal_lv)
 				return battle_config.max_heal;
-			#ifdef RENEWAL
-				/**
-				* Renewal Heal Formula
-				* Formula: ( [(Base Level + INT) / 5] x 30 ) x (Heal Level / 10) x (Modifiers) + MATK
-				**/
-				hp = (status_get_lv(src) + status_get_int(src)) / 5 * 30  * (skill_id == AB_HIGHNESSHEAL ? ((sd) ? pc_checkskill(sd,AL_HEAL) : skill_get_max(AL_HEAL)) : skill_lv) / 10;
-			#else
-				hp = (status_get_lv(src) + status_get_int(src)) / 8 * (4 + ( (skill_id == AB_HIGHNESSHEAL ? ((sd) ? pc_checkskill(sd,AL_HEAL) : skill_get_max(AL_HEAL)) : skill_lv) * 8));
-			#endif
+#ifdef RENEWAL
+			/**
+			 * Renewal Heal Formula
+			 * Formula: ( [(Base Level + INT) / 5] x 30 ) x (Heal Level / 10) x (Modifiers) + MATK
+			 */
+			hp = (status_get_lv(src) + status_get_int(src)) / 5 * 30  * (skill_id == AB_HIGHNESSHEAL ? ((sd) ? pc_checkskill(sd,AL_HEAL) : skill_get_max(AL_HEAL)) : skill_lv) / 10;
+#else
+			hp = (status_get_lv(src) + status_get_int(src)) / 8 * (4 + ( (skill_id == AB_HIGHNESSHEAL ? ((sd) ? pc_checkskill(sd,AL_HEAL) : skill_get_max(AL_HEAL)) : skill_lv) * 8));
+#endif
 			if (skill_id == AB_HIGHNESSHEAL)
 				hp = hp * ( 17 + 3 * skill_lv ) / 10;
 			if( sd && ((skill = pc_checkskill(sd, HP_MEDITATIO)) > 0) )
@@ -446,13 +447,14 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 	return hp;
 }
 
-/** Making Plagiarism and Reproduce check their own function
-* Previous prevention for NPC skills, Wedding skills, and INF3_DIS_PLAGIA are removed since we use skill_copyable_db.txt [Cydh]
-* @param sd: Player who will copy the skill
-* @param skill_id: Target skill
-* @return 0 - Cannot be copied; 1 - Can be copied by Plagiarism 2 - Can be copied by Reproduce
-* @author Aru - for previous check; Jobbie for class restriction idea; Cydh expands the copyable skill
-*/
+/**
+ * Making Plagiarism and Reproduce check their own function
+ * Previous prevention for NPC skills, Wedding skills, and INF3_DIS_PLAGIA are removed since we use skill_copyable_db.txt [Cydh]
+ * @param sd: Player who will copy the skill
+ * @param skill_id: Target skill
+ * @return 0 - Cannot be copied; 1 - Can be copied by Plagiarism 2 - Can be copied by Reproduce
+ * @author Aru - for previous check; Jobbie for class restriction idea; Cydh expands the copyable skill
+ */
 static char skill_isCopyable(struct map_session_data *sd, uint16 skill_id) {
 	uint16 idx = skill_get_index(skill_id);
 
@@ -485,13 +487,14 @@ static char skill_isCopyable(struct map_session_data *sd, uint16 skill_id) {
 	return 0;
 }
 
-/** Check if the skill is ok to cast and when.
-* Done before check_condition_begin, requirement
-* @param skill_id: Skill ID that casted
-* @param sd: Player who casted
-* @return true: Skill cannot be used, false: otherwise
-* @author [MouseJstr]
-*/
+/**
+ * Check if the skill is ok to cast and when.
+ * Done before check_condition_begin, requirement
+ * @param skill_id: Skill ID that casted
+ * @param sd: Player who casted
+ * @return true: Skill cannot be used, false: otherwise
+ * @author [MouseJstr]
+ */
 bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 {
 	int16 idx,m;
@@ -529,7 +532,7 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 	/**
 	 * It has been confirmed on a official server (thanks to Yommy) that item-cast skills bypass all the restrictions above
 	 * Also, without this check, an exploit where an item casting + healing (or any other kind buff) isn't deleted after used on a restricted map
-	 **/
+	 */
 	if( sd->skillitem == skill_id )
 		return false;
 	// Check skill restrictions [Celest]
@@ -632,12 +635,13 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 	return false;
 }
 
-/** Check if the homunculus skill is ok to be processed
-* After checking from Homunculus side, also check the master condition
-* @param skill_id: Skill ID that casted
-* @param hd: Homunculus who casted
-* @return true: Skill cannot be used, false: otherwise
-*/
+/**
+ * Check if the homunculus skill is ok to be processed
+ * After checking from Homunculus side, also check the master condition
+ * @param skill_id: Skill ID that casted
+ * @param hd: Homunculus who casted
+ * @return true: Skill cannot be used, false: otherwise
+ */
 bool skill_isNotOk_hom(uint16 skill_id, struct homun_data *hd)
 {
 	uint16 idx = skill_get_index(skill_id);
@@ -699,38 +703,41 @@ bool skill_isNotOk_hom(uint16 skill_id, struct homun_data *hd)
 	return skill_isNotOk(skill_id, hd->master);
 }
 
-/** Check if the mercenary skill is ok to be processed
-* After checking from Homunculus side, also check the master condition
-* @param skill_id: Skill ID that casted
-* @param md: Mercenary who casted
-* @return true: Skill cannot be used, false: otherwise
-*/
+/**
+ * Check if the mercenary skill is ok to be processed
+ * After checking from Homunculus side, also check the master condition
+ * @param skill_id: Skill ID that casted
+ * @param md: Mercenary who casted
+ * @return true: Skill cannot be used, false: otherwise
+ */
 bool skill_isNotOk_mercenary(uint16 skill_id, struct mercenary_data *md)
 {
 	uint16 idx = skill_get_index(skill_id);
-	nullpo_retr(1,md);
 
-	if( idx == 0 )
+	nullpo_retr(1, md);
+
+	if (!idx)
 		return true; // Invalid Skill ID
-	if( md->blockskill[idx] > 0 )
+	if (md->blockskill[idx] > 0)
 		return true;
 
 	return skill_isNotOk(skill_id, md->master);
 }
 
-/** Check if the skill can be casted near NPC or not
-* @param src Object who casted
-* @param skill_id Skill ID that casted
-* @param skill_lv Skill Lv
-* @param pos_x Position x of the target
-* @param pos_y Position y of the target
-* @return true: Skill cannot be used, false: otherwise
-* @author [Cydh]
-*/
+/**
+ * Check if the skill can be casted near NPC or not
+ * @param src Object who casted
+ * @param skill_id Skill ID that casted
+ * @param skill_lv Skill Lv
+ * @param pos_x Position x of the target
+ * @param pos_y Position y of the target
+ * @return true: Skill cannot be used, false: otherwise
+ * @author [Cydh]
+ */
 bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skill_lv, int pos_x, int pos_y) {
 	int inf;
 
-	if (!src || skill_get_index(skill_id) == 0)
+	if (!src || !skill_get_index(skill_id))
 		return false;
 
 	if (src->type == BL_PC && pc_has_permission(BL_CAST(BL_PC,src),PC_PERM_SKILL_UNCONDITIONAL))
@@ -749,7 +756,8 @@ bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skil
 	return skill_check_unit_range2(src,pos_x,pos_y,skill_id,skill_lv,true);
 }
 
-struct s_skill_unit_layout* skill_get_unit_layout (uint16 skill_id, uint16 skill_lv, struct block_list* src, int x, int y) {
+struct s_skill_unit_layout *skill_get_unit_layout(uint16 skill_id, uint16 skill_lv, struct block_list* src, int x, int y)
+{
 	int pos = skill_get_unit_layout_type(skill_id,skill_lv);
 	uint8 dir;
 
@@ -792,7 +800,7 @@ struct s_skill_nounit_layout* skill_get_nounit_layout(uint16 skill_id, uint16 sk
 /*==========================================
  * Add effect to skill when hit succesfully target
  *------------------------------------------*/
-int skill_additional_effect (struct block_list* src, struct block_list *bl, uint16 skill_id, uint16 skill_lv, int attack_type, int dmg_lv, unsigned int tick)
+int skill_additional_effect(struct block_list* src, struct block_list *bl, uint16 skill_id, uint16 skill_lv, int attack_type, int dmg_lv, unsigned int tick)
 {
 	struct map_session_data *sd, *dstsd;
 	struct mob_data *md, *dstmd;
@@ -1005,9 +1013,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case WZ_STORMGUST:
-	/**
-	 * Storm Gust counter was dropped in renewal
-	 **/
+		// Storm Gust counter was dropped in renewal
 #ifdef RENEWAL
 		sc_start(src,bl,SC_FREEZE,65-(5*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
 #else
@@ -1015,9 +1021,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 		if(tsc->sg_counter >= 3 &&
 			sc_start(src,bl,SC_FREEZE,150,skill_lv,skill_get_time2(skill_id,skill_lv)))
 			tsc->sg_counter = 0;
-		/**
-		 * being it only resets on success it'd keep stacking and eventually overflowing on mvps, so we reset at a high value
-		 **/
+		// Being it only resets on success it'd keep stacking and eventually overflowing on mvps, so we reset at a high value
 		else if( tsc->sg_counter > 250 )
 			tsc->sg_counter = 0;
 #endif
@@ -2217,13 +2221,14 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 
 	return 0;
 }
+
 /*=========================================================================
  Breaks equipment. On-non players causes the corresponding strip effect.
  - rate goes from 0 to 10000 (100.00%)
  - flag is a BCT_ flag to indicate which type of adjustment should be used
    (BCT_ENEMY/BCT_PARTY/BCT_SELF) are the valid values.
 --------------------------------------------------------------------------*/
-int skill_break_equip (struct block_list *src,struct block_list *bl, unsigned short where, int rate, int flag)
+int skill_break_equip(struct block_list *src, struct block_list *bl, unsigned short where, int rate, int flag)
 {
 	const int where_list[4]     = {EQP_WEAPON, EQP_ARMOR, EQP_SHIELD, EQP_HELM};
 	const enum sc_type scatk[4] = {SC_STRIPWEAPON, SC_STRIPARMOR, SC_STRIPSHIELD, SC_STRIPHELM};
@@ -2350,7 +2355,7 @@ int skill_strip_equip(struct block_list *src,struct block_list *bl, unsigned sho
 */
 static int skill_area_temp[8];
 
-/*=========================================================================
+/**
  Used to knock back players, monsters, traps, etc
  * @param src Object that give knock back
  * @param target Object that receive knock back
@@ -2365,14 +2370,15 @@ static int skill_area_temp[8];
 		0x10 - if target has 'special_state.no_knockback';
 		0x20 - if target is in Basilica area;
  * @return Number of knocked back cells done
- -------------------------------------------------------------------------*/
-short skill_blown(struct block_list* src, struct block_list* target, char count, int8 dir, unsigned char flag) {
+ */
+short skill_blown(struct block_list* src, struct block_list* target, char count, int8 dir, unsigned char flag)
+{
 	int dx = 0, dy = 0;
 
 	nullpo_ret(src);
 	nullpo_ret(target);
 
-	if (count == 0)
+	if (!count)
 		return count; // Actual knockback distance is 0.
 
 	if (src != target && (map_flag_gvg(target->m) || map[target->m].flag.battleground))
@@ -2460,7 +2466,7 @@ static int skill_magic_reflect(struct block_list* src, struct block_list* bl, in
  * @param skill_id: Target skill
  * @return true: Skill is a combo, false: otherwise
  * @author Panikon
- **/
+ */
 bool skill_is_combo(uint16 skill_id) {
 	switch(skill_id) {
 		case MO_CHAINCOMBO:
@@ -2619,14 +2625,16 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 	}
 }
 
-/** Copy skill by Plagiarism or Reproduce
-* @param src: The caster
-* @param bl: The target
-* @param skill_id: Skill that casted
-* @param skill_lv: Skill level of the casted skill
-*/
-static void skill_do_copy(struct block_list* src,struct block_list *bl, uint16 skill_id, uint16 skill_lv){
-	TBL_PC *tsd = BL_CAST(BL_PC,bl);
+/**
+ * Copy skill by Plagiarism or Reproduce
+ * @param src: The caster
+ * @param bl: The target
+ * @param skill_id: Skill that casted
+ * @param skill_lv: Skill level of the casted skill
+ */
+static void skill_do_copy(struct block_list* src,struct block_list *bl, uint16 skill_id, uint16 skill_lv)
+{
+	TBL_PC *tsd = BL_CAST(BL_PC, bl);
 
 	if (!tsd || (!pc_checkskill(tsd,RG_PLAGIARISM) && !pc_checkskill(tsd,SC_REPRODUCE)))
 		return;
@@ -2723,17 +2731,17 @@ static void skill_do_copy(struct block_list* src,struct block_list *bl, uint16 s
 }
 
 /**
-* Knockback the target on skill_attack
-* @param src is the master behind the attack
-* @param dsrc is the actual originator of the damage, can be the same as src, or a BL_SKILL
-* @param target is the target to be attacked.
-* @param blewcount
-* @param skill_id
-* @param skill_lv
-* @param damage
-* @param tick
-* @param flag can hold a bunch of information:
-*/
+ * Knockback the target on skill_attack
+ * @param src is the master behind the attack
+ * @param dsrc is the actual originator of the damage, can be the same as src, or a BL_SKILL
+ * @param target is the target to be attacked.
+ * @param blewcount
+ * @param skill_id
+ * @param skill_lv
+ * @param damage
+ * @param tick
+ * @param flag can hold a bunch of information:
+ */
 void skill_attack_blow(struct block_list *src, struct block_list *dsrc, struct block_list *target, uint8 blewcount, uint16 skill_id, uint16 skill_lv, int64 damage, unsigned int tick, int flag) {
 	int8 dir = -1; // Default direction
 	//Only knockback if it's still alive, otherwise a "ghost" is left behind. [Skotlex]
@@ -2920,9 +2928,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 			} else if( type != 2 ) /* Kaite bypasses */
 				additional_effects = false;
 
-		/**
-		 * Official Magic Reflection Behavior : damage reflected depends on gears caster wears, not target
-		 **/
+			// Official Magic Reflection Behavior : damage reflected depends on gears caster wears, not target
 #if MAGIC_REFLECTION_TYPE
 #ifdef RENEWAL
 			if( dmg.dmg_lv != ATK_MISS ) { //Wiz SL cancelled and consumed fragment
@@ -3249,10 +3255,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 			battle_drain(sd, bl, dmg.damage, dmg.damage2, tstatus->race, tstatus->class_);
 	}
 
-	if( damage > 0 ) {
-		/**
-		 * Post-damage effects
-		 **/
+	if( damage > 0 ) { // Post-damage effects
 		switch( skill_id ) {
 			case GC_VENOMPRESSURE: {
 					struct status_change *ssc = status_get_sc(src);
@@ -3294,7 +3297,8 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
  * then call func with source,target,skill_id,skill_lv,tick,flag
  *------------------------------------------*/
 typedef int (*SkillFunc)(struct block_list *, struct block_list *, int, int, unsigned int, int);
-int skill_area_sub (struct block_list *bl, va_list ap) {
+int skill_area_sub(struct block_list *bl, va_list ap)
+{
 	struct block_list *src;
 	uint16 skill_id,skill_lv;
 	int flag;
@@ -3303,15 +3307,14 @@ int skill_area_sub (struct block_list *bl, va_list ap) {
 
 	nullpo_ret(bl);
 
-	src=va_arg(ap,struct block_list *);
-	skill_id=va_arg(ap,int);
-	skill_lv=va_arg(ap,int);
-	tick=va_arg(ap,unsigned int);
-	flag=va_arg(ap,int);
-	func=va_arg(ap,SkillFunc);
+	src = va_arg(ap,struct block_list *);
+	skill_id = va_arg(ap,int);
+	skill_lv = va_arg(ap,int);
+	tick = va_arg(ap,unsigned int);
+	flag = va_arg(ap,int);
+	func = va_arg(ap,SkillFunc);
 
-	if(battle_check_target(src,bl,flag) > 0)
-	{
+	if(battle_check_target(src,bl,flag) > 0) {
 		// several splash skills need this initial dummy packet to display correctly
 		if (flag&SD_PREAMBLE && skill_area_temp[2] == 0)
 			clif_skill_damage(src,bl,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, 6);
@@ -3324,7 +3327,7 @@ int skill_area_sub (struct block_list *bl, va_list ap) {
 	return 0;
 }
 
-static int skill_check_unit_range_sub (struct block_list *bl, va_list ap)
+static int skill_check_unit_range_sub(struct block_list *bl, va_list ap)
 {
 	struct skill_unit *unit;
 	uint16 skill_id,g_skill_id;
@@ -3425,15 +3428,16 @@ static int skill_check_unit_range2_sub (struct block_list *bl, va_list ap)
 	return 1;
 }
 
-/** Used to check range condition of the casted skill. Used if the skill has UF_NOFOOTSET or INF2_NO_NEARNPC
-* @param bl Object that casted skill
-* @param x Position x of the target
-* @param y Position y of the target
-* @param skill_id The casted skill
-* @param skill_lv The skill Lv
-* @param isNearNPC 'true' means, check the range between target and nearer NPC by using npc_isnear and range calculation [Cydh]
-* @return 0: No object (BL_CHAR or BL_PC) within the range. If 'isNearNPC' the target oject is BL_NPC
-*/
+/**
+ * Used to check range condition of the casted skill. Used if the skill has UF_NOFOOTSET or INF2_NO_NEARNPC
+ * @param bl Object that casted skill
+ * @param x Position x of the target
+ * @param y Position y of the target
+ * @param skill_id The casted skill
+ * @param skill_lv The skill Lv
+ * @param isNearNPC 'true' means, check the range between target and nearer NPC by using npc_isnear and range calculation [Cydh]
+ * @return 0: No object (BL_CHAR or BL_PC) within the range. If 'isNearNPC' the target oject is BL_NPC
+ */
 static int skill_check_unit_range2 (struct block_list *bl, int x, int y, uint16 skill_id, uint16 skill_lv, bool isNearNPC)
 {
 	int range = 0, type;
@@ -3452,9 +3456,9 @@ static int skill_check_unit_range2 (struct block_list *bl, int x, int y, uint16 
 			case GN_HELLS_PLANT:
 				range = 0;
 				break;
-			default:
-				{
+			default: {
 					int layout_type = skill_get_unit_layout_type(skill_id,skill_lv);
+
 					if (layout_type == -1 || layout_type > MAX_SQUARE_LAYOUT) {
 						ShowError("skill_check_unit_range2: unsupported layout type %d for skill %d\n",layout_type,skill_id);
 						return 0;
@@ -3475,8 +3479,7 @@ static int skill_check_unit_range2 (struct block_list *bl, int x, int y, uint16 
 			type = BL_CHAR;
 		else
 			type = BL_PC;
-	}
-	else
+	} else
 		type = BL_NPC;
 
 	return (!isNearNPC) ?
@@ -3729,9 +3732,6 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 						}
 					}
 					break;
-				/**
-				 * Warlock
-				 **/
 				case WL_CHAINLIGHTNING_ATK: {
 						skill_attack(BF_MAGIC,src,src,target,skl->skill_id,skl->skill_lv,tick,skl->flag); // Hit a Lightning on the current Target
 						skill_toggle_magicpower(src, skl->skill_id); // only the first hit will be amplify
@@ -3963,22 +3963,26 @@ int skill_cleartimerskill (struct block_list *src)
 	}
 	return 1;
 }
-static int skill_ative_reverberation( struct block_list *bl, va_list ap) {
+static int skill_active_reverberation(struct block_list *bl, va_list ap) {
 	struct skill_unit *su = (TBL_SKILL*)bl;
-	struct skill_unit_group *sg;
-	if( bl->type != BL_SKILL )
+	struct skill_unit_group *sg = NULL;
+
+	nullpo_ret(su);
+
+	if (bl->type != BL_SKILL)
 		return 0;
-	if( su->alive && (sg = su->group) && sg->skill_id == WM_REVERBERATION ) {
+	if (su->alive && (sg = su->group) && sg->skill_id == WM_REVERBERATION) {
 		map_foreachinrange(skill_trap_splash, bl, skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag, bl, gettick());
-		su->limit=DIFF_TICK(gettick(),sg->tick);
+		su->limit = DIFF_TICK(gettick(), sg->tick);
 		sg->unit_id = UNT_USED_TRAPS;
 	}
 	return 0;
 }
 
-static int skill_reveal_trap (struct block_list *bl, va_list ap)
+static int skill_reveal_trap(struct block_list *bl, va_list ap)
 {
 	TBL_SKILL *su = (TBL_SKILL*)bl;
+
 	if (su->alive && su->group && skill_get_inf2(su->group->skill_id)&INF2_TRAP)
 	{	//Reveal trap.
 		//Change look is not good enough, the client ignores it as an actual trap still. [Skotlex]
@@ -4155,9 +4159,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 
-	/**
-	 * Mechanic (MADO GEAR)
-	 **/
 	case NC_BOOSTKNUCKLE:
 	case NC_PILEBUNKER:
 	case NC_COLDSLOWER:
@@ -4735,9 +4736,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	}
 	break;
 #endif
-	/**
-	 * Rune Knight
-	 **/
 	case RK_DRAGONBREATH_WATER:
 	case RK_DRAGONBREATH: {
 			struct status_change *tsc2 = NULL;
@@ -5086,11 +5084,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		}
 		else
 		{
-			struct skill_unit *su = BL_CAST(BL_SKILL,bl);
+			struct skill_unit *su = NULL;
 			struct skill_unit_group* sg;
 
-			if( su && (sg=su->group) && skill_get_inf2(sg->skill_id)&INF2_TRAP )
-			{
+			if (su && (sg = su->group) && skill_get_inf2(sg->skill_id)&INF2_TRAP) {
 				if( !(sg->unit_id == UNT_USED_TRAPS || (sg->unit_id == UNT_ANKLESNARE && sg->val2 != 0 )) )
 				{
 					struct item item_tmp;
@@ -5536,10 +5533,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		return 1;
 
 	if( src != bl && status_isdead(bl) ) {
-		/**
-		 * Skills that may be cast on dead targets
-		 **/
-		switch( skill_id ) {
+		switch( skill_id ) { // Skills that may be cast on dead targets
 			case NPC_WIDESOULDRAIN:
 			case PR_REDEMPTIO:
 			case ALL_RESURRECTION:
@@ -5573,9 +5567,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
  		case AL_HEAL:
 		case ALL_RESURRECTION:
 		case PR_ASPERSIO:
-		/**
-		 * Arch Bishop
-		 **/
 		case AB_RENOVATIO:
 		case AB_HIGHNESSHEAL:
 			//Apparently only player casted skills can be offensive like this.
@@ -5656,9 +5647,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	{
 	case HLIF_HEAL:	//[orn]
 	case AL_HEAL:
-	/**
-	 * Arch Bishop
-	 **/
 	case AB_HIGHNESSHEAL:
 		{
 			int heal = skill_calc_heal(src, bl, skill_id, skill_lv, true);
@@ -7345,9 +7333,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				case SC_EXTREMITYFIST2:
 #endif
 					continue;
-				/**
-				 * bugreport:4888 these songs may only be dispelled if you're not in their song area anymore
-				 **/
+				// bugreport:4888 these songs may only be dispelled if you're not in their song area anymore
 				case SC_WHISTLE:
 				case SC_ASSNCROS:
 				case SC_POEMBRAGI:
@@ -7746,7 +7732,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case HT_REMOVETRAP:
 		{
 			struct skill_unit* su;
-			struct skill_unit_group* sg;
+			struct skill_unit_group* sg = NULL;
 			su = BL_CAST(BL_SKILL, bl);
 
 			// Mercenaries can remove any trap
@@ -7831,12 +7817,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case AS_SPLASHER:
 		if(tstatus->mode&MD_BOSS
-	/**
-	 * Renewal dropped the 3/4 hp requirement
-	 **/
-	#ifndef RENEWAL
+		// Renewal dropped the 3/4 hp requirement
+#ifndef RENEWAL
 			|| tstatus-> hp > tstatus->max_hp*3/4
-	#endif
+#endif
 				) {
 			if (sd) clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 			map_freeblock_unlock();
@@ -8568,9 +8552,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 	break;
 
-	/**
-	 * Guilotine Cross
-	 **/
 	case GC_ROLLINGCUTTER:
 		{
 			short count = 1;
@@ -8648,9 +8629,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		}
 		break;
-	/**
-	 * Arch Bishop
-	 **/
+
 	case AB_ANCILLA:
 	 	if( sd ) {
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
@@ -8848,9 +8827,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			src, PR_LEXDIVINA, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
 		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 		break;
-	/**
-	 * Warlock
-	 **/
+
 	case WL_STASIS:
 		if( flag&1 )
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
@@ -9024,9 +9001,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 		}
 		break;
-	/**
-	 * Ranger
-	 **/
+
 	case RA_FEARBREEZE:
 		clif_skill_damage(src, src, tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, 6);
 		clif_skill_nodamage(src, bl, skill_id, skill_lv, sc_start(src,bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
@@ -9072,9 +9047,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		clif_skill_damage(src,src,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, 6);
 		map_foreachinrange(skill_area_sub,src,skill_get_splash(skill_id,skill_lv),BL_CHAR|BL_SKILL,src,skill_id,skill_lv,tick,flag|BCT_ENEMY,skill_castend_damage_id);
 		break;
-	/**
-	 * Mechanic
-	 **/
+
 	case NC_F_SIDESLIDE:
 	case NC_B_SIDESLIDE:
 		{
@@ -9838,9 +9811,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_itemlistwindow(sd,skill_id,skill_lv);
 		}
 		break;
-	/**
-	 * Genetic
-	 **/
+
 	case GN_BLOOD_SUCKER:
 		{
 			struct status_change *sc = status_get_sc(src);
@@ -9915,9 +9886,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		}
 		break;
-	/**
-	 * Elemental
-	 **/
+
 	case EL_CIRCLE_OF_FIRE:
 	case EL_PYROTECHNIC:
 	case EL_HEATER:
@@ -9981,9 +9950,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			}
 		}
 		break;	
-	/**
-	 * Kagerou & Oboro
-	 **/
+
 	case KO_KAHU_ENTEN:
 	case KO_HYOUHU_HUBUKI:
 	case KO_KAZEHU_SEIRAN:
@@ -10209,9 +10176,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 		}
 		break;
-	/**
-	 * Rebellion
-	 **/
+
 	case RL_RICHS_COIN:
 		if (sd) {
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
@@ -11350,9 +11315,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		map_foreachinarea(skill_area_sub,src->m,x-i,y-i,x+i,y+i,splash_target(src),
 			src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
 		break;
-	/**
-	 * Guilotine Cross
-	 **/
+
 	case GC_POISONSMOKE:
 		if( !(sc && sc->data[SC_POISONINGWEAPON]) ) {
 			if( sd )
@@ -11362,18 +11325,14 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		clif_skill_damage(src,src,tick,status_get_amotion(src),0,-30000,1,skill_id,skill_lv,6);
 		skill_unitsetting(src, skill_id, skill_lv, x, y, flag);
 		break;
-	/**
-	 * Arch Bishop
-	 **/
+
 	case AB_EPICLESIS:
 		if( (sg = skill_unitsetting(src, skill_id, skill_lv, x, y, 0)) ) {
 			i = sg->unit->range;
 			map_foreachinarea(skill_area_sub, src->m, x - i, y - i, x + i, y + i, BL_CHAR, src, ALL_RESURRECTION, 1, tick, flag|BCT_NOENEMY|1,skill_castend_nodamage_id);
 		}
 		break;
-	/**
-	 * Warlock
-	 **/
+
 	case WL_COMET:
 		if( sc ) {
 			sc->comet_x = x;
@@ -11400,17 +11359,13 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			}
 		}
 		break;
-	/**
-	 * Ranger
-	 **/
+
 	case RA_DETONATOR:
 		i = skill_get_splash(skill_id, skill_lv);
 		map_foreachinarea(skill_detonator, src->m, x-i, y-i, x+i, y+i, BL_SKILL, src);
 		clif_skill_damage(src, src, tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, 6);
 		break;
-	/**
-	 * Mechanic
-	 **/
+
 	case NC_NEUTRALBARRIER:
 	case NC_STEALTHFIELD:
 		if( (sc->data[SC_NEUTRALBARRIER_MASTER] && skill_id == NC_NEUTRALBARRIER) || (sc->data[SC_STEALTHFIELD_MASTER] && skill_id == NC_STEALTHFIELD) ) {
@@ -11488,7 +11443,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 
 	case WM_DOMINION_IMPULSE:
 		i = skill_get_splash(skill_id, skill_lv);
-		map_foreachinarea( skill_ative_reverberation,
+		map_foreachinarea(skill_active_reverberation,
 			src->m, x-i, y-i, x+i,y+i,BL_SKILL);
 		break;
 
@@ -11837,34 +11792,39 @@ int skill_dance_overlap(struct skill_unit* unit, int flag)
 	return map_foreachincell(skill_dance_overlap_sub, unit->bl.m,unit->bl.x,unit->bl.y,BL_SKILL, unit,flag);
 }
 
-/*==========================================
+/**
  * Converts this group information so that it is handled as a Dissonance or Ugly Dance cell.
- * Flag: 0 - Convert, 1 - Revert.
- * TODO: This should be completely removed later and rewritten
- * 	 The entire execution of the overlapping songs instances is dirty and hacked together
- *	 Overlapping cells should be checked on unit entry, not infinitely loop checked causing 1000's of executions a song/dance
- *------------------------------------------*/
+ * @param unit Skill unit data (from BA_DISSONANCE or DC_UGLYDANCE)
+ * @param flag 0 Convert
+ * @param flag 1 Revert
+ * @return true success
+ * @TODO: This should be completely removed later and rewritten
+ *	The entire execution of the overlapping songs instances is dirty and hacked together
+ *	Overlapping cells should be checked on unit entry, not infinitely loop checked causing 1000's of executions a song/dance
+ */
 static bool skill_dance_switch(struct skill_unit* unit, int flag)
 {
 	static int prevflag = 1;  // by default the backup is empty
 	static struct skill_unit_group backup;
-	struct skill_unit_group* group = unit->group;
+	struct skill_unit_group* group;
 
-	// val2&UF_ENSEMBLE is a hack to indicate dissonance
-	if ( !(group->state.song_dance&0x1 && unit->val2&UF_ENSEMBLE) )
+	if( unit == NULL || (group = unit->group) == NULL )
 		return false;
 
-	if( flag == prevflag )
-	{// protection against attempts to read an empty backup / write to a full backup
+	//val2&UF_ENSEMBLE is a hack to indicate dissonance
+	if ( !((group->state.song_dance&0x1) && (unit->val2&UF_ENSEMBLE)) )
+		return false;
+
+	if( flag == prevflag ) { //Protection against attempts to read an empty backup/write to a full backup
 		ShowError("skill_dance_switch: Attempted to %s (skill_id=%d, skill_lv=%d, src_id=%d).\n",
 			flag ? "read an empty backup" : "write to a full backup",
 			group->skill_id, group->skill_lv, group->src_id);
 		return false;
 	}
+
 	prevflag = flag;
 
-	if( !flag )
-	{	//Transform
+	if (!flag) { //Transform
 		uint16 skill_id = unit->val2&UF_SONG ? BA_DISSONANCE : DC_UGLYDANCE;
 
 		// backup
@@ -11882,9 +11842,7 @@ static bool skill_dance_switch(struct skill_unit* unit, int flag)
 		group->target_flag = skill_get_unit_target(skill_id);
 		group->bl_flag     = skill_get_unit_bl_target(skill_id);
 		group->interval    = skill_get_unit_interval(skill_id);
-	}
-	else
-	{	//Restore
+	} else { //Restore
 		group->skill_id    = backup.skill_id;
 		group->skill_lv    = backup.skill_lv;
 		group->unit_id     = backup.unit_id;
@@ -11897,7 +11855,7 @@ static bool skill_dance_switch(struct skill_unit* unit, int flag)
 }
 /**
  * Upon Ice Wall cast it checks all nearby mobs to find any who may be blocked by the IW
- **/
+ */
 static int skill_icewall_block(struct block_list *bl,va_list ap) {
 	struct block_list *target = NULL;
 	struct mob_data *md = ((TBL_MOB*)bl);
@@ -11917,7 +11875,8 @@ static int skill_icewall_block(struct block_list *bl,va_list ap) {
 
 	return 0;
 }
-/*==========================================
+
+/**
  * Initializes and sets a ground skill / skill unit. Usually called after skill_casted_pos() or skill_castend_map()
  * @param src Object that triggers the skill
  * @param skill_id Skill ID
@@ -11926,8 +11885,8 @@ static int skill_icewall_block(struct block_list *bl,va_list ap) {
  * @param y Position y
  * @param flag &1: Used to determine when the skill 'morphs' (Warp portal becomes active, or Fire Pillar becomes active)
  * @return skill_unit_group
- *------------------------------------------*/
-struct skill_unit_group* skill_unitsetting (struct block_list *src, uint16 skill_id, uint16 skill_lv, int16 x, int16 y, int flag)
+ */
+struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_id, uint16 skill_lv, int16 x, int16 y, int flag)
 {
 	struct skill_unit_group *group;
 	int i, limit, val1 = 0, val2 = 0, val3 = 0;
@@ -12024,9 +11983,6 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, uint16 skill
 	case HT_FREEZINGTRAP:
 	case MA_FREEZINGTRAP:
 	case HT_BLASTMINE:
-	/**
-	 * Ranger
-	 **/
 	case RA_ELECTRICSHOCKER:
 	case RA_CLUSTERBOMB:
 	case RA_MAGENTATRAP:
@@ -12035,9 +11991,6 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, uint16 skill
 	case RA_VERDURETRAP:
 	case RA_FIRINGTRAP:
 	case RA_ICEBOUNDTRAP:
-	/**
-	 * Rebellion
-	 **/
 	case RL_B_TRAP:
 		{
 			struct skill_condition req = skill_get_requirement(sd,skill_id,skill_lv);
@@ -12427,16 +12380,20 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, uint16 skill
 /*==========================================
  *
  *------------------------------------------*/
-void ext_skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, unsigned int tick){skill_unit_onplace(unit, bl, tick);}
+void ext_skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, unsigned int tick)
+{
+	skill_unit_onplace(unit, bl, tick);
+}
+
 /**
-* Triggeres when 'target' (based on skill unit target) is stand at unit area
-* while skill unit initialized or moved (such by knock back).
-* As a follow of skill_unit_effect flag &1
-* @param unit
-* @param bl Target
-* @param tick
-*/
-static int skill_unit_onplace (struct skill_unit *unit, struct block_list *bl, unsigned int tick)
+ * Triggeres when 'target' (based on skill unit target) is stand at unit area
+ * while skill unit initialized or moved (such by knock back).
+ * As a follow of skill_unit_effect flag &1
+ * @param unit
+ * @param bl Target
+ * @param tick
+ */
+static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, unsigned int tick)
 {
 	struct skill_unit_group *sg;
 	struct block_list *ss; // Actual source that cast the skill unit
@@ -12677,13 +12634,13 @@ static int skill_unit_onplace (struct skill_unit *unit, struct block_list *bl, u
 	return skill_id;
 }
 
-/*==========================================
+/**
  * Process skill unit each interval (sg->interval, see interval field of skill_unit_db.txt)
  * @param unit Skill unit
  * @param bl Valid 'target' above the unit, that has been check in skill_unit_timer_sub_onplace
  * @param tick
- *------------------------------------------*/
-int skill_unit_onplace_timer (struct skill_unit *unit, struct block_list *bl, unsigned int tick)
+ */
+int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, unsigned int tick)
 {
 	struct skill_unit_group *sg;
 	struct block_list *ss;
@@ -12762,28 +12719,22 @@ int skill_unit_onplace_timer (struct skill_unit *unit, struct block_list *bl, un
 			break;
 
 		case UNT_DUMMYSKILL:
-			switch (sg->skill_id)
-			{
+			switch (sg->skill_id) {
 				case SG_SUN_WARM: //SG skills [Komurka]
 				case SG_MOON_WARM:
-				case SG_STAR_WARM:
-				{
+				case SG_STAR_WARM: {
 					int count = 0;
 					const int x = bl->x, y = bl->y;
 
 					//If target isn't knocked back it should hit every "interval" ms [Playtester]
-					do
-					{
+					do {
 						if( bl->type == BL_PC )
 							status_zap(bl, 0, 15); // sp damage to players
 						else // mobs
-						if( status_charge(ss, 0, 2) ) // costs 2 SP per hit
-						{
+						if( status_charge(ss, 0, 2) ) { // costs 2 SP per hit
 							if( !skill_attack(BF_WEAPON,ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick+count*sg->interval,0) )
 								status_charge(ss, 0, 8); //costs additional 8 SP if miss
-						}
-						else
-						{ //should end when out of sp.
+						} else { //should end when out of sp.
 							sg->limit = DIFF_TICK(tick,sg->tick);
 							break;
 						}
@@ -12791,10 +12742,7 @@ int skill_unit_onplace_timer (struct skill_unit *unit, struct block_list *bl, un
 						++count < SKILLUNITTIMER_INTERVAL/sg->interval && !status_isdead(bl) );
 				}
 				break;
-		/**
-		 * The storm gust counter was dropped in renewal
-		 **/
-#ifndef RENEWAL
+#ifndef RENEWAL // The storm gust counter was dropped in renewal
 				case WZ_STORMGUST: //SG counter does not reset per stormgust. IE: One hit from a SG and two hits from another will freeze you.
 					if (tsc)
 						tsc->sg_counter++; //SG hit counter.
@@ -12807,7 +12755,7 @@ int skill_unit_onplace_timer (struct skill_unit *unit, struct block_list *bl, un
 						skill_attack(BF_WEAPON,ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 				break;
 				case GN_CRAZYWEED_ATK:
-					if( bl->type == BL_SKILL ){
+					if( bl->type == BL_SKILL ) {
 						struct skill_unit *su = (struct skill_unit *)bl;
 						if( su && !(skill_get_inf2(su->group->skill_id)&INF2_TRAP) )
 							break;
@@ -13162,9 +13110,7 @@ int skill_unit_onplace_timer (struct skill_unit *unit, struct block_list *bl, un
 			//clif_changetraplook(&src->bl, UNT_FIREPILLAR_ACTIVE);
 			sg->limit=DIFF_TICK(tick,sg->tick)+1500;
 			break;
-		/**
-		 * 3rd stuff
-		 **/
+
 		case UNT_POISONSMOKE:
 			if( battle_check_target(ss,bl,BCT_ENEMY) > 0 && !(tsc && tsc->data[sg->val2]) && rnd()%100 < 20 )
 				sc_start(ss,bl,(sc_type)sg->val2,100,sg->val3,skill_get_time2(GC_POISONINGWEAPON, 1));
@@ -13437,13 +13383,14 @@ int skill_unit_onplace_timer (struct skill_unit *unit, struct block_list *bl, un
 
 	return skill_id;
 }
-/*==========================================
+
+/**
  * Triggered when a char steps out of a skill unit
  * @param src Skill unit from char moved out
  * @param bl Char
  * @param tick
- *------------------------------------------*/
-int skill_unit_onout (struct skill_unit *src, struct block_list *bl, unsigned int tick)
+ */
+int skill_unit_onout(struct skill_unit *src, struct block_list *bl, unsigned int tick)
 {
 	struct skill_unit_group *sg;
 	struct status_change *sc;
@@ -13517,13 +13464,13 @@ int skill_unit_onout (struct skill_unit *src, struct block_list *bl, unsigned in
 	return sg->skill_id;
 }
 
-/*==========================================
+/**
  * Triggered when a char steps out of a skill group (entirely) [Skotlex]
  * @param skill_id Skill ID
  * @param bl A char
  * @param tick
- *------------------------------------------*/
-int skill_unit_onleft (uint16 skill_id, struct block_list *bl, unsigned int tick)
+ */
+int skill_unit_onleft(uint16 skill_id, struct block_list *bl, unsigned int tick)
 {
 	struct status_change *sc;
 	struct status_change_entry *sce;
@@ -13655,7 +13602,7 @@ int skill_unit_onleft (uint16 skill_id, struct block_list *bl, unsigned int tick
  * flag&4: Invoke a onleft call (the unit might be scheduled for deletion)
  * flag&8: Recursive
  *------------------------------------------*/
-static int skill_unit_effect (struct block_list* bl, va_list ap)
+static int skill_unit_effect(struct block_list* bl, va_list ap)
 {
 	struct skill_unit* unit = va_arg(ap,struct skill_unit*);
 	struct skill_unit_group* group = unit->group;
@@ -13700,13 +13647,13 @@ static int skill_unit_effect (struct block_list* bl, va_list ap)
 	return 0;
 }
 
-/*==========================================
+/**
  * Check skill unit while receiving damage
  * @param unit Skill unit
  * @param damage Received damage
  * @return Damage
- *------------------------------------------*/
-int64 skill_unit_ondamaged (struct skill_unit *unit, int64 damage)
+ */
+int64 skill_unit_ondamaged(struct skill_unit *unit, int64 damage)
 {
 	struct skill_unit_group *sg;
 
@@ -13734,17 +13681,18 @@ int64 skill_unit_ondamaged (struct skill_unit *unit, int64 damage)
 			damage = 0;
 			break;
 	}
+
 	return damage;
 }
 
-/*==========================================
+/**
  * Check char condition around the skill caster
  * @param bl Char around area
  * @param *c Counter for 'valid' condition found
  * @param *p_sd Stores 'rid' of char found
  * @param skill_id Skill ID
  * @param skill_lv Level of used skill
- *------------------------------------------*/
+ */
 int skill_check_condition_char_sub (struct block_list *bl, va_list ap)
 {
 	int *c, skill_id;
@@ -13830,7 +13778,7 @@ int skill_check_condition_char_sub (struct block_list *bl, va_list ap)
 	return 0;
 }
 
-/*==========================================
+/**
  * Checks and stores partners for ensemble skills [Skotlex]
  * Max partners is 2.
  * @param sd Caster
@@ -13838,8 +13786,8 @@ int skill_check_condition_char_sub (struct block_list *bl, va_list ap)
  * @param skill_lv
  * @param range Area range to check
  * @param cast_flag Special handle
- *------------------------------------------*/
-int skill_check_pc_partner (struct map_session_data *sd, uint16 skill_id, uint16 *skill_lv, int range, int cast_flag)
+ */
+int skill_check_pc_partner(struct map_session_data *sd, uint16 skill_id, uint16 *skill_lv, int range, int cast_flag)
 {
 	static int c=0;
 	static int p_sd[2] = { 0, 0 };
@@ -13897,15 +13845,15 @@ int skill_check_pc_partner (struct map_session_data *sd, uint16 skill_id, uint16
 	return c;
 }
 
-/*==========================================
+/**
  * Sub function to count how many spawned mob is around.
  * Some skills check with matched AI.
  * @param rid Source ID
  * @param mob_class Monster ID
  * @param skill_id Used skill
  * @param *c Counter for found monster
- *------------------------------------------*/
-static int skill_check_condition_mob_master_sub (struct block_list *bl, va_list ap)
+ */
+static int skill_check_condition_mob_master_sub(struct block_list *bl, va_list ap)
 {
 	int *c,src_id,mob_class,skill;
 	uint16 ai;
@@ -13927,17 +13875,17 @@ static int skill_check_condition_mob_master_sub (struct block_list *bl, va_list 
 	return 1;
 }
 
-/*==========================================
+/**
  * Determines if a given skill should be made to consume ammo
  * when used by the player. [Skotlex]
  * @param sd Player
- * @param skill Skill ID
+ * @param skill_id Skill ID
  * @return True if skill is need ammo; False otherwise.
- *------------------------------------------*/
-int skill_isammotype (struct map_session_data *sd, unsigned short skill_id)
+ */
+int skill_isammotype(struct map_session_data *sd, unsigned short skill_id)
 {
 	return (
-		battle_config.arrow_decrement==2 &&
+		battle_config.arrow_decrement == 2 &&
 		(sd->status.weapon == W_BOW || (sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE)) &&
 		skill_id != HT_PHANTASMIC &&
 		skill_get_type(skill_id) == BF_WEAPON &&
@@ -14001,14 +13949,17 @@ static bool skill_check_condition_sc_required(struct map_session_data *sd, unsig
 	return true;
 }
 
-/** Check skill condition when cast begin
-* NOTE: For ammo, only check if the skill need ammo, for checking ammo requirement (type and amount) will be skill_check_condition_castend
-* @param sd Player who uses skill
-* @param skill_id ID of used skill
-* @param skill_lv Level of used skill
-* @return true: All condition passed, false: Failed
-*/
-bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_id, uint16 skill_lv) {
+/** 
+ * Check skill condition when cast begin
+ * For ammo, only check if the skill need ammo
+ * For checking ammo requirement (type and amount) will be skill_check_condition_castend
+ * @param sd Player who uses skill
+ * @param skill_id ID of used skill
+ * @param skill_lv Level of used skill
+ * @return true: All condition passed, false: Failed
+ */
+bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_id, uint16 skill_lv)
+{
 	struct status_data *status;
 	struct status_change *sc;
 	struct skill_condition require;
@@ -14439,13 +14390,10 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				return false;
 			}
 			break;
-		/**
-		 * Arch Bishop
-		 **/
-		case AB_ANCILLA:
-			{
+		case AB_ANCILLA: {
 				int count = 0;
-				for( i = 0; i < MAX_INVENTORY; i ++ )
+
+				for( i = 0; i < MAX_INVENTORY; i++ )
 					if( sd->status.inventory[i].nameid == ITEMID_ANCILLA )
 						count += sd->status.inventory[i].amount;
 				if( count >= 3 ) {
@@ -14457,7 +14405,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 		/**
 		 * Keeping as a note:
 		 * Bug Report #17 provides a link to a sep-2011 changelog that shows this requirement was removed
-		 **/
+		 */
 		//case AB_LAUDAAGNUS:
 		//case AB_LAUDARAMUS:
 		//	if( !sd->status.party_id ) {
@@ -14468,9 +14416,6 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 
 
 		case AB_ADORAMUS: // bugreport:7647 mistress card DOES remove requirements for gemstones from Adoramus and Comet -helvetica
-		/**
-		 * Warlock
-		 **/
 		case WL_COMET:
 			if( skill_check_pc_partner(sd,skill_id,&skill_lv,1,0) <= 0 && require.itemid[0]
 				&& sd->special_state.no_gemstone == 0
@@ -14511,9 +14456,6 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				return false;
 			}
 			break;
-		/**
-		 * Guillotine Cross
-		 **/
 		case GC_HALLUCINATIONWALK:
 			if( sc && (sc->data[SC_HALLUCINATIONWALK] || sc->data[SC_HALLUCINATIONWALK_POSTDELAY]) ) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
@@ -14527,9 +14469,6 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				return false;
 			}
 			break;
-		/**
-		 * Ranger
-		 **/
 		case RA_WUGMASTERY:
 			if( (pc_isfalcon(sd) && !battle_config.warg_can_falcon) || pc_isridingwug(sd) || sd->sc.data[SC__GROOMY]) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
@@ -14554,9 +14493,6 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				return false;
 			}
 			break;
-		/**
-		 * Royal Guard
-		 **/
 		case LG_BANDING:
 			if( sc && sc->data[SC_INSPIRATION] ) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
@@ -14866,14 +14802,16 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 	return true;
 }
 
-/** Check skill condition when cast end.
-* NOTE: Checking ammo requirement (type and amount) will be here, not at skill_check_condition_castbegin
-* @param sd Player who uses skill
-* @param skill_id ID of used skill
-* @param skill_lv Level of used skill
-* @return true: All condition passed, false: Failed
-*/
-bool skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id, uint16 skill_lv) {
+/**
+ * Check skill condition when cast end.
+ * Checking ammo requirement (type and amount) will be here, not at skill_check_condition_castbegin
+ * @param sd Player who uses skill
+ * @param skill_id ID of used skill
+ * @param skill_lv Level of used skill
+ * @return true: All condition passed, false: Failed
+ */
+bool skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id, uint16 skill_lv)
+{
 	struct skill_condition require;
 	struct status_data *status;
 	int i;
@@ -15061,14 +14999,14 @@ bool skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id,
 }
 
 /** Consume skill requirement
-* @param sd Player who uses the skill
-* @param skill_id ID of used skill
-* @param skill_lv Level of used skill
-* @param type Consume type
-*	type&1: consume the others (before skill was used);
-*	type&2: consume items (after skill was used)
-*/
-void skill_consume_requirement( struct map_session_data *sd, uint16 skill_id, uint16 skill_lv, short type)
+ * @param sd Player who uses the skill
+ * @param skill_id ID of used skill
+ * @param skill_lv Level of used skill
+ * @param type Consume type
+ *  type&1: consume the others (before skill was used);
+ *  type&2: consume items (after skill was used)
+ */
+void skill_consume_requirement(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv, short type)
 {
 	struct skill_condition require;
 
@@ -15155,12 +15093,12 @@ void skill_consume_requirement( struct map_session_data *sd, uint16 skill_id, ui
 }
 
 /**
-* Get skill requirements and return the value after some additional/reduction condition (such item bonus and status change)
-* @param sd Player's that will be checked
-* @param skill_id Skill that's being used
-* @param skill_lv Skill level of used skill
-* @return skill_condition Struct 'skill_condition' that store the modified skill requirements
-*/
+ * Get skill requirements and return the value after some additional/reduction condition (such item bonus and status change)
+ * @param sd Player's that will be checked
+ * @param skill_id Skill that's being used
+ * @param skill_lv Skill level of used skill
+ * @return skill_condition Struct 'skill_condition' that store the modified skill requirements
+ */
 struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16 skill_id, uint16 skill_lv)
 {
 	struct skill_condition req;
@@ -15455,7 +15393,7 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
 /*==========================================
  * Does cast-time reductions based on dex, item bonuses and config setting
  *------------------------------------------*/
-int skill_castfix (struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
+int skill_castfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
 	int time = skill_get_cast(skill_id, skill_lv);
 
 	nullpo_ret(bl);
@@ -15502,16 +15440,14 @@ int skill_castfix (struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
 	return time;
 }
 
-/*==========================================
- * Does cast-time reductions based on sc data.
- *------------------------------------------*/
 #ifndef RENEWAL_CAST
-/** Get the skill cast time for Pre-Re cast
-* @param bl: The caster
-* @param time: Cast time before Status Change addition or reduction
-* @return time: Modified castime after status change addition or reduction
-*/
-int skill_castfix_sc (struct block_list *bl, int time)
+/**
+ * Get the skill cast time for Pre-Re cast
+ * @param bl: The caster
+ * @param time: Cast time before Status Change addition or reduction
+ * @return time: Modified castime after status change addition or reduction
+ */
+int skill_castfix_sc(struct block_list *bl, int time)
 {
 	struct status_change *sc = status_get_sc(bl);
 
@@ -15543,14 +15479,15 @@ int skill_castfix_sc (struct block_list *bl, int time)
 	return time;
 }
 #else
-/** Get the skill cast time for RENEWAL_CAST
-* @param bl: The caster
-* @param time: Cast time without reduction
-* @param skill_id: Skill ID of the casted skill
-* @param skill_lv: Skill level of the casted skill
-* @return time: Modified castime after status and bonus addition or reduction
-*/
-int skill_vfcastfix (struct block_list *bl, double time, uint16 skill_id, uint16 skill_lv)
+/**
+ * Get the skill cast time for RENEWAL_CAST
+ * @param bl: The caster
+ * @param time: Cast time without reduction
+ * @param skill_id: Skill ID of the casted skill
+ * @param skill_lv: Skill level of the casted skill
+ * @return time: Modified castime after status and bonus addition or reduction
+ */
+int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 skill_lv)
 {
 	struct status_change *sc = status_get_sc(bl);
 	struct map_session_data *sd = BL_CAST(BL_PC,bl);
@@ -15930,7 +15867,7 @@ void skill_brandishspear(struct block_list* src, struct block_list* bl, uint16 s
 /*==========================================
  * Weapon Repair [Celest/DracoRPG]
  *------------------------------------------*/
-void skill_repairweapon (struct map_session_data *sd, int idx) {
+void skill_repairweapon(struct map_session_data *sd, int idx) {
 	int material;
 	int materials[4] = { 1002, 998, 999, 756 };
 	struct item *item;
@@ -15947,7 +15884,7 @@ void skill_repairweapon (struct map_session_data *sd, int idx) {
 		return; //Invalid index??
 
 	item = &target_sd->status.inventory[idx];
-	if( item->nameid == 0 || item->attribute == 0 )
+	if( !item->nameid || !item->attribute )
 		return; //Again invalid item....
 
 	if( sd != target_sd && !battle_check_range(&sd->bl,&target_sd->bl, skill_get_range2(&sd->bl, sd->menuskill_id,sd->menuskill_val2) ) ){
@@ -15981,7 +15918,7 @@ void skill_repairweapon (struct map_session_data *sd, int idx) {
 /*==========================================
  * Item Appraisal
  *------------------------------------------*/
-void skill_identify (struct map_session_data *sd, int idx)
+void skill_identify(struct map_session_data *sd, int idx)
 {
 	int flag=1;
 
@@ -15999,7 +15936,7 @@ void skill_identify (struct map_session_data *sd, int idx)
 /*==========================================
  * Weapon Refine [Celest]
  *------------------------------------------*/
-void skill_weaponrefine (struct map_session_data *sd, int idx)
+void skill_weaponrefine(struct map_session_data *sd, int idx)
 {
 	nullpo_retv(sd);
 
@@ -16009,8 +15946,7 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 		struct item_data *ditem = sd->inventory_data[idx];
 		item = &sd->status.inventory[idx];
 
-		if(item->nameid > 0 && ditem->type == IT_WEAPON)
-		{
+		if(item->nameid > 0 && ditem->type == IT_WEAPON) {
 			int i = 0, per;
 			int material[5] = { 0, ITEMID_PHRACON, ITEMID_EMVERETARCON, ITEMID_ORIDECON, ITEMID_ORIDECON, };
 			if( ditem->flag.no_refine ) { 	// if the item isn't refinable
@@ -16081,7 +16017,7 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 /*==========================================
  *
  *------------------------------------------*/
-int skill_autospell (struct map_session_data *sd, uint16 skill_id)
+int skill_autospell(struct map_session_data *sd, uint16 skill_id)
 {
 	uint16 skill_lv;
 	int maxlv=1,lv;
@@ -16124,7 +16060,7 @@ int skill_autospell (struct map_session_data *sd, uint16 skill_id)
 /*==========================================
  * Sitting skills functions.
  *------------------------------------------*/
-static int skill_sit_count (struct block_list *bl, va_list ap)
+static int skill_sit_count(struct block_list *bl, va_list ap)
 {
 	struct map_session_data *sd;
 	int type =va_arg(ap,int);
@@ -16219,7 +16155,7 @@ int skill_sit (struct map_session_data *sd, int type)
 /*==========================================
  * Do Forstjoke/Scream effect
  *------------------------------------------*/
-int skill_frostjoke_scream (struct block_list *bl, va_list ap)
+int skill_frostjoke_scream(struct block_list *bl, va_list ap)
 {
 	struct block_list *src;
 	uint16 skill_id,skill_lv;
@@ -16250,33 +16186,33 @@ int skill_frostjoke_scream (struct block_list *bl, va_list ap)
 	return 0;
 }
 
-/*==========================================
+/**
  * Set map cell flag as skill unit effect
  * @param src Skill unit
  * @param skill_id
  * @param skill_lv
  * @param cell Cell type cell_t
  * @param flag 0/1
- *------------------------------------------*/
-static void skill_unitsetmapcell (struct skill_unit *src, uint16 skill_id, uint16 skill_lv, cell_t cell, bool flag)
+ */
+static void skill_unitsetmapcell(struct skill_unit *src, uint16 skill_id, uint16 skill_lv, cell_t cell, bool flag)
 {
 	int range = skill_get_unit_range(skill_id,skill_lv);
-	int x,y;
+	int x, y;
 
 	for( y = src->bl.y - range; y <= src->bl.y + range; ++y )
 		for( x = src->bl.x - range; x <= src->bl.x + range; ++x )
 			map_setcell(src->bl.m, x, y, cell, flag);
 }
 
-/*==========================================
+/**
  * Do skill attack area (such splash effect) around the 'first' target.
  * First target will skip skill condition, always receive damage. But,
  * around it, still need target/condition validation by
  * battle_check_target and status_check_skilluse
  * @param bl
  * @param ap { atk_type, src, dsrc, skill_id, skill_lv, tick, flag, type }
- *------------------------------------------*/
-int skill_attack_area (struct block_list *bl, va_list ap)
+ */
+int skill_attack_area(struct block_list *bl, va_list ap)
 {
 	struct block_list *src,*dsrc;
 	int atk_type,skill_id,skill_lv,flag,type;
@@ -16294,14 +16230,12 @@ int skill_attack_area (struct block_list *bl, va_list ap)
 	flag = va_arg(ap,int);
 	type = va_arg(ap,int);
 
-
 	if (skill_area_temp[1] == bl->id) //This is the target of the skill, do a full attack and skip target checks.
 		return (int)skill_attack(atk_type,src,dsrc,bl,skill_id,skill_lv,tick,flag);
 
 	if(battle_check_target(dsrc,bl,type) <= 0 ||
 		!status_check_skilluse(NULL, bl, skill_id, 2))
 		return 0;
-
 
 	switch (skill_id) {
 		case WZ_FROSTNOVA: //Skills that don't require the animation to be removed
@@ -16317,18 +16251,19 @@ int skill_attack_area (struct block_list *bl, va_list ap)
 	}
 }
 
-/*==========================================
+/**
  * Clear skill unit group
  * @param bl
  * @param flag &1
- *------------------------------------------*/
-int skill_clear_group (struct block_list *bl, int flag)
+ */
+int skill_clear_group(struct block_list *bl, int flag)
 {
-	struct unit_data *ud;
+	struct unit_data *ud = NULL;
 	struct skill_unit_group *group[MAX_SKILLUNITGROUP];
 	int i, count = 0;
 
 	nullpo_ret(bl);
+
 	if (!(ud = unit_bl2ud(bl)))
 		return 0;
 
@@ -16342,19 +16277,19 @@ int skill_clear_group (struct block_list *bl, int flag)
 			case NJ_SUITON:
 			case NJ_KAENSIN:
 				if (flag&1)
-					group[count++]= ud->skillunit[i];
+					group[count++] = ud->skillunit[i];
 				break;
 			case SO_CLOUD_KILL:
 				if( flag&4 )
-					group[count++]= ud->skillunit[i];
+					group[count++] = ud->skillunit[i];
 				break;
 			case SO_WARMER:
 				if( flag&8 )
-					group[count++]= ud->skillunit[i];
+					group[count++] = ud->skillunit[i];
 				break;
 			default:
 				if (flag&2 && skill_get_inf2(ud->skillunit[i]->skill_id)&INF2_TRAP)
-					group[count++]= ud->skillunit[i];
+					group[count++] = ud->skillunit[i];
 				break;
 		}
 
@@ -16364,20 +16299,22 @@ int skill_clear_group (struct block_list *bl, int flag)
 	return count;
 }
 
-/*==========================================
+/**
  * Returns the first element field found [Skotlex]
  * @param bl
  * @return skill_unit_group
- *------------------------------------------*/
+ */
 struct skill_unit_group *skill_locate_element_field(struct block_list *bl)
 {
-	struct unit_data *ud;
+	struct unit_data *ud = NULL;
 	int i;
+
 	nullpo_ret(bl);
+
 	if (!(ud = unit_bl2ud(bl)))
 		return NULL;
 
-	for (i = 0; i < MAX_SKILLUNITGROUP && ud->skillunit[i];i++) {
+	for (i = 0; i < MAX_SKILLUNITGROUP && ud->skillunit[i]; i++) {
 		switch (ud->skillunit[i]->skill_id) {
 			case SA_DELUGE:
 			case SA_VOLCANO:
@@ -16393,31 +16330,33 @@ struct skill_unit_group *skill_locate_element_field(struct block_list *bl)
 }
 
 /// Graffiti cleaner [Valaris]
-int skill_graffitiremover (struct block_list *bl, va_list ap) {
-	struct skill_unit *unit=NULL;
+int skill_graffitiremover(struct block_list *bl, va_list ap)
+{
+	struct skill_unit *unit = NULL;
 
 	nullpo_ret(bl);
 	nullpo_ret(ap);
 
-	if(bl->type!=BL_SKILL || (unit=(struct skill_unit *)bl) == NULL)
+	if (bl->type != BL_SKILL || (unit = (struct skill_unit *)bl) == NULL)
 		return 0;
 
-	if((unit->group) && (unit->group->unit_id == UNT_GRAFFITI))
+	if ((unit->group) && (unit->group->unit_id == UNT_GRAFFITI))
 		skill_delunit(unit);
 
 	return 0;
 }
 
 /// Greed effect
-int skill_greed (struct block_list *bl, va_list ap) {
+int skill_greed(struct block_list *bl, va_list ap)
+{
 	struct block_list *src;
-	struct map_session_data *sd=NULL;
-	struct flooritem_data *fitem=NULL;
+	struct map_session_data *sd = NULL;
+	struct flooritem_data *fitem = NULL;
 
 	nullpo_ret(bl);
 	nullpo_ret(src = va_arg(ap, struct block_list *));
 
-	if(src->type == BL_PC && (sd=(struct map_session_data *)src) && bl->type==BL_ITEM && (fitem=(struct flooritem_data *)bl))
+	if(src->type == BL_PC && (sd = (struct map_session_data *)src) && bl->type == BL_ITEM && (fitem = (struct flooritem_data *)bl))
 		pc_takeitem(sd, fitem);
 
 	return 0;
@@ -16426,12 +16365,13 @@ int skill_greed (struct block_list *bl, va_list ap) {
 /// Ranger's Detonator [Jobbie/3CeAM]
 int skill_detonator(struct block_list *bl, va_list ap)
 {
-	struct skill_unit *unit=NULL;
+	struct skill_unit *unit = NULL;
 	struct block_list *src;
 	int unit_id;
 
 	nullpo_ret(bl);
 	nullpo_ret(ap);
+
 	src = va_arg(ap,struct block_list *);
 
 	if( bl->type != BL_SKILL || (unit = (struct skill_unit *)bl) == NULL || !unit->group )
@@ -16461,6 +16401,7 @@ int skill_detonator(struct block_list *bl, va_list ap)
 					break;
 				default:
 					map_foreachinrange(skill_trap_splash,bl,skill_get_splash(unit->group->skill_id,unit->group->skill_lv),unit->group->bl_flag,bl,unit->group->tick);
+					break;
 			}
 			clif_changetraplook(bl, UNT_USED_TRAPS);
 			unit->group->unit_id = UNT_USED_TRAPS;
@@ -16623,18 +16564,19 @@ int skill_changetarget(struct block_list *bl, va_list ap)
  * Splash effect for skill unit 'trap type'.
  * Chance triggered when damaged, timeout, or char step on it.
  *------------------------------------------*/
-static int skill_trap_splash (struct block_list *bl, va_list ap)
+static int skill_trap_splash(struct block_list *bl, va_list ap)
 {
-	struct block_list *src;
-	int tick;
-	struct skill_unit *unit;
+	struct block_list *src = va_arg(ap,struct block_list *);
+	struct skill_unit *unit = NULL;
+	int tick = va_arg(ap,int);
 	struct skill_unit_group *sg;
-	struct block_list *ss; //skill src bl
-	src = va_arg(ap,struct block_list *);
-	unit = (struct skill_unit *)src;
-	tick = va_arg(ap,int);
+	struct block_list *ss; //Skill src bl
 
-	if (!unit->alive || bl->prev == NULL)
+	nullpo_ret(src);
+
+	unit = (struct skill_unit *)src;
+
+	if (!unit || !unit->alive || bl->prev == NULL)
 		return 0;
 
 	nullpo_ret(sg = unit->group);
@@ -16701,7 +16643,7 @@ static int skill_trap_splash (struct block_list *bl, va_list ap)
 			if( bl->type == BL_SKILL ) {
 				struct skill_unit *su = (struct skill_unit *)bl;
 
-				if( su->group->unit_id == UNT_USED_TRAPS )
+				if (su && su->group->unit_id == UNT_USED_TRAPS)
 					break;
 			}
 		case UNT_CLUSTERBOMB:
@@ -16712,7 +16654,11 @@ static int skill_trap_splash (struct block_list *bl, va_list ap)
 			if( src->id == bl->id ) break;
 			if( bl->type == BL_SKILL ) {
 				struct skill_unit *su = (struct skill_unit *)bl;
-				switch( su->group->unit_id ){
+
+				if (!su)
+					return 0;
+
+				switch(su->group->unit_id) {
 					case UNT_CLAYMORETRAP:
 					case UNT_LANDMINE:
 					case UNT_BLASTMINE:
@@ -16740,6 +16686,8 @@ int skill_maelstrom_suction(struct block_list *bl, va_list ap)
 	uint16 skill_id, skill_lv;
 	struct skill_unit *unit;
 
+	nullpo_ret(bl);
+
 	skill_id = va_arg(ap,int);
 	skill_lv = va_arg(ap,int);
 	unit = (struct skill_unit *)bl;
@@ -16750,10 +16698,12 @@ int skill_maelstrom_suction(struct block_list *bl, va_list ap)
 	if( skill_get_inf2(skill_id)&INF2_TRAP )
 		return 0;
 
-	if( unit->group->skill_id == SC_MAELSTROM ){
+	if( unit->group->skill_id == SC_MAELSTROM ) {
 		struct block_list *src;
+
 		if( (src = map_id2bl(unit->group->src_id)) ){
 			int sp = unit->group->skill_lv * skill_lv;
+
 			if( src->type == BL_PC )
 				sp += ((TBL_PC*)src)->status.job_level / 5;
 			status_heal(src, 0, sp/2, 1);
@@ -16763,15 +16713,17 @@ int skill_maelstrom_suction(struct block_list *bl, va_list ap)
 	return 0;
 }
 
-/*==========================================
+/**
  * Remove current enchanted element for new element
  * @param bl Char
  * @param type New element
- *------------------------------------------*/
-void skill_enchant_elemental_end (struct block_list *bl, int type) {
+ */
+void skill_enchant_elemental_end(struct block_list *bl, int type)
+{
 	struct status_change *sc;
 	const enum sc_type scs[] = { SC_ENCPOISON, SC_ASPERSIO, SC_FIREWEAPON, SC_WATERWEAPON, SC_WINDWEAPON, SC_EARTHWEAPON, SC_SHADOWWEAPON, SC_GHOSTWEAPON, SC_ENCHANTARMS };
 	int i;
+
 	nullpo_retv(bl);
 	nullpo_retv(sc= status_get_sc(bl));
 
@@ -16784,11 +16736,11 @@ void skill_enchant_elemental_end (struct block_list *bl, int type) {
 }
 
 /**
-* Check camouflage condition
-* @param bl
-* @param sce
-* @return True if near wall; False otherwise
-**/
+ * Check camouflage condition
+ * @param bl
+ * @param sce
+ * @return True if near wall; False otherwise
+ */
 bool skill_check_cloaking(struct block_list *bl, struct status_change_entry *sce)
 {
 	bool wall = true;
@@ -16824,12 +16776,13 @@ bool skill_check_cloaking(struct block_list *bl, struct status_change_entry *sce
 }
 
 /** Check Shadow Form on the target
-* @param bl: Target
-* @param damage: Damage amount
-* @param hit
-* @return true - in Shadow Form state; false - otherwise
-*/
-bool skill_check_shadowform(struct block_list *bl, int64 damage, int hit) {
+ * @param bl: Target
+ * @param damage: Damage amount
+ * @param hit
+ * @return true - in Shadow Form state; false - otherwise
+ */
+bool skill_check_shadowform(struct block_list *bl, int64 damage, int hit)
+{
 	struct status_change *sc;
 
 	nullpo_retr(false,bl);
@@ -16866,12 +16819,12 @@ bool skill_check_shadowform(struct block_list *bl, int64 damage, int hit) {
 }
 
 /**
-* Check camouflage condition
-* @param bl
-* @param sce
-* @return True if near wall; False otherwise
-* @TODO: Seems wrong
-**/
+ * Check camouflage condition
+ * @param bl
+ * @param sce
+ * @return True if near wall; False otherwise
+ * @TODO: Seems wrong
+ */
 bool skill_check_camouflage(struct block_list *bl, struct status_change_entry *sce)
 {
 	bool wall = true;
@@ -16896,7 +16849,7 @@ bool skill_check_camouflage(struct block_list *bl, struct status_change_entry *s
 	return wall;
 }
 
-/*==========================================
+/**
  * Initialize new skill unit for skill unit group.
  * Overall, Skill Unit makes skill unit group which each group holds their cell datas (skill unit)
  * @param group Skill unit group
@@ -16905,8 +16858,8 @@ bool skill_check_camouflage(struct block_list *bl, struct status_change_entry *s
  * @param y
  * @param val1
  * @param val2
- *------------------------------------------*/
-struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int x, int y, int val1, int val2)
+ */
+struct skill_unit *skill_initunit(struct skill_unit_group *group, int idx, int x, int y, int val1, int val2)
 {
 	struct skill_unit *unit;
 
@@ -16963,19 +16916,22 @@ struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int 
 	return unit;
 }
 
-/*==========================================
+/**
  * Remove unit
  * @param unit
- *------------------------------------------*/
-int skill_delunit (struct skill_unit* unit) {
+ */
+int skill_delunit(struct skill_unit* unit)
+{
 	struct skill_unit_group *group;
 
 	nullpo_ret(unit);
+
 	if( !unit->alive )
 		return 0;
-	unit->alive=0;
 
-	nullpo_ret(group=unit->group);
+	unit->alive = 0;
+
+	nullpo_ret(group = unit->group);
 
 	if( group->state.song_dance&0x1 ) //Cancel dissonance effect.
 		skill_dance_overlap(unit, 0);
@@ -17046,9 +17002,9 @@ struct skill_unit_group* skill_id2group(int group_id) {
 static int skill_unit_group_newid = MAX_SKILL_DB; /// Skill Unit Group ID
 
 /**
-* Returns a new group_id that isn't being used in skillunit_group_db.
-* Fatal error if nothing is available.
-**/
+ * Returns a new group_id that isn't being used in skillunit_group_db.
+ * Fatal error if nothing is available.
+ */
 static int skill_get_new_group_id(void)
 {
 	if( skill_unit_group_newid >= MAX_SKILL_DB && skill_id2group(skill_unit_group_newid) == NULL )
@@ -17069,17 +17025,17 @@ static int skill_get_new_group_id(void)
 }
 
 /**
-* Initialize skill unit group called while setting new unit (skill unit/ground skill) in skill_unitsetting()
-* @param src Object that cast the skill
-* @param count How many 'cells' used that needed. Related with skill layout
-* @param skill_id ID of used skill
-* @param skill_lv Skill level of used skill
-* @param unit_id Unit ID (look at skill_unit_db.txt)
-* @param limit Lifetime for skill unit, uses skill_get_time(skill_id, skill_lv)
-* @param interval Time interval
-* @return skill_unit_group
-**/
-struct skill_unit_group* skill_initunitgroup (struct block_list* src, int count, uint16 skill_id, uint16 skill_lv, int unit_id, int limit, int interval)
+ * Initialize skill unit group called while setting new unit (skill unit/ground skill) in skill_unitsetting()
+ * @param src Object that cast the skill
+ * @param count How many 'cells' used that needed. Related with skill layout
+ * @param skill_id ID of used skill
+ * @param skill_lv Skill level of used skill
+ * @param unit_id Unit ID (look at skill_unit_db.txt)
+ * @param limit Lifetime for skill unit, uses skill_get_time(skill_id, skill_lv)
+ * @param interval Time interval
+ * @return skill_unit_group
+ */
+struct skill_unit_group* skill_initunitgroup(struct block_list* src, int count, uint16 skill_id, uint16 skill_lv, int unit_id, int limit, int interval)
 {
 	struct unit_data* ud = unit_bl2ud( src );
 	struct skill_unit_group* group;
@@ -17140,13 +17096,13 @@ struct skill_unit_group* skill_initunitgroup (struct block_list* src, int count,
 	return group;
 }
 
-/*==========================================
+/**
  * Remove skill unit group
  * @param group
  * @param file
  * @param line
  * @param *func
- *------------------------------------------*/
+ */
 int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int line, const char* func)
 {
 	struct block_list* src;
@@ -17158,7 +17114,7 @@ int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int li
 		return 0;
 	}
 
-	src=map_id2bl(group->src_id);
+	src = map_id2bl(group->src_id);
 	ud = unit_bl2ud(src);
 	if (!src || !ud) {
 		ShowError("skill_delunitgroup: Group's source not found! (src_id: %d skill_id: %d)\n", group->src_id, group->skill_id);
@@ -17281,11 +17237,12 @@ int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int li
 	return 1;
 }
 
-/*==========================================
+/**
  * Clear all Skill Unit Group from an Object, example usage when player logged off or dead
  * @param src
- *------------------------------------------*/
-void skill_clear_unitgroup (struct block_list *src) {
+ */
+void skill_clear_unitgroup(struct block_list *src)
+{
 	struct unit_data *ud;
 
 	nullpo_retv(src);
@@ -17295,14 +17252,15 @@ void skill_clear_unitgroup (struct block_list *src) {
 		skill_delunitgroup(ud->skillunit[0]);
 }
 
-/*==========================================
+/**
  * Search tickset for skill unit in skill unit group
  * @param bl Block List for skill_unit
  * @param group Skill unit group
  * @param tick
  * @return skill_unit_group_tickset if found
- *------------------------------------------*/
-struct skill_unit_group_tickset *skill_unitgrouptickset_search (struct block_list *bl, struct skill_unit_group *group, int tick) {
+ */
+struct skill_unit_group_tickset *skill_unitgrouptickset_search(struct block_list *bl, struct skill_unit_group *group, int tick)
+{
 	int i, j = -1, s, id;
 	struct unit_data *ud;
 	struct skill_unit_group_tickset *set;
@@ -17344,15 +17302,18 @@ struct skill_unit_group_tickset *skill_unitgrouptickset_search (struct block_lis
  * Check for validity skill unit that triggered by skill_unit_timer_sub
  * And trigger skill_unit_onplace_timer for object that maybe stands there (catched object is *bl)
  *------------------------------------------*/
-int skill_unit_timer_sub_onplace (struct block_list* bl, va_list ap) {
+int skill_unit_timer_sub_onplace(struct block_list* bl, va_list ap)
+{
 	struct skill_unit* unit = va_arg(ap,struct skill_unit *);
-	struct skill_unit_group* group = unit->group;
+	struct skill_unit_group* group = NULL;
 	unsigned int tick = va_arg(ap,unsigned int);
+
+	nullpo_ret(unit);
 
 	if( !unit->alive || bl->prev == NULL )
 		return 0;
 
-	nullpo_ret(group);
+	nullpo_ret(group = unit->group);
 
 	if( !(skill_get_inf2(group->skill_id)&(INF2_SONG_DANCE|INF2_TRAP)) && !(skill_get_inf3(group->skill_id)&(INF3_NOLP)) && group->skill_id != NC_NEUTRALBARRIER && map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR) )
 		return 0; //AoE skills are ineffective. [Skotlex]
@@ -17370,22 +17331,23 @@ int skill_unit_timer_sub_onplace (struct block_list* bl, va_list ap) {
  */
 static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 {
-	struct skill_unit* unit = db_data2ptr(data);
-	struct skill_unit_group* group = unit->group;
+	struct skill_unit* unit = (struct skill_unit*)db_data2ptr(data);
+	struct skill_unit_group* group = NULL;
 	unsigned int tick = va_arg(ap,unsigned int);
 	bool dissonance;
 	struct block_list* bl = &unit->bl;
 
+	nullpo_ret(unit);
+
 	if( !unit->alive )
 		return 0;
 
-	nullpo_ret(group);
+	nullpo_ret(group = unit->group);
 
 	// Check for expiration
 	if( !group->state.guildaura && (DIFF_TICK(tick,group->tick) >= group->limit || DIFF_TICK(tick,group->tick) >= unit->limit) )
 	{// skill unit expired (inlined from skill_unit_onlimit())
-		switch( group->unit_id )
-		{
+		switch( group->unit_id ) {
 			case UNT_BLASTMINE:
 #ifdef RENEWAL
 			case UNT_CLAYMORETRAP:
@@ -17608,7 +17570,8 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 /*==========================================
  * Executes on all skill units every SKILLUNITTIMER_INTERVAL miliseconds.
  *------------------------------------------*/
-int skill_unit_timer(int tid, unsigned int tick, int id, intptr_t data) {
+int skill_unit_timer(int tid, unsigned int tick, int id, intptr_t data)
+{
 	map_freeblock_lock();
 
 	skillunit_db->foreach(skillunit_db, skill_unit_timer_sub, tick);
@@ -17624,22 +17587,25 @@ static int skill_unit_temp[20];  // temporary storage for tracking skill unit sk
  *	2 : clear that skill_unit
  *	4 : call_on_left
  *------------------------------------------*/
-int skill_unit_move_sub (struct block_list* bl, va_list ap) {
+int skill_unit_move_sub(struct block_list* bl, va_list ap)
+{
 	struct skill_unit* unit = (struct skill_unit *)bl;
-	struct skill_unit_group* group = unit->group;
+	struct skill_unit_group* group = NULL;
 
 	struct block_list* target = va_arg(ap,struct block_list*);
 	unsigned int tick = va_arg(ap,unsigned int);
 	int flag = va_arg(ap,int);
-
 	bool dissonance;
 	uint16 skill_id;
 	int i;
 
-	nullpo_ret(group);
+	nullpo_ret(unit);
+	nullpo_ret(target);
 
 	if( !unit->alive || target->prev == NULL )
 		return 0;
+
+	nullpo_ret(group = unit->group);
 
 	if( flag&1 && ( unit->group->skill_id == PF_SPIDERWEB || unit->group->skill_id == GN_THORNS_TRAP ) )
 		return 0; // Fiberlock is never supposed to trigger on skill_unit_move. [Inkfish]
@@ -17681,12 +17647,14 @@ int skill_unit_move_sub (struct block_list* bl, va_list ap) {
 				skill_unit_onleft(skill_id,target,tick);
 		}
 
-		if( dissonance ) skill_dance_switch(unit, 1);
+		if( dissonance )
+			skill_dance_switch(unit, 1);
 
 		return 0;
 	} else {
 		if( flag&1 ) {
 			int result = skill_unit_onplace(unit,target,tick);
+
 			if( flag&2 && result ) { //Clear skill ids we have stored in onout.
 				ARR_FIND( 0, ARRAYLENGTH(skill_unit_temp), i, skill_unit_temp[i] == result );
 				if( i < ARRAYLENGTH(skill_unit_temp) )
@@ -17694,6 +17662,7 @@ int skill_unit_move_sub (struct block_list* bl, va_list ap) {
 			}
 		} else {
 			int result = skill_unit_onout(unit,target,tick);
+
 			if( flag&2 && result ) { //Store this unit id.
 				ARR_FIND( 0, ARRAYLENGTH(skill_unit_temp), i, skill_unit_temp[i] == 0 );
 				if( i < ARRAYLENGTH(skill_unit_temp) )
@@ -17706,7 +17675,8 @@ int skill_unit_move_sub (struct block_list* bl, va_list ap) {
 		//TODO: Normally, this is dangerous since the unit and group could be freed
 		//inside the onout/onplace functions. Currently it is safe because we know song/dance
 		//cells do not get deleted within them. [Skotlex]
-		if( dissonance ) skill_dance_switch(unit, 1);
+		if( dissonance )
+			skill_dance_switch(unit, 1);
 
 		if( flag&4 )
 			skill_unit_onleft(skill_id,target,tick);
@@ -17723,24 +17693,25 @@ int skill_unit_move_sub (struct block_list* bl, va_list ap) {
  * units to figure out when they have left a group.
  * flag&4: Force a onleft event (triggered when the bl is killed, for example)
  *------------------------------------------*/
-int skill_unit_move (struct block_list *bl, unsigned int tick, int flag) {
+int skill_unit_move(struct block_list *bl, unsigned int tick, int flag)
+{
 	nullpo_ret(bl);
 
 	if( bl->prev == NULL )
 		return 0;
 
-	if( flag&2 && !(flag&1) ) { //Onout, clear data
+	if( flag&2 && !(flag&1) ) //Onout, clear data
 		memset(skill_unit_temp, 0, sizeof(skill_unit_temp));
-	}
 
 	map_foreachincell(skill_unit_move_sub,bl->m,bl->x,bl->y,BL_SKILL,bl,tick,flag);
 
 	if( flag&2 && flag&1 ) { //Onplace, check any skill units you have left.
 		int i;
+
 		for( i = 0; i < ARRAYLENGTH(skill_unit_temp); i++ )
 			if( skill_unit_temp[i] )
 				skill_unit_onleft(skill_unit_temp[i], bl, tick);
-			}
+	}
 
 	return 0;
 }
@@ -17778,15 +17749,16 @@ void skill_unit_move_unit(struct block_list *bl, int dx, int dy) {
 	return;
 }
 
-/*==========================================
+/**
  * Moves skill unit group to map m with coordinates x & y (example when knocked back)
  * @param group Skill Group
  * @param m Map
  * @param dx
  * @param dy
- *------------------------------------------*/
-void skill_unit_move_unit_group(struct skill_unit_group *group, int16 m, int16 dx, int16 dy) {
-	int i,j;
+ */
+void skill_unit_move_unit_group(struct skill_unit_group *group, int16 m, int16 dx, int16 dy)
+{
+	int i, j;
 	unsigned int tick = gettick();
 	int *m_flag;
 	struct skill_unit *unit1;
@@ -17794,8 +17766,10 @@ void skill_unit_move_unit_group(struct skill_unit_group *group, int16 m, int16 d
 
 	if (group == NULL)
 		return;
+
 	if (group->unit_count <= 0)
 		return;
+
 	if (group->unit == NULL)
 		return;
 
@@ -17808,25 +17782,25 @@ void skill_unit_move_unit_group(struct skill_unit_group *group, int16 m, int16 d
 	//		1: Unit will move to a slot that had another unit of the same group (skill_unit_onplace not needed)
 	//		2: Another unit from same group will end up positioned on this unit (skill_unit_onout not needed)
 	//		3: Both 1+2.
-	for(i = 0; i < group->unit_count; i++){
+	for(i = 0; i < group->unit_count; i++) {
 		unit1 =& group->unit[i];
 		if (!unit1->alive || unit1->bl.m != m)
 			continue;
-		for(j = 0; j < group->unit_count; j++){
-			unit2 =& group->unit[j];
+		for(j = 0; j < group->unit_count; j++) {
+			unit2 = &group->unit[j];
 			if (!unit2->alive)
 				continue;
-			if (unit1->bl.x+dx == unit2->bl.x && unit1->bl.y+dy == unit2->bl.y){
+			if (unit1->bl.x+dx == unit2->bl.x && unit1->bl.y+dy == unit2->bl.y)
 				m_flag[i] |= 0x1;
-			}
-			if (unit1->bl.x-dx == unit2->bl.x && unit1->bl.y-dy == unit2->bl.y){
+			if (unit1->bl.x-dx == unit2->bl.x && unit1->bl.y-dy == unit2->bl.y)
 				m_flag[i] |= 0x2;
-			}
 		}
 	}
+
 	j = 0;
+
 	for (i = 0; i < group->unit_count; i++) {
-		unit1 =& group->unit[i];
+		unit1 = &group->unit[i];
 		if (!unit1->alive)
 			continue;
 		if (!(m_flag[i]&0x2)) {
@@ -17843,8 +17817,8 @@ void skill_unit_move_unit_group(struct skill_unit_group *group, int16 m, int16 d
 			case 1:
 			//Cell moves unto another cell, look for a replacement cell that won't collide
 			//and has no cell moving into it (flag == 2)
-				for(;j<group->unit_count;j++) {
-					if(m_flag[j]!=2 || !group->unit[j].alive)
+				for(; j < group->unit_count; j++) {
+					if(m_flag[j] != 2 || !group->unit[j].alive)
 						continue;
 					//Move to where this cell would had moved.
 					unit2 = &group->unit[j];
@@ -17864,11 +17838,11 @@ void skill_unit_move_unit_group(struct skill_unit_group *group, int16 m, int16 d
 			map_foreachincell(skill_unit_effect,unit1->bl.m,unit1->bl.x,unit1->bl.y,group->bl_flag,&unit1->bl,tick,1);
 		}
 	}
+
 	aFree(m_flag);
-	return;
 }
 
-/*==========================================
+/**
  * Checking product requirement in player's inventory.
  * Checking if player has the item or not, the amount, and the weight limit.
  * @param sd Player
@@ -17876,17 +17850,18 @@ void skill_unit_move_unit_group(struct skill_unit_group *group, int16 m, int16 d
  * @param trigger Trigger criteria to match will 'ItemLv'
  * @param qty Amount of item will be created
  * @return 0 If failed or Index+1 of item found on skill_produce_db[]
- *------------------------------------------*/
-short skill_can_produce_mix (struct map_session_data *sd, unsigned short nameid, int trigger, int qty) {
+ */
+short skill_can_produce_mix(struct map_session_data *sd, unsigned short nameid, int trigger, int qty)
+{
 	short i, j;
 
 	nullpo_ret(sd);
 
-	if (nameid == 0 || !itemdb_exists(nameid))
+	if (!nameid || !itemdb_exists(nameid))
 		return 0;
 
 	for (i = 0; i < MAX_SKILL_PRODUCE_DB; i++) {
-		if (skill_produce_db[i].nameid == nameid ) {
+		if (skill_produce_db[i].nameid == nameid) {
 			if ((j = skill_produce_db[i].req_skill) > 0 &&
 				pc_checkskill(sd,j) < skill_produce_db[i].req_skill_lv)
 				continue; // must iterate again to check other skills that produce it. [malufett]
@@ -17920,25 +17895,26 @@ short skill_can_produce_mix (struct map_session_data *sd, unsigned short nameid,
 	// Check on player's inventory
 	for (j = 0; j < MAX_PRODUCE_RESOURCE; j++) {
 		unsigned short nameid_produce;
-		if ((nameid_produce = skill_produce_db[i].mat_id[j]) == 0 )
+
+		if (!(nameid_produce = skill_produce_db[i].mat_id[j]))
 			continue;
 		if (skill_produce_db[i].mat_amount[j] == 0) {
 			if (pc_search_inventory(sd,nameid_produce) < 0)
 				return 0;
-		}
-		else {
+		} else {
 			unsigned short idx, amt;
+
 			for (idx = 0, amt = 0; idx < MAX_INVENTORY; idx++)
 				if (sd->status.inventory[idx].nameid == nameid_produce)
 					amt += sd->status.inventory[idx].amount;
-			if (amt < qty*skill_produce_db[i].mat_amount[j])
+			if (amt < qty * skill_produce_db[i].mat_amount[j])
 				return 0;
 		}
 	}
-	return i+1;
+	return i + 1;
 }
 
-/*==========================================
+/**
  * Attempt to produce an item
  * @param sd Player
  * @param skill_id Skill used
@@ -17948,22 +17924,24 @@ short skill_can_produce_mix (struct map_session_data *sd, unsigned short nameid,
  * @param slot3
  * @param qty Amount of requested item
  * @return True is success, False if failed
- *------------------------------------------*/
-bool skill_produce_mix (struct map_session_data *sd, uint16 skill_id, unsigned short nameid, int slot1, int slot2, int slot3, int qty) {
+ */
+bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned short nameid, int slot1, int slot2, int slot3, int qty)
+{
 	int slot[3];
-	int i,sc,ele,idx,equip,wlv,make_per = 0,flag = 0,skill_lv = 0;
+	int i, sc, ele, idx, equip, wlv, make_per = 0, flag = 0, skill_lv = 0;
 	int num = -1; // exclude the recipe
 	struct status_data *status;
 	struct item_data* data;
 
 	nullpo_ret(sd);
+
 	status = status_get_status_data(&sd->bl);
 
 	if( sd->skill_id_old == skill_id )
 		skill_lv = sd->skill_lv_old;
 
 	if( !(idx = skill_can_produce_mix(sd,nameid,-1, qty)) )
-		return 0;
+		return false;
 	idx--;
 
 	if (qty < 1)
@@ -17979,14 +17957,14 @@ bool skill_produce_mix (struct map_session_data *sd, uint16 skill_id, unsigned s
 	slot[1] = slot2;
 	slot[2] = slot3;
 
-	for (i = 0, sc = 0, ele = 0; i < 3; i++){ //Note that qty should always be one if you are using these!
+	for (i = 0, sc = 0, ele = 0; i < 3; i++) { //Note that qty should always be one if you are using these!
 		short j;
 		if (slot[i] <= 0)
 			continue;
 		j = pc_search_inventory(sd,slot[i]);
 		if (j < 0)
 			continue;
-		if (slot[i] == ITEMID_STAR_CRUMB){
+		if (slot[i] == ITEMID_STAR_CRUMB) {
 			pc_delitem(sd,j,1,1,0,LOG_TYPE_PRODUCE);
 			sc++;
 		}
@@ -18012,9 +17990,7 @@ bool skill_produce_mix (struct map_session_data *sd, uint16 skill_id, unsigned s
 						clif_msgtable(sd->fd,RUNE_CANT_CREATE);
 						return 0;
 					} else {
-						/**
-						 * the amount fits, say we got temp_qty 4 and 19 runes, we trim temp_qty to 1.
-						 **/
+						// The amount fits, say we got temp_qty 4 and 19 runes, we trim temp_qty to 1.
 						if (temp_qty + sd->status.inventory[i].amount >= data->stack.amount)
 							temp_qty = data->stack.amount - sd->status.inventory[i].amount;
 					}
@@ -18025,14 +18001,16 @@ bool skill_produce_mix (struct map_session_data *sd, uint16 skill_id, unsigned s
 		qty = temp_qty;
 	}
 
-	for (i = 0; i < MAX_PRODUCE_RESOURCE; i++){
+	for (i = 0; i < MAX_PRODUCE_RESOURCE; i++) {
 		short id, x, j;
-		if ((id = skill_produce_db[idx].mat_id[i]) <= 0 || !itemdb_exists(id))
+
+		if (!(id = skill_produce_db[idx].mat_id[i]) || !itemdb_exists(id))
 			continue;
 		num++;
 		x = (skill_id == RK_RUNEMASTERY ? 1 : qty) * skill_produce_db[idx].mat_amount[i];
 		do {
 			int y = 0;
+
 			j = pc_search_inventory(sd,id);
 
 			if (j >= 0) {
@@ -18042,15 +18020,15 @@ bool skill_produce_mix (struct map_session_data *sd, uint16 skill_id, unsigned s
 				pc_delitem(sd,j,y,0,0,LOG_TYPE_PRODUCE);
 			} else {
 				ShowError("skill_produce_mix: material item error\n");
-				return 0;
+				return false;
 			}
-
-			x-=y;
-		} while( j>=0 && x>0 );
+			x -= y;
+		} while( j >= 0 && x > 0 );
 	}
 
 	if ((equip = (itemdb_isequip(nameid) && skill_id != GN_CHANGEMATERIAL && skill_id != GN_MAKEBOMB )))
 		wlv = itemdb_wlv(nameid);
+
 	if (!equip) {
 		switch (skill_id) {
 			case BS_IRON:
@@ -18071,16 +18049,13 @@ bool skill_produce_mix (struct map_session_data *sd, uint16 skill_id, unsigned s
 						break;
 					default: // Enchanted Stones
 						make_per += 1000+i*500; // Enchanted stone Craft bonus: +15/+20/+25/+30/+35
-					break;
+						break;
 				}
 				break;
 			case ASC_CDP:
 				make_per = (2000 + 40*status->dex + 20*status->luk);
 				break;
 			case AL_HOLYWATER:
-			/**
-			 * Arch Bishop
-			 **/
 			case AB_ANCILLA:
 				make_per = 100000; //100% success
 				break;
@@ -18132,15 +18107,13 @@ bool skill_produce_mix (struct map_session_data *sd, uint16 skill_id, unsigned s
 			case SA_CREATECON: // Elemental Converter Creation
 				make_per = 100000; // should be 100% success rate
 				break;
-			/**
-			 * Rune Knight
-			 **/
-			case RK_RUNEMASTERY:
-				{
+
+			case RK_RUNEMASTERY: {
 					int A = 100 * (51 + 2 * pc_checkskill(sd, skill_id));
 					int B = 100 * status->dex / 30 + 10 * (status->luk + sd->status.job_level);
 					int C = 100 * cap_value(sd->itemid,0,100); //itemid depend on makerune()
 					int D = 0;
+
 					switch (nameid) { //rune rank it_diff 9 craftable rune
 						case ITEMID_BERKANA:
 							D = -2000;
@@ -18164,11 +18137,9 @@ bool skill_produce_mix (struct map_session_data *sd, uint16 skill_id, unsigned s
 							break; //not specified =-15%
 					}
 					make_per = A + B + C + D;
-				break;
 				}
-			/**
-			 * Guillotine Cross
-			 **/
+				break;
+
 			case GC_CREATENEWPOISON:
 				make_per = 3000 + 500 * pc_checkskill(sd,GC_RESEARCHNEWPOISON);
 				qty = 1+rnd()%pc_checkskill(sd,GC_RESEARCHNEWPOISON);
@@ -18346,9 +18317,6 @@ bool skill_produce_mix (struct map_session_data *sd, uint16 skill_id, unsigned s
 					flag = battle_config.produce_item_name_input&0x2;
 					break;
 				case AL_HOLYWATER:
-				/**
-				 * Arch Bishop
-				 **/
 				case AB_ANCILLA:
 					flag = battle_config.produce_item_name_input&0x8;
 					break;
@@ -18538,24 +18506,26 @@ bool skill_produce_mix (struct map_session_data *sd, uint16 skill_id, unsigned s
 					if (sd->cook_mastery > 0)
 						pc_setglobalreg(sd, "COOK_MASTERY", sd->cook_mastery - ( 1 << ((skill_produce_db[idx].itemlv - 11) / 2) ) - ( ( ( 1 << ((skill_produce_db[idx].itemlv - 11) / 2) ) >> 1 ) * 3 ));
 				}
+				break;
 		}
 	}
 	return false;
 }
 
 /**
-* Attempt to create arrow by specified material
-* @param sd Player
-* @param nameid Item ID of material
-* @return True if created, False is failed
-*/
-bool skill_arrow_create(struct map_session_data *sd, unsigned short nameid) {
-	short i, j, idx =- 1;
+ * Attempt to create arrow by specified material
+ * @param sd Player
+ * @param nameid Item ID of material
+ * @return True if created, False is failed
+ */
+bool skill_arrow_create(struct map_session_data *sd, unsigned short nameid)
+{
+	short i, j, idx = -1;
 	struct item tmp_item;
 
 	nullpo_ret(sd);
 
-	if (nameid == 0 || !itemdb_exists(nameid) || !skill_arrow_count)
+	if (!nameid || !itemdb_exists(nameid) || !skill_arrow_count)
 		return false;
 
 	for (i = 0; i < MAX_SKILL_ARROW_DB;i++) {
@@ -18565,12 +18535,13 @@ bool skill_arrow_create(struct map_session_data *sd, unsigned short nameid) {
 		}
 	}
 
-	if (idx < 0 || (j = pc_search_inventory(sd,nameid)) < 0)
+	if (!idx || (j = pc_search_inventory(sd,nameid)) < 0)
 		return false;
 
 	pc_delitem(sd,j,1,0,0,LOG_TYPE_PRODUCE);
 	for (i = 0; i < MAX_ARROW_RESULT; i++) {
 		char flag = 0;
+
 		if (skill_arrow_db[idx].cre_id[i] == 0 || !itemdb_exists(skill_arrow_db[idx].cre_id[i]) || skill_arrow_db[idx].cre_amount[i] == 0)
 			continue;
 		memset(&tmp_item,0,sizeof(tmp_item));
@@ -18592,11 +18563,12 @@ bool skill_arrow_create(struct map_session_data *sd, unsigned short nameid) {
 }
 
 /**
-* Enchant weapon with poison
-* @param sd Player
-* @nameid Item ID of poison type
-*/
-int skill_poisoningweapon( struct map_session_data *sd, unsigned short nameid) {
+ * Enchant weapon with poison
+ * @param sd Player
+ * @nameid Item ID of poison type
+ */
+int skill_poisoningweapon(struct map_session_data *sd, unsigned short nameid)
+{
 	sc_type type;
 	int chance, i;
 	//uint16 msg = 1443; //Official is using msgstringtable.txt
@@ -18605,7 +18577,7 @@ int skill_poisoningweapon( struct map_session_data *sd, unsigned short nameid) {
 
 	nullpo_ret(sd);
 
-	if( nameid == 0 || (i = pc_search_inventory(sd,nameid)) < 0 || pc_delitem(sd,i,1,0,0,LOG_TYPE_CONSUME) ) {
+	if( !nameid || (i = pc_search_inventory(sd,nameid)) < 0 || pc_delitem(sd,i,1,0,0,LOG_TYPE_CONSUME) ) {
 		clif_skill_fail(sd,GC_POISONINGWEAPON,USESKILL_FAIL_LEVEL,0);
 		return 0;
 	}
@@ -18668,7 +18640,7 @@ int skill_magicdecoy(struct map_session_data *sd, unsigned short nameid) {
 	nullpo_ret(sd);
 	skill = sd->menuskill_val;
 
-	if( nameid == 0 || !itemdb_is_element(nameid) || (i = pc_search_inventory(sd,nameid)) < 0 || !skill || pc_delitem(sd,i,1,0,0,LOG_TYPE_CONSUME) ) {
+	if( !nameid || !itemdb_is_element(nameid) || (i = pc_search_inventory(sd,nameid)) < 0 || !skill || pc_delitem(sd,i,1,0,0,LOG_TYPE_CONSUME) ) {
 		clif_skill_fail(sd,NC_MAGICDECOY,USESKILL_FAIL_LEVEL,0);
 		return 0;
 	}
@@ -18904,15 +18876,18 @@ int skill_changematerial(struct map_session_data *sd, int n, unsigned short *ite
 
 	return 0;
 }
+
 /**
- * for Royal Guard's LG_TRAMPLE
- **/
-static int skill_destroy_trap( struct block_list *bl, va_list ap ) {
+ * For Royal Guard's LG_TRAMPLE
+ */
+static int skill_destroy_trap(struct block_list *bl, va_list ap)
+{
 	struct skill_unit *su = (struct skill_unit *)bl;
-	struct skill_unit_group *sg;
+	struct skill_unit_group *sg = NULL;
 	unsigned int tick;
 
 	nullpo_ret(su);
+
 	tick = va_arg(ap, unsigned int);
 
 	if (su->alive && (sg = su->group) && skill_get_inf2(sg->skill_id)&INF2_TRAP) {
@@ -18935,13 +18910,16 @@ static int skill_destroy_trap( struct block_list *bl, va_list ap ) {
 		// Traps aren't recovered.
 		skill_delunit(su);
 	}
+
 	return 0;
 }
+
 /*==========================================
-*
-*------------------------------------------*/
+ *
+ *------------------------------------------*/
 int skill_blockpc_get(struct map_session_data *sd, int skillid) {
 	int i;
+
 	nullpo_retr(-1, sd);
 
 	ARR_FIND(0, MAX_SKILLCOOLDOWN, i, sd->scd[i] && sd->scd[i]->skill_id == skillid);
@@ -18950,7 +18928,7 @@ int skill_blockpc_get(struct map_session_data *sd, int skillid) {
 
 int skill_blockpc_end(int tid, unsigned int tick, int id, intptr_t data) {
 	struct map_session_data *sd = map_id2sd(id);
-	int i = (int) data;
+	int i = (int)data;
 
 	if (!sd || data < 0 || data >= MAX_SKILLCOOLDOWN)
 		return 0;
@@ -18966,20 +18944,22 @@ int skill_blockpc_end(int tid, unsigned int tick, int id, intptr_t data) {
 }
 
 /**
-* flags a singular skill as being blocked from persistent usage.
-* @param   sd        the player the skill delay affects
-* @param   skill_id   the skill which should be delayed
-* @param   tick      the length of time the delay should last
-* @param   load      whether this assignment is being loaded upon player login
-* @return  0 if successful, -1 otherwise
-*/
-int skill_blockpc_start(struct map_session_data *sd, int skillid, int tick) {
+ * Flags a singular skill as being blocked from persistent usage.
+ * @param   sd        the player the skill delay affects
+ * @param   skill_id   the skill which should be delayed
+ * @param   tick      the length of time the delay should last
+ * @param   load      whether this assignment is being loaded upon player login
+ * @return  0 if successful, -1 otherwise
+ */
+int skill_blockpc_start(struct map_session_data *sd, int skill_id, int tick) {
 	int i;
+
 	nullpo_retr(-1, sd);
-	if (skillid == 0 || tick < 1)
+
+	if (!skill_id || tick < 1)
 		return -1;
 
-	ARR_FIND(0, MAX_SKILLCOOLDOWN, i, sd->scd[i] && sd->scd[i]->skill_id == skillid);
+	ARR_FIND(0, MAX_SKILLCOOLDOWN, i, sd->scd[i] && sd->scd[i]->skill_id == skill_id);
 	if (i < MAX_SKILLCOOLDOWN) { // Skill already with cooldown
 		delete_timer(sd->scd[i]->timer, skill_blockpc_end);
 		aFree(sd->scd[i]);
@@ -18989,11 +18969,11 @@ int skill_blockpc_start(struct map_session_data *sd, int skillid, int tick) {
 	ARR_FIND(0, MAX_SKILLCOOLDOWN, i, !sd->scd[i]);
 	if (i < MAX_SKILLCOOLDOWN) { // Free Slot found
 		CREATE(sd->scd[i], struct skill_cooldown_entry, 1);
-		sd->scd[i]->skill_id = skillid;
+		sd->scd[i]->skill_id = skill_id;
 		sd->scd[i]->timer = add_timer(gettick() + tick, skill_blockpc_end, sd->bl.id, i);
 
 		if (battle_config.display_status_timers && tick > 0)
-			clif_skill_cooldown(sd, skillid, tick);
+			clif_skill_cooldown(sd, skill_id, tick);
 
 		return 1;
 	} else {
@@ -19004,7 +18984,9 @@ int skill_blockpc_start(struct map_session_data *sd, int skillid, int tick) {
 
 int skill_blockpc_clear(struct map_session_data *sd) {
 	int i;
+
 	nullpo_ret(sd);
+
 	for (i = 0; i < MAX_SKILLCOOLDOWN; i++) {
 		if (!sd->scd[i])
 			continue;
@@ -19018,9 +19000,12 @@ int skill_blockpc_clear(struct map_session_data *sd) {
 int skill_blockhomun_end(int tid, unsigned int tick, int id, intptr_t data)	//[orn]
 {
 	struct homun_data *hd = (TBL_HOM*) map_id2bl(id);
+
 	if (data <= 0 || data >= MAX_SKILL)
 		return 0;
-	if (hd) hd->blockskill[data] = 0;
+
+	if (hd)
+		hd->blockskill[data] = 0;
 
 	return 1;
 }
@@ -19028,26 +19013,31 @@ int skill_blockhomun_end(int tid, unsigned int tick, int id, intptr_t data)	//[o
 int skill_blockhomun_start(struct homun_data *hd, uint16 skill_id, int tick)	//[orn]
 {
 	uint16 idx = skill_get_index(skill_id);
-	nullpo_retr (-1, hd);
 
+	nullpo_retr(-1, hd);
 
-	if (idx == 0)
+	if (!idx)
 		return -1;
 
 	if (tick < 1) {
 		hd->blockskill[idx] = 0;
 		return -1;
 	}
+
 	hd->blockskill[idx] = 1;
+
 	return add_timer(gettick() + tick, skill_blockhomun_end, hd->bl.id, idx);
 }
 
 int skill_blockmerc_end(int tid, unsigned int tick, int id, intptr_t data)	//[orn]
 {
 	struct mercenary_data *md = (TBL_MER*)map_id2bl(id);
+
 	if( data <= 0 || data >= MAX_SKILL )
 		return 0;
-	if( md ) md->blockskill[data] = 0;
+
+	if( md )
+		md->blockskill[data] = 0;
 
 	return 1;
 }
@@ -19055,21 +19045,24 @@ int skill_blockmerc_end(int tid, unsigned int tick, int id, intptr_t data)	//[or
 int skill_blockmerc_start(struct mercenary_data *md, uint16 skill_id, int tick)
 {
 	uint16 idx = skill_get_index(skill_id);
-	nullpo_retr (-1, md);
 
-	if (idx == 0)
+	nullpo_retr(-1, md);
+
+	if( !idx )
 		return -1;
-	if( tick < 1 )
-	{
+
+	if( tick < 1 ) {
 		md->blockskill[idx] = 0;
 		return -1;
 	}
+
 	md->blockskill[idx] = 1;
+
 	return add_timer(gettick() + tick, skill_blockmerc_end, md->bl.id, idx);
 }
 /**
  * Adds a new skill unit entry for this player to recast after map load
- **/
+ */
 void skill_usave_add(struct map_session_data * sd, uint16 skill_id, uint16 skill_lv) {
 	struct skill_usave * sus = NULL;
 
@@ -19077,8 +19070,8 @@ void skill_usave_add(struct map_session_data * sd, uint16 skill_id, uint16 skill
 		idb_remove(skillusave_db,sd->status.char_id);
 	}
 
-	CREATE( sus, struct skill_usave, 1 );
-	idb_put( skillusave_db, sd->status.char_id, sus );
+	CREATE(sus, struct skill_usave, 1);
+	idb_put(skillusave_db, sd->status.char_id, sus);
 
 	sus->skill_id = skill_id;
 	sus->skill_lv = skill_lv;
@@ -19088,12 +19081,10 @@ void skill_usave_add(struct map_session_data * sd, uint16 skill_id, uint16 skill
 void skill_usave_trigger(struct map_session_data *sd) {
 	struct skill_usave * sus = NULL;
 
-	if( ! (sus = idb_get(skillusave_db,sd->status.char_id)) ) {
+	if( ! (sus = idb_get(skillusave_db,sd->status.char_id)) )
 		return;
-	}
 
 	skill_unitsetting(&sd->bl,sus->skill_id,sus->skill_lv,sd->bl.x,sd->bl.y,0);
-
 	idb_remove(skillusave_db,sd->status.char_id);
 
 	return;
@@ -19101,14 +19092,15 @@ void skill_usave_trigger(struct map_session_data *sd) {
 /*
  *
  */
-int skill_split_str (char *str, char **val, int num) {
+int skill_split_str (char *str, char **val, int num)
+{
 	int i;
 
 	for( i = 0; i < num && str; i++ ) {
 		val[i] = str;
 		str = strchr(str,',');
 		if( str )
-			*str++=0;
+			*str++ = 0;
 	}
 
 	return i;
@@ -19121,7 +19113,8 @@ int skill_split_str (char *str, char **val, int num) {
  * @param val : array of MAX_SKILL_LEVEL to put value into
  * @return 0:error, x:number of value assign (should be MAX_SKILL_LEVEL)
  */
-int skill_split_atoi (char *str, int *val) {
+int skill_split_atoi (char *str, int *val)
+{
 	int i, j, step = 1;
 
 	for (i=0; i<MAX_SKILL_LEVEL; i++) {
@@ -19783,14 +19776,15 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current)
 	return true;
 }
 
-/** Split string to int by constanta value (const.txt) or atoi()
-* @param *str: String input
-* @param *val: Temporary storage
-* @param *delim: Delimiter (for multiple value support)
-* @param min_value: Minimum value. If the splitted value is less or equal than this, will be skipped
-* @param max: Maximum number that can be allocated
-* @return count: Number of success
-*/
+/**
+ * Split string to int by constanta value (const.txt) or atoi()
+ * @param *str: String input
+ * @param *val: Temporary storage
+ * @param *delim: Delimiter (for multiple value support)
+ * @param min_value: Minimum value. If the splitted value is less or equal than this, will be skipped
+ * @param max: Maximum number that can be allocated
+ * @return count: Number of success
+ */
 uint8 skill_split_atoi2(char *str, int *val, const char *delim, int min_value, uint16 max) {
 	uint8 i = 0;
 	char *p = strtok(str, delim);
@@ -19833,9 +19827,10 @@ static void skill_destroy_requirement(void) {
 
 /**
  * Read skill requirement from skill_require_db.txt
- **/
+ * Structure: skill_id,HPCost,MaxHPTrigger,SPCost,HPRateCost,SPRateCost,ZenyCost,RequiredWeapons,RequiredAmmoTypes,RequiredAmmoAmount,RequiredState,RequiredStatuss,SpiritSphereCost,RequiredItemID1,RequiredItemAmount1,RequiredItemID2,RequiredItemAmount2,RequiredItemID3,RequiredItemAmount3,RequiredItemID4,RequiredItemAmount4,RequiredItemID5,RequiredItemAmount5,RequiredItemID6,RequiredItemAmount6,RequiredItemID7,RequiredItemAmount7,RequiredItemID8,RequiredItemAmount8,RequiredItemID9,RequiredItemAmount9,RequiredItemID10,RequiredItemAmount10
+ */
 static bool skill_parse_row_requiredb(char* split[], int columns, int current)
-{// skill_id,HPCost,MaxHPTrigger,SPCost,HPRateCost,SPRateCost,ZenyCost,RequiredWeapons,RequiredAmmoTypes,RequiredAmmoAmount,RequiredState,RequiredStatuss,SpiritSphereCost,RequiredItemID1,RequiredItemAmount1,RequiredItemID2,RequiredItemAmount2,RequiredItemID3,RequiredItemAmount3,RequiredItemID4,RequiredItemAmount4,RequiredItemID5,RequiredItemAmount5,RequiredItemID6,RequiredItemAmount6,RequiredItemID7,RequiredItemAmount7,RequiredItemID8,RequiredItemAmount8,RequiredItemID9,RequiredItemAmount9,RequiredItemID10,RequiredItemAmount10
+{
 	char* p;
 	uint16 skill_id = atoi(split[0]), idx, i;
 
@@ -19930,10 +19925,12 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 }
 
 /** Reads skill cast db
-* SkillID,CastingTime,AfterCastActDelay,AfterCastWalkDelay,Duration1,Duration2,Cooldown{,Fixedcast}
-*/
-static bool skill_parse_row_castdb(char* split[], int columns, int current) {
+ * Structure: SkillID,CastingTime,AfterCastActDelay,AfterCastWalkDelay,Duration1,Duration2,Cooldown{,Fixedcast}
+ */
+static bool skill_parse_row_castdb(char* split[], int columns, int current)
+{
 	uint16 idx = skill_get_index(atoi(split[0]));
+
 	if( !idx ) // invalid skill id
 		return false;
 
@@ -19950,10 +19947,12 @@ static bool skill_parse_row_castdb(char* split[], int columns, int current) {
 }
 
 /** Reads skill cast no dex db
-* SkillID,Cast,Delay (optional)
-*/
-static bool skill_parse_row_castnodexdb(char* split[], int columns, int current) {
+ * Structure: SkillID,Cast,Delay (optional)
+ */
+static bool skill_parse_row_castnodexdb(char* split[], int columns, int current)
+{
 	uint16 idx = skill_get_index(atoi(split[0]));
+
 	if( !idx ) // invalid skill id
 		return false;
 
@@ -19965,10 +19964,12 @@ static bool skill_parse_row_castnodexdb(char* split[], int columns, int current)
 }
 
 /** Reads skill no cast db
-* SkillID,Flag
-*/
-static bool skill_parse_row_nocastdb(char* split[], int columns, int current) {
+ * Structure: SkillID,Flag
+ */
+static bool skill_parse_row_nocastdb(char* split[], int columns, int current)
+{
 	uint16 idx = skill_get_index(atoi(split[0]));
+
 	if( !idx ) // invalid skill id
 		return false;
 
@@ -19978,10 +19979,12 @@ static bool skill_parse_row_nocastdb(char* split[], int columns, int current) {
 }
 
 /** Reads skill unit db
-* ID,unit ID,unit ID 2,layout,range,interval,target,flag
-*/
-static bool skill_parse_row_unitdb(char* split[], int columns, int current) {
+ * Structure: ID,unit ID,unit ID 2,layout,range,interval,target,flag
+ */
+static bool skill_parse_row_unitdb(char* split[], int columns, int current)
+{
 	uint16 idx = skill_get_index(atoi(split[0]));
+
 	if( !idx ) // invalid skill id
 		return false;
 
@@ -20021,9 +20024,10 @@ static bool skill_parse_row_unitdb(char* split[], int columns, int current) {
 }
 
 /** Reads Produce db
-* ID,ProduceItemID,ItemLV,RequireSkill,Requireskill_lv,MaterialID1,MaterialAmount1,......
-*/
-static bool skill_parse_row_producedb(char* split[], int columns, int current) {
+ * Structure: ProduceItemID,ItemLV,RequireSkill,Requireskill_lv,MaterialID1,MaterialAmount1,...
+ */
+static bool skill_parse_row_producedb(char* split[], int columns, int current)
+{
 	unsigned short x, y;
 	unsigned short id = atoi(split[0]);
 	unsigned short nameid = 0;
@@ -20064,9 +20068,10 @@ static bool skill_parse_row_producedb(char* split[], int columns, int current) {
 }
 
 /** Reads create arrow db
-* SourceID,MakeID1,MakeAmount1,...,MakeID5,MakeAmount5
-*/
-static bool skill_parse_row_createarrowdb(char* split[], int columns, int current) {
+ * Sturcture: SourceID,MakeID1,MakeAmount1,...,MakeID5,MakeAmount5
+ */
+static bool skill_parse_row_createarrowdb(char* split[], int columns, int current)
+{
 	unsigned short x, y, i, material_id = atoi(split[0]);
 
 	if (!(itemdb_exists(material_id))) {
@@ -20100,9 +20105,10 @@ static bool skill_parse_row_createarrowdb(char* split[], int columns, int curren
 }
 
 /** Reads Spell book db
-* SkillID,PreservePoints,RequiredBook
-*/
-static bool skill_parse_row_spellbookdb(char* split[], int columns, int current) {
+ * Structure: SkillID,PreservePoints,RequiredBook
+ */
+static bool skill_parse_row_spellbookdb(char* split[], int columns, int current)
+{
 	unsigned short i,
 		skill_id = atoi(split[0]),
 		points = atoi(split[1]),
@@ -20133,15 +20139,15 @@ static bool skill_parse_row_spellbookdb(char* split[], int columns, int current)
 			skill_spellbook_count++;
 		return true;
 	}
-	
 
 	return false;
 }
 
 /** Reads improvise db
-* SkillID,Rate
-*/
-static bool skill_parse_row_improvisedb(char* split[], int columns, int current) {
+ * Structure: SkillID,Rate
+ */
+static bool skill_parse_row_improvisedb(char* split[], int columns, int current)
+{
 	unsigned short skill_id = atoi(split[0]), per = atoi(split[1]), i;
 
 	if( !skill_get_index(skill_id) || !skill_get_max(skill_id) ) {
@@ -20166,17 +20172,18 @@ static bool skill_parse_row_improvisedb(char* split[], int columns, int current)
 
 	skill_improvise_db[i].skill_id = skill_id;
 	skill_improvise_db[i].per = per; // Still need confirm it.
-	
+
 	if (i == skill_improvise_count)
 		skill_improvise_count++;
-	
+
 	return true;
 }
 
 /** Reads Magic mushroom db
-* SkillID{,<RemoveFlag>}
-*/
-static bool skill_parse_row_magicmushroomdb(char* split[], int column, int current) {
+ * Structure: SkillID
+ */
+static bool skill_parse_row_magicmushroomdb(char* split[], int column, int current)
+{
 	unsigned short i, skill_id = atoi(split[0]);
 	bool rem = (atoi(split[1]) == 1 ? true : false);
 
@@ -20208,10 +20215,11 @@ static bool skill_parse_row_magicmushroomdb(char* split[], int column, int curre
 }
 
 /** Reads db of copyable skill
-* SkillName,Option{,JobAllowed{,RequirementRemoved}}
-* SkillID,Option{,JobAllowed{,RequirementRemoved}}
-*/
-static bool skill_parse_row_copyabledb(char* split[], int column, int current) {
+ * Structure: SkillName,Option{,JobAllowed{,RequirementRemoved}}
+ *	SkillID,Option{,JobAllowed{,RequirementRemoved}}
+ */
+static bool skill_parse_row_copyabledb(char* split[], int column, int current)
+{
 	int16 id = 0;
 	uint8 option = 0;
 
@@ -20245,10 +20253,11 @@ static bool skill_parse_row_copyabledb(char* split[], int column, int current) {
 }
 
 /** Reads additional range for distance checking from NPC [Cydh]
-* SkillName,AdditionalRange{,NPC Type}
-* SkillID,AdditionalRange{,NPC Type}
-*/
-static bool skill_parse_row_nonearnpcrangedb(char* split[], int column, int current) {
+ * Structure: SkillName,AdditionalRange{,NPC Type}
+ *	SkillID,AdditionalRange{,NPC Type}
+ */
+static bool skill_parse_row_nonearnpcrangedb(char* split[], int column, int current)
+{
 	uint16 id = 0;
 
 	trim(split[0]);
@@ -20268,9 +20277,10 @@ static bool skill_parse_row_nonearnpcrangedb(char* split[], int column, int curr
 }
 
 /** Reads skill chance by Abracadabra/Hocus Pocus spell
-* SkillID,DummyName,RatePerLvl
-*/
-static bool skill_parse_row_abradb(char* split[], int columns, int current) {
+ * Structure: SkillID,DummyName,RatePerLvl
+ */
+static bool skill_parse_row_abradb(char* split[], int columns, int current)
+{
 	unsigned short i, skill_id = atoi(split[0]);
 	if (!skill_get_index(skill_id) || !skill_get_max(skill_id)) {
 		ShowError("skill_parse_row_abradb: Invalid skill ID %d\n", skill_id);
@@ -20303,9 +20313,10 @@ static bool skill_parse_row_abradb(char* split[], int columns, int current) {
 }
 
 /** Reads change material db
-* ID,ProductID,BaseRate,MakeAmount1,MakeAmountRate1...,MakeAmount5,MakeAmountRate5
-*/
-static bool skill_parse_row_changematerialdb(char* split[], int columns, int current) {
+ * Structure: ProductID,BaseRate,MakeAmount1,MakeAmountRate1...,MakeAmount5,MakeAmountRate5
+ */
+static bool skill_parse_row_changematerialdb(char* split[], int columns, int current)
+{
 	uint16 id = atoi(split[0]), nameid = atoi(split[1]);
 	short rate = atoi(split[2]);
 	bool found = false;
@@ -20358,7 +20369,7 @@ static bool skill_parse_row_changematerialdb(char* split[], int columns, int cur
 
 /**
  * Manage Skill Damage database [Lilith]
- **/
+ */
 #ifdef ADJUST_SKILL_DAMAGE
 static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
 {
@@ -20393,7 +20404,8 @@ static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
  * create_arrow_db.txt
  * abra_db.txt
  *------------------------------*/
-static void skill_readdb(void) {
+static void skill_readdb(void)
+{
 	int i;
 	const char* dbsubpath[] = {
 		"",
@@ -20460,6 +20472,7 @@ static void skill_readdb(void) {
 void skill_reload (void) {
 	struct s_mapiterator *iter;
 	struct map_session_data *sd;
+
 	skill_destroy_requirement();
 	skill_readdb();
 	/* lets update all players skill tree : so that if any skill modes were changed they're properly updated */
@@ -20467,13 +20480,13 @@ void skill_reload (void) {
 	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
 		clif_skillinfoblock(sd);
 	mapit_free(iter);
-
 }
 
 /*==========================================
  *
  *------------------------------------------*/
-void do_init_skill (void){
+void do_init_skill(void)
+{
 	skilldb_name2id = strdb_alloc(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA, 0);
 	skill_readdb();
 
@@ -20493,7 +20506,8 @@ void do_init_skill (void){
 	add_timer_interval(gettick()+SKILLUNITTIMER_INTERVAL,skill_unit_timer,0,0,SKILLUNITTIMER_INTERVAL);
 }
 
-void do_final_skill(void){
+void do_final_skill(void)
+{
 	skill_destroy_requirement();
 	db_destroy(skilldb_name2id);
 	db_destroy(skillunit_group_db);

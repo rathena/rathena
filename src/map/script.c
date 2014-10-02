@@ -7538,18 +7538,18 @@ BUILDIN_FUNC(getpartyname)
 BUILDIN_FUNC(getpartymember)
 {
 	struct party_data *p;
-	int type = 0;
 	unsigned char j = 0;
 
 	p = party_search(script_getnum(st,2));
 
-	if (p != NULL){
+	if (p != NULL) {
+		int type = 0;
 		unsigned char i;
 
 		if (script_hasdata(st,3))
  			type = script_getnum(st,3);
 
-		for (i = 0;i<MAX_PARTY;i++) {
+		for (i = 0; i < MAX_PARTY; i++) {
 			if (p->party.member[i].account_id) {
 				switch (type) {
 					case 2:
@@ -7562,10 +7562,12 @@ BUILDIN_FUNC(getpartymember)
 						mapreg_setregstr(reference_uid(add_str("$@partymembername$"), j),p->party.member[i].name);
 						break;
 				}
+
 				j++;
 			}
 		}
 	}
+
 	mapreg_setreg(add_str("$@partymembercount"),j);
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -14328,7 +14330,6 @@ BUILDIN_FUNC(unequip) {
 
 BUILDIN_FUNC(equip) {
 	unsigned short nameid = 0;
-	int i;
 	TBL_PC *sd;
 	struct item_data *item_data;
 
@@ -14337,6 +14338,8 @@ BUILDIN_FUNC(equip) {
 
 	nameid = script_getnum(st,2);
 	if ((item_data = itemdb_exists(nameid))) {
+		int i;
+
 		ARR_FIND( 0, MAX_INVENTORY, i, sd->status.inventory[i].nameid == nameid );
 		if (i < MAX_INVENTORY) {
 			pc_equipitem(sd,i,item_data->equip);
@@ -14584,7 +14587,6 @@ BUILDIN_FUNC(substr)
 	char *output;
 	int start = script_getnum(st,3);
 	int end = script_getnum(st,4);
-
 	int len = 0;
 
 	if(start >= 0 && end < strlen(str) && start <= end) {
@@ -14613,17 +14615,13 @@ BUILDIN_FUNC(explode)
 	size_t len = strlen(str);
 	int i = 0, j = 0;
 	int start;
-
-
 	char *temp;
 	const char* name;
-
 	TBL_PC* sd = NULL;
 
 	temp = (char*)aMalloc(len + 1);
 
-	if( !data_isreference(data) )
-	{
+	if( !data_isreference(data) ) {
 		ShowError("script:explode: not a variable\n");
 		script_reportdata(data);
 		st->state = END;
@@ -14634,24 +14632,21 @@ BUILDIN_FUNC(explode)
 	start = reference_getindex(data);
 	name = reference_getname(data);
 
-	if( not_array_variable(*name) )
-	{
+	if( not_array_variable(*name) ) {
 		ShowError("script:explode: illegal scope\n");
 		script_reportdata(data);
 		st->state = END;
 		return 1;// not supported
 	}
 
-	if( !is_string_variable(name) )
-	{
+	if( !is_string_variable(name) ) {
 		ShowError("script:explode: not string array\n");
 		script_reportdata(data);
 		st->state = END;
 		return 1;// data type mismatch
 	}
 
-	if( not_server_variable(*name) )
-	{
+	if( not_server_variable(*name) ) {
 		sd = script_rid2sd(st);
 		if( sd == NULL )
 			return 0;// no player attached
@@ -14667,6 +14662,7 @@ BUILDIN_FUNC(explode)
 			temp[j++] = str[i++];
 		}
 	}
+
 	//set last string
 	temp[j] = '\0';
 	set_reg(st, sd, reference_uid(id, start), name, (void*)temp, reference_getref(data));
@@ -14684,13 +14680,9 @@ BUILDIN_FUNC(implode)
 	struct script_data* data = script_getdata(st, 2);
 	const char *name;
 	int32 glue_len = 0, array_size, id;
-
-	TBL_PC* sd = NULL;
-
 	char *output;
 
-	if( !data_isreference(data) )
-	{
+	if( !data_isreference(data) ) {
 		ShowError("script:implode: not a variable\n");
 		script_reportdata(data);
 		st->state = END;
@@ -14700,25 +14692,23 @@ BUILDIN_FUNC(implode)
 	id = reference_getid(data);
 	name = reference_getname(data);
 
-	if( not_array_variable(*name) )
-	{
+	if( not_array_variable(*name) ) {
 		ShowError("script:implode: illegal scope\n");
 		script_reportdata(data);
 		st->state = END;
 		return 1;// not supported
 	}
 
-	if( !is_string_variable(name) )
-	{
+	if( !is_string_variable(name) ) {
 		ShowError("script:implode: not string array\n");
 		script_reportdata(data);
 		st->state = END;
 		return 1;// data type mismatch
 	}
 
-	if( not_server_variable(*name) )
-	{
-		sd = script_rid2sd(st);
+	if( not_server_variable(*name) ) {
+		TBL_PC* sd = script_rid2sd(st);
+
 		if( sd == NULL )
 			return 0;// no player attached
 	}
@@ -14726,8 +14716,7 @@ BUILDIN_FUNC(implode)
 	//count chars
 	array_size = getarraysize(st, id, reference_getindex(data), is_string_variable(name), reference_getref(data)) - 1;
 
-	if(array_size == -1) //empty array check (AmsTaff)
-	{
+	if(array_size == -1) { //empty array check (AmsTaff)
 		ShowWarning("script:implode: array length = 0\n");
 		output = (char*)aMalloc(sizeof(char)*5);
 		sprintf(output,"%s","NULL");
@@ -14756,18 +14745,20 @@ BUILDIN_FUNC(implode)
 			len = strlen(temp);
 			memcpy(&output[k], temp, len);
 			k += len;
+
 			if(glue_len != 0) {
 				memcpy(&output[k], glue, glue_len);
 				k += glue_len;
 			}
+
 			script_removetop(st, -1, 0);
 		}
+
 		temp = (char*) get_val2(st, reference_uid(id, array_size), reference_getref(data));
 		len = strlen(temp);
 		memcpy(&output[k], temp, len);
 		k += len;
 		script_removetop(st, -1, 0);
-
 		output[k] = '\0';
 	}
 
@@ -14797,7 +14788,7 @@ BUILDIN_FUNC(sprintf)
 	len = strlen(format);
 
 	// Skip parsing, where no parsing is required.
-	if(len==0){
+	if(len == 0) {
 		script_pushconststr(st,"");
 		return 0;
 	}
@@ -14806,7 +14797,7 @@ BUILDIN_FUNC(sprintf)
 	CREATE(buf, char, len+1);
 
 	// Need not be parsed, just solve stuff like %%.
-	if(argc==0){
+	if(argc == 0) {
 		memcpy(buf,format,len+1);
 		script_pushstrcopy(st, buf);
 		aFree(buf);
@@ -14818,30 +14809,36 @@ BUILDIN_FUNC(sprintf)
 	// Issue sprintf for each parameter
 	StringBuf_Init(&final_buf);
 	q = buf;
-	while((p = strchr(q, '%'))!=NULL){
-		if(p!=q){
-			len = p-q+1;
-			if(buf2_len<len){
+	while((p = strchr(q, '%')) != NULL) {
+		if(p != q) {
+			len = p - q + 1;
+
+			if(buf2_len < len) {
 				RECREATE(buf2, char, len);
 				buf2_len = len;
 			}
+
 			safestrncpy(buf2, q, len);
 			StringBuf_AppendStr(&final_buf, buf2);
 			q = p;
 		}
-		p = q+1;
-		if(*p=='%'){  // %%
+
+		p = q + 1;
+
+		if(*p == '%') {  // %%
 			StringBuf_AppendStr(&final_buf, "%");
 			q+=2;
 			continue;
 		}
-		if(*p=='n'){  // %n
+
+		if(*p == 'n') {  // %n
 			ShowWarning("buildin_sprintf: Format %%n not supported! Skipping...\n");
 			script_reportsrc(st);
 			q+=2;
 			continue;
 		}
-		if(arg>=argc){
+
+		if(arg >= argc) {
 			ShowError("buildin_sprintf: Not enough arguments passed!\n");
 			if(buf) aFree(buf);
 			if(buf2) aFree(buf2);
@@ -14849,14 +14846,17 @@ BUILDIN_FUNC(sprintf)
 			script_pushconststr(st,"");
 			return 1;
 		}
-		if((p = strchr(q+1, '%'))==NULL){
+
+		if((p = strchr(q+1, '%')) == NULL)
 			p = strchr(q, 0);  // EOS
-		}
-		len = p-q+1;
-		if(buf2_len<len){
+
+		len = p - q + 1;
+
+		if(buf2_len < len) {
 			RECREATE(buf2, char, len);
 			buf2_len = len;
 		}
+
 		safestrncpy(buf2, q, len);
 		q = p;
 
@@ -14866,18 +14866,19 @@ BUILDIN_FUNC(sprintf)
 		// but it would behave in normal code the same way so it's
 		// the scripter's responsibility.
 		data = script_getdata(st, arg+3);
-		if(data_isstring(data)){  // String
+
+		if(data_isstring(data))  // String
 			StringBuf_Printf(&final_buf, buf2, script_getstr(st, arg+3));
-		}else if(data_isint(data)){  // Number
+		else if(data_isint(data))  // Number
 			StringBuf_Printf(&final_buf, buf2, script_getnum(st, arg+3));
-		}else if(data_isreference(data)){  // Variable
+		else if(data_isreference(data)) {  // Variable
 			char* name = reference_getname(data);
-			if(name[strlen(name)-1]=='$'){  // var Str
+
+			if(name[strlen(name)-1]=='$')  // var Str
 				StringBuf_Printf(&final_buf, buf2, script_getstr(st, arg+3));
-			}else{  // var Int
+			else  // var Int
 				StringBuf_Printf(&final_buf, buf2, script_getnum(st, arg+3));
-			}
-		}else{  // Unsupported type
+		} else {  // Unsupported type
 			ShowError("buildin_sprintf: Unknown argument type!\n");
 			if(buf) aFree(buf);
 			if(buf2) aFree(buf2);
@@ -14885,16 +14886,16 @@ BUILDIN_FUNC(sprintf)
 			script_pushconststr(st,"");
 			return 1;
 		}
+
 		arg++;
 	}
 
 	// Append anything left
-	if(*q){
+	if(*q)
 		StringBuf_AppendStr(&final_buf, q);
-	}
 
 	// Passed more, than needed
-	if(arg<argc){
+	if(arg < argc) {
 		ShowWarning("buildin_sprintf: Unused arguments passed.\n");
 		script_reportsrc(st);
 	}
@@ -15663,13 +15664,11 @@ BUILDIN_FUNC(npcshopdelitem)
 {
 	const char* npcname = script_getstr(st,2);
 	struct npc_data* nd = npc_name2id(npcname);
-	unsigned short nameid;
 	int n, i;
 	int amount;
 	int size;
 
-	if( !nd || ( nd->subtype != NPCTYPE_SHOP && nd->subtype != NPCTYPE_CASHSHOP && nd->subtype != NPCTYPE_ITEMSHOP && nd->subtype != NPCTYPE_POINTSHOP ) )
-	{	//Not found.
+	if( !nd || ( nd->subtype != NPCTYPE_SHOP && nd->subtype != NPCTYPE_CASHSHOP && nd->subtype != NPCTYPE_ITEMSHOP && nd->subtype != NPCTYPE_POINTSHOP ) ) { // Not found.
 		script_pushint(st,0);
 		return 0;
 	}
@@ -15678,13 +15677,11 @@ BUILDIN_FUNC(npcshopdelitem)
 	size = nd->u.shop.count;
 
 	// remove specified items from the shop item list
-	for( i = 3; i < 3 + amount; i++ )
-	{
-		nameid = script_getnum(st,i);
+	for( i = 3; i < 3 + amount; i++ ) {
+		unsigned short nameid = script_getnum(st,i);
 
 		ARR_FIND( 0, size, n, nd->u.shop.shop_item[n].nameid == nameid );
-		if( n < size )
-		{
+		if( n < size ) {
 			memmove(&nd->u.shop.shop_item[n], &nd->u.shop.shop_item[n+1], sizeof(nd->u.shop.shop_item[0])*(size-n));
 			size--;
 		}

@@ -53,6 +53,7 @@ const short diry[8]={1,1,0,-1,-1,-1,0,1}; ///lookup to know where will move to y
 static int unit_attack_timer(int tid, unsigned int tick, int id, intptr_t data);
 static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data);
 int unit_unattackable(struct block_list *bl);
+
 /**
  * Get the unit_data related to the bl
  * @param bl : Object to get the unit_data from
@@ -131,7 +132,6 @@ int unit_walktoxy_sub(struct block_list *bl)
 	return 1;
 }
 
-
 /**
  * Retrieve the direct master of a bl if one exists.
  * @param bl: char to get his master [HOM|ELEM|PET|MER]
@@ -189,8 +189,7 @@ int unit_teleport_timer(int tid, unsigned int tick, int id, intptr_t data)
 		if(msd && !check_distance_bl(&msd->bl, bl, data)) {
 			*mast_tid = INVALID_TIMER;
 			unit_warp(bl, msd->bl.m, msd->bl.x, msd->bl.y, CLR_TELEPORT );
-		}
-		else // No timer needed
+		} else // No timer needed
 			*mast_tid = INVALID_TIMER;
 	}
 	return 0;
@@ -227,6 +226,7 @@ int unit_check_start_teleport_timer(struct block_list *sbl)
 	// If there is a master and it's a valid type
 	if(msd && max_dist) {
 		int *msd_tid = unit_get_masterteleport_timer(sbl);
+
 		if(msd_tid == NULL) return 0;
 		if (!check_distance_bl(&msd->bl, sbl, max_dist)) {
 			if(*msd_tid == INVALID_TIMER || *msd_tid == 0)
@@ -310,7 +310,7 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	map_foreachinmovearea(clif_insight, bl, AREA_SIZE, -dx, -dy, sd?BL_ALL:BL_PC, bl);
 	ud->walktimer = INVALID_TIMER;
 
-	switch(bl->type){
+	switch(bl->type) {
 	case BL_PC: {
 		if( sd->touching_id )
 			npc_touchnext_areanpc(sd,false);
@@ -704,7 +704,7 @@ int unit_run(struct block_list *bl)
 }
 
 /**
- * Char movement with wugdash
+ * Character movement with Warg Dash
  * @author [Jobbie/3CeAM]
  * @param bl: Object that is dashing
  * @param sd: Player
@@ -1276,6 +1276,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	int combo = 0, range;
 
 	nullpo_ret(src);
+
 	if(status_isdead(src))
 		return 0; // Do not continue source is dead
 
@@ -1336,7 +1337,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		}
 		if (target)
 			target_id = target->id;
-	} else if (src->type==BL_HOM)
+	} else if (src->type == BL_HOM)
 		switch(skill_id) { // Homun-auto-target skills.
 			case HLIF_HEAL:
 			case HLIF_AVOID:
@@ -1481,14 +1482,14 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 
 	ud->state.skillcastcancel = castcancel;
 
-	// temp: Used to signal force cast now.
+	// Combo: Used to signal force cast now.
 	combo = 0;
 
 	switch(skill_id) {
 		case ALL_RESURRECTION:
-			if(battle_check_undead(tstatus->race,tstatus->def_ele)) {
+			if(battle_check_undead(tstatus->race,tstatus->def_ele))
 				combo = 1;
-			} else if (!status_isdead(target))
+			else if (!status_isdead(target))
 				return 0; // Can't cast on non-dead characters.
 		break;
 		case MO_FINGEROFFENSIVE:
@@ -1703,7 +1704,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 		/**
 		 * Pneuma cannot be cancelled past this point, the client displays the animation even,
 		 * if we cancel it from nodamage_id, so it has to be here for it to not display the animation.
-		 **/
+		 */
 		if( skill_id == AL_PNEUMA && map_getcell(src->m, skill_x, skill_y, CELL_CHKLANDPROTECTOR) ) {
 			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 			return 0;
@@ -2197,7 +2198,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 		/**
 		 * Applied when you're unable to attack (e.g. out of ammo)
 		 * We should stop here otherwise timer keeps on and this happens endlessly
-		 **/
+		 */
 		if( ud->attacktarget_lv == ATK_NONE )
 			return 1;
 

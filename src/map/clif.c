@@ -17373,7 +17373,8 @@ void clif_crimson_marker(struct map_session_data *sd, struct block_list *bl, boo
 //void clif_broadcast_obtain_special_item() {}
 
 #ifdef DUMP_UNKNOWN_PACKET
-void DumpUnknow(int fd,TBL_PC *sd,int cmd,int packet_len){
+void DumpUnknown(int fd,TBL_PC *sd,int cmd,int packet_len)
+{
 	const char* packet_txt = "save/packet.txt";
 	FILE* fp;
 	time_t time_server;
@@ -17527,7 +17528,7 @@ static int clif_parse(int fd)
 			packet_db[packet_ver][cmd].func(fd, sd);
 	}
 #ifdef DUMP_UNKNOWN_PACKET
-	else DumpUnknow(fd,sd,cmd,packet_len);
+	else DumpUnknown(fd,sd,cmd,packet_len);
 #endif
 	RFIFOSKIP(fd, packet_len);
 	}; // main loop end
@@ -17540,7 +17541,6 @@ static int clif_parse(int fd)
  *------------------------------------------*/
 void packetdb_readdb(void)
 {
-	FILE *fp;
 	char line[1024];
 	int cmd,i,j;
 	int max_cmd=-1;
@@ -18038,13 +18038,14 @@ void packetdb_readdb(void)
 		packet_len(i) = packet_len_table[i];
 
 	clif_config.packet_db_ver = MAX_PACKET_VER;
-	for(f = 0; f < ARRAYLENGTH(filename); f++){
-		int ln=0;
+	for(f = 0; f < ARRAYLENGTH(filename); f++) {
+		FILE *fp;
+		int ln = 0;
 		int entries = 0;
-		char *str[64],*p,*str2[64],*p2;
+		char *str[64], *p, *str2[64], *p2;
 
 		sprintf(line, "%s/%s", db_path, filename[f]);
-		if( (fp = fopen(line,"r")) == NULL ){
+		if( (fp = fopen(line,"r")) == NULL ) {
 			if (f == 0) {
 				ShowFatalError("Can't read %s\n", line);
 				exit(EXIT_FAILURE);

@@ -10870,7 +10870,7 @@ int pc_autotrade_timer(int tid, unsigned int tick, int id, intptr_t data) {
 	buyingstore_reopen(sd);
 	vending_reopen(sd);
 
-	if (sd && !sd->vender_id && !sd->buyer_id) {
+	if (!sd->vender_id && !sd->buyer_id) {
 		sd->state.autotrade = 0;
 		map_quit(sd);
 	}

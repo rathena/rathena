@@ -254,7 +254,7 @@ static int add_path(struct node_heap *heap, struct path_node *tp, int16 x, int16
  *------------------------------------------*/
 bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int flag, cell_chk cell)
 {
-	register int i, j, x, y, dx = 0, dy = 0;
+	register int i, x, y, dx = 0, dy = 0;
 	struct map_data *md;
 	struct walkpath_data s_wpd;
 
@@ -263,6 +263,7 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 
 	if (!map[m].cell)
 		return false;
+
 	md = &map[m];
 
 #ifdef CELL_NOSTACK
@@ -288,8 +289,7 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 		x = x0; // Current position = starting cell
 		y = y0;
 		i = 0;
-		while( i < ARRAYLENGTH(wpd->path) )
-		{
+		while( i < ARRAYLENGTH(wpd->path) ) {
 			wpd->path[i] = walk_choices[-dy + 1][dx + 1];
 			i++;
 
@@ -305,16 +305,14 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 				break; // obstacle = failure
 		}
 
-		if( x == x1 && y == y1 )
-		{ // easy path successful.
+		if( x == x1 && y == y1 ) { // easy path successful.
 			wpd->path_len = i;
 			wpd->path_pos = 0;
 			return true;
 		}
 
 		return false; // easy path unsuccessful
-	}
-	else { // !(flag&1)
+	} else { // !(flag&1)
 		// A* (A-star) pathfinding
 		// We always use A* for finding walkpaths because it is what game client uses.
 		// Easy pathfinding cuts corners of non-walkable cells, but client always walks around it.
@@ -329,6 +327,8 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 		int xs = md->xs - 1;
 		int ys = md->ys - 1;
 		int len = 0;
+		int j;
+
 		memset(tp, 0, sizeof(tp));
 
 		// Start node
@@ -341,8 +341,8 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 		tp[i].flag   = SET_OPEN;
 
 		heap_push_node(&open_set, &tp[i]); // Put start node to 'open' set
-		for(;;)
-		{
+
+		for(;;) {
 			int e = 0; // error flag
 
 			// Saves allowed directions for the current cell. Diagonal directions
@@ -407,18 +407,19 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 		}
 
 		for (it = current; it->parent != NULL; it = it->parent, len++);
-		if (len > sizeof(wpd->path)) {
+		if (len > sizeof(wpd->path))
 			return false;
-		}
 
 		// Recreate path
 		wpd->path_len = len;
 		wpd->path_pos = 0;
+
 		for (it = current, j = len-1; j >= 0; it = it->parent, j--) {
 			dx = it->x - it->parent->x;
 			dy = it->y - it->parent->y;
 			wpd->path[j] = walk_choices[-dy + 1][dx + 1];
 		}
+
 		return true;
 	} // A* end
 

@@ -38,9 +38,11 @@
  * @param quest_id ID to lookup
  * @return Quest entry (equals to &quest_dummy if the ID is invalid)
  */
-struct quest_db *quest_db(int quest_id) {
+struct quest_db *quest_db(int quest_id)
+{
   if( quest_id < 0 || quest_id > MAX_QUEST_DB || quest_db_data[quest_id] == NULL )
     return &quest_dummy;
+
   return quest_db_data[quest_id];
 }
 
@@ -50,7 +52,8 @@ struct quest_db *quest_db(int quest_id) {
  * @param sd Player's data
  * @return 0 in case of success, nonzero otherwise (i.e. the player has no quests)
  */
-int quest_pc_login(TBL_PC *sd) {
+int quest_pc_login(TBL_PC *sd)
+{
 	int i;
 
 	if( sd->avail_quests == 0 )
@@ -75,7 +78,8 @@ int quest_pc_login(TBL_PC *sd) {
  * @param quest_id ID of the quest to add.
  * @return 0 in case of success, nonzero otherwise
  */
-int quest_add(TBL_PC *sd, int quest_id) {
+int quest_add(TBL_PC *sd, int quest_id)
+{
 	int n;
 	struct quest_db *qi = quest_db(quest_id);
 
@@ -125,7 +129,8 @@ int quest_add(TBL_PC *sd, int quest_id) {
  * @param qid2 New quest to add
  * @return 0 in case of success, nonzero otherwise
  */
-int quest_change(TBL_PC *sd, int qid1, int qid2) {
+int quest_change(TBL_PC *sd, int qid1, int qid2)
+{
 	int i;
 	struct quest_db *qi = quest_db(qid2);
 
@@ -152,8 +157,10 @@ int quest_change(TBL_PC *sd, int qid1, int qid2) {
 
 	memset(&sd->quest_log[i], 0, sizeof(struct quest));
 	sd->quest_log[i].quest_id = qi->id;
+
 	if( qi->time )
 		sd->quest_log[i].time = (unsigned int)(time(NULL) + qi->time);
+
 	sd->quest_log[i].state = Q_ACTIVE;
 
 	sd->save_quest = true;
@@ -175,7 +182,8 @@ int quest_change(TBL_PC *sd, int qid1, int qid2) {
  * @param quest_id ID of the quest to remove
  * @return 0 in case of success, nonzero otherwise
  */
-int quest_delete(TBL_PC *sd, int quest_id) {
+int quest_delete(TBL_PC *sd, int quest_id)
+{
 	int i;
 
 	//Search for quest
@@ -184,15 +192,19 @@ int quest_delete(TBL_PC *sd, int quest_id) {
 		ShowError("quest_delete: Character %d doesn't have quest %d.\n", sd->status.char_id, quest_id);
 		return -1;
 	}
+
 	if( sd->quest_log[i].state != Q_COMPLETE )
 		sd->avail_quests--;
+
 	if( i < --sd->num_quests ) //Compact the array
 		memmove(&sd->quest_log[i], &sd->quest_log[i + 1], sizeof(struct quest) * (sd->num_quests - i));
+
 	if( sd->num_quests == 0 ) {
 		aFree(sd->quest_log);
 		sd->quest_log = NULL;
 	} else
 		RECREATE(sd->quest_log, struct quest, sd->num_quests);
+
 	sd->save_quest = true;
 
 	clif_quest_delete(sd, quest_id);
@@ -211,7 +223,8 @@ int quest_delete(TBL_PC *sd, int quest_id) {
  *           int Party ID
  *           int Mob ID
  */
-int quest_update_objective_sub(struct block_list *bl, va_list ap) {
+int quest_update_objective_sub(struct block_list *bl, va_list ap)
+{
 	struct map_session_data *sd;
 	int mob, party;
 
@@ -237,7 +250,8 @@ int quest_update_objective_sub(struct block_list *bl, va_list ap) {
  * @param sd     Character's data
  * @param mob_id Monster ID
  */
-void quest_update_objective(TBL_PC *sd, int mob) {
+void quest_update_objective(TBL_PC *sd, int mob)
+{
 	int i, j;
 
 	for( i = 0; i < sd->avail_quests; i++ ) {
@@ -268,7 +282,8 @@ void quest_update_objective(TBL_PC *sd, int mob) {
  * @param qs       New quest state
  * @return 0 in case of success, nonzero otherwise
  */
-int quest_update_status(TBL_PC *sd, int quest_id, enum quest_state status) {
+int quest_update_status(TBL_PC *sd, int quest_id, enum quest_state status)
+{
 	int i;
 
 	ARR_FIND(0, sd->avail_quests, i, sd->quest_log[i].quest_id == quest_id);
@@ -317,7 +332,8 @@ int quest_update_status(TBL_PC *sd, int quest_id, enum quest_state status) {
  *                    1 if the quest's timeout has expired
  *                    0 otherwise
  */
-int quest_check(TBL_PC *sd, int quest_id, enum quest_check_type type) {
+int quest_check(TBL_PC *sd, int quest_id, enum quest_check_type type)
+{
 	int i;
 
 	ARR_FIND(0, sd->num_quests, i, sd->quest_log[i].quest_id == quest_id);
@@ -354,7 +370,8 @@ int quest_check(TBL_PC *sd, int quest_id, enum quest_check_type type) {
  *
  * @return Number of loaded quests, or -1 if the file couldn't be read.
  */
-int quest_read_db(void) {
+int quest_read_db(void)
+{
 	const char* dbsubpath[] = {
 		"",
 		DBIMPORT"/",
@@ -373,11 +390,14 @@ int quest_read_db(void) {
 		if( (fp = fopen(filename, "r")) == NULL ) {
 			if (f == 0)
 				ShowError("Can't read %s\n", filename);
+
 			return -1;
 		}
+
 		while( fgets(line, sizeof(line), fp) ) {
 			if( line[0] == '/' && line[1] == '/' )
 				continue;
+
 			memset(str, 0, sizeof(str));
 
 			for( i = 0, p = line; i < 8; i++ ) {
@@ -392,6 +412,7 @@ int quest_read_db(void) {
 					continue;
 				}
 			}
+
 			if( str[0] == NULL )
 				continue;
 
@@ -422,6 +443,7 @@ int quest_read_db(void) {
 			memcpy(quest_db_data[entry.id], &entry, sizeof(struct quest_db));
 			count++;
 		}
+
 		fclose(fp);
 		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, filename);
 	}
@@ -437,7 +459,8 @@ int quest_read_db(void) {
  * @see map_foreachpc
  * @param ap Ignored
  */
-int quest_reload_check_sub(struct map_session_data *sd, va_list ap) {
+int quest_reload_check_sub(struct map_session_data *sd, va_list ap)
+{
 	int i, j;
 
 	nullpo_ret(sd);
@@ -451,12 +474,15 @@ int quest_reload_check_sub(struct map_session_data *sd, va_list ap) {
 				clif_quest_delete(sd, sd->quest_log[i].quest_id);
 			continue;
 		}
+
 		if( i != j ) {
 			//Move entries if there's a gap to fill
 			memcpy(&sd->quest_log[j], &sd->quest_log[i], sizeof(struct quest));
 		}
+
 		j++;
 	}
+
 	sd->num_quests = j;
 	ARR_FIND(0, sd->num_quests, i, sd->quest_log[i].state == Q_COMPLETE);
 	sd->avail_quests = i;
@@ -467,7 +493,8 @@ int quest_reload_check_sub(struct map_session_data *sd, va_list ap) {
 /**
  * Clears the quest database for shutdown or reload.
  */
-void quest_clear_db(void) {
+void quest_clear_db(void)
+{
 	int i;
 
 	for( i = 0; i < MAX_QUEST_DB; i++ ) {
@@ -481,14 +508,16 @@ void quest_clear_db(void) {
 /**
  * Initializes the quest interface.
  */
-void do_init_quest(void) {
+void do_init_quest(void)
+{
 	quest_read_db();
 }
 
 /**
  * Finalizes the quest interface before shutdown.
  */
-void do_final_quest(void) {
+void do_final_quest(void)
+{
 	memset(&quest_dummy, 0, sizeof(quest_dummy));
 
 	quest_clear_db();
@@ -497,7 +526,8 @@ void do_final_quest(void) {
 /**
  * Reloads the quest database.
  */
-void do_reload_quest(void) {
+void do_reload_quest(void)
+{
 	memset(&quest_dummy, 0, sizeof(quest_dummy));
 
 	quest_clear_db();
