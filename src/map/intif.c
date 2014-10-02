@@ -32,7 +32,6 @@
 #include <fcntl.h>
 #include <string.h>
 
-
 static const int packet_len_table[]={
 	-1,-1,27,-1, -1, 0,37,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3800-0x380f
 	 0, 0, 0, 0,  0, 0, 0, 0, -1,11, 0, 0,  0, 0,  0, 0, //0x3810

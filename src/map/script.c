@@ -73,7 +73,6 @@
 	#include "../common/mutex.h"
 #endif
 
-
 ///////////////////////////////////////////////////////////////////////////////
 //## TODO possible enhancements: [FlavioJS]
 // - 'callfunc' supporting labels in the current npc "::LabelName"

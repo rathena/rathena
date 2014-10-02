@@ -36,7 +36,6 @@
 #include <time.h>
 #include <errno.h>
 
-
 struct npc_data* fake_nd;
 
 // linked list of npc source files

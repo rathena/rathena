@@ -293,7 +293,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
  * Player setup a new shop
  * @param sd : player opening the shop
  * @param message : shop title
- * @param data : itemlist data \n
+ * @param data : itemlist data
  *	data := {<index>.w <amount>.w <value>.l}[count]
  * @param count : number of different items
  * @return 0 If success, 1 - Cannot open (die, not state.prevend, trading), 2 - No cart, 3 - Count issue, 4 - Cart data isn't saved yet, 5 - No valid item found

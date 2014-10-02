@@ -41,7 +41,6 @@
 #include <time.h>
 #include <math.h>
 
-
 #define SKILLUNITTIMER_INTERVAL	100
 
 // ranges reserved for mapping skill ids to skilldb offsets

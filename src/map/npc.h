@@ -7,10 +7,10 @@
 #include "map.h" // struct block_list
 #include "status.h" // struct status_change
 #include "unit.h" // struct unit_data
+
 struct block_list;
 struct npc_data;
 struct view_data;
-
 
 struct npc_timerevent_list {
 	int timer,pos;
@@ -75,8 +75,6 @@ struct npc_data {
 		} tomb;
 	} u;
 };
-
-
 
 #define START_NPC_NUM 110000000
 

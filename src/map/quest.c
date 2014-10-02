@@ -34,8 +34,7 @@
 
 /**
  * Searches a quest by ID.
- *
- * @param quest_id ID to lookup
+ * @param quest_id : ID to lookup
  * @return Quest entry (equals to &quest_dummy if the ID is invalid)
  */
 struct quest_db *quest_db(int quest_id)
@@ -48,8 +47,7 @@ struct quest_db *quest_db(int quest_id)
 
 /**
  * Sends quest info to the player on login.
- *
- * @param sd Player's data
+ * @param sd : Player's data
  * @return 0 in case of success, nonzero otherwise (i.e. the player has no quests)
  */
 int quest_pc_login(TBL_PC *sd)
@@ -71,11 +69,9 @@ int quest_pc_login(TBL_PC *sd)
 
 /**
  * Adds a quest to the player's list.
- *
  * New quest will be added as Q_ACTIVE.
- *
- * @param sd       Player's data
- * @param quest_id ID of the quest to add.
+ * @param sd : Player's data
+ * @param quest_id : ID of the quest to add.
  * @return 0 in case of success, nonzero otherwise
  */
 int quest_add(TBL_PC *sd, int quest_id)
@@ -123,10 +119,9 @@ int quest_add(TBL_PC *sd, int quest_id)
 
 /**
  * Replaces a quest in a player's list with another one.
- *
- * @param sd   Player's data
- * @param qid1 Current quest to replace
- * @param qid2 New quest to add
+ * @param sd : Player's data
+ * @param qid1 : Current quest to replace
+ * @param qid2 : New quest to add
  * @return 0 in case of success, nonzero otherwise
  */
 int quest_change(TBL_PC *sd, int qid1, int qid2)
@@ -177,9 +172,8 @@ int quest_change(TBL_PC *sd, int qid1, int qid2)
 
 /**
  * Removes a quest from a player's list
- *
- * @param sd       Player's data
- * @param quest_id ID of the quest to remove
+ * @param sd : Player's data
+ * @param quest_id : ID of the quest to remove
  * @return 0 in case of success, nonzero otherwise
  */
 int quest_delete(TBL_PC *sd, int quest_id)
@@ -217,11 +211,10 @@ int quest_delete(TBL_PC *sd, int quest_id)
 
 /**
  * Map iterator subroutine to update quest objectives for a party after killing a monster.
- *
  * @see map_foreachinrange
- * @param ap Argument list, expecting:
- *           int Party ID
- *           int Mob ID
+ * @param ap : Argument list, expecting:
+ *   int Party ID
+ *   int Mob ID
  */
 int quest_update_objective_sub(struct block_list *bl, va_list ap)
 {
@@ -246,9 +239,8 @@ int quest_update_objective_sub(struct block_list *bl, va_list ap)
 
 /**
  * Updates the quest objectives for a character after killing a monster.
- *
- * @param sd     Character's data
- * @param mob_id Monster ID
+ * @param sd : Character's data
+ * @param mob_id : Monster ID
  */
 void quest_update_objective(TBL_PC *sd, int mob)
 {
@@ -274,13 +266,12 @@ void quest_update_objective(TBL_PC *sd, int mob)
 
 /**
  * Updates a quest's state.
- *
- * Only status of active and inactive quests can be updated. Completed quests can't (for now). [Inkfish]
- *
- * @param sd       Character's data
- * @param quest_id Quest ID to update
- * @param qs       New quest state
+ * Only status of active and inactive quests can be updated. Completed quests can't (for now).
+ * @param sd : Character's data
+ * @param quest_id : Quest ID to update
+ * @param qs : New quest state
  * @return 0 in case of success, nonzero otherwise
+ * @author [Inkfish]
  */
 int quest_update_status(TBL_PC *sd, int quest_id, enum quest_state status)
 {
@@ -319,18 +310,17 @@ int quest_update_status(TBL_PC *sd, int quest_id, enum quest_state status)
 
 /**
  * Queries quest information for a character.
- *
- * @param sd       Character's data
- * @param quest_id Quest ID
- * @param type     Check type
+ * @param sd : Character's data
+ * @param quest_id : Quest ID
+ * @param type : Check type
  * @return -1 if the quest was not found, otherwise it depends on the type:
- *         HAVEQUEST: The quest's state
- *         PLAYTIME:  2 if the quest's timeout has expired
- *                    1 if the quest was completed
- *                    0 otherwise
- *         HUNTING:   2 if the quest has not been marked as completed yet, and its objectives have been fulfilled
- *                    1 if the quest's timeout has expired
- *                    0 otherwise
+ *   HAVEQUEST: The quest's state
+ *   PLAYTIME:  2 if the quest's timeout has expired
+ *              1 if the quest was completed
+ *              0 otherwise
+ *   HUNTING:   2 if the quest has not been marked as completed yet, and its objectives have been fulfilled
+ *              1 if the quest's timeout has expired
+ *              0 otherwise
  */
 int quest_check(TBL_PC *sd, int quest_id, enum quest_check_type type)
 {
@@ -367,7 +357,6 @@ int quest_check(TBL_PC *sd, int quest_id, enum quest_check_type type)
 
 /**
  * Loads quests from the quest db.
- *
  * @return Number of loaded quests, or -1 if the file couldn't be read.
  */
 int quest_read_db(void)
@@ -453,11 +442,10 @@ int quest_read_db(void)
 
 /**
  * Map iterator to ensures a player has no invalid quest log entries.
- *
  * Any entries that are no longer in the db are removed.
- *
  * @see map_foreachpc
- * @param ap Ignored
+ * @param sd : Character's data
+ * @param ap : Ignored
  */
 int quest_reload_check_sub(struct map_session_data *sd, va_list ap)
 {

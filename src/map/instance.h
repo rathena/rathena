@@ -11,7 +11,8 @@
 
 typedef enum instance_state { INSTANCE_FREE, INSTANCE_IDLE, INSTANCE_BUSY } instance_state;
 
-struct instance_data {
+struct instance_data
+{
 	short type, cnt_map;
 	int state;
 	int party_id;

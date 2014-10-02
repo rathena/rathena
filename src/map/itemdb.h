@@ -33,7 +33,8 @@
 #define itemdb_isspecial(i) (i == CARD0_FORGE || i == CARD0_CREATE || i == CARD0_PET)
 
 ///Enum of item id (for hardcoded purpose)
-enum item_itemid {
+enum item_itemid
+{
 	ITEMID_RED_POTION					= 501,
 	ITEMID_YELLOW_POTION				= 503,
 	ITEMID_WHITE_POTION					= 504,
@@ -122,7 +123,8 @@ enum item_itemid {
 };
 
 ///Mercenary Scrolls
-enum mercenary_scroll_item_list {
+enum mercenary_scroll_item_list
+{
 	ITEMID_BOW_MERCENARY_SCROLL1 = 12153,
 	ITEMID_BOW_MERCENARY_SCROLL2,
 	ITEMID_BOW_MERCENARY_SCROLL3,
@@ -156,7 +158,8 @@ enum mercenary_scroll_item_list {
 };
 
 ///Rune Knight
-enum rune_item_list {
+enum rune_item_list
+{
 	ITEMID_NAUTHIZ		= 12725,
 	ITEMID_RAIDO,
 	ITEMID_BERKANA,
@@ -170,7 +173,8 @@ enum rune_item_list {
 };
 
 ///Mechanic
-enum mechanic_item_list {
+enum mechanic_item_list
+{
 	ITEMID_ACCELERATOR				= 2800,
 	ITEMID_HOVERING_BOOSTER,
 	ITEMID_SUICIDAL_DEVICE,
@@ -192,7 +196,8 @@ enum mechanic_item_list {
 };
 
 ///Genetic
-enum genetic_item_list {
+enum genetic_item_list
+{
 	ITEMID_SEED_OF_HORNY_PLANT			= 6210,
 	ITEMID_BLOODSUCK_PLANT_SEED			= 6211,
 	ITEMID_BOMB_MUSHROOM_SPORE			= 6212,
@@ -247,7 +252,8 @@ enum genetic_item_list {
 };
 
 ///Guillotine Cross
-enum poison_item_list {
+enum poison_item_list
+{
 	ITEMID_PARALYSE = 12717,
 	ITEMID_LEECHESEND,
 	ITEMID_OBLIVIONCURSE,
@@ -259,7 +265,8 @@ enum poison_item_list {
 };
 
 ///Spell Books
-enum spell_book_item_list {
+enum spell_book_item_list
+{
 	ITEMID_MAGIC_BOOK_FB = 6189,
 	ITEMID_MAGIC_BOOK_CB,
 	ITEMID_MAGIC_BOOK_LB,
@@ -280,7 +287,8 @@ enum spell_book_item_list {
 };
 
 ///Cash Food
-enum cash_food_item_list {
+enum cash_food_item_list
+{
 	ITEMID_STR_DISH10_  = 12202,
 	ITEMID_AGI_DISH10_,
 	ITEMID_INT_DISH10_,
@@ -290,12 +298,14 @@ enum cash_food_item_list {
 };
 
 ///Item No Use List
-enum item_nouse_list {
+enum item_nouse_list
+{
 	NOUSE_SITTING = 0x01,
 };
 
 ///Item job
-enum e_item_job {
+enum e_item_job
+{
 	ITEMJ_NORMAL      = 0x01,
 	ITEMJ_UPPER       = 0x02,
 	ITEMJ_BABY        = 0x04,
@@ -304,7 +314,8 @@ enum e_item_job {
 	ITEMJ_THIRD_BABY  = 0x20,
 };
 
-enum e_item_ammo {
+enum e_item_ammo
+{
 	AMMO_ARROW = 1,
 	AMMO_THROWABLE_DAGGER,
 	AMMO_BULLET,
@@ -317,7 +328,8 @@ enum e_item_ammo {
 };
 
 ///Item combo struct
-struct item_combo {
+struct item_combo
+{
 	struct script_code *script;
 	unsigned short *nameid;/* nameid array */
 	unsigned char count;
@@ -327,7 +339,8 @@ struct item_combo {
 
 
 /// Struct of item group entry
-struct s_item_group_entry {
+struct s_item_group_entry
+{
 	unsigned short nameid, /// Item ID
 		duration, /// Duration if item as rental item (in minutes)
 		amount; /// Amount of item will be obtained
@@ -337,13 +350,15 @@ struct s_item_group_entry {
 };
 
 /// Struct of random group
-struct s_item_group_random {
+struct s_item_group_random
+{
 	struct s_item_group_entry *data; /// Random group entry
 	unsigned short data_qty; /// Number of item in random group
 };
 
 /// Struct of item group that will be used for db
-struct s_item_group_db {
+struct s_item_group_db
+{
 	unsigned short id, /// Item Group ID
 		must_qty; /// Number of must item at this group
 	struct s_item_group_entry *must; /// Must item entry
@@ -351,7 +366,8 @@ struct s_item_group_db {
 };
 
 ///Main item data struct
-struct item_data {
+struct item_data
+{
 	unsigned short nameid;
 	char name[ITEM_NAME_LENGTH],jname[ITEM_NAME_LENGTH];
 

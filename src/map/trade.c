@@ -91,13 +91,13 @@ void trade_traderequest(struct map_session_data *sd, struct map_session_data *ta
 /**
  * Reply to a trade-request.
  * @param sd : player receiving the trade request answer
- * @param type : answer code \n
- *  0: Char is too far \n
- *  1: Character does not exist \n
- *  2: Trade failed \n
- *  3: Accept \n
- *  4: Cancel \n
- * Weird enough, the client should only send 3/4 \n
+ * @param type : answer code
+ *  0: Char is too far
+ *  1: Character does not exist
+ *  2: Trade failed
+ *  3: Accept
+ *  4: Cancel
+ * Weird enough, the client should only send 3/4
  * and the server is the one that can reply 0~2
  */
 void trade_tradeack(struct map_session_data *sd, int type)
@@ -168,7 +168,7 @@ void trade_tradeack(struct map_session_data *sd, int type)
 /**
  * Check here hacker for duplicate item in trade
  * normal client refuse to have 2 same types of item (except equipment) in same trade window
- * normal client authorise only no equiped item and only from inventory
+ * normal client authorise only no equipped item and only from inventory
  * This function could end player connection if too much hack is detected
  * @param sd : player to check
  * @return -1:zeny hack, 0:all fine, 1:item hack

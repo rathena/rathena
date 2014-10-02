@@ -13,7 +13,6 @@
 #include "pc_groups.h"
 #include "pc.h" // e_pc_permission
 
-
 typedef struct GroupSettings GroupSettings;
 
 // Cached config settings/pointers for quick lookup
