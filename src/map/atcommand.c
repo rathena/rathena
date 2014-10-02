@@ -684,10 +684,16 @@ ACMD_FUNC(who) {
 					StringBuf_Printf(&buf, msg_txt(sd,343), pl_sd->status.name); // "Name: %s "
 					if (pc_get_group_id(pl_sd) > 0) // Player title, if exists
 						StringBuf_Printf(&buf, msg_txt(sd,344), pc_group_id2name(pc_get_group_id(pl_sd))); // "(%s) "
-					if (p != NULL)
+					if (p != NULL) {
 						StringBuf_Printf(&buf, msg_txt(sd,345), p->party.name); // " | Party: '%s'"
-					if (g != NULL)
+						if (pc_has_permission(sd, PC_PERM_WHO_DISPLAY_AID))
+							StringBuf_Printf(&buf, msg_txt(sd,739), pl_sd->status.party_id);	// " (ID:)"
+					}
+					if (g != NULL) {
 						StringBuf_Printf(&buf, msg_txt(sd,346), g->name); // " | Guild: '%s'"
+						if (pc_has_permission(sd, PC_PERM_WHO_DISPLAY_AID))
+							StringBuf_Printf(&buf, msg_txt(sd,739), pl_sd->status.guild_id);	// " (ID:)"
+					}
 					break;
 				}
 			}
@@ -3360,6 +3366,11 @@ ACMD_FUNC(guild)
 
 	memset(guild, '\0', sizeof(guild));
 
+	if (!(battle_config.guild_create&2)) {
+		clif_colormes(sd, color_table[COLOR_RED], msg_txt(sd, 740));
+		return -1;
+	}
+
 	if (!message || !*message || sscanf(message, "%23[^\n]", guild) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,1030)); // Please enter a guild name (usage: @guild <guild_name>).
 		return -1;
@@ -3379,6 +3390,10 @@ ACMD_FUNC(breakguild)
 
 	if (sd->status.guild_id) { // Check if the player has a guild
 		struct guild *g;
+		if (!(battle_config.guild_break&2)) {
+			clif_colormes(sd, color_table[COLOR_RED], msg_txt(sd, 741));
+			return -1;
+		}
 		g = sd->guild; // Search the guild
 		if (g) { // Check if guild was found
 			if (sd->state.gmaster_flag) { // Check if player is guild master

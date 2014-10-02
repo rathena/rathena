@@ -7754,6 +7754,7 @@ static const struct _battle_data {
 	{ "bg_magic_attack_damage_rate",        &battle_config.bg_magic_damage_rate,            60,     0,      INT_MAX,        },
 	{ "bg_misc_attack_damage_rate",         &battle_config.bg_misc_damage_rate,             60,     0,      INT_MAX,        },
 	{ "bg_flee_penalty",                    &battle_config.bg_flee_penalty,                 20,     0,      INT_MAX,        },
+
 	/**
 	 * rAthena
 	 **/
@@ -7796,8 +7797,12 @@ static const struct _battle_data {
 	{ "vip_gemstone",                       &battle_config.vip_gemstone,                    0,      0,      1,              },
 	{ "vip_disp_rate",                      &battle_config.vip_disp_rate,                   1,      0,      1,              },
 	{ "mon_trans_disable_in_gvg",           &battle_config.mon_trans_disable_in_gvg,        0,      0,      1,              },
-	{ "homunculus_S_growth_level",          &battle_config.hom_S_growth_level,             99,      0,      MAX_LEVEL,      },
-	{ "emblem_woe_change",                  &battle_config.emblem_woe_change,               0,      0,      1,              },
+	{ "homunculus_S_growth_level",          &battle_config.hom_S_growth_level,             99,      0,      MAX_LEVEL,      },	
+	{ "create_guild",                       &battle_config.guild_create,                    3,      0,      3,              },
+	{ "break_guild",                        &battle_config.guild_break,                     3,      0,      3,              },
+	{ "disable_invite",                     &battle_config.guild_disable_invite,           -1,     -1,      15,             },
+	{ "disable_expel",                      &battle_config.guild_disable_expel,            -1,     -1,      15,             },
+	{ "disable_change_emblem",              &battle_config.guild_disable_change_emblem,     0,      0,      15,             },
 	{ "emblem_transparency_limit",          &battle_config.emblem_transparency_limit,      80,      0,      100,            },
 	{ "discount_item_point_shop",			&battle_config.discount_item_point_shop,		0,		0,		3,				},
 	{ "update_enemy_position",				&battle_config.update_enemy_position,			0,		0,		1,				},
