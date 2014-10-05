@@ -201,12 +201,12 @@ void log_pick(int id, int16 m, e_log_pick_type type, int amount, struct item* it
 #ifdef BETA_THREAD_TEST
 		char entry[512];
 		int e_length = 0;
-		e_length = sprintf(entry, LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`, `unique_id`) VALUES (NOW(), '%d', '%c', '%hu', '%d', '%d', '%hu', '%hu', '%hu', '%hu', '%s', '%"PRIu64"')",
-				log_config.log_pick, id, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], map[m].name?map[m].name:"", itm->unique_id);
+		e_length = sprintf(entry, LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`, `unique_id`, `bound`) VALUES (NOW(), '%d', '%c', '%hu', '%d', '%d', '%hu', '%hu', '%hu', '%hu', '%s', '%"PRIu64"', '%d')",
+				log_config.log_pick, id, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], map[m].name?map[m].name:"", itm->unique_id, itm->bound);
 		queryThread_log(entry,e_length);
 #else
-		if( SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`, `unique_id`) VALUES (NOW(), '%d', '%c', '%hu', '%d', '%d', '%hu', '%hu', '%hu', '%hu', '%s', '%"PRIu64"')",
-			log_config.log_pick, id, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], map[m].name?map[m].name:"", itm->unique_id) )
+		if( SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`, `unique_id`, `bound`) VALUES (NOW(), '%d', '%c', '%hu', '%d', '%d', '%hu', '%hu', '%hu', '%hu', '%s', '%"PRIu64"', '%d')",
+			log_config.log_pick, id, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], map[m].name?map[m].name:"", itm->unique_id, itm->bound) )
 		{
 			Sql_ShowDebug(logmysql_handle);
 			return;
@@ -223,7 +223,7 @@ void log_pick(int id, int16 m, e_log_pick_type type, int amount, struct item* it
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-		fprintf(logfp,"%s - %d\t%c\t%hu,%d,%d,%hu,%hu,%hu,%hu,%s,'%"PRIu64"'\n", timestring, id, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], map[m].name?map[m].name:"", itm->unique_id);
+		fprintf(logfp,"%s - %d\t%c\t%hu,%d,%d,%hu,%hu,%hu,%hu,%s,'%"PRIu64"',%d\n", timestring, id, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], map[m].name?map[m].name:"", itm->unique_id, itm->bound);
 		fclose(logfp);
 	}
 }

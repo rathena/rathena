@@ -315,11 +315,15 @@
 15088:18816:18818,{ bonus bMatk,BaseLevel/3; bonus2 bExpAddClass,Class_All,5; }
 15088:18817:18819,{ bonus bBaseAtk,BaseLevel/3; bonus2 bExpAddClass,Class_All,5; }
 15116:20743:22046,{ bonus bMaxSPrate,25; bonus bMaxSPrate,25; bonus bSpeedAddRate,10; }
+15138:19026,{ bonus bUnbreakableArmor,1; bonus2 bSubRace,RC_Fish,(10+getequiprefinerycnt(EQI_ARMOR)); bonus2 bSubRace,RC_Fish,(10+getequiprefinerycnt(EQI_ARMOR)); }
 18507:18539,{ bonus bUseSPrate,-3; }
 18559:18560,{ bonus bCritAtkRate,5; }
 18776:20710,{ bonus bBaseAtk,10; }
 18776:22015,{ bonus bMatk,20; }
 18997:28326:28327,{ bonus bSpeed,25; bonus bBaseAtk,50; bonus bMatk,50; }
+19026:20756:22059:15138,{ bonus bMaxHP,1000; bonus bMaxSP,100; bonus2 bExpAddRace,RC_Fish,20; bonus2 bMagicAddRace,RC_Fish,50; bonus2 bSubEle,Ele_Water,50; }
+20756:19026,{ bonus2 bSPGainRace,RC_Fish,10; bonus bHPrecovRate,(getequiprefinerycnt(EQI_GARMENT)*5); bonus3 bAddMonsterDropItem,551,RC_Fish,(1+getequiprefinerycnt(EQI_GARMENT)); bonus2 bAddItemHealRate,551,5; }
+22059:19026,{ bonus2 bCriticalAddRace,RC_Fish,(10+getequiprefinerycnt(EQI_SHOES)); }
 24012:24013:24014:24015:24016:24017,{ bonus bAllStats,9; }
 24018:24019:24020,{ if(getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_ACC_L) + getequiprefinerycnt(EQI_SHADOW_WEAPON) >= 23) { bonus bAtkRate,1; } }
 24021:24022:24023,{ if(getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_ACC_L) + getequiprefinerycnt(EQI_SHADOW_WEAPON) >= 23) { bonus bMatkRate,1; } }
@@ -384,3 +388,15 @@
 24168:24169:24178,{ bonus bMatk,5; if(getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L)>=25) bonus bIgnoreMDefRace,RC_Undead; }
 24168:24169:24179,{ bonus bMatk,5; if(getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L)>=25) bonus bIgnoreMDefRace,RC_Plant; }
 28326:28327,{ bonus bInt,8; bonus bStr,8; }
+24180:24181:24182:24183:24184:24185,{ set .@refine,getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_SHOES)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L; bonus bAllStats,1; if(.@refine)>=45) { bonus bMaxHPrate,(.@refine-60); sc_start4 SC_ENDURE,1,10,0,0,1;} }
+24186:24198,{ bonus2 bSubEle,Ele_Neutral,2; }
+24187:24199,{ bonus2 bSubEle,Ele_Dark,2; }
+24188:24200,{ bonus2 bSubEle,Ele_Water,2; }
+24189:24201,{ bonus2 bSubEle,Ele_Earth,2; }
+24190:24202,{ bonus2 bSubEle,Ele_Fire,2; }
+24191:24203,{ bonus2 bSubEle,Ele_Wind,2; }
+24192:24204,{ bonus2 bSubEle,Ele_Poison,2; }
+24193:24205,{ bonus2 bSubEle,Ele_Holy,2; }
+24194:24206,{ bonus2 bSubEle,Ele_Ghost,2; }
+24195:24207,{ bonus2 bSubEle,Ele_Undead,2; }
+24196:24197,{ bonus bFlee,5; if(getequiprefinerycnt(EQI_SHADOW_SHOES)+getequiprefinerycnt(EQI_SHADOW_ARMOR)>=15) bonus bSpeedAddRate,3; }

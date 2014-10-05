@@ -528,6 +528,7 @@ CREATE TABLE IF NOT EXISTS `mail` (
   `card2` smallint(5) unsigned NOT NULL default '0',
   `card3` smallint(5) unsigned NOT NULL default '0',
   `unique_id` bigint(20) unsigned NOT NULL default '0',
+  `bound` tinyint(1) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM;
 

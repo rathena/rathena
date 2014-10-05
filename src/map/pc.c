@@ -5241,14 +5241,22 @@ char pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int 
 
 	if( x < 0 || x >= map[m].xs || y < 0 || y >= map[m].ys )
 	{
-		ShowError("pc_setpos: attempt to place player %s (%d:%d) on invalid coordinates (%s-%d,%d)\n", sd->status.name, sd->status.account_id, sd->status.char_id, mapindex_id2name(mapindex),x,y);
+		ShowError("pc_setpos: attempt to place player '%s' (%d:%d) on invalid coordinates (%s-%d,%d)\n", sd->status.name, sd->status.account_id, sd->status.char_id, mapindex_id2name(mapindex),x,y);
 		x = y = 0; // make it random
 	}
 
 	if( x == 0 && y == 0 ) { // pick a random walkable cell
+		int c=0;
 		do {
 			x = rnd()%(map[m].xs-2)+1;
 			y = rnd()%(map[m].ys-2)+1;
+			c++;
+			
+			if(c > (map[m].xs * map[m].ys)*3){ //force out
+				ShowError("pc_setpos: couldn't found a valid coordinates for player '%s' (%d:%d) on (%s), preventing warp\n", sd->status.name, sd->status.account_id, sd->status.char_id, mapindex_id2name(mapindex));
+				return 0; //preventing warp
+				//break; //allow warp anyway
+			}
 		} while(map_getcell(m,x,y,CELL_CHKNOPASS) || (!battle_config.teleport_on_portal && npc_check_areanpc(1,m,x,y,1)));
 	}
 
@@ -5305,6 +5313,8 @@ char pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int 
 	if(npc_check_areanpc(1,m,x,y,1)){
 		sd->count_rewarp++;	
 	}
+	else 
+		sd->count_rewarp = 0;
 	
 	return 0;
 }
@@ -7187,13 +7197,14 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		}
 	}
 
-	for(k = 0; k < 5; k++)
+	for(k = 0; k < MAX_DEVOTION; k++) {
 		if (sd->devotion[k]){
 			struct map_session_data *devsd = map_id2sd(sd->devotion[k]);
 			if (devsd)
 				status_change_end(&devsd->bl, SC_DEVOTION, INVALID_TIMER);
 			sd->devotion[k] = 0;
 		}
+	}
 	if(sd->shadowform_id) { //if we were target of shadowform
 		status_change_end(map_id2bl(sd->shadowform_id), SC__SHADOWFORM, INVALID_TIMER);
 		sd->shadowform_id = 0; //should be remove on status end anyway
@@ -11102,6 +11113,18 @@ short pc_maxparameter(struct map_session_data *sd, enum e_params param) {
 		((class_&JOBL_UPPER) ? battle_config.max_trans_parameter : battle_config.max_parameter)));
 }
 
+/**
+* Get max ASPD for player based on Class
+* @param sd Player
+* @return ASPD
+*/
+short pc_maxaspd(struct map_session_data *sd) {
+	nullpo_ret(sd);
+
+	return (( sd->class_&JOBL_THIRD) ? battle_config.max_third_aspd : (
+			((sd->class_&MAPID_UPPERMASK) == MAPID_KAGEROUOBORO || (sd->class_&MAPID_UPPERMASK) == MAPID_REBELLION) ? battle_config.max_extended_aspd :
+			battle_config.max_aspd ));
+}
 
 /**
 * Calculates total item-group related bonuses for the given item

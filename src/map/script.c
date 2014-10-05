@@ -2363,6 +2363,12 @@ void script_hardcoded_constants(void) {
 	/* status option compounds */
 	script_set_constant("Option_Dragon",OPTION_DRAGON,false);
 	script_set_constant("Option_Costume",OPTION_COSTUME,false);
+
+	/* bonus_script commands */
+	script_set_constant("BSF_REM_BUFF",BSF_REM_BUFF,false);
+	script_set_constant("BSF_REM_DEBUFF",BSF_REM_DEBUFF,false);
+	script_set_constant("BSF_ALL",BSF_ALL,false);
+	script_set_constant("BSF_CLEARALL",BSF_CLEARALL,false);
 }
 
 /*==========================================

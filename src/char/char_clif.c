@@ -168,26 +168,27 @@ int chclif_parse_pincode_change( int fd, struct char_session_data* sd ){
 		return 0;
 	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id )
 		return 1;
-        else {
-            char oldpin[PINCODE_LENGTH+1];
-            char newpin[PINCODE_LENGTH+1];
-        
-            memset(oldpin,0,PINCODE_LENGTH+1);
-            memset(newpin,0,PINCODE_LENGTH+1);
-            strncpy(oldpin, (char*)RFIFOP(fd,6), PINCODE_LENGTH);
-            strncpy(newpin, (char*)RFIFOP(fd,10), PINCODE_LENGTH);
-            RFIFOSKIP(fd,14);
-
-            char_pincode_decrypt(sd->pincode_seed,oldpin);
-            if( !char_pincode_compare( fd, sd, oldpin ) )
-                    return 1;
-            char_pincode_decrypt(sd->pincode_seed,newpin);
-
-            chlogif_pincode_notifyLoginPinUpdate( sd->account_id, newpin );
-            strncpy(sd->pincode, newpin, sizeof(newpin));
-
-            chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );
-        }
+	else {
+		char oldpin[PINCODE_LENGTH+1];
+		char newpin[PINCODE_LENGTH+1];
+		
+		memset(oldpin,0,PINCODE_LENGTH+1);
+		memset(newpin,0,PINCODE_LENGTH+1);
+		strncpy(oldpin, (char*)RFIFOP(fd,6), PINCODE_LENGTH);
+		strncpy(newpin, (char*)RFIFOP(fd,10), PINCODE_LENGTH);
+		RFIFOSKIP(fd,14);
+		
+		char_pincode_decrypt(sd->pincode_seed,oldpin);
+		if( !char_pincode_compare( fd, sd, oldpin ) )
+			return 1;
+		char_pincode_decrypt(sd->pincode_seed,newpin);
+		
+		chlogif_pincode_notifyLoginPinUpdate( sd->account_id, newpin );
+		strncpy(sd->pincode, newpin, sizeof(newpin));
+		ShowInfo("Pincode changed for AID: %d\n", sd->account_id);
+		
+		chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );
+	}
 	return 1;
 }
 
@@ -200,19 +201,19 @@ int chclif_parse_pincode_setnew( int fd, struct char_session_data* sd ){
 
 	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id )
 		return 1;
-        else {
-            char newpin[PINCODE_LENGTH+1];
-            memset(newpin,0,PINCODE_LENGTH+1);
-            strncpy( newpin, (char*)RFIFOP(fd,6), PINCODE_LENGTH );
-            RFIFOSKIP(fd,10);
+	else {
+		char newpin[PINCODE_LENGTH+1];
+		memset(newpin,0,PINCODE_LENGTH+1);
+		strncpy( newpin, (char*)RFIFOP(fd,6), PINCODE_LENGTH );
+		RFIFOSKIP(fd,10);
 
-            char_pincode_decrypt( sd->pincode_seed, newpin );
+		char_pincode_decrypt( sd->pincode_seed, newpin );
 
-            chlogif_pincode_notifyLoginPinUpdate( sd->account_id, newpin );
-            strncpy( sd->pincode, newpin, strlen( newpin ) );
+		chlogif_pincode_notifyLoginPinUpdate( sd->account_id, newpin );
+		strncpy( sd->pincode, newpin, strlen( newpin ) );
 
-            chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );
-        }
+		chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );
+	}
 	return 1;
 }
 
@@ -368,9 +369,9 @@ void chclif_char_delete2_cancel_ack(int fd, int char_id, uint32 result) {
 
 // CH: <0827>.W <char id>.L
 int chclif_parse_char_delete2_req(int fd, struct char_session_data* sd) {
-    FIFOSD_CHECK(6)
-    {
-        int char_id, i;
+	FIFOSD_CHECK(6)
+	{
+		int char_id, i;
 		char* data;
 		time_t delete_date;
 
@@ -425,15 +426,15 @@ int chclif_parse_char_delete2_req(int fd, struct char_session_data* sd) {
 		}
 
 		chclif_char_delete2_ack(fd, char_id, 1, delete_date);
-    }
-    return 1;
+	}
+	return 1;
 }
 
 // CH: <0829>.W <char id>.L <birth date:YYMMDD>.6B
 int chclif_parse_char_delete2_accept(int fd, struct char_session_data* sd) {
-    FIFOSD_CHECK(12)
-    {
-        char birthdate[8+1];
+	FIFOSD_CHECK(12)
+	{
+		char birthdate[8+1];
 		int char_id, i, k;
 		unsigned int base_level;
 		char* data;
@@ -503,8 +504,8 @@ int chclif_parse_char_delete2_accept(int fd, struct char_session_data* sd) {
 		sd->found_char[MAX_CHARS-1] = -1;
 
 		chclif_char_delete2_accept_ack(fd, char_id, 1);
-    }
-    return 1;
+	}
+	return 1;
 }
 
 // CH: <082b>.W <char id>.L

@@ -1,0 +1,18 @@
+-	script	Sleep	-1,{
+
+	OnPCLoginEvent:
+		dispbottom "Login";
+		sleep2 30000;
+		dispbottom "After sleep";
+		sleep2 5000;
+		//atcommand "@kick "+strcharinfo(0);
+		atcommand "@kami say my name! "+strcharinfo(0);
+		//dispbottom "2nd sleep";
+		atcommand "@channel list colors";
+		.@name$ = strcharinfo(0);
+		sleep 5000;
+		//atcommand "@kick "+.@name$;
+		atcommand "@kami say my name! "+.@name$;
+		atcommand "@channel list colors";
+		end;
+}

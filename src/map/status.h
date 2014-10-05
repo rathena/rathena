@@ -1757,6 +1757,9 @@ enum e_bonus_script_flags {
 	// These flags better in the last of everything
 	BSF_REM_BUFF	= 0x1000,	///Remove positive buff
 	BSF_REM_DEBUFF	= 0x2000,	///Remove negative buff
+
+	BSF_ALL = 0x0FFF|BSF_REM_BUFF|BSF_REM_DEBUFF,
+	BSF_CLEARALL = BSF_ALL&~BSF_PERMANENT,
 };
 
 ///Enum for status_get_hpbonus and status_get_spbonus
@@ -2055,8 +2058,8 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, struct status_change *sc);
 void status_calc_state(struct block_list *bl, struct status_change *sc, uint32 flag, bool start);
 
-int status_check_skilluse(struct block_list *src, struct block_list *target, uint16 skill_id, int flag); // [Skotlex]
-int status_check_visibility(struct block_list *src, struct block_list *target); //[Skotlex]
+bool status_check_skilluse(struct block_list *src, struct block_list *target, uint16 skill_id, int flag);
+int status_check_visibility(struct block_list *src, struct block_list *target);
 
 int status_change_spread( struct block_list *src, struct block_list *bl );
 

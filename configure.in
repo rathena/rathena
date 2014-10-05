@@ -940,12 +940,22 @@ case $enable_debug in
 		CPPFLAGS="$CPPFLAGS"
 		;;
 	"yes")
-		CPPFLAGS="$CPPFLAGS -g -DDEBUG"
-		LDFLAGS="$LDFLAGS -g"
+		if test $ac_cv_prog_cc_g = yes; then
+		    CPPFLAGS="$CPPFLAGS -g -DDEBUG"
+		    LDFLAGS="$LDFLAGS -g"
+                else
+		    echo "error: --enable-debug flag=$enable_debug entered but the compiler does not support -g"
+		    exit 1
+                fi
 		;;
 	"gdb")
-		CPPFLAGS="$CPPFLAGS -ggdb -DDEBUG"
-		LDFLAGS="$LDFLAGS -g"
+		if test $ac_cv_prog_cc_g = yes; then
+		    CPPFLAGS="$CPPFLAGS -ggdb -DDEBUG"
+		    LDFLAGS="$LDFLAGS -g"
+		else
+		    echo "error: --enable-debug flag=$enable_debug entered but the compiler does not support -g"
+		    exit 1
+                fi
 		;;
 esac
 

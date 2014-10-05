@@ -76,22 +76,23 @@ enum e_skill_inf2 {
 
 /// Skill info type 3
 enum e_skill_inf3 {
-	INF3_NOLP				= 0x0001,	// Spells that can ignore Land Protector
-	INF3_NOENDCAMOUFLAGE	= 0x0002,	// spell that doesn't end camouflage
-	INF3_USABLE_HIDING		= 0x0004,	// spell that can be use in hiding
-	INF3_USABLE_DANCE		= 0x0008,	// spell that can be use while in dancing state
-	INF3_HIT_EMP			= 0x0010,	// spell that could hit emperium
-	INF3_STATIS_BL			= 0x0020,	// spell blocked by statis
-	INF3_KAGEHUMI_BL		= 0x0040,	// spell blocked by kagehumi
-	INF3_EFF_VULTURE		= 0x0080,	// spell range affected by AC_VULTURE
-	INF3_EFF_SNAKEEYE		= 0x0100,	// spell range affected by GS_SNAKEEYE
-	INF3_EFF_SHADOWJUMP		= 0x0200,	// spell range affected by NJ_SHADOWJUMP
-	INF3_EFF_RADIUS			= 0x0400,	// spell range affected by WL_RADIUS
-	INF3_EFF_RESEARCHTRAP	= 0x0800,	// spell range affected by RA_RESEARCHTRAP
-	INF3_NO_EFF_HOVERING	= 0x1000,	// Spell that does not affect user that has SC_HOVERING active
-	INF3_USABLE_WARG		= 0x2000,	// spell that can be use while riding warg
-	INF3_DIS_MADO			= 0x4000,	// spell that can't be used while in mado
-	INF3_USABLE_MANHOLE		= 0x8000,	// spell that can be used to target while under Man Hole effect
+	INF3_NOLP				= 0x00001,	// Spells that can ignore Land Protector
+	INF3_NOENDCAMOUFLAGE	= 0x00002,	// spell that doesn't end camouflage
+	INF3_USABLE_HIDING		= 0x00004,	// spell that can be use in hiding
+	INF3_USABLE_DANCE		= 0x00008,	// spell that can be use while in dancing state
+	INF3_HIT_EMP			= 0x00010,	// spell that could hit emperium
+	INF3_STATIS_BL			= 0x00020,	// spell blocked by statis
+	INF3_KAGEHUMI_BL		= 0x00040,	// spell blocked by kagehumi
+	INF3_EFF_VULTURE		= 0x00080,	// spell range affected by AC_VULTURE
+	INF3_EFF_SNAKEEYE		= 0x00100,	// spell range affected by GS_SNAKEEYE
+	INF3_EFF_SHADOWJUMP		= 0x00200,	// spell range affected by NJ_SHADOWJUMP
+	INF3_EFF_RADIUS			= 0x00400,	// spell range affected by WL_RADIUS
+	INF3_EFF_RESEARCHTRAP	= 0x00800,	// spell range affected by RA_RESEARCHTRAP
+	INF3_NO_EFF_HOVERING	= 0x01000,	// Spell that does not affect user that has SC_HOVERING active
+	INF3_USABLE_WARG		= 0x02000,	// spell that can be use while riding warg
+	INF3_DIS_MADO			= 0x04000,	// spell that can't be used while in mado
+	INF3_USABLE_MANHOLE		= 0x08000,	// spell that can be used to target while under Man Hole effect
+	INF3_HIT_HIDING			= 0x10000,	// spell that having an affect to hiding target
 	//... add other spell list option here
 };
 
