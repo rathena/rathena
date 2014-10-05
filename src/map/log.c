@@ -17,7 +17,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 /// filters for item logging
 typedef enum e_log_filter
 {

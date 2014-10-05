@@ -114,16 +114,18 @@ enum MOBID {
 //These marks the "level" of the job.
 #define JOBL_2_1 0x100 //256
 #define JOBL_2_2 0x200 //512
-#define JOBL_2 0x300
+#define JOBL_2 0x300 //768
 
 #define JOBL_UPPER 0x1000 //4096
 #define JOBL_BABY 0x2000  //8192
 #define JOBL_THIRD 0x4000 //16384
+#define JOBL_SUPER_NOVICE 0x8000 //32768
 
 //for filtering and quick checking.
 #define MAPID_BASEMASK 0x00ff
 #define MAPID_UPPERMASK 0x0fff
 #define MAPID_THIRDMASK (JOBL_THIRD|MAPID_UPPERMASK)
+
 //First Jobs
 //Note the oddity of the novice:
 //Super Novices are considered the 2-1 version of the novice! Novices are considered a first class type, too...
@@ -146,8 +148,7 @@ enum e_mapid {
 	MAPID_GANGSI,
 	MAPID_OKTOBERFEST,
 //2-1 Jobs
-	MAPID_SUPER_NOVICE = JOBL_2_1|0x0,
-	MAPID_KNIGHT,
+	MAPID_KNIGHT = JOBL_2_1|0x1,
 	MAPID_WIZARD,
 	MAPID_HUNTER,
 	MAPID_PRIEST,
@@ -197,8 +198,7 @@ enum e_mapid {
 	MAPID_BABY_MERCHANT,
 	MAPID_BABY_THIEF,
 //Baby 2-1 Jobs
-	MAPID_SUPER_BABY = JOBL_BABY|JOBL_2_1|0x0,
-	MAPID_BABY_KNIGHT,
+	MAPID_BABY_KNIGHT = JOBL_BABY|JOBL_2_1|0x1,
 	MAPID_BABY_WIZARD,
 	MAPID_BABY_HUNTER,
 	MAPID_BABY_PRIEST,
@@ -212,8 +212,7 @@ enum e_mapid {
 	MAPID_BABY_ALCHEMIST,
 	MAPID_BABY_ROGUE,
 //3-1 Jobs
-	MAPID_SUPER_NOVICE_E = JOBL_THIRD|JOBL_2_1|0x0,
-	MAPID_RUNE_KNIGHT,
+	MAPID_RUNE_KNIGHT = JOBL_THIRD|JOBL_2_1|0x1,
 	MAPID_WARLOCK,
 	MAPID_RANGER,
 	MAPID_ARCH_BISHOP,
@@ -241,8 +240,7 @@ enum e_mapid {
 	MAPID_GENETIC_T,
 	MAPID_SHADOW_CHASER_T,
 //Baby 3-1 Jobs
-	MAPID_SUPER_BABY_E = JOBL_THIRD|JOBL_BABY|JOBL_2_1|0x0,
-	MAPID_BABY_RUNE,
+	MAPID_BABY_RUNE = JOBL_THIRD|JOBL_BABY|JOBL_2_1|0x1,
 	MAPID_BABY_WARLOCK,
 	MAPID_BABY_RANGER,
 	MAPID_BABY_BISHOP,
@@ -255,6 +253,11 @@ enum e_mapid {
 	MAPID_BABY_SURA,
 	MAPID_BABY_GENETIC,
 	MAPID_BABY_CHASER,
+//Super Novices
+	MAPID_SUPER_NOVICE = JOBL_SUPER_NOVICE|JOBL_2_1|0x0,
+	MAPID_SUPER_BABY = JOBL_SUPER_NOVICE|JOBL_BABY|JOBL_2_1|0x0,
+	MAPID_SUPER_NOVICE_E = JOBL_SUPER_NOVICE|JOBL_THIRD|JOBL_2_1|0x0,
+	MAPID_SUPER_BABY_E = JOBL_SUPER_NOVICE|JOBL_THIRD|JOBL_BABY|JOBL_2_1|0x0,
 };
 
 //Max size for inputs to Graffiti, Talkie Box and Vending text prompts
@@ -422,7 +425,7 @@ struct flooritem_data {
 	int cleartimer;
 	int first_get_charid,second_get_charid,third_get_charid;
 	unsigned int first_get_tick,second_get_tick,third_get_tick;
-	struct item item_data;
+	struct item item;
 };
 
 enum _sp {
@@ -792,7 +795,7 @@ bool map_addnpc(int16 m,struct npc_data *);
 int map_clearflooritem_timer(int tid, unsigned int tick, int id, intptr_t data);
 int map_removemobs_timer(int tid, unsigned int tick, int id, intptr_t data);
 void map_clearflooritem(struct block_list* bl);
-int map_addflooritem(struct item *item_data,int amount,int16 m,int16 x,int16 y,int first_charid,int second_charid,int third_charid,int flags);
+int map_addflooritem(struct item *item,int amount,int16 m,int16 x,int16 y,int first_charid,int second_charid,int third_charid,int flags);
 
 // instances
 int map_addinstancemap(const char*,int);

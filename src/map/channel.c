@@ -496,11 +496,14 @@ int channel_display_list(struct map_session_data *sd, char *options){
 			clif_displaymessage(sd->fd, msg_txt(sd,1476)); // You have not joined any channels.
 		else {
 			unsigned char k;
-			struct Channel *channel;
-			for(k=0; k<sd->channel_count; k++){
+
+			for(k = 0; k < sd->channel_count; k++) {
 				char output[128];
+				struct Channel *channel;
+
 				if (!(channel = sd->channels[k]))
 					continue;
+
 				sprintf(output, msg_txt(sd,1409), channel->name, db_size(channel->users));// - #%s (%d users)
 				clif_displaymessage(sd->fd, output);
 			}

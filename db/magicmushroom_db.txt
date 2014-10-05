@@ -4,7 +4,7 @@
 // Structure of Database:
 // SkillID{,RemoveFlag}
 //
-// - To remove entry by importing, put any value on 'RemoveFlag'
+// - To remove entry by importing, put 1 value on 'RemoveFlag'
 
 7	//SM_MAGNUM
 8	//SM_ENDURE

@@ -1740,6 +1740,16 @@ enum e_status_calc_opt {
 	SCO_FORCE = 0x2, /* Only relevant to BL_PC types, ensures call bypasses the queue caused by delayed damage */
 };
 
+/// Flags for status_change_start and status_get_sc_def
+enum e_status_change_start_flags {
+	SCSTART_NONE       = 0x00,
+	SCSTART_NOAVOID    = 0x01, /// Cannot be avoided (it has to start)
+	SCSTART_NOTICKDEF  = 0x02, /// Tick should not be reduced (by statuses or bonuses)
+	SCSTART_LOADED     = 0x04, /// When sc_data loaded (fetched from table), no values (val1 ~ val4) have to be altered/recalculate
+	SCSTART_NORATEDEF  = 0x08, /// Rate should not be reduced (by statuses or bonuses)
+	SCSTART_NOICON     = 0x10, /// Status icon won't be sent to client
+};
+
 ///Enum for bonus_script's flag [Cydh]
 enum e_bonus_script_flags {
 	BSF_NONE = 0x0,
@@ -2022,13 +2032,13 @@ struct status_change *status_get_sc(struct block_list *bl);
 int status_isdead(struct block_list *bl);
 int status_isimmune(struct block_list *bl);
 
-int status_get_sc_def(struct block_list *src,struct block_list *bl, enum sc_type type, int rate, int tick, int flag);
+int status_get_sc_def(struct block_list *src,struct block_list *bl, enum sc_type type, int rate, int tick, unsigned char flag);
 //Short version, receives rate in 1->100 range, and does not uses a flag setting.
-#define sc_start(src, bl, type, rate, val1, tick) status_change_start(src,bl,type,100*(rate),val1,0,0,0,tick,0)
-#define sc_start2(src, bl, type, rate, val1, val2, tick) status_change_start(src,bl,type,100*(rate),val1,val2,0,0,tick,0)
-#define sc_start4(src, bl, type, rate, val1, val2, val3, val4, tick) status_change_start(src,bl,type,100*(rate),val1,val2,val3,val4,tick,0)
+#define sc_start(src, bl, type, rate, val1, tick) status_change_start(src,bl,type,100*(rate),val1,0,0,0,tick,SCSTART_NONE)
+#define sc_start2(src, bl, type, rate, val1, val2, tick) status_change_start(src,bl,type,100*(rate),val1,val2,0,0,tick,SCSTART_NONE)
+#define sc_start4(src, bl, type, rate, val1, val2, val3, val4, tick) status_change_start(src,bl,type,100*(rate),val1,val2,val3,val4,tick,SCSTART_NONE)
 
-int status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,int tick,int flag);
+int status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,int tick,unsigned char flag);
 int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const char* file, int line);
 #define status_change_end(bl,type,tid) status_change_end_(bl,type,tid,__FILE__,__LINE__)
 int kaahi_heal_timer(int tid, unsigned int tick, int id, intptr_t data);

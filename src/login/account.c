@@ -107,12 +107,12 @@ AccountDB* account_db_sql(void) {
 static bool account_db_sql_init(AccountDB* self) {
 	AccountDB_SQL* db = (AccountDB_SQL*)self;
 	Sql* sql_handle;
-	const char* username;
-	const char* password;
-	const char* hostname;
-	uint16      port;
-	const char* database;
-	const char* codepage;
+	const char* username = "ragnarok";
+	const char* password = "";
+	const char* hostname = "127.0.0.1";
+	uint16      port     = 3306;
+	const char* database = "ragnarok";
+	const char* codepage = "";
 
 	db->accounts = Sql_Malloc();
 	sql_handle = db->accounts;

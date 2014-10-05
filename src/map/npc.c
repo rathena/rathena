@@ -36,7 +36,6 @@
 #include <time.h>
 #include <errno.h>
 
-
 struct npc_data* fake_nd;
 
 // linked list of npc source files
@@ -970,7 +969,7 @@ int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y)
 			if (pc_ishiding(sd) || (sd->sc.count && sd->sc.data[SC_CAMOUFLAGE]) || pc_isdead(sd))
 				break; // hidden or dead chars cannot use warps
 			if(sd->count_rewarp > 10){
-				ShowWarning("Prevent infinite warping loop for player (%d:%d), please fix script npc:'%s', path:'%s' \n",sd->status.account_id, sd->status.char_id,map[m].npc[i]->exname,map[m].npc[i]->path);
+				ShowWarning("Prevented infinite warp loop for player (%d:%d). Please fix NPC: '%s', path: '%s'\n", sd->status.account_id, sd->status.char_id, map[m].npc[i]->exname, map[m].npc[i]->path);
 				sd->count_rewarp=0;
 				break;
 			}
@@ -4174,6 +4173,8 @@ bool npc_unloadfile( const char* path ) {
 
 	if( found ) /* refresh event cache */
 		npc_read_event_script();
+
+	npc_delsrcfile(path);
 
 	return found;
 }

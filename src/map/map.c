@@ -1289,8 +1289,8 @@ int map_clearflooritem_timer(int tid, unsigned int tick, int id, intptr_t data)
 	}
 
 
-	if (search_petDB_index(fitem->item_data.nameid, PET_EGG) >= 0)
-		intif_delete_petdata(MakeDWord(fitem->item_data.card[1], fitem->item_data.card[2]));
+	if (search_petDB_index(fitem->item.nameid, PET_EGG) >= 0)
+		intif_delete_petdata(MakeDWord(fitem->item.card[1], fitem->item.card[2]));
 
 	clif_clearflooritem(fitem, 0);
 	map_deliddb(&fitem->bl);
@@ -1442,14 +1442,14 @@ int map_search_freecell(struct block_list *src, int16 m, int16 *x,int16 *y, int1
  * @param flag: &1 MVP item. &2 do stacking check. &4 bypass droppable check.
  * @return 0:failure, x:item_gid [MIN_FLOORITEM;MAX_FLOORITEM]==[2;START_ACCOUNT_NUM]
  *------------------------------------------*/
-int map_addflooritem(struct item *item_data,int amount,int16 m,int16 x,int16 y,int first_charid,int second_charid,int third_charid,int flags)
+int map_addflooritem(struct item *item,int amount,int16 m,int16 x,int16 y,int first_charid,int second_charid,int third_charid,int flags)
 {
 	int r;
 	struct flooritem_data *fitem=NULL;
 
-	nullpo_ret(item_data);
+	nullpo_ret(item);
 
-	if(!(flags&4) && battle_config.item_onfloor && (itemdb_traderight(item_data->nameid)&1) )
+	if(!(flags&4) && battle_config.item_onfloor && (itemdb_traderight(item->nameid)&1) )
 		return 0; //can't be dropped
 
 	if(!map_searchrandfreecell(m,&x,&y,flags&2?1:0))
@@ -1475,8 +1475,8 @@ int map_addflooritem(struct item *item_data,int amount,int16 m,int16 x,int16 y,i
 	fitem->third_get_charid = third_charid;
 	fitem->third_get_tick = fitem->second_get_tick + (flags&1 ? battle_config.mvp_item_third_get_time : battle_config.item_third_get_time);
 
-	memcpy(&fitem->item_data,item_data,sizeof(*item_data));
-	fitem->item_data.amount=amount;
+	memcpy(&fitem->item,item,sizeof(*item));
+	fitem->item.amount=amount;
 	fitem->subx=(r&3)*3+3;
 	fitem->suby=((r>>2)&3)*3+3;
 	fitem->cleartimer=add_timer(gettick()+battle_config.flooritem_lifetime,map_clearflooritem_timer,fitem->bl.id,0);

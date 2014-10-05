@@ -67,11 +67,11 @@ S_BulletTrade:
 
 	mes "[Tony]";
 	mes "For every set of";
-	mes callsub("F_InsertPlural",30,getitemname(.@bullet_id))+",";
+	mes callfunc("F_InsertPlural",30,getitemname(.@bullet_id))+",";
 	mes "you must give me";
 	mes "1 Emveretarcon,";
 	mes "1 Phracon, and";
-	mes callsub("F_InsertPlural",.@required_amount,getitemname(.@required_id))+".";
+	mes callfunc("F_InsertPlural",.@required_amount,getitemname(.@required_id))+".";
 	next;
 	mes "[Tony]";
 	mes "Remember that I can give";

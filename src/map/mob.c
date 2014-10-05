@@ -417,7 +417,7 @@ bool mob_ksprotected (struct block_list *src, struct block_list *target)
 		return true;
 	} while(0);
 
-	status_change_start(src, target, SC_KSPROTECTED, 10000, sd->bl.id, sd->state.noks, sd->status.party_id, sd->status.guild_id, battle_config.ksprotection, 0);
+	status_change_start(src, target, SC_KSPROTECTED, 10000, sd->bl.id, sd->state.noks, sd->status.party_id, sd->status.guild_id, battle_config.ksprotection, SCSTART_NOAVOID);
 
 	return false;
 }
@@ -1168,9 +1168,7 @@ static int mob_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 	target = va_arg(ap,struct block_list**);
 
 	dist = distance_bl(&md->bl, bl);
-	if(mob_can_reach(md,bl,dist+1, MSS_LOOT) &&
-		((*target) == NULL || !check_distance_bl(&md->bl, *target, dist)) //New target closer than previous one.
-	) {
+	if (mob_can_reach(md,bl,dist+1, MSS_LOOT) && (*target) == NULL) {
 		(*target) = bl;
 		md->target_id = bl->id;
 		md->min_chase = md->db->range3;
@@ -1318,8 +1316,7 @@ int mob_unlocktarget(struct mob_data *md, unsigned int tick)
 		break;
 	default:
 		mob_stop_attack(md);
-		if (battle_config.mob_ai&0x8)
-			mob_stop_walking(md,1); //Immediately stop chasing.
+		mob_stop_walking(md,1); //Stop chasing.
 		md->state.skillstate = MSS_IDLE;
 		md->next_walktime=tick+rnd()%3000+3000;
 		break;
@@ -1372,7 +1369,7 @@ int mob_randomwalk(struct mob_data *md,unsigned int tick)
 	speed=status_get_speed(&md->bl);
 	for(i=c=0;i<md->ud.walkpath.path_len;i++){	// The next walk start time is calculated.
 		if(md->ud.walkpath.path[i]&1)
-			c+=speed*14/10;
+			c+=speed*MOVE_DIAGONAL_COST/MOVE_COST;
 		else
 			c+=speed;
 	}
@@ -1425,9 +1422,6 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 	if (md->ud.skilltimer != INVALID_TIMER)
 		return false;
 
-	if(md->ud.walktimer != INVALID_TIMER && md->ud.walkpath.path_pos <= 3)
-		return false;
-
 	// Abnormalities
 	if(( md->sc.opt1 && md->sc.opt1 != OPT1_STONEWAIT && md->sc.opt1 != OPT1_BURNING && md->sc.opt1 != OPT1_CRYSTALIZE )
 	   || md->sc.data[SC_BLADESTOP] || md->sc.data[SC__MANHOLE] || md->sc.data[SC_CURSEDCIRCLE_TARGET]) {//Should reset targets.
@@ -1453,10 +1447,12 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 				tbl->type == BL_PC &&
 				((((TBL_PC*)tbl)->state.gangsterparadise && !(mode&MD_BOSS)) ||
 				((TBL_PC*)tbl)->invincible_timer != INVALID_TIMER)
-		)) {	//Unlock current target.
+		)) {	//No valid target
 			if (mob_warpchase(md, tbl))
 				return true; //Chasing this target.
-			mob_unlocktarget(md, tick-(battle_config.mob_ai&0x8?3000:0)); //Imediately do random walk.
+			if(md->ud.walktimer != INVALID_TIMER && md->ud.walkpath.path_pos <= battle_config.mob_chase_refresh)
+				return true; //Walk at least "mob_chase_refresh" cells before dropping the target
+			mob_unlocktarget(md, tick-(battle_config.mob_ai&0x8?3000:0)); //Immediately do random walk.
 			tbl = NULL;
 		}
 	}
@@ -1607,15 +1603,15 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 
 		fitem = (struct flooritem_data *)tbl;
 		//Logs items, taken by (L)ooter Mobs [Lupus]
-		log_pick_mob(md, LOG_TYPE_LOOT, fitem->item_data.amount, &fitem->item_data);
+		log_pick_mob(md, LOG_TYPE_LOOT, fitem->item.amount, &fitem->item);
 
 		if (md->lootitem_count < LOOTITEM_SIZE) {
-			memcpy (&md->lootitem[md->lootitem_count++], &fitem->item_data, sizeof(md->lootitem[0]));
+			memcpy (&md->lootitem[md->lootitem_count++], &fitem->item, sizeof(md->lootitem[0]));
 		} else {	//Destroy first looted item...
 			if (md->lootitem[0].card[0] == CARD0_PET)
 				intif_delete_petdata( MakeDWord(md->lootitem[0].card[1],md->lootitem[0].card[2]) );
 			memmove(&md->lootitem[0], &md->lootitem[1], (LOOTITEM_SIZE-1)*sizeof(md->lootitem[0]));
-			memcpy (&md->lootitem[LOOTITEM_SIZE-1], &fitem->item_data, sizeof(md->lootitem[0]));
+			memcpy (&md->lootitem[LOOTITEM_SIZE-1], &fitem->item, sizeof(md->lootitem[0]));
 		}
 		if (pcdb_checkid(md->vd->class_))
 		{	//Give them walk act/delay to properly mimic players. [Skotlex]
@@ -1628,25 +1624,25 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 		mob_unlocktarget (md,tick);
 		return true;
 	}
+
 	//Attempt to attack.
 	//At this point we know the target is attackable, we just gotta check if the range matches.
-	if (md->ud.target == tbl->id && md->ud.attacktimer != INVALID_TIMER) //Already locked.
-		return true;
-
 	if (battle_check_range (&md->bl, tbl, md->status.rhw.range))
 	{	//Target within range, engage
+		if (md->ud.target != tbl->id || md->ud.attacktimer == INVALID_TIMER) 
+		{ //Only attack if no more attack delay left
+			if(tbl->type == BL_PC)
+				mob_log_damage(md, tbl, 0); //Log interaction (counts as 'attacker' for the exp bonus)
 
-		if(tbl->type == BL_PC)
-			mob_log_damage(md, tbl, 0); //Log interaction (counts as 'attacker' for the exp bonus)
-
-		if( !(mode&MD_RANDOMTARGET) )
-			unit_attack(&md->bl,tbl->id,1);
-		else { // Attack once and find a new random target
-			int search_size = (view_range < md->status.rhw.range) ? view_range : md->status.rhw.range;
-			unit_attack(&md->bl, tbl->id, 0);
-			if ((tbl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md), search_size))) {
-				md->target_id = tbl->id;
-				md->min_chase = md->db->range3;
+			if( !(mode&MD_RANDOMTARGET) )
+				unit_attack(&md->bl,tbl->id,1);
+			else { // Attack once and find a new random target
+				int search_size = (view_range < md->status.rhw.range) ? view_range : md->status.rhw.range;
+				unit_attack(&md->bl, tbl->id, 0);
+				if ((tbl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md), search_size))) {
+					md->target_id = tbl->id;
+					md->min_chase = md->db->range3;
+				}
 			}
 		}
 		return true;
@@ -1655,17 +1651,23 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 	//Out of range...
 	if (!(mode&MD_CANMOVE))
 	{	//Can't chase. Attempt an idle skill before unlocking.
-		md->state.skillstate = MSS_IDLE;
-		if (!mobskill_use(md, tick, -1))
-			mob_unlocktarget(md,tick);
+		if (md->ud.target != tbl->id || md->ud.attacktimer == INVALID_TIMER) 
+		{ //Only use skill if no more attack delay left
+			md->state.skillstate = MSS_IDLE;
+			if (!mobskill_use(md, tick, -1))
+				mob_unlocktarget(md,tick);
+		}
 		return true;
 	}
 
 	if (!can_move)
 	{	//Stuck. Attempt an idle skill
-		md->state.skillstate = MSS_IDLE;
-		if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL))
-			mobskill_use(md, tick, -1);
+		if (md->ud.target != tbl->id || md->ud.attacktimer == INVALID_TIMER) 
+		{ //Only use skill if no more attack delay left
+			md->state.skillstate = MSS_IDLE;
+			if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL))
+				mobskill_use(md, tick, -1);
+		}
 		return true;
 	}
 
@@ -1674,6 +1676,10 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 			!(battle_config.mob_ai&0x1) ||
 			check_distance_blxy(tbl, md->ud.to_x, md->ud.to_y, md->status.rhw.range)
 	)) //Current target tile is still within attack range.
+		return true;
+
+	//Only update target cell after having moved at least "mob_chase_refresh" cells
+	if(md->ud.walktimer != INVALID_TIMER && md->ud.walkpath.path_pos <= battle_config.mob_chase_refresh)
 		return true;
 
 	//Follow up if possible.

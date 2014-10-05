@@ -18,24 +18,14 @@ struct status_change_entry;
 #define MAX_PRODUCE_RESOURCE	12 /// Max Produce requirements
 #define MAX_SKILL_ARROW_DB		150 /// Max Arrow Creation DB
 #define MAX_ARROW_RESULT		5 /// Max Arrow results/created
-#define MAX_SKILL_ABRA_DB		350 /// Max Skill list of Abracadabra DB
-#define MAX_SKILL_IMPROVISE_DB 50 /// Max Skill for Improvise
+#define MAX_SKILL_ABRA_DB		160 /// Max Skill list of Abracadabra DB
+#define MAX_SKILL_IMPROVISE_DB 30 /// Max Skill for Improvise
 #define MAX_SKILL_LEVEL 100 /// Max Skill Level
-#define MAX_SKILL_CRIMSON_MARKER 3 /// Max Crimson Marker targets
+#define MAX_SKILL_CRIMSON_MARKER 3 /// Max Crimson Marker targets (RL_C_MARKER)
 #define SKILL_NAME_LENGTH 31 /// Max Skill Name length
 #define SKILL_DESC_LENGTH 31 /// Max Skill Desc length
 
 DBMap* skilldb_name2id;
-
-/// Constants to identify the skill's inf value:
-enum e_skill_inf {
-	INF_ATTACK_SKILL  = 0x01,
-	INF_GROUND_SKILL  = 0x02,
-	INF_SELF_SKILL    = 0x04, // Skills casted on self where target is automatically chosen
-	// 0x08 not assigned
-	INF_SUPPORT_SKILL = 0x10,
-	INF_TARGET_TRAP   = 0x20,
-};
 
 /// Constants to identify a skill's nk value (damage properties)
 /// The NK value applies only to non INF_GROUND_SKILL skills
@@ -51,49 +41,58 @@ enum e_skill_nk {
 	NK_NO_CARDFIX_DEF = 0x80,
 };
 
+/// Constants to identify the skill's inf value:
+enum e_skill_inf {
+	INF_ATTACK_SKILL  = 0x01,
+	INF_GROUND_SKILL  = 0x02,
+	INF_SELF_SKILL    = 0x04, // Skills casted on self where target is automatically chosen
+	// 0x08 not assigned
+	INF_SUPPORT_SKILL = 0x10,
+	INF_TARGET_TRAP   = 0x20,
+};
+
 /// A skill with 3 would be no damage + splash: area of effect.
 /// Constants to identify a skill's inf2 value.
 enum e_skill_inf2 {
-	INF2_QUEST_SKILL    = 0x00001,
-	INF2_NPC_SKILL      = 0x00002, //NPC skills are those that players can't have in their skill tree.
-	INF2_WEDDING_SKILL  = 0x00004,
-	INF2_SPIRIT_SKILL   = 0x00008,
-	INF2_GUILD_SKILL    = 0x00010,
-	INF2_SONG_DANCE     = 0x00020,
-	INF2_ENSEMBLE_SKILL = 0x00040,
-	INF2_TRAP           = 0x00080,
-	INF2_TARGET_SELF    = 0x00100, //Refers to ground placed skills that will target the caster as well (like Grandcross)
-	INF2_NO_TARGET_SELF = 0x00200,
-	INF2_PARTY_ONLY     = 0x00400,
-	INF2_GUILD_ONLY     = 0x00800,
-	INF2_NO_ENEMY       = 0x01000,
+	INF2_QUEST_SKILL     = 0x00001,
+	INF2_NPC_SKILL       = 0x00002, //NPC skills are those that players can't have in their skill tree.
+	INF2_WEDDING_SKILL   = 0x00004,
+	INF2_SPIRIT_SKILL    = 0x00008,
+	INF2_GUILD_SKILL     = 0x00010,
+	INF2_SONG_DANCE      = 0x00020,
+	INF2_ENSEMBLE_SKILL  = 0x00040,
+	INF2_TRAP            = 0x00080,
+	INF2_TARGET_SELF     = 0x00100, //Refers to ground placed skills that will target the caster as well (like Grandcross)
+	INF2_NO_TARGET_SELF  = 0x00200,
+	INF2_PARTY_ONLY      = 0x00400,
+	INF2_GUILD_ONLY      = 0x00800,
+	INF2_NO_ENEMY        = 0x01000,
 	INF2_AUTOSHADOWSPELL = 0x02000, // Skill that available for SC_AUTOSHADOWSPELL
-	INF2_CHORUS_SKILL	= 0x04000, // Chorus skill
-	INF2_NO_BG_DMG		= 0x08000, // spell that ignore bg reduction
-	INF2_NO_GVG_DMG		= 0x10000, // spell that ignore gvg reduction
-	INF2_NO_NEARNPC     = 0x20000, // disable to cast skill if near with NPC [Cydh]
+	INF2_CHORUS_SKILL	 = 0x04000, // Chorus skill
+	INF2_NO_BG_DMG		 = 0x08000, // Skill that ignore bg reduction
+	INF2_NO_GVG_DMG		 = 0x10000, // Skill that ignore gvg reduction
+	INF2_NO_NEARNPC      = 0x20000, // disable to cast skill if near with NPC [Cydh]
 };
 
 /// Skill info type 3
 enum e_skill_inf3 {
-	INF3_NOLP				= 0x00001,	// Spells that can ignore Land Protector
-	INF3_NOENDCAMOUFLAGE	= 0x00002,	// spell that doesn't end camouflage
-	INF3_USABLE_HIDING		= 0x00004,	// spell that can be use in hiding
-	INF3_USABLE_DANCE		= 0x00008,	// spell that can be use while in dancing state
-	INF3_HIT_EMP			= 0x00010,	// spell that could hit emperium
-	INF3_STATIS_BL			= 0x00020,	// spell blocked by statis
-	INF3_KAGEHUMI_BL		= 0x00040,	// spell blocked by kagehumi
-	INF3_EFF_VULTURE		= 0x00080,	// spell range affected by AC_VULTURE
-	INF3_EFF_SNAKEEYE		= 0x00100,	// spell range affected by GS_SNAKEEYE
-	INF3_EFF_SHADOWJUMP		= 0x00200,	// spell range affected by NJ_SHADOWJUMP
-	INF3_EFF_RADIUS			= 0x00400,	// spell range affected by WL_RADIUS
-	INF3_EFF_RESEARCHTRAP	= 0x00800,	// spell range affected by RA_RESEARCHTRAP
-	INF3_NO_EFF_HOVERING	= 0x01000,	// Spell that does not affect user that has SC_HOVERING active
-	INF3_USABLE_WARG		= 0x02000,	// spell that can be use while riding warg
-	INF3_DIS_MADO			= 0x04000,	// spell that can't be used while in mado
-	INF3_USABLE_MANHOLE		= 0x08000,	// spell that can be used to target while under Man Hole effect
-	INF3_HIT_HIDING			= 0x10000,	// spell that having an affect to hiding target
-	//... add other spell list option here
+	INF3_NOLP             = 0x00001, // Skill that can ignore Land Protector
+	INF3_NOENDCAMOUFLAGE  = 0x00002, // Skill that doesn't end camouflage
+	INF3_USABLE_HIDING    = 0x00004, // Skill that can be use in hiding
+	INF3_USABLE_DANCE     = 0x00008, // Skill that can be use while in dancing state
+	INF3_HIT_EMP          = 0x00010, // Skill that could hit emperium
+	INF3_STATIS_BL        = 0x00020, // Skill blocked by statis
+	INF3_KAGEHUMI_BL      = 0x00040, // Skill blocked by kagehumi
+	INF3_EFF_VULTURE      = 0x00080, // Skill range affected by AC_VULTURE
+	INF3_EFF_SNAKEEYE     = 0x00100, // Skill range affected by GS_SNAKEEYE
+	INF3_EFF_SHADOWJUMP   = 0x00200, // Skill range affected by NJ_SHADOWJUMP
+	INF3_EFF_RADIUS       = 0x00400, // Skill range affected by WL_RADIUS
+	INF3_EFF_RESEARCHTRAP = 0x00800, // Skill range affected by RA_RESEARCHTRAP
+	INF3_NO_EFF_HOVERING  = 0x01000, // Skill that does not affect user that has SC_HOVERING active
+	INF3_USABLE_WARG      = 0x02000, // Skill that can be use while riding warg
+	INF3_DIS_MADO         = 0x04000, // Skill that can't be used while in mado
+	INF3_USABLE_MANHOLE   = 0x08000, // Skill that can be used to target while under SC__MANHOLE effect
+	INF3_HIT_HIDING       = 0x10000, // Skill that affects hidden targets
 };
 
 /// Walk intervals at which chase-skills are attempted to be triggered.
@@ -102,7 +101,7 @@ enum e_skill_inf3 {
 /// Flags passed to skill_attack/skill_area_sub
 enum e_skill_display {
 	SD_LEVEL     = 0x1000, // skill_attack will send -1 instead of skill level (affects display of some skills)
-	SD_ANIMATION = 0x2000, // skill_attack will use '5' instead of the skill's 'type' (this makes skills show an animation)
+	SD_ANIMATION = 0x2000, // skill_attack will use '5' instead of the skill's 'type' (this makes skills show an animation). Also being used in skill_attack for splash skill (NK_SPLASH) to check status_check_skilluse
 	SD_SPLASH    = 0x4000, // skill_area_sub will count targets in skill_area_temp[2]
 	SD_PREAMBLE  = 0x8000, // skill_area_sub will transmit a 'magic' damage packet (-30000 dmg) for the first target selected
 };
@@ -261,22 +260,23 @@ struct skill_unit_group_tickset {
 
 
 enum {
-	UF_DEFNOTENEMY      = 0x0001,	// If 'defunit_not_enemy' is set, the target is changed to 'friend'
-	UF_NOREITERATION    = 0x0002,	// Spell cannot be stacked
-	UF_NOFOOTSET        = 0x0004,	// Spell cannot be cast near/on targets
-	UF_NOOVERLAP        = 0x0008,	// Spell effects do not overlap
-	UF_PATHCHECK        = 0x0010,	// Only cells with a shootable path will be placed
-	UF_NOPC             = 0x0020,	// May not target players
-	UF_NOMOB            = 0x0040,	// May not target mobs
-	UF_SKILL            = 0x0080,	// May target skills
-	UF_DANCE            = 0x0100,	// Dance
-	UF_ENSEMBLE         = 0x0200,	// Duet
-	UF_SONG             = 0x0400,	// Song
-	UF_DUALMODE         = 0x0800,	// Spells should trigger both ontimer and onplace/onout/onleft effects.
-	UF_NOKNOCKBACK      = 0x1000,	// Skill unit cannot be knocked back
-	UF_RANGEDSINGLEUNIT = 0x2000,	// hack for ranged layout, only display center
-	UF_REM_CRAZYWEED    = 0x4000,	// removed by Crazyweed
-	UF_REM_FIRERAIN     = 0x8000,	// removed by Fire Rain
+	UF_DEFNOTENEMY      = 0x00001,	// If 'defunit_not_enemy' is set, the target is changed to 'friend'
+	UF_NOREITERATION    = 0x00002,	// Spell cannot be stacked
+	UF_NOFOOTSET        = 0x00004,	// Spell cannot be cast near/on targets
+	UF_NOOVERLAP        = 0x00008,	// Spell effects do not overlap
+	UF_PATHCHECK        = 0x00010,	// Only cells with a shootable path will be placed
+	UF_NOPC             = 0x00020,	// May not target players
+	UF_NOMOB            = 0x00040,	// May not target mobs
+	UF_SKILL            = 0x00080,	// May target skills
+	UF_DANCE            = 0x00100,	// Dance
+	UF_ENSEMBLE         = 0x00200,	// Duet
+	UF_SONG             = 0x00400,	// Song
+	UF_DUALMODE         = 0x00800,	// Spells should trigger both ontimer and onplace/onout/onleft effects.
+	UF_NOKNOCKBACK      = 0x01000,	// Skill unit cannot be knocked back
+	UF_RANGEDSINGLEUNIT = 0x02000,	// hack for ranged layout, only display center
+	UF_REM_CRAZYWEED    = 0x04000,	// removed by Crazyweed
+	UF_REM_FIRERAIN     = 0x08000,	// removed by Fire Rain
+	UF_KNOCKBACK_GROUP  = 0x10000,	// knockback skill unit with its group instead of single unit
 };
 
 /// Create Database item
@@ -305,9 +305,7 @@ struct s_skill_abra_db {
 	int per[MAX_SKILL_LEVEL]; /// Probability summoned
 };
 extern struct s_skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
-
-extern int enchant_eff[5];
-extern int deluge_eff[5];
+extern unsigned short skill_abra_count;
 
 void do_init_skill(void);
 void do_final_skill(void);
@@ -416,6 +414,7 @@ int skill_check_unit_cell(uint16 skill_id,int16 m,int16 x,int16 y,int unit_id);
 int skill_unit_out_all( struct block_list *bl,unsigned int tick,int range);
 int skill_unit_move(struct block_list *bl,unsigned int tick,int flag);
 void skill_unit_move_unit_group( struct skill_unit_group *group, int16 m,int16 dx,int16 dy);
+void skill_unit_move_unit(struct block_list *bl, int dx, int dy);
 
 struct skill_unit_group *skill_check_dancing( struct block_list *src );
 
@@ -1986,17 +1985,19 @@ struct s_skill_spellbook_db {
 	unsigned short point;
 };
 extern struct s_skill_spellbook_db skill_spellbook_db[MAX_SKILL_SPELLBOOK_DB];
-int skill_spellbook (struct map_session_data *sd, unsigned short nameid);
+extern unsigned short skill_spellbook_count;
+void skill_spellbook (struct map_session_data *sd, unsigned short nameid);
 int skill_block_check(struct block_list *bl, enum sc_type type, uint16 skill_id);
 
 /**
  * Guilottine Cross
  **/
-#define MAX_SKILL_MAGICMUSHROOM_DB 23
+#define MAX_SKILL_MAGICMUSHROOM_DB 25
 struct s_skill_magicmushroom_db {
 	uint16 skill_id;
 };
 extern struct s_skill_magicmushroom_db skill_magicmushroom_db[MAX_SKILL_MAGICMUSHROOM_DB];
+extern unsigned short skill_magicmushroom_count;
 int skill_maelstrom_suction(struct block_list *bl, va_list ap);
 bool skill_check_shadowform(struct block_list *bl, int64 damage, int hit);
 

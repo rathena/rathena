@@ -914,7 +914,7 @@ bool pc_can_Adopt(struct map_session_data *p1_sd, struct map_session_data *p2_sd
 		return false;
 	}
 
-	if( !( ( b_sd->status.class_ >= JOB_NOVICE && b_sd->status.class_ <= JOB_THIEF ) || b_sd->status.class_ == JOB_SUPER_NOVICE ) )
+	if( !( ( b_sd->status.class_ >= JOB_NOVICE && b_sd->status.class_ <= JOB_THIEF ) || b_sd->status.class_ == JOB_SUPER_NOVICE || b_sd->status.class_ == JOB_SUPER_NOVICE_E ) )
 		return false;
 
 	return true;
@@ -1058,13 +1058,14 @@ bool pc_isequip(struct map_session_data *sd,int n)
 			if (sd->status.base_level > 90 && item->equip & EQP_HELM)
 				return true; //Can equip all helms
 
-			if (sd->status.base_level > 96 && item->equip & EQP_ARMS && item->type == IT_WEAPON)
+			if (sd->status.base_level > 96 && item->equip & EQP_ARMS && item->type == IT_WEAPON && item->wlv == 4)
 				switch(item->look) { //In weapons, the look determines type of weapon.
-					case W_DAGGER: //Level 4 Knives are equippable.. this means all knives, I'd guess?
-					case W_1HSWORD: //All 1H swords
-					case W_1HAXE: //All 1H Axes
-					case W_MACE: //All 1H Maces
-					case W_STAFF: //All 1H Staves
+					case W_DAGGER: //All level 4 - Daggers
+					case W_1HSWORD: //All level 4 - 1H Swords
+					case W_1HAXE: //All level 4 - 1H Axes
+					case W_MACE: //All level 4 - 1H Maces
+					case W_STAFF: //All level 4 - 1H Staves
+					case W_2HSTAFF: //All level 4 - 2H Staves
 						return true;
 				}
 		}
@@ -1781,7 +1782,7 @@ int pc_calc_skilltree_normalize_job(struct map_session_data *sd)
 		c = MAPID_NOVICE;
 	}
 	// limit 2nd class and above to first class job levels (super novices are exempt)
-	else if ((sd->class_&JOBL_2) && (sd->class_&MAPID_UPPERMASK) != MAPID_SUPER_NOVICE)
+	else if (sd->class_&JOBL_2 && !(sd->class_&JOBL_SUPER_NOVICE))
 	{
 		// regenerate change_level_2nd
 		if (!sd->change_level_2nd)
@@ -4310,7 +4311,7 @@ char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_p
 		clif_additem(sd,i,amount,0);
 	}
 	if( !itemdb_isstackable2(id) && !item->unique_id )
-		sd->status.inventory[i].unique_id = itemdb_unique_id(sd);
+		sd->status.inventory[i].unique_id = pc_generate_unique_id(sd);
 	log_pick_pc(sd, log_type, amount, &sd->status.inventory[i]);
 
 	sd->weight += w;
@@ -4470,7 +4471,7 @@ bool pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 	}
 
 	//This function takes care of giving the item to whoever should have it, considering party-share options.
-	if ((flag = party_share_loot(p,sd,&fitem->item_data, fitem->first_get_charid))) {
+	if ((flag = party_share_loot(p,sd,&fitem->item, fitem->first_get_charid))) {
 		clif_additem(sd,0,0,flag);
 		return true;
 	}
@@ -6162,7 +6163,7 @@ int pc_checkbaselevelup(struct map_session_data *sd) {
 	status_calc_pc(sd,SCO_FORCE);
 	status_percent_heal(&sd->bl,100,100);
 
-	if((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE) {
+	if(sd->class_&JOBL_SUPER_NOVICE) {
 		sc_start(&sd->bl,&sd->bl,skill_get_sc(PR_KYRIE),100,1,skill_get_time(PR_KYRIE,1));
 		sc_start(&sd->bl,&sd->bl,skill_get_sc(PR_IMPOSITIO),100,1,skill_get_time(PR_IMPOSITIO,1));
 		sc_start(&sd->bl,&sd->bl,skill_get_sc(PR_MAGNIFICAT),100,1,skill_get_time(PR_MAGNIFICAT,1));
@@ -7180,8 +7181,9 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	// Activate Steel body if a super novice dies at 99+% exp [celest]
 	// Super Novices have no kill or die functions attached when saved by their angel
-	if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && !sd->state.snovice_dead_flag) {
+	if (sd->class_&JOBL_SUPER_NOVICE && !sd->state.snovice_dead_flag) {
 		unsigned int next = pc_nextbaseexp(sd);
+
 		if( next == 0 ) next = pc_thisbaseexp(sd);
 		if( get_percentage(sd->status.base_exp,next) >= 99 ) {
 			sd->state.snovice_dead_flag = 1;
@@ -7989,7 +7991,7 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 		return false; //Nothing to change.
 
 	// changing from 1st to 2nd job
-	if ((b_class&JOBL_2) && !(sd->class_&JOBL_2) && (b_class&MAPID_UPPERMASK) != MAPID_SUPER_NOVICE) {
+	if ((b_class&JOBL_2) && !(sd->class_&JOBL_2) && !(b_class&JOBL_SUPER_NOVICE)) {
 		sd->change_level_2nd = sd->status.job_level;
 		pc_setglobalreg (sd, "jobchange_level", sd->change_level_2nd);
 	}
@@ -8602,7 +8604,7 @@ bool pc_setregistry(struct map_session_data *sd,const char *reg,int val,int type
 	{
 	case 3: //Char reg
 		if( !strcmp(reg,"PC_DIE_COUNTER") && sd->die_counter != val ) {
-			i = (!sd->die_counter && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE);
+			i = (!sd->die_counter && sd->class_&JOBL_SUPER_NOVICE);
 			sd->die_counter = val;
 			if( i )
 				status_calc_pc(sd,SCO_NONE); // Lost the bonus.
@@ -9514,7 +9516,7 @@ void pc_check_available_item(struct map_session_data *sd) {
 				continue;
 			}
 			if (!sd->status.inventory[i].unique_id && !itemdb_isstackable(it))
-				sd->status.inventory[i].unique_id = itemdb_unique_id(sd);
+				sd->status.inventory[i].unique_id = pc_generate_unique_id(sd);
 		}
 	}
 
@@ -9532,7 +9534,7 @@ void pc_check_available_item(struct map_session_data *sd) {
 				continue;
 			}
 			if (!sd->status.cart[i].unique_id && !itemdb_isstackable(it))
-				sd->status.cart[i].unique_id = itemdb_unique_id(sd);
+				sd->status.cart[i].unique_id = pc_generate_unique_id(sd);
 		}
 	}
 
@@ -9550,7 +9552,7 @@ void pc_check_available_item(struct map_session_data *sd) {
 				continue;
 			}
 			if (!sd->status.storage.items[i].unique_id && !itemdb_isstackable(it))
-				sd->status.storage.items[i].unique_id = itemdb_unique_id(sd);
+				sd->status.storage.items[i].unique_id = pc_generate_unique_id(sd);
  		}
 	}
 }
@@ -10838,7 +10840,7 @@ int pc_autotrade_timer(int tid, unsigned int tick, int id, intptr_t data) {
 	buyingstore_reopen(sd);
 	vending_reopen(sd);
 
-	if (sd && !sd->vender_id && !sd->buyer_id) {
+	if (!sd->vender_id && !sd->buyer_id) {
 		sd->state.autotrade = 0;
 		map_quit(sd);
 	}
@@ -10932,22 +10934,21 @@ enum e_BANKING_WITHDRAW_ACK pc_bank_withdraw(struct map_session_data *sd, int mo
 }
 
 /**
-* Clear Cirmson Marker data from caster
+* Clear Crimson Marker data from caster
 * @param sd: Player
 **/
 void pc_crimson_marker_clear(struct map_session_data *sd) {
 	uint8 i;
 
-	if (!sd || !(&sd->c_marker) || !sd->c_marker.target)
+	if (!sd)
 		return;
 
 	for (i = 0; i < MAX_SKILL_CRIMSON_MARKER; i++) {
 		struct block_list *bl = NULL;
-		if (sd->c_marker.target[i] && (bl = map_id2bl(sd->c_marker.target[i])))
+		if (sd->c_marker[i] && (bl = map_id2bl(sd->c_marker[i])))
 			status_change_end(bl,SC_C_MARKER,INVALID_TIMER);
-		sd->c_marker.target[i] = 0;
+		sd->c_marker[i] = 0;
 	}
-	sd->c_marker.count = 0;
 }
 
 /**
@@ -11199,6 +11200,15 @@ bool pc_is_same_equip_index(enum equip_index eqi, short *equip_index, short inde
 	if (eqi == EQI_COSTUME_TOP && (equip_index[EQI_COSTUME_MID] == index || equip_index[EQI_COSTUME_LOW] == index))
 		return true;
 	return false;
+}
+
+/**
+ * Generate Unique item ID for player
+ * @param sd : Player
+ * @return A generated Unique item ID
+ */
+uint64 pc_generate_unique_id(struct map_session_data *sd) {
+	return ((uint64)sd->status.char_id << 32) | sd->status.uniqueitem_counter++;
 }
 
 /*==========================================

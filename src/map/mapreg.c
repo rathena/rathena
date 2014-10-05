@@ -20,7 +20,6 @@ static char mapreg_table[32] = "mapreg";
 static bool mapreg_dirty = false;
 #define MAPREG_AUTOSAVE_INTERVAL (300*1000)
 
-
 /// Looks up the value of an integer variable using its uid.
 int mapreg_readreg(int uid)
 {

@@ -25,7 +25,7 @@
 static char   ipban_db_hostname[32] = "127.0.0.1";
 static uint16 ipban_db_port = 3306;
 static char   ipban_db_username[32] = "ragnarok";
-static char   ipban_db_password[32] = "ragnarok";
+static char   ipban_db_password[32] = "";
 static char   ipban_db_database[32] = "ragnarok";
 static char   ipban_codepage[32] = "";
 static char   ipban_table[32] = "ipbanlist";
@@ -187,12 +187,12 @@ bool ipban_config_read(const char* key, const char* value) {
  * Launched at login-serv start, create db or other long scope variable here.
  */
 void ipban_init(void) {
-	const char* username;
-	const char* password;
-	const char* hostname;
-	uint16      port;
-	const char* database;
-	const char* codepage;
+	const char* username = ipban_db_username;
+	const char* password = ipban_db_password;
+	const char* hostname = ipban_db_hostname;
+	uint16      port     = ipban_db_port;
+	const char* database = ipban_db_database;
+	const char* codepage = ipban_codepage;
 
 	ipban_inited = true;
 

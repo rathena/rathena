@@ -29,7 +29,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 static DBMap* guild_db; // int guild_id -> struct guild*
 static DBMap* castle_db; // int castle_id -> struct guild_castle*
 static DBMap* guild_expcache_db; // int char_id -> struct guild_expcache*

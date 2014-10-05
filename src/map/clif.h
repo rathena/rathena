@@ -46,6 +46,7 @@ enum e_packet_ack {
 	ZC_PERSONAL_INFOMATION,
 	ZC_PERSONAL_INFOMATION_CHN,
 	ZC_CLEAR_DIALOG,
+	ZC_C_MARKERINFO,
 	//add other here
 	MAX_ACK_FUNC //auto upd len
 };
@@ -379,7 +380,6 @@ enum clif_messages {
 	USAGE_FAIL = 0x783,
 	NEED_REINS_OF_MOUNT = 0x78c,
 };
-
 
 enum e_personalinfo {
 	PINFO_BASIC = 0,
@@ -881,7 +881,7 @@ void clif_channel_msg(struct Channel *channel, struct map_session_data *sd, char
 void clif_ranklist(struct map_session_data *sd, int16 rankingType);
 void clif_update_rankingpoint(struct map_session_data *sd, int rankingtype, int point);
 
-void clif_crimson_marker(int fd, struct block_list *bl, bool remove);
+void clif_crimson_marker(struct map_session_data *sd, struct block_list *bl, bool remove);
 
 //void clif_broadcast_obtain_special_item(); ///TODO!
 
