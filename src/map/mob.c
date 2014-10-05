@@ -1649,26 +1649,24 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 	}
 
 	//Out of range...
-	if (!(mode&MD_CANMOVE))
-	{	//Can't chase. Attempt an idle skill before unlocking.
-		if (md->ud.target != tbl->id || md->ud.attacktimer == INVALID_TIMER) 
-		{ //Only use skill if no more attack delay left
-			md->state.skillstate = MSS_IDLE;
-			if (!mobskill_use(md, tick, -1))
+	if (!(mode&MD_CANMOVE) || (!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0))
+	{	//Can't chase. Immobile and trapped mobs should unlock target and use an idle skill on next interval.
+		if ((md->ud.target != tbl->id || md->ud.attacktimer == INVALID_TIMER)) 
+		{ //Only unlock target to use idle skill if no more attack left
+			md->ud.walk_count = (md->ud.walk_count+1)%250;
+			if (!(md->ud.walk_count%IDLE_SKILL_INTERVAL))
 				mob_unlocktarget(md,tick);
 		}
 		return true;
 	}
 
-	if (!can_move)
-	{	//Stuck. Attempt an idle skill
-		if (md->ud.target != tbl->id || md->ud.attacktimer == INVALID_TIMER) 
-		{ //Only use skill if no more attack delay left
-			md->state.skillstate = MSS_IDLE;
-			if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL))
-				mobskill_use(md, tick, -1);
+	//Before a monster starts to chase a target, it will check if it has a ranged "attack" skill to use on it.
+	if(md->ud.walktimer == INVALID_TIMER && (md->state.skillstate == MSS_BERSERK || md->state.skillstate == MSS_ANGRY)) 
+	{
+		if (DIFF_TICK(md->ud.canmove_tick, tick) <= MIN_MOBTHINKTIME && DIFF_TICK(md->ud.canact_tick, tick) < -MIN_MOBTHINKTIME*IDLE_SKILL_INTERVAL) 
+		{ //Only use skill if able to walk on next tick and not used a skill the last second
+			mobskill_use(md, tick, -1);
 		}
-		return true;
 	}
 
 	if (md->ud.walktimer != INVALID_TIMER && md->ud.target == tbl->id &&
@@ -1683,6 +1681,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 		return true;
 
 	//Follow up if possible.
+	//Hint: Chase skills are handled in the walktobl routine
 	if(!mob_can_reach(md, tbl, md->min_chase, MSS_RUSH) ||
 		!unit_walktobl(&md->bl, tbl, md->status.rhw.range, 2))
 		mob_unlocktarget(md,tick);

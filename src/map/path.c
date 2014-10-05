@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 #define SET_OPEN 0
 #define SET_CLOSED 1
@@ -464,4 +465,35 @@ unsigned int distance(int dx, int dy)
 	if (dy < 0) dy = -dy;
 	return (dx<dy?dy:dx);
 #endif
+}
+
+/**
+ * The client uses a circular distance instead of the square one. The circular distance
+ * is only used by units sending their attack commands via the client (not monsters).
+ * @param dx: Horizontal distance
+ * @param dy: Vertical distance
+ * @param distance: Distance to check against
+ * @return Within distance(1); Not within distance(0);
+ */
+int check_distance_client(int dx, int dy, int distance)
+{
+	return (distance_client(dx,dy) <= distance);
+}
+
+/**
+ * The client uses a circular distance instead of the square one. The circular distance
+ * is only used by units sending their attack commands via the client (not monsters).
+ * @param dx: Horizontal distance
+ * @param dy: Vertical distance
+ * @return Circular distance
+ */
+unsigned int distance_client(int dx, int dy)
+{
+	double temp_dist = sqrt((double)(dx*dx + dy*dy));
+
+	//Bonus factor used by client
+	//This affects even horizontal/vertical lines so they are one cell longer than expected
+	temp_dist -= 0.625;
+
+	return ((int)temp_dist);
 }

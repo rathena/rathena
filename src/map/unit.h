@@ -33,7 +33,9 @@ struct unit_data {
 	int   target_to;
 	int   attacktimer;
 	int   walktimer;
-	int	chaserange;
+	int   chaserange;
+	bool  stepaction; //Action should be executed on step [Playtester]
+	uint16 stepskill_id,stepskill_lv; //Remembers skill that should be casted on step [Playtester]
 	unsigned int attackabletime;
 	unsigned int canact_tick;
 	unsigned int canmove_tick;
