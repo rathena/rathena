@@ -1,5 +1,5 @@
 //
-// SC,SI,SCS,SCB,OPT1,OPT2,OPT3,Option,Flag
+// SC,SI,SCS,SCB,OPT1,OPT2,OPT3,Option,Flag,MinDuration,MinRate
 //
 // More detail, see doc/sc_config.txt
 //

@@ -1696,8 +1696,7 @@ enum scs_flag {
 };
 
 ///Define flags for the status_calc_bl function. [Skotlex]
-enum scb_flag
-{
+enum scb_flag {
 	SCB_NONE	= 0x0,
 	SCB_BASE	= 0x00000001,
 	SCB_MAXHP	= 0x00000002,
@@ -1743,6 +1742,7 @@ enum e_status_calc_opt {
 
 ///Enum for bonus_script's flag [Cydh]
 enum e_bonus_script_flags {
+	BSF_NONE = 0x0,
 	BSF_REM_ON_DEAD				= 0x001, ///Removed when dead
 	BSF_REM_ON_DISPELL			= 0x002, ///Removed by Dispell
 	BSF_REM_ON_CLEARANCE		= 0x004, ///Removed by Clearance
@@ -1770,6 +1770,7 @@ enum e_status_bonus {
 
 ///Enum of Status Change Flags [Cydh]
 enum e_status_change_flag {
+	SCF_NONE = 0x0,
 	SCF_BLEFFECT			= 0x000001,
 	SCF_DISPLAY				= 0x000002,
 	SCF_PERMANENT			= 0x000004,
@@ -1791,6 +1792,7 @@ enum e_status_change_flag {
 	SCF_SET_STAND			= 0x040000,
 	SCF_FAILED_MADO			= 0x080000,
 	SCF_DEBUFF				= 0x100000,
+	SCF_FAILED_IMMUNITY		= 0x200000,
 };
 
 //Define to determine who gets HP/SP consumed on doing skills/etc. [Skotlex]

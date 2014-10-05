@@ -82,6 +82,8 @@ struct s_status_change_db {
 		fail_count; /// Number of SC fail list
 	bool end_return; /// After SC ends the SC from end list, it does nothing
 	struct script_code *script; /// Exceuted script when SC is active
+	uint32 min_duration; /// Minimum duration effect (after all status reduction)
+	uint16 min_rate; /// Minimum rate to be applied (after all status reduction)
 };
 /// Status Change DB
 static struct s_status_change_db StatusChange[SC_MAX];
@@ -207,11 +209,9 @@ static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned
 /** Init StatusChange data each SC */
 static void initStatusChange(void) {
 	uint16 i;
-	for (i = 0; i < SC_MAX; i++) {
+	memset(StatusChange, 0, sizeof(StatusChange));
+	for (i = 0; i < SC_MAX; i++)
 		StatusChange[i].icon = SI_BLANK;
-		StatusChange[i].state = SCS_NONE;
-		StatusChange[i].calc_flag = SCB_NONE;
-	}
 	memset(StatusChangeIcon, BL_PC, sizeof(StatusChangeIcon));
 }
 
@@ -6154,40 +6154,8 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 		return tick?tick:1; // This should not happen in current implementation, but leave it anyway
 
 	// Status that are blocked by Golden Thief Bug card or Wand of Hermod
-	if (status_isimmune(bl)) {
-		switch (type) {
-			case SC_DECREASEAGI:
-			case SC_SILENCE:
-			case SC_COMA:
-			case SC_INCREASEAGI:
-			case SC_BLESSING:
-			case SC_SLOWPOISON:
-			case SC_IMPOSITIO:
-			case SC_AETERNA:
-			case SC_SUFFRAGIUM:
-			case SC_BENEDICTIO:
-			case SC_PROVIDENCE:
-			case SC_KYRIE:
-			case SC_ASSUMPTIO:
-			case SC_ANGELUS:
-			case SC_MAGNIFICAT:
-			case SC_GLORIA:
-			case SC_WINDWALK:
-			case SC_MAGICROD:
-			case SC_HALLUCINATION:
-			case SC_STONE:
-			case SC_QUAGMIRE:
-			case SC_SUITON:
-			case SC_SWINGDANCE:
-			case SC__ENERVATION:
-			case SC__GROOMY:
-			case SC__IGNORANCE:
-			case SC__LAZINESS:
-			case SC__UNLUCKY:
-			case SC__WEAKNESS:
-				return 0;
-		}
-	}
+	if (status_isimmune(bl) && StatusChange[type].flag&SCF_FAILED_IMMUNITY)
+		return 0;
 
 	sd = BL_CAST(BL_PC,bl);
 	status = status_get_status_data(bl);
@@ -6408,13 +6376,6 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 		rate -= rate*sc_def/10000;
 		rate -= sc_def2;
 
-		// Minimum chances
-		switch (type) {
-			case SC_BITE:
-				rate = max(rate, 5000); // Minimum of 50%
-				break;
-		}
-
 		// Item resistance (only applies to rate%)
 		if(sd && SC_COMMON_MIN <= type && type <= SC_COMMON_MAX) {
 			if( sd->reseff[type-SC_COMMON_MIN] > 0 )
@@ -6427,7 +6388,11 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 		if(rate > 0 && rate%10 != 0) rate += (10 - rate%10);
 	}
 
-	if (!(rnd()%10000 < rate))
+	// Cap minimum rate
+	if (StatusChange[type].min_rate)
+		rate = max(rate, StatusChange[type].min_rate);
+
+	if (rate < 10000 && (rate <= 0 || !(rnd()%10000 < rate)))
 		return 0;
 
 	// Even if a status change doesn't have a duration, it should still trigger
@@ -6440,25 +6405,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 	tick -= tick*tick_def/10000;
 	tick -= tick_def2;
 
-	// Minimum durations
-	switch (type) {
-		case SC_ANKLE:
-		case SC_BURNING:
-		case SC_MARSHOFABYSS:
-		case SC_STASIS:
-		case SC_DEEPSLEEP:
-			tick = max(tick, 5000); // Minimum duration 5s
-			break;
-		case SC_FREEZING:
-			tick = max(tick, 6000); // Minimum duration 6s
-			break;
-		default:
-			// Skills need to trigger even if the duration is reduced below 1ms
-			tick = max(tick, 1);
-			break;
-	}
-
-	return tick;
+	return cap_value(tick, 0, StatusChange[type].min_duration); // Cap minimum duration
 }
 
 /**
@@ -6966,6 +6913,23 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	if(!(flag&4)) // &4 - Do not parse val settings when loading SCs
 	switch(type)
 	{
+
+		/* Permanent effects */
+		case SC_AETERNA:
+		case SC_MODECHANGE:
+		case SC_WEIGHT50:
+		case SC_WEIGHT90:
+		case SC_BROKENWEAPON:
+		case SC_BROKENARMOR:
+		case SC_READYSTORM:
+		case SC_READYDOWN:
+		case SC_READYCOUNTER:
+		case SC_READYTURN:
+		case SC_DODGE:
+		case SC_PUSH_CART:
+			tick = -1;
+			break;
+
 		case SC_DECREASEAGI:
 		case SC_INCREASEAGI:
 		case SC_ADORAMUS:
@@ -7296,22 +7260,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val3 = skill_get_splash(val2, val1); // Val2 should bring the skill-id.
 			val2 = tick/250;
 			tick_time = 10; // [GodLesZ] tick time
-			break;
-
-		/* Permanent effects */
-		case SC_AETERNA:
-		case SC_MODECHANGE:
-		case SC_WEIGHT50:
-		case SC_WEIGHT90:
-		case SC_BROKENWEAPON:
-		case SC_BROKENARMOR:
-		case SC_READYSTORM:
-		case SC_READYDOWN:
-		case SC_READYCOUNTER:
-		case SC_READYTURN:
-		case SC_DODGE:
-		case SC_PUSH_CART:
-			tick = -1;
 			break;
 
 		case SC_AUTOGUARD:
@@ -11078,6 +11026,8 @@ static bool status_readdb_scconfig(char* fields[], int columns, int current) {
 	StatusChange[status].opt3 = opt3; //Set the OPT3
 	StatusChange[status].look = look_option; //Set the Option
 	StatusChange[status].flag = flag; //Set the Flag
+	StatusChange[status].min_duration = atoi(fields[9]); //Minimum duration
+	StatusChange[status].min_rate = atoi(fields[10]); //Minimum rate
 
 	if (flag&SCF_BLEFFECT && icon > SI_BLANK && icon < SI_MAX) //Set BL_SCEFFECT for this status icon
 		StatusChangeIcon[icon] |= BL_SCEFFECT;
@@ -11350,7 +11300,7 @@ void status_readdb(void) {
 		status_readdb_attrfix(dbsubpath2,i); // !TODO use sv_readdb ?
 		sv_readdb(dbsubpath1, "size_fix.txt",',',MAX_WEAPON_TYPE,MAX_WEAPON_TYPE,ARRAYLENGTH(atkmods),&status_readdb_sizefix, i);
 		sv_readdb(dbsubpath2, "refine_db.txt", ',', 4+MAX_REFINE, 4+MAX_REFINE, ARRAYLENGTH(refine_info), &status_readdb_refine, i);
-		sv_readdb(dbsubpath2, "sc_config_db.txt"    , ',', 9, 9, SC_MAX, &status_readdb_scconfig, i);
+		sv_readdb(dbsubpath2, "sc_config_db.txt"    , ',', 9,11, SC_MAX, &status_readdb_scconfig, i);
 		sv_readdb(dbsubpath2, "sc_failingsc_db.txt" , ',', 2, 2, SC_MAX, &status_readdb_scfailingsc, i);
 		sv_readdb(dbsubpath2, "sc_endsc_db.txt"     , ',', 2, 3, SC_MAX, &status_readdb_scendsc, i);
 		status_read_sc_script(dbsubpath2,i);
@@ -11368,7 +11318,6 @@ void do_init_status(void) {
 	add_timer_func_list(status_change_timer,"status_change_timer");
 	add_timer_func_list(kaahi_heal_timer,"kaahi_heal_timer");
 	add_timer_func_list(status_natural_heal_timer,"status_natural_heal_timer");
-	initStatusChange();
 	initDummyData();
 	status_readdb();
 	natural_heal_prev_tick = gettick();

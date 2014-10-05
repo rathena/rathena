@@ -168,6 +168,7 @@ Flag: Various status flags for specifc usage
 	  SCF_DEBUFF              = SC considered as debuff.
       SCF_SET_STAND           = Sets player to stand.
       SCF_FAILED_MADO         = Cannot be applied if Madogear is active.
+	  SCF_FAILED_IMMUNITY     = Failed to be applied if target has immunity by Golden Thief Bug Card's effect or Wand of Hermode
 
       SCF_NO_CLEARBUFF        = Cannot be removed on status_change_clear_buffs(). This has priority check than SCF_REM_ON_REFRESH, SCF_REM_ON_LUXANIMA, and .
       SCF_NO_REM_ONDEAD       = Cannot be romoved when dead. 'status_change_clear(block_list,0)'.
@@ -187,6 +188,14 @@ Flag: Various status flags for specifc usage
 
       SCF_BOSS_RESIST         = Cannot be applied to Boss Monster.
       SCF_MVP_RESIST          = Cannot be applied to MvP.
+
+---------------------------------------
+
+MinDuration: Minimum duration in miliseconds after all reduction calculation for SC resistance.
+
+---------------------------------------
+
+MinRate: Minimum success rate in n/10000 after all reduction calculation for SC resistance.
 
 ---------------------------------------
 
