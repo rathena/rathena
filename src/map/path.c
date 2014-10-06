@@ -477,6 +477,8 @@ unsigned int distance(int dx, int dy)
  */
 int check_distance_client(int dx, int dy, int distance)
 {
+	if(distance < 0) distance = 0;
+
 	return (distance_client(dx,dy) <= distance);
 }
 
@@ -487,13 +489,15 @@ int check_distance_client(int dx, int dy, int distance)
  * @param dy: Vertical distance
  * @return Circular distance
  */
-unsigned int distance_client(int dx, int dy)
+int distance_client(int dx, int dy)
 {
 	double temp_dist = sqrt((double)(dx*dx + dy*dy));
 
 	//Bonus factor used by client
 	//This affects even horizontal/vertical lines so they are one cell longer than expected
-	temp_dist -= 0.625;
+	temp_dist -= 0.0625;
+
+	if(temp_dist < 0) temp_dist = 0;
 
 	return ((int)temp_dist);
 }

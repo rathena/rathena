@@ -7424,8 +7424,7 @@ bool battle_check_range(struct block_list *src, struct block_list *bl, int range
 
 #ifndef CIRCULAR_AREA
 	if( src->type == BL_PC ) { // Range for players' attacks and skills should always have a circular check. [Angezerus]
-		int dx = src->x - bl->x, dy = src->y - bl->y;
-		if( !check_distance_client(dx, dy, range) )
+		if ( !check_distance_client_bl(src, bl, range) )
 			return false;
 	} else
 #endif

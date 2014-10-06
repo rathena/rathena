@@ -241,6 +241,74 @@ int unit_check_start_teleport_timer(struct block_list *sbl)
 }
 
 /**
+ * Triggered on full step if stepaction is true and executes remembered action.
+ * @param tid: Timer ID
+ * @param tick: Unused
+ * @param id: ID of bl to do the action
+ * @param data: Not used
+ * @return 1: Success 0: Fail (No valid bl)
+ */
+int unit_step_timer(int tid, unsigned int tick, int id, intptr_t data)
+{
+	struct block_list *bl;
+	struct unit_data *ud;
+	int target_id;
+
+	bl = map_id2bl(id);
+
+	if (!bl || bl->prev == NULL)
+		return 0;
+
+	ud = unit_bl2ud(bl);
+
+	if(!ud)
+		return 0;
+
+	if(ud->steptimer != tid) {
+		ShowError("unit_step_timer mismatch %d != %d\n",ud->steptimer,tid);
+		return 0;
+	}
+
+	ud->steptimer = INVALID_TIMER;
+
+	if(!ud->stepaction)
+		return 0;
+
+	//Set to false here because if an error occurs, it should not be executed again
+	ud->stepaction = false;
+
+	if(!ud->target_to)
+		return 0;
+
+	//Flush target_to as it might contain map coordinates which should not be used by other functions
+	target_id = ud->target_to;
+	ud->target_to = 0;
+
+	//If stepaction is set then we remembered a client request that should be executed on the next step
+	//Execute request now if target is in attack range
+	if(ud->stepskill_id && skill_get_inf(ud->stepskill_id) & INF_GROUND_SKILL) {
+		//Execute ground skill
+		struct map_data *md = &map[bl->m];			
+		unit_skilluse_pos(bl, target_id%md->xs, target_id/md->xs, ud->stepskill_id, ud->stepskill_lv);
+	} else {
+		//If a player has target_id set and target is in range, attempt attack
+		struct block_list *tbl = map_id2bl(target_id);
+		if (!tbl || !status_check_visibility(bl, tbl)) {
+			return 0;
+		}
+		if(ud->stepskill_id == 0) {
+			//Execute normal attack
+			unit_attack(bl, tbl->id, ud->state.attack_continue);
+		} else {
+			//Execute non-ground skill
+			unit_skilluse_id(bl, tbl->id, ud->stepskill_id, ud->stepskill_lv);
+		}
+	}
+
+	return 1;
+}
+
+/**
  * Defines when to refresh the walking character to object and restart the timer if applicable
  * Also checks for speed update, target location, and slave teleport timers
  * @param tid: Timer ID
@@ -356,58 +424,18 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 		return 0;
 
 	//If stepaction is set then we remembered a client request that should be executed on the next step
-	//Execute request now if target is in attack range
 	if (ud->stepaction && ud->target_to) {
+		//Delete old stepaction even if not executed yet, the latest command is what counts
+		if(ud->steptimer != INVALID_TIMER) {
+			delete_timer(ud->steptimer, unit_step_timer);
+			ud->steptimer = INVALID_TIMER;
+		}
 		//Delay stepactions by half a step (so they are executed at full step)
 		if(ud->walkpath.path[ud->walkpath.path_pos]&1)
 			i = status_get_speed(bl)*14/20;
 		else
 			i = status_get_speed(bl)/2;
-		if(ud->stepskill_id && skill_get_inf(ud->stepskill_id) & INF_GROUND_SKILL) {
-			//Ground skill, create imaginary target
-			struct block_list tbl;
-			struct map_data *md = &map[bl->m];			
-			tbl.type = BL_NUL;
-			tbl.m = bl->m;
-			//Convert target_to back to map coordinates
-			tbl.x = ud->target_to%md->xs;
-			tbl.y = ud->target_to/md->xs;
-			if (battle_check_range(bl, &tbl, ud->chaserange)) {
-				//Execute ground skill
-				ud->stepaction = false;
-				ud->target_to = 0;
-				unit_stop_walking(bl, 1);
-				//TODO: Delay skill use
-				unit_skilluse_pos(bl, tbl.x, tbl.y, ud->stepskill_id, ud->stepskill_lv);
-				return 0;
-			}
-		} else {
-			//If a player has target_to set and target is in range, attempt attack
-			struct block_list *tbl = map_id2bl(ud->target_to);
-			if (!tbl || !status_check_visibility(bl, tbl)) {
-				ud->target_to = 0;
-			}
-			if (battle_check_range(bl, tbl, ud->chaserange)) {
-				// Close enough to attempt an attack
-				if(ud->stepskill_id == 0) {
-					//Execute normal attack
-					ud->stepaction = false;
-					ud->target = ud->target_to;
-					ud->target_to = 0;
-					unit_stop_walking(bl, 1);
-					ud->attacktimer=add_timer(tick+i,unit_attack_timer,bl->id,0);
-					return 0;
-				} else {
-					//Execute non-ground skill
-					ud->stepaction = false;
-					ud->target_to = 0;
-					unit_stop_walking(bl, 1);
-					//TODO: Delay skill use
-					unit_skilluse_id(bl, tbl->id, ud->stepskill_id, ud->stepskill_lv);
-					return 0;
-				}
-			}
-		}
+		ud->steptimer = add_timer(tick+i, unit_step_timer, bl->id, 0);
 	}
 
 	if(ud->state.change_walk_target)
@@ -1608,6 +1636,15 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	else
 		range = skill_get_range2(src, skill_id, skill_lv); // Skill cast distance from database
 
+	// New action request received, delete previous action request if not executed yet
+	if(ud->steptimer != INVALID_TIMER) {
+		delete_timer(ud->steptimer, unit_step_timer);
+		ud->steptimer = INVALID_TIMER;
+	}
+	if(ud->stepaction) {
+		ud->stepaction = false;
+		ud->target_to = 0;
+	}
 	// Remember the skill request from the client while walking to the next cell
 	if(src->type == BL_PC && ud->walktimer != INVALID_TIMER && !battle_check_range(src, target, range-1)) {
 		ud->stepaction = true;
@@ -1616,9 +1653,6 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		ud->stepskill_id = skill_id;
 		ud->stepskill_lv = skill_lv;
 		return 0; // Attacking will be handled by unit_walktoxy_timer in this case
-	} else {
-		// To make sure a failed stepaction is not remembered any longer
-		ud->stepaction = false;
 	}
 
 	// Check range when not using skill on yourself or is a combo-skill during attack
@@ -1925,6 +1959,15 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 	else
 		range = skill_get_range2(src, skill_id, skill_lv); // Skill cast distance from database
 
+	// New action request received, delete previous action request if not executed yet
+	if(ud->steptimer != INVALID_TIMER) {
+		delete_timer(ud->steptimer, unit_step_timer);
+		ud->steptimer = INVALID_TIMER;
+	}
+	if(ud->stepaction) {
+		ud->stepaction = false;
+		ud->target_to = 0;
+	}
 	// Remember the skill request from the client while walking to the next cell
 	if(src->type == BL_PC && ud->walktimer != INVALID_TIMER && !battle_check_range(src, &bl, range-1)) {
 		struct map_data *md = &map[src->m];
@@ -1935,9 +1978,6 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 		ud->stepskill_id = skill_id;
 		ud->stepskill_lv = skill_lv;
 		return 0; // Attacking will be handled by unit_walktoxy_timer in this case
-	} else {
-		// To make sure a failed stepaction is not remembered any longer
-		ud->stepaction = false;
 	}
 
 	if( skill_get_state(ud->skill_id) == ST_MOVE_ENABLE ) {
@@ -2141,6 +2181,15 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 	if(ud->attacktimer != INVALID_TIMER)
 		return 0;
 
+	// New action request received, delete previous action request if not executed yet
+	if(ud->steptimer != INVALID_TIMER) {
+		delete_timer(ud->steptimer, unit_step_timer);
+		ud->steptimer = INVALID_TIMER;
+	}
+	if(ud->stepaction) {
+		ud->stepaction = false;
+		ud->target_to = 0;
+	}
 	// Remember the attack request from the client while walking to the next cell
 	if(src->type == BL_PC && ud->walktimer != INVALID_TIMER && !battle_check_range(src, target, range-1)) {
 		ud->stepaction = true;
@@ -2149,9 +2198,6 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 		ud->stepskill_id = 0;
 		ud->stepskill_lv = 0;
 		return 0; // Attacking will be handled by unit_walktoxy_timer in this case
-	} else {
-		// To make sure a failed stepaction is not remembered any longer
-		ud->stepaction = false;
 	}
 	
 	if(DIFF_TICK(ud->attackabletime, gettick()) > 0) // Do attack next time it is possible. [Skotlex]
@@ -2613,6 +2659,7 @@ void unit_dataset(struct block_list *bl)
 	ud->walktimer      = INVALID_TIMER;
 	ud->skilltimer     = INVALID_TIMER;
 	ud->attacktimer    = INVALID_TIMER;
+	ud->steptimer      = INVALID_TIMER;
 	ud->attackabletime =
 	ud->canact_tick    =
 	ud->canmove_tick   = gettick();
@@ -3277,6 +3324,7 @@ void do_init_unit(void){
 	add_timer_func_list(unit_delay_walktoxy_timer,"unit_delay_walktoxy_timer");
 	add_timer_func_list(unit_delay_walktobl_timer,"unit_delay_walktobl_timer");
 	add_timer_func_list(unit_teleport_timer,"unit_teleport_timer");
+	add_timer_func_list(unit_step_timer,"unit_step_timer");
 }
 
 /**
