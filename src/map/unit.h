@@ -119,6 +119,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 
 // Step timer used for delayed attack and skill use
 int unit_step_timer(int tid, unsigned int tick, int id, intptr_t data);
+int unit_stop_stepaction(struct block_list *bl);
 
 // Cancel unit cast
 int unit_skillcastcancel(struct block_list *bl, char type);

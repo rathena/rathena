@@ -426,7 +426,7 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 
 
 //Distance functions, taken from http://www.flipcode.com/articles/article_fastdistance.shtml
-int check_distance(int dx, int dy, int distance)
+bool check_distance(int dx, int dy, int distance)
 {
 #ifdef CIRCULAR_AREA
 	//In this case, we just do a square comparison. Add 1 tile grace for diagonal range checks.
@@ -475,7 +475,7 @@ unsigned int distance(int dx, int dy)
  * @param distance: Distance to check against
  * @return Within distance(1); Not within distance(0);
  */
-int check_distance_client(int dx, int dy, int distance)
+bool check_distance_client(int dx, int dy, int distance)
 {
 	if(distance < 0) distance = 0;
 

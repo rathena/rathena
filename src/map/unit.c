@@ -1637,19 +1637,12 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		range = skill_get_range2(src, skill_id, skill_lv); // Skill cast distance from database
 
 	// New action request received, delete previous action request if not executed yet
-	if(ud->steptimer != INVALID_TIMER) {
-		delete_timer(ud->steptimer, unit_step_timer);
-		ud->steptimer = INVALID_TIMER;
-	}
-	if(ud->stepaction) {
-		ud->stepaction = false;
-		ud->target_to = 0;
-	}
+	if(ud->stepaction || ud->steptimer != INVALID_TIMER)
+		unit_stop_stepaction(src);
 	// Remember the skill request from the client while walking to the next cell
 	if(src->type == BL_PC && ud->walktimer != INVALID_TIMER && !battle_check_range(src, target, range-1)) {
 		ud->stepaction = true;
 		ud->target_to = target_id;
-		ud->chaserange = range;
 		ud->stepskill_id = skill_id;
 		ud->stepskill_lv = skill_lv;
 		return 0; // Attacking will be handled by unit_walktoxy_timer in this case
@@ -1960,21 +1953,14 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 		range = skill_get_range2(src, skill_id, skill_lv); // Skill cast distance from database
 
 	// New action request received, delete previous action request if not executed yet
-	if(ud->steptimer != INVALID_TIMER) {
-		delete_timer(ud->steptimer, unit_step_timer);
-		ud->steptimer = INVALID_TIMER;
-	}
-	if(ud->stepaction) {
-		ud->stepaction = false;
-		ud->target_to = 0;
-	}
+	if(ud->stepaction || ud->steptimer != INVALID_TIMER)
+		unit_stop_stepaction(src);
 	// Remember the skill request from the client while walking to the next cell
 	if(src->type == BL_PC && ud->walktimer != INVALID_TIMER && !battle_check_range(src, &bl, range-1)) {
 		struct map_data *md = &map[src->m];
 		// Convert coordinates to target_to so we can use it as target later
 		ud->stepaction = true;
 		ud->target_to = (skill_x + skill_y*md->xs);
-		ud->chaserange = range;
 		ud->stepskill_id = skill_id;
 		ud->stepskill_lv = skill_lv;
 		return 0; // Attacking will be handled by unit_walktoxy_timer in this case
@@ -2102,6 +2088,36 @@ int unit_stop_attack(struct block_list *bl)
 }
 
 /**
+ * Stop a unit's step action
+ * @param bl: Object to stop
+ * @return 0
+ */
+int unit_stop_stepaction(struct block_list *bl)
+{
+	struct unit_data *ud = unit_bl2ud(bl);
+
+	nullpo_ret(bl);
+
+	if(!ud)
+		return 0;
+
+	//Clear remembered step action
+	ud->stepaction = false;
+	ud->target_to = 0;
+	ud->stepskill_id = 0;
+	ud->stepskill_lv = 0;
+
+	if(ud->steptimer == INVALID_TIMER)
+		return 0;
+
+	//Clear timer
+	delete_timer(ud->steptimer, unit_step_timer);
+	ud->steptimer = INVALID_TIMER;
+	
+	return 0;
+}
+
+/**
  * Removes a unit's target due to being unattackable
  * @param bl: Object to unlock target
  * @return 0
@@ -2182,19 +2198,12 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 		return 0;
 
 	// New action request received, delete previous action request if not executed yet
-	if(ud->steptimer != INVALID_TIMER) {
-		delete_timer(ud->steptimer, unit_step_timer);
-		ud->steptimer = INVALID_TIMER;
-	}
-	if(ud->stepaction) {
-		ud->stepaction = false;
-		ud->target_to = 0;
-	}
+	if(ud->stepaction || ud->steptimer != INVALID_TIMER)
+		unit_stop_stepaction(src);
 	// Remember the attack request from the client while walking to the next cell
 	if(src->type == BL_PC && ud->walktimer != INVALID_TIMER && !battle_check_range(src, target, range-1)) {
 		ud->stepaction = true;
 		ud->target_to = ud->target;
-		ud->chaserange = range;
 		ud->stepskill_id = 0;
 		ud->stepskill_lv = 0;
 		return 0; // Attacking will be handled by unit_walktoxy_timer in this case
@@ -2737,6 +2746,10 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 
 	if (ud->skilltimer != INVALID_TIMER)
 		unit_skillcastcancel(bl,0);
+
+	//Clear stepaction even if there is no timer
+	if (ud->stepaction || ud->steptimer != INVALID_TIMER)
+		unit_stop_stepaction(bl);
 
 	// Do not reset can-act delay. [Skotlex]
 	ud->attackabletime = ud->canmove_tick /*= ud->canact_tick*/ = gettick();
