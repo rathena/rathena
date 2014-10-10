@@ -27,6 +27,8 @@
 #define MIN_MOBTHINKTIME 100
 //Min time before mobs do a check to call nearby friends for help (or for slaves to support their master)
 #define MIN_MOBLINKTIME 1000
+//Min time between random walks
+#define MIN_RANDOMWALKTIME 4000
 
 //Distance that slaves should keep from their master.
 #define MOB_SLAVEDISTANCE 2

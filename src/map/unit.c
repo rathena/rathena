@@ -101,7 +101,7 @@ int unit_walktoxy_sub(struct block_list *bl)
 		// Trim the last part of the path to account for range,
 		// but always move at least one cell when requested to move.
 		for (i = ud->chaserange*10; i > 0 && ud->walkpath.path_len>1;) {
-		   ud->walkpath.path_len--;
+			ud->walkpath.path_len--;
 			dir = ud->walkpath.path[ud->walkpath.path_len];
 			if(dir&1)
 				i -= MOVE_DIAGONAL_COST;
@@ -594,7 +594,7 @@ int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
 	ud->state.walk_easy = flag&1;
 	ud->to_x = x;
 	ud->to_y = y;
-	unit_set_target(ud, 0);
+	unit_stop_attack(bl); //Sets target to 0
 
 	sc = status_get_sc(bl);
 	if (sc && sc->data[SC_CONFUSION]) // Randomize the target position
@@ -605,11 +605,6 @@ int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
 		// Call a function from a timer unit_walktoxy_sub
 		ud->state.change_walk_target = 1;
 		return 1;
-	}
-
-	if(ud->attacktimer != INVALID_TIMER) {
-		delete_timer( ud->attacktimer, unit_attack_timer );
-		ud->attacktimer = INVALID_TIMER;
 	}
 
 	// Start timer to recall summon
@@ -702,7 +697,7 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, unsi
 	ud->target_to = tbl->id;
 	ud->chaserange = range; // Note that if flag&2, this SHOULD be attack-range
 	ud->state.attack_continue = flag&2?1:0; // Chase to attack.
-	unit_set_target(ud, 0);
+	unit_stop_attack(bl); //Sets target to 0
 
 	sc = status_get_sc(bl);
 	if (sc && sc->data[SC_CONFUSION]) // Randomize the target position
@@ -722,11 +717,6 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, unsi
 
 	if(!unit_can_move(bl))
 		return 0;
-
-	if(ud->attacktimer != INVALID_TIMER) {
-		delete_timer( ud->attacktimer, unit_attack_timer );
-		ud->attacktimer = INVALID_TIMER;
-	}
 
 	if (unit_walktoxy_sub(bl)) {
 		set_mobstate(bl, flag&2);
@@ -2069,37 +2059,37 @@ int unit_set_target(struct unit_data* ud, int target_id)
 /**
  * Stop a unit's attacks
  * @param bl: Object to stop
- * @return 0
  */
-int unit_stop_attack(struct block_list *bl)
+void unit_stop_attack(struct block_list *bl)
 {
-	struct unit_data *ud = unit_bl2ud(bl);
-
+	struct unit_data *ud;
 	nullpo_ret(bl);
+	ud = unit_bl2ud(bl);
+	nullpo_ret(ud);
 
-	if(!ud || ud->attacktimer == INVALID_TIMER)
-		return 0;
-
-	delete_timer( ud->attacktimer, unit_attack_timer );
-	ud->attacktimer = INVALID_TIMER;
+	//Clear target
 	unit_set_target(ud, 0);
 
-	return 0;
+	if(ud->attacktimer == INVALID_TIMER)
+		return;
+
+	//Clear timer
+	delete_timer(ud->attacktimer, unit_attack_timer);
+	ud->attacktimer = INVALID_TIMER;
+
+	return;
 }
 
 /**
  * Stop a unit's step action
  * @param bl: Object to stop
- * @return 0
  */
-int unit_stop_stepaction(struct block_list *bl)
+void unit_stop_stepaction(struct block_list *bl)
 {
-	struct unit_data *ud = unit_bl2ud(bl);
-
+	struct unit_data *ud;
 	nullpo_ret(bl);
-
-	if(!ud)
-		return 0;
+	ud = unit_bl2ud(bl);
+	nullpo_ret(ud);
 
 	//Clear remembered step action
 	ud->stepaction = false;
@@ -2108,13 +2098,13 @@ int unit_stop_stepaction(struct block_list *bl)
 	ud->stepskill_lv = 0;
 
 	if(ud->steptimer == INVALID_TIMER)
-		return 0;
+		return;
 
 	//Clear timer
 	delete_timer(ud->steptimer, unit_step_timer);
 	ud->steptimer = INVALID_TIMER;
 	
-	return 0;
+	return;
 }
 
 /**
@@ -2133,7 +2123,7 @@ int unit_unattackable(struct block_list *bl)
 	}
 
 	if(bl->type == BL_MOB)
-		mob_unlocktarget((struct mob_data*)bl, gettick()) ;
+		mob_unlocktarget((struct mob_data*)bl, gettick());
 	else if(bl->type == BL_PET)
 		pet_unlocktarget((struct pet_data*)bl);
 
@@ -2736,16 +2726,15 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 
 	map_freeblock_lock();
 
-	unit_set_target(ud, 0);
-
 	if (ud->walktimer != INVALID_TIMER)
 		unit_stop_walking(bl,0);
 
-	if (ud->attacktimer != INVALID_TIMER)
-		unit_stop_attack(bl);
-
 	if (ud->skilltimer != INVALID_TIMER)
 		unit_skillcastcancel(bl,0);
+
+	//Clear target even if there is no timer
+	if (ud->target || ud->attacktimer != INVALID_TIMER)
+		unit_stop_attack(bl);
 
 	//Clear stepaction even if there is no timer
 	if (ud->stepaction || ud->steptimer != INVALID_TIMER)

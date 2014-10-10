@@ -107,7 +107,7 @@ bool unit_can_reach_pos(struct block_list *bl,int x,int y,int easy);
 bool unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int range, int easy, short *x, short *y);
 
 // Unit attack functions
-int unit_stop_attack(struct block_list *bl);
+void unit_stop_attack(struct block_list *bl);
 int unit_attack(struct block_list *src,int target_id,int continuous);
 int unit_cancel_combo(struct block_list *bl);
 
@@ -119,7 +119,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 
 // Step timer used for delayed attack and skill use
 int unit_step_timer(int tid, unsigned int tick, int id, intptr_t data);
-int unit_stop_stepaction(struct block_list *bl);
+void unit_stop_stepaction(struct block_list *bl);
 
 // Cancel unit cast
 int unit_skillcastcancel(struct block_list *bl, char type);
