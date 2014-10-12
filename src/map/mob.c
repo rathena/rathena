@@ -46,7 +46,9 @@
 
 #define IDLE_SKILL_INTERVAL 10	//Active idle skills should be triggered every 1 second (1000/MIN_MOBTHINKTIME)
 
-#define MOB_LAZYSKILLPERC 0	// Probability for mobs far from players from doing their IDLE skill. (rate of 1000 minute)
+// Probability for mobs far from players from doing their IDLE skill. (rate of 1000 minute)
+// in Aegis, this is 100% for mobs that have been activated by players and none otherwise.
+#define MOB_LAZYSKILLPERC(md) (md->state.spotted?1000:0)
 // Move probability for mobs away from players (rate of 1000 minute)
 // in Aegis, this is 100% for mobs that have been activated by players and none otherwise.
 #define MOB_LAZYMOVEPERC(md) (md->state.spotted?1000:0)
@@ -1357,7 +1359,7 @@ int mob_randomwalk(struct mob_data *md,unsigned int tick)
 		x+=md->bl.x;
 		y+=md->bl.y;
 
-		if(((x != md->bl.x) || (y != md->bl.y)) && map_getcell(md->bl.m,x,y,CELL_CHKPASS) && unit_walktoxy(&md->bl,x,y,1)){
+		if(((x != md->bl.x) || (y != md->bl.y)) && map_getcell(md->bl.m,x,y,CELL_CHKPASS) && unit_walktoxy(&md->bl,x,y,0)){
 			break;
 		}
 	}
@@ -1770,20 +1772,17 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 
 	if( DIFF_TICK(md->next_walktime,tick) < 0 && (status_get_mode(&md->bl)&MD_CANMOVE) && unit_can_move(&md->bl) )
 	{
-		if( map[md->bl.m].users > 0 )
-		{
-			if( rnd()%1000 < MOB_LAZYMOVEPERC(md) )
-				mob_randomwalk(md, tick);
-			else
-			if( rnd()%1000 < MOB_LAZYSKILLPERC ) //Chance to do a mob's idle skill.
-				mobskill_use(md, tick, -1);
-		}
-		else
-		{
-			if( rnd()%1000 < MOB_LAZYMOVEPERC(md) )
-				mob_randomwalk(md, tick);
-		}
+		if( rnd()%1000 < MOB_LAZYMOVEPERC(md) )
+			mob_randomwalk(md, tick);
 	}
+	else if( md->ud.walktimer == INVALID_TIMER && map[md->bl.m].users > 0 )
+	{
+		//Because it is not unset when the mob finishes walking.
+		md->state.skillstate = MSS_IDLE;
+		if( rnd()%1000 < MOB_LAZYSKILLPERC(md) ) //Chance to do a mob's idle skill.
+			mobskill_use(md, tick, -1);
+	}
+
 	return 0;
 }
 

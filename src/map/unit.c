@@ -409,8 +409,11 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 			// But avoid triggering on stop-walk calls.
 			if(tid != INVALID_TIMER &&
 				!(ud->walk_count%WALK_SKILL_INTERVAL) &&
+				map[bl->m].users > 0 &&
 				mobskill_use(md, tick, -1)) {
-				if (!(ud->skill_id == NPC_SELFDESTRUCTION && ud->skilltimer != INVALID_TIMER)) { // Skill used, abort walking
+				if (!(ud->skill_id == NPC_SELFDESTRUCTION && ud->skilltimer != INVALID_TIMER)
+					&& md->state.skillstate != MSS_WALK) //Walk skills are supposed to be used while walking
+				{ // Skill used, abort walking
 					clif_fixpos(bl); // Fix position as walk has been cancelled.
 					return 0;
 				}
