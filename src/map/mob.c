@@ -1775,7 +1775,7 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 		if( rnd()%1000 < MOB_LAZYMOVEPERC(md) )
 			mob_randomwalk(md, tick);
 	}
-	else if( md->ud.walktimer == INVALID_TIMER && map[md->bl.m].users > 0 )
+	else if( md->ud.walktimer == INVALID_TIMER )
 	{
 		//Because it is not unset when the mob finishes walking.
 		md->state.skillstate = MSS_IDLE;
@@ -3781,6 +3781,8 @@ static bool mob_parse_dbrow(char** str)
 		if (db->range3 < db->range2)
 			db->range3 = db->range2;
 	}
+	//Tests showed that chase range is effectively 2 cells larger than expected [Playtester]
+	db->range3 += 2;
 
 	status->size = atoi(str[22]);
 	status->race = atoi(str[23]);

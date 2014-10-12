@@ -2066,9 +2066,9 @@ int unit_set_target(struct unit_data* ud, int target_id)
 void unit_stop_attack(struct block_list *bl)
 {
 	struct unit_data *ud;
-	nullpo_ret(bl);
+	nullpo_retv(bl);
 	ud = unit_bl2ud(bl);
-	nullpo_ret(ud);
+	nullpo_retv(ud);
 
 	//Clear target
 	unit_set_target(ud, 0);
@@ -2079,8 +2079,6 @@ void unit_stop_attack(struct block_list *bl)
 	//Clear timer
 	delete_timer(ud->attacktimer, unit_attack_timer);
 	ud->attacktimer = INVALID_TIMER;
-
-	return;
 }
 
 /**
@@ -2090,9 +2088,9 @@ void unit_stop_attack(struct block_list *bl)
 void unit_stop_stepaction(struct block_list *bl)
 {
 	struct unit_data *ud;
-	nullpo_ret(bl);
+	nullpo_retv(bl);
 	ud = unit_bl2ud(bl);
-	nullpo_ret(ud);
+	nullpo_retv(ud);
 
 	//Clear remembered step action
 	ud->stepaction = false;
@@ -2106,8 +2104,6 @@ void unit_stop_stepaction(struct block_list *bl)
 	//Clear timer
 	delete_timer(ud->steptimer, unit_step_timer);
 	ud->steptimer = INVALID_TIMER;
-	
-	return;
 }
 
 /**
