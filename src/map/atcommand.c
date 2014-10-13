@@ -7047,25 +7047,32 @@ ACMD_FUNC(mobinfo)
 			clif_displaymessage(fd, atcmd_output);
 		// mvp
 		if (mob->mexp) {
+			float mvppercent, mvpremain;
 			sprintf(atcmd_output, msg_txt(sd,1247), mob->mexp); //  MVP Bonus EXP:%u
 			clif_displaymessage(fd, atcmd_output);
 			strcpy(atcmd_output, msg_txt(sd,1248)); //  MVP Items:
+			mvpremain = 100.0; //Remaining drop chance for official mvp drop mode
 			j = 0;
 			for (i = 0; i < MAX_MVP_DROP; i++) {
 				if (mob->mvpitem[i].nameid <= 0 || (item_data = itemdb_exists(mob->mvpitem[i].nameid)) == NULL)
 					continue;
-				if (mob->mvpitem[i].p > 0) {
+				//Because if there are 3 MVP drops at 50%, the first has a chance of 50%, the second 25% and the third 12.5%
+				mvppercent = (float)mob->mvpitem[i].p * mvpremain / 10000.0;
+				if(battle_config.item_drop_mvp_mode == 0) {
+					mvpremain -= mvppercent;
+				}
+				if (mvppercent > 0) {
 					j++;
 					if (j == 1) {
 						if (item_data->slot)
-							sprintf(atcmd_output2, " %s[%d]  %02.02f%%", item_data->jname, item_data->slot, (float)mob->mvpitem[i].p / 100);
+							sprintf(atcmd_output2, " %s[%d]  %02.02f%%", item_data->jname, item_data->slot, mvppercent);
 						else
-							sprintf(atcmd_output2, " %s  %02.02f%%", item_data->jname, (float)mob->mvpitem[i].p / 100);
+							sprintf(atcmd_output2, " %s  %02.02f%%", item_data->jname, mvppercent);
 					} else {
 						if (item_data->slot)
-							sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", item_data->jname, item_data->slot, (float)mob->mvpitem[i].p / 100);
+							sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", item_data->jname, item_data->slot, mvppercent);
 						else
-							sprintf(atcmd_output2, " - %s  %02.02f%%", item_data->jname, (float)mob->mvpitem[i].p / 100);
+							sprintf(atcmd_output2, " - %s  %02.02f%%", item_data->jname, mvppercent);
 					}
 					strcat(atcmd_output, atcmd_output2);
 				}

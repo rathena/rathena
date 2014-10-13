@@ -2531,26 +2531,38 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		log_mvp[1] = mexp;
 
 		if( !(map[m].flag.nomvploot || type&1) ) {
-			/* pose them randomly in the list -- so on 100% drop servers it wont always drop the same item */
+			//Order might be random depending on item_drop_mvp_mode config setting
 			int mdrop_id[MAX_MVP_DROP];
 			int mdrop_p[MAX_MVP_DROP];
 
 			memset(mdrop_id,0,MAX_MVP_DROP*sizeof(int));
 			memset(mdrop_p,0,MAX_MVP_DROP*sizeof(int));
 
-			//Make random order
-			for(i = 0; i < MAX_MVP_DROP; i++) {
-				while( 1 ) {
-					uint8 va = rnd()%MAX_MVP_DROP;
-					if (mdrop_id[va] == 0) {
-						if (md->db->mvpitem[i].nameid > 0) {
-							mdrop_id[va] = md->db->mvpitem[i].nameid;
-							mdrop_p[va] = md->db->mvpitem[i].p;
+			if(battle_config.item_drop_mvp_mode == 1) {
+				//Random order
+				for(i = 0; i < MAX_MVP_DROP; i++) {
+					while( 1 ) {
+						uint8 va = rnd()%MAX_MVP_DROP;
+						if (mdrop_id[va] == 0) {
+							if (md->db->mvpitem[i].nameid > 0) {
+								mdrop_id[va] = md->db->mvpitem[i].nameid;
+								mdrop_p[va] = md->db->mvpitem[i].p;
+							}
+							else
+								mdrop_id[va] = -1;
+							break;
 						}
-						else
-							mdrop_id[va] = -1;
-						break;
 					}
+				}
+			} else {
+				//Normal order
+				for(i = 0; i < MAX_MVP_DROP; i++) {
+					if (md->db->mvpitem[i].nameid > 0) {
+						mdrop_id[i] = md->db->mvpitem[i].nameid;
+						mdrop_p[i] = md->db->mvpitem[i].p;
+					}
+					else
+						mdrop_id[i] = -1;
 				}
 			}
 
@@ -2589,7 +2601,10 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 				//Logs items, MVP prizes [Lupus]
 				log_pick_mob(md, LOG_TYPE_MVP, -1, &item);
-				break;
+				//If item_drop_mvp_mode is not 2, then only one item should be granted
+				if(battle_config.item_drop_mvp_mode != 2) {
+					break;
+				}
 			}
 		}
 

@@ -314,6 +314,7 @@ extern struct Battle_Config
 	int item_drop_card_min,item_drop_card_max;
 	int item_drop_equip_min,item_drop_equip_max;
 	int item_drop_mvp_min,item_drop_mvp_max;	// End Addition
+	int item_drop_mvp_mode; //rAthena addition [Playtester]
 	int item_drop_heal_min,item_drop_heal_max;	// Added by Valatris
 	int item_drop_use_min,item_drop_use_max;	//End
 	int item_drop_treasure_min,item_drop_treasure_max; //by [Skotlex]
