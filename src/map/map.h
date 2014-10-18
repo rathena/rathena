@@ -703,13 +703,6 @@ struct map_data {
 #ifdef ADJUST_SKILL_DAMAGE
 	struct s_skill_damage skill_damage[MAX_MAP_SKILL_MODIFIER];
 #endif
-	/**
-	 * Ice wall reference counter for bugreport:3574
-	 * - since there are a thounsand mobs out there in a lot of maps checking on,
-	 * - every targetting for icewall on attack path would just be a waste, so,
-	 * - this counter allows icewall checking be only run when there is a actual ice wall on the map
-	 **/
-	int icewall_num;
 	// Instance Variables
 	int instance_id;
 	int instance_src_map;

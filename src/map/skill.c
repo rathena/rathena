@@ -11852,28 +11852,6 @@ static bool skill_dance_switch(struct skill_unit* unit, int flag)
 
 	return true;
 }
-/**
- * Upon Ice Wall cast it checks all nearby mobs to find any who may be blocked by the IW
- */
-static int skill_icewall_block(struct block_list *bl,va_list ap) {
-	struct block_list *target = NULL;
-	struct mob_data *md = ((TBL_MOB*)bl);
-
-	nullpo_ret(bl);
-	nullpo_ret(md);
-	if( !md->target_id || ( target = map_id2bl(md->target_id) ) == NULL )
-		return 0;
-
-	if( path_search_long(NULL,bl->m,bl->x,bl->y,target->x,target->y,CELL_CHKICEWALL) )
-		return 0;
-
-	if( !check_distance_bl(bl, target, status_get_range(bl) ) ) {
-		mob_unlocktarget(md,gettick());
-		mob_stop_walking(md,1);
-	}
-
-	return 0;
-}
 
 /**
  * Initializes and sets a ground skill / skill unit. Usually called after skill_casted_pos() or skill_castend_map()
@@ -12365,9 +12343,6 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 
 	//success, unit created.
 	switch( skill_id ) {
-		case WZ_ICEWALL:
-			map_foreachinrange(skill_icewall_block, src, AREA_SIZE, BL_MOB);
-			break;
 		case NJ_TATAMIGAESHI: //Store number of tiles.
 			group->val1 = group->alive_count;
 			break;
@@ -16894,7 +16869,6 @@ struct skill_unit *skill_initunit(struct skill_unit_group *group, int idx, int x
 			map_setgatcell(unit->bl.m,unit->bl.x,unit->bl.y,5);
 			clif_changemapcell(0,unit->bl.m,unit->bl.x,unit->bl.y,5,AREA);
 			skill_unitsetmapcell(unit,WZ_ICEWALL,group->skill_lv,CELL_ICEWALL,true);
-			map[unit->bl.m].icewall_num++;
 			break;
 		case SA_LANDPROTECTOR:
 			skill_unitsetmapcell(unit,SA_LANDPROTECTOR,group->skill_lv,CELL_LANDPROTECTOR,true);
@@ -16952,7 +16926,6 @@ int skill_delunit(struct skill_unit* unit)
 			map_setgatcell(unit->bl.m,unit->bl.x,unit->bl.y,unit->val2);
 			clif_changemapcell(0,unit->bl.m,unit->bl.x,unit->bl.y,unit->val2,ALL_SAMEMAP); // hack to avoid clientside cell bug
 			skill_unitsetmapcell(unit,WZ_ICEWALL,group->skill_lv,CELL_ICEWALL,false);
-			map[unit->bl.m].icewall_num--;
 			break;
 		case SA_LANDPROTECTOR:
 			skill_unitsetmapcell(unit,SA_LANDPROTECTOR,group->skill_lv,CELL_LANDPROTECTOR,false);

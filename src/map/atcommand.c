@@ -7057,7 +7057,7 @@ ACMD_FUNC(mobinfo)
 				if (mob->mvpitem[i].nameid <= 0 || (item_data = itemdb_exists(mob->mvpitem[i].nameid)) == NULL)
 					continue;
 				//Because if there are 3 MVP drops at 50%, the first has a chance of 50%, the second 25% and the third 12.5%
-				mvppercent = (float)mob->mvpitem[i].p * mvpremain / 10000.0;
+				mvppercent = (float)mob->mvpitem[i].p * mvpremain / 10000.0f;
 				if(battle_config.item_drop_mvp_mode == 0) {
 					mvpremain -= mvppercent;
 				}

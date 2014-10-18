@@ -168,6 +168,7 @@ struct mob_data {
 	short move_fail_count;
 	short lootitem_count;
 	short min_chase;
+	unsigned char walktoxy_fail_count; //Pathfinding succeeds but the actual walking failed (e.g. Icewall lock)
 
 	int deletetimer;
 	int master_id,master_dist;

@@ -2585,28 +2585,27 @@ uint8 map_calc_dir(struct block_list* src, int16 x, int16 y)
 	}
 	else if( dx >= 0 && dy >=0 )
 	{	// upper-right
-		if( dx*2 <= dy )      dir = 0;	// up
-		else if( dx > dy*2 )  dir = 6;	// right
-		else                  dir = 7;	// up-right
+		if( dx*2 < dy || dx == 0 )         dir = 0;	// up
+		else if( dx > dy*2+1 || dy == 0 )  dir = 6;	// right
+		else                               dir = 7;	// up-right
 	}
 	else if( dx >= 0 && dy <= 0 )
 	{	// lower-right
-		if( dx*2 <= -dy )     dir = 4;	// down
-		else if( dx > -dy*2 ) dir = 6;	// right
-		else                  dir = 5;	// down-right
+		if( dx*2 < -dy || dx == 0 )        dir = 4;	// down
+		else if( dx > -dy*2+1 || dy == 0 ) dir = 6;	// right
+		else                               dir = 5;	// down-right
 	}
 	else if( dx <= 0 && dy <= 0 )
 	{	// lower-left
-		if( dx*2 >= dy )      dir = 4;	// down
-		else if( dx < dy*2 )  dir = 2;	// left
-		else                  dir = 3;	// down-left
+		if( dx*2 > dy || dx == 0 )         dir = 4;	// down
+		else if( dx < dy*2-1 || dy == 0 )  dir = 2;	// left
+		else                               dir = 3;	// down-left
 	}
 	else
 	{	// upper-left
-		if( -dx*2 <= dy )     dir = 0;	// up
-		else if( -dx > dy*2 ) dir = 2;	// left
-		else                  dir = 1;	// up-left
-
+		if( -dx*2 < dy || dx == 0 )        dir = 0;	// up
+		else if( -dx > dy*2+1 || dy == 0)  dir = 2;	// left
+		else                               dir = 1;	// up-left
 	}
 	return dir;
 }

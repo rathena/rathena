@@ -1092,15 +1092,6 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 			((*target) == NULL || !check_distance_bl(&md->bl, *target, dist)) &&
 			battle_check_range(&md->bl,bl,md->db->range2)
 		) { //Pick closest target?
-
-			if( map[bl->m].icewall_num &&
-				!path_search_long(NULL,bl->m,md->bl.x,md->bl.y,bl->x,bl->y,CELL_CHKICEWALL) ) {
-
-				if( !check_distance_bl(&md->bl, bl, status_get_range(&md->bl) ) )
-					return 0;
-
-			}
-
 			(*target) = bl;
 			md->target_id=bl->id;
 			md->min_chase= dist + md->db->range3;
@@ -1306,8 +1297,7 @@ int mob_unlocktarget(struct mob_data *md, unsigned int tick)
 		md->state.skillstate = MSS_IDLE;
 	case MSS_IDLE:
 		// Idle skill.
-		if ((md->target_id || !(++md->ud.walk_count%IDLE_SKILL_INTERVAL)) &&
-			mobskill_use(md, tick, -1))
+		if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL) && mobskill_use(md, tick, -1))
 			break;
 		//Random walk.
 		if (!md->master_id &&
@@ -1474,6 +1464,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 					|| md->sc.data[SC_BITE] || md->sc.data[SC_VACUUM_EXTREME] || md->sc.data[SC_THORNSTRAP]
 					|| md->sc.data[SC__MANHOLE])) // Not yet confirmed if boss will teleport once it can't reach target.
 					|| !mob_can_reach(md, tbl, md->min_chase, MSS_RUSH)
+					|| md->walktoxy_fail_count > 0
 					)
 			&&  md->state.attacked_count++ >= RUDE_ATTACKED_COUNT
 			&&  !mobskill_use(md, tick, MSC_RUDEATTACKED) // If can't rude Attack
@@ -1497,6 +1488,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 					|| md->sc.data[SC_BITE] || md->sc.data[SC_VACUUM_EXTREME] || md->sc.data[SC_THORNSTRAP]
 					|| md->sc.data[SC__MANHOLE])) // Not yet confirmed if boss will teleport once it can't reach target.
 					|| !mob_can_reach(md, abl, dist+md->db->range3, MSS_RUSH)
+					|| md->walktoxy_fail_count > 0
 					)
 				) )
 			{ // Rude attacked
@@ -1573,7 +1565,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 			}
 		}
 
-		//This handles triggering idle walk/skill.
+		//This handles triggering idle/walk skill.
 		mob_unlocktarget(md, tick);
 		return true;
 	}
@@ -1586,14 +1578,14 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 			return true; //Already locked.
 		if (md->lootitem == NULL)
 		{	//Can't loot...
-			mob_unlocktarget (md, tick);
+			mob_unlocktarget(md, tick);
 			return true;
 		}
 		if (!check_distance_bl(&md->bl, tbl, 1))
 		{	//Still not within loot range.
 			if (!(mode&MD_CANMOVE))
 			{	//A looter that can't move? Real smart.
-				mob_unlocktarget(md,tick);
+				mob_unlocktarget(md, tick);
 				return true;
 			}
 			if (!can_move) //Stuck. Wait before walking.
@@ -1626,8 +1618,8 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 			unit_set_walkdelay(&md->bl, tick, md->status.amotion, 1);
 		}
 		//Clear item.
-		map_clearflooritem (tbl);
-		mob_unlocktarget (md,tick);
+		map_clearflooritem(tbl);
+		mob_unlocktarget(md, tick);
 		return true;
 	}
 
@@ -1656,12 +1648,11 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 
 	//Out of range...
 	if (!(mode&MD_CANMOVE) || (!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0))
-	{	//Can't chase. Immobile and trapped mobs should unlock target and use an idle skill on next interval.
-		if ((md->ud.target != tbl->id || md->ud.attacktimer == INVALID_TIMER)) 
-		{ //Only unlock target to use idle skill if no more attack left
-			md->ud.walk_count = (md->ud.walk_count+1)%250;
-			if (!(md->ud.walk_count%IDLE_SKILL_INTERVAL))
-				mob_unlocktarget(md,tick);
+	{	//Can't chase. Immobile and trapped mobs should unlock target and use an idle skill.
+		if (md->ud.attacktimer == INVALID_TIMER)
+		{ //Only unlock target if no more attack delay left
+			//This handles triggering idle/walk skill.
+			mob_unlocktarget(md,tick);
 		}
 		return true;
 	}
