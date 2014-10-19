@@ -2793,10 +2793,8 @@ void skill_attack_blow(struct block_list *src, struct block_list *dsrc, struct b
 				dir_ka = -1;
 
 				// Move attacker to the target position after knocked back
-				if ((target->x != x || target->y != y) && unit_movepos(src,target->x,target->y,1,1)) {
-					clif_slide(src, target->x, target->y);
-					clif_fixpos(src);
-				}
+				if ((target->x != x || target->y != y) && unit_movepos(src,target->x,target->y,1,1))
+					clif_blown(src);
 			}
 			break;
 		case RL_R_TRIP:
@@ -2804,11 +2802,11 @@ void skill_attack_blow(struct block_list *src, struct block_list *dsrc, struct b
 				skill_addtimerskill(src, tick + status_get_amotion(src), target->id, 0, 0, RL_R_TRIP_PLUSATK, skill_lv, BF_WEAPON, flag|SD_ANIMATION);
 			break;
 		case RL_SLUGSHOT:
-			skill_blown(dsrc,target,blewcount,dir, 0x0);
+			skill_blown(dsrc,target,blewcount,dir, 0);
 			skill_addtimerskill(src, tick + status_get_amotion(src), target->id, 0, 0, skill_id, skill_lv, skill_get_type(skill_id), flag|SD_ANIMATION);
 			break;
 		default:
-			skill_blown(dsrc,target,blewcount,dir, 0x0 );
+			skill_blown(dsrc,target,blewcount,dir, 0);
 			if (!blewcount && target->type == BL_SKILL && damage > 0) {
 				TBL_SKILL *su = (TBL_SKILL*)target;
 				if (su->group && su->group->skill_id == HT_BLASTMINE)
@@ -3817,7 +3815,7 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 						struct status_change* sc = status_get_sc(src);
 						if( ( tsc && tsc->option&OPTION_HIDE ) ||
 							( sc && sc->option&OPTION_HIDE ) ){
-							skill_blown(src,target,skill_get_blewcount(skl->skill_id, skl->skill_lv), -1, 0x0 );
+							skill_blown(src,target,skill_get_blewcount(skl->skill_id, skl->skill_lv), -1, 0);
 							break;
 						}
 						skill_attack(skl->type,src,src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
@@ -4209,10 +4207,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		uint8 dir = map_calc_dir(bl, src->x, src->y);
 
 		// teleport to target (if not on WoE grounds)
-		if( !map_flag_gvg(src->m) && !map[src->m].flag.battleground && unit_movepos(src, bl->x, bl->y, 0, 1) ) {
-			clif_slide(src, bl->x, bl->y);
-			clif_fixpos(src);
-		}
+		if( !map_flag_gvg(src->m) && !map[src->m].flag.battleground && unit_movepos(src, bl->x, bl->y, 0, 1) )
+			clif_blown(src);
 
 		// cause damage and knockback if the path to target was a straight one
 		if( path )
@@ -4327,8 +4323,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			// Ashura Strike still has slide effect in GVG
 			if ((mbl == src || (!map_flag_gvg2(src->m) && !map[src->m].flag.battleground)) &&
 				unit_movepos(src, mbl->x + x, mbl->y + y, 1, 1)) {
-				clif_slide(src, mbl->x, mbl->y);
-				clif_fixpos(src);
+				clif_blown(src);
 				clif_spiritball(src);
 			}
 		}
@@ -4724,8 +4719,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			y = 0;
 		// Doesn't have slide effect in GVG
 		if (!map_flag_gvg2(src->m) && !map[src->m].flag.battleground && unit_movepos(src, bl->x + x, bl->y + y, 1, 1)) {
-			clif_slide(src, bl->x, bl->y);
-			clif_fixpos(src);
+			clif_blown(src);
 			clif_spiritball(src);
 		}
 		skill_attack(BF_MISC, src, src, bl, skill_id, skill_lv, tick, flag);
@@ -4796,8 +4790,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			short x, y;
 			map_search_freecell(bl, 0, &x, &y, 1, 1, 0);
 			if (unit_movepos(src, x, y, 0, 0)) {
-				clif_slide(src, src->x, src->y);
-				clif_fixpos(src);
+				clif_blown(src);
 			}
 		}
 		status_change_end(src, SC_HIDING, INVALID_TIMER);
@@ -4842,8 +4835,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			else y = 0;
 
 			if( unit_movepos(src, bl->x+x, bl->y+y, 1, 1) ) {
-				clif_slide(src, bl->x, bl->y);
-				clif_fixpos(src);
+				clif_blown(src);
 				skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 				if( rnd()%100 < 4 * skill_lv )
 					skill_castend_damage_id(src,bl,GC_CROSSIMPACT,skill_lv,tick,flag);
@@ -5059,8 +5051,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			uint8 dir = map_calc_dir(bl, src->x, src->y);
 
 			if( unit_movepos(src, bl->x+x[dir], bl->y+y[dir], 1, 1) ) {
-				clif_slide(src, bl->x, bl->y);
-				clif_fixpos(src);
+				clif_blown(src);
 				skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 			}
 			break;
@@ -5136,10 +5127,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		}
 		break;
 	case LG_PINPOINTATTACK:
-		if( !map_flag_gvg(src->m) && !map[src->m].flag.battleground && unit_movepos(src, bl->x, bl->y, 1, 1) ) {
-			clif_slide(src, bl->x, bl->y);
-			clif_fixpos(src);
-		}
+		if( !map_flag_gvg(src->m) && !map[src->m].flag.battleground && unit_movepos(src, bl->x, bl->y, 1, 1) )
+			clif_blown(src);
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 
@@ -5158,10 +5147,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		// Holds current direction of bl/target to src/attacker before the src is moved to bl location
 		dir_ka = map_calc_dir(bl, src->x, src->y);
 		// Has slide effect even in GVG
-		if( unit_movepos(src, bl->x, bl->y, 1, 1) ) {
-			clif_slide(src, bl->x, bl->y);
-			clif_fixpos(src);
-		}
+		if( unit_movepos(src, bl->x, bl->y, 1, 1) )
+			clif_blown(src);
 
 		if( flag&1 )
 			skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag|SD_LEVEL);
@@ -5261,8 +5248,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			else
 				y = 0;
 			if (unit_movepos(src,bl->x + x,bl->y + y,1,1)) {
-				clif_slide(src, bl->x, bl->y);
-				clif_fixpos(src);
+				clif_blown(src);
 				skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 			}
 		}
@@ -5375,8 +5361,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			duration = max(skill_lv,(status_get_str(src)/7 - status_get_str(bl)/10))*1000; //Yommy formula
 
 			if (skill_id == MH_TINDER_BREAKER && unit_movepos(src, bl->x, bl->y, 1, 1)) {
-				clif_slide(src, bl->x, bl->y);
-				clif_fixpos(src);
+				clif_blown(src);
 				clif_skill_poseffect(src,skill_id,skill_lv,bl->x,bl->y,tick);
 			}
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,
@@ -6075,8 +6060,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if( battle_check_target(src, bl, BCT_ENEMY) > 0 ) {
 			if( unit_movepos(src, bl->x, bl->y, 1, 1) ) {
 				skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-				clif_slide(src, bl->x, bl->y);
-				clif_fixpos(src);
+				clif_blown(src);
 			}
 		} else
 			clif_skill_fail(sd,skill_id,USESKILL_FAIL,0);
@@ -7382,10 +7366,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			}
 
 			clif_skill_nodamage(src,bl,TK_HIGHJUMP,skill_lv,1);
-			if(!map_count_oncell(src->m,x,y,BL_PC|BL_NPC|BL_MOB) && map_getcell(src->m,x,y,CELL_CHKREACH) && unit_movepos(src, x, y, 1, 0)) {
-				clif_slide(src, src->x, src->y);
-				clif_fixpos(src);
-			}
+			if(!map_count_oncell(src->m,x,y,BL_PC|BL_NPC|BL_MOB) && map_getcell(src->m,x,y,CELL_CHKREACH) && unit_movepos(src, x, y, 1, 0))
+				clif_blown(src);
 		}
 		break;
 
@@ -8266,12 +8248,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				skill_blockhomun_start(hd,skill_id,skill_get_time2(skill_id,skill_lv));
 			if (unit_movepos(src,bl->x,bl->y,0,0)) {
 				clif_skill_nodamage(src,src,skill_id,skill_lv,1); // Homunc
-				clif_slide(src, bl->x, bl->y);
-				clif_fixpos(src);
+				clif_blown(src);
 				if (unit_movepos(bl,x,y,0,0)) {
 					clif_skill_nodamage(bl,bl,skill_id,skill_lv,1); // Master
-					clif_slide(bl, x, y);
-					clif_fixpos(bl);
+					clif_blown(bl);
 				}
 				//TODO: Make casted skill also change its target
 				map_foreachinrange(skill_changetarget,src,AREA_SIZE,BL_CHAR,bl,src);
@@ -9051,9 +9031,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case NC_B_SIDESLIDE:
 		{
 			uint8 dir = (skill_id == NC_F_SIDESLIDE) ? (unit_getdir(src)+4)%8 : unit_getdir(src);
-			skill_blown(src,bl,skill_get_blewcount(skill_id,skill_lv),dir,0x1);
-			clif_slide(src, src->x, src->y);
-			clif_fixpos(src);
+			skill_blown(src,bl,skill_get_blewcount(skill_id,skill_lv),dir,0);
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		}
 		break;
@@ -10011,15 +9989,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 			if (unit_movepos(src,bl->x,bl->y,0,0)) {
 				clif_skill_nodamage(src,src,skill_id,skill_lv,1);
-				clif_slide(src, bl->x, bl->y);
-				clif_fixpos(src);
+				clif_blown(src);
 				sc_start(src,src,SC_CONFUSION,25,skill_lv,skill_get_time(skill_id,skill_lv));
 				if (unit_movepos(bl,x,y,0,0)) {
 					clif_skill_damage(bl,bl,tick, status_get_amotion(src), 0, -30000, 1, skill_id, -1, 6);
 					if( bl->type == BL_PC && pc_issit((TBL_PC*)bl))
 						clif_sitting(bl); //Avoid sitting sync problem
-					clif_slide(bl, x, y);
-					clif_fixpos(bl);
+					clif_blown(bl);
 					sc_start(src,bl,SC_CONFUSION,75,skill_lv,skill_get_time(skill_id,skill_lv));
 				}
 			}
@@ -10647,8 +10623,7 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 			else
 				y = 0;
 			if( unit_movepos(src, src->x + x, src->y + y, 1, 1) ) { //Display movement + animation.
-				clif_slide(src, src->x, src->y);
-				clif_fixpos(src);
+				clif_blown(src);
 				clif_spiritball(src);
 			}
 			clif_skill_damage(src,target,tick,sd->battle_status.amotion,0,0,1,ud->skill_id,ud->skill_lv,5);
@@ -11129,10 +11104,8 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		}
 		break;
 	case NJ_SHADOWJUMP:
-		if( !map_flag_gvg(src->m) && !map[src->m].flag.battleground && unit_movepos(src, x, y, 1, 0) ) { //You don't move on GVG grounds.
-			clif_slide(src, x, y);
-			clif_fixpos(src);
-		}
+		if( !map_flag_gvg(src->m) && !map[src->m].flag.battleground && unit_movepos(src, x, y, 1, 0) ) //You don't move on GVG grounds.
+			clif_blown(src);
 		status_change_end(src, SC_HIDING, INVALID_TIMER);
 		break;
 	case AM_SPHEREMINE:
@@ -11549,8 +11522,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		if (unit_movepos(src,x,y,1,1)) {
 			enum e_skill skill_use = GS_DESPERADO;
 			uint8 skill_use_lv = pc_checkskill(sd,skill_use);
-			clif_slide(src, x, y);
-			clif_fixpos(src);
+			clif_blown(src);
 			if (skill_use_lv && skill_check_condition_castend(sd,skill_use,skill_use_lv)) {
 				sd->skill_id_old = RL_FALLEN_ANGEL;
 				skill_castend_pos2(src,src->x,src->y,skill_use,skill_use_lv,tick,SD_LEVEL|SD_ANIMATION|SD_SPLASH);
@@ -12557,7 +12529,6 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, un
 				if( i > 0 && !(status_get_mode(bl)&MD_BOSS) )
 				{ // knock-back any enemy except Boss
 					skill_blown(ss, bl, skill_get_blewcount(skill_id, sg->skill_lv), unit_getdir(bl), 0);
-					clif_fixpos(bl);
 					break;
 				}
 				if (!sce && i <= 0)
@@ -13064,7 +13035,6 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 				if( i > 0 && !(status_get_mode(bl)&MD_BOSS) )
 				{ // knock-back any enemy except Boss
 					skill_blown(&unit->bl, bl, skill_get_blewcount(skill_id, sg->skill_lv), unit_getdir(bl), 0);
-					clif_fixpos(bl);
 					break;
 				}
 				if (i <= 0 && (!tsc || !tsc->data[SC_BASILICA]))
@@ -13182,7 +13152,6 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 			if (status_get_mode(bl)&MD_BOSS)
 				break; // This skill doesn't affect to Boss monsters. [iRO Wiki]
 			skill_blown(&unit->bl, bl, skill_get_blewcount(sg->skill_id, sg->skill_lv), -1, 0);
-			clif_fixpos(bl);
 			skill_addtimerskill(ss, tick + 100, bl->id, unit->bl.x, unit->bl.y, sg->skill_id, sg->skill_lv, skill_get_type(sg->skill_id), 4|SD_LEVEL);
 			break;
 

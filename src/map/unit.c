@@ -794,7 +794,6 @@ int unit_run(struct block_list *bl)
 		status_change_end(bl, SC_RUN, INVALID_TIMER);
 
 		skill_blown(bl,bl,skill_get_blewcount(TK_RUN,lv),unit_getdir(bl),0);
-		clif_fixpos(bl); // Why is a clif_slide (skill_blown) AND a fixpos needed? Ask Aegis.
 		clif_status_change(bl, SI_BUMP, 0, 0, 0, 0, 0);
 
 		return 0;
