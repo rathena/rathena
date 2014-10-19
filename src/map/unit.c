@@ -366,7 +366,9 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	dx = dirx[(int)dir];
 	dy = diry[(int)dir];
 
-	if(map_getcell(bl->m,x+dx,y+dy,CELL_CHKNOPASS))
+	//Monsters will walk into an icewall from the west and south if they already started walking
+	if(map_getcell(bl->m,x+dx,y+dy,CELL_CHKNOPASS) 
+		&& (battle_config.icewall_walk_block == 0 || !map_getcell(bl->m,x+dx,y+dy,CELL_CHKICEWALL) || dx < 0 || dy < 0))
 		return unit_walktoxy_sub(bl);
 
 	//Monsters can only leave icewalls to the west and south
