@@ -2825,11 +2825,11 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 
 	status = &sd->base_status;
 	// These are not zeroed. [zzo]
-	sd->hprate=100;
-	sd->sprate=100;
-	sd->castrate=100;
-	sd->delayrate=100;
-	sd->dsprate=100;
+	sd->hprate = 100;
+	sd->sprate = 100;
+	sd->castrate = 100;
+	sd->delayrate = 100;
+	sd->dsprate = 100;
 	sd->hprecov_rate = 100;
 	sd->sprecov_rate = 100;
 	sd->matk_rate = 100;
@@ -2864,9 +2864,9 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		+ sizeof(sd->critaddrace)
 		+ sizeof(sd->expaddrace)
 		+ sizeof(sd->expaddclass)
-		+ sizeof(sd->ignore_def_by_race)
 		+ sizeof(sd->ignore_mdef_by_race)
 		+ sizeof(sd->ignore_mdef_by_class)
+		+ sizeof(sd->ignore_def_by_race)
 		+ sizeof(sd->sp_gain_race)
 		+ sizeof(sd->sp_gain_race_attack)
 		+ sizeof(sd->hp_gain_race_attack)
@@ -2909,7 +2909,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	status->class_ = CLASS_NORMAL;
 
 	// Zero up structures...
-	memset(&sd->autospell,0,sizeof(sd->autospell)
+	memset(&sd->autospell, 0, sizeof(sd->autospell)
 		+ sizeof(sd->autospell2)
 		+ sizeof(sd->autospell3)
 		+ sizeof(sd->addeff)
@@ -2920,27 +2920,27 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		+ sizeof(sd->skillusesp)
 		+ sizeof(sd->skillheal)
 		+ sizeof(sd->skillheal2)
+		+ sizeof(sd->skillblown)
+		+ sizeof(sd->skillcast)
+		+ sizeof(sd->skillcooldown)
+		+ sizeof(sd->skillfixcast)
+		+ sizeof(sd->skillvarcast)
+		+ sizeof(sd->skillfixcastrate)
 		+ sizeof(sd->hp_loss)
 		+ sizeof(sd->sp_loss)
 		+ sizeof(sd->hp_regen)
 		+ sizeof(sd->sp_regen)
-		+ sizeof(sd->skillblown)
-		+ sizeof(sd->skillcast)
 		+ sizeof(sd->add_def)
 		+ sizeof(sd->add_mdef)
 		+ sizeof(sd->add_mdmg)
 		+ sizeof(sd->add_drop)
 		+ sizeof(sd->itemhealrate)
 		+ sizeof(sd->subele2)
-		+ sizeof(sd->skillcooldown)
-		+ sizeof(sd->skillfixcast)
-		+ sizeof(sd->skillvarcast)
-		+ sizeof(sd->skillfixcastrate)
 		+ sizeof(sd->def_set_race)
 		+ sizeof(sd->mdef_set_race)
 	);
 
-	memset (&sd->bonus, 0,sizeof(sd->bonus));
+	memset (&sd->bonus, 0, sizeof(sd->bonus));
 
 	// Autobonus
 	pc_delautobonus(sd,sd->autobonus,ARRAYLENGTH(sd->autobonus),true);
@@ -2952,15 +2952,15 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	npc_script_event(sd, NPCE_STATCALC);
 
 	// Parse equipment
-	for(i=0;i<EQI_MAX;i++) {
+	for (i = 0; i < EQI_MAX; i++) {
 		current_equip_item_index = index = sd->equip_index[i]; // We pass INDEX to current_equip_item_index - for EQUIP_SCRIPT (new cards solution) [Lupus]
-		if(index < 0)
+		if (index < 0)
 			continue;
-		if(i == EQI_AMMO)
+		if (i == EQI_AMMO)
 			continue;
 		if (pc_is_same_equip_index((enum equip_index)i, sd->equip_index, index))
 			continue;
-		if(!sd->inventory_data[index])
+		if (!sd->inventory_data[index])
 			continue;
 
 		status->def += sd->inventory_data[index]->def;
@@ -2977,7 +2977,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		if (sd->status.inventory[index].refine > MAX_REFINE)
 			sd->status.inventory[index].refine = MAX_REFINE;
 
-		if(sd->inventory_data[index]->type == IT_WEAPON) {
+		if (sd->inventory_data[index]->type == IT_WEAPON) {
 			int r = sd->status.inventory[index].refine, wlv = sd->inventory_data[index]->wlv;
 			struct weapon_data *wd;
 			struct weapon_atk *wa;
@@ -3089,24 +3089,24 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	status->def += (refinedef+50)/100;
 
 	// Parse Cards
-	for(i=0;i<EQI_MAX;i++) {
+	for (i = 0; i < EQI_MAX; i++) {
 		current_equip_item_index = index = sd->equip_index[i]; // We pass INDEX to current_equip_item_index - for EQUIP_SCRIPT (new cards solution) [Lupus]
-		if(index < 0)
+		if (index < 0)
 			continue;
-		if(i == EQI_AMMO)
+		if (i == EQI_AMMO)
 			continue;
 		if (pc_is_same_equip_index((enum equip_index)i, sd->equip_index, index))
 			continue;
 
-		if(sd->inventory_data[index]) {
+		if (sd->inventory_data[index]) {
 			int j;
 			struct item_data *data;
 
 			// Card script execution.
-			if(itemdb_isspecial(sd->status.inventory[index].card[0]))
+			if (itemdb_isspecial(sd->status.inventory[index].card[0]))
 				continue;
-			for(j=0;j<MAX_SLOTS;j++) { // Uses MAX_SLOTS to support Soul Bound system [Inkfish]
-				int c= sd->status.inventory[index].card[j];
+			for (j = 0; j < MAX_SLOTS; j++) { // Uses MAX_SLOTS to support Soul Bound system [Inkfish]
+				int c = sd->status.inventory[index].card[j];
 				current_equip_card_id= c;
 				if(!c)
 					continue;
