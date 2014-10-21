@@ -642,7 +642,7 @@ void initChangeTables(void)
 	/* Ranger */
 	set_sc( RA_FEARBREEZE		, SC_FEARBREEZE		, SI_FEARBREEZE		, SCB_NONE );
 	set_sc( RA_ELECTRICSHOCKER	, SC_ELECTRICSHOCKER	, SI_ELECTRICSHOCKER	, SCB_NONE );
-	set_sc( RA_WUGDASH		, SC_WUGDASH		, SI_WUGDASH		, SCB_SPEED );
+	set_sc( RA_WUGDASH			, SC_WUGDASH		, SI_WUGDASH		, SCB_SPEED|SCB_DSPD );
 	set_sc( RA_WUGBITE          , SC_BITE           , SI_WUGBITE        , SCB_NONE );
 	set_sc( RA_CAMOUFLAGE		, SC_CAMOUFLAGE		, SI_CAMOUFLAGE		, SCB_SPEED );
 	add_sc( RA_MAGENTATRAP		, SC_ELEMENTALCHANGE	);
@@ -10305,8 +10305,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_RUN:
 			{
 				struct unit_data *ud = unit_bl2ud(bl);
+
 				if( ud )
-					ud->state.running = unit_run(bl);
+					ud->state.running = unit_run(bl, NULL, SC_RUN);
 			}
 			break;
 		case SC_BOSSMAPINFO:
@@ -10321,8 +10322,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_WUGDASH:
 			{
 				struct unit_data *ud = unit_bl2ud(bl);
+
 				if( ud )
-					ud->state.running = unit_wugdash(bl, sd);
+					ud->state.running = unit_run(bl, sd, SC_WUGDASH);
 			}
 			break;
 		case SC_COMBO:

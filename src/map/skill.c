@@ -8061,7 +8061,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SL_SUPERNOVICE:
 	case SL_WIZARD:
 		//NOTE: here, 'type' has the value of the associated MAPID, not of the SC_SPIRIT constant.
-		if (sd && !(dstsd && ((skill_id != SL_SUPERNOVICE && (dstsd->class_&MAPID_UPPERMASK) == type) || (skill_id == SL_SUPERNOVICE && !(dstsd->class_&JOBL_SUPER_NOVICE))))) {
+		if (sd && dstsd && !((dstsd->class_&MAPID_UPPERMASK) == type) || (skill_id == SL_SUPERNOVICE && (dstsd->class_&JOBL_SUPER_NOVICE))) {
 			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 			break;
 		}
@@ -9016,7 +9016,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			return 0;
 		}
 		if( sd && pc_isridingwug(sd) ) {
-			clif_skill_nodamage(src,bl,skill_id,skill_lv,sc_start4(src,bl,type,100,skill_lv,unit_getdir(bl),0,0,1));
+			clif_skill_nodamage(src,bl,skill_id,skill_lv,sc_start4(src,bl,type,100,skill_lv,unit_getdir(bl),0,0,0));
 			clif_walkok(sd);
 		}
 		break;
@@ -9162,11 +9162,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			rate = cap_value(rate, skill_lv + sstatus->dex / 20, 100);
 			if (clif_skill_nodamage(src,bl,skill_id,0,sc_start(src,bl,type,rate,skill_lv,skill_get_time(skill_id,skill_lv)))) {
 				int sp = 100 * skill_lv;
-				if( dstmd ) sp = dstmd->level * 2;
-				if( !dstmd && status_zap(bl,0,sp) )
-					status_heal(src,0,sp/2,3);
-			}
-			else if( sd ) clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+
+				if( dstmd )
+					sp = dstmd->level;
+				if( !dstmd )
+					status_zap(bl, 0, sp);
+
+				status_heal(src, 0, sp / 2, 3);
+			} else if( sd )
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 		} else if( sd )
 			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 		break;
@@ -9458,22 +9462,28 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case WM_SIRCLEOFNATURE:
-		flag |= BCT_SELF|BCT_PARTY|BCT_GUILD;
-	case WM_VOICEOFSIREN:
-	{
-		int rate = 100;
-		if( skill_id != WM_SIRCLEOFNATURE ) {
-			rate = 6 * skill_lv + ((sd) ? pc_checkskill(sd,WM_LESSON)*2 + sd->status.job_level/2 : skill_get_max(WM_LESSON));
-			flag &= ~BCT_SELF;
-		}
-		if( flag&1 ) {
-			sc_start2(src,bl,type,rate,skill_lv,(skill_id==WM_VOICEOFSIREN)?src->id:0,skill_get_time(skill_id,skill_lv));
-		} else {
-			map_foreachinrange(skill_area_sub, src, skill_get_splash(skill_id,skill_lv),(skill_id==WM_VOICEOFSIREN)?BL_CHAR|BL_SKILL:BL_PC, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
+		if( flag&1 )
+			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
+		else {
+			map_foreachinrange(skill_area_sub,src,skill_get_splash(skill_id,skill_lv),BL_PC,src,skill_id,skill_lv,tick,flag|BCT_ALL|1,skill_castend_nodamage_id);
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		}
 		break;
-	}
+
+	case WM_VOICEOFSIREN:
+		if( flag&1 ) {
+			tick = (status_get_lv(bl) > 150 ? 150 : status_get_lv(bl)) / 10 + (dstsd ? (dstsd->status.job_level > 50 ? 50 : dstsd->status.job_level) / 5 : 0);
+			sc_start2(src,bl,type,100,skill_lv,src->id,skill_get_time(skill_id,skill_lv) - (1000 * tick));
+		} else {
+			int rate = 6 * skill_lv + ((sd) ? pc_checkskill(sd,WM_LESSON) * 2 + (sd->status.job_level > 50 ? 50 : sd->status.job_level) / 2 : skill_get_max(WM_LESSON));
+
+			if (rnd()%100 < rate) {
+				map_foreachinrange(skill_area_sub, src, skill_get_splash(skill_id,skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
+				clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
+			}
+		}
+		break;
+
 	case WM_GLOOMYDAY:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		if( dstsd && ( pc_checkskill(dstsd,KN_BRANDISHSPEAR) || pc_checkskill(dstsd,LK_SPIRALPIERCE) ||
@@ -14698,7 +14708,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 		}
 	}
 
-	//check if equiped item
+	//check if equipped item
 	if (require.eqItem_count) {
 		for (i = 0; i < require.eqItem_count; i++) {
 			uint16 reqeqit = require.eqItem[i];
@@ -15268,14 +15278,11 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
 				req.spiritball = 0;
 			break;
 		case MO_EXTREMITYFIST:
-			if( sc )
-			{
+			if( sc ) {
 				if( sc->data[SC_BLADESTOP] )
 					req.spiritball--;
-				else if( sc->data[SC_COMBO] )
-				{
-					switch( sc->data[SC_COMBO]->val1 )
-					{
+				else if( sc->data[SC_COMBO] ) {
+					switch( sc->data[SC_COMBO]->val1 ) {
 						case MO_COMBOFINISH:
 							req.spiritball = 4;
 							break;
@@ -15286,7 +15293,7 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
 							req.spiritball = sd->spiritball?sd->spiritball:1;
 							break;
 					}
-				}else if( sc->data[SC_RAISINGDRAGON] && sd->spiritball > 5)
+				} else if( sc->data[SC_RAISINGDRAGON] && sd->spiritball > 5)
 					req.spiritball = sd->spiritball; // must consume all regardless of the amount required
 			}
 			break;
@@ -15303,8 +15310,12 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
 		case SO_SUMMON_AGNI:
 		case SO_SUMMON_AQUA:
 		case SO_SUMMON_VENTUS:
-		case SO_SUMMON_TERA:
-			req.sp -= req.sp * (5 + 5 * pc_checkskill(sd,SO_EL_SYMPATHY)) / 100;
+		case SO_SUMMON_TERA: {
+				int spirit_sympathy = pc_checkskill(sd,SO_EL_SYMPATHY);
+
+				if( spirit_sympathy )
+					req.sp -= req.sp * (5 + 5 * spirit_sympathy) / 100;
+			}
 			break;
 		case SO_PSYCHIC_WAVE:
 			if( sc && (sc->data[SC_HEATER_OPTION] || sc->data[SC_COOLER_OPTION] || sc->data[SC_CURSED_SOIL_OPTION] || sc->data[SC_BLAST_OPTION]) )
@@ -15315,6 +15326,7 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
 	//Check if player is using the copied skill [Cydh]
 	if (sd->status.skill[idx].flag == SKILL_FLAG_PLAGIARIZED) {
 		uint16 req_opt = skill_db[idx].copyable.req_opt;
+
 		if (req_opt&0x0001) req.hp = 0;
 		if (req_opt&0x0002) req.mhp = 0;
 		if (req_opt&0x0004) req.sp = 0;
