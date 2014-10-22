@@ -6701,7 +6701,9 @@ int status_get_party_id(struct block_list *bl)
 				return ((TBL_MER*)bl)->master->status.party_id;
 			break;
 		case BL_SKILL:
-			return ((TBL_SKILL*)bl)->group->party_id;
+			if (((TBL_SKILL*)bl)->group)
+				return ((TBL_SKILL*)bl)->group->party_id;
+			break;
 		case BL_ELEM:
 			if (((TBL_ELEM*)bl)->master)
 				return ((TBL_ELEM*)bl)->master->status.party_id;

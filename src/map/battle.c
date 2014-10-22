@@ -7082,7 +7082,7 @@ struct block_list* battle_get_master(struct block_list *src)
  *
  * Credits:
  *	Original coder unknown
- *	Rewritten by Skoltex
+ *	Rewritten by Skotlex
 */
 int battle_check_target( struct block_list *src, struct block_list *target,int flag)
 {
@@ -7252,7 +7252,10 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		case BL_SKILL: {
 				struct skill_unit *su = (struct skill_unit *)src;
 
-				if (su && su->group && su->group->src_id == target->id) {
+				if (!su || !su->group)
+					return 0;
+
+				if (su->group->src_id == target->id) {
 					int inf2 = skill_get_inf2(su->group->skill_id);
 					if (inf2&INF2_NO_TARGET_SELF)
 						return -1;
