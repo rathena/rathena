@@ -1009,6 +1009,7 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag)
 			unit_stop_walking(bl, 0);
 
 		if( sd ) {
+			unit_stop_stepaction(bl); //Stop stepaction when knocked back
 			sd->ud.to_x = nx;
 			sd->ud.to_y = ny;
 		}

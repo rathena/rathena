@@ -2831,6 +2831,8 @@ void skill_attack_blow(struct block_list *src, struct block_list *dsrc, struct b
  *        flag&0xFFF is passed to the underlying battle_calc_attack for processing
  *             (usually holds number of targets, or just 1 for simple splash attacks)
  *
+ *        flag&0x1000 - Return 0 if damage was reflected
+ *
  *        Values from enum e_skill_display
  *        Values from enum e_battle_check_target
  *-------------------------------------------------------------------------*/
@@ -2909,7 +2911,8 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 				tsc = NULL; //Don't need it.
 			/* bugreport:2564 flag&2 disables double casting trigger */
 			flag |= 2;
-
+			//Reflected magic damage will not cause the caster to be knocked back [Playtester]
+			flag |= 4;
 			//Spirit of Wizard blocks Kaite's reflection
 			if( type == 2 && tsc && tsc->data[SC_SPIRIT] && tsc->data[SC_SPIRIT]->val2 == SL_WIZARD )
 			{	//Consume one Fragment per hit of the casted skill? [Skotlex]
@@ -3284,6 +3287,9 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 	}
 
 	map_freeblock_unlock();
+
+	if ((flag&0x1000) && rmdamage == 1)
+		return 0; //Should return 0 when damage was reflected
 
 	return damage;
 }

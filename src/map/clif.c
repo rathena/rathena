@@ -4708,9 +4708,10 @@ int clif_outsight(struct block_list *bl,va_list ap)
 	tsd = BL_CAST(BL_PC, tbl);
 
 	if (tsd && tsd->fd) { //tsd has lost sight of the bl object.
+		nullpo_ret(bl);
 		switch(bl->type){
 		case BL_PC:
-			if (sd->vd.class_ != INVISIBLE_CLASS)
+			if(sd->vd.class_ != INVISIBLE_CLASS)
 				clif_clearunit_single(bl->id,CLR_OUTSIGHT,tsd->fd);
 			if(sd->chatID){
 				struct chat_data *cd;
@@ -4718,9 +4719,9 @@ int clif_outsight(struct block_list *bl,va_list ap)
 				if(cd->usersd[0]==sd)
 					clif_dispchat(cd,tsd->fd);
 			}
-			if( sd->state.vending )
+			if(sd->state.vending)
 				clif_closevendingboard(bl,tsd->fd);
-			if( sd->state.buyingstore )
+			if(sd->state.buyingstore)
 				clif_buyingstore_disappear_entry_single(tsd, sd);
 			break;
 		case BL_ITEM:
@@ -4730,17 +4731,20 @@ int clif_outsight(struct block_list *bl,va_list ap)
 			clif_clearchar_skillunit((struct skill_unit *)bl,tsd->fd);
 			break;
 		case BL_NPC:
-			if( !(((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE) )
+			if(!(((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE))
 				clif_clearunit_single(bl->id,CLR_OUTSIGHT,tsd->fd);
 			break;
 		default:
-			if ((vd=status_get_viewdata(bl)) && vd->class_ != INVISIBLE_CLASS)
+			if((vd=status_get_viewdata(bl)) && vd->class_ != INVISIBLE_CLASS)
 				clif_clearunit_single(bl->id,CLR_OUTSIGHT,tsd->fd);
 			break;
 		}
 	}
 	if (sd && sd->fd) { //sd is watching tbl go out of view.
-		if (((vd=status_get_viewdata(tbl)) && vd->class_ != INVISIBLE_CLASS) &&
+		nullpo_ret(tbl);
+		if(tbl->type == BL_SKILL) //Trap knocked out of sight
+			clif_clearchar_skillunit((struct skill_unit *)tbl,sd->fd);
+		else if(((vd=status_get_viewdata(tbl)) && vd->class_ != INVISIBLE_CLASS) &&
 			!(tbl->type == BL_NPC && (((TBL_NPC*)tbl)->sc.option&OPTION_INVISIBLE)))
 			clif_clearunit_single(tbl->id,CLR_OUTSIGHT,sd->fd);
 	}

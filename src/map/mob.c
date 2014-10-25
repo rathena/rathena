@@ -1625,8 +1625,8 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 
 	//Attempt to attack.
 	//At this point we know the target is attackable, we just gotta check if the range matches.
-	if (battle_check_range (&md->bl, tbl, md->status.rhw.range))
-	{	//Target within range, engage
+	if (battle_check_range(&md->bl, tbl, md->status.rhw.range) && !(md->sc.option&OPTION_HIDE))
+	{	//Target within range and able to use normal attack, engage
 		if (md->ud.target != tbl->id || md->ud.attacktimer == INVALID_TIMER) 
 		{ //Only attack if no more attack delay left
 			if(tbl->type == BL_PC)
@@ -1646,6 +1646,19 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 		return true;
 	}
 
+	//Monsters in berserk state, unable to use normal attacks, will always attempt a skill
+	if(md->ud.walktimer == INVALID_TIMER && (md->state.skillstate == MSS_BERSERK || md->state.skillstate == MSS_ANGRY)) 
+	{
+		if (DIFF_TICK(md->ud.canmove_tick, tick) <= MIN_MOBTHINKTIME && DIFF_TICK(md->ud.canact_tick, tick) < -MIN_MOBTHINKTIME*IDLE_SKILL_INTERVAL) 
+		{ //Only use skill if able to walk on next tick and not used a skill the last second
+			mobskill_use(md, tick, -1);
+		}
+	}
+
+	//Target still in attack range, no need to chase the target
+	if(battle_check_range(&md->bl, tbl, md->status.rhw.range))
+		return true;
+
 	//Out of range...
 	if (!(mode&MD_CANMOVE) || (!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0))
 	{	//Can't chase. Immobile and trapped mobs should unlock target and use an idle skill.
@@ -1655,15 +1668,6 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 			mob_unlocktarget(md,tick);
 		}
 		return true;
-	}
-
-	//Before a monster starts to chase a target, it will check if it has a ranged "attack" skill to use on it.
-	if(md->ud.walktimer == INVALID_TIMER && (md->state.skillstate == MSS_BERSERK || md->state.skillstate == MSS_ANGRY)) 
-	{
-		if (DIFF_TICK(md->ud.canmove_tick, tick) <= MIN_MOBTHINKTIME && DIFF_TICK(md->ud.canact_tick, tick) < -MIN_MOBTHINKTIME*IDLE_SKILL_INTERVAL) 
-		{ //Only use skill if able to walk on next tick and not used a skill the last second
-			mobskill_use(md, tick, -1);
-		}
 	}
 
 	if (md->ud.walktimer != INVALID_TIMER && md->ud.target == tbl->id &&
