@@ -7146,8 +7146,9 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		case BL_SKILL:
 		{
 			TBL_SKILL *su = (TBL_SKILL*)target;
-
-			if( su && su->group && skill_get_inf2(su->group->skill_id)&INF2_TRAP && su->group->unit_id != UNT_USED_TRAPS) { //Only a few skills can target traps...
+			if( !su || !su->group)
+				return 0;
+			if( skill_get_inf2(su->group->skill_id)&INF2_TRAP && su->group->unit_id != UNT_USED_TRAPS) { //Only a few skills can target traps...
 				switch( battle_getcurrentskill(src) ) {
 					case RK_DRAGONBREATH:// it can only hit traps in pvp/gvg maps
 					case RK_DRAGONBREATH_WATER:

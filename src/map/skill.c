@@ -12027,12 +12027,12 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 		}
 		break;
 	case DC_SERVICEFORYOU:
-			//val1: MaxSP percent increase
-			val1 = 15+skill_lv+(status->int_/10); //Bonus rate by Dancer's INT 
-			//val2: SP cost reduction
-			val2 = 20+3*skill_lv;
-			if(sd) val2 += (pc_checkskill(sd,DC_DANCINGLESSON)+1)/2; //Bonus rate by DC_DANCINGLESSON
-			val2 += status->int_/10; //Bonus rate by Dancer's INT
+		val1 = 15+skill_lv+(status->int_/10); // MaxSP percent increase
+		val2 = 20+3*skill_lv+(status->int_/10); // SP cost reduction
+		if(sd){
+			val1 += pc_checkskill(sd,DC_DANCINGLESSON)/2;
+			val2 += pc_checkskill(sd,DC_DANCINGLESSON)/2;
+		}
 		break;
 	case BA_ASSASSINCROSS:
 		val1 = 100+(10*skill_lv)+status->agi; // ASPD increase
