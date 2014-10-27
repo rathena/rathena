@@ -8920,22 +8920,25 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			}
 			break;
 
-		case SC_COMBO: {
-				// val1: Skill ID
-				// val2: When given, target (for autotargetting skills)
-				// val3: When set, this combo time should NOT delay attack/movement
-				// val3: TK: Last used kick
-				// val4: TK: Combo time
-				struct unit_data *ud = unit_bl2ud(bl);
-				if (ud && !val3) {
-					tick += 300 * battle_config.combo_delay_rate/100;
-					ud->attackabletime = gettick()+tick;
+		case SC_COMBO:
+		{
+			// val1: Skill ID
+			// val2: When given, target (for autotargetting skills)
+			// val3: When set, this combo time should NOT delay attack/movement
+			// val3: If set to 2 this combo will delay ONLY attack
+			// val3: TK: Last used kick
+			// val4: TK: Combo time
+			struct unit_data *ud = unit_bl2ud(bl);
+			if ( ud && (!val3 || val3 == 2) ) {
+				tick += 300 * battle_config.combo_delay_rate/100;
+				ud->attackabletime = gettick()+tick;
+				if( !val3 )
 					unit_set_walkdelay(bl, gettick(), tick, 1);
-				}
-				val3 = 0;
-				val4 = tick;
 			}
+			val3 = 0;
+			val4 = tick;
 			break;
+		}
 		case SC_EARTHSCROLL:
 			val2 = 11-val1; // Chance to consume: 11-skill_lv%
 			break;
