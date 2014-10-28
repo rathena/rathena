@@ -96,6 +96,7 @@ enum e_skill_inf3 {
 };
 
 /// Walk intervals at which chase-skills are attempted to be triggered.
+/// If you change this, make sure it's an odd value (for icewall block behavior).
 #define WALK_SKILL_INTERVAL 5
 
 /// Flags passed to skill_attack/skill_area_sub
