@@ -10864,6 +10864,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 
 	switch (skill_id) { //Skill effect.
 		case WZ_METEOR:
+		case WZ_ICEWALL:
 		case MO_BODYRELOCATION:
 		case CR_CULTIVATION:
 		case HW_GANBANTEIN:
@@ -10944,7 +10945,6 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case MG_FIREWALL:
 	case MG_THUNDERSTORM:
 	case AL_PNEUMA:
-	case WZ_ICEWALL:
 	case WZ_FIREPILLAR:
 	case WZ_QUAGMIRE:
 	case WZ_VERMILION:
@@ -11049,6 +11049,11 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case GS_GROUNDDRIFT: //Ammo should be deleted right away.
 	case GN_WALLOFTHORN:
 		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
+		break;
+	case WZ_ICEWALL:
+		flag|=1;
+		if(skill_unitsetting(src,skill_id,skill_lv,x,y,0))
+			clif_skill_poseffect(src,skill_id,skill_lv,x,y,tick);
 		break;
 	case RG_GRAFFITI:			/* Graffiti [Valaris] */
 		skill_clear_unitgroup(src);
@@ -16489,9 +16494,11 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 					break;
 			}
 			break;
+		case WZ_ICEWALL:
 		case HP_BASILICA:
-			if (unit->group->skill_id == HP_BASILICA)
-			{	//Basilica can't be placed on top of itself to avoid map-cell stacking problems. [Skotlex]
+			//These can't be placed on top of themselves (duration can't be refreshed)
+			if (unit->group->skill_id == skill_id)
+			{
 				(*alive) = 0;
 				return 1;
 			}
