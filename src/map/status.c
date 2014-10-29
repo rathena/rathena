@@ -2760,13 +2760,16 @@ static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned
 	if (isHP) { //Calculates MaxHP
 		max = job_info[idx].base_hp[level-1] * (1 + (max(stat,1) * 0.01)) * ((sd->class_&JOBL_UPPER)?1.25:1);
 		max += status_get_hpbonus(&sd->bl,STATUS_BONUS_FIX);
-		max *= (1 + status_get_hpbonus(&sd->bl,STATUS_BONUS_RATE) * 0.01);
+		max += (int64)(max * status_get_hpbonus(&sd->bl,STATUS_BONUS_RATE) / 100); //Aegis accuracy
 	}
 	else { //Calculates MaxSP
 		max = job_info[idx].base_sp[level-1] * (1 + (max(stat,1) * 0.01)) * ((sd->class_&JOBL_UPPER)?1.25:1);
 		max += status_get_spbonus(&sd->bl,STATUS_BONUS_FIX);
-		max *= (1 + status_get_spbonus(&sd->bl,STATUS_BONUS_RATE) * 0.01);
+		max += (int64)(max * status_get_spbonus(&sd->bl,STATUS_BONUS_RATE) / 100); //Aegis accuracy
 	}
+
+	//Make sure it's not negative before casting to unsigned int
+	if(max < 1) max = 1;
 
 	return cap_value((unsigned int)max,1,UINT_MAX);
 }
@@ -10837,8 +10840,8 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_AUTOTRADE:
 			if (tid == INVALID_TIMER)
 				break;
-			// Note: vending/buying is closed by unit_remove_map, no
-			// need to do it here.
+			// Vending is not automatically closed for autovenders
+			vending_closevending(sd);
 			map_quit(sd);
 			// Because map_quit calls status_change_end with tid -1
 			// from here it's not neccesary to continue
