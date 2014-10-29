@@ -6393,7 +6393,7 @@ mid_camp,247,255,1	script	Hue#ep131_rhea02	868,{
 				next;
 				mes "[Hue]";
 				mes "I always needed this because the weather here is colder then I expected. I'm sure this will keep me warm.";
-				delitem 6020,5; //Fur
+				delitem 6020,2; //Fur
 				getitem 12320,1; //Pineapple_Juice
 				close;
 			}
