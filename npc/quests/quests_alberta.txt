@@ -1341,7 +1341,7 @@ alberta_in,18,102,4	script	Letter#tur	111,{
 	close;
 }
 
-alberta,248,93,4	script	Voyage log#tur	111,{
+alberta,246,117,4	script	Voyage log#tur	111,{
 	if (rand(2)) {
 		mes "[Voyage log]";
 		mes "03:20 am";

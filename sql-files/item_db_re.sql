@@ -1291,7 +1291,7 @@ REPLACE INTO `item_db_re` VALUES (2164,'Sombre_Shield','Bull Son Shield',4,20,NU
 REPLACE INTO `item_db_re` VALUES (2165,'Sol_Shield','Sol Shield',4,20,NULL,1300,NULL,50,NULL,1,0xFFFFFFFF,63,2,32,NULL,'65',1,3,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2166,'Exorcism_Bible_','Devil\'s Bible Drive',4,20,NULL,600,NULL,80,NULL,1,0x00008100,63,2,32,NULL,'50',1,5,'bonus bInt,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2167,'Poison_Shield','Poison Shield',4,20,NULL,1300,NULL,50,NULL,1,0xFFFFFFFF,63,2,32,NULL,'65',1,3,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (2168,'Immuned_Shield','Immune Shield',4,20,NULL,700,NULL,55,NULL,1,0xFFFFFFFF,63,2,32,NULL,'1',1,1,'if (getrefine()>5) bonus2 bSubEle,Ele_Neutral,((getrefine()>12)?12:getrefine())-5;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2168,'Immuned_Shield','Immune Shield',4,20,NULL,700,NULL,55,NULL,1,0xFFFFFFFF,63,2,32,NULL,'1',1,1,'if (getrefine()>5) bonus2 bSubEle,Ele_Neutral,((getrefine()>12)?12:getrefine())-5; if (getrefine()>=7) bonus2 bSubEle,Ele_Neutral,5; if (getrefine()>=9){ bonus2 bSubEle,Ele_Earth,5; bonus2 bSubEle,Ele_Wind,5; bonus2 bSubEle,Ele_Fire,5; bonus2 bSubEle,Ele_Water,5; }',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2169,'Kalasak','Kalasag',4,20,NULL,400,NULL,40,NULL,0,0xFFFFFFFF,63,2,32,NULL,'1',1,1,'bonus2 bSubClass,Class_Boss,getrefine()/3;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2170,'Bayani_Kalasak','Bayani Kalasag',4,20,NULL,400,NULL,40,NULL,1,0xFFFFFFFF,63,2,32,NULL,'1',1,1,'bonus2 bSubClass,Class_Boss,getrefine()/3;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2171,'Fox_Armguard','Fox Wrist Guard',4,40000,NULL,200,NULL,45,NULL,1,0x02000000,63,2,32,NULL,'100',1,1,'bonus bFlee,5;',NULL,NULL);
