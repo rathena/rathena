@@ -2573,41 +2573,53 @@ int map_check_dir(int s_dir,int t_dir)
 uint8 map_calc_dir(struct block_list* src, int16 x, int16 y)
 {
 	uint8 dir = 0;
-	int dx, dy;
 
 	nullpo_ret(src);
 
-	dx = x-src->x;
-	dy = y-src->y;
+	dir = map_calc_dir_xy(src->x, src->y, x, y, unit_getdir(src));
+
+	return dir;
+}
+
+/*==========================================
+ * Returns the direction of the given cell, relative to source cell
+ * Use this if you don't have a block list available to check against
+ *------------------------------------------*/
+uint8 map_calc_dir_xy(int16 srcx, int16 srcy, int16 x, int16 y, uint8 srcdir) {
+	uint8 dir = 0;
+	int dx, dy;
+
+	dx = x-srcx;
+	dy = y-srcy;
 	if( dx == 0 && dy == 0 )
 	{	// both are standing on the same spot
 		// aegis-style, makes knockback default to the left
 		// athena-style, makes knockback default to behind 'src'
-		dir = (battle_config.knockback_left ? 6 : unit_getdir(src));
+		dir = (battle_config.knockback_left ? 6 : srcdir);
 	}
 	else if( dx >= 0 && dy >=0 )
 	{	// upper-right
-		if( dx*2 < dy || dx == 0 )         dir = 0;	// up
-		else if( dx > dy*2+1 || dy == 0 )  dir = 6;	// right
-		else                               dir = 7;	// up-right
+		if( dx >= dy*3 )      dir = 6;	// right
+		else if( dx*3 < dy )  dir = 0;	// up
+		else                  dir = 7;	// up-right
 	}
 	else if( dx >= 0 && dy <= 0 )
 	{	// lower-right
-		if( dx*2 < -dy || dx == 0 )        dir = 4;	// down
-		else if( dx > -dy*2+1 || dy == 0 ) dir = 6;	// right
-		else                               dir = 5;	// down-right
+		if( dx >= -dy*3 )     dir = 6;	// right
+		else if( dx*3 < -dy ) dir = 4;	// down
+		else                  dir = 5;	// down-right
 	}
 	else if( dx <= 0 && dy <= 0 )
 	{	// lower-left
-		if( dx*2 > dy || dx == 0 )         dir = 4;	// down
-		else if( dx < dy*2-1 || dy == 0 )  dir = 2;	// left
-		else                               dir = 3;	// down-left
+		if( dx*3 >= dy )      dir = 4;	// down
+		else if( dx < dy*3 )  dir = 2;	// left
+		else                  dir = 3;	// down-left
 	}
 	else
 	{	// upper-left
-		if( -dx*2 < dy || dx == 0 )        dir = 0;	// up
-		else if( -dx > dy*2+1 || dy == 0)  dir = 2;	// left
-		else                               dir = 1;	// up-left
+		if( -dx*3 <= dy )     dir = 0;	// up
+		else if( -dx > dy*3 ) dir = 2;	// left
+		else                  dir = 1;	// up-left
 	}
 	return dir;
 }

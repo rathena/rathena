@@ -100,11 +100,11 @@ int unit_walktoxy_sub(struct block_list *bl)
 		uint8 dir;
 		// Trim the last part of the path to account for range,
 		// but always move at least one cell when requested to move.
-		for (i = ud->chaserange*10; i > 0 && ud->walkpath.path_len>1;) {
+		for (i = (ud->chaserange*10)-10; i > 0 && ud->walkpath.path_len>1;) {
 			ud->walkpath.path_len--;
 			dir = ud->walkpath.path[ud->walkpath.path_len];
 			if(dir&1)
-				i -= MOVE_DIAGONAL_COST;
+				i -= MOVE_COST*20; //When chasing, units will target a diamond-shaped area in range [Playtester]
 			else
 				i -= MOVE_COST;
 			ud->to_x -= dirx[dir];
@@ -1059,6 +1059,64 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag)
 	}
 
 	return count;  // Return amount of knocked back cells
+}
+
+/**
+ * Checks if unit can be knocked back / stopped by skills.
+ * @param bl: Object to check
+ * @param flag
+ *		0x1 - Offensive (not set: self skill, e.g. Backslide)
+ *		0x2 - Knockback type (not set: Stop type, e.g. Ankle Snare)
+ *      0x4 - Boss attack
+ * @return reason for immunity
+ *		0 - can be knocked back / stopped
+ *		1 - at WOE/BG map;
+ *		2 - target is emperium
+ *		3 - target is MD_KNOCKBACK_IMMUNE|MD_BOSS;
+ *		4 - target is in Basilica area;
+ *		5 - target has 'special_state.no_knockback';
+ *      6 - target is trap that cannot be knocked back
+ */
+int unit_blown_immune(struct block_list* bl, int flag)
+{
+	if ((flag&0x1) && (map_flag_gvg(bl->m) || map[bl->m].flag.battleground)
+		&& ((flag&0x2) || !(battle_config.skill_trap_type&0x1)))
+		return 1; // No knocking back in WoE / BG
+
+	switch (bl->type) {
+		case BL_MOB: {
+				struct mob_data* md = BL_CAST(BL_MOB, bl);
+				// Emperium can't be knocked back
+				if( md->mob_id == MOBID_EMPERIUM )
+					return 2;
+				// Bosses or immune can't be knocked back
+				if((flag&0x1) && status_get_mode(bl)&(MD_KNOCKBACK_IMMUNE|MD_BOSS)
+					&& ((flag&0x2) || !(battle_config.skill_trap_type&0x2)))
+					return 3;
+			}
+			break;
+		case BL_PC: {
+				struct map_session_data *sd = BL_CAST(BL_PC, bl);
+				// Basilica caster can't be knocked-back by normal monsters.
+				if( sd->sc.data[SC_BASILICA] && sd->sc.data[SC_BASILICA]->val4 == sd->bl.id && !(flag&0x4))
+					return 4;
+				// Target has special_state.no_knockback (equip)
+				if( (flag&0x1) && (flag&0x2) && sd->special_state.no_knockback )
+					return 5;
+			}
+			break;
+		case BL_SKILL: {
+				struct skill_unit* su = NULL;
+				su = (struct skill_unit *)bl;
+				// Trap cannot be knocked back
+				if (su && su->group && skill_get_unit_flag(su->group->skill_id)&UF_NOKNOCKBACK)
+					return 6;
+			}
+			break;
+	}
+
+	//Object can be knocked back / stopped
+	return 0;
 }
 
 /**

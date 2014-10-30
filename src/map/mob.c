@@ -1446,7 +1446,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 		)) {	//No valid target
 			if (mob_warpchase(md, tbl))
 				return true; //Chasing this target.
-			if(md->ud.walktimer != INVALID_TIMER && md->ud.walkpath.path_pos <= battle_config.mob_chase_refresh)
+			if(md->ud.walktimer != INVALID_TIMER && (!can_move || md->ud.walkpath.path_pos <= battle_config.mob_chase_refresh))
 				return true; //Walk at least "mob_chase_refresh" cells before dropping the target
 			mob_unlocktarget(md, tick); //Unlock target
 			tbl = NULL;
@@ -1661,6 +1661,10 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 	if(battle_check_range(&md->bl, tbl, md->status.rhw.range))
 		return true;
 
+	//Only update target cell / drop target after having moved at least "mob_chase_refresh" cells
+	if(md->ud.walktimer != INVALID_TIMER && (!can_move || md->ud.walkpath.path_pos <= battle_config.mob_chase_refresh))
+		return true;
+
 	//Out of range...
 	if (!(mode&MD_CANMOVE) || (!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0))
 	{	//Can't chase. Immobile and trapped mobs should unlock target and use an idle skill.
@@ -1677,10 +1681,6 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 			!(battle_config.mob_ai&0x1) ||
 			check_distance_blxy(tbl, md->ud.to_x, md->ud.to_y, md->status.rhw.range)
 	)) //Current target tile is still within attack range.
-		return true;
-
-	//Only update target cell after having moved at least "mob_chase_refresh" cells
-	if(md->ud.walktimer != INVALID_TIMER && md->ud.walkpath.path_pos <= battle_config.mob_chase_refresh)
 		return true;
 
 	//Follow up if possible.

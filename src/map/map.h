@@ -856,7 +856,8 @@ bool                    mapit_exists(struct s_mapiterator* mapit);
 #define mapit_geteachiddb() mapit_alloc(MAPIT_NORMAL,BL_ALL)
 
 int map_check_dir(int s_dir,int t_dir);
-uint8 map_calc_dir( struct block_list *src,int16 x,int16 y);
+uint8 map_calc_dir(struct block_list *src,int16 x,int16 y);
+uint8 map_calc_dir_xy(int16 srcx, int16 srcy, int16 x, int16 y, uint8 srcdir);
 int map_random_dir(struct block_list *bl, short *x, short *y); // [Skotlex]
 
 int cleanup_sub(struct block_list *bl, va_list ap);

@@ -2381,6 +2381,7 @@ static int skill_area_temp[8];
 short skill_blown(struct block_list* src, struct block_list* target, char count, int8 dir, unsigned char flag)
 {
 	int dx = 0, dy = 0;
+	int reason = 0, checkflag = 0;
 
 	nullpo_ret(src);
 	nullpo_ret(target);
@@ -2388,34 +2389,23 @@ short skill_blown(struct block_list* src, struct block_list* target, char count,
 	if (!count)
 		return count; // Actual knockback distance is 0.
 
-	if (src != target && (map_flag_gvg(target->m) || map[target->m].flag.battleground))
-		return ((flag&0x04) ? count : 0); // No knocking back in WoE
+	// Create flag needed in unit_blown_immune
+	if(src != target)
+		checkflag |= 0x1; // Offensive
+	if(!(flag&0x2))
+		checkflag |= 0x2; // Knockback type
+	if(is_boss(src))
+		checkflag |= 0x4; // Boss attack
 
-	switch (target->type) {
-		case BL_MOB: {
-				struct mob_data* md = BL_CAST(BL_MOB, target);
-				if( md->mob_id == MOBID_EMPERIUM )
-					return count;
-				// Bosses or imune can't be knocked-back
-				if(src != target && status_get_mode(target)&(MD_KNOCKBACK_IMMUNE|MD_BOSS))
-					return ((flag&0x08) ? count : 0);
-			}
-			break;
-		case BL_PC: {
-				struct map_session_data *sd = BL_CAST(BL_PC, target);
-				if( sd->sc.data[SC_BASILICA] && sd->sc.data[SC_BASILICA]->val4 == sd->bl.id && !is_boss(src))
-					return ((flag&0x20) ? count : 0); // Basilica caster can't be knocked-back by normal monsters.
-				if( !(flag&0x2) && src != target && sd->special_state.no_knockback )
-					return ((flag&0x10) ? count : 0);
-			}
-			break;
-		case BL_SKILL: {
-				struct skill_unit* su = NULL;
-				su = (struct skill_unit *)target;
-				if (su && su->group && skill_get_unit_flag(su->group->skill_id)&UF_NOKNOCKBACK)
-					return count; // Cannot be knocked back
-			}
-			break;
+	// Get reason and check for flags
+	reason = unit_blown_immune(target, checkflag);
+	switch(reason) {
+		case 1: return ((flag&0x04) ? count : 0); // No knocking back in WoE / BG
+		case 2: return count; // Emperium can't be knocked back
+		case 3: return ((flag&0x08) ? count : 0); // Bosses or immune can't be knocked back
+		case 4: return ((flag&0x20) ? count : 0); // Basilica caster can't be knocked-back by normal monsters.
+		case 5: return ((flag&0x10) ? count : 0); // Target has special_state.no_knockback (equip)
+		case 6: return count; // Trap cannot be knocked back
 	}
 
 	if (dir == -1) // <optimized>: do the computation here instead of outside
@@ -2428,7 +2418,6 @@ short skill_blown(struct block_list* src, struct block_list* target, char count,
 
 	return unit_blown(target, dx, dy, count, flag);	// Send over the proper flag
 }
-
 
 // Checks if 'bl' should reflect back a spell cast by 'src'.
 // type is the type of magic attack: 0: indirect (aoe), 1: direct (targetted)
@@ -11955,13 +11944,14 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 		break;
 	case HT_ANKLESNARE:
 		if( flag&2 ) val3 = SC_ESCAPE;
+	case HT_SKIDTRAP:
+	case MA_SKIDTRAP:
+		//Save position of caster
+		val1 = ((src->x)<<16)|(src->y);
 	case HT_SHOCKWAVE:
-		val1=skill_lv*15+10;
 	case HT_SANDMAN:
 	case MA_SANDMAN:
 	case HT_CLAYMORETRAP:
-	case HT_SKIDTRAP:
-	case MA_SKIDTRAP:
 	case HT_LANDMINE:
 	case MA_LANDMINE:
 	case HT_FLASHER:
@@ -12824,10 +12814,14 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 			break;
 
 		case UNT_SKIDTRAP: {
-				skill_blown(&unit->bl,bl,skill_get_blewcount(sg->skill_id,sg->skill_lv),unit_getdir(bl),0);
+				//Knockback away from position of user during placement [Playtester]
+				skill_blown(&unit->bl,bl,skill_get_blewcount(sg->skill_id,sg->skill_lv),
+					(map_calc_dir_xy(sg->val1>>16,sg->val1&0xFFFF,bl->x,bl->y,6)+4)%8,0);
 				sg->unit_id = UNT_USED_TRAPS;
 				clif_changetraplook(&unit->bl, UNT_USED_TRAPS);
 				sg->limit=DIFF_TICK(tick,sg->tick)+1500;
+				//Target will be stopped for 3 seconds
+				sc_start(ss,bl,SC_STOP,100,0,skill_get_time2(sg->skill_id,sg->skill_lv));
 			}
 			break;
 
@@ -12841,7 +12835,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 
 					if( td )
 						sec = DIFF_TICK(td->tick, tick);
-					if( sg->unit_id == UNT_MANHOLE || battle_config.skill_trap_type || !map_flag_gvg(unit->bl.m) ) {
+					if( !unit_blown_immune(bl,0x1) ) {
 						unit_movepos(bl, unit->bl.x, unit->bl.y, 0, 0);
 						clif_fixpos(bl);
 					}

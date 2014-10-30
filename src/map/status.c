@@ -10042,10 +10042,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_KYOUGAKU:
 		case SC_PARALYSIS:
 		case SC_MAGNETICFIELD:
-			unit_stop_walking(bl,1);
-			break;
 		case SC_ANKLE:
-			if( battle_config.skill_trap_type || !map_flag_gvg(bl->m) )
+		case SC_VACUUM_EXTREME:
+			if (!unit_blown_immune(bl,0x1))
 				unit_stop_walking(bl,1);
 			break;
 		case SC_HIDING:
@@ -10067,10 +10066,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_SILENCE:
 			if (battle_config.sc_castcancel&bl->type)
 				unit_skillcastcancel(bl, 0);
-			break;
-		case SC_VACUUM_EXTREME:
-			if (!map_flag_gvg(bl->m))
-				unit_stop_walking(bl, 1);
 			break;
 		case SC_ITEMSCRIPT: // Shows Buff Icons
 			if (sd && val2 != SI_BLANK)
