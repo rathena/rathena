@@ -430,6 +430,8 @@ killerrid	121 1
 killedrid	122 1
 Sitting	123	1
 CharMoves	124	1
+CharRename	125	1
+Font		126	1
 
 bMaxHP	6
 bMaxSP	8
