@@ -5740,8 +5740,8 @@ void clif_maptypeproperty2(struct block_list *bl,enum send_target t) {
 
 	unsigned int NotifyProperty =
 		((map[bl->m].flag.pvp?1:0)<<0)| // PARTY - Show attack cursor on non-party members (PvP)
-		((map_flag_gvg(bl->m)?1:0)<<1)| // GUILD - Show attack cursor on non-guild members (GvG)
-		((map_flag_gvg2(bl->m)?1:0)<<2)| // SIEGE - Show emblem over characters heads when in GvG (WoE castle)
+		((map[bl->m].flag.battleground || map_flag_gvg(bl->m)?1:0)<<1)|// GUILD - Show attack cursor on non-guild members (GvG)
+		((map[bl->m].flag.battleground || map_flag_gvg2(bl->m)?1:0)<<2)|// SIEGE - Show emblem over characters heads when in GvG (WoE castle)
 		((map[bl->m].flag.nomineeffect || !map_flag_gvg2(bl->m)?0:1)<<3)| // USE_SIMPLE_EFFECT - Automatically enable /mineffect
 		((map[bl->m].flag.nolockon?1:0)<<4)| // DISABLE_LOCKON - Unknown (By the name it might disable cursor lock-on)
 		((map[bl->m].flag.pvp?1:0)<<5)| // COUNT_PK - Show the PvP counter
