@@ -18765,6 +18765,7 @@ BUILDIN_FUNC(montransform) {
 	enum sc_type type;
 	int tick, mob_id, val1, val2, val3, val4;
 	struct script_data *data;
+	val1 = val2 = val3 = val4 = 0;
 
 	if( (sd = script_rid2sd(st)) == NULL )
 		return 1;
@@ -18777,8 +18778,11 @@ BUILDIN_FUNC(montransform) {
 		mob_id = mobdb_checkid(script_getnum(st, 2));
 
 	tick = script_getnum(st, 3);
-	type = (sc_type)script_getnum(st, 4);
-	val1 = val2 = val3 = val4 = 0;
+
+	if (script_hasdata(st, 4))
+		type = (sc_type)script_getnum(st, 4);
+	else
+		type = SC_NONE;
 
 	if (mob_id == 0) {
 		if( data_isstring(data) )
@@ -18793,7 +18797,7 @@ BUILDIN_FUNC(montransform) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (!(type > SC_NONE && type < SC_MAX)) {
+	if (!(type >= SC_NONE && type < SC_MAX)) {
 		ShowWarning("buildin_montransform: Unsupported status change id %d\n", type);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -18825,10 +18829,11 @@ BUILDIN_FUNC(montransform) {
 		}
 
 		sprintf(msg, msg_txt(sd,728), monster->name); // Traaaansformation-!! %s form!!
-		clif_disp_overhead(&sd->bl, msg);
+		clif_showscript(&sd->bl, msg);
 		status_change_end(&sd->bl, SC_MONSTER_TRANSFORM, INVALID_TIMER); // Clear previous
 		sc_start2(NULL, &sd->bl, SC_MONSTER_TRANSFORM, 100, mob_id, type, tick);
-		sc_start4(NULL, &sd->bl, type, 100, val1, val2, val3, val4, tick);
+		if (script_hasdata(st, 4))
+			sc_start4(NULL, &sd->bl, type, 100, val1, val2, val3, val4, tick);
 	}
 
 	return SCRIPT_CMD_SUCCESS;

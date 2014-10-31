@@ -463,6 +463,7 @@ packet_ver: 5
 //0x020b,-1
 //0x020c,-1
 0x020d,-1
+0x8b3,-1
 0x8d6,6,ZC_CLEAR_DIALOG,2
 
 //2004-07-05aSakexe
@@ -1346,7 +1347,7 @@ packet_ver: 25
 
 //2008-11-12aRagexeRE
 0x043d,8
-//0x043e,-1
+0x043e,4
 0x043f,8
 
 //2008-12-17aRagexeRE
@@ -1467,7 +1468,7 @@ packet_ver: 25
 0x07fb,25
 
 //2009-12-01aRagexeRE
-//0x07fc,10
+0x07fc,10
 //0x07fd,-1
 0x07fe,26
 //0x07ff,-1
