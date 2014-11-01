@@ -3352,10 +3352,10 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 		if(sd->skillfixcastrate[i].id == type2)
-			sd->skillfixcastrate[i].val += val;
+			sd->skillfixcastrate[i].val -= val;
 		else {
 			sd->skillfixcastrate[i].id = type2;
-			sd->skillfixcastrate[i].val = val;
+			sd->skillfixcastrate[i].val -= val;
 		}
 		break;
 	case SP_HP_LOSS_RATE: // bonus2 bHPLossRate,n,t;
@@ -4623,7 +4623,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 	else if( itemdb_is_poison(nameid) && (sd->class_&MAPID_THIRDMASK) != MAPID_GUILLOTINE_CROSS )
 		return false;
 
-	if( item->flag.group ) {
+	if( item->flag.group || item->type == IT_CASH) {	//safe check type cash disappear when overweight [Napster]
 		if( pc_is90overweight(sd) ) {
 			clif_msgtable(sd->fd, ITEM_CANT_OBTAIN_WEIGHT);
 			return false;
