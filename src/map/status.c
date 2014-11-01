@@ -61,6 +61,7 @@ static struct eri *sc_data_ers; /// For sc_data entries
 static struct status_data dummy_status;
 
 short current_equip_item_index; /// Contains inventory index of an equipped item. To pass it into the EQUP_SCRIPT [Lupus]
+unsigned int current_equip_combo_pos; /// For combo items we need to save the position of all involved items here
 int current_equip_card_id; /// To prevent card-stacking (from jA) [Skotlex]
 // We need it for new cards 15 Feb 2005, to check if the combo cards are insrerted into the CURRENT weapon only to avoid cards exploits
 
@@ -2957,6 +2958,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	// Parse equipment
 	for (i = 0; i < EQI_MAX; i++) {
 		current_equip_item_index = index = sd->equip_index[i]; // We pass INDEX to current_equip_item_index - for EQUIP_SCRIPT (new cards solution) [Lupus]
+		current_equip_combo_pos = 0;
 		if (index < 0)
 			continue;
 		if (i == EQI_AMMO)
@@ -3065,6 +3067,9 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 			bool no_run = false;
 			struct item_combo *combo = NULL;
 
+			current_equip_item_index = -1;
+			current_equip_combo_pos = sd->combos.pos[i];
+
 			if (!sd->combos.bonus[i] || !(combo = itemdb_combo_exists(sd->combos.id[i])))
 				continue;
 			// Check combo items
@@ -3094,6 +3099,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	// Parse Cards
 	for (i = 0; i < EQI_MAX; i++) {
 		current_equip_item_index = index = sd->equip_index[i]; // We pass INDEX to current_equip_item_index - for EQUIP_SCRIPT (new cards solution) [Lupus]
+		current_equip_combo_pos = 0;
 		if (index < 0)
 			continue;
 		if (i == EQI_AMMO)

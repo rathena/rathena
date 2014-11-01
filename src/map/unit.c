@@ -1067,7 +1067,7 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag)
  * @param flag
  *		0x1 - Offensive (not set: self skill, e.g. Backslide)
  *		0x2 - Knockback type (not set: Stop type, e.g. Ankle Snare)
- *      0x4 - Boss attack
+ *		0x4 - Boss attack
  * @return reason for immunity
  *		0 - can be knocked back / stopped
  *		1 - at WOE/BG map;
@@ -1075,7 +1075,7 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag)
  *		3 - target is MD_KNOCKBACK_IMMUNE|MD_BOSS;
  *		4 - target is in Basilica area;
  *		5 - target has 'special_state.no_knockback';
- *      6 - target is trap that cannot be knocked back
+ *		6 - target is trap that cannot be knocked back
  */
 int unit_blown_immune(struct block_list* bl, int flag)
 {
@@ -3131,6 +3131,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			if( sd->combos.count ) {
 				aFree(sd->combos.bonus);
 				aFree(sd->combos.id);
+				aFree(sd->combos.pos);
 				sd->combos.count = 0;
 			}
 
