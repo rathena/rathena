@@ -19614,7 +19614,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(party_destroy,"i"),
 
 	BUILDIN_DEF(is_clientver,"ii?"),
-	BUILDIN_DEF2(montransform, "transform", "vii????"), // Monster Transform [malufett/Hercules]
+	BUILDIN_DEF2(montransform, "transform", "vi?????"), // Monster Transform [malufett/Hercules]
 	BUILDIN_DEF(vip_status,"i?"),
 	BUILDIN_DEF(vip_time,"i?"),
 	BUILDIN_DEF(bonus_script,"si????"),
