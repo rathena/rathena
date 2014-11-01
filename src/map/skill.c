@@ -2142,7 +2142,8 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			if (autospl_skill_lv < 0) autospl_skill_lv = 1+rnd()%(-autospl_skill_lv);
 
 			autospl_rate = dstsd->autospell2[i].rate;
-			if (attack_type&BF_LONG)
+			//Physical range attacks only trigger autospells half of the time
+			if ((attack_type&(BF_WEAPON|BF_LONG)) == (BF_WEAPON|BF_LONG))
 				 autospl_rate>>=1;
 
 			dstsd->state.autocast = 1;

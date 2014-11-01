@@ -1109,11 +1109,19 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 				damage >>= 2; //75% reduction
 		}
 
-		if( sc->data[SC_SMOKEPOWDER] ) {
+		if(sc->data[SC_ARMORCHANGE]) {
+			//On official servers, SC_ARMORCHANGE does not change DEF/MDEF but rather increases/decreases the damage
+			if(flag&BF_WEAPON)
+				DAMAGE_SUBRATE(sc->data[SC_ARMORCHANGE]->val2)
+			else if(flag&BF_MAGIC)
+				DAMAGE_SUBRATE(sc->data[SC_ARMORCHANGE]->val3)
+		}
+
+		if(sc->data[SC_SMOKEPOWDER]) {
 			if( (flag&(BF_SHORT|BF_WEAPON)) == (BF_SHORT|BF_WEAPON) )
-				damage -= 15 * damage / 100; // 15% reduction to physical melee attacks
+				DAMAGE_SUBRATE(15) // 15% reduction to physical melee attacks
 			else if( (flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON) )
-				damage -= 50 * damage / 100; // 50% reduction to physical ranged attacks
+				DAMAGE_SUBRATE(50) // 50% reduction to physical ranged attacks
 		}
 
 		// Compressed code, fixed by map.h [Epoque]
