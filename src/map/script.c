@@ -19110,6 +19110,34 @@ BUILDIN_FUNC(countspiritball) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/** Send message with color to player
+* displaymessage("<message>"{,<color>{,<Account ID>}})
+* @param message 
+* @param color Hex color default (Green)
+* @param account_id Target player (Optional)
+* @author [Napster]
+*/
+BUILDIN_FUNC(displaymessage)
+{
+	TBL_PC *sd;
+	int color;
+	const char *mes = script_getstr(st,2);
+
+	if (script_hasdata(st,3))
+		color = script_getnum(st,3); // <color>
+	else
+		color = 0xFFFFFF; // Default color
+
+	if (script_hasdata(st,4))
+		sd = map_id2sd(script_getnum(st,4)); // <Account ID>
+	else
+		sd = script_rid2sd(st); // Attached player
+
+	if (sd)
+		clif_messagecolor2(sd, color, mes);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -19653,6 +19681,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(addspiritball,"ii?"),
 	BUILDIN_DEF(delspiritball,"i?"),
 	BUILDIN_DEF(countspiritball,"?"),
+	BUILDIN_DEF(displaymessage,"s??"),
+	BUILDIN_DEF2(displaymessage,"dispcolor","s??"),
 
 #include "../custom/script_def.inc"
 

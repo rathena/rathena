@@ -8652,9 +8652,30 @@ void clif_messagecolor(struct block_list* bl, unsigned long color, const char* m
 	WBUFW(buf,2) = msg_len + 12;
 	WBUFL(buf,4) = bl->id;
 	WBUFL(buf,8) = color;
-	memcpy(WBUFP(buf,12), msg, msg_len);
+	memcpy((char*)WBUFP(buf,12), msg, msg_len);
 
 	clif_send(buf, WBUFW(buf,2), bl, AREA_CHAT_WOC);
+}
+
+void clif_messagecolor2(struct map_session_data *sd, unsigned long color, const char* msg)
+{
+	int fd;
+	unsigned short msg_len = strlen(msg) + 1;
+
+	nullpo_retv(sd);
+
+	if(msg_len > 0) {
+		color = (color & 0x0000FF) << 16 | (color & 0x00FF00) | (color & 0xFF0000) >> 16; // RGB to BGR
+
+		fd = sd->fd;
+		WFIFOHEAD(fd, msg_len+12);
+		WFIFOW(fd,0) = 0x2C1;
+		WFIFOW(fd,2) = msg_len+12;
+		WFIFOL(fd,4) = 0;
+		WFIFOL(fd,8) = color;
+		safestrncpy((char*)WFIFOP(fd,12), msg, msg_len);
+		WFIFOSET(fd, WFIFOW(fd,2));
+	}
 }
 
 /**
