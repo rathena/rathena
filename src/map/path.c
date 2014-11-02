@@ -263,12 +263,8 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 
 	md = &map[m];
 
-#ifdef CELL_NOSTACK
 	//Do not check starting cell as that would get you stuck.
-	if (x0 < 0 || x0 >= md->xs || y0 < 0 || y0 >= md->ys)
-#else
 	if (x0 < 0 || x0 >= md->xs || y0 < 0 || y0 >= md->ys /*|| map_getcellp(md,x0,y0,cell)*/)
-#endif
 		return false;
 
 	// Check destination cell

@@ -298,7 +298,7 @@ int unit_step_timer(int tid, unsigned int tick, int id, intptr_t data)
 		}
 		if(ud->stepskill_id == 0) {
 			//Execute normal attack
-			unit_attack(bl, tbl->id, ud->state.attack_continue);
+			unit_attack(bl, tbl->id, (ud->state.attack_continue) + 2);
 		} else {
 			//Execute non-ground skill
 			unit_skilluse_id(bl, tbl->id, ud->stepskill_id, ud->stepskill_lv);
@@ -314,7 +314,7 @@ int unit_step_timer(int tid, unsigned int tick, int id, intptr_t data)
  * @param tid: Timer ID
  * @param tick: Current tick to decide next timer update
  * @param data: Data used in timer calls
- * @return 0 or unit_walktoxy_sub()
+ * @return 0 or unit_walktoxy_sub() or unit_walktoxy()
  */
 static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
@@ -518,6 +518,16 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	} else { // Stopped walking. Update to_x and to_y to current location [Skotlex]
 		ud->to_x = bl->x;
 		ud->to_y = bl->y;
+
+		if(map_count_oncell(bl->m, x, y, BL_CHAR|BL_NPC, 1) > battle_config.official_cell_stack_limit) {
+			//Walked on occupied cell, call unit_walktoxy again
+			if(ud->steptimer != INVALID_TIMER) {
+				//Execute step timer on next step instead
+				delete_timer(ud->steptimer, unit_step_timer);
+				ud->steptimer = INVALID_TIMER;
+			}
+			return unit_walktoxy(bl, x, y, 8);
+		}
 	}
 
 	return 0;
@@ -576,6 +586,7 @@ int unit_delay_walktobl_timer(int tid, unsigned int tick, int id, intptr_t data)
  *	&1: Easy walk (fail if CELL_CHKNOPASS is in direct path)
  *	&2: Force walking (override can_move)
  *	&4: Delay walking for can_move
+ *  &8: Search for an unoccupied cell and cancel if none available
  * @return 1: Success 0: Fail or unit_walktoxy_sub()
  */
 int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
@@ -594,6 +605,9 @@ int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
 
 	if (bl->type == BL_PC)
 		sd = BL_CAST(BL_PC, bl);
+
+	if ((flag&8) && !map_closest_freecell(bl->m, &x, &y, BL_CHAR|BL_NPC, 1)) //This might change x and y
+		return 0;
 
 	if (!path_search(&wpd, bl->m, bl->x, bl->y, x, y, flag&1, CELL_CHKNOPASS)) // Count walk path cells
 		return 0;
@@ -819,7 +833,7 @@ bool unit_run(struct block_list *bl, struct map_session_data *sd, enum sc_type t
 			break;
 
 		// If sprinting and there's a PC/Mob/NPC, block the path [Kevin]
-		if(map_count_oncell(bl->m, to_x + dir_x, to_y + dir_y, BL_PC|BL_MOB|BL_NPC))
+		if(map_count_oncell(bl->m, to_x + dir_x, to_y + dir_y, BL_PC|BL_MOB|BL_NPC, 0))
 			break;
 
 		to_x += dir_x;
@@ -2147,6 +2161,7 @@ int unit_unattackable(struct block_list *bl)
 
 	if (ud) {
 		ud->state.attack_continue = 0;
+		ud->state.step_attack = 0;
 		ud->target_to = 0;
 		unit_set_target(ud, 0);
 	}
@@ -2163,7 +2178,9 @@ int unit_unattackable(struct block_list *bl)
  * Requests a unit to attack a target
  * @param src: Object initiating attack
  * @param target_id: Target ID (bl->id)
- * @param continuous: Whether or not the attack is ongoing
+ * @param continuous: 
+ *		0x1 - Whether or not the attack is ongoing
+ *		0x2 - Whether function was called from unit_step_timer or not
  * @return Success(0); Fail(1);
  */
 int unit_attack(struct block_list *src,int target_id,int continuous)
@@ -2204,7 +2221,8 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 		return 1;
 	}
 
-	ud->state.attack_continue = continuous;
+	ud->state.attack_continue = (continuous&1)?1:0;
+	ud->state.step_attack = (continuous&2)?1:0;
 	unit_set_target(ud, target_id);
 
 	range = status_get_range(src);
@@ -2493,7 +2511,8 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 	sstatus = status_get_status_data(src);
 	range = sstatus->rhw.range;
 
-	if( unit_is_walking(target) && (target->type == BL_PC || !map_getcell(target->m,target->x,target->y,CELL_CHKICEWALL)) )
+	if( (unit_is_walking(target) || ud->state.step_attack)
+		&& (target->type == BL_PC || !map_getcell(target->m,target->x,target->y,CELL_CHKICEWALL)) )
 		range++; // Extra range when chasing (does not apply to mobs locked in an icewall)
 
 	if(sd && !check_distance_client_bl(src,target,range)) {
