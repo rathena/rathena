@@ -19111,13 +19111,13 @@ BUILDIN_FUNC(countspiritball) {
 }
 
 /** Send message with color to player
-* displaymessage("<message>"{,<color>{,<Account ID>}})
+* dispbottomcolor("<message>"{,<color>{,<Account ID>}})
 * @param message 
 * @param color Hex color default (Green)
 * @param account_id Target player (Optional)
 * @author [Napster]
 */
-BUILDIN_FUNC(displaymessage)
+BUILDIN_FUNC(dispbottomcolor)
 {
 	TBL_PC *sd;
 	int color;
@@ -19681,8 +19681,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(addspiritball,"ii?"),
 	BUILDIN_DEF(delspiritball,"i?"),
 	BUILDIN_DEF(countspiritball,"?"),
-	BUILDIN_DEF(displaymessage,"s??"),
-	BUILDIN_DEF2(displaymessage,"dispcolor","s??"),
+	BUILDIN_DEF(dispbottomcolor,"s??"),
 
 #include "../custom/script_def.inc"
 

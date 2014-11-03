@@ -3769,6 +3769,14 @@ window.
 
 ---------------------------------------
 
+*dispbottomcolor "<message>",<color>,<accound_id>;
+
+This command will send the given message with color into the invoking character's chat 
+window. The color format is in RGB (0xRRGGBB). The color is
+by default green (0xFFFFFF).
+
+---------------------------------------
+
 *warp "<map name>",<x>,<y>;
 
 This command will take the invoking character to the specified map, and if 
