@@ -320,12 +320,16 @@ int battle_delay_damage(unsigned int tick, int amotion, struct block_list *src, 
 {
 	struct delay_damage *dat;
 	struct status_change *sc;
+	struct block_list *d_tbl = NULL;
 	nullpo_ret(src);
 	nullpo_ret(target);
 
 	sc = status_get_sc(target);
 
-	if( sc && sc->data[SC_DEVOTION] && damage > 0 && skill_id != PA_PRESSURE && skill_id != CR_REFLECTSHIELD )
+	if (sc && sc->data[SC_DEVOTION] && sc->data[SC_DEVOTION]->val1)
+		d_tbl = map_id2bl(sc->data[SC_DEVOTION]->val1);
+
+	if( d_tbl && sc && sc->data[SC_DEVOTION] && damage > 0 && skill_id != PA_PRESSURE && skill_id != CR_REFLECTSHIELD )
 		damage = 0;
 
 	if ( !battle_config.delay_battle_damage || amotion <= 1 ) {
@@ -347,7 +351,7 @@ int battle_delay_damage(unsigned int tick, int amotion, struct block_list *src, 
 	dat->damage = damage;
 	dat->dmg_lv = dmg_lv;
 	dat->delay = ddelay;
-	dat->distance = distance_bl(src, target)+10; //Attack should connect regardless unless you teleported.
+	dat->distance = distance_bl(src, target) + (battle_config.snap_dodge ? 10 : battle_config.area_size);
 	dat->additional_effects = additional_effects;
 	dat->src_type = src->type;
 	if (src->type != BL_PC && amotion > 1000)
@@ -7922,6 +7926,7 @@ static const struct _battle_data {
 	{ "monster_chase_refresh",              &battle_config.mob_chase_refresh,               1,      0,      30,             },
 	{ "mob_icewall_walk_block",             &battle_config.mob_icewall_walk_block,          75,     0,      255,            },
 	{ "boss_icewall_walk_block",            &battle_config.boss_icewall_walk_block,         0,      0,      255,            },
+	{ "snap_dodge",                         &battle_config.snap_dodge,                      0,      0,      1,              },
 };
 
 #ifndef STATS_OPT_OUT
