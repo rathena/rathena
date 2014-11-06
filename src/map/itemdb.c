@@ -1088,7 +1088,7 @@ static char itemdb_gendercheck(struct item_data *id)
  * We use a ':' delimiter which, if not found, assumes the weapon does not provide any matk.
  **/
 #ifdef RENEWAL
-static void itemdb_re_split_atoi(char *str, int *atk, int *matk) {
+static void itemdb_re_split_atoi(char *str, int *val1, int *val2) {
 	int i, val[2];
 
 	for (i=0; i<2; i++) {
@@ -1099,17 +1099,17 @@ static void itemdb_re_split_atoi(char *str, int *atk, int *matk) {
 			*str++=0;
 	}
 	if( i == 0 ) {
-		*atk = *matk = 0;
+		*val1 = *val2 = 0;
 		return;//no data found
 	}
-	if( i == 1 ) {//Single Value, we assume it's the ATK
-		*atk = val[0];
-		*matk = 0;
+	if( i == 1 ) {//Single Value
+		*val1 = val[0];
+		*val2 = 0;
 		return;
 	}
 	//We assume we have 2 values.
-	*atk = val[0];
-	*matk = val[1];
+	*val1 = val[0];
+	*val2 = val[1];
 	return;
 }
 #endif
