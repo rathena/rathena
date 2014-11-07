@@ -586,7 +586,7 @@ int unit_delay_walktobl_timer(int tid, unsigned int tick, int id, intptr_t data)
  *	&1: Easy walk (fail if CELL_CHKNOPASS is in direct path)
  *	&2: Force walking (override can_move)
  *	&4: Delay walking for can_move
- *  &8: Search for an unoccupied cell and cancel if none available
+ *	&8: Search for an unoccupied cell and cancel if none available
  * @return 1: Success 0: Fail or unit_walktoxy_sub()
  */
 int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)

@@ -499,7 +499,7 @@ void initChangeTables(void)
 	add_sc( NPC_MAGICMIRROR		, SC_MAGICMIRROR	);
 	set_sc( NPC_SLOWCAST		, SC_SLOWCAST		, SI_SLOWCAST		, SCB_NONE );
 	set_sc( NPC_CRITICALWOUND	, SC_CRITICALWOUND	, SI_CRITICALWOUND	, SCB_NONE );
-	set_sc( NPC_STONESKIN		, SC_ARMORCHANGE	, SI_BLANK		, SCB_DEF|SCB_MDEF );
+	set_sc( NPC_STONESKIN		, SC_ARMORCHANGE	, SI_BLANK		, SCB_NONE );
 	add_sc( NPC_ANTIMAGIC		, SC_ARMORCHANGE	);
 	add_sc( NPC_WIDECURSE		, SC_CURSE		);
 	add_sc( NPC_WIDESTUN		, SC_STUN		);
@@ -12208,12 +12208,14 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 			status_check_skilluse(src, bl, WZ_SIGHTBLASTER, 2))
 		{
 			struct skill_unit *su = (struct skill_unit *)bl;
-			if (sce && skill_attack(BF_MAGIC,src,src,bl,WZ_SIGHTBLASTER,sce->val1,tick,0x1000)
-				&& (!su || !su->group || !(skill_get_inf2(su->group->skill_id)&INF2_TRAP))) { // The hit is not counted if it's against a trap
-				sce->val2 = 0; // This signals it to end.
-			} else if((bl->type&BL_SKILL) && sce->val4%2 == 0) {
-				//Remove trap immunity temporarily so it triggers if you still stand on it
-				sce->val4++;
+			if (sce) {
+				if (skill_attack(BF_MAGIC,src,src,bl,WZ_SIGHTBLASTER,sce->val1,tick,0x1000000)
+					&& (!su || !su->group || !(skill_get_inf2(su->group->skill_id)&INF2_TRAP))) { // The hit is not counted if it's against a trap
+					sce->val2 = 0; // This signals it to end.
+				} else if((bl->type&BL_SKILL) && sce->val4%2 == 0) {
+					//Remove trap immunity temporarily so it triggers if you still stand on it
+					sce->val4++;
+				}
 			}
 		}
 		break;

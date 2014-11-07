@@ -2024,8 +2024,9 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
  *	Original coder Skoltex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
+  *	flag - see e_battle_flag
  */
-static bool target_has_infinite_defense(struct block_list *target, int skill_id)
+static bool is_infinite_defense(struct block_list *target, int flag)
 {
 	struct status_data *tstatus = status_get_status_data(target);
 
@@ -2035,11 +2036,17 @@ static bool target_has_infinite_defense(struct block_list *target, int skill_id)
 		if (su && su->group && (su->group->skill_id == WM_REVERBERATION || su->group->skill_id == WM_POEMOFNETHERWORLD))
 			return true;
 	}
-	return (tstatus->mode&MD_PLANT && skill_id != RA_CLUSTERBOMB
-#ifdef RENEWAL
-		&& skill_id != HT_FREEZINGTRAP && skill_id != HT_CLAYMORETRAP
-#endif
-	);
+
+	if(tstatus->mode&MD_IGNOREMELEE && (flag&(BF_WEAPON|BF_SHORT)) == (BF_WEAPON|BF_SHORT) )
+		return true;
+	if(tstatus->mode&MD_IGNOREMAGIC && flag&(BF_MAGIC) )
+		return true;
+	if(tstatus->mode&MD_IGNORERANGED && (flag&(BF_WEAPON|BF_LONG)) == (BF_WEAPON|BF_LONG) )
+		return true;
+	if(tstatus->mode&MD_IGNOREMISC && flag&(BF_MISC) )
+		return true;
+
+	return (tstatus->mode&MD_PLANT);
 }
 
 /*========================
@@ -3035,9 +3042,29 @@ struct Damage battle_calc_skill_base_damage(struct Damage wd, struct block_list 
 }
 
 //For quick div adjustment.
-#define DAMAGE_DIV_FIX(dmg, div) { if (div > 1) (dmg)*=div; else if (div < 0) (div)*=-1; }
+#define DAMAGE_DIV_FIX(dmg, div) { if (div < 0) { (div)*=-1; (dmg)/=div; } (dmg)*=div; }
 #define DAMAGE_DIV_FIX2(dmg, div) { if (div > 1) (dmg)*=div; }
 #define DAMAGE_DIV_FIX_RENEWAL(wd, div) { DAMAGE_DIV_FIX2(wd.statusAtk, div); DAMAGE_DIV_FIX2(wd.weaponAtk, div); DAMAGE_DIV_FIX2(wd.equipAtk, div); DAMAGE_DIV_FIX2(wd.masteryAtk, div); }
+/*=================================================
+ * Applies DAMAGE_DIV_FIX and checks for min damage
+ *-------------------------------------------------
+ * Credits:
+ *	Original coder Playtester
+ */
+static struct Damage battle_apply_div_fix(struct Damage d)
+{
+	if(d.damage) {
+		DAMAGE_DIV_FIX(d.damage, d.div_);
+		//Min damage
+		if((battle_config.skill_min_damage&d.flag) && d.damage < d.div_)
+			d.damage = d.div_;
+	} else if (d.div_ < 0) {
+		d.div_ *= -1;
+	}
+
+	return d;
+}
+
 /*=======================================
  * Check for and calculate multi attacks
  *---------------------------------------
@@ -3235,7 +3262,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			skillratio += 30*skill_lv;
 			break;
 		case AS_SONICBLOW:
-			skillratio += -50+5*skill_lv;
+			skillratio += 300+40*skill_lv;
 			break;
 		case TF_SPRINKLESAND:
 			skillratio += 30;
@@ -3431,7 +3458,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			skillratio += 20*skill_lv;
 			break;
 		case GS_RAPIDSHOWER:
-			skillratio += 10*skill_lv;
+			skillratio += 400+50*skill_lv;
 			break;
 		case GS_DESPERADO:
 			skillratio += 50*(skill_lv-1);
@@ -4492,6 +4519,7 @@ struct Damage battle_calc_attack_post_defense(struct Damage wd, struct block_lis
  */
 struct Damage battle_calc_attack_plant(struct Damage wd, struct block_list *src,struct block_list *target, uint16 skill_id, uint16 skill_lv)
 {
+	struct map_session_data *sd = BL_CAST(BL_PC, src);
 	struct status_data *tstatus = status_get_status_data(target);
 	bool attack_hits = is_attack_hitting(wd, src, target, skill_id, skill_lv, false);
 	int right_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_R, false);
@@ -4500,11 +4528,14 @@ struct Damage battle_calc_attack_plant(struct Damage wd, struct block_list *src,
 
 	//Plants receive 1 damage when hit
 	if( attack_hits || wd.damage > 0 )
-		wd.damage = wd.div_; // In some cases, right hand no need to have a weapon to increase damage
-	if( is_attack_left_handed(src, skill_id) && (attack_hits || wd.damage2 > 0) )
-		wd.damage2 = wd.div_;
-	if (is_attack_right_handed(src, skill_id) && is_attack_left_handed(src, skill_id)) // force left hand to 1 damage while dual wielding [helvetica]
-		wd.damage2 = 1;
+		wd.damage = 1; //In some cases, right hand no need to have a weapon to deal a damage
+	if( is_attack_left_handed(src, skill_id) && (attack_hits || wd.damage2 > 0) ) {
+		if(sd->status.weapon == W_KATAR)
+			wd.damage2 = 0; //No backhand damage against plants
+		else {
+			wd.damage2 = 1; //Deal 1 HP damage as long as there is a weapon in the left hand
+		}
+	}
 
 	if( attack_hits && class_ == MOBID_EMPERIUM ) {
 		if(target && map_flag_gvg2(target->m) && !battle_can_hit_gvg_target(src,target,skill_id,(skill_id)?BF_SKILL:0)) {
@@ -4521,8 +4552,15 @@ struct Damage battle_calc_attack_plant(struct Damage wd, struct block_list *src,
 		return wd;
 	}
 
-	//if( !(battle_config.skill_min_damage&1) )
-	//Do not return if you are supposed to deal greater damage to plants than 1. [Skotlex]
+	//For plants we don't continue with the weapon attack code, so we have to apply DAMAGE_DIV_FIX here
+	wd = battle_apply_div_fix(wd);
+
+	//If there is left hand damage, total damage can never exceed 2, even on multiple hits
+	if(wd.damage > 1 && wd.damage2 > 0) {
+		wd.damage = 1;
+		wd.damage2 = 1;
+	}
+
 	return wd;
 }
 
@@ -4948,7 +4986,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	// check if we're landing a hit
 	if(!is_attack_hitting(wd, src, target, skill_id, skill_lv, true))
 		wd.dmg_lv = ATK_FLEE;
-	else if(!target_has_infinite_defense(target, skill_id)) { //no need for math against plants
+	else if(!is_infinite_defense(target, wd.flag)) { //no need for math against plants
 		int ratio, i = 0;
 
 		wd = battle_calc_skill_base_damage(wd, src, target, skill_id, skill_lv); // base skill damage
@@ -5010,18 +5048,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 			wd = battle_calc_attack_post_defense(wd, src, target, skill_id, skill_lv);
 		}
-	} else if(wd.div_ < 0) //Since the attack missed.
-		wd.div_ *= -1;
-
-	//WS_CARTTERMINATION never be missed because of flee, deals damage from BS_WEAPONRESEARCH [Cydh]
-	//NOTE: Idk the official behavior, if this damage can be reflected/adjusted or not
-	if (sd && skill_id == WS_CARTTERMINATION && wd.dmg_lv == ATK_FLEE && pc_checkskill(sd,BS_WEAPONRESEARCH)) {
-		wd.dmg_lv = ATK_DEF;
-		if(target_has_infinite_defense(target, skill_id))
-			return battle_calc_attack_plant(wd, src, target, skill_id, skill_lv);
-		wd.damage = pc_checkskill(sd,BS_WEAPONRESEARCH) * 2;
-		wd.damage2 = 0;
-		return wd;
 	}
 
 #ifdef RENEWAL
@@ -5185,11 +5211,12 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	// perform multihit calculations
 	DAMAGE_DIV_FIX_RENEWAL(wd, wd.div_);
 #endif
-	DAMAGE_DIV_FIX(wd.damage, wd.div_);
-
 	// only do 1 dmg to plant, no need to calculate rest
-	if(target_has_infinite_defense(target, skill_id))
+	if(is_infinite_defense(target, wd.flag))
 		return battle_calc_attack_plant(wd, src, target, skill_id, skill_lv);
+
+	//Apply DAMAGE_DIV_FIX and check for min damage
+	wd = battle_apply_div_fix(wd);
 
 	wd = battle_calc_attack_left_right_hands(wd, src, target, skill_id, skill_lv);
 
@@ -5308,13 +5335,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 
 	//Skill Range Criteria
 	ad.flag |= battle_range_type(src, target, skill_id, skill_lv);
-	flag.infdef=(tstatus->mode&MD_PLANT?1:0);
-	if( target->type == BL_SKILL) {
-		TBL_SKILL *su = (TBL_SKILL*)target;
 
-		if( su && su->group && (su->group->skill_id == WM_REVERBERATION || su->group->skill_id == WM_POEMOFNETHERWORLD) )
-			flag.infdef = 1;
-	}
+	//Infinite defense (plant mode)
+	flag.infdef = is_infinite_defense(target, ad.flag)?1:0;
 
 	switch(skill_id)
 	{
@@ -5328,10 +5351,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			ad.dmotion = 0; //No flinch animation.
 			break;
 	}
-
-	if(!flag.infdef && (
-		(tstatus->mode&MD_IGNOREMAGIC && ad.flag&(BF_MAGIC) )	//magic
-	)) flag.infdef = 1;
 
 	if (!flag.infdef) //No need to do the math for plants
 	{
@@ -5950,14 +5969,12 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		}
 
 #ifndef RENEWAL
-	ad.damage += battle_calc_cardfix(BF_MAGIC, src, target, nk, s_ele, 0, ad.damage, 0, ad.flag);
+		ad.damage += battle_calc_cardfix(BF_MAGIC, src, target, nk, s_ele, 0, ad.damage, 0, ad.flag);
 #endif
-	}
+	} //Hint: Against plants damage will still be 1 at this point
 
-	DAMAGE_DIV_FIX(ad.damage, ad.div_);
-
-	if (flag.infdef && ad.damage)
-		ad.damage = ad.damage>0?1:-1;
+	//Apply DAMAGE_DIV_FIX and check for min damage
+	ad = battle_apply_div_fix(ad);
 
 	switch(skill_id) { // These skills will do a GVG fix later
 #ifdef RENEWAL
@@ -6258,8 +6275,6 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			ShowError("0 enemies targeted by %d:%s, divide per 0 avoided!\n", skill_id, skill_get_name(skill_id));
 	}
 
-	DAMAGE_DIV_FIX(md.damage, md.div_);
-
 	if (!(nk&NK_IGNORE_FLEE))
 	{
 		struct status_change *sc = status_get_sc(target);
@@ -6309,34 +6324,18 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	if (sd && (i = pc_skillatk_bonus(sd, skill_id)))
 		md.damage += (int64)md.damage*i/100;
 
-	if(md.damage < 0)
-		md.damage = 0;
-	else if(md.damage && tstatus->mode&MD_PLANT) {
-		switch(skill_id){
-			case NJ_ISSEN: // Final Strike will MISS on "plant"-type mobs [helvetica]
-				md.damage = 0;
-				md.dmg_lv = ATK_FLEE;
-				break;
-			case HT_LANDMINE:
-			case MA_LANDMINE:
-			case HT_BLASTMINE:
-			case HT_CLAYMORETRAP:
-			case RA_CLUSTERBOMB:
-#ifdef RENEWAL
-				break;
-#endif
-			default:
-				md.damage = 1;
-		}
-	} else if( target->type == BL_SKILL ) {
-		TBL_SKILL *su = (TBL_SKILL*)target;
-
-		if( su && su->group && (su->group->skill_id == WM_REVERBERATION || su->group->skill_id == WM_POEMOFNETHERWORLD) )
-			md.damage = 1;
-	}
-
 	if(!(nk&NK_NO_ELEFIX))
 		md.damage=battle_attr_fix(src, target, md.damage, s_ele, tstatus->def_ele, tstatus->ele_lv);
+
+	//Plant damage
+	if(md.damage < 0)
+		md.damage = 0;
+	else if(md.damage && is_infinite_defense(target, md.flag)) {
+		md.damage = 1;
+	}
+
+	//Apply DAMAGE_DIV_FIX and check for min damage
+	md = battle_apply_div_fix(md);
 
 	md.damage=battle_calc_damage(src,target,&md,md.damage,skill_id,skill_lv);
 	if( map_flag_gvg2(target->m) )
@@ -6369,9 +6368,6 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	if ((skill_damage = battle_skill_damage(src,target,skill_id)) != 0)
 		md.damage += (int64)md.damage * skill_damage / 100;
 #endif
-
-	if(tstatus->mode&MD_IGNOREMISC && md.flag&(BF_MISC) )	//misc @TODO optimize me
-		md.damage = md.damage2 = 1;
 
 	battle_do_reflect(BF_MISC,&md, src, target, skill_id, skill_lv); //WIP [lighta]
 

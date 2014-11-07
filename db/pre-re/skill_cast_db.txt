@@ -5,7 +5,7 @@
 //
 // CastingTime: time to cast this skill, in milliseconds
 // AfterCastActDelay: "normal" delay, character cannot use skills, in milliseconds
-// AfterCastWalkDleay: amount of time before character can move again, in milliseconds
+// AfterCastWalkDelay: amount of time before character can move again, in milliseconds
 // Duration1/Duration2: usually the durations used by the skill, at special cases it is used to hold special data
 // Cool Down: amount of time until character can re-use this skill, in milliseconds
 //
