@@ -3762,18 +3762,11 @@ be seen by anyone else.
 
 ---------------------------------------
 
-*dispbottom "<message>";
-
-This command will send the given message into the invoking character's chat 
-window.
-
----------------------------------------
-
-*dispbottomcolor "<message>",<color>,<accound_id>;
+*dispbottom "<message>",<color>;
 
 This command will send the given message with color into the invoking character's chat 
 window. The color format is in RGB (0xRRGGBB). The color is
-by default green (0xFFFFFF).
+by default green
 
 ---------------------------------------
 

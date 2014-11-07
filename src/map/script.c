@@ -13403,16 +13403,28 @@ BUILDIN_FUNC(atcommand) {
 	return atcommand_sub(st,0);
 }
 
-/*==========================================
- * Displays a message for the player only (like system messages like "you got an apple" )
- *------------------------------------------*/
+/** Displays a message for the player only (like system messages like "you got an apple" )
+* dispbottom("<message>"{,<color>})
+* @param message 
+* @param color Hex color default (Green)
+* @author [Napster]
+*/
 BUILDIN_FUNC(dispbottom)
 {
 	TBL_PC *sd=script_rid2sd(st);
+	int color;
 	const char *message;
 	message=script_getstr(st,2);
-	if(sd)
-		clif_disp_onlyself(sd,message,(int)strlen(message));
+
+	if (script_hasdata(st,3))
+		color = script_getnum(st,3); // <color>
+
+	if(sd) {
+		if (script_hasdata(st,3))
+			clif_messagecolor2(sd, color, message);
+		else
+			clif_disp_onlyself(sd, message, (int)strlen(message));
+	}
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -19110,34 +19122,6 @@ BUILDIN_FUNC(countspiritball) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/** Send message with color to player
-* dispbottomcolor("<message>"{,<color>{,<Account ID>}})
-* @param message 
-* @param color Hex color default (Green)
-* @param account_id Target player (Optional)
-* @author [Napster]
-*/
-BUILDIN_FUNC(dispbottomcolor)
-{
-	TBL_PC *sd;
-	int color;
-	const char *mes = script_getstr(st,2);
-
-	if (script_hasdata(st,3))
-		color = script_getnum(st,3); // <color>
-	else
-		color = 0xFFFFFF; // Default color
-
-	if (script_hasdata(st,4))
-		sd = map_id2sd(script_getnum(st,4)); // <Account ID>
-	else
-		sd = script_rid2sd(st); // Attached player
-
-	if (sd)
-		clif_messagecolor2(sd, color, mes);
-	return SCRIPT_CMD_SUCCESS;
-}
-
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -19467,7 +19451,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(deletepset,"i"), // Delete a pattern set [MouseJstr]
 #endif
 	BUILDIN_DEF(preg_match,"ss?"),
-	BUILDIN_DEF(dispbottom,"s"), //added from jA [Lupus]
+	BUILDIN_DEF(dispbottom,"s?"), //added from jA [Lupus]
 	BUILDIN_DEF(getusersname,""),
 	BUILDIN_DEF(recovery,"i???"),
 	BUILDIN_DEF(getpetinfo,"i"),
@@ -19681,7 +19665,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(addspiritball,"ii?"),
 	BUILDIN_DEF(delspiritball,"i?"),
 	BUILDIN_DEF(countspiritball,"?"),
-	BUILDIN_DEF(dispbottomcolor,"s??"),
 
 #include "../custom/script_def.inc"
 
