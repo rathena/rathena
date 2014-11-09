@@ -5060,25 +5060,6 @@ void clif_skill_cooldown(struct map_session_data *sd, uint16 skill_id, unsigned 
 #endif
 }
 
-/// List of skills that have cooldown (ZC_SKILL_POSTDELAY_LIST).
-/// 043e <len>.W <skill ID>.W <tick>.L
-/// NOTE: This will tell the client which skills are currently in cooldown when a player logs on
-/// and display them in the shortcut bar. [Rytech]
-void clif_skill_cooldown_list(struct map_session_data *sd, uint16 skill_id, unsigned int tick)
-{
-#if PACKETVER >= 20081112
-	unsigned char buf[8];
-
-	nullpo_retv(sd);
-
-	WBUFW(buf,0) = 0x43e;
-	WBUFW(buf,2) = packet_len(0x43e);
-	WBUFW(buf,4) = skill_id;
-	WBUFL(buf,6) = tick;
-	clif_send(buf,packet_len(0x43e),&sd->bl,SELF);
-#endif
-}
-
 /// Skill attack effect and damage.
 /// 0114 <skill id>.W <src id>.L <dst id>.L <tick>.L <src delay>.L <dst delay>.L <damage>.W <level>.W <div>.W <type>.B (ZC_NOTIFY_SKILL)
 /// 01de <skill id>.W <src id>.L <dst id>.L <tick>.L <src delay>.L <dst delay>.L <damage>.L <level>.W <div>.W <type>.B (ZC_NOTIFY_SKILL2)
@@ -17748,7 +17729,7 @@ void packetdb_readdb(void)
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  4, 25,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  0, 25,
 	//#0x0440
 	   10,  4, -1,  0,  0,  0, 14,  0,  0,  0,  6,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,

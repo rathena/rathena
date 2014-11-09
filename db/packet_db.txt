@@ -1347,7 +1347,7 @@ packet_ver: 25
 
 //2008-11-12aRagexeRE
 0x043d,8
-0x043e,4
+//0x043e,-1
 0x043f,8
 
 //2008-12-17aRagexeRE

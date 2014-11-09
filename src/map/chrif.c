@@ -1407,8 +1407,7 @@ int chrif_skillcooldown_load(int fd) {
 	count = RFIFOW(fd, 12); //sc_count
 	for (i = 0; i < count; i++) {
 		struct skill_cooldown_data *data = (struct skill_cooldown_data*) RFIFOP(fd, 14 + i * sizeof (struct skill_cooldown_data));
-		if (skill_blockpc_start(sd, data->skill_id, data->tick))
-			clif_skill_cooldown_list(sd, data->skill_id, data->tick);
+			skill_blockpc_start(sd, data->skill_id, data->tick);
 	}
 	return 0;
 }
