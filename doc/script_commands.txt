@@ -3762,7 +3762,7 @@ be seen by anyone else.
 
 ---------------------------------------
 
-*dispbottom "<message>",<color>;
+*dispbottom "<message>"{,<color>};
 
 This command will send the given message with color into the invoking character's chat 
 window. The color format is in RGB (0xRRGGBB). The color is

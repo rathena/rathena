@@ -13407,21 +13407,20 @@ BUILDIN_FUNC(atcommand) {
 * dispbottom("<message>"{,<color>})
 * @param message 
 * @param color Hex color default (Green)
-* @author [Napster]
 */
 BUILDIN_FUNC(dispbottom)
 {
 	TBL_PC *sd=script_rid2sd(st);
-	int color;
+	int color = 0;
 	const char *message;
-	message=script_getstr(st,2);
+	message = script_getstr(st,2);
 
 	if (script_hasdata(st,3))
 		color = script_getnum(st,3); // <color>
 
 	if(sd) {
 		if (script_hasdata(st,3))
-			clif_messagecolor2(sd, color, message);
+			clif_messagecolor2(sd, color, message);		// [Napster]
 		else
 			clif_disp_onlyself(sd, message, (int)strlen(message));
 	}
