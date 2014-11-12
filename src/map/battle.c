@@ -3045,12 +3045,11 @@ struct Damage battle_calc_skill_base_damage(struct Damage wd, struct block_list 
 #define DAMAGE_DIV_FIX(dmg, div) { if (div < 0) { (div)*=-1; (dmg)/=div; } (dmg)*=div; }
 #define DAMAGE_DIV_FIX2(dmg, div) { if (div > 1) (dmg)*=div; }
 #define DAMAGE_DIV_FIX_RENEWAL(wd, div) { DAMAGE_DIV_FIX2(wd.statusAtk, div); DAMAGE_DIV_FIX2(wd.weaponAtk, div); DAMAGE_DIV_FIX2(wd.equipAtk, div); DAMAGE_DIV_FIX2(wd.masteryAtk, div); }
-/*=================================================
+/*================================================= [Playtester]
  * Applies DAMAGE_DIV_FIX and checks for min damage
- *-------------------------------------------------
- * Credits:
- *	Original coder Playtester
- */
+ * @param d: Damage struct to apply DAMAGE_DIV_FIX to
+ * @return Modified damage struct
+ *------------------------------------------------*/
 static struct Damage battle_apply_div_fix(struct Damage d)
 {
 	if(d.damage) {
@@ -5342,11 +5341,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	switch(skill_id)
 	{
 		case MG_FIREWALL:
-		case NJ_KAENSIN:
-			ad.dmotion = 0; //No flinch animation.
 			if ( tstatus->def_ele == ELE_FIRE || battle_check_undead(tstatus->race, tstatus->def_ele) )
 				ad.blewcount = 0; //No knockback
-			break;
+			//Fall through
+		case NJ_KAENSIN:
 		case PR_SANCTUARY:
 			ad.dmotion = 0; //No flinch animation.
 			break;

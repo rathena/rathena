@@ -23,7 +23,9 @@
 
 // If the server can't handle processing thousands of monsters
 // or many connected clients, please increase TIMER_MIN_INTERVAL.
-#define TIMER_MIN_INTERVAL 50
+// The official interval of 20ms is however strongly recommended,
+// as it is needed for perfect server-client syncing.
+#define TIMER_MIN_INTERVAL 20
 #define TIMER_MAX_INTERVAL 1000
 
 // timers (array)

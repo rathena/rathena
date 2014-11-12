@@ -1420,6 +1420,10 @@ int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int 
 		return 0;
 
 	if (type) {
+		//Bosses can ignore skill induced walkdelay (but not damage induced)
+		if(bl->type == BL_MOB && (((TBL_MOB*)bl)->status.mode&MD_BOSS))
+			return 0;
+		//Make sure walk delay is not decreased
 		if (DIFF_TICK(ud->canmove_tick, tick+delay) > 0)
 			return 0;
 	} else {

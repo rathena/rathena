@@ -42,6 +42,7 @@
 #include <math.h>
 
 #define SKILLUNITTIMER_INTERVAL	100
+#define WATERBALL_INTERVAL	150
 
 // ranges reserved for mapping skill ids to skilldb offsets
 #define HM_SKILLRANGEMIN 700
@@ -3721,11 +3722,15 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 				case WZ_WATERBALL:
 					skill_toggle_magicpower(src, skl->skill_id); // only the first hit will be amplify
 					// Official behaviour is to hit as long as there is a line of sight, regardless of distance
-					range = path_search_long(NULL,src->m,src->x,src->y,target->x,target->y,CELL_CHKNOREACH);
-					if (!status_isdead(target) && range)
+					if (!status_isdead(target) && path_search_long(NULL,src->m,src->x,src->y,target->x,target->y,CELL_CHKNOREACH)) {
+						//Apply canact delay here to prevent hacks (unlimited waterball casting)
+						ud->canact_tick = tick + skill_delayfix(src, skl->skill_id, skl->skill_lv);
 						skill_attack(BF_MAGIC,src,src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
-					if (skl->type>1 && !status_isdead(target) && !status_isdead(src) && range) {
-						skill_addtimerskill(src,tick+125,target->id,0,0,skl->skill_id,skl->skill_lv,skl->type-1,skl->flag);
+					}
+					if (skl->type>1 && !status_isdead(target) && !status_isdead(src)) {
+						//Timer will continue and walkdelay set until target is dead, even if there is currently no line of sight
+						unit_set_walkdelay(src, tick, WATERBALL_INTERVAL, 1);
+						skill_addtimerskill(src,tick+WATERBALL_INTERVAL,target->id,0,0,skl->skill_id,skl->skill_lv,skl->type-1,skl->flag);
 					} else {
 						struct status_change *sc = status_get_sc(src);
 						if(sc) {
@@ -4670,8 +4675,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					}
 				}
 
+			if( count > (10000/WATERBALL_INTERVAL)+1 ) //Waterball has a max duration of 10 seconds [Playtester]
+				count = (10000/WATERBALL_INTERVAL)+1;
 			if( count > 1 ) // queue the remaining count - 1 timerskill Waterballs
-				skill_addtimerskill(src,tick+150,bl->id,0,0,skill_id,skill_lv,count-1,flag);
+				skill_addtimerskill(src,tick+WATERBALL_INTERVAL,bl->id,0,0,skill_id,skill_lv,count-1,flag);
 		}
 		skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
