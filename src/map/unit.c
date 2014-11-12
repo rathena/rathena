@@ -802,8 +802,7 @@ void unit_run_hit(struct block_list *bl, struct status_change *sc, struct map_se
  * @param sd: Required only when using SC_WUGDASH
  * @return true: Success (Finished running) false: Fail (Hit an object/Couldn't run)
  */
-bool unit_run(struct block_list *bl, struct map_session_data *sd, enum sc_type type)
-{
+bool unit_run(struct block_list *bl, struct map_session_data *sd, enum sc_type type) {
 	struct status_change *sc;
 	short to_x, to_y, dir_x, dir_y;
 	int i;
@@ -812,7 +811,7 @@ bool unit_run(struct block_list *bl, struct map_session_data *sd, enum sc_type t
 
 	sc = status_get_sc(bl);
 
-	if (!(sc && sc->data[SC_RUN]))
+	if (!(sc && sc->data[type]))
 		return false;
 
 	if (!unit_can_move(bl)) {
@@ -904,7 +903,7 @@ int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool
 	if(ud == NULL)
 		return 0;
 
-	unit_stop_walking(bl,1);
+	unit_stop_walking(bl, 1);
 	unit_stop_attack(bl);
 
 	if( checkpath && (map_getcell(bl->m,dst_x,dst_y,CELL_CHKNOPASS) || !path_search(NULL,bl->m,bl->x,bl->y,dst_x,dst_y,easy,CELL_CHKNOREACH)) )
@@ -919,12 +918,12 @@ int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool
 	dx = dst_x - bl->x;
 	dy = dst_y - bl->y;
 
-	map_foreachinmovearea(clif_outsight, bl, AREA_SIZE, dx, dy, sd?BL_ALL:BL_PC, bl);
+	map_foreachinmovearea(clif_outsight, bl, AREA_SIZE, dx, dy, (sd ? BL_ALL : BL_PC), bl);
 
 	map_moveblock(bl, dst_x, dst_y, gettick());
 
 	ud->walktimer = CLIF_WALK_TIMER; // Arbitrary non-INVALID_TIMER value to make the clif code send walking packets
-	map_foreachinmovearea(clif_insight, bl, AREA_SIZE, -dx, -dy, sd?BL_ALL:BL_PC, bl);
+	map_foreachinmovearea(clif_insight, bl, AREA_SIZE, -dx, -dy, (sd ? BL_ALL : BL_PC), bl);
 	ud->walktimer = INVALID_TIMER;
 
 	if(sd) {
@@ -932,14 +931,14 @@ int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool
 			npc_touchnext_areanpc(sd,false);
 
 		if(map_getcell(bl->m,bl->x,bl->y,CELL_CHKNPC)) {
-			npc_touch_areanpc(sd,bl->m,bl->x,bl->y);
+			npc_touch_areanpc(sd, bl->m, bl->x, bl->y);
 
 			if (bl->prev == NULL) // Script could have warped char, abort remaining of the function.
 				return 0;
 		} else
 			sd->areanpc_id=0;
 
-		if( sd->status.pet_id > 0 && sd->pd && sd->pd->pet.intimate > 0 ){
+		if( sd->status.pet_id > 0 && sd->pd && sd->pd->pet.intimate > 0 ) {
 			// Check if pet needs to be teleported. [Skotlex]
 			int flag = 0;
 			struct block_list* pbl = &sd->pd->bl;
@@ -965,7 +964,7 @@ int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool
  * @param dir: Direction (0-7)
  * @return 0
  */
-int unit_setdir(struct block_list *bl,unsigned char dir)
+int unit_setdir(struct block_list *bl, unsigned char dir)
 {
 	struct unit_data *ud;
 
@@ -1797,7 +1796,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		casttime = 0;
 
 	if(!ud->state.running) // Need TK_RUN or WUGDASH handler to be done before that, see bugreport:6026
-		unit_stop_walking(src,1);// Even though this is not how official works but this will do the trick. bugreport:6829
+		unit_stop_walking(src, 1); // Even though this is not how official works but this will do the trick. bugreport:6829
 
 	// In official this is triggered even if no cast time.
 	clif_skillcasting(src, src->id, target_id, 0,0, skill_id, skill_get_ele(skill_id, skill_lv), casttime);
