@@ -5321,7 +5321,7 @@ char pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int 
 	pc_cell_basilica(sd);
 	
 	//check if we gonna be rewarped [lighta]
-	if(npc_check_areanpc(1,m,x,y,1)){
+	if(npc_check_areanpc(1,m,x,y,0)){
 		sd->count_rewarp++;	
 	}
 	else 
