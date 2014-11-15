@@ -3332,16 +3332,16 @@ moc_para01,112,96,5	script	Administrator Michael	967,{
 				mes "I hope they're useful to you.";
 				close;
 			}
-			mes "[Michael]";
-			mes "Wait...I will check the record...";
-			mes "...";
-			mes "...hummmm.";
-			next;
-			mes "[Michael]";
-			mes "Sorry, but I can't find any record that you can obtain supplies.";
-			mes "Are you sure?";
-			close;
 		}
+		mes "[Michael]";
+		mes "Wait...I will check the record...";
+		mes "...";
+		mes "...hummmm.";
+		next;
+		mes "[Michael]";
+		mes "Sorry, but I can't find any record that you can obtain supplies.";
+		mes "Are you sure?";
+		close;
 	case 2:
 		mes "[Michael]";
 		mes "We store weapons, armor and other goods which were created by the Eden Group here.";
