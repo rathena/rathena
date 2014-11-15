@@ -5486,9 +5486,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case WZ_FIREPILLAR:
 						if (skill_lv > 10)
-							skillratio += 100;
+							skillratio += 2300; //200% MATK each hit
 						else
-							skillratio -= 80;
+							skillratio += -60 + 20*skill_lv; //20% MATK each hit
 						break;
 					case WZ_SIGHTRASHER:
 						skillratio += 20*skill_lv;
@@ -5843,7 +5843,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 
 				//Constant/misc additions from skills
 				if (skill_id == WZ_FIREPILLAR)
-					MATK_ADD(50);
+					MATK_ADD(100+50*skill_lv);
 			}
 		}
 #ifdef RENEWAL

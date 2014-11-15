@@ -58,7 +58,7 @@
 125,0x99,    ,  0, 1,1000,all,   0x8000	//HT_TALKIEBOX
 140,0x92,    , -1, 1,1000,enemy, 0x8000	//AS_VENOMDUST
 220,0xb0,    ,  0, 0,  -1,all,   0x8002	//RG_GRAFFITI
-229,0xb1,    ,  0, 1,1000,enemy, 0x006	//AM_DEMONSTRATION
+229,0xb1,    ,  0, 1, 500,enemy, 0x006	//AM_DEMONSTRATION
 254,0x86,    , -1, 0, 300,enemy, 0x010	//CR_GRANDCROSS
 285,0x9a,    ,  3, 0,  -1,all,   0xC010	//SA_VOLCANO
 286,0x9b,    ,  3, 0,  -1,all,   0xC010	//SA_DELUGE
