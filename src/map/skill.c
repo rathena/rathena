@@ -4356,8 +4356,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case NPC_SPLASHATTACK:
 		flag |= SD_PREAMBLE; // a fake packet will be sent for the first target to be hit
 	case AS_SPLASHER:
-	case SM_MAGNUM:
-	case MS_MAGNUM:
 	case HT_BLITZBEAT:
 	case AC_SHOWER:
 	case MA_SHOWER:
@@ -4470,6 +4468,14 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case WL_COMET:
 		if(!map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR)) // Nothing should happen if the target is on Land Protector
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
+		break;
+		
+	case SM_MAGNUM:
+	case MS_MAGNUM:
+		if( flag&1 ) {
+			//Damage depends on distance, so add it to flag if it is > 1
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag|distance_bl(src, bl));
+		}
 		break;
 
 	case KN_BRANDISHSPEAR:

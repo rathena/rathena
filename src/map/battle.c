@@ -2621,7 +2621,7 @@ static struct Damage battle_calc_element_damage(struct Damage wd, struct block_l
 		}
 		if (is_attack_left_handed(src, skill_id) && wd.damage2 > 0)
 			wd.damage2 = battle_attr_fix(src, target, wd.damage2, left_element ,tstatus->def_ele, tstatus->ele_lv);
-		if (sc && sc->data[SC_WATK_ELEMENT]) {
+		if (sc && sc->data[SC_WATK_ELEMENT] && (wd.damage || wd.damage2)) {
 			// Descriptions indicate this means adding a percent of a normal attack in another element. [Skotlex]
 			int64 damage = battle_calc_base_damage(sstatus, &sstatus->rhw, sc, tstatus->size, sd, (is_skill_using_arrow(src, skill_id)?2:0)) * sc->data[SC_WATK_ELEMENT]->val2 / 100;
 
@@ -3194,7 +3194,10 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 		case SM_MAGNUM:
 		case MS_MAGNUM:
-			skillratio += 20*skill_lv;
+			if(wd.miscflag == 1)
+				skillratio += 20*skill_lv; //Inner 3x3 circle takes 100%+20%*level damage [Playtester]
+			else
+				skillratio += 10*skill_lv; //Outer 5x5 circle takes 100%+10%*level damage [Playtester]
 			break;
 		case MC_MAMMONITE:
 			skillratio += 50*skill_lv;
