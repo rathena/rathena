@@ -1428,11 +1428,11 @@ void pc_reg_received(struct map_session_data *sd)
 	chrif_bsdata_request(sd->status.char_id);
 	sd->storage_size = MIN_STORAGE; //default to min
 	if(battle_config.feature_banking)
-		chrif_req_login_operation(sd->status.account_id, sd->status.name, 7, 0, 1, 0); //request Bank data
+		chrif_req_login_operation(sd->status.account_id, sd->status.name, CHRIF_OP_LOGIN_BANK, 0, 1, 0); //request Bank data
 #ifdef VIP_ENABLE
 	sd->vip.time = 0;
 	sd->vip.enabled = 0;
-	chrif_req_login_operation(sd->status.account_id, sd->status.name, 6, 0, 1, 0);  // request VIP informations
+	chrif_req_login_operation(sd->status.account_id, sd->status.name, CHRIF_OP_LOGIN_VIP, 0, 1, 0);  // request VIP informations
 #endif
 	intif_Mail_requestinbox(sd->status.char_id, 0); // MAIL SYSTEM - Request Mail Inbox
 	intif_request_questlog(sd);

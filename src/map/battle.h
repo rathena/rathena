@@ -555,6 +555,7 @@ extern struct Battle_Config
 	int fame_pharmacy_10;
 
 	int disp_serverbank_msg;
+	int disp_servervip_msg;
 	int warg_can_falcon;
 	int path_blown_halt;
 	int rental_mount_speed_boost;

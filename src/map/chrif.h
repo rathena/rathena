@@ -18,6 +18,22 @@ struct auth_node {
 	enum sd_state state; //To track whether player was login in/out or changing maps.
 };
 
+/// Char-server (to login-server) operation request
+enum chrif_req_op {
+	// Request to login-server
+	CHRIF_OP_LOGIN_BLOCK = 1,
+	CHRIF_OP_LOGIN_BAN,
+	CHRIF_OP_LOGIN_UNBLOCK,
+	CHRIF_OP_LOGIN_UNBAN,
+	CHRIF_OP_LOGIN_CHANGESEX,
+	CHRIF_OP_LOGIN_VIP,
+	CHRIF_OP_LOGIN_BANK,
+
+	// Char-server operation
+	CHRIF_OP_BAN,
+	CHRIF_OP_UNBAN,
+};
+
 void chrif_setuserid(char* id);
 void chrif_setpasswd(char* pwd);
 void chrif_checkdefaultlogin(void);
@@ -68,7 +84,7 @@ int chrif_send_report(char* buf, int len);
 void chrif_parse_ack_vipActive(int fd);
 
 int chrif_req_charban(int aid, const char* character_name, int timediff);
-int chrif_req_charunban(int cid);
+int chrif_req_charunban(int aid, const char* character_name);
 
 int chrif_load_bankdata(int fd);
 

@@ -18781,7 +18781,7 @@ BUILDIN_FUNC(vip_time) {
 	if (sd == NULL)
 		return SCRIPT_CMD_FAILURE;
 
-	chrif_req_login_operation(sd->status.account_id, sd->status.name, 6, viptime, 7, 0); 
+	chrif_req_login_operation(sd->status.account_id, sd->status.name, CHRIF_OP_LOGIN_VIP, viptime, 7, 0); 
 #endif
 	return SCRIPT_CMD_SUCCESS;
 }

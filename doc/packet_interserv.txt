@@ -2753,11 +2753,13 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 
 0x2b2a
 	Type: ZA
-	Structure: <cmd>.W <cid>.L
-	index: 0,2
-	len: 6
+	Structure: <cmd>.W <aid>.L <character_name>.?B
+	index: 0,2,6
+	len: 6+NAME_LENGTH
 	parameter:
 		- cmd : packet identification (0x2b2a)
+		- aid
+		- character_name
 	desc:
 		- chrif_req_charunban
 

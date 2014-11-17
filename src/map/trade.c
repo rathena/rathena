@@ -210,13 +210,13 @@ int impossible_trade_check(struct map_session_data *sd)
 			intif_wis_message_to_gm(wisp_server_name, PC_PERM_RECEIVE_HACK_INFO, message_to_gm);
 			// if we block people
 			if (battle_config.ban_hack_trade < 0) {
-				chrif_req_login_operation(-1, sd->status.name, 1, 0, 0, 0); // type: 1 - block
+				chrif_req_login_operation(-1, sd->status.name, CHRIF_OP_LOGIN_BLOCK, 0, 0, 0); // type: 1 - block
 				set_eof(sd->fd); // forced to disconnect because of the hack
 				// message about the ban
 				strcpy(message_to_gm, msg_txt(sd,540)); //  This player has been definitively blocked.
 			// if we ban people
 			} else if (battle_config.ban_hack_trade > 0) {
-				chrif_req_login_operation(-1, sd->status.name, 2, battle_config.ban_hack_trade*60, 0, 0); // type: 2 - ban (year, month, day, hour, minute, second)
+				chrif_req_login_operation(-1, sd->status.name, CHRIF_OP_LOGIN_BAN, battle_config.ban_hack_trade*60, 0, 0); // type: 2 - ban (year, month, day, hour, minute, second)
 				set_eof(sd->fd); // forced to disconnect because of the hack
 				// message about the ban
 				sprintf(message_to_gm, msg_txt(sd,507), battle_config.ban_hack_trade); //  This player has been banned for %d minute(s).

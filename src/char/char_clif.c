@@ -712,7 +712,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 			WFIFOSET(fd,3);
 			return 1;
 		}
-                
+
 		/* set char as online prior to loading its data so 3rd party applications will realise the sql data is not reliable */
 		char_set_char_online(-2,char_id,sd->account_id);
 		if( !char_mmo_char_fromsql(char_id, &char_dat, true) ) { /* failed? set it back offline */

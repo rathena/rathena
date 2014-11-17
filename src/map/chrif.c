@@ -290,7 +290,7 @@ int chrif_save(struct map_session_data *sd, int flag) {
 			chrif_save_scdata(sd);
 			chrif_skillcooldown_save(sd);
 			chrif_save_bsdata(sd);
-			chrif_req_login_operation(sd->status.account_id, sd->status.name, 7, 0, 2, sd->status.bank_vault); //save Bank data
+			chrif_req_login_operation(sd->status.account_id, sd->status.name, CHRIF_OP_LOGIN_BANK, 0, 2, sd->status.bank_vault); //save Bank data
 		}
 		if ( flag != 3 && !chrif_auth_logout(sd,flag == 1 ? ST_LOGOUT : ST_MAPCHANGE) )
 			ShowError("chrif_save: Failed to set up player %d:%d for proper quitting!\n", sd->status.account_id, sd->status.char_id);
@@ -830,7 +830,7 @@ int chrif_changeemail(int id, const char *actual_email, const char *new_email) {
  * Send an account modification request to the login server (via char server).
  * @aid : Player requesting operation account id
  * @character_name : Target of operation Player name
- * @operation_type : 1: block, 2: ban, 3: unblock, 4: unban, 5: changesex (use next function for 5), 6 vip, 7 bank 
+ * @operation_type : see chrif_req_op
  * @timediff : tick to add or remove to unixtimestamp
  * @val1 : extra data value to transfer for operation
  * @val2 : extra data value to transfer for operation
@@ -844,15 +844,19 @@ int chrif_req_login_operation(int aid, const char* character_name, unsigned shor
 	safestrncpy((char*)WFIFOP(char_fd,6), character_name, NAME_LENGTH);
 	WFIFOW(char_fd,30) = operation_type;
 
-	if ( operation_type == 2 || operation_type == 6)
+	if ( operation_type == CHRIF_OP_LOGIN_BAN || operation_type == CHRIF_OP_LOGIN_VIP)
 		WFIFOL(char_fd,32) = timediff;
 	WFIFOL(char_fd,36) = val1;
 	WFIFOL(char_fd,40) = val2;
-
 	WFIFOSET(char_fd,44);
 	return 0;
 }
 
+/**
+ * S 2b0e <accid>.l <name>.24B <operation_type>.w <timediff>L <val1>L <val2>L
+ * Send an account modification (changesex) request to the login server (via char server).
+ * @sd : Player requesting operation
+ */
 int chrif_changesex(struct map_session_data *sd) {
 	chrif_check(-1);
 
@@ -860,7 +864,7 @@ int chrif_changesex(struct map_session_data *sd) {
 	WFIFOW(char_fd,0) = 0x2b0e;
 	WFIFOL(char_fd,2) = sd->status.account_id;
 	safestrncpy((char*)WFIFOP(char_fd,6), sd->status.name, NAME_LENGTH);
-	WFIFOW(char_fd,30) = 5;
+	WFIFOW(char_fd,30) = CHRIF_OP_LOGIN_CHANGESEX;
 	WFIFOSET(char_fd,44);
 
 	clif_displaymessage(sd->fd, msg_txt(sd,408)); //"Need disconnection to perform change-sex request..."
@@ -878,8 +882,7 @@ int chrif_changesex(struct map_session_data *sd) {
  * NB: That ack is received just after the char has sent the request to login and therefore didn't have login reply yet
  * @param aid : player account id the request was concerning
  * @param player_name : name the request was concerning
- * @param type : code of operation done:
- *   1: block, 2: ban, 3: unblock, 4: unban, 5: changesex, 6: vip, 7: bank
+ * @param type : code of operation done. See enum chrif_req_op
  * @param answer : type of answer
  *   0: login-server request done
  *   1: player not found
@@ -897,16 +900,29 @@ static void chrif_ack_login_req(int aid, const char* player_name, uint16 type, u
 		ShowError("chrif_ack_login_req failed - player not online.\n");
 		return;
 	}
-	
-	if( type > 0 && type <= 5 )
-		snprintf(action,25,"%s",msg_txt(sd,427+type)); //block|ban|unblock|unban|change the sex of
-	else if(type == 6) snprintf(action,25,"%s",msg_txt(sd,436)); //VIP
-	else if(type == 7) {
-		if (!battle_config.disp_serverbank_msg)
-			return;
-		snprintf(action,25,"%s","bank");
-	} else
-		snprintf(action,25,"???");
+
+	switch (type) {
+		case CHRIF_OP_LOGIN_BLOCK:
+		case CHRIF_OP_LOGIN_BAN:
+		case CHRIF_OP_LOGIN_UNBLOCK:
+		case CHRIF_OP_LOGIN_UNBAN:
+		case CHRIF_OP_LOGIN_CHANGESEX:
+			snprintf(action,25,"%s",msg_txt(sd,427+type)); //block|ban|unblock|unban|change the sex of
+			break;
+		case CHRIF_OP_LOGIN_VIP:
+			if (!battle_config.disp_servervip_msg)
+				return;
+			snprintf(action,25,"%s",msg_txt(sd,436)); //VIP
+			break;
+		case CHRIF_OP_LOGIN_BANK:
+			if (!battle_config.disp_serverbank_msg)
+				return;
+			snprintf(action,25,"%s","bank");
+			break;
+		default:
+			snprintf(action,25,"???");
+			break;
+	}
 
 	switch( answer ) {
 		case 0: sprintf(output, msg_txt(sd,424), action, NAME_LENGTH, player_name); break; //Login-serv has been asked to %s '%.*s'.
@@ -1098,13 +1114,14 @@ int chrif_req_charban(int aid, const char* character_name, int32 timediff){
 	return 0;
 }
 
-int chrif_req_charunban(int cid){
+int chrif_req_charunban(int aid, const char* character_name){
 	chrif_check(-1);
 	
-	WFIFOHEAD(char_fd,6);
+	WFIFOHEAD(char_fd,6+NAME_LENGTH);
 	WFIFOW(char_fd,0) = 0x2b2a;
-	WFIFOL(char_fd,2) = cid;
-	WFIFOSET(char_fd,6);
+	WFIFOL(char_fd,2) = aid;
+	safestrncpy((char*)WFIFOP(char_fd,6), character_name, NAME_LENGTH);
+	WFIFOSET(char_fd,6+NAME_LENGTH);
 	return 0;
 }
 
