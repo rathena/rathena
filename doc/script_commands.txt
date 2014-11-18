@@ -368,7 +368,7 @@ return 0 if the there is no player attached or the attached player no longer
 is logged on to the map-server).
 
 But what about GID?
---- ---- ----- ----
+-------------------
 
 GID stands for the Game ID of something, this can either be the GID obtained
 through mobspawn (mob control commands) or the account ID of a character.
@@ -643,7 +643,7 @@ the '$', normally denoting a string variable, before the square brackets that
 denotes an array index.
 
 Resume of the allowed variable and array scopes
------- -- --- ------- -------- --- ----- ------
+-----------------------------------------------
 
 +==========+======+=======+
 |VarType   | Norm | Array |
