@@ -368,7 +368,7 @@ return 0 if the there is no player attached or the attached player no longer
 is logged on to the map-server).
 
 But what about GID?
---- ---- ----- ----
+-------------------
 
 GID stands for the Game ID of something, this can either be the GID obtained
 through mobspawn (mob control commands) or the account ID of a character.
@@ -643,7 +643,7 @@ the '$', normally denoting a string variable, before the square brackets that
 denotes an array index.
 
 Resume of the allowed variable and array scopes
------- -- --- ------- -------- --- ----- ------
+-----------------------------------------------
 
 +==========+======+=======+
 |VarType   | Norm | Array |
@@ -2995,16 +2995,6 @@ within the specified area - an x1/y1-x2/y2 square on the specified map.
 
 This is useful for maps that are split into many buildings, such as all the 
 "*_in" maps, due to all the shops and houses.
-
----------------------------------------
-
-*getusersname;
-
-This command will give the invoking character a list of names of the connected 
-characters (including themselves) into an NPC script message window (see 'mes') 
-paging it by 10 names as if with the 'next' command.
-
-You need to put a 'close' after that yourself.
 
 ---------------------------------------
 \\
