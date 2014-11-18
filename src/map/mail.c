@@ -52,6 +52,8 @@ int mail_removezeny(struct map_session_data *sd, short flag)
 	{  //Zeny send
 		pc_payzeny(sd,sd->mail.zeny,LOG_TYPE_MAIL, NULL);
 	}
+	if (sd->mail.zeny > 0)
+		clif_updatestatus(sd, SP_ZENY);
 	sd->mail.zeny = 0;
 
 	return 1;
