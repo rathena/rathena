@@ -2997,16 +2997,6 @@ This is useful for maps that are split into many buildings, such as all the
 "*_in" maps, due to all the shops and houses.
 
 ---------------------------------------
-
-*getusersname;
-
-This command will give the invoking character a list of names of the connected 
-characters (including themselves) into an NPC script message window (see 'mes') 
-paging it by 10 names as if with the 'next' command.
-
-You need to put a 'close' after that yourself.
-
----------------------------------------
 \\
 2,2.- Guild-related commands
 \\
