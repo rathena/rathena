@@ -3567,24 +3567,35 @@ warg and 0 if they don't.
 ---------------------------------------
 
 *checkvending({"<Player Name>"})
-*checkchatting({"<Player Name>"})
 
-Checks if the player is vending or in a chatroom.
+Checks if the player is vending or has buyingstore.
 Name is optional, and defaults to the attached player if omitted.
 
-Return values for 'checkvending' are
-  0 = not vending
+The returned values are bitmask of.
+  0 = not vending, doesn't have buyingstore, & not autotrading
   1 = normal vending
-  2 = vending using @autotrade
-
-'checkchatting' returns 1 if they are in a chat room, 0 if they are not.
+  2 = using @autotrade
+  4 = has buyingstore
 
 Examples:
-	//This will check if Aaron is vending, and if so, put a message in front
-	//of the attached player saying Aaron is vending.
-	if (checkvending("Aaron"))
+	//This will check if Aaron's state
+	.@state = checkvending("Aaron");
+	if (.@state&1)
 		mes "Aaron is currently vending!";
+	if (.@state&2)
+		mes "Aaron is autotrading!";
+	if (.@state&4)
+		mes "Aaron has buying store!";
 
+---------------------------------------
+
+*checkchatting({"<Player Name>"})
+
+Checks if the player is in a chatroom.
+Name is optional, and defaults to the attached player if omitted.
+Returns 1 if they are in a chat room, 0 if they are not.
+
+Examples:
 	//This will check if the attached player in a chat room or not.
 	if (checkchatting())
 		mes "You are currently in a chat room!";

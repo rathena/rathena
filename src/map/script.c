@@ -15929,19 +15929,37 @@ BUILDIN_FUNC(getmonsterinfo)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-BUILDIN_FUNC(checkvending) // check vending [Nab4]
-{
+/**
+ * Check player's vending/buyingstore/autotrade state
+ * checkvending({"<Player Name>"})
+ * @author [Nab4]
+ */
+BUILDIN_FUNC(checkvending) {
 	TBL_PC *sd = NULL;
 
-	if(script_hasdata(st,2))
-		sd = map_nick2sd(script_getstr(st,2));
+	if (script_hasdata(st,2)) {
+		if (!(sd = map_nick2sd(script_getstr(st,2)))) {
+			ShowError("buildin_checkvending: Player '%s' is not online!\n", script_getstr(st,2));
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
 	else
 		sd = script_rid2sd(st);
 
-	if(sd)
-		script_pushint(st, sd->state.autotrade ? 2 : sd->state.vending);
-	else
+	if (!sd) {
 		script_pushint(st,0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+	else {
+		int8 ret = 0;
+		if (sd->state.vending)
+			ret |= 1;
+		if (sd->state.autotrade)
+			ret |= 2;
+		if (sd->state.buyingstore)
+			ret |= 4;
+		script_pushint(st, ret);
+	}
 	return SCRIPT_CMD_SUCCESS;
 }
 
