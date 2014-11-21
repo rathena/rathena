@@ -813,9 +813,10 @@ int channel_pcunbind(struct map_session_data *sd){
  *  0 : success
  *  -1 : fail
  */
-int channel_pcban(struct map_session_data *sd, char *chname, struct map_session_data *tsd, int flag){
+int channel_pcban(struct map_session_data *sd, char *chname, char *pname, int flag){
 	struct Channel *channel;
 	char output[128];
+	struct map_session_data *tsd = map_nick2sd(pname);
 
 	if( channel_chk(chname,NULL,1) ) {
 		clif_displaymessage(sd->fd, msg_txt(sd,1405));// Channel name must start with '#'.
@@ -838,7 +839,7 @@ int channel_pcban(struct map_session_data *sd, char *chname, struct map_session_
 	if(flag != 2 && flag != 3){
 		char banned;
 		if(!tsd || pc_has_permission(tsd, PC_PERM_CHANNEL_ADMIN) ) {
-			sprintf(output, msg_txt(sd,1464), tsd->status.name);// Ban failed for player '%s'.
+			sprintf(output, msg_txt(sd,1464), pname);// Ban failed for player '%s'.
 			clif_displaymessage(sd->fd, output);
 			return -1;
 		}
@@ -867,6 +868,8 @@ int channel_pcban(struct map_session_data *sd, char *chname, struct map_session_
 	switch(flag){
 	case 0: {
 		struct chan_banentry *cbe;
+		if (!tsd)
+			return -1;
 		CREATE(cbe, struct chan_banentry, 1);
 		cbe->char_id = tsd->status.char_id;
 		strcpy(cbe->char_name,tsd->status.name);
@@ -876,6 +879,8 @@ int channel_pcban(struct map_session_data *sd, char *chname, struct map_session_
 		break;
 		}
 	case 1:
+		if (!tsd)
+			return -1;
 		idb_remove(channel->banned, tsd->status.char_id);
 		sprintf(output, msg_txt(sd,1441),tsd->status.name,chname); // Player '%s' is unbanned from the '%s' channel.
 		break;
@@ -938,15 +943,10 @@ int channel_pcsetopt(struct map_session_data *sd, char *chname, const char *opti
 		clif_displaymessage(sd->fd, output);
 		return -1;
 	}
-
-	if(!option || option[0] == '\0' ) {
-		clif_displaymessage(sd->fd, msg_txt(sd,1446));// You need to input an option.
-		return -1;
-	}
-
+	
 	s = ARRAYLENGTH(opt_str);
 	ARR_FIND(1,s,k,( strncmpi(option,opt_str[k],3) == 0 )); //we only cmp 3 letter atm
-	if( k >= s ) {
+	if(!option || option[0] == '\0' || k >= s ) {
 		sprintf(output, msg_txt(sd,1447), option);// Unknown channel option '%s'.
 		clif_displaymessage(sd->fd, output);
 		clif_displaymessage(sd->fd, msg_txt(sd,1414));// ---- Available options:

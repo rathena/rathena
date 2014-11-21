@@ -9234,21 +9234,15 @@ static inline void atcmd_channel_help(struct map_session_data *sd, const char *c
 }
 
 ACMD_FUNC(channel) {
-	char key[CHAN_NAME_LENGTH], sub1[CHAN_NAME_LENGTH], sub2[CHAN_NAME_LENGTH], sub3[CHAN_NAME_LENGTH];
-	sub1[0] = sub2[0] = sub3[0] = '\0';
+	char key[NAME_LENGTH], sub1[CHAN_NAME_LENGTH], sub2[64];
+	sub1[0] = sub2[0] = '\0';
 
-	if( !message || !*message || sscanf(message, "%19s %19s %19s %19s", key, sub1, sub2, sub3) < 1 ) {
+	if( !message || !*message || sscanf(message, "%23s %19s %63[^\n]", key, sub1, sub2) < 1 ) {
 		atcmd_channel_help(sd,command);
 		return 0;
 	}
 
-	if( strcmpi(key,"create") == 0 && ( channel_config.user_chenable || pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) ) ) {
-		if(sub3[0] != '\0'){
-			clif_displaymessage(fd, msg_txt(sd,1408)); // Channel password may not contain spaces.
-			return -1;
-		}
-		return channel_pccreate(sd,sub1,sub2);
-	} else if( strcmpi(key,"delete") == 0 && pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) ) {
+	if( strcmpi(key,"delete") == 0 && pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) ) {
 		return channel_pcdelete(sd,sub1);
 	} else if ( strcmpi(key,"list") == 0 ) {
 		return channel_display_list(sd,sub1);
@@ -9263,16 +9257,26 @@ ACMD_FUNC(channel) {
 	} else if ( strcmpi(key,"unbind") == 0 ) {
 		return channel_pcunbind(sd);
 	} else if ( strcmpi(key,"ban") == 0 ) {
-		return channel_pcban(sd,sub1,map_nick2sd(sub2),0);
+		return channel_pcban(sd,sub1,sub2,0);
 	} else if ( strcmpi(key,"banlist") == 0 ) {
 		return channel_pcban(sd,sub1,NULL,3);
 	} else if ( strcmpi(key,"unban") == 0 ) {
-		return channel_pcban(sd,sub1,map_nick2sd(sub2),1);
+		return channel_pcban(sd,sub1,sub2,1);
 	} else if ( strcmpi(key,"unbanall") == 0 ) {
 		return channel_pcban(sd,sub1,NULL,2);
-	} else if ( strcmpi(key,"setopt") == 0 ) {
-		return channel_pcsetopt(sd,sub1,sub2,sub3);
 	} else {
+		char sub3[CHAN_NAME_LENGTH], sub4[CHAN_NAME_LENGTH];
+		sub3[0] = sub4[0] = '\0';
+		sscanf(sub2, "%19s %19s", sub3, sub4);
+		if( strcmpi(key,"create") == 0 && ( channel_config.user_chenable || pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) ) ) {
+			if (sub4[0] != '\0') {
+				clif_displaymessage(fd, msg_txt(sd, 1408)); // Channel password may not contain spaces.
+				return -1;
+			}
+			return channel_pccreate(sd,sub1,sub3);
+		} else if ( strcmpi(key,"setopt") == 0 ) {
+			return channel_pcsetopt(sd,sub1,sub3,sub4);
+		}
 		atcmd_channel_help(sd,command);
 	}
 
