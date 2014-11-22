@@ -1068,7 +1068,6 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 {
 	struct mob_data *md;
 	struct block_list **target;
-	struct walkpath_data wpd;
 	int mode;
 	int dist;
 
@@ -1104,6 +1103,7 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 			battle_check_range(&md->bl,bl,md->db->range2)
 		) { //Pick closest target?
 #ifdef ACTIVEPATHSEARCH
+			struct walkpath_data wpd;
 			if (!path_search(&wpd, md->bl.m, md->bl.x, md->bl.y, bl->x, bl->y, 0, CELL_CHKNOPASS)) // Count walk path cells
 				return 0;
 			//Standing monsters use range2, walking monsters use range3
