@@ -224,7 +224,7 @@ char itemdb_pc_get_itemgroup(uint16 group_id, struct map_session_data *sd) {
 	nullpo_retr(1,sd);
 	
 	if (!(group = (struct s_item_group_db *) uidb_get(itemdb_group, group_id))) {
-		ShowError("itemdb_pc_get_itemgroup: Invalid group id '%d' specified.",group_id);
+		ShowError("itemdb_pc_get_itemgroup: Invalid group id '%d' specified.\n",group_id);
 		return 2;
 	}
 	

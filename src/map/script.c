@@ -18229,7 +18229,7 @@ BUILDIN_FUNC(getgroupitem) {
 		return SCRIPT_CMD_SUCCESS;
 	
 	if (itemdb_pc_get_itemgroup(group_id,sd)) {
-		ShowError("getgroupitem: Invalid group id '%d' specified.",group_id);
+		ShowError("getgroupitem: Invalid group id '%d' specified.\n",group_id);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -18355,7 +18355,7 @@ BUILDIN_FUNC(consumeitem)
 			return SCRIPT_CMD_FAILURE;
 		}
 	}else{
-		ShowError("buildin_consumeitem: invalid data type for argument #1 (%d).", data->type );
+		ShowError("buildin_consumeitem: invalid data type for argument #1 (%d).\n", data->type );
 		return SCRIPT_CMD_FAILURE;
 	}
 
