@@ -35,7 +35,7 @@ prt_castle,80,170,4	script	King of Prontera	108,{
 				mes "If you could get me:";
 				for(set .@j,1; .@j<getarraysize(getd(".@Items"+.@i)); set .@j,.@j+2)
 					mes " ~ ^0055FF"+getd(".@Items"+.@i+"["+(.@j+1)+"]")+"^000000x "+getitemname(getd(".@Items"+.@i+"["+.@j+"]"));
-				mes "I'll give my "+((.@i)?"sword.":"crown.");
+				mes "I'll give my "+((.@i == 2 )?"sword.":"crown.");
 				if (.@i==2) close;
 				next; }
 		case 2:
