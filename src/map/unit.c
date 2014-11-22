@@ -722,7 +722,7 @@ static int unit_walktobl_sub(int tid, unsigned int tick, int id, intptr_t data)
  * @param tbl: Target object
  * @param range: How close to get to target (or attack range if flag&2)
  * @param flag: Extra behaviour
- *	&1: Use hard path seek (obstacles will be walked around if possible)
+ *	&1: Use easy path seek (obstacles will not be walked around)
  *	&2: Start attacking upon arrival within range, otherwise just walk to target
  * @return 1: Started walking or set timer 0: Failed
  */
@@ -748,6 +748,10 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, unsi
 		ud->target_to = 0;
 
 		return 0;
+	} else if (range == 0) {
+		//Should walk on the same cell as target (for looters)
+		ud->to_x = tbl->x;
+		ud->to_y = tbl->y;
 	}
 
 	ud->state.walk_easy = flag&1;

@@ -1180,12 +1180,11 @@ static int mob_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 	target = va_arg(ap,struct block_list**);
 
 	dist = distance_bl(&md->bl, bl);
-	if (mob_can_reach(md,bl,dist+1, MSS_LOOT) && (*target) == NULL) {
+	if (mob_can_reach(md,bl,dist+1, MSS_LOOT) && ((*target) == NULL || md->target_id > bl->id)) {
 		(*target) = bl;
 		md->target_id = bl->id;
 		md->min_chase = md->db->range3;
-	} else
-		mob_stop_walking(md, 1); // Stop walking immediately if item is no longer on the ground.
+	}
 	return 0;
 }
 
@@ -1561,7 +1560,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 	if (!tbl && mode&MD_LOOTER && md->lootitem && DIFF_TICK(tick, md->ud.canact_tick) > 0 &&
 		(md->lootitem_count < LOOTITEM_SIZE || battle_config.monster_loot_type != 1))
 	{	// Scan area for items to loot, avoid trying to loot if the mob is full and can't consume the items.
-		map_foreachinrange (mob_ai_sub_hard_lootsearch, &md->bl, view_range, BL_ITEM, md, &tbl);
+		map_foreachinshootrange (mob_ai_sub_hard_lootsearch, &md->bl, view_range, BL_ITEM, md, &tbl);
 	}
 
 	if ((!tbl && mode&MD_AGGRESSIVE) || md->state.skillstate == MSS_FOLLOW)
@@ -1607,7 +1606,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 			mob_unlocktarget(md, tick);
 			return true;
 		}
-		if (!check_distance_bl(&md->bl, tbl, 1))
+		if (!check_distance_bl(&md->bl, tbl, 0))
 		{	//Still not within loot range.
 			if (!(mode&MD_CANMOVE))
 			{	//A looter that can't move? Real smart.
@@ -1617,7 +1616,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 			if (!can_move) //Stuck. Wait before walking.
 				return true;
 			md->state.skillstate = MSS_LOOT;
-			if (!unit_walktobl(&md->bl, tbl, 1, 1))
+			if (!unit_walktobl(&md->bl, tbl, 0, 1))
 				mob_unlocktarget(md, tick); //Can't loot...
 			return true;
 		}

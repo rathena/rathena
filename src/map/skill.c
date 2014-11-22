@@ -11664,7 +11664,6 @@ int skill_castend_map (struct map_session_data *sd, uint16 skill_id, const char 
 	}
 
 	pc_stop_attack(sd);
-	pc_stop_walking(sd,0);
 
 	if(battle_config.skill_log && battle_config.skill_log&BL_PC)
 		ShowInfo("PC %d skill castend skill =%d map=%s\n",sd->bl.id,skill_id,mapname);
