@@ -887,6 +887,8 @@ void clif_crimson_marker(struct map_session_data *sd, struct block_list *bl, boo
 void clif_showscript(struct block_list* bl, const char* message);
 void clif_party_leaderchanged(struct map_session_data *sd, int prev_leader_aid, int new_leader_aid);
 
+void clif_account_name(int fd, int account_id, const char* accname);
+
 //void clif_broadcast_obtain_special_item(); ///TODO!
 
 #endif /* _CLIF_H_ */

@@ -609,10 +609,52 @@ int chlogif_reqvipdata(uint32 aid, uint8 type, int32 timediff, int mapfd) {
 	return 0;
 }
 
+/**
+* HA 0x2720
+* Request account info to login-server
+*/
+int chlogif_req_accinfo(int fd, int u_fd, int u_aid, int u_group, int account_id, int8 type) {
+	loginif_check(-1);
+	//ShowInfo("%d request account info for %d (type %d)\n", u_aid, account_id, type);
+	WFIFOHEAD(login_fd,23);
+	WFIFOW(login_fd,0) = 0x2720;
+	WFIFOL(login_fd,2) = fd;
+	WFIFOL(login_fd,6) = u_fd;
+	WFIFOL(login_fd,10) = u_aid;
+	WFIFOL(login_fd,14) = u_group;
+	WFIFOL(login_fd,18) = account_id;
+	WFIFOB(login_fd,22) = type;
+	WFIFOSET(login_fd,23);
+	return 1;
+}
+
+/**
+ * AH 0x2721
+ * Retrieve account info from login-server, ask inter-server to tell player
+ */
+int chlogif_parse_AccInfoAck(int fd) {
+	if (RFIFOREST(fd) < 19)
+		return 0;
+	else {
+		int8 type = RFIFOB(fd, 18);
+		if (type == 0 || RFIFOREST(fd) < 155+PINCODE_LENGTH+NAME_LENGTH) {
+			mapif_accinfo_ack(false, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), RFIFOL(fd,14), 0, -1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+			RFIFOSKIP(fd,19);
+			return 1;
+		}
+		type>>=1;
+		mapif_accinfo_ack(true, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), RFIFOL(fd,14), type, RFIFOL(fd,19), RFIFOL(fd,23), RFIFOL(fd,27),
+			(char*)RFIFOP(fd,31), (char*)RFIFOP(fd,71), (char*)RFIFOP(fd,87), (char*)RFIFOP(fd,111),
+			(char*)RFIFOP(fd,122), (char*)RFIFOP(fd,155), (char*)RFIFOP(fd,155+PINCODE_LENGTH));
+		RFIFOSKIP(fd,155+PINCODE_LENGTH+NAME_LENGTH);
+	}
+	return 1;
+}
+
 
 int chlogif_parse(int fd) {
 	struct char_session_data* sd = NULL;
-        
+
 	// only process data from the login-server
 	if( fd != login_fd ) {
 		ShowDebug("parse_fromlogin: Disconnecting invalid session #%d (is not the login-server)\n", fd);
@@ -645,26 +687,28 @@ int chlogif_parse(int fd) {
 		uint16 command = RFIFOW(fd,0);
 		switch( command )
 		{
-			case 0x2741: next=chlogif_parse_BankingAck(fd); break;
-			case 0x2743: next=chlogif_parse_vipack(fd); break;
+			case 0x2741: next = chlogif_parse_BankingAck(fd); break;
+			case 0x2743: next = chlogif_parse_vipack(fd); break;
 			// acknowledgement of connect-to-loginserver request
-			case 0x2711: next=chlogif_parse_ackconnect(fd,sd); break;
+			case 0x2711: next = chlogif_parse_ackconnect(fd,sd); break;
 			// acknowledgement of account authentication request
-			case 0x2713: next=chlogif_parse_ackaccreq(fd, sd); break;
+			case 0x2713: next = chlogif_parse_ackaccreq(fd, sd); break;
 			// account data
-			case 0x2717: next=chlogif_parse_reqaccdata(fd, sd); break;
+			case 0x2717: next = chlogif_parse_reqaccdata(fd, sd); break;
 			// login-server alive packet
-			case 0x2718: next=chlogif_parse_keepalive(fd, sd); break;
+			case 0x2718: next = chlogif_parse_keepalive(fd, sd); break;
 			// changesex reply
-			case 0x2723: next=chlogif_parse_ackchangesex(fd, sd); break;
+			case 0x2723: next = chlogif_parse_ackchangesex(fd, sd); break;
 			// reply to an account_reg2 registry request
-			case 0x2729: next=chlogif_parse_ackacc2req(fd, sd); break;
+			case 0x2729: next = chlogif_parse_ackacc2req(fd, sd); break;
 			// State change of account/ban notification (from login-server)
-			case 0x2731: next=chlogif_parse_accbannotification(fd, sd); break;
+			case 0x2731: next = chlogif_parse_accbannotification(fd, sd); break;
 			// Login server request to kick a character out. [Skotlex]
-			case 0x2734: next=chlogif_parse_askkick(fd,sd); break;
+			case 0x2734: next = chlogif_parse_askkick(fd,sd); break;
 			// ip address update signal from login server
-			case 0x2735: next=chlogif_parse_updip(fd,sd); break;
+			case 0x2735: next = chlogif_parse_updip(fd,sd); break;
+			// @accinfo result
+			case 0x2721: next = chlogif_parse_AccInfoAck(fd); break;
 			default:
 				ShowError("Unknown packet 0x%04x received from login-server, disconnecting.\n", command);
 				set_eof(fd);

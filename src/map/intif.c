@@ -33,7 +33,7 @@
 #include <string.h>
 
 static const int packet_len_table[]={
-	-1,-1,27,-1, -1, 0,37,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3800-0x380f
+	-1,-1,27,-1, -1, 0,37,-1, 10+NAME_LENGTH, 0, 0, 0,  0, 0,  0, 0, //0x3800-0x380f
 	 0, 0, 0, 0,  0, 0, 0, 0, -1,11, 0, 0,  0, 0,  0, 0, //0x3810
 	39,-1,15,15, 14,19, 7,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3820
 	10,-1,15, 0, 79,19, 7,-1,  0,-1,-1,-1, 14,67,186,-1, //0x3830
@@ -2821,23 +2821,37 @@ int intif_parse_elemental_saved(int fd)
  * @param aid : requesting player aid
  * @param group_lv : requesting player lv
  * @param query : name or aid of player we want info
+ * @param type : 1 - Only return account id & userid, 0 - Full info
  * @return : 0=errur, 1=msg sent
  */
-int intif_request_accinfo( int u_fd, int aid, int group_lv, char* query ) {
+int intif_request_accinfo(int u_fd, int aid, int group_lv, char* query, char type) {
 
 	if( CheckForCharServer() )
 		return 0;
 	
-	WFIFOHEAD(inter_fd,2 + 4 + 4 + 4 + NAME_LENGTH);
+	WFIFOHEAD(inter_fd,2 + 4 + 4 + 4 + 1 + NAME_LENGTH);
 
 	WFIFOW(inter_fd,0) = 0x3007;
 	WFIFOL(inter_fd,2) = u_fd;
 	WFIFOL(inter_fd,6) = aid;
 	WFIFOL(inter_fd,10) = group_lv;
-	safestrncpy((char *)WFIFOP(inter_fd,14), query, NAME_LENGTH);
+	WFIFOB(inter_fd,14) = type;
+	safestrncpy((char *)WFIFOP(inter_fd,15), query, NAME_LENGTH);
 
-	WFIFOSET(inter_fd,2 + 4 + 4 + 4 + NAME_LENGTH);
+	WFIFOSET(inter_fd,2 + 4 + 4 + 4 + 1 + NAME_LENGTH);
 	return 1;
+}
+
+/**
+ * Receive the reply of a request_accinfo with type 1
+ * @param fd : char-serv link
+ */
+void intif_parse_accinfo_ack( int fd ) {
+	char acc_name[NAME_LENGTH];
+	int u_fd = RFIFOL(fd,2);
+	int acc_id = RFIFOL(fd,6);
+	safestrncpy(acc_name, (char*)RFIFOP(fd,10), NAME_LENGTH);
+	clif_account_name(u_fd, acc_id, acc_name);
 }
 
 /**
@@ -2945,6 +2959,7 @@ int intif_parse(int fd)
 	case 0x3804:	intif_parse_Registers(fd); break;
 	case 0x3806:	intif_parse_ChangeNameOk(fd); break;
 	case 0x3807:	intif_parse_MessageToFD(fd); break;
+	case 0x3808:	intif_parse_accinfo_ack(fd); break;
 	case 0x3818:	intif_parse_LoadGuildStorage(fd); break;
 	case 0x3819:	intif_parse_SaveGuildStorage(fd); break;
 	case 0x3820:	intif_parse_PartyCreated(fd); break;

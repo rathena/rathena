@@ -140,8 +140,45 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- Ping request from char-server
 
 0x2720:
+	Type: HA
+	Structure: <cmd>.W <map_fd>.L <u_fd>.L <u_aid>.L <u_group>.L <account_id>.L
+	index: 0,2,6,10,14,18
+	len: 22
+	parameter:
+		- cmd : packet identification (0x2720)
+		- map_fd :
+		- u_fd :
+		- u_aid :
+		- u_group :
+		- account_id :
+	desc:
+		- 
+
 0x2721:
-    free
+	Type: AH
+	Structure: <cmd>.W <map_fd>.L <u_fd>.L <u_aid>.L <account_id>.L <status>.B <password>.33B <email>.40B <last_ip>.16B <last_login>.24B <group_id>.L <logincount>.L <state>.L <password>.33B <birthdate>.11B <pincode>.?B <userid>.?B
+	index: 0,2,6,10,18,19,52,92,108,132,136,140,144,155,155+PINCODE_LENGTH
+	len: 155 + PINCODE_LENGTH + NAME_LENGTH
+	parameter:
+		- cmd : packet identification (0x2721)
+		- map_fd
+		- u_fd
+		- u_aid
+		- account_id
+		- status: 0 - Failed
+		- password
+		- email
+		- last_ip
+		- last_login
+		- group_id
+		- logincount
+		- state
+		- password
+		- birthdate
+		- pincode
+		- userid
+	desc:
+		-
 
 0x2722:
 	Type: HA
@@ -567,15 +604,16 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 
 0x3007
 	Type: ZI
-	Structure: <cmd>.W <u_fd>.L <aid>.L <group_lv>.L
-	index: 0,2,6,10,14
-	len: 14+NAME_LENGTH
+	Structure: <cmd>.W <u_fd>.L <aid>.L <group_lv>.L <type>.B <query>.?B
+	index: 0,2,6,10,14,15
+	len: 15+NAME_LENGTH
 	parameter:
 		- cmd : packet identification (0x3007)
 		- u_fd
 		- aid
 		- group_lv
-		- query
+		- type : 0 - Full account info. 1 - Return as clif_account_name
+		- query : name or aid of player we want info
 	desc:
 		- Request acc info
 
@@ -1448,6 +1486,19 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- msg_out
 	desc:
 		- sends a mesasge to map server (fd) to a user (u_fd) although we use fd we keep aid for safe-check
+
+0x3808
+	Type: IZ
+	Structure: <cmd>.W <u_fd>.L <aid>.L <acc_name>.?B
+	index: 0,2,6,10
+	len: variable: 10+NAME+LENGTH
+	parameter:
+		- cmd : packet identification (0x3807)
+		- u_fd
+		- aid
+		- acc_name
+	desc:
+		- Transmit the result of a account_information request from map-serv, with type 1
 
 0x3818
 	Type: IZ

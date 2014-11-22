@@ -13291,10 +13291,8 @@ void clif_parse_GMRc(int fd, struct map_session_data* sd)
 
 /// Result of request to resolve account name (ZC_ACK_ACCOUNTNAME).
 /// 01e0 <account id>.L <account name>.24B
-void clif_account_name(struct map_session_data* sd, int account_id, const char* accname)
+void clif_account_name(int fd, int account_id, const char* accname)
 {
-	int fd = sd->fd;
-
 	WFIFOHEAD(fd,packet_len(0x1e0));
 	WFIFOW(fd,0) = 0x1e0;
 	WFIFOL(fd,2) = account_id;
@@ -13305,17 +13303,16 @@ void clif_account_name(struct map_session_data* sd, int account_id, const char* 
 
 /// GM requesting account name (for right-click gm menu) (CZ_REQ_ACCOUNTNAME).
 /// 01df <account id>.L
+/// @CHECKME
 void clif_parse_GMReqAccountName(int fd, struct map_session_data *sd)
 {
-	if (sd->bl.type&BL_PC) { // Only show for players
-		char command[30];
-		int account_id = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
+	char query[30];
+	int account_id = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
 
-		//tmp get all display
-		safesnprintf(command,sizeof(command),"%caccinfo %d", atcommand_symbol, account_id);
-		is_atcommand(fd, sd, command, 1);
-		//clif_account_name(sd, account_id, ""); //! TODO request to login-serv
-	}
+	//tmp get all display
+	safesnprintf(query,sizeof(query),"%d", account_id);
+	intif_request_accinfo(sd->fd, sd->bl.id, pc_get_group_level(sd), query, 1);
+	//will call clif_account_name at return
 }
 
 

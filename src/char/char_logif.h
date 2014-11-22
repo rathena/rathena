@@ -40,6 +40,7 @@ int chlogif_BankingReq(int32 account_id, int8 type, int32 data);
 int chlogif_parse_BankingAck(int fd);
 int chlogif_parse_vipack(int fd);
 int chlogif_reqvipdata(uint32 aid, uint8 type, int32 timediff, int mapfd);
+int chlogif_req_accinfo(int fd, int u_fd, int u_aid, int u_group, int account_id, int8 type);
 
 int chlogif_parse(int fd);
 

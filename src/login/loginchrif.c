@@ -826,6 +826,66 @@ int logchrif_parse_reqvipdata(int fd) {
 }
 
 /**
+* IA 0x2720
+* Get account info that asked by inter/char-server
+*/
+int logchrif_parse_accinfo(int fd) {
+	if( RFIFOREST(fd) < 23 )
+		return 0;
+	else {
+		int map_fd = RFIFOL(fd, 2), u_fd = RFIFOL(fd, 6), u_aid = RFIFOL(fd, 10), u_group = RFIFOL(fd, 14), account_id = RFIFOL(fd, 18);
+		short level = -1;
+		int logincount = 0, state = 0;
+		int8 type = RFIFOB(fd, 22);
+		AccountDB* accounts = login_get_accounts_db();
+		struct mmo_account acc;
+		RFIFOSKIP(fd,23);
+
+		// Send back the result to char-server
+		if (accounts->load_num(accounts, &acc, account_id)) {
+			int len = 155 + PINCODE_LENGTH + NAME_LENGTH;
+			//ShowInfo("Found account info for %d, requested by %d\n", account_id, u_aid);
+			WFIFOHEAD(fd, len);
+			WFIFOW(fd, 0) = 0x2721;
+			WFIFOL(fd, 2) = map_fd;
+			WFIFOL(fd, 6) = u_fd;
+			WFIFOL(fd, 10) = u_aid;
+			WFIFOL(fd, 14) = account_id;
+			WFIFOB(fd, 18) = (1<<type); // success
+			WFIFOL(fd, 19) = acc.group_id;
+			WFIFOL(fd, 23) = acc.logincount;
+			WFIFOL(fd, 27) = acc.state;
+			safestrncpy((char*)WFIFOP(fd, 31), acc.email, 40);
+			safestrncpy((char*)WFIFOP(fd, 71), acc.last_ip, 16);
+			safestrncpy((char*)WFIFOP(fd, 87), acc.lastlogin, 24);
+			safestrncpy((char*)WFIFOP(fd, 111), acc.birthdate, 11);
+			if ((unsigned int)u_group >= acc.group_id) {
+				safestrncpy((char*)WFIFOP(fd, 122), acc.pass, 33);
+				safestrncpy((char*)WFIFOP(fd, 155), acc.pincode, PINCODE_LENGTH);
+			}
+			else {
+				memset(WFIFOP(fd, 122), '\0', 33);
+				memset(WFIFOP(fd, 155), '\0', PINCODE_LENGTH);
+			}
+			safestrncpy((char*)WFIFOP(fd, 155 + PINCODE_LENGTH), acc.userid, NAME_LENGTH);
+			WFIFOSET(fd, len);
+		}
+		else {
+			//ShowInfo("Cannot found account info for %d, requested by %d\n", account_id, u_aid);
+			WFIFOHEAD(fd, 19);
+			WFIFOW(fd, 0) = 0x2721;
+			WFIFOL(fd, 2) = map_fd;
+			WFIFOL(fd, 6) = u_fd;
+			WFIFOL(fd, 10) = u_aid;
+			WFIFOL(fd, 14) = account_id;
+			WFIFOB(fd, 18) = 0; // failed
+			WFIFOSET(fd, 19);
+		}
+	}
+	return 1;
+}
+
+/**
  * Entry point from char-server to log-server.
  * Function that checks incoming command, then splits it to the correct handler.
  * @param fd: file descriptor to parse, (link to char-serv)
@@ -863,6 +923,7 @@ int logchrif_parse(int fd){
 		case 0x2715: next = logchrif_parse_updmail(fd, cid, ip); break;
 		case 0x2716: next = logchrif_parse_reqaccdata(fd, cid, ip); break;
 		case 0x2719: next = logchrif_parse_keepalive(fd); break;
+		case 0x2720: next = logchrif_parse_accinfo(fd); break; //@accinfo from inter-server
 		case 0x2722: next = logchrif_parse_reqchangemail(fd,cid,ip); break;
 		case 0x2724: next = logchrif_parse_requpdaccstate(fd,cid,ip); break;
 		case 0x2725: next = logchrif_parse_reqbanacc(fd,cid,ip); break;
