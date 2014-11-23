@@ -13303,16 +13303,17 @@ void clif_account_name(int fd, int account_id, const char* accname)
 
 /// GM requesting account name (for right-click gm menu) (CZ_REQ_ACCOUNTNAME).
 /// 01df <account id>.L
-/// @CHECKME
+//! TODO: Figure out how does this actually work
 void clif_parse_GMReqAccountName(int fd, struct map_session_data *sd)
 {
-	char query[30];
 	int account_id = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
-
-	//tmp get all display
+	/*
+	char query[30];
 	safesnprintf(query,sizeof(query),"%d", account_id);
-	intif_request_accinfo(sd->fd, sd->bl.id, pc_get_group_level(sd), query, 1);
-	//will call clif_account_name at return
+	intif_request_accinfo(sd->fd, sd->bl.id, pc_get_group_level(sd), query, 1); //will call clif_account_name at return
+	*/
+
+	clif_account_name(fd, account_id, "");
 }
 
 
