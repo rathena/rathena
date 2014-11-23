@@ -15953,11 +15953,12 @@ BUILDIN_FUNC(checkvending) {
 	else {
 		int8 ret = 0;
 		if (sd->state.vending)
-			ret |= 1;
+			ret = 1;
+		else if (sd->state.buyingstore)
+			ret = 4;
+
 		if (sd->state.autotrade)
 			ret |= 2;
-		if (sd->state.buyingstore)
-			ret |= 4;
 		script_pushint(st, ret);
 	}
 	return SCRIPT_CMD_SUCCESS;
