@@ -49,6 +49,36 @@ static unsigned int hexptbl[MAX_LEVEL];
 //For holding the view data of npc classes. [Skotlex]
 static struct view_data hom_viewdb[MAX_HOMUNCULUS_CLASS];
 
+/**
+* Check if the skill is a valid homunculus skill based skill range or availablity in skill db
+* @param skill_id
+* @return -1 if invalid skill or skill index for homunculus skill_tree
+*/
+static short hom_skill_get_index(int skill_id) {
+	short idx = 0;
+	if (!skill_get_index(skill_id))
+		return -1;
+	if ((skill_id -= HM_SKILLBASE) < 0 || skill_id >= MAX_HOMUNSKILL)
+		return -1;
+	return skill_id;
+}
+
+/**
+* Check homunculus class for array look up
+* @param class_
+* @return Class index or -1 if invalid class
+*/
+static short hom_class2index(int class_) {
+	if (homdb_checkid(class_))
+		return class_ - HM_CLASS_BASE;
+	return -1;
+}
+
+/**
+* Get homunculus view data
+* @param class_ Homunculus class
+* @return vd
+*/
 struct view_data* hom_get_viewdata(int class_)
 {	//Returns the viewdata for homunculus
 	if (homdb_checkid(class_))
@@ -56,6 +86,11 @@ struct view_data* hom_get_viewdata(int class_)
 	return NULL;
 }
 
+/**
+* Get homunculus type of specified class_
+* @param class_
+* @return enum homun_type
+*/
 enum homun_type hom_class2type(int class_) {
 	int mid = hom_class2mapid(class_);
 	if((mid&(HOM_REG|HOM_EVO)) == (HOM_REG|HOM_EVO))
@@ -68,6 +103,11 @@ enum homun_type hom_class2type(int class_) {
 		return HT_INVALID;
 }
 
+/**
+* Get homunculus MAPID from specified class
+* @param hom_class
+* @return Homunculus MAPID (see enum hom_mapid)
+*/
 int hom_class2mapid(int hom_class)
 {
 	switch(hom_class)
@@ -93,50 +133,65 @@ int hom_class2mapid(int hom_class)
 	}
 }
 
-int hom_addspiritball(TBL_HOM *hd, int max) {
-    nullpo_ret(hd);
+/**
+* Add homunculus spirit ball
+* @param hd
+* @param max Maximum number of spirit ball
+*/
+void hom_addspiritball(TBL_HOM *hd, int max) {
+	nullpo_retv(hd);
 
-    if (max > MAX_SKILL_LEVEL)
-        max = MAX_SKILL_LEVEL;
-    if (hd->homunculus.spiritball < 0)
-        hd->homunculus.spiritball = 0;
+	if (max > MAX_SKILL_LEVEL)
+		max = MAX_SKILL_LEVEL;
+	if (hd->homunculus.spiritball < 0)
+		hd->homunculus.spiritball = 0;
 
-    if (hd->homunculus.spiritball && hd->homunculus.spiritball >= max) {
-        hd->homunculus.spiritball = max;
-    }
-    else
-        hd->homunculus.spiritball++;
+	if (hd->homunculus.spiritball && hd->homunculus.spiritball >= max)
+		hd->homunculus.spiritball = max;
+	else
+		hd->homunculus.spiritball++;
 
-    clif_spiritball(&hd->bl);
-
-    return 0;
+	clif_spiritball(&hd->bl);
 }
 
-int hom_delspiritball(TBL_HOM *hd, int count, int type) {
-    nullpo_ret(hd);
+/**
+* Delete homunculus spirit ball
+* @param hd
+* @param count Number spirit ball will be deleted
+* @param type 1 - Update client
+*/
+void hom_delspiritball(TBL_HOM *hd, int count, int type) {
+	nullpo_retv(hd);
 
-    if (hd->homunculus.spiritball <= 0) {
-        hd->homunculus.spiritball = 0;
-        return 0;
-    }
-    if (count <= 0)
-        return 0;
-    if (count > MAX_SKILL_LEVEL)
-        count = MAX_SKILL_LEVEL;
-    if (count > hd->homunculus.spiritball)
-        count = hd->homunculus.spiritball;
+	if (hd->homunculus.spiritball <= 0) {
+		hd->homunculus.spiritball = 0;
+		return;
+	}
+	if (count <= 0)
+		return;
+	if (count > MAX_SKILL_LEVEL)
+		count = MAX_SKILL_LEVEL;
+	if (count > hd->homunculus.spiritball)
+		count = hd->homunculus.spiritball;
 
-    hd->homunculus.spiritball -= count;
-    if (!type)
-        clif_spiritball(&hd->bl);
-
-    return 0;
+	hd->homunculus.spiritball -= count;
+	if (!type)
+		clif_spiritball(&hd->bl);
 }
 
+/**
+* Update homunculus info to its master after receiving damage
+* @param hd
+*/
 void hom_damage(struct homun_data *hd) {
 	clif_hominfo(hd->master,hd,0);
 }
 
+/**
+* Set homunculus's dead status
+* @param hd
+* @return flag &1 - Standard dead, &2 - Remove object from map, &4 - Delete object from memory
+*/
 int hom_dead(struct homun_data *hd)
 {
 	//There's no intimacy penalties on death (from Tharis)
@@ -156,7 +211,11 @@ int hom_dead(struct homun_data *hd)
 	return 3;
 }
 
-//Vaporize a character's homun. If flag == 1 then HP needs to be 80% or above, if flag == 2 then set to morph state.
+/**
+* Vaporize a character's homunculus
+* @param sd
+* @param flag 1: then HP needs to be 80% or above. 2: then set to morph state.
+*/
 int hom_vaporize(struct map_session_data *sd, int flag)
 {
 	struct homun_data *hd;
@@ -177,15 +236,19 @@ int hom_vaporize(struct map_session_data *sd, int flag)
 	//Delete timers when vaporized.
 	hom_hungry_timer_delete(hd);
 	hd->homunculus.vaporize = flag ? flag : HOM_ST_REST;
-	if(battle_config.hom_setting&HOMSET_RESET_REUSESKILL_VAPORIZED)
+	if (battle_config.hom_setting&HOMSET_RESET_REUSESKILL_VAPORIZED)
 		memset(hd->blockskill, 0, sizeof(hd->blockskill));
 	clif_hominfo(sd, sd->hd, 0);
 	hom_save(hd);
 	return unit_remove_map(&hd->bl, CLR_OUTSIGHT);
 }
 
-//delete a homunculus, completely "killing it".
-//Emote is the emotion the master should use, send negative to disable.
+/**
+* Delete a homunculus, completely "killing it".
+* Emote is the emotion the master should use, send negative to disable.
+* @param hd
+* @param emote
+*/
 int hom_delete(struct homun_data *hd, int emote)
 {
 	struct map_session_data *sd;
@@ -206,99 +269,139 @@ int hom_delete(struct homun_data *hd, int emote)
 	return unit_remove_map(&hd->bl,CLR_OUTSIGHT);
 }
 
-int hom_calc_skilltree(struct homun_data *hd, int flag_evolve)
+/**
+* Calculates homunculus skill tree
+* @param hd
+* @param flag_envolve
+*/
+void hom_calc_skilltree(struct homun_data *hd, int flag_evolve)
 {
-	int i, id = 0;
-	int j, f = 1;
-	int c = 0;
+	int i, skill_id = 0;
+	int f = 1;
+	short c = 0;
 
-	nullpo_ret(hd);
+	nullpo_retv(hd);
+
 	/* load previous homunculus form skills first. */
-	if( hd->homunculus.prev_class != 0 ) {
-		c = hd->homunculus.prev_class - HM_CLASS_BASE;
-
-		for( i = 0; i < MAX_SKILL_TREE && ( id = hskill_tree[c][i].id ) > 0; i++ ) {
-			if( hd->homunculus.hskill[ id - HM_SKILLBASE ].id )
+	if (hd->homunculus.prev_class != 0 && (c = hom_class2index(hd->homunculus.prev_class)) >= 0) {
+		for (i = 0; i < MAX_SKILL_TREE && (skill_id = hskill_tree[c][i].id) > 0; i++) {
+			int idx = hom_skill_get_index(skill_id);
+			if (idx < 0)
+				continue;
+			if (hd->homunculus.hskill[idx].id)
 				continue; //Skill already known.
-			if(!battle_config.skillfree) {
-				for( j = 0; j < MAX_PC_SKILL_REQUIRE; j++ ) {
-					if( hskill_tree[c][i].need[j].id &&
-					   hom_checkskill(hd,hskill_tree[c][i].need[j].id) < hskill_tree[c][i].need[j].lv ) {
+			if (!battle_config.skillfree) {
+				int j;
+				for (j = 0; j < MAX_HOM_SKILL_REQUIRE; j++) {
+					if (hskill_tree[c][i].need[j].id &&
+						hom_checkskill(hd,hskill_tree[c][i].need[j].id) < hskill_tree[c][i].need[j].lv)
+					{
 						f = 0;
 						break;
 					}
 				}
 			}
-			if ( f )
-				hd->homunculus.hskill[id-HM_SKILLBASE].id = id;
+			if (f)
+				hd->homunculus.hskill[idx].id = skill_id;
 		}
-
 		f = 1;
 	}
 
-	c = hd->homunculus.class_ - HM_CLASS_BASE;
 
-	for( i = 0; i < MAX_SKILL_TREE && ( id = hskill_tree[c][i].id ) > 0; i++ ) {
-		if( hd->homunculus.hskill[ id - HM_SKILLBASE ].id )
-			continue; //Skill already known.
-		j = ( flag_evolve ) ? 10 : hd->homunculus.intimacy;
-		if( j < hskill_tree[c][i].intimacylv )
+	if ((c = hom_class2index(hd->homunculus.class_)) < 0)
+		return;
+
+	for (i = 0; i < MAX_SKILL_TREE && (skill_id = hskill_tree[c][i].id) > 0; i++) {
+		int intimacy;
+		int idx = hom_skill_get_index(skill_id);
+		if (idx < 0)
 			continue;
-		if(!battle_config.skillfree) {
-			for( j = 0; j < MAX_PC_SKILL_REQUIRE; j++ ) {
-				if( hskill_tree[c][i].need[j].id &&
-					hom_checkskill(hd,hskill_tree[c][i].need[j].id) < hskill_tree[c][i].need[j].lv ) {
+		if (hd->homunculus.hskill[idx].id)
+			continue; //Skill already known.
+		intimacy = (flag_evolve) ? 10 : hd->homunculus.intimacy;
+		if (intimacy < hskill_tree[c][i].intimacylv)
+			continue;
+		if (!battle_config.skillfree) {
+			int j;
+			for (j = 0; j < MAX_HOM_SKILL_REQUIRE; j++) {
+				if (hskill_tree[c][i].need[j].id &&
+					hom_checkskill(hd,hskill_tree[c][i].need[j].id) < hskill_tree[c][i].need[j].lv)
+				{
 					f = 0;
 					break;
 				}
 			}
 		}
-		if ( f )
-			hd->homunculus.hskill[id-HM_SKILLBASE].id = id;
+		if (f)
+			hd->homunculus.hskill[idx].id = skill_id;
 	}
 
-	if( hd->master )
+	if (hd->master)
 		clif_homskillinfoblock(hd->master);
-	return 0;
 }
 
-int hom_checkskill(struct homun_data *hd,uint16 skill_id)
+/**
+* Check skill from homunculus
+* @param hd
+* @param skill_id
+* @return Skill Level or 0 if invalid or unlearned skill
+*/
+short hom_checkskill(struct homun_data *hd,uint16 skill_id)
 {
-	int i = skill_id - HM_SKILLBASE;
-	if(!hd || !&hd->homunculus)
+	int idx = hom_skill_get_index(skill_id);
+	if (idx < 0) // Invalid skill
 		return 0;
 
-	if(hd->homunculus.hskill[i].id == skill_id)
-		return (hd->homunculus.hskill[i].lv);
+	if (!hd || !&hd->homunculus)
+		return 0;
+
+	if (hd->homunculus.hskill[idx].id == skill_id)
+		return (hd->homunculus.hskill[idx].lv);
 
 	return 0;
 }
 
-int hom_skill_tree_get_max(int id, int b_class){
-	int i, skill_id;
-	b_class -= HM_CLASS_BASE;
-	for(i=0;(skill_id=hskill_tree[b_class][i].id)>0;i++)
-		if (id == skill_id)
+/**
+* Get max level for homunculus skill
+* @param id Skill ID
+* @param b_class
+* @return Skill Level
+*/
+int hom_skill_tree_get_max(int skill_id, int b_class){
+	int i, skid;
+	if ((b_class = hom_class2index(b_class)) < 0)
+		return 0;
+	for (i = 0; (skid = hskill_tree[b_class][i].id) > 0; i++) {
+		if (hom_skill_get_index(skid) < 0)
+			return 0;
+		if (skill_id == skid)
 			return hskill_tree[b_class][i].max;
-	return skill_get_max(id);
+	}
+	return skill_get_max(skill_id);
 }
 
-void hom_skillup(struct homun_data *hd,uint16 skill_id)
+/**
+ * Level up an homunculus skill
+ * @param hd
+ * @param skill_id
+ */
+void hom_skillup(struct homun_data *hd, uint16 skill_id)
 {
-	int i = 0 ;
+	short idx = 0;
 	nullpo_retv(hd);
 
-	if(hd->homunculus.vaporize)
+	if (hd->homunculus.vaporize)
 		return;
 
-	i = skill_id - HM_SKILLBASE;
-	if(hd->homunculus.skillpts > 0 &&
-		hd->homunculus.hskill[i].id &&
-		hd->homunculus.hskill[i].flag == SKILL_FLAG_PERMANENT && //Don't allow raising while you have granted skills. [Skotlex]
-		hd->homunculus.hskill[i].lv < hom_skill_tree_get_max(skill_id, hd->homunculus.class_)
+	if ((idx = hom_skill_get_index(skill_id)) < 0)
+		return;
+	if (hd->homunculus.skillpts > 0 &&
+		hd->homunculus.hskill[idx].id &&
+		hd->homunculus.hskill[idx].flag == SKILL_FLAG_PERMANENT && //Don't allow raising while you have granted skills. [Skotlex]
+		hd->homunculus.hskill[idx].lv < hom_skill_tree_get_max(skill_id, hd->homunculus.class_)
 		)
 	{
-		hd->homunculus.hskill[i].lv++;
+		hd->homunculus.hskill[idx].lv++;
 		hd->homunculus.skillpts-- ;
 		status_calc_homunculus(hd, SCO_NONE);
 		if (hd->master) {
@@ -309,6 +412,10 @@ void hom_skillup(struct homun_data *hd,uint16 skill_id)
 	}
 }
 
+/**
+* Homunculus leveled up
+* @param hd
+*/
 int hom_levelup(struct homun_data *hd)
 {
 	struct s_homunculus *hom;
@@ -317,7 +424,7 @@ int hom_levelup(struct homun_data *hd)
 	int growth_max_hp, growth_max_sp ;
 	int m_class;
 
-	if((m_class = hom_class2mapid(hd->homunculus.class_)) == -1) {
+	if ((m_class = hom_class2mapid(hd->homunculus.class_)) == -1) {
 		ShowError("hom_levelup: Invalid class %d. \n", hd->homunculus.class_);
 		return 0;
 	}
@@ -325,19 +432,19 @@ int hom_levelup(struct homun_data *hd)
 	/// When homunculus is homunculus S, we check to see if we need to apply previous class stats
 	if(m_class&HOM_S && hd->homunculus.level < battle_config.hom_S_growth_level) {
 		int i;
-		if(!hd->homunculus.prev_class) {
+		if (!hd->homunculus.prev_class) {
 			/// We also need to be sure that the previous class exists, otherwise give it something to work with
 			hd->homunculus.prev_class = 6001;
 		}
 		// Give the homunculus the level up stats database it needs
 		i = hom_search(hd->homunculus.prev_class,HOMUNCULUS_CLASS);
-		if(i < 0) // Nothing should go wrong here, but check anyways
+		if (i < 0) // Nothing should go wrong here, but check anyways
 			return 0;
 		max = &homunculus_db[i].gmax;
 		min = &homunculus_db[i].gmin;
 	}
 
-	if(((m_class&HOM_REG) && hd->homunculus.level >= battle_config.hom_max_level)
+	if (((m_class&HOM_REG) && hd->homunculus.level >= battle_config.hom_max_level)
 		|| ((m_class&HOM_S) && hd->homunculus.level >= battle_config.hom_S_max_level)
 		|| !hd->exp_next || hd->homunculus.exp < hd->exp_next)
 		return 0;
@@ -350,7 +457,7 @@ int hom_levelup(struct homun_data *hd)
 	hom->exp -= hd->exp_next ;
 	hd->exp_next = hexptbl[hom->level - 1] ;
 
-	if(!max) {
+	if (!max) {
 		max  = &hd->homunculusDB->gmax;
 		min  = &hd->homunculusDB->gmin;
 	}
@@ -393,10 +500,16 @@ int hom_levelup(struct homun_data *hd)
 	return 1;
 }
 
+/**
+* Changes homunculus class
+* @param hd
+* @param class_ old class
+* @reutrn Fals if the class cannot be changed, True if otherwise
+*/
 static bool hom_change_class(struct homun_data *hd, short class_) {
 	int i;
 	i = hom_search(class_,HOMUNCULUS_CLASS);
-	if(i < 0)
+	if (i < 0)
 		return false;
 	hd->homunculusDB = &homunculus_db[i];
 	hd->homunculus.class_ = class_;
@@ -445,7 +558,7 @@ int hom_evolution(struct homun_data *hd)
 	hom->intimacy = 500;
 
 	unit_remove_map(&hd->bl, CLR_OUTSIGHT);
-	if(map_addblock(&hd->bl))
+	if (map_addblock(&hd->bl))
 		return 0;
 
 	clif_spawn(&hd->bl);
@@ -503,7 +616,6 @@ int hom_mutate(struct homun_data *hd, int homun_id)
 	clif_emotion(&sd->bl, E_NO1);
 	clif_specialeffect(&hd->bl,568,AREA);
 
-
 	//status_Calc flag&1 will make current HP/SP be reloaded from hom structure
 	hom = &hd->homunculus;
 	hom->hp = hd->battle_status.hp;
@@ -517,30 +629,38 @@ int hom_mutate(struct homun_data *hd, int homun_id)
 	return 1;
 }
 
-int hom_gainexp(struct homun_data *hd,int exp)
+/**
+* Add homunculus exp
+* @param hd
+* @param exp Added EXP
+*/
+void hom_gainexp(struct homun_data *hd,int exp)
 {
 	int m_class;
 
+	nullpo_retv(hd);
+
 	if(hd->homunculus.vaporize)
-		return 1;
+		return;
 
 	if((m_class = hom_class2mapid(hd->homunculus.class_)) == -1) {
 		ShowError("hom_gainexp: Invalid class %d. \n", hd->homunculus.class_);
-		return 0;
+		return;
 	}
 
 	if( hd->exp_next == 0 ||
-	   ((m_class&HOM_REG) && hd->homunculus.level >= battle_config.hom_max_level) ||
-	   ((m_class&HOM_S)   && hd->homunculus.level >= battle_config.hom_S_max_level) ) {
-	  	hd->homunculus.exp = 0;
-		return 0;
+		((m_class&HOM_REG) && hd->homunculus.level >= battle_config.hom_max_level) ||
+		((m_class&HOM_S)   && hd->homunculus.level >= battle_config.hom_S_max_level) )
+	{
+		hd->homunculus.exp = 0;
+		return;
 	}
 
 	hd->homunculus.exp += exp;
 
-	if(hd->homunculus.exp < hd->exp_next) {
+	if (hd->homunculus.exp < hd->exp_next) {
 		clif_hominfo(hd->master,hd,0);
-		return 0;
+		return;
 	}
 
  	// Do the levelup(s)
@@ -557,12 +677,17 @@ int hom_gainexp(struct homun_data *hd,int exp)
 	clif_specialeffect(&hd->bl,568,AREA);
 	status_calc_homunculus(hd, SCO_NONE);
 	status_percent_heal(&hd->bl, 100, 100);
-	return 0;
 }
 
-// Return the new value
+/**
+* Increase homunculu sintimacy
+* @param hd
+* @param value Added intimacy
+* @return New intimacy value
+*/
 int hom_increase_intimacy(struct homun_data * hd, unsigned int value)
 {
+	nullpo_ret(hd);
 	if (battle_config.homunculus_friendly_rate != 100)
 		value = (value * battle_config.homunculus_friendly_rate) / 100;
 
@@ -573,9 +698,15 @@ int hom_increase_intimacy(struct homun_data * hd, unsigned int value)
 	return hd->homunculus.intimacy;
 }
 
-// Return 0 if decrease fails or intimacy became 0 else the new value
+/**
+* Decrease homunculu sintimacy
+* @param hd
+* @param value Reduced intimacy
+* @return New intimacy value
+*/
 int hom_decrease_intimacy(struct homun_data * hd, unsigned int value)
 {
+	nullpo_ret(hd);
 	if (hd->homunculus.intimacy >= value)
 		hd->homunculus.intimacy -= value;
 	else
@@ -584,14 +715,26 @@ int hom_decrease_intimacy(struct homun_data * hd, unsigned int value)
 	return hd->homunculus.intimacy;
 }
 
+/**
+* Update homunculus info to master after healing
+* @param hd
+*/
 void hom_heal(struct homun_data *hd) {
 	clif_hominfo(hd->master,hd,0);
 }
 
+/**
+* Save homunculus data
+* @param hd
+*/
 void hom_save(struct homun_data *hd)
 {
 	// copy data that must be saved in homunculus struct ( hp / sp )
-	TBL_PC * sd = hd->master;
+	TBL_PC *sd;
+
+	nullpo_retv(hd);
+
+	sd = hd->master;
 	//Do not check for max_hp/max_sp caps as current could be higher to max due
 	//to status changes/skills (they will be capped as needed upon stat
 	//calculation on login)
@@ -600,13 +743,18 @@ void hom_save(struct homun_data *hd)
 	intif_homunculus_requestsave(sd->status.account_id, &hd->homunculus);
 }
 
-int hom_menu(struct map_session_data *sd,int menunum)
+/**
+* Perform requested action from selected homunculus menu
+* @param sd
+* @param type
+*/
+void hom_menu(struct map_session_data *sd, int type)
 {
-	nullpo_ret(sd);
+	nullpo_retv(sd);
 	if (sd->hd == NULL)
-		return 1;
+		return;
 
-	switch(menunum) {
+	switch(type) {
 		case 0:
 			break;
 		case 1:
@@ -616,22 +764,29 @@ int hom_menu(struct map_session_data *sd,int menunum)
 			hom_delete(sd->hd, -1);
 			break;
 		default:
-			ShowError("hom_menu : unknown menu choice : %d\n", menunum) ;
+			ShowError("hom_menu : unknown menu choice : %d\n", type) ;
 			break;
 	}
-	return 0;
 }
 
+/**
+* Feed homunculus
+* @param sd
+* @param hd
+*/
 int hom_food(struct map_session_data *sd, struct homun_data *hd)
 {
 	int i, foodID, emotion;
 
-	if(hd->homunculus.vaporize)
-		return 1 ;
+	nullpo_retr(1,sd);
+	nullpo_retr(1,hd);
+
+	if (hd->homunculus.vaporize)
+		return 1;
 
 	foodID = hd->homunculusDB->foodID;
 	i = pc_search_inventory(sd,foodID);
-	if(i < 0) {
+	if (i < 0) {
 		clif_hom_food(sd,foodID,0);
 		return 1;
 	}
@@ -670,26 +825,29 @@ int hom_food(struct map_session_data *sd, struct homun_data *hd)
 	return 0;
 }
 
+/**
+* Timer to reduce hunger level
+*/
 static int hom_hungry(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct map_session_data *sd;
 	struct homun_data *hd;
 
-	sd=map_id2sd(id);
-	if(!sd)
+	sd = map_id2sd(id);
+	if (!sd)
 		return 1;
 
-	if(!sd->status.hom_id || !(hd=sd->hd))
+	if (!sd->status.hom_id || !(hd=sd->hd))
 		return 1;
 
-	if(hd->hungry_timer != tid){
+	if (hd->hungry_timer != tid) {
 		ShowError("hom_hungry_timer %d != %d\n",hd->hungry_timer,tid);
 		return 0;
 	}
 
 	hd->hungry_timer = INVALID_TIMER;
 
-	hd->homunculus.hunger-- ;
+	hd->homunculus.hunger--;
 	if(hd->homunculus.hunger <= 10) {
 		clif_emotion(&hd->bl, E_AN);
 	} else if(hd->homunculus.hunger == 25) {
@@ -698,10 +856,10 @@ static int hom_hungry(int tid, unsigned int tick, int id, intptr_t data)
 		clif_emotion(&hd->bl, E_OK);
 	}
 
-	if(hd->homunculus.hunger < 0) {
+	if (hd->homunculus.hunger < 0) {
 		hd->homunculus.hunger = 0;
 		// Delete the homunculus if intimacy <= 100
-		if ( !hom_decrease_intimacy(hd, 100) )
+		if (!hom_decrease_intimacy(hd, 100))
 			return hom_delete(hd, E_OMG);
 		clif_send_homdata(sd,SP_INTIMATE,hd->homunculus.intimacy / 100);
 	}
@@ -711,16 +869,23 @@ static int hom_hungry(int tid, unsigned int tick, int id, intptr_t data)
 	return 0;
 }
 
+/**
+* Remove hungry timer from homunculus
+* @param hd
+*/
 int hom_hungry_timer_delete(struct homun_data *hd)
 {
 	nullpo_ret(hd);
-	if(hd->hungry_timer != INVALID_TIMER) {
+	if (hd->hungry_timer != INVALID_TIMER) {
 		delete_timer(hd->hungry_timer,hom_hungry);
 		hd->hungry_timer = INVALID_TIMER;
 	}
 	return 1;
 }
 
+/**
+* Change homunculus name
+*/
 int hom_change_name(struct map_session_data *sd,char *name)
 {
 	int i;
@@ -730,50 +895,62 @@ int hom_change_name(struct map_session_data *sd,char *name)
 	hd = sd->hd;
 	if (!hom_is_active(hd))
 		return 1;
-	if(hd->homunculus.rename_flag && !battle_config.hom_rename)
+	if (hd->homunculus.rename_flag && !battle_config.hom_rename)
 		return 1;
 
-	for(i=0;i<NAME_LENGTH && name[i];i++){
-		if( !(name[i]&0xe0) || name[i]==0x7f)
+	for (i = 0; i < NAME_LENGTH && name[i];i++) {
+		if (!(name[i]&0xe0) || name[i] == 0x7f)
 			return 1;
 	}
 
 	return intif_rename_hom(sd, name);
 }
 
-int hom_change_name_ack(struct map_session_data *sd, char* name, int flag)
+/**
+* Acknowledge change name request from inter-server
+* @param sd
+* @param name
+* @param flag
+*/
+void hom_change_name_ack(struct map_session_data *sd, char* name, int flag)
 {
 	struct homun_data *hd = sd->hd;
-	if (!hom_is_active(hd)) return 0;
+	if (!hom_is_active(hd))
+		return;
 
 	normalize_name(name," ");//bugreport:3032
 
-	if ( !flag || name[0] == '\0' ) {
+	if (!flag || name[0] == '\0') {
 		clif_displaymessage(sd->fd, msg_txt(sd,280)); // You cannot use this name
-		return 0;
+		return;
 	}
 	safestrncpy(hd->homunculus.name,name,NAME_LENGTH);
 	clif_charnameack (0,&hd->bl);
 	hd->homunculus.rename_flag = 1;
 	clif_hominfo(sd,hd,0);
-	return 1;
 }
 
-int hom_search(int key,int type)
+/**
+* Search homunculus info (food or next class)
+* @param key
+* @param type see enum e_hom_search_type
+* @return info found
+*/
+int hom_search(int key, int type)
 {
 	int i;
 
-	for(i=0;i<homunculus_count;i++) {
-		if(homunculus_db[i].base_class <= 0)
+	for (i = 0; i < homunculus_count; i++) {
+		if (homunculus_db[i].base_class <= 0)
 			continue;
-		switch(type) {
+		switch (type) {
 			case HOMUNCULUS_CLASS:
-				if(homunculus_db[i].base_class == key ||
+				if (homunculus_db[i].base_class == key ||
 					homunculus_db[i].evo_class == key)
 					return i;
 				break;
 			case HOMUNCULUS_FOOD:
-				if(homunculus_db[i].foodID == key)
+				if (homunculus_db[i].foodID == key)
 					return i;
 				break;
 			default:
@@ -783,7 +960,11 @@ int hom_search(int key,int type)
 	return -1;
 }
 
-// Create homunc structure
+/**
+* Create homunc structure
+* @param sd
+* @param hom
+*/
 void hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 {
 	struct homun_data *hd;
@@ -830,6 +1011,10 @@ void hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 	hd->masterteleport_timer = INVALID_TIMER;
 }
 
+/**
+* Init homunculus timers
+* @param hd
+*/
 void hom_init_timers(struct homun_data * hd)
 {
 	if (hd->hungry_timer == INVALID_TIMER)
@@ -841,9 +1026,9 @@ void hom_init_timers(struct homun_data * hd)
 /**
  * Make a player spawn a homonculus (call)
  * @param sd
- * @return 0:failure, 1:sucess
+ * @return False:failure, True:sucess
  */
-int hom_call(struct map_session_data *sd)
+bool hom_call(struct map_session_data *sd)
 {
 	struct homun_data *hd;
 
@@ -857,10 +1042,10 @@ int hom_call(struct map_session_data *sd)
 	hd = sd->hd;
 
 	if (!hd->homunculus.vaporize)
-		return 0; //Can't use this if homun wasn't vaporized.
+		return false; //Can't use this if homun wasn't vaporized.
 
 	if (hd->homunculus.vaporize == HOM_ST_MORPH)
-		return 0; // Can't call homunculus (morph state).
+		return false; // Can't call homunculus (morph state).
 
 	hom_init_timers(hd);
 	hd->homunculus.vaporize = HOM_ST_ACTIVE;
@@ -870,7 +1055,7 @@ int hom_call(struct map_session_data *sd)
 		hd->bl.y = sd->bl.y;
 		hd->bl.m = sd->bl.m;
 		if(map_addblock(&hd->bl))
-			return 0;
+			return false;
 		clif_spawn(&hd->bl);
 		clif_send_homdata(sd,SP_ACK,0);
 		clif_hominfo(sd,hd,1);
@@ -882,7 +1067,7 @@ int hom_call(struct map_session_data *sd)
 	} else
 		//Warp him to master.
 		unit_warp(&hd->bl,sd->bl.m, sd->bl.x, sd->bl.y,CLR_OUTSIGHT);
-	return 1;
+	return true;
 }
 
 /**
@@ -934,17 +1119,23 @@ int hom_recv_data(int account_id, struct s_homunculus *sh, int flag)
 	return 1;
 }
 
-// Ask homunculus creation to char server
-int hom_create_request(struct map_session_data *sd, int class_)
+/**
+* Ask homunculus creation to char-server
+* @param sd
+* @param class_
+* @return True:Success; False:Failed
+*/
+bool hom_create_request(struct map_session_data *sd, int class_)
 {
 	struct s_homunculus homun;
 	struct h_stats *base;
 	int i;
 
-	nullpo_retr(1, sd);
+	nullpo_ret(sd);
 
 	i = hom_search(class_,HOMUNCULUS_CLASS);
-	if(i < 0) return 0;
+	if(i < 0)
+		return false;
 
 	memset(&homun, 0, sizeof(struct s_homunculus));
 	//Initial data
@@ -968,7 +1159,7 @@ int hom_create_request(struct map_session_data *sd, int class_)
 
 	// Request homunculus creation
 	intif_homunculus_create(sd->status.account_id, &homun);
-	return 1;
+	return true;
 }
 
 /**
@@ -1012,6 +1203,12 @@ int hom_ressurect(struct map_session_data* sd, unsigned char per, short x, short
 	return status_revive(&hd->bl, per, 0);
 }
 
+/**
+* Revive homunculus
+* @param hd
+* @param hp
+* @param sp
+*/
 void hom_revive(struct homun_data *hd, unsigned int hp, unsigned int sp)
 {
 	struct map_session_data *sd = hd->master;
@@ -1022,10 +1219,14 @@ void hom_revive(struct homun_data *hd, unsigned int hp, unsigned int sp)
 	clif_hominfo(sd,hd,1);
 	clif_hominfo(sd,hd,0);
 	clif_homskillinfoblock(sd);
-	if(hd->homunculus.class_ == 6052) //eleanor
+	if (hd->homunculus.class_ == 6052) //eleanor
 		sc_start(&hd->bl,&hd->bl, SC_STYLE_CHANGE, 100, MH_MD_FIGHTING, -1);
 }
 
+/**
+* Reset homunculus status
+* @param hd
+*/
 void hom_reset_stats(struct homun_data *hd)
 {	//Resets a homunc stats back to zero (but doesn't touches hunger or intimacy)
 	struct s_homunculus_db *db;
@@ -1050,6 +1251,10 @@ void hom_reset_stats(struct homun_data *hd)
 	hd->homunculus.skillpts = 0;
 }
 
+/**
+* Shuffle homunculus status
+* @param hd
+*/
 int hom_shuffle(struct homun_data *hd)
 {
 	struct map_session_data *sd;
@@ -1101,6 +1306,10 @@ int hom_shuffle(struct homun_data *hd)
 	return 1;
 }
 
+/**
+* Get initmacy grade
+* @param hd
+*/
 uint8 hom_get_intimacy_grade(struct homun_data *hd)
 {
 	unsigned int val = hd->homunculus.intimacy / 100;
@@ -1121,6 +1330,9 @@ uint8 hom_get_intimacy_grade(struct homun_data *hd)
 	return 0;
 }
 
+/**
+* Read homunculus db
+*/
 static bool read_homunculusdb_sub(char* str[], int columns, int current)
 {
 	int classid;
@@ -1244,6 +1456,9 @@ static bool read_homunculusdb_sub(char* str[], int columns, int current)
 	return true;
 }
 
+/**
+* Read homunculus db (check the files)
+*/
 void read_homunculusdb(void) {
 	uint8 i;
 	const char *filename[] = {
@@ -1257,48 +1472,49 @@ void read_homunculusdb(void) {
 	}
 }
 
+/**
+* Read homunculus skill db
+*/
 static bool read_homunculus_skilldb_sub(char* split[], int columns, int current)
 {// <hom class>,<skill id>,<max level>[,<job level>],<req id1>,<req lv1>,<req id2>,<req lv2>,<req id3>,<req lv3>,<req id4>,<req lv4>,<req id5>,<req lv5>,<intimacy lv req>
-	int k, classid;
-	int j;
+	int skill_id, class_idx;
+	int i, j;
 	int minJobLevelPresent = 0;
 
-	if( columns == 14 )
+	if (columns == 14)
 		minJobLevelPresent = 1;	// MinJobLvl has been added
 
 	// check for bounds [celest]
-	classid = atoi(split[0]) - HM_CLASS_BASE;
-	if ( classid >= MAX_HOMUNCULUS_CLASS )
-	{
+	if ((class_idx = hom_class2index(atoi(split[0]))) == -1) {
 		ShowWarning("read_homunculus_skilldb: Invalud homunculus class %d.\n", atoi(split[0]));
 		return false;
 	}
 
-	k = atoi(split[1]); //This is to avoid adding two lines for the same skill. [Skotlex]
+	skill_id = atoi(split[1]); //This is to avoid adding two lines for the same skill. [Skotlex]
 	// Search an empty line or a line with the same skill_id (stored in j)
-	ARR_FIND( 0, MAX_SKILL_TREE, j, !hskill_tree[classid][j].id || hskill_tree[classid][j].id == k );
-	if (j == MAX_SKILL_TREE)
-	{
-		ShowWarning("Unable to load skill %d into homunculus %d's tree. Maximum number of skills per class has been reached.\n", k, classid);
+	ARR_FIND( 0, MAX_SKILL_TREE, j, !hskill_tree[class_idx][j].id || hskill_tree[class_idx][j].id == skill_id );
+	if (j == MAX_SKILL_TREE) {
+		ShowWarning("Unable to load skill %d into homunculus %d's tree. Maximum number of skills per class has been reached.\n", skill_id, atoi(split[0]));
 		return false;
 	}
 
-	hskill_tree[classid][j].id = k;
-	hskill_tree[classid][j].max = atoi(split[2]);
+	hskill_tree[class_idx][j].id = skill_id;
+	hskill_tree[class_idx][j].max = atoi(split[2]);
 	if (minJobLevelPresent)
-		hskill_tree[classid][j].joblv = atoi(split[3]);
+		hskill_tree[class_idx][j].joblv = atoi(split[3]);
 
-	for( k = 0; k < MAX_PC_SKILL_REQUIRE; k++ )
-	{
-		hskill_tree[classid][j].need[k].id = atoi(split[3+k*2+minJobLevelPresent]);
-		hskill_tree[classid][j].need[k].lv = atoi(split[3+k*2+minJobLevelPresent+1]);
+	for (i = 0; i < MAX_HOM_SKILL_REQUIRE; i++) {
+		hskill_tree[class_idx][j].need[i].id = atoi(split[3+i*2+minJobLevelPresent]);
+		hskill_tree[class_idx][j].need[i].lv = atoi(split[3+i*2+minJobLevelPresent+1]);
 	}
 
-	hskill_tree[classid][j].intimacylv = atoi(split[13+minJobLevelPresent]);
-
+	hskill_tree[class_idx][j].intimacylv = atoi(split[13+minJobLevelPresent]);
 	return true;
 }
 
+/**
+* Read homunculus skill db (check the files)
+*/
 int read_homunculus_skilldb(void)
 {
 	const char *filename[]={ "homun_skill_tree.txt",DBIMPORT"/homun_skill_tree.txt"};
@@ -1310,6 +1526,9 @@ int read_homunculus_skilldb(void)
 	return 0;
 }
 
+/**
+* Read homunculus exp db
+*/
 void read_homunculus_expdb(void)
 {
 	int i;
@@ -1319,30 +1538,29 @@ void read_homunculus_expdb(void)
 	};
 
 	memset(hexptbl,0,sizeof(hexptbl));
-	for(i=0; i<ARRAYLENGTH(filename); i++){
+	for (i = 0; i < ARRAYLENGTH(filename); i++) {
 		FILE *fp;
 		char line[1024];
 		int j=0;
 		
 		sprintf(line, "%s/%s", db_path, filename[i]);
-		fp=fopen(line,"r");
-		if(fp == NULL){
-			if(i != 0)
+		fp = fopen(line,"r");
+		if (fp == NULL) {
+			if (i != 0)
 				continue;
-			if(i==0) ShowError("Can't read %s\n",line);
+			if (i == 0)
+				ShowError("Can't read %s\n",line);
 			return;
 		}
-		while(fgets(line, sizeof(line), fp) && j < MAX_LEVEL)
-		{
-			if(line[0] == '/' && line[1] == '/')
+		while (fgets(line, sizeof(line), fp) && j < MAX_LEVEL) {
+			if (line[0] == '/' && line[1] == '/')
 				continue;
 
 			hexptbl[j] = strtoul(line, NULL, 10);
 			if (!hexptbl[j++])
 				break;
 		}
-		if (hexptbl[MAX_LEVEL - 1]) // Last permitted level have to be 0!
-		{
+		if (hexptbl[MAX_LEVEL - 1]) { // Last permitted level have to be 0!
 			ShowWarning("read_hexptbl: Reached max level in %s [%d]. Remaining lines were not read.\n ",filename,MAX_LEVEL);
 			hexptbl[MAX_LEVEL - 1] = 0;
 		}

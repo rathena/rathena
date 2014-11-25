@@ -225,7 +225,7 @@ bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd)
 	Sql_FreeResult(sql_handle);
 
 	if( charserv_config.save_log )
-		ShowInfo("Homunculus loaded (%d - %s).\n", hd->hom_id, hd->name);
+		ShowInfo("Homunculus loaded (ID: %d - %s / Class: %d / CID: %d).\n", hd->hom_id, hd->name, hd->class_, hd->char_id);
 
 	return true;
 }

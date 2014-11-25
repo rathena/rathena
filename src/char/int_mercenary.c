@@ -120,7 +120,7 @@ bool mapif_mercenary_load(int merc_id, int char_id, struct s_mercenary *merc)
 	Sql_GetData(sql_handle,  4, &data, NULL); merc->life_time = atoi(data);
 	Sql_FreeResult(sql_handle);
 	if( charserv_config.save_log )
-		ShowInfo("Mercenary loaded (%d - %d).\n", merc->mercenary_id, merc->char_id);
+		ShowInfo("Mercenary loaded (ID: %d / Class: %d / CID: %d).\n", merc->mercenary_id, merc->class_, merc->char_id);
 
 	return true;
 }

@@ -78,7 +78,7 @@ bool mapif_elemental_load(int ele_id, int char_id, struct s_elemental *ele) {
 	Sql_GetData(sql_handle, 14, &data, NULL); ele->life_time = atoi(data);
 	Sql_FreeResult(sql_handle);
 	if( charserv_config.save_log )
-		ShowInfo("Elemental loaded (%d - %d).\n", ele->elemental_id, ele->char_id);
+		ShowInfo("Elemental loaded (ID: %d / Class: %d / CID: %d).\n", ele->elemental_id, ele->class_, ele->char_id);
 
 	return true;
 }
