@@ -9387,7 +9387,7 @@
 19604,Brawler's_Supply_Crate,Brawler's Supply Crate,18,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem(12208,4); getitem(12072,6); getitem(12082,6); getitem(12087,6); getitem(11502,30); },{},{}
 //19604,C_Invisible_Flu_Mask,Costume Invisible Flu Mask,4,0,,0,,0,,0,0xFFFFFFFF,63,2,4096,,1,0,0,{},{},{}
 19607,C_Love_Chick_Hat,Costume Love Chick Hat,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,500,{},{},{}
-19608,C_Baby_Chick,Costume_Baby_Chick,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,311,{},{},{}
+19608,C_Baby_Chick,Costume Baby Chick,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,311,{},{},{}
 19613,C_Valkyrie_Feather_Hat,Costume Valkyrie Feather Hat,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,300,{ bonus bAllStats,1; skill "PR_MAGNUS",5; skill "SA_FLAMELAUNCHER",1; skill "SA_FROSTWEAPON",1; skill "SA_LIGHTNINGLOADER",1; skill "SA_SEISMICWEAPON",1; },{},{}
 19617,C_Puppy_Headband,Costume Puppy Headband,4,0,,0,,,,,0xFFFFFFFF,63,2,1024,,,,199,{},{},{}
 19618,C_Kitsune_Mask,Costume Kitsune Mask,4,0,,0,,,,,0xFFFFFFFF,63,2,1024,,,,153,{},{},{}
@@ -9412,7 +9412,7 @@
 19649,C_White_Baby_Cat_Ears,Costume White Baby Cat Ears,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,926,{},{},{}
 19650,C_Rainbow_Feather_Deco,Costume Rainbow Feather Deco,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,1,934,{},{},{}
 19651,C_RWC_Shouting_Mouth,Costume RWC Shouting Mouth,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,194,{},{},{}
-19654,C_Ship_Captain_Hat,Costume_Ship_Captain_Hat,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,367,{},{},{}
+19654,C_Ship_Captain_Hat,Costume Ship Captain Hat,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,367,{},{},{}
 19655,C_Tiraya_Bonnet,Costume Tiraya Bonnet,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,0,0,398,{},{},{}
 19656,C_Wandering_Minstrel_Hat,Wandering Minstrel Hat,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,0,0,240,{},{},{}
 19661,C_Sweet_Bonnet,Costume Sweet Bonnet,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,938,{},{},{}
@@ -9438,7 +9438,7 @@
 //19708,Elizabeth,Elizabeth,4,10,,0,,,,0,0xFFFFFFFF,63,2,256,,1,1,,{},{},{}
 19709,C_Yellow_Ribbon,Costume Yellow Ribbon,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,310,{},{},{}
 19710,C_Wings_Of_Victory,Costume Wings Of Victory,4,10,,0,,,,0,0xFFFFFFFF,63,2,2048,,1,1,365,{},{},{}
-19712,C_Little_Angel_Doll,Costume_Little_Angel_Doll,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,344,{},{},{}
+19712,C_Little_Angel_Doll,Costume Little Angel Doll,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,344,{},{},{}
 19716,C_Alice_Doll,Costume Alice Doll,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,208,{},{},{}
 19719,C_Coronet,Costume Coronet,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,33,{},{},{}
 19721,C_Darkness_Helm,Costume Darkness Helm,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,379,{},{},{}
@@ -9526,7 +9526,7 @@
 19864,C_Dokebi's_Wig,Dokebi's Wig,4,20,,0,,0,,0,0xFFFFFFFF,63,2,3072,,0,0,302,{},{},{}
 19865,C_Joker_Jester,Joker Jester,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,0,0,89,{},{},{}
 19871,C_DecorationOfMusic_Accessory,Decoration of Music,4,20,,0,,0,,0,0xFFFFFFFF,63,2,2048,,0,0,1074,{},{ sc_start SC_DECORATION_OF_MUSIC,-1,0; },{ sc_end SC_DECORATION_OF_MUSIC; }
-19876,C_Bunny_Top_Hat,Costume_Bunny_Top_Hat,4,0,,0,,,,,0xFFFFFFFF,63,2,1024,,1,,384,{},{},{}
+19876,C_Bunny_Top_Hat,Costume Bunny Top Hat,4,0,,0,,,,,0xFFFFFFFF,63,2,1024,,1,,384,{},{},{}
 19878,C_Evolved_Drooping_Bunny,Costume Evolved Drooping Bunny,4,0,,0,,,,,0xFFFFFFFF,63,2,1024,,1,,249,{},{},{}
 19882,C_Flowerpot_Mask,Costume Flowerpot Mask,4,0,,0,,,,,0xFFFFFFFF,63,2,4096,,1,,,{/*TODO: View ID*/},{},{}
 19883,C_Cyclops_Glasses,Costume Cyclops Glasses,4,0,,0,,,,,0xFFFFFFFF,63,2,2048,,1,,1087,{},{},{}
@@ -9852,7 +9852,7 @@
 22808,Special_Gift_Box,Special Gift Box,2,10,,100,,,,,,,,,,,,,{},{},{}
 22812,Sealed_Dracula_Scroll,Sealed Dracula Scroll,2,10,,10,,,,,,,,,,,,,{ getitem callfunc("F_Rand",6228,6232,22813,19937,17314, 6635),1; },{},{}
 22813,Bearer's_Shadow_Box,Bearer's Shadow Box,2,10,,10,,,,,,,,,,,,,{ getitem callfunc("F_Rand",24180,24181,24182,28183,24184,24185),1; },{},{}
-22814,Cat_Hand_Ticket,Cat_Hand_Ticket,3,10,,0,,,,,,,,,,,,,{},{},{}
+22814,Cat_Hand_Ticket,Cat Hand Ticket,3,10,,0,,,,,,,,,,,,,{},{},{}
 22823,Sealed_Sniper_Scroll,Sealed Sniper Scroll,2,10,,10,,,,,,,,,,,,,{ /*getitem callfunc("F_Rand",4491,6228,6232,24196, Hasty Shadow Armor, 19882, 17474, 6635),1;*/ },{},{}
 22826,Costume_Enchantment_Stone_Box_4,Costume Enchantment Stone Box 4,2,10,,100,,,,,,,,,,,,,{},{},{}
 22827,Shadow_Cube,Shadow Cube,2,10,,10,,,,,,,,,,,,,{/*No Info*/},{},{}
