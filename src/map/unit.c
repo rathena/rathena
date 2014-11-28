@@ -499,7 +499,7 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 		if( md && DIFF_TICK(tick,md->dmgtick) < 3000 ) // Not required not damaged recently
 			clif_move(ud);
 	} else if(ud->state.running) { // Keep trying to run.
-		if ( !(unit_run(bl, NULL, SC_RUN) || unit_run(bl, sd, SC_WUGDASH)) )
+		if (!(unit_run(bl, NULL, SC_RUN) || unit_run(bl, sd, SC_WUGDASH)) )
 			ud->state.running = 0;
 	} else if (!ud->stepaction && ud->target_to) {
 		// Update target trajectory.
@@ -792,7 +792,8 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, unsi
  * Called by unit_run when an object is hit.
  * @param sd Required only when using SC_WUGDASH
  */
-void unit_run_hit(struct block_list *bl, struct status_change *sc, struct map_session_data *sd, enum sc_type type) {
+void unit_run_hit(struct block_list *bl, struct status_change *sc, struct map_session_data *sd, enum sc_type type)
+{
 	int lv = sc->data[type]->val1;
 
 	// If you can't run forward, you must be next to a wall, so bounce back. [Skotlex]
@@ -819,7 +820,8 @@ void unit_run_hit(struct block_list *bl, struct status_change *sc, struct map_se
  * @param sd: Required only when using SC_WUGDASH
  * @return true: Success (Finished running) false: Fail (Hit an object/Couldn't run)
  */
-bool unit_run(struct block_list *bl, struct map_session_data *sd, enum sc_type type) {
+bool unit_run(struct block_list *bl, struct map_session_data *sd, enum sc_type type)
+{
 	struct status_change *sc;
 	short to_x, to_y, dir_x, dir_y;
 	int i;
@@ -857,7 +859,7 @@ bool unit_run(struct block_list *bl, struct map_session_data *sd, enum sc_type t
 	}
 
 	// Can't run forward.
-	if( (to_x == bl->x && to_y == bl->y ) || (to_x == (bl->x + 1) || to_y == (bl->y + 1)) || (to_x == (bl->x - 1) || to_y == (bl->y - 1))) {
+	if( (to_x == bl->x && to_y == bl->y) || (to_x == (bl->x + 1) || to_y == (bl->y + 1)) || (to_x == (bl->x - 1) || to_y == (bl->y - 1))) {
 		unit_run_hit(bl, sc, sd, type);
 		return false;
 	}
@@ -1402,7 +1404,6 @@ int unit_can_move(struct block_list *bl) {
  */
 int unit_resume_running(int tid, unsigned int tick, int id, intptr_t data)
 {
-
 	struct unit_data *ud = (struct unit_data *)data;
 	TBL_PC *sd = map_id2sd(id);
 

@@ -2706,6 +2706,11 @@ static struct Damage battle_calc_attack_masteries(struct Damage wd, struct block
 		if (sc) { // Status change considered as masteries
 			uint8 i;
 
+#ifdef RENEWAL
+			if (sc->data[SC_NIBELUNGEN]) // With renewal, the level 4 weapon limitation has been removed
+				ATK_ADD(wd.masteryAtk, wd.masteryAtk2, sc->data[SC_NIBELUNGEN]->val2);
+#endif
+
 			if (sc->data[SC_MIRACLE])
 				i = 2; //Star anger
 			else
@@ -4141,18 +4146,22 @@ static int battle_calc_skill_constant_addition(struct Damage wd, struct block_li
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
-struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, uint16 skill_id)
+struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, struct block_list *target, uint16 skill_id)
 {
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
 	struct status_change *sc = status_get_sc(src);
 	struct status_data *sstatus = status_get_status_data(src);
+#ifdef RENEWAL
+	struct status_data *tstatus = status_get_status_data(target);
+#endif
+	int inf3 = skill_get_inf3(skill_id);
 
-	if( sd ) {
+	if (sd) {
 		int type;
 
 		// Kagerou/Oboro Earth Charm effect +15% wATK
 		ARR_FIND(1, 6, type, sd->talisman[type] > 0);
-		if( type == 2 ) {
+		if (type == 2) { //KO Earth Charm effect +15% wATK
 			ATK_ADDRATE(wd.damage, wd.damage2, 15 * sd->talisman[type]);
 #ifdef RENEWAL
 			ATK_ADDRATE(wd.weaponAtk, wd.weaponAtk2, 15 * sd->talisman[type]);
@@ -4163,36 +4172,42 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, u
 	//The following are applied on top of current damage and are stackable.
 	if (sc) {
 #ifdef RENEWAL
-		if (sc->data[SC_WATK_ELEMENT])
-			if (skill_id != ASC_METEORASSAULT)
-				ATK_ADDRATE(wd.weaponAtk, wd.weaponAtk2, sc->data[SC_WATK_ELEMENT]->val2);
-#else
-		if( sc->data[SC_TRUESIGHT] )
-			ATK_ADDRATE(wd.damage, wd.damage2, 2*sc->data[SC_TRUESIGHT]->val1);
-#endif
-		if( sc->data[SC_GLOOMYDAY_SK] &&
-		( skill_id == LK_SPIRALPIERCE || skill_id == KN_BRANDISHSPEAR ||
-		  skill_id == CR_SHIELDBOOMERANG || skill_id == PA_SHIELDCHAIN ||
-		  skill_id == RK_HUNDREDSPEAR || skill_id == LG_SHIELDPRESS ) ) {
-			ATK_ADDRATE(wd.damage, wd.damage2, sc->data[SC_GLOOMYDAY_SK]->val2);
-#ifdef RENEWAL
-			ATK_ADDRATE(wd.weaponAtk, wd.weaponAtk2, sc->data[SC_GLOOMYDAY_SK]->val2);
-#endif
+		if (sc->data[SC_WATK_ELEMENT] && skill_id != ASC_METEORASSAULT)
+			ATK_ADDRATE(wd.weaponAtk, wd.weaponAtk2, sc->data[SC_WATK_ELEMENT]->val2);
+		if (sc->data[SC_IMPOSITIO])
+			ATK_ADD(wd.equipAtk, wd.equipAtk2, sc->data[SC_IMPOSITIO]->val2);
+		if (sc->data[SC_VOLCANO])
+			ATK_ADD(wd.equipAtk, wd.equipAtk2, sc->data[SC_VOLCANO]->val2);
+		if (sc->data[SC_DRUMBATTLE]) {
+			if (tstatus->size == SZ_SMALL) {
+				ATK_ADD(wd.equipAtk, wd.equipAtk2, sc->data[SC_DRUMBATTLE]->val2);
+			} else if (tstatus->size == SZ_MEDIUM)
+				ATK_ADD(wd.equipAtk, wd.equipAtk2, 10 * sc->data[SC_DRUMBATTLE]->val1);
 		}
+		if (sc->data[SC_MADNESSCANCEL])
+			ATK_ADD(wd.equipAtk, wd.equipAtk2, 100);
+		if (sc->data[SC_GATLINGFEVER]) {
+			if (tstatus->size == SZ_SMALL) {
+				ATK_ADD(wd.equipAtk, wd.equipAtk2, 10 * sc->data[SC_GATLINGFEVER]->val1);
+			} else if (tstatus->size == SZ_MEDIUM) {
+				ATK_ADD(wd.equipAtk, wd.equipAtk2, 5 * sc->data[SC_GATLINGFEVER]->val1);
+			} else if (tstatus->size == SZ_BIG)
+				ATK_ADD(wd.equipAtk, wd.equipAtk2, sc->data[SC_GATLINGFEVER]->val1);
+		}
+#else
+		if (sc->data[SC_TRUESIGHT])
+			ATK_ADDRATE(wd.damage, wd.damage2, 2 * sc->data[SC_TRUESIGHT]->val1);
+#endif
 		if (sc->data[SC_SPIRIT]) {
-			if(skill_id == AS_SONICBLOW && sc->data[SC_SPIRIT]->val2 == SL_ASSASIN){
-				ATK_ADDRATE(wd.damage, wd.damage2, map_flag_gvg(src->m)?25:100); //+25% dmg on woe/+100% dmg on nonwoe
-#ifdef RENEWAL
-				ATK_ADDRATE(wd.weaponAtk, wd.weaponAtk2, map_flag_gvg(src->m)?25:100); //+25% dmg on woe/+100% dmg on nonwoe
-#endif
-			} else if (skill_id == CR_SHIELDBOOMERANG && (sc->data[SC_SPIRIT]->val2 == SL_CRUSADER)) {
+			if (skill_id == AS_SONICBLOW && sc->data[SC_SPIRIT]->val2 == SL_ASSASIN) {
+				ATK_ADDRATE(wd.damage, wd.damage2, map_flag_gvg(src->m) ? 25 : 100); //+25% dmg on woe/+100% dmg on nonwoe
+				RE_ALLATK_ADDRATE(wd, map_flag_gvg(src->m) ? 25 : 100); //+25% dmg on woe/+100% dmg on nonwoe
+			} else if (skill_id == CR_SHIELDBOOMERANG && sc->data[SC_SPIRIT]->val2 == SL_CRUSADER) {
 				ATK_ADDRATE(wd.damage, wd.damage2, 100);
-#ifdef RENEWAL
-				ATK_ADDRATE(wd.weaponAtk, wd.weaponAtk2, 100);
-#endif
+				RE_ALLATK_ADDRATE(wd, 100);
 			}
 		}
-		if( sc->data[SC_EDP] ) {
+		if (sc->data[SC_EDP]) {
 			switch(skill_id) {
 				case AS_SPLASHER:
 				// Pre-Renewal only: Soul Breaker and Meteor Assault ignores EDP
@@ -4233,6 +4248,10 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, u
 
 #endif
 			}
+		}
+		if (sc->data[SC_GLOOMYDAY_SK] && (inf3&INF3_SC_GLOOMYDAY_SK)) {
+			ATK_ADDRATE(wd.damage, wd.damage2, sc->data[SC_GLOOMYDAY_SK]->val2);
+			RE_ALLATK_ADDRATE(wd, sc->data[SC_GLOOMYDAY_SK]->val2);
 		}
 
 		if(sc->data[SC_ZENKAI] && sstatus->rhw.ele == sc->data[SC_ZENKAI]->val2) {
@@ -4461,14 +4480,13 @@ struct Damage battle_calc_attack_post_defense(struct Damage wd, struct block_lis
 	struct status_change *sc = status_get_sc(src);
 	struct status_data *sstatus = status_get_status_data(src);
 
-	//Post skill/vit reduction damage increases
-	if( sc )
-	{	//SC skill damages
+	// Post skill/vit reduction damage increases
+	if( sc ) { // SC skill damages
 		if(sc->data[SC_AURABLADE]
 #ifndef RENEWAL
 				&& skill_id != LK_SPIRALPIERCE && skill_id != ML_SPIRALPIERCE
 #endif
-		){
+		) {
 			int lv = sc->data[SC_AURABLADE]->val1;
 #ifdef RENEWAL
 			lv *= ((skill_id == LK_SPIRALPIERCE || skill_id == ML_SPIRALPIERCE)?wd.div_:1); // +100 per hit in lv 5
@@ -4481,14 +4499,11 @@ struct Damage battle_calc_attack_post_defense(struct Damage wd, struct block_lis
 	wd = battle_calc_attack_masteries(wd, src, target, skill_id, skill_lv);
 
 	//Refine bonus
-	if( sd && battle_skill_stacks_masteries_vvs(skill_id) && skill_id != MO_INVESTIGATE && skill_id != MO_EXTREMITYFIST )
-	{ // Counts refine bonus multiple times
+	if( sd && battle_skill_stacks_masteries_vvs(skill_id) && skill_id != MO_INVESTIGATE && skill_id != MO_EXTREMITYFIST ) { // Counts refine bonus multiple times
 		if( skill_id == MO_FINGEROFFENSIVE )
-		{
 			ATK_ADD2(wd.damage, wd.damage2, wd.div_*sstatus->rhw.atk2, wd.div_*sstatus->lhw.atk2);
-		} else {
+		else
 			ATK_ADD2(wd.damage, wd.damage2, sstatus->rhw.atk2, sstatus->lhw.atk2);
-		}
 	}
 #endif
 	//Set to min of 1
@@ -4496,7 +4511,6 @@ struct Damage battle_calc_attack_post_defense(struct Damage wd, struct block_lis
 	if (is_attack_left_handed(src, skill_id) && wd.damage2 < 1) wd.damage2 = 1;
 
 	switch (skill_id) {
-
 		case AS_SONICBLOW:
 			if(sd && pc_checkskill(sd,AS_SONICACCEL)>0)
 				ATK_ADDRATE(wd.damage, wd.damage2, 10);
@@ -5029,7 +5043,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		}
 
 		// final attack bonuses that aren't affected by cards
-		wd = battle_attack_sc_bonus(wd, src, skill_id);
+		wd = battle_attack_sc_bonus(wd, src, target, skill_id);
 
 		if (sd) { //monsters, homuns and pets have their damage computed directly
 			wd.damage = wd.statusAtk + wd.weaponAtk + wd.equipAtk + wd.masteryAtk;
@@ -5041,7 +5055,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		}
 #else
 		// final attack bonuses that aren't affected by cards
-		wd = battle_attack_sc_bonus(wd, src, skill_id);
+		wd = battle_attack_sc_bonus(wd, src, target, skill_id);
 #endif
 
 		if (wd.damage + wd.damage2) { //Check if attack ignores DEF

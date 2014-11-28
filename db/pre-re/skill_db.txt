@@ -23,47 +23,48 @@
 // 10 Cast interrupted when hit?
 // 11 defense-reduction rate during cast.
 // 12 inf2 (skill information 2):
-//    0x00001- quest skill
-//    0x00002- npc skill
-//    0x00004- wedding skill
-//    0x00008- spirit skill
-//    0x00010- guild skill
-//    0x00020- song/dance
-//    0x00040- ensemble skill
-//    0x00080- trap
-//    0x00100- skill that damages/targets yourself
-//    0x00200- cannot be casted on self (if inf = 4, auto-select target skill)
-//    0x00400- usable only on party-members (and enemies if skill is offensive)
-//    0x00800- usable only on guild-mates (and enemies if skill is offensive)
-//    0x01000- disable usage on enemies (for non-offensive skills).
-//    0x02000- available skill for SC_AUTOSHADOWSPELL
-//    0x04000- chorus skill
-//    0x08000- skill that ignore bg reduction
-//    0x10000- skill that ignore gvg reduction
-//    0x20000- makes 'self'/'place' skill cannot be casted/placed when near NPC (see 'db/skill_nonearnpc_db.txt' for more options)
+//    0x00001 - quest skill
+//    0x00002 - npc skill
+//    0x00004 - wedding skill
+//    0x00008 - spirit skill
+//    0x00010 - guild skill
+//    0x00020 - song/dance
+//    0x00040 - ensemble skill
+//    0x00080 - trap
+//    0x00100 - skill that damages/targets yourself
+//    0x00200 - cannot be casted on self (if inf = 4, auto-select target skill)
+//    0x00400 - usable only on party-members (and enemies if skill is offensive)
+//    0x00800 - usable only on guild-mates (and enemies if skill is offensive)
+//    0x01000 - disable usage on enemies (for non-offensive skills).
+//    0x02000 - available skill for SC_AUTOSHADOWSPELL
+//    0x04000 - chorus skill
+//    0x08000 - skill that ignore bg reduction
+//    0x10000 - skill that ignore gvg reduction
+//    0x20000 - makes 'self'/'place' skill cannot be casted/placed when near NPC (see 'db/skill_nonearnpc_db.txt' for more options)
 // 13 maxcount: max amount of skill instances to place on the ground when
 //    player_land_skill_limit/monster_land_skill_limit is enabled. For skills
 //    that attack using a path, this is the path length to be used.
 // 14 attack type (none, weapon, magic, misc)
 // 15 Blowcount (amount of tiles skill knockbacks)
 // 16 inf3 (skill information 3):
-//    0x00001- skill ignores land protector (e.g. arrow shower)
-//    0x00002- skill that doesn't end camouflage
-//    0x00004- usable skills while hiding
-//    0x00008- skill that can be use while in dancing state
-//    0x00010- skill that could hit emperium
-//    0x00020- skill blocked by statis
-//    0x00040- skill blocked by kagehumi
-//    0x00080- skill range affected by AC_VULTURE
-//    0x00100- skill range affected by GS_SNAKEEYE
-//    0x00200- skill range affected by NJ_SHADOWJUMP
-//    0x00400- skill range affected by WL_RADIUS
-//    0x00800- skill range affected by RA_RESEARCHTRAP
-//    0x01000- skill that does not affect user that has NC_HOVERING active
-//    0x02000- skill that can be using while riding warg
-//    0x04000- skill that can't be used while in mado
-//    0x08000- skill that can be used to target while under SC__MANHOLE effect
-//    0x10000- skill that affects hidden targets
+//    0x00001 - skill ignores land protector (e.g. arrow shower)
+//    0x00002 - skill that doesn't end camouflage
+//    0x00004 - usable skills while hiding
+//    0x00008 - skill that can be use while in dancing state
+//    0x00010 - skill that could hit emperium
+//    0x00020 - skill blocked by statis
+//    0x00040 - skill blocked by kagehumi
+//    0x00080 - skill range affected by AC_VULTURE
+//    0x00100 - skill range affected by GS_SNAKEEYE
+//    0x00200 - skill range affected by NJ_SHADOWJUMP
+//    0x00400 - skill range affected by WL_RADIUS
+//    0x00800 - skill range affected by RA_RESEARCHTRAP
+//    0x01000 - skill that does not affect user that has NC_HOVERING active
+//    0x02000 - skill that can be using while riding warg
+//    0x04000 - skill that can't be used while in mado
+//    0x08000 - skill that can be used to target while under SC__MANHOLE effect
+//    0x10000 - skill that affects hidden targets
+//    0x20000 - skill that affects SC_GLOOMYDAY_SK
 // 17 Name
 // 18 Description
 1,0,0,0,0,0,0,9,0,no,0,0,0,none,0,0x0,		NV_BASIC,Basic Skill
@@ -144,7 +145,7 @@
 // Knight
 55,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,0x0,		KN_SPEARMASTERY,Spear Mastery
 56,-2,8,1,-1,0,0,10,3,no,0,0,0,weapon,0,0x0,		KN_PIERCE,Pierce
-57,-2,6,1,-1,0x1,0,10,1,no,0,0,0,weapon,3,0x0,	KN_BRANDISHSPEAR,Brandish Spear
+57,-2,6,1,-1,0x1,0,10,1,no,0,0,0,weapon,3,0x20000,	KN_BRANDISHSPEAR,Brandish Spear
 58,-4,6,1,-1,0x2,0,10,1,no,0,0,0,weapon,6,0x0,	KN_SPEARSTAB,Spear Stab
 59,3:5:7:9:11,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,	KN_SPEARBOOMERANG,Spear Boomerang
 60,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,0x0,		KN_TWOHANDQUICKEN,Twohand Quicken
@@ -367,7 +368,7 @@
 248,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,		CR_TRUST,Faith
 249,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,0x0,	CR_AUTOGUARD,Guard
 250,3,6,1,0,0,0,5,1,no,0,0,0,weapon,5:6:7:8:9,0x0,	CR_SHIELDCHARGE,Smite
-251,3:5:7:9:11,6,1,0,0,0,5,1,no,0,0,0,weapon,0,0x0,	CR_SHIELDBOOMERANG,Shield Boomerang
+251,3:5:7:9:11,6,1,0,0,0,5,1,no,0,0,0,weapon,20000,0x0,	CR_SHIELDBOOMERANG,Shield Boomerang
 252,0,6,4,0,0,0,10,1,no,0,0,0,weapon,0,0x0,		CR_REFLECTSHIELD,Shield Reflect
 253,-2,8,1,6,0,0,10,-2,no,0,0,0,weapon,0,0x0,	CR_HOLYCROSS,Holy Cross
 254,5,6,4,6,0x48,0,10,1,no,33,0x100,0,magic,0,0x0,	CR_GRANDCROSS,Grand Cross
@@ -576,7 +577,7 @@
 
 //****
 // Lord Knight
-397,5,8,1,-1,0x20,0,5,5,no,0,0,0,weapon,0,0x0,	LK_SPIRALPIERCE,Spiral Pierce
+397,5,8,1,-1,0x20,0,5,5,no,0,0,0,weapon,0,0x20000,	LK_SPIRALPIERCE,Spiral Pierce
 398,4,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,		LK_HEADCRUSH,Traumatic Blow
 399,4,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,0x0,		LK_JOINTBEAT,Vital Strike
 
@@ -695,7 +696,7 @@
 477,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,0x4000,	WS_WEAPONREFINE,Upgrade Weapon
 478,3,6,2,0,0x3,3,10,1,no,0,0,0,none,0,0x0,		CR_SLIMPITCHER,Aid Condensed Potion
 479,1,6,16,0,0x1,0,5,1,yes,0,0,0,weapon,0,0x0,	CR_FULLPROTECTION,Full Protection
-480,5,8,1,-1,0,0,5,5,no,0,0,0,weapon,0,0x0,		PA_SHIELDCHAIN,Shield Chain
+480,5,8,1,-1,0,0,5,5,no,0,0,0,weapon,0,0x20000,		PA_SHIELDCHAIN,Shield Chain
 481,0,0,0,0,0,0,5,0,no,0,0,0,none,0,0x0,		HP_MANARECHARGE,Mana Recharge
 482,0,6,4,0,0x1,0,5,1,no,0,0,0,magic,0,0x0,		PF_DOUBLECASTING,Double Casting
 483,16,6,2,0,0x1,1:2:3:4:5,1,1,no,0,0,0,none,0,0x20,	HW_GANBANTEIN,Ganbantein
@@ -884,7 +885,7 @@
 2001,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0,0x0,	RK_ENCHANTBLADE,Enchant Blade
 2002,7:8:9:10:11,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,	RK_SONICWAVE,Sonic Wave
 2003,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,0x0,	RK_DEATHBOUND,Death Bound
-2004,5,8,1,-1,0,0,10,-5,no,0,0,0,weapon,0,0x0,	RK_HUNDREDSPEAR,Hundred Spear
+2004,5,8,1,-1,0,0,10,-5,no,0,0,0,weapon,0,0x20000,	RK_HUNDREDSPEAR,Hundred Spear
 2005,1,6,2,4,0x2,2,5,1,no,0,0,0,weapon,3,0x0,	RK_WINDCUTTER,Wind Cutter
 2006,0,6,4,-1,0x2,5,5,1,no,0,0,0,weapon,0,0x0,	RK_IGNITIONBREAK,Ignition Break
 2007,0,0,0,0,0,0,5,0,no,0,0,0,none,0,0x0,		RK_DRAGONTRAINING,Dragon Training
