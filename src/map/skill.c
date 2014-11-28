@@ -15420,11 +15420,11 @@ int skill_castfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
 			int i;
 			if( sd->castrate != 100 )
 				time = time * sd->castrate / 100;
-			for( i = 0; i < ARRAYLENGTH(sd->skillcast) && sd->skillcast[i].id; i++ )
+			for( i = 0; i < ARRAYLENGTH(sd->skillcastrate) && sd->skillcastrate[i].id; i++ )
 			{
-				if( sd->skillcast[i].id == skill_id )
+				if( sd->skillcastrate[i].id == skill_id )
 				{
-					time+= time * sd->skillcast[i].val / 100;
+					time += time * sd->skillcastrate[i].val / 100;
 					break;
 				}
 			}
@@ -15459,8 +15459,8 @@ int skill_castfix_sc(struct block_list *bl, int time)
 	if (sc && sc->count) {
 		if (sc->data[SC_SLOWCAST])
 			time += time * sc->data[SC_SLOWCAST]->val2 / 100;
-	if (sc->data[SC_PARALYSIS])
-		time += sc->data[SC_PARALYSIS]->val3;
+		if (sc->data[SC_PARALYSIS])
+			time += sc->data[SC_PARALYSIS]->val3;
 		if (sc->data[SC_SUFFRAGIUM]) {
 			time -= time * sc->data[SC_SUFFRAGIUM]->val2 / 100;
 			status_change_end(bl, SC_SUFFRAGIUM, INVALID_TIMER);
@@ -15482,7 +15482,14 @@ int skill_castfix_sc(struct block_list *bl, int time)
 }
 #else
 /**
- * Get the skill cast time for RENEWAL_CAST
+ * Get the skill cast time for RENEWAL_CAST.
+ * FixedRate reduction never be stacked, always get the HIGHEST VALUE TO REDUCE (-20% vs 10%, -20% wins!)
+ * Additive value:
+ *    Variable CastTime : time  += value
+ *    Fixed CastTime    : fixed += value
+ * Multipicative value
+ *    Variable CastTime : VARCAST_REDUCTION(value)
+ *    Fixed CastTime    : FIXEDCASTRATE2(value)
  * @param bl: The caster
  * @param time: Cast time without reduction
  * @param skill_id: Skill ID of the casted skill
@@ -15493,7 +15500,13 @@ int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 
 {
 	struct status_change *sc = status_get_sc(bl);
 	struct map_session_data *sd = BL_CAST(BL_PC,bl);
-	int fixed = skill_get_fixed_cast(skill_id, skill_lv), fixcast_r = 0, varcast_r = 0, i = 0;
+	int fixed = skill_get_fixed_cast(skill_id, skill_lv);
+	short fixcast_r = 0;
+	uint8 i = 0, flag = skill_get_castnodex(skill_id, skill_lv);
+
+#define FIXEDCASTRATE2(val) ( FIXEDCASTRATE(fixcast_r,(val)) )
+
+	nullpo_ret(bl);
 
 	if( time < 0 )
 		return 0;
@@ -15501,97 +15514,116 @@ int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 
 	if( bl->type == BL_MOB )
 		return (int)time;
 
-	if( fixed == 0 ){
-		fixed = (int)time * 20 / 100; // fixed time
-		time = time * 80 / 100; // variable time
-	}else if( fixed < 0 ) // no fixed cast time
+	if( fixed < 0 || battle_config.default_fixed_castrate == 0 ) // no fixed cast time
 		fixed = 0;
+	else if( fixed == 0 ) {
+		fixed = (int)time * battle_config.default_fixed_castrate / 100; // fixed time
+		time = time * (100 - battle_config.default_fixed_castrate) / 100; // variable time
+	}
 
-	if(sd  && !(skill_get_castnodex(skill_id, skill_lv)&4) ){ // Increases/Decreases fixed/variable cast time of a skill by item/card bonuses.
-		if( sd->bonus.varcastrate < 0 )
-			VARCAST_REDUCTION(sd->bonus.varcastrate);
-		if( sd->bonus.add_varcast != 0 ) // bonus bVariableCast
-			time += sd->bonus.add_varcast;
-		if( sd->bonus.add_fixcast != 0 ) // bonus bFixedCast
-			fixed += sd->bonus.add_fixcast;
+	// Additive Variable Cast bonus first
+	if (sd && !(flag&4)) { // item bonus
+		time += sd->bonus.add_varcast; // bonus bVariableCast
+
+		for (i = 0; i < ARRAYLENGTH(sd->skillvarcast) && sd->skillvarcast[i].id; i++)
+			if( sd->skillvarcast[i].id == skill_id ){ // bonus2 bSkillVariableCast
+				time += sd->skillvarcast[i].val;
+				break;
+			}
+	}
+	/*if (sc && sc->count && !(flag&2)) { // status change
+		// -NONE YET-
+		//	if (sc->data[????])
+		//		bonus += sc->data[????]->val?;
+	}*/
+
+	// Adjusted by item bonuses
+	if (sd && !(flag&4)) {
+		// Additive values
+		fixed += sd->bonus.add_fixcast; // bonus bFixedCast
+
 		for (i = 0; i < ARRAYLENGTH(sd->skillfixcast) && sd->skillfixcast[i].id; i++)
 			if (sd->skillfixcast[i].id == skill_id){ // bonus2 bSkillFixedCast
 				fixed += sd->skillfixcast[i].val;
 				break;
 			}
-		for( i = 0; i < ARRAYLENGTH(sd->skillvarcast) && sd->skillvarcast[i].id; i++ )
-			if( sd->skillvarcast[i].id == skill_id ){ // bonus2 bSkillVariableCast
-				time += sd->skillvarcast[i].val;
-				break;
-			}
-		for( i = 0; i < ARRAYLENGTH(sd->skillcast) && sd->skillcast[i].id; i++ )
-			if( sd->skillcast[i].id == skill_id ){ // bonus2 bVariableCastrate
-				VARCAST_REDUCTION(sd->skillcast[i].val);
+
+		// Multipicative values
+		if (sd->bonus.varcastrate != 0)
+			VARCAST_REDUCTION(sd->bonus.varcastrate); // bonus bVariableCastrate
+
+		if (sd->bonus.fixcastrate != 0)
+			FIXEDCASTRATE2(sd->bonus.fixcastrate); // bonus bFixedCastrate
+
+		for( i = 0; i < ARRAYLENGTH(sd->skillcastrate) && sd->skillcastrate[i].id; i++ )
+			if( sd->skillcastrate[i].id == skill_id ){ // bonus2 bVariableCastrate
+				VARCAST_REDUCTION(sd->skillcastrate[i].val);
 				break;
 			}
 		for( i = 0; i < ARRAYLENGTH(sd->skillfixcastrate) && sd->skillfixcastrate[i].id; i++ )
 			if( sd->skillfixcastrate[i].id == skill_id ){ // bonus2 bFixedCastrate
-				fixcast_r = sd->skillfixcastrate[i].val;
+				FIXEDCASTRATE2(sd->skillfixcastrate[i].val);
 				break;
 			}
 	}
 
-	if (sc && sc->count && !(skill_get_castnodex(skill_id, skill_lv)&2) ) {
-		// All variable cast additive bonuses must come first
+	// Adjusted by active statuses
+	if (sc && sc->count && !(flag&2) ) {
+		// Multiplicative Variable CastTime values
 		if (sc->data[SC_SLOWCAST])
-			VARCAST_REDUCTION(-sc->data[SC_SLOWCAST]->val2);
-		if( sc->data[SC__LAZINESS] )
-			VARCAST_REDUCTION(-sc->data[SC__LAZINESS]->val2);
+			VARCAST_REDUCTION(sc->data[SC_SLOWCAST]->val2);
+		if (sc->data[SC__LAZINESS])
+			VARCAST_REDUCTION(sc->data[SC__LAZINESS]->val2);
 
-		// Variable cast reduction bonuses
 		if (sc->data[SC_SUFFRAGIUM]) {
-			VARCAST_REDUCTION(sc->data[SC_SUFFRAGIUM]->val2);
+			VARCAST_REDUCTION(-sc->data[SC_SUFFRAGIUM]->val2);
 			status_change_end(bl, SC_SUFFRAGIUM, INVALID_TIMER);
 		}
 		if (sc->data[SC_MEMORIZE]) {
-			VARCAST_REDUCTION(50);
+			VARCAST_REDUCTION(-50);
 			if ((--sc->data[SC_MEMORIZE]->val2) <= 0)
 				status_change_end(bl, SC_MEMORIZE, INVALID_TIMER);
 		}
 		if (sc->data[SC_POEMBRAGI])
-			VARCAST_REDUCTION(sc->data[SC_POEMBRAGI]->val2);
+			VARCAST_REDUCTION(-sc->data[SC_POEMBRAGI]->val2);
 		if (sc->data[SC_IZAYOI])
-			VARCAST_REDUCTION(50);
+			VARCAST_REDUCTION(-50);
 		if (sc->data[SC_WATER_INSIGNIA] && sc->data[SC_WATER_INSIGNIA]->val1 == 3 && (skill_get_ele(skill_id, skill_lv) == ELE_WATER))
-			VARCAST_REDUCTION(30); //Reduces 30% Variable Cast Time of Water spells.
-		if( sc->data[SC_TELEKINESIS_INTENSE] )
-			VARCAST_REDUCTION(sc->data[SC_TELEKINESIS_INTENSE]->val2);
-		// Fixed cast reduction bonuses
-		if( sc->data[SC_SECRAMENT] )
-			fixcast_r = max(fixcast_r, sc->data[SC_SECRAMENT]->val2);
-		if( sd && ( skill_lv = pc_checkskill(sd, WL_RADIUS) ) && skill_id >= WL_WHITEIMPRISON && skill_id <= WL_FREEZE_SP  )
-			fixcast_r = max(fixcast_r, 5 + skill_lv * 5);
-		// Fixed cast non percentage bonuses
-		if( sc->data[SC_MANDRAGORA] )
-			fixed += sc->data[SC_MANDRAGORA]->val1 * 1000 / 2;
-		if( sc->data[SC_GUST_OPTION] || sc->data[SC_BLAST_OPTION] || sc->data[SC_WILD_STORM_OPTION] )
-			fixed -= 1000;
+			VARCAST_REDUCTION(-30); //Reduces 30% Variable Cast Time of Water spells.
+		if (sc->data[SC_TELEKINESIS_INTENSE])
+			VARCAST_REDUCTION(-sc->data[SC_TELEKINESIS_INTENSE]->val2);
+
+		// Multiplicative Fixed CastTime values
+		if (sc->data[SC_SECRAMENT])
+			FIXEDCASTRATE2(-sc->data[SC_SECRAMENT]->val2);
+		if (sd && (skill_lv = pc_checkskill(sd, WL_RADIUS) ) && skill_id >= WL_WHITEIMPRISON && skill_id <= WL_FREEZE_SP)
+			FIXEDCASTRATE2(-(5 + skill_lv * 5));
 		if (sc->data[SC_DANCEWITHWUG])
-			fixed -= fixed * sc->data[SC_DANCEWITHWUG]->val4 / 100;
-		if( sc->data[SC_HEAT_BARREL] )
-			fixcast_r = max(fixcast_r, sc->data[SC_HEAT_BARREL]->val2);
+			FIXEDCASTRATE2(-sc->data[SC_DANCEWITHWUG]->val4);
+		if (sc->data[SC_HEAT_BARREL])
+			FIXEDCASTRATE2(-sc->data[SC_HEAT_BARREL]->val2);
+
+		// Additive Fixed CastTime values
+		if (sc->data[SC_MANDRAGORA])
+			fixed += sc->data[SC_MANDRAGORA]->val1 * 1000 / 2;
+
+		if (sc->data[SC_GUST_OPTION] || sc->data[SC_BLAST_OPTION] || sc->data[SC_WILD_STORM_OPTION])
+			fixed -= 1000;
 		if (sc->data[SC_IZAYOI])
 			fixed = 0;
 	}
 
-	if( sd && !(skill_get_castnodex(skill_id, skill_lv)&4) ){
-		VARCAST_REDUCTION( max(sd->bonus.varcastrate, 0) + max(i, 0) );
-		fixcast_r = max(fixcast_r, sd->bonus.fixcastrate) + min(sd->bonus.fixcastrate,0);
-	}
+	// Apply Variable CastTime calculation by INT & DEX
+	if (!(flag&1))
+		time = time * (1 - sqrt(((float)(status_get_dex(bl)*2 + status_get_int(bl)) / battle_config.vcast_stat_scale)));
 
-	if( varcast_r < 0 ) // now compute overall factors
-		time = time * (1 - (float)varcast_r / 100);
-	if( !(skill_get_castnodex(skill_id, skill_lv)&1) )// reduction from status point
-		time = (1 - sqrt( ((float)(status_get_dex(bl)*2 + status_get_int(bl)) / battle_config.vcast_stat_scale) )) * time;
-	// underflow checking/capping
-	time = max(time, 0) + (1 - (float)min(fixcast_r, 100) / 100) * max(fixed,0);
+	// Apply Fixed CastTime rate
+	if (fixed != 0 && fixcast_r != 0)
+		fixed = (int)(fixed * (1 + fixcast_r * 0.01));
 
-	return (int)time;
+#undef FIXEDCASTRATE2
+
+	return (int)max(time + fixed, 0);
 }
 #endif
 

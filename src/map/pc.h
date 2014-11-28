@@ -355,7 +355,7 @@ struct map_session_data {
 	struct s_skill_bonus { //skillatk raises bonus dmg% of skills, skillheal increases heal%, skillblown increases bonus blewcount for some skills.
 		unsigned short id;
 		short val;
-	} skillatk[MAX_PC_BONUS], skillusesprate[MAX_PC_BONUS], skillusesp[MAX_PC_BONUS], skillheal[MAX_PC_BONUS], skillheal2[MAX_PC_BONUS], skillblown[MAX_PC_BONUS], skillcast[MAX_PC_BONUS], skillcooldown[MAX_PC_BONUS], skillfixcast[MAX_PC_BONUS], skillvarcast[MAX_PC_BONUS], skillfixcastrate[MAX_PC_BONUS];
+	} skillatk[MAX_PC_BONUS], skillusesprate[MAX_PC_BONUS], skillusesp[MAX_PC_BONUS], skillheal[MAX_PC_BONUS], skillheal2[MAX_PC_BONUS], skillblown[MAX_PC_BONUS], skillcastrate[MAX_PC_BONUS], skillcooldown[MAX_PC_BONUS], skillfixcast[MAX_PC_BONUS], skillvarcast[MAX_PC_BONUS], skillfixcastrate[MAX_PC_BONUS];
 	struct s_regen {
 		short value;
 		int rate;
@@ -419,8 +419,8 @@ struct map_session_data {
 		unsigned short unbreakable;	// chance to prevent ANY equipment breaking [celest]
 		unsigned short unbreakable_equip; //100% break resistance on certain equipment
 		unsigned short unstripable_equip;
-		int fixcastrate,varcastrate;
-		int add_fixcast,add_varcast;
+		int fixcastrate, varcastrate; // n/100
+		int add_fixcast, add_varcast; // in milliseconds
 		int ematk; // matk bonus from equipment
 		int eatk; // atk bonus from equipment
 	} bonus;

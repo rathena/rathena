@@ -579,6 +579,7 @@ extern struct Battle_Config
 	int boss_icewall_walk_block; //How a boss monster should be trapped in icewall [Playtester]
 	int snap_dodge; // Enable or disable dodging damage snapping away [csnv]
 	int stormgust_knockback;
+	int default_fixed_castrate;
 } battle_config;
 
 void do_init_battle(void);

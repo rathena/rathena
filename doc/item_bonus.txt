@@ -174,16 +174,18 @@ bonus2 bAddItemGroupHealRate,ig,n;	Increases HP recovered by n% for items of ite
 
 Cast time/delay
 ---------------
-bonus bCastrate,n;             		Skill cast time rate + n%
-bonus2 bCastrate,sk,n;         		Adjust casting time of skill sk by n%
-bonus bFixedCastrate,n;        		Increases fixed cast time of all skills by n%
-bonus2 bFixedCastrate,sk,n;    		Increases fixed cast time of skill sk by n%
-bonus bVariableCastrate,n;     		Increases variable cast time of all skills by n%
-bonus2 bVariableCastrate,sk,n; 		Increases variable cast time of skill sk by n%
-bonus bFixedCast,t;            		Increases fixed cast time of all skills by t milliseconds
-bonus2 bSkillFixedCast,sk,t;   		Increases fixed cast time of skill sk by t milliseconds
-bonus bVariableCast,t;         		Increases variable cast time of all skills by t milliseconds
-bonus2 bSkillVariableCast,sk,t;		Increases variable cast time of skill sk by t milliseconds
+bonus bCastrate,n;             		Skill cast time rate + n%. (If RENEWAL_CAST is defined, this bonus is equal to bVariableCastrate)
+bonus2 bCastrate,sk,n;         		Adjust casting time of skill sk by n%.(If RENEWAL_CAST is defined, this bonus is equal to bVariableCastrate)
+
+bonus bFixedCastrate,n;        		Increases fixed cast time of all skills by n% (has effect in RENEWAL_CAST only)
+bonus2 bFixedCastrate,sk,n;    		Increases fixed cast time of skill sk by n% (has effect in RENEWAL_CAST only)
+bonus bVariableCastrate,n;     		Increases variable cast time of all skills by n%. (If RENEWAL_CAST is NOT defined, this bonus is equal to bCastrate)
+bonus2 bVariableCastrate,sk,n; 		Increases variable cast time of skill sk by n% (If RENEWAL_CAST is NOT defined, this bonus is equal to bCastrate)
+
+bonus bFixedCast,t;            		Increases fixed cast time of all skills by t milliseconds (has effect in RENEWAL_CAST only)
+bonus2 bSkillFixedCast,sk,t;   		Increases fixed cast time of skill sk by t milliseconds (has effect in RENEWAL_CAST only)
+bonus bVariableCast,t;         		Increases variable cast time of all skills by t milliseconds (has effect in RENEWAL_CAST only)
+bonus2 bSkillVariableCast,sk,t;		Increases variable cast time of skill sk by t milliseconds (has effect in RENEWAL_CAST only)
 
 bonus bNoCastCancel,n; 			Prevents casting from being interrupted when hit (does not work in GvG | n is meaningless)
 bonus bNoCastCancel2,n;			Prevents casting from being interrupted when hit (works even in GvG | n is meaningless)

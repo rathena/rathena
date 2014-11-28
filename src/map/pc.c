@@ -2497,13 +2497,6 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 				break;
 			sd->bonus.sp += val;
 			break;
-#ifndef RENEWAL_CAST
-		case SP_VARCASTRATE:
-#endif
-		case SP_CASTRATE:
-			if(sd->state.lr_flag != 2)
-				sd->castrate+=val;
-			break;
 		case SP_MAXHPRATE:
 			if(sd->state.lr_flag != 2)
 				sd->hprate+=val;
@@ -2911,25 +2904,37 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 				sd->bonus.itemhealrate2 += val;
 			break;
 		case SP_EMATK:
-			   if(sd->state.lr_flag != 2)
-				   sd->bonus.ematk += val;
-			   break;
+			if(sd->state.lr_flag != 2)
+				sd->bonus.ematk += val;
+			break;
+#ifdef RENEWAL_CAST
 		case SP_FIXCASTRATE:
 			if(sd->state.lr_flag != 2)
-				sd->bonus.fixcastrate -= val;
+				FIXEDCASTRATE(sd->bonus.fixcastrate,val);
 			break;
 		case SP_ADD_FIXEDCAST:
 			if(sd->state.lr_flag != 2)
 				sd->bonus.add_fixcast += val;
 			break;
-#ifdef RENEWAL_CAST
+		case SP_CASTRATE:
 		case SP_VARCASTRATE:
 			if(sd->state.lr_flag != 2)
-				sd->bonus.varcastrate -= val;
+				sd->bonus.varcastrate += val;
 			break;
 		case SP_ADD_VARIABLECAST:
 			if(sd->state.lr_flag != 2)
 				sd->bonus.add_varcast += val;
+			break;
+#else
+		case SP_ADD_FIXEDCAST:
+		case SP_FIXCASTRATE:
+		case SP_ADD_VARIABLECAST:
+			//ShowWarning("pc_bonus: non-RENEWAL_CAST doesn't support this bonus %d.\n", type);
+			break;
+		case SP_VARCASTRATE:
+		case SP_CASTRATE:
+			if(sd->state.lr_flag != 2)
+				sd->castrate += val;
 			break;
 #endif
 		case SP_ADDMAXWEIGHT:
@@ -3315,49 +3320,6 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->skillblown[i].val = val;
 		}
 		break;
-#ifndef RENEWAL_CAST
-	case SP_VARCASTRATE: // bonus2 bVariableCastrate,sk,n;
-#endif
-	case SP_CASTRATE: // bonus2 bCastrate,sk,n;
-		if(sd->state.lr_flag == 2)
-			break;
-		ARR_FIND(0, ARRAYLENGTH(sd->skillcast), i, sd->skillcast[i].id == 0 || sd->skillcast[i].id == type2);
-		if (i == ARRAYLENGTH(sd->skillcast))
-		{	//Better mention this so the array length can be updated. [Skotlex]
-			ShowError("run_script: %s: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n",
-
-#ifndef RENEWAL_CAST
-				"SP_VARCASTRATE",
-#else
-				"SP_CASTRATE",
-#endif
-
-				ARRAYLENGTH(sd->skillcast), type2, val);
-			break;
-		}
-		if(sd->skillcast[i].id == type2)
-			sd->skillcast[i].val += val;
-		else {
-			sd->skillcast[i].id = type2;
-			sd->skillcast[i].val = val;
-		}
-		break;
-	case SP_FIXCASTRATE: // bonus2 bFixedCastrate,sk,n;
-		if(sd->state.lr_flag == 2)
-			break;
-		ARR_FIND(0, ARRAYLENGTH(sd->skillfixcastrate), i, sd->skillfixcastrate[i].id == 0 || sd->skillfixcastrate[i].id == type2);
-		if (i == ARRAYLENGTH(sd->skillfixcastrate))
-		{
-			ShowError("run_script: SP_FIXCASTRATE: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillfixcastrate), type2, val);
-			break;
-		}
-		if(sd->skillfixcastrate[i].id == type2)
-			sd->skillfixcastrate[i].val -= val;
-		else {
-			sd->skillfixcastrate[i].id = type2;
-			sd->skillfixcastrate[i].val -= val;
-		}
-		break;
 	case SP_HP_LOSS_RATE: // bonus2 bHPLossRate,n,t;
 		if(sd->state.lr_flag != 2) {
 			sd->hp_loss.value = type2;
@@ -3538,6 +3500,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->skillcooldown[i].val = val;
 		}
 		break;
+#ifdef RENEWAL_CAST
 	case SP_SKILL_FIXEDCAST: // bonus2 bSkillFixedCast,sk,t;
 		if(sd->state.lr_flag == 2)
 			break;
@@ -3570,21 +3533,61 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->skillvarcast[i].val = val;
 		}
 		break;
-#ifdef RENEWAL_CAST
+	case SP_CASTRATE: // bonus2 bCastrate,sk,n;
 	case SP_VARCASTRATE: // bonus2 bVariableCastrate,sk,n;
 		if(sd->state.lr_flag == 2)
 			break;
-		ARR_FIND(0, ARRAYLENGTH(sd->skillcast), i, sd->skillcast[i].id == 0 || sd->skillcast[i].id == type2);
-		if (i == ARRAYLENGTH(sd->skillcast))
+		ARR_FIND(0, ARRAYLENGTH(sd->skillcastrate), i, sd->skillcastrate[i].id == 0 || sd->skillcastrate[i].id == type2);
+		if (i == ARRAYLENGTH(sd->skillcastrate))
 		{
-			ShowError("pc_bonus2: SP_VARCASTRATE: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n",ARRAYLENGTH(sd->skillcast), type2, val);
+			ShowError("pc_bonus2: SP_VARCASTRATE: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n",ARRAYLENGTH(sd->skillcastrate), type2, val);
 			break;
 		}
-		if(sd->skillcast[i].id == type2)
-			sd->skillcast[i].val -= val;
+		if(sd->skillcastrate[i].id == type2)
+			sd->skillcastrate[i].val += val;
 		else {
-			sd->skillcast[i].id = type2;
-			sd->skillcast[i].val -= val;
+			sd->skillcastrate[i].id = type2;
+			sd->skillcastrate[i].val += val;
+		}
+		break;
+	case SP_FIXCASTRATE: // bonus2 bFixedCastrate,sk,n;
+		if(sd->state.lr_flag == 2)
+			break;
+		ARR_FIND(0, ARRAYLENGTH(sd->skillfixcastrate), i, sd->skillfixcastrate[i].id == 0 || sd->skillfixcastrate[i].id == type2);
+		if (i == ARRAYLENGTH(sd->skillfixcastrate))
+		{
+			ShowError("pc_bonus2: SP_FIXCASTRATE: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillfixcastrate), type2, val);
+			break;
+		}
+		if(sd->skillfixcastrate[i].id == type2)
+			FIXEDCASTRATE(sd->skillfixcastrate[i].val,val);
+		else {
+			sd->skillfixcastrate[i].id = type2;
+			sd->skillfixcastrate[i].val = val;
+		}
+		break;
+#else
+	case SP_SKILL_FIXEDCAST: // bonus2 bSkillFixedCast,sk,t;
+	case SP_SKILL_VARIABLECAST: // bonus2 bSkillVariableCast,sk,t;
+	case SP_FIXCASTRATE: // bonus2 bFixedCastrate,sk,n;
+		//ShowWarning("pc_bonus2: Non-RENEWAL_CAST doesn't support this bonus %d.\n", type);
+		break;
+	case SP_VARCASTRATE: // bonus2 bVariableCastrate,sk,n;
+	case SP_CASTRATE: // bonus2 bCastrate,sk,n;
+		if(sd->state.lr_flag == 2)
+			break;
+		ARR_FIND(0, ARRAYLENGTH(sd->skillcastrate), i, sd->skillcastrate[i].id == 0 || sd->skillcastrate[i].id == type2);
+		if (i == ARRAYLENGTH(sd->skillcastrate))
+		{	//Better mention this so the array length can be updated. [Skotlex]
+			ShowError("pc_bonus2: %s: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n",
+				(type == SP_CASTRATE) ? "SP_CASTRATE" : "SP_VARCASTRATE", ARRAYLENGTH(sd->skillcastrate), type2, val);
+			break;
+		}
+		if(sd->skillcastrate[i].id == type2)
+			sd->skillcastrate[i].val += val;
+		else {
+			sd->skillcastrate[i].id = type2;
+			sd->skillcastrate[i].val = val;
 		}
 		break;
 #endif
@@ -7572,12 +7575,6 @@ int pc_readparam(struct map_session_data* sd,int type)
 		case SP_FLEE1:		     val = sd->battle_status.flee; break;
 		case SP_FLEE2:		     val = sd->battle_status.flee2; break;
 		case SP_DEFELE:		     val = sd->battle_status.def_ele; break;
-#ifndef RENEWAL_CAST
-		case SP_VARCASTRATE:
-#endif
-		case SP_CASTRATE:
-				val = sd->castrate+=val;
-			break;
 		case SP_MAXHPRATE:	     val = sd->hprate; break;
 		case SP_MAXSPRATE:	     val = sd->sprate; break;
 		case SP_SPRATE:		     val = sd->dsprate; break;
@@ -7658,9 +7655,13 @@ int pc_readparam(struct map_session_data* sd,int type)
 		case SP_EMATK:           val = sd->bonus.ematk; break;
 		case SP_FIXCASTRATE:     val = sd->bonus.fixcastrate; break;
 		case SP_ADD_FIXEDCAST:   val = sd->bonus.add_fixcast; break;
+		case SP_ADD_VARIABLECAST:  val = sd->bonus.add_varcast; break;
+		case SP_CASTRATE:
+		case SP_VARCASTRATE:
 #ifdef RENEWAL_CAST
-		case SP_VARCASTRATE:     val = sd->bonus.varcastrate; break;
-		case SP_ADD_VARIABLECAST:val = sd->bonus.add_varcast; break;
+			val = sd->bonus.varcastrate; break;
+#else
+			val = sd->castrate; break;
 #endif
 	}
 
