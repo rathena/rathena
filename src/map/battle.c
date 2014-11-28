@@ -4499,11 +4499,12 @@ struct Damage battle_calc_attack_post_defense(struct Damage wd, struct block_lis
 	wd = battle_calc_attack_masteries(wd, src, target, skill_id, skill_lv);
 
 	//Refine bonus
-	if( sd && battle_skill_stacks_masteries_vvs(skill_id) && skill_id != MO_INVESTIGATE && skill_id != MO_EXTREMITYFIST ) { // Counts refine bonus multiple times
-		if( skill_id == MO_FINGEROFFENSIVE )
+	if (sd && battle_skill_stacks_masteries_vvs(skill_id) && skill_id != MO_INVESTIGATE && skill_id != MO_EXTREMITYFIST) { // Counts refine bonus multiple times
+		if (skill_id == MO_FINGEROFFENSIVE) {
 			ATK_ADD2(wd.damage, wd.damage2, wd.div_*sstatus->rhw.atk2, wd.div_*sstatus->lhw.atk2);
-		else
+		} else {
 			ATK_ADD2(wd.damage, wd.damage2, sstatus->rhw.atk2, sstatus->lhw.atk2);
+		}
 	}
 #endif
 	//Set to min of 1
