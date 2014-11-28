@@ -2650,9 +2650,9 @@
 4627,Big_Bell_Card,Big Bell Card,6,10,,10,,,,,,,,2,,,,,{ bonus2 bAddRace,RC_Formless,10; bonus2 bAddRace,RC_Demon,10; },{},{}
 4628,Neo_Punk_Card,Neo Punk Card,6,10,,10,,,,,0xFFFFFFFF,63,2,32,,,,,{ bonus2 bSubRace,RC_Formless,20; bonus2 bSubRace,RC_Demon,20; },{},{}
 4629,Arc_Elder_Card,Arc Elder Card,6,10,,10,,,,,,,,4,,,,,{ bonus2 bSubEle,Ele_Neutral,15; bonus2 bMagicAtkEle,Ele_Earth,30; },{},{}
-4630,Nightmare_Timer_Keeper_Card,Nightmare Timer Keeper Card,6,10,,10,,,,,,,,64,,,,,{ bonus3 bAutoSpell,677,2,1; },{},{}
+4630,Nightmare_Timer_Keeper_Card,Nightmare Timer Keeper Card,6,10,,10,,,,,,,,64,,,,,{ bonus3 bAutoSpell,"NPC_WIDECURSE",2,1; },{},{}
 4631,Owl_Viscount_Card,Owl Viscount Card,6,10,,10,,,,,,,,136,,,,,{ bonus bAspdRate,3; },{},{}
-4632,Owl_Marquees_Card,Owl Marquees Card,6,10,,10,,,,,,,,136,,,,,{ if(getskilllv(287)==5) bonus5 bAutoSpell,287,5,1,BF_SHORT,0; else bonus5 bAutoSpell,287,1,1,BF_SHORT,0; },{},{}
+4632,Owl_Marquees_Card,Owl Marquees Card,6,10,,10,,,,,,,,136,,,,,{ if(getskilllv(287)==5) bonus5 bAutoSpell,"SA_VIOLENTGALE",5,1,BF_SHORT,0; else bonus5 bAutoSpell,"SA_VIOLENTGALE",1,1,BF_SHORT,0; },{},{}
 
 // Armor Enchant System
 //===================================================================
@@ -6608,7 +6608,7 @@
 12787,Diabolic_Scroll,Diabolic Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ mercenary_create 2342,1800000; },{},{}
 12788,No100_Firecracker,No100 Firecracker,2,2,,20,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12789,Juicy_Fruit,Juicy Fruit,2,2,,100,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12790,Change_Name_Card,Character Name Change Coupon,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+12790,Change_Name_Card,Character Name Change Coupon,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ set CharRename, CharRename + 1; },{},{}
 12791,Combat_Pill,Combat Pill,2,20,,150,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_POTION_BERSERK; bonus_script "{ bonus2 bAddDamageClass,Class_All,5; bonus bMatkRate,5; bonus bMaxHPrate,3; bonus bMaxSPrate,3; }",60,0,0,SI_GM_BATTLE; },{},{}
 12792,P_Combat_Pill,P Combat Pill,2,20,,150,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_POTION_BERSERK; bonus_script "{  bonus2 bAddDamageClass,Class_All,10; bonus bMatkRate,10; bonus bMaxHPrate,5; bonus bMaxSPrate,5;  }",60,0,0,SI_GM_BATTLE2; },{},{}
 12793,Combat_Pill_Box10,Combat Pill Box10,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12791,10; },{},{}

@@ -2681,9 +2681,9 @@ REPLACE INTO `item_db_re` VALUES (4626,'Big_Ben_Card','Big Ben Card',6,10,NULL,1
 REPLACE INTO `item_db_re` VALUES (4627,'Big_Bell_Card','Big Bell Card',6,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus2 bAddRace,RC_Formless,10; bonus2 bAddRace,RC_Demon,10;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4628,'Neo_Punk_Card','Neo Punk Card',6,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,32,NULL,NULL,NULL,NULL,'bonus2 bSubRace,RC_Formless,20; bonus2 bSubRace,RC_Demon,20;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4629,'Arc_Elder_Card','Arc Elder Card',6,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,NULL,NULL,'bonus2 bSubEle,Ele_Neutral,15; bonus2 bMagicAtkEle,Ele_Earth,30;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (4630,'Nightmare_Timer_Keeper_Card','Nightmare Timer Keeper Card',6,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,64,NULL,NULL,NULL,NULL,'bonus3 bAutoSpell,677,2,1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (4630,'Nightmare_Timer_Keeper_Card','Nightmare Timer Keeper Card',6,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,64,NULL,NULL,NULL,NULL,'bonus3 bAutoSpell,"NPC_WIDECURSE",2,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4631,'Owl_Viscount_Card','Owl Viscount Card',6,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,136,NULL,NULL,NULL,NULL,'bonus bAspdRate,3;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (4632,'Owl_Marquees_Card','Owl Marquees Card',6,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,136,NULL,NULL,NULL,NULL,'if(getskilllv(287)==5) bonus5 bAutoSpell,287,5,1,BF_SHORT,0; else bonus5 bAutoSpell,287,1,1,BF_SHORT,0;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (4632,'Owl_Marquees_Card','Owl Marquees Card',6,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,136,NULL,NULL,NULL,NULL,'if(getskilllv(287)==5) bonus5 bAutoSpell,"SA_VIOLENTGALE",5,1,BF_SHORT,0; else bonus5 bAutoSpell,"SA_VIOLENTGALE",1,1,BF_SHORT,0;',NULL,NULL);
 
 # Armor Enchant System
 #===================================================================
@@ -6639,7 +6639,7 @@ REPLACE INTO `item_db_re` VALUES (12786,'Change_Slot_Card','Character Position C
 REPLACE INTO `item_db_re` VALUES (12787,'Diabolic_Scroll','Diabolic Scroll',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'mercenary_create 2342,1800000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12788,'No100_Firecracker','No100 Firecracker',2,2,NULL,20,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12789,'Juicy_Fruit','Juicy Fruit',2,2,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12790,'Change_Name_Card','Character Name Change Coupon',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12790,'Change_Name_Card','Character Name Change Coupon',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'set CharRename, CharRename + 1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12791,'Combat_Pill','Combat Pill',2,20,NULL,150,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'specialeffect2 EF_POTION_BERSERK; bonus_script "{ bonus2 bAddDamageClass,Class_All,5; bonus bMatkRate,5; bonus bMaxHPrate,3; bonus bMaxSPrate,3; }",60,0,0,SI_GM_BATTLE;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12792,'P_Combat_Pill','P Combat Pill',2,20,NULL,150,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'specialeffect2 EF_POTION_BERSERK; bonus_script "{  bonus2 bAddDamageClass,Class_All,10; bonus bMatkRate,10; bonus bMaxHPrate,5; bonus bMaxSPrate,5;  }",60,0,0,SI_GM_BATTLE2;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12793,'Combat_Pill_Box10','Combat Pill Box10',2,20,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 12791,10;',NULL,NULL);
