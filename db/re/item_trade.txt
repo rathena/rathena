@@ -2565,3 +2565,56 @@
 20139,475,100	//C_Horse_Hairpin
 20140,475,100	//C_Horse_Hairpin
 6907,475,100		//Piece_Of_Soul_Horse
+
+// kRO 2014-08-06
+17507,475,100	//Actinidia_Cat_Fruit_Box(4)
+17508,475,100	//Actinidia_Cat_Fruit_Box(10)
+17509,475,100	//Actinidia_Cat_Fruit_Box(40)
+20135,475,100	//C_12_Anniversary_Crown_Of_Saint
+20136,475,100	//C_12_Anniversary_Elf_Ears
+6909,475,100		//Actinidia_Cat_Fruit
+
+// kRO 2014-08-20
+17510,475,100	//Smelting_Ore_Box_VIII
+17511,475,100	//Smelting_Ore_Box_VIII(10)
+22828,475,100	//Sealed_Album_Scroll
+22829,475,100	//Sealed_Card_Album
+
+// kRO 2014-08-27
+6912,475,100		//Piece_Of_Soul_Sheep
+6674,475,100		//GM_Coin
+
+// kRO 2014-09-09
+6910,475,100		//(Limited)Purified_Oridecon
+6911,475,100		//(Limited)Purified_Eluminium
+17512,475,100	//(Limited)Purified_Eluminium_Box(30)
+17513,475,100	//(Limited)Purified_Oridecon_Box(30)
+
+// kRO 2014-09-17
+6699,475,100		//Faith_Silence
+6700,475,100		//White_Snake_Scale
+6701,475,100		//Treasure_Dwarf
+6702,475,100		//Sweat_Dwarf
+6703,475,100		//Warrior_Tears
+6704,475,100		//Warrior_Anger
+6705,475,100		//Warrior_Certificate
+6706,475,100		//Guardian_Flowers
+
+// kRO 2014-09-24
+6916,475,100		//Piece_Of_Soul_Monkey
+14758,475,100	//Safe_To_Smelting_Scroll
+17515,475,100	//Unlimited_Box_III
+17516,475,100	//Unlimited_Box_III(10)
+20179,475,100	//C_Monkey_Coat_Hat
+
+// kRO 2014-10-08
+6913,475,100		//Holy_Rosary
+6914,475,100		//Black_Horn
+6915,475,100		//Captured_Soul
+22837,475,100	//Integer_Time
+675,475,100		//Silver_Coin
+671,475,100		//Gold_Coin
+
+// kRO 2014-10-22
+14765,475,100	//Limited_Edition_JOB_Battle_Manual
+17520,475,100	//Limited_Edition_Manual_Box
