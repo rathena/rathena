@@ -6559,7 +6559,9 @@ BUILDIN_FUNC(getitem)
 		// if not pet egg
 		if (!pet_create_egg(sd, nameid))
 		{
+#ifdef ENABLE_ITEM_GUID
 			it.unique_id = (id->flag.guid) ? pc_generate_unique_id(sd) : 0;
+#endif
 			if ((flag = pc_additem(sd, &it, get_count, LOG_TYPE_SCRIPT)))
 			{
 				clif_additem(sd, 0, 0, flag);
@@ -6679,7 +6681,9 @@ BUILDIN_FUNC(getitem2)
 			if (!pet_create_egg(sd, nameid))
 			{
 				unsigned char flag = 0;
+#ifdef ENABLE_ITEM_GUID
 				item_tmp.unique_id = (item_data->flag.guid) ? pc_generate_unique_id(sd) : 0;
+#endif
 				if ((flag = pc_additem(sd, &item_tmp, get_count, LOG_TYPE_SCRIPT)))
 				{
 					clif_additem(sd, 0, 0, flag);

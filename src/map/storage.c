@@ -131,7 +131,7 @@ int storage_storageopen(struct map_session_data *sd)
 }
 
 /**
- * check if 2 item a and b have same values
+ * Check if 2 item a and b have same values
  * @param a : item 1
  * @param b : item 2
  * @return 1:same, 0:are different
@@ -143,8 +143,11 @@ int compare_item(struct item *a, struct item *b)
 		a->refine == b->refine &&
 		a->attribute == b->attribute &&
 		a->expire_time == b->expire_time &&
-		a->bound == b->bound &&
-		a->unique_id == b->unique_id )
+		a->bound == b->bound
+#ifdef ENABLE_ITEM_GUID
+		&& a->unique_id == b->unique_id
+#endif
+		)
 	{
 		int i;
 

@@ -13207,9 +13207,11 @@ void clif_parse_GM_Item_Monster(int fd, struct map_session_data *sd)
 		if( !itemdb_isstackable2(id) ) //Nonstackable
 			StringBuf_Printf(&command, "%citem2 %d 1 0 0 0 0 0 0 0", atcommand_symbol, id->nameid);
 		else {
+#ifdef ENABLE_ITEM_GUID
 			if (id->flag.guid)
 				StringBuf_Printf(&command, "%citem %d 1", atcommand_symbol, id->nameid);
 			else
+#endif
 				StringBuf_Printf(&command, "%citem %d 20", atcommand_symbol, id->nameid);
 		}
 		is_atcommand(fd, sd, StringBuf_Value(&command), 1);

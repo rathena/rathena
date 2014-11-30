@@ -4292,7 +4292,9 @@ char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_p
 			if( sd->status.inventory[i].nameid == item->nameid &&
 				sd->status.inventory[i].bound == item->bound &&
 				sd->status.inventory[i].expire_time == 0 &&
+#ifdef ENABLE_ITEM_GUID
 				sd->status.inventory[i].unique_id == item->unique_id &&
+#endif
 				memcmp(&sd->status.inventory[i].card, &item->card, sizeof(item->card)) == 0
 				)
 			{
