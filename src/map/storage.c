@@ -143,7 +143,9 @@ int compare_item(struct item *a, struct item *b)
 		a->refine == b->refine &&
 		a->attribute == b->attribute &&
 		a->expire_time == b->expire_time &&
-		a->bound == b->bound ) {
+		a->bound == b->bound &&
+		a->unique_id == b->unique_id )
+	{
 		int i;
 
 		for (i = 0; i < MAX_SLOTS && (a->card[i] == b->card[i]); i++);

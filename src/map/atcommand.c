@@ -1268,7 +1268,8 @@ ACMD_FUNC(item)
 				item_tmp.nameid = item_id;
 				item_tmp.identify = 1;
 				item_tmp.bound = bound;
-
+				if (item_data[j]->flag.guid)
+					item_tmp.unique_id = pc_generate_unique_id(sd);
 				if ((flag = pc_additem(sd, &item_tmp, get_count, LOG_TYPE_COMMAND)))
 					clif_additem(sd, 0, 0, flag);
 			}
@@ -1359,6 +1360,8 @@ ACMD_FUNC(item2)
 			item_tmp.card[2] = c3;
 			item_tmp.card[3] = c4;
 			item_tmp.bound = bound;
+			if (item_data->flag.guid)
+				item_tmp.unique_id = pc_generate_unique_id(sd);
 			if ((flag = pc_additem(sd, &item_tmp, get_count, LOG_TYPE_COMMAND)))
 				clif_additem(sd, 0, 0, flag);
 		}

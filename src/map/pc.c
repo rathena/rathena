@@ -4290,9 +4290,12 @@ char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_p
 	if( itemdb_isstackable2(id) && item->expire_time == 0 ) {
 		for( i = 0; i < MAX_INVENTORY; i++ ) {
 			if( sd->status.inventory[i].nameid == item->nameid &&
-			    sd->status.inventory[i].bound == item->bound &&
-			    sd->status.inventory[i].expire_time == 0 &&
-			    memcmp(&sd->status.inventory[i].card, &item->card, sizeof(item->card)) == 0 ) {
+				sd->status.inventory[i].bound == item->bound &&
+				sd->status.inventory[i].expire_time == 0 &&
+				sd->status.inventory[i].unique_id == item->unique_id &&
+				memcmp(&sd->status.inventory[i].card, &item->card, sizeof(item->card)) == 0
+				)
+			{
 				if( amount > MAX_AMOUNT - sd->status.inventory[i].amount || ( id->stack.inventory && amount > id->stack.amount - sd->status.inventory[i].amount ) )
 					return ADDITEM_OVERAMOUNT;
 				sd->status.inventory[i].amount += amount;
@@ -4321,7 +4324,7 @@ char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_p
 		clif_additem(sd,i,amount,0);
 	}
 	if( !itemdb_isstackable2(id) && !item->unique_id )
-		sd->status.inventory[i].unique_id = pc_generate_unique_id(sd);
+		item->unique_id = pc_generate_unique_id(sd);
 	log_pick_pc(sd, log_type, amount, &sd->status.inventory[i]);
 
 	sd->weight += w;
@@ -11272,6 +11275,7 @@ bool pc_is_same_equip_index(enum equip_index eqi, short *equip_index, short inde
  * @return A generated Unique item ID
  */
 uint64 pc_generate_unique_id(struct map_session_data *sd) {
+	nullpo_ret(sd);
 	return ((uint64)sd->status.char_id << 32) | sd->status.uniqueitem_counter++;
 }
 

@@ -1,7 +1,7 @@
 // Item Package Database
 //
 // Structure of Database:
-// GroupID,ItemID,Rate{,Amount,Random,isAnnounced,Duration,isNamed,isBound}
+// GroupID,ItemID,Rate{,Amount,Random,isAnnounced,Duration,GUID,isBound,isNamed}
 
 IG_Special_Box,Wrapped_Mask,3,1,1
 IG_Special_Box,Poison_Bottle,10,2,1

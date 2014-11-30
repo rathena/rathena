@@ -2842,6 +2842,17 @@ This function returns CARD ID, 255,254,-255 (for card 0, if the item is produced
 It's useful for when you want to check whether an item contains cards or if it's signed.
 
 ---------------------------------------
+
+*mergeitem({<item_id>});
+*mergeitem({"<item name>"});
+
+Merge item!!!!!!!!!
+
+If no item_id ot "item name", it will merges all possible items that exist in player's inventory.
+
+Example, just see the NPC npc/re/other/merge_item.txt
+
+---------------------------------------
 //
 2,1.- End of item-related commands.
 //

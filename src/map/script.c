@@ -6497,20 +6497,21 @@ BUILDIN_FUNC(getitem)
 	struct script_data *data;
 	unsigned char flag = 0;
 	const char* command = script_getfuncname(st);
+	struct item_data *id = NULL;
 
-	data=script_getdata(st,2);
+	data = script_getdata(st,2);
 	get_val(st,data);
 	if( data_isstring(data) ) {// "<item name>"
 		const char *name = conv_str(st,data);
-		struct item_data *item_data = itemdb_searchname(name);
-		if( item_data == NULL ){
+		id = itemdb_searchname(name);
+		if( id == NULL ){
 			ShowError("buildin_getitem: Nonexistant item %s requested.\n", name);
 			return SCRIPT_CMD_FAILURE; //No item created.
 		}
-		nameid = item_data->nameid;
+		nameid = id->nameid;
 	} else if( data_isint(data) ) {// <item id>
 		nameid = conv_num(st,data);
-		if( !itemdb_exists(nameid) ){
+		if( !(id = itemdb_exists(nameid)) ){
 			ShowError("buildin_getitem: Nonexistant item %d requested.\n", nameid);
 			return SCRIPT_CMD_FAILURE; //No item created.
 		}
@@ -6558,6 +6559,7 @@ BUILDIN_FUNC(getitem)
 		// if not pet egg
 		if (!pet_create_egg(sd, nameid))
 		{
+			it.unique_id = (id->flag.guid) ? pc_generate_unique_id(sd) : 0;
 			if ((flag = pc_additem(sd, &it, get_count, LOG_TYPE_SCRIPT)))
 			{
 				clif_additem(sd, 0, 0, flag);
@@ -6677,6 +6679,7 @@ BUILDIN_FUNC(getitem2)
 			if (!pet_create_egg(sd, nameid))
 			{
 				unsigned char flag = 0;
+				item_tmp.unique_id = (item_data->flag.guid) ? pc_generate_unique_id(sd) : 0;
 				if ((flag = pc_additem(sd, &item_tmp, get_count, LOG_TYPE_SCRIPT)))
 				{
 					clif_additem(sd, 0, 0, flag);
@@ -19111,6 +19114,90 @@ BUILDIN_FUNC(countspiritball) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/** Merges separated stackable items because of guid
+* mergeitem {<item_id>};
+* mergeitem {"<item name>"};
+* @param item Item ID/Name for merging specific item (Optional)
+* @author [Cydh]
+*/
+BUILDIN_FUNC(mergeitem) {
+	struct map_session_data *sd = script_rid2sd(st);
+	struct item *items;
+	uint16 i, count = 0;
+	int nameid = 0;
+
+	if (!sd)
+		return SCRIPT_CMD_SUCCESS;
+
+	if (script_hasdata(st, 2)) {
+		struct script_data *data = script_getdata(st, 2);
+		struct item_data *id;
+		get_val(st, data);
+
+		if (data_isstring(data)) {// "<item name>"
+			const char *name = conv_str(st,data);
+			if (!(id = itemdb_searchname(name))) {
+				ShowError("buildin_mergeitem: Nonexistant item %s requested.\n", name);
+				script_pushint(st, count);
+				return SCRIPT_CMD_FAILURE;
+			}
+			nameid = id->nameid;
+		}
+		else if (data_isint(data)) {// <item id>
+			nameid = conv_num(st,data);
+			if (!(id = itemdb_exists(nameid))) {
+				ShowError("buildin_mergeitem: Nonexistant item %d requested.\n", nameid);
+				script_pushint(st, count);
+				return SCRIPT_CMD_FAILURE;
+			}
+		}
+	}
+
+	for (i = 0; i < MAX_INVENTORY; i++) {
+		struct item *it = &sd->status.inventory[i];
+		if (!it || !it->unique_id || it->expire_time || !itemdb_isstackable(it->nameid))
+			continue;
+		if ((!nameid || (nameid == it->nameid))) {
+			uint8 k;
+			if (!count) {
+				CREATE(items, struct item, 1);
+				memcpy(&items[count++], it, sizeof(struct item));
+				pc_delitem(sd, i, it->amount, 0, 0, LOG_TYPE_NPC);
+				continue;
+			}
+			for (k = 0; k < count; k++) {
+				// Find Match
+				if (&items[k] && items[k].nameid == it->nameid && items[k].bound == it->bound) {
+					items[k].amount += it->amount;
+					pc_delitem(sd, i, it->amount, 0, 0, LOG_TYPE_NPC);
+					break;
+				}
+			}
+			if (k >= count) {
+				// New entry
+				RECREATE(items, struct item, count+1);
+				memcpy(&items[count++], it, sizeof(struct item));
+				pc_delitem(sd, i, it->amount, 0, 0, LOG_TYPE_NPC);
+			}
+		}
+	}
+
+	// Retrieve the items
+	for (i = 0; i < count; i++) {
+		uint8 flag = 0;
+		if (!&items[i])
+			continue;
+		items[i].id = 0;
+		//items[i].unique_id = pc_generate_unique_id(sd);
+		items[i].unique_id = 0;
+		if ((flag = pc_additem(sd, &items[i], items[i].amount, LOG_TYPE_NPC)))
+			clif_additem(sd, i, items[i].amount, flag);
+	}
+	aFree(items);
+	script_pushint(st, count);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -19653,6 +19740,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(addspiritball,"ii?"),
 	BUILDIN_DEF(delspiritball,"i?"),
 	BUILDIN_DEF(countspiritball,"?"),
+	BUILDIN_DEF(mergeitem,"?"),
 
 #include "../custom/script_def.inc"
 
