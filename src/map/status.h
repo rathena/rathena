@@ -1846,27 +1846,25 @@ struct regen_data_sub {
 		unsigned int hp,sp;
 	} tick;
 
-	//Regen rates (where every 1 means +100% regen)
+	//Regen rates. n/100
 	struct {
-		unsigned char hp,sp;
+		unsigned short hp,sp;
 	} rate;
 };
 
 ///Regen data
 struct regen_data {
-	unsigned short flag; //Marks what stuff you may heal or not.
-	unsigned short
-		hp,sp,shp,ssp;
+	unsigned char flag; //Marks what stuff you may heal or not.
+	unsigned short hp,sp,shp,ssp;
 
 	//tick accumulation before healing.
 	struct {
 		unsigned int hp,sp,shp,ssp;
 	} tick;
 
-	//Regen rates (where every 1 means +100% regen)
+	//Regen rates. n/100
 	struct {
-		unsigned char
-		hp,sp,shp,ssp;
+		unsigned short hp, sp, shp, ssp;
 	} rate;
 
 	struct {
