@@ -55,7 +55,6 @@ static struct view_data hom_viewdb[MAX_HOMUNCULUS_CLASS];
 * @return -1 if invalid skill or skill index for homunculus skill_tree
 */
 static short hom_skill_get_index(int skill_id) {
-	short idx = 0;
 	if (!skill_get_index(skill_id))
 		return -1;
 	if ((skill_id -= HM_SKILLBASE) < 0 || skill_id >= MAX_HOMUNSKILL)
@@ -764,7 +763,7 @@ void hom_menu(struct map_session_data *sd, int type)
 			hom_delete(sd->hd, -1);
 			break;
 		default:
-			ShowError("hom_menu : unknown menu choice : %d\n", type) ;
+			ShowError("hom_menu : unknown menu choice : %d\n", type);
 			break;
 	}
 }

@@ -834,8 +834,6 @@ int logchrif_parse_accinfo(int fd) {
 		return 0;
 	else {
 		int map_fd = RFIFOL(fd, 2), u_fd = RFIFOL(fd, 6), u_aid = RFIFOL(fd, 10), u_group = RFIFOL(fd, 14), account_id = RFIFOL(fd, 18);
-		short level = -1;
-		int logincount = 0, state = 0;
 		int8 type = RFIFOB(fd, 22);
 		AccountDB* accounts = login_get_accounts_db();
 		struct mmo_account acc;
