@@ -1842,7 +1842,6 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 			(sc->data[SC_TRICKDEAD] && skill_id != NV_TRICKDEAD)
 			|| (sc->data[SC_AUTOCOUNTER] && !flag && skill_id)
 			|| (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF && skill_id != PA_GOSPEL)
-			|| (sc->data[SC_GRAVITATION] && sc->data[SC_GRAVITATION]->val3 == BCT_SELF && flag != 2)
 		)
 			return false;
 
@@ -2162,7 +2161,7 @@ static unsigned short status_base_atk(const struct block_list *bl, const struct 
 unsigned int status_weapon_atk(struct weapon_atk wa, struct status_data *status)
 {
 	float str = status->str;
-	if (wa.range > 1)
+	if (wa.range > 3)
 		str = status->dex;
 	// wa.at2 = refinement, wa.atk = base equip atk, wa.atk*str/200 = bonus str
 	return wa.atk + wa.atk2 + (int)(wa.atk * (str/200));

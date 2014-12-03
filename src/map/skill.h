@@ -233,6 +233,7 @@ struct skill_unit_group {
 	char *valstr; /// String value, used for HT_TALKIEBOX & RG_GRAFFITI
 	int unit_id; /// Unit ID (for client effect)
 	int group_id; /// Skill Group ID
+	int link_group_id; /// Linked group that should be deleted if this one is deleted
 	int unit_count, /// Number of unit at this group
 		alive_count; /// Number of alive unit
 	int item_id; /// Store item used.

@@ -841,15 +841,15 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	if( sc && sc->data[SC_INVINCIBLE] && !sc->data[SC_INVINCIBLEOFF] )
 		return 1;
 
-	if (skill_id == PA_PRESSURE)
-		return damage; //This skill bypass everything else.
+	if (skill_id == PA_PRESSURE || skill_id == HW_GRAVITATION)
+		return damage; //These skills bypass everything else.
 
 	if( sc && sc->count ) { // SC_* that reduce damage to 0.
 		if( sc->data[SC_BASILICA] && !(status_get_mode(src)&MD_BOSS) ) {
 			d->dmg_lv = ATK_BLOCK;
 			return 0;
 		}
-		if( sc->data[SC_WHITEIMPRISON] && skill_id != HW_GRAVITATION ) { // Gravitation and Pressure do damage without removing the effect
+		if( sc->data[SC_WHITEIMPRISON] ) { // Gravitation and Pressure do damage without removing the effect
 			if( skill_id == MG_NAPALMBEAT ||
 				skill_id == MG_SOULSTRIKE ||
 				skill_id == WL_SOULEXPANSION ||
@@ -6244,7 +6244,11 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 #endif
 		break;
 	case HW_GRAVITATION:
+#ifdef RENEWAL
+		md.damage = 500+100*skill_lv;
+#else
 		md.damage = 200+200*skill_lv;
+#endif
 		md.dmotion = 0; //No flinch animation.
 		break;
 	case NPC_EVILLAND:
