@@ -6430,8 +6430,18 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case MO_KITRANSLATION:
-		if(dstsd && ((dstsd->class_&MAPID_BASEMASK) != MAPID_GUNSLINGER || (dstsd->class_&MAPID_UPPERMASK) != MAPID_REBELLION)) {
-			pc_addspiritball(dstsd,skill_get_time(skill_id,skill_lv),5);
+		if(dstsd && ((dstsd->class_&MAPID_BASEMASK) != MAPID_GUNSLINGER && (dstsd->class_&MAPID_UPPERMASK) != MAPID_REBELLION) && dstsd->spiritball < 5) {
+			//Require will define how many spiritballs will be transferred
+			struct skill_condition require;
+			require = skill_get_requirement(sd,skill_id,skill_lv);
+			pc_delspiritball(sd,require.spiritball,0);
+			for (i = 0; i < require.spiritball; i++)
+				pc_addspiritball(dstsd,skill_get_time(skill_id,skill_lv),5);
+		} else {
+			if(sd)
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+			map_freeblock_unlock();
+			return 0;
 		}
 		break;
 
@@ -15040,6 +15050,10 @@ void skill_consume_requirement(struct map_session_data *sd, uint16 skill_id, uin
 				if (sd->skill_id_old == RL_FALLEN_ANGEL) //Don't consume SP if triggered by Fallen Angel
 					require.sp = 0;
 				break;
+			case MO_KITRANSLATION:
+				//Spiritual Bestowment only uses spirit sphere when giving it to someone
+				require.spiritball = 0;
+				//Fall through
 			default:
 				if(sd->state.autocast)
 					require.sp = 0;
