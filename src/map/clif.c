@@ -5075,7 +5075,8 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,unsigned int
 	type = clif_calc_delay(type,div,damage,ddelay);
 
 #if PACKETVER >= 20131223
-	if( type == 6 ) type = 8;
+	if ( type == DMG_SKILL ) 
+		type = DMG_MULTI_HIT;		/* Temporary Fix */
 #endif
 
 	if( ( sc = status_get_sc(dst) ) && sc->count ) {
@@ -17022,7 +17023,13 @@ void clif_snap( struct block_list *bl, short x, short y ) {
 	WBUFW(buf,6) = x;
 	WBUFW(buf,8) = y;
 
-	clif_send(buf,packet_len(0x8d2),bl,AREA);
+	if( disguised(bl) )
+	{
+		clif_send(buf, packet_len(0x8d2), bl, AREA_WOS);
+		WBUFL(buf,2) = -bl->id;
+		clif_send(buf, packet_len(0x8d2), bl, SELF);
+	} else
+		clif_send(buf,packet_len(0x8d2),bl, AREA);
 }
 
 void clif_monster_hp_bar( struct mob_data* md, int fd ) {

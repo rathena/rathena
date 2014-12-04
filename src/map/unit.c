@@ -1748,6 +1748,19 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 				casttime = -1;
 			combo = 1;
 		break;
+		case CR_DEVOTION:
+			if (sd)	{
+				int i = 0, count = min(skill_lv, MAX_DEVOTION);
+				ARR_FIND(0, count, i, sd->devotion[i] == target_id);
+				if (i == count) {
+					ARR_FIND(0, count, i, sd->devotion[i] == 0);
+						if(i == count) {
+							clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+							return 0; // Can't cast on other characters when limit is reached
+						}
+				}
+			}
+		break;
 		case SR_GATEOFHELL:
 		case SR_TIGERCANNON:
 			if (sc && sc->data[SC_COMBO] &&
