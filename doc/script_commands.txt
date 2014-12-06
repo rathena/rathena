@@ -2846,11 +2846,11 @@ It's useful for when you want to check whether an item contains cards or if it's
 *mergeitem({<item_id>});
 *mergeitem({"<item name>"});
 
-Merge item!!!!!!!!!
+Merge all stackable items that separated by GUID flags
+(either by flag 4 item_flag.txt or GUID  in item_group).
+If no item ID/name given, all possible items in player's inventory will be merged.
 
-If no item_id ot "item name", it will merges all possible items that exist in player's inventory.
-
-Example, just see the NPC npc/re/other/merge_item.txt
+Example, just see the NPC 'npc/re/other/merge_item.txt'.
 
 ---------------------------------------
 //
