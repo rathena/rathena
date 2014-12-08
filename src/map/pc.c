@@ -4286,6 +4286,11 @@ char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_p
 
 	i = MAX_INVENTORY;
 
+#ifdef ENABLE_ITEM_GUID
+	if (id->flag.guid && !item->unique_id)
+		item->unique_id = pc_generate_unique_id(sd);
+#endif
+
 	// Stackable | Non Rental
 	if( itemdb_isstackable2(id) && item->expire_time == 0 ) {
 		for( i = 0; i < MAX_INVENTORY; i++ ) {
@@ -4860,11 +4865,17 @@ unsigned char pc_cart_additem(struct map_session_data *sd,struct item *item,int 
 	i = MAX_CART;
 	if( itemdb_isstackable2(data) && !item->expire_time )
 	{
-		ARR_FIND( 0, MAX_CART, i,
-			sd->status.cart[i].nameid == item->nameid && sd->status.cart[i].bound == item->bound &&
-			sd->status.cart[i].card[0] == item->card[0] && sd->status.cart[i].card[1] == item->card[1] &&
-			sd->status.cart[i].card[2] == item->card[2] && sd->status.cart[i].card[3] == item->card[3] );
-	};
+		for (i = 0; i < MAX_CART; i++) {
+			if (sd->status.cart[i].nameid == item->nameid
+				&& sd->status.cart[i].bound == item->bound
+#ifdef ENABLE_ITEM_GUID
+				&& sd->status.cart[i].unique_id == item->unique_id
+#endif
+				&& memcmp(sd->status.cart[i].card, item->card, sizeof(item->card)) == 0
+				)
+				break;
+		}
+	}
 
 	if( i < MAX_CART )
 	{// item already in cart, stack it

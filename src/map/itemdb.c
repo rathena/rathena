@@ -453,7 +453,7 @@ bool itemdb_isstackable2(struct item_data *id)
 		case IT_SHADOWGEAR:
 			return false;
 		default:
-		return true;
+			return true;
 	}
 }
 

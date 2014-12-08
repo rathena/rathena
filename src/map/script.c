@@ -6549,7 +6549,7 @@ BUILDIN_FUNC(getitem)
 		return SCRIPT_CMD_SUCCESS;
 
 	//Check if it's stackable.
-	if (!itemdb_isstackable(nameid))
+	if (!itemdb_isstackable2(id))
 		get_count = 1;
 	else
 		get_count = amount;
@@ -6559,9 +6559,6 @@ BUILDIN_FUNC(getitem)
 		// if not pet egg
 		if (!pet_create_egg(sd, nameid))
 		{
-#ifdef ENABLE_ITEM_GUID
-			it.unique_id = (id->flag.guid) ? pc_generate_unique_id(sd) : 0;
-#endif
 			if ((flag = pc_additem(sd, &it, get_count, LOG_TYPE_SCRIPT)))
 			{
 				clif_additem(sd, 0, 0, flag);
@@ -6670,7 +6667,7 @@ BUILDIN_FUNC(getitem2)
 		item_tmp.bound = bound;
 
 		//Check if it's stackable.
-		if (!itemdb_isstackable(nameid))
+		if (!itemdb_isstackable2(item_data))
 			get_count = 1;
 		else
 			get_count = amount;
@@ -6681,9 +6678,6 @@ BUILDIN_FUNC(getitem2)
 			if (!pet_create_egg(sd, nameid))
 			{
 				unsigned char flag = 0;
-#ifdef ENABLE_ITEM_GUID
-				item_tmp.unique_id = (item_data->flag.guid) ? pc_generate_unique_id(sd) : 0;
-#endif
 				if ((flag = pc_additem(sd, &item_tmp, get_count, LOG_TYPE_SCRIPT)))
 				{
 					clif_additem(sd, 0, 0, flag);
@@ -19171,7 +19165,7 @@ BUILDIN_FUNC(mergeitem) {
 			}
 			for (k = 0; k < count; k++) {
 				// Find Match
-				if (&items[k] && items[k].nameid == it->nameid && items[k].bound == it->bound) {
+				if (&items[k] && items[k].nameid == it->nameid && items[k].bound == it->bound && memcmp(items[k].card, it->card, sizeof(it->card)) == 0) {
 					items[k].amount += it->amount;
 					pc_delitem(sd, i, it->amount, 0, 0, LOG_TYPE_NPC);
 					break;
@@ -19192,7 +19186,6 @@ BUILDIN_FUNC(mergeitem) {
 		if (!&items[i])
 			continue;
 		items[i].id = 0;
-		//items[i].unique_id = pc_generate_unique_id(sd);
 		items[i].unique_id = 0;
 		if ((flag = pc_additem(sd, &items[i], items[i].amount, LOG_TYPE_NPC)))
 			clif_additem(sd, i, items[i].amount, flag);
