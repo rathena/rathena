@@ -2950,8 +2950,8 @@ ACMD_FUNC(char_ban)
 	}
 	
 	if( timediff < 0 && (
-		   (bantype == CHRIF_OP_LOGIN_BAN && !pc_can_use_command(sd, parent_cmd, COMMAND_ATCOMMAND))
-		|| (bantype == CHRIF_OP_BAN && !pc_can_use_command(sd, parent_cmd, COMMAND_ATCOMMAND))
+		   (bantype == CHRIF_OP_LOGIN_BAN && !pc_can_use_command(sd, "unban", COMMAND_ATCOMMAND))
+		|| (bantype == CHRIF_OP_BAN && !pc_can_use_command(sd, "charunban", COMMAND_ATCOMMAND))
 		))
 	{
 		clif_displaymessage(fd,msg_txt(sd,1023)); // You are not allowed to alter the time of a ban.
