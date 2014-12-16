@@ -2618,3 +2618,18 @@
 // kRO 2014-10-22
 14765,475,100	//Limited_Edition_JOB_Battle_Manual
 17520,475,100	//Limited_Edition_Manual_Box
+
+// kRO 2014-10-29
+1938,475,100		//Infinity_Violin
+1994,475,100		//Infinity_Whip
+2024,475,100		//Infinity_Two-handed_Stick
+6905,475,100		//Broken_Magic_Stone
+13126,475,100	//Infinity_Pistol
+13323,475,100	//Infinity_Shuriken
+15141,475,100	//Ancient_Armor_Of_The_Goddess
+16038,475,100	//Infinity_Mace
+18128,475,100	//Infinity_Bow
+19033,475,100	//Ancient_Decoration_Of_The_Goddess
+21014,475,100	//Infinity_Two-Handed_Sword
+28105,475,100	//Infinity_Axe
+28703,475,100	//Infinity_Dagger
