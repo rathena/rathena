@@ -64,6 +64,14 @@
 /// Uncomment to enable the job base HP/SP table (job_basehpsp_db.txt)
 //#define HP_SP_TABLES
 
+/// Enable separated item by `guid`. [Cydh]
+/// See db/[pre-]re/item_flag.txt and doc/item_group.txt for the `guid` explanation.
+/// NOTE:
+///    If this feature is disabled "in the middle" of your game, the separated is still
+///    separated in inventory, storage, or guild storage until player move the item
+///    to/from storage/inventory to restack them.
+#define ENABLE_ITEM_GUID
+
 /// Uncomment to enable VIP system.
 //#define VIP_ENABLE
 

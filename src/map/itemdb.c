@@ -13,6 +13,7 @@
 #include "cashshop.h"
 #include "script.h" // item script processing
 #include "pc.h"     // W_MUSICAL, W_WHIP
+#include "intif.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -198,12 +199,17 @@ static void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, struct s_it
 	// Do loop for non-stackable item
 	for (i = 0; i < data->amount; i++) {
 		char flag = 0;
+#ifdef ENABLE_ITEM_GUID
+		tmp.unique_id = data->GUID ? pc_generate_unique_id(sd) : 0; // Generate UID
+#endif
 		if ((flag = pc_additem(sd, &tmp, tmp.amount, LOG_TYPE_SCRIPT)))
 			clif_additem(sd, 0, 0, flag);
-		else if (!flag && data->isAnnounced) { ///TODO: Move this broadcast to proper behavior (it should on at different packet)
+		else if (!flag && data->isAnnounced) {
 			char output[CHAT_SIZE_MAX];
 			sprintf(output, msg_txt(NULL, 717), sd->status.name, itemdb_jname(data->nameid), itemdb_jname(sd->itemid));
-			clif_broadcast(&sd->bl, output, strlen(output), BC_DEFAULT, ALL_CLIENT);
+
+			//! TODO: Move this broadcast to proper packet
+			intif_broadcast(output, strlen(output) + 1, BC_DEFAULT);
 			//clif_broadcast_obtain_special_item();
 		}
 		if (itemdb_isstackable(data->nameid))
@@ -438,17 +444,17 @@ bool itemdb_isequip2(struct item_data *id)
 */
 bool itemdb_isstackable2(struct item_data *id)
 {
-  nullpo_ret(id);
-  switch(id->type) {
-	  case IT_WEAPON:
-	  case IT_ARMOR:
-	  case IT_PETEGG:
-	  case IT_PETARMOR:
-	  case IT_SHADOWGEAR:
-		  return false;
-	  default:
-		  return true;
-  }
+	nullpo_ret(id);
+	switch(id->type) {
+		case IT_WEAPON:
+		case IT_ARMOR:
+		case IT_PETEGG:
+		case IT_PETARMOR:
+		case IT_SHADOWGEAR:
+			return false;
+		default:
+			return true;
+	}
 }
 
 
@@ -557,7 +563,7 @@ static bool itemdb_read_itemavail(char* str[], int columns, int current) {
 }
 
 /** Read item group data
-* Structure: GroupID,ItemID,Rate{,Amount,isMust,isAnnounced,Duration,isNamed,isBound}
+* Structure: GroupID,ItemID,Rate{,Amount,isMust,isAnnounced,Duration,GUID,isBound,isNamed}
 */
 static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 {
@@ -574,7 +580,7 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 		int group_id = -1;
 		unsigned int j, prob = 1;
 		uint8 rand_group = 1;
-		char *str[9], *p;
+		char *str[10], *p;
 		struct s_item_group_random *random = NULL;
 		struct s_item_group_db *group = NULL;
 		struct s_item_group_entry entry;
@@ -658,8 +664,11 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 		if (str[3] != NULL) entry.amount = cap_value(atoi(str[3]),1,MAX_AMOUNT);
 		if (str[5] != NULL) entry.isAnnounced= atoi(str[5]);
 		if (str[6] != NULL) entry.duration = cap_value(atoi(str[6]),0,UINT16_MAX);
-		if (str[7] != NULL) entry.isNamed = atoi(str[7]);
+#ifdef ENABLE_ITEM_GUID
+		if (str[7] != NULL) entry.GUID = atoi(str[7]);
+#endif
 		if (str[8] != NULL) entry.bound = cap_value(atoi(str[8]),BOUND_NONE,BOUND_MAX-1);
+		if (str[9] != NULL) entry.isNamed = atoi(str[9]);
 
 		if (!(group = (struct s_item_group_db *) uidb_get(itemdb_group, group_id))) {
 			CREATE(group, struct s_item_group_db, 1);
@@ -894,6 +903,7 @@ static bool itemdb_read_nouse(char* fields[], int columns, int current) {
 * <item_id>,<flag>
 * &1 - As dead branch item
 * &2 - As item container
+* &4 - GUID item, cannot be stacked even same or stackable item
 */
 static bool itemdb_read_flag(char* fields[], int columns, int current) {
 	unsigned short nameid = atoi(fields[0]);
@@ -911,6 +921,9 @@ static bool itemdb_read_flag(char* fields[], int columns, int current) {
 
 	if (flag&1) id->flag.dead_branch = set ? 1 : 0;
 	if (flag&2) id->flag.group = set ? 1 : 0;
+#ifdef ENABLE_ITEM_GUID
+	if (flag&4 && itemdb_isstackable2(id)) id->flag.guid = set ? 1 : 0;
+#endif
 
 	return true;
 }

@@ -29,9 +29,11 @@ accessed in each.
 +===============+====================+================+
 | Duration      |       no           |      YES       |
 +===============+====================+================+
-| isNamed       |       no           |      YES       |
+| GUID          |       no           |      YES       |
 +===============+====================+================+
 | isBound       |       no           |      YES       |
++===============+====================+================+
+| isNamed       |       no           |      YES       |
 +===============+====================+================+
 
 ---------------------------------------
@@ -117,12 +119,21 @@ Duration: Makes the item a rental item, which will be expire in the given amount
 
 ---------------------------------------
 
-isNamed: Inscribes the item with the obtainer's name.
+GUID: Makes the given item(s) with Unique ID. Item will be stacked ONLY each group
+      when it obtained. Cannot be stacked with same item, even it's stackable item.
+	  Example, there is Box (just call it Apple_Box) that contains 3x Apples with
+	  GUID = 1. When Apples appear it will stack for each 3 even another 3x Apples
+	  are appeared by same box. So it will be filled in inventory as:
+	          3x Apples | 3x Apples | so on... | nx Apples (normal)
 
 ---------------------------------------
 
 isBound: Binds the obtained item.
          See 'getitembound' in 'doc/script_commands.txt' for valid bound types.
+
+---------------------------------------
+
+isNamed: Inscribes the item with the obtainer's name.
 
 ---------------------------------------
 

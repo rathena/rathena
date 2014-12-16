@@ -345,6 +345,7 @@ struct s_item_group_entry
 		duration, /// Duration if item as rental item (in minutes)
 		amount; /// Amount of item will be obtained
 	bool isAnnounced, /// Broadcast if player get this item
+		GUID, /// Gives Unique ID for items in each box opened
 		isNamed; /// Named the item (if possible)
 	char bound; /// Makes the item as bound item (according to bound type)
 };
@@ -414,6 +415,7 @@ struct item_data
 		unsigned buyingstore : 1;
 		unsigned dead_branch : 1; // As dead branch item. Logged at `branchlog` table and cannot be used at 'nobranch' mapflag [Cydh]
 		unsigned group : 1; // As item group container [Cydh]
+		unsigned guid : 1; // This item always be attached with GUID and make it as bound item! [Cydh]
 	} flag;
 	struct {// item stacking limitation
 		unsigned short amount;

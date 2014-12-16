@@ -2842,6 +2842,17 @@ This function returns CARD ID, 255,254,-255 (for card 0, if the item is produced
 It's useful for when you want to check whether an item contains cards or if it's signed.
 
 ---------------------------------------
+
+*mergeitem({<item_id>});
+*mergeitem({"<item name>"});
+
+Merge all stackable items that separated by GUID flags
+(either by flag 4 item_flag.txt or GUID  in item_group).
+If no item ID/name given, all possible items in player's inventory will be merged.
+
+Example, just see the NPC 'npc/re/other/merge_item.txt'.
+
+---------------------------------------
 //
 2,1.- End of item-related commands.
 //
