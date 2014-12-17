@@ -9398,6 +9398,7 @@ REPLACE INTO `item_db_re` VALUES (19550,'C_Blush','Costume Blush',4,20,NULL,100,
 REPLACE INTO `item_db_re` VALUES (19551,'C_Elven_Ears','Costume Elven Ears',4,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'100',0,73,'bonus bUnbreakableHelm,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19552,'C_Centimental_Flower','Costume Centimental Flower',4,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'100',0,56,'bonus bUnbreakableHelm,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19553,'C_Assassin_Mask_','Costume Assassin Mask',4,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'100',0,180,'bonus bUnbreakableHelm,0;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (19554,'C_Hahoe_Mask_','Costume Hahoe Mask',4,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,63,2,6144,NULL,'100',0,230,'bonus bUnbreakableHelm,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19573,'C_Heart_Wing_Hairband','Costume Heart Wing Hairband',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,733,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19574,'C_Lord_of_Death','Costume Lord of Death',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,3072,NULL,'0',1,742,'bonus bUnbreakableHelm,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19576,'C_Tare_Pope','Costume Tare Pope',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,817,NULL,NULL,NULL);

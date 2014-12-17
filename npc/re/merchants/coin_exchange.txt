@@ -1068,7 +1068,7 @@ ecl_in01,67,39,4	script	Replication Expert Palt	445,{
 		19547, //C_Deviruchi_Cap
 		19553, //C_Assassin_Mask_
 		19551, //C_Elven_Ears
-		0,     //-- not implemented? --
+		19554, //C_Hahoe_Mask
 		19545; //C_Boys_Cap
 	if (countitem(6081) >= 50 && countitem(747) >= 4 && countitem(6395) >= 1 && countitem(721) >= 10 && countitem(723) >= 10 && countitem(726) >= 10 && countitem(728) >= 10 && countitem(729) >= 10)
 		set .@item_check,1;
