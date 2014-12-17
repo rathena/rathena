@@ -625,7 +625,7 @@ int party_member_withdraw(int party_id, int account_id, int char_id)
 		int idxlist[MAX_INVENTORY]; //or malloc to reduce consumtion
 		int j,i;
 
-		j = pc_bound_chk(sd,3,idxlist);
+		j = pc_bound_chk(sd,BOUND_PARTY,idxlist);
 
 		for(i = 0; i < j; i++)
 			pc_delitem(sd,idxlist[i],sd->status.inventory[idxlist[i]].amount,0,1,LOG_TYPE_OTHER);

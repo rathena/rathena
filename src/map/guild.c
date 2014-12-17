@@ -844,7 +844,7 @@ void guild_retrieveitembound(int char_id,int aid,int guild_id) {
 	if(sd){ //Character is online
 		int idxlist[MAX_INVENTORY];
 		int j;
-		j = pc_bound_chk(sd,2,idxlist);
+		j = pc_bound_chk(sd,BOUND_GUILD,idxlist);
 		if(j) {
 			struct guild_storage* stor = guild2storage(sd->status.guild_id);
 			int i;
@@ -1804,7 +1804,7 @@ int guild_break(struct map_session_data *sd,char *name) {
 
 #ifdef BOUND_ITEMS
 	//Guild bound item check - Removes the bound flag
-	j = pc_bound_chk(sd,2,idxlist);
+	j = pc_bound_chk(sd,BOUND_GUILD,idxlist);
 	for(i=0;i<j;i++)
 		sd->status.inventory[idxlist[i]].bound = BOUND_NONE;
 #endif
