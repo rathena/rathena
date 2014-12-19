@@ -19120,7 +19120,7 @@ BUILDIN_FUNC(countspiritball) {
 */
 BUILDIN_FUNC(mergeitem) {
 	struct map_session_data *sd = script_rid2sd(st);
-	struct item *items;
+	struct item *items = NULL;
 	uint16 i, count = 0;
 	int nameid = 0;
 
@@ -19179,6 +19179,9 @@ BUILDIN_FUNC(mergeitem) {
 			}
 		}
 	}
+
+	if (!items) // Nothing todo here
+		return SCRIPT_CMD_SUCCESS;
 
 	// Retrieve the items
 	for (i = 0; i < count; i++) {
