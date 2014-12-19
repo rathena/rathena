@@ -127,3 +127,9 @@ Thumbs.db
 /vcproj-9/login-server
 /vcproj-9/map-server
 /vcproj-9/mapcache
+/.idea/.name
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/rathena.iml
+/.idea/vcs.xml
+/.idea/workspace.xml
