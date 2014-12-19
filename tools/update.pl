@@ -11,31 +11,30 @@ use File::Copy;
 use DBI;
 use DBD::mysql;
 use YAML::XS;
-
-use lib "./"; #use current path for out lib as well
 use rA_Common;
 
 #prgm option
 my $sHelp	= 0;
-my $sValidTarget = "All|DB|Compile|Restart|Upd";
 my $srABaseGitHttp	= 'https://github.com/rathena/rathena.git';
 my $srABaseGitSSH	= 'git@github.com:rathena/rathena.git';
 use constant {
 	STATE_FILE => "SQL_Status.yml",
 	ST_OLD => "old",
 	ST_SK => "skipped",
-    SQL_HOST => "SQL_host",
-    SQL_PORT => "SQL_port",
-    SQL_UID => "SQL_userid",
-    SQL_PW => "SQL_userpass",
-    SQL_MAIN_DB => "SQL_maindb",
-    SQL_LOG_DB => ,"SQL_logdb"
+	ST_DONE => "done",
+	SQL_HOST => "SQL_host",
+	SQL_PORT => "SQL_port",
+	SQL_UID => "SQL_userid",
+	SQL_PW => "SQL_userpass",
+	SQL_MAIN_DB => "SQL_maindb",
+	SQL_LOG_DB => ,"SQL_logdb"
 };
 my %hFileState = ();
+my $sValidTarget = "All|DB|Compile|Restart|Upd|MapDB";
 
 #those following could be edited by user
 my $sAutoDB    = 0;	#by default we ask for db setting
-my $sTarget = "Upd|DB|Compile"; #default target doesn't restart
+my $sTarget = "Upd|DB|Compile|MapDB"; #default target doesn't restart
 my %hDefConf = (
 	SQL_HOST => "localhost",
 	SQL_PORT => "3306",
@@ -45,25 +44,24 @@ my %hDefConf = (
 	SQL_LOG_DB => ,"ragnarok",
 );
 
-			
 GetArgs();
 Main();
 
 sub GetArgs {
-    GetOptions(
-    'target=s'	=> \$sTarget,	 #Target (wich setup to run)=
-    'help!' => \$sHelp,
-    ) or $sHelp=1; #display help if invalid option	
+	GetOptions(
+	'target=s'	=> \$sTarget,	 #Target (wich setup to run)=
+	'help!' => \$sHelp,
+	) or $sHelp=1; #display help if invalid option	
 	
-    if( $sHelp ) {
+	if( $sHelp ) {
 	print "Incorect option specified, available option are:\n"
 	    ."\t --target => target (specify wich check to ignore [$sValidTarget])\n";
 	exit;
-    }
-    if(!$sTarget || !($sTarget =~ /$sValidTarget/i)){
-    	print "Incorect target specified, available target are:\n"
-	    ."\t --target => target (specify wich check to ignore [(default)$sValidTarget])\n 
-				NB restart is compiling dependant\n";
+	}
+	if(!$sTarget || !($sTarget =~ /$sValidTarget/i)){
+		print "Incorect target specified, available target are:\n"
+			."\t --target => target (specify wich check to ignore [(default)$sValidTarget])\n 
+			NB restart is compiling dependant\n";
 		exit;
     }
 }
@@ -78,50 +76,85 @@ sub Main {
 	if($sTarget =~ "All|Compile") { RunCompilation($sCurdir,$sTarget); }
 }
 
-sub UpdateSQL  { my($sBaseDir,$sInit,$rhFileState) = @_;
-	#my @aMapDBFiles;
-	my @aCharDBFiles; #for now we assum they all in same DB
-	#my @aLoginDBFiles;
-	my @aLogDBFiles;
-
-	chdir "sql-files/upgrades";
-	opendir (DIR, "./") or die $!;
+sub GetSqlFileInDir { my($sDir) = @_;
+	opendir (DIR, $sDir) or die $!;
 	my @aFiles 
 		= grep { 
 		/^(?!\.)/      # not begins with a period
 		&& /\.sql$/      # finish by .sql
-		&& -f "./$_"   # and is a file
+		&& -f "$sDir/$_"   # and is a file
 	} readdir(DIR);
+	closedir(DIR);
+	return \@aFiles;
+}
+
+sub UpdateSQL  { my($sBaseDir,$sInit,$rhFileState) = @_;
+	my @aMapDBFiles = ();
+	my @aCharDBFiles = (); #for now we assum they all in same DB
+	my @aLoginDBFiles = ();
+	my @aLogDBFiles = ();
 
 	print "Preparing SQL folder\n" if($sInit==1);
-	if(-e -r STATE_FILE) {
+	if(-e -r "sql-files/".STATE_FILE) {
 		print "Reading file status \n";
-		$rhFileState = YAML::XS::LoadFile(STATE_FILE);
+		$rhFileState = YAML::XS::LoadFile("sql-files/".STATE_FILE);
 	}
-		
-	foreach my $sFile (@aFiles){
-		#print "Cur file = $sFile \n";
-		
-		next if(exists($rhFileState->{$sFile}) ); #either old or skipped
-			
-		if($sInit==1){ #move all file into old
-			if( $sFile =~ /_opt_/){
-				$$rhFileState{$sFile} = ST_SK;
-				next; # by default optional updated are put in skipped dir
+	
+	if($sTarget =~ "All|MapDB") {
+			chdir "sql-files";
+			print "Getting Map SQL Db file \n";
+			my $raFilesMap = GetSqlFileInDir("./");
+			foreach my $sFile (@$raFilesMap){
+				if($sInit==1){
+					if(exists $$rhFileState{$sFile} && $$rhFileState{$sFile}{"status"} == ST_DONE ){
+						next;
+					}
+					$$rhFileState{$sFile}{"status"} = ST_OLD;
+					$$rhFileState{$sFile}{"lastmod"} = (stat ($sFile))[9];
+				}
+				elsif($$rhFileState{$sFile}{"lastmod"} != (stat ($sFile))[9] )  {
+					print "The file $sFile was updated\n {\t ".$$rhFileState{$sFile}->{"lastmod"}." , ".(stat ($sFile))[9]."} \n";
+					push(@aMapDBFiles,$sFile);
+					$$rhFileState{$sFile}{"status"} = ST_DONE;
+				}
 			}
-			$$rhFileState{$sFile} = ST_OLD;
+			chdir "..";
+	}
+	
+	chdir "sql-files/upgrades";
+	my $raFiles = GetSqlFileInDir("./");
+	
+	foreach my $sFile (@$raFiles){
+		#print "Cur file = $sFile \n";
+		if($sInit==1){
+			if(exists $$rhFileState{$sFile} && $$rhFileState{$sFile}{"status"} == ST_DONE ){
+				next;
+			}
+			
+			if( $sFile =~ /_opt_/){
+				$$rhFileState{$sFile}{"status"} = ST_SK;
+			} else {
+				$$rhFileState{$sFile}{"status"} = ST_OLD;
+			}
+			$$rhFileState{$sFile}{"lastmod"} = (stat ($sFile))[9];
 		}
 		else {
-			
+			if(exists $$rhFileState{$sFile}){
+				my $sT = $$rhFileState{$sFile}{"status"};
+				my $sLastMode = $$rhFileState{$sFile}{"lastmod"};
+		#		#if it's done or skipped don't do it, if it's old but updated do it
+				next if ( $sT eq ST_OLD or $sT eq ST_DONE or $sLastMode == (stat ($sFile))[9] );
+			}
 			
 			if( $sFile =~ /_log.sql$/) { 
 				print "Found log file = $sFile \n";
 				push(@aLogDBFiles,$sFile);
 			}
 			else { 
-				print "Found file = $sFile \n";
+				print "Found char file = $sFile \n";\
 				push(@aCharDBFiles,$sFile);
 			}
+			$$rhFileState{$sFile}{"status"} = "done"; #  the query will be applied so mark it so
 			
 		# This part is for distributed DB, not supported yet
 		# proposed nomenclature [lighta] : update_date_{opt_}(map|chr|acc|log).sql
@@ -144,13 +177,10 @@ sub UpdateSQL  { my($sBaseDir,$sInit,$rhFileState) = @_;
 		#	}
 		}
 	}
-	if($sInit==1){
-		print "Saving stateFile \n";
-		YAML::XS::DumpFile(STATE_FILE,$rhFileState);
-	}
-	else{ #apply update
+	if($sInit==0){ #apply update
+		return;
 		if( scalar(@aCharDBFiles)==0 and  scalar(@aLogDBFiles)==0 
-		# and  scalar(@aMapDBFiles)==0 and  scalar(@aLoginDBFiles)==0
+			and  scalar(@aMapDBFiles)==0 and  scalar(@aLoginDBFiles)==0
 		){
 			print "No SQL Update to perform\n";
 		}
@@ -166,14 +196,18 @@ sub UpdateSQL  { my($sBaseDir,$sInit,$rhFileState) = @_;
 				$rhUserConf=\%hDefConf; #we assum it's set correctly
 			}
 			
-			#CheckAndLoadSQL(\@aMapDBFiles,$rhUserConf,$$rhUserConf{SQL_MAP_DB});
+			CheckAndLoadSQL(\@aMapDBFiles,$rhUserConf,$$rhUserConf{SQL_MAP_DB});
 			CheckAndLoadSQL(\@aCharDBFiles,$rhUserConf,$$rhUserConf{SQL_MAIN_DB});
 			#CheckAndLoadSQL(\@aLoginDBFiles,$rhUserConf,$$rhUserConf{SQL_ACC_DB});
 			CheckAndLoadSQL(\@aLogDBFiles,$rhUserConf,$$rhUserConf{SQL_LOG_DB});
 		}
+		chdir "../..";
+	} else {
+		chdir "../..";
+		print "Saving stateFile \n";
+		YAML::XS::DumpFile("sql-files/".STATE_FILE,$rhFileState);
 	}
-	
-	chdir "../..";
+
 }
 
 sub RunCompilation { my($sBaseDir,$sTarget) = @_;
