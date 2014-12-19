@@ -11,6 +11,7 @@ use Cwd;
 use Getopt::Long;
 use Net::Ping;
 use strict;
+use rA_Common;
 
 use constant {
     SERV_UID => "Serv_userid",
@@ -35,14 +36,6 @@ use constant {
     MIN_PORT => 2000, #below are usually reserved for system
     MAX_PORT => 65535,
 };
-#BEGIN { #check and install module
-#    my @aCheckModule = ("File::Basename","DBI","DBD::mysql","YAML","YAML::XS","Cwd","Getopt::Long","Net::Ping");
-#    my @aMarkInst = ();
-#    foreach(@aCheckModule) { eval "require $_" or push(@aMarkInst,$_); }
-#    CPAN::install("@aMarkInst") if(@aMarkInst > 0);
-#    foreach(@aCheckModule) { $_->import(); }
-#}
-
 # setup my defaults option
 my $sDsdFile    = DESD_CONF_FILE;
 my $sAutoyes    = 0;
@@ -73,7 +66,7 @@ sub GetArgs {
 	    ."\t --auto => auto-yes to question ? \n"
 	    ."\t --C => Clean (remove file, db, user before adding new)\n"
 	    ."\t --target => target (specify wich setup to run [$sValidTarget])\n"
-	    ."\t --Force => Force (bypass verification)\n";
+	    ."\t --Force => Force (bypass verification)\n"
 	    ."\t --OS => (specify the os you wish to use and avoid check)";
 	exit;
     }
@@ -109,40 +102,40 @@ sub Main {
 			SQL_LOG_DB => ,"ragnarok",
 			);
 
-    my $sBasedir = getcwd; #for setupdb
-    if($sTarget =~ /All|Inst/i){ InstallSoft(); }
-    if($sTarget =~ /All|Conf/i) { ConfigConf(\%hDefConf); chdir "$sBasedir"; }
-    if($sTarget =~ /All|DB/i) { ConfigDB(\%hDefConf); chdir "$sBasedir"; }
-    if($sTarget =~ /All|Dump/i) { chdir "~"; EnableCoredump(); }
-    print "Config done, you should be able to launch and connect server now\n";
-    print "NB : Don't forget to update your client clieninfo.xml to match change\n";
+	my $sBasedir = getcwd; #for setupdb
+	if($sTarget =~ /All|Inst/i){ InstallSoft(); }
+	if($sTarget =~ /All|Conf/i) { ConfigConf(\%hDefConf); chdir "$sBasedir"; }
+	if($sTarget =~ /All|DB/i) { ConfigDB(\%hDefConf); chdir "$sBasedir"; }
+	if($sTarget =~ /All|Dump/i) { chdir "~"; EnableCoredump(); }
+	print "Config done, you should be able to launch and connect server now\n";
+	print "NB : Don't forget to update your client clieninfo.xml to match change\n";
 }
 
 
 sub EnableCoredump { 
-    print "\n Starting Enabling coredump \n";
-    my $sCurfile = "~/.bashrc";
-    my @lines = ();
-    my $sJump = .0;
-    open PIPE,"sudo less $sCurfile |" or die $!;
-    foreach(<PIPE>){
+	print "\n Starting Enabling coredump \n";
+	my $sCurfile = "~/.bashrc";
+	my @lines = ();
+	my $sJump = .0;
+	open PIPE,"sudo less $sCurfile |" or die $!;
+	foreach(<PIPE>){
 		if($_ =~ /ulimit -c unlimited/){
 			$sJump = 1; #already in here nothing to do
 			last; 
 		}
 		push(@lines,$_) if /ulimit/;
-    }
-    if(scalar(@lines)>0){
-	print "ulimit instruction found in file=$sCurfile\n"
-	    ."\t lines= \n @lines \n"
-	    ."are you sure you want to continue ? [y/n] \n";
-	$sJump=1 if(GetValidAnwser("y|o|n") =~ /n/i);
-    }
-    system("sudo echo \"ulimit -c unlimited\" >> $sCurfile") if $sJump==0;
-    $sJump=0;
-    
-    $sOS = GetOS() unless($sOS);
-    if($sOS =~ /Fedora|CentOs/i){;
+	}
+	if(scalar(@lines)>0){
+		print "ulimit instruction found in file=$sCurfile\n"
+			."\t lines= \n @lines \n"
+			."are you sure you want to continue ? [y/n] \n";
+		$sJump=1 if(GetValidAnwser("y|o|n",$sAutoyes) =~ /n/i);
+	}
+	system("sudo echo \"ulimit -c unlimited\" >> $sCurfile") if $sJump==0;
+	$sJump=0;
+
+	$sOS = GetOS() unless($sOS);
+	if($sOS =~ /Fedora|CentOs/i){;
 		open FILE, "</etc/security/limits.conf" || die;
 		open FILE_TMP, ">tmp_limits.conf" || die;
 		while(<FILE>){
@@ -160,24 +153,24 @@ sub EnableCoredump {
 		unlink "tmp_limits.conf";
 	}
 
-    $sCurfile = "/etc/sysctl.conf";
-    @lines = ();
-    open PIPE,"sudo less $sCurfile |" or die $!;
-    foreach(<PIPE>){
-	push(@lines,$_) if /^kernel.core/;
-    }
-    if(scalar(@lines)>0){
-	print "ulimit instruction found in file=$sCurfile\n"
-	    ."\t line= \n @lines \n"
-	    ."are you sure you want to continue ? [y/n] \n";
-	$sJump=2 if(GetValidAnwser("y|o|n") =~ /n/i);
-    }
+	$sCurfile = "/etc/sysctl.conf";
+	@lines = ();
+	open PIPE,"sudo less $sCurfile |" or die $!;
+	foreach(<PIPE>){
+		push(@lines,$_) if /^kernel.core/;
+	}
+	if(scalar(@lines)>0){
+		print "ulimit instruction found in file=$sCurfile\n"
+			."\t line= \n @lines \n"
+			."are you sure you want to continue ? [y/n] \n";
+		$sJump=2 if(GetValidAnwser("y|o|n",$sAutoyes) =~ /n/i);
+	}
     unless($sJump==2){
-	system('sudo su root -c "echo \"echo kernel.core_uses_pid = 1 >> /etc/sysctl.conf\" | sudo bash"');
-	system('sudo su root -c "echo \"echo kernel.core_pattern = /tmp/core-%e-%s-%u-%g-%p-%t >> /etc/sysctl.conf\" | sudo bash"');
-	system('sudo su root -c "echo \"echo fs.suid_dumpable = 1 >> /etc/sysctl.conf\" | sudo bash"');
-	system('sudo su root -c "sysctl -p"');
-    }
+		system('sudo su root -c "echo \"echo kernel.core_uses_pid = 1 >> /etc/sysctl.conf\" | sudo bash"');
+		system('sudo su root -c "echo \"echo kernel.core_pattern = /tmp/core-%e-%s-%u-%g-%p-%t >> /etc/sysctl.conf\" | sudo bash"');
+		system('sudo su root -c "echo \"echo fs.suid_dumpable = 1 >> /etc/sysctl.conf\" | sudo bash"');
+		system('sudo su root -c "sysctl -p"');
+	}
 }
 
 sub GetOS {
@@ -213,7 +206,7 @@ sub InstallSoft {
 	system("sudo apt-get install @aListSoft");
 	}
 	elsif($sOS =~ /Fedora|CentOs/i){ #tested on fedora 18,19,20 /centos 5,6,7
-	my @aListSoft = ("gcc","gdb","zlib","zlib-devel","make","git","mariadb-server","maria","mariadb-devel","phpmyadmin","pcre-devel");
+	my @aListSoft = ("gcc","gdb","zlib","zlib-devel","make","git","mariadb-server","mariadb","mariadb-devel","phpmyadmin","pcre-devel");
 #	my @aListSoft = ("gcc","gdb","zlib","zlib-devel","make","git","mysql-server","mysql-devel","phpmyadmin","pcre-devel");
 	system("sudo yum install @aListSoft");
     }
@@ -247,10 +240,10 @@ sub ConfigDB { my ($rhDefConf) = @_;
     print "\n Starting ConfigDB \n";
     my $rhUserConf;
     while(1) {
-	$rhUserConf = GetDesiredConf($rhDefConf);
-	print "SetupDb using conf : \n";
-	ShowConfig($rhUserConf);
-	last if($sForce || AutoCheckConf($rhUserConf));
+		$rhUserConf = GetDesiredConf($rhDefConf);
+		print "SetupDb using conf : \n";
+		ShowConfig($rhUserConf);
+		last if($sForce || AutoCheckConf($rhUserConf));
     }
     ApplySetupDB($rhUserConf);
 }
@@ -268,7 +261,7 @@ sub ApplySetupConf { my ($rhConfig) = @_;
     YAML::XS::DumpFile(DESD_CONF_FILE,$rhConfig);
     unless(-d "$sUserConfDir") {
 	print "conf/import directory doesn't exist, create it ? [y/n] (will be generated by compilation otherwise) \n";
-	if(GetValidAnwser("y|o|n") =~ /n/i) { die "Couldn't apply conf without import folder\n"; }
+	if(GetValidAnwser("y|o|n",$sAutoyes) =~ /n/i) { die "Couldn't apply conf without import folder\n"; }
 	mkdir "$sUserConfDir";
     }
     chdir $sUserConfDir;
@@ -284,7 +277,7 @@ sub ApplySetupConf { my ($rhConfig) = @_;
 	if(-e -r $sCurfile) {
 	    print "Yes\n";
 	    print "$sCurfile seem to exist, overwritte it [y/n] ?\n";
-	    if(GetValidAnwser("y|o|n") =~ /n/i) {
+	    if(GetValidAnwser("y|o|n",$sAutoyes) =~ /n/i) {
 		print "Only overwritte option supported atm skip file\n\n";
 		next;
 	    }
@@ -388,18 +381,14 @@ sub AutoCheckConf { my ($rhConfig) = @_;
 sub CheckDupPort { my ($rhConfig,$sChkKeys) = @_;
     my $sChkport = $$rhConfig{$sChkKeys};
     foreach my $sKeys (keys %$rhConfig){
-	next if($sKeys eq $sChkKeys); #skip ourself
-	my $sVal = $$rhConfig{$sKeys};
-	return 1 if($sChkport eq $sVal);
+		next if($sKeys eq $sChkKeys); #skip ourself
+		my $sVal = $$rhConfig{$sKeys};
+		return 1 if($sChkport eq $sVal);
     }
     return 0;
 }
 
-sub CheckUsedPort { my($sPort) = @_;
-    open PIPE,"netstat -nat |" or die $!;
-    my @line = grep { /$sPort/ } <PIPE>;
-    return scalar(@line);
-}
+
 
 #Db function
 sub ApplySetupDB { my($rhConfig) = @_;
@@ -417,25 +406,7 @@ sub ApplySetupDB { my($rhConfig) = @_;
     print "SetupDb done \n";
 }
 
-sub RootCo { my($rhConfig) = @_;
-    print "\n Entering RootCo \n";
-    my $sDbH;
-    my $sDsn = $$rhConfig{"Dsn"}; #mysql server dest
-    my $sUser = $$rhConfig{SQL_UID}; #verify desired user
-    print "My dsn = $sDsn \n";
-    if($sUser eq "root"){
-	my $sPw = $$rhConfig{SQL_PW};
-	$sDbH = DBI->connect($sDsn, "root", $sPw);
-	unless($sDbH) { warn "Your root password doesn't seem valid for mysql, your desired-conf is wrong \n"; }
-    }
-    while($sDbH == 0) { #if can't use user to connect user root
-	print "Please inser DB root passeword (this won't be saved in any configuration file, needed to create dbs and user)\n";
-	my $sRPw = <>; chop($sRPw);
-	$sDbH = DBI->connect($sDsn, "root", $sRPw);
-    }
 
-    return $sDbH;
-}
 
 sub CreateDB { my($sDbH,$rhConfig) = @_;
     print "\n Entering CreateDB \n";
@@ -459,7 +430,7 @@ sub CreateDB { my($sDbH,$rhConfig) = @_;
 sub ValidateDBMerge { my($sDBn) = @_;
     warn "Database: '$sDBn' seem to already exist exiting\n";
     warn "Continue will load data in existing db would you like to continue ? [y/n] \n";
-    if(GetValidAnwser("y|o|n") =~ /n/i) {
+    if(GetValidAnwser("y|o|n",$sAutoyes) =~ /n/i) {
 	print "Exiting setup, please either setup with another dbname or manually\n";
 	exit;
     }
@@ -505,28 +476,14 @@ sub LoadSqlFile { my($sDbH,$rhConfig) = @_;
     chdir "../$sSqldir";
     print "Checking if target files exist :\n\tMain: [@aMainFiles]\n\tLog: [@aLogFiles]\n";
 
-    CheckAndLoad(\@aMainFiles,$rhConfig,$sDBn);
-    CheckAndLoad(\@aLogFiles,$rhConfig,$sLogDBn);
+    CheckAndLoadSQL(\@aMainFiles,$rhConfig,$sDBn);
+    CheckAndLoadSQL(\@aLogFiles,$rhConfig,$sLogDBn);
 
 #    my $raMainQuerys = CheckAndAddQuery(\@aMainFiles,$rhConfig);
 #    my $raLogQuerys = CheckAndAddQuery(\@aLogFiles,$rhConfig);
 #    ExeQuery($sDbH,"use $sDBn;",@$raMainQuerys,"use $sLogDBn;", @$raLogQuerys);
 }
 
-sub CheckAndLoad { my ($raFiles,$rhConfig,$sDBn) = @_;
-    my $sHost = $$rhConfig{SQL_HOST};
-    my $sPw = $$rhConfig{SQL_PW};
-    my $sUser = $$rhConfig{SQL_UID};
-
-    foreach(@$raFiles) {
-	unless(-f -r $_){
-	    print "File : $_ doesn't seem to exist or was unreadable skipped\n";
-	    next;
-	}
-	my $sFileFullPath = Cwd::abs_path($_);
-	system("mysql -u $sUser --password=$sPw -h $sHost $sDBn < $sFileFullPath");
-    }
-}
 
 # query failure atm (shitty perl)
 #sub CheckAndAddQuery { my ($raFiles) = @_;
@@ -556,61 +513,6 @@ sub CreateServUser { my($sDbH,$rhConfig) = @_;
     ExeQuery($sDbH,@aQuery);
 }
 
-sub ExeQuery { my $sDbH = shift;
-    my @aQuery = @_;
-    print "my querys are = [ @aQuery ]\n";
-    foreach(@aQuery) {
-	unless($sDbH->do($_)){ print "Failed to execute query : $_ =>  $DBI::errstr \n"; }
-    }
-}
-
-#Common
-sub GetValidateConf { my($rhConfig) = @_;
-    my $rhUserConf;
-    while (1) {
-	$rhUserConf = GetUserConf($rhConfig);
-	print "\n Please Check desired conf \n";
-	ShowConfig($rhUserConf);
-	print "Would you like to apply those setting ? [y/n] ";
-	last if(GetValidAnwser("y|o|n") =~ /y|o/i);
-	print "\n Restarting configuration sequence \n";
-    }
-    return $rhUserConf;
-}
-
-sub GetUserConf { my ($rhDefConf) = @_;
-    my %hConf;
-    my @sortedkeys = sort keys (%$rhDefConf);
-    foreach my $sKey (@sortedkeys){
-	my $sVal = $$rhDefConf{$sKey};
-	print "$sKey : [$sVal] ";
-	my $sAnwser = <>; chop($sAnwser);
-	$hConf{"$sKey"} = $sAnwser || $sVal;
-    }
-    return \%hConf;
-}
-
-sub ShowConfig { my ($rhUserConf) = @_;
-    my @sortedkeys = sort keys (%$rhUserConf);
-    foreach my $sKey (@sortedkeys){
-	my $sVal = $$rhUserConf{$sKey};
-	if(ref($sVal) eq 'ARRAY') {  print " $sKey => [@$sVal] \n";}
-	else { print " $sKey => [$sVal] \n"; }
-    }
-}
-
-sub GetValidAnwser { my($sOptReg) = @_;
-    my $sAnwser = "";
-    if($sAutoyes) { $sAnwser="y"; print "\n"; }
-    else {
-	while(!($sAnwser =~ /$sOptReg/i)) {
-	    $sAnwser = <>; chop($sAnwser);
-	    print "Please enter a valid option : $sOptReg " unless($sAnwser =~ /$sOptReg/i);
-	}
-    }
-    return $sAnwser;
-}
-
 sub GetDesiredConf { my ($rhDefConf) = @_;
     print "Please enter desired confiration\n";
     my $rhUserConf;
@@ -629,7 +531,7 @@ sub GetDesiredConf { my ($rhDefConf) = @_;
 	else {
 	    ShowConfig($rhUserConf);
 	    print "Would you like to apply those setting ? [y/n] ";
-	    if(GetValidAnwser("y|o|n") =~ /n/i) {  #no take user entry
+	    if(GetValidAnwser("y|o|n",$sAutoyes) =~ /n/i) {  #no take user entry
 		print "DesiredConf not applyed, please enter config\n";
 		$rhUserConf=GetValidateConf($rhDefConf);
 	    }
