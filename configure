@@ -623,6 +623,7 @@ ac_includes_default="\
 
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
+CFLAGS_AR
 DLLEXT
 PCRE_CFLAGS
 PCRE_LIBS
@@ -4946,15 +4947,17 @@ fi
 # LTO Support test
 #
 if test "$enable_lto" != "no" ; then
+	OPT_LTO_AR=""
+	OPT_LTO=""
 
 	OLD_CFLAGS="$CFLAGS"
-	CFLAGS="$CFLAGS -flto"
+	CFLAGS="$CFLAGS -flto -fuse-linker-plugin -ffat-lto-objects"
 
 	OLD_LDFLAGS="$LDFLAGS"
-	LDFLAGS="$LDFLAGS -flto"
+	LDFLAGS="$LDFLAGS -flto -fuse-linker-plugin -ffat-lto-objects"
 
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC supports -flto" >&5
-$as_echo_n "checking whether $CC supports -flto... " >&6; }
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC supports -ffat-lto-objects" >&5
+$as_echo_n "checking whether $CC supports -ffat-lto-objects... " >&6; }
 	if test "$cross_compiling" = yes; then :
 
 			{ $as_echo "$as_me:${as_lineno-$LINENO}: result: guessing no" >&5
@@ -4974,19 +4977,60 @@ if ac_fn_c_try_run "$LINENO"; then :
 
 			{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
+			OPT_LTO_AR="-ffat-lto-objects"
 
 else
 
 			{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-			CFLAGS="$OLD_CFLAGS"
-			LDFLAGS="$OLD_LDFLAGS"
 
 fi
 rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
   conftest.$ac_objext conftest.beam conftest.$ac_ext
 fi
 
+	CFLAGS="$OLD_CFLAGS"
+	LDFLAGS="$OLD_LDFLAGS"
+
+	CFLAGS="$CFLAGS -flto -fuse-linker-plugin"
+	LDFLAGS="$LDFLAGS -flto -fuse-linker-plugin"
+
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC supports -flto -fuse-linker-plugin" >&5
+$as_echo_n "checking whether $CC supports -flto -fuse-linker-plugin... " >&6; }
+	if test "$cross_compiling" = yes; then :
+
+			{ $as_echo "$as_me:${as_lineno-$LINENO}: result: guessing no" >&5
+$as_echo "guessing no" >&6; }
+
+
+else
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+			int main(int argc, char **argv){
+				return 0;
+			}
+
+_ACEOF
+if ac_fn_c_try_run "$LINENO"; then :
+
+			{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+			OPT_LTO_AR="-flto -fuse-linker-plugin $OPT_LTO_AR"
+			OPT_LTO="-flto -fuse-linker-plugin"
+
+else
+
+			{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext
+fi
+
+	CFLAGS="$OLD_CFLAGS"
+	LDFLAGS="$OLD_LDFLAGS"
 fi
 
 
@@ -7337,10 +7381,20 @@ else
 $as_echo "no" >&6; }
 fi
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: Configure finish, CPPFLAGS= $CPPFLAGS" >&5
-$as_echo "$as_me: Configure finish, CPPFLAGS= $CPPFLAGS" >&6;}
-{ $as_echo "$as_me:${as_lineno-$LINENO}: LDFLAGS=$LDFLAGS" >&5
-$as_echo "$as_me: LDFLAGS=$LDFLAGS" >&6;}
+CFLAGS="$OPT_LTO $CFLAGS"
+CFLAGS_AR="$OPT_LTO_AR $CFLAGS"
+
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: Configure finish" >&5
+$as_echo "$as_me: Configure finish" >&6;}
+{ $as_echo "$as_me:${as_lineno-$LINENO}: CPPFLAGS= $CPPFLAGS" >&5
+$as_echo "$as_me: CPPFLAGS= $CPPFLAGS" >&6;}
+{ $as_echo "$as_me:${as_lineno-$LINENO}: CFLAGS= $CFLAGS" >&5
+$as_echo "$as_me: CFLAGS= $CFLAGS" >&6;}
+{ $as_echo "$as_me:${as_lineno-$LINENO}: CFLAGS_AR= $CFLAGS_AR" >&5
+$as_echo "$as_me: CFLAGS_AR= $CFLAGS_AR" >&6;}
+{ $as_echo "$as_me:${as_lineno-$LINENO}: LDFLAGS= $LDFLAGS" >&5
+$as_echo "$as_me: LDFLAGS= $LDFLAGS" >&6;}
 #AC_MSG_NOTICE([PROD_WARN= $PROD_WARN])
 #AC_MSG_NOTICE([EXTRA_WARN= $EXTRA_WARN])
 { $as_echo "$as_me:${as_lineno-$LINENO}: output name =  $output_login, $output_char, $output_map" >&5
