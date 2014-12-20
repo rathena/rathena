@@ -1,5 +1,8 @@
 rAthena
 =======
+
+Build Status: [![Build Status](https://travis-ci.org/rathena/rathena.png?branch=master)](https://travis-ci.org/rathena/rathena)
+
 Table of Contents
 ---------
 * 1 What is rAthena?
