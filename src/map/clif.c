@@ -6908,7 +6908,7 @@ void clif_party_option(struct party_data *p,struct map_session_data *sd,int flag
 ///     1 = expel
 ///     2 = cannot leave party on this map
 ///     3 = cannot expel from party on this map
-void clif_party_withdraw(struct party_data* p, struct map_session_data* sd, int account_id, const char* name, int flag)
+void clif_party_withdraw(struct party_data* p, struct map_session_data* sd, uint32 account_id, const char* name, int flag)
 {
 	unsigned char buf[64];
 
@@ -6937,7 +6937,7 @@ void clif_party_withdraw(struct party_data* p, struct map_session_data* sd, int 
 
 /// Party chat message (ZC_NOTIFY_CHAT_PARTY).
 /// 0109 <packet len>.W <account id>.L <message>.?B
-void clif_party_message(struct party_data* p, int account_id, const char* mes, int len)
+void clif_party_message(struct party_data* p, uint32 account_id, const char* mes, int len)
 {
 	struct map_session_data *sd;
 	int i;
@@ -7996,7 +7996,7 @@ void clif_guild_leave(struct map_session_data *sd,const char *name,const char *m
 /// Notifies clients of a guild of an expelled member.
 /// 015c <char name>.24B <reason>.40B <account name>.24B (ZC_ACK_BAN_GUILD)
 /// 0839 <char name>.24B <reason>.40B (ZC_ACK_BAN_GUILD_SSO)
-void clif_guild_expulsion(struct map_session_data* sd, const char* name, const char* mes, int account_id)
+void clif_guild_expulsion(struct map_session_data* sd, const char* name, const char* mes, uint32 account_id)
 {
 	unsigned char buf[128];
 #if PACKETVER < 20100803
@@ -8063,7 +8063,7 @@ void clif_guild_expulsionlist(struct map_session_data* sd)
 
 /// Guild chat message (ZC_GUILD_CHAT).
 /// 017f <packet len>.W <message>.?B
-void clif_guild_message(struct guild *g,int account_id,const char *mes,int len)
+void clif_guild_message(struct guild *g,uint32 account_id,const char *mes,int len)
 {// TODO: account_id is not used, candidate for deletion? [Ai4rei]
 	struct map_session_data *sd;
 	uint8 buf[256];
@@ -8088,7 +8088,7 @@ void clif_guild_message(struct guild *g,int account_id,const char *mes,int len)
 
 /// Request for guild alliance (ZC_REQ_ALLY_GUILD).
 /// 0171 <inviter account id>.L <guild name>.24B
-void clif_guild_reqalliance(struct map_session_data *sd,int account_id,const char *name)
+void clif_guild_reqalliance(struct map_session_data *sd,uint32 account_id,const char *name)
 {
 	int fd;
 
@@ -13110,7 +13110,7 @@ void clif_parse_GMShift(int fd, struct map_session_data *sd)
 /// 0843 <account id>.L
 void clif_parse_GMRemove2(int fd, struct map_session_data* sd)
 {
-	int account_id;
+	uint32 account_id;
 	struct map_session_data* pl_sd;
 
 	account_id = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
@@ -13147,7 +13147,7 @@ void clif_parse_GMRecall(int fd, struct map_session_data *sd)
 /// 0842 <account id>.L
 void clif_parse_GMRecall2(int fd, struct map_session_data* sd)
 {
-	int account_id;
+	uint32 account_id;
 	struct map_session_data* pl_sd;
 
 	account_id = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
@@ -13298,7 +13298,7 @@ void clif_parse_GMRc(int fd, struct map_session_data* sd)
 
 /// Result of request to resolve account name (ZC_ACK_ACCOUNTNAME).
 /// 01e0 <account id>.L <account name>.24B
-void clif_account_name(int fd, int account_id, const char* accname)
+void clif_account_name(int fd, uint32 account_id, const char* accname)
 {
 	WFIFOHEAD(fd,packet_len(0x1e0));
 	WFIFOW(fd,0) = 0x1e0;
@@ -13520,7 +13520,7 @@ void clif_parse_NoviceExplosionSpirits(int fd, struct map_session_data *sd)
 /// state:
 ///     0 = online
 ///     1 = offline
-void clif_friendslist_toggle(struct map_session_data *sd,int account_id, int char_id, int online)
+void clif_friendslist_toggle(struct map_session_data *sd,uint32 account_id, uint32 char_id, int online)
 {
 	int i, fd = sd->fd;
 
@@ -13543,7 +13543,7 @@ void clif_friendslist_toggle(struct map_session_data *sd,int account_id, int cha
 //Subfunction called from clif_foreachclient to toggle friends on/off [Skotlex]
 int clif_friendslist_toggle_sub(struct map_session_data *sd,va_list ap)
 {
-	int account_id, char_id, online;
+	uint32 account_id, char_id, online;
 	account_id = va_arg(ap, int);
 	char_id = va_arg(ap, int);
 	online = va_arg(ap, int);
@@ -13606,7 +13606,7 @@ void clif_friendslist_reqack(struct map_session_data *sd, struct map_session_dat
 
 /// Asks a player for permission to be added as friend (ZC_REQ_ADD_FRIENDS).
 /// 0207 <req account id>.L <req char id>.L <req char name>.24B
-void clif_friendlist_req(struct map_session_data* sd, int account_id, int char_id, const char* name)
+void clif_friendlist_req(struct map_session_data* sd, uint32 account_id, uint32 char_id, const char* name)
 {
 	int fd = sd->fd;
 
@@ -13676,7 +13676,7 @@ void clif_parse_FriendsListAdd(int fd, struct map_session_data *sd)
 void clif_parse_FriendsListReply(int fd, struct map_session_data *sd)
 {
 	struct map_session_data *f_sd;
-	int account_id;
+	uint32 account_id;
 	char reply;
 	struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
 
@@ -13740,7 +13740,7 @@ void clif_parse_FriendsListReply(int fd, struct map_session_data *sd)
 void clif_parse_FriendsListRemove(int fd, struct map_session_data *sd)
 {
 	struct map_session_data *f_sd = NULL;
-	int account_id, char_id;
+	uint32 account_id, char_id;
 	int i, j;
 	struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
 
@@ -16341,7 +16341,7 @@ void clif_buyingstore_disappear_entry_single(struct map_session_data* sd, struct
 /// 0817 <account id>.L
 static void clif_parse_ReqClickBuyingStore(int fd, struct map_session_data* sd)
 {
-	int account_id;
+	uint32 account_id;
 
 	account_id = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
 
@@ -16381,7 +16381,7 @@ static void clif_parse_ReqTradeBuyingStore(int fd, struct map_session_data* sd)
 {
 	const unsigned int blocksize = 6;
 	uint8* itemlist;
-	int account_id;
+	uint32 account_id;
 	unsigned int count, packet_len, buyer_id;
 	struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
 
@@ -16647,7 +16647,7 @@ static void clif_parse_CloseSearchStoreInfo(int fd, struct map_session_data* sd)
 static void clif_parse_SearchStoreInfoListItemClick(int fd, struct map_session_data* sd)
 {
 	unsigned short nameid;
-	int account_id, store_id;
+	uint32 account_id, store_id;
 	struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
 
 	account_id = RFIFOL(fd,info->pos[0]);

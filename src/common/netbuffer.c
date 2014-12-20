@@ -10,21 +10,6 @@
 //
 //
 
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-
-#include "../common/cbasetypes.h"
-#include "../common/atomic.h"
-#include "../common/mempool.h"
-#include "../common/showmsg.h"
-#include "../common/raconf.h"
-#include "../common/thread.h"
-#include "../common/malloc.h"
-#include "../common/core.h"
-
-#include "../common/netbuffer.h"
-
 
 // 
 // Buffers are available in the following sizes:

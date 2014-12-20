@@ -2,11 +2,9 @@
 // For more information, see LICENCE in the main folder
 
 #include <time.h>
-#include <signal.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/types.h>
 #include <string.h>
 
 #include "../common/cbasetypes.h"
@@ -19,10 +17,7 @@
 #include "../common/socket.h"
 #include "../common/strlib.h"
 #include "../common/timer.h"
-#include "../common/utils.h"
 #include "../common/cli.h"
-#include "../common/random.h"
-#include "../common/ers.h"
 #include "int_guild.h"
 #include "int_homun.h"
 #include "int_mercenary.h"
@@ -34,7 +29,6 @@
 #include "char_mapif.h"
 #include "char_cnslif.h"
 #include "char_clif.h"
-#include "char.h"
 
 //definition of exported var declared in .h
 int login_fd=-1; //login file descriptor
@@ -76,9 +70,9 @@ int subnet_count = 0;
 
 int char_chardb_waiting_disconnect(int tid, unsigned int tick, int id, intptr_t data);
 
-DBMap* auth_db; // int account_id -> struct auth_node*
-DBMap* online_char_db; // int account_id -> struct online_char_data*
-DBMap* char_db_; // int char_id -> struct mmo_charstatus*
+DBMap* auth_db; // uint32 account_id -> struct auth_node*
+DBMap* online_char_db; // uint32 account_id -> struct online_char_data*
+DBMap* char_db_; // uint32 char_id -> struct mmo_charstatus*
 DBMap* char_get_authdb() { return auth_db; }
 DBMap* char_get_onlinedb() { return online_char_db; }
 DBMap* char_get_chardb() { return char_db_; }
@@ -97,7 +91,7 @@ DBData char_create_online_data(DBKey key, va_list args){
 	return db_ptr2data(character);
 }
 
-void char_set_charselect(int account_id) {
+void char_set_charselect(uint32 account_id) {
 	struct online_char_data* character;
 
 	character = (struct online_char_data*)idb_ensure(online_char_db, account_id, char_create_online_data);
@@ -118,7 +112,7 @@ void char_set_charselect(int account_id) {
 
 }
 
-void char_set_char_online(int map_id, int char_id, int account_id) {
+void char_set_char_online(int map_id, uint32 char_id, uint32 account_id) {
 	struct online_char_data* character;
 	struct mmo_charstatus *cp;
 
@@ -156,7 +150,7 @@ void char_set_char_online(int map_id, int char_id, int account_id) {
 	chlogif_send_setacconline(account_id);
 }
 
-void char_set_char_offline(int char_id, int account_id){
+void char_set_char_offline(uint32 char_id, uint32 account_id){
 	struct online_char_data* character;
 
 	if ( char_id == -1 )
@@ -277,7 +271,7 @@ static DBData char_create_charstatus(DBKey key, va_list args) {
 
 int char_inventory_to_sql(const struct item items[], int max, int id);
 
-int char_mmo_char_tosql(int char_id, struct mmo_charstatus* p){
+int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 	int i = 0;
 	int count = 0;
 	int diff = 0;
@@ -948,7 +942,7 @@ int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf) {
 }
 
 //=====================================================================================================
-int char_mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything) {
+int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_everything) {
 	int i,j;
 	char t_msg[128] = "";
 	struct mmo_charstatus* cp;
@@ -1255,7 +1249,7 @@ int char_mmo_sql_init(void) {
 //-----------------------------------
 // Function to change chararcter's names
 //-----------------------------------
-int char_rename_char_sql(struct char_session_data *sd, int char_id)
+int char_rename_char_sql(struct char_session_data *sd, uint32 char_id)
 {
 	struct mmo_charstatus char_dat;
 	char esc_name[NAME_LENGTH*2+1];
@@ -1365,7 +1359,8 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 #endif
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1];
-	int char_id, flag, k;
+	uint32 char_id;
+	int flag, k;
 
 	safestrncpy(name, name_, NAME_LENGTH);
 	normalize_name(name,TRIM_CHARS);
@@ -1465,10 +1460,11 @@ int char_divorce_char_sql(int partner_id1, int partner_id2){
 /* Returns 0 if successful
  * Returns < 0 for error
  */
-int char_delete_char_sql(int char_id){
+int char_delete_char_sql(uint32 char_id){
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1]; //Name needs be escaped.
-	int account_id, party_id, guild_id, hom_id, base_level, partner_id, father_id, mother_id, elemental_id;
+	uint32 account_id;
+	int party_id, guild_id, hom_id, base_level, partner_id, father_id, mother_id, elemental_id;
 	char *data;
 	size_t len;
 
@@ -1802,7 +1798,7 @@ int char_family(int cid1, int cid2, int cid3)
 //----------------------------------------------------------------------
 // Force disconnection of an online player (with account value) by [Yor]
 //----------------------------------------------------------------------
-void char_disconnect_player(int account_id)
+void char_disconnect_player(uint32 account_id)
 {
 	int i;
 	struct char_session_data* sd;
@@ -1907,7 +1903,7 @@ void char_read_fame_list(void)
 
 //Loads a character's name and stores it in the buffer given (must be NAME_LENGTH in size)
 //Returns 1 on found, 0 on not found (buffer is filled with Unknown char name)
-int char_loadName(int char_id, char* name){
+int char_loadName(uint32 char_id, char* name){
 	char* data;
 	size_t len;
 

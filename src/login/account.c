@@ -12,11 +12,8 @@
 #include "../common/showmsg.h"
 #include "../common/sql.h"
 #include "../common/strlib.h"
-#include "../common/timer.h"
-#include "../config/core.h"
 #include "account.h"
 #include <stdlib.h>
-#include <string.h>
 
 /// global defines
 #define ACCOUNT_SQL_DB_VERSION 20140928
@@ -52,15 +49,15 @@ static void account_db_sql_destroy(AccountDB* self);
 static bool account_db_sql_get_property(AccountDB* self, const char* key, char* buf, size_t buflen);
 static bool account_db_sql_set_property(AccountDB* self, const char* option, const char* value);
 static bool account_db_sql_create(AccountDB* self, struct mmo_account* acc);
-static bool account_db_sql_remove(AccountDB* self, const int account_id);
+static bool account_db_sql_remove(AccountDB* self, const uint32 account_id);
 static bool account_db_sql_save(AccountDB* self, const struct mmo_account* acc);
-static bool account_db_sql_load_num(AccountDB* self, struct mmo_account* acc, const int account_id);
+static bool account_db_sql_load_num(AccountDB* self, struct mmo_account* acc, const uint32 account_id);
 static bool account_db_sql_load_str(AccountDB* self, struct mmo_account* acc, const char* userid);
 static AccountDBIterator* account_db_sql_iterator(AccountDB* self);
 static void account_db_sql_iter_destroy(AccountDBIterator* self);
 static bool account_db_sql_iter_next(AccountDBIterator* self, struct mmo_account* acc);
 
-static bool mmo_auth_fromsql(AccountDB_SQL* db, struct mmo_account* acc, int account_id);
+static bool mmo_auth_fromsql(AccountDB_SQL* db, struct mmo_account* acc, uint32 account_id);
 static bool mmo_auth_tosql(AccountDB_SQL* db, const struct mmo_account* acc, bool is_new);
 
 /// public constructor
@@ -129,6 +126,8 @@ static bool account_db_sql_init(AccountDB* self) {
 
 	if( SQL_ERROR == Sql_Connect(sql_handle, username, password, hostname, port, database) )
 	{
+                ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
+                        username, password, hostname, port, database);
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(db->accounts);
 		db->accounts = NULL;
@@ -258,7 +257,7 @@ static bool account_db_sql_set_property(AccountDB* self, const char* key, const 
 			safestrncpy(db->codepage, value, sizeof(db->codepage));
 		else
 		if( strcmpi(key, "case_sensitive") == 0 )
-			db->case_sensitive = config_switch(value);
+			db->case_sensitive = (config_switch(value)==1);
 		else
 			return false;// not found
 		return true;
@@ -280,7 +279,7 @@ static bool account_db_sql_create(AccountDB* self, struct mmo_account* acc) {
 	Sql* sql_handle = db->accounts;
 
 	// decide on the account id to assign
-	int account_id;
+	uint32 account_id;
 	if( acc->account_id != -1 )
 	{// caller specifies it manually
 		account_id = acc->account_id;
@@ -330,7 +329,7 @@ static bool account_db_sql_create(AccountDB* self, struct mmo_account* acc) {
  * @param account_id: id of user account
  * @return true if successful, false if something has failed
  */
-static bool account_db_sql_remove(AccountDB* self, const int account_id) {
+static bool account_db_sql_remove(AccountDB* self, const uint32 account_id) {
 	AccountDB_SQL* db = (AccountDB_SQL*)self;
 	Sql* sql_handle = db->accounts;
 	bool result = false;
@@ -366,7 +365,7 @@ static bool account_db_sql_save(AccountDB* self, const struct mmo_account* acc) 
  * @param account_id: id of user account
  * @return true if successful, false if something has failed
  */
-static bool account_db_sql_load_num(AccountDB* self, struct mmo_account* acc, const int account_id) {
+static bool account_db_sql_load_num(AccountDB* self, struct mmo_account* acc, const uint32 account_id) {
 	AccountDB_SQL* db = (AccountDB_SQL*)self;
 	return mmo_auth_fromsql(db, acc, account_id);
 }
@@ -384,7 +383,7 @@ static bool account_db_sql_load_str(AccountDB* self, struct mmo_account* acc, co
 	AccountDB_SQL* db = (AccountDB_SQL*)self;
 	Sql* sql_handle = db->accounts;
 	char esc_userid[2*NAME_LENGTH+1];
-	int account_id;
+	uint32 account_id;
 	char* data;
 
 	Sql_EscapeString(sql_handle, esc_userid, userid);
@@ -469,7 +468,7 @@ static bool account_db_sql_iter_next(AccountDBIterator* self, struct mmo_account
 		SQL_SUCCESS == Sql_GetData(sql_handle, 0, &data, NULL) &&
 		data != NULL )
 	{// get account data
-		int account_id;
+		uint32 account_id;
 		account_id = atoi(data);
 		if( mmo_auth_fromsql(db, acc, account_id) )
 		{
@@ -489,7 +488,7 @@ static bool account_db_sql_iter_next(AccountDBIterator* self, struct mmo_account
  * @param account_id: id of user account to take data from
  * @return true if successful, false if something has failed
  */
-static bool mmo_auth_fromsql(AccountDB_SQL* db, struct mmo_account* acc, int account_id) {
+static bool mmo_auth_fromsql(AccountDB_SQL* db, struct mmo_account* acc, uint32 account_id) {
 	Sql* sql_handle = db->accounts;
 	char* data;
 	int i = 0;

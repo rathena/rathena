@@ -69,7 +69,6 @@
 #include <stdlib.h>
 
 #include "db.h"
-#include "../common/mmo.h"
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
 #include "../common/ers.h"

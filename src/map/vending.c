@@ -5,23 +5,15 @@
 #include "../common/malloc.h" // aMalloc, aFree
 #include "../common/showmsg.h" // ShowInfo
 #include "../common/strlib.h"
-#include "../common/utils.h"
 #include "clif.h"
 #include "itemdb.h"
 #include "atcommand.h"
-#include "map.h"
 #include "path.h"
 #include "chrif.h"
 #include "vending.h"
 #include "pc.h"
-#include "npc.h"
-#include "skill.h"
-#include "battle.h"
-#include "log.h"
 
-#include <stdio.h>
 #include <stdlib.h> // atoi
-#include <string.h>
 
 /// Struct for vending entry of autotrader
 struct s_autotrade_entry {
@@ -33,8 +25,8 @@ struct s_autotrade_entry {
 
 /// Struct of autotrader
 struct s_autotrade {
-	int account_id;
-	int char_id;
+	uint32 account_id;
+	uint32 char_id;
 	int vendor_id;
 	int m;
 	uint16 x,
@@ -272,7 +264,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 	vsd->vend_num = cursor;
 
 	//Always save BOTH: customer (buyer) and vender
-	if( save_settings&2 ) {
+	if( save_settings&CHARSAVE_VENDING ) {
 		chrif_save(sd,0);
 		chrif_save(vsd,0);
 	}
@@ -324,7 +316,7 @@ char vending_openvending(struct map_session_data* sd, const char* message, const
 		return 3;
 	}
 
-	if (save_settings&2) // Avoid invalid data from saving
+	if (save_settings&CHARSAVE_VENDING) // Avoid invalid data from saving
 		chrif_save(sd, 0);
 
 	// filter out invalid items

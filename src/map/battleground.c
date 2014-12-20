@@ -6,21 +6,16 @@
 #include "../common/malloc.h"
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
-#include "../common/socket.h"
 #include "../common/strlib.h"
 
 #include "battleground.h"
 #include "battle.h"
 #include "clif.h"
-#include "map.h"
 #include "npc.h"
 #include "pc.h"
 #include "pet.h"
 #include "homunculus.h"
 #include "mercenary.h"
-
-#include <string.h>
-#include <stdio.h>
 
 static DBMap* bg_team_db; // int bg_id -> struct battleground_data*
 static unsigned int bg_team_counter = 0; // Next bg_id

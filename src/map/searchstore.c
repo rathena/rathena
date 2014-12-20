@@ -307,7 +307,7 @@ void searchstore_close(struct map_session_data* sd)
  * @param store_id : store ID created by client
  * @param nameid : item being searched
  */
-void searchstore_click(struct map_session_data* sd, int account_id, int store_id, unsigned short nameid)
+void searchstore_click(struct map_session_data* sd, uint32 account_id, int store_id, unsigned short nameid)
 {
 	unsigned int i;
 	struct map_session_data* pl_sd;
@@ -372,7 +372,7 @@ void searchstore_click(struct map_session_data* sd, int account_id, int store_id
  * @param account_id : account ID of owner's shop
  * @return : true : shop opened, false : shop not opened
  */
-bool searchstore_queryremote(struct map_session_data* sd, int account_id)
+bool searchstore_queryremote(struct map_session_data* sd, uint32 account_id)
 {
 	return (bool)( sd->searchstore.open && sd->searchstore.count && sd->searchstore.remote_id == account_id );
 }
@@ -398,7 +398,7 @@ void searchstore_clearremote(struct map_session_data* sd)
  * @param card : card in the item
  * @param refine : refine of the item
  */
-bool searchstore_result(struct map_session_data* sd, int store_id, int account_id, const char* store_name, unsigned short nameid, unsigned short amount, unsigned int price, const unsigned short* card, unsigned char refine)
+bool searchstore_result(struct map_session_data* sd, int store_id, uint32 account_id, const char* store_name, unsigned short nameid, unsigned short amount, unsigned int price, const unsigned short* card, unsigned char refine)
 {
 	struct s_search_store_info_item* ssitem;
 

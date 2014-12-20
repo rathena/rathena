@@ -5,17 +5,12 @@
 #include "../common/socket.h"
 #include "clif.h"
 #include "itemdb.h"
-#include "map.h"
 #include "path.h"
 #include "trade.h"
 #include "pc.h"
-#include "npc.h"
-#include "battle.h"
 #include "chrif.h"
 #include "storage.h"
 #include "intif.h"
-#include "atcommand.h"
-#include "log.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -638,7 +633,7 @@ void trade_tradecommit(struct map_session_data *sd)
 	clif_tradecompleted(tsd, 0);
 
 	// save both player to avoid crash: they always have no advantage/disadvantage between the 2 players
-	if (save_settings&1) {
+	if (save_settings&CHARSAVE_TRADE) {
 		chrif_save(sd,0);
 		chrif_save(tsd,0);
 	}

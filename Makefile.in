@@ -28,7 +28,6 @@ endif
 	map \
 	tools \
 	import \
-	test \
 	clean help \
 	install uninstall bin-clean \
 
@@ -60,9 +59,6 @@ libconfig:
 tools:
 	@$(MAKE) -C src/tool
 
-test:
-	@$(MAKE) -C src/test
-
 import:
 # 1) create conf/import folder
 # 2) add missing files
@@ -86,7 +82,6 @@ clean:
 	@$(MAKE) -C src/char $@
 	@$(MAKE) -C src/map $@
 	@$(MAKE) -C src/tool $@
-	@$(MAKE) -C src/test $@
 
 help:
 	@echo "most common targets are 'all' 'server' 'conf' 'clean' 'help'"
@@ -101,7 +96,6 @@ help:
 	@echo "'import'      - builds conf/import, conf/msg_conf/import and db/import folders from their template folders (x-tmpl)"
 	@echo "'all'         - builds all the above targets"
 	@echo "'server'      - builds servers (targets 'common' 'login' 'char' 'map' and 'import')"
-	@echo "'test'        - builds tests"
 	@echo "'clean'       - cleans builds and objects"
 	@echo "'install'     - run installer wich setup rathena in /opt/"
 	@echo "'bin-clean'   - delete binary installed"

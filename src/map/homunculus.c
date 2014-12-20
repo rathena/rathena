@@ -3,7 +3,6 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
-#include "../common/socket.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
 #include "../common/mmo.h"
@@ -14,30 +13,15 @@
 
 #include "log.h"
 #include "clif.h"
-#include "chrif.h"
 #include "intif.h"
 #include "itemdb.h"
-#include "map.h"
 #include "pc.h"
-#include "status.h"
-#include "skill.h"
-#include "mob.h"
-#include "pet.h"
-#include "battle.h"
 #include "party.h"
-#include "guild.h"
-#include "atcommand.h"
-#include "script.h"
-#include "npc.h"
 #include "trade.h"
-#include "unit.h"
 
 #include "homunculus.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <math.h>
 
 struct s_homunculus_db homunculus_db[MAX_HOMUNCULUS_CLASS];	//[orn]
 struct homun_skill_tree_entry hskill_tree[MAX_HOMUNCULUS_CLASS][MAX_SKILL_TREE];
@@ -1076,7 +1060,7 @@ bool hom_call(struct map_session_data *sd)
  * @param flag : does the creation in inter-serv was a success (0:no,1:yes)
  * @return 0:failure, 1:sucess
  */
-int hom_recv_data(int account_id, struct s_homunculus *sh, int flag)
+int hom_recv_data(uint32 account_id, struct s_homunculus *sh, int flag)
 {
 	struct map_session_data *sd;
 	struct homun_data *hd;
@@ -1547,8 +1531,7 @@ void read_homunculus_expdb(void)
 		if (fp == NULL) {
 			if (i != 0)
 				continue;
-			if (i == 0)
-				ShowError("Can't read %s\n",line);
+			ShowError("Can't read %s\n",line);
 			return;
 		}
 		while (fgets(line, sizeof(line), fp) && j < MAX_LEVEL) {

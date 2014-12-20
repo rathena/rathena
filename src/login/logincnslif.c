@@ -17,9 +17,7 @@
 #include "login.h"
 #include "logincnslif.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 /**
  * Login-server console help: starting option info.

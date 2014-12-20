@@ -2,8 +2,6 @@
 // For more information, see LICENCE in the main folder
 
 #include "conf.h"
-#include "libconfig.h"
-
 #include "../common/showmsg.h" // ShowError
 
 int conf_read_file(config_t *config, const char *config_filename)

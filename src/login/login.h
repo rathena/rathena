@@ -28,7 +28,7 @@ enum E_LOGINSERVER_ST {
 
 ///Struct of 1 client connected to login-serv
 struct login_session_data {
-	int account_id;			///also GID
+	uint32 account_id;			///also GID
 	long login_id1;
 	long login_id2;
 	char sex;			/// 'F','M','S'
@@ -125,16 +125,16 @@ bool login_config_read(const char* cfgName, bool normal);
 
 /// Online User Database [Wizputer]
 struct online_login_data {
-	int account_id;
+	uint32 account_id;
 	int waiting_disconnect;
 	int char_server;
 };
-extern DBMap* online_db; // int account_id -> struct online_login_data*
+extern DBMap* online_db; // uint32 account_id -> struct online_login_data*
 
 /// Auth database
 #define AUTH_TIMEOUT 30000
 struct auth_node {
-	int account_id;
+	uint32 account_id;
 	uint32 login_id1;
 	uint32 login_id2;
 	uint32 ip;
@@ -142,7 +142,7 @@ struct auth_node {
 	uint32 version;
 	uint8 clienttype;
 };
-extern DBMap* auth_db; // int account_id -> struct auth_node*
+extern DBMap* auth_db; // uint32 account_id -> struct auth_node*
 
 ///Accessors
 AccountDB* login_get_accounts_db(void);
@@ -164,14 +164,14 @@ DBData login_create_online_user(DBKey key, va_list args);
  * @param account_id: the account identifier
  * @return the new|registered online data
  */
-struct online_login_data* login_add_online_user(int char_server, int account_id);
+struct online_login_data* login_add_online_user(int char_server, uint32 account_id);
 
 /**
  * Function to remove a user from online_db.
  *  Checking if user was already scheduled for deletion, and remove that timer if found.
  * @param account_id: the account identifier
  */
-void login_remove_online_user(int account_id);
+void login_remove_online_user(uint32 account_id);
 
 /**
  * Timered function to disconnect a user from login.

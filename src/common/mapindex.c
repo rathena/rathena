@@ -3,13 +3,9 @@
 
 #include "../common/mmo.h"
 #include "../common/showmsg.h"
-#include "../common/malloc.h"
 #include "../common/strlib.h"
-#include "../common/db.h"
 #include "mapindex.h"
 
-#include <string.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 DBMap *mapindex_db;

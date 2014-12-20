@@ -15,29 +15,12 @@
 #include "path.h"
 #include "pc.h"
 #include "pet.h"
-#include "npc.h"
-#include "mob.h"
-#include "clif.h"
-#include "guild.h"
-#include "skill.h"
-#include "itemdb.h"
-#include "battle.h"
 #include "battleground.h"
-#include "chrif.h"
-#include "skill.h"
-#include "status.h"
-#include "script.h"
-#include "unit.h"
 #include "homunculus.h"
 #include "mercenary.h"
 #include "elemental.h"
-#include "vending.h"
 
-#include <time.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <memory.h>
-#include <string.h>
 #include <math.h>
 
 // Regen related flags.

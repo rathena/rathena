@@ -2,7 +2,6 @@
 // For more information, see LICENCE in the main folder
 
 #include "../common/mmo.h"
-#include "../common/db.h"
 #include "../common/malloc.h"
 #include "../common/strlib.h"
 #include "../common/showmsg.h"
@@ -23,8 +22,6 @@
 #include "int_quest.h"
 #include "int_elemental.h"
 
-#include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
 
 #include <sys/stat.h> // for stat/lstat/fstat - [Dekamaster/Ultimate GM Tool]
@@ -517,7 +514,7 @@ void mapif_accinfo_ack(bool success, int map_fd, int u_fd, int u_aid, int accoun
 
 //--------------------------------------------------------
 // Save registry to sql
-int inter_accreg_tosql(int account_id, int char_id, struct accreg* reg, int type)
+int inter_accreg_tosql(uint32 account_id, uint32 char_id, struct accreg* reg, int type)
 {
 	StringBuf buf;
 	int i;
@@ -579,7 +576,7 @@ int inter_accreg_tosql(int account_id, int char_id, struct accreg* reg, int type
 }
 
 // Load account_reg from sql (type=2)
-int inter_accreg_fromsql(int account_id,int char_id, struct accreg *reg, int type)
+int inter_accreg_fromsql(uint32 account_id,uint32 char_id, struct accreg *reg, int type)
 {
 	char* data;
 	size_t len;
@@ -710,6 +707,8 @@ int inter_init_sql(const char *file)
 	ShowInfo("Connect Character DB server.... (Character Server)\n");
 	if( SQL_ERROR == Sql_Connect(sql_handle, char_server_id, char_server_pw, char_server_ip, (uint16)char_server_port, char_server_db) )
 	{
+		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
+			char_server_id, char_server_pw, char_server_ip, char_server_port, char_server_db);
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(sql_handle);
 		exit(EXIT_FAILURE);
@@ -821,7 +820,7 @@ static void mapif_account_reg(int fd, unsigned char *src)
 }
 
 // Send the requested account_reg
-int mapif_account_reg_reply(int fd,int account_id,int char_id, int type)
+int mapif_account_reg_reply(int fd,uint32 account_id,uint32 char_id, int type)
 {
 	struct accreg *reg=accreg_pt;
 	WFIFOHEAD(fd, 13 + 5000);
@@ -848,7 +847,7 @@ int mapif_account_reg_reply(int fd,int account_id,int char_id, int type)
 }
 
 //Request to kick char from a certain map server. [Skotlex]
-int mapif_disconnectplayer(int fd, int account_id, int char_id, int reason)
+int mapif_disconnectplayer(int fd, uint32 account_id, uint32 char_id, int reason)
 {
 	if (fd >= 0)
 	{
@@ -1064,7 +1063,7 @@ int mapif_parse_RegistryRequest(int fd)
 	return 1;
 }
 
-static void mapif_namechange_ack(int fd, int account_id, int char_id, int type, int flag, char *name)
+static void mapif_namechange_ack(int fd, uint32 account_id, uint32 char_id, int type, int flag, char *name)
 {
 	WFIFOHEAD(fd, NAME_LENGTH+13);
 	WFIFOW(fd, 0) = 0x3806;
@@ -1078,7 +1077,8 @@ static void mapif_namechange_ack(int fd, int account_id, int char_id, int type, 
 
 int mapif_parse_NameChangeRequest(int fd)
 {
-	int account_id, char_id, type;
+	uint32 account_id, char_id;
+	int type;
 	char* name;
 	int i;
 

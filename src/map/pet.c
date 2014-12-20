@@ -12,26 +12,12 @@
 #include "../common/ers.h"
 
 #include "pc.h"
-#include "status.h"
-#include "map.h"
-#include "path.h"
 #include "intif.h"
-#include "clif.h"
 #include "chrif.h"
 #include "pet.h"
-#include "itemdb.h"
-#include "battle.h"
-#include "mob.h"
-#include "npc.h"
-#include "script.h"
-#include "skill.h"
-#include "unit.h"
-#include "atcommand.h" // msg_txt()
-#include "log.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+
 
 #define MIN_PETTHINKTIME 100
 
@@ -524,8 +510,8 @@ int pet_birth_process(struct map_session_data *sd, struct s_pet *pet)
 	}
 
 	intif_save_petdata(sd->status.account_id,pet);
-
-	if (save_settings&8)
+	
+	if (save_settings&CHARSAVE_PET)
 		chrif_save(sd,0); //is it REALLY Needed to save the char for hatching a pet? [Skotlex]
 
 	if(sd->bl.prev != NULL) {
@@ -551,7 +537,7 @@ int pet_birth_process(struct map_session_data *sd, struct s_pet *pet)
  * @param flag : 1:stop loading of pet
  * @return 0:success, 1:failure
  */
-int pet_recv_petdata(int account_id,struct s_pet *p,int flag)
+int pet_recv_petdata(uint32 account_id,struct s_pet *p,int flag)
 {
 	struct map_session_data *sd;
 
@@ -709,7 +695,7 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
  * @param pet_id : pet ID otherwise means failure
  * @return true : success, false : failure
  **/
-bool pet_get_egg(int account_id, short pet_class, int pet_id ) {
+bool pet_get_egg(uint32 account_id, short pet_class, int pet_id ) {
 	struct map_session_data *sd;
 	struct item tmp_item;
 	int i = 0, ret = 0;

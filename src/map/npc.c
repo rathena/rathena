@@ -10,31 +10,18 @@
 #include "../common/utils.h"
 #include "../common/ers.h"
 #include "../common/db.h"
-#include "../common/socket.h"
 #include "map.h"
-#include "mapreg.h"
 #include "log.h"
 #include "clif.h"
 #include "intif.h"
 #include "pc.h"
-#include "status.h"
-#include "itemdb.h"
-#include "script.h"
-#include "mob.h"
 #include "pet.h"
 #include "instance.h"
-#include "battle.h"
-#include "skill.h"
-#include "unit.h"
-#include "npc.h"
 #include "chat.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include <time.h>
 #include <errno.h>
+
 
 struct npc_data* fake_nd;
 

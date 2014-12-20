@@ -3043,8 +3043,8 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		case SL_STIN:
 		case SL_STUN:
 			if (skill_lv >= 7) {
-				struct status_change *sc = status_get_sc(src);
-				if (sc && !sc->data[SC_SMA])
+				struct status_change *sc_cur = status_get_sc(src);
+				if (sc_cur && !sc_cur->data[SC_SMA])
 					sc_start(src,src,SC_SMA,100,skill_lv,skill_get_time(SL_SMA, skill_lv));
 			}
 			break;
@@ -17307,9 +17307,9 @@ int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int li
 		ShowError("skill_delunitgroup: Group not found! (src_id: %d skill_id: %d)\n", group->src_id, group->skill_id);
 
 	if(link_group_id) {
-		struct skill_unit_group* group = skill_id2group(link_group_id);
-		if(group)
-			skill_delunitgroup(group);
+		struct skill_unit_group* group_cur = skill_id2group(link_group_id);
+		if(group_cur)
+			skill_delunitgroup(group_cur);
 	}
 
 	return 1;

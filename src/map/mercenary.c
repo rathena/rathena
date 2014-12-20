@@ -3,7 +3,6 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
-#include "../common/socket.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
 #include "../common/mmo.h"
@@ -14,28 +13,14 @@
 
 #include "log.h"
 #include "clif.h"
-#include "chrif.h"
 #include "intif.h"
 #include "itemdb.h"
-#include "map.h"
 #include "pc.h"
-#include "status.h"
-#include "skill.h"
-#include "mob.h"
-#include "pet.h"
-#include "battle.h"
 #include "party.h"
-#include "guild.h"
-#include "atcommand.h"
-#include "script.h"
-#include "npc.h"
 #include "trade.h"
-#include "unit.h"
 #include "mercenary.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <math.h>
 
 struct s_mercenary_db mercenary_db[MAX_MERCENARY_CLASS]; // Mercenary Database

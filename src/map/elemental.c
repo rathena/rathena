@@ -3,39 +3,23 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
-#include "../common/socket.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
 #include "../common/mmo.h"
 #include "../common/showmsg.h"
-#include "../common/utils.h"
 #include "../common/random.h"
 #include "../common/strlib.h"
 
 #include "log.h"
 #include "clif.h"
-#include "chrif.h"
 #include "intif.h"
 #include "itemdb.h"
-#include "map.h"
 #include "pc.h"
-#include "status.h"
-#include "skill.h"
-#include "mob.h"
-#include "pet.h"
-#include "battle.h"
 #include "party.h"
-#include "guild.h"
-#include "atcommand.h"
-#include "script.h"
-#include "npc.h"
 #include "trade.h"
-#include "unit.h"
 #include "elemental.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <math.h>
 
 struct s_elemental_db elemental_db[MAX_ELEMENTAL_CLASS]; // Elemental Database
@@ -564,11 +548,7 @@ int elemental_unlocktarget(struct elemental_data *ed) {
 bool elemental_skillnotok(uint16 skill_id, struct elemental_data *ed) {
 	uint16 idx = skill_get_index(skill_id);
 	nullpo_retr(1,ed);
-
-	if (idx == 0)
-		return false; // invalid skill id
-
-	return skill_isNotOk(skill_id,ed->master);
+	return idx == 0 ? false : skill_isNotOk(skill_id,ed->master); // return false or check if it,s ok for master as well
 }
 
 struct skill_condition elemental_skill_get_requirements(uint16 skill_id, uint16 skill_lv){

@@ -7,14 +7,11 @@
 #include "../common/showmsg.h"
 #include "../common/strlib.h" //safestrncpy
 #include "../common/socket.h" //set_eof
-#include "../common/nullpo.h" //nullpo chk
 
 #include "map.h" //msg_conf
 #include "clif.h" //clif_chsys_msg
 #include "channel.h"
-#include "pc.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 
 static DBMap* channel_db; // channels
@@ -24,7 +21,7 @@ struct Channel_Config channel_config;
 DBMap* channel_get_db(void){ return channel_db; }
 
 struct chan_banentry {
-	int char_id;
+	uint32 char_id;
 	char char_name[NAME_LENGTH];
 } chan_banentry;
 

@@ -14,15 +14,13 @@
 #include "char_mapif.h"
 #include "char_logif.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 //early declaration
 void chlogif_on_ready(void);
 void chlogif_on_disconnect(void);
 
-int chlogif_pincode_notifyLoginPinError( int account_id ){
+int chlogif_pincode_notifyLoginPinError( uint32 account_id ){
 	if (login_fd > 0 && session[login_fd] && !session[login_fd]->flag.eof){
 		WFIFOHEAD(login_fd,6);
 		WFIFOW(login_fd,0) = 0x2739;
@@ -33,7 +31,7 @@ int chlogif_pincode_notifyLoginPinError( int account_id ){
 	return 0;
 }
 
-int chlogif_pincode_notifyLoginPinUpdate( int account_id, char* pin ){
+int chlogif_pincode_notifyLoginPinUpdate( uint32 account_id, char* pin ){
 	if (login_fd > 0 && session[login_fd] && !session[login_fd]->flag.eof){
 		int size = 8 + PINCODE_LENGTH+1;
 		WFIFOHEAD(login_fd,size);
@@ -49,7 +47,7 @@ int chlogif_pincode_notifyLoginPinUpdate( int account_id, char* pin ){
 
 void chlogif_pincode_start(int fd, struct char_session_data* sd){
 	if( charserv_config.pincode_config.pincode_enabled ){
-		ShowInfo("Asking to start pincode to AID: %d\n", sd->account_id);
+		//ShowInfo("Asking to start pincode to AID: %d\n", sd->account_id);
 		// PIN code system enabled
 		if( sd->pincode[0] == '\0' ){
 			// No PIN code has been set yet
@@ -179,7 +177,7 @@ int chlogif_save_accreg2(unsigned char* buf, int len){
 	return 0;
 }
 
-int chlogif_request_accreg2(int account_id, int char_id){
+int chlogif_request_accreg2(uint32 account_id, uint32 char_id){
 	if (login_fd > 0) {
 		WFIFOHEAD(login_fd,10);
 		WFIFOW(login_fd,0) = 0x272e;
@@ -257,7 +255,7 @@ int chlogif_parse_ackaccreq(int fd, struct char_session_data* sd){
 	if (RFIFOREST(fd) < 25)
 		return 0;
 	{
-		int account_id = RFIFOL(fd,2);
+		uint32 account_id = RFIFOL(fd,2);
 		uint32 login_id1 = RFIFOL(fd,6);
 		uint32 login_id2 = RFIFOL(fd,10);
 		uint8 sex = RFIFOB(fd,14);
@@ -361,7 +359,7 @@ int chlogif_parse_ackchangesex(int fd, struct char_session_data* sd){
 
 		if( acc > 0 )
 		{// TODO: Is this even possible?
-			int char_id[MAX_CHARS];
+			uint32 char_id[MAX_CHARS];
 			int class_[MAX_CHARS];
 			int guild_id[MAX_CHARS];
 			unsigned char num, i;

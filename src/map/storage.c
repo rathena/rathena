@@ -5,7 +5,6 @@
 #include "../common/db.h"
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
-#include "../common/showmsg.h"
 
 #include "map.h" // struct map_session_data
 #include "storage.h"
@@ -14,14 +13,10 @@
 #include "clif.h"
 #include "intif.h"
 #include "pc.h"
-#include "guild.h"
-#include "battle.h"
-#include "atcommand.h"
-#include "log.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 
 static DBMap* guild_storage_db; ///Databases of guild_storage : int guild_id -> struct guild_storage*
 
@@ -751,7 +746,7 @@ void storage_guild_storagegettocart(struct map_session_data* sd, int index, int 
  * @param flag : 1=char quitting, close the storage
  * @return 0 : fail (no storage), 1 : success (requested)
  */
-int storage_guild_storagesave(int account_id, int guild_id, int flag)
+int storage_guild_storagesave(uint32 account_id, int guild_id, int flag)
 {
 	struct guild_storage *stor = guild2storage2(guild_id);
 
@@ -801,7 +796,7 @@ int storage_guild_storageclose(struct map_session_data* sd)
 
 	clif_storageclose(sd);
 	if (stor->storage_status) {
-		if (save_settings&4)
+		if (save_settings&CHARSAVE_STORAGE)
 			chrif_save(sd, 0); //This one also saves the storage. [Skotlex]
 		else
 			storage_guild_storagesave(sd->status.account_id, sd->status.guild_id,0);
@@ -832,14 +827,14 @@ int storage_guild_storage_quit(struct map_session_data* sd, int flag)
 		stor->storage_status = 0;
 		clif_storageclose(sd);
 
-		if (save_settings&4)
+		if (save_settings&CHARSAVE_STORAGE)
 			chrif_save(sd,0);
 
 		return 0;
 	}
 
 	if(stor->storage_status) {
-		if (save_settings&4)
+		if (save_settings&CHARSAVE_STORAGE)
 			chrif_save(sd,0);
 		else
 			storage_guild_storagesave(sd->status.account_id,sd->status.guild_id,1);

@@ -242,7 +242,7 @@ struct map_session_data {
 		unsigned int no_knockback : 1;
 		unsigned int bonus_coma : 1;
 	} special_state;
-	int login_id1, login_id2;
+	uint32 login_id1, login_id2;
 	unsigned short class_;	//This is the internal job ID used by the map server to simplify comparisons/queries/etc. [Skotlex]
 	int group_id, group_pos, group_level;
 	unsigned int permissions;/* group permissions */
@@ -837,8 +837,8 @@ bool pc_should_log_commands(struct map_session_data *sd);
 void pc_setrestartvalue(struct map_session_data *sd, char type);
 void pc_makesavestatus(struct map_session_data *sd);
 void pc_respawn(struct map_session_data* sd, clr_type clrtype);
-void pc_setnewpc(struct map_session_data *sd, int account_id, int char_id, int login_id1, unsigned int client_tick, int sex, int fd);
-bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_time, int group_id, struct mmo_charstatus *st, bool changing_mapservers);
+void pc_setnewpc(struct map_session_data *sd, uint32 account_id, uint32 char_id, int login_id1, unsigned int client_tick, int sex, int fd);
+bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_time, int group_id, struct mmo_charstatus *st, bool changing_mapservers);
 void pc_authfail(struct map_session_data *sd);
 void pc_reg_received(struct map_session_data *sd);
 void pc_close_npc(struct map_session_data *sd,int flag);
@@ -1051,7 +1051,7 @@ void pc_delinvincibletimer(struct map_session_data* sd);
 void pc_addspiritball(struct map_session_data *sd,int interval,int max);
 void pc_delspiritball(struct map_session_data *sd,int count,int type);
 void pc_addfame(struct map_session_data *sd,int count);
-unsigned char pc_famerank(int char_id, int job);
+unsigned char pc_famerank(uint32 char_id, int job);
 bool pc_set_hate_mob(struct map_session_data *sd, int pos, struct block_list *bl);
 
 extern struct fame_list smith_fame_list[MAX_FAME_LIST];

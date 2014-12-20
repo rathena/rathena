@@ -17,9 +17,7 @@
 #include "char_logif.h"
 #include "char_mapif.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 /**
  * Packet send to all map-servers, attach to ourself
@@ -396,7 +394,7 @@ int chmapif_parse_authok(int fd){
 	if( RFIFOREST(fd) < 19 )
 		return 0;
 	else{
-		int account_id = RFIFOL(fd,2);
+		uint32 account_id = RFIFOL(fd,2);
 		uint32 login_id1 = RFIFOL(fd,6);
 		uint32 login_id2 = RFIFOL(fd,10);
 		uint32 ip = RFIFOL(fd,14);
@@ -613,7 +611,7 @@ int chmapif_parse_askrmfriend(int fd){
 	if (RFIFOREST(fd) < 10)
 		return 0;
 	{
-		int char_id, friend_id;
+		uint32 char_id, friend_id;
 		char_id = RFIFOL(fd,2);
 		friend_id = RFIFOL(fd,6);
 		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id`='%d' AND `friend_id`='%d' LIMIT 1",
@@ -945,10 +943,10 @@ int chmapif_parse_reqauth(int fd, int id){
             return 0;
 
     {
-        int account_id;
-        int char_id;
-        int login_id1;
-        char sex;
+        uint32 account_id;
+        uint32 char_id;
+        uint32 login_id1;
+        unsigned char sex;
         uint32 ip;
         struct auth_node* node;
         struct mmo_charstatus* cd;
@@ -969,12 +967,12 @@ int chmapif_parse_reqauth(int fd, int id){
         node = (struct auth_node*)idb_get(auth_db, account_id);
         cd = (struct mmo_charstatus*)uidb_get(char_db_,char_id);
         if( cd == NULL )
-        {	//Really shouldn't happen.
+        {	//Really shouldn't happen. (or autotrade)
                 char_mmo_char_fromsql(char_id, &char_dat, true);
                 cd = (struct mmo_charstatus*)uidb_get(char_db_,char_id);
         }
         if( runflag == CHARSERVER_ST_RUNNING && autotrade && cd ){
-            uint32 mmo_charstatus_len = sizeof(struct mmo_charstatus) + 25;
+            uint16 mmo_charstatus_len = sizeof(struct mmo_charstatus) + 25;
             cd->sex = sex;
 
             WFIFOHEAD(fd,mmo_charstatus_len);
@@ -999,7 +997,7 @@ int chmapif_parse_reqauth(int fd, int id){
             node->sex == sex /*&&
             node->ip == ip*/ )
         {// auth ok
-            uint32 mmo_charstatus_len = sizeof(struct mmo_charstatus) + 25;
+            uint16 mmo_charstatus_len = sizeof(struct mmo_charstatus) + 25;
             cd->sex = sex;
 
             WFIFOHEAD(fd,mmo_charstatus_len);

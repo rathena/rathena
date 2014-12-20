@@ -9,17 +9,14 @@
  */
 
 #include "../common/cbasetypes.h"
-#include "../common/db.h"
-#include "../common/malloc.h"
+#include "../common/showmsg.h"
 #include "../common/sql.h"
-#include "../common/socket.h"
 #include "../common/strlib.h"
 #include "../common/timer.h"
 #include "login.h"
 #include "ipban.h"
 #include "loginlog.h"
 #include <stdlib.h>
-#include <string.h>
 
 // login sql settings
 static char   ipban_db_hostname[32] = "127.0.0.1";
@@ -213,10 +210,14 @@ void ipban_init(void) {
 	sql_handle = Sql_Malloc();
 	if( SQL_ERROR == Sql_Connect(sql_handle, username, password, hostname, port, database) )
 	{
+                ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
+                        username, password, hostname, port, database);
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(sql_handle);
 		exit(EXIT_FAILURE);
 	}
+        ShowInfo("Ipban conection made\n");
+        
 	if( codepage[0] != '\0' && SQL_ERROR == Sql_SetEncoding(sql_handle, codepage) )
 		Sql_ShowDebug(sql_handle);
 

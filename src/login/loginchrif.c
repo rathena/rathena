@@ -11,17 +11,12 @@
 #include "../common/strlib.h" //safeprint
 #include "../common/showmsg.h" //show notice
 #include "../common/socket.h" //wfifo session
-#include "../common/malloc.h"
 #include "account.h"
-#include "ipban.h" //ipban_check
 #include "login.h"
 #include "loginlog.h"
-#include "loginclif.h"
 #include "loginchrif.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 //early declaration
 void logchrif_on_disconnect(int id);
@@ -82,7 +77,7 @@ int logchrif_parse_reqauth(int fd, int id,char* ip){
 		return 0;
 	else{
 		struct auth_node* node;
-		int account_id = RFIFOL(fd,2);
+		uint32 account_id = RFIFOL(fd,2);
 		uint32 login_id1 = RFIFOL(fd,6);
 		uint32 login_id2 = RFIFOL(fd,10);
 		uint8 sex = RFIFOB(fd,14);
@@ -169,7 +164,7 @@ int logchrif_parse_updmail(int fd, int id, char* ip){
 		struct mmo_account acc;
 		char email[40];
 
-		int account_id = RFIFOL(fd,2);
+		uint32 account_id = RFIFOL(fd,2);
 		safestrncpy(email, (char*)RFIFOP(fd,6), 40); remove_control_chars(email);
 		RFIFOSKIP(fd,46);
 
@@ -312,7 +307,7 @@ int logchrif_parse_reqchangemail(int fd, int id, char* ip){
 		char actual_email[40];
 		char new_email[40];
 
-		int account_id = RFIFOL(fd,2);
+		uint32 account_id = RFIFOL(fd,2);
 		safestrncpy(actual_email, (char*)RFIFOP(fd,6), 40);
 		safestrncpy(new_email, (char*)RFIFOP(fd,46), 40);
 		RFIFOSKIP(fd, 86);
@@ -351,7 +346,7 @@ int logchrif_parse_requpdaccstate(int fd, int id, char* ip){
 	else{
 		struct mmo_account acc;
 
-		int account_id = RFIFOL(fd,2);
+		uint32 account_id = RFIFOL(fd,2);
 		unsigned int state = RFIFOL(fd,6);
 		AccountDB* accounts = login_get_accounts_db();
 
@@ -397,7 +392,7 @@ int logchrif_parse_reqbanacc(int fd, int id, char* ip){
 		struct mmo_account acc;
 		AccountDB* accounts = login_get_accounts_db();
 
-		int account_id = RFIFOL(fd,2);
+		uint32 account_id = RFIFOL(fd,2);
 		int timediff = RFIFOL(fd,6);
 		RFIFOSKIP(fd,10);
 
@@ -450,7 +445,7 @@ int logchrif_parse_reqchgsex(int fd, int id, char* ip){
 		struct mmo_account acc;
 		AccountDB* accounts = login_get_accounts_db();
 
-		int account_id = RFIFOL(fd,2);
+		uint32 account_id = RFIFOL(fd,2);
 		RFIFOSKIP(fd,6);
 
 		if( !accounts->load_num(accounts, &acc, account_id) )
@@ -490,7 +485,7 @@ int logchrif_parse_updreg2(int fd, int id, char* ip){
 	else{
 		struct mmo_account acc;
 		AccountDB* accounts = login_get_accounts_db();
-		int account_id = RFIFOL(fd,4);
+		uint32 account_id = RFIFOL(fd,4);
 
 		if( !accounts->load_num(accounts, &acc, account_id) )
 			ShowStatus("Char-server '%s': receiving (from the char-server) of account_reg2 (account: %d not found, ip: %s).\n", ch_server[id].name, account_id, ip);
@@ -535,7 +530,7 @@ int logchrif_parse_requnbanacc(int fd, int id, char* ip){
 		struct mmo_account acc;
 		AccountDB* accounts = login_get_accounts_db();
 
-		int account_id = RFIFOL(fd,2);
+		uint32 account_id = RFIFOL(fd,2);
 		RFIFOSKIP(fd,6);
 
 		if( !accounts->load_num(accounts, &acc, account_id) )
@@ -621,8 +616,8 @@ int logchrif_parse_reqacc2reg(int fd){
 		AccountDB* accounts = login_get_accounts_db();
 		size_t off;
 
-		int account_id = RFIFOL(fd,2);
-		int char_id = RFIFOL(fd,6);
+		uint32 account_id = RFIFOL(fd,2);
+		uint32 char_id = RFIFOL(fd,6);
 		RFIFOSKIP(fd,10);
 
 		WFIFOHEAD(fd,ACCOUNT_REG2_NUM*sizeof(struct global_reg));
@@ -739,7 +734,7 @@ int logchrif_parse_bankvault(int fd, int id, char* ip){
 		struct mmo_account acc;
 
 
-		int account_id = RFIFOL(fd,2);
+		uint32 account_id = RFIFOL(fd,2);
 		char type = RFIFOB(fd,6);
 		int32 data = RFIFOL(fd,7);
 		AccountDB* accounts = login_get_accounts_db();

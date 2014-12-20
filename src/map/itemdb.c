@@ -8,16 +8,11 @@
 #include "../common/strlib.h"
 #include "../common/utils.h"
 #include "itemdb.h"
-#include "map.h"
 #include "battle.h" // struct battle_config
 #include "cashshop.h"
-#include "script.h" // item script processing
-#include "pc.h"     // W_MUSICAL, W_WHIP
 #include "intif.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 static DBMap *itemdb; /// Item DB
 static DBMap *itemdb_combo; /// Item Combo DB
@@ -1472,9 +1467,7 @@ bool itemdb_is_spellbook2(unsigned short nameid) {
 	if (!nameid || !itemdb_exists(nameid) || !skill_spellbook_count)
 		return false;
 	ARR_FIND(0, MAX_SKILL_SPELLBOOK_DB, i, skill_spellbook_db[i].nameid == nameid);
-	if (i == MAX_SKILL_SPELLBOOK_DB)
-		return false;
-	return true;
+	return i == MAX_SKILL_SPELLBOOK_DB ? false : true;
 }
 
 /**

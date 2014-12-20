@@ -24,32 +24,20 @@
 #include "chrif.h"
 #include "itemdb.h"
 #include "pc.h"
-#include "status.h"
 #include "storage.h"
-#include "mob.h"
-#include "npc.h"
 #include "pet.h"
 #include "mapreg.h"
 #include "homunculus.h"
 #include "instance.h"
 #include "mercenary.h"
 #include "intif.h"
-#include "skill.h"
-#include "status.h"
 #include "chat.h"
-#include "battle.h"
 #include "battleground.h"
 #include "party.h"
-#include "guild.h"
-#include "atcommand.h"
-#include "log.h"
-#include "unit.h"
-#include "pet.h"
 #include "mail.h"
 #include "script.h"
 #include "quest.h"
 #include "elemental.h"
-#include "../config/core.h"
 
 #ifdef PCRE_SUPPORT
 #include "../../3rdparty/pcre/include/pcre.h" // preg_match
@@ -60,9 +48,8 @@
 #include <string.h>
 #include <math.h>
 #ifndef WIN32
-	#include <sys/time.h>
 #endif
-#include <time.h>
+
 #include <setjmp.h>
 #include <errno.h>
 
@@ -4245,8 +4232,13 @@ static void *queryThread_main(void *x) {
 	Sql *queryThread_handle = Sql_Malloc();
 	int i;
 
-	if ( SQL_ERROR == Sql_Connect(queryThread_handle, map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db) )
+	if ( SQL_ERROR == Sql_Connect(queryThread_handle, map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db) ){
+                ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
+                            map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db);
+                Sql_ShowDebug(queryThread_handle);
+                Sql_Free(queryThread_handle);
 		exit(EXIT_FAILURE);
+        }
 
 	if( strlen(default_codepage) > 0 )
 		if ( SQL_ERROR == Sql_SetEncoding(queryThread_handle, default_codepage) )
@@ -4255,8 +4247,13 @@ static void *queryThread_main(void *x) {
 	if( log_config.sql_logs ) {
 		logmysql_handle = Sql_Malloc();
 
-		if ( SQL_ERROR == Sql_Connect(logmysql_handle, log_db_id, log_db_pw, log_db_ip, log_db_port, log_db_db) )
-			exit(EXIT_FAILURE);
+		if ( SQL_ERROR == Sql_Connect(logmysql_handle, log_db_id, log_db_pw, log_db_ip, log_db_port, log_db_db) ){
+                    ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
+                                log_db_id, log_db_pw, log_db_ip, log_db_port, log_db_db);
+                    Sql_ShowDebug(logmysql_handle);
+                    Sql_Free(logmysql_handle);
+                    exit(EXIT_FAILURE);
+                }
 
 		if( strlen(default_codepage) > 0 )
 			if ( SQL_ERROR == Sql_SetEncoding(logmysql_handle, default_codepage) )
@@ -7247,7 +7244,7 @@ BUILDIN_FUNC(delitem)
 	
 	if( script_hasdata(st,4) )
 	{
-		int account_id = script_getnum(st,4);
+		uint32 account_id = script_getnum(st,4);
 		sd = map_id2sd(account_id); // <account id>
 		if( sd == NULL )
 		{
@@ -7334,7 +7331,7 @@ BUILDIN_FUNC(delitem2)
 
 	if( script_hasdata(st,11) )
 	{
-		int account_id = script_getnum(st,11);
+		uint32 account_id = script_getnum(st,11);
 		sd = map_id2sd(account_id); // <account id>
 		if( sd == NULL )
 		{
@@ -9654,7 +9651,8 @@ BUILDIN_FUNC(killmonsterall)
 BUILDIN_FUNC(clone)
 {
 	TBL_PC *sd, *msd=NULL;
-	int char_id,master_id=0,x,y, mode = 0, flag = 0, m;
+	uint32 char_id;
+	int master_id=0,x,y, mode = 0, flag = 0, m;
 	unsigned int duration = 0;
 	const char *mapname,*event;
 

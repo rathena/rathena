@@ -4,14 +4,12 @@
 #include "../common/cbasetypes.h"
 #include "../common/db.h"
 #include "../common/malloc.h"
-#include "../common/showmsg.h"
 #include "../common/sql.h"
 #include "../common/strlib.h"
 #include "../common/timer.h"
 #include "map.h" // mmysql_handle
 #include "script.h"
 #include <stdlib.h>
-#include <string.h>
 
 static DBMap* mapreg_db = NULL; // int var_id -> int value
 static DBMap* mapregstr_db = NULL; // int var_id -> char* value
@@ -19,6 +17,7 @@ static DBMap* mapregstr_db = NULL; // int var_id -> char* value
 static char mapreg_table[32] = "mapreg";
 static bool mapreg_dirty = false;
 #define MAPREG_AUTOSAVE_INTERVAL (300*1000)
+
 
 /// Looks up the value of an integer variable using its uid.
 int mapreg_readreg(int uid)

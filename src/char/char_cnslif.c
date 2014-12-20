@@ -9,7 +9,6 @@
 #include "char.h"
 #include "char_cnslif.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 

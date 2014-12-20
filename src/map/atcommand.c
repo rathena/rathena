@@ -5,7 +5,6 @@
 #include "../common/mmo.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
-#include "../common/core.h"
 #include "../common/showmsg.h"
 #include "../common/malloc.h"
 #include "../common/random.h"
@@ -19,37 +18,24 @@
 #include "battle.h"
 #include "chat.h"
 #include "channel.h"
-#include "clif.h"
 #include "chrif.h"
 #include "duel.h"
 #include "instance.h"
 #include "intif.h"
-#include "itemdb.h"
-#include "log.h"
-#include "pc.h"
-#include "pc_groups.h" // groupid2name
-#include "status.h"
-#include "skill.h"
-#include "mob.h"
-#include "npc.h"
 #include "pet.h"
 #include "homunculus.h"
 #include "mail.h"
 #include "mercenary.h"
 #include "elemental.h"
 #include "party.h"
-#include "guild.h"
-#include "script.h"
 #include "storage.h"
 #include "trade.h"
-#include "unit.h"
 #include "mapreg.h"
 #include "quest.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <math.h>
+
 
 #define ATCOMMAND_LENGTH 50
 #define ACMD_FUNC(x) static int atcommand_ ## x (const int fd, struct map_session_data* sd, const char* command, const char* message)
@@ -8957,7 +8943,7 @@ ACMD_FUNC(set) {
 		return -1;
 	}
 
-	is_str = ( reg[strlen(reg) - 1] == '$' ) ? true : false;
+	is_str = ( reg[strlen(reg) - 1] == '$' );
 
 	if( ( len = strlen(val) ) > 1 ) {
 		if( val[0] == '"' && val[len-1] == '"') {
@@ -9057,7 +9043,7 @@ ACMD_FUNC(addperm) {
 
 	parent_cmd = atcommand_checkalias(command+1);
 
-	add = (strcmpi(parent_cmd, "addperm") == 0) ? true : false;
+	add = (strcmpi(parent_cmd, "addperm") == 0);
 
 	if( !message || !*message ) {
 		sprintf(atcmd_output,  msg_txt(sd,1378),command); // Usage: %s <permission_name>
@@ -9135,7 +9121,7 @@ ACMD_FUNC(cart) {
 	sd->status.skill[MC_PUSHCART].flag = x?SKILL_FLAG_TEMPORARY:SKILL_FLAG_PERMANENT;
 
 	int val = atoi(message);
-	bool need_skill = pc_checkskill(sd, MC_PUSHCART) ? false : true;
+	bool need_skill = (pc_checkskill(sd, MC_PUSHCART) == 0);
 
 	if( !message || !*message || val < 0 || val > MAX_CARTS ) {
 		sprintf(atcmd_output, msg_txt(sd,1390),command,MAX_CARTS); // Unknown Cart (usage: %s <0-%d>).
@@ -9552,7 +9538,7 @@ ACMD_FUNC(costume) {
 */
 ACMD_FUNC(cloneequip) {
 	struct map_session_data *pl_sd;
-	int char_id = 0;
+	uint32 char_id = 0;
 
 	nullpo_retr(-1, sd);
 
@@ -9628,7 +9614,7 @@ ACMD_FUNC(cloneequip) {
 */
 ACMD_FUNC(clonestat) {
 	struct map_session_data *pl_sd;
-	int char_id = 0;
+	uint32 char_id = 0;
 
 	nullpo_retr(-1, sd);
 

@@ -4,11 +4,9 @@
 #include "../common/cbasetypes.h"
 #include "../common/socket.h"
 #include "../common/timer.h"
-#include "../common/malloc.h"
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
-#include "../common/utils.h"
 #include "../common/db.h"
 
 #include "clif.h"
@@ -18,11 +16,7 @@
 #include "party.h"
 #include "pc.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
-#include <time.h>
 
 #define MAX_INSTANCE_DB		15	// Max number of instance types
 #define INSTANCE_INTERVAL	60000	// Interval used to check when an instance is to be destroyed (ms)

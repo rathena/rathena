@@ -11,9 +11,7 @@
 #include "char.h"
 #include "inter.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 struct s_pet *pet_pt;
 
@@ -119,7 +117,7 @@ int inter_pet_delete(int pet_id){
 	return 0;
 }
 //------------------------------------------------------
-int mapif_pet_created(int fd, int account_id, struct s_pet *p)
+int mapif_pet_created(int fd, uint32 account_id, struct s_pet *p)
 {
 	WFIFOHEAD(fd, 12);
 	WFIFOW(fd, 0) = 0x3880;
@@ -137,7 +135,7 @@ int mapif_pet_created(int fd, int account_id, struct s_pet *p)
 	return 0;
 }
 
-int mapif_pet_info(int fd, int account_id, struct s_pet *p){
+int mapif_pet_info(int fd, uint32 account_id, struct s_pet *p){
 	WFIFOHEAD(fd, sizeof(struct s_pet) + 9);
 	WFIFOW(fd, 0) =0x3881;
 	WFIFOW(fd, 2) =sizeof(struct s_pet) + 9;
@@ -149,7 +147,7 @@ int mapif_pet_info(int fd, int account_id, struct s_pet *p){
 	return 0;
 }
 
-int mapif_pet_noinfo(int fd, int account_id){
+int mapif_pet_noinfo(int fd, uint32 account_id){
 	WFIFOHEAD(fd, sizeof(struct s_pet) + 9);
 	WFIFOW(fd, 0) =0x3881;
 	WFIFOW(fd, 2) =sizeof(struct s_pet) + 9;
@@ -161,7 +159,7 @@ int mapif_pet_noinfo(int fd, int account_id){
 	return 0;
 }
 
-int mapif_save_pet_ack(int fd, int account_id, int flag){
+int mapif_save_pet_ack(int fd, uint32 account_id, int flag){
 	WFIFOHEAD(fd, 7);
 	WFIFOW(fd, 0) =0x3882;
 	WFIFOL(fd, 2) =account_id;
@@ -180,7 +178,7 @@ int mapif_delete_pet_ack(int fd, int flag){
 	return 0;
 }
 
-int mapif_create_pet(int fd, int account_id, int char_id, short pet_class, short pet_lv, short pet_egg_id,
+int mapif_create_pet(int fd, uint32 account_id, uint32 char_id, short pet_class, short pet_lv, short pet_egg_id,
 	short pet_equip, short intimate, short hungry, char rename_flag, char incubate, char *pet_name)
 {
 	memset(pet_pt, 0, sizeof(struct s_pet));
@@ -218,7 +216,7 @@ int mapif_create_pet(int fd, int account_id, int char_id, short pet_class, short
 	return 0;
 }
 
-int mapif_load_pet(int fd, int account_id, int char_id, int pet_id){
+int mapif_load_pet(int fd, uint32 account_id, uint32 char_id, int pet_id){
 	memset(pet_pt, 0, sizeof(struct s_pet));
 
 	inter_pet_fromsql(pet_id, pet_pt);
@@ -239,7 +237,7 @@ int mapif_load_pet(int fd, int account_id, int char_id, int pet_id){
 	return 0;
 }
 
-int mapif_save_pet(int fd, int account_id, struct s_pet *data) {
+int mapif_save_pet(int fd, uint32 account_id, struct s_pet *data) {
 	//here process pet save request.
 	int len;
 	RFIFOHEAD(fd);

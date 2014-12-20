@@ -2,7 +2,6 @@
 // For more information, see LICENCE in the main folder
 
 #include "../common/nullpo.h"
-#include "../common/cbasetypes.h"
 #include "../common/db.h"  // ARR_FIND
 #include "../common/malloc.h" // aMalloc, aFree
 #include "../common/showmsg.h"  // ShowWarning
@@ -27,8 +26,8 @@ struct s_autotrade_entry {
 
 /// Struct of autotrader
 struct s_autotrade {
-	int account_id;
-	int char_id;
+	uint32 account_id;
+	uint32 char_id;
 	int buyer_id;
 	int m;
 	uint16 x, y;
@@ -296,7 +295,7 @@ void buyingstore_close(struct map_session_data* sd) {
 * @param sd Player
 * @param account_id Buyer account ID
 */
-void buyingstore_open(struct map_session_data* sd, int account_id)
+void buyingstore_open(struct map_session_data* sd, uint32 account_id)
 {
 	struct map_session_data* pl_sd;
 
@@ -334,7 +333,7 @@ void buyingstore_open(struct map_session_data* sd, int account_id)
 * @param *itemlist List of sold items { <index>.W, <nameid>.W, <amount>.W }*
 * @param count Number of item on the itemlist
 */
-void buyingstore_trade(struct map_session_data* sd, int account_id, unsigned int buyer_id, const uint8* itemlist, unsigned int count)
+void buyingstore_trade(struct map_session_data* sd, uint32 account_id, unsigned int buyer_id, const uint8* itemlist, unsigned int count)
 {
 	int zeny = 0;
 	unsigned int i, weight, listidx, k;
@@ -487,7 +486,7 @@ void buyingstore_trade(struct map_session_data* sd, int account_id, unsigned int
 		clif_buyingstore_update_item(pl_sd, nameid, amount);
 	}
 
-	if( save_settings&128 ) {
+	if( save_settings&CHARSAVE_BANK ) {
 		chrif_save(sd, 0);
 		chrif_save(pl_sd, 0);
 	}

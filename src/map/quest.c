@@ -3,34 +3,18 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/socket.h"
-#include "../common/timer.h"
 #include "../common/malloc.h"
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
-#include "../common/utils.h"
 
 #include "map.h"
 #include "pc.h"
-#include "npc.h"
-#include "itemdb.h"
-#include "script.h"
-#include "intif.h"
-#include "battle.h"
-#include "mob.h"
 #include "party.h"
-#include "unit.h"
-#include "log.h"
-#include "clif.h"
 #include "quest.h"
-#include "intif.h"
 #include "chrif.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
-#include <time.h>
 
 /**
  * Searches a quest by ID.
@@ -111,7 +95,7 @@ int quest_add(TBL_PC *sd, int quest_id)
 	clif_quest_add(sd, &sd->quest_log[n]);
 	clif_quest_update_objective(sd, &sd->quest_log[n]);
 
-	if( save_settings&64 )
+	if( save_settings&CHARSAVE_QUEST )
 		chrif_save(sd,0);
 
 	return 0;
@@ -164,7 +148,7 @@ int quest_change(TBL_PC *sd, int qid1, int qid2)
 	clif_quest_add(sd, &sd->quest_log[i]);
 	clif_quest_update_objective(sd, &sd->quest_log[i]);
 
-	if( save_settings&64 )
+	if( save_settings&CHARSAVE_QUEST )
 		chrif_save(sd,0);
 
 	return 0;
@@ -203,7 +187,7 @@ int quest_delete(TBL_PC *sd, int quest_id)
 
 	clif_quest_delete(sd, quest_id);
 
-	if( save_settings&64 )
+	if( save_settings&CHARSAVE_QUEST )
 		chrif_save(sd,0);
 
 	return 0;
@@ -287,7 +271,7 @@ int quest_update_status(TBL_PC *sd, int quest_id, enum quest_state status)
 	sd->save_quest = true;
 
 	if( status < Q_COMPLETE ) {
-		clif_quest_update_status(sd, quest_id, status == Q_ACTIVE ? true : false);
+		clif_quest_update_status(sd, quest_id, status == Q_ACTIVE);
 		return 0;
 	}
 
@@ -302,7 +286,7 @@ int quest_update_status(TBL_PC *sd, int quest_id, enum quest_state status)
 
 	clif_quest_delete(sd, quest_id);
 
-	if( save_settings&64 )
+	if( save_settings&CHARSAVE_QUEST )
 		chrif_save(sd,0);
 
 	return 0;

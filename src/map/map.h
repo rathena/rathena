@@ -740,7 +740,7 @@ extern int map_num;
 
 extern int autosave_interval;
 extern int minsave_interval;
-extern int save_settings;
+extern unsigned char save_settings;
 extern int agit_flag;
 extern int agit2_flag;
 extern int night_flag; // 0=day, 1=night [Yor]
@@ -752,6 +752,20 @@ extern char help2_txt[];
 extern char charhelp_txt[];
 
 extern char wisp_server_name[];
+
+/// Type of 'save_settings'
+enum save_settings_type {
+	CHARSAVE_NONE = 0,
+	CHARSAVE_TRADE   = 0x01, /// After trading
+	CHARSAVE_VENDING = 0x02, /// After vending (open/transaction)
+	CHARSAVE_STORAGE = 0x04, /// After closing storage/guild storage.
+	CHARSAVE_PET     = 0x08, /// After hatching/returning to egg a pet.
+	CHARSAVE_MAIL    = 0x10, /// After successfully sending a mail with attachment
+	CHARSAVE_AUCTION = 0x20, /// After successfully submitting an item for auction
+	CHARSAVE_QUEST   = 0x40, /// After successfully get/delete/complete a quest
+	CHARSAVE_BANK    = 0x80, /// After every bank transaction (deposit/withdraw)
+	CHARSAVE_ALL     = 0xFF,
+};
 
 // users
 void map_setusers(int);

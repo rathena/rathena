@@ -150,8 +150,8 @@ extern struct mmo_map_server map_server[MAX_MAP_SERVERS];
 
 #define AUTH_TIMEOUT 30000
 struct auth_node {
-	int account_id;
-	int char_id;
+	uint32 account_id;
+	uint32 char_id;
 	uint32 login_id1;
 	uint32 login_id2;
 	uint32 ip;
@@ -161,21 +161,22 @@ struct auth_node {
 	unsigned changing_mapservers : 1;
 	uint8 version;
 };
-DBMap* char_get_authdb(); // int account_id -> struct auth_node*
+DBMap* char_get_authdb(); // uint32 account_id -> struct auth_node*
 
 struct online_char_data {
-	int account_id;
-	int char_id;
+	uint32 account_id;
+	uint32 char_id;
 	int fd;
 	int waiting_disconnect;
 	short server; // -2: unknown server, -1: not connected, 0+: id of server
 	bool pincode_success;
 };
-DBMap* char_get_onlinedb(); // int account_id -> struct online_char_data*
+DBMap* char_get_onlinedb(); // uint32 account_id -> struct online_char_data*
 
 struct char_session_data {
 	bool auth; // whether the session is authed or not
-	int account_id, login_id1, login_id2, sex;
+	uint32 account_id, login_id1, login_id2;
+	int sex;
 	int found_char[MAX_CHARS]; // ids of chars on this account
 	char email[40]; // e-mail (default: a@a.com) by [Yor]
 	time_t expiration_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
@@ -202,7 +203,7 @@ struct char_session_data {
 
 
 struct mmo_charstatus;
-DBMap* char_get_chardb(); // int char_id -> struct mmo_charstatus*
+DBMap* char_get_chardb(); // uint32 char_id -> struct mmo_charstatus*
 
 //Custom limits for the fame lists. [Skotlex]
 extern int fame_list_size_chemist;
@@ -222,38 +223,38 @@ int char_lan_subnetcheck(uint32 ip);
 int char_count_users(void);
 DBData char_create_online_data(DBKey key, va_list args);
 int char_db_setoffline(DBKey key, DBData *data, va_list ap);
-void char_set_char_online(int map_id, int char_id, int account_id);
-void char_set_char_offline(int char_id, int account_id);
+void char_set_char_online(int map_id, uint32 char_id, uint32 account_id);
+void char_set_char_offline(uint32 char_id, uint32 account_id);
 void char_set_all_offline(int id);
-void char_disconnect_player(int account_id);
+void char_disconnect_player(uint32 account_id);
 int char_chardb_waiting_disconnect(int tid, unsigned int tick, int id, intptr_t data);
 
 int char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p);
-int char_mmo_char_tosql(int char_id, struct mmo_charstatus* p);
-int char_mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything);
+int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p);
+int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_everything);
 int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf);
-int char_delete_char_sql(int char_id);
-int char_rename_char_sql(struct char_session_data *sd, int char_id);
+int char_delete_char_sql(uint32 char_id);
+int char_rename_char_sql(struct char_session_data *sd, uint32 char_id);
 int char_divorce_char_sql(int partner_id1, int partner_id2);
 int char_memitemdata_to_sql(const struct item items[], int max, int id, int tableswitch);
 
-void disconnect_player(int account_id);
+void disconnect_player(uint32 account_id);
 
 int char_married(int pl1,int pl2);
 int char_child(int parent_id, int child_id);
 int char_family(int pl1,int pl2,int pl3);
 
-int char_request_accreg2(int account_id, int char_id);
+int char_request_accreg2(uint32 account_id, uint32 char_id);
 int char_save_accreg2(unsigned char* buf, int len);
 
 //extern bool char_gm_read;
-int char_loadName(int char_id, char* name);
+int char_loadName(uint32 char_id, char* name);
 int char_check_char_name(char * name, char * esc_name);
 
 void char_pincode_decrypt( uint32 userSeed, char* pin );
 int char_pincode_compare( int fd, struct char_session_data* sd, char* pin );
 void char_auth_ok(int fd, struct char_session_data *sd);
-void char_set_charselect(int account_id);
+void char_set_charselect(uint32 account_id);
 void char_read_fame_list(void);
 
 #if PACKETVER >= 20120307

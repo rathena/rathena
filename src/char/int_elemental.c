@@ -2,18 +2,14 @@
 // For more information, see LICENCE in the main folder
 
 #include "../common/mmo.h"
-#include "../common/malloc.h"
 #include "../common/strlib.h"
 #include "../common/showmsg.h"
 #include "../common/socket.h"
-#include "../common/utils.h"
 #include "../common/sql.h"
 #include "char.h"
 #include "inter.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 bool mapif_elemental_save(struct s_elemental* ele) {
 	bool flag = true;
@@ -42,7 +38,7 @@ bool mapif_elemental_save(struct s_elemental* ele) {
 	return flag;
 }
 
-bool mapif_elemental_load(int ele_id, int char_id, struct s_elemental *ele) {
+bool mapif_elemental_load(int ele_id, uint32 char_id, struct s_elemental *ele) {
 	char* data;
 
 	memset(ele, 0, sizeof(struct s_elemental));
@@ -108,7 +104,7 @@ static void mapif_parse_elemental_create(int fd, struct s_elemental* ele) {
 	mapif_elemental_send(fd, ele, result);
 }
 
-static void mapif_parse_elemental_load(int fd, int ele_id, int char_id) {
+static void mapif_parse_elemental_load(int fd, int ele_id, uint32 char_id) {
 	struct s_elemental ele;
 	bool result = mapif_elemental_load(ele_id, char_id, &ele);
 	mapif_elemental_send(fd, &ele, result);

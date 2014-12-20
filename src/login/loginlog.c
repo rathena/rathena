@@ -12,7 +12,7 @@
 #include "../common/socket.h"
 #include "../common/sql.h"
 #include "../common/strlib.h"
-#include <string.h>
+#include "../common/showmsg.h"
 #include <stdlib.h> // exit
 
 // global sql settings (in ipban_sql.c)
@@ -188,6 +188,8 @@ bool loginlog_init(void) {
 
 	if( SQL_ERROR == Sql_Connect(sql_handle, username, password, hostname, port, database) )
 	{
+        ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
+                        username, password, hostname, port, database);
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(sql_handle);
 		exit(EXIT_FAILURE);

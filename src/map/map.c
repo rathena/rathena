@@ -23,41 +23,24 @@
 #include "intif.h"
 #include "npc.h"
 #include "pc.h"
-#include "status.h"
-#include "mob.h"
-#include "npc.h" // npc_setcells(), npc_unsetcells()
 #include "chat.h"
-#include "itemdb.h"
 #include "storage.h"
-#include "skill.h"
 #include "trade.h"
 #include "party.h"
-#include "unit.h"
-#include "battle.h"
 #include "battleground.h"
 #include "quest.h"
-#include "script.h"
 #include "mapreg.h"
-#include "guild.h"
 #include "pet.h"
 #include "homunculus.h"
 #include "instance.h"
 #include "mercenary.h"
 #include "elemental.h"
-#include "atcommand.h"
-#include "log.h"
-#include "mail.h"
 #include "cashshop.h"
 #include "channel.h"
-#include "vending.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
 #include <math.h>
 #ifndef _WIN32
-#include <unistd.h>
 #endif
 
 char default_codepage[32] = "";
@@ -100,8 +83,8 @@ static DBMap* pc_db=NULL; /// int id -> struct map_session_data*
 static DBMap* mobid_db=NULL; /// int id -> struct mob_data*
 static DBMap* bossid_db=NULL; /// int id -> struct mob_data* (MVP db)
 static DBMap* map_db=NULL; /// unsigned int mapindex -> struct map_data*
-static DBMap* nick_db=NULL; /// int char_id -> struct charid2nick* (requested names of offline characters)
-static DBMap* charid_db=NULL; /// int char_id -> struct map_session_data*
+static DBMap* nick_db=NULL; /// uint32 char_id -> struct charid2nick* (requested names of offline characters)
+static DBMap* charid_db=NULL; /// uint32 char_id -> struct map_session_data*
 static DBMap* regen_db=NULL; /// int id -> struct block_list* (status_natural_heal processing)
 static DBMap* map_msg_db=NULL;
 
@@ -124,7 +107,7 @@ int map_port=0;
 
 int autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
 int minsave_interval = 100;
-int save_settings = 0xFFFF;
+unsigned char save_settings = CHARSAVE_ALL;
 int agit_flag = 0;
 int agit2_flag = 0;
 int night_flag = 0; // 0=day, 1=night [Yor]
@@ -3596,7 +3579,7 @@ int map_config_read(char *cfgName)
 			if (minsave_interval < 1)
 				minsave_interval = 1;
 		} else if (strcmpi(w1, "save_settings") == 0)
-			save_settings = atoi(w2);
+			save_settings = cap_value(atoi(w2),CHARSAVE_NONE,CHARSAVE_ALL);
 		else if (strcmpi(w1, "motd_txt") == 0)
 			strcpy(motd_txt, w2);
 		else if (strcmpi(w1, "help_txt") == 0)
@@ -3788,8 +3771,13 @@ int map_sql_init(void)
 	mmysql_handle = Sql_Malloc();
 
 	ShowInfo("Connecting to the Map DB Server....\n");
-	if( SQL_ERROR == Sql_Connect(mmysql_handle, map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db) )
-		exit(EXIT_FAILURE);
+	if( SQL_ERROR == Sql_Connect(mmysql_handle, map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db) ){
+            ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
+                        map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db);
+            Sql_ShowDebug(mmysql_handle);
+            Sql_Free(mmysql_handle);
+            exit(EXIT_FAILURE);
+        }
 	ShowStatus("Connect success! (Map Server Connection)\n");
 
 	if( strlen(default_codepage) > 0 )
@@ -3822,8 +3810,13 @@ int log_sql_init(void)
 	logmysql_handle = Sql_Malloc();
 
 	ShowInfo(""CL_WHITE"[SQL]"CL_RESET": Connecting to the Log Database "CL_WHITE"%s"CL_RESET" At "CL_WHITE"%s"CL_RESET"...\n",log_db_db,log_db_ip);
-	if ( SQL_ERROR == Sql_Connect(logmysql_handle, log_db_id, log_db_pw, log_db_ip, log_db_port, log_db_db) )
+	if ( SQL_ERROR == Sql_Connect(logmysql_handle, log_db_id, log_db_pw, log_db_ip, log_db_port, log_db_db) ){
+		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
+			log_db_id, log_db_pw, log_db_ip, log_db_port, log_db_db);
+		Sql_ShowDebug(logmysql_handle);
+		Sql_Free(logmysql_handle);
 		exit(EXIT_FAILURE);
+	}
 	ShowStatus(""CL_WHITE"[SQL]"CL_RESET": Successfully '"CL_GREEN"connected"CL_RESET"' to Database '"CL_WHITE"%s"CL_RESET"'.\n", log_db_db);
 
 	if( strlen(default_codepage) > 0 )

@@ -10,11 +10,7 @@
 #include "itemdb.h"
 #include "clif.h"
 #include "pc.h"
-#include "log.h"
 #include "intif.h"
-
-#include <time.h>
-#include <string.h>
 
 void mail_clear(struct map_session_data *sd)
 {

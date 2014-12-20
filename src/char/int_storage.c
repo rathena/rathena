@@ -2,7 +2,6 @@
 // For more information, see LICENCE in the main folder
 
 #include "../common/mmo.h"
-#include "../common/malloc.h"
 #include "../common/showmsg.h"
 #include "../common/socket.h"
 #include "../common/strlib.h" // StringBuf
@@ -10,8 +9,6 @@
 #include "char.h"
 #include "inter.h"
 
-#include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
 
 
@@ -25,7 +22,7 @@ int storage_tosql(int account_id, struct storage_data* p)
 }
 
 /// Load storage data to mem
-int storage_fromsql(int account_id, struct storage_data* p)
+int storage_fromsql(uint32 account_id, struct storage_data* p)
 {
 	StringBuf buf;
 	int i, j;
@@ -140,7 +137,7 @@ void inter_storage_sql_final(void)
 }
 
 // Delete char storage
-int inter_storage_delete(int account_id)
+int inter_storage_delete(uint32 account_id)
 {
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id`='%d'", schema_config.storage_db, account_id) )
 		Sql_ShowDebug(sql_handle);
@@ -156,7 +153,7 @@ int inter_guild_storage_delete(int guild_id)
 //---------------------------------------------------------
 // packet from map server
 
-int mapif_load_guild_storage(int fd,int account_id,int guild_id, char flag)
+int mapif_load_guild_storage(int fd,uint32 account_id,int guild_id, char flag)
 {
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `guild_id` FROM `%s` WHERE `guild_id`='%d'", schema_config.guild_db, guild_id) )
 		Sql_ShowDebug(sql_handle);
@@ -182,7 +179,7 @@ int mapif_load_guild_storage(int fd,int account_id,int guild_id, char flag)
 	WFIFOSET(fd, 12);
 	return 0;
 }
-int mapif_save_guild_storage_ack(int fd,int account_id,int guild_id,int fail)
+int mapif_save_guild_storage_ack(int fd,uint32 account_id,int guild_id,int fail)
 {
 	WFIFOHEAD(fd,11);
 	WFIFOW(fd,0)=0x3819;
@@ -255,7 +252,7 @@ int mapif_parse_itembound_retrieve(int fd)
 	bool found = false;
 	struct item items[MAX_INVENTORY];
 	unsigned int bound_item[MAX_INVENTORY] = { 0 };
-	int char_id = RFIFOL(fd,2);
+	uint32 char_id = RFIFOL(fd,2);
 	int aid = RFIFOL(fd,6);
 	int guild_id = RFIFOW(fd,10);
 

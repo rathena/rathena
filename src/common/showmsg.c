@@ -6,13 +6,8 @@
 #include "showmsg.h"
 #include "core.h" //[Ind] - For SERVER_TYPE
 
-#include <stdio.h>
-#include <string.h>
-#include <stdarg.h>
 #include <time.h>
 #include <stdlib.h> // atexit
-
-#include "libconfig.h"
 
 #ifdef WIN32
 	#include "../common/winapi.h"

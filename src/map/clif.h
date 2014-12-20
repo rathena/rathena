@@ -608,8 +608,8 @@ void clif_party_info(struct party_data* p, struct map_session_data *sd);
 void clif_party_invite(struct map_session_data *sd,struct map_session_data *tsd);
 void clif_party_inviteack(struct map_session_data* sd, const char* nick, int result);
 void clif_party_option(struct party_data *p,struct map_session_data *sd,int flag);
-void clif_party_withdraw(struct party_data* p, struct map_session_data* sd, int account_id, const char* name, int flag);
-void clif_party_message(struct party_data* p, int account_id, const char* mes, int len);
+void clif_party_withdraw(struct party_data* p, struct map_session_data* sd, uint32 account_id, const char* name, int flag);
+void clif_party_message(struct party_data* p, uint32 account_id, const char* mes, int len);
 void clif_party_xy(struct map_session_data *sd);
 void clif_party_xy_single(int fd, struct map_session_data *sd);
 void clif_party_hp(struct map_session_data *sd);
@@ -628,14 +628,14 @@ void clif_guild_memberlogin_notice(struct guild *g,int idx,int flag);
 void clif_guild_invite(struct map_session_data *sd,struct guild *g);
 void clif_guild_inviteack(struct map_session_data *sd,int flag);
 void clif_guild_leave(struct map_session_data *sd,const char *name,const char *mes);
-void clif_guild_expulsion(struct map_session_data* sd, const char* name, const char* mes, int account_id);
+void clif_guild_expulsion(struct map_session_data* sd, const char* name, const char* mes, uint32 account_id);
 void clif_guild_positionchanged(struct guild *g,int idx);
 void clif_guild_memberpositionchanged(struct guild *g,int idx);
 void clif_guild_emblem(struct map_session_data *sd,struct guild *g);
 void clif_guild_emblem_area(struct block_list* bl);
 void clif_guild_notice(struct map_session_data* sd, struct guild* g);
-void clif_guild_message(struct guild *g,int account_id,const char *mes,int len);
-void clif_guild_reqalliance(struct map_session_data *sd,int account_id,const char *name);
+void clif_guild_message(struct guild *g,uint32 account_id,const char *mes,int len);
+void clif_guild_reqalliance(struct map_session_data *sd,uint32 account_id,const char *name);
 void clif_guild_allianceack(struct map_session_data *sd,int flag);
 void clif_guild_delalliance(struct map_session_data *sd,int guild_id,int flag);
 void clif_guild_oppositionack(struct map_session_data *sd,int flag);
@@ -887,7 +887,7 @@ void clif_crimson_marker(struct map_session_data *sd, struct block_list *bl, boo
 void clif_showscript(struct block_list* bl, const char* message);
 void clif_party_leaderchanged(struct map_session_data *sd, int prev_leader_aid, int new_leader_aid);
 
-void clif_account_name(int fd, int account_id, const char* accname);
+void clif_account_name(int fd, uint32 account_id, const char* accname);
 
 //void clif_broadcast_obtain_special_item(); ///TODO!
 

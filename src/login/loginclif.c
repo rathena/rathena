@@ -22,9 +22,7 @@
 #include "loginclif.h"
 #include "loginchrif.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 /**
  * Transmit auth result to client.

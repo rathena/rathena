@@ -5,21 +5,14 @@
 
 #include "../common/timer.h"
 #include "../common/malloc.h"
-#include "../common/nullpo.h"
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
 
 #include "mob.h" // struct mob_data
-#include "npc.h" // struct npc_data
 #include "pc.h" // struct map_session_data
-#include "script.h" // set_var()
 
 #include "../../3rdparty/pcre/include/pcre.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
 
 /**
  *  Written by MouseJstr in a vision... (2/21/2005)

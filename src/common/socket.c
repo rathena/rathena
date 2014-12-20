@@ -7,25 +7,18 @@
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
-#include "../config/core.h"
 #include "socket.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <sys/types.h>
 
 #ifdef WIN32
 	#include "../common/winapi.h"
 #else
 	#include <errno.h>
-	#include <sys/socket.h>
-	#include <netinet/in.h>
-	#include <netinet/tcp.h>
+#include <netinet/tcp.h>
 	#include <net/if.h>
 	#include <unistd.h>
-	#include <sys/time.h>
-	#include <sys/ioctl.h>
+#include <sys/ioctl.h>
 	#include <netdb.h>
 	#include <arpa/inet.h>
 

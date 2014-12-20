@@ -10,9 +10,7 @@
 #include "pc.h"
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <time.h>
 
 //global var (extern)
 struct duel duel_list[MAX_DUEL]; //list of current duel

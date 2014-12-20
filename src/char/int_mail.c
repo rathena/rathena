@@ -2,21 +2,17 @@
 // For more information, see LICENCE in the main folder
 
 #include "../common/mmo.h"
-#include "../common/malloc.h"
 #include "../common/showmsg.h"
 #include "../common/socket.h"
 #include "../common/strlib.h"
 #include "../common/sql.h"
-#include "../common/timer.h"
 #include "char.h"
 #include "char_mapif.h"
 #include "inter.h"
 
-#include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
 
-static int mail_fromsql(int char_id, struct mail_data* md)
+static int mail_fromsql(uint32 char_id, struct mail_data* md)
 {
 	int i, j;
 	struct mail_message *msg;
@@ -200,7 +196,7 @@ static bool mail_loadmessage(int mail_id, struct mail_message* msg)
 /*==========================================
  * Client Inbox Request
  *------------------------------------------*/
-static void mapif_Mail_sendinbox(int fd, int char_id, unsigned char flag)
+static void mapif_Mail_sendinbox(int fd, uint32 char_id, unsigned char flag)
 {
 	struct mail_data md;
 	mail_fromsql(char_id, &md);
@@ -256,7 +252,7 @@ static bool mail_DeleteAttach(int mail_id)
 	return true;
 }
 
-static void mapif_Mail_getattach(int fd, int char_id, int mail_id)
+static void mapif_Mail_getattach(int fd, uint32 char_id, int mail_id)
 {
 	struct mail_message msg;
 
@@ -292,7 +288,7 @@ static void mapif_parse_Mail_getattach(int fd)
 /*==========================================
  * Delete Mail
  *------------------------------------------*/
-static void mapif_Mail_delete(int fd, int char_id, int mail_id)
+static void mapif_Mail_delete(int fd, uint32 char_id, int mail_id)
 {
 	bool failed = false;
 	if ( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", schema_config.mail_db, mail_id) )
@@ -335,7 +331,7 @@ void mapif_Mail_new(struct mail_message *msg)
 /*==========================================
  * Return Mail
  *------------------------------------------*/
-static void mapif_Mail_return(int fd, int char_id, int mail_id)
+static void mapif_Mail_return(int fd, uint32 char_id, int mail_id)
 {
 	struct mail_message msg;
 	int new_mail = 0;
@@ -399,7 +395,7 @@ static void mapif_parse_Mail_send(int fd)
 {
 	struct mail_message msg;
 	char esc_name[NAME_LENGTH*2+1];
-	int account_id = 0;
+	uint32 account_id = 0;
 
 	if(RFIFOW(fd,2) != 8 + sizeof(struct mail_message))
 		return;

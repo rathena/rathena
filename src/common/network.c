@@ -11,26 +11,6 @@
 #define _GNU_SOURCE
 //#endif
 
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-#include <errno.h>
-
-#include <sys/types.h>
-#include <sys/fcntl.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <netinet/tcp.h>
-#include <arpa/inet.h>
-
-
-#include "../common/cbasetypes.h"
-#include "../common/showmsg.h"
-#include "../common/timer.h"
-#include "../common/evdp.h"
-#include "../common/netbuffer.h"
-
-#include "../common/network.h"
 
 #define ENABLE_IPV6
 #define HAVE_ACCEPT4
@@ -362,7 +342,7 @@ int32 network_addlistener(bool v6,  const char *addr,  uint16 port){
 		s->addr.v6.sin6_family = AF_INET6;
 		s->addr.v6.sin6_port = htons(port);
 		if(inet_pton(AF_INET6, addr, &s->addr.v6.sin6_addr) != 1){
-			ShowError("network_addlistener(%c, '%s', %u): failed to parse the given IPV6 address.\n", (v6==true?'t':'f'), addr, port);
+			ShowError("network_addlistener(t, '%s', %u): failed to parse the given IPV6 address.\n", addr, port);
 			close(fd);
 			return -1;
 		}
@@ -387,14 +367,14 @@ int32 network_addlistener(bool v6,  const char *addr,  uint16 port){
 #ifdef ENABLE_IPV6
 	if(v6 == true){
 		if( bind(fd, (struct sockaddr*)&s->addr.v6,  sizeof(s->addr.v6)) == -1) {
-			ShowError("network_addlistener(%c, '%s', %u): bind failed (errno: %u / %s)\n", (v6==true?'t':'f'), addr, port, errno, strerror(errno));
+			ShowError("network_addlistener(t, '%s', %u): bind failed (errno: %u / %s)\n", addr, port, errno, strerror(errno));
 			close(fd);
 			return -1;
 		}
 	}else{
 #endif
 		if( bind(fd, (struct sockaddr*)&s->addr.v4,  sizeof(s->addr.v4)) == -1) {
-            ShowError("network_addlistener(%c, '%s', %u): bind failed (errno: %u / %s)\n", (v6==true?'t':'f'), addr, port, errno, strerror(errno));
+            ShowError("network_addlistener(f, '%s', %u): bind failed (errno: %u / %s)\n", addr, port, errno, strerror(errno));
 			close(fd);
 			return -1;
 		}		
@@ -548,7 +528,7 @@ int32 network_connect(bool v6,
 			ip6.sin6_port = htons(from_port);
 			
 			if(inet_pton(AF_INET6, from_addr, &ip6.sin6_addr) != 1){
-				ShowError("network_connect(%c, '%s', %u...): cannot parse originating (from) IPV6 address (errno: %u / %s)\n", (v6==true?'t':'f'), addr, port, errno, strerror(errno));
+				ShowError("network_connect(t, '%s', %u...): cannot parse originating (from) IPV6 address (errno: %u / %s)\n", addr, port, errno, strerror(errno));
 				close(fd);
 				return -1;
  			}
@@ -584,7 +564,7 @@ int32 network_connect(bool v6,
 		ip6.sin6_port = htons(port);
 		
 		if(inet_pton(AF_INET6, addr, &ip6.sin6_addr) != 1){
-			 ShowError("network_connect(%c, '%s', %u...): cannot parse destination IPV6 address (errno: %u / %s)\n", (v6==true?'t':'f'), addr, port, errno, strerror(errno));
+			 ShowError("network_connect(t, '%s', %u...): cannot parse destination IPV6 address (errno: %u / %s)\n", addr, port, errno, strerror(errno));
 			 close(fd);
 			 return -1;
 		}

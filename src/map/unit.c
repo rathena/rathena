@@ -12,34 +12,22 @@
 #include "map.h"
 #include "path.h"
 #include "pc.h"
-#include "mob.h"
 #include "pet.h"
 #include "homunculus.h"
-#include "instance.h"
 #include "mercenary.h"
 #include "elemental.h"
-#include "skill.h"
 #include "channel.h"
-#include "clif.h"
 #include "duel.h"
-#include "npc.h"
-#include "guild.h"
-#include "status.h"
-#include "unit.h"
-#include "battle.h"
 #include "battleground.h"
 #include "chat.h"
 #include "trade.h"
-#include "vending.h"
 #include "party.h"
 #include "intif.h"
-#include "chrif.h"
-#include "script.h"
 #include "storage.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 
 // Directions values
 // 1 0 7

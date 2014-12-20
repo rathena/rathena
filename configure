@@ -2177,8 +2177,6 @@ ac_config_files="$ac_config_files src/char/Makefile src/login/Makefile"
 
 ac_config_files="$ac_config_files src/map/Makefile src/tool/Makefile"
 
-ac_config_files="$ac_config_files src/test/Makefile"
-
 
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
@@ -8115,7 +8113,6 @@ do
     "src/login/Makefile") CONFIG_FILES="$CONFIG_FILES src/login/Makefile" ;;
     "src/map/Makefile") CONFIG_FILES="$CONFIG_FILES src/map/Makefile" ;;
     "src/tool/Makefile") CONFIG_FILES="$CONFIG_FILES src/tool/Makefile" ;;
-    "src/test/Makefile") CONFIG_FILES="$CONFIG_FILES src/test/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac

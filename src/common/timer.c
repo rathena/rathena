@@ -9,16 +9,12 @@
 #include "../common/nullpo.h"
 #include "timer.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 
 #ifdef WIN32
 #include "../common/winapi.h" // GetTickCount()
 #else
-#include <unistd.h>
-#include <sys/time.h> // struct timeval, gettimeofday()
 #endif
 
 // If the server can't handle processing thousands of monsters

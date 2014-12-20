@@ -19,27 +19,13 @@
 #include "intif.h"
 #include "pc.h"
 #include "pet.h"
-#include "status.h"
-#include "mob.h"
 #include "homunculus.h"
 #include "mercenary.h"
 #include "elemental.h"
-#include "guild.h"
-#include "itemdb.h"
-#include "skill.h"
-#include "battle.h"
 #include "party.h"
-#include "npc.h"
-#include "log.h"
-#include "script.h"
-#include "atcommand.h"
-#include "date.h"
 #include "quest.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <stdarg.h>
-#include <string.h>
 #include <math.h>
 
 #define ACTIVE_AI_RANGE 2	//Distance added on top of 'AREA_SIZE' at which mobs enter active AI mode.
@@ -1971,7 +1957,8 @@ int mob_respawn(int tid, unsigned int tick, int id, intptr_t data)
 
 void mob_log_damage(struct mob_data *md, struct block_list *src, int damage)
 {
-	int char_id = 0, flag = MDLF_NORMAL;
+	uint32 char_id = 0;
+	int flag = MDLF_NORMAL;
 
 	if( damage < 0 )
 		return; //Do nothing for absorbed damage.

@@ -9,7 +9,6 @@ AC_CONFIG_FILES([Makefile src/common/Makefile])
 AC_CONFIG_FILES([3rdparty/mt19937ar/Makefile 3rdparty/libconfig/Makefile])
 AC_CONFIG_FILES([src/char/Makefile src/login/Makefile])
 AC_CONFIG_FILES([src/map/Makefile src/tool/Makefile])
-AC_CONFIG_FILES([src/test/Makefile])
 
 AC_GNU_SOURCE
 

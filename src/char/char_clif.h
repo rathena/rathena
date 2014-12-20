@@ -29,9 +29,9 @@ void chclif_mmo_send082d(int fd, struct char_session_data* sd);
 void chclif_mmo_send099d(int fd, struct char_session_data *sd);
 void chclif_mmo_char_send(int fd, struct char_session_data* sd);
 void chclif_send_auth_result(int fd,char result);
-void chclif_char_delete2_ack(int fd, int char_id, uint32 result, time_t delete_date);
-void chclif_char_delete2_accept_ack(int fd, int char_id, uint32 result);
-void chclif_char_delete2_cancel_ack(int fd, int char_id, uint32 result);
+void chclif_char_delete2_ack(int fd, uint32 char_id, uint32 result, time_t delete_date);
+void chclif_char_delete2_accept_ack(int fd, uint32 char_id, uint32 result);
+void chclif_char_delete2_cancel_ack(int fd, uint32 char_id, uint32 result);
 
 int chclif_parse_char_delete2_req(int fd, struct char_session_data* sd);
 int chclif_parse_char_delete2_accept(int fd, struct char_session_data* sd);
