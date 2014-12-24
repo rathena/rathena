@@ -70,7 +70,7 @@ char vendings_db[32] = "vendings";
 char vending_items_db[32] = "vending_items";
 
 // log database
-char log_db_ip[32] = "127.0.0.1";
+char log_db_ip[64] = "127.0.0.1";
 int log_db_port = 3306;
 char log_db_id[32] = "ragnarok";
 char log_db_pw[32] = "ragnarok";
