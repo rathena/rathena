@@ -13723,8 +13723,10 @@ BUILDIN_FUNC(movenpc)
 	x = script_getnum(st,3);
 	y = script_getnum(st,4);
 
-	if ((nd = npc_name2id(npc)) == NULL)
+	if ((nd = npc_name2id(npc)) == NULL){
+		ShowError("script: movenpc: NPC with ID '%s' was not found!\n", npc );
 		return -1;
+	}
 
 	if (script_hasdata(st,5))
 		nd->ud.dir = script_getnum(st,5) % 8;
