@@ -9642,7 +9642,7 @@
 20161,C_Army_Cap,Costume Army Cap,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,48,{},{},{}
 20162,C_Fleece_Hat,Costume Fleece Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,7168,,1,1,,{/*TODO: View ID*/},{},{}
 20163,C_Fleece_Hat,Costume Fleece Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,7168,,1,1,,{/*TODO: View ID*/},{},{}
-20177,C_Drooping_Dorasuke,Costume Drooping Dorasuke,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,,{/*TODO: View ID*/},{},{}
+20177,C_Drooping_Dorasuke,Costume Drooping Dorasuke,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,1290,{},{},{}
 20179,C_Monkey_Coat_Hat,Costume Monkey Coat Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,858,{},{},{}
 20180,C_Western_Grace,Costume Western Grace,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,32,{},{},{}
 20181,C_Mystic_Rose,Costume Mystic Rose,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,198,{},{},{}
