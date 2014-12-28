@@ -9630,8 +9630,8 @@
 20125,C_Mini_Glasses,Costume Mini Glasses,4,0,,0,,,,0,0xFFFFFFFF,63,2,2048,,1,1,47,{},{},{}
 20135,C_12_Anniversary_Crown_Of_Saint,Costume 12 Anniversary Crown of Saint,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,1117,{},{},{}
 20136,C_12_Anniversary_Elf_Ears,Costume 12 Anniversary Elf Ears,4,0,,0,,,,0,0xFFFFFFFF,63,2,2048,,1,1,875,{},{},{}
-20139,C_Horse_Hairpin,Costume Horse Hairpin,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,,{/*TODO: View ID*/},{},{}
-20140,C_Horse_Hairpin,Costume Horse Hairpin,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,,{/*TODO: View ID*/},{},{}
+20139,C_Horse_Hairpin,Costume Horse Hairpin,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,1271,{},{},{}
+20140,C_Horse_Hairpin,Costume Horse Hairpin,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,1272,{},{},{}
 20145,C_Robo_Eye,Costume Robo Eye,4,0,,0,,,,0,0xFFFFFFFF,63,2,2048,,1,1,345,{},{},{}
 20146,C_Angel_Of_Ghost,Costume Angel of Ghost,4,0,,0,,,,0,0xFFFFFFFF,63,2,2048,,1,1,394,{},{},{}
 20147,C_Bell_Of_Piegon,Costume Bell of Piegon,4,0,,0,,,,0,0xFFFFFFFF,63,2,2048,,1,1,1034,{},{},{}
@@ -9642,7 +9642,7 @@
 20161,C_Army_Cap,Costume Army Cap,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,48,{},{},{}
 20162,C_Fleece_Hat,Costume Fleece Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,7168,,1,1,,{/*TODO: View ID*/},{},{}
 20163,C_Fleece_Hat,Costume Fleece Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,7168,,1,1,,{/*TODO: View ID*/},{},{}
-20177,C_Drooping_Dorasuke,Costume Drooping Dorasuke,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,1290,{},{},{}
+20177,C_Drooping_Dorasuke,Costume Drooping Dorasuke,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,,{/*TODO: View ID*/},{},{}
 20179,C_Monkey_Coat_Hat,Costume Monkey Coat Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,858,{},{},{}
 20180,C_Western_Grace,Costume Western Grace,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,32,{},{},{}
 20181,C_Mystic_Rose,Costume Mystic Rose,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,198,{},{},{}
