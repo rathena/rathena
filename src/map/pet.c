@@ -463,7 +463,7 @@ int pet_data_init(struct map_session_data *sd, struct s_pet *pet)
 		run_script(pet_db[i].pet_script,0,sd->bl.id,0);
 
 	if( pd->petDB ) {
-		if( pd->petDB->equip_script )
+		if( pd->petDB->pet_loyal_script )
 			status_calc_pc(sd,SCO_NONE);
 
 		if( battle_config.pet_hungry_delay_rate != 100 )
@@ -1372,7 +1372,6 @@ int pet_skill_bonus_timer(int tid, unsigned int tick, int id, intptr_t data)
 	if(pd->bonus->timer != tid) {
 		ShowError("pet_skill_bonus_timer %d != %d\n",pd->bonus->timer,tid);
 		pd->bonus->timer = INVALID_TIMER;
-
 		return 0;
 	}
 
@@ -1385,7 +1384,6 @@ int pet_skill_bonus_timer(int tid, unsigned int tick, int id, intptr_t data)
 		timer = pd->bonus->duration*1000;	// the duration for pet bonuses to be in effect
 	} else { //Lost pet...
 		pd->bonus->timer = INVALID_TIMER;
-
 		return 0;
 	}
 
@@ -1396,7 +1394,6 @@ int pet_skill_bonus_timer(int tid, unsigned int tick, int id, intptr_t data)
 
 	// wait for the next timer
 	pd->bonus->timer=add_timer(tick+timer,pet_skill_bonus_timer,sd->bl.id,0);
-
 	return 0;
 }
 
@@ -1421,7 +1418,6 @@ int pet_recovery_timer(int tid, unsigned int tick, int id, intptr_t data)
 
 	if(pd->recovery->timer != tid) {
 		ShowError("pet_recovery_timer %d != %d\n",pd->recovery->timer,tid);
-
 		return 0;
 	}
 
@@ -1434,7 +1430,6 @@ int pet_recovery_timer(int tid, unsigned int tick, int id, intptr_t data)
 	}
 
 	pd->recovery->timer = INVALID_TIMER;
-
 	return 0;
 }
 
@@ -1458,7 +1453,6 @@ int pet_heal_timer(int tid, unsigned int tick, int id, intptr_t data)
 
 	if(pd->s_skill->timer != tid) {
 		ShowError("pet_heal_timer %d != %d\n",pd->s_skill->timer,tid);
-
 		return 0;
 	}
 
@@ -1470,7 +1464,6 @@ int pet_heal_timer(int tid, unsigned int tick, int id, intptr_t data)
 		(rate = (pd->ud.skilltimer != INVALID_TIMER)) //Another skill is in effect
 	) {  //Wait (how long? 1 sec for every 10% of remaining)
 		pd->s_skill->timer=add_timer(gettick()+(rate>10?rate:10)*100,pet_heal_timer,sd->bl.id,0);
-
 		return 0;
 	}
 
@@ -1479,7 +1472,6 @@ int pet_heal_timer(int tid, unsigned int tick, int id, intptr_t data)
 	clif_skill_nodamage(&pd->bl,&sd->bl,AL_HEAL,pd->s_skill->lv,1);
 	status_heal(&sd->bl, pd->s_skill->lv,0, 0);
 	pd->s_skill->timer = add_timer(tick+pd->s_skill->delay*1000,pet_heal_timer,sd->bl.id,0);
-
 	return 0;
 }
 
@@ -1505,7 +1497,6 @@ int pet_skill_support_timer(int tid, unsigned int tick, int id, intptr_t data)
 
 	if(pd->s_skill->timer != tid) {
 		ShowError("pet_skill_support_timer %d != %d\n",pd->s_skill->timer,tid);
-
 		return 0;
 	}
 
@@ -1514,7 +1505,6 @@ int pet_skill_support_timer(int tid, unsigned int tick, int id, intptr_t data)
 	if (DIFF_TICK(pd->ud.canact_tick, tick) > 0) {
 		//Wait until the pet can act again.
 		pd->s_skill->timer=add_timer(pd->ud.canact_tick,pet_skill_support_timer,sd->bl.id,0);
-
 		return 0;
 	}
 
@@ -1535,7 +1525,6 @@ int pet_skill_support_timer(int tid, unsigned int tick, int id, intptr_t data)
 		unit_skilluse_pos(&pd->bl, sd->bl.x, sd->bl.y, pd->s_skill->id, pd->s_skill->lv);
 	else
 		unit_skilluse_id(&pd->bl, sd->bl.id, pd->s_skill->id, pd->s_skill->lv);
-
 	return 0;
 }
 
@@ -1544,7 +1533,10 @@ int pet_skill_support_timer(int tid, unsigned int tick, int id, intptr_t data)
  */
 void read_petdb()
 {
-	char* filename[] = {"pet_db.txt",DBIMPORT"/pet_db.txt"};
+	char* filename[] = {
+		DBPATH"pet_db.txt",
+		DBIMPORT"/pet_db.txt"
+	};
 	unsigned short nameid;
 	int i,j;
 
@@ -1555,9 +1547,9 @@ void read_petdb()
 			pet_db[j].pet_script = NULL;
 		}
 
-		if( pet_db[j].equip_script ) {
-			script_free_code(pet_db[j].equip_script);
-			pet_db[j].pet_script = NULL;
+		if( pet_db[j].pet_loyal_script ) {
+			script_free_code(pet_db[j].pet_loyal_script);
+			pet_db[j].pet_loyal_script = NULL;
 		}
 	}
 
@@ -1670,13 +1662,13 @@ void read_petdb()
 			pet_db[j].defence_attack_rate=atoi(str[18]);
 			pet_db[j].change_target_rate=atoi(str[19]);
 			pet_db[j].pet_script = NULL;
-			pet_db[j].equip_script = NULL;
+			pet_db[j].pet_loyal_script = NULL;
 
 			if( *str[20] )
 				pet_db[j].pet_script = parse_script(str[20], filename[i], lines, 0);
 
 			if( *str[21] )
-				pet_db[j].equip_script = parse_script(str[21], filename[i], lines, 0);
+				pet_db[j].pet_loyal_script = parse_script(str[21], filename[i], lines, 0);
 
 			j++;
 			entries++;
@@ -1723,9 +1715,9 @@ void do_final_pet(void)
 			pet_db[i].pet_script = NULL;
 		}
 
-		if( pet_db[i].equip_script ) {
-			script_free_code(pet_db[i].equip_script);
-			pet_db[i].equip_script = NULL;
+		if( pet_db[i].pet_loyal_script ) {
+			script_free_code(pet_db[i].pet_loyal_script);
+			pet_db[i].pet_loyal_script = NULL;
 		}
 	}
 
