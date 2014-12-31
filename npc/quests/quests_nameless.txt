@@ -11206,7 +11206,7 @@ prontera,140,304,5	script	Old Soldier	901,{
 						else if ((BaseLevel > 80) && (BaseLevel < 86)) getexp 36000,0;
 						else if ((BaseLevel > 85) && (BaseLevel < 91)) getexp 50000,0;
 						else if ((BaseLevel > 90) && (BaseLevel < 96)) getexp 80000,0;
-						else if ((BaseLevel > 95) && (BaseLevel < 160)) getexp 100000,0;
+						else if ((BaseLevel > 95) && (BaseLevel < MAX_LEVEL)) getexp 100000,0;
 						else getitem 617,1; //Old_Violet_Box
 					} else {
 						if (BaseLevel < 66) getitem 607,1; //Yggdrasilberry
@@ -11261,7 +11261,7 @@ prontera,140,304,5	script	Old Soldier	901,{
 				else if ((BaseLevel > 80) && (BaseLevel < 86)) getexp 15000,0;
 				else if ((BaseLevel > 85) && (BaseLevel < 91)) getexp 20000,0;
 				else if ((BaseLevel > 90) && (BaseLevel < 96)) getexp 40000,0;
-				else if ((BaseLevel > 95) && (BaseLevel < 160)) getexp 50000,0;
+				else if ((BaseLevel > 95) && (BaseLevel < MAX_LEVEL)) getexp 50000,0;
 				else getitem 617,1; //Old_Violet_Box
 			} else {
 				if (BaseLevel < 66) getitem 607,1; //Yggdrasilberry

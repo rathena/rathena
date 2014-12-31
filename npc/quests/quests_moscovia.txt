@@ -7049,7 +7049,7 @@ mosk_dun01,45,259,0	script	Wall#rus04	HIDDEN_NPC,{
 			else if (BaseLevel < 81) getexp 27629,6907;
 			else if (BaseLevel < 86) getexp 34041,8510;
 			else if (BaseLevel < 91) getexp 41846,10462;
-			else if (BaseLevel < 150) getexp 88814,22204;
+			else if (BaseLevel < MAX_LEVEL) getexp 88814,22204;
 			else getitem 617,1; //Old_Violet_Box
 		} else {
 			if (BaseLevel < 56) getexp 13000,3500;
@@ -7665,7 +7665,7 @@ moscovia,206,81,0	script	Vassili Grandpapa#rus07	4_M_05,{
 					else if (BaseLevel < 81) getexp 2000,0;
 					else if (BaseLevel < 86) getexp 4500,0;
 					else if (BaseLevel < 91) getexp 8500,0;
-					else if (BaseLevel < 150) getexp 30000,0;
+					else if (BaseLevel < MAX_LEVEL) getexp 30000,0;
 					else {
 						getitem 607,1; //Yggdrasilberry
 						getexp 30000,0;
@@ -7983,7 +7983,7 @@ moscovia,213,216,3	script	Ryubaba#rus08	4_F_RUSWOMAN2,{
 					else if (BaseLevel < 81) getexp 2000,0;
 					else if (BaseLevel < 86) getexp 4500,0;
 					else if (BaseLevel < 91) getexp 8500,0;
-					else if (BaseLevel < 150) getexp 30000,0;
+					else if (BaseLevel < MAX_LEVEL) getexp 30000,0;
 					else {
 						getitem 607,1; //Yggdrasilberry
 						getexp 30000,0;
