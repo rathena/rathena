@@ -3952,22 +3952,19 @@ ACMD_FUNC(mapinfo) {
 			,map[m_id].adjust.damage.other
 			,map[m_id].adjust.damage.caster);
 		clif_displaymessage(fd, atcmd_output);
-		if (map[m_id].skill_damage[0].skill_id) {
-			int j;
-
+		if (map[m_id].skill_damage.count) {
+			uint8 j;
 			clif_displaymessage(fd," > [Map Skill] Name : Player, Monster, Boss Monster, Other | Caster");
-			for (j = 0; j < MAX_MAP_SKILL_MODIFIER; j++) {
-				if (map[m_id].skill_damage[j].skill_id) {
-					sprintf(atcmd_output,"     %d. %s : %d%%, %d%%, %d%%, %d%% | %d"
-						,j+1
-						,skill_get_name(map[m_id].skill_damage[j].skill_id)
-						,map[m_id].skill_damage[j].pc
-						,map[m_id].skill_damage[j].mob
-						,map[m_id].skill_damage[j].boss
-						,map[m_id].skill_damage[j].other
-						,map[m_id].skill_damage[j].caster);
-					clif_displaymessage(fd,atcmd_output);
-				}
+			for (j = 0; j < map[m_id].skill_damage.count; j++) {
+				sprintf(atcmd_output,"     %d. %s : %d%%, %d%%, %d%%, %d%% | %d"
+					,j+1
+					,skill_get_name(map[m_id].skill_damage.entries[j]->skill_id)
+					,map[m_id].skill_damage.entries[j]->pc
+					,map[m_id].skill_damage.entries[j]->mob
+					,map[m_id].skill_damage.entries[j]->boss
+					,map[m_id].skill_damage.entries[j]->other
+					,map[m_id].skill_damage.entries[j]->caster);
+				clif_displaymessage(fd,atcmd_output);
 			}
 		}
 	}

@@ -20451,7 +20451,8 @@ static bool skill_parse_row_changematerialdb(char* split[], int columns, int cur
 }
 
 /**
- * Manage Skill Damage database [Lilith]
+ * Reads skill damage adjustment
+ * @author [Lilith]
  */
 #ifdef ADJUST_SKILL_DAMAGE
 static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
