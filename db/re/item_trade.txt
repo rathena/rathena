@@ -2633,3 +2633,13 @@
 21014,475,100	//Infinity_Two-Handed_Sword
 28105,475,100	//Infinity_Axe
 28703,475,100	//Infinity_Dagger
+6917,475,100		//Piece_Of_Soul_Chicken
+22842,475,100	//Sealed_Dracula_Scroll_II
+22846,475,100	//Sealed_Dracula_Card
+17521,475,100	//Three_Master_Package_V
+17522,475,100	//Three_Master_Package_V(10)
+22844,475,100	//Sealed_Dracula_Card_Album
+22845,475,100	//Sealed_Fortune_Egg
+20206,475,100	//C_Chicken_Hat
+20210,475,100	//C_Chicken_Hat
+20211,475,100	//C_Chicken_Hat
