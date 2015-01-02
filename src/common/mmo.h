@@ -798,7 +798,7 @@ enum bound_type {
 	BOUND_CHAR, /// 4 - Character Bound
 	BOUND_MAX,
 
-	//BOUND_ONEQUIP = 1, //! TODO
+	BOUND_ONEQUIP = 1, ///< Show notification when item will be bound on equip
 	BOUND_DISPYELLOW = 2, /// Shows the item name in yellow color
 };
 

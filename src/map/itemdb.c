@@ -919,6 +919,7 @@ static bool itemdb_read_flag(char* fields[], int columns, int current) {
 #ifdef ENABLE_ITEM_GUID
 	if (flag&4 && itemdb_isstackable2(id)) id->flag.guid = set ? 1 : 0;
 #endif
+	if (flag&8) id->flag.bindOnEquip = true;
 
 	return true;
 }

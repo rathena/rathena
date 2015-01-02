@@ -9166,6 +9166,12 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos)
 		clif_equipitemack(sd,n,0,0); //Fail
 		return false;
 	}
+
+	if (id->flag.bindOnEquip && !sd->status.inventory[n].bound) {
+		sd->status.inventory[n].bound = (char)battle_config.default_bind_on_equip;
+		clif_notify_bindOnEquip(sd,n);
+	}
+
 	if(pos == EQP_ACC) { //Accesories should only go in one of the two,
 		pos = req_pos&EQP_ACC;
 		if (pos == EQP_ACC) //User specified both slots..

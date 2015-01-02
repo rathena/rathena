@@ -416,6 +416,7 @@ struct item_data
 		unsigned dead_branch : 1; // As dead branch item. Logged at `branchlog` table and cannot be used at 'nobranch' mapflag [Cydh]
 		unsigned group : 1; // As item group container [Cydh]
 		unsigned guid : 1; // This item always be attached with GUID and make it as bound item! [Cydh]
+		bool bindOnEquip; ///< Set item as bound when equipped
 	} flag;
 	struct {// item stacking limitation
 		unsigned short amount;

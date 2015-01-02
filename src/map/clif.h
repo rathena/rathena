@@ -47,6 +47,7 @@ enum e_packet_ack {
 	ZC_PERSONAL_INFOMATION_CHN,
 	ZC_CLEAR_DIALOG,
 	ZC_C_MARKERINFO,
+	ZC_NOTIFY_BIND_ON_EQUIP,
 	//add other here
 	MAX_ACK_FUNC //auto upd len
 };
@@ -888,6 +889,7 @@ void clif_showscript(struct block_list* bl, const char* message);
 void clif_party_leaderchanged(struct map_session_data *sd, int prev_leader_aid, int new_leader_aid);
 
 void clif_account_name(int fd, uint32 account_id, const char* accname);
+void clif_notify_bindOnEquip(struct map_session_data *sd, int n);
 
 //void clif_broadcast_obtain_special_item(); ///TODO!
 
