@@ -704,6 +704,15 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 		char_id = atoi(data);
 		Sql_FreeResult(sql_handle);
 
+		// Prevent select a char while retrieving guild bound items
+		if (sd->flag&1) {
+			WFIFOHEAD(fd,3);
+			WFIFOW(fd,0) = 0x6c;
+			WFIFOB(fd,2) = 0; // rejected from server
+			WFIFOSET(fd,3);
+			return 1;
+		}
+
 		/* client doesn't let it get to this point if you're banned, so its a forged packet */
 		if( sd->found_char[slot] == char_id && sd->unban_time[slot] > time(NULL) ) {
 			WFIFOHEAD(fd,3);

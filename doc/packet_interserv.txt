@@ -2021,6 +2021,20 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	desc:
 		- Acknowledge the good deletion of the bound item
 
+0x3857
+	Type: IZ
+	Structure: <cmd>.W <size>.W <count>.W <guild_id>.W { <items>.?B }*MAX_INVENTORY
+	index: 0,2,4,6,8
+	len: variable: 8+items
+	parameter:
+		- cmd : packet identification (0x3856)
+		- size
+		- count : number of item retrieved
+		- guild_id
+		- items: retreived guild bound items
+	desc:
+		- Ask map-server to process the retreived guild bound items from expelled member
+
 0x3860
 	Type: IZ
 	Structure: <cmd>.W <size>.W <char_id>.L <quest>.?B

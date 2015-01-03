@@ -920,7 +920,7 @@ ACMD_FUNC(guildstorage)
 		return -1;
 	}
 
-	storage_guild_storageopen(sd);
+	gstorage_storageopen(sd);
 	clif_displaymessage(fd, msg_txt(sd,920)); // Guild storage opened.
 	return 0;
 }
@@ -5436,18 +5436,24 @@ ACMD_FUNC(cleargstorage)
 		return -1;
 	}
 
-	gstorage = guild2storage2(sd->status.guild_id);
+	gstorage = gstorage_get_storage(sd->status.guild_id);
 	if (gstorage == NULL) {// Doesn't have opened @gstorage yet, so we skip the deletion since *shouldn't* have any item there.
 		return -1;
 	}
 
-	j = gstorage->storage_amount;
-	gstorage->lock = 1; // Lock @gstorage: do not allow any item to be retrieved or stored from any guild member
-	for (i = 0; i < j; ++i) {
-		guild_storage_delitem(sd, gstorage, i, gstorage->items[i].amount);
+	if (gstorage->opened) {
+		struct map_session_data *tsd = map_charid2sd(gstorage->opened);
+		if (tsd)
+			gstorage_storageclose(tsd);
 	}
-	storage_guild_storageclose(sd);
-	gstorage->lock = 0; // Cleaning done, release lock
+
+	j = gstorage->storage_amount;
+	gstorage->locked = true; // Lock @gstorage: do not allow any item to be retrieved or stored from any guild member
+	for (i = 0; i < j; ++i) {
+		gstorage_delitem(sd, gstorage, i, gstorage->items[i].amount);
+	}
+	gstorage_storageclose(sd);
+	gstorage->locked = false; // Cleaning done, release lock
 
 	clif_displaymessage(fd, msg_txt(sd,1395)); // Your guild storage was cleaned.
 	return 0;

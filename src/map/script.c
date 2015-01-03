@@ -9232,7 +9232,7 @@ BUILDIN_FUNC(guildopenstorage)
 	if( sd == NULL )
 		return 0;
 
-	ret = storage_guild_storageopen(sd);
+	ret = gstorage_storageopen(sd);
 	script_pushint(st,ret);
 	return SCRIPT_CMD_SUCCESS;
 }

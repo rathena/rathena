@@ -60,7 +60,7 @@ int intif_guild_emblem(int guild_id, int len, const char *data);
 int intif_guild_castle_dataload(int num, int *castle_ids);
 int intif_guild_castle_datasave(int castle_id, int index, int value);
 #ifdef BOUND_ITEMS
-void intif_itembound_req(uint32 char_id, uint32 aid, int guild_id);
+void intif_itembound_guild_retrieve(uint32 char_id, uint32 account_id, int guild_id);
 #endif
 
 int intif_create_pet(uint32 account_id, uint32 char_id, short pet_type, short pet_lv, short pet_egg_id,
