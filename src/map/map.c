@@ -51,6 +51,7 @@ char map_server_id[32] = "ragnarok";
 char map_server_pw[32] = "";
 char map_server_db[32] = "ragnarok";
 Sql* mmysql_handle;
+Sql* qsmysql_handle; /// For query_sql
 
 int db_use_sqldbs = 0;
 char buyingstores_db[32] = "buyingstores";
@@ -3769,20 +3770,28 @@ int map_sql_init(void)
 {
 	// main db connection
 	mmysql_handle = Sql_Malloc();
+	qsmysql_handle = Sql_Malloc();
 
 	ShowInfo("Connecting to the Map DB Server....\n");
-	if( SQL_ERROR == Sql_Connect(mmysql_handle, map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db) ){
+	if( SQL_ERROR == Sql_Connect(mmysql_handle, map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db) ||
+		SQL_ERROR == Sql_Connect(qsmysql_handle, map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db) )
+	{
             ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
                         map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db);
             Sql_ShowDebug(mmysql_handle);
             Sql_Free(mmysql_handle);
+            Sql_ShowDebug(qsmysql_handle);
+            Sql_Free(qsmysql_handle);
             exit(EXIT_FAILURE);
         }
 	ShowStatus("Connect success! (Map Server Connection)\n");
 
-	if( strlen(default_codepage) > 0 )
+	if( strlen(default_codepage) > 0 ) {
 		if ( SQL_ERROR == Sql_SetEncoding(mmysql_handle, default_codepage) )
 			Sql_ShowDebug(mmysql_handle);
+		if ( SQL_ERROR == Sql_SetEncoding(qsmysql_handle, default_codepage) )
+			Sql_ShowDebug(qsmysql_handle);
+	}
 
 	return 0;
 }
@@ -3791,7 +3800,9 @@ int map_sql_close(void)
 {
 	ShowStatus("Close Map DB Connection....\n");
 	Sql_Free(mmysql_handle);
+	Sql_Free(qsmysql_handle);
 	mmysql_handle = NULL;
+	qsmysql_handle = NULL;
 #ifndef BETA_THREAD_TEST
 	if (log_config.sql_logs)
 	{
