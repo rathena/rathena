@@ -4546,14 +4546,15 @@ static int mob_item_drop_ratio_free(DBKey key, DBData *data, va_list ap) {
 	return 0;
 }
 
-static void mob_drop_ratio_adjust(){
-	struct mob_db *mob;
-	struct item_data *id;
-	unsigned short nameid, ratemin, ratemax;
-	int i, j, k, rate, rate_adjust, type, mob_id;
-	bool is_treasurechest;
+static void mob_drop_ratio_adjust(void){
+	unsigned short i;
 
 	for( i = 0; i <= MAX_MOB_DB; i++ ){
+		struct mob_db *mob;
+		struct item_data *id;
+		unsigned short nameid;
+		int j, rate, rate_adjust = 0, mob_id;
+
 		mob = mob_db(i);
 
 		// Skip dummy mobs.
@@ -4583,6 +4584,14 @@ static void mob_drop_ratio_adjust(){
 			if( rate ){
 				id = itemdb_search( nameid );
 
+				// Item is not known anymore(should never happen)
+				if( !id ){
+					ShowWarning( "Monster \"%s\"(id:%d) is dropping an unknown item(id: %d)\n", mob->name, mob_id, nameid );
+					mob->mvpitem[j].nameid = 0;
+					mob->mvpitem[j].p = 0;
+					continue;
+				}
+
 				if( id->maxchance == -1 || ( id->maxchance < rate/10 + 1 ) ){
 					// item has bigger drop chance or sold in shops
 					id->maxchance = rate/10 + 1; // reduce MVP drop info to not spoil common drop rate
@@ -4593,6 +4602,9 @@ static void mob_drop_ratio_adjust(){
 		}
 
 		for( j = 0; j < MAX_MOB_DROP; j++ ){
+			unsigned short ratemin, ratemax;
+			bool is_treasurechest;
+
 			nameid = mob->dropitem[j].nameid;
 			rate = mob->dropitem[j].p;
 
@@ -4610,14 +4622,12 @@ static void mob_drop_ratio_adjust(){
 				continue;
 			}
 
-			type = id->type;
-			
 			if( battle_config.drop_rateincrease && rate < 5000 ){
 				rate++;
 			}
 
 			// Treasure box drop rates [Skotlex]
-			if( ( mob_id >= 1324 && mob_id <= 1363 ) || ( mob_id >= 1938 && mob_id <= 1946 ) ){
+			if( ( mob_id >= MOBID_TREAS01 && mob_id <= MOBID_TREAS40 ) || ( mob_id >= MOBID_TREAS41 && mob_id <= MOBID_TREAS49 ) ){
 				is_treasurechest = true;
 
 				rate_adjust = battle_config.item_rate_treasure;
@@ -4627,7 +4637,7 @@ static void mob_drop_ratio_adjust(){
 				is_treasurechest = false;
 
 				 // Added suport to restrict normal drops of MVP's [Reddozen]
-				switch( type ){
+				switch( id->type ){
 					case IT_HEALING:
 						rate_adjust = (mob->status.mode&MD_BOSS) ? battle_config.item_rate_heal_boss : battle_config.item_rate_heal;
 						ratemin = battle_config.item_drop_heal_min;
@@ -4666,6 +4676,8 @@ static void mob_drop_ratio_adjust(){
 			// calculate and store Max available drop chance of the item
 			// but skip treasure chests.
 			if( rate && !is_treasurechest ){
+				unsigned short k;
+
 				if( id->maxchance == -1 || ( id->maxchance < rate ) ){
 					id->maxchance = rate; // item has bigger drop chance or sold in shops
 				}
