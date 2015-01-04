@@ -319,7 +319,10 @@ int party_recv_info(struct party* sp, uint32 char_id)
 
 		clif_charnameupdate(sd); //Update other people's display. [Skotlex]
 		clif_party_member_info(p,sd);
-		clif_party_option(p,sd,0x100);
+		// Only send this on party creation, otherwise it will be sent by party_send_movemap [Lemongrass]
+		if( sd->party_creating ){
+			clif_party_option(p,sd,0x100);
+		}
 		clif_party_info(p,NULL);
 
 		if( p->instance_id != 0 )
