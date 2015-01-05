@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20131112
+//= 20150104
 //===== Description: =========================================
 //= Basic information and installation guide with links to
 //= various forum posts and Wiki articles.
@@ -95,7 +95,7 @@ Linux
 	* Insert SQL files:
 		mysql --user=root -p rathena_rag < trunk/sql-files/main.sql (and others)
 	* Configure and compile:
-		./configure && make clean && make sql
+		./configure && make clean && make server
 	* When you're ready, start the servers:
 		./athena-start start
 

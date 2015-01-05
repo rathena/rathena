@@ -1,3 +1,4 @@
 #!/bin/sh
-#simple script to setupperl environnement with all module dependancy needed
+# Perl Setup
+# Sets up perl environment with all required module dependencies.
 cpan install File::Basename Getopt::Long DBI DBD::mysql YAML YAML:XS Cwd Net::Ping Scalar::Util Git::Repository;

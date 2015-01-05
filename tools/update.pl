@@ -1,7 +1,6 @@
 #!/usr/bin/perl
-# upgrading rA emulator, (src,npc,db..).
-# perform sql db update
-# perform binary recompilation
+# rAthena Updater
+# Performs git update, applies SQL database changes, and recompiles binaries.
 
 use strict;
 use Getopt::Long;
@@ -49,19 +48,19 @@ Main();
 
 sub GetArgs {
 	GetOptions(
-	'target=s'	=> \$sTarget,	 #Target (wich setup to run)=
+	'target=s'	=> \$sTarget,	 #Target (which setup to run)
 	'help!' => \$sHelp,
-	) or $sHelp=1; #display help if invalid option	
+	) or $sHelp=1; #display help if invalid option
 	
 	if( $sHelp ) {
-	print "Incorect option specified, available option are:\n"
-	    ."\t --target => target (specify wich check to ignore [$sValidTarget])\n";
+	print "Incorrect option specified. Available options:\n"
+	    ."\t --target => target (specify which check to ignore [$sValidTarget])\n";
 	exit;
 	}
 	if(!$sTarget || !($sTarget =~ /$sValidTarget/i)){
-		print "Incorect target specified, available target are:\n"
-			."\t --target => target (specify wich check to ignore [(default)$sValidTarget])\n 
-			NB restart is compiling dependant\n";
+		print "Incorrect target specified. Available targets:\n"
+			."\t --target => target (specify which check to ignore [(default)$sValidTarget])\n 
+			(NOTE: restart is compiling dependent.)\n";
 		exit;
     }
 }
@@ -94,15 +93,15 @@ sub UpdateSQL  { my($sBaseDir,$sInit,$rhFileState) = @_;
 	my @aLoginDBFiles = ();
 	my @aLogDBFiles = ();
 
-	print "Preparing SQL folder\n" if($sInit==1);
+	print "Preparing SQL folder...\n" if($sInit==1);
 	if(-e -r "sql-files/".STATE_FILE) {
-		print "Reading file status \n";
+		print "Reading file status...\n";
 		$rhFileState = YAML::XS::LoadFile("sql-files/".STATE_FILE);
 	}
 	
 	if($sTarget =~ "All|MapDB") {
 			chdir "sql-files";
-			print "Getting Map SQL Db file \n";
+			print "Getting Map SQL Db file...\n";
 			my $raFilesMap = GetSqlFileInDir("./");
 			foreach my $sFile (@$raFilesMap){
 				if($sInit==1){
@@ -147,11 +146,11 @@ sub UpdateSQL  { my($sBaseDir,$sInit,$rhFileState) = @_;
 			}
 			
 			if( $sFile =~ /_log.sql$/) { 
-				print "Found log file = $sFile \n";
+				print "Found log file '$sFile'.\n";
 				push(@aLogDBFiles,$sFile);
 			}
 			else { 
-				print "Found char file = $sFile \n";\
+				print "Found char file '$sFile'.\n";
 				push(@aCharDBFiles,$sFile);
 			}
 			$$rhFileState{$sFile}{"status"} = "done"; #  the query will be applied so mark it so
@@ -182,18 +181,18 @@ sub UpdateSQL  { my($sBaseDir,$sInit,$rhFileState) = @_;
 		if( scalar(@aCharDBFiles)==0 and  scalar(@aLogDBFiles)==0 
 			and  scalar(@aMapDBFiles)==0 and  scalar(@aLoginDBFiles)==0
 		){
-			print "No SQL Update to perform\n";
+			print "No SQL update to perform.\n";
 		}
 		else {
 			print "Updating DB \n";
 			my $rhUserConf;
 			if($sAutoDB==0){
 				$rhUserConf=GetValidateConf(\%hDefConf);
-				print "To make this step auto you can edit hDefConf and set sAutoDB to 1.
-					both parameter at the begining of file for the moment\n";
+				print "To make this step automatic you can edit hDefConf and set sAutoDB to 1.
+					Both parameters are at the begining of the file for the moment.\n";
 			}
 			else {
-				$rhUserConf=\%hDefConf; #we assum it's set correctly
+				$rhUserConf=\%hDefConf; #we assume it's set correctly
 			}
 			
 			CheckAndLoadSQL(\@aMapDBFiles,$rhUserConf,$$rhUserConf{SQL_MAP_DB});
@@ -204,7 +203,7 @@ sub UpdateSQL  { my($sBaseDir,$sInit,$rhFileState) = @_;
 		chdir "../..";
 	} else {
 		chdir "../..";
-		print "Saving stateFile \n";
+		print "Saving stateFile...\n";
 		YAML::XS::DumpFile("sql-files/".STATE_FILE,$rhFileState);
 	}
 
@@ -212,15 +211,15 @@ sub UpdateSQL  { my($sBaseDir,$sInit,$rhFileState) = @_;
 
 sub RunCompilation { my($sBaseDir,$sTarget) = @_;
 	if($^O =~ "linux"){
-		print "Recompiling \n";
+		print "Recompiling...\n";
 		system('./configure && make clean server');
 		if($sTarget =~ "All|Restart") {
-			print "Restarting \n";
+			print "Restarting...\n";
 			system('./athena-start restart');
 		}
 	}
 	else {
-		print "AutoCompilation ain't supported for this OS yet (OS detected=$^O \n";
+		print "Automatic compilation is not yet supported for this OS ($^O detected).\n";
 	}
 }
 
@@ -231,19 +230,19 @@ sub GitUpdate { my($sBaseDir) = @_;
 	
 	my $sIsOrigin = CheckRemote($sGit);
 	if($sIsOrigin==0){
-		print "Saving current work\n";
+		print "Saving current working tree...\n";
 		$sGit->run( "stash" );
-		print "Fetching new content and merging\n";
+		print "Fetching and merging new content...\n";
 		$sGit->run( "pull" );
-		print "Attempt applying save work\n";
+		print "Attempting to re-apply user changes...\n";
 		$sGit->run( "stash" => "pop" );
 	}
 	else { #it's a fork
-		print "Fetching upstream\n";
+		print "Fetching 'upstream'...\n";
 		$sGit->run( "fetch" => "upstream" );
-		print "Switching to master branch\n";
+		print "Switching to branch 'master'...\n";
 		$sGit->run( "checkout" => "master" );
-		print "Merging upstream with master\n";
+		print "Merging 'upstream' with 'master'...\n";
 		$sGit->run( "merge" => "upstream/master" );
 	}
 }

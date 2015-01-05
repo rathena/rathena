@@ -17,9 +17,9 @@ sub GetValidateConf { my($rhConfig) = @_;
 		$rhUserConf = GetUserConf($rhConfig);
 		print "\n Please Check desired conf \n";
 		ShowConfig($rhUserConf);
-		print "Would you like to apply those setting ? [y/n] ";
+		print "Would you like to apply these settings? [y/n] ";
 		last if(GetValidAnwser("y|o|n") =~ /y|o/i);
-		print "\n Restarting configuration sequence \n";
+		print "\n Restarting configuration sequence...\n";
 	}
 	return $rhUserConf;
 }
@@ -52,7 +52,7 @@ sub GetValidAnwser { my($sOptReg,$sAutoyes) = @_;
 	else {
 	while(!($sAnwser =~ /$sOptReg/i)) {
 	    $sAnwser = <>; chop($sAnwser);
-	    print "Please enter a valid option : $sOptReg " unless($sAnwser =~ /$sOptReg/i);
+	    print "Please enter a valid option: $sOptReg " unless($sAnwser =~ /$sOptReg/i);
 	}
     }
     return $sAnwser;
@@ -66,7 +66,7 @@ sub CheckUsedPort { my($sPort) = @_;
 
 
 sub RootCo { my($rhConfig) = @_;
-	print "\n Entering RootCo \n";
+	print "\n== Entering RootCo ==\n";
 	my $sDbH = 0;
 	my $sDsn = $$rhConfig{"Dsn"}; #mysql server dest
 	my $sUser = $$rhConfig{SQL_UID}; #verify desired user
@@ -74,10 +74,10 @@ sub RootCo { my($rhConfig) = @_;
 	if($sUser eq "root"){
 		my $sPw = $$rhConfig{SQL_PW};
 		$sDbH = DBI->connect($sDsn, "root", $sPw);
-		unless($sDbH) { warn "Your root password doesn't seem valid for mysql, your desired-conf is wrong \n"; }
+		unless($sDbH) { warn "Your root password doesn't seem valid for mysql. Please check your desired-conf.\n"; }
 	}
 	while($sDbH == 0) { #if can't use user to connect user root
-		print "Please inser DB root passeword (this won't be saved in any configuration file, needed to create dbs and user)\n";
+		print "Please enter database root password. (NOTE: This is needed to create the users and databases, and will not be saved in any configuration file.)\n";
 		my $sRPw = <>; chop($sRPw);
 		$sDbH = DBI->connect($sDsn, "root", $sRPw);
 	}
@@ -92,7 +92,7 @@ sub CheckAndLoadSQL { my ($raFiles,$rhConfig,$sDBn) = @_;
 
     foreach(@$raFiles) {
 	unless(-f -r $_){
-	    print "File : $_ doesn't seem to exist or was unreadable skipped\n";
+	    print "File '$_' does not exist or could not be read, skipped...\n";
 	    next;
 	}
 	my $sFileFullPath = Cwd::abs_path($_);
@@ -102,8 +102,8 @@ sub CheckAndLoadSQL { my ($raFiles,$rhConfig,$sDBn) = @_;
 
 sub ExeQuery { my $sDbH = shift;
     my @aQuery = @_;
-    print "my querys are = [ @aQuery ]\n";
+    print "Queries: [ @aQuery ]\n";
     foreach(@aQuery) {
-	unless($sDbH->do($_)){ print "Failed to execute query : $_ =>  $DBI::errstr \n"; }
+	unless($sDbH->do($_)){ print "Failed to execute query: $_ =>  $DBI::errstr \n"; }
     }
 }

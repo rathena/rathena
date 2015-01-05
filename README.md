@@ -5,12 +5,12 @@ Build Status: [![Build Status](https://travis-ci.org/rathena/rathena.png?branch=
 
 Table of Contents
 ---------
-* 1 What is rAthena?
-* 2 Prerequisites
-* 3 Installation
-* 4 Troubleshooting
-* 5 Helpful Links
-* 6 More Documentation
+1. What is rAthena?
+2. Prerequisites
+3. Installation
+4. Troubleshooting
+5. Helpful Links
+6. More Documentation
 
 1. What is rAthena?
 ---------
@@ -90,7 +90,7 @@ relevant to your Operation System, please refer to the Wiki (links at the end of
 				mysql --user=root -p rathena_rag < trunk/sql-files/main.sql (and others)
 	* Configure and compile:
 
-				./configure && make clean && make sql
+				./configure && make clean && make server
 	* When you're ready, start the servers:
 
 				./athena-start start

@@ -1,5 +1,6 @@
 #!/usr/bin/perl
-# building documentation using doxygen and updation versionning number
+# Documentation Builder
+# Builds documentation using doxygen and updates version number.
 use strict;
 use File::Basename;
 use Getopt::Long;
@@ -19,8 +20,8 @@ Main();
 sub GetArgs {
     GetOptions(
     'doxyconf=s' => \$sDocFile, #specify the doxygen configuration file
-    'outdir=s' => \$outputdir, #specify in wich folder to build the documentation
-    'ignorechk=s'	=> \$sIgnChk,	 #Target (wich setup to run)
+    'outdir=s' => \$outputdir, #specify in which folder to build the documentation
+    'ignorechk=s'	=> \$sIgnChk,	 #Target (which setup to run)
     'forcebuild=i' => \$sForceBuild, #should we chk if all doc are linked to a src ?
     'noupd=i' => \$sNoUpd, #prevent altering doxygen conf
     'help!' => \$sHelp,
@@ -28,16 +29,16 @@ sub GetArgs {
 	
     if( $sHelp ) {
 	print "Incorect option specified, available option are:\n"
-	    ."\t --doxyconf filename => specify wich doxygen configuration to use\n"
-	    ."\t --outdir path => specify in wich path to build doxygen documentation\n"
+	    ."\t --doxyconf filename => specify which doxygen configuration to use\n"
+	    ."\t --outdir path => specify in which path to build doxygen documentation\n"
 	    ."\t --forcebuild=0|1 => should we force building of documentation even if same git detected ?\n"
 	    ."\t --noupd=0|1 => should we skip producing a new doxyconf for version ?\n"
-	    ."\t --ignorechk => target (specify wich check to ignore [$sValidTarget])\n";
+	    ."\t --ignorechk => target (specify which check to ignore [$sValidTarget])\n";
 	exit;
     }
     if($sIgnChk && !($sIgnChk =~ /$sValidTarget/i)){
-    	print "Incorect ignorechk target specified, available target are:\n"
-	    ."\t --ignorechk => target (specify wich check to ignore [(default)$sValidTarget])\n";
+    	print "Incorect ignorechk target specified. Available targets:\n"
+	    ."\t --ignorechk => target (specify which check to ignore [(default)$sValidTarget])\n";
 		exit;
     }
 }
@@ -76,7 +77,7 @@ sub DoxygenChk {
 	chomp($doxyversion); #remove newline
 	print "doxyversion = [ $doxyversion ]\n";
 	if($doxyversion eq ""){
-		die "Please install doxygen to proceed";
+		die "Please install doxygen to proceed.";
 	}
 	close PIPE;
 	return $doxyversion;
@@ -94,7 +95,7 @@ sub GitChk {
 	chomp($gitversion);
 	print "git = [ $gitversion ]\n";
 	if($gitversion eq ""){
-		die "Please install git to proceed";
+		die "Please install git to proceed.";
 	}
 	close PIPE;
 	return $gitversion;
