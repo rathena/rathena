@@ -3380,27 +3380,33 @@ int map_readallmaps (void)
 
 	for(i = 0; i < map_num; i++) {
 		size_t size;
+		bool success = false;
 
-		// show progress
 		if( enable_grf ){
+			// show progress
 			ShowStatus("Loading maps [%i/%i]: %s"CL_CLL"\r", i, map_num, map[i].name);
 
 			// try to load the map
-			if( !map_readgat(&map[i]) ){
-				map_delmapid(i);
-				maps_removed++;
-				i--;
-				continue;
-			}
+			success = map_readgat(&map[i]) != 0;
 		}else{
 			// try to load the map
-			if( ( map_cache_buffer[1] != NULL && !map_readfromcache( &map[i], map_cache_buffer[1], map_cache_decode_buffer ) ) && // Read from import first, in case of override
-				!map_readfromcache( &map[i], map_cache_buffer[0], map_cache_decode_buffer ) ){
-				map_delmapid(i);
-				maps_removed++;
-				i--;
-				continue;
+			// Read from import first, in case of override
+			if( map_cache_buffer[1] != NULL ){
+				success = map_readfromcache( &map[i], map_cache_buffer[1], map_cache_decode_buffer ) != 0;
 			}
+
+			// Nothing was found in import - try to find it in the main file
+			if( !success ){
+				success = map_readfromcache( &map[i], map_cache_buffer[0], map_cache_decode_buffer ) != 0;
+			}
+		}
+
+		// The map was not found - remove it
+		if( !success ){
+			map_delmapid(i);
+			maps_removed++;
+			i--;
+			continue;
 		}
 
 		map[i].index = mapindex_name2id(map[i].name);
