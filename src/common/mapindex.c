@@ -15,8 +15,6 @@ struct _indexes {
 
 int max_index = 0;
 
-char mapindex_cfgfile[80] = "db/map_index.txt";
-
 #define mapindex_exists(id) (indexes[id].name[0] != '\0')
 
 /// Retrieves the map name from 'string' (removing .gat extension if present).
@@ -134,29 +132,44 @@ void mapindex_init(void) {
 	int last_index = -1;
 	int index;
 	char map_name[MAP_NAME_LENGTH];
+	char* mapindex_cfgfile[80] = {
+		"db/map_index.txt",
+		"db/import/map_index.txt"
+	};
+	int i;
 
-	if( ( fp = fopen(mapindex_cfgfile,"r") ) == NULL ){
-		ShowFatalError("Unable to read mapindex config file %s!\n", mapindex_cfgfile);
-		exit(EXIT_FAILURE); //Server can't really run without this file.
-	}
 	memset (&indexes, 0, sizeof (indexes));
 	mapindex_db = strdb_alloc(DB_OPT_DUP_KEY, MAP_NAME_LENGTH);
-	while(fgets(line, sizeof(line), fp)) {
-		if(line[0] == '/' && line[1] == '/')
-			continue;
 
-		switch (sscanf(line, "%11s\t%d", map_name, &index)) {
-			case 1: //Map with no ID given, auto-assign
-				index = last_index+1;
-			case 2: //Map with ID given
-				mapindex_addmap(index,map_name);
+	for( i = 0; i < 2; i++ ){
+		if( ( fp = fopen(mapindex_cfgfile[i],"r") ) == NULL ){
+			// It is only fatal if it is the main file
+			if( i == 0 ){
+				ShowFatalError("Unable to read mapindex config file %s!\n", mapindex_cfgfile[i]);
+				exit(EXIT_FAILURE); //Server can't really run without this file.
+			}else{
+				ShowWarning("Unable to read mapindex config file %s!\n", mapindex_cfgfile[i]);
 				break;
-			default:
-				continue;
+			}
 		}
-		last_index = index;
+
+		while(fgets(line, sizeof(line), fp)) {
+			if(line[0] == '/' && line[1] == '/')
+				continue;
+
+			switch (sscanf(line, "%11s\t%d", map_name, &index)) {
+				case 1: //Map with no ID given, auto-assign
+					index = last_index+1;
+				case 2: //Map with ID given
+					mapindex_addmap(index,map_name);
+					break;
+				default:
+					continue;
+			}
+			last_index = index;
+		}
+		fclose(fp);
 	}
-	fclose(fp);
 
 	if( !strdb_iget(mapindex_db, MAP_DEFAULT) ) {
 		ShowError("mapindex_init: MAP_DEFAULT '%s' not found in cache! Update MAP_DEFAULT in mapindex.h!\n",MAP_DEFAULT);
