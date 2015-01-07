@@ -898,8 +898,10 @@ void do_reconnect_map(void); //Invoked on map-char reconnection [Skotlex]
 void map_addmap2db(struct map_data *m);
 void map_removemapdb(struct map_data *m);
 
+#ifdef ADJUST_SKILL_DAMAGE
 void map_skill_damage_free(struct map_data *m);
 void map_skill_damage_add(struct map_data *m, uint16 skill_id, int pc, int mob, int boss, int other, uint8 caster);
+#endif
 
 #define CHK_ELEMENT(ele) ((ele) > ELE_NONE && (ele) < ELE_MAX) /// Check valid Element
 #define CHK_ELEMENT_LEVEL(lv) ((lv) >= 1 && (lv) <= MAX_ELE_LEVEL) /// Check valid element level

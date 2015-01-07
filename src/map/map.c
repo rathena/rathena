@@ -112,7 +112,9 @@ int agit_flag = 0;
 int agit2_flag = 0;
 int night_flag = 0; // 0=day, 1=night [Yor]
 
+#ifdef ADJUST_SKILL_DAMAGE
 struct eri *map_skill_damage_ers = NULL;
+#endif
 
 struct charid_request {
 	struct charid_request* next;
