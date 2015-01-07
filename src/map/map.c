@@ -3490,14 +3490,13 @@ int parse_console(const char* buf){
 	char mapname[64];
 	int16 x = 0;
 	int16 y = 0;
-	int16 m;
 	int n;
 	struct map_session_data sd;
 
 	memset(&sd, 0, sizeof(struct map_session_data));
 	strcpy(sd.status.name, "console");
 
-	if( ( n = sscanf(buf, "%63[^:]:%63[^:]:%63s %hd %hd[^\n]", type, command, mapname, &x, &y) ) < 5 ){
+	if( ( n = sscanf(buf, "%63[^:]:%63[^:]:%63s %6hd %6hd[^\n]", type, command, mapname, &x, &y) ) < 5 ){
 		if( ( n = sscanf(buf, "%63[^:]:%63[^\n]", type, command) ) < 2 )		{
 			if((n = sscanf(buf, "%63[^\n]", type))<1) return -1; //nothing to do no arg
 		}
@@ -3519,7 +3518,7 @@ int parse_console(const char* buf){
 
 	if(strcmpi("admin",type) == 0 ) {
 		if(strcmpi("map",command) == 0){
-			m = map_mapname2mapid(mapname);
+			int16 m = map_mapname2mapid(mapname);
 			if( m < 0 ){
 				ShowWarning("Console: Unknown map.\n");
 				return 0;
