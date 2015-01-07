@@ -22,8 +22,8 @@ struct s_buyingstore
 	unsigned char slots;
 };
 
-char buyingstore_setup(struct map_session_data* sd, unsigned char slots);
-char buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned char result, const char* storename, const uint8* itemlist, unsigned int count);
+int8 buyingstore_setup(struct map_session_data* sd, unsigned char slots);
+int8 buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned char result, const char* storename, const uint8* itemlist, unsigned int count, struct s_autotrader *at);
 void buyingstore_close(struct map_session_data* sd);
 void buyingstore_open(struct map_session_data* sd, uint32 account_id);
 void buyingstore_trade(struct map_session_data* sd, uint32 account_id, unsigned int buyer_id, const uint8* itemlist, unsigned int count);
