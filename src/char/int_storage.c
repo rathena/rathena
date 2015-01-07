@@ -282,9 +282,8 @@ int mapif_parse_itembound_retrieve(int fd)
 {
 	StringBuf buf;
 	SqlStmt* stmt;
-	bool found = false;
-	unsigned short i = 0, count = 0, size = 0;
-	struct item item, items[MAX_INVENTORY] = { 0 };
+	unsigned short i = 0, count = 0;
+	struct item item, items[MAX_INVENTORY];
 	int j, guild_id = RFIFOW(fd,10);
 	uint32 char_id = RFIFOL(fd,2), account_id = RFIFOL(fd,6);
 
@@ -319,6 +318,7 @@ int mapif_parse_itembound_retrieve(int fd)
 	for( j = 0; j < MAX_SLOTS; ++j )
 		SqlStmt_BindColumn(stmt, 9+j, SQLDT_SHORT, &item.card[j], 0, NULL, NULL);
 
+	memset(&items, 0, sizeof(items));
 	while( SQL_SUCCESS == SqlStmt_NextRow(stmt) )
 		memcpy(&items[count++], &item, sizeof(struct item));
 	Sql_FreeResult(sql_handle);
