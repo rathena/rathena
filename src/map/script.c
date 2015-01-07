@@ -2283,8 +2283,8 @@ static void read_constdb(void)
 			continue;
 		
 		type=0;
-		if(sscanf(line,"%1023[A-Za-z0-9/_],%1023[A-Za-z0-9/_-],%d",name,val,&type)>=2 ||
-		   sscanf(line,"%1023[A-Za-z0-9/_] %1023[A-Za-z0-9/_-] %d",name,val,&type)>=2){
+		if(sscanf(line,"%1023[A-Za-z0-9/_],%1023[A-Za-z0-9/_-],%11d",name,val,&type)>=2 ||
+		   sscanf(line,"%1023[A-Za-z0-9/_] %1023[A-Za-z0-9/_-] %11d",name,val,&type)>=2){
 			entries++;
 			script_set_constant(name, (int)strtol(val, NULL, 0), (bool)type);
 		}
@@ -15393,7 +15393,7 @@ BUILDIN_FUNC(setd)
 	int elem;
 	buffer = script_getstr(st, 2);
 
-	if(sscanf(buffer, "%99[^[][%d]", varname, &elem) < 2)
+	if(sscanf(buffer, "%99[^[][%11d]", varname, &elem) < 2)
 		elem = 0;
 
 	if( not_server_variable(*varname) )
@@ -15560,7 +15560,7 @@ BUILDIN_FUNC(getd)
 
 	buffer = script_getstr(st, 2);
 
-	if(sscanf(buffer, "%99[^[][%d]", varname, &elem) < 2)
+	if(sscanf(buffer, "%99[^[][%11d]", varname, &elem) < 2)
 		elem = 0;
 
 	// Push the 'pointer' so it's more flexible [Lance]

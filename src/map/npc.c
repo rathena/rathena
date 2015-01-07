@@ -488,7 +488,7 @@ int npc_timerevent_export(struct npc_data *nd, int i)
 	int t = 0, k = 0;
 	char *lname = nd->u.scr.label_list[i].name;
 	int pos = nd->u.scr.label_list[i].pos;
-	if (sscanf(lname, "OnTimer%d%n", &t, &k) == 1 && lname[k] == '\0') {
+	if (sscanf(lname, "OnTimer%11d%n", &t, &k) == 1 && lname[k] == '\0') {
 		// Timer event
 		struct npc_timerevent_list *te = nd->u.scr.timer_event;
 		int j, k2 = nd->u.scr.timeramount;
@@ -2303,15 +2303,16 @@ struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short 
  */
 static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
-	int x, y, xs, ys, to_x, to_y, m;
+	int m;
+	short x, y, xs, ys, to_x, to_y;
 	unsigned short i;
-	char mapname[32], to_mapname[32];
+	char mapname[32], to_mapname[32]; // TODO: Check why this does not use MAP_NAME_LENGTH_EXT
 	struct npc_data *nd;
 
 	// w1=<from map name>,<fromX>,<fromY>,<facing>
 	// w4=<spanx>,<spany>,<to map name>,<toX>,<toY>
-	if( sscanf(w1, "%31[^,],%d,%d", mapname, &x, &y) != 3
-	||	sscanf(w4, "%d,%d,%31[^,],%d,%d", &xs, &ys, to_mapname, &to_x, &to_y) != 5 )
+	if( sscanf(w1, "%31[^,],%6hd,%6hd", mapname, &x, &y) != 3
+	||	sscanf(w4, "%6hd,%6hd,%31[^,],%6hd,%6hd", &xs, &ys, to_mapname, &to_x, &to_y) != 5 )
 	{
 		ShowError("npc_parse_warp: Invalid warp definition in file '%s', line '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 		return strchr(start,'\n');// skip and continue
@@ -2385,7 +2386,9 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
 	char *p, point_str[32];
-	int x, y, dir, m, is_discount = 0;
+	int m, is_discount = 0;
+	uint8 dir;
+	short x, y;
 	unsigned short nameid = 0;
 	struct npc_data *nd;
 	enum npc_subtype type;
@@ -2397,8 +2400,8 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	}
 	else
 	{// w1=<map name>,<x>,<y>,<facing>
-		char mapname[32];
-		if( sscanf(w1, "%31[^,],%d,%d,%d", mapname, &x, &y, &dir) != 4
+		char mapname[32];  // TODO: Check why this does not use MAP_NAME_LENGTH_EXT
+		if( sscanf(w1, "%31[^,],%6hd,%6hd,%4d", mapname, &x, &y, &dir) != 4
 		||	strchr(w4, ',') == NULL )
 		{
 			ShowError("npc_parse_shop: Invalid shop definition in file '%s', line '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
@@ -2426,7 +2429,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 
 	switch(type) {
 		case NPCTYPE_ITEMSHOP: {
-			if (sscanf(p,",%hu:%d,",&nameid,&is_discount) < 1) {
+			if (sscanf(p,",%5hu:%11d,",&nameid,&is_discount) < 1) {
 				ShowError("npc_parse_shop: Invalid item cost definition in file '%s', line '%d'. Ignoring the rest of the line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 				return strchr(start,'\n'); // skip and continue
 			}
@@ -2438,7 +2441,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 			break;
 		}
 		case NPCTYPE_POINTSHOP: {
-			if (sscanf(p, ",%32[^,:]:%d,",point_str,&is_discount) < 1) {
+			if (sscanf(p, ",%32[^,:]:%11d,",point_str,&is_discount) < 1) {
 				ShowError("npc_parse_shop: Invalid item cost definition in file '%s', line '%d'. Ignoring the rest of the line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 				return strchr(start,'\n'); // skip and continue
 			}
@@ -2471,7 +2474,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		struct item_data* id;
 		if( p == NULL )
 			break;
-		if( sscanf(p, ",%hu:%d", &nameid2, &value) != 2 ) {
+		if( sscanf(p, ",%6hu:%11d", &nameid2, &value) != 2 ) {
 			ShowError("npc_parse_shop: Invalid item definition in file '%s', line '%d'. Ignoring the rest of the line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 			break;
 		}
@@ -2684,7 +2687,8 @@ static const char* npc_skip_script(const char* start, const char* buffer, const 
  * @return new index for next parsing
  */
 static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath, bool runOnInit) {
-	int x, y, dir = 0, m, xs = 0, ys = 0;	// [Valaris] thanks to fov
+	int8 dir = 0;
+	short m, x, y, xs = 0, ys = 0; // [Valaris] thanks to fov
 	struct script_code *script;
 	int i;
 	const char* end;
@@ -2702,9 +2706,9 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 	}
 	else
 	{// npc in a map
-		char mapname[32];
+		char mapname[32]; // TODO: Check why this does not use MAP_NAME_LENGTH_EXT
 
-		if( sscanf(w1, "%31[^,],%d,%d,%d", mapname, &x, &y, &dir) != 4 )
+		if( sscanf(w1, "%31[^,],%6hd,%6hd,%4d", mapname, &x, &y, &dir) != 4 )
 		{
 			ShowError("npc_parse_script: Invalid placement format for a script in file '%s', line '%d'. Skipping the rest of file...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 			return NULL;// unknown format, don't continue
@@ -2737,7 +2741,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 
 	CREATE(nd, struct npc_data, 1);
 
-	if( sscanf(w4, "%*[^,],%d,%d", &xs, &ys) == 2 )
+	if( sscanf(w4, "%*[^,],%6hd,%6hd", &xs, &ys) == 2 )
 	{// OnTouch area defined
 		nd->u.scr.xs = xs;
 		nd->u.scr.ys = ys;
@@ -2824,7 +2828,8 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 /// npc: <map name>,<x>,<y>,<facing>%TAB%duplicate(<name of target>)%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>
 const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
-	int x, y, dir, m, xs = -1, ys = -1;
+	short x, y, m, xs = -1, ys = -1;
+	int8 dir;
 	char srcname[128];
 	int i;
 	const char* end;
@@ -2859,9 +2864,9 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 		x = y = dir = 0;
 		m = -1;
 	} else {
-		char mapname[32];
+		char mapname[32]; // TODO: Check why this does not use MAP_NAME_LENGTH_EXT
 
-		if( sscanf(w1, "%31[^,],%d,%d,%d", mapname, &x, &y, &dir) != 4 ) { // <map name>,<x>,<y>,<facing>
+		if( sscanf(w1, "%31[^,],%6hd,%6hd,%4d", mapname, &x, &y, &dir) != 4 ) { // <map name>,<x>,<y>,<facing>
 			ShowError("npc_parse_duplicate: Invalid placement format for duplicate in file '%s', line '%d'. Skipping line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 			return end;// next line, try to continue
 		}
@@ -2872,8 +2877,8 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 		ShowError("npc_parse_duplicate: coordinates %d/%d are out of bounds in map %s(%dx%d), in file '%s', line '%d'\n", x, y, map[m].name, map[m].xs, map[m].ys,filepath,strline(buffer,start-buffer));
 	}
 
-	if( type == NPCTYPE_WARP && sscanf(w4, "%d,%d", &xs, &ys) == 2 );// <spanx>,<spany>
-	else if( type == NPCTYPE_SCRIPT && sscanf(w4, "%*[^,],%d,%d", &xs, &ys) == 2);// <sprite id>,<triggerX>,<triggerY>
+	if( type == NPCTYPE_WARP && sscanf(w4, "%6hd,%6hd", &xs, &ys) == 2 );// <spanx>,<spany>
+	else if( type == NPCTYPE_SCRIPT && sscanf(w4, "%*[^,],%6hd,%6hd", &xs, &ys) == 2);// <sprite id>,<triggerX>,<triggerY>
 	else if( type == NPCTYPE_WARP ) {
 		ShowError("npc_parse_duplicate: Invalid span format for duplicate warp in file '%s', line '%d'. Skipping line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 		return end;// next line, try to continue
@@ -3299,9 +3304,9 @@ void npc_parse_mob2(struct spawn_data* mob)
 
 static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
-	int num, class_, m,x,y,xs,ys, i,j;
-	int mob_lv = -1, ai = -1, size = -1;
-	char mapname[32], mobname[NAME_LENGTH];
+	int num, class_, i, j, mob_lv = -1, ai = -1, size = -1;
+	short m,x,y,xs,ys;
+	char mapname[32], mobname[NAME_LENGTH]; // TODO: Check why this does not use MAP_NAME_LENGTH_EXT
 	struct spawn_data mob, *data;
 	struct mob_db* db;
 
@@ -3312,9 +3317,9 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	// w1=<map name>,<x>,<y>,<xs>,<ys>
 	// w3=<mob name>{,<mob level>}
 	// w4=<mob id>,<amount>,<delay1>,<delay2>,<event>{,<mob size>,<mob ai>}
-	if( sscanf(w1, "%31[^,],%d,%d,%d,%d", mapname, &x, &y, &xs, &ys) < 3
+	if( sscanf(w1, "%31[^,],%6hd,%6hd,%6hd,%6hd", mapname, &x, &y, &xs, &ys) < 3
 	||	sscanf(w3, "%23[^,],%d", mobname, &mob_lv) < 1
-	||	sscanf(w4, "%d,%d,%u,%u,%127[^,],%d,%d[^\t\r\n]", &class_, &num, &mob.delay1, &mob.delay2, mob.eventname, &size, &ai) < 2 )
+	||	sscanf(w4, "%11d,%11d,%11u,%11u,%127[^,],%11d,%11d[^\t\r\n]", &class_, &num, &mob.delay1, &mob.delay2, mob.eventname, &size, &ai) < 2 )
 	{
 		ShowError("npc_parse_mob: Invalid mob definition in file '%s', line '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 		return strchr(start,'\n');// skip and continue
@@ -3495,15 +3500,15 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 		state = 0;	//Disable mapflag rather than enable it. [Skotlex]
 
 	if (!strcmpi(w3, "nosave")) {
-		char savemap[32];
-		int savex, savey;
+		char savemap[32]; // TODO: Check why this does not use MAP_NAME_LENGTH_EXT
+		short savex, savey;
 		if (state == 0)
 			; //Map flag disabled.
 		else if (!strcmpi(w4, "SavePoint")) {
 			map[m].save.map = 0;
 			map[m].save.x = -1;
 			map[m].save.y = -1;
-		} else if (sscanf(w4, "%31[^,],%d,%d", savemap, &savex, &savey) == 3) {
+		} else if (sscanf(w4, "%31[^,],%6hd,%6hd", savemap, &savex, &savey) == 3) {
 			map[m].save.map = mapindex_name2id(savemap);
 			map[m].save.x = savex;
 			map[m].save.y = savey;
@@ -3612,7 +3617,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 	}
 	else if (!strcmpi(w3,"battleground")) {
 		if( state ) {
-			if( sscanf(w4, "%d", &state) == 1 )
+			if( sscanf(w4, "%11d", &state) == 1 )
 				map[m].flag.battleground = state;
 			else
 				map[m].flag.battleground = 1; // Default value
@@ -3680,7 +3685,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 		map[m].flag.nomvploot=state;
 	else if (!strcmpi(w3,"nocommand")) {
 		if (state) {
-			if (sscanf(w4, "%d", &state) == 1)
+			if (sscanf(w4, "%11d", &state) == 1)
 				map[m].nocommand =state;
 			else //No level specified, block everyone.
 				map[m].nocommand =100;
@@ -3690,7 +3695,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 	else if (!strcmpi(w3,"restricted")) {
 		if (state) {
 			map[m].flag.restricted=1;
-			sscanf(w4, "%d", &state);
+			sscanf(w4, "%d", &state); // TODO: Something should be done if it could not be read
 			map[m].zone |= 1<<(state+1);
 		} else {
 			map[m].flag.restricted=0;
@@ -3744,7 +3749,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 			memset(&map[m].adjust.damage, 0, sizeof(map[m].adjust.damage));
 		}
 		else {
-			if (sscanf(w4, "%30[^,],%d,%d,%d,%d,%d[^\n]", skill, &caster, &pc, &mob, &boss, &other) >= 3) {
+			if (sscanf(w4, "%30[^,],%11d,%11d,%11d,%11d,%11d[^\n]", skill, &caster, &pc, &mob, &boss, &other) >= 3) {
 				caster = (!caster) ? SDC_ALL : caster;
 				pc = cap_value(pc, -100, INT_MAX);
 				mob = cap_value(mob, -100, INT_MAX);
@@ -3892,9 +3897,9 @@ int npc_parsesrcfile(const char* filepath, bool runOnInit)
 
 		if( strcmp(w1,"-") !=0 && strcasecmp(w1,"function") != 0 )
 		{// w1 = <map name>,<x>,<y>,<facing>
-			char mapname[MAP_NAME_LENGTH*2];
+			char mapname[MAP_NAME_LENGTH*2]; // TODO: Check why this does not use MAP_NAME_LENGTH_EXT
 			x = y = 0;
-			sscanf(w1,"%23[^,],%hd,%hd[^,]",mapname,&x,&y);
+			sscanf(w1,"%23[^,],%6hd,%6hd[^,]",mapname,&x,&y); // TODO: Why is no check here?
 			if( !mapindex_name2id(mapname) )
 			{// Incorrect map, we must skip the script info...
 				ShowError("npc_parsesrcfile: Unknown map '%s' in file '%s', line '%d'. Skipping line...\n", mapname, filepath, strline(buffer,p-buffer));
