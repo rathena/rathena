@@ -1489,12 +1489,12 @@ int mapif_parse_GuildMemberInfoChange(int fd,int guild_id,uint32 account_id,uint
 		  }
 		case GMI_EXP:
 		{	// EXP
-			uint64 exp, old_exp=g->member[i].exp;
+			uint64 old_exp=g->member[i].exp;
 			g->member[i].exp=*((uint64 *)data);
 			g->member[i].modified = GS_MEMBER_MODIFIED;
 			if (g->member[i].exp > old_exp)
 			{
-				exp = g->member[i].exp - old_exp;
+				uint64 exp = g->member[i].exp - old_exp;
 
 				// Compute gained exp
 				if (charserv_config.guild_exp_rate != 100)
