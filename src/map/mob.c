@@ -3880,7 +3880,7 @@ static bool mob_parse_dbrow(char** str)
 		if( db->mvpitem[i].nameid ){
 			if( itemdb_search(db->mvpitem[i].nameid) ){
 				db->mvpitem[i].p = atoi(str[32+i*2]);
-				continue;	
+				continue;
 			}else{
 				ShowWarning( "Monster \"%s\"(id: %d) is dropping an unknown item \"%s\"(MVP-Drop %d)\n", db->name, mob_id, str[31+i*2], ( i / 2 ) + 1 );
 			}
@@ -4531,21 +4531,34 @@ static bool mob_readdb_itemratio(char* str[], int columns, int current)
 
 	item_ratio->drop_ratio = ratio;
 	memset(item_ratio->mob_id, 0, sizeof(item_ratio->mob_id));
-	for (i = 0; i < columns-2; i++)
-		item_ratio->mob_id[i] = atoi(str[i+2]);
+	for (i = 0; i < columns-2; i++) {
+		uint16 mob_id = atoi(str[i+2]);
+		if (mob_db(mob_id) == mob_dummy)
+			ShowError("itemdb_read_itemratio: Invalid monster with ID %hu (Item:%hu Col:%d).\n", mob_id, nameid, columns);
+		else
+			item_ratio->mob_id[i] = atoi(str[i+2]);
+	}
 
-	if (!item_ratio->nameid)
+	if (!item_ratio->nameid) {
+		item_ratio->nameid = nameid;
 		idb_put(mob_item_drop_ratio, nameid, item_ratio);
+	}
 
 	return true;
 }
 
+/**
+ * Free drop ratio data
+ **/
 static int mob_item_drop_ratio_free(DBKey key, DBData *data, va_list ap) {
 	struct s_mob_item_drop_ratio *item_ratio = db_data2ptr(data);
 	aFree(item_ratio);
 	return 0;
 }
 
+/**
+ * Adjust drop ratio for each monster
+ **/
 static void mob_drop_ratio_adjust(void){
 	unsigned short i;
 
@@ -4670,7 +4683,6 @@ static void mob_drop_ratio_adjust(void){
 			}
 
 			item_dropratio_adjust( nameid, mob_id, &rate_adjust );
-
 			rate = mob_drop_adjust( rate, rate_adjust, ratemin, ratemax );
 
 			// calculate and store Max available drop chance of the item
@@ -4744,7 +4756,7 @@ static void mob_load(void)
 
 		sv_readdb(dbsubpath1, "mob_avail.txt", ',', 2, 12, -1, &mob_readdb_mobavail, i);
 		sv_readdb(dbsubpath2, "mob_race2_db.txt", ',', 2, 20, -1, &mob_readdb_race2, i);
-		sv_readdb(dbsubpath1, "mob_item_ratio.txt", ',', 2, 2+MAX_ITEMRATIO_MOBS, -1, &mob_readdb_itemratio, i); // must be read before mobdb
+		sv_readdb(dbsubpath1, "mob_item_ratio.txt", ',', 2, 2+MAX_ITEMRATIO_MOBS, -1, &mob_readdb_itemratio, i);
 		sv_readdb(dbsubpath1, "mob_chat_db.txt", '#', 3, 3, MAX_MOB_CHAT, &mob_parse_row_chatdb, i);
 		
 		aFree(dbsubpath1);
@@ -4752,7 +4764,6 @@ static void mob_load(void)
 	}
 
 	mob_drop_ratio_adjust();
-
 	mob_read_randommonster();
 }
 
