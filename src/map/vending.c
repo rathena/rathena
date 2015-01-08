@@ -12,6 +12,7 @@
 #include "chrif.h"
 #include "vending.h"
 #include "pc.h"
+#include "buyingstore.h" // struct s_autotrade_entry, struct s_autotrader
 
 #include <stdlib.h> // atoi
 
@@ -535,7 +536,6 @@ void vending_reopen( struct map_session_data* sd )
 
 /**
 * Initializing autotraders from table
-* TODO: Make this support for multi map-server
 */
 void do_init_vending_autotrade(void)
 {

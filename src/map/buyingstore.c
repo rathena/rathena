@@ -14,7 +14,6 @@
 #include "log.h"  // log_pick_pc, log_zeny
 #include "pc.h"  // struct map_session_data
 #include "chrif.h"
-#include "vending.h" // struct s_autotrade_entry, struct s_autotrader
 
 #include <stdlib.h> // atoi
 
@@ -649,7 +648,6 @@ void buyingstore_reopen( struct map_session_data* sd ){
 
 /**
 * Initializing autotraders from table
-* TODO: Make this support for multi map-server
 */
 void do_init_buyingstore_autotrade( void ) {
 	if(battle_config.feature_autotrade) {
