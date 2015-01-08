@@ -2860,13 +2860,13 @@ if test "$ac_test_CFLAGS" = set; then
   CFLAGS=$ac_save_CFLAGS
 elif test $ac_cv_prog_cc_g = yes; then
   if test "$GCC" = yes; then
-    CFLAGS="-O3"
+    CFLAGS="-g -O2"
   else
-    CFLAGS=
+    CFLAGS="-g"
   fi
 else
   if test "$GCC" = yes; then
-    CFLAGS="-O3"
+    CFLAGS="-O2"
   else
     CFLAGS=
   fi
@@ -6297,6 +6297,10 @@ fi
 # Debug
 #
 case $enable_debug in
+	"no")
+		# default value
+		CPPFLAGS="$CPPFLAGS"
+		;;
 	"yes")
 		if test $ac_cv_prog_cc_g = yes; then
 		    CPPFLAGS="$CPPFLAGS -g -DDEBUG"
@@ -6309,14 +6313,11 @@ case $enable_debug in
 	"gdb")
 		if test $ac_cv_prog_cc_g = yes; then
 		    CPPFLAGS="$CPPFLAGS -ggdb -DDEBUG"
-		    LDFLAGS="$LDFLAGS -ggdb"
+		    LDFLAGS="$LDFLAGS -g"
 		else
 		    echo "error: --enable-debug flag=$enable_debug entered but the compiler does not support -g"
 		    exit 1
                 fi
-		;;
-	*) # default value
-		CPPFLAGS="$CPPFLAGS"
 		;;
 esac
 
@@ -7378,8 +7379,8 @@ else
 $as_echo "no" >&6; }
 fi
 
-CFLAGS_AR="$OPT_LTO_AR $CFLAGS"
 CFLAGS="$OPT_LTO $CFLAGS"
+CFLAGS_AR="$OPT_LTO_AR $CFLAGS"
 
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: Configure finish" >&5

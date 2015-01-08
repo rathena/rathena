@@ -962,6 +962,10 @@ fi
 # Debug
 #
 case $enable_debug in
+	"no")
+		# default value
+		CPPFLAGS="$CPPFLAGS"
+		;;
 	"yes")
 		if test $ac_cv_prog_cc_g = yes; then
 		    CPPFLAGS="$CPPFLAGS -g -DDEBUG"
@@ -974,14 +978,11 @@ case $enable_debug in
 	"gdb")
 		if test $ac_cv_prog_cc_g = yes; then
 		    CPPFLAGS="$CPPFLAGS -ggdb -DDEBUG"
-		    LDFLAGS="$LDFLAGS -ggdb"
+		    LDFLAGS="$LDFLAGS -g"
 		else
 		    echo "error: --enable-debug flag=$enable_debug entered but the compiler does not support -g"
 		    exit 1
                 fi
-		;;
-	*) # default value
-		CPPFLAGS="$CPPFLAGS"
 		;;
 esac
 
@@ -1260,8 +1261,8 @@ else
 	AC_MSG_RESULT([no])
 fi
 
-CFLAGS_AR="$OPT_LTO_AR $CFLAGS"
 CFLAGS="$OPT_LTO $CFLAGS" 
+CFLAGS_AR="$OPT_LTO_AR $CFLAGS"
 AC_SUBST([CFLAGS_AR])
 
 AC_MSG_NOTICE([Configure finish])
