@@ -11631,8 +11631,9 @@ BUILDIN_FUNC(removemapflag)
 			case MF_SKILL_DAMAGE:
 				{
 					map[m].flag.skill_damage = 0;
-					memset(map[m].skill_damage, 0, sizeof(map[m].skill_damage));
 					memset(&map[m].adjust.damage, 0, sizeof(map[m].adjust.damage));
+					if (map[m].skill_damage.count)
+						map_skill_damage_free(&map[m]);
 				} break;
 #endif
 		}

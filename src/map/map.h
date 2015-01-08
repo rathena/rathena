@@ -589,16 +589,18 @@ struct iwall_data {
 };
 
 #ifdef ADJUST_SKILL_DAMAGE
+/// Struct of skill damage adjustment
 struct s_skill_damage {
-	uint16 map, skill_id;
-	/* additional rates */
-	int pc,
-		mob,
-		boss,
-		other;
-	uint8 caster;	/* caster type */
+	unsigned int map; ///< Maps (used for skill_damage_db.txt)
+	uint16 skill_id; ///< Skill ID (used for mapflag)
+	// Additional rates
+	int pc, ///< Rate to Player
+		mob, ///< Rate to Monster
+		boss, ///< Rate to Boss-Monster
+		other; ///< Rate to Other target
+	uint8 caster; ///< Caster type
 };
-#define MAX_MAP_SKILL_MODIFIER 5
+struct eri *map_skill_damage_ers;
 #endif
 
 struct questinfo {
@@ -703,7 +705,10 @@ struct map_data {
 #endif
 	} adjust;
 #ifdef ADJUST_SKILL_DAMAGE
-	struct s_skill_damage skill_damage[MAX_MAP_SKILL_MODIFIER];
+	struct {
+		struct s_skill_damage **entries;
+		uint8 count;
+	} skill_damage;
 #endif
 	// Instance Variables
 	int instance_id;
@@ -892,6 +897,11 @@ void map_removemobs(int16 m); // [Wizputer]
 void do_reconnect_map(void); //Invoked on map-char reconnection [Skotlex]
 void map_addmap2db(struct map_data *m);
 void map_removemapdb(struct map_data *m);
+
+#ifdef ADJUST_SKILL_DAMAGE
+void map_skill_damage_free(struct map_data *m);
+void map_skill_damage_add(struct map_data *m, uint16 skill_id, int pc, int mob, int boss, int other, uint8 caster);
+#endif
 
 #define CHK_ELEMENT(ele) ((ele) > ELE_NONE && (ele) < ELE_MAX) /// Check valid Element
 #define CHK_ELEMENT_LEVEL(lv) ((lv) >= 1 && (lv) <= MAX_ELE_LEVEL) /// Check valid element level

@@ -3740,8 +3740,9 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 		map[m].flag.skill_damage = state;	// Set the mapflag
 
 		if (!state) {
-			memset(map[m].skill_damage, 0, sizeof(map[m].skill_damage));
 			memset(&map[m].adjust.damage, 0, sizeof(map[m].adjust.damage));
+			if (map[m].skill_damage.count)
+				map_skill_damage_free(&map[m]);
 		}
 		else {
 			if (sscanf(w4, "%30[^,],%d,%d,%d,%d,%d[^\n]", skill, &caster, &pc, &mob, &boss, &other) >= 3) {
@@ -3751,7 +3752,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 				boss = cap_value(boss, -100, INT_MAX);
 				other = cap_value(other, -100, INT_MAX);
 
-				if (strcmp(skill,"all") == 0) {	// Adjust damages for all skills
+				if (strcmp(skill,"all") == 0) { // Adjust damages for all skills
 					map[m].adjust.damage.caster = caster;
 					map[m].adjust.damage.pc = pc;
 					map[m].adjust.damage.mob = mob;
@@ -3760,20 +3761,8 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 				}
 				else if (skill_name2id(skill) <= 0)
 					ShowWarning("npc_parse_mapflag: skill_damage: Invalid skill name '%s'. Skipping (file '%s', line '%d')\n", skill, filepath, strline(buffer,start-buffer));
-				else {	//damages for specified skill
-					uint8 i;
-					ARR_FIND(0, ARRAYLENGTH(map[m].skill_damage), i, map[m].skill_damage[i].skill_id <= 0);
-					if (i >= ARRAYLENGTH(map[m].skill_damage))
-						ShowWarning("npc_parse_mapflag: skill_damage: Skill damage for map '%s' is overflow.\n", map[m].name);
-					else {
-						map[m].skill_damage[i].skill_id = skill_name2id(skill);
-						map[m].skill_damage[i].caster = caster;
-						map[m].skill_damage[i].pc = pc;
-						map[m].skill_damage[i].mob = mob;
-						map[m].skill_damage[i].boss = boss;
-						map[m].skill_damage[i].other = other;
-					}
-				}
+				else //Damages for specified skill
+					map_skill_damage_add(&map[m], skill_name2id(skill), pc, mob, boss, other, caster);
 			}
 		}
 #else

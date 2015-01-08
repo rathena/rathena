@@ -112,6 +112,10 @@ int agit_flag = 0;
 int agit2_flag = 0;
 int night_flag = 0; // 0=day, 1=night [Yor]
 
+#ifdef ADJUST_SKILL_DAMAGE
+struct eri *map_skill_damage_ers = NULL;
+#endif
+
 struct charid_request {
 	struct charid_request* next;
 	int charid;// who want to be notified of the nick
@@ -3227,8 +3231,9 @@ void map_flags_init(void)
 
 		// skill damage
 #ifdef ADJUST_SKILL_DAMAGE
-		memset(map[i].skill_damage, 0, sizeof(map[i].skill_damage));
 		memset(&map[i].adjust.damage, 0, sizeof(map[i].adjust.damage));
+		if (map[i].skill_damage.count)
+			map_skill_damage_free(&map[i]);
 #endif
 
 		// adjustments
@@ -3916,6 +3921,65 @@ int cleanup_sub(struct block_list *bl, va_list ap)
 	return 1;
 }
 
+#ifdef ADJUST_SKILL_DAMAGE
+/**
+ * Free all skill damage entries for a map
+ * @param m Map data
+ **/
+void map_skill_damage_free(struct map_data *m) {
+	uint8 i;
+
+	for (i = 0; i < m->skill_damage.count; i++) {
+		ers_free(map_skill_damage_ers, m->skill_damage.entries[i]);
+		m->skill_damage.entries[i] = NULL;
+	}
+
+	aFree(m->skill_damage.entries);
+	m->skill_damage.entries = NULL;
+	m->skill_damage.count = 0;
+}
+
+/**
+ * Add new skill damage adjustment entry for a map
+ * @param m Map data
+ * @param skill_id Skill
+ * @param pc Rate to PC
+ * @param mobs Rate to Monster
+ * @param boss Rate to Boss-monster
+ * @param other Rate to Other target
+ * @param caster Caster type
+ **/
+void map_skill_damage_add(struct map_data *m, uint16 skill_id, int pc, int mob, int boss, int other, uint8 caster) {
+	struct s_skill_damage *entry;
+	int i = 0;
+
+	if (m->skill_damage.count >= UINT8_MAX)
+		return;
+
+	for (i = 0; i < m->skill_damage.count; i++) {
+		if (m->skill_damage.entries[i]->skill_id == skill_id) {
+			m->skill_damage.entries[i]->pc = pc;
+			m->skill_damage.entries[i]->mob = mob;
+			m->skill_damage.entries[i]->boss = boss;
+			m->skill_damage.entries[i]->other = other;
+			m->skill_damage.entries[i]->caster = caster;
+			return;
+		}
+	}
+
+	entry = ers_alloc(map_skill_damage_ers, struct s_skill_damage);
+	entry->skill_id = skill_id;
+	entry->pc = pc;
+	entry->mob = mob;
+	entry->boss = boss;
+	entry->other = other;
+	entry->caster = caster;
+
+	RECREATE(m->skill_damage.entries, struct s_skill_damage *, m->skill_damage.count+1);
+	m->skill_damage.entries[m->skill_damage.count++] = entry;
+}
+#endif
+
 /**
  * @see DBApply
  */
@@ -4001,6 +4065,10 @@ void do_final(void)
 			for (j=0; j<MAX_MOB_LIST_PER_MAP; j++)
 				if (map[i].moblist[j]) aFree(map[i].moblist[j]);
 		}
+#ifdef ADJUST_SKILL_DAMAGE
+		if (map[i].skill_damage.count)
+			map_skill_damage_free(&map[i]);
+#endif
 	}
 
 	mapindex_final();
@@ -4015,6 +4083,10 @@ void do_final(void)
 	charid_db->destroy(charid_db, NULL);
 	iwall_db->destroy(iwall_db, NULL);
 	regen_db->destroy(regen_db, NULL);
+
+#ifdef ADJUST_SKILL_DAMAGE
+	ers_destroy(map_skill_damage_ers);
+#endif
 
 	map_sql_close();
 
@@ -4254,6 +4326,10 @@ int do_init(int argc, char *argv[])
 	charid_db = idb_alloc(DB_OPT_BASE);
 	regen_db = idb_alloc(DB_OPT_BASE); // efficient status_natural_heal processing
 	iwall_db = strdb_alloc(DB_OPT_RELEASE_DATA,2*NAME_LENGTH+2+1); // [Zephyrus] Invisible Walls
+
+#ifdef ADJUST_SKILL_DAMAGE
+	map_skill_damage_ers = ers_new(sizeof(struct s_skill_damage), "map.c:map_skill_damage_ers", ERS_OPT_NONE);
+#endif
 
 	map_sql_init();
 	if (log_config.sql_logs)
