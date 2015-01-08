@@ -2306,13 +2306,13 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 	int m;
 	short x, y, xs, ys, to_x, to_y;
 	unsigned short i;
-	char mapname[32], to_mapname[32]; // TODO: Check why this does not use MAP_NAME_LENGTH_EXT
+	char mapname[MAP_NAME_LENGTH_EXT], to_mapname[MAP_NAME_LENGTH_EXT];
 	struct npc_data *nd;
 
 	// w1=<from map name>,<fromX>,<fromY>,<facing>
 	// w4=<spanx>,<spany>,<to map name>,<toX>,<toY>
-	if( sscanf(w1, "%31[^,],%6hd,%6hd", mapname, &x, &y) != 3
-	||	sscanf(w4, "%6hd,%6hd,%31[^,],%6hd,%6hd", &xs, &ys, to_mapname, &to_x, &to_y) != 5 )
+	if( sscanf(w1, "%15[^,],%6hd,%6hd", mapname, &x, &y) != 3
+	||	sscanf(w4, "%6hd,%6hd,%15[^,],%6hd,%6hd", &xs, &ys, to_mapname, &to_x, &to_y) != 5 )
 	{
 		ShowError("npc_parse_warp: Invalid warp definition in file '%s', line '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 		return strchr(start,'\n');// skip and continue
@@ -2400,8 +2400,8 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	}
 	else
 	{// w1=<map name>,<x>,<y>,<facing>
-		char mapname[32];  // TODO: Check why this does not use MAP_NAME_LENGTH_EXT
-		if( sscanf(w1, "%31[^,],%6hd,%6hd,%4hd", mapname, &x, &y, &dir) != 4
+		char mapname[MAP_NAME_LENGTH_EXT];
+		if( sscanf(w1, "%15[^,],%6hd,%6hd,%4hd", mapname, &x, &y, &dir) != 4
 		||	strchr(w4, ',') == NULL )
 		{
 			ShowError("npc_parse_shop: Invalid shop definition in file '%s', line '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
@@ -2706,9 +2706,9 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 	}
 	else
 	{// npc in a map
-		char mapname[32]; // TODO: Check why this does not use MAP_NAME_LENGTH_EXT
+		char mapname[MAP_NAME_LENGTH_EXT];
 
-		if( sscanf(w1, "%31[^,],%6hd,%6hd,%4hd", mapname, &x, &y, &dir) != 4 )
+		if( sscanf(w1, "%15[^,],%6hd,%6hd,%4hd", mapname, &x, &y, &dir) != 4 )
 		{
 			ShowError("npc_parse_script: Invalid placement format for a script in file '%s', line '%d'. Skipping the rest of file...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 			return NULL;// unknown format, don't continue
@@ -2864,9 +2864,9 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 		x = y = dir = 0;
 		m = -1;
 	} else {
-		char mapname[32]; // TODO: Check why this does not use MAP_NAME_LENGTH_EXT
+		char mapname[MAP_NAME_LENGTH_EXT];
 
-		if( sscanf(w1, "%31[^,],%6hd,%6hd,%4hd", mapname, &x, &y, &dir) != 4 ) { // <map name>,<x>,<y>,<facing>
+		if( sscanf(w1, "%15[^,],%6hd,%6hd,%4hd", mapname, &x, &y, &dir) != 4 ) { // <map name>,<x>,<y>,<facing>
 			ShowError("npc_parse_duplicate: Invalid placement format for duplicate in file '%s', line '%d'. Skipping line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 			return end;// next line, try to continue
 		}
@@ -3306,7 +3306,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 {
 	int num, class_, i, j, mob_lv = -1, ai = -1, size = -1;
 	short m,x,y,xs,ys;
-	char mapname[32], mobname[NAME_LENGTH]; // TODO: Check why this does not use MAP_NAME_LENGTH_EXT
+	char mapname[MAP_NAME_LENGTH_EXT], mobname[NAME_LENGTH];
 	struct spawn_data mob, *data;
 	struct mob_db* db;
 
@@ -3317,7 +3317,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	// w1=<map name>,<x>,<y>,<xs>,<ys>
 	// w3=<mob name>{,<mob level>}
 	// w4=<mob id>,<amount>,<delay1>,<delay2>,<event>{,<mob size>,<mob ai>}
-	if( sscanf(w1, "%31[^,],%6hd,%6hd,%6hd,%6hd", mapname, &x, &y, &xs, &ys) < 3
+	if( sscanf(w1, "%15[^,],%6hd,%6hd,%6hd,%6hd", mapname, &x, &y, &xs, &ys) < 3
 	||	sscanf(w3, "%23[^,],%11d", mobname, &mob_lv) < 1
 	||	sscanf(w4, "%11d,%11d,%11u,%11u,%127[^,],%11d,%11d[^\t\r\n]", &class_, &num, &mob.delay1, &mob.delay2, mob.eventname, &size, &ai) < 2 )
 	{
@@ -3500,7 +3500,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 		state = 0;	//Disable mapflag rather than enable it. [Skotlex]
 
 	if (!strcmpi(w3, "nosave")) {
-		char savemap[32]; // TODO: Check why this does not use MAP_NAME_LENGTH_EXT
+		char savemap[MAP_NAME_LENGTH_EXT];
 		short savex, savey;
 		if (state == 0)
 			; //Map flag disabled.
@@ -3508,7 +3508,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 			map[m].save.map = 0;
 			map[m].save.x = -1;
 			map[m].save.y = -1;
-		} else if (sscanf(w4, "%31[^,],%6hd,%6hd", savemap, &savex, &savey) == 3) {
+		} else if (sscanf(w4, "%15[^,],%6hd,%6hd", savemap, &savex, &savey) == 3) {
 			map[m].save.map = mapindex_name2id(savemap);
 			map[m].save.x = savex;
 			map[m].save.y = savey;
