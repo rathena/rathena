@@ -2501,7 +2501,6 @@ static int battle_get_weapon_element(struct Damage wd, struct block_list *src, s
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
 	struct status_change *sc = status_get_sc(src);
 	struct status_data *sstatus = status_get_status_data(src);
-	uint8 i;
 	int element = skill_get_ele(skill_id, skill_lv);
 
 	//Take weapon's element
@@ -2514,6 +2513,7 @@ static int battle_get_weapon_element(struct Damage wd, struct block_list *src, s
 			element = sd->bonus.arrow_ele;
 		// on official endows override all other elements [helvetica]
 		if (sd) { //Summoning 10 talisman will endow your weapon.
+			uint8 i;
 			ARR_FIND(1, 6, i, sd->talisman[i] >= 10);
 			if (i < 5)
 				element = i;
@@ -3087,7 +3087,7 @@ static struct Damage battle_calc_multi_attack(struct Damage wd, struct block_lis
 			}
 		}
 		else if( ((sd->weapontype1 == W_REVOLVER && (skill_lv = pc_checkskill(sd,GS_CHAINACTION)) > 0) //Normal Chain Action effect
-			|| (sd && sc->count && sc->data[SC_E_CHAIN] && (skill_lv = sc->data[SC_E_CHAIN]->val2) > 0)) //Chain Action of ETERNAL_CHAIN
+			|| (sd && sc && sc->count && sc->data[SC_E_CHAIN] && (skill_lv = sc->data[SC_E_CHAIN]->val2) > 0)) //Chain Action of ETERNAL_CHAIN
 			&& rnd()%100 < 5*skill_lv ) //Success rate
 		{
 			wd.div_ = skill_get_num(GS_CHAINACTION,skill_lv);

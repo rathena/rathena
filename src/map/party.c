@@ -754,7 +754,14 @@ int party_changeleader(struct map_session_data *sd, struct map_session_data *tsd
 			return 0; // Shouldn't happen
 	} else {
 		ARR_FIND(0,MAX_PARTY,mi,p->party.member[mi].leader);
+
+		if (mi == MAX_PARTY)
+			return 0; // Shouldn't happen
+
 		ARR_FIND(0,MAX_PARTY,tmi,p->data[tmi].sd ==  tsd);
+
+		if (tmi == MAX_PARTY)
+			return 0; // Shouldn't happen
 	}
 
 	// Change leadership.

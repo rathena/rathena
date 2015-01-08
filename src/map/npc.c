@@ -2387,7 +2387,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 {
 	char *p, point_str[32];
 	int m, is_discount = 0;
-	uint8 dir;
+	uint16 dir;
 	short x, y;
 	unsigned short nameid = 0;
 	struct npc_data *nd;
@@ -2401,7 +2401,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	else
 	{// w1=<map name>,<x>,<y>,<facing>
 		char mapname[32];  // TODO: Check why this does not use MAP_NAME_LENGTH_EXT
-		if( sscanf(w1, "%31[^,],%6hd,%6hd,%4d", mapname, &x, &y, &dir) != 4
+		if( sscanf(w1, "%31[^,],%6hd,%6hd,%4hd", mapname, &x, &y, &dir) != 4
 		||	strchr(w4, ',') == NULL )
 		{
 			ShowError("npc_parse_shop: Invalid shop definition in file '%s', line '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
@@ -2687,7 +2687,7 @@ static const char* npc_skip_script(const char* start, const char* buffer, const 
  * @return new index for next parsing
  */
 static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath, bool runOnInit) {
-	int8 dir = 0;
+	int16 dir = 0;
 	short m, x, y, xs = 0, ys = 0; // [Valaris] thanks to fov
 	struct script_code *script;
 	int i;
@@ -2708,7 +2708,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 	{// npc in a map
 		char mapname[32]; // TODO: Check why this does not use MAP_NAME_LENGTH_EXT
 
-		if( sscanf(w1, "%31[^,],%6hd,%6hd,%4d", mapname, &x, &y, &dir) != 4 )
+		if( sscanf(w1, "%31[^,],%6hd,%6hd,%4hd", mapname, &x, &y, &dir) != 4 )
 		{
 			ShowError("npc_parse_script: Invalid placement format for a script in file '%s', line '%d'. Skipping the rest of file...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 			return NULL;// unknown format, don't continue
@@ -2829,7 +2829,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
 	short x, y, m, xs = -1, ys = -1;
-	int8 dir;
+	int16 dir;
 	char srcname[128];
 	int i;
 	const char* end;
@@ -2866,7 +2866,7 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 	} else {
 		char mapname[32]; // TODO: Check why this does not use MAP_NAME_LENGTH_EXT
 
-		if( sscanf(w1, "%31[^,],%6hd,%6hd,%4d", mapname, &x, &y, &dir) != 4 ) { // <map name>,<x>,<y>,<facing>
+		if( sscanf(w1, "%31[^,],%6hd,%6hd,%4hd", mapname, &x, &y, &dir) != 4 ) { // <map name>,<x>,<y>,<facing>
 			ShowError("npc_parse_duplicate: Invalid placement format for duplicate in file '%s', line '%d'. Skipping line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 			return end;// next line, try to continue
 		}
@@ -3318,7 +3318,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	// w3=<mob name>{,<mob level>}
 	// w4=<mob id>,<amount>,<delay1>,<delay2>,<event>{,<mob size>,<mob ai>}
 	if( sscanf(w1, "%31[^,],%6hd,%6hd,%6hd,%6hd", mapname, &x, &y, &xs, &ys) < 3
-	||	sscanf(w3, "%23[^,],%d", mobname, &mob_lv) < 1
+	||	sscanf(w3, "%23[^,],%11d", mobname, &mob_lv) < 1
 	||	sscanf(w4, "%11d,%11d,%11u,%11u,%127[^,],%11d,%11d[^\t\r\n]", &class_, &num, &mob.delay1, &mob.delay2, mob.eventname, &size, &ai) < 2 )
 	{
 		ShowError("npc_parse_mob: Invalid mob definition in file '%s', line '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
@@ -3564,7 +3564,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 	else if (!strcmpi(w3, "pvp_nightmaredrop")) {
 		char drop_arg1[16], drop_arg2[16];
 		int drop_per = 0;
-		if (sscanf(w4, "%15[^,],%15[^,],%d", drop_arg1, drop_arg2, &drop_per) == 3) {
+		if (sscanf(w4, "%15[^,],%15[^,],%11d", drop_arg1, drop_arg2, &drop_per) == 3) {
 			int drop_id = 0, drop_type = 0;
 			if (!strcmpi(drop_arg1, "random"))
 				drop_id = -1;
@@ -3695,7 +3695,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 	else if (!strcmpi(w3,"restricted")) {
 		if (state) {
 			map[m].flag.restricted=1;
-			sscanf(w4, "%d", &state); // TODO: Something should be done if it could not be read
+			sscanf(w4, "%11d", &state); // TODO: Something should be done if it could not be read
 			map[m].zone |= 1<<(state+1);
 		} else {
 			map[m].flag.restricted=0;
@@ -4054,7 +4054,6 @@ void npc_clear_pathlist(void) {
 //Clear then reload npcs files
 int npc_reload(void) {
 	struct npc_src_list *nsl;
-	int16 m, i;
 	int npc_new_min = npc_id;
 	struct s_mapiterator* iter;
 	struct block_list* bl;
@@ -4087,7 +4086,9 @@ int npc_reload(void) {
 
 	if(battle_config.dynamic_mobs)
 	{// dynamic check by [random]
+		int16 m;
 		for (m = 0; m < map_num; m++) {
+			int16 i;
 			for (i = 0; i < MAX_MOB_LIST_PER_MAP; i++) {
 				if (map[m].moblist[i] != NULL) {
 					aFree(map[m].moblist[i]);

@@ -1814,7 +1814,6 @@ ACMD_FUNC(go)
 	int i;
 	int town;
 	char map_name[MAP_NAME_LENGTH];
-	int16 m;
 
 	const struct {
 		char map[MAP_NAME_LENGTH];
@@ -1983,7 +1982,7 @@ ACMD_FUNC(go)
 
 	if (town >= 0 && town < ARRAYLENGTH(data))
 	{
-		m = map_mapname2mapid(data[town].map);
+		int16 m = map_mapname2mapid(data[town].map);
 		if (m >= 0 && map[m].flag.nowarpto && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE)) {
 			clif_displaymessage(fd, msg_txt(sd,247));
 			return -1;
@@ -6042,7 +6041,7 @@ ACMD_FUNC(autolootitem)
  *------------------------------------------*/
 ACMD_FUNC(autoloottype)
 {
-	uint8 i = 0, action = 3; // 1=add, 2=remove, 3=help+list (default), 4=reset
+	uint8 action = 3; // 1=add, 2=remove, 3=help+list (default), 4=reset
 	enum item_types type = -1;
 	int ITEM_MAX = 1533;
 
@@ -6116,6 +6115,7 @@ ACMD_FUNC(autoloottype)
 			if (sd->state.autoloottype == 0)
 				clif_displaymessage(fd, msg_txt(sd,1489)); // Your autoloottype list is empty.
 			else {
+				uint8 i = 0;
 				clif_displaymessage(fd, msg_txt(sd,1490)); // Item types on your autoloottype list:
 				while (i < IT_MAX) {
 					if (sd->state.autoloottype&(1<<i)) {
@@ -8902,7 +8902,7 @@ ACMD_FUNC(accinfo) {
 	char type = 0; // type = 1, get only account name
 
 	if (!message || !*message || strlen(message) > NAME_LENGTH
-		|| ( sscanf(message, "%31s %c", query, &type) < 1))
+		|| ( sscanf(message, "%23s %c", query, &type) < 1))
 	{
 		clif_displaymessage(fd, msg_txt(sd,1365)); // Usage: @accinfo/@accountinfo <account_id/char name>
 		clif_displaymessage(fd, msg_txt(sd,1366)); // You may search partial name by making use of '%' in the search, ex. "@accinfo %Mario%" lists all characters whose name contains "Mario".

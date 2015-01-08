@@ -8641,12 +8641,13 @@ void clif_messagecolor(struct block_list* bl, unsigned long color, const char* m
 
 void clif_messagecolor2(struct map_session_data *sd, unsigned long color, const char* msg)
 {
-	int fd;
 	unsigned short msg_len = strlen(msg) + 1;
 
 	nullpo_retv(sd);
 
 	if(msg_len > 0) {
+		int fd;
+
 		color = (color & 0x0000FF) << 16 | (color & 0x00FF00) | (color & 0xFF0000) >> 16; // RGB to BGR
 
 		fd = sd->fd;

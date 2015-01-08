@@ -3441,7 +3441,6 @@ int parse_console(const char* buf){
 	char mapname[64];
 	int16 x = 0;
 	int16 y = 0;
-	int16 m;
 	int n;
 	struct map_session_data sd;
 
@@ -3470,7 +3469,7 @@ int parse_console(const char* buf){
 
 	if(strcmpi("admin",type) == 0 ) {
 		if(strcmpi("map",command) == 0){
-			m = map_mapname2mapid(mapname);
+			int16 m = map_mapname2mapid(mapname);
 			if( m < 0 ){
 				ShowWarning("Console: Unknown map.\n");
 				return 0;

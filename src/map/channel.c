@@ -382,7 +382,7 @@ int channel_chk(char *chname, char *chpass, int type){
 			return -4;
 		}
 	}
-	if (type&4 && (chpass != '\0' && strlen(chpass) > CHAN_NAME_LENGTH ) ) {
+	if (type&4 && (chpass[0] != '\0' && strlen(chpass) > CHAN_NAME_LENGTH ) ) {
 		return -3;
 	}
 

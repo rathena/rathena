@@ -17088,7 +17088,7 @@ BUILDIN_FUNC(waitingroom2bg)
 	}
 
 	n = cd->users;
-	for( i = 0; i < n && i < MAX_BG_MEMBERS; i++ )
+	for( i = 0; i < n && i < MAX_BG_MEMBERS; i++ ) // TODO: should this be MAX_CHAT_USERS?! otherwise cd->usersd[i] might be out of bounds
 	{
 		struct map_session_data *sd;
 		if( (sd = cd->usersd[i]) != NULL && bg_team_join(bg_id, sd) )
@@ -18270,7 +18270,6 @@ BUILDIN_FUNC(cleanmap)
 {
 	const char *mapname;
 	int16 m;
-	int16 x0 = 0, y0 = 0, x1 = 0, y1 = 0;
 
 	mapname = script_getstr(st, 2);
 	m = map_mapname2mapid(mapname);
@@ -18280,10 +18279,10 @@ BUILDIN_FUNC(cleanmap)
 	if ((script_lastdata(st) - 2) < 4) {
 		map_foreachinmap(atcommand_cleanfloor_sub, m, BL_ITEM);
 	} else {
-		x0 = script_getnum(st, 3);
-		y0 = script_getnum(st, 4);
-		x1 = script_getnum(st, 5);
-		y1 = script_getnum(st, 6);
+		int16 x0 = script_getnum(st, 3);
+		int16 y0 = script_getnum(st, 4);
+		int16 x1 = script_getnum(st, 5);
+		int16 y1 = script_getnum(st, 6);
 		if (x0 > 0 && y0 > 0 && x1 > 0 && y1 > 0) {
 			map_foreachinarea(atcommand_cleanfloor_sub, m, x0, y0, x1, y1, BL_ITEM);
 		} else {
@@ -19129,11 +19128,11 @@ BUILDIN_FUNC(mergeitem) {
 
 	if (script_hasdata(st, 2)) {
 		struct script_data *data = script_getdata(st, 2);
-		struct item_data *id;
 		get_val(st, data);
 
 		if (data_isstring(data)) {// "<item name>"
 			const char *name = conv_str(st,data);
+			struct item_data *id;
 			if (!(id = itemdb_searchname(name))) {
 				ShowError("buildin_mergeitem: Nonexistant item %s requested.\n", name);
 				script_pushint(st, count);
@@ -19143,7 +19142,7 @@ BUILDIN_FUNC(mergeitem) {
 		}
 		else if (data_isint(data)) {// <item id>
 			nameid = conv_num(st,data);
-			if (!(id = itemdb_exists(nameid))) {
+			if (!itemdb_exists(nameid)) {
 				ShowError("buildin_mergeitem: Nonexistant item %d requested.\n", nameid);
 				script_pushint(st, count);
 				return SCRIPT_CMD_FAILURE;
