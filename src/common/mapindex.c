@@ -1,10 +1,12 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include "../config/core.h"
+#include "../common/core.h"
+#include "../common/mapindex.h"
 #include "../common/mmo.h"
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
-#include "mapindex.h"
 
 #include <stdlib.h>
 
@@ -132,23 +134,26 @@ void mapindex_init(void) {
 	int last_index = -1;
 	int index;
 	char map_name[MAP_NAME_LENGTH];
-	char* mapindex_cfgfile[80] = {
-		"db/map_index.txt",
-		"db/import/map_index.txt"
+	char path[255];
+	const char* mapindex_cfgfile[] = {
+		"map_index.txt",
+		DBIMPORT"/map_index.txt"
 	};
 	int i;
 
 	memset (&indexes, 0, sizeof (indexes));
 	mapindex_db = strdb_alloc(DB_OPT_DUP_KEY, MAP_NAME_LENGTH);
 
-	for( i = 0; i < 2; i++ ){
-		if( ( fp = fopen(mapindex_cfgfile[i],"r") ) == NULL ){
+	for( i = 0; i < ARRAYLENGTH(mapindex_cfgfile); i++ ){
+		sprintf( path, "%s/%s", db_path, mapindex_cfgfile[i] );
+
+		if( ( fp = fopen( path, "r" ) ) == NULL ){
 			// It is only fatal if it is the main file
 			if( i == 0 ){
-				ShowFatalError("Unable to read mapindex config file %s!\n", mapindex_cfgfile[i]);
+				ShowFatalError("Unable to read mapindex config file %s!\n", path );
 				exit(EXIT_FAILURE); //Server can't really run without this file.
 			}else{
-				ShowWarning("Unable to read mapindex config file %s!\n", mapindex_cfgfile[i]);
+				ShowWarning("Unable to read mapindex config file %s!\n", path );
 				break;
 			}
 		}
