@@ -580,6 +580,7 @@ extern struct Battle_Config
 	int snap_dodge; // Enable or disable dodging damage snapping away [csnv]
 	int stormgust_knockback;
 	int default_fixed_castrate;
+	int default_bind_on_equip;
 } battle_config;
 
 void do_init_battle(void);

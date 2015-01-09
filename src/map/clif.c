@@ -2253,7 +2253,7 @@ void clif_additem(struct map_session_data *sd, int n, int amount, unsigned char 
 #endif
 #if PACKETVER >= 20071002
 		/* Yellow color only for non-stackable item */
-		WFIFOW(fd,offs+27)=(sd->status.inventory[n].bound && !itemdb_isstackable(sd->status.inventory[n].nameid)) ? BOUND_DISPYELLOW : 0;
+		WFIFOW(fd,offs+27)=(sd->status.inventory[n].bound && !itemdb_isstackable(sd->status.inventory[n].nameid)) ? BOUND_DISPYELLOW : sd->inventory_data[n]->flag.bindOnEquip ? BOUND_ONEQUIP : 0;
 #endif
 	}
 
@@ -2322,7 +2322,7 @@ void clif_item_sub_v5(unsigned char *buf, int n, int idx, struct item *it, struc
 		WBUFB(buf,n+13) = it->refine; //refine lvl
 		clif_addcards(WBUFP(buf, n+14), it); //EQUIPSLOTINFO 8B
 		WBUFL(buf,n+22) = it->expire_time;
-		WBUFW(buf,n+26) = it->bound ? BOUND_DISPYELLOW : 0; //bindOnEquipType
+		WBUFW(buf,n+26) = it->bound ? BOUND_DISPYELLOW : id->flag.bindOnEquip ? BOUND_ONEQUIP : 0; //bindOnEquipType
 		WBUFW(buf,n+28) = (id->equip&EQP_VISIBLE) ? id->look : 0;
 		//V5_ITEM_flag
 		WBUFB(buf,n+30) = it->identify; //0x1 IsIdentified
@@ -2359,7 +2359,7 @@ void clif_item_sub(unsigned char *buf, int n, int idx, struct item *it, struct i
 		clif_addcards(WBUFP(buf, n+12), it); //8B
 #if PACKETVER >= 20071002
 		WBUFL(buf,n+20) = it->expire_time;
-		WBUFW(buf,n+24) = it->bound ? BOUND_DISPYELLOW : 0;
+		WBUFW(buf,n+24) = it->bound ? BOUND_DISPYELLOW : id->flag.bindOnEquip ? BOUND_ONEQUIP : 0;
 #endif
 #if PACKETVER >= 20100629
 		WBUFW(buf,n+26) = (id->equip&EQP_VISIBLE) ? id->look : 0;
@@ -17408,6 +17408,26 @@ void clif_crimson_marker(struct map_session_data *sd, struct block_list *bl, boo
 	clif_send(buf, len, &sd->bl, SELF);
 }
 
+/**
+ * 02d3 <index>.W (ZC_NOTIFY_BIND_ON_EQUIP)
+ **/
+void clif_notify_bindOnEquip(struct map_session_data *sd, int n) {
+	struct s_packet_db *info = NULL;
+	int cmd = 0;
+
+	nullpo_retv(sd);
+
+	cmd = packet_db_ack[sd->packet_ver][ZC_NOTIFY_BIND_ON_EQUIP];
+	info = &packet_db[sd->packet_ver][cmd];
+	if (!cmd || !info->len)
+		return;
+
+	WFIFOHEAD(sd->fd, info->len);
+	WFIFOW(sd->fd, 0) = cmd;
+	WFIFOW(sd->fd, info->pos[0]) = n+2;
+	WFIFOSET(sd->fd, info->len);
+}
+
 /// [Ind/Hercules]
 void clif_showscript(struct block_list* bl, const char* message) {
 	char buf[256];
@@ -18105,6 +18125,7 @@ void packetdb_readdb(void)
 		{ "ZC_PERSONAL_INFOMATION_CHN", ZC_PERSONAL_INFOMATION_CHN},
 		{ "ZC_CLEAR_DIALOG", ZC_CLEAR_DIALOG},
 		{ "ZC_C_MARKERINFO", ZC_C_MARKERINFO},
+		{ "ZC_NOTIFY_BIND_ON_EQUIP", ZC_NOTIFY_BIND_ON_EQUIP },
 	};
 	const char *filename[] = { "packet_db.txt", DBIMPORT"/packet_db.txt"};
 	int f;

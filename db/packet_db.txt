@@ -1057,7 +1057,7 @@ packet_ver: 22
 0x02d0,-1
 0x02d1,-1
 0x02d2,-1
-0x02d3,4
+0x02d3,4,ZC_NOTIFY_BIND_ON_EQUIP,2
 0x02d4,29
 0x02d5,2
 0x02d6,6,viewplayerequip,2
