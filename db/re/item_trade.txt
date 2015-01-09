@@ -2080,6 +2080,14 @@
 16505,475,100	//Steamed_Tongue_Box_10
 16506,475,100	//Steamed_Desert_Scorpions_Box_10
 
+// Valor Set
+2482,475,100	// Shoes_Of_Valor
+2585,475,100	// Muffler_Of_Valor
+2895,475,100	// Medal_Of_Valor1
+2896,475,100	// Medal_Of_Valor2
+15045,475,100	// Armor_Of_Valor
+18578,475,100	// Helm_Of_Valor
+
 // kRO 2012-07-16
 7630,475,100	//Clean_Beach_Brush
 7631,475,100	//Trash_Debris
