@@ -160,6 +160,7 @@
 2481:2730,{ bonus bBaseAtk,getequiprefinerycnt(EQI_SHOES); }
 2481:2731,{ bonus bMatkRate,getequiprefinerycnt(EQI_SHOES)/2; bonus bVariableCastrate,-(getequiprefinerycnt(EQI_SHOES)/2); }
 2481:10031,{ bonus bCritical,(getequiprefinerycnt(EQI_SHOES)/2)*10; }
+2482:2585:2895:2896:15045:18578,{ bonus bMaxHP,500; bonus bMaxSP,300; bonus bBaseAtk,10; bonus bDef,10; }
 2483:2586:15046,{ bonus bVit,5; bonus2 bSubRace,RC_DemiHuman,15; bonus2 bSubRace,RC_Player,15; }
 2484:2586:15047,{ bonus bDex,5; bonus2 bSubRace,RC_DemiHuman,15; bonus2 bSubRace,RC_Player,15; }
 2485:2587:15048,{ bonus bInt,5; bonus bMdef,10; bonus2 bSubRace,RC_DemiHuman,15; bonus2 bSubRace,RC_Player,15; }

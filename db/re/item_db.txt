@@ -1567,7 +1567,7 @@
 2479,White_Wing_Boots,White Wing Boots,4,20,,400,,18,,1,0x00000800,63,2,64,,100,1,0,{ bonus bAgi,2; bonus2 bSkillUseSP,"RA_AIMEDBOLT",10; },{},{}
 2480,Black_Wing_Boots,Black Wing Boots,4,20,,400,,18,,1,0x00000800,56,2,64,,100,1,0,{ bonus bInt,2; bonus bMaxSPrate,5; },{},{}
 2481,Rune_Boots,Rune Boots,4,20,,100,,5,,1,0xFFFFFFFF,63,2,64,,0,1,0,{},{},{}
-2482,Shoes_Of_Valor,Shoes Of Valor,4,0,,0,,4,,0,0xFFFFFFFF,63,2,64,,0,0,0,{},{},{}
+2482,Shoes_Of_Valor,Shoes Of Valor,4,0,,0,,4,,0,0xFFFFFFFF,63,2,64,,0,0,0,{ skill "AL_HEAL",1; bonus bUseSPrate,10; },{},{}
 2483,Siege_Greave,Siege Greaves,4,10,,750,,30,,1,0x006444A2,63,2,64,,95,1,0,{ bonus bMdef,1; bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; },{},{}
 2484,Siege_Boots,Siege Boots,4,10,,500,,20,,1,0x036E5CEA,63,2,64,,95,1,0,{ bonus bMdef,5; bonus2 bSubRace,RC_DemiHuman,1; bonus2 bSubRace,RC_Player,1; },{},{}
 2485,Siege_Shoes,Siege Shoes,4,10,,350,,15,,1,0x00818315,63,2,64,,95,1,0,{ bonus bMdef,10; bonus2 bSubRace,RC_DemiHuman,1; bonus2 bSubRace,RC_Player,1; },{},{}
@@ -1664,7 +1664,7 @@
 2582,Salvage_Cape,Salvage Cape,4,56000,,400,,1,,0,0x00000300,63,2,4,,130,1,0,{ skill "NJ_UTSUSEMI",1; bonus2 bSkillCooldown,"NJ_UTSUSEMI",30000; bonus bUseSPrate,100; },{},{ heal 0,-1200; }
 2583,Holy_Cape,Holy Cape,4,20,,100,,5,,1,0xFFFFFFFF,63,2,4,,50,1,0,{ bonus bDex,-5; bonus bMdef,5; },{},{}
 2584,Wanderer_Outer,Wanderer Outer,4,20,,500,,8,,1,0xFFFFFFFF,63,2,4,,0,1,0,{},{},{}
-2585,Muffler_Of_Valor,Muffler Of Valor,4,0,,0,,4,,0,0xFFFFFFFF,63,2,4,,0,0,0,{},{},{}
+2585,Muffler_Of_Valor,Muffler Of Valor,4,0,,0,,4,,0,0xFFFFFFFF,63,2,4,,0,0,0,{ bonus bSPrecovRate,10; },{},{}
 2586,Siege_Manteau,Siege Manteau,4,10,,600,,32,,1,0xFFFFFFFE,63,2,4,,95,1,0,{ bonus bMdef,1; bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; },{},{}
 2587,Siege_Muffler,Siege Muffler,4,10,,400,,15,,1,0xFFFFFFFF,63,2,4,,95,1,0,{ bonus bMdef,10; bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; },{},{}
 2588,Ragamuffin_Cape_,Ragamuffin Cape,4,56000,,500,,4,,1,0xFFFFFFFE,63,2,4,,40,1,0,{ bonus bMdef,10; },{},{}
@@ -1969,8 +1969,8 @@
 2892,Assassin_Handcuffs,Assassin's Glove,4,56000,,400,,3,,1,0x00001000,63,2,136,,100,0,0,{ bonus bMaxSP,20; bonus bCritical,3; },{},{}
 2893,Cursed_Heart,Cursed Heart,4,20,,50,,0,,1,0xFFFFFFFF,63,2,136,,80,0,0,{},{},{}
 2894,Glove_Of_Shura,Sura Gauntlet,4,20,,400,,1,,0,0x00008000,63,2,136,,130,0,0,{ bonus bStr,5; bonus bMaxSPrate,6; bonus bMaxHPrate,-6; if(readparam(bStr)>=120){ bonus bBaseAtk,30; } },{},{}
-2895,Medal_Of_Valor1,Medal Of Valor1,4,0,,0,,4,,0,0xFFFFFFFF,63,2,136,,0,0,0,{},{},{}
-2896,Medal_Of_Valor2,Medal Of Valor2,4,0,,0,,4,,0,0xFFFFFFFF,63,2,136,,0,0,0,{},{},{}
+2895,Medal_Of_Valor1,Medal Of Valor1,4,0,,0,,4,,0,0xFFFFFFFF,63,2,136,,0,0,0,{ bonus bVariableCastrate,-2; },{},{}
+2896,Medal_Of_Valor2,Medal Of Valor2,4,0,,0,,4,,0,0xFFFFFFFF,63,2,136,,0,0,0,{ bonus bAspdRate,3; },{},{}
 2897,2011RWC_Necklace_J,2011RWC Necklace J,4,0,,100,,0,,0,0xFFFFFFFF,63,2,136,,0,0,0,{ bonus2 bAddClass,Class_All,5; bonus bMatkRate,5; bonus2 bExpAddClass,Class_All,1; },{},{}
 2898,Black_Rosary,Dark Rosary,4,20,,100,,0,,1,0xFFFFFFFF,63,2,136,,90,0,0,{ bonus bMdef,15; },{},{}
 2899,Sound_Amplifier,Sound Amplification Device,4,20,,100,,0,,1,0x00080800,63,2,136,,90,0,0,{ bonus2 bSkillAtk,"WM_METALICSOUND",150; bonus2 bSkillUseSP,"WM_METALICSOUND",-60; bonus bVariableCastrate,-50; },{},{}
@@ -8197,7 +8197,7 @@
 15042,White_Wing_Suits,White Wing Suits,4,20,,100,,45,,1,0x00000800,63,2,16,,100,1,0,{ bonus bLongAtkRate,getrefine()*2; bonus bFlee,getrefine(); },{},{}
 15043,Black_Wing_Suits,Black Wing Suits,4,20,,100,,45,,1,0x00000800,56,2,16,,100,1,0,{ bonus bInt,2; bonus bBaseAtk,getrefine()*3; },{},{}
 15044,Green_Operation_Coat,Green Surgical Gown,4,56000,,660,,66,,1,0x00040000,63,2,16,,100,1,0,{ bonus bDex,1; bonus bMaxSP,30; },{},{}
-15045,Armor_Of_Valor,Armor Of Valor,4,0,,0,,4,,0,0xFFFFFFFF,63,2,16,,0,0,0,{},{},{}
+15045,Armor_Of_Valor,Armor Of Valor,4,0,,0,,4,,0,0xFFFFFFFF,63,2,16,,0,0,0,{ bonus bHPrecovRate,10; },{},{}
 15046,Siege_Plate,Siege Plate,4,0,,3300,,85,,1,0x006444A2,63,2,16,,95,1,0,{ bonus bMdef,5; bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; if(getrefine()>5) { bonus bHealpower2,12; bonus bAddItemHealRate,12; } if(getrefine()>8) { bonus bMaxHPrate,25; } },{},{}
 15047,Siege_Suits,Siege Suit,4,0,,750,,50,,1,0x036E5CEA,63,2,16,,95,1,0,{ bonus bMdef,10; bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; if(getrefine()>5) { bonus bFlee2,5; bonus bLongAtkDef,20; } if(getrefine()>8) { bonus bMaxHPrate,15; } },{},{}
 15048,Siege_Robe,Siege Robe,4,0,,500,,40,,1,0x00818315,63,2,16,,95,1,0,{ bonus bMdef,20; bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; if(getrefine()>5) { bonus bFlee,5; bonus bLongAtkDef,15; } if(getrefine()>8) { bonus bMaxHP,1000; bonus bMaxSP,100; } },{},{}
@@ -9035,7 +9035,7 @@
 18575,Wunderkammer,Wunderkammer,4,20,,500,,10,,1,0xFFFFFFFF,63,2,769,,20,0,743,{ bonus bMdef,10; },{},{}
 18576,YinYang_Earring,YinYang Earring,4,20,,100,,0,,0,0xFFFFFFFF,63,2,512,,50,0,744,{ bonus2 bSkillAtk,"MO_CHAINCOMBO",10; bonus2 bSkillAtk,"MO_TRIPLEATTACK",5; bonus2 bSkillAtk,"MO_COMBOFINISH",5; bonus2 bSkillUseSP,"MO_CHAINCOMBO",1; bonus2 bSkillUseSP,"MO_COMBOFINISH",1; },{},{}
 18577,24_Bolt,24 Bolt,4,20,,200,,0,,0,0xFFFFFFFF,63,2,512,,10,0,696,{},{},{}
-18578,Helm_Of_Valor,Helm Of Valor,4,0,,0,,4,,0,0xFFFFFFFF,63,2,256,,0,0,258,{},{},{}
+18578,Helm_Of_Valor,Helm Of Valor,4,0,,0,,4,,0,0xFFFFFFFF,63,2,256,,0,0,258,{ bonus2 bAddRace,RC_All,3; },{},{}
 18579,9th_Anni_Hat,9th Anni Hat,4,0,,90,,0,,0,0xFFFFFFFF,63,2,256,,0,1,745,{ bonus bMdef,9; },{},{}
 18580,Yggdrasil_Crown,Yggdrasil Crown,4,20,,200,,3,,1,0xFFFFFFFF,63,2,256,,1,1,746,{ bonus bMdef,3; bonus bHealPower,2; bonus bHealpower2,10; if(getrefine() >= 7){ bonus bHealPower,5; } if(getrefine() >= 9){ bonus bHealPower,3; } },{},{}
 18581,Red_Tiger_Mask,Red Tiger Mask,4,20,,400,,2,,0,0xFFFFFFFF,63,2,768,,50,0,747,{ bonus bStr,3; bonus bMaxHP,100; },{},{}
