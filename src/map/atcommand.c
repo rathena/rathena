@@ -7581,7 +7581,7 @@ ACMD_FUNC(whodrops)
 				if (pc_isvip(sd) && battle_config.vip_drop_increase)
 					dropchance += battle_config.vip_drop_increase;
 #endif
-				sprintf(atcmd_output, "- %s (%02.02f%%)", mob_db(item_data->mob[j].id)->jname, dropchance/100.);
+				sprintf(atcmd_output, "- %s (%d): %02.02f%%", mob_db(item_data->mob[j].id)->jname, item_data->mob[j].id, dropchance/100.);
 				clif_displaymessage(fd, atcmd_output);
 			}
 		}
