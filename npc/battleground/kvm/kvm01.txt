@@ -221,22 +221,22 @@ OnTimer30000:
 
 OnTimer45000:
 	mapannounce "bat_c01", "15 seconds remaining to start KVM battle.",bc_map,"0x00ff00";
-	donpcevent "::OnKvM01One";
+	donpcevent "CellEffect::OnKvM01One";
 	end;
 
 OnTimer50000:
 	mapannounce "bat_c01", "10 seconds remaining to start KVM battle.",bc_map,"0x00ff00";
-	donpcevent "::OnKvM01Two";
+	donpcevent "CellEffect::OnKvM01Two";
 	end;
 
 OnTimer55000:
 	mapannounce "bat_c01", "5 seconds remaining to start KVM battle.",bc_map,"0x00ff00";
-	donpcevent "::OnKvM01One";
+	donpcevent "CellEffect::OnKvM01One";
 	end;
 
 OnTimer59000:
 	mapannounce "bat_c01", "KVM is now commencing.",bc_map,"0x00ff00";
-	donpcevent "::OnKvM01Two";
+	donpcevent "CellEffect::OnKvM01Two";
 	end;
 
 OnTimer61000:
