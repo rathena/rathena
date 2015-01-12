@@ -17717,7 +17717,7 @@ int skill_unit_move_sub(struct block_list* bl, va_list ap)
 					if( i < ARRAYLENGTH(skill_unit_temp) )
 						skill_unit_temp[i] = skill_id;
 					else
-						ShowError("skill_unit_move_sub: Reached limit of unit objects per cell!\n");
+						ShowError("skill_unit_move_sub: Reached limit of unit objects per cell! (skill_id: %hu)\n", skill_id );
 				}
 			}
 
@@ -17746,7 +17746,7 @@ int skill_unit_move_sub(struct block_list* bl, va_list ap)
 				if( i < ARRAYLENGTH(skill_unit_temp) )
 					skill_unit_temp[i] = skill_id;
 				else
-					ShowError("skill_unit_move_sub: Reached limit of unit objects per cell!\n");
+					ShowError("skill_unit_move_sub: Reached limit of unit objects per cell! (skill_id: %hu)\n", skill_id );
 			}
 		}
 
