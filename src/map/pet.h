@@ -7,28 +7,31 @@
 #define MAX_PET_DB	300
 #define MAX_PETLOOT_SIZE	30
 
+/// Pet DB
 struct s_pet_db {
-	short class_;
-	char name[NAME_LENGTH],jname[NAME_LENGTH];
-	short itemID;
-	short EggID;
-	short AcceID;
-	short FoodID;
-	int fullness;
-	int hungry_delay;
-	int r_hungry;
-	int r_full;
-	int intimate;
-	int die;
-	int capture;
-	int speed;
-	char s_perfor;
-	int talk_convert_class;
-	int attack_rate;
-	int defence_attack_rate;
-	int change_target_rate;
-	struct script_code *equip_script;
-	struct script_code *pet_script;
+	short class_; ///< Monster ID
+	char name[NAME_LENGTH], ///< AEGIS name
+		jname[NAME_LENGTH]; ///< English name
+	short itemID; ///< Lure ID
+	short EggID; ///< Egg ID
+	short AcceID; ///< Accessory ID
+	short FoodID; ///< Food ID
+	int fullness; ///< Amount of hunger decresed each hungry_delay interval
+	int hungry_delay; ///< Hunger value decrease each x seconds
+	int r_hungry; ///< Intimacy increased after feeding
+	int r_full; ///< Intimacy reduced when over-fed
+	int intimate; ///< Initial intimacy value
+	int die; ///< Intimacy decreased when die
+	int capture; ///< Capture success rate 1000 = 100%
+	int speed; ///< Walk speed
+	char s_perfor; ///< Special performance
+	int talk_convert_class; ///< Disables pet talk (instead of talking they emote  with /!.) (?)
+	int attack_rate; ///< Rate of which the pet will attack (requires at least pet_support_min_friendly intimacy).
+	int defence_attack_rate; ///< Rate of which the pet will retaliate when master is being attacked (requires at least pet_support_min_friendly intimacy).
+	int change_target_rate; ///< Rate of which the pet will change its attack target.
+	struct script_code
+		*pet_script, ///< Script since pet hatched
+		*pet_loyal_script; ///< Script when pet is loyal
 };
 extern struct s_pet_db pet_db[MAX_PET_DB];
 
@@ -42,15 +45,16 @@ struct pet_recovery { //Stat recovery
 
 struct pet_bonus {
 	unsigned short type; //bStr, bVit?
-	unsigned short val;	//Qty
-	unsigned short duration; //in secs
-	unsigned short delay;	//Time before RENEWAL_CAST (secs)
+	unsigned short val;	//value
+	unsigned short duration; //in seconds
+	unsigned short delay;	//Time before re-effect the bonus in seconds
 	int timer;
 };
 
 struct pet_skill_attack { //Attack Skill
 	unsigned short id;
-	unsigned short lv;
+	unsigned short lv; // Skill level
+	unsigned short damage; // Fixed damage value of petskillattack2
 	unsigned short div_; //0 = Normal skill. >0 = Fixed damage (lv), fixed div_.
 	unsigned short rate; //Base chance of skill ocurrance (10 = 10% of attacks)
 	unsigned short bonusrate; //How being 100% loyal affects cast rate (10 = At 1000 intimacy->rate+10%
@@ -87,7 +91,7 @@ struct pet_data {
 	} state;
 	int move_fail_count;
 	unsigned int next_walktime,last_thinktime;
-	short rate_fix;	//Support rate as modified by intimacy (1000 = 100%) [Skotlex]
+	unsigned short rate_fix;	//Support rate as modified by intimacy (1000 = 100%) [Skotlex]
 
 	struct pet_recovery* recovery;
 	struct pet_bonus* bonus;

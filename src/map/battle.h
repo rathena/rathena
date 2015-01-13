@@ -113,6 +113,9 @@ int battle_check_target(struct block_list *src, struct block_list *target,int fl
 bool battle_check_range(struct block_list *src,struct block_list *bl,int range);
 
 void battle_consume_ammo(struct map_session_data* sd, int skill, int lv);
+
+bool is_infinite_defense(struct block_list *target, int flag);
+
 // Settings
 
 #define MIN_HAIR_STYLE battle_config.min_hair_style
@@ -581,6 +584,7 @@ extern struct Battle_Config
 	int stormgust_knockback;
 	int default_fixed_castrate;
 	int default_bind_on_equip;
+	int pet_ignore_infinite_def; // Makes fixed damage of petskillattack2 ignores infinite defense
 } battle_config;
 
 void do_init_battle(void);

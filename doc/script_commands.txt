@@ -1044,6 +1044,7 @@ From here on, we will have the commands sorted as follow:
 8.- Quest Log commands.
 9.- Battleground commands.
 10.- Pet commands.
+10.1.- The Pet AI commands.
 11.- Homunculus commands.
 12.- Mercenary commands.
 13.- Party commands.
@@ -8048,8 +8049,10 @@ currently has active. Valid types are:
 
 ---------------------------------------
 
-* The Pet AI commands
-  -------------------
+=============================
+|10.1.- The Pet AI commands.|
+=============================
+---------------------------------------
 
 These commands will only work if the invoking character has a pet, and are meant 
 to be executed from pet scripts. They will modify the pet AI decision-making for 
@@ -8086,9 +8089,11 @@ Nobody tried this before, so you're essentially on your own here.
 
 *petskillbonus <bonus type>,<value>,<duration>,<delay>;
 
-This command will make the pet give a bonus to the owner's stat (bonus type -
-bInt,bVit,bDex,bAgi,bLuk,bStr,bSpeedRate - for a full list, see the values 
-starting with 'b' in 'db/const.txt')
+This command will make the pet give a bonus to the owner's stat in certain
+duration in seconds and will be repeated for certain delay in seconds.
+
+For a full bonus list, see 'doc/item_bonus.txt'
+NOTE: Currently ONLY supported for bonuses that used by 'bonus' script.
 
 ---------------------------------------
 
@@ -8117,7 +8122,7 @@ This will make the pet use a specified support skill on the owner whenever the
 HP and SP are below the given percent values, with a specified delay time 
 between activations. The skill numbers are as per 'db/(pre-)re/skill_db.txt'.
 'petheal' works the same as 'petskillsupport' but has the skill ID hard-coded to 
-28 (Heal). This command is deprecated.
+AL_HEAL (ID:28). This command is deprecated.
 It's not quite certain who's stats will be used for the skills cast, the 
 character's or the pets. Probably, Skotlex can answer that question.
 
@@ -8132,6 +8137,8 @@ These two commands will make the pet cast an attack skill on the enemy the pet's
 owner is currently fighting. Skill IDs and levels are as per 'petskillsupport'. 
 'petskillattack2' will make the pet cast the skill with a fixed amount of damage 
 inflicted and the specified number of attacks.
+
+Value of 'rate' is between 1 and 100. 100 = 100%
 
 ---------------------------------------
 

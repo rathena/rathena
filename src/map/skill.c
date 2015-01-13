@@ -2892,18 +2892,24 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 
 	dmg = battle_calc_attack(attack_type,src,bl,skill_id,skill_lv,flag&0xFFF);
 
-	//Skotlex: Adjusted to the new system
+	//! CHECKME: This check maybe breaks the battle_calc_attack, and maybe need better calculation.
+	// Adjusted to the new system [Skotlex]
 	if( src->type == BL_PET ) { // [Valaris]
 		struct pet_data *pd = (TBL_PET*)src;
-		if (pd->a_skill && pd->a_skill->div_ && pd->a_skill->id == skill_id) {
-			int element = skill_get_ele(skill_id, skill_lv);
-			/*if (skill_id == -1) Does it ever worked?
-				element = sstatus->rhw.ele;*/
-			if (element != ELE_NEUTRAL || !(battle_config.attack_attr_none&BL_PET))
-				dmg.damage=battle_attr_fix(src, bl, skill_lv, element, tstatus->def_ele, tstatus->ele_lv);
+		if (pd->a_skill && pd->a_skill->div_ && pd->a_skill->id == skill_id) { //petskillattack2
+			if (battle_config.pet_ignore_infinite_def || !is_infinite_defense(bl,dmg.flag)) {
+				int element = skill_get_ele(skill_id, skill_lv);
+				/*if (skill_id == -1) Does it ever worked?
+					element = sstatus->rhw.ele;*/
+				if (element != ELE_NEUTRAL || !(battle_config.attack_attr_none&BL_PET))
+					dmg.damage = battle_attr_fix(src, bl, pd->a_skill->damage, element, tstatus->def_ele, tstatus->ele_lv);
+				else
+					dmg.damage = pd->a_skill->damage; // Fixed damage
+				
+			}
 			else
-				dmg.damage= skill_lv;
-			dmg.damage2=0;
+				dmg.damage = 1*pd->a_skill->div_;
+			dmg.damage2 = 0;
 			dmg.div_= pd->a_skill->div_;
 		}
 	}

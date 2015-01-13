@@ -2030,7 +2030,7 @@ void status_change_clear_buffs(struct block_list* bl, int type);
 
 void status_calc_bl_(struct block_list *bl, enum scb_flag flag, enum e_status_calc_opt opt);
 int status_calc_mob_(struct mob_data* md, enum e_status_calc_opt opt);
-int status_calc_pet_(struct pet_data* pd, enum e_status_calc_opt opt);
+void status_calc_pet_(struct pet_data* pd, enum e_status_calc_opt opt);
 int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt);
 int status_calc_homunculus_(struct homun_data *hd, enum e_status_calc_opt opt);
 int status_calc_mercenary_(struct mercenary_data *md, enum e_status_calc_opt opt);
