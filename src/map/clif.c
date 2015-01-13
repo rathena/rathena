@@ -12513,7 +12513,7 @@ void clif_parse_OpenVending(int fd, struct map_session_data* sd){
 	if( message[0] == '\0' ) // invalid input
 		return;
 
-	vending_openvending(sd, message, data, len/8);
+	vending_openvending(sd, message, data, len/8, NULL);
 }
 
 
@@ -16235,7 +16235,7 @@ static void clif_parse_ReqOpenBuyingStore(int fd, struct map_session_data* sd)
 	}
 	count = packet_len/blocksize;
 
-	buyingstore_create(sd, zenylimit, result, storename, itemlist, count);
+	buyingstore_create(sd, zenylimit, result, storename, itemlist, count, NULL);
 }
 
 
