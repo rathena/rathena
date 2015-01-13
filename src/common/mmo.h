@@ -278,12 +278,12 @@ struct storage_data {
 };
 
 struct guild_storage {
-	int dirty;
+	bool dirty;
 	int guild_id;
-	short storage_status;
 	short storage_amount;
 	struct item items[MAX_GUILD_STORAGE];
-	unsigned short lock;
+	bool locked;
+	int opened; /// Holds the char_id that open the storage
 };
 
 struct s_pet {

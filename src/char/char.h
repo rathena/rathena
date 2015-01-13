@@ -199,6 +199,7 @@ struct char_session_data {
 	uint8 isvip;
 	time_t unban_time[MAX_CHARS];
 	int charblock_timer;
+	uint8 flag; // &1 - Retrieving guild bound items
 };
 
 
@@ -262,6 +263,10 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int slot, 
 #else
 int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style);
 #endif
+
+void char_set_session_flag_(int account_id, int val, bool set);
+#define char_set_session_flag(account_id, val)   ( char_set_session_flag_((account_id), (val), true)  )
+#define char_unset_session_flag(account_id, val) ( char_set_session_flag_((account_id), (val), false) )
 
 //For use in packets that depend on an sd being present [Skotlex]
 #define FIFOSD_CHECK(rest) { if(RFIFOREST(fd) < rest) return 0; if (sd==NULL || !sd->auth) { RFIFOSKIP(fd,rest); return 0; } }

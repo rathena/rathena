@@ -293,7 +293,7 @@ int chrif_save(struct map_session_data *sd, int flag) {
 
 	//For data sync
 	if (sd->state.storage_flag == 2)
-		storage_guild_storagesave(sd->status.account_id, sd->status.guild_id, flag);
+		gstorage_storagesave(sd->status.account_id, sd->status.guild_id, flag);
 
 	if (flag)
 		sd->state.storage_flag = 0; //Force close it.

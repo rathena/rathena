@@ -1528,16 +1528,16 @@ bool map_closest_freecell(int16 m, int16 *x, int16 *y, int type, int flag)
 int map_addflooritem(struct item *item,int amount,int16 m,int16 x,int16 y,int first_charid,int second_charid,int third_charid,int flags)
 {
 	int r;
-	struct flooritem_data *fitem=NULL;
+	struct flooritem_data *fitem = NULL;
 
 	nullpo_ret(item);
 
-	if(!(flags&4) && battle_config.item_onfloor && (itemdb_traderight(item->nameid)&1) )
+	if (!(flags&4) && battle_config.item_onfloor && (itemdb_traderight(item->nameid)&1))
 		return 0; //can't be dropped
 
-	if(!map_searchrandfreecell(m,&x,&y,flags&2?1:0))
+	if (!map_searchrandfreecell(m,&x,&y,flags&2?1:0))
 		return 0;
-	r=rnd();
+	r = rnd();
 
 	CREATE(fitem, struct flooritem_data, 1);
 	fitem->bl.type=BL_ITEM;
@@ -1546,7 +1546,7 @@ int map_addflooritem(struct item *item,int amount,int16 m,int16 x,int16 y,int fi
 	fitem->bl.x=x;
 	fitem->bl.y=y;
 	fitem->bl.id = map_get_new_object_id();
-	if(fitem->bl.id==0){
+	if (fitem->bl.id==0) {
 		aFree(fitem);
 		return 0;
 	}
@@ -1559,13 +1559,13 @@ int map_addflooritem(struct item *item,int amount,int16 m,int16 x,int16 y,int fi
 	fitem->third_get_tick = fitem->second_get_tick + (flags&1 ? battle_config.mvp_item_third_get_time : battle_config.item_third_get_time);
 
 	memcpy(&fitem->item,item,sizeof(*item));
-	fitem->item.amount=amount;
-	fitem->subx=(r&3)*3+3;
-	fitem->suby=((r>>2)&3)*3+3;
-	fitem->cleartimer=add_timer(gettick()+battle_config.flooritem_lifetime,map_clearflooritem_timer,fitem->bl.id,0);
+	fitem->item.amount = amount;
+	fitem->subx = (r&3)*3+3;
+	fitem->suby = ((r>>2)&3)*3+3;
+	fitem->cleartimer = add_timer(gettick()+battle_config.flooritem_lifetime,map_clearflooritem_timer,fitem->bl.id,0);
 
 	map_addiddb(&fitem->bl);
-	if(map_addblock(&fitem->bl))
+	if (map_addblock(&fitem->bl))
 		return 0;
 	clif_dropflooritem(fitem);
 

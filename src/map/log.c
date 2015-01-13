@@ -74,6 +74,7 @@ static char log_picktype2char(e_log_pick_type type)
 		case LOG_TYPE_BANK:             return 'K';  // Ban(K) Transactions
 		case LOG_TYPE_OTHER:			return 'X';  // Other
 		case LOG_TYPE_CASH:				return '$';  // Cash
+		case LOG_TYPE_BOUND_REMOVAL:	return 'B';  // Removed bound items when guild/party is broken
 	}
 
 	// should not get here, fallback

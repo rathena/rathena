@@ -419,10 +419,9 @@ struct item_data* itemdb_search(unsigned short nameid) {
 * @param id Item data
 * @return True if item is equip, false otherwise
 */
-bool itemdb_isequip2(struct item_data *id)
-{
+bool itemdb_isequip2(struct item_data *id) {
 	nullpo_ret(id);
-	switch(id->type) {
+	switch (id->type) {
 		case IT_WEAPON:
 		case IT_ARMOR:
 		case IT_AMMO:

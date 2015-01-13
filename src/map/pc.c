@@ -4430,47 +4430,47 @@ bool pc_dropitem(struct map_session_data *sd,int n,int amount)
  *------------------------------------------*/
 bool pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 {
-	int flag=0;
+	int flag = 0;
 	unsigned int tick = gettick();
 	struct party_data *p = NULL;
 
 	nullpo_ret(sd);
 	nullpo_ret(fitem);
 
-	if(!check_distance_bl(&fitem->bl, &sd->bl, 2) && sd->ud.skill_id!=BS_GREED)
+	if (!check_distance_bl(&fitem->bl, &sd->bl, 2) && sd->ud.skill_id!=BS_GREED)
 		return false;	// Distance is too far
 
-	if( sd->sc.cant.pickup )
+	if (sd->sc.cant.pickup)
 		return false;
 
 	if (sd->status.party_id)
 		p = party_search(sd->status.party_id);
 
-	if(fitem->first_get_charid > 0 && fitem->first_get_charid != sd->status.char_id) {
+	if (fitem->first_get_charid > 0 && fitem->first_get_charid != sd->status.char_id) {
 		struct map_session_data *first_sd = map_charid2sd(fitem->first_get_charid);
-		if(DIFF_TICK(tick,fitem->first_get_tick) < 0) {
+		if (DIFF_TICK(tick,fitem->first_get_tick) < 0) {
 			if (!(p && p->party.item&1 &&
 				first_sd && first_sd->status.party_id == sd->status.party_id
-			))
+				))
 				return false;
 		}
-		else if(fitem->second_get_charid > 0 && fitem->second_get_charid != sd->status.char_id) {
+		else if (fitem->second_get_charid > 0 && fitem->second_get_charid != sd->status.char_id) {
 			struct map_session_data *second_sd = map_charid2sd(fitem->second_get_charid);
-			if(DIFF_TICK(tick, fitem->second_get_tick) < 0) {
-				if(!(p && p->party.item&1 &&
+			if (DIFF_TICK(tick, fitem->second_get_tick) < 0) {
+				if (!(p && p->party.item&1 &&
 					((first_sd && first_sd->status.party_id == sd->status.party_id) ||
 					(second_sd && second_sd->status.party_id == sd->status.party_id))
-				))
+					))
 					return false;
 			}
-			else if(fitem->third_get_charid > 0 && fitem->third_get_charid != sd->status.char_id){
+			else if (fitem->third_get_charid > 0 && fitem->third_get_charid != sd->status.char_id){
 				struct map_session_data *third_sd = map_charid2sd(fitem->third_get_charid);
-				if(DIFF_TICK(tick,fitem->third_get_tick) < 0) {
+				if (DIFF_TICK(tick,fitem->third_get_tick) < 0) {
 					if(!(p && p->party.item&1 &&
 						((first_sd && first_sd->status.party_id == sd->status.party_id) ||
 						(second_sd && second_sd->status.party_id == sd->status.party_id) ||
 						(third_sd && third_sd->status.party_id == sd->status.party_id))
-					))
+						))
 						return false;
 				}
 			}

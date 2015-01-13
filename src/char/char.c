@@ -1809,7 +1809,24 @@ void char_disconnect_player(uint32 account_id)
 		set_eof(i);
 }
 
+/**
+* Set 'flag' value of char_session_data
+* @param account_id
+* @param value
+* @param set True: set the value by using '|= val', False: unset the value by using '&= ~val'
+**/
+void char_set_session_flag_(int account_id, int val, bool set) {
+	int i;
+	struct char_session_data* sd;
 
+	ARR_FIND(0, fd_max, i, session[i] && (sd = (struct char_session_data*)session[i]->session_data) && sd->account_id == account_id);
+	if (i < fd_max) {
+		if (set)
+			sd->flag |= val;
+		else
+			sd->flag &= ~val;
+	}
+}
 
 void char_auth_ok(int fd, struct char_session_data *sd) {
 	struct online_char_data* character;
