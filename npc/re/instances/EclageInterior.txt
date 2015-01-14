@@ -10,7 +10,7 @@
 //= Eclage Interior Instance
 //===== Additional Comments: ================================= 
 //= 1.0 Converted from the official Aegis script. [Dastgir]
-//= 1.1 Converted from Hercules script to rAthena script & Small error fix. [Skorm]
+//= 1.1 Converted from Hercules script to rAthena script & Small bug fix. [Skorm]
 //============================================================ 
 
 ecl_hub01,132,12,3	script	Chief of Staff#tl02	435,{
@@ -151,32 +151,20 @@ OnInstanceInit:
 	end;
 	
 OnInstanceInit:
-	'mob_summoned = 0;
 	disablenpc instance_npcname(strnpcinfo(0));
 	end;
 	
 OnEnable:
-	initnpctimer;
-	end;
-	
-OnReset:
-	killmonster instance_mapname("1@ecl"),instance_npcname("#sndmaster")+"::OnMyMobDead";
-	stopnpctimer;
-	end;
-OnTimer1000:
+	sleep 1000;
     mapannounce instance_mapname("1@ecl"),"Warning: Abnormal occurrence in the lighting room. Abnormal occurrence in the lighting room.",bc_map,"0xffff00"; //FW_NORMAL 12 0 0
-	end;
-OnTimer2000:
+	sleep 2000;
     mapannounce instance_mapname("1@ecl"),"Suspicious Creature: Kerrrrr....krwahhhh!!",bc_map,"0xffff00"; //FW_NORMAL 12 0 0
 	hideoffnpc instance_npcname("Suspicious Creature#5");
 	hideoffnpc instance_npcname("Suspicious Creature#6");
 	hideoffnpc instance_npcname("Suspicious Creature#7");
 	hideoffnpc instance_npcname("Suspicious Creature#8");
-	end;
-	
-OnTimer3000:
+	sleep 3000;
 	hideonnpc instance_npcname("#sndmaster");
-	stopnpctimer;
 	end;
 	
 OnMyMobDead:
@@ -187,7 +175,7 @@ OnMyMobDead:
 	end;
 	
 OnTouch:
-	if ('mob_summoned) end;
+	if ( 'mob_summoned > 1 ) end;
     mes "Upon eliminating the intruders near the Orb, another strange-looking creatures appeared.";
     next;
     mes "We couldn't communicate with them either, and one of them seemed furious after looking around and finding out that its fellows are defeated.";
@@ -203,6 +191,7 @@ OnTouch:
     next;
     mes "A battle cannot be avoided!";
     mes "They will kill me!";
+	close2;
 	hideonnpc instance_npcname("Suspicious Creature#5");
 	hideonnpc instance_npcname("Suspicious Creature#6");
 	hideonnpc instance_npcname("Suspicious Creature#7");
@@ -221,14 +210,14 @@ OnTouch:
 	monster .@eclmap$,42,69,"Subordinate of the King of Demons",2376,1,.@sndmaster$+"::OnMyMobDead";
 	monster .@eclmap$,47,64,"Subordinate of the King of Demons",2376,1,.@sndmaster$+"::OnMyMobDead";
 	monster .@eclmap$,50,60,"Subordinate of the King of Demons",2376,1,.@sndmaster$+"::OnMyMobDead";
-	'mob_summoned = 1;
-    close;
+	'mob_summoned = 2;
+    end;
 }
 
 1@ecl,57,65,0	script	#event	139,5,5,{
 	end;
 OnTouch:
-	if ('mob_summoned) end;
+	if ( 'mob_summoned > 0 ) end;
 	.@eclmap$ = instance_mapname("1@ecl");
 	.@eventname$ = instance_npcname("#event");
 	mes "An empty room with nothing inside.";
@@ -245,6 +234,7 @@ OnTouch:
 	next;
 	mes "It seems like they are going to start attacking any minute.";
 	mes "We cannot help fighting them!";
+	close2;
 	hideonnpc instance_npcname("Suspicious Creature#1");
 	hideonnpc instance_npcname("Suspicious Creature#2");
 	hideonnpc instance_npcname("Suspicious Creature#3");
@@ -258,15 +248,13 @@ OnTouch:
 	monster .@eclmap$,55,80,"Suspicious Creature",2375,1,.@eventname$+"::OnMyMobDead";
 	monster .@eclmap$,60,75,"Suspicious Creature",2375,1,.@eventname$+"::OnMyMobDead";
 	'mob_summoned = 1;
-	close;
+	end;
+	
 OnMyMobDead:
 	if (mobcount(instance_mapname("1@ecl"),instance_npcname("#event")+"::OnMyMobDead") == 0) {
 		enablenpc instance_npcname("#sndmaster");
 		donpcevent instance_npcname("#sndmaster")+"::OnEnable";
 	}
-	end;
-OnInstanceInit:
-	'mob_summoned = 0;
 	end;
 }
 

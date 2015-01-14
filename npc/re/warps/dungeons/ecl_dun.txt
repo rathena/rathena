@@ -3,14 +3,14 @@
 //===== By: ==================================================
 //= Chilly
 //===== Current Version: =====================================
-//= 1.0a
+//= 1.1
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: =========================================
 //= Warp Portals for Eclage Dungeon
 //===== Additional Comments: =================================
 //= 1.0 First Version.
-//= 1.0a Corrected Warp Co-ordinates and 
+//= 1.1 Corrected Warp Co-ordinates and 
 //=      name of Warp Portal. [Dastgir]
 //============================================================
 

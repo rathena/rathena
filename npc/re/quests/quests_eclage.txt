@@ -14,10 +14,35 @@
 //= 1.1 Converted from Hercules Script to rAthena Script. [Skorm]
 //============================================================ 
 
-// Teleport Cats
+// Teleport Cats (14.2 Cat Hand Addition)
 //============================================================
-
-ecl_fild01,118,311,4	script	Teleport Cat No.1#1	421,{
+-	script	Teleport Cat#ep14_2	-1,{
+	switch(atoi(charat(strnpcinfo(1),16))) {
+	case 1:
+		setarray .@map$[0],"Entrance to Mora";
+		setarray .@cost[0],15;
+		break;
+	case 2:
+		setarray .@map$[0],"Near Eclage","Near Splendide";
+		setarray .@cost[0],15,55;
+		break;
+	case 3:
+		setarray .@map$[0],"Entrance to Mora","Midgard Allied Forces Post";
+		setarray .@cost[0],55,10;
+		break;
+	case 4:
+		setarray .@map$[0],"Near Splendide","Manuk Field";
+		setarray .@cost[0],10,10;
+		break;
+	case 5:
+		setarray .@map$[0],"Midgard Allied Forces Post","Near El Dicastes";
+		setarray .@cost[0],10,20;
+		break;
+	case 6:
+		setarray .@map$[0],"Manuk Field";
+		setarray .@cost[0],20;
+		break;
+	}
 	mes "[Teleport Cat]";
 	mes "What a nice day, isn't it!";
 	mes "Welcome to Cat Merchant Group. We do anything to please our customers. We would even lie on our back if you want!";
@@ -25,69 +50,50 @@ ecl_fild01,118,311,4	script	Teleport Cat No.1#1	421,{
 	mes "[Teleport Cat]";
 	mes "We provide teleport service between various regions based on our accumulated knowledge. We accept Malangdo Canned Specialties or Zeny, so you can pay however you like it~";
 	next;
-	.@index[0] = .index[(atoi(strnpcinfo(2))*2-2)];
-	.@index[1] = .index[(atoi(strnpcinfo(2))*2-1)];
-	.@menu$ = "Forget it:";
-	for (.@i=0; .@i < getarraysize(.maps$); .@i++){
-		for (.@j=0; .@j<2; .@j++){
-			if (.@index[.@j]&(2<<.@i)){
-				.@mindex[.@j] = .@i;
-				.@pindex[.@j] = (.@index[.@j]-(2<<.@i) )>>8;
-				if (.@pindex[.@j]==4){ .@pindex[.@j]--; }
-				.@menu$ = .@menu$ + .descript$[.@i] + " ( "+ .price[.@pindex[.@j]] +" Canned Food):" + .descript$[.@i] + " ( "+ .price[.@pindex[.@j]]*1000 +" Zeny)";
-				if (.@j==0 && .@index[1]){
-					.@menu$ = .@menu$ + ":";
-				}
-			}
-		}
+	set .@menu$,"Forget it:";
+	for(set .@i,0; .@i<getarraysize(.@map$); set .@i,.@i+1) {
+		set .@menu$, .@menu$+
+			.@map$[.@i]+" ("+.@cost[.@i]+" Canned Food):"+
+			.@map$[.@i]+" ("+callfunc("F_InsertComma",.@cost[.@i]*1000)+" Zeny):";
 	}
-	.@menu = select(.@menu$);
-	if (.@menu==1){
+	set .@i, select(.@menu$)-2;
+	if (.@i == -1) {
 		mes "[Teleport Cat]";
-		mes "I'll see you later then";
+		mes "I'll see you later then.";
 		close;
 	}
-	if (.@menu%2){
-		.@menu = (.@menu/2)-1;
-		if (Zeny < (.price[.@pindex[.@menu]]*1000)){
+	set .@choice$, .@map$[.@i/2];
+	set .@price, .@cost[.@i/2];
+	if (.@i % 2) {
+		set .@price, .@price*1000;
+		if (Zeny < .@price) {
 			mes "[Teleport Cat]";
 			mes "I'm afraid it's not enough. Sorry, but it can't be done for free~";
 			close;
 		}
-		Zeny = Zeny - .price[.@pindex[.@menu]]*1000;
-	}
-	else{
-		.@menu = (.@menu/2)-1;
-		if (countitem(12636) < .price[.@pindex[(.@menu/2)]] ){
+		set Zeny, Zeny-.@price;
+	} else {
+		if (countitem(12636) < .@price) {
 			mes "[Teleport Cat]";
 			mes "I'm afraid it's not enough. Sorry, but it can't be done for free~";
 			close;
 		}
-		delitem 12636,.price[.@pindex[(.@menu/2)]];
+		delitem 12636,.@price; //Malang_Sp_Can
 	}
-	warp .maps$[.@mindex],.x[.@mindex],.y[.@mindex];
-	end;
-	
-OnInit:
-	setarray .maps$,"bif_fild02","ecl_fild01","spl_fild02","mid_camp","ma_fild02","dic_fild01";	//Map Names	//2,4,8,16,32,64
-	setarray .x,291,116,51,180,133,159;	//X-Co-ordinate of Maps
-	setarray .y,323,309,240,247,47,264;	//Y-Co-ordinates of Map
-	setarray .descript$,"Entrace to Mora","Near Eclage","Near Splendide","Midgard Allied Forces Post","Manuk Field","Near El Dicastes";
-	setarray .price,10,15,20,55;	//In terms of Canned Food, Also 1 Canned Food = 1000 Zeny.	//128,256,512,1024
-	setarray .index,2+256,0,		//Bitwise Indexes for Maps and Price Required.
-					4+256,8+1024,
-					2+1024,16+128,
-					8+128,32+128,
-					16+128,64+512,
-					32+512,0;
-	end;
+	if (compare(.@choice$,"Midgard Allied Forces Post")) warp "mid_camp",180,247;
+	else if (compare(.@choice$,"Manuk Field")) warp "man_fild02",133,47;
+	else if (compare(.@choice$,"Near Splendide")) warp "spl_fild02",51,240;
+	else if (compare(.@choice$,"Near El Dicastes")) warp "dic_fild01",159,264;
+	else if (compare(.@choice$,"Entrance to Mora")) warp "bif_fild02",291,323;
+	else if (compare(.@choice$,"Near Eclage")) warp "ecl_fild01",116,309;
+	close;
 }
-
-bif_fild02,293,325,4	duplicate(Teleport Cat No.1#1)	Teleport Cat No.2#2	421
-spl_fild02,53,242,4	duplicate(Teleport Cat No.1#1)	Teleport Cat No.3#3	421
-mid_camp,207,234,4	duplicate(Teleport Cat No.1#1)	Teleport Cat No.4#4	421
-man_fild02,135,49,4	duplicate(Teleport Cat No.1#1)	Teleport Cat No.5#5	421
-dic_fild01,161,266,4	duplicate(Teleport Cat No.1#1)	Teleport Cat No.6#6	421
+ecl_fild01,118,311,4	duplicate(Teleport Cat#ep14_2)	Teleport Cat No.1	421
+bif_fild02,293,325,4	duplicate(Teleport Cat#ep14_2)	Teleport Cat No.2	421
+spl_fild02,53,242,4	duplicate(Teleport Cat#ep14_2)	Teleport Cat No.3	421
+mid_camp,207,234,4	duplicate(Teleport Cat#ep14_2)	Teleport Cat No.4	421
+man_fild02,135,49,4	duplicate(Teleport Cat#ep14_2)	Teleport Cat No.5	421
+dic_fild01,161,266,4	duplicate(Teleport Cat#ep14_2)	Teleport Cat No.6	421
 
 // Eclage's Entrance
 //============================================================
