@@ -8235,6 +8235,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	case SC_FREEZING:
 		status_change_end(bl, SC_BURNING, INVALID_TIMER);
 		break;
+	case SC_EQC:
+		status_change_end(bl,SC_TINDER_BREAKER2,INVALID_TIMER);
+		break;
 	}
 
 	// Check for overlapping fails
@@ -9818,6 +9821,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 5 * val1; // def % reduc
 			val3 = 5 * val1; // atk % reduc
 			val4 = 2 * val1; // HP drain %
+			sc_start2(src, bl,SC_STUN,100,val1,bl->id,(1000*status_get_lv(src))/50+500*val1);
 			break;
 		case SC_ASH:
 			val2 = 50; // hit % reduc
@@ -10369,10 +10373,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_RAISINGDRAGON:
 			sce->val2 = status->max_hp / 100; // Officially tested its 1%hp drain. [Jobbie]
-			break;
-		case SC_EQC:
-			sc_start2(src, bl,SC_STUN,100,val1,bl->id,(1000*status_get_lv(src))/50+500*val1);
-			status_change_end(bl,SC_TINDER_BREAKER2,INVALID_TIMER);
 			break;
 		case SC_C_MARKER:
 			//Send mini-map, don't wait for first timer triggered
