@@ -3388,39 +3388,36 @@ void clif_statusupack(struct map_session_data *sd,int type,int ok,int val)
 ///     0 = failure
 ///     1 = success
 ///     2 = failure due to low level
-void clif_equipitemack(struct map_session_data *sd,int n,int pos,int ok)
+void clif_equipitemack(struct map_session_data *sd,int n,int pos,uint8 flag)
 {
-	int fd,header,offs=0,success;
+	int fd, header, offs = 0;
 #if PACKETVER < 20110824
 	header = 0xaa;
-	success = (ok==1);
 #elif PACKETVER < 20120925
 	header = 0x8d0;
-	success = ok ? 0:1;
 #else
 	header = 0x999;
-	success = ok ? 0:1;
 #endif
 	nullpo_retv(sd);
 
-	fd=sd->fd;
+	fd = sd->fd;
 	WFIFOHEAD(fd,packet_len(header));
-	WFIFOW(fd,offs+0)=header;
-	WFIFOW(fd,offs+2)=n+2;
+	WFIFOW(fd,offs+0) = header;
+	WFIFOW(fd,offs+2) = n+2;
 #if PACKETVER >= 20120925
-	WFIFOL(fd,offs+4)=pos;
-	offs+=2;
+	WFIFOL(fd,offs+4) = pos;
+	offs += 2;
 #else
-	WFIFOW(fd,offs+4)=(int)pos;
+	WFIFOW(fd,offs+4) = (int)pos;
 #endif
 #if PACKETVER < 20100629
-	WFIFOB(fd,offs+6)=success;
+	WFIFOB(fd,offs+6) = flag;
 #else
-	if (ok && sd->inventory_data[n]->equip&EQP_VISIBLE)
-		WFIFOW(fd,offs+6)=sd->inventory_data[n]->look;
+	if (flag == ITEM_EQUIP_ACK_OK && sd->inventory_data[n]->equip&EQP_VISIBLE)
+		WFIFOW(fd,offs+6) = sd->inventory_data[n]->look;
 	else
-		WFIFOW(fd,offs+6)=0;
-	WFIFOB(fd,offs+8)=success;
+		WFIFOW(fd,offs+6) = 0;
+	WFIFOB(fd,offs+8) = flag;
 #endif
 	WFIFOSET(fd,packet_len(header));
 }
@@ -10743,7 +10740,7 @@ void clif_parse_EquipItem(int fd,struct map_session_data *sd)
 		return;
 
 	if(!sd->status.inventory[index].identify) {
-		clif_equipitemack(sd,index,0,0);	// fail
+		clif_equipitemack(sd,index,0,ITEM_EQUIP_ACK_FAIL);	// fail
 		return;
 	}
 

@@ -1813,8 +1813,8 @@ int map_quit(struct map_session_data *sd) {
 
 	for (i = 0; i < EQI_MAX; i++) {
 		if (sd->equip_index[i] >= 0)
-			if (!pc_isequip(sd,sd->equip_index[i]))
-				pc_unequipitem(sd,sd->equip_index[i],2);
+			if (pc_isequip(sd,sd->equip_index[i]) != ITEM_EQUIP_ACK_OK)
+				pc_unequipitem(sd,sd->equip_index[i],ITEM_EQUIP_ACK_FAIL);
 	}
 
 	// Return loot to owner

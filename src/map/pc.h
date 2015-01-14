@@ -845,7 +845,7 @@ void pc_reg_received(struct map_session_data *sd);
 void pc_close_npc(struct map_session_data *sd,int flag);
 int pc_close_npc_timer(int tid, unsigned int tick, int id, intptr_t data);
 
-bool pc_isequip(struct map_session_data *sd,int n);
+uint8 pc_isequip(struct map_session_data *sd,int n);
 int pc_equippoint(struct map_session_data *sd,int n);
 void pc_setinventorydata(struct map_session_data *sd);
 
