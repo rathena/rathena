@@ -48,6 +48,7 @@ enum e_packet_ack {
 	ZC_CLEAR_DIALOG,
 	ZC_C_MARKERINFO,
 	ZC_NOTIFY_BIND_ON_EQUIP,
+	ZC_WEAR_EQUIP_ACK,
 	//add other here
 	MAX_ACK_FUNC //auto upd len
 };
@@ -365,23 +366,14 @@ enum useskill_fail_cause
 
 enum clif_messages {
 	/* Constant values */
+	// clif_cart_additem_ack flags
 	ADDITEM_TO_CART_FAIL_WEIGHT = 0x0,
 	ADDITEM_TO_CART_FAIL_COUNT = 0x1,
 
-	// clif_equipitemack flag
-#if PACKETVER < 20110824
-	ITEM_EQUIP_ACK_OK = 1,
-	ITEM_EQUIP_ACK_FAIL = 0,
-	ITEM_EQUIP_ACK_FAILLEVEL = 0,
-#elif PACKETVER < 20120925
-	ITEM_EQUIP_ACK_OK = 0,
-	ITEM_EQUIP_ACK_FAIL = 1,
-	ITEM_EQUIP_ACK_FAILLEVEL = 1,
-#else
+	// clif_equipitemack flags
 	ITEM_EQUIP_ACK_OK = 0,
 	ITEM_EQUIP_ACK_FAIL = 1,
 	ITEM_EQUIP_ACK_FAILLEVEL = 2,
-#endif
 	/* -end- */
 
 	//! NOTE: These values below need client version validation
