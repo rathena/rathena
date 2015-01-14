@@ -3,14 +3,14 @@
 //===== By: ================================================== 
 //= Dastgir
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.0.1
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: ========================================= 
 //= Eclage Town NPC
 //===== Additional Comments: ================================= 
 //= 1.0 Generic NPC place holders. [Euphy]
-//= 1.0a Converted from the official Aegis script. [Dastgir]
+//= 1.0.1 Converted from the official Aegis script. [Dastgir]
 //============================================================ 
 
 ecl_in02,96,22,3	script	sign#prison_inn	545,{

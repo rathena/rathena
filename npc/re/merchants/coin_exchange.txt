@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 1.2a
+//= 1.2.1
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: =========================================
@@ -13,7 +13,7 @@
 //= 1.0 First version. [Euphy/Lemongrass]
 //= 1.1 Added remaining Malangdo traders. [Euphy/Lemongrass]
 //= 1.2 Added Eclage traders (not fully complete). [Euphy]
-//= 1.2a Completed Eclage Traders. [Dastgir]
+//= 1.2.1 Completed Eclage Traders. [Dastgir]
 //============================================================
 
 // Malangdo
@@ -843,16 +843,49 @@ ecl_in01,66,95,3	script	Armor Merchant Naphara#e	436,{
 	mes "Hello, this is Naphara's store, a place of high class goods.";
 	mes "What would you need?";
 	next;
-	.@choice = select("Str Glove:Int Glove:Agi Glove:Vit Glove:Dex Glove:Luk Glove");
-	.@choice -= 1;
+	.@choice = select("Str Glove:Int Glove:Agi Glove:Vit Glove:Dex Glove:Luk Glove") -1;
 	mes "[Armor Merchant]";
-	mes "^3131FF" + .name$[.@choice] + " For ^000000,";
-	mes "^3131FFMHP + 100, MSP + 20^000000";
-	mes "^3131FF" + .descript$[.@choice] + "^000000";
-	mes "^3131FF" + .descript2$[.@choice] + "^000000";
+	switch(.@choice) {
+		case 0: // Str Glove
+			mes "^3131FFStr Glove^000000";
+			mes "^3131FFMHP + 100, MSP + 20^000000";
+			mes "^3131FFATK+1 increases for every STR+10^000000";
+			mes "^3131FFATK +1% added above STR 110^000000";
+			break;
+		case 1:
+			mes "^3131FFInt Glove^000000";
+			mes "^3131FFMHP + 100, MSP + 20^000000";
+			mes "^3131FFMATK+1 increases for every INT+10^000000";
+			mes "^3131FFMATK +1% added above INT 110^000000";
+			break;
+		case 2:
+			mes "^3131FFAgi Glove^000000";
+			mes "^3131FFMHP + 100, MSP + 20^000000";
+			mes "^3131FFFLEE+1 increases for every AGI+10^000000";
+			mes "^3131FFComplete Flee +1 added above AGI 110^000000";
+			break;
+		case 3:
+			mes "^3131FFVit Glove^000000";
+			mes "^3131FFMHP + 100, MSP + 20^000000";
+			mes "^3131FFMHP+50 for every VIT+10^000000";
+			mes "^3131FFMHP+1% added above VIT 110^000000";
+			break;
+		case 4:
+			mes "^3131FFDex Glove^000000";
+			mes "^3131FFMHP + 100, MSP + 20^000000";
+			mes "^3131FFHIT+1 increases for every DEX+10^000000";
+			mes "^3131FFRanged attack power +1% added above DEX 110^000000";
+			break;
+		case 5:
+			mes "^3131FFLuk Glove^000000";
+			mes "^3131FFMHP + 100, MSP + 20^000000";
+			mes "^3131FFCRI+1 increases for every LUK+10^000000";
+			mes "^3131FFCritical damage +1% added above LUK 110^000000";
+			break;
+	}
 	mes "^3131FFRequired Level: 100^000000";
-	mes "^3131FFSlot:0^000000";
-	mes "^3131FFWeight:10^000000";
+	mes "^3131FFSlot: 0^000000";
+	mes "^3131FFWeight: 10^000000";
 	mes "are the characteristic options.";
 	next;
 	mes "[Armor Merchant]";
@@ -871,22 +904,6 @@ ecl_in01,66,95,3	script	Armor Merchant Naphara#e	436,{
 		mes "Great, it's yours. Thank you.";
 	}
 	close;
-
-OnInit:
-	setarray .name$[0],"Str Glove","Int Glove","Agi Glove","Vit Glove","Dex Glove","Luk Glove";
-	setarray .descript$[0],"ATK+1 increases for every STR+10",
-							"MATK+1 increases for every INT+10",
-							"FLEE+1 increases for every AGI+10",
-							"MHP+50 for every VIT+10",
-							"HIT+1 increases for every DEX+10",
-							"CRI+1 increases for every LUK+10";
-	setarray .descript2$[0],"ATK +1% added above STR 110",
-							"MATK +1% added above INT 110",
-							"Complete Flee +1 added above AGI 110",
-							"MHP+1 added above VIT 110",
-							"Ranged attack power +1% added above DEX 110",
-							"Critical damage +1% added above LUK 110";
-	end;
 }
 
 ecl_in01,64,97,5	script	Slot Expert Nattuer#ecl	436,{

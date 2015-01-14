@@ -16,14 +16,8 @@
 ecl_hub01,132,12,3	script	Chief of Staff#tl02	435,{
 	.@party_id = getcharid(1);
 	.@md_name$ = "Eclage Interior";
-	if (!.@party_id){
-		mes "-! Warning !-";
-		mes "This current quest will be held at Memorial dungeon.";
-		mes "Only the party leader will enter. Please create your party.";
-		close;
-	}
 	
-	if (getpartyleader(.@party_id,2) != getcharid(0)) {
+	if (.@party_id == 0 || getpartyleader(.@party_id,2) != getcharid(0)){
 		mes "-! Warning !-";
 		mes "This current quest will be held at Memorial dungeon.";
 		mes "Only the party leader will enter. Please create your party.";
@@ -65,47 +59,40 @@ ecl_hub01,130,15,0	script	It is closed shut.	844,{
 		mes "This door connects to the plaza's ceiling.";
 		mes "It's also a place where the lighting is set up to make Orb seem more beautiful.";
 		next;
-		switch (select("Enter it.:Forget it.")) {
-			case 1:
-				.@party_id = getcharid(1);
-				
-				/*if (has_instance("1@ecl") == "") {
-					mes "It is closed shut.";
-					close;
-				}*/
-				if (.@party_id) {
-					.@md_name$ = "Eclage Interior";
-					if (getpartyleader(.@party_id,2) != getcharid(0)){
-						mes "-! Warning !-";
-						mes "This current quest will be held at Memorial dungeon.";
-						mes "Only the party leader will enter. Please create your party.";
-						close;
-					}
-					if (gettimetick(2) >= ecl_interior_time){
-						mes "[Shenime]";
-						mes "Looks like the soldiers inside are really tense.";
-						mes "It is pretty difficult to guide an outsider like you.";
-						close;
-					}
-					close2;
-					mapannounce "ecl_hub01",getpartyname(.@party_id) + " Party leader " + strcharinfo(0) + " is entering " + .@md_name$,bc_map,"0x00ff99";
-					instance_enter(.@md_name$);
-					end;
-				}
+		if (select("Enter it.:Forget it.") == 1) {
+			.@party_id = getcharid(1);
+			.@md_name$ = "Eclage Interior";
+			if (.@party_id == 0 || getpartyleader(.@party_id,2) != getcharid(0)) {
 				mes "-! Warning !-";
 				mes "This current quest will be held at Memorial dungeon.";
 				mes "Only the party leader will enter. Please create your party.";
 				close;
-				
-			case 2:
+			}
+			if (gettimetick(2) >= ecl_interior_time){
+				mes "[Shenime]";
+				mes "Looks like the soldiers inside are really tense.";
+				mes "It is pretty difficult to guide an outsider like you.";
 				close;
-		}
+			}
+			switch ( instance_enter(.@md_name$) ) {
+				case 3:
+					mes "An unknown error has occurred.";
+					close;
+				case 2:
+					mes "It is closed shut.";
+					close;
+				case 0:
+					mapannounce "ecl_hub01",getpartyname(.@party_id) + " Party leader " + strcharinfo(0) + " is entering " + .@md_name$,bc_map,"0x00ff99";
+					end;
+				default:
+			}
+		} else
+			close;
 	}
 	mes "This door connects to the plaza's ceiling.";
 	mes "It's also a place where the lighting is set up to make Orb seem more beautiful.";
 	mes "It is closed shut.";
 	close;
-	end;
 }
 
 
@@ -164,7 +151,7 @@ OnInstanceInit:
 	end;
 	
 OnInstanceInit:
-	.mob_summoned = 0;
+	'mob_summoned = 0;
 	disablenpc instance_npcname(strnpcinfo(0));
 	end;
 	
@@ -200,7 +187,7 @@ OnMyMobDead:
 	end;
 	
 OnTouch:
-	if (.mob_summoned) end;
+	if ('mob_summoned) end;
     mes "Upon eliminating the intruders near the Orb, another strange-looking creatures appeared.";
     next;
     mes "We couldn't communicate with them either, and one of them seemed furious after looking around and finding out that its fellows are defeated.";
@@ -234,14 +221,14 @@ OnTouch:
 	monster .@eclmap$,42,69,"Subordinate of the King of Demons",2376,1,.@sndmaster$+"::OnMyMobDead";
 	monster .@eclmap$,47,64,"Subordinate of the King of Demons",2376,1,.@sndmaster$+"::OnMyMobDead";
 	monster .@eclmap$,50,60,"Subordinate of the King of Demons",2376,1,.@sndmaster$+"::OnMyMobDead";
-	.mob_summoned = 1;
+	'mob_summoned = 1;
     close;
 }
 
 1@ecl,57,65,0	script	#event	139,5,5,{
 	end;
 OnTouch:
-	if (.mob_summoned) end;
+	if ('mob_summoned) end;
 	.@eclmap$ = instance_mapname("1@ecl");
 	.@eventname$ = instance_npcname("#event");
 	mes "An empty room with nothing inside.";
@@ -270,7 +257,7 @@ OnTouch:
 	monster .@eclmap$,43,67,"Suspicious Creature",2375,1,.@eventname$+"::OnMyMobDead";
 	monster .@eclmap$,55,80,"Suspicious Creature",2375,1,.@eventname$+"::OnMyMobDead";
 	monster .@eclmap$,60,75,"Suspicious Creature",2375,1,.@eventname$+"::OnMyMobDead";
-	.mob_summoned = 1;
+	'mob_summoned = 1;
 	close;
 OnMyMobDead:
 	if (mobcount(instance_mapname("1@ecl"),instance_npcname("#event")+"::OnMyMobDead") == 0) {
@@ -279,7 +266,7 @@ OnMyMobDead:
 	}
 	end;
 OnInstanceInit:
-	.mob_summoned = 0;
+	'mob_summoned = 0;
 	end;
 }
 
@@ -492,8 +479,6 @@ OnInstanceInit:
 	mes "Let's go." + strcharinfo(0) + ".";
 	ep14_2_mylord = 30;
 	changequest 7450,7451;
-	erasequest 7450;
-	setquest 7451;
 	close2;
 	cutin "",255;
 	warp "ecl_in03",57,76;
