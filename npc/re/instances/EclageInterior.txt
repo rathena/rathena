@@ -212,6 +212,9 @@ OnTouch:
 	monster .@eclmap$,50,60,"Subordinate of the King of Demons",2376,1,.@sndmaster$+"::OnMyMobDead";
 	'mob_summoned = 2;
     end;
+OnInstanceInit:
+	'mob_summoned = 0;
+	end;
 }
 
 1@ecl,57,65,0	script	#event	139,5,5,{
