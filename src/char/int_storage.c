@@ -379,7 +379,7 @@ int mapif_parse_itembound_retrieve(int fd)
 	if (j) {
 		StringBuf buf2;
 		StringBuf_Init(&buf2);
-		StringBuf_Printf(&buf2, "UPDATE `%s` SET %s WHERE `char_id`='%d", schema_config.char_db, StringBuf_Value(&buf), char_id);
+		StringBuf_Printf(&buf2, "UPDATE `%s` SET %s WHERE `char_id`='%d'", schema_config.char_db, StringBuf_Value(&buf), char_id);
 
 		if( SQL_ERROR == SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf)) ||
 			SQL_ERROR == SqlStmt_Execute(stmt) )
