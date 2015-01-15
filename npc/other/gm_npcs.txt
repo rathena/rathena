@@ -118,6 +118,9 @@ List of GM Management NPCs (incomplete)
 - Field Bush Switch
 - Bakonawa Intro Helper
 - Pintados Manager#pin
+- #pa0829Reactor11
+- New Oz Image#1
+- Professor Aide#worm
 --------------------------
 - Allied Manager#gm
 - #timer_alba01

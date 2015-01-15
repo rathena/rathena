@@ -1,4 +1,4 @@
-//===== rAthena Script ====================================== 
+//===== rAthena Script ======================================= 
 //= General Eclage NPC.
 //===== By: ================================================== 
 //= Dastgir
@@ -30,49 +30,48 @@ ecl_in02,164,56,3	script	Receptionist#Laphine	835,{
 	mes "Welcome to Eclage Clinic.";
 	next;
 	switch (select("Save Location:Rest:Finish the conversation")) {
+	case 1:
+		mes "[Receptionist}";
+		mes "Clinic has been set as your save point. Be careful though~";
+		savepoint "ecl_in02",162,50;
+		close;
+	case 2:
+		mes "[Receptionist}";
+		mes "Restore your mind and body at our clinic. It's filled with Eclage's clean energy.";
+		mes "We charge 1 Splendide Coin normally, but we offer a special discount for travelers. Your total is 5,000 zeny. ";
+		next;
+		switch (select("Pay with Splendide Coin:Pay with Zeny:Forget it")) {
 		case 1:
-			mes "[Receptionist}";
-			mes "Clinic has been set as your save point. Be careful though~";
-			savepoint "ecl_in02",162,50;
-			close;
-		case 2:
-			mes "[Receptionist}";
-			mes "Restore your mind and body at our clinic. It's filled with Eclage's clean energy.";
-			mes "We charge 1 Splendide Coin normally, but we offer a special discount for travelers. Your total is 5,000 zeny. ";
-			next;
-			switch (select("Pay with Splendide Coin:Pay with Zeny:Forget it")) {
-				case 1:
-					if (!countitem(6081)) {
-						mes "[Receptionist}";
-						mes "It seems like you don't have enough coins. Would you check your account again, please?";
-						close;
-					}
-					mes "[Receptionist}";
-					mes "Make yourself at home~";
-					close2;
-					delitem 6081,1; //6081
-					percentheal 100,100;
-					warp "ecl_in02",167,49;
-					end;
-					
-				case 2:
-					if (Zeny < 5000) {
-						mes "[Receptionist]";
-						mes "Looks like you don't have enough resources to proceed. Do you mind checking your account again?";
-						close;
-					}
-					mes "[Receptionist}";
-					mes "Make yourself at home~";
-					close2;
-					Zeny = Zeny - 5000;
-					percentheal 100,100;
-					warp "ecl_in02",167,49;
-					end;
-				case 3:
-					close;
+			if (!countitem(6081)) {
+				mes "[Receptionist}";
+				mes "It seems like you don't have enough coins. Would you check your account again, please?";
+				close;
 			}
+			mes "[Receptionist}";
+			mes "Make yourself at home~";
+			close2;
+			delitem 6081,1; //6081
+			percentheal 100,100;
+			warp "ecl_in02",167,49;
+			end;
+		case 2:
+			if (Zeny < 5000) {
+				mes "[Receptionist]";
+				mes "Looks like you don't have enough resources to proceed. Do you mind checking your account again?";
+				close;
+			}
+			mes "[Receptionist}";
+			mes "Make yourself at home~";
+			close2;
+			Zeny = Zeny - 5000;
+			percentheal 100,100;
+			warp "ecl_in02",167,49;
+			end;
 		case 3:
 			close;
+		}
+	case 3:
+		close;
 	}
 }
 
@@ -104,5 +103,4 @@ ecl_in02,135,45,5	script	Injured Laphine	442,{
 	mes "What? No way...please...doctor!! No!!";
 	close;
 }
-
 ecl_in02,137,44,3	duplicate(Injured Laphine)	Doctor Laphine#doctor	441

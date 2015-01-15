@@ -1,4 +1,4 @@
-//===== rAthena Script ====================================== 
+//===== rAthena Script ======================================= 
 //= Eclage Instance Script
 //===== By: ================================================== 
 //= Dastgir
@@ -7,6 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: ========================================= 
+//= [Official Conversion]
 //= Eclage Interior Instance
 //===== Additional Comments: ================================= 
 //= 1.0 Converted from the official Aegis script. [Dastgir]
@@ -16,7 +17,7 @@
 ecl_hub01,132,12,3	script	Chief of Staff#tl02	435,{
 	.@party_id = getcharid(1);
 	.@md_name$ = "Eclage Interior";
-	
+
 	if (.@party_id == 0 || getpartyleader(.@party_id,2) != getcharid(0)){
 		mes "-! Warning !-";
 		mes "This current quest will be held at Memorial dungeon.";
@@ -29,23 +30,22 @@ ecl_hub01,132,12,3	script	Chief of Staff#tl02	435,{
 		mes "If you favor Mayor, you should be cautious here.";
 		next;
 		switch (select("Enter it.:Forget it.")) {
-			case 1:
-				if (instance_create(.@md_name$) < 0) {
-					mes "[Shenime]";
-					mes "There are some soldiers dispatched by Mayor not too long ago.";
-					mes "I should sure hope that you aren't the disturbance they're looking for, right?";
-					close;
-				}
-				ecl_interior_time = gettimetick(2)+20*60;
+		case 1:
+			if (instance_create(.@md_name$) < 0) {
 				mes "[Shenime]";
-				mes "Given the tight internal security, you should prepare yourself.";
-				mes "Wait here for a minute.";
+				mes "There are some soldiers dispatched by Mayor not too long ago.";
+				mes "I should sure hope that you aren't the disturbance they're looking for, right?";
 				close;
-				
-			case 2:
-				mes "[Shenime]";
-				mes "It's not an easy task.";
-				close;
+			}
+			ecl_interior_time = gettimetick(2) + 20 * 60;
+			mes "[Shenime]";
+			mes "Given the tight internal security, you should prepare yourself.";
+			mes "Wait here for a minute.";
+			close;
+		case 2:
+			mes "[Shenime]";
+			mes "It's not an easy task.";
+			close;
 		}
 	}
 	mes "[High-level Laphine's]";
@@ -74,17 +74,17 @@ ecl_hub01,130,15,0	script	It is closed shut.	844,{
 				mes "It is pretty difficult to guide an outsider like you.";
 				close;
 			}
-			switch ( instance_enter(.@md_name$) ) {
-				case 3:
-					mes "An unknown error has occurred.";
-					close;
-				case 2:
-					mes "It is closed shut.";
-					close;
-				case 0:
-					mapannounce "ecl_hub01",getpartyname(.@party_id) + " Party leader " + strcharinfo(0) + " is entering " + .@md_name$,bc_map,"0x00ff99";
-					end;
-				default:
+			switch (instance_enter(.@md_name$)) {
+			case 3:
+				mes "An unknown error has occurred.";
+				close;
+			case 2:
+				mes "It is closed shut.";
+				close;
+			case 0:
+				mapannounce "ecl_hub01",getpartyname(.@party_id) + " Party leader " + strcharinfo(0) + " is entering " + .@md_name$,bc_map,"0x00ff99";
+				end;
+			default:
 			}
 		} else
 			close;
@@ -94,7 +94,6 @@ ecl_hub01,130,15,0	script	It is closed shut.	844,{
 	mes "It is closed shut.";
 	close;
 }
-
 
 1@ecl,58,69,3	script	Shenime#ecl01	435,{
 	mes "[Shenime]";
@@ -131,7 +130,6 @@ OnEnable:
 1@ecl,51,64,1	script	Suspicious Creature#1	2375,{
 	end;
 }
-
 1@ecl,43,67,3	duplicate(Suspicious Creature#1)	Suspicious Creature#2	2375,0,0
 1@ecl,55,80,3	duplicate(Suspicious Creature#1)	Suspicious Creature#3	2375,0,0
 1@ecl,60,75,3	duplicate(Suspicious Creature#1)	Suspicious Creature#4	2375,0,0
@@ -142,18 +140,18 @@ OnInstanceInit:
 	hideonnpc instance_npcname(strnpcinfo(0));
 	end;
 }
-
 1@ecl,48,86,3	duplicate(Suspicious Creature#5)	Suspicious Creature#6	2376,0,0
 1@ecl,58,82,3	duplicate(Suspicious Creature#5)	Suspicious Creature#7	2376,0,0
 1@ecl,56,88,3	duplicate(Suspicious Creature#5)	Suspicious Creature#8	2376,0,0
 
 1@ecl,53,83,0	script	#sndmaster	HIDDEN_WARP_NPC,10,10,{
 	end;
-	
+
 OnInstanceInit:
+	'mob_summoned = 0;
 	disablenpc instance_npcname(strnpcinfo(0));
 	end;
-	
+
 OnEnable:
 	sleep 1000;
     mapannounce instance_mapname("1@ecl"),"Warning: Abnormal occurrence in the lighting room. Abnormal occurrence in the lighting room.",bc_map,"0xffff00"; //FW_NORMAL 12 0 0
@@ -166,16 +164,16 @@ OnEnable:
 	sleep 3000;
 	hideonnpc instance_npcname("#sndmaster");
 	end;
-	
+
 OnMyMobDead:
 	if (mobcount(instance_mapname("1@ecl"),instance_npcname("#sndmaster")+"::OnMyMobDead") == 0) {
 		donpcevent instance_npcname("Shenime#ecl01")+"::OnEnable";
 		mapannounce instance_mapname("1@ecl"),"Shenime: Good, I got here just in time.",bc_map,"0xffff00"; //FW_NORMAL 12 0 0
 	}
 	end;
-	
+
 OnTouch:
-	if ( 'mob_summoned > 1 ) end;
+	if ('mob_summoned > 1) end;
     mes "Upon eliminating the intruders near the Orb, another strange-looking creatures appeared.";
     next;
     mes "We couldn't communicate with them either, and one of them seemed furious after looking around and finding out that its fellows are defeated.";
@@ -212,15 +210,12 @@ OnTouch:
 	monster .@eclmap$,50,60,"Subordinate of the King of Demons",2376,1,.@sndmaster$+"::OnMyMobDead";
 	'mob_summoned = 2;
     end;
-OnInstanceInit:
-	'mob_summoned = 0;
-	end;
 }
 
 1@ecl,57,65,0	script	#event	139,5,5,{
 	end;
 OnTouch:
-	if ( 'mob_summoned > 0 ) end;
+	if ('mob_summoned > 0) end;
 	.@eclmap$ = instance_mapname("1@ecl");
 	.@eventname$ = instance_npcname("#event");
 	mes "An empty room with nothing inside.";
@@ -252,7 +247,7 @@ OnTouch:
 	monster .@eclmap$,60,75,"Suspicious Creature",2375,1,.@eventname$+"::OnMyMobDead";
 	'mob_summoned = 1;
 	end;
-	
+
 OnMyMobDead:
 	if (mobcount(instance_mapname("1@ecl"),instance_npcname("#event")+"::OnMyMobDead") == 0) {
 		enablenpc instance_npcname("#sndmaster");

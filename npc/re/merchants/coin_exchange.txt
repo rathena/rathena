@@ -1,4 +1,4 @@
-//===== rAthena Script ======================================
+//===== rAthena Script =======================================
 //= Coin Merchants
 //===== By: ==================================================
 //= rAthena Dev Team
@@ -846,42 +846,42 @@ ecl_in01,66,95,3	script	Armor Merchant Naphara#e	436,{
 	.@choice = select("Str Glove:Int Glove:Agi Glove:Vit Glove:Dex Glove:Luk Glove") -1;
 	mes "[Armor Merchant]";
 	switch(.@choice) {
-		case 0: // Str Glove
-			mes "^3131FFStr Glove^000000";
-			mes "^3131FFMHP + 100, MSP + 20^000000";
-			mes "^3131FFATK+1 increases for every STR+10^000000";
-			mes "^3131FFATK +1% added above STR 110^000000";
-			break;
-		case 1:
-			mes "^3131FFInt Glove^000000";
-			mes "^3131FFMHP + 100, MSP + 20^000000";
-			mes "^3131FFMATK+1 increases for every INT+10^000000";
-			mes "^3131FFMATK +1% added above INT 110^000000";
-			break;
-		case 2:
-			mes "^3131FFAgi Glove^000000";
-			mes "^3131FFMHP + 100, MSP + 20^000000";
-			mes "^3131FFFLEE+1 increases for every AGI+10^000000";
-			mes "^3131FFComplete Flee +1 added above AGI 110^000000";
-			break;
-		case 3:
-			mes "^3131FFVit Glove^000000";
-			mes "^3131FFMHP + 100, MSP + 20^000000";
-			mes "^3131FFMHP+50 for every VIT+10^000000";
-			mes "^3131FFMHP+1% added above VIT 110^000000";
-			break;
-		case 4:
-			mes "^3131FFDex Glove^000000";
-			mes "^3131FFMHP + 100, MSP + 20^000000";
-			mes "^3131FFHIT+1 increases for every DEX+10^000000";
-			mes "^3131FFRanged attack power +1% added above DEX 110^000000";
-			break;
-		case 5:
-			mes "^3131FFLuk Glove^000000";
-			mes "^3131FFMHP + 100, MSP + 20^000000";
-			mes "^3131FFCRI+1 increases for every LUK+10^000000";
-			mes "^3131FFCritical damage +1% added above LUK 110^000000";
-			break;
+	case 0: // Str Glove
+		mes "^3131FFStr Glove^000000";
+		mes "^3131FFMHP + 100, MSP + 20^000000";
+		mes "^3131FFATK+1 increases for every STR+10^000000";
+		mes "^3131FFATK +1% added above STR 110^000000";
+		break;
+	case 1:
+		mes "^3131FFInt Glove^000000";
+		mes "^3131FFMHP + 100, MSP + 20^000000";
+		mes "^3131FFMATK+1 increases for every INT+10^000000";
+		mes "^3131FFMATK +1% added above INT 110^000000";
+		break;
+	case 2:
+		mes "^3131FFAgi Glove^000000";
+		mes "^3131FFMHP + 100, MSP + 20^000000";
+		mes "^3131FFFLEE+1 increases for every AGI+10^000000";
+		mes "^3131FFComplete Flee +1 added above AGI 110^000000";
+		break;
+	case 3:
+		mes "^3131FFVit Glove^000000";
+		mes "^3131FFMHP + 100, MSP + 20^000000";
+		mes "^3131FFMHP+50 for every VIT+10^000000";
+		mes "^3131FFMHP+1% added above VIT 110^000000";
+		break;
+	case 4:
+		mes "^3131FFDex Glove^000000";
+		mes "^3131FFMHP + 100, MSP + 20^000000";
+		mes "^3131FFHIT+1 increases for every DEX+10^000000";
+		mes "^3131FFRanged attack power +1% added above DEX 110^000000";
+		break;
+	case 5:
+		mes "^3131FFLuk Glove^000000";
+		mes "^3131FFMHP + 100, MSP + 20^000000";
+		mes "^3131FFCRI+1 increases for every LUK+10^000000";
+		mes "^3131FFCritical damage +1% added above LUK 110^000000";
+		break;
 	}
 	mes "^3131FFRequired Level: 100^000000";
 	mes "^3131FFSlot: 0^000000";
@@ -898,7 +898,7 @@ ecl_in01,66,95,3	script	Armor Merchant Naphara#e	436,{
 			mes "It seems like you don't have enough coins.";
 			close;
 		}
-		delitem 6081,10; //6081
+		delitem 6081,10; //Splendide_Coin
 		getitem (.@choice+2917),1;
 		mes "[Armor Merchant]";
 		mes "Great, it's yours. Thank you.";
@@ -912,7 +912,7 @@ ecl_in01,64,97,5	script	Slot Expert Nattuer#ecl	436,{
 	mes "I am Slot Expert Nattuer.";
 	mes "If you bring me an item from my little brother Naphara along with 5 Splendide Coins, I will open up one Slot for you.";
 	next;
-	if (select("Activate a Slot.:Forget it.")==2){
+	if (select("Activate a Slot.:Forget it.") == 2){
 		close;
 	}
 	mes "[Slot Expert]";
@@ -921,7 +921,7 @@ ecl_in01,64,97,5	script	Slot Expert Nattuer#ecl	436,{
 	mes "[Slot Expert]";
 	mes "Of course, if your heart were as big as that flower-filled land, you wouldn't mind. Right? Should I go for it?";
 	next;
-	if (select("Continue.:Forget it.")==2) {
+	if (select("Continue.:Forget it.") == 2) {
 		close;
 	}
 	mes "[Slot Expert]";
@@ -949,9 +949,9 @@ ecl_in01,64,97,5	script	Slot Expert Nattuer#ecl	436,{
 	}
 	progressbar "0xFFFF00",3;
 	mes "[Slot Expert]";
-	delitem 6081,5; //6081
+	delitem 6081,5; //Splendide_Coin
 	.@luckyday = rand(1,99);
-	if ( .@luckyday%20 ){
+	if (.@luckyday % 20){
 		emotion e_dots;
 		delitem .@choice,1;
 		mes "Shoot, I'm sorry. It failed.";
@@ -979,40 +979,40 @@ ecl_in01,33,98,5	script	Armor Merchant Naphara#a	443,{ // Armor Merchant Naphara
 	mes "Welcome, this is Plafina's Herb Store where only the freshest herbs are provided~!";
 	next;
 	.@item = select("Snow Flip:Peony Mommy:Slapping Herb:Yggdrasil Dust:End conversation")-1;
-	if (.@item==4){
+	if (.@item == 4){
 		mes "[Herb Merchant]";
 		mes "Come back anytime.";
 		close;
 	}
 	mes "[Herb Merchant]";
 	switch (.@item){
-		case 0:
-			mes "Snow Flip has special effects on ^3131FFBurning, Bleeding, Deep Sleep, Sleep^000000.";
-			break;
-		case 1:
-			mes "Peony Mamy has special effects on ^3131FFFrost, Frozen, Freezing^000000";
-			break;
-		case 2:
-			mes "Slapping Herb has special effects on ^3131FFStun, Fear, Chaos, Hallucination^000000";
-			break;
-		case 3:
-			mes "Yggdrasil Dust has special effects on ^3131FFBlind, Curse, Decrease Agility, Reverse Orcish^000000.";
-			break;
+	case 0:
+		mes "Snow Flip has special effects on ^3131FFBurning, Bleeding, Deep Sleep, Sleep^000000.";
+		break;
+	case 1:
+		mes "Peony Mamy has special effects on ^3131FFFrost, Frozen, Freezing^000000";
+		break;
+	case 2:
+		mes "Slapping Herb has special effects on ^3131FFStun, Fear, Chaos, Hallucination^000000";
+		break;
+	case 3:
+		mes "Yggdrasil Dust has special effects on ^3131FFBlind, Curse, Decrease Agility, Reverse Orcish^000000.";
+		break;
 	}
 	mes "Requires 5 seconds between uses.";
 	mes "It costs "+ .cost[.@item] +" Splendide Coins for each.";
 	next;
 	.@buy = select("Buy 1.:Buy 10.:Don't buy.");
-	if (.@buy==3){
+	if (.@buy == 3){
 		close;
 	}
-	if (.@buy==2){
+	if (.@buy == 2){
 		.@buy = 10;
 	}
 	mes "[Herb Merchant]";
 	mes "Would you like to buy "+ .@buy +" "+ getitemname(.items[.@item]) +"?";
 	next;
-	if (select("Buy.:Don't buy.")==2){
+	if (select("Buy.:Don't buy.") == 2){
 		close;
 	}
 	if (countitem(6081) < (.cost[.@item]*.@buy) ) {
@@ -1022,8 +1022,8 @@ ecl_in01,33,98,5	script	Armor Merchant Naphara#a	443,{ // Armor Merchant Naphara
 	}
 	mes "[Herb Merchant]";
 	mes "Thank you for your business.";
-	delitem 6081,.cost[.@item]*.@buy; //6081
-	getitem 12812,.@buy;
+	delitem 6081,.cost[.@item]*.@buy; //Splendide_Coin
+	getitem .items[.@item],.@buy;
 	close;
 	
 OnInit:
@@ -1033,7 +1033,7 @@ OnInit:
 }
 
 ecl_in01,67,39,4	script	Replication Expert Paltu	445,{
-	if (checkweight(1301,3)==0) {
+	if (checkweight(1301,3) == 0) {
 		mes "You have too many items to continue.";
 		close;
 	}
@@ -1042,72 +1042,71 @@ ecl_in01,67,39,4	script	Replication Expert Paltu	445,{
 	mes "Woohoo- Greetings. What are you looking for? Lots of goods here.";
 	next;
 	switch (select("No thanks.:Replication?:I know you got lots up your sleeve!")) {
-		case 1:
-			emotion e_an;
+	case 1:
+		emotion e_an;
+		mes "[Paltu]";
+		mes "Really? Hmm?";
+		close;
+	case 2:
+		mes "[Paltu]";
+		mes "One can say that there's no one better in Eclage than I at utilizing magic resistance.";
+		next;
+		mes "[Paltu]";
+		mes "I'll give you a good price whatever it is. Just trust me.";
+		next;
+		select("Could you do something for me?");
+		emotion e_no1;
+		mes "[Paltu]";
+		mes "Hey, I like your attitude.";
+		next;
+		mes "[Paltu]";
+		mes "Ah- you know the hat you're wearing?";
+		next;
+		emotion e_what;
+		mes "[Paltu]";
+		mes "Don't you have any of those hats lying around in storage that are solid but too ugly to wear? You do, right?";
+		next;
+		select(".........");
+		emotion e_dots,1;
+		emotion e_heh;
+		mes "[Paltu]";
+		mes "See! I knew it. I knew it from the first minute.";
+		next;
+		mes "[Paltu]";
+		mes "If you bring me ^ff0000 50 Splendide Coins and the ingredients^000000, I'll make you a new hat in the same shape but worn as a ^ff0000Costume^000000.";
+		next;
+		mes "[Paltu]";
+		mes "Hmm, what was it...?";
+		mes "I think you adventurers call them ^0571B0Costumes^000000? right?";
+		next;
+		select("Yes~ What do you need?");
+		mes "[Paltu]";
+		mes "I need 1 ^0571B0hat to replicate^000000 and";
+		mes "I need ^E1281E 4 Crystal Mirrors^000000 for magic resistance, ^E1281E 1 Fairy Magic Powder^000000 as the catalyst, and ^E1281E Emerald, Ruby, Sapphire, Topaz, and Zircon, 10 of each^000000, to be used for amplifying the magic power.";
+		next;
+		emotion e_no;
+		mes "[Paltu]";
+		mes "There's quite a lot of ingredients, right? Well, I can't do anything about that. Dealing with magic power is not a joke.";
+		next;
+		select("Which hats can be replicated?");
+		mes "[Paltu]";
+		mes "Oh! You're pretty sharp!";
+		mes "Almost forgot the most important thing.";
+		next;
+		mes "[Paltu]";
+		mes "Hats that I can replicate are:";
+		mes "^0571B0Frog Hat, Romantic Flower, Magestic Goat, Blush, Valkyrie Helm, Deviruchi Hat, Assassin Mask, Elven Ears, Hahoe Mask, and Boys Cap^000000 a total of 10 types.";
+		next;
+		mes "[Paltu]";
+		mes "What do you think? I'll make it happen as long as I have the ingredients and the compensation.";
+		next;
+		if (select("I'll do it later.:Show me what you got!") == 1) {
+			emotion e_dots;
 			mes "[Paltu]";
-			mes "Really? Hmm?";
+			mes "What? Are you kidding me? Please tell me you are!";
 			close;
-			
-		case 2:
-			mes "[Paltu]";
-			mes "One can say that there's no one better in Eclage than I at utilizing magic resistance.";
-			next;
-			mes "[Paltu]";
-			mes "I'll give you a good price whatever it is. Just trust me.";
-			next;
-			select("Could you do something for me?");
-			emotion e_no1;
-			mes "[Paltu]";
-			mes "Hey, I like your attitude.";
-			next;
-			mes "[Paltu]";
-			mes "Ah- you know the hat you're wearing?";
-			next;
-			emotion e_what;
-			mes "[Paltu]";
-			mes "Don't you have any of those hats lying around in storage that are solid but too ugly to wear? You do, right?";
-			next;
-			select(".........");
-			emotion e_dots,1;
-			emotion e_heh;
-			mes "[Paltu]";
-			mes "See! I knew it. I knew it from the first minute.";
-			next;
-			mes "[Paltu]";
-			mes "If you bring me ^ff0000 50 Splendide Coins and the ingredients^000000, I'll make you a new hat in the same shape but worn as a ^ff0000Costume^000000.";
-			next;
-			mes "[Paltu]";
-			mes "Hmm, what was it...?";
-			mes "I think you adventurers call them ^0571B0Costumes^000000? right?";
-			next;
-			select("Yes~ What do you need?");
-			mes "[Paltu]";
-			mes "I need 1 ^0571B0hat to replicate^000000 and";
-			mes "I need ^E1281E 4 Crystal Mirrors^000000 for magic resistance, ^E1281E 1 Fairy Magic Powder^000000 as the catalyst, and ^E1281E Emerald, Ruby, Sapphire, Topaz, and Zircon, 10 of each^000000, to be used for amplifying the magic power.";
-			next;
-			emotion e_no;
-			mes "[Paltu]";
-			mes "There's quite a lot of ingredients, right? Well, I can't do anything about that. Dealing with magic power is not a joke.";
-			next;
-			select("Which hats can be replicated?");
-			mes "[Paltu]";
-			mes "Oh! You're pretty sharp!";
-			mes "Almost forgot the most important thing.";
-			next;
-			mes "[Paltu]";
-			mes "Hats that I can replicate are:";
-			mes "^0571B0Frog Hat, Romantic Flower, Magestic Goat, Blush, Valkyrie Helm, Deviruchi Hat, Assassin Mask, Elven Ears, Hahoe Mask, and Boys Cap^000000 a total of 10 types.";
-			next;
-			mes "[Paltu]";
-			mes "What do you think? I'll make it happen as long as I have the ingredients and the compensation.";
-			next;
-			if (select("I'll do it later.:Show me what you got!") == 1) {
-				emotion e_dots;
-				mes "[Paltu]";
-				mes "What? Are you kidding me? Please tell me you are!";
-				close;
-			}
-			break;
+		}
+		break;
 	}
 	disable_items;
 	emotion e_lv2;
@@ -1171,7 +1170,7 @@ ecl_in01,67,39,4	script	Replication Expert Paltu	445,{
 	mes "[Paltu]";
 	mes "So any problems with that?";
 	next;
-	if (select("Let me go check.:Start the replication process.")==1) {
+	if (select("Let me go check.:Start the replication process.") == 1) {
 		mes "[Paltu]";
 		mes "Yeah, please make sure!";
 		close;
@@ -1199,14 +1198,14 @@ ecl_in01,67,39,4	script	Replication Expert Paltu	445,{
 	progressbar "0xFFFF00",1;
 	specialeffect EF_MVP;
 	next;
-	delitem 6081,50;
-	delitem 747,4;
-	delitem 6395,1;
-	delitem 721,10;
-	delitem 723,10;
-	delitem 726,10;
-	delitem 728,10;
-	delitem 729,10;
+	delitem 6081,50; //Splendide_Coin
+	delitem 747,4; //Crystal_Mirror
+	delitem 6395,1; //Angel_Magic_Power
+	delitem 721,10; //Azure_Jewel
+	delitem 723,10; //Cardinal_Jewel
+	delitem 726,10; //Blue_Jewel
+	delitem 728,10; //Golden_Jewel
+	delitem 729,10; //Bluish_Green_Jewel
 	delitem .@items[.@i],1;
 	getitem .@costumes[.@i],1;
 	mes "[Paltu]";

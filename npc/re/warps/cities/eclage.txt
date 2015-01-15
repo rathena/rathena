@@ -1,4 +1,4 @@
-//===== rAthena Script ======================================
+//===== rAthena Script =======================================
 //= Eclage Warp Script
 //===== By: ==================================================
 //= Chilly
@@ -31,26 +31,22 @@ ecl_in02,157,68,0	warp	in02-3_in02-2	1,1,ecl_in02,83,18
 ecl_in01,84,68,0	script	in01e_hub2-1	45,1,1,{
 	end;
 OnTouch:
-	if (ep14_2_mylord == 29) {
+	if (ep14_2_mylord == 29)
 		warp "ecl_hub01",106,31;
-	}
-	else {
+	else
 		warp "ecl_hub01",107,107;
-	}
-end;
+	end;
 }
 ecl_hub01,107,110,0	warp	hub2-1_in01e	1,1,ecl_in01,82,68
 ecl_hub01,127,95,0	warp	hub2-2_hub3-1	1,1,ecl_hub01,18,32
 ecl_hub01,18,34,0	script	hub3-1_hub2-2	45,1,1,{
 	end;
 OnTouch:
-	if (ep14_2_mylord == 29) {
+	if (ep14_2_mylord == 29)
 		warp "ecl_hub01",135,14;
-	}
-	else {
+	else
 		warp "ecl_hub01",125,94;
-	}
-end;
+	end;
 }
 ecl_hub01,40,14,0	warp	hub3-2_in03	1,1,ecl_in03,144,17
 ecl_in03,144,14,0	warp	in03_hub3-2	1,1,ecl_hub01,40,11
