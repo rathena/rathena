@@ -1,4 +1,4 @@
-Ôªø//===== rAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Eclage Quests
 //===== By: ================================================== 
 //= Dastgir
@@ -12016,7 +12016,7 @@ ecl_in04,105,216,4	script	Hiel's Workshop#pa0829	111,{
 			next;
 			cutin "EP14_etran1",1;
 			mes "[Etran]";
-			mes "Welcome welcomeow~! We are cat merchants, always serving guests as our kingeow~! Special sale! One piece of meat for 200√Å¬¶¬¥√è!!";
+			mes "Welcome welcomeow~! We are cat merchants, always serving guests as our kingeow~! Special sale! One piece of meat for 200¡¶¥œ!!";
 			next;
 			cutin "EP14_robert1",1;
 			mes "[Robert]";
