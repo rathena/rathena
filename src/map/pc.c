@@ -998,7 +998,7 @@ static bool pc_isItemClass (struct map_session_data *sd, struct item_data* item)
  * Checks if the player can equip the item at index n in inventory.
  * @param sd
  * @param n Item index in inventory
- * @return ITEM_EQUIP_ACK_OK if can be equipped, or ITEM_EQUIP_ACK_FAIL/ITEM_EQUIP_ACK_FAILLEVEL if can't
+ * @return ITEM_EQUIP_ACK_OK(0) if can be equipped, or ITEM_EQUIP_ACK_FAIL(1)/ITEM_EQUIP_ACK_FAILLEVEL(2) if can't
  *------------------------------------------------*/
 uint8 pc_isequip(struct map_session_data *sd,int n)
 {
@@ -5202,8 +5202,8 @@ char pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int 
 		}
 		for( i = 0; i < EQI_MAX; i++ ) {
 			if( sd->equip_index[i] >= 0 )
-				if( pc_isequip(sd,sd->equip_index[i]) != ITEM_EQUIP_ACK_OK )
-					pc_unequipitem(sd,sd->equip_index[i],ITEM_EQUIP_ACK_FAIL );
+				if( pc_isequip(sd,sd->equip_index[i]) )
+					pc_unequipitem(sd,sd->equip_index[i],2);
 		}
 		if (battle_config.clear_unit_onwarp&BL_PC)
 			skill_clear_unitgroup(&sd->bl);
@@ -6811,8 +6811,8 @@ int pc_resetlvl(struct map_session_data* sd,int type)
 
 	for(i=0;i<EQI_MAX;i++) { // unequip items that can't be equipped by base 1 [Valaris]
 		if(sd->equip_index[i] >= 0)
-			if(pc_isequip(sd,sd->equip_index[i]) != ITEM_EQUIP_ACK_OK)
-				pc_unequipitem(sd,sd->equip_index[i],ITEM_EQUIP_ACK_FAILLEVEL);
+			if(pc_isequip(sd,sd->equip_index[i]))
+				pc_unequipitem(sd,sd->equip_index[i],2);
 	}
 
 	if ((type == 1 || type == 2 || type == 3) && sd->status.party_id)
@@ -8088,8 +8088,8 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 
 	for(i=0;i<EQI_MAX;i++) {
 		if(sd->equip_index[i] >= 0)
-			if(pc_isequip(sd,sd->equip_index[i]) != ITEM_EQUIP_ACK_OK)
-				pc_unequipitem(sd,sd->equip_index[i],ITEM_EQUIP_ACK_FAILLEVEL);	// unequip invalid item for class
+			if(pc_isequip(sd,sd->equip_index[i]))
+				pc_unequipitem(sd,sd->equip_index[i],2);	// unequip invalid item for class
 	}
 
 	//Change look, if disguised, you need to undisguise
@@ -9149,7 +9149,7 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos)
 	if(battle_config.battle_log)
 		ShowInfo("equip %hu(%d) %x:%x\n",sd->status.inventory[n].nameid,n,id?id->equip:0,req_pos);
 
-	if((res = pc_isequip(sd,n)) != ITEM_EQUIP_ACK_OK) {
+	if((res = pc_isequip(sd,n))) {
 		clif_equipitemack(sd,n,0,res);	// fail
 		return false;
 	}
