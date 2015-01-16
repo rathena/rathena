@@ -1097,9 +1097,10 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag)
  *		5 - target has 'special_state.no_knockback';
  *		6 - target is trap that cannot be knocked back
  */
-int unit_blown_immune(struct block_list* bl, int flag)
+uint8 unit_blown_immune(struct block_list* bl, uint8 flag)
 {
-	if ((flag&0x1) && (map_flag_gvg(bl->m) || map[bl->m].flag.battleground)
+	if ((flag&0x1)
+		&& (map_flag_gvg(bl->m) || map[bl->m].flag.battleground)
 		&& ((flag&0x2) || !(battle_config.skill_trap_type&0x1)))
 		return 1; // No knocking back in WoE / BG
 
@@ -1118,16 +1119,15 @@ int unit_blown_immune(struct block_list* bl, int flag)
 		case BL_PC: {
 				struct map_session_data *sd = BL_CAST(BL_PC, bl);
 				// Basilica caster can't be knocked-back by normal monsters.
-				if( sd->sc.data[SC_BASILICA] && sd->sc.data[SC_BASILICA]->val4 == sd->bl.id && !(flag&0x4))
+				if( !(flag&0x4) && &sd->sc && sd->sc.data[SC_BASILICA] && sd->sc.data[SC_BASILICA]->val4 == sd->bl.id)
 					return 4;
 				// Target has special_state.no_knockback (equip)
-				if( (flag&0x1) && (flag&0x2) && sd->special_state.no_knockback )
+				if( (flag&(0x1|0x2)) && sd->special_state.no_knockback )
 					return 5;
 			}
 			break;
 		case BL_SKILL: {
-				struct skill_unit* su = NULL;
-				su = (struct skill_unit *)bl;
+				struct skill_unit* su = (struct skill_unit *)bl;
 				// Trap cannot be knocked back
 				if (su && su->group && skill_get_unit_flag(su->group->skill_id)&UF_NOKNOCKBACK)
 					return 6;

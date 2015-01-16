@@ -15,3 +15,4 @@
 9,Bakonawa Lake,7200,1@ma_b,64,51,1@ma_b
 10,Wolfchev's Laboratory,14400,1@lhz,45,148,1@lhz
 11,Old Glast Heim,3600,1@gl_k,150,20,1@gl_k,2@gl_k
+12,Eclage Interior,1200,1@ecl,60,50,1@ecl

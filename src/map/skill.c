@@ -2388,7 +2388,7 @@ static int skill_area_temp[8];
 short skill_blown(struct block_list* src, struct block_list* target, char count, int8 dir, unsigned char flag)
 {
 	int dx = 0, dy = 0;
-	int reason = 0, checkflag = 0;
+	uint8 reason = 0, checkflag = 0;
 
 	nullpo_ret(src);
 	nullpo_ret(target);
@@ -12895,7 +12895,9 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 
 					if( td )
 						sec = DIFF_TICK(td->tick, tick);
-					if( !unit_blown_immune(bl,0x1) ) {
+					if( (sg->unit_id == UNT_MANHOLE && bl->type == BL_PC)
+						|| !unit_blown_immune(bl,0x1) )
+					{
 						unit_movepos(bl, unit->bl.x, unit->bl.y, 0, 0);
 						clif_fixpos(bl);
 					}
