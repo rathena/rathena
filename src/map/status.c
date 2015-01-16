@@ -10052,7 +10052,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_ELECTRICSHOCKER:
 		case SC_BITE:
 		case SC_THORNSTRAP:
-		case SC__MANHOLE:
 		//case SC__CHAOS:
 		case SC_CRYSTALIZE:
 		case SC_CURSEDCIRCLE_ATKER:
@@ -10065,6 +10064,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_ANKLE:
 		case SC_VACUUM_EXTREME:
 			if (!unit_blown_immune(bl,0x1))
+				unit_stop_walking(bl,1);
+			break;
+		case SC__MANHOLE:
+			if (bl->type == BL_PC || !unit_blown_immune(bl,0x1))
 				unit_stop_walking(bl,1);
 			break;
 		case SC_HIDING:
