@@ -6156,7 +6156,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			md.damage = 7 * ((atk.damage/skill_lv + matk.damage/skill_lv) * tstatus->vit / 100 );
 
 			// AD benefits from endow/element but damage is forced back to neutral
-			battle_attr_fix(src, target, md.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
+			md.damage = battle_attr_fix(src, target, md.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 		}
 #else
 		if(tstatus->vit+sstatus->int_) //crash fix
