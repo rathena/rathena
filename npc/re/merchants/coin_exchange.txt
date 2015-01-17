@@ -40,9 +40,9 @@ malangdo,220,167,5	script	Coin Exchanger CX-1	564,{
 	.@menu$ = "Stop:";
 	for(.@i = 1; .@i<=6; .@i++) {
 		if (countitem(.@coins[.@i]))
-			.@menu$ += getitemname(.@coins[.@i])+":";
+			.@menu$ = .@menu$ + getitemname(.@coins[.@i]) + ":";
 		else
-			.@menu$ += "^aaaaaa"+getitemname(.@coins[.@i])+" (None)^000000:";
+			.@menu$ = .@menu$ + "^aaaaaa"+getitemname(.@coins[.@i])+" (None)^000000:";
 	}
 	.@i = select(.@menu$);
 	switch(.@i) {
@@ -76,11 +76,11 @@ malangdo,220,167,5	script	Coin Exchanger CX-1	564,{
 	.@menu$ = "Stop:";
 	for(.@i = 0; .@i<2; .@i++) {
 		if (.@exchange_id[.@i] == 0)
-			.@menu$ += "^ff3333Unavailable exchange to "+.@exchange_name$[.@i]+" coin^000000:";
+			.@menu$ = .@menu$ + "^ff3333Unavailable exchange to "+.@exchange_name$[.@i]+" coin^000000:";
 		else if (countitem(.@coin) < .@exchange_rate[.@i])
-			.@menu$ += "^aaaaaaExchange to "+.@exchange_name$[.@i]+" coin (null)^000000:";
+			.@menu$ = .@menu$ + "^aaaaaaExchange to "+.@exchange_name$[.@i]+" coin (null)^000000:";
 		else
-			.@menu$ += "Exchange to "+.@exchange_name$[.@i]+" coin - "+getitemname(.@coin)+" ("+.@exchange_rate[.@i]+" needed):";
+			.@menu$ = .@menu$ + "Exchange to "+.@exchange_name$[.@i]+" coin - "+getitemname(.@coin)+" ("+.@exchange_rate[.@i]+" needed):";
 	}
 	.@i = select(.@menu$)-2;
 	if (.@i == -1) {
@@ -134,7 +134,7 @@ malangdo,218,165,5	script	Special Vending Machine	562,{
 L_AddItem:
 	.@menu$ = "Explanation:";
 	for(.@i = 0; .@i<getargcount(); .@i += 3)
-		.@menu$ += getarg(.@i)+":";
+		.@menu$ = .@menu$ + getarg(.@i)+":";
 	.@i = select(.@menu$)-2;
 	if (.@i == -1) {
 		mes "[Special Vending Machine]";
@@ -197,9 +197,9 @@ malangdo,236,179,5	script	Dark Merchant K	554,{
 		.@menu$ = "";
 		for(.@i = 0; .@i<getarraysize(.@coin_amount); .@i++) {
 			if (countitem(6420) >= .@coin_amount[.@i])
-				.@menu$ += "Exchange "+(.@coin_amount[.@i]/10)+" Mora Coin:";
+				.@menu$ = .@menu$ + "Exchange "+(.@coin_amount[.@i]/10)+" Mora Coin:";
 			else
-				.@menu$ += "^aaaaaaExchange "+(.@coin_amount[.@i]/10)+" Mora Coin (Not Enough)^000000:";
+				.@menu$ = .@menu$ + "^aaaaaaExchange "+(.@coin_amount[.@i]/10)+" Mora Coin (Not Enough)^000000:";
 		}
 		.@i = select(.@menu$+"Quit")-1;
 		if (.@i == getarraysize(.@coin_amount)) {
@@ -249,9 +249,9 @@ malangdo,233,180,3	script	Dark MachineTX100	564,{
 	.@menu$ = "Quit:";
 	for(.@i = 1; .@i<=6; .@i++) {
 		if (countitem(.@coins[.@i]))
-			.@menu$ += getitemname(.@coins[.@i])+" (have "+countitem(.@coins[.@i])+"):";
+			.@menu$ = .@menu$ + getitemname(.@coins[.@i])+" (have "+countitem(.@coins[.@i])+"):";
 		else
-			.@menu$ += "^aaaaaa"+getitemname(.@coins[.@i])+" (None)^000000:";
+			.@menu$ = .@menu$ + "^aaaaaa"+getitemname(.@coins[.@i])+" (None)^000000:";
 	}
 	.@i = select(.@menu$)-1;
 	if (.@i == 0) {
@@ -284,22 +284,22 @@ malangdo,233,180,3	script	Dark MachineTX100	564,{
 	next;
 	.@menu$ = "Quit:";
 	if (.@exchange_id[0] == 0)
-		.@menu$ += "^ff3333Cannot exchange to higher level coin^000000:";
+		.@menu$ = .@menu$ + "^ff3333Cannot exchange to higher level coin^000000:";
 	else {
 		if (countitem(.@coin) >= 99)
-			.@menu$ += "Exchange 99 "+getitemname(.@coin)+" into higher level coin:";
+			.@menu$ = .@menu$ + "Exchange 99 "+getitemname(.@coin)+" into higher level coin:";
 		else
-			.@menu$ += "^aaaaaaExchange to higher level coin (Not enough)^000000:";
+			.@menu$ = .@menu$ + "^aaaaaaExchange to higher level coin (Not enough)^000000:";
 	}
 	if (.@exchange_id[1] == 0)
-		.@menu$ += "^ff3333Cannot exchange to lower level coin^000000:";
+		.@menu$ = .@menu$ + "^ff3333Cannot exchange to lower level coin^000000:";
 	else {
 		if (countitem(.@coin) > 500)
-			.@menu$ += "Exchange 500 "+getitemname(.@coin)+" into lower level coin:";
+			.@menu$ = .@menu$ + "Exchange 500 "+getitemname(.@coin)+" into lower level coin:";
 		else if (countitem(.@coin))
-			.@menu$ += "Exchange "+countitem(.@coin)+" "+getitemname(.@coin)+" into lower level coin:";
+			.@menu$ = .@menu$ + "Exchange "+countitem(.@coin)+" "+getitemname(.@coin)+" into lower level coin:";
 		else
-			.@menu$ += "^aaaaaaExchange to lower level coin (Not enough)^000000:";
+			.@menu$ = .@menu$ + "^aaaaaaExchange to lower level coin (Not enough)^000000:";
 	}
 	.@i = select(.@menu$)-2;
 	if (.@i == -1) {
