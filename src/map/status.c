@@ -203,6 +203,7 @@ void initChangeTables(void)
 	set_sc( NPC_BLINDATTACK		, SC_BLIND		, SI_BLANK		, SCB_HIT|SCB_FLEE );
 	set_sc( NPC_BLEEDING		, SC_BLEEDING		, SI_BLEEDING		, SCB_REGEN );
 	set_sc( NPC_POISON		, SC_DPOISON		, SI_BLANK		, SCB_DEF2|SCB_REGEN );
+	add_sc( ALL_REVERSEORCISH,	SC_ORCISH );
 
 	/* The main status definitions */
 	add_sc( SM_BASH			, SC_STUN		);
