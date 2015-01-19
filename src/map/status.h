@@ -1520,18 +1520,19 @@ enum si_type {
 	SI_GET_MAILBOX = 814,
 	SI_JUMPINGCLAN = 815,
 	SI_JP_OTP = 816,
+	
 	SI_MAX,
 };
 
-// JOINTBEAT stackable ailments
+/// JOINTBEAT stackable ailments
 enum e_joint_break
 {
-	BREAK_ANKLE	= 0x01, // MoveSpeed reduced by 50%
-	BREAK_WRIST	= 0x02, // ASPD reduced by 25%
-	BREAK_KNEE	= 0x04, // MoveSpeed reduced by 30%, ASPD reduced by 10%
-	BREAK_SHOULDER	= 0x08, // DEF reduced by 50%
-	BREAK_WAIST	= 0x10, // DEF reduced by 25%, ATK reduced by 25%
-	BREAK_NECK	= 0x20, // current attack does 2x damage, inflicts 'bleeding' for 30 seconds
+	BREAK_ANKLE	= 0x01, ///< MoveSpeed reduced by 50%
+	BREAK_WRIST	= 0x02, ///< ASPD reduced by 25%
+	BREAK_KNEE	= 0x04, ///< MoveSpeed reduced by 30%, ASPD reduced by 10%
+	BREAK_SHOULDER	= 0x08, ///< DEF reduced by 50%
+	BREAK_WAIST	= 0x10, ///< DEF reduced by 25%, ATK reduced by 25%
+	BREAK_NECK	= 0x20, ///< current attack does 2x damage, inflicts 'bleeding' for 30 seconds
 	BREAK_FLAGS	= BREAK_ANKLE | BREAK_WRIST | BREAK_KNEE | BREAK_SHOULDER | BREAK_WAIST | BREAK_NECK,
 };
 
@@ -1539,7 +1540,7 @@ extern short current_equip_item_index;
 extern unsigned int current_equip_combo_pos;
 extern int current_equip_card_id;
 
-//Mode definitions to clear up code reading. [Skotlex]
+/// Mode definitions to clear up code reading. [Skotlex]
 enum e_mode {
 	MD_CANMOVE				= 0x000001,
 	MD_LOOTER				= 0x000002,
@@ -1654,7 +1655,7 @@ enum e_option {
 	OPTION_CART4	= 0x00000200,
 	OPTION_CART5	= 0x00000400,
 
-	/*  compound constant for older carts */
+	// compound constant for older carts
 	OPTION_CART	= OPTION_CART1|OPTION_CART2|OPTION_CART3|OPTION_CART4|OPTION_CART5,
 #endif
 
@@ -1673,18 +1674,18 @@ enum manner_flags
 	MANNER_NOROOM		= 0x10,
 };
 
-/* Status Change State Flags */
+/// Status Change State Flags
 enum scs_flag {
-	SCS_NOMOVECOND		= 0x00000001, /* cond flag for nomove */
-	SCS_NOMOVE			= 0x00000002, /* unit unable to move */
-	SCS_NOPICKITEMCOND	= 0x00000004, /* cond flag for nopickitem */
-	SCS_NOPICKITEM		= 0x00000008, /* player unable to pick up items */
-	SCS_NODROPITEMCOND	= 0x00000010, /* cond flag for nodropitem */
-	SCS_NODROPITEM		= 0x00000020, /* player unable to drop items */
-	SCS_NOCASTCOND		= 0x00000040, /* cond flag for nocast */
-	SCS_NOCAST			= 0x00000080, /* unit unable to cast skills */
-	SCS_NOCHAT			= 0x00000100, /* unit can't talk */
-	SCS_NOCHATCOND		= 0x00000200, /* cond flag for notalk */
+	SCS_NOMOVECOND		= 0x00000001, ///< cond flag for nomove
+	SCS_NOMOVE			= 0x00000002, ///< unit unable to move
+	SCS_NOPICKITEMCOND	= 0x00000004, ///< cond flag for nopickitem
+	SCS_NOPICKITEM		= 0x00000008, ///< player unable to pick up items
+	SCS_NODROPITEMCOND	= 0x00000010, ///< cond flag for nodropitem
+	SCS_NODROPITEM		= 0x00000020, ///< player unable to drop items
+	SCS_NOCASTCOND		= 0x00000040, ///< cond flag for nocast
+	SCS_NOCAST			= 0x00000080, ///< unit unable to cast skills
+	SCS_NOCHAT			= 0x00000100, ///< unit can't talk
+	SCS_NOCHATCOND		= 0x00000200, ///< cond flag for notalk
 };
 
 ///Define flags for the status_calc_bl function. [Skotlex]
@@ -1729,8 +1730,8 @@ enum scb_flag
 
 enum e_status_calc_opt {
 	SCO_NONE  = 0x0,
-	SCO_FIRST = 0x1, /* Trigger the calculations that should take place only onspawn/once */
-	SCO_FORCE = 0x2, /* Only relevant to BL_PC types, ensures call bypasses the queue caused by delayed damage */
+	SCO_FIRST = 0x1, ///< Trigger the calculations that should take place only onspawn/once
+	SCO_FORCE = 0x2, ///< Only relevant to BL_PC types, ensures call bypasses the queue caused by delayed damage
 };
 
 /// Flags for status_change_start and status_get_sc_def
@@ -1790,12 +1791,12 @@ struct weapon_atk {
 #endif
 };
 
-sc_type SkillStatusChangeTable[MAX_SKILL];   // skill  -> status
-int StatusIconChangeTable[SC_MAX];           // status -> "icon" (icon is a bit of a misnomer, since there exist values with no icon associated)
-unsigned int StatusChangeFlagTable[SC_MAX];  // status -> flags
-int StatusSkillChangeTable[SC_MAX];          // status -> skill
-int StatusRelevantBLTypes[SI_MAX];           // "icon" -> enum bl_type (for clif->status_change to identify for which bl types to send packets)
-unsigned int StatusChangeStateTable[SC_MAX]; // status -> flags
+sc_type SkillStatusChangeTable[MAX_SKILL];   /// skill  -> status
+int StatusIconChangeTable[SC_MAX];           /// status -> "icon" (icon is a bit of a misnomer, since there exist values with no icon associated)
+unsigned int StatusChangeFlagTable[SC_MAX];  /// status -> flags
+int StatusSkillChangeTable[SC_MAX];          /// status -> skill
+int StatusRelevantBLTypes[SI_MAX];           /// "icon" -> enum bl_type (for clif->status_change to identify for which bl types to send packets)
+unsigned int StatusChangeStateTable[SC_MAX]; /// status -> flags
 bool StatusDisplayType[SC_MAX];
 
 ///For holding basic status (which can be modified by status changes)
