@@ -5238,14 +5238,14 @@ OnTouch:
 			mes "seem to be of a particular problem.";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			if (checkquest(9244) == 1 || checkquest(9246) == 1){
+			if (isbegin_quest(9244) == 1 || isbegin_quest(9246) == 1){
 				mes "However, Dames actually";
 				mes "suspects Rosa the most.";
 				mes "Their marriage has been becoming";
 				mes "more difficult. She's been asking him for";
 				mes "more things. Their relationship doesn't seem healthy.";
 			}
-			else if (checkquest(9245) == 1 || checkquest(9247) == 1){
+			else if (isbegin_quest(9245) == 1 || isbegin_quest(9247) == 1){
 				mes "The stolen necklace was";
 				mes "what the husband bought for his wife..";
 				mes "Recently, the wife asked him to ";
@@ -5263,14 +5263,14 @@ OnTouch:
 			mes "there and stayed inside the house.";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			if (checkquest(9248) == 1 || checkquest(9250) == 1){
+			if (isbegin_quest(9248) == 1 || isbegin_quest(9250) == 1){
 				mes "She said she doesn't suspect anyone.";
 				mes "She trusts her family entirely.";
 				mes "The stolen necklace was";
 				mes "something that she";
 				mes "really cared for.";
 			}
-			else if (checkquest(9249) == 1 || checkquest(9251) == 1){
+			else if (isbegin_quest(9249) == 1 || isbegin_quest(9251) == 1){
 				mes "There are no particularly expensive";
 				mes "items in the house and neither was the necklace.";
 				mes "It was just a meaningful item.";
@@ -5307,7 +5307,7 @@ ecl_in04,78,108,5	script	Daughter Luen#eclage	437,{
 		mes "I can't believe that the house was robbed...";
 	}
 	else if (ep14_2_detect == 2) {
-		if (checkquest(9226) != 1) {
+		if (isbegin_quest(9226) != 1) {
 			mes "[Daughter Luen]";
 			mes "I hope the robber";
 			mes "is caught soon..";
@@ -5553,7 +5553,7 @@ ecl_in04,78,108,5	script	Daughter Luen#eclage	437,{
 		mes "I can help with?";
 	}
 	else if (ep14_2_detect == 4) {
-		if (checkquest(9252) != 1 || checkquest(9253) != 1 || checkquest(9254) != 1 || checkquest(9255) != 1 || checkquest(9256) != 1 || checkquest(9257) != 1){
+		if (isbegin_quest(9252) != 1 || isbegin_quest(9253) != 1 || isbegin_quest(9254) != 1 || isbegin_quest(9255) != 1 || isbegin_quest(9256) != 1 || isbegin_quest(9257) != 1){
 			mes "[Daughter Luen]";
 			mes "You were working on the field examination, right?";
 			mes "But I guess you aren't done.";
@@ -5721,7 +5721,7 @@ ecl_in04,85,110,3	script	Father Dames#eclage	447,{
 		mes "thing ever happened to us.";
 	}
 	else if (ep14_2_detect == 2) {
-		if (checkquest(9227) == 1) {
+		if (isbegin_quest(9227) == 1) {
 			mes "[" + strcharinfo(0) + "]";
 			mes "As you may have heard, to figure out the thief responsible for this, I will begin my interview with you.";
 			mes "Please give me your best cooperation.";
@@ -6177,7 +6177,7 @@ eclage,164,102,3	script	Cruyan#eclage	442,{
 		mes "no matter what and";
 		mes "bring it to mother.";
 	}
-	else if (ep14_2_detect == 5 && checkquest(9231) == 1) {
+	else if (ep14_2_detect == 5 && isbegin_quest(9231) == 1) {
 		mes "[" + strcharinfo(0) + "]";
 		mes "Hello.";
 		mes "You must be Luen's boyfriend";
@@ -6589,7 +6589,7 @@ ecl_in04,85,104,3	script	Poppy#eclage	81,{
 		mes "Grrrrr!!!!";
 	}
 	else if (ep14_2_detect == 4) {
-		if (checkquest(9252) != 0) {
+		if (isbegin_quest(9252) != 0) {
 			mes "[" + strcharinfo(0) + "]";
 			mes "This thing is so violent";
 			mes "toward strangers...";
@@ -8613,7 +8613,7 @@ ecl_in01,26,88,5	script	Cecilia#nk	440,{
 	}
 	else if (checkquest(4256) == 2) {
 		if (checkquest(4257) == -1) {
-			.@que_ni = checkquest(4254) + checkquest(4255);
+			.@que_ni = isbegin_quest(4254) + isbegin_quest(4255);
 			if (.@que_ni != 4) {
 				mes "[Cecilia]";
 				mes "How strange...";
@@ -8649,7 +8649,7 @@ ecl_in01,26,88,5	script	Cecilia#nk	440,{
 			close;
 		}
 		else if (isbegin_quest(4257) == 1) {
-			.@que_san = checkquest(4258) + checkquest(4259);
+			.@que_san = isbegin_quest(4258) + isbegin_quest(4259);
 			if (.@que_san != 4) {
 				mes "[Cecilia]";
 				mes "Could you go ask Eirinn and Bourbon about reading books?";
@@ -12016,7 +12016,7 @@ ecl_in04,105,216,4	script	Hiel's Workshop#pa0829	111,{
 			next;
 			cutin "EP14_etran1",1;
 			mes "[Etran]";
-			mes "Welcome welcomeow~! We are cat merchants, always serving guests as our kingeow~! Special sale! One piece of meat for 200Á¦´Ï!!";
+			mes "Welcome welcomeow~! We are cat merchants, always serving guests as our kingeow~! Special sale! One piece of meat for 200ÃÂ¦Â´Ã!!";
 			next;
 			cutin "EP14_robert1",1;
 			mes "[Robert]";
@@ -12291,7 +12291,7 @@ ecl_fild01,190,93,5	script	Fili#1	617,1,1,{
 		mes "[Fili]";
 		mes "Looking at this beautiful field, the song sings itself~";
 		emotion e_ho;
-		close2;
+		close;
 	}
 	if (ep14_2_nines > 2) {
 		mes "[Fili]";
@@ -12515,7 +12515,7 @@ ecl_fild01,190,93,5	script	Fili#1	617,1,1,{
 			getexp 300000,300000;
 			close;
 		}
-		else if (checkquest(13050) == 0){
+		else if (isbegin_quest(13050) == 0){
 			mes "[Fili]";
 			mes "Now that I see...you're a traveler, right? Sorry, I can't really notice anything unless I'm interested.";
 			next;
@@ -12547,11 +12547,11 @@ ecl_fild01,190,93,5	script	Fili#1	617,1,1,{
 				setquest 13052;
 				setquest 13053;
 				setquest 13054;
-				close2;
+				close;
 			case 2:
 				mes "[Fili]";
 				mes "Ahng? Well, too bad. But if you have time later, please drop by. I could use a little help here.";
-				close2;
+				close;
 			}
 		}
 	} 
@@ -12582,7 +12582,7 @@ ecl_fild01,222,290,5	script	Singing Laphine#1	436,{
 		close;
 	}
 	else if (ep14_2_nines > 2 ){
-		if (checkquest(13059,PLAYTIME) == 1 || checkquest(13059,PLAYTIME) == 1) {
+		if (checkquest(13059,PLAYTIME) == 1) {
 			mes "[Singing Laphine]";
 			mes "Whew, did I sing too much? I'm so thirsty. A glass of rice wine sounds great, hah~";
 			emotion e_spin;
@@ -12635,10 +12635,10 @@ ecl_fild01,83,263,5	script	Watering Laphine#1	444,{
 	if (ep14_2_nines < 1) {
 		mes "[Watering Laphine]";
 		mes "I think the earth is running dry.";
-		close2;
+		close;
 	}
 	else if (ep14_2_nines > 2) {
-		if ((checkquest(13059,PLAYTIME) == 1) || (checkquest(13059,PLAYTIME) == 1)) {
+		if (checkquest(13059,PLAYTIME) == 1) {
 			mes "[Watering Laphine]";
 			mes "I think this is enough for the day. I have to take a break and draw water, too. Hehe~!";
 			close;
@@ -12688,7 +12688,7 @@ ecl_fild01,163,196,5	script	Dancing Laphine#1	438,{
 		close;
 	}
 	else if (ep14_2_nines > 2) {
-		if ((checkquest(13059,PLAYTIME) == 1) || (checkquest(13059,PLAYTIME) == 1)) {
+		if (checkquest(13059,PLAYTIME) == 1) {
 			mes "[Dancing Laphine]";
 			mes "I would love to see the great Fili next time...";
 			close;
@@ -12728,7 +12728,7 @@ ecl_fild01,163,196,5	script	Dancing Laphine#1	438,{
 			mes "[Dancing Laphine]";
 			mes "You'll see as you continue your adventure. Anyway, I'll start working now.";
 			erasequest 13053;
-			close2;
+			close;
 		}
 		if (isbegin_quest(13050) == 1) {
 			mes "[Dancing Laphine]";
@@ -12751,7 +12751,7 @@ ecl_fild01,237,181,5	script	Cute Laphine#1	446,{
 		close;
 	}
 	else if (ep14_2_nines > 2) {
-		if ((checkquest(13059,PLAYTIME) == 1) || (checkquest(13059,PLAYTIME) == 1)) {
+		if (checkquest(13059,PLAYTIME) == 1) {
 			mes "[Cute Laphine]";
 			mes "It takes a cute person like me to bring joy to the earth...Too bad that you'll never be able to do so!";
 			close;
@@ -12768,12 +12768,12 @@ ecl_fild01,237,181,5	script	Cute Laphine#1	446,{
 				mes "[Cute Laphine]";
 				mes "You might think smiling to the earth always is nothing, but it's not that easy actually. I mean, it's hard to be cute like me in the first place~";
 				emotion e_heh;
-				close2;
+				close;
 			}
 			mes "[Cute Laphine]";
 			mes "I hope someday the flowers, trees, grasses, and little creatures on this earth will smile with joy.";
 			emotion e_heh;
-			close2;
+			close;
 		}
 	}
 	else if (ep14_2_nines == 1) {
@@ -12840,7 +12840,7 @@ OnTouch:
 		close;
 	}
 	else if (ep14_2_nines > 2) {
-		if ((checkquest(13060,PLAYTIME) == 1) || (checkquest(13060,PLAYTIME) == 1)) {
+		if (checkquest(13060,PLAYTIME) == 1) {
 			mes "[Rosi]";
 			mes "Anyway, this isn't an ordinary place. This place, it's filled with newsworthy stories!";
 			close;
@@ -12932,7 +12932,7 @@ OnTouch:
 		close;
 	}
 	else if (ep14_2_nines > 2) {
-		if ((checkquest(13060,PLAYTIME) == 1) || (checkquest(13060,PLAYTIME) == 1)) {
+		if (checkquest(13060,PLAYTIME) == 1) {
 			mes "[Euncheong]";
 			mes "Don't take me lightly just because I'm young. I've already been to every part of Midgard continent. I'm a real adventurer, you know.";
 			close;
@@ -13018,6 +13018,16 @@ ecl_tdun01,98,47,5	duplicate(Euncheong#No.1)	Euncheong#No.3	896,1,1
 
 ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 	if (ep14_2_nines > 5) {
+		if ((checkquest(13062,PLAYTIME) == 1) && (checkquest(13064,PLAYTIME) == 1) && (checkquest(13066,PLAYTIME) == 1)) {
+			cutin "nines02",2;
+			mes "[New Oz]";
+			mes "No need to worry about me! ^FF0000I'll definitely go home this time!^000000 Thanks for everything! I'll take you out for a nice meal next time!";
+			emotion e_thx;
+			erasequest 13058;
+			close2;
+			cutin "",255;
+			end;
+		}
 		if ((checkquest(13062,PLAYTIME) == 1) || (checkquest(13064,PLAYTIME) == 1) || (checkquest(13066,PLAYTIME) == 1)) {
 			cutin "nines01",2;
 			mes "[New Oz]";
@@ -13044,16 +13054,6 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 				mes "Whew, I guess I was walking around really hard...somehow, I lost all the souvenirs they collected for me...";
 				erasequest 13066;
 			}
-			close2;
-			cutin "",255;
-			end;
-		}
-		if ((checkquest(13062,PLAYTIME) == 1) && (checkquest(13064,PLAYTIME) == 1) && (checkquest(13066,PLAYTIME) == 1)) {
-			cutin "nines02",2;
-			mes "[New Oz]";
-			mes "No need to worry about me! ^FF0000I'll definitely go home this time!^000000 Thanks for everything! I'll take you out for a nice meal next time!";
-			emotion e_thx;
-			erasequest 13058;
 			close2;
 			cutin "",255;
 			end;
@@ -13113,11 +13113,11 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 					delitem 6558,10; //Pile_Of_Acorn
 					erasequest 13061;
 					setquest 13062;
-					getexp 300000,0;
-					getexp 0,300000;
+					getexp 300000,300000;
 					getitem 6081,1; //Splendide_Coin
 					close2;
 					cutin "",255;
+					end;
 				}
 				cutin "nines04",2;
 				mes "[New Oz]";
@@ -13129,6 +13129,7 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 				mes "Seeing his eyes and hearing him coughing constantly, I can tell he needs something to eat, like meat.";
 				close2;
 				cutin "",255;
+				end;
 			}
 			else if (checkquest(13061) == 2) {
 				cutin "nines04",2;
@@ -13948,7 +13949,7 @@ ecl_tdun04,26,39,1	script	Professor Worm#worm	627,{
 		close;
 	}
 	else if (ep14_2_profe == 4) {
-		.@quest_status = checkquest(1218)+checkquest(1219)+checkquest(1220)+checkquest(1221)+checkquest(1222);
+		.@quest_status = isbegin_quest(1218)+isbegin_quest(1219)+isbegin_quest(1220)+isbegin_quest(1221)+isbegin_quest(1222);
 		if (.@quest_status < 10) {
 			mes "[Professor Worm]";
 			mes "Every wall has so much doodling.";
@@ -14674,7 +14675,7 @@ ecl_in01,32,52,5	script	Traveler Fome#tl01	515,3,3,{
 	}
 	.@totaltemp =  isbegin_quest(7423) + isbegin_quest(7424) + isbegin_quest(7425) + isbegin_quest(7426);
 	.@total =  isbegin_quest(7411) + isbegin_quest(7412) + isbegin_quest(7413);
-	if (ep14_2_mylord < 2 || (ep14_2_mylord == 2 && checkquest(7411) != 1)) {
+	if (ep14_2_mylord < 2 || (ep14_2_mylord == 2 && isbegin_quest(7411) != 1)) {
 		mes "[Fome]";
 		mes "Come here and have a talk with us.";
 		mes "My name is Fome and I'm from the central region of Alpheim.";
@@ -14932,8 +14933,8 @@ ecl_in01,32,51,7	script	Traveler Litrip#tl02	513,{
 		mes "It's very impressive that you're able to come this far...";
 		close;
 	}
-	.@total =  checkquest(7411) + checkquest(7412) + checkquest(7413);
-	if (ep14_2_mylord < 2 || (ep14_2_mylord == 2 && checkquest(7412) != 1)) {
+	.@total = isbegin_quest(7411) + isbegin_quest(7412) + isbegin_quest(7413);
+	if (ep14_2_mylord < 2 || (ep14_2_mylord == 2 && isbegin_quest(7412) != 1)) {
 		mes "[Litrip]";
 		mes "Oh, look at this strange traveler. ";
 		mes "Come here. My name is Litrip.";
@@ -15098,8 +15099,8 @@ ecl_in01,35,51,3	script	Traveler Chiba#tl03	514,{
 		mes "But you...Hmm...I don't think you're skilled enough to travel around this area.";
 		close;
 	}
-	.@total =  checkquest(7411) + checkquest(7412) + checkquest(7413);
-	if (ep14_2_mylord < 2 || (ep14_2_mylord==2 && checkquest(7413)!=1)) {
+	.@total = isbegin_quest(7411) + isbegin_quest(7412) + isbegin_quest(7413);
+	if (ep14_2_mylord < 2 || (ep14_2_mylord==2 && isbegin_quest(7413)!=1)) {
 		mes "[Chiba]";
 		mes "You're a human from Midgard.";
 		mes "I'm Chiba.";
@@ -15408,7 +15409,7 @@ ecl_in01,82,70,3	script	Eclage Guard#tl02	447,{
 		}
 	}
 	else if (ep14_2_mylord == 7) {
-		.@alltotal =  checkquest(7418) + checkquest(7419) + checkquest(7420);
+		.@alltotal = isbegin_quest(7418) + isbegin_quest(7419) + isbegin_quest(7420);
 		if (checkquest(7418) == -1) {
 			mes "[Eclage Guard]";
 			mes "Eh, good to see you again.";
@@ -15503,7 +15504,7 @@ ecl_in01,82,70,3	script	Eclage Guard#tl02	447,{
 			delitem 944,5; //Horseshoe
 			completequest 7418;
 			getexp 200000,200000;
-			.@alltotal =  checkquest(7418) + checkquest(7419) + checkquest(7420);
+			.@alltotal = isbegin_quest(7418) + isbegin_quest(7419) + isbegin_quest(7420);
 			if (.@alltotal > 5) {
 				mes "[Minuel]";
 				mes "Come to think of it, you've done a lot of work for other Laphines as well. ";
@@ -17498,7 +17499,7 @@ eclage,112,40,3	script	Eclage Guard Leo#tl	461,{
 		mes "- You have too many items to proceed with the quest. -";
 		close;
 	}
-	.@alltotal =  checkquest(7420) + checkquest(7419) + checkquest(7418);
+	.@alltotal = isbegin_quest(7420) + isbegin_quest(7419) + isbegin_quest(7418);
 	if (ep14_2_mylord < 7) {
 		mes "[Leo]";
 		mes "Welcome to Eclage, the capital of Laphines and a gateway to Alpheim.";
@@ -17598,7 +17599,7 @@ eclage,112,40,3	script	Eclage Guard Leo#tl	461,{
 			delitem 12345,3; //Luciola's_Honey_Jam
 			completequest 7420;
 			getexp 200000,200000;
-			.@alltotal =  checkquest(7420) + checkquest(7419) + checkquest(7418);
+			.@alltotal = isbegin_quest(7420) + isbegin_quest(7419) + isbegin_quest(7418);
 			if (.@alltotal > 5) {
 				mes "[Eclage Guard]";
 				mes "Here you are.";
@@ -17750,7 +17751,7 @@ eclage,112,40,3	script	Eclage Guard Leo#tl	461,{
 		}
 	}
 	else if ((ep14_2_mylord >= 8) && (ep14_2_mylord <= 10)) {
-		.@total =  checkquest(7423) + checkquest(7424) + checkquest(7425) + checkquest(7426);
+		.@total = isbegin_quest(7423) + isbegin_quest(7424) + isbegin_quest(7425) + isbegin_quest(7426);
 		if (checkquest(7423) == -1) {
 			mes "[Leo]";
 			mes "Hmm...Are you and Mayor Jun involved in some kind of conspiracy?";
@@ -17929,7 +17930,7 @@ ecl_fild01,205,86,3	script	Eclage Messenger Roy#tl	461,{
 		mes "- You have too many items to proceed with the quest. -";
 		close;
 	}
-	.@alltotal =  checkquest(7418) + checkquest(7419) + checkquest(7420);
+	.@alltotal = isbegin_quest(7418) + isbegin_quest(7419) + isbegin_quest(7420);
 	if (ep14_2_mylord < 7) {
 		mes "[Roy]";
 		mes "I can make it to Mora Village.";
@@ -18153,7 +18154,7 @@ ecl_fild01,205,86,3	script	Eclage Messenger Roy#tl	461,{
 		mes "This is a little something for you.";
 		mes "I'll be looking forward to seeing you!";
 		delitem 6552,1; //Mail_Package
-		changequest 7430,4731;
+		changequest 7430,7431;
 		getexp 200000,200000;
 		getitem 6081,1; //Splendide_Coin
 		close;
@@ -18286,6 +18287,7 @@ eclage,274,294,5	script	Laphines Conversation#tl	436,3,3,{
 OnTouch:
 	if (ep14_2_mylord == 10) {
 		doevent "Eclage Resident#tl02::OnTalk";
+		end;
 	}
 	else if (ep14_2_mylord == 11) {
 		mes "[Male Laphine]";
@@ -18346,7 +18348,7 @@ OnTalk:
 			mes "Stop eavesdropping and mind your own business.";
 			next;
 			setquest 7425;
-			.@total =  checkquest(7423) + checkquest(7424) + checkquest(7425) + checkquest(7426);
+			.@total = isbegin_quest(7423) + isbegin_quest(7424) + isbegin_quest(7425) + isbegin_quest(7426);
 			if (.@total > 3) {
 				mes "Mayor and tyrant? And what's Seneth?";
 				mes "Anyway, they seem to be worried about Kardui, the current Mayor.";
@@ -18425,7 +18427,7 @@ OnTouch:
 			mes "Now, all visitors should leave the room.";
 			next;
 			setquest 7426;
-			.@total =  checkquest(7423) + checkquest(7424) + checkquest(7425) + checkquest(7426);
+			.@total = isbegin_quest(7423) + isbegin_quest(7424) + isbegin_quest(7425) + isbegin_quest(7426);
 			if (.@total > 3) {
 				mes "What is 'that' Laphines are talking about? It seems to be related to Kardui.";
 				mes "Let's stop worrying and ask Kardui instead!";
@@ -18447,6 +18449,7 @@ OnTouch:
 ecl_in03,245,54,2	script	Laphine official duty#tl	439,{
 	if (ep14_2_mylord == 10) {
 		doevent "Resting Laphine#tl01::OnTouch";
+		end;
 	}
 	else if (ep14_2_mylord == 11) {
 		mes "[Working Laphine]";
@@ -19140,12 +19143,12 @@ que_avan01,18,38,0	script	Desk#tl01	844,{
 					switch (select("Try rearranging the books.:Forget it.")) {
 					case 1:
 						.@book = 0;
-						setarray .@books[0],"First","Second","Third","Fourth","Fifth";
+						setarray .@books$[0],"First","Second","Third","Fourth","Fifth";
 						for (.@i = 1; .@i < 6; .@i++){
-							mes "Where should the "+ .@books[.@i-1] +" book be placed?";
+							mes "Where should the "+ .@books$[.@i-1] +" book be placed?";
 							next;
 							.@select_book = select("First:Second:Third:Fourth:Fifth")-1;
-							mes "Book 1 was placed at the "+ .@books[.@select_book] +" spot.";
+							mes "Book 1 was placed at the "+ .@books$[.@select_book] +" spot.";
 							if ((.@i==1 && .@select_book==1) || (.@i==2 && .@select_book==3) || (.@i==3 && .@select_book==0) || (.@i==4 && .@select_book==2) || (.@i==5 && .@select_book==4)) {
 								.@book = .@book + 10;
 							}
