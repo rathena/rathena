@@ -3388,41 +3388,48 @@ void clif_statusupack(struct map_session_data *sd,int type,int ok,int val)
 ///     0 = failure
 ///     1 = success
 ///     2 = failure due to low level
-void clif_equipitemack(struct map_session_data *sd,int n,int pos,int ok)
+void clif_equipitemack(struct map_session_data *sd,int n,int pos,uint8 flag)
 {
-	int fd,header,offs=0,success;
-#if PACKETVER < 20110824
-	header = 0xaa;
-	success = (ok==1);
-#elif PACKETVER < 20120925
-	header = 0x8d0;
-	success = ok ? 0:1;
-#else
-	header = 0x999;
-	success = ok ? 0:1;
-#endif
+	int fd = 0, cmd = 0, look = 0;
+	struct s_packet_db *info = NULL;
+
 	nullpo_retv(sd);
 
-	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(header));
-	WFIFOW(fd,offs+0)=header;
-	WFIFOW(fd,offs+2)=n+2;
-#if PACKETVER >= 20120925
-	WFIFOL(fd,offs+4)=pos;
-	offs+=2;
-#else
-	WFIFOW(fd,offs+4)=(int)pos;
-#endif
-#if PACKETVER < 20100629
-	WFIFOB(fd,offs+6)=success;
-#else
-	if (ok && sd->inventory_data[n]->equip&EQP_VISIBLE)
-		WFIFOW(fd,offs+6)=sd->inventory_data[n]->look;
-	else
-		WFIFOW(fd,offs+6)=0;
-	WFIFOB(fd,offs+8)=success;
-#endif
-	WFIFOSET(fd,packet_len(header));
+	cmd = packet_db_ack[sd->packet_ver][ZC_WEAR_EQUIP_ACK];
+	if (!cmd || !(info = &packet_db[sd->packet_ver][cmd]) || !info->len)
+		return;
+
+	fd = sd->fd;
+
+	if (flag == ITEM_EQUIP_ACK_OK && sd->inventory_data[n]->equip&EQP_VISIBLE)
+		look = sd->inventory_data[n]->look;
+
+	WFIFOHEAD(fd, info->len);
+	WFIFOW(fd, 0) = cmd;
+	WFIFOW(fd, info->pos[0]) = n+2;
+	switch (cmd) {
+		case 0xaa:
+			WFIFOW(fd, info->pos[1]) = pos;
+			if (sd->packet_ver < date2version(20100629))
+				WFIFOW(fd, info->pos[2]) = (flag == ITEM_EQUIP_ACK_OK ? 1 : 0);
+			else {
+				WFIFOL(fd, info->pos[2]) = look;
+				WFIFOW(fd, info->pos[3]) = (flag == ITEM_EQUIP_ACK_OK ? 1 : 0);
+			}
+			break;
+		case 0x8d0:
+			if (flag == ITEM_EQUIP_ACK_FAILLEVEL)
+				flag = 1;
+		case 0x999:
+			if (cmd == 0x999)
+				WFIFOL(fd, info->pos[1]) = pos;
+			else
+				WFIFOW(fd, info->pos[1]) = pos;
+			WFIFOL(fd, info->pos[2]) = look;
+			WFIFOW(fd, info->pos[3]) = flag;
+			break;
+	}
+	WFIFOSET(fd, info->len);
 }
 
 
@@ -10743,7 +10750,7 @@ void clif_parse_EquipItem(int fd,struct map_session_data *sd)
 		return;
 
 	if(!sd->status.inventory[index].identify) {
-		clif_equipitemack(sd,index,0,0);	// fail
+		clif_equipitemack(sd,index,0,ITEM_EQUIP_ACK_FAIL);	// fail
 		return;
 	}
 
@@ -18126,6 +18133,7 @@ void packetdb_readdb(void)
 		{ "ZC_CLEAR_DIALOG", ZC_CLEAR_DIALOG},
 		{ "ZC_C_MARKERINFO", ZC_C_MARKERINFO},
 		{ "ZC_NOTIFY_BIND_ON_EQUIP", ZC_NOTIFY_BIND_ON_EQUIP },
+		{ "ZC_WEAR_EQUIP_ACK", ZC_WEAR_EQUIP_ACK },
 	};
 	const char *filename[] = { "packet_db.txt", DBIMPORT"/packet_db.txt"};
 	int f;

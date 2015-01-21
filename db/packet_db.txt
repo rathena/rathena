@@ -107,7 +107,7 @@ packet_ver: 5
 0x00a7,8,useitem,2:4
 0x00a8,7
 0x00a9,6,equipitem,2:4
-0x00aa,7
+0x00aa,7,ZC_WEAR_EQUIP_ACK,2:4:6
 0x00ab,4,unequipitem,2
 0x00ac,7
 //0x00ad,-1
@@ -1586,7 +1586,7 @@ packet_ver: 25
 //0x083F,22
 
 //2010-06-29aRagexeRE
-0x00AA,9
+0x00AA,9,ZC_WEAR_EQUIP_ACK,2:4:6:8
 //0x07F1,18
 //0x07F2,8
 //0x07F3,6
@@ -1631,7 +1631,7 @@ packet_ver: 26
 0x0857,-1
 0x0858,-1
 0x0859,-1
-0x08d0,9
+0x08d0,9,ZC_WEAR_EQUIP_ACK,2:4:6:8
 
 //2011-10-05aRagexeRE
 packet_ver: 27
@@ -1869,7 +1869,7 @@ packet_ver: 34
 0x0996,-1 //store itemlist equip
 0x0997,-1 //ZC_EQUIPWIN_MICROSCOPE_V5
 0x0998,8,equipitem,2:4 // CZ_REQ_WEAR_EQUIP_V5
-0x0999,11 // cz_wear_equipv5
+0x0999,11,ZC_WEAR_EQUIP_ACK,2:4:8:10 // cz_wear_equipv5
 0x099a,9 // take_off_equipv5
 0x099b,8 //maptypeproperty2
 
