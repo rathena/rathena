@@ -1,10 +1,12 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include "../config/core.h"
+#include "../common/core.h"
+#include "../common/mapindex.h"
 #include "../common/mmo.h"
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
-#include "mapindex.h"
 
 #include <stdlib.h>
 
@@ -14,8 +16,6 @@ struct _indexes {
 } indexes[MAX_MAPINDEX];
 
 int max_index = 0;
-
-char mapindex_cfgfile[80] = "db/map_index.txt";
 
 #define mapindex_exists(id) (indexes[id].name[0] != '\0')
 
@@ -134,29 +134,47 @@ void mapindex_init(void) {
 	int last_index = -1;
 	int index;
 	char map_name[MAP_NAME_LENGTH];
+	char path[255];
+	const char* mapindex_cfgfile[] = {
+		"map_index.txt",
+		DBIMPORT"/map_index.txt"
+	};
+	int i;
 
-	if( ( fp = fopen(mapindex_cfgfile,"r") ) == NULL ){
-		ShowFatalError("Unable to read mapindex config file %s!\n", mapindex_cfgfile);
-		exit(EXIT_FAILURE); //Server can't really run without this file.
-	}
 	memset (&indexes, 0, sizeof (indexes));
 	mapindex_db = strdb_alloc(DB_OPT_DUP_KEY, MAP_NAME_LENGTH);
-	while(fgets(line, sizeof(line), fp)) {
-		if(line[0] == '/' && line[1] == '/')
-			continue;
 
-		switch (sscanf(line, "%11s\t%d", map_name, &index)) {
-			case 1: //Map with no ID given, auto-assign
-				index = last_index+1;
-			case 2: //Map with ID given
-				mapindex_addmap(index,map_name);
+	for( i = 0; i < ARRAYLENGTH(mapindex_cfgfile); i++ ){
+		sprintf( path, "%s/%s", db_path, mapindex_cfgfile[i] );
+
+		if( ( fp = fopen( path, "r" ) ) == NULL ){
+			// It is only fatal if it is the main file
+			if( i == 0 ){
+				ShowFatalError("Unable to read mapindex config file %s!\n", path );
+				exit(EXIT_FAILURE); //Server can't really run without this file.
+			}else{
+				ShowWarning("Unable to read mapindex config file %s!\n", path );
 				break;
-			default:
-				continue;
+			}
 		}
-		last_index = index;
+
+		while(fgets(line, sizeof(line), fp)) {
+			if(line[0] == '/' && line[1] == '/')
+				continue;
+
+			switch (sscanf(line, "%11s\t%d", map_name, &index)) {
+				case 1: //Map with no ID given, auto-assign
+					index = last_index+1;
+				case 2: //Map with ID given
+					mapindex_addmap(index,map_name);
+					break;
+				default:
+					continue;
+			}
+			last_index = index;
+		}
+		fclose(fp);
 	}
-	fclose(fp);
 
 	if( !strdb_iget(mapindex_db, MAP_DEFAULT) ) {
 		ShowError("mapindex_init: MAP_DEFAULT '%s' not found in cache! Update MAP_DEFAULT in mapindex.h!\n",MAP_DEFAULT);

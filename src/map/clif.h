@@ -48,6 +48,7 @@ enum e_packet_ack {
 	ZC_CLEAR_DIALOG,
 	ZC_C_MARKERINFO,
 	ZC_NOTIFY_BIND_ON_EQUIP,
+	ZC_WEAR_EQUIP_ACK,
 	//add other here
 	MAX_ACK_FUNC //auto upd len
 };
@@ -364,8 +365,18 @@ enum useskill_fail_cause
 };
 
 enum clif_messages {
+	/* Constant values */
+	// clif_cart_additem_ack flags
 	ADDITEM_TO_CART_FAIL_WEIGHT = 0x0,
 	ADDITEM_TO_CART_FAIL_COUNT = 0x1,
+
+	// clif_equipitemack flags
+	ITEM_EQUIP_ACK_OK = 0,
+	ITEM_EQUIP_ACK_FAIL = 1,
+	ITEM_EQUIP_ACK_FAILLEVEL = 2,
+	/* -end- */
+
+	//! NOTE: These values below need client version validation
 	ITEM_CANT_OBTAIN_WEIGHT = 0x34, /* You cannot carry more items because you are overweight. */
 	ITEM_NOUSE_SITTING = 0x297,
 	MERC_MSG_BASE = 0x4f2,
@@ -461,7 +472,7 @@ void clif_arrowequip(struct map_session_data *sd,int val); //self
 void clif_arrow_fail(struct map_session_data *sd,int type); //self
 void clif_arrow_create_list(struct map_session_data *sd);	//self
 void clif_statusupack(struct map_session_data *sd,int type,int ok,int val);	// self
-void clif_equipitemack(struct map_session_data *sd,int n,int pos,int ok);	// self
+void clif_equipitemack(struct map_session_data *sd,int n,int pos,uint8 flag);	// self
 void clif_unequipitemack(struct map_session_data *sd,int n,int pos,int ok);	// self
 void clif_misceffect(struct block_list* bl,int type);	// area
 void clif_changeoption(struct block_list* bl);	// area

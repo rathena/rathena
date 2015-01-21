@@ -329,6 +329,8 @@
     <Copy SourceFiles="..\db\import-tmpl\job_param_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\job_param_db.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\level_penalty.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\level_penalty.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\magicmushroom_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\magicmushroom_db.txt')" />
+    <Copy SourceFiles="..\db\import-tmpl\map_cache.dat" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\map_cache.dat')" />
+    <Copy SourceFiles="..\db\import-tmpl\map_index.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\map_index.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\mercenary_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\mercenary_db.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\mercenary_skill_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\mercenary_skill_db.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\mob_avail.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\mob_avail.txt')" />

@@ -1813,7 +1813,7 @@ int map_quit(struct map_session_data *sd) {
 
 	for (i = 0; i < EQI_MAX; i++) {
 		if (sd->equip_index[i] >= 0)
-			if (!pc_isequip(sd,sd->equip_index[i]))
+			if (pc_isequip(sd,sd->equip_index[i]))
 				pc_unequipitem(sd,sd->equip_index[i],2);
 	}
 
@@ -3345,41 +3345,71 @@ int map_readallmaps (void)
 	int i;
 	FILE* fp=NULL;
 	int maps_removed = 0;
-	char *map_cache_buffer = NULL; // Has the uncompressed gat data of all maps, so just one allocation has to be made
+	// Has the uncompressed gat data of all maps, so just one allocation has to be made
+	char *map_cache_buffer[2] = {
+		NULL,
+		NULL
+	};
 	char map_cache_decode_buffer[MAX_MAP_SIZE];
 
 	if( enable_grf )
 		ShowStatus("Loading maps (using GRF files)...\n");
 	else {
-		char mapcachefilepath[254];
-		sprintf(mapcachefilepath,"%s/%s%s",db_path,DBPATH,"map_cache.dat");
-		ShowStatus("Loading maps (using %s as map cache)...\n", mapcachefilepath);
-		if( (fp = fopen(mapcachefilepath, "rb")) == NULL ) {
-			ShowFatalError("Unable to open map cache file "CL_WHITE"%s"CL_RESET"\n", mapcachefilepath);
-			exit(EXIT_FAILURE); //No use launching server if maps can't be read.
-		}
+		char* mapcachefilepath[] = {
+			"db/"DBPATH"map_cache.dat",
+			"db/import/map_cache.dat"
+		};
 
-		// Init mapcache data. [Shinryo]
-		map_cache_buffer = map_init_mapcache(fp);
-		if(!map_cache_buffer) {
-			ShowFatalError("Failed to initialize mapcache data (%s)..\n", mapcachefilepath);
-			exit(EXIT_FAILURE);
+		for( i = 0; i < 2; i++ ){
+			ShowStatus( "Loading maps (using %s as map cache)...\n", mapcachefilepath[i] );
+
+			if( ( fp = fopen(mapcachefilepath[i], "rb") ) == NULL ){
+				if( i == 0 ){
+					ShowFatalError( "Unable to open map cache file "CL_WHITE"%s"CL_RESET"\n", mapcachefilepath[i] );
+					exit(EXIT_FAILURE); //No use launching server if maps can't be read.
+				}else{
+					ShowWarning( "Unable to open map cache file "CL_WHITE"%s"CL_RESET"\n", mapcachefilepath[i] );
+					break;
+				}
+			}
+
+			// Init mapcache data. [Shinryo]
+			map_cache_buffer[i] = map_init_mapcache(fp);
+
+			if( !map_cache_buffer[i] ) {
+				ShowFatalError( "Failed to initialize mapcache data (%s)..\n", mapcachefilepath );
+				exit(EXIT_FAILURE);
+			}
+
+			fclose(fp);
 		}
 	}
 
 	for(i = 0; i < map_num; i++) {
 		size_t size;
+		bool success = false;
 
-		// show progress
-		if(enable_grf)
+		if( enable_grf ){
+			// show progress
 			ShowStatus("Loading maps [%i/%i]: %s"CL_CLL"\r", i, map_num, map[i].name);
 
-		// try to load the map
-		if( !
-			(enable_grf?
-				 map_readgat(&map[i])
-				:map_readfromcache(&map[i], map_cache_buffer, map_cache_decode_buffer))
-			) {
+			// try to load the map
+			success = map_readgat(&map[i]) != 0;
+		}else{
+			// try to load the map
+			// Read from import first, in case of override
+			if( map_cache_buffer[1] != NULL ){
+				success = map_readfromcache( &map[i], map_cache_buffer[1], map_cache_decode_buffer ) != 0;
+			}
+
+			// Nothing was found in import - try to find it in the main file
+			if( !success ){
+				success = map_readfromcache( &map[i], map_cache_buffer[0], map_cache_decode_buffer ) != 0;
+			}
+		}
+
+		// The map was not found - remove it
+		if( !success ){
 			map_delmapid(i);
 			maps_removed++;
 			i--;
@@ -3419,10 +3449,11 @@ int map_readallmaps (void)
 	map_flags_init();
 
 	if( !enable_grf ) {
-		fclose(fp);
-
 		// The cache isn't needed anymore, so free it. [Shinryo]
-		aFree(map_cache_buffer);
+		if( map_cache_buffer[1] != NULL ){
+			aFree(map_cache_buffer[1]);
+		}
+		aFree(map_cache_buffer[0]);
 	}
 
 	// finished map loading
