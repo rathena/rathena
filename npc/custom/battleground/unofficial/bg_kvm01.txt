@@ -144,15 +144,15 @@ OnTimer26000:
 	end;
 
 OnTimer27000:
-	donpcevent "::OnKvM01LightA";
+	donpcevent "#bat_c01a::OnKvM01LightA";
 	end;
 
 OnTimer28000:
-	donpcevent "::OnKvM01LightB";
+	donpcevent "#bat_c01a::OnKvM01LightB";
 	end;
 	
 OnTimer29000:
-	donpcevent "::OnKvM01LightC";
+	donpcevent "#bat_c01a::OnKvM01LightC";
 	end;
 
 OnTimer30000:
