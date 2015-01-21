@@ -181,6 +181,7 @@ Flag: Various status flags for specifc usage
       SCF_REM_ON_DAMAGED      = Removed when receives damage.
       SCF_REM_ON_REFRESH      = Removed by Refresh (RK_REFRESH) on status_change_clear_buffs().
       SCF_REM_ON_LUXANIMA     = Removed by Luxanima (RK_LUXANIMA) on status_change_clear_buffs().
+      SCF_REM_ON_CHANGEMAP    = Removed if map-server is changed
 
       SCF_STOP_ATTACKING      = Makes unit stop attacking for a while.
       SCF_STOP_CASTING        = Stops casting process.

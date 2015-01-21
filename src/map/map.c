@@ -1673,7 +1673,7 @@ int map_quit(struct map_session_data *sd) {
 			if (!sd->sc.data[i])
 				continue;
 			else {
-				uint32 flag = status_sc_get_flag((sc_type)i)&SCF_NO_SAVE;
+				uint32 flag = status_sc_get_flag((sc_type)i);
 				switch (i) {
 					case SC_ENDURE: //No need to save infinite endure.
 					case SC_REGENERATION:

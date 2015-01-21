@@ -2602,38 +2602,19 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 	ud->attackabletime = ud->canmove_tick /*= ud->canact_tick*/ = gettick();
 
 	if(sc && sc->count ) { // map-change/warp dispells.
-		status_change_end(bl, SC_BLADESTOP, INVALID_TIMER);
-		status_change_end(bl, SC_BASILICA, INVALID_TIMER);
-		status_change_end(bl, SC_ANKLE, INVALID_TIMER);
-		status_change_end(bl, SC_TRICKDEAD, INVALID_TIMER);
-		status_change_end(bl, SC_BLADESTOP_WAIT, INVALID_TIMER);
-		status_change_end(bl, SC_RUN, INVALID_TIMER);
-		status_change_end(bl, SC_DANCING, INVALID_TIMER);
-		status_change_end(bl, SC_WARM, INVALID_TIMER);
-		status_change_end(bl, SC_DEVOTION, INVALID_TIMER);
-		status_change_end(bl, SC_MARIONETTE, INVALID_TIMER);
-		status_change_end(bl, SC_MARIONETTE2, INVALID_TIMER);
-		status_change_end(bl, SC_CLOSECONFINE, INVALID_TIMER);
-		status_change_end(bl, SC_CLOSECONFINE2, INVALID_TIMER);
-		status_change_end(bl, SC_TINDER_BREAKER, INVALID_TIMER);
-		status_change_end(bl, SC_TINDER_BREAKER2, INVALID_TIMER);
-		status_change_end(bl, SC_HIDING, INVALID_TIMER);
+		uint16 i;
+		for (i = 0; i < SC_MAX; i++) {
+			if (!sc->data[i] || !(status_sc_get_flag((sc_type)i)&SCF_REM_ON_CHANGEMAP))
+				continue;
+			status_change_end(bl, (sc_type)i, INVALID_TIMER);
+		}
 		// Ensure the bl is a PC; if so, we'll handle the removal of cloaking and cloaking exceed later
 		if ( bl->type != BL_PC ) {
 			status_change_end(bl, SC_CLOAKING, INVALID_TIMER);
 			status_change_end(bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
 		}
-		status_change_end(bl, SC_CHASEWALK, INVALID_TIMER);
 		if (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF)
 			status_change_end(bl, SC_GOSPEL, INVALID_TIMER);
-		status_change_end(bl, SC_CHANGE, INVALID_TIMER);
-		status_change_end(bl, SC_STOP, INVALID_TIMER);
-		status_change_end(bl, SC_WUGDASH, INVALID_TIMER);
-		status_change_end(bl, SC_CAMOUFLAGE, INVALID_TIMER);
-		status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER);
-		status_change_end(bl, SC__MANHOLE, INVALID_TIMER);
-		status_change_end(bl, SC_VACUUM_EXTREME, INVALID_TIMER);
-		status_change_end(bl, SC_CURSEDCIRCLE_ATKER, INVALID_TIMER); // callme before warp
 	}
 
 	if (bl->type&(BL_CHAR|BL_PET)) {

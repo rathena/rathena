@@ -1803,6 +1803,7 @@ enum e_status_change_flag {
 	SCF_FAILED_MADO			= 0x080000,
 	SCF_DEBUFF				= 0x100000,
 	SCF_FAILED_IMMUNITY		= 0x200000,
+	SCF_REM_ON_CHANGEMAP	= 0x400000,
 };
 
 //Define to determine who gets HP/SP consumed on doing skills/etc. [Skotlex]
