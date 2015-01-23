@@ -32,6 +32,7 @@ void (*shutdown_callback)(void) = NULL;
 
 int runflag = CORE_ST_RUN;
 char db_path[12] = "db"; /// relative path for db from server
+char groups_conf_file[32] = "conf/groups.conf";
 
 char *SERVER_NAME = NULL;
 char SERVER_TYPE = ATHENA_SERVER_NONE;
