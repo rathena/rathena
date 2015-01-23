@@ -967,6 +967,7 @@ extern char log_db_db[32];
 extern int db_use_sqldbs;
 
 extern Sql* mmysql_handle;
+extern Sql* qsmysql_handle;
 extern Sql* logmysql_handle;
 
 extern char buyingstores_db[32];

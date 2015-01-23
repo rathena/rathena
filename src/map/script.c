@@ -15543,7 +15543,7 @@ BUILDIN_FUNC(query_sql) {
 
 	return 0;
 #else
-	return buildin_query_sql_sub(st, mmysql_handle);
+	return buildin_query_sql_sub(st, qsmysql_handle);
 #endif
 }
 
