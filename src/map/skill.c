@@ -10171,7 +10171,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case MH_LIGHT_OF_REGENE: //self
 		if(hd) {
 			sc_start2(src, src, type, 100, skill_lv, hd->homunculus.level, skill_get_time(skill_id, skill_lv));
-			hd->homunculus.intimacy = 251; //change to neutral (can't be cast if < 750)
+			hd->homunculus.intimacy = 25100; //change to neutral (can't be cast if < 750)
 			if(sd) clif_send_homdata(sd, SP_INTIMATE, hd->homunculus.intimacy); //refresh intimacy info
 			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 		}
