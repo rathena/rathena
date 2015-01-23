@@ -32,7 +32,7 @@ CREATE TABLE `item_db_re` (
 # Items Database
 #
 # Structure of Database:
-#REPLACE INTO `item_db_re` VALUES ( ID,'AegisName','Name',Type,Buy,Sell,Weight,'ATK',DEF,Range,Slots,Job,Class,Gender,Loc,wLV,'eLV',Refineable,View,'Script','OnEquip_Script','OnUnequip_Script');
+#REPLACE INTO `item_db_re` VALUES ( ID,'AegisName','Name',Type,Buy,Sell,Weight,'ATK[:MATK]',DEF,Range,Slots,Job,Class,Gender,Loc,wLV,'eLV[:maxLevel]',Refineable,View,'Script','OnEquip_Script','OnUnequip_Script');
 #
 # Healing Items
 #=============================================================
@@ -8815,8 +8815,8 @@ REPLACE INTO `item_db_re` VALUES (17241,'Amistr_Cap_Box','Amistir Cap Box',2,10,
 REPLACE INTO `item_db_re` VALUES (17244,'Event_Almighty_Box','Event Almighty Box',2,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 12883,10;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (17242,'Immortal_Egg','Immortal Egg',18,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,'1',NULL,NULL,'/*TODO: random between Weapon Upgrade Certificate and Blessed Weapon Ore */',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (17245,'Idn_Independ_Scroll','Idn Independ Scroll',18,20,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (17246,'HD_Elunium_Box(30)','HD Elunium Box(30)',3,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 6241,30;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (17247,'HD_Oridecon_Box(30)','HD Oridecon Box(30)',3,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 6241,40;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (17246,'HD_Elunium_Box(30)','HD Elunium Box(30)',2,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 6241,30;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (17247,'HD_Oridecon_Box(30)','HD Oridecon Box(30)',2,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 6241,40;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (17251,'C_Wing_Of_Fly_3Day_Box','C Wing Of Fly 3Day Box',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_C_Wing_Of_Fly_3Day_Box); /*rentitem C_Wing_Of_Fly,259200;*/',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (17252,'RWC_2012_Set_Box','RWC 2012 Set Box',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_RWC_2012_Set_Box); /*getitem 2966,1; getitem 2968,1; getitem 17251,1;*/',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (17253,'RWC_2012_Ring_Box','RWC 2012 Ring Box',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 2966,1;',NULL,NULL);
