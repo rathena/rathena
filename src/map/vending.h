@@ -5,7 +5,9 @@
 #define	_VENDING_H_
 
 #include "../common/cbasetypes.h"
+#include "buyingstore.h"
 //#include "map.h"
+
 struct map_session_data;
 struct s_search_store_search;
 
