@@ -15425,7 +15425,6 @@ int buildin_query_sql_sub(struct script_state* st, Sql* handle)
 	int max_rows = SCRIPT_MAX_ARRAYSIZE; // maximum number of rows
 	int num_vars;
 	int num_cols;
-	int64 num_rows = 0;
 
 	// check target variables
 	for( i = 3; script_hasdata(st,i); ++i ) {
@@ -15476,8 +15475,6 @@ int buildin_query_sql_sub(struct script_state* st, Sql* handle)
 		script_reportsrc(st);
 	}
 
-	num_rows = Sql_NumRows(handle);
-
 	// Store data
 	for( i = 0; i < max_rows && SQL_SUCCESS == Sql_NextRow(handle); ++i ) {
 		for( j = 0; j < num_vars; ++j ) {
@@ -15494,11 +15491,7 @@ int buildin_query_sql_sub(struct script_state* st, Sql* handle)
 				setd_sub(st, sd, name, i, (void *)__64BPRTSIZE((str?atoi(str):0)), reference_getref(data));
 		}
 	}
-	if (i < num_rows) {
-		ShowWarning("script:query_sql: Only %d/%u rows have been stored.\n", i, num_rows);
-		script_reportsrc(st);
-	}
-	else if( i == max_rows && max_rows < Sql_NumRows(handle) ) {
+	if( i == max_rows && max_rows < Sql_NumRows(handle) ) {
 		ShowWarning("script:query_sql: Only %d/%u rows have been stored.\n", max_rows, (unsigned int)Sql_NumRows(handle));
 		script_reportsrc(st);
 	}
