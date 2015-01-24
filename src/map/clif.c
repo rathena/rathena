@@ -15398,7 +15398,7 @@ void clif_quest_send_mission(struct map_session_data * sd)
 	WFIFOL(fd, 4) = sd->avail_quests;
 
 	for( i = 0; i < sd->avail_quests; i++ ) {
-		struct quest_db *qi = quest_db(sd->quest_log[i].quest_id);
+		struct quest_db *qi = quest_search(sd->quest_log[i].quest_id);
 
 		WFIFOL(fd, i*104+8) = sd->quest_log[i].quest_id;
 		WFIFOL(fd, i*104+12) = sd->quest_log[i].time - qi->time;
@@ -15423,7 +15423,7 @@ void clif_quest_add(struct map_session_data * sd, struct quest * qd)
 {
 	int fd = sd->fd;
 	int i;
-	struct quest_db *qi = quest_db(qd->quest_id);
+	struct quest_db *qi = quest_search(qd->quest_id);
 
 	WFIFOHEAD(fd, packet_len(0x2b3));
 	WFIFOW(fd, 0) = 0x2b3;
@@ -15464,7 +15464,7 @@ void clif_quest_update_objective(struct map_session_data * sd, struct quest * qd
 {
 	int fd = sd->fd;
 	int i;
-	struct quest_db *qi = quest_db(qd->quest_id);
+	struct quest_db *qi = quest_search(qd->quest_id);
 	int len = qi->num_objectives * 12 + 6;
 
 	WFIFOHEAD(fd, len);
