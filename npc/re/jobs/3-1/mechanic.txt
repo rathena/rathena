@@ -18,7 +18,7 @@
 
 yuno,129,156,3	script	Chainheart	923,{
 	mes "[Chainheart]";
-	if (BaseLevel > 99) {
+	if (eaclass() & EAJL_THIRD) {
 		mes "Living as a Mechanic is tough,";
 		mes "but I am happy that I can";
 		mes "always do what I want.";
