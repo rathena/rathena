@@ -95,7 +95,7 @@ in_rogue,376,100,5	script	Guild Member#sc01	828,{
 			mes "[Vin]";
 			mes "What?";
 			next;
-			if (BaseLevel == 99) {
+			if (BaseLevel > 98) {
 				mes "[Scary man]";
 				mes "Hey there?";
 				next;
