@@ -28,8 +28,6 @@ struct Inter_Config {
 	StringBuf *char_server_db;        ///< char-server database
 	StringBuf *default_codepage;      ///< Codepage [irmin]
 
-	StringBuf testbuf;
-
 	unsigned short party_share_level; ///< Party share level
 };
 extern struct Inter_Config inter_config; /// Inter/char-server configuration with database
