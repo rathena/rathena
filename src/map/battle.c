@@ -5648,7 +5648,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 static struct Damage battle_calc_magic_attack_base(struct Damage ad, struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, int nk, int mflag) {
 	struct status_data *sstatus = status_get_status_data(src);
 	struct status_data *tstatus = status_get_status_data(target);
-	//struct map_session_data *tsd = BL_CAST(BL_PC, target);
 	int i = 0;
 
 	switch (skill_id) {
@@ -5695,20 +5694,20 @@ static struct Damage battle_calc_magic_attack_base(struct Damage ad, struct bloc
 			ad.damage = status_get_lv(src) * 10 + sstatus->int_;
 			break;
 		case GN_FIRE_EXPANSION_ACID:
-#ifdef RENEWAL
 			{
+#ifdef RENEWAL
 				struct Damage wd = battle_calc_weapon_attack(src, target, skill_id, skill_lv, 0);
-
 				ad.damage = (int64)(7 * ((wd.damage / skill_lv + ad.damage / skill_lv) * tstatus->vit / 100));
-			}
 #else
-			if(tstatus->vit + sstatus->int_)
-				ad.damage = (int64)(7 * tstatus->vit * sstatus->int_ * sstatus->int_ / (10 * (tstatus->vit + sstatus->int_)));
-			else
-				ad.damage = 0;
-			if(tsd)
-				ad.damage >>= 1;
+				struct map_session_data *tsd = BL_CAST(BL_PC, target);
+				if(tstatus->vit + sstatus->int_)
+					ad.damage = (int64)(7 * tstatus->vit * sstatus->int_ * sstatus->int_ / (10 * (tstatus->vit + sstatus->int_)));
+				else
+					ad.damage = 0;
+				if(tsd)
+					ad.damage >>= 1;
 #endif
+			}
 			break;
 		default:
 			{
@@ -5747,7 +5746,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 
 	TBL_PC *sd;
 	TBL_PC *tsd;
-	struct status_change *sc, *tsc;
+	struct status_change *sc;
 	struct Damage ad;
 	struct status_data *sstatus = status_get_status_data(src);
 	struct status_data *tstatus = status_get_status_data(target);
@@ -5778,7 +5777,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	sd = BL_CAST(BL_PC, src);
 	tsd = BL_CAST(BL_PC, target);
 	sc = status_get_sc(src);
-	tsc = status_get_sc(target);
 
 	//Initialize variables that will be used afterwards
 	s_ele = skill_get_ele(skill_id, skill_lv);
@@ -5970,6 +5968,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			defType mdef = tstatus->mdef;
 			int mdef2= tstatus->mdef2;
 #ifdef RENEWAL
+			struct status_change *tsc = status_get_sc(target);
 			if(tsc && tsc->data[SC_ASSUMPTIO])
 				mdef <<= 1; // only eMDEF is doubled
 #endif
