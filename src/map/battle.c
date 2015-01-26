@@ -36,7 +36,7 @@ static struct eri *delay_damage_ers; //For battle delay damage structures.
 #define DAMAGE_ADDRATE(a) { damage += (int64)damage * (a) / 100; }
 
 /// Adjust damage by rate (a) for damage
-#define ATK_RATE_(damage, a) { apply_rate((damage),(a)); }
+#define ATK_RATE_(damage, a) { (damage) = apply_rate((damage),(a)); }
 /// Adjust damage by rate (a) for damage and damage2
 #define ATK_RATE(damage, damage2, a) { ATK_RATE_((damage),(a)); if(is_attack_left_handed(src, skill_id)) ATK_RATE_((damage2),(a)); }
 /// Adjust damage by rate (a) for damage, rate (b) for damage2
@@ -5646,90 +5646,86 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
  * @param mflag
  **/
 static struct Damage battle_calc_magic_attack_base(struct Damage ad, struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, int nk, int mflag) {
-	if (!(&ad))
-		return ad;
-	else {
-		struct status_data *sstatus = status_get_status_data(src);
-		struct status_data *tstatus = status_get_status_data(target);
-		struct map_session_data *tsd = BL_CAST(BL_PC, target);
-		int i = 0;
+	struct status_data *sstatus = status_get_status_data(src);
+	struct status_data *tstatus = status_get_status_data(target);
+	//struct map_session_data *tsd = BL_CAST(BL_PC, target);
+	int i = 0;
 
-		switch (skill_id) {
-			case AL_HEAL:
-			case PR_BENEDICTIO:
-			case PR_SANCTUARY:
-			case AB_HIGHNESSHEAL:
-				ad.damage = skill_calc_heal(src, target, skill_id, skill_lv, false);
-				break;
-			case PR_ASPERSIO:
-				ad.damage = 40;
-				break;
-			case ALL_RESURRECTION:
-			case PR_TURNUNDEAD:
-				//Undead check is on skill_castend_damageid code.
+	switch (skill_id) {
+		case AL_HEAL:
+		case PR_BENEDICTIO:
+		case PR_SANCTUARY:
+		case AB_HIGHNESSHEAL:
+			ad.damage = skill_calc_heal(src, target, skill_id, skill_lv, false);
+			break;
+		case PR_ASPERSIO:
+			ad.damage = 40;
+			break;
+		case ALL_RESURRECTION:
+		case PR_TURNUNDEAD:
+			//Undead check is on skill_castend_damageid code.
 #ifdef RENEWAL
-				i = 10*skill_lv + sstatus->luk + sstatus->int_ + status_get_lv(src)
-					+ 300 - 300*tstatus->hp/tstatus->max_hp;
+			i = 10*skill_lv + sstatus->luk + sstatus->int_ + status_get_lv(src)
+				+ 300 - 300*tstatus->hp/tstatus->max_hp;
 #else
-				i = 20*skill_lv + sstatus->luk + sstatus->int_ + status_get_lv(src)
-					+ 200 - 200*tstatus->hp/tstatus->max_hp;
+			i = 20*skill_lv + sstatus->luk + sstatus->int_ + status_get_lv(src)
+				+ 200 - 200*tstatus->hp/tstatus->max_hp;
 #endif
-				if(i > 700)
-					i = 700;
-				if(rnd()%1000 < i && !(tstatus->mode&MD_BOSS))
-					ad.damage = tstatus->hp;
-				else {
+			if(i > 700)
+				i = 700;
+			if(rnd()%1000 < i && !(tstatus->mode&MD_BOSS))
+				ad.damage = tstatus->hp;
+			else {
 #ifdef RENEWAL
-					if (sstatus->matk_max > sstatus->matk_min) {
-						ATK_ADD_(ad.damage,sstatus->matk_min+rnd()%(sstatus->matk_max-sstatus->matk_min));
-					} else {
-						ATK_ADD_(ad.damage,sstatus->matk_min);
-					}
-					ATK_RATE_(ad.damage,skill_lv);
-#else
-					ad.damage = status_get_lv(src) + sstatus->int_ + skill_lv * 10;
-#endif
+				if (sstatus->matk_max > sstatus->matk_min) {
+					ATK_ADD_(ad.damage,sstatus->matk_min+rnd()%(sstatus->matk_max-sstatus->matk_min));
+				} else {
+					ATK_ADD_(ad.damage,sstatus->matk_min);
 				}
-				break;
-			case PF_SOULBURN:
-				ad.damage = tstatus->sp * 2;
-				break;
-			case AB_RENOVATIO:
-				ad.damage = status_get_lv(src) * 10 + sstatus->int_;
-				break;
-			case GN_FIRE_EXPANSION_ACID:
+				ATK_RATE_(ad.damage,skill_lv);
+#else
+				ad.damage = status_get_lv(src) + sstatus->int_ + skill_lv * 10;
+#endif
+			}
+			break;
+		case PF_SOULBURN:
+			ad.damage = tstatus->sp * 2;
+			break;
+		case AB_RENOVATIO:
+			ad.damage = status_get_lv(src) * 10 + sstatus->int_;
+			break;
+		case GN_FIRE_EXPANSION_ACID:
 #ifdef RENEWAL
-				{
-					struct Damage wd = battle_calc_weapon_attack(src, target, skill_id, skill_lv, 0);
+			{
+				struct Damage wd = battle_calc_weapon_attack(src, target, skill_id, skill_lv, 0);
 
-					ad.damage = (int64)(7 * ((wd.damage / skill_lv + ad.damage / skill_lv) * tstatus->vit / 100));
-				}
+				ad.damage = (int64)(7 * ((wd.damage / skill_lv + ad.damage / skill_lv) * tstatus->vit / 100));
+			}
 #else
-				if(tstatus->vit + sstatus->int_)
-					ad.damage = (int64)(7 * tstatus->vit * sstatus->int_ * sstatus->int_ / (10 * (tstatus->vit + sstatus->int_)));
-				else
-					ad.damage = 0;
-				if(tsd)
-					ad.damage >>= 1;
+			if(tstatus->vit + sstatus->int_)
+				ad.damage = (int64)(7 * tstatus->vit * sstatus->int_ * sstatus->int_ / (10 * (tstatus->vit + sstatus->int_)));
+			else
+				ad.damage = 0;
+			if(tsd)
+				ad.damage >>= 1;
 #endif
-				break;
-			default:
-				{
-					if (sstatus->matk_max > sstatus->matk_min) {
-						ATK_ADD_(ad.damage,sstatus->matk_min+rnd()%(sstatus->matk_max-sstatus->matk_min));
-					} else {
-						ATK_ADD_(ad.damage,sstatus->matk_min);
-					}
-
-					if (nk&NK_SPLASHSPLIT) { // Divide MATK in case of multiple targets skill
-						if(mflag > 0)
-							ad.damage /= mflag;
-						else
-							ShowError("0 enemies targeted by %d:%s, divide per 0 avoided!\n", skill_id, skill_get_name(skill_id));
-					}
+			break;
+		default:
+			{
+				if (sstatus->matk_max > sstatus->matk_min) {
+					ATK_ADD_(ad.damage,sstatus->matk_min+rnd()%(sstatus->matk_max-sstatus->matk_min));
+				} else {
+					ATK_ADD_(ad.damage,sstatus->matk_min);
 				}
-				break;
-		}
+
+				if (nk&NK_SPLASHSPLIT) { // Divide MATK in case of multiple targets skill
+					if(mflag > 0)
+						ad.damage /= mflag;
+					else
+						ShowError("0 enemies targeted by %d:%s, divide per 0 avoided!\n", skill_id, skill_get_name(skill_id));
+				}
+			}
+			break;
 	}
 	return ad;
 }
