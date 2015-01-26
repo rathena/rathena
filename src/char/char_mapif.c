@@ -284,7 +284,7 @@ int chmapif_parse_askscdata(int fd){
 		aid = RFIFOL(fd,2);
 		cid = RFIFOL(fd,6);
 		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT type, tick, val1, val2, val3, val4 from `%s` WHERE `account_id` = '%d' AND `char_id`='%d'",
-			schema_config.scdata_db, aid, cid) )
+			charserv_table(scdata_table), aid, cid) )
 		{
 			Sql_ShowDebug(sql_handle);
 			return 1;
@@ -505,7 +505,7 @@ int chmapif_parse_req_saveskillcooldown(int fd){
 			int i;
 
 			StringBuf_Init(&buf);
-			StringBuf_Printf(&buf, "INSERT INTO `%s` (`account_id`, `char_id`, `skill`, `tick`) VALUES ", schema_config.skillcooldown_db);
+			StringBuf_Printf(&buf, "INSERT INTO `%s` (`account_id`, `char_id`, `skill`, `tick`) VALUES ", charserv_table(skillcooldown_table));
 			for( i = 0; i < count; ++i )
 			{
 				memcpy(&data,RFIFOP(fd,14+i*sizeof(struct skill_cooldown_data)),sizeof(struct skill_cooldown_data));
@@ -532,7 +532,7 @@ int chmapif_parse_req_skillcooldown(int fd){
 		cid = RFIFOL(fd,6);
 		RFIFOSKIP(fd, 10);
 		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT skill, tick FROM `%s` WHERE `account_id` = '%d' AND `char_id`='%d'",
-			schema_config.skillcooldown_db, aid, cid) )
+			charserv_table(skillcooldown_table), aid, cid) )
 		{
 			Sql_ShowDebug(sql_handle);
 			return 1;
@@ -561,7 +561,7 @@ int chmapif_parse_req_skillcooldown(int fd){
 				WFIFOW(fd,12) = count;
 				WFIFOSET(fd,WFIFOW(fd,2));
 				//Clear the data once loaded.
-				if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%d' AND `char_id`='%d'", schema_config.skillcooldown_db, aid, cid) )
+				if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%d' AND `char_id`='%d'", charserv_table(skillcooldown_table), aid, cid) )
 					Sql_ShowDebug(sql_handle);
 			}
 		}
@@ -667,7 +667,7 @@ int chmapif_parse_askrmfriend(int fd){
 		char_id = RFIFOL(fd,2);
 		friend_id = RFIFOL(fd,6);
 		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id`='%d' AND `friend_id`='%d' LIMIT 1",
-			schema_config.friend_db, char_id, friend_id) ) {
+			charserv_table(friend_table), char_id, friend_id) ) {
 			Sql_ShowDebug(sql_handle);
 			return 1;
 		}
@@ -741,7 +741,7 @@ int chmapif_parse_fwlog_changestatus(int fd){
 		RFIFOSKIP(fd,44);
 
 		Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`, `char_id` FROM `%s` WHERE `name` = '%s'", schema_config.char_db, esc_name) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`, `char_id` FROM `%s` WHERE `name` = '%s'", charserv_table(char_table), esc_name) )
 			Sql_ShowDebug(sql_handle);
 		else if( Sql_NumRows(sql_handle) == 0 ) {
 			result = 1; // 1-player not found
@@ -866,7 +866,7 @@ int chmapif_parse_updmapinfo(int fd){
 		char esc_server_name[sizeof(charserv_config.server_name)*2+1];
 		Sql_EscapeString(sql_handle, esc_server_name, charserv_config.server_name);
 		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` SET `index`='%d',`name`='%s',`exp`='%d',`jexp`='%d',`drop`='%d'",
-			schema_config.ragsrvinfo_db, fd, esc_server_name, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10)) )
+			charserv_table(ragsrvinfo_table), fd, esc_server_name, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10)) )
 			Sql_ShowDebug(sql_handle);
 		RFIFOSKIP(fd,14);
 	}
@@ -950,7 +950,7 @@ int chmapif_parse_save_scdata(int fd){
 		count = RFIFOW(fd, 12);
 
 		// Whatever comes from the mapserver, now is the time to drop previous entries
-		if( Sql_Query( sql_handle, "DELETE FROM `%s` where `account_id` = %d and `char_id` = %d;", schema_config.scdata_db, aid, cid ) != SQL_SUCCESS ){
+		if( Sql_Query( sql_handle, "DELETE FROM `%s` where `account_id` = %d and `char_id` = %d;", charserv_table(scdata_table), aid, cid ) != SQL_SUCCESS ){
 			Sql_ShowDebug( sql_handle );
 		}
 		else if( count > 0 )
@@ -960,7 +960,7 @@ int chmapif_parse_save_scdata(int fd){
 			int i;
 
 			StringBuf_Init(&buf);
-			StringBuf_Printf(&buf, "INSERT INTO `%s` (`account_id`, `char_id`, `type`, `tick`, `val1`, `val2`, `val3`, `val4`) VALUES ", schema_config.scdata_db);
+			StringBuf_Printf(&buf, "INSERT INTO `%s` (`account_id`, `char_id`, `type`, `tick`, `val1`, `val2`, `val3`, `val4`) VALUES ", charserv_table(scdata_table));
 			for( i = 0; i < count; ++i )
 			{
 				memcpy (&data, RFIFOP(fd, 14+i*sizeof(struct status_change_data)), sizeof(struct status_change_data));
@@ -1221,7 +1221,7 @@ int chmapif_parse_reqcharban(int fd){
 		const char* name = (char*)RFIFOP(fd,10); // name of the target character
 		RFIFOSKIP(fd,10+NAME_LENGTH);
 
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`char_id`,`unban_time` FROM `%s` WHERE `name` = '%s'", schema_config.char_db, name) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`char_id`,`unban_time` FROM `%s` WHERE `name` = '%s'", charserv_table(char_table), name) )
 			Sql_ShowDebug(sql_handle);
 		else if( Sql_NumRows(sql_handle) == 0 ){
 			return 1; // 1-player not found
@@ -1250,7 +1250,7 @@ int chmapif_parse_reqcharban(int fd){
 
 			if( SQL_SUCCESS != SqlStmt_Prepare(stmt,
 					  "UPDATE `%s` SET `unban_time` = ? WHERE `char_id` = ? LIMIT 1",
-					  schema_config.char_db)
+					  charserv_table(char_table))
 				|| SQL_SUCCESS != SqlStmt_BindParam(stmt,  0, SQLDT_LONG,   (void*)&unban_time,   sizeof(unban_time))
 				|| SQL_SUCCESS != SqlStmt_BindParam(stmt,  1, SQLDT_INT,    (void*)&t_cid,     sizeof(t_cid))
 				|| SQL_SUCCESS != SqlStmt_Execute(stmt)
@@ -1286,7 +1286,7 @@ int chmapif_parse_reqcharunban(int fd){
 		const char* name = (char*)RFIFOP(fd,6);
 		RFIFOSKIP(fd,6+NAME_LENGTH);
 
-		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `unban_time` = '0' WHERE `name` = '%s' LIMIT 1", schema_config.char_db, name) ) {
+		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `unban_time` = '0' WHERE `name` = '%s' LIMIT 1", charserv_table(char_table), name) ) {
 			Sql_ShowDebug(sql_handle);
 			return 1;
 		}
@@ -1316,7 +1316,7 @@ int chmapif_bonus_script_get(int fd) {
 
 		if (SQL_ERROR == SqlStmt_Prepare(stmt,
 			"SELECT `script`, `tick`, `flag`, `type`, `icon` FROM `%s` WHERE `char_id` = '%d' LIMIT %d",
-			schema_config.bonus_script_db, cid, MAX_PC_BONUS_SCRIPT) ||
+			charserv_table(bonus_script_table), cid, MAX_PC_BONUS_SCRIPT) ||
 			SQL_ERROR == SqlStmt_Execute(stmt) ||
 			SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_STRING, &tmp_bsdata.script_str, sizeof(tmp_bsdata.script_str), NULL, NULL) ||
 			SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_UINT32, &tmp_bsdata.tick, 0, NULL, NULL) ||
@@ -1357,7 +1357,7 @@ int chmapif_bonus_script_get(int fd) {
 
 			ShowInfo("Bonus Script loaded for CID=%d. Total: %d.\n", cid, i);
 
-			if (SQL_ERROR == SqlStmt_Prepare(stmt,"DELETE FROM `%s` WHERE `char_id`='%d'",schema_config.bonus_script_db,cid) ||
+			if (SQL_ERROR == SqlStmt_Prepare(stmt,"DELETE FROM `%s` WHERE `char_id`='%d'", charserv_table(bonus_script_table), cid) ||
 				SQL_ERROR == SqlStmt_Execute(stmt))
 				SqlStmt_ShowDebug(stmt);
 		}
@@ -1390,7 +1390,7 @@ int chmapif_bonus_script_save(int fd) {
 			uint8 i;
 
 			StringBuf_Init(&buf);
-			StringBuf_Printf(&buf, "INSERT INTO `%s` (`char_id`, `script`, `tick`, `flag`, `type`, `icon`) VALUES ", schema_config.bonus_script_db);
+			StringBuf_Printf(&buf, "INSERT INTO `%s` (`char_id`, `script`, `tick`, `flag`, `type`, `icon`) VALUES ", charserv_table(bonus_script_table));
 			for (i = 0; i < count; ++i) {
 				memcpy(&bsdata, RFIFOP(fd, 9 + i*sizeof(struct bonus_script_data)), sizeof(struct bonus_script_data));
 				Sql_EscapeString(sql_handle, esc_script, bsdata.script_str);
@@ -1555,7 +1555,7 @@ void chmapif_server_reset(int id){
 		WBUFW(buf,2) = j * 4 + 10;
 		chmapif_sendallwos(fd, buf, WBUFW(buf,2));
 	}
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `index`='%d'", schema_config.ragsrvinfo_db, map_server[id].fd) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `index`='%d'", charserv_table(ragsrvinfo_table), map_server[id].fd) )
 		Sql_ShowDebug(sql_handle);
 	online_char_db->foreach(online_char_db,char_db_setoffline,id); //Tag relevant chars as 'in disconnected' server.
 	chmapif_server_destroy(id);

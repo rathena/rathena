@@ -10106,9 +10106,9 @@ static int pc_autosave(int tid, unsigned int tick, int id, intptr_t data)
 	}
 	mapit_free(iter);
 
-	interval = autosave_interval/(map_usercount()+1);
-	if(interval < minsave_interval)
-		interval = minsave_interval;
+	interval = map_config.autosave_interval/(map_usercount()+1);
+	if(interval < map_config.minsave_interval)
+		interval = map_config.minsave_interval;
 	add_timer(gettick()+interval,pc_autosave,0,0);
 
 	return 0;
@@ -10116,10 +10116,10 @@ static int pc_autosave(int tid, unsigned int tick, int id, intptr_t data)
 
 static int pc_daynight_timer_sub(struct map_session_data *sd,va_list ap)
 {
-	if (sd->state.night != night_flag && map[sd->bl.m].flag.nightenabled)
+	if (sd->state.night != map_config.night_flag && map[sd->bl.m].flag.nightenabled)
 	{	//Night/day state does not match.
-		clif_status_load(&sd->bl, SI_NIGHT, night_flag); //New night effect by dynamix [Skotlex]
-		sd->state.night = night_flag;
+		clif_status_load(&sd->bl, SI_NIGHT, map_config.night_flag); //New night effect by dynamix [Skotlex]
+		sd->state.night = map_config.night_flag;
 		return 1;
 	}
 	return 0;
@@ -10135,10 +10135,10 @@ int map_day_timer(int tid, unsigned int tick, int id, intptr_t data)
 	if (data == 0 && battle_config.day_duration <= 0)	// if we want a day
 		return 0;
 
-	if (!night_flag)
+	if (!map_config.night_flag)
 		return 0; //Already day.
 
-	night_flag = 0; // 0=day, 1=night [Yor]
+	map_config.night_flag = 0; // 0=day, 1=night [Yor]
 	map_foreachpc(pc_daynight_timer_sub);
 	strcpy(tmp_soutput, (data == 0) ? msg_txt(NULL,502) : msg_txt(NULL,60)); // The day has arrived!
 	intif_broadcast(tmp_soutput, strlen(tmp_soutput) + 1, BC_DEFAULT);
@@ -10156,10 +10156,10 @@ int map_night_timer(int tid, unsigned int tick, int id, intptr_t data)
 	if (data == 0 && battle_config.night_duration <= 0)	// if we want a night
 		return 0;
 
-	if (night_flag)
+	if (map_config.night_flag)
 		return 0; //Already nigth.
 
-	night_flag = 1; // 0=day, 1=night [Yor]
+	map_config.night_flag = 1; // 0=day, 1=night [Yor]
 	map_foreachpc(pc_daynight_timer_sub);
 	strcpy(tmp_soutput, (data == 0) ? msg_txt(NULL,503) : msg_txt(NULL,59)); // The night has fallen...
 	intif_broadcast(tmp_soutput, strlen(tmp_soutput) + 1, BC_DEFAULT);
@@ -10987,11 +10987,12 @@ void pc_readdb(void) {
 int pc_read_motd(void)
 {
 	FILE* fp;
+	const char *motd_file = mapserv_file(motd);
 	// clear old MOTD
 	memset(motd_text, 0, sizeof(motd_text));
 
 	// read current MOTD
-	if( ( fp = fopen(motd_txt, "r") ) != NULL )
+	if( ( fp = fopen(motd_file, "r") ) != NULL )
 	{
 		unsigned int entries = 0;
 
@@ -11010,7 +11011,7 @@ int pc_read_motd(void)
 				char * ptr;
 				buf[len] = 0;
 				if( ( ptr = strstr(buf, " :") ) != NULL && ptr-buf >= NAME_LENGTH ) // crashes newer clients
-					ShowWarning("Found sequence '"CL_WHITE" :"CL_RESET"' on line '"CL_WHITE"%u"CL_RESET"' in '"CL_WHITE"%s"CL_RESET"'. This can cause newer clients to crash.\n", lines, motd_txt);
+					ShowWarning("Found sequence '"CL_WHITE" :"CL_RESET"' on line '"CL_WHITE"%u"CL_RESET"' in '"CL_WHITE"%s"CL_RESET"'. This can cause newer clients to crash.\n", lines, motd_file);
 			}
 			else {// empty line
 				buf[0] = ' ';
@@ -11019,10 +11020,10 @@ int pc_read_motd(void)
 			entries++;
 		}
 		fclose(fp);
-		ShowStatus("Done reading '"CL_WHITE"%u"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", entries, motd_txt);
+		ShowStatus("Done reading '"CL_WHITE"%u"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", entries, motd_file);
 	}
 	else
-		ShowWarning("File '"CL_WHITE"%s"CL_RESET"' not found.\n", motd_txt);
+		ShowWarning("File '"CL_WHITE"%s"CL_RESET"' not found.\n", motd_file);
 
 	return 0;
 }
@@ -11228,7 +11229,7 @@ void pc_check_expiration(struct map_session_data *sd) {
 		char tmpstr[1024];
 
 		strftime(tmpstr,sizeof(tmpstr) - 1,msg_txt(sd,501),localtime(&exp_time)); // "Your account time limit is: %d-%m-%Y %H:%M:%S."
-		clif_wis_message(sd->fd,wisp_server_name,tmpstr,strlen(tmpstr) + 1);
+		clif_wis_message(sd->fd,map_config.wisp_server_name,tmpstr,strlen(tmpstr) + 1);
 
 		pc_expire_check(sd);
 	}
@@ -11324,7 +11325,7 @@ enum e_BANKING_DEPOSIT_ACK pc_bank_deposit(struct map_session_data *sd, int mone
 
 	sd->bank_vault += money;
 	pc_setreg2(sd, BANK_VAULT_VAR, sd->bank_vault);
-	if( save_settings&CHARSAVE_BANK )
+	if( map_config.save_settings&CHARSAVE_BANK )
 		chrif_save(sd,0);
 	return BDA_SUCCESS;
 }
@@ -11352,7 +11353,7 @@ enum e_BANKING_WITHDRAW_ACK pc_bank_withdraw(struct map_session_data *sd, int mo
 	
 	sd->bank_vault -= money;
 	pc_setreg2(sd, BANK_VAULT_VAR, sd->bank_vault);
-	if( save_settings&CHARSAVE_BANK )
+	if( map_config.save_settings&CHARSAVE_BANK )
 		chrif_save(sd,0);
 	return BWA_SUCCESS;
 }
@@ -11927,10 +11928,10 @@ void do_init_pc(void) {
 	add_timer_func_list(pc_expiration_timer, "pc_expiration_timer");
 	add_timer_func_list(pc_autotrade_timer, "pc_autotrade_timer");
 
-	add_timer(gettick() + autosave_interval, pc_autosave, 0, 0);
+	add_timer(gettick() + map_config.autosave_interval, pc_autosave, 0, 0);
 
 	// 0=day, 1=night [Yor]
-	night_flag = battle_config.night_at_start ? 1 : 0;
+	map_config.night_flag = battle_config.night_at_start ? 1 : 0;
 
 	if (battle_config.day_duration > 0 && battle_config.night_duration > 0) {
 		int day_duration = battle_config.day_duration;
@@ -11939,8 +11940,8 @@ void do_init_pc(void) {
 		add_timer_func_list(map_day_timer, "map_day_timer");
 		add_timer_func_list(map_night_timer, "map_night_timer");
 
-		day_timer_tid   = add_timer_interval(gettick() + (night_flag ? 0 : day_duration) + night_duration, map_day_timer,   0, 0, day_duration + night_duration);
-		night_timer_tid = add_timer_interval(gettick() + day_duration + (night_flag ? night_duration : 0), map_night_timer, 0, 0, day_duration + night_duration);
+		day_timer_tid   = add_timer_interval(gettick() + (map_config.night_flag ? 0 : day_duration) + night_duration, map_day_timer,   0, 0, day_duration + night_duration);
+		night_timer_tid = add_timer_interval(gettick() + day_duration + (map_config.night_flag ? night_duration : 0), map_night_timer, 0, 0, day_duration + night_duration);
 	}
 
 	do_init_pc_groups();

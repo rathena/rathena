@@ -35,7 +35,7 @@ int storage_fromsql(uint32 account_id, struct storage_data* p)
 	StringBuf_AppendStr(&buf, "SELECT `id`,`nameid`,`amount`,`equip`,`identify`,`refine`,`attribute`,`expire_time`,`bound`,`unique_id`");
 	for( j = 0; j < MAX_SLOTS; ++j )
 		StringBuf_Printf(&buf, ",`card%d`", j);
-	StringBuf_Printf(&buf, " FROM `%s` WHERE `account_id`='%d' ORDER BY `nameid`", schema_config.storage_db, account_id);
+	StringBuf_Printf(&buf, " FROM `%s` WHERE `account_id`='%d' ORDER BY `nameid`", charserv_table(storage_table), account_id);
 
 	if( SQL_ERROR == Sql_Query(sql_handle, StringBuf_Value(&buf)) )
 		Sql_ShowDebug(sql_handle);
@@ -91,7 +91,7 @@ int guild_storage_fromsql(int guild_id, struct guild_storage* p)
 	StringBuf_AppendStr(&buf, "SELECT `id`,`nameid`,`amount`,`equip`,`identify`,`refine`,`attribute`,`bound`,`unique_id`");
 	for( j = 0; j < MAX_SLOTS; ++j )
 		StringBuf_Printf(&buf, ",`card%d`", j);
-	StringBuf_Printf(&buf, " FROM `%s` WHERE `guild_id`='%d' ORDER BY `nameid`", schema_config.guild_storage_db, guild_id);
+	StringBuf_Printf(&buf, " FROM `%s` WHERE `guild_id`='%d' ORDER BY `nameid`", charserv_table(guild_storage_table), guild_id);
 
 	if( SQL_ERROR == Sql_Query(sql_handle, StringBuf_Value(&buf)) )
 		Sql_ShowDebug(sql_handle);
@@ -139,13 +139,13 @@ void inter_storage_sql_final(void)
 // Delete char storage
 int inter_storage_delete(uint32 account_id)
 {
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id`='%d'", schema_config.storage_db, account_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id`='%d'", charserv_table(storage_table), account_id) )
 		Sql_ShowDebug(sql_handle);
 	return 0;
 }
 int inter_guild_storage_delete(int guild_id)
 {
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `guild_id`='%d'", schema_config.guild_storage_db, guild_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `guild_id`='%d'", charserv_table(guild_storage_table), guild_id) )
 		Sql_ShowDebug(sql_handle);
 	return 0;
 }
@@ -155,7 +155,7 @@ int inter_guild_storage_delete(int guild_id)
 
 int mapif_load_guild_storage(int fd,uint32 account_id,int guild_id, char flag)
 {
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `guild_id` FROM `%s` WHERE `guild_id`='%d'", schema_config.guild_db, guild_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `guild_id` FROM `%s` WHERE `guild_id`='%d'", charserv_table(guild_table), guild_id) )
 		Sql_ShowDebug(sql_handle);
 	else if( Sql_NumRows(sql_handle) > 0 )
 	{// guild exists
@@ -215,7 +215,7 @@ int mapif_parse_SaveGuildStorage(int fd)
 	}
 	else
 	{
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `guild_id` FROM `%s` WHERE `guild_id`='%d'", schema_config.guild_db, guild_id) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `guild_id` FROM `%s` WHERE `guild_id`='%d'", charserv_table(guild_table), guild_id) )
 			Sql_ShowDebug(sql_handle);
 		else if( Sql_NumRows(sql_handle) > 0 )
 		{// guild exists
@@ -293,7 +293,7 @@ int mapif_parse_itembound_retrieve(int fd)
 	StringBuf_AppendStr(&buf, "SELECT `id`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `expire_time`, `bound`");
 	for( j = 0; j < MAX_SLOTS; ++j )
 		StringBuf_Printf(&buf, ", `card%d`", j);
-	StringBuf_Printf(&buf, " FROM `%s` WHERE `char_id`='%d' AND `bound` = %d", schema_config.inventory_db,char_id, BOUND_GUILD);
+	StringBuf_Printf(&buf, " FROM `%s` WHERE `char_id`='%d' AND `bound` = %d", charserv_table(inventory_table),char_id, BOUND_GUILD);
 
 	stmt = SqlStmt_Malloc(sql_handle);
 	if( SQL_ERROR == SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf)) ||
@@ -335,7 +335,7 @@ int mapif_parse_itembound_retrieve(int fd)
 
 	// Delete bound items from player's inventory
 	StringBuf_Clear(&buf);
-	StringBuf_Printf(&buf, "DELETE FROM `%s` WHERE `bound` = %d",schema_config.inventory_db, BOUND_GUILD);
+	StringBuf_Printf(&buf, "DELETE FROM `%s` WHERE `bound` = %d",charserv_table(inventory_table), BOUND_GUILD);
 	if( SQL_ERROR == SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf)) ||
 		SQL_ERROR == SqlStmt_Execute(stmt) )
 	{
@@ -379,7 +379,7 @@ int mapif_parse_itembound_retrieve(int fd)
 	if (j) {
 		StringBuf buf2;
 		StringBuf_Init(&buf2);
-		StringBuf_Printf(&buf2, "UPDATE `%s` SET %s WHERE `char_id`='%d'", schema_config.char_db, StringBuf_Value(&buf), char_id);
+		StringBuf_Printf(&buf2, "UPDATE `%s` SET %s WHERE `char_id`='%d'", charserv_table(char_table), StringBuf_Value(&buf), char_id);
 
 		if( SQL_ERROR == SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf)) ||
 			SQL_ERROR == SqlStmt_Execute(stmt) )

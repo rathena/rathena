@@ -10,6 +10,7 @@
 #include "../common/mapindex.h"
 #include "../common/db.h"
 #include "../common/msg_conf.h"
+#include "../common/strlib.h"
 
 #include "../config/core.h"
 
@@ -50,6 +51,102 @@ void map_msg_reload(void);
 #define MAX_IGNORE_LIST 20 	// official is 14
 #define MAX_VENDING 12
 #define MAX_MAP_SIZE 512*512 	// Wasn't there something like this already? Can't find it.. [Shinryo]
+
+
+struct MapServer_Schema {
+	bool db_use_sqldbs;
+
+	StringBuf *buyingstores_table;      ///< Buyingstore table (buyer & autotrader)
+	StringBuf *buyingstore_items_table; ///< Buyingstore items table (buyer & autotrader)
+	StringBuf *item_cash_db_table;	    ///< Item cash table
+	StringBuf *item_cash_db2_table;	    ///< Item cash table
+	StringBuf *item_db_table;		    ///< Item DB table
+	StringBuf *item_db2_table;		    ///< Item DB table
+	StringBuf *item_db_re_table;	    ///< Item DB table
+	StringBuf *mapreg_table;		    ///< Mapreg table, used in mapreg.c
+	StringBuf *market_table;		    ///< Market table
+	StringBuf *mob_db_table;		    ///< Mob DB table
+	StringBuf *mob_db_re_table;		    ///< Mob DB table
+	StringBuf *mob_db2_table;		    ///< Mob DB table
+	StringBuf *mob_skill_db_table;	    ///< Mob Skill table
+	StringBuf *mob_skill_db_re_table;   ///< Mob Skill table
+	StringBuf *mob_skill_db2_table;	    ///< Mob Skill table
+	StringBuf *roulette_table;			///< Roulette table
+	StringBuf *vendings_table;		    ///< Vending table (vendor & autotrader)
+	StringBuf *vending_items_table;	    ///< Vending items table (vendor & autotrader)
+};
+extern struct MapServer_Schema mapserv_schema_config; /// map-server tables
+/// Get map-server table value. Table names @see MapServer_Schema
+#define mapserv_table(table) ( StringBuf_Value(mapserv_schema_config.table) )
+
+struct MapServer_File {
+	StringBuf *group;	  ///< Prefered file for groups.conf
+	StringBuf *atcommand; ///< Prefered file for atcommand_athena.conf
+	StringBuf *motd;	  ///< Prefered file for motd
+};
+extern struct MapServer_File mapserv_file_config;
+/// Get file name
+#define mapserv_file(filename) ( StringBuf_Value(mapserv_file_config.filename) )
+
+struct Map_Config {
+	// Map-server
+	uint16 map_server_port;
+	StringBuf *map_server_ip;
+	StringBuf *map_server_id;
+	StringBuf *map_server_pw;
+	StringBuf *map_server_db;
+	StringBuf *default_codepage;
+
+	// Log Database
+	uint16 log_db_port;
+	StringBuf *log_db_ip;
+	StringBuf *log_db_id;
+	StringBuf *log_db_pw;
+	StringBuf *log_db_db;
+
+	char wisp_server_name[NAME_LENGTH]; // can be modified in char-server configuration file
+
+	uint32 autosave_interval;
+	uint32 minsave_interval;
+	uint8 save_settings;
+
+	bool agit_flag;
+	bool agit2_flag;
+	bool night_flag; // False = day, True = night [Yor]
+
+	bool console;
+	bool enable_spy; //To enable/disable @spy commands, which consume too much cpu time when sending packets. [Skotlex]
+	bool enable_grf;	//To enable/disable reading maps from GRF files, bypassing mapcache [blackhole89]
+
+	bool check_tables;
+};
+extern struct Map_Config map_config;
+
+/// Getter of map_server_port
+#define map_server_port()         ( map_config.map_server_port )
+/// Getter of map_server_ip Hostname
+#define map_server_ip()           ( StringBuf_Value(map_config.map_server_ip) )
+/// Getter of map_server_id Username
+#define map_server_id()           ( StringBuf_Value(map_config.map_server_id) )
+/// Getter of map_server_pw Password
+#define map_server_pw()           ( StringBuf_Value(map_config.map_server_pw) )
+/// Getter of map_server_db Database
+#define map_server_db()           ( StringBuf_Value(map_config.map_server_db) )
+/// Getter of map's default_codepage
+#define map_server_codepage()     ( StringBuf_Value(map_config.default_codepage) )
+/// Get map's default_codepage length
+#define map_server_codepage_len() ( StringBuf_Length(map_config.default_codepage) )
+
+/// Getter of log_db_port
+#define log_db_port() ( map_config.log_db_port )
+/// Getter of log_db_ip Hostname
+#define log_db_ip()   ( StringBuf_Value(map_config.log_db_ip) )
+/// Getter of log_db_id Username
+#define log_db_id()   ( StringBuf_Value(map_config.log_db_id) )
+/// Getter of log_db_pw Password
+#define log_db_pw()   ( StringBuf_Value(map_config.log_db_pw) )
+/// Getter of log_db_db Database
+#define log_db_db()   ( StringBuf_Value(map_config.log_db_db) )
 
 /** Added definitions for WoESE objects and other [L0ne_W0lf], [aleos] */
 enum MOBID {
@@ -273,9 +370,9 @@ enum e_mapid {
 #define DEFAULT_AUTOSAVE_INTERVAL 5*60*1000
 
 //Specifies maps where players may hit each other
-#define map_flag_vs(m) (map[m].flag.pvp || map[m].flag.gvg_dungeon || map[m].flag.gvg || ((agit_flag || agit2_flag) && map[m].flag.gvg_castle) || map[m].flag.battleground)
+#define map_flag_vs(m) (map[m].flag.pvp || map[m].flag.gvg_dungeon || map[m].flag.gvg || ((map_config.agit_flag || map_config.agit2_flag) && map[m].flag.gvg_castle) || map[m].flag.battleground)
 //Specifies maps that have special GvG/WoE restrictions
-#define map_flag_gvg(m) (map[m].flag.gvg || ((agit_flag || agit2_flag) && map[m].flag.gvg_castle))
+#define map_flag_gvg(m) (map[m].flag.gvg || ((map_config.agit_flag || map_config.agit2_flag) && map[m].flag.gvg_castle))
 //Specifies if the map is tagged as GvG/WoE (regardless of agit_flag status)
 #define map_flag_gvg2(m) (map[m].flag.gvg || map[m].flag.gvg_castle)
 // No Kill Steal Protection
@@ -771,26 +868,6 @@ void map_setgatcell(int16 m, int16 x, int16 y, int gat);
 extern struct map_data map[];
 extern int map_num;
 
-extern int autosave_interval;
-extern int minsave_interval;
-extern unsigned char save_settings;
-extern int agit_flag;
-extern int agit2_flag;
-extern int night_flag; // 0=day, 1=night [Yor]
-extern int enable_spy; //Determines if @spy commands are active.
-
-extern char motd_txt[];
-extern char help_txt[];
-extern char help2_txt[];
-extern char charhelp_txt[];
-
-extern char wisp_server_name[];
-
-struct s_map_default {
-	char mapname[MAP_NAME_LENGTH];
-	unsigned short x;
-	unsigned short y;
-};
 extern struct s_map_default map_default;
 
 /// Type of 'save_settings'
@@ -983,47 +1060,11 @@ typedef struct elemental_data	TBL_ELEM;
 #define BL_CAST(type_, bl) \
 	( ((bl) == (struct block_list*)NULL || (bl)->type != (type_)) ? (T ## type_ *)NULL : (T ## type_ *)(bl) )
 
-
-#ifdef BETA_THREAD_TEST
-
-extern char default_codepage[32];
-extern int map_server_port;
-extern char map_server_ip[32];
-extern char map_server_id[32];
-extern char map_server_pw[32];
-extern char map_server_db[32];
-
-extern char log_db_ip[32];
-extern int log_db_port;
-extern char log_db_id[32];
-extern char log_db_pw[32];
-extern char log_db_db[32];
-
-#endif
-
 #include "../common/sql.h"
-
-extern int db_use_sqldbs;
 
 extern Sql* mmysql_handle;
 extern Sql* qsmysql_handle;
 extern Sql* logmysql_handle;
-
-extern char buyingstores_db[32];
-extern char buyingstore_items_db[32];
-extern char item_db_db[32];
-extern char item_db2_db[32];
-extern char item_db_re_db[32];
-extern char mob_db_db[32];
-extern char mob_db_re_db[32];
-extern char mob_db2_db[32];
-extern char mob_skill_db_db[32];
-extern char mob_skill_db_re_db[32];
-extern char mob_skill_db2_db[32];
-extern char vendings_db[32];
-extern char vending_items_db[32];
-extern char market_table[32];
-extern char db_roulette_table[32];
 
 void do_shutdown(void);
 

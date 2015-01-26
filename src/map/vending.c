@@ -51,8 +51,8 @@ void vending_closevending(struct map_session_data* sd)
 	nullpo_retv(sd);
 
 	if( sd->state.vending ) {
-		if( Sql_Query( mmysql_handle, "DELETE FROM `%s` WHERE vending_id = %d;", vending_items_db, sd->vender_id ) != SQL_SUCCESS ||
-			Sql_Query( mmysql_handle, "DELETE FROM `%s` WHERE `id` = %d;", vendings_db, sd->vender_id ) != SQL_SUCCESS ) {
+		if( Sql_Query( mmysql_handle, "DELETE FROM `%s` WHERE vending_id = %d;", mapserv_table(vending_items_table), sd->vender_id ) != SQL_SUCCESS ||
+			Sql_Query( mmysql_handle, "DELETE FROM `%s` WHERE `id` = %d;", mapserv_table(vendings_table), sd->vender_id ) != SQL_SUCCESS ) {
 				Sql_ShowDebug(mmysql_handle);
 		}
 
@@ -207,11 +207,11 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 		z += ((double)vsd->vending[i].value * (double)amount);
 
 		if( vsd->vending[vend_list[i]].amount ) {
-			if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `amount` = %d WHERE `vending_id` = %d and `cartinventory_id` = %d", vending_items_db, vsd->vending[vend_list[i]].amount, vsd->vender_id, vsd->status.cart[idx].id ) != SQL_SUCCESS ) {
+			if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `amount` = %d WHERE `vending_id` = %d and `cartinventory_id` = %d", mapserv_table(vending_items_table), vsd->vending[vend_list[i]].amount, vsd->vender_id, vsd->status.cart[idx].id ) != SQL_SUCCESS ) {
 				Sql_ShowDebug( mmysql_handle );
 			}
 		} else {
-			if( Sql_Query( mmysql_handle, "DELETE FROM `%s` WHERE `vending_id` = %d and `cartinventory_id` = %d", vending_items_db, vsd->vender_id, vsd->status.cart[idx].id ) != SQL_SUCCESS ) {
+			if( Sql_Query( mmysql_handle, "DELETE FROM `%s` WHERE `vending_id` = %d and `cartinventory_id` = %d", mapserv_table(vending_items_table), vsd->vender_id, vsd->status.cart[idx].id ) != SQL_SUCCESS ) {
 				Sql_ShowDebug( mmysql_handle );
 			}
 		}
@@ -246,7 +246,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 	vsd->vend_num = cursor;
 
 	//Always save BOTH: customer (buyer) and vender
-	if( save_settings&CHARSAVE_VENDING ) {
+	if( map_config.save_settings&CHARSAVE_VENDING ) {
 		chrif_save(sd,0);
 		chrif_save(vsd,0);
 	}
@@ -300,7 +300,7 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
 		return 3;
 	}
 
-	if (save_settings&CHARSAVE_VENDING) // Avoid invalid data from saving
+	if (map_config.save_settings&CHARSAVE_VENDING) // Avoid invalid data from saving
 		chrif_save(sd, 0);
 
 	// filter out invalid items
@@ -358,12 +358,12 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
 
 	if( Sql_Query( mmysql_handle, "INSERT INTO `%s`(`id`, `account_id`, `char_id`, `sex`, `map`, `x`, `y`, `title`, `autotrade`, `body_direction`, `head_direction`, `sit`) "
 		"VALUES( %d, %d, %d, '%c', '%s', %d, %d, '%s', %d, '%d', '%d', '%d' );",
-		vendings_db, sd->vender_id, sd->status.account_id, sd->status.char_id, sd->status.sex == 0 ? 'F' : 'M', map[sd->bl.m].name, sd->bl.x, sd->bl.y, message_sql, sd->state.autotrade, at ? at->dir : sd->ud.dir, at ? at->head_dir : sd->head_dir, at ? at->sit : pc_issit(sd) ) != SQL_SUCCESS ) {
+		mapserv_table(vendings_table), sd->vender_id, sd->status.account_id, sd->status.char_id, sd->status.sex == 0 ? 'F' : 'M', map[sd->bl.m].name, sd->bl.x, sd->bl.y, message_sql, sd->state.autotrade, at ? at->dir : sd->ud.dir, at ? at->head_dir : sd->head_dir, at ? at->sit : pc_issit(sd) ) != SQL_SUCCESS ) {
 		Sql_ShowDebug(mmysql_handle);
 	}
 
 	StringBuf_Init(&buf);
-	StringBuf_Printf(&buf, "INSERT INTO `%s`(`vending_id`,`index`,`cartinventory_id`,`amount`,`price`) VALUES", vending_items_db);
+	StringBuf_Printf(&buf, "INSERT INTO `%s`(`vending_id`,`index`,`cartinventory_id`,`amount`,`price`) VALUES", mapserv_table(vending_items_table));
 	for (i = 0; i < count; i++) {
 		StringBuf_Printf(&buf, "(%d,%d,%d,%d,%d)", sd->vender_id, i, sd->status.cart[sd->vending[i].index].id, sd->vending[i].amount, sd->vending[i].value);
 		if (i < count-1)
@@ -549,7 +549,7 @@ void do_init_vending_autotrade(void)
 			"FROM `%s` "
 			"WHERE `autotrade` = 1 AND (SELECT COUNT(`vending_id`) FROM `%s` WHERE `vending_id` = `id`) > 0 "
 			"ORDER BY `id`;",
-			vendings_db, vending_items_db ) != SQL_SUCCESS )
+			mapserv_table(vendings_table), mapserv_table(vending_items_table) ) != SQL_SUCCESS )
 		{
 			Sql_ShowDebug(mmysql_handle);
 			return;
@@ -604,7 +604,7 @@ void do_init_vending_autotrade(void)
 					"FROM `%s` "
 					"WHERE `vending_id` = %d "
 					"ORDER BY `index` ASC;",
-					vending_items_db, at->id ) )
+					mapserv_table(vending_items_table), at->id ) )
 				{
 					Sql_ShowDebug(mmysql_handle);
 					continue;
@@ -639,8 +639,8 @@ void do_init_vending_autotrade(void)
 	}
 
 	// Everything is loaded fine, their entries will be reinserted once they are loaded
-	if (Sql_Query( mmysql_handle, "DELETE FROM `%s`;", vendings_db ) != SQL_SUCCESS ||
-		Sql_Query( mmysql_handle, "DELETE FROM `%s`;", vending_items_db ) != SQL_SUCCESS) {
+	if (Sql_Query( mmysql_handle, "DELETE FROM `%s`;", mapserv_table(vendings_table) ) != SQL_SUCCESS ||
+		Sql_Query( mmysql_handle, "DELETE FROM `%s`;", mapserv_table(vending_items_table) ) != SQL_SUCCESS) {
 		Sql_ShowDebug(mmysql_handle);
 	}
 }

@@ -10,6 +10,7 @@
 #include "../common/core.h" // CORE_ST_LAST
 #include "../common/msg_conf.h"
 #include "../common/mmo.h"
+#include "../common/strlib.h"
 
 
 extern int login_fd; //login file descriptor
@@ -33,46 +34,55 @@ enum {
 };
 
 struct Schema_Config {
-	int db_use_sqldbs;
-	char db_path[1024];
-	char char_db[DB_NAME_LEN];
-	char scdata_db[DB_NAME_LEN];
-	char skillcooldown_db[DB_NAME_LEN];
-	char cart_db[DB_NAME_LEN];
-	char inventory_db[DB_NAME_LEN];
-	char charlog_db[DB_NAME_LEN];
-	char storage_db[DB_NAME_LEN];
-	char interlog_db[DB_NAME_LEN];
-	char skill_db[DB_NAME_LEN];
-	char memo_db[DB_NAME_LEN];
-	char guild_db[DB_NAME_LEN];
-	char guild_alliance_db[DB_NAME_LEN];
-	char guild_castle_db[DB_NAME_LEN];
-	char guild_expulsion_db[DB_NAME_LEN];
-	char guild_member_db[DB_NAME_LEN];
-	char guild_position_db[DB_NAME_LEN];
-	char guild_skill_db[DB_NAME_LEN];
-	char guild_storage_db[DB_NAME_LEN];
-	char party_db[DB_NAME_LEN];
-	char pet_db[DB_NAME_LEN];
-	char mail_db[DB_NAME_LEN]; // MAIL SYSTEM
-	char auction_db[DB_NAME_LEN]; // Auctions System
-	char friend_db[DB_NAME_LEN];
-	char hotkey_db[DB_NAME_LEN];
-	char quest_db[DB_NAME_LEN];
-	char homunculus_db[DB_NAME_LEN];
-	char skill_homunculus_db[DB_NAME_LEN];
-	char mercenary_db[DB_NAME_LEN];
-	char mercenary_owner_db[DB_NAME_LEN];
-	char ragsrvinfo_db[DB_NAME_LEN];
-	char elemental_db[DB_NAME_LEN];
-	char bonus_script_db[DB_NAME_LEN];
-	char acc_reg_num_table[DB_NAME_LEN];
-	char acc_reg_str_table[DB_NAME_LEN];
-	char char_reg_str_table[DB_NAME_LEN];
-	char char_reg_num_table[DB_NAME_LEN];
+	// Character related tables
+	StringBuf *char_table;			   ///< Main Charachter table
+	StringBuf *charlog_table;		   ///< Charlog table
+	StringBuf *bonus_script_table;	   ///< Stored bonus_script table
+	StringBuf *cart_table;			   ///< Cart inventory table
+	StringBuf *inventory_table;		   ///< Inventory table
+	StringBuf *storage_table;		   ///< Storage table
+	StringBuf *memo_table;			   ///< Memo table
+	StringBuf *scdata_table;		   ///< Stored SC table
+	StringBuf *skill_table;			   ///< Skill table
+	StringBuf *skillcooldown_table;	   ///< Skill Cooldown table
+	StringBuf *friend_table;		   ///< Friend list table
+	StringBuf *hotkey_table;		   ///< Hotkey list table
+	StringBuf *mail_table;			   ///< Mail table
+	StringBuf *quest_table;			   ///< Quest table
+	StringBuf *pet_table;			   ///< Pet table
+	StringBuf *elemental_table;		   ///< Elemental table
+	StringBuf *party_table;			   ///< Party table
+
+	// Homunculus tables
+	StringBuf *homunculus_table;	   ///< Homunculus table
+	StringBuf *homunculus_skill_table; ///< Homunculus skill table
+
+	// Mercenary Tables
+	StringBuf *mercenary_table;		   ///< Mercenary table
+	StringBuf *mercenary_owner_table;  ///< Mercenary owner table
+
+	// Guild tables
+	StringBuf *guild_table;			   ///< Guild table
+	StringBuf *guild_alliance_table;   ///< Guild alliance & enemy table
+	StringBuf *guild_castle_table;	   ///< Castle table
+	StringBuf *guild_expulsion_table;  ///< Expulsion table
+	StringBuf *guild_member_table;	   ///< Guild member table
+	StringBuf *guild_position_table;   ///< Guild member position table
+	StringBuf *guild_skill_table;	   ///< Guild skill table
+	StringBuf *guild_storage_table;	   ///< Guild storage table
+
+	// Other
+	StringBuf *acc_reg_num_table;	   ///< Account Registry (Number)
+	StringBuf *acc_reg_str_table;	   ///< Account Registry (String)
+	StringBuf *auction_table;		   ///< Auction table
+	StringBuf *char_reg_num_table;	   ///< Character Registry (Number)
+	StringBuf *char_reg_str_table;	   ///< Character Registry (String)
+	StringBuf *ragsrvinfo_table;	   ///< Server info table
+	StringBuf *interlog_table;		   ///< Inter log table
 };
-extern struct Schema_Config schema_config;
+extern struct Schema_Config schema_config; /// Inter/char-server tables
+/// Get inter/char-server table value. Table names @see Schema_Config
+#define charserv_table(table) ( StringBuf_Value(schema_config.table) )
 
 #if PACKETVER_SUPPORTS_PINCODE
 /// Pincode system
@@ -158,6 +168,8 @@ struct CharServ_Config {
 	char default_map[MAP_NAME_LENGTH];
 	unsigned short default_map_x;
 	unsigned short default_map_y;
+
+	char db_path[16];
 };
 extern struct CharServ_Config charserv_config;
 

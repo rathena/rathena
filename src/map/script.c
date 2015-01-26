@@ -4458,31 +4458,31 @@ static void *queryThread_main(void *x) {
 	Sql *queryThread_handle = Sql_Malloc();
 	int i;
 
-	if ( SQL_ERROR == Sql_Connect(queryThread_handle, map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db) ){
+	if ( SQL_ERROR == Sql_Connect(queryThread_handle, map_server_id(), map_server_pw(), map_server_ip(), map_server_port(), map_server_db()) ){
 		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-			map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db);
+			map_server_id(), map_server_pw(), map_server_ip(), map_server_port(), map_server_db());
 		Sql_ShowDebug(queryThread_handle);
 		Sql_Free(queryThread_handle);
 		exit(EXIT_FAILURE);
 	}
 
-	if( strlen(default_codepage) > 0 )
-		if ( SQL_ERROR == Sql_SetEncoding(queryThread_handle, default_codepage) )
+	if( map_server_codepage_len() > 0 )
+		if ( SQL_ERROR == Sql_SetEncoding(queryThread_handle, map_server_codepage()) )
 			Sql_ShowDebug(queryThread_handle);
 
 	if( log_config.sql_logs ) {
 		logmysql_handle = Sql_Malloc();
 
-		if ( SQL_ERROR == Sql_Connect(logmysql_handle, log_db_id, log_db_pw, log_db_ip, log_db_port, log_db_db) ){
+		if ( SQL_ERROR == Sql_Connect(logmysql_handle, log_db_id(), log_db_pw(), log_db_ip(), log_db_port(), log_db_db()) ){
 			ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-				log_db_id, log_db_pw, log_db_ip, log_db_port, log_db_db);
+				log_db_id(), log_db_pw(), log_db_ip(), log_db_port(), log_db_db());
 			Sql_ShowDebug(logmysql_handle);
 			Sql_Free(logmysql_handle);
 			exit(EXIT_FAILURE);
 		}
 
-		if( strlen(default_codepage) > 0 )
-			if ( SQL_ERROR == Sql_SetEncoding(logmysql_handle, default_codepage) )
+		if( map_server_codepage_len() > 0 )
+			if ( SQL_ERROR == Sql_SetEncoding(logmysql_handle, map_server_codepage()) )
 				Sql_ShowDebug(logmysql_handle);
 	}
 
@@ -12247,32 +12247,36 @@ BUILDIN_FUNC(maprespawnguildid)
 
 BUILDIN_FUNC(agitstart)
 {
-	if(agit_flag==1) return SCRIPT_CMD_SUCCESS;      // Agit already Start.
-	agit_flag=1;
+	if (map_config.agit_flag)
+		return SCRIPT_CMD_SUCCESS; // Agit already Start.
+	map_config.agit_flag = true;
 	guild_agit_start();
 	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(agitend)
 {
-	if(agit_flag==0) return SCRIPT_CMD_SUCCESS;      // Agit already End.
-	agit_flag=0;
+	if (!map_config.agit_flag)
+		return SCRIPT_CMD_SUCCESS; // Agit already End.
+	map_config.agit_flag = false;
 	guild_agit_end();
 	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(agitstart2)
 {
-	if(agit2_flag==1) return SCRIPT_CMD_SUCCESS;      // Agit2 already Start.
-	agit2_flag=1;
+	if (map_config.agit2_flag)
+		return SCRIPT_CMD_SUCCESS; // Agit2 already Start.
+	map_config.agit2_flag = true;
 	guild_agit2_start();
 	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(agitend2)
 {
-	if(agit2_flag==0) return SCRIPT_CMD_SUCCESS;      // Agit2 already End.
-	agit2_flag=0;
+	if (!map_config.agit2_flag)
+		return SCRIPT_CMD_SUCCESS; // Agit2 already End.
+	map_config.agit2_flag = false;
 	guild_agit2_end();
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -12282,7 +12286,7 @@ BUILDIN_FUNC(agitend2)
  *------------------------------------------*/
 BUILDIN_FUNC(agitcheck)
 {
-	script_pushint(st,agit_flag);
+	script_pushint(st,map_config.agit_flag?1:0);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -12291,7 +12295,7 @@ BUILDIN_FUNC(agitcheck)
  *------------------------------------------*/
 BUILDIN_FUNC(agitcheck2)
 {
-	script_pushint(st,agit2_flag);
+	script_pushint(st,map_config.agit2_flag?1:0);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -14626,13 +14630,13 @@ BUILDIN_FUNC(summon)
  *------------------------------------------*/
 BUILDIN_FUNC(isnight)
 {
-	script_pushint(st,(night_flag == 1));
+	script_pushint(st,map_config.night_flag?1:0);
 	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(isday)
 {
-	script_pushint(st,(night_flag == 0));
+	script_pushint(st,(!map_config.night_flag)?1:0);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -14834,12 +14838,12 @@ BUILDIN_FUNC(getrefine)
  *-------------------------------------------------------*/
 BUILDIN_FUNC(night)
 {
-	if (night_flag != 1) map_night_timer(night_timer_tid, 0, 0, 1);
+	if (!map_config.night_flag) map_night_timer(night_timer_tid, 0, 0, 1);
 	return SCRIPT_CMD_SUCCESS;
 }
 BUILDIN_FUNC(day)
 {
-	if (night_flag != 0) map_day_timer(day_timer_tid, 0, 0, 1);
+	if (map_config.night_flag) map_day_timer(day_timer_tid, 0, 0, 1);
 	return SCRIPT_CMD_SUCCESS;
 }
 

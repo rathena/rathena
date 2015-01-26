@@ -2358,7 +2358,7 @@ static void intif_parse_Mail_send(int fd)
 		else
 		{
 			clif_Mail_send(sd->fd, false);
-			if( save_settings&CHARSAVE_MAIL )
+			if( map_config.save_settings&CHARSAVE_MAIL )
 				chrif_save(sd, 0);
 		}
 	}
@@ -2476,7 +2476,7 @@ static void intif_parse_Auction_register(int fd)
 	if( auction.auction_id > 0 )
 	{
 		clif_Auction_message(sd->fd, 1); // Confirmation Packet ??
-		if( save_settings&CHARSAVE_AUCTION )
+		if( map_config.save_settings&CHARSAVE_AUCTION )
 			chrif_save(sd,0);
 	}
 	else

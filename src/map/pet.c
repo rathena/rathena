@@ -510,7 +510,7 @@ int pet_birth_process(struct map_session_data *sd, struct s_pet *pet)
 
 	intif_save_petdata(sd->status.account_id,pet);
 	
-	if (save_settings&CHARSAVE_PET)
+	if (map_config.save_settings&CHARSAVE_PET)
 		chrif_save(sd,0); //is it REALLY Needed to save the char for hatching a pet? [Skotlex]
 
 	if(sd->bl.prev != NULL) {

@@ -1076,7 +1076,7 @@ bool itemdb_parse_roulette_db(void)
 	uint32 count = 0;
 
 	// retrieve all rows from the item database
-	if (SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", db_roulette_table)) {
+	if (SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", roulette_table)) {
 		Sql_ShowDebug(mmysql_handle);
 		return false;
 	}
@@ -1156,7 +1156,7 @@ bool itemdb_parse_roulette_db(void)
 		}
 	}
 
-	ShowStatus("Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, db_roulette_table);
+	ShowStatus("Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, roulette_table);
 
 	return true;
 }
@@ -1498,11 +1498,11 @@ static int itemdb_read_sqldb(void) {
 
 	const char* item_db_name[] = {
 #ifdef RENEWAL
-		item_db_re_db,
+		mapserv_table(item_db_re_table),
 #else
-		item_db_db,
+		mapserv_table(item_db_table),
 #endif
-		item_db2_db
+		mapserv_table(item_db2_table)
 	};
 	int fi;
 
@@ -1583,7 +1583,7 @@ static void itemdb_read(void) {
 		"/"DBIMPORT,
 	};
 	
-	if (db_use_sqldbs)
+	if (mapserv_schema_config.db_use_sqldbs)
 		itemdb_read_sqldb();
 	else
 		itemdb_readdb();

@@ -14,9 +14,6 @@
 struct cash_item_db cash_shop_items[CASHSHOP_TAB_SEARCH];
 bool cash_shop_defined = false;
 
-extern char item_cash_db_db[32];
-extern char item_cash_db2_db[32];
-
 /*
  * Reads one line from database and assigns it to RAM.
  * return
@@ -98,7 +95,7 @@ static void cashshop_read_db_txt( void ){
  * parses line and sends them to parse_dbrow.
  */
 static int cashshop_read_db_sql( void ){
-	const char* cash_db_name[] = { item_cash_db_db, item_cash_db2_db };
+	const char* cash_db_name[] = { mapserv_table(item_cash_db_table), mapserv_table(item_cash_db2_table) };
 	int fi;
 
 	for( fi = 0; fi < ARRAYLENGTH( cash_db_name ); ++fi ){
@@ -144,7 +141,7 @@ static int cashshop_read_db_sql( void ){
  * based on 'db_use_sqldbs' in conf/map_athena.conf.
  */
 static void cashshop_read_db( void ){
-	if( db_use_sqldbs ){
+	if( mapserv_schema_config.db_use_sqldbs ){
 		cashshop_read_db_sql();
 	} else {
 		cashshop_read_db_txt();

@@ -43,42 +43,21 @@
 #ifndef _WIN32
 #endif
 
-char default_codepage[32] = "";
-
-int map_server_port = 3306;
-char map_server_ip[32] = "127.0.0.1";
-char map_server_id[32] = "ragnarok";
-char map_server_pw[32] = "";
-char map_server_db[32] = "ragnarok";
-Sql* mmysql_handle;
+Sql* mmysql_handle; /// Map-server handle
 Sql* qsmysql_handle; /// For query_sql
+Sql* logmysql_handle; /// Log database handle
 
-int db_use_sqldbs = 0;
-char buyingstores_db[32] = "buyingstores";
-char buyingstore_items_db[32] = "buyingstore_items";
-char item_db_db[32] = "item_db";
-char item_db2_db[32] = "item_db2";
-char item_db_re_db[32] = "item_db_re";
-char item_cash_db_db[32] = "item_cash_db";
-char item_cash_db2_db[32] = "item_cash_db2";
-char mob_db_db[32] = "mob_db";
-char mob_db_re_db[32] = "mob_db_re";
-char mob_db2_db[32] = "mob_db2";
-char mob_skill_db_db[32] = "mob_skill_db";
-char mob_skill_db_re_db[32] = "mob_skill_db_re";
-char mob_skill_db2_db[32] = "mob_skill_db2";
-char vendings_db[32] = "vendings";
-char vending_items_db[32] = "vending_items";
-char market_table[32] = "market";
-char db_roulette_table[32] = "db_roulette";
+struct Map_Config map_config; /// Map configurations
+static void map_inter_config_init(void);
+static void map_inter_config_final(void);
 
-// log database
-char log_db_ip[32] = "127.0.0.1";
-int log_db_port = 3306;
-char log_db_id[32] = "ragnarok";
-char log_db_pw[32] = "ragnarok";
-char log_db_db[32] = "log";
-Sql* logmysql_handle;
+struct MapServer_Schema mapserv_schema_config; /// map-server tables
+static void map_schema_init(void);
+static void map_schema_final(void);
+
+struct MapServer_File mapserv_file_config; /// Sub files needed for map-server
+static void map_file_init(void);
+static void map_file_final(void);
 
 // DBMap declaration
 static DBMap* id_db=NULL; /// int id -> struct block_list*
@@ -108,13 +87,6 @@ struct map_data map[MAX_MAP_PER_SERVER];
 int map_num = 0;
 int map_port=0;
 
-int autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
-int minsave_interval = 100;
-unsigned char save_settings = CHARSAVE_ALL;
-int agit_flag = 0;
-int agit2_flag = 0;
-int night_flag = 0; // 0=day, 1=night [Yor]
-
 #ifdef ADJUST_SKILL_DAMAGE
 struct eri *map_skill_damage_ers = NULL;
 #endif
@@ -142,18 +114,7 @@ struct map_cache_map_info {
 	int32 len;
 };
 
-char motd_txt[256] = "conf/motd.txt";
-char help_txt[256] = "conf/help.txt";
-char help2_txt[256] = "conf/help2.txt";
-char charhelp_txt[256] = "conf/charhelp.txt";
-
-char wisp_server_name[NAME_LENGTH] = "Server"; // can be modified in char-server configuration file
-
 struct s_map_default map_default;
-
-int console = 0;
-int enable_spy = 0; //To enable/disable @spy commands, which consume too much cpu time when sending packets. [Skotlex]
-int enable_grf = 0;	//To enable/disable reading maps from GRF files, bypassing mapcache [blackhole89]
 
 /*==========================================
  * server player count (of all mapservers)
@@ -3522,7 +3483,7 @@ int map_readallmaps (void)
 	};
 	char map_cache_decode_buffer[MAX_MAP_SIZE];
 
-	if( enable_grf )
+	if( map_config.enable_grf )
 		ShowStatus("Loading maps (using GRF files)...\n");
 	else {
 		char* mapcachefilepath[] = {
@@ -3560,7 +3521,7 @@ int map_readallmaps (void)
 		bool success = false;
 		unsigned short idx = 0;
 
-		if( enable_grf ){
+		if( map_config.enable_grf ){
 			// show progress
 			ShowStatus("Loading maps [%i/%i]: %s"CL_CLL"\r", i, map_num, map[i].name);
 
@@ -3619,7 +3580,7 @@ int map_readallmaps (void)
 	// intialization and configuration-dependent adjustments of mapflags
 	map_flags_init();
 
-	if( !enable_grf ) {
+	if( !map_config.enable_grf ) {
 		// The cache isn't needed anymore, so free it. [Shinryo]
 		if( map_cache_buffer[1] != NULL ){
 			aFree(map_cache_buffer[1]);
@@ -3713,6 +3674,49 @@ int parse_console(const char* buf){
 	return 0;
 }
 
+/**
+ * Get table names
+ * @param w1 Config name
+ * @param w2 Config value
+ **/
+static bool map_schema_read_conf(const char *w1, const char *w2) {
+#define SCHEMA_CONF(var,str) \
+	if (!strcmpi(w1,(str))) {\
+		StringBuf_PrintfClear(mapserv_schema_config.var, "%s", w2);\
+		return true;\
+	}\
+
+	if (strcmpi(w1,"use_sql_db")==0) {
+		mapserv_schema_config.db_use_sqldbs = config_switch(w2);
+		ShowStatus ("Using SQL dbs: %s\n",w2);
+		return true;
+	}
+
+	SCHEMA_CONF(buyingstores_table, "buyingstore_table")
+	SCHEMA_CONF(buyingstore_items_table, "buyingstore_items_table")
+	SCHEMA_CONF(mapreg_table, "mapreg_table")
+	SCHEMA_CONF(market_table, "market_table")
+	SCHEMA_CONF(roulette_table, "db_roulette")
+	SCHEMA_CONF(vendings_table, "vending_table")
+	SCHEMA_CONF(vending_items_table, "vending_items_table")
+
+	// TXT -> SQL DB
+	SCHEMA_CONF(item_db_table, "item_db_table")
+	SCHEMA_CONF(item_db_re_table, "item_db_re_table")
+	SCHEMA_CONF(item_db2_table, "item_db2_table")
+	SCHEMA_CONF(mob_db_table, "mob_db_table")
+	SCHEMA_CONF(mob_db_re_table, "mob_db_re_table")
+	SCHEMA_CONF(mob_db2_table, "mob_db2_table")
+	SCHEMA_CONF(mob_skill_db_table, "mob_skill_db_table")
+	SCHEMA_CONF(mob_skill_db_re_table, "mob_skill_db_re_table")
+	SCHEMA_CONF(mob_skill_db2_table, "mob_skill_db2_table")
+	SCHEMA_CONF(item_cash_db_table, "item_cash_db_table")
+	SCHEMA_CONF(item_cash_db2_table, "item_cash_db2_table")
+
+	return false;
+#undef SCHEMA_CONF
+}
+
 /*==========================================
  * Read map server configuration files (conf/map_athena.conf...)
  *------------------------------------------*/
@@ -3777,39 +3781,39 @@ int map_config_read(char *cfgName)
 		else if (strcmpi(w1, "delnpc") == 0)
 			npc_delsrcfile(w2);
 		else if (strcmpi(w1, "autosave_time") == 0) {
-			autosave_interval = atoi(w2);
-			if (autosave_interval < 1) //Revert to default saving.
-				autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
+			map_config.autosave_interval = atoi(w2);
+			if (map_config.autosave_interval < 1) //Revert to default saving.
+				map_config.autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
 			else
-				autosave_interval *= 1000; //Pass from sec to ms
+				map_config.autosave_interval *= 1000; //Pass from sec to ms
 		} else if (strcmpi(w1, "minsave_time") == 0) {
-			minsave_interval= atoi(w2);
-			if (minsave_interval < 1)
-				minsave_interval = 1;
+			map_config.minsave_interval = atoi(w2);
+			if (map_config.minsave_interval < 1)
+				map_config.minsave_interval = 1;
 		} else if (strcmpi(w1, "save_settings") == 0)
-			save_settings = cap_value(atoi(w2),CHARSAVE_NONE,CHARSAVE_ALL);
+			map_config.save_settings = cap_value(atoi(w2),CHARSAVE_NONE,CHARSAVE_ALL);
 		else if (strcmpi(w1, "motd_txt") == 0)
-			strcpy(motd_txt, w2);
-		else if (strcmpi(w1, "help_txt") == 0)
-			strcpy(help_txt, w2);
-		else if (strcmpi(w1, "help2_txt") == 0)
-			strcpy(help2_txt, w2);
-		else if (strcmpi(w1, "charhelp_txt") == 0)
-			strcpy(charhelp_txt, w2);
+			StringBuf_PrintfClear(mapserv_file_config.motd, "%s", w2);
+		else if (strcmpi(w1, "group_conf_file") == 0)
+			StringBuf_PrintfClear(mapserv_file_config.group, "%s", w2);
+		else if (strcmpi(w1, "atcommand_conf_file") == 0)
+			StringBuf_PrintfClear(mapserv_file_config.atcommand, "%s", w2);
 		else if(strcmpi(w1,"db_path") == 0)
 			safestrncpy(db_path,w2,ARRAYLENGTH(db_path));
 		else if (strcmpi(w1, "console") == 0) {
-			console = config_switch(w2);
-			if (console)
+			map_config.console = config_switch(w2);
+			if (map_config.console)
 				ShowNotice("Console Commands are enabled.\n");
 		} else if (strcmpi(w1, "enable_spy") == 0)
-			enable_spy = config_switch(w2);
+			map_config.enable_spy = config_switch(w2);
 		else if (strcmpi(w1, "use_grf") == 0)
-			enable_grf = config_switch(w2);
+			map_config.enable_grf = config_switch(w2);
 		else if (strcmpi(w1, "console_msg_log") == 0)
 			console_msg_log = atoi(w2);//[Ind]
-		else if (strcmpi(w1, "console_log_filepath") == 0)
-			safestrncpy(console_log_filepath, w2, sizeof(console_log_filepath));
+		else if (strcmpi(w1,"check_tables") == 0)
+			map_config.check_tables = config_switch(w2);
+		else if (map_schema_read_conf(w1, w2))
+			continue;
 		else if (strcmpi(w1, "import") == 0)
 			map_config_read(w2);
 		else
@@ -3874,9 +3878,284 @@ void map_reloadnpc(bool clear)
 #endif
 }
 
-int inter_config_read(char *cfgName)
+/**
+ * Initialize default configurations
+ **/
+static void map_inter_config_init(void) {
+	map_config.map_server_port  = 3306;
+	map_config.map_server_ip    = StringBuf_FromStr("127.0.0.1");
+	map_config.map_server_id    = StringBuf_FromStr("ragnarok");
+	map_config.map_server_pw    = StringBuf_FromStr("");
+	map_config.map_server_db    = StringBuf_FromStr("ragnarok");
+	map_config.default_codepage = StringBuf_FromStr("");
+
+	map_config.log_db_port = 3306;
+	map_config.log_db_ip   = StringBuf_FromStr("127.0.0.1");
+	map_config.log_db_id   = StringBuf_FromStr("ragnarok");
+	map_config.log_db_pw   = StringBuf_FromStr("");
+	map_config.log_db_db   = StringBuf_FromStr("log");
+
+	safestrncpy(map_config.wisp_server_name, "Server", sizeof(map_config.wisp_server_name));
+
+	map_config.autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
+	map_config.minsave_interval = 100;
+	map_config.save_settings = CHARSAVE_ALL;
+
+	map_config.agit_flag = false;
+	map_config.agit2_flag = false;
+	map_config.night_flag = false;
+
+	map_config.console = false;
+	map_config.enable_spy = false;
+	map_config.enable_grf = false;
+}
+
+/**
+ * Finalize default configurations
+ **/
+static void map_inter_config_final(void) {
+	StringBuf_Free(map_config.map_server_ip);
+	StringBuf_Free(map_config.map_server_id);
+	StringBuf_Free(map_config.map_server_pw);
+	StringBuf_Free(map_config.map_server_db);
+	StringBuf_Free(map_config.default_codepage);
+	StringBuf_Free(map_config.log_db_ip);
+	StringBuf_Free(map_config.log_db_id);
+	StringBuf_Free(map_config.log_db_pw);
+	StringBuf_Free(map_config.log_db_db);
+}
+
+/**
+ * Initialize default map-server tables
+ **/
+static void map_schema_init(void) {
+	mapserv_schema_config.db_use_sqldbs = false;
+
+	mapserv_schema_config.buyingstores_table      = StringBuf_FromStr("buyingstores");
+	mapserv_schema_config.buyingstore_items_table = StringBuf_FromStr("buyingstore_items");
+	mapserv_schema_config.item_db_table           = StringBuf_FromStr("item_db");
+	mapserv_schema_config.item_db2_table          = StringBuf_FromStr("item_db2");
+	mapserv_schema_config.item_db_re_table        = StringBuf_FromStr("item_db_re");
+	mapserv_schema_config.item_cash_db_table      = StringBuf_FromStr("item_cash_db");
+	mapserv_schema_config.item_cash_db2_table     = StringBuf_FromStr("item_cash_db2");
+	mapserv_schema_config.mapreg_table            = StringBuf_FromStr("mapreg");
+	mapserv_schema_config.market_table            = StringBuf_FromStr("market");
+	mapserv_schema_config.mob_db_table            = StringBuf_FromStr("mob_db");
+	mapserv_schema_config.mob_db_re_table         = StringBuf_FromStr("mob_db_re");
+	mapserv_schema_config.mob_db2_table           = StringBuf_FromStr("mob_db2");
+	mapserv_schema_config.mob_skill_db_table      = StringBuf_FromStr("mob_skill_db");
+	mapserv_schema_config.mob_skill_db_re_table   = StringBuf_FromStr("mob_skill_db_re");
+	mapserv_schema_config.mob_skill_db2_table     = StringBuf_FromStr("mob_skill_db2");
+	mapserv_schema_config.roulette_table		  = StringBuf_FromStr("db_roulette");
+	mapserv_schema_config.vendings_table          = StringBuf_FromStr("vendings");
+	mapserv_schema_config.vending_items_table     = StringBuf_FromStr("vending_items");
+}
+
+/**
+ * Finalize map-server tables
+ **/
+static void map_schema_final(void) {
+	StringBuf_Free(mapserv_schema_config.buyingstores_table);
+	StringBuf_Free(mapserv_schema_config.buyingstore_items_table);
+	StringBuf_Free(mapserv_schema_config.item_db_table);
+	StringBuf_Free(mapserv_schema_config.item_db2_table);
+	StringBuf_Free(mapserv_schema_config.item_db_re_table);
+	StringBuf_Free(mapserv_schema_config.item_cash_db_table);
+	StringBuf_Free(mapserv_schema_config.item_cash_db2_table);
+	StringBuf_Free(mapserv_schema_config.mapreg_table);
+	StringBuf_Free(mapserv_schema_config.market_table);
+	StringBuf_Free(mapserv_schema_config.mob_db_table);
+	StringBuf_Free(mapserv_schema_config.mob_db_re_table);
+	StringBuf_Free(mapserv_schema_config.mob_db2_table);
+	StringBuf_Free(mapserv_schema_config.mob_skill_db_table);
+	StringBuf_Free(mapserv_schema_config.mob_skill_db_re_table);
+	StringBuf_Free(mapserv_schema_config.mob_skill_db2_table);
+	StringBuf_Free(mapserv_schema_config.roulette_table);
+	StringBuf_Free(mapserv_schema_config.vendings_table);
+	StringBuf_Free(mapserv_schema_config.vending_items_table);
+}
+
+/**
+ * Initialize default map-server files
+ **/
+static void map_file_init(void) {
+	mapserv_file_config.group     = StringBuf_FromStr("conf/groups.conf");
+	mapserv_file_config.atcommand = StringBuf_FromStr("conf/atcommand_athena.conf");
+	mapserv_file_config.motd      = StringBuf_FromStr("conf/motd.txt");
+}
+
+/**
+ * Finalize map-server files
+ **/
+static void map_file_final(void) {
+	StringBuf_Free(mapserv_file_config.group);
+	StringBuf_Free(mapserv_file_config.atcommand);
+	StringBuf_Free(mapserv_file_config.motd);
+}
+
+/**
+ * Check all tables, check all fields are sitting
+ **/
+static bool map_check_tables(void) {
+	uint16 i;
+	// These tables must be there
+	const char* sqltable[] = {
+		mapserv_table(buyingstores_table),
+		mapserv_table(buyingstore_items_table),
+		mapserv_table(mapreg_table),
+		mapserv_table(market_table),
+		mapserv_table(roulette_table),
+		mapserv_table(vendings_table),
+		mapserv_table(vending_items_table),
+	};
+
+	ShowInfo("Start checking DB integrity\n");
+
+	for (i = 0; i < ARRAYLENGTH(sqltable); i++) {
+		if (SQL_ERROR == Sql_Query(mmysql_handle, "SELECT  * FROM `%s`;", sqltable[i])) {
+			Sql_ShowDebug(mmysql_handle);
+			return false;
+		}
+	}
+
+	// buyingstores
+	if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `id`, `account_id`, `char_id`, `sex`, `map`, `x`, `y`, "
+		"`title`, `limit`, `body_direction`, `head_direction`, `sit`, `autotrade` "
+		"FROM `%s`;", mapserv_table(buyingstores_table)) )
+	{
+		Sql_ShowDebug(mmysql_handle);
+		return false;
+	}
+
+	// buyingstore_items
+	if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `buyingstore_id`, `index`, `item_id`, `amount`, `price` "
+		"FROM `%s`;", mapserv_table(buyingstore_items_table)) )
+	{
+		Sql_ShowDebug(mmysql_handle);
+		return false;
+	}
+
+	// market
+	if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `name`, `nameid`, `price`, `amount`, `flag` "
+		"FROM `%s`;", mapserv_table(market_table)) )
+	{
+		Sql_ShowDebug(mmysql_handle);
+		return false;
+	}
+
+	// roulette
+	if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `index`, `level`, `item_id`, `amount`, `flag` "
+		"FROM `%s`;", mapserv_table(roulette_table)) )
+	{
+		Sql_ShowDebug(mmysql_handle);
+		return false;
+	}
+
+	// vendings
+	if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `id`, `account_id`, `char_id`, `sex`, `map`, `x`, `y`, "
+		"`title`, `body_direction`, `head_direction`, `sit`, `autotrade` "
+		"FROM `%s`;", mapserv_table(vendings_table)) )
+	{
+		Sql_ShowDebug(mmysql_handle);
+		return false;
+	}
+
+	// vending_items
+	if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `vending_id`, `index`, `cartinventory_id`, `amount`, `price` "
+		"FROM `%s`;", mapserv_table(vending_items_table)) )
+	{
+		Sql_ShowDebug(mmysql_handle);
+		return false;
+	}
+
+	// Depends on mapserv_schema_config.db_use_sqldbs
+	if (mapserv_schema_config.db_use_sqldbs) {
+		const char* sqltable2[] = {
+#ifdef RENEWAL
+			mapserv_table(item_db_re_table),
+#else
+			mapserv_table(item_db_table),
+#endif
+			mapserv_table(item_db2_table),
+
+			mapserv_table(item_cash_db_table),
+			mapserv_table(item_cash_db2_table),
+			
+#ifdef RENEWAL
+			mapserv_table(mob_db_re_table),
+#else
+			mapserv_table(mob_db_table),
+#endif
+			mapserv_table(mob_db2_table),
+
+#ifdef RENEWAL
+			mapserv_table(mob_skill_db_re_table),
+#else
+			mapserv_table(mob_skill_db_table),
+#endif
+			mapserv_table(mob_skill_db2_table),
+		};
+		for (i = 0; i < ARRAYLENGTH(sqltable2); i++) {
+			if (SQL_ERROR == Sql_Query(mmysql_handle, "SELECT  * FROM `%s`;", sqltable2[i])) {
+				Sql_ShowDebug(mmysql_handle);
+				return false;
+			}
+		}
+
+		// item tables
+		for (i = 0; i < 2; i++) {
+			if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `id`, `name_english`, `name_japanese`, `type`, `price_buy`, `price_sell`, "
+				"`weight`, "/*`attack`, */"`defense`, `range`, `slots`, `equip_jobs`, `equip_upper`, `equip_genders`, `equip_locations`, "
+				"`weapon_level`, `equip_level`, `refineable`, `view`, `script`, `equip_script`, `unequip_script` "
+				"FROM `%s`;", sqltable2[i]) )
+			{
+				Sql_ShowDebug(mmysql_handle);
+				return false;
+			}
+		}
+
+		// cash tables
+		for (i = 2; i < 4; i++) {
+			if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `tab`, `item_id`, `price` "
+				"FROM `%s`;", sqltable2[i]) )
+			{
+				Sql_ShowDebug(mmysql_handle);
+				return false;
+			}
+		}
+
+		// mob tables
+		for (i = 4; i < 6; i++) {
+			if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `ID`, `Sprite`, `kName`, `iName`, `LV`, `HP`, `SP`, `EXP`, `JEXP`, `Range1`, "
+				"`ATK1`, `ATK2`, `DEF`, `MDEF`, `STR`, `AGI`, `VIT`, `INT`, `DEX`, `LUK`, `Range2`, `Range3`, `Scale`, `Race`, `Element`, "
+				"`Mode`, `Speed`, `aDelay`, `aMotion`, `dMotion`, `MEXP`, `MVP1id`, `MVP1per`, `MVP2id`, `MVP2per`, `MVP3id`, `MVP3per`, "
+				"`Drop1id`, `Drop1per`, `Drop2id`, `Drop2per`, `Drop3id`, `Drop3per`, `Drop4id`, `Drop4per`, `Drop5id`, `Drop5per`, `Drop6id`, "
+				"`Drop6per`, `Drop7id`, `Drop7per`, `Drop8id`, `Drop8per`, `Drop9id`, `Drop9per`, `DropCardid`, `DropCardper` "
+				"FROM `%s`;", sqltable2[i]) )
+			{
+				Sql_ShowDebug(mmysql_handle);
+				return false;
+			}
+		}
+
+		// mob skill tables
+		for (i = 6; i < 8; i++) {
+			if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `MOB_ID`, `INFO`, `STATE`, `SKILL_ID`, `SKILL_LV`, `RATE`, `CASTTIME`, "
+				"`DELAY`, `CANCELABLE`, `TARGET`, `CONDITION`, `CONDITION_VALUE`, `VAL1`, `VAL2`, `VAL3`, `VAL4`, `VAL5`, "
+				"`EMOTION`, `CHAT` "
+				"FROM `%s`;", sqltable2[i]) )
+			{
+				Sql_ShowDebug(mmysql_handle);
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+int map_inter_config_read(char *cfgName)
 {
-	char line[1024],w1[1024],w2[1024];
+	char line[1024];
 	FILE *fp;
 
 	fp=fopen(cfgName,"r");
@@ -3886,90 +4165,38 @@ int inter_config_read(char *cfgName)
 	}
 	while(fgets(line, sizeof(line), fp))
 	{
+		char w1[32],w2[32];
 		if(line[0] == '/' && line[1] == '/')
 			continue;
-		if( sscanf(line,"%1023[^:]: %1023[^\r\n]",w1,w2) < 2 )
+		if( sscanf(line,"%31[^:]: %31[^\r\n]",w1,w2) < 2 )
 			continue;
 
-		if( strcmpi( w1, "buyingstore_db" ) == 0 )
-			strcpy( buyingstores_db, w2 );
-		else if( strcmpi( w1, "buyingstore_items_db" ) == 0 )
-			strcpy( buyingstore_items_db, w2 );
-		else if(strcmpi(w1,"item_db_db")==0)
-			strcpy(item_db_db,w2);
-		else if(strcmpi(w1,"item_db2_db")==0)
-			strcpy(item_db2_db,w2);
-		else if(strcmpi(w1,"item_db_re_db")==0)
-			strcpy(item_db_re_db,w2);
-		else if(strcmpi(w1,"mob_db_db")==0)
-			strcpy(mob_db_db,w2);
-		else if(strcmpi(w1,"mob_db_re_db")==0)
-			strcpy(mob_db_re_db,w2);
-		else if(strcmpi(w1,"mob_db2_db")==0)
-			strcpy(mob_db2_db,w2);
-		else if(strcmpi(w1,"mob_skill_db_db")==0)
-			strcpy(mob_skill_db_db,w2);
-		else if(strcmpi(w1,"mob_skill_db_re_db")==0)
-			strcpy(mob_skill_db_re_db,w2);
-		else if(strcmpi(w1,"mob_skill_db2_db")==0)
-			strcpy(mob_skill_db2_db,w2);
-		else if( strcmpi( w1, "item_cash_db_db" ) == 0 )
-			strcpy( item_cash_db_db, w2 );
-		else if( strcmpi( w1, "item_cash_db2_db" ) == 0 )
-			strcpy( item_cash_db2_db, w2 );
-		else if( strcmpi( w1, "vending_db" ) == 0 )
-			strcpy( vendings_db, w2 );
-		else if( strcmpi( w1, "vending_items_db" ) == 0 )
-			strcpy(vending_items_db, w2);
-		else if( strcmpi(w1, "db_roulette_table") == 0)
-			strcpy(db_roulette_table, w2);
-		else if (strcmpi(w1, "market_table") == 0)
-			strcpy(market_table, w2);
-		else
 		//Map Server SQL DB
-		if(strcmpi(w1,"map_server_ip")==0)
-			strcpy(map_server_ip, w2);
-		else
-		if(strcmpi(w1,"map_server_port")==0)
-			map_server_port=atoi(w2);
-		else
-		if(strcmpi(w1,"map_server_id")==0)
-			strcpy(map_server_id, w2);
-		else
-		if(strcmpi(w1,"map_server_pw")==0)
-			strcpy(map_server_pw, w2);
-		else
-		if(strcmpi(w1,"map_server_db")==0)
-			strcpy(map_server_db, w2);
-		else
-		if(strcmpi(w1,"default_codepage")==0)
-			strcpy(default_codepage, w2);
-		else
-		if(strcmpi(w1,"use_sql_db")==0) {
-			db_use_sqldbs = config_switch(w2);
-			ShowStatus ("Using SQL dbs: %s\n",w2);
-		} else
-		if(strcmpi(w1,"log_db_ip")==0)
-			strcpy(log_db_ip, w2);
-		else
-		if(strcmpi(w1,"log_db_id")==0)
-			strcpy(log_db_id, w2);
-		else
-		if(strcmpi(w1,"log_db_pw")==0)
-			strcpy(log_db_pw, w2);
-		else
-		if(strcmpi(w1,"log_db_port")==0)
-			log_db_port = atoi(w2);
-		else
-		if(strcmpi(w1,"log_db_db")==0)
-			strcpy(log_db_db, w2);
-		else
-		if( mapreg_config_read(w1,w2) )
-			continue;
+		else if(strcmpi(w1,"map_server_ip")==0)
+			StringBuf_PrintfClear(map_config.map_server_ip, w2);
+		else if(strcmpi(w1,"map_server_port")==0)
+			map_config.map_server_port = atoi(w2);
+		else if(strcmpi(w1,"map_server_id")==0)
+			StringBuf_PrintfClear(map_config.map_server_id, w2);
+		else if(strcmpi(w1,"map_server_pw")==0)
+			StringBuf_PrintfClear(map_config.map_server_pw, w2);
+		else if(strcmpi(w1,"map_server_db")==0)
+			StringBuf_PrintfClear(map_config.map_server_db, w2);
+		else if(strcmpi(w1,"default_codepage")==0)
+			StringBuf_PrintfClear(map_config.default_codepage, w2);
+		else if(strcmpi(w1,"log_db_ip")==0)
+			StringBuf_PrintfClear(map_config.log_db_ip, w2);
+		else if(strcmpi(w1,"log_db_id")==0)
+			StringBuf_PrintfClear(map_config.log_db_id, w2);
+		else if(strcmpi(w1,"log_db_pw")==0)
+			StringBuf_PrintfClear(map_config.log_db_pw, w2);
+		else if(strcmpi(w1,"log_db_port")==0)
+			map_config.log_db_port = atoi(w2);
+		else if(strcmpi(w1,"log_db_db")==0)
+			StringBuf_PrintfClear(map_config.log_db_db, w2);
 		//support the import command, just like any other config
-		else
-		if(strcmpi(w1,"import")==0)
-			inter_config_read(w2);
+		else if(strcmpi(w1,"import")==0)
+			map_inter_config_read(w2);
 	}
 	fclose(fp);
 
@@ -3986,11 +4213,11 @@ int map_sql_init(void)
 	qsmysql_handle = Sql_Malloc();
 
 	ShowInfo("Connecting to the Map DB Server....\n");
-	if( SQL_ERROR == Sql_Connect(mmysql_handle, map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db) ||
-		SQL_ERROR == Sql_Connect(qsmysql_handle, map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db) )
+	if( SQL_ERROR == Sql_Connect(mmysql_handle, map_server_id(), map_server_pw(), map_server_ip(), map_server_port(), map_server_db()) ||
+		SQL_ERROR == Sql_Connect(qsmysql_handle, map_server_id(), map_server_pw(), map_server_ip(), map_server_port(), map_server_db()) )
 	{
 		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-			map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db);
+			map_server_id(), map_server_pw(), map_server_ip(), map_server_port(), map_server_db());
 		Sql_ShowDebug(mmysql_handle);
 		Sql_Free(mmysql_handle);
 		Sql_ShowDebug(qsmysql_handle);
@@ -3999,12 +4226,19 @@ int map_sql_init(void)
 	}
 	ShowStatus("Connect success! (Map Server Connection)\n");
 
-	if( strlen(default_codepage) > 0 ) {
-		if ( SQL_ERROR == Sql_SetEncoding(mmysql_handle, default_codepage) )
+	if( map_server_codepage_len() > 0 ) {
+		if ( SQL_ERROR == Sql_SetEncoding(mmysql_handle, map_server_codepage()) )
 			Sql_ShowDebug(mmysql_handle);
-		if ( SQL_ERROR == Sql_SetEncoding(qsmysql_handle, default_codepage) )
+		if ( SQL_ERROR == Sql_SetEncoding(qsmysql_handle, map_server_codepage()) )
 			Sql_ShowDebug(qsmysql_handle);
 	}
+
+	if (map_config.check_tables && !map_check_tables()) {
+		ShowFatalError("map-server: A table is missing from the sql-server, please fix it, see (sql-files/main.sql or sql-files/logs.sql for structure) \n");
+		exit(EXIT_FAILURE);
+	}
+
+	ShowStatus("Map server connection: Database '"CL_WHITE"%s"CL_RESET"' at '"CL_WHITE"%s"CL_RESET"'\n", map_server_db(), map_server_ip());
 	return 0;
 }
 
@@ -4032,19 +4266,25 @@ int log_sql_init(void)
 	// log db connection
 	logmysql_handle = Sql_Malloc();
 
-	ShowInfo(""CL_WHITE"[SQL]"CL_RESET": Connecting to the Log Database "CL_WHITE"%s"CL_RESET" At "CL_WHITE"%s"CL_RESET"...\n",log_db_db,log_db_ip);
-	if ( SQL_ERROR == Sql_Connect(logmysql_handle, log_db_id, log_db_pw, log_db_ip, log_db_port, log_db_db) ){
+	ShowInfo(""CL_WHITE"[SQL]"CL_RESET": Connecting to the Log Database "CL_WHITE"%s"CL_RESET" At "CL_WHITE"%s"CL_RESET"...\n", log_db_db(), log_db_ip());
+	if ( SQL_ERROR == Sql_Connect(logmysql_handle, log_db_id(), log_db_pw(), log_db_ip(), log_db_port(), log_db_db()) ){
 		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-			log_db_id, log_db_pw, log_db_ip, log_db_port, log_db_db);
+			log_db_id(), log_db_pw(), log_db_ip(), log_db_port(), log_db_db());
 		Sql_ShowDebug(logmysql_handle);
 		Sql_Free(logmysql_handle);
 		exit(EXIT_FAILURE);
 	}
-	ShowStatus(""CL_WHITE"[SQL]"CL_RESET": Successfully '"CL_GREEN"connected"CL_RESET"' to Database '"CL_WHITE"%s"CL_RESET"'.\n", log_db_db);
 
-	if( strlen(default_codepage) > 0 )
-		if ( SQL_ERROR == Sql_SetEncoding(logmysql_handle, default_codepage) )
+	if( map_server_codepage_len() > 0 )
+		if ( SQL_ERROR == Sql_SetEncoding(logmysql_handle, map_server_codepage()) )
 			Sql_ShowDebug(logmysql_handle);
+
+	ShowStatus(""CL_WHITE"[SQL]"CL_RESET": Successfully '"CL_GREEN"connected"CL_RESET"' to Log Database '"CL_WHITE"%s"CL_RESET"'.\n", log_db_db());
+
+	if (!log_check_tables()) {
+		ShowFatalError("map-server (log): A table is missing from the sql-server, please fix it, see (sql-files/logs.sql for structure) \n");
+		exit(EXIT_FAILURE);
+	}
 #endif
 	return 0;
 }
@@ -4360,7 +4600,7 @@ void do_final(void)
 	}
 
 	mapindex_final();
-	if(enable_grf)
+	if(map_config.enable_grf)
 		grfio_final();
 
 	id_db->destroy(id_db, NULL);
@@ -4376,6 +4616,10 @@ void do_final(void)
 	ers_destroy(map_skill_damage_ers);
 #endif
 
+	map_inter_config_final();
+	map_schema_final();
+	map_file_final();
+	log_config_final();
 	map_sql_close();
 
 	ShowStatus("Finished.\n");
@@ -4554,7 +4798,6 @@ int do_init(int argc, char *argv[])
 	LOG_CONF_NAME="conf/log_athena.conf";
 	MAP_CONF_NAME = "conf/map_athena.conf";
 	BATTLE_CONF_FILENAME = "conf/battle_athena.conf";
-	ATCOMMAND_CONF_FILENAME = "conf/atcommand_athena.conf";
 	SCRIPT_CONF_NAME = "conf/script_athena.conf";
 	GRF_PATH_FILENAME = "conf/grf-files.txt";
 	safestrncpy(console_log_filepath, "./log/map-msg_log.log", sizeof(console_log_filepath));
@@ -4580,6 +4823,11 @@ int do_init(int argc, char *argv[])
 	cli_get_options(argc,argv);
 
 	rnd_init();
+	map_inter_config_init();
+	map_schema_init();
+	map_file_init();
+	log_config_init();
+
 	map_config_read(MAP_CONF_NAME);
 
 	// loads npcs
@@ -4608,8 +4856,10 @@ int do_init(int argc, char *argv[])
 
 	battle_config_read(BATTLE_CONF_FILENAME);
 	script_config_read(SCRIPT_CONF_NAME);
-	inter_config_read(INTER_CONF_NAME);
+
+	map_inter_config_read(INTER_CONF_NAME);
 	log_config_read(LOG_CONF_NAME);
+	log_config_read_done();
 
 	id_db = idb_alloc(DB_OPT_BASE);
 	pc_db = idb_alloc(DB_OPT_BASE);	//Added for reliable map_id2sd() use. [Skotlex]
@@ -4630,7 +4880,7 @@ int do_init(int argc, char *argv[])
 		log_sql_init();
 
 	mapindex_init();
-	if(enable_grf)
+	if(map_config.enable_grf)
 		grfio_init(GRF_PATH_FILENAME);
 
 	map_readallmaps();
@@ -4686,7 +4936,7 @@ int do_init(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 #endif
 
-	if( console ){ //start listening
+	if( map_config.console ){ //start listening
 		add_timer_func_list(parse_console_timer, "parse_console_timer");
 		add_timer_interval(gettick()+1000, parse_console_timer, 0, 0, 1000); //start in 1s each 1sec
 	}

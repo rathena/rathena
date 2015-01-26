@@ -54,6 +54,8 @@ bool loginlog_init(void);
  */
 bool loginlog_final(void);
 
+void loginlog_config_init(void);
+
 #ifdef	__cplusplus
 }
 #endif

@@ -127,9 +127,9 @@ int inter_party_tosql(struct party *p, int flag, int index)
 	if( flag & PS_BREAK )
 	{// Break the party
 		// we'll skip name-checking and just reset everyone with the same party id [celest]
-		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `party_id`='0' WHERE `party_id`='%d'", schema_config.char_db, party_id) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `party_id`='0' WHERE `party_id`='%d'", charserv_table(char_table), party_id) )
 			Sql_ShowDebug(sql_handle);
-		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `party_id`='%d'", schema_config.party_db, party_id) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `party_id`='%d'", charserv_table(party_table), party_id) )
 			Sql_ShowDebug(sql_handle);
 		//Remove from memory
 		idb_remove(party_db_, party_id);
@@ -141,7 +141,7 @@ int inter_party_tosql(struct party *p, int flag, int index)
 		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` "
 			"(`name`, `exp`, `item`, `leader_id`, `leader_char`) "
 			"VALUES ('%s', '%d', '%d', '%d', '%d')",
-			schema_config.party_db, esc_name, p->exp, p->item, p->member[index].account_id, p->member[index].char_id) )
+			charserv_table(party_table), esc_name, p->exp, p->item, p->member[index].account_id, p->member[index].char_id) )
 		{
 			Sql_ShowDebug(sql_handle);
 			return 0;
@@ -152,28 +152,28 @@ int inter_party_tosql(struct party *p, int flag, int index)
 	if( flag & PS_BASIC )
 	{// Update party info.
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `name`='%s', `exp`='%d', `item`='%d' WHERE `party_id`='%d'",
-			schema_config.party_db, esc_name, p->exp, p->item, party_id) )
+			charserv_table(party_table), esc_name, p->exp, p->item, party_id) )
 			Sql_ShowDebug(sql_handle);
 	}
 
 	if( flag & PS_LEADER )
 	{// Update leader
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s`  SET `leader_id`='%d', `leader_char`='%d' WHERE `party_id`='%d'",
-			schema_config.party_db, p->member[index].account_id, p->member[index].char_id, party_id) )
+			charserv_table(party_table), p->member[index].account_id, p->member[index].char_id, party_id) )
 			Sql_ShowDebug(sql_handle);
 	}
 
 	if( flag & PS_ADDMEMBER )
 	{// Add one party member.
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `party_id`='%d' WHERE `account_id`='%d' AND `char_id`='%d'",
-			schema_config.char_db, party_id, p->member[index].account_id, p->member[index].char_id) )
+			charserv_table(char_table), party_id, p->member[index].account_id, p->member[index].char_id) )
 			Sql_ShowDebug(sql_handle);
 	}
 
 	if( flag & PS_DELMEMBER )
 	{// Remove one party member.
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `party_id`='0' WHERE `party_id`='%d' AND `account_id`='%d' AND `char_id`='%d'",
-			schema_config.char_db, party_id, p->member[index].account_id, p->member[index].char_id) )
+			charserv_table(char_table), party_id, p->member[index].account_id, p->member[index].char_id) )
 			Sql_ShowDebug(sql_handle);
 	}
 
@@ -207,7 +207,7 @@ struct party_data *inter_party_fromsql(int party_id)
 	p = party_pt;
 	memset(p, 0, sizeof(struct party_data));
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `party_id`, `name`,`exp`,`item`, `leader_id`, `leader_char` FROM `%s` WHERE `party_id`='%d'", schema_config.party_db, party_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `party_id`, `name`,`exp`,`item`, `leader_id`, `leader_char` FROM `%s` WHERE `party_id`='%d'", charserv_table(party_table), party_id) )
 	{
 		Sql_ShowDebug(sql_handle);
 		return NULL;
@@ -225,7 +225,7 @@ struct party_data *inter_party_fromsql(int party_id)
 	Sql_FreeResult(sql_handle);
 
 	// Load members
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`char_id`,`name`,`base_level`,`last_map`,`online`,`class` FROM `%s` WHERE `party_id`='%d'", schema_config.char_db, party_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`char_id`,`name`,`base_level`,`last_map`,`online`,`class` FROM `%s` WHERE `party_id`='%d'", charserv_table(char_table), party_id) )
 	{
 		Sql_ShowDebug(sql_handle);
 		return NULL;
@@ -289,7 +289,7 @@ struct party_data* search_partyname(char* str)
 	struct party_data* p = NULL;
 
 	Sql_EscapeStringLen(sql_handle, esc_name, str, safestrnlen(str, NAME_LENGTH));
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `party_id` FROM `%s` WHERE `name`='%s'", schema_config.party_db, esc_name) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `party_id` FROM `%s` WHERE `name`='%s'", charserv_table(party_table), esc_name) )
 		Sql_ShowDebug(sql_handle);
 	else if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
 	{
@@ -304,7 +304,7 @@ struct party_data* search_partyname(char* str)
 // Returns whether this party can keep having exp share or not.
 int party_check_exp_share(struct party_data *p)
 {
-	return (p->party.count < 2 || p->max_lv - p->min_lv <= party_share_level);
+	return (p->party.count < 2 || p->max_lv - p->min_lv <= inter_config.party_share_level);
 }
 
 // Is there any member in the party?
@@ -594,7 +594,7 @@ int mapif_parse_PartyLeave(int fd, int party_id, uint32 account_id, uint32 char_
 	p = inter_party_fromsql(party_id);
 	if( p == NULL )
 	{// Party does not exists?
-		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `party_id`='0' WHERE `party_id`='%d'", schema_config.char_db, party_id) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `party_id`='0' WHERE `party_id`='%d'", charserv_table(char_table), party_id) )
 			Sql_ShowDebug(sql_handle);
 		return 0;
 	}
@@ -748,7 +748,7 @@ int mapif_parse_PartyShareLevel(int fd,unsigned int share_lvl)
 	struct party_data *p;
 	DBIterator* iter = db_iterator(party_db_);
 
-	party_share_level = share_lvl;
+	inter_config.party_share_level = share_lvl;
 
 	for(p = (struct party_data *)dbi_first(iter); dbi_exists(iter); p = (struct party_data *)dbi_next(iter)) { //Update online parties
 		if(p->party.count > 1)
@@ -802,7 +802,7 @@ int inter_party_CharOnline(uint32 char_id, int party_id)
 	{// Get party_id from the database
 		char* data;
 
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT party_id FROM `%s` WHERE char_id='%d'", schema_config.char_db, char_id) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT party_id FROM `%s` WHERE char_id='%d'", charserv_table(char_table), char_id) )
 		{
 			Sql_ShowDebug(sql_handle);
 			return 0;
@@ -848,7 +848,7 @@ int inter_party_CharOffline(uint32 char_id, int party_id) {
 	{// Get guild_id from the database
 		char* data;
 
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT party_id FROM `%s` WHERE char_id='%d'", schema_config.char_db, char_id) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT party_id FROM `%s` WHERE char_id='%d'", charserv_table(char_table), char_id) )
 		{
 			Sql_ShowDebug(sql_handle);
 			return 0;

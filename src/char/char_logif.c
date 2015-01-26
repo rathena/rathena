@@ -445,7 +445,7 @@ int chlogif_parse_ackchangesex(int fd, struct char_session_data* sd)
 
 			// get characters
 			stmt = SqlStmt_Malloc(sql_handle);
-			if (SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `char_id`, `class`, `guild_id` FROM `%s` WHERE `account_id` = '%d'", schema_config.char_db, acc) || SqlStmt_Execute(stmt)) {
+			if (SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `char_id`, `class`, `guild_id` FROM `%s` WHERE `account_id` = '%d'", charserv_table(char_table), acc) || SqlStmt_Execute(stmt)) {
 				SqlStmt_ShowDebug(stmt);
 				SqlStmt_Free(stmt);
 			}

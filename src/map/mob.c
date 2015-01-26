@@ -4017,11 +4017,12 @@ static int mob_read_sqldb(void)
 {
 	const char* mob_db_name[] = {
 #ifndef RENEWAL
-		mob_db_db,
+		mapserv_table(mob_db_table),
 #else
-		mob_db_re_db,
+		mapserv_table(mob_db_re_table),
 #endif
-		mob_db2_db };
+		mapserv_table(mob_db2_table)
+	};
 	int fi;
 
 	for( fi = 0; fi < ARRAYLENGTH(mob_db_name); ++fi ) {
@@ -4531,11 +4532,12 @@ static int mob_read_sqlskilldb(void)
 {
 	const char* mob_skill_db_name[] = {
 #ifndef RENEWAL
-		mob_skill_db_db,
+		mapserv_table(mob_skill_db_table),
 #else
-		mob_skill_db_re_db,
+		mapserv_table(mob_skill_db_re_table),
 #endif
-		mob_skill_db2_db };
+		mapserv_table(mob_skill_db2_table)
+	};
 	int fi;
 
 	if( battle_config.mob_skill_rate == 0 ) {
@@ -4939,7 +4941,7 @@ static void mob_load(void)
 			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
 		}
 		
-		if (db_use_sqldbs && i==0) //only read once for sql
+		if (mapserv_schema_config.db_use_sqldbs && i==0) //only read once for sql
 		{
 			mob_read_sqldb();
 			mob_read_sqlskilldb();

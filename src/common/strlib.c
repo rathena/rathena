@@ -1070,16 +1070,35 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 /// Allocates a StringBuf
 StringBuf* StringBuf_Malloc()
 {
+	return StringBuf_MallocInitial(1024);
+}
+
+StringBuf* StringBuf_MallocInitial(unsigned int initial)
+{
 	StringBuf* self;
 	CREATE(self, StringBuf, 1);
-	StringBuf_Init(self);
+	StringBuf_InitialInit(self, initial);
+
+	return self;
+}
+
+StringBuf* StringBuf_FromStr(const char* str)
+{
+	StringBuf* self = StringBuf_MallocInitial((unsigned int)strlen(str)+1);
+	StringBuf_AppendStr(self, str);
 	return self;
 }
 
 /// Initializes a previously allocated StringBuf
 void StringBuf_Init(StringBuf* self)
 {
-	self->max_ = 1024;
+	StringBuf_InitialInit(self, 1024);
+}
+
+void StringBuf_InitialInit(StringBuf* self, unsigned int initial)
+{
+	self->max_ = initial;
+	self->initial_ = initial;
 	self->ptr_ = self->buf_ = (char*)aMalloc(self->max_ + 1);
 }
 
@@ -1093,6 +1112,18 @@ int StringBuf_Printf(StringBuf* self, const char* fmt, ...)
 	len = StringBuf_Vprintf(self, fmt, ap);
 	va_end(ap);
 
+	return len;
+}
+
+int StringBuf_PrintfClear(StringBuf* self, const char* fmt, ...) {
+	int len;
+	va_list ap;
+
+	self->ptr_ = self->buf_;
+
+	va_start(ap, fmt);
+	len = StringBuf_Vprintf(self, fmt, ap);
+	va_end(ap);
 	return len;
 }
 
@@ -1150,7 +1181,7 @@ int StringBuf_AppendStr(StringBuf* self, const char* str)
 	if( needed >= available )
 	{// not enough space, expand the buffer (minimum expansion = 1024)
 		int off = (int)(self->ptr_ - self->buf_);
-		self->max_ += max(needed, 1024);
+		self->max_ += max((unsigned int)needed, self->initial_);
 		self->buf_ = (char*)aRealloc(self->buf_, self->max_ + 1);
 		self->ptr_ = self->buf_ + off;
 	}

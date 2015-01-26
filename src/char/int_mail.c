@@ -31,7 +31,7 @@ static int mail_fromsql(uint32 char_id, struct mail_data* md)
 
 	// I keep the `status` < 3 just in case someone forget to apply the sqlfix
 	StringBuf_Printf(&buf, " FROM `%s` WHERE `dest_id`='%d' AND `status` < 3 ORDER BY `id` LIMIT %d",
-		schema_config.mail_db, char_id, MAIL_MAX_INBOX + 1);
+		charserv_table(mail_table), char_id, MAIL_MAX_INBOX + 1);
 
 	if( SQL_ERROR == Sql_Query(sql_handle, StringBuf_Value(&buf)) )
 		Sql_ShowDebug(sql_handle);
@@ -82,7 +82,7 @@ static int mail_fromsql(uint32 char_id, struct mail_data* md)
 		msg = &md->msg[i];
 		if( msg->status == MAIL_NEW )
 		{
-			if ( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `status` = '%d' WHERE `id` = '%d'", schema_config.mail_db, MAIL_UNREAD, msg->id) )
+			if ( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `status` = '%d' WHERE `id` = '%d'", charserv_table(mail_table), MAIL_UNREAD, msg->id) )
 				Sql_ShowDebug(sql_handle);
 
 			msg->status = MAIL_UNREAD;
@@ -106,7 +106,7 @@ int mail_savemessage(struct mail_message* msg)
 
 	// build message save query
 	StringBuf_Init(&buf);
-	StringBuf_Printf(&buf, "INSERT INTO `%s` (`send_name`, `send_id`, `dest_name`, `dest_id`, `title`, `message`, `time`, `status`, `zeny`, `amount`, `nameid`, `refine`, `attribute`, `identify`, `unique_id`, `bound`", schema_config.mail_db);
+	StringBuf_Printf(&buf, "INSERT INTO `%s` (`send_name`, `send_id`, `dest_name`, `dest_id`, `title`, `message`, `time`, `status`, `zeny`, `amount`, `nameid`, `refine`, `attribute`, `identify`, `unique_id`, `bound`", charserv_table(mail_table));
 	for (j = 0; j < MAX_SLOTS; j++)
 		StringBuf_Printf(&buf, ", `card%d`", j);
 	StringBuf_Printf(&buf, ") VALUES (?, '%d', ?, '%d', ?, ?, '%lu', '%d', '%d', '%d', '%hu', '%d', '%d', '%d', '%"PRIu64"', '%d'",
@@ -147,7 +147,7 @@ static bool mail_loadmessage(int mail_id, struct mail_message* msg)
 		"`zeny`,`amount`,`nameid`,`refine`,`attribute`,`identify`,`unique_id`,`bound`");
 	for( j = 0; j < MAX_SLOTS; j++ )
 		StringBuf_Printf(&buf, ",`card%d`", j);
-	StringBuf_Printf(&buf, " FROM `%s` WHERE `id` = '%d'", schema_config.mail_db, mail_id);
+	StringBuf_Printf(&buf, " FROM `%s` WHERE `id` = '%d'", charserv_table(mail_table), mail_id);
 
 	if( SQL_ERROR == Sql_Query(sql_handle, StringBuf_Value(&buf))
 	||  SQL_SUCCESS != Sql_NextRow(sql_handle) )
@@ -222,7 +222,7 @@ static void mapif_parse_Mail_requestinbox(int fd)
 static void mapif_parse_Mail_read(int fd)
 {
 	int mail_id = RFIFOL(fd,2);
-	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `status` = '%d' WHERE `id` = '%d'", schema_config.mail_db, MAIL_READ, mail_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `status` = '%d' WHERE `id` = '%d'", charserv_table(mail_table), MAIL_READ, mail_id) )
 		Sql_ShowDebug(sql_handle);
 }
 
@@ -235,7 +235,7 @@ static bool mail_DeleteAttach(int mail_id)
 	int i;
 
 	StringBuf_Init(&buf);
-	StringBuf_Printf(&buf, "UPDATE `%s` SET `zeny` = '0', `nameid` = '0', `amount` = '0', `refine` = '0', `attribute` = '0', `identify` = '0'", schema_config.mail_db);
+	StringBuf_Printf(&buf, "UPDATE `%s` SET `zeny` = '0', `nameid` = '0', `amount` = '0', `refine` = '0', `attribute` = '0', `identify` = '0'", charserv_table(mail_table));
 	for (i = 0; i < MAX_SLOTS; i++)
 		StringBuf_Printf(&buf, ", `card%d` = '0'", i);
 	StringBuf_Printf(&buf, " WHERE `id` = '%d'", mail_id);
@@ -291,7 +291,7 @@ static void mapif_parse_Mail_getattach(int fd)
 static void mapif_Mail_delete(int fd, uint32 char_id, int mail_id)
 {
 	bool failed = false;
-	if ( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", schema_config.mail_db, mail_id) )
+	if ( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", charserv_table(mail_table), mail_id) )
 	{
 		Sql_ShowDebug(sql_handle);
 		failed = true;
@@ -340,7 +340,7 @@ static void mapif_Mail_return(int fd, uint32 char_id, int mail_id)
 	{
 		if( msg.dest_id != char_id)
 			return;
-		else if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", schema_config.mail_db, mail_id) )
+		else if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", charserv_table(mail_table), mail_id) )
 			Sql_ShowDebug(sql_handle);
 		else
 		{
@@ -405,7 +405,7 @@ static void mapif_parse_Mail_send(int fd)
 
 	// Try to find the Dest Char by Name
 	Sql_EscapeStringLen(sql_handle, esc_name, msg.dest_name, strnlen(msg.dest_name, NAME_LENGTH));
-	if ( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`, `char_id` FROM `%s` WHERE `name` = '%s'", schema_config.char_db, esc_name) )
+	if ( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`, `char_id` FROM `%s` WHERE `name` = '%s'", charserv_table(char_table), esc_name) )
 		Sql_ShowDebug(sql_handle);
 	else
 	if ( SQL_SUCCESS == Sql_NextRow(sql_handle) )

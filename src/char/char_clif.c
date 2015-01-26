@@ -69,8 +69,8 @@ int chclif_parse_moveCharSlot( int fd, struct char_session_data* sd){
 		if( charserv_config.charmove_config.char_movetoused ){ // TODO: check if the target is in deletion process
 			// Admin is friendly and uses triangle exchange
 			if( SQL_ERROR == Sql_QueryStr(sql_handle, "START TRANSACTION")
-				|| SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `char_num`='%d' WHERE `char_id` = '%d'",schema_config.char_db, to, sd->found_char[from] )
-				|| SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `char_num`='%d' WHERE `char_id` = '%d'", schema_config.char_db, from, sd->found_char[to] )
+				|| SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `char_num`='%d' WHERE `char_id` = '%d'",charserv_table(char_table), to, sd->found_char[from] )
+				|| SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `char_num`='%d' WHERE `char_id` = '%d'", charserv_table(char_table), from, sd->found_char[to] )
 				|| SQL_ERROR == Sql_QueryStr(sql_handle, "COMMIT")
 				){
 				chclif_moveCharSlotReply( fd, sd, from, 1 );
@@ -83,7 +83,7 @@ int chclif_parse_moveCharSlot( int fd, struct char_session_data* sd){
 			chclif_moveCharSlotReply( fd, sd, from, 1 );
 			return 1;
 		}
-	}else if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `char_num`='%d' WHERE `char_id`='%d'", schema_config.char_db, to, sd->found_char[from] ) ){
+	}else if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `char_num`='%d' WHERE `char_id`='%d'", charserv_table(char_table), to, sd->found_char[from] ) ){
 		Sql_ShowDebug(sql_handle);
 		chclif_moveCharSlotReply( fd, sd, from, 1 );
 		return 1;
@@ -91,7 +91,7 @@ int chclif_parse_moveCharSlot( int fd, struct char_session_data* sd){
 
 	if( (charserv_config.charmove_config.char_moves_unlimited)==0 ){
 		sd->char_moves[from]--;
-		Sql_Query(sql_handle, "UPDATE `%s` SET `moves`='%d' WHERE `char_id`='%d'", schema_config.char_db, sd->char_moves[from], sd->found_char[from] );
+		Sql_Query(sql_handle, "UPDATE `%s` SET `moves`='%d' WHERE `char_id`='%d'", charserv_table(char_table), sd->char_moves[from], sd->found_char[from] );
 	}
 
 	// We successfully moved the char - time to notify the client
@@ -467,7 +467,7 @@ int chclif_parse_char_delete2_req(int fd, struct char_session_data* sd) {
 			return 1;
 		}
 
-		if( SQL_SUCCESS != Sql_Query(sql_handle, "SELECT `delete_date` FROM `%s` WHERE `char_id`='%d'", schema_config.char_db, char_id) || SQL_SUCCESS != Sql_NextRow(sql_handle) )
+		if( SQL_SUCCESS != Sql_Query(sql_handle, "SELECT `delete_date` FROM `%s` WHERE `char_id`='%d'", charserv_table(char_table), char_id) || SQL_SUCCESS != Sql_NextRow(sql_handle) )
 		{
 			Sql_ShowDebug(sql_handle);
 			chclif_char_delete2_ack(fd, char_id, 3, 0);
@@ -500,7 +500,7 @@ int chclif_parse_char_delete2_req(int fd, struct char_session_data* sd) {
 		// success
 		delete_date = time(NULL)+(charserv_config.char_config.char_del_delay);
 
-		if( SQL_SUCCESS != Sql_Query(sql_handle, "UPDATE `%s` SET `delete_date`='%lu' WHERE `char_id`='%d'", schema_config.char_db, (unsigned long)delete_date, char_id) )
+		if( SQL_SUCCESS != Sql_Query(sql_handle, "UPDATE `%s` SET `delete_date`='%lu' WHERE `char_id`='%d'", charserv_table(char_table), (unsigned long)delete_date, char_id) )
 		{
 			Sql_ShowDebug(sql_handle);
 			chclif_char_delete2_ack(fd, char_id, 3, 0);
@@ -545,7 +545,7 @@ int chclif_parse_char_delete2_accept(int fd, struct char_session_data* sd) {
 			return 1;
 		}
 
-		if( SQL_SUCCESS != Sql_Query(sql_handle, "SELECT `base_level`,`delete_date` FROM `%s` WHERE `char_id`='%d'", schema_config.char_db, char_id) || SQL_SUCCESS != Sql_NextRow(sql_handle) )
+		if( SQL_SUCCESS != Sql_Query(sql_handle, "SELECT `base_level`,`delete_date` FROM `%s` WHERE `char_id`='%d'", charserv_table(char_table), char_id) || SQL_SUCCESS != Sql_NextRow(sql_handle) )
 		{// data error
 			Sql_ShowDebug(sql_handle);
 			chclif_char_delete2_accept_ack(fd, char_id, 3);
@@ -611,7 +611,7 @@ int chclif_parse_char_delete2_cancel(int fd, struct char_session_data* sd) {
 	// there is no need to check, whether or not the character was
 	// queued for deletion, as the client prints an error message by
 	// itself, if it was not the case (@see char_delete2_cancel_ack)
-	if( SQL_SUCCESS != Sql_Query(sql_handle, "UPDATE `%s` SET `delete_date`='0' WHERE `char_id`='%d'", schema_config.char_db, char_id) )
+	if( SQL_SUCCESS != Sql_Query(sql_handle, "UPDATE `%s` SET `delete_date`='0' WHERE `char_id`='%d'", charserv_table(char_table), char_id) )
 	{
 		Sql_ShowDebug(sql_handle);
 		chclif_char_delete2_cancel_ack(fd, char_id, 2);
@@ -759,7 +759,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 		int slot = RFIFOB(fd,2);
 		RFIFOSKIP(fd,3);
 
-		if ( SQL_SUCCESS != Sql_Query(sql_handle, "SELECT `char_id` FROM `%s` WHERE `account_id`='%d' AND `char_num`='%d'", schema_config.char_db, sd->account_id, slot)
+		if ( SQL_SUCCESS != Sql_Query(sql_handle, "SELECT `char_id` FROM `%s` WHERE `account_id`='%d' AND `char_num`='%d'", charserv_table(char_table), sd->account_id, slot)
 		  || SQL_SUCCESS != Sql_NextRow(sql_handle)
 		  || SQL_SUCCESS != Sql_GetData(sql_handle, 0, &data, NULL) )
 		{	//Not found?? May be forged packet.
@@ -803,7 +803,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 
 			Sql_EscapeStringLen(sql_handle, esc_name, char_dat.name, strnlen(char_dat.name, NAME_LENGTH));
 			if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s`(`time`, `account_id`,`char_num`,`name`) VALUES (NOW(), '%d', '%d', '%s')",
-				schema_config.charlog_db, sd->account_id, slot, esc_name) )
+				charserv_table(charlog_table), sd->account_id, slot, esc_name) )
 				Sql_ShowDebug(sql_handle);
 		}
 		ShowInfo("Selected char: (Account %d: %d - %s)\n", sd->account_id, slot, char_dat.name);
@@ -1104,7 +1104,7 @@ void chclif_block_character( int fd, struct char_session_data* sd){
 			else {
 				WFIFOL(fd, 4+j*24) = 0;
 				sd->unban_time[i] = 0;
-				if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `unban_time`='0' WHERE `char_id`='%d' LIMIT 1", schema_config.char_db, sd->found_char[i]) )
+				if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `unban_time`='0' WHERE `char_id`='%d' LIMIT 1", charserv_table(char_table), sd->found_char[i]) )
 					Sql_ShowDebug(sql_handle);
 			}
 			len+=24;

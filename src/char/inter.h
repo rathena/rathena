@@ -20,7 +20,19 @@ int inter_log(char *fmt,...);
 
 #define inter_cfgName "conf/inter_athena.conf"
 
-extern unsigned int party_share_level;
+struct Inter_Config {
+	unsigned short char_server_port;  ///< char-server port
+	StringBuf *char_server_ip;        ///< char-server hostname/ip
+	StringBuf *char_server_id;        ///< char-server username
+	StringBuf *char_server_pw;        ///< char-server password
+	StringBuf *char_server_db;        ///< char-server database
+	StringBuf *default_codepage;      ///< Codepage [irmin]
+
+	StringBuf testbuf;
+
+	unsigned short party_share_level; ///< Party share level
+};
+extern struct Inter_Config inter_config; /// Inter/char-server configuration with database
 
 extern Sql* sql_handle;
 extern Sql* lsql_handle;

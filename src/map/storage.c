@@ -373,7 +373,7 @@ void storage_storageclose(struct map_session_data* sd)
 
 	clif_storageclose(sd);
 
-	if( save_settings&4 )
+	if( map_config.save_settings&CHARSAVE_STORAGE )
 		chrif_save(sd,0); //Invokes the storage saving as well.
 
 	sd->state.storage_flag = 0;
@@ -391,7 +391,7 @@ void storage_storage_quit(struct map_session_data* sd, int flag)
 {
 	nullpo_retv(sd);
 
-	if (save_settings&4)
+	if (map_config.save_settings&CHARSAVE_STORAGE)
 		chrif_save(sd, flag); //Invokes the storage saving as well.
 
 	sd->state.storage_flag = 0;
@@ -828,7 +828,7 @@ void gstorage_storageclose(struct map_session_data* sd)
 
 	clif_storageclose(sd);
 	if (stor->opened) {
-		if (save_settings&CHARSAVE_STORAGE)
+		if (map_config.save_settings&CHARSAVE_STORAGE)
 			chrif_save(sd, 0); //This one also saves the storage. [Skotlex]
 		else
 			gstorage_storagesave(sd->status.account_id, sd->status.guild_id,0);
@@ -856,14 +856,14 @@ void gstorage_storage_quit(struct map_session_data* sd, int flag)
 		stor->opened = 0;
 		clif_storageclose(sd);
 
-		if (save_settings&CHARSAVE_STORAGE)
+		if (map_config.save_settings&CHARSAVE_STORAGE)
 			chrif_save(sd,0);
 
 		return;
 	}
 
 	if (stor->opened) {
-		if (save_settings&CHARSAVE_STORAGE)
+		if (map_config.save_settings&CHARSAVE_STORAGE)
 			chrif_save(sd,0);
 		else
 			gstorage_storagesave(sd->status.account_id,sd->status.guild_id,1);

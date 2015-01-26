@@ -137,12 +137,17 @@ struct StringBuf
 	char *buf_;
 	char *ptr_;
 	unsigned int max_;
+	unsigned int initial_;
 };
 typedef struct StringBuf StringBuf;
 
 StringBuf* StringBuf_Malloc(void);
+StringBuf* StringBuf_MallocInitial(unsigned int initial);
+StringBuf* StringBuf_FromStr(const char* str);
+void StringBuf_InitialInit(StringBuf* self, unsigned int initial);
 void StringBuf_Init(StringBuf* self);
 int StringBuf_Printf(StringBuf* self, const char* fmt, ...);
+int StringBuf_PrintfClear(StringBuf* self, const char* fmt, ...);
 int StringBuf_Vprintf(StringBuf* self, const char* fmt, va_list args);
 int StringBuf_Append(StringBuf* self, const StringBuf *sbuf);
 int StringBuf_AppendStr(StringBuf* self, const char* str);

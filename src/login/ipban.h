@@ -47,4 +47,6 @@ void ipban_init(void);
  */
 void ipban_final(void);
 
+void ipban_config_init(void);
+
 #endif // __IPBAN_H_INCLUDED__

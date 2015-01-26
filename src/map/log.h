@@ -12,6 +12,7 @@ struct item;
 
 typedef enum e_log_chat_type
 {
+	LOG_CHAT_NONE        = 0,
 	LOG_CHAT_GLOBAL      = 0x01,
 	LOG_CHAT_WHISPER     = 0x02,
 	LOG_CHAT_PARTY       = 0x04,
@@ -80,19 +81,50 @@ void log_mvpdrop(struct map_session_data* sd, int monster_id, unsigned int* log_
 
 int log_config_read(const char* cfgName);
 
-extern struct Log_Config
-{
-	e_log_pick_type enable_logs;
-	int filter;
-	bool sql_logs;
-	bool log_chat_woe_disable;
-	bool cash;
-	int rare_items_log,refine_items_log,price_items_log,amount_items_log; //for filter
-	int branch, mvpdrop, zeny, commands, npc, chat;
-	unsigned feeding : 2;
-	char log_branch[64], log_pick[64], log_zeny[64], log_mvpdrop[64], log_gm[64], log_npc[64], log_chat[64], log_cash[64];
-	char log_feeding[64];
-} log_config;
+/// Log Config structure
+struct Log_Config {
+	uint32 enable_logs;           ///< Values @see e_log_pick_type
+	uint16 filter;                ///< Values @see e_log_filter
+	bool sql_logs;                ///< Enable SQL log instead of file log
+	bool log_chat_woe_disable;    ///< Disable chat logging on WOE
+
+	bool cash;                    ///< Log cash usage
+	bool branch;                  ///< Log item branch usage
+	bool mvpdrop;                 ///< Log MVP Drop
+	uint32 zeny;                  ///< Log Zeny usage if zeny spent is more than 'zeny'
+	bool commands;                ///< Log Comman usage
+	bool npc;                     ///< Log NPC 'logmes' command
+	uint8 chat;                   ///< Log Chat @see e_log_chat_type
+	uint8 feeding;                ///< Log Feeding usage
+
+	// Filter
+	uint16 rare_items_log;	      ///< Log if droprate is less than 'rare_items_log'
+	uint8 refine_items_log;       ///< Log if refine value is more than 'refine_items_log'
+	uint32 price_items_log;       ///< Log if item buy price is more than 'price_items_log'
+	uint16 amount_items_log;      ///< Log if single item amount is more than 'amount_items_log'
+
+	StringBuf *log_path;          ///< Path to log file (Used if 'sql_logs' is no)
+	StringBuf *log_ext;	          ///< Log file extension (Used if 'sql_logs' is no)
+
+	struct s_log_schema_config {
+		StringBuf *branch_table;  ///< Branch log table/file with path
+		StringBuf *cash_table;	  ///< Cash log table/file with path
+		StringBuf *chat_table;	  ///< Chat log table/file with path
+		StringBuf *command_table; ///< Command log table/file with path
+		StringBuf *mvpdrop_table; ///< MVP Drop log table/file with path
+		StringBuf *npc_table;	  ///< NPC log table/file with path
+		StringBuf *pick_table;	  ///< Pick log table/file with path
+		StringBuf *zeny_table;	  ///< Zeny log table/file with path
+		StringBuf *feeding_table; ///< Feeding log table/file with path
+	} schema; ///< Log filepathes or tables
+};
+/// Log Config used values
+extern struct Log_Config log_config;
+
+void log_config_init(void);
+void log_config_final(void);
+void log_config_read_done(void);
+bool log_check_tables(void);
 
 #ifdef BETA_THREAD_TEST
 	struct {

@@ -598,7 +598,7 @@ int guild_invite(struct map_session_data *sd, struct map_session_data *tsd) {
 
 	if(tsd->status.guild_id>0 ||
 		tsd->guild_invite>0 ||
-		((agit_flag || agit2_flag) && map[tsd->bl.m].flag.gvg_castle))
+		((map_config.agit_flag || map_config.agit2_flag) && map[tsd->bl.m].flag.gvg_castle))
 	{	//Can't invite people inside castles. [Skotlex]
 		clif_guild_inviteack(sd,0);
 		return 0;
@@ -762,7 +762,7 @@ int guild_leave(struct map_session_data* sd, int guild_id, uint32 account_id, ui
 
 	if(sd->status.account_id!=account_id ||
 		sd->status.char_id!=char_id || sd->status.guild_id!=guild_id ||
-		((agit_flag || agit2_flag) && map[sd->bl.m].flag.gvg_castle))
+		((map_config.agit_flag || map_config.agit2_flag) && map[sd->bl.m].flag.gvg_castle))
 		return 0;
 
 	guild_trade_bound_cancel(sd);
@@ -794,7 +794,7 @@ int guild_expulsion(struct map_session_data* sd, int guild_id, uint32 account_id
 	//Can't leave inside guild castles.
 	if ((tsd = map_id2sd(account_id)) &&
 		tsd->status.char_id == char_id &&
-		((agit_flag || agit2_flag) && map[tsd->bl.m].flag.gvg_castle))
+		((map_config.agit_flag || map_config.agit2_flag) && map[tsd->bl.m].flag.gvg_castle))
 		return 0;
 
 	// find the member and perform expulsion
@@ -1327,7 +1327,7 @@ int guild_skillupack(int guild_id,uint16 skill_id,uint32 account_id) {
 void guild_guildaura_refresh(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv) {
 	struct skill_unit_group* group = NULL;
 	int type = status_skill2sc(skill_id);
-	if( !(battle_config.guild_aura&((agit_flag || agit2_flag)?2:1)) &&
+	if( !(battle_config.guild_aura&((map_config.agit_flag || map_config.agit2_flag)?2:1)) &&
 			!(battle_config.guild_aura&(map_flag_gvg2(sd->bl.m)?8:4)) )
 		return;
 	if( !skill_lv )
@@ -1395,7 +1395,7 @@ int guild_reqalliance(struct map_session_data *sd,struct map_session_data *tsd) 
 	struct guild *g[2];
 	int i;
 
-	if(agit_flag || agit2_flag) {	// Disable alliance creation during woe [Valaris]
+	if(map_config.agit_flag || map_config.agit2_flag) {	// Disable alliance creation during woe [Valaris]
 		clif_displaymessage(sd->fd,msg_txt(sd,676)); //"Alliances cannot be made during Guild Wars!"
 		return 0;
 	}	// end addition [Valaris]
@@ -1511,7 +1511,7 @@ int guild_reply_reqalliance(struct map_session_data *sd,uint32 account_id,int fl
 int guild_delalliance(struct map_session_data *sd,int guild_id,int flag) {
 	nullpo_ret(sd);
 
-	if(agit_flag || agit2_flag)	{	// Disable alliance breaking during woe [Valaris]
+	if(map_config.agit_flag || map_config.agit2_flag)	{	// Disable alliance breaking during woe [Valaris]
 		clif_displaymessage(sd->fd,msg_txt(sd,677)); //"Alliances cannot be broken during Guild Wars!"
 		return 0;
 	}	// end addition [Valaris]
@@ -1548,7 +1548,7 @@ int guild_opposition(struct map_session_data *sd,struct map_session_data *tsd) {
 				clif_guild_oppositionack(sd,2);
 				return 0;
 			}
-			if(agit_flag || agit2_flag) // Prevent the changing of alliances to oppositions during WoE.
+			if(map_config.agit_flag || map_config.agit2_flag) // Prevent the changing of alliances to oppositions during WoE.
 				return 0;
 			//Change alliance to opposition.
 			intif_guild_alliance( sd->status.guild_id,tsd->status.guild_id,
