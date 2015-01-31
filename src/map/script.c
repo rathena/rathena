@@ -8604,13 +8604,17 @@ BUILDIN_FUNC(skill)
 {
 	int id;
 	int level;
-	int flag = 1;
+	int flag = ADDSKILL_TEMP;
 	TBL_PC* sd;
 	struct script_data *data;
+	const char* command = script_getfuncname(st);
 
 	sd = script_rid2sd(st);
 	if( sd == NULL )
 		return 0;// no player attached, report source
+
+	if (strcmpi(command, "addtoskill") == 0)
+		flag = ADDSKILL_TEMP_ADDLEVEL;
 
 	data = script_getdata(st, 2);
 	get_val(st, data); // Convert into value in case of a variable
@@ -8618,39 +8622,7 @@ BUILDIN_FUNC(skill)
 	level = script_getnum(st,3);
 	if( script_hasdata(st,4) )
 		flag = script_getnum(st,4);
-	pc_skill(sd, id, level, flag);
-
-	return SCRIPT_CMD_SUCCESS;
-}
-
-/// Changes the level of a player skill.
-/// like skill, but <flag> defaults to 2
-///
-/// addtoskill <skill id>,<amount>,<flag>
-/// addtoskill <skill id>,<amount>
-/// addtoskill "<skill name>",<amount>,<flag>
-/// addtoskill "<skill name>",<amount>
-///
-/// @see skill
-BUILDIN_FUNC(addtoskill)
-{
-	int id;
-	int level;
-	int flag = 2;
-	TBL_PC* sd;
-	struct script_data *data;
-
-	sd = script_rid2sd(st);
-	if( sd == NULL )
-		return 0;// no player attached, report source
-
-	data = script_getdata(st, 2);
-	get_val(st, data); // Convert into value in case of a variable
-	id = ( data_isstring(data) ? skill_name2id(script_getstr(st,2)) : script_getnum(st,2) );
-	level = script_getnum(st,3);
-	if( script_hasdata(st,4) )
-		flag = script_getnum(st,4);
-	pc_skill(sd, id, level, flag);
+	pc_skill(sd, id, level, (enum e_addskill_type)flag);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -19376,7 +19348,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(autobonus2,"sii??"),
 	BUILDIN_DEF(autobonus3,"siiv?"),
 	BUILDIN_DEF(skill,"vi?"),
-	BUILDIN_DEF(addtoskill,"vi?"), // [Valaris]
+	BUILDIN_DEF2(skill,"addtoskill","vi?"), // [Valaris]
 	BUILDIN_DEF(guildskill,"vi"),
 	BUILDIN_DEF(getskilllv,"v"),
 	BUILDIN_DEF(getgdskilllv,"iv"),

@@ -71,6 +71,7 @@ void mercenary_set_calls(struct mercenary_data *md, int value);
 void mercenary_kills(struct mercenary_data *md);
 
 int mercenary_checkskill(struct mercenary_data *md, uint16 skill_id);
+short mercenary_skill_get_index(uint16 skill_id);
 
 /**
  * atcommand.c required

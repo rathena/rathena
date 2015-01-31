@@ -437,7 +437,7 @@ struct map_session_data {
 
 	short catch_target_class; // pet catching, stores a pet class to catch (short now) [zzo]
 
-	short spiritball, spiritball_old;
+	int8 spiritball, spiritball_old;
 	int spirit_timer[MAX_SPIRITBALL];
 	short talisman[ELE_POISON+1]; // There are actually 5 talisman Fire, Ice, Wind, Earth & Poison maybe because its color violet.
 	int talisman_timer[ELE_POISON+1][10];
@@ -656,6 +656,8 @@ enum weapon_type {
 	W_DOUBLE_DA, // dagger + axe
 	W_DOUBLE_SA, // sword + axe
 };
+
+#define WEAPON_TYPE_ALL ((1<<MAX_WEAPON_TYPE)-1)
 
 enum ammo_type {
 	A_ARROW = 1,
@@ -914,7 +916,7 @@ void pc_bonus2(struct map_session_data *sd, int type, int type2, int val);
 void pc_bonus3(struct map_session_data *sd, int type, int type2, int type3, int val);
 void pc_bonus4(struct map_session_data *sd, int type, int type2, int type3, int type4, int val);
 void pc_bonus5(struct map_session_data *sd, int type, int type2, int type3, int type4, int type5, int val);
-int pc_skill(struct map_session_data *sd, int id, int level, int flag);
+bool pc_skill(struct map_session_data *sd, uint16 skill_id, int level, enum e_addskill_type type);
 
 int pc_insert_card(struct map_session_data *sd,int idx_card,int idx_equip);
 
@@ -941,7 +943,7 @@ int pc_need_status_point(struct map_session_data *,int,int);
 int pc_maxparameterincrease(struct map_session_data*,int);
 bool pc_statusup(struct map_session_data*,int,int);
 int pc_statusup2(struct map_session_data*,int,int);
-int pc_skillup(struct map_session_data*,uint16 skill_id);
+void pc_skillup(struct map_session_data*,uint16 skill_id);
 int pc_allskillup(struct map_session_data*);
 int pc_resetlvl(struct map_session_data*,int type);
 int pc_resetstate(struct map_session_data*);
@@ -1026,12 +1028,12 @@ int pc_mapid2jobid(unsigned short class_, int sex);	// Skotlex
 const char * job_name(int class_);
 
 struct skill_tree_entry {
-	short id;
-	unsigned char max;
-	unsigned char joblv;
+	uint16 id;
+	uint8 max;
+	uint8 joblv;
 	struct {
-		short id;
-		unsigned char lv;
+		uint16 id;
+		uint8 lv;
 	} need[MAX_PC_SKILL_REQUIRE];
 }; // Celest
 extern struct skill_tree_entry skill_tree[CLASS_COUNT][MAX_SKILL_TREE];
@@ -1076,6 +1078,13 @@ enum e_additem_result {
     ADDITEM_OVERITEM = 4,
     ADDITEM_OVERAMOUNT,
     ADDITEM_STACKLIMIT = 7
+};
+
+enum e_addskill_type {
+	ADDSKILL_PERMANENT			= 0,	///< Permanent skill. Remove the skill if level is 0
+	ADDSKILL_TEMP				= 1,	///< Temporary skill. If player learned the skill and the given level is higher, level will be replaced and learned level will be palced in skill flag. `flag = learned + SKILL_FLAG_REPLACED_LV_0; learned_level = level;`
+	ADDSKILL_TEMP_ADDLEVEL		= 2,	///< Like PCSKILL_TEMP, except the level will be stacked. `learned_level += level`. The flag is used to store original learned level
+	ADDSKILL_PERMANENT_GRANTED	= 3,	///< Grant permanent skill, ignore skill tree and learned level
 };
 
 // timer for night.day
@@ -1133,6 +1142,8 @@ bool pc_is_same_equip_index(enum equip_index eqi, short *equip_index, short inde
 #define pc_is_taekwon_ranker(sd) (((sd)->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && (sd)->status.base_level >= battle_config.taekwon_ranker_min_lv && pc_famerank((sd)->status.char_id,MAPID_TAEKWON))
 
 int pc_autotrade_timer(int tid, unsigned int tick, int id, intptr_t data);
+
+void pc_validate_skill(struct map_session_data *sd);
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_class, int type);
