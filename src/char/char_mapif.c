@@ -1242,90 +1242,112 @@ int chmapif_parse_reqcharunban(int fd){
 	return 1;
 }
 
-/** [Cydh]
-* Get bonus_script data(s) from table to load
-* @param fd
-*/
+/**
+ * ZA 0x2b2d
+ * <cmd>.W <char_id>.L
+ * AZ 0x2b2f
+ * <cmd>.W <len>.W <cid>.L <count>.B { <bonus_script_data>.?B }
+ * Get bonus_script data(s) from table to load then send to player
+ * @param fd
+ * @author [Cydh]
+ **/
 int chmapif_bonus_script_get(int fd) {
 	if (RFIFOREST(fd) < 6)
 		return 0;
 	else {
-		int cid;
-		cid = RFIFOL(fd,2);
+		uint8 num_rows = 0;
+		uint32 cid = RFIFOL(fd,2);
+		struct bonus_script_data tmp_bsdata;
+		SqlStmt* stmt = SqlStmt_Malloc(sql_handle);
+
 		RFIFOSKIP(fd,6);
 
-		if (SQL_ERROR == Sql_Query(sql_handle,"SELECT `script`, `tick`, `flag`, `type`, `icon` FROM `%s` WHERE `char_id`='%d'",
-			schema_config.bonus_script_db,cid))
+		if (SQL_ERROR == SqlStmt_Prepare(stmt,
+			"SELECT `script`, `tick`, `flag`, `type`, `icon` FROM `%s` WHERE `char_id` = '%d' LIMIT %d",
+			schema_config.bonus_script_db, cid, MAX_PC_BONUS_SCRIPT) ||
+			SQL_ERROR == SqlStmt_Execute(stmt) ||
+			SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_STRING, &tmp_bsdata.script_str, sizeof(tmp_bsdata.script_str), NULL, NULL) ||
+			SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_UINT32, &tmp_bsdata.tick, 0, NULL, NULL) ||
+			SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_UINT16, &tmp_bsdata.flag, 0, NULL, NULL) ||
+			SQL_ERROR == SqlStmt_BindColumn(stmt, 3, SQLDT_UINT8,  &tmp_bsdata.type, 0, NULL, NULL) ||
+			SQL_ERROR == SqlStmt_BindColumn(stmt, 4, SQLDT_INT16,  &tmp_bsdata.icon, 0, NULL, NULL)
+			)
 		{
-			Sql_ShowDebug(sql_handle);
+			SqlStmt_ShowDebug(stmt);
+			SqlStmt_Free(stmt);
 			return 1;
 		}
-		if (Sql_NumRows(sql_handle) > 0) {
-			struct bonus_script_data bsdata;
-			int count;
-			char *data;
 
-			WFIFOHEAD(fd,10+50*sizeof(struct bonus_script_data));
-			WFIFOW(fd,0) = 0x2b2f;
-			WFIFOL(fd,4) = cid;
-			for (count = 0; count < MAX_PC_BONUS_SCRIPT && SQL_SUCCESS == Sql_NextRow(sql_handle); ++count) {
-				Sql_GetData(sql_handle,0,&data,NULL); memcpy(bsdata.script,data,strlen(data)+1);
-				Sql_GetData(sql_handle,1,&data,NULL); bsdata.tick = atoi(data);
-				Sql_GetData(sql_handle,2,&data,NULL); bsdata.flag = atoi(data);
-				Sql_GetData(sql_handle,3,&data,NULL); bsdata.type = atoi(data);
-				Sql_GetData(sql_handle,4,&data,NULL); bsdata.icon = atoi(data);
-				memcpy(WFIFOP(fd,10+count*sizeof(struct bonus_script_data)),&bsdata,sizeof(struct bonus_script_data));
-			}
-			if (count >= MAX_PC_BONUS_SCRIPT)
-				ShowWarning("Too many bonus_script for %d, some of them were not loaded.\n",cid);
-			if (count > 0) {
-				WFIFOW(fd,2) = 10 + count*sizeof(struct bonus_script_data);
-				WFIFOW(fd,8) = count;
-				WFIFOSET(fd,WFIFOW(fd,2));
+		if ((num_rows = (uint8)SqlStmt_NumRows(stmt)) > 0) {
+			uint8 i;
+			uint32 size = 9 + num_rows * sizeof(struct bonus_script_data);
 
-				//Clear the data once loaded.
-				if (SQL_ERROR == Sql_Query(sql_handle,"DELETE FROM `%s` WHERE `char_id`='%d'",schema_config.bonus_script_db,cid))
-					Sql_ShowDebug(sql_handle);
-				ShowInfo("Loaded %d bonus_script for char_id: %d\n",count,cid);
+			WFIFOHEAD(fd, size);
+			WFIFOW(fd, 0) = 0x2b2f;
+			WFIFOW(fd, 2) = size;
+			WFIFOL(fd, 4) = cid;
+			WFIFOB(fd, 8) = num_rows;
+
+			for (i = 0; i < num_rows && SQL_SUCCESS == SqlStmt_NextRow(stmt); i++) {
+				struct bonus_script_data bsdata;
+				memset(&bsdata, 0, sizeof(bsdata));
+				memset(bsdata.script_str, '\0', sizeof(bsdata.script_str));
+
+				safestrncpy(bsdata.script_str, tmp_bsdata.script_str, strlen(tmp_bsdata.script_str)+1);
+				bsdata.tick = tmp_bsdata.tick;
+				bsdata.flag = tmp_bsdata.flag;
+				bsdata.type = tmp_bsdata.type;
+				bsdata.icon = tmp_bsdata.icon;
+				memcpy(WFIFOP(fd, 9 + i * sizeof(struct bonus_script_data)), &bsdata, sizeof(struct bonus_script_data));
 			}
+
+			WFIFOSET(fd, size);
+
+			ShowInfo("Bonus Script loaded for CID=%d. Total: %d.\n", cid, i);
+
+			if (SQL_ERROR == SqlStmt_Prepare(stmt,"DELETE FROM `%s` WHERE `char_id`='%d'",schema_config.bonus_script_db,cid) ||
+				SQL_ERROR == SqlStmt_Execute(stmt))
+				SqlStmt_ShowDebug(stmt);
 		}
-		Sql_FreeResult(sql_handle);
+		SqlStmt_Free(stmt);
 	}
 	return 1;
 }
 
-/** [Cydh]
-* Save bonus_script data(s) to the table
-* @param fd
-*/
+/**
+ * ZA 0x2b2e
+ * <cmd>.W <len>.W <char_id>.L <count>.B { <bonus_script>.?B }
+ * Save bonus_script data(s) to the table
+ * @param fd
+ * @author [Cydh]
+ **/
 int chmapif_bonus_script_save(int fd) {
 	if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
 		return 0;
 	else {
-		int count, cid;
-
-		cid = RFIFOL(fd,4);
-		count = RFIFOW(fd,8);
+		uint32 cid = RFIFOL(fd,4);
+		uint8 count = RFIFOB(fd,8);
 
 		if (count > 0) {
-			struct bonus_script_data bs;
+			char esc_script[MAX_BONUS_SCRIPT_LENGTH*2];
+			struct bonus_script_data bsdata;
 			StringBuf buf;
-			int i;
-			char esc_script[MAX_BONUS_SCRIPT_LENGTH] = "";
+			uint8 i;
 
 			StringBuf_Init(&buf);
-			StringBuf_Printf(&buf,"INSERT INTO `%s` (`char_id`, `script`, `tick`, `flag`, `type`, `icon`) VALUES ",schema_config.bonus_script_db);
+			StringBuf_Printf(&buf, "INSERT INTO `%s` (`char_id`, `script`, `tick`, `flag`, `type`, `icon`) VALUES ", schema_config.bonus_script_db);
 			for (i = 0; i < count; ++i) {
-				memcpy(&bs,RFIFOP(fd,10+i*sizeof(struct bonus_script_data)),sizeof(struct bonus_script_data));
-				Sql_EscapeString(sql_handle,esc_script,bs.script);
+				memcpy(&bsdata, RFIFOP(fd, 9 + i*sizeof(struct bonus_script_data)), sizeof(struct bonus_script_data));
+				Sql_EscapeString(sql_handle, esc_script, bsdata.script_str);
 				if (i > 0)
 					StringBuf_AppendStr(&buf,", ");
-				StringBuf_Printf(&buf,"('%d','%s','%d','%d','%d','%d')",cid,esc_script,bs.tick,bs.flag,bs.type,bs.icon);
+				StringBuf_Printf(&buf, "('%d','%s','%d','%d','%d','%d')", cid, esc_script, bsdata.tick, bsdata.flag, bsdata.type, bsdata.icon);
 			}
 			if (SQL_ERROR == Sql_QueryStr(sql_handle,StringBuf_Value(&buf)))
 				Sql_ShowDebug(sql_handle);
+
+			ShowInfo("Bonus Script saved for CID=%d. Total: %d.\n", cid, count);
 			StringBuf_Destroy(&buf);
-			ShowInfo("Saved %d bonus_script for char_id: %d\n",count,cid);
 		}
 		RFIFOSKIP(fd,RFIFOW(fd,2));
 	}

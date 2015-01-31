@@ -97,8 +97,8 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 //2b2b: Incoming, chrif_parse_ack_vipActive -> vip info result
 //2b2c: FREE
 //2b2d: Outgoing, chrif_bsdata_request -> request bonus_script for pc_authok'ed char.
-//2b2e: Outgoing, chrif_save_bsdata -> Send bonus_script of player for saving.
-//2b2f: Incoming, chrif_load_bsdata -> received bonus_script of player for loading.
+//2b2e: Outgoing, chrif_bsdata_save -> Send bonus_script of player for saving.
+//2b2f: Incoming, chrif_bsdata_received -> received bonus_script of player for loading.
 
 int chrif_connected = 0;
 int char_fd = -1;
@@ -282,7 +282,8 @@ int chrif_save(struct map_session_data *sd, int flag) {
 		if (chrif_isconnected()) {
 			chrif_save_scdata(sd);
 			chrif_skillcooldown_save(sd);
-			chrif_save_bsdata(sd);
+			if (flag != 3)
+				chrif_bsdata_save(sd);
 			chrif_req_login_operation(sd->status.account_id, sd->status.name, CHRIF_OP_LOGIN_BANK, 0, 2, sd->status.bank_vault); //save Bank data
 		}
 		if ( flag != 3 && !chrif_auth_logout(sd,flag == 1 ? ST_LOGOUT : ST_MAPCHANGE) )
@@ -1598,6 +1599,123 @@ void chrif_parse_ack_vipActive(int fd) {
 #endif
 }
 
+
+/**
+ * ZA 0x2b2d
+ * <cmd>.W <char_id>.L
+ * Requets bonus_script datas
+ * @param char_id
+ * @author [Cydh]
+ **/
+int chrif_bsdata_request(uint32 char_id) {
+	chrif_check(-1);
+	WFIFOHEAD(char_fd,6);
+	WFIFOW(char_fd,0) = 0x2b2d;
+	WFIFOL(char_fd,2) = char_id;
+	WFIFOSET(char_fd,6);
+	return 0;
+}
+
+/**
+ * ZA 0x2b2e
+ * <cmd>.W <len>.W <char_id>.L <count>.B { <bonus_script>.?B }
+ * Stores bonus_script data(s) to the table when player log out
+ * @param sd
+ * @author [Cydh]
+ **/
+int chrif_bsdata_save(struct map_session_data *sd) {
+	uint16 i;
+	uint8 count = 0;
+	unsigned int tick;
+
+	chrif_check(-1);
+
+	if (!sd || !sd->bonus_script_num)
+		return 0;
+
+	tick = gettick();
+
+	WFIFOHEAD(char_fd, 9 + sd->bonus_script_num * sizeof(struct bonus_script_data));
+	WFIFOW(char_fd, 0) = 0x2b2e;
+	WFIFOL(char_fd, 4) = sd->status.char_id;
+
+	i = BSF_REM_ON_LOGOUT; //Remove bonus with this flag
+	if (battle_config.debuff_on_logout&1) //Remove negative buffs
+		i |= BSF_REM_DEBUFF;
+	if (battle_config.debuff_on_logout&2) //Remove positive buffs
+		i |= BSF_REM_BUFF;
+
+	//Clear data that won't be stored
+	pc_bonus_script_clear(sd, i);
+
+	if (!sd->bonus_script_num)
+		return 0;
+
+	for (i = 0; i < sd->bonus_script_num; i++) {
+		const struct TimerData *timer = get_timer(sd->bonus_script[i]->tid);
+		struct bonus_script_data bs;
+
+		if (timer == NULL || DIFF_TICK(timer->tick,tick) < 0)
+			continue;
+
+		memset(&bs, 0, sizeof(bs));
+		safestrncpy(bs.script_str, StringBuf_Value(sd->bonus_script[i]->script_buf), StringBuf_Length(sd->bonus_script[i]->script_buf)+1);
+		bs.tick = DIFF_TICK(timer->tick, tick);
+		bs.flag = sd->bonus_script[i]->flag;
+		bs.type = sd->bonus_script[i]->type;
+		bs.icon = sd->bonus_script[i]->icon;
+		memcpy(WFIFOP(char_fd, 9 + count * sizeof(struct bonus_script_data)), &bs, sizeof(struct bonus_script_data));
+		count++;
+	}
+
+	if (count > 0) {
+		WFIFOB(char_fd, 8) = count;
+		WFIFOW(char_fd, 2) = 9 + sd->bonus_script_num * sizeof(struct bonus_script_data);
+		WFIFOSET(char_fd, WFIFOW(char_fd, 2));
+	}
+
+	// Clear All
+	pc_bonus_script_clear_all(sd,3);
+
+	return 0;
+}
+
+/**
+ * AZ 0x2b2f
+ * <cmd>.W <len>.W <cid>.L <count>.B { <bonus_script_data>.?B }
+ * Bonus script received, set to player
+ * @param fd
+ * @author [Cydh]
+ **/
+int chrif_bsdata_received(int fd) {
+	struct map_session_data *sd;
+	uint32 cid = RFIFOL(fd,4);
+	uint8 i, count = 0;
+	bool calc = false;
+
+	sd = map_charid2sd(cid);
+
+	if (!sd) {
+		ShowError("chrif_bsdata_received: Player with CID %d not found!\n",cid);
+		return -1;
+	}
+
+	count = RFIFOB(fd,8);
+
+	for (i = 0; i < count; i++) {
+		struct bonus_script_data *bs = (struct bonus_script_data*)RFIFOP(fd,9 + i*sizeof(struct bonus_script_data));
+
+		if (bs->script_str[0] == '\0' || !bs->tick)
+			continue;
+
+		if (pc_bonus_script_add(sd, bs->script_str, bs->tick, (enum si_type)bs->icon, bs->flag, bs->type))
+			calc = true;
+	}
+	if (calc)
+		status_calc_pc(sd,SCO_NONE);
+	return 0;
+}
+
 /*==========================================
  *
  *------------------------------------------*/
@@ -1676,7 +1794,7 @@ int chrif_parse(int fd) {
 			case 0x2b27: chrif_authfail(fd); break;
 			case 0x2b29: chrif_load_bankdata(fd); break;
 			case 0x2b2b: chrif_parse_ack_vipActive(fd); break;
-			case 0x2b2f: chrif_load_bsdata(fd); break;
+			case 0x2b2f: chrif_bsdata_received(fd); break;
 			default:
 				ShowError("chrif_parse : unknown packet (session #%d): 0x%x. Disconnecting.\n", fd, cmd);
 				set_eof(fd);
@@ -1798,121 +1916,6 @@ int chrif_send_report(char* buf, int len) {
 	return 0;
 }
 
-/** [Cydh]
-* Requets bonus_script datas
-* @param char_id
-*/
-int chrif_bsdata_request(uint32 char_id) {
-	chrif_check(-1);
-	WFIFOHEAD(char_fd,6);
-	WFIFOW(char_fd,0) = 0x2b2d;
-	WFIFOL(char_fd,2) = char_id;
-	WFIFOSET(char_fd,6);
-	return 0;
-}
-
-/** [Cydh]
-* Stores bonus_script data(s) to the table
-* @param sd
-*/
-int chrif_save_bsdata(struct map_session_data *sd) {
-	int i;
-	uint8 count = 0;
-	unsigned int tick;
-	struct bonus_script_data bs;
-	const struct TimerData *timer;
-
-	chrif_check(-1);
-	tick = gettick();
-
-	WFIFOHEAD(char_fd,10+MAX_PC_BONUS_SCRIPT*sizeof(struct bonus_script_data));
-	WFIFOW(char_fd,0) = 0x2b2e;
-	WFIFOL(char_fd,4) = sd->status.char_id;
-	
-	i = BSF_REM_ON_LOGOUT; //Remove bonus with this flag
-	if (battle_config.debuff_on_logout&1) //Remove negative buffs
-		i |= BSF_REM_DEBUFF;
-	if (battle_config.debuff_on_logout&2) //Remove positive buffs
-		i |= BSF_REM_BUFF;
-	
-	//Clear data that won't be stored
-	pc_bonus_script_clear(sd,i);
-
-	for (i = 0; i < MAX_PC_BONUS_SCRIPT; i++) {
-		if (!(&sd->bonus_script[i]) || !sd->bonus_script[i].script || sd->bonus_script[i].script_str[0] == '\0')
-			continue;
-
-		timer = get_timer(sd->bonus_script[i].tid);
-		if (timer == NULL || DIFF_TICK(timer->tick,tick) < 0)
-			continue;
-
-		memcpy(bs.script,sd->bonus_script[i].script_str,strlen(sd->bonus_script[i].script_str)+1);
-		bs.tick = DIFF_TICK(timer->tick,tick);
-		bs.flag = sd->bonus_script[i].flag;
-		bs.type = sd->bonus_script[i].type;
-		bs.icon = sd->bonus_script[i].icon;
-
-		memcpy(WFIFOP(char_fd,10+count*sizeof(struct bonus_script_data)),&bs,sizeof(struct bonus_script_data));
-		pc_bonus_script_remove(&sd->bonus_script[i]);
-		count++;
-	}
-
-	if (count == 0)
-		return 0;
-
-	WFIFOW(char_fd,8) = count;
-	WFIFOW(char_fd,2) = 10+count*sizeof(struct bonus_script_data);
-	WFIFOSET(char_fd,WFIFOW(char_fd,2));
-	return 0;
-}
-
-/** [Cydh]
-* Loads bonus_script datas
-* @param fd
-*/
-int chrif_load_bsdata(int fd) {
-	struct map_session_data *sd;
-	int cid, count;
-	uint8 i;
-	bool calc = false;
-
-	cid = RFIFOL(fd,4);
-	sd = map_charid2sd(cid);
-
-	if (!sd) {
-		ShowError("chrif_load_bsdata: Player with CID %d not found!\n",cid);
-		return -1;
-	}
-
-	if (sd->status.char_id != cid) {
-		ShowError("chrif_load_bsdata: Receiving data for char id does not matches (%d != %d)!\n",sd->status.char_id,cid);
-		return -1;
-	}
-
-	count = RFIFOW(fd,8);
-
-	for (i = 0; i < count; i++) {
-		struct script_code *script;
-		struct bonus_script_data *bs = (struct bonus_script_data*)RFIFOP(fd,10 + i*sizeof(struct bonus_script_data));
-
-		if (bs->script[0] == '\0' || !(script = parse_script(bs->script,"chrif_load_bsdata",1,1)))
-			continue;
-
-		memcpy(sd->bonus_script[i].script_str,bs->script,strlen(bs->script));
-		sd->bonus_script[i].script = script;
-		sd->bonus_script[i].tick = gettick() + bs->tick;
-		sd->bonus_script[i].flag = (uint8)bs->flag;
-		sd->bonus_script[i].type = bs->type;
-		sd->bonus_script[i].icon = bs->icon;
-		if (bs->icon != SI_BLANK) //Gives status icon if exist
-			clif_status_change(&sd->bl,sd->bonus_script[i].icon,1,bs->tick,1,0,0);
-		calc = true;
-	}
-	if (calc)
-		status_calc_pc(sd,SCO_NONE);
-	return 0;
-}
-
 /**
  * @see DBApply
  */
@@ -1954,6 +1957,13 @@ void do_init_chrif(void) {
 			sizeof(struct mmo_charstatus));
 		exit(EXIT_FAILURE);
 	}
+
+	if((sizeof(struct bonus_script_data) * MAX_PC_BONUS_SCRIPT) > 0xFFFF){
+		ShowError("bonus_script_data size = %d is too, please reduce MAX_PC_BONUS_SCRIPT (%d) size. (must be below 0xFFFF).\n",
+			(sizeof(struct bonus_script_data) * MAX_PC_BONUS_SCRIPT), MAX_PC_BONUS_SCRIPT);
+		exit(EXIT_FAILURE);
+	}
+
 	auth_db = idb_alloc(DB_OPT_BASE);
 	auth_db_ers = ers_new(sizeof(struct auth_node),"chrif.c::auth_db_ers",ERS_OPT_NONE);
 

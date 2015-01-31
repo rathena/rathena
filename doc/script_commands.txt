@@ -5350,9 +5350,6 @@ After that time, the script will automatically expire. The same bonus cannot be
 stacked. By default, this bonus will be stored on `bonus_script` table when player
 logs out.
 
-Note that the maximum number of 'bonus_script' commands that can run simultaneously
-for a player is 10 (MAX_PC_BONUS_SCRIPT in 'src/map/pc.h').
-
 Flags (bitmask):
 	1   : Remove when dead.
 	2   : Removable by Dispell.
@@ -5360,10 +5357,13 @@ Flags (bitmask):
 	8   : Remove when player logs out.
 	16  : Removeable by Banishing Buster.
 	32  : Removable by Refresh.
-	128 : Removable by Luxanima.
-	256 : Remove when Madogear is activated or deactivated.
-	512 : Remove when receive damage.
-	1024: Script is permanent, cannot be cleared by bonus_script_clear
+	64  : Removable by Luxanima.
+	128 : Remove when Madogear is activated or deactivated.
+	256 : Remove when receive damage.
+	512 : Script is permanent, cannot be cleared by bonus_script_clear.
+	1024: Force to replace duplicated script by expanding the duration.
+	2048: Force to add duplicated script. This flag cannot be stacked with 1024,
+	      if both are defined, 1024 will be checked first and ignore this flag.
 
 Types:
 	This will be used to decide negative or positive buff for 'debuff_on_logout'.

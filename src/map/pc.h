@@ -7,6 +7,7 @@
 #include "../common/mmo.h" // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus
 #include "../common/ers.h"
 #include "../common/timer.h" // INVALID_TIMER
+#include "../common/strlib.h"// StringBuf
 #include "map.h" // RC_ALL
 #include "atcommand.h" // AtCommandType
 #include "battle.h" // battle_config
@@ -159,11 +160,11 @@ struct s_pc_itemgrouphealrate {
 ///Timed bonus 'bonus_script' struct [Cydh]
 struct s_bonus_script {
 	struct script_code *script;
-	char script_str[MAX_BONUS_SCRIPT_LENGTH]; //Used for comparing and storing on table
+	StringBuf *script_buf; //Used for comparing and storing on table
 	uint32 tick;
-	uint8 flag;
-	char type; //0 - Ignore; 1 - Buff; 2 - Debuff
-	int16 icon;
+	uint16 flag;
+	enum si_type icon;
+	uint8 type; //0 - Ignore; 1 - Buff; 2 - Debuff
 	int tid;
 };
 
@@ -603,7 +604,8 @@ struct map_session_data {
 	struct vip_info vip;
 	bool disableshowrate; //State to disable clif_display_pinfo(). [Cydh]
 #endif
-	struct s_bonus_script bonus_script[MAX_PC_BONUS_SCRIPT]; ///Bonus Script [Cydh]
+	struct s_bonus_script **bonus_script; ///Bonus Script [Cydh]
+	uint8 bonus_script_num;
 	
 	struct s_pc_itemgrouphealrate **itemgrouphealrate; /// List of Item Group Heal rate bonus
 	uint8 itemgrouphealrate_count; /// Number of rate bonuses
@@ -1118,9 +1120,10 @@ void pc_crimson_marker_clear(struct map_session_data *sd);
 void pc_show_version(struct map_session_data *sd);
 
 int pc_bonus_script_timer(int tid, unsigned int tick, int id, intptr_t data);
-void pc_bonus_script_remove(struct s_bonus_script *bscript);
+void pc_bonus_script(struct map_session_data *sd);
+bool pc_bonus_script_add(struct map_session_data *sd, const char *script_str, uint32 dur, enum si_type icon, uint16 flag, uint8 type);
 void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag);
-void pc_bonus_script_clear_all(struct map_session_data *sd, bool permanent);
+void pc_bonus_script_clear_all(struct map_session_data *sd, uint8 flag);
 
 void pc_cell_basilica(struct map_session_data *sd);
 

@@ -1143,8 +1143,6 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 		sd->autobonus2[i].active = INVALID_TIMER;
 	for(i = 0; i < ARRAYLENGTH(sd->autobonus3); i++)
 		sd->autobonus3[i].active = INVALID_TIMER;
-	for(i = 0; i < ARRAYLENGTH(sd->bonus_script); i++)
-		sd->bonus_script[i].tid = INVALID_TIMER;
 
 	if (battle_config.item_auto_get)
 		sd->state.autoloot = 10000;
@@ -1265,6 +1263,9 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->status.cashshop_sent = false;
 
 	sd->last_addeditem_index = -1;
+
+	sd->bonus_script = NULL;
+	sd->bonus_script_num = 0;
 
 	// Request all registries (auth is considered completed whence they arrive)
 	intif_request_registry(sd,7);
@@ -11038,106 +11039,252 @@ void pc_show_version(struct map_session_data *sd) {
 	clif_displaymessage(sd->fd,buf);
 }
 
-/** [Cydh]
+/**
+ * Run bonus_script on player
+ * @param sd
+ * @author [Cydh]
+ **/
+void pc_bonus_script(struct map_session_data *sd) {
+	uint8 i = 0;
+	int now = gettick();
+
+	if (!sd || !sd->bonus_script_num)
+		return;
+
+	for (i = 0; i < sd->bonus_script_num; i++) {
+		if (sd->bonus_script[i]->tid == INVALID_TIMER) { // Start new timer for new bonus_script
+			sd->bonus_script[i]->tick += now;
+			sd->bonus_script[i]->tid = add_timer(sd->bonus_script[i]->tick, pc_bonus_script_timer, sd->bl.id, 0);
+			if (sd->bonus_script[i]->icon != SI_BLANK) //Gives status icon if exist
+				clif_status_change(&sd->bl, sd->bonus_script[i]->icon, 1, sd->bonus_script[i]->tick, 1, 0, 0);
+		}
+		if (!sd->bonus_script[i]->script) {
+			ShowError("pc_bonus_script: The script has been removed somewhere. \"%s\"\n", StringBuf_Value(sd->bonus_script[i]->script_buf));
+			continue;
+		}
+		run_script(sd->bonus_script[i]->script, 0, sd->bl.id, 0);
+	}
+}
+
+/**
+ * Add bonus_script to player
+ * @param sd Player
+ * @param script_str Script string
+ * @param dur Duration in ms
+ * @param icon SI
+ * @param flag Flags @see enum e_bonus_script_flags
+ * @param type 0 - None, 1 - Buff, 2 - Debuff
+ * @return True if added, False if cannot
+ * @author [Cydh]
+ **/
+bool pc_bonus_script_add(struct map_session_data *sd, const char *script_str, uint32 dur, enum si_type icon, uint16 flag, uint8 type) {
+	struct script_code *script = NULL;
+
+	if (!sd)
+		return false;
+	
+	if (!(script = parse_script(script_str, "bonus_script", 0, SCRIPT_IGNORE_EXTERNAL_BRACKETS))) {
+		ShowError("pc_bonus_script_add: Failed to parse script '%s' (CID:%d).\n", script_str, sd->status.char_id);
+		return false;
+	}
+
+	if (!sd->bonus_script_num)
+		CREATE(sd->bonus_script, struct s_bonus_script *, 1);
+	else {
+		uint8 i = 0;
+		for (i = 0; i < sd->bonus_script_num; i++) {
+			if (strcmpi(script_str, StringBuf_Value(sd->bonus_script[i]->script_buf)) == 0)
+				break;
+		}
+
+		// Duplication checks
+		if (i < sd->bonus_script_num) {
+			int newdur = gettick() + dur;
+			if (flag&BSF_FORCE_REPLACE && sd->bonus_script[i]->tick < newdur) {
+				settick_timer(sd->bonus_script[i]->tid, newdur);
+				script_free_code(script);
+				return true;
+			}
+			else if (flag&BSF_FORCE_DUPLICATE) {
+				;
+			}
+			else {
+				// No duplicate bonus
+				script_free_code(script);
+				return false;
+			}
+		}
+
+		if (i >= UINT8_MAX) {
+			ShowError("pc_bonus_script_add: Reached max (%d) possible bonuses for this player %d\n", UINT8_MAX);
+			script_free_code(script);
+			return false;
+		}
+
+		RECREATE(sd->bonus_script, struct s_bonus_script *, sd->bonus_script_num+1);
+	}
+
+	CREATE(sd->bonus_script[sd->bonus_script_num], struct s_bonus_script, 1);
+
+	sd->bonus_script[sd->bonus_script_num]->script_buf = StringBuf_Malloc();
+	StringBuf_AppendStr(sd->bonus_script[sd->bonus_script_num]->script_buf, script_str);
+	sd->bonus_script[sd->bonus_script_num]->tid = INVALID_TIMER;
+	sd->bonus_script[sd->bonus_script_num]->flag = flag;
+	sd->bonus_script[sd->bonus_script_num]->icon = icon;
+	sd->bonus_script[sd->bonus_script_num]->tick = dur; // Use duration first, on run change to expire time
+	sd->bonus_script[sd->bonus_script_num]->type = type;
+	sd->bonus_script[sd->bonus_script_num]->script = script;
+
+	sd->bonus_script_num++;
+	return true;
+}
+
+/**
+ * Move bonus_script allocation to empty space
+ * @param sd
+ * @author [Cydh]
+ **/
+static void pc_bonus_script_move(struct map_session_data *sd) {
+	if (sd && sd->bonus_script_num) {
+		uint8 i, cur;
+
+		for (i = 0, cur = 0; i < sd->bonus_script_num; i++) {
+			if (sd->bonus_script[i] == NULL)
+				continue;
+
+			if (i != cur)
+				sd->bonus_script[cur] = sd->bonus_script[i];
+
+			cur++;
+		}
+
+		if (!(sd->bonus_script_num = cur)) {
+			aFree(sd->bonus_script);
+			sd->bonus_script = NULL;
+			sd->bonus_script_num = 0;
+		}
+	}
+}
+
+/**
+* Remove bonus_script data from player
+* @param sd: Target player
+* @param idx: Bonus script idx in player array
+* @author [Cydh]
+**/
+static void pc_bonus_script_remove(struct map_session_data *sd, uint8 idx) {
+	uint8 i = 0, cursor = 0;
+
+	if (!sd || !sd->bonus_script_num)
+		return;
+
+	if (idx >= sd->bonus_script_num) {
+		ShowError("pc_bonus_script_remove: Invalid index: %d\n", idx);
+		return;
+	}
+
+	if (sd->bonus_script[idx]->tid != INVALID_TIMER)
+		delete_timer(sd->bonus_script[idx]->tid, pc_bonus_script_timer);
+
+	if (sd->bonus_script[idx]->icon != SI_BLANK)
+		clif_status_load(&sd->bl, sd->bonus_script[idx]->icon, 0);
+
+	script_free_code(sd->bonus_script[idx]->script);
+	StringBuf_Free(sd->bonus_script[idx]->script_buf);
+
+	aFree(sd->bonus_script[idx]);
+	sd->bonus_script[idx] = NULL;
+}
+
+/**
 * Timer for bonus_script
 * @param tid
 * @param tick
 * @param id
 * @param data
+* @author [Cydh]
 **/
 int pc_bonus_script_timer(int tid, unsigned int tick, int id, intptr_t data) {
-	uint8 i = (uint8)data;
+	uint8 i;
 	struct map_session_data *sd;
 
 	sd = map_id2sd(id);
 	if (!sd) {
-		ShowDebug("pc_bonus_script_timer: Null pointer id: %d data: %d\n",id,data);
+		ShowError("pc_bonus_script_timer: Null pointer id: %d tid: %d\n", id, tid);
 		return 0;
 	}
 
-	if (i >= MAX_PC_BONUS_SCRIPT || !(&sd->bonus_script[i]) || !sd->bonus_script[i].script) {
-		ShowDebug("pc_bonus_script_timer: Invalid index %d\n",i);
+	if (tid == INVALID_TIMER || !sd->bonus_script_num)
+		return 0;
+
+	for (i = 0; i < sd->bonus_script_num; i++) {
+		if (sd->bonus_script[i]->tid == tid)
+			break;
+	}
+
+	if (i == sd->bonus_script_num) {
+		ShowError("pc_bonus_script_timer: Timer %d is not found.\n", tid);
 		return 0;
 	}
 
-	if (sd->bonus_script[i].icon != SI_BLANK)
-		clif_status_load(&sd->bl, sd->bonus_script[i].icon, 0);
-	pc_bonus_script_remove(&sd->bonus_script[i]);
+	pc_bonus_script_remove(sd, i);
+	pc_bonus_script_move(sd);
 	status_calc_pc(sd,SCO_NONE);
 	return 0;
 }
 
-/** [Cydh]
-* Remove bonus_script data from player
-* @param sd: Target player
-* @param i: Bonus script index
-**/
-void pc_bonus_script_remove(struct s_bonus_script *bscript) {
-	if (!bscript)
-		return;
-
-	if (bscript->script)
-		script_free_code(bscript->script);
-	bscript->script = NULL;
-	memset(bscript->script_str, '\0', sizeof(bscript->script_str));
-	bscript->tick = 0;
-	bscript->flag = 0;
-	bscript->icon = SI_BLANK;
-	if (bscript->tid != INVALID_TIMER)
-		delete_timer(bscript->tid,pc_bonus_script_timer);
-	bscript->tid = INVALID_TIMER;
-}
-
-/** [Cydh]
+/**
 * Check then clear all active timer(s) of bonus_script data from player based on reason
 * @param sd: Target player
 * @param flag: Reason to remove the bonus_script. e_bonus_script_flags or e_bonus_script_types
+* @author [Cydh]
 **/
 void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag) {
 	uint8 i, count = 0;
-	if (!sd)
+	if (!sd || !sd->bonus_script_num)
 		return;
 
-	for (i = 0; i < MAX_PC_BONUS_SCRIPT; i++) {
-		if (&sd->bonus_script[i] && sd->bonus_script[i].script &&
-			(sd->bonus_script[i].flag&flag || //Remove bonus script based on e_bonus_script_flags
-			(sd->bonus_script[i].type && (
-				(flag&BSF_REM_BUFF && sd->bonus_script[i].type == 1) || //Remove bonus script based on buff type
-				(flag&BSF_REM_DEBUFF && sd->bonus_script[i].type == 2)) //Remove bonus script based on debuff type
-			))) 
+	for (i = 0; i < sd->bonus_script_num; i++) {
+		if ((flag&sd->bonus_script[i]->flag) || // Matched flag
+			(sd->bonus_script[i]->type && (
+				(flag&BSF_REM_BUFF   && sd->bonus_script[i]->type == 1) || // Buff type
+				(flag&BSF_REM_DEBUFF && sd->bonus_script[i]->type == 2))   // Debuff type
+			))
 		{
-			if (sd->bonus_script[i].icon != SI_BLANK)
-				clif_status_load(&sd->bl, sd->bonus_script[i].icon, 0);
-			pc_bonus_script_remove(&sd->bonus_script[i]);
+			pc_bonus_script_remove(sd, i);
 			count++;
 		}
 	}
-	if (count && !(flag&BSF_REM_ON_LOGOUT)) //Don't need to do this if log out
-		status_calc_pc(sd,SCO_NONE);
+	if (count) {
+		pc_bonus_script_move(sd);
+		if (!(flag&BSF_REM_ON_LOGOUT)) { //Don't need to do this if log out
+			status_calc_pc(sd,SCO_NONE);
+		}
+	}
 }
 
 /**
 * Clear all bonus script from player
 * @param sd
-* @param permanent If true, will removes permanent bonus script.
+* @param flag &1 - Remove permanent bonus_script, &2 - Logout
 * @author [Cydh]
-*/
-void pc_bonus_script_clear_all(struct map_session_data *sd, bool permanent) {
+**/
+void pc_bonus_script_clear_all(struct map_session_data *sd, uint8 flag) {
 	uint8 i, count = 0;
-	if (!sd)
+	if (!sd || !sd->bonus_script_num)
 		return;
 
-	for (i = 0; i < MAX_PC_BONUS_SCRIPT; i++) {
-		if (!&sd->bonus_script[i] && !sd->bonus_script[i].script)
+	for (i = 0; i < sd->bonus_script_num; i++) {
+		if (!(flag&1) && (sd->bonus_script[i]->flag&BSF_PERMANENT))
 			continue;
-		if (!permanent && sd->bonus_script[i].flag&BSF_PERMANENT)
-			continue;
-		if (sd->bonus_script[i].icon != SI_BLANK)
-			clif_status_load(&sd->bl, sd->bonus_script[i].icon, 0);
-		pc_bonus_script_remove(&sd->bonus_script[i]);
+		pc_bonus_script_remove(sd, i);
 		count++;
 	}
-	status_calc_pc(sd,SCO_NONE);
+	if (count) {
+		pc_bonus_script_move(sd);
+		if (!(flag&2))
+			status_calc_pc(sd,SCO_NONE);
+	}
 }
 
 /** [Cydh]
