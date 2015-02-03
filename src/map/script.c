@@ -18909,6 +18909,7 @@ BUILDIN_FUNC(bonus_script) {
 	uint8 type = 0;
 	TBL_PC* sd;
 	const char *script_str = NULL;
+	struct s_bonus_script_entry *entry = NULL;
 
 	if (script_hasdata(st,7)) {
 		if (!(sd = map_charid2sd(script_getnum(st,7)))) {
@@ -18942,8 +18943,10 @@ BUILDIN_FUNC(bonus_script) {
 	if (icon <= SI_BLANK || icon >= SI_MAX)
 		icon = SI_BLANK;
 
-	if (pc_bonus_script_add(sd, script_str, dur, (enum si_type)icon, flag, type))
+	if ((entry = pc_bonus_script_add(sd, script_str, dur, (enum si_type)icon, flag, type))) {
+		linkdb_insert(&sd->bonus_script.head, (void *)((intptr_t)entry), entry);
 		status_calc_pc(sd,SCO_NONE);
+	}
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -18969,7 +18972,7 @@ BUILDIN_FUNC(bonus_script_clear) {
 	if (sd == NULL)
 		return SCRIPT_CMD_FAILURE;
 
-	pc_bonus_script_clear_all(sd,(flag ? 1 : 0));
+	pc_bonus_script_clear(sd,(flag ? BSF_PERMANENT : BSF_REM_ALL));
 	return SCRIPT_CMD_SUCCESS;
 }
 

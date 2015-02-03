@@ -1762,7 +1762,7 @@ enum e_bonus_script_flags {
 	BSF_FORCE_DUPLICATE			= 0x800, ///< Force to add duplicated script
 
 	// These flags aren't part of 'bonus_script' scripting flags
-
+	BSF_REM_ALL		= 0x0,		///< Remove all bonus script
 	BSF_REM_BUFF	= 0x4000,	///< Remove positive buff if battle_config.debuff_on_logout&1
 	BSF_REM_DEBUFF	= 0x8000,	///< Remove negative buff if battle_config.debuff_on_logout&2
 };

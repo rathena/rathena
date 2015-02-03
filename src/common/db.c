@@ -2717,18 +2717,29 @@ void linkdb_insert( struct linkdb_node** head, void *key, void* data)
 	node->data = data;
 }
 
-void linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  )
-{
+int linkdb_vforeach( struct linkdb_node** head, LinkDBFunc func, va_list ap) {
 	struct linkdb_node *node;
-	if( head == NULL ) return;
+	int retCount = 0;
+	if( head == NULL )
+		return 0;
 	node = *head;
 	while ( node ) {
-		va_list args;
-		va_start(args, func);
-		func( node->key, node->data, args );
-		va_end(args);
+		va_list argscopy;
+		va_copy(argscopy, ap);
+		retCount += func(node->key, node->data, argscopy);
+		va_end(argscopy);
 		node = node->next;
 	}
+	return retCount;
+}
+
+int linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  ) {
+	va_list ap;
+	int retCount = 0;
+	va_start(ap, func);
+	retCount = linkdb_vforeach(head, func, ap);
+	va_end(ap);
+	return retCount;
 }
 
 void* linkdb_search( struct linkdb_node** head, void *key)

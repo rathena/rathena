@@ -282,8 +282,6 @@ int chrif_save(struct map_session_data *sd, int flag) {
 		if (chrif_isconnected()) {
 			chrif_save_scdata(sd);
 			chrif_skillcooldown_save(sd);
-			if (flag != 3)
-				chrif_bsdata_save(sd);
 			chrif_req_login_operation(sd->status.account_id, sd->status.name, CHRIF_OP_LOGIN_BANK, 0, 2, sd->status.bank_vault); //save Bank data
 		}
 		if ( flag != 3 && !chrif_auth_logout(sd,flag == 1 ? ST_LOGOUT : ST_MAPCHANGE) )
@@ -291,6 +289,8 @@ int chrif_save(struct map_session_data *sd, int flag) {
 	}
 
 	chrif_check(-1); //Character is saved on reconnect.
+
+	chrif_bsdata_save(sd, (flag && (flag != 3)));
 
 	//For data sync
 	if (sd->state.storage_flag == 2)
@@ -1619,63 +1619,63 @@ int chrif_bsdata_request(uint32 char_id) {
 /**
  * ZA 0x2b2e
  * <cmd>.W <len>.W <char_id>.L <count>.B { <bonus_script>.?B }
- * Stores bonus_script data(s) to the table when player log out
+ * Stores bonus_script data(s) to the table
  * @param sd
  * @author [Cydh]
  **/
-int chrif_bsdata_save(struct map_session_data *sd) {
-	uint16 i;
-	uint8 count = 0;
-	unsigned int tick;
+int chrif_bsdata_save(struct map_session_data *sd, bool quit) {
+	uint8 i = 0;
 
 	chrif_check(-1);
 
-	if (!sd || !sd->bonus_script_num)
+	if (!sd)
 		return 0;
 
-	tick = gettick();
+	// Removing...
+	if (quit && sd->bonus_script.head) {
+		uint16 flag = BSF_REM_ON_LOGOUT; //Remove bonus when logout
+		if (battle_config.debuff_on_logout&1) //Remove negative buffs
+			flag |= BSF_REM_DEBUFF;
+		if (battle_config.debuff_on_logout&2) //Remove positive buffs
+			flag |= BSF_REM_BUFF;
+		pc_bonus_script_clear(sd, flag);
+	}
 
-	WFIFOHEAD(char_fd, 9 + sd->bonus_script_num * sizeof(struct bonus_script_data));
+	//ShowInfo("Saving %d bonus script for CID=%d\n", sd->bonus_script.count, sd->status.char_id);
+
+	WFIFOHEAD(char_fd, 9 + sd->bonus_script.count * sizeof(struct bonus_script_data));
 	WFIFOW(char_fd, 0) = 0x2b2e;
 	WFIFOL(char_fd, 4) = sd->status.char_id;
 
-	i = BSF_REM_ON_LOGOUT; //Remove bonus with this flag
-	if (battle_config.debuff_on_logout&1) //Remove negative buffs
-		i |= BSF_REM_DEBUFF;
-	if (battle_config.debuff_on_logout&2) //Remove positive buffs
-		i |= BSF_REM_BUFF;
+	if (sd->bonus_script.count) {
+		unsigned int tick = gettick();
+		struct linkdb_node *node = NULL;
 
-	//Clear data that won't be stored
-	pc_bonus_script_clear(sd, i);
+		for (node = sd->bonus_script.head; node && i < MAX_PC_BONUS_SCRIPT; node = node->next) {
+			const struct TimerData *timer = NULL;
+			struct bonus_script_data bs;
+			struct s_bonus_script_entry *entry = (struct s_bonus_script_entry *)node->data;
 
-	if (!sd->bonus_script_num)
-		return 0;
+			if (!entry || !(timer = get_timer(entry->tid)) || DIFF_TICK(timer->tick,tick) < 0)
+				continue;
 
-	for (i = 0; i < sd->bonus_script_num; i++) {
-		const struct TimerData *timer = get_timer(sd->bonus_script[i]->tid);
-		struct bonus_script_data bs;
+			memset(&bs, 0, sizeof(bs));
+			safestrncpy(bs.script_str, StringBuf_Value(entry->script_buf), StringBuf_Length(entry->script_buf)+1);
+			bs.tick = DIFF_TICK(timer->tick, tick);
+			bs.flag = entry->flag;
+			bs.type = entry->type;
+			bs.icon = entry->icon;
+			memcpy(WFIFOP(char_fd, 9 + i * sizeof(struct bonus_script_data)), &bs, sizeof(struct bonus_script_data));
+			i++;
+		}
 
-		if (timer == NULL || DIFF_TICK(timer->tick,tick) < 0)
-			continue;
-
-		memset(&bs, 0, sizeof(bs));
-		safestrncpy(bs.script_str, StringBuf_Value(sd->bonus_script[i]->script_buf), StringBuf_Length(sd->bonus_script[i]->script_buf)+1);
-		bs.tick = DIFF_TICK(timer->tick, tick);
-		bs.flag = sd->bonus_script[i]->flag;
-		bs.type = sd->bonus_script[i]->type;
-		bs.icon = sd->bonus_script[i]->icon;
-		memcpy(WFIFOP(char_fd, 9 + count * sizeof(struct bonus_script_data)), &bs, sizeof(struct bonus_script_data));
-		count++;
+		if (i != sd->bonus_script.count && sd->bonus_script.count > MAX_PC_BONUS_SCRIPT)
+			ShowWarning("Only allowed to save %d (mmo.h::MAX_PC_BONUS_SCRIPT) bonus script each player.\n", MAX_PC_BONUS_SCRIPT);
 	}
 
-	if (count > 0) {
-		WFIFOB(char_fd, 8) = count;
-		WFIFOW(char_fd, 2) = 9 + sd->bonus_script_num * sizeof(struct bonus_script_data);
-		WFIFOSET(char_fd, WFIFOW(char_fd, 2));
-	}
-
-	// Clear All
-	pc_bonus_script_clear_all(sd,3);
+	WFIFOB(char_fd, 8) = i;
+	WFIFOW(char_fd, 2) = 9 + sd->bonus_script.count * sizeof(struct bonus_script_data);
+	WFIFOSET(char_fd, WFIFOW(char_fd, 2));
 
 	return 0;
 }
@@ -1690,8 +1690,7 @@ int chrif_bsdata_save(struct map_session_data *sd) {
 int chrif_bsdata_received(int fd) {
 	struct map_session_data *sd;
 	uint32 cid = RFIFOL(fd,4);
-	uint8 i, count = 0;
-	bool calc = false;
+	uint8 count = 0;
 
 	sd = map_charid2sd(cid);
 
@@ -1700,19 +1699,28 @@ int chrif_bsdata_received(int fd) {
 		return -1;
 	}
 
-	count = RFIFOB(fd,8);
+	if ((count = RFIFOB(fd,8))) {
+		struct s_bonus_script *list = NULL;
+		uint8 i = 0;
 
-	for (i = 0; i < count; i++) {
-		struct bonus_script_data *bs = (struct bonus_script_data*)RFIFOP(fd,9 + i*sizeof(struct bonus_script_data));
+		//ShowInfo("Loaded %d bonus script for CID=%d\n", count, sd->status.char_id);
 
-		if (bs->script_str[0] == '\0' || !bs->tick)
-			continue;
+		for (i = 0; i < count; i++) {
+			struct bonus_script_data *bs = (struct bonus_script_data*)RFIFOP(fd,9 + i*sizeof(struct bonus_script_data));
+			struct s_bonus_script_entry *entry = NULL;
 
-		if (pc_bonus_script_add(sd, bs->script_str, bs->tick, (enum si_type)bs->icon, bs->flag, bs->type))
-			calc = true;
+			if (bs->script_str[0] == '\0' || !bs->tick)
+				continue;
+
+			if (!(entry = pc_bonus_script_add(sd, bs->script_str, bs->tick, (enum si_type)bs->icon, bs->flag, bs->type)))
+				continue;
+
+			linkdb_insert(&sd->bonus_script.head, (void *)((intptr_t)entry), entry);
+		}
+
+		if (sd->bonus_script.head)
+			status_calc_pc(sd,SCO_NONE);
 	}
-	if (calc)
-		status_calc_pc(sd,SCO_NONE);
 	return 0;
 }
 

@@ -158,7 +158,7 @@ struct s_pc_itemgrouphealrate {
 };
 
 ///Timed bonus 'bonus_script' struct [Cydh]
-struct s_bonus_script {
+struct s_bonus_script_entry {
 	struct script_code *script;
 	StringBuf *script_buf; //Used for comparing and storing on table
 	uint32 tick;
@@ -604,9 +604,13 @@ struct map_session_data {
 	struct vip_info vip;
 	bool disableshowrate; //State to disable clif_display_pinfo(). [Cydh]
 #endif
-	struct s_bonus_script **bonus_script; ///Bonus Script [Cydh]
-	uint8 bonus_script_num;
-	
+
+	/// Bonus Script [Cydh]
+	struct s_bonus_script_list {
+		struct linkdb_node *head; ///< Bonus script head node. data: struct s_bonus_script_entry *entry, key: (intptr_t)entry
+		uint16 count;
+	} bonus_script;
+
 	struct s_pc_itemgrouphealrate **itemgrouphealrate; /// List of Item Group Heal rate bonus
 	uint8 itemgrouphealrate_count; /// Number of rate bonuses
 
@@ -1121,9 +1125,9 @@ void pc_show_version(struct map_session_data *sd);
 
 int pc_bonus_script_timer(int tid, unsigned int tick, int id, intptr_t data);
 void pc_bonus_script(struct map_session_data *sd);
-bool pc_bonus_script_add(struct map_session_data *sd, const char *script_str, uint32 dur, enum si_type icon, uint16 flag, uint8 type);
+struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, const char *script_str, uint32 dur, enum si_type icon, uint16 flag, uint8 type);
 void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag);
-void pc_bonus_script_clear_all(struct map_session_data *sd, uint8 flag);
+int pc_bonus_script_list(void *key, void *data, va_list ap);
 
 void pc_cell_basilica(struct map_session_data *sd);
 

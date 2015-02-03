@@ -1328,6 +1328,9 @@ int chmapif_bonus_script_save(int fd) {
 		uint32 cid = RFIFOL(fd,4);
 		uint8 count = RFIFOB(fd,8);
 
+		if (SQL_ERROR == Sql_Query(sql_handle,"DELETE FROM `%s` WHERE `char_id` = '%d'", schema_config.bonus_script_db, cid))
+			Sql_ShowDebug(sql_handle);
+
 		if (count > 0) {
 			char esc_script[MAX_BONUS_SCRIPT_LENGTH*2];
 			struct bonus_script_data bsdata;
@@ -1346,9 +1349,9 @@ int chmapif_bonus_script_save(int fd) {
 			if (SQL_ERROR == Sql_QueryStr(sql_handle,StringBuf_Value(&buf)))
 				Sql_ShowDebug(sql_handle);
 
-			ShowInfo("Bonus Script saved for CID=%d. Total: %d.\n", cid, count);
 			StringBuf_Destroy(&buf);
 		}
+		ShowInfo("Bonus Script saved for CID=%d. Total: %d.\n", cid, count);
 		RFIFOSKIP(fd,RFIFOW(fd,2));
 	}
 	return 1;

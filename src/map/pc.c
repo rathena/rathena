@@ -1263,9 +1263,9 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->status.cashshop_sent = false;
 
 	sd->last_addeditem_index = -1;
-
-	sd->bonus_script = NULL;
-	sd->bonus_script_num = 0;
+	
+	sd->bonus_script.head = NULL;
+	sd->bonus_script.count = 0;
 
 	// Request all registries (auth is considered completed whence they arrive)
 	intif_request_registry(sd,7);
@@ -11039,6 +11039,16 @@ void pc_show_version(struct map_session_data *sd) {
 	clif_displaymessage(sd->fd,buf);
 }
 
+int pc_bonus_script_list(void *key, void *data, va_list ap) {
+	struct s_bonus_script_entry *entry = (struct s_bonus_script_entry *)data;
+	struct map_session_data *sd = va_arg(ap, struct map_session_data *);
+	struct linkdb_node *node = (struct linkdb_node *)key;
+	if (sd)
+		ShowDebug("  cid=%d aid=%d\n",sd->status.char_id, sd->status.account_id);
+	ShowDebug("    key:%d e:0x%08X n:0x%08X nn:0x%08X np:0x%08X\n",(intptr_t)key, entry, key, node->next, node->prev);
+	return 1;
+}
+
 /**
  * Run bonus_script on player
  * @param sd
@@ -11047,22 +11057,32 @@ void pc_show_version(struct map_session_data *sd) {
 void pc_bonus_script(struct map_session_data *sd) {
 	uint8 i = 0;
 	int now = gettick();
+	struct linkdb_node *node = NULL, *next = NULL;
 
-	if (!sd || !sd->bonus_script_num)
+	if (!sd || !(node = sd->bonus_script.head))
 		return;
 
-	for (i = 0; i < sd->bonus_script_num; i++) {
-		if (sd->bonus_script[i]->tid == INVALID_TIMER) { // Start new timer for new bonus_script
-			sd->bonus_script[i]->tick += now;
-			sd->bonus_script[i]->tid = add_timer(sd->bonus_script[i]->tick, pc_bonus_script_timer, sd->bl.id, 0);
-			if (sd->bonus_script[i]->icon != SI_BLANK) //Gives status icon if exist
-				clif_status_change(&sd->bl, sd->bonus_script[i]->icon, 1, sd->bonus_script[i]->tick, 1, 0, 0);
+	while (node) {
+		struct s_bonus_script_entry *entry = NULL;
+		next = node->next;
+
+		if ((entry = (struct s_bonus_script_entry *)node->data)) {
+			// Only start timer for new bonus_script
+			if (entry->tid == INVALID_TIMER) {
+				if (entry->icon != SI_BLANK) // Gives status icon if exist
+					clif_status_change(&sd->bl, entry->icon, 1, entry->tick, 1, 0, 0);
+
+				entry->tick += now;
+				entry->tid = add_timer(entry->tick, pc_bonus_script_timer, sd->bl.id, (intptr_t)entry);
+			}
+
+			if (entry->script)
+				run_script(entry->script, 0, sd->bl.id, 0);
+			else
+				ShowError("pc_bonus_script: The script has been removed somewhere. \"%s\"\n", StringBuf_Value(entry->script_buf));
 		}
-		if (!sd->bonus_script[i]->script) {
-			ShowError("pc_bonus_script: The script has been removed somewhere. \"%s\"\n", StringBuf_Value(sd->bonus_script[i]->script_buf));
-			continue;
-		}
-		run_script(sd->bonus_script[i]->script, 0, sd->bl.id, 0);
+
+		node = next;
 	}
 }
 
@@ -11074,126 +11094,93 @@ void pc_bonus_script(struct map_session_data *sd) {
  * @param icon SI
  * @param flag Flags @see enum e_bonus_script_flags
  * @param type 0 - None, 1 - Buff, 2 - Debuff
- * @return True if added, False if cannot
+ * @return New created entry pointer or NULL if failed or NULL if duplicate fail
  * @author [Cydh]
  **/
-bool pc_bonus_script_add(struct map_session_data *sd, const char *script_str, uint32 dur, enum si_type icon, uint16 flag, uint8 type) {
+struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, const char *script_str, uint32 dur, enum si_type icon, uint16 flag, uint8 type) {
 	struct script_code *script = NULL;
+	struct linkdb_node *node = NULL;
+	struct s_bonus_script_entry *entry = NULL;
 
 	if (!sd)
-		return false;
+		return NULL;
 	
 	if (!(script = parse_script(script_str, "bonus_script", 0, SCRIPT_IGNORE_EXTERNAL_BRACKETS))) {
 		ShowError("pc_bonus_script_add: Failed to parse script '%s' (CID:%d).\n", script_str, sd->status.char_id);
-		return false;
+		return NULL;
 	}
 
-	if (!sd->bonus_script_num)
-		CREATE(sd->bonus_script, struct s_bonus_script *, 1);
-	else {
-		uint8 i = 0;
-		for (i = 0; i < sd->bonus_script_num; i++) {
-			if (strcmpi(script_str, StringBuf_Value(sd->bonus_script[i]->script_buf)) == 0)
-				break;
-		}
-
-		// Duplication checks
-		if (i < sd->bonus_script_num) {
-			int newdur = gettick() + dur;
-			if (flag&BSF_FORCE_REPLACE && sd->bonus_script[i]->tick < newdur) {
-				settick_timer(sd->bonus_script[i]->tid, newdur);
-				script_free_code(script);
-				return true;
+	// Duplication checks
+	if ((node = sd->bonus_script.head)) {
+		while (node) {
+			entry = (struct s_bonus_script_entry *)node->data;
+			if (strcmpi(script_str, StringBuf_Value(entry->script_buf)) == 0) {
+				int newdur = gettick() + dur;
+				if (flag&BSF_FORCE_REPLACE && entry->tick < newdur) { // Change duration
+					settick_timer(entry->tid, newdur);
+					script_free_code(script);
+					return NULL;
+				}
+				else if (flag&BSF_FORCE_DUPLICATE) // Allow duplicate
+					break;
+				else { // No duplicate bonus
+					script_free_code(script);
+					return NULL;
+				}
 			}
-			else if (flag&BSF_FORCE_DUPLICATE) {
-				;
-			}
-			else {
-				// No duplicate bonus
-				script_free_code(script);
-				return false;
-			}
+			node = node->next;
 		}
-
-		if (i >= UINT8_MAX) {
-			ShowError("pc_bonus_script_add: Reached max (%d) possible bonuses for this player %d\n", UINT8_MAX);
-			script_free_code(script);
-			return false;
-		}
-
-		RECREATE(sd->bonus_script, struct s_bonus_script *, sd->bonus_script_num+1);
 	}
 
-	CREATE(sd->bonus_script[sd->bonus_script_num], struct s_bonus_script, 1);
+	CREATE(entry, struct s_bonus_script_entry, 1);
 
-	sd->bonus_script[sd->bonus_script_num]->script_buf = StringBuf_Malloc();
-	StringBuf_AppendStr(sd->bonus_script[sd->bonus_script_num]->script_buf, script_str);
-	sd->bonus_script[sd->bonus_script_num]->tid = INVALID_TIMER;
-	sd->bonus_script[sd->bonus_script_num]->flag = flag;
-	sd->bonus_script[sd->bonus_script_num]->icon = icon;
-	sd->bonus_script[sd->bonus_script_num]->tick = dur; // Use duration first, on run change to expire time
-	sd->bonus_script[sd->bonus_script_num]->type = type;
-	sd->bonus_script[sd->bonus_script_num]->script = script;
-
-	sd->bonus_script_num++;
-	return true;
-}
-
-/**
- * Move bonus_script allocation to empty space
- * @param sd
- * @author [Cydh]
- **/
-static void pc_bonus_script_move(struct map_session_data *sd) {
-	if (sd && sd->bonus_script_num) {
-		uint8 i, cur;
-
-		for (i = 0, cur = 0; i < sd->bonus_script_num; i++) {
-			if (sd->bonus_script[i] == NULL)
-				continue;
-
-			if (i != cur)
-				sd->bonus_script[cur] = sd->bonus_script[i];
-
-			cur++;
-		}
-
-		if (!(sd->bonus_script_num = cur)) {
-			aFree(sd->bonus_script);
-			sd->bonus_script = NULL;
-			sd->bonus_script_num = 0;
-		}
-	}
+	entry->script_buf = StringBuf_Malloc();
+	StringBuf_AppendStr(entry->script_buf, script_str);
+	entry->tid = INVALID_TIMER;
+	entry->flag = flag;
+	entry->icon = icon;
+	entry->tick = dur; // Use duration first, on run change to expire time
+	entry->type = type;
+	entry->script = script;
+	sd->bonus_script.count++;
+	return entry;
 }
 
 /**
 * Remove bonus_script data from player
 * @param sd: Target player
-* @param idx: Bonus script idx in player array
+* @param list: Bonus script entry from player
 * @author [Cydh]
 **/
-static void pc_bonus_script_remove(struct map_session_data *sd, uint8 idx) {
-	uint8 i = 0, cursor = 0;
+void pc_bonus_script_free_entry(struct map_session_data *sd, struct s_bonus_script_entry *entry) {
+	if (entry->tid != INVALID_TIMER)
+		delete_timer(entry->tid, pc_bonus_script_timer);
 
-	if (!sd || !sd->bonus_script_num)
-		return;
+	if (entry->script)
+		script_free_code(entry->script);
 
-	if (idx >= sd->bonus_script_num) {
-		ShowError("pc_bonus_script_remove: Invalid index: %d\n", idx);
-		return;
+	if (entry->script_buf)
+		StringBuf_Free(entry->script_buf);
+
+	if (sd) {
+		if (entry->icon != SI_BLANK)
+			clif_status_load(&sd->bl, entry->icon, 0);
+		if (sd->bonus_script.count > 0)
+			sd->bonus_script.count--;
 	}
+	aFree(entry);
+}
 
-	if (sd->bonus_script[idx]->tid != INVALID_TIMER)
-		delete_timer(sd->bonus_script[idx]->tid, pc_bonus_script_timer);
-
-	if (sd->bonus_script[idx]->icon != SI_BLANK)
-		clif_status_load(&sd->bl, sd->bonus_script[idx]->icon, 0);
-
-	script_free_code(sd->bonus_script[idx]->script);
-	StringBuf_Free(sd->bonus_script[idx]->script_buf);
-
-	aFree(sd->bonus_script[idx]);
-	sd->bonus_script[idx] = NULL;
+/**
+ * Do final process if no entry left
+ * @param sd
+ **/
+static void inline pc_bonus_script_check_final(struct map_session_data *sd) {
+	if (sd->bonus_script.count == 0) {
+		if (sd->bonus_script.head && sd->bonus_script.head->data)
+			pc_bonus_script_free_entry(sd, (struct s_bonus_script_entry *)sd->bonus_script.head->data);
+		linkdb_final(&sd->bonus_script.head);
+	}
 }
 
 /**
@@ -11205,8 +11192,8 @@ static void pc_bonus_script_remove(struct map_session_data *sd, uint8 idx) {
 * @author [Cydh]
 **/
 int pc_bonus_script_timer(int tid, unsigned int tick, int id, intptr_t data) {
-	uint8 i;
 	struct map_session_data *sd;
+	struct s_bonus_script_entry *entry = (struct s_bonus_script_entry *)data;
 
 	sd = map_id2sd(id);
 	if (!sd) {
@@ -11214,21 +11201,17 @@ int pc_bonus_script_timer(int tid, unsigned int tick, int id, intptr_t data) {
 		return 0;
 	}
 
-	if (tid == INVALID_TIMER || !sd->bonus_script_num)
+	if (tid == INVALID_TIMER)
 		return 0;
 
-	for (i = 0; i < sd->bonus_script_num; i++) {
-		if (sd->bonus_script[i]->tid == tid)
-			break;
-	}
-
-	if (i == sd->bonus_script_num) {
-		ShowError("pc_bonus_script_timer: Timer %d is not found.\n", tid);
+	if (!sd->bonus_script.head || entry == NULL) {
+		ShowError("pc_bonus_script_timer: Invalid entry pointer 0x%08X!\n", entry);
 		return 0;
 	}
 
-	pc_bonus_script_remove(sd, i);
-	pc_bonus_script_move(sd);
+	linkdb_erase(&sd->bonus_script.head, (void *)((intptr_t)entry));
+	pc_bonus_script_free_entry(sd, entry);
+	pc_bonus_script_check_final(sd);
 	status_calc_pc(sd,SCO_NONE);
 	return 0;
 }
@@ -11240,27 +11223,37 @@ int pc_bonus_script_timer(int tid, unsigned int tick, int id, intptr_t data) {
 * @author [Cydh]
 **/
 void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag) {
-	uint8 i, count = 0;
-	if (!sd || !sd->bonus_script_num)
+	struct linkdb_node *node = NULL;
+	uint16 count = 0;
+
+	if (!sd || !(node = sd->bonus_script.head))
 		return;
 
-	for (i = 0; i < sd->bonus_script_num; i++) {
-		if ((flag&sd->bonus_script[i]->flag) || // Matched flag
-			(sd->bonus_script[i]->type && (
-				(flag&BSF_REM_BUFF   && sd->bonus_script[i]->type == 1) || // Buff type
-				(flag&BSF_REM_DEBUFF && sd->bonus_script[i]->type == 2))   // Debuff type
-			))
+	while (node) {
+		struct linkdb_node *next = node->next;
+		struct s_bonus_script_entry *entry = (struct s_bonus_script_entry *)node->data;
+
+		if (entry && (
+				(flag == BSF_PERMANENT) ||					 // Remove all with permanent bonus
+				(!flag && !(entry->flag&BSF_PERMANENT)) ||	 // Remove all WITHOUT permanent bonus
+				(flag&entry->flag) ||						 // Matched flag
+				(flag&BSF_REM_BUFF   && entry->type == 1) || // Remove buff
+				(flag&BSF_REM_DEBUFF && entry->type == 2)	 // Remove debuff
+				)
+			)
 		{
-			pc_bonus_script_remove(sd, i);
+			linkdb_erase(&sd->bonus_script.head, (void *)((intptr_t)entry));
+			pc_bonus_script_free_entry(sd, entry);
 			count++;
 		}
+
+		node = next;
 	}
-	if (count) {
-		pc_bonus_script_move(sd);
-		if (!(flag&BSF_REM_ON_LOGOUT)) { //Don't need to do this if log out
-			status_calc_pc(sd,SCO_NONE);
-		}
-	}
+
+	pc_bonus_script_check_final(sd);
+
+	if (count && !(flag&BSF_REM_ON_LOGOUT)) //Don't need to do this if log out
+		status_calc_pc(sd,SCO_NONE);
 }
 
 /**
@@ -11270,21 +11263,34 @@ void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag) {
 * @author [Cydh]
 **/
 void pc_bonus_script_clear_all(struct map_session_data *sd, uint8 flag) {
-	uint8 i, count = 0;
-	if (!sd || !sd->bonus_script_num)
+	struct linkdb_node *node = NULL;
+	uint16 count = 0;
+
+	if (!sd || !(node = sd->bonus_script.head))
 		return;
 
-	for (i = 0; i < sd->bonus_script_num; i++) {
-		if (!(flag&1) && (sd->bonus_script[i]->flag&BSF_PERMANENT))
-			continue;
-		pc_bonus_script_remove(sd, i);
-		count++;
+	while (node) {
+		struct linkdb_node *next = node->next;
+		struct s_bonus_script_entry *entry = (struct s_bonus_script_entry *)node->data;
+
+		if (entry && (
+				!(entry->flag&BSF_PERMANENT) ||
+				((flag&1) && entry->flag&BSF_PERMANENT)
+				)
+			)
+		{
+			linkdb_erase(&sd->bonus_script.head, (void *)((intptr_t)entry));
+			pc_bonus_script_free_entry(sd, entry);
+			count++;
+		}
+
+		node = next;
 	}
-	if (count) {
-		pc_bonus_script_move(sd);
-		if (!(flag&2))
-			status_calc_pc(sd,SCO_NONE);
-	}
+
+	pc_bonus_script_check_final(sd);
+
+	if (count && !(flag&2))
+		status_calc_pc(sd,SCO_NONE);
 }
 
 /** [Cydh]
