@@ -32,6 +32,7 @@
 #include "trade.h"
 #include "mapreg.h"
 #include "quest.h"
+#include "pc.h"
 
 #include <stdlib.h>
 #include <math.h>
