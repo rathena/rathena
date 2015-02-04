@@ -22,6 +22,7 @@ extern char **arg_v;
 extern int runflag;
 extern char *SERVER_NAME;
 extern char db_path[12]; /// relative path for db from servers
+extern char groups_conf_file[32];
 
 enum {
 	ATHENA_SERVER_NONE = 0,	// not defined

@@ -61,11 +61,12 @@ static inline GroupSettings* name2group(const char* group_name)
 static void read_config(void)
 {
 	config_setting_t *groups = NULL;
-	const char *config_filename = "conf/groups.conf"; // FIXME hardcoded name
 	int group_count = 0;
 	
-	if (conf_read_file(&pc_group_config, config_filename))
+	if (conf_read_file(&pc_group_config, groups_conf_file)) {
+		ShowError("Cannot read Groups file \"%s\".\n", groups_conf_file);
 		return;
+	}
 
 	groups = config_lookup(&pc_group_config, "groups");
 
@@ -244,7 +245,7 @@ static void read_config(void)
 
 			if (++loop > group_count) {
 				ShowWarning("pc_groups:read_config: Could not process inheritance rules, check your config '%s' for cycles...\n",
-				            config_filename);
+				            groups_conf_file);
 				break;
 			}
 		} // while(i < group_count)
@@ -270,7 +271,7 @@ static void read_config(void)
 		dbi_destroy(iter);
 	}
 
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' groups in '"CL_WHITE"%s"CL_RESET"'.\n", group_count, config_filename);
+	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' groups in '"CL_WHITE"%s"CL_RESET"'.\n", group_count, groups_conf_file);
 
 	
 	if( ( pc_group_max = group_count ) ) {
