@@ -6962,7 +6962,7 @@ ACMD_FUNC(gmotd)
 {
 	FILE* fp;
 
-	if( ( fp = fopen(StringBuf_Value(map_config.motd_txt), "r") ) != NULL )
+	if( ( fp = fopen(mapserv_file(motd), "r") ) != NULL )
 	{
 		char buf[CHAT_SIZE_MAX];
 		size_t len;
@@ -10533,7 +10533,7 @@ void atcommand_doload(void) {
 	atcommand_db = stridb_alloc(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA, ATCOMMAND_LENGTH);
 	atcommand_alias_db = stridb_alloc(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA, ATCOMMAND_LENGTH);
 	atcommand_basecommands(); //fills initial atcommand_db with known commands
-	atcommand_config_read(ATCOMMAND_CONF_FILENAME);
+	atcommand_config_read(ATCOMMAND_CONF_FILENAME ? ATCOMMAND_CONF_FILENAME : mapserv_file(atcommand));
 }
 
 void do_init_atcommand(void) {

@@ -61,9 +61,9 @@ static inline GroupSettings* name2group(const char* group_name)
 static void read_config(void)
 {
 	config_setting_t *groups = NULL;
-	const char *config_filename = "conf/groups.conf"; // FIXME hardcoded name
+	const char *config_filename = mapserv_file(group);
 	int group_count = 0;
-	
+
 	if (conf_read_file(&pc_group_config, config_filename))
 		return;
 
