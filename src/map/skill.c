@@ -4017,7 +4017,7 @@ static int skill_reveal_trap(struct block_list *bl, va_list ap)
 	{	//Reveal trap.
 		//Change look is not good enough, the client ignores it as an actual trap still. [Skotlex]
 		//clif_changetraplook(bl, su->group->unit_id);
-		clif_getareachar_skillunit(&su->bl, su, AREA);
+		clif_getareachar_skillunit(&su->bl, su, AREA, 0);
 		return 1;
 	}
 	return 0;
@@ -10954,8 +10954,8 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			src->m, x-i, y-i, x+i,y+i,BL_CHAR,
 			src,NULL,SC_SIGHT,tick);
 		if(battle_config.traps_setting&1)
-		map_foreachinarea( skill_reveal_trap,
-			src->m, x-i, y-i, x+i,y+i,BL_SKILL);
+			map_foreachinarea(skill_reveal_trap, src->m, x-i, y-i, x+i, y+i, BL_SKILL);
+			break;
 		break;
 
 	case SR_RIDEINLIGHTNING:
@@ -11818,7 +11818,7 @@ static int skill_dance_overlap_sub(struct block_list* bl, va_list ap)
 	else //Remove dissonance
 		target->val2 &= ~UF_ENSEMBLE;
 
-	clif_getareachar_skillunit(&target->bl, target, AREA); //Update look of affected cell.
+	clif_getareachar_skillunit(&target->bl, target, AREA, 0); //Update look of affected cell.
 
 	return 1;
 }
@@ -16997,7 +16997,7 @@ struct skill_unit *skill_initunit(struct skill_unit_group *group, int idx, int x
 			break;
 	}
 
-	clif_getareachar_skillunit(&unit->bl, unit, AREA);
+	clif_getareachar_skillunit(&unit->bl, unit, AREA, 0);
 	return unit;
 }
 
@@ -17840,7 +17840,7 @@ void skill_unit_move_unit(struct block_list *bl, int dx, int dy) {
 
 	map_moveblock(bl, dx, dy, tick);
 	map_foreachincell(skill_unit_effect,bl->m,bl->x,bl->y,su->group->bl_flag,bl,tick,1);
-	clif_getareachar_skillunit(bl, su, AREA);
+	clif_getareachar_skillunit(bl, su, AREA, 0);
 	return;
 }
 
@@ -17934,7 +17934,7 @@ void skill_unit_move_unit_group(struct skill_unit_group *group, int16 m, int16 d
 		if (!(m_flag[i]&0x2)) { //We only moved the cell in 0-1
 			if (group->state.song_dance&0x1) //Check for dissonance effect.
 				skill_dance_overlap(unit1, 1);
-			clif_getareachar_skillunit(&unit1->bl, unit1, AREA);
+			clif_getareachar_skillunit(&unit1->bl, unit1, AREA, 0);
 			map_foreachincell(skill_unit_effect,unit1->bl.m,unit1->bl.x,unit1->bl.y,group->bl_flag,&unit1->bl,tick,1);
 		}
 	}

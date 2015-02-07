@@ -4545,10 +4545,10 @@ static void clif_graffiti(struct block_list *bl, struct skill_unit *unit, enum s
 /// 08c7 <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.B <range>.W <visible>.B (ZC_SKILL_ENTRY3)
 /// 099f <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.W <visible>.B (ZC_SKILL_ENTRY4)
 /// 09ca <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.B <visible>.B <skill level>.B (ZC_SKILL_ENTRY5)
-void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, enum send_target target) {
+void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, enum send_target target, uint8 flag) {
 	int header = 0, unit_id = 0, pos = 0, fd = 0, len = -1;
 	unsigned char buf[128];
-	
+
 	nullpo_retv(bl);
 	nullpo_retv(unit);
 
@@ -4558,14 +4558,30 @@ void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, 
 	if (unit->group->state.guildaura)
 		return;
 
-	if (battle_config.traps_setting&1 && skill_get_inf2(unit->group->skill_id)&INF2_TRAP)
-		unit_id = UNT_DUMMYSKILL; //Use invisible unit id for traps.
-	else if (unit->group->state.song_dance&0x1 && unit->val2&UF_ENSEMBLE)
+	if (unit->group->state.song_dance&0x1 && unit->val2&UF_ENSEMBLE)
 		unit_id = unit->val2&UF_SONG ? UNT_DISSONANCE : UNT_UGLYDANCE;
 	else if (skill_get_unit_flag(unit->group->skill_id) & UF_RANGEDSINGLEUNIT && !(unit->val2 & UF_RANGEDSINGLEUNIT))
-		unit_id = UNT_DUMMYSKILL; //Use invisible unit id for other case of rangedsingle unit
+		unit_id = UNT_DUMMYSKILL; // Use invisible unit id for other case of rangedsingle unit
 	else
 		unit_id = unit->group->unit_id;
+
+	if (flag && battle_config.traps_setting&1) {
+		switch(unit->group->skill_id) {
+			case HT_ANKLESNARE:
+				if (!map_flag_vs(((TBL_PC*)bl)->bl.m))
+					break;
+			case HT_SKIDTRAP:
+			case MA_SKIDTRAP:
+			case HT_SHOCKWAVE:
+			case HT_SANDMAN:
+			case MA_SANDMAN:
+			case HT_FLASHER:
+			case HT_FREEZINGTRAP:
+			case MA_FREEZINGTRAP:
+				unit_id = UNT_DUMMYSKILL; // Use invisible unit id for Hunter's traps
+				break;
+		}
+	}
 
 #if PACKETVER >= 3
 	if (unit_id == UNT_GRAFFITI) { // Graffiti [Valaris]
@@ -4690,7 +4706,7 @@ static int clif_getareachar(struct block_list* bl,va_list ap)
 		clif_getareachar_item(sd,(struct flooritem_data*) bl);
 		break;
 	case BL_SKILL:
-		clif_getareachar_skillunit(&sd->bl, (TBL_SKILL*)bl, SELF);
+		clif_getareachar_skillunit(&sd->bl, (TBL_SKILL*)bl, SELF, 1);
 		break;
 	default:
 		if(&sd->bl == bl)
@@ -4778,7 +4794,7 @@ int clif_insight(struct block_list *bl,va_list ap)
 			clif_getareachar_item(tsd,(struct flooritem_data*)bl);
 			break;
 		case BL_SKILL:
-			clif_getareachar_skillunit(&tsd->bl, (TBL_SKILL*)bl, SELF);
+			clif_getareachar_skillunit(&tsd->bl, (TBL_SKILL*)bl, SELF, 1);
 			break;
 		default:
 			clif_getareachar_unit(tsd,bl);
