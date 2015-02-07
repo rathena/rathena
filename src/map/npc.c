@@ -112,12 +112,12 @@ int npc_isnear_sub(struct block_list* bl, va_list args) {
 	if (skill_id > 0) { //If skill_id > 0 that means is used for INF2_NO_NEARNPC [Cydh]
 		uint16 idx = skill_get_index(skill_id);
 
-		if (idx > 0 && skill_db[idx].unit_nonearnpc_type) {
+		if (idx > 0 && skill_db[idx]->unit_nonearnpc_type) {
 			while (1) {
-				if (skill_db[idx].unit_nonearnpc_type&1 && nd->subtype == NPCTYPE_WARP) break;
-				if (skill_db[idx].unit_nonearnpc_type&2 && nd->subtype == NPCTYPE_SHOP) break;
-				if (skill_db[idx].unit_nonearnpc_type&4 && nd->subtype == NPCTYPE_SCRIPT) break;
-				if (skill_db[idx].unit_nonearnpc_type&8 && nd->subtype == NPCTYPE_TOMB) break;
+				if (skill_db[idx]->unit_nonearnpc_type&1 && nd->subtype == NPCTYPE_WARP) break;
+				if (skill_db[idx]->unit_nonearnpc_type&2 && nd->subtype == NPCTYPE_SHOP) break;
+				if (skill_db[idx]->unit_nonearnpc_type&4 && nd->subtype == NPCTYPE_SCRIPT) break;
+				if (skill_db[idx]->unit_nonearnpc_type&8 && nd->subtype == NPCTYPE_TOMB) break;
 					return 0;
 			}
 		}
@@ -1687,8 +1687,9 @@ int npc_buylist(struct map_session_data* sd, int n, unsigned short* item_list)
 	// custom merchant shop exp bonus
 	if( battle_config.shop_exp > 0 && z > 0 && (skill = pc_checkskill(sd,MC_DISCOUNT)) > 0 )
 	{
-		if( sd->status.skill[MC_DISCOUNT].flag >= SKILL_FLAG_REPLACED_LV_0 )
-			skill = sd->status.skill[MC_DISCOUNT].flag - SKILL_FLAG_REPLACED_LV_0;
+		uint16 sk_idx = skill_get_index(MC_DISCOUNT);
+		if( sd->status.skill[sk_idx].flag >= SKILL_FLAG_REPLACED_LV_0 )
+			skill = sd->status.skill[sk_idx].flag - SKILL_FLAG_REPLACED_LV_0;
 
 		if( skill > 0 )
 		{
@@ -1850,8 +1851,9 @@ int npc_selllist(struct map_session_data* sd, int n, unsigned short* item_list)
 	// custom merchant shop exp bonus
 	if( battle_config.shop_exp > 0 && z > 0 && ( skill = pc_checkskill(sd,MC_OVERCHARGE) ) > 0)
 	{
-		if( sd->status.skill[MC_OVERCHARGE].flag >= SKILL_FLAG_REPLACED_LV_0 )
-			skill = sd->status.skill[MC_OVERCHARGE].flag - SKILL_FLAG_REPLACED_LV_0;
+		uint16 sk_idx = skill_get_index(MC_OVERCHARGE);
+		if( sd->status.skill[sk_idx].flag >= SKILL_FLAG_REPLACED_LV_0 )
+			skill = sd->status.skill[sk_idx].flag - SKILL_FLAG_REPLACED_LV_0;
 
 		if( skill > 0 )
 		{

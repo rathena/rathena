@@ -225,7 +225,7 @@ alberta_in,58,52,4	script	Purchasing Team#Buying	59,{
 				mes "Okay, you're now approved to open the Bulk Buyer Shop.";
 				set Zeny,Zeny-10000;
 				getitem 6377,5; //Buy_Stall_Permit
-				skill "ALL_BUYING_STORE",1,4;
+				skill "ALL_BUYING_STORE",1,SKILL_PERM_GRANT;
 				next;
 				mes "[Mr. Hugh]";
 				mes "Currently, only normal items ^8C2121EXCEPT^000000 equipment, certain potions, and hand-crafted items can be purchased in bulk, but this can still be very beneficial to you, depending on how you use it.";

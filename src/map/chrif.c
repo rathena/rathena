@@ -951,19 +951,21 @@ int chrif_changedsex(int fd) {
 		if ((sd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER) {
 			int i;
 			// remove specifical skills of Bard classes
-			for(i = 315; i <= 322; i++) {
-				if (sd->status.skill[i].id > 0 && sd->status.skill[i].flag == SKILL_FLAG_PERMANENT) {
-					sd->status.skill_point += sd->status.skill[i].lv;
-					sd->status.skill[i].id = 0;
-					sd->status.skill[i].lv = 0;
+			for(i = BA_MUSICALLESSON; i <= BA_APPLEIDUN; i++) {
+				uint16 sk_idx = skill_get_index(i);
+				if (sd->status.skill[sk_idx].id > 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PERMANENT) {
+					sd->status.skill_point += sd->status.skill[sk_idx].lv;
+					sd->status.skill[sk_idx].id = 0;
+					sd->status.skill[sk_idx].lv = 0;
 				}
 			}
 			// remove specifical skills of Dancer classes
-			for(i = 323; i <= 330; i++) {
-				if (sd->status.skill[i].id > 0 && sd->status.skill[i].flag == SKILL_FLAG_PERMANENT) {
-					sd->status.skill_point += sd->status.skill[i].lv;
-					sd->status.skill[i].id = 0;
-					sd->status.skill[i].lv = 0;
+			for(i = DC_DANCINGLESSON; i <= DC_SERVICEFORYOU; i++) {
+				uint16 sk_idx = skill_get_index(i);
+				if (sd->status.skill[sk_idx].id > 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PERMANENT) {
+					sd->status.skill_point += sd->status.skill[sk_idx].lv;
+					sd->status.skill[sk_idx].id = 0;
+					sd->status.skill[sk_idx].lv = 0;
 				}
 			}
 			clif_updatestatus(sd, SP_SKILLPOINT);
@@ -1030,7 +1032,7 @@ int chrif_divorceack(uint32 char_id, int partner_id) {
  *------------------------------------------*/
 int chrif_deadopt(int father_id, int mother_id, int child_id) {
 	struct map_session_data* sd;
-	int idx = skill_get_index(WE_CALLBABY);
+	uint16 idx = skill_get_index(WE_CALLBABY);
 
 	if( father_id && ( sd = map_charid2sd(father_id) ) != NULL && sd->status.child == child_id ) {
 		sd->status.child = 0;

@@ -60,6 +60,20 @@ struct view_data * mercenary_get_viewdata(int class_){
 }
 
 /**
+ * Get mercenary skill index for mercenary skill tree
+ * @param skill_id
+ * @return Index in skill_tree or -1
+ **/
+short mercenary_skill_get_index(uint16 skill_id) {
+	if (!SKILL_CHK_MERC(skill_id))
+		return -1;
+	skill_id -= MC_SKILLBASE;
+	if (skill_id >= MAX_MERCSKILL)
+		return -1;
+	return skill_id;
+}
+
+/**
 * Create a new Mercenary for Player
 * @param sd The Player
 * @param class_ Mercenary Class
@@ -445,14 +459,11 @@ void mercenary_kills(struct mercenary_data *md){
 * @return Skill Level or 0 if Mercenary doesn't have the skill
 **/
 int mercenary_checkskill(struct mercenary_data *md, uint16 skill_id) {
-	int i = skill_id - MC_SKILLBASE;
+	short idx = mercenary_skill_get_index(skill_id);
 
-	if( !md || !md->db )
+	if( !md || !md->db || idx == -1)
 		return 0;
-	if( md->db->skill[i].id == skill_id )
-		return md->db->skill[i].lv;
-
-	return 0;
+	return md->db->skill[idx].lv;
 }
 
 /**
@@ -529,6 +540,7 @@ static bool mercenary_readdb_sub(char* str[], int columns, int current)
 void mercenary_readdb(void) {
 	const char *filename[]={ "mercenary_db.txt",DBIMPORT"/mercenary_db.txt"};
 	uint8 i;
+
 	mercenary_count = 0; //Reset the counter
 	memset(mercenary_db,0,sizeof(mercenary_db));
 	for(i = 0; i<ARRAYLENGTH(filename); i++){
@@ -542,7 +554,9 @@ void mercenary_readdb(void) {
 static bool mercenary_read_skilldb_sub(char* str[], int columns, int current)
 {// <merc id>,<skill id>,<skill level>
 	struct s_mercenary_db *db;
-	uint16 i, class_, skill_id, skill_lv;
+	uint16 class_, skill_id, skill_lv;
+	uint8 i = 0;
+	short idx = -1;
 
 	class_ = atoi(str[0]);
 	ARR_FIND(0, MAX_MERCENARY_CLASS, i, class_ == mercenary_db[i].class_);
@@ -553,18 +567,16 @@ static bool mercenary_read_skilldb_sub(char* str[], int columns, int current)
 	}
 
 	skill_id = atoi(str[1]);
-	if( skill_id < MC_SKILLBASE || skill_id >= MC_SKILLBASE + MAX_MERCSKILL )
-	{
-		ShowError("read_mercenary_skilldb : Skill %d out of range.\n", skill_id);
+	if( (idx = mercenary_skill_get_index(skill_id)) == -1 ) {
+		ShowError("read_mercenary_skilldb: Invalid Mercenary skill '%s'.\n", str[1]);
 		return false;
 	}
 
 	db = &mercenary_db[i];
 	skill_lv = atoi(str[2]);
 
-	i = skill_id - MC_SKILLBASE;
-	db->skill[i].id = skill_id;
-	db->skill[i].lv = skill_lv;
+	db->skill[idx].id = skill_id;
+	db->skill[idx].lv = skill_lv;
 
 	return true;
 }
@@ -575,6 +587,7 @@ static bool mercenary_read_skilldb_sub(char* str[], int columns, int current)
 void mercenary_read_skilldb(void){
 	const char *filename[]={ "mercenary_skill_db.txt",DBIMPORT"/mercenary_skill_db.txt"};
 	uint8 i;
+
 	for(i = 0; i<ARRAYLENGTH(filename); i++){
 		sv_readdb(db_path, filename[i], ',', 3, 3, -1, &mercenary_read_skilldb_sub, i);
 	}
