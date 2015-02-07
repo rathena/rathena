@@ -1,15 +1,9 @@
 //===== rAthena Script =======================================
 //= Eden Group Quest - Quests NPCs
-//===== By: ==================================================
-//= L0ne_W0lf
-//===== Current Version: =====================================
-//= 1.6
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: =========================================
 //= Eden Group Headquarter NPCs.
-//===== Additional Comments: =================================
-//= 1.0 First Version.
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [L0ne_W0lf]
 //= 1.1 Removed unencoded comments (Korean -> Gibberish)
 //=     Readded the GM helper NPC, commented out.
 //= 1.2 Some little optimization here and there. [Masao]
@@ -20,6 +14,7 @@
 //= 1.4b Added 'disable_items' command. [Euphy]
 //= 1.5 Added GM management function. [Euphy]
 //= 1.6 Kagerou/Oboro support (Class -> BaseClass) [Euphy]
+//= 2.0 Updated Instructor Ur's quests. [Capuche]
 //============================================================
 
 moc_para01,25,35,4	script	Instructor Boya#para01	469,{
@@ -3841,591 +3836,1282 @@ moc_para01,179,44,3	script	Chef	820,{
 	}
 }
 
-moc_para01,23,35,4	script	Instructor Ur	468,{
+moc_para01,23,35,5	script	Instructor Ur#2nd01	4_M_KNIGHT_BLACK,{
 	mes "[Instructor Ur]";
-	if (countitem(6219) > 0) {
-		if (BaseLevel < 60) {
-			mes "Umm. You should raise your level more!";
-			mes "You need to be at least level 60!";
-			mes "I'm sorry but those are the rules.";
-			close;
-		}
-		if ((BaseLevel >= 60) && (BaseLevel < 70) && (para_suv01 < 39)) {
-			callsub L_GiveQuest;
-			mes "Great! I want you to go find ^0000FFRomeo in Comodo^000000.";
-			next;
-			set para_suv01,39;
-			setquest 7214;
-			mes "[Instructor Ur]";
-			mes "You should see him near the entrance to the ^0000FFNorth Cave in Comodo^000000.";
-			close;
-		}
-		if ((para_suv01 == 39) && (romeo < 4)) {
-			mes "What are you waiting for? Go find ^0000FFRomeo in Comodo^000000.";
-			next;
-			mes "[Instructor Ur]";
-			mes "You should see him near the entrance to the ^0000FFNorth Cave in Comodo^000000.";
-			close;
-		}
-		if ((para_suv01 == 40) && (romeo == 4)) callsub L_CompleteQuest,7218,41,5;
-		if (para_suv01 == 41) callsub L_Toren;
-		if ((para_suv01 == 42) && (BaseLevel < 70)) callsub L_Level,70;
-		if ((BaseLevel >= 70) && (BaseLevel < 80) && (para_suv01 < 39 || para_suv01 == 42)) {
-			callsub L_GiveQuest;
-			mes "Great! I want you to go find ^0000FFJohan in Glast Heim^000000.";
-			next;
-			set para_suv01,43;
-			setquest 7219;
-			mes "[Instructor Ur]";
-			mes "You should see him near the entrance of the ^0000FFGlast Heim Church^000000.";
-			close;
-		}
-		if ((para_suv01 == 43) && (johan < 3)) {
-			mes "What are you waiting for? Go find ^0000FFJohan in Glast Heim^000000.";
-			next;
-			mes "[Instructor Ur]";
-			mes "You should see him near the entrance of the ^0000FFGlast Heim Church^000000.";
-			close;
-		}
-		if ((para_suv01 == 43) && (johan == 3)) callsub L_CompleteQuest,7222,44,7;
-		if (para_suv01 == 44) callsub L_Toren;
-		if ((para_suv01 == 45) && (BaseLevel < 80)) callsub L_Level,80;
-		if ((BaseLevel >= 80) && (BaseLevel < 90) && (para_suv01 < 39 || para_suv01 == 42 || para_suv01 == 45)) {
-			callsub L_GiveQuest;
-			mes "Great! I want you to go find ^0000FFKiren in Einbroch^000000.";
-			next;
-			set para_suv01,46;
-			setquest 7223;
-			mes "[Instructor Ur]";
-			mes "You should see her near the ^0000FFSouth Enterance^000000 outside of town.";
-			close;
-		}
-		if ((para_suv01 == 46) && (kiren < 3)) {
-			mes "What are you waiting for? Go find ^0000FFKiren in Einbroch^000000.";
-			next;
-			mes "[Instructor Ur]";
-			mes "You should see her near the ^0000FFSouth Enterance^000000 outside of town.";
-			close;
-		}
-		if ((para_suv01 == 46) && (kiren == 3)) callsub L_CompleteQuest,7228,47,9;
-		if (para_suv01 == 47) callsub L_Toren;
-		if ((para_suv01 == 48) && (BaseLevel < 90)) callsub L_Level,90;
-		if ((BaseLevel >= 90) && (BaseLevel < 100) && (para_suv01 < 39 || para_suv01 == 42 || para_suv01 == 45 || para_suv01 == 48)) {
-			callsub L_GiveQuest;
-			mes "Great! I want you to go find ^0000FFNaomi in Ice Dungeon^000000.";
-			next;
-			set para_suv01,49;
-			setquest 7229;
-			mes "[Instructor Ur]";
-			mes "You should see her near the ^0000FFEntrance^000000 when you enter the dungeon.";
-			close;
-		}
-		if ((para_suv01 == 49) && (naomi < 3)) {
-			mes "What are you waiting for? Go find ^0000FFNaomi in Ice Dungeon^000000.";
-			next;
-			mes "[Instructor Ur]";
-			mes "You should see her near the ^0000FFEntrance^000000 when you enter the dungeon.";
-			close;
-		}
-		if ((para_suv01 == 49) && (naomi == 3)) callsub L_CompleteQuest,7232,50,11;
-		if (para_suv01 == 50) callsub L_Toren;
-		if ((para_suv01 == 51) && (BaseLevel < 100)) callsub L_Level,100;
-		if ((BaseLevel >= 100) && (para_suv01 < 39 || para_suv01 == 42 || para_suv01 == 45 || para_suv01 == 48 || para_suv01 == 51)) {
-			callsub L_GiveQuest;
-			mes "Great! I want you to go find ^0000FFMargaret in the Expedition Camp^000000.";
-			next;
-			set para_suv01,52;
-			setquest 7233;
-			mes "[Instructor Ur]";
-			mes "You should see her near the ^0000FFBuilding in the Center^000000 of the Expedition Camp.";
-			close;
-		}
-		if ((para_suv01 == 52) && (margaret < 7)) {
-			mes "What are you waiting for? Go find ^0000FFMargaret in the Expedition Camp^000000.";
-			next;
-			mes "[Instructor Ur]";
-			mes "You should see her near the ^0000FFBuilding in the Center^000000 of the Expedition Camp.";
-			close;
-		}
-		if ((para_suv01 == 52) && (margaret == 7)) callsub L_CompleteQuest,7237,53,13;
-		if (para_suv01 == 53) callsub L_Toren;
-		if (para_suv01 > 53) {
-			mes "[Instructor Ur]";
-			mes "I'm out of rewards to give to you. But don't worry, there are much better gears out there for you to obtain.";
-			close;
-		}
-	}
-	mes "You are not in my group are you?";
-	mes "I don't have anything to say to outsiders.";
-	mes "If you want something register with my group.";
-	next;
-	mes "[Instructor Ur]";
-	mes "To register with the Eden Group ask Laime Evenor next to me.";
-	close;
-
-L_GiveQuest:
-	mes "You are just in time! I have a new quest for you, would you like to start it now?";
-	next;
-	if(select("Yes!:No, thanks.") == 2) {
+	if (countitem(6219) < 1) {// Para_Team_Mark
+		mes "Hey there!";
+		mes "I see you're not one of our agents?";
+		mes "Are you interested in joining us?";
+		next;
 		mes "[Instructor Ur]";
-		mes "Thats too bad. I had some nice rewards I could have given to you for helping me.";
-		close;
+		mes "There are no fees to join!";
+		mes "We are brokers that send help where help is needed. More adventurers like you means more profit.";
+		next;
+		mes "[Instructor Ur]";
+		mes "If you're interested, talk to Raim.";
+		mes "Raim's a good guy.";
+		mes "Hahaha..";
 	}
-	mes "[Instructor Ur]";
+	else if (para_2nd01 == 0) {
+		mes "Hello?";
+		mes "Do you need help?";
+		mes "This is a general request in order to receive the next board's request.";
+		next;
+		if (select( "What are you doing here?", "It's nothing." ) == 2) {
+			mes "[Instructor Ur]";
+			mes "I guess I have no business with you then.";
+			close;
+		}
+		mes "[Instructor Ur]";
+		mes "Well, I'm an instructor for Eden Group.";
+		next;
+		mes "[Instructor Ur]";
+		mes "I'm here to give you missions based on your current base level.";
+		mes "These missions are not very difficult to do.";
+		next;
+		mes "[Instructor Ur]";
+		mes "I am the senior instructor here at Eden Group.";
+		mes "What do you say are you up for the challenge?";
+		next;
+		if (select( "Not today I'm not.", "Okay, I'll try." ) == 1) {
+			mes "[Instructor Ur]";
+			mes "Really?";
+			mes "That's so sad.";
+			mes "When you finish these missions I will even give you a pretty decent reward.";
+			close;
+		}
+		mes "[Instructor Ur]";
+		mes "Yeah!";
+		mes "Ok, let me check what mission you should get ok?";
+		next;
+		mes "[Instructor Ur]";
+		if (BaseLevel < 60) {
+			mes "Well... I know that you've got the heart but you're just a little too weak to help.";
+			next;
+			mes "[Instructor Ur]";
+			mes "Sorry, but your basic level should be at least 60 to help with these missions.";
+		}
+		else if (BaseLevel < 70) {
+			mes "Ok, I guess you're the bare minimum level for these missions.";
+			next;
+			mes "[Instructor Ur]";
+			mes "Based on your level, I think that the Comodo area suits you.";
+			next;
+			mes "[Instructor Ur]";
+			mes "Do you know where Comodo is?";
+			mes "You can get there by going to Morocc and then through Pharos Lighthouse.";
+			next;
+			mes "[Instructor Ur]";
+			mes "Comodo is a small city on the coast with many caves.";
+			next;
+			mes "[Instructor Ur]";
+			mes "Look for the cave located to the north. There's someone there named Romeo.";
+			mes "You know? As in Romeo, Romeo, wherefore art thou Romeo.";
+			next;
+			mes "[Instructor Ur]";
+			mes "Go there are get the mission from him.";
+			mes "Well, then come back here alive when you're done!";
+			para_2nd01 = 1;
+			setquest 7214;// Advanced Training at Comodo
+		}
+		else if (BaseLevel < 80) {
+			mes "Let's see...";
+			mes "Your level would suggest that Comodo is just too easy for you.";
+			mes "Yeah, here we go.";
+			next;
+			mes "[Instructor Ur]";
+			mes "Do you know where Glast Heim is?";
+			mes "If there was a tragic accident now, the capital of the Rune-Midgarts Kingdom could revert back to there.";
+			next;
+			mes "[Instructor Ur]";
+			mes "Well, if it wasn't infested with undead monsters, it would become the new capitol of Rune-Midgarts.";
+			next;
+			mes "[Instructor Ur]";
+			mes "Please, come back alive.";
+			para_2nd01 = 7;
+			setquest 7219;// Advanced Training at Glast Heim
+		}
+		else if (BaseLevel < 90) {
+			mes "Ah, ok so for you...";
+			mes "Hmm where do I send you?";
+			next;
+			mes "[Instructor Ur]";
+			mes "There an industrial city called Einbroch.";
+			mes "You know it? It's a city covered in smog.";
+			mes "It's a pretty gloomy city come to think of it.";
+			next;
+			mes "[Instructor Ur]";
+			mes "Anyways, go to Einbroch and find the Dispatched Instructor there. He should be in the field south of the main city.";
+			setquest 7223;// Advanced Training in Einbroch
+			para_2nd01 = 12;
+		}
+		else
+			callsub S_Quest89100;
+	}
+	else if (para_2nd01 == 5) {
+		mes "Oh, there he is.";
+		mes "Romeo seems to be back from his field report.";
+		next;
+		mes "[Instructor Ur]";
+		mes "We have rewards for you.";
+		mes "I'm sure Romeo gave you some items, but we brought more useful things.";
+		next;
+		mes "[Instructor Ur]";
+		mes "Do you know where the weapon storage is at?";
+		mes "Go out through that large blue door and walk to the end of the hallway.";
+		mes "Ask the Blacksmith, and he will give you new equipment.";
+		next;
+		mes "[Instructor Ur]";
+		mes "And the 2nd stage training and missions start at level 70, so come back then.";
+		mes "Don't forget, I'll be waiting for you.";
+		para_2nd01 = 6;
+		para_2nd02 = 1;
+		erasequest 7218;// Report to Instructor Ur
+	}
+	else if (para_2nd01 == 6) {
+		if (BaseLevel > 69) {
+			mes "Hey, buddy~";
+			mes "What's going on?";
+			next;
+			switch( select( "I want to start training.", "I'm just visiting." ) ) {
+				mes "[Instructor Ur]";
+			case 1:
+				mes "Hmm... You have a good form!";
+				mes "Let me see....";
+				mes "Which location would suit you...?";
+				next;
+				mes "[Instructor Ur]";
+				if (BaseLevel < 80) {
+					mes "Ah, this place should be good!";
+					mes "Do you know where Glast Heim is?";
+					mes "If it wasn't for that terrible accident, Glast Heim would still be";
+					mes "the capital of Rune Midgard, not Prontera.";
+					next;
+					mes "[Instructor Ur]";
+					mes "Anyways, that ancient castle is now full of undead monsters .";
+					mes "It's especially bad around the Abbey in the south.";
+					next;
+					mes "[Instructor Ur]";
+					mes "All of those undead monsters come from the underground graveyard";
+					mes "Well... I guess you don't have to go all the way into the graveyard...";
+					next;
+					mes "[Instructor Ur]";
+					mes "Once you get to the Abbey you'll see our unit member stationed in front of the entrance.";
+					mes "Follow his instructions to help clear out that area.";
+					next;
+					mes "[Instructor Ur]";
+					mes "Please come back alive.";
+					para_2nd01 = 7;
+					setquest 7219;// Advanced Training at Glast Heim
+				}
+				else if (BaseLevel < 90)
+					callsub S_Quest7990;
+				else
+					callsub S_Quest89100;
+				close;
+			case 2:
+				mes "Really? At your level, I think you can easily complete the top class missions..";
+				mes "I'll be here if you change your mind.";
+				close;
+			}
+		}
+		else {
+			mes "2nd stage training missions start at level 70.";
+			mes "I'll see you then.";
+			mes "Did you pick up the necessary equipment from the storage?";
+			mes "Hahaha!";
+		}
+	}
+	else if (para_2nd01 == 10) {
+		mes "Oh! You're here!";
+		mes "I just got a message from Johan.";
+		mes "I think he's not telling me something, but I can't figure out what that is.";
+		next;
+		mes "[Instructor Ur]";
+		mes "Anyways, good job. I'm glad you're not hurt";
+		mes "The Blacksmith BK said he'll reinforce your weapon.";
+		next;
+		callsub S_Para2;
+		mes "[Instructor Ur]";
+		mes "You know where the Blacksmith is at right??";
+		mes "Go out through the blue door, to the end of the hallway.";
+		mes "BK is a great blacksmith, he'll make your weapon stronger.";
+		mes "What are you waiting for?";
+		para_2nd01 = 11;// Report to Instructor Ur
+		erasequest 7222;
+	}
+	else if (para_2nd01 == 11) {
+		if (BaseLevel > 79) {
+			mes "Ah, ever so improving "+ strcharinfo(0) +"?";
+			mes "To what do I owe this pleasure?";
+			next;
+			switch( select( "I came for more training.", "I'm just visiting." ) ) {
+				mes "[Instructor Ur]";
+			case 1:
+				mes "Hmm... You have a good form!";
+				mes "Let me see....";
+				next;
+				mes "[Instructor Ur]";
+				if (BaseLevel < 90)
+					callsub S_Quest7990;
+				else
+					callsub S_Quest89100;
+				close;
+			case 2:
+				mes "Really? At your level, I think you can easily complete the top class missions..";
+				mes "I'll be here if you change your mind.";
+				close;
+			}
+		}
+		else {
+			mes "3rd stage training starts at level 80.";
+			mes "I'll see you then.";
+			mes "Oh, if you haven't reinforced your weapon yet, go talk to BK.";
+		}
+	}
+	else if (para_2nd01 == 15) {
+		mes "Ah, you've come.";
+		mes "I just received a message from Kiren.";
+		mes "How was he? He didn't throw a tantrum for waking him up?";
+		mes "I wouldn't be surprised if he did";
+		next;
+		mes "[Instructor Ur]";
+		mes "Anyways, good job. I'm glad you're not hurt.";
+		mes "The Blacksmith BK said he'll reinforce your weapon.";
+		next;
+		callsub S_Para2;
+		mes "[Instructor Ur]";
+		mes "You know where the Blacksmith is at right??";
+		mes "Go out through the blue door, to the end of the hallway.";
+		mes "BK is a great blacksmith, he'll make your weapon stronger.";
+		mes "What are you waiting for?";
+		erasequest 7228;// Report to Instructor Ur
+		para_2nd01 = 16;
+	}
+	else if (para_2nd01 == 16) {
+		if (BaseLevel > 89) {
+			mes "It's nice to see you still strong!";
+			mes "What brings you today?";
+			next;
+			if (select( "I want to continue training.", "I'm just visiting." ) == 2) {
+				mes "[Instructor Ur]";
+				mes "Really? At your level, I think you can easily complete the top class missions..";
+				mes "I'll be here if you change your mind.";
+				close;
+			}
+			mes "[Instructor Ur]";
+			callsub S_Quest89100;
+		}
+		else {
+			mes "4th stage training starts at level 90.";
+			mes "I'll see you then.";
+			mes "Oh, if you haven't reinforced your weapon yet, go talk to BK.";
+		}
+	}
+	else if (para_2nd01 == 20) {
+		mes "Congratulations on completing all training stages!";
+		mes "That took quite a bit of time huh?";
+		mes "The Blacksmith BK said he'll reinforce your weapon.";
+		next;
+		callsub S_Para2;
+		mes "[Instructor Ur]";
+		mes "You know where the Blacksmith is at right??";
+		mes "Go out through the blue door, to the end of the hallway.";
+		mes "BK is a great blacksmith, he'll make your weapon stronger.";
+		next;
+		mes "[Instructor Ur]";
+		mes "Good job!";
+		para_2nd01 = 30;
+		erasequest 7232;//Report to Instructor Ur
+	}
+	else if (para_2nd01 == 29) {
+		mes "Congratulations on completing all training stages!";
+		mes "How was the Expedition? From the looks of it, it must've been pretty tough.";
+		next;
+		mes "[Instructor Ur]";
+		mes "Good job..";
+		mes "The Blacksmith BK said he'll reinforce your weapon.";
+		next;
+		callsub S_Para2;
+		mes "[Instructor Ur]";
+		mes "You know where the Blacksmith is at right??";
+		mes "Go out through the blue door, to the end of the hallway.";
+		mes "BK is a great blacksmith, he'll make your weapon stronger.";
+		next;
+		mes "[Instructor Ur]";
+		mes "By the way, it looked like Michael had something to tell you as well";
+		mes "Go talk to him, he's at the weapon storage as well.";
+		mes "Go ahead.";
+		para_2nd01 = 30;
+		erasequest 7237;// Report to Instructor Ur
+	}
+	else if (para_2nd01 == 30) {
+		mes "Good job.";
+		mes "Oh, if you haven't reinforced your weapon yet, go talk to BK.";
+		next;
+		mes "[Instructor Ur]";
+		mes "Also, sometimes Michael needs help, so if you have time try to help him out.";
+		mes "I'm sure he'll reward you for your time.";
+	}
+	else if (para_2nd01 < 5)
+		callsub S_Direction,"Comodo";
+	else if (para_2nd01 < 10)
+		callsub S_Direction,"Glast Heim Castle";
+	else if (para_2nd01 < 15)
+		callsub S_Direction,"Einbroch";
+	else if (para_2nd01 < 20)
+		callsub S_Direction,"Ice Dungeon";
+	else if (para_2nd01 < 29) {
+		mes "You have to travel very far to get to the ^4d4dffRune Midgard Expedition Camp^000000!";
+		mes "If you want to stay there then earn your keep by doing missions. Got it?";
+	}
+	close;
+S_Para2:
+	if (para_2nd02 == 0) {
+		mes "[Instructor Ur]";
+		mes "I just realized... this was your first mission, wasn't it?";
+		mes "You must not have gotten the basic equipments yet, right?";
+		mes "Pick them up at the weapon storage.";
+		mes "Ask the Blacksmith Michael and he'll give you the equipment.";
+		para_2nd02 = 1;
+		next;
+	}
 	return;
-L_CompleteQuest:
-	mes "Done already? Great work!";
+S_Direction:
+	mes "So, have you been in ^4d4dff"+ getarg(0) +"^000000 yet?";
+	mes "Didn't I tell you to go there?";
+	mes "Go there first and then come back to me. Okay?";
+	return;
+
+S_Quest7990:
+	mes "Hmm.. Not bad ...";
+	mes "You must be getting a hang of this..";
+	mes "Let's go with a simple mission this time";
 	next;
-	set para_suv01, getarg(1);
-	completequest getarg(0);
-	if (para_suv02 < getarg(2)) set para_suv02, getarg(2);
 	mes "[Instructor Ur]";
-L_Toren:
-	mes "Go to the back room and talk to ^0000FFToren and the Weapons Expert^000000 for your rewards!";
-	close;
-L_Level:
-	mes "I'm sorry, I have no new quests available for you at this time. Come back when you are at least ^FF0000Base Level "+getarg(0)+"^000000.";
-	close;
+	mes "There is a industrial city called Einbroch.";
+	mes "You've heard of it? It's a city clouded with pollution.";
+	mes "You'll appreciate the environment here so much more after visiting that city...";
+	mes "We should all be thankful.";
+	next;
+	mes "[Instructor Ur]";
+	mes "Anyways, go out to the field south of Einbroch and you'll see the Dispatched Instructor.";
+	mes "I'm sure he'll recognize you first.";
+	mes "Don't forget to bring the Eden Group badge.";
+	next;
+	mes "[Instructor Ur]";
+	mes "The city's pollution is unbearable";
+	mes "But the surrounding fields are relatively clean...";
+	mes "This should be pretty easy for you.";
+	para_2nd01 = 12;
+	setquest 7223;// Advanced Training in Einbroch
+	return;
+
+S_Quest89100:
+	if (BaseLevel < 100) {
+		mes "Uh-huh....";
+		mes "Hmm...";
+		mes "You seem like a cool-headed person. What do you think about the ice caves?";
+		next;
+		mes "[Instructor Ur]";
+		mes "North of the city of Rachel is a cave filled with ice.";
+		mes "Find the Dispatched Instructor there.";
+		para_2nd01 = 17;
+		setquest 7229;// Advanced Training in Ice Dungeon
+	}
+	else {
+		mes "Well, well...";
+		mes "I don't even know where to send you now.";
+		mes "I'm sure you are familiar with most places around here";
+		next;
+		mes "[Instructor Ur]";
+		mes "Then, should I send you somewhere farther this time?";
+		mes "There is a cat hand agent here.";
+		mes "Do you see him over there?";
+		next;
+		mes "[Instructor Ur]";
+		mes "Through him, you can get to Ash Vacuum pretty easily .";
+		mes "Since there is a Expedition Camp there...";
+		next;
+		mes "[Instructor Ur]";
+		mes "All you have to do is find the Eden Group agent there.";
+		mes "Tell him I sent you, and he'll give you instructions.";
+		mes "You can explore the new world";
+		mes "It's like a vacation isn't it?";
+		next;
+		mes "[Instructor Ur]";
+		mes "Hahaha!";
+		mes ".. Maybe I'll go instead of sending you.";
+		mes "Anyways, their names are Ma~ something... I don't know.";
+		next;
+		mes "[Instructor Ur]";
+		mes "So, the mission, once again, is finding our agent at the Midgard Expedition Camp.";
+		mes "Isn't this the easiest mission you've ever had?";
+		mes "Don't forget my present when you come back~!";
+		para_2nd01 = 22;
+		setquest 7233;// Advanced Training at Ash Vacuum
+	}
+	return;
 }
 
-comodo,173,354,6	script	Romeo#01	55,{
-	if ((para_suv01 == 39) && (romeo < 1)) {
-		mes "[Romeo]";
-		mes "Ah, there you are.";
+//--60~69
+// comodo,173,354,5	script	Dispatched Instructor#2nd02	1_M_JOBTESTER,{
+comodo,173,354,5	script	Dispatched Instructor#02	1_M_JOBTESTER,{
+	mes "[Romeo]";
+	if (para_2nd01 < 1) {
+		mes "How are you?";
+		mes "Comodo has the best weather in the whole world.";
+		mes "Even during the winter, Comodo has great weather.";
 		next;
 		mes "[Romeo]";
-		mes "Before we begin, I want to test you.";
+		mes "Do you know why?";
+		mes "Comodo is surrounded by the ocean and caves.";
+		mes "Seasonal changes don't make any difference in the temperature here.";
 		next;
-		set romeo,1;
-		changequest 7214,7215;
 		mes "[Romeo]";
-		mes "Enter the cave and kill ^0000FF3 Stalactic Golems^000000, then return to me.";
-		close;
+		mes "Take it easy here.";
+		mes "This area is a place for relaxation.";
 	}
-	if (romeo == 1) {
+	else if (para_2nd01 == 1) {
+		mes "How are you?";
+		mes "You were sent here by Instructor Ur right?";
+		mes "Did you come here for a quest?";
+		next;
+		mes "[Romeo]";
+		mes "I don't know if this will fit you well";
+		mes "Why don't you just try it.";
+		next;
+		mes "[Romeo]";
+		mes "The thing about this cave is that, many monsters are created from stones.";
+		mes "If you stay cautious, they shouldn't be too threatning...";
+		next;
+		mes "[Romeo]";
+		mes "But most of them have range attacks..";
+		mes "And sometimes a really strong one roams around.";
+		next;
+		mes "[Romeo]";
+		mes "Well... this is the reason why you train right?";
+		mes "Let's try taking on one of the big monsters";
+		next;
+		mes "[Romeo]";
+		mes "'They are called 'Stalactic Golem'.";
+		mes "Try defeating some of them.";
+		mes "Not too difficult, right?";
+		para_2nd01 = 2;
+		erasequest 7214;
+		setquest 7215;
+	}
+	else if (para_2nd01 == 2) {
 		if (checkquest(7215,HUNTING) == 2) {
-			mes "[Romeo]";
-			mes "You did it? Thats all the proof I needed.";
+			mes "So, how good of an explorer are you now?";
+			mes "You've fought these before, so clearing this cave should be possible.";
 			next;
 			mes "[Romeo]";
-			mes "You should then have no trouble killing ^0000FF10 more Stalactic Golems^000000, right?";
+			mes "As I said before, since Komodo is a city inside a cave..";
+			mes "Access to the outside world is mostly done through the east entrance, but...";
 			next;
+			mes "[Romeo]";
+			mes "Let's try going out through the north.";
+			mes "There should be things you can hunt out there.";
+			next;
+			mes "[Romeo]";
+			mes "And instead of just walking out,";
+			mes "Let's kill about 10 Stalactic Golems on the way out.";
+			next;
+			mes "[Romeo]";
+			mes "So that, travelers coming from the north can safely walk through.";
+			mes "Remember, 10 Stalactic Golems. Then come to the other side of northern part of the cave";
+			next;
+			mes "[Romeo]";
+			mes "I'll be waiting outside.";
+			para_2nd01 = 3;
 			getexp 10000,10000;
-			set romeo,2;
-			changequest 7215,7216;
-			mes "[Romeo]";
-			mes "^0000FFMeet me at the north-east exit of the cave^000000 when you are done, I will be waiting for you outside.";
-			close;
+			erasequest 7215;// Stalactic Golem Hunt
+			setquest 7216;// More Golem Hunting
 		}
-		mes "[Romeo]";
-		mes "Don't give up, I'm only asking you to kill ^0000FF3 Stalactic Golems^000000.";
-		close;
+		else {
+			mes "As a test of the difficulty of this cave";
+			mes "Go defeat 3 Stalactic Golems.";
+			mes "Watch out for other monsters as well.";
+			next;
+			mes "[Romeo]";
+			mes "Let me help you recover if you are tired.";
+			npcskill "AL_HEAL",10,99,60;
+			percentheal 0,100;
+		}
 	}
-	if (romeo == 2) {
-		mes "[Romeo]";
-		mes "You should then have no trouble killing ^0000FF10 more Stalactic Golems^000000, right?";
-		next;
-		mes "[Romeo]";
-		mes "After you have killed all ^0000FF10 Stalactic Golems^000000, ^0000FFmeet me at the north-east exit of the cave^000000. I will be waiting for you outside.";
-		close;
+	else if (para_2nd01 == 3) {
+		mes "You must go through this cave to the outside.";
+		mes "Don't forget to defeat the Stalactic Golems you run into on the way.";
 	}
-	mes "[Romeo]";
-	mes "The person I'm waiting for is late...";
+	else {
+		mes "I always give the same test to the trainees that come here..";
+		mes "I've never seen anyone pass it so perfectly like you did.";
+	}
 	close;
 }
 
-um_fild01,34,280,6	script	Romeo#02	55,{
-	if (romeo == 2) {
+um_fild01,34,280,5	script	Instructor Romeo#2nd02	1_M_JOBTESTER,{
+	mes "[Romeo]";
+	if (para_2nd01 < 2) {
+		mes "If you were sent from the Eden Group for training, wait for me at the town.";
+		mes "I'm waiting for a different trainee right now.";
+	}
+	else if (para_2nd01 == 2) {
+		mes "No no.. Not here.";
+		mes "I'm waiting for a different trainee right now.";
+		mes "Go back.";
+	}
+	else if (para_2nd01 == 3) {
 		if (checkquest(7216,HUNTING) == 2) {
-			mes "[Romeo]";
-			mes "Wow, you have arrived sooner than I expected.";
+			mes "Ah, I see you didn't get lost.";
+			mes "Your skills at defeating those Stalactic Golems were better than I expected.";
+			mes "Just means you've improved that much.";
 			next;
 			mes "[Romeo]";
-			mes "There is only one more thing I need you to do for me.";
+			mes "Now look around here";
+			mes "We're in a dense forest now.";
+			mes "There are Dryads and Wootans here...";
 			next;
+			mes "[Romeo]";
+			mes "Next task is to clearing this area of monsters.";
+			mes "Bring me the following from the monsters.";
+			next;
+			mes "[Romeo]";
+			mes "5 Wootan Fighter's Shoulderguard";
+			mes "7 Dryad's Sharp Leaf";
+			next;
+			mes "[Romeo]";
+			mes "This is the last test.";
+			mes "Good luck.";
+			para_2nd01 = 4;
+			erasequest 7216;// More Golem Hunting
+			setquest 7217;// Field drops
 			getexp 10000,10000;
-			set romeo,3;
-			changequest 7216,7217;
-			mes "[Romeo]";
-			mes "Bring me ^0000FF5 Shoulder Pads and 7 Sharp Leafs^000000.";
-			close;
 		}
-		mes "[Romeo]";
-		mes "You are early, but you didn't kill ^0000FF10 Stalactic Golems^000000 like I asked you to do.";
-		close;
-	}
-	if (romeo == 3) {
-		if ((countitem(7196) >= 5) && (countitem(7100) >= 7)) {
-			mes "[Romeo]";
-			mes "Your work here is done my friend.";
+		else {
+			mes "I see you didn't get lost.";
+			mes "But you didn't defeat enough Stalactic Golems..";
+			mes "Go back and defeat them.";
 			next;
-			delitem 7196,5; // Shoulder Pad
-			delitem 7100,7; // Sharp Leaf
-			getexp 10000,10000;
-			set romeo,4;
-			set para_suv01,40;
-			changequest 7217,7218;
 			mes "[Romeo]";
-			mes "Return to the ^33CC33Paradise Group Headquarters^000000 for your reward.";
-			close;
+			mes "I'll help you recover if you are tired.";
+			npcskill "AL_HEAL",10,99,60;
+			percentheal 0,100;
 		}
-		mes "[Romeo]";
-		mes "Bring me ^0000FF5 Shoulder Pads and 7 Sharp Leafs^000000.";
-		close;
 	}
-	if (romeo == 4) {
-		mes "[Romeo]";
-		mes "Thank you again for all your help.";
-		next;
-		mes "[Romeo]";
-		mes "Return to the ^33CC33Paradise Group Headquarters^000000 for your reward.";
-		close;
+	else if (para_2nd01 == 4) {
+		if (countitem(7196) > 4 && countitem(7100) > 6) {// Shoulder_Protection, Sharp_Leaf
+			mes "You really got these by defeating the monsters?";
+			mes "I believe you. I want to get out of here anyways.";
+			next;
+			mes "[Romeo]";
+			mes "There are no more training tasks here.";
+			mes "Go back and report to Ur.";
+			delitem 7196,5;
+			delitem 7100,7;
+			para_2nd01 = 5;
+			erasequest 7217;// Field drops
+			setquest 7218;// Report to Instructor Ur
+			getexp 10000,10000;
+		}
+		else {
+			mes "Didn't I already tell you the last task?";
+			mes "Defeat the monsters in this forest, and bring me the items I asked for.";
+			next;
+			mes "[Romeo]";
+			mes "5 Wootan Fighter's Shoulderguard";
+			mes "7 Dryad's Sharp Leaf";
+			mes "You must bring me those to pass this test.";
+			next;
+			mes "[Romeo]";
+			mes "I'll help you recover if you are tired.";
+			npcskill "AL_HEAL",10,99,60;
+			percentheal 0,100;
+		}
 	}
-	mes "[Romeo]";
-	mes "What is taking so long...";
+	else {
+		mes "Ugh, It's way too hot here.";
+		mes "You can leave now.";
+	}
 	close;
 }
 
-glast_01,195,131,6	script	Johan	95,{
-	if ((para_suv01 == 43) && (johan < 1)) {
-		mes "[Johan]";
-		mes "...";
-		next;
-		mes "[Johan]";
-		mes "I don't need to explain anything to you.";
-		next;
-		set johan,1;
-		changequest 7219,7220;
-		mes "[Johan]";
-		mes "Go kill ^0000FF20 Wraiths^000000.";
-		close;
-	}
-	if (johan == 1) {
-		if (checkquest(7220,HUNTING) == 2) {
-			mes "[Johan]";
-			mes "Good.";
-			next;
-			mes "[Johan]";
-			mes "Next I want you to kill ^0000FF10 Evil Druids^000000.";
-			next;
-			getexp 20000,20000;
-			set johan,2;
-			changequest 7220,7221;
-			mes "[Johan]";
-			mes "This time kill them quickly, I don't like to wait.";
-			close;
-		}
-		mes "[Johan]";
-		mes "... ^0000FF20 Wraiths^000000 shouldn't take this long.";
-		close;
-	}
-	if (johan == 2) {
-		if (checkquest(7221,HUNTING) == 2) {
-			mes "[Johan]";
-			mes "Hmmmm, better.";
-			next;
-			mes "[Johan]";
-			mes "Ok, I'm done with you.";
-			next;
-			getexp 20000,20000;
-			set johan,3;
-			changequest 7221,7222;
-			mes "[Johan]";
-			mes "Return to the ^33CC33Paradise Group Headquarters^000000 for your reward.";
-			close;
-		}
-		mes "[Johan]";
-		mes "Hurry up, it is only ^0000FF10 Evil Druids^000000.";
-		close;
-	}
-	if (johan == 3) {
-		mes "[Johan]";
-		mes "Why are you still here?";
-		next;
-		mes "[Johan]";
-		mes "Return to the ^33CC33Paradise Group Headquarters^000000 for your reward.";
-		close;
-	}
+//--70~79
+// glast_01,195,131,5	script	Dispatched Instructor#2nd03	4_F_SISTER,{
+glast_01,195,131,5	script	Dispatched Instructor#03	4_F_SISTER,{
 	mes "[Johan]";
-	mes "Go away... I'm busy.";
+	if (para_2nd01 < 7) {
+		mes "Ah~ So bored.";
+		mes "You're not the one Ur sent, are you?";
+		mes "Oh~ That's okay.";
+		next;
+		mes "[Johan]";
+		mes "This is Glast Heim Abbey.";
+		mes "Be careful, there are a lot of lost souls around here.";
+	}
+	else if (para_2nd01 == 7) {
+		mes "Oh oh!!";
+		mes "You're finally here!";
+		mes "I asked Ur to send someone to help me here!";
+		next;
+		select("What? I came for training..");
+		mes "[Johan]";
+		mes "No no, that's the same thing!";
+		mes "Your training mission is to help me clear out this Abbey!";
+		next;
+		mes "[Johan]";
+		mes "Phew... It's been so tough.";
+		mes "I can't run in by myself, but then Gargoyles attack me out here..";
+		mes "Hahaha...";
+		next;
+		mes "[Johan]";
+		mes "This abbey is our responsibilty.";
+		mes "Just like other monasteries, this one has an underground graveryad as well, but..";
+		next;
+		mes "[Johan]";
+		mes "As you well know, this castle... is not at a normal state.";
+		mes "I think that's causing these souls from being able to rest in peace.";
+		next;
+		mes "[Johan]";
+		mes "Let's defeat the ones around here first, since going underground may be too much for just us.";
+		mes "I'll be testing how skilled you are as well...";
+		next;
+		mes "[Johan]";
+		mes "First target are the Wraiths.";
+		mes "You can tell them apart by their strange laugh.";
+		mes "They look like demons, but we can't tell for sure...";
+		next;
+		mes "[Johan]";
+		mes "Defeat 20 Wraiths.";
+		mes "I'll assist you from here!";
+		para_2nd01 = 8;
+		erasequest 7219;// Advanced Training at Glast Heim
+		setquest 7220;// Wraith Hunt
+	}
+	else if (para_2nd01 == 8) {
+		if (checkquest(7220,HUNTING) == 2) {
+			mes "Oh~ You are pretty strong!";
+			mes "I'm so glad that someone strong like you came.";
+			mes "I wouldn't have last long here by myself.";
+			next;
+			mes "[Johan]";
+			mes "By the way, did you see those other monsters besides the Wraiths?";
+			mes "They are the corrupted souls of priests.";
+			mes "They are called 'Evil Druid' as well.";
+			next;
+			mes "[Johan]";
+			mes "Let's take care of these Evil Druids this time.";
+			mes "10 of them.";
+			mes "You can do it right?";
+			mes "I believe in you!";
+			para_2nd01 = 9;
+			erasequest 7220;// Wraith Hunt
+			setquest 7221;// Evil Druid hunt
+			getexp 20000,20000;
+		}
+		else {
+			mes "20 Wraiths!";
+			mes "I'll watch your back!.";
+			mes "... Of.. Course.. I'll fight too!";
+			npcskill "AL_HEAL",10,99,60;
+			percentheal 0,100;
+		}
+	}
+	else if (para_2nd01 == 9) {
+		if (checkquest(7221,HUNTING) == 2) {
+			mes "...Oh you're back!";
+			mes "(Johan Opens the door and checks)";
+			mes "....!";
+			mes "Okay!!";
+			next;
+			mes "[Johan]";
+			mes "Thank you! I really appreciate it!";
+			mes "I think I can enter without any worries now!";
+			mes "I hope those evil souls left it alone..";
+			next;
+			mes "[Johan]";
+			mes "Hehe, I'll put in a good word to Ur!";
+			mes "You're a valient and skilled exorcist!";
+			next;
+			mes "[Johan]";
+			mes "You can go back to Eden now";
+			mes "I'll stay and clean up the rest, hehe";
+			para_2nd01 = 10;
+			erasequest 7221;// Evil Druid hunt
+			setquest 7222;// Report to Instructor Ur
+			getexp 20000,20000;
+		}
+		else {
+			mes "10 Evil Druids!";
+			mes "I'll watch your back, like last time.";
+			mes "... Of... Course... I'll fight them too!";
+			npcskill "AL_HEAL",10,99,60;
+			percentheal 0,100;
+		}
+	}
+	else if (para_2nd01 == 10) {
+		mes "Go back and report to Ur.";
+		mes "That Glast Heim Abbey is clear now.";
+		mes "I need to stay and look for something... Good bye.";
+	}
+	else {
+		mes "Ugh, I still haven't found the thing I lost.";
+		mes "Hmm... I may need to wait for the next trainee before I can start looking again... Eep!";
+		next;
+		mes "[Johan]";
+		mes "Uh... You didn't hear that did you?";
+		mes "Hahahahahahaha!!!";
+		mes "Hahahahaha!!";
+	}
 	close;
 }
 
-ein_fild08,172,359,4	script	Kiren	989,{
-	if ((para_suv01 == 46) && (kiren < 1)) {
-		mes "[Kiren]";
-		mes "Hey there.";
-		next;
-		mes "[Kiren]";
-		mes "You must be a member of the Paradise Group, come help me for a second.";
-		next;
-		set kiren,1;
-		changequest 7223,7224;
-		mes "[kiren]";
-		mes "Can you kill ^0000FF30 Porcellios^000000 for me and then return to me?";
-		close;
-	}
-	if (kiren == 1) {
-		if (checkquest(7224,HUNTING) == 2) {
-			mes "[Kiren]";
-			mes "Wow, most people spend twice as long as you did to kill those Porcellios!";
-			next;
-			mes "[Kiren]";
-			mes "I think you need a challenge.";
-			next;
-			getexp 30000,30000;
-			set kiren,2;
-			changequest 7224,7226;
-			setquest 7227;
-			mes "[Kiren]";
-			mes "How about this: Kill ^0000FF30 Venomous and 5 Teddy Bears^000000.";
-			close;
-		}
-		mes "[Kiren]";
-		mes "Come back to me when you have killed the ^0000FF30 Porcellios^000000.";
-		close;
-	}
-	if (kiren == 2) {
-		if ((checkquest(7226,HUNTING) == 2) && (checkquest(7227,HUNTING) == 2)) {
-			mes "[Kiren]";
-			mes "Incredible, you set a new record!";
-			next;
-			mes "[Kiren]";
-			mes "I have never seen anyone kill them all so fast, you are good at this.";
-			next;
-			getexp 30000,30000;
-			set kiren,3;
-			changequest 7226,7228;
-			completequest 7227;
-			mes "[Kiren]";
-			mes "Return to the ^33CC33Paradise Group Headquarters^000000 for your reward.";
-			close;
-		}
-		mes "[Kiren]";
-		mes "Remember, you need to kill ^0000FF30 Venomous and 5 Teddy Bears^000000.";
-		close;
-	}
-	if (kiren == 3) {
-		mes "[Kiren]";
-		mes "Don't worry, nobody else has beaten your record yet.";
-		next;
-		mes "[Kiren]";
-		mes "Return to the ^33CC33Paradise Group Headquarters^000000 for your reward.";
-		close;
-	}
+//--80~89
+// ein_fild08,172,359,3	script	Dispatched Instructor#2nd02	4_M_4THPRIN1,{
+ein_fild08,172,359,3	script	Dispatched Instructor#04	4_M_4THPRIN1,{
 	mes "[Kiren]";
-	mes "Be careful, there are some fast monsters around here.";
+	if (para_2nd01 < 12) {
+		mes "What are you looking at?";
+		mes "You want something from me?";
+		mes "Mind your own business, go away..";
+	}
+	else if (para_2nd01 == 12) {
+		mes "What?";
+		mes "....";
+		mes "Hmm, Ur sent you?";
+		mes "Oh, that training mission thing.";
+		next;
+		mes "[Kiren]";
+		mes "You've came a long way, I won't make you do anything too tough, don't worry.";
+		mes "The fields outside of Einbroch isn't too bad.";
+		next;
+		mes "[Kiren]";
+		mes "And monsters here usually leaves me alone, so I can nap all day.";
+		mes "But there are some that bother me.";
+		next;
+		mes "[Kiren]";
+		mes "Do you know Porcellios are?";
+		mes "Ugly looking insects... They steal too..";
+		next;
+		mes "[Kiren]";
+		mes "Let's defeat some of them as a warm up.";
+		mes "There are plenty of them around here. 30 shouldn't be too hard right?";
+		next;
+		mes "[Kiren]";
+		mes "I'm not holding a grudge just because they ate my lunch.";
+		mes "I'll be resting here until you're done.";
+		para_2nd01 = 13;
+		erasequest 7223;// Advanced Training in Einbroch
+		setquest 7224;// Porcellio hunting
+	}
+	else if (para_2nd01 == 13) {
+		if (checkquest(7224,HUNTING) == 2) {// Porcellio hunting
+			mes "What, You're done already?";
+			mes "I was just about to fall asleep... Oh well..";
+			mes "It can't be helped, I guess. Let's go to a different spot..";
+			next;
+			mes "[Kiren]";
+			mes "No, what are you talking about?";
+			mes "Go... with you?";
+			mes "You can by yourself right?";
+			next;
+			mes "[Kiren]";
+			mes "Okay, next task!";
+			mes "People of Einbroch say that the pollution is really bad in the north.";
+			mes "They are worried that pollution will drift into the town.";
+			next;
+			mes "[Kiren]";
+			mes "It's probably all those factories right there...";
+			mes "I guess I should still look into it.";
+			mes "The cause for the pollution... Find it and destroy it.";
+			next;
+			mes "[Kiren]";
+			mes "30 Venomous and 5 Teddy Bears.";
+			mes "That should be good enough.";
+			next;
+			mes "[Kiren]";
+			mes "I'm sure you'll do fine without me watching.";
+			mes "To show my support, let me give you some EXP and HP recovery.";
+			next;
+			mes "[Kiren]";
+			mes "The monsters are at the northern fields of Einbroch.";
+			mes "Okay then, be safe.";
+			mes "I'm going to take a nap.";
+			para_2nd01 = 14;
+			erasequest 7224;// Porcellio hunting
+			setquest 7226;// Venomous hunting
+			setquest 7227;// Teddy Bear hunting
+			getexp 30000,30000;
+		}
+		else {
+			mes "So, have you punished those Porcellio's yet?";
+			mes "I don't think you're done yet right?";
+			next;
+			mes "[Kiren]";
+			mes "If you're hurt I'll heal you a bit.";
+		}
+		npcskill "AL_HEAL",10,99,60;
+		percentheal 0,100;
+	}
+	else if (para_2nd01 == 14) {
+		if (checkquest(7226,HUNTING) == 2 && checkquest(7227,HUNTING) == 2) {
+			mes "Um...";
+			mes "I'm getting it done.";
+			mes "Hmm...";
+			mes "I'm still tired to finish...";
+			next;
+			mes "[Kiren]";
+			mes "Good. Those monsters have been bothering the Einbroch workers.";
+			mes "That was great..";
+			next;
+			mes "[Kiren]";
+			mes "I have some things to report to Instructor Ur.";
+			mes "I've been watching you closely and you've done well. Go back to Ur and deliver this report.";
+			para_2nd01 = 15;
+			erasequest 7226;// Venomous hunting
+			erasequest 7227;// Teddy Bear hunting
+			setquest 7228;// Report to Instructor Ur
+			getexp 30000,30000;
+			// erasequest 7225;
+		}
+		else {
+			mes "The monsters are at the northern fields of Einbroch.";
+			mes "Find the Noxious...";
+			mes "Don't try to lie to me that you've finished hunting them.";
+			next;
+			// if (isbegin_quest(7225) > 0)
+				// erasequest 7225;
+			// else {
+			mes "[Kiren]";
+			mes "Yeah, if this is okay?";
+			mes "Ugh this is difficult.";
+			mes "I'll make you feel better though.";
+			// }
+			npcskill "AL_HEAL",10,99,60;
+			percentheal 0,100;
+		}
+	}
+	else if (para_2nd01 == 15) {
+		mes "What serious?";
+		mes "Have you made your report to Instructor Ur?";
+		mes "Einbroch has commissioned work out so that means more training.";
+	}
+	else {
+		mes "I'm not a thief...";
+		mes "It's a hard living.";
+		mes "Nor is there any real ambition.";
+		next;
+		mes "[Kiren]";
+		mes "Come practitioners?";
+		mes "Make things.";
+		mes "How convenient witchinya.";
+		mes "Heumnya. I'll sleep in one breath..";
+	}
 	close;
 }
 
-ice_dun01,154,13,6	script	Naomi	726,{
-	if ((para_suv01 == 49) && (naomi < 1)) {
-		mes "[Naomi]";
-		mes "It is so cold in here.";
-		next;
-		mes "[Naomi]";
-		mes "I blame those annoying Siromas.";
-		next;
-		set naomi,1;
-		changequest 7229,7230;
-		mes "[Naomi]";
-		mes "Can you kill ^0000FF30 Siromas^000000 for me, please?";
-		close;
-	}
-	if (naomi == 1) {
-		if (checkquest(7230,HUNTING) == 2) {
-			mes "[Naomi]";
-			mes "Thank you, but there are still so many Siromas here!";
-			next;
-			mes "[Naomi]";
-			mes "I need to make a special drink to stay warm, please help me make it.";
-			next;
-			getexp 40000,40000;
-			set naomi,2;
-			changequest 7230,7231;
-			mes "[Naomi]";
-			mes "Can you kill another ^0000FF30 Siromas^000000 and bring me ^0000FF30 Ice Cubics, 1 Milk and 1 Sweet Sauce^000000?";
-			close;
-		}
-		mes "[Naomi]";
-		mes "Please kill ^0000FF30 Siromas^000000, I just hate them.";
-		close;
-	}
-	if (naomi == 2) {
-		if ((checkquest(7231,HUNTING) == 2) && (countitem(7066) >= 30) && (countitem(519) >= 1) && (countitem(7453) >= 1)) {
-			mes "[Naomi]";
-			mes "Yay, you did it!";
-			next;
-			mes "[Naomi]";
-			mes "I will be fine now, don't worry about me.";
-			next;
-			delitem 7066,30; // Ice Cubic
-			delitem 519,1; // Milk
-			delitem 7453,1; // Sweet Sauce
-			getexp 40000,40000;
-			set naomi,3;
-			changequest 7231,7232;
-			mes "[Naomi]";
-			mes "Return to the ^33CC33Paradise Group Headquarters^000000 for your reward.";
-			close;
-		}
-		mes "[Naomi]";
-		mes "Can you kill another ^0000FF30 Siromas^000000 and bring me ^0000FF30 Ice Cubics, 1 Milk and 1 Sweet Sauce^000000?";
-		close;
-	}
-	if (naomi == 3) {
-		mes "[Naomi]";
-		mes "I will be fine now, don't worry about me.";
-		next;
-		mes "[Naomi]";
-		mes "Return to the ^33CC33Paradise Group Headquarters^000000 for your reward.";
-		close;
-	}
+//--90~99
+// ice_dun01,154,13,5	script	Dispatched Instructor#2nd02	4_F_JOB_BLACKSMITH,{
+ice_dun01,154,13,5	script	Dispatched Instructor#05	4_F_JOB_BLACKSMITH,{
 	mes "[Naomi]";
-	mes "So... cold...";
+	if (para_2nd01 <= 17) {
+		mes "It's more than that~";
+		mes "Now where did the time go~";
+		mes "I thought you said you sent me~!";
+		next;
+		mes "[Naomi]";
+		if (para_2nd01 < 17) {
+			mes "What is it? You'll help me. Is that right?";
+			mes "No, you don't have to do that.";
+			mes "I'm waiting for someone scheduled to help me.";
+			close;
+		}
+		mes "And you are?";
+		mes "Oh, you were sent here by Ur?";
+		mes "I don't know how long I've been waiting here in the snow.";
+		next;
+		mes "[Naomi]";
+		mes "This is the ice dungeon of the northern plains.";
+		mes "Nothing like a cave that's cold the entire year.";
+		next;
+		mes "[Naomi]";
+		mes "So this is where the people of Rachel go for their ice supply.";
+		mes "But, this area is crawling with dangerous monsters.";
+		next;
+		mes "[Naomi]";
+		mes "One of those monsters is known as a Siroma.";
+		mes "They should be a good challenge for you.";
+		next;
+		mes "[Naomi]";
+		mes "Okay, then go in the cave and find those Siroma.";
+		mes "It's cold in there but this job has to be done.";
+		next;
+		mes "[Naomi]";
+		mes "OH, sometimes";
+		mes "You be careful in there.";
+		mes "Well, good luck~!";
+		para_2nd01 = 18;
+		erasequest 7229;// Advanced Training in Ice Dungeon
+		setquest 7230;// Siroma hunting
+	}
+	else if (para_2nd01 == 18) {
+		if (checkquest(7230,HUNTING) == 2) {
+			mes "Ah... It's over...";
+			mes "Good!";
+			mes "Your skills have been verified.";
+			next;
+			mes "[Naomi]";
+			mes "Now, what have I happened to do next.";
+			mes "Those Siromas seem to be growing at a faster rate.";
+			mes "As before go and hunt 30 more Siromas and bring me some materials.";
+			next;
+			mes "[Naomi]";
+			mes "And get this... Well...";
+			mes "Please listen carefully";
+			mes "30 Ice Cubic";
+			mes "1 Sweet Sauce";
+			mes "1 Milk";
+			next;
+			mes "[Naomi]";
+			mes "I'm not just doing this for myself you know.";
+			mes "I'm doing this for everyone.";
+			next;
+			mes "[Naomi]";
+			mes "That's the last of it anyways.";
+			mes "So hunt those Siromas and get the materials.";
+			mes "We understand each other?";
+			next;
+			select("What about you?");
+			mes "[Naomi]";
+			mes "Me? Well of course... I'm going to stand guard here.";
+			mes "I... I'm a busy person!";
+			mes "Besides this is training so who are you to ask me what about me?";
+			next;
+			mes "[Naomi]";
+			mes "Go now!";
+			mes "Those Siromas are going to just get rowdier by the minute.";
+			para_2nd01 = 19;
+			erasequest 7230;// Siroma hunting
+			setquest 7231;// Hunting and Gathering
+			getexp 40000,40000;
+			npcskill "AL_HEAL",10,99,60;
+			percentheal 0,100;
+		}
+		else {
+			mes "The biggest stumbling block is dealing with the Siromas.";
+			mes "Have you hunted 30 yet?";
+			next;
+			mes "[Naomi]";
+			mes "Oh, you want help recovering your HP/SP huh?";
+			mes "You'll get nothing from me~!";
+			mes "What challenge would that be if I did that?";
+		}
+	}
+	else if (para_2nd01 == 19) {
+		if (checkquest(7231,HUNTING) == 2 && countitem(7066) > 29 && countitem(7453) > 0 && countitem(519) > 0) {// Ice_Piece, Sweet_Sauce, Milk
+			mes "Ohh!";
+			mes "You've brought everything.";
+			mes "Okay, so just one last thing...!";
+			next;
+			select("...... Look");
+			mes "[Naomi]";
+			mes "Yes, yes? Why not?";
+			mes "...";
+			mes "Oh, that's right! I'm supposed to give you something.";
+			mes "You've done enough, I know.";
+			next;
+			mes "[Naomi]";
+			mes "I'll inform Instructor Ur.";
+			mes "A few more stages left to go so don't worry!";
+			next;
+			mes "[Naomi]";
+			mes "Oh and congratulations!";
+			mes "This is the last training stage prepared!";
+			next;
+			mes "[Naomi]";
+			mes "I guess I should do some of this myself~";
+			mes "Muahaha~";
+			delitem 7066,30;
+			delitem 7453,1;
+			delitem 519,1;
+			para_2nd01 = 20;
+			erasequest 7231;// Hunting and Gathering
+			setquest 7232;// Report to Instructor Ur
+			getexp 40000,40000;
+		}
+		else {
+			mes "Have you finished hunting the 30 Siroma yet?";
+			mes "You've already done it once so this shouldn't be difficult...";
+			next;
+			mes "[Naomi]";
+			mes "And don't forget the 30 Ice Cubic, 1 Sweet Sauce, and 1 Milk.";
+		}
+	}
+	else if (para_2nd01 == 20) {
+		mes "Were you there yet?";
+		mes "Other people have come and go since you've been here last.";
+		mes "Now I don't have to get the materials myself.";
+		next;
+		mes "[Naomi]";
+		mes "Report back to Instructor Ur and report that the job is done.";
+		mes "Don't procrastinate.";
+	}
+	else
+		mes "Alas, is there anywhere where the buildup of ice caps is more than here?";
 	close;
 }
 
-mid_camp,212,229,4	script	Margaret	893,{
-	if ((para_suv01 == 52) && (margaret < 1)) {
-		mes "[Margaret]";
-		mes "Oh, hello there.";
-		next;
-		mes "[Margaret]";
-		mes "I have two friends here in the New World which need your help.";
-		next;
-		set margaret,1;
-		changequest 7233,7234;
-		mes "[Margaret]";
-		mes "Please start by helping the ^0000FFParadise Dispatch in Manuk Field^000000.";
-		close;
-	}
-	if (margaret == 1 || margaret == 2) {
-		mes "[Margaret]";
-		mes "Please start by helping the ^0000FFParadise Dispatch in Manuk Field^000000.";
-		close;
-	}
-	if (margaret == 3) {
-		mes "[Margaret]";
-		mes "Ah good, you were able to help him.";
-		next;
-		set margaret,4;
-		mes "[Margaret]";
-		mes "Next can you help the ^0000FFParadise Dispatch in Splendide Field^000000, please?";
-		close;
-	}
-	if (margaret == 4 || margaret == 5) {
-		mes "[Margaret]";
-		mes "Next can you help the ^0000FFParadise Dispatch in Splendide Field^000000, please?";
-		close;
-	}
-	if (margaret == 6) {
-		mes "[Margaret]";
-		mes "Haha, so he still wants a zoom out hack...";
-		next;
-		mes "[Margaret]";
-		mes "Thanks for helping them, I knew you could do it.";
-		next;
-		set margaret,7;
-		changequest 7234,7237;
-		mes "[Margaret]";
-		mes "Return to the ^33CC33Paradise Group Headquarters^000000 for your reward.";
-		close;
-	}
+// mid_camp,212,229,3	script	Dispatched Instructor#2nd02	4_F_HUWOMAN,{
+mid_camp,212,229,3	script	Dispatched Instructor#06	4_F_HUWOMAN,{
 	mes "[Margaret]";
-	mes "The New World... What a beautiful place!";
+	if (para_2nd01 < 22) {
+		mes "Oh, sorry.";
+		mes "I don't know much about the life of an adventurer.";
+		mes "I'm just a member of Eden Group...";
+	}
+	else if (para_2nd01 == 22) {
+		mes "The proof that you have there.";
+		mes "You're here in paradise.";
+		mes "Instructor Ur sent you?";
+		next;
+		if (select( "Yes.", "No." ) == 2) {
+			mes "[Margaret]";
+			mes "Oh, my mistake.";
+			close;
+		}
+		mes "[Margaret]";
+		mes "How do you do?";
+		mes "Oh, so you're here for the training from Instructor Ur.";
+		next;
+		mes "[Margaret]";
+		mes "Ok, I'm in a bit of a situation right now so I asked Instructor Ur to use his missions to help.";
+		next;
+		select("A situation?");
+		mes "[Margaret]";
+		mes "Yes, ";
+		mes "Find Mine and do what he asks you.";
+		next;
+		mes "[Margaret]";
+		mes "We dispatched him to do something and he hasn't done it yet so I'm guessing he's either chickened out or failed.";
+		next;
+		mes "[Margaret]";
+		mes "So can you find him out there in Splendide Field?";
+		next;
+		mes "[Margaret]";
+		mes "Find him and figure out what the heck he's up to please.";
+		para_2nd01 = 23;
+		erasequest 7233;//  Advanced Training at Ash Vacuum
+		setquest 7234;// Margaret's favor
+	}
+	else if (para_2nd01 < 27) {
+		mes "Can you find those two brothers?";
+		mes "Find out what's up with them.";
+	}
+	else if (para_2nd01 == 27) {
+		mes "So what's up?!";
+		next;
+		mes "- You tell her about Meeru and Mine. -";
+		next;
+		mes "[Margaret]";
+		mes "Yeah? Oh what?";
+		mes "This is not really...";
+		mes "Ok I'll go deal with them.";
+		next;
+		mes "[Margaret]";
+		mes "Well, whatever the Nepenthes and Pinguicula proof has been collected.";
+		next;
+		mes "[Margaret]";
+		mes "Your training is done so go back and talk to Instructor Ur.";
+		para_2nd01 = 29;
+		erasequest 7234;// Margaret's favor
+		setquest 7237;// Report to Instructor Ur
+	}
+	else if (para_2nd01 == 29) {
+		mes "Well, whatever the Nepenthes and Pinguicula proof has been collected.";
+		next;
+		mes "[Margaret]";
+		mes "Your training is done so go back and talk to Instructor Ur.";
+	}
+	else
+		mes "........";
 	close;
 }
 
-man_fild01,43,234,2	script	Paradise Dispatch#01	939,{
-	if (margaret == 1) {
-		mes "[Paradise Dispatch]";
-		mes "Hey you, can you help me here?";
+// man_fild01,43,234,3	script	Dispatched Instructor#2nd02	4_DST_SOLDIER,{
+man_fild01,43,234,3	script	Dispatched Instructor#07	4_DST_SOLDIER,{
+	mes "[Meeru]";
+	if (para_2nd01 < 23) {
+		mes "You think I'll lose!";
+		mes "...?";
+		mes "All of them... Who're you?!";
+		mes "Mine is a stooge?";
+		mes "He sent you to watch me!?";
 		next;
-		mes "[Paradise Dispatch]";
-		mes "The plant monsters in this area have a long ranged attack.";
-		next;
-		set margaret,2;
-		changequest 7234,7235;
-		mes "[Paradise Dispatch]";
-		mes "Can you please kill ^0000FF1 Nepenthes^000000 so I can go back to the camp?";
-		close;
+		mes "[Meeru]";
+		mes "What? Isn't that it?";
+		mes "... ...";
+		mes "Mine didn't send you did he?";
 	}
-	if (margaret == 2) {
+	else if (para_2nd01 == 23) {
+		mes "You think I'll lose!";
+		mes "...?";
+		mes "All of them... Who're you?!";
+		mes "Mine is a stooge?";
+		mes "He sent you to watch me!?";
+		next;
+		mes "[Meeru]";
+		mes "What? Isn't that it?";
+		mes "... ...";
+		mes "Mine didn't send you did he?";
+		mes "So why are you here?";
+		next;
+		select("Margaret sent me");
+		mes "[Meeru]";
+		mes "Ah, Margaret!";
+		mes "Mine and Margaret are always trying to mess with me because of my win-!";
+		mes "Gosh...";
+		next;
+		select( "What happened?", "What do you win?" );
+		mes "[Meeru]";
+		mes "It all started with them bickering.";
+		mes "Margaret was asked to scout for both of us. It's like what you're doing now.";
+		next;
+		mes "[Meeru]";
+		mes "Mine said that he was strong enough to defeat any monster.";
+		mes "So I insisted that he go to either East or West of the camp and show me.";
+		next;
+		mes "[Meeru]";
+		mes "Mine made an idle threat and huffed and puffed but didn't do anything.";
+		next;
+		mes "[Meeru]";
+		mes "Basically, Margaret didn't believe him and challenged him to kill 1 Nepenthes.";
+		next;
+		mes "[Meeru]";
+		mes "So anyways now I'm charged with asking people to go and hunt 1 Nepenthes because of that bickering incident.";
+		next;
+		mes "[Meeru]";
+		mes "It's really not that difficult to hunt 1 so just go to the field East of here and kill one of them.";
+		para_2nd01 = 24;
+		setquest 7235;// Nepenthes Hunt
+	}
+	else if (para_2nd01 == 24) {
 		if (checkquest(7235,HUNTING) == 2) {
-			mes "[Paradise Dispatch]";
-			mes "Thanks!";
+			mes "Hmm yes I saw.";
+			mes "I knew I should've asked you to hunt more than 1.";
 			next;
-			mes "[Paradise Dispatch]";
-			mes "Ok, I'm out of here.";
+			mes "[Meeru]";
+			mes "Anyways you've proven that you're stronger than Mine ever made himself out to be.";
 			next;
-			getexp 50000,50000;
-			set margaret,3;
-			changequest 7235,7234;
-			mes "[Paradise Dispatch]";
-			mes "Head back to ^0000FFMargaret^000000 and tell her thanks for me too!";
-			close;
+			mes "[Meeru]";
+			mes "Well anyways here's a small reward.";
+			next;
+			mes "[Meeru]";
+			mes "I'll just be here making sure other people hunt the Nepenthes. I might ask them to hunt more than 1 who knows.";
+			para_2nd01 = 25;
+			erasequest 7235;// Nepenthes Hunt
+			getexp 50000,50000;;
 		}
-		mes "[Paradise Dispatch]";
-		mes "Can you kill ^0000FF1 Nepenthes^000000 so I can go back to the camp?";
-		close;
+		else {
+			mes "Is hunting the Nepenthes too much for you?";
+			mes "You seem a bit flushed.";
+			mes "Fine I'll heal you!";
+			npcskill "AL_HEAL",10,99,60;
+			percentheal 0,100;
+		}
 	}
-	if (margaret == 3) {
-		mes "[Paradise Dispatch]";
-		mes "...";
-		next;
-		mes "[Paradise Dispatch]";
-		mes "Don't rush me, just head back to ^0000FFMargaret^000000.";
-		close;
+	else if (para_2nd01 == 25)
+		mes "I'll just be here making sure other people hunt the Nepenthes. I might ask them to hunt more than 1 who knows.";
+	else {
+		mes "Something wrong?";
+		mes "Did you have trouble with that Nepenthes...";
+		mes ".........hyuk huk.";
 	}
-	mes "[Paradise Dispatch]";
-	mes "Those Nepenthes are so scary!";
 	close;
 }
 
-spl_fild02,377,149,4	script	Paradise Dispatch#02	946,{
-	if (margaret == 4) {
-		mes "[Paradise Dispatch]";
-		mes "So Margaret sent you to help me?";
-		next;
-		mes "[Paradise Dispatch]";
-		mes "Ok, lets get started!";
-		next;
-		set margaret,5;
-		changequest 7234,7236;
-		mes "[Paradise Dispatch]";
-		mes "Kill ^0000FF5 Pinguicula^000000 and then return to me.";
-		close;
+// spl_fild02,377,149,3	script	Dispatched Instructor#2nd02	4_M_DST_MASTER,{
+spl_fild02,377,149,3	script	Dispatched Instructor#08	4_M_DST_MASTER,{
+	mes "[Mine]";
+	if (para_2nd01 < 25) {
+		mes "Oh cruel world.";
+		mes "...";
+		mes "Way to go passing by.";
+		mes "What a fiasco this has turned out to be";
 	}
-	if (margaret == 5) {
-		if (checkquest(7236,HUNTING) == 2) {
-			mes "[Paradise Dispatch]";
-			mes "You make it look so easy, but I couldn't even kill 1...";
-			next;
-			mes "[Paradise Dispatch]";
-			mes "Now is my chance to run to Splendide!";
-			next;
-			getexp 50000,50000;
-			set margaret,6;
-			changequest 7236,7234;
-			mes "[Paradise Dispatch]";
-			mes "Head back to ^0000FFMargaret^000000, I will be ok now.";
-			close;
+	else if (para_2nd01 == 25) {
+		mes "Oh cruel world...";
+		mes "...";
+		mes "Who are you?";
+		next;
+		if (select( "Margaret sent me.", "Yeah I'm here..." ) == 1) {
+			mes "[Mine]";
+			mes "Eh? Who!";
+			mes "I see. Is it that time already?";
+			mes "This has been difficult.";
+			mes "I'm in a crisis here!";
 		}
-		mes "[Paradise Dispatch]";
-		mes "Kill ^0000FF5 Pinguicula^000000 and return to me.";
-		close;
-	}
-	if (margaret == 6) {
-		mes "[Paradise Dispatch]";
-		mes "Now, if only I had a hack for zooming out more...";
+		else {
+			mes "[Mine]";
+			mes "Oh so you're not here by your own will eh?";
+			mes "So why even bother coming?";
+			next;
+			mes "[Mine]";
+			mes "You didn't want to be here right?";
+			mes "Margaret sent you instead of someone else I bet.";
+			mes "Whatever, anyway I'm in a crisis here!";
+		}
 		next;
-		mes "[Paradise Dispatch]";
-		mes "Head back to ^0000FFMargaret^000000, I will be ok now.";
-		close;
+		mes "[Mine]";
+		mes "Ok I don't want to admit it but you gotta help me out here.";
+		next;
+		mes "[Mine]";
+		mes "Ok just because I was complaining doesn't mean they have to send me here!";
+		next;
+		mes "[Mine]";
+		mes "I mean they've asked for too much of a simple person like myself.";
+		next;
+		mes "[Mine]";
+		mes "Ok here's the deal.";
+		mes "I'm supposed to hunt those Pinguiculas. Just 5 of 'em.";
+		mes "But you'll do that for me yeah?";
+		next;
+		mes "[Mine]";
+		mes "I promise you I'll give you something good.";
+		mes "Thanks.";
+		para_2nd01 = 26;
+		setquest 7236;// Pinguicula Hunt
 	}
-	mes "[Paradise Dispatch]";
-	mes "I need a hack to zoom out more so I can see if it is safe...";
+	else if (para_2nd01 == 26) {
+		if (checkquest(7236,HUNTING) == 2) {
+			mes "Excellent!";
+			mes "Now I can go back to the camp and...";
+			next;
+			mes "[Mine]";
+			mes "I mean, can you tell Margaret that it's all done?";
+			next;
+			mes "[Mine]";
+			mes "Oh don't worry she won't mind. I'll just go back to doing what I was doing. Here's your reward.";
+			para_2nd01 = 27;
+			erasequest 7236;// Pinguicula Hunt
+			getexp 50000,50000;;
+		}
+		else {
+			mes "Come on 5 Pinguicula.";
+			mes "Really how did you get here then?";
+			next;
+			mes "[Mine]";
+			mes "You're not lying about being a real adventurer are you?";
+			npcskill "AL_HEAL",10,99,60;
+			percentheal 0,100;
+		}
+	}
+	else if (para_2nd01 == 27) {
+		mes "Margaret gets everything she wants back at the camp.";
+		mes "Don't you worry, I'm going back soon.";
+	}
+	else
+		mes ".........";
 	close;
 }
 
@@ -4565,7 +5251,7 @@ moc_para01,111,83,3	script	Toren	813,{
 		if (para_suv02 == 14) {
 			setarray .@Check[0],18514,2571,2473,15031;
 			setarray .@Item$[0],"Hat","Mantle","Boots","Uniform";
-			for(set .@i,0; .@i<4; set .@i,.@i+1) 
+			for(set .@i,0; .@i<4; set .@i,.@i+1)
 				if (countitem(.@Check[.@i]) < 1) {
 					mes "[Toren]";
 					mes "Where is the Paradise "+.@Item$[.@i]+" I gave you?";
