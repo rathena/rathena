@@ -937,6 +937,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 	} else if (.@equip_item == 2160 || .@equip_item == 2161 || .@equip_item == 2162 ||
 	           .@equip_item == 2582 || .@equip_item == 2892 || .@equip_item == 15044 || 
 	           .@equip_item == 18570) {
+		.@type = 4;
 		if (.@equip_item == 2582 || .@equip_item == 18570)
 			.@lhz_max_num = 4200;
 	} else {
