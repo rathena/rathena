@@ -4011,7 +4011,6 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 			regen->sregen->rate.hp += 300;
 	}
 	if (sc->data[SC_MAGNIFICAT]) {
-		regen->rate.hp += 100;
 		regen->rate.sp += 100;
 	}
 	if (sc->data[SC_REGENERATION]) {
@@ -8762,7 +8761,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					int i;
 					for (i = 0; i < MAX_DEVOTION; i++) { // See if there are devoted characters, and pass the status to them. [Skotlex]
 						if (sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])))
-							status_change_start(src,&tsd->bl,type,10000,val1,5+val1*5,val3,val4,tick,SCSTART_NOAVOID);
+							status_change_start(src,&tsd->bl,type,10000,val1,val2,val3,val4,tick,SCSTART_NOAVOID);
 					}
 				}
 			}
@@ -12567,7 +12566,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 	struct view_data *vd = NULL;
 	struct regen_data_sub *sregen;
 	struct map_session_data *sd;
-	int rate, bonus = 0,flag;
+	int rate, multi = 1, flag;
 
 	regen = status_get_regen_data(bl);
 	if (!regen)
@@ -12647,14 +12646,14 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 		if(!vd)
 			vd = status_get_viewdata(bl);
 		if(vd && vd->dead_sit == 2)
-			bonus += 100;
+			multi += 1; //This causes the interval to be halved
 		if(regen->state.gc)
-			bonus += 100;
+			multi += 1; //This causes the interval to be halved
 	}
 
 	// Natural Hp regen
 	if (flag&RGN_HP) {
-		rate = (int)(natural_heal_diff_tick * (regen->rate.hp/100. + bonus/100.));
+		rate = (int)(natural_heal_diff_tick * (regen->rate.hp/100. * multi));
 		if (ud && ud->walktimer != INVALID_TIMER)
 			rate /= 2;
 		// Homun HP regen fix (they should regen as if they were sitting (twice as fast)
@@ -12676,7 +12675,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 
 	// Natural SP regen
 	if(flag&RGN_SP) {
-		rate = (int)(natural_heal_diff_tick * (regen->rate.sp/100. + bonus/100.));
+		rate = (int)(natural_heal_diff_tick * (regen->rate.sp/100. * multi));
 		// Homun SP regen fix (they should regen as if they were sitting (twice as fast)
 		if(bl->type==BL_HOM)
 			rate *= 2;
