@@ -7037,7 +7037,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			item_tmp.nameid = ITEMID_STONE;
 			item_tmp.identify = 1;
 			tbl.id = 0;
-			clif_takeitem(&sd->bl,&tbl);
+			// Commented because of duplicate animation [Lemongrass]
+			// At the moment this displays the pickup animation a second time
+			// If this is required in older clients, we need to add a version check here
+			//clif_takeitem(&sd->bl,&tbl);
 			eflag = pc_additem(sd,&item_tmp,1,LOG_TYPE_PRODUCE);
 			if(eflag) {
 				clif_additem(sd,0,0,eflag);
