@@ -7,6 +7,17 @@
 #include "status.h" // struct status_data, struct status_change
 #include "unit.h" // struct unit_data
 
+#ifdef RENEWAL
+	#define	HOMUN_LEVEL_STATWEIGHT_VALUE 0
+	#define APPLY_HOMUN_LEVEL_STATWEIGHT()( \
+		hom->str_value = hom->agi_value = \
+		hom->vit_value = hom->int_value = \
+		hom->dex_value = hom->luk_value = hom->level / 10 - HOMUN_LEVEL_STATWEIGHT_VALUE \
+		)
+#else
+	#define APPLY_HOMUN_LEVEL_STATWEIGHT()
+#endif
+
 struct h_stats {
 	unsigned int HP, SP;
 	unsigned short str, agi, vit, int_, dex, luk;

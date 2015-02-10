@@ -1411,15 +1411,24 @@ void clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 	WBUFW(buf,29)=hd->homunculus.hunger;
 	WBUFW(buf,31)=(unsigned short) (hd->homunculus.intimacy / 100) ;
 	WBUFW(buf,33)=0; // equip id
+#ifdef RENEWAL
+	WBUFW(buf,35)=cap_value(status->rhw.atk2, 0, INT16_MAX);
+#else
 	WBUFW(buf,35)=cap_value(status->rhw.atk2+status->batk, 0, INT16_MAX);
+#endif
 	WBUFW(buf,37)=min(status->matk_max, INT16_MAX); //FIXME capping to INT16 here is too late
 	WBUFW(buf,39)=status->hit;
 	if (battle_config.hom_setting&HOMSET_DISPLAY_LUK)
 		WBUFW(buf,41)=status->luk/3 + 1;	//crit is a +1 decimal value! Just display purpose.[Vicious]
 	else
 		WBUFW(buf,41)=status->cri/10;
-	WBUFW(buf,43)=status->def + status->vit ;
+#ifdef RENEWAL
+	WBUFW(buf,43)=status->def + status->def2;
+	WBUFW(buf,45)=status->mdef + status->mdef2;
+#else
+	WBUFW(buf,43)=status->def + status->vit;
 	WBUFW(buf,45)=status->mdef;
+#endif
 	WBUFW(buf,47)=status->flee;
 	WBUFW(buf,49)=(flag)?0:status->amotion;
 	if (status->max_hp > INT16_MAX) {
@@ -2903,7 +2912,6 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 	case SP_MATK2:
 		WFIFOL(fd,4)=pc_leftside_matk(sd);
 		break;
-
 
 	case SP_ZENY:
 		WFIFOW(fd,0)=0xb1;
@@ -11257,16 +11265,20 @@ static void clif_parse_UseSkillToId_homun(struct homun_data *hd, struct map_sess
 
 	if( !hd )
 		return;
-	if( skill_isNotOk_hom(skill_id, hd) )
+	if( skill_isNotOk_hom(skill_id, hd) ) {
+		clif_emotion(&hd->bl, E_DOTS);
 		return;
+	}
 	if( hd->bl.id != target_id && skill_get_inf(skill_id)&INF_SELF_SKILL )
 		target_id = hd->bl.id;
-	if( hd->ud.skilltimer != INVALID_TIMER )
-	{
+	if( hd->ud.skilltimer != INVALID_TIMER ) {
 		if( skill_id != SA_CASTCANCEL && skill_id != SO_SPELLFIST ) return;
-	}
-	else if( DIFF_TICK(tick, hd->ud.canact_tick) < 0 )
+	} else if( DIFF_TICK(tick, hd->ud.canact_tick) < 0 ) {
+		clif_emotion(&hd->bl, E_DOTS);
+		if (hd->master)
+			clif_skill_fail(hd->master, skill_id, USESKILL_FAIL_SKILLINTERVAL, 0);
 		return;
+	}
 
 	lv = hom_checkskill(hd, skill_id);
 	if( skill_lv > lv )
@@ -11280,12 +11292,18 @@ static void clif_parse_UseSkillToPos_homun(struct homun_data *hd, struct map_ses
 	int lv;
 	if( !hd )
 		return;
-	if( skill_isNotOk_hom(skill_id, hd) )
+	if( skill_isNotOk_hom(skill_id, hd) ) {
+		clif_emotion(&hd->bl, E_DOTS);
 		return;
+	}
 	if( hd->ud.skilltimer != INVALID_TIMER ) {
 		if( skill_id != SA_CASTCANCEL && skill_id != SO_SPELLFIST ) return;
-	} else if( DIFF_TICK(tick, hd->ud.canact_tick) < 0 )
+	} else if( DIFF_TICK(tick, hd->ud.canact_tick) < 0 ) {
+		clif_emotion(&hd->bl, E_DOTS);
+		if (hd->master)
+			clif_skill_fail(hd->master, skill_id, USESKILL_FAIL_SKILLINTERVAL, 0);
 		return;
+	}
 
 	if( hd->sc.data[SC_BASILICA] )
 		return;

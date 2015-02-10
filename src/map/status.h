@@ -1992,6 +1992,14 @@ unsigned char status_calc_attack_element(struct block_list *bl, struct status_ch
 #define status_get_class_(bl) status_get_status_data(bl)->class_
 #define status_get_size(bl) status_get_status_data(bl)->size
 #define status_get_mode(bl) status_get_status_data(bl)->mode
+
+#define status_get_homstr(bl) (status->str + ((TBL_HOM*)bl)->homunculus.str_value)
+#define status_get_homagi(bl) (status->agi + ((TBL_HOM*)bl)->homunculus.agi_value)
+#define status_get_homvit(bl) (status->vit + ((TBL_HOM*)bl)->homunculus.vit_value)
+#define status_get_homint(bl) (status->int_ + ((TBL_HOM*)bl)->homunculus.int_value)
+#define status_get_homdex(bl) (status->dex + ((TBL_HOM*)bl)->homunculus.dex_value)
+#define status_get_homluk(bl) (status->luk + ((TBL_HOM*)bl)->homunculus.luk_value)
+
 int status_get_party_id(struct block_list *bl);
 int status_get_guild_id(struct block_list *bl);
 int status_get_emblem_id(struct block_list *bl);
@@ -2052,8 +2060,10 @@ int status_change_spread( struct block_list *src, struct block_list *bl );
 	unsigned short status_base_matk_max(const struct status_data* status);
 #else
 	unsigned int status_weapon_atk(struct weapon_atk wa, struct status_data *status);
-	unsigned short status_base_matk(const struct status_data* status, int level);
 #endif
+
+unsigned short status_base_atk(const struct block_list *bl, const struct status_data *status);
+unsigned short status_base_matk(struct block_list *bl, const struct status_data* status, int level);
 
 int status_readdb(void);
 int do_init_status(void);
