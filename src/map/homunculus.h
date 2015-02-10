@@ -159,8 +159,6 @@ void hom_delspiritball(TBL_HOM *hd, int count, int type);
 
 uint8 hom_get_intimacy_grade(struct homun_data *hd);
 
-short hom_skill_get_index(uint16 skill_id);
-
 void do_final_homunculus(void);
 void do_init_homunculus(void);
 

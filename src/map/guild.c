@@ -64,20 +64,6 @@ static int guild_send_xy_timer(int tid, unsigned int tick, int id, intptr_t data
 struct npc_data **guild_flags;
 unsigned short guild_flags_count;
 
-/**
- * Get guild skill index in guild_skill_tree
- * @param skill_id
- * @return Index in skill_tree or -1
- **/
-static short guild_skill_get_index(uint16 skill_id) {
-	if (!SKILL_CHK_GUILD(skill_id))
-		return -1;
-	skill_id -= GD_SKILLBASE;
-	if (skill_id >= MAX_GUILDSKILL)
-		return -1;
-	return skill_id;
-}
-
 /*==========================================
  * Retrieves and validates the sd pointer for this guild member [Skotlex]
  *------------------------------------------*/
@@ -98,41 +84,44 @@ static TBL_PC* guild_sd_check(int guild_id, uint32 account_id, uint32 char_id) {
 
  // Modified [Komurka]
 int guild_skill_get_max (int id) {
-	if ((id = guild_skill_get_index(id)) < 0)
+	if (id < GD_SKILLBASE || id >= GD_SKILLBASE+MAX_GUILDSKILL)
 		return 0;
-	return guild_skill_tree[id].max;
+	return guild_skill_tree[id-GD_SKILLBASE].max;
 }
 
 // Retrive skill_lv learned by guild
 
 int guild_checkskill(struct guild *g, int id) {
-	if ((id = guild_skill_get_index(id)) < 0)
+	int idx = id - GD_SKILLBASE;
+	if (idx < 0 || idx >= MAX_GUILDSKILL)
 		return 0;
-	return g->skill[id].lv;
+	return g->skill[idx].lv;
 }
 
 /*==========================================
  * guild_skill_tree.txt reading - from jA [Komurka]
  *------------------------------------------*/
 static bool guild_read_guildskill_tree_db(char* split[], int columns, int current) {// <skill id>,<max lv>,<req id1>,<req lv1>,<req id2>,<req lv2>,<req id3>,<req lv3>,<req id4>,<req lv4>,<req id5>,<req lv5>
-	int k, skill_id = atoi(split[0]);
-	short idx = -1;
+	int k, id, skill_id;
 
-	if ((idx = guild_skill_get_index(skill_id)) < 0) {
-		ShowError("guild_read_guildskill_tree_db: Invalid Guild skill '%s'.\n", split[1]);
+	skill_id = atoi(split[0]);
+	id = skill_id - GD_SKILLBASE;
+
+	if( id < 0 || id >= MAX_GUILDSKILL ) 	{
+		ShowWarning("guild_read_guildskill_tree_db: Invalid skill id %d.\n", skill_id);
 		return false;
 	}
 
-	guild_skill_tree[idx].id = skill_id;
-	guild_skill_tree[idx].max = atoi(split[1]);
+	guild_skill_tree[id].id = skill_id;
+	guild_skill_tree[id].max = atoi(split[1]);
 
-	if( guild_skill_tree[idx].id == GD_GLORYGUILD && battle_config.require_glory_guild && guild_skill_tree[idx].max == 0 ) 	{// enable guild's glory when required for emblems
-		guild_skill_tree[idx].max = 1;
+	if( guild_skill_tree[id].id == GD_GLORYGUILD && battle_config.require_glory_guild && guild_skill_tree[id].max == 0 ) 	{// enable guild's glory when required for emblems
+		guild_skill_tree[id].max = 1;
 	}
 
 	for( k = 0; k < MAX_GUILD_SKILL_REQUIRE; k++ ) 	{
-		guild_skill_tree[idx].need[k].id = atoi(split[k*2+2]);
-		guild_skill_tree[idx].need[k].lv = atoi(split[k*2+3]);
+		guild_skill_tree[id].need[k].id = atoi(split[k*2+2]);
+		guild_skill_tree[id].need[k].lv = atoi(split[k*2+3]);
 	}
 
 	return true;
@@ -142,13 +131,13 @@ static bool guild_read_guildskill_tree_db(char* split[], int columns, int curren
  * Guild skill check - from jA [Komurka]
  *------------------------------------------*/
 int guild_check_skill_require(struct guild *g,int id) {
-	uint8 i;
-	short idx = -1;
+	int i;
+	int idx = id-GD_SKILLBASE;
 
 	if(g == NULL)
 		return 0;
 
-	if ((idx = guild_skill_get_index(id)) < 0)
+	if (idx < 0 || idx >= MAX_GUILDSKILL)
 		return 0;
 
 	for(i=0;i<MAX_GUILD_SKILL_REQUIRE;i++)
@@ -1268,41 +1257,37 @@ int guild_getexp(struct map_session_data *sd,int exp) {
 /*====================================================
  * Ask to increase guildskill skill_id
  *---------------------------------------------------*/
-void guild_skillup(TBL_PC* sd, uint16 skill_id) {
+int guild_skillup(TBL_PC* sd, uint16 skill_id) {
 	struct guild* g;
-	short idx = guild_skill_get_index(skill_id);
-	short max = 0;
+	int idx = skill_id - GD_SKILLBASE;
+	int max = guild_skill_get_max(skill_id);
 
-	nullpo_retv(sd);
+	nullpo_ret(sd);
 
-	if (idx == -1)
-		return;
-
-	if( sd->status.guild_id == 0 || (g=sd->guild) == NULL || // no guild
-		strcmp(sd->status.name, g->master) ) // not the guild master
-		return;
-
-	max = guild_skill_get_max(skill_id);
+	if( idx < 0 || idx >= MAX_GUILDSKILL || // not a guild skill
+			sd->status.guild_id == 0 || (g=sd->guild) == NULL || // no guild
+			strcmp(sd->status.name, g->master) ) // not the guild master
+		return 0;
 
 	if( g->skill_point > 0 &&
-		g->skill[idx].id != 0 &&
-		g->skill[idx].lv < max )
+			g->skill[idx].id != 0 &&
+			g->skill[idx].lv < max )
 		intif_guild_skillup(g->guild_id, skill_id, sd->status.account_id, max);
+
+	return 0;
 }
 
 /*====================================================
  * Notification of guildskill skill_id increase request
  *---------------------------------------------------*/
 int guild_skillupack(int guild_id,uint16 skill_id,uint32 account_id) {
-	struct map_session_data *sd = map_id2sd(account_id);
-	struct guild *g = guild_search(guild_id);
+	struct map_session_data *sd=map_id2sd(account_id);
+	struct guild *g=guild_search(guild_id);
 	int i;
-	short idx = guild_skill_get_index(skill_id);
-
-	if (g == NULL || idx == -1)
+	if(g==NULL)
 		return 0;
-	if (sd != NULL) {
-		int lv = g->skill[idx].lv;
+	if( sd != NULL ) {
+		int lv = g->skill[skill_id-GD_SKILLBASE].lv;
 		int range = skill_get_range(skill_id, lv);
 		clif_skillup(sd,skill_id,lv,range,1);
 
@@ -1312,14 +1297,14 @@ int guild_skillupack(int guild_id,uint16 skill_id,uint32 account_id) {
 			case GD_GLORYWOUNDS:
 			case GD_SOULCOLD:
 			case GD_HAWKEYES:
-					guild_guildaura_refresh(sd,skill_id,g->skill[idx].lv);
+					guild_guildaura_refresh(sd,skill_id,g->skill[skill_id-GD_SKILLBASE].lv);
 				break;
 		}
 	}
 
 	// Inform all members
-	for (i = 0; i < g->max_member; i++)
-		if ((sd = g->member[i].sd) != NULL)
+	for(i=0;i<g->max_member;i++)
+		if((sd=g->member[i].sd)!=NULL)
 			clif_guild_skillinfo(sd);
 
 	return 0;
