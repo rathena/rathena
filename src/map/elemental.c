@@ -9,7 +9,6 @@
 #include "../common/showmsg.h"
 #include "../common/random.h"
 #include "../common/strlib.h"
-#include "../common/utils.h"
 
 #include "log.h"
 #include "clif.h"
@@ -559,12 +558,13 @@ struct skill_condition elemental_skill_get_requirements(uint16 skill_id, uint16 
 	memset(&req,0,sizeof(req));
 
 	if( idx == 0 ) // invalid skill id
+  		return req;
+
+	if( skill_lv < 1 || skill_lv > MAX_SKILL_LEVEL )
 		return req;
 
-	skill_lv = cap_value(skill_lv, 1, MAX_SKILL_LEVEL);
-
-	req.hp = skill_db[idx]->require.hp[skill_lv-1];
-	req.sp = skill_db[idx]->require.sp[skill_lv-1];
+	req.hp = skill_db[idx].require.hp[skill_lv-1];
+	req.sp = skill_db[idx].require.sp[skill_lv-1];
 
 	return req;
 }
@@ -815,7 +815,6 @@ void read_elementaldb(void) {
 	uint8 i;
 
 	elemental_count = 0;
-	memset(elemental_db, 0, sizeof(elemental_db));
 	for(i = 0; i<ARRAYLENGTH(filename); i++){
 		sv_readdb(db_path, filename[i], ',', 26, 26, -1, &read_elementaldb_sub, i);
 	}
@@ -826,8 +825,7 @@ void read_elementaldb(void) {
 * ElementalID,SkillID,SkillLevel,ReqMode
 */
 static bool read_elemental_skilldb_sub(char* str[], int columns, int current) {
-	uint16 class_ = atoi(str[0]), skill_id, skill_lv, skillmode;
-	uint8 i;
+	uint16 class_ = atoi(str[0]), i, skill_id, skill_lv, skillmode;
 	struct s_elemental_db *db;
 
 	ARR_FIND(0, MAX_ELEMENTAL_CLASS, i, class_ == elemental_db[i].class_);
@@ -837,8 +835,8 @@ static bool read_elemental_skilldb_sub(char* str[], int columns, int current) {
 	}
 
 	skill_id = atoi(str[1]);
-	if( !SKILL_CHK_ELEM(skill_id) ) {
-		ShowError("read_elemental_skilldb_sub: Invalid Elemental skill '%d'.\n", skill_id);
+	if( skill_id < EL_SKILLBASE || skill_id >= EL_SKILLBASE + MAX_ELEMENTALSKILL ) {
+		ShowError("read_elemental_skilldb_sub: Skill out of range, line %d.\n", current);
 		return false;
 	}
 
