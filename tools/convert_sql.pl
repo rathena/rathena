@@ -269,7 +269,11 @@ CREATE TABLE `$db` (
 	}
 	elsif($sType =~ /mob_skill/i) { #Same format for Pre-Renewal and Renewal.
 		$db = $sTable;
-		$db = "mob_skill_db" unless($db);
+		if($sTarget =~ /Pre/i){
+			$db = "mob_skill_db" unless($db);
+		}else{
+			$db = "mob_skill_db_re" unless($db);
+		}
 		$nb_columns = 19;
 		@str_col = (1,2,8,9,10,11,17,18);
 		$line_format = "([^\,]*),"x($nb_columns-1)."([^\,]*)";
@@ -304,7 +308,11 @@ CREATE TABLE IF NOT EXISTS `$db` (
 	}
 	elsif($sType =~ /mob/i) { #Same format for Pre-Renewal and Renewal.
 		$db = $sTable;
-		$db = "mob_db" unless($db);
+		if($sTarget =~ /Pre/i){
+			$db = "mob_db" unless($db);
+		}else{
+			$db = "mob_db_re" unless($db);
+		}
 		$nb_columns = 57;
 		@str_col = (1,2,3);
 		$line_format = "([^\,]*),"x($nb_columns-1);
