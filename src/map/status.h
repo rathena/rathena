@@ -2060,10 +2060,10 @@ int status_change_spread( struct block_list *src, struct block_list *bl );
 	unsigned short status_base_matk_max(const struct status_data* status);
 #else
 	unsigned int status_weapon_atk(struct weapon_atk wa, struct status_data *status);
+	unsigned short status_base_matk(struct block_list *bl, const struct status_data* status, int level);
 #endif
 
 unsigned short status_base_atk(const struct block_list *bl, const struct status_data *status);
-unsigned short status_base_matk(struct block_list *bl, const struct status_data* status, int level);
 
 int status_readdb(void);
 int do_init_status(void);

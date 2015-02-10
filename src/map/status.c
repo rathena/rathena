@@ -2156,9 +2156,9 @@ unsigned int status_weapon_atk(struct weapon_atk wa, struct status_data *status)
 	unsigned short status_base_matk_max(const struct status_data* status) { return status->int_ + (status->int_ / 5) * (status->int_ / 5); }
 #endif
 
+#ifdef RENEWAL
 unsigned short status_base_matk(struct block_list *bl, const struct status_data* status, int level)
 {
-#ifdef RENEWAL
 	switch (bl->type) {
 	case BL_MOB:
 		return status->int_ + level;
@@ -2168,10 +2168,8 @@ unsigned short status_base_matk(struct block_list *bl, const struct status_data*
 	default:
 		return status->int_ + (status->int_ / 2) + (status->dex / 5) + (status->luk / 3) + (level / 4);
 	}
-#else
-	return 0;
-#endif
 }
+#endif
 
 /**
  * Fills in the misc data that can be calculated from the other status info (except for level)
