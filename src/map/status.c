@@ -4475,23 +4475,13 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			break;
 
 		case BL_HOM:
-			if ((bl->type&BL_HOM && battle_config.hom_setting&HOMSET_SAME_MATK)  /// Hom Min Matk is always the same as Max Matk
-					|| (sc && sc->data[SC_RECOGNIZEDSPELL]))
-				status->matk_min = status->matk_max;
-			else
-				status->matk_min += (status_get_homint(bl) + status_get_homdex(bl)) / 5;
-
+			status->matk_min += (status_get_homint(bl) + status_get_homdex(bl)) / 5;
 			status->matk_max += (status_get_homluk(bl) + status_get_homint(bl) + status_get_homdex(bl)) / 3;
 			break;
 
 		case BL_MOB:
 			status->matk_min += 70 * ((TBL_MOB*)bl)->status.rhw.atk2 / 100;
 			status->matk_max += 130 * ((TBL_MOB*)bl)->status.rhw.atk2 / 100;
-			break;
-
-		default:
-			status->matk_max = status_calc_matk(bl, sc, status->matk_max);
-			status->matk_min = status_calc_matk(bl, sc, status->matk_min);
 			break;
 		}
 #endif
@@ -4500,12 +4490,19 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			status->matk_min = status->matk_min * sd->matk_rate/100;
 		}
 
+		if ((bl->type&BL_HOM && battle_config.hom_setting&HOMSET_SAME_MATK)  /// Hom Min Matk is always the same as Max Matk
+				|| (sc && sc->data[SC_RECOGNIZEDSPELL]))
+			status->matk_min = status->matk_max;
+
 #ifdef RENEWAL
 		if( sd && sd->right_weapon.overrefine > 0) {
 			status->matk_min++;
 			status->matk_max += sd->right_weapon.overrefine - 1;
 		}
 #endif
+
+		status->matk_max = status_calc_matk(bl, sc, status->matk_max);
+		status->matk_min = status_calc_matk(bl, sc, status->matk_min);
 	}
 
 	if(flag&SCB_ASPD) {
