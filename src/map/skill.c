@@ -12245,6 +12245,12 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 	case HW_GRAVITATION:
 		if(sc && sc->data[SC_GRAVITATION] && sc->data[SC_GRAVITATION]->val3 == BCT_SELF)
 			link_group_id = sc->data[SC_GRAVITATION]->val4;
+		break;
+	case SO_VACUUM_EXTREME:
+		// Coordinates
+		val1 = x;
+		val2 = y;
+		break;
 	}
 
 	// Init skill unit group
@@ -13329,11 +13335,17 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 			break;
 
 		case UNT_VACUUM_EXTREME:
-			if ( tsc && tsc->data[SC_HALLUCINATIONWALK] )
+			if (tsc && (tsc->data[SC_HALLUCINATIONWALK] || tsc->data[SC_HOVERING] || tsc->data[SC_VACUUM_EXTREME] ||
+				(tsc->data[SC_VACUUM_EXTREME_POSTDELAY] && tsc->data[SC_VACUUM_EXTREME_POSTDELAY]->val2 == sg->group_id))) // Ignore post delay from other vacuum (this will make stack effect enabled)
 				return 0;
 			else {
-				sg->limit -= 100 * tstatus->str/20;
-				sc_start(ss, bl, SC_VACUUM_EXTREME, 100, sg->skill_lv, sg->limit);
+				if (sc_start2(ss, bl, SC_VACUUM_EXTREME, 100, sg->skill_lv, sg->group_id, (sg->limit - DIFF_TICK(tick, sg->tick))) &&
+					bl->type != BL_PC && !unit_blown_immune(bl,0x1) && // Always let player finish their walk path
+					unit_movepos(bl, sg->val1, sg->val2, 0, false))
+				{
+					clif_slide(bl, sg->val1, sg->val2);
+					clif_fixpos(bl);
+				}
 			}
 			break;
 
