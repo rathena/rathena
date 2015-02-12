@@ -1902,15 +1902,15 @@ int pc_disguise(struct map_session_data *sd, int class_)
 /// Show error message
 #define PC_BONUS_SHOW_ERROR(type,type2,val) { ShowError("%s: %s: Invalid %s %d.\n",__FUNCTION__,#type,#type2,(val)); break; }
 /// Check for valid Element, break & show error message if invalid Element
-#define PC_BONUS_CHK_ELEMENT(ele,bonus) { if (!CHK_ELEMENT(ele)) { PC_BONUS_SHOW_ERROR(bonus,Element,(ele)); }}
+#define PC_BONUS_CHK_ELEMENT(ele,bonus) { if (!CHK_ELEMENT((ele))) { PC_BONUS_SHOW_ERROR((bonus),Element,(ele)); }}
 /// Check for valid Race, break & show error message if invalid Race
-#define PC_BONUS_CHK_RACE(rc,bonus) { if (!CHK_RACE(rc)) { PC_BONUS_SHOW_ERROR(bonus,Race,(rc)); }}
+#define PC_BONUS_CHK_RACE(rc,bonus) { if (!CHK_RACE((rc))) { PC_BONUS_SHOW_ERROR((bonus),Race,(rc)); }}
 /// Check for valid Race2, break & show error message if invalid Race2
-#define PC_BONUS_CHK_RACE2(rc2,bonus) { if (!CHK_RACE2(rc2)) { PC_BONUS_SHOW_ERROR(bonus,Race2,(rc2)); }}
+#define PC_BONUS_CHK_RACE2(rc2,bonus) { if (!CHK_RACE2((rc2))) { PC_BONUS_SHOW_ERROR((bonus),Race2,(rc2)); }}
 /// Check for valid Class, break & show error message if invalid Class
-#define PC_BONUS_CHK_CLASS(cl,bonus) { if (!CHK_CLASS(cl)) { PC_BONUS_SHOW_ERROR(bonus,Class,(cl)); }}
+#define PC_BONUS_CHK_CLASS(cl,bonus) { if (!CHK_CLASS((cl))) { PC_BONUS_SHOW_ERROR((bonus),Class,(cl)); }}
 /// Check for valid Size, break & show error message if invalid Size
-#define PC_BONUS_CHK_SIZE(sz,bonus) { if (!CHK_MOBSIZE(sz)) { PC_BONUS_SHOW_ERROR(bonus,Size,(sz)); }}
+#define PC_BONUS_CHK_SIZE(sz,bonus) { if (!CHK_MOBSIZE((sz))) { PC_BONUS_SHOW_ERROR((bonus),Size,(sz)); }}
 
 static void pc_bonus_autospell(struct s_autospell *spell, int max, short id, short lv, short rate, short flag, unsigned short card_id)
 {
@@ -3700,6 +3700,22 @@ void pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 		PC_BONUS_CHK_ELEMENT(type2,SP_SUBELE);
 		if (sd->state.lr_flag != 2)
 			pc_bonus_subele(sd, (unsigned char)type2, type3, val);
+		break;
+		
+	case SP_SP_VANISH_RACE_RATE: // bonus3 bSPVanishRaceRate,r,n,x;
+		PC_BONUS_CHK_RACE(type2,SP_SP_VANISH_RACE_RATE);
+		if(sd->state.lr_flag != 2) {
+			sd->vanish_race[type2].sp_rate += type3;
+			sd->vanish_race[type2].sp_per += val;
+		}
+		break;
+
+	case SP_HP_VANISH_RACE_RATE: // bonus3 bHPVanishRaceRate,r,n,x;
+		PC_BONUS_CHK_RACE(type2,SP_HP_VANISH_RACE_RATE);
+		if(sd->state.lr_flag != 2) {
+			sd->vanish_race[type2].hp_rate += type3;
+			sd->vanish_race[type2].hp_per += val;
+		}
 		break;
 
 	default:

@@ -2962,6 +2962,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		+ sizeof(sd->subele2)
 		+ sizeof(sd->def_set_race)
 		+ sizeof(sd->mdef_set_race)
+		+ sizeof(sd->vanish_race)
 	);
 
 	memset (&sd->bonus, 0, sizeof(sd->bonus));
