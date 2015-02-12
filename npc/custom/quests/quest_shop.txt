@@ -91,27 +91,27 @@ OnInit:
 
 OnMenu:
 	set .@size, getarraysize(@i);
-	if (!.@size) set .@i, select(.menu$);
-	else if (.@size == 1) set .@i, @i[0];
+	if (!.@size) set @shop_index, select(.menu$);
+	else if (.@size == 1) set @shop_index, @i[0];
 	else {
 		for(set .@j,0; .@j<.@size; set .@j,.@j+1)
 			set .@menu$, .@menu$+.Shops$[@i[.@j]]+":";
-		set .@i, @i[select(.@menu$)-1];
+		set @shop_index, @i[select(.@menu$)-1];
 	}
 	deletearray @i[0],getarraysize(@i);
-	if (.Shops$[.@i] == "") {
+	if (.Shops$[@shop_index] == "") {
 		message strcharinfo(0),"An error has occurred.";
 		end;
 	}
 	dispbottom "Select one item at a time.";
-	callshop "qshop"+.@i,1;
-	npcshopattach "qshop"+.@i;
+	callshop "qshop"+@shop_index,1;
+	npcshopattach "qshop"+@shop_index;
 	end;
 
 OnBuyItem:
 	// .@q[] : RewardID, BoughtAmt, RewardAmt, BaseAmt, ReqZeny, ReqPts, { ReqItem, ReqAmt, ... }
 	setarray .@q[0],@bought_nameid[0],((@bought_quantity[0] > .MaxStack)?.MaxStack:@bought_quantity[0]);
-	copyarray .@q[3],getd(".q_"+.@q[0]+"[0]"),getarraysize(getd(".q_"+.@q[0]));
+	copyarray .@q[3],getd(".q_"+@shop_index+"_"+.@q[0]+"[0]"),getarraysize(getd(".q_"+@shop_index+"_"+.@q[0]));
 	set .@q[2],.@q[1]*.@q[3];
 	if (!.@q[2] || .@q[2] > 30000) {
 		message strcharinfo(0),"You can't purchase that many "+getitemname(.@q[0])+".";
@@ -186,7 +186,7 @@ function Add {
 		} else
 			setarray .@j[.@i-2],getarg(.@i),getarg(.@i+1);
 	}
-	copyarray getd(".q_"+getarg(1)+"[0]"),.@j[0],getarraysize(.@j);
+	copyarray getd(".q_"+getarg(0)+"_"+getarg(1)+"[0]"),.@j[0],getarraysize(.@j);
 	npcshopadditem "qshop"+getarg(0),getarg(1),((.ShowZeny)?getarg(3):0);
 	return;
 }
