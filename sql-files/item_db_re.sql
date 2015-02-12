@@ -9909,10 +9909,10 @@ REPLACE INTO `item_db_re` VALUES (22829,'Sealed_Card_Album','Sealed Card Album',
 REPLACE INTO `item_db_re` VALUES (22837,'Integer_Time','Integer Time',2,10,NULL,100,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'getitem 673,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22838,'Something_Present_Candy_Holders','Something Present Candy Holders',2,10,NULL,100,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22842,'Sealed_Dracula_Scroll_II','Sealed Dracula Scroll II',2,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'getitem callfunc("F_Rand",22846,6228,6232,24223,24227,17474/*, Enchant Letter*/),1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (22843,'Superstar_Snack','Superstar Snack',2,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'bonus_script "{ bonus bAtk2,50; bonus bMatk,50; }",300;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22843,'Superstar_Snack','Superstar Snack',2,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'bonus_script "{ bonus bAtk2,50; bonus bMatk,50; }",300;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22844,'Sealed_Dracula_Card_Album','Sealed Dracula Card Album',2,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'/*No Info*/',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22845,'Sealed_Fortune_Egg','Sealed Fortune Egg',2,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'getitem callfunc("F_Rand",4488,4497,4486,4480,4485,4539,4487,4494,4538,4489,4490,4482,4503,22846),1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (22846,'Sealed_Dracula_Card','Sealed Dracula Card',2,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'bonus_script "{ bonus3 bSPDrainRate,50,5,0; }",300;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22846,'Sealed_Dracula_Card','Sealed Dracula Card',2,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'bonus_script "{ bonus3 bSPDrainRate,50,5,0; }",300;',NULL,NULL);
 # Shadow Equip
 REPLACE INTO `item_db_re` VALUES (24000,'T_STR1_Armor_Shadow','T STR1 Armor Shadow',12,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,65536,NULL,'1',NULL,NULL,'bonus bStr,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (24001,'T_DEX1_Weapon_Shadow','T DEX1 Weapon Shadow',12,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,131072,NULL,'1',NULL,NULL,'bonus bDex,1;',NULL,NULL);

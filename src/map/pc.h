@@ -1127,7 +1127,6 @@ int pc_bonus_script_timer(int tid, unsigned int tick, int id, intptr_t data);
 void pc_bonus_script(struct map_session_data *sd);
 struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, const char *script_str, uint32 dur, enum si_type icon, uint16 flag, uint8 type);
 void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag);
-int pc_bonus_script_list(void *key, void *data, va_list ap);
 
 void pc_cell_basilica(struct map_session_data *sd);
 

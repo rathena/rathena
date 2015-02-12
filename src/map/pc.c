@@ -11039,16 +11039,6 @@ void pc_show_version(struct map_session_data *sd) {
 	clif_displaymessage(sd->fd,buf);
 }
 
-int pc_bonus_script_list(void *key, void *data, va_list ap) {
-	struct s_bonus_script_entry *entry = (struct s_bonus_script_entry *)data;
-	struct map_session_data *sd = va_arg(ap, struct map_session_data *);
-	struct linkdb_node *node = (struct linkdb_node *)key;
-	if (sd)
-		ShowDebug("  cid=%d aid=%d\n",sd->status.char_id, sd->status.account_id);
-	ShowDebug("    key:%d e:0x%08X n:0x%08X nn:0x%08X np:0x%08X\n",(intptr_t)key, entry, key, node->next, node->prev);
-	return 1;
-}
-
 /**
  * Run bonus_script on player
  * @param sd
