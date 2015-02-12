@@ -119,7 +119,7 @@ geffen_in,151,119,4	script	Great Wizard	64,{
 			delitem 730,1; //Crystal_Jewel
 			delitem 935,5; //Shell
 			delitem 943,1; //Solid_Shell
-			skill "MG_ENERGYCOAT",1,0;
+			skill "MG_ENERGYCOAT",1,SKILL_PERM;
 			mes "[BLIZZARDRISS]";
 			mes ". . . . .";
 			mes "It is done. . .";

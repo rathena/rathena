@@ -13,14 +13,14 @@ struct skill_unit;
 struct skill_unit_group;
 struct status_change_entry;
 
-#define MAX_SKILL_DB			MAX_SKILL /// Max Skill DB
 #define MAX_SKILL_PRODUCE_DB	270 /// Max Produce DB
 #define MAX_PRODUCE_RESOURCE	12 /// Max Produce requirements
 #define MAX_SKILL_ARROW_DB		150 /// Max Arrow Creation DB
 #define MAX_ARROW_RESULT		5 /// Max Arrow results/created
 #define MAX_SKILL_ABRA_DB		160 /// Max Skill list of Abracadabra DB
 #define MAX_SKILL_IMPROVISE_DB 30 /// Max Skill for Improvise
-#define MAX_SKILL_LEVEL 100 /// Max Skill Level
+#define MAX_SKILL_LEVEL 10 /// Max Skill Level (for skill_db storage)
+#define MAX_MOBSKILL_LEVEL 100	/// Max monster skill level (on skill usage)
 #define MAX_SKILL_CRIMSON_MARKER 3 /// Max Crimson Marker targets (RL_C_MARKER)
 #define SKILL_NAME_LENGTH 31 /// Max Skill Name length
 #define SKILL_DESC_LENGTH 31 /// Max Skill Desc length
@@ -111,80 +111,116 @@ enum e_skill_display {
 #define MAX_SKILL_ITEM_REQUIRE	10 /// Maximum required items
 #define MAX_SKILL_STATUS_REQUIRE 3 /// Maximum required statuses
 #define MAX_SKILL_EQUIP_REQUIRE 10 /// Maximum required equipped item
+
+/// Single skill requirement. !TODO: Cleanup the variable types
 struct skill_condition {
-	int hp, /// HP cost
-		mhp, /// Max HP to trigger
-		sp, /// SP cost
-		hp_rate, /// HP cost (%)
-		sp_rate, /// SP cost (%)
-		ammo, /// Ammo type
-		ammo_qty, /// Amount of ammo
-		weapon, /// Weapon type
-		zeny, /// Zeny cost
-		state, /// State/condition
-		spiritball, /// Spiritball cost
-		itemid[MAX_SKILL_ITEM_REQUIRE], /// Required item
-		amount[MAX_SKILL_ITEM_REQUIRE]; /// Amount of item
-	uint16 *eqItem; /// List of equipped item
-	enum sc_type *status; /// List of Status required (SC)
-	uint8 status_count, /// Count of SC
-		eqItem_count; /// Count of equipped item
+	int16 hp;								 ///< HP cost
+	int16 mhp;								 ///< Max HP to trigger
+	int16 sp;								 /// SP cost
+	int16 hp_rate;							 /// HP cost (%)
+	int16 sp_rate;							 /// SP cost (%)
+	uint32 zeny;							 /// Zeny cost
+	uint32 weapon;							 /// Weapon type. Combined bitmask of enum weapon_type (1<<weapon)
+	uint16 ammo;							 /// Ammo type. Combine bitmask of enum ammo_type (1<<ammo)
+	int8 ammo_qty;							 /// Amount of ammo
+	uint8 state;							 /// State/condition. @see enum e_require_state
+	int8 spiritball;						 /// Spiritball cost
+	uint16 itemid[MAX_SKILL_ITEM_REQUIRE];	 /// Required item
+	uint16 amount[MAX_SKILL_ITEM_REQUIRE];	 /// Amount of item
+	uint16 *eqItem;							 /// List of equipped item
+	enum sc_type *status;					 /// List of Status required (SC)
+	uint8 status_count,						 /// Count of SC
+		eqItem_count;						 /// Count of equipped item
 };
 
+/// Skill requirement structure. !TODO: Cleanup the variable types that use array [MAX_SKILL_LEVEL]
 struct s_skill_require {
-	int hp[MAX_SKILL_LEVEL], /// HP cost
-		mhp[MAX_SKILL_LEVEL], /// Max HP to trigger
-		sp[MAX_SKILL_LEVEL], /// SP cost
-		hp_rate[MAX_SKILL_LEVEL], /// HP cost (%)
-		sp_rate[MAX_SKILL_LEVEL], /// SP cost (%)
-		zeny[MAX_SKILL_LEVEL], /// Zeny cost
-		weapon, /// Weapon type
-		ammo, /// Ammo type
-		ammo_qty[MAX_SKILL_LEVEL], /// Amount of ammo
-		state, /// State/condition
-		spiritball[MAX_SKILL_LEVEL], /// Spiritball cost
-		itemid[MAX_SKILL_ITEM_REQUIRE], /// Required item
-		amount[MAX_SKILL_ITEM_REQUIRE]; /// Amount of item
-	uint16 *eqItem; /// List of equipped item
-	enum sc_type *status; /// List of Status required (SC)
-	uint8 status_count, /// Count of SC
-		eqItem_count; /// Count of equipped item
+	int hp[MAX_SKILL_LEVEL];			 ///< HP cost
+	int mhp[MAX_SKILL_LEVEL];			 ///< Max HP to trigger
+	int sp[MAX_SKILL_LEVEL];			 /// SP cost
+	int hp_rate[MAX_SKILL_LEVEL];		 /// HP cost (%)
+	int sp_rate[MAX_SKILL_LEVEL];		 /// SP cost (%)
+	int zeny[MAX_SKILL_LEVEL];			 /// Zeny cost
+	uint32 weapon;						 /// Weapon type. Combined bitmask of enum weapon_type (1<<weapon)
+	uint16 ammo;						 /// Ammo type. Combine bitmask of enum ammo_type (1<<ammo)
+	int ammo_qty[MAX_SKILL_LEVEL];		 /// Amount of ammo
+	uint8 state;						 /// State/condition. @see enum e_require_state
+	int spiritball[MAX_SKILL_LEVEL];	 /// Spiritball cost
+	int itemid[MAX_SKILL_ITEM_REQUIRE];	 /// Required item
+	int amount[MAX_SKILL_ITEM_REQUIRE];	 /// Amount of item
+	uint16 *eqItem;						 /// List of equipped item
+	enum sc_type *status;				 /// List of Status required (SC)
+	uint8 status_count,					 /// Count of SC
+		eqItem_count;					 /// Count of equipped item
 };
 
-/// Database skills
+/// Database skills. !TODO: Cleanup the variable types that use array [MAX_SKILL_LEVEL]
 struct s_skill_db {
-	char name[SKILL_NAME_LENGTH];
-	char desc[SKILL_DESC_LENGTH];
-	int range[MAX_SKILL_LEVEL],hit,inf,element[MAX_SKILL_LEVEL],nk,splash[MAX_SKILL_LEVEL],max;
-	int num[MAX_SKILL_LEVEL];
-	int cast[MAX_SKILL_LEVEL],walkdelay[MAX_SKILL_LEVEL],delay[MAX_SKILL_LEVEL];
+	// skill_db.txt
+	uint16 nameid;								 ///< Skill ID
+	char name[SKILL_NAME_LENGTH];				 ///< AEGIS_Name
+	char desc[SKILL_DESC_LENGTH];				 ///< English Name
+	int range[MAX_SKILL_LEVEL];					 ///< Range
+	int8 hit;									 ///< Hit type
+	uint8 inf;									 ///< Inf: 0- passive, 1- enemy, 2- place, 4- self, 16- friend, 32- trap
+	int element[MAX_SKILL_LEVEL];				 ///< Element
+	uint8 nk;									 ///< Damage properties
+	int splash[MAX_SKILL_LEVEL];				 ///< Splash effect
+	uint8 max;									 ///< Max level
+	int num[MAX_SKILL_LEVEL];					 ///< Number of hit
+	bool castcancel;							 ///< Cancel cast when being hit
+	int16 cast_def_rate;						 ///< Def rate during cast a skill
+	uint16 skill_type;							 ///< Skill type
+	int blewcount[MAX_SKILL_LEVEL];				 ///< Blew count
+	uint32 inf2;								 ///<
+	uint32 inf3;								 ///<
+	int maxcount[MAX_SKILL_LEVEL];				 ///< Max number skill can be casted in same map
+
+	// skill_castnodex_db.txt
+	uint8 castnodex;							 ///< 1 - Not affected by dex, 2 - Not affected by SC, 4 - Not affected by item
+	uint8 delaynodex;							 ///< 1 - Not affected by dex, 2 - Not affected by SC, 4 - Not affected by item
+
+	// skill_nocast_db.txt
+	uint32 nocast;								 ///< Skill cannot be casted at this zone
+
+	// skill_unit_db.txt
+	uint16 unit_id[2];							 ///< Unit ID. @see enum s_skill_unit_id
+	int unit_layout_type[MAX_SKILL_LEVEL];		 ///< Layout type. -1 is special layout, others are square with lenght*width: (val*2+1)^2
+	int unit_range[MAX_SKILL_LEVEL];			 ///< Unit cell effect range
+	int16 unit_interval;						 ///< Interval
+	uint32 unit_target;							 ///< Unit target. @see enum e_battle_check_target
+	uint32 unit_flag;							 ///< Unit flags. @see enum e_skill_unit_flag
+
+	// skill_cast_db.txt
+	int cast[MAX_SKILL_LEVEL];				 ///< Variable casttime
 #ifdef RENEWAL_CAST
-	int fixed_cast[MAX_SKILL_LEVEL];
+	int fixed_cast[MAX_SKILL_LEVEL];			 ///< If -1 means 20% than 'cast'
 #endif
-	int upkeep_time[MAX_SKILL_LEVEL],upkeep_time2[MAX_SKILL_LEVEL],cooldown[MAX_SKILL_LEVEL];
-	int castcancel,cast_def_rate;
-	int inf2,maxcount[MAX_SKILL_LEVEL],skill_type,inf3;
-	int blewcount[MAX_SKILL_LEVEL];
-	struct s_skill_require require;
-	int castnodex[MAX_SKILL_LEVEL], delaynodex[MAX_SKILL_LEVEL];
-	int32 nocast;
-	int unit_id[2];
-	int unit_layout_type[MAX_SKILL_LEVEL];
-	int unit_range[MAX_SKILL_LEVEL];
-	int unit_interval;
-	int unit_target;
-	int unit_flag;
+	int walkdelay[MAX_SKILL_LEVEL];			 ///< Delay to walk after casting
+	int delay[MAX_SKILL_LEVEL];				 ///< Global delay (delay before reusing all skills)
+	int cooldown[MAX_SKILL_LEVEL];			 ///< Cooldown (delay before reusing same skill)
+	int upkeep_time[MAX_SKILL_LEVEL];		 ///< Duration
+	int upkeep_time2[MAX_SKILL_LEVEL];		 ///< Duration2
+
+	// skill_require_db.txt
+	struct s_skill_require require;				 ///< Skill requirement
+
+	// skill_nonearnpc_db.txt
 	uint8 unit_nonearnpc_range;	//additional range for UF_NONEARNPC or INF2_NO_NEARNPC [Cydh]
 	uint8 unit_nonearnpc_type;	//type of NPC [Cydh]
+
+	// skill_damage_db.txt
 #ifdef ADJUST_SKILL_DAMAGE
 	struct s_skill_damage damage;
 #endif
+
+	// skill_copyable_db.txt
 	struct s_copyable { // [Cydh]
 		uint8 option;
 		uint16 joballowed, req_opt;
 	} copyable;
 };
-extern struct s_skill_db skill_db[MAX_SKILL_DB];
+extern struct s_skill_db **skill_db;
 
 #define MAX_SKILL_UNIT_LAYOUT	52
 #define MAX_SKILL_UNIT_LAYOUT2	17
@@ -261,7 +297,7 @@ struct skill_unit_group_tickset {
 };
 
 
-enum {
+enum e_skill_unit_flag {
 	UF_DEFNOTENEMY      = 0x00001,	// If 'defunit_not_enemy' is set, the target is changed to 'friend'
 	UF_NOREITERATION    = 0x00002,	// Spell cannot be stacked
 	UF_NOFOOTSET        = 0x00004,	// Spell cannot be cast near/on targets
@@ -321,7 +357,9 @@ const char*	skill_get_desc( uint16 skill_id ); 	// [Skotlex]
 int skill_tree_get_max( uint16 skill_id, int b_class );	// Celest
 
 // Accessor to the skills database
-int skill_get_index( uint16 skill_id );
+int skill_get_index_( uint16 skill_id, bool silent, const char *func, const char *file, int line );
+#define skill_get_index(skill_id)  skill_get_index_((skill_id), false, __FUNCTION__, __FILE__, __LINE__) /// Get skill index from skill_id (common usage on source)
+#define skill_get_index2(skill_id) skill_get_index_((skill_id), true, __FUNCTION__, __FILE__, __LINE__)  /// Get skill index from skill_id (used when reading skill_db files)
 int skill_get_type( uint16 skill_id );
 int skill_get_hit( uint16 skill_id );
 int skill_get_inf( uint16 skill_id );
@@ -337,7 +375,7 @@ int skill_get_delay( uint16 skill_id ,uint16 skill_lv );
 int skill_get_walkdelay( uint16 skill_id ,uint16 skill_lv );
 int skill_get_time( uint16 skill_id ,uint16 skill_lv );
 int skill_get_time2( uint16 skill_id ,uint16 skill_lv );
-int skill_get_castnodex( uint16 skill_id ,uint16 skill_lv );
+int skill_get_castnodex( uint16 skill_id );
 int skill_get_castdef( uint16 skill_id );
 int skill_get_nocast( uint16 skill_id );
 int skill_get_unit_id(uint16 skill_id,int flag);
@@ -367,6 +405,9 @@ int skill_get_itemid( uint16 skill_id, int idx );
 int skill_get_itemqty( uint16 skill_id, int idx );
 
 int skill_name2id(const char* name);
+uint16 skill_idx2id(uint16 idx);
+
+uint16 SKILL_MAX_DB(void);
 
 int skill_isammotype(struct map_session_data *sd, unsigned short skill_id);
 int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data);
@@ -1815,7 +1856,7 @@ enum e_skill {
 };
 
 /// The client view ids for land skills.
-enum {
+enum s_skill_unit_id {
 	UNT_SAFETYWALL = 0x7e,
 	UNT_FIREWALL,
 	UNT_WARP_WAITING,
@@ -2054,5 +2095,10 @@ enum e_skill_damage_caster {
 #define SKILL_VAR_REPRODUCE "REPRODUCE_SKILL"
 /// Variable name of copied skill level by Reproduce
 #define SKILL_VAR_REPRODUCE_LV "REPRODUCE_SKILL_LV"
+
+#define SKILL_CHK_HOMUN(skill_id) ( (skill_id) >= HM_SKILLBASE && (skill_id) < HM_SKILLBASE+MAX_HOMUNSKILL )
+#define SKILL_CHK_MERC(skill_id)  ( (skill_id) >= MC_SKILLBASE && (skill_id) < MC_SKILLBASE+MAX_MERCSKILL )
+#define SKILL_CHK_ELEM(skill_id)  ( (skill_id) >= EL_SKILLBASE && (skill_id) < EL_SKILLBASE+MAX_ELEMENTALSKILL )
+#define SKILL_CHK_GUILD(skill_id) ( (skill_id) >= GD_SKILLBASE && (skill_id) < GD_SKILLBASE+MAX_GUILDSKILL )
 
 #endif /* _SKILL_H_ */

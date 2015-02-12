@@ -54,7 +54,7 @@
 #define MAX_BANK_ZENY SINT32_MAX ///Max zeny in Bank
 #define MAX_FAME 1000000000 ///Max fame points
 #define MAX_CART 100 ///Maximum item in cart
-#define MAX_SKILL 5020 ///Maximum skill data
+#define MAX_SKILL 1200 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
 #define GLOBAL_REG_NUM 256 ///Max permanent character variables per char
 #define ACCOUNT_REG_NUM 64 ///Max permanent local account variables per account
 #define ACCOUNT_REG2_NUM 16 ///Max permanent global account variables per account
@@ -223,10 +223,11 @@ enum e_skill_flag
 	SKILL_FLAG_PERMANENT,
 	SKILL_FLAG_TEMPORARY,
 	SKILL_FLAG_PLAGIARIZED,
-	SKILL_FLAG_REPLACED_LV_0, // temporary skill overshadowing permanent skill of level 'N - SKILL_FLAG_REPLACED_LV_0',
-	SKILL_FLAG_PERM_GRANTED, // permanent, granted through someway e.g. script
-	SKILL_FLAG_TMP_COMBO, //@FIXME for homon combo atm
-	//...
+	SKILL_FLAG_PERM_GRANTED, // Permanent, granted through someway e.g. script
+	SKILL_FLAG_TMP_COMBO, //@FIXME for homunculus combo atm
+
+	//! NOTE: This flag be the last flag, and don't change the value if not needed!
+	SKILL_FLAG_REPLACED_LV_0 = 10, // temporary skill overshadowing permanent skill of level 'N - SKILL_FLAG_REPLACED_LV_0',
 };
 
 enum e_mmo_charstatus_opt {
@@ -236,9 +237,9 @@ enum e_mmo_charstatus_opt {
 };
 
 struct s_skill {
-	unsigned short id;
-	unsigned char lv;
-	unsigned char flag; // see enum e_skill_flag
+	uint16 id;
+	uint8 lv;
+	uint8 flag; // see enum e_skill_flag
 };
 
 struct global_reg {
@@ -631,6 +632,7 @@ enum e_guild_skill {
 	GD_MAX,
 };
 
+#define MAX_SKILL_ID GD_MAX
 
 //These mark the ID of the jobs, as expected by the client. [Skotlex]
 enum e_job {

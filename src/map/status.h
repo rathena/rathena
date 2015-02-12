@@ -2065,6 +2065,7 @@ int status_change_spread( struct block_list *src, struct block_list *bl );
 
 unsigned short status_base_atk(const struct block_list *bl, const struct status_data *status);
 
+void initChangeTables(void);
 int status_readdb(void);
 int do_init_status(void);
 void do_final_status(void);

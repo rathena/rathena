@@ -140,7 +140,7 @@ in_rogue,355,179,0	script	Haijara Greg#rogueguild	46,{
 			mes "eh? Then I will teach you the";
 			mes "Close Confine skill once again.";
 			specialeffect2 EF_LIGHTSPHERE;
-			skill "RG_CLOSECONFINE",1,0;
+			skill "RG_CLOSECONFINE",1,SKILL_PERM;
 			set ROG_SK,13;
 			close;
 		}
@@ -493,7 +493,7 @@ in_rogue,355,179,0	script	Haijara Greg#rogueguild	46,{
 					mes "more about this skill through";
 					mes "practice, and that you become as great a legend as Chae Takbae.";
 					set ROG_SK,12;
-					skill "RG_CLOSECONFINE",1,0;
+					skill "RG_CLOSECONFINE",1,SKILL_PERM;
 					specialeffect2 EF_LIGHTSPHERE;
 					close;
 				}
@@ -505,7 +505,7 @@ in_rogue,355,179,0	script	Haijara Greg#rogueguild	46,{
 				mes "practice. Good luck, and";
 				mes "thanks again for your help.";
 				set ROG_SK,12;
-				skill "RG_CLOSECONFINE",1,0;
+				skill "RG_CLOSECONFINE",1,SKILL_PERM;
 				specialeffect2 EF_LIGHTSPHERE;
 				close;
 			}

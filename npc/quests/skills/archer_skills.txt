@@ -51,7 +51,7 @@ moc_ruins,118,99,5	script	Roberto	88,{
 				delitem 906,41; //Tough_Scalelike_Stem
 				delitem 1019,13; //Wooden_Block
 				delitem 501,1; //Red_Potion
-				skill "AC_MAKINGARROW",1,0;
+				skill "AC_MAKINGARROW",1,SKILL_PERM;
 				mes "[Roberto]";
 				mes "No need to worry about arrows now.";
 				mes "Oh, and did you happen to see";
@@ -224,7 +224,7 @@ payon,103,63,3	script	Jason	88,3,3,{
 					delitem 962,10; //Tentacle
 					delitem 925,10; //Bill_Of_Birds
 					delitem 532,36; //Banana_Juice
-					skill "AC_CHARGEARROW",1,0;
+					skill "AC_CHARGEARROW",1,SKILL_PERM;
 					mes "[Jason]";
 					mes "Oh, works better than I expected!";
 					mes "Won't be needing to modify the bow!";

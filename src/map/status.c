@@ -154,11 +154,11 @@ static void set_sc(uint16 skill_id, sc_type sc, int icon, unsigned int flag)
 {
 	uint16 idx = skill_get_index(skill_id);
 	if( idx == 0 ) {
-		ShowError("set_sc: Unsupported skill id %d\n", skill_id);
+		ShowError("set_sc: Unsupported skill id %d (SC: %d. Icon: %d)\n", skill_id, sc, icon);
 		return;
 	}
 	if( sc < 0 || sc >= SC_MAX ) {
-		ShowError("set_sc: Unsupported status change id %d\n", sc);
+		ShowError("set_sc: Unsupported status change id %d (Skill: %d. Icon: %d)\n", sc, skill_id, icon);
 		return;
 	}
 
@@ -170,6 +170,16 @@ static void set_sc(uint16 skill_id, sc_type sc, int icon, unsigned int flag)
 
 	if( SkillStatusChangeTable[idx] == SC_NONE )
 		SkillStatusChangeTable[idx] = sc;
+}
+
+static void set_sc_with_vfx_noskill(sc_type sc, int icon, unsigned flag) {
+	if (sc > SC_NONE && sc < SC_MAX) {
+		if (StatusIconChangeTable[sc] == SI_BLANK)
+			StatusIconChangeTable[sc] = icon;
+		StatusChangeFlagTable[sc] |= flag;
+	}
+	if (icon > SI_BLANK && icon < SI_MAX)
+		StatusRelevantBLTypes[icon] |= BL_SCEFFECT;
 }
 
 void initChangeTables(void)
@@ -791,8 +801,6 @@ void initChangeTables(void)
 	set_sc( OB_OBOROGENSOU			, SC_GENSOU		, SI_GENSOU		, SCB_NONE );
 
 	set_sc( ALL_FULL_THROTTLE		, SC_FULL_THROTTLE	, SI_FULL_THROTTLE	, SCB_SPEED|SCB_STR|SCB_AGI|SCB_VIT|SCB_INT|SCB_DEX|SCB_LUK );
-	set_sc_with_vfx( SC_MOONSTAR		, SC_MOONSTAR		, SI_MOONSTAR		, SCB_NONE );
-	set_sc_with_vfx( SC_SUPER_STAR		, SC_SUPER_STAR		, SI_SUPER_STAR		, SCB_NONE );
 
 	/* Rebellion */
 	add_sc( RL_MASS_SPIRAL		, SC_BLEEDING );
@@ -806,24 +814,26 @@ void initChangeTables(void)
 	set_sc_with_vfx( RL_C_MARKER	, SC_C_MARKER		, SI_C_MARKER		, SCB_FLEE );
 	set_sc_with_vfx( RL_AM_BLAST	, SC_ANTI_M_BLAST	, SI_ANTI_M_BLAST	, SCB_NONE );
 
-	set_sc_with_vfx( SC_ALL_RIDING		, SC_ALL_RIDING		, SI_ALL_RIDING		, SCB_SPEED );
+	set_sc_with_vfx_noskill( SC_MOONSTAR	, SI_MOONSTAR	, SCB_NONE );
+	set_sc_with_vfx_noskill( SC_SUPER_STAR	, SI_SUPER_STAR	, SCB_NONE );
+	set_sc_with_vfx_noskill( SC_ALL_RIDING	, SI_ALL_RIDING	, SCB_SPEED );
 
 	/* Storing the target job rather than simply SC_SPIRIT simplifies code later on */
-	SkillStatusChangeTable[SL_ALCHEMIST]	= (sc_type)MAPID_ALCHEMIST,
-	SkillStatusChangeTable[SL_MONK]		= (sc_type)MAPID_MONK,
-	SkillStatusChangeTable[SL_STAR]		= (sc_type)MAPID_STAR_GLADIATOR,
-	SkillStatusChangeTable[SL_SAGE]		= (sc_type)MAPID_SAGE,
-	SkillStatusChangeTable[SL_CRUSADER]	= (sc_type)MAPID_CRUSADER,
-	SkillStatusChangeTable[SL_SUPERNOVICE]	= (sc_type)MAPID_SUPER_NOVICE,
-	SkillStatusChangeTable[SL_KNIGHT]	= (sc_type)MAPID_KNIGHT,
-	SkillStatusChangeTable[SL_WIZARD]	= (sc_type)MAPID_WIZARD,
-	SkillStatusChangeTable[SL_PRIEST]	= (sc_type)MAPID_PRIEST,
-	SkillStatusChangeTable[SL_BARDDANCER]	= (sc_type)MAPID_BARDDANCER,
-	SkillStatusChangeTable[SL_ROGUE]	= (sc_type)MAPID_ROGUE,
-	SkillStatusChangeTable[SL_ASSASIN]	= (sc_type)MAPID_ASSASSIN,
-	SkillStatusChangeTable[SL_BLACKSMITH]	= (sc_type)MAPID_BLACKSMITH,
-	SkillStatusChangeTable[SL_HUNTER]	= (sc_type)MAPID_HUNTER,
-	SkillStatusChangeTable[SL_SOULLINKER]	= (sc_type)MAPID_SOUL_LINKER,
+	SkillStatusChangeTable[skill_get_index(SL_ALCHEMIST)]	= (sc_type)MAPID_ALCHEMIST,
+	SkillStatusChangeTable[skill_get_index(SL_MONK)]		= (sc_type)MAPID_MONK,
+	SkillStatusChangeTable[skill_get_index(SL_STAR)]		= (sc_type)MAPID_STAR_GLADIATOR,
+	SkillStatusChangeTable[skill_get_index(SL_SAGE)]		= (sc_type)MAPID_SAGE,
+	SkillStatusChangeTable[skill_get_index(SL_CRUSADER)]	= (sc_type)MAPID_CRUSADER,
+	SkillStatusChangeTable[skill_get_index(SL_SUPERNOVICE)]	= (sc_type)MAPID_SUPER_NOVICE,
+	SkillStatusChangeTable[skill_get_index(SL_KNIGHT)]	= (sc_type)MAPID_KNIGHT,
+	SkillStatusChangeTable[skill_get_index(SL_WIZARD)]	= (sc_type)MAPID_WIZARD,
+	SkillStatusChangeTable[skill_get_index(SL_PRIEST)]	= (sc_type)MAPID_PRIEST,
+	SkillStatusChangeTable[skill_get_index(SL_BARDDANCER)]	= (sc_type)MAPID_BARDDANCER,
+	SkillStatusChangeTable[skill_get_index(SL_ROGUE)]	= (sc_type)MAPID_ROGUE,
+	SkillStatusChangeTable[skill_get_index(SL_ASSASIN)]	= (sc_type)MAPID_ASSASSIN,
+	SkillStatusChangeTable[skill_get_index(SL_BLACKSMITH)]	= (sc_type)MAPID_BLACKSMITH,
+	SkillStatusChangeTable[skill_get_index(SL_HUNTER)]	= (sc_type)MAPID_HUNTER,
+	SkillStatusChangeTable[skill_get_index(SL_SOULLINKER)]	= (sc_type)MAPID_SOUL_LINKER,
 
 	/* Status that don't have a skill associated */
 	StatusIconChangeTable[SC_WEIGHT50] = SI_WEIGHT50;

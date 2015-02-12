@@ -101,7 +101,7 @@ valkyrie,53,50,3	script	Biochemist#Valkyrie	122,{
 				mes "responsibility in using these";
 				mes "secrets for the right ends...";
 				next;
-				skill "AM_BIOETHICS",1,0;
+				skill "AM_BIOETHICS",1,SKILL_PERM;
 				mes "[Biochemist]";
 				mes "Open your eyes...";
 				mes "Now that you have";
