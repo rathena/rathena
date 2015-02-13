@@ -1700,7 +1700,6 @@ int chrif_bsdata_received(int fd) {
 	}
 
 	if ((count = RFIFOB(fd,8))) {
-		struct s_bonus_script *list = NULL;
 		uint8 i = 0;
 
 		//ShowInfo("Loaded %d bonus script for CID=%d\n", count, sd->status.char_id);

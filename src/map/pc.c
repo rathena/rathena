@@ -11045,7 +11045,6 @@ void pc_show_version(struct map_session_data *sd) {
  * @author [Cydh]
  **/
 void pc_bonus_script(struct map_session_data *sd) {
-	uint8 i = 0;
 	int now = gettick();
 	struct linkdb_node *node = NULL, *next = NULL;
 
