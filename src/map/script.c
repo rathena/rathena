@@ -2352,12 +2352,6 @@ void script_hardcoded_constants(void) {
 	script_set_constant("Option_Dragon",OPTION_DRAGON,false);
 	script_set_constant("Option_Costume",OPTION_COSTUME,false);
 
-	/* bonus_script commands */
-	script_set_constant("BSF_REM_BUFF",BSF_REM_BUFF,false);
-	script_set_constant("BSF_REM_DEBUFF",BSF_REM_DEBUFF,false);
-	script_set_constant("BSF_ALL",BSF_ALL,false);
-	script_set_constant("BSF_CLEARALL",BSF_CLEARALL,false);
-
 	/* sc_start flags */
 	script_set_constant("SCSTART_NONE",SCSTART_NONE,false);
 	script_set_constant("SCSTART_NOAVOID",SCSTART_NOAVOID,false);
@@ -18909,16 +18903,20 @@ BUILDIN_FUNC(montransform) {
 * @author [Cydh]
  **/
 BUILDIN_FUNC(bonus_script) {
-	uint8 i, flag = 0;
+	uint16 flag = 0;
 	int16 icon = SI_BLANK;
 	uint32 dur;
-	char type = 0;
+	uint8 type = 0;
 	TBL_PC* sd;
 	const char *script_str = NULL;
-	struct script_code *script = NULL;
+	struct s_bonus_script_entry *entry = NULL;
 
-	if (script_hasdata(st,7))
-		sd = map_charid2sd(script_getnum(st,7));
+	if (script_hasdata(st,7)) {
+		if (!(sd = map_charid2sd(script_getnum(st,7)))) {
+			ShowError("buildin_bonus_script: Player CID=%d is not found.\n", script_getnum(st,7));
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
 	else
 		sd = script_rid2sd(st);
 
@@ -18927,46 +18925,28 @@ BUILDIN_FUNC(bonus_script) {
 	
 	script_str = script_getstr(st,2);
 	dur = 1000 * abs(script_getnum(st,3));
-	FETCH(4,flag);
-	FETCH(5,type);
-	FETCH(6,icon);
+	FETCH(4, flag);
+	FETCH(5, type);
+	FETCH(6, icon);
 
+	// No Script string, No Duration!
 	if (script_str[0] == '\0' || !dur) {
-		//ShowWarning("buildin_bonus_script: Invalid script. Skipping...\n");
+		ShowError("buildin_bonus_script: Invalid! Script: \"%s\". Duration: %d\n", script_str, dur);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	//Skip duplicate entry
-	ARR_FIND(0,MAX_PC_BONUS_SCRIPT,i,&sd->bonus_script[i] && sd->bonus_script[i].script_str && strcmp(sd->bonus_script[i].script_str,script_str) == 0);
-	if (i < MAX_PC_BONUS_SCRIPT) {
-		//ShowWarning("buildin_bonus_script: Duplicate entry with bonus '%d'. Skipping...\n",i);
-		return SCRIPT_CMD_SUCCESS;
-	}
-
-	if (!(script = parse_script(script_str,"bonus_script",0,1))) {
-		ShowWarning("buildin_bonus_script: Failed to parse script '%s' (cid:%d). Skipping...\n",script_str,sd->status.char_id);
+	if (strlen(script_str) >= MAX_BONUS_SCRIPT_LENGTH) {
+		ShowError("buildin_bonus_script: Script string to long: \"%s\".\n", script_str);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	//Find the empty slot
-	ARR_FIND(0,MAX_PC_BONUS_SCRIPT,i,!sd->bonus_script[i].script);
-	if (i >= MAX_PC_BONUS_SCRIPT) {
-		ShowWarning("buildin_itemscript: Maximum script_bonus is reached (cid:%d max: %d). Skipping...\n",sd->status.char_id,MAX_PC_BONUS_SCRIPT);
-		return SCRIPT_CMD_SUCCESS;
+	if (icon <= SI_BLANK || icon >= SI_MAX)
+		icon = SI_BLANK;
+
+	if ((entry = pc_bonus_script_add(sd, script_str, dur, (enum si_type)icon, flag, type))) {
+		linkdb_insert(&sd->bonus_script.head, (void *)((intptr_t)entry), entry);
+		status_calc_pc(sd,SCO_NONE);
 	}
-
-	//Add the script data
-	memcpy(sd->bonus_script[i].script_str,script_str,strlen(script_str)+1);
-	sd->bonus_script[i].script = script;
-	sd->bonus_script[i].tick = gettick() + dur;
-	sd->bonus_script[i].flag = flag;
-	sd->bonus_script[i].type = type;
-	sd->bonus_script[i].icon = icon;
-
-	if (sd->bonus_script[i].icon != SI_BLANK) //Gives status icon if exist
-		clif_status_change(&sd->bl,sd->bonus_script[i].icon,1,dur,1,0,0);
-
-	status_calc_pc(sd,SCO_NONE);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -18979,7 +18959,7 @@ BUILDIN_FUNC(bonus_script) {
 */
 BUILDIN_FUNC(bonus_script_clear) {
 	TBL_PC* sd;
-	bool flag = 0;
+	bool flag = false;
 
 	if (script_hasdata(st,2))
 		flag = script_getnum(st,2);
@@ -18992,7 +18972,7 @@ BUILDIN_FUNC(bonus_script_clear) {
 	if (sd == NULL)
 		return SCRIPT_CMD_FAILURE;
 
-	pc_bonus_script_clear_all(sd,flag); /// Don't remove permanent script
+	pc_bonus_script_clear(sd,(flag ? BSF_PERMANENT : BSF_REM_ALL));
 	return SCRIPT_CMD_SUCCESS;
 }
 

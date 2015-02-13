@@ -2491,9 +2491,9 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 
 0x2b2f
 	Type: AZ
-	Structure: <cmd>.W <len>.W <cid>.L <count>.W
+	Structure: <cmd>.W <len>.W <cid>.L <count>.B { <bonus_script_data>.?B }
 	index: 0,2,4,8
-	len: variable: 10+50*bonus_script_data
+	len: variable: 9+count*bonus_script_data
 	parameter:
 		- cmd : packet identification (0x2b2f)
 	desc:
@@ -2840,9 +2840,9 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 
 0x2b2e
 	Type: ZA
-	Structure: <cmd>.W <len>.W <char_id>.L <count>.W
+	Structure: <cmd>.W <len>.W <char_id>.L <count>.B { <bonus_script_data>.?B }
 	index: 0,2,4,8
-	len: variable: 10+MAX_PC_BONUS_SCRIPT*bonus_script_data
+	len: variable: 9+count*bonus_script_data
 	parameter:
 		- cmd : packet identification (0x2b2e)
 		- len

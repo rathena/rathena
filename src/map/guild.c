@@ -1945,11 +1945,12 @@ int guild_castledatasave(int castle_id, int index, int value) {
 	return 0;
 }
 
-void guild_castle_reconnect_sub(void *key, void *data, va_list ap) {
+int guild_castle_reconnect_sub(void *key, void *data, va_list ap) {
 	int castle_id = GetWord((int)__64BPRTSIZE(key), 0);
 	int index = GetWord((int)__64BPRTSIZE(key), 1);
 	intif_guild_castle_datasave(castle_id, index, *(int *)data);
 	aFree(data);
+	return 1;
 }
 
 /**
