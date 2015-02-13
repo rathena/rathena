@@ -1630,14 +1630,14 @@ int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int flag)
 /**
  * Applies percentage based damage to a unit.
  * If a mob is killed this way and there is no src, no EXP/Drops will be awarded.
- * Rate < 0 means adding the the HP/SP
  * @param src: Object initiating HP/SP modification [PC|MOB|PET|HOM|MER|ELEM]
  * @param target: Object to modify HP/SP
  * @param hp_rate: Percentage of HP to modify
  * @param sp_rate: Percentage of SP to modify
  * @param flag: \n
  *		0: Heal target \n 
- *		2: Target must not die from subtraction
+ *		1: Use status_damage \n 
+ *		2: Use status_damage and make sure target must not die from subtraction
  * @return hp+sp through status_heal()
  */
 int status_percent_change(struct block_list *src, struct block_list *target, int8 hp_rate, int8 sp_rate, uint8 flag)
@@ -1677,18 +1677,18 @@ int status_percent_change(struct block_list *src, struct block_list *target, int
 	// Ugly check in case damage dealt is too much for the received args of
 	// status_heal / status_damage. [Skotlex]
 	if (hp > INT_MAX) {
-	  	hp -= INT_MAX;
+		hp -= INT_MAX;
 		if (flag)
 			status_damage(src, target, INT_MAX, 0, 0, (!src||src==target?5:1));
 		else
-		  	status_heal(target, INT_MAX, 0, 0);
+			status_heal(target, INT_MAX, 0, 0);
 	}
-  	if (sp > INT_MAX) {
+	if (sp > INT_MAX) {
 		sp -= INT_MAX;
 		if (flag)
 			status_damage(src, target, 0, INT_MAX, 0, (!src||src==target?5:1));
 		else
-		  	status_heal(target, 0, INT_MAX, 0);
+			status_heal(target, 0, INT_MAX, 0);
 	}
 	if (flag)
 		return status_damage(src, target, hp, sp, 0, (!src||src==target?5:1));
