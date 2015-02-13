@@ -6517,25 +6517,26 @@ void battle_drain(TBL_PC *sd, struct block_list *tbl, int64 rdamage, int64 ldama
 {
 	struct weapon_data *wd;
 	int64 *damage;
-	int thp = 0, tsp = 0, rhp = 0, rsp = 0, hp = 0, sp = 0, i = 0;
+	int thp = 0, tsp = 0, rhp = 0, rsp = 0, hp = 0, sp = 0;
+	uint8 i = 0;
 	short vrate_hp = 0, vrate_sp = 0, v_hp = 0, v_sp = 0;
 
 	if (!CHK_RACE(race) && !CHK_CLASS(class_))
 		return;
 
 	// Check for vanish HP/SP. !CHECKME: Which first, drain or vanish?
-	vrate_hp = min(sd->bonus.hp_vanish_rate + sd->vanish_race[race].hp_rate + sd->vanish_race[RC_ALL].hp_rate, 10000);
-	v_hp = sd->bonus.hp_vanish_per + sd->vanish_race[race].hp_per + sd->vanish_race[RC_ALL].hp_per;
+	vrate_hp = cap_value(sd->bonus.hp_vanish_rate + sd->vanish_race[race].hp_rate + sd->vanish_race[RC_ALL].hp_rate, SHRT_MIN, SHRT_MAX);
+	v_hp = cap_value(sd->bonus.hp_vanish_per + sd->vanish_race[race].hp_per + sd->vanish_race[RC_ALL].hp_per, INT8_MIN, INT8_MAX);
 
-	vrate_sp = min(sd->bonus.sp_vanish_rate + sd->vanish_race[race].sp_rate + sd->vanish_race[RC_ALL].sp_rate, 10000);
-	v_sp = sd->bonus.sp_vanish_per + sd->vanish_race[race].sp_per + sd->vanish_race[RC_ALL].sp_per;
+	vrate_sp = cap_value(sd->bonus.sp_vanish_rate + sd->vanish_race[race].sp_rate + sd->vanish_race[RC_ALL].sp_rate, SHRT_MIN, SHRT_MAX);
+	v_sp = cap_value(sd->bonus.sp_vanish_per + sd->vanish_race[race].sp_per + sd->vanish_race[RC_ALL].sp_per, INT8_MIN, INT8_MAX);
 
 	if (v_hp > 0 && vrate_hp > 0 && (vrate_hp >= 10000 || rnd()%10000 < vrate_hp))
 		i |= 1;
 	if (v_sp > 0 && vrate_sp > 0 && (vrate_sp >= 10000 || rnd()%10000 < vrate_sp))
 		i |= 2;
 	if (i)
-		status_percent_damage(&sd->bl, tbl, (i&1 ? (unsigned char)v_hp: 0), (i&2 ? (unsigned char)v_sp : 0), false);
+		status_percent_damage(&sd->bl, tbl, (i&1 ? (int8)v_hp: 0), (i&2 ? (int8)v_sp : 0), false);
 
 	i = 0;
 	for (i = 0; i < 4; i++) {

@@ -1628,8 +1628,9 @@ int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int flag)
 }
 
 /**
- * Applies percentage based damage to a unit
- * If a mob is killed this way and there is no src, no EXP/Drops will be awarded
+ * Applies percentage based damage to a unit.
+ * If a mob is killed this way and there is no src, no EXP/Drops will be awarded.
+ * Rate < 0 means adding the the HP/SP
  * @param src: Object initiating HP/SP modification [PC|MOB|PET|HOM|MER|ELEM]
  * @param target: Object to modify HP/SP
  * @param hp_rate: Percentage of HP to modify
@@ -1639,10 +1640,10 @@ int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int flag)
  *		2: Target must not die from subtraction
  * @return hp+sp through status_heal()
  */
-int status_percent_change(struct block_list *src,struct block_list *target,signed char hp_rate, signed char sp_rate, int flag)
+int status_percent_change(struct block_list *src, struct block_list *target, int8 hp_rate, int8 sp_rate, uint8 flag)
 {
 	struct status_data *status;
-	unsigned int hp  =0, sp = 0;
+	unsigned int hp = 0, sp = 0;
 
 	status = status_get_status_data(target);
 
@@ -1651,15 +1652,11 @@ int status_percent_change(struct block_list *src,struct block_list *target,signe
 	if (hp_rate > 99)
 		hp = status->hp;
 	else if (hp_rate > 0)
-		hp = status->hp>10000?
-			hp_rate*(status->hp/100):
-			((int64)hp_rate*status->hp)/100;
+		hp = apply_rate(status->hp, hp_rate);
 	else if (hp_rate < -99)
 		hp = status->max_hp;
 	else if (hp_rate < 0)
-		hp = status->max_hp>10000?
-			(-hp_rate)*(status->max_hp/100):
-			((int64)-hp_rate*status->max_hp)/100;
+		hp = (apply_rate(status->hp, -hp_rate));
 	if (hp_rate && !hp)
 		hp = 1;
 
@@ -1669,11 +1666,11 @@ int status_percent_change(struct block_list *src,struct block_list *target,signe
 	if (sp_rate > 99)
 		sp = status->sp;
 	else if (sp_rate > 0)
-		sp = ((int64)sp_rate*status->sp)/100;
+		sp = apply_rate(status->sp, sp_rate);
 	else if (sp_rate < -99)
 		sp = status->max_sp;
 	else if (sp_rate < 0)
-		sp = ((int64)-sp_rate)*status->max_sp/100;
+		sp = (apply_rate(status->sp, -sp_rate));
 	if (sp_rate && !sp)
 		sp = 1;
 
