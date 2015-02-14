@@ -1301,7 +1301,8 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		if (sc->data[SC_STYLE_CHANGE] && sc->data[SC_STYLE_CHANGE]->val1 == MH_MD_FIGHTING) {
 			TBL_HOM *hd = BL_CAST(BL_HOM,src); //when attacking
 
-			if (hd && (rnd()%100<50) ) hom_addspiritball(hd, 10); // According to WarpPortal, this is a flat 50% chance
+			if (hd && (rnd()%100<50) )
+				hom_addspiritball(hd, 10); // According to WarpPortal, this is a flat 50% chance
 		}
 	} //End of caster SC_ check
 

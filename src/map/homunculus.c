@@ -260,8 +260,8 @@ int hom_delete(struct homun_data *hd, int emote)
 */
 void hom_calc_skilltree(struct homun_data *hd)
 {
-	int i, skill_id = 0;
-	int f = 1;
+	uint8 i;
+	uint16 skill_id;
 	short c = 0;
 
 	nullpo_retv(hd);
@@ -270,6 +270,7 @@ void hom_calc_skilltree(struct homun_data *hd)
 
 	/* load previous homunculus form skills first. */
 	if (hd->homunculus.prev_class != 0 && (c = hom_class2index(hd->homunculus.prev_class)) >= 0) {
+		bool fail = false;
 		for (i = 0; i < MAX_SKILL_TREE && (skill_id = hskill_tree[c][i].id) > 0; i++) {
 			int idx = hom_skill_get_index(skill_id);
 			if (idx < 0)
@@ -286,15 +287,14 @@ void hom_calc_skilltree(struct homun_data *hd)
 					if (hskill_tree[c][i].need[j].id &&
 						hom_checkskill(hd,hskill_tree[c][i].need[j].id) < hskill_tree[c][i].need[j].lv)
 					{
-						f = 0;
+						fail = true;
 						break;
 					}
 				}
 			}
-			if (f)
+			if (!fail)
 				hd->homunculus.hskill[idx].id = skill_id;
 		}
-		f = 1;
 	}
 
 
@@ -302,7 +302,8 @@ void hom_calc_skilltree(struct homun_data *hd)
 		return;
 
 	for (i = 0; i < MAX_SKILL_TREE && (skill_id = hskill_tree[c][i].id) > 0; i++) {
-		int idx = hom_skill_get_index(skill_id);
+		bool fail = false;
+		short idx = hom_skill_get_index(skill_id);
 		if (idx < 0)
 			continue;
 		if (hd->homunculus.hskill[idx].id)
@@ -317,12 +318,12 @@ void hom_calc_skilltree(struct homun_data *hd)
 				if (hskill_tree[c][i].need[j].id &&
 					hom_checkskill(hd,hskill_tree[c][i].need[j].id) < hskill_tree[c][i].need[j].lv)
 				{
-					f = 0;
+					fail = true;
 					break;
 				}
 			}
 		}
-		if (f)
+		if (!fail)
 			hd->homunculus.hskill[idx].id = skill_id;
 	}
 
