@@ -3718,7 +3718,7 @@ int status_calc_homunculus_(struct homun_data *hd, enum e_status_calc_opt opt)
 	status->max_hp = hom->max_hp;
 	status->max_sp = hom->max_sp;
 
-	hom_calc_skilltree(hd, 0);
+	hom_calc_skilltree(hd);
 
 	if((skill_lv = hom_checkskill(hd, HAMI_SKIN)) > 0)
 		status->def += skill_lv * 4;

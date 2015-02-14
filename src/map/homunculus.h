@@ -69,13 +69,13 @@ struct homun_data {
 
 #define MAX_HOM_SKILL_REQUIRE 5
 struct homun_skill_tree_entry {
-	short id;
-	unsigned char max;
-	unsigned char joblv;
-	short intimacylv;
+	uint16 id;
+	uint8 max;
+	uint8 need_level;
+	uint16 intimacylv;
 	struct {
-		short id;
-		unsigned char lv;
+		uint16 id;
+		uint8 lv;
 	} need[MAX_HOM_SKILL_REQUIRE];
 }; // Celest
 
@@ -135,8 +135,9 @@ enum homun_type hom_class2type(int class_);
 void hom_damage(struct homun_data *hd);
 int hom_dead(struct homun_data *hd);
 void hom_skillup(struct homun_data *hd,uint16 skill_id);
-void hom_calc_skilltree(struct homun_data *hd, int flag_evolve);
+void hom_calc_skilltree(struct homun_data *hd);
 short hom_checkskill(struct homun_data *hd,uint16 skill_id);
+uint8 hom_skill_get_min_level(int class_, uint16 skill_id);
 void hom_gainexp(struct homun_data *hd,int exp);
 int hom_levelup(struct homun_data *hd);
 int hom_evolution(struct homun_data *hd);
@@ -169,6 +170,7 @@ void hom_addspiritball(TBL_HOM *hd, int max);
 void hom_delspiritball(TBL_HOM *hd, int count, int type);
 
 uint8 hom_get_intimacy_grade(struct homun_data *hd);
+void hom_check_skilltree(struct homun_data *hd);
 
 void do_final_homunculus(void);
 void do_init_homunculus(void);

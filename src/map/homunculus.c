@@ -25,6 +25,8 @@
 
 struct s_homunculus_db homunculus_db[MAX_HOMUNCULUS_CLASS];	//[orn]
 struct homun_skill_tree_entry hskill_tree[MAX_HOMUNCULUS_CLASS][MAX_SKILL_TREE];
+/// Flag to mark that this homunculus has skill that require intimacy, so just resend clif_homskillinfoblock if needed
+bool hasSkillIntimacyReq[MAX_HOMUNCULUS_CLASS];
 
 static int hom_hungry(int tid, unsigned int tick, int id, intptr_t data);
 static uint16 homunculus_count;
@@ -255,15 +257,16 @@ int hom_delete(struct homun_data *hd, int emote)
 /**
 * Calculates homunculus skill tree
 * @param hd
-* @param flag_envolve
 */
-void hom_calc_skilltree(struct homun_data *hd, int flag_evolve)
+void hom_calc_skilltree(struct homun_data *hd)
 {
 	int i, skill_id = 0;
 	int f = 1;
 	short c = 0;
 
 	nullpo_retv(hd);
+
+	//! TODO: No clear up first like pc_calc_skilltree?
 
 	/* load previous homunculus form skills first. */
 	if (hd->homunculus.prev_class != 0 && (c = hom_class2index(hd->homunculus.prev_class)) >= 0) {
@@ -274,7 +277,11 @@ void hom_calc_skilltree(struct homun_data *hd, int flag_evolve)
 			if (hd->homunculus.hskill[idx].id)
 				continue; //Skill already known.
 			if (!battle_config.skillfree) {
-				int j;
+				uint8 j;
+				if (hd->homunculus.intimacy < hskill_tree[c][i].intimacylv * 100)
+					continue;
+				if (hd->homunculus.level < hskill_tree[c][i].need_level)
+					continue;
 				for (j = 0; j < MAX_HOM_SKILL_REQUIRE; j++) {
 					if (hskill_tree[c][i].need[j].id &&
 						hom_checkskill(hd,hskill_tree[c][i].need[j].id) < hskill_tree[c][i].need[j].lv)
@@ -295,17 +302,17 @@ void hom_calc_skilltree(struct homun_data *hd, int flag_evolve)
 		return;
 
 	for (i = 0; i < MAX_SKILL_TREE && (skill_id = hskill_tree[c][i].id) > 0; i++) {
-		int intimacy;
 		int idx = hom_skill_get_index(skill_id);
 		if (idx < 0)
 			continue;
 		if (hd->homunculus.hskill[idx].id)
 			continue; //Skill already known.
-		intimacy = (flag_evolve) ? 10 : hd->homunculus.intimacy;
-		if (intimacy < hskill_tree[c][i].intimacylv)
-			continue;
 		if (!battle_config.skillfree) {
-			int j;
+			uint8 j;
+			if (hd->homunculus.intimacy < hskill_tree[c][i].intimacylv * 100)
+				continue;
+			if (hd->homunculus.level < hskill_tree[c][i].need_level)
+				continue;
 			for (j = 0; j < MAX_HOM_SKILL_REQUIRE; j++) {
 				if (hskill_tree[c][i].need[j].id &&
 					hom_checkskill(hd,hskill_tree[c][i].need[j].id) < hskill_tree[c][i].need[j].lv)
@@ -345,6 +352,39 @@ short hom_checkskill(struct homun_data *hd,uint16 skill_id)
 }
 
 /**
+ * Get required minimum level to learn the skill
+ * @param class_ Homunculus class
+ * @param skill_id Homunculus skill ID
+ * @return Level required or 0 if invalid
+ **/
+uint8 hom_skill_get_min_level(int class_, uint16 skill_id) {
+	short class_idx = hom_class2index(class_), skill_idx = -1;
+	uint8 i;
+	if (class_idx == -1 || (skill_idx = hom_skill_get_index(skill_id)) == -1)
+		return 0;
+	ARR_FIND(0, MAX_HOM_SKILL_REQUIRE, i, hskill_tree[class_idx][i].id == skill_id);
+	if (i == MAX_HOM_SKILL_REQUIRE)
+		return 0;
+
+	return hskill_tree[class_idx][i].need_level;
+}
+
+/**
+ * Check homunculus skill tree on intimacy changes
+ * @param hd Homunculus
+ **/
+void hom_check_skilltree(struct homun_data *hd) {
+	short class_idx = -1;
+	if (!hd || (class_idx = hom_class2index(hd->homunculus.class_)) == -1 || !hasSkillIntimacyReq[class_idx])
+		return;
+
+	hom_calc_skilltree(hd);
+
+	if (hd->master)
+		clif_homskillinfoblock(hd->master);
+}
+
+/**
 * Get max level for homunculus skill
 * @param id Skill ID
 * @param b_class
@@ -381,6 +421,7 @@ void hom_skillup(struct homun_data *hd, uint16 skill_id)
 	if (hd->homunculus.skillpts > 0 &&
 		hd->homunculus.hskill[idx].id &&
 		hd->homunculus.hskill[idx].flag == SKILL_FLAG_PERMANENT && //Don't allow raising while you have granted skills. [Skotlex]
+		hd->homunculus.level >= hom_skill_get_min_level(hd->homunculus.class_, skill_id) &&
 		hd->homunculus.hskill[idx].lv < hom_skill_tree_get_max(skill_id, hd->homunculus.class_)
 		)
 	{
@@ -499,7 +540,6 @@ static bool hom_change_class(struct homun_data *hd, short class_) {
 	hd->homunculusDB = &homunculus_db[i];
 	hd->homunculus.class_ = class_;
 	status_set_viewdata(&hd->bl, class_);
-	hom_calc_skilltree(hd, 1);
 	return true;
 }
 
@@ -540,7 +580,7 @@ int hom_evolution(struct homun_data *hd)
 	hom->int_+= 10*rnd_value(min->int_,max->int_);
 	hom->dex += 10*rnd_value(min->dex, max->dex);
 	hom->luk += 10*rnd_value(min->luk, max->luk);
-	hom->intimacy = 500;
+	hom->intimacy = battle_config.homunculus_evo_intimacy_reset;
 
 	unit_remove_map(&hd->bl, CLR_OUTSIGHT);
 	if (map_addblock(&hd->bl))
@@ -696,7 +736,6 @@ int hom_decrease_intimacy(struct homun_data * hd, unsigned int value)
 		hd->homunculus.intimacy -= value;
 	else
 		hd->homunculus.intimacy = 0;
-
 	return hd->homunculus.intimacy;
 }
 
@@ -1461,13 +1500,9 @@ void read_homunculusdb(void) {
 * Read homunculus skill db
 */
 static bool read_homunculus_skilldb_sub(char* split[], int columns, int current)
-{// <hom class>,<skill id>,<max level>[,<job level>],<req id1>,<req lv1>,<req id2>,<req lv2>,<req id3>,<req lv3>,<req id4>,<req lv4>,<req id5>,<req lv5>,<intimacy lv req>
+{// <hom class>,<skill id>,<max level>,<need level>,<req id1>,<req lv1>,<req id2>,<req lv2>,<req id3>,<req lv3>,<req id4>,<req lv4>,<req id5>,<req lv5>,<intimacy lv req>
 	int skill_id, class_idx;
 	int i, j;
-	int minJobLevelPresent = 0;
-
-	if (columns == 14)
-		minJobLevelPresent = 1;	// MinJobLvl has been added
 
 	// check for bounds [celest]
 	if ((class_idx = hom_class2index(atoi(split[0]))) == -1) {
@@ -1485,15 +1520,15 @@ static bool read_homunculus_skilldb_sub(char* split[], int columns, int current)
 
 	hskill_tree[class_idx][j].id = skill_id;
 	hskill_tree[class_idx][j].max = atoi(split[2]);
-	if (minJobLevelPresent)
-		hskill_tree[class_idx][j].joblv = atoi(split[3]);
+	hskill_tree[class_idx][j].need_level = atoi(split[3]);
 
 	for (i = 0; i < MAX_HOM_SKILL_REQUIRE; i++) {
-		hskill_tree[class_idx][j].need[i].id = atoi(split[3+i*2+minJobLevelPresent]);
-		hskill_tree[class_idx][j].need[i].lv = atoi(split[3+i*2+minJobLevelPresent+1]);
+		hskill_tree[class_idx][j].need[i].id = atoi(split[4+i*2]);
+		hskill_tree[class_idx][j].need[i].lv = atoi(split[4+i*2+1]);
 	}
 
-	hskill_tree[class_idx][j].intimacylv = atoi(split[13+minJobLevelPresent]);
+	if (hskill_tree[class_idx][j].intimacylv = atoi(split[14]))
+		hasSkillIntimacyReq[class_idx] = true;
 	return true;
 }
 
@@ -1505,8 +1540,9 @@ int read_homunculus_skilldb(void)
 	const char *filename[]={ "homun_skill_tree.txt",DBIMPORT"/homun_skill_tree.txt"};
 	int i;
 	memset(hskill_tree,0,sizeof(hskill_tree));
+	memset(hasSkillIntimacyReq,0,sizeof(hasSkillIntimacyReq));
 	for(i = 0; i<ARRAYLENGTH(filename); i++){
-		sv_readdb(db_path, filename[i], ',', 13, 15, -1, &read_homunculus_skilldb_sub, i);
+		sv_readdb(db_path, filename[i], ',', 15, 15, -1, &read_homunculus_skilldb_sub, i);
 	}
 	return 0;
 }

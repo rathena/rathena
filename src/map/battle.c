@@ -7960,6 +7960,8 @@ static const struct _battle_data {
 	{ "default_fixed_castrate",             &battle_config.default_fixed_castrate,          20,     0,      100,            },
 	{ "default_bind_on_equip",              &battle_config.default_bind_on_equip,           BOUND_CHAR, BOUND_NONE, BOUND_MAX-1, },
 	{ "pet_ignore_infinite_def",            &battle_config.pet_ignore_infinite_def,         0,      0,      1,              },
+	{ "homunculus_evo_intimacy_need",       &battle_config.homunculus_evo_intimacy_need,    91000,  0,      INT_MAX,        },
+	{ "homunculus_evo_intimacy_reset",      &battle_config.homunculus_evo_intimacy_reset,   1000,   0,      INT_MAX,        },
 };
 
 #ifndef STATS_OPT_OUT
