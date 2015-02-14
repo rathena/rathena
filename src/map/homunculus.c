@@ -1484,7 +1484,7 @@ static bool read_homunculusdb_sub(char* str[], int columns, int current)
 /**
 * Read homunculus db (check the files)
 */
-void read_homunculusdb(void) {
+static void read_homunculusdb(void) {
 	uint8 i;
 	const char *filename[] = {
 		DBPATH"homunculus_db.txt",
@@ -1536,8 +1536,7 @@ static bool read_homunculus_skilldb_sub(char* split[], int columns, int current)
 /**
 * Read homunculus skill db (check the files)
 */
-int read_homunculus_skilldb(void)
-{
+static void read_homunculus_skilldb(void) {
 	const char *filename[]={ "homun_skill_tree.txt",DBIMPORT"/homun_skill_tree.txt"};
 	int i;
 	memset(hskill_tree,0,sizeof(hskill_tree));
@@ -1545,14 +1544,12 @@ int read_homunculus_skilldb(void)
 	for(i = 0; i<ARRAYLENGTH(filename); i++){
 		sv_readdb(db_path, filename[i], ',', 15, 15, -1, &read_homunculus_skilldb_sub, i);
 	}
-	return 0;
 }
 
 /**
 * Read homunculus exp db
 */
-void read_homunculus_expdb(void)
-{
+static void read_homunculus_expdb(void) {
 	int i;
 	char *filename[]={
 		DBPATH"exp_homun.txt",
