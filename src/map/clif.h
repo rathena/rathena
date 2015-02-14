@@ -737,7 +737,7 @@ void clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag);
 int clif_homskillinfoblock(struct map_session_data *sd);
 void clif_homskillup(struct map_session_data *sd, uint16 skill_id);	//[orn]
 int clif_hom_food(struct map_session_data *sd,int foodid,int fail);	//[orn]
-void clif_send_homdata(struct map_session_data *sd, int state, int param);	//[orn]
+void clif_send_homdata(struct map_session_data *sd, int state, int param, uint8 flag);	//[orn]
 
 void clif_equiptickack(struct map_session_data* sd, int flag);
 void clif_partytickack(struct map_session_data* sd, bool flag);
