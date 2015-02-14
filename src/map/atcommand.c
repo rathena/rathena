@@ -7282,6 +7282,7 @@ ACMD_FUNC(makehomun)
 ACMD_FUNC(homfriendly)
 {
 	int friendly = 0;
+	unsigned int prev_intimacy = 0;
 
 	nullpo_retr(-1, sd);
 
@@ -7298,8 +7299,9 @@ ACMD_FUNC(homfriendly)
 	friendly = atoi(message);
 	friendly = cap_value(friendly, 0, 1000);
 
+	prev_intimacy = sd->hd->homunculus.intimacy;
 	sd->hd->homunculus.intimacy = friendly * 100 ;
-	clif_send_homdata(sd,SP_INTIMATE,friendly);
+	clif_send_homdata(sd,SP_INTIMATE,friendly,(sd->hd->homunculus.intimacy > prev_intimacy));
 	return 0;
 }
 
@@ -7326,7 +7328,7 @@ ACMD_FUNC(homhungry)
 	hungry = cap_value(hungry, 0, 100);
 
 	sd->hd->homunculus.hunger = hungry;
-	clif_send_homdata(sd,SP_HUNGRY,hungry);
+	clif_send_homdata(sd,SP_HUNGRY,hungry,0);
 	return 0;
 }
 

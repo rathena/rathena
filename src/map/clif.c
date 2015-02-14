@@ -1474,13 +1474,20 @@ void clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 ///     2 = hunger
 ///     3 = accessory?
 ///     ? = ignored
-void clif_send_homdata(struct map_session_data *sd, int state, int param)
+/// @param sd
+/// @param state
+/// @param param
+/// @param flag &1 for SP_INTIMATE means value is increased
+void clif_send_homdata(struct map_session_data *sd, int state, int param, uint8 flag)
 {	//[orn]
-	int fd = sd->fd;
+	int fd = 0;
 
-	if ( (state == SP_INTIMATE) && (param >= 910) && (sd->hd->homunculus.class_ == sd->hd->homunculusDB->evo_class) )
-		hom_calc_skilltree(sd->hd, 0);
+	nullpo_retv(sd);
 
+	if (flag&1 && state == SP_INTIMATE)
+		hom_check_skilltree(sd->hd);
+
+	fd = sd->fd;
 	WFIFOHEAD(fd, packet_len(0x230));
 	WFIFOW(fd,0)=0x230;
 	WFIFOB(fd,2)=0;
@@ -1515,7 +1522,7 @@ int clif_homskillinfoblock(struct map_session_data *sd)
 			WFIFOW(fd,len+8) = skill_get_sp(id,hd->homunculus.hskill[j].lv);
 			WFIFOW(fd,len+10)= skill_get_range2(&sd->hd->bl, id,hd->homunculus.hskill[j].lv);
 			safestrncpy((char*)WFIFOP(fd,len+12), skill_get_name(id), NAME_LENGTH);
-			WFIFOB(fd,len+36) = (hd->homunculus.hskill[j].lv < hom_skill_tree_get_max(id, hd->homunculus.class_))?1:0;
+			WFIFOB(fd,len+36) = (hd->homunculus.level < hom_skill_get_min_level(hd->homunculus.class_, id) || hd->homunculus.hskill[j].lv >= hom_skill_tree_get_max(id, hd->homunculus.class_)) ? 0 : 1;
 			len+=37;
 		}
 	}
@@ -1535,13 +1542,16 @@ void clif_homskillup(struct map_session_data *sd, uint16 skill_id)
 	fd=sd->fd;
 	hd=sd->hd;
 
+	if (!hd)
+		return;
+
 	WFIFOHEAD(fd, packet_len(0x239));
 	WFIFOW(fd,0) = 0x239;
 	WFIFOW(fd,2) = skill_id;
 	WFIFOW(fd,4) = hd->homunculus.hskill[idx].lv;
 	WFIFOW(fd,6) = skill_get_sp(skill_id,hd->homunculus.hskill[idx].lv);
 	WFIFOW(fd,8) = skill_get_range2(&hd->bl, skill_id,hd->homunculus.hskill[idx].lv);
-	WFIFOB(fd,10) = (hd->homunculus.hskill[idx].lv < skill_get_max(hd->homunculus.hskill[idx].id)) ? 1 : 0;
+	WFIFOB(fd,10) = (hd->homunculus.level < hom_skill_get_min_level(hd->homunculus.class_, skill_id) || hd->homunculus.hskill[idx].lv >= hom_skill_tree_get_max(hd->homunculus.hskill[idx].id, hd->homunculus.class_)) ? 0 : 1;
 	WFIFOSET(fd,packet_len(0x239));
 }
 
@@ -8748,7 +8758,7 @@ void clif_refresh(struct map_session_data *sd)
 	if (sd->vd.cloth_color)
 		clif_refreshlook(&sd->bl,sd->bl.id,LOOK_CLOTHES_COLOR,sd->vd.cloth_color,SELF);
 	if(hom_is_active(sd->hd))
-		clif_send_homdata(sd,SP_ACK,0);
+		clif_send_homdata(sd,SP_ACK,0,0);
 	if( sd->md ) {
 		clif_mercenary_info(sd);
 		clif_mercenary_skillblock(sd);
@@ -9694,7 +9704,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		if(map_addblock(&sd->hd->bl))
 			return;
 		clif_spawn(&sd->hd->bl);
-		clif_send_homdata(sd,SP_ACK,0);
+		clif_send_homdata(sd,SP_ACK,0,0);
 		clif_hominfo(sd,sd->hd,1);
 		clif_hominfo(sd,sd->hd,0); //for some reason, at least older clients want this sent twice
 		clif_homskillinfoblock(sd);

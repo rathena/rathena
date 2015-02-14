@@ -1,12 +1,12 @@
 // Homunculus Skill Tree Database
 //
 // Structure of Database:
-// Class,SkillID,MaxLv[,JobLevel],Prerequisite SkillID1,Prerequisite SkillLv1,PrereqSkillID2,PrereqSkillLv2,PrereqSkillID3,PrereqSkillLv3,PrereqSkillID4,PrereqSkillLv4,PrereqSkillID5,PrereqSkillLv5,IntimacyLvReq //SKILLNAME#Skill Name#
+// Class,SkillID,MaxLv,NeedLevel,Prerequisite SkillID1,Prerequisite SkillLv1,PrereqSkillID2,PrereqSkillLv2,PrereqSkillID3,PrereqSkillLv3,PrereqSkillID4,PrereqSkillLv4,PrereqSkillID5,PrereqSkillLv5,IntimacyLvReq //SKILLNAME#Skill Name#
 //
 // 01. Class                    Homunculus ID.
 // 02. SkillID                  Skill ID of the homunuculus skill.
 // 03. MaxLv                    Maximum level of the homunuculus skill.
-// 04. JobLevel                 Job level required for the skill to become available (optional, reserved, not used by server).
+// 04. NeedLevel                Homunculus level required for the skill to become available
 // 05. Prerequisite SkillID     Homunculus skill required for the skill to become available.
 // 06. Prerequisite SkillLv     Level of the required homunculus skill.
 // ...
