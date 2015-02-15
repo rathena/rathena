@@ -3702,6 +3702,7 @@ int status_calc_homunculus_(struct homun_data *hd, enum e_status_calc_opt opt)
 #ifdef RENEWAL
 	amotion = hd->homunculusDB->baseASPD;
 	amotion = amotion - amotion * (status->dex + hom->dex_value) / 1000 - (status->agi + hom->agi_value) * amotion / 250;
+	status->def = status->mdef = 0;
 #else
 	skill_lv = hom->level / 10 + status->vit / 5;
 	status->def = cap_value(skill_lv, 0, 99);

@@ -68,6 +68,8 @@ struct homun_data {
 };
 
 #define MAX_HOM_SKILL_REQUIRE 5
+#define MAX_HOM_SKILL_TREE 8
+
 struct homun_skill_tree_entry {
 	short id;
 	unsigned char max;

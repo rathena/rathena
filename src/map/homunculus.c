@@ -24,7 +24,7 @@
 #include <stdlib.h>
 
 struct s_homunculus_db homunculus_db[MAX_HOMUNCULUS_CLASS];	//[orn]
-struct homun_skill_tree_entry hskill_tree[MAX_HOMUNCULUS_CLASS][MAX_SKILL_TREE];
+struct homun_skill_tree_entry hskill_tree[MAX_HOMUNCULUS_CLASS][MAX_HOM_SKILL_TREE];
 
 static int hom_hungry(int tid, unsigned int tick, int id, intptr_t data);
 static uint16 homunculus_count;
@@ -36,7 +36,7 @@ static struct view_data hom_viewdb[MAX_HOMUNCULUS_CLASS];
 /**
 * Check if the skill is a valid homunculus skill based skill range or availablity in skill db
 * @param skill_id
-* @return -1 if invalid skill or skill index for homunculus skill_tree
+* @return -1 if invalid skill or skill index for homunculus skill in s_homunculus::hskill
 */
 static short hom_skill_get_index(int skill_id) {
 	if (!skill_get_index(skill_id))
@@ -267,7 +267,7 @@ void hom_calc_skilltree(struct homun_data *hd, int flag_evolve)
 
 	/* load previous homunculus form skills first. */
 	if (hd->homunculus.prev_class != 0 && (c = hom_class2index(hd->homunculus.prev_class)) >= 0) {
-		for (i = 0; i < MAX_SKILL_TREE && (skill_id = hskill_tree[c][i].id) > 0; i++) {
+		for (i = 0; i < MAX_HOM_SKILL_TREE && (skill_id = hskill_tree[c][i].id) > 0; i++) {
 			int idx = hom_skill_get_index(skill_id);
 			if (idx < 0)
 				continue;
@@ -294,7 +294,7 @@ void hom_calc_skilltree(struct homun_data *hd, int flag_evolve)
 	if ((c = hom_class2index(hd->homunculus.class_)) < 0)
 		return;
 
-	for (i = 0; i < MAX_SKILL_TREE && (skill_id = hskill_tree[c][i].id) > 0; i++) {
+	for (i = 0; i < MAX_HOM_SKILL_TREE && (skill_id = hskill_tree[c][i].id) > 0; i++) {
 		int intimacy;
 		int idx = hom_skill_get_index(skill_id);
 		if (idx < 0)
@@ -351,15 +351,13 @@ short hom_checkskill(struct homun_data *hd,uint16 skill_id)
 * @return Skill Level
 */
 int hom_skill_tree_get_max(int skill_id, int b_class){
-	int i, skid;
+	uint8 i;
+
 	if ((b_class = hom_class2index(b_class)) < 0)
 		return 0;
-	for (i = 0; (skid = hskill_tree[b_class][i].id) > 0; i++) {
-		if (hom_skill_get_index(skid) < 0)
-			return 0;
-		if (skill_id == skid)
-			return hskill_tree[b_class][i].max;
-	}
+	ARR_FIND(0, MAX_HOM_SKILL_TREE, i, hskill_tree[b_class][i].id == skill_id);
+	if (i < MAX_HOM_SKILL_TREE)
+		return hskill_tree[b_class][i].max;
 	return skill_get_max(skill_id);
 }
 
@@ -1466,7 +1464,7 @@ static bool read_homunculus_skilldb_sub(char* split[], int columns, int current)
 	int i, j;
 	int minJobLevelPresent = 0;
 
-	if (columns == 14)
+	if (columns == 15)
 		minJobLevelPresent = 1;	// MinJobLvl has been added
 
 	// check for bounds [celest]
@@ -1477,8 +1475,8 @@ static bool read_homunculus_skilldb_sub(char* split[], int columns, int current)
 
 	skill_id = atoi(split[1]); //This is to avoid adding two lines for the same skill. [Skotlex]
 	// Search an empty line or a line with the same skill_id (stored in j)
-	ARR_FIND( 0, MAX_SKILL_TREE, j, !hskill_tree[class_idx][j].id || hskill_tree[class_idx][j].id == skill_id );
-	if (j == MAX_SKILL_TREE) {
+	ARR_FIND( 0, MAX_HOM_SKILL_TREE, j, !hskill_tree[class_idx][j].id || hskill_tree[class_idx][j].id == skill_id );
+	if (j == MAX_HOM_SKILL_TREE) {
 		ShowWarning("Unable to load skill %d into homunculus %d's tree. Maximum number of skills per class has been reached.\n", skill_id, atoi(split[0]));
 		return false;
 	}
@@ -1506,7 +1504,7 @@ int read_homunculus_skilldb(void)
 	int i;
 	memset(hskill_tree,0,sizeof(hskill_tree));
 	for(i = 0; i<ARRAYLENGTH(filename); i++){
-		sv_readdb(db_path, filename[i], ',', 13, 15, -1, &read_homunculus_skilldb_sub, i);
+		sv_readdb(db_path, filename[i], ',', 14, 15, -1, &read_homunculus_skilldb_sub, i);
 	}
 	return 0;
 }
