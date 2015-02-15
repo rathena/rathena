@@ -3509,7 +3509,7 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 		/**
 		 * The clone should be able to cast the skill (e.g. have the required weapon) bugreport:5299)
 		 **/
-		if( !skill_check_condition_castbegin(sd,skill_id,sd->status.skill[skill_id].lv) )
+		if( !skill_check_condition_castbegin(sd,skill_id,sd->status.skill[sk_idx].lv) )
 			continue;
 
 		memset (&ms[i], 0, sizeof(struct mob_skill));
