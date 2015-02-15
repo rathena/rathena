@@ -70,16 +70,17 @@ struct homun_data {
 #define MAX_HOM_SKILL_REQUIRE 5
 #define MAX_HOM_SKILL_TREE 8
 
+/// Homunculus skill entry [Celest]
 struct homun_skill_tree_entry {
-	short id;
-	unsigned char max;
-	unsigned char joblv;
-	short intimacylv;
+	uint16 id;			///< Skill ID
+	uint8 max;			///< Max level for this tree
+	uint8 need_level;	///< Homunculus level required
+	uint16 intimacy;	///< Intimacy required (n/100)
 	struct {
-		short id;
-		unsigned char lv;
-	} need[MAX_HOM_SKILL_REQUIRE];
-}; // Celest
+		uint16 id;		///< Skill ID
+		uint8 lv;		///< Level of skill
+	} need[MAX_HOM_SKILL_REQUIRE]; ///< Skills needed
+};
 
 #define HOM_EVO 0x100 //256
 #define HOM_S 0x200 //512
@@ -147,8 +148,9 @@ enum homun_type hom_class2type(int class_);
 void hom_damage(struct homun_data *hd);
 int hom_dead(struct homun_data *hd);
 void hom_skillup(struct homun_data *hd,uint16 skill_id);
-void hom_calc_skilltree(struct homun_data *hd, int flag_evolve);
+void hom_calc_skilltree(struct homun_data *hd, bool flag_evolve);
 short hom_checkskill(struct homun_data *hd,uint16 skill_id);
+uint8 hom_skill_get_min_level(int class_, uint16 skill_id);
 void hom_gainexp(struct homun_data *hd,int exp);
 int hom_levelup(struct homun_data *hd);
 int hom_evolution(struct homun_data *hd);
