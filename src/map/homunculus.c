@@ -33,6 +33,22 @@ static unsigned int hexptbl[MAX_LEVEL];
 //For holding the view data of npc classes. [Skotlex]
 static struct view_data hom_viewdb[MAX_HOMUNCULUS_CLASS];
 
+struct s_homun_intimacy_grade {
+	//const char *grade;
+	uint32 min_value;
+};
+
+/// Intimacy grade, order based on enum e_homun_grade
+static struct s_homun_intimacy_grade intimacy_grades[] = {
+	{ /*"Hate with passion",*/   100 },
+	{ /*"Hate",             */   400 },
+	{ /*"Awkward",          */  1100 },
+	{ /*"Shy",              */ 10100 },
+	{ /*"Neutral",          */ 25100 },
+	{ /*"Cordial",          */ 75100 },
+	{ /*"Loyal",            */ 91100 },
+};
+
 /**
 * Check if the skill is a valid homunculus skill based skill range or availablity in skill db
 * @param skill_id
@@ -302,7 +318,7 @@ void hom_calc_skilltree(struct homun_data *hd, int flag_evolve)
 		if (hd->homunculus.hskill[idx].id)
 			continue; //Skill already known.
 		intimacy = (flag_evolve) ? 10 : hd->homunculus.intimacy;
-		if (intimacy < hskill_tree[c][i].intimacylv)
+		if (intimacy < hskill_tree[c][i].intimacylv * 100)
 			continue;
 		if (!battle_config.skillfree) {
 			int j;
@@ -538,7 +554,7 @@ int hom_evolution(struct homun_data *hd)
 	hom->int_+= 10*rnd_value(min->int_,max->int_);
 	hom->dex += 10*rnd_value(min->dex, max->dex);
 	hom->luk += 10*rnd_value(min->luk, max->luk);
-	hom->intimacy = 500;
+	hom->intimacy = battle_config.homunculus_evo_intimacy_reset;
 
 	unit_remove_map(&hd->bl, CLR_OUTSIGHT);
 	if (map_addblock(&hd->bl))
@@ -1290,27 +1306,39 @@ int hom_shuffle(struct homun_data *hd)
 }
 
 /**
+ * Get minimum intimacy value of specified grade
+ * @param grade see enum e_homun_grade
+ * @return Intimacy value
+ **/
+uint32 hom_intimacy_grade2intimacy(enum e_homun_grade grade) {
+	if (grade < HOMGRADE_HATE_WITH_PASSION || grade > HOMGRADE_LOYAL)
+		return 0;
+	return intimacy_grades[grade].min_value;
+}
+
+/**
+ * Get grade of given intimacy value
+ * @param intimacy
+ * @return Grade, see enum e_homun_grade
+ **/
+enum e_homun_grade hom_intimacy_intimacy2grade(uint32 intimacy) {
+#define CHK_HOMINTIMACY(grade) { if (intimacy >= intimacy_grades[(grade)].min_value) return (grade); }
+	CHK_HOMINTIMACY(HOMGRADE_LOYAL)
+	CHK_HOMINTIMACY(HOMGRADE_CORDIAL)
+	CHK_HOMINTIMACY(HOMGRADE_NEUTRAL)
+	CHK_HOMINTIMACY(HOMGRADE_SHY)
+	CHK_HOMINTIMACY(HOMGRADE_AWKWARD)
+	CHK_HOMINTIMACY(HOMGRADE_HATE)
+#undef CHK_HOMINTIMACY
+	return HOMGRADE_HATE_WITH_PASSION;
+}
+
+/**
 * Get initmacy grade
 * @param hd
 */
-uint8 hom_get_intimacy_grade(struct homun_data *hd)
-{
-	unsigned int val = hd->homunculus.intimacy / 100;
-
-	if( val > 100 ) {
-		if( val > 250 ) {
-			if( val > 750 ) {
-				if ( val > 900 )
-					return 4;
-				else
-					return 3;
-			} else
-				return 2;
-		} else
-			return 1;
-	}
-
-	return 0;
+uint8 hom_get_intimacy_grade(struct homun_data *hd) {
+	return hom_intimacy_intimacy2grade(hd->homunculus.intimacy);
 }
 
 /**

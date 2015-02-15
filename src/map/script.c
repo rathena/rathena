@@ -10611,7 +10611,7 @@ BUILDIN_FUNC(homunculus_evolution)
 
 	if(hom_is_active(sd->hd))
 	{
-		if (sd->hd->homunculus.intimacy > 91000)
+		if (sd->hd->homunculus.intimacy >= battle_config.homunculus_evo_intimacy_need)
 			hom_evolution(sd->hd);
 		else
 			clif_emotion(&sd->hd->bl, E_SWT);

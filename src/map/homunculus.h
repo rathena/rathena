@@ -125,6 +125,16 @@ enum homun_setting {
 	HOMSET_RESET_REUSESKILL_TELEPORTED	= 0x80, /// Skill re-use delay is reset when they are warped (by skill or item) with player.
 };
 
+enum e_homun_grade {
+	HOMGRADE_HATE_WITH_PASSION = 0,
+	HOMGRADE_HATE,
+	HOMGRADE_AWKWARD,
+	HOMGRADE_SHY,
+	HOMGRADE_NEUTRAL,
+	HOMGRADE_CORDIAL,
+	HOMGRADE_LOYAL,
+};
+
 /// Check Homunculus Class ID
 #define homdb_checkid(id) (id >=  HM_CLASS_BASE && id <= HM_CLASS_MAX)
 
@@ -171,6 +181,8 @@ void hom_addspiritball(TBL_HOM *hd, int max);
 void hom_delspiritball(TBL_HOM *hd, int count, int type);
 
 uint8 hom_get_intimacy_grade(struct homun_data *hd);
+uint32 hom_intimacy_grade2intimacy(enum e_homun_grade grade);
+enum e_homun_grade hom_intimacy_intimacy2grade(uint32 intimacy);
 
 void do_final_homunculus(void);
 void do_init_homunculus(void);
