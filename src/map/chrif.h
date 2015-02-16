@@ -27,7 +27,6 @@ enum chrif_req_op {
 	CHRIF_OP_LOGIN_UNBAN,
 	CHRIF_OP_LOGIN_CHANGESEX,
 	CHRIF_OP_LOGIN_VIP,
-	CHRIF_OP_LOGIN_BANK,
 
 	// Char-server operation
 	CHRIF_OP_BAN,
@@ -85,8 +84,6 @@ void chrif_parse_ack_vipActive(int fd);
 
 int chrif_req_charban(int aid, const char* character_name, int timediff);
 int chrif_req_charunban(int aid, const char* character_name);
-
-int chrif_load_bankdata(int fd);
 
 int chrif_bsdata_request(uint32 char_id);
 int chrif_bsdata_save(struct map_session_data *sd, bool quit);

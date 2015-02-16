@@ -29,6 +29,8 @@
 #define MAX_SPIRITBALL 15 /// Max spirit balls
 #define MAX_DEVOTION 5 /// Max Devotion slots
 
+#define BANK_VAULT_VAR "#BANKVAULT"
+
 //Update this max as necessary. 55 is the value needed for Super Baby currently
 //Raised to 84 since Expanded Super Novice needs it.
 #define MAX_SKILL_TREE 84
@@ -626,6 +628,8 @@ struct map_session_data {
 
 	short last_addeditem_index; /// Index of latest item added
 	int autotrade_tid;
+
+	int bank_vault; ///< Bank Vault
 };
 
 struct eri *pc_sc_display_ers; /// Player's SC display table
@@ -1008,6 +1012,9 @@ int pc_readregistry(struct map_session_data*,const char*,int);
 bool pc_setregistry(struct map_session_data*,const char*,int,int);
 char *pc_readregistry_str(struct map_session_data*,const char*,int);
 bool pc_setregistry_str(struct map_session_data*,const char*,const char*,int);
+
+bool pc_setaccountreg_(struct map_session_data *sd, const char *reg, int val);
+int pc_readaccountreg_(struct map_session_data *sd, const char *reg);
 
 bool pc_addeventtimer(struct map_session_data *sd,int tick,const char *name);
 bool pc_deleventtimer(struct map_session_data *sd,const char *name);

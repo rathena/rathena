@@ -432,6 +432,7 @@ Sitting	123	1
 CharMoves	124	1
 CharRename	125	1
 Font		126	1
+BankVault	127	1
 
 bMaxHP	6
 bMaxSP	8

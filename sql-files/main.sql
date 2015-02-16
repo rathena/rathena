@@ -462,7 +462,6 @@ CREATE TABLE IF NOT EXISTS `login` (
   `character_slots` tinyint(3) unsigned NOT NULL default '0',
   `pincode` varchar(4) NOT NULL DEFAULT '',
   `pincode_change` int(11) unsigned NOT NULL DEFAULT '0',
-  `bank_vault` int(11) NOT NULL DEFAULT '0',
   `vip_time` int(11) unsigned NOT NULL default '0',
   `old_group` tinyint(3) NOT NULL default '0',
   PRIMARY KEY  (`account_id`),

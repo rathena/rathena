@@ -705,50 +705,47 @@ int chmapif_parse_fwlog_changestatus(int fd){
 			//FIXME: need to move this check to login server [ultramage]
 			//	if( acc != -1 && isGM(acc) < isGM(account_id) )
 			//		result = 2; // 2-gm level too low
+			//! NOTE: See src/char/chrif.h::enum chrif_req_op for the number
 			else {
 				switch( operation ) {
-				case 1: // block
-					WFIFOHEAD(login_fd,10);
-					WFIFOW(login_fd,0) = 0x2724;
-					WFIFOL(login_fd,2) = t_aid;
-					WFIFOL(login_fd,6) = 5; // new account status
-					WFIFOSET(login_fd,10);
-				break;
-				case 2: // ban
-					WFIFOHEAD(login_fd,10);
-					WFIFOW(login_fd, 0) = 0x2725;
-					WFIFOL(login_fd, 2) = t_aid;
-					WFIFOL(login_fd, 6) = timediff;
-					WFIFOSET(login_fd,10);
-				break;
-				case 3: // unblock
-					WFIFOHEAD(login_fd,10);
-					WFIFOW(login_fd,0) = 0x2724;
-					WFIFOL(login_fd,2) = t_aid;
-					WFIFOL(login_fd,6) = 0; // new account status
-					WFIFOSET(login_fd,10);
-				break;
-				case 4: // unban
-					WFIFOHEAD(login_fd,6);
-					WFIFOW(login_fd,0) = 0x272a;
-					WFIFOL(login_fd,2) = t_aid;
-					WFIFOSET(login_fd,6);
-				break;
-				case 5: // changesex
-					answer = false;
-					WFIFOHEAD(login_fd,6);
-					WFIFOW(login_fd,0) = 0x2727;
-					WFIFOL(login_fd,2) = t_aid;
-					WFIFOSET(login_fd,6);
-				break;
-				case 6:
-					answer = (val1&4); // vip_req val1=type, &1 login send return, &2 update timestamp, &4 map send answer
-					chlogif_reqvipdata(t_aid, val1, timediff, fd);
-					break;
-				case 7:
-					answer = (val1&1); //val&1 request answer, val1&2 save data
-					chlogif_BankingReq(aid, val1, val2);
-					break;
+					case 1: // block
+						WFIFOHEAD(login_fd,10);
+						WFIFOW(login_fd,0) = 0x2724;
+						WFIFOL(login_fd,2) = t_aid;
+						WFIFOL(login_fd,6) = 5; // new account status
+						WFIFOSET(login_fd,10);
+						break;
+					case 2: // ban
+						WFIFOHEAD(login_fd,10);
+						WFIFOW(login_fd, 0) = 0x2725;
+						WFIFOL(login_fd, 2) = t_aid;
+						WFIFOL(login_fd, 6) = timediff;
+						WFIFOSET(login_fd,10);
+						break;
+					case 3: // unblock
+						WFIFOHEAD(login_fd,10);
+						WFIFOW(login_fd,0) = 0x2724;
+						WFIFOL(login_fd,2) = t_aid;
+						WFIFOL(login_fd,6) = 0; // new account status
+						WFIFOSET(login_fd,10);
+						break;
+					case 4: // unban
+						WFIFOHEAD(login_fd,6);
+						WFIFOW(login_fd,0) = 0x272a;
+						WFIFOL(login_fd,2) = t_aid;
+						WFIFOSET(login_fd,6);
+						break;
+					case 5: // changesex
+						answer = false;
+						WFIFOHEAD(login_fd,6);
+						WFIFOW(login_fd,0) = 0x2727;
+						WFIFOL(login_fd,2) = t_aid;
+						WFIFOSET(login_fd,6);
+						break;
+					case 6:
+						answer = (val1&4); // vip_req val1=type, &1 login send return, &2 update timestamp, &4 map send answer
+						chlogif_reqvipdata(t_aid, val1, timediff, fd);
+						break;
 				} //end switch operation
 			} //login is connected
 		}
@@ -1130,17 +1127,6 @@ int chmapif_parse_updfamelist(int fd){
     }
     return 1;
 }
-
-//HZ 0x2b29 <aid>L <bank_vault>L
-int chmapif_BankingAck(int32 account_id, int32 bank_vault){
-	unsigned char buf[11];
-	WBUFW(buf,0) = 0x2b29;
-	WBUFL(buf,2) = account_id;
-	WBUFL(buf,6) = bank_vault;
-	chmapif_sendall(buf, 10); //inform all maps-attached
-	return 1;
-}
-
 
 /*
  * HZ 0x2b2b
