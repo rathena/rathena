@@ -15,6 +15,7 @@
 //= 1.5 Added GM management function. [Euphy]
 //= 1.6 Kagerou/Oboro support (Class -> BaseClass) [Euphy]
 //= 2.0 Updated Instructor Ur's quests. [Capuche]
+//= 2.1 Updated Blacksmith Thorn and Weapons Expert NPC. [Capuche]
 //============================================================
 
 moc_para01,25,35,4	script	Instructor Boya#para01	469,{
@@ -5115,698 +5116,622 @@ spl_fild02,377,149,3	script	Dispatched Instructor#08	4_M_DST_MASTER,{
 	close;
 }
 
-moc_para01,111,83,3	script	Toren	813,{
-	if (checkweight(1101,5) == 0) {
-		mes "^3355FFWait a second!";
-		mes "Right now, you're carrying";
-		mes "to many things with you.";
-		mes "Please come back after";
-		mes "using the Kafra Service";
-		mes "to store some of your items.^000000";
+moc_para01,111,83,3	script	Blacksmith Thorn#2nd10	2_M_OLDBLSMITH,{
+	if (checkweight(2571,5) == 0) {
+		mes "- You have too many items in your inventory to continue -";
 		close;
 	}
-	mes "[Toren]";
-	mes "Hello adventurer, what can I do for you?";
+	mes "[Thorn]";
+	if (countitem(6219) < 1) {// Para_Team_Mark
+		mes "Hmm, are you a member of Eden Group?";
+		mes "You need to be one of our members to use my services.";
+		close;
+	}
+	mes "What's going on?";
 	next;
-	switch(select("Where is my reward?:I want an enchantment!")) {
+	switch( select( "Strengthen Equipment", "Personal Request", "Give me new equipment." ) ) {
+		mes "[Thorn]";
 	case 1:
-		if (para_suv02 == 5 || para_suv02 == 7 || para_suv02 == 9 || para_suv02 == 11 || para_suv02 == 13) {
-			mes "[Toren]";
-			mes "You must be ^0000FF" + strcharinfo(0) + "^000000, right? Instructor Ur told me about you.";
+		if (para_2nd01 < 6) {
+			mes "Hmm equipment strengthening.";
+			mes "I don't exactly do that for just anyone.";
+			mes "The first step is at least a higher degree of training so have you done the Eden Group training yet?";
 			next;
-			mes "[Toren]";
-			mes "Here is a set of our advanced gears for you to use, wear them proudly as a member of the ^33CC33Paradise Group^000000 and don't think about selling them to anyone else.";
+			mes "[Thorn]";
+			mes "You have not awakened yet.";
+			mes "First do the missions set forth by Instructor Ur and I'll help you strengthen your equipment.";
 			next;
-			mes "[Toren]";
-			if (BaseClass == Job_Swordman) {
-				mes "Swordman Class gets a choice of weapons, would you like to have a sword or a spear?";
-				callsub L_Select,
-					1197,"Slayer","Two-handed Sword, 200 Atk", //P.Slayer III
-					13434,"Saber","One-handed Sword, 185 Atk", //P.Saber III
-					1434,"Spear","One-handed, 165 Atk"; //P.Spear I
+			mes "[Thorn]";
+			mes "I won't help you unless you do that first!";
+		}
+		else if (para_2nd04 == 3) {
+			mes "Strengthen your equipment eh?";
+			mes "I'll strengthen the new Eden Group equipment for you by giving it a random stat boost.";
+			next;
+			mes "[Thorn]";
+			mes "So what equipment do you want to enhance?";
+			next;
+			switch( select( "Eden Group Manteau II", "Eden Group Armor IV", "Eden Group Boots IV" ) ) {
+				case 1: callsub S_Enchant,2571,"Manteau";// Para_Team_Manteau2
+				case 2: callsub S_Enchant,15031,"Armor";// Para_Team_Armor
+				case 3: callsub S_Enchant,2473,"Boots";// Para_Team_Boots4
 			}
-			else if (BaseClass == Job_Merchant) {
-				mes "Merchant Class gets a choice of weapons, would you like to have an axe, dagger or a sword?";
-				callsub L_Select,
-					1391,"Axe","Two-handed, 195 Atk", //P.Two-Handed Axe I
-					13066,"Dagger","One-handed, 165 Atk, 80 Matk", //P.Dagger III
-					13434,"Sword","One-handed, 185 Atk"; //P.Saber III
+		}
+		else {
+			mes "I will strengthen your equipment after you've done a personal request of mine.";
+			next;
+			mes "[Thorn]";
+			mes "I just want to be sure that you're worthy of using my services.";
+		}
+		close;
+	case 2:
+		if (para_2nd02 < 2) {
+			mes "Have you started the request of Instructor Ur?";
+			mes "I'm lending my services to those who are worthy.";
+			next;
+			mes "[Thorn]";
+			mes "Besides, you won't have the equipment that I can enhance until you do those missions.";
+		}
+		else if (para_2nd04 == 0) {
+			mes "Glad you're here.";
+			mes "As a blacksmith I am in need of Iron materials constantly.";
+			next;
+			mes "[Thorn]";
+			mes "Of course there will be a reward eventually...";
+			mes "So...";
+			next;
+			mes "[Thorn]";
+			if (BaseLevel < 80) {
+				mes "Bring me some materials.";
+				mes "I need 20 Iron Ore, and 10 Iron.";
+			}
+			else {
+				mes "Bring me some materials.";
+				mes "Bring 20 Used Iron Plate.";
+				.@add = 1;
+			}
+			mes "It shouldn't be hard to get these can you bring them right away?";
+			next;
+			switch( select( "Sure thing.", "I don't want to." ) ) {
+				mes "[Thorn]";
+			case 1:
+				mes "I appreciate it.";
+				mes "So take your time and I'll be waiting.";
+				para_2nd04 = 1 + .@add;
+				setquest (7238 + .@add);// Errands for Thorn (easy/hard)
+				close;
+			case 2:
+				mes "Eh...?";
+				mes "Guess you're too busy to help me.";
+				close;
+			}
+		}
+		else if (para_2nd04 == 1 || para_2nd04 == 2) {
+			if (para_2nd04 == 1) {
+				setarray .@item[0],1002,998;// Iron_Ore, Iron
+				setarray .@amount[0],20,10;
+				setarray .@countitem[0],countitem(1002),countitem(998);
+				.@string$ = "I asked you to get 20 Iron Ore, and 10 Iron.";
+			}
+			else {
+				.@item[0] = 7319;
+				.@amount[0] = 20;
+				.@countitem[0] = countitem(7319);
+				.@add = 1;
+				.@string$ = "I asked you to get 20 Used Iron Plate.";
+			}
+			if (.@countitem[0] >= .@amount[0] && .@countitem[1] >= .@amount[1]) {
+				mes "Let me guess...";
+				mes "You've brought me the best quality materials.";
+				mes "Good.";
+				next;
+				mes "[Thorn]";
+				mes "I can always use more Iron materials.";
+				mes "Instead of a normal reward I'll give you an advanced equipment.";
+				next;
+				mes "[Thorn]";
+				mes "If at any time you think you have equipment that you need to strengthen come by me again.";
+				delitem .@item[0],.@amount[0];
+				if (.@countitem[1])
+					delitem .@item[1],.@amount[1];
+				para_2nd04 = 3;
+				erasequest (7238 + .@add);
+				setquest 7240;
+			}
+			else {
+				mes .@string$;
+				mes "I'm pretty sure that it isn't that difficult to do.";
+			}
+		}
+		else if (para_2nd04 == 3) {
+			mes "Now, that's it.";
+			mes "That's enough for today.";
+			mes "For now, ask me to strengthen your equipment and I'll do it for you.";
+			next;
+			mes "[Thorn]";
+			mes "If you have one of these bring them to me.";
+			mes "Eden Group Manteau II, Eden Group Armor IV, Eden Group Boots IV.";
+		}
+		else if (para_2nd04 == 4) {
+			if (checkquest(7241,PLAYTIME) == 0) {
+				mes "Come back later.";
+				mes "You have to wait for some time first.";
+			}
+			else {
+				mes "Uh-huh...";
+				mes "What are we going to... oh don't worry.";
+				mes "Come to me later.";
+				erasequest 7241;// Errands for Thorn timer
+				para_2nd04 = 0;
+			}
+		}
+		close;
+	case 3:
+		if (para_2nd02 < 1) {
+			mes "I'm not permitted to do this by Instructor Ur.";
+			mes "Don't mess with me.";
+		}
+		else if (para_2nd02 == 1) {
+			mes "Okay, I'll give you equipment.";
+			mes "I'll give you good armor and equipment that you'll be proud of.";
+			next;
+			mes "[Thorn]";
+			mes "So now, ^4d4dffmake sure that you have enough free inventory space.^000000";
+			next;
+			if (select( "Let me organize my inventory.", "I have free space." ) == 1) {
+				mes "[Thorn]";
+				mes "You do that.";
+				mes "Free up your inventory so that you can get the weapons, boots, and all the other equipment.";
+				close;
+			}
+			mes "[Thorn]";
+			if (BaseJob == Job_Knight || BaseJob == Job_Crusader) {
+				callsub L_Select,"One-handed sword, two-handed sword or spear.",
+					1197,"Eden Group Slayer III","Two-handed Sword, Attack 200",
+					13434,"Eden Group Saber III","One-handed Sword, Attack 185",
+					1434,"Eden Group Spear I","One-handed, Attack 165";
 			}
 			else if (BaseJob == Job_Assassin) {
-				mes "Assassin Class gets a choice of weapons, would you like to have a katar, dagger or a sword?";
-				callsub L_Select,
-					1289,"Katar","Two-handed, 155 Atk", //P.Katar I
-					13066,"Dagger","One-handed, 165 Atk, 80 Matk", //P.Dagger III
-					13434,"Sword","One-handed, 185 Atk"; //P.Saber III
+				callsub L_Select,"You have your choice of dagger or katar.",
+					13066,"Eden Group Dagger III","Dagger, MATK +80, ATK 165",
+					1289,"Eden Group Katar I","Katar, ATK 155";
 			}
-			else if (BaseJob == Job_Rogue) {
-				mes "Rogue Class gets a choice of weapons, would you like to have a dagger, bow or a sword?";
-				callsub L_Select,
-					13066,"Dagger","One-handed, 165 Atk, 80 Matk", //P.Dagger III
-					18106,"Bow","Two-handed, 140 Atk", //P.Bow III
-					13434,"Sword","One-handed, 185 Atk"; //P.Saber III
+			else if (BaseJob == Job_Rogue || BaseClass == Job_Novice)
+				getitem 13066,1;// P.Dagger III
+			else if (BaseJob == Job_Alchemist || BaseJob == Job_Blacksmith) {
+				callsub L_Select,"Your options are Mace, Saber and Axe.",
+					16014,"Eden Group Mace III","Mace, Attack 172",// P_Mace3
+					13434,"Eden Group Saber III","Sword, Attack 185",//P.Saber III
+					1391,"Eden Group Axe I","Axe, Attack 195"; //P.Two-Handed Axe I
 			}
-			else if (BaseJob == Job_Thief) {
-				mes "Thief Class gets a choice of weapons, would you like to have a dagger or a sword?";
-				callsub L_Select,
-					13066,"Dagger","One-handed, 165 Atk, 80 Matk", //P.Dagger III
-					13434,"Sword","One-handed, 185 Atk"; //P.Saber III
-			}
-			else if (BaseJob == Job_Bard) {
-				mes "Bard Class gets a choice of weapons, would you like to have a guitar, bow or a dagger?";
-				callsub L_Select,
-					1931,"Guitar","One-handed, 125 Atk", //P.Guitar I
-					18106,"Bow","Two-handed, 140 Atk", //P.Bow III
-					13066,"Dagger","One-handed, 165 Atk, 80 Matk"; //P.Dagger III
-			}
-			else if (BaseJob == Job_Dancer) {
-				mes "Dancer Class gets a choice of weapons, would you like to have a whip, bow or a dagger?";
-				callsub L_Select,
-					1986,"Whip","One-handed, 125 Atk", //P.Tail I
-					18106,"Bow","Two-handed, 140 Atk", //P.Bow III
-					13066,"Dagger","One-handed, 165 Atk, 80 Matk"; //P.Dagger III
-			}
-			else if (BaseClass == Job_Archer) {
-				mes "Archer Class gets a choice of weapons, would you like to have a bow or a dagger?";
-				callsub L_Select,
-					18106,"Bow","Two-handed, 140 Atk", //P.Bow III
-					13066,"Dagger","One-handed, 165 Atk, 80 Matk"; //P.Dagger III
+			else if (BaseJob == Job_Wizard)
+				getitem 1658,1;// P.Staff III
+			else if (BaseJob == Job_Sage) {
+				callsub L_Select,"",
+					1658,"Eden Group Staff III","Staff, MATK + 170, INT +4, Attack 60", //P.Staff III
+					1583,"Eden Group Dictionary I","Book, MATK +100, Attack 135"; //P.Book I
 			}
 			else if (BaseJob == Job_Priest) {
-				mes "Priest Class gets a choice of weapons, would you like to have a staff, mace or a book?";
-				callsub L_Select,
-					1658,"Staff","One-handed, 60 Atk, 170 Matk, 4 Int", //P.Staff III
-					16014,"Mace","One-handed, 172 Atk", //P.Mace III
-					1583,"Book","One-handed, 135 Atk, 110 Matk"; //P.Book I
+				callsub L_Select,"",
+					1658,"Eden Group Staff III","Staff, MATK + 170, INT +4, Attack 60", //P.Staff III
+					1583,"Eden Group Dictionary I","Book, MATK +100, Attack 135", //P.Book I
+					16014,"Eden Group Mace III","Mace, Attack 172"; //P.Mace III
 			}
 			else if (BaseJob == Job_Monk) {
-				mes "Monk Class gets a choice of weapons, would you like to have a knuckle, mace or a staff?";
-				callsub L_Select,
-					1831,"Knuckle","One-handed, 120 Atk", //P.Knuckle I
-					16014,"Mace","One-handed, 172 Atk", //P.Mace III
-					1658,"Staff","One-handed, 60 Atk, 170 Matk, 4 Int"; //P.Staff III
+				callsub L_Select,"",
+					1831,"Eden Group Knuckles I","Knuckle, Attack 120", //P.Knuckle I
+					16014,"Eden Group Mace III","Mace, Attack 172"; //P.Mace III
 			}
-			else if (BaseJob == Job_Acolyte) {
-				mes "Acolyte Class gets a choice of weapons, would you like to have a staff or a mace?";
-				callsub L_Select,
-					1658,"Staff","One-handed, 60 Atk, 170 Matk, 4 Int", //P.Staff III
-					16014,"Mace","One-handed, 172 Atk"; //P.Mace III
+			else if (BaseJob == Job_Hunter)
+				getitem 18106,1;// P.Bow III
+			else if (BaseJob == Job_Bard) {
+				callsub L_Select,"",
+					18106,"Eden Group Bow III","Bow, Attack 140", //P.Bow III
+					1931,"Eden Group Guitar I","Guitar, Attack 125"; //P.Guitar I
 			}
-			else if (BaseJob == Job_Sage) {
-				mes "Sage Class gets a choice of weapons, would you like to have a staff, book or a dagger?";
-				callsub L_Select,
-					1658,"Staff","One-handed, 60 Atk, 170 Matk, 4 Int", //P.Staff III
-					1583,"Book","One-handed, 135 Atk, 110 Matk", //P.Book I
-					13066,"Dagger","One-handed, 165 Atk, 80 Matk"; //P.Dagger III
+			else if (BaseJob == Job_Dancer) {
+				callsub L_Select,"",
+					18106,"Eden Group Bow III","Bow, Attack 140", //P.Bow III
+					1986,"Eden Group Whip I","Whip, Attack 125"; //P.Tail I
 			}
-			else if (BaseClass == Job_Mage || Class == Job_Soul_Linker) {
-				mes "Mage and Soul Linker Class gets a choice of weapons, would you like to have a staff or a dagger?";
-				callsub L_Select,
-					1658,"Staff","One-handed, 60 Atk, 170 Matk, 4 Int", //P.Staff III
-					13066,"Dagger","One-handed, 165 Atk, 80 Matk"; //P.Dagger III
+			else if (Class == Job_Ninja) {
+				callsub L_Select,"",
+					13066,"Eden Group Dagger III","Dagger, MATK +80, ATK 165", //P.Dagger III
+					13310,"Eden Group Huuma Shuriken I","Huuma Suriken, MATK +50, ATK 170"; //P.Huuma Suriken I
 			}
-			else if (BaseClass == Job_Ninja) {
-				mes "Ninja Class gets a choice of weapons, would you like to have a huuma suriken or a dagger?";
-				callsub L_Select,
-					13310,"Huuma Suriken","Two-handed, 170 Atk, 50 Matk", //P.Huuma Suriken I
-					13066,"Dagger","One-handed, 165 Atk, 80 Matk"; //P.Dagger III
+			else if (Class == Job_Star_Gladiator)
+				getitem 1583,1; //P.Book I
+			else if (Class == Job_Soul_Linker) {
+				callsub L_Select,"",
+					13066,"Eden Group Dagger III","Dagger, MATK +80, ATK 165", //P.Dagger III
+					1658,"Eden Group Staff III","Staff, MATK +170, INT +4, ATK 60"; //P.Staff III
 			}
-			else if (Class == Job_Star_Gladiator) getitem 1583,1; //P.Book I
-			else if (Class == Job_Gunslinger) getitem 13114,1; //P.Revolver III
-			else if (BaseClass == Job_Novice) getitem 13066,1; //P.Dagger III
-			getitem 18514,1; //Paradise Hat II
-			getitem 2571,1; //Paradise Mantle II
-			getitem 2473,1; //Paradise Boots IV
-			getitem 15031,1; //Paradise Uniform IV
-			set para_suv02,14;
-			if (para_suv01 > 40)
-				set para_suv01, para_suv01+1;
-			if (Class == Job_Taekwon) {
-				mes "I'm sorry, but Teakwon Class can't wear any of our weapons...";
+			else if (Class == Job_Gunslinger)
+				getitem 13114,1; //P.Revolver III
+			else {
+				mes "Hmm, you are eligible to receive equipment.";
+				mes "Yeah I understand that.";
 				next;
-			}
-			mes "See you later, and good luck on your adventures!";
-			close;
-		}
-		if (para_suv02 == 14) {
-			setarray .@Check[0],18514,2571,2473,15031;
-			setarray .@Item$[0],"Hat","Mantle","Boots","Uniform";
-			for(set .@i,0; .@i<4; set .@i,.@i+1)
-				if (countitem(.@Check[.@i]) < 1) {
-					mes "[Toren]";
-					mes "Where is the Paradise "+.@Item$[.@i]+" I gave you?";
-					next;
-					mes "[Toren]";
-					mes "...Fine, I will sell you another one for ^FF0000250,000 Zeny^000000. Don't lose it this time.";
-					next;
-					if(select("Ok.:No, thanks.") == 2) {
-						mes "[Toren]";
-						mes "Come back if you change your mind.";
-						close;
-					}
-					if (Zeny < 250000) {
-						mes "[Toren]";
-						mes "You dont have enough zeny.";
-						close;
-					}
-					set Zeny, Zeny - 250000;
-					getitem .@Check[.@i],1;
-					mes "[Toren]";
-					mes "These advanced gears are not easy to make, please take better care of this one.";
-					close;
-				}
-			mes "[Toren]";
-			mes "I already gave you the most advanced gears we have to offer.";
-			close;
-		}
-		mes "[Toren]";
-		mes "You need to complete quests given to you by ^0000FFInstructor Ur^000000 if you want a reward.";
-		close;
-	case 2:
-		if (para_suv02 < 14) {
-			mes "[Toren]";
-			mes "First you need the ^0000FFAdvanced Paradise Gears^000000.";
-			close;
-		}
-		if (paragearenchant < 1) {
-			mes "[Toren]";
-			mes "Alright, but I'll need a few items for the enchantment process.";
-			next;
-			if (BaseLevel >= 90) {
-				set paragearenchant,1;
-				setquest 7239;
-				mes "[Toren]";
-				mes "Just bring me ^0000FF20 Used Iron Plates^000000.";
+				mes "[Thorn]";
+				mes "Hmm something went wrong though. I'm not sure what...";
 				close;
 			}
-			set paragearenchant,2;
-			setquest 7238;
-			mes "[Toren]";
-			mes "Just bring me ^0000FF20 Iron Ores and 10 Irons^000000.";
-			close;
+			para_2nd02 = 2;
+			getitem 18514,1;// Paradise Hat II
+			getitem 2571,1;// Paradise Mantle II
+			getitem 2473,1;// Paradise Boots IV
+			getitem 15031,1;// Paradise Uniform IV
+			mes "Here's your equipment.";
+			mes "I'll also give you the other gear that comes along with this set.";
 		}
-		if (paragearenchant == 1) {
-			if (countitem(7319) >= 20) {
-				mes "[Toren]";
-				mes "Thanks, that's what I needed!";
-				next;
-				delitem 7319,20; // Used Iron Plate
-				set paragearenchant,3;
-				changequest 7239,7240;
-				mes "[Toren]";
-				mes "Give me a second to prepare before I enchant your gears.";
-				close;
-			}
-			mes "[Toren]";
-			mes "Just bring me ^0000FF20 Used Iron Plates^000000.";
-			close;
-		}
-		if (paragearenchant == 2) {
-			if ((countitem(1002) >= 20) && (countitem(998) >= 10)) {
-				mes "[Toren]";
-				mes "Thanks, that's what I needed!";
-				next;
-				delitem 1002,20; // Iron Ore
-				delitem 998,10; // Iron
-				set paragearenchant,3;
-				changequest 7238,7240;
-				mes "[Toren]";
-				mes "Give me a second to prepare before I enchant your gears.";
-				close;
-			}
-			mes "[Toren]";
-			mes "Just bring me ^0000FF20 Iron Ores and 10 Irons^000000.";
-			close;
-		}
-		if (paragearenchant == 3) {
-			mes "[Toren]";
-			mes "Before we begin I would like to mention that this enchantment proccess ^FF0000can not fail^000000.";
+		else if (para_2nd02 == 2) {
+			mes "You can strengthen the equipment that I gave you.";
+			mes "Weapons Expert BK is at Eden Group Headquarters and he can do that for you.";
 			next;
-			mes "[Toren]";
-			mes "I am able to add 2 enchantments at once, and if something is already enchanted I will ^FF0000re-do the current enchantments^000000 for you.";
-			next;
-			mes "[Toren]";
-			mes "Now pick which gear you would like me to enchant.";
-			next;
-			setarray .@Item[0],2571,2473,15031;
-			set .@i, select("Paradise Mantle II.:Paradise Boots IV.:Paradise Uniform IV.")-1;
-			if (countitem(.@Item[.@i]) < 1) {
-				mes "[Toren]";
-				mes "Bring one and I'll enchant it.";
-				close;
-			}
-			set .@paragearcount, .@Item[.@i];
-			mes "[Toren]";
-			mes "Here we go!";
-			close2;
-			specialeffect2 EF_MAPPILLAR;
-			progressbar "ffff00",4;
-			set .@enc_paragear,rand(1,42);
-			if (.@enc_paragear == 1) set .@addpart,4763;
-			else if (.@enc_paragear == 2) set .@addpart,4765;
-			else if (.@enc_paragear == 3) set .@addpart,4790;
-			else if (.@enc_paragear == 4) set .@addpart,4794;
-			else if (.@enc_paragear < 7) set .@addpart,4762;
-			else if (.@enc_paragear < 9) set .@addpart,4764;
-			else if (.@enc_paragear < 11) set .@addpart,4789;
-			else if (.@enc_paragear < 13) set .@addpart,4793;
-			else if (.@enc_paragear < 15) set .@addpart,4701;
-			else if (.@enc_paragear < 17) set .@addpart,4711;
-			else if (.@enc_paragear < 19) set .@addpart,4721;
-			else if (.@enc_paragear < 21) set .@addpart,4731;
-			else if (.@enc_paragear < 23) set .@addpart,4741;
-			else if (.@enc_paragear < 25) set .@addpart,4751;
-			else if (.@enc_paragear < 28) set .@addpart,4788;
-			else if (.@enc_paragear < 31) set .@addpart,4792;
-			else if (.@enc_paragear < 35) set .@addpart,4787;
-			else if (.@enc_paragear < 39) set .@addpart,4791;
-			else if (.@enc_paragear < 43) set .@addpart,4786;
-			set .@addpart2,4701+(10*rand(6));
-			delitem .@paragearcount,1;
-			getitem2 .@paragearcount, 1, 1, 0, 0, 0, 0, .@addpart2, .@addpart;
-			set paragearenchant,4;
-			changequest 7240,7241;
-			mes "[Toren]";
-			mes "It is finished! Come back tomorrow if you want to enchant more.";
-			close;
+			mes "[Thorn]";
+			mes "So go to him and he can make your equipment stronger.";
 		}
-		if ((paragearenchant == 4) && (checkquest(7241,PLAYTIME) != 2)) {
-			mes "[Toren]";
-			mes "Please come back tomorrow if you want to enchant more.";
-			close;
-		}
-		if ((paragearenchant == 4) && (checkquest(7241,PLAYTIME) == 2)) {
-			set paragearenchant,0;
-			erasequest 7241;
-			mes "[Toren]";
-			mes "Another day, another piece of equipment to enchant!";
-			close;
+		else {
+			mes "Have you gotten your gear yet?";
+			mes "I can give you the gear but I can't strengthen it for you.";
+			next;
+			mes "[Thorn]";
+			mes "Your armor can be strengthened by someone else.";
+			mes "I wish I could but I can't.";
 		}
 	}
-	end;
+	close;
 L_Select:
-	next;
-	mes "[Toren]";
-	set .@menu$,"";
-	for(set .@i,0; .@i<getargcount(); set .@i,.@i+3) {
-		set .@menu$, .@menu$+getarg(.@i+1)+".:";
-		mes getarg(.@i+1)+": "+getarg(.@i+2)+".";
-		mes " ";
+	mes "Choose a weapon.";
+	mes getarg(0);
+	mes "Choose from the following.";
+	for ( .@i = 1; .@i < getargcount(); .@i += 3 ) {
+		set .@menu$, .@menu$ + getarg(.@i+1) + ":";
+		mes getarg(.@i+1)+" : "+ getarg(.@i+2);
 	}
 	next;
-	set .@i, select(.@menu$)-1;
-	getitem getarg(.@i*3),1;
+	.@i = (select(.@menu$) -1) *3 +1;
 	mes "[Toren]";
+	getitem getarg(.@i),1;
 	return;
+S_Enchant:
+	mes "[Thorn]";
+	if (countitem(getarg(0)) > 0) {
+		// .@1st = rand(1,12);
+		// .@2nd = rand(1,12);
+
+		// if (.@1st == 1) .@1st = 4751;// Luck2
+		// else if (.@1st == 2) .@1st = 4787;// Mdef4
+		// else if (.@1st == 3) .@1st = 4791;// Def3
+		// else if (.@1st == 4) .@1st = 4701;// Strength2
+		// else if (.@1st == 5) .@1st = 4788;// Mdef6
+		// else if (.@1st == 6) .@1st = 4792;// Def6
+		// else if (.@1st == 7) .@1st = 4731;// Agility2
+		// else if (.@1st == 8) .@1st = 4789;// Mdef8
+		// else if (.@1st == 9) .@1st = 4793;// Def9
+		// else if (.@1st == 10) .@1st = 4721;// Dexterity2
+		// else if (.@1st == 11) .@1st = 4711;// Inteligence2
+		// else if (.@1st == 12) .@1st = 4741;// Vitality2
+
+		// if (.@2nd == 1) .@2nd = 4701;// Strength2
+		// else if (.@2nd == 2) .@2nd = 4787;// Mdef4
+		// else if (.@2nd == 3) .@2nd = 4741;// Vitality2
+		// else if (.@2nd == 4) .@2nd = 4791;// Def3
+		// else if (.@2nd == 5) .@2nd = 4788;// Mdef6
+		// else if (.@2nd == 6) .@2nd = 4792;// Def6
+		// else if (.@2nd == 7) .@2nd = 4721;// Dexterity2
+		// else if (.@2nd == 8) .@2nd = 4793;// Def9
+		// else if (.@2nd == 9) .@2nd = 4751;// Luck2
+		// else if (.@2nd == 10) .@2nd = 4789;// Mdef8
+		// else if (.@2nd == 11) .@2nd = 4731;// Agility2
+		// else if (.@2nd == 12) .@2nd = 4711;// Inteligence2
+		setarray .@bonus[0],
+			4751,// Luck2
+			4787,// Mdef4
+			4791,// Def3
+			4701,// Strength2
+			4788,// Mdef6
+			4792,// Def6
+			4731,// Agility2
+			4789,// Mdef8
+			4793,// Def9
+			4721,// Dexterity2
+			4711,// Inteligence2
+			4741;// Vitality2
+		.@1st = .@bonus[ rand(1,12) ];
+		.@2nd = .@bonus[ rand(1,12) ];
+		mes "Eden Group "+ getarg(1) +"?";
+		mes "I understand.";
+		mes "Remember the stats that are enhanced will be random.";
+		mes "You sure you want me to enhance this?";
+		next;
+		switch( select( "I changed my mind.", "Yes, enhance it." ) ) {
+			mes "[Thorn]";
+		case 1:
+			mes "You sure you don't want to enhance it?";
+			mes "It's your choice.";
+			close;
+		case 2:
+			mes "I understand.";
+			mes "Let's begin the enhancement.";
+			next;
+			specialeffect EF_REPAIRWEAPON;
+			progressbar "ffff00",3;
+			delitem getarg(0),1;
+			para_2nd04 = 4;
+			// erasequest 7240;// Equipment Enhancement
+			// setquest 7241;// Errands for Thorn timer
+			changequest 7240,7241;
+			getitem2 getarg(0),1,1,0,0,0,0,.@1st,.@2nd;						
+			mes "[Thorn]";
+			mes "Ok, seems that the enhancement went well.";
+			mes "If you don't like the result then you can come back again tomorrow.";
+			close;
+		}
+	}
+	mes "Hmm... Don't you have the "+ getarg(1) +"?";
+	mes "I don't think you have it with you.";
+	close;
 }
 
-moc_para01,112,79,3	script	Weapons Expert	851,{
-	if (checkweight(1101,5) == 0) {
-		mes "^3355FFWait a second!";
-		mes "Right now, you are carrying";
-		mes "to many things with you.";
-		mes "Please come back after";
-		mes "using the Kafra Service";
-		mes "to store some of your items.^000000";
-		close;
-	}
-	mes "[Weapons Expert]";
-	mes "Hello adventurer, what can I do for you today?";
+moc_para01,112,79,3	script	Weapons Expert BK#2nd11	4_M_REPAIR,{
+	setarray .@wplist[0],
+		1197,	// P_Slayer3
+		13434,	// P_Saber3
+		13066,	// P_Dagger3
+		1289,	// P_Katar1
+		1391,	// P_Two_Handed_Axe1
+		1434,	// P_Spear I
+		1658,	// P_Staff3
+		16014,	// P_Mace3
+		18106,	// P_Bow3
+		1583,	// P.Book I
+		1931,	// P_Guitar I
+		1986,	// P_Tail1
+		13114,	// P_Revolver3
+		1831,	// P_Knuckle1
+		13310;	// P_Huuma_Shuriken1
+	.@menu$ = "Eden Group Slayer III:" +
+		"Eden Group Saber III:" +
+		"Eden Group Dagger III:" +
+		"Eden Group Katar I:" +
+		"Eden Group Axe I:" +
+		"Eden Group Spear I:" +
+		"Eden Group Staff III:" +
+		"Eden Group Mace III:" +
+		"Eden Group Bow III:" +
+		"Eden Group Dictionary I:" +
+		"Eden Group Guitar I:" +
+		"Eden Group Whip I:" +
+		"Eden Group Revolver III:" +
+		"Eden Group Knuckles I:" +
+		"Eden Group Huuma Shuriken I";
+	mes "[BK]";
+	mes "What's happening?";
+	mes "No way?!";
 	next;
-	switch(select("Where is my reward?","I want an enchantment!")) {
-	case 1:
-		if ((para_suv02 == 14) && (countitem(1197) < 1) && (countitem(1289) < 1) && (countitem(1391) < 1) && (countitem(1434) < 1) && (countitem(1583) < 1) && (countitem(1658) < 1) && (countitem(1831) < 1) && (countitem(1931) < 1) && (countitem(1986) < 1) && (countitem(13066) < 1) && (countitem(13114) < 1) && (countitem(13310) < 1) && (countitem(13434) < 1) && (countitem(16014) < 1) && (countitem(18106) < 1)) {
-			mes "[Weapons Expert]";
-			mes "Where is the Paradise Weapon I gave you?";
-			next;
-			mes "[Weapons Expert]";
-			mes "...Fine, I will sell you another one for ^FF0000250,000 Zeny^000000. Don't lose it this time.";
-			next;
-			switch(select("Ok.","No, thanks.")) {
-			case 1:
-				mes "[Weapons Expert]";
-				if (Zeny < 250000) {
-					mes "You dont have enough zeny.";
-					close;
-				}
-				if (Class == Job_Taekwon) {
-					mes "Wait... Your Class doesn't have a weapon.";
-					close;
-				}
-				set Zeny, Zeny - 250000;
-				if (BaseClass == Job_Swordman) {
-					mes "Swordman Class gets a choice of weapons, would you like to have a sword or a spear?";
-					callsub L_Select,
-						1197,"Slayer","Two-handed Sword, 200 Atk", //P.Slayer III
-						13434,"Saber","One-handed Sword, 185 Atk", //P.Saber III
-						1434,"Spear","One-handed, 165 Atk"; //P.Spear I
-				}
-				else if (BaseClass == Job_Merchant) {
-					mes "Merchant Class gets a choice of weapons, would you like to have an axe, dagger or a sword?";
-					callsub L_Select,
-						1391,"Axe","Two-handed, 195 Atk", //P.Two-Handed Axe I
-						13066,"Dagger","One-handed, 165 Atk, 80 Matk", //P.Dagger III
-						13434,"Sword","One-handed, 185 Atk"; //P.Saber III
-				}
-				else if (BaseJob == Job_Assassin) {
-					mes "Assassin Class gets a choice of weapons, would you like to have a katar, dagger or a sword?";
-					callsub L_Select,
-						1289,"Katar","Two-handed, 155 Atk", //P.Katar I
-						13066,"Dagger","One-handed, 165 Atk, 80 Matk", //P.Dagger III
-						13434,"Sword","One-handed, 185 Atk"; //P.Saber III
-				}
-				else if (BaseJob == Job_Rogue) {
-					mes "Rogue Class gets a choice of weapons, would you like to have a dagger, bow or a sword?";
-					callsub L_Select,
-						13066,"Dagger","One-handed, 165 Atk, 80 Matk", //P.Dagger III
-						18106,"Bow","Two-handed, 140 Atk", //P.Bow III
-						13434,"Sword","One-handed, 185 Atk"; //P.Saber III
-				}
-				else if (BaseJob == Job_Thief) {
-					mes "Thief Class gets a choice of weapons, would you like to have a dagger or a sword?";
-					callsub L_Select,
-						13066,"Dagger","One-handed, 165 Atk, 80 Matk", //P.Dagger III
-						13434,"Sword","One-handed, 185 Atk"; //P.Saber III
-				}
-				else if (BaseJob == Job_Bard) {
-					mes "Bard Class gets a choice of weapons, would you like to have a guitar, bow or a dagger?";
-					callsub L_Select,
-						1931,"Guitar","One-handed, 125 Atk", //P.Guitar I
-						18106,"Bow","Two-handed, 140 Atk", //P.Bow III
-						13066,"Dagger","One-handed, 165 Atk, 80 Matk"; //P.Dagger III
-				}
-				else if (BaseJob == Job_Dancer) {
-					mes "Dancer Class gets a choice of weapons, would you like to have a whip, bow or a dagger?";
-					callsub L_Select,
-						1986,"Whip","One-handed, 125 Atk", //P.Tail I
-						18106,"Bow","Two-handed, 140 Atk", //P.Bow III
-						13066,"Dagger","One-handed, 165 Atk, 80 Matk"; //P.Dagger III
-				}
-				else if (BaseClass == Job_Archer) {
-					mes "Archer Class gets a choice of weapons, would you like to have a bow or a dagger?";
-					callsub L_Select,
-						18106,"Bow","Two-handed, 140 Atk", //P.Bow III
-						13066,"Dagger","One-handed, 165 Atk, 80 Matk"; //P.Dagger III
-				}
-				else if (BaseJob == Job_Priest) {
-					mes "Priest Class gets a choice of weapons, would you like to have a staff, mace or a book?";
-					callsub L_Select,
-						1658,"Staff","One-handed, 60 Atk, 170 Matk, 4 Int", //P.Staff III
-						16014,"Mace","One-handed, 172 Atk", //P.Mace III
-						1583,"Book","One-handed, 135 Atk, 110 Matk"; //P.Book I
-				}
-				else if (BaseJob == Job_Monk) {
-					mes "Monk Class gets a choice of weapons, would you like to have a knuckle, mace or a staff?";
-					callsub L_Select,
-						1831,"Knuckle","One-handed, 120 Atk", //P.Knuckle I
-						16014,"Mace","One-handed, 172 Atk", //P.Mace III
-						1658,"Staff","One-handed, 60 Atk, 170 Matk, 4 Int"; //P.Staff III
-				}
-				else if (BaseJob == Job_Acolyte) {
-					mes "Acolyte Class gets a choice of weapons, would you like to have a staff or a mace?";
-					callsub L_Select,
-						1658,"Staff","One-handed, 60 Atk, 170 Matk, 4 Int", //P.Staff III
-						16014,"Mace","One-handed, 172 Atk"; //P.Mace III
-				}
-				else if (BaseJob == Job_Sage) {
-					mes "Sage Class gets a choice of weapons, would you like to have a staff, book or a dagger?";
-					callsub L_Select,
-						1658,"Staff","One-handed, 60 Atk, 170 Matk, 4 Int", //P.Staff III
-						1583,"Book","One-handed, 135 Atk, 110 Matk", //P.Book I
-						13066,"Dagger","One-handed, 165 Atk, 80 Matk"; //P.Dagger III
-				}
-				else if (BaseClass == Job_Mage || Class == Job_Soul_Linker) {
-					mes "Mage and Soul Linker Class gets a choice of weapons, would you like to have a staff or a dagger?";
-					callsub L_Select,
-						1658,"Staff","One-handed, 60 Atk, 170 Matk, 4 Int", //P.Staff III
-						13066,"Dagger","One-handed, 165 Atk, 80 Matk"; //P.Dagger III
-				}
-				else if (BaseClass == Job_Ninja) {
-					mes "Ninja Class gets a choice of weapons, would you like to have a huuma suriken or a dagger?";
-					callsub L_Select,
-						13310,"Huuma Suriken","Two-handed, 170 Atk, 50 Matk", //P.Huuma Suriken I
-						13066,"Dagger","One-handed, 165 Atk, 80 Matk"; //P.Dagger III
-				}
-				else if (Class == Job_Star_Gladiator) getitem 1583,1; //P.Book I
-				else if (Class == Job_Gunslinger) getitem 13114,1; //P.Revolver III
-				else if (BaseClass == Job_Novice) getitem 13066,1; //P.Dagger III
-				mes "These weapons aren't easy to make, please take better care of this one.";
-				close;
-			case 2:
-				mes "[Weapons Expert]";
-				mes "Come back if you change your mind.";
-				close;
-			}
-		}
-		mes "[Weapons Expert]";
-		mes "My reward for you is enchantments on your ^0000FFParadise Weapon^000000.";
+	if (select( "Enhancing weapons.", "What?" ) == 2) {
+		mes "[BK]";
+		mes "Yeah?";
+		mes "Are you asking me what I know?";
 		next;
-		mes "[Weapons Expert]";
-		mes "The number of enchantments I can give you depends on which level of ^0000FFAdvanced Paradise Quests^000000 you have completed.";
+		select("...??");
+		mes "[BK]";
+		mes ".....????";
 		close;
-	case 2:
-		if (para_suv02 < 14) {
-			mes "[Weapons Expert]";
-			mes "First you need the ^0000FFAdvanced Paradise Gears^000000.";
-			close;
+	}
+	mes "[BK]";
+	mes "Ah, you're here to enhance your gear.";
+	mes "Okay, shall we?";
+	next;
+	mes "[BK]";
+	if (para_2nd02 < 2) {
+		mes "You have to have the equipment first in order for me to do anything.";
+		mes "Didn't you get anything from Thorn yet?";
+	}
+	else if (para_2nd02 == 2) {
+		if (para_2nd01 < 11) {
+			mes "Hmm, no.";
+			mes "I don't have permission from Instructor Ur.";
+			mes "You have to finish your training.";
+			next;
+			mes "[BK]";
+			mes "Once you do that I can help you.";
+			mes "Until then I won't talk to you.";
 		}
-		if ((countitem(1197) < 1) && (countitem(1289) < 1) && (countitem(1391) < 1) && (countitem(1434) < 1) && (countitem(1583) < 1) && (countitem(1658) < 1) && (countitem(1831) < 1) && (countitem(1931) < 1) && (countitem(1986) < 1) && (countitem(13066) < 1) && (countitem(13114) < 1) && (countitem(13310) < 1) && (countitem(13434) < 1) && (countitem(16014) < 1) && (countitem(18106) < 1)) {
-			mes "[Weapons Expert]";
-			mes "Did you sell your new Paradise Weapon? No enchantments for you.";
-			close;
-		}
-		if (para_suv01 < 44) {
-			mes "[Weapons Expert]";
-			mes "You haven't completed enough quests for an enchantment yet.";
+		else {
+			mes "Okay, what weapon do you want to enhance?";
 			next;
-			mes "[Weapons Expert]";
-			mes "Make sure to pick a weapon from Toren too.";
-			close;
-		}
-		if (para_suv01 == 44) {
-			mes "[Weapons Expert]";
-			mes "It seems you have earned your first weapon enchantment.";
-			next;
-			mes "[Weapons Expert]";
-			mes "There are only 2 to choose from, which one would you like?";
-			next;
-			if(select("Atk + 3%:Matk + 3%") == 1) set paraweaponenchant,4767;
-			else set paraweaponenchant,4806;
-			callsub L_GetWeapon;
-			mes "[Weapons Expert]";
-			mes "OK, gimmy a sec.";
-			close2;
-			specialeffect2 EF_MAPPILLAR;
-			progressbar "ffff00",4;
-			delitem paraweaponcount,1;
-			getitem2 paraweaponcount, 1, 1, 0, 0, 0, 0, 0, paraweaponenchant;
-			set para_suv01,45;
-			mes "[Weapons Expert]";
-			mes "All done.";
-			close;
-		}
-		if (para_suv01 == 47) {
-			mes "[Weapons Expert]";
-			mes "It seems you have earned your second weapon enchantment.";
-			next;
-			if (paraweaponenchant < 1) {
-				mes "[Weapons Expert]";
-				mes "Before I do the second enchantment, you need to pick the first one.";
+			.@s = select(.@menu$) -1;
+			mes "[BK]";
+			if (countitem(.@wplist[.@s]) > 0) {
+				mes "Ok for the first reinforcement.";
+				mes "ATK + 3% or MATK + 3%?";
+				mes "I'll give you the option to grant this effect on the selected gear.";
 				next;
-				mes "[Weapons Expert]";
-				mes "There are only 2 to choose from, which one would you like?";
+				mes "[BK]";
+				mes "You can't change your mind after so choose wisely.";
 				next;
-				if(select("Atk + 3%:Matk + 3%") == 1) set paraweaponenchant,4767;
-				else set paraweaponenchant,4806;
-				callsub L_GetWeapon;
-				mes "[Weapons Expert]";
-				mes "Gotcha, now for the second enchantment.";
-				next;
-			}
-			mes "[Weapons Expert]";
-			mes "This one is a little different, you are given the choice of which ^0000FFRace of monsters^000000 you would like to have increased damage with.";
-			next;
-			mes "[Weapons Expert]";
-			mes "You could also choose to increase your ^0000FFHealing Power^000000 too, which one would you like?";
-			next;
-			switch(select("Animal Type","Plant Type","Insect Type","Fish Type","Dragon Type","Healing Power")) {
-			case 1:
-				if (paraweaponenchant == 4767) set paraweaponenchant2,4060;
-				if (paraweaponenchant == 4806) set paraweaponenchant2,4472;
-				break;
-			case 2:
-				if (paraweaponenchant == 4767) set paraweaponenchant2,4068;
-				if (paraweaponenchant == 4806) set paraweaponenchant2,4470;
-				break;
-			case 3:
-				if (paraweaponenchant == 4767) set paraweaponenchant2,4063;
-				if (paraweaponenchant == 4806) set paraweaponenchant2,4476;
-				break;
-			case 4:
-				if (paraweaponenchant == 4767) set paraweaponenchant2,4080;
-				if (paraweaponenchant == 4806) set paraweaponenchant2,4469;
-				break;
-			case 5:
-				if (paraweaponenchant == 4767) set paraweaponenchant2,4118;
-				if (paraweaponenchant == 4806) set paraweaponenchant2,4471;
-				break;
-			case 6:
-				set paraweaponenchant2,4805;
-				break;
-			}
-			mes "[Weapons Expert]";
-			mes "OK, gimmy a sec.";
-			close2;
-			specialeffect2 EF_MAPPILLAR;
-			progressbar "ffff00",4;
-			delitem paraweaponcount,1;
-			getitem2 paraweaponcount, 1, 1, 0, 0, 0, 0, paraweaponenchant2, paraweaponenchant;
-			set para_suv01,48;
-			mes "[Weapons Expert]";
-			mes "All done.";
-			close;
-		}
-		if (para_suv01 == 50 || para_suv01 == 53) {
-			mes "[Weapons Expert]";
-			mes "It seems you have earned your third weapon enchantment.";
-			next;
-			if (paraweaponenchant < 1) {
-				mes "[Weapons Expert]";
-				mes "Before I do the other enchantments, you need to pick the first one.";
-				next;
-				mes "[Weapons Expert]";
-				mes "There are only 2 to choose from, which one would you like?";
-				next;
-				if(select("Atk + 3%:Matk + 3%") == 1) set paraweaponenchant,4767;
-				else set paraweaponenchant,4806;
-				callsub L_GetWeapon;
-				mes "[Weapons Expert]";
-				mes "Gotcha, on to the next one.";
-				next;
-			}
-			if (paraweaponenchant2 < 1) {
-				mes "[Weapons Expert]";
-				mes "Before I do the third enchantment, you need to pick the second one.";
-				next;
-				mes "[Weapons Expert]";
-				mes "This one is a little different, you are given the choice of which ^0000FFRace of monsters^000000 you would like to have increased damage with.";
-				next;
-				mes "[Weapons Expert]";
-				mes "You could also choose to increase your ^0000FFHealing Power^000000 too, which one would you like?";
-				next;
-				switch(select("Animal Type","Plant Type","Insect Type","Fish Type","Dragon Type","Healing Power")) {
-				case 1:
-					if (paraweaponenchant == 4767) set paraweaponenchant2,4060;
-					if (paraweaponenchant == 4806) set paraweaponenchant2,4472;
-					break;
-				case 2:
-					if (paraweaponenchant == 4767) set paraweaponenchant2,4068;
-					if (paraweaponenchant == 4806) set paraweaponenchant2,4470;
-					break;
-				case 3:
-					if (paraweaponenchant == 4767) set paraweaponenchant2,4063;
-					if (paraweaponenchant == 4806) set paraweaponenchant2,4476;
-					break;
-				case 4:
-					if (paraweaponenchant == 4767) set paraweaponenchant2,4080;
-					if (paraweaponenchant == 4806) set paraweaponenchant2,4469;
-					break;
-				case 5:
-					if (paraweaponenchant == 4767) set paraweaponenchant2,4118;
-					if (paraweaponenchant == 4806) set paraweaponenchant2,4471;
-					break;
-				case 6:
-					set paraweaponenchant2,4805;
-					break;
+				if (select( "ATK +3%","MATK +3%" ) == 1) {
+					.@string$ = "Ok, you've chosen to raise physical attack.";
+					.@card = 4767;
 				}
-				mes "[Weapons Expert]";
-				mes "Gotcha, now for the third one.";
+				else {
+					.@string$ = "Ok, you've chosen to raise magical attack.";
+					.@card = 4806;
+					.@add = 1;
+				}
+				mes "[BK]";
+				mes .@string$;
+				mes "Would you look at that. Your weapon will now be stronger.";
+				para_2nd03 = 1 + .@add;
 				next;
+				specialeffect EF_REPAIRWEAPON;
+				progressbar "ffff00",3;
+				para_2nd02 = 3;
+				delitem .@wplist[.@s],1;
+				getitem2 .@wplist[.@s],1,1,0,0,0,0,0,.@card;
+				mes "[BK]";
+				mes "Isn't it magnificent?";
+				mes "I know, I know, I'm pretty amazing!";
 			}
-			mes "[Weapons Expert]";
-			mes "The third enchantment is the same as the second one, you are given the choice of which ^0000FFRace of monsters^000000 you would like to have increased damage with.";
+			else {
+				mes "Are you kidding me?";
+				mes "You don't seem to have that weapon in your possession.";
+			}
+		}
+	}
+	else if (para_2nd02 == 3) {
+		if (para_2nd01 < 16) {
+			mes "Hmm, I'm not sure you're ready.";
+			mes "All 3 steps of Instructor Ur's missions have to be completed first.";
 			next;
-			mes "[Weapons Expert]";
-			mes "You could also choose to increase your ^0000FFHealing Power^000000 too, which one would you like?";
+			mes "[BK]";
+			mes "You get what I'm saying?";
+			mes "Finish the third mission from Instructor Ur.";
+		}
+		else {
+			mes "Good. So you previously received an addition to Atk or Matk.";
+			mes "For this option you can choose from Brute, Plant, Fish, Dragon, Increased Heal.";
 			next;
-			switch(select("Animal Type","Plant Type","Insect Type","Fish Type","Dragon Type","Healing Power")) {
+			mes "[BK]";
+			mes "Once you've chosen you can't change your mind again.";
+			mes "But your weapon will increase damage to the type of enhancement you pick.";
+			next;
+			mes "[BK]";
+			mes "Basically I will add a random monster card with the property type that you choose.";
+			mes "Good luck!";
+			next;
+			switch( select( "Brute Type", "Plant Type", "Insect Type", "Fish Type", "Dragon Type", "Increased Heal" ) ) {
 			case 1:
-				if (paraweaponenchant == 4767) set paraweaponenchant3,4060;
-				if (paraweaponenchant == 4806) set paraweaponenchant3,4472;
+				setarray .@arg[0],4060,4472,111;// Goblin_Card, Bradium_Goram_Card
+				.@type$ = "Brute";
 				break;
 			case 2:
-				if (paraweaponenchant == 4767) set paraweaponenchant3,4068;
-				if (paraweaponenchant == 4806) set paraweaponenchant3,4470;
+				setarray .@arg[0],4068,4470,121;// Scorpion_Card, Nepenthes_Card
+				.@type$ = "Plant";
 				break;
 			case 3:
-				if (paraweaponenchant == 4767) set paraweaponenchant3,4063;
-				if (paraweaponenchant == 4806) set paraweaponenchant3,4476;
+				setarray .@arg[0],4063,4476,131;// Caramel_Card, Pinguicula_Card
+				.@type$ = "Insect";
 				break;
 			case 4:
-				if (paraweaponenchant == 4767) set paraweaponenchant3,4080;
-				if (paraweaponenchant == 4806) set paraweaponenchant3,4469;
+				setarray .@arg[0],4080,4469,141;// Flora_Card, Naga_Card
+				.@type$ = "Fish";
 				break;
 			case 5:
-				if (paraweaponenchant == 4767) set paraweaponenchant3,4118;
-				if (paraweaponenchant == 4806) set paraweaponenchant3,4471;
+				setarray .@arg[0],4118,4471,151;// Petit_Card, Egg_Of_Draco_Card
+				.@type$ = "Dragon";
 				break;
 			case 6:
-				set paraweaponenchant3,4805;
-				break;
+				setarray .@arg[0],4805,4805,161;// Heal_Amount2
 			}
-			mes "[Weapons Expert]";
-			mes "OK, gimmy a sec.";
-			close2;
-			specialeffect2 EF_MAPPILLAR;
-			progressbar "ffff00",4;
-			delitem paraweaponcount,1;
-			getitem2 paraweaponcount, 1, 1, 0, 0, 0, paraweaponenchant3, paraweaponenchant2, paraweaponenchant;
-			set para_suv01,54;
-			mes "[Weapons Expert]";
-			mes "All done.";
+			mes "[BK]";
+			for ( .@i = 0; .@i < 15; .@i++ ) {
+				if (countitem(.@wplist[.@i]) > 0) {
+					if (.@arg[0] == 4805)
+						mes "Good. Your weapon will now increase Heal effectiveness.";
+					else
+						mes "Good. Your weapon will increase attacks to "+ .@type$ +" type monsters.";
+					next;
+					specialeffect EF_REPAIRWEAPON;
+					progressbar "ffff00",3;
+					delitem .@wplist[.@i],1;
+					para_2nd02 = 4;
+					if (para_2nd03 == 1) {
+						para_2nd03 = .@arg[2];
+						getitem2 .@wplist[.@i],1,1,0,0,0,0,.@arg[0],4767;
+					}
+					else {
+						para_2nd03 = .@arg[2] + 100;
+						getitem2 .@wplist[.@i],1,1,0,0,0,0,.@arg[1],4806;
+					}
+					mes "[BK]";
+					mes "Isn't it magnificent?";
+					mes "I know, I know, I'm pretty amazing!";
+					close;
+				}
+			}
+			mes "Sorry, but it doesn't seem like you have a weapon that can be enhanced.";
+			mes "How did this happen?";
 			close;
 		}
-		if (para_suv01 > 53) {
-			mes "[Weapons Expert]";
-			mes "That is the maximum number of enchanments I can do, enjoy them.";
-			close;
+	}
+	else if (para_2nd02 == 4) {
+		if (para_2nd01 < 30) {
+			mes "Instructor Ur has a lot of training missions doesn't he?";
+			mes "There's only one more stage.";
+			mes "Reach the final stage of training.";
 		}
-		mes "[Weapons Expert]";
-		mes "I've already enchanted your weapon, you need to complete more quests for the next enchantment.";
-		close;
+		else {
+			mes "Okay, this is the last step.";
+			mes "I will make your weapon even more enhanced.";
+			next;
+			mes "[BK]";
+			mes "The card added from the previous step will be doubled.";
+			mes "And if you have a healing weapon it will increase it's healing efficiency.";
+			mes "You understand?";
+			next;
+			mes "[BK]";
+			mes "Ok what weapon did you have now?";
+			next;
+			.@s = select(.@menu$) -1;
+			mes "[BK]";
+			if (countitem(.@wplist[.@s]) > 0) {
+				mes "Doubling the strength of your bonus stat.";
+				next;
+				specialeffect EF_REPAIRWEAPON;
+				progressbar "ffff00",3;
+				delitem .@wplist[.@s],1;
+				para_2nd02 = 5;
+				if (para_2nd03 == 111)
+					getitem2 .@wplist[.@s],1,1,0,0,0,4060,4060,4767;// Goblin_Card, Goblin_Card, Atk3
+				else if (para_2nd03 == 121)
+					getitem2 .@wplist[.@s],1,1,0,0,0,4068,4068,4767;// Scorpion_Card, Scorpion_Card, Atk3
+				else if (para_2nd03 == 131)
+					getitem2 .@wplist[.@s],1,1,0,0,0,4063,4063,4767;// Caramel_Card, Caramel_Card, Atk3
+				else if (para_2nd03 == 141)
+					getitem2 .@wplist[.@s],1,1,0,0,0,4080,4080,4767;// Flora_Card, Flora_Card, Atk3
+				else if (para_2nd03 == 151)
+					getitem2 .@wplist[.@s],1,1,0,0,0,4118,4118,4767;// Petit_Card, Petit_Card, Atk3
+				else if (para_2nd03 == 161)
+					getitem2 .@wplist[.@s],1,1,0,0,0,4805,4805,4767;// Heal_Amount2, Heal_Amount2, Atk3
+				else if (para_2nd03 == 211)
+					getitem2 .@wplist[.@s],1,1,0,0,0,4472,4472,4806;// Bradium_Goram_Card, Bradium_Goram_Card, Matk3
+				else if (para_2nd03 == 221)
+					getitem2 .@wplist[.@s],1,1,0,0,0,4470,4470,4806;// Nepenthes_Card, Nepenthes_Card, Matk3
+				else if (para_2nd03 == 231)
+					getitem2 .@wplist[.@s],1,1,0,0,0,4476,4476,4806;// Pinguicula_Card, Pinguicula_Card, Matk3
+				else if (para_2nd03 == 241)
+					getitem2 .@wplist[.@s],1,1,0,0,0,4469,4469,4806;// Naga_Card, Naga_Card, Matk3
+				else if (para_2nd03 == 251)
+					getitem2 .@wplist[.@s],1,1,0,0,0,4471,4471,4806;// Egg_Of_Draco_Card, Egg_Of_Draco_Card, Matk3
+				else if (para_2nd03 == 261)
+					getitem2 .@wplist[.@s],1,1,0,0,0,4805,4805,4806;// Heal_Amount2, Heal_Amount2, Matk3
+				mes "[BK]";
+				mes "Isn't it magnificent?";
+				mes "I know, I know, I'm pretty amazing!";
+			}
+			else {
+				mes "Hey, you think I'm joking?";
+				mes "Do you have the weapons or not?";
+			}
+		}
 	}
-	end;
-L_Select:
-	next;
-	mes "[Weapons Expert]";
-	set .@menu$,"";
-	for(set .@i,0; .@i<getargcount(); set .@i,.@i+3) {
-		set .@menu$, .@menu$+getarg(.@i+1)+".:";
-		mes getarg(.@i+1)+": "+getarg(.@i+2)+".";
-		mes " ";
+	else if (para_2nd02 > 4) {
+		mes "How do you like your enhanced weapon?";
+		mes "Hopefully it has helped you.";
+		next;
+		mes "[BK]";
+		mes "I've given you the peak of your weapon's efficiency.";
+		mes "Weapons aren't the only things that need strength, though, don't you agree?";
+		next;
+		mes "[BK]";
+		mes "Come on admit it.";
+		mes "Thorn gave inspiration and I intend on providing strong equipment, that's how to live life.";
+		mes "Hahahaha!";
 	}
-	next;
-	set .@i, select(.@menu$)-1;
-	getitem getarg(.@i*3),1;
-	mes "[Weapons Expert]";
-	return;
-L_GetWeapon:
-	if (countitem(1197)) set paraweaponcount,1197;
-	else if (countitem(1289)) set paraweaponcount,1289;
-	else if (countitem(1391)) set paraweaponcount,1391;
-	else if (countitem(1434)) set paraweaponcount,1434;
-	else if (countitem(1583)) set paraweaponcount,1583;
-	else if (countitem(1658)) set paraweaponcount,1658;
-	else if (countitem(1831)) set paraweaponcount,1831;
-	else if (countitem(1931)) set paraweaponcount,1931;
-	else if (countitem(1986)) set paraweaponcount,1986;
-	else if (countitem(13066)) set paraweaponcount,13066;
-	else if (countitem(13114)) set paraweaponcount,13114;
-	else if (countitem(13310)) set paraweaponcount,13310;
-	else if (countitem(13434)) set paraweaponcount,13434;
-	else if (countitem(16014)) set paraweaponcount,16014;
-	else if (countitem(18106)) set paraweaponcount,18106;
-	return;
+	close;
 }
 
 sec_in02,25,33,4	script	Assistant#para_suvquest	422,{
