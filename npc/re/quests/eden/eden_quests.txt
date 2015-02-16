@@ -5425,7 +5425,7 @@ S_Enchant:
 		// else if (.@2nd == 10) .@2nd = 4789;// Mdef8
 		// else if (.@2nd == 11) .@2nd = 4731;// Agility2
 		// else if (.@2nd == 12) .@2nd = 4711;// Inteligence2
-		setarray .@bonus[0],
+		setarray .@bonus[1],
 			4751,// Luck2
 			4787,// Mdef4
 			4791,// Def3
