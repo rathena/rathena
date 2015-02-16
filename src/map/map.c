@@ -1739,6 +1739,9 @@ int map_quit(struct map_session_data *sd) {
 	if (sd->autotrade_tid != INVALID_TIMER)
 		delete_timer(sd->autotrade_tid, pc_autotrade_timer);
 
+	if (sd->warp.tid != INVALID_TIMER)
+		delete_timer(sd->warp.tid, pc_warp_timer);
+
 	if (sd->npc_id)
 		npc_event_dequeue(sd);
 

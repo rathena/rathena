@@ -626,6 +626,13 @@ struct map_session_data {
 
 	short last_addeditem_index; /// Index of latest item added
 	int autotrade_tid;
+
+	/// Timer data for warp to other map-server
+	struct s_warp {
+		char map[MAP_NAME_LENGTH_EXT];
+		uint16 x, y;
+		int tid;
+	} warp;
 };
 
 struct eri *pc_sc_display_ers; /// Player's SC display table
@@ -1135,6 +1142,7 @@ struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, co
 void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag);
 
 void pc_cell_basilica(struct map_session_data *sd);
+int pc_warp_timer(int tid, unsigned int tick, int id, intptr_t data);
 
 void pc_itemgrouphealrate_clear(struct map_session_data *sd);
 short pc_get_itemgroup_bonus(struct map_session_data* sd, unsigned short nameid);
@@ -1145,6 +1153,7 @@ bool pc_is_same_equip_index(enum equip_index eqi, short *equip_index, short inde
 #define pc_is_taekwon_ranker(sd) (((sd)->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && (sd)->status.base_level >= battle_config.taekwon_ranker_min_lv && pc_famerank((sd)->status.char_id,MAPID_TAEKWON))
 
 int pc_autotrade_timer(int tid, unsigned int tick, int id, intptr_t data);
+int pc_warp_timer(int tid, unsigned int tick, int id, intptr_t data);
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_class, int type);
