@@ -1119,6 +1119,7 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->pvp_timer = INVALID_TIMER;
 	sd->expiration_tid = INVALID_TIMER;
 	sd->autotrade_tid = INVALID_TIMER;
+	sd->warp.tid = INVALID_TIMER;
 
 #ifdef SECURE_NPCTIMEOUT
 	// Initialize to defaults/expected
@@ -11439,6 +11440,29 @@ bool pc_is_same_equip_index(enum equip_index eqi, short *equip_index, short inde
 uint64 pc_generate_unique_id(struct map_session_data *sd) {
 	nullpo_ret(sd);
 	return ((uint64)sd->status.char_id << 32) | sd->status.uniqueitem_counter++;
+}
+
+/**
+* Moves player to another map on other map-server
+* @param tid
+* @param tick
+* @param id
+* @param data
+* @author [Cydh]
+**/
+int pc_warp_timer(int tid, unsigned int tick, int id, intptr_t data) {
+	struct map_session_data *sd;
+
+	if (!(sd = map_id2sd(id))) {
+		ShowDebug("pc_warp_timer: Null pointer id: %d data: %d\n",id,data);
+		return 0;
+	}
+
+	if (pc_setpos(sd, mapindex_name2id(sd->warp.map), sd->warp.x, sd->warp.y, CLR_TELEPORT)) {
+		clif_displaymessage(sd->fd, msg_txt(sd,1)); // Map not found.
+		return 0;
+	}
+	return 1;
 }
 
 /*==========================================

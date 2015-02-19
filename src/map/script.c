@@ -5165,7 +5165,7 @@ BUILDIN_FUNC(rand)
 BUILDIN_FUNC(warp)
 {
 	int ret;
-	int x,y;
+	uint16 x,y;
 	const char* str;
 	TBL_PC* sd;
 
@@ -5177,16 +5177,50 @@ BUILDIN_FUNC(warp)
 	x = script_getnum(st,3);
 	y = script_getnum(st,4);
 
-	if(strcmp(str,"Random")==0)
+	if (strcmp(str,"Random") == 0)
 		ret = pc_randomwarp(sd,CLR_TELEPORT);
-	else if(strcmp(str,"SavePoint")==0 || strcmp(str,"Save")==0)
-		ret = pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
-	else
-		ret = pc_setpos(sd,mapindex_name2id(str),x,y,CLR_OUTSIGHT);
+	else {
+		int m;
 
-	if( ret ) {
+		if (strcmp(str,"SavePoint") == 0 || strcmp(str,"Save") == 0) {
+			m = sd->status.save_point.map;
+			x = sd->status.save_point.x;
+			y = sd->status.save_point.y;
+		}
+		else
+			m = mapindex_name2id(str);
+
+		if (map_mapindex2mapid(m) >= 0)
+			ret = pc_setpos(sd,m,x,y,CLR_OUTSIGHT);
+		else { //If the map destination is in different map-server, use warp timer
+			uint32 ip;
+			uint16 port;
+			if (map_mapname2ipport(m, &ip, &port) < 0) { //No found any map
+				ShowError("buildin_warp: moving player '%s' to \"%s\",%d,%d failed.\n", sd->status.name, str, x, y);
+				return SCRIPT_CMD_FAILURE;
+			}
+			else {
+				if (sd->warp.tid != INVALID_TIMER) {
+					delete_timer(sd->warp.tid, pc_warp_timer);
+					sd->warp.tid = INVALID_TIMER;
+					memset(&sd->warp, 0, sizeof(sd->warp));
+				}
+
+				memcpy(sd->warp.map, str, strlen(str)+1);
+				sd->warp.x = x;
+				sd->warp.y = y;
+				sd->warp.tid = add_timer(gettick() + 500, pc_warp_timer, sd->bl.id, 0);
+				st->mes_active = 0;
+				st->state = END;
+				clif_scriptclose(sd,st->oid); // If a menu/select/prompt is active, close it.
+				return SCRIPT_CMD_SUCCESS;
+			}
+		}
+	}
+
+	if (ret) {
 		ShowError("buildin_warp: moving player '%s' to \"%s\",%d,%d failed.\n", sd->status.name, str, x, y);
-		return 1;
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	return SCRIPT_CMD_SUCCESS;
