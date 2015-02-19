@@ -107,7 +107,7 @@ int mapindex_addmap(int index, const char* name) {
 	return index;
 }
 
-unsigned short mapindex_name2id(const char* name) {
+unsigned short mapindex_name2idx(const char* name, const char *func) {
 	int i;
 	char map_name[MAP_NAME_LENGTH];
 	mapindex_getmapname(name, map_name);
@@ -115,14 +115,13 @@ unsigned short mapindex_name2id(const char* name) {
 	if( (i = strdb_iget(mapindex_db, map_name)) )
 		return i;
 
-	ShowDebug("mapindex_name2id: Map \"%s\" not found in index list!\n", map_name);
+	ShowDebug("(%s) mapindex_name2id: Map \"%s\" not found in index list!\n", func, map_name);
 	return 0;
 }
 
-const char* mapindex_id2name(unsigned short id)
-{
+const char* mapindex_idx2name(unsigned short id, const char *func) {
 	if (id > MAX_MAPINDEX || !mapindex_exists(id)) {
-		ShowDebug("mapindex_id2name: Requested name for non-existant map index [%d] in cache.\n", id);
+		ShowDebug("(%s) mapindex_id2name: Requested name for non-existant map index [%d] in cache.\n", func, id);
 		return indexes[0].name; // dummy empty string so that the callee doesn't crash
 	}
 	return indexes[id].name;
@@ -175,9 +174,16 @@ void mapindex_init(void) {
 		}
 		fclose(fp);
 	}
+}
 
-	if( !strdb_iget(mapindex_db, MAP_DEFAULT) ) {
-		ShowError("mapindex_init: MAP_DEFAULT '%s' not found in cache! Update MAP_DEFAULT in mapindex.h!\n",MAP_DEFAULT);
+/**
+ * Check default map (only triggered once by char-server)
+ * @param mapname
+ **/
+void mapindex_check_mapdefault(const char *mapname) {
+	mapname = mapindex_getmapname(mapname, NULL);
+	if( !strdb_iget(mapindex_db, mapname) ) {
+		ShowError("mapindex_init: Default map '%s' not found in cache! Please change in (by default in) char_athena.conf!\n", mapname);
 	}
 }
 

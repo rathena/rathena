@@ -161,6 +161,79 @@ void chmapif_sendall_playercount(int users){
 }
 
 /**
+ * Send some misc info to new map-server.
+ * - Server name for whisper name
+ * - Default map
+ * HZ 0x2afb <size>.W <status>.B <name>.24B <mapname>.11B <map_x>.W <map_y>.W
+ * @param fd
+ **/
+static void chmapif_send_misc(int fd) {
+	uint16 offs = 5;
+	unsigned char buf[45];
+
+	memset(buf, '\0', sizeof(buf));
+	WBUFW(buf, 0) = 0x2afb;
+	// 0 succes, 1:failure
+	WBUFB(buf, 4) = 0;
+	// Send name for wisp to player
+	memcpy(WBUFP(buf, 5), charserv_config.wisp_server_name, NAME_LENGTH);
+	// Default map
+	memcpy(WBUFP(buf, (offs+=NAME_LENGTH)), charserv_config.default_map, MAP_NAME_LENGTH); // 29
+	WBUFW(buf, (offs+=MAP_NAME_LENGTH)) = charserv_config.default_map_x; // 41
+	WBUFW(buf, (offs+=2)) = charserv_config.default_map_y; // 43
+	offs+=2;
+
+	// Length
+	WBUFW(buf, 2) = offs;
+	chmapif_send(fd, buf, offs);
+}
+
+/**
+ * Sends maps to all map-server
+ * HZ 0x2b04 <size>.W <ip>.L <port>.W { <map>.?B }.?B
+ * @param fd
+ * @param map_id
+ * @param count Number of map from new map-server has
+ **/
+static void chmapif_send_maps(int fd, int map_id, int count, unsigned char *mapbuf) {
+	uint16 x;
+
+	if (count == 0) {
+		ShowWarning("Map-server %d has NO maps.\n", map_id);
+	}
+	else {
+		unsigned char buf[16384];
+		// Transmitting maps information to the other map-servers
+		WBUFW(buf,0) = 0x2b04;
+		WBUFW(buf,2) = count * 4 + 10;
+		WBUFL(buf,4) = htonl(map_server[map_id].ip);
+		WBUFW(buf,8) = htons(map_server[map_id].port);
+		memcpy(WBUFP(buf,10), mapbuf, count * 4);
+		chmapif_sendallwos(fd, buf, WBUFW(buf,2));
+	}
+
+	// Transmitting the maps of the other map-servers to the new map-server
+	for (x = 0; x < ARRAYLENGTH(map_server); x++) {
+		if (map_server[x].fd > 0 && x != map_id) {
+			uint16 i, j;
+
+			WFIFOHEAD(fd,10 +4*ARRAYLENGTH(map_server[x].map));
+			WFIFOW(fd,0) = 0x2b04;
+			WFIFOL(fd,4) = htonl(map_server[x].ip);
+			WFIFOW(fd,8) = htons(map_server[x].port);
+			j = 0;
+			for(i = 0; i < ARRAYLENGTH(map_server[x].map); i++)
+				if (map_server[x].map[i])
+					WFIFOW(fd,10+(j++)*4) = map_server[x].map[i];
+			if (j > 0) {
+				WFIFOW(fd,2) = j * 4 + 10;
+				WFIFOSET(fd,WFIFOW(fd,2));
+			}
+		}
+	}
+}
+
+/**
  * This function is called when the map-serv initialise is chrif interface.
  * Map-serv sent us his map indexes so we can transfert a player from a map-serv to another when necessary
  * We reply by sending back the char_serv_wisp_name  fame list and
@@ -169,7 +242,9 @@ void chmapif_sendall_playercount(int users){
  * @return : 0 not enough data received, 1 success
  */
 int chmapif_parse_getmapname(int fd, int id){
-	int j = 0, i = 0;
+	int i = 0, j = 0;
+	unsigned char *mapbuf;
+
 	if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
 		return 0;
 
@@ -180,52 +255,17 @@ int chmapif_parse_getmapname(int fd, int id){
 		j++;
 	}
 
+	mapbuf = RFIFOP(fd,4);
+	RFIFOSKIP(fd,RFIFOW(fd,2));
+
 	ShowStatus("Map-Server %d connected: %d maps, from IP %d.%d.%d.%d port %d.\n",
 				id, j, CONVIP(map_server[id].ip), map_server[id].port);
 	ShowStatus("Map-server %d loading complete.\n", id);
 
-	// send name for wisp to player
-	WFIFOHEAD(fd, 3 + NAME_LENGTH);
-	WFIFOW(fd,0) = 0x2afb;
-	WFIFOB(fd,2) = 0; //0 succes, 1:failure
-	memcpy(WFIFOP(fd,3), charserv_config.wisp_server_name, NAME_LENGTH);
-	WFIFOSET(fd,3+NAME_LENGTH);
-
+	chmapif_send_misc(fd);
 	chmapif_send_fame_list(fd); //Send fame list.
+	chmapif_send_maps(fd, id, j, mapbuf);
 
-	{
-		int x;
-		if (j == 0) {
-			ShowWarning("Map-server %d has NO maps.\n", id);
-		} else {
-			unsigned char buf[16384];
-			// Transmitting maps information to the other map-servers
-			WBUFW(buf,0) = 0x2b04;
-			WBUFW(buf,2) = j * 4 + 10;
-			WBUFL(buf,4) = htonl(map_server[id].ip);
-			WBUFW(buf,8) = htons(map_server[id].port);
-			memcpy(WBUFP(buf,10), RFIFOP(fd,4), j * 4);
-			chmapif_sendallwos(fd, buf, WBUFW(buf,2));
-		}
-		// Transmitting the maps of the other map-servers to the new map-server
-		for(x = 0; x < ARRAYLENGTH(map_server); x++) {
-			if (map_server[x].fd > 0 && x != id) {
-				WFIFOHEAD(fd,10 +4*ARRAYLENGTH(map_server[x].map));
-				WFIFOW(fd,0) = 0x2b04;
-				WFIFOL(fd,4) = htonl(map_server[x].ip);
-				WFIFOW(fd,8) = htons(map_server[x].port);
-				j = 0;
-				for(i = 0; i < ARRAYLENGTH(map_server[x].map); i++)
-					if (map_server[x].map[i])
-						WFIFOW(fd,10+(j++)*4) = map_server[x].map[i];
-				if (j > 0) {
-					WFIFOW(fd,2) = j * 4 + 10;
-					WFIFOSET(fd,WFIFOW(fd,2));
-				}
-			}
-		}
-	}
-	RFIFOSKIP(fd,RFIFOW(fd,2));
 	return 1;
 }
 

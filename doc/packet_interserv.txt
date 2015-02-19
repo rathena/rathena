@@ -2176,15 +2176,19 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- chrif_connectack
 
 0x2afb
-	Type: AZ
-	Structure: <cmd>.W <?>.B
-	index: 0,2
-	len: variable: 3+NAME_LENGTH
+	Type: HZ
+	Structure: <cmd>.W <size>.W <status>.B <servername>.?B <defaultmap>.?B <mapx>.W <mapy>.W
+	index: 0,2,4,5+NAME_LENGTH,5+NAME_LENGTH+MAP_NAME_LENGTH,5+NAME_LENGTH+MAP_NAME_LENGTH+2
+	len: variable: 9+NAME_LENGTH+MAP_NAME_LENGTH
 	parameter:
 		- cmd : packet identification (0x2afb)
-		- ?
+		- status : 0 Success, 1 : Fail
+		- servername :
+		- defaultmap :
+		- mapx :
+		- mapy :
 	desc:
-		- send name for wisp to player
+		- Map received from map-server, then send reply with server name and default map
 
 0x2afd
 	Type: AZ

@@ -147,6 +147,8 @@ char charhelp_txt[256] = "conf/charhelp.txt";
 
 char wisp_server_name[NAME_LENGTH] = "Server"; // can be modified in char-server configuration file
 
+struct s_map_default map_default;
+
 int console = 0;
 int enable_spy = 0; //To enable/disable @spy commands, which consume too much cpu time when sending packets. [Skotlex]
 int enable_grf = 0;	//To enable/disable reading maps from GRF files, bypassing mapcache [blackhole89]
@@ -3389,6 +3391,7 @@ int map_readallmaps (void)
 	for(i = 0; i < map_num; i++) {
 		size_t size;
 		bool success = false;
+		unsigned short idx = 0;
 
 		if( enable_grf ){
 			// show progress
@@ -3410,14 +3413,14 @@ int map_readallmaps (void)
 		}
 
 		// The map was not found - remove it
-		if( !success ){
+		if( !(idx = mapindex_name2id(map[i].name)) || !success ){
 			map_delmapid(i);
 			maps_removed++;
 			i--;
 			continue;
 		}
 
-		map[i].index = mapindex_name2id(map[i].name);
+		map[i].index = idx;
 
 		if (uidb_get(map_db,(unsigned int)map[i].index) != NULL)
 		{
@@ -3459,7 +3462,7 @@ int map_readallmaps (void)
 
 	// finished map loading
 	ShowInfo("Successfully loaded '"CL_WHITE"%d"CL_RESET"' maps."CL_CLL"\n",map_num);
-	instance_start = map_num + 1; // Next Map Index will be instances
+	instance_start = map_num; // Next Map Index will be instances
 
 	if (maps_removed)
 		ShowNotice("Maps removed: '"CL_WHITE"%d"CL_RESET"'\n",maps_removed);
@@ -4326,6 +4329,11 @@ int do_init(int argc, char *argv[])
 	MSG_CONF_NAME_POR = "conf/msg_conf/map_msg_por.conf";	// Brazilian Portuguese
 	MSG_CONF_NAME_THA = "conf/msg_conf/map_msg_tha.conf";	// Thai
 	/* Multilanguage */
+
+	// Default map
+	safestrncpy(map_default.mapname, "prontera", MAP_NAME_LENGTH);
+	map_default.x = 156;
+	map_default.y = 191;
 
 	cli_get_options(argc,argv);
 
