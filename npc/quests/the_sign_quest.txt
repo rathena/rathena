@@ -12611,7 +12611,7 @@ function	script	F_UpdateSignVars	{
 		set sign_fail,0;
 		set gaananpoint,0;
 		set gaanantest,0;
-		set arianstest,0;
+		set ariantest,0;
 		set SignJore,0;
 		set ScareAlchSign,0;
 		set dearles_test,0;
