@@ -27,7 +27,6 @@
 #include <stdlib.h>
 
 static int check_connect_char_server(int tid, unsigned int tick, int id, intptr_t data);
-int chrif_save_bankdata(struct map_session_data *sd);
 
 static struct eri *auth_db_ers; //For reutilizing player login structures.
 static DBMap* auth_db; // int id -> struct auth_node*

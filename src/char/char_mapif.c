@@ -678,7 +678,7 @@ int chmapif_parse_fwlog_changestatus(int fd){
 
 		int aid = RFIFOL(fd,2); // account_id of who ask (-1 if server itself made this request)
 		const char* name = (char*)RFIFOP(fd,6); // name of the target character
-		int operation = RFIFOW(fd,30); // type of operation: 1-block, 2-ban, 3-unblock, 4-unban, 5-changesex, 6-vip, 7-bank
+		int operation = RFIFOW(fd,30); // type of operation: 1-block, 2-ban, 3-unblock, 4-unban, 5-changesex, 6-vip
 		int32 timediff = RFIFOL(fd,32);
 		int val1 = RFIFOL(fd,36);
 		int val2 = RFIFOL(fd,40);
