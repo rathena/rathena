@@ -436,7 +436,7 @@ morocc_in,169,72,7	script	Spiteful-Looking Bard#bs	741,3,3,{
 				mes "confuse people and disrupt";
 				mes "control of their bodies. It's not a fatal skill, but it is effective";
 				mes "in mentally upsetting your enemy. Make very wise use of this skill.";
-				skill "BA_PANGVOICE",1,0;
+				skill "BA_PANGVOICE",1,SKILL_PERM;
 				close;
 			}
 		}
@@ -489,7 +489,7 @@ morocc_in,169,72,7	script	Spiteful-Looking Bard#bs	741,3,3,{
 				mes "spinning, head spinning...!''";
 				specialeffect2 EF_TALK_FROSTJOKE;
 				delitem 7277,1; //Munak_Doll
-				skill "BA_PANGVOICE",1,0;
+				skill "BA_PANGVOICE",1,SKILL_PERM;
 				set qskill_bard,9;
 				next;
 				mes "[Riott]";
@@ -571,7 +571,7 @@ morocc_in,169,72,7	script	Spiteful-Looking Bard#bs	741,3,3,{
 				mes "spinning, head spinning...!''";
 				specialeffect2 EF_TALK_FROSTJOKE;
 				delitem 574,5; //Egg
-				skill "BA_PANGVOICE",1,0;
+				skill "BA_PANGVOICE",1,SKILL_PERM;
 				set qskill_bard,9;
 				next;
 				mes "[Riott]";

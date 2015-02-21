@@ -186,6 +186,8 @@ uint8 hom_get_intimacy_grade(struct homun_data *hd);
 uint32 hom_intimacy_grade2intimacy(enum e_homun_grade grade);
 enum e_homun_grade hom_intimacy_intimacy2grade(uint32 intimacy);
 
+short hom_skill_get_index(uint16 skill_id);
+
 void do_final_homunculus(void);
 void do_init_homunculus(void);
 

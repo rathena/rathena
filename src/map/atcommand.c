@@ -32,6 +32,7 @@
 #include "trade.h"
 #include "mapreg.h"
 #include "quest.h"
+#include "pc.h"
 
 #include <stdlib.h>
 #include <math.h>
@@ -3250,7 +3251,7 @@ ACMD_FUNC(questskill)
 
 		return -1;
 	}
-	if (skill_id >= MAX_SKILL_DB) {
+	if (skill_id >= MAX_SKILL_ID) {
 		clif_displaymessage(fd, msg_txt(sd,198)); // This skill number doesn't exist.
 		return -1;
 	}
@@ -3263,7 +3264,7 @@ ACMD_FUNC(questskill)
 		return -1;
 	}
 
-	pc_skill(sd, skill_id, 1, 0);
+	pc_skill(sd, skill_id, 1, ADDSKILL_PERMANENT);
 	clif_displaymessage(fd, msg_txt(sd,70)); // You have learned the skill.
 
 	return 0;
@@ -3274,7 +3275,7 @@ ACMD_FUNC(questskill)
  *------------------------------------------*/
 ACMD_FUNC(lostskill)
 {
-	uint16 skill_id;
+	uint16 skill_id = 0, sk_idx = 0;
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || (skill_id = atoi(message)) <= 0)
@@ -3294,7 +3295,7 @@ ACMD_FUNC(lostskill)
 
 		return -1;
 	}
-	if (skill_id >= MAX_SKILL) {
+	if (!(sk_idx = skill_get_index(skill_id))) {
 		clif_displaymessage(fd, msg_txt(sd,198)); // This skill number doesn't exist.
 		return -1;
 	}
@@ -3307,8 +3308,8 @@ ACMD_FUNC(lostskill)
 		return -1;
 	}
 
-	sd->status.skill[skill_id].lv = 0;
-	sd->status.skill[skill_id].flag = SKILL_FLAG_PERMANENT;
+	sd->status.skill[sk_idx].lv = 0;
+	sd->status.skill[sk_idx].flag = SKILL_FLAG_PERMANENT;
 	clif_deleteskill(sd,skill_id);
 	clif_displaymessage(fd, msg_txt(sd,71)); // You have forgotten the skill.
 
@@ -5507,11 +5508,11 @@ ACMD_FUNC(skillid) {
 
 	for( data = iter->first(iter,&key); iter->exists(iter); data = iter->next(iter,&key) ) {
 		int idx = skill_get_index(db_data2i(data));
-		if (strnicmp(key.str, message, skillen) == 0 || strnicmp(skill_db[idx].desc, message, skillen) == 0) {
-			sprintf(atcmd_output, msg_txt(sd,1164), db_data2i(data), skill_db[idx].desc, key.str); // skill %d: %s (%s)
+		if (strnicmp(key.str, message, skillen) == 0 || strnicmp(skill_db[idx]->desc, message, skillen) == 0) {
+			sprintf(atcmd_output, msg_txt(sd,1164), db_data2i(data), skill_db[idx]->desc, key.str); // skill %d: %s (%s)
 			clif_displaymessage(fd, atcmd_output);
-		} else if ( found < MAX_SKILLID_PARTIAL_RESULTS && ( stristr(key.str,message) || stristr(skill_db[idx].desc,message) ) ) {
-			snprintf(partials[found++], MAX_SKILLID_PARTIAL_RESULTS_LEN, msg_txt(sd,1164), db_data2i(data), skill_db[idx].desc, key.str);
+		} else if ( found < MAX_SKILLID_PARTIAL_RESULTS && ( stristr(key.str,message) || stristr(skill_db[idx]->desc,message) ) ) {
+			snprintf(partials[found++], MAX_SKILLID_PARTIAL_RESULTS_LEN, msg_txt(sd,1164), db_data2i(data), skill_db[idx]->desc, key.str);
 		}
 	}
 
@@ -5559,7 +5560,7 @@ ACMD_FUNC(useskill)
 		return -1;
 	}
 
-	if (skill_id >= HM_SKILLBASE && skill_id < HM_SKILLBASE+MAX_HOMUNSKILL
+	if (SKILL_CHK_HOMUN(skill_id)
 		&& sd->hd && hom_is_active(sd->hd)) // (If used with @useskill, put the homunc as dest)
 		bl = &sd->hd->bl;
 	else
@@ -5643,7 +5644,7 @@ ACMD_FUNC(skilltree)
 	{
 		if( ent->need[j].id && pc_checkskill(sd,ent->need[j].id) < ent->need[j].lv)
 		{
-			sprintf(atcmd_output, msg_txt(sd,1170), ent->need[j].lv, skill_db[ent->need[j].id].desc); // Player requires level %d of skill %s.
+			sprintf(atcmd_output, msg_txt(sd,1170), ent->need[j].lv, skill_db[skill_get_index(ent->need[j].id)]->desc); // Player requires level %d of skill %s.
 			clif_displaymessage(fd, atcmd_output);
 			meets = 0;
 		}
@@ -9118,13 +9119,14 @@ ACMD_FUNC(unloadnpcfile) {
 	return 0;
 }
 ACMD_FUNC(cart) {
-#define MC_CART_MDFY(x) \
-	sd->status.skill[MC_PUSHCART].id = x?MC_PUSHCART:0; \
-	sd->status.skill[MC_PUSHCART].lv = x?1:0; \
-	sd->status.skill[MC_PUSHCART].flag = x?SKILL_FLAG_TEMPORARY:SKILL_FLAG_PERMANENT;
+#define MC_CART_MDFY(idx, x) \
+	sd->status.skill[(idx)].id = x?MC_PUSHCART:0; \
+	sd->status.skill[(idx)].lv = x?1:0; \
+	sd->status.skill[(idx)].flag = x?SKILL_FLAG_TEMPORARY:SKILL_FLAG_PERMANENT;
 
 	int val = atoi(message);
 	bool need_skill = (pc_checkskill(sd, MC_PUSHCART) == 0);
+	uint16 sk_idx = 0;
 
 	if( !message || !*message || val < 0 || val > MAX_CARTS ) {
 		sprintf(atcmd_output, msg_txt(sd,1390),command,MAX_CARTS); // Unknown Cart (usage: %s <0-%d>).
@@ -9137,19 +9139,22 @@ ACMD_FUNC(cart) {
 		return -1;
 	}
 
+	if (!(sk_idx = skill_get_index(MC_PUSHCART)))
+		return -1;
+
 	if( need_skill ) {
-		MC_CART_MDFY(1);
+		MC_CART_MDFY(sk_idx,1);
 	}
 
 	if( !pc_setcart(sd, val) ) {
 		if( need_skill ) {
-			MC_CART_MDFY(0);
+			MC_CART_MDFY(sk_idx,0);
 		}
 		return -1;/* @cart failed */
 	}
 
 	if( need_skill ) {
-		MC_CART_MDFY(0);
+		MC_CART_MDFY(sk_idx,0);
 	}
 
 	clif_displaymessage(fd, msg_txt(sd,1392)); // Cart Added

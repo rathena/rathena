@@ -40,12 +40,12 @@ moc_prydb1,39,129,2	script	Thief Guide	69,{
 				mes "[Thief Guide]";
 				mes "Well, I got this feeling like you've been through a lifetime of fighting, so I'm promoting you to a Thief right this minute. I better give you tough guys what you want...";
 				next;
-				skill "NV_TRICKDEAD",0,0;
+				skill "NV_TRICKDEAD",0,SKILL_PERM;
 				jobchange Job_Thief_High;
-				skill "TF_SPRINKLESAND",1,0;
-				skill "TF_BACKSLIDING",1,0;
-				skill "TF_PICKSTONE",1,0;
-				skill "TF_THROWSTONE",1,0;
+				skill "TF_SPRINKLESAND",1,SKILL_PERM;
+				skill "TF_BACKSLIDING",1,SKILL_PERM;
+				skill "TF_PICKSTONE",1,SKILL_PERM;
+				skill "TF_THROWSTONE",1,SKILL_PERM;
 				mes "[Thief Guide]";
 				mes "Since you've become a Thief, live as a Thief. Now, go for it! Next~";
 				close;

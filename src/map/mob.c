@@ -3492,8 +3492,9 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 
 	//Go Backwards to give better priority to advanced skills.
 	for (i=0,j = MAX_SKILL_TREE-1;j>=0 && i< MAX_MOBSKILL ;j--) {
-		int skill_id = skill_tree[pc_class2idx(sd->status.class_)][j].id;
-		if (!skill_id || sd->status.skill[skill_id].lv < 1 ||
+		uint16 skill_id = skill_tree[pc_class2idx(sd->status.class_)][j].id;
+		uint16 sk_idx = 0;
+		if (!skill_id || !(sk_idx = skill_get_index(skill_id)) || sd->status.skill[sk_idx].lv < 1 ||
 			(skill_get_inf2(skill_id)&(INF2_WEDDING_SKILL|INF2_GUILD_SKILL)) ||
 			skill_get_nocast(skill_id)&16
 		)
@@ -3508,12 +3509,12 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 		/**
 		 * The clone should be able to cast the skill (e.g. have the required weapon) bugreport:5299)
 		 **/
-		if( !skill_check_condition_castbegin(sd,skill_id,sd->status.skill[skill_id].lv) )
+		if( !skill_check_condition_castbegin(sd,skill_id,sd->status.skill[sk_idx].lv) )
 			continue;
 
 		memset (&ms[i], 0, sizeof(struct mob_skill));
 		ms[i].skill_id = skill_id;
-		ms[i].skill_lv = sd->status.skill[skill_id].lv;
+		ms[i].skill_lv = sd->status.skill[sk_idx].lv;
 		ms[i].state = MSS_ANY;
 		ms[i].permillage = 500*battle_config.mob_skill_rate/100; //Default chance of all skills: 5%
 		ms[i].emotion = -1;
@@ -4289,7 +4290,7 @@ static bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 
 	//Skill ID
 	j = atoi(str[3]);
-	if (j <= 0 || j > MAX_SKILL_DB) //fixed Lupus
+	if (j <= 0 || j > MAX_SKILL_ID || !skill_get_index(j)) //fixed Lupus
 	{
 		if (mob_id < 0)
 			ShowError("mob_parse_row_mobskilldb: Invalid Skill ID (%d) for all mobs\n", j);

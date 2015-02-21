@@ -62,7 +62,7 @@ prt_in,85,99,3	script	Knight#kabuto	734,{
 			mes "is greater risk to yourself.";
 			mes "For now, it would be best to practice this skill on your own.";
 			set KNGT_SK,10;
-			skill "KN_CHARGEATK",1,0;
+			skill "KN_CHARGEATK",1,SKILL_PERM;
 			next;
 			mes "[Essofeit]";
 			mes "Good luck on your";
@@ -112,7 +112,7 @@ prt_in,85,99,3	script	Knight#kabuto	734,{
 			mes "is greater risk to yourself.";
 			mes "For now, it would be best to practice this skill on your own.";
 			set KNGT_SK,9;
-			skill "KN_CHARGEATK",1,0;
+			skill "KN_CHARGEATK",1,SKILL_PERM;
 			next;
 			mes "[Essofeit]";
 			mes "I hope you make good";

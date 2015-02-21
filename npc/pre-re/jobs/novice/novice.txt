@@ -753,7 +753,7 @@ new_1-2,83,111,3	script	Skill Tutor#nv	753,{
 			next;
 			mes "^3355FFYou have learned";
 			mes "the ^4A708BFirst Aid^3355FF skill.^000000";
-			skill "NV_FIRSTAID",1,0;
+			skill "NV_FIRSTAID",1,SKILL_PERM;
 			set NOV_SK,3;
 			set nov_get_item03,11;
 			next;

@@ -539,7 +539,7 @@ new_5-2,100,105,3	duplicate(NvBradeA)	Brade#nv5a	733
 			mes "You can open the Skill Window by pressing the ^4d4dffskill^000000 button in the Basic Window.";
 			mes "Hot Key is ^4d4dffALT + S^000000.";
 			mes "Why don't you try the skill?";
-			skill "NV_FIRSTAID",1,0;
+			skill "NV_FIRSTAID",1,SKILL_PERM;
 			set skill_nov,3; // Has future uses - do not remove! [Euphy]
 			set job_novice_q,6;
 			next;

@@ -325,7 +325,11 @@ enum e_item_ammo
 	AMMO_KUNAI,
 	AMMO_CANNONBALL,
 	AMMO_THROWABLE_ITEM, ///Sling items
+
+	MAX_AMMO_TYPE,
 };
+
+#define AMMO_TYPE_ALL ((1<<MAX_AMMO_TYPE)-1)
 
 ///Item combo struct
 struct item_combo

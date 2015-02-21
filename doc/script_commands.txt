@@ -5411,8 +5411,14 @@ Flag 2 means that the level parameter is to be interpreted as a stackable
 additional bonus to the skill level. If the character did not have that skill 
 previously, they will now at 0+the level given.
 
-Flag 4 is the same as flag 1 in that it saves to the database.  However, these skills
+Flag 3 is the same as flag 1 in that it saves to the database.  However, these skills
 are ignored when any action is taken that adjusts the skill tree (reset/job change).
+
+Flag contants:
+	0 - SKILL_PERM
+	1 - SKILL_TEMP
+	2 - SKILL_TEMPLEVEL
+	3 - SKILL_PERM_GRANT
 
 // This will permanently give the character Stone Throw (TF_THROWSTONE,152), at 
 // level 1.

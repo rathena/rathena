@@ -64,7 +64,7 @@ in_moc_16,14,27,5	script	Assassin#realman	884,{
 			mes "skill. Leave me now, and";
 			mes "always fight for the honor";
 			mes "of the Assassin Guild!";
-			skill "AS_VENOMKNIFE",1,0;
+			skill "AS_VENOMKNIFE",1,SKILL_PERM;
 			close;
 		}
 		else {
@@ -234,7 +234,7 @@ in_moc_16,14,27,5	script	Assassin#realman	884,{
 							mes "Knife pretty easily in battle.";
 							set ASSN_SK2,1;
 							set ASSN_SK,1;
-							skill "AS_VENOMKNIFE",1,0;
+							skill "AS_VENOMKNIFE",1,SKILL_PERM;
 							next;
 							mes "[Killtin]";
 							mes "Well, that's all I can";
@@ -358,7 +358,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 			mes "Yes, that's it...!";
 			mes "Very well executed.";
 			mes "Good work, "+ strcharinfo(0) +".";
-			skill "AS_SONICACCEL",1,0;
+			skill "AS_SONICACCEL",1,SKILL_PERM;
 			set ASSN_SK,7;
 			next;
 			mes "[Esmille]";
@@ -455,7 +455,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 		mes "Yes, that's it...!";
 		mes "Very well executed.";
 		mes "Good work, "+ strcharinfo(0) +".";
-		skill "AS_SONICACCEL",1,0;
+		skill "AS_SONICACCEL",1,SKILL_PERM;
 		set ASSN_SK,7;
 		next;
 		mes "[Esmille]";
@@ -538,7 +538,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 			mes "Yes, that's it...!";
 			mes "Very well executed.";
 			mes "Good work, "+ strcharinfo(0) +".";
-			skill "AS_SONICACCEL",1,0;
+			skill "AS_SONICACCEL",1,SKILL_PERM;
 			set ASSN_SK,7;
 			next;
 			mes "[Esmille]";

@@ -59,11 +59,11 @@ izlude_in,74,172,4	script	Swordman#swd_1	119,{
 			mes "[Swordman]";
 			mes "Excellent! Let me promote you to a Swordman right away!";
 			next;
-			skill "NV_TRICKDEAD",0,0;
+			skill "NV_TRICKDEAD",0,SKILL_PERM;
 			jobchange Job_Swordman_High;
-			skill "SM_MOVINGRECOVERY",1,0;
-			skill "SM_FATALBLOW",1,0;
-			skill "SM_AUTOBERSERK",1,0;
+			skill "SM_MOVINGRECOVERY",1,SKILL_PERM;
+			skill "SM_FATALBLOW",1,SKILL_PERM;
+			skill "SM_AUTOBERSERK",1,SKILL_PERM;
 			mes "[Swordman]";
 			mes "Hmm... You look like a well-experienced Swordman. Still, I'm sure that you must train to improve your skills and gain strength!";
 			close;
