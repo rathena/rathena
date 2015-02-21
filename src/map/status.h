@@ -1746,23 +1746,25 @@ enum e_status_change_start_flags {
 
 ///Enum for bonus_script's flag [Cydh]
 enum e_bonus_script_flags {
-	BSF_REM_ON_DEAD				= 0x001, ///Removed when dead
-	BSF_REM_ON_DISPELL			= 0x002, ///Removed by Dispell
-	BSF_REM_ON_CLEARANCE		= 0x004, ///Removed by Clearance
-	BSF_REM_ON_LOGOUT			= 0x008, ///Removed when player logged out
-	BSF_REM_ON_BANISHING_BUSTER	= 0x010, ///Removed by Banishing Buster
-	BSF_REM_ON_REFRESH			= 0x020, ///Removed by Refresh
-	BSF_REM_ON_LUXANIMA			= 0x040, ///Removed by Luxanima
-	BSF_REM_ON_MADOGEAR			= 0x080, ///Removed when Madogear is activated or deactivated
-	BSF_REM_ON_DAMAGED			= 0x100, ///Removed when receive damage
-	BSF_PERMANENT				= 0x200, ///Cannot be removed by sc_end SC_ALL
+	BSF_REM_ON_DEAD				= 0x001, ///< Removed when dead
+	BSF_REM_ON_DISPELL			= 0x002, ///< Removed by Dispell
+	BSF_REM_ON_CLEARANCE		= 0x004, ///< Removed by Clearance
+	BSF_REM_ON_LOGOUT			= 0x008, ///< Removed when player logged out
+	BSF_REM_ON_BANISHING_BUSTER	= 0x010, ///< Removed by Banishing Buster
+	BSF_REM_ON_REFRESH			= 0x020, ///< Removed by Refresh
+	BSF_REM_ON_LUXANIMA			= 0x040, ///< Removed by Luxanima
+	BSF_REM_ON_MADOGEAR			= 0x080, ///< Removed when Madogear is activated or deactivated
+	BSF_REM_ON_DAMAGED			= 0x100, ///< Removed when receive damage
+	BSF_PERMANENT				= 0x200, ///< Cannot be removed by sc_end SC_ALL
 
-	// These flags better in the last of everything
-	BSF_REM_BUFF	= 0x1000,	///Remove positive buff
-	BSF_REM_DEBUFF	= 0x2000,	///Remove negative buff
+	// These flags cannot be stacked, BSF_FORCE_REPLACE has highest priority to check if YOU force to add both
+	BSF_FORCE_REPLACE			= 0x400, ///< Force to replace duplicated script by expanding the duration
+	BSF_FORCE_DUPLICATE			= 0x800, ///< Force to add duplicated script
 
-	BSF_ALL = 0x0FFF|BSF_REM_BUFF|BSF_REM_DEBUFF,
-	BSF_CLEARALL = BSF_ALL&~BSF_PERMANENT,
+	// These flags aren't part of 'bonus_script' scripting flags
+	BSF_REM_ALL		= 0x0,		///< Remove all bonus script
+	BSF_REM_BUFF	= 0x4000,	///< Remove positive buff if battle_config.debuff_on_logout&1
+	BSF_REM_DEBUFF	= 0x8000,	///< Remove negative buff if battle_config.debuff_on_logout&2
 };
 
 ///Enum for status_get_hpbonus and status_get_spbonus
@@ -1934,7 +1936,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp,int
 #define status_zap(bl, hp, sp) status_damage(NULL, bl, hp, sp, 0, 1)
 //Define for standard HP/SP skill-related cost triggers (mobs require no HP/SP to use skills)
 int64 status_charge(struct block_list* bl, int64 hp, int64 sp);
-int status_percent_change(struct block_list *src,struct block_list *target,signed char hp_rate, signed char sp_rate, int flag);
+int status_percent_change(struct block_list *src, struct block_list *target, int8 hp_rate, int8 sp_rate, uint8 flag);
 //Easier handling of status_percent_change
 #define status_percent_heal(bl, hp_rate, sp_rate) status_percent_change(NULL, bl, -(hp_rate), -(sp_rate), 0)
 #define status_percent_damage(src, target, hp_rate, sp_rate, kill) status_percent_change(src, target, hp_rate, sp_rate, (kill)?1:2)

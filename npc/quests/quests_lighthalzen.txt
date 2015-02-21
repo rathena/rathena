@@ -906,7 +906,7 @@ lhz_cube,237,183,0	script	Barrel#cube	111,{
 			mes "you can only enter single";
 			mes "digit numbers at one time...^000000";
 			next;
-			for( set $@i, 0; .@i < 9; set .@i, .@i + 1 )
+			for( set .@i, 0; .@i < 9; set .@i, .@i + 1 )
 				input .@input;
 			mes "^3355FFNothing happened...^000000";
 			close;
@@ -923,7 +923,7 @@ lhz_cube,237,183,0	script	Barrel#cube	111,{
 			mes "metal plate on top of the box";
 			mes "you found inside the keg.^000000";
 			next;
-			for( set $@i, 0; .@i < 9; set .@i, .@i + 1 ) {
+			for( set .@i, 0; .@i < 9; set .@i, .@i + 1 ) {
 				input .@input;
 				if (.@input == .@numbers[.@i]) set .@number_line,.@number_line+1;
 			}

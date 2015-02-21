@@ -161,6 +161,79 @@ void chmapif_sendall_playercount(int users){
 }
 
 /**
+ * Send some misc info to new map-server.
+ * - Server name for whisper name
+ * - Default map
+ * HZ 0x2afb <size>.W <status>.B <name>.24B <mapname>.11B <map_x>.W <map_y>.W
+ * @param fd
+ **/
+static void chmapif_send_misc(int fd) {
+	uint16 offs = 5;
+	unsigned char buf[45];
+
+	memset(buf, '\0', sizeof(buf));
+	WBUFW(buf, 0) = 0x2afb;
+	// 0 succes, 1:failure
+	WBUFB(buf, 4) = 0;
+	// Send name for wisp to player
+	memcpy(WBUFP(buf, 5), charserv_config.wisp_server_name, NAME_LENGTH);
+	// Default map
+	memcpy(WBUFP(buf, (offs+=NAME_LENGTH)), charserv_config.default_map, MAP_NAME_LENGTH); // 29
+	WBUFW(buf, (offs+=MAP_NAME_LENGTH)) = charserv_config.default_map_x; // 41
+	WBUFW(buf, (offs+=2)) = charserv_config.default_map_y; // 43
+	offs+=2;
+
+	// Length
+	WBUFW(buf, 2) = offs;
+	chmapif_send(fd, buf, offs);
+}
+
+/**
+ * Sends maps to all map-server
+ * HZ 0x2b04 <size>.W <ip>.L <port>.W { <map>.?B }.?B
+ * @param fd
+ * @param map_id
+ * @param count Number of map from new map-server has
+ **/
+static void chmapif_send_maps(int fd, int map_id, int count, unsigned char *mapbuf) {
+	uint16 x;
+
+	if (count == 0) {
+		ShowWarning("Map-server %d has NO maps.\n", map_id);
+	}
+	else {
+		unsigned char buf[16384];
+		// Transmitting maps information to the other map-servers
+		WBUFW(buf,0) = 0x2b04;
+		WBUFW(buf,2) = count * 4 + 10;
+		WBUFL(buf,4) = htonl(map_server[map_id].ip);
+		WBUFW(buf,8) = htons(map_server[map_id].port);
+		memcpy(WBUFP(buf,10), mapbuf, count * 4);
+		chmapif_sendallwos(fd, buf, WBUFW(buf,2));
+	}
+
+	// Transmitting the maps of the other map-servers to the new map-server
+	for (x = 0; x < ARRAYLENGTH(map_server); x++) {
+		if (map_server[x].fd > 0 && x != map_id) {
+			uint16 i, j;
+
+			WFIFOHEAD(fd,10 +4*ARRAYLENGTH(map_server[x].map));
+			WFIFOW(fd,0) = 0x2b04;
+			WFIFOL(fd,4) = htonl(map_server[x].ip);
+			WFIFOW(fd,8) = htons(map_server[x].port);
+			j = 0;
+			for(i = 0; i < ARRAYLENGTH(map_server[x].map); i++)
+				if (map_server[x].map[i])
+					WFIFOW(fd,10+(j++)*4) = map_server[x].map[i];
+			if (j > 0) {
+				WFIFOW(fd,2) = j * 4 + 10;
+				WFIFOSET(fd,WFIFOW(fd,2));
+			}
+		}
+	}
+}
+
+/**
  * This function is called when the map-serv initialise is chrif interface.
  * Map-serv sent us his map indexes so we can transfert a player from a map-serv to another when necessary
  * We reply by sending back the char_serv_wisp_name  fame list and
@@ -169,7 +242,9 @@ void chmapif_sendall_playercount(int users){
  * @return : 0 not enough data received, 1 success
  */
 int chmapif_parse_getmapname(int fd, int id){
-	int j = 0, i = 0;
+	int i = 0, j = 0;
+	unsigned char *mapbuf;
+
 	if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
 		return 0;
 
@@ -180,52 +255,17 @@ int chmapif_parse_getmapname(int fd, int id){
 		j++;
 	}
 
+	mapbuf = RFIFOP(fd,4);
+	RFIFOSKIP(fd,RFIFOW(fd,2));
+
 	ShowStatus("Map-Server %d connected: %d maps, from IP %d.%d.%d.%d port %d.\n",
 				id, j, CONVIP(map_server[id].ip), map_server[id].port);
 	ShowStatus("Map-server %d loading complete.\n", id);
 
-	// send name for wisp to player
-	WFIFOHEAD(fd, 3 + NAME_LENGTH);
-	WFIFOW(fd,0) = 0x2afb;
-	WFIFOB(fd,2) = 0; //0 succes, 1:failure
-	memcpy(WFIFOP(fd,3), charserv_config.wisp_server_name, NAME_LENGTH);
-	WFIFOSET(fd,3+NAME_LENGTH);
-
+	chmapif_send_misc(fd);
 	chmapif_send_fame_list(fd); //Send fame list.
+	chmapif_send_maps(fd, id, j, mapbuf);
 
-	{
-		int x;
-		if (j == 0) {
-			ShowWarning("Map-server %d has NO maps.\n", id);
-		} else {
-			unsigned char buf[16384];
-			// Transmitting maps information to the other map-servers
-			WBUFW(buf,0) = 0x2b04;
-			WBUFW(buf,2) = j * 4 + 10;
-			WBUFL(buf,4) = htonl(map_server[id].ip);
-			WBUFW(buf,8) = htons(map_server[id].port);
-			memcpy(WBUFP(buf,10), RFIFOP(fd,4), j * 4);
-			chmapif_sendallwos(fd, buf, WBUFW(buf,2));
-		}
-		// Transmitting the maps of the other map-servers to the new map-server
-		for(x = 0; x < ARRAYLENGTH(map_server); x++) {
-			if (map_server[x].fd > 0 && x != id) {
-				WFIFOHEAD(fd,10 +4*ARRAYLENGTH(map_server[x].map));
-				WFIFOW(fd,0) = 0x2b04;
-				WFIFOL(fd,4) = htonl(map_server[x].ip);
-				WFIFOW(fd,8) = htons(map_server[x].port);
-				j = 0;
-				for(i = 0; i < ARRAYLENGTH(map_server[x].map); i++)
-					if (map_server[x].map[i])
-						WFIFOW(fd,10+(j++)*4) = map_server[x].map[i];
-				if (j > 0) {
-					WFIFOW(fd,2) = j * 4 + 10;
-					WFIFOSET(fd,WFIFOW(fd,2));
-				}
-			}
-		}
-	}
-	RFIFOSKIP(fd,RFIFOW(fd,2));
 	return 1;
 }
 
@@ -1242,91 +1282,116 @@ int chmapif_parse_reqcharunban(int fd){
 	return 1;
 }
 
-/** [Cydh]
-* Get bonus_script data(s) from table to load
-* @param fd
-*/
+/**
+ * ZA 0x2b2d
+ * <cmd>.W <char_id>.L
+ * AZ 0x2b2f
+ * <cmd>.W <len>.W <cid>.L <count>.B { <bonus_script_data>.?B }
+ * Get bonus_script data(s) from table to load then send to player
+ * @param fd
+ * @author [Cydh]
+ **/
 int chmapif_bonus_script_get(int fd) {
 	if (RFIFOREST(fd) < 6)
 		return 0;
 	else {
-		int cid;
-		cid = RFIFOL(fd,2);
+		uint8 num_rows = 0;
+		uint32 cid = RFIFOL(fd,2);
+		struct bonus_script_data tmp_bsdata;
+		SqlStmt* stmt = SqlStmt_Malloc(sql_handle);
+
 		RFIFOSKIP(fd,6);
 
-		if (SQL_ERROR == Sql_Query(sql_handle,"SELECT `script`, `tick`, `flag`, `type`, `icon` FROM `%s` WHERE `char_id`='%d'",
-			schema_config.bonus_script_db,cid))
+		if (SQL_ERROR == SqlStmt_Prepare(stmt,
+			"SELECT `script`, `tick`, `flag`, `type`, `icon` FROM `%s` WHERE `char_id` = '%d' LIMIT %d",
+			schema_config.bonus_script_db, cid, MAX_PC_BONUS_SCRIPT) ||
+			SQL_ERROR == SqlStmt_Execute(stmt) ||
+			SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_STRING, &tmp_bsdata.script_str, sizeof(tmp_bsdata.script_str), NULL, NULL) ||
+			SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_UINT32, &tmp_bsdata.tick, 0, NULL, NULL) ||
+			SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_UINT16, &tmp_bsdata.flag, 0, NULL, NULL) ||
+			SQL_ERROR == SqlStmt_BindColumn(stmt, 3, SQLDT_UINT8,  &tmp_bsdata.type, 0, NULL, NULL) ||
+			SQL_ERROR == SqlStmt_BindColumn(stmt, 4, SQLDT_INT16,  &tmp_bsdata.icon, 0, NULL, NULL)
+			)
 		{
-			Sql_ShowDebug(sql_handle);
+			SqlStmt_ShowDebug(stmt);
+			SqlStmt_Free(stmt);
 			return 1;
 		}
-		if (Sql_NumRows(sql_handle) > 0) {
-			struct bonus_script_data bsdata;
-			int count;
-			char *data;
 
-			WFIFOHEAD(fd,10+50*sizeof(struct bonus_script_data));
-			WFIFOW(fd,0) = 0x2b2f;
-			WFIFOL(fd,4) = cid;
-			for (count = 0; count < MAX_PC_BONUS_SCRIPT && SQL_SUCCESS == Sql_NextRow(sql_handle); ++count) {
-				Sql_GetData(sql_handle,0,&data,NULL); memcpy(bsdata.script,data,strlen(data)+1);
-				Sql_GetData(sql_handle,1,&data,NULL); bsdata.tick = atoi(data);
-				Sql_GetData(sql_handle,2,&data,NULL); bsdata.flag = atoi(data);
-				Sql_GetData(sql_handle,3,&data,NULL); bsdata.type = atoi(data);
-				Sql_GetData(sql_handle,4,&data,NULL); bsdata.icon = atoi(data);
-				memcpy(WFIFOP(fd,10+count*sizeof(struct bonus_script_data)),&bsdata,sizeof(struct bonus_script_data));
-			}
-			if (count >= MAX_PC_BONUS_SCRIPT)
-				ShowWarning("Too many bonus_script for %d, some of them were not loaded.\n",cid);
-			if (count > 0) {
-				WFIFOW(fd,2) = 10 + count*sizeof(struct bonus_script_data);
-				WFIFOW(fd,8) = count;
-				WFIFOSET(fd,WFIFOW(fd,2));
+		if ((num_rows = (uint8)SqlStmt_NumRows(stmt)) > 0) {
+			uint8 i;
+			uint32 size = 9 + num_rows * sizeof(struct bonus_script_data);
 
-				//Clear the data once loaded.
-				if (SQL_ERROR == Sql_Query(sql_handle,"DELETE FROM `%s` WHERE `char_id`='%d'",schema_config.bonus_script_db,cid))
-					Sql_ShowDebug(sql_handle);
-				ShowInfo("Loaded %d bonus_script for char_id: %d\n",count,cid);
+			WFIFOHEAD(fd, size);
+			WFIFOW(fd, 0) = 0x2b2f;
+			WFIFOW(fd, 2) = size;
+			WFIFOL(fd, 4) = cid;
+			WFIFOB(fd, 8) = num_rows;
+
+			for (i = 0; i < num_rows && SQL_SUCCESS == SqlStmt_NextRow(stmt); i++) {
+				struct bonus_script_data bsdata;
+				memset(&bsdata, 0, sizeof(bsdata));
+				memset(bsdata.script_str, '\0', sizeof(bsdata.script_str));
+
+				safestrncpy(bsdata.script_str, tmp_bsdata.script_str, strlen(tmp_bsdata.script_str)+1);
+				bsdata.tick = tmp_bsdata.tick;
+				bsdata.flag = tmp_bsdata.flag;
+				bsdata.type = tmp_bsdata.type;
+				bsdata.icon = tmp_bsdata.icon;
+				memcpy(WFIFOP(fd, 9 + i * sizeof(struct bonus_script_data)), &bsdata, sizeof(struct bonus_script_data));
 			}
+
+			WFIFOSET(fd, size);
+
+			ShowInfo("Bonus Script loaded for CID=%d. Total: %d.\n", cid, i);
+
+			if (SQL_ERROR == SqlStmt_Prepare(stmt,"DELETE FROM `%s` WHERE `char_id`='%d'",schema_config.bonus_script_db,cid) ||
+				SQL_ERROR == SqlStmt_Execute(stmt))
+				SqlStmt_ShowDebug(stmt);
 		}
-		Sql_FreeResult(sql_handle);
+		SqlStmt_Free(stmt);
 	}
 	return 1;
 }
 
-/** [Cydh]
-* Save bonus_script data(s) to the table
-* @param fd
-*/
+/**
+ * ZA 0x2b2e
+ * <cmd>.W <len>.W <char_id>.L <count>.B { <bonus_script>.?B }
+ * Save bonus_script data(s) to the table
+ * @param fd
+ * @author [Cydh]
+ **/
 int chmapif_bonus_script_save(int fd) {
 	if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
 		return 0;
 	else {
-		int count, cid;
+		uint32 cid = RFIFOL(fd,4);
+		uint8 count = RFIFOB(fd,8);
 
-		cid = RFIFOL(fd,4);
-		count = RFIFOW(fd,8);
+		if (SQL_ERROR == Sql_Query(sql_handle,"DELETE FROM `%s` WHERE `char_id` = '%d'", schema_config.bonus_script_db, cid))
+			Sql_ShowDebug(sql_handle);
 
 		if (count > 0) {
-			struct bonus_script_data bs;
+			char esc_script[MAX_BONUS_SCRIPT_LENGTH*2];
+			struct bonus_script_data bsdata;
 			StringBuf buf;
-			int i;
-			char esc_script[MAX_BONUS_SCRIPT_LENGTH] = "";
+			uint8 i;
 
 			StringBuf_Init(&buf);
-			StringBuf_Printf(&buf,"INSERT INTO `%s` (`char_id`, `script`, `tick`, `flag`, `type`, `icon`) VALUES ",schema_config.bonus_script_db);
+			StringBuf_Printf(&buf, "INSERT INTO `%s` (`char_id`, `script`, `tick`, `flag`, `type`, `icon`) VALUES ", schema_config.bonus_script_db);
 			for (i = 0; i < count; ++i) {
-				memcpy(&bs,RFIFOP(fd,10+i*sizeof(struct bonus_script_data)),sizeof(struct bonus_script_data));
-				Sql_EscapeString(sql_handle,esc_script,bs.script);
+				memcpy(&bsdata, RFIFOP(fd, 9 + i*sizeof(struct bonus_script_data)), sizeof(struct bonus_script_data));
+				Sql_EscapeString(sql_handle, esc_script, bsdata.script_str);
 				if (i > 0)
 					StringBuf_AppendStr(&buf,", ");
-				StringBuf_Printf(&buf,"('%d','%s','%d','%d','%d','%d')",cid,esc_script,bs.tick,bs.flag,bs.type,bs.icon);
+				StringBuf_Printf(&buf, "('%d','%s','%d','%d','%d','%d')", cid, esc_script, bsdata.tick, bsdata.flag, bsdata.type, bsdata.icon);
 			}
 			if (SQL_ERROR == Sql_QueryStr(sql_handle,StringBuf_Value(&buf)))
 				Sql_ShowDebug(sql_handle);
+
 			StringBuf_Destroy(&buf);
-			ShowInfo("Saved %d bonus_script for char_id: %d\n",count,cid);
 		}
+		ShowInfo("Bonus Script saved for CID=%d. Total: %d.\n", cid, count);
 		RFIFOSKIP(fd,RFIFOW(fd,2));
 	}
 	return 1;

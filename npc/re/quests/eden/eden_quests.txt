@@ -15,1075 +15,590 @@
 //= 1.5 Added GM management function. [Euphy]
 //= 1.6 Kagerou/Oboro support (Class -> BaseClass) [Euphy]
 //= 2.0 Updated Instructor Ur's quests. [Capuche]
+//= 2.1 Updated Blacksmith Thorn and Weapons Expert NPC. [Capuche]
 //============================================================
 
-moc_para01,25,35,4	script	Instructor Boya#para01	469,{
-	if (countitem(6219) > 0) {
-		if (para_suv01 == 0) {
+moc_para01,25,35,4	script	Instructor Boya#para01	4_M_KNIGHT_GOLD,{
+	mes "[Boya]";
+	if (countitem(6219) < 1) {
+		mes "You are not in my group are you?";
+		mes "I don't have anything to say to outsiders.";
+		mes "If you want something register with my group.";
+		next;
+		mes "[Boya]";
+		mes "To register with the Eden Group ask Laime Evenor next to me.";
+		close;
+	}
+	if (para_suv01 == 0) {
+		mes "What's up?";
+		mes "If you have any normal missions use the bulletin board.";
+		next;
+		switch (select("What is your responsibility?:Don't you have equipment?:Ignore.")) {
 			mes "[Boya]";
-			mes "What's up?";
-			mes "If you have any normal missions use the bulletin board.";
+		case 1:
+			mes "I give training missions to members.";
+			mes "That's why they participate in it.";
+			mes "If they don't want to get in trouble, it's essential.";
 			next;
-			switch (select("What is your responsiblily?:Don't you have equipment?:Ignore.")) {
+			mes "[Boya]";
+			mes "Through battle training they can improve their real experience.";
+			mes "The members that prove themselves will even get a reward.";
+			next;
+			mes "[Boya]";
+			mes "We gave them special equipmant that we have made.";
+			mes "These gifts are for people who are really doing their best.";
+			next;
+			mes "[Boya]";
+			mes "If you are curious, you can join.";
+			mes "The training battle course is not very difficult.";
+			mes "There's nothing to worry about.";
+			next;
+			mes "[Boya]";
+			mes "If you want to join, don't hesitate.";
+			next;
+			switch (select("Participate in the training.:Ignore.")) {
+				mes "[Boya]";
 			case 1:
-				mes "[Boya]";
-				mes "I give training missions to members.";
-				mes "That's why they participate in it.";
-				mes "If they don't want to get in trouble, it's essential.";
-				next;
-				mes "[Boya]";
-				mes "Through battle training they can improve their real experience.";
-				mes "The members that prove themselves will even get a reward.";
-				next;
-				mes "[Boya]";
-				mes "We gave them special equipmant that we have made.";
-				mes "These gifts are for people who are really doing their best.";
-				next;
-				mes "[Boya]";
-				mes "If you are curious, you can join.";
-				mes "The training battle course is not very difficult.";
-				mes "There's nothing to worry about.";
-				next;
-				mes "[Boya]";
-				mes "If you want to join, don't hesitate.";
-				next;
-				switch (select("Participate in the training.:Ignore.")) {
-				case 1:
-					mes "[Boya]";
-					mes "Really? You already seem ready.";
-					mes "We have a total of 3 steps for the training.";
-					mes "Let me see...";
-					next;
-					if (BaseLevel < 12) {
-						mes "[Boya]";
-						mes "Umm. You should raise your level more!";
-						mes "You need to be at least level 12!";
-						mes "I'm sorry but those are the rules.";
-						close;
-					}
-					if ((BaseLevel > 11) && (BaseLevel < 20)) {
-						mes "[Boya]";
-						mes "Really? You already seem ready.";
-						mes "We have a total of 3 steps for the training.";
-						mes "Let me see...";
-						next;
-						mes "[Boya]";
-						mes "The first step is course A.";
-						mes "Course A is called 'Conquer the Desert!'.";
-						mes "It's the most proper mission for your level.";
-						next;
-						mes "[Boya]";
-						mes "^4d4dffThere is a desert town called Morroc.";
-						mes "From there go south and then east. There is small oasis in the center of that field.^000000";
-						next;
-						mes "[Boya]";
-						mes "If you go there, you will find a dog around the oasis.";
-						mes "He is really mysterious and he can speak so don't be suprised.";
-						next;
-						mes "[Boya]";
-						mes "Tell the dog ^4d4dffBoya is really great.^000000";
-						mes "If you have any questions ask that dog.";
-						next;
-						mes "[Boya]";
-						mes "Why are you staring at me?";
-						mes "I had to come up with a password right?";
-						mes "What's wrong with that password?";
-						next;
-						mes "[Boya]";
-						mes "Anyway, that place is not far from here so, it is a reasonable place for a beginner like you.";
-						mes "Ok, may Freya bless you~!";
-						set para_suv01,1;
-						setquest 7128;
-						close;
-					}
-					if ((BaseLevel > 19) && (BaseLevel < 26)) {
-						mes "[Boya]";
-						mes "I'll send you to the first step of course B.";
-						mes "Course B is called 'Conquer the Culvert!'.";
-						mes "It's the most proper mission for your level.";
-						next;
-						mes "[Boya]";
-						mes "You need to register to explore the culvert in Prontera at the Knight Guild.";
-						mes "After registering there go to the western gate of Prontera. The manager of the culvert is near the entrance.";
-						next;
-						mes "[Boya]";
-						mes "Once you enter the culvert you can find a dispatched cat. Don't be surprised if he talks to you.";
-						next;
-						mes "[Boya]";
-						mes "Tell the cat ^4d4dffBoya's help is like a giant and beautiful tuna^000000.";
-						mes "He is really mysterious and he can speak so don't be suprised.";
-						mes "He will give you a battle target when you tell him that.";
-						mes "If you have any questions ask the cat.";
-						next;
-						mes "[Boya]";
-						mes "Why are you staring at me like that?";
-						mes "It's just a password that I made up.";
-						next;
-						mes "[Boya]";
-						mes "Anyway...";
-						mes "That place is nor far from here so, it is a reasonable place for a beginner like you.";
-						mes "Ok, may Freya bless you~!";
-						set para_suv01,6;
-						setquest 7133;
-						close;
-					}
-					if ((BaseLevel > 25) && (BaseLevel < 33)) {
-						mes "[Boya]";
-						mes "Cool.";
-						mes "Let me choose a proper place for you.";
-						next;
-						mes "[Boya]";
-						mes "I'll send you to the second step of course A.";
-						mes "This course is called 'Conquer the Ghost Cave!'.";
-						mes "It's the most proper mission for your level.";
-						next;
-						mes "[Boya]";
-						mes "There is a small archer village north of Payon.";
-						mes "There is a cave on the western hill of the archer village.";
-						next;
-						mes "[Boya]";
-						mes "We have dispatched someone in front of the cave.";
-						mes "His name is... um...";
-						mes "...";
-						next;
-						mes "[Boya]";
-						mes "Anyway he is one of us so he will know me.";
-						mes "He will give you a mission.";
-						mes "If you have questions ask him.";
-						next;
-						mes "[Boya]";
-						mes "Why are you staring at me?";
-						mes "We haven't met for a long time that's why I can't remember his name!";
-						next;
-						mes "[Boya]";
-						mes "Anyway...";
-						mes "That place is not far from here so, come back quickly.";
-						mes "Ok, may Freya bless you~!";
-						set para_suv01,13;
-						setquest 7138;
-						close;
-					}
-					if ((BaseLevel > 32) && (BaseLevel < 40)) {
-						mes "[Boya]";
-						mes "I'll send you to the 2nd step of course B.";
-						mes "This course is called 'Conquer Anthell!'.";
-						mes "It's the most proper mission for your level.";
-						next;
-						mes "[Boya]";
-						mes "Travel just southwest of Morroc City.";
-						mes "There you will find a hole in the ground to a cave called Anthell.";
-						next;
-						mes "[Boya]";
-						mes "There are lots of ants in there. kk?";
-						mes "It is also covered in sand so be careful in there ok.";
-						next;
-						mes "[Boya]";
-						mes "That's why it's called ant hell.";
-						mes "One of our members will be waiting there.";
-						mes "His name is... K? M? Hmm? Anyway I can't remember.";
-						next;
-						mes "[Boya]";
-						mes "He is one of us so he will know me.";
-						mes "He will give you a mission.";
-						mes "If you have any questions ask him.";
-						next;
-						mes "[Boya]";
-						mes "Why are you staring at me?";
-						mes "We haven't met for a long time that's why I can't remember his name!";
-						next;
-						mes "[Boya]";
-						mes "Anyway...";
-						mes "That place is not far from here so, come back quickly.";
-						mes "Ok, blessing you~!!";
-						set para_suv01,17;
-						setquest 7142;
-						close;
-					}
-					if ((BaseLevel > 39) && (BaseLevel < 50)) {
-						mes "[Boya]";
-						mes "You are on the third step of course A.";
-						mes "This course is called 'Conquer Orc village!'.";
-						mes "Let me see...";
-						next;
-						mes "[Boya]";
-						mes "Go through the gate of Prontera and keep walking to the west. Orc Village is in that direction.";
-						mes "Or you can go out through the western gate of Geffen and keep heading southeast..";
-						next;
-						mes "[Boya]";
-						mes "Umm. Orc village has a Kafra Employee dispatched there so you could use the Kafra services..";
-						mes "It's up to you.";
-						next;
-						mes "[Boya]";
-						mes "One of our dispatched members is waiting in the building near the Kafra Employee.";
-						next;
-						mes "[Boya]";
-						mes "She will explain what needs to be done there.";
-						mes "If you have any questions ask her.";
-						next;
-						mes "[Boya]";
-						mes "Ok, may Freya bless you!";
-						set para_suv01,24;
-						setquest 7147;
-						close;
-					}
-					if ((BaseLevel > 49) && (BaseLevel < 60)) {
-						mes "[Boya]";
-						mes "You are on the third step of course B.";
-						mes "This course is called 'Conquer Orc dungeon!'.";
-						mes "It's the most proper mission for your level.";
-						next;
-						mes "[Boya]";
-						mes "Go through the gate of Prontera and keep walking to the west. Orc Village is in that direction.";
-						mes "Or you can go out through the western gate of Geffen and keep heading southeast..";
-						next;
-						mes "[Boya]";
-						mes "Umm. Orc village has a Kafra Employee dispatched there so you could use the Kafra services..";
-						mes "It's up to you.";
-						next;
-						mes "[Boya]";
-						mes "One of our dispatched members is waiting in the building near the Kafra Employee.";
-						next;
-						mes "[Boya]";
-						mes "She will explain what needs to be done there.";
-						mes "If you have any questions ask her.";
-						next;
-						mes "[Boya]";
-						mes "Ok, may Freya bless you!";
-						set para_suv01,29;
-						setquest 7152;
-						close;
-					}
-					if (BaseLevel > 59) {
-						mes "[Boya]";
-						mes "You are on the last step.";
-						mes "This course is called 'Conquer the Ocean City!'.";
-						mes "I don't know if it is the proper course or not, but anyway it's the last course of our training.";
-						next;
-						mes "[Boya]";
-						mes "First take a ship to to Byalan Island from Izlude!";
-						mes "There is an underground cave. Go in and get to the bottom floor where you will find a historic underwater city..";
-						next;
-						mes "[Boya]";
-						mes "Although it's underwater, you can breath so don't worry.";
-						mes "There is a dispatched trainee around the entrance of the Ocean City.";
-						next;
-						mes "[Boya]";
-						mes "Tell him that I sent you and follow his directions.";
-						mes "Ok, may Freya bless you!";
-						set para_suv01,33;
-						setquest 7156;
-						close;
-					}
-				case 2:
-					mes "[Boya]";
-					mes "It's all your decision.";
-					mes "It's not my business but you should probably reconsider.";
-					close;
-				}
+				callsub S_Quest1;
+				callsub S_Quest2;
+				callsub S_Quest3;
 			case 2:
-				mes "[Boya]";
-				mes "Huh?";
-				mes "You are so honest!";
-				mes "Gosh. You wanted to know something about equipment?";
-				next;
-				mes "[Boya]";
-				mes "I have a uniform set which is free for our group members.";
-				mes "But, I can't give it for free.";
-				next;
-				mes "[Boya]";
-				mes "We give it to great participants who do their best in the training.";
-				next;
-				mes "-Boya eyes you from top to bottom.";
-				mes "Hmm... he seems to think something is wrong.-";
-				next;
-				mes "[Boya]";
-				mes "Due to emotion.";
-				next;
-				select("What?!");
-				mes "[Boya]";
-				mes "So, will you join the training or not?";
-				mes "I look a little bit funny, actually I am really busy I was called shining Rune Knight.";
-				mes "Make a decision, hurry.";
-				next;
-				switch (select("Participate in the training.:Refuse!!")) {
-				case 1:
-					mes "[Boya]";
-					mes "Really? You already seem ready.";
-					mes "We have a total of 3 steps for the training.";
-					mes "Let me see...";
-					next;
-					if (BaseLevel < 12) {
-						mes "[Boya]";
-						mes "Umm. You should raise your level more!";
-						mes "You need to be at least level 12!";
-						mes "I'm sorry but those are the rules.";
-						close;
-					}
-					if ((BaseLevel > 11) && (BaseLevel < 20)) {
-						mes "[Boya]";
-						mes "Really? You already seem ready.";
-						mes "We have a total of 3 steps for the training.";
-						mes "Let me see...";
-						next;
-						mes "[Boya]";
-						mes "The first step is course A.";
-						mes "Course A is called 'Conquer the Desert!'.";
-						mes "It's the most proper mission for your level.";
-						next;
-						mes "[Boya]";
-						mes "^4d4dffThere is a desert town called Morroc.";
-						mes "From there go south and then east. There is small oasis in the center of that field.^000000";
-						next;
-						mes "[Boya]";
-						mes "If you go there, you will find a dog around the oasis.";
-						mes "He is really mysterious and he can speak so don't be suprised.";
-						next;
-						mes "[Boya]";
-						mes "Tell the dog ^4d4dffBoya is really great.^000000";
-						mes "If you have any questions ask that dog.";
-						next;
-						mes "[Boya]";
-						mes "Why are you staring at me?";
-						mes "I had to come up with a password right?";
-						mes "What's wrong with that password?";
-						next;
-						mes "[Boya]";
-						mes "Anyway, that place is not far from here so, it is a reasonable place for a beginner like you.";
-						mes "Ok, may Freya bless you~!";
-						set para_suv01,1;
-						setquest 7128;
-						close;
-					}
-					if ((BaseLevel > 19) && (BaseLevel < 26)) {
-						mes "[Boya]";
-						mes "I'll send you to the first step of course B.";
-						mes "Course B is called 'Conquer the Culvert!'.";
-						mes "It's the most proper mission for your level.";
-						next;
-						mes "[Boya]";
-						mes "You need to register to explore the culvert in Prontera at the Knight Guild.";
-						mes "After registering there go to the western gate of Prontera. The manager of the culvert is near the entrance.";
-						next;
-						mes "[Boya]";
-						mes "Once you enter the culvert you can find a dispatched cat. Don't be surprised if he talks to you.";
-						next;
-						mes "[Boya]";
-						mes "Tell the cat ^4d4dffBoya's help is like a giant and beautiful tuna^000000.";
-						mes "He is really mysterious and he can speak so don't be suprised.";
-						mes "He will give you a battle target when you tell him that.";
-						mes "If you have any questions ask the cat.";
-						next;
-						mes "[Boya]";
-						mes "Why are you staring at me like that?";
-						mes "It's just a password that I made up.";
-						next;
-						mes "[Boya]";
-						mes "Anyway...";
-						mes "That place is nor far from here so, it is a reasonable place for a beginner like you.";
-						mes "Ok, may Freya bless you~!";
-						set para_suv01,6;
-						setquest 7133;
-						close;
-					}
-					if ((BaseLevel > 25) && (BaseLevel < 33)) {
-						mes "[Boya]";
-						mes "Cool.";
-						mes "Let me choose a proper place for you.";
-						next;
-						mes "[Boya]";
-						mes "I'll send you to the second step of course A.";
-						mes "This course is called 'Conquer the Ghost Cave!'.";
-						mes "It's the most proper mission for your level.";
-						next;
-						mes "[Boya]";
-						mes "There is a small archer village north of Payon.";
-						mes "There is a cave on the western hill of the archer village.";
-						next;
-						mes "[Boya]";
-						mes "We have dispatched someone in front of the cave.";
-						mes "His name is... um...";
-						mes "...";
-						next;
-						mes "[Boya]";
-						mes "Anyway he is one of us so he will know me.";
-						mes "He will give you a mission.";
-						mes "If you have questions ask him.";
-						next;
-						mes "[Boya]";
-						mes "Why are you staring at me?";
-						mes "We haven't met for a long time that's why I can't remember his name!";
-						next;
-						mes "[Boya]";
-						mes "Anyway...";
-						mes "That place is not far from here so, come back quickly.";
-						mes "Ok, may Freya bless you~!";
-						set para_suv01,13;
-						setquest 7138;
-						close;
-					}
-					if ((BaseLevel > 32) && (BaseLevel < 40)) {
-						mes "[Boya]";
-						mes "I'll send you to the 2nd step of course B.";
-						mes "This course is called 'Conquer Anthell!'.";
-						mes "It's the most proper mission for your level.";
-						next;
-						mes "[Boya]";
-						mes "Travel just southwest of Morroc City.";
-						mes "There you will find a hole in the ground to a cave called Anthell.";
-						next;
-						mes "[Boya]";
-						mes "There are lots of ants in there. kk?";
-						mes "It is also covered in sand so be careful in there ok.";
-						next;
-						mes "[Boya]";
-						mes "That's why it's called ant hell.";
-						mes "One of our members will be waiting there.";
-						mes "His name is... K? M? Hmm? Anyway I can't remember.";
-						next;
-						mes "[Boya]";
-						mes "He is one of us so he will know me.";
-						mes "He will give you a mission.";
-						mes "If you have any questions ask him.";
-						next;
-						mes "[Boya]";
-						mes "Why are you staring at me?";
-						mes "We haven't met for a long time that's why I can't remember his name!";
-						next;
-						mes "[Boya]";
-						mes "Anyway...";
-						mes "That place is not far from here so, come back quickly.";
-						mes "Ok, blessing you~!!";
-						set para_suv01,17;
-						setquest 7142;
-						close;
-					}
-					if ((BaseLevel > 39) && (BaseLevel < 50)) {
-						mes "[Boya]";
-						mes "You are on the third step of course A.";
-						mes "This course is called 'Conquer Orc village!'.";
-						mes "Let me see...";
-						next;
-						mes "[Boya]";
-						mes "Go through the gate of Prontera and keep walking to the west. Orc Village is in that direction.";
-						mes "Or you can go out through the western gate of Geffen and keep heading southeast..";
-						next;
-						mes "[Boya]";
-						mes "Umm. Orc village has a Kafra Employee dispatched there so you could use the Kafra services..";
-						mes "It's up to you.";
-						next;
-						mes "[Boya]";
-						mes "One of our dispatched members is waiting in the building near the Kafra Employee.";
-						next;
-						mes "[Boya]";
-						mes "She will explain what needs to be done there.";
-						mes "If you have any questions ask her.";
-						next;
-						mes "[Boya]";
-						mes "Ok, may Freya bless you!";
-						set para_suv01,24;
-						setquest 7147;
-						close;
-					}
-					if ((BaseLevel > 49) && (BaseLevel < 60)) {
-						mes "[Boya]";
-						mes "You are on the third step of course B.";
-						mes "This course is called 'Conquer Orc dungeon!'.";
-						mes "It's the most proper mission for your level.";
-						next;
-						mes "[Boya]";
-						mes "Go through the gate of Prontera and keep walking to the west. Orc Village is in that direction.";
-						mes "Or you can go out through the western gate of Geffen and keep heading southeast..";
-						next;
-						mes "[Boya]";
-						mes "Umm. Orc village has a Kafra Employee dispatched there so you could use the Kafra services..";
-						mes "It's up to you.";
-						next;
-						mes "[Boya]";
-						mes "One of our dispatched members is waiting in the building near the Kafra Employee.";
-						next;
-						mes "[Boya]";
-						mes "She will explain what needs to be done there.";
-						mes "If you have any questions ask her.";
-						next;
-						mes "[Boya]";
-						mes "Ok, may Freya bless you!";
-						set para_suv01,29;
-						setquest 7152;
-						close;
-					}
-					if (BaseLevel > 59) {
-						mes "[Boya]";
-						mes "You are on the last step.";
-						mes "This course is called 'Conquer the Ocean City!'.";
-						mes "I don't know if it is the proper course or not, but anyway it's the last course of our training.";
-						next;
-						mes "[Boya]";
-						mes "First take a ship to to Byalan Island from Izlude!";
-						mes "There is an underground cave. Go in and get to the bottom floor where you will find a historic underwater city..";
-						next;
-						mes "[Boya]";
-						mes "Although it's underwater, you can breath so don't worry.";
-						mes "There is a dispatched trainee around the entrance of the Ocean City.";
-						next;
-						mes "[Boya]";
-						mes "Tell him that I sent you and follow his directions.";
-						mes "Ok, may Freya bless you!";
-						set para_suv01,33;
-						setquest 7156;
-						close;
-					}
-				case 2:
-					mes "[Boya]";
-					mes "You are so rude!";
-					specialeffect2 EF_HIT1;
-					percentheal -50,0;
-					next;
-					mes "-Beats quickly and this shining Rune Knight turns invisible.";
-					mes "It hurts too much-";
-					close;
-				}
-			case 3:
-				mes "[Boya]";
-				mes "Don't bother me.";
+				mes "It's all your decision.";
+				mes "It's not my business but you should probably reconsider.";
 				close;
 			}
-		}
-		if ((para_suv01 > 0) && (para_suv01 < 5)) {
-			mes "[Boya]";
-			mes "Hey, I already talked all about the training areas.";
-			mes "I will explain again please concentrate.";
+		case 2:
+			mes "Huh?";
+			mes "You are so honest!";
+			mes "Gosh. You wanted to know something about equipment?";
 			next;
 			mes "[Boya]";
-			mes "An oasis souteast of Morroc.";
-			mes "There is a big dog in the center.";
-			mes "The detailed story is written in the log, see?";
-			close;
-		}
-		if (para_suv01 == 5) {
-			mes "[Boya]";
-			mes "Oh you've come back.";
-			mes "Good job.";
-			mes "Now you are adapting.";
+			mes "I have a uniform set which is free for our group members.";
+			mes "But, I can't give it for free.";
 			next;
 			mes "[Boya]";
-			mes "Completed step 1.";
-			mes "Congratulations.";
-			mes "We will give you a uniform and some equipment.";
+			mes "We give it to great participants who do their best in the training.";
+			next;
+			mes "-Boya eyes you from top to bottom.";
+			mes "Hmm... he seems to think something is wrong.-";
 			next;
 			mes "[Boya]";
-			mes "Can you see a large blue gate next to the board?";
-			mes "Go inside then keep walking until the end of the right passage. There is an equipment storage there.";
+			mes "Due to emotion.";
 			next;
+			select("What?!");
 			mes "[Boya]";
-			mes "Inform the manager that I sent you. He will give you some stuff.";
-			mes "Go go go!";
-			set para_suv01,11;
-			completequest 7132;
-			close;
-		}
-		if ((para_suv01 > 5) && (para_suv01 < 10)) {
-			mes "[Boya]";
-			mes "The training name was 'Conquer the Culvert!.";
-			mes "Did you explore the culvert fully?";
+			mes "So, will you join the training or not?";
+			mes "I look a little bit funny, actually I am really busy I was called shining Rune Knight.";
+			mes "Make a decision, hurry.";
 			next;
-			mes "[Boya]";
-			mes "Come back when you've completed all the courses from the local trainer.";
-			close;
-		}
-		if (para_suv01 == 10) {
-			mes "[Boya]";
-			mes "Oh you're back.";
-			mes "Good job.";
-			mes "Now you are adapting.";
-			next;
-			mes "[Boya]";
-			mes "Completed step 1.";
-			mes "Congratulations.";
-			mes "My team will give you a uniform and some equipment.";
-			next;
-			mes "[Boya]";
-			mes "Can you see a large blue gate next to the board?";
-			mes "Go inside then keep walking until the end of the right passage. There is an equipment storage there.";
-			next;
-			mes "[Boya]";
-			mes "Inform the manager that I sent you. He will give you some stuff.";
-			mes "Go go go!";
-			set para_suv01,11;
-			completequest 7137;
-			close;
-		}
-		if (para_suv01 == 11) {
-			mes "[Boya]";
-			mes "What are you doing?";
-			mes "Get the equipment from the storage manager.";
-			mes "Our uniform is pretty awesome haha.";
-			close;
-		}
-		if (para_suv01 == 12) {
-			mes "[Boya]";
-			mes "Um, did you like the supplies?";
-			mes "I like the red hat.";
-			mes "The red ribbon is really cute.";
-			next;
-			if (BaseLevel > 25) {
+			switch (select("Participate in the training.:Refuse!!")) {
 				mes "[Boya]";
-				mes "And you seem to.";
-				mes "Able to take upper class, now.";
-				mes "What about it, do you want?";
+			case 1:
+				callsub S_Quest1;
+				callsub S_Quest2;
+				callsub S_Quest3;
+			case 2:
+				mes "You are so rude!";
+				specialeffect2 EF_HIT1;
+				percentheal -50,0;
 				next;
-				switch (select("No, way.:Absolutely, I will.")) {
-				case 1:
-					mes "[Boya]";
-					mes "Really?";
-					mes "Actually I don't care but the uniform will be changed as upper class.";
-					close;
-				case 2:
-					mes "[Boya]";
-					mes "Cool.";
-					mes "Let me choose a proper place for you.";
-					next;
-					if ((BaseLevel > 25) && (BaseLevel < 33)) {
-						mes "[Boya]";
-						mes "Cool.";
-						mes "Let me choose a proper place for you.";
-						next;
-						mes "[Boya]";
-						mes "I'll send you to the second step of course A.";
-						mes "This course is called 'Conquer the Ghost Cave!'.";
-						mes "It's the most proper mission for your level.";
-						next;
-						mes "[Boya]";
-						mes "There is a small archer village north of Payon.";
-						mes "There is a cave on the western hill of the archer village.";
-						next;
-						mes "[Boya]";
-						mes "We have dispatched someone in front of the cave.";
-						mes "His name is... um...";
-						mes "...";
-						next;
-						mes "[Boya]";
-						mes "Anyway he is one of us so he will know me.";
-						mes "He will give you a mission.";
-						mes "If you have questions ask him.";
-						next;
-						mes "[Boya]";
-						mes "Why are you staring at me?";
-						mes "We haven't met for a long time that's why I can't remember his name!";
-						next;
-						mes "[Boya]";
-						mes "Anyway...";
-						mes "That place is not far from here so, come back quickly.";
-						mes "Ok, may Freya bless you~!";
-						set para_suv01,13;
-						setquest 7138;
-						close;
-					}
-					if ((BaseLevel > 32) && (BaseLevel < 40)) {
-						mes "[Boya]";
-						mes "I'll send you to the 2nd step of course B.";
-						mes "This course is called 'Conquer Anthell!'.";
-						mes "It's the most proper mission for your level.";
-						next;
-						mes "[Boya]";
-						mes "Travel just southwest of Morroc City.";
-						mes "There you will find a hole in the ground to a cave called Anthell.";
-						next;
-						mes "[Boya]";
-						mes "There are lots of ants in there. kk?";
-						mes "It is also covered in sand so be careful in there ok.";
-						next;
-						mes "[Boya]";
-						mes "That's why it's called ant hell.";
-						mes "One of our members will be waiting there.";
-						mes "His name is... K? M? Hmm? Anyway I can't remember.";
-						next;
-						mes "[Boya]";
-						mes "He is one of us so he will know me.";
-						mes "He will give you a mission.";
-						mes "If you have any questions ask him.";
-						next;
-						mes "[Boya]";
-						mes "Why are you staring at me?";
-						mes "We haven't met for a long time that's why I can't remember his name!";
-						next;
-						mes "[Boya]";
-						mes "Anyway...";
-						mes "That place is not far from here so, come back quickly.";
-						mes "Ok, blessing you~!!";
-						set para_suv01,17;
-						setquest 7142;
-						close;
-					}
-					if ((BaseLevel > 39) && (BaseLevel < 50)) {
-						mes "[Boya]";
-						mes "You are on the third step of course A.";
-						mes "This course is called 'Conquer Orc village!'.";
-						mes "Let me see...";
-						next;
-						mes "[Boya]";
-						mes "Go through the gate of Prontera and keep walking to the west. Orc Village is in that direction.";
-						mes "Or you can go out through the western gate of Geffen and keep heading southeast..";
-						next;
-						mes "[Boya]";
-						mes "Umm. Orc village has a Kafra Employee dispatched there so you could use the Kafra services..";
-						mes "It's up to you.";
-						next;
-						mes "[Boya]";
-						mes "One of our dispatched members is waiting in the building near the Kafra Employee.";
-						next;
-						mes "[Boya]";
-						mes "She will explain what needs to be done there.";
-						mes "If you have any questions ask her.";
-						next;
-						mes "[Boya]";
-						mes "Ok, may Freya bless you!";
-						set para_suv01,24;
-						setquest 7147;
-						close;
-					}
-					if ((BaseLevel > 49) && (BaseLevel < 60)) {
-						mes "[Boya]";
-						mes "You are on the third step of course B.";
-						mes "This course is called 'Conquer Orc dungeon!'.";
-						mes "It's the most proper mission for your level.";
-						next;
-						mes "[Boya]";
-						mes "Go through the gate of Prontera and keep walking to the west. Orc Village is in that direction.";
-						mes "Or you can go out through the western gate of Geffen and keep heading southeast..";
-						next;
-						mes "[Boya]";
-						mes "Umm. Orc village has a Kafra Employee dispatched there so you could use the Kafra services..";
-						mes "It's up to you.";
-						next;
-						mes "[Boya]";
-						mes "One of our dispatched members is waiting in the building near the Kafra Employee.";
-						next;
-						mes "[Boya]";
-						mes "She will explain what needs to be done there.";
-						mes "If you have any questions ask her.";
-						next;
-						mes "[Boya]";
-						mes "Ok, may Freya bless you!";
-						set para_suv01,29;
-						setquest 7152;
-						close;
-					}
-					if (BaseLevel > 59) {
-						mes "[Boya]";
-						mes "You are on the last step.";
-						mes "This course is called 'Conquer the Ocean City!'.";
-						mes "I don't know if it is the proper course or not, but anyway it's the last course of our training.";
-						next;
-						mes "[Boya]";
-						mes "First take a ship to to Byalan Island from Izlude!";
-						mes "There is an underground cave. Go in and get to the bottom floor where you will find a historic underwater city..";
-						next;
-						mes "[Boya]";
-						mes "Although it's underwater, you can breath so don't worry.";
-						mes "There is a dispatched trainee around the entrance of the Ocean City.";
-						next;
-						mes "[Boya]";
-						mes "Tell him that I sent you and follow his directions.";
-						mes "Ok, may Freya bless you!";
-						set para_suv01,33;
-						setquest 7156;
-						close;
-					}
-				}
+				mes "-Beats quickly and this shining Rune Knight turns invisible.";
+				mes "It hurts too much-";
+				close;
 			}
-			mes "[Boya]";
+		case 3:
+			mes "Don't bother me.";
+			close;
+		}
+	}
+	else if (para_suv01 < 5) {
+		mes "Hey, I already talked all about the training areas.";
+		mes "I will explain again please concentrate.";
+		next;
+		mes "[Boya]";
+		mes "An oasis souteast of Morroc.";
+		mes "There is a big dog in the center.";
+		mes "The detailed story is written in the log, see?";
+	}
+	else if (para_suv01 == 5) {
+		mes "Oh you've come back.";
+		mes "Good job.";
+		mes "Now you are adapting.";
+		next;
+		mes "[Boya]";
+		mes "Completed step 1.";
+		mes "Congratulations.";
+		mes "We will give you a uniform and some equipment.";
+		next;
+		mes "[Boya]";
+		mes "Can you see a large blue gate next to the board?";
+		mes "Go inside then keep walking until the end of the right passage. There is an equipment storage there.";
+		next;
+		mes "[Boya]";
+		mes "Inform the manager that I sent you. He will give you some stuff.";
+		mes "Go go go!";
+		para_suv01 = 11;
+		completequest 7132;
+	}
+	else if (para_suv01 < 10) {
+		mes "The training name was 'Conquer the Culvert!.";
+		mes "Did you explore the culvert fully?";
+		next;
+		mes "[Boya]";
+		mes "Come back when you've completed all the courses from the local trainer.";
+	}
+	else if (para_suv01 == 10) {
+		mes "Oh you're back.";
+		mes "Good job.";
+		mes "Now you are adapting.";
+		next;
+		mes "[Boya]";
+		mes "Completed step 1.";
+		mes "Congratulations.";
+		mes "My team will give you a uniform and some equipment.";
+		next;
+		mes "[Boya]";
+		mes "Can you see a large blue gate next to the board?";
+		mes "Go inside then keep walking until the end of the right passage. There is an equipment storage there.";
+		next;
+		mes "[Boya]";
+		mes "Inform the manager that I sent you. He will give you some stuff.";
+		mes "Go go go!";
+		para_suv01 = 11;
+		completequest 7137;
+	}
+	else if (para_suv01 == 11) {
+		mes "What are you doing?";
+		mes "Get the equipment from the storage manager.";
+		mes "Our uniform is pretty awesome haha.";
+	}
+	else if (para_suv01 == 12) {
+		mes "Um, did you like the supplies?";
+		mes "I like the red hat.";
+		mes "The red ribbon is really cute.";
+		next;
+		mes "[Boya]";
+		if (BaseLevel > 25) {
+			mes "And you seem to.";
+			mes "Able to take upper class, now.";
+			mes "What about it, do you want?";
+			next;
+			switch (select("No, way.:Absolutely, I will.")) {
+				mes "[Boya]";
+			case 1:
+				mes "Really?";
+				mes "Actually I don't care but the uniform will be changed as upper class.";
+				close;
+			case 2:
+				mes "Cool.";
+				mes "Let me choose a proper place for you.";
+				next;
+				mes "[Boya]";
+				callsub S_Quest2;
+				callsub S_Quest3;
+			}
+		}
+		else {
 			mes "The battle training is organized into steps.";
 			mes "When you able to join next step come back again after leveling more.";
 			next;
 			mes "[Boya]";
 			mes "The next training step is available for those over Level 26.";
 			mes "When you reach that level, come by again. get it?";
-			close;
 		}
-		if ((para_suv01 > 12) && (para_suv01 < 16)) {
+	}
+	else if (para_suv01 < 16) {
+		mes "The training area is at the north cave of Payon.";
+		mes "A staff member is already dispatched there.";
+		mes "Find him and follow his directions.";
+	}
+	else if (para_suv01 == 16) {
+		mes "You finished the second step of training.";
+		mes "Now do you understand how this world is organized?";
+		next;
+		mes "[Boya]";
+		mes "I will certify that you completed the training.";
+		mes "The person in charge of equipment storage will supply you with what you need.";
+		next;
+		mes "[Boya]";
+		mes "Choose an equipment that fits your particular set of skills.";
+		para_suv01 = 22;
+		completequest 7141;
+	}
+	else if (para_suv01 < 21) {
+		mes "The training area is southwest of Morroc.";
+		mes "Enter the Saint Darmain Fortress to reach it directly.";
+		next;
+		mes "[Boya]";
+		mes "There's someone there named... Uh... he is waiting for you to follow his direction.";
+	}
+	else if (para_suv01 == 21) {
+		mes "You finished the second step of training.";
+		mes "Now do you understand how this world is organized?";
+		next;
+		mes "[Boya]";
+		mes "I will certify that you completed the training.";
+		mes "The person in charge of equipment storage will supply you with what you need.";
+		next;
+		mes "[Boya]";
+		mes "The person in charge of equipment storage will supply you with what you need.";
+		para_suv01 = 22;
+		completequest 7146;
+	}
+	else if (para_suv01 == 22) {
+		mes "We serve trainees with equipment and armor after passing the second step of training.";
+		mes "Go to the storage and meet the person in charge there.";
+		next;
+		mes "[Boya]";
+		mes "To find the storage pass the blue gate next to the mission board then at the end of the hallway to the right side.";
+	}
+	else if (para_suv01 == 23) {
+		mes "Hey long time no see.";
+		mes "So what's up?";
+		next;
+		switch (select("I want to join training.:Nothing.")) {
 			mes "[Boya]";
-			mes "The training area is at the north cave of Payon.";
-			mes "A staff member is already dispatched there.";
-			mes "Find him and follow his directions.";
-			close;
-		}
-		if (para_suv01 == 16) {
-			mes "[Boya]";
-			mes "You finished the second step of training.";
-			mes "Now do you understand how this world is organized?";
+		case 1:
+			mes "Hmm... really?";
+			mes "Let me see... which step is good for you...";
 			next;
 			mes "[Boya]";
-			mes "I will certify that you completed the training.";
-			mes "The person in charge of equipment storage will supply you with what you need.";
-			next;
-			mes "[Boya]";
-			mes "Choose an equipment that fits your particular set of skills.";
-			set para_suv01,22;
-			completequest 7141;
-			close;
-		}
-		if ((para_suv01 > 16) && (para_suv01 < 21)) {
-			mes "[Boya]";
-			mes "The training area is southwest of Morroc.";
-			mes "Enter the Saint Darmain Fortress to reach it directly.";
-			next;
-			mes "[Boya]";
-			mes "There's someone there named... Uh... he is waiting for you to follow his direction.";
-			close;
-		}
-		if (para_suv01 == 21) {
-			mes "[Boya]";
-			mes "You finished the second step of training.";
-			mes "Now do you understand how this world is organized?";
-			next;
-			mes "[Boya]";
-			mes "I will certify that you completed the training.";
-			mes "The person in charge of equipment storage will supply you with what you need.";
-			next;
-			mes "[Boya]";
-			mes "The person in charge of equipment storage will supply you with what you need.";
-			set para_suv01,22;
-			completequest 7146;
-			close;
-		}
-		if (para_suv01 == 22) {
-			mes "[Boya]";
-			mes "We serve trainees with equipment and armor after passing the second step of training.";
-			mes "Go to the storage and meet the person in charge there.";
-			next;
-			mes "[Boya]";
-			mes "To find the storage pass the blue gate next to the mission board then at the end of the hallway to the right side.";
-			close;
-		}
-		if (para_suv01 == 23) {
-			mes "[Boya]";
-			mes "Hey long time no see.";
-			mes "So what's up?";
-			next;
-			switch (select("I want to join training.:Nothing.")) {
-			case 1:
-				mes "[Boya]";
-				mes "Hmm... really?";
-				mes "Let me see... which step is good for you...";
-				next;
-				if ((BaseLevel > 39) && (BaseLevel < 50)) {
-					mes "[Boya]";
-					mes "You are on the third step of course A.";
-					mes "This course is called 'Conquer Orc village!'.";
-					mes "Let me see...";
-					next;
-					mes "[Boya]";
-					mes "Go through the gate of Prontera and keep walking to the west. Orc Village is in that direction.";
-					mes "Or you can go out through the western gate of Geffen and keep heading southeast..";
-					next;
-					mes "[Boya]";
-					mes "Umm. Orc village has a Kafra Employee dispatched there so you could use the Kafra services..";
-					mes "It's up to you.";
-					next;
-					mes "[Boya]";
-					mes "One of our dispatched members is waiting in the building near the Kafra Employee.";
-					next;
-					mes "[Boya]";
-					mes "She will explain what needs to be done there.";
-					mes "If you have any questions ask her.";
-					next;
-					mes "[Boya]";
-					mes "Ok, may Freya bless you!";
-					set para_suv01,24;
-					setquest 7147;
-					close;
-				}
-				if ((BaseLevel > 49) && (BaseLevel < 60)) {
-					mes "[Boya]";
-					mes "You are on the third step of course B.";
-					mes "This course is called 'Conquer Orc dungeon!'.";
-					mes "It's the most proper mission for your level.";
-					next;
-					mes "[Boya]";
-					mes "Go through the gate of Prontera and keep walking to the west. Orc Village is in that direction.";
-					mes "Or you can go out through the western gate of Geffen and keep heading southeast..";
-					next;
-					mes "[Boya]";
-					mes "Umm. Orc village has a Kafra Employee dispatched there so you could use the Kafra services..";
-					mes "It's up to you.";
-					next;
-					mes "[Boya]";
-					mes "One of our dispatched members is waiting in the building near the Kafra Employee.";
-					next;
-					mes "[Boya]";
-					mes "She will explain what needs to be done there.";
-					mes "If you have any questions ask her.";
-					next;
-					mes "[Boya]";
-					mes "Ok, may Freya bless you!";
-					set para_suv01,29;
-					setquest 7152;
-					close;
-				}
-				if (BaseLevel > 59) {
-					mes "[Boya]";
-					mes "You are on the last step.";
-					mes "This course is called 'Conquer the Ocean City!'.";
-					mes "I don't know if it is the proper course or not, but anyway it's the last course of our training.";
-					next;
-					mes "[Boya]";
-					mes "First take a ship to to Byalan Island from Izlude!";
-					mes "There is an underground cave. Go in and get to the bottom floor where you will find a historic underwater city..";
-					next;
-					mes "[Boya]";
-					mes "Although it's underwater, you can breath so don't worry.";
-					mes "There is a dispatched trainee around the entrance of the Ocean City.";
-					next;
-					mes "[Boya]";
-					mes "Tell him that I sent you and follow his directions.";
-					mes "Ok, may Freya bless you!";
-					set para_suv01,33;
-					setquest 7156;
-					close;
-				}
-				mes "[Boya]";
+			if (BaseLevel < 40) {
 				mes "Sooo sorry but to join this training You need to be at least level 40.";
 				mes "Concentrate to become higher level then come back.";
 				close;
-			case 2:
-				mes "[Boya]";
-				mes "Did you come to see me?";
-				mes "Just that? Without anything?";
-				mes "At could have least brought some chocolate...";
-				next;
-				mes "[Boya]";
-				mes "Banana roll or stripe straw... anything.";
-				mes "Oh, I don't eat snacks with cinnamon...";
-				close;
 			}
-		}
-		if ((para_suv01 > 23) && (para_suv01 < 28)) {
-			mes "[Boya]";
-			mes "Umm. Orc village has a Kafra Employee there so you can use the Kafra services.";
+			callsub S_Quest3;
+		case 2:
+			mes "Did you come to see me?";
+			mes "Just that? Without anything?";
+			mes "At could have least brought some chocolate...";
 			next;
 			mes "[Boya]";
-			mes "One of our dispatched members is waiting in the building near the Kafra Employee.";
+			mes "Banana roll or stripe straw... anything.";
+			mes "Oh, I don't eat snacks with cinnamon...";
 			close;
 		}
-		if (para_suv01 == 28) {
-			mes "[Boya]";
-			mes "Cool! You passed the third step of training.";
-			mes "I will certify that you completed the training.";
-			mes "The person in charge of equipment storage will supply you with some equipment.";
-			next;
-			mes "[Boya]";
-			mes "We serve trainees with equipment and armor after passing the second step of training.";
-			mes "Go to the storage and meet the person in charge there.";
-			next;
-			mes "[Boya]";
-			mes "To find the storage pass the blue gate next to the mission board then at the end of the hallway to the right side.";
-			set para_suv01,37;
-			completequest 7151;
-			close;
-		}
-		if ((para_suv01 > 28) && (para_suv01 < 32)) {
-			mes "[Boya]";
-			mes "Umm. Orc village has a Kafra Employee there so you can use the Kafra services there.";
-			next;
-			mes "[Boya]";
-			mes "One of our dispatched members is waiting in the building near the Kafra Employee.";
-			close;
-		}
-		if (para_suv01 == 32) {
-			mes "[Boya]";
-			mes "Cool! You passed the third step of training.";
-			mes "I will certify that you completed the training.";
-			mes "The person in charge of equipment storage will supply you with some equipment.";
-			next;
-			mes "[Boya]";
-			mes "We serve trainees with equipment and armor after passing the second step of training.";
-			mes "Go to the storage and meet the person in charge there.";
-			next;
-			mes "[Boya]";
-			mes "To find the storage pass the blue gate next to the mission board then at the end of the hallway to the right side.";
-			set para_suv01,37;
-			completequest 7155;
-			close;
-		}
-		if ((para_suv01 > 32) && (para_suv01 < 36)) {
-			mes "[Boya]";
-			mes "First take a ship toward to Bayalan from Izlude!";
-			mes "There is an underground cave. Go in and get to the bottom floor where you will find a historic underwater city..";
-			next;
-			mes "[Boya]";
-			mes "There is a dispatched trainee around the entrance of the Ocean City.";
-			close;
-		}
-		if (para_suv01 == 36) {
-			mes "[Boya]";
-			mes "Cool! You passed the third step of training.";
-			mes "I will certify that you completed the training.";
-			mes "The person in charge of equipment storage will supply you with some equipment.";
-			next;
-			mes "[Boya]";
-			mes "We serve trainees with equipment and armor after passing the second step of training.";
-			mes "Go to the storage and meet the person in charge there.";
-			next;
-			mes "[Boya]";
-			mes "To find the storage pass the blue gate next to the mission board then at the end of the hallway to the right side.";
-			set para_suv01,37;
-			completequest 7159;
-			close;
-		}
-		if (para_suv01 == 37) {
-			mes "[Boya]";
-			mes "If you finish all of the steps go and get your supplies.";
-			mes "We offer equipment to those who complete the training.";
-			next;
-			mes "[Boya]";
-			mes "We might serve you other things.";
-			mes "If you have any questions, ask the person in charge of the arsenal.";
-			next;
-			mes "[Boya]";
-			mes "The arsenal is past the blue gate and at the end of the right side of the passage.";
-			close;
-		}
-		if (para_suv01 >= 38) {
-			mes "[Boya]";
-			mes "My boss created all the courses for the training.";
-			mes "After he manufactured the uniform and supplies he changed his mind and said that he can't give them for free.";
-			next;
-			mes "[Boya]";
-			mes "People who show their effort for my team and the world can get some supplies.";
-			mes "That's why these courses were made.";
-			next;
-			mes "[Boya]";
-			mes "Basically we are supposed to offer these supplies for beginners";
-			mes "but if experts want to participate this training, we accept them.";
-			next;
-			mes "[Boya]";
-			mes "Although the uniform and equipment might be useless.";
-			mes "participating in this training means they want to become a member of our group.";
-			next;
-			mes "[Boya]";
-			mes "Yes that's all.";
-			mes "That's why when we decided a hat design it was really difficult.";
-			next;
-			mes "[Boya]";
-			mes "Remember this when you use the equipment.";
-			mes "But if you decide to sell or trade them off, it is none of our concern.";
-			close;
-		}
+	}
+	else if (para_suv01 < 28) {
+		mes "Umm. Orc village has a Kafra Employee there so you can use the Kafra services.";
+		next;
 		mes "[Boya]";
+		mes "One of our dispatched members is waiting in the building near the Kafra Employee.";
+	}
+	else if (para_suv01 == 28) {
+		mes "Cool! You passed the third step of training.";
+		mes "I will certify that you completed the training.";
+		mes "The person in charge of equipment storage will supply you with some equipment.";
+		next;
+		mes "[Boya]";
+		mes "We serve trainees with equipment and armor after passing the second step of training.";
+		mes "Go to the storage and meet the person in charge there.";
+		next;
+		mes "[Boya]";
+		mes "To find the storage pass the blue gate next to the mission board then at the end of the hallway to the right side.";
+		para_suv01 = 37;
+		completequest 7151;
+	}
+	else if (para_suv01 < 32) {
+		mes "Umm. Orc village has a Kafra Employee there so you can use the Kafra services there.";
+		next;
+		mes "[Boya]";
+		mes "One of our dispatched members is waiting in the building near the Kafra Employee.";
+	}
+	else if (para_suv01 == 32) {
+		mes "Cool! You passed the third step of training.";
+		mes "I will certify that you completed the training.";
+		mes "The person in charge of equipment storage will supply you with some equipment.";
+		next;
+		mes "[Boya]";
+		mes "We serve trainees with equipment and armor after passing the second step of training.";
+		mes "Go to the storage and meet the person in charge there.";
+		next;
+		mes "[Boya]";
+		mes "To find the storage pass the blue gate next to the mission board then at the end of the hallway to the right side.";
+		para_suv01 = 37;
+		completequest 7155;
+	}
+	else if (para_suv01 < 36) {
+		mes "First take a ship toward to Bayalan from Izlude!";
+		mes "There is an underground cave. Go in and get to the bottom floor where you will find a historic underwater city..";
+		next;
+		mes "[Boya]";
+		mes "There is a dispatched trainee around the entrance of the Ocean City.";
+	}
+	else if (para_suv01 == 36) {
+		mes "Cool! You passed the third step of training.";
+		mes "I will certify that you completed the training.";
+		mes "The person in charge of equipment storage will supply you with some equipment.";
+		next;
+		mes "[Boya]";
+		mes "We serve trainees with equipment and armor after passing the second step of training.";
+		mes "Go to the storage and meet the person in charge there.";
+		next;
+		mes "[Boya]";
+		mes "To find the storage pass the blue gate next to the mission board then at the end of the hallway to the right side.";
+		para_suv01 = 37;
+		completequest 7159;
+	}
+	else if (para_suv01 == 37) {
+		mes "[Boya]";
+		mes "If you finish all of the steps go and get your supplies.";
+		mes "We offer equipment to those who complete the training.";
+		next;
+		mes "[Boya]";
+		mes "We might serve you other things.";
+		mes "If you have any questions, ask the person in charge of the arsenal.";
+		next;
+		mes "[Boya]";
+		mes "The arsenal is past the blue gate and at the end of the right side of the passage.";
+	}
+	else if (para_suv01 >= 38) {
+		mes "My boss created all the courses for the training.";
+		mes "After he manufactured the uniform and supplies he changed his mind and said that he can't give them for free.";
+		next;
+		mes "[Boya]";
+		mes "People who show their effort for my team and the world can get some supplies.";
+		mes "That's why these courses were made.";
+		next;
+		mes "[Boya]";
+		mes "Basically we are supposed to offer these supplies for beginners";
+		mes "but if experts want to participate this training, we accept them.";
+		next;
+		mes "[Boya]";
+		mes "Although the uniform and equipment might be useless.";
+		mes "participating in this training means they want to become a member of our group.";
+		next;
+		mes "[Boya]";
+		mes "Yes that's all.";
+		mes "That's why when we decided a hat design it was really difficult.";
+		next;
+		mes "[Boya]";
+		mes "Remember this when you use the equipment.";
+		mes "But if you decide to sell or trade them off, it is none of our concern.";
+	}
+	else {
 		mes "What do you want?";
 		mes "I doubt that you need more training.";
 		next;
 		mes "[Boya]";
 		mes "There is nothing more I can teach a battle master such as yourself.";
-		close;
 	}
-	mes "[Boya]";
-	mes "You are not in my group are you?";
-	mes "I don't have anything to say to outsiders.";
-	mes "If you want something register with my group.";
+	close;
+S_Quest1:
+	mes "Really? You already seem ready.";
+	mes "We have a total of 3 steps for the training.";
+	mes "Let me see...";
 	next;
 	mes "[Boya]";
-	mes "To register with the Eden Group ask Laime Evenor next to me.";
+	if (BaseLevel < 12) {
+		mes "Umm. You should raise your level more!";
+		mes "You need to be at least level 12!";
+		mes "I'm sorry but those are the rules.";
+		close;
+	}
+	if (BaseLevel < 20) {
+		mes "The first step is course A.";
+		mes "Course A is called 'Conquer the Desert!'.";
+		mes "It's the most proper mission for your level.";
+		next;
+		mes "[Boya]";
+		mes "^4d4dffThere is a desert town called Morroc.";
+		mes "From there go south and then east. There is small oasis in the center of that field.^000000";
+		next;
+		mes "[Boya]";
+		mes "If you go there, you will find a dog around the oasis.";
+		mes "He is really mysterious and he can speak so don't be suprised.";
+		next;
+		mes "[Boya]";
+		mes "Tell the dog ^4d4dffBoya is really great.^000000";
+		mes "If you have any questions ask that dog.";
+		next;
+		mes "[Boya]";
+		mes "Why are you staring at me?";
+		mes "I had to come up with a password right?";
+		mes "What's wrong with that password?";
+		next;
+		mes "[Boya]";
+		mes "Anyway, that place is not far from here so, it is a reasonable place for a beginner like you.";
+		mes "Ok, may Freya bless you~!";
+		para_suv01 = 1;
+		setquest 7128;
+		close;
+	}
+	if (BaseLevel < 26) {
+		mes "I'll send you to the first step of course B.";
+		mes "Course B is called 'Conquer the Culvert!'.";
+		mes "It's the most proper mission for your level.";
+		next;
+		mes "[Boya]";
+		mes "You need to register to explore the culvert in Prontera at the Knight Guild.";
+		mes "After registering there go to the western gate of Prontera. The manager of the culvert is near the entrance.";
+		next;
+		mes "[Boya]";
+		mes "Once you enter the culvert you can find a dispatched cat. Don't be surprised if he talks to you.";
+		next;
+		mes "[Boya]";
+		mes "Tell the cat ^4d4dffBoya's help is like a giant and beautiful tuna^000000.";
+		mes "He is really mysterious and he can speak so don't be suprised.";
+		mes "He will give you a battle target when you tell him that.";
+		mes "If you have any questions ask the cat.";
+		next;
+		mes "[Boya]";
+		mes "Why are you staring at me like that?";
+		mes "It's just a password that I made up.";
+		next;
+		mes "[Boya]";
+		mes "Anyway...";
+		mes "That place is nor far from here so, it is a reasonable place for a beginner like you.";
+		mes "Ok, may Freya bless you~!";
+		para_suv01 = 6;
+		setquest 7133;
+		close;
+	}
+	return;
+S_Quest2:
+	if (BaseLevel < 33) {
+		mes "Cool.";
+		mes "Let me choose a proper place for you.";
+		next;
+		mes "[Boya]";
+		mes "I'll send you to the second step of course A.";
+		mes "This course is called 'Conquer the Ghost Cave!'.";
+		mes "It's the most proper mission for your level.";
+		next;
+		mes "[Boya]";
+		mes "There is a small archer village north of Payon.";
+		mes "There is a cave on the western hill of the archer village.";
+		next;
+		mes "[Boya]";
+		mes "We have dispatched someone in front of the cave.";
+		mes "His name is... um...";
+		mes "...";
+		next;
+		mes "[Boya]";
+		mes "Anyway he is one of us so he will know me.";
+		mes "He will give you a mission.";
+		mes "If you have questions ask him.";
+		next;
+		mes "[Boya]";
+		mes "Why are you staring at me?";
+		mes "We haven't met for a long time that's why I can't remember his name!";
+		next;
+		mes "[Boya]";
+		mes "Anyway...";
+		mes "That place is not far from here so, come back quickly.";
+		mes "Ok, may Freya bless you~!";
+		para_suv01 = 13;
+		setquest 7138;
+		close;
+	}
+	if (BaseLevel < 40) {
+		mes "I'll send you to the 2nd step of course B.";
+		mes "This course is called 'Conquer Anthell!'.";
+		mes "It's the most proper mission for your level.";
+		next;
+		mes "[Boya]";
+		mes "Travel just southwest of Morroc City.";
+		mes "There you will find a hole in the ground to a cave called Anthell.";
+		next;
+		mes "[Boya]";
+		mes "There are lots of ants in there. kk?";
+		mes "It is also covered in sand so be careful in there ok.";
+		next;
+		mes "[Boya]";
+		mes "That's why it's called ant hell.";
+		mes "One of our members will be waiting there.";
+		mes "His name is... K? M? Hmm? Anyway I can't remember.";
+		next;
+		mes "[Boya]";
+		mes "He is one of us so he will know me.";
+		mes "He will give you a mission.";
+		mes "If you have any questions ask him.";
+		next;
+		mes "[Boya]";
+		mes "Why are you staring at me?";
+		mes "We haven't met for a long time that's why I can't remember his name!";
+		next;
+		mes "[Boya]";
+		mes "Anyway...";
+		mes "That place is not far from here so, come back quickly.";
+		mes "Ok, blessing you~!!";
+		para_suv01 = 17;
+		setquest 7142;
+		close;
+	}
+	return;
+S_Quest3:
+	if (BaseLevel < 50) {
+		mes "You are on the third step of course A.";
+		mes "This course is called 'Conquer Orc village!'.";
+		mes "Let me see...";
+		next;
+		mes "[Boya]";
+		mes "Go through the gate of Prontera and keep walking to the west. Orc Village is in that direction.";
+		mes "Or you can go out through the western gate of Geffen and keep heading southeast..";
+		next;
+		mes "[Boya]";
+		mes "Umm. Orc village has a Kafra Employee dispatched there so you could use the Kafra services..";
+		mes "It's up to you.";
+		next;
+		mes "[Boya]";
+		mes "One of our dispatched members is waiting in the building near the Kafra Employee.";
+		next;
+		mes "[Boya]";
+		mes "She will explain what needs to be done there.";
+		mes "If you have any questions ask her.";
+		next;
+		mes "[Boya]";
+		mes "Ok, may Freya bless you!";
+		para_suv01 = 24;
+		setquest 7147;
+	}
+	else if (BaseLevel < 60) {
+		mes "You are on the third step of course B.";
+		mes "This course is called 'Conquer Orc dungeon!'.";
+		mes "It's the most proper mission for your level.";
+		next;
+		mes "[Boya]";
+		mes "Go through the gate of Prontera and keep walking to the west. Orc Village is in that direction.";
+		mes "Or you can go out through the western gate of Geffen and keep heading southeast..";
+		next;
+		mes "[Boya]";
+		mes "Umm. Orc village has a Kafra Employee dispatched there so you could use the Kafra services..";
+		mes "It's up to you.";
+		next;
+		mes "[Boya]";
+		mes "One of our dispatched members is waiting in the building near the Kafra Employee.";
+		next;
+		mes "[Boya]";
+		mes "She will explain what needs to be done there.";
+		mes "If you have any questions ask her.";
+		next;
+		mes "[Boya]";
+		mes "Ok, may Freya bless you!";
+		para_suv01 = 29;
+		setquest 7152;
+	}
+	else {
+		mes "You are on the last step.";
+		mes "This course is called 'Conquer the Ocean City!'.";
+		mes "I don't know if it is the proper course or not, but anyway it's the last course of our training.";
+		next;
+		mes "[Boya]";
+		mes "First take a ship to to Byalan Island from Izlude!";
+		mes "There is an underground cave. Go in and get to the bottom floor where you will find a historic underwater city..";
+		next;
+		mes "[Boya]";
+		mes "Although it's underwater, you can breath so don't worry.";
+		mes "There is a dispatched trainee around the entrance of the Ocean City.";
+		next;
+		mes "[Boya]";
+		mes "Tell him that I sent you and follow his directions.";
+		mes "Ok, may Freya bless you!";
+		para_suv01 = 33;
+		setquest 7156;
+	}
 	close;
 }
 
@@ -2255,56 +1770,52 @@ iz_dun04,43,46,3	script	Eden Member Callandiva	745,{
 	close;
 }
 
-moc_para01,112,96,5	script	Administrator Michael	967,{
+moc_para01,112,96,5	script	Administrator Michael	4_M_RUSMAN1,{
 	mes "[Michael]";
 	mes "Why did you come here?";
 	next;
 	switch (select("To get supplies:Where is here?:Upgrade equipment")) {
+		mes "[Michael]";
 	case 1:
 		if (para_suv01 == 11) {
-			mes "[Michael]";
 			mes "If you've completed step 1";
 			mes "we can supply you with a Eden Group Hat, Uniform, Manteau and Boots.";
 			mes "^4d4dffCheck your inventory first.^000000";
 			next;
-			switch (select("Let me check my inventory:I have enough room.")) {
-			case 1:
+			if (select("Let me check my inventory:I have enough room.") == 1) {
 				mes "[Michael]";
 				mes "Make sure you have enough room for the supplies.";
 				close;
-			case 2:
-				mes "[Michael]";
-				mes "Two of the supplies, the ^4d4dffHat and Manteau^000000,";
-				mes "will only be given out once.";
-				mes "So treat them with caution and care.";
-				next;
-				mes "[Michael]";
-				mes "As for the Boots and the Uniforms, you will receive better quality ones based on your course grades.";
-				next;
-				mes "[Michael]";
-				mes "One Eden Group Hat.";
-				mes "One Eden Group Uniform I.";
-				mes "One pair of Eden Group Boots I.";
-				mes "One Eden Group Manteau.";
-				mes "A total of 4 supplies, that's all.";
-				set para_suv01,12;
-				set para_suv02,1;
-				getitem 5583,1; //Para_Team_Hat1
-				getitem 2560,1; //Para_Team_Manteau1
-				getitem 2456,1; //Para_Team_Boots1
-				getitem 15009,1; //Para_Team_Uniform1
-				next;
-				mes "[Michael]";
-				mes "Is that correct?";
-				mes "It is manufactured for beginners so they don't have the best effect but they're still cheaper than equipment in the shops.";
-				next;
-				mes "[Michael]";
-				mes "We made them especially for the Eden Group.";
-				close;
 			}
-		}
-		if (para_suv01 == 22) {
 			mes "[Michael]";
+			mes "Two of the supplies, the ^4d4dffHat and Manteau^000000,";
+			mes "will only be given out once.";
+			mes "So treat them with caution and care.";
+			next;
+			mes "[Michael]";
+			mes "As for the Boots and the Uniforms, you will receive better quality ones based on your course grades.";
+			next;
+			mes "[Michael]";
+			mes "One Eden Group Hat.";
+			mes "One Eden Group Uniform I.";
+			mes "One pair of Eden Group Boots I.";
+			mes "One Eden Group Manteau.";
+			mes "A total of 4 supplies, that's all.";
+			para_suv01 = 12;
+			para_suv02 = 1;
+			getitem 5583,1; //Para_Team_Hat1
+			getitem 2560,1; //Para_Team_Manteau1
+			getitem 2456,1; //Para_Team_Boots1
+			getitem 15009,1; //Para_Team_Uniform1
+			next;
+			mes "[Michael]";
+			mes "Is that correct?";
+			mes "It is manufactured for beginners so they don't have the best effect but they're still cheaper than equipment in the shops.";
+			next;
+			mes "[Michael]";
+			mes "We made them especially for the Eden Group.";
+		}
+		else if (para_suv01 == 22) {
 			mes "If you've completed step 2, we offer extra weapons including the basic equipment.";
 			next;
 			mes "[Michael]";
@@ -2321,486 +1832,72 @@ moc_para01,112,96,5	script	Administrator Michael	967,{
 			mes "[Michael]";
 			mes "^4d4dffPlease check your inventory to get those items.^000000";
 			next;
-			switch (select("I will make more space.:I have got enough space.")) {
-			case 1:
+			if (select("I will make more space.:I have got enough space.") == 1) {
 				mes "[Michael]";
 				mes "Make enough space.";
 				close;
-			case 2:
-				if (Class == Job_Swordman || Class == Job_Swordman_High || Class == Job_Knight || Class == Job_Crusader) {
-					mes "[Michael]";
-					mes "What kind of weapon do you want?";
-					mes "We have one and Two-handed swords.";
-					mes "Here are the options.";
-					next;
-					mes "[Michael]";
-					mes "Eden Slayer I: Two-handed sword. attack 162.";
-					mes "Eden Saber I: One-handed sword. attack 147.";
-					mes "Both are Lv. 2 and the required level is 26.";
-					next;
-					mes "[Michael]";
-					mes "They also can't be traded with other players or be refined.";
-					next;
-					switch (select("Eden Slayer I:Eden Sabre I")) {
-					case 1:
-						mes "[Michael]";
-						mes "You've chosen the Eden Slayer I.";
-						mes "Additionally you'll receive the Eden Group Boots II and Uniform II.";
-						next;
-						if (para_suv02 == 0) {
-							mes "[Michael]";
-							mes "You don't have a record of receiving any supplies";
-							mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-							set para_suv01,23;
-							set para_suv02,2;
-							getitem 1192,1; //P_Slayer1
-							getitem 18514,1; //Para_Team_Hat2
-							getitem 2571,1; //Para_Team_Manteau2
-							getitem 2457,1; //Para_Team_Boots2
-							getitem 15010,1; //Para_Team_Uniform2
-							next;
-							mes "[Michael]";
-							mes "Check your supplies again and look after it.";
-							close;
-						}
-						mes "[Michael]";
-						mes "A Two-handed sword, Uniform and Boots all 3 supplies.";
-						mes "Please check it again.";
-						set para_suv01,23;
-						set para_suv02,2;
-						getitem 1192,1; //P_Slayer1
-						getitem 2457,1; //Para_Team_Boots2
-						getitem 15010,1; //Para_Team_Uniform2
-						next;
-						mes "[Michael]";
-						mes "I hope they're useful to you.";
-						close;
-					case 2:
-						mes "[Michael]";
-						mes "You've chosen the Eden Sabre I.";
-						mes "Additionally you'll receive the Eden Group Boots II and Uniform II.";
-						next;
-						if (para_suv02 == 0) {
-							mes "[Michael]";
-							mes "You don't have a record of receiving any supplies";
-							mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-							set para_suv01, 23;
-							set para_suv02, 2;
-							getitem 13423,1; //P_Sabre1
-							getitem 2457,1; //Para_Team_Boots2
-							getitem 15010,1; //Para_Team_Uniform2
-							getitem 5583,1; //Para_Team_Hat
-							getitem 2560,1; //Para_Team_Manteau
-							next;
-							mes "[Michael]";
-							mes "Check your supplies again and look after it.";
-							close;
-						}
-						mes "[Michael]";
-						mes "A One-handed sword, Uniform and Boots all 3 supplies.";
-						mes "Please check it again.";
-						set para_suv01,23;
-						set para_suv02,2;
-						getitem 13423,1; //P_Sabre1
-						getitem 2457,1; //Para_Team_Boots2
-						getitem 15010,1; //Para_Team_Uniform2
-						next;
-						mes "[Michael]";
-						mes "I hope they're useful to you.";
-						mes "This is what we strive for.";
-						close;
-					}
-				}
-				if (Class == Job_Thief || Class == Job_Thief_High || Class == Job_Assassin || Class == Job_Rogue || Class == Job_Ninja || Class == Job_Novice || Class == Job_Novice_High) {
-					mes "[Michael]";
-					mes "We only have 1 weapon for you.";
-					next;
-					mes "[Michael]";
-					mes "Eden Dagger I: Dagger. MATK+60, attack 124.";
-					mes "It is Lv. 2 and the required level is 26.";
-					next;
-					mes "[Michael]";
-					mes "It also can't be traded with other players or be refined.";
-					next;
-					mes "[Michael]";
-					mes "You'll receive the Eden Dagger I.";
-					next;
-					mes "[Michael]";
-					mes "Additionally you'll receive the Eden Group Boots II and Uniform II.";
-					next;
-					if (para_suv02 == 0) {
-						mes "[Michael]";
-						mes "You don't have a record of receiving any supplies";
-						mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-						set para_suv01,23;
-						set para_suv02,2;
-						getitem 13050,1; //P_Dagger1
-						getitem 2457,1; //Para_Team_Boots2
-						getitem 15010,1; //Para_Team_Uniform2
-						getitem 5583,1; //Para_Team_Hat
-						getitem 2560,1; //Para_Team_Manteau
-						next;
-						mes "[Michael]";
-						mes "Check your supplies again and look after it.";
-						close;
-					}
-					mes "[Michael]";
-					mes "A Dagger, Uniform and Boots all 3 supplies.";
-					mes "Please check it again.";
-					set para_suv01,23;
-					set para_suv02,2;
-					getitem 13050,1; //P_Dagger1
-					getitem 2457,1; //Para_Team_Boots2
-					getitem 15010,1; //Para_Team_Uniform2
-					next;
-					mes "[Michael]";
-					mes "I hope they're useful to you.";
-					mes "This is what we strive for.";
-					close;
-				}
-				if (Class == Job_Merchant || Class == Job_Merchant_High || Class == Job_Blacksmith || Class == Job_Alchemist) {
-					mes "[Michael]";
-					mes "What kind of weapon do you want?";
-					mes "We have a mace and a One-handed sword.";
-					mes "Here are the options.";
-					next;
-					mes "[Michael]";
-					mes "Eden Saber I: One-handed sword. attack 147.";
-					mes "Eden Mace I: Mace. attack 142.";
-					mes "Both are level 2 and the required level is 26.";
-					next;
-					mes "[Michael]";
-					mes "They also can't be traded with other players or be refined.";
-					next;
-					switch (select("Eden Sabre I:Eden Mace I")) {
-					case 1:
-						mes "[Michael]";
-						mes "You've chosen the Eden Sabre I.";
-						mes "Additionally you'll receive the Eden Group Boots II and Uniform II.";
-						next;
-						if (para_suv02 == 0) {
-							mes "[Michael]";
-							mes "You don't have a record of receiving any supplies";
-							mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-							set para_suv01,23;
-							set para_suv02,2;
-							getitem 13423,1; //P_Sabre1
-							getitem 2457,1; //Para_Team_Boots2
-							getitem 15010,1; //Para_Team_Uniform2
-							getitem 5583,1; //Para_Team_Hat
-							getitem 2560,1; //Para_Team_Manteau
-							next;
-							mes "[Michael]";
-							mes "Check your supplies again and look after it.";
-							close;
-						}
-						mes "[Michael]";
-						mes "A One-handed Sword, Uniform and Boots all 3 supplies.";
-						mes "Please check it again.";
-						set para_suv01,23;
-						set para_suv02,2;
-						getitem 13423,1; //P_Sabre1
-						getitem 2457,1; //Para_Team_Boots2
-						getitem 15010,1; //Para_Team_Uniform2
-						next;
-						mes "[Michael]";
-						mes "I hope they're useful to you.";
-						mes "This is what we strive for.";
-						close;
-					case 2:
-						mes "[Michael]";
-						mes "You've chosen the Eden Mace I.";
-						mes "Additionally you'll receive the Eden Group Boots II and Uniform II.";
-						next;
-						if (para_suv02 == 0) {
-							mes "[Michael]";
-							mes "You don't have a record of receiving any supplies";
-							mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-							set para_suv01,23;
-							set para_suv02,2;
-							getitem 16004,1; //P_Mace1
-							getitem 2457,1; //Para_Team_Boots2
-							getitem 15010,1; //Para_Team_Uniform2
-							getitem 5583,1; //Para_Team_Hat
-							getitem 2560,1; //Para_Team_Manteau
-							next;
-							mes "[Michael]";
-							mes "Check your supplies again and look after it.";
-							close;
-						}
-						mes "[Michael]";
-						mes "A Mace, Uniform and Boots all 3 supplies.";
-						mes "Please check it again.";
-						set para_suv01,23;
-						set para_suv02,2;
-						getitem 16004,1; //P_Mace1
-						getitem 2457,1; //Para_Team_Boots2
-						getitem 15010,1; //Para_Team_Uniform2
-						next;
-						mes "[Michael]";
-						mes "I hope they're useful to you.";
-						close;
-					}
-				}
-				if (Class == Job_Archer || Class == Job_Archer_High || Class == Job_Hunter || Class == Job_Dancer || Class == Job_Bard) {
-					mes "[Michael]";
-					mes "We only have 1 weapon for you.";
-					next;
-					mes "[Michael]";
-					mes "Eden Bow I: Bow. attack 82.";
-					mes "It is Lv. 2 and the required level is 26.";
-					next;
-					mes "[Michael]";
-					mes "It also can't be traded with other players or be refined.";
-					next;
-					mes "[Michael]";
-					mes "You'll receive the Eden Bow I.";
-					next;
-					mes "[Michael]";
-					mes "Additionally you'll receive the Eden Group Boots II and Uniform II.";
-					next;
-					if (para_suv02 == 0) {
-						mes "[Michael]";
-						mes "You don't have a record of receiving any supplies";
-						mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-						set para_suv01, 23;
-						set para_suv02, 2;
-						getitem 1747,1; //P_Bow1
-						getitem 2457,1; //Para_Team_Boots2
-						getitem 15010,1; //Para_Team_Uniform2
-						getitem 5583,1; //Para_Team_Hat
-						getitem 2560,1; //Para_Team_Manteau
-						next;
-						mes "[Michael]";
-						mes "Check your supplies again and look after it.";
-						close;
-					}
-					mes "[Michael]";
-					mes "A Bow, Uniform and Boots all 3 supplies.";
-					mes "Please check it again.";
-					set para_suv01,23;
-					set para_suv02,2;
-					getitem 1747,1; //P_Bow1
-					getitem 2457,1; //Para_Team_Boots2
-					getitem 15010,1; //Para_Team_Uniform2
-					next;
-					mes "[Michael]";
-					mes "I hope they're useful to you.";
-					close;
-				}
-				if (Class == Job_Acolyte || Class == Job_Acolyte_High || Class == Job_Priest || Class == Job_Monk) {
-					mes "[Michael]";
-					mes "What kind of weapon do you want?";
-					mes "We have a mace and a staff.";
-					mes "Here are the options.";
-					next;
-					mes "[Michael]";
-					mes "Eden Mace I: Mace. attack 142.";
-					mes "Eden Staff I: Staff. INT+2, MATK+125, attack 60.";
-					mes "Both are Lv. 2 and the required level is 26.";
-					next;
-					mes "[Michael]";
-					mes "They also can't be traded with other players or be refined.";
-					next;
-					switch (select("Eden Staff I:Eden Mace I")) {
-					case 1:
-						mes "[Michael]";
-						mes "You've chosen the Eden Staff I.";
-						mes "Additionally you'll receive the Eden Group Boots II and Uniform II.";
-						next;
-						if (para_suv02 == 0) {
-							mes "[Michael]";
-							mes "You don't have a record of receiving any supplies";
-							mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-							set para_suv01,23;
-							set para_suv02,2;
-							getitem 1650,1; //P_Staff1
-							getitem 2457,1; //Para_Team_Boots2
-							getitem 15010,1; //Para_Team_Uniform2
-							getitem 5583,1; //Para_Team_Hat
-							getitem 2560,1; //Para_Team_Manteau
-							next;
-							mes "[Michael]";
-							mes "Check your supplies again and look after it.";
-							close;
-						}
-						mes "[Michael]";
-						mes "A Staff, Uniform and Boots all 3 supplies.";
-						mes "Please check it again.";
-						set para_suv01,23;
-						set para_suv02,2;
-						getitem 1650,1; //P_Staff1
-						getitem 2457,1; //Para_Team_Boots2
-						getitem 15010,1; //Para_Team_Uniform2
-						next;
-						mes "[Michael]";
-						mes "I hope they're useful to you.";
-						close;
-					case 2:
-						mes "[Michael]";
-						mes "You've chosen the Eden Mace I.";
-						mes "Additionally you'll receive the Eden Group Boots II and Uniform II.";
-						next;
-						if (para_suv02 == 0) {
-							mes "[Michael]";
-							mes "You don't have a record of receiving any supplies";
-							mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-							set para_suv01,23;
-							set para_suv02,2;
-							getitem 16004,1; //P_Mace1
-							getitem 2457,1; //Para_Team_Boots2
-							getitem 15010,1; //Para_Team_Uniform2
-							getitem 5583,1; //Para_Team_Hat
-							getitem 2560,1; //Para_Team_Manteau
-							next;
-							mes "[Michael]";
-							mes "Check your supplies again and look after it.";
-							close;
-						}
-						mes "[Michael]";
-						mes "A Mace, Uniform and Boots all 3 supplies.";
-						mes "Please check it again.";
-						set para_suv01,23;
-						set para_suv02,2;
-						getitem 16004,1; //P_Mace1
-						getitem 2457,1; //Para_Team_Boots2
-						getitem 15010,1; //Para_Team_Uniform2
-						next;
-						mes "[Michael]";
-						mes "I hope they're useful to you.";
-						close;
-					}
-				}
-				if (Class == Job_Mage || Class == Job_Mage_High || Class == Job_Wizard || Class == Job_Sage) {
-					mes "[Michael]";
-					mes "We only have 1 weapon for you.";
-					next;
-					mes "[Michael]";
-					mes "Eden Staff I: Staff. INT+2, MATK+125, attack 60.";
-					mes "It is Lv. 2 and the required level is 26.";
-					next;
-					mes "[Michael]";
-					mes "It also can't be traded with other players or be refined.";
-					next;
-					mes "[Michael]";
-					mes "You'll receive the Eden Staff I.";
-					next;
-					mes "[Michael]";
-					mes "Additionally you'll receive the Eden Group Boots II and Uniform II.";
-					next;
-					if (para_suv02 == 0) {
-						mes "[Michael]";
-						mes "You don't have a record of receiving any supplies";
-						mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-						set para_suv01, 23;
-						set para_suv02, 2;
-						getitem 1650,1; //P_Staff1
-						getitem 2457,1; //Para_Team_Boots2
-						getitem 15010,1; //Para_Team_Uniform2
-						getitem 5583,1; //Para_Team_Hat
-						getitem 2560,1; //Para_Team_Manteau
-						next;
-						mes "[Michael]";
-						mes "Check your supplies again and look after it.";
-						close;
-					}
-					mes "[Michael]";
-					mes "A Staff, Uniform and Boots all 3 supplies.";
-					mes "Please check it again.";
-					set para_suv01,23;
-					set para_suv02,2;
-					getitem 1650,1; //P_Staff1
-					getitem 2457,1; //Para_Team_Boots2
-					getitem 15010,1; //Para_Team_Uniform2
-					next;
-					mes "[Michael]";
-					mes "I hope they're useful to you.";
-					close;
-				}
-				if (Class == Job_Gunslinger) {
-					mes "[Michael]";
-					mes "We only have 1 weapon for you.";
-					next;
-					mes "[Michael]";
-					mes "Eden Revolver I: Revolver. HIT-5, attack 44.";
-					mes "It is Lv. 2 and the required level is 26.";
-					next;
-					mes "[Michael]";
-					mes "It also can't be traded with other players or be refined.";
-					next;
-					mes "[Michael]";
-					mes "You'll receive the Eden Revolver I.";
-					next;
-					mes "[Michael]";
-					mes "Additionally you'll receive the Eden Group Boots II and Uniform II.";
-					next;
-					if (para_suv02 == 0) {
-						mes "[Michael]";
-						mes "You don't have a record of receiving any supplies";
-						mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-						set para_suv01, 23;
-						set para_suv02, 2;
-						getitem 13112,1; //P_Revolver1
-						getitem 2457,1; //Para_Team_Boots2
-						getitem 15010,1; //Para_Team_Uniform2
-						getitem 5583,1; //Para_Team_Hat
-						getitem 2560,1; //Para_Team_Manteau
-						next;
-						mes "[Michael]";
-						mes "Check your supplies again and look after it.";
-						close;
-					}
-					mes "[Michael]";
-					mes "A Revolver, Uniform and Boots all 3 supplies.";
-					mes "Please check it again.";
-					set para_suv01,23;
-					set para_suv02,2;
-					getitem 13112,1; //P_Revolver1
-					getitem 2457,1; //Para_Team_Boots2
-					getitem 15010,1; //Para_Team_Uniform2
-					next;
-					mes "[Michael]";
-					mes "I hope they're useful to you.";
-					close;
-				}
-				mes "[Michael]";
-				mes "Let me see... you will receive..";
-				mes "the Eden Group Boots II and Uniform II.";
-				next;
-				if (para_suv02 == 0) {
-					mes "[Michael]";
-					mes "I don't know what weapon will suit you so, you'll get a Dagger.";
-					mes "You don't have a record of receiving any supplies";
-					mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-					set para_suv01,23;
-					set para_suv02,2;
-					getitem 13050,1; //P_Dagger1
-					getitem 2457,1; //Para_Team_Boots2
-					getitem 15010,1; //Para_Team_Uniform2
-					getitem 5583,1; //Para_Team_Hat
-					getitem 2560,1; //Para_Team_Manteau
-					next;
-					mes "[Michael]";
-					mes "Check your supplies again and look after it.";
-					close;
-				}
-				mes "[Michael]";
-				mes "A Weapon, Uniform and Boots all 3 supplies.";
+			}
+			mes "[Michael]";
+			if (Class == Job_Swordman || Class == Job_Swordman_High || Class == Job_Knight || Class == Job_Crusader) {
+				callsub S_Select,"We have one and Two-handed swords",
+					1192,"Eden Slayer I","Two-handed sword","Attack 162","",//P_Slayer1
+					13423,"Eden Saber I","One-handed sword","Attack 147","This is what we strive for.";//P_Sabre1
+			}
+			if (Class == Job_Thief || Class == Job_Thief_High || Class == Job_Assassin || Class == Job_Rogue || Class == Job_Ninja || Class == Job_Novice || Class == Job_Novice_High) {
+				callsub S_Select,"",
+					13050,"Eden Dagger I","Dagger","MATK+60, attack 124","This is what we strive for.";//P_Dagger1
+			}
+			if (Class == Job_Merchant || Class == Job_Merchant_High || Class == Job_Blacksmith || Class == Job_Alchemist) {
+				callsub S_Select,"We have a mace and a One-handed sword",
+					13423,"Eden Saber I","One-handed sword","Attack 147","This is what we strive for.",// P_Sabre1
+					16004,"Eden Mace I","Mace","Attack 142","";// P_Mace1
+			}
+			if (Class == Job_Archer || Class == Job_Archer_High || Class == Job_Hunter || Class == Job_Dancer || Class == Job_Bard) {
+				callsub S_Select,"",
+					1747,"Eden Bow I","Bow","Attack 82","";//P_Bow1
+			}
+			if (Class == Job_Acolyte || Class == Job_Acolyte_High || Class == Job_Priest || Class == Job_Monk) {
+				callsub S_Select,"We have a mace and a staff",
+					1650,"Eden Mace I","Mace","Attack 142","", //P_Staff1
+					16004,"Eden Staff I","Staff","INT+2, MATK+125, attack 60",""; //P_Mace1
+			}
+			if (Class == Job_Mage || Class == Job_Mage_High || Class == Job_Wizard || Class == Job_Sage) {
+				callsub S_Select,"",
+					1650,"Eden Staff I","Staff","INT+2, MATK+125, attack 60","";//P_Staff1
+			}
+			if (Class == Job_Gunslinger) {
+				callsub S_Select,"",
+					13112,"Eden Revolver I","Revolver","HIT-5, attack 44","";//P_Revolver1
+			}
+			mes "Let me see... you will receive..";
+			mes "the Eden Group Boots II and Uniform II.";
+			next;
+			mes "[Michael]";
+			para_suv01 = 23;
+			getitem 13050,1; //P_Dagger1
+			getitem 2457,1; //Para_Team_Boots2
+			getitem 15010,1; //Para_Team_Uniform2
+			if (para_suv02 == 0) {
 				mes "I don't know what weapon will suit you so, you'll get a Dagger.";
-				mes "Please check it again.";
-				set para_suv01,23;
-				set para_suv02,2;
-				getitem 13050,1; //P_Dagger1
-				getitem 2457,1; //Para_Team_Boots2
-				getitem 15010,1; //Para_Team_Uniform2
+				mes "You don't have a record of receiving any supplies";
+				mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
+				getitem 5583,1; //Para_Team_Hat
+				getitem 2560,1; //Para_Team_Manteau
+				para_suv02 = 2;
 				next;
 				mes "[Michael]";
-				mes "I hope they're useful to you.";
+				mes "Check your supplies again and look after it.";
 				close;
 			}
-		}
-		if (para_suv01 == 37) {
+			para_suv02 = 2;
+			mes "A Weapon, Uniform and Boots all 3 supplies.";
+			mes "I don't know what weapon will suit you so, you'll get a Dagger.";
+			mes "Please check it again.";
+			next;
 			mes "[Michael]";
+			mes "I hope they're useful to you.";
+		}
+		else if (para_suv01 == 37) {
 			mes "You've completed the last training course.";
 			mes "It's time for you to receive a new weapon.";
 			next;
@@ -2812,533 +1909,79 @@ moc_para01,112,96,5	script	Administrator Michael	967,{
 			mes "[Michael]";
 			mes "^4d4dffPlease check you inventory to get those supplies.^000000";
 			next;
-			switch (select("I'll come back.:I have enough room.")) {
-			case 1:
+			if (select("I'll come back.:I have enough room.") == 1) {
 				mes "[Michael]";
 				mes "Make sure you have enough room.";
 				close;
-			case 2:
-				if (Class == Job_Swordman || Class == Job_Swordman_High || Class == Job_Knight || Class == Job_Crusader) {
-					mes "[Michael]";
-					mes "What kind of weapon do you want?";
-					mes "We have one and Two-handed swords.";
-					mes "Here are the options.";
-					next;
-					mes "[Michael]";
-					mes "Eden Saber II: One-handed sword. attack 170.";
-					mes "Eden Slayer II: Two-handed sword. attack 185.";
-					mes "Both of them are Lv. 2 weapons and the required level is 40.";
-					next;
-					mes "[Michael]";
-					mes "They also can't be traded with other players or be refined.";
-					next;
-					switch (select("Eden Saber II:Eden Slayer II")) {
-					case 1:
-						mes "[Michael]";
-						mes "You've chosen the Eden Sabre II.";
-						mes "Additionally you'll receive the Eden Group Boots III and Uniform III.";
-						next;
-						if (para_suv02 == 0) {
-							mes "[Michael]";
-							mes "You don't have a record of receiving any supplies";
-							mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-							set para_suv01, 38;
-							set para_suv02, 3;
-							getitem 13424,1; //P_Sabre2
-							getitem 2458,1; //Para_Team_Boots3
-							getitem 15011,1; //Para_Team_Uniform3
-							getitem 5583,1; //Para_Team_Hat
-							getitem 2560,1; //Para_Team_Manteau
-							next;
-							mes "[Michael]";
-							mes "Check your supplies again and look after it.";
-							close;
-						}
-						mes "[Michael]";
-						mes "A One-handed sword, Uniform, and Boots all 3 supplies.";
-						mes "Please check it again.";
-						set para_suv01,38;
-						set para_suv02,3;
-						getitem 13424,1; //P_Sabre2
-						getitem 2458,1; //Para_Team_Boots3
-						getitem 15011,1; //Para_Team_Uniform3
-						next;
-						mes "[Michael]";
-						mes "I hope they're useful to you.";
-						close;
-					case 2:
-						mes "[Michael]";
-						mes "You've chosen the Eden Slayer II.";
-						mes "Additionally you'll receive the Eden Group Boots III and Uniform III.";
-						next;
-						if (para_suv02 == 0) {
-							mes "[Michael]";
-							mes "You don't have a record of receiving any supplies";
-							mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-							set para_suv01,38;
-							set para_suv02,3;
-							getitem 1193,1; //P_Slayer2
-							getitem 2458,1; //Para_Team_Boots3
-							getitem 15011,1; //Para_Team_Uniform3
-							getitem 5583,1; //Para_Team_Hat
-							getitem 2560,1; //Para_Team_Manteau
-							next;
-							mes "[Michael]";
-							mes "Check your supplies again and look after it.";
-							close;
-						}
-						mes "[Michael]";
-						mes "A Two-handed sword, Uniform, and Boots all 3 supplies.";
-						mes "Please check it again.";
-						set para_suv01,38;
-						set para_suv02,3;
-						getitem 1193,1; //P_Slayer2
-						getitem 2458,1; //Para_Team_Boots3
-						getitem 15011,1; //Para_Team_Uniform3
-						next;
-						mes "[Michael]";
-						mes "I hope they're useful to you.";
-						close;
-					}
-				}
-				if (Class == Job_Thief || Class == Job_Thief_High || Class == Job_Assassin || Class == Job_Rogue) {
-					mes "[Michael]";
-					mes "We only have 1 weapon for you.";
-					next;
-					mes "[Michael]";
-					mes "Eden Dagger II: Dagger. MATK+70, attack 158.";
-					mes "It is Lv. 2 and the required level is 40.";
-					next;
-					mes "[Michael]";
-					mes "It also can't be traded with other players or be refined.";
-					next;
-					mes "[Michael]";
-					mes "You'll receive the Eden Dagger II.";
-					next;
-					mes "[Michael]";
-					mes "Additionally you'll receive the Eden Group Boots III and Uniform III.";
-					next;
-					if (para_suv02 == 0) {
-						mes "[Michael]";
-						mes "You don't have a record of receiving any supplies";
-						mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-						set para_suv02, 3;
-						getitem 13051,1; //P_Dagger2
-						getitem 2458,1; //Para_Team_Boots3
-						getitem 15011,1; //Para_Team_Uniform3
-						getitem 5583,1; //Para_Team_Hat
-						getitem 2560,1; //Para_Team_Manteau
-						next;
-						mes "[Michael]";
-						mes "Check your supplies again and look after it.";
-						close;
-					}
-					mes "[Michael]";
-					mes "A Dagger, Uniform, and Boots all 3 supplies.";
-					mes "Please check it again.";
-					set para_suv01,38;
-					set para_suv02,3;
-					getitem 13051,1; //P_Dagger2
-					getitem 2458,1; //Para_Team_Boots3
-					getitem 15011,1; //Para_Team_Uniform3
-					next;
-					mes "[Michael]";
-					mes "I hope they're useful to you.";
-					close;
-				}
-				if (Class == Job_Acolyte || Class == Job_Acolyte_High || Class == Job_Priest || Class == Job_Monk) {
-					mes "[Michael]";
-					mes "What kind of weapon do you want?";
-					mes "We have a mace and a staff.";
-					mes "Here are the options.";
-					next;
-					mes "[Michael]";
-					mes "Eden Mace II: Mace. attack 163.";
-					mes "Eden Staff II: Staff. INT+3, MATK+150, attack 60.";
-					mes "Both of them are Lv. 2 weapons and the required level is 40.";
-					next;
-					mes "[Michael]";
-					mes "They also can't be traded with other players or be refined.";
-					next;
-					switch (select("Eden Staff II:Eden Mace II")) {
-					case 1:
-						mes "[Michael]";
-						mes "You've chosen the Eden Staff II.";
-						mes "Additionally you'll receive the Eden Group Boots III and Uniform III.";
-						next;
-						if (para_suv02 == 0) {
-							mes "[Michael]";
-							mes "You don't have a record of receiving any supplies";
-							mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-							set para_suv01,38;
-							set para_suv02,3;
-							getitem 1651,1; //P_Staff2
-							getitem 2458,1; //Para_Team_Boots3
-							getitem 15011,1; //Para_Team_Uniform3
-							getitem 5583,1; //Para_Team_Hat
-							getitem 2560,1; //Para_Team_Manteau
-							next;
-							mes "[Michael]";
-							mes "Check your supplies again and look after it.";
-							close;
-						}
-						mes "[Michael]";
-						mes "A Staff, Uniform, and Boots all 3 supplies.";
-						mes "Please check it again.";
-						set para_suv01,38;
-						set para_suv02,3;
-						getitem 1651,1; //P_Staff2
-						getitem 2458,1; //Para_Team_Boots3
-						getitem 15011,1; //Para_Team_Uniform3
-						next;
-						mes "[Michael]";
-						mes "I hope they're useful to you.";
-						close;
-					case 2:
-						mes "[Michael]";
-						mes "You've chosen the Eden Mace II.";
-						mes "Additionally you'll receive the Eden Group Boots III and Uniform III.";
-						next;
-						if (para_suv02 == 0) {
-							mes "[Michael]";
-							mes "You don't have a record of receiving any supplies";
-							mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-							set para_suv01,38;
-							set para_suv02,3;
-							getitem 16005,1; //P_Mace2
-							getitem 2458,1; //Para_Team_Boots3
-							getitem 15011,1; //Para_Team_Uniform3
-							getitem 5583,1; //Para_Team_Hat
-							getitem 2560,1; //Para_Team_Manteau
-							next;
-							mes "[Michael]";
-							mes "Check your supplies again and look after it.";
-							close;
-						}
-						mes "[Michael]";
-						mes "A Mace, Uniform, and Boots all 3 supplies.";
-						mes "Please check it again.";
-						set para_suv01,38;
-						set para_suv02,3;
-						getitem 16005,1; //P_Mace2
-						getitem 2458,1; //Para_Team_Boots3
-						getitem 15011,1; //Para_Team_Uniform3
-						next;
-						mes "[Michael]";
-						mes "I hope they're useful to you.";
-						close;
-					}
-				}
-				if (Class == Job_Archer || Class == Job_Archer_High || Class == Job_Hunter || Class == Job_Dancer || Class == Job_Bard) {
-					mes "[Michael]";
-					mes "We only have 1 weapon for you.";
-					next;
-					mes "[Michael]";
-					mes "Eden Bow II: Bow. attack 82.";
-					mes "It is Lv. 2 and the required level is 40.";
-					next;
-					mes "[Michael]";
-					mes "It also can't be traded with other players or be refined.";
-					next;
-					mes "[Michael]";
-					mes "You'll receive the Eden Bow II.";
-					next;
-					mes "[Michael]";
-					mes "Additionally you'll receive the Eden Group Boots III and Uniform III.";
-					next;
-					if (para_suv02 == 0) {
-						mes "[Michael]";
-						mes "You don't have a record of receiving any supplies";
-						mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-						set para_suv01,38;
-						set para_suv02,3;
-						getitem 1748,1; //P_Bow2
-						getitem 2458,1; //Para_Team_Boots3
-						getitem 15011,1; //Para_Team_Uniform3
-						getitem 5583,1; //Para_Team_Hat
-						getitem 2560,1; //Para_Team_Manteau
-						next;
-						mes "[Michael]";
-						mes "Check your supplies again and look after it.";
-						close;
-					}
-					mes "[Michael]";
-					mes "A Bow, Uniform, and Boots all 3 supplies.";
-					mes "Please check it again.";
-					set para_suv01,38;
-					set para_suv02,3;
-					getitem 1748,1; //P_Bow2
-					getitem 2458,1; //Para_Team_Boots3
-					getitem 15011,1; //Para_Team_Uniform3
-					next;
-					mes "[Michael]";
-					mes "I hope they're useful to you.";
-					close;
-				}
-				if (Class == Job_Novice || Class == Job_Novice_High || Class == Job_SuperNovice || Class == Job_Soul_Linker || BaseClass == Job_Ninja) {
-					mes "[Michael]";
-					mes "We only have 1 weapon for you.";
-					next;
-					mes "[Michael]";
-					mes "Eden Dagger II: Dagger. MATK+70, attack 158.";
-					mes "It is Lv. 2 and the required level is 40.";
-					next;
-					mes "[Michael]";
-					mes "It also can't be traded with other players or be refined.";
-					next;
-					mes "[Michael]";
-					mes "You'll receive the Eden Dagger II.";
-					next;
-					mes "[Michael]";
-					mes "Additionally you'll receive the Eden Group Boots III and Uniform III.";
-					next;
-					if (para_suv02 == 0) {
-						mes "[Michael]";
-						mes "You don't have a record of receiving any supplies";
-						mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-						set para_suv01,38;
-						set para_suv02,3;
-						getitem 13051,1; //P_Dagger2
-						getitem 2458,1; //Para_Team_Boots3
-						getitem 15011,1; //Para_Team_Uniform3
-						getitem 5583,1; //Para_Team_Hat
-						getitem 2560,1; //Para_Team_Manteau
-						next;
-						mes "[Michael]";
-						mes "Check your supplies again and look after it.";
-						close;
-					}
-					mes "[Michael]";
-					mes "A Dagger, Uniform, and Boots all 3 supplies.";
-					mes "Please check it again.";
-					set para_suv01, 38;
-					set para_suv02, 3;
-					getitem 13051,1; //P_Dagger2
-					getitem 2458,1; //Para_Team_Boots3
-					getitem 15011,1; //Para_Team_Uniform3
-					next;
-					mes "[Michael]";
-					mes "I hope they're useful to you.";
-					close;
-				}
-				if (Class == Job_Mage || Class == Job_Mage_High || Class == Job_Wizard || Class == Job_Sage) {
-					mes "[Michael]";
-					mes "We only have 1 weapon for you.";
-					next;
-					mes "[Michael]";
-					mes "Eden Staff II: Staff. INT+3, MATK+155, attack 60.";
-					mes "It is Lv. 2 and the required level is 40.";
-					next;
-					mes "[Michael]";
-					mes "It also can't be traded with other players or be refined.";
-					next;
-					mes "[Michael]";
-					mes "You'll receive the Eden Staff II.";
-					next;
-					mes "[Michael]";
-					mes "Additionally you'll receive the Eden Group Boots III and Uniform III.";
-					next;
-					if (para_suv02 == 0) {
-						mes "[Michael]";
-						mes "You don't have a record of receiving any supplies";
-						mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-						set para_suv01,38;
-						set para_suv02,3;
-						getitem 1651,1; //P_Staff2
-						getitem 2458,1; //Para_Team_Boots3
-						getitem 15011,1; //Para_Team_Uniform3
-						getitem 5583,1; //Para_Team_Hat
-						getitem 2560,1; //Para_Team_Manteau
-						next;
-						mes "[Michael]";
-						mes "Check your supplies again and look after it.";
-						close;
-					}
-					mes "[Michael]";
-					mes "A Staff, Uniform, and Boots all 3 supplies.";
-					mes "Please check it again.";
-					set para_suv01,38;
-					set para_suv02,3;
-					getitem 1651,1; //P_Staff2
-					getitem 2458,1; //Para_Team_Boots3
-					getitem 15011,1; //Para_Team_Uniform3
-					next;
-					mes "[Michael]";
-					mes "I hope they're useful to you.";
-					close;
-				}
-				if (Class == Job_Merchant || Class == Job_Merchant_High || Class == Job_Blacksmith || Class == Job_Alchemist) {
-					mes "[Michael]";
-					mes "What kind of weapon do you want?";
-					mes "We have a mace and a one-handed sword.";
-					mes "Here are the options.";
-					next;
-					mes "[Michael]";
-					mes "Eden Saber II: One-handed sword. attack 170.";
-					mes "Eden Mace II: Mace. attack 163.";
-					mes "Both of them are Lv. 2 weapons and the required level is 40.";
-					next;
-					mes "[Michael]";
-					mes "They also can't be traded with other players or be refined.";
-					next;
-					switch (select("Eden Saber II:Eden Mace II")) {
-					case 1:
-						mes "[Michael]";
-						mes "You've chosen the Eden Sabre II.";
-						mes "Additionally you'll receive the Eden Group Boots III and Uniform III.";
-						next;
-						if (para_suv02 == 0) {
-							mes "[Michael]";
-							mes "You don't have a record of receiving any supplies";
-							mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-							set para_suv01,38;
-							set para_suv02,3;
-							getitem 13424,1; //P_Sabre2
-							getitem 2458,1; //Para_Team_Boots3
-							getitem 15011,1; //Para_Team_Uniform3
-							getitem 5583,1; //Para_Team_Hat
-							getitem 2560,1; //Para_Team_Manteau
-							next;
-							mes "[Michael]";
-							mes "Check your supplies again and look after it.";
-							close;
-						}
-						mes "[Michael]";
-						mes "A One-handed sword, Uniform and Boots all 3 supplies.";
-						mes "Please check it again.";
-						set para_suv01,38;
-						set para_suv02,3;
-						getitem 13424,1; //P_Sabre2
-						getitem 2458,1; //Para_Team_Boots3
-						getitem 15011,1; //Para_Team_Uniform3
-						next;
-						mes "[Michael]";
-						mes "I hope they're useful to you.";
-						close;
-					case 2:
-						mes "[Michael]";
-						mes "You've chosen the Eden Mace II.";
-						mes "Additionally you'll receive the Eden Group Boots III and Uniform III.";
-						next;
-						if (para_suv02 == 0) {
-							mes "[Michael]";
-							mes "You don't have a record of receiving any supplies";
-							mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-							set para_suv01, 38;
-							set para_suv02, 3;
-							getitem 16005,1; //P_Mace2
-							getitem 2458,1; //Para_Team_Boots3
-							getitem 15011,1; //Para_Team_Uniform3
-							getitem 5583,1; //Para_Team_Hat
-							getitem 2560,1; //Para_Team_Manteau
-							next;
-							mes "[Michael]";
-							mes "Check your supplies again and look after it.";
-							close;
-						}
-						mes "[Michael]";
-						mes "A Mace, Uniform and Boots all 3 supplies.";
-						mes "Please check it again.";
-						set para_suv01,38;
-						set para_suv02,3;
-						getitem 16005,1; //P_Mace2
-						getitem 2458,1; //Para_Team_Boots3
-						getitem 15011,1; //Para_Team_Uniform3
-						next;
-						mes "[Michael]";
-						mes "I hope they're useful to you.";
-						close;
-					}
-				}
-				if (Class == Job_Gunslinger) {
-					mes "[Michael]";
-					mes "We only have 1 weapon for you.";
-					next;
-					mes "[Michael]";
-					mes "Eden Revolver II: Revolver. HIT-5, attack 60.";
-					mes "It is Lv. 2 and the required level is 40.";
-					next;
-					mes "[Michael]";
-					mes "It also can't be traded with other players or be refined.";
-					next;
-					mes "[Michael]";
-					mes "You'll receive the Eden Revolver II.";
-					next;
-					mes "[Michael]";
-					mes "Additionally you'll receive the Eden Group Boots III and Uniform III.";
-					next;
-					if (para_suv02 == 0) {
-						mes "[Michael]";
-						mes "You don't have a record of receiving any supplies";
-						mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-						set para_suv01,38;
-						set para_suv02,3;
-						getitem 13113,1; //P_Revolver2
-						getitem 2458,1; //Para_Team_Boots3
-						getitem 15011,1; //Para_Team_Uniform3
-						getitem 5583,1; //Para_Team_Hat
-						getitem 2560,1; //Para_Team_Manteau
-						next;
-						mes "[Michael]";
-						mes "Check your supplies again and look after it.";
-						close;
-					}
-					mes "[Michael]";
-					mes "A Revolver, Uniform and Boots all 3 supplies.";
-					mes "Please check it again.";
-					set para_suv01,38;
-					set para_suv02,3;
-					getitem 13113,1; //P_Revolver2
-					getitem 2458,1; //Para_Team_Boots3
-					getitem 15011,1; //Para_Team_Uniform3
-					next;
-					mes "[Michael]";
-					mes "I hope they're useful to you.";
-					close;
-				}
-				mes "[Michael]";
-				mes "Let me see... you will receive..";
-				mes "the Eden Group Boots III and Uniform III.";
-				next;
-				if (para_suv02 == 0) {
-					mes "[Michael]";
-					mes "You don't have a record of receiving any supplies";
-					mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-					set para_suv01,38;
-					set para_suv02,3;
-					getitem 2458,1; //Para_Team_Boots3
-					getitem 15011,1; //Para_Team_Uniform3
-					getitem 5583,1; //Para_Team_Hat
-					getitem 2560,1; //Para_Team_Manteau
-					next;
-					mes "[Michael]";
-					mes "Check your supplies again and look after it.";
-					close;
-				}
-				mes "[Michael]";
-				mes "A Uniform and Boots all 2 supplies.";
-				mes "Please check it again.";
-				set para_suv01,38;
-				set para_suv02,3;
-				getitem 2458,1; //Para_Team_Boots3
-				getitem 15011,1; //Para_Team_Uniform3
+			}
+			mes "[Michael]";
+			if (Class == Job_Swordman || Class == Job_Swordman_High || Class == Job_Knight || Class == Job_Crusader) {
+				callsub S_Select,"We have one and Two-handed swords",
+					13424,"Eden Saber II","One-handed sword","Attack 170","",///P_Sabre2
+					1193,"Eden Slayer II","Two-handed sword","Attack 185","";//P_Slayer2
+			}
+			if (Class == Job_Thief || Class == Job_Thief_High || Class == Job_Assassin || Class == Job_Rogue || Class == Job_Novice || Class == Job_Novice_High || Class == Job_SuperNovice || Class == Job_Soul_Linker || Class == Job_Ninja) {
+				callsub S_Select,"",
+					13051,"Eden Dagger II","Dagger","MATK+70, attack 158","";//P_Dagger2
+			}
+			if (Class == Job_Acolyte || Class == Job_Acolyte_High || Class == Job_Priest || Class == Job_Monk) {
+				callsub S_Select,"We have a mace and a staff",
+					1651,"Eden Mace II","Mace","Attack 163","", //P_Staff2
+					16005,"Eden Staff II","Staff","INT+3, MATK+150, attack 60",""; //P_Mace2
+			}
+			if (Class == Job_Archer || Class == Job_Archer_High || Class == Job_Hunter || Class == Job_Dancer || Class == Job_Bard) {
+				callsub S_Select,"",
+					1748,"Eden Bow II","Bow","Attack 82","";//P_Bow2
+			}
+			if (Class == Job_Mage || Class == Job_Mage_High || Class == Job_Wizard || Class == Job_Sage) {
+				callsub S_Select,"",
+					1651,"Eden Staff II","Staff","INT+3, MATK+155, attack 60","";//P_Staff2
+			}
+			if (Class == Job_Merchant || Class == Job_Merchant_High || Class == Job_Blacksmith || Class == Job_Alchemist) {
+				callsub S_Select,"We have a mace and a One-handed sword",
+					13424,"Eden Saber II","One-handed sword","Attack 170","",//P_Sabre2
+					16005,"Eden Mace II","Mace","Attack 163","";// P_Mace2
+			}
+			if (Class == Job_Gunslinger) {
+				callsub S_Select,"",
+					13113,"Eden Revolver II","Revolver","HIT-5, attack 60","";//P_Revolver2
+			}
+			mes "Let me see... you will receive..";
+			mes "the Eden Group Boots III and Uniform III.";
+			next;
+			para_suv01 = 38;
+			getitem 2458,1; //Para_Team_Boots3
+			getitem 15011,1; //Para_Team_Uniform3
+			mes "[Michael]";
+			if (para_suv02 == 0) {
+				mes "You don't have a record of receiving any supplies";
+				mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
+				para_suv02 = 3;
+				getitem 5583,1; //Para_Team_Hat
+				getitem 2560,1; //Para_Team_Manteau
 				next;
 				mes "[Michael]";
-				mes "I hope they're useful to you.";
+				mes "Check your supplies again and look after it.";
 				close;
 			}
+			para_suv02 = 3;
+			mes "A Uniform and Boots all 2 supplies.";
+			mes "Please check it again.";
+			next;
+			mes "[Michael]";
+			mes "I hope they're useful to you.";
 		}
-		mes "[Michael]";
-		mes "Wait...I will check the record...";
-		mes "...";
-		mes "...hummmm.";
-		next;
-		mes "[Michael]";
-		mes "Sorry, but I can't find any record that you can obtain supplies.";
-		mes "Are you sure?";
+		else {
+			mes "Wait...I will check the record...";
+			mes "...";
+			mes "...hummmm.";
+			next;
+			mes "[Michael]";
+			mes "Sorry, but I can't find any record that you can obtain supplies.";
+			mes "Are you sure?";
+		}
 		close;
 	case 2:
-		mes "[Michael]";
 		mes "We store weapons, armor and other goods which were created by the Eden Group here.";
 		mes "We also have a lot of special stuff.";
 		next;
@@ -3353,149 +1996,22 @@ moc_para01,112,96,5	script	Administrator Michael	967,{
 		mes "If I make a mistake, Reke will punish me.";
 		close;
 	case 3:
-		mes "[Michael]";
 		mes "You mean upgrading equipment, right?";
 		mes "We can only upgrade the Eden Group Hat.";
 		next;
+		mes "[Michael]";
 		if (para_suv02 == 3) {
 			if (countitem(5583) > 0) {
 				disable_items;
-				mes "[Michael]";
 				mes "What status bonus do you want to upgrade?";
 				next;
 				switch (select("Upgrade STR:Upgrade AGI:Upgrade VIT:Upgrade INT:Upgrade DEX:Upgrade LUK:Nevermind.")) {
-				case 1:
-					mes "[Michael]";
-					mes "I see.";
-					mes "I will ^4d4dffUpgrade STR^000000.";
-					mes "Are you sure?";
-					next;
-					switch (select("Yes I am.:No wait.")) {
-					case 1:
-						mes "[Michael]";
-						mes "I will start to upgrade.";
-						next;
-						mes "[Michael]";
-						mes "Here you are.";
-						set para_suv02,4;
-						delitem 5583,1;
-						getitem2 5583, 1, 1, 0, 0, 0, 0, 0, 4701;
-						close;
-					case 2:
-						mes "[Michael]";
-						mes "Don't you want to upgrade?";
-						close;
-					}
-				case 2:
-					mes "[Michael]";
-					mes "I see.";
-					mes "I will ^4d4dffUpgrade AGI^000000.";
-					mes "Are you sure?";
-					next;
-					switch (select("Yes I am.:No wait.")) {
-					case 1:
-						mes "[Michael]";
-						mes "I will start to upgrade.";
-						next;
-						mes "[Michael]";
-						mes "Here you are.";
-						set para_suv02,4;
-						delitem 5583,1;
-						getitem2 5583, 1, 1, 0, 0, 0, 0, 0, 4731;
-						close;
-					case 2:
-						mes "[Michael]";
-						mes "Don't you want to upgrade?";
-						close;
-					}
-				case 3:
-					mes "[Michael]";
-					mes "I see.";
-					mes "I will ^4d4dffUpgrade VIT^000000.";
-					mes "Are you sure?";
-					next;
-					switch (select("Yes I am.:No wait.")) {
-					case 1:
-						mes "[Michael]";
-						mes "I will start to upgrade.";
-						next;
-						mes "[Michael]";
-						mes "Here you are.";
-						set para_suv02,4;
-						delitem 5583,1;
-						getitem2 5583, 1, 1, 0, 0, 0, 0, 0, 4741;
-						close;
-					case 2:
-						mes "[Michael]";
-						mes "Don't you want to upgrade?";
-						close;
-					}
-				case 4:
-					mes "[Michael]";
-					mes "I see.";
-					mes "I will ^4d4dffUpgrade INT^000000.";
-					mes "Are you sure?";
-					next;
-					switch (select("Yes I am.:No wait.")) {
-					case 1:
-						mes "[Michael]";
-						mes "I will start to upgrade.";
-						next;
-						mes "[Michael]";
-						mes "Here you are.";
-						set para_suv02,4;
-						delitem 5583,1;
-						getitem2 5583, 1, 1, 0, 0, 0, 0, 0, 4711;
-						close;
-					case 2:
-						mes "[Michael]";
-						mes "Don't you want to upgrade?";
-						close;
-					}
-				case 5:
-					mes "[Michael]";
-					mes "I see.";
-					mes "I will ^4d4dffUpgrade DEX^000000.";
-					mes "Are you sure?";
-					next;
-					switch (select("Yes I am.:No wait.")) {
-					case 1:
-						mes "[Michael]";
-						mes "I will start to upgrade.";
-						next;
-						mes "[Michael]";
-						mes "Here you are.";
-						set para_suv02, 4;
-						delitem 5583,1;
-						getitem2 5583, 1, 1, 0, 0, 0, 0, 0, 4721;
-						close;
-					case 2:
-						mes "[Michael]";
-						mes "Don't you want to upgrade?";
-						close;
-					}
-				case 6:
-					mes "[Michael]";
-					mes "I see.";
-					mes "I will ^4d4dffUpgrade LUK^000000.";
-					mes "Are you sure?";
-					next;
-					switch (select("Yes I am.:No wait.")) {
-					case 1:
-						mes "[Michael]";
-						mes "I will start to upgrade.";
-						next;
-						mes "[Michael]";
-						mes "Here you are.";
-						set para_suv02, 4;
-						delitem 5583,1;
-						getitem2 5583, 1, 1, 0, 0, 0, 0, 0, 4751;
-						close;
-					case 2:
-						mes "[Michael]";
-						mes "Don't you want to upgrade?";
-						close;
-					}
+				case 1: callsub S_Upgrade,"STR",4701;
+				case 2: callsub S_Upgrade,"AGI",4731;
+				case 3: callsub S_Upgrade,"VIT",4741;
+				case 4: callsub S_Upgrade,"INT",4711;
+				case 5: callsub S_Upgrade,"DEX",4721;
+				case 6: callsub S_Upgrade,"LUK",4751;
 				case 7:
 					mes "[Michael]";
 					mes "Why? It'll be beter than it is.";
@@ -3506,13 +2022,11 @@ moc_para01,112,96,5	script	Administrator Michael	967,{
 					close;
 				}
 			}
-			mes "[Michael]";
 			mes "First come with a Hat that you want me to upgrade.";
 			mes "Make sure that it's in your inventory, got it?";
 			close;
 		}
 		if (para_suv02 == 4) {
-			mes "[Michael]";
 			mes "Umm, didn't you upgrade this already?";
 			mes "According to the records";
 			mes ""+strcharinfo(0)+": Has already upgraded their Hat.";
@@ -3522,7 +2036,6 @@ moc_para01,112,96,5	script	Administrator Michael	967,{
 			mes "Sorry but I can't do it twice.";
 			close;
 		}
-		mes "[Michael]";
 		mes "You haven't received all the supplies up to step 3.";
 		mes "Upgrading your Hat is a special service.";
 		next;
@@ -3530,6 +2043,109 @@ moc_para01,112,96,5	script	Administrator Michael	967,{
 		mes "Sorry but I can't help you.";
 		close;
 	}
+S_Upgrade:
+	mes "[Michael]";
+	mes "I see.";
+	mes "I will ^4d4dffUpgrade "+ getarg(0) +"^000000.";
+	mes "Are you sure?";
+	next;
+	switch (select("Yes I am.:No wait.")) {
+	case 1:
+		mes "[Michael]";
+		mes "I will start to upgrade.";
+		next;
+		mes "[Michael]";
+		mes "Here you are.";
+		para_suv02 = 4;
+		delitem 5583,1;
+		getitem2 5583,1,1,0,0,0,0,0,getarg(1);
+		close;
+	case 2:
+		mes "[Michael]";
+		mes "Don't you want to upgrade?";
+		close;
+	}
+
+S_Select:
+	.@total_arg = getargcount();
+	if (.@total_arg < 7)
+		mes "We only have 1 weapon for you.";
+	else {
+		mes "What kind of weapon do you want?";
+		mes getarg(0);
+		mes "Here are the options.";
+	}
+	next;
+	mes "[Michael]";
+	for ( .@i = 1; .@i < .@total_arg; .@i += 5 ) {
+		set .@menu$, .@menu$ + getarg(.@i+1) + ":";
+		mes getarg(.@i+1)+": "+ getarg(.@i+2) +". "+ getarg(.@i+3) +".";
+	}
+	if (.@total_arg < 7)
+		mes "It is Lv. 2 and the required level is "+ (para_suv01 == 22 ? "26" : "40") +".";
+	else
+		mes "Both of them are Lv. 2 weapons and the required level is "+ (para_suv01 == 22 ? "26" : "40") +".";
+	next;
+	mes "[Michael]";
+	mes "They also can't be traded with other players or be refined.";
+	next;
+	//			callsub S_Select,"We have one and Two-handed swords",
+		//			13424,"Eden Saber II","One-handed sword","Attack 170","",///P_Sabre2
+			//		1193,"Eden Slayer II","Two-handed sword","Attack 185","";//P_Slayer2
+	if (.@total_arg < 7) {
+		.@i = 1;
+		mes "[Michael]";
+		mes "You'll receive the "+ getarg(.@i+1) +".";
+		next;
+		mes "[Michael]";
+	}
+	else {
+		.@i = (select(.@menu$) -1) *5 +1;
+		mes "[Michael]";
+		mes "You've chosen the "+ getarg(.@i+1) +".";
+	}
+	if (para_suv01 == 22) {
+		mes "Additionally you'll receive the Eden Group Boots II and Uniform II.";
+		next;
+		getitem 2457,1;	// Para_Team_Boots2
+		getitem 15010,1;// Para_Team_Uniform2
+		para_suv01 = 23;
+	}
+	else {
+		mes "Additionally you'll receive the Eden Group Boots III and Uniform III.";
+		next;
+		getitem 2458,1;// Para_Team_Boots3
+		getitem 15011,1;// Para_Team_Uniform3
+		para_suv01 = 38;
+	}
+	getitem getarg(.@i),1;
+	mes "[Michael]";
+	if (para_suv02 == 0) {
+		mes "You don't have a record of receiving any supplies";
+		mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
+		getitem 18514,1;// Para_Team_Hat2
+		getitem 2571,1;	// Para_Team_Manteau2
+		if (para_suv01 == 22)
+			para_suv02 = 2;
+		else
+			para_suv02 = 3;
+		next;
+		mes "[Michael]";
+		mes "Check your supplies again and look after it.";
+	}
+	else {
+		if (para_suv01 == 22)
+			para_suv02 = 2;
+		else
+			para_suv02 = 3;
+		mes "A "+ getarg(.@i+2) +", Uniform and Boots all 3 supplies.";
+		mes "Please check it again.";
+		next;
+		mes "[Michael]";
+		mes "I hope they're useful to you.";
+		mes getarg(.@i+4);
+	}
+	close;
 }
 
 moc_para01,179,44,3	script	Chef	820,{
@@ -5115,698 +3731,622 @@ spl_fild02,377,149,3	script	Dispatched Instructor#08	4_M_DST_MASTER,{
 	close;
 }
 
-moc_para01,111,83,3	script	Toren	813,{
-	if (checkweight(1101,5) == 0) {
-		mes "^3355FFWait a second!";
-		mes "Right now, you're carrying";
-		mes "to many things with you.";
-		mes "Please come back after";
-		mes "using the Kafra Service";
-		mes "to store some of your items.^000000";
+moc_para01,111,83,3	script	Blacksmith Thorn#2nd10	2_M_OLDBLSMITH,{
+	if (checkweight(2571,5) == 0) {
+		mes "- You have too many items in your inventory to continue -";
 		close;
 	}
-	mes "[Toren]";
-	mes "Hello adventurer, what can I do for you?";
+	mes "[Thorn]";
+	if (countitem(6219) < 1) {// Para_Team_Mark
+		mes "Hmm, are you a member of Eden Group?";
+		mes "You need to be one of our members to use my services.";
+		close;
+	}
+	mes "What's going on?";
 	next;
-	switch(select("Where is my reward?:I want an enchantment!")) {
+	switch( select( "Strengthen Equipment", "Personal Request", "Give me new equipment." ) ) {
+		mes "[Thorn]";
 	case 1:
-		if (para_suv02 == 5 || para_suv02 == 7 || para_suv02 == 9 || para_suv02 == 11 || para_suv02 == 13) {
-			mes "[Toren]";
-			mes "You must be ^0000FF" + strcharinfo(0) + "^000000, right? Instructor Ur told me about you.";
+		if (para_2nd01 < 6) {
+			mes "Hmm equipment strengthening.";
+			mes "I don't exactly do that for just anyone.";
+			mes "The first step is at least a higher degree of training so have you done the Eden Group training yet?";
 			next;
-			mes "[Toren]";
-			mes "Here is a set of our advanced gears for you to use, wear them proudly as a member of the ^33CC33Paradise Group^000000 and don't think about selling them to anyone else.";
+			mes "[Thorn]";
+			mes "You have not awakened yet.";
+			mes "First do the missions set forth by Instructor Ur and I'll help you strengthen your equipment.";
 			next;
-			mes "[Toren]";
-			if (BaseClass == Job_Swordman) {
-				mes "Swordman Class gets a choice of weapons, would you like to have a sword or a spear?";
-				callsub L_Select,
-					1197,"Slayer","Two-handed Sword, 200 Atk", //P.Slayer III
-					13434,"Saber","One-handed Sword, 185 Atk", //P.Saber III
-					1434,"Spear","One-handed, 165 Atk"; //P.Spear I
+			mes "[Thorn]";
+			mes "I won't help you unless you do that first!";
+		}
+		else if (para_2nd04 == 3) {
+			mes "Strengthen your equipment eh?";
+			mes "I'll strengthen the new Eden Group equipment for you by giving it a random stat boost.";
+			next;
+			mes "[Thorn]";
+			mes "So what equipment do you want to enhance?";
+			next;
+			switch( select( "Eden Group Manteau II", "Eden Group Armor IV", "Eden Group Boots IV" ) ) {
+				case 1: callsub S_Enchant,2571,"Manteau";// Para_Team_Manteau2
+				case 2: callsub S_Enchant,15031,"Armor";// Para_Team_Armor
+				case 3: callsub S_Enchant,2473,"Boots";// Para_Team_Boots4
 			}
-			else if (BaseClass == Job_Merchant) {
-				mes "Merchant Class gets a choice of weapons, would you like to have an axe, dagger or a sword?";
-				callsub L_Select,
-					1391,"Axe","Two-handed, 195 Atk", //P.Two-Handed Axe I
-					13066,"Dagger","One-handed, 165 Atk, 80 Matk", //P.Dagger III
-					13434,"Sword","One-handed, 185 Atk"; //P.Saber III
+		}
+		else {
+			mes "I will strengthen your equipment after you've done a personal request of mine.";
+			next;
+			mes "[Thorn]";
+			mes "I just want to be sure that you're worthy of using my services.";
+		}
+		close;
+	case 2:
+		if (para_2nd02 < 2) {
+			mes "Have you started the request of Instructor Ur?";
+			mes "I'm lending my services to those who are worthy.";
+			next;
+			mes "[Thorn]";
+			mes "Besides, you won't have the equipment that I can enhance until you do those missions.";
+		}
+		else if (para_2nd04 == 0) {
+			mes "Glad you're here.";
+			mes "As a blacksmith I am in need of Iron materials constantly.";
+			next;
+			mes "[Thorn]";
+			mes "Of course there will be a reward eventually...";
+			mes "So...";
+			next;
+			mes "[Thorn]";
+			if (BaseLevel < 80) {
+				mes "Bring me some materials.";
+				mes "I need 20 Iron Ore, and 10 Iron.";
+			}
+			else {
+				mes "Bring me some materials.";
+				mes "Bring 20 Used Iron Plate.";
+				.@add = 1;
+			}
+			mes "It shouldn't be hard to get these can you bring them right away?";
+			next;
+			switch( select( "Sure thing.", "I don't want to." ) ) {
+				mes "[Thorn]";
+			case 1:
+				mes "I appreciate it.";
+				mes "So take your time and I'll be waiting.";
+				para_2nd04 = 1 + .@add;
+				setquest (7238 + .@add);// Errands for Thorn (easy/hard)
+				close;
+			case 2:
+				mes "Eh...?";
+				mes "Guess you're too busy to help me.";
+				close;
+			}
+		}
+		else if (para_2nd04 == 1 || para_2nd04 == 2) {
+			if (para_2nd04 == 1) {
+				setarray .@item[0],1002,998;// Iron_Ore, Iron
+				setarray .@amount[0],20,10;
+				setarray .@countitem[0],countitem(1002),countitem(998);
+				.@string$ = "I asked you to get 20 Iron Ore, and 10 Iron.";
+			}
+			else {
+				.@item[0] = 7319;
+				.@amount[0] = 20;
+				.@countitem[0] = countitem(7319);
+				.@add = 1;
+				.@string$ = "I asked you to get 20 Used Iron Plate.";
+			}
+			if (.@countitem[0] >= .@amount[0] && .@countitem[1] >= .@amount[1]) {
+				mes "Let me guess...";
+				mes "You've brought me the best quality materials.";
+				mes "Good.";
+				next;
+				mes "[Thorn]";
+				mes "I can always use more Iron materials.";
+				mes "Instead of a normal reward I'll give you an advanced equipment.";
+				next;
+				mes "[Thorn]";
+				mes "If at any time you think you have equipment that you need to strengthen come by me again.";
+				delitem .@item[0],.@amount[0];
+				if (.@countitem[1])
+					delitem .@item[1],.@amount[1];
+				para_2nd04 = 3;
+				erasequest (7238 + .@add);
+				setquest 7240;
+			}
+			else {
+				mes .@string$;
+				mes "I'm pretty sure that it isn't that difficult to do.";
+			}
+		}
+		else if (para_2nd04 == 3) {
+			mes "Now, that's it.";
+			mes "That's enough for today.";
+			mes "For now, ask me to strengthen your equipment and I'll do it for you.";
+			next;
+			mes "[Thorn]";
+			mes "If you have one of these bring them to me.";
+			mes "Eden Group Manteau II, Eden Group Armor IV, Eden Group Boots IV.";
+		}
+		else if (para_2nd04 == 4) {
+			if (checkquest(7241,PLAYTIME) == 0) {
+				mes "Come back later.";
+				mes "You have to wait for some time first.";
+			}
+			else {
+				mes "Uh-huh...";
+				mes "What are we going to... oh don't worry.";
+				mes "Come to me later.";
+				erasequest 7241;// Errands for Thorn timer
+				para_2nd04 = 0;
+			}
+		}
+		close;
+	case 3:
+		if (para_2nd02 < 1) {
+			mes "I'm not permitted to do this by Instructor Ur.";
+			mes "Don't mess with me.";
+		}
+		else if (para_2nd02 == 1) {
+			mes "Okay, I'll give you equipment.";
+			mes "I'll give you good armor and equipment that you'll be proud of.";
+			next;
+			mes "[Thorn]";
+			mes "So now, ^4d4dffmake sure that you have enough free inventory space.^000000";
+			next;
+			if (select( "Let me organize my inventory.", "I have free space." ) == 1) {
+				mes "[Thorn]";
+				mes "You do that.";
+				mes "Free up your inventory so that you can get the weapons, boots, and all the other equipment.";
+				close;
+			}
+			mes "[Thorn]";
+			if (BaseJob == Job_Knight || BaseJob == Job_Crusader) {
+				callsub L_Select,"One-handed sword, two-handed sword or spear.",
+					1197,"Eden Group Slayer III","Two-handed Sword, Attack 200",
+					13434,"Eden Group Saber III","One-handed Sword, Attack 185",
+					1434,"Eden Group Spear I","One-handed, Attack 165";
 			}
 			else if (BaseJob == Job_Assassin) {
-				mes "Assassin Class gets a choice of weapons, would you like to have a katar, dagger or a sword?";
-				callsub L_Select,
-					1289,"Katar","Two-handed, 155 Atk", //P.Katar I
-					13066,"Dagger","One-handed, 165 Atk, 80 Matk", //P.Dagger III
-					13434,"Sword","One-handed, 185 Atk"; //P.Saber III
+				callsub L_Select,"You have your choice of dagger or katar.",
+					13066,"Eden Group Dagger III","Dagger, MATK +80, ATK 165",
+					1289,"Eden Group Katar I","Katar, ATK 155";
 			}
-			else if (BaseJob == Job_Rogue) {
-				mes "Rogue Class gets a choice of weapons, would you like to have a dagger, bow or a sword?";
-				callsub L_Select,
-					13066,"Dagger","One-handed, 165 Atk, 80 Matk", //P.Dagger III
-					18106,"Bow","Two-handed, 140 Atk", //P.Bow III
-					13434,"Sword","One-handed, 185 Atk"; //P.Saber III
+			else if (BaseJob == Job_Rogue || BaseClass == Job_Novice)
+				getitem 13066,1;// P.Dagger III
+			else if (BaseJob == Job_Alchemist || BaseJob == Job_Blacksmith) {
+				callsub L_Select,"Your options are Mace, Saber and Axe.",
+					16014,"Eden Group Mace III","Mace, Attack 172",// P_Mace3
+					13434,"Eden Group Saber III","Sword, Attack 185",//P.Saber III
+					1391,"Eden Group Axe I","Axe, Attack 195"; //P.Two-Handed Axe I
 			}
-			else if (BaseJob == Job_Thief) {
-				mes "Thief Class gets a choice of weapons, would you like to have a dagger or a sword?";
-				callsub L_Select,
-					13066,"Dagger","One-handed, 165 Atk, 80 Matk", //P.Dagger III
-					13434,"Sword","One-handed, 185 Atk"; //P.Saber III
-			}
-			else if (BaseJob == Job_Bard) {
-				mes "Bard Class gets a choice of weapons, would you like to have a guitar, bow or a dagger?";
-				callsub L_Select,
-					1931,"Guitar","One-handed, 125 Atk", //P.Guitar I
-					18106,"Bow","Two-handed, 140 Atk", //P.Bow III
-					13066,"Dagger","One-handed, 165 Atk, 80 Matk"; //P.Dagger III
-			}
-			else if (BaseJob == Job_Dancer) {
-				mes "Dancer Class gets a choice of weapons, would you like to have a whip, bow or a dagger?";
-				callsub L_Select,
-					1986,"Whip","One-handed, 125 Atk", //P.Tail I
-					18106,"Bow","Two-handed, 140 Atk", //P.Bow III
-					13066,"Dagger","One-handed, 165 Atk, 80 Matk"; //P.Dagger III
-			}
-			else if (BaseClass == Job_Archer) {
-				mes "Archer Class gets a choice of weapons, would you like to have a bow or a dagger?";
-				callsub L_Select,
-					18106,"Bow","Two-handed, 140 Atk", //P.Bow III
-					13066,"Dagger","One-handed, 165 Atk, 80 Matk"; //P.Dagger III
+			else if (BaseJob == Job_Wizard)
+				getitem 1658,1;// P.Staff III
+			else if (BaseJob == Job_Sage) {
+				callsub L_Select,"",
+					1658,"Eden Group Staff III","Staff, MATK + 170, INT +4, Attack 60", //P.Staff III
+					1583,"Eden Group Dictionary I","Book, MATK +100, Attack 135"; //P.Book I
 			}
 			else if (BaseJob == Job_Priest) {
-				mes "Priest Class gets a choice of weapons, would you like to have a staff, mace or a book?";
-				callsub L_Select,
-					1658,"Staff","One-handed, 60 Atk, 170 Matk, 4 Int", //P.Staff III
-					16014,"Mace","One-handed, 172 Atk", //P.Mace III
-					1583,"Book","One-handed, 135 Atk, 110 Matk"; //P.Book I
+				callsub L_Select,"",
+					1658,"Eden Group Staff III","Staff, MATK + 170, INT +4, Attack 60", //P.Staff III
+					1583,"Eden Group Dictionary I","Book, MATK +100, Attack 135", //P.Book I
+					16014,"Eden Group Mace III","Mace, Attack 172"; //P.Mace III
 			}
 			else if (BaseJob == Job_Monk) {
-				mes "Monk Class gets a choice of weapons, would you like to have a knuckle, mace or a staff?";
-				callsub L_Select,
-					1831,"Knuckle","One-handed, 120 Atk", //P.Knuckle I
-					16014,"Mace","One-handed, 172 Atk", //P.Mace III
-					1658,"Staff","One-handed, 60 Atk, 170 Matk, 4 Int"; //P.Staff III
+				callsub L_Select,"",
+					1831,"Eden Group Knuckles I","Knuckle, Attack 120", //P.Knuckle I
+					16014,"Eden Group Mace III","Mace, Attack 172"; //P.Mace III
 			}
-			else if (BaseJob == Job_Acolyte) {
-				mes "Acolyte Class gets a choice of weapons, would you like to have a staff or a mace?";
-				callsub L_Select,
-					1658,"Staff","One-handed, 60 Atk, 170 Matk, 4 Int", //P.Staff III
-					16014,"Mace","One-handed, 172 Atk"; //P.Mace III
+			else if (BaseJob == Job_Hunter)
+				getitem 18106,1;// P.Bow III
+			else if (BaseJob == Job_Bard) {
+				callsub L_Select,"",
+					18106,"Eden Group Bow III","Bow, Attack 140", //P.Bow III
+					1931,"Eden Group Guitar I","Guitar, Attack 125"; //P.Guitar I
 			}
-			else if (BaseJob == Job_Sage) {
-				mes "Sage Class gets a choice of weapons, would you like to have a staff, book or a dagger?";
-				callsub L_Select,
-					1658,"Staff","One-handed, 60 Atk, 170 Matk, 4 Int", //P.Staff III
-					1583,"Book","One-handed, 135 Atk, 110 Matk", //P.Book I
-					13066,"Dagger","One-handed, 165 Atk, 80 Matk"; //P.Dagger III
+			else if (BaseJob == Job_Dancer) {
+				callsub L_Select,"",
+					18106,"Eden Group Bow III","Bow, Attack 140", //P.Bow III
+					1986,"Eden Group Whip I","Whip, Attack 125"; //P.Tail I
 			}
-			else if (BaseClass == Job_Mage || Class == Job_Soul_Linker) {
-				mes "Mage and Soul Linker Class gets a choice of weapons, would you like to have a staff or a dagger?";
-				callsub L_Select,
-					1658,"Staff","One-handed, 60 Atk, 170 Matk, 4 Int", //P.Staff III
-					13066,"Dagger","One-handed, 165 Atk, 80 Matk"; //P.Dagger III
+			else if (Class == Job_Ninja) {
+				callsub L_Select,"",
+					13066,"Eden Group Dagger III","Dagger, MATK +80, ATK 165", //P.Dagger III
+					13310,"Eden Group Huuma Shuriken I","Huuma Suriken, MATK +50, ATK 170"; //P.Huuma Suriken I
 			}
-			else if (BaseClass == Job_Ninja) {
-				mes "Ninja Class gets a choice of weapons, would you like to have a huuma suriken or a dagger?";
-				callsub L_Select,
-					13310,"Huuma Suriken","Two-handed, 170 Atk, 50 Matk", //P.Huuma Suriken I
-					13066,"Dagger","One-handed, 165 Atk, 80 Matk"; //P.Dagger III
+			else if (Class == Job_Star_Gladiator)
+				getitem 1583,1; //P.Book I
+			else if (Class == Job_Soul_Linker) {
+				callsub L_Select,"",
+					13066,"Eden Group Dagger III","Dagger, MATK +80, ATK 165", //P.Dagger III
+					1658,"Eden Group Staff III","Staff, MATK +170, INT +4, ATK 60"; //P.Staff III
 			}
-			else if (Class == Job_Star_Gladiator) getitem 1583,1; //P.Book I
-			else if (Class == Job_Gunslinger) getitem 13114,1; //P.Revolver III
-			else if (BaseClass == Job_Novice) getitem 13066,1; //P.Dagger III
-			getitem 18514,1; //Paradise Hat II
-			getitem 2571,1; //Paradise Mantle II
-			getitem 2473,1; //Paradise Boots IV
-			getitem 15031,1; //Paradise Uniform IV
-			set para_suv02,14;
-			if (para_suv01 > 40)
-				set para_suv01, para_suv01+1;
-			if (Class == Job_Taekwon) {
-				mes "I'm sorry, but Teakwon Class can't wear any of our weapons...";
+			else if (Class == Job_Gunslinger)
+				getitem 13114,1; //P.Revolver III
+			else {
+				mes "Hmm, you are eligible to receive equipment.";
+				mes "Yeah I understand that.";
 				next;
-			}
-			mes "See you later, and good luck on your adventures!";
-			close;
-		}
-		if (para_suv02 == 14) {
-			setarray .@Check[0],18514,2571,2473,15031;
-			setarray .@Item$[0],"Hat","Mantle","Boots","Uniform";
-			for(set .@i,0; .@i<4; set .@i,.@i+1)
-				if (countitem(.@Check[.@i]) < 1) {
-					mes "[Toren]";
-					mes "Where is the Paradise "+.@Item$[.@i]+" I gave you?";
-					next;
-					mes "[Toren]";
-					mes "...Fine, I will sell you another one for ^FF0000250,000 Zeny^000000. Don't lose it this time.";
-					next;
-					if(select("Ok.:No, thanks.") == 2) {
-						mes "[Toren]";
-						mes "Come back if you change your mind.";
-						close;
-					}
-					if (Zeny < 250000) {
-						mes "[Toren]";
-						mes "You dont have enough zeny.";
-						close;
-					}
-					set Zeny, Zeny - 250000;
-					getitem .@Check[.@i],1;
-					mes "[Toren]";
-					mes "These advanced gears are not easy to make, please take better care of this one.";
-					close;
-				}
-			mes "[Toren]";
-			mes "I already gave you the most advanced gears we have to offer.";
-			close;
-		}
-		mes "[Toren]";
-		mes "You need to complete quests given to you by ^0000FFInstructor Ur^000000 if you want a reward.";
-		close;
-	case 2:
-		if (para_suv02 < 14) {
-			mes "[Toren]";
-			mes "First you need the ^0000FFAdvanced Paradise Gears^000000.";
-			close;
-		}
-		if (paragearenchant < 1) {
-			mes "[Toren]";
-			mes "Alright, but I'll need a few items for the enchantment process.";
-			next;
-			if (BaseLevel >= 90) {
-				set paragearenchant,1;
-				setquest 7239;
-				mes "[Toren]";
-				mes "Just bring me ^0000FF20 Used Iron Plates^000000.";
+				mes "[Thorn]";
+				mes "Hmm something went wrong though. I'm not sure what...";
 				close;
 			}
-			set paragearenchant,2;
-			setquest 7238;
-			mes "[Toren]";
-			mes "Just bring me ^0000FF20 Iron Ores and 10 Irons^000000.";
-			close;
+			para_2nd02 = 2;
+			getitem 18514,1;// Paradise Hat II
+			getitem 2571,1;// Paradise Mantle II
+			getitem 2473,1;// Paradise Boots IV
+			getitem 15031,1;// Paradise Uniform IV
+			mes "Here's your equipment.";
+			mes "I'll also give you the other gear that comes along with this set.";
 		}
-		if (paragearenchant == 1) {
-			if (countitem(7319) >= 20) {
-				mes "[Toren]";
-				mes "Thanks, that's what I needed!";
-				next;
-				delitem 7319,20; // Used Iron Plate
-				set paragearenchant,3;
-				changequest 7239,7240;
-				mes "[Toren]";
-				mes "Give me a second to prepare before I enchant your gears.";
-				close;
-			}
-			mes "[Toren]";
-			mes "Just bring me ^0000FF20 Used Iron Plates^000000.";
-			close;
-		}
-		if (paragearenchant == 2) {
-			if ((countitem(1002) >= 20) && (countitem(998) >= 10)) {
-				mes "[Toren]";
-				mes "Thanks, that's what I needed!";
-				next;
-				delitem 1002,20; // Iron Ore
-				delitem 998,10; // Iron
-				set paragearenchant,3;
-				changequest 7238,7240;
-				mes "[Toren]";
-				mes "Give me a second to prepare before I enchant your gears.";
-				close;
-			}
-			mes "[Toren]";
-			mes "Just bring me ^0000FF20 Iron Ores and 10 Irons^000000.";
-			close;
-		}
-		if (paragearenchant == 3) {
-			mes "[Toren]";
-			mes "Before we begin I would like to mention that this enchantment proccess ^FF0000can not fail^000000.";
+		else if (para_2nd02 == 2) {
+			mes "You can strengthen the equipment that I gave you.";
+			mes "Weapons Expert BK is at Eden Group Headquarters and he can do that for you.";
 			next;
-			mes "[Toren]";
-			mes "I am able to add 2 enchantments at once, and if something is already enchanted I will ^FF0000re-do the current enchantments^000000 for you.";
-			next;
-			mes "[Toren]";
-			mes "Now pick which gear you would like me to enchant.";
-			next;
-			setarray .@Item[0],2571,2473,15031;
-			set .@i, select("Paradise Mantle II.:Paradise Boots IV.:Paradise Uniform IV.")-1;
-			if (countitem(.@Item[.@i]) < 1) {
-				mes "[Toren]";
-				mes "Bring one and I'll enchant it.";
-				close;
-			}
-			set .@paragearcount, .@Item[.@i];
-			mes "[Toren]";
-			mes "Here we go!";
-			close2;
-			specialeffect2 EF_MAPPILLAR;
-			progressbar "ffff00",4;
-			set .@enc_paragear,rand(1,42);
-			if (.@enc_paragear == 1) set .@addpart,4763;
-			else if (.@enc_paragear == 2) set .@addpart,4765;
-			else if (.@enc_paragear == 3) set .@addpart,4790;
-			else if (.@enc_paragear == 4) set .@addpart,4794;
-			else if (.@enc_paragear < 7) set .@addpart,4762;
-			else if (.@enc_paragear < 9) set .@addpart,4764;
-			else if (.@enc_paragear < 11) set .@addpart,4789;
-			else if (.@enc_paragear < 13) set .@addpart,4793;
-			else if (.@enc_paragear < 15) set .@addpart,4701;
-			else if (.@enc_paragear < 17) set .@addpart,4711;
-			else if (.@enc_paragear < 19) set .@addpart,4721;
-			else if (.@enc_paragear < 21) set .@addpart,4731;
-			else if (.@enc_paragear < 23) set .@addpart,4741;
-			else if (.@enc_paragear < 25) set .@addpart,4751;
-			else if (.@enc_paragear < 28) set .@addpart,4788;
-			else if (.@enc_paragear < 31) set .@addpart,4792;
-			else if (.@enc_paragear < 35) set .@addpart,4787;
-			else if (.@enc_paragear < 39) set .@addpart,4791;
-			else if (.@enc_paragear < 43) set .@addpart,4786;
-			set .@addpart2,4701+(10*rand(6));
-			delitem .@paragearcount,1;
-			getitem2 .@paragearcount, 1, 1, 0, 0, 0, 0, .@addpart2, .@addpart;
-			set paragearenchant,4;
-			changequest 7240,7241;
-			mes "[Toren]";
-			mes "It is finished! Come back tomorrow if you want to enchant more.";
-			close;
+			mes "[Thorn]";
+			mes "So go to him and he can make your equipment stronger.";
 		}
-		if ((paragearenchant == 4) && (checkquest(7241,PLAYTIME) != 2)) {
-			mes "[Toren]";
-			mes "Please come back tomorrow if you want to enchant more.";
-			close;
-		}
-		if ((paragearenchant == 4) && (checkquest(7241,PLAYTIME) == 2)) {
-			set paragearenchant,0;
-			erasequest 7241;
-			mes "[Toren]";
-			mes "Another day, another piece of equipment to enchant!";
-			close;
+		else {
+			mes "Have you gotten your gear yet?";
+			mes "I can give you the gear but I can't strengthen it for you.";
+			next;
+			mes "[Thorn]";
+			mes "Your armor can be strengthened by someone else.";
+			mes "I wish I could but I can't.";
 		}
 	}
-	end;
+	close;
 L_Select:
-	next;
-	mes "[Toren]";
-	set .@menu$,"";
-	for(set .@i,0; .@i<getargcount(); set .@i,.@i+3) {
-		set .@menu$, .@menu$+getarg(.@i+1)+".:";
-		mes getarg(.@i+1)+": "+getarg(.@i+2)+".";
-		mes " ";
+	mes "Choose a weapon.";
+	mes getarg(0);
+	mes "Choose from the following.";
+	for ( .@i = 1; .@i < getargcount(); .@i += 3 ) {
+		set .@menu$, .@menu$ + getarg(.@i+1) + ":";
+		mes getarg(.@i+1)+" : "+ getarg(.@i+2);
 	}
 	next;
-	set .@i, select(.@menu$)-1;
-	getitem getarg(.@i*3),1;
+	.@i = (select(.@menu$) -1) *3 +1;
 	mes "[Toren]";
+	getitem getarg(.@i),1;
 	return;
+S_Enchant:
+	mes "[Thorn]";
+	if (countitem(getarg(0)) > 0) {
+		// .@1st = rand(1,12);
+		// .@2nd = rand(1,12);
+
+		// if (.@1st == 1) .@1st = 4751;// Luck2
+		// else if (.@1st == 2) .@1st = 4787;// Mdef4
+		// else if (.@1st == 3) .@1st = 4791;// Def3
+		// else if (.@1st == 4) .@1st = 4701;// Strength2
+		// else if (.@1st == 5) .@1st = 4788;// Mdef6
+		// else if (.@1st == 6) .@1st = 4792;// Def6
+		// else if (.@1st == 7) .@1st = 4731;// Agility2
+		// else if (.@1st == 8) .@1st = 4789;// Mdef8
+		// else if (.@1st == 9) .@1st = 4793;// Def9
+		// else if (.@1st == 10) .@1st = 4721;// Dexterity2
+		// else if (.@1st == 11) .@1st = 4711;// Inteligence2
+		// else if (.@1st == 12) .@1st = 4741;// Vitality2
+
+		// if (.@2nd == 1) .@2nd = 4701;// Strength2
+		// else if (.@2nd == 2) .@2nd = 4787;// Mdef4
+		// else if (.@2nd == 3) .@2nd = 4741;// Vitality2
+		// else if (.@2nd == 4) .@2nd = 4791;// Def3
+		// else if (.@2nd == 5) .@2nd = 4788;// Mdef6
+		// else if (.@2nd == 6) .@2nd = 4792;// Def6
+		// else if (.@2nd == 7) .@2nd = 4721;// Dexterity2
+		// else if (.@2nd == 8) .@2nd = 4793;// Def9
+		// else if (.@2nd == 9) .@2nd = 4751;// Luck2
+		// else if (.@2nd == 10) .@2nd = 4789;// Mdef8
+		// else if (.@2nd == 11) .@2nd = 4731;// Agility2
+		// else if (.@2nd == 12) .@2nd = 4711;// Inteligence2
+		setarray .@bonus[1],
+			4751,// Luck2
+			4787,// Mdef4
+			4791,// Def3
+			4701,// Strength2
+			4788,// Mdef6
+			4792,// Def6
+			4731,// Agility2
+			4789,// Mdef8
+			4793,// Def9
+			4721,// Dexterity2
+			4711,// Inteligence2
+			4741;// Vitality2
+		.@1st = .@bonus[ rand(1,12) ];
+		.@2nd = .@bonus[ rand(1,12) ];
+		mes "Eden Group "+ getarg(1) +"?";
+		mes "I understand.";
+		mes "Remember the stats that are enhanced will be random.";
+		mes "You sure you want me to enhance this?";
+		next;
+		switch( select( "I changed my mind.", "Yes, enhance it." ) ) {
+			mes "[Thorn]";
+		case 1:
+			mes "You sure you don't want to enhance it?";
+			mes "It's your choice.";
+			close;
+		case 2:
+			mes "I understand.";
+			mes "Let's begin the enhancement.";
+			next;
+			specialeffect EF_REPAIRWEAPON;
+			progressbar "ffff00",3;
+			delitem getarg(0),1;
+			para_2nd04 = 4;
+			// erasequest 7240;// Equipment Enhancement
+			// setquest 7241;// Errands for Thorn timer
+			changequest 7240,7241;
+			getitem2 getarg(0),1,1,0,0,0,0,.@1st,.@2nd;						
+			mes "[Thorn]";
+			mes "Ok, seems that the enhancement went well.";
+			mes "If you don't like the result then you can come back again tomorrow.";
+			close;
+		}
+	}
+	mes "Hmm... Don't you have the "+ getarg(1) +"?";
+	mes "I don't think you have it with you.";
+	close;
 }
 
-moc_para01,112,79,3	script	Weapons Expert	851,{
-	if (checkweight(1101,5) == 0) {
-		mes "^3355FFWait a second!";
-		mes "Right now, you are carrying";
-		mes "to many things with you.";
-		mes "Please come back after";
-		mes "using the Kafra Service";
-		mes "to store some of your items.^000000";
-		close;
-	}
-	mes "[Weapons Expert]";
-	mes "Hello adventurer, what can I do for you today?";
+moc_para01,112,79,3	script	Weapons Expert BK#2nd11	4_M_REPAIR,{
+	setarray .@wplist[0],
+		1197,	// P_Slayer3
+		13434,	// P_Saber3
+		13066,	// P_Dagger3
+		1289,	// P_Katar1
+		1391,	// P_Two_Handed_Axe1
+		1434,	// P_Spear I
+		1658,	// P_Staff3
+		16014,	// P_Mace3
+		18106,	// P_Bow3
+		1583,	// P.Book I
+		1931,	// P_Guitar I
+		1986,	// P_Tail1
+		13114,	// P_Revolver3
+		1831,	// P_Knuckle1
+		13310;	// P_Huuma_Shuriken1
+	.@menu$ = "Eden Group Slayer III:" +
+		"Eden Group Saber III:" +
+		"Eden Group Dagger III:" +
+		"Eden Group Katar I:" +
+		"Eden Group Axe I:" +
+		"Eden Group Spear I:" +
+		"Eden Group Staff III:" +
+		"Eden Group Mace III:" +
+		"Eden Group Bow III:" +
+		"Eden Group Dictionary I:" +
+		"Eden Group Guitar I:" +
+		"Eden Group Whip I:" +
+		"Eden Group Revolver III:" +
+		"Eden Group Knuckles I:" +
+		"Eden Group Huuma Shuriken I";
+	mes "[BK]";
+	mes "What's happening?";
+	mes "No way?!";
 	next;
-	switch(select("Where is my reward?","I want an enchantment!")) {
-	case 1:
-		if ((para_suv02 == 14) && (countitem(1197) < 1) && (countitem(1289) < 1) && (countitem(1391) < 1) && (countitem(1434) < 1) && (countitem(1583) < 1) && (countitem(1658) < 1) && (countitem(1831) < 1) && (countitem(1931) < 1) && (countitem(1986) < 1) && (countitem(13066) < 1) && (countitem(13114) < 1) && (countitem(13310) < 1) && (countitem(13434) < 1) && (countitem(16014) < 1) && (countitem(18106) < 1)) {
-			mes "[Weapons Expert]";
-			mes "Where is the Paradise Weapon I gave you?";
-			next;
-			mes "[Weapons Expert]";
-			mes "...Fine, I will sell you another one for ^FF0000250,000 Zeny^000000. Don't lose it this time.";
-			next;
-			switch(select("Ok.","No, thanks.")) {
-			case 1:
-				mes "[Weapons Expert]";
-				if (Zeny < 250000) {
-					mes "You dont have enough zeny.";
-					close;
-				}
-				if (Class == Job_Taekwon) {
-					mes "Wait... Your Class doesn't have a weapon.";
-					close;
-				}
-				set Zeny, Zeny - 250000;
-				if (BaseClass == Job_Swordman) {
-					mes "Swordman Class gets a choice of weapons, would you like to have a sword or a spear?";
-					callsub L_Select,
-						1197,"Slayer","Two-handed Sword, 200 Atk", //P.Slayer III
-						13434,"Saber","One-handed Sword, 185 Atk", //P.Saber III
-						1434,"Spear","One-handed, 165 Atk"; //P.Spear I
-				}
-				else if (BaseClass == Job_Merchant) {
-					mes "Merchant Class gets a choice of weapons, would you like to have an axe, dagger or a sword?";
-					callsub L_Select,
-						1391,"Axe","Two-handed, 195 Atk", //P.Two-Handed Axe I
-						13066,"Dagger","One-handed, 165 Atk, 80 Matk", //P.Dagger III
-						13434,"Sword","One-handed, 185 Atk"; //P.Saber III
-				}
-				else if (BaseJob == Job_Assassin) {
-					mes "Assassin Class gets a choice of weapons, would you like to have a katar, dagger or a sword?";
-					callsub L_Select,
-						1289,"Katar","Two-handed, 155 Atk", //P.Katar I
-						13066,"Dagger","One-handed, 165 Atk, 80 Matk", //P.Dagger III
-						13434,"Sword","One-handed, 185 Atk"; //P.Saber III
-				}
-				else if (BaseJob == Job_Rogue) {
-					mes "Rogue Class gets a choice of weapons, would you like to have a dagger, bow or a sword?";
-					callsub L_Select,
-						13066,"Dagger","One-handed, 165 Atk, 80 Matk", //P.Dagger III
-						18106,"Bow","Two-handed, 140 Atk", //P.Bow III
-						13434,"Sword","One-handed, 185 Atk"; //P.Saber III
-				}
-				else if (BaseJob == Job_Thief) {
-					mes "Thief Class gets a choice of weapons, would you like to have a dagger or a sword?";
-					callsub L_Select,
-						13066,"Dagger","One-handed, 165 Atk, 80 Matk", //P.Dagger III
-						13434,"Sword","One-handed, 185 Atk"; //P.Saber III
-				}
-				else if (BaseJob == Job_Bard) {
-					mes "Bard Class gets a choice of weapons, would you like to have a guitar, bow or a dagger?";
-					callsub L_Select,
-						1931,"Guitar","One-handed, 125 Atk", //P.Guitar I
-						18106,"Bow","Two-handed, 140 Atk", //P.Bow III
-						13066,"Dagger","One-handed, 165 Atk, 80 Matk"; //P.Dagger III
-				}
-				else if (BaseJob == Job_Dancer) {
-					mes "Dancer Class gets a choice of weapons, would you like to have a whip, bow or a dagger?";
-					callsub L_Select,
-						1986,"Whip","One-handed, 125 Atk", //P.Tail I
-						18106,"Bow","Two-handed, 140 Atk", //P.Bow III
-						13066,"Dagger","One-handed, 165 Atk, 80 Matk"; //P.Dagger III
-				}
-				else if (BaseClass == Job_Archer) {
-					mes "Archer Class gets a choice of weapons, would you like to have a bow or a dagger?";
-					callsub L_Select,
-						18106,"Bow","Two-handed, 140 Atk", //P.Bow III
-						13066,"Dagger","One-handed, 165 Atk, 80 Matk"; //P.Dagger III
-				}
-				else if (BaseJob == Job_Priest) {
-					mes "Priest Class gets a choice of weapons, would you like to have a staff, mace or a book?";
-					callsub L_Select,
-						1658,"Staff","One-handed, 60 Atk, 170 Matk, 4 Int", //P.Staff III
-						16014,"Mace","One-handed, 172 Atk", //P.Mace III
-						1583,"Book","One-handed, 135 Atk, 110 Matk"; //P.Book I
-				}
-				else if (BaseJob == Job_Monk) {
-					mes "Monk Class gets a choice of weapons, would you like to have a knuckle, mace or a staff?";
-					callsub L_Select,
-						1831,"Knuckle","One-handed, 120 Atk", //P.Knuckle I
-						16014,"Mace","One-handed, 172 Atk", //P.Mace III
-						1658,"Staff","One-handed, 60 Atk, 170 Matk, 4 Int"; //P.Staff III
-				}
-				else if (BaseJob == Job_Acolyte) {
-					mes "Acolyte Class gets a choice of weapons, would you like to have a staff or a mace?";
-					callsub L_Select,
-						1658,"Staff","One-handed, 60 Atk, 170 Matk, 4 Int", //P.Staff III
-						16014,"Mace","One-handed, 172 Atk"; //P.Mace III
-				}
-				else if (BaseJob == Job_Sage) {
-					mes "Sage Class gets a choice of weapons, would you like to have a staff, book or a dagger?";
-					callsub L_Select,
-						1658,"Staff","One-handed, 60 Atk, 170 Matk, 4 Int", //P.Staff III
-						1583,"Book","One-handed, 135 Atk, 110 Matk", //P.Book I
-						13066,"Dagger","One-handed, 165 Atk, 80 Matk"; //P.Dagger III
-				}
-				else if (BaseClass == Job_Mage || Class == Job_Soul_Linker) {
-					mes "Mage and Soul Linker Class gets a choice of weapons, would you like to have a staff or a dagger?";
-					callsub L_Select,
-						1658,"Staff","One-handed, 60 Atk, 170 Matk, 4 Int", //P.Staff III
-						13066,"Dagger","One-handed, 165 Atk, 80 Matk"; //P.Dagger III
-				}
-				else if (BaseClass == Job_Ninja) {
-					mes "Ninja Class gets a choice of weapons, would you like to have a huuma suriken or a dagger?";
-					callsub L_Select,
-						13310,"Huuma Suriken","Two-handed, 170 Atk, 50 Matk", //P.Huuma Suriken I
-						13066,"Dagger","One-handed, 165 Atk, 80 Matk"; //P.Dagger III
-				}
-				else if (Class == Job_Star_Gladiator) getitem 1583,1; //P.Book I
-				else if (Class == Job_Gunslinger) getitem 13114,1; //P.Revolver III
-				else if (BaseClass == Job_Novice) getitem 13066,1; //P.Dagger III
-				mes "These weapons aren't easy to make, please take better care of this one.";
-				close;
-			case 2:
-				mes "[Weapons Expert]";
-				mes "Come back if you change your mind.";
-				close;
-			}
-		}
-		mes "[Weapons Expert]";
-		mes "My reward for you is enchantments on your ^0000FFParadise Weapon^000000.";
+	if (select( "Enhancing weapons.", "What?" ) == 2) {
+		mes "[BK]";
+		mes "Yeah?";
+		mes "Are you asking me what I know?";
 		next;
-		mes "[Weapons Expert]";
-		mes "The number of enchantments I can give you depends on which level of ^0000FFAdvanced Paradise Quests^000000 you have completed.";
+		select("...??");
+		mes "[BK]";
+		mes ".....????";
 		close;
-	case 2:
-		if (para_suv02 < 14) {
-			mes "[Weapons Expert]";
-			mes "First you need the ^0000FFAdvanced Paradise Gears^000000.";
-			close;
+	}
+	mes "[BK]";
+	mes "Ah, you're here to enhance your gear.";
+	mes "Okay, shall we?";
+	next;
+	mes "[BK]";
+	if (para_2nd02 < 2) {
+		mes "You have to have the equipment first in order for me to do anything.";
+		mes "Didn't you get anything from Thorn yet?";
+	}
+	else if (para_2nd02 == 2) {
+		if (para_2nd01 < 11) {
+			mes "Hmm, no.";
+			mes "I don't have permission from Instructor Ur.";
+			mes "You have to finish your training.";
+			next;
+			mes "[BK]";
+			mes "Once you do that I can help you.";
+			mes "Until then I won't talk to you.";
 		}
-		if ((countitem(1197) < 1) && (countitem(1289) < 1) && (countitem(1391) < 1) && (countitem(1434) < 1) && (countitem(1583) < 1) && (countitem(1658) < 1) && (countitem(1831) < 1) && (countitem(1931) < 1) && (countitem(1986) < 1) && (countitem(13066) < 1) && (countitem(13114) < 1) && (countitem(13310) < 1) && (countitem(13434) < 1) && (countitem(16014) < 1) && (countitem(18106) < 1)) {
-			mes "[Weapons Expert]";
-			mes "Did you sell your new Paradise Weapon? No enchantments for you.";
-			close;
-		}
-		if (para_suv01 < 44) {
-			mes "[Weapons Expert]";
-			mes "You haven't completed enough quests for an enchantment yet.";
+		else {
+			mes "Okay, what weapon do you want to enhance?";
 			next;
-			mes "[Weapons Expert]";
-			mes "Make sure to pick a weapon from Toren too.";
-			close;
-		}
-		if (para_suv01 == 44) {
-			mes "[Weapons Expert]";
-			mes "It seems you have earned your first weapon enchantment.";
-			next;
-			mes "[Weapons Expert]";
-			mes "There are only 2 to choose from, which one would you like?";
-			next;
-			if(select("Atk + 3%:Matk + 3%") == 1) set paraweaponenchant,4767;
-			else set paraweaponenchant,4806;
-			callsub L_GetWeapon;
-			mes "[Weapons Expert]";
-			mes "OK, gimmy a sec.";
-			close2;
-			specialeffect2 EF_MAPPILLAR;
-			progressbar "ffff00",4;
-			delitem paraweaponcount,1;
-			getitem2 paraweaponcount, 1, 1, 0, 0, 0, 0, 0, paraweaponenchant;
-			set para_suv01,45;
-			mes "[Weapons Expert]";
-			mes "All done.";
-			close;
-		}
-		if (para_suv01 == 47) {
-			mes "[Weapons Expert]";
-			mes "It seems you have earned your second weapon enchantment.";
-			next;
-			if (paraweaponenchant < 1) {
-				mes "[Weapons Expert]";
-				mes "Before I do the second enchantment, you need to pick the first one.";
+			.@s = select(.@menu$) -1;
+			mes "[BK]";
+			if (countitem(.@wplist[.@s]) > 0) {
+				mes "Ok for the first reinforcement.";
+				mes "ATK + 3% or MATK + 3%?";
+				mes "I'll give you the option to grant this effect on the selected gear.";
 				next;
-				mes "[Weapons Expert]";
-				mes "There are only 2 to choose from, which one would you like?";
+				mes "[BK]";
+				mes "You can't change your mind after so choose wisely.";
 				next;
-				if(select("Atk + 3%:Matk + 3%") == 1) set paraweaponenchant,4767;
-				else set paraweaponenchant,4806;
-				callsub L_GetWeapon;
-				mes "[Weapons Expert]";
-				mes "Gotcha, now for the second enchantment.";
-				next;
-			}
-			mes "[Weapons Expert]";
-			mes "This one is a little different, you are given the choice of which ^0000FFRace of monsters^000000 you would like to have increased damage with.";
-			next;
-			mes "[Weapons Expert]";
-			mes "You could also choose to increase your ^0000FFHealing Power^000000 too, which one would you like?";
-			next;
-			switch(select("Animal Type","Plant Type","Insect Type","Fish Type","Dragon Type","Healing Power")) {
-			case 1:
-				if (paraweaponenchant == 4767) set paraweaponenchant2,4060;
-				if (paraweaponenchant == 4806) set paraweaponenchant2,4472;
-				break;
-			case 2:
-				if (paraweaponenchant == 4767) set paraweaponenchant2,4068;
-				if (paraweaponenchant == 4806) set paraweaponenchant2,4470;
-				break;
-			case 3:
-				if (paraweaponenchant == 4767) set paraweaponenchant2,4063;
-				if (paraweaponenchant == 4806) set paraweaponenchant2,4476;
-				break;
-			case 4:
-				if (paraweaponenchant == 4767) set paraweaponenchant2,4080;
-				if (paraweaponenchant == 4806) set paraweaponenchant2,4469;
-				break;
-			case 5:
-				if (paraweaponenchant == 4767) set paraweaponenchant2,4118;
-				if (paraweaponenchant == 4806) set paraweaponenchant2,4471;
-				break;
-			case 6:
-				set paraweaponenchant2,4805;
-				break;
-			}
-			mes "[Weapons Expert]";
-			mes "OK, gimmy a sec.";
-			close2;
-			specialeffect2 EF_MAPPILLAR;
-			progressbar "ffff00",4;
-			delitem paraweaponcount,1;
-			getitem2 paraweaponcount, 1, 1, 0, 0, 0, 0, paraweaponenchant2, paraweaponenchant;
-			set para_suv01,48;
-			mes "[Weapons Expert]";
-			mes "All done.";
-			close;
-		}
-		if (para_suv01 == 50 || para_suv01 == 53) {
-			mes "[Weapons Expert]";
-			mes "It seems you have earned your third weapon enchantment.";
-			next;
-			if (paraweaponenchant < 1) {
-				mes "[Weapons Expert]";
-				mes "Before I do the other enchantments, you need to pick the first one.";
-				next;
-				mes "[Weapons Expert]";
-				mes "There are only 2 to choose from, which one would you like?";
-				next;
-				if(select("Atk + 3%:Matk + 3%") == 1) set paraweaponenchant,4767;
-				else set paraweaponenchant,4806;
-				callsub L_GetWeapon;
-				mes "[Weapons Expert]";
-				mes "Gotcha, on to the next one.";
-				next;
-			}
-			if (paraweaponenchant2 < 1) {
-				mes "[Weapons Expert]";
-				mes "Before I do the third enchantment, you need to pick the second one.";
-				next;
-				mes "[Weapons Expert]";
-				mes "This one is a little different, you are given the choice of which ^0000FFRace of monsters^000000 you would like to have increased damage with.";
-				next;
-				mes "[Weapons Expert]";
-				mes "You could also choose to increase your ^0000FFHealing Power^000000 too, which one would you like?";
-				next;
-				switch(select("Animal Type","Plant Type","Insect Type","Fish Type","Dragon Type","Healing Power")) {
-				case 1:
-					if (paraweaponenchant == 4767) set paraweaponenchant2,4060;
-					if (paraweaponenchant == 4806) set paraweaponenchant2,4472;
-					break;
-				case 2:
-					if (paraweaponenchant == 4767) set paraweaponenchant2,4068;
-					if (paraweaponenchant == 4806) set paraweaponenchant2,4470;
-					break;
-				case 3:
-					if (paraweaponenchant == 4767) set paraweaponenchant2,4063;
-					if (paraweaponenchant == 4806) set paraweaponenchant2,4476;
-					break;
-				case 4:
-					if (paraweaponenchant == 4767) set paraweaponenchant2,4080;
-					if (paraweaponenchant == 4806) set paraweaponenchant2,4469;
-					break;
-				case 5:
-					if (paraweaponenchant == 4767) set paraweaponenchant2,4118;
-					if (paraweaponenchant == 4806) set paraweaponenchant2,4471;
-					break;
-				case 6:
-					set paraweaponenchant2,4805;
-					break;
+				if (select( "ATK +3%","MATK +3%" ) == 1) {
+					.@string$ = "Ok, you've chosen to raise physical attack.";
+					.@card = 4767;
 				}
-				mes "[Weapons Expert]";
-				mes "Gotcha, now for the third one.";
+				else {
+					.@string$ = "Ok, you've chosen to raise magical attack.";
+					.@card = 4806;
+					.@add = 1;
+				}
+				mes "[BK]";
+				mes .@string$;
+				mes "Would you look at that. Your weapon will now be stronger.";
+				para_2nd03 = 1 + .@add;
 				next;
+				specialeffect EF_REPAIRWEAPON;
+				progressbar "ffff00",3;
+				para_2nd02 = 3;
+				delitem .@wplist[.@s],1;
+				getitem2 .@wplist[.@s],1,1,0,0,0,0,0,.@card;
+				mes "[BK]";
+				mes "Isn't it magnificent?";
+				mes "I know, I know, I'm pretty amazing!";
 			}
-			mes "[Weapons Expert]";
-			mes "The third enchantment is the same as the second one, you are given the choice of which ^0000FFRace of monsters^000000 you would like to have increased damage with.";
+			else {
+				mes "Are you kidding me?";
+				mes "You don't seem to have that weapon in your possession.";
+			}
+		}
+	}
+	else if (para_2nd02 == 3) {
+		if (para_2nd01 < 16) {
+			mes "Hmm, I'm not sure you're ready.";
+			mes "All 3 steps of Instructor Ur's missions have to be completed first.";
 			next;
-			mes "[Weapons Expert]";
-			mes "You could also choose to increase your ^0000FFHealing Power^000000 too, which one would you like?";
+			mes "[BK]";
+			mes "You get what I'm saying?";
+			mes "Finish the third mission from Instructor Ur.";
+		}
+		else {
+			mes "Good. So you previously received an addition to Atk or Matk.";
+			mes "For this option you can choose from Brute, Plant, Fish, Dragon, Increased Heal.";
 			next;
-			switch(select("Animal Type","Plant Type","Insect Type","Fish Type","Dragon Type","Healing Power")) {
+			mes "[BK]";
+			mes "Once you've chosen you can't change your mind again.";
+			mes "But your weapon will increase damage to the type of enhancement you pick.";
+			next;
+			mes "[BK]";
+			mes "Basically I will add a random monster card with the property type that you choose.";
+			mes "Good luck!";
+			next;
+			switch( select( "Brute Type", "Plant Type", "Insect Type", "Fish Type", "Dragon Type", "Increased Heal" ) ) {
 			case 1:
-				if (paraweaponenchant == 4767) set paraweaponenchant3,4060;
-				if (paraweaponenchant == 4806) set paraweaponenchant3,4472;
+				setarray .@arg[0],4060,4472,111;// Goblin_Card, Bradium_Goram_Card
+				.@type$ = "Brute";
 				break;
 			case 2:
-				if (paraweaponenchant == 4767) set paraweaponenchant3,4068;
-				if (paraweaponenchant == 4806) set paraweaponenchant3,4470;
+				setarray .@arg[0],4068,4470,121;// Scorpion_Card, Nepenthes_Card
+				.@type$ = "Plant";
 				break;
 			case 3:
-				if (paraweaponenchant == 4767) set paraweaponenchant3,4063;
-				if (paraweaponenchant == 4806) set paraweaponenchant3,4476;
+				setarray .@arg[0],4063,4476,131;// Caramel_Card, Pinguicula_Card
+				.@type$ = "Insect";
 				break;
 			case 4:
-				if (paraweaponenchant == 4767) set paraweaponenchant3,4080;
-				if (paraweaponenchant == 4806) set paraweaponenchant3,4469;
+				setarray .@arg[0],4080,4469,141;// Flora_Card, Naga_Card
+				.@type$ = "Fish";
 				break;
 			case 5:
-				if (paraweaponenchant == 4767) set paraweaponenchant3,4118;
-				if (paraweaponenchant == 4806) set paraweaponenchant3,4471;
+				setarray .@arg[0],4118,4471,151;// Petit_Card, Egg_Of_Draco_Card
+				.@type$ = "Dragon";
 				break;
 			case 6:
-				set paraweaponenchant3,4805;
-				break;
+				setarray .@arg[0],4805,4805,161;// Heal_Amount2
 			}
-			mes "[Weapons Expert]";
-			mes "OK, gimmy a sec.";
-			close2;
-			specialeffect2 EF_MAPPILLAR;
-			progressbar "ffff00",4;
-			delitem paraweaponcount,1;
-			getitem2 paraweaponcount, 1, 1, 0, 0, 0, paraweaponenchant3, paraweaponenchant2, paraweaponenchant;
-			set para_suv01,54;
-			mes "[Weapons Expert]";
-			mes "All done.";
+			mes "[BK]";
+			for ( .@i = 0; .@i < 15; .@i++ ) {
+				if (countitem(.@wplist[.@i]) > 0) {
+					if (.@arg[0] == 4805)
+						mes "Good. Your weapon will now increase Heal effectiveness.";
+					else
+						mes "Good. Your weapon will increase attacks to "+ .@type$ +" type monsters.";
+					next;
+					specialeffect EF_REPAIRWEAPON;
+					progressbar "ffff00",3;
+					delitem .@wplist[.@i],1;
+					para_2nd02 = 4;
+					if (para_2nd03 == 1) {
+						para_2nd03 = .@arg[2];
+						getitem2 .@wplist[.@i],1,1,0,0,0,0,.@arg[0],4767;
+					}
+					else {
+						para_2nd03 = .@arg[2] + 100;
+						getitem2 .@wplist[.@i],1,1,0,0,0,0,.@arg[1],4806;
+					}
+					mes "[BK]";
+					mes "Isn't it magnificent?";
+					mes "I know, I know, I'm pretty amazing!";
+					close;
+				}
+			}
+			mes "Sorry, but it doesn't seem like you have a weapon that can be enhanced.";
+			mes "How did this happen?";
 			close;
 		}
-		if (para_suv01 > 53) {
-			mes "[Weapons Expert]";
-			mes "That is the maximum number of enchanments I can do, enjoy them.";
-			close;
+	}
+	else if (para_2nd02 == 4) {
+		if (para_2nd01 < 30) {
+			mes "Instructor Ur has a lot of training missions doesn't he?";
+			mes "There's only one more stage.";
+			mes "Reach the final stage of training.";
 		}
-		mes "[Weapons Expert]";
-		mes "I've already enchanted your weapon, you need to complete more quests for the next enchantment.";
-		close;
+		else {
+			mes "Okay, this is the last step.";
+			mes "I will make your weapon even more enhanced.";
+			next;
+			mes "[BK]";
+			mes "The card added from the previous step will be doubled.";
+			mes "And if you have a healing weapon it will increase it's healing efficiency.";
+			mes "You understand?";
+			next;
+			mes "[BK]";
+			mes "Ok what weapon did you have now?";
+			next;
+			.@s = select(.@menu$) -1;
+			mes "[BK]";
+			if (countitem(.@wplist[.@s]) > 0) {
+				mes "Doubling the strength of your bonus stat.";
+				next;
+				specialeffect EF_REPAIRWEAPON;
+				progressbar "ffff00",3;
+				delitem .@wplist[.@s],1;
+				para_2nd02 = 5;
+				if (para_2nd03 == 111)
+					getitem2 .@wplist[.@s],1,1,0,0,0,4060,4060,4767;// Goblin_Card, Goblin_Card, Atk3
+				else if (para_2nd03 == 121)
+					getitem2 .@wplist[.@s],1,1,0,0,0,4068,4068,4767;// Scorpion_Card, Scorpion_Card, Atk3
+				else if (para_2nd03 == 131)
+					getitem2 .@wplist[.@s],1,1,0,0,0,4063,4063,4767;// Caramel_Card, Caramel_Card, Atk3
+				else if (para_2nd03 == 141)
+					getitem2 .@wplist[.@s],1,1,0,0,0,4080,4080,4767;// Flora_Card, Flora_Card, Atk3
+				else if (para_2nd03 == 151)
+					getitem2 .@wplist[.@s],1,1,0,0,0,4118,4118,4767;// Petit_Card, Petit_Card, Atk3
+				else if (para_2nd03 == 161)
+					getitem2 .@wplist[.@s],1,1,0,0,0,4805,4805,4767;// Heal_Amount2, Heal_Amount2, Atk3
+				else if (para_2nd03 == 211)
+					getitem2 .@wplist[.@s],1,1,0,0,0,4472,4472,4806;// Bradium_Goram_Card, Bradium_Goram_Card, Matk3
+				else if (para_2nd03 == 221)
+					getitem2 .@wplist[.@s],1,1,0,0,0,4470,4470,4806;// Nepenthes_Card, Nepenthes_Card, Matk3
+				else if (para_2nd03 == 231)
+					getitem2 .@wplist[.@s],1,1,0,0,0,4476,4476,4806;// Pinguicula_Card, Pinguicula_Card, Matk3
+				else if (para_2nd03 == 241)
+					getitem2 .@wplist[.@s],1,1,0,0,0,4469,4469,4806;// Naga_Card, Naga_Card, Matk3
+				else if (para_2nd03 == 251)
+					getitem2 .@wplist[.@s],1,1,0,0,0,4471,4471,4806;// Egg_Of_Draco_Card, Egg_Of_Draco_Card, Matk3
+				else if (para_2nd03 == 261)
+					getitem2 .@wplist[.@s],1,1,0,0,0,4805,4805,4806;// Heal_Amount2, Heal_Amount2, Matk3
+				mes "[BK]";
+				mes "Isn't it magnificent?";
+				mes "I know, I know, I'm pretty amazing!";
+			}
+			else {
+				mes "Hey, you think I'm joking?";
+				mes "Do you have the weapons or not?";
+			}
+		}
 	}
-	end;
-L_Select:
-	next;
-	mes "[Weapons Expert]";
-	set .@menu$,"";
-	for(set .@i,0; .@i<getargcount(); set .@i,.@i+3) {
-		set .@menu$, .@menu$+getarg(.@i+1)+".:";
-		mes getarg(.@i+1)+": "+getarg(.@i+2)+".";
-		mes " ";
+	else if (para_2nd02 > 4) {
+		mes "How do you like your enhanced weapon?";
+		mes "Hopefully it has helped you.";
+		next;
+		mes "[BK]";
+		mes "I've given you the peak of your weapon's efficiency.";
+		mes "Weapons aren't the only things that need strength, though, don't you agree?";
+		next;
+		mes "[BK]";
+		mes "Come on admit it.";
+		mes "Thorn gave inspiration and I intend on providing strong equipment, that's how to live life.";
+		mes "Hahahaha!";
 	}
-	next;
-	set .@i, select(.@menu$)-1;
-	getitem getarg(.@i*3),1;
-	mes "[Weapons Expert]";
-	return;
-L_GetWeapon:
-	if (countitem(1197)) set paraweaponcount,1197;
-	else if (countitem(1289)) set paraweaponcount,1289;
-	else if (countitem(1391)) set paraweaponcount,1391;
-	else if (countitem(1434)) set paraweaponcount,1434;
-	else if (countitem(1583)) set paraweaponcount,1583;
-	else if (countitem(1658)) set paraweaponcount,1658;
-	else if (countitem(1831)) set paraweaponcount,1831;
-	else if (countitem(1931)) set paraweaponcount,1931;
-	else if (countitem(1986)) set paraweaponcount,1986;
-	else if (countitem(13066)) set paraweaponcount,13066;
-	else if (countitem(13114)) set paraweaponcount,13114;
-	else if (countitem(13310)) set paraweaponcount,13310;
-	else if (countitem(13434)) set paraweaponcount,13434;
-	else if (countitem(16014)) set paraweaponcount,16014;
-	else if (countitem(18106)) set paraweaponcount,18106;
-	return;
+	close;
 }
 
 sec_in02,25,33,4	script	Assistant#para_suvquest	422,{

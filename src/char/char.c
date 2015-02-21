@@ -1049,15 +1049,15 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 	p->save_point.map = mapindex_name2id(save_map);
 
 	if( p->last_point.map == 0 ) {
-		p->last_point.map = mapindex_name2id(MAP_DEFAULT);
-		p->last_point.x = MAP_DEFAULT_X;
-		p->last_point.y = MAP_DEFAULT_Y;
+		p->last_point.map = mapindex_name2id(charserv_config.default_map);
+		p->last_point.x = charserv_config.default_map_x;
+		p->last_point.y = charserv_config.default_map_y;
 	}
 
 	if( p->save_point.map == 0 ) {
-		p->save_point.map = mapindex_name2id(MAP_DEFAULT);
-		p->save_point.x = MAP_DEFAULT_X;
-		p->save_point.y = MAP_DEFAULT_Y;
+		p->save_point.map = mapindex_name2id(charserv_config.default_map);
+		p->save_point.x = charserv_config.default_map_x;
+		p->save_point.y = charserv_config.default_map_y;
 	}
 
 	StringBuf_Init(&msg_buf);
@@ -2536,6 +2536,10 @@ void char_set_defaults(){
 	charserv_config.autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
 	charserv_config.start_zeny = 0;
 	charserv_config.guild_exp_rate = 100;
+
+	safestrncpy(charserv_config.default_map, "prontera", MAP_NAME_LENGTH);
+	charserv_config.default_map_x = 156;
+	charserv_config.default_map_y = 191;
 }
 
 bool char_config_read(const char* cfgName, bool normal){
@@ -2725,6 +2729,12 @@ bool char_config_read(const char* cfgName, bool normal){
 			charserv_config.charmove_config.char_moves_unlimited = config_switch(w2);
 		} else if (strcmpi(w1, "char_checkdb") == 0) {
 			charserv_config.char_check_db = config_switch(w2);
+		} else if (strcmpi(w1, "default_map") == 0) {
+			safestrncpy(charserv_config.default_map, w2, MAP_NAME_LENGTH);
+		} else if (strcmpi(w1, "default_map_x") == 0) {
+			charserv_config.default_map_x = atoi(w2);
+		} else if (strcmpi(w1, "default_map_y") == 0) {
+			charserv_config.default_map_y = atoi(w2);
 		} else if (strcmpi(w1, "import") == 0) {
 			char_config_read(w2, normal);
 		}
@@ -2912,6 +2922,8 @@ int do_init(int argc, char **argv)
 	}
 
 	do_init_chcnslif();
+	mapindex_check_mapdefault(charserv_config.default_map);
+	ShowInfo("Default map: '"CL_WHITE"%s %d,%d"CL_RESET"'\n", charserv_config.default_map, charserv_config.default_map_x, charserv_config.default_map_y);
 
 	ShowStatus("The char-server is "CL_GREEN"ready"CL_RESET" (Server is listening on the port %d).\n\n", charserv_config.char_port);
 

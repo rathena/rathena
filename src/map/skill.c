@@ -704,7 +704,7 @@ bool skill_isNotOk_hom(uint16 skill_id, struct homun_data *hd)
 
 	switch(skill_id) {
 		case MH_LIGHT_OF_REGENE: //must be cordial
-			if (hom_get_intimacy_grade(hd) != 4) {
+			if (hom_get_intimacy_grade(hd) < HOMGRADE_CORDIAL) {
 				if (hd->master)
 					clif_skill_fail(hd->master, skill_id, USESKILL_FAIL_RELATIONGRADE, 0);
 				return true;
@@ -2118,7 +2118,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	case HVAN_EXPLOSION:
 		if(src->type == BL_HOM){
 			TBL_HOM *hd = (TBL_HOM*)src;
-			hd->homunculus.intimacy = 200;
+			hd->homunculus.intimacy = (skill_id == HFLI_SBR44) ? 200 : 100; // hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION)
 			if (hd->master)
 				clif_send_homdata(hd->master,SP_INTIMATE,hd->homunculus.intimacy/100);
 		}
@@ -3622,7 +3622,7 @@ static int skill_check_condition_mercenary(struct block_list *bl, int skill, int
 		switch( skill )
 		{
 			case HFLI_SBR44:
-				if( hd->homunculus.intimacy <= 200 )
+				if( hd->homunculus.intimacy <= 200 ) // hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION)
 					return 0;
 				break;
 			case HVAN_EXPLOSION:
@@ -10228,8 +10228,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			struct block_list *s_bl = battle_get_master(src);
 			if(s_bl) sc_start(src, s_bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 			sc_start2(src, src, type, 100, skill_lv, hd->homunculus.level, skill_get_time(skill_id, skill_lv));
-			hd->homunculus.intimacy = 25100; //change to neutral (can't be cast if < 750)
-			if(sd) clif_send_homdata(sd, SP_INTIMATE, hd->homunculus.intimacy); //refresh intimacy info
+			hd->homunculus.intimacy = hom_intimacy_grade2intimacy(HOMGRADE_NEUTRAL); //change to neutral
+			if(sd) clif_send_homdata(sd, SP_INTIMATE, hd->homunculus.intimacy/100); //refresh intimacy info
 			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 		}
 		break;

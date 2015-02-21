@@ -1977,7 +1977,7 @@ OnTouch:
 	mapannounce strnpcinfo(4),strcharinfo(0) +" is second to reach the Finish Line! Congratulations!",bc_map,"0xFFFF00";
 	if (.@w$ == "e8" || .@w$ == "n8") setarray .@pts, 28961,40;
 	if (.@w$ == "e16" || .@w$ == "n16") setarray .@pts, 28951,50;
-	if (tt_points < .@pts[0]) set tt_point,tt_point+.@pts[1];
+	if (tt_point < .@pts[0]) set tt_point,tt_point+.@pts[1];
 	warp "turbo_room",72,89;
 	disablenpc "#cos_"+.@w$+"_end2";
 	enablenpc "#cos_"+.@w$+"_end3";

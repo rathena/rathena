@@ -89,8 +89,7 @@ int chrif_req_charunban(int aid, const char* character_name);
 int chrif_load_bankdata(int fd);
 
 int chrif_bsdata_request(uint32 char_id);
-int chrif_save_bsdata(struct map_session_data *sd);
-int chrif_load_bsdata(int fd);
+int chrif_bsdata_save(struct map_session_data *sd, bool quit);
 
 void do_final_chrif(void);
 void do_init_chrif(void);
