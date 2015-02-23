@@ -1666,7 +1666,7 @@ int status_percent_change(struct block_list *src, struct block_list *target, int
 	else if (hp_rate < -99)
 		hp = status->max_hp;
 	else if (hp_rate < 0)
-		hp = (apply_rate(status->hp, -hp_rate));
+		hp = (apply_rate(status->max_hp, -hp_rate));
 	if (hp_rate && !hp)
 		hp = 1;
 
@@ -1680,7 +1680,7 @@ int status_percent_change(struct block_list *src, struct block_list *target, int
 	else if (sp_rate < -99)
 		sp = status->max_sp;
 	else if (sp_rate < 0)
-		sp = (apply_rate(status->sp, -sp_rate));
+		sp = (apply_rate(status->max_sp, -sp_rate));
 	if (sp_rate && !sp)
 		sp = 1;
 
