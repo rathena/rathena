@@ -346,7 +346,7 @@ D31: Restrict("RE",7,8);
 	 setarray @c[2],192,9,10,192,100,92,181,11,94,96,192,8,94,96,192,8;
 	 Disp("Pyramids 1:Pyramids 2:Pyramids 3:Pyramids 4:Basement 1:Basement 2:Basement 1 - Nightmare Mode:Basement 2 - Nightmare Mode");
 	 Pick("","moc_pryd01","moc_pryd02","moc_pryd03","moc_pryd04","moc_pryd05","moc_pryd06","moc_prydn1","moc_prydn2");
-D32: setarray @c[2],140,11,32,21,4,149,204,218,150,9;
+D32: setarray @c[2],140,11,32,21,8,149,204,218,150,9;
 	 Disp("Rachel Sanctuary",1,5); Pick("ra_san");
 D33: Restrict("RE");
 	 setarray @c[2],364,44,101,141;
