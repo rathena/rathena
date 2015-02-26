@@ -619,7 +619,7 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 			script_get_constant(trim(str[0]), &group_id);
 
 		if (group_id < 0) {
-			ShowWarning("itemdb_read_itemgroup: Invlaid Group ID '%s' (%s:%d)\n", str[0], filename, ln);
+			ShowWarning("itemdb_read_itemgroup: Invalid Group ID '%s' (%s:%d)\n", str[0], filename, ln);
 			continue;
 		}
 
