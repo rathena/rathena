@@ -282,7 +282,7 @@ void hom_calc_skilltree(struct homun_data *hd, bool flag_evolve) {
 
 	/* load previous homunculus form skills first. */
 	if (hd->homunculus.prev_class != 0 && (c = hom_class2index(hd->homunculus.prev_class)) >= 0) {
-		for (i = 0; i < MAX_SKILL_TREE; i++) {
+		for (i = 0; i < MAX_HOM_SKILL_TREE; i++) {
 			uint16 skill_id;
 			short idx = -1;
 			bool fail = false;
@@ -312,7 +312,7 @@ void hom_calc_skilltree(struct homun_data *hd, bool flag_evolve) {
 	if ((c = hom_class2index(hd->homunculus.class_)) < 0)
 		return;
 
-	for (i = 0; i < MAX_SKILL_TREE; i++) {
+	for (i = 0; i < MAX_HOM_SKILL_TREE; i++) {
 		unsigned int intimacy = 0;
 		uint16 skill_id;
 		short idx = -1;
@@ -1525,8 +1525,15 @@ static bool read_homunculus_skilldb_sub(char* split[], int columns, int current)
 	}
 
 	skill_id = atoi(split[1]);
-	if ((idx = hom_skill_get_index(skill_id)) == -1) {
+	if (hom_skill_get_index(skill_id) == -1) {
 		ShowError("read_homunculus_skilldb: Invalid Homunculus skill '%s'.\n", split[1]);
+		return false;
+	}
+
+	// Search an empty line or a line with the same skill_id (stored in idx)
+	ARR_FIND(0, MAX_HOM_SKILL_TREE, idx, !hskill_tree[class_idx][idx].id || hskill_tree[class_idx][idx].id == skill_id);
+	if (idx == MAX_HOM_SKILL_TREE) {
+		ShowWarning("Unable to load skill %d into homunculus %d's tree. Maximum number of skills per class has been reached.\n", skill_id, atoi(split[0]));
 		return false;
 	}
 
@@ -1608,9 +1615,11 @@ void hom_reload_skill(void){
 
 void do_init_homunculus(void){
 	int class_;
+
 	read_homunculusdb();
 	read_homunculus_expdb();
 	read_homunculus_skilldb();
+
 	// Add homunc timer function to timer func list [Toms]
 	add_timer_func_list(hom_hungry, "hom_hungry");
 

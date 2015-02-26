@@ -235,6 +235,7 @@ bool mapif_homunculus_delete(int homun_id)
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
+	ShowInfo("Homunculus '%d' has been deleted.\n", homun_id);
 	return true;
 }
 

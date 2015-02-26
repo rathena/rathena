@@ -3817,14 +3817,14 @@ int map_sql_init(void)
 	if( SQL_ERROR == Sql_Connect(mmysql_handle, map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db) ||
 		SQL_ERROR == Sql_Connect(qsmysql_handle, map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db) )
 	{
-            ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-                        map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db);
-            Sql_ShowDebug(mmysql_handle);
-            Sql_Free(mmysql_handle);
-            Sql_ShowDebug(qsmysql_handle);
-            Sql_Free(qsmysql_handle);
-            exit(EXIT_FAILURE);
-        }
+		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
+			map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db);
+		Sql_ShowDebug(mmysql_handle);
+		Sql_Free(mmysql_handle);
+		Sql_ShowDebug(qsmysql_handle);
+		Sql_Free(qsmysql_handle);
+		exit(EXIT_FAILURE);
+	}
 	ShowStatus("Connect success! (Map Server Connection)\n");
 
 	if( strlen(default_codepage) > 0 ) {
@@ -3833,7 +3833,6 @@ int map_sql_init(void)
 		if ( SQL_ERROR == Sql_SetEncoding(qsmysql_handle, default_codepage) )
 			Sql_ShowDebug(qsmysql_handle);
 	}
-
 	return 0;
 }
 

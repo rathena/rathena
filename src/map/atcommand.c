@@ -9120,9 +9120,9 @@ ACMD_FUNC(unloadnpcfile) {
 }
 ACMD_FUNC(cart) {
 #define MC_CART_MDFY(idx, x) \
-	sd->status.skill[(idx)].id = x?MC_PUSHCART:0; \
-	sd->status.skill[(idx)].lv = x?1:0; \
-	sd->status.skill[(idx)].flag = x?SKILL_FLAG_TEMPORARY:SKILL_FLAG_PERMANENT;
+	sd->status.skill[(idx)].id = (x)?MC_PUSHCART:0; \
+	sd->status.skill[(idx)].lv = (x)?1:0; \
+	sd->status.skill[(idx)].flag = (x)?SKILL_FLAG_TEMPORARY:SKILL_FLAG_PERMANENT;
 
 	int val = atoi(message);
 	bool need_skill = (pc_checkskill(sd, MC_PUSHCART) == 0);

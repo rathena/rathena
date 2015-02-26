@@ -4438,7 +4438,6 @@ static int mob_read_sqlskilldb(void)
 		return 0;
 	}
 
-
 	for( fi = 0; fi < ARRAYLENGTH(mob_skill_db_name); ++fi ) {
 		uint32 lines = 0, count = 0;
 

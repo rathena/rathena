@@ -7,7 +7,6 @@
 #include "cbasetypes.h"
 #include "../common/db.h"
 #include <time.h>
-#include "../common/strlib.h"// StringBuf
 
 // server->client protocol version
 //        0 - pre-?
