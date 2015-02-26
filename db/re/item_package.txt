@@ -3357,3 +3357,24 @@ IG_Lucky_Silvervine_Fruit_Box_III10,Sealed_Vesper_Scroll,0,1,0,0,0,0
 
 IG_Lucky_Silvervine_Fruit_Box_III110,Silvervine,0,110,0,0,0,0
 IG_Lucky_Silvervine_Fruit_Box_III110,Sealed_Vesper_Scroll,0,11,0,0,0,0
+
+IG_Old_Ore_Box,714,50,1,1,0,0,0,0,0
+IG_Old_Ore_Box,756,80,1,1,0,0,0,0,0
+IG_Old_Ore_Box,757,70,1,1,0,0,0,0,0
+IG_Old_Ore_Box,969,10,1,1,0,0,0,0,0
+IG_Old_Ore_Box,984,20,1,1,0,0,0,0,0
+IG_Old_Ore_Box,985,20,1,1,0,0,0,0,0
+IG_Old_Ore_Box,990,100,1,1,0,0,0,0,0
+IG_Old_Ore_Box,991,100,1,1,0,0,0,0,0
+IG_Old_Ore_Box,992,100,1,1,0,0,0,0,0
+IG_Old_Ore_Box,993,100,1,1,0,0,0,0,0
+IG_Old_Ore_Box,994,40,1,1,0,0,0,0,0
+IG_Old_Ore_Box,995,40,1,1,0,0,0,0,0
+IG_Old_Ore_Box,996,40,1,1,0,0,0,0,0
+IG_Old_Ore_Box,997,40,1,1,0,0,0,0,0
+IG_Old_Ore_Box,998,380,1,1,0,0,0,0,0
+IG_Old_Ore_Box,999,50,1,1,0,0,0,0,0
+IG_Old_Ore_Box,1002,600,1,1,0,0,0,0,0
+IG_Old_Ore_Box,1003,80,1,1,0,0,0,0,0
+IG_Old_Ore_Box,1010,600,1,1,0,0,0,0,0
+IG_Old_Ore_Box,1011,380,1,1,0,0,0,0,0

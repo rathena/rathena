@@ -2651,3 +2651,4 @@
 20206,475,100	//C_Chicken_Hat
 20210,475,100	//C_Chicken_Hat
 20211,475,100	//C_Chicken_Hat
+12831,475,100	//Potion_Box

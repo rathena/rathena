@@ -6429,6 +6429,7 @@
 12606,Special_Box5,Special Box V,11,100,,100,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12607,Lolli_Pop_Box,Delicious Lollipop Box,11,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12608,Splendid_Box2,Splendid Box2,11,20,,100,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+12609,Old_Ore_Box,Old Ore Box,2,20,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Old_Ore_Box); },{},{}
 //
 12612,Old_Coin_Pocket,Old Coin Bag,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Old_Coin_Pocket); },{},{}
 12613,High_Coin_Pocket,Improved Coin Bag,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_High_Coin_Pocket); },{},{}
@@ -6653,6 +6654,7 @@
 12827,Water_Type_Scroll,Water Type Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Water_Type_Scroll); },{},{}
 12828,Fire_Type_Scroll,Fire Type Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Fire_Type_Scroll); },{},{}
 12829,Earth_Type_Scroll,Earth Type Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Earth_Type_Scroll); },{},{}
+12831,Potion_Box,Potion Box,2,0,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 545,100; getitem 546,100; getitem 547,100; getitem 505,100; },{},{}
 12834,Undead_Egg,Undead Egg,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12835,Girls_Heart,Girls Heart,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12837,Wooden_Treasure_Box,Wooden Treasure Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
@@ -8906,7 +8908,7 @@
 17490,Time_Travel_Lucky_Egg,Time Travel Lucky Egg,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem callfunc("F_Rand",4486,4488,4498,6238,6239,6228,6232,2190,19661,5822,18832,18754),1; },{},{}
 17494,Rise_Midgard_Lucky_Egg,Rise Midgard Lucky Egg,18,10,,10,,,,,,,,,,,,,{/*TODO*/},{},{}
 17495,Lucky_Silvervine_Fruit_Box_III10,Lucky Silvervine Fruit Box III(10),18,10,,10,,,,,,,,,,,,,{ getgroupitem(IG_Lucky_Silvervine_Fruit_Box_III10); },{},{}
-17496,Lucky_Silvervine_Fruit_Box_III110,Lucky Silvervine Fruit Box III(110),18,10,,10,,,,,,,,,,,,,{ getgroupitem(IG_Lucky_Silvervine_Fruit_Box_III10); },{},{}
+17496,Lucky_Silvervine_Fruit_Box_III110,Lucky Silvervine Fruit Box III(110),18,10,,10,,,,,,,,,,,,,{ getgroupitem(IG_Lucky_Silvervine_Fruit_Box_III110); },{},{}
 17498,Three_Master_Package_IV,Three Master Package IV,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 14534,20; getitem 14535,20; getitem 12578,20; getitem 22812,1; },{},{}
 17499,Three_Master_Package_IV(10),Three Master Package IV(10),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 14534,200; getitem 14535,200; getitem 12578,200; getitem 22812,11; },{},{}
 17501,Support_Package_IV,Support Package IV,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 12208,2; getitem 12210,2; getitem 12883,2; getitem 14600,2; /*getitem Mysterious Water of Life,6;*/ if(!rand(100)) getitem 22823,1; },{},{}
