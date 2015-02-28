@@ -390,9 +390,9 @@ struct item_data
 	int slot;
 	int look;
 	int elv;
-	int elvmax; ///< Maximum level for this item
 	int wlv;
 	int view_id;
+	int elvmax; ///< Maximum level for this item
 #ifdef RENEWAL
 	int matk;
 #endif
