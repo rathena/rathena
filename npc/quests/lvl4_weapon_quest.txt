@@ -468,14 +468,6 @@ umbala,163,257,3	script	Hibilaithan#lv4	785,{
 		mes "^3355FFWait a second! Right now, you're carrying too many items with you. Please come back after putting some of your things into Kafra Storage.^000000";
 		close;
 	}
-	if (event_umbala < 3) {
-		mes "[Hibilaithan]";
-		mes "Umba! Umbaba...umum! Baumba!";
-		mes "Umumumbababaumumbabaumba!";
-		mes "Umbaumbaumbaumbaumhah!";
-		mes "Umumumumumbababababab!";
-		close;
-	}
 	if (lv4_weapon == 0) {
 		mes "[Hibilaithan]";
 		mes "Eh heh heh...";
@@ -924,14 +916,6 @@ umbala,163,257,3	script	Hibilaithan#lv4	785,{
 um_in,156,77,5	script	Tabezthan#lv4	788,{
 	if (checkweight(908,300) == 0) {
 		mes "^3355FFWait a second! Right now, you're carrying too many items with you. Please come back after putting some of your things into Kafra Storage.^000000";
-		close;
-	}
-	if (event_umbala < 3) {
-		mes "[Tabezthan]";
-		mes "Umba! Umbaba...umum! Baumba!";
-		mes "Umumumbababaumumbabaumba!";
-		mes "Umbaumbaumbaumbaumhah!";
-		mes "Umumumumumbababababab!";
 		close;
 	}
 	if (lv4_weapon == 0) {
