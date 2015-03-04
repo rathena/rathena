@@ -1617,8 +1617,6 @@ void pc_calc_skilltree(struct map_session_data *sd)
 				if (sk_id == NV_BASIC || sk_id == NV_FIRSTAID || sk_id == WE_CALLBABY)
 					continue;
 				sd->status.skill[sk_idx].id = 0;
-				sd->status.skill[sk_idx].lv = 0;
-				sd->status.skill[sk_idx].flag = SKILL_FLAG_PERMANENT;
 			}
 		}
 	}
@@ -1705,7 +1703,7 @@ void pc_calc_skilltree(struct map_session_data *sd)
 				continue;
 			if( (skill_get_inf2(skid)&(INF2_QUEST_SKILL|INF2_WEDDING_SKILL)) )
 				continue; //Do not include Quest/Wedding skills.
-			if( sd->status.skill[sk_idx].id == 0 ) { //do we really want skid as index ? //Lighta
+			if( sd->status.skill[sk_idx].id == 0 ) {
 				sd->status.skill[sk_idx].id = skid;
 				sd->status.skill[sk_idx].flag = SKILL_FLAG_TEMPORARY; // So it is not saved, and tagged as a "bonus" skill.
 			} else if( skid != NV_BASIC )
@@ -6757,8 +6755,8 @@ void pc_skillup(struct map_session_data *sd,uint16 skill_id)
 			if (!pc_has_permission(sd, PC_PERM_ALL_SKILL)) // may skill everything at any time anyways, and this would cause a huge slowdown
 				clif_skillinfoblock(sd);
 		}
-		else
-			ShowDebug("Skill Level up failed. ID:%d idx:%d (CID=%d. AID=%d)\n", skill_id, idx, sd->status.char_id, sd->status.account_id);
+		//else
+		//	ShowDebug("Skill Level up failed. ID:%d idx:%d (CID=%d. AID=%d)\n", skill_id, idx, sd->status.char_id, sd->status.account_id);
 	}
 }
 
