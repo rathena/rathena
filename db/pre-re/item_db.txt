@@ -4941,7 +4941,7 @@
 12392,Repair_A,Repair A,2,220,,100,,,,,0x00000400,8,2,,,,,,{ if ( checkmadogear() ) { itemheal rand(200,300),0; } },{},{}
 12393,Repair_B,Repair B,2,500,,140,,,,,0x00000400,8,2,,,,,,{ if ( checkmadogear() ) { itemheal rand(300,400),0; } },{},{}
 12394,Repair_C,Repair C,2,1100,,180,,,,,0x00000400,8,2,,,,,,{ if ( checkmadogear() ) { itemheal rand(400,500),0; } },{},{}
-12395,Tantanmen,Tantan Noodle,2,20,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1519; },{},{}
+12395,Tantanmen,Tantan Noodle,2,20,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1631; },{},{}
 12396,Fools_Day_Box,Gift Box?,11,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ .@rnd = rand(1,10); if(.@rnd==1) itemskill "AL_TELEPORT",1; else if(.@rnd==2) itemskill "AL_TELEPORT",3; else if(.@rnd==3) percentheal 50,0; else if(.@rnd==4) percentheal 0,50; else if(.@rnd==5) end; else if(.@rnd==6) getitem 512,1; else if(.@rnd==7) itemskill "ALL_REVERSEORCISH",1; else if(.@rnd==8) specialeffect2 247; else if(.@rnd==9) specialeffect2 338; else specialeffect2 10; },{},{}
 12397,Fools_Day_Box2,Gift Box?,11,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ .@rnd = rand(1,10); if(.@rnd==1) itemskill "TF_DETOXIFY",1; else if(.@rnd==2) itemskill "TF_PICKSTONE",1; else if(.@rnd==3) itemskill "BA_FROSTJOKER",1; else if(.@rnd==4) itemskill "DC_SCREAM",1; else if(.@rnd==5) end; else if(.@rnd==6) getitem 909,1; else if(.@rnd==7) itemskill "AL_RUWACH",1; else if(.@rnd==8) specialeffect2 328; else if(.@rnd==9) specialeffect2 68; else specialeffect2 196; },{},{}
 12398,PCBang_Gift_Box,PCBang Gift Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
