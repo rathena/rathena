@@ -7015,7 +7015,7 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 		if (lv == 0 || skill_id == 0)
 			continue;
 
-		inf2 = skill_get_inf2(i);
+		inf2 = skill_get_inf2(skill_id);
 
 		if( inf2&(INF2_WEDDING_SKILL|INF2_SPIRIT_SKILL) ) //Avoid reseting wedding/linker skills.
 			continue;
