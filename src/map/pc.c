@@ -4809,7 +4809,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 			if( sd->item_delay[i].nameid ) {// found
 				if( DIFF_TICK(sd->item_delay[i].tick, tick) > 0 ) {
 					int e_tick = DIFF_TICK(sd->item_delay[i].tick, tick)/1000;
-					char e_msg[100];
+					char e_msg[CHAT_SIZE_MAX];
 					if( e_tick > 99 )
 						sprintf(e_msg,msg_txt(sd,379), // Item Failed. [%s] is cooling down. Wait %.1f minutes.
 										itemdb_jname(sd->item_delay[i].nameid), (double)e_tick / 60);
