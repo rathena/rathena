@@ -297,8 +297,10 @@ static bool account_db_sql_set_property(AccountDB* self, const char* key, const 
 		if( strcmpi(key, "db") == 0 )
 			StringBuf_PrintfClear(db->db_database, value);
 		else
-		if( strcmpi(key, "account_db") == 0 )
+		if( strcmpi(key, "account_table") == 0 ) {
 			StringBuf_PrintfClear(db->account_table, value);
+			ShowDebug("set account_table: %s\n", StringBuf_Value(db->account_table));
+		}
 		else
 		if( strcmpi(key, "global_acc_reg_num_table") == 0 )
 			StringBuf_PrintfClear(db->global_acc_reg_num_table, value);

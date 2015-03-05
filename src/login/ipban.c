@@ -192,7 +192,7 @@ bool ipban_config_read(const char* key, const char* value) {
 		if( strcmpi(key, "codepage") == 0 )
 			StringBuf_PrintfClear(ipban_config.ipban_codepage, value);
 		else
-		if( strcmpi(key, "ipban_table") == 0 )
+		if( strcmpi(key, "list_table") == 0 )
 			StringBuf_PrintfClear(ipban_config.ipban_table, value);
 		else
 		if( strcmpi(key, "enable") == 0 )

@@ -74,6 +74,7 @@ struct MapServer_Schema {
 	StringBuf *roulette_table;			///< Roulette table
 	StringBuf *vendings_table;		    ///< Vending table (vendor & autotrader)
 	StringBuf *vending_items_table;	    ///< Vending items table (vendor & autotrader)
+	StringBuf *mapreg_table;		    ///< Mapreg table, used in mapreg.c
 };
 extern struct MapServer_Schema mapserv_schema_config; /// map-server tables
 /// Get map-server table value. Table names @see MapServer_Schema

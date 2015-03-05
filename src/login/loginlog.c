@@ -18,14 +18,6 @@
 static Sql* sql_handle = NULL;
 
 struct Loginlog_Config {
-	// global sql settings (in ipban_sql.c)
-	uint16 global_db_port;
-	StringBuf *global_db_hostname;
-	StringBuf *global_db_username;
-	StringBuf *global_db_password;
-	StringBuf *global_db_database;
-	StringBuf *global_codepage;
-
 	// local sql settings
 	uint16 log_db_port;
 	StringBuf *log_db_hostname;
@@ -40,13 +32,6 @@ struct Loginlog_Config {
 struct Loginlog_Config loginlog_config; /// LoginLog config
 
 void loginlog_config_init(void) {
-	loginlog_config.global_db_port = 3306;
-	loginlog_config.global_db_hostname = StringBuf_FromStr("127.0.0.1");
-	loginlog_config.global_db_username = StringBuf_FromStr("ragnarok");
-	loginlog_config.global_db_password = StringBuf_FromStr("");
-	loginlog_config.global_db_database = StringBuf_FromStr("ragnarok");
-	loginlog_config.global_codepage    = StringBuf_FromStr("");
-	
 	loginlog_config.log_db_port = 3306;
 	loginlog_config.log_db_hostname = StringBuf_FromStr("127.0.0.1");
 	loginlog_config.log_db_username = StringBuf_FromStr("ragnarok");
@@ -59,11 +44,6 @@ void loginlog_config_init(void) {
 }
 
 static void loginlog_config_final(void) {
-	StringBuf_Free(loginlog_config.global_db_hostname);
-	StringBuf_Free(loginlog_config.global_db_username);
-	StringBuf_Free(loginlog_config.global_db_password);
-	StringBuf_Free(loginlog_config.global_db_database);
-	StringBuf_Free(loginlog_config.global_codepage);
 	StringBuf_Free(loginlog_config.log_db_hostname);
 	StringBuf_Free(loginlog_config.log_db_username);
 	StringBuf_Free(loginlog_config.log_db_password);
@@ -146,34 +126,6 @@ void login_log(uint32 ip, const char* username, int rcode, const char* message) 
  * @return true if successful, false if config not complete or server already running
  */
 bool loginlog_config_read(const char* key, const char* value) {
-	const char* signature;
-
-	signature = "sql.";
-	if( strncmpi(key, signature, strlen(signature)) == 0 )
-	{
-		key += strlen(signature);
-		if( strcmpi(key, "db_hostname") == 0 )
-			StringBuf_PrintfClear(loginlog_config.global_db_hostname, value);
-		else
-		if( strcmpi(key, "db_port") == 0 )
-			loginlog_config.global_db_port = (uint16)strtoul(value, NULL, 10);
-		else
-		if( strcmpi(key, "db_username") == 0 )
-			StringBuf_PrintfClear(loginlog_config.global_db_username, value);
-		else
-		if( strcmpi(key, "db_password") == 0 )
-			StringBuf_PrintfClear(loginlog_config.global_db_password, value);
-		else
-		if( strcmpi(key, "db_database") == 0 )
-			StringBuf_PrintfClear(loginlog_config.global_db_database, value);
-		else
-		if( strcmpi(key, "codepage") == 0 )
-			StringBuf_PrintfClear(loginlog_config.global_codepage, value);
-		else
-			return false;// not found
-		return true;
-	}
-
 	if( strcmpi(key, "log_db_ip") == 0 )
 		StringBuf_PrintfClear(loginlog_config.log_db_hostname, value);
 	else
@@ -208,44 +160,18 @@ bool loginlog_config_read(const char* key, const char* value) {
  * @return true if success else exit execution
  */
 bool loginlog_init(void) {
-	StringBuf* username;
-	StringBuf* password;
-	StringBuf* hostname;
-	uint16     port;
-	StringBuf* database;
-	StringBuf* codepage;
-
-	if( StringBuf_Length(loginlog_config.log_db_hostname) )
-	{// local settings
-		username = loginlog_config.log_db_username;
-		password = loginlog_config.log_db_password;
-		hostname = loginlog_config.log_db_hostname;
-		port     = loginlog_config.log_db_port;
-		database = loginlog_config.log_db_database;
-		codepage = loginlog_config.log_codepage;
-	}
-	else
-	{// global settings
-		username = loginlog_config.global_db_username;
-		password = loginlog_config.global_db_password;
-		hostname = loginlog_config.global_db_hostname;
-		port     = loginlog_config.global_db_port;
-		database = loginlog_config.global_db_database;
-		codepage = loginlog_config.global_codepage;
-	}
-
 	sql_handle = Sql_Malloc();
 
-	if( SQL_ERROR == Sql_Connect(sql_handle, StringBuf_Value(username), StringBuf_Value(password), StringBuf_Value(hostname), port, StringBuf_Value(database)) )
+	if( SQL_ERROR == Sql_Connect(sql_handle, StringBuf_Value(loginlog_config.log_db_username), StringBuf_Value(loginlog_config.log_db_password), StringBuf_Value(loginlog_config.log_db_hostname), loginlog_config.log_db_port, StringBuf_Value(loginlog_config.log_db_database)) )
 	{
 		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-			StringBuf_Value(username), StringBuf_Value(password), StringBuf_Value(hostname), port, StringBuf_Value(database));
+			StringBuf_Value(loginlog_config.log_db_username), StringBuf_Value(loginlog_config.log_db_password), StringBuf_Value(loginlog_config.log_db_hostname), loginlog_config.log_db_port, StringBuf_Value(loginlog_config.log_db_database));
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(sql_handle);
 		exit(EXIT_FAILURE);
 	}
 
-	if( StringBuf_Length(codepage) && SQL_ERROR == Sql_SetEncoding(sql_handle, StringBuf_Value(codepage)) )
+	if( StringBuf_Length(loginlog_config.log_codepage) && SQL_ERROR == Sql_SetEncoding(sql_handle, StringBuf_Value(loginlog_config.log_codepage)) )
 		Sql_ShowDebug(sql_handle);
 
 	if (!loginlog_check_table()) {
@@ -255,7 +181,7 @@ bool loginlog_init(void) {
 
 	loginlog_config.enabled = true;
 
-	ShowStatus("Loginlog connection: Database '"CL_WHITE"%s"CL_RESET"' at '"CL_WHITE"%s"CL_RESET"'\n", StringBuf_Value(database), StringBuf_Value(username));
+	ShowStatus("Loginlog connection: Database '"CL_WHITE"%s"CL_RESET"' at '"CL_WHITE"%s"CL_RESET"'\n", StringBuf_Value(loginlog_config.log_db_database), StringBuf_Value(loginlog_config.log_db_username));
 	return true;
 }
 

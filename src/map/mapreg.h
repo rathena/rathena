@@ -22,7 +22,6 @@ extern bool skip_insert;
 void mapreg_reload(void);
 void mapreg_final(void);
 void mapreg_init(void);
-bool mapreg_config_read(const char* w1, const char* w2);
 
 int mapreg_readreg(int64 uid);
 char* mapreg_readregstr(int64 uid);

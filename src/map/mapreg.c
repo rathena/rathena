@@ -20,8 +20,8 @@ static struct eri *mapreg_ers;
 
 bool skip_insert = false;
 
-static char mapreg_table[32] = "mapreg";
-static bool mapreg_dirty = false; // Whether there are modified regs to be saved
+static char mapreg_table[32];
+static bool mapreg_dirty = false;
 
 #define MAPREG_AUTOSAVE_INTERVAL (300*1000)
 
@@ -323,27 +323,12 @@ void mapreg_final(void)
  */
 void mapreg_init(void)
 {
-	regs.vars = i64db_alloc(DB_OPT_BASE);
-	mapreg_ers = ers_new(sizeof(struct mapreg_save), "mapreg.c:mapreg_ers", ERS_OPT_CLEAN);
-
-	skip_insert = false;
-	regs.arrays = NULL;
+	mapreg_db = idb_alloc(DB_OPT_BASE);
+	mapregstr_db = idb_alloc(DB_OPT_RELEASE_DATA);
+	safestrncpy(mapreg_table, StringBuf_Value(mapserv_schema_config.mapreg_table), sizeof(mapreg_table));
 
 	script_load_mapreg();
 
 	add_timer_func_list(script_autosave_mapreg, "script_autosave_mapreg");
 	add_timer_interval(gettick() + MAPREG_AUTOSAVE_INTERVAL, script_autosave_mapreg, 0, 0, MAPREG_AUTOSAVE_INTERVAL);
-}
-
-/**
- * Loads the mapreg configuration file.
- */
-bool mapreg_config_read(const char* w1, const char* w2)
-{
-	if(!strcmpi(w1, "mapreg_table"))
-		safestrncpy(mapreg_table, w2, sizeof(mapreg_table));
-	else
-		return false;
-
-	return true;
 }

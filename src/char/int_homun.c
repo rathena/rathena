@@ -118,7 +118,7 @@ bool mapif_homunculus_save(struct s_homunculus* hd)
 			int i;
 
 			stmt = SqlStmt_Malloc(sql_handle);
-			if( SQL_ERROR == SqlStmt_Prepare(stmt, "REPLACE INTO `%s` (`homun_id`, `id`, `lv`) VALUES (%d, ?, ?)", charserv_table(skill_homunculus_table), hd->hom_id) )
+			if( SQL_ERROR == SqlStmt_Prepare(stmt, "REPLACE INTO `%s` (`homun_id`, `id`, `lv`) VALUES (%d, ?, ?)", charserv_table(homunculus_skill_table), hd->hom_id) )
 				SqlStmt_ShowDebug(stmt);
 			for( i = 0; i < MAX_HOMUNSKILL; ++i )
 			{
@@ -199,7 +199,7 @@ bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd)
 	hd->hunger = cap_value(hd->hunger, 0, 100);
 
 	// Load Homunculus Skill
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `id`,`lv` FROM `%s` WHERE `homun_id`=%d", charserv_table(skill_homunculus_table), homun_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `id`,`lv` FROM `%s` WHERE `homun_id`=%d", charserv_table(homunculus_skill_table), homun_id) )
 	{
 		Sql_ShowDebug(sql_handle);
 		return false;
@@ -230,7 +230,7 @@ bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd)
 bool mapif_homunculus_delete(int homun_id)
 {
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `homun_id` = '%u'", charserv_table(homunculus_table), homun_id)
-	||	SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `homun_id` = '%u'", charserv_table(skill_homunculus_table), homun_id)
+	||	SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `homun_id` = '%u'", charserv_table(homunculus_skill_table), homun_id)
 	) {
 		Sql_ShowDebug(sql_handle);
 		return false;
