@@ -7704,7 +7704,7 @@ static const struct _battle_data {
 	{ "bone_drop",                          &battle_config.bone_drop,                       0,      0,      2,              },
 	{ "buyer_name",                         &battle_config.buyer_name,                      1,      0,      1,              },
 	{ "skill_wall_check",                   &battle_config.skill_wall_check,                1,      0,      1,              },
-	{ "official_cell_stack_limit",          &battle_config.official_cell_stack_limit,       1,      1,      255,            },
+	{ "official_cell_stack_limit",          &battle_config.official_cell_stack_limit,       1,      0,      255,            },
 	{ "custom_cell_stack_limit",            &battle_config.custom_cell_stack_limit,         1,      1,      255,            },
 	{ "dancing_weaponswitch_fix",           &battle_config.dancing_weaponswitch_fix,        1,      0,      1,              },
 
