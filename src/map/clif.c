@@ -17740,10 +17740,13 @@ void packetdb_readdb(bool reload)
 	char line[1024];
 	int cmd,i,j;
 	int max_cmd=-1;
-	bool skip_ver = false, key_defined = false;
+	bool skip_ver = false;
 	int warned = 0;
 	int packet_ver = MAX_PACKET_VER;	// read into packet_db's version by default
+#ifdef PACKET_OBFUSCATION
+	bool key_defined = false;
 	int last_key_defined = -1;
+#endif
 
 	int packet_len_table[MAX_PACKET_DB] = {
 	   10,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
