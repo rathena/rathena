@@ -1341,6 +1341,9 @@ void pc_reg_received(struct map_session_data *sd)
 		sd->mission_count = pc_readglobalreg(sd,"TK_MISSION_COUNT");
 	}
 
+	if (battle_config.feature_banking)
+		sd->bank_vault = pc_readaccountreg_(sd, BANK_VAULT_VAR);
+
 	//SG map and mob read [Komurka]
 	for(i=0;i<MAX_PC_FEELHATE;i++) { //for now - someone need to make reading from txt/sql
 		uint16 j;
@@ -1410,8 +1413,6 @@ void pc_reg_received(struct map_session_data *sd)
 	chrif_skillcooldown_request(sd->status.account_id, sd->status.char_id);
 	chrif_bsdata_request(sd->status.char_id);
 	sd->storage_size = MIN_STORAGE; //default to min
-	if(battle_config.feature_banking)
-		chrif_req_login_operation(sd->status.account_id, sd->status.name, CHRIF_OP_LOGIN_BANK, 0, 1, 0); //request Bank data
 #ifdef VIP_ENABLE
 	sd->vip.time = 0;
 	sd->vip.enabled = 0;
@@ -7627,6 +7628,7 @@ int pc_readparam(struct map_session_data* sd,int type)
 		case SP_CHARMOVE:		 val = sd->status.character_moves; break;
 		case SP_CHARRENAME:		 val = sd->status.rename; break;
 		case SP_CHARFONT:		 val = sd->status.font; break;
+		case SP_BANK_VAULT:			 val = sd->bank_vault; break;
 		case SP_CRITICAL:        val = sd->battle_status.cri/10; break;
 		case SP_ASPD:            val = (2000-sd->battle_status.amotion)/10; break;
 		case SP_BASE_ATK:	     val = sd->battle_status.batk; break;
@@ -7770,7 +7772,7 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 		// clif_updatestatus(sd, SP_JOBLEVEL);  // Gets updated at the bottom
 		clif_updatestatus(sd, SP_NEXTJOBEXP);
 		clif_updatestatus(sd, SP_JOBEXP);
-		status_calc_pc(sd, 0);
+		status_calc_pc(sd, SCO_NONE);
 		break;
 	case SP_SKILLPOINT:
 		sd->status.skill_point = val;
@@ -7877,6 +7879,13 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 	case SP_CHARFONT:
 		sd->status.font = val;
 		clif_font(sd);
+		return true;
+	case SP_BANK_VAULT:
+		if (val < 0)
+			return false;
+		log_zeny(sd, LOG_TYPE_BANK, sd, -(sd->bank_vault - cap_value(val, 0, MAX_BANK_ZENY)));
+		sd->bank_vault = cap_value(val, 0, MAX_BANK_ZENY);
+		pc_setaccountreg_(sd, BANK_VAULT_VAR, sd->bank_vault);
 		return true;
 	default:
 		ShowError("pc_setparam: Attempted to set unknown parameter '%d'.\n", type);
@@ -8866,6 +8875,26 @@ bool pc_setregistry_str(struct map_session_data *sd,const char *reg,const char *
 
 	ShowError("pc_setregistry : couldn't set %s, limit of registries reached (%d)\n", reg, regmax);
 	return false;
+}
+
+bool pc_setaccountreg_(struct map_session_data *sd, const char *reg, int val) {
+	nullpo_retr(false, sd);
+
+	if (reg[0] != '#' || reg[strlen(reg)-1] == '$')
+		return false;
+
+	val = cap_value(val, 0, INT_MAX);
+
+	return (reg[1] == '#') ? pc_setaccountreg2(sd, reg, val) : pc_setaccountreg(sd, reg, val);
+}
+
+int pc_readaccountreg_(struct map_session_data *sd, const char *reg) {
+	nullpo_ret(sd);
+
+	if (reg[0] != '#' || reg[strlen(reg)-1] == '$')
+		return 0;
+
+	return (reg[1] == '#') ? pc_readaccountreg2(sd, reg) : pc_readaccountreg(sd, reg);
 }
 
 /*==========================================
@@ -11027,7 +11056,7 @@ void pc_expire_check(struct map_session_data *sd) {
 * @param money Amount of money to deposit
 **/
 enum e_BANKING_DEPOSIT_ACK pc_bank_deposit(struct map_session_data *sd, int money) {
-	unsigned int limit_check = money+sd->status.bank_vault;
+	unsigned int limit_check = money + sd->bank_vault;
 
 	if( money <= 0 || limit_check > MAX_BANK_ZENY ) {
 		return BDA_OVERFLOW;
@@ -11038,7 +11067,8 @@ enum e_BANKING_DEPOSIT_ACK pc_bank_deposit(struct map_session_data *sd, int mone
 	if( pc_payzeny(sd,money, LOG_TYPE_BANK, NULL) )
 		return BDA_NO_MONEY;
 
-	sd->status.bank_vault += money;
+	sd->bank_vault += money;
+	pc_setaccountreg_(sd, BANK_VAULT_VAR, sd->bank_vault);
 	if( save_settings&CHARSAVE_BANK )
 		chrif_save(sd,0);
 	return BDA_SUCCESS;
@@ -11050,11 +11080,11 @@ enum e_BANKING_DEPOSIT_ACK pc_bank_deposit(struct map_session_data *sd, int mone
 * @param money Amount of money that will be withdrawn
 **/
 enum e_BANKING_WITHDRAW_ACK pc_bank_withdraw(struct map_session_data *sd, int money) {
-	unsigned int limit_check = money+sd->status.zeny;
+	unsigned int limit_check = money + sd->status.zeny;
 	
 	if( money <= 0 ) {
 		return BWA_UNKNOWN_ERROR;
-	} else if ( money > sd->status.bank_vault ) {
+	} else if ( money > sd->bank_vault ) {
 		return BWA_NO_MONEY;
 	} else if ( limit_check > MAX_ZENY ) {
 		/* no official response for this scenario exists. */
@@ -11065,7 +11095,8 @@ enum e_BANKING_WITHDRAW_ACK pc_bank_withdraw(struct map_session_data *sd, int mo
 	if( pc_getzeny(sd,money, LOG_TYPE_BANK, NULL) )
 		return BWA_NO_MONEY;
 	
-	sd->status.bank_vault -= money;
+	sd->bank_vault -= money;
+	pc_setaccountreg_(sd, BANK_VAULT_VAR, sd->bank_vault);
 	if( save_settings&CHARSAVE_BANK )
 		chrif_save(sd,0);
 	return BWA_SUCCESS;

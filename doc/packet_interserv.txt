@@ -99,9 +99,9 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 
 0x2717
 	Type: AH
-	Structure: <cmd>.W <aid>.L <email>.40B <expiration_time>.L <group_id>.B <char_slots>.B <birthdate>.11B <pincode>.5B <pincode_change>.L <bank_vault>.L <isvip>.B <char_vip>.B <MAX_CHAR_BILLING>.B
-	index: 0,2,6,46,50,51,52,63,68,72,76,77,78
-	len: 79
+	Structure: <cmd>.W <aid>.L <email>.40B <expiration_time>.L <group_id>.B <char_slots>.B <birthdate>.11B <pincode>.5B <pincode_change>.L <isvip>.B <char_vip>.B <MAX_CHAR_BILLING>.B
+	index: 0,2,6,46,50,51,52,63,68,72,73,74
+	len: 75
 	parameter:
 		- cmd: packet identification (0x2717)
 		- aid: account identification
@@ -112,7 +112,6 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- birthdate: birthdate of aid
 		- pincode: current pincode of aid
 		- pincode_change: new pincode of aid
-		- bank_vault: value in bank for this aid
 		- isvip: if this aid is currently vip or not
 		- char_vip: number of charslot that are vip (could only do creation on if you are vip)
 		- MAX_CHAR_BILLING: number of charslort that are for billing
@@ -437,31 +436,9 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 0x273f
 	free
 
-0x2740:
-	Type: HA
-	Structure: <cmd>.W <aid>.L <type>.B <data>.L
-	index: 0,2,6,7
-	len: 11
-	parameter:
-		- cmd : packet identification (0x2740)
-		- aid: account identification
-		- type:
-		- data:
-	desc:
-		- Request to update bank_vault
-
-0x2741:
-	Type: AH
-	Structure: <cmd>.W <aid>.L <type>.B <data>.L
-	index: 0,2,6,7
-	len: 11
-	parameter:
-		- cmd : packet identification (0x2741)
-		- aid : account identification
-		- type : 1=select, 2=upd and save
-		- data : new bank vault
-	desc:
-		- Request the bank info of login
+0x2740
+0x2741
+	free
 
 0x2742:
 	Type: HA
@@ -2467,16 +2444,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- Client authentication failed
 
 0x2b29
-	Type: AZ
-	Structure: <cmd>.W <aid>.L <bank_vault>.L
-	index: 0,2,6
-	len: 10
-	parameter:
-		- cmd : packet identification (0x2b29)
-		- aid
-		- bank_vault
-	desc:
-		- Received bank data for player to be loaded
+	free
 
 0x2b2b
 	Type: AZ
