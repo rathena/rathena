@@ -218,12 +218,8 @@ const char* skill_get_desc( uint16 skill_id ) {
 static void skill_chk(uint16 *skill_id) {
 	*skill_id = skill_get_index(*skill_id); // checks/adjusts id
 }
-// checks/adjusts level
-static void skill_chk2(uint16 *skill_lv) {
-	*skill_lv = cap_value(*skill_lv, 1, MAX_SKILL_LEVEL);
-}
-// checks/adjusts index. make sure we don't use negative index
-static void skill_chk3(int *idx) {
+/// checks/adjusts index. make sure we don't use negative index
+static void skill_chk2(int *idx) {
 	if (*idx < 0) *idx = 0;
 }
 
@@ -241,7 +237,7 @@ static void skill_chk3(int *idx) {
 	}\
 	return ((arrvar)[idx]);\
 } while(0)
-#define skill_get3(id,x,var)  { skill_chk(&id); if (!id) return 0; skill_chk3(&x);  return var; }
+#define skill_get3(id,x,var)  { skill_chk(&id); if (!id) return 0; skill_chk2(&x);  return var; }
 
 // Skill DB
 int skill_get_hit( uint16 skill_id )                               { skill_get  (skill_id, skill_db[skill_id]->hit); }
@@ -19986,7 +19982,7 @@ static void skill_destroy_requirement(uint16 idx) {
 static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 {
 	char* p;
-	uint16 skill_id = atoi(split[0]), idx, i;
+	uint16 idx, i;
 
 	idx = skill_db_isset(atoi(split[0]), __FUNCTION__);
 

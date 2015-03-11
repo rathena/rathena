@@ -2247,7 +2247,7 @@ void pc_exeautobonus(struct map_session_data *sd,struct s_autobonus *autobonus)
 
 	autobonus->active = add_timer(gettick()+autobonus->duration, pc_endautobonus, sd->bl.id, (intptr_t)autobonus);
 	sd->state.autobonus |= autobonus->pos;
-	status_calc_pc(sd,SCO_NONE);
+	status_calc_pc(sd,SCO_FORCE);
 }
 
 int pc_endautobonus(int tid, unsigned int tick, int id, intptr_t data)
@@ -2260,7 +2260,7 @@ int pc_endautobonus(int tid, unsigned int tick, int id, intptr_t data)
 
 	autobonus->active = INVALID_TIMER;
 	sd->state.autobonus &= ~autobonus->pos;
-	status_calc_pc(sd,SCO_NONE);
+	status_calc_pc(sd,SCO_FORCE);
 	return 0;
 }
 
@@ -7755,7 +7755,7 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 		clif_updatestatus(sd, SP_NEXTBASEEXP);
 		clif_updatestatus(sd, SP_STATUSPOINT);
 		clif_updatestatus(sd, SP_BASEEXP);
-		status_calc_pc(sd, SCO_NONE);
+		status_calc_pc(sd, SCO_FORCE);
 		if(sd->status.party_id)
 			party_send_levelup(sd);
 		break;
@@ -7770,7 +7770,7 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 		// clif_updatestatus(sd, SP_JOBLEVEL);  // Gets updated at the bottom
 		clif_updatestatus(sd, SP_NEXTJOBEXP);
 		clif_updatestatus(sd, SP_JOBEXP);
-		status_calc_pc(sd, 0);
+		status_calc_pc(sd, SCO_FORCE);
 		break;
 	case SP_SKILLPOINT:
 		sd->status.skill_point = val;

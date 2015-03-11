@@ -1227,12 +1227,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			return 0;
 		}
 
-		//Probably not the most correct place, but it'll do here
-		//(since battle_drain is strictly for players currently)
-		if ((sce=sc->data[SC_BLOODLUST]) && flag&BF_WEAPON && damage > 0 &&
-			rnd()%100 < sce->val3)
-			status_heal(src, (int64)damage*sce->val4/100, 0, 3);
-
 		if( sd && (sce = sc->data[SC_FORCEOFVANGUARD]) && flag&BF_WEAPON && rnd()%100 < sce->val2 )
 			pc_addspiritball(sd,skill_get_time(LG_FORCEOFVANGUARD,sce->val1),sce->val3);
 
@@ -1263,6 +1257,10 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	if (sc && sc->count) {
 		if( sc->data[SC_INVINCIBLE] && !sc->data[SC_INVINCIBLEOFF] )
 			DAMAGE_ADDRATE(75)
+
+		if ((sce = sc->data[SC_BLOODLUST]) && flag&BF_WEAPON && damage > 0 && rnd()%100 < sce->val3)
+			status_heal(src, damage * sce->val4 / 100, 0, 3);
+
 		// [Epoque]
 		if (bl->type == BL_MOB) {
 			uint8 i;
@@ -3460,7 +3458,12 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			skillratio += 100 *(skill_lv+1);
 			break;
 		case GS_PIERCINGSHOT:
-			skillratio += 20*skill_lv;
+#ifdef RENEWAL
+			if (sd && sd->weapontype1 == W_RIFLE)
+				skillratio += 50 + 30 * skill_lv;
+			else
+#endif
+				skillratio += 20*skill_lv;
 			break;
 		case GS_RAPIDSHOWER:
 			skillratio += 400+50*skill_lv;
