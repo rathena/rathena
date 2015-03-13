@@ -5521,7 +5521,7 @@ int pc_get_skillcooldown(struct map_session_data *sd, uint16 skill_id, uint16 sk
  *------------------------------------------*/
 uint8 pc_checkskill(struct map_session_data *sd, uint16 skill_id)
 {
-	uint16 i = 0, idx = 0;
+	uint16 idx = 0;
 	if (sd == NULL)
 		return 0;
 	if ((idx = skill_get_index(skill_id)) == 0) {

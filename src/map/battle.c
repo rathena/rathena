@@ -2904,10 +2904,6 @@ struct Damage battle_calc_skill_base_damage(struct Damage wd, struct block_list 
 			{
 				int damagevalue = 0;
 
-				wd.damage = wd.damage2 = 0;
-#ifdef RENEWAL
-				wd.weaponAtk = wd.weaponAtk2 = 0;
-#endif
 				damagevalue = ((sstatus->hp / 50) + (status_get_max_sp(src) / 4)) * skill_lv;
 				if(status_get_lv(src) > 100)
 					damagevalue = damagevalue * status_get_lv(src) / 150;
@@ -2923,10 +2919,6 @@ struct Damage battle_calc_skill_base_damage(struct Damage wd, struct block_list 
 		case NC_SELFDESTRUCTION: {
 				int damagevalue = 0;
 
-				wd.damage = wd.damage2 = 0;
-#ifdef RENEWAL
-				wd.weaponAtk = wd.weaponAtk2 = 0;
-#endif
 				damagevalue = (skill_lv + 1) * ((sd ? pc_checkskill(sd,NC_MAINFRAME) : 0) + 8) * (status_get_sp(src) + sstatus->vit);
 				if(status_get_lv(src) > 100)
 					damagevalue = damagevalue * status_get_lv(src) / 100;
@@ -2940,10 +2932,6 @@ struct Damage battle_calc_skill_base_damage(struct Damage wd, struct block_list 
 		case KO_HAPPOKUNAI: {
 				int damagevalue = 0;
 
-				wd.damage = wd.damage2 = 0;
-#ifdef RENEWAL
-				wd.weaponAtk = wd.weaponAtk2 = 0;
-#endif
 				if(sd) {
 					short index = sd->equip_index[EQI_AMMO];
 
@@ -5152,9 +5140,21 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		}
 #ifndef RENEWAL
 		//Card Fix for attacker (sd), 2 is added to the "left" flag meaning "attacker cards only"
-		wd.damage += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.damage, 2, wd.flag);
-		if( is_attack_left_handed(src, skill_id ))
-			wd.damage2 += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.damage2, 3, wd.flag);
+		switch(skill_id) {
+			case RK_DRAGONBREATH:
+			case RK_DRAGONBREATH_WATER:
+				if(wd.flag&BF_LONG) { //Add check here, because we want to apply the same behavior in pre-renewal [exneval]
+					wd.damage = wd.damage * (100 + sd->bonus.long_attack_atk_rate) / 100;
+					if(is_attack_left_handed(src, skill_id))
+						wd.damage2 = wd.damage2 * (100 + sd->bonus.long_attack_atk_rate) / 100;
+				}
+				break;
+			default:
+				wd.damage += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.damage, 2, wd.flag);
+				if( is_attack_left_handed(src, skill_id ))
+					wd.damage2 += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.damage2, 3, wd.flag);
+				break;
+		}
 #endif
 	}
 
@@ -6254,13 +6254,6 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		break;
 	case NPC_EVILLAND:
 		md.damage = skill_calc_heal(src,target,skill_id,skill_lv,false);
-		break;
-	case RK_DRAGONBREATH_WATER:
-	case RK_DRAGONBREATH:
-		md.damage = ((status_get_hp(src) / 50) + (status_get_max_sp(src) / 4)) * skill_lv;
-		RE_LVL_MDMOD(150);
-		if (sd) md.damage = (int64)md.damage * (95 + 5 * pc_checkskill(sd,RK_DRAGONTRAINING)) / 100;
-		md.flag |= BF_LONG|BF_WEAPON;
 		break;
 	case RA_CLUSTERBOMB:
 	case RA_FIRINGTRAP:

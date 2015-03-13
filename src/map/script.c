@@ -3156,6 +3156,8 @@ void script_free_vars(struct DBMap* storage)
 
 void script_free_code(struct script_code* code)
 {
+	nullpo_retv(code);
+
 	script_free_vars( code->script_vars );
 	aFree( code->script_buf );
 	aFree( code );
