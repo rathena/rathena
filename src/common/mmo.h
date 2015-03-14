@@ -828,7 +828,7 @@ enum bound_type {
 
 #ifdef PACKET_OBFUSCATION
 	#if PACKETVER < 20110817
-	#error core.h::PACKET_OBFUSCATION is enabled, it requires PACKETVER 20110817 or newer
+		#undef PACKET_OBFUSCATION
 	#endif
 #endif
 
