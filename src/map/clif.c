@@ -17546,12 +17546,12 @@ static unsigned short clif_parse_cmd(int fd, struct map_session_data *sd) {
 #ifndef PACKET_OBFUSCATION
 	return RFIFOW(fd, 0);
 #else
-	unsigned short cmd = RFIFOW(fd,0);
+	unsigned short cmd = RFIFOW(fd,0); // Check if it is a player that tries to connect to the map server.
 	if (sd)
-		cmd = (cmd ^ ((sd->cryptKey >> 16) & 0x7FFF));
+		cmd = (cmd ^ ((sd->cryptKey >> 16) & 0x7FFF)); // Decrypt the current packet ID with the last key stored in the session.
 	else
-		cmd = (cmd ^ ((((clif_cryptKey[0] * clif_cryptKey[1]) + clif_cryptKey[2]) >> 16) & 0x7FFF));
-	return cmd;
+		cmd = (cmd ^ ((((clif_cryptKey[0] * clif_cryptKey[1]) + clif_cryptKey[2]) >> 16) & 0x7FFF)); // A player tries to connect - use the initial keys for the decryption of the packet ID.
+	return cmd; // Return the decrypted packet ID.
 #endif
 }
 
@@ -18437,7 +18437,7 @@ void packetdb_readdb(bool reload)
 			if (packet_keys[clif_config.packet_db_ver])
 				use_key = clif_config.packet_db_ver;
 
-			ShowInfo("Using default packet obfuscation keys for packet_db_ver:%d\n", use_key);
+			ShowInfo("Using default packet obfuscation keys for packet_db_ver: %d\n", use_key);
 			memcpy(&clif_cryptKey, &packet_keys[use_key]->keys, sizeof(packet_keys[use_key]->keys));
 		}
 	}
