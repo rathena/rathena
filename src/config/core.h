@@ -93,6 +93,11 @@
 	#define MAX_CHAR_VIP 0
 #endif
 
+/// Comment to disable the official packet obfuscation support.
+/// When enabled, make sure there is value for 'packet_keys' of used packet version or
+/// defined 'packet_keys_use' in db/[import/]packet_db.txt.
+#define PACKET_OBFUSCATION
+
 /**
  * No settings past this point
  **/

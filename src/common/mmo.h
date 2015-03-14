@@ -821,8 +821,15 @@ enum bound_type {
 #if (MIN_CHARS + MAX_CHAR_VIP + MAX_CHAR_BILLING) > MAX_CHARS
 #error Config of MAX_CHARS is invalid
 #endif
+
 #if MIN_STORAGE > MAX_STORAGE
 #error Config of MIN_STORAGE is invalid
+#endif
+
+#ifdef PACKET_OBFUSCATION
+	#if PACKETVER < 20110817
+	#error core.h::PACKET_OBFUSCATION is enabled, it requires PACKETVER 20110817 or newer
+	#endif
 #endif
 
 #endif /* _MMO_H_ */
