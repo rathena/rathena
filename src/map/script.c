@@ -170,6 +170,70 @@
 #define SCRIPT_BLOCK_SIZE 512
 enum { LABEL_NEXTLINE=1,LABEL_START };
 
+/**
+ * Get `sd` from an account id in `loc` param instead of attached rid
+ * @param loc Location to look account id in script parameter
+ * @param sd Variable that will be assigned
+ * @param ret Optional action when fail to get sd
+ **/
+#define script_accid2sd(loc, sd, ret) {\
+	if (script_hasdata(st, (loc))) {\
+		if (!((sd) = map_id2sd(script_getnum(st, loc)))) {\
+			ShowError("%s: Player with account id %d is not found.\n", __FUNCTION__, script_getnum(st, (loc)));\
+			(ret);\
+			return SCRIPT_CMD_FAILURE;\
+		}\
+	}\
+	else if (!((sd) = script_rid2sd(st))) {\
+		(ret);\
+		return SCRIPT_CMD_FAILURE;\
+	}\
+}
+
+/**
+ * Get `sd` from a char id in `loc` param instead of attached rid
+ * @param loc Location to look char id in script parameter
+ * @param sd Variable that will be assigned
+ * @param ret Optional action when fail to get sd
+ **/
+#define script_charid2sd(loc, sd, ret) {\
+	if (script_hasdata(st, (loc))) {\
+		if (!((sd) = map_charid2sd(script_getnum(st, loc)))) {\
+			ShowError("%s: Player with char id %d is not found.\n", __FUNCTION__, script_getnum(st, (loc)));\
+			(ret);\
+			return SCRIPT_CMD_FAILURE;\
+		}\
+	}\
+	else {\
+		if (!((sd) = script_rid2sd(st))) {\
+			(ret);\
+			return SCRIPT_CMD_FAILURE;\
+		}\
+	}\
+}
+
+/**
+ * Get `sd` from a nick in `loc` param instead of attached rid
+ * @param loc Location to look nick in script parameter
+ * @param sd Variable that will be assigned
+ * @param ret Optional action when fail to get sd
+ **/
+#define script_nick2sd(loc, sd, ret) {\
+	if (script_hasdata(st, (loc))) {\
+		if (!((sd) = map_nick2sd(script_getstr(st, loc)))) {\
+			ShowError("%s: Player with nick %s is not found.\n", __FUNCTION__, script_getstr(st, (loc)));\
+			(ret);\
+			return SCRIPT_CMD_FAILURE;\
+		}\
+	}\
+	else {\
+		if (!((sd) = script_rid2sd(st))) {\
+			(ret);\
+			return SCRIPT_CMD_FAILURE;\
+		}\
+	}\
+}
+
 /// temporary buffer for passing around compiled bytecode
 /// @see add_scriptb, set_label, parse_script
 static unsigned char* script_buf = NULL;
@@ -5658,7 +5722,7 @@ BUILDIN_FUNC(copyarray);
 /// Sets the value of a variable.
 /// The value is converted to the type of the variable.
 ///
-/// set(<variable>,<value>) -> <variable>
+/// set(<variable>,<value>{,<charid>})
 BUILDIN_FUNC(set)
 {
 	TBL_PC* sd = NULL;
@@ -5682,14 +5746,8 @@ BUILDIN_FUNC(set)
 	name = reference_getname(data);
 	prefix = *name;
 
-	if( not_server_variable(prefix) )
-	{
-		sd = script_rid2sd(st);
-		if( sd == NULL )
-		{
-			ShowError("script:set: no player attached for player variable '%s'\n", name);
-			return 0;
-		}
+	if (not_server_variable(prefix)) {
+		script_charid2sd(4,sd,NULL);
 	}
 
 #if 0
@@ -6682,8 +6740,8 @@ BUILDIN_FUNC(getitem2)
 }
 
 /** Gives rental item to player
- * rentitem <item id>,<seconds>
- * rentitem "<item name>",<seconds>
+ * rentitem <item id>,<seconds>{,<account_id>}
+ * rentitem "<item name>",<seconds>{,<account_id>}
  */
 BUILDIN_FUNC(rentitem) {
 	struct map_session_data *sd;
@@ -6696,8 +6754,7 @@ BUILDIN_FUNC(rentitem) {
 	data = script_getdata(st,2);
 	get_val(st,data);
 
-	if( (sd = script_rid2sd(st)) == NULL )
-		return SCRIPT_CMD_SUCCESS;
+	script_accid2sd(4,sd,NULL);
 
 	if( data_isstring(data) )
 	{
@@ -6741,8 +6798,8 @@ BUILDIN_FUNC(rentitem) {
 }
 
 /** Gives rental item to player with advanced option
-* rentitem2 <item id>,<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>;
-* rentitem2 "<item name>",<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>;
+* rentitem2 <item id>,<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account_id>};
+* rentitem2 "<item name>",<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account_id>};
 */
 BUILDIN_FUNC(rentitem2) {
 	struct map_session_data *sd;
@@ -6757,8 +6814,7 @@ BUILDIN_FUNC(rentitem2) {
 	data = script_getdata(st,2);
 	get_val(st,data);
 
-	if( (sd = script_rid2sd(st)) == NULL )
-		return SCRIPT_CMD_SUCCESS;
+	script_accid2sd(11,sd,NULL);
 
 	if( data_isstring(data) ) {
 		const char *name = conv_str(st,data);
@@ -7235,7 +7291,7 @@ BUILDIN_FUNC(delitem)
 	else if(!strncmp(command, "storage", 7))
 		loc = 2;
 	//TODO: 3 - Guild Storage
-	
+
 	if( script_hasdata(st,4) )
 	{
 		uint32 account_id = script_getnum(st,4);
@@ -7420,22 +7476,15 @@ BUILDIN_FUNC(disableitemuse)
 /*==========================================
  * Returns a character's specified stat.
  * Check pc_readparam for available options.
+ * readparam <param>{,"<nick>"}
  *------------------------------------------*/
 BUILDIN_FUNC(readparam)
 {
 	int type;
 	TBL_PC *sd;
 
-	type=script_getnum(st,2);
-	if( script_hasdata(st,3) )
-		sd=map_nick2sd(script_getstr(st,3));
-	else
-		sd=script_rid2sd(st);
-
-	if(sd==NULL){
-		script_pushint(st,-1);
-		return 0;
-	}
+	type = script_getnum(st,2);
+	script_nick2sd(3, sd, script_pushint(st,-1));
 	script_pushint(st,pc_readparam(sd,type));
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -7667,6 +7716,7 @@ BUILDIN_FUNC(getguildmasterid)
  *	2 : guild_name or ""
  *	3 : map_name
  *	- : ""
+ * strcharinfo(<type>{,<char_id>})
  *------------------------------------------*/
 BUILDIN_FUNC(strcharinfo)
 {
@@ -7675,11 +7725,8 @@ BUILDIN_FUNC(strcharinfo)
 	struct guild* g;
 	struct party_data* p;
 
-	sd=script_rid2sd(st);
-	if (!sd) { //Avoid crashing....
-		script_pushconststr(st,"");
-		return 0;
-	}
+	script_charid2sd(3,sd,script_pushconststr(st,""));
+
 	num=script_getnum(st,2);
 	switch(num){
 		case 0:
@@ -7937,6 +7984,7 @@ BUILDIN_FUNC(getbrokenid)
 
 /*==========================================
  * repair [Valaris]
+ * repair <num>{,<char_id>};
  *------------------------------------------*/
 BUILDIN_FUNC(repair)
 {
@@ -7944,9 +7992,7 @@ BUILDIN_FUNC(repair)
 	int repaircounter=0;
 	TBL_PC *sd;
 
-	sd = script_rid2sd(st);
-	if( sd == NULL )
-		return 0;
+	script_charid2sd(3,sd,NULL);
 
 	num=script_getnum(st,2);
 	for(i=0; i<MAX_INVENTORY; i++) {
@@ -7966,16 +8012,14 @@ BUILDIN_FUNC(repair)
 }
 
 /*==========================================
- * repairall
+ * repairall {<char_id>}
  *------------------------------------------*/
 BUILDIN_FUNC(repairall)
 {
 	int i, repaircounter = 0;
 	TBL_PC *sd;
 
-	sd = script_rid2sd(st);
-	if(sd == NULL)
-		return 0;
+	script_charid2sd(2,sd,NULL);
 
 	for(i = 0; i < MAX_INVENTORY; i++)
 	{
@@ -7998,6 +8042,7 @@ BUILDIN_FUNC(repairall)
 
 /*==========================================
  * Chk if player have something equiped at pos
+ * getequipisequiped <pos>{,<char_id>}
  *------------------------------------------*/
 BUILDIN_FUNC(getequipisequiped)
 {
@@ -8005,9 +8050,8 @@ BUILDIN_FUNC(getequipisequiped)
 	TBL_PC *sd;
 
 	num = script_getnum(st,2);
-	sd = script_rid2sd(st);
-	if( sd == NULL )
-		return 0;
+
+	script_charid2sd(3,sd,NULL);
 
 	if (num > 0 && num <= ARRAYLENGTH(equip))
 		i=pc_checkequip(sd,equip[num-1]);
@@ -19262,7 +19306,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(warpguild,"siii"), // [Fredzilla]
 	BUILDIN_DEF(setlook,"ii"),
 	BUILDIN_DEF(changelook,"ii"), // Simulates but don't Store it
-	BUILDIN_DEF(set,"rv"),
+	BUILDIN_DEF(set,"rv?"),
 	BUILDIN_DEF(setarray,"rv*"),
 	BUILDIN_DEF(cleararray,"rvi"),
 	BUILDIN_DEF(copyarray,"rri"),
@@ -19270,8 +19314,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(deletearray,"r?"),
 	BUILDIN_DEF(getelementofarray,"ri"),
 	BUILDIN_DEF(getitem,"vi?"),
-	BUILDIN_DEF(rentitem,"vi"),
-	BUILDIN_DEF(rentitem2,"viiiiiiii"),
+	BUILDIN_DEF(rentitem,"vi?"),
+	BUILDIN_DEF(rentitem2,"viiiiiiii?"),
 	BUILDIN_DEF(getitem2,"viiiiiiii?"),
 	BUILDIN_DEF(getnameditem,"vv"),
 	BUILDIN_DEF2(grouprandomitem,"groupranditem","i?"),
@@ -19308,15 +19352,15 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getguildname,"i"),
 	BUILDIN_DEF(getguildmaster,"i"),
 	BUILDIN_DEF(getguildmasterid,"i"),
-	BUILDIN_DEF(strcharinfo,"i"),
+	BUILDIN_DEF(strcharinfo,"i?"),
 	BUILDIN_DEF(strnpcinfo,"i"),
 	BUILDIN_DEF(getequipid,"i"),
 	BUILDIN_DEF(getequipuniqueid,"i"),
 	BUILDIN_DEF(getequipname,"i"),
 	BUILDIN_DEF(getbrokenid,"i"), // [Valaris]
-	BUILDIN_DEF(repair,"i"), // [Valaris]
-	BUILDIN_DEF(repairall,""),
-	BUILDIN_DEF(getequipisequiped,"i"),
+	BUILDIN_DEF(repair,"i?"), // [Valaris]
+	BUILDIN_DEF(repairall,"?"),
+	BUILDIN_DEF(getequipisequiped,"i?"),
 	BUILDIN_DEF(getequipisenableref,"i"),
 	BUILDIN_DEF(getequiprefinerycnt,"i"),
 	BUILDIN_DEF(getequipweaponlv,"i"),

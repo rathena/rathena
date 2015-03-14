@@ -1203,8 +1203,8 @@ of 'end' stops this, and ends the script.
 
 ---------------------------------------
 
-*set <variable>,<expression>;
-*set(<variable>,<expression>)
+*set <variable>,<expression>{,<charid>};
+*set(<variable>,<expression>{,<charid>})
 
 This command will set a variable to the value that the expression results in. 
 Variables may either be set through this command or directly, much like any
@@ -2229,7 +2229,7 @@ array, shifting all the elements beyond this towards the beginning.
 ======================================
 ---------------------------------------
 
-*strcharinfo(<type>)
+*strcharinfo(<type>{,<char_id>})
 
 This function will return either the name, party name or guild name for the 
 invoking character. Whatever it returns is determined by type.
@@ -2588,7 +2588,7 @@ will return the second one, etc. Will return 0 if no such item is found.
 
 ---------------------------------------
 
-*getequipisequiped(<equipment slot>)
+*getequipisequiped(<equipment slot>{,<char_id>})
 
 This functions will return 1 if there is an equipment placed on the specified
 equipment slot and 0 otherwise. For a list of equipment slots 
@@ -4416,8 +4416,8 @@ Example:
 
 ---------------------------------------
 
-*rentitem <item id>,<time>;
-*rentitem "<item name>",<time>;
+*rentitem <item id>,<time>{,<account_id>};
+*rentitem "<item name>",<time>{,<account_id>};
 
 Creates a rental item in the attached character's inventory. The item will expire 
 in <time> seconds and be automatically deleted. When receiving a rental item, 
@@ -4430,8 +4430,8 @@ Note: 'delitem' in an NPC script can still remove rental items.
 
 ---------------------------------------
 
-*rentitem2 <item id>,<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>;
-*rentitem2 "<item name>",<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>;
+*rentitem2 <item id>,<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account_id>};
+*rentitem2 "<item name>",<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account_id>};
 
 Creates a rental item in the attached character's inventory. The item will expire 
 in <time> seconds and be automatically deleted. See 'rentitem' for further details.
@@ -4802,14 +4802,14 @@ Whatever the type is, it will also show a failure effect on screen.
 
 ---------------------------------------
 
-*repair <broken item number>;
+*repair <broken item number>{,<char_id>};
 
 This command repairs a broken piece of equipment, using the same list of broken 
 items as available through 'getbrokenid'.
 
 ---------------------------------------
 
-*repairall;
+*repairall {<char_id>};
 
 This command repairs all broken equipment in the attached player's inventory.
 A repair effect will be shown if any items are repaired, else the command will
