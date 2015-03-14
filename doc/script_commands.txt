@@ -1226,7 +1226,7 @@ Returns the variable reference (since trunk r12870).
 
 ---------------------------------------
 
-*setd "<variable name>",<value>;
+*setd "<variable name>",<value>{,<char_id>};
 
 Works almost identically as set, except the variable name is identified as a string 
 and can thus be constructed dynamically.
@@ -1241,6 +1241,9 @@ Examples:
 
   setd ".@" + .@var$ + "123$", "Poporing is cool";
   mes .@Poporing123$; // Displays "Poporing is cool".
+
+NOTE:
+  'char_id' only works for non-server variables.
 
 ---------------------------------------
 
@@ -4132,7 +4135,7 @@ they will also have their skills reset upon 'changesex'.
 
 ---------------------------------------
 
-*getexp <base xp>,<job xp>;
+*getexp <base xp>,<job xp>{,<char_id>};
 
 This command will give the invoking character a specified number of base and job 
 experience points. Can be used as a quest reward. Negative values won't work.
@@ -4846,7 +4849,7 @@ appropriate messages into their chat window.
 
 ---------------------------------------
 
-*unequip <equipment slot>;
+*unequip <equipment slot>{,<char_id>};
 
 This command will unequip whatever is currently equipped in the invoking 
 character's specified equipment slot. For a full list of possible equipment 
@@ -4857,7 +4860,7 @@ them.
 
 ---------------------------------------
 
-*delequip <equipment slot>;
+*delequip <equipment slot>{,<char_id>};
 
 This command will destroy whatever is currently equipped in the invoking
 character's specified equipment slot. For a full list of possible equipment 
@@ -4867,7 +4870,7 @@ This command will return 1 if an item was deleted and 0 otherwise.
 
 ---------------------------------------
 
-*breakequip <equipment slot>;
+*breakequip <equipment slot>{,<char_id>};
 
 This command will break and unequip whatever is currently equipped in the
 invoking character's specified equipment slot. For a full list of possible
@@ -4877,7 +4880,7 @@ This command will return 1 if an item was broken and 0 otherwise.
 
 ---------------------------------------
 
-*clearitem;
+*clearitem {,<char_id>};
 
 This command will destroy all items the invoking character has in their 
 inventory (including equipped items). It will not affect anything else, like 
@@ -4885,7 +4888,7 @@ storage or cart.
 
 ---------------------------------------
 
-*equip <item id>;
+*equip <item id>{,<char_id>};
 *autoequip <item id>,<option>;
 
 These commands are to equip a equipment on the attached character. 
@@ -4968,7 +4971,7 @@ window, to avoid any disruption when both windows overlap.
 
 ---------------------------------------
 
-*openmail;
+*openmail {<char_id>};
 
 This will open a character's Mail window on the client connected to the 
 invoking character.
@@ -4980,7 +4983,7 @@ invoking character.
 
 ---------------------------------------
 
-*openauction;
+*openauction {<char_id>};
 
 This will open the Auction window on the client connected to the invoking character.
 
@@ -7767,7 +7770,7 @@ izlude,100,100,4	script	Test	844,{
 
 ---------------------------------------
 
-*setquest <ID>;
+*setquest <ID>{,<char_id>};
 
 Place quest of <ID> in the users quest log, the state of which is "active".
 
@@ -7775,26 +7778,26 @@ If *questinfo is set, and the same ID is specified here, the icon will be cleare
 
 ---------------------------------------
 
-*completequest <ID>;
+*completequest <ID>{,<char_id>};
 
 Change the state for the given quest <ID> to "complete" and remove from the users quest log.
 
 ---------------------------------------
 
-*erasequest <ID>;
+*erasequest <ID>{,<char_id>};
 
 Remove the quest of the given <ID> from the user's quest log.
 
 ---------------------------------------
 
-*changequest <ID>,<ID2>;
+*changequest <ID>,<ID2>{,<char_id>};
 
 Remove quest of the given <ID> from the user's quest log.
 Add quest of the <ID2> to the the quest log, and the state is "active".
 
 ---------------------------------------
 
-*checkquest(<ID>{,PLAYTIME|HUNTING})
+*checkquest(<ID>{,PLAYTIME|HUNTING{,<char_id>}})
 
 If no additional argument supplied, return the state of the quest: 
 	-1 = Quest not started (not in quest log)
@@ -7816,7 +7819,7 @@ If parameter "HUNTING" is supplied:
 
 ---------------------------------------
 
-*isbegin_quest(<ID>)
+*isbegin_quest(<ID>{,<char_id>})
 
 Return the state of the quest: 
 	0  = Quest not started (not in quest log)
@@ -7825,7 +7828,7 @@ Return the state of the quest:
 
 ---------------------------------------
 
-*showevent <icon>{,<mark color>}
+*showevent <icon>{,<mark color>{,<char_id>}}
 
 Show an emotion on top of a NPC, and optionally,
 a colored mark in the mini-map like "viewpoint".

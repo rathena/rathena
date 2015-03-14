@@ -204,11 +204,9 @@ enum { LABEL_NEXTLINE=1,LABEL_START };
 			return SCRIPT_CMD_FAILURE;\
 		}\
 	}\
-	else {\
-		if (!((sd) = script_rid2sd(st))) {\
-			(ret);\
-			return SCRIPT_CMD_FAILURE;\
-		}\
+	else if (!((sd) = script_rid2sd(st))) {\
+		(ret);\
+		return SCRIPT_CMD_FAILURE;\
 	}\
 }
 
@@ -226,11 +224,9 @@ enum { LABEL_NEXTLINE=1,LABEL_START };
 			return SCRIPT_CMD_FAILURE;\
 		}\
 	}\
-	else {\
-		if (!((sd) = script_rid2sd(st))) {\
-			(ret);\
-			return SCRIPT_CMD_FAILURE;\
-		}\
+	else if (!((sd) = script_rid2sd(st))) {\
+		(ret);\
+		return SCRIPT_CMD_FAILURE;\
 	}\
 }
 
@@ -8321,9 +8317,7 @@ BUILDIN_FUNC(delequip) {
 	TBL_PC *sd;
 
 	pos = script_getnum(st,2);
-	sd = script_rid2sd(st);
-	if (sd == NULL)
-		return 0;
+	script_charid2sd(3,sd,NULL);
 
 	if (pos > 0 && pos <= ARRAYLENGTH(equip))
 		i = pc_checkequip(sd,equip[pos-1]);
@@ -8350,9 +8344,7 @@ BUILDIN_FUNC(breakequip) {
 	TBL_PC *sd;
 
 	pos = script_getnum(st,2);
-	sd = script_rid2sd(st);
-	if (sd == NULL)
-		return 0;
+	script_charid2sd(3,sd,NULL);
 
 	if (pos > 0 && pos <= ARRAYLENGTH(equip))
 		i = pc_checkequip(sd,equip[pos-1]);
@@ -9342,9 +9334,7 @@ BUILDIN_FUNC(getexp)
 	int base=0,job=0;
 	double bonus;
 
-	sd = script_rid2sd(st);
-	if( sd == NULL )
-		return 0;
+	script_charid2sd(4,sd,NULL);
 
 	base=script_getnum(st,2);
 	job =script_getnum(st,3);
@@ -12856,9 +12846,11 @@ BUILDIN_FUNC(getskilllist)
 
 BUILDIN_FUNC(clearitem)
 {
-	TBL_PC *sd=script_rid2sd(st);
+	TBL_PC *sd;
 	int i;
-	if(sd==NULL) return 0;
+
+	script_charid2sd(2,sd,NULL);
+
 	for (i=0; i<MAX_INVENTORY; i++) {
 		if (sd->status.inventory[i].amount) {
 			pc_delitem(sd, i, sd->status.inventory[i].amount, 0, 0, LOG_TYPE_SCRIPT);
@@ -14367,8 +14359,7 @@ BUILDIN_FUNC(unequip) {
 	int pos;
 	TBL_PC *sd;
 
-	if (!(sd = script_rid2sd(st)))
-		return SCRIPT_CMD_SUCCESS;
+	script_charid2sd(3,sd,NULL);
 
 	pos = script_getnum(st,2);
 	if (pos >= 1 && pos <= ARRAYLENGTH(equip)) {
@@ -14389,8 +14380,7 @@ BUILDIN_FUNC(equip) {
 	TBL_PC *sd;
 	struct item_data *item_data;
 
-	if (!(sd = script_rid2sd(st)))
-		return SCRIPT_CMD_SUCCESS;
+	script_charid2sd(3,sd,NULL);
 
 	nameid = script_getnum(st,2);
 	if ((item_data = itemdb_exists(nameid))) {
@@ -15445,12 +15435,7 @@ BUILDIN_FUNC(setd)
 
 	if( not_server_variable(*varname) )
 	{
-		sd = script_rid2sd(st);
-		if( sd == NULL )
-		{
-			ShowError("script:setd: no player attached for player variable '%s'\n", buffer);
-			return 0;
-		}
+		script_charid2sd(4,sd,NULL);
 	}
 
 	if( is_string_variable(varname) ) {
@@ -16658,9 +16643,7 @@ BUILDIN_FUNC(openmail)
 {
 	TBL_PC* sd;
 
-	sd = script_rid2sd(st);
-	if( sd == NULL )
-		return 0;
+	script_charid2sd(2,sd,NULL);
 
 	mail_openmail(sd);
 
@@ -16671,9 +16654,7 @@ BUILDIN_FUNC(openauction)
 {
 	TBL_PC* sd;
 
-	sd = script_rid2sd(st);
-	if( sd == NULL )
-		return 0;
+	script_charid2sd(2,sd,NULL);
 
 	if( !battle_config.feature_auction ) {
 		clif_colormes(sd, color_table[COLOR_RED], msg_txt(sd, 517));
@@ -16978,13 +16959,13 @@ BUILDIN_FUNC(questinfo)
 
 BUILDIN_FUNC(setquest)
 {
-	struct map_session_data *sd = script_rid2sd(st);
+	struct map_session_data *sd;
 	unsigned short i;
 	int quest_id;
 
-	nullpo_retr(1, sd);
-
 	quest_id = script_getnum(st, 2);
+
+	script_charid2sd(3,sd,NULL);
 
 	quest_add(sd, quest_id);
 
@@ -17004,8 +16985,9 @@ BUILDIN_FUNC(setquest)
 
 BUILDIN_FUNC(erasequest)
 {
-	struct map_session_data *sd = script_rid2sd(st);
-	nullpo_ret(sd);
+	struct map_session_data *sd;
+
+	script_charid2sd(3,sd,NULL);
 
 	quest_delete(sd, script_getnum(st, 2));
 	return SCRIPT_CMD_SUCCESS;
@@ -17013,8 +16995,9 @@ BUILDIN_FUNC(erasequest)
 
 BUILDIN_FUNC(completequest)
 {
-	struct map_session_data *sd = script_rid2sd(st);
-	nullpo_ret(sd);
+	struct map_session_data *sd;
+
+	script_charid2sd(3,sd,NULL);
 
 	quest_update_status(sd, script_getnum(st, 2), Q_COMPLETE);
 	return SCRIPT_CMD_SUCCESS;
@@ -17022,8 +17005,9 @@ BUILDIN_FUNC(completequest)
 
 BUILDIN_FUNC(changequest)
 {
-	struct map_session_data *sd = script_rid2sd(st);
-	nullpo_ret(sd);
+	struct map_session_data *sd;
+	
+	script_charid2sd(4,sd,NULL);
 
 	quest_change(sd, script_getnum(st, 2),script_getnum(st, 3));
 	return SCRIPT_CMD_SUCCESS;
@@ -17031,13 +17015,13 @@ BUILDIN_FUNC(changequest)
 
 BUILDIN_FUNC(checkquest)
 {
-	struct map_session_data *sd = script_rid2sd(st);
+	struct map_session_data *sd;
 	enum quest_check_type type = HAVEQUEST;
-
-	nullpo_ret(sd);
 
 	if( script_hasdata(st, 3) )
 		type = (enum quest_check_type)script_getnum(st, 3);
+
+	script_charid2sd(4,sd,NULL);
 
 	script_pushint(st, quest_check(sd, script_getnum(st, 2), type));
 
@@ -17046,10 +17030,10 @@ BUILDIN_FUNC(checkquest)
 
 BUILDIN_FUNC(isbegin_quest)
 {
-	struct map_session_data *sd = script_rid2sd(st);
+	struct map_session_data *sd;
 	int i;
 
-	nullpo_ret(sd);
+	script_charid2sd(3,sd,NULL);
 
 	i = quest_check(sd, script_getnum(st, 2), (enum quest_check_type) HAVEQUEST);
 	script_pushint(st, i + (i < 1));
@@ -17059,12 +17043,14 @@ BUILDIN_FUNC(isbegin_quest)
 
 BUILDIN_FUNC(showevent)
 {
-	TBL_PC *sd = script_rid2sd(st);
+	TBL_PC *sd;
 	struct npc_data *nd = map_id2nd(st->oid);
 	int icon, color = 0;
 
+	script_charid2sd(4,sd,NULL);
+
 	if( sd == NULL || nd == NULL )
-	return 0;
+		return 0;
 
 	icon = script_getnum(st, 2);
 	if( script_hasdata(st, 3) ) {
@@ -19501,10 +19487,10 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getitemname,"v"),
 	BUILDIN_DEF(getitemslots,"i"),
 	BUILDIN_DEF(makepet,"i"),
-	BUILDIN_DEF(getexp,"ii"),
+	BUILDIN_DEF(getexp,"ii?"),
 	BUILDIN_DEF(getinventorylist,""),
 	BUILDIN_DEF(getskilllist,""),
-	BUILDIN_DEF(clearitem,""),
+	BUILDIN_DEF(clearitem,"?"),
 	BUILDIN_DEF(classchange,"ii"),
 	BUILDIN_DEF(misceffect,"i"),
 	BUILDIN_DEF(playBGM,"s"),
@@ -19568,7 +19554,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(checkequipedcard,"i"),
 	BUILDIN_DEF(jump_zero,"il"), //for future jA script compatibility
 	BUILDIN_DEF(globalmes,"s?"), //end jA addition
-	BUILDIN_DEF(unequip,"i"), // unequip command [Spectre]
+	BUILDIN_DEF(unequip,"i?"), // unequip command [Spectre]
 	BUILDIN_DEF(getstrlen,"s"), //strlen [Valaris]
 	BUILDIN_DEF(charisalpha,"si"), //isalpha [Valaris]
 	BUILDIN_DEF(charat,"si"),
@@ -19601,13 +19587,13 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(md5,"s"),
 	// [zBuffer] List of dynamic var commands --->
 	BUILDIN_DEF(getd,"s"),
-	BUILDIN_DEF(setd,"sv"),
+	BUILDIN_DEF(setd,"sv?"),
 	BUILDIN_DEF(callshop,"s?"), // [Skotlex]
 	BUILDIN_DEF(npcshopitem,"sii*"), // [Lance]
 	BUILDIN_DEF(npcshopadditem,"sii*"),
 	BUILDIN_DEF(npcshopdelitem,"si*"),
 	BUILDIN_DEF(npcshopattach,"s?"),
-	BUILDIN_DEF(equip,"i"),
+	BUILDIN_DEF(equip,"i?"),
 	BUILDIN_DEF(autoequip,"ii"),
 	BUILDIN_DEF(setbattleflag,"si"),
 	BUILDIN_DEF(getbattleflag,"s"),
@@ -19655,8 +19641,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(checkvending,"?"),
 	BUILDIN_DEF(checkchatting,"?"),
 	BUILDIN_DEF(checkidle,"?"),
-	BUILDIN_DEF(openmail,""),
-	BUILDIN_DEF(openauction,""),
+	BUILDIN_DEF(openmail,"?"),
+	BUILDIN_DEF(openauction,"?"),
 	BUILDIN_DEF(checkcell,"siii"),
 	BUILDIN_DEF(setcell,"siiiiii"),
 	BUILDIN_DEF(setwall,"siiiiis"),
@@ -19728,8 +19714,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(cleanmap,"cleanarea","siiii"),
 	BUILDIN_DEF(npcskill,"viii"),
 	BUILDIN_DEF(consumeitem,"v"),
-	BUILDIN_DEF(delequip,"i"),
-	BUILDIN_DEF(breakequip,"i"),
+	BUILDIN_DEF(delequip,"i?"),
+	BUILDIN_DEF(breakequip,"i?"),
 	BUILDIN_DEF(sit,"?"),
 	BUILDIN_DEF(stand,"?"),
 	//@commands (script based)
@@ -19739,13 +19725,13 @@ struct script_function buildin_func[] = {
 
 	//Quest Log System [Inkfish]
 	BUILDIN_DEF(questinfo, "ii??"),
-	BUILDIN_DEF(setquest, "i"),
-	BUILDIN_DEF(erasequest, "i"),
-	BUILDIN_DEF(completequest, "i"),
-	BUILDIN_DEF(checkquest, "i?"),
-	BUILDIN_DEF(isbegin_quest,"i"),
-	BUILDIN_DEF(changequest, "ii"),
-	BUILDIN_DEF(showevent, "i?"),
+	BUILDIN_DEF(setquest, "i?"),
+	BUILDIN_DEF(erasequest, "i?"),
+	BUILDIN_DEF(completequest, "i?"),
+	BUILDIN_DEF(checkquest, "i??"),
+	BUILDIN_DEF(isbegin_quest,"i?"),
+	BUILDIN_DEF(changequest, "ii?"),
+	BUILDIN_DEF(showevent, "i??"),
 
 	//Bound items [Xantara] & [Akinari]
 	BUILDIN_DEF2(getitem,"getitembound","vii?"),
