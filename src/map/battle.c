@@ -1366,7 +1366,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
  * @param flag
  * @return damage
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -1689,7 +1689,7 @@ static int battle_calc_base_weapon_attack(struct block_list *src, struct status_
  * &16: Arrow attack but BOW, REVOLVER, RIFLE, SHOTGUN, GATLING or GRENADE type weapon not equipped (i.e. shuriken, kunai and venom knives not affected by DEX)
  *
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -1785,7 +1785,7 @@ static int64 battle_calc_base_damage(struct status_data *status, struct weapon_a
  * Consumes ammo for the given skill.
  *------------------------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -2017,7 +2017,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
  * Should infinite defense be applied on target? (plant)
  *-------------------------------------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
   *	flag - see e_battle_flag
@@ -2049,7 +2049,7 @@ bool is_infinite_defense(struct block_list *target, int flag)
  * Is attack arrow based?
  *------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -2068,7 +2068,7 @@ static bool is_skill_using_arrow(struct block_list *src, int skill_id)
  * Is attack right handed? By default yes.
  *-----------------------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -2088,7 +2088,7 @@ static bool is_attack_right_handed(struct block_list *src, int skill_id)
  * Is attack left handed? By default no.
  *---------------------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -2117,7 +2117,7 @@ static bool is_attack_left_handed(struct block_list *src, int skill_id)
  * Do we score a critical hit?
  *-----------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -2190,7 +2190,7 @@ static bool is_attack_critical(struct Damage wd, struct block_list *src, struct 
  * Is the attack piercing? (Investigate/Ice Pick in pre-re)
  *----------------------------------------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -2246,7 +2246,7 @@ static bool battle_skill_get_damage_properties(uint16 skill_id, int is_splash)
  * Checks if attack is hitting
  *-----------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -2402,7 +2402,7 @@ static bool is_attack_hitting(struct Damage wd, struct block_list *src, struct b
  * If attack ignores def.
  *------------------------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -2451,7 +2451,7 @@ static bool attack_ignores_def(struct Damage wd, struct block_list *src, struct 
  * Should skill attack consider VVS and masteries?
  *------------------------------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -2473,7 +2473,7 @@ static bool battle_skill_stacks_masteries_vvs(uint16 skill_id)
  * Calculate equipment ATK for renewal ATK
  *----------------------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -2497,7 +2497,7 @@ static int battle_calc_equip_attack(struct block_list *src, int skill_id)
  * Returns the element type of attack
  *----------------------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -2569,7 +2569,7 @@ static int battle_get_weapon_element(struct Damage wd, struct block_list *src, s
  * Do element damage modifier calculation
  *----------------------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -2656,7 +2656,7 @@ static struct Damage battle_calc_element_damage(struct Damage wd, struct block_l
  * Calculate weapon mastery damages
  *----------------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -2749,7 +2749,7 @@ static struct Damage battle_calc_attack_masteries(struct Damage wd, struct block
  * Calculate the various Renewal ATK parts
  *-----------------------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -2800,7 +2800,7 @@ struct Damage battle_calc_damage_parts(struct Damage wd, struct block_list *src,
  * Calculate basic ATK that goes into the skill ATK formula
  *----------------------------------------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -3057,7 +3057,7 @@ static struct Damage battle_apply_div_fix(struct Damage d)
  * Check for and calculate multi attacks
  *---------------------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -3123,7 +3123,7 @@ static struct Damage battle_calc_multi_attack(struct Damage wd, struct block_lis
  * Calculate skill level ratios for weapon-based skills
  *------------------------------------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -4051,7 +4051,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
  * Constant skill damage additions are added before SC modifiers and after skill base ATK calculation
  *--------------------------------------------------------------------------------------------------*
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -4131,7 +4131,7 @@ static int battle_calc_skill_constant_addition(struct Damage wd, struct block_li
  * Stackable SC bonuses added on top of calculated skill damage
  *--------------------------------------------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -4288,7 +4288,7 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
  * Calc defense damage reduction
  *------------------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -4459,7 +4459,7 @@ struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list 
  * Modifiers ignoring DEF
  *------------------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -4519,7 +4519,7 @@ struct Damage battle_calc_attack_post_defense(struct Damage wd, struct block_lis
  * "Plant"-type (mobs that only take 1 damage from all sources) damage calculation
  *---------------------------------------------------------------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -4574,7 +4574,7 @@ struct Damage battle_calc_attack_plant(struct Damage wd, struct block_list *src,
  * Perform left/right hand weapon damage calculation based on previously calculated damage
  *----------------------------------------------------------------------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -4632,7 +4632,7 @@ struct Damage battle_calc_attack_left_right_hands(struct Damage wd, struct block
  * BG/GvG attack modifiers
  *------------------------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -4672,7 +4672,7 @@ struct Damage battle_calc_attack_gvg_bg(struct Damage wd, struct block_list *src
  * final ATK modifiers - after BG/GvG calc
  *------------------------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -4771,7 +4771,7 @@ struct Damage battle_calc_weapon_final_atk_modifiers(struct Damage wd, struct bl
  * Basic wd init - not influenced by HIT/MISS/DEF/etc.
  *----------------------------------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -4940,7 +4940,7 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
  * Calculate "weapon"-type attacks and skills
  *--------------------------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
@@ -6022,7 +6022,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
  * Calculate "misc"-type attacks and skills
  *------------------------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *	Refined and optimized by helvetica
  */
 struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *target,uint16 skill_id,uint16 skill_lv,int mflag)
@@ -7054,7 +7054,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
  * Check for undead status
  *-------------------------
  * Credits:
- *	Original coder Skoltex
+ *	Original coder Skotlex
  *  Refactored by Baalberith
  */
 int battle_check_undead(int race,int element)

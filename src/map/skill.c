@@ -3314,7 +3314,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		dmg.flag |= BF_WEAPON;
 
 	if( sd && src != bl && damage > 0 && ( dmg.flag&BF_WEAPON ||
-		(dmg.flag&BF_MISC && (skill_id == RA_CLUSTERBOMB || skill_id == RA_FIRINGTRAP || skill_id == RA_ICEBOUNDTRAP || skill_id == RK_DRAGONBREATH || skill_id == RK_DRAGONBREATH_WATER)) ) )
+		(dmg.flag&BF_MISC && (skill_id == RA_CLUSTERBOMB || skill_id == RA_FIRINGTRAP || skill_id == RA_ICEBOUNDTRAP)) ) )
 	{
 		if (battle_config.left_cardfix_to_right)
 			battle_drain(sd, bl, dmg.damage, dmg.damage, tstatus->race, tstatus->class_);
@@ -4825,7 +4825,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			if( (tsc2 = status_get_sc(bl)) && (tsc2->data[SC_HIDING] )) {
 				clif_skill_nodamage(src,src,skill_id,skill_lv,1);
 			} else
-				skill_attack(BF_MISC,src,src,bl,skill_id,skill_lv,tick,flag);
+				skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		}
 		break;
 

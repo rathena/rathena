@@ -1948,7 +1948,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 						return false;
 					if (tsc->data[SC__FEINTBOMB] && (is_boss || is_detect))
 						return false;
-					if (tsc->data[SC_CAMOUFLAGE] && !(is_boss || is_detect))
+					if (tsc->data[SC_CAMOUFLAGE] && !(is_boss || is_detect) && (!skill_id || (!flag && src)))
 						return false;
 					if (tsc->data[SC_STEALTHFIELD] && !(is_boss || is_detect))
 						return false;
