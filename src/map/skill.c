@@ -12363,19 +12363,10 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 			case HT_FLASHER:
 			case HT_FREEZINGTRAP:
 			case MA_FREEZINGTRAP:
-			case HT_TALKIEBOX:
 			case HT_SKIDTRAP:
 			case MA_SKIDTRAP:
 			case HT_CLAYMORETRAP:
 			case HT_BLASTMINE:
-			case RA_ELECTRICSHOCKER:
-			case RA_CLUSTERBOMB:
-			case RA_MAGENTATRAP:
-			case RA_COBALTTRAP:
-			case RA_MAIZETRAP:
-			case RA_VERDURETRAP:
-			case RA_FIRINGTRAP:
-			case RA_ICEBOUNDTRAP:
 				unit_val1 = 3500;
 				break;
 
@@ -13769,7 +13760,6 @@ int64 skill_unit_ondamaged(struct skill_unit *unit, int64 damage)
 		case UNT_FLASHER:
 		case UNT_CLAYMORETRAP:
 		case UNT_FREEZINGTRAP:
-		case UNT_TALKIEBOX:
 		case UNT_ANKLESNARE:
 		case UNT_ICEWALL:
 		case UNT_WALLOFTHORN:
