@@ -54,6 +54,10 @@ int chmapif_parse_reqcharunban(int fd);
 int chmapif_bonus_script_get(int fd);
 int chmapif_bonus_script_save(int fd);
 
+void chmapif_connectack(int fd, uint8 errCode);
+void chmapif_charselres(int fd, uint32 aid, uint8 res);
+void chmapif_changemapserv_ack(int fd, bool nok);
+
 int chmapif_parse(int fd);
 int chmapif_init(int fd);
 void chmapif_server_init(int id);

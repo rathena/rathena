@@ -454,7 +454,7 @@ int chrif_changemapserver(struct map_session_data* sd, uint32 ip, uint16 port) {
 	return 0;
 }
 
-/// map-server change request acknowledgement (positive or negative)
+/// map-server change (mapserv) request acknowledgement (positive or negative)
 /// R 2b06 <account_id>.L <login_id1>.L <login_id2>.L <char_id>.L <map_index>.W <x>.W <y>.W <ip>.L <port>.W
 int chrif_changemapserverack(uint32 account_id, int login_id1, int login_id2, uint32 char_id, short map_index, short x, short y, uint32 ip, uint16 port) {
 	struct auth_node *node;
@@ -474,9 +474,14 @@ int chrif_changemapserverack(uint32 account_id, int login_id1, int login_id2, ui
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------*/
+/**
+ * Does the char_serv have validate our connection to him ?
+ * If yes then 
+ *  - Send all our mapname to charserv
+ *  - Retrieve guild castle
+ *  - Do OnInterIfInit and OnInterIfInitOnce on all npc 
+ * 0x2af9 <errCode>B
+ */
 int chrif_connectack(int fd) {
 	static bool char_init_done = false;
 

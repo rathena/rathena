@@ -426,6 +426,20 @@ int chmapif_parse_reqsavechar(int fd, int id){
 }
 
 /**
+ * Inform mapserv of a new character selection request
+ * @param fd : FD link tomapserv
+ * @param aid : Player account id
+ * @param res : result, 0=not ok, 1=ok
+ */
+void chmapif_charselres(int fd, uint32 aid, uint8 res){
+	WFIFOHEAD(fd,7);
+	WFIFOW(fd,0) = 0x2b03;
+	WFIFOL(fd,2) = aid;
+	WFIFOB(fd,6) = res;
+	WFIFOSET(fd,7);
+}
+
+/**
  * Player Requesting char-select from map_serv
  * @param fd: wich fd to parse from
  * @return : 0 not enough data received, 1 success
@@ -442,11 +456,7 @@ int chmapif_parse_authok(int fd){
 		RFIFOSKIP(fd,19);
 
 		if( runflag != CHARSERVER_ST_RUNNING ){
-			WFIFOHEAD(fd,7);
-			WFIFOW(fd,0) = 0x2b03;
-			WFIFOL(fd,2) = account_id;
-			WFIFOB(fd,6) = 0;// not ok
-			WFIFOSET(fd,7);
+			chmapif_charselres(fd,account_id,0);
 		}else{
 			struct auth_node* node;
 			DBMap*  auth_db = char_get_authdb();
@@ -473,12 +483,7 @@ int chmapif_parse_authok(int fd){
 					character->pincode_success = true;
 				}
 			}
-
-			WFIFOHEAD(fd,7);
-			WFIFOW(fd,0) = 0x2b03;
-			WFIFOL(fd,2) = account_id;
-			WFIFOB(fd,6) = 1;// ok
-			WFIFOSET(fd,7);
+			chmapif_charselres(fd,account_id,1);
 		}
 	}
 	return 1;
@@ -566,6 +571,20 @@ int chmapif_parse_req_skillcooldown(int fd){
 }
 
 /**
+ * Inform the mapserv, of a change mapserv request
+ * @param fd :Link to mapserv
+ * @param nok : 0=accepted or no=1
+ */
+void chmapif_changemapserv_ack(int fd, bool nok){
+    WFIFOHEAD(fd,30);
+    WFIFOW(fd,0) = 0x2b06;
+    memcpy(WFIFOP(fd,2), RFIFOP(fd,2), 28);
+    if(nok) 
+	WFIFOL(fd,6) = 0; //Set login1 to 0.(not ok)
+    WFIFOSET(fd,30);
+}
+
+/**
  * Player requesting to change map-serv
  * @param fd: wich fd to parse from
  * @return : 0 not enough data received, 1 success
@@ -624,16 +643,9 @@ int chmapif_parse_reqchangemapserv(int fd){
 			data->server = map_id; //Update server where char is.
 
 			//Reply with an ack.
-			WFIFOHEAD(fd,30);
-			WFIFOW(fd,0) = 0x2b06;
-			memcpy(WFIFOP(fd,2), RFIFOP(fd,2), 28);
-			WFIFOSET(fd,30);
+			chmapif_changemapserv_ack(fd,0);
 		} else { //Reply with nak
-			WFIFOHEAD(fd,30);
-			WFIFOW(fd,0) = 0x2b06;
-			memcpy(WFIFOP(fd,2), RFIFOP(fd,2), 28);
-			WFIFOL(fd,6) = 0; //Set login1 to 0.
-			WFIFOSET(fd,30);
+			chmapif_changemapserv_ack(fd,1);
 		}
 		RFIFOSKIP(fd,39);
 	}
@@ -1395,6 +1407,18 @@ int chmapif_bonus_script_save(int fd) {
 		RFIFOSKIP(fd,RFIFOW(fd,2));
 	}
 	return 1;
+}
+
+/**
+ * Inform the mapserv wheater his login attemp to us was a success or not
+ * @param fd : file descriptor to parse, (link to mapserv)
+ * @param errCode 0:success, 3:fail
+ */
+void chmapif_connectack(int fd, uint8 errCode){
+	WFIFOHEAD(fd,3);
+	WFIFOW(fd,0) = 0x2af9;
+	WFIFOB(fd,2) = errCode;
+	WFIFOSET(fd,3);
 }
 
 /**
