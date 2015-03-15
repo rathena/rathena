@@ -210,6 +210,7 @@ sub UpdateSQL  { my($sBaseDir,$sInit,$rhFileState) = @_;
 }
 
 sub RunCompilation { my($sBaseDir,$sTarget) = @_;
+	chdir "$sBaseDir/..";
 	if($^O =~ "linux"){
 		print "Recompiling...\n";
 		system('./configure && make clean server');
