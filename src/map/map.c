@@ -2365,6 +2365,7 @@ int map_addinstancemap(const char *name, int id)
 
 	map[dst_m].m = dst_m;
 	map[dst_m].instance_id = id;
+	map[dst_m].instance_src_map = src_m;
 	map[dst_m].users = 0;
 
 	memset(map[dst_m].npc, 0, sizeof(map[dst_m].npc));
