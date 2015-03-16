@@ -6019,8 +6019,8 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 				val = max( val, sc->data[SC_MARSHOFABYSS]->val3 );
 			if( sc->data[SC_CAMOUFLAGE] && (sc->data[SC_CAMOUFLAGE]->val3&1) == 0 )
 				val = max( val, sc->data[SC_CAMOUFLAGE]->val1 < 3 ? 0 : 25 * (5 - sc->data[SC_CAMOUFLAGE]->val1) );
-			if( sc->data[SC_STEALTHFIELD_MASTER] )
-				val = max( val, 30 );
+			if( sc->data[SC_STEALTHFIELD] )
+				val = max( val, sc->data[SC_STEALTHFIELD]->val2 );
 			if( sc->data[SC__LAZINESS] )
 				val = max( val, 25 );
 			if( sc->data[SC_BANDING_DEFENCE] )
@@ -9938,6 +9938,15 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 5 * val1; //HP rate bonus
 			break;
 
+		case SC_STEALTHFIELD:
+			val2 = 30; // Speed reduction
+			break;
+		case SC_STEALTHFIELD_MASTER:
+			val3 = 3; // Reduces SP 3%
+			tick_time = 3000;
+			val4 = tick/tick_time;
+			break;
+
 		/* Rebellion */
 		case SC_B_TRAP:
 			val2 = src->id;
@@ -12147,15 +12156,15 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		}
 		break;
 	case SC_CBC:
-	    if(--(sce->val4) >= 0) { // Drain hp/sp
-		int hp=0;
-		int sp = (status->max_sp * sce->val3) / 100;
-		if(bl->type == BL_MOB) hp = sp*10;
-		if( !status_charge(bl,hp,sp) ) break;
-		sc_timer_next(1000+tick,status_change_timer,bl->id, data);
-		return 0;
-	    }
-	    break;
+		if(--(sce->val4) >= 0) { // Drain hp/sp
+			int hp=0;
+			int sp = (status->max_sp * sce->val3) / 100;
+			if(bl->type == BL_MOB) hp = sp*10;
+			if( !status_charge(bl,hp,sp) )break;
+			sc_timer_next(1000+tick,status_change_timer,bl->id, data);
+			return 0;
+		}
+		break;
 	case SC_FULL_THROTTLE:
 		if( --(sce->val4) >= 0 ) {
 			status_percent_damage(bl, bl, 0, sce->val2, false);
@@ -12194,6 +12203,13 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			return 0;
 		}
 		break;
+	case SC_STEALTHFIELD_MASTER:
+		if (--(sce->val4) >= 0) {
+			int sp = (status->max_sp * sce->val3) / 100;
+			if (!status_charge(bl,0,sp))
+				break;
+			sc_timer_next(3000 + tick, status_change_timer, bl->id, data);
+		}
 	}
 
 	// Default for all non-handled control paths is to end the status
