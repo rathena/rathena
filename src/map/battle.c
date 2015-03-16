@@ -6997,21 +6997,21 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 					}
 				}
 
-                if (sd->state.autocast == 0) {
-                    sd->state.autocast = 1;
-                    skill_consume_requirement(sd, r_skill, r_lv, 3);
-                    switch (type) {
-                        case CAST_GROUND:
-                            skill_castend_pos2(src, target->x, target->y, r_skill, r_lv, tick, flag);
-                            break;
-                        case CAST_NODAMAGE:
-                            skill_castend_nodamage_id(src, target, r_skill, r_lv, tick, flag);
-                            break;
-                        case CAST_DAMAGE:
-                            skill_castend_damage_id(src, target, r_skill, r_lv, tick, flag);
-                            break;
-                    }
-                }
+				if (sd->state.autocast == 0) {
+					sd->state.autocast = 1;
+					skill_consume_requirement(sd, r_skill, r_lv, 3);
+					switch (type) {
+						case CAST_GROUND:
+							skill_castend_pos2(src, target->x, target->y, r_skill, r_lv, tick, flag);
+							break;
+						case CAST_NODAMAGE:
+							skill_castend_nodamage_id(src, target, r_skill, r_lv, tick, flag);
+							break;
+						case CAST_DAMAGE:
+							skill_castend_damage_id(src, target, r_skill, r_lv, tick, flag);
+							break;
+					}
+				}
 				sd->state.autocast = 0;
 
 				sd->ud.canact_tick = tick + skill_delayfix(src, r_skill, r_lv);
