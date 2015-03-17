@@ -2915,7 +2915,7 @@
 5008,Puppy_Love,Puppy Love,4,20,,100,,1,,0,0xFFFFFFFE,63,2,256,,0,0,94,{},{},{}
 5009,Safety_Helmet,Safety Helmet,4,20,,500,,3,,0,0xFFFFFFFE,63,2,256,,0,1,95,{ bonus bMdef,3; bonus bUnbreakableHelm,0; },{},{}
 5010,Indian_Hair_Piece,Indian Fillet,4,20,,100,,5,,0,0xFFFFFFFF,63,2,256,,0,1,96,{},{},{}
-5011,Antenna,Aerial,4,20,,100,5,,0,0xFFFFFFFF,63,2,256,,0,1,97,{},{},{}
+5011,Antenna,Aerial,4,20,,100,,5,,0,0xFFFFFFFF,63,2,256,,0,1,97,{},{},{}
 5012,Ph.D_Hat,Ph.D Hat,4,20,,200,,3,,0,0xFFFFFFFE,63,2,256,,0,1,98,{},{},{}
 5013,Horn_Of_Lord_Kaho,Lord Kaho's Horn,4,20,,100,,5,,0,0xFFFFFFFF,63,2,256,,0,1,99,{ bonus bMdef,10; bonus bStr,5; bonus bAgi,10; bonus bVit,10; bonus bInt,5; bonus bLuk,20; },{},{}
 5014,Fin_Helm,Fin Helm,4,20,,300,,2,,0,0x00004082,63,2,512,,65,0,100,{},{},{}

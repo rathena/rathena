@@ -2946,7 +2946,7 @@ REPLACE INTO `item_db_re` VALUES (5007,'Loard_Circlet','Grand Circlet',4,20,NULL
 REPLACE INTO `item_db_re` VALUES (5008,'Puppy_Love','Puppy Love',4,20,NULL,100,NULL,1,NULL,0,0xFFFFFFFE,63,2,256,NULL,'0',0,94,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5009,'Safety_Helmet','Safety Helmet',4,20,NULL,500,NULL,3,NULL,0,0xFFFFFFFE,63,2,256,NULL,'0',1,95,'bonus bMdef,3; bonus bUnbreakableHelm,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5010,'Indian_Hair_Piece','Indian Fillet',4,20,NULL,100,NULL,5,NULL,0,0xFFFFFFFF,63,2,256,NULL,'0',1,96,NULL,NULL,NULL);
-5011,Antenna,Aerial,4,20,,100,5,,0,0xFFFFFFFF,63,2,256,,0,1,97,{},{},{}
+REPLACE INTO `item_db_re` VALUES (5011,'Antenna','Aerial',4,20,NULL,100,NULL,5,NULL,0,0xFFFFFFFF,63,2,256,NULL,'0',1,97,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5012,'Ph.D_Hat','Ph.D Hat',4,20,NULL,200,NULL,3,NULL,0,0xFFFFFFFE,63,2,256,NULL,'0',1,98,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5013,'Horn_Of_Lord_Kaho','Lord Kaho\'s Horn',4,20,NULL,100,NULL,5,NULL,0,0xFFFFFFFF,63,2,256,NULL,'0',1,99,'bonus bMdef,10; bonus bStr,5; bonus bAgi,10; bonus bVit,10; bonus bInt,5; bonus bLuk,20;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5014,'Fin_Helm','Fin Helm',4,20,NULL,300,NULL,2,NULL,0,0x00004082,63,2,512,NULL,'65',0,100,NULL,NULL,NULL);
