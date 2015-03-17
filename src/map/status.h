@@ -702,6 +702,7 @@ typedef enum sc_type {
 	SC__CHAOS,
 	SC_ELEMENTAL_SHIELD,
 	SC_CHASEWALK2,
+	SC_VACUUM_EXTREME_POSTDELAY,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
