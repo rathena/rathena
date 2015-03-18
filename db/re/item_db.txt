@@ -5804,10 +5804,10 @@
 11588,Fresh_Strawberries,Fresh Strawberries,0,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(32,56),rand(16,28); },{},{}
 11589,Iceflake,Cold Snow Cone,0,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 5,5; },{},{}
 11590,Meat_Skewer5,Skewer No.5,0,5000,,300,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(760,810),10; },{},{}
-11592,Trans-Red_Candy,Trans-Red Candy,0,20,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal 45,0; transform "1507",600000,SC_NONE; sc_start SC_INCMHP,600000,1000; },{},{}
-11593,Trans-Blue_Candy,Trans-Blue Candy,0,20,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal 45,0; transform "1102",600000,SC_NONE; sc_start SC_INCMSP,600000,100; },{},{}
-11594,Trans-Yellow_Candy,Trans-Yellow Candy,0,20,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal 45,0; transform "1130",600000,SC_NONE; autobonus "{ bonus2 bAddItemHealRate,535,2000; }",10000,600000; },{},{}
-11595,Trans-Green_Candy,Trans-Green Candy,0,20,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal 45,0; transform "1508",600000,SC_NONE; autobonus "{ bonus bHit,10; bonus bFlee,20; }",10000,600000; },{},{}
+11592,Trans_Candy_Red,Trans Candy Red,0,20,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal 45,0; transform 1507,600000,SC_MTF_MHP,1000; },{},{}
+11593,Trans_Candy_Blue,Trans Candy Blue,0,20,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal 45,0; transform 1102,600000,SC_MTF_MSP,100; },{},{}
+11594,Trans_Candy_Yellow,Trans Candy Yellow,0,20,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal 45,0; transform 1130,600000,SC_MTF_PUMPKIN,2000; },{},{}
+11595,Trans_Candy_Green,Trans Candy Green,0,20,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal 45,0; transform 1508,600000,SC_MTF_HITFLEE,10,20; },{},{}
 11596,Blood_In_Skull,Blood In Skull,0,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(600,800),0; },{},{}
 11597,Iron_Worm,Iron Worm,0,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
 11598,Bitter_Cacao_Bean,Bitter Cacao Bean,0,10,,0,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
@@ -6479,13 +6479,13 @@
 12655,Brain_Powder,Brain Powder,2,2000,,100,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12656,Magical_Powder,Magical Powder,2,3000,,200,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12657,Madness_Powder,Madness Powder,2,4000,,300,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12658,Trans_Scroll_Devi,Transformation Scroll(Deviruchi),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ transform "Deviruchi",1200000,SC_MTF_ASPD; },{},{}
-12659,Trans_Scroll_Ray_Arch,Transformation Scroll(Raydric),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ transform "Raydric Archer",1200000,SC_MTF_RANGEATK; },{},{}
-12660,Trans_Scroll_Mavka,Transformation Scroll(Mavka),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ transform "Mavka",1200000,SC_MTF_RANGEATK; },{},{}
-12661,Trans_Scroll_Marduk,Transformation Scroll(Marduk),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ transform "Marduk",1200000,SC_MTF_MATK; },{},{}
-12662,Trans_Scroll_Banshee,Transformation Scroll(Banshee),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ transform "Banshee",1200000,SC_MTF_MATK; },{},{}
-12663,Trans_Scroll_Poring,Transformation Scroll(Poring),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ transform "Poring",1200000,SC_MTF_CRIDAMAGE; },{},{}
-12664,Trans_Scroll_Golem,Transformation Scroll(Golem),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ transform "Golem",1200000,SC_MTF_MLEATKED; },{},{}
+12658,Trans_Scroll_Devi,Transformation Scroll(Deviruchi),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ transform 1109,1200000,SC_MTF_ASPD; },{},{}
+12659,Trans_Scroll_Ray_Arch,Transformation Scroll(Raydric),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ transform 1276,1200000,SC_MTF_RANGEATK; },{},{}
+12660,Trans_Scroll_Mavka,Transformation Scroll(Mavka),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ transform 1884,1200000,SC_MTF_RANGEATK; },{},{}
+12661,Trans_Scroll_Marduk,Transformation Scroll(Marduk),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ transform 1140,1200000,SC_MTF_MATK; },{},{}
+12662,Trans_Scroll_Banshee,Transformation Scroll(Banshee),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ transform 1867,1200000,SC_MTF_MATK; },{},{}
+12663,Trans_Scroll_Poring,Transformation Scroll(Poring),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ transform 1002,1200000,SC_MTF_CRIDAMAGE; },{},{}
+12664,Trans_Scroll_Golem,Transformation Scroll(Golem),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ transform 1040,1200000,SC_MTF_MLEATKED; },{},{}
 12665,Grovel_Buff,Grovel Buff,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12666,Thai_Perfume_MATK,Thai Perfume MATK,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_MAGICALATTHIT; bonus_script "{ bonus bMatk,24; }",600,0,0,SI_SKF_MATK; },{},{}
 12667,Thai_Perfume_ATK,Thai Perfume ATK,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_MAGICALATTHIT; bonus_script "{ bonus bBaseAtk,24; }",600,0,0,SI_SKF_ATK; },{},{}
@@ -6678,7 +6678,7 @@
 12853,Patron_Scroll,Patron Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Patron_Scroll); },{},{}
 12860,Mommy_Day_Cake,Mommy Day Cake,2,0,,200,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 50,50; skilleffect "HP_ASSUMPTIO",0; sc_start SC_ASSUMPTIO,100000,5; },{},{}
 12863,Treasure_Chest_Summoned_II,Treasure Chest Summoned II,3,10,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ monster "this",-1,-1,"--ja--",rand(1324,1363),1,""; },{},{}
-12883,Almighty,Almighty,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_BASH3D; sc_start SC_INCALLSTATUS,1800000,10; /* SetBuff "EFST_2011RWC_SCROLL" 1800 1800 */ },{},{}
+12883,Almighty,Almighty,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_BASH3D; sc_start SC_2011RWC_SCROLL,1800000,10; },{},{}
 12884,Infinite_Concentration_Potion,Infinite Concentration Potion,11,10,,0,,,,0,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_ASPDPOTION0,1800000,4; },{},{}
 12885,Infinite_Awakening_Potion,Infinite Awakening Potion,11,10,,0,,,,0,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_ASPDPOTION1,1800000,6; },{},{}
 12886,Infinite_Berserk_Potion,Infinite Berserk Potion,11,10,,0,,,,0,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_ASPDPOTION2,1800000,9; },{},{}
@@ -9803,7 +9803,7 @@
 22618,Clear_Box_A,Clear Box A,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
 22619,Ghost_Summon_Scroll,Ghost Scroll,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ /* mercenary_create M_E_DEVILING,1800000; */ },{},{}
 22620,Memorial_Box,Box Of Memories,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
-22621,Squid_Bbq,Barbecued Squid,2,5000,,250,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_EXIT; /* SetBuff "EFST_JP_EVENT04" 300000 1 */ percentheal 5,5; },{},{}
+22621,Squid_Bbq,Barbecued Squid,2,5000,,250,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_EXIT; sc_start SC_JP_EVENT04,300000,25; percentheal 5,5; },{},{}
 22623,New_Start_Box,New Start Box,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 12803,1; getitem 12802,1; getitem 12809,1; },{},{}
 22624,Riesen_Bretzel,Riesen Bretzel,0,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 100,0; },{},{}
 22625,Oktoberfest_Bag,Oktoberfest Bag,2,0,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_OKTOBERFEST,600000,0; },{},{}
@@ -9860,12 +9860,12 @@
 22747,Dengeki_Shot_Cartridge,Dengeki Shot Cartridge,18,10,,250,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 13218,500; },{},{}
 22748,Hearthstone_Shot_Cartridge,Hearthstone Shot Cartridge,18,10,,250,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 13219,500; },{},{}
 22749,Purification_Shot_Cartridge,Purification Shot Cartridge,18,10,,250,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 13220,500; },{},{}
-22750,Trans_Scroll_Horn_Scaraba,Transformation Scroll(Horn Scaraba),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ transform "2161",1200000,SC_NONE; /*ASPD + 2, HIT + 10*/ },{},{}
-22751,Trans_Scroll_Wanderer,Transformation Scroll(Wanderer),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ transform "1208",1200000,SC_NONE; /*ASPD + 2, HIT + 10*/ },{},{}
-22752,Trans_Scroll_Gazeti,Transformation Scroll(Gazeti),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ transform "1778",1200000,SC_NONE; /*Ranged Attack +30%*/ },{},{}
-22753,Trans_Scroll_Kobold_Archer,Transformation Scroll(Kobold Archer),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ transform "1282",1200000,SC_NONE; /*Ranged Attack +30%*/ },{},{}
-22754,Trans_Scroll_Necromancer,Transformation Scroll(Necromancer),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ transform "1870",1200000,SC_NONE; /*Ranged Attack +30%*/ },{},{}
-22755,Trans_Scroll_Wind_Ghost,Transformation Scroll(Wind Ghost),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ transform "1263",1200000,SC_NONE; /*MATK + 50*/ },{},{}
+22750,Trans_Scroll_Horn_Scaraba,Transformation Scroll(Horn Scaraba),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ transform 2161,1200000,SC_MTF_ASPD2; },{},{}
+22751,Trans_Scroll_Wanderer,Transformation Scroll(Wanderer),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ transform 1208,1200000,SC_MTF_ASPD2; },{},{}
+22752,Trans_Scroll_Gazeti,Transformation Scroll(Gazeti),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ transform 1778,1200000,SC_MTF_RANGEATK2; },{},{}
+22753,Trans_Scroll_Kobold_Archer,Transformation Scroll(Kobold Archer),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ transform 1282,1200000,SC_MTF_RANGEATK2; },{},{}
+22754,Trans_Scroll_Necromancer,Transformation Scroll(Necromancer),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ transform 1870,1200000,SC_MTF_RANGEATK2; },{},{}
+22755,Trans_Scroll_Wind_Ghost,Transformation Scroll(Wind Ghost),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ transform 1263,1200000,SC_MTF_MATK2; },{},{}
 22757,Collection_Of_Scrolls_Magical_Transformation,Collection Of Scrolls Magical Transformation,18,10,,200,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 22755,1; getitem 22754,1; },{},{}
 22758,Collection_Of_Scrolls_Shooting_Transformation,Collection Of Scrolls Shooting Transformation,18,10,,200,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 22753,1; getitem 22752,1; },{},{}
 22759,Collection_Of_Scrolls_Attack_Speed_Transformation,Collection Of Scrolls Attack Speed Transformation,18,10,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 22751,1; getitem 22750,1; },{},{}

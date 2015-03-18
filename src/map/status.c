@@ -709,7 +709,7 @@ void initChangeTables(void)
 	set_sc( SR_GENTLETOUCH_ENERGYGAIN	, SC_GT_ENERGYGAIN	, SI_GENTLETOUCH_ENERGYGAIN	, SCB_NONE );
 	set_sc( SR_GENTLETOUCH_CHANGE		, SC_GT_CHANGE		, SI_GENTLETOUCH_CHANGE		, SCB_WATK|SCB_MDEF|SCB_ASPD|SCB_MAXHP );
 	set_sc( SR_GENTLETOUCH_REVITALIZE	, SC_GT_REVITALIZE	, SI_GENTLETOUCH_REVITALIZE	, SCB_MAXHP|SCB_REGEN );
-	add_sc( SR_FLASHCOMBO			, SC_FLASHCOMBO );
+	set_sc( SR_FLASHCOMBO			, SC_FLASHCOMBO		, SI_FLASHCOMBO			, SCB_WATK );
 
 	/* Wanderer / Minstrel */
 	set_sc( WA_SWING_DANCE			, SC_SWINGDANCE			, SI_SWINGDANCE			, SCB_SPEED|SCB_ASPD );
@@ -977,6 +977,8 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_UPHEAVAL] = SI_UPHEAVAL;
 
 	StatusIconChangeTable[SC_REBOUND] = SI_REBOUND;
+	StatusIconChangeTable[SC_DEFSET] = SI_SET_NUM_DEF;
+	StatusIconChangeTable[SC_MDEFSET] = SI_SET_NUM_MDEF;
 	StatusIconChangeTable[SC_MONSTER_TRANSFORM] = SI_MONSTER_TRANSFORM;
 	StatusIconChangeTable[SC_ALL_RIDING] = SI_ALL_RIDING;
 	StatusIconChangeTable[SC_PUSH_CART] = SI_ON_PUSH_CART;
@@ -994,16 +996,25 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_QUEST_BUFF1] = SI_QUEST_BUFF1;
 	StatusIconChangeTable[SC_QUEST_BUFF2] = SI_QUEST_BUFF2;
 	StatusIconChangeTable[SC_QUEST_BUFF3] = SI_QUEST_BUFF3;
+	StatusIconChangeTable[SC_MTF_ASPD2] = SI_MTF_ASPD2;
+	StatusIconChangeTable[SC_MTF_RANGEATK2] = SI_MTF_RANGEATK2;
+	StatusIconChangeTable[SC_MTF_MATK2] = SI_MTF_MATK2;
+	StatusIconChangeTable[SC_2011RWC_SCROLL] = SI_2011RWC_SCROLL;
+	StatusIconChangeTable[SC_JP_EVENT04] = SI_JP_EVENT04;
+	StatusIconChangeTable[SC_MTF_HITFLEE] = SI_MTF_HITFLEE;
+	StatusIconChangeTable[SC_MTF_MHP] = SI_MTF_MHP;
+	StatusIconChangeTable[SC_MTF_MSP] = SI_MTF_MSP;
+	StatusIconChangeTable[SC_MTF_PUMPKIN] = SI_MTF_PUMPKIN;
 
 	/* Other SC which are not necessarily associated to skills */
-	StatusChangeFlagTable[SC_ASPDPOTION0] = SCB_ASPD;
-	StatusChangeFlagTable[SC_ASPDPOTION1] = SCB_ASPD;
-	StatusChangeFlagTable[SC_ASPDPOTION2] = SCB_ASPD;
-	StatusChangeFlagTable[SC_ASPDPOTION3] = SCB_ASPD;
-	StatusChangeFlagTable[SC_SPEEDUP0] = SCB_SPEED;
-	StatusChangeFlagTable[SC_SPEEDUP1] = SCB_SPEED;
-	StatusChangeFlagTable[SC_ATKPOTION] = SCB_BATK;
-	StatusChangeFlagTable[SC_MATKPOTION] = SCB_MATK;
+	StatusChangeFlagTable[SC_ASPDPOTION0] |= SCB_ASPD;
+	StatusChangeFlagTable[SC_ASPDPOTION1] |= SCB_ASPD;
+	StatusChangeFlagTable[SC_ASPDPOTION2] |= SCB_ASPD;
+	StatusChangeFlagTable[SC_ASPDPOTION3] |= SCB_ASPD;
+	StatusChangeFlagTable[SC_SPEEDUP0] |= SCB_SPEED;
+	StatusChangeFlagTable[SC_SPEEDUP1] |= SCB_SPEED;
+	StatusChangeFlagTable[SC_ATKPOTION] |= SCB_BATK;
+	StatusChangeFlagTable[SC_MATKPOTION] |= SCB_MATK;
 	StatusChangeFlagTable[SC_INCALLSTATUS] |= SCB_STR|SCB_AGI|SCB_VIT|SCB_INT|SCB_DEX|SCB_LUK;
 	StatusChangeFlagTable[SC_INCSTR] |= SCB_STR;
 	StatusChangeFlagTable[SC_INCAGI] |= SCB_AGI;
@@ -1045,12 +1056,12 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_CHASEWALK2] |= SCB_STR;
 
 	/* Cash Items */
-	StatusChangeFlagTable[SC_FOOD_STR_CASH] = SCB_STR;
-	StatusChangeFlagTable[SC_FOOD_AGI_CASH] = SCB_AGI;
-	StatusChangeFlagTable[SC_FOOD_VIT_CASH] = SCB_VIT;
-	StatusChangeFlagTable[SC_FOOD_DEX_CASH] = SCB_DEX;
-	StatusChangeFlagTable[SC_FOOD_INT_CASH] = SCB_INT;
-	StatusChangeFlagTable[SC_FOOD_LUK_CASH] = SCB_LUK;
+	StatusChangeFlagTable[SC_FOOD_STR_CASH] |= SCB_STR;
+	StatusChangeFlagTable[SC_FOOD_AGI_CASH] |= SCB_AGI;
+	StatusChangeFlagTable[SC_FOOD_VIT_CASH] |= SCB_VIT;
+	StatusChangeFlagTable[SC_FOOD_DEX_CASH] |= SCB_DEX;
+	StatusChangeFlagTable[SC_FOOD_INT_CASH] |= SCB_INT;
+	StatusChangeFlagTable[SC_FOOD_LUK_CASH] |= SCB_LUK;
 
 	/* Mercenary Bonus Effects */
 	StatusChangeFlagTable[SC_MERC_FLEEUP] |= SCB_FLEE;
@@ -1104,6 +1115,12 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_QUEST_BUFF1] |= SCB_BATK|SCB_MATK;
 	StatusChangeFlagTable[SC_QUEST_BUFF2] |= SCB_BATK|SCB_MATK;
 	StatusChangeFlagTable[SC_QUEST_BUFF3] |= SCB_BATK|SCB_MATK;
+	StatusChangeFlagTable[SC_MTF_ASPD2] |= SCB_ASPD|SCB_HIT;
+	StatusChangeFlagTable[SC_MTF_MATK2] |= SCB_MATK;
+	StatusChangeFlagTable[SC_2011RWC_SCROLL] |= SCB_BATK|SCB_MATK|SCB_STR|SCB_AGI|SCB_VIT|SCB_INT|SCB_DEX|SCB_LUK;
+	StatusChangeFlagTable[SC_MTF_HITFLEE] |= SCB_HIT|SCB_FLEE;
+	StatusChangeFlagTable[SC_MTF_MHP] |= SCB_MAXHP;
+	StatusChangeFlagTable[SC_MTF_MSP] |= SCB_MAXSP;
 
 #ifdef RENEWAL
 	// renewal EDP increases your weapon atk
@@ -1183,6 +1200,7 @@ void initChangeTables(void)
 	StatusChangeStateTable[SC_KAGEHUMI]				|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_KYOUGAKU]				|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_PARALYSIS]			|= SCS_NOMOVE;
+	StatusChangeStateTable[SC_KINGS_GRACE]			|= SCS_NOMOVE;
 
 	/* StatusChangeState (SCS_) NOPICKUPITEMS */
 	StatusChangeStateTable[SC_HIDING]				|= SCS_NOPICKITEM;
@@ -2628,6 +2646,8 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += (600 * sc->data[SC_INSPIRATION]->val1);
 			if(sc->data[SC_SOLID_SKIN_OPTION])
 				bonus += 2000;
+			if(sc->data[SC_MTF_MHP])
+				bonus += sc->data[SC_MTF_MHP]->val1;
 			if(sc->data[SC_MARIONETTE])
 				bonus -= 1000;
 		}
@@ -2734,9 +2754,11 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 		//Bonus by SC
 		if (sc) {
 			if(sc->data[SC_INCMSP])
-				bonus += (sc->data[SC_INCMSP]->val1);
+				bonus += sc->data[SC_INCMSP]->val1;
 			if(sc->data[SC_EARTH_INSIGNIA] && sc->data[SC_EARTH_INSIGNIA]->val1 == 3)
 				bonus += 50;
+			if(sc->data[SC_MTF_MSP])
+				bonus += sc->data[SC_MTF_MSP]->val1;
 		}
 	} else if (type == STATUS_BONUS_RATE) {
 		struct status_change *sc = status_get_sc(bl);
@@ -4855,6 +4877,8 @@ static unsigned short status_calc_str(struct block_list *bl, struct status_chang
 		str += sc->data[SC_SAVAGE_STEAK]->val1;
 	if(sc->data[SC_INSPIRATION])
 		str += sc->data[SC_INSPIRATION]->val3;
+	if(sc->data[SC_2011RWC_SCROLL])
+		str += sc->data[SC_2011RWC_SCROLL]->val1;
 	if(sc->data[SC_STOMACHACHE])
 		str -= sc->data[SC_STOMACHACHE]->val1;
 	if(sc->data[SC_KYOUGAKU])
@@ -4899,6 +4923,8 @@ static unsigned short status_calc_agi(struct block_list *bl, struct status_chang
 		agi += sc->data[SC_INCREASEAGI]->val2;
 	if(sc->data[SC_INCREASING])
 		agi += 4; // Added based on skill updates [Reddozen]
+	if(sc->data[SC_2011RWC_SCROLL])
+		agi += sc->data[SC_2011RWC_SCROLL]->val1;
 	if(sc->data[SC_DECREASEAGI])
 		agi -= sc->data[SC_DECREASEAGI]->val2;
 	if(sc->data[SC_QUAGMIRE])
@@ -4971,6 +4997,8 @@ static unsigned short status_calc_vit(struct block_list *bl, struct status_chang
 		vit += sc->data[SC_MINOR_BBQ]->val1;
 	if(sc->data[SC_INSPIRATION])
 		vit += sc->data[SC_INSPIRATION]->val3;
+	if(sc->data[SC_2011RWC_SCROLL])
+		vit += sc->data[SC_2011RWC_SCROLL]->val1;
 	if(sc->data[SC_STOMACHACHE])
 		vit -= sc->data[SC_STOMACHACHE]->val1;
 	if(sc->data[SC_KYOUGAKU])
@@ -5027,6 +5055,8 @@ static unsigned short status_calc_int(struct block_list *bl, struct status_chang
 		int_ += sc->data[SC_NEN]->val1;
 	if(sc->data[SC_MARIONETTE])
 		int_ -= ((sc->data[SC_MARIONETTE]->val4)>>16)&0xFF;
+	if(sc->data[SC_2011RWC_SCROLL])
+		int_ += sc->data[SC_2011RWC_SCROLL]->val1;
 	if(sc->data[SC_MARIONETTE2])
 		int_ += ((sc->data[SC_MARIONETTE2]->val4)>>16)&0xFF;
 	if(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_HIGH)
@@ -5100,6 +5130,8 @@ static unsigned short status_calc_dex(struct block_list *bl, struct status_chang
 		dex += 4; // Added based on skill updates [Reddozen]
 	if(sc->data[SC_MARIONETTE])
 		dex -= ((sc->data[SC_MARIONETTE]->val4)>>8)&0xFF;
+	if(sc->data[SC_2011RWC_SCROLL])
+		dex += sc->data[SC_2011RWC_SCROLL]->val1;
 	if(sc->data[SC_MARIONETTE2])
 		dex += ((sc->data[SC_MARIONETTE2]->val4)>>8)&0xFF;
 	if(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_HIGH)
@@ -5169,7 +5201,8 @@ static unsigned short status_calc_luk(struct block_list *bl, struct status_chang
 		luk -= sc->data[SC_KYOUGAKU]->val2;
 	if(sc->data[SC_LAUDARAMUS])
 		luk += 4 + sc->data[SC_LAUDARAMUS]->val1;
-
+	if(sc->data[SC_2011RWC_SCROLL])
+		luk += sc->data[SC_2011RWC_SCROLL]->val1;
 	if(sc->data[SC__STRIPACCESSORY] && bl->type != BL_PC)
 		luk -= luk * sc->data[SC__STRIPACCESSORY]->val2 / 100;
 	if(sc->data[SC_BANANA_BOMB])
@@ -5219,7 +5252,8 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 		batk += sc->data[SC_PYROCLASTIC]->val2;
 	if (sc->data[SC_ANGRIFFS_MODUS])
 		batk += sc->data[SC_ANGRIFFS_MODUS]->val2;
-
+	if(sc->data[SC_2011RWC_SCROLL])
+		batk += 30;
 	if(sc->data[SC_INCATKRATE])
 		batk += batk * sc->data[SC_INCATKRATE]->val1/100;
 	if(sc->data[SC_PROVOKE])
@@ -5345,6 +5379,8 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 		watk += sc->data[SC_PYROCLASTIC]->val2;
 	if(sc->data[SC_ANGRIFFS_MODUS])
 		watk += watk * sc->data[SC_ANGRIFFS_MODUS]->val2/100;
+	if( sc->data[SC_FLASHCOMBO] )
+		watk += sc->data[SC_FLASHCOMBO]->val2;
 	if(sc->data[SC_ODINS_POWER])
 		watk += 40 + 30 * sc->data[SC_ODINS_POWER]->val1;
 
@@ -5394,6 +5430,10 @@ static unsigned short status_calc_ematk(struct block_list *bl, struct status_cha
 		matk += sc->data[SC_QUEST_BUFF2]->val1;
 	if(sc->data[SC_QUEST_BUFF3])
 		matk += sc->data[SC_QUEST_BUFF3]->val1;
+	if(sc->data[SC_MTF_MATK2])
+		matk += 50;
+	if(sc->data[SC_2011RWC_SCROLL])
+		matk += 30;
 
 	return (unsigned short)cap_value(matk,0,USHRT_MAX);
 }
@@ -5432,6 +5472,10 @@ static unsigned short status_calc_matk(struct block_list *bl, struct status_chan
 		matk += 40 + 30 * sc->data[SC_ODINS_POWER]->val1; // 70 lvl1, 100lvl2
 	if (sc->data[SC_IZAYOI])
 		matk += 25 * sc->data[SC_IZAYOI]->val1;
+	if (sc->data[SC_MTF_MATK2])
+		matk += 50;
+	if (sc->data[SC_2011RWC_SCROLL])
+		matk += 30;
 #endif
 	if (sc->data[SC_ZANGETSU])
 		matk += sc->data[SC_ZANGETSU]->val3;
@@ -5451,6 +5495,8 @@ static unsigned short status_calc_matk(struct block_list *bl, struct status_chan
 		matk += sc->data[SC_MOONLITSERENADE]->val3/100;
 	if (sc->data[SC_MTF_MATK])
 		matk += matk * 25 / 100;
+	if(sc->data[SC_2011RWC_SCROLL])
+		matk += 30;
 
 	return (unsigned short)cap_value(matk,0,USHRT_MAX);
 }
@@ -5523,7 +5569,8 @@ static signed short status_calc_hit(struct block_list *bl, struct status_change 
 		hit += 20; // RockmanEXE; changed based on updated [Reddozen]
 	if(sc->data[SC_MERC_HITUP])
 		hit += sc->data[SC_MERC_HITUP]->val2;
-
+	if(sc->data[SC_MTF_HITFLEE])
+		hit += sc->data[SC_MTF_HITFLEE]->val1;
 	if(sc->data[SC_INCHITRATE])
 		hit += hit * sc->data[SC_INCHITRATE]->val1/100;
 	if(sc->data[SC_BLIND])
@@ -5538,8 +5585,6 @@ static signed short status_calc_hit(struct block_list *bl, struct status_change 
 		hit -= hit * 50 / 100;
 	if(sc->data[SC_ILLUSIONDOPING])
 		hit -= 50;
-	if (sc->data[SC_MTF_ASPD])
-		hit += 5;
 
 	return (short)cap_value(hit,1,SHRT_MAX);
 }
@@ -5596,6 +5641,8 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 		flee += sc->data[SC_MERC_FLEEUP]->val2;
 	if( sc->data[SC_HALLUCINATIONWALK] )
 		flee += sc->data[SC_HALLUCINATIONWALK]->val2;
+	if(sc->data[SC_MTF_HITFLEE])
+		flee += sc->data[SC_MTF_HITFLEE]->val2;
 	if( sc->data[SC_WATER_BARRIER] )
 		flee -= sc->data[SC_WATER_BARRIER]->val3;
 	if( sc->data[SC_C_MARKER] )
@@ -6265,6 +6312,8 @@ static short status_calc_fix_aspd(struct block_list *bl, struct status_change *s
 		aspd -= sc->data[SC_FIGHTINGSPIRIT]->val2;
 	if (sc->data[SC_MTF_ASPD])
 		aspd -= 10;
+	if (sc->data[SC_MTF_ASPD2])
+		aspd -= 20;
 
 	return cap_value(aspd, 0, 2000); // Will be recap for proper bl anyway
 }
@@ -7744,11 +7793,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			return 0;
 	break;
 	case SC_MAGNIFICAT:
-		if( sc->data[SC_OFFERTORIUM] || sc->option&OPTION_MADOGEAR ) // Mado is immune to magnificat
-			return 0;
-		break;
-	case SC_OFFERTORIUM:
-		if(sc->data[SC_MAGNIFICAT])
+		if( sc->option&OPTION_MADOGEAR ) // Mado is immune to magnificat
 			return 0;
 		break;
 	case SC_ONEHAND:
@@ -7890,27 +7935,27 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			return 0;
 	break;
 	case SC_FOOD_STR_CASH:
-		if (sc->data[SC_STRFOOD] && sc->data[SC_STRFOOD]->val1 > val1)
+		if ((sc->data[SC_STRFOOD] && sc->data[SC_STRFOOD]->val1 > val1) || sc->data[SC_2011RWC_SCROLL])
 			return 0;
 	break;
 	case SC_FOOD_AGI_CASH:
-		if (sc->data[SC_AGIFOOD] && sc->data[SC_AGIFOOD]->val1 > val1)
+		if ((sc->data[SC_AGIFOOD] && sc->data[SC_AGIFOOD]->val1 > val1) || sc->data[SC_2011RWC_SCROLL])
 			return 0;
 	break;
 	case SC_FOOD_VIT_CASH:
-		if (sc->data[SC_VITFOOD] && sc->data[SC_VITFOOD]->val1 > val1)
+		if ((sc->data[SC_VITFOOD] && sc->data[SC_VITFOOD]->val1 > val1) || sc->data[SC_2011RWC_SCROLL])
 			return 0;
 	break;
 	case SC_FOOD_INT_CASH:
-		if (sc->data[SC_INTFOOD] && sc->data[SC_INTFOOD]->val1 > val1)
+		if ((sc->data[SC_INTFOOD] && sc->data[SC_INTFOOD]->val1 > val1) || sc->data[SC_2011RWC_SCROLL])
 			return 0;
 	break;
 	case SC_FOOD_DEX_CASH:
-		if (sc->data[SC_DEXFOOD] && sc->data[SC_DEXFOOD]->val1 > val1)
+		if ((sc->data[SC_DEXFOOD] && sc->data[SC_DEXFOOD]->val1 > val1) || sc->data[SC_2011RWC_SCROLL])
 			return 0;
 	break;
 	case SC_FOOD_LUK_CASH:
-		if (sc->data[SC_LUKFOOD] && sc->data[SC_LUKFOOD]->val1 > val1)
+		if ((sc->data[SC_LUKFOOD] && sc->data[SC_LUKFOOD]->val1 > val1) || sc->data[SC_2011RWC_SCROLL])
 			return 0;
 	break;
 	case SC_CAMOUFLAGE:
@@ -7969,6 +8014,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		break;
 	case SC_MADNESSCANCEL:
 		if (sc->data[SC_P_ALTER] || sc->data[SC_HEAT_BARREL])
+			return 0;
+		break;
+	case SC_KINGS_GRACE:
+		if (sc->data[SC_DEVOTION] || sc->data[SC_WHITEIMPRISON])
 			return 0;
 		break;
 
@@ -8085,6 +8134,12 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	case SC_MAXOVERTHRUST:
 	  	// Cancels Normal Overthrust. [Skotlex]
 		status_change_end(bl, SC_OVERTHRUST, INVALID_TIMER);
+		break;
+	case SC_MAGNIFICAT:
+		status_change_end(bl,SC_OFFERTORIUM,INVALID_TIMER);
+		break;
+	case SC_OFFERTORIUM:
+		status_change_end(bl,SC_MAGNIFICAT,INVALID_TIMER);
 		break;
 	case SC_KYRIE:
 		// Cancels Assumptio
@@ -8297,6 +8352,33 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		break;
 	case SC_FREEZING:
 		status_change_end(bl, SC_BURNING, INVALID_TIMER);
+		break;
+	case SC_KINGS_GRACE:
+		status_change_end(bl,SC_POISON,INVALID_TIMER);
+		status_change_end(bl,SC_BLIND,INVALID_TIMER);
+		status_change_end(bl,SC_FREEZE,INVALID_TIMER);
+		status_change_end(bl,SC_STONE,INVALID_TIMER);
+		status_change_end(bl,SC_STUN,INVALID_TIMER);
+		status_change_end(bl,SC_SLEEP,INVALID_TIMER);
+		status_change_end(bl,SC_BLEEDING,INVALID_TIMER);
+		status_change_end(bl,SC_CURSE,INVALID_TIMER);
+		status_change_end(bl,SC_CONFUSION,INVALID_TIMER);
+		status_change_end(bl,SC_HALLUCINATION,INVALID_TIMER);
+		status_change_end(bl,SC_SILENCE,INVALID_TIMER);
+		status_change_end(bl,SC_BURNING,INVALID_TIMER);
+		status_change_end(bl,SC_CRYSTALIZE,INVALID_TIMER);
+		status_change_end(bl,SC_FREEZING,INVALID_TIMER);
+		status_change_end(bl,SC_DEEPSLEEP,INVALID_TIMER);
+		status_change_end(bl,SC_FEAR,INVALID_TIMER);
+		status_change_end(bl,SC_MANDRAGORA,INVALID_TIMER);
+		break;
+	case SC_2011RWC_SCROLL:
+		status_change_end(bl,SC_FOOD_STR_CASH,INVALID_TIMER);
+		status_change_end(bl,SC_FOOD_AGI_CASH,INVALID_TIMER);
+		status_change_end(bl,SC_FOOD_VIT_CASH,INVALID_TIMER);
+		status_change_end(bl,SC_FOOD_INT_CASH,INVALID_TIMER);
+		status_change_end(bl,SC_FOOD_DEX_CASH,INVALID_TIMER);
+		status_change_end(bl,SC_FOOD_LUK_CASH,INVALID_TIMER);
 		break;
 	case SC_EQC:
 		status_change_end(bl,SC_TINDER_BREAKER2,INVALID_TIMER);
@@ -9231,6 +9313,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_EXPBOOST:
 		case SC_JEXPBOOST:
+		case SC_JP_EVENT04:
 			if (val1 < 0)
 				val1 = 0;
 			break;
@@ -10031,6 +10114,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_EXPBOOST:
 		case SC_JEXPBOOST:
 		case SC_ITEMBOOST:
+		case SC_JP_EVENT04:
 			val_flag |= 1;
 			break;
 		// Start |1|2 val_flag setting
@@ -10480,7 +10564,7 @@ int status_change_clear(struct block_list* bl, int type)
 		if(!sc->data[i])
 			continue;
 
-		if(type == 0)
+		if(type == 0) {
 			switch (i) { // Type 0: PC killed -> Place here statuses that do not dispel on death.
 			case SC_ELEMENTALCHANGE: // Only when its Holy or Dark that it doesn't dispell on death
 				if( sc->data[i]->val2 != ELE_HOLY && sc->data[i]->val2 != ELE_DARK )
@@ -10549,7 +10633,10 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_QUEST_BUFF1:
 			case SC_QUEST_BUFF2:
 			case SC_QUEST_BUFF3:
+			case SC_2011RWC_SCROLL:
+			case SC_JP_EVENT04:
 				continue;
+			}
 		}
 
 		if( type == 3 ) {
@@ -12398,6 +12485,15 @@ void status_change_clear_buffs (struct block_list* bl, int type)
 			case SC_QUEST_BUFF1:
 			case SC_QUEST_BUFF2:
 			case SC_QUEST_BUFF3:
+			case SC_MTF_ASPD2:
+			case SC_MTF_RANGEATK2:
+			case SC_MTF_MATK2:
+			case SC_2011RWC_SCROLL:
+			case SC_JP_EVENT04:
+			case SC_MTF_MHP:
+			case SC_MTF_MSP:
+			case SC_MTF_PUMPKIN:
+			case SC_MTF_HITFLEE:
 				continue;
 
 			// Debuffs that can be removed.

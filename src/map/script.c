@@ -10442,23 +10442,34 @@ BUILDIN_FUNC(sc_end)
 	if (!bl)
 		return 0;
 
-	if (type >= 0 && type < SC_MAX)
-	{
+	if (type >= 0 && type < SC_MAX) {
 		struct status_change *sc = status_get_sc(bl);
 		struct status_change_entry *sce = sc ? sc->data[type] : NULL;
 
 		if (!sce)
 			return 0;
 
-
-		switch (type)
-		{
+		switch (type) {
 			case SC_WEIGHT50:
 			case SC_WEIGHT90:
 			case SC_NOCHAT:
 			case SC_PUSH_CART:
+			case SC_ALL_RIDING:
+			case SC_STYLE_CHANGE:
+			case SC_MONSTER_TRANSFORM:
+			case SC_MTF_ASPD:
+			case SC_MTF_RANGEATK:
+			case SC_MTF_MATK:
+			case SC_MTF_MLEATKED:
+			case SC_MTF_CRIDAMAGE:
+			case SC_MTF_ASPD2:
+			case SC_MTF_RANGEATK2:
+			case SC_MTF_MATK2:
+			case SC_MTF_MHP:
+			case SC_MTF_MSP:
+			case SC_MTF_PUMPKIN:
+			case SC_MTF_HITFLEE:
 				return 0;
-
 			default:
 				break;
 		}
@@ -10466,8 +10477,7 @@ BUILDIN_FUNC(sc_end)
 		//This should help status_change_end force disabling the SC in case it has no limit.
 		sce->val1 = sce->val2 = sce->val3 = sce->val4 = 0;
 		status_change_end(bl, (sc_type)type, INVALID_TIMER);
-	}
-	else
+	} else
 		status_change_clear(bl, 3); // remove all effects
 
 	return SCRIPT_CMD_SUCCESS;
