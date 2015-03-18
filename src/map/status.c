@@ -9912,6 +9912,16 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_EPICLESIS:
 			val2 = 5 * val1; //HP rate bonus
 			break;
+		case SC_VACUUM_EXTREME:
+			// Suck target at n second, only if the n second is lower than the duration
+			// Doesn't apply to BL_PC
+			if (bl->type != BL_PC && val4 < tick && !unit_blown_immune(bl,0x1) && status->mode&MD_CANMOVE) {
+				tick_time = val4;
+				val4 = tick - tick_time;
+			}
+			else
+				val4 = 0;
+			break;
 
 		/* Rebellion */
 		case SC_B_TRAP:
@@ -12219,6 +12229,16 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
 			clif_crimson_marker(caster, bl, false);
 			return 0;
+		}
+		break;
+	case SC_VACUUM_EXTREME:
+		if (sce->val4) {
+			if (unit_movepos(bl, sce->val3>>16, sce->val3&0xFFFF, 0, false)) {
+				clif_slide(bl, sce->val3>>16, sce->val3&0xFFFF);
+				clif_fixpos(bl);
+			}
+			sc_timer_next(tick+sce->val4, status_change_timer, bl->id, data);
+			sce->val4 = 0;
 		}
 		break;
 	}
