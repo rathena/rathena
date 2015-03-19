@@ -26,16 +26,17 @@ int instance_start = 0; // To keep the last index + 1 of normal map inserted in 
 
 struct instance_data instance_data[MAX_INSTANCE_DATA];
 
+/// Instance DB entry struct
 struct instance_db {
-	unsigned short id;
-	StringBuf *name;
-	unsigned int limit;
+	unsigned short id; ///< Instance ID
+	StringBuf *name; ///< Instance name
+	unsigned int limit; ///< Duration limit
 	struct {
 		StringBuf *mapname; ///< Mapname, the limit should be MAP_NAME_LENGTH_EXT
 		unsigned short x, y; ///< Map coordinates
 	} enter;
-	StringBuf **maplist; ///< Used maps, the limit should be MAP_NAME_LENGTH_EXT
-	uint8 maplist_count;
+	StringBuf **maplist; ///< Used maps in instance, the limit should be MAP_NAME_LENGTH_EXT
+	uint8 maplist_count; ///< Number of used maps
 };
 
 static DBMap *InstanceDB; /// Instance DB: struct instance_db, key: id
@@ -615,6 +616,8 @@ int instance_delusers(short instance_id)
 	return 0;
 }
 
+static bool instance_db_free_sub(struct instance_db *db);
+
 /*==========================================
  * Read the instance_db.txt file
  *------------------------------------------*/
@@ -623,10 +626,15 @@ static bool instance_readdb_sub(char* str[], int columns, int current)
 	uint8 i;
 	int id = atoi(str[0]);
 	struct instance_db *db;
-	bool isNew = false;
+	bool isNew = false, defined = false;
 
 	if (!id || id >  USHRT_MAX) {
 		ShowError("instance_readdb_sub: Cannot add instance with ID '%d'. Valid ID is 1 ~ %d.\n", id, USHRT_MAX);
+		return false;
+	}
+
+	if (mapindex_name2id(str[3]) == 0) {
+		ShowError("instance_readdb_sub: Invalid map '%s' as entrance map.\n", str[3]);
 		return false;
 	}
 
@@ -657,11 +665,25 @@ static bool instance_readdb_sub(char* str[], int columns, int current)
 	//Instance maps
 	for (i = 6; i < columns; i++) {
 		if (strlen(str[i])) {
+			if (mapindex_name2id(str[i]) == 0) {
+				ShowWarning("instance_readdb_sub: Invalid map '%s' in maplist, skipping...\n", str[i]);
+				continue;
+			}
 			RECREATE(db->maplist, StringBuf *, db->maplist_count+1);
 			db->maplist[db->maplist_count] = StringBuf_Malloc();
+			if (strcmpi(str[i], str[3]) == 0)
+				defined = true;
 			StringBuf_AppendStr(db->maplist[db->maplist_count], str[i]);
 			db->maplist_count++;
 		}
+	}
+
+	if (!defined) {
+		ShowError("instance_readdb_sub: The entrance map is not defined in instance map list.\n");
+		instance_db_free_sub(db);
+		if (!isNew)
+			uidb_remove(InstanceDB,id);
+		return false;
 	}
 
 	if (isNew) {
@@ -671,9 +693,11 @@ static bool instance_readdb_sub(char* str[], int columns, int current)
 	return true;
 }
 
-static int instance_db_free(DBKey key, DBData *data, va_list ap) {
-	struct instance_db *db = (struct instance_db *)db_data2ptr(data);
-	bool clear = va_arg(ap, bool);
+/**
+ * Free InstanceDB single entry
+ * @param db Instance Db entry
+ **/
+static bool instance_db_free_sub(struct instance_db *db) {
 	if (!db)
 		return 1;
 	StringBuf_Free(db->name);
@@ -688,6 +712,17 @@ static int instance_db_free(DBKey key, DBData *data, va_list ap) {
 	return 0;
 }
 
+/**
+ * Free InstanceDB entries
+ **/
+static int instance_db_free(DBKey key, DBData *data, va_list ap) {
+	struct instance_db *db = (struct instance_db *)db_data2ptr(data);
+	return instance_db_free_sub(db);
+}
+
+/**
+ * Read instance_db.txt files
+ **/
 void instance_readdb(void) {
 	const char* filename[] = { DBPATH"instance_db.txt", "import/instance_db.txt"};
 	int f;
@@ -697,6 +732,9 @@ void instance_readdb(void) {
 	}
 }
 
+/**
+ * Reload Instance DB
+ **/
 void instance_reload(void) {
 	InstanceDB->clear(InstanceDB, instance_db_free);
 	db_clear(InstanceNameDB);
