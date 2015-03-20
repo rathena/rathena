@@ -7097,28 +7097,28 @@ Parameter (indexes) for pets are:
 	2 - HP							9  - intimacy		16 - INT
 	3 - max HP						10 - speed			17 - DEX
 	4 - master AID					11 - looking dir	18 - LUK
-	5 - map index					12 - canmove_tick	19 - name
+	5 - map index					12 - canmove_tick	19 - immune from attacks state
 	6 - x							13 - STR
 
 Parameter (indexes) for mercenaries are:
 
-	0 - size (big, small, normal)	7  - y				14 - AGI
-	1 - level						8  - kill count		15 - VIT
-	2 - HP							9  - life time		16 - INT
-	3 - max HP						10 - speed			17 - DEX
-	4 - master Character ID			11 - looking dir	18 - LUK
-	5 - map index					12 - canmove_tick	19 - immune from attacks state
-	6 - x							13 - STR
+	0 - size (big, small, normal)	7  - kill count		14 - VIT
+	1 - HP							8  - life time		15 - INT
+	2 - max HP						9  - speed 			16 - DEX
+	3 - master Character ID			10 - looking dir	17 - LUK
+	4 - map index					11 - canmove_tick	18 - immune from attacks state
+	5 - x							12 - STR
+	6 - y							13 - AGI
 
 Parameter (indexes) for elementals are:
 
-	0 - size (big, small, normal)	7  - map index		14 - canmove_tick	21 - immune from attacks state
-	1 - level						8  - x				15 - STR
-	2 - HP							9  - y				16 - AGI
-	3 - max HP						10 - life time		17 - VIT
-	4 - SP							11 - mode			18 - INT
-	5 - max SP						12 - speed			19 - DEX
-	6 - master Character ID			13 - looking dir	20 - LUK
+	0 - size (big, small, normal)	7  - x				14 - STR
+	1 - HP							8  - y				15 - AGI
+	2 - max HP						9  - life time		16 - VIT
+	3 - SP							10 - mode			17 - INT
+	4 - max SP						11 - speed			18 - DEX
+	5 - master Character ID			12 - looking dir	19 - LUK
+	6 - map index					13 - canmove_tick	20 - immune from attacks state
 
 Parameter (indexes) for NPCs are:
 

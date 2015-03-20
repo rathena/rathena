@@ -16489,7 +16489,7 @@ BUILDIN_FUNC(setunitdata)
 			case 2: hd->homunculus.hp = (unsigned int)value; break;
 			case 3: hd->homunculus.max_hp = (unsigned int)value; break;
 			case 4: hd->homunculus.sp = (unsigned int)value; break;
-			case 5: hd->homunculus.max_sp; (unsigned int)value; break;
+			case 5: hd->homunculus.max_sp = (unsigned int)value; break;
 			case 6: hd->homunculus.char_id = (unsigned int)value; break;
 			case 7: hd->bl.m = (short)value; break;
 			case 8: hd->bl.x = (short)value; break;
@@ -16537,7 +16537,7 @@ BUILDIN_FUNC(setunitdata)
 			case 16: pd->status.int_ = (unsigned int)value; break;
 			case 17: pd->status.dex = (unsigned int)value; break;
 			case 18: pd->status.luk = (unsigned int)value; break;
-			case 20: pd->ud.immune_attack = (bool)value > 0 ? 1 : 0; break;
+			case 19: pd->ud.immune_attack = (bool)value > 0 ? 1 : 0; break;
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_PET.\n", type);
 				return SCRIPT_CMD_FAILURE;
@@ -16568,6 +16568,7 @@ BUILDIN_FUNC(setunitdata)
 			case 15: mc->base_status.int_ = (unsigned int)value; break;
 			case 16: mc->base_status.dex = (unsigned int)value; break;
 			case 17: mc->base_status.luk = (unsigned int)value; break;
+			case 18: mc->ud.immune_attack = (bool)value > 0 ? 1 : 0; break;
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_MER.\n", type);
 				return SCRIPT_CMD_FAILURE;
