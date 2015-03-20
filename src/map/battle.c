@@ -7142,10 +7142,12 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 	int state = 0; //Initial state none
 	int strip_enemy = 1; //Flag which marks whether to remove the BCT_ENEMY status if it's also friend/ally.
 	struct block_list *s_bl = src, *t_bl = target;
+	struct unit_data *ud = NULL;
 
 	nullpo_ret(src);
 	nullpo_ret(target);
 
+	ud = unit_bl2ud(target);
 	m = target->m;
 
 	//t_bl/s_bl hold the 'master' of the attack, while src/target are the actual
@@ -7174,6 +7176,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 	switch( target->type ) { // Checks on actual target
 		case BL_PC: {
 				struct status_change* sc = status_get_sc(src);
+
 				if (((TBL_PC*)target)->invincible_timer != INVALID_TIMER || pc_isinvisible((TBL_PC*)target))
 					return -1; //Cannot be targeted yet.
 				if( sc && sc->count ) {
@@ -7185,6 +7188,9 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		case BL_MOB:
 		{
 			struct mob_data *md = ((TBL_MOB*)target);
+
+			if (ud && ud->immune_attack)
+				return 0;
 			if(((md->special_state.ai == AI_SPHERE || //Marine Spheres
 				(md->special_state.ai == AI_FLORA && battle_config.summon_flora&1)) && s_bl->type == BL_PC && src->type != BL_MOB) || //Floras
 				(md->special_state.ai == AI_ZANZOU && t_bl->id != s_bl->id) || //Zanzoe
@@ -7256,10 +7262,11 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 				return 0;
 		}
 			break;
-		//Valid targets with no special checks here.
 		case BL_MER:
 		case BL_HOM:
 		case BL_ELEM:
+			if (ud && ud->immune_attack)
+				return 0;
 			break;
 		//All else not specified is an invalid target.
 		default:

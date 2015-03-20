@@ -1903,6 +1903,11 @@ struct pet_data* map_id2pd(int id){
 	return BL_CAST(BL_PET, bl);
 }
 
+struct elemental_data* map_id2ed(int id) {
+	struct block_list* bl = map_id2bl(id);
+	return BL_CAST(BL_ELEM, bl);
+}
+
 struct chat_data* map_id2cd(int id){
 	struct block_list* bl = map_id2bl(id);
 	return BL_CAST(BL_CHAT, bl);

@@ -7480,6 +7480,7 @@ BUILDIN_FUNC(getcharid)
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
+
 /*==========================================
  * returns the GID of an NPC
  *------------------------------------------*/
@@ -9263,6 +9264,7 @@ BUILDIN_FUNC(cooking)
 	clif_cooking_list(sd, trigger, AM_PHARMACY, 1, 1);
 	return SCRIPT_CMD_SUCCESS;
 }
+
 /*==========================================
  * Create a pet
  *------------------------------------------*/
@@ -9291,6 +9293,7 @@ BUILDIN_FUNC(makepet)
 
 	return SCRIPT_CMD_SUCCESS;
 }
+
 /*==========================================
  * Give player exp base,job * quest_exp_rate/100
  *------------------------------------------*/
@@ -9362,13 +9365,8 @@ BUILDIN_FUNC(guildchangegm)
 }
 
 /*==========================================
- * Spawn a monster :
+ * Spawn a monster:
  * *monster "<map name>",<x>,<y>,"<name to show>",<mob id>,<amount>{,"<event label>",<size>,<ai>};
- @mapn,x,y : location
- @str : monster name
- @class_ : mob_id
- @amount : nb to spawn
- @event : event to attach to mob
  *------------------------------------------*/
 BUILDIN_FUNC(monster)
 {
@@ -9419,12 +9417,16 @@ BUILDIN_FUNC(monster)
 	else
 		m = map_mapname2mapid(mapn);
 
-	for(i=0; i<amount; i++){ //not optimised
+	for(i = 0; i < amount; i++) { //not optimised
 		int mobid = mob_once_spawn(sd, m, x, y, str, class_, 1, event, size, ai);
-		if(mobid) mapreg_setreg(reference_uid(add_str("$@mobid"), i),mobid);
+
+		if (mobid)
+			mapreg_setreg(reference_uid(add_str("$@mobid"), i), mobid);
 	}
+
 	return SCRIPT_CMD_SUCCESS;
 }
+
 /*==========================================
  * Request List of Monster Drops
  *------------------------------------------*/
@@ -9460,8 +9462,10 @@ BUILDIN_FUNC(getmobdrops)
 
 	return SCRIPT_CMD_SUCCESS;
 }
+
 /*==========================================
- * Same as monster but randomize location in x0,x1,y0,y1 area
+ * Spawn a monster in a random location
+ * in x0,x1,y0,y1 area.
  *------------------------------------------*/
 BUILDIN_FUNC(areamonster)
 {
@@ -9479,6 +9483,7 @@ BUILDIN_FUNC(areamonster)
 
 	struct map_session_data* sd;
 	int16 m;
+	int i;
 
 	if (script_hasdata(st,10)) {
 		event = script_getstr(st, 10);
@@ -9508,9 +9513,16 @@ BUILDIN_FUNC(areamonster)
 	else
 		m = map_mapname2mapid(mapn);
 
-	mob_once_spawn_area(sd, m, x0, y0, x1, y1, str, class_, amount, event, size, ai);
+	for(i = 0; i < amount; i++) { //not optimised
+		int mobid = mob_once_spawn_area(sd, m, x0, y0, x1, y1, str, class_, 1, event, size, ai);
+
+		if (mobid)
+			mapreg_setreg(reference_uid(add_str("$@mobid"), i), mobid);
+	}
+
 	return SCRIPT_CMD_SUCCESS;
 }
+
 /*==========================================
  * KillMonster subcheck, verify if mob to kill ain't got an even to handle, could be force kill by allflag
  *------------------------------------------*/
@@ -13550,6 +13562,7 @@ BUILDIN_FUNC(recovery)
 	script_pushint(st,1); //Successfully executed without errors
 	return SCRIPT_CMD_SUCCESS;
 }
+
 /*==========================================
  * Get your pet info: getpetinfo(n)
  * n -> 0:pet_id 1:pet_class 2:pet_name
@@ -14103,6 +14116,8 @@ BUILDIN_FUNC(summon)
 		clif_specialeffect(&md->bl,344,AREA);
 		sc_start4(NULL,&md->bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE, 0, 60000);
 	}
+	script_pushint(st, md->bl.id);
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -16165,10 +16180,546 @@ BUILDIN_FUNC(pcstopfollow)
 	return SCRIPT_CMD_SUCCESS;
 }
 // <--- [zBuffer] List of player cont commands
-// [zBuffer] List of mob control commands --->
+// [zBuffer] List of unit control commands --->
 
-/// Makes the unit walk to target position or map
-/// Returns if it was successfull
+/// Gets specific live information of a bl.
+///
+/// getunitdata <unit id>,<arrayname>;
+BUILDIN_FUNC(getunitdata)
+{
+	TBL_PC *sd = st->rid ? map_id2sd(st->rid) : NULL;
+	struct block_list* bl;
+	TBL_MOB* md = NULL;
+	TBL_HOM* hd = NULL;
+	TBL_MER* mc = NULL;
+	TBL_PET* pd = NULL;
+	TBL_ELEM* ed = NULL;
+	TBL_NPC* nd = NULL;
+	int num;
+	char* name;
+
+	if (!data_isreference(script_getdata(st, 3))) {
+		ShowWarning("buildin_getunitdata: Error in argument! Please give a variable to store values in.\n");
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	bl = map_id2bl(script_getnum(st, 2));
+
+	if (!bl) {
+		ShowWarning("buildin_getunitdata: Error in finding object with given game ID %d!\n", script_getnum(st, 2));
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	switch (bl->type) {
+		case BL_MOB:  md = map_id2md(bl->id); break;
+		case BL_HOM:  hd = map_id2hd(bl->id); break;
+		case BL_PET:  pd = map_id2pd(bl->id); break;
+		case BL_MER:  mc = map_id2mc(bl->id); break;
+		case BL_ELEM: ed = map_id2ed(bl->id); break;
+		case BL_NPC:  nd = map_id2nd(bl->id); break;
+	}
+
+	num = st->stack->stack_data[st->start+3].u.num;
+	name = (char *)(str_buf+str_data[num&0x00ffffff].str);
+
+	switch(bl->type) {
+		case BL_MOB:
+			if (!md) {
+				ShowWarning("buildin_getunitdata: Error in finding object BL_MOB!\n");
+				return SCRIPT_CMD_FAILURE;
+			}
+			setd_sub(st,sd,name,0,(void *)(int)md->status.size,script_getref(st,3));
+			setd_sub(st,sd,name,1,(void *)(int)md->level,script_getref(st,3));
+			setd_sub(st,sd,name,2,(void *)(int)md->status.hp,script_getref(st,3));
+			setd_sub(st,sd,name,3,(void *)(int)md->status.max_hp,script_getref(st,3));
+			setd_sub(st,sd,name,4,(void *)(int)md->master_id,script_getref(st,3));
+			setd_sub(st,sd,name,5,(void *)(int)md->bl.m,script_getref(st,3));
+			setd_sub(st,sd,name,6,(void *)(int)md->bl.x,script_getref(st,3));
+			setd_sub(st,sd,name,7,(void *)(int)md->bl.y,script_getref(st,3));
+			setd_sub(st,sd,name,8,(void *)(int)md->status.speed,script_getref(st,3));
+			setd_sub(st,sd,name,9,(void *)(int)md->status.mode,script_getref(st,3));
+			setd_sub(st,sd,name,10,(void *)(int)md->special_state.ai,script_getref(st,3));
+			setd_sub(st,sd,name,11,(void *)(int)md->sc.option,script_getref(st,3));
+			setd_sub(st,sd,name,12,(void *)(int)md->vd->sex,script_getref(st,3));
+			setd_sub(st,sd,name,13,(void *)(int)md->vd->class_,script_getref(st,3));
+			setd_sub(st,sd,name,14,(void *)(int)md->vd->hair_style,script_getref(st,3));
+			setd_sub(st,sd,name,15,(void *)(int)md->vd->hair_color,script_getref(st,3));
+			setd_sub(st,sd,name,16,(void *)(int)md->vd->head_bottom,script_getref(st,3));
+			setd_sub(st,sd,name,17,(void *)(int)md->vd->head_mid,script_getref(st,3));
+			setd_sub(st,sd,name,18,(void *)(int)md->vd->head_top,script_getref(st,3));
+			setd_sub(st,sd,name,19,(void *)(int)md->vd->cloth_color,script_getref(st,3));
+			setd_sub(st,sd,name,20,(void *)(int)md->vd->shield,script_getref(st,3));
+			setd_sub(st,sd,name,21,(void *)(int)md->vd->weapon,script_getref(st,3));
+			setd_sub(st,sd,name,22,(void *)(int)md->vd->shield,script_getref(st,3));
+			setd_sub(st,sd,name,23,(void *)(int)md->ud.dir,script_getref(st,3));
+			setd_sub(st,sd,name,24,(void *)(int)md->status.str, script_getref(st,3));
+			setd_sub(st,sd,name,25,(void *)(int)md->status.agi, script_getref(st,3));
+			setd_sub(st,sd,name,26,(void *)(int)md->status.vit, script_getref(st,3));
+			setd_sub(st,sd,name,27,(void *)(int)md->status.int_, script_getref(st,3));
+			setd_sub(st,sd,name,28,(void *)(int)md->status.dex, script_getref(st,3));
+			setd_sub(st,sd,name,29,(void *)(int)md->status.luk, script_getref(st,3));
+			setd_sub(st,sd,name,30,(void *)(int)md->state.copy_master_mode, script_getref(st,3));
+			setd_sub(st,sd,name,31,(void *)(int)md->ud.immune_attack, script_getref(st,3));
+			break;
+
+		case BL_HOM:
+			if (!hd) {
+				ShowWarning("buildin_getunitdata: Error in finding object BL_HOM!\n");
+				return SCRIPT_CMD_FAILURE;
+			}
+			setd_sub(st,sd,name,0,(void *)(int)hd->base_status.size,script_getref(st,3));
+			setd_sub(st,sd,name,1,(void *)(int)hd->homunculus.level,script_getref(st,3));
+			setd_sub(st,sd,name,2,(void *)(int)hd->homunculus.hp,script_getref(st,3));
+			setd_sub(st,sd,name,3,(void *)(int)hd->homunculus.max_hp,script_getref(st,3));
+			setd_sub(st,sd,name,4,(void *)(int)hd->homunculus.sp,script_getref(st,3));
+			setd_sub(st,sd,name,5,(void *)(int)hd->homunculus.max_sp,script_getref(st,3));
+			setd_sub(st,sd,name,6,(void *)(int)hd->homunculus.char_id,script_getref(st,3));
+			setd_sub(st,sd,name,7,(void *)(int)hd->bl.m,script_getref(st,3));
+			setd_sub(st,sd,name,8,(void *)(int)hd->bl.x,script_getref(st,3));
+			setd_sub(st,sd,name,9,(void *)(int)hd->bl.y,script_getref(st,3));
+			setd_sub(st,sd,name,10,(void *)(int)hd->homunculus.hunger,script_getref(st,3));
+			setd_sub(st,sd,name,11,(void *)(int)hd->homunculus.intimacy,script_getref(st,3));
+			setd_sub(st,sd,name,12,(void *)(int)hd->base_status.speed,script_getref(st,3));
+			setd_sub(st,sd,name,13,(void *)(int)hd->ud.dir,script_getref(st,3));
+			setd_sub(st,sd,name,14,(void *)(int)hd->ud.canmove_tick, script_getref(st,3));
+			setd_sub(st,sd,name,15,(void *)(int)hd->base_status.str, script_getref(st,3));
+			setd_sub(st,sd,name,16,(void *)(int)hd->base_status.agi, script_getref(st,3));
+			setd_sub(st,sd,name,17,(void *)(int)hd->base_status.vit, script_getref(st,3));
+			setd_sub(st,sd,name,18,(void *)(int)hd->base_status.int_, script_getref(st,3));
+			setd_sub(st,sd,name,19,(void *)(int)hd->base_status.dex, script_getref(st,3));
+			setd_sub(st,sd,name,20,(void *)(int)hd->base_status.luk, script_getref(st,3));
+			setd_sub(st,sd,name,21,(void *)(int)hd->ud.immune_attack, script_getref(st,3));
+			break;
+
+		case BL_PET:
+			if (!pd) {
+				ShowWarning("buildin_getunitdata: Error in finding object BL_PET!\n");
+				return SCRIPT_CMD_FAILURE;
+			}
+			setd_sub(st,sd,name,0,(void *)(int)pd->status.size,script_getref(st,3));
+			setd_sub(st,sd,name,1,(void *)(int)pd->pet.level,script_getref(st,3));
+			setd_sub(st,sd,name,2,(void *)(int)pd->status.hp,script_getref(st,3));
+			setd_sub(st,sd,name,3,(void *)(int)pd->status.max_hp,script_getref(st,3));
+			setd_sub(st,sd,name,4,(void *)(int)pd->pet.account_id,script_getref(st,3));
+			setd_sub(st,sd,name,5,(void *)(int)pd->bl.m,script_getref(st,3));
+			setd_sub(st,sd,name,6,(void *)(int)pd->bl.x,script_getref(st,3));
+			setd_sub(st,sd,name,7,(void *)(int)pd->bl.y,script_getref(st,3));
+			setd_sub(st,sd,name,8,(void *)(int)pd->pet.hungry,script_getref(st,3));
+			setd_sub(st,sd,name,9,(void *)(int)pd->pet.intimate,script_getref(st,3));
+			setd_sub(st,sd,name,10,(void *)(int)pd->status.speed,script_getref(st,3));
+			setd_sub(st,sd,name,11,(void *)(int)pd->ud.dir,script_getref(st,3));
+			setd_sub(st,sd,name,12,(void *)(int)pd->ud.canmove_tick, script_getref(st,3));
+			setd_sub(st,sd,name,13,(void *)(int)pd->status.str, script_getref(st,3));
+			setd_sub(st,sd,name,14,(void *)(int)pd->status.agi, script_getref(st,3));
+			setd_sub(st,sd,name,15,(void *)(int)pd->status.vit, script_getref(st,3));
+			setd_sub(st,sd,name,16,(void *)(int)pd->status.int_, script_getref(st,3));
+			setd_sub(st,sd,name,17,(void *)(int)pd->status.dex, script_getref(st,3));
+			setd_sub(st,sd,name,18,(void *)(int)pd->status.luk, script_getref(st,3));
+			break;
+
+		case BL_MER:
+			if (!mc) {
+				ShowWarning("buildin_getunitdata: Error in finding object BL_MER!\n");
+				return SCRIPT_CMD_FAILURE;
+			}
+			setd_sub(st,sd,name,0,(void *)(int)mc->base_status.size,script_getref(st,3));
+			setd_sub(st,sd,name,1,(void *)(int)mc->base_status.hp,script_getref(st,3));
+			setd_sub(st,sd,name,2,(void *)(int)mc->base_status.max_hp,script_getref(st,3));
+			setd_sub(st,sd,name,3,(void *)(int)mc->mercenary.char_id,script_getref(st,3));
+			setd_sub(st,sd,name,4,(void *)(int)mc->bl.m,script_getref(st,3));
+			setd_sub(st,sd,name,5,(void *)(int)mc->bl.x,script_getref(st,3));
+			setd_sub(st,sd,name,6,(void *)(int)mc->bl.y,script_getref(st,3));
+			setd_sub(st,sd,name,7,(void *)(int)mc->mercenary.kill_count,script_getref(st,3));
+			setd_sub(st,sd,name,8,(void *)(int)mc->mercenary.life_time,script_getref(st,3));
+			setd_sub(st,sd,name,9,(void *)(int)mc->base_status.speed,script_getref(st,3));
+			setd_sub(st,sd,name,10,(void *)(int)mc->ud.dir,script_getref(st,3));
+			setd_sub(st,sd,name,11,(void *)(int)mc->ud.canmove_tick, script_getref(st,3));
+			setd_sub(st,sd,name,12,(void *)(int)mc->base_status.str, script_getref(st,3));
+			setd_sub(st,sd,name,13,(void *)(int)mc->base_status.agi, script_getref(st,3));
+			setd_sub(st,sd,name,14,(void *)(int)mc->base_status.vit, script_getref(st,3));
+			setd_sub(st,sd,name,15,(void *)(int)mc->base_status.int_, script_getref(st,3));
+			setd_sub(st,sd,name,16,(void *)(int)mc->base_status.dex, script_getref(st,3));
+			setd_sub(st,sd,name,17,(void *)(int)mc->base_status.luk, script_getref(st,3));
+			setd_sub(st,sd,name,18,(void *)(int)mc->ud.immune_attack, script_getref(st,3));
+			break;
+
+		case BL_ELEM:
+			if (!ed) {
+				ShowWarning("buildin_getunitdata: Error in finding object BL_ELEM!\n");
+				return SCRIPT_CMD_FAILURE;
+			}
+			setd_sub(st,sd,name,0,(void *)(int)ed->base_status.size,script_getref(st,3));
+			setd_sub(st,sd,name,1,(void *)(int)ed->elemental.hp,script_getref(st,3));
+			setd_sub(st,sd,name,2,(void *)(int)ed->elemental.max_hp,script_getref(st,3));
+			setd_sub(st,sd,name,3,(void *)(int)ed->elemental.sp,script_getref(st,3));
+			setd_sub(st,sd,name,4,(void *)(int)ed->elemental.max_sp,script_getref(st,3));
+			setd_sub(st,sd,name,5,(void *)(int)ed->elemental.char_id,script_getref(st,3));
+			setd_sub(st,sd,name,6,(void *)(int)ed->bl.m,script_getref(st,3));
+			setd_sub(st,sd,name,7,(void *)(int)ed->bl.x,script_getref(st,3));
+			setd_sub(st,sd,name,8,(void *)(int)ed->bl.y,script_getref(st,3));
+			setd_sub(st,sd,name,9,(void *)(int)ed->elemental.life_time,script_getref(st,3));
+			setd_sub(st,sd,name,10,(void *)(int)ed->elemental.mode,script_getref(st,3));
+			setd_sub(st,sd,name,11,(void *)(int)ed->base_status.speed,script_getref(st,3));
+			setd_sub(st,sd,name,12,(void *)(int)ed->ud.dir,script_getref(st,3));
+			setd_sub(st,sd,name,13,(void *)(int)ed->ud.canmove_tick, script_getref(st,3));
+			setd_sub(st,sd,name,14,(void *)(int)ed->base_status.str, script_getref(st,3));
+			setd_sub(st,sd,name,15,(void *)(int)ed->base_status.agi, script_getref(st,3));
+			setd_sub(st,sd,name,16,(void *)(int)ed->base_status.vit, script_getref(st,3));
+			setd_sub(st,sd,name,17,(void *)(int)ed->base_status.int_, script_getref(st,3));
+			setd_sub(st,sd,name,18,(void *)(int)ed->base_status.dex, script_getref(st,3));
+			setd_sub(st,sd,name,19,(void *)(int)ed->base_status.luk, script_getref(st,3));
+			setd_sub(st,sd,name,20,(void *)(int)ed->ud.immune_attack, script_getref(st,3));
+			break;
+
+		case BL_NPC:
+			if (!nd) {
+				ShowWarning("buildin_getunitdata: Error in finding object BL_NPC!\n");
+				return SCRIPT_CMD_FAILURE;
+			}
+			setd_sub(st,sd,name,0,(void *)(int)nd->class_,script_getref(st,3));
+			setd_sub(st,sd,name,1,(void *)(int)nd->level,script_getref(st,3));
+			setd_sub(st,sd,name,2,(void *)(int)nd->status.hp,script_getref(st,3));
+			setd_sub(st,sd,name,3,(void *)(int)nd->status.max_hp,script_getref(st,3));
+			setd_sub(st,sd,name,4,(void *)(int)nd->bl.m,script_getref(st,3));
+			setd_sub(st,sd,name,5,(void *)(int)nd->bl.x,script_getref(st,3));
+			setd_sub(st,sd,name,6,(void *)(int)nd->bl.y,script_getref(st,3));
+			setd_sub(st,sd,name,7,(void *)(int)nd->ud.dir,script_getref(st,3));
+			setd_sub(st,sd,name,8,(void *)(int)nd->status.str, script_getref(st,3));
+			setd_sub(st,sd,name,9,(void *)(int)nd->status.agi, script_getref(st,3));
+			setd_sub(st,sd,name,10,(void *)(int)nd->status.vit, script_getref(st,3));
+			setd_sub(st,sd,name,11,(void *)(int)nd->status.int_, script_getref(st,3));
+			setd_sub(st,sd,name,12,(void *)(int)nd->status.dex, script_getref(st,3));
+			setd_sub(st,sd,name,13,(void *)(int)nd->status.luk, script_getref(st,3));
+			break;
+
+		default:
+			ShowWarning("buildin_getunitdata: Unknown object type!\n");
+			return SCRIPT_CMD_FAILURE;
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/// Changes the live data of a bl.
+///
+/// setunitdata <unit id>,<type>,<value>;
+BUILDIN_FUNC(setunitdata)
+{
+	struct block_list* bl = NULL;
+	TBL_MOB* md = NULL;
+	TBL_HOM* hd = NULL;
+	TBL_MER* mc = NULL;
+	TBL_PET* pd = NULL;
+	TBL_ELEM* ed = NULL;
+	TBL_NPC* nd = NULL;
+	int type, value;
+
+	bl = map_id2bl(script_getnum(st, 2));
+
+	if (!bl) {
+		ShowWarning("buildin_setunitdata: Error in finding object with given game ID %d!\n", script_getnum(st, 2));
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	switch (bl->type) {
+		case BL_MOB:  md = map_id2md(bl->id); break;
+		case BL_HOM:  hd = map_id2hd(bl->id); break;
+		case BL_PET:  pd = map_id2pd(bl->id); break;
+		case BL_MER:  mc = map_id2mc(bl->id); break;
+		case BL_ELEM: ed = map_id2ed(bl->id); break;
+		case BL_NPC:  nd = map_id2nd(bl->id); break;
+	}
+
+	type = script_getnum(st, 3);
+	value = script_getnum(st, 4);
+
+	switch (bl->type) {
+	case BL_MOB:
+		if (!md) {
+			ShowWarning("buildin_setunitdata: Error in finding object BL_MOB!\n");
+			return SCRIPT_CMD_FAILURE;
+		}
+		switch (type) {
+			case 0: md->status.size = (unsigned char)value; break;
+			case 1: md->level = (unsigned short)value; break;
+			case 2: md->status.hp = (unsigned int)value; break;
+			case 3: md->status.max_hp = (unsigned int)value; break;
+			case 4: md->master_id = value; break;
+			case 5: md->bl.m = (short)value; break;
+			case 6: md->bl.x = (short)value; break;
+			case 7: md->bl.y = (short)value; break;
+			case 8: md->status.speed = (unsigned short)value; break;
+			case 9: md->status.mode = (enum e_mode)value; break;
+			case 10: md->special_state.ai = (enum mob_ai)value; break;
+			case 11: md->sc.option = (unsigned short)value; break;
+			case 12: md->vd->sex = (char)value; break;
+			case 13: md->vd->class_ = (unsigned short)value; break;
+			case 14: md->vd->hair_style = (unsigned short)value; break;
+			case 15: md->vd->hair_color = (unsigned short)value; break;
+			case 16: md->vd->head_bottom = (unsigned short)value; break;
+			case 17: md->vd->head_mid = (unsigned short)value; break;
+			case 18: md->vd->head_top = (unsigned short)value; break;
+			case 19: md->vd->cloth_color = (unsigned short)value; break;
+			case 20: md->vd->shield = (unsigned short)value; break;
+			case 21: md->vd->weapon = (unsigned short)value; break;
+			case 22: md->vd->shield = (unsigned short)value; break;
+			case 23: md->ud.dir = (unsigned char)value; break;
+			case 24: md->status.str = (unsigned int)value; break;
+			case 25: md->status.agi = (unsigned int)value; break;
+			case 26: md->status.vit = (unsigned int)value; break;
+			case 27: md->status.int_ = (unsigned int)value; break;
+			case 28: md->status.dex = (unsigned int)value; break;
+			case 29: md->status.luk = (unsigned int)value; break;
+			case 30: md->state.copy_master_mode = value > 0 ? 1 : 0; break;
+			case 31: md->ud.immune_attack = (bool)value > 0 ? 1 : 0; break;
+			default:
+				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_MOB.\n", type);
+				return SCRIPT_CMD_FAILURE;
+			}
+		break;
+
+	case BL_HOM:
+		if (!hd) {
+			ShowWarning("buildin_setunitdata: Error in finding object BL_HOM!\n");
+			return SCRIPT_CMD_FAILURE;
+		}
+		switch (type) {
+			case 0: hd->base_status.size = (unsigned char)value; break;
+			case 1: hd->homunculus.level = (unsigned short)value; break;
+			case 2: hd->homunculus.hp = (unsigned int)value; break;
+			case 3: hd->homunculus.max_hp = (unsigned int)value; break;
+			case 4: hd->homunculus.sp = (unsigned int)value; break;
+			case 5: hd->homunculus.max_sp; (unsigned int)value; break;
+			case 6: hd->homunculus.char_id = (unsigned int)value; break;
+			case 7: hd->bl.m = (short)value; break;
+			case 8: hd->bl.x = (short)value; break;
+			case 9: hd->bl.y = (short)value; break;
+			case 10: hd->homunculus.hunger = (short)value; break;
+			case 11: hd->homunculus.intimacy = (unsigned int)value; break;
+			case 12: hd->base_status.speed = (unsigned short)value; break;
+			case 13: hd->ud.dir = (unsigned char)value; break;
+			case 14: hd->ud.canmove_tick = value > 0 ? 1 : 0; break;
+			case 15: hd->base_status.str = (unsigned int)value; break;
+			case 16: hd->base_status.agi = (unsigned int)value; break;
+			case 17: hd->base_status.vit = (unsigned int)value; break;
+			case 18: hd->base_status.int_ = (unsigned int)value; break;
+			case 19: hd->base_status.dex = (unsigned int)value; break;
+			case 20: hd->base_status.luk = (unsigned int)value; break;
+			case 21: hd->ud.immune_attack = (bool)value > 0 ? 1 : 0; break;
+			default:
+				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_HOM.\n", type);
+				return SCRIPT_CMD_FAILURE;
+			}
+		break;
+
+	case BL_PET:
+		if (!pd) {
+			ShowWarning("buildin_setunitdata: Error in finding object BL_PET!\n");
+			return SCRIPT_CMD_FAILURE;
+		}
+		switch (type) {
+			case 0: pd->status.size = (unsigned char)value; break;
+			case 1: pd->pet.level = (unsigned short)value; break;
+			case 2: pd->status.hp = (unsigned int)value; break;
+			case 3: pd->status.max_hp = (unsigned int)value; break;
+			case 4: pd->pet.account_id = (unsigned int)value; break;
+			case 5: pd->bl.m = (short)value; break;
+			case 6: pd->bl.x = (short)value; break;
+			case 7: pd->bl.y = (short)value; break;
+			case 8: pd->pet.hungry = (short)value; break;
+			case 9: pd->pet.intimate = (unsigned int)value; break;
+			case 10: pd->status.speed = (unsigned short)value; break;
+			case 11: pd->ud.dir = (unsigned char)value; break;
+			case 12: pd->ud.canmove_tick = value > 0 ? 1 : 0; break;
+			case 13: pd->status.str = (unsigned int)value; break;
+			case 14: pd->status.agi = (unsigned int)value; break;
+			case 15: pd->status.vit = (unsigned int)value; break;
+			case 16: pd->status.int_ = (unsigned int)value; break;
+			case 17: pd->status.dex = (unsigned int)value; break;
+			case 18: pd->status.luk = (unsigned int)value; break;
+			case 20: pd->ud.immune_attack = (bool)value > 0 ? 1 : 0; break;
+			default:
+				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_PET.\n", type);
+				return SCRIPT_CMD_FAILURE;
+			}
+		break;
+
+	case BL_MER:
+		if (!mc) {
+			ShowWarning("buildin_setunitdata: Error in finding object BL_MER!\n");
+			return SCRIPT_CMD_FAILURE;
+		}
+		switch (type) {
+			case 0: mc->base_status.size = (unsigned char)value; break;
+			case 1: mc->base_status.hp = (unsigned int)value; break;
+			case 2: mc->base_status.max_hp = (unsigned int)value; break;
+			case 3: mc->mercenary.char_id = (unsigned int)value; break;
+			case 4: mc->bl.m = (short)value; break;
+			case 5: mc->bl.x = (short)value; break;
+			case 6: mc->bl.y = (short)value; break;
+			case 7: mc->mercenary.kill_count = (unsigned int)value; break;
+			case 8: mc->mercenary.life_time = (unsigned int)value; break;
+			case 9: mc->base_status.speed = (unsigned short)value; break;
+			case 10: mc->ud.dir = (unsigned char)value; break;
+			case 11: mc->ud.canmove_tick = value > 0 ? 1 : 0; break;
+			case 12: mc->base_status.str = (unsigned int)value; break;
+			case 13: mc->base_status.agi = (unsigned int)value; break;
+			case 14: mc->base_status.vit = (unsigned int)value; break;
+			case 15: mc->base_status.int_ = (unsigned int)value; break;
+			case 16: mc->base_status.dex = (unsigned int)value; break;
+			case 17: mc->base_status.luk = (unsigned int)value; break;
+			default:
+				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_MER.\n", type);
+				return SCRIPT_CMD_FAILURE;
+			}
+		break;
+
+	case BL_ELEM:
+		if (!ed) {
+			ShowWarning("buildin_setunitdata: Error in finding object BL_ELEM!\n");
+			return SCRIPT_CMD_FAILURE;
+		}
+		switch (type) {
+			case 0: ed->base_status.size = (unsigned char)value; break;
+			case 1: ed->elemental.hp = (unsigned int)value; break;
+			case 2: ed->elemental.max_hp = (unsigned int)value; break;
+			case 3: ed->elemental.sp = (unsigned int)value; break;
+			case 4: ed->elemental.max_sp = (unsigned int)value; break;
+			case 5: ed->elemental.char_id = (unsigned int)value; break;
+			case 6: ed->bl.m = (short)value; break;
+			case 7: ed->bl.x = (short)value; break;
+			case 8: ed->bl.y = (short)value; break;
+			case 9: ed->elemental.life_time = (unsigned int)value; break;
+			case 10: ed->elemental.mode = (unsigned int)value; break;
+			case 11: ed->base_status.speed = (unsigned short)value; break;
+			case 12: ed->ud.dir = (unsigned char)value; break;
+			case 13: ed->ud.canmove_tick = value > 0 ? 1 : 0; break;
+			case 14: ed->base_status.str = (unsigned int)value; break;
+			case 15: ed->base_status.agi = (unsigned int)value; break;
+			case 16: ed->base_status.vit = (unsigned int)value; break;
+			case 17: ed->base_status.int_ = (unsigned int)value; break;
+			case 18: ed->base_status.dex = (unsigned int)value; break;
+			case 19: ed->base_status.luk = (unsigned int)value; break;
+			case 20: ed->ud.immune_attack = (bool)value > 0 ? 1 : 0; break;
+			default:
+				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_ELEM.\n", type);
+				return SCRIPT_CMD_FAILURE;
+			}
+		break;
+
+	case BL_NPC:
+		if (!md) {
+			ShowWarning("buildin_setunitdata: Error in finding object BL_NPC!\n");
+			return SCRIPT_CMD_FAILURE;
+		}
+		switch (type) {
+			case 0: nd->class_ = (unsigned int)value; break;
+			case 1: nd->level = (unsigned int)value; break;
+			case 2: nd->status.hp = (unsigned int)value; break;
+			case 3: nd->status.max_hp = (unsigned int)value; break;
+			case 4: nd->bl.m = (short)value; break;
+			case 5: nd->bl.x = (short)value; break;
+			case 6: nd->bl.y = (short)value; break;
+			case 7: nd->ud.dir = (unsigned char)value; break;
+			case 8: nd->status.str = (unsigned int)value; break;
+			case 9: nd->status.agi = (unsigned int)value; break;
+			case 10: nd->status.vit = (unsigned int)value; break;
+			case 11: nd->status.int_ = (unsigned int)value; break;
+			case 12: nd->status.dex = (unsigned int)value; break;
+			case 13: nd->status.luk = (unsigned int)value; break;
+			default:
+				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_NPC.\n", type);
+				return SCRIPT_CMD_FAILURE;
+			}
+		break;
+
+	default:
+		ShowWarning("buildin_setunitdata: Unknown object type!\n");
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/// Gets the name of a bl.
+/// Supported types are [MOB|HOM|PET|NPC].
+/// MER and ELEM don't support custom names.
+///
+/// getunitname <unit id>;
+BUILDIN_FUNC(getunitname)
+{
+	struct block_list* bl = NULL;
+
+	bl = map_id2bl(script_getnum(st, 2));
+
+	if (!bl) {
+		ShowWarning("buildin_getunitname: Error in finding object with given game ID %d!\n", script_getnum(st, 2));
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushstrcopy(st, status_get_name(bl));
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/// Changes the name of a bl.
+/// Supported types are [MOB|HOM|PET].
+/// For NPC see 'setnpcdisplay', MER and ELEM don't support custom names.
+///
+/// setunitname <unit id>,<name>;
+BUILDIN_FUNC(setunitname)
+{
+	struct block_list* bl = NULL;
+	TBL_MOB* md = NULL;
+	TBL_HOM* hd = NULL;
+	TBL_PET* pd = NULL;
+
+	bl = map_id2bl(script_getnum(st, 2));
+
+	if (!bl) {
+		ShowWarning("buildin_setunitname: Error in finding object with given game ID %d!\n", script_getnum(st, 2));
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	switch (bl->type) {
+		case BL_MOB:  md = map_id2md(bl->id); break;
+		case BL_HOM:  hd = map_id2hd(bl->id); break;
+		case BL_PET:  pd = map_id2pd(bl->id); break;
+	}
+
+	switch (bl->type) {
+		case BL_MOB:
+			if (!md) {
+				ShowWarning("buildin_setunitname: Error in finding object BL_MOB!\n");
+				return SCRIPT_CMD_FAILURE;
+			}
+			safestrncpy(md->name, script_getstr(st, 3), NAME_LENGTH);
+			break;
+		case BL_HOM:
+			if (!hd) {
+				ShowWarning("buildin_setunitname: Error in finding object BL_HOM!\n");
+				return SCRIPT_CMD_FAILURE;
+			}
+			safestrncpy(hd->homunculus.name, script_getstr(st, 3), NAME_LENGTH);
+			break;
+		case BL_PET:
+			if (!pd) {
+				ShowWarning("buildin_setunitname: Error in finding object BL_PET!\n");
+				return SCRIPT_CMD_FAILURE;
+			}
+			safestrncpy(pd->pet.name, script_getstr(st, 3), NAME_LENGTH);
+			break;
+		default:
+			ShowWarning("buildin_setunitname: Unknown object type!\n");
+			return SCRIPT_CMD_FAILURE;
+	}
+	clif_charnameack(0, bl); // Send update to client.
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/// Makes the unit walk to target position or map.
+/// Returns if it was successful.
 ///
 /// unitwalk(<unit_id>,<x>,<y>) -> <bool>
 /// unitwalk(<unit_id>,<target_id>) -> <bool>
@@ -16177,41 +16728,44 @@ BUILDIN_FUNC(unitwalk)
 	struct block_list* bl;
 
 	bl = map_id2bl(script_getnum(st,2));
-	if( bl == NULL )
+
+	if (!bl)
 		script_pushint(st, 0);
 	else if( script_hasdata(st,4) ) {
 		int x = script_getnum(st,3);
 		int y = script_getnum(st,4);
-		if( script_pushint(st, unit_can_reach_pos(bl,x,y,0)) )
+
+		if (script_pushint(st, unit_can_reach_pos(bl,x,y,0)))
 			add_timer(gettick()+50, unit_delay_walktoxy_timer, bl->id, (x<<16)|(y&0xFFFF)); // Need timer to avoid mismatches
 	} else {
 		struct block_list* tbl = map_id2bl(script_getnum(st,3));
-		if( tbl == NULL ) {
-			ShowError("script:unitwalk: bad target destination\n");
+
+		if (!tbl) {
+			ShowError("buildin_unitwalk: Bad target destination.\n");
 			script_pushint(st, 0);
-			return 1;
-		}
-		else if (script_pushint(st, unit_can_reach_bl(bl, tbl, distance_bl(bl, tbl)+1, 0, NULL, NULL)))
+			return SCRIPT_CMD_FAILURE;
+		} else if (script_pushint(st, unit_can_reach_bl(bl, tbl, distance_bl(bl, tbl)+1, 0, NULL, NULL)))
 			add_timer(gettick()+50, unit_delay_walktobl_timer, bl->id, tbl->id); // Need timer to avoid mismatches
 	}
 
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/// Kills the unit
+/// Kills the unit.
 ///
 /// unitkill <unit_id>;
 BUILDIN_FUNC(unitkill)
 {
 	struct block_list* bl = map_id2bl(script_getnum(st,2));
-	if( bl != NULL )
+
+	if (bl != NULL)
 		status_kill(bl);
 
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/// Warps the unit to the target position in the target map
-/// Returns if it was successfull
+/// Warps the unit to the target position in the target map.
+/// Returns if it was successful.
 ///
 /// unitwarp(<unit_id>,"<map name>",<x>,<y>) -> <bool>
 BUILDIN_FUNC(unitwarp)
@@ -16233,12 +16787,12 @@ BUILDIN_FUNC(unitwarp)
 	else
 		bl = map_id2bl(unit_id);
 
-	if( strcmp(mapname,"this") == 0 )
+	if (!strcmp(mapname,"this"))
 		map_idx = bl?bl->m:-1;
 	else
 		map_idx = map_mapname2mapid(mapname);
 
-	if( map_idx >= 0 && bl != NULL )
+	if (map_idx >= 0 && bl != NULL)
 		script_pushint(st, unit_warp(bl,map_idx,x,y,CLR_OUTSIGHT));
 	else
 		script_pushint(st, 0);
@@ -16260,58 +16814,56 @@ BUILDIN_FUNC(unitattack)
 	struct script_data* data;
 	int actiontype = 0;
 
-	// get unit
 	unit_bl = map_id2bl(script_getnum(st,2));
-	if( unit_bl == NULL ) {
+
+	if (!unit_bl) {
 		script_pushint(st, 0);
-		return 0;
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	data = script_getdata(st, 3);
 	get_val(st, data);
-	if( data_isstring(data) )
-	{
+
+	if (data_isstring(data)) {
 		TBL_PC* sd = map_nick2sd(conv_str(st, data));
 		if( sd != NULL )
 			target_bl = &sd->bl;
 	} else
 		target_bl = map_id2bl(conv_num(st, data));
-	// request the attack
-	if( target_bl == NULL )
-	{
+
+	if (!target_bl) {
 		script_pushint(st, 0);
-		return 0;
+		return SCRIPT_CMD_FAILURE;
 	}
 
-	// get actiontype
-	if( script_hasdata(st,4) )
+	if (script_hasdata(st,4))
 		actiontype = script_getnum(st,4);
 
-	switch( unit_bl->type )
-	{
-	case BL_PC:
-		clif_parse_ActionRequest_sub(((TBL_PC *)unit_bl), actiontype > 0 ? 0x07 : 0x00, target_bl->id, gettick());
-		script_pushint(st, 1);
-		return 0;
-	case BL_MOB:
-		((TBL_MOB *)unit_bl)->target_id = target_bl->id;
-		break;
-	case BL_PET:
-		((TBL_PET *)unit_bl)->target_id = target_bl->id;
-		break;
-	default:
-		ShowError("script:unitattack: unsupported source unit type %d\n", unit_bl->type);
-		script_pushint(st, 0);
-		return 1;
+	switch(unit_bl->type) {
+		case BL_PC:
+			clif_parse_ActionRequest_sub(((TBL_PC *)unit_bl), actiontype > 0 ? 0x07 : 0x00, target_bl->id, gettick());
+			script_pushint(st, 1);
+			return SCRIPT_CMD_SUCCESS;
+		case BL_MOB:
+			((TBL_MOB *)unit_bl)->target_id = target_bl->id;
+			break;
+		case BL_PET:
+			((TBL_PET *)unit_bl)->target_id = target_bl->id;
+			break;
+		default:
+			ShowError("buildin_unitattack: Unsupported source unit type %d.\n", unit_bl->type);
+			script_pushint(st, 0);
+			return SCRIPT_CMD_FAILURE;
 	}
+
 	script_pushint(st, unit_walktobl(unit_bl, target_bl, 65025, 2));
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/// Makes the unit stop attacking and moving
+/// Makes the unit stop attacking.
 ///
-/// unitstop <unit_id>;
-BUILDIN_FUNC(unitstop)
+/// unitstopattack <unit_id>;
+BUILDIN_FUNC(unitstopattack)
 {
 	int unit_id;
 	struct block_list* bl;
@@ -16319,18 +16871,38 @@ BUILDIN_FUNC(unitstop)
 	unit_id = script_getnum(st,2);
 
 	bl = map_id2bl(unit_id);
-	if( bl != NULL )
-	{
+
+	if (bl != NULL) {
 		unit_stop_attack(bl);
-		unit_stop_walking(bl,4);
-		if( bl->type == BL_MOB )
+		if (bl->type == BL_MOB)
 			((TBL_MOB*)bl)->target_id = 0;
 	}
 
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/// Makes the unit say the message
+/// Makes the unit stop walking.
+///
+/// unitstopwalk <unit_id>;
+BUILDIN_FUNC(unitstopwalk)
+{
+	int unit_id;
+	struct block_list* bl;
+
+	unit_id = script_getnum(st,2);
+
+	bl = map_id2bl(unit_id);
+
+	if (bl != NULL) {
+		unit_stop_walking(bl,4);
+		if (bl->type == BL_MOB)
+			((TBL_MOB*)bl)->target_id = 0;
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/// Makes the unit say the given message.
 ///
 /// unittalk <unit_id>,"<message>";
 BUILDIN_FUNC(unittalk)
@@ -16343,9 +16915,10 @@ BUILDIN_FUNC(unittalk)
 	message = script_getstr(st, 3);
 
 	bl = map_id2bl(unit_id);
-	if( bl != NULL )
-	{
+
+	if (bl != NULL) {
 		struct StringBuf sbuf;
+
 		StringBuf_Init(&sbuf);
 		StringBuf_Printf(&sbuf, "%s : %s", status_get_name(bl), message);
 		clif_disp_overhead(bl, StringBuf_Value(&sbuf));
@@ -16355,7 +16928,7 @@ BUILDIN_FUNC(unittalk)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/// Makes the unit do an emotion
+/// Makes the unit do an emotion.
 ///
 /// unitemote <unit_id>,<emotion>;
 ///
@@ -16369,22 +16942,21 @@ BUILDIN_FUNC(unitemote)
 	unit_id = script_getnum(st,2);
 	emotion = script_getnum(st,3);
 	bl = map_id2bl(unit_id);
-	if( bl != NULL )
+
+	if (bl != NULL)
 		clif_emotion(bl, emotion);
 
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/// Makes the unit cast the skill on the target or self if no target is specified
+/// Makes the unit cast the skill on the target or self if no target is specified.
 ///
-/// unitskilluseid <unit_id>,<skill_id>,<skill_lv>{,<target_id>};
-/// unitskilluseid <unit_id>,"<skill name>",<skill_lv>{,<target_id>};
+/// unitskilluseid <unit_id>,<skill_id>,<skill_lv>{,<target_id>,<casttime>};
+/// unitskilluseid <unit_id>,"<skill name>",<skill_lv>{,<target_id>,<casttime>};
 BUILDIN_FUNC(unitskilluseid)
 {
-	int unit_id;
-	uint16 skill_id;
-	uint16 skill_lv;
-	int target_id;
+	int unit_id, target_id, casttime;
+	uint16 skill_id, skill_lv;
 	struct block_list* bl;
 	struct script_data *data;
 
@@ -16394,25 +16966,23 @@ BUILDIN_FUNC(unitskilluseid)
 	skill_id = ( data_isstring(data) ? skill_name2id(script_getstr(st,3)) : script_getnum(st,3) );
 	skill_lv = script_getnum(st,4);
 	target_id = ( script_hasdata(st,5) ? script_getnum(st,5) : unit_id );
-
+	casttime = ( script_hasdata(st,6) ? script_getnum(st,6) : 0 );
 	bl = map_id2bl(unit_id);
-	if( bl != NULL )
-		unit_skilluse_id(bl, target_id, skill_id, skill_lv);
+
+	if (bl != NULL)
+		unit_skilluse_id2(bl, target_id, skill_id, skill_lv, (casttime * 1000) + skill_castfix(bl, skill_id, skill_lv), skill_get_castcancel(skill_id));
 
 	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Makes the unit cast the skill on the target position.
 ///
-/// unitskillusepos <unit_id>,<skill_id>,<skill_lv>,<target_x>,<target_y>;
-/// unitskillusepos <unit_id>,"<skill name>",<skill_lv>,<target_x>,<target_y>;
+/// unitskillusepos <unit_id>,<skill_id>,<skill_lv>,<target_x>,<target_y>{,<casttime>};
+/// unitskillusepos <unit_id>,"<skill name>",<skill_lv>,<target_x>,<target_y>{,<casttime>};
 BUILDIN_FUNC(unitskillusepos)
 {
-	int unit_id;
-	uint16 skill_id;
-	uint16 skill_lv;
-	int skill_x;
-	int skill_y;
+	int unit_id, skill_x, skill_y, casttime;
+	uint16 skill_id, skill_lv;
 	struct block_list* bl;
 	struct script_data *data;
 
@@ -16423,10 +16993,11 @@ BUILDIN_FUNC(unitskillusepos)
 	skill_lv = script_getnum(st,4);
 	skill_x  = script_getnum(st,5);
 	skill_y  = script_getnum(st,6);
-
+	casttime = ( script_hasdata(st,7) ? script_getnum(st,7) : 0 );
 	bl = map_id2bl(unit_id);
-	if( bl != NULL )
-		unit_skilluse_pos(bl, skill_x, skill_y, skill_id, skill_lv);
+
+	if (bl != NULL)
+		unit_skilluse_pos2(bl, skill_x, skill_y, skill_id, skill_lv, (casttime * 1000) + skill_castfix(bl, skill_id, skill_lv), skill_get_castcancel(skill_id));
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -16715,6 +17286,8 @@ BUILDIN_FUNC(mercenary_create)
 
 	contract_time = script_getnum(st,3);
 	mercenary_create(sd, class_, contract_time);
+	script_pushint(st, sd->md->bl.id);
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -19598,15 +20171,20 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(pcblockmove,"ii"),
 	// <--- [zBuffer] List of player cont commands
 	// [zBuffer] List of mob control commands --->
+	BUILDIN_DEF(getunitname,"i"),
+	BUILDIN_DEF(setunitname,"is"),
+	BUILDIN_DEF(getunitdata,"i*"),
+	BUILDIN_DEF(setunitdata,"iii"),
 	BUILDIN_DEF(unitwalk,"ii?"),
 	BUILDIN_DEF(unitkill,"i"),
 	BUILDIN_DEF(unitwarp,"isii"),
 	BUILDIN_DEF(unitattack,"iv?"),
-	BUILDIN_DEF(unitstop,"i"),
+	BUILDIN_DEF(unitstopattack,"i"),
+	BUILDIN_DEF(unitstopwalk,"i"),
 	BUILDIN_DEF(unittalk,"is"),
 	BUILDIN_DEF(unitemote,"ii"),
-	BUILDIN_DEF(unitskilluseid,"ivi?"), // originally by Qamera [Celest]
-	BUILDIN_DEF(unitskillusepos,"iviii"), // [Celest]
+	BUILDIN_DEF(unitskilluseid,"ivi??"), // originally by Qamera [Celest]
+	BUILDIN_DEF(unitskillusepos,"iviii?"), // [Celest]
 // <--- [zBuffer] List of mob control commands
 	BUILDIN_DEF(sleep,"i"),
 	BUILDIN_DEF(sleep2,"i"),

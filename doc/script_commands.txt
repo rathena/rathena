@@ -2334,11 +2334,11 @@ character name is specified, of that player.
 
 Type is the kind of associated ID number required:
 
- 0 - Character ID number.
- 1 - Party ID number.
- 2 - Guild ID number.
- 3 - Account ID number.
- 4 - Battle ground ID
+ 0 - Character ID
+ 1 - Party ID
+ 2 - Guild ID
+ 3 - Account ID
+ 4 - Battle Ground ID
 
 For most purposes other than printing it, a number is better to have than a name 
 (people do horrifying things to their character names).
@@ -2363,7 +2363,7 @@ Retrieves IDs of the currently invoked NPC. If a unique npc name is
 given, IDs of that NPC are retrieved instead. Type specifies what ID
 to retrieve and can be one of the following:
 
-    0 - Unit ID (GID)
+    0 - NPC Game ID
 
 If an invalid type is given or the NPC does not exist, 0 is returned.
 
@@ -5588,6 +5588,9 @@ The 'areamonster' command works much like the 'monster' command and is not
 significantly different, but spawns the monsters within a square defined by 
 x1/y1-x2/y2.
 
+Returned value is an array with the game ID of the spawned monster(s) depending
+on the amount spawned. Array is stored in $@mobid[].
+
 Simple monster killing script:
 
         <Normal NPC object definition. Let's assume you called him NPCNAME.>
@@ -5756,6 +5759,8 @@ to 60000 (1 minute). Note that also the value 0 will set the timer to default,
 and it is not possible to create a spawn that lasts forever.
 If an event label is given, upon the monster being killed, the event label will
 run as if by 'donpcevent'.
+
+Returned value is the game ID of the spawned monster.
 
 // Will summon a dead branch-style monster to fight for the character.
 summon "--ja--",-1;
@@ -6999,9 +7004,15 @@ OnTouch:
 
 ---------------------------------------
 
-*unitstop <GID>;
+*unitstopattack <GID>;
 
-This command will make a <GID> stop attacking and moving.
+This command will make a <GID> stop attacking.
+
+---------------------------------------
+
+*unitstopwalk <GID>;
+
+This command will make a <GID> stop moving.
 
 ---------------------------------------
 
@@ -7018,16 +7029,123 @@ For a full list of emotion numbers, see 'db/const.txt' under 'e_'.
 
 ---------------------------------------
 
-*unitskilluseid <GID>,<skill id>,<skill lvl>{,<target id>};
-*unitskilluseid <GID>,"<skill name>",<skill lvl>{,<target id>};
-*unitskillusepos <GID>,<skill id>,<skill lvl>,<x>,<y>;
-*unitskillusepos <GID>,"<skill name>",<skill lvl>,<x>,<y>;
+*unitskilluseid <GID>,<skill id>,<skill lvl>{,<target id>,<casttime>};
+*unitskilluseid <GID>,"<skill name>",<skill lvl>{,<target id>,<casttime>};
+*unitskillusepos <GID>,<skill id>,<skill lvl>,<x>,<y>{,<casttime>};
+*unitskillusepos <GID>,"<skill name>",<skill lvl>,<x>,<y>{,<casttime>};
 
 This is the replacement of the older commands, these use the same values for
 GID as the other unit* commands (See 'GID').
 
 Skill ID is the ID of the skill, skill level is the level of the skill.
-For the position, the x and y are given in the unitSkillUsePos.
+Cast time is the amount of seconds to add or remove from the skill. Use a positive value to
+add and negative value to subtract. Using 0 or no value will use the default skill cast time.
+For the position, the x and y are given in the UnitSkillUsePos.
+
+---------------------------------------
+
+*getunitname <GID>;
+
+Gets the name of the given unit. Supported types are monster, homunculus, pet, and NPC.
+Mercenary and Elemental don't support custom names.
+
+Returns "Unknown" if unit is not found.
+
+---------------------------------------
+
+*setunitname <GID>,"<new name>";
+
+Changes the name of the given unit to the new name given. Supported types are monster,
+homunculus, and pet. To change an NPC's name, see 'setnpcdisplay'. Mercenary and
+Elemental don't support custom names.
+
+Changing a homunculus or pet name will be permanent.
+
+---------------------------------------
+
+*getunitdata <GID>,<arrayname>;
+*setsetdata <GID>,<parameter>,<new value>;
+
+This is used to get and set special data related to the unit.
+With getunitdata, the array given will be filled with the current data. In setunitdata
+the indexes in the array would be used to set that data on the unit. 
+
+Parameters (indexes) for monsters are:
+
+	0 - size (big, small, normal)	7  - y							14 - hair style			21 - weapon			28 - DEX
+	1 - level						8  - speed						15 - hair color			22 - shield (again)	29 - LUK
+	2 - HP							9  - mode 						16 - head gear bottom	23 - looking dir	30 - for slave to copy master's mode
+	3 - max HP						10 - special AI state	 		17 - head gear middle	24 - STR			31 - immune from attacks state
+	4 - master AID					11 - SC option					18 - head gear top		25 - AGI
+	5 - map index					12 - sex						19 - cloth color		26 - VIT
+	6 - x							13 - class (Monster ID, Job ID)	20 - shield				27 - INT
+
+Parameter (indexes) for homunculi are:
+
+	0 - size (big, small, normal)	7  - map index		14 - canmove_tick	21 - immune from attacks state
+	1 - level						8  - x				15 - STR
+	2 - HP							9  - y				16 - AGI
+	3 - max HP						10 - hunger			17 - VIT
+	4 - SP							11 - intimacy		18 - INT
+	5 - max SP						12 - speed			19 - DEX
+	6 - master Character ID			13 - looking dir	20 - LUK
+
+Parameter (indexes) for pets are:
+
+	0 - size (big, small, normal)	7  - y				14 - AGI
+	1 - level						8  - hunger			15 - VIT
+	2 - HP							9  - intimacy		16 - INT
+	3 - max HP						10 - speed			17 - DEX
+	4 - master AID					11 - looking dir	18 - LUK
+	5 - map index					12 - canmove_tick	19 - name
+	6 - x							13 - STR
+
+Parameter (indexes) for mercenaries are:
+
+	0 - size (big, small, normal)	7  - y				14 - AGI
+	1 - level						8  - kill count		15 - VIT
+	2 - HP							9  - life time		16 - INT
+	3 - max HP						10 - speed			17 - DEX
+	4 - master Character ID			11 - looking dir	18 - LUK
+	5 - map index					12 - canmove_tick	19 - immune from attacks state
+	6 - x							13 - STR
+
+Parameter (indexes) for elementals are:
+
+	0 - size (big, small, normal)	7  - map index		14 - canmove_tick	21 - immune from attacks state
+	1 - level						8  - x				15 - STR
+	2 - HP							9  - y				16 - AGI
+	3 - max HP						10 - life time		17 - VIT
+	4 - SP							11 - mode			18 - INT
+	5 - max SP						12 - speed			19 - DEX
+	6 - master Character ID			13 - looking dir	20 - LUK
+
+Parameter (indexes) for NPCs are:
+
+	0 - display		7  - looking dir
+	1 - level		8  - STR
+	2 - HP			9  - AGI
+	3 - max HP		10 - VIT
+	4 - map index	11 - INT
+	5 - x			12 - DEX
+	6 - y			13 - LUK
+
+*Note: For mode, see doc/mob_db_mode_list.txt
+
+Example:
+	// Spawn some Porings and save the Game ID.
+	// - Keep in mind, when the 'monster' script command is used,
+	// - all the spawned monster GID's are stored in an array
+	// - called $@mobid[].
+	monster "prontera",123,42,"Poring",1002,10;
+	.GID = $@mobid[9]; // Store and modify the 10th Poring spawned to make him stronger!
+
+	// Save the strong Poring's mob data in the @por_arr[] variable. (@por_arr[1] being level, @por_arr[13] being class, etc.)
+	getunitdata .GID,@por_arr;
+
+	// Set the max HP of the Poring to 1000 and update the current HP to match.
+	setunitdata .GID,3,1000;
+	setunitdata .GID,2,1000;
 
 ---------------------------------------
 \\
@@ -8044,9 +8162,7 @@ server and the egg will disappear when anyone tries to hatch it.
 This function will return pet information for the pet the invoking character 
 currently has active. Valid types are:
 
- 0 - Unique pet ID number as stored by the char server and distinguishing it 
-     from all other pets the characters actually have. This value is currently 
-     useless, at most you can use it to tell pets apart reliably.
+ 0 - Pet Game ID
  1 - Pet class number as per 'db/pet_db.txt' - will tell you what kind of a pet it 
      is.
  2 - Pet name. Will return "null" if there's no pet. 
@@ -8054,7 +8170,6 @@ currently has active. Valid types are:
  4 - Pet hungry level. 100 is completely full.
  5 - Pet rename flag. 0 means this pet has not been named yet.
  6 - Pet level
-
 
 ---------------------------------------
 
@@ -8217,12 +8332,12 @@ invoking character, regardless of its vaporize state. It returns zero or
 "null" if the player does not own a Homunculus.
 
 Valid types are:
- 0 - Homunculus unique ID
+ 0 - Homunculus Game ID
  1 - Homunculus Class
- 2 - Name
- 3 - Friendly level (intimacy score). 100000 is full loyalty.
- 4 - Hungry level. 100 is completely full.
- 5 - Rename flag. 0 means this homunculus has not been named yet.
+ 2 - Homunculus Name
+ 3 - Homunculus friendly level (intimacy score). 100000 is full loyalty.
+ 4 - Homunculus hungry level. 100 is completely full.
+ 5 - Homunculus rename flag. 0 means this homunculus has not been named yet.
  6 - Homunculus level
 
 ---------------------------------------
@@ -8245,6 +8360,8 @@ This command summons a mercenary for a given time (in milliseconds). For a
 list of all available classes, see 'db/mercenary_db.txt'.
 
 This command is typically used in item scripts of mercenary scrolls.
+
+Returned value is the game ID of the spawned mercenary.
 
 ---------------------------------------
 
@@ -8293,14 +8410,14 @@ character. If char id is given, the information of that character is
 retrieved instead. Type specifies what information to retrieve and
 can be one of the following:
 
-    0 - Database ID
-    1 - Class
-    2 - Name
-    3 - Faith value for this mercenary's guild, if any
-    4 - Calls value for this mercenary's guild, if any
-    5 - Kill count
-    6 - Remaining life time in msec
-    7 - Level
+    0 - Mercenary Game ID
+    1 - Mercenary Class
+    2 - Mercenary Name
+    3 - Mercenary faith value for this mercenary's guild, if any
+    4 - Mercenary calls value for this mercenary's guild, if any
+    5 - Mercenary kill count
+    6 - Mercenary remaining life time in msec
+    7 - Mercenary level
 
 If the character does not have a mercenary, the command returns ""
 for name and 0 for all other types.

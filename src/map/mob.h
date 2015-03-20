@@ -143,6 +143,7 @@ struct mob_data {
 		unsigned int npc_killmonster: 1; //for new killmonster behavior
 		unsigned int rebirth: 1; // NPC_Rebirth used
 		unsigned int boss : 1;
+		unsigned int copy_master_mode : 1; ///< Whether the spawned monster should copy the master's mode.
 		enum MobSkillState skillstate;
 		unsigned char steal_flag; //number of steal tries (to prevent steal exploit on mobs with few items) [Lupus]
 		unsigned char attacked_count; //For rude attacked.
@@ -186,8 +187,6 @@ struct mob_data {
 	 **/
 	int tomb_nid;
 };
-
-
 
 enum {
 	MST_TARGET	=	0,
