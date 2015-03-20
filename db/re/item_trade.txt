@@ -1421,7 +1421,6 @@
 14605,475,100	// Orc Lord Scroll
 14606,475,100	// JOB Battle Manual
 14608,73,100	// Manchu-Han Imperial Feast
-14696,475,100	// Sealed Gloom Under Night Gachapon
 16002,507,100	// Stunner
 16134,475,100	// Frog King Hat Box
 16135,457,100	// Satanic Bone Helm Box
@@ -2018,8 +2017,6 @@
 12630,475,100	// Teddy Bear Scroll
 12778,473,100	// Bapho Jr Scroll
 12779,473,100	// Galapago Scroll
-17338,457,100	// Ore Box V
-17339,457,100	// Ore Box V(10)
 22685,475,100	// Single Union Christmas Gift
 
 // Sealed Cards
@@ -2059,26 +2056,16 @@
 12511,475,100	//E_Siege_Teleport_Scroll
 12512,475,100	//E_Greed_Scroll
 12513,475,100	//E_Glass_Of_Illusion
-12514,475,100	//E_Abrasive
-12515,475,100	//E_Med_Life_Potion
-12516,475,100	//E_Small_Life_Potion
 12517,475,100	//E_Regeneration_Potion
 12518,475,100	//E_B_Mdef_Potion
 12519,475,100	//E_S_Mdef_Potion
 12520,475,100	//E_B_Def_Potion
 12521,475,100	//E_S_Def_Potion
-12522,475,100	//E_Blessing_10_Scroll
-12523,475,100	//E_Inc_Agi_10_Scroll
 12524,475,100	//E_Aspersio_5_Scroll
 12525,475,100	//E_Assumptio_5_Scroll
 12526,475,100	//E_Wind_Walk_10_Scroll
 12527,475,100	//E_Adrenaline_Scroll
 12528,475,100	//E_Convex_Mirror
-
-16481,475,100	//Small_Life_Potion_Box_10
-16483,475,100	//Abrasive_Box_10
-16505,475,100	//Steamed_Tongue_Box_10
-16506,475,100	//Steamed_Desert_Scorpions_Box_10
 
 // Valor Set
 2482,475,100	// Shoes_Of_Valor
@@ -2242,7 +2229,6 @@
 22541,475,100	//PC_Room_Coupon_Box_VI
 
 // kRO 2013-03-06 Items
-6713,457,100	//Heart_of_Soul
 6714,457,100	//Sheenas_Soul
 6715,457,100	//Gods_Soul_Piece
 16378,457,100	//Siege_Tele_Scroll_Box_30
@@ -2257,7 +2243,6 @@
 16867,457,100	//Siege_Map_Teleport_Scroll_II_Box_30
 17159,457,100	//Name_Change_Box
 17160,457,100	//Character_Name_Change_Card_Box
-22540,457,100	//Runstone_Luxanima
 
 // kRO 2013-03-20
 6713,475,100	//Heart_of_Soul
@@ -2311,7 +2296,6 @@
 14696,475,100	//Sealed_Gloom_Under_Night_Gachapon
 17338,475,100	//Ore_Box_V
 17339,475,100	//Ore_Box_V(10)
-22525,475,100	//Level_Up_Box(140)
 
 // kRO 2013-08-21
 17429,475,100	//11_Anniversary_Shadow_Box
@@ -2354,11 +2338,9 @@
 5280,475,100	//Magestic_Goat_C
 6036,475,100	//Invite_To_Meeting
 6038,475,100	//Neat_Report
-6039,475,100	//Piece_Of_Fish
 6040,475,100	//Some_Of_Report
 6043,475,100	//Letter_From_Lugen
 6044,475,100	//Letter_From_Otto
-6048,475,100	//Unidentified_Mineral
 6049,475,100	//Marlin
 7059,475,100	//Cargo_Free_Ticket
 7060,475,100	//Warp_Free_Ticket
@@ -2644,7 +2626,6 @@
 
 // kRO 2014-08-27
 6912,475,100		//Piece_Of_Soul_Sheep
-6674,475,100		//GM_Coin
 
 // kRO 2014-09-09
 6910,475,100		//(Limited)Purified_Oridecon
