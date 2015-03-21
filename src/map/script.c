@@ -16222,44 +16222,46 @@ BUILDIN_FUNC(getunitdata)
 	num = st->stack->stack_data[st->start+3].u.num;
 	name = (char *)(str_buf+str_data[num&0x00ffffff].str);
 
+#define getunitdata_sub(idx__,var__) setd_sub(st,sd,name,(idx__),(void *)__64BPRTSIZE((int)(var__)),script_getref(st,3))
+
 	switch(bl->type) {
 		case BL_MOB:
 			if (!md) {
 				ShowWarning("buildin_getunitdata: Error in finding object BL_MOB!\n");
 				return SCRIPT_CMD_FAILURE;
 			}
-			setd_sub(st,sd,name,0,(void *)(int)md->status.size,script_getref(st,3));
-			setd_sub(st,sd,name,1,(void *)(int)md->level,script_getref(st,3));
-			setd_sub(st,sd,name,2,(void *)(int)md->status.hp,script_getref(st,3));
-			setd_sub(st,sd,name,3,(void *)(int)md->status.max_hp,script_getref(st,3));
-			setd_sub(st,sd,name,4,(void *)(int)md->master_id,script_getref(st,3));
-			setd_sub(st,sd,name,5,(void *)(int)md->bl.m,script_getref(st,3));
-			setd_sub(st,sd,name,6,(void *)(int)md->bl.x,script_getref(st,3));
-			setd_sub(st,sd,name,7,(void *)(int)md->bl.y,script_getref(st,3));
-			setd_sub(st,sd,name,8,(void *)(int)md->status.speed,script_getref(st,3));
-			setd_sub(st,sd,name,9,(void *)(int)md->status.mode,script_getref(st,3));
-			setd_sub(st,sd,name,10,(void *)(int)md->special_state.ai,script_getref(st,3));
-			setd_sub(st,sd,name,11,(void *)(int)md->sc.option,script_getref(st,3));
-			setd_sub(st,sd,name,12,(void *)(int)md->vd->sex,script_getref(st,3));
-			setd_sub(st,sd,name,13,(void *)(int)md->vd->class_,script_getref(st,3));
-			setd_sub(st,sd,name,14,(void *)(int)md->vd->hair_style,script_getref(st,3));
-			setd_sub(st,sd,name,15,(void *)(int)md->vd->hair_color,script_getref(st,3));
-			setd_sub(st,sd,name,16,(void *)(int)md->vd->head_bottom,script_getref(st,3));
-			setd_sub(st,sd,name,17,(void *)(int)md->vd->head_mid,script_getref(st,3));
-			setd_sub(st,sd,name,18,(void *)(int)md->vd->head_top,script_getref(st,3));
-			setd_sub(st,sd,name,19,(void *)(int)md->vd->cloth_color,script_getref(st,3));
-			setd_sub(st,sd,name,20,(void *)(int)md->vd->shield,script_getref(st,3));
-			setd_sub(st,sd,name,21,(void *)(int)md->vd->weapon,script_getref(st,3));
-			setd_sub(st,sd,name,22,(void *)(int)md->vd->shield,script_getref(st,3));
-			setd_sub(st,sd,name,23,(void *)(int)md->ud.dir,script_getref(st,3));
-			setd_sub(st,sd,name,24,(void *)(int)md->status.str, script_getref(st,3));
-			setd_sub(st,sd,name,25,(void *)(int)md->status.agi, script_getref(st,3));
-			setd_sub(st,sd,name,26,(void *)(int)md->status.vit, script_getref(st,3));
-			setd_sub(st,sd,name,27,(void *)(int)md->status.int_, script_getref(st,3));
-			setd_sub(st,sd,name,28,(void *)(int)md->status.dex, script_getref(st,3));
-			setd_sub(st,sd,name,29,(void *)(int)md->status.luk, script_getref(st,3));
-			setd_sub(st,sd,name,30,(void *)(int)md->state.copy_master_mode, script_getref(st,3));
-			setd_sub(st,sd,name,31,(void *)(int)md->ud.immune_attack, script_getref(st,3));
+			getunitdata_sub(0, md->status.size);
+			getunitdata_sub(1, md->level);
+			getunitdata_sub(2, md->status.hp);
+			getunitdata_sub(3, md->status.max_hp);
+			getunitdata_sub(4, md->master_id);
+			getunitdata_sub(5, md->bl.m);
+			getunitdata_sub(6, md->bl.x);
+			getunitdata_sub(7, md->bl.y);
+			getunitdata_sub(8, md->status.speed);
+			getunitdata_sub(9, md->status.mode);
+			getunitdata_sub(10,md->special_state.ai);
+			getunitdata_sub(11,md->sc.option);
+			getunitdata_sub(12,md->vd->sex);
+			getunitdata_sub(13,md->vd->class_);
+			getunitdata_sub(14,md->vd->hair_style);
+			getunitdata_sub(15,md->vd->hair_color);
+			getunitdata_sub(16,md->vd->head_bottom);
+			getunitdata_sub(17,md->vd->head_mid);
+			getunitdata_sub(18,md->vd->head_top);
+			getunitdata_sub(19,md->vd->cloth_color);
+			getunitdata_sub(20,md->vd->shield);
+			getunitdata_sub(21,md->vd->weapon);
+			getunitdata_sub(22,md->vd->shield);
+			getunitdata_sub(23,md->ud.dir);
+			getunitdata_sub(24,md->status.str);
+			getunitdata_sub(25,md->status.agi);
+			getunitdata_sub(26,md->status.vit);
+			getunitdata_sub(27,md->status.int_);
+			getunitdata_sub(28,md->status.dex);
+			getunitdata_sub(29,md->status.luk);
+			getunitdata_sub(30,md->state.copy_master_mode);
+			getunitdata_sub(31,md->ud.immune_attack);
 			break;
 
 		case BL_HOM:
@@ -16267,28 +16269,28 @@ BUILDIN_FUNC(getunitdata)
 				ShowWarning("buildin_getunitdata: Error in finding object BL_HOM!\n");
 				return SCRIPT_CMD_FAILURE;
 			}
-			setd_sub(st,sd,name,0,(void *)(int)hd->base_status.size,script_getref(st,3));
-			setd_sub(st,sd,name,1,(void *)(int)hd->homunculus.level,script_getref(st,3));
-			setd_sub(st,sd,name,2,(void *)(int)hd->homunculus.hp,script_getref(st,3));
-			setd_sub(st,sd,name,3,(void *)(int)hd->homunculus.max_hp,script_getref(st,3));
-			setd_sub(st,sd,name,4,(void *)(int)hd->homunculus.sp,script_getref(st,3));
-			setd_sub(st,sd,name,5,(void *)(int)hd->homunculus.max_sp,script_getref(st,3));
-			setd_sub(st,sd,name,6,(void *)(int)hd->homunculus.char_id,script_getref(st,3));
-			setd_sub(st,sd,name,7,(void *)(int)hd->bl.m,script_getref(st,3));
-			setd_sub(st,sd,name,8,(void *)(int)hd->bl.x,script_getref(st,3));
-			setd_sub(st,sd,name,9,(void *)(int)hd->bl.y,script_getref(st,3));
-			setd_sub(st,sd,name,10,(void *)(int)hd->homunculus.hunger,script_getref(st,3));
-			setd_sub(st,sd,name,11,(void *)(int)hd->homunculus.intimacy,script_getref(st,3));
-			setd_sub(st,sd,name,12,(void *)(int)hd->base_status.speed,script_getref(st,3));
-			setd_sub(st,sd,name,13,(void *)(int)hd->ud.dir,script_getref(st,3));
-			setd_sub(st,sd,name,14,(void *)(int)hd->ud.canmove_tick, script_getref(st,3));
-			setd_sub(st,sd,name,15,(void *)(int)hd->base_status.str, script_getref(st,3));
-			setd_sub(st,sd,name,16,(void *)(int)hd->base_status.agi, script_getref(st,3));
-			setd_sub(st,sd,name,17,(void *)(int)hd->base_status.vit, script_getref(st,3));
-			setd_sub(st,sd,name,18,(void *)(int)hd->base_status.int_, script_getref(st,3));
-			setd_sub(st,sd,name,19,(void *)(int)hd->base_status.dex, script_getref(st,3));
-			setd_sub(st,sd,name,20,(void *)(int)hd->base_status.luk, script_getref(st,3));
-			setd_sub(st,sd,name,21,(void *)(int)hd->ud.immune_attack, script_getref(st,3));
+			getunitdata_sub(0, hd->base_status.size);
+			getunitdata_sub(1, hd->homunculus.level);
+			getunitdata_sub(2, hd->homunculus.hp);
+			getunitdata_sub(3, hd->homunculus.max_hp);
+			getunitdata_sub(4, hd->homunculus.sp);
+			getunitdata_sub(5, hd->homunculus.max_sp);
+			getunitdata_sub(6, hd->homunculus.char_id);
+			getunitdata_sub(7, hd->bl.m);
+			getunitdata_sub(8, hd->bl.x);
+			getunitdata_sub(9, hd->bl.y);
+			getunitdata_sub(10,hd->homunculus.hunger);
+			getunitdata_sub(11,hd->homunculus.intimacy);
+			getunitdata_sub(12,hd->base_status.speed);
+			getunitdata_sub(13,hd->ud.dir);
+			getunitdata_sub(14,hd->ud.canmove_tick);
+			getunitdata_sub(15,hd->base_status.str);
+			getunitdata_sub(16,hd->base_status.agi);
+			getunitdata_sub(17,hd->base_status.vit);
+			getunitdata_sub(18,hd->base_status.int_);
+			getunitdata_sub(19,hd->base_status.dex);
+			getunitdata_sub(20,hd->base_status.luk);
+			getunitdata_sub(21,hd->ud.immune_attack);
 			break;
 
 		case BL_PET:
@@ -16296,25 +16298,26 @@ BUILDIN_FUNC(getunitdata)
 				ShowWarning("buildin_getunitdata: Error in finding object BL_PET!\n");
 				return SCRIPT_CMD_FAILURE;
 			}
-			setd_sub(st,sd,name,0,(void *)(int)pd->status.size,script_getref(st,3));
-			setd_sub(st,sd,name,1,(void *)(int)pd->pet.level,script_getref(st,3));
-			setd_sub(st,sd,name,2,(void *)(int)pd->status.hp,script_getref(st,3));
-			setd_sub(st,sd,name,3,(void *)(int)pd->status.max_hp,script_getref(st,3));
-			setd_sub(st,sd,name,4,(void *)(int)pd->pet.account_id,script_getref(st,3));
-			setd_sub(st,sd,name,5,(void *)(int)pd->bl.m,script_getref(st,3));
-			setd_sub(st,sd,name,6,(void *)(int)pd->bl.x,script_getref(st,3));
-			setd_sub(st,sd,name,7,(void *)(int)pd->bl.y,script_getref(st,3));
-			setd_sub(st,sd,name,8,(void *)(int)pd->pet.hungry,script_getref(st,3));
-			setd_sub(st,sd,name,9,(void *)(int)pd->pet.intimate,script_getref(st,3));
-			setd_sub(st,sd,name,10,(void *)(int)pd->status.speed,script_getref(st,3));
-			setd_sub(st,sd,name,11,(void *)(int)pd->ud.dir,script_getref(st,3));
-			setd_sub(st,sd,name,12,(void *)(int)pd->ud.canmove_tick, script_getref(st,3));
-			setd_sub(st,sd,name,13,(void *)(int)pd->status.str, script_getref(st,3));
-			setd_sub(st,sd,name,14,(void *)(int)pd->status.agi, script_getref(st,3));
-			setd_sub(st,sd,name,15,(void *)(int)pd->status.vit, script_getref(st,3));
-			setd_sub(st,sd,name,16,(void *)(int)pd->status.int_, script_getref(st,3));
-			setd_sub(st,sd,name,17,(void *)(int)pd->status.dex, script_getref(st,3));
-			setd_sub(st,sd,name,18,(void *)(int)pd->status.luk, script_getref(st,3));
+			getunitdata_sub(0, pd->status.size);
+			getunitdata_sub(1, pd->pet.level);
+			getunitdata_sub(2, pd->status.hp);
+			getunitdata_sub(3, pd->status.max_hp);
+			getunitdata_sub(4, pd->pet.account_id);
+			getunitdata_sub(5, pd->bl.m);
+			getunitdata_sub(6, pd->bl.x);
+			getunitdata_sub(7, pd->bl.y);
+			getunitdata_sub(8, pd->pet.hungry);
+			getunitdata_sub(9, pd->pet.intimate);
+			getunitdata_sub(10,pd->status.speed);
+			getunitdata_sub(11,pd->ud.dir);
+			getunitdata_sub(12,pd->ud.canmove_tick);
+			getunitdata_sub(13,pd->status.str);
+			getunitdata_sub(14,pd->status.agi);
+			getunitdata_sub(15,pd->status.vit);
+			getunitdata_sub(16,pd->status.int_);
+			getunitdata_sub(17,pd->status.dex);
+			getunitdata_sub(18,pd->status.luk);
+			getunitdata_sub(19,pd->ud.immune_attack);
 			break;
 
 		case BL_MER:
@@ -16322,25 +16325,25 @@ BUILDIN_FUNC(getunitdata)
 				ShowWarning("buildin_getunitdata: Error in finding object BL_MER!\n");
 				return SCRIPT_CMD_FAILURE;
 			}
-			setd_sub(st,sd,name,0,(void *)(int)mc->base_status.size,script_getref(st,3));
-			setd_sub(st,sd,name,1,(void *)(int)mc->base_status.hp,script_getref(st,3));
-			setd_sub(st,sd,name,2,(void *)(int)mc->base_status.max_hp,script_getref(st,3));
-			setd_sub(st,sd,name,3,(void *)(int)mc->mercenary.char_id,script_getref(st,3));
-			setd_sub(st,sd,name,4,(void *)(int)mc->bl.m,script_getref(st,3));
-			setd_sub(st,sd,name,5,(void *)(int)mc->bl.x,script_getref(st,3));
-			setd_sub(st,sd,name,6,(void *)(int)mc->bl.y,script_getref(st,3));
-			setd_sub(st,sd,name,7,(void *)(int)mc->mercenary.kill_count,script_getref(st,3));
-			setd_sub(st,sd,name,8,(void *)(int)mc->mercenary.life_time,script_getref(st,3));
-			setd_sub(st,sd,name,9,(void *)(int)mc->base_status.speed,script_getref(st,3));
-			setd_sub(st,sd,name,10,(void *)(int)mc->ud.dir,script_getref(st,3));
-			setd_sub(st,sd,name,11,(void *)(int)mc->ud.canmove_tick, script_getref(st,3));
-			setd_sub(st,sd,name,12,(void *)(int)mc->base_status.str, script_getref(st,3));
-			setd_sub(st,sd,name,13,(void *)(int)mc->base_status.agi, script_getref(st,3));
-			setd_sub(st,sd,name,14,(void *)(int)mc->base_status.vit, script_getref(st,3));
-			setd_sub(st,sd,name,15,(void *)(int)mc->base_status.int_, script_getref(st,3));
-			setd_sub(st,sd,name,16,(void *)(int)mc->base_status.dex, script_getref(st,3));
-			setd_sub(st,sd,name,17,(void *)(int)mc->base_status.luk, script_getref(st,3));
-			setd_sub(st,sd,name,18,(void *)(int)mc->ud.immune_attack, script_getref(st,3));
+			getunitdata_sub(0, mc->base_status.size);
+			getunitdata_sub(1, mc->base_status.hp);
+			getunitdata_sub(2, mc->base_status.max_hp);
+			getunitdata_sub(3, mc->mercenary.char_id);
+			getunitdata_sub(4, mc->bl.m);
+			getunitdata_sub(5, mc->bl.x);
+			getunitdata_sub(6, mc->bl.y);
+			getunitdata_sub(7, mc->mercenary.kill_count);
+			getunitdata_sub(8, mc->mercenary.life_time);
+			getunitdata_sub(9, mc->base_status.speed);
+			getunitdata_sub(10,mc->ud.dir);
+			getunitdata_sub(11,mc->ud.canmove_tick);
+			getunitdata_sub(12,mc->base_status.str);
+			getunitdata_sub(13,mc->base_status.agi);
+			getunitdata_sub(14,mc->base_status.vit);
+			getunitdata_sub(15,mc->base_status.int_);
+			getunitdata_sub(16,mc->base_status.dex);
+			getunitdata_sub(17,mc->base_status.luk);
+			getunitdata_sub(18,mc->ud.immune_attack);
 			break;
 
 		case BL_ELEM:
@@ -16348,27 +16351,27 @@ BUILDIN_FUNC(getunitdata)
 				ShowWarning("buildin_getunitdata: Error in finding object BL_ELEM!\n");
 				return SCRIPT_CMD_FAILURE;
 			}
-			setd_sub(st,sd,name,0,(void *)(int)ed->base_status.size,script_getref(st,3));
-			setd_sub(st,sd,name,1,(void *)(int)ed->elemental.hp,script_getref(st,3));
-			setd_sub(st,sd,name,2,(void *)(int)ed->elemental.max_hp,script_getref(st,3));
-			setd_sub(st,sd,name,3,(void *)(int)ed->elemental.sp,script_getref(st,3));
-			setd_sub(st,sd,name,4,(void *)(int)ed->elemental.max_sp,script_getref(st,3));
-			setd_sub(st,sd,name,5,(void *)(int)ed->elemental.char_id,script_getref(st,3));
-			setd_sub(st,sd,name,6,(void *)(int)ed->bl.m,script_getref(st,3));
-			setd_sub(st,sd,name,7,(void *)(int)ed->bl.x,script_getref(st,3));
-			setd_sub(st,sd,name,8,(void *)(int)ed->bl.y,script_getref(st,3));
-			setd_sub(st,sd,name,9,(void *)(int)ed->elemental.life_time,script_getref(st,3));
-			setd_sub(st,sd,name,10,(void *)(int)ed->elemental.mode,script_getref(st,3));
-			setd_sub(st,sd,name,11,(void *)(int)ed->base_status.speed,script_getref(st,3));
-			setd_sub(st,sd,name,12,(void *)(int)ed->ud.dir,script_getref(st,3));
-			setd_sub(st,sd,name,13,(void *)(int)ed->ud.canmove_tick, script_getref(st,3));
-			setd_sub(st,sd,name,14,(void *)(int)ed->base_status.str, script_getref(st,3));
-			setd_sub(st,sd,name,15,(void *)(int)ed->base_status.agi, script_getref(st,3));
-			setd_sub(st,sd,name,16,(void *)(int)ed->base_status.vit, script_getref(st,3));
-			setd_sub(st,sd,name,17,(void *)(int)ed->base_status.int_, script_getref(st,3));
-			setd_sub(st,sd,name,18,(void *)(int)ed->base_status.dex, script_getref(st,3));
-			setd_sub(st,sd,name,19,(void *)(int)ed->base_status.luk, script_getref(st,3));
-			setd_sub(st,sd,name,20,(void *)(int)ed->ud.immune_attack, script_getref(st,3));
+			getunitdata_sub(0, ed->base_status.size);
+			getunitdata_sub(1, ed->elemental.hp);
+			getunitdata_sub(2, ed->elemental.max_hp);
+			getunitdata_sub(3, ed->elemental.sp);
+			getunitdata_sub(4, ed->elemental.max_sp);
+			getunitdata_sub(5, ed->elemental.char_id);
+			getunitdata_sub(6, ed->bl.m);
+			getunitdata_sub(7, ed->bl.x);
+			getunitdata_sub(8, ed->bl.y);
+			getunitdata_sub(9, ed->elemental.life_time);
+			getunitdata_sub(10,ed->elemental.mode);
+			getunitdata_sub(11,ed->base_status.speed);
+			getunitdata_sub(12,ed->ud.dir);
+			getunitdata_sub(13,ed->ud.canmove_tick);
+			getunitdata_sub(14,ed->base_status.str);
+			getunitdata_sub(15,ed->base_status.agi);
+			getunitdata_sub(16,ed->base_status.vit);
+			getunitdata_sub(17,ed->base_status.int_);
+			getunitdata_sub(18,ed->base_status.dex);
+			getunitdata_sub(19,ed->base_status.luk);
+			getunitdata_sub(20,ed->ud.immune_attack);
 			break;
 
 		case BL_NPC:
@@ -16376,26 +16379,28 @@ BUILDIN_FUNC(getunitdata)
 				ShowWarning("buildin_getunitdata: Error in finding object BL_NPC!\n");
 				return SCRIPT_CMD_FAILURE;
 			}
-			setd_sub(st,sd,name,0,(void *)(int)nd->class_,script_getref(st,3));
-			setd_sub(st,sd,name,1,(void *)(int)nd->level,script_getref(st,3));
-			setd_sub(st,sd,name,2,(void *)(int)nd->status.hp,script_getref(st,3));
-			setd_sub(st,sd,name,3,(void *)(int)nd->status.max_hp,script_getref(st,3));
-			setd_sub(st,sd,name,4,(void *)(int)nd->bl.m,script_getref(st,3));
-			setd_sub(st,sd,name,5,(void *)(int)nd->bl.x,script_getref(st,3));
-			setd_sub(st,sd,name,6,(void *)(int)nd->bl.y,script_getref(st,3));
-			setd_sub(st,sd,name,7,(void *)(int)nd->ud.dir,script_getref(st,3));
-			setd_sub(st,sd,name,8,(void *)(int)nd->status.str, script_getref(st,3));
-			setd_sub(st,sd,name,9,(void *)(int)nd->status.agi, script_getref(st,3));
-			setd_sub(st,sd,name,10,(void *)(int)nd->status.vit, script_getref(st,3));
-			setd_sub(st,sd,name,11,(void *)(int)nd->status.int_, script_getref(st,3));
-			setd_sub(st,sd,name,12,(void *)(int)nd->status.dex, script_getref(st,3));
-			setd_sub(st,sd,name,13,(void *)(int)nd->status.luk, script_getref(st,3));
+			getunitdata_sub(0, nd->class_);
+			getunitdata_sub(1, nd->level);
+			getunitdata_sub(2, nd->status.hp);
+			getunitdata_sub(3, nd->status.max_hp);
+			getunitdata_sub(4, nd->bl.m);
+			getunitdata_sub(5, nd->bl.x);
+			getunitdata_sub(6, nd->bl.y);
+			getunitdata_sub(7, nd->ud.dir);
+			getunitdata_sub(8, nd->status.str);
+			getunitdata_sub(9, nd->status.agi);
+			getunitdata_sub(10,nd->status.vit);
+			getunitdata_sub(11,nd->status.int_);
+			getunitdata_sub(12,nd->status.dex);
+			getunitdata_sub(13,nd->status.luk);
 			break;
 
 		default:
 			ShowWarning("buildin_getunitdata: Unknown object type!\n");
 			return SCRIPT_CMD_FAILURE;
 	}
+
+#undef getunitdata_sub
 
 	return SCRIPT_CMD_SUCCESS;
 }
