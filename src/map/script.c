@@ -170,6 +170,8 @@
 #define SCRIPT_BLOCK_SIZE 512
 enum { LABEL_NEXTLINE=1,LABEL_START };
 
+TBL_PC *script_rid2sd(struct script_state *st);
+
 /**
  * Get `sd` from an account id in `loc` param instead of attached rid
  * @param loc Location to look account id in script parameter
@@ -212,23 +214,21 @@ enum { LABEL_NEXTLINE=1,LABEL_START };
 
 /**
  * Get `sd` from a nick in `loc` param instead of attached rid
+ * @param st Script
  * @param loc Location to look nick in script parameter
  * @param sd Variable that will be assigned
  * @param ret Optional action when fail to get sd
  **/
-#define script_nick2sd(loc, sd, ret) {\
-	if (script_hasdata(st, (loc))) {\
-		if (!((sd) = map_nick2sd(script_getstr(st, loc)))) {\
-			ShowError("%s: Player with nick %s is not found.\n", __FUNCTION__, script_getstr(st, (loc)));\
-			(ret);\
-			return SCRIPT_CMD_FAILURE;\
-		}\
-	}\
-	else if (!((sd) = script_rid2sd(st))) {\
-		(ret);\
-		return SCRIPT_CMD_FAILURE;\
-	}\
+static void script_nick2sd_(struct script_state *st, uint8 loc, struct map_session_data **sd, const char *func) {
+	if (script_hasdata(st, loc)) {
+		if (!(*sd = map_nick2sd(script_getstr(st, loc))))
+			ShowError("%s: Player with nick %s is not found.\n", func, script_getstr(st, loc));
+	}
+	else
+		*sd = script_rid2sd(st);
 }
+
+#define script_nick2sd(loc,sd) script_nick2sd_(st,(loc),&(sd),__FUNCTION__)
 
 /// temporary buffer for passing around compiled bytecode
 /// @see add_scriptb, set_label, parse_script
@@ -7480,7 +7480,11 @@ BUILDIN_FUNC(readparam)
 	TBL_PC *sd;
 
 	type = script_getnum(st,2);
-	script_nick2sd(3, sd, script_pushint(st,-1));
+	script_nick2sd(3,sd);
+	if (!sd) {
+		script_pushint(st,-1);
+		return SCRIPT_CMD_FAILURE;
+	}
 	script_pushint(st,pc_readparam(sd,type));
 	return SCRIPT_CMD_SUCCESS;
 }
