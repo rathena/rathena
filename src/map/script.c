@@ -173,43 +173,35 @@ enum { LABEL_NEXTLINE=1,LABEL_START };
 TBL_PC *script_rid2sd(struct script_state *st);
 
 /**
- * Get `sd` from an account id in `loc` param instead of attached rid
+ * Get `sd` from a account id in `loc` param instead of attached rid
+ * @param st Script
  * @param loc Location to look account id in script parameter
  * @param sd Variable that will be assigned
- * @param ret Optional action when fail to get sd
  **/
-#define script_accid2sd(loc, sd, ret) {\
-	if (script_hasdata(st, (loc))) {\
-		if (!((sd) = map_id2sd(script_getnum(st, loc)))) {\
-			ShowError("%s: Player with account id %d is not found.\n", __FUNCTION__, script_getnum(st, (loc)));\
-			(ret);\
-			return SCRIPT_CMD_FAILURE;\
-		}\
-	}\
-	else if (!((sd) = script_rid2sd(st))) {\
-		(ret);\
-		return SCRIPT_CMD_FAILURE;\
-	}\
+static void script_accid2sd_(struct script_state *st, uint8 loc, struct map_session_data **sd, const char *func) {
+	if (script_hasdata(st, loc)) {
+		int id_ = script_getnum(st, loc);
+		if (!(*sd = map_id2sd(id_)))
+			ShowError("%s: Player with account id '%s' is not found.\n", func, id_);
+	}
+	else
+		*sd = script_rid2sd(st);
 }
 
 /**
  * Get `sd` from a char id in `loc` param instead of attached rid
+ * @param st Script
  * @param loc Location to look char id in script parameter
  * @param sd Variable that will be assigned
- * @param ret Optional action when fail to get sd
  **/
-#define script_charid2sd(loc, sd, ret) {\
-	if (script_hasdata(st, (loc))) {\
-		if (!((sd) = map_charid2sd(script_getnum(st, loc)))) {\
-			ShowError("%s: Player with char id %d is not found.\n", __FUNCTION__, script_getnum(st, (loc)));\
-			(ret);\
-			return SCRIPT_CMD_FAILURE;\
-		}\
-	}\
-	else if (!((sd) = script_rid2sd(st))) {\
-		(ret);\
-		return SCRIPT_CMD_FAILURE;\
-	}\
+static void script_charid2sd_(struct script_state *st, uint8 loc, struct map_session_data **sd, const char *func) {
+	if (script_hasdata(st, loc)) {
+		int id_ = script_getnum(st, loc);
+		if (!(*sd = map_charid2sd(id_)))
+			ShowError("%s: Player with char id '%d' is not found.\n", func, id_);
+	}
+	else
+		*sd = script_rid2sd(st);
 }
 
 /**
@@ -217,17 +209,19 @@ TBL_PC *script_rid2sd(struct script_state *st);
  * @param st Script
  * @param loc Location to look nick in script parameter
  * @param sd Variable that will be assigned
- * @param ret Optional action when fail to get sd
  **/
-static void script_nick2sd_(struct script_state *st, uint8 loc, struct map_session_data **sd, const char *func) {
+static bool script_nick2sd_(struct script_state *st, uint8 loc, struct map_session_data **sd, const char *func) {
 	if (script_hasdata(st, loc)) {
-		if (!(*sd = map_nick2sd(script_getstr(st, loc))))
-			ShowError("%s: Player with nick %s is not found.\n", func, script_getstr(st, loc));
+		const char *name_ = script_getstr(st, loc);
+		if (!(*sd = map_nick2sd(name_)))
+			ShowError("%s: Player with nick '%s' is not found.\n", func, name_);
 	}
 	else
 		*sd = script_rid2sd(st);
 }
 
+#define script_accid2sd(loc,sd) script_accid2sd_(st,(loc),&(sd),__FUNCTION__)
+#define script_charid2sd(loc,sd) script_charid2sd_(st,(loc),&(sd),__FUNCTION__)
 #define script_nick2sd(loc,sd) script_nick2sd_(st,(loc),&(sd),__FUNCTION__)
 
 /// temporary buffer for passing around compiled bytecode
@@ -5743,7 +5737,9 @@ BUILDIN_FUNC(set)
 	prefix = *name;
 
 	if (not_server_variable(prefix)) {
-		script_charid2sd(4,sd,NULL);
+		script_charid2sd(4,sd);
+		if (!sd)
+			return SCRIPT_CMD_FAILURE;
 	}
 
 #if 0
@@ -6750,7 +6746,9 @@ BUILDIN_FUNC(rentitem) {
 	data = script_getdata(st,2);
 	get_val(st,data);
 
-	script_accid2sd(4,sd,NULL);
+	script_accid2sd(4,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	if( data_isstring(data) )
 	{
@@ -6810,7 +6808,9 @@ BUILDIN_FUNC(rentitem2) {
 	data = script_getdata(st,2);
 	get_val(st,data);
 
-	script_accid2sd(11,sd,NULL);
+	script_accid2sd(11,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	if( data_isstring(data) ) {
 		const char *name = conv_str(st,data);
@@ -7725,7 +7725,11 @@ BUILDIN_FUNC(strcharinfo)
 	struct guild* g;
 	struct party_data* p;
 
-	script_charid2sd(3,sd,script_pushconststr(st,""));
+	script_charid2sd(3,sd);
+	if (!sd) {
+		script_pushconststr(st,"");
+		return SCRIPT_CMD_FAILURE;
+	}
 
 	num=script_getnum(st,2);
 	switch(num){
@@ -7992,7 +7996,9 @@ BUILDIN_FUNC(repair)
 	int repaircounter=0;
 	TBL_PC *sd;
 
-	script_charid2sd(3,sd,NULL);
+	script_charid2sd(3,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	num=script_getnum(st,2);
 	for(i=0; i<MAX_INVENTORY; i++) {
@@ -8019,7 +8025,9 @@ BUILDIN_FUNC(repairall)
 	int i, repaircounter = 0;
 	TBL_PC *sd;
 
-	script_charid2sd(2,sd,NULL);
+	script_charid2sd(2,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	for(i = 0; i < MAX_INVENTORY; i++)
 	{
@@ -8051,7 +8059,9 @@ BUILDIN_FUNC(getequipisequiped)
 
 	num = script_getnum(st,2);
 
-	script_charid2sd(3,sd,NULL);
+	script_charid2sd(3,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	if (num > 0 && num <= ARRAYLENGTH(equip))
 		i=pc_checkequip(sd,equip[num-1]);
@@ -8321,7 +8331,9 @@ BUILDIN_FUNC(delequip) {
 	TBL_PC *sd;
 
 	pos = script_getnum(st,2);
-	script_charid2sd(3,sd,NULL);
+	script_charid2sd(3,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	if (pos > 0 && pos <= ARRAYLENGTH(equip))
 		i = pc_checkequip(sd,equip[pos-1]);
@@ -8348,7 +8360,9 @@ BUILDIN_FUNC(breakequip) {
 	TBL_PC *sd;
 
 	pos = script_getnum(st,2);
-	script_charid2sd(3,sd,NULL);
+	script_charid2sd(3,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	if (pos > 0 && pos <= ARRAYLENGTH(equip))
 		i = pc_checkequip(sd,equip[pos-1]);
@@ -9338,7 +9352,9 @@ BUILDIN_FUNC(getexp)
 	int base=0,job=0;
 	double bonus;
 
-	script_charid2sd(4,sd,NULL);
+	script_charid2sd(4,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	base=script_getnum(st,2);
 	job =script_getnum(st,3);
@@ -12853,7 +12869,9 @@ BUILDIN_FUNC(clearitem)
 	TBL_PC *sd;
 	int i;
 
-	script_charid2sd(2,sd,NULL);
+	script_charid2sd(2,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	for (i=0; i<MAX_INVENTORY; i++) {
 		if (sd->status.inventory[i].amount) {
@@ -14363,7 +14381,9 @@ BUILDIN_FUNC(unequip) {
 	int pos;
 	TBL_PC *sd;
 
-	script_charid2sd(3,sd,NULL);
+	script_charid2sd(3,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	pos = script_getnum(st,2);
 	if (pos >= 1 && pos <= ARRAYLENGTH(equip)) {
@@ -14384,7 +14404,9 @@ BUILDIN_FUNC(equip) {
 	TBL_PC *sd;
 	struct item_data *item_data;
 
-	script_charid2sd(3,sd,NULL);
+	script_charid2sd(3,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	nameid = script_getnum(st,2);
 	if ((item_data = itemdb_exists(nameid))) {
@@ -15439,7 +15461,9 @@ BUILDIN_FUNC(setd)
 
 	if( not_server_variable(*varname) )
 	{
-		script_charid2sd(4,sd,NULL);
+		script_charid2sd(4,sd);
+		if (!sd)
+			return SCRIPT_CMD_FAILURE;
 	}
 
 	if( is_string_variable(varname) ) {
@@ -16647,7 +16671,9 @@ BUILDIN_FUNC(openmail)
 {
 	TBL_PC* sd;
 
-	script_charid2sd(2,sd,NULL);
+	script_charid2sd(2,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	mail_openmail(sd);
 
@@ -16658,7 +16684,9 @@ BUILDIN_FUNC(openauction)
 {
 	TBL_PC* sd;
 
-	script_charid2sd(2,sd,NULL);
+	script_charid2sd(2,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	if( !battle_config.feature_auction ) {
 		clif_colormes(sd, color_table[COLOR_RED], msg_txt(sd, 517));
@@ -16969,7 +16997,9 @@ BUILDIN_FUNC(setquest)
 
 	quest_id = script_getnum(st, 2);
 
-	script_charid2sd(3,sd,NULL);
+	script_charid2sd(3,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	quest_add(sd, quest_id);
 
@@ -16991,7 +17021,9 @@ BUILDIN_FUNC(erasequest)
 {
 	struct map_session_data *sd;
 
-	script_charid2sd(3,sd,NULL);
+	script_charid2sd(3,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	quest_delete(sd, script_getnum(st, 2));
 	return SCRIPT_CMD_SUCCESS;
@@ -17001,7 +17033,9 @@ BUILDIN_FUNC(completequest)
 {
 	struct map_session_data *sd;
 
-	script_charid2sd(3,sd,NULL);
+	script_charid2sd(3,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	quest_update_status(sd, script_getnum(st, 2), Q_COMPLETE);
 	return SCRIPT_CMD_SUCCESS;
@@ -17011,7 +17045,9 @@ BUILDIN_FUNC(changequest)
 {
 	struct map_session_data *sd;
 	
-	script_charid2sd(4,sd,NULL);
+	script_charid2sd(4,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	quest_change(sd, script_getnum(st, 2),script_getnum(st, 3));
 	return SCRIPT_CMD_SUCCESS;
@@ -17025,7 +17061,9 @@ BUILDIN_FUNC(checkquest)
 	if( script_hasdata(st, 3) )
 		type = (enum quest_check_type)script_getnum(st, 3);
 
-	script_charid2sd(4,sd,NULL);
+	script_charid2sd(4,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	script_pushint(st, quest_check(sd, script_getnum(st, 2), type));
 
@@ -17037,7 +17075,9 @@ BUILDIN_FUNC(isbegin_quest)
 	struct map_session_data *sd;
 	int i;
 
-	script_charid2sd(3,sd,NULL);
+	script_charid2sd(3,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	i = quest_check(sd, script_getnum(st, 2), (enum quest_check_type) HAVEQUEST);
 	script_pushint(st, i + (i < 1));
@@ -17051,7 +17091,9 @@ BUILDIN_FUNC(showevent)
 	struct npc_data *nd = map_id2nd(st->oid);
 	int icon, color = 0;
 
-	script_charid2sd(4,sd,NULL);
+	script_charid2sd(4,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	if( sd == NULL || nd == NULL )
 		return 0;
