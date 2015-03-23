@@ -210,7 +210,7 @@ static void script_charid2sd_(struct script_state *st, uint8 loc, struct map_ses
  * @param loc Location to look nick in script parameter
  * @param sd Variable that will be assigned
  **/
-static bool script_nick2sd_(struct script_state *st, uint8 loc, struct map_session_data **sd, const char *func) {
+static void script_nick2sd_(struct script_state *st, uint8 loc, struct map_session_data **sd, const char *func) {
 	if (script_hasdata(st, loc)) {
 		const char *name_ = script_getstr(st, loc);
 		if (!(*sd = map_nick2sd(name_)))
@@ -8760,28 +8760,28 @@ BUILDIN_FUNC(basicskillcheck)
 
 /// Returns the GM level of the player.
 ///
-/// getgmlevel() -> <level>
+/// getgmlevel({<char_id>}) -> <level>
 BUILDIN_FUNC(getgmlevel)
 {
 	TBL_PC* sd;
 
-	sd = script_rid2sd(st);
-	if( sd == NULL )
-		return 0;// no player attached, report source
+	script_charid2sd(2,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 	script_pushint(st, pc_get_group_level(sd));
 	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Returns the group ID of the player.
 ///
-/// getgroupid() -> <int>
+/// getgroupid({<char_id>}) -> <int>
 BUILDIN_FUNC(getgroupid)
 {
 	TBL_PC* sd;
 
-	sd = script_rid2sd(st);
-	if (sd == NULL)
-		return 1; // no player attached, report source
+	script_charid2sd(2,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 	script_pushint(st, pc_get_group_id(sd));
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -8808,15 +8808,15 @@ BUILDIN_FUNC(end)
 
 /// Checks if the player has that effect state (option).
 ///
-/// checkoption(<option>) -> <bool>
+/// checkoption(<option>{,<char_id>}) -> <bool>
 BUILDIN_FUNC(checkoption)
 {
 	int option;
 	TBL_PC* sd;
 
-	sd = script_rid2sd(st);
-	if( sd == NULL )
-		return 0;// no player attached, report source
+	script_charid2sd(3,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	option = script_getnum(st,2);
 	if( sd->sc.option&option )
@@ -8829,15 +8829,15 @@ BUILDIN_FUNC(checkoption)
 
 /// Checks if the player is in that body state (opt1).
 ///
-/// checkoption1(<opt1>) -> <bool>
+/// checkoption1(<opt1>{,<char_id>}) -> <bool>
 BUILDIN_FUNC(checkoption1)
 {
 	int opt1;
 	TBL_PC* sd;
 
-	sd = script_rid2sd(st);
-	if( sd == NULL )
-		return 0;// no player attached, report source
+	script_charid2sd(3,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	opt1 = script_getnum(st,2);
 	if( sd->sc.opt1 == opt1 )
@@ -8850,15 +8850,15 @@ BUILDIN_FUNC(checkoption1)
 
 /// Checks if the player has that health state (opt2).
 ///
-/// checkoption2(<opt2>) -> <bool>
+/// checkoption2(<opt2>{,<char_id>}) -> <bool>
 BUILDIN_FUNC(checkoption2)
 {
 	int opt2;
 	TBL_PC* sd;
 
-	sd = script_rid2sd(st);
-	if( sd == NULL )
-		return 0;// no player attached, report source
+	script_charid2sd(3,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	opt2 = script_getnum(st,2);
 	if( sd->sc.opt2&opt2 )
@@ -8874,17 +8874,16 @@ BUILDIN_FUNC(checkoption2)
 /// <flag>=0 : removes the option
 /// <flag>=other : adds the option
 ///
-/// setoption <option>,<flag>;
-/// setoption <option>;
+/// setoption <option>{,<flag>{,<char_id>}};
 BUILDIN_FUNC(setoption)
 {
 	int option;
 	int flag = 1;
 	TBL_PC* sd;
 
-	sd = script_rid2sd(st);
-	if( sd == NULL )
-		return 0;// no player attached, report source
+	script_charid2sd(4,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	option = script_getnum(st,2);
 	if( script_hasdata(st,3) )
@@ -8908,16 +8907,16 @@ BUILDIN_FUNC(setoption)
 
 /// Returns if the player has a cart.
 ///
-/// checkcart() -> <bool>
+/// checkcart({char_id}) -> <bool>
 ///
 /// @author Valaris
 BUILDIN_FUNC(checkcart)
 {
 	TBL_PC* sd;
 
-	sd = script_rid2sd(st);
-	if( sd == NULL )
-		return 0;// no player attached, report source
+	script_charid2sd(2,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	if( pc_iscarton(sd) )
 		script_pushint(st, 1);
@@ -8936,16 +8935,15 @@ BUILDIN_FUNC(checkcart)
 /// <type>=4 : Wooden cart with a Panda doll on the back
 /// <type>=5 : Normal cart with bigger wheels, a roof and a banner on the back
 ///
-/// setcart <type>;
-/// setcart;
+/// setcart {<type>{,<char_id>}};
 BUILDIN_FUNC(setcart)
 {
 	int type = 1;
 	TBL_PC* sd;
 
-	sd = script_rid2sd(st);
-	if( sd == NULL )
-		return 0;// no player attached, report source
+	script_charid2sd(2,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	if( script_hasdata(st,2) )
 		type = script_getnum(st,2);
@@ -8956,16 +8954,16 @@ BUILDIN_FUNC(setcart)
 
 /// Returns if the player has a falcon.
 ///
-/// checkfalcon() -> <bool>
+/// checkfalcon({char_id}) -> <bool>
 ///
 /// @author Valaris
 BUILDIN_FUNC(checkfalcon)
 {
 	TBL_PC* sd;
 
-	sd = script_rid2sd(st);
-	if( sd == NULL )
-		return 0;// no player attached, report source
+	script_charid2sd(2,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	if( pc_isfalcon(sd) )
 		script_pushint(st, 1);
@@ -8978,16 +8976,15 @@ BUILDIN_FUNC(checkfalcon)
 /// Sets if the player has a falcon or not.
 /// <flag> defaults to 1
 ///
-/// setfalcon <flag>;
-/// setfalcon;
+/// setfalcon {<flag>{,<char_id>}};
 BUILDIN_FUNC(setfalcon)
 {
 	int flag = 1;
 	TBL_PC* sd;
 
-	sd = script_rid2sd(st);
-	if( sd == NULL )
-		return 0;// no player attached, report source
+	script_charid2sd(3,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	if( script_hasdata(st,2) )
 		flag = script_getnum(st,2);
@@ -8999,16 +8996,16 @@ BUILDIN_FUNC(setfalcon)
 
 /// Returns if the player is riding.
 ///
-/// checkriding() -> <bool>
+/// checkriding({char_id}) -> <bool>
 ///
 /// @author Valaris
 BUILDIN_FUNC(checkriding)
 {
 	TBL_PC* sd;
 
-	sd = script_rid2sd(st);
-	if( sd == NULL )
-		return 0;// no player attached, report source
+	script_charid2sd(2,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	if( pc_isriding(sd) )
 		script_pushint(st, 1);
@@ -9021,16 +9018,15 @@ BUILDIN_FUNC(checkriding)
 /// Sets if the player is riding.
 /// <flag> defaults to 1
 ///
-/// setriding <flag>;
-/// setriding;
+/// setriding {<flag>{,<char_id>}};
 BUILDIN_FUNC(setriding)
 {
 	int flag = 1;
 	TBL_PC* sd;
 
-	sd = script_rid2sd(st);
-	if( sd == NULL )
-		return 0;// no player attached, report source
+	script_charid2sd(3,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	if( script_hasdata(st,2) )
 		flag = script_getnum(st,2);
@@ -9041,15 +9037,15 @@ BUILDIN_FUNC(setriding)
 
 /// Returns if the player has a warg.
 ///
-/// checkwug() -> <bool>
+/// checkwug({char_id}) -> <bool>
 ///
 BUILDIN_FUNC(checkwug)
 {
 	TBL_PC* sd;
 
-	sd = script_rid2sd(st);
-	if( sd == NULL )
-		return 0;// no player attached, report source
+	script_charid2sd(2,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	if( pc_iswug(sd) || pc_isridingwug(sd) )
 		script_pushint(st, 1);
@@ -9061,15 +9057,15 @@ BUILDIN_FUNC(checkwug)
 
 /// Returns if the player is wearing MADO Gear.
 ///
-/// checkmadogear() -> <bool>
+/// checkmadogear({<char_id>}) -> <bool>
 ///
 BUILDIN_FUNC(checkmadogear)
 {
 	TBL_PC* sd;
 
-	sd = script_rid2sd(st);
-	if( sd == NULL )
-		return 0;// no player attached, report source
+	script_charid2sd(2,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	if( pc_ismadogear(sd) )
 		script_pushint(st, 1);
@@ -9082,16 +9078,15 @@ BUILDIN_FUNC(checkmadogear)
 /// Sets if the player is riding MADO Gear.
 /// <flag> defaults to 1
 ///
-/// setmadogear <flag>;
-/// setmadogear;
+/// setmadogear {<flag>{,<char_id>}};
 BUILDIN_FUNC(setmadogear)
 {
 	int flag = 1;
 	TBL_PC* sd;
 
-	sd = script_rid2sd(st);
-	if( sd == NULL )
-		return 0;// no player attached, report source
+	script_charid2sd(3,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	if( script_hasdata(st,2) )
 		flag = script_getnum(st,2);
@@ -9102,8 +9097,8 @@ BUILDIN_FUNC(setmadogear)
 
 /// Sets the save point of the player.
 ///
-/// save "<map name>",<x>,<y>
-/// savepoint "<map name>",<x>,<y>
+/// save "<map name>",<x>,<y>{,<char_id>}
+/// savepoint "<map name>",<x>,<y>{,<char_id>}
 BUILDIN_FUNC(savepoint)
 {
 	int x;
@@ -9112,9 +9107,9 @@ BUILDIN_FUNC(savepoint)
 	const char* str;
 	TBL_PC* sd;
 
-	sd = script_rid2sd(st);
+	script_charid2sd(4,sd);
 	if( sd == NULL )
-		return 0;// no player attached, report source
+		return SCRIPT_CMD_FAILURE;// no player attached, report source
 
 	str = script_getstr(st, 2);
 	x   = script_getnum(st,3);
@@ -10548,17 +10543,16 @@ BUILDIN_FUNC(getscrate)
 }
 
 /*==========================================
- * getstatus <type>{, <info>};
+ * getstatus(<effect type>{,<type>{,<char_id>}});
  *------------------------------------------*/
 BUILDIN_FUNC(getstatus)
 {
 	int id, type;
-	struct map_session_data* sd = script_rid2sd(st);
+	struct map_session_data* sd;
 
-	if( sd == NULL )
-	{// no player attached
-		return 0;
-	}
+	script_charid2sd(3,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	id = script_getnum(st, 2);
 	type = script_hasdata(st, 3) ? script_getnum(st, 3) : 0;
@@ -10834,9 +10828,9 @@ BUILDIN_FUNC(resetlvl)
 
 	int type=script_getnum(st,2);
 
-	sd=script_rid2sd(st);
-	if( sd == NULL )
-		return 0;
+	script_charid2sd(3,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	pc_resetlvl(sd,type);
 	return SCRIPT_CMD_SUCCESS;
@@ -10847,7 +10841,9 @@ BUILDIN_FUNC(resetlvl)
 BUILDIN_FUNC(resetstatus)
 {
 	TBL_PC *sd;
-	sd=script_rid2sd(st);
+	script_charid2sd(2,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 	pc_resetstate(sd);
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -10858,7 +10854,9 @@ BUILDIN_FUNC(resetstatus)
 BUILDIN_FUNC(resetskill)
 {
 	TBL_PC *sd;
-	sd=script_rid2sd(st);
+	script_charid2sd(2,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 	pc_resetskill(sd,1);
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -10869,7 +10867,9 @@ BUILDIN_FUNC(resetskill)
 BUILDIN_FUNC(skillpointcount)
 {
 	TBL_PC *sd;
-	sd=script_rid2sd(st);
+	script_charid2sd(2,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 	script_pushint(st,sd->status.skill_point + pc_resetskill(sd,2));
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -10918,7 +10918,9 @@ BUILDIN_FUNC(changesex)
 {
 	int i;
 	TBL_PC *sd = NULL;
-	sd = script_rid2sd(st);
+	script_charid2sd(2,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	pc_resetskill(sd,4);
 	// to avoid any problem with equipment and invalid sex, equipment is unequiped.
@@ -12323,10 +12325,11 @@ BUILDIN_FUNC(wedding_effect)
 
 BUILDIN_FUNC(divorce)
 {
-	TBL_PC *sd=script_rid2sd(st);
-	if(!sd || !pc_divorce(sd)){
+	TBL_PC *sd;
+	script_charid2sd(2,sd);
+	if (!sd || !pc_divorce(sd)) {
 		script_pushint(st,0);
-		return 0;
+		return SCRIPT_CMD_FAILURE;
 	}
 	script_pushint(st,1);
 	return SCRIPT_CMD_SUCCESS;
@@ -12334,12 +12337,13 @@ BUILDIN_FUNC(divorce)
 
 BUILDIN_FUNC(ispartneron)
 {
-	TBL_PC *sd=script_rid2sd(st);
-
-	if(sd==NULL || !pc_ismarried(sd) ||
-		map_charid2sd(sd->status.partner_id) == NULL) {
-			script_pushint(st,0);
-			return 0;
+	TBL_PC *sd;
+	script_charid2sd(2,sd);
+	if (!sd || !pc_ismarried(sd) ||
+		map_charid2sd(sd->status.partner_id) == NULL)
+	{
+		script_pushint(st,0);
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	script_pushint(st,1);
@@ -12348,10 +12352,11 @@ BUILDIN_FUNC(ispartneron)
 
 BUILDIN_FUNC(getpartnerid)
 {
-	TBL_PC *sd=script_rid2sd(st);
+	TBL_PC *sd;
+	script_charid2sd(2,sd);
 	if (sd == NULL) {
 		script_pushint(st,0);
-		return 0;
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	script_pushint(st,sd->status.partner_id);
@@ -12360,10 +12365,11 @@ BUILDIN_FUNC(getpartnerid)
 
 BUILDIN_FUNC(getchildid)
 {
-	TBL_PC *sd=script_rid2sd(st);
+	TBL_PC *sd;
+	script_charid2sd(2,sd);
 	if (sd == NULL) {
 		script_pushint(st,0);
-		return 0;
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	script_pushint(st,sd->status.child);
@@ -12372,10 +12378,11 @@ BUILDIN_FUNC(getchildid)
 
 BUILDIN_FUNC(getmotherid)
 {
-	TBL_PC *sd=script_rid2sd(st);
+	TBL_PC *sd;
+	script_charid2sd(2,sd);
 	if (sd == NULL) {
 		script_pushint(st,0);
-		return 0;
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	script_pushint(st,sd->status.mother);
@@ -12384,10 +12391,11 @@ BUILDIN_FUNC(getmotherid)
 
 BUILDIN_FUNC(getfatherid)
 {
-	TBL_PC *sd=script_rid2sd(st);
+	TBL_PC *sd;
+	script_charid2sd(2,sd);
 	if (sd == NULL) {
 		script_pushint(st,0);
-		return 0;
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	script_pushint(st,sd->status.father);
@@ -12820,11 +12828,13 @@ BUILDIN_FUNC(petloot)
  *------------------------------------------*/
 BUILDIN_FUNC(getinventorylist)
 {
-	TBL_PC *sd=script_rid2sd(st);
+	TBL_PC *sd;
 	char card_var[NAME_LENGTH];
-
 	int i,j=0,k;
-	if(!sd) return 0;
+
+	script_charid2sd(2,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 	for(i=0;i<MAX_INVENTORY;i++){
 		if(sd->status.inventory[i].nameid > 0 && sd->status.inventory[i].amount > 0){
 			pc_setreg(sd,reference_uid(add_str("@inventorylist_id"), j),sd->status.inventory[i].nameid);
@@ -12847,11 +12857,16 @@ BUILDIN_FUNC(getinventorylist)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * getskilllist ({<char_id>});
+ **/
 BUILDIN_FUNC(getskilllist)
 {
-	TBL_PC *sd=script_rid2sd(st);
+	TBL_PC *sd;
 	int i,j=0;
-	if(!sd) return 0;
+	script_charid2sd(2,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 	for(i=0;i<MAX_SKILL;i++){
 		if(sd->status.skill[i].id > 0 && sd->status.skill[i].lv > 0){
 			pc_setreg(sd,reference_uid(add_str("@skilllist_id"), j),sd->status.skill[i].id);
@@ -12864,6 +12879,9 @@ BUILDIN_FUNC(getskilllist)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * clearitem ({<char_id>});
+ **/
 BUILDIN_FUNC(clearitem)
 {
 	TBL_PC *sd;
@@ -12887,8 +12905,10 @@ BUILDIN_FUNC(clearitem)
 BUILDIN_FUNC(disguise)
 {
 	int id;
-	TBL_PC* sd = script_rid2sd(st);
-	if (sd == NULL) return 0;
+	TBL_PC* sd;
+	script_charid2sd(3,sd);
+	if (sd == NULL)
+		return SCRIPT_CMD_FAILURE;
 
 	id = script_getnum(st,2);
 
@@ -12905,8 +12925,10 @@ BUILDIN_FUNC(disguise)
  *------------------------------------------*/
 BUILDIN_FUNC(undisguise)
 {
-	TBL_PC* sd = script_rid2sd(st);
-	if (sd == NULL) return 0;
+	TBL_PC* sd;
+	script_charid2sd(2,sd);
+	if (sd == NULL)
+		return SCRIPT_CMD_FAILURE;
 
 	if (sd->disguise) {
 		pc_disguise(sd, 0);
@@ -13372,11 +13394,12 @@ BUILDIN_FUNC(specialeffect2)
  *------------------------------------------*/
 BUILDIN_FUNC(nude)
 {
-	TBL_PC *sd = script_rid2sd(st);
+	TBL_PC *sd;
 	int i, calcflag = 0;
 
-	if( sd == NULL )
-		return 0;
+	script_charid2sd(2,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	for( i = 0 ; i < EQI_MAX; i++ ) {
 		if( sd->equip_index[ i ] >= 0 ) {
@@ -13435,15 +13458,20 @@ BUILDIN_FUNC(atcommand) {
 }
 
 /** Displays a message for the player only (like system messages like "you got an apple" )
-* dispbottom("<message>"{,<color>})
+* dispbottom("<message>"{,<color>{,<char_id>}})
 * @param message 
 * @param color Hex color default (Green)
 */
 BUILDIN_FUNC(dispbottom)
 {
-	TBL_PC *sd=script_rid2sd(st);
+	TBL_PC *sd;
 	int color = 0;
 	const char *message;
+
+	script_charid2sd(3,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
+
 	message = script_getstr(st,2);
 
 	if (script_hasdata(st,3))
@@ -13888,7 +13916,11 @@ BUILDIN_FUNC(getlook)
 {
 	int type,val;
 	TBL_PC *sd;
-	sd=script_rid2sd(st);
+	script_charid2sd(3,sd);
+	if (!sd) {
+		script_pushint(st,-1);
+		return SCRIPT_CMD_FAILURE;
+	}
 
 	type=script_getnum(st,2);
 	val=-1;
@@ -13917,7 +13949,7 @@ BUILDIN_FUNC(getsavepoint)
 	TBL_PC* sd;
 	int type;
 
-	sd = script_rid2sd(st);
+	script_charid2sd(3,sd);
 	if (sd == NULL) {
 		script_pushint(st,0);
 		return 0;
@@ -17905,8 +17937,9 @@ BUILDIN_FUNC(showdigit)
  **/
 BUILDIN_FUNC(makerune) {
 	TBL_PC* sd;
-	if( (sd = script_rid2sd(st)) == NULL )
-		return 0;
+	script_charid2sd(2,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 	clif_skill_produce_mix_list(sd,RK_RUNEMASTERY,24);
 	sd->itemid = script_getnum(st,2);
 	return SCRIPT_CMD_SUCCESS;
@@ -17916,8 +17949,9 @@ BUILDIN_FUNC(makerune) {
  **/
 BUILDIN_FUNC(checkdragon) {
 	TBL_PC* sd;
-	if( (sd = script_rid2sd(st)) == NULL )
-		return 0;
+	script_charid2sd(2,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 	if( pc_isridingdragon(sd) )
 		script_pushint(st,1);
 	else
@@ -17938,8 +17972,9 @@ BUILDIN_FUNC(setdragon) {
 	TBL_PC* sd;
 	int color = script_hasdata(st,2) ? script_getnum(st,2) : 0;
 
-	if( (sd = script_rid2sd(st)) == NULL )
-		return 0;
+	script_charid2sd(3,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 	if( !pc_checkskill(sd,RK_DRAGONTRAINING) || (sd->class_&MAPID_THIRDMASK) != MAPID_RUNE_KNIGHT )
 		script_pushint(st,0);//Doesn't have the skill or it's not a Rune Knight
 	else if ( pc_isridingdragon(sd) ) {//Is mounted; release
@@ -17969,8 +18004,9 @@ BUILDIN_FUNC(setdragon) {
  **/
 BUILDIN_FUNC(ismounting) {
 	TBL_PC* sd;
-	if( (sd = script_rid2sd(st)) == NULL )
-		return 0;
+	script_charid2sd(2,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 	if( &sd->sc && sd->sc.data[SC_ALL_RIDING] )
 		script_pushint(st,1);
 	else
@@ -17986,8 +18022,9 @@ BUILDIN_FUNC(ismounting) {
  **/
 BUILDIN_FUNC(setmounting) {
 	TBL_PC* sd;
-	if( (sd = script_rid2sd(st)) == NULL )
-		return 0;
+	script_charid2sd(2,sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 	if( &sd->sc && sd->sc.option&(OPTION_WUGRIDER|OPTION_RIDING|OPTION_DRAGON|OPTION_MADOGEAR) ) {
 		clif_msgtable(sd->fd, NEED_REINS_OF_MOUNT);
 		script_pushint(st,0); //can't mount with one of these
@@ -18424,8 +18461,8 @@ BUILDIN_FUNC(npcskill)
 }
 
 /* Consumes an item.
- * consumeitem <item id>;
- * consumeitem "<item name>";
+ * consumeitem <item id>{,<char_id>};
+ * consumeitem "<item name>"{,<char_id>};
  * @param item: Item ID or name
  */
 BUILDIN_FUNC(consumeitem)
@@ -18434,7 +18471,9 @@ BUILDIN_FUNC(consumeitem)
 	struct script_data *data;
 	struct item_data *item_data;
 
-	nullpo_retr( 1, ( sd = script_rid2sd( st ) ) );
+	script_charid2sd(3, sd);
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
 
 	data = script_getdata( st, 2 );
 	get_val( st, data );
@@ -18512,7 +18551,7 @@ BUILDIN_FUNC(stand)
 }
 
 /** Creates an array of bounded item IDs
- * countbound {<type>};
+ * countbound {<type>{,<char_id>}};
  * @param type: 0 - All bound items; 1 - Account Bound; 2 - Guild Bound; 3 - Party Bound
  * @return amt: Amount of items found
  */
@@ -18521,7 +18560,9 @@ BUILDIN_FUNC(countbound)
 	int i, type, j = 0, k = 0;
 	TBL_PC *sd;
 
-	if( (sd = script_rid2sd(st)) == NULL )
+	script_charid2sd(3,sd);
+
+	if (!sd)
 		return SCRIPT_CMD_FAILURE;
 
 	type = script_getnum(st,2);
@@ -19156,7 +19197,7 @@ BUILDIN_FUNC(delspiritball) {
 }
 
 /** Counts the spirit ball that player has
-* countspiritball {,<char_id>};
+* countspiritball {<char_id>};
 * @param char_id Target player (Optional)
 * @author [Cydh]
 */
@@ -19178,19 +19219,20 @@ BUILDIN_FUNC(countspiritball) {
 }
 
 /** Merges separated stackable items because of guid
-* mergeitem {<item_id>};
-* mergeitem {"<item name>"};
+* mergeitem {<item_id>,{<char_id>}};
+* mergeitem {"<item name>",{<char_id>}};
 * @param item Item ID/Name for merging specific item (Optional)
 * @author [Cydh]
 */
 BUILDIN_FUNC(mergeitem) {
-	struct map_session_data *sd = script_rid2sd(st);
+	struct map_session_data *sd;
 	struct item *items = NULL;
 	uint16 i, count = 0;
 	int nameid = 0;
 
+	script_charid2sd(3, sd);
 	if (!sd)
-		return SCRIPT_CMD_SUCCESS;
+		return SCRIPT_CMD_FAILURE;
 
 	if (script_hasdata(st, 2)) {
 		struct script_data *data = script_getdata(st, 2);
@@ -19416,22 +19458,22 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getskilllv,"v"),
 	BUILDIN_DEF(getgdskilllv,"iv"),
 	BUILDIN_DEF(basicskillcheck,""),
-	BUILDIN_DEF(getgmlevel,""),
-	BUILDIN_DEF(getgroupid,""),
+	BUILDIN_DEF(getgmlevel,"?"),
+	BUILDIN_DEF(getgroupid,"?"),
 	BUILDIN_DEF(end,""),
-	BUILDIN_DEF(checkoption,"i"),
-	BUILDIN_DEF(setoption,"i?"),
-	BUILDIN_DEF(setcart,"?"),
-	BUILDIN_DEF(checkcart,""),
-	BUILDIN_DEF(setfalcon,"?"),
-	BUILDIN_DEF(checkfalcon,""),
-	BUILDIN_DEF(setriding,"?"),
-	BUILDIN_DEF(checkriding,""),
-	BUILDIN_DEF(checkwug,""),
-	BUILDIN_DEF(checkmadogear,""),
-	BUILDIN_DEF(setmadogear,"?"),
-	BUILDIN_DEF2(savepoint,"save","sii"),
-	BUILDIN_DEF(savepoint,"sii"),
+	BUILDIN_DEF(checkoption,"i?"),
+	BUILDIN_DEF(setoption,"i??"),
+	BUILDIN_DEF(setcart,"??"),
+	BUILDIN_DEF(checkcart,"?"),
+	BUILDIN_DEF(setfalcon,"??"),
+	BUILDIN_DEF(checkfalcon,"?"),
+	BUILDIN_DEF(setriding,"??"),
+	BUILDIN_DEF(checkriding,"?"),
+	BUILDIN_DEF(checkwug,"?"),
+	BUILDIN_DEF(checkmadogear,"?"),
+	BUILDIN_DEF(setmadogear,"??"),
+	BUILDIN_DEF2(savepoint,"save","sii?"),
+	BUILDIN_DEF(savepoint,"sii?"),
 	BUILDIN_DEF(gettimetick,"i"),
 	BUILDIN_DEF(gettime,"i"),
 	BUILDIN_DEF(gettimestr,"si"),
@@ -19476,17 +19518,17 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(sc_start,"sc_start2","iiii???"),
 	BUILDIN_DEF2(sc_start,"sc_start4","iiiiii???"),
 	BUILDIN_DEF(sc_end,"i?"),
-	BUILDIN_DEF(getstatus, "i?"),
+	BUILDIN_DEF(getstatus, "i??"),
 	BUILDIN_DEF(getscrate,"ii?"),
 	BUILDIN_DEF(debugmes,"s"),
 	BUILDIN_DEF2(catchpet,"pet","i"),
 	BUILDIN_DEF2(birthpet,"bpet",""),
-	BUILDIN_DEF(resetlvl,"i"),
-	BUILDIN_DEF(resetstatus,""),
-	BUILDIN_DEF(resetskill,""),
-	BUILDIN_DEF(skillpointcount,""),
+	BUILDIN_DEF(resetlvl,"i?"),
+	BUILDIN_DEF(resetstatus,"?"),
+	BUILDIN_DEF(resetskill,"?"),
+	BUILDIN_DEF(skillpointcount,"?"),
 	BUILDIN_DEF(changebase,"i?"),
-	BUILDIN_DEF(changesex,""),
+	BUILDIN_DEF(changesex,"?"),
 	BUILDIN_DEF(waitingroom,"si?????"),
 	BUILDIN_DEF(delwaitingroom,"?"),
 	BUILDIN_DEF2(waitingroomkickall,"kickwaitingroomall","?"),
@@ -19523,19 +19565,19 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(failedremovecards,"ii"),
 	BUILDIN_DEF(marriage,"s"),
 	BUILDIN_DEF2(wedding_effect,"wedding",""),
-	BUILDIN_DEF(divorce,""),
-	BUILDIN_DEF(ispartneron,""),
-	BUILDIN_DEF(getpartnerid,""),
-	BUILDIN_DEF(getchildid,""),
-	BUILDIN_DEF(getmotherid,""),
-	BUILDIN_DEF(getfatherid,""),
+	BUILDIN_DEF(divorce,"?"),
+	BUILDIN_DEF(ispartneron,"?"),
+	BUILDIN_DEF(getpartnerid,"?"),
+	BUILDIN_DEF(getchildid,"?"),
+	BUILDIN_DEF(getmotherid,"?"),
+	BUILDIN_DEF(getfatherid,"?"),
 	BUILDIN_DEF(warppartner,"sii"),
 	BUILDIN_DEF(getitemname,"v"),
 	BUILDIN_DEF(getitemslots,"i"),
 	BUILDIN_DEF(makepet,"i"),
 	BUILDIN_DEF(getexp,"ii?"),
-	BUILDIN_DEF(getinventorylist,""),
-	BUILDIN_DEF(getskilllist,""),
+	BUILDIN_DEF(getinventorylist,"?"),
+	BUILDIN_DEF(getskilllist,"?"),
 	BUILDIN_DEF(clearitem,"?"),
 	BUILDIN_DEF(classchange,"ii"),
 	BUILDIN_DEF(misceffect,"i"),
@@ -19557,7 +19599,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(npcskilleffect,"viii"), // npc skill effect [Valaris]
 	BUILDIN_DEF(specialeffect,"i??"), // npc skill effect [Valaris]
 	BUILDIN_DEF(specialeffect2,"i??"), // skill effect on players[Valaris]
-	BUILDIN_DEF(nude,""), // nude command [Valaris]
+	BUILDIN_DEF(nude,"?"), // nude command [Valaris]
 	BUILDIN_DEF(mapwarp,"ssii??"),		// Added by RoVeRT
 	BUILDIN_DEF(atcommand,"s"), // [MouseJstr]
 	BUILDIN_DEF2(atcommand,"charcommand","s"), // [MouseJstr]
@@ -19565,14 +19607,14 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(message,"ss"), // [MouseJstr]
 	BUILDIN_DEF(npctalk,"s"), // [Valaris]
 	BUILDIN_DEF(mobcount,"ss"),
-	BUILDIN_DEF(getlook,"i"),
-	BUILDIN_DEF(getsavepoint,"i"),
+	BUILDIN_DEF(getlook,"i?"),
+	BUILDIN_DEF(getsavepoint,"i?"),
 	BUILDIN_DEF(npcspeed,"i"), // [Valaris]
 	BUILDIN_DEF(npcwalkto,"ii"), // [Valaris]
 	BUILDIN_DEF(npcstop,""), // [Valaris]
 	BUILDIN_DEF(getmapxy,"rrri?"),	//by Lorky [Lupus]
-	BUILDIN_DEF(checkoption1,"i"),
-	BUILDIN_DEF(checkoption2,"i"),
+	BUILDIN_DEF(checkoption1,"i?"),
+	BUILDIN_DEF(checkoption2,"i?"),
 	BUILDIN_DEF(guildgetexp,"i"),
 	BUILDIN_DEF(guildchangegm,"is"),
 	BUILDIN_DEF(logmes,"s"), //this command actls as MES but rints info into LOG file either SQL/TXT [Lupus]
@@ -19592,7 +19634,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(deletepset,"i"), // Delete a pattern set [MouseJstr]
 #endif
 	BUILDIN_DEF(preg_match,"ss?"),
-	BUILDIN_DEF(dispbottom,"s?"), //added from jA [Lupus]
+	BUILDIN_DEF(dispbottom,"s??"), //added from jA [Lupus]
 	BUILDIN_DEF(recovery,"i???"),
 	BUILDIN_DEF(getpetinfo,"i"),
 	BUILDIN_DEF(gethominfo,"i"),
@@ -19644,8 +19686,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(setbattleflag,"si"),
 	BUILDIN_DEF(getbattleflag,"s"),
 	BUILDIN_DEF(setitemscript,"is?"), //Set NEW item bonus script. Lupus
-	BUILDIN_DEF(disguise,"i"), //disguise player. Lupus
-	BUILDIN_DEF(undisguise,""), //undisguise player. Lupus
+	BUILDIN_DEF(disguise,"i?"), //disguise player. Lupus
+	BUILDIN_DEF(undisguise,"?"), //undisguise player. Lupus
 	BUILDIN_DEF(getmonsterinfo,"ii"), //Lupus
 	BUILDIN_DEF(addmonsterdrop,"vii"), //Akinari [Lupus]
 	BUILDIN_DEF(delmonsterdrop,"vi"), //Akinari [Lupus]
@@ -19740,11 +19782,11 @@ struct script_function buildin_func[] = {
 	/**
 	 * 3rd-related
 	 **/
-	BUILDIN_DEF(makerune,"i"),
-	BUILDIN_DEF(checkdragon,""),//[Ind]
-	BUILDIN_DEF(setdragon,"?"),//[Ind]
-	BUILDIN_DEF(ismounting,""),//[Ind]
-	BUILDIN_DEF(setmounting,""),//[Ind]
+	BUILDIN_DEF(makerune,"i?"),
+	BUILDIN_DEF(checkdragon,"?"),//[Ind]
+	BUILDIN_DEF(setdragon,"??"),//[Ind]
+	BUILDIN_DEF(ismounting,"?"),//[Ind]
+	BUILDIN_DEF(setmounting,"?"),//[Ind]
 	BUILDIN_DEF(checkre,"i"),
 	/**
 	 * rAthena and beyond!
@@ -19759,7 +19801,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(cleanmap,"s"),
 	BUILDIN_DEF2(cleanmap,"cleanarea","siiii"),
 	BUILDIN_DEF(npcskill,"viii"),
-	BUILDIN_DEF(consumeitem,"v"),
+	BUILDIN_DEF(consumeitem,"v?"),
 	BUILDIN_DEF(delequip,"i?"),
 	BUILDIN_DEF(breakequip,"i?"),
 	BUILDIN_DEF(sit,"?"),
@@ -19782,7 +19824,7 @@ struct script_function buildin_func[] = {
 	//Bound items [Xantara] & [Akinari]
 	BUILDIN_DEF2(getitem,"getitembound","vii?"),
 	BUILDIN_DEF2(getitem2,"getitembound2","viiiiiiiii?"),
-	BUILDIN_DEF(countbound, "?"),
+	BUILDIN_DEF(countbound, "??"),
 
 	// Party related
 	BUILDIN_DEF(party_create,"s???"),
@@ -19805,7 +19847,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(addspiritball,"ii?"),
 	BUILDIN_DEF(delspiritball,"i?"),
 	BUILDIN_DEF(countspiritball,"?"),
-	BUILDIN_DEF(mergeitem,"?"),
+	BUILDIN_DEF(mergeitem,"??"),
 
 #include "../custom/script_def.inc"
 

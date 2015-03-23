@@ -2372,9 +2372,9 @@ If an invalid type is given or the NPC does not exist, 0 is returned.
 
 ---------------------------------------
 
-*getchildid()
-*getmotherid()
-*getfatherid()
+*getchildid({<char_id>})
+*getmotherid({<char_id>})
+*getfatherid({<char_id>})
 
 These functions return the character ID of the attached player's child,
 mother, mother, or father, respectively. It returns 0 if no ID is found.
@@ -2383,14 +2383,14 @@ mother, mother, or father, respectively. It returns 0 if no ID is found.
 
 ---------------------------------------
 
-*ispartneron()
+*ispartneron({<char_id>})
 
 This function returns 1 if the invoking character's marriage partner is 
 currently online and 0 if they are not or if the character has no partner.
 
 ---------------------------------------
 
-*getpartnerid()
+*getpartnerid({<char_id>})
 
 This function returns the character ID of the invoking character's marriage 
 partner, if any. If the invoking character is not married, it will return 0, 
@@ -2401,7 +2401,7 @@ which is a quick way to see if they are married:
 
 ---------------------------------------
 
-*getlook(<type>)
+*getlook(<type>{,<char_id>})
 
 This function will return the number for the current character look value 
 specified by type. See 'setlook' for valid look types.
@@ -2411,7 +2411,7 @@ dressed in black. :)
 
 ---------------------------------------
 
-*getsavepoint(<information type>)
+*getsavepoint(<information type>{,<char_id>})
 
 This function will return information about the invoking character's save point. 
 You can use it to let a character swap between several recorded save points. 
@@ -2722,7 +2722,7 @@ of possible equipment slots.
 
 ---------------------------------------
 
-*getinventorylist;
+*getinventorylist {<char_id>};
 
 This command sets a bunch of arrays with a complete list of whatever the 
 invoking character has in their inventory, including all the data needed to 
@@ -2848,8 +2848,8 @@ It's useful for when you want to check whether an item contains cards or if it's
 
 ---------------------------------------
 
-*mergeitem({<item_id>});
-*mergeitem({"<item name>"});
+*mergeitem({<item_id>{,<char_id>}});
+*mergeitem({"<item name>"{,<char_id>}});
 
 Merge all stackable items that separated by GUID flags
 (either by flag 4 item_flag.txt or GUID  in item_group).
@@ -2913,7 +2913,7 @@ Notice that NPC objects disabled with 'disablenpc' will still be located.
 
 ---------------------------------------
 
-*getgmlevel()
+*getgmlevel({<char_id>})
 
 This function will return the (GM) level associated with the player group to which
 the invoking character belongs. If this is somehow executed from a console command,
@@ -2926,7 +2926,7 @@ specially when talked to by GMs.
 
 ---------------------------------------
 
-*getgroupid()
+*getgroupid({<char_id>})
 
 This function will return the group id to which the invoking player belongs.
 
@@ -3208,7 +3208,7 @@ Example 2:
 
 ---------------------------------------
 
-*getskilllist;
+*getskilllist({<char_id>});
 
 This command sets a bunch of arrays with a complete list of skills the
 invoking character has. Here's what you get:
@@ -3313,7 +3313,7 @@ Example:
 
 ---------------------------------------
 
-*skillpointcount()
+*skillpointcount({<char_id>})
 
 Returns the total amount of skill points a character possesses (SkillPoint+SP's used in skills)
 This command can be used to check the currently attached characters total amount of skill points.
@@ -3417,10 +3417,10 @@ things might in some cases be required.
 
 ---------------------------------------
 
-*checkoption(<option number>)
-*checkoption1(<option number>)
-*checkoption2(<option number>)
-*setoption <option number>{,<flag>};
+*checkoption(<option number>{,<char_id>})
+*checkoption1(<option number>{,<char_id>})
+*checkoption2(<option number>{,<char_id>})
+*setoption <option number>{,<flag>{,<char_id>}};
 
 The 'setoption' series of functions check for a so-called option that is set on 
 the invoking character. 'Options' are used to store status conditions and a lot 
@@ -3482,8 +3482,8 @@ core developer (or read the source: src/map/status.h) for the full list.
 
 ---------------------------------------
 
-*setcart {<type>};
-*checkcart()
+*setcart {<type>{,<char_id>}};
+*checkcart({<char_id>});
 
 If <type> is 0 this command will remove the cart from the character.
 Otherwise it gives the invoking character a cart. The cart given will be 
@@ -3498,8 +3498,8 @@ The accompanying function will return 1 if the invoking character has a cart
 
 ---------------------------------------
 
-*setfalcon {<flag>};
-*checkfalcon()
+*setfalcon {<flag>{,<char_id>}};
+*checkfalcon({<char_id>});
 
 If <flag> is 0 this command will remove the falcon from the character.
 Otherwise it gives the invoking character a falcon. The falcon will be there 
@@ -3514,8 +3514,8 @@ and 0 if they don't.
 
 ---------------------------------------
 
-*setriding {<flag>};
-*checkriding()
+*setriding {<flag>{,<char_id>}};
+*checkriding({<char_id>});
 
 If <flag> is 0 this command will remove the mount from the character.
 Otherwise it gives the invoking character a PecoPeco (if they are a Knight 
@@ -3531,8 +3531,8 @@ bird and 0 if they aren't.
 
 ---------------------------------------
 
-*setdragon {<color>};
-*checkdragon()
+*setdragon {<color>{,<char_id>}};
+*checkdragon({<char_id>});
 
 The 'setdragon' function toggles mounting a dragon for the invoking character.
 It will return 1 if successful, 0 otherwise.
@@ -3551,8 +3551,8 @@ dragon and 0 if they aren't.
 
 ---------------------------------------
 
-*setmadogear {<flag>};
-*checkmadogear()
+*setmadogear {<flag>{,<char_id>}};
+*checkmadogear({<char_id>});
 
 If <flag> is 0 this command will remove the mount from the character.
 Otherwise it gives the invoking character a Mado (if they are a Mechanic).
@@ -3562,8 +3562,8 @@ Mado and 0 if they don't.
 
 ---------------------------------------
 
-*setmounting;
-*ismounting()
+*setmounting {<char_id>};
+*ismounting({<char_id>});
 
 The 'setmounting' function toggles cash mount for the invoking character.
 It will return 1 if successful, 0 otherwise.
@@ -3575,7 +3575,7 @@ cash mount and 0 if they don't.
 
 ---------------------------------------
 
-*checkwug()
+*checkwug({<char_id>});
 
 This function will return 1 if the invoking character has a
 warg and 0 if they don't.
@@ -3780,7 +3780,7 @@ be seen by anyone else.
 
 ---------------------------------------
 
-*dispbottom "<message>"{,<color>};
+*dispbottom "<message>"{,<color>{,<char_id>}};
 
 This command will send the given message with color into the invoking character's chat 
 window. The color format is in RGB (0xRRGGBB). The color is
@@ -3909,8 +3909,8 @@ normally translate to random coordinates.
 
 ---------------------------------------
 
-*savepoint "<map name>",<x>,<y>;
-*save "<map name>",<x>,<y>;
+*savepoint "<map name>",<x>,<y>{,<char_id>};
+*save "<map name>",<x>,<y>{,<char_id>};
 
 These commands save where the invoking character will return to upon clicking
 "Return to Save Point", after death and in some other cases. The two versions are 
@@ -4121,7 +4121,7 @@ do, but this will only happen in a later SVN revision.
 
 ---------------------------------------
 
-*changesex;
+*changesex({<char_id>});
 
 This command will change the gender for the attached character's account. If it 
 was male, it will become female, if it was female, it will become male. The 
@@ -4591,7 +4591,7 @@ cart or storage. If no cart is mounted, 'cartcountitem2' will return -1.
 
 ---------------------------------------
 
-*countbound({<bound type>})
+*countbound({<bound type>{,<char_id>}})
 
 This function will return the number of bounded items in the character's
 inventory, and sets an array @bound_items[] containing all item IDs of the
@@ -4704,8 +4704,8 @@ target cursor is shown.
 
 ---------------------------------------
 
-*consumeitem <item id>;
-*consumeitem "<item name>";
+*consumeitem <item id>{,<char_id>};
+*consumeitem "<item name>"{,<char_id>};
 
 This command will run the item script of the specified item on the invoking
 character. The character does not need to possess the item, and the item will
@@ -4770,7 +4770,7 @@ to cook the dish the command works.
 
 ---------------------------------------
 
-*makerune <% success bonus>;
+*makerune <% success bonus>{,<char_id>};
 
 This command will open a rune crafting window on the client connected to the
 invoking character. Since this command is officially used in rune ores, a bonus
@@ -5056,7 +5056,7 @@ a fun quest. (Wasting a level point on that is really annoying :D)
 //
 ---------------------------------------
 
-*resetlvl <action type>;
+*resetlvl <action type>{,<char_id>};
 
 This is a character reset command, meant mostly for rebirth script supporting 
 Advanced jobs, which will reset the invoking character's stats and level 
@@ -5078,7 +5078,7 @@ rebirth scripts. Ask AppleGirl why.
 
 ---------------------------------------
 
-*resetstatus;
+*resetstatus({<char_id>});
 
 This is a character reset command, which will reset the stats on the invoking 
 character and give back all the stat points used to raise them previously. 
@@ -5088,7 +5088,7 @@ Used in reset NPC's (duh!)
 
 ---------------------------------------
 
-*resetskill;
+*resetskill({<char_id>});
 
 This command takes off all the skill points on the invoking character, so they 
 only have Basic Skill blanked out (lvl 0) left, and returns the points for them 
@@ -5162,7 +5162,7 @@ Note: to use SC_NOCHAT you should alter Manner
 
 ---------------------------------------
 
-*getstatus(<effect type>{,<type>})
+*getstatus(<effect type>{,<type>{,<char_id>}})
 
 Retrieve information about a specific status effect when called. Depending on <type>
 specified the function will return different information.
@@ -5430,7 +5430,7 @@ Flag contants:
 
 ---------------------------------------
 
-*nude;
+*nude {<char_id>};
 
 This command will unequip anything equipped on the invoking character.
 
@@ -5447,8 +5447,8 @@ If no character is specified, the command will run for the invoking character.
 
 ---------------------------------------
 
-*disguise <Monster ID>;
-*undisguise;
+*disguise <Monster ID>{,<char_id>};
+*undisguise {<char_id>};
 
 This command disguises the current player with a monster sprite.
 The disguise lasts until 'undisguise' is issued or the player logs out.
@@ -5494,7 +5494,7 @@ the invoking character. Example can be found in the wedding script.
 
 ---------------------------------------
 
-*divorce()
+*divorce({<char_id>})
 
 This function will "un-marry" the invoking character from whoever they were 
 married to. Both will no longer be each other's marriage partner, (at least in 
