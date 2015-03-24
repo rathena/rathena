@@ -6659,7 +6659,7 @@ and given spot. Direction can be used to change the NPC's facing direction.
 
 Example:
 
-// This will move Bugga from to the coordinates 100,20 (if those coordinates are legit).
+// This will move Bugga from it's old coordinates to the new coordinates at 100,20 (if those coordinates are legit).
 	moveNPC "Bugga",100,20;
 
 ---------------------------------------
