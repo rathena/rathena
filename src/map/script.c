@@ -13651,7 +13651,7 @@ BUILDIN_FUNC(getmercinfo)
 		{
 			ShowError("buildin_getmercinfo: No such character (char_id=%d).\n", char_id);
 			script_pushnil(st);
-			return 1;
+			return SCRIPT_CMD_FAILURE;
 		}
 	}
 	else
@@ -13659,7 +13659,7 @@ BUILDIN_FUNC(getmercinfo)
 		if( ( sd = script_rid2sd(st) ) == NULL )
 		{
 			script_pushnil(st);
-			return 0;
+			return SCRIPT_CMD_SUCCESS;
 		}
 	}
 
@@ -13683,7 +13683,7 @@ BUILDIN_FUNC(getmercinfo)
 		default:
 			ShowError("buildin_getmercinfo: Invalid type %d (char_id=%d).\n", type, sd->status.char_id);
 			script_pushnil(st);
-			return 1;
+			return SCRIPT_CMD_FAILURE;
 	}
 
 	return SCRIPT_CMD_SUCCESS;
@@ -17292,7 +17292,6 @@ BUILDIN_FUNC(mercenary_create)
 
 	contract_time = script_getnum(st,3);
 	mercenary_create(sd, class_, contract_time);
-	script_pushint(st, sd->md->bl.id);
 
 	return SCRIPT_CMD_SUCCESS;
 }

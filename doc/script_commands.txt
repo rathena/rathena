@@ -8361,8 +8361,6 @@ list of all available classes, see 'db/mercenary_db.txt'.
 
 This command is typically used in item scripts of mercenary scrolls.
 
-Returned value is the game ID of the spawned mercenary.
-
 ---------------------------------------
 
 *mercenary_heal <hp>,<sp>;
