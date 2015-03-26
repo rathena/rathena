@@ -1275,8 +1275,8 @@ static inline void status_cpy(struct status_data* a, const struct status_data* b
 
 /**
  * Sets HP to a given value
- * Will always succeed (overrides heal impedement statuses) but can't kill an object
- * @param bl: Object whose HP will be set [PC|MOB|HOM|MER|ELEM]
+ * Will always succeed (overrides heal impediment statuses) but can't kill an object
+ * @param bl: Object whose HP will be set [PC|MOB|HOM|MER|ELEM|NPC]
  * @param hp: What the HP is to be set as
  * @param flag: Used in case final value is higher than current
  *		Use 2 to display healing effect
@@ -1295,6 +1295,32 @@ int status_set_hp(struct block_list *bl, unsigned int hp, int flag)
 	if (hp > status->hp)
 		return status_heal(bl, hp - status->hp, 0, 1|flag);
 	return status_zap(bl, status->hp - hp, 0);
+}
+
+/**
+ * Sets Max HP to a given value
+ * @param bl: Object whose Max HP will be set [PC|MOB|HOM|MER|ELEM|NPC]
+ * @param maxhp: What the Max HP is to be set as
+ * @param flag: Used in case final value is higher than current
+ *		Use 2 to display healing effect
+ * @return heal or zapped HP if valid
+ */
+int status_set_maxhp(struct block_list *bl, unsigned int maxhp, int flag)
+{
+	struct status_data *status;
+	if (maxhp < 1) return 0;
+	status = status_get_status_data(bl);
+	if (status == &dummy_status)
+		return 0;
+
+	if (maxhp == status->max_hp) return 0;
+	if (maxhp > status->max_hp) {
+		status_heal(bl, maxhp - status->max_hp, 0, 1|flag);
+	} else
+		status_zap(bl, status->max_hp - maxhp, 0);
+
+	status->max_hp = maxhp;
+	return maxhp;
 }
 
 /**
@@ -1318,6 +1344,32 @@ int status_set_sp(struct block_list *bl, unsigned int sp, int flag)
 	if (sp > status->sp)
 		return status_heal(bl, 0, sp - status->sp, 1|flag);
 	return status_zap(bl, 0, status->sp - sp);
+}
+
+/**
+ * Sets Max SP to a given value
+ * @param bl: Object whose Max SP will be set [PC|HOM|MER|ELEM]
+ * @param maxsp: What the Max SP is to be set as
+ * @param flag: Used in case final value is higher than current
+ *		Use 2 to display healing effect
+ * @return heal or zapped HP if valid
+ */
+int status_set_maxsp(struct block_list *bl, unsigned int maxsp, int flag)
+{
+	struct status_data *status;
+	if (maxsp < 1) return 0;
+	status = status_get_status_data(bl);
+	if (status == &dummy_status)
+		return 0;
+
+	if (maxsp == status->max_sp) return 0;
+	if (maxsp > status->max_sp) {
+		status_heal(bl, maxsp - status->max_sp, 0, 1|flag);
+	} else
+		status_zap(bl, status->max_sp - maxsp, 0);
+
+	status->max_sp = maxsp;
+	return maxsp;
 }
 
 /**

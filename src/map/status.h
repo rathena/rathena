@@ -2003,7 +2003,9 @@ int status_percent_change(struct block_list *src, struct block_list *target, int
 #define status_kill(bl) status_percent_damage(NULL, bl, 100, 0, true)
 //Used to set the hp/sp of an object to an absolute value (can't kill)
 int status_set_hp(struct block_list *bl, unsigned int hp, int flag);
+int status_set_maxhp(struct block_list *bl, unsigned int hp, int flag);
 int status_set_sp(struct block_list *bl, unsigned int sp, int flag);
+int status_set_maxsp(struct block_list *bl, unsigned int hp, int flag);
 int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int flag);
 int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per_sp);
 

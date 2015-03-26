@@ -2872,7 +2872,7 @@ Type is the type of object to search for:
   0 - Character object
   1 - NPC object
   2 - Pet object
-  3 - Monster object
+  3 - Monster object -- See 'getunitdata' for monster.
   4 - Homunculus object
   5 - Mercenary object
   6 - Elemental object
@@ -2907,6 +2907,13 @@ Example:
    }
 
 Notice that NPC objects disabled with 'disablenpc' will still be located.
+
+---------------------------------------
+
+*mapid2name(<map ID>)
+
+Returns the map name of the given map ID. Returns an empty string if given
+map ID doesn't exist.
 
 ---------------------------------------
 
@@ -7064,7 +7071,7 @@ Changing a homunculus or pet name will be permanent.
 ---------------------------------------
 
 *getunitdata <GID>,<arrayname>;
-*setsetdata <GID>,<parameter>,<new value>;
+*setunitdata <GID>,<parameter>,<new value>;
 
 This is used to get and set special data related to the unit.
 With getunitdata, the array given will be filled with the current data. In setunitdata
@@ -7072,17 +7079,17 @@ the indexes in the array would be used to set that data on the unit.
 
 Parameters (indexes) for monsters are:
 
-	0 - size (big, small, normal)	7  - y							14 - hair style			21 - weapon			28 - DEX
-	1 - level						8  - speed						15 - hair color			22 - shield (again)	29 - LUK
-	2 - HP							9  - mode 						16 - head gear bottom	23 - looking dir	30 - for slave to copy master's mode
-	3 - max HP						10 - special AI state	 		17 - head gear middle	24 - STR			31 - immune from attacks state
-	4 - master AID					11 - SC option					18 - head gear top		25 - AGI
-	5 - map index					12 - sex						19 - cloth color		26 - VIT
-	6 - x							13 - class (Monster ID, Job ID)	20 - shield				27 - INT
+	0 - size (big, small, normal)	7  - y							14 - hair style			21 - weapon			28 - LUK
+	1 - level						8  - speed						15 - hair color			22 - looking dir	29 - for slave to copy master's mode
+	2 - HP							9  - mode 						16 - head gear bottom	23 - STR			30 - immune from attacks state
+	3 - max HP						10 - special AI state	 		17 - head gear middle	24 - AGI
+	4 - master AID					11 - SC option					18 - head gear top		25 - VIT
+	5 - map ID						12 - sex						19 - cloth color		26 - INT
+	6 - x							13 - class (Monster ID, Job ID)	20 - shield				27 - DEX
 
 Parameter (indexes) for homunculi are:
 
-	0 - size (big, small, normal)	7  - map index		14 - canmove_tick	21 - immune from attacks state
+	0 - size (big, small, normal)	7  - map ID			14 - canmove_tick	21 - immune from attacks state
 	1 - level						8  - x				15 - STR
 	2 - HP							9  - y				16 - AGI
 	3 - max HP						10 - hunger			17 - VIT
@@ -7097,7 +7104,7 @@ Parameter (indexes) for pets are:
 	2 - HP							9  - intimacy		16 - INT
 	3 - max HP						10 - speed			17 - DEX
 	4 - master AID					11 - looking dir	18 - LUK
-	5 - map index					12 - canmove_tick	19 - immune from attacks state
+	5 - map ID						12 - canmove_tick	19 - immune from attacks state
 	6 - x							13 - STR
 
 Parameter (indexes) for mercenaries are:
@@ -7106,7 +7113,7 @@ Parameter (indexes) for mercenaries are:
 	1 - HP							8  - life time		15 - INT
 	2 - max HP						9  - speed 			16 - DEX
 	3 - master Character ID			10 - looking dir	17 - LUK
-	4 - map index					11 - canmove_tick	18 - immune from attacks state
+	4 - map ID						11 - canmove_tick	18 - immune from attacks state
 	5 - x							12 - STR
 	6 - y							13 - AGI
 
@@ -7118,7 +7125,7 @@ Parameter (indexes) for elementals are:
 	3 - SP							10 - mode			17 - INT
 	4 - max SP						11 - speed			18 - DEX
 	5 - master Character ID			12 - looking dir	19 - LUK
-	6 - map index					13 - canmove_tick	20 - immune from attacks state
+	6 - map ID						13 - canmove_tick	20 - immune from attacks state
 
 Parameter (indexes) for NPCs are:
 
@@ -7126,26 +7133,28 @@ Parameter (indexes) for NPCs are:
 	1 - level		8  - STR
 	2 - HP			9  - AGI
 	3 - max HP		10 - VIT
-	4 - map index	11 - INT
+	4 - map ID		11 - INT
 	5 - x			12 - DEX
 	6 - y			13 - LUK
 
-*Note: For mode, see doc/mob_db_mode_list.txt
+*Notes: For mode, see doc/mob_db_mode_list.txt
+	    For map ID, this refers to the map_data index (from src/map/map.c), not the mapindex_db index (from src/common/mapindex.c)
+	    For 'setunitdata', map name can also be passed in as a valid value instead of map ID
 
 Example:
 	// Spawn some Porings and save the Game ID.
 	// - Keep in mind, when the 'monster' script command is used,
 	// - all the spawned monster GID's are stored in an array
 	// - called $@mobid[].
-	monster "prontera",123,42,"Poring",1002,10;
+	monster "prontera",149,190,"Poring",1002,10;
 	.GID = $@mobid[9]; // Store and modify the 10th Poring spawned to make him stronger!
 
 	// Save the strong Poring's mob data in the @por_arr[] variable. (@por_arr[1] being level, @por_arr[13] being class, etc.)
+	// With this data we can have the NPC display or manipulate it how we want. This does not have to be ran before 'setunitdata'.
 	getunitdata .GID,@por_arr;
 
-	// Set the max HP of the Poring to 1000 and update the current HP to match.
+	// Set the max HP of the Poring to 1000 (current HP will also get updated to 1000).
 	setunitdata .GID,3,1000;
-	setunitdata .GID,2,1000;
 
 ---------------------------------------
 \\
