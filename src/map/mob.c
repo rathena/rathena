@@ -4189,6 +4189,7 @@ static bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 		char str[32];
 		int id;
 	} cond1[] = {
+		// enum e_mob_skill_condition
 		{ "always",            MSC_ALWAYS            },
 		{ "myhpltmaxrate",     MSC_MYHPLTMAXRATE     },
 		{ "myhpinrate",        MSC_MYHPINRATE        },
@@ -4226,6 +4227,7 @@ static bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 		{	"hiding",		SC_HIDING		},
 		{	"sight",		SC_SIGHT		},
 	}, target[] = {
+		// enum e_mob_skill_target
 		{	"target",	MST_TARGET	},
 		{	"randomtarget",	MST_RANDOM	},
 		{	"self",		MST_SELF	},
