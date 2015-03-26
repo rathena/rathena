@@ -155,7 +155,7 @@ OnTimer10000:
 bat_b02,1,1,3	script	OBJ#bat_b02_a	844,{
 OnEnable:
 	$@FlavBG2_C1_ID = bg_monster($@FlaviusBG2_id1,"bat_b02",61,150,"Pink Crystal",1915,"OBJ#bat_b02_a::OnMyMobDead");
-	setunitdata $@FlavBG2_C1_ID,31,1; // Make Crystal immune to damage until Guardians are defeated
+	setunitdata $@FlavBG2_C1_ID,30,1; // Make Crystal immune to damage until Guardians are defeated
 	end;
 
 OnKill:
@@ -189,7 +189,7 @@ OnMyMobDead:
 bat_b02,1,2,3	script	OBJ#bat_b02_b	844,{
 OnEnable:
 	$@FlavBG2_C2_ID = bg_monster($@FlaviusBG2_id2,"bat_b02",328,150,"Blue Crystal",1914,"OBJ#bat_b02_b::OnMyMobDead");
-	setunitdata $@FlavBG2_C2_ID,31,1; // Make Crystal immune to damage until Guardians are defeated
+	setunitdata $@FlavBG2_C2_ID,30,1; // Make Crystal immune to damage until Guardians are defeated
 	end;
 
 OnKill:
@@ -234,7 +234,7 @@ OnMyMobDead:
 	if (mobcount("bat_b02","guardian#bat_b02_a::OnMyMobDead") < 1) {
 		donpcevent "cell#bat_b02_a::OnGreen";
 		mapannounce "bat_b02", "The Guardian protecting Guillaume's Crystal has been slain.",bc_map,"0xFFCE00";
-		setunitdata $@FlavBG2_C1_ID,31,0; // Make Crystal damageable again
+		setunitdata $@FlavBG2_C1_ID,30,0; // Make Crystal damageable again
 	}
 	end;
 }
@@ -253,7 +253,7 @@ OnMyMobDead:
 	if (mobcount("bat_b02","guardian#bat_b02_b::OnMyMobDead") < 1) {
 		donpcevent "cell#bat_b02_b::OnGreen";
 		mapannounce "bat_b02", "The Guardian protecting Croix's Crystal has been slain.",bc_map,"0xFFCE00";
-		setunitdata $@FlavBG2_C2_ID,31,0; // Make Crystal damageable again
+		setunitdata $@FlavBG2_C2_ID,30,0; // Make Crystal damageable again
 	}
 	end;
 }
