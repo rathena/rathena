@@ -1856,6 +1856,133 @@ void clif_selllist(struct map_session_data *sd)
 }
 
 
+/**
+ * Presents list of items, that can be sold to a Market shop.
+ * @author: Ind and Yommy
+ **/
+void clif_npc_market_open(struct map_session_data *sd, struct npc_data *nd) {
+#if PACKETVER >= 20131223
+	struct npc_item_list *shop = nd->u.shop.shop_item;
+	unsigned short shop_size = nd->u.shop.count, i, c, cmd = 0x9d5;
+	struct item_data *id = NULL;
+	struct s_packet_db *info;
+	int fd;
+
+	nullpo_retv(sd);
+
+	if (sd->state.trading)
+		return;
+
+	info = &packet_db[sd->packet_ver][cmd];
+	if (!info || info->len == 0)
+		return;
+
+	fd = sd->fd;
+
+	WFIFOHEAD(fd, 4 + shop_size * 13);
+	WFIFOW(fd,0) = cmd;
+
+	for (i = 0, c = 0; i < shop_size; i++) {
+		if (shop[i].nameid && (id = itemdb_exists(shop[i].nameid))) {
+			WFIFOW(fd, 4+c*13) = shop[i].nameid;
+			WFIFOB(fd, 6+c*13) = itemtype(id->nameid);
+			WFIFOL(fd, 7+c*13) = shop[i].value;
+			WFIFOL(fd,11+c*13) = shop[i].qty;
+			WFIFOW(fd,15+c*13) = (id->view_id > 0) ? id->view_id : id->nameid;
+			c++;
+		}
+	}
+
+	WFIFOW(fd,2) = 4 + c*13;
+	WFIFOSET(fd,WFIFOW(fd,2));
+	sd->state.trading = 1;
+#endif
+}
+
+
+/// Closes the Market shop window.
+void clif_parse_NPCMarketClosed(int fd, struct map_session_data *sd) {
+	nullpo_retv(sd);
+	sd->npc_shopid = 0;
+	sd->state.trading = 0;
+}
+
+
+/// Purchase item from Market shop.
+void clif_npc_market_purchase_ack(struct map_session_data *sd, uint8 res, uint8 n, struct s_npc_buy_list *list) {
+#if PACKETVER >= 20131223
+	unsigned short cmd = 0x9d7, len = 0;
+	struct npc_data* nd;
+	uint8 result = (res == 0 ? 1 : 0);
+	int fd = 0;
+	struct s_packet_db *info;
+
+	nullpo_retv(sd);
+	nullpo_retv((nd = map_id2nd(sd->npc_shopid)));
+
+	info = &packet_db[sd->packet_ver][cmd];
+	if (!info || info->len == 0)
+		return;
+
+	fd = sd->fd;
+	len = 5 + 8*n;
+
+	WFIFOHEAD(fd, len);
+	WFIFOW(fd, 0) = cmd;
+	WFIFOW(fd, 2) = len;
+
+	if (result) {
+		uint8 i, j;
+		struct npc_item_list *shop = nd->u.shop.shop_item;
+		unsigned short count = nd->u.shop.count;
+
+		for (i = 0; i < n; i++) {
+			WFIFOW(fd, 5+i*8) = list[i].nameid;
+			WFIFOW(fd, 7+i*8) = list[i].qty;
+
+			ARR_FIND(0, count, j, list[i].nameid == shop[j].nameid);
+			WFIFOL(fd, 9+i*8) = (j != count) ? shop[j].value : 0;
+		}
+	}
+
+	WFIFOB(fd, 4) = n;
+	WFIFOSET(fd, len);
+#endif
+}
+
+
+/// Purchase item from Market shop.
+void clif_parse_NPCMarketPurchase(int fd, struct map_session_data *sd) {
+#if PACKETVER >= 20131223
+	struct s_packet_db* info;
+	struct s_npc_buy_list *item_list;
+	uint16 cmd = RFIFOW(fd,0), len = 0, i = 0;
+	uint8 res = 0, n = 0;
+
+	nullpo_retv(sd);
+
+	if (!sd->npc_shopid)
+		return;
+
+	info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
+	if (!info || info->len == 0)
+		return;
+	len = RFIFOW(fd,info->pos[0]);
+	n = (len-4) / 6;
+
+	CREATE(item_list, struct s_npc_buy_list, n);
+	for (i = 0; i < n; i++) {
+		item_list[i].nameid = RFIFOW(fd,info->pos[1]+i*6);
+		item_list[i].qty    = (uint16)min(RFIFOL(fd,info->pos[2]+i*6),USHRT_MAX);
+	}
+
+	res = npc_buylist(sd, n, item_list);
+	clif_npc_market_purchase_ack(sd, res, n, item_list);
+	aFree(item_list);
+#endif
+}
+
+
 /// Displays an NPC dialog message (ZC_SAY_DIALOG).
 /// 00b4 <packet len>.W <npc id>.L <message>.?B
 /// Client behavior (dialog window):
@@ -10930,17 +11057,15 @@ void clif_npc_buy_result(struct map_session_data* sd, unsigned char result)
 void clif_parse_NpcBuyListSend(int fd, struct map_session_data* sd)
 {
 	struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
-	int n = (RFIFOW(fd,info->pos[0])-4) /4;
-	unsigned short* item_list = (unsigned short*)RFIFOP(fd,info->pos[1]);
+	uint16 n = (RFIFOW(fd,info->pos[0])-4) /4;
 	int result;
 
 	if( sd->state.trading || !sd->npc_shopid )
 		result = 1;
 	else
-		result = npc_buylist(sd,n,item_list);
+		result = npc_buylist(sd, n, (struct s_npc_buy_list*)RFIFOP(fd,info->pos[1]));
 
 	sd->npc_shopid = 0; //Clear shop data.
-
 	clif_npc_buy_result(sd, result);
 }
 
@@ -17989,7 +18114,7 @@ void packetdb_readdb(bool reload)
 		0,  0,  0,  0,  0,  0,  6,  4,  6,  4,  0,  0,  0,  0,  0,  0,
 	//#0x09C0
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 23,  0,  0,  0,102,  0,
-		0,  0,  0,  0,  2,  0, -1,  0,  2,  0,  0,  0,  0,  0,  0,  7,
+		0,  0,  0,  0,  2,  0, -1, -1,  2,  0,  0,  0,  0,  0,  0,  7,
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	};
@@ -18214,6 +18339,9 @@ void packetdb_readdb(bool reload)
 		{ clif_parse_client_version, "clientversion"},
 		{ clif_parse_blocking_playcancel, "booking_playcancel"},
 		{ clif_parse_ranklist, "ranklist"},
+		/* Market NPC */
+		{ clif_parse_NPCMarketClosed, "npcmarketclosed" },
+		{ clif_parse_NPCMarketPurchase, "npcmarketpurchase" },
 		{NULL,NULL}
 	};
 	struct {
