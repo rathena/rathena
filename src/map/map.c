@@ -69,6 +69,7 @@ char mob_skill_db_re_db[32] = "mob_skill_db_re";
 char mob_skill_db2_db[32] = "mob_skill_db2";
 char vendings_db[32] = "vendings";
 char vending_items_db[32] = "vending_items";
+char market_table[32] = "market";
 
 // log database
 char log_db_ip[32] = "127.0.0.1";
@@ -3759,6 +3760,8 @@ int inter_config_read(char *cfgName)
 			strcpy( vendings_db, w2 );
 		else if( strcmpi( w1, "vending_items_db" ) == 0 )
 			strcpy( vending_items_db, w2 );
+		else if (strcmpi(w1, "market_table") == 0)
+			strcpy(market_table, w2);
 		else
 		//Map Server SQL DB
 		if(strcmpi(w1,"map_server_ip")==0)

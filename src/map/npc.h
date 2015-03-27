@@ -15,13 +15,26 @@ struct view_data;
 struct npc_timerevent_list {
 	int timer,pos;
 };
+
 struct npc_label_list {
 	char name[NAME_LENGTH];
 	int pos;
 };
+
+/// Item list for NPC sell/buy list
 struct npc_item_list {
 	unsigned short nameid;
 	unsigned int value;
+#if PACKETVER >= 20131223
+	unsigned short qty; ///< Stock counter (Market shop)
+	uint8 flag; ///< 1: Item added by npcshopitem/npcshopadditem, force load! (Market shop)
+#endif
+};
+
+/// List of bought/sold item for NPC shops
+struct s_npc_buy_list {
+	unsigned short qty;		///< Amount of item will be bought
+	unsigned short nameid;	///< ID of item will be bought
 };
 
 struct npc_data {
@@ -126,8 +139,8 @@ int npc_click(struct map_session_data* sd, struct npc_data* nd);
 int npc_scriptcont(struct map_session_data* sd, int id, bool closing);
 struct npc_data* npc_checknear(struct map_session_data* sd, struct block_list* bl);
 int npc_buysellsel(struct map_session_data* sd, int id, int type);
-int npc_buylist(struct map_session_data* sd,int n, unsigned short* item_list);
-int npc_selllist(struct map_session_data* sd, int n, unsigned short* item_list);
+uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *item_list);
+uint8 npc_selllist(struct map_session_data* sd, int n, unsigned short *item_list);
 void npc_parse_mob2(struct spawn_data* mob);
 bool npc_viewisid(const char * viewid);
 struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short from_y, short xs, short ys, unsigned short to_mapindex, short to_x, short to_y);
@@ -178,6 +191,11 @@ extern struct npc_data* fake_nd;
 
 int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, unsigned short* item_list);
 bool npc_shop_discount(enum npc_subtype type, bool discount);
+
+#if PACKETVER >= 20131223
+void npc_market_tosql(const char *exname, struct npc_item_list *list);
+void npc_market_delfromsql_(const char *exname, unsigned short nameid, bool clear);
+#endif
 
 #ifdef SECURE_NPCTIMEOUT
 	int npc_rr_secure_timeout_timer(int tid, unsigned int tick, int id, intptr_t data);

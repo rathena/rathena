@@ -2310,10 +2310,12 @@ packet_keys: 0x631C511C,0x111C111C,0x111C111C // [Shakto]
 //0x097E,12 //ZC_UPDATE_RANKING_POINT
 0x09B4,6,dull,0 //Cash Shop - Special Tab
 0x09CE,102,itemmonster,2
-0x09D4,2,dull,0 //npcshopclosed
+0x09D4,2,npcshopclosed,0
 //NPC Market
-0x09D6,-1,dull,0 //npcmarketpurchase
-0x09D8,2,dull,0 //npcmarketclosed
+0x09D5,-1
+0x09D6,-1,npcmarketpurchase,2:4:6
+0x09D7,-1
+0x09D8,2,npcmarketclosed,0
 0x09DF,7
 
 //Add new packets here

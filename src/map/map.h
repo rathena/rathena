@@ -312,7 +312,8 @@ enum npc_subtype {
 	NPCTYPE_CASHSHOP, /// Cashshop
 	NPCTYPE_ITEMSHOP, /// Itemshop
 	NPCTYPE_POINTSHOP, /// Pointshop
-	NPCTYPE_TOMB /// Monster tomb
+	NPCTYPE_TOMB, /// Monster tomb
+	NPCTYPE_MARKETSHOP, /// Marketshop
 };
 
 enum e_race {
@@ -993,6 +994,7 @@ extern char mob_skill_db_re_db[32];
 extern char mob_skill_db2_db[32];
 extern char vendings_db[32];
 extern char vending_items_db[32];
+extern char market_table[32];
 
 void do_shutdown(void);
 
