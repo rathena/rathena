@@ -695,6 +695,10 @@ CREATE TABLE IF NOT EXISTS `storage` (
   KEY `account_id` (`account_id`)
 ) ENGINE=MyISAM;
 
+--
+-- Table structure for table `interreg`
+--
+
 CREATE TABLE IF NOT EXISTS `interreg` (
   `varname` varchar(11) NOT NULL,
   `value` varchar(20) NOT NULL,
@@ -706,13 +710,17 @@ CREATE TABLE IF NOT EXISTS `interreg` (
 --
 
 CREATE TABLE IF NOT EXISTS `bonus_script` (
-  `char_id` varchar(11) NOT NULL,
-  `script` varchar(1024) NOT NULL,
-  `tick` varchar(11) NOT NULL DEFAULT '0',
-  `flag` varchar(3) NOT NULL DEFAULT '0',
-  `type` char(1) NOT NULL DEFAULT '0',
-  `icon` varchar(3) NOT NULL DEFAULT '-1'
+  `char_id` INT(11) UNSIGNED NOT NULL,
+  `script` TEXT NOT NULL,
+  `tick` INT(11) UNSIGNED NOT NULL DEFAULT '0',
+  `flag` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0',
+  `type` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
+  `icon` SMALLINT(3) NOT NULL DEFAULT '-1'
 ) ENGINE=InnoDB;
+
+--
+-- Table structure for table `vending_items`
+--
 
 CREATE TABLE IF NOT EXISTS `vending_items` (
   `vending_id` int(10) unsigned NOT NULL,
@@ -721,6 +729,10 @@ CREATE TABLE IF NOT EXISTS `vending_items` (
   `amount` smallint(5) unsigned NOT NULL,
   `price` int(10) unsigned NOT NULL
 ) ENGINE=MyISAM;
+
+--
+-- Table structure for table `vendings`
+--
 
 CREATE TABLE IF NOT EXISTS `vendings` (
   `id` int(10) unsigned NOT NULL,
@@ -738,6 +750,10 @@ CREATE TABLE IF NOT EXISTS `vendings` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
+--
+-- Table structure for table `buyingstore_items`
+--
+
 CREATE TABLE IF NOT EXISTS `buyingstore_items` (
   `buyingstore_id` int(10) unsigned NOT NULL,
   `index` smallint(5) unsigned NOT NULL,
@@ -745,6 +761,10 @@ CREATE TABLE IF NOT EXISTS `buyingstore_items` (
   `amount` smallint(5) unsigned NOT NULL,
   `price` int(10) unsigned NOT NULL
 ) ENGINE=MyISAM;
+
+--
+-- Table structure for table `buyingstores`
+--
 
 CREATE TABLE IF NOT EXISTS `buyingstores` (
   `id` int(10) unsigned NOT NULL,
@@ -762,3 +782,16 @@ CREATE TABLE IF NOT EXISTS `buyingstores` (
   `autotrade` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
+
+--
+-- Table `market` for market shop persistency
+--
+
+CREATE TABLE IF NOT EXISTS `market` (
+  `name` varchar(32) NOT NULL DEFAULT '',
+  `nameid` SMALLINT(5) UNSIGNED NOT NULL,
+  `price` INT(11) UNSIGNED NOT NULL,
+  `amount` SMALLINT(5) UNSIGNED NOT NULL,
+  `flag` TINYINT(2) UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY  (`name`,`nameid`)
+) ENGINE = MyISAM;

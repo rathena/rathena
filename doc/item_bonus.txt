@@ -333,8 +333,11 @@ bonus2 bSPDrainRate,n,x;		Adds a n/10% chance to drain x% SP when attacking
 bonus3 bSPDrainRate,n,x,y;		Adds a n/10% chance to either gain SP equivalent to x% of damage dealt, OR drain the amount of SP from the enemy
                           		(y: 0=gain SP, 1=drain SP from target)
 
-bonus2 bHPVanishRate,n,x;		Add a n/10% chance of decreasing enemy's HP (player) amount by x% when attacking
-bonus2 bSPVanishRate,n,x;		Add a n/10% chance of decreasing enemy's SP (player) amount by x% when attacking
+bonus2 bHPVanishRate,n,x;		Add a n/100% chance of decreasing enemy's HP amount by x% when attacking
+bonus2 bSPVanishRate,n,x;		Add a n/100% chance of decreasing enemy's SP amount by x% when attacking
+
+bonus3 bHPVanishRaceRate,r,n,x;		Add a n/100% chance of decreasing enemy's HP amount by x% when attacking, depends on enemy race r
+bonus3 bSPVanishRaceRate,r,n,x;		Add a n/100% chance of decreasing enemy's SP amount by x% when attacking, depends on enemy race r
 
 bonus2 bHPGainRaceAttack,r,n;		Heals +n HP on every hit when attacking an enemy of race r
 bonus2 bSPGainRaceAttack,r,n;		Heals +n SP on every hit when attacking an enemy of race r

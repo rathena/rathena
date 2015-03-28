@@ -21,7 +21,7 @@ get_status(){
 	PIDFILE=.$1.pid
 	if [ -e ${PIDFILE} ]; then
 		ISRUN=$(ps ax | grep $(cat ${PIDFILE}) | grep $1)
-		PSRUN=$(echo "$ISRUN" | awk '{ print substr( $0, 0, 7) }')
+		PSRUN=$(echo "$ISRUN" | awk '{ print $1 }')
 	fi
 	#return ${PSRUN} #seem to cause issue for some os
 }

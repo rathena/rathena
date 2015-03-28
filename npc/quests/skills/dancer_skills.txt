@@ -317,7 +317,7 @@ comodo,204,172,5	script	Canell#qsk_dan01	724,{
 				mes "the Charming Wink skill.^000000";
 				set DANCER_SK,9;
 				specialeffect2 EF_ABSORBSPIRITS;
-				skill "DC_WINKCHARM",1,0;
+				skill "DC_WINKCHARM",1,SKILL_PERM;
 				close;
 			}
 		}
@@ -360,7 +360,7 @@ comodo,204,172,5	script	Canell#qsk_dan01	724,{
 			mes "^3355FFYou have learned the";
 			mes "Charming Wink skill.^000000";
 			specialeffect2 EF_ABSORBSPIRITS;
-			skill "DC_WINKCHARM",1,0;
+			skill "DC_WINKCHARM",1,SKILL_PERM;
 			close;
 		}
 	}

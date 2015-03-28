@@ -17,7 +17,7 @@ prontera,156,179,6	script	test_getiteminfo	117,{
 	mes "Item ID: " + .@value + " ^nItemID^" + .@value;
 
 	mes "Current item info:";
-	for(.@id = 0; .@id < 14; .@id++)
+	for(.@id = 0; .@id <= 16; .@id++)
 		mes " getiteminfo(" + .@value + "," + .@id + ") = " + getiteminfo(.@value,.@id);
 	close;
 }

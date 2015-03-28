@@ -1,18 +1,18 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Eclage Quests
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Dastgir
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.1
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Quest NPCs related to Eclage.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 Converted from the official Aegis script. [Dastgir]
 //= 1.1 Converted from Hercules Script to rAthena Script. [Skorm]
-//============================================================ 
+//============================================================
 
 // Teleport Cats (14.2 Cat Hand Addition)
 //============================================================
@@ -5004,7 +5004,7 @@ ecl_in01,52,104,4	duplicate(Choir member#eclbig01)	Choir member#eclbig04	442
 ecl_in01,54,104,4	duplicate(Choir member#eclbig01)	Choir member#eclbig05	442
 
 
-// Mystery Burglary Quest 
+// Mystery Burglary Quest
 //============================================================
 eclage,156,51,6	script	#hidden_eclage	111,3,3,{
 	end;
@@ -12016,7 +12016,7 @@ ecl_in04,105,216,4	script	Hiel's Workshop#pa0829	111,{
 			next;
 			cutin "EP14_etran1",1;
 			mes "[Etran]";
-			mes "Welcome welcomeow~! We are cat merchants, always serving guests as our kingeow~! Special sale! One piece of meat for 200ÃÂ¦Â´Ã!!";
+			mes "Welcome welcomeow~! We are cat merchants, always serving guests as our kingeow~! Special sale! One piece of meat for 200Á¦´Ï!!";
 			next;
 			cutin "EP14_robert1",1;
 			mes "[Robert]";
@@ -12332,7 +12332,7 @@ ecl_fild01,190,93,5	script	Fili#1	617,1,1,{
 					mes "[Fili]";
 					mes "There are four in the work group. Don't forget to tell everyone.";
 					close;
-				} 
+				}
 				mes "[Fili]";
 				mes "Thanks. Can you hear the earth singing? The sound of flowers and trees dancing in the wind. You'll hear it someday.";
 				emotion e_lv;
@@ -12493,7 +12493,7 @@ ecl_fild01,190,93,5	script	Fili#1	617,1,1,{
 	}
 	else if (ep14_2_nines == 1) {
 		if (isbegin_quest(13050) == 1) {
-			if ((isbegin_quest(13051) == 1) || (isbegin_quest(13052) == 1) || (isbegin_quest(13053) == 1) || (isbegin_quest(13054) == 1)) { 
+			if ((isbegin_quest(13051) == 1) || (isbegin_quest(13052) == 1) || (isbegin_quest(13053) == 1) || (isbegin_quest(13054) == 1)) {
 				mes "[Fili]";
 				mes "Four Laphines are preparing to work today. Make sure you tell every one of them.";
 				next;
@@ -12510,7 +12510,7 @@ ecl_fild01,190,93,5	script	Fili#1	617,1,1,{
 			mes "[Fili]";
 			mes "I think their work for the field is finished for the day. By the way, ^FF0000there's another work. Ask about it if you're interested.^000000";
 			erasequest 13050;
-			ep14_2_nines = 2; 
+			ep14_2_nines = 2;
 			getitem 6081,1; //Splendide_Coin
 			getexp 300000,300000;
 			close;
@@ -12554,7 +12554,7 @@ ecl_fild01,190,93,5	script	Fili#1	617,1,1,{
 				close;
 			}
 		}
-	} 
+	}
 	if (ep14_2_oliver > 4) {
 		mes "[Fili]";
 		mes "Look at this beautiful field filled with little blades of grass and twigs breathing!";
@@ -12643,7 +12643,7 @@ ecl_fild01,83,263,5	script	Watering Laphine#1	444,{
 			mes "I think this is enough for the day. I have to take a break and draw water, too. Hehe~!";
 			close;
 		}
-		else if ((isbegin_quest(13050) == 1) && (isbegin_quest(13052) == 1)) { 
+		else if ((isbegin_quest(13050) == 1) && (isbegin_quest(13052) == 1)) {
 			mes "[Watering Laphine]";
 			mes "I'll water these dying flowers and grasses again. This brings them back to life! Hehe~!";
 			erasequest 13052;
@@ -12693,7 +12693,7 @@ ecl_fild01,163,196,5	script	Dancing Laphine#1	438,{
 			mes "I would love to see the great Fili next time...";
 			close;
 		}
-		if ((isbegin_quest(13050) == 1) && (isbegin_quest(13053) == 1)) { 
+		if ((isbegin_quest(13050) == 1) && (isbegin_quest(13053) == 1)) {
 			mes "[Dancing Laphine]";
 			mes "Ah, it's you again! You're so insensitive. Anyway, you're here to tell me to start working, right? I see, I see. You can go now.";
 			emotion e_pif;
@@ -13023,31 +13023,32 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 			mes "[New Oz]";
 			mes "No need to worry about me! ^FF0000I'll definitely go home this time!^000000 Thanks for everything! I'll take you out for a nice meal next time!";
 			emotion e_thx;
-			erasequest 13058;
+			if (isbegin_quest(13058))
+				erasequest 13058;
 			close2;
 			cutin "",255;
 			end;
 		}
-		if ((checkquest(13062,PLAYTIME) == 1) || (checkquest(13064,PLAYTIME) == 1) || (checkquest(13066,PLAYTIME) == 1)) {
+		if ((checkquest(13062,PLAYTIME) == 2) || (checkquest(13064,PLAYTIME) == 2) || (checkquest(13066,PLAYTIME) == 2)) {
 			cutin "nines01",2;
 			mes "[New Oz]";
 			mes "Ah...What a relief...I'm so glad you're here. I was about to leave this tower alone! But I think I'm lost.";
 			emotion e_gasp;
-			if (checkquest(13062,PLAYTIME) == 1) {
+			if (checkquest(13062,PLAYTIME) == 2) {
 				next;
 				cutin "nines04",2;
 				mes "[New Oz]";
 				mes "I'm hungry again from walking around so much...I'm so hungry that I can't walk anymore.";
 				erasequest 13062;
 			}
-			if (checkquest(13064,PLAYTIME) == 1) {
+			if (checkquest(13064,PLAYTIME) == 2) {
 				next;
 				cutin "nines03",2;
 				mes "[New Oz]";
 				mes "Did I walk too much? I'm covered with dust again. It keeps covering my eyes.";
 				erasequest 13064;
 			}
-			if (checkquest(13066,PLAYTIME) == 1) {
+			if (checkquest(13066,PLAYTIME) == 2) {
 				next;
 				cutin "nines02",2;
 				mes "[New Oz]";
@@ -13069,7 +13070,7 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 			if (checkquest(13062,PLAYTIME) >= 1) {
 				next;
 				mes "[New Oz]";
-				if (checkquest(13064,PLAYTIME) == 1) {
+				if (checkquest(13064,PLAYTIME) >= 1) {
 					mes "I guess I'll have no problem finding my way out of this tower now. I'm full...and I just need to get a few more souvenirs...";
 				}
 				else {
@@ -13083,7 +13084,8 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 				mes "I'm starving to death though... Could you please help me, my friend?";
 				emotion e_wah;
 			}
-			erasequest 13058;
+			if (isbegin_quest(13058))
+				erasequest 13058;
 			close2;
 			cutin "",255;
 			end;
@@ -13164,6 +13166,7 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 				mes "[New Oz]";
 				mes "As long as I'm getting something to eat, I was just hoping for a good one. I'm sorry, but do me a favor please. I couldn't forget the taste of the meat.";
 				emotion e_slur;
+				if (checkquest(13062,PLAYTIME) == 2)
 				erasequest 13062;
 				setquest 13061;
 				break;
@@ -13229,7 +13232,9 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 				next;
 				mes "[New Oz]";
 				mes "Fight off some Cherenes then. You don't have to eliminate that many because I'll start fighting soon, too! Haha.";
-				changequest 13064,13063;
+				if (checkquest(13064,PLAYTIME))
+					erasequest 13064;
+				setquest 13063;
 				break;
 			case 2:
 				mes "[New Oz]";
@@ -13262,7 +13267,6 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 					emotion e_thx;
 					delitem 6560,20; //Leaf_Bookmark
 					changequest 13065,13066;
-					setquest 13066;
 					getexp 300000,300000;
 					getitem 6081,1; //Splendide_Coin
 					close2;
@@ -13299,7 +13303,9 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 			case 1:
 				mes "[New Oz]";
 				mes "Bookmarks made of fallen leaves...Ah, they bring so many memories back and make my eyes teary. I'm sure my friends will love it!";
-				changequest 13066,13065;
+				if (checkquest(13066,PLAYTIME))
+					erasequest 13066;
+				setquest 13065;
 				break;
 			case 2:
 				cutin "nines04",2;
@@ -13367,7 +13373,7 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 				close2;
 				cutin "",255;
 				end;
-			} 
+			}
 			cutin "nines03",2;
 			mes "[New Oz]";
 			mes "Don't worry. I'm pretty much done writing a song. I'm almost done with the lyrics as well as the melody.";
@@ -19055,13 +19061,13 @@ OnStop:
 	stopnpctimer;
 	end;
 OnTimer5000:
-	mapannounce "que_avan01","Welcome, Sir Avant. User certification standby for 5 minutes.",bc_map,"0xA8A8A8"; 
+	mapannounce "que_avan01","Welcome, Sir Avant. User certification standby for 5 minutes.",bc_map,"0xA8A8A8";
 	end;
 OnTimer360000:
-	mapannounce "que_avan01","Warning: Long-term use was not certified. Restrictive magic on unauthorized personnel will automatically be executed.",bc_map,"0xA8A8A8"; 
+	mapannounce "que_avan01","Warning: Long-term use was not certified. Restrictive magic on unauthorized personnel will automatically be executed.",bc_map,"0xA8A8A8";
 	end;
 OnTimer365000:
-	mapannounce "que_avan01","Research lab interior space has been distorted. Sweeping in process.",bc_map,"0x7b68ee"; 
+	mapannounce "que_avan01","Research lab interior space has been distorted. Sweeping in process.",bc_map,"0x7b68ee";
 	end;
 OnTimer368000:
 	mapwarp "que_avan01","eclage",265,275;
@@ -19333,7 +19339,7 @@ OnReset:
 	
 OnMyMobDead:
 	if (mobcount ("que_avan01","#avtmanager::OnMyMobDead") == 0) {
-		mapannounce "que_avan01","Hisie: This is it for you! Avant!!",bc_map,"0x7b68ee"; 
+		mapannounce "que_avan01","Hisie: This is it for you! Avant!!",bc_map,"0x7b68ee";
 		hideonnpc "Hisie#tlspt";
 		hideoffnpc "Hisie#tlhunt";
 	}
@@ -19362,7 +19368,7 @@ OnKill:
 	end;
 	
 OnTimer2000:
-	mapannounce "que_avan01","Hisie: Watch out!!!",bc_map,"0x7b68ee"; 
+	mapannounce "que_avan01","Hisie: Watch out!!!",bc_map,"0x7b68ee";
 	end;
 	
 OnTimer8000:

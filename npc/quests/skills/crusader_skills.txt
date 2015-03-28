@@ -24,7 +24,7 @@ geffen,110,117,3	script	Ford#11	752,{
 			mes "the Shrink skill, so I'll teach";
 			mes "it to you real quick... There!";
 			set CRUS_SK,10;
-			skill "CR_SHRINK",1,0;
+			skill "CR_SHRINK",1,SKILL_PERM;
 			close;
 		}
 
@@ -519,7 +519,7 @@ gef_fild13,297,242,3	script	Soldier#277	751,{
 				mes "and protect the weak. Ah, and";
 				mes "if I learn any new skills, I'll be sure to teach you right away.";
 				set CRUS_SK,8;
-				skill "CR_SHRINK",1,0;
+				skill "CR_SHRINK",1,SKILL_PERM;
 				close;
 			}
 			mes "^3355FFYou carefully pour the";

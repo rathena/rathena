@@ -151,8 +151,8 @@ valkyrie,48,86,4	script	Valkyrie#	811,{
 			jobchange Job_Novice_High;
 			resetlvl(1);
 			set MISC_QUEST,MISC_QUEST | 1024; //<-reset Skill Reset Event
-			skill "NV_FIRSTAID",1,0;
-			skill "NV_TRICKDEAD",1,0;
+			skill "NV_FIRSTAID",1,SKILL_PERM;
+			skill "NV_TRICKDEAD",1,SKILL_PERM;
 			completequest 1000;
 			next;
 			mes "[Valkyrie]";

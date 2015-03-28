@@ -117,9 +117,9 @@ yuno_in03,176,24,3	script	Mischna	755,{
 					mes "learned the "+.@Skill$[.@i]+" Elemental";
 					mes "Change skill and the Elemental";
 					mes "Converter Creation skill.^000000";
-					skill .@Skill[.@i],1,0;
+					skill .@Skill[.@i],1,SKILL_PERM;
 					if(.@Convert == 0)
-						skill "SA_CREATECON",1,0;
+						skill "SA_CREATECON",1,SKILL_PERM;
 					next;
 					break;
 				}
@@ -146,7 +146,7 @@ yuno_in03,176,24,3	script	Mischna	755,{
 			mes "the Elemental Coverter";
 			mes "Creation skill and are";
 			mes "able to use it again.^000000";
-			skill "SA_CREATECON",1,0;
+			skill "SA_CREATECON",1,SKILL_PERM;
 			next;
 		}
 		mes "[Mishuna]";
@@ -316,7 +316,7 @@ yuno_in03,176,24,3	script	Mischna	755,{
 			delitem 946,10; // Snail's_Shell
 			delitem 7433,4; // Blank_Scroll
 			set SAG_SK,2;
-			skill "SA_CREATECON",1,0;
+			skill "SA_CREATECON",1,SKILL_PERM;
 			next;
 			mes "[Mishuna]";
 			mes "Wow, "+strcharinfo(0)+"!";
@@ -337,7 +337,7 @@ yuno_in03,176,24,3	script	Mischna	755,{
 	}
 	else if(SAG_SK == 2) {
 		if(getskilllv("SA_CREATECON") == 0) {
-			skill "SA_CREATECON",1,0;
+			skill "SA_CREATECON",1,SKILL_PERM;
 			mes "- I recalled ^ff0000Elemental Converter Creation skill^000000 While I talk to Mishuna! -";
 			next;
 		}
@@ -389,7 +389,7 @@ yuno_in03,176,24,3	script	Mischna	755,{
 	}
 	else if(SAG_SK == 10 || SAG_SK == 20 || SAG_SK == 30 || SAG_SK == 40) {
 		if(getskilllv("SA_CREATECON") == 0) {
-			skill "SA_CREATECON",1,0;
+			skill "SA_CREATECON",1,SKILL_PERM;
 			mes "- I recalled ^ff0000Elemental Converter Creation skill^000000 While I talk to Mishuna! -";
 			next;
 		}

@@ -54,7 +54,7 @@
 #define MAX_BANK_ZENY SINT32_MAX ///Max zeny in Bank
 #define MAX_FAME 1000000000 ///Max fame points
 #define MAX_CART 100 ///Maximum item in cart
-#define MAX_SKILL 5020 ///Maximum skill data
+#define MAX_SKILL 1200 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
 #define GLOBAL_REG_NUM 256 ///Max permanent character variables per char
 #define ACCOUNT_REG_NUM 64 ///Max permanent local account variables per account
 #define ACCOUNT_REG2_NUM 16 ///Max permanent global account variables per account
@@ -73,7 +73,7 @@
 #define MAX_GUILDLEVEL 50 ///Max Guild level
 #define MAX_GUARDIANS 8	///Local max per castle. If this value is increased, need to add more fields on MySQL `guild_castle` table [Skotlex]
 #define MAX_QUEST_OBJECTIVES 3 ///Max quest objectives for a quest
-#define MAX_PC_BONUS_SCRIPT 20 ///Max bonus script
+#define MAX_PC_BONUS_SCRIPT 50 ///Max bonus script can be fetched from `bonus_script` table on player load [Cydh]
 
 // for produce
 #define MIN_ATTRIBUTE 0
@@ -223,10 +223,11 @@ enum e_skill_flag
 	SKILL_FLAG_PERMANENT,
 	SKILL_FLAG_TEMPORARY,
 	SKILL_FLAG_PLAGIARIZED,
-	SKILL_FLAG_REPLACED_LV_0, // temporary skill overshadowing permanent skill of level 'N - SKILL_FLAG_REPLACED_LV_0',
-	SKILL_FLAG_PERM_GRANTED, // permanent, granted through someway e.g. script
-	SKILL_FLAG_TMP_COMBO, //@FIXME for homon combo atm
-	//...
+	SKILL_FLAG_PERM_GRANTED, // Permanent, granted through someway e.g. script
+	SKILL_FLAG_TMP_COMBO, //@FIXME for homunculus combo atm
+
+	//! NOTE: This flag be the last flag, and don't change the value if not needed!
+	SKILL_FLAG_REPLACED_LV_0 = 10, // temporary skill overshadowing permanent skill of level 'N - SKILL_FLAG_REPLACED_LV_0',
 };
 
 enum e_mmo_charstatus_opt {
@@ -236,9 +237,9 @@ enum e_mmo_charstatus_opt {
 };
 
 struct s_skill {
-	unsigned short id;
-	unsigned char lv;
-	unsigned char flag; // see enum e_skill_flag
+	uint16 id;
+	uint8 lv;
+	uint8 flag; // see enum e_skill_flag
 };
 
 struct global_reg {
@@ -259,12 +260,13 @@ struct status_change_data {
 	long val1, val2, val3, val4, tick; //Remaining duration.
 };
 
-#define MAX_BONUS_SCRIPT_LENGTH 1024
+#define MAX_BONUS_SCRIPT_LENGTH 512
 struct bonus_script_data {
-	char script[MAX_BONUS_SCRIPT_LENGTH];
-	long tick;
-	char type;
-	short flag, icon;
+	char script_str[MAX_BONUS_SCRIPT_LENGTH]; //< Script string
+	uint32 tick; ///< Tick
+	uint16 flag; ///< Flags @see enum e_bonus_script_flags
+	int16 icon; ///< Icon SI
+	uint8 type; ///< 0 - None, 1 - Buff, 2 - Debuff
 };
 
 struct skill_cooldown_data {
@@ -317,12 +319,19 @@ struct s_homunculus {	//[orn]
 	unsigned int exp;
 	short rename_flag;
 	short vaporize; //albator
-	int str ;
-	int agi ;
-	int vit ;
-	int int_ ;
-	int dex ;
-	int luk ;
+	int str;
+	int agi;
+	int vit;
+	int int_;
+	int dex;
+	int luk;
+
+	int str_value;
+	int agi_value;
+	int vit_value;
+	int int_value;
+	int dex_value;
+	int luk_value;
 
 	char spiritball; //for homun S [lighta]
 };
@@ -624,6 +633,7 @@ enum e_guild_skill {
 	GD_MAX,
 };
 
+#define MAX_SKILL_ID GD_MAX
 
 //These mark the ID of the jobs, as expected by the client. [Skotlex]
 enum e_job {
@@ -811,8 +821,15 @@ enum bound_type {
 #if (MIN_CHARS + MAX_CHAR_VIP + MAX_CHAR_BILLING) > MAX_CHARS
 #error Config of MAX_CHARS is invalid
 #endif
+
 #if MIN_STORAGE > MAX_STORAGE
 #error Config of MIN_STORAGE is invalid
+#endif
+
+#ifdef PACKET_OBFUSCATION
+	#if PACKETVER < 20110817
+		#undef PACKET_OBFUSCATION
+	#endif
 #endif
 
 #endif /* _MMO_H_ */

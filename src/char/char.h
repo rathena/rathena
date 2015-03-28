@@ -135,6 +135,10 @@ struct CharServ_Config {
 	int autosave_interval;
 	int start_zeny;
 	int guild_exp_rate;
+
+	char default_map[MAP_NAME_LENGTH];
+	unsigned short default_map_x;
+	unsigned short default_map_y;
 };
 extern struct CharServ_Config charserv_config;
 

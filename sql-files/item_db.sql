@@ -32,7 +32,7 @@ CREATE TABLE `item_db` (
 # Items Database
 #
 # Structure of Database:
-#REPLACE INTO `item_db` VALUES ( ID,'AegisName','Name',Type,Buy,Sell,Weight,ATK,DEF,Range,Slots,Job,Class,Gender,Loc,wLV,eLV,Refineable,View,'Script','OnEquip_Script','OnUnequip_Script');
+#REPLACE INTO `item_db` VALUES ( ID,'AegisName','Name',Type,Buy,Sell,Weight,ATK,DEF,Range,Slots,Job,Class,Gender,Loc,wLV,eLV[:maxLevel],Refineable,View,'Script','OnEquip_Script','OnUnequip_Script');
 #
 # Healing Items
 #=============================================================

@@ -134,7 +134,7 @@
 
 2319,0xec,    ,  0, 3,5000,all,   0x000	//LG_BANDING
 
-2414,0xda,    ,  0, 0,1000,enemy, 0x1008	//WM_REVERBERATION
+2414,0xda,    ,  0, 0,  -1,enemy, 0x1000	//WM_REVERBERATION
 2418,0xdb,    ,  0, 5, 300,enemy, 0x800	//WM_SEVERE_RAINSTORM
 2419,0xde,    ,  0, 1,1000,enemy, 0x1014 //WM_POEMOFNETHERWORLD
 
@@ -171,6 +171,7 @@
 5006,0x101,   ,  0, 3,2000,enemy, 0x018	//NC_MAGMA_ERUPTION
 5008,0x85,    ,  0, 0,  -1,all,   0x003	//SO_ELEMENTAL_SHIELD
 5010,0xfe,    ,  0, 2,  -1,enemy, 0x000	//SC_ESCAPE
+5013,0x102,   ,  3, 0,  -1,all,   0x2002	//LG_KINGS_GRACE
 
 8020,0xf5,    ,  3, 0,2300:2100:1900:1700:1500,enemy,   0x018	//MH_POISON_MIST
 8033,0x7e,    ,  0, 0,  -1,all,   0x003	//MH_STEINWAND

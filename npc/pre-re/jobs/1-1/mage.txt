@@ -46,9 +46,9 @@ geffen_in,164,124,4	script	Mage Guildsman	123,{
 				mes "[Mage Guildsman]";
 				mes "Well, since you have passed the Mage test once, I will not question your qualification. You want to have your magic skills back immediately, don't you?";
 				next;
-				skill "NV_TRICKDEAD",0,0;
+				skill "NV_TRICKDEAD",0,SKILL_PERM;
 				jobchange Job_Mage_High;
-				skill "MG_ENERGYCOAT",1,0;
+				skill "MG_ENERGYCOAT",1,SKILL_PERM;
 				mes "[Mage Guildsman]";
 				mes "Wow, for some reason, you look way better than you did before. Anyway, I believe you will do a better job being a Mage as well.";
 				close;

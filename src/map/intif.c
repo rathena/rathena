@@ -1910,7 +1910,7 @@ void intif_parse_questlog(int fd)
 			CREATE(sd->quest_log, struct quest, num_received);
 
 		for(i = 0; i < num_received; i++) {
-			if(quest_db(received[i].quest_id) == &quest_dummy) {
+			if(quest_search(received[i].quest_id) == &quest_dummy) {
 				ShowError("intif_parse_QuestLog: quest %d not found in DB.\n", received[i].quest_id);
 				continue;
 			}

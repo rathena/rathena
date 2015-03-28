@@ -434,12 +434,6 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 		strcat(save_status, " memo");
 	}
 
-	//FIXME: is this neccessary? [ultramage]
-	for(i=0;i<MAX_SKILL;i++)
-		if ((p->skill[i].lv != 0) && (p->skill[i].id == 0))
-			p->skill[i].id = i; // Fix skill tree
-
-
 	//skills
 	if( memcmp(p->skill, cp->skill, sizeof(p->skill)) )
 	{
@@ -944,7 +938,6 @@ int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf) {
 //=====================================================================================================
 int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_everything) {
 	int i,j;
-	char t_msg[128] = "";
 	struct mmo_charstatus* cp;
 	StringBuf buf;
 	SqlStmt* stmt;
@@ -954,11 +947,13 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 	struct point tmp_point;
 	struct item tmp_item;
 	struct s_skill tmp_skill;
+	uint16 skill_count = 0;
 	struct s_friend tmp_friend;
 #ifdef HOTKEY_SAVING
 	struct hotkey tmp_hotkey;
 	int hotkey_num;
 #endif
+	StringBuf msg_buf;
 
 	memset(p, 0, sizeof(struct mmo_charstatus));
 
@@ -1054,22 +1049,24 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 	p->save_point.map = mapindex_name2id(save_map);
 
 	if( p->last_point.map == 0 ) {
-		p->last_point.map = mapindex_name2id(MAP_DEFAULT);
-		p->last_point.x = MAP_DEFAULT_X;
-		p->last_point.y = MAP_DEFAULT_Y;
+		p->last_point.map = mapindex_name2id(charserv_config.default_map);
+		p->last_point.x = charserv_config.default_map_x;
+		p->last_point.y = charserv_config.default_map_y;
 	}
 
 	if( p->save_point.map == 0 ) {
-		p->save_point.map = mapindex_name2id(MAP_DEFAULT);
-		p->save_point.x = MAP_DEFAULT_X;
-		p->save_point.y = MAP_DEFAULT_Y;
+		p->save_point.map = mapindex_name2id(charserv_config.default_map);
+		p->save_point.x = charserv_config.default_map_x;
+		p->save_point.y = charserv_config.default_map_y;
 	}
 
-	strcat(t_msg, " status");
+	StringBuf_Init(&msg_buf);
+	StringBuf_AppendStr(&msg_buf, " status");
 
 	if (!load_everything) // For quick selection of data when displaying the char menu
 	{
 		SqlStmt_Free(stmt);
+		StringBuf_Destroy(&msg_buf);
 		return 1;
 	}
 
@@ -1088,7 +1085,7 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 		tmp_point.map = mapindex_name2id(point_map);
 		memcpy(&p->memo_point[i], &tmp_point, sizeof(tmp_point));
 	}
-	strcat(t_msg, " memo");
+	StringBuf_AppendStr(&msg_buf, " memo");
 
 	//read inventory
 	//`inventory` (`id`,`char_id`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `card0`, `card1`, `card2`, `card3`, `expire_time`, `favorite`, `unique_id`)
@@ -1120,7 +1117,7 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 	for( i = 0; i < MAX_INVENTORY && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
 		memcpy(&p->inventory[i], &tmp_item, sizeof(tmp_item));
 
-	strcat(t_msg, " inventory");
+	StringBuf_AppendStr(&msg_buf, " inventory");
 
 	//read cart
 	//`cart_inventory` (`id`,`char_id`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `card0`, `card1`, `card2`, `card3`, expire_time`, `unique_id`)
@@ -1150,33 +1147,34 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 
 	for( i = 0; i < MAX_CART && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
 		memcpy(&p->cart[i], &tmp_item, sizeof(tmp_item));
-	strcat(t_msg, " cart");
+	StringBuf_AppendStr(&msg_buf, " cart");
 
 	//read storage
 	storage_fromsql(p->account_id, &p->storage);
-	strcat(t_msg, " storage");
+	StringBuf_AppendStr(&msg_buf, " storage");
 
 	//read skill
 	//`skill` (`char_id`, `id`, `lv`)
 	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `id`, `lv`,`flag` FROM `%s` WHERE `char_id`=? LIMIT %d", schema_config.skill_db, MAX_SKILL)
-	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
-	||	SQL_ERROR == SqlStmt_Execute(stmt)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_USHORT, &tmp_skill.id  , 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_UCHAR , &tmp_skill.lv  , 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_UCHAR , &tmp_skill.flag, 0, NULL, NULL) )
+		||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
+		||	SQL_ERROR == SqlStmt_Execute(stmt)
+		||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_UINT16, &tmp_skill.id  , 0, NULL, NULL)
+		||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_UINT8 , &tmp_skill.lv  , 0, NULL, NULL)
+		||	SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_UINT8 , &tmp_skill.flag, 0, NULL, NULL) )
 		SqlStmt_ShowDebug(stmt);
 
 	if( tmp_skill.flag != SKILL_FLAG_PERM_GRANTED )
 		tmp_skill.flag = SKILL_FLAG_PERMANENT;
 
-	for( i = 0; i < MAX_SKILL && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
-	{
-		if( tmp_skill.id < ARRAYLENGTH(p->skill) )
-			memcpy(&p->skill[tmp_skill.id], &tmp_skill, sizeof(tmp_skill));
+	for( i = 0; skill_count < MAX_SKILL && SQL_SUCCESS == SqlStmt_NextRow(stmt); i++ ) {
+		if( tmp_skill.id > 0 && tmp_skill.id < MAX_SKILL_ID ) {
+			memcpy(&p->skill[i], &tmp_skill, sizeof(tmp_skill));
+			skill_count++;
+		}
 		else
 			ShowWarning("mmo_char_fromsql: ignoring invalid skill (id=%u,lv=%u) of character %s (AID=%d,CID=%d)\n", tmp_skill.id, tmp_skill.lv, p->name, p->account_id, p->char_id);
 	}
-	strcat(t_msg, " skills");
+	StringBuf_Printf(&msg_buf, " %d skills", skill_count);
 
 	//read friends
 	//`friends` (`char_id`, `friend_account`, `friend_id`)
@@ -1190,7 +1188,7 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 
 	for( i = 0; i < MAX_FRIENDS && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
 		memcpy(&p->friends[i], &tmp_friend, sizeof(tmp_friend));
-	strcat(t_msg, " friends");
+	StringBuf_AppendStr(&msg_buf, " friends");
 
 #ifdef HOTKEY_SAVING
 	//read hotkeys
@@ -1211,20 +1209,21 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 		else
 			ShowWarning("mmo_char_fromsql: ignoring invalid hotkey (hotkey=%d,type=%u,id=%u,lv=%u) of character %s (AID=%d,CID=%d)\n", hotkey_num, tmp_hotkey.type, tmp_hotkey.id, tmp_hotkey.lv, p->name, p->account_id, p->char_id);
 	}
-	strcat(t_msg, " hotkeys");
+	StringBuf_AppendStr(&msg_buf, " hotkeys");
 #endif
 
 	/* Mercenary Owner DataBase */
 	mercenary_owner_fromsql(char_id, p);
-	strcat(t_msg, " mercenary");
+	StringBuf_AppendStr(&msg_buf, " mercenary");
 
 
-	if (charserv_config.save_log) ShowInfo("Loaded char (%d - %s): %s\n", char_id, p->name, t_msg);	//ok. all data load successfuly!
+	if (charserv_config.save_log) ShowInfo("Loaded char (%d - %s): %s\n", char_id, p->name, StringBuf_Value(&msg_buf));	//ok. all data load successfuly!
 	SqlStmt_Free(stmt);
 	StringBuf_Destroy(&buf);
 
 	cp = idb_ensure(char_db_, char_id, char_create_charstatus);
 	memcpy(cp, p, sizeof(struct mmo_charstatus));
+	StringBuf_Destroy(&msg_buf);
 	return 1;
 }
 
@@ -2537,6 +2536,10 @@ void char_set_defaults(){
 	charserv_config.autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
 	charserv_config.start_zeny = 0;
 	charserv_config.guild_exp_rate = 100;
+
+	safestrncpy(charserv_config.default_map, "prontera", MAP_NAME_LENGTH);
+	charserv_config.default_map_x = 156;
+	charserv_config.default_map_y = 191;
 }
 
 bool char_config_read(const char* cfgName, bool normal){
@@ -2726,6 +2729,12 @@ bool char_config_read(const char* cfgName, bool normal){
 			charserv_config.charmove_config.char_moves_unlimited = config_switch(w2);
 		} else if (strcmpi(w1, "char_checkdb") == 0) {
 			charserv_config.char_check_db = config_switch(w2);
+		} else if (strcmpi(w1, "default_map") == 0) {
+			safestrncpy(charserv_config.default_map, w2, MAP_NAME_LENGTH);
+		} else if (strcmpi(w1, "default_map_x") == 0) {
+			charserv_config.default_map_x = atoi(w2);
+		} else if (strcmpi(w1, "default_map_y") == 0) {
+			charserv_config.default_map_y = atoi(w2);
 		} else if (strcmpi(w1, "import") == 0) {
 			char_config_read(w2, normal);
 		}
@@ -2913,6 +2922,8 @@ int do_init(int argc, char **argv)
 	}
 
 	do_init_chcnslif();
+	mapindex_check_mapdefault(charserv_config.default_map);
+	ShowInfo("Default map: '"CL_WHITE"%s %d,%d"CL_RESET"'\n", charserv_config.default_map, charserv_config.default_map_x, charserv_config.default_map_y);
 
 	ShowStatus("The char-server is "CL_GREEN"ready"CL_RESET" (Server is listening on the port %d).\n\n", charserv_config.char_port);
 

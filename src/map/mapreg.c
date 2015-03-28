@@ -7,8 +7,10 @@
 #include "../common/sql.h"
 #include "../common/strlib.h"
 #include "../common/timer.h"
+
 #include "map.h" // mmysql_handle
 #include "script.h"
+
 #include <stdlib.h>
 
 static DBMap* mapreg_db = NULL; // int var_id -> int value
@@ -70,7 +72,7 @@ bool mapreg_setregstr(int uid, const char* str)
 	int num = (uid & 0x00ffffff);
 	int i   = (uid & 0xff000000) >> 24;
 	const char* name = get_str(num);
-	
+
 	if( str == NULL || *str == 0 )
 	{
 		if(name[1] != '@') {
@@ -134,7 +136,6 @@ static void script_load_mapreg(void)
 		else
 			idb_iput(mapreg_db, (i<<24)|s, atoi(value));
 	}
-	
 	SqlStmt_Free(stmt);
 
 	mapreg_dirty = false;

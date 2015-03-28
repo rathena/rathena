@@ -22,6 +22,8 @@ int chclif_parse_pincode_check( int fd, struct char_session_data* sd );
 int chclif_parse_pincode_change( int fd, struct char_session_data* sd );
 int chclif_parse_pincode_setnew( int fd, struct char_session_data* sd );
 
+void chclif_reject(int fd, uint8 errCode);
+void chclif_refuse_delchar(int fd, uint8 errCode);
 void chclif_charlist_notify( int fd, struct char_session_data* sd );
 void chclif_block_character( int fd, struct char_session_data* sd );
 int chclif_mmo_send006b(int fd, struct char_session_data* sd);

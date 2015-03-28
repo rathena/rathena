@@ -33,6 +33,7 @@ struct party_booking_ad_info;
 #include <stdarg.h>
 
 enum { // packet DB
+	MIN_PACKET_DB  = 0x0064,
 	MAX_PACKET_DB  = 0xf00,
 	MAX_PACKET_VER = 46,
 	MAX_PACKET_POS = 20,
@@ -58,6 +59,13 @@ struct s_packet_db {
 	void (*func)(int, struct map_session_data *);
 	short pos[MAX_PACKET_POS];
 };
+
+#ifdef PACKET_OBFUSCATION
+/// Keys based on packet versions
+struct s_packet_keys {
+	unsigned int keys[3]; ///< 3-Keys
+};
+#endif
 
 enum e_BANKING_DEPOSIT_ACK {
 	BDA_SUCCESS  = 0x0,
@@ -424,7 +432,7 @@ void clif_setport(uint16 port);
 uint32 clif_getip(void);
 uint32 clif_refresh_ip(void);
 uint16 clif_getport(void);
-void packetdb_readdb(void);
+void packetdb_readdb(bool reload);
 
 void clif_authok(struct map_session_data *sd);
 void clif_authrefuse(int fd, uint8 error_code);
@@ -447,6 +455,9 @@ void clif_fixpos(struct block_list *bl);	// area
 void clif_npcbuysell(struct map_session_data* sd, int id);	//self
 void clif_buylist(struct map_session_data *sd, struct npc_data *nd);	//self
 void clif_selllist(struct map_session_data *sd);	//self
+void clif_npc_market_open(struct map_session_data *sd, struct npc_data *nd);
+void clif_parse_NPCMarketClosed(int fd, struct map_session_data *sd);
+void clif_parse_NPCMarketPurchase(int fd, struct map_session_data *sd);
 void clif_scriptmes(struct map_session_data *sd, int npcid, const char *mes);	//self
 void clif_scriptnext(struct map_session_data *sd,int npcid);	//self
 void clif_scriptclose(struct map_session_data *sd, int npcid);	//self
@@ -532,9 +543,9 @@ void clif_class_change(struct block_list *bl,int class_,int type);
 
 void clif_skillinfoblock(struct map_session_data *sd);
 void clif_skillup(struct map_session_data *sd, uint16 skill_id, int lv, int range, int upgradable);
-void clif_skillinfo(struct map_session_data *sd,int skill, int inf);
-void clif_addskill(struct map_session_data *sd, int id);
-void clif_deleteskill(struct map_session_data *sd, int id);
+void clif_skillinfo(struct map_session_data *sd,int skill_id, int inf);
+void clif_addskill(struct map_session_data *sd, int skill_id);
+void clif_deleteskill(struct map_session_data *sd, int skill_id);
 
 void clif_skillcasting(struct block_list* bl, int src_id, int dst_id, int dst_x, int dst_y, uint16 skill_id, int property, int casttime);
 void clif_skillcastcancel(struct block_list* bl);
@@ -553,7 +564,7 @@ void clif_cooking_list(struct map_session_data *sd, int trigger, uint16 skill_id
 
 void clif_produceeffect(struct map_session_data* sd,int flag, unsigned short nameid);
 
-void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, enum send_target target);
+void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, enum send_target target, uint8 flag);
 void clif_skill_delunit(struct skill_unit *unit);
 void clif_skillunit_update(struct block_list* bl);
 

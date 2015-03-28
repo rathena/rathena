@@ -33,8 +33,16 @@
 // Main packet version of the DB to use (default = max available version)
 // Client detection is faster when all clients use this version.
 // Version 23 is the latest Sakexe (above versions are for Renewal clients)
+//
+// packet_keys values are default value for each packet version, if no value
+// or value is 'default' in packet_keys_use, server will uses default keys
+// according to used packet_db_ver. packet_keys_use is user-defined keys.
+// Maximum key value is 0x7FFFFFFF.
+// NOTE: Keys won't be reloaded, initialized on first load only.
+//
 //packet_db_ver: 46
 packet_db_ver: default
+packet_keys_use: default
 
 packet_ver: 5
 0x0064,55
@@ -1635,6 +1643,7 @@ packet_ver: 26
 
 //2011-10-05aRagexeRE
 packet_ver: 27
+packet_keys: 0x291E6762,0x77CD391A,0x60AC2F16 // [Shakto]
 0x0364,5,walktoxy,2
 0x0817,6,ticksend,2
 0x0366,5,changedir,2:4
@@ -1653,6 +1662,7 @@ packet_ver: 27
 
 // 2011-11-02aRagexe
 packet_ver: 28
+packet_keys: 0x5324329D,0x5D545D52,0x06137269 // [Shakto]
 0x0436,26,friendslistadd,2
 0x0898,5,hommenu,2:4
 0x0281,36,storagepassword,2:4:20
@@ -1674,6 +1684,7 @@ packet_ver: 28
 
 //2012-03-07fRagexeRE
 packet_ver:29
+packet_keys: 0x382A6DEF,0x5CBE7202,0x61F46637 // [Shakto]
 0x086A,19,wanttoconnection,2:6:10:14:18
 0x0437,5,walktoxy,2
 0x0887,6,ticksend,2
@@ -1706,6 +1717,7 @@ packet_ver:29
 
 //2012-04-10aRagexeRE
 packet_ver: 30
+packet_keys: 0x01581359,0x452D6FFA,0x6AFB6E2E // [Shakto]
 0x01fd,15,repairitem,2:4:6:7:9:11:13
 0x089c,26,friendslistadd,2
 0x0885,5,hommenu,2:4
@@ -1767,6 +1779,7 @@ packet_ver: 30
 
 //2012-04-18aRagexeRE [Special Thanks to Judas!]
 packet_ver: 31
+packet_keys: 0x01540E48,0x13041224,0x31247924 // [Shakto]
 0x023B,26,friendslistadd,2
 0x0361,5,hommenu,2:4
 0x08A8,36,storagepassword,2:4:20
@@ -1786,11 +1799,13 @@ packet_ver: 31
 
 //2012-06-18
 packet_ver: 32
+packet_keys: 0x261F261F,0x261F261F,0x261F261F // [Shakto]
 0x0983,29 // ZC_MSG_STATE_CHANGE3
 0x0861,41,bookingregreq,2:4:6 //actually 12-05-03
 
 //2012-07-02aRagexeRE (unstable)
 packet_ver: 33
+packet_keys: 0x25733B31,0x53486CFD,0x398649BD // [Shakto]
 0x0363,19,wanttoconnection,2:6:10:14:18
 0x0364,6,ticksend,2
 0x085a,7,actionrequest,2:6
@@ -1809,6 +1824,7 @@ packet_ver: 33
 
 //2013-03-20Ragexe (Judas)
 packet_ver: 34
+packet_keys: 0x3F094C49,0x55F86C1E,0x58AA359A // [Shakto]
 0x014f,6,guildrequestinfo,2
 0x01fd,15,repairitem,2:4:6:7:9:11:13
 //0x0281,-1,itemlistwindowselected,2:4:8:12
@@ -1880,6 +1896,7 @@ packet_ver: 34
 
 //2013-05-15aRagexe (Yommy)
 packet_ver: 35
+packet_keys: 0x75794A38,0x58A96BC1,0x296E6FB8 // [Shakto]
 0x0369,7,actionrequest,2:6
 0x083C,10,useskilltoid,2:4:6
 0x0437,5,walktoxy,2
@@ -1912,6 +1929,7 @@ packet_ver: 35
 
 //2013-05-22Ragexe (Yommy)
 packet_ver: 36
+packet_keys: 0x6948050B,0x06511D9D,0x725D4DF1 // [Shakto]
 0x08A2,7,actionrequest,2:6
 0x095C,10,useskilltoid,2:4:6
 0x0360,5,walktoxy,2
@@ -1944,6 +1962,7 @@ packet_ver: 36
 
 //2013-05-29Ragexe (Shakto)
 packet_ver: 37
+packet_keys: 0x023A6C87,0x14BF1F1E,0x5CC70CC9 // [Shakto]
 0x0890,7,actionrequest,2:6
 0x0438,10,useskilltoid,2:4:6
 0x0876,5,walktoxy,2
@@ -1976,6 +1995,7 @@ packet_ver: 37
 
 //2013-06-05Ragexe (Shakto)
 packet_ver: 38
+packet_keys: 0x646E08D9,0x5F153AB5,0x61B509B5 // [Shakto]
 0x0369,7,actionrequest,2:6
 0x083C,10,useskilltoid,2:4:6
 0x0437,5,walktoxy,2
@@ -2009,6 +2029,7 @@ packet_ver: 38
 
 //2013-06-12Ragexe (Shakto)
 packet_ver: 39
+packet_keys: 0x6D166F66,0x3C000FCF,0x295B0FCB // [Shakto]
 0x0369,7,actionrequest,2:6
 0x083C,10,useskilltoid,2:4:6
 0x0437,5,walktoxy,2
@@ -2041,6 +2062,7 @@ packet_ver: 39
 
 //2013-06-18Ragexe (Shakto)
 packet_ver: 40
+packet_keys: 0x434115DE,0x34A10FE9,0x6791428E // [Shakto]
 0x0889,7,actionrequest,2:6
 0x0951,10,useskilltoid,2:4:6
 0x088E,5,walktoxy,2
@@ -2073,6 +2095,7 @@ packet_ver: 40
 
 //2013-06-26Ragexe
 packet_ver: 41
+packet_keys: 0x38F453EF,0x6A040FD8,0X65BD6668 // [Shakto]
 0x0369,7,actionrequest,2:6
 0x083C,10,useskilltoid,2:4:6
 0x0437,5,walktoxy,2
@@ -2105,6 +2128,7 @@ packet_ver: 41
 
 //2013-07-03Ragexe
 packet_ver: 42
+packet_keys: 0x4FF90E23,0x0F1432F2,0x4CFA1EDA // [Shakto]
 0x0369,7,actionrequest,2:6
 0x083C,10,useskilltoid,2:4:6
 0x0437,5,walktoxy,2
@@ -2137,6 +2161,7 @@ packet_ver: 42
 
 //2013-07-10Ragexe
 packet_ver: 43
+packet_keys: 0x458F758F,0x4CCF3F8F,0x4A9C4237
 0x0369,7,actionrequest,2:6
 0x083C,10,useskilltoid,2:4:6
 0x0437,5,walktoxy,2
@@ -2171,6 +2196,7 @@ packet_ver: 43
 
 //2013-07-17Ragexe
 packet_ver: 44
+packet_keys: 0x2BED4F91,0x5F9E00CF,0x5EE5520C
 0x0918,7,actionrequest,2:6
 0x091E,10,useskilltoid,2:4:6
 0x083C,5,walktoxy,2
@@ -2216,6 +2242,7 @@ packet_ver: 44
 
 //2013-08-07Ragexe
 packet_ver: 45
+packet_keys: 0x7E241DE0,0x5E805580,0x3D807D80 // [Shakto]
 0x0369,7,actionrequest,2:6
 0x083C,10,useskilltoid,2:4:6
 0x0437,5,walktoxy,2
@@ -2249,6 +2276,7 @@ packet_ver: 45
 
 //2013-12-23Ragexe
 packet_ver: 46
+packet_keys: 0x631C511C,0x111C111C,0x111C111C // [Shakto]
 0x0369,7,actionrequest,2:6
 0x083C,10,useskilltoid,2:4:6
 0x0437,5,walktoxy,2
@@ -2282,10 +2310,12 @@ packet_ver: 46
 //0x097E,12 //ZC_UPDATE_RANKING_POINT
 0x09B4,6,dull,0 //Cash Shop - Special Tab
 0x09CE,102,itemmonster,2
-0x09D4,2,dull,0 //npcshopclosed
+0x09D4,2,npcshopclosed,0
 //NPC Market
-0x09D6,-1,dull,0 //npcmarketpurchase
-0x09D8,2,dull,0 //npcmarketclosed
+0x09D5,-1
+0x09D6,-1,npcmarketpurchase,2:4:6
+0x09D7,-1
+0x09D8,2,npcmarketclosed,0
 0x09DF,7
 
 //Add new packets here

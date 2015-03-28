@@ -11,9 +11,9 @@
 
 typedef enum instance_state { INSTANCE_FREE, INSTANCE_IDLE, INSTANCE_BUSY } instance_state;
 
-struct instance_data
-{
-	short type, cnt_map;
+struct instance_data {
+	unsigned short type, ///< Instance DB ID
+		cnt_map;
 	int state;
 	int party_id;
 	unsigned int keep_limit;
@@ -43,6 +43,7 @@ int instance_addmap(short instance_id);
 
 void instance_addnpc(struct instance_data *im);
 void instance_readdb(void);
+void instance_reload(void);
 void do_reload_instance(void);
 void do_init_instance(void);
 void do_final_instance(void);

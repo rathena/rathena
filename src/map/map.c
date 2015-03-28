@@ -69,6 +69,7 @@ char mob_skill_db_re_db[32] = "mob_skill_db_re";
 char mob_skill_db2_db[32] = "mob_skill_db2";
 char vendings_db[32] = "vendings";
 char vending_items_db[32] = "vending_items";
+char market_table[32] = "market";
 
 // log database
 char log_db_ip[32] = "127.0.0.1";
@@ -146,6 +147,8 @@ char help2_txt[256] = "conf/help2.txt";
 char charhelp_txt[256] = "conf/charhelp.txt";
 
 char wisp_server_name[NAME_LENGTH] = "Server"; // can be modified in char-server configuration file
+
+struct s_map_default map_default;
 
 int console = 0;
 int enable_spy = 0; //To enable/disable @spy commands, which consume too much cpu time when sending packets. [Skotlex]
@@ -1901,6 +1904,11 @@ struct pet_data* map_id2pd(int id){
 	return BL_CAST(BL_PET, bl);
 }
 
+struct elemental_data* map_id2ed(int id) {
+	struct block_list* bl = map_id2bl(id);
+	return BL_CAST(BL_ELEM, bl);
+}
+
 struct chat_data* map_id2cd(int id){
 	struct block_list* bl = map_id2bl(id);
 	return BL_CAST(BL_CHAT, bl);
@@ -2363,6 +2371,7 @@ int map_addinstancemap(const char *name, int id)
 
 	map[dst_m].m = dst_m;
 	map[dst_m].instance_id = id;
+	map[dst_m].instance_src_map = src_m;
 	map[dst_m].users = 0;
 
 	memset(map[dst_m].npc, 0, sizeof(map[dst_m].npc));
@@ -3389,6 +3398,7 @@ int map_readallmaps (void)
 	for(i = 0; i < map_num; i++) {
 		size_t size;
 		bool success = false;
+		unsigned short idx = 0;
 
 		if( enable_grf ){
 			// show progress
@@ -3410,14 +3420,14 @@ int map_readallmaps (void)
 		}
 
 		// The map was not found - remove it
-		if( !success ){
+		if( !(idx = mapindex_name2id(map[i].name)) || !success ){
 			map_delmapid(i);
 			maps_removed++;
 			i--;
 			continue;
 		}
 
-		map[i].index = mapindex_name2id(map[i].name);
+		map[i].index = idx;
 
 		if (uidb_get(map_db,(unsigned int)map[i].index) != NULL)
 		{
@@ -3459,7 +3469,7 @@ int map_readallmaps (void)
 
 	// finished map loading
 	ShowInfo("Successfully loaded '"CL_WHITE"%d"CL_RESET"' maps."CL_CLL"\n",map_num);
-	instance_start = map_num + 1; // Next Map Index will be instances
+	instance_start = map_num; // Next Map Index will be instances
 
 	if (maps_removed)
 		ShowNotice("Maps removed: '"CL_WHITE"%d"CL_RESET"'\n",maps_removed);
@@ -3750,6 +3760,8 @@ int inter_config_read(char *cfgName)
 			strcpy( vendings_db, w2 );
 		else if( strcmpi( w1, "vending_items_db" ) == 0 )
 			strcpy( vending_items_db, w2 );
+		else if (strcmpi(w1, "market_table") == 0)
+			strcpy(market_table, w2);
 		else
 		//Map Server SQL DB
 		if(strcmpi(w1,"map_server_ip")==0)
@@ -3814,14 +3826,14 @@ int map_sql_init(void)
 	if( SQL_ERROR == Sql_Connect(mmysql_handle, map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db) ||
 		SQL_ERROR == Sql_Connect(qsmysql_handle, map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db) )
 	{
-            ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-                        map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db);
-            Sql_ShowDebug(mmysql_handle);
-            Sql_Free(mmysql_handle);
-            Sql_ShowDebug(qsmysql_handle);
-            Sql_Free(qsmysql_handle);
-            exit(EXIT_FAILURE);
-        }
+		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
+			map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db);
+		Sql_ShowDebug(mmysql_handle);
+		Sql_Free(mmysql_handle);
+		Sql_ShowDebug(qsmysql_handle);
+		Sql_Free(qsmysql_handle);
+		exit(EXIT_FAILURE);
+	}
 	ShowStatus("Connect success! (Map Server Connection)\n");
 
 	if( strlen(default_codepage) > 0 ) {
@@ -3830,7 +3842,6 @@ int map_sql_init(void)
 		if ( SQL_ERROR == Sql_SetEncoding(qsmysql_handle, default_codepage) )
 			Sql_ShowDebug(qsmysql_handle);
 	}
-
 	return 0;
 }
 
@@ -4326,6 +4337,11 @@ int do_init(int argc, char *argv[])
 	MSG_CONF_NAME_POR = "conf/msg_conf/map_msg_por.conf";	// Brazilian Portuguese
 	MSG_CONF_NAME_THA = "conf/msg_conf/map_msg_tha.conf";	// Thai
 	/* Multilanguage */
+
+	// Default map
+	safestrncpy(map_default.mapname, "prontera", MAP_NAME_LENGTH);
+	map_default.x = 156;
+	map_default.y = 191;
 
 	cli_get_options(argc,argv);
 

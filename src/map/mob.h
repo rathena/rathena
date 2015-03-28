@@ -143,6 +143,7 @@ struct mob_data {
 		unsigned int npc_killmonster: 1; //for new killmonster behavior
 		unsigned int rebirth: 1; // NPC_Rebirth used
 		unsigned int boss : 1;
+		unsigned int copy_master_mode : 1; ///< Whether the spawned monster should copy the master's mode.
 		enum MobSkillState skillstate;
 		unsigned char steal_flag; //number of steal tries (to prevent steal exploit on mobs with few items) [Lupus]
 		unsigned char attacked_count; //For rude attacked.
@@ -173,7 +174,7 @@ struct mob_data {
 	int deletetimer;
 	int master_id,master_dist;
 
-	int8 skill_idx;// key of array
+	int8 skill_idx; // Index of last used skill from db->skill[]
 	unsigned int skilldelay[MAX_MOBSKILL];
 	char npc_event[EVENT_NAME_LENGTH];
 	/**
@@ -187,9 +188,7 @@ struct mob_data {
 	int tomb_nid;
 };
 
-
-
-enum {
+enum e_mob_skill_target {
 	MST_TARGET	=	0,
 	MST_RANDOM,	//Random Target!
 	MST_SELF,
@@ -204,7 +203,9 @@ enum {
 	MST_AROUND3,
 	MST_AROUND4,
 	MST_AROUND	=	MST_AROUND4,
+};
 
+enum e_mob_skill_condition {
 	MSC_ALWAYS	=	0x0000,
 	MSC_MYHPLTMAXRATE,
 	MSC_MYHPINRATE,

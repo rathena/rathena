@@ -1205,7 +1205,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	57,{
 		mes "" + strcharinfo(0) + ".";
 		next;
 		set bioeth,13;
-		skill "AM_BIOETHICS",1,0;
+		skill "AM_BIOETHICS",1,SKILL_PERM;
 		mes "[Kellasus]";
 		mes "Ah...";
 		mes "" + strcharinfo(0) + ".";

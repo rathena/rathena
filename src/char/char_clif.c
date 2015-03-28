@@ -367,9 +367,9 @@ void chclif_char_delete2_cancel_ack(int fd, uint32 char_id, uint32 result) {
 
 // CH: <0827>.W <char id>.L
 int chclif_parse_char_delete2_req(int fd, struct char_session_data* sd) {
-    FIFOSD_CHECK(6)
-    {
-        uint32 char_id, i;
+	FIFOSD_CHECK(6)
+	{
+		uint32 char_id, i;
 		char* data;
 		time_t delete_date;
 
@@ -557,15 +557,9 @@ int chclif_parse_maplogin(int fd){
 			strcmp(l_user, charserv_config.userid) != 0 ||
 			strcmp(l_pass, charserv_config.passwd) != 0 )
 		{
-			WFIFOHEAD(fd,3);
-			WFIFOW(fd,0) = 0x2af9;
-			WFIFOB(fd,2) = 3;
-			WFIFOSET(fd,3);
+			chmapif_connectack(fd, 3); //fail
 		} else {
-			WFIFOHEAD(fd,3);
-			WFIFOW(fd,0) = 0x2af9;
-			WFIFOB(fd,2) = 0;
-			WFIFOSET(fd,3);
+			chmapif_connectack(fd, 0); //success
 
 			map_server[i].fd = fd;
 			map_server[i].ip = ntohl(RFIFOL(fd,54));
@@ -619,25 +613,21 @@ int chclif_parse_reqtoconnect(int fd, struct char_session_data* sd,uint32 ipl){
 		WFIFOL(fd,0) = account_id;
 		WFIFOSET(fd,4);
 
-		if( runflag != CHARSERVER_ST_RUNNING )
-		{
-			WFIFOHEAD(fd,3);
-			WFIFOW(fd,0) = 0x6c;
-			WFIFOB(fd,2) = 0;// rejected from server
-			WFIFOSET(fd,3);
+		if( runflag != CHARSERVER_ST_RUNNING ) {
+			chclif_reject(fd, 0); // rejected from server
 			return 1;
 		}
 
 		// search authentification
 		node = (struct auth_node*)idb_get(auth_db, account_id);
 		if( node != NULL &&
-		    node->account_id == account_id &&
+			node->account_id == account_id &&
 			node->login_id1  == login_id1 &&
 			node->login_id2  == login_id2 /*&&
 			node->ip         == ipl*/ )
 		{// authentication found (coming from map server)
-                        sd->version = node->version;
-                        idb_remove(auth_db, account_id);
+			sd->version = node->version;
+			idb_remove(auth_db, account_id);
 			char_auth_ok(fd, sd);
 		}
 		else
@@ -653,10 +643,7 @@ int chclif_parse_reqtoconnect(int fd, struct char_session_data* sd,uint32 ipl){
 				WFIFOL(login_fd,19) = fd;
 				WFIFOSET(login_fd,23);
 			} else { // if no login-server, we must refuse connection
-				WFIFOHEAD(fd,3);
-				WFIFOW(fd,0) = 0x6c;
-				WFIFOB(fd,2) = 0;
-				WFIFOSET(fd,3);
+				chclif_reject(fd, 0); // rejected from server
 			}
 		}
 	}
@@ -694,10 +681,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 		{	//Not found?? May be forged packet.
 			Sql_ShowDebug(sql_handle);
 			Sql_FreeResult(sql_handle);
-			WFIFOHEAD(fd,3);
-			WFIFOW(fd,0) = 0x6c;
-			WFIFOB(fd,2) = 0; // rejected from server
-			WFIFOSET(fd,3);
+			chclif_reject(fd, 0); // rejected from server
 			return 1;
 		}
 
@@ -706,19 +690,13 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 
 		// Prevent select a char while retrieving guild bound items
 		if (sd->flag&1) {
-			WFIFOHEAD(fd,3);
-			WFIFOW(fd,0) = 0x6c;
-			WFIFOB(fd,2) = 0; // rejected from server
-			WFIFOSET(fd,3);
+			chclif_reject(fd, 0); // rejected from server
 			return 1;
 		}
 
 		/* client doesn't let it get to this point if you're banned, so its a forged packet */
 		if( sd->found_char[slot] == char_id && sd->unban_time[slot] > time(NULL) ) {
-			WFIFOHEAD(fd,3);
-			WFIFOW(fd,0) = 0x6c;
-			WFIFOB(fd,2) = 0; // rejected from server
-			WFIFOSET(fd,3);
+			chclif_reject(fd, 0); // rejected from server
 			return 1;
 		}
 
@@ -727,11 +705,8 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 		if( !char_mmo_char_fromsql(char_id, &char_dat, true) ) { /* failed? set it back offline */
 			char_set_char_offline(char_id, sd->account_id);
 			/* failed to load something. REJECT! */
-			WFIFOHEAD(fd,3);
-			WFIFOW(fd,0) = 0x6c;
-			WFIFOB(fd,2) = 0;
-			WFIFOSET(fd,3);
-			return 1;/* jump off this boat */
+			chclif_reject(fd, 0); /* jump off this boat */
+			return 1;
 		}
 
 		//Have to switch over to the DB instance otherwise data won't propagate [Kevin]
@@ -880,6 +855,20 @@ int chclif_parse_createnewchar(int fd, struct char_session_data* sd,int cmd){
 	return 1;
 }
 
+/**
+ * Inform client that his deletion request was refused
+ * 0x70 <ErrorCode>B HC_REFUSE_DELETECHAR
+ * @param fd
+ * @param ErrorCode
+ *   00 = Incorrect Email address
+ */
+void chclif_refuse_delchar(int fd, uint8 errCode){
+	WFIFOHEAD(fd,3);
+	WFIFOW(fd,0) = 0x70;
+	WFIFOB(fd,2) = errCode;
+	WFIFOSET(fd,3);
+}
+
 int chclif_parse_delchar(int fd,struct char_session_data* sd, int cmd){
     if (cmd == 0x68) FIFOSD_CHECK(46)
     else if (cmd == 0x1fb) FIFOSD_CHECK(56)
@@ -899,10 +888,7 @@ int chclif_parse_delchar(int fd,struct char_session_data* sd, int cmd){
                 strcmp("a@a.com", sd->email) || //it is not default email, or
                 (strcmp("a@a.com", email) && strcmp("", email)) //email sent does not matches default
         )) {	//Fail
-                WFIFOHEAD(fd,3);
-                WFIFOW(fd,0) = 0x70;
-                WFIFOB(fd,2) = 0; // 00 = Incorrect Email address
-                WFIFOSET(fd,3);
+		chclif_refuse_delchar(fd,0); // 00 = Incorrect Email address
                 return 1;
         }
 
@@ -910,10 +896,7 @@ int chclif_parse_delchar(int fd,struct char_session_data* sd, int cmd){
         ARR_FIND( 0, MAX_CHARS, i, sd->found_char[i] == cid );
         if( i == MAX_CHARS )
         { // Such a character does not exist in the account
-                WFIFOHEAD(fd,3);
-                WFIFOW(fd,0) = 0x70;
-                WFIFOB(fd,2) = 0;
-                WFIFOSET(fd,3);
+		chclif_refuse_delchar(fd,0);
                 return 1;
         }
 
@@ -927,10 +910,7 @@ int chclif_parse_delchar(int fd,struct char_session_data* sd, int cmd){
                 //can't delete the char
                 //either SQL error or can't delete by some CONFIG conditions
                 //del fail
-                WFIFOHEAD(fd,3);
-                WFIFOW(fd, 0) = 0x70;
-                WFIFOB(fd, 2) = 0;
-                WFIFOSET(fd, 3);
+		chclif_refuse_delchar(fd,0);
                 return 1;
         }
         /* Char successfully deleted.*/
@@ -1087,6 +1067,14 @@ int chclif_ack_captcha(int fd){
     WFIFOB(fd,4) = 1;
     WFIFOSET(fd,5);
     return 1;
+}
+
+// R 06C <ErrorCode>B HEADER_HC_REFUSE_ENTER
+void chclif_reject(int fd, uint8 errCode){
+    WFIFOHEAD(fd,3);
+    WFIFOW(fd,0) = 0x6c;
+    WFIFOB(fd,2) = errCode;// rejected from server
+    WFIFOSET(fd,3);
 }
 
 // R 07e5 <?>.w <aid>.l

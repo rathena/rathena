@@ -281,10 +281,7 @@ int chlogif_parse_ackaccreq(int fd, struct char_session_data* sd){
 				char_auth_ok(client_fd, sd);
 				break;
 			case 1:// auth failed
-				WFIFOHEAD(client_fd,3);
-				WFIFOW(client_fd,0) = 0x6c;
-				WFIFOB(client_fd,2) = 0;// rejected from server
-				WFIFOSET(client_fd,3);
+				chclif_reject(client_fd,0); // rejected from server
 				break;
 			}
 		}
@@ -324,10 +321,7 @@ int chlogif_parse_reqaccdata(int fd, struct char_session_data* sd){
 			(charserv_config.max_connect_user == 0 && sd->group_id != charserv_config.gm_allow_group) ||
 			( charserv_config.max_connect_user > 0 && char_count_users() >= charserv_config.max_connect_user && sd->group_id != charserv_config.gm_allow_group ) ) {
 			// refuse connection (over populated)
-			WFIFOHEAD(u_fd,3);
-			WFIFOW(u_fd,0) = 0x6c;
-			WFIFOW(u_fd,2) = 0;
-			WFIFOSET(u_fd,3);
+			chclif_reject(u_fd,0);
 		} else {
 			// send characters to player
 			chclif_mmo_char_send(u_fd, sd);

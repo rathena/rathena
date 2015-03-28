@@ -102,8 +102,8 @@ REPLACE INTO `mob_skill_db` VALUES (1010,'Willow@NPC_GROUNDATTACK','attack',185,
 REPLACE INTO `mob_skill_db` VALUES (1010,'Willow@NPC_TELEKINESISATTACK','attack',191,5,500,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,'9',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1010,'Willow@NPC_TELEKINESISATTACK','chase',191,5,500,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,'9',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1011,'Chonchon@NPC_WINDATTACK','attack',187,1,2000,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db` VALUES (1011,'Chonchon@NPC_RUN','attack',354,1,10000,0,3000,'no','self','always','0',NULL,0x181,NULL,NULL,NULL,'26',NULL);
-#REPLACE INTO `mob_skill_db` VALUES (1011,'Chonchon@NPC_RUN','chase',354,1,10000,0,3000,'no','self','always','0',NULL,0x181,NULL,NULL,NULL,'26',NULL);
+#REPLACE INTO `mob_skill_db` VALUES (1011,'Chonchon@NPC_RUN','attack',354,1,10000,0,3000,'no','self','always','0',NULL,0x81,NULL,NULL,NULL,'26',NULL);
+#REPLACE INTO `mob_skill_db` VALUES (1011,'Chonchon@NPC_RUN','chase',354,1,10000,0,3000,'no','self','always','0',NULL,0x81,NULL,NULL,NULL,'26',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1012,'Roda Frog@NPC_WATERATTACK','attack',184,1,2000,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1013,'Wolf@NPC_GROUNDATTACK','attack',185,2,500,500,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'6',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1013,'Wolf@NPC_PROVOCATION','chase',194,1,200,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,'19',NULL);

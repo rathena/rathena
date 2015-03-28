@@ -520,7 +520,8 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 		ud->to_x = bl->x;
 		ud->to_y = bl->y;
 
-		if(map_count_oncell(bl->m, x, y, BL_CHAR|BL_NPC, 1) > battle_config.official_cell_stack_limit) {
+		if(battle_config.official_cell_stack_limit > 0
+			&& map_count_oncell(bl->m, x, y, BL_CHAR|BL_NPC, 1) > battle_config.official_cell_stack_limit) {
 			//Walked on occupied cell, call unit_walktoxy again
 			if(ud->steptimer != INVALID_TIMER) {
 				//Execute step timer on next step instead
@@ -1481,6 +1482,8 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	struct block_list * target = NULL;
 	unsigned int tick = gettick();
 	int combo = 0, range;
+	uint8 inf = 0;
+	uint32 inf2 = 0;
 
 	nullpo_ret(src);
 
@@ -1498,6 +1501,9 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	if (sc && !sc->count)
 		sc = NULL; // Unneeded
 
+	inf = skill_get_inf(skill_id);
+	inf2 = skill_get_inf2(skill_id);
+
 	// temp: used to signal combo-skills right now.
 	if (sc && sc->data[SC_COMBO] &&
 		skill_is_combo(skill_id) &&
@@ -1508,13 +1514,13 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		else if (target_id == src->id || ud->target > 0)
 			target_id = ud->target;
 
-		if( skill_get_inf(skill_id)&INF_SELF_SKILL && skill_get_nk(skill_id)&NK_NO_DAMAGE )// exploit fix
+		if( inf&INF_SELF_SKILL && skill_get_nk(skill_id)&NK_NO_DAMAGE )// exploit fix
 			target_id = src->id;
 
 		combo = 1;
 	} else if ( target_id == src->id &&
-		skill_get_inf(skill_id)&INF_SELF_SKILL &&
-		(skill_get_inf2(skill_id)&INF2_NO_TARGET_SELF ||
+		inf&INF_SELF_SKILL &&
+		(inf2&INF2_NO_TARGET_SELF ||
 		(skill_id == RL_QD_SHOT && sc && sc->data[SC_QD_SHOT_READY])) ) {
 		target_id = ud->target; // Auto-select target. [Skotlex]
 		combo = 1;
@@ -1588,14 +1594,14 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	if(ud->skilltimer != INVALID_TIMER && skill_id != SA_CASTCANCEL && skill_id != SO_SPELLFIST)
 		return 0;
 
-	if(skill_get_inf2(skill_id)&INF2_NO_TARGET_SELF && src->id == target_id)
+	if(inf2&INF2_NO_TARGET_SELF && src->id == target_id)
 		return 0;
 
 	if(!status_check_skilluse(src, target, skill_id, 0))
 		return 0;
 
 	// Fail if the targetted skill is near NPC [Cydh]
-	if(skill_get_inf2(skill_id)&INF2_NO_NEARNPC && skill_isNotOk_npcRange(src,skill_id,skill_lv,target->x,target->y)) {
+	if(inf2&INF2_NO_NEARNPC && skill_isNotOk_npcRange(src,skill_id,skill_lv,target->x,target->y)) {
 		if (sd)
 			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 
@@ -1796,7 +1802,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 
 	// Moved here to prevent Suffragium from ending if skill fails
 #ifndef RENEWAL_CAST
-	if (!(skill_get_castnodex(skill_id, skill_lv)&2))
+	if (!(skill_get_castnodex(skill_id)&2))
 		casttime = skill_castfix_sc(src, casttime);
 #else
 	casttime = skill_vfcastfix(src, casttime, skill_id, skill_lv);
@@ -2013,7 +2019,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 
 	// Moved here to prevent Suffragium from ending if skill fails
 #ifndef RENEWAL_CAST
-	if (!(skill_get_castnodex(skill_id, skill_lv)&2))
+	if (!(skill_get_castnodex(skill_id)&2))
 		casttime = skill_castfix_sc(src, casttime);
 #else
 	casttime = skill_vfcastfix(src, casttime, skill_id, skill_lv );
@@ -2035,11 +2041,11 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 // 		}
 // 	}
 
-	ud->skill_id      = skill_id;
-	ud->skill_lv      = skill_lv;
-	ud->skillx       = skill_x;
-	ud->skilly       = skill_y;
-	ud->skilltarget  = 0;
+	ud->skill_id    = skill_id;
+	ud->skill_lv    = skill_lv;
+	ud->skillx      = skill_x;
+	ud->skilly      = skill_y;
+	ud->skilltarget = 0;
 
 	if( sc ) {
 		// These 3 status do not stack, so it's efficient to use if-else
@@ -3168,6 +3174,10 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				sd->quest_log = NULL;
 				sd->num_quests = sd->avail_quests = 0;
 			}
+
+			// Clearing...
+			if (sd->bonus_script.head)
+				pc_bonus_script_clear(sd, BSF_REM_ALL);
 
 			pc_itemgrouphealrate_clear(sd);
 			break;

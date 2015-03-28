@@ -563,8 +563,8 @@
 1703,507,100	// Bow
 2794,507,100	// Magic Stone Ring
 2795,499,100	// Green Apple Ring
-2796,507,100	// Rocks
-2797,507,100	// Rocks
+2796,507,100	// Magical_Stone
+2797,507,100	// Magical_Stone_
 2798,499,100	// Will Of Exhausted Angel
 6121,507,100	// Makeover Brush
 6122,507,100	// Paint Brush
@@ -875,28 +875,28 @@
 12936,473,100	// Muramasa Box
 12937,473,100	// Excalibur Box
 12938,473,100	// Combat Knife Box
-12939,473,100	// Dagger of Counter Box
+12939,475,100	// Dagger of Counter Box
 12940,473,100	// Kaiser Knuckle Box
-12941,473,100	// Poll Axe Box
+12941,475,100	// Poll Axe Box
 12942,473,100	// Mighty Staff Box
-12943,473,100	// Light Epsilon Box
+12943,475,100	// Light Epsilon Box
 12944,473,100	// Ballista Box
-12945,473,100	// Sage's Diary Box
-12946,473,100	// Asura Box
-12947,473,100	// Apple of Archer Box
-12948,473,100	// Bunny Band Box
+12945,475,100	// Sage's Diary Box
+12946,475,100	// Asura Box
+12947,475,100	// Apple of Archer Box
+12948,475,100	// Bunny Band Box
 12949,473,100	// Sakkat Box
 12950,473,100	// Grand Circlet Box
-12951,473,100	// Elven Ears Box
-12952,473,100	// Steel Flower Box
-12953,473,100	// Critical Ring Box
-12954,473,100	// Earring Box
-12955,473,100	// Ring Box
-12956,473,100	// Necklace Box
-12957,473,100	// Glove Box
-12958,473,100	// Brooch Box
-12959,473,100	// Rosary Box
-12960,473,100	// Safety Ring Box
+12951,475,100	// Elven Ears Box
+12952,475,100	// Steel Flower Box
+12953,475,100	// Critical Ring Box
+12954,475,100	// Earring Box
+12955,475,100	// Ring Box
+12956,475,100	// Necklace Box
+12957,475,100	// Glove Box
+12958,475,100	// Brooch Box
+12959,475,100	// Rosary Box
+12960,475,100	// Safety Ring Box
 12961,473,100	// Vesper Core 01 Box
 12962,473,100	// Vesper Core 02 Box
 12963,473,100	// Vesper Core 03 Box
@@ -1421,7 +1421,6 @@
 14605,475,100	// Orc Lord Scroll
 14606,475,100	// JOB Battle Manual
 14608,73,100	// Manchu-Han Imperial Feast
-14696,475,100	// Sealed Gloom Under Night Gachapon
 16002,507,100	// Stunner
 16134,475,100	// Frog King Hat Box
 16135,457,100	// Satanic Bone Helm Box
@@ -2018,8 +2017,6 @@
 12630,475,100	// Teddy Bear Scroll
 12778,473,100	// Bapho Jr Scroll
 12779,473,100	// Galapago Scroll
-17338,457,100	// Ore Box V
-17339,457,100	// Ore Box V(10)
 22685,475,100	// Single Union Christmas Gift
 
 // Sealed Cards
@@ -2059,26 +2056,16 @@
 12511,475,100	//E_Siege_Teleport_Scroll
 12512,475,100	//E_Greed_Scroll
 12513,475,100	//E_Glass_Of_Illusion
-12514,475,100	//E_Abrasive
-12515,475,100	//E_Med_Life_Potion
-12516,475,100	//E_Small_Life_Potion
 12517,475,100	//E_Regeneration_Potion
 12518,475,100	//E_B_Mdef_Potion
 12519,475,100	//E_S_Mdef_Potion
 12520,475,100	//E_B_Def_Potion
 12521,475,100	//E_S_Def_Potion
-12522,475,100	//E_Blessing_10_Scroll
-12523,475,100	//E_Inc_Agi_10_Scroll
 12524,475,100	//E_Aspersio_5_Scroll
 12525,475,100	//E_Assumptio_5_Scroll
 12526,475,100	//E_Wind_Walk_10_Scroll
 12527,475,100	//E_Adrenaline_Scroll
 12528,475,100	//E_Convex_Mirror
-
-16481,475,100	//Small_Life_Potion_Box_10
-16483,475,100	//Abrasive_Box_10
-16505,475,100	//Steamed_Tongue_Box_10
-16506,475,100	//Steamed_Desert_Scorpions_Box_10
 
 // Valor Set
 2482,475,100	// Shoes_Of_Valor
@@ -2242,7 +2229,6 @@
 22541,475,100	//PC_Room_Coupon_Box_VI
 
 // kRO 2013-03-06 Items
-6713,457,100	//Heart_of_Soul
 6714,457,100	//Sheenas_Soul
 6715,457,100	//Gods_Soul_Piece
 16378,457,100	//Siege_Tele_Scroll_Box_30
@@ -2257,7 +2243,6 @@
 16867,457,100	//Siege_Map_Teleport_Scroll_II_Box_30
 17159,457,100	//Name_Change_Box
 17160,457,100	//Character_Name_Change_Card_Box
-22540,457,100	//Runstone_Luxanima
 
 // kRO 2013-03-20
 6713,475,100	//Heart_of_Soul
@@ -2311,11 +2296,62 @@
 14696,475,100	//Sealed_Gloom_Under_Night_Gachapon
 17338,475,100	//Ore_Box_V
 17339,475,100	//Ore_Box_V(10)
-22525,475,100	//Level_Up_Box(140)
 
 // kRO 2013-08-21
 17429,475,100	//11_Anniversary_Shadow_Box
 17430,475,100	//11_Anniversary_Shadow_Package
+
+// kRO 2013-09-06
+7037,475,100		//Trade_Coupon
+7763,475,100		//Sticky_Herb
+7764,475,100		//High_Strength_Adhesive
+7765,475,100		//Yaga_Secret_Medicine
+11013,475,100	//Expedition_Report_Vol1
+11014,475,100	//Expedition_Report_Vol2
+11015,475,100	//Expedition_Report_Vol3
+11016,475,100	//Expedition_Report_Vol4
+//14470,475,100	//(Not Exist Yet)
+//14471,475,100	//(Not Exist Yet)
+//14472,475,100	//(Not Exist Yet)
+//14473,475,100	//(Not Exist Yet)
+//14474,475,100	//(Not Exist Yet)
+//14475,475,100	//(Not Exist Yet)
+//14476,475,100	//(Not Exist Yet)
+//14477,475,100	//(Not Exist Yet)
+//14478,475,100	//(Not Exist Yet)
+//14479,475,100	//(Not Exist Yet)
+//14480,475,100	//(Not Exist Yet)
+//14481,475,100	//(Not Exist Yet)
+//14482,475,100	//(Not Exist Yet)
+//14483,475,100	//(Not Exist Yet)
+//14484,475,100	//(Not Exist Yet)
+17252,475,100	//RWC_2012_Set_Box
+18505,475,100	//Umbala_Spirit
+
+// kRO 2013-09-11
+1174,475,100	//Executioner_C
+1374,475,100	//Tomahawk_C
+1534,475,100	//Spanner_C
+1729,475,100	//Bow_Of_Rudra_C
+5254,475,100	//Deviling_Hat
+5279,475,100	//Drooping_Kitty_C
+5280,475,100	//Magestic_Goat_C
+6036,475,100	//Invite_To_Meeting
+6038,475,100	//Neat_Report
+6040,475,100	//Some_Of_Report
+6043,475,100	//Letter_From_Lugen
+6044,475,100	//Letter_From_Otto
+6049,475,100	//Marlin
+7059,475,100	//Cargo_Free_Ticket
+7060,475,100	//Warp_Free_Ticket
+7061,475,100	//Cart_Free_Ticket
+
+// kRO 2013-09-13
+1243,475,100	//Novice_Knife
+2112,475,100	//Novice_Guard
+2352,475,100	//Novice_Plate
+2414,475,100	//Novice_Boots
+2510,475,100	//Novice_Hood
 
 // kRO 2013-09-25
 14704,475,100	//Gemstone_Shadow_Box
@@ -2590,7 +2626,6 @@
 
 // kRO 2014-08-27
 6912,475,100		//Piece_Of_Soul_Sheep
-6674,475,100		//GM_Coin
 
 // kRO 2014-09-09
 6910,475,100		//(Limited)Purified_Oridecon
@@ -2624,6 +2659,8 @@
 671,475,100		//Gold_Coin
 
 // kRO 2014-10-22
+6847,475,100	//Very_Small_Box
+6848,475,100	//Light_Box
 14765,475,100	//Limited_Edition_JOB_Battle_Manual
 17520,475,100	//Limited_Edition_Manual_Box
 
@@ -2651,3 +2688,4 @@
 20206,475,100	//C_Chicken_Hat
 20210,475,100	//C_Chicken_Hat
 20211,475,100	//C_Chicken_Hat
+12831,475,100	//Potion_Box

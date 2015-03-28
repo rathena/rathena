@@ -43,7 +43,7 @@
 				next;
 				delitem 713,200; //Empty_Bottle
 				delitem 1058,1; //Wing_Of_Moth
-				skill "SM_MOVINGRECOVERY",1,0;
+				skill "SM_MOVINGRECOVERY",1,SKILL_PERM;
 				mes "[De Thomas]";
 				mes "There you go!";
 				mes "Try it yourself.";
@@ -176,7 +176,7 @@ prt_in,75,88,5	script	Leon Von Frich	85,3,3,{
 				delitem 532,1; //Banana_Juice
 				delitem 962,30; //Tentacle
 				delitem 526,5; //Royal_Jelly
-				skill "SM_FATALBLOW",1,0;
+				skill "SM_FATALBLOW",1,SKILL_PERM;
 				mes "[Leon]";
 				mes "Success!";
 				mes "Go use your new skill to its full potential.";
@@ -342,7 +342,7 @@ prt_in,94,57,3	script	Juan	85,4,4,{
 				delitem 958,10; //Horrendous_Mouth
 				delitem 957,10; //Decayed_Nail
 				delitem 518,10; //Honey
-				skill "SM_AUTOBERSERK",1,0;
+				skill "SM_AUTOBERSERK",1,SKILL_PERM;
 				mes "[Juan]";
 				mes "You have just become a swordsman";
 				mes "that can use Auto Berserk.";

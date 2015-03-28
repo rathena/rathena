@@ -556,13 +556,15 @@ static bool itemdb_read_itemavail(char* str[], int columns, int current) {
 	return true;
 }
 
+static int itemdb_group_free(DBKey key, DBData *data, va_list ap);
+
 /** Read item group data
 * Structure: GroupID,ItemID,Rate{,Amount,isMust,isAnnounced,Duration,GUID,isBound,isNamed}
 */
 static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 {
 	FILE *fp;
-	int ln=0, entries=0;
+	int ln = 0, entries = 0;
 	char line[1024];
 
 	if ((fp=fopen(filename,"r")) == NULL) {
@@ -571,6 +573,7 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 	}
 	
 	while (fgets(line,sizeof(line),fp)) {
+		DBData data;
 		int group_id = -1;
 		unsigned int j, prob = 1;
 		uint8 rand_group = 1;
@@ -619,7 +622,14 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 			script_get_constant(trim(str[0]), &group_id);
 
 		if (group_id < 0) {
-			ShowWarning("itemdb_read_itemgroup: Invlaid Group ID '%s' (%s:%d)\n", str[0], filename, ln);
+			ShowWarning("itemdb_read_itemgroup: Invalid Group ID '%s' (%s:%d)\n", str[0], filename, ln);
+			continue;
+		}
+
+		// Remove from DB
+		if (strcmpi(str[1], "clear") == 0 && itemdb_group->remove(itemdb_group, db_ui2key(group_id), &data)) {
+			itemdb_group_free(db_ui2key(group_id), &data, 0);
+			ShowNotice("Item Group '%s' has been cleared.\n", str[0]);
 			continue;
 		}
 
@@ -639,10 +649,8 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 
 		// Checking item
 		trim(str[1]);
-		if (ISDIGIT(str[1][0])) {
-			if (itemdb_exists((entry.nameid = atoi(str[1]))))
-				found = true;
-		}
+		if (ISDIGIT(str[1][0]) && ISDIGIT(str[1][1]) && itemdb_exists((entry.nameid = atoi(str[1]))))
+			found = true;
 		else {
 			struct item_data *id = itemdb_searchname(str[1]);
 			if (id) {
@@ -650,6 +658,7 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 				found = true;
 			}
 		}
+
 		if (!found) {
 			ShowWarning("itemdb_read_itemgroup: Non-existant item '%s' in %s:%d\n", str[1], filename, ln);
 			continue;
@@ -672,14 +681,8 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 
 		// Must item (rand_group == 0), place it here
 		if (!rand_group) {
-			uint16 idx = group->must_qty;
-			if (!idx)
-				CREATE(group->must, struct s_item_group_entry, 1);
-			else
-				RECREATE(group->must, struct s_item_group_entry, idx+1);
-
-			group->must[idx] = entry;
-			group->must_qty++;
+			RECREATE(group->must, struct s_item_group_entry, group->must_qty+1);
+			group->must[group->must_qty++] = entry;
 
 			// If 'must' item isn't set as random item, skip the next process
 			if (!prob) {
@@ -693,13 +696,7 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 
 		random = &group->random[rand_group];
 
-		// Check, if the entry for this random group already created or not
-		if (!random->data_qty) {
-			CREATE(random->data, struct s_item_group_entry, prob);
-			random->data_qty = 0;
-		}
-		else
-			RECREATE(random->data, struct s_item_group_entry, random->data_qty+prob);
+		RECREATE(random->data, struct s_item_group_entry, random->data_qty+prob);
 
 		// Put the entry to its rand_group
 		for (j = random->data_qty; j < random->data_qty+prob; j++)

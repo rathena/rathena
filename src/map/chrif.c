@@ -33,7 +33,7 @@ static struct eri *auth_db_ers; //For reutilizing player login structures.
 static DBMap* auth_db; // int id -> struct auth_node*
 
 static const int packet_len_table[0x3d] = { // U - used, F - free
-	60, 3,-1,27,10,-1, 6,-1,	// 2af8-2aff: U->2af8, U->2af9, U->2afa, U->2afb, U->2afc, U->2afd, U->2afe, U->2aff
+	60, 3,-1,-1,10,-1, 6,-1,	// 2af8-2aff: U->2af8, U->2af9, U->2afa, U->2afb, U->2afc, U->2afd, U->2afe, U->2aff
 	 6,-1,19, 7,-1,39,30, 10,	// 2b00-2b07: U->2b00, U->2b01, U->2b02, U->2b03, U->2b04, U->2b05, U->2b06, U->2b07
 	 6,30, 10, -1,86, 7,44,34,	// 2b08-2b0f: U->2b08, U->2b09, U->2b0a, U->2b0b, U->2b0c, U->2b0d, U->2b0e, U->2b0f
 	11,10,10, 0,11, -1,266,10,	// 2b10-2b17: U->2b10, U->2b11, U->2b12, F->2b13, U->2b14, U->2b15, U->2b16, U->2b17
@@ -46,7 +46,7 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 //2af8: Outgoing, chrif_connect -> 'connect to charserver / auth @ charserver'
 //2af9: Incoming, chrif_connectack -> 'answer of the 2af8 login(ok / fail)'
 //2afa: Outgoing, chrif_sendmap -> 'sending our maps'
-//2afb: Incoming, chrif_sendmapack -> 'Maps received successfully / or not ..'
+//2afb: Incoming, chrif_sendmapack -> 'Maps received successfully / or not .. also received server name & default map'
 //2afc: Outgoing, chrif_scdata_request -> request sc_data for pc_authok'ed char. <- new command reuses previous one.
 //2afd: Incoming, chrif_authok -> 'client authentication ok'
 //2afe: Outgoing, send_usercount_tochar -> 'sends player count of this map server to charserver'
@@ -97,8 +97,8 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 //2b2b: Incoming, chrif_parse_ack_vipActive -> vip info result
 //2b2c: FREE
 //2b2d: Outgoing, chrif_bsdata_request -> request bonus_script for pc_authok'ed char.
-//2b2e: Outgoing, chrif_save_bsdata -> Send bonus_script of player for saving.
-//2b2f: Incoming, chrif_load_bsdata -> received bonus_script of player for loading.
+//2b2e: Outgoing, chrif_bsdata_save -> Send bonus_script of player for saving.
+//2b2f: Incoming, chrif_bsdata_received -> received bonus_script of player for loading.
 
 int chrif_connected = 0;
 int char_fd = -1;
@@ -282,7 +282,6 @@ int chrif_save(struct map_session_data *sd, int flag) {
 		if (chrif_isconnected()) {
 			chrif_save_scdata(sd);
 			chrif_skillcooldown_save(sd);
-			chrif_save_bsdata(sd);
 			chrif_req_login_operation(sd->status.account_id, sd->status.name, CHRIF_OP_LOGIN_BANK, 0, 2, sd->status.bank_vault); //save Bank data
 		}
 		if ( flag != 3 && !chrif_auth_logout(sd,flag == 1 ? ST_LOGOUT : ST_MAPCHANGE) )
@@ -290,6 +289,8 @@ int chrif_save(struct map_session_data *sd, int flag) {
 	}
 
 	chrif_check(-1); //Character is saved on reconnect.
+
+	chrif_bsdata_save(sd, (flag && (flag != 3)));
 
 	//For data sync
 	if (sd->state.storage_flag == 2)
@@ -453,7 +454,7 @@ int chrif_changemapserver(struct map_session_data* sd, uint32 ip, uint16 port) {
 	return 0;
 }
 
-/// map-server change request acknowledgement (positive or negative)
+/// map-server change (mapserv) request acknowledgement (positive or negative)
 /// R 2b06 <account_id>.L <login_id1>.L <login_id2>.L <char_id>.L <map_index>.W <x>.W <y>.W <ip>.L <port>.W
 int chrif_changemapserverack(uint32 account_id, int login_id1, int login_id2, uint32 char_id, short map_index, short x, short y, uint32 ip, uint16 port) {
 	struct auth_node *node;
@@ -473,9 +474,14 @@ int chrif_changemapserverack(uint32 account_id, int login_id1, int login_id2, ui
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------*/
+/**
+ * Does the char_serv have validate our connection to him ?
+ * If yes then 
+ *  - Send all our mapname to charserv
+ *  - Retrieve guild castle
+ *  - Do OnInterIfInit and OnInterIfInitOnce on all npc 
+ * 0x2af9 <errCode>B
+ */
 int chrif_connectack(int fd) {
 	static bool char_init_done = false;
 
@@ -562,17 +568,30 @@ void chrif_on_ready(void) {
 }
 
 
-/*==========================================
- *
- *------------------------------------------*/
+/**
+ * Maps are sent, then received misc info from char-server
+ * - Server name
+ * - Default map
+ * HZ 0x2afb
+ **/
 int chrif_sendmapack(int fd) {
+	uint16 offs = 5;
 
-	if (RFIFOB(fd,2)) {
+	if (RFIFOB(fd,4)) {
 		ShowFatalError("chrif : send map list to char server failed %d\n", RFIFOB(fd,2));
 		exit(EXIT_FAILURE);
 	}
 
-	memcpy(wisp_server_name, RFIFOP(fd,3), NAME_LENGTH);
+	// Server name
+	memcpy(wisp_server_name, RFIFOP(fd,5), NAME_LENGTH);
+	ShowStatus("Map-server connected to char-server '"CL_WHITE"%s"CL_RESET"'.\n", wisp_server_name);
+
+	// Default map
+	memcpy(map_default.mapname, RFIFOP(fd, (offs+=NAME_LENGTH)), MAP_NAME_LENGTH);
+	map_default.x = RFIFOW(fd, (offs+=MAP_NAME_LENGTH));
+	map_default.y = RFIFOW(fd, (offs+=2));
+	if (battle_config.etc_log)
+		ShowInfo("Received default map from char-server '"CL_WHITE"%s %d,%d"CL_RESET"'.\n", map_default.mapname, map_default.x, map_default.y);
 
 	chrif_on_ready();
 
@@ -951,19 +970,21 @@ int chrif_changedsex(int fd) {
 		if ((sd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER) {
 			int i;
 			// remove specifical skills of Bard classes
-			for(i = 315; i <= 322; i++) {
-				if (sd->status.skill[i].id > 0 && sd->status.skill[i].flag == SKILL_FLAG_PERMANENT) {
-					sd->status.skill_point += sd->status.skill[i].lv;
-					sd->status.skill[i].id = 0;
-					sd->status.skill[i].lv = 0;
+			for(i = BA_MUSICALLESSON; i <= BA_APPLEIDUN; i++) {
+				uint16 sk_idx = skill_get_index(i);
+				if (sd->status.skill[sk_idx].id > 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PERMANENT) {
+					sd->status.skill_point += sd->status.skill[sk_idx].lv;
+					sd->status.skill[sk_idx].id = 0;
+					sd->status.skill[sk_idx].lv = 0;
 				}
 			}
 			// remove specifical skills of Dancer classes
-			for(i = 323; i <= 330; i++) {
-				if (sd->status.skill[i].id > 0 && sd->status.skill[i].flag == SKILL_FLAG_PERMANENT) {
-					sd->status.skill_point += sd->status.skill[i].lv;
-					sd->status.skill[i].id = 0;
-					sd->status.skill[i].lv = 0;
+			for(i = DC_DANCINGLESSON; i <= DC_SERVICEFORYOU; i++) {
+				uint16 sk_idx = skill_get_index(i);
+				if (sd->status.skill[sk_idx].id > 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PERMANENT) {
+					sd->status.skill_point += sd->status.skill[sk_idx].lv;
+					sd->status.skill[sk_idx].id = 0;
+					sd->status.skill[sk_idx].lv = 0;
 				}
 			}
 			clif_updatestatus(sd, SP_SKILLPOINT);
@@ -1030,7 +1051,7 @@ int chrif_divorceack(uint32 char_id, int partner_id) {
  *------------------------------------------*/
 int chrif_deadopt(int father_id, int mother_id, int child_id) {
 	struct map_session_data* sd;
-	int idx = skill_get_index(WE_CALLBABY);
+	uint16 idx = skill_get_index(WE_CALLBABY);
 
 	if( father_id && ( sd = map_charid2sd(father_id) ) != NULL && sd->status.child == child_id ) {
 		sd->status.child = 0;
@@ -1598,6 +1619,130 @@ void chrif_parse_ack_vipActive(int fd) {
 #endif
 }
 
+
+/**
+ * ZA 0x2b2d
+ * <cmd>.W <char_id>.L
+ * Requets bonus_script datas
+ * @param char_id
+ * @author [Cydh]
+ **/
+int chrif_bsdata_request(uint32 char_id) {
+	chrif_check(-1);
+	WFIFOHEAD(char_fd,6);
+	WFIFOW(char_fd,0) = 0x2b2d;
+	WFIFOL(char_fd,2) = char_id;
+	WFIFOSET(char_fd,6);
+	return 0;
+}
+
+/**
+ * ZA 0x2b2e
+ * <cmd>.W <len>.W <char_id>.L <count>.B { <bonus_script>.?B }
+ * Stores bonus_script data(s) to the table
+ * @param sd
+ * @author [Cydh]
+ **/
+int chrif_bsdata_save(struct map_session_data *sd, bool quit) {
+	uint8 i = 0;
+
+	chrif_check(-1);
+
+	if (!sd)
+		return 0;
+
+	// Removing...
+	if (quit && sd->bonus_script.head) {
+		uint16 flag = BSF_REM_ON_LOGOUT; //Remove bonus when logout
+		if (battle_config.debuff_on_logout&1) //Remove negative buffs
+			flag |= BSF_REM_DEBUFF;
+		if (battle_config.debuff_on_logout&2) //Remove positive buffs
+			flag |= BSF_REM_BUFF;
+		pc_bonus_script_clear(sd, flag);
+	}
+
+	//ShowInfo("Saving %d bonus script for CID=%d\n", sd->bonus_script.count, sd->status.char_id);
+
+	WFIFOHEAD(char_fd, 9 + sd->bonus_script.count * sizeof(struct bonus_script_data));
+	WFIFOW(char_fd, 0) = 0x2b2e;
+	WFIFOL(char_fd, 4) = sd->status.char_id;
+
+	if (sd->bonus_script.count) {
+		unsigned int tick = gettick();
+		struct linkdb_node *node = NULL;
+
+		for (node = sd->bonus_script.head; node && i < MAX_PC_BONUS_SCRIPT; node = node->next) {
+			const struct TimerData *timer = NULL;
+			struct bonus_script_data bs;
+			struct s_bonus_script_entry *entry = (struct s_bonus_script_entry *)node->data;
+
+			if (!entry || !(timer = get_timer(entry->tid)) || DIFF_TICK(timer->tick,tick) < 0)
+				continue;
+
+			memset(&bs, 0, sizeof(bs));
+			safestrncpy(bs.script_str, StringBuf_Value(entry->script_buf), StringBuf_Length(entry->script_buf)+1);
+			bs.tick = DIFF_TICK(timer->tick, tick);
+			bs.flag = entry->flag;
+			bs.type = entry->type;
+			bs.icon = entry->icon;
+			memcpy(WFIFOP(char_fd, 9 + i * sizeof(struct bonus_script_data)), &bs, sizeof(struct bonus_script_data));
+			i++;
+		}
+
+		if (i != sd->bonus_script.count && sd->bonus_script.count > MAX_PC_BONUS_SCRIPT)
+			ShowWarning("Only allowed to save %d (mmo.h::MAX_PC_BONUS_SCRIPT) bonus script each player.\n", MAX_PC_BONUS_SCRIPT);
+	}
+
+	WFIFOB(char_fd, 8) = i;
+	WFIFOW(char_fd, 2) = 9 + sd->bonus_script.count * sizeof(struct bonus_script_data);
+	WFIFOSET(char_fd, WFIFOW(char_fd, 2));
+
+	return 0;
+}
+
+/**
+ * AZ 0x2b2f
+ * <cmd>.W <len>.W <cid>.L <count>.B { <bonus_script_data>.?B }
+ * Bonus script received, set to player
+ * @param fd
+ * @author [Cydh]
+ **/
+int chrif_bsdata_received(int fd) {
+	struct map_session_data *sd;
+	uint32 cid = RFIFOL(fd,4);
+	uint8 count = 0;
+
+	sd = map_charid2sd(cid);
+
+	if (!sd) {
+		ShowError("chrif_bsdata_received: Player with CID %d not found!\n",cid);
+		return -1;
+	}
+
+	if ((count = RFIFOB(fd,8))) {
+		uint8 i = 0;
+
+		//ShowInfo("Loaded %d bonus script for CID=%d\n", count, sd->status.char_id);
+
+		for (i = 0; i < count; i++) {
+			struct bonus_script_data *bs = (struct bonus_script_data*)RFIFOP(fd,9 + i*sizeof(struct bonus_script_data));
+			struct s_bonus_script_entry *entry = NULL;
+
+			if (bs->script_str[0] == '\0' || !bs->tick)
+				continue;
+
+			if (!(entry = pc_bonus_script_add(sd, bs->script_str, bs->tick, (enum si_type)bs->icon, bs->flag, bs->type)))
+				continue;
+
+			linkdb_insert(&sd->bonus_script.head, (void *)((intptr_t)entry), entry);
+		}
+
+		if (sd->bonus_script.head)
+			status_calc_pc(sd,SCO_NONE);
+	}
+	return 0;
+}
+
 /*==========================================
  *
  *------------------------------------------*/
@@ -1676,7 +1821,7 @@ int chrif_parse(int fd) {
 			case 0x2b27: chrif_authfail(fd); break;
 			case 0x2b29: chrif_load_bankdata(fd); break;
 			case 0x2b2b: chrif_parse_ack_vipActive(fd); break;
-			case 0x2b2f: chrif_load_bsdata(fd); break;
+			case 0x2b2f: chrif_bsdata_received(fd); break;
 			default:
 				ShowError("chrif_parse : unknown packet (session #%d): 0x%x. Disconnecting.\n", fd, cmd);
 				set_eof(fd);
@@ -1798,121 +1943,6 @@ int chrif_send_report(char* buf, int len) {
 	return 0;
 }
 
-/** [Cydh]
-* Requets bonus_script datas
-* @param char_id
-*/
-int chrif_bsdata_request(uint32 char_id) {
-	chrif_check(-1);
-	WFIFOHEAD(char_fd,6);
-	WFIFOW(char_fd,0) = 0x2b2d;
-	WFIFOL(char_fd,2) = char_id;
-	WFIFOSET(char_fd,6);
-	return 0;
-}
-
-/** [Cydh]
-* Stores bonus_script data(s) to the table
-* @param sd
-*/
-int chrif_save_bsdata(struct map_session_data *sd) {
-	int i;
-	uint8 count = 0;
-	unsigned int tick;
-	struct bonus_script_data bs;
-	const struct TimerData *timer;
-
-	chrif_check(-1);
-	tick = gettick();
-
-	WFIFOHEAD(char_fd,10+MAX_PC_BONUS_SCRIPT*sizeof(struct bonus_script_data));
-	WFIFOW(char_fd,0) = 0x2b2e;
-	WFIFOL(char_fd,4) = sd->status.char_id;
-	
-	i = BSF_REM_ON_LOGOUT; //Remove bonus with this flag
-	if (battle_config.debuff_on_logout&1) //Remove negative buffs
-		i |= BSF_REM_DEBUFF;
-	if (battle_config.debuff_on_logout&2) //Remove positive buffs
-		i |= BSF_REM_BUFF;
-	
-	//Clear data that won't be stored
-	pc_bonus_script_clear(sd,i);
-
-	for (i = 0; i < MAX_PC_BONUS_SCRIPT; i++) {
-		if (!(&sd->bonus_script[i]) || !sd->bonus_script[i].script || sd->bonus_script[i].script_str[0] == '\0')
-			continue;
-
-		timer = get_timer(sd->bonus_script[i].tid);
-		if (timer == NULL || DIFF_TICK(timer->tick,tick) < 0)
-			continue;
-
-		memcpy(bs.script,sd->bonus_script[i].script_str,strlen(sd->bonus_script[i].script_str)+1);
-		bs.tick = DIFF_TICK(timer->tick,tick);
-		bs.flag = sd->bonus_script[i].flag;
-		bs.type = sd->bonus_script[i].type;
-		bs.icon = sd->bonus_script[i].icon;
-
-		memcpy(WFIFOP(char_fd,10+count*sizeof(struct bonus_script_data)),&bs,sizeof(struct bonus_script_data));
-		pc_bonus_script_remove(&sd->bonus_script[i]);
-		count++;
-	}
-
-	if (count == 0)
-		return 0;
-
-	WFIFOW(char_fd,8) = count;
-	WFIFOW(char_fd,2) = 10+count*sizeof(struct bonus_script_data);
-	WFIFOSET(char_fd,WFIFOW(char_fd,2));
-	return 0;
-}
-
-/** [Cydh]
-* Loads bonus_script datas
-* @param fd
-*/
-int chrif_load_bsdata(int fd) {
-	struct map_session_data *sd;
-	int cid, count;
-	uint8 i;
-	bool calc = false;
-
-	cid = RFIFOL(fd,4);
-	sd = map_charid2sd(cid);
-
-	if (!sd) {
-		ShowError("chrif_load_bsdata: Player with CID %d not found!\n",cid);
-		return -1;
-	}
-
-	if (sd->status.char_id != cid) {
-		ShowError("chrif_load_bsdata: Receiving data for char id does not matches (%d != %d)!\n",sd->status.char_id,cid);
-		return -1;
-	}
-
-	count = RFIFOW(fd,8);
-
-	for (i = 0; i < count; i++) {
-		struct script_code *script;
-		struct bonus_script_data *bs = (struct bonus_script_data*)RFIFOP(fd,10 + i*sizeof(struct bonus_script_data));
-
-		if (bs->script[0] == '\0' || !(script = parse_script(bs->script,"chrif_load_bsdata",1,1)))
-			continue;
-
-		memcpy(sd->bonus_script[i].script_str,bs->script,strlen(bs->script));
-		sd->bonus_script[i].script = script;
-		sd->bonus_script[i].tick = gettick() + bs->tick;
-		sd->bonus_script[i].flag = (uint8)bs->flag;
-		sd->bonus_script[i].type = bs->type;
-		sd->bonus_script[i].icon = bs->icon;
-		if (bs->icon != SI_BLANK) //Gives status icon if exist
-			clif_status_change(&sd->bl,sd->bonus_script[i].icon,1,bs->tick,1,0,0);
-		calc = true;
-	}
-	if (calc)
-		status_calc_pc(sd,SCO_NONE);
-	return 0;
-}
-
 /**
  * @see DBApply
  */
@@ -1954,6 +1984,13 @@ void do_init_chrif(void) {
 			sizeof(struct mmo_charstatus));
 		exit(EXIT_FAILURE);
 	}
+
+	if((sizeof(struct bonus_script_data) * MAX_PC_BONUS_SCRIPT) > 0xFFFF){
+		ShowError("bonus_script_data size = %d is too big, please reduce MAX_PC_BONUS_SCRIPT (%d) size. (must be below 0xFFFF).\n",
+			(sizeof(struct bonus_script_data) * MAX_PC_BONUS_SCRIPT), MAX_PC_BONUS_SCRIPT);
+		exit(EXIT_FAILURE);
+	}
+
 	auth_db = idb_alloc(DB_OPT_BASE);
 	auth_db_ers = ers_new(sizeof(struct auth_node),"chrif.c::auth_db_ers",ERS_OPT_NONE);
 

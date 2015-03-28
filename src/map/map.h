@@ -312,7 +312,8 @@ enum npc_subtype {
 	NPCTYPE_CASHSHOP, /// Cashshop
 	NPCTYPE_ITEMSHOP, /// Itemshop
 	NPCTYPE_POINTSHOP, /// Pointshop
-	NPCTYPE_TOMB /// Monster tomb
+	NPCTYPE_TOMB, /// Monster tomb
+	NPCTYPE_MARKETSHOP, /// Marketshop
 };
 
 enum e_race {
@@ -498,7 +499,8 @@ enum _sp {
 
 	SP_IGNORE_DEF_CLASS, SP_DEF_RATIO_ATK_CLASS, SP_ADDCLASS, SP_SUBCLASS, SP_MAGIC_ADDCLASS, //2062-2066
 	SP_WEAPON_COMA_CLASS, SP_IGNORE_MDEF_CLASS_RATE, SP_EXP_ADDCLASS, SP_ADD_CLASS_DROP_ITEM, //2067-2070
-	SP_ADD_CLASS_DROP_ITEMGROUP, SP_ADDMAXWEIGHT, SP_ADD_ITEMGROUP_HEAL_RATE  // 2071-2073
+	SP_ADD_CLASS_DROP_ITEMGROUP, SP_ADDMAXWEIGHT, SP_ADD_ITEMGROUP_HEAL_RATE,  // 2071-2073
+	SP_HP_VANISH_RACE_RATE, SP_SP_VANISH_RACE_RATE, // 2074-2075
 };
 
 enum _look {
@@ -758,6 +760,13 @@ extern char charhelp_txt[];
 
 extern char wisp_server_name[];
 
+struct s_map_default {
+	char mapname[MAP_NAME_LENGTH];
+	unsigned short x;
+	unsigned short y;
+};
+extern struct s_map_default map_default;
+
 /// Type of 'save_settings'
 enum save_settings_type {
 	CHARSAVE_NONE = 0,
@@ -828,6 +837,8 @@ struct mob_data * map_id2md(int id);
 struct npc_data * map_id2nd(int id);
 struct homun_data* map_id2hd(int id);
 struct mercenary_data* map_id2mc(int id);
+struct pet_data* map_id2pd(int id);
+struct elemental_data* map_id2ed(int id);
 struct chat_data* map_id2cd(int id);
 struct block_list * map_id2bl(int id);
 bool map_blid_exists( int id );
@@ -983,6 +994,7 @@ extern char mob_skill_db_re_db[32];
 extern char mob_skill_db2_db[32];
 extern char vendings_db[32];
 extern char vending_items_db[32];
+extern char market_table[32];
 
 void do_shutdown(void);
 

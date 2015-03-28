@@ -40,6 +40,7 @@ enum item_itemid
 	ITEMID_WHITE_POTION					= 504,
 	ITEMID_BLUE_POTION					= 505,
 	ITEMID_HOLY_WATER					= 523,
+	ITEMID_PUMPKIN						= 535,
 	ITEMID_RED_SLIM_POTION				= 545,
 	ITEMID_YELLOW_SLIM_POTION			= 546,
 	ITEMID_WHITE_SLIM_POTION			= 547,
@@ -325,7 +326,11 @@ enum e_item_ammo
 	AMMO_KUNAI,
 	AMMO_CANNONBALL,
 	AMMO_THROWABLE_ITEM, ///Sling items
+
+	MAX_AMMO_TYPE,
 };
+
+#define AMMO_TYPE_ALL ((1<<MAX_AMMO_TYPE)-1)
 
 ///Item combo struct
 struct item_combo
@@ -386,9 +391,9 @@ struct item_data
 	int slot;
 	int look;
 	int elv;
-	int elvmax; ///< Maximum level for this item
 	int wlv;
 	int view_id;
+	int elvmax; ///< Maximum level for this item
 #ifdef RENEWAL
 	int matk;
 #endif

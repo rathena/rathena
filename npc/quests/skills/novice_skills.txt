@@ -137,7 +137,7 @@ prt_in,234,133,4	script	Nami	66,{
 						mes "and combine them together and. . .";
 						mes "Presto !!";
 						next;
-						skill "NV_FIRSTAID",1,0;
+						skill "NV_FIRSTAID",1,SKILL_PERM;
 						set skill_nov,3;
 						mes "[Nami]";
 						mes "Yes yes, that's right!";
@@ -314,7 +314,7 @@ prt_in,73,87,4	script	Chivalry Member	65,{
 				mes "Okay okay, See you around ! ! !";
 				set skill_nov,6;
 				delitem 7039,1; //Novice_Nametag
-				skill "NV_TRICKDEAD",1,0;
+				skill "NV_TRICKDEAD",1,SKILL_PERM;
 				close;
 			}
 			mes "[Bulma]";

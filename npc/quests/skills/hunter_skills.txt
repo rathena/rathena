@@ -85,7 +85,7 @@ pay_arche,109,169,3	script	Arpesto	712,{
 				mes "You should be able to use the";
 				mes "Phantasmic Arrow skill now.";
 				mes "Travel safely now, you hear?";
-				skill "HT_PHANTASMIC",1,0;
+				skill "HT_PHANTASMIC",1,SKILL_PERM;
 				close;
 			}
 		}
@@ -213,7 +213,7 @@ pay_arche,109,169,3	script	Arpesto	712,{
 				delitem 7115,5; //Harpy's_Feather
 				delitem 537,30; //Pet_Food
 				set qskill_hunter,100;
-				skill "HT_PHANTASMIC",1,0;
+				skill "HT_PHANTASMIC",1,SKILL_PERM;
 				close;
 			} else {
 				mes "[Arpesto]";

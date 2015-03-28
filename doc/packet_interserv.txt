@@ -2176,15 +2176,19 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- chrif_connectack
 
 0x2afb
-	Type: AZ
-	Structure: <cmd>.W <?>.B
-	index: 0,2
-	len: variable: 3+NAME_LENGTH
+	Type: HZ
+	Structure: <cmd>.W <size>.W <status>.B <servername>.?B <defaultmap>.?B <mapx>.W <mapy>.W
+	index: 0,2,4,5+NAME_LENGTH,5+NAME_LENGTH+MAP_NAME_LENGTH,5+NAME_LENGTH+MAP_NAME_LENGTH+2
+	len: variable: 9+NAME_LENGTH+MAP_NAME_LENGTH
 	parameter:
 		- cmd : packet identification (0x2afb)
-		- ?
+		- status : 0 Success, 1 : Fail
+		- servername :
+		- defaultmap :
+		- mapx :
+		- mapy :
 	desc:
-		- send name for wisp to player
+		- Map received from map-server, then send reply with server name and default map
 
 0x2afd
 	Type: AZ
@@ -2491,9 +2495,9 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 
 0x2b2f
 	Type: AZ
-	Structure: <cmd>.W <len>.W <cid>.L <count>.W
+	Structure: <cmd>.W <len>.W <cid>.L <count>.B { <bonus_script_data>.?B }
 	index: 0,2,4,8
-	len: variable: 10+50*bonus_script_data
+	len: variable: 9+count*bonus_script_data
 	parameter:
 		- cmd : packet identification (0x2b2f)
 	desc:
@@ -2840,9 +2844,9 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 
 0x2b2e
 	Type: ZA
-	Structure: <cmd>.W <len>.W <char_id>.L <count>.W
+	Structure: <cmd>.W <len>.W <char_id>.L <count>.B { <bonus_script_data>.?B }
 	index: 0,2,4,8
-	len: variable: 10+MAX_PC_BONUS_SCRIPT*bonus_script_data
+	len: variable: 9+count*bonus_script_data
 	parameter:
 		- cmd : packet identification (0x2b2e)
 		- len

@@ -24,7 +24,7 @@
 que_job01,75,96,3	script	Guild Member#3rdgc01	997,{
 	if (job_3rd_gc == 0) {
 		if (Class == Job_Assassin || Class == Job_Assassin_Cross || Class == Job_Baby_Assassin) {
-			if (BaseLevel == 99) {
+			if (BaseLevel > 98) {
 			L_Mission:
 				mes "[Ahcart]";
 				mes "Finally, it's time...";
@@ -120,7 +120,7 @@ que_job01,75,96,3	script	Guild Member#3rdgc01	997,{
 		mes "You are not an assassin.";
 		close;
 	} else if (job_3rd_gc == 1) {
-		if (BaseLevel == 99) goto L_Mission;
+		if (BaseLevel > 98) goto L_Mission;
 		mes "[Ahcart]";
 		mes "If you become stronger and more skillful, then the assassin's guild will give you a special task.";
 		mes "Go for it.";

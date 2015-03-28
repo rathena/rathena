@@ -9,14 +9,13 @@
 struct quest_db {
 	int id;
 	unsigned int time;
-	int mob[MAX_QUEST_OBJECTIVES];
-	int count[MAX_QUEST_OBJECTIVES];
-	int num_objectives;
-	//char name[NAME_LENGTH];
+	uint16 mob[MAX_QUEST_OBJECTIVES];
+	uint16 count[MAX_QUEST_OBJECTIVES];
+	uint8 num_objectives;
+	//StringBuf name;
 };
 
-struct quest_db *quest_db_data[MAX_QUEST_DB];	///< Quest database
-struct quest_db quest_dummy;					///< Dummy entry for invalid quest lookups
+struct quest_db quest_dummy;	///< Dummy entry for invalid quest lookups
 
 // Questlog check types
 enum quest_check_type {
@@ -36,7 +35,7 @@ int quest_update_status(TBL_PC * sd, int quest_id, enum quest_state status);
 int quest_check(TBL_PC * sd, int quest_id, enum quest_check_type type);
 void quest_clear(void);
 
-struct quest_db *quest_db(int quest_id);
+struct quest_db *quest_search(int quest_id);
 
 void do_init_quest(void);
 void do_final_quest(void);
