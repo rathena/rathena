@@ -3783,7 +3783,7 @@ ACMD_FUNC(reload) {
 		}
 		clif_displaymessage(fd, msg_txt(sd,255));
 	} else if (strstr(command, "statusdb") || strncmp(message, "statusdb", 3) == 0) {
-		status_readdb();
+		status_reloaddb();
 		clif_displaymessage(fd, msg_txt(sd,256));
 	} else if (strstr(command, "pcdb") || strncmp(message, "pcdb", 2) == 0) {
 		pc_readdb();

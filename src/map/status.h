@@ -702,6 +702,7 @@ typedef enum sc_type {
 	SC__CHAOS,
 	SC_ELEMENTAL_SHIELD,
 	SC_CHASEWALK2,
+	SC_WEAPONBLOCKING_POSTDELAY,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
@@ -1952,9 +1953,6 @@ struct status_change {
 	struct status_change_entry *data[SC_MAX];
 };
 
-// for looking up associated data
-void status_sc_set_skill(sc_type sc, uint16 skill_id);
-
 int status_damage(struct block_list *src,struct block_list *target,int64 dhp,int64 dsp, int walkdelay, int flag);
 //Define for standard HP damage attacks.
 #define status_fix_damage(src, target, hp, walkdelay) status_damage(src, target, hp, 0, walkdelay, 0)
@@ -2093,12 +2091,12 @@ uint32 status_sc_get_calc_flag(enum sc_type sc);
 //uint32 status_sc_get_opt3(enum sc_type sc);
 //uint32 status_sc_get_look(enum sc_type sc);
 uint32 status_sc_get_flag(enum sc_type sc);
-bool status_sc_isDebuff(enum sc_type sc);
-uint16 status_sc_get_skill(enum sc_type sc);
-void status_sc_set_assoc(enum sc_type sc, uint16 skill_id);
+//bool status_sc_isDebuff(enum sc_type sc);
+uint16 status_sc_get_skill(enum sc_type sc_type);
 uint16 status_si_get_bl_type(enum si_type si);
 
 void status_readdb(void);
+void status_reloaddb(void);
 void do_init_status(void);
 void do_final_status(void);
 

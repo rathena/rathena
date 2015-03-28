@@ -2943,10 +2943,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				aFree(sd->combos.id);
 				sd->combos.count = 0;
 			}
-			if (sd->sc_scripts_count) {
-				aFree(sd->sc_scripts);
-				sd->sc_scripts_count = 0;
-			}
+
 			pc_itemgrouphealrate_clear(sd);
 
 			/* [Ind] */

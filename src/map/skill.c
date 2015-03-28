@@ -19540,7 +19540,7 @@ int skill_disable_check(struct status_change *sc, uint16 skill_id)
 		case RA_WUGDASH:
 		case RA_CAMOUFLAGE:
 			if( sc->data[skill_get_sc(skill_id)] )
-				return 1;
+					return 1;
 			break;
 
 		// These 2 skills contain a master and are not correctly pulled using skill2sc
@@ -20243,23 +20243,34 @@ static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
 }
 #endif
 
-/** Returns the SC for skill
-* @param skill_id
-* @return SC_ID
-*/
+/**
+ * Returns the SC for skill
+ * @param skill_id
+ * @return SC_ID or SC_NONE if skill is invalid or doesn't have SC
+ * !TODO: Some skill_get_sc() usages are careless, not checking if will be used on array or not!!
+ **/
 enum sc_type skill_get_sc(int16 skill_id) {
 	uint16 idx = skill_get_index(skill_id);
-	if (!idx)
+	if (!idx) {
+		ShowError("skill_get_sc: Invalid skill '%d'.\n", skill_id);
 		return SC_NONE;
+	}
+	if (skill_db[idx].sc <= SC_NONE || skill_db[idx].sc >= SC_MAX) {
+		//ShowError("skill_get_sc: Skill '%d' doesn't have default SC.\n", skill_id);
+		return SC_NONE;
+	}
 	return skill_db[idx].sc;
 }
 
-/** Reads "skill_sc_assoc_db.txt" for setting SC-Skill association, default SC for skill, and listed ended SC
-* <Skill>,<SC Assoc>
-* @author Cydh
-*/
+/**
+ * Reads "skill_sc_assoc_db.txt" for skill_get_sc() in skill_castend_nodamage_id()
+ * <Skill>,<SC>
+ * @author [Cydh]
+ **/
 static bool skill_parse_row_skillscassocdb(char* split[], int columns, int current) {
-	uint16 skill_id, idx;
+	uint16 skill_id = 0, idx = 0;
+	int sc = SC_NONE;
+	bool eaj = false;
 
 	trim(split[0]);
 	if (ISDIGIT(split[0][0]))
@@ -20268,28 +20279,29 @@ static bool skill_parse_row_skillscassocdb(char* split[], int columns, int curre
 		skill_id = skill_name2id(trim(split[0])); // Finds by name
 
 	if (!(idx = skill_get_index(skill_id))) {
-		ShowWarning("skill_parse_row_skillscassocdb: Invalid skill '%s'. Skipping..", split[0]);
+		ShowWarning("skill_parse_row_skillscassocdb: Invalid skill '%s'. Skipping..\n", split[0]);
 		return false;
 	}
 
 	// SC checks
 	trim(split[1]);
-	if (split[1][0] != '\0' || atoi(split[1])) {
-		int scs[3];
-		uint8 i;
-		if (skill_split_atoi2(split[1], scs, ":", SC_NONE, ARRAYLENGTH(scs)) > ARRAYLENGTH(scs))
-			ShowWarning("skill_parse_row_skillscassocdb: Skill '%s' associated status entries than %d. Ignore the rest.\n", split[0], ARRAYLENGTH(scs));
+	if (split[1][0] == '\0')
+		return false;
 
-		//! TODO: Skill only has 1 effect yet
-		if ((sc_type)scs[0] > SC_NONE && (sc_type)scs[0] < SC_MAX)
-			skill_db[idx].sc = (sc_type)scs[0];
-		
-		// Adds SC-Skill assoc
-		for (i = 0; i < ARRAYLENGTH(scs); i++) {
-			if ((sc_type)scs[i] > SC_NONE && (sc_type)scs[i] < SC_MAX)
-				status_sc_set_assoc((sc_type)scs[i], skill_id);
-		}
+	if (ISDIGIT(split[1][0]))
+		sc = atoi(split[1]);
+	else {
+		if (strlen(split[1]) > 3 && split[1][0] == 'E' && split[1][1] == 'A' && split[1][2] == 'J')
+			eaj = true;
+		script_get_constant(split[1], &sc);
 	}
+
+	if (!eaj && (sc <= SC_NONE || sc >= SC_MAX)) {
+		ShowWarning("skill_parse_row_skillscassocdb: Invalid SC '%s'. Skipping..\n", split[1]);
+		return false;
+	}
+
+	skill_db[idx].sc = (enum sc_type)sc; 
 	return true;
 }
 
@@ -20305,6 +20317,9 @@ static void skill_readdb(void) {
 	// init skill db structures
 	db_clear(skilldb_name2id);
 	memset(skill_db,0,sizeof(skill_db));
+	for (i = 0; i < MAX_SKILL_DB; i++) {
+		skill_db[i].sc = SC_NONE;
+	}
 	memset(skill_produce_db,0,sizeof(skill_produce_db));
 	memset(skill_arrow_db,0,sizeof(skill_arrow_db));
 	memset(skill_abra_db,0,sizeof(skill_abra_db));

@@ -1285,6 +1285,10 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 
 	sd->last_addeditem_index = -1;
 
+	for (i = 0; i < MAX_PC_SC_SCRIPTS; i++) {
+		sd->sc_scripts[i] = SC_NONE;
+	}
+
 	// Request all registries (auth is considered completed whence they arrive)
 	intif_request_registry(sd,7);
 	return true;

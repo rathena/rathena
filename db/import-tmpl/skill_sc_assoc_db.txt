@@ -1,14 +1,13 @@
 // Skill-SC Association Database
 //
-// This database will makes skill by default has effect to give SC when casted
-// and SC will be associated with the skill for duration lookup (like for addeff duration)
+// Gives SC as default effect of skill (after-cast effect) that mostly is used
+// by 'skill_get_sc()' in 'skill_castend_nodamage_id()' of buff skill.
+//
+// Currently only 1 SC per skill.
 //
 // Structure:
 // 	Skill,SC
 //
 // Skill : Skill ID or name
-// SC    : Status Change ID (see db/const.txt). For multiple value, use ':' as delimiter
-//	Rules:
-//	- On skill cast is ended, skill will use the FIRST SC (if the SC is more than 1)
-//	- SC that listed, will adds the skill as its association if the SC doesn't have associated skill yet
+// SC    : Status Change ID (see db/const.txt)
 //
