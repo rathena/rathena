@@ -2236,7 +2236,9 @@ unsigned short status_base_matk(struct block_list *bl, const struct status_data*
 {
 	switch (bl->type) {
 		case BL_MOB:
-			return status->int_ + level;
+			///! TODO: Confirm these RENEWAL calculations. Currently is using previous calculation before 083cf5d9 (issue: #321) and until re/mob_db.txt is updated.
+			//return status->int_ + level;
+			return status->int_ + (status->int_ / 2) + (status->dex / 5) + (status->luk / 3) + (level / 4);
 		case BL_HOM:
 			return status_get_homint(bl) + level;
 		case BL_MER:
@@ -2317,7 +2319,21 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 		}
 		status->mdef2 = cap_value(stat, 0, SHRT_MAX);
 	}
+
+	// MAtk
 	status->matk_min = status->matk_max = status_base_matk(bl, status, level);
+
+	///! TODO: Confirm these RENEWAL calculations. Currently is using previous calculation before 083cf5d9 (issue: #321) and until re/mob_db.txt is updated.
+	//switch (bl->type) {
+	//	case BL_MOB:
+	//		status->matk_min += 70 * ((TBL_MOB*)bl)->status.rhw.atk2 / 100;
+	//		status->matk_max += 130 * ((TBL_MOB*)bl)->status.rhw.atk2 / 100;
+	//		break;
+	//	case BL_MER:
+	//		status->matk_min += 70 * ((TBL_MER*)bl)->battle_status.rhw.atk2 / 100;
+	//		status->matk_max += 130 * ((TBL_MER*)bl)->battle_status.rhw.atk2 / 100;
+	//		break;
+	//}
 #else
 	// Matk
 	status->matk_min = status_base_matk_min(status);
@@ -4524,58 +4540,50 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 		status->matk_min = status->matk_max = status_base_matk(bl, status, status_get_lv(bl));
 
 		switch( bl->type ) {
-		case BL_PC: {
-			int wMatk = 0;
-			int variance = 0;
+			case BL_PC: {
+				int wMatk = 0;
+				int variance = 0;
 
-			// Any +MATK you get from skills and cards, including cards in weapon, is added here.
-			if (sd->bonus.ematk > 0)
-				status->matk_min += sd->bonus.ematk;
+				// Any +MATK you get from skills and cards, including cards in weapon, is added here.
+				if (sd->bonus.ematk > 0)
+					status->matk_min += sd->bonus.ematk;
 
-			status->matk_min = status_calc_ematk(bl, sc, status->matk_min);
-			status->matk_max = status->matk_min;
+				status->matk_min = status_calc_ematk(bl, sc, status->matk_min);
+				status->matk_max = status->matk_min;
 
-			// This is the only portion in MATK that varies depending on the weapon level and refinement rate.
-			if (b_status->lhw.matk) {
-				if (sd) {
-					//sd->state.lr_flag = 1; //?? why was that set here
-					status->lhw.matk = b_status->lhw.matk;
-					sd->state.lr_flag = 0;
-				} else {
-					status->lhw.matk = b_status->lhw.matk;
+				// This is the only portion in MATK that varies depending on the weapon level and refinement rate.
+				if (b_status->lhw.matk) {
+					if (sd) {
+						//sd->state.lr_flag = 1; //?? why was that set here
+						status->lhw.matk = b_status->lhw.matk;
+						sd->state.lr_flag = 0;
+					} else {
+						status->lhw.matk = b_status->lhw.matk;
+					}
 				}
-			}
 
-			if (b_status->rhw.matk) {
-				status->rhw.matk = b_status->rhw.matk;
-			}
+				if (b_status->rhw.matk) {
+					status->rhw.matk = b_status->rhw.matk;
+				}
 
-			if (status->rhw.matk) {
-				wMatk += status->rhw.matk;
-				variance += wMatk * status->rhw.wlv / 10;
-			}
+				if (status->rhw.matk) {
+					wMatk += status->rhw.matk;
+					variance += wMatk * status->rhw.wlv / 10;
+				}
 
-			if (status->lhw.matk) {
-				wMatk += status->lhw.matk;
-				variance += status->lhw.matk * status->lhw.wlv / 10;
-			}
+				if (status->lhw.matk) {
+					wMatk += status->lhw.matk;
+					variance += status->lhw.matk * status->lhw.wlv / 10;
+				}
 
-			status->matk_min += wMatk - variance;
-			status->matk_max += wMatk + variance;
-			}
-			break;
-		case BL_HOM:
-			status->matk_min += (status_get_homint(bl) + status_get_homdex(bl)) / 5;
-			status->matk_max += (status_get_homluk(bl) + status_get_homint(bl) + status_get_homdex(bl)) / 3;
-			break;
-		case BL_MOB:
-			status->matk_min += 70 * ((TBL_MOB*)bl)->status.rhw.atk2 / 100;
-			status->matk_max += 130 * ((TBL_MOB*)bl)->status.rhw.atk2 / 100;
-			break;
-		case BL_MER:
-			status->matk_min += 70 * ((TBL_MER*)bl)->battle_status.rhw.atk2 / 100;
-			status->matk_max += 130 * ((TBL_MER*)bl)->battle_status.rhw.atk2 / 100;
-			break;
+				status->matk_min += wMatk - variance;
+				status->matk_max += wMatk + variance;
+				}
+				break;
+			case BL_HOM:
+				status->matk_min += (status_get_homint(bl) + status_get_homdex(bl)) / 5;
+				status->matk_max += (status_get_homluk(bl) + status_get_homint(bl) + status_get_homdex(bl)) / 3;
+				break;
 		}
 #endif
 
