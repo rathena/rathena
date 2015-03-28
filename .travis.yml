@@ -7,13 +7,19 @@ before_script:
   - uname -a  
 
 script: 
-  - ./configure && make server
-  - make clean
-  - ./configure --enable-prere && make server
+  - ./configure $CONFIGURE_FLAGS $CONFIGURE_PACKETS && make clean && make server
+
+env:
+  - CONFIGURE_FLAGS=""
+  - CONFIGURE_FLAGS="--enable-prere"
+  - CONFIGURE_PACKETS="20130807"
+  - CONFIGURE_PACKETS="20120410"
+  - CONFIGURE_PACKETS="20100730"
   
 notifications:
   email: false
   
 branches:
   only:
-    - master 
+    - master
+    - sc_config
