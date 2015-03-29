@@ -16500,7 +16500,7 @@ BUILDIN_FUNC(setunitdata)
 	TBL_PET* pd = NULL;
 	TBL_ELEM* ed = NULL;
 	TBL_NPC* nd = NULL;
-	int type, value;
+	int type, value = 0;
 
 	bl = map_id2bl(script_getnum(st, 2));
 
@@ -19878,7 +19878,9 @@ BUILDIN_FUNC(npcshopupdate) {
 	struct npc_data* nd = npc_name2id(npcname);
 	uint16 nameid = script_getnum(st, 3);
 	int price = script_getnum(st, 4);
-	uint16 stock = 0;
+#if PACKETVER >= 20131223
+	uint16 stock = script_hasdata(st,5) ? script_getnum(st,5) : 0;
+#endif
 	int i;
 
 	if( !nd || ( nd->subtype != NPCTYPE_SHOP && nd->subtype != NPCTYPE_CASHSHOP && nd->subtype != NPCTYPE_ITEMSHOP && nd->subtype != NPCTYPE_POINTSHOP && nd->subtype != NPCTYPE_MARKETSHOP ) ) { // Not found.
@@ -19890,14 +19892,6 @@ BUILDIN_FUNC(npcshopupdate) {
 		ShowError("buildin_npcshopupdate: Attempt to update empty shop from '%s'.\n", nd->exname);
 		script_pushint(st,0);
 		return SCRIPT_CMD_FAILURE;
-	}
-
-	if (nd->subtype == NPCTYPE_MARKETSHOP) {
-		FETCH(5, stock);
-	}
-	else if ((price = cap_value(price, 0, INT_MAX)) == 0) { // Nothing to do here...
-		script_pushint(st,1);
-		return SCRIPT_CMD_SUCCESS;
 	}
 
 	for (i = 0; i < nd->u.shop.count; i++) {

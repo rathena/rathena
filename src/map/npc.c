@@ -1679,6 +1679,8 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 						count = pc_readaccountreg(sd, nd->u.shop.pointshop_str);
 					break;
 				case '@':
+					count = pc_readreg(sd, add_str(nd->u.shop.pointshop_str));
+					break;
 				default:
 					count = pc_readglobalreg(sd, nd->u.shop.pointshop_str);
 					break;
@@ -2539,19 +2541,13 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	nd->u.shop.count = 0;
 	while ( p ) {
 		unsigned short nameid2, qty = 0;
-		int value, i = 0;
+		int value;
 		struct item_data* id;
 		bool skip = false;
 
 		if( p == NULL )
 			break;
 		switch(type) {
-			case NPCTYPE_SHOP:
-				if (sscanf(p, ",%hu:%d", &nameid2, &value) != 2) {
-					ShowError("npc_parse_shop: (SHOP) Invalid item definition in file '%s', line '%d'. Ignoring the rest of the line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer, start - buffer), w1, w2, w3, w4);
-					skip = true;
-				}
-				break;
 			case NPCTYPE_MARKETSHOP:
 #if PACKETVER >= 20131223
 				if (sscanf(p, ",%hu:%d:%hu", &nameid2, &value, &qty) != 3) {
@@ -2559,6 +2555,12 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 					skip = true;
 				}
 #endif
+				break;
+			default:
+				if (sscanf(p, ",%hu:%d", &nameid2, &value) != 2) {
+					ShowError("npc_parse_shop: Invalid item definition in file '%s', line '%d'. Ignoring the rest of the line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer, start - buffer), w1, w2, w3, w4);
+					skip = true;
+				}
 				break;
 		}
 
@@ -2593,6 +2595,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		
 #if PACKETVER >= 20131223
 		if (nd->u.shop.count && type == NPCTYPE_MARKETSHOP) {
+			uint16 i;
 			// Duplicate entry? Replace the value
 			ARR_FIND(0, nd->u.shop.count, i, nd->u.shop.shop_item[i].nameid == nameid);
 			if (i != nd->u.shop.count) {
