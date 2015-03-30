@@ -297,7 +297,7 @@ prices for items in different shops.
 
 Since trunk r12264 you can alternatively use "cashshop" in place of "shop"
 to use the Cash Shop interface, allowing you to buy items with special points
-(Currently stored as account vars in global_reg #CASHPOINTS and #KAFRAPOINTS.)
+(Currently stored as account variables in global_reg #CASHPOINTS and #KAFRAPOINTS.)
 This type of shop will not allow you to sell items at it, you may only
 purchase items here. The layout used to define sale items still count, and
 "<price>" refers to how many points will be spent purchasing the them.
@@ -5391,7 +5391,7 @@ Example:
 
 *bonus_script_clear {<flag>,{<char_id>}};
 
-Removes atatched bonus_script from player. If no 'char_id' given, it will removes
+Removes attached bonus_script from player. If no 'char_id' given, it will removes
 from the invoker.
 
 If 'flag' is 1, means will clears all scripts even it's Permanent effect. By default,
@@ -5424,7 +5424,7 @@ previously, they will now at 0+the level given.
 Flag 3 is the same as flag 1 in that it saves to the database.  However, these skills
 are ignored when any action is taken that adjusts the skill tree (reset/job change).
 
-Flag contants:
+Flag constants:
 	0 - SKILL_PERM
 	1 - SKILL_TEMP
 	2 - SKILL_TEMPLEVEL

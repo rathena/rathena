@@ -18441,7 +18441,8 @@ void packetdb_readdb(bool reload)
 					char key1[12] = { 0 }, key2[12] = { 0 }, key3[12] = { 0 };
 					trim(w2);
 					if (sscanf(w2, "%11[^,],%11[^,],%11[^ \r\n/]", key1, key2, key3) == 3) {
-						CREATE(packet_keys[packet_ver], struct s_packet_keys, 1);
+						if (!packet_keys[packet_ver])
+							CREATE(packet_keys[packet_ver], struct s_packet_keys, 1);
 						packet_keys[packet_ver]->keys[0] = strtol(key1, NULL, 0);
 						packet_keys[packet_ver]->keys[1] = strtol(key2, NULL, 0);
 						packet_keys[packet_ver]->keys[2] = strtol(key3, NULL, 0);
@@ -18572,8 +18573,10 @@ void packetdb_readdb(bool reload)
 	ShowStatus("Packet Obfuscation: "CL_GREEN"Enabled"CL_RESET". Keys: "CL_WHITE"0x%08X, 0x%08X, 0x%08X"CL_RESET"\n", clif_cryptKey[0], clif_cryptKey[1], clif_cryptKey[2]);
 
 	for (i = 0; i < ARRAYLENGTH(packet_keys); i++) {
-		if (packet_keys[i])
+		if (packet_keys[i]) {
 			aFree(packet_keys[i]);
+			packet_keys[i] = NULL;
+		}
 	}
 #endif
 }
