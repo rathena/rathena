@@ -7982,6 +7982,7 @@ static const struct _battle_data {
 	{ "pet_ignore_infinite_def",            &battle_config.pet_ignore_infinite_def,         0,      0,      1,              },
 	{ "homunculus_evo_intimacy_need",       &battle_config.homunculus_evo_intimacy_need,    91100,  0,      INT_MAX,        },
 	{ "homunculus_evo_intimacy_reset",      &battle_config.homunculus_evo_intimacy_reset,   1000,   0,      INT_MAX,        },
+	{ "monster_loot_search_type",           &battle_config.monster_loot_search_type,        1,      0,      1,              },
 };
 
 #ifndef STATS_OPT_OUT

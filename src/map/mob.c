@@ -1175,11 +1175,18 @@ static int mob_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 	target = va_arg(ap,struct block_list**);
 
 	dist = distance_bl(&md->bl, bl);
-	if (mob_can_reach(md,bl,dist+1, MSS_LOOT) && ((*target) == NULL || md->target_id > bl->id)) {
+	if (mob_can_reach(md,bl,dist+1, MSS_LOOT) && (
+		(*target) == NULL ||
+		(battle_config.monster_loot_search_type && md->target_id > bl->id) ||
+		(!battle_config.monster_loot_search_type && !check_distance_bl(&md->bl, *target, dist)) // New target closer than previous one.
+		))
+	{
 		(*target) = bl;
 		md->target_id = bl->id;
 		md->min_chase = md->db->range3;
 	}
+	else if (!battle_config.monster_loot_search_type)
+		mob_stop_walking(md, 1); // Stop walking immediately if item is no longer on the ground.
 	return 0;
 }
 

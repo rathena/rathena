@@ -587,6 +587,7 @@ extern struct Battle_Config
 	int pet_ignore_infinite_def; // Makes fixed damage of petskillattack2 ignores infinite defense
 	int homunculus_evo_intimacy_need;
 	int homunculus_evo_intimacy_reset;
+	int monster_loot_search_type;
 } battle_config;
 
 void do_init_battle(void);
