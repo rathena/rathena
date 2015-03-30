@@ -20419,7 +20419,7 @@ static bool skill_parse_row_nonearnpcrangedb(char* split[], int column, int curr
 	else
 		id = skill_name2id(split[0]);
 
-	id = skill_db_isset(atoi(split[0]), __FUNCTION__);
+	id = skill_db_isset(id, __FUNCTION__);
 
 	skill_db[id]->unit_nonearnpc_range = max(atoi(split[1]),0);
 	skill_db[id]->unit_nonearnpc_type = (atoi(split[2])) ? cap_value(atoi(split[2]),1,15) : 15;
@@ -20524,20 +20524,26 @@ static bool skill_parse_row_changematerialdb(char* split[], int columns, int cur
  */
 static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
 {
-	uint16 idx;
-	
-	idx = skill_db_isset(atoi(split[0]), __FUNCTION__);
+	uint16 id = 0;
 
-	memset(&skill_db[idx]->damage,0,sizeof(struct s_skill_damage));
-	skill_db[idx]->damage.caster |= atoi(split[1]);
-	skill_db[idx]->damage.map |= atoi(split[2]);
-	skill_db[idx]->damage.pc = cap_value(atoi(split[3]),-100,INT_MAX);
+	trim(split[0]);
+	if (ISDIGIT(split[0][0]))
+		id = atoi(split[0]);
+	else
+		id = skill_name2id(split[0]);
+
+	id = skill_db_isset(id, __FUNCTION__);
+
+	memset(&skill_db[id]->damage,0,sizeof(struct s_skill_damage));
+	skill_db[id]->damage.caster |= atoi(split[1]);
+	skill_db[id]->damage.map |= atoi(split[2]);
+	skill_db[id]->damage.pc = cap_value(atoi(split[3]),-100,INT_MAX);
 	if (split[3])
-		skill_db[idx]->damage.mob = cap_value(atoi(split[4]),-100,INT_MAX);
+		skill_db[id]->damage.mob = cap_value(atoi(split[4]),-100,INT_MAX);
 	if (split[4])
-		skill_db[idx]->damage.boss = cap_value(atoi(split[5]),-100,INT_MAX);
+		skill_db[id]->damage.boss = cap_value(atoi(split[5]),-100,INT_MAX);
 	if (split[5])
-		skill_db[idx]->damage.other = cap_value(atoi(split[6]),-100,INT_MAX);
+		skill_db[id]->damage.other = cap_value(atoi(split[6]),-100,INT_MAX);
 	return true;
 }
 #endif

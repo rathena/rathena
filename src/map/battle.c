@@ -1984,7 +1984,7 @@ static int battle_skill_damage_map(struct block_list *src, struct block_list *ta
  */
 static int battle_skill_damage(struct block_list *src, struct block_list *target, uint16 skill_id) {
 	nullpo_ret(src);
-	if (!target)
+	if (!target || !skill_id)
 		return 0;
 	return battle_skill_damage_skill(src, target, skill_id) + battle_skill_damage_map(src, target, skill_id);
 }
