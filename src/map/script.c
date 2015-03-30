@@ -177,15 +177,17 @@ TBL_PC *script_rid2sd(struct script_state *st);
  * @param st Script
  * @param loc Location to look account id in script parameter
  * @param sd Variable that will be assigned
+ * @return True if `sd` is assigned, false otherwise
  **/
-static void script_accid2sd_(struct script_state *st, uint8 loc, struct map_session_data **sd, const char *func) {
+static bool script_accid2sd_(struct script_state *st, uint8 loc, struct map_session_data **sd, const char *func) {
 	if (script_hasdata(st, loc)) {
 		int id_ = script_getnum(st, loc);
 		if (!(*sd = map_id2sd(id_)))
-			ShowError("%s: Player with account id '%s' is not found.\n", func, id_);
+			ShowError("%s: Player with account id '%d' is not found.\n", func, id_);
 	}
 	else
 		*sd = script_rid2sd(st);
+	return (*sd) ? true : false;
 }
 
 /**
@@ -193,8 +195,9 @@ static void script_accid2sd_(struct script_state *st, uint8 loc, struct map_sess
  * @param st Script
  * @param loc Location to look char id in script parameter
  * @param sd Variable that will be assigned
+ * @return True if `sd` is assigned, false otherwise
  **/
-static void script_charid2sd_(struct script_state *st, uint8 loc, struct map_session_data **sd, const char *func) {
+static bool script_charid2sd_(struct script_state *st, uint8 loc, struct map_session_data **sd, const char *func) {
 	if (script_hasdata(st, loc)) {
 		int id_ = script_getnum(st, loc);
 		if (!(*sd = map_charid2sd(id_)))
@@ -202,6 +205,7 @@ static void script_charid2sd_(struct script_state *st, uint8 loc, struct map_ses
 	}
 	else
 		*sd = script_rid2sd(st);
+	return (*sd) ? true : false;
 }
 
 /**
@@ -209,8 +213,9 @@ static void script_charid2sd_(struct script_state *st, uint8 loc, struct map_ses
  * @param st Script
  * @param loc Location to look nick in script parameter
  * @param sd Variable that will be assigned
+ * @return True if `sd` is assigned, false otherwise
  **/
-static void script_nick2sd_(struct script_state *st, uint8 loc, struct map_session_data **sd, const char *func) {
+static bool script_nick2sd_(struct script_state *st, uint8 loc, struct map_session_data **sd, const char *func) {
 	if (script_hasdata(st, loc)) {
 		const char *name_ = script_getstr(st, loc);
 		if (!(*sd = map_nick2sd(name_)))
@@ -218,6 +223,7 @@ static void script_nick2sd_(struct script_state *st, uint8 loc, struct map_sessi
 	}
 	else
 		*sd = script_rid2sd(st);
+	return (*sd) ? true : false;
 }
 
 #define script_accid2sd(loc,sd) script_accid2sd_(st,(loc),&(sd),__FUNCTION__)
@@ -5736,11 +5742,8 @@ BUILDIN_FUNC(set)
 	name = reference_getname(data);
 	prefix = *name;
 
-	if (not_server_variable(prefix)) {
-		script_charid2sd(4,sd);
-		if (!sd)
-			return SCRIPT_CMD_FAILURE;
-	}
+	if (not_server_variable(prefix) && !script_charid2sd(4,sd))
+		return SCRIPT_CMD_FAILURE;
 
 #if 0
 	if( data_isreference(datavalue) )
@@ -6746,8 +6749,7 @@ BUILDIN_FUNC(rentitem) {
 	data = script_getdata(st,2);
 	get_val(st,data);
 
-	script_accid2sd(4,sd);
-	if (!sd)
+	if (!script_accid2sd(4,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	if( data_isstring(data) )
@@ -6808,8 +6810,7 @@ BUILDIN_FUNC(rentitem2) {
 	data = script_getdata(st,2);
 	get_val(st,data);
 
-	script_accid2sd(11,sd);
-	if (!sd)
+	if (!script_accid2sd(11,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	if( data_isstring(data) ) {
@@ -7480,8 +7481,7 @@ BUILDIN_FUNC(readparam)
 	TBL_PC *sd;
 
 	type = script_getnum(st,2);
-	script_nick2sd(3,sd);
-	if (!sd) {
+	if (!script_nick2sd(3,sd)) {
 		script_pushint(st,-1);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -7725,8 +7725,7 @@ BUILDIN_FUNC(strcharinfo)
 	struct guild* g;
 	struct party_data* p;
 
-	script_charid2sd(3,sd);
-	if (!sd) {
+	if (!script_charid2sd(3,sd)) {
 		script_pushconststr(st,"");
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -7996,8 +7995,7 @@ BUILDIN_FUNC(repair)
 	int repaircounter=0;
 	TBL_PC *sd;
 
-	script_charid2sd(3,sd);
-	if (!sd)
+	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	num=script_getnum(st,2);
@@ -8025,8 +8023,7 @@ BUILDIN_FUNC(repairall)
 	int i, repaircounter = 0;
 	TBL_PC *sd;
 
-	script_charid2sd(2,sd);
-	if (!sd)
+	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	for(i = 0; i < MAX_INVENTORY; i++)
@@ -8059,8 +8056,7 @@ BUILDIN_FUNC(getequipisequiped)
 
 	num = script_getnum(st,2);
 
-	script_charid2sd(3,sd);
-	if (!sd)
+	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	if (num > 0 && num <= ARRAYLENGTH(equip))
@@ -8331,8 +8327,7 @@ BUILDIN_FUNC(delequip) {
 	TBL_PC *sd;
 
 	pos = script_getnum(st,2);
-	script_charid2sd(3,sd);
-	if (!sd)
+	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	if (pos > 0 && pos <= ARRAYLENGTH(equip))
@@ -8360,8 +8355,7 @@ BUILDIN_FUNC(breakequip) {
 	TBL_PC *sd;
 
 	pos = script_getnum(st,2);
-	script_charid2sd(3,sd);
-	if (!sd)
+	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	if (pos > 0 && pos <= ARRAYLENGTH(equip))
@@ -8765,8 +8759,7 @@ BUILDIN_FUNC(getgmlevel)
 {
 	TBL_PC* sd;
 
-	script_charid2sd(2,sd);
-	if (!sd)
+	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 	script_pushint(st, pc_get_group_level(sd));
 	return SCRIPT_CMD_SUCCESS;
@@ -8779,8 +8772,7 @@ BUILDIN_FUNC(getgroupid)
 {
 	TBL_PC* sd;
 
-	script_charid2sd(2,sd);
-	if (!sd)
+	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 	script_pushint(st, pc_get_group_id(sd));
 	return SCRIPT_CMD_SUCCESS;
@@ -8814,8 +8806,7 @@ BUILDIN_FUNC(checkoption)
 	int option;
 	TBL_PC* sd;
 
-	script_charid2sd(3,sd);
-	if (!sd)
+	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	option = script_getnum(st,2);
@@ -8835,8 +8826,7 @@ BUILDIN_FUNC(checkoption1)
 	int opt1;
 	TBL_PC* sd;
 
-	script_charid2sd(3,sd);
-	if (!sd)
+	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	opt1 = script_getnum(st,2);
@@ -8856,8 +8846,7 @@ BUILDIN_FUNC(checkoption2)
 	int opt2;
 	TBL_PC* sd;
 
-	script_charid2sd(3,sd);
-	if (!sd)
+	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	opt2 = script_getnum(st,2);
@@ -8881,8 +8870,7 @@ BUILDIN_FUNC(setoption)
 	int flag = 1;
 	TBL_PC* sd;
 
-	script_charid2sd(4,sd);
-	if (!sd)
+	if (!script_charid2sd(4,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	option = script_getnum(st,2);
@@ -8914,8 +8902,7 @@ BUILDIN_FUNC(checkcart)
 {
 	TBL_PC* sd;
 
-	script_charid2sd(2,sd);
-	if (!sd)
+	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	if( pc_iscarton(sd) )
@@ -8941,8 +8928,7 @@ BUILDIN_FUNC(setcart)
 	int type = 1;
 	TBL_PC* sd;
 
-	script_charid2sd(2,sd);
-	if (!sd)
+	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	if( script_hasdata(st,2) )
@@ -8961,8 +8947,7 @@ BUILDIN_FUNC(checkfalcon)
 {
 	TBL_PC* sd;
 
-	script_charid2sd(2,sd);
-	if (!sd)
+	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	if( pc_isfalcon(sd) )
@@ -8982,8 +8967,7 @@ BUILDIN_FUNC(setfalcon)
 	int flag = 1;
 	TBL_PC* sd;
 
-	script_charid2sd(3,sd);
-	if (!sd)
+	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	if( script_hasdata(st,2) )
@@ -9003,8 +8987,7 @@ BUILDIN_FUNC(checkriding)
 {
 	TBL_PC* sd;
 
-	script_charid2sd(2,sd);
-	if (!sd)
+	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	if( pc_isriding(sd) )
@@ -9024,8 +9007,7 @@ BUILDIN_FUNC(setriding)
 	int flag = 1;
 	TBL_PC* sd;
 
-	script_charid2sd(3,sd);
-	if (!sd)
+	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	if( script_hasdata(st,2) )
@@ -9043,8 +9025,7 @@ BUILDIN_FUNC(checkwug)
 {
 	TBL_PC* sd;
 
-	script_charid2sd(2,sd);
-	if (!sd)
+	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	if( pc_iswug(sd) || pc_isridingwug(sd) )
@@ -9063,8 +9044,7 @@ BUILDIN_FUNC(checkmadogear)
 {
 	TBL_PC* sd;
 
-	script_charid2sd(2,sd);
-	if (!sd)
+	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	if( pc_ismadogear(sd) )
@@ -9084,8 +9064,7 @@ BUILDIN_FUNC(setmadogear)
 	int flag = 1;
 	TBL_PC* sd;
 
-	script_charid2sd(3,sd);
-	if (!sd)
+	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	if( script_hasdata(st,2) )
@@ -9107,8 +9086,7 @@ BUILDIN_FUNC(savepoint)
 	const char* str;
 	TBL_PC* sd;
 
-	script_charid2sd(4,sd);
-	if( sd == NULL )
+	if (!script_charid2sd(4,sd))
 		return SCRIPT_CMD_FAILURE;// no player attached, report source
 
 	str = script_getstr(st, 2);
@@ -9347,8 +9325,7 @@ BUILDIN_FUNC(getexp)
 	int base=0,job=0;
 	double bonus;
 
-	script_charid2sd(4,sd);
-	if (!sd)
+	if (!script_charid2sd(4,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	base=script_getnum(st,2);
@@ -10550,8 +10527,7 @@ BUILDIN_FUNC(getstatus)
 	int id, type;
 	struct map_session_data* sd;
 
-	script_charid2sd(3,sd);
-	if (!sd)
+	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	id = script_getnum(st, 2);
@@ -10828,8 +10804,7 @@ BUILDIN_FUNC(resetlvl)
 
 	int type=script_getnum(st,2);
 
-	script_charid2sd(3,sd);
-	if (!sd)
+	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	pc_resetlvl(sd,type);
@@ -10841,8 +10816,7 @@ BUILDIN_FUNC(resetlvl)
 BUILDIN_FUNC(resetstatus)
 {
 	TBL_PC *sd;
-	script_charid2sd(2,sd);
-	if (!sd)
+	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 	pc_resetstate(sd);
 	return SCRIPT_CMD_SUCCESS;
@@ -10854,8 +10828,7 @@ BUILDIN_FUNC(resetstatus)
 BUILDIN_FUNC(resetskill)
 {
 	TBL_PC *sd;
-	script_charid2sd(2,sd);
-	if (!sd)
+	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 	pc_resetskill(sd,1);
 	return SCRIPT_CMD_SUCCESS;
@@ -10867,8 +10840,7 @@ BUILDIN_FUNC(resetskill)
 BUILDIN_FUNC(skillpointcount)
 {
 	TBL_PC *sd;
-	script_charid2sd(2,sd);
-	if (!sd)
+	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 	script_pushint(st,sd->status.skill_point + pc_resetskill(sd,2));
 	return SCRIPT_CMD_SUCCESS;
@@ -10918,8 +10890,8 @@ BUILDIN_FUNC(changesex)
 {
 	int i;
 	TBL_PC *sd = NULL;
-	script_charid2sd(2,sd);
-	if (!sd)
+
+	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	pc_resetskill(sd,4);
@@ -12326,8 +12298,8 @@ BUILDIN_FUNC(wedding_effect)
 BUILDIN_FUNC(divorce)
 {
 	TBL_PC *sd;
-	script_charid2sd(2,sd);
-	if (!sd || !pc_divorce(sd)) {
+
+	if (!script_charid2sd(2,sd) || !pc_divorce(sd)) {
 		script_pushint(st,0);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -12338,8 +12310,8 @@ BUILDIN_FUNC(divorce)
 BUILDIN_FUNC(ispartneron)
 {
 	TBL_PC *sd;
-	script_charid2sd(2,sd);
-	if (!sd || !pc_ismarried(sd) ||
+
+	if (!script_charid2sd(2,sd) || !pc_ismarried(sd) ||
 		map_charid2sd(sd->status.partner_id) == NULL)
 	{
 		script_pushint(st,0);
@@ -12353,8 +12325,8 @@ BUILDIN_FUNC(ispartneron)
 BUILDIN_FUNC(getpartnerid)
 {
 	TBL_PC *sd;
-	script_charid2sd(2,sd);
-	if (sd == NULL) {
+
+	if (!script_charid2sd(2,sd)) {
 		script_pushint(st,0);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -12366,8 +12338,8 @@ BUILDIN_FUNC(getpartnerid)
 BUILDIN_FUNC(getchildid)
 {
 	TBL_PC *sd;
-	script_charid2sd(2,sd);
-	if (sd == NULL) {
+
+	if (!script_charid2sd(2,sd)) {
 		script_pushint(st,0);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -12379,8 +12351,8 @@ BUILDIN_FUNC(getchildid)
 BUILDIN_FUNC(getmotherid)
 {
 	TBL_PC *sd;
-	script_charid2sd(2,sd);
-	if (sd == NULL) {
+
+	if (!script_charid2sd(2,sd)) {
 		script_pushint(st,0);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -12392,8 +12364,8 @@ BUILDIN_FUNC(getmotherid)
 BUILDIN_FUNC(getfatherid)
 {
 	TBL_PC *sd;
-	script_charid2sd(2,sd);
-	if (sd == NULL) {
+
+	if (!script_charid2sd(2,sd)) {
 		script_pushint(st,0);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -12832,8 +12804,7 @@ BUILDIN_FUNC(getinventorylist)
 	char card_var[NAME_LENGTH];
 	int i,j=0,k;
 
-	script_charid2sd(2,sd);
-	if (!sd)
+	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 	for(i=0;i<MAX_INVENTORY;i++){
 		if(sd->status.inventory[i].nameid > 0 && sd->status.inventory[i].amount > 0){
@@ -12864,8 +12835,8 @@ BUILDIN_FUNC(getskilllist)
 {
 	TBL_PC *sd;
 	int i,j=0;
-	script_charid2sd(2,sd);
-	if (!sd)
+
+	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 	for(i=0;i<MAX_SKILL;i++){
 		if(sd->status.skill[i].id > 0 && sd->status.skill[i].lv > 0){
@@ -12887,8 +12858,7 @@ BUILDIN_FUNC(clearitem)
 	TBL_PC *sd;
 	int i;
 
-	script_charid2sd(2,sd);
-	if (!sd)
+	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	for (i=0; i<MAX_INVENTORY; i++) {
@@ -12906,8 +12876,8 @@ BUILDIN_FUNC(disguise)
 {
 	int id;
 	TBL_PC* sd;
-	script_charid2sd(3,sd);
-	if (sd == NULL)
+
+	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	id = script_getnum(st,2);
@@ -12926,8 +12896,8 @@ BUILDIN_FUNC(disguise)
 BUILDIN_FUNC(undisguise)
 {
 	TBL_PC* sd;
-	script_charid2sd(2,sd);
-	if (sd == NULL)
+
+	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	if (sd->disguise) {
@@ -13397,8 +13367,7 @@ BUILDIN_FUNC(nude)
 	TBL_PC *sd;
 	int i, calcflag = 0;
 
-	script_charid2sd(2,sd);
-	if (!sd)
+	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	for( i = 0 ; i < EQI_MAX; i++ ) {
@@ -13468,8 +13437,7 @@ BUILDIN_FUNC(dispbottom)
 	int color = 0;
 	const char *message;
 
-	script_charid2sd(3,sd);
-	if (!sd)
+	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	message = script_getstr(st,2);
@@ -13916,8 +13884,8 @@ BUILDIN_FUNC(getlook)
 {
 	int type,val;
 	TBL_PC *sd;
-	script_charid2sd(3,sd);
-	if (!sd) {
+
+	if (!script_charid2sd(3,sd)) {
 		script_pushint(st,-1);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -13949,8 +13917,7 @@ BUILDIN_FUNC(getsavepoint)
 	TBL_PC* sd;
 	int type;
 
-	script_charid2sd(3,sd);
-	if (sd == NULL) {
+	if (!script_charid2sd(3,sd)) {
 		script_pushint(st,0);
 		return 0;
 	}
@@ -14413,8 +14380,7 @@ BUILDIN_FUNC(unequip) {
 	int pos;
 	TBL_PC *sd;
 
-	script_charid2sd(3,sd);
-	if (!sd)
+	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	pos = script_getnum(st,2);
@@ -14436,8 +14402,7 @@ BUILDIN_FUNC(equip) {
 	TBL_PC *sd;
 	struct item_data *item_data;
 
-	script_charid2sd(3,sd);
-	if (!sd)
+	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	nameid = script_getnum(st,2);
@@ -15482,7 +15447,7 @@ BUILDIN_FUNC(md5)
 
 BUILDIN_FUNC(setd)
 {
-	TBL_PC *sd=NULL;
+	TBL_PC *sd = NULL;
 	char varname[100];
 	const char *buffer;
 	int elem;
@@ -15491,10 +15456,8 @@ BUILDIN_FUNC(setd)
 	if(sscanf(buffer, "%99[^[][%d]", varname, &elem) < 2)
 		elem = 0;
 
-	if( not_server_variable(*varname) )
-	{
-		script_charid2sd(4,sd);
-		if (!sd)
+	if( not_server_variable(*varname) ) {
+		if (!script_charid2sd(4,sd))
 			return SCRIPT_CMD_FAILURE;
 	}
 
@@ -16703,8 +16666,7 @@ BUILDIN_FUNC(openmail)
 {
 	TBL_PC* sd;
 
-	script_charid2sd(2,sd);
-	if (!sd)
+	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	mail_openmail(sd);
@@ -16716,8 +16678,7 @@ BUILDIN_FUNC(openauction)
 {
 	TBL_PC* sd;
 
-	script_charid2sd(2,sd);
-	if (!sd)
+	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	if( !battle_config.feature_auction ) {
@@ -17029,8 +16990,7 @@ BUILDIN_FUNC(setquest)
 
 	quest_id = script_getnum(st, 2);
 
-	script_charid2sd(3,sd);
-	if (!sd)
+	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	quest_add(sd, quest_id);
@@ -17053,8 +17013,7 @@ BUILDIN_FUNC(erasequest)
 {
 	struct map_session_data *sd;
 
-	script_charid2sd(3,sd);
-	if (!sd)
+	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	quest_delete(sd, script_getnum(st, 2));
@@ -17065,8 +17024,7 @@ BUILDIN_FUNC(completequest)
 {
 	struct map_session_data *sd;
 
-	script_charid2sd(3,sd);
-	if (!sd)
+	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	quest_update_status(sd, script_getnum(st, 2), Q_COMPLETE);
@@ -17077,8 +17035,7 @@ BUILDIN_FUNC(changequest)
 {
 	struct map_session_data *sd;
 	
-	script_charid2sd(4,sd);
-	if (!sd)
+	if (!script_charid2sd(4,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	quest_change(sd, script_getnum(st, 2),script_getnum(st, 3));
@@ -17093,8 +17050,7 @@ BUILDIN_FUNC(checkquest)
 	if( script_hasdata(st, 3) )
 		type = (enum quest_check_type)script_getnum(st, 3);
 
-	script_charid2sd(4,sd);
-	if (!sd)
+	if (!script_charid2sd(4,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	script_pushint(st, quest_check(sd, script_getnum(st, 2), type));
@@ -17107,8 +17063,7 @@ BUILDIN_FUNC(isbegin_quest)
 	struct map_session_data *sd;
 	int i;
 
-	script_charid2sd(3,sd);
-	if (!sd)
+	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	i = quest_check(sd, script_getnum(st, 2), (enum quest_check_type) HAVEQUEST);
@@ -17123,8 +17078,7 @@ BUILDIN_FUNC(showevent)
 	struct npc_data *nd = map_id2nd(st->oid);
 	int icon, color = 0;
 
-	script_charid2sd(4,sd);
-	if (!sd)
+	if (!script_charid2sd(4,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	if( sd == NULL || nd == NULL )
@@ -17937,8 +17891,8 @@ BUILDIN_FUNC(showdigit)
  **/
 BUILDIN_FUNC(makerune) {
 	TBL_PC* sd;
-	script_charid2sd(2,sd);
-	if (!sd)
+	
+	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 	clif_skill_produce_mix_list(sd,RK_RUNEMASTERY,24);
 	sd->itemid = script_getnum(st,2);
@@ -17949,8 +17903,8 @@ BUILDIN_FUNC(makerune) {
  **/
 BUILDIN_FUNC(checkdragon) {
 	TBL_PC* sd;
-	script_charid2sd(2,sd);
-	if (!sd)
+	
+	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 	if( pc_isridingdragon(sd) )
 		script_pushint(st,1);
@@ -17972,8 +17926,7 @@ BUILDIN_FUNC(setdragon) {
 	TBL_PC* sd;
 	int color = script_hasdata(st,2) ? script_getnum(st,2) : 0;
 
-	script_charid2sd(3,sd);
-	if (!sd)
+	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 	if( !pc_checkskill(sd,RK_DRAGONTRAINING) || (sd->class_&MAPID_THIRDMASK) != MAPID_RUNE_KNIGHT )
 		script_pushint(st,0);//Doesn't have the skill or it's not a Rune Knight
@@ -18004,8 +17957,8 @@ BUILDIN_FUNC(setdragon) {
  **/
 BUILDIN_FUNC(ismounting) {
 	TBL_PC* sd;
-	script_charid2sd(2,sd);
-	if (!sd)
+	
+	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 	if( &sd->sc && sd->sc.data[SC_ALL_RIDING] )
 		script_pushint(st,1);
@@ -18022,8 +17975,8 @@ BUILDIN_FUNC(ismounting) {
  **/
 BUILDIN_FUNC(setmounting) {
 	TBL_PC* sd;
-	script_charid2sd(2,sd);
-	if (!sd)
+	
+	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 	if( &sd->sc && sd->sc.option&(OPTION_WUGRIDER|OPTION_RIDING|OPTION_DRAGON|OPTION_MADOGEAR) ) {
 		clif_msgtable(sd->fd, NEED_REINS_OF_MOUNT);
@@ -18471,8 +18424,7 @@ BUILDIN_FUNC(consumeitem)
 	struct script_data *data;
 	struct item_data *item_data;
 
-	script_charid2sd(3, sd);
-	if (!sd)
+	if (!script_charid2sd(3, sd))
 		return SCRIPT_CMD_FAILURE;
 
 	data = script_getdata( st, 2 );
@@ -18560,9 +18512,7 @@ BUILDIN_FUNC(countbound)
 	int i, type, j = 0, k = 0;
 	TBL_PC *sd;
 
-	script_charid2sd(3,sd);
-
-	if (!sd)
+	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	type = script_getnum(st,2);
@@ -19230,8 +19180,7 @@ BUILDIN_FUNC(mergeitem) {
 	uint16 i, count = 0;
 	int nameid = 0;
 
-	script_charid2sd(3, sd);
-	if (!sd)
+	if (!script_charid2sd(3, sd))
 		return SCRIPT_CMD_FAILURE;
 
 	if (script_hasdata(st, 2)) {
