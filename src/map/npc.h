@@ -127,6 +127,35 @@ enum npce_event {
 	NPCE_STATCALC,
 	NPCE_MAX
 };
+
+// NPC Event Names
+#define NPCEVNAME_OnInit "OnInit"
+#define NPCEVNAME_OnInterIfInit "OnInterIfInit"
+#define NPCEVNAME_OnInterIfInitOnce "OnInterIfInitOnce"
+#define NPCEVNAME_OnAgitStart "OnAgitStart"
+#define NPCEVNAME_OnAgitEnd "OnAgitEnd"
+#define NPCEVNAME_OnAgitInit "OnAgitInit"
+#define NPCEVNAME_OnAgitStart2 "OnAgitStart2"
+#define NPCEVNAME_OnAgitEnd2 "OnAgitEnd2"
+#define NPCEVNAME_OnAgitInit2 "OnAgitInit2"
+#define NPCEVNAME_OnInstanceInit "OnInstanceInit"
+
+/// Enum for NPC event name
+enum e_event_name_type {
+	NPCEV_UNKNOWN = 0,
+	NPCEV_OnInit,
+	NPCEV_OnInterIfInit,
+	NPCEV_OnInterIfInitOnce,
+	NPCEV_OnAgitStart,
+	NPCEV_OnAgitEnd,
+	NPCEV_OnAgitInit,
+	NPCEV_OnAgitStart2,
+	NPCEV_OnAgitEnd2,
+	NPCEV_OnAgitInit2,
+	NPCEV_OnInstanceInit,
+	NPCEV_MAX,
+};
+
 struct view_data* npc_get_viewdata(int class_);
 int npc_chat_sub(struct block_list* bl, va_list ap);
 int npc_event_dequeue(struct map_session_data* sd);
@@ -205,5 +234,7 @@ void npc_market_delfromsql_(const char *exname, unsigned short nameid, bool clea
 int npc_do_atcmd_event(struct map_session_data* sd, const char* command, const char* message, const char* eventname);
 
 bool npc_unloadfile( const char* path );
+
+uint16 npc_event_data_doall(enum e_event_name_type type);
 
 #endif /* _NPC_H_ */
