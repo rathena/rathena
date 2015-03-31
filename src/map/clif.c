@@ -14342,12 +14342,15 @@ void clif_parse_HomMenu(int fd, struct map_session_data *sd)
 /// 0292
 void clif_parse_AutoRevive(int fd, struct map_session_data *sd)
 {
-	int item_position = pc_search_inventory(sd, ITEMID_TOKEN_OF_SIEGFRIED);
-	int hpsp = 100;
+	short item_position = pc_search_inventory(sd, ITEMID_TOKEN_OF_SIEGFRIED);
+	uint8 hp = 100, sp = 100;
 
 	if (item_position < 0) {
-		if (sd->sc.data[SC_LIGHT_OF_REGENE])
-			hpsp = sd->sc.data[SC_LIGHT_OF_REGENE]->val2;
+		if (sd->sc.data[SC_LIGHT_OF_REGENE]) {
+			// HP restored
+			hp = sd->sc.data[SC_LIGHT_OF_REGENE]->val2;
+			sp = 0;
+		}
 		else
 			return;
 	}
@@ -14355,7 +14358,7 @@ void clif_parse_AutoRevive(int fd, struct map_session_data *sd)
 	if (sd->sc.data[SC_HELLPOWER]) //Cannot res while under the effect of SC_HELLPOWER.
 		return;
 
-	if (!status_revive(&sd->bl, hpsp, hpsp))
+	if (!status_revive(&sd->bl, hp, sp))
 		return;
 
 	if (item_position < 0)

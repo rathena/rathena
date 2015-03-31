@@ -119,7 +119,7 @@ bonus bFlee2,n;       			Perfect Dodge + n
 bonus bFlee2Rate,n;   			Perfect Dodge + n%
 bonus bPerfectHitRate,n;		On-target impact attack probability n% (only the highest among all is applied)
 bonus bPerfectHitAddRate,n;		On-target impact attack probability + n%
-bonus bSpeedRate,n;   			Movement speed + n% (only the highest among all is applied)
+bonus bSpeedRate,n;   			Movement speed + n% (only the highest among all is applied, won't be stacked with SC_SPEEDUP0, SC_SPEEDUP1)
 bonus bSpeedAddRate,n;			Movement speed + n%
 bonus bAspd,n;        			Attack speed + n
 bonus bAspdRate,n;    			Attack speed + n%
