@@ -376,7 +376,7 @@ Another way would be to right click on a mob,
 NPC or char as GM sprited char to view the GID.
 
 This is mostly used for the new version of skill and the mob control commands
-implemented (but NEVER documented by Lance. Shame on you...).
+implemented.
 
 Item and pet scripts
 --------------------
@@ -933,7 +933,8 @@ chosen once the triggering character leaves the area.
 
 OnTouchNPC:
 
-Similar to OnTouch, but will only trigger for monsters.
+Similar to OnTouch, but will only trigger for monsters. For this case, by using
+'getattachedrid' will returns GID (ID that returned when use 'monster').
 
 OnPCLoginEvent:
 OnPCLogoutEvent:
@@ -3357,6 +3358,12 @@ server. It is wise to check for the attached player in script functions that
 deal with timers as there's no guarantee the player will still be logged on
 when the timer triggers. Note that the ID of a player is actually their
 account ID.
+
+---------------------------------------
+
+*getattachedrid();
+
+Returns RID from running script. Script may does not have RID.
 
 ---------------------------------------
 

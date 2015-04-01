@@ -3734,7 +3734,7 @@ int run_func(struct script_state *st)
 /*==========================================
  * script execution
  *------------------------------------------*/
-void run_script(struct script_code *rootscript,int pos,int rid,int oid)
+void run_script(struct script_code *rootscript, int pos, int rid, int oid)
 {
 	struct script_state *st;
 
@@ -19254,6 +19254,15 @@ BUILDIN_FUNC(mergeitem) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Get rid from running script.
+ * getattachedrid();
+ **/
+BUILDIN_FUNC(getattachedrid) {
+	script_pushint(st, st->rid);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -19797,6 +19806,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(delspiritball,"i?"),
 	BUILDIN_DEF(countspiritball,"?"),
 	BUILDIN_DEF(mergeitem,"??"),
+	BUILDIN_DEF(getattachedrid,""),
 
 #include "../custom/script_def.inc"
 
