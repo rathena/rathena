@@ -1545,9 +1545,7 @@ void pc_calc_skilltree(struct map_session_data *sd)
 
 	for( i = 0; i < MAX_SKILL; i++ ) {
 		if( sd->status.skill[i].flag != SKILL_FLAG_PLAGIARIZED && sd->status.skill[i].flag != SKILL_FLAG_PERM_GRANTED ) //Don't touch these
-		{
 			sd->status.skill[i].id = 0; //First clear skills.
-		}
 		/* permanent skills that must be re-checked */
 		if( sd->status.skill[i].flag == SKILL_FLAG_PERM_GRANTED ) {
 			uint16 sk_id = skill_idx2id(i);
@@ -5535,7 +5533,7 @@ uint8 pc_checkskill(struct map_session_data *sd, uint16 skill_id)
 			return guild_checkskill(g,skill_id);
 		return 0;
 	}
-	return sd->status.skill[idx].lv;
+	return (sd->status.skill[idx].id == skill_id) ? sd->status.skill[idx].lv : 0;
 }
 
 /**
