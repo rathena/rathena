@@ -85,10 +85,8 @@ struct event_data {
 struct s_npc_event_data_entry {
 	struct event_data *ev; ///< Event pointer for single entry of ev_db
 	enum e_event_name_type type; ///< Event type
-	struct s_npc_event_data_entry *prev, *next;
 };
-static struct s_npc_event_data_entry *npc_event_data_head; ///< Linked list (head) for event to make On'label's are loaded in order
-static struct s_npc_event_data_entry *npc_event_data_last; ///< Linked list (tail) for event to make On'label's are loaded in order
+static struct linkdb_node *npc_event_data_head, *npc_event_data_last;
 static void npc_event_data_add(struct event_data *ev, enum e_event_name_type type);
 static void npc_event_data_remove(struct event_data *ev);
 static enum e_event_name_type npc_event_name2type(const char *evname);
@@ -346,17 +344,14 @@ static bool npc_event_export(struct npc_data *nd, int i)
 
 	if ((lname[0] == 'O' || lname[0] == 'o') && (lname[1] == 'N' || lname[1] == 'n')) {
 		struct event_data *ev;
-		enum e_event_name_type ev_type;
 		char buf[EVENT_NAME_LENGTH];
 
 		snprintf(buf, ARRAYLENGTH(buf), "%s::%s", nd->exname, lname);
-		ev_type = npc_event_name2type(lname);
 
 		CREATE(ev, struct event_data, 1);
 		ev->nd = nd;
 		ev->pos = pos;
-		if (ev_type > NPCEV_UNKNOWN && ev_type < NPCEV_MAX)
-			npc_event_data_add(ev, ev_type);
+		npc_event_data_add(ev, npc_event_name2type(lname));
 
 		if (strdb_put(ev_db, buf, ev))
 			return 1;
@@ -4354,7 +4349,7 @@ void npc_clear_pathlist(void) {
  * @param evname Event name (On<label>)
  **/
 static enum e_event_name_type npc_event_name2type(const char *evname) {
-	if (strcasecmp(evname, NPCEVNAME_OnInit) == 0)                 return NPCEV_OnInit;
+	if      (strcasecmp(evname, NPCEVNAME_OnInit) == 0)            return NPCEV_OnInit;
 	else if (strcasecmp(evname, NPCEVNAME_OnInterIfInit) == 0)     return NPCEV_OnInterIfInit;
 	else if (strcasecmp(evname, NPCEVNAME_OnInterIfInitOnce) == 0) return NPCEV_OnInterIfInitOnce;
 	else if (strcasecmp(evname, NPCEVNAME_OnAgitStart) == 0)       return NPCEV_OnAgitStart;
@@ -4373,19 +4368,20 @@ static enum e_event_name_type npc_event_name2type(const char *evname) {
  * @return Number of executed events
  **/
 uint16 npc_event_data_doall(enum e_event_name_type type) {
-	struct s_npc_event_data_entry *node = NULL;
+	struct linkdb_node *node = NULL;
 	uint16 c = 0;
 
-	if (type <= NPCEV_UNKNOWN || type >= NPCEV_MAX|| !npc_event_data_last)
+	if (!npc_event_data_head || type <= NPCEV_UNKNOWN || type >= NPCEV_MAX)
 		return 0;
 
 	node = npc_event_data_head;
 	while (node) {
-		if (node->type == type) {
-			run_script(node->ev->nd->u.scr.script, node->ev->pos, 0, node->ev->nd->bl.id);
+		struct s_npc_event_data_entry *evdata = (struct s_npc_event_data_entry *)node->data;
+		if (evdata->type == type) {
+			run_script(evdata->ev->nd->u.scr.script, evdata->ev->pos, 0, evdata->ev->nd->bl.id);
 			c++;
 		}
-		node = node->next;
+		node = node->prev;
 	}
 
 	return c;
@@ -4397,32 +4393,19 @@ uint16 npc_event_data_doall(enum e_event_name_type type) {
  * @param type Event type, see enum e_event_name_type
  **/
 static void npc_event_data_add(struct event_data *ev, enum e_event_name_type type) {
-	struct s_npc_event_data_entry *node;
-	static int c = 0;
+	struct s_npc_event_data_entry *evdata;
 
-	if (!ev)
+	if (!ev || type <= NPCEV_UNKNOWN || type >= NPCEV_MAX)
 		return;
 
-	c++;
+	CREATE(evdata, struct s_npc_event_data_entry, 1);
+	evdata->ev = ev;
+	evdata->type = type;
 
-	CREATE(node, struct s_npc_event_data_entry, 1);
-
-	node->ev = ev;
-	node->type = type;
-
-	if (npc_event_data_last) {
-		npc_event_data_last->next = node;
-		node->next = NULL;
-		node->prev = npc_event_data_last;
-	}
-	else {
-		node->next = NULL;
-		node->prev = NULL;
-	}
+	linkdb_insert(&npc_event_data_last, (void *)__64BPRTSIZE(ev), (void *)evdata);
 
 	if (!npc_event_data_head)
-		npc_event_data_head = node;
-	npc_event_data_last = node;
+		npc_event_data_head = npc_event_data_last;
 }
 
 /**
@@ -4430,43 +4413,29 @@ static void npc_event_data_add(struct event_data *ev, enum e_event_name_type typ
  * @param ev Pointer of event_data
  **/
 static void npc_event_data_remove(struct event_data *ev) {
-	struct s_npc_event_data_entry *node = NULL;
+	struct s_npc_event_data_entry *evdata = NULL;
 
 	if (npc_event_data_last == NULL)
 		return;
 
-	node = npc_event_data_last;
-
-	while (node) {
-		if (node->ev == ev) {
-			if (node->prev == NULL)
-				npc_event_data_last = node->next;
-			else
-				node->prev->next = node->next;
-			if (node->next)
-				node->next->prev = node->prev;
-
-			node->ev = NULL;
-			aFree(node);
-			return;
-		}
-		node = node->next;
-	}
+	evdata = (struct s_npc_event_data_entry *)linkdb_erase(&npc_event_data_last, (void *)__64BPRTSIZE(ev));
+	aFree(evdata);
 }
 
 /**
  * Clear event data linked list
  **/
 void npc_event_data_list_clear(void) {
-	struct s_npc_event_data_entry *list = npc_event_data_last;
-
-	if (!npc_event_data_last)
-		return;
-
-	while (list) {
-		struct s_npc_event_data_entry *prev = list->prev;
-		aFree(list);
-		list = prev;
+	if (npc_event_data_last != NULL) {
+		struct linkdb_node *node = npc_event_data_last;
+		struct s_npc_event_data_entry *evdata = NULL;
+		while (node) {
+			struct linkdb_node *next = node->next;
+			evdata = (struct s_npc_event_data_entry *)node->data;
+			aFree(evdata);
+			aFree(node);
+			node = next;
+		}
 	}
 
 	npc_event_data_head = npc_event_data_last = NULL;
