@@ -5,19 +5,33 @@ compiler:
 
 before_script:
   - uname -a
+  - mysql -u $DB_ROOT -e "CREATE DATABASE $DB_NAME;" || aborterror "Unable to create database."
+  - mysql -u $DB_ROOT $DB_NAME < sql-files/main.sql || aborterror "Unable to import main database."
+  - mysql -u $DB_ROOT $DB_NAME < sql-files/logs.sql || aborterror "Unable to import logs database."
+  - mysql -u $DB_ROOT -e "GRANT ALL ON *.* TO '$DB_USER'@'$DB_HOST' IDENTIFIED BY '$DB_PASS';"
 
 script:
-  - ./configure $CONFIGURE_FLAGS $CONFIGURE_PACKETS && make clean && make server
+  - ./configure $CONFIGURE_FLAGS && make clean
+  - make server
+  - ./map-server --run-once
 
 env:
-  - CONFIGURE_FLAGS=""
-  - CONFIGURE_FLAGS="--enable-prere"
-  - CONFIGURE_PACKETS="20130807"
-  - CONFIGURE_PACKETS="20120410"
-  - CONFIGURE_PACKETS="20100730"
+  global:
+    - DB_ROOT="root"
+    - DB_HOST="127.0.0.1"
+    - DB_NAME="ragnarok"
+    - DB_USER="ragnarok"
+    - DB_PASS="ragnarok"
+  matrix:
+    - CONFIGURE_FLAGS="--enable-prere=no"
+    - CONFIGURE_FLAGS="--enable-prere=yes"
 
 notifications:
   email: false
   irc:
     channels:
       - "irc.rizon.net#rathena-dev"
+    template:
+      - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
+      - "Change view : %{compare_url}"
+      - "Build details : %{build_url}"
