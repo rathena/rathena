@@ -2,11 +2,11 @@ language: c
 compiler:
   - clang
   - gcc
-  
-before_script:
-  - uname -a  
 
-script: 
+before_script:
+  - uname -a
+
+script:
   - ./configure $CONFIGURE_FLAGS $CONFIGURE_PACKETS && make clean && make server
 
 env:
@@ -15,11 +15,9 @@ env:
   - CONFIGURE_PACKETS="20130807"
   - CONFIGURE_PACKETS="20120410"
   - CONFIGURE_PACKETS="20100730"
-  
+
 notifications:
   email: false
-  
-branches:
-  only:
-    - master
-    - sc_config
+  irc:
+    channels:
+      - "irc.rizon.net#rathena-dev"
