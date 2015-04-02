@@ -4978,7 +4978,7 @@ window, to avoid any disruption when both windows overlap.
 
 ---------------------------------------
 
-*openmail {<char_id>};
+*openmail({<char_id>});
 
 This will open a character's Mail window on the client connected to the 
 invoking character.
@@ -4990,7 +4990,7 @@ invoking character.
 
 ---------------------------------------
 
-*openauction {<char_id>};
+*openauction({<char_id>});
 
 This will open the Auction window on the client connected to the invoking character.
 
@@ -7733,7 +7733,7 @@ if (instance_check_party(getcharid(1),2,2,149)) {
 =========================
 ---------------------------------------
 
-*questinfo <Quest ID>, <Icon> {, <Map Mark Color>{, <Job Class>}};
+*questinfo <Quest ID>,<Icon>{,<Map Mark Color>{,<Job Class>}};
 
 This is esentially a combination of checkquest and showevent. Use this only
 in an OnInit label. For the Quest ID, specify the quest ID that you want

@@ -8317,9 +8317,10 @@ BUILDIN_FUNC(downrefitem) {
 	return SCRIPT_CMD_FAILURE;
 }
 
-/*==========================================
+/**
  * Delete the item equipped at pos.
- *------------------------------------------*/
+ * delequip <equipment slot>{,<char_id>};
+ **/
 BUILDIN_FUNC(delequip) {
 	short i = -1;
 	int pos;
@@ -8327,8 +8328,10 @@ BUILDIN_FUNC(delequip) {
 	TBL_PC *sd;
 
 	pos = script_getnum(st,2);
-	if (!script_charid2sd(3,sd))
+	if (!script_charid2sd(3,sd)) {
+		st->state = END;
 		return SCRIPT_CMD_FAILURE;
+	}
 
 	if (pos > 0 && pos <= ARRAYLENGTH(equip))
 		i = pc_checkequip(sd,equip[pos-1]);
@@ -8346,9 +8349,10 @@ BUILDIN_FUNC(delequip) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
+/**
  * Break the item equipped at pos.
- *------------------------------------------*/
+ * breakequip <equipment slot>{,<char_id>};
+ **/
 BUILDIN_FUNC(breakequip) {
 	short i = -1;
 	int pos;
@@ -8928,7 +8932,7 @@ BUILDIN_FUNC(setcart)
 	int type = 1;
 	TBL_PC* sd;
 
-	if (!script_charid2sd(2,sd))
+	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	if( script_hasdata(st,2) )
@@ -9316,9 +9320,11 @@ BUILDIN_FUNC(makepet)
 
 	return SCRIPT_CMD_SUCCESS;
 }
-/*==========================================
+
+/**
  * Give player exp base,job * quest_exp_rate/100
- *------------------------------------------*/
+ * getexp <base xp>,<job xp>{,<char_id>};
+ **/
 BUILDIN_FUNC(getexp)
 {
 	TBL_PC* sd;
@@ -10519,9 +10525,9 @@ BUILDIN_FUNC(getscrate)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
+/**
  * getstatus(<effect type>{,<type>{,<char_id>}});
- *------------------------------------------*/
+ **/
 BUILDIN_FUNC(getstatus)
 {
 	int id, type;
@@ -10790,14 +10796,15 @@ BUILDIN_FUNC(birthpet)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
- * Added - AppleGirl For Advanced Classes, (Updated for Cleaner Script Purposes)
- * @type
+/**
+ * resetlvl <action type>{,<char_id>};
+ * @param action_type:
  *	1 : make like after rebirth
  *	2 : blvl,jlvl=1, skillpoint=0
  * 	3 : don't reset skill, blvl=1
  *	4 : jlvl=0
- *------------------------------------------*/
+ * @author AppleGirl
+ **/
 BUILDIN_FUNC(resetlvl)
 {
 	TBL_PC *sd;
@@ -10810,9 +10817,11 @@ BUILDIN_FUNC(resetlvl)
 	pc_resetlvl(sd,type);
 	return SCRIPT_CMD_SUCCESS;
 }
-/*==========================================
+
+/**
  * Reset a player status point
- *------------------------------------------*/
+ * resetstatus({<char_id>});
+ **/
 BUILDIN_FUNC(resetstatus)
 {
 	TBL_PC *sd;
@@ -10822,9 +10831,10 @@ BUILDIN_FUNC(resetstatus)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
- * script command resetskill
- *------------------------------------------*/
+/**
+ * Reset player's skill
+ * resetskill({<char_id>});
+ **/
 BUILDIN_FUNC(resetskill)
 {
 	TBL_PC *sd;
@@ -10834,9 +10844,10 @@ BUILDIN_FUNC(resetskill)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
+/**
  * Counts total amount of skill points.
- *------------------------------------------*/
+ * skillpointcount({<char_id>})
+ **/
 BUILDIN_FUNC(skillpointcount)
 {
 	TBL_PC *sd;
@@ -10883,9 +10894,10 @@ BUILDIN_FUNC(changebase)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
- * Unequip all item and request for a changesex to char-serv
- *------------------------------------------*/
+/**
+ * Change sec and unequip all item and request for a changesex to char-serv
+ * changesex({<char_id>});
+ **/
 BUILDIN_FUNC(changesex)
 {
 	int i;
@@ -12295,6 +12307,9 @@ BUILDIN_FUNC(wedding_effect)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * divorce({<char_id>})
+ **/
 BUILDIN_FUNC(divorce)
 {
 	TBL_PC *sd;
@@ -12307,6 +12322,9 @@ BUILDIN_FUNC(divorce)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * ispartneron({<char_id>})
+ **/
 BUILDIN_FUNC(ispartneron)
 {
 	TBL_PC *sd;
@@ -12322,6 +12340,9 @@ BUILDIN_FUNC(ispartneron)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * getpartnerid({<char_id>})
+ **/
 BUILDIN_FUNC(getpartnerid)
 {
 	TBL_PC *sd;
@@ -12335,6 +12356,9 @@ BUILDIN_FUNC(getpartnerid)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * getchildid({<char_id>})
+ **/
 BUILDIN_FUNC(getchildid)
 {
 	TBL_PC *sd;
@@ -12348,6 +12372,9 @@ BUILDIN_FUNC(getchildid)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * getmotherid({<char_id>})
+ **/
 BUILDIN_FUNC(getmotherid)
 {
 	TBL_PC *sd;
@@ -12361,6 +12388,9 @@ BUILDIN_FUNC(getmotherid)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * getfatherid({<char_id>})
+ **/
 BUILDIN_FUNC(getfatherid)
 {
 	TBL_PC *sd;
@@ -12869,9 +12899,10 @@ BUILDIN_FUNC(clearitem)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
+/**
  * Disguise Player (returns Mob/NPC ID if success, 0 on fail)
- *------------------------------------------*/
+ * disguise <Monster ID>{,<char_id>};
+ **/
 BUILDIN_FUNC(disguise)
 {
 	int id;
@@ -12890,9 +12921,10 @@ BUILDIN_FUNC(disguise)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
+/**
  * Undisguise Player (returns 1 if success, 0 on fail)
- *------------------------------------------*/
+ * undisguise {<char_id>};
+ **/
 BUILDIN_FUNC(undisguise)
 {
 	TBL_PC* sd;
@@ -13359,9 +13391,10 @@ BUILDIN_FUNC(specialeffect2)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
- * Nude [Valaris]
- *------------------------------------------*/
+/**
+ * nude({<char_id>});
+ * @author [Valaris]
+ **/
 BUILDIN_FUNC(nude)
 {
 	TBL_PC *sd;
@@ -13877,9 +13910,9 @@ BUILDIN_FUNC(npcstop)
 }
 
 
-/*==========================================
- * getlook char info. getlook(arg)
- *------------------------------------------*/
+/**
+ * getlook(<type>{,<char_id>})
+ **/
 BUILDIN_FUNC(getlook)
 {
 	int type,val;
@@ -13909,9 +13942,10 @@ BUILDIN_FUNC(getlook)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
- *     get char save point. argument: 0- map name, 1- x, 2- y
- *------------------------------------------*/
+/**
+ * getsavepoint(<information type>{,<char_id>})
+ * @param type 0- map name, 1- x, 2- y
+ **/
 BUILDIN_FUNC(getsavepoint)
 {
 	TBL_PC* sd;
@@ -14373,9 +14407,10 @@ BUILDIN_FUNC(day)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-//=======================================================
-// Unequip [Spectre]
-//-------------------------------------------------------
+/**
+ * unequip <equipment slot>{,<char_id>};
+ * @author [Spectre]
+ **/
 BUILDIN_FUNC(unequip) {
 	int pos;
 	TBL_PC *sd;
@@ -14397,6 +14432,9 @@ BUILDIN_FUNC(unequip) {
 	return SCRIPT_CMD_FAILURE;
 }
 
+/**
+ * equip <item id>{,<char_id>};
+ **/
 BUILDIN_FUNC(equip) {
 	unsigned short nameid = 0;
 	TBL_PC *sd;
@@ -15444,7 +15482,9 @@ BUILDIN_FUNC(md5)
 }
 
 // [zBuffer] List of dynamic var commands --->
-
+/**
+ * setd "<variable name>",<value>{,<char_id>};
+ **/
 BUILDIN_FUNC(setd)
 {
 	TBL_PC *sd = NULL;
@@ -16662,6 +16702,9 @@ BUILDIN_FUNC(warpportal)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * openmail({<char_id>});
+ **/
 BUILDIN_FUNC(openmail)
 {
 	TBL_PC* sd;
@@ -16674,6 +16717,9 @@ BUILDIN_FUNC(openmail)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * openauction({<char_id>});
+ **/
 BUILDIN_FUNC(openauction)
 {
 	TBL_PC* sd;
@@ -16928,6 +16974,9 @@ BUILDIN_FUNC(readbook)
 Questlog script commands
 *******************/
 
+/**
+ * questinfo <Quest ID>,<Icon>{,<Map Mark Color>{,<Job Class>}};
+ **/
 BUILDIN_FUNC(questinfo)
 {
 	TBL_NPC* nd = map_id2nd(st->oid);
@@ -16982,6 +17031,9 @@ BUILDIN_FUNC(questinfo)
 	return true;
 }
 
+/**
+ * setquest <ID>{,<char_id>};
+ **/
 BUILDIN_FUNC(setquest)
 {
 	struct map_session_data *sd;
@@ -17009,6 +17061,9 @@ BUILDIN_FUNC(setquest)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * erasequest <ID>{,<char_id>};
+ **/
 BUILDIN_FUNC(erasequest)
 {
 	struct map_session_data *sd;
@@ -17020,6 +17075,9 @@ BUILDIN_FUNC(erasequest)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * completequest <ID>{,<char_id>};
+ **/
 BUILDIN_FUNC(completequest)
 {
 	struct map_session_data *sd;
@@ -17031,6 +17089,9 @@ BUILDIN_FUNC(completequest)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * changequest <ID>,<ID2>{,<char_id>};
+ **/
 BUILDIN_FUNC(changequest)
 {
 	struct map_session_data *sd;
@@ -17042,6 +17103,9 @@ BUILDIN_FUNC(changequest)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * checkquest(<ID>{,PLAYTIME|HUNTING{,<char_id>}})
+ **/
 BUILDIN_FUNC(checkquest)
 {
 	struct map_session_data *sd;
@@ -17058,6 +17122,9 @@ BUILDIN_FUNC(checkquest)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * isbegin_quest(<ID>{,<char_id>})
+ **/
 BUILDIN_FUNC(isbegin_quest)
 {
 	struct map_session_data *sd;
@@ -17072,6 +17139,9 @@ BUILDIN_FUNC(isbegin_quest)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * showevent <icon>{,<mark color>{,<char_id>}}
+ **/
 BUILDIN_FUNC(showevent)
 {
 	TBL_PC *sd;
@@ -17888,6 +17958,7 @@ BUILDIN_FUNC(showdigit)
 }
 /**
  * Rune Knight
+ * makerune({<char_id>});
  **/
 BUILDIN_FUNC(makerune) {
 	TBL_PC* sd;
@@ -17899,7 +17970,7 @@ BUILDIN_FUNC(makerune) {
 	return SCRIPT_CMD_SUCCESS;
 }
 /**
- * checkdragon() returns 1 if mounting a dragon or 0 otherwise.
+ * checkdragon({<char_id>}) returns 1 if mounting a dragon or 0 otherwise.
  **/
 BUILDIN_FUNC(checkdragon) {
 	TBL_PC* sd;
@@ -17913,7 +17984,7 @@ BUILDIN_FUNC(checkdragon) {
 	return SCRIPT_CMD_SUCCESS;
 }
 /**
- * setdragon({optional Color}) returns 1 on success or 0 otherwise
+ * setdragon({optional Color{,<char_id>}}) returns 1 on success or 0 otherwise
  * - Toggles the dragon on a RK if he can mount;
  * @param Color - when not provided uses the green dragon;
  * - 1 : Green Dragon
@@ -17953,7 +18024,7 @@ BUILDIN_FUNC(setdragon) {
 }
 
 /**
- * ismounting() returns 1 if mounting a new mount or 0 otherwise
+ * ismounting({<char_id>}) returns 1 if mounting a new mount or 0 otherwise
  **/
 BUILDIN_FUNC(ismounting) {
 	TBL_PC* sd;
@@ -17968,7 +18039,7 @@ BUILDIN_FUNC(ismounting) {
 }
 
 /**
- * setmounting() returns 1 on success or 0 otherwise
+ * setmounting({<char_id>}) returns 1 on success or 0 otherwise
  * - Toggles new mounts on a player when he can mount
  * - Will fail if the player is mounting a non-new mount, e.g. dragon, peco, wug, etc.
  * - Will unmount the player is he is already mounting
