@@ -2933,7 +2933,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		return 0;
 
 	//When Gravitational Field is active, damage can only be dealt by Gravitational Field and Autospells
-	if(sc && sc->data[SC_GRAVITATION] && sc->data[SC_GRAVITATION]->val3 == BCT_SELF && skill_id != HW_GRAVITATION && !sd->state.autocast)
+	if(sd && sc && sc->data[SC_GRAVITATION] && sc->data[SC_GRAVITATION]->val3 == BCT_SELF && skill_id != HW_GRAVITATION && !sd->state.autocast)
 		return 0;
 
 	dmg = battle_calc_attack(attack_type,src,bl,skill_id,skill_lv,flag&0xFFF);
