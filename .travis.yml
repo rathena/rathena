@@ -14,7 +14,7 @@ script:
   - ./configure $CONFIGURE_FLAGS
   - make clean
   - make server
-  - echo "packet_db_ver: $PACKETDBVER" >> db/import/packet_db.txt
+  - 'echo packet_db_ver: $PACKETDBVER >> db/import/packet_db.txt'
   - ./map-server --run-once
 
 env:
