@@ -378,7 +378,7 @@ Another way would be to right click on a mob,
 NPC or char as GM sprited char to view the GID.
 
 This is mostly used for the new version of skill and the mob control commands
-implemented (but NEVER documented by Lance. Shame on you...).
+implemented.
 
 Item and pet scripts
 --------------------
@@ -935,7 +935,8 @@ chosen once the triggering character leaves the area.
 
 OnTouchNPC:
 
-Similar to OnTouch, but will only trigger for monsters.
+Similar to OnTouch, but will only trigger for monsters. For this case, by using
+'getattachedrid' will returns GID (ID that returned when use 'monster').
 
 OnPCLoginEvent:
 OnPCLogoutEvent:
@@ -1205,8 +1206,8 @@ of 'end' stops this, and ends the script.
 
 ---------------------------------------
 
-*set <variable>,<expression>;
-*set(<variable>,<expression>)
+*set <variable>,<expression>{,<charid>};
+*set(<variable>,<expression>{,<charid>})
 
 This command will set a variable to the value that the expression results in. 
 Variables may either be set through this command or directly, much like any
@@ -1228,7 +1229,7 @@ Returns the variable reference (since trunk r12870).
 
 ---------------------------------------
 
-*setd "<variable name>",<value>;
+*setd "<variable name>",<value>{,<char_id>};
 
 Works almost identically as set, except the variable name is identified as a string 
 and can thus be constructed dynamically.
@@ -1243,6 +1244,9 @@ Examples:
 
   setd ".@" + .@var$ + "123$", "Poporing is cool";
   mes .@Poporing123$; // Displays "Poporing is cool".
+
+NOTE:
+  'char_id' only works for non-server variables.
 
 ---------------------------------------
 
@@ -2231,7 +2235,7 @@ array, shifting all the elements beyond this towards the beginning.
 ======================================
 ---------------------------------------
 
-*strcharinfo(<type>)
+*strcharinfo(<type>{,<char_id>})
 
 This function will return either the name, party name or guild name for the 
 invoking character. Whatever it returns is determined by type.
@@ -2371,9 +2375,9 @@ If an invalid type is given or the NPC does not exist, 0 is returned.
 
 ---------------------------------------
 
-*getchildid()
-*getmotherid()
-*getfatherid()
+*getchildid({<char_id>})
+*getmotherid({<char_id>})
+*getfatherid({<char_id>})
 
 These functions return the character ID of the attached player's child,
 mother, mother, or father, respectively. It returns 0 if no ID is found.
@@ -2382,14 +2386,14 @@ mother, mother, or father, respectively. It returns 0 if no ID is found.
 
 ---------------------------------------
 
-*ispartneron()
+*ispartneron({<char_id>})
 
 This function returns 1 if the invoking character's marriage partner is 
 currently online and 0 if they are not or if the character has no partner.
 
 ---------------------------------------
 
-*getpartnerid()
+*getpartnerid({<char_id>})
 
 This function returns the character ID of the invoking character's marriage 
 partner, if any. If the invoking character is not married, it will return 0, 
@@ -2400,7 +2404,7 @@ which is a quick way to see if they are married:
 
 ---------------------------------------
 
-*getlook(<type>)
+*getlook(<type>{,<char_id>})
 
 This function will return the number for the current character look value 
 specified by type. See 'setlook' for valid look types.
@@ -2410,7 +2414,7 @@ dressed in black. :)
 
 ---------------------------------------
 
-*getsavepoint(<information type>)
+*getsavepoint(<information type>{,<char_id>})
 
 This function will return information about the invoking character's save point. 
 You can use it to let a character swap between several recorded save points. 
@@ -2481,7 +2485,7 @@ Counts the spirit ball that player has.
 \\
 ---------------------------------------
 
-*getequipid(<equipment slot>)
+*getequipid(<equipment slot>{,<char_id>})
 
 This function returns the item ID of the item equipped in the equipment slot 
 specified on the invoking character. If nothing is equipped there, it returns -1. 
@@ -2543,7 +2547,7 @@ armor, but also don't want them to equip if after the check, you would do this:
 
 ---------------------------------------
 
-*getequipuniqueid(<equipment slot>)
+*getequipuniqueid(<equipment slot>{,<char_id>})
 
 This function returns the unique ID (as a string) of the item equipped in the equipment slot 
 specified on the invoking character. If nothing is equipped there, it returns an empty string.
@@ -2551,7 +2555,7 @@ See 'getequipid' for a full list of valid equipment slots.
 
 ---------------------------------------
 
-*getequipname(<equipment slot>)
+*getequipname(<equipment slot>{,<char_id>})
 
 Returns the jname of the item equipped in the specified equipment slot on the
 invoking character, or an empty string if nothing is equipped in that position.
@@ -2574,7 +2578,7 @@ the players would normally see on screen.)
 
 ---------------------------------------
 
-*getbrokenid(<number>)
+*getbrokenid(<number>{,<char_id>})
 
 This function will search the invoking character's inventory for any broken 
 items, and will return their item ID numbers. Since the character may have 
@@ -2590,7 +2594,7 @@ will return the second one, etc. Will return 0 if no such item is found.
 
 ---------------------------------------
 
-*getequipisequiped(<equipment slot>)
+*getequipisequiped(<equipment slot>{,<char_id>})
 
 This functions will return 1 if there is an equipment placed on the specified
 equipment slot and 0 otherwise. For a list of equipment slots 
@@ -2607,7 +2611,7 @@ see 'getequipid'. Function originally used by the refining NPCs:
 
 ---------------------------------------
 
-*getequipisenableref(<equipment slot>)
+*getequipisenableref(<equipment slot>{,<char_id>})
 
 Will return 1 if the item equipped on the invoking character in the specified 
 equipment slot is refinable, and 0 if it isn't. For a list of equipment slots 
@@ -2624,7 +2628,7 @@ see 'getequipid'.
 
 ---------------------------------------
 
-*getequiprefinerycnt(<equipment slot>)
+*getequiprefinerycnt(<equipment slot>{,<char_id>})
 
 Returns the current number of pluses for the item in the specified equipment 
 slot. For a list of equipment slots see 'getequipid'.
@@ -2640,7 +2644,7 @@ this is +10:
 
 ---------------------------------------
 
-*getequipweaponlv(<equipment slot>)
+*getequipweaponlv(<equipment slot>{,<char_id>})
 
 This function returns the weapon level for the weapon equipped in the specified 
 equipment slot on the invoking character. For a list of equipment slots see 
@@ -2681,7 +2685,7 @@ Examples:
 
 ---------------------------------------
 
-*getequippercentrefinery(<equipment slot>)
+*getequippercentrefinery(<equipment slot>{,<char_id>})
 
 This function calculates and returns the percent value chance to successfully 
 refine the item found in the specified equipment slot of the invoking character 
@@ -2721,7 +2725,7 @@ of possible equipment slots.
 
 ---------------------------------------
 
-*getinventorylist;
+*getinventorylist {<char_id>};
 
 This command sets a bunch of arrays with a complete list of whatever the 
 invoking character has in their inventory, including all the data needed to 
@@ -2847,8 +2851,8 @@ It's useful for when you want to check whether an item contains cards or if it's
 
 ---------------------------------------
 
-*mergeitem({<item_id>});
-*mergeitem({"<item name>"});
+*mergeitem({<item_id>{,<char_id>}});
+*mergeitem({"<item name>"{,<char_id>}});
 
 Merge all stackable items that separated by GUID flags
 (either by flag 4 item_flag.txt or GUID  in item_group).
@@ -2919,7 +2923,7 @@ map ID doesn't exist.
 
 ---------------------------------------
 
-*getgmlevel()
+*getgmlevel({<char_id>})
 
 This function will return the (GM) level associated with the player group to which
 the invoking character belongs. If this is somehow executed from a console command,
@@ -2932,7 +2936,7 @@ specially when talked to by GMs.
 
 ---------------------------------------
 
-*getgroupid()
+*getgroupid({<char_id>})
 
 This function will return the group id to which the invoking player belongs.
 
@@ -3214,7 +3218,7 @@ Example 2:
 
 ---------------------------------------
 
-*getskilllist;
+*getskilllist({<char_id>});
 
 This command sets a bunch of arrays with a complete list of skills the
 invoking character has. Here's what you get:
@@ -3319,7 +3323,7 @@ Example:
 
 ---------------------------------------
 
-*skillpointcount()
+*skillpointcount({<char_id>})
 
 Returns the total amount of skill points a character possesses (SkillPoint+SP's used in skills)
 This command can be used to check the currently attached characters total amount of skill points.
@@ -3363,6 +3367,12 @@ server. It is wise to check for the attached player in script functions that
 deal with timers as there's no guarantee the player will still be logged on
 when the timer triggers. Note that the ID of a player is actually their
 account ID.
+
+---------------------------------------
+
+*getattachedrid();
+
+Returns RID from running script. Script may does not have RID.
 
 ---------------------------------------
 
@@ -3423,10 +3433,10 @@ things might in some cases be required.
 
 ---------------------------------------
 
-*checkoption(<option number>)
-*checkoption1(<option number>)
-*checkoption2(<option number>)
-*setoption <option number>{,<flag>};
+*checkoption(<option number>{,<char_id>})
+*checkoption1(<option number>{,<char_id>})
+*checkoption2(<option number>{,<char_id>})
+*setoption <option number>{,<flag>{,<char_id>}};
 
 The 'setoption' series of functions check for a so-called option that is set on 
 the invoking character. 'Options' are used to store status conditions and a lot 
@@ -3488,8 +3498,8 @@ core developer (or read the source: src/map/status.h) for the full list.
 
 ---------------------------------------
 
-*setcart {<type>};
-*checkcart()
+*setcart {<type>{,<char_id>}};
+*checkcart({<char_id>});
 
 If <type> is 0 this command will remove the cart from the character.
 Otherwise it gives the invoking character a cart. The cart given will be 
@@ -3504,8 +3514,8 @@ The accompanying function will return 1 if the invoking character has a cart
 
 ---------------------------------------
 
-*setfalcon {<flag>};
-*checkfalcon()
+*setfalcon {<flag>{,<char_id>}};
+*checkfalcon({<char_id>});
 
 If <flag> is 0 this command will remove the falcon from the character.
 Otherwise it gives the invoking character a falcon. The falcon will be there 
@@ -3520,8 +3530,8 @@ and 0 if they don't.
 
 ---------------------------------------
 
-*setriding {<flag>};
-*checkriding()
+*setriding {<flag>{,<char_id>}};
+*checkriding({<char_id>});
 
 If <flag> is 0 this command will remove the mount from the character.
 Otherwise it gives the invoking character a PecoPeco (if they are a Knight 
@@ -3537,8 +3547,8 @@ bird and 0 if they aren't.
 
 ---------------------------------------
 
-*setdragon {<color>};
-*checkdragon()
+*setdragon {<color>{,<char_id>}};
+*checkdragon({<char_id>});
 
 The 'setdragon' function toggles mounting a dragon for the invoking character.
 It will return 1 if successful, 0 otherwise.
@@ -3557,8 +3567,8 @@ dragon and 0 if they aren't.
 
 ---------------------------------------
 
-*setmadogear {<flag>};
-*checkmadogear()
+*setmadogear {<flag>{,<char_id>}};
+*checkmadogear({<char_id>});
 
 If <flag> is 0 this command will remove the mount from the character.
 Otherwise it gives the invoking character a Mado (if they are a Mechanic).
@@ -3568,8 +3578,8 @@ Mado and 0 if they don't.
 
 ---------------------------------------
 
-*setmounting;
-*ismounting()
+*setmounting {<char_id>};
+*ismounting({<char_id>});
 
 The 'setmounting' function toggles cash mount for the invoking character.
 It will return 1 if successful, 0 otherwise.
@@ -3581,7 +3591,7 @@ cash mount and 0 if they don't.
 
 ---------------------------------------
 
-*checkwug()
+*checkwug({<char_id>});
 
 This function will return 1 if the invoking character has a
 warg and 0 if they don't.
@@ -3786,7 +3796,7 @@ be seen by anyone else.
 
 ---------------------------------------
 
-*dispbottom "<message>"{,<color>};
+*dispbottom "<message>"{,<color>{,<char_id>}};
 
 This command will send the given message with color into the invoking character's chat 
 window. The color format is in RGB (0xRRGGBB). The color is
@@ -3915,8 +3925,8 @@ normally translate to random coordinates.
 
 ---------------------------------------
 
-*savepoint "<map name>",<x>,<y>;
-*save "<map name>",<x>,<y>;
+*savepoint "<map name>",<x>,<y>{,<char_id>};
+*save "<map name>",<x>,<y>{,<char_id>};
 
 These commands save where the invoking character will return to upon clicking
 "Return to Save Point", after death and in some other cases. The two versions are 
@@ -4127,7 +4137,7 @@ do, but this will only happen in a later SVN revision.
 
 ---------------------------------------
 
-*changesex;
+*changesex({<char_id>});
 
 This command will change the gender for the attached character's account. If it 
 was male, it will become female, if it was female, it will become male. The 
@@ -4141,7 +4151,7 @@ they will also have their skills reset upon 'changesex'.
 
 ---------------------------------------
 
-*getexp <base xp>,<job xp>;
+*getexp <base xp>,<job xp>{,<char_id>};
 
 This command will give the invoking character a specified number of base and job 
 experience points. Can be used as a quest reward. Negative values won't work.
@@ -4425,8 +4435,8 @@ Example:
 
 ---------------------------------------
 
-*rentitem <item id>,<time>;
-*rentitem "<item name>",<time>;
+*rentitem <item id>,<time>{,<account_id>};
+*rentitem "<item name>",<time>{,<account_id>};
 
 Creates a rental item in the attached character's inventory. The item will expire 
 in <time> seconds and be automatically deleted. When receiving a rental item, 
@@ -4439,8 +4449,8 @@ Note: 'delitem' in an NPC script can still remove rental items.
 
 ---------------------------------------
 
-*rentitem2 <item id>,<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>;
-*rentitem2 "<item name>",<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>;
+*rentitem2 <item id>,<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account_id>};
+*rentitem2 "<item name>",<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account_id>};
 
 Creates a rental item in the attached character's inventory. The item will expire 
 in <time> seconds and be automatically deleted. See 'rentitem' for further details.
@@ -4597,7 +4607,7 @@ cart or storage. If no cart is mounted, 'cartcountitem2' will return -1.
 
 ---------------------------------------
 
-*countbound({<bound type>})
+*countbound({<bound type>{,<char_id>}})
 
 This function will return the number of bounded items in the character's
 inventory, and sets an array @bound_items[] containing all item IDs of the
@@ -4710,8 +4720,8 @@ target cursor is shown.
 
 ---------------------------------------
 
-*consumeitem <item id>;
-*consumeitem "<item name>";
+*consumeitem <item id>{,<char_id>};
+*consumeitem "<item name>"{,<char_id>};
 
 This command will run the item script of the specified item on the invoking
 character. The character does not need to possess the item, and the item will
@@ -4776,7 +4786,7 @@ to cook the dish the command works.
 
 ---------------------------------------
 
-*makerune <% success bonus>;
+*makerune <% success bonus>{,<char_id>};
 
 This command will open a rune crafting window on the client connected to the
 invoking character. Since this command is officially used in rune ores, a bonus
@@ -4811,14 +4821,14 @@ Whatever the type is, it will also show a failure effect on screen.
 
 ---------------------------------------
 
-*repair <broken item number>;
+*repair <broken item number>{,<char_id>};
 
 This command repairs a broken piece of equipment, using the same list of broken 
 items as available through 'getbrokenid'.
 
 ---------------------------------------
 
-*repairall;
+*repairall {<char_id>};
 
 This command repairs all broken equipment in the attached player's inventory.
 A repair effect will be shown if any items are repaired, else the command will
@@ -4826,7 +4836,7 @@ end silently.
 
 ---------------------------------------
 
-*successrefitem <equipment slot>{,<count>};
+*successrefitem <equipment slot>{,<count>{,<char_id>}};
 
 This command will refine an item in the specified equipment slot of the invoking 
 character by +1, or a count if given. For a list of equipment slots see 'getequipid'.
@@ -4837,7 +4847,7 @@ blacksmith who will later forge a weapon.
 
 ---------------------------------------
 
-*failedrefitem <equipment slot>;
+*failedrefitem <equipment slot>{,<char_id>};
 
 This command will fail to refine an item in the specified equipment slot of the 
 invoking character. The item will be destroyed. This will also display a 'refine 
@@ -4846,7 +4856,7 @@ window.
 
 ---------------------------------------
 
-*downrefitem <equipment slot>{,<count>};
+*downrefitem <equipment slot>{,<count>{,<char_id>}};
 
 This command will downgrade an item in the specified equipment slot of the invoking
 character by -1, or a count if given. For a list of equipment slots see 'getequipid'.
@@ -4855,7 +4865,7 @@ appropriate messages into their chat window.
 
 ---------------------------------------
 
-*unequip <equipment slot>;
+*unequip <equipment slot>{,<char_id>};
 
 This command will unequip whatever is currently equipped in the invoking 
 character's specified equipment slot. For a full list of possible equipment 
@@ -4866,7 +4876,7 @@ them.
 
 ---------------------------------------
 
-*delequip <equipment slot>;
+*delequip <equipment slot>{,<char_id>};
 
 This command will destroy whatever is currently equipped in the invoking
 character's specified equipment slot. For a full list of possible equipment 
@@ -4876,7 +4886,7 @@ This command will return 1 if an item was deleted and 0 otherwise.
 
 ---------------------------------------
 
-*breakequip <equipment slot>;
+*breakequip <equipment slot>{,<char_id>};
 
 This command will break and unequip whatever is currently equipped in the
 invoking character's specified equipment slot. For a full list of possible
@@ -4886,7 +4896,7 @@ This command will return 1 if an item was broken and 0 otherwise.
 
 ---------------------------------------
 
-*clearitem;
+*clearitem {,<char_id>};
 
 This command will destroy all items the invoking character has in their 
 inventory (including equipped items). It will not affect anything else, like 
@@ -4894,7 +4904,7 @@ storage or cart.
 
 ---------------------------------------
 
-*equip <item id>;
+*equip <item id>{,<char_id>};
 *autoequip <item id>,<option>;
 
 These commands are to equip a equipment on the attached character. 
@@ -4977,7 +4987,7 @@ window, to avoid any disruption when both windows overlap.
 
 ---------------------------------------
 
-*openmail;
+*openmail({<char_id>});
 
 This will open a character's Mail window on the client connected to the 
 invoking character.
@@ -4989,7 +4999,7 @@ invoking character.
 
 ---------------------------------------
 
-*openauction;
+*openauction({<char_id>});
 
 This will open the Auction window on the client connected to the invoking character.
 
@@ -5062,7 +5072,7 @@ a fun quest. (Wasting a level point on that is really annoying :D)
 //
 ---------------------------------------
 
-*resetlvl <action type>;
+*resetlvl <action type>{,<char_id>};
 
 This is a character reset command, meant mostly for rebirth script supporting 
 Advanced jobs, which will reset the invoking character's stats and level 
@@ -5084,7 +5094,7 @@ rebirth scripts. Ask AppleGirl why.
 
 ---------------------------------------
 
-*resetstatus;
+*resetstatus({<char_id>});
 
 This is a character reset command, which will reset the stats on the invoking 
 character and give back all the stat points used to raise them previously. 
@@ -5094,7 +5104,7 @@ Used in reset NPC's (duh!)
 
 ---------------------------------------
 
-*resetskill;
+*resetskill({<char_id>});
 
 This command takes off all the skill points on the invoking character, so they 
 only have Basic Skill blanked out (lvl 0) left, and returns the points for them 
@@ -5168,7 +5178,7 @@ Note: to use SC_NOCHAT you should alter Manner
 
 ---------------------------------------
 
-*getstatus(<effect type>{,<type>})
+*getstatus(<effect type>{,<type>{,<char_id>}})
 
 Retrieve information about a specific status effect when called. Depending on <type>
 specified the function will return different information.
@@ -5259,7 +5269,7 @@ behavior of the command.
 
 ---------------------------------------
 
-*statusup <stat>;
+*statusup <stat>{,<char_id>};
 
 This command will bump a specified stat of the invoking character up by one 
 permanently. Stats are to be given as number, but you can use these constants to 
@@ -5274,7 +5284,7 @@ bLuk -  Luck
 
 ---------------------------------------
 
-*statusup2 <stat>,<amount>;
+*statusup2 <stat>,<amount>{,<char_id>};
 
 This command will bump a specified stat of the invoking character up by the 
 specified amount permanently. The amount can be negative. See 'statusup'.
@@ -5436,7 +5446,7 @@ Flag constants:
 
 ---------------------------------------
 
-*nude;
+*nude {<char_id>};
 
 This command will unequip anything equipped on the invoking character.
 
@@ -5453,8 +5463,8 @@ If no character is specified, the command will run for the invoking character.
 
 ---------------------------------------
 
-*disguise <Monster ID>;
-*undisguise;
+*disguise <Monster ID>{,<char_id>};
+*undisguise {<char_id>};
 
 This command disguises the current player with a monster sprite.
 The disguise lasts until 'undisguise' is issued or the player logs out.
@@ -5502,7 +5512,7 @@ the invoking character. Example can be found in the wedding script.
 
 ---------------------------------------
 
-*divorce()
+*divorce({<char_id>})
 
 This function will "un-marry" the invoking character from whoever they were 
 married to. Both will no longer be each other's marriage partner, (at least in 
@@ -7871,7 +7881,7 @@ if (instance_check_party(getcharid(1),2,2,149)) {
 =========================
 ---------------------------------------
 
-*questinfo <Quest ID>, <Icon> {, <Map Mark Color>{, <Job Class>}};
+*questinfo <Quest ID>,<Icon>{,<Map Mark Color>{,<Job Class>}};
 
 This is esentially a combination of checkquest and showevent. Use this only
 in an OnInit label. For the Quest ID, specify the quest ID that you want
@@ -7915,7 +7925,7 @@ izlude,100,100,4	script	Test	844,{
 
 ---------------------------------------
 
-*setquest <ID>;
+*setquest <ID>{,<char_id>};
 
 Place quest of <ID> in the users quest log, the state of which is "active".
 
@@ -7923,26 +7933,26 @@ If *questinfo is set, and the same ID is specified here, the icon will be cleare
 
 ---------------------------------------
 
-*completequest <ID>;
+*completequest <ID>{,<char_id>};
 
 Change the state for the given quest <ID> to "complete" and remove from the users quest log.
 
 ---------------------------------------
 
-*erasequest <ID>;
+*erasequest <ID>{,<char_id>};
 
 Remove the quest of the given <ID> from the user's quest log.
 
 ---------------------------------------
 
-*changequest <ID>,<ID2>;
+*changequest <ID>,<ID2>{,<char_id>};
 
 Remove quest of the given <ID> from the user's quest log.
 Add quest of the <ID2> to the the quest log, and the state is "active".
 
 ---------------------------------------
 
-*checkquest(<ID>{,PLAYTIME|HUNTING})
+*checkquest(<ID>{,PLAYTIME|HUNTING{,<char_id>}})
 
 If no additional argument supplied, return the state of the quest: 
 	-1 = Quest not started (not in quest log)
@@ -7964,7 +7974,7 @@ If parameter "HUNTING" is supplied:
 
 ---------------------------------------
 
-*isbegin_quest(<ID>)
+*isbegin_quest(<ID>{,<char_id>})
 
 Return the state of the quest: 
 	0  = Quest not started (not in quest log)
@@ -7973,7 +7983,7 @@ Return the state of the quest:
 
 ---------------------------------------
 
-*showevent <icon>{,<mark color>}
+*showevent <icon>{,<mark color>{,<char_id>}}
 
 Show an emotion on top of a NPC, and optionally,
 a colored mark in the mini-map like "viewpoint".
