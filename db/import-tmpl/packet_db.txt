@@ -15,21 +15,29 @@
 // The packet database allows you to add support for new clients,
 // because packets change every release.
 //
-// Note: Every packet version needs a wanttoconnection specification, since
+// NOTE: Every packet version needs a wanttoconnection specification, since
 // that is the packet used to identify a client's version.
 // If multiple versions have the same connection packet, the higher version
 // will be used (unless the lower one is specified as the default)
 //
 // Incoming packets have their parser function and layout specified, which enables
-// them for the current and all higher versions, unless explicitely disabled.
+// them for the current and all higher versions, unless explicitly disabled.
 //
 // Outgoing packets must be specified in order to enable them for the current
-// and all higher versions, unless explicitely disabled. Packets that are not
+// and all higher versions, unless explicitly disabled. Packets that are not
 // enabled for a packet version are silently discarded when sent as multicast.
 //
 // Every packet version inherits packet definitions from the previous (lower)
 // packet version.
 //
-// Main packet version of the DB to use (default = max available version)
+// If 'packet_db_ver' is 'default', the main packet version used is determined
+// by PACKETVER in src/common/mmo.h, see src/common/utils::date2version() for
+// equalizations.
 // Client detection is faster when all clients use this version.
 // Version 23 is the latest Sakexe (above versions are for Renewal clients)
+//
+// packet_keys values are default value for each packet version, if no value
+// or value is 'default' in packet_keys_use, server will uses default keys
+// according to used packet_db_ver. packet_keys_use is user-defined keys.
+// Maximum key value is 0x7FFFFFFF.
+// NOTE: Keys won't be reloaded, initialized on first load only.
