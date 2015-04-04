@@ -3594,7 +3594,7 @@
 5687,Viking_Helm_Repl,Orc Helm,4,20,,100,,5,,0,0xFFFFFFFF,63,2,256,,1,1,86,{},{},{}
 5688,2009_Love_Dad,2009 Love Dad,4,20,,100,,3,,0,0xFFFFFFFF,63,2,256,,1,1,611,{ bonus bVit,2; },{},{}
 5689,Queen_Ant_Diadem,Queen Ant Diadem,4,20,,300,,1,,0,0xFFFFFFFF,63,2,256,,75,1,612,{},{},{}
-5690,Red_Wing_Hat,Red Wing Hat,4,20,,600,,5,,0,0xFFFFFFFF,63,2,256,,1,1,613,{ bonus bHPrecovRate,20; bonus bSPrecovRate,20; } },{},{}
+5690,Red_Wing_Hat,Red Wing Hat,4,20,,600,,5,,0,0xFFFFFFFF,63,2,256,,1,1,613,{ bonus bHPrecovRate,20; bonus bSPrecovRate,20; },{},{}
 5691,Catain_Bandanna,Sailor's Bandana,4,20,,10,,1,,0,0xFFFFFFFF,63,2,256,,1,1,542,{ bonus bDex,1; bonus2 bSubEle,Ele_Poison,20; },{},{}
 5692,Sea_Cat_Hat,Sea Cat Hat,4,20,,10,,1,,0,0xFFFFFFFF,63,2,256,,1,1,539,{ bonus bDex,1; },{},{}
 5693,No_Fear_Underware,No Fear Underwear,4,0,,0,,10,,0,0xFFFFFFFF,63,2,256,,20,0,30,{ bonus bStr,1; bonus bInt,1; bonus bDex,1; },{},{}
@@ -9223,7 +9223,7 @@
 18763,Remodel_Joker_Jester,Improved Joker Jester,4,20,,100,,3,,1,0xFFFFFFFE,63,2,256,,0,1,89,{ bonus bLuk,2; bonus bMdef,5; if(getrefine()>=7) bonus bCritAtkRate,5; },{},{}
 18764,Remodel_Bunny_Band,Improved Bunny Band,4,20,,100,,3,,1,0xFFFFFFFF,63,2,256,,0,1,15,{ bonus bLuk,2; if(getrefine()>=7) bonus bCritical,5; },{},{}
 18765,Enhanced_Corsair,Enhanced Corsair,4,20,,500,,10,,1,0xFFFFFFFE,63,2,256,,99,1,105,{ bonus bVit,1; bonus bMaxHprate,5; .@r = getrefine(); if(.@r>=7) bonus2 bSubEle,Ele_Neutral,1; if(.@r>=9) bonus bMaxHPrate,3; },{},{}
-18766,Enhanced_Helm_Of_Angel,Enhanced Helm of Angel,4,20,,1600,,10,,1,0x00CFDF80,63,2,256,,99,1,110,{ bonus bAgi,1; bonus bLuk,1; bonus bMdef,3; .@r = getrefine(); if(.@r>=7){ bonus bAgi,2; bonus bLuk,2; } if(.@r>=9) bonus bAspd,1; } },{},{}
+18766,Enhanced_Helm_Of_Angel,Enhanced Helm of Angel,4,20,,1600,,10,,1,0x00CFDF80,63,2,256,,99,1,110,{ bonus bAgi,1; bonus bLuk,1; bonus bMdef,3; .@r = getrefine(); if(.@r>=7){ bonus bAgi,2; bonus bLuk,2; } if(.@r>=9) bonus bAspd,1; },{},{}
 18767,Enhanced_Helm_Of_Sun,Enhanced Hat of the Sun God,4,20,,2400,,4,,1,0x00CFDF80,63,2,768,,99,1,138,{ bonus bStr,3; bonus bInt,2; .@j = getrefine(); if(.@j>=7) set .@i,1; if(.@j>=9) set .@i,2; bonus bBaseAtk,10+(15*.@i); bonus bMatk,10+(15*.@i); },{},{}
 18768,Enhanced_Bone_Helm,Enhanced Bone Helm,4,20,,800,,15,,1,0x000444A2,63,2,256,,70,1,103,{ bonus2 bSubEle,Ele_Dark,-15; .@j = getrefine(); if(.@j>=7) set .@i,1; if(.@j>=9) set .@i,2; bonus2 bSubEle,Ele_Neutral,2+(2*.@i); },{},{}
 18769,Remodel_Munak_Turban,Improved Munak Hat,4,20,,300,,5,,1,0xFFFFFFFF,63,2,769,,0,0,51,{ bonus2 bSubRace,RC_Undead,10; if(getrefine()>=7) bonus2 bAddRace,RC_Undead,10; },{},{}

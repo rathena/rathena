@@ -2,18 +2,32 @@ language: c
 compiler:
   - clang
   - gcc
-  
-before_script:
-  - uname -a  
 
-script: 
-  - ./configure && make server
+before_script:
+  - uname -a
+  - mysql -u $DB_ROOT -e "CREATE DATABASE $DB_NAME;" || aborterror "Unable to create database."
+  - mysql -u $DB_ROOT $DB_NAME < sql-files/main.sql || aborterror "Unable to import main database."
+  - mysql -u $DB_ROOT $DB_NAME < sql-files/logs.sql || aborterror "Unable to import logs database."
+  - mysql -u $DB_ROOT -e "GRANT ALL ON *.* TO '$DB_USER'@'$DB_HOST' IDENTIFIED BY '$DB_PASS';"
+
+script:
+  - ./configure $CONFIGURE_FLAGS
   - make clean
-  - ./configure --enable-prere && make server
-  
+  - make server
+  - 'echo packet_db_ver: $PACKETDBVER >> db/import/packet_db.txt'
+  - ./map-server --run-once
+
+env:
+  global:
+    - DB_ROOT="root"
+    - DB_HOST="127.0.0.1"
+    - DB_NAME="ragnarok"
+    - DB_USER="ragnarok"
+    - DB_PASS="ragnarok"
+    - PACKETDBVER=45
+  matrix:
+    - CONFIGURE_FLAGS="--enable-prere=no"
+    - CONFIGURE_FLAGS="--enable-prere=yes"
+
 notifications:
   email: false
-  
-branches:
-  only:
-    - master 
