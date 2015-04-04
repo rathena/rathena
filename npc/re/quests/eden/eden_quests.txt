@@ -1858,8 +1858,8 @@ moc_para01,112,96,5	script	Administrator Michael	4_M_RUSMAN1,{
 			}
 			if (Class == Job_Acolyte || Class == Job_Acolyte_High || Class == Job_Priest || Class == Job_Monk) {
 				callsub S_Select,"We have a mace and a staff",
-					1650,"Eden Mace I","Mace","Attack 142","", //P_Staff1
-					16004,"Eden Staff I","Staff","INT+2, MATK+125, attack 60",""; //P_Mace1
+					16004,"Eden Mace I","Mace","Attack 142","", //P_Mace1
+					1650,"Eden Staff I","Staff","INT+2, MATK+125, attack 60",""; //P_Staff1
 			}
 			if (Class == Job_Mage || Class == Job_Mage_High || Class == Job_Wizard || Class == Job_Sage) {
 				callsub S_Select,"",
@@ -1926,8 +1926,8 @@ moc_para01,112,96,5	script	Administrator Michael	4_M_RUSMAN1,{
 			}
 			if (Class == Job_Acolyte || Class == Job_Acolyte_High || Class == Job_Priest || Class == Job_Monk) {
 				callsub S_Select,"We have a mace and a staff",
-					1651,"Eden Mace II","Mace","Attack 163","", //P_Staff2
-					16005,"Eden Staff II","Staff","INT+3, MATK+150, attack 60",""; //P_Mace2
+					16005,"Eden Mace II","Mace","Attack 163","", //P_Mace2
+					1651,"Eden Staff II","Staff","INT+3, MATK+150, attack 60",""; //P_Staff2
 			}
 			if (Class == Job_Archer || Class == Job_Archer_High || Class == Job_Hunter || Class == Job_Dancer || Class == Job_Bard) {
 				callsub S_Select,"",
