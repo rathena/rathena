@@ -9547,11 +9547,18 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_ELECTRICSHOCKER:
 		case SC_CRYSTALIZE:
-		case SC_MEIKYOUSISUI:
 			val4 = tick / 1000;
 			if( val4 < 1 )
 				val4 = 1;
 			tick_time = 1000; // [GodLesZ] tick time
+			break;
+		case SC_MEIKYOUSISUI:
+			val2 = val1 * 2; // % HP each sec
+			val3 = val1; // % SP each sec
+			val4 = tick / 1000;
+			if( val4 < 1 )
+				val4 = 1;
+			tick_time = 1000;
 			break;
 		case SC_CAMOUFLAGE:
 			val4 = tick/1000;
@@ -12293,7 +12300,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		return 0;
 	case SC_MEIKYOUSISUI:
 		if( --(sce->val4) >= 0 ) {
-			status_heal(bl, status->max_hp * (sce->val1+1) / 100, status->max_sp * sce->val1 / 100, 0);
+			status_heal(bl, status->max_hp * sce->val2 / 100, sce->val3 / 100, 0);
 			sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
 			return 0;
 		}
