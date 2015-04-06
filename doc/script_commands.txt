@@ -1206,8 +1206,8 @@ of 'end' stops this, and ends the script.
 
 ---------------------------------------
 
-*set <variable>,<expression>{,<charid>};
-*set(<variable>,<expression>{,<charid>})
+*set <variable>,<expression>{,<char_id>};
+*set(<variable>,<expression>{,<char id>})
 
 This command will set a variable to the value that the expression results in. 
 Variables may either be set through this command or directly, much like any
@@ -1247,6 +1247,7 @@ Examples:
 
 NOTE:
   'char_id' only works for non-server variables.
+  Player with Character ID 'char_id' must be online.
 
 ---------------------------------------
 
@@ -3269,6 +3270,7 @@ Valid types are listed in 'db/const.txt':
 	MOB_MODE	21
 	MOB_MVPEXP	22
 
+Note: MOB_ELEMENT doesn't return the element level, only the element ID.
 For more details, see the sample in 'doc/sample/getmonsterinfo.txt'.
 
 ---------------------------------------
@@ -3770,7 +3772,7 @@ invoking RID. It returns 1 if successful and 0 upon failure.
     [ Parameters: <guild id> ]
  4: All players in a specified area of the map of the invoking player (or NPC).
     [ Parameters: <x0>,<y0>,<x1>,<y1> ]
- Account ID: The specified account ID.
+ Account ID: If type is Account ID, attach the specified account ID.
 
 <flag> can prevent certain players from being attached:
  0: Players are always attached. (default)
@@ -4800,10 +4802,10 @@ a rune and has the appropriate raw materials in their inventory.
 
 *successremovecards <equipment slot>;
 
-This command will remove all cards from the item found in the specified 
-equipment slot of the invoking character, create new card items and give them to 
-the character. If any cards were removed in this manner, it will also show a 
-success effect.
+This command will remove all cards of the cards slots defined by item_db.txt
+from the item found in the specified equipment slot of the invoking character,
+create new card items and give them to the character. 
+If any cards were removed in this manner, it will also show a success effect.
 
 ---------------------------------------
 
@@ -5598,6 +5600,8 @@ attached at this execution will be the RID of the killing character.
 	2 = sphere (Alchemist skill)
 	3 = flora (Alchemist skill)
 	4 = zanzou (Kagerou/Oboro skill)
+	5 = legion (Sera skill)
+	6 = faw (Mechanic skill)
 
     monster "place",60,100,"Poring",1002,1,"NPCNAME::OnLabel";
 
