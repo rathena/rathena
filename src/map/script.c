@@ -8409,9 +8409,9 @@ BUILDIN_FUNC(breakequip) {
 	return SCRIPT_CMD_FAILURE;
 }
 
-/*==========================================
- *
- *------------------------------------------*/
+/**
+ * statusup <stat>{,<char_id>};
+ **/
 BUILDIN_FUNC(statusup)
 {
 	int type;
@@ -8426,9 +8426,10 @@ BUILDIN_FUNC(statusup)
 
 	return SCRIPT_CMD_SUCCESS;
 }
-/*==========================================
- *
- *------------------------------------------*/
+
+/**
+ * statusup2 <stat>,<amount>{,<char_id>};
+ **/
 BUILDIN_FUNC(statusup2)
 {
 	int type,val;
@@ -9122,7 +9123,7 @@ BUILDIN_FUNC(savepoint)
 	const char* str;
 	TBL_PC* sd;
 
-	if (!script_charid2sd(4,sd))
+	if (!script_charid2sd(5,sd))
 		return SCRIPT_CMD_FAILURE;// no player attached, report source
 
 	str = script_getstr(st, 2);
@@ -10581,7 +10582,7 @@ BUILDIN_FUNC(getstatus)
 	int id, type;
 	struct map_session_data* sd;
 
-	if (!script_charid2sd(3,sd))
+	if (!script_charid2sd(4,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	id = script_getnum(st, 2);
@@ -13518,7 +13519,7 @@ BUILDIN_FUNC(dispbottom)
 	int color = 0;
 	const char *message;
 
-	if (!script_charid2sd(3,sd))
+	if (!script_charid2sd(4,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	message = script_getstr(st,2);
