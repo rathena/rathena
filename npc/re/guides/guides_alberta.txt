@@ -77,7 +77,7 @@ alberta,23,238,4	script	Guide#01alberta::AlbertaGuide	105,{
 					mes "[Alberta Guide]";
 					mes "The "+F_Navi("Merchant Guild","alberta,33,41")+" is where";
 					mes "you can change your job to ^800080Merchant^000000.";
-					mes "Let me mark it's location";
+					mes "Let me mark its location";
 					mes "on your mini-map.";
 					mes .@str$;
 					viewpoint 1,33,41,5,0xDA70D6;
