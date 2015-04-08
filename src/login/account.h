@@ -39,7 +39,6 @@ struct mmo_account {
 	char pincode[PINCODE_LENGTH+1];		// pincode system
 	time_t pincode_change;	// (timestamp): last time of pincode change
 	int account_reg2_num;
-	int bank_vault;
 #ifdef VIP_ENABLE
 	int old_group;
 	time_t vip_time;

@@ -1671,20 +1671,7 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 			}
 			break;
 		case NPCTYPE_POINTSHOP:
-			switch(nd->u.shop.pointshop_str[0]) {
-				case '#':
-					if (nd->u.shop.pointshop_str[1] == '#')
-						count = pc_readaccountreg2(sd, nd->u.shop.pointshop_str);
-					else
-						count = pc_readaccountreg(sd, nd->u.shop.pointshop_str);
-					break;
-				case '@':
-					count = pc_readreg(sd, add_str(nd->u.shop.pointshop_str));
-					break;
-				default:
-					count = pc_readglobalreg(sd, nd->u.shop.pointshop_str);
-					break;
-			}
+			count = pc_readreg2(sd, nd->u.shop.pointshop_str);
 			if (z > (double)count) {
 				sprintf(output,msg_txt(sd,713),nd->u.shop.pointshop_str); // You do not have enough '%s'.
 				clif_colormes(sd,color_table[COLOR_RED],output);
@@ -1707,18 +1694,7 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 			pc_delitem(sd, pc_search_inventory(sd, nd->u.shop.itemshop_nameid), (int)z, 0, 0, LOG_TYPE_NPC);
 			break;
 		case NPCTYPE_POINTSHOP:
-			switch(nd->u.shop.pointshop_str[0]) {
-				case '#':
-					if (nd->u.shop.pointshop_str[1] == '#')
-						pc_setaccountreg2(sd, nd->u.shop.pointshop_str, count - (int)z);
-					else
-						pc_setaccountreg(sd, nd->u.shop.pointshop_str, count - (int)z);
-					break;
-				case '@':
-				default:
-					pc_setglobalreg(sd, nd->u.shop.pointshop_str, count - (int)z);
-					break;
-			}
+			pc_setreg2(sd, nd->u.shop.pointshop_str, count - (int)z);
 			break;
 	}
 

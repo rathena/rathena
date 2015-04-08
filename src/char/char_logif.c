@@ -291,7 +291,7 @@ int chlogif_parse_ackaccreq(int fd, struct char_session_data* sd){
 
 int chlogif_parse_reqaccdata(int fd, struct char_session_data* sd){
 	int u_fd; //user fd
-	if (RFIFOREST(fd) < 79)
+	if (RFIFOREST(fd) < 75)
 		return 0;
 
 	// find the authenticated session with this account id
@@ -311,10 +311,9 @@ int chlogif_parse_reqaccdata(int fd, struct char_session_data* sd){
 		safestrncpy(sd->birthdate, (const char*)RFIFOP(fd,52), sizeof(sd->birthdate));
                 safestrncpy(sd->pincode, (const char*)RFIFOP(fd,63), sizeof(sd->pincode));
                 sd->pincode_change = (time_t)RFIFOL(fd,68);
-                sd->bank_vault = RFIFOL(fd,72);
-                sd->isvip = RFIFOB(fd,76);
-                sd->chars_vip = RFIFOB(fd,77);
-                sd->chars_billing = RFIFOB(fd,78);
+                sd->isvip = RFIFOB(fd,72);
+                sd->chars_vip = RFIFOB(fd,73);
+                sd->chars_billing = RFIFOB(fd,74);
 		ARR_FIND( 0, ARRAYLENGTH(map_server), server_id, map_server[server_id].fd > 0 && map_server[server_id].map[0] );
 		// continued from char_auth_ok...
 		if( server_id == ARRAYLENGTH(map_server) || //server not online, bugreport:2359
@@ -329,7 +328,7 @@ int chlogif_parse_reqaccdata(int fd, struct char_session_data* sd){
 				chlogif_pincode_start(u_fd,sd);
 		}
 	}
-	RFIFOSKIP(fd,79);
+	RFIFOSKIP(fd,75);
 	return 1;
 }
 
@@ -517,45 +516,6 @@ int chlogif_parse_updip(int fd, struct char_session_data* sd){
 	return 1;
 }
 
-/**
- * Send to login-serv the request of banking operation from map
- * HA 0x2740<aid>L <type>B <data>L
- * @param account_id
- * @param type : 0 = select, 1 = update
- * @param data
- * @return
- */
-int chlogif_BankingReq(int32 account_id, int8 type, int32 data){
-	loginif_check(-1);
-
-	WFIFOHEAD(login_fd,11);
-	WFIFOW(login_fd,0) = 0x2740;
-	WFIFOL(login_fd,2) = account_id;
-	WFIFOB(login_fd,6) = type;
-	WFIFOL(login_fd,7) = data;
-	WFIFOSET(login_fd,11);
-	return 0;
-}
-
-/*
- * Received the banking data from login and transmit it to all map-serv
- * AH 0x2741<aid>L <bank_vault>L <not_fw>B
- * HZ 0x2b29 <aid>L <bank_vault>L
- */
-int chlogif_parse_BankingAck(int fd){
-	if (RFIFOREST(fd) < 11)
-            return 0;
-	else {
-		uint32 aid = RFIFOL(fd,2);
-		int32 bank_vault = RFIFOL(fd,6);
-		char not_fw = RFIFOB(fd,10);
-		RFIFOSKIP(fd,11);
-
-		if(not_fw==0) chmapif_BankingAck(aid, bank_vault);
-	}
-	return 1;
-}
-
 /*
  * AH 0x2743
  * We received the info from login-serv, transmit it to map
@@ -679,7 +639,6 @@ int chlogif_parse(int fd) {
 		uint16 command = RFIFOW(fd,0);
 		switch( command )
 		{
-			case 0x2741: next = chlogif_parse_BankingAck(fd); break;
 			case 0x2743: next = chlogif_parse_vipack(fd); break;
 			// acknowledgement of connect-to-loginserver request
 			case 0x2711: next = chlogif_parse_ackconnect(fd,sd); break;

@@ -47,7 +47,6 @@ int chmapif_parse_reqauth(int fd, int id);
 int chmapif_parse_updmapip(int fd, int id);
 int chmapif_parse_fw_configstats(int fd);
 
-int chmapif_BankingAck(int32 account_id, int32 bank_vault);
 int chmapif_vipack(int mapfd, uint32 aid, uint32 vip_time, uint8 isvip, uint8 isgm, uint32 groupid);
 int chmapif_parse_reqcharban(int fd);
 int chmapif_parse_reqcharunban(int fd);

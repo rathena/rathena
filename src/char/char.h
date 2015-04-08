@@ -198,7 +198,6 @@ struct char_session_data {
 	time_t pincode_change;
 	uint16 pincode_try;
 	// Addon system
-	int bank_vault;
 	unsigned int char_moves[MAX_CHARS]; // character moves left
 	uint8 isvip;
 	time_t unban_time[MAX_CHARS];

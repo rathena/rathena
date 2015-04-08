@@ -184,8 +184,8 @@ int logchrif_parse_updmail(int fd, int id, char* ip){
 
 /**
  * Transmit account data to char_server
- * S 2717 aid.W email.40B exp_time.L group_id.B char_slot.B birthdate.11B pincode.5B pincode_change.L bank_vault.L
- *  isvip.1B char_vip.1B max_billing.1B (tot 79)  
+ * S 2717 aid.W email.40B exp_time.L group_id.B char_slot.B birthdate.11B pincode.5B pincode_change.L
+ *  isvip.1B char_vip.1B max_billing.1B (tot 75)  
  * @return -1 : account not found, 1:sucess
  */
 int logchrif_send_accdata(int fd, uint32 aid) {
@@ -195,7 +195,6 @@ int logchrif_send_accdata(int fd, uint32 aid) {
 	int group_id = 0;
 	char birthdate[10+1] = "";
 	char pincode[PINCODE_LENGTH+1];
-	int bank_vault = 0;
 	char isvip = false;
 	uint8 char_slots = MIN_CHARS, char_vip = 0;
 	AccountDB* accounts = login_get_accounts_db();
@@ -210,7 +209,6 @@ int logchrif_send_accdata(int fd, uint32 aid) {
 
 		safestrncpy(birthdate, acc.birthdate, sizeof(birthdate));
 		safestrncpy(pincode, acc.pincode, sizeof(pincode));
-		bank_vault = acc.bank_vault;
 #ifdef VIP_ENABLE
 		char_vip = login_config.vip_sys.char_increase;
 		if( acc.vip_time > time(NULL) ) {
@@ -221,7 +219,7 @@ int logchrif_send_accdata(int fd, uint32 aid) {
 #endif
 	}
 
-	WFIFOHEAD(fd,79);
+	WFIFOHEAD(fd,75);
 	WFIFOW(fd,0) = 0x2717;
 	WFIFOL(fd,2) = aid;
 	safestrncpy((char*)WFIFOP(fd,6), email, 40);
@@ -231,11 +229,10 @@ int logchrif_send_accdata(int fd, uint32 aid) {
 	safestrncpy((char*)WFIFOP(fd,52), birthdate, 10+1);
 	safestrncpy((char*)WFIFOP(fd,63), pincode, 4+1 );
 	WFIFOL(fd,68) = (uint32)acc.pincode_change;
-	WFIFOL(fd,72) = bank_vault;
-	WFIFOB(fd,76) = isvip;
-	WFIFOB(fd,77) = char_vip;
-	WFIFOB(fd,78) = MAX_CHAR_BILLING; //TODO create a config for this
-	WFIFOSET(fd,79);
+	WFIFOB(fd,72) = isvip;
+	WFIFOB(fd,73) = char_vip;
+	WFIFOB(fd,74) = MAX_CHAR_BILLING; //TODO create a config for this
+	WFIFOSET(fd,75);
 	return 1;
 }
 
@@ -721,48 +718,6 @@ int logchrif_parse_pincode_authfail(int fd){
 }
 
 /**
- * Request the bank info of login
- * @param fd: fd to parse from (char-serv)
- * @param id: char serv id
- * @param ip: char-serv ip (used for info)
- * @return 0 fail (packet does not have enough data), 1 success (continue parsing)
- */
-int logchrif_parse_bankvault(int fd, int id, char* ip){
-	if( RFIFOREST(fd) < 11 )
-		return 0;
-	else {
-		struct mmo_account acc;
-
-
-		uint32 account_id = RFIFOL(fd,2);
-		char type = RFIFOB(fd,6);
-		int32 data = RFIFOL(fd,7);
-		AccountDB* accounts = login_get_accounts_db();
-
-		RFIFOSKIP(fd,11);
-
-		if( !accounts->load_num(accounts, &acc, account_id) )
-			ShowNotice("Char-server '%s': Error on banking  (account: %d not found, ip: %s).\n", ch_server[id].name, account_id, ip);
-		else{
-			unsigned char buf[12];
-			if(type==2){ // upd and Save
-				acc.bank_vault = data;
-				accounts->save(accounts, &acc);
-				WBUFB(buf,10) = 1;
-			} else {
-				WBUFB(buf,10) = 0;
-			}
-			// announce to other servers
-			WBUFW(buf,0) = 0x2741;
-			WBUFL(buf,2) = account_id;
-			WBUFL(buf,6) = acc.bank_vault;
-			logchrif_sendallwos(-1, buf, 11);
-		}
-	}
-	return 1;
-}
-
-/**
  * Received a vip data reqest from char
  * type is the query to perform
  *  &1 : Select info and update old_groupid
@@ -931,7 +886,6 @@ int logchrif_parse(int fd){
 		case 0x2737: next = logchrif_parse_setalloffline(fd,cid); break;
 		case 0x2738: next = logchrif_parse_updpincode(fd); break;
 		case 0x2739: next = logchrif_parse_pincode_authfail(fd); break;
-		case 0x2740: next = logchrif_parse_bankvault(fd,cid,ip); break;
 		case 0x2742: next = logchrif_parse_reqvipdata(fd); break; //Vip sys
 		default:
 			ShowError("logchrif_parse: Unknown packet 0x%x from a char-server! Disconnecting!\n", command);
