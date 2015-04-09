@@ -733,7 +733,7 @@ int chmapif_parse_fwlog_changestatus(int fd){
 		int operation = RFIFOW(fd,30); // type of operation: 1-block, 2-ban, 3-unblock, 4-unban, 5-changesex, 6-vip
 		int32 timediff = RFIFOL(fd,32);
 		int val1 = RFIFOL(fd,36);
-		int val2 = RFIFOL(fd,40);
+		//int val2 = RFIFOL(fd,40); // Since BankVault is moved out, this value is unused for now
 		RFIFOSKIP(fd,44);
 
 		Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
@@ -757,8 +757,8 @@ int chmapif_parse_fwlog_changestatus(int fd){
 			//FIXME: need to move this check to login server [ultramage]
 			//	if( acc != -1 && isGM(acc) < isGM(account_id) )
 			//		result = 2; // 2-gm level too low
-			//! NOTE: See src/char/chrif.h::enum chrif_req_op for the number
 			else {
+				//! NOTE: See src/char/chrif.h::enum chrif_req_op for the number
 				switch( operation ) {
 					case 1: // block
 						WFIFOHEAD(login_fd,10);

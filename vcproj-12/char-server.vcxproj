@@ -162,6 +162,8 @@
     <ClInclude Include="..\src\common\utils.h" />
     <ClInclude Include="..\src\common\cli.h" />
     <ClInclude Include="..\src\common\msg_conf.h" />
+    <ClInclude Include="..\src\common\winapi.h" />
+    <ClInclude Include="..\src\config\core.h" />
     <ClInclude Include="..\src\char\char.h" />
     <ClInclude Include="..\src\char\char_clif.h" />
     <ClInclude Include="..\src\char\char_cnslif.h" />
@@ -178,7 +180,6 @@
     <ClInclude Include="..\src\char\int_quest.h" />
     <ClInclude Include="..\src\char\int_storage.h" />
     <ClInclude Include="..\src\char\inter.h" />
-    <ClInclude Include="..\src\common\winapi.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\3rdparty\libconfig\grammar.c" />

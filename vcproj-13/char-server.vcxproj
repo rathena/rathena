@@ -206,6 +206,7 @@
     <ClCompile Include="..\src\common\utils.c" />
     <ClCompile Include="..\src\common\cli.c" />
     <ClCompile Include="..\src\common\msg_conf.c" />
+    <ClInclude Include="..\src\config\core.h" />
     <ClCompile Include="..\src\char\char.c" />
     <ClCompile Include="..\src\char\char_clif.c" />
     <ClCompile Include="..\src\char\char_cnslif.c" />
