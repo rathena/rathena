@@ -6952,9 +6952,18 @@ BUILDIN_FUNC(getnameditem)
  * gets a random item ID from an item group [Skotlex]
  * groupranditem <group_num>{,<sub_group>};
  *------------------------------------------*/
-BUILDIN_FUNC(grouprandomitem)
-{
-	script_pushint(st,itemdb_searchrandomid(script_getnum(st,2),script_getnum(st,3)));
+BUILDIN_FUNC(grouprandomitem) {
+	struct s_item_group_entry *entry = NULL;
+	int sub_group = 1;
+
+	FETCH(3, sub_group);
+	entry = itemdb_get_randgroupitem(script_getnum(st,2),sub_group);
+	if (!entry) {
+		ShowError("buildin_grouprandomitem: Invalid item group with group_id '%d', sub_group '%d'.\n", script_getnum(st,2), sub_group);
+		script_pushint(st,UNKNOWN_ITEM_ID);
+		return SCRIPT_CMD_FAILURE;
+	}
+	script_pushint(st,entry->nameid);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -19032,36 +19041,39 @@ BUILDIN_FUNC(checkre)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/* getrandgroupitem <group_id>,<quantity>{,<sub_group>} */
+/* getrandgroupitem <group_id>{,<quantity>{,<sub_group>}} */
 BUILDIN_FUNC(getrandgroupitem) {
 	TBL_PC* sd;
 	int i, get_count = 0;
-	unsigned short nameid;
-	uint16 group = script_getnum(st,2), qty = script_getnum(st,3);
-	uint8 sub_group = script_getnum(st,4);
+	uint16 group = script_getnum(st,2), qty = 0;
+	uint8 sub_group = 1;
 	struct item item_tmp;
+	struct s_item_group_entry *entry = NULL;
 
-	if (!( sd = script_rid2sd(st)))
+	if (!(sd = script_rid2sd(st)))
 		return SCRIPT_CMD_SUCCESS;
 
 	if (!group) {
-		ShowError("getrandgroupitem: Invalid group id (%d)!\n",script_getnum(st,2));
+		ShowError("buildin_getrandgroupitem: Invalid group id (%d)!\n",script_getnum(st,2));
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if ((nameid = itemdb_searchrandomid(group,sub_group)) == UNKNOWN_ITEM_ID) {
+	FETCH(3, qty);
+	FETCH(4, sub_group);
+
+	entry = itemdb_get_randgroupitem(group,sub_group);
+	if (!entry)
 		return SCRIPT_CMD_FAILURE; //ensure valid itemid
-	}
 
 	memset(&item_tmp,0,sizeof(item_tmp));
-	item_tmp.nameid   = nameid;
-	item_tmp.identify = itemdb_isidentified(nameid);
+	item_tmp.nameid   = entry->nameid;
+	item_tmp.identify = itemdb_isidentified(entry->nameid);
 
 	if (!qty)
-		qty = itemdb_get_randgroupitem_count(group,sub_group,nameid);
+		qty = entry->amount;
 
 	//Check if it's stackable.
-	if (!itemdb_isstackable(nameid)) {
+	if (!itemdb_isstackable(entry->nameid)) {
 		item_tmp.amount = 1;
 		get_count = qty;
 	}
@@ -19072,7 +19084,7 @@ BUILDIN_FUNC(getrandgroupitem) {
 
 	for (i = 0; i < get_count; i++) {
 		// if not pet egg
-		if (!pet_create_egg(sd, nameid)) {
+		if (!pet_create_egg(sd, entry->nameid)) {
 			unsigned char flag = 0;
 			if ((flag = pc_additem(sd,&item_tmp,item_tmp.amount,LOG_TYPE_SCRIPT))) {
 				clif_additem(sd,0,0,flag);
@@ -20582,7 +20594,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(get_revision,""),
 	BUILDIN_DEF(get_githash,""),
 	BUILDIN_DEF(freeloop,"?"),
-	BUILDIN_DEF(getrandgroupitem,"ii?"),
+	BUILDIN_DEF(getrandgroupitem,"i??"),
 	BUILDIN_DEF(cleanmap,"s"),
 	BUILDIN_DEF2(cleanmap,"cleanarea","siiii"),
 	BUILDIN_DEF(npcskill,"viii"),

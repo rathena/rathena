@@ -2812,7 +2812,7 @@ void skill_attack_blow(struct block_list *src, struct block_list *dsrc, struct b
 		// This ensures the storm randomly pushes instead of exactly a cell backwards per official mechanics.
 		case WZ_STORMGUST:
 			if(!battle_config.stormgust_knockback)
-				dir = rand()%8;
+				dir = rnd()%8;
 			break;
 		case WL_CRIMSONROCK:
 			dir = map_calc_dir(target,skill_area_temp[4],skill_area_temp[5]);
@@ -3036,7 +3036,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 				sp = sp/((skill_lv|1)*(skill_lv|1)); //Estimate SP cost of a single water-ball
 			status_heal(bl, 0, sp, 2);
 		}
-		if( (dmg.damage || dmg.damage2) && tsc && tsc->data[SC_HALLUCINATIONWALK] && rand()%100 < tsc->data[SC_HALLUCINATIONWALK]->val3 ) {
+		if( (dmg.damage || dmg.damage2) && tsc && tsc->data[SC_HALLUCINATIONWALK] && rnd()%100 < tsc->data[SC_HALLUCINATIONWALK]->val3 ) {
 			dmg.damage = dmg.damage2 = 0;
 			dmg.dmg_lv = ATK_MISS;
 		}
@@ -3282,7 +3282,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 				status_fix_damage(NULL,d_bl, damage, 0);
 			} else {
 				bool isDevotRdamage = false;
-				if (battle_config.devotion_rdamage && battle_config.devotion_rdamage > rand()%100)
+				if (battle_config.devotion_rdamage && battle_config.devotion_rdamage > rnd()%100)
 					isDevotRdamage = true;
 				// If !isDevotRdamage, reflected magics are done directly on the target not on paladin
 				// This check is only for magical skill.
@@ -4583,7 +4583,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				if(idb_exists(bowling_db, bl->id))
 					break;
 				// Random direction
-				dir = rand()%8;
+				dir = rnd()%8;
 			} else {
 				// Create an empty list of already hit targets
 				db_clear(bowling_db);
@@ -5037,7 +5037,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				if ( s == 0 )
 					break;
 
-				i = spell[s==1?0:rand()%s];// Random select of spell to be released.
+				i = spell[s==1?0:rnd()%s];// Random select of spell to be released.
 				if(sc->data[i] ){// Now extract the data from the preserved spell
 					pres_skill_id = sc->data[i]->val1;
 					pres_skill_lv = sc->data[i]->val2;
@@ -10010,7 +10010,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					clif_skill_nodamage(src,src,skill_id,skill_lv,1);
 					clif_skill_damage(src, ( skill_id == EL_GUST || skill_id == EL_BLAST || skill_id == EL_WILD_STORM )?src:bl, tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, 6);
 					if( skill_id == EL_WIND_STEP )	// There aren't teleport, just push the master away.
-						skill_blown(src,bl,(rnd()%skill_get_blewcount(skill_id,skill_lv))+1,rand()%8,0);
+						skill_blown(src,bl,(rnd()%skill_get_blewcount(skill_id,skill_lv))+1,rnd()%8,0);
 					sc_start(src,src,type2,100,skill_lv,skill_get_time(skill_id,skill_lv));
 					sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
 				}
@@ -10077,7 +10077,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 	case KO_KYOUGAKU:
-		if( dstsd && tsc && !tsc->data[type] && rand()%100 < tstatus->int_/2 ){
+		if( dstsd && tsc && !tsc->data[type] && rnd()%100 < tstatus->int_/2 ){
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,
 				sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		}else if( sd )
@@ -10085,7 +10085,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case KO_JYUSATSU:
 		if( dstsd && tsc && !tsc->data[type] &&
-			rand()%100 < ((45+5*skill_lv) + skill_lv*5 - status_get_int(bl)/2) ){//[(Base chance of success) + (Skill Level x 5) - (int / 2)]%.
+			rnd()%100 < ((45+5*skill_lv) + skill_lv*5 - status_get_int(bl)/2) ){//[(Base chance of success) + (Skill Level x 5) - (int / 2)]%.
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,
 				status_change_start(src,bl,type,10000,skill_lv,0,0,0,skill_get_time(skill_id,skill_lv),SCSTART_NOAVOID));
 			status_zap(bl, tstatus->max_hp*skill_lv*5/100 , 0);
@@ -14715,7 +14715,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			break;
 		case LG_REFLECTDAMAGE:
 		case CR_REFLECTSHIELD:
-			if( sc && sc->data[SC_KYOMU] && rand()%100 < 30){
+			if( sc && sc->data[SC_KYOMU] && rnd()%100 < 30){
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				return false;
 			}

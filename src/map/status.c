@@ -9613,7 +9613,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC__UNLUCKY:
 		{
 			sc_type rand_eff; 
-			switch(rand() % 3) {
+			switch(rnd() % 3) {
 				case 1: rand_eff = SC_BLIND; break;
 				case 2: rand_eff = SC_SILENCE; break;
 				default: rand_eff = SC_POISON; break;
@@ -9704,7 +9704,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_GLOOMYDAY:
 			val2 = 20 + 5 * val1; // Flee reduction.
 			val3 = 15 + 5 * val1; // ASPD reduction.
-			if( sd && rand()%100 < val1 ) { // (Skill Lv) %
+			if( sd && rnd()%100 < val1 ) { // (Skill Lv) %
 				val4 = 1; // Reduce walk speed by half.
 				if( pc_isriding(sd) ) pc_setriding(sd, 0);
 				if( pc_isridingdragon(sd) ) pc_setoption(sd, sd->sc.option&~OPTION_DRAGON);
@@ -9712,7 +9712,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_GLOOMYDAY_SK:
 			// Random number between [15 ~ (Voice Lesson Skill Level x 5) + (Skill Level x 10)] %.
-			val2 = 15 + rand()%( (sd?pc_checkskill(sd, WM_LESSON)*5:0) + val1*10 );
+			val2 = 15 + rnd()%( (sd?pc_checkskill(sd, WM_LESSON)*5:0) + val1*10 );
 			break;
 		case SC_SITDOWN_FORCE:
 		case SC_BANANA_BOMB_SITDOWN:
@@ -9938,7 +9938,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = 10000; // [GodLesZ] tick time
 			break;
 		case SC_KYOUGAKU:
-			val2 = 2*val1 + rand()%val1;
+			val2 = 2*val1 + rnd()%val1;
 			clif_status_change(bl,SI_ACTIVE_MONSTER_TRANSFORM,1,0,1002,0,0);
 			break;
 		case SC_KAGEMUSYA:

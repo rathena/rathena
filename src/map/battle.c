@@ -1206,7 +1206,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 				status_change_end(bl, SC_KYRIE, INVALID_TIMER);
 		}
 
-		if( sc->data[SC_MEIKYOUSISUI] && rand()%100 < 40 ) // custom value
+		if( sc->data[SC_MEIKYOUSISUI] && rnd()%100 < 40 ) // custom value
 			damage = 0;
 
 
@@ -4872,7 +4872,7 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 struct block_list *battle_check_devotion(struct block_list *bl) {
 	struct block_list *d_bl = NULL;
 
-	if (battle_config.devotion_rdamage && battle_config.devotion_rdamage > rand()%100) {
+	if (battle_config.devotion_rdamage && battle_config.devotion_rdamage > rnd()%100) {
 		struct status_change *sc = status_get_sc(bl);
 		if (sc && sc->data[SC_DEVOTION])
 			d_bl = map_id2bl(sc->data[SC_DEVOTION]->val1);
@@ -5639,7 +5639,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							c = 0;
 							memset (p_sd, 0, sizeof(p_sd));
 							party_foreachsamemap(skill_check_condition_char_sub, sd, 3, &sd->bl, &c, &p_sd, skill_id);
-							c = ( c > 1 ? rand()%c : 0 );
+							c = ( c > 1 ? rnd()%c : 0 );
 
 							if( (psd = map_id2sd(p_sd[c])) && pc_checkskill(psd,WL_COMET) > 0 ){
 								skillratio = skill_lv * 400; //MATK [{( Skill Level x 400 ) x ( Caster's Base Level / 120 )} + 2500 ] %

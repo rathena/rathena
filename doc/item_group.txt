@@ -8,33 +8,33 @@
 //= Explanation of the item_group.txt file and structure.
 //============================================================
 
-Items within an item group can be retrieved through the 'getrandgroupitem'
-and 'getgroupitem' script commands. The table below explains which fields are
-accessed in each.
+Items within an item group can be retrieved through the 'groupranditem',
+'getrandgroupitem', and 'getgroupitem' script commands.
+The table below explains which fields are accessed in each.
 
-+===============+====================+================+
-| Field         | 'getrandgroupitem' | 'getgroupitem' |
-+===============+====================+================+
-| GroupID       |       YES          |      YES       |
-+===============+====================+================+
-| ItemID        |       YES          |      YES       |
-+===============+====================+================+
-| Rate          |       YES          |      YES       |
-+===============+====================+================+
-| Amount        |       no           |      YES       |
-+===============+====================+================+
-| Random        |       no           |      YES       |
-+===============+====================+================+
-| isAnnounced   |       no           |      YES       |
-+===============+====================+================+
-| Duration      |       no           |      YES       |
-+===============+====================+================+
-| GUID          |       no           |      YES       |
-+===============+====================+================+
-| isBound       |       no           |      YES       |
-+===============+====================+================+
-| isNamed       |       no           |      YES       |
-+===============+====================+================+
++===============+=================+====================+================+
+| Field         | 'groupranditem' | 'getrandgroupitem' | 'getgroupitem' |
++===============+=================+====================+================+
+| GroupID       |       YES       |        YES         |      YES       |
++===============+=================+====================+================+
+| ItemID        |       YES       |        YES         |      YES       |
++===============+=================+====================+================+
+| Rate          |       YES       |        YES         |      YES       |
++===============+=================+====================+================+
+| Amount        |       no        |     OPTIONAL       |      YES       |
++===============+=================+====================+================+
+| Random        |    OPTIONAL     |     OPTIONAL       |      YES       |
++===============+=================+====================+================+
+| isAnnounced   |       no        |        no          |      YES       |
++===============+=================+====================+================+
+| Duration      |       no        |        no          |      YES       |
++===============+=================+====================+================+
+| GUID          |       no        |        no          |      YES       |
++===============+=================+====================+================+
+| isBound       |       no        |        no          |      YES       |
++===============+=================+====================+================+
+| isNamed       |       no        |        no          |      YES       |
++===============+=================+====================+================+
 
 ---------------------------------------
 
@@ -67,7 +67,7 @@ Random: Set this to '0' and the item will always be obtained ("must" item).
 		Random value will allocates where the item will be stored at random group.
 		(max. random group is 4, defined as MAX_ITEMGROUP_RANDGROUP in 'src/map/itemdb.c'.)
 
-	Example:
+	Item Group:
 		IG_MyItemGroup,Knife,0,1,0		//a "must" item
 		IG_MyItemGroup,Dagger,0,1,0		//a "must" item
 		IG_MyItemGroup,Stiletto,5,1,1	//random at group 1
@@ -75,12 +75,52 @@ Random: Set this to '0' and the item will always be obtained ("must" item).
 		IG_MyItemGroup,Stiletto,5,1,2	//random at group 2
 		IG_MyItemGroup,Dagger_,4,1,2	//random at group 2
 
-	-> usage: 'getgroupitem(IG_MyItemGroup);'
+	Usages:
+	getgroupitem(<group_id>)
+	------------
+	-> 'getgroupitem(IG_MyItemGroup);'
 		- Player always gets 1x Knife and 1x Dagger
 		- Player has chance to get 1x Stiletto by chance 5/7 from group 1
 		- Player has chance to get 1x Stiletto_ by chance 2/7 from group 1
 		- Player has chance to get 1x Stiletto by chance 5/9 from group 2
 		- Player has chance to get 1x Dagger_ by chance 4/9 from group 2
+
+	getrandgroupitem(<group_id>{,<quantity>{,<sub_group>}})
+	------------
+	-> 'getrandgroupitem(IG_MyItemGroup);'
+		- Random Group: 1, Amount: [Based on list]
+		- Equals to: getrandgroupitem(IG_MyItemGroup,0) and getrandgroupitem(IG_MyItemGroup,0,1)
+		- Player has chance to get 1x Stiletto by chance 5/7 from group 1
+		- Player has chance to get 1x Stiletto_ by chance 2/7 from group 1
+		- 'must' and 'group 2' are ignored
+
+	-> 'getrandgroupitem(IG_MyItemGroup,1);'
+		- Random Group: 1, Amount: 2, ignore 'amount' on the list
+		- Equals to: getrandgroupitem(IG_MyItemGroup,1,1)
+		- Player has chance to get 2x Stiletto by chance 5/7 from group 1
+		- Player has chance to get 2x Stiletto_ by chance 2/7 from group 1
+		- 'must' and 'group 2' are ignored
+
+	-> 'getrandgroupitem(IG_MyItemGroup,3,0);'
+		- Random Group: 'must', Amount: 2, ignore 'amount' on the list
+		- Player has chance to get 3x Knife by chance 1/2 from 'must' group
+		- Player has chance to get 3x Dagger by chance 1/2 from 'must' group
+		- 'group 1' and 'group 2' are ignored
+
+	groupranditem(<group id>{,<sub_group>})
+	------------
+	This command only returns an Item ID from random group. Combine with 'getitem'
+	to retrieve the items.
+	-> 'groupranditem(IG_MyItemGroup);'
+		- Random Group: 1
+		- Returns Item ID of Stiletto by chance 5/7 from group 1
+		- Returns Item ID of Stiletto_ by chance 2/7 from group 1
+		- 'must' and 'group 2' are ignored
+	-> 'groupranditem(IG_MyItemGroup,0);'
+		- Random Group: 0
+		- Returns Item ID of Knife by chance 5/7 from 'must' group
+		- Returns Item ID of Dagger by chance 2/7 from 'must' group
+		- 'group 1' and 'group 2' are ignored
 
 	-----------------------------------------
 

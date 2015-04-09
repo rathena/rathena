@@ -109,61 +109,48 @@ int itemdb_searchname_array(struct item_data** data, int size, const char *str)
 }
 
 /**
-* Return a random item id from group. (takes into account % chance giving/tot group)
-* NOTE: Sub group 0 will be set to default 1, since 0 isn't random group
+* Return a random group entry from Item Group
 * @param group_id
-* @param sub_group: Default is 1
-* @return nameid
+* @param sub_group: 0 is 'must' item group, random groups start from 1 to MAX_ITEMGROUP_RANDGROUP+1
+* @return Item group entry or NULL on fail
 */
-unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group)
-{
+struct s_item_group_entry *itemdb_get_randgroupitem(uint16 group_id, uint8 sub_group) {
 	struct s_item_group_db *group = (struct s_item_group_db *) uidb_get(itemdb_group, group_id);
-	if (sub_group)
-		sub_group -= 1;
-	if (!group) {
-		ShowError("itemdb_searchrandomid: Invalid group id %d\n", group_id);
-		return UNKNOWN_ITEM_ID;
-	}
-	if (sub_group > MAX_ITEMGROUP_RANDGROUP) {
-		ShowError("itemdb_searchrandomid: Invalid sub_group %d\n", sub_group+1);
-		return UNKNOWN_ITEM_ID;
-	}
-	if (&group->random[sub_group] && group->random[sub_group].data_qty)
-		return group->random[sub_group].data[rand()%group->random[sub_group].data_qty].nameid;
+	struct s_item_group_entry *list = NULL;
+	uint16 qty = 0;
 
-	ShowError("itemdb_searchrandomid: No item entries for group id %d and sub group %d\n", group_id, sub_group+1);
-	return UNKNOWN_ITEM_ID;
+	if (!group) {
+		ShowError("itemdb_get_randgroupitem: Invalid group id %d\n", group_id);
+		return NULL;
+	}
+	if (sub_group > MAX_ITEMGROUP_RANDGROUP+1) {
+		ShowError("itemdb_get_randgroupitem: Invalid sub_group %d\n", sub_group);
+		return NULL;
+	}
+	if (sub_group == 0) {
+		list = group->must;
+		qty = group->must_qty;
+	}
+	else {
+		list = group->random[sub_group-1].data;
+		qty = group->random[sub_group-1].data_qty;
+	}
+	if (!qty) {
+		ShowError("itemdb_get_randgroupitem: No item entries for group id %d and sub group %d\n", group_id, sub_group);
+		return NULL;
+	}
+	return &list[rnd()%qty];
 }
 
-/** [Cydh]
-* Return a number of item's amount that will be obtained for 'getrandgroupitem id,1;'
-* NOTE: Sub group 0 will be set to default 1, since 0 isn't random group
+/**
+* Return a random Item ID from from Item Group
 * @param group_id
-* @param sub_group
-* @param nameid: The target item will be found
-* @return amount
+* @param sub_group: 0 is 'must' item group, random groups start from 1 to MAX_ITEMGROUP_RANDGROUP+1
+* @return Item ID or UNKNOWN_ITEM_ID on fail
 */
-uint16 itemdb_get_randgroupitem_count(uint16 group_id, uint8 sub_group, unsigned short nameid) {
-	uint16 i, amt = 1;
-	struct s_item_group_db *group = (struct s_item_group_db *) uidb_get(itemdb_group, group_id);
-	
-	if (sub_group)
-		sub_group -= 1;
-	if (!group) {
-		ShowError("itemdb_get_randgroupitem_count: Invalid group id %d\n", group_id);
-		return amt;
-	}
-	if (sub_group > MAX_ITEMGROUP_RANDGROUP) {
-		ShowError("itemdb_get_randgroupitem_count: Invalid sub_group id %d\n", group_id+1);
-		return amt;
-	}
-	if (!(&group->random[sub_group]) || !group->random[sub_group].data_qty)
-		return amt;
-	for (i = 0; i < group->random[sub_group].data_qty; i++) {
-		if (group->random[sub_group].data[i].nameid == nameid)
-			return group->random[sub_group].data[i].amount;
-	}
-	return amt;
+unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group) {
+	struct s_item_group_entry *entry = itemdb_get_randgroupitem(group_id, sub_group);
+	return entry ? entry->nameid : UNKNOWN_ITEM_ID;
 }
 
 /** [Cydh]
@@ -370,7 +357,7 @@ static void itemdb_jobid2mapid(unsigned int *bclass, unsigned int jobmask)
 }
 
 /**
-* Create dummy item data
+* Create dummy item_data as dummy_item and dummy item group entry as dummy_itemgroup
 */
 static void itemdb_create_dummy(void) {
 	CREATE(dummy_item, struct item_data, 1);
@@ -1660,6 +1647,6 @@ void do_init_itemdb(void) {
 	itemdb = uidb_alloc(DB_OPT_BASE);
 	itemdb_combo = uidb_alloc(DB_OPT_BASE);
 	itemdb_group = uidb_alloc(DB_OPT_BASE);
-	itemdb_create_dummy(); //Dummy data item.	
+	itemdb_create_dummy();
 	itemdb_read();
 }
