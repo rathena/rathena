@@ -37,20 +37,21 @@ enum e_battle_flag {
 
 /// Battle check target [Skotlex]
 enum e_battle_check_target {
-	BCT_NOONE		= 0x000000, /// No one
-	BCT_SELF		= 0x010000, /// Self
-	BCT_ENEMY		= 0x020000, /// Enemy
-	BCT_PARTY		= 0x040000, /// Party members
-	BCT_GUILDALLY	= 0x080000, /// Only allies, NOT guildmates
-	BCT_NEUTRAL		= 0x100000, /// Neutral target
-	BCT_SAMEGUILD	= 0x200000, /// Guildmates, No Guild Allies
+	BCT_NOONE		= 0x000000, ///< No one
+	BCT_SELF		= 0x010000, ///< Self
+	BCT_ENEMY		= 0x020000, ///< Enemy
+	BCT_PARTY		= 0x040000, ///< Party members
+	BCT_GUILDALLY	= 0x080000, ///< Only allies, NOT guildmates
+	BCT_NEUTRAL		= 0x100000, ///< Neutral target
+	BCT_SAMEGUILD	= 0x200000, ///< Guildmates, No Guild Allies
 
-	BCT_ALL			= 0x3F0000, /// All targets
+	BCT_ALL			= 0x3F0000, ///< All targets
 
-	BCT_GUILD		= BCT_SAMEGUILD|BCT_GUILDALLY, /// Guild AND Allies (BCT_SAMEGUILD|BCT_GUILDALLY)
-	BCT_NOGUILD		= BCT_ALL&~BCT_GUILD, /// Except guildmates
-	BCT_NOPARTY		= BCT_ALL&~BCT_PARTY, /// Except party members
-	BCT_NOENEMY		= BCT_ALL&~BCT_ENEMY, /// Except enemy
+	BCT_ALLWOS		= BCT_ALL&~BCT_SELF,			///< All, except self (currently used for skipping if src == bl in skill_area_sub)
+	BCT_GUILD		= BCT_SAMEGUILD|BCT_GUILDALLY,	///< Guild AND Allies (BCT_SAMEGUILD|BCT_GUILDALLY)
+	BCT_NOGUILD		= BCT_ALL&~BCT_GUILD,			///< Except guildmates
+	BCT_NOPARTY		= BCT_ALL&~BCT_PARTY,			///< Except party members
+	BCT_NOENEMY		= BCT_ALL&~BCT_ENEMY,			///< Except enemy
 };
 
 /// Damage structure

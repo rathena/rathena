@@ -7235,6 +7235,28 @@ void status_change_init(struct block_list *bl)
 }
 
 /**
+ * Get base level of bl, cap the value by level_limit
+ * @param bl Object [BL_PC|BL_MOB|BL_HOM|BL_MER|BL_ELEM]
+ * @param level_limit Level cap
+ * @return Base level or level_limit
+ **/
+int status_get_baselevel_limit(struct block_list *bl, int level_limit) {
+	int lvl = status_get_lv(bl);
+	return min(lvl, level_limit);
+}
+
+/**
+ * Get job level of player, cap the value by level_limit.
+ * @param sd Player
+ * @param level_limit Level cap
+ * @return Job level or level_limit or 0 if not a player
+ **/
+int status_get_joblevel_limit(struct map_session_data *sd, int level_limit) {
+	int lvl = sd ? sd->status.job_level : 0;
+	return min(lvl, level_limit);
+}
+
+/**
  * Applies SC defense to a given status change
  * This function also determines whether or not the status change will be applied
  * @param src: Source of the status change [PC|MOB|HOM|MER|ELEM|NPC]
@@ -7405,8 +7427,8 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			tick_def2 = (b_status->int_ + status_get_lv(bl))*50; // kRO balance update lists this formula
 			break;
 		case SC_NETHERWORLD:
-			tick_def2 = (status_get_lv(bl) > 150 ? 150 : status_get_lv(bl)) * 20 +
-				(sd ? (sd->status.job_level > 50 ? 50 : sd->status.job_level) * 100 : 0);
+			// Resistance: {(Target’s Base Level / 50) + (Target’s Job Level / 10)} seconds
+			tick_def2 = status_get_baselevel_limit(bl, 150) * 20 + status_get_joblevel_limit(sd, 50) * 100;
 			break;
 		case SC_MARSHOFABYSS:
 			// 5 second (Fixed) + 25 second - {( INT + LUK ) / 20 second }
@@ -7456,7 +7478,8 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			tick_def2 = (status->vit + status->luk)*50;
 			break;
 		case SC_VOICEOFSIREN:
-			tick_def2 = (status_get_lv(bl) * 100) + ((bl->type == BL_PC)?((TBL_PC*)bl)->status.job_level * 200 : 0);
+			// Resistance: {(Target’s Base Level / 10) + (Target’s Job Level / 5)} seconds
+			tick_def2 = status_get_baselevel_limit(bl, 150) * 100 + status_get_joblevel_limit(sd, 50) * 200;
 			break;
 		case SC_B_TRAP:
 			tick_def = b_status->str * 50; // (custom)

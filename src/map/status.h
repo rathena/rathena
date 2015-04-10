@@ -2128,6 +2128,9 @@ int status_change_spread( struct block_list *src, struct block_list *bl );
 
 unsigned short status_base_atk(const struct block_list *bl, const struct status_data *status);
 
+int status_get_baselevel_limit(struct block_list *bl, int level_limit);
+int status_get_joblevel_limit(struct map_session_data *sd, int level_limit);
+
 void initChangeTables(void);
 int status_readdb(void);
 int do_init_status(void);
