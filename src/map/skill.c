@@ -3382,7 +3382,7 @@ int skill_area_sub(struct block_list *bl, va_list ap)
 	flag = va_arg(ap,int);
 	func = va_arg(ap,SkillFunc);
 
-	if (src == bl && !(flag&BCT_SELF))
+	if (flag&BCT_WOS && src == bl)
 		return 0;
 
 	if(battle_check_target(src,bl,flag) > 0) {
@@ -9586,7 +9586,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			// Success chance: (Skill Level x 6) + (Voice Lesson Skill Level x 2) + (Caster’s Job Level / 2) %
 			skill_area_temp[5] = skill_lv * 6 + ((sd) ? pc_checkskill(sd, WM_LESSON) : skill_get_max(WM_LESSON)) * 2 + (sd ? sd->status.job_level : 50) / 2;
 			skill_area_temp[6] = skill_get_time(skill_id,skill_lv);
-			map_foreachinrange(skill_area_sub, src, skill_get_splash(skill_id,skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag|BCT_ALLWOS|1, skill_castend_nodamage_id);
+			map_foreachinrange(skill_area_sub, src, skill_get_splash(skill_id,skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag|BCT_ALL|BCT_WOS|1, skill_castend_nodamage_id);
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		}
 		break;
@@ -9817,7 +9817,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			skill_area_temp[5] = (4 * skill_lv * 1000) + ((sd) ? pc_checkskill(sd,WM_LESSON) : skill_get_max(WM_LESSON)) * 2000 + (status_get_lv(src) * 1000 / 15) + (sd ? sd->status.job_level * 200 : 0);
 			skill_area_temp[6] = skill_get_time(skill_id,skill_lv);
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ALLWOS|1, skill_castend_nodamage_id);
+			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ALL|BCT_WOS|1, skill_castend_nodamage_id);
 		}
 		break;
 
