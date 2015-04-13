@@ -348,7 +348,7 @@ CREATE TABLE `$db` (
   `Scale` tinyint(4) unsigned NOT NULL default '0',
   `Race` tinyint(4) unsigned NOT NULL default '0',
   `Element` tinyint(4) unsigned NOT NULL default '0',
-  `Mode` smallint(6) unsigned NOT NULL default '0',
+  `Mode` int(11) unsigned NOT NULL default '0',
   `Speed` smallint(6) unsigned NOT NULL default '0',
   `aDelay` smallint(6) unsigned NOT NULL default '0',
   `aMotion` smallint(6) unsigned NOT NULL default '0',

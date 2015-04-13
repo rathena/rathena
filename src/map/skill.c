@@ -10412,9 +10412,109 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------*/
+/**
+ * Checking that causing skill failed
+ * @param src Caster
+ * @param target Target
+ * @param skill_id
+ * @param skill_lv
+ * @return -1 success, others are failed @see enum useskill_fail_cause.
+ **/
+static int8 skill_castend_id_check(struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv) {
+	int inf = skill_get_inf(skill_id);
+	int inf2 = skill_get_inf2(skill_id);
+	struct map_session_data *sd = BL_CAST(BL_PC,  src);
+	struct status_change *tsc = status_get_sc(target);
+
+	switch (skill_id) {
+		case RG_BACKSTAP:
+			{
+				uint8 dir = map_calc_dir(src,target->x,target->y),t_dir = unit_getdir(target);
+				if (check_distance_bl(src, target, 0) || map_check_dir(dir,t_dir))
+					return USESKILL_FAIL_MAX;
+			}
+			break;
+		case PR_TURNUNDEAD:
+			{
+				struct status_data *tstatus = status_get_status_data(target);
+				if (!battle_check_undead(tstatus->race, tstatus->def_ele))
+					return USESKILL_FAIL_MAX;
+			}
+			break;
+		case PR_LEXDIVINA:
+		case MER_LEXDIVINA:
+			{
+				//If it's not an enemy, and not silenced, you can't use the skill on them. [Skotlex]
+				if (battle_check_target(src,target, BCT_ENEMY) <= 0 && (!tsc || !tsc->data[SC_SILENCE])) {
+					clif_skill_nodamage (src, target, skill_id, skill_lv, 0);
+					return USESKILL_FAIL_MAX;
+				}
+			}
+			break;
+
+		// Check if path can be reached
+		case RA_WUGSTRIKE:
+			if (!path_search(NULL,src->m,src->x,src->y,target->x,target->y,1,CELL_CHKNOREACH))
+				return USESKILL_FAIL_MAX;
+			break;
+	}
+
+	// Check partner
+	if (sd && (inf2&INF2_CHORUS_SKILL) && skill_check_pc_partner(sd, skill_id, &skill_lv, 1, 0) < 1 ) {
+		clif_skill_fail(sd, skill_id, USESKILL_FAIL_NEED_HELPER, 0);
+		return USESKILL_FAIL_NEED_HELPER;
+	}
+
+	if (inf&INF_ATTACK_SKILL ||
+		(inf&INF_SELF_SKILL && inf2&INF2_NO_TARGET_SELF) //Combo skills
+		) // Casted through combo.
+		inf = BCT_ENEMY; //Offensive skill.
+	else if (inf2&INF2_NO_ENEMY)
+		inf = BCT_NOENEMY;
+	else
+		inf = 0;
+
+	if (inf2 & (INF2_PARTY_ONLY|INF2_GUILD_ONLY) && src != target) {
+		inf |=
+			(inf2&INF2_PARTY_ONLY?BCT_PARTY:0)|
+			(inf2&INF2_GUILD_ONLY?BCT_GUILD:0);
+		//Remove neutral targets (but allow enemy if skill is designed to be so)
+		inf &= ~BCT_NEUTRAL;
+	}
+
+	switch (skill_id) {
+		// Cannot be casted to Emperium
+		case SL_SKE:
+		case SL_SKA:
+			if (target->type == BL_MOB && ((TBL_MOB*)target)->mob_id == MOBID_EMPERIUM)
+				return USESKILL_FAIL_MAX;
+			break;
+
+		// Still can be casted to party member in normal map
+		case RK_PHANTOMTHRUST:
+		case AB_CLEARANCE:
+			if (target->type != BL_MOB && !map_flag_vs(src->m) && battle_check_target(src,target,BCT_PARTY) <= 0)
+				return USESKILL_FAIL_MAX;
+			inf |= BCT_PARTY;
+			break;
+	}
+
+	if (inf && battle_check_target(src, target, inf) <= 0)
+		return USESKILL_FAIL_LEVEL;
+
+	//Fogwall makes all offensive-type targetted skills fail at 75%
+	if (inf&BCT_ENEMY && tsc && tsc->data[SC_FOGWALL] && rnd() % 100 < 75)
+		return USESKILL_FAIL_LEVEL;
+
+	return -1;
+}
+
+/**
+ * Check & process skill to target on castend. Determines if skill is 'damage' or 'nodamage'
+ * @param tid
+ * @param tick
+ * @param data
+ **/
 int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct block_list *target, *src;
@@ -10422,7 +10522,7 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 	struct mob_data *md;
 	struct unit_data *ud;
 	struct status_change *sc = NULL;
-	int inf,inf2,flag = 0;
+	int flag = 0;
 
 	src = map_id2bl(id);
 	if( src == NULL )
@@ -10469,40 +10569,51 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 
 	// Use a do so that you can break out of it when the skill fails.
 	do {
-		if(!target || target->prev==NULL) break;
+		bool fail = false;
+		int8 res = USESKILL_FAIL_LEVEL;
 
-		if(src->m != target->m || status_isdead(src)) break;
+		if (!target || target->prev == NULL)
+			break;
 
+		if (src->m != target->m || status_isdead(src))
+			break;
+
+		//These should become skill_castend_pos
 		switch (ud->skill_id) {
-			//These should become skill_castend_pos
 			case WE_CALLPARTNER:
-				if(sd) clif_callpartner(sd);
+				if (sd)
+					clif_callpartner(sd);
 			case WE_CALLPARENT:
-				if(sd) {
+				if (sd) {
 					struct map_session_data *f_sd = pc_get_father(sd);
 					struct map_session_data *m_sd = pc_get_mother(sd);
-					if( (f_sd && f_sd->state.autotrade) || (m_sd && m_sd->state.autotrade ))
+					if ((f_sd && f_sd->state.autotrade) || (m_sd && m_sd->state.autotrade)) {
+						fail = true;
 						break;
+					}
 				}
 			case WE_CALLBABY:
-				if(sd) {
+				if (sd) {
 					struct map_session_data *c_sd = pc_get_child(sd);
-
-					if( c_sd && c_sd->state.autotrade )
+					if (c_sd && c_sd->state.autotrade) {
+						fail = true;
 						break;
+					}
 				}
 			case AM_RESURRECTHOMUN:
 			case PF_SPIDERWEB:
-				//Find a random spot to place the skill. [Skotlex]
-				inf2 = skill_get_splash(ud->skill_id, ud->skill_lv);
-				ud->skillx = target->x + inf2;
-				ud->skilly = target->y + inf2;
-				if (inf2 && !map_random_dir(target, &ud->skillx, &ud->skilly)) {
-					ud->skillx = target->x;
-					ud->skilly = target->y;
+				{
+					//Find a random spot to place the skill. [Skotlex]
+					int splash = skill_get_splash(ud->skill_id, ud->skill_lv);
+					ud->skillx = target->x + splash;
+					ud->skilly = target->y + splash;
+					if (splash && !map_random_dir(target, &ud->skillx, &ud->skilly)) {
+						ud->skillx = target->x;
+						ud->skilly = target->y;
+					}
+					ud->skilltimer = tid;
+					return skill_castend_pos(tid,tick,id,data);
 				}
-				ud->skilltimer=tid;
-				return skill_castend_pos(tid,tick,id,data);
 			case GN_WALLOFTHORN:
 				ud->skillx = target->x;
 				ud->skilly = target->y;
@@ -10510,81 +10621,11 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 				return skill_castend_pos(tid,tick,id,data);
 		}
 
-		if(ud->skill_id == RG_BACKSTAP) {
-			uint8 dir = map_calc_dir(src,target->x,target->y),t_dir = unit_getdir(target);
-			if(check_distance_bl(src, target, 0) || map_check_dir(dir,t_dir)) {
-				break;
-			}
-		}
-		else if( ud->skill_id == PR_TURNUNDEAD ) {
-			struct status_data *tstatus = status_get_status_data(target);
-			if( !battle_check_undead(tstatus->race, tstatus->def_ele) )
-				break;
-		}
-		else if( ud->skill_id == RA_WUGSTRIKE ){
-			if( !path_search(NULL,src->m,src->x,src->y,target->x,target->y,1,CELL_CHKNOREACH))
-				break;
-		}
-		else if( ud->skill_id == PR_LEXDIVINA || ud->skill_id == MER_LEXDIVINA ) {
-			sc = status_get_sc(target);
-			if( battle_check_target(src,target, BCT_ENEMY) <= 0 && (!sc || !sc->data[SC_SILENCE]) )
-			{ //If it's not an enemy, and not silenced, you can't use the skill on them. [Skotlex]
-				clif_skill_nodamage (src, target, ud->skill_id, ud->skill_lv, 0);
-				break;
-			}
-		}
-		else { // Check target validity.
-			inf = skill_get_inf(ud->skill_id);
-			inf2 = skill_get_inf2(ud->skill_id);
-
-			if(inf&INF_ATTACK_SKILL ||
-				(inf&INF_SELF_SKILL && inf2&INF2_NO_TARGET_SELF) //Combo skills
-					) // Casted through combo.
-				inf = BCT_ENEMY; //Offensive skill.
-			else if(inf2&INF2_NO_ENEMY)
-				inf = BCT_NOENEMY;
-			else
-				inf = 0;
-
-			if(inf2 & (INF2_PARTY_ONLY|INF2_GUILD_ONLY) && src != target)
-			{
-				inf |=
-					(inf2&INF2_PARTY_ONLY?BCT_PARTY:0)|
-					(inf2&INF2_GUILD_ONLY?BCT_GUILD:0);
-				//Remove neutral targets (but allow enemy if skill is designed to be so)
-				inf &= ~BCT_NEUTRAL;
-			}
-
-			// Specific skill check first
-			if( ud->skill_id >= SL_SKE && ud->skill_id <= SL_SKA && target->type == BL_MOB ) {
-				if( ((TBL_MOB*)target)->mob_id == MOBID_EMPERIUM )
-					break;
-			}
-			else if( ud->skill_id == RK_PHANTOMTHRUST && target->type != BL_MOB ) {
-				if( !map_flag_vs(src->m) && battle_check_target(src,target,BCT_PARTY) <= 0 )
-					break; // You can use Phantom Thurst on party members in normal maps too. [pakpil]
-			}
-			else if( ud->skill_id == AB_CLEARANCE && target->type != BL_MOB ) {
-				if( !map_flag_vs(src->m) && battle_check_target(src,target,BCT_PARTY) <= 0 )
-					break; // You can use Clearance on party members in normal maps too. [pakpil]
-			}
-			else if( sd && (inf2&INF2_CHORUS_SKILL) && skill_check_pc_partner(sd, ud->skill_id, &ud->skill_lv, 1, 0) < 1 ) {
-				clif_skill_fail(sd, ud->skill_id, USESKILL_FAIL_NEED_HELPER, 0);
-				break;
-			}
-			// Common check
-			else if (inf && battle_check_target(src, target, inf) <= 0){
-				if (sd)
-					clif_skill_fail(sd,ud->skill_id,USESKILL_FAIL_LEVEL,0);
-				break;
-			}
-
-			if(inf&BCT_ENEMY && (sc = status_get_sc(target)) &&
-				sc->data[SC_FOGWALL] &&
-				rnd() % 100 < 75) { //Fogwall makes all offensive-type targetted skills fail at 75%
-					if (sd) clif_skill_fail(sd, ud->skill_id, USESKILL_FAIL_LEVEL, 0);
-					break;
-			}
+		// Failing
+		if (fail || (res = skill_castend_id_check(src, target, ud->skill_id, ud->skill_lv)) >= 0) {
+			if (sd && res != USESKILL_FAIL_MAX)
+				clif_skill_fail(sd, ud->skill_id, (enum useskill_fail_cause)res, 0);
+			break;
 		}
 
 		//Avoid doing double checks for instant-cast skills.
