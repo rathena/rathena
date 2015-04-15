@@ -18301,7 +18301,7 @@ BUILDIN_FUNC(instance_id)
 	if(!instance_id) {
 		//ShowError("script:instance_id: No instance attached to NPC or player");
 		script_pushint(st, 0);
-		return 1;
+		return SCRIPT_CMD_SUCCESS;
 	}
 	script_pushint(st, instance_id);
 	return SCRIPT_CMD_SUCCESS;
