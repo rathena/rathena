@@ -48,6 +48,9 @@ enum e_battle_check_target {
 	BCT_ALL			= 0x3F0000, ///< All targets
 
 	BCT_WOS			= 0x400000, ///< Except self (currently used for skipping if src == bl in skill_area_sub)
+
+	BCT_ALLFLAGS	= 0x7F0000, ///< Mask all valid BCT
+
 	BCT_GUILD		= BCT_SAMEGUILD|BCT_GUILDALLY,	///< Guild AND Allies (BCT_SAMEGUILD|BCT_GUILDALLY)
 	BCT_NOGUILD		= BCT_ALL&~BCT_GUILD,			///< Except guildmates
 	BCT_NOPARTY		= BCT_ALL&~BCT_PARTY,			///< Except party members

@@ -1,12 +1,22 @@
 // Skill Unit Database
 //
 // Structure of Database:
-// Skill ID,Unit ID,Unit ID 2,Layout,Range,Interval,Target,Flag
+// SkillID,UnitID,UnitID2,Layout,Range,Interval,Target1[:Target2],Flag
 //
-// layout = -1:special, 0:1*1, 1:3*3, 2:5*5, up to 5:11*11
-// target = friend (party +guildmates +neutral players) / party / guild
-//          ally (party +guildmates) / all / sameguild (guild but no allies) / enemy
-// flag 0x00001(UF_DEFNOTENEMY)			If 'defunit_not_enemy' is set, the target is changed to 'friend'
+// SkillID  = ID of available skill in skill_db
+// UnitID   = Unit ID (hex), must be defined in skill.h::s_skill_unit_id (enum)
+// UnitID2  = Unit ID (hex), must be defined in skill.h::s_skill_unit_id (enum) (Optional, hardcoded usage)
+// Layout   = 0:1*1, 1:3*3, 2:5*5, up to 5:11*11
+//            -1: Special layout. Must be defined in skill.c::skill_init_unit_layout or skill_init_nounit_layout
+//                and accessible in skill.c::skill_get_unit_layout
+// Range    = Effect range of each cell created in layout
+// Interval = Time interval
+// Target1  = friend (party +guildmates +neutral players) / party / guild (sameguild+guildally)
+//            ally (party +guildmates) / all / sameguild (guild but no allies) / enemy
+//            partywos / guildwos / allywos / sameguildwos / allwos (* without self)
+// Target2  = Alternative target. Example if 'Target1' is used for global and skill_castend_nodamage_id
+//            iteration target check, this is for skill_castend_damage_id.
+// Flag 0x00001(UF_DEFNOTENEMY)			If 'defunit_not_enemy' is set, the target is changed to 'friend'
 //      0x00002(UF_NOREITERATION)		Spell cannot be stacked
 //      0x00004(UF_NOFOOTSET)			Spell cannot be cast near/on targets
 //      0x00008(UF_NOOVERLAP)			Spell effects do not overlap
@@ -26,7 +36,17 @@
 // 	Example: 0x006 = 0x002+0x004 -> Cannot be stacked nor cast near targets
 //
 // Notes:
-//    0x89,0x8a,0x8b without indication
+// - Dummy unit, without indication: 0x89,0x8a,0x8b
+// - 'Target1:Target2' explanation:
+//   By default, if listed skill is 'real' skill unit (initialized in skill_unitsetting), only 'Target1'
+//   that will be used in unit timer to check unit target. 
+//   This value is used also to determines 'normal' skill area/splash with assumptions,
+//   -> 'Target1' is used in iteration for 'skill_castend_nodamage_id'
+//      ... map_foreachinrange(skill_area_sub, .... , <Target1>, skill_castend_nodamage_id); ...
+//   -> 'Target2' is used in iteration for 'skill_castend_damage_id'
+//      ... map_foreachinrange(skill_area_sub, .... , <Target2>, skill_castend_damage_id); ...
+//   If 'Target2' is not defined, the value is same with 'Target1'.
+//   NOTE: Not all skills are coded for splash/area effect.
 //
 //    u1   u2 lay  r intr target  flag
 //
@@ -107,7 +127,7 @@
 
 //706,0xfd,    ,  0, 0,1000,all, 0x000	//NPC_VENOMFOG
 
-2044,0xca,    ,  0, 2,3000,all,   0x018	//AB_EPICLESIS
+2044,0xca,    ,  0, 2,3000,all:noenemy,   0x018	//AB_EPICLESIS
 
 2032,0xe1,    ,  2, 0,1000,enemy, 0x8018	//GC_POISONSMOKE
 
@@ -196,3 +216,192 @@
 10007,0xc2,   ,  2, 0,  -1,guild, 0x040	//GD_GLORYWOUNDS
 10008,0xc3,   ,  2, 0,  -1,guild, 0x040	//GD_SOULCOLD
 10009,0xc4,   ,  2, 0,  -1,guild, 0x040	//GD_HAWKEYES
+
+// Skill Targets
+  7, 0x0,    ,  0, 0,   0,    enemy, 0x0	//SM_MAGNUM                  (BCT_ENEMY)
+ 11, 0x0,    ,  0, 0,   0,    enemy, 0x0	//MG_NAPALMBEAT              (BCT_ENEMY)
+ 17, 0x0,    ,  0, 0,   0,    enemy, 0x0	//MG_FIREBALL                (BCT_ENEMY)
+ 32, 0x0,    ,  0, 0,   0,    enemy, 0x0	//AL_CRUCIS                  (BCT_ENEMY)
+ 33, 0x0,    ,  0, 0,   0,    party, 0x0	//AL_ANGELUS                 (BCT_PARTY)
+ 74, 0x0,    ,  0, 0,   0,    party, 0x0	//PR_MAGNIFICAT              (BCT_PARTY)
+ 75, 0x0,    ,  0, 0,   0,    party, 0x0	//PR_GLORIA                  (BCT_PARTY)
+ 57, 0x0,    ,  0, 0,   0,    enemy, 0x0	//KN_BRANDISHSPEAR           (BCT_ENEMY)
+ 58, 0x0,    ,  0, 0,   0,    enemy, 0x0	//KN_SPEARSTAB               (BCT_ENEMY)
+ 62, 0x0,    ,  0, 0,   0,    enemy, 0x0	//KN_BOWLINGBASH             (BCT_ENEMY)
+ 69, 0x0,    ,  0, 0,   0,all:enemy, 0x0	//PR_BENEDICTIO              (BCT_ALL:BCT_ENEMY)
+ 81, 0x0,    ,  0, 0,   0,    enemy, 0x0	//WZ_SIGHTRASHER             (BCT_ENEMY)
+ 88, 0x0,    ,  0, 0,   0,    enemy, 0x0	//WZ_FROSTNOVA               (BCT_ENEMY)
+110, 0x0,    ,  0, 0,   0,    enemy, 0x0	//BS_HAMMERFAL               (BCT_ENEMY)
+111, 0x0,    ,  0, 0,   0,    party, 0x0	//BS_ADRENALINE              (BCT_PARTY)
+112, 0x0,    ,  0, 0,   0,    party, 0x0	//BS_WEAPONPERFECT           (BCT_PARTY)
+113, 0x0,    ,  0, 0,   0,    party, 0x0	//BS_OVERTHRUST              (BCT_PARTY)
+129, 0x0,    ,  0, 0,   0,    enemy, 0x0	//HT_BLITZBEAT               (BCT_ENEMY)
+137, 0x0,    ,  0, 0,   0,    enemy, 0x0	//AS_GRIMTOOTH               (BCT_ENEMY)
+141, 0x0,    ,  0, 0,   0,    enemy, 0x0	//AS_SPLASHER                (BCT_ENEMY)
+153, 0x0,    ,  0, 0,   0,    enemy, 0x0	//MC_CARTREVOLUTION          (BCT_ENEMY)
+173, 0x0,    ,  0, 0,   0,all:enemy, 0x0	//NPC_SELFDESTRUCTION        ((pvp)?BCT_ALL:BCT_ENEMY))
+174, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NPC_SPLASHATTACK           (BCT_ENEMY)
+214, 0x0,    ,  0, 0,   0,    enemy, 0x0	//RG_RAID                    (BCT_ENEMY)
+273, 0x0,    ,  0, 0,   0,    enemy, 0x0	//MO_COMBOFINISH             (BCT_ENEMY)
+361, 0x0,    ,  0, 0,   0,      all, 0x0	//HP_ASSUMPTIO               (BCT_ALL)
+382, 0x0,    ,  0, 0,   0,    enemy, 0x0	//SN_SHARPSHOOTING           (BCT_ENEMY)
+383, 0x0,    ,  0, 0,   0,    party, 0x0	//SN_WINDWALK                (BCT_PARTY)
+400, 0x0,    ,  0, 0,   0,    enemy, 0x0	//HW_NAPALMVULCAN            (BCT_ENEMY)
+406, 0x0,    ,  0, 0,   0,    enemy, 0x0	//ASC_METEORASSAULT          (BCT_ENEMY)
+413, 0x0,    ,  0, 0,   0,    enemy, 0x0	//TK_STORMKICK               (BCT_ENEMY)
+417, 0x0,    ,  0, 0,   0,    enemy, 0x0	//TK_TURNKICK                (BCT_ENEMY)
+478, 0x0,    ,  0, 0,   0,     ally, 0x0	//CR_SLIMPITCHER             (BCT_GUILD|BCT_PARTY)
+459, 0x0,    ,  0, 0,   0,    party, 0x0	//BS_ADRENALINE2             (BCT_PARTY)
+520, 0x0,    ,  0, 0,   0,    enemy, 0x0	//GS_SPREADATTACK            (BCT_ENEMY)
+536, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NJ_BAKUENRYU               (BCT_ENEMY)
+539, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NJ_HYOUSYOURAKU            (BCT_ENEMY)
+542, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NJ_KAMAITACHI              (BCT_ENEMY)
+653, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NPC_EARTHQUAKE             (BCT_ENEMY)
+654, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NPC_FIREBREATH             (BCT_ENEMY)
+655, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NPC_ICEBREATH              (BCT_ENEMY)
+656, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NPC_THUNDERBREATH          (BCT_ENEMY)
+657, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NPC_ACIDBREATH             (BCT_ENEMY)
+658, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NPC_DARKNESSBREATH         (BCT_ENEMY)
+661, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NPC_PULSESTRIKE            (BCT_ENEMY)
+662, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NPC_HELLJUDGEMENT          (BCT_ENEMY)
+653, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NPC_EARTHQUAKE             (BCT_ENEMY)
+663, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NPC_WIDESILENCE            (BCT_ENEMY)
+664, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NPC_WIDEFREEZE             (BCT_ENEMY)
+665, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NPC_WIDEBLEEDING           (BCT_ENEMY)
+666, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NPC_WIDESTONE              (BCT_ENEMY)
+667, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NPC_WIDECONFUSE            (BCT_ENEMY)
+668, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NPC_WIDESLEEP              (BCT_ENEMY)
+672, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NPC_SLOWCAST               (BCT_ENEMY)
+677, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NPC_WIDECURSE              (BCT_ENEMY)
+678, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NPC_WIDESTUN               (BCT_ENEMY)
+679, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NPC_VAMPIRE_GIFT           (BCT_ENEMY)
+680, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NPC_WIDESOULDRAIN          (BCT_ENEMY)
+684, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NPC_WIDEHELLDIGNITY        (BCT_ENEMY)
+689, 0x0,    ,  0, 0,   0,    party, 0x0	//CASH_BLESSING              (BCT_PARTY)
+690, 0x0,    ,  0, 0,   0,    party, 0x0	//CASH_INCAGI                (BCT_PARTY)
+691, 0x0,    ,  0, 0,   0,    party, 0x0	//CASH_ASSUMPTIO             (BCT_PARTY)
+693, 0x0,    ,  0, 0,   0,    party, 0x0	//ALL_PARTYFLEE              (BCT_PARTY)
+
+//700, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NPC_WIDEHEALTHFEAR         (BCT_ENEMY)
+//701, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NPC_WIDEBODYBURNNING       (BCT_ENEMY)
+//702, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NPC_WIDEFROSTMISTY         (BCT_ENEMY)
+//703, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NPC_WIDECOLD               (BCT_ENEMY)
+//704, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NPC_WIDE_DEEP_SLEEP        (BCT_ENEMY)
+//705, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NPC_WIDESIREN              (BCT_ENEMY)
+
+1014, 0x0,    ,  0, 0,   0,    party, 0x0	//PR_REDEMPTIO               (BCT_PARTY)
+1016, 0x0,    ,  0, 0,   0,    enemy, 0x0	//MO_BALKYOUNG               (BCT_ENEMY)
+
+2005, 0x0,    ,  0, 0,   0,    enemy, 0x0	//RK_WINDCUTTER              (BCT_ENEMY)
+2006, 0x0,    ,  0, 0,   0,    enemy, 0x0	//RK_IGNITIONBREAK           (BCT_ENEMY)
+2008, 0x0,    ,  0, 0,   0,    enemy, 0x0	//RK_DRAGONBREATH            (BCT_ENEMY)
+2009, 0x0,    ,  0, 0,   0,    enemy, 0x0	//RK_DRAGONHOWLING           (BCT_ENEMY)
+2017, 0x0,    ,  0, 0,   0,    enemy, 0x0	//RK_STORMBLAST              (BCT_ENEMY)
+2018, 0x0,    ,  0, 0,   0,    party, 0x0	//RK_FIGHTINGSPIRIT          (BCT_PARTY)
+2029, 0x0,    ,  0, 0,   0,    enemy, 0x0	//GC_COUNTERSLASH            (BCT_ENEMY)
+2034, 0x0,    ,  0, 0,   0,    enemy, 0x0	//GC_PHANTOMMENACE           (BCT_ENEMY)
+2036, 0x0,    ,  0, 0,   0,    enemy, 0x0	//GC_ROLLINGCUTTER           (BCT_ENEMY)
+2038, 0x0,    ,  0, 0,   0,    enemy, 0x0	//AB_JUDEX                   (BCT_ENEMY)
+2041, 0x0,    ,  0, 0,   0,    party, 0x0	//AB_CLEMENTIA               (BCT_PARTY)
+2042, 0x0,    ,  0, 0,   0,    party, 0x0	//AB_CANTO                   (BCT_PARTY)
+2043, 0x0,    ,  0, 0,   0,    party, 0x0	//AB_CHEAL                   (BCT_PARTY)
+2045, 0x0,    ,  0, 0,   0,    party, 0x0	//AB_PRAEFATIO               (BCT_PARTY)
+2047, 0x0,    ,  0, 0,   0,    party, 0x0	//AB_LAUDAAGNUS              (BCT_PARTY)
+2048, 0x0,    ,  0, 0,   0,    party, 0x0	//AB_LAUDARAMUS              (BCT_PARTY)
+2057, 0x0,    ,  0, 0,   0,    enemy, 0x0	//AB_SILENTIUM               (BCT_ENEMY)
+2202, 0x0,    ,  0, 0,   0,    enemy, 0x0	//WL_SOULEXPANSION           (BCT_ENEMY)
+2204, 0x0,    ,  0, 0,   0,    enemy, 0x0	//WL_JACKFROST               (BCT_ENEMY)
+2203, 0x0,    ,  0, 0,   0,    enemy, 0x0	//WL_FROSTMISTY              (BCT_ENEMY)
+2204, 0x0,    ,  0, 0,   0,    enemy, 0x0	//WL_JACKFROST               (BCT_ENEMY)
+2207, 0x0,    ,  0, 0,   0,    enemy, 0x0	//WL_SIENNAEXECRATE          (BCT_ENEMY)
+2209, 0x0,    ,  0, 0,   0,all:0x030000, 0x0	//WL_STASIS              ((pvp)?BCT_ALL:BCT_ENEMY|BCT_SELF)
+2211, 0x0,    ,  0, 0,   0,    enemy, 0x0	//WL_CRIMSONROCK             (BCT_ENEMY)
+2233, 0x0,    ,  0, 0,   0,    enemy, 0x0	//RA_ARROWSTORM              (BCT_ENEMY)
+2242, 0x0,    ,  0, 0,   0,    enemy, 0x0	//RA_WUGDASH                 (BCT_ENEMY)
+2246, 0x0,    ,  0, 0,   0,    enemy, 0x0	//RA_SENSITIVEKEEN           (BCT_ENEMY)
+2258, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NC_VULCANARM               (BCT_ENEMY)
+2259, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NC_FLAMELAUNCHER           (BCT_ENEMY)
+2260, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NC_COLDSLOWER              (BCT_ENEMY)
+2261, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NC_ARMSCANNON              (BCT_ENEMY)
+2267, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NC_SELFDESTRUCTION         (BCT_ENEMY)
+2270, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NC_INFRAREDSCAN            (BCT_ENEMY)
+2272, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NC_MAGNETICFIELD           (BCT_ENEMY)
+2280, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NC_AXETORNADO              (BCT_ENEMY)
+2284, 0x0,    ,  0, 0,   0,    enemy, 0x0	//SC_FATALMENACE             (BCT_ENEMY)
+2289, 0x0,    ,  0, 0,   0,    enemy, 0x0	//SC_BODYPAINT               (BCT_ENEMY)
+2307, 0x0,    ,  0, 0,   0,    enemy, 0x0	//LG_CANNONSPEAR             (BCT_ENEMY)
+2315, 0x0,    ,  0, 0,   0,    enemy, 0x0	//LG_SHIELDSPELL             (BCT_ENEMY)
+2317, 0x0,    ,  0, 0,   0,    enemy, 0x0	//LG_OVERBRAND               (BCT_ENEMY)
+2320, 0x0,    ,  0, 0,   0,    enemy, 0x0	//LG_MOONSLASHER             (BCT_ENEMY)
+2321, 0x0,    ,  0, 0,   0,    enemy, 0x0	//LG_RAYOFGENESIS            (BCT_ENEMY)
+2323, 0x0,    ,  0, 0,   0,    enemy, 0x0	//LG_EARTHDRIVE              (BCT_ENEMY)
+2322, 0x0,    ,  0, 0,   0, 0x050000, 0x0	//LG_PIETY                   (BCT_PARTY|BCT_SELF)
+2323, 0x0,    ,  0, 0,   0,    enemy, 0x0	//LG_EARTHDRIVE              (BCT_ENEMY)
+2327, 0x0,    ,  0, 0,   0,    enemy, 0x0	//SR_SKYNETBLOW              (BCT_ENEMY)
+2328, 0x0,    ,  0, 0,   0,    enemy, 0x0	//SR_EARTHSHAKER             (BCT_ENEMY)
+2330, 0x0,    ,  0, 0,   0,    enemy, 0x0	//SR_TIGERCANNON             (BCT_ENEMY)
+2332, 0x0,    ,  0, 0,   0,    enemy, 0x0	//SR_RAMPAGEBLASTER          (BCT_ENEMY)
+2334, 0x0,    ,  0, 0,   0,    enemy, 0x0	//SR_CURSEDCIRCLE            (BCT_ENEMY)
+2337, 0x0,    ,  0, 0,   0,    enemy, 0x0	//SR_WINDMILL                (BCT_ENEMY)
+2340, 0x0,    ,  0, 0,   0, 0x030000, 0x0	//SR_ASSIMILATEPOWER         (BCT_ENEMY|BCT_SELF)
+2350, 0x0,    ,  0, 0,   0,    party, 0x0	//WA_SWING_DANCE             (BCT_PARTY)
+2351, 0x0,    ,  0, 0,   0,    party, 0x0	//WA_SYMPHONY_OF_LOVER       (BCT_PARTY)
+2352, 0x0,    ,  0, 0,   0,    party, 0x0	//WA_MOONLIT_SERENADE        (BCT_PARTY)
+2381, 0x0,    ,  0, 0,   0,    party, 0x0	//MI_RUSH_WINDMILL           (BCT_PARTY)
+2382, 0x0,    ,  0, 0,   0,    party, 0x0	//MI_ECHOSONG                (BCT_PARTY)
+2420, 0x0,    ,  0, 0,   0,   allwos, 0x0	//WM_VOICEOFSIREN            (BCT_ALL|BCT_WOS)
+2422, 0x0,    ,  0, 0,   0,   allwos, 0x0	//WM_LULLABY_DEEPSLEEP       (BCT_ALL|BCT_WOS)
+2423, 0x0,    ,  0, 0,   0,      all, 0x0	//WM_SIRCLEOFNATURE          (BCT_ALL)
+2426, 0x0,    ,  0, 0,   0,    enemy, 0x0	//WM_GREAT_ECHO              (BCT_ENEMY)
+2427, 0x0,    ,  0, 0,   0,    party, 0x0	//WM_SONG_OF_MANA            (BCT_PARTY)
+2428, 0x0,    ,  0, 0,   0,    party, 0x0	//WM_DANCE_WITH_WUG          (BCT_PARTY)
+2429, 0x0,    ,  0, 0,   0,    enemy, 0x0	//WM_SOUND_OF_DESTRUCTION    (BCT_ENEMY)
+2430, 0x0,    ,  0, 0,   0,    enemy, 0x0	//WM_SATURDAY_NIGHT_FEVER    (BCT_ENEMY)
+2431, 0x0,    ,  0, 0,   0,    party, 0x0	//WM_LERADS_DEW              (BCT_PARTY)
+2432, 0x0,    ,  0, 0,   0,    enemy, 0x0	//WM_MELODYOFSINK            (BCT_ENEMY)
+2433, 0x0,    ,  0, 0,   0,    enemy, 0x0	//WM_BEYOND_OF_WARCRY        (BCT_ENEMY)
+2434, 0x0,    ,  0, 0,   0,    party, 0x0	//WM_UNLIMITED_HUMMING_VOICE (BCT_PARTY)
+2454, 0x0,    ,  0, 0,   0,    enemy, 0x0	//SO_VARETYR_SPEAR           (BCT_ENEMY)
+2455, 0x0,    ,  0, 0,   0,    enemy, 0x0	//SO_ARRULLO                 (BCT_ENEMY)
+2476, 0x0,    ,  0, 0,   0,    enemy, 0x0	//GN_CART_TORNADO            (BCT_ENEMY)
+2477, 0x0,    ,  0, 0,   0,    enemy, 0x0	//GN_CARTCANNON              (BCT_ENEMY)
+2481, 0x0,    ,  0, 0,   0,    enemy, 0x0	//GN_SPORE_EXPLOSION         (BCT_ENEMY)
+2486, 0x0,    ,  0, 0,   0,    enemy, 0x0	//GN_FIRE_EXPANSION          (BCT_ENEMY)
+2492, 0x0,    ,  0, 0,   0,    enemy, 0x0	//GN_MANDRAGORA              (BCT_ENEMY)
+2493, 0x0,    ,  0, 0,   0,    enemy, 0x0	//GN_SLINGITEM               (BCT_ENEMY)
+2517, 0x0,    ,  0, 0,   0,    enemy, 0x0	//SR_HOWLINGOFLION           (BCT_ENEMY)
+2518, 0x0,    ,  0, 0,   0,    enemy, 0x0	//SR_RIDEINLIGHTNING         (BCT_ENEMY)
+2519, 0x0,    ,  0, 0,   0,    enemy, 0x0	//LG_OVERBRAND_BRANDISH      (BCT_ENEMY)
+
+2554, 0x0,    ,  0, 0,   0,    enemy, 0x0	//RL_BANISHING_BUSTER        (BCT_ENEMY)
+2557, 0x0,    ,  0, 0,   0,    enemy, 0x0	//RL_S_STORM                 (BCT_ENEMY)
+2561, 0x0,    ,  0, 0,   0,    enemy, 0x0	//RL_FIREDANCE               (BCT_ENEMY)
+2562, 0x0,    ,  0, 0,   0,    enemy, 0x0	//RL_H_MINE                  (BCT_ENEMY)
+2565, 0x0,    ,  0, 0,   0,    enemy, 0x0	//RL_R_TRIP                  (BCT_ENEMY)
+2571, 0x0,    ,  0, 0,   0,    enemy, 0x0	//RL_HAMMER_OF_GOD           (BCT_ENEMY)
+
+3007, 0x0,    ,  0, 0,   0,    enemy, 0x0	//KO_HAPPOKUNAI              (BCT_ENEMY)
+3023, 0x0,    ,  0, 0,   0,    enemy, 0x0	//KG_KAGEHUMI                (BCT_ENEMY)
+
+5003, 0x0,    ,  0, 0,   0,    enemy, 0x0	//GN_ILLUSIONDOPING          (BCT_ENEMY)
+5004, 0x0,    ,  0, 0,   0,    enemy, 0x0	//RK_DRAGONBREATH_WATER      (BCT_ENEMY)
+5007, 0x0,    ,  0, 0,   0,    party, 0x0	//WM_FRIGG_SONG              (BCT_PARTY)
+
+8016, 0x0,    ,  0, 0,   0,all:enemy, 0x0	//HVAN_EXPLOSION             ((pvp)?BCT_ALL:BCT_ENEMY)
+8034, 0x0,    ,  0, 0,   0,    enemy, 0x0	//MH_HEILIGE_STANGE          (BCT_ENEMY)
+8039, 0x0,    ,  0, 0,   0,    enemy, 0x0	//MH_MAGMA_FLOW              (BCT_ENEMY)
+8202, 0x0,    ,  0, 0,   0,    enemy, 0x0	//MS_MAGNUM                  (BCT_ENEMY)
+8203, 0x0,    ,  0, 0,   0,    enemy, 0x0	//MS_BOWLINGBASH             (BCT_ENEMY)
+8215, 0x0,    ,  0, 0,   0,    enemy, 0x0	//MA_SHARPSHOOTING           (BCT_ENEMY)
+8217, 0x0,    ,  0, 0,   0,    enemy, 0x0	//ML_BRANDISH                (BCT_ENEMY)
+8222, 0x0,    ,  0, 0,   0,    party, 0x0	//MER_MAGNIFICAT             (BCT_PARTY)
+8426, 0x0,    ,  0, 0,   0,    enemy, 0x0	//EL_FIRE_BOMB               (BCT_ENEMY)
+8428, 0x0,    ,  0, 0,   0,    enemy, 0x0	//EL_FIRE_WAVE               (BCT_ENEMY)
+8431, 0x0,    ,  0, 0,   0,    enemy, 0x0	//EL_WATER_SCREW             (BCT_ENEMY)
+8435, 0x0,    ,  0, 0,   0,    enemy, 0x0	//EL_HURRICANE               (BCT_ENEMY)
+8437, 0x0,    ,  0, 0,   0,    enemy, 0x0	//EL_TYPOON_MIS              (BCT_ENEMY)
+8442, 0x0,    ,  0, 0,   0,    enemy, 0x0	//EL_STONE_RAIN              (BCT_ENEMY)
+
+10010, 0x0,    ,  0, 0,   0,   guild, 0x0	//GD_BATTLEORDER             (BCT_GUILD)
+10011, 0x0,    ,  0, 0,   0,   guild, 0x0	//GD_REGENERATION            (BCT_GUILD)
+10012, 0x0,    ,  0, 0,   0,   guild, 0x0	//GD_RESTORE                 (BCT_GUILD)

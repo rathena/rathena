@@ -188,7 +188,8 @@ struct s_skill_db {
 	int unit_layout_type[MAX_SKILL_LEVEL];		 ///< Layout type. -1 is special layout, others are square with lenght*width: (val*2+1)^2
 	int unit_range[MAX_SKILL_LEVEL];			 ///< Unit cell effect range
 	int16 unit_interval;						 ///< Interval
-	uint32 unit_target;							 ///< Unit target. @see enum e_battle_check_target
+	uint32 unit_target;							 ///< Unit target. @see enum e_battle_check_target and enum bl_type
+	uint32 unit_target2;						 ///< Unit target. @see enum e_battle_check_target and enum bl_type
 	uint32 unit_flag;							 ///< Unit flags. @see enum e_skill_unit_flag
 
 	// skill_cast_db.txt
@@ -385,6 +386,7 @@ int skill_get_maxcount( uint16 skill_id ,uint16 skill_lv );
 int skill_get_blewcount( uint16 skill_id ,uint16 skill_lv );
 int skill_get_unit_flag( uint16 skill_id );
 int skill_get_unit_target( uint16 skill_id );
+int skill_get_unit_target2( uint16 skill_id );
 int skill_get_inf3( uint16 skill_id );
 // Accessor for skill requirements
 int skill_get_hp( uint16 skill_id ,uint16 skill_lv );
