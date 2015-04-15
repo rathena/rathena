@@ -8469,16 +8469,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 	case ALL_PARTYFLEE:
-		if( sd  && !(flag&1) )
-		{
-			if( !sd->status.party_id )
-			{
+		if( sd  && !(flag&1) ) {
+			if( !sd->status.party_id ) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				break;
 			}
 			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
-		}
-		else
+		} else
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
 	case NPC_TALK:
@@ -9931,16 +9928,20 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case GN_MANDRAGORA:
 		if( flag&1 ) {
-			int rate = (25 + 10 * skill_lv) - ((tstatus->vit + tstatus->luk) / 5);
+			int rate = 25 + (10 * skill_lv) - (tstatus->vit + tstatus->luk) / 5;
 			if (rate < 10)
 				rate = 10;
-			if ( clif_skill_nodamage(bl, src, skill_id, skill_lv,
-					sc_start(src,bl, type, rate, skill_lv, skill_get_time(skill_id, skill_lv))) )
-				status_zap(bl, 0, status_get_max_sp(bl) * (25 + 5 * skill_lv) / 100);
-		} else
-			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR,
-							   src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
-		break;
+			if (bl->type == BL_MOB)
+				break;
+				if (rnd()%100 < rate) {
+					sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
+					status_zap(bl,0,status_get_max_sp(bl) * (25 + 5 * skill_lv) / 100);
+				}
+			} else {
+				map_foreachinrange(skill_area_sub,bl,skill_get_splash(skill_id,skill_lv),BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_nodamage_id);
+				clif_skill_nodamage(src,src,skill_id,skill_lv,1);
+			}
+			break;
 	case GN_SLINGITEM:
 		if( sd ) {
 			short ammo_id;
@@ -14767,6 +14768,14 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				return false;
 			}
 			break;
+		case KO_JYUMONJIKIRI:
+			if (sd->weapontype1 && (sd->weapontype2 || sd->status.shield))
+				return true;
+			else {
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+				return false;
+			}
+			break;
 		case KO_KAHU_ENTEN:
 		case KO_HYOUHU_HUBUKI:
 		case KO_KAZEHU_SEIRAN:
@@ -14787,10 +14796,6 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				clif_skill_fail(sd, skill_id, USESKILL_FAIL_SUMMON, 0);
 				return false;
 			}
-			break;
-		case KO_JYUMONJIKIRI:
-			if (sd->status.shield && !sd->weapontype2 && (sd->weapontype1 == W_DAGGER || sd->weapontype1 == W_1HSWORD))
-				return true; // Wearing Shield + Dagger/Sword, other non-shield weapon checks are later
 			break;
 	}
 

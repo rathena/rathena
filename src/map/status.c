@@ -7468,9 +7468,6 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 		case SC_VACUUM_EXTREME:
 			tick_def2 = b_status->str*50;
 			break;
-		case SC_MANDRAGORA:
-			sc_def = (status->vit + status->luk)*20;
-			break;
 		case SC_KYOUGAKU:
 			tick_def2 = 30*status->int_;
 			break;

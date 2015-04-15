@@ -5779,8 +5779,9 @@ int pc_jobid2mapid(unsigned short b_class)
 //Reverts the map-style class id to the client-style one.
 int pc_mapid2jobid(unsigned short class_, int sex)
 {
-	switch(class_)
-	{
+	class_ &= JOBL_SUPER_NOVICE; // Quick conversion to get proper Super Novice ID.
+
+	switch(class_) {
 	//Novice And 1-1 Jobs
 		case MAPID_NOVICE:                return JOB_NOVICE;
 		case MAPID_SWORDMAN:              return JOB_SWORDMAN;
