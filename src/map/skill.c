@@ -3724,14 +3724,16 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 	struct unit_data *ud = unit_bl2ud(src);
 	struct skill_timerskill *skl;
 	int range, target_flag = BCT_NOONE, target_flag2 = BCT_NOONE;
+	uint16 idx;
 
 	nullpo_ret(src);
 	nullpo_ret(ud);
 	skl = ud->skilltimerskill[data];
 	nullpo_ret(skl);
 	ud->skilltimerskill[data] = NULL;
-	target_flag = skill_get_unit_target(skl->skill_id);
-	target_flag2 = skill_get_unit_target2(skl->skill_id);
+	idx = skill_get_index(skl->skill_id);
+	target_flag = skill_db[idx]->unit_target&BCT_ALLFLAGS;
+	target_flag2 = skill_db[idx]->unit_target2&BCT_ALLFLAGS;
 
 	do {
 		if(src->prev == NULL)
@@ -4087,6 +4089,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	struct status_change *sc, *tsc;
 	int target_flag = BCT_NOONE;
 	int target_flag2 = BCT_NOONE;
+	uint16 idx;
 
 	if (skill_id > 0 && !skill_lv) return 0;
 
@@ -4121,8 +4124,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		tsc = NULL;
 
 	tstatus = status_get_status_data(bl);
-	target_flag = skill_get_unit_target(skill_id);
-	target_flag2 = skill_get_unit_target2(skill_id);
+	idx = skill_get_index(skill_id);
+	target_flag = skill_db[idx]->unit_target&BCT_ALLFLAGS;
+	target_flag2 = skill_db[idx]->unit_target2&BCT_ALLFLAGS;
 
 	map_freeblock_lock();
 
@@ -5591,9 +5595,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	int chorusbonus = 0;
 	int target_flag = BCT_NOONE;
 	int target_flag2 = BCT_NOONE;
-
 	int i = 0;
 	enum sc_type type;
+	uint16 idx;
 
 	if(skill_id > 0 && !skill_lv) return 0;	// celest
 
@@ -5631,8 +5635,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	tstatus = status_get_status_data(bl);
 	sstatus = status_get_status_data(src);
 
-	target_flag = skill_get_unit_target(skill_id);
-	target_flag2 = skill_get_unit_target2(skill_id);
+	idx = skill_get_index(skill_id);
+	target_flag = skill_db[idx]->unit_target&BCT_ALLFLAGS;
+	target_flag2 = skill_db[idx]->unit_target2&BCT_ALLFLAGS;
 
 	// Minstrel/Wanderer number check for chorus skills.
 	// Bonus remains 0 unless 3 or more Minstrels/Wanderers are in the party.
@@ -10952,6 +10957,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	struct skill_unit_group* sg;
 	enum sc_type type;
 	int i, target_flag = BCT_NOONE, target_flag2 = BCT_NOONE;
+	uint16 idx;
 
 	//if(skill_lv <= 0) return 0;
 	if (skill_id > 0 && !skill_lv)
@@ -10968,8 +10974,9 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	type = status_skill2sc(skill_id);
 	sce = (sc && type != -1)?sc->data[type]:NULL;
 
-	target_flag = skill_get_unit_target(skill_id);
-	target_flag2 = skill_get_unit_target2(skill_id);
+	idx = skill_get_index(skill_id);
+	target_flag = skill_db[idx]->unit_target&BCT_ALLFLAGS;
+	target_flag2 = skill_db[idx]->unit_target2&BCT_ALLFLAGS;
 
 	switch (skill_id) { //Skill effect.
 		case WZ_METEOR:
@@ -11448,7 +11455,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case AB_EPICLESIS:
 		if( (sg = skill_unitsetting(src, skill_id, skill_lv, x, y, 0)) ) {
 			i = sg->unit->range;
-			map_foreachinarea(skill_area_sub, src->m, x - i, y - i, x + i, y + i, BL_CHAR, src, ALL_RESURRECTION, 1, tick, flag|target_flag|1,skill_castend_nodamage_id);
+			map_foreachinarea(skill_area_sub, src->m, x - i, y - i, x + i, y + i, BL_CHAR, src, ALL_RESURRECTION, 1, tick, flag|target_flag2|1,skill_castend_nodamage_id);
 		}
 		break;
 

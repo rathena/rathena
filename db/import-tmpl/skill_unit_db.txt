@@ -1,28 +1,52 @@
 // Skill Unit Database
 //
 // Structure of Database:
-// ID,unit ID,unit ID 2,layout,range,interval,target,flag
+// SkillID,UnitID,UnitID2,Layout,Range,Interval,Target1[:Target2],Flag
 //
-// layout = -1:special, 0:1*1, 1:3*3, 2:5*5, up to 5:11*11
-// target = friend (party +guildmates +neutral players) / party / guild
-//          ally (party +guildmates) / all / enemy
-// flag 0x0001(UF_DEFNOTENEMY)		If 'defunit_not_enemy' is set, the target is changed to 'friend'
-//      0x0002(UF_NOREITERRATION)	Spell cannot be stacked
-//      0x0004(UF_NOFOOTSET)		Spell cannot be cast near/on targets
-//      0x0008(UF_NOOVERLAP)		Spell effects do not overlap
-//      0x0010(UF_PATHCHECK)		Only cells with a shootable path will be placed
-//      0x0020(UF_NOPC)				Spell cannot affect players.
-//      0x0040(UF_NOMOB)			Spell cannot affect mobs.
-//      0x0080(UF_SKILL)			Spell CAN affect skills.
-//      0x0100(UF_DANCE)			Dance skill
-//      0x0200(UF_ENSEMBLE)			Ensemble skill
-//      0x0400(UF_SONG)				Song skill
-//      0x0800(UF_DUALMODE)			Spell has effects both at an interval and when you step in/out
-//      0x2000(UF_RANGEDSINGLEUNIT)	Layout hack, use layout range propriety but only display center.
+// SkillID  = ID of available skill in skill_db
+// UnitID   = Unit ID (hex), must be defined in skill.h::s_skill_unit_id (enum)
+// UnitID2  = Unit ID (hex), must be defined in skill.h::s_skill_unit_id (enum) (Optional, hardcoded usage)
+// Layout   = 0:1*1, 1:3*3, 2:5*5, up to 5:11*11
+//            -1: Special layout. Must be defined in skill.c::skill_init_unit_layout or skill_init_nounit_layout
+//                and accessible in skill.c::skill_get_unit_layout
+// Range    = Effect range of each cell created in layout
+// Interval = Time interval
+// Target1  = friend (party +guildmates +neutral players) / party / guild (sameguild+guildally)
+//            ally (party +guildmates) / all / sameguild (guild but no allies) / enemy
+//            partywos / guildwos / allywos / sameguildwos / allwos (* without self)
+// Target2  = Alternative target. Example if 'Target1' is used for global and skill_castend_nodamage_id
+//            iteration target check, this is for skill_castend_damage_id.
+// Flag 0x00001(UF_DEFNOTENEMY)			If 'defunit_not_enemy' is set, the target is changed to 'friend'
+//      0x00002(UF_NOREITERATION)		Spell cannot be stacked
+//      0x00004(UF_NOFOOTSET)			Spell cannot be cast near/on targets
+//      0x00008(UF_NOOVERLAP)			Spell effects do not overlap
+//      0x00010(UF_PATHCHECK)			Only cells with a shootable path will be placed
+//      0x00020(UF_NOPC)				Spell cannot affect players.
+//      0x00040(UF_NOMOB)				Spell cannot affect mobs.
+//      0x00080(UF_SKILL)				Spell CAN affect skills.
+//      0x00100(UF_DANCE)				Dance skill
+//      0x00200(UF_ENSEMBLE)			Ensemble skill
+//      0x00400(UF_SONG)				Song skill
+//      0x00800(UF_DUALMODE)			Spell has effects both at an interval and when you step in/out
+//      0x01000(UF_NOKNOCKBACK)			Cannot be knocked back (only unit that can be damaged)
+//      0x02000(UF_RANGEDSINGLEUNIT)	Layout hack, use layout range propriety but only display center.
+//      0x04000(UF_REM_CRAZYWEED)		Removed if be overlapped by GN_CRAZYWEED
+//      0x08000(UF_REM_FIRERAIN)		Removed if be overlapped by RL_FIRE_RAIN
+//      0x10000(UF_KNOCKBACK_GROUP) 	Knock back a whole skill group (by default, skill unit is knocked back each unit)
 // 	Example: 0x006 = 0x002+0x004 -> Cannot be stacked nor cast near targets
 //
 // Notes:
-//    0x89,0x8a,0x8b without indication
+// - Dummy unit, without indication: 0x89,0x8a,0x8b
+// - 'Target1:Target2' explanation:
+//   By default, if listed skill is 'real' skill unit (initialized in skill_unitsetting), only 'Target1'
+//   that will be used in unit timer to check unit target. 
+//   This value is used also to determines 'normal' skill area/splash with assumptions,
+//   -> 'Target1' is used in iteration for 'skill_castend_nodamage_id'
+//      ... map_foreachinrange(skill_area_sub, .... , <Target1>, skill_castend_nodamage_id); ...
+//   -> 'Target2' is used in iteration for 'skill_castend_damage_id'
+//      ... map_foreachinrange(skill_area_sub, .... , <Target2>, skill_castend_damage_id); ...
+//   If 'Target2' is not defined, the value is same with 'Target1'.
+//   NOTE: Not all skills are coded for splash/area effect.
 //
 //    u1   u2 lay  r intr target  flag
 //

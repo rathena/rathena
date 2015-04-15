@@ -39,13 +39,14 @@
 // - Dummy unit, without indication: 0x89,0x8a,0x8b
 // - 'Target1:Target2' explanation:
 //   By default, if listed skill is 'real' skill unit (initialized in skill_unitsetting), only 'Target1'
-//   that will be used in unit timer to check unit target.
-//   But since this value is used to determines 'normal' skill area/splash (to remove hardcoded target),
-//   -> 'Target1' supposed to be used in iteration for 'skill_castend_nodamage_id'
+//   that will be used in unit timer to check unit target. 
+//   This value is used also to determines 'normal' skill area/splash with assumptions,
+//   -> 'Target1' is used in iteration for 'skill_castend_nodamage_id'
 //      ... map_foreachinrange(skill_area_sub, .... , <Target1>, skill_castend_nodamage_id); ...
-//   -> 'Target2' supposed to be used in iteration for 'skill_castend_damage_id'
+//   -> 'Target2' is used in iteration for 'skill_castend_damage_id'
 //      ... map_foreachinrange(skill_area_sub, .... , <Target2>, skill_castend_damage_id); ...
-//   If 'Target2' is not defined, the value is same with 'Target1'
+//   If 'Target2' is not defined, the value is same with 'Target1'.
+//   NOTE: Not all skills are coded for splash/area effect.
 //
 //    u1   u2 lay  r intr target  flag
 //
@@ -124,7 +125,7 @@
 
 //706,0xfd,    ,  0, 0,1000,all, 0x000	//NPC_VENOMFOG
 
-2044,0xca,    ,  0, 2,3000,all,   0x018	//AB_EPICLESIS
+2044,0xca,    ,  0, 2,3000,all:noenemy,   0x018	//AB_EPICLESIS
 
 2032,0xe1,    ,  2, 0,1000,enemy, 0x8018	//GC_POISONSMOKE
 
@@ -222,7 +223,6 @@
  33, 0x0,    ,  0, 0,   0,    party, 0x0	//AL_ANGELUS                 (BCT_PARTY)
  74, 0x0,    ,  0, 0,   0,    party, 0x0	//PR_MAGNIFICAT              (BCT_PARTY)
  75, 0x0,    ,  0, 0,   0,    party, 0x0	//PR_GLORIA                  (BCT_PARTY)
- 47, 0x0,    ,  0, 0,   0,    enemy, 0x0	//AC_SHOWER                  (BCT_ENEMY)
  57, 0x0,    ,  0, 0,   0,    enemy, 0x0	//KN_BRANDISHSPEAR           (BCT_ENEMY)
  58, 0x0,    ,  0, 0,   0,    enemy, 0x0	//KN_SPEARSTAB               (BCT_ENEMY)
  62, 0x0,    ,  0, 0,   0,    enemy, 0x0	//KN_BOWLINGBASH             (BCT_ENEMY)
@@ -250,9 +250,7 @@
 417, 0x0,    ,  0, 0,   0,    enemy, 0x0	//TK_TURNKICK                (BCT_ENEMY)
 478, 0x0,    ,  0, 0,   0,     ally, 0x0	//CR_SLIMPITCHER             (BCT_GUILD|BCT_PARTY)
 459, 0x0,    ,  0, 0,   0,    party, 0x0	//BS_ADRENALINE2             (BCT_PARTY)
-516, 0x0,    ,  0, 0,   0,    enemy, 0x0	//GS_DESPERADO               (BCT_ENEMY)
 520, 0x0,    ,  0, 0,   0,    enemy, 0x0	//GS_SPREADATTACK            (BCT_ENEMY)
-525, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NJ_HUUMA                   (BCT_ENEMY)
 536, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NJ_BAKUENRYU               (BCT_ENEMY)
 539, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NJ_HYOUSYOURAKU            (BCT_ENEMY)
 541, 0x0,    ,  0, 0,   0,    enemy, 0x0	//NJ_RAIGEKISAI              (BCT_ENEMY)
@@ -306,7 +304,6 @@
 2041, 0x0,    ,  0, 0,   0,    party, 0x0	//AB_CLEMENTIA               (BCT_PARTY)
 2042, 0x0,    ,  0, 0,   0,    party, 0x0	//AB_CANTO                   (BCT_PARTY)
 2043, 0x0,    ,  0, 0,   0,    party, 0x0	//AB_CHEAL                   (BCT_PARTY)
-2044, 0x0,    ,  0, 0,   0,  noenemy, 0x0	//AB_EPICLESIS               (BCT_NOENEMY)
 2045, 0x0,    ,  0, 0,   0,    party, 0x0	//AB_PRAEFATIO               (BCT_PARTY)
 2047, 0x0,    ,  0, 0,   0,    party, 0x0	//AB_LAUDAAGNUS              (BCT_PARTY)
 2048, 0x0,    ,  0, 0,   0,    party, 0x0	//AB_LAUDARAMUS              (BCT_PARTY)
@@ -318,7 +315,6 @@
 2207, 0x0,    ,  0, 0,   0,    enemy, 0x0	//WL_SIENNAEXECRATE          (BCT_ENEMY)
 2209, 0x0,    ,  0, 0,   0,all:0x030000, 0x0	//WL_STASIS              ((pvp)?BCT_ALL:BCT_ENEMY|BCT_SELF)
 2211, 0x0,    ,  0, 0,   0,    enemy, 0x0	//WL_CRIMSONROCK             (BCT_ENEMY)
-2213, 0x0,    ,  0, 0,   0,    enemy, 0x0	//WL_COMET                   (BCT_ENEMY)
 2233, 0x0,    ,  0, 0,   0,    enemy, 0x0	//RA_ARROWSTORM              (BCT_ENEMY)
 2242, 0x0,    ,  0, 0,   0,    enemy, 0x0	//RA_WUGDASH                 (BCT_ENEMY)
 2246, 0x0,    ,  0, 0,   0,    enemy, 0x0	//RA_SENSITIVEKEEN           (BCT_ENEMY)
@@ -352,7 +348,6 @@
 2352, 0x0,    ,  0, 0,   0,    party, 0x0	//WA_MOONLIT_SERENADE        (BCT_PARTY)
 2381, 0x0,    ,  0, 0,   0,    party, 0x0	//MI_RUSH_WINDMILL           (BCT_PARTY)
 2382, 0x0,    ,  0, 0,   0,    party, 0x0	//MI_ECHOSONG                (BCT_PARTY)
-2415, 0x0,    ,  0, 0,   0,    enemy, 0x0	//WM_REVERBERATION           (BCT_ENEMY)
 2420, 0x0,    ,  0, 0,   0,   allwos, 0x0	//WM_VOICEOFSIREN            (BCT_ALL|BCT_WOS)
 2422, 0x0,    ,  0, 0,   0,   allwos, 0x0	//WM_LULLABY_DEEPSLEEP       (BCT_ALL|BCT_WOS)
 2423, 0x0,    ,  0, 0,   0,      all, 0x0	//WM_SIRCLEOFNATURE          (BCT_ALL)
@@ -384,10 +379,7 @@
 2565, 0x0,    ,  0, 0,   0,    enemy, 0x0	//RL_R_TRIP                  (BCT_ENEMY)
 2571, 0x0,    ,  0, 0,   0,    enemy, 0x0	//RL_HAMMER_OF_GOD           (BCT_ENEMY)
 
-3006, 0x0,    ,  0, 0,   0,    enemy, 0x0	//KO_BAKURETSU               (BCT_ENEMY)
 3007, 0x0,    ,  0, 0,   0,    enemy, 0x0	//KO_HAPPOKUNAI              (BCT_ENEMY)
-3008, 0x0,    ,  0, 0,   0,    enemy, 0x0	//KO_MUCHANAGE               (BCT_ENEMY)
-3009, 0x0,    ,  0, 0,   0,    enemy, 0x0	//KO_HUUMARANKA              (BCT_ENEMY)
 3023, 0x0,    ,  0, 0,   0,    enemy, 0x0	//KG_KAGEHUMI                (BCT_ENEMY)
 
 5003, 0x0,    ,  0, 0,   0,    enemy, 0x0	//GN_ILLUSIONDOPING          (BCT_ENEMY)
@@ -395,12 +387,10 @@
 5007, 0x0,    ,  0, 0,   0,    party, 0x0	//WM_FRIGG_SONG              (BCT_PARTY)
 
 8016, 0x0,    ,  0, 0,   0,all:enemy, 0x0	//HVAN_EXPLOSION             ((pvp)?BCT_ALL:BCT_ENEMY)
-8025, 0x0,    ,  0, 0,   0,    enemy, 0x0	//MH_XENO_SLASHER            (BCT_ENEMY)
 8034, 0x0,    ,  0, 0,   0,    enemy, 0x0	//MH_HEILIGE_STANGE          (BCT_ENEMY)
 8039, 0x0,    ,  0, 0,   0,    enemy, 0x0	//MH_MAGMA_FLOW              (BCT_ENEMY)
 8202, 0x0,    ,  0, 0,   0,    enemy, 0x0	//MS_MAGNUM                  (BCT_ENEMY)
 8203, 0x0,    ,  0, 0,   0,    enemy, 0x0	//MS_BOWLINGBASH             (BCT_ENEMY)
-8208, 0x0,    ,  0, 0,   0,    enemy, 0x0	//MA_SHOWER                  (BCT_ENEMY)
 8215, 0x0,    ,  0, 0,   0,    enemy, 0x0	//MA_SHARPSHOOTING           (BCT_ENEMY)
 8217, 0x0,    ,  0, 0,   0,    enemy, 0x0	//ML_BRANDISH                (BCT_ENEMY)
 8222, 0x0,    ,  0, 0,   0,    party, 0x0	//MER_MAGNIFICAT             (BCT_PARTY)
