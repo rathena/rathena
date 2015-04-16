@@ -428,7 +428,7 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 				hp += hp * skill * 2 / 100;
 			else if( src->type == BL_HOM && (skill = hom_checkskill(((TBL_HOM*)src), HLIF_BRAIN)) > 0 )
 				hp += hp * skill * 2 / 100;
-			if( sd && tsd && sd->status.partner_id == tsd->status.char_id && sd->class_&JOBL_SUPER_NOVICE && sd->status.sex == 0 )
+			if( sd && tsd && sd->status.partner_id == tsd->status.char_id && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.sex == 0 )
 				hp *= 2;
 			break;
 	}
@@ -8172,7 +8172,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SL_SUPERNOVICE:
 	case SL_WIZARD:
 		//NOTE: here, 'type' has the value of the associated MAPID, not of the SC_SPIRIT constant.
-		if (sd && dstsd && !(((dstsd->class_&MAPID_UPPERMASK) == type) || (skill_id == SL_SUPERNOVICE && (dstsd->class_&JOBL_SUPER_NOVICE)))) {
+		if (sd && dstsd && !((dstsd->class_&MAPID_UPPERMASK) == type)) {
 			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 			break;
 		}
