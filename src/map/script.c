@@ -18674,12 +18674,12 @@ BUILDIN_FUNC(showdigit)
 }
 /**
  * Rune Knight
- * makerune({<char_id>});
+ * makerune <% success bonus>{,<char_id>};
  **/
 BUILDIN_FUNC(makerune) {
 	TBL_PC* sd;
 	
-	if (!script_charid2sd(2,sd))
+	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 	clif_skill_produce_mix_list(sd,RK_RUNEMASTERY,24);
 	sd->itemid = script_getnum(st,2);
