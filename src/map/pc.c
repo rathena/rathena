@@ -10496,18 +10496,22 @@ static unsigned int pc_calc_basesp(uint16 level, uint16 class_) {
 	uint16 idx = pc_class2idx(class_);
 
 	base_sp = 10 + floor(level * (job_info[idx].sp_factor / 100.));
-#ifndef RENEWAL
+
 	switch (class_) {
 		case JOB_NINJA:
 			if (level >= 10)
-				base_sp -= 20;
+				base_sp -= 22;
+			else
+				base_sp = 11 + 3*level;
 			break;
 		case JOB_GUNSLINGER:
-			if (level >= 10)
-				base_sp -= 17;
+			if (level > 10)
+				base_sp -= 18;
+			else
+				base_sp = 9 + 3*level;
 			break;
 	}
-#endif
+
 	return (unsigned int)base_sp;
 }
 
