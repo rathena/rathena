@@ -10690,7 +10690,7 @@ static bool pc_readdb_job_basehpsp(char* fields[], int columns, int current)
 					job_info[idx].base_hp[lvl_idx] = atoi(fields[j+4]);
 					//Tells if this HP is lower than previous level
 					if (lvl_idx-1 >= 0 && job_info[idx].base_hp[lvl_idx] < job_info[idx].base_hp[lvl_idx-1])
-						ShowWarning("pc_readdb_job_basehpsp: HP value at line %d col %d is lower than previous level (job=%d,lvl=%d,oldval=%d,val=%d).\n",
+						ShowInfo("pc_readdb_job_basehpsp: HP value at entry %d col %d is lower than previous level (job=%d,lvl=%d,oldval=%d,val=%d).\n",
 							current,j+4,job_id,lvl_idx+1,job_info[idx].base_hp[lvl_idx-1],job_info[idx].base_hp[lvl_idx]);
 				}
 			}
@@ -10703,7 +10703,7 @@ static bool pc_readdb_job_basehpsp(char* fields[], int columns, int current)
 					job_info[idx].base_sp[lvl_idx] = atoi(fields[j+4]);
 					//Tells if this SP is lower than previous level
 					if (lvl_idx-1 >= 0 && job_info[idx].base_sp[lvl_idx] < job_info[idx].base_sp[lvl_idx-1])
-						ShowWarning("pc_readdb_job_basehpsp: SP value at line %d col %d is lower than previous level (job=%d,lvl=%d,oldval=%d,val=%d).\n",
+						ShowInfo("pc_readdb_job_basehpsp: SP value at entry %d col %d is lower than previous level (job=%d,lvl=%d,oldval=%d,val=%d).\n",
 							current,j+4,job_id,lvl_idx+1,job_info[idx].base_sp[lvl_idx-1],job_info[idx].base_sp[lvl_idx]);
 				}
 			}

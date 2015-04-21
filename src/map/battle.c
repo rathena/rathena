@@ -4655,7 +4655,7 @@ struct Damage battle_calc_attack_left_right_hands(struct Damage wd, struct block
 struct block_list *battle_check_devotion(struct block_list *bl) {
 	struct block_list *d_bl = NULL;
 
-	if (battle_config.devotion_rdamage && battle_config.devotion_rdamage > rand() % 100) {
+	if (battle_config.devotion_rdamage && battle_config.devotion_rdamage > rnd() % 100) {
 		struct status_change *sc = status_get_sc(bl);
 		if (sc && sc->data[SC_DEVOTION])
 			d_bl = map_id2bl(sc->data[SC_DEVOTION]->val1);
