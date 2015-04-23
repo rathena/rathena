@@ -10020,41 +10020,41 @@
 24112,Spell_Flow_Shadow_Armor,Spell Flow Shadow Armor,12,10,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,1,,{ bonus bUseSPrate,1+((getrefine()>=7)?1:0)+((getrefine()>=9)?1:0); },{},{}
 24113,Spell_Flow_Shadow_Shield,Spell Flow Shadow Shield,12,10,,0,,,,0,0xFFFFFFFF,63,2,262144,,1,1,,{ bonus bUseSPrate,1; if(getrefine()>=7) bonus bMaxSPrate,1; },{},{}
 24114,Grid_Shadow_Armor,Grid Shadow Armor,12,10,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,1,,{ skill "BS_GREED",1; bonus2 bSkillUseSP,"BS_GREED",100-(getrefine()*10); },{},{}
-24115,Grid_Shadow_Shoes,Grid Shadow Shoes,12,10,,0,,,,0,0xFFFFFFFF,63,2,524288,,1,1,,{ skill "BS_GREED",1; bonus2 bSkillUseSP,"BS_GREED",100-(getrefine()*10); },{},{}
-24116,Grid_Shadow_Shield,Grid Shadow Shield,12,10,,0,,,,0,0xFFFFFFFF,63,2,262144,,1,1,,{ skill "BS_GREED",1; bonus2 bSkillUseSP,"BS_GREED",100-(getrefine()*10); },{},{}
-24117,Grid_Shadow_Weapon,Grid Shadow Weapon,12,10,,0,,,,0,0xFFFFFFFF,63,2,131072,,1,1,,{ skill "BS_GREED",1; bonus2 bSkillUseSP,"BS_GREED",100-(getrefine()*10); },{},{}
-24118,Grid_Shadow_Earring,Grid Shadow Earring,12,10,,0,,,,0,0xFFFFFFFF,63,2,1048576,,1,1,,{ skill "BS_GREED",1; bonus2 bSkillUseSP,"BS_GREED",100-(getrefine()*10); },{},{}
-24119,Grid_Shadow_Pendant,Grid Shadow Pendant,12,10,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,1,,{ skill "BS_GREED",1; bonus2 bSkillUseSP,"BS_GREED",100-(getrefine()*10); },{},{}
-24120,Heal_Shadow_Armor,Heal Shadow Armor,12,10,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,1,,{ skill "AL_HEAL",1; bonus2 bSkillUseSP,"AL_HEAL",50-(getrefine()*5); },{},{}
-24121,Heal_Shadow_Shoes,Heal Shadow Shoes,12,10,,0,,,,0,0xFFFFFFFF,63,2,524288,,1,1,,{ skill "AL_HEAL",1; bonus2 bSkillUseSP,"AL_HEAL",50-(getrefine()*5); },{},{}
-24122,Heal_Shadow_Shield,Heal Shadow Shield,12,10,,0,,,,0,0xFFFFFFFF,63,2,262144,,1,1,,{ skill "AL_HEAL",1; bonus2 bSkillUseSP,"AL_HEAL",50-(getrefine()*5); },{},{}
-24123,Heal_Shadow_Weapon,Heal Shadow Weapon,12,10,,0,,,,0,0xFFFFFFFF,63,2,131072,,1,1,,{ skill "AL_HEAL",1; bonus2 bSkillUseSP,"AL_HEAL",50-(getrefine()*5); },{},{}
-24124,Heal_Shadow_Earring,Heal Shadow Earring,12,10,,0,,,,0,0xFFFFFFFF,63,2,1048576,,1,1,,{ skill "AL_HEAL",1; bonus2 bSkillUseSP,"AL_HEAL",50-(getrefine()*5); },{},{}
-24125,Heal_Shadow_Pendant,Heal Shadow Pendant,12,10,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,1,,{ skill "AL_HEAL",1; bonus2 bSkillUseSP,"AL_HEAL",50-(getrefine()*5); },{},{}
-24126,Hiding_Shadow_Armor,Hiding Shadow Armor,12,10,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,1,,{ skill "TF_HIDING",1; bonus2 bSkillUseSP,"TF_HIDING",50-(getrefine()*5); },{},{ sc_end SC_HIDING; }
-24127,Hiding_Shadow_Shoes,Hiding Shadow Shoes,12,10,,0,,,,0,0xFFFFFFFF,63,2,524288,,1,1,,{ skill "TF_HIDING",1; bonus2 bSkillUseSP,"TF_HIDING",50-(getrefine()*5); },{},{ sc_end SC_HIDING; }
-24128,Hiding_Shadow_Shield,Hiding Shadow Shield,12,10,,0,,,,0,0xFFFFFFFF,63,2,262144,,1,1,,{ skill "TF_HIDING",1; bonus2 bSkillUseSP,"TF_HIDING",50-(getrefine()*5); },{},{ sc_end SC_HIDING; }
-24129,Hiding_Shadow_Weapon,Hiding Shadow Weapon,12,10,,0,,,,0,0xFFFFFFFF,63,2,131072,,1,1,,{ skill "TF_HIDING",1; bonus2 bSkillUseSP,"TF_HIDING",50-(getrefine()*5); },{},{ sc_end SC_HIDING; }
-24130,Hiding_Shadow_Earring,Hiding Shadow Earring,12,10,,0,,,,0,0xFFFFFFFF,63,2,1048576,,1,1,,{ skill "TF_HIDING",1; bonus2 bSkillUseSP,"TF_HIDING",50-(getrefine()*5); },{},{ sc_end SC_HIDING; }
-24131,Hiding_Shadow_Pendant,Hiding Shadow Pendant,12,10,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,1,,{ skill "TF_HIDING",1; bonus2 bSkillUseSP,"TF_HIDING",50-(getrefine()*5); },{},{ sc_end SC_HIDING; }
-24132,Cloaking_Shadow_Armor,Cloaking Shadow Armor,12,10,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,1,,{ skill "AS_CLOAKING",1; bonus2 bSkillUseSP,"AS_CLOAKING",50-(getrefine()*5); },{},{ sc_end SC_CLOAKING; }
-24133,Cloaking_Shadow_Shoes,Cloaking Shadow Shoes,12,10,,0,,,,0,0xFFFFFFFF,63,2,524288,,1,1,,{ skill "AS_CLOAKING",1; bonus2 bSkillUseSP,"AS_CLOAKING",50-(getrefine()*5); },{},{ sc_end SC_CLOAKING; }
-24134,Cloaking_Shadow_Shield,Cloaking Shadow Shield,12,10,,0,,,,0,0xFFFFFFFF,63,2,262144,,1,1,,{ skill "AS_CLOAKING",1; bonus2 bSkillUseSP,"AS_CLOAKING",50-(getrefine()*5); },{},{ sc_end SC_CLOAKING; }
-24135,Cloaking_Shadow_Weapon,Cloaking Shadow Weapon,12,10,,0,,,,0,0xFFFFFFFF,63,2,131072,,1,1,,{ skill "AS_CLOAKING",1; bonus2 bSkillUseSP,"AS_CLOAKING",50-(getrefine()*5); },{},{ sc_end SC_CLOAKING; }
-24136,Cloaking_Shadow_Earring,Cloaking Shadow Earring,12,10,,0,,,,0,0xFFFFFFFF,63,2,1048576,,1,1,,{ skill "AS_CLOAKING",1; bonus2 bSkillUseSP,"AS_CLOAKING",50-(getrefine()*5); },{},{ sc_end SC_CLOAKING; }
-24137,Cloaking_Shadow_Pendant,Cloaking Shadow Pendant,12,10,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,1,,{ skill "AS_CLOAKING",1; bonus2 bSkillUseSP,"AS_CLOAKING",50-(getrefine()*5); },{},{ sc_end SC_CLOAKING; }
-24138,Teleport_Shadow_Armor,Teleport Shadow Armor,12,10,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,1,,{ skill "AL_TELEPORT",1; bonus2 bSkillUseSP,"AS_CLOAKING",50-(getrefine()*5); },{},{}
-24139,Teleport_Shadow_Shoes,Teleport Shadow Shoes,12,10,,0,,,,0,0xFFFFFFFF,63,2,524288,,1,1,,{ skill "AL_TELEPORT",1; bonus2 bSkillUseSP,"AS_CLOAKING",50-(getrefine()*5); },{},{}
-24140,Teleport_Shadow_Shield,Teleport Shadow Shield,12,10,,0,,,,0,0xFFFFFFFF,63,2,262144,,1,1,,{ skill "AL_TELEPORT",1; bonus2 bSkillUseSP,"AS_CLOAKING",50-(getrefine()*5); },{},{}
-24141,Teleport_Shadow_Weapon,Teleport Shadow Weapon,12,10,,0,,,,0,0xFFFFFFFF,63,2,131072,,1,1,,{ skill "AL_TELEPORT",1; bonus2 bSkillUseSP,"AS_CLOAKING",50-(getrefine()*5); },{},{}
-24142,Teleport_Shadow_Earring,Teleport Shadow Earring,12,10,,0,,,,0,0xFFFFFFFF,63,2,1048576,,1,1,,{ skill "AL_TELEPORT",1; bonus2 bSkillUseSP,"AS_CLOAKING",50-(getrefine()*5); },{},{}
-24143,Teleport_Shadow_Pendant,Teleport Shadow Pendant,12,10,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,1,,{ skill "AL_TELEPORT",1; bonus2 bSkillUseSP,"AS_CLOAKING",50-(getrefine()*5); },{},{}
-24144,Steal_Shadow_Armor,Steal Shadow Armor,12,10,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,1,,{ skill "TF_STEAL",1; bonus2 bSkillUseSP,"TF_STEAL",50-(getrefine()*5); },{},{}
-24145,Steal_Shadow_Shoes,Steal Shadow Shoes,12,10,,0,,,,0,0xFFFFFFFF,63,2,524288,,1,1,,{ skill "TF_STEAL",1; bonus2 bSkillUseSP,"TF_STEAL",50-(getrefine()*5); },{},{}
-24146,Steal_Shadow_Shield,Steal Shadow Shield,12,10,,0,,,,0,0xFFFFFFFF,63,2,262144,,1,1,,{ skill "TF_STEAL",1; bonus2 bSkillUseSP,"TF_STEAL",50-(getrefine()*5); },{},{}
-24147,Steal_Shadow_Weapon,Steal Shadow Weapon,12,10,,0,,,,0,0xFFFFFFFF,63,2,131072,,1,1,,{ skill "TF_STEAL",1; bonus2 bSkillUseSP,"TF_STEAL",50-(getrefine()*5); },{},{}
-24148,Steal_Shadow_Earring,Steal Shadow Earring,12,10,,0,,,,0,0xFFFFFFFF,63,2,1048576,,1,1,,{ skill "TF_STEAL",1; bonus2 bSkillUseSP,"TF_STEAL",50-(getrefine()*5); },{},{}
-24149,Steal_Shadow_Pendant,Steal Shadow Pendant,12,10,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,1,,{ skill "TF_STEAL",1; bonus2 bSkillUseSP,"TF_STEAL",50-(getrefine()*5); },{},{}
+24115,Grid_Shadow_Shoes,Grid Shadow Shoes,12,10,,0,,,,0,0xFFFFFFFF,63,2,524288,,1,1,,{ skill "BS_GREED",1; bonus2 bSkillUseSP,"BS_GREED",-100+(getrefine()*10); },{},{}
+24116,Grid_Shadow_Shield,Grid Shadow Shield,12,10,,0,,,,0,0xFFFFFFFF,63,2,262144,,1,1,,{ skill "BS_GREED",1; bonus2 bSkillUseSP,"BS_GREED",-100+(getrefine()*10); },{},{}
+24117,Grid_Shadow_Weapon,Grid Shadow Weapon,12,10,,0,,,,0,0xFFFFFFFF,63,2,131072,,1,1,,{ skill "BS_GREED",1; bonus2 bSkillUseSP,"BS_GREED",-100+(getrefine()*10); },{},{}
+24118,Grid_Shadow_Earring,Grid Shadow Earring,12,10,,0,,,,0,0xFFFFFFFF,63,2,1048576,,1,1,,{ skill "BS_GREED",1; bonus2 bSkillUseSP,"BS_GREED",-100+(getrefine()*10); },{},{}
+24119,Grid_Shadow_Pendant,Grid Shadow Pendant,12,10,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,1,,{ skill "BS_GREED",1; bonus2 bSkillUseSP,"BS_GREED",-100+(getrefine()*10); },{},{}
+24120,Heal_Shadow_Armor,Heal Shadow Armor,12,10,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,1,,{ skill "AL_HEAL",1; bonus2 bSkillUseSP,"AL_HEAL",-50+(getrefine()*5); },{},{}
+24121,Heal_Shadow_Shoes,Heal Shadow Shoes,12,10,,0,,,,0,0xFFFFFFFF,63,2,524288,,1,1,,{ skill "AL_HEAL",1; bonus2 bSkillUseSP,"AL_HEAL",-50+(getrefine()*5); },{},{}
+24122,Heal_Shadow_Shield,Heal Shadow Shield,12,10,,0,,,,0,0xFFFFFFFF,63,2,262144,,1,1,,{ skill "AL_HEAL",1; bonus2 bSkillUseSP,"AL_HEAL",-50+(getrefine()*5); },{},{}
+24123,Heal_Shadow_Weapon,Heal Shadow Weapon,12,10,,0,,,,0,0xFFFFFFFF,63,2,131072,,1,1,,{ skill "AL_HEAL",1; bonus2 bSkillUseSP,"AL_HEAL",-50+(getrefine()*5); },{},{}
+24124,Heal_Shadow_Earring,Heal Shadow Earring,12,10,,0,,,,0,0xFFFFFFFF,63,2,1048576,,1,1,,{ skill "AL_HEAL",1; bonus2 bSkillUseSP,"AL_HEAL",-50+(getrefine()*5); },{},{}
+24125,Heal_Shadow_Pendant,Heal Shadow Pendant,12,10,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,1,,{ skill "AL_HEAL",1; bonus2 bSkillUseSP,"AL_HEAL",-50+(getrefine()*5); },{},{}
+24126,Hiding_Shadow_Armor,Hiding Shadow Armor,12,10,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,1,,{ skill "TF_HIDING",1; bonus2 bSkillUseSP,"TF_HIDING",-50+(getrefine()*5); },{},{ sc_end SC_HIDING; }
+24127,Hiding_Shadow_Shoes,Hiding Shadow Shoes,12,10,,0,,,,0,0xFFFFFFFF,63,2,524288,,1,1,,{ skill "TF_HIDING",1; bonus2 bSkillUseSP,"TF_HIDING",-50+(getrefine()*5); },{},{ sc_end SC_HIDING; }
+24128,Hiding_Shadow_Shield,Hiding Shadow Shield,12,10,,0,,,,0,0xFFFFFFFF,63,2,262144,,1,1,,{ skill "TF_HIDING",1; bonus2 bSkillUseSP,"TF_HIDING",-50+(getrefine()*5); },{},{ sc_end SC_HIDING; }
+24129,Hiding_Shadow_Weapon,Hiding Shadow Weapon,12,10,,0,,,,0,0xFFFFFFFF,63,2,131072,,1,1,,{ skill "TF_HIDING",1; bonus2 bSkillUseSP,"TF_HIDING",-50+(getrefine()*5); },{},{ sc_end SC_HIDING; }
+24130,Hiding_Shadow_Earring,Hiding Shadow Earring,12,10,,0,,,,0,0xFFFFFFFF,63,2,1048576,,1,1,,{ skill "TF_HIDING",1; bonus2 bSkillUseSP,"TF_HIDING",-50+(getrefine()*5); },{},{ sc_end SC_HIDING; }
+24131,Hiding_Shadow_Pendant,Hiding Shadow Pendant,12,10,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,1,,{ skill "TF_HIDING",1; bonus2 bSkillUseSP,"TF_HIDING",-50+(getrefine()*5); },{},{ sc_end SC_HIDING; }
+24132,Cloaking_Shadow_Armor,Cloaking Shadow Armor,12,10,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,1,,{ skill "AS_CLOAKING",1; bonus2 bSkillUseSP,"AS_CLOAKING",-50+(getrefine()*5); },{},{ sc_end SC_CLOAKING; }
+24133,Cloaking_Shadow_Shoes,Cloaking Shadow Shoes,12,10,,0,,,,0,0xFFFFFFFF,63,2,524288,,1,1,,{ skill "AS_CLOAKING",1; bonus2 bSkillUseSP,"AS_CLOAKING",-50+(getrefine()*5); },{},{ sc_end SC_CLOAKING; }
+24134,Cloaking_Shadow_Shield,Cloaking Shadow Shield,12,10,,0,,,,0,0xFFFFFFFF,63,2,262144,,1,1,,{ skill "AS_CLOAKING",1; bonus2 bSkillUseSP,"AS_CLOAKING",-50+(getrefine()*5); },{},{ sc_end SC_CLOAKING; }
+24135,Cloaking_Shadow_Weapon,Cloaking Shadow Weapon,12,10,,0,,,,0,0xFFFFFFFF,63,2,131072,,1,1,,{ skill "AS_CLOAKING",1; bonus2 bSkillUseSP,"AS_CLOAKING",-50+(getrefine()*5); },{},{ sc_end SC_CLOAKING; }
+24136,Cloaking_Shadow_Earring,Cloaking Shadow Earring,12,10,,0,,,,0,0xFFFFFFFF,63,2,1048576,,1,1,,{ skill "AS_CLOAKING",1; bonus2 bSkillUseSP,"AS_CLOAKING",-50+(getrefine()*5); },{},{ sc_end SC_CLOAKING; }
+24137,Cloaking_Shadow_Pendant,Cloaking Shadow Pendant,12,10,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,1,,{ skill "AS_CLOAKING",1; bonus2 bSkillUseSP,"AS_CLOAKING",-50+(getrefine()*5); },{},{ sc_end SC_CLOAKING; }
+24138,Teleport_Shadow_Armor,Teleport Shadow Armor,12,10,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,1,,{ skill "AL_TELEPORT",1; bonus2 bSkillUseSP,"AL_TELEPORT",-50+(getrefine()*5); },{},{}
+24139,Teleport_Shadow_Shoes,Teleport Shadow Shoes,12,10,,0,,,,0,0xFFFFFFFF,63,2,524288,,1,1,,{ skill "AL_TELEPORT",1; bonus2 bSkillUseSP,"AL_TELEPORT",-50+(getrefine()*5); },{},{}
+24140,Teleport_Shadow_Shield,Teleport Shadow Shield,12,10,,0,,,,0,0xFFFFFFFF,63,2,262144,,1,1,,{ skill "AL_TELEPORT",1; bonus2 bSkillUseSP,"AL_TELEPORT",-50+(getrefine()*5); },{},{}
+24141,Teleport_Shadow_Weapon,Teleport Shadow Weapon,12,10,,0,,,,0,0xFFFFFFFF,63,2,131072,,1,1,,{ skill "AL_TELEPORT",1; bonus2 bSkillUseSP,"AL_TELEPORT",-50+(getrefine()*5); },{},{}
+24142,Teleport_Shadow_Earring,Teleport Shadow Earring,12,10,,0,,,,0,0xFFFFFFFF,63,2,1048576,,1,1,,{ skill "AL_TELEPORT",1; bonus2 bSkillUseSP,"AL_TELEPORT",-50+(getrefine()*5); },{},{}
+24143,Teleport_Shadow_Pendant,Teleport Shadow Pendant,12,10,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,1,,{ skill "AL_TELEPORT",1; bonus2 bSkillUseSP,"AL_TELEPORT",-50+(getrefine()*5); },{},{}
+24144,Steal_Shadow_Armor,Steal Shadow Armor,12,10,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,1,,{ skill "TF_STEAL",1; bonus2 bSkillUseSP,"TF_STEAL",-50+(getrefine()*5); },{},{}
+24145,Steal_Shadow_Shoes,Steal Shadow Shoes,12,10,,0,,,,0,0xFFFFFFFF,63,2,524288,,1,1,,{ skill "TF_STEAL",1; bonus2 bSkillUseSP,"TF_STEAL",-50+(getrefine()*5); },{},{}
+24146,Steal_Shadow_Shield,Steal Shadow Shield,12,10,,0,,,,0,0xFFFFFFFF,63,2,262144,,1,1,,{ skill "TF_STEAL",1; bonus2 bSkillUseSP,"TF_STEAL",-50+(getrefine()*5); },{},{}
+24147,Steal_Shadow_Weapon,Steal Shadow Weapon,12,10,,0,,,,0,0xFFFFFFFF,63,2,131072,,1,1,,{ skill "TF_STEAL",1; bonus2 bSkillUseSP,"TF_STEAL",-50+(getrefine()*5); },{},{}
+24148,Steal_Shadow_Earring,Steal Shadow Earring,12,10,,0,,,,0,0xFFFFFFFF,63,2,1048576,,1,1,,{ skill "TF_STEAL",1; bonus2 bSkillUseSP,"TF_STEAL",-50+(getrefine()*5); },{},{}
+24149,Steal_Shadow_Pendant,Steal Shadow Pendant,12,10,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,1,,{ skill "TF_STEAL",1; bonus2 bSkillUseSP,"TF_STEAL",-50+(getrefine()*5); },{},{}
 24150,Infinity_Shadow_Earring,Infinity Shadow Earring,12,10,,0,,,,0,0xFFFFFFFF,63,2,1048576,,1,1,,{ .@r = getrefine(); bonus2 bSubSize,Size_All,1+((.@r >= 9) ? 2 : (.@r >= 7) ? 1 : 0); },{},{}
 24151,Infinity_Shadow_Pendant,Infinity Shadow Pendant,12,10,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,1,,{ .@r = getrefine(); bonus2 bSubSize,Size_All,1+((.@r >= 9) ? 2 : (.@r >= 7) ? 1 : 0); },{},{}
 24152,Solid_Shadow_Weapon,Solid Shadow Weapon,12,10,,0,,,,0,0xFFFFFFFF,63,2,131072,,1,1,,{ bonus bBaseAtk,5+(getrefine()/2); },{},{}
