@@ -1380,7 +1380,7 @@ int chmapif_bonus_script_save(int fd) {
 		uint32 cid = RFIFOL(fd,4);
 		uint8 count = RFIFOB(fd,8);
 
-		if (SQL_ERROR == Sql_Query(sql_handle,"DELETE FROM `%s` WHERE `char_id` = '%d'", schema_config.bonus_script_db, cid))
+		if (SQL_ERROR == Sql_Query(sql_handle,"DELETE FROM `%s` WHERE `char_id` = '%d'", charserv_table(bonus_script_table), cid))
 			Sql_ShowDebug(sql_handle);
 
 		if (count > 0) {

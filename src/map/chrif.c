@@ -585,7 +585,7 @@ int chrif_sendmapack(int fd) {
 
 	// Server name
 	memcpy(map_config.wisp_server_name, RFIFOP(fd,5), NAME_LENGTH);
-	ShowStatus("Map-server connected to char-server '"CL_WHITE"%s"CL_RESET"'.\n", wisp_server_name);
+	ShowStatus("Map-server connected to char-server '"CL_WHITE"%s"CL_RESET"'.\n", map_config.wisp_server_name);
 
 	// Default map
 	memcpy(map_default.mapname, RFIFOP(fd, (offs+=NAME_LENGTH)), MAP_NAME_LENGTH);

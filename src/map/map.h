@@ -74,7 +74,6 @@ struct MapServer_Schema {
 	StringBuf *roulette_table;			///< Roulette table
 	StringBuf *vendings_table;		    ///< Vending table (vendor & autotrader)
 	StringBuf *vending_items_table;	    ///< Vending items table (vendor & autotrader)
-	StringBuf *mapreg_table;		    ///< Mapreg table, used in mapreg.c
 };
 extern struct MapServer_Schema mapserv_schema_config; /// map-server tables
 /// Get map-server table value. Table names @see MapServer_Schema
@@ -869,6 +868,11 @@ void map_setgatcell(int16 m, int16 x, int16 y, int gat);
 extern struct map_data map[];
 extern int map_num;
 
+struct s_map_default {
+	char mapname[MAP_NAME_LENGTH];
+	unsigned short x;
+	unsigned short y;
+};
 extern struct s_map_default map_default;
 
 /// Type of 'save_settings'
