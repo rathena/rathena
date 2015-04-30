@@ -12332,6 +12332,13 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 	case HW_GRAVITATION:
 		if(sc && sc->data[SC_GRAVITATION] && sc->data[SC_GRAVITATION]->val3 == BCT_SELF)
 			link_group_id = sc->data[SC_GRAVITATION]->val4;
+		break;
+	case SO_VACUUM_EXTREME:
+		// Coordinates
+		val1 = x;
+		val2 = y;
+		val3 = 0; // Suck target at n seconds.
+		break;
 	}
 
 	// Init skill unit group
@@ -13426,12 +13433,12 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 			break;
 
 		case UNT_VACUUM_EXTREME:
-			if ( tsc && tsc->data[SC_HALLUCINATIONWALK] )
+			if (tsc && (tsc->data[SC_HALLUCINATIONWALK] || tsc->data[SC_HOVERING] || tsc->data[SC_VACUUM_EXTREME] ||
+				(tsc->data[SC_VACUUM_EXTREME_POSTDELAY] && tsc->data[SC_VACUUM_EXTREME_POSTDELAY]->val2 == sg->group_id))) // Ignore post delay from other vacuum (this will make stack effect enabled)
 				return 0;
-			else {
-				sg->limit -= 100 * tstatus->str/20;
-				sc_start(ss, bl, SC_VACUUM_EXTREME, 100, sg->skill_lv, sg->limit);
-			}
+			else
+				// Apply effect and suck targets one-by-one each n seconds
+				sc_start4(ss, bl, SC_VACUUM_EXTREME, 100, sg->skill_lv, sg->group_id, (sg->val1<<16)|(sg->val2), ++sg->val3*500, (sg->limit - DIFF_TICK(tick, sg->tick)));
 			break;
 
 		case UNT_BANDING:

@@ -1201,6 +1201,7 @@ void initChangeTables(void)
 	StatusChangeStateTable[SC_KYOUGAKU]				|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_PARALYSIS]			|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_KINGS_GRACE]			|= SCS_NOMOVE;
+	StatusChangeStateTable[SC_VACUUM_EXTREME]		|= SCS_NOMOVE;
 
 	/* StatusChangeState (SCS_) NOPICKUPITEMS */
 	StatusChangeStateTable[SC_HIDING]				|= SCS_NOPICKITEM;
@@ -7799,7 +7800,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		)
 			return 0;
 	case SC_VACUUM_EXTREME:
-		if(sc->data[SC_HALLUCINATIONWALK] || sc->data[SC_HOVERING])
+		if (sc && (sc->data[SC_HALLUCINATIONWALK] || sc->data[SC_HOVERING] || sc->data[SC_VACUUM_EXTREME] ||
+			(sc->data[SC_VACUUM_EXTREME_POSTDELAY] && sc->data[SC_VACUUM_EXTREME_POSTDELAY]->val2 == val2))) // Ignore post delay from other vacuum (this will make stack effect enabled)
 			return 0;
 		break;
 	case SC_STONE:
@@ -8160,6 +8162,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_ELECTRICSHOCKER:
 			case SC_MAGNETICFIELD:
 			case SC_NETHERWORLD:
+			case SC_VACUUM_EXTREME:
 				return 0;
 		}
 	}
@@ -9677,11 +9680,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val4 = tick / 1000;
 			tick_time = 1000; // [GodLesZ] tick time
 			break;
-		case SC_VACUUM_EXTREME:
-			tick -= (status->str / 20) * 1000;
-			val4 = val3 = tick / 100;
-			tick_time = 100; // [GodLesZ] tick time
-			break;
 		case SC_SWINGDANCE:
 			val3 = 5 * val1 + val2; // Walk speed and aspd reduction.
 			break;
@@ -10129,6 +10127,16 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = 3000;
 			val4 = tick/tick_time;
 			break;
+		case SC_VACUUM_EXTREME:
+			// Suck target at n second, only if the n second is lower than the duration
+			// Doesn't apply to BL_PC
+			if (bl->type != BL_PC && val4 < tick && !unit_blown_immune(bl,0x1) && status->mode&MD_CANMOVE) {
+				tick_time = val4;
+				val4 = tick - tick_time;
+			}
+			else
+				val4 = 0;
+			break;
 
 		/* Rebellion */
 		case SC_B_TRAP:
@@ -10311,13 +10319,18 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_PARALYSIS:
 		case SC_MAGNETICFIELD:
 		case SC_ANKLE:
-		case SC_VACUUM_EXTREME:
 			if (!unit_blown_immune(bl,0x1))
 				unit_stop_walking(bl,1);
 			break;
 		case SC__MANHOLE:
 			if (bl->type == BL_PC || !unit_blown_immune(bl,0x1))
 				unit_stop_walking(bl,1);
+			break;
+		case SC_VACUUM_EXTREME:
+			if (bl->type != BL_PC && !unit_blown_immune(bl,0x1)) {
+				unit_stop_walking(bl,1);
+				unit_stop_attack(bl);
+			}
 			break;
 		case SC_HIDING:
 		case SC_CLOAKING:
@@ -11307,6 +11320,10 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				it.identify = 1;
 				map_addflooritem(&it, it.amount, bl->m,bl->x, bl->y, caster->status.char_id, 0, 0, 4);
 			}
+			break;
+		case SC_VACUUM_EXTREME:
+			///< !CHECKME: Seems on official, there's delay before same target can be vacuumed in same area again [Cydh]
+			sc_start2(bl, bl, SC_VACUUM_EXTREME_POSTDELAY, 100, sce->val1, sce->val2, skill_get_time2(SO_VACUUM_EXTREME,sce->val1));
 			break;
 	}
 
@@ -12397,6 +12414,17 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 				break;
 			sc_timer_next(3000 + tick, status_change_timer, bl->id, data);
 		}
+		break;
+	case SC_VACUUM_EXTREME:
+		if (sce->val4) {
+			if (unit_movepos(bl, sce->val3>>16, sce->val3&0xFFFF, 0, false)) {
+				clif_slide(bl, sce->val3>>16, sce->val3&0xFFFF);
+				clif_fixpos(bl);
+			}
+			sc_timer_next(tick+sce->val4, status_change_timer, bl->id, data);
+			sce->val4 = 0;
+		}
+		break;
 	}
 
 	// Default for all non-handled control paths is to end the status
