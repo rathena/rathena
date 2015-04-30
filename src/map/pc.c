@@ -10688,8 +10688,8 @@ static bool pc_readdb_job_basehpsp(char* fields[], int columns, int current)
 				if (atoi(fields[j+4])) {
 					uint16 lvl_idx = startlvl-1+j;
 					job_info[idx].base_hp[lvl_idx] = atoi(fields[j+4]);
-					//Tells if this HP is lower than previous level
-					if (lvl_idx-1 >= 0 && job_info[idx].base_hp[lvl_idx] < job_info[idx].base_hp[lvl_idx-1])
+					//Tells if this HP is lower than previous level (but not for 99->100)
+					if (lvl_idx-1 >= 0 && lvl_idx != 99 && job_info[idx].base_hp[lvl_idx] < job_info[idx].base_hp[lvl_idx-1])
 						ShowInfo("pc_readdb_job_basehpsp: HP value at entry %d col %d is lower than previous level (job=%d,lvl=%d,oldval=%d,val=%d).\n",
 							current,j+4,job_id,lvl_idx+1,job_info[idx].base_hp[lvl_idx-1],job_info[idx].base_hp[lvl_idx]);
 				}
@@ -10701,8 +10701,8 @@ static bool pc_readdb_job_basehpsp(char* fields[], int columns, int current)
 				if (atoi(fields[j+4])) {
 					uint16 lvl_idx = startlvl-1+j;
 					job_info[idx].base_sp[lvl_idx] = atoi(fields[j+4]);
-					//Tells if this SP is lower than previous level
-					if (lvl_idx-1 >= 0 && job_info[idx].base_sp[lvl_idx] < job_info[idx].base_sp[lvl_idx-1])
+					//Tells if this SP is lower than previous level (but not for 99->100)
+					if (lvl_idx-1 >= 0 && lvl_idx != 99 && job_info[idx].base_sp[lvl_idx] < job_info[idx].base_sp[lvl_idx-1])
 						ShowInfo("pc_readdb_job_basehpsp: SP value at entry %d col %d is lower than previous level (job=%d,lvl=%d,oldval=%d,val=%d).\n",
 							current,j+4,job_id,lvl_idx+1,job_info[idx].base_sp[lvl_idx-1],job_info[idx].base_sp[lvl_idx]);
 				}
