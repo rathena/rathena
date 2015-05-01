@@ -2759,25 +2759,22 @@ int unit_changeviewsize(struct block_list *bl,short size)
 }
 
 /**
- * Makes 'bl' that attacking 'src' switch to 'target'
+ * Makes 'bl' that attacking 'src' switch to attack 'target'
  * @param bl
  * @param ap
  * @param src Current target
  * @param target New target
- * @param flag 0x1 Force to attack although 'bl' is idle
- *             0x2 Force to attack although 'bl' has different target (not targetting 'src')
  **/
 int unit_changetarget(struct block_list *bl, va_list ap) {
 	struct unit_data *ud = unit_bl2ud(bl);
 	struct block_list *src = va_arg(ap,struct block_list *);
 	struct block_list *target = va_arg(ap,struct block_list *);
-	int flag = va_arg(ap,int);
 
 	if (!ud || !target || ud->target == target->id)
 		return 1;
-	if (!(flag&0x1) && !ud->target && !ud->target_to)
+	if (!ud->target && !ud->target_to)
 		return 1;
-	if (!(flag&0x2) && ud->target != src->id && ud->target_to != src->id)
+	if (ud->target != src->id && ud->target_to != src->id)
 		return 1;
 
 	if (bl->type == BL_MOB)
