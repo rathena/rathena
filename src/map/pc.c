@@ -4323,6 +4323,8 @@ char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_p
 	struct item_data *id;
 	int16 i;
 	unsigned int w;
+	
+	if( map[sd->bl.m].flag.pickevent ) npc_script_event( sd, NPCE_PICKEVENT );
 
 	nullpo_retr(1, sd);
 	nullpo_retr(1, item);
