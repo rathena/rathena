@@ -367,6 +367,12 @@ teleporting within the map). More details can be found in '/doc/script_commands.
 
 ---------------------------------------
 
+*pickevent
+
+Triggers the label "OnPickEvent" when a player pick a item.
+
+---------------------------------------
+
 *allowks
 
 Allows kill stealing on a map (rendering the @noks command useless).
