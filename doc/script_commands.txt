@@ -975,6 +975,11 @@ changing stats, equipment, or maps, as well as when logging in, leveling up, and
 mounting a job mount. This can be used to grant additional item bonuses to certain
 player groups, for instance.
 
+
+OnPickEvent:
+
+This special label triggers when a player pick a item in a map with the 'pickevent' mapflag and attaches its RID.
+
 OnWhisperGlobal:
 
 This special label triggers when a player whispers the NPC, and will run with the
