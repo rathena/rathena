@@ -2759,6 +2759,39 @@ int unit_changeviewsize(struct block_list *bl,short size)
 }
 
 /**
+ * Makes 'bl' that attacking 'src' switch to attack 'target'
+ * @param bl
+ * @param ap
+ * @param src Current target
+ * @param target New target
+ **/
+int unit_changetarget(struct block_list *bl, va_list ap) {
+	struct unit_data *ud = unit_bl2ud(bl);
+	struct block_list *src = va_arg(ap,struct block_list *);
+	struct block_list *target = va_arg(ap,struct block_list *);
+
+	if (!ud || !target || ud->target == target->id)
+		return 1;
+	if (!ud->target && !ud->target_to)
+		return 1;
+	if (ud->target != src->id && ud->target_to != src->id)
+		return 1;
+
+	if (bl->type == BL_MOB)
+		(BL_CAST(BL_MOB,bl))->target_id = target->id;
+	if (ud->target_to)
+		ud->target_to = target->id;
+	else
+		ud->target_to = 0;
+	if (ud->skilltarget)
+		ud->skilltarget = target->id;
+	unit_set_target(ud, target->id);
+
+	//unit_attack(bl, target->id, ud->state.attack_continue);
+	return 0;
+}
+
+/**
  * Removes a bl/ud from the map
  * On kill specifics are not performed here, check status_damage()
  * @param bl: Object to remove from map

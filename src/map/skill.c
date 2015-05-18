@@ -5569,9 +5569,15 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------*/
+/**
+ * Use no-damage skill from 'src' to 'bl
+ * @param src Caster
+ * @param bl Target of the skill, bl maybe same with src for self skill
+ * @param skill_id
+ * @param skill_lv
+ * @param tick
+ * @param flag Various value, &1: Recursive effect
+ **/
 int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, uint16 skill_id, uint16 skill_lv, unsigned int tick, int flag)
 {
 	struct map_session_data *sd, *dstsd;
@@ -8352,22 +8358,24 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case HAMI_CASTLE:	//[orn]
-		if (rnd()%100 < 20 * skill_lv && src != bl) {
+		if (src != bl && rnd()%100 < 20 * skill_lv) {
 			int x = src->x, y = src->y;
 
 			if (hd)
 				skill_blockhomun_start(hd,skill_id,skill_get_time2(skill_id,skill_lv));
+			// Move source
 			if (unit_movepos(src,bl->x,bl->y,0,0)) {
 				clif_skill_nodamage(src,src,skill_id,skill_lv,1); // Homunc
 				clif_blown(src);
+				// Move target
 				if (unit_movepos(bl,x,y,0,0)) {
-					clif_skill_nodamage(bl,bl,skill_id,skill_lv,1); // Master
+					clif_skill_nodamage(bl,bl,skill_id,skill_lv,1);
 					clif_blown(bl);
 				}
-				//TODO: Make casted skill also change its target
-				map_foreachinrange(skill_changetarget,src,AREA_SIZE,BL_CHAR,bl,src);
+				map_foreachinrange(unit_changetarget,src,AREA_SIZE,BL_MOB,bl,src);
 			}
-		} else if (hd && hd->master) // Failed
+		}
+		else if (hd && hd->master) // Failed
 			clif_skill_fail(hd->master, skill_id, USESKILL_FAIL_LEVEL, 0);
 		else if (sd)
 			clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
@@ -16738,24 +16746,6 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 		return 1;
 	}
 
-	return 0;
-}
-
-/*==========================================
- *
- *------------------------------------------*/
-int skill_changetarget(struct block_list *bl, va_list ap)
-{
-	struct mob_data *md = (struct mob_data *)bl;
-	struct unit_data *ud = unit_bl2ud(bl);
-	struct block_list *from_bl = va_arg(ap,struct block_list *);
-	struct block_list *to_bl = va_arg(ap,struct block_list *);
-
-	if(ud && ud->target == from_bl->id)
-		ud->target = to_bl->id;
-
-	if(md->bl.type == BL_MOB && md->target_id == from_bl->id)
-		md->target_id = to_bl->id;
 	return 0;
 }
 
