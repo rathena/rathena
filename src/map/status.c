@@ -762,7 +762,7 @@ void initChangeTables(void)
 	set_sc( EL_FIRE_CLOAK		, SC_FIRE_CLOAK_OPTION		, SI_FIRE_CLOAK_OPTION		, SCB_ALL );
 	set_sc( EL_WATER_SCREEN		, SC_WATER_SCREEN_OPTION	, SI_WATER_SCREEN_OPTION	, SCB_NONE );
 	set_sc( EL_WATER_DROP		, SC_WATER_DROP_OPTION		, SI_WATER_DROP_OPTION		, SCB_ALL );
-	set_sc( EL_WATER_BARRIER	, SC_WATER_BARRIER		, SI_WATER_BARRIER		, SCB_MDEF|SCB_WATK|SCB_MATK|SCB_FLEE );
+	set_sc( EL_WATER_BARRIER	, SC_WATER_BARRIER		, SI_WATER_BARRIER		, SCB_WATK|SCB_FLEE );
 	set_sc( EL_WIND_STEP		, SC_WIND_STEP_OPTION		, SI_WIND_STEP_OPTION		, SCB_SPEED|SCB_FLEE );
 	set_sc( EL_WIND_CURTAIN		, SC_WIND_CURTAIN_OPTION	, SI_WIND_CURTAIN_OPTION	, SCB_ALL );
 	set_sc( EL_ZEPHYR		, SC_ZEPHYR			, SI_ZEPHYR			, SCB_FLEE );
@@ -853,8 +853,9 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_INTFOOD] = SI_FOODINT;
 	StatusIconChangeTable[SC_DEXFOOD] = SI_FOODDEX;
 	StatusIconChangeTable[SC_LUKFOOD] = SI_FOODLUK;
-	StatusIconChangeTable[SC_FLEEFOOD]= SI_FOODFLEE;
+	StatusIconChangeTable[SC_FLEEFOOD] = SI_FOODFLEE;
 	StatusIconChangeTable[SC_HITFOOD] = SI_FOODHIT;
+	StatusIconChangeTable[SC_CRIFOOD] = SI_FOODCRI;
 	StatusIconChangeTable[SC_MANU_ATK] = SI_MANU_ATK;
 	StatusIconChangeTable[SC_MANU_DEF] = SI_MANU_DEF;
 	StatusIconChangeTable[SC_SPL_ATK] = SI_SPL_ATK;
@@ -1042,8 +1043,9 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_INTFOOD] |= SCB_INT;
 	StatusChangeFlagTable[SC_DEXFOOD] |= SCB_DEX;
 	StatusChangeFlagTable[SC_LUKFOOD] |= SCB_LUK;
-	StatusChangeFlagTable[SC_HITFOOD] |= SCB_HIT;
 	StatusChangeFlagTable[SC_FLEEFOOD] |= SCB_FLEE;
+	StatusChangeFlagTable[SC_HITFOOD] |= SCB_HIT;
+	StatusChangeFlagTable[SC_CRIFOOD] |= SCB_CRI;
 	StatusChangeFlagTable[SC_BATKFOOD] |= SCB_BATK;
 	StatusChangeFlagTable[SC_WATKFOOD] |= SCB_WATK;
 	StatusChangeFlagTable[SC_MATKFOOD] |= SCB_MATK;
@@ -1198,7 +1200,6 @@ void initChangeTables(void)
 	StatusChangeStateTable[SC_CAMOUFLAGE]			|= SCS_NOMOVE|SCS_NOMOVECOND;
 	StatusChangeStateTable[SC_MEIKYOUSISUI]			|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_KAGEHUMI]				|= SCS_NOMOVE;
-	StatusChangeStateTable[SC_KYOUGAKU]				|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_PARALYSIS]			|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_KINGS_GRACE]			|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_VACUUM_EXTREME]		|= SCS_NOMOVE;
@@ -4128,14 +4129,19 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 		sc->data[SC_OBLIVIONCURSE] || sc->data[SC_VITALITYACTIVATION])
 		regen->flag &= ~RGN_SP;
 
-	if(sc->data[SC_TENSIONRELAX]) {
-		regen->rate.hp += 200;
-		if (regen->sregen)
-			regen->sregen->rate.hp += 300;
+	if (sc->data[SC_TENSIONRELAX]) {
+		if (sc->data[SC_WEIGHT50] || sc->data[SC_WEIGHT90])
+			regen->state.overweight = 0; // 1x HP regen
+		else {
+			regen->rate.hp += 200;
+			if (regen->sregen)
+				regen->sregen->rate.hp += 200;
+		}
 	}
-	if (sc->data[SC_MAGNIFICAT]) {
+
+	if (sc->data[SC_MAGNIFICAT])
 		regen->rate.sp += 100;
-	}
+
 	if (sc->data[SC_REGENERATION]) {
 		const struct status_change_entry *sce = sc->data[SC_REGENERATION];
 		if (!sce->val4) {
@@ -5383,7 +5389,7 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 	if(sc->data[SC_MERC_ATKUP])
 		watk += sc->data[SC_MERC_ATKUP]->val2;
 	if(sc->data[SC_WATER_BARRIER])
-		watk -= sc->data[SC_WATER_BARRIER]->val3;
+		watk -= sc->data[SC_WATER_BARRIER]->val2;
 #ifndef RENEWAL
 	if(sc->data[SC_NIBELUNGEN]) {
 		if (bl->type != BL_PC)
@@ -5477,8 +5483,6 @@ static unsigned short status_calc_ematk(struct block_list *bl, struct status_cha
 		matk += sc->data[SC_AQUAPLAY_OPTION]->val2;
 	if(sc->data[SC_CHILLY_AIR_OPTION])
 		matk += sc->data[SC_CHILLY_AIR_OPTION]->val2;
-	if(sc->data[SC_WATER_BARRIER])
-		matk -= sc->data[SC_WATER_BARRIER]->val3;
 	if(sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 3)
 		matk += 50;
 	if(sc->data[SC_ODINS_POWER])
@@ -5529,8 +5533,6 @@ static unsigned short status_calc_matk(struct block_list *bl, struct status_chan
 		matk += sc->data[SC_CHILLY_AIR_OPTION]->val2;
 	if (sc->data[SC_COOLER_OPTION])
 		matk += sc->data[SC_COOLER_OPTION]->val2;
-	if (sc->data[SC_WATER_BARRIER])
-		matk -= sc->data[SC_WATER_BARRIER]->val3;
 	if (sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 3)
 		matk += 50;
 	if (sc->data[SC_ODINS_POWER])
@@ -5580,6 +5582,8 @@ static signed short status_calc_critical(struct block_list *bl, struct status_ch
 
 	if (sc->data[SC_INCCRI])
 		critical += sc->data[SC_INCCRI]->val1;
+	if (sc->data[SC_CRIFOOD])
+		critical += sc->data[SC_CRIFOOD]->val1;
 	if (sc->data[SC_EXPLOSIONSPIRITS])
 		critical += sc->data[SC_EXPLOSIONSPIRITS]->val2;
 	if (sc->data[SC_FORTUNE])
@@ -5711,7 +5715,7 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 	if(sc->data[SC_MTF_HITFLEE])
 		flee += sc->data[SC_MTF_HITFLEE]->val2;
 	if( sc->data[SC_WATER_BARRIER] )
-		flee -= sc->data[SC_WATER_BARRIER]->val3;
+		flee -= sc->data[SC_WATER_BARRIER]->val2;
 	if( sc->data[SC_C_MARKER] )
 		flee -= sc->data[SC_C_MARKER]->val3;
 #ifdef RENEWAL
@@ -5808,8 +5812,6 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 #endif
 	if(sc->data[SC_DEFSET])
 		return sc->data[SC_DEFSET]->val1;
-	if(sc->data[SC_UNLIMIT])
-		return 1;
 
 	if(sc->data[SC_DRUMBATTLE])
 		def += sc->data[SC_DRUMBATTLE]->val3;
@@ -5899,8 +5901,6 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 		return 0;
 	if(sc->data[SC_DEFSET])
 		return sc->data[SC_DEFSET]->val1;
-	if(sc->data[SC_UNLIMIT])
-		return 1;
 
 	if(sc->data[SC_SUN_COMFORT])
 		def2 += sc->data[SC_SUN_COMFORT]->val2;
@@ -5971,8 +5971,6 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 #endif
 	if(sc->data[SC_MDEFSET])
 		return sc->data[SC_MDEFSET]->val1;
-	if(sc->data[SC_UNLIMIT])
-		return 1;
 
 	if(sc->data[SC_EARTH_INSIGNIA] && sc->data[SC_EARTH_INSIGNIA]->val1 == 3)
 		mdef += 50;
@@ -5980,8 +5978,6 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 		mdef += (sc->data[SC_ENDURE]->val4 == 0) ? sc->data[SC_ENDURE]->val1 : 1;
 	if(sc->data[SC_STONEHARDSKIN])
 		mdef += sc->data[SC_STONEHARDSKIN]->val1;
-	if(sc->data[SC_WATER_BARRIER])
-		mdef += sc->data[SC_WATER_BARRIER]->val2;
 	if(sc->data[SC_STONE] && sc->opt1 == OPT1_STONE)
 		mdef += 25 * mdef / 100;
 	if(sc->data[SC_FREEZE])
@@ -6027,8 +6023,6 @@ static signed short status_calc_mdef2(struct block_list *bl, struct status_chang
 		return 90;
 	if(sc->data[SC_MDEFSET])
 		return sc->data[SC_MDEFSET]->val1;
-	if(sc->data[SC_UNLIMIT])
-		return 1;
 
 	if(sc->data[SC_MINDBREAKER])
 		mdef2 -= mdef2 * sc->data[SC_MINDBREAKER]->val3/100;
@@ -8992,10 +8986,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				clif_sitting(&sd->bl);
 			}
 			val2 = 12; // SP cost
-			val4 = 10000; // Decrease at 10secs intervals.
-			val3 = tick/val4;
+			tick_time = 10000; // Decrease at 10secs intervals.
+			val3 = tick / tick_time;
 			tick = -1; // Duration sent to the client should be infinite
-			tick_time = val4; // [GodLesZ] tick time
 			break;
 		case SC_PARRYING:
 		    val2 = 20 + val1*3; // Block Chance
@@ -9502,8 +9495,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_WEAPONBLOCKING:
 			val2 = 10 + 2 * val1; // Chance
-			val4 = tick / 3000;
-			tick_time = 3000; // [GodLesZ] tick time
+			val4 = tick / 5000;
+			tick_time = 5000; // [GodLesZ] tick time
 			break;
 		case SC_TOXIN:
 			val4 = tick / 10000;
@@ -9627,7 +9620,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				if( pc_isridingwug(sd) ) pc_setoption(sd, sd->sc.option&~OPTION_WUGRIDER);
 				if( pc_isfalcon(sd) ) pc_setoption(sd, sd->sc.option&~OPTION_FALCON);
 				if( sd->status.pet_id > 0 ) pet_menu(sd, 3);
-				if( hom_is_active(sd->hd) ) hom_vaporize(sd,HOM_ST_REST);
+				if( hom_is_active(sd->hd) ) hom_vaporize(sd, HOM_ST_ACTIVE);
 				//if( sd->md ) mercenary_delete(sd->md,3); // Are Mercenaries removed? [aleos]
 			}
 			break;
@@ -9889,6 +9882,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_CIRCLE_OF_FIRE_OPTION:
 			val2 = 300;
 			break;
+		case SC_WATER_SCREEN_OPTION:
+			tick_time = 10000;
+			break;
 		case SC_FIRE_CLOAK_OPTION:
 		case SC_WATER_DROP_OPTION:
 		case SC_WIND_CURTAIN_OPTION:
@@ -9924,8 +9920,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = val3; // [GodLesZ] tick time
 			break;
 		case SC_WATER_BARRIER:
-			val2 = 40; // Increasement. Mdef1 ???
-			val3 = 30; // Reductions. Atk2, Flee1, Matk1 ????
+			val2 = 30; // Reductions. Atk2 and Flee1
 			break;
 		case SC_ZEPHYR:
 			val2 = 25; // Flee.
@@ -10102,6 +10097,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_UNLIMIT:
 			val2 = 50 * val1;
+			status_change_start(bl, bl, SC_DEFSET, 10000, 1, 0, 0, 0, tick, SCSTART_NOTICKDEF);
+			status_change_start(bl, bl, SC_MDEFSET, 10000, 1, 0, 0, 0, tick, SCSTART_NOTICKDEF);
 			break;
 		case SC_MONSTER_TRANSFORM:
 			if( !mobdb_checkid(val1) )
@@ -10289,7 +10286,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_STUN:
 		case SC_SLEEP:
 		case SC_STONE:
+		case SC_WHITEIMPRISON:
 		case SC_DEEPSLEEP:
+		case SC_CRYSTALIZE:
 			if (sd && pc_issit(sd)) // Avoid sprite sync problems.
 				pc_setstand(sd, true);
 		case SC_TRICKDEAD:
@@ -10297,28 +10296,33 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			// Cancel cast when get status [LuzZza]
 			if (battle_config.sc_castcancel&bl->type)
 				unit_skillcastcancel(bl, 0);
-		case SC_WHITEIMPRISON:
+		// Fall through
+		case SC_CURSEDCIRCLE_ATKER:
 			unit_stop_attack(bl);
+		// Fall through
 		case SC_STOP:
 		case SC_CONFUSION:
 		case SC_CLOSECONFINE:
 		case SC_CLOSECONFINE2:
 		case SC_TINDER_BREAKER:
 		case SC_TINDER_BREAKER2:
-		case SC_SPIDERWEB:
-		case SC_ELECTRICSHOCKER:
 		case SC_BITE:
 		case SC_THORNSTRAP:
-		//case SC__CHAOS:
-		case SC_CRYSTALIZE:
-		case SC_CURSEDCIRCLE_ATKER:
 		case SC_FEAR:
-		case SC_NETHERWORLD:
 		case SC_MEIKYOUSISUI:
 		case SC_KYOUGAKU:
 		case SC_PARALYSIS:
-		case SC_MAGNETICFIELD:
+		//case SC__CHAOS:
+			unit_stop_walking(bl,1);
+			break;
+		case SC_CURSEDCIRCLE_TARGET:
+			unit_stop_attack(bl);
+		// Fall through
 		case SC_ANKLE:
+		case SC_SPIDERWEB:
+		case SC_ELECTRICSHOCKER:
+		case SC_MAGNETICFIELD:
+		case SC_NETHERWORLD:
 			if (!unit_blown_immune(bl,0x1))
 				unit_stop_walking(bl,1);
 			break;
@@ -11684,8 +11688,8 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		break;
 
 	case SC_TENSIONRELAX:
-		if(status->max_hp > status->hp && --(sce->val3) > 0) {
-			sc_timer_next(sce->val4+tick, status_change_timer, bl->id, data);
+		if(status->max_hp > status->hp && --(sce->val3) >= 0) {
+			sc_timer_next(10000 + tick, status_change_timer, bl->id, data);
 			return 0;
 		}
 		break;
@@ -11979,7 +11983,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		if( --(sce->val4) >= 0 ) {
 			if( !status_charge(bl,0,3) )
 				break;
-			sc_timer_next(3000+tick,status_change_timer,bl->id,data);
+			sc_timer_next(5000+tick,status_change_timer,bl->id,data);
 			return 0;
 		}
 		break;
@@ -12296,6 +12300,11 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		sc_timer_next(sce->val3 + tick, status_change_timer, bl->id, data);
 		return 0;
 
+	case SC_WATER_SCREEN_OPTION:
+		status_heal(bl,1000,0,2);
+		sc_timer_next(10000 + tick,status_change_timer,bl->id,data);
+		return 0;
+
 	case SC_TEARGAS:
 		if( --(sce->val4) >= 0 ) {
 			struct block_list *src = map_id2bl(sce->val3);
@@ -12565,8 +12574,9 @@ void status_change_clear_buffs (struct block_list* bl, int type)
 			case SC_INTFOOD:
 			case SC_DEXFOOD:
 			case SC_LUKFOOD:
-			case SC_HITFOOD:
 			case SC_FLEEFOOD:
+			case SC_HITFOOD:
+			case SC_CRIFOOD:
 			case SC_BATKFOOD:
 			case SC_WATKFOOD:
 			case SC_MATKFOOD:
@@ -12704,9 +12714,10 @@ void status_change_clear_buffs (struct block_list* bl, int type)
  * Infect a user with status effects (SC_DEADLYINFECT)
  * @param src: Object initiating change on bl [PC|MOB|HOM|MER|ELEM]
  * @param bl: Object to change
+ * @param type: 0 - Shadow Chaser attacking, 1 - Shadow Chaser being attacked
  * @return 1: Success 0: Fail
  */
-int status_change_spread( struct block_list *src, struct block_list *bl )
+int status_change_spread(struct block_list *src, struct block_list *bl, bool type)
 {
 	int i, flag = 0;
 	struct status_change *sc = status_get_sc(src);
@@ -12730,11 +12741,14 @@ int status_change_spread( struct block_list *src, struct block_list *bl )
 		switch( i ) {
 			// Debuffs that can be spread.
 			// NOTE: We'll add/delete SCs when we are able to confirm it.
+			case SC_DEATHHURT:
+			case SC_PARALYSE:
+				if (type)
+					continue;
 			case SC_CURSE:
 			case SC_SILENCE:
 			case SC_CONFUSION:
 			case SC_BLIND:
-			//case SC_NOCHAT:
 			case SC_HALLUCINATION:
 			case SC_SIGNUMCRUCIS:
 			case SC_DECREASEAGI:
@@ -12751,8 +12765,6 @@ int status_change_spread( struct block_list *src, struct block_list *bl )
 			//case SC_BITE:
 			case SC_FREEZING:
 			case SC_VENOMBLEED:
-			case SC_DEATHHURT:
-			case SC_PARALYSE:
 				if( sc->data[i]->timer != INVALID_TIMER ) {
 					timer = get_timer(sc->data[i]->timer);
 					if (timer == NULL || timer->func != status_change_timer || DIFF_TICK(timer->tick,tick) < 0)
@@ -12766,27 +12778,34 @@ int status_change_spread( struct block_list *src, struct block_list *bl )
 			case SC_DPOISON:
 				data.tick = sc->data[i]->val3 * 1000;
 				break;
-			case SC_FEAR:
 			case SC_LEECHESEND:
+				if (type)
+					continue;
+			case SC_FEAR:
 				data.tick = sc->data[i]->val4 * 1000;
 				break;
 			case SC_BURNING:
 				data.tick = sc->data[i]->val4 * 2000;
 				break;
 			case SC_PYREXIA:
+				if (type)
+					continue;
 			//case SC_OBLIVIONCURSE: // Players are not affected by Oblivion Curse.
 				data.tick = sc->data[i]->val4 * 3000;
 				break;
 			case SC_MAGICMUSHROOM:
+				if (type)
+					continue;
 				data.tick = sc->data[i]->val4 * 4000;
 				break;
 			case SC_TOXIN:
+				if (type)
+					continue;
 			case SC_BLEEDING:
 				data.tick = sc->data[i]->val4 * 10000;
 				break;
 			default:
 				continue;
-				break;
 		}
 		if( i ) {
 			data.val1 = sc->data[i]->val1;

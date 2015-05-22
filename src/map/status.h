@@ -716,6 +716,8 @@ typedef enum sc_type {
 	SC_MTF_PUMPKIN,
 	SC_MTF_HITFLEE,
 
+	SC_CRIFOOD,
+
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif
@@ -2117,7 +2119,7 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 bool status_check_skilluse(struct block_list *src, struct block_list *target, uint16 skill_id, int flag);
 int status_check_visibility(struct block_list *src, struct block_list *target);
 
-int status_change_spread( struct block_list *src, struct block_list *bl );
+int status_change_spread(struct block_list *src, struct block_list *bl, bool type);
 
 #ifndef RENEWAL
 	unsigned short status_base_matk_min(const struct status_data* status);

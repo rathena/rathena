@@ -865,12 +865,12 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		if( sc->data[SC_SAFETYWALL] && (flag&(BF_SHORT|BF_MAGIC))==BF_SHORT ) {
 			struct skill_unit_group* group = skill_id2group(sc->data[SC_SAFETYWALL]->val3);
 			uint16 skill_id_val = sc->data[SC_SAFETYWALL]->val2;
-			if (group) {
-				d->dmg_lv = ATK_BLOCK;
 
+			if (group) {
 				if (skill_id_val == MH_STEINWAND) {
 					if (--group->val2 <= 0)
 						skill_delunitgroup(group);
+					d->dmg_lv = ATK_BLOCK;
 					if( (group->val3 - damage) > 0 )
 						group->val3 -= (int)cap_value(damage, INT_MIN, INT_MAX);
 					else
@@ -878,6 +878,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 					return 0;
 				}
 				//in RE, SW possesses a lifetime equal to group val2, (3x caster hp, or homon formula)
+				d->dmg_lv = ATK_BLOCK;
 #ifdef RENEWAL
 				if ( ( group->val2 - damage) > 0 ) {
 					group->val2 -= (int)cap_value(damage, INT_MIN, INT_MAX);
@@ -908,12 +909,14 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			skill_blown(src,bl,skill_get_blewcount(skill_id,skill_lv),-1,0);
 			return 0;
 		}
+
 		if( sc->data[SC_WEAPONBLOCKING] && flag&(BF_SHORT|BF_WEAPON) && rnd()%100 < sc->data[SC_WEAPONBLOCKING]->val2 ) {
-			clif_skill_nodamage(bl,src,GC_WEAPONBLOCKING,1,1);
+			clif_skill_nodamage(bl,src,GC_WEAPONBLOCKING,sc->data[SC_WEAPONBLOCKING]->val1,1);
+			sc_start2(src,bl,SC_COMBO,100,GC_WEAPONBLOCKING,src->id,skill_get_time2(GC_WEAPONBLOCKING,sc->data[SC_WEAPONBLOCKING]->val1));
 			d->dmg_lv = ATK_BLOCK;
-			sc_start2(src,bl,SC_COMBO,100,GC_WEAPONBLOCKING,src->id,2000);
 			return 0;
 		}
+
 		if( (sce = sc->data[SC_AUTOGUARD]) && flag&BF_WEAPON && !(skill_get_nk(skill_id)&NK_NO_CARDFIX_ATK) && rnd()%100 < sce->val2 ) {
 			int delay;
 			struct status_change_entry *sce_d = sc->data[SC_DEVOTION];
@@ -926,6 +929,8 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 				delay = 200;
 			else
 				delay = 100;
+			if (sd && pc_issit(sd))
+				pc_setstand(sd, true);
 			if( sce_d && (d_bl = map_id2bl(sce_d->val1)) &&
 				((d_bl->type == BL_MER && ((TBL_MER*)d_bl)->master && ((TBL_MER*)d_bl)->master->bl.id == bl->id) ||
 				(d_bl->type == BL_PC && ((TBL_PC*)d_bl)->devotion[sce_d->val2] == bl->id)) &&
@@ -1001,6 +1006,11 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 					status_change_end(bl, SC_KAUPE, INVALID_TIMER);
 			return 0;
 		}
+
+#ifdef RENEWAL // Flat +400% damage from melee
+		if (sc->data[SC_KAITE] && (flag&(BF_SHORT|BF_MAGIC)) == BF_SHORT)
+			damage <<= 2;
+#endif
 
 		if( flag&BF_MAGIC && (sce=sc->data[SC_PRESTIGE]) && rnd()%100 < sce->val2) {
 			clif_specialeffect(bl, 462, AREA); // Still need confirm it.
@@ -1269,7 +1279,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		}
 
 		if( sc->data[SC__DEADLYINFECT] && (flag&(BF_SHORT|BF_MAGIC)) == BF_SHORT && damage > 0 && rnd()%100 < 30 + 10 * sc->data[SC__DEADLYINFECT]->val1 )
-			status_change_spread(bl, src); // Deadly infect attacked side
+			status_change_spread(bl, src, 1); // Deadly infect attacked side
 
 	} //End of target SC_ check
 
@@ -1316,7 +1326,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			sc_start(src,bl,(enum sc_type)sc->data[SC_POISONINGWEAPON]->val2,100,sc->data[SC_POISONINGWEAPON]->val1,skill_get_time2(GC_POISONINGWEAPON, 1));
 
 		if( sc->data[SC__DEADLYINFECT] && (flag&(BF_SHORT|BF_MAGIC)) == BF_SHORT && damage > 0 && rnd()%100 < 30 + 10 * sc->data[SC__DEADLYINFECT]->val1 )
-			status_change_spread(src, bl);
+			status_change_spread(src, bl, 0);
 
 		if (sc->data[SC_STYLE_CHANGE] && sc->data[SC_STYLE_CHANGE]->val1 == MH_MD_FIGHTING) {
 			TBL_HOM *hd = BL_CAST(BL_HOM,src); //when attacking
@@ -3509,10 +3519,19 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 		case NJ_KUNAI:
 			skillratio += 200;
 			break;
-		case KN_CHARGEATK:
-			{
-				int k = (wd.miscflag-1)/3; //+100% every 3 cells of distance
-				if( k > 2 ) k = 2; // ...but hard-limited to 300%.
+		case KN_CHARGEATK: { // +100% every 3 cells of distance but hard-limited to 500%
+				unsigned int k = wd.miscflag / 3;
+
+				if (k < 2)
+					k = 0;
+				else if (k > 1 && k < 3)
+					k = 1;
+				else if (k > 2 && k < 4)
+					k = 2;
+				else if (k > 3 && k < 5)
+					k = 3;
+				else
+					k = 4;
 				skillratio += 100 * k;
 			}
 			break;
@@ -7225,7 +7244,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 				return 0;
 			if(((md->special_state.ai == AI_SPHERE || //Marine Spheres
 				(md->special_state.ai == AI_FLORA && battle_config.summon_flora&1)) && s_bl->type == BL_PC && src->type != BL_MOB) || //Floras
-				(md->special_state.ai == AI_ZANZOU && t_bl->id != s_bl->id) || //Zanzoe
+				(md->special_state.ai == AI_ZANZOU && t_bl->id != s_bl->id) || //Zanzou
 				(md->special_state.ai == AI_FAW && (t_bl->id != s_bl->id || (s_bl->type == BL_PC && src->type != BL_MOB)))
 			){	//Targettable by players
 				state |= BCT_ENEMY;

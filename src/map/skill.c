@@ -1650,8 +1650,8 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 					case SC_STRFOOD:		case SC_AGIFOOD:		case SC_VITFOOD:
 					case SC_INTFOOD:		case SC_DEXFOOD:		case SC_LUKFOOD:
 					case SC_HITFOOD:		case SC_FLEEFOOD:		case SC_BATKFOOD:
-					case SC_WATKFOOD:		case SC_MATKFOOD:		case SC_DANCING:
-					case SC_SPIRIT:			case SC_AUTOBERSERK:
+					case SC_WATKFOOD:		case SC_MATKFOOD:		case SC_CRIFOOD:
+					case SC_DANCING:		case SC_SPIRIT:			case SC_AUTOBERSERK:
 					case SC_CARTBOOST:		case SC_MELTDOWN:		case SC_SAFETYWALL:
 					case SC_SMA:			case SC_SPEEDUP0:		case SC_NOCHAT:
 					case SC_ANKLE:			case SC_SPIDERWEB:		case SC_JAILED:
@@ -4289,12 +4289,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		uint8 dir = map_calc_dir(bl, src->x, src->y);
 
 		// teleport to target (if not on WoE grounds)
-		if( !map_flag_gvg(src->m) && !map[src->m].flag.battleground && unit_movepos(src, bl->x, bl->y, 0, 1) )
+		if (!map_flag_gvg(src->m) && !map[src->m].flag.battleground && unit_movepos(src, bl->x, bl->y, 0, 1))
 			clif_blown(src);
 
 		// cause damage and knockback if the path to target was a straight one
-		if( path )
-		{
+		if (path) {
+			dist = cap_value(dist, 0, 9);
 			skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, dist);
 			skill_blown(src, bl, dist, dir, 0);
 			//HACK: since knockback officially defaults to the left, the client also turns to the left... therefore,
@@ -4536,7 +4536,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case MS_MAGNUM:
 		if( flag&1 ) {
 			//Damage depends on distance, so add it to flag if it is > 1
-			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag|distance_bl(src, bl));
+			// Cannot hit hidden targets
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag|SD_ANIMATION|distance_bl(src, bl));
 		}
 		break;
 
@@ -5059,6 +5060,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				if( !skill_check_condition_castbegin(sd, pres_skill_id, pres_skill_lv) )
 					break;
 
+				// Get the requirement for the preserved skill
+				skill_consume_requirement(sd, pres_skill_id, pres_skill_lv, 1);
 				// SC_MAGICPOWER needs to switch states before any damage is actually dealt
 				skill_toggle_magicpower(src, pres_skill_id);
 
@@ -6514,12 +6517,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case MO_ABSORBSPIRITS:
 		i = 0;
-		if (dstsd && dstsd->spiritball && (sd == dstsd || map_flag_vs(src->m)) && ((dstsd->class_&MAPID_BASEMASK) != MAPID_GUNSLINGER || (dstsd->class_&MAPID_UPPERMASK) != MAPID_REBELLION))
-		{	// split the if for readability, and included gunslingers in the check so that their coins cannot be removed [Reddozen]
+		if (dstsd && (sd == dstsd || map_flag_vs(src->m) || (sd && sd->duel_group && sd->duel_group == dstsd->duel_group)) &&
+			((dstsd->class_&MAPID_BASEMASK) != MAPID_GUNSLINGER || (dstsd->class_&MAPID_UPPERMASK) != MAPID_REBELLION)) { // split the if for readability, and included gunslingers in the check so that their coins cannot be removed [Reddozen]
 			i = dstsd->spiritball * 7;
 			pc_delspiritball(dstsd,dstsd->spiritball,0);
-		} else if (dstmd && !(tstatus->mode&MD_BOSS) && rnd() % 100 < 20)
-		{	// check if target is a monster and not a Boss, for the 20% chance to absorb 2 SP per monster's level [Reddozen]
+		} else if (dstmd && !(tstatus->mode&MD_BOSS) && rnd() % 100 < 20) { // check if target is a monster and not a Boss, for the 20% chance to absorb 2 SP per monster's level [Reddozen]
 			i = 2 * dstmd->level;
 			mob_target(dstmd,src,0);
 		}
@@ -7381,8 +7383,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					case SC_STRFOOD:		case SC_AGIFOOD:		case SC_VITFOOD:
 					case SC_INTFOOD:		case SC_DEXFOOD:		case SC_LUKFOOD:
 					case SC_HITFOOD:		case SC_FLEEFOOD:		case SC_BATKFOOD:
-					case SC_WATKFOOD:		case SC_MATKFOOD:		case SC_DANCING:
-					case SC_EDP:			case SC_AUTOBERSERK:
+					case SC_WATKFOOD:		case SC_MATKFOOD:		case SC_CRIFOOD:
+					case SC_DANCING:		case SC_EDP:			case SC_AUTOBERSERK:
 					case SC_CARTBOOST:		case SC_MELTDOWN:		case SC_SAFETYWALL:
 					case SC_SMA:			case SC_SPEEDUP0:		case SC_NOCHAT:
 					case SC_ANKLE:			case SC_SPIDERWEB:		case SC_JAILED:
@@ -8864,8 +8866,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					case SC_STRFOOD:		case SC_AGIFOOD:		case SC_VITFOOD:
 					case SC_INTFOOD:		case SC_DEXFOOD:		case SC_LUKFOOD:
 					case SC_HITFOOD:		case SC_FLEEFOOD:		case SC_BATKFOOD:
-					case SC_WATKFOOD:		case SC_MATKFOOD:		case SC_DANCING:
-					case SC_SPIRIT:			case SC_AUTOBERSERK:
+					case SC_WATKFOOD:		case SC_MATKFOOD:		case SC_CRIFOOD:
+					case SC_DANCING:		case SC_SPIRIT:			case SC_AUTOBERSERK:
 					case SC_CARTBOOST:		case SC_MELTDOWN:		case SC_SAFETYWALL:
 					case SC_SMA:			case SC_SPEEDUP0:		case SC_NOCHAT:
 					case SC_ANKLE:			case SC_SPIDERWEB:		case SC_JAILED:
@@ -10122,8 +10124,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				clif_skill_nodamage(src,src,skill_id,skill_lv,1);
 				clif_blown(src);
 				sc_start(src,src,SC_CONFUSION,25,skill_lv,skill_get_time(skill_id,skill_lv));
-				if (unit_movepos(bl,x,y,0,0)) {
-					clif_skill_damage(bl,bl,tick, status_get_amotion(src), 0, -30000, 1, skill_id, -1, 6);
+				if (!is_boss(bl) && unit_movepos(bl,x,y,0,0)) {
 					if( bl->type == BL_PC && pc_issit((TBL_PC*)bl))
 						clif_sitting(bl); //Avoid sitting sync problem
 					clif_blown(bl);
@@ -13585,16 +13586,6 @@ int skill_unit_onout(struct skill_unit *src, struct block_list *bl, unsigned int
 				status_change_end(bl, type, INVALID_TIMER);
 			break;
 
-		case UNT_SPIDERWEB:
-			{
-				struct block_list *target = map_id2bl(sg->val2);
-				if (target && target==bl) {
-					if (sce && sce->val3 == sg->group_id)
-						status_change_end(bl, type, INVALID_TIMER);
-					sg->limit = DIFF_TICK(tick,sg->tick)+1000;
-				}
-				break;
-			}
 		case UNT_DISSONANCE:
 		case UNT_UGLYDANCE: //Used for updating timers in song overlap instances
 			{
@@ -13971,12 +13962,6 @@ int skill_check_pc_partner(struct map_session_data *sd, uint16 skill_id, uint16 
 					status_charge(&tsd->bl, 0, i);
 				}
 				break;
-			case WM_GREAT_ECHO:
-				for( i = 0; i < c; i++ ) {
-					if( (tsd = map_id2sd(p_sd[i])) != NULL )
-						status_zap(&tsd->bl,0,skill_get_sp(skill_id,*skill_lv)/c);
-				}
-			break;
 			default: //Warning: Assuming Ensemble skills here (for speed)
 				if( is_chorus )
 					break;//Chorus skills are not to be parsed as ensambles

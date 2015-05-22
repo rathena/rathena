@@ -865,7 +865,7 @@
 
 //****
 // 2nd Quest Skills
-1001,9,6,1,-1,0,0,1,1,no,0,0x1,0,weapon,0,0x0,	KN_CHARGEATK,Charge Attack
+1001,14,6,1,-1,0,0,1,1,no,0,0x1,0,weapon,0,0x0,	KN_CHARGEATK,Charge Attack
 1002,0,6,4,0,0x1,0,1,0,no,0,0x1,0,weapon,2,0x0,	CR_SHRINK,Shrink
 1003,0,0,0,0,0,0,1,0,no,0,0x1,0,weapon,0,0x0,	AS_SONICACCEL,Sonic Acceleration
 1004,9,8,1,0,0x8,0,1,1,no,0,0x1,0,weapon,0,0x0,	AS_VENOMKNIFE,Throw Venom Knife
@@ -969,11 +969,11 @@
 2038,11,8,1,6,0x2,1,5,-3,yes,0,0,0,magic,0,0x0,	AB_JUDEX,Judex
 2039,0,6,4,0,0x1,0,1,1,yes,0,0,0,magic,0,0x0,	AB_ANCILLA,Ancilla
 2040,11,8,1,6,0,0,10,-10,yes,0,0,0,magic,0,0x0,	AB_ADORAMUS,Adoramus
-2041,0,6,4,6,0x3,3:7:15,3,1,yes,0,0,0,magic,0,0x0,	AB_CLEMENTIA,Crementia
-2042,0,6,4,6,0x3,3:7:15,3,1,yes,0,0,0,magic,0,0x0,	AB_CANTO,Canto Candidus
+2041,0,6,4,0,0x3,3:7:15,3,1,yes,0,0,0,magic,0,0x0,	AB_CLEMENTIA,Crementia
+2042,0,6,4,0,0x3,3:7:15,3,1,yes,0,0,0,magic,0,0x0,	AB_CANTO,Canto Candidus
 2043,0,6,4,6,0x3,3:7:15,3,1,yes,0,0,0,magic,0,0x0,	AB_CHEAL,Coluceo Heal
 2044,11,6,2,6,0x1,0,5,1,yes,0,0,1,magic,0,0x0,	AB_EPICLESIS,Epiclesis
-2045,0,6,4,6,0x3,15,10,1,yes,0,0,0,magic,0,0x0,	AB_PRAEFATIO,Praefatio
+2045,0,6,4,0,0x3,15,10,1,yes,0,0,0,magic,0,0x0,	AB_PRAEFATIO,Praefatio
 2046,0,6,4,6,0x3,15,10,1,yes,0,0,0,magic,0,0x0,	AB_ORATIO,Oratio
 2047,0,6,4,6,0x3,15,4,1,yes,0,0,0,magic,0,0x0,	AB_LAUDAAGNUS,Lauda Agnus
 2048,0,6,4,6,0x3,15,4,1,yes,0,0,0,magic,0,0x0,	AB_LAUDARAMUS,Lauda Ramus
@@ -1263,35 +1263,35 @@
 
 //****
 // Kagerou & Oboro
-3001,0,6,4,0,0,0,1,1,no,0,0,0,none,0,0x4,		KO_YAMIKUMO,Yamikumo
+3001,0,6,4,0,0,0,1,1,no,0,0,0,none,0,0x4,		KO_YAMIKUMO,Shadow Hiding
 3002,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0,0x0,		KO_RIGHT,Right Hand Mastery
 3003,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0,0x0,		KO_LEFT,Left Hand Mastery
-3004,3:4:5:6:7,8,1,-1,0,0,5,-2,no,0,0,0,weapon,0,0x0,	KO_JYUMONJIKIRI,Cross Strike
-3005,2,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,		KO_SETSUDAN,Soul Sever
-3006,7:8:9:10:11,6,2,-1,0x42,2,5,1,no,0,0,0,weapon,0,0x0,	KO_BAKURETSU,Bakuretsu Kunai
-3007,5,6,4,-1,0x42,4:4:4:4:5,5,1,no,0,0,0,weapon,0,0x0,	KO_HAPPOKUNAI,Happo Kunai
-3008,11,8,2,0,0x56,1:1:1:1:1:1:1:1:1:2,10,-10,no,0,0,0,misc,0,0x0,	KO_MUCHANAGE,Mucha Nage
-3009,9:10:11:12:13,8,2,-1,0x2,3,5,2,no,0,0,0,weapon,0,0x0,	KO_HUUMARANKA,Huuma Shuriken Ranka 
+3004,3:4:5:6:7,8,1,-1,0,0,5,-2,no,0,0,0,weapon,0,0x0,	KO_JYUMONJIKIRI,Cross Slash
+3005,2,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,		KO_SETSUDAN,Soul Cutter
+3006,7:8:9:10:11,6,2,-1,0x42,2,5,1,no,0,0,0,weapon,0,0x0,	KO_BAKURETSU,Kunai Explosion
+3007,0,6,4,-1,0x42,4:4:4:4:5,5,1,no,0,0,0,weapon,0,0x0,	KO_HAPPOKUNAI,Kunai Splash
+3008,11,8,2,0,0x56,1:1:1:1:1:1:1:1:1:2,10,-10,no,0,0,0,misc,0,0x0,	KO_MUCHANAGE,Rapid Throw
+3009,9:10:11:12:13,8,2,-1,0x2,3,5,2,no,0,0,0,weapon,0,0x0,	KO_HUUMARANKA,Swirling Petal
 3010,3,6,4,0,0x52,0,5,1,no,0,0x80,0,weapon,0,0x10,	KO_MAKIBISHI,Makibishi
-3011,0,6,4,0,0x1,0,5,0,yes,0,0,0,none,0,0x0,	KO_MEIKYOUSISUI,Meikyo Shisui
-3012,0,6,4,0,0x1,0,5,0,no,0,0,1,none,3:4:5:6:7,0x0,	KO_ZANZOU,Zanzou
-3013,5,6,1,0,0x1,0,5,0,no,0,0,0,none,0,0x0,		KO_KYOUGAKU,Kyougaku
-3014,5,6,1,0,0x1,0,5,0,no,0,0,0,none,0,0x0,		KO_JYUSATSU,Jyusatsu
-3015,0,6,4,3,0x1,0,1,1,no,0,0,0,none,0,0x0,		KO_KAHU_ENTEN,Kahu Enten
-3016,0,6,4,1,0x1,0,1,1,no,0,0,0,none,0,0x0,		KO_HYOUHU_HUBUKI,Hyouhu Hubuki
-3017,0,6,4,4,0x1,0,1,1,no,0,0,0,none,0,0x0,		KO_KAZEHU_SEIRAN,Kazehu Seiran
-3018,0,6,4,2,0x1,0,1,1,no,0,0,0,none,0,0x0,		KO_DOHU_KOUKAI,Dohu Koukai
-3019,11,6,1,0,0,0,1,1,no,0,0,0,magic,0,0x0,		KO_KAIHOU,Technique Kaihou
-3020,7,6,2,0,0,0,1,1,yes,0,0,0,magic,0,0x0,		KO_ZENKAI,Zenkai
-3021,5:6:7:8:9,6,16,0,0x1,0,5,1,no,0,0,0,none,0,0x0,	KO_GENWAKU,Genwaku
-3022,0,6,4,0,0x1,0,5,0,no,0,0,0,none,0,0x0,		KO_IZAYOI,Izayoi
-3023,0,6,4,0,0x3,2:3:4:5:6,5,0,no,0,0,0,none,0,0x0,	KG_KAGEHUMI,Kagehumi
-3024,7,6,1,0,0x1,0,5,1,no,0,0,0,none,0,0x0,		KG_KYOMU,Kyomu
-3025,7,6,16,0,0x1,0,5,1,no,0,0,0,none,0,0x0,	KG_KAGEMUSYA,Kagemusha
-3026,7,6,16,0,0x1,0,5,1,no,0,0,0,none,0,0x0,	OB_ZANGETSU,Zangetsu
-3027,7,6,16,0,0x1,0,5,1,no,0,0,0,none,0,0x0,	OB_OBOROGENSOU,Oboro Gensou
-3028,1,6,4,0,0x2,3,1,1,no,0,0,0,weapon,0,0x0,	OB_OBOROGENSOU_TRANSITION_ATK,Hazy Moonlight Illusion Transition Attack
-3029,7,6,1,0,0x1,0,5,0,no,0,0,0,none,0,0x0,		OB_AKAITSUKI,Akaitsuki
+3011,0,6,4,0,0x1,0,5,0,yes,0,0,0,none,0,0x0,	KO_MEIKYOUSISUI,Pure Soul
+3012,0,6,4,0,0x1,0,5,0,no,0,0,1,none,3:4:5:6:7,0x0,	KO_ZANZOU,Illusion - Shadow
+3013,5,6,1,0,0x1,0,5,0,no,0,0,0,none,0,0x0,		KO_KYOUGAKU,Illusion - Shock
+3014,5,6,1,0,0x1,0,5,0,no,0,0,0,none,0,0x0,		KO_JYUSATSU,Illusion - Death
+3015,0,6,4,3,0x1,0,1,1,no,0,0,0,none,0,0x0,		KO_KAHU_ENTEN,Fire Charm
+3016,0,6,4,1,0x1,0,1,1,no,0,0,0,none,0,0x0,		KO_HYOUHU_HUBUKI,Ice Charm
+3017,0,6,4,4,0x1,0,1,1,no,0,0,0,none,0,0x0,		KO_KAZEHU_SEIRAN,Wind Charm
+3018,0,6,4,2,0x1,0,1,1,no,0,0,0,none,0,0x0,		KO_DOHU_KOUKAI,Earth Charm
+3019,11,6,1,0,0,0,1,1,no,0,0,0,magic,0,0x0,		KO_KAIHOU,Release Ninja Spell
+3020,7,6,2,0,0,0,1,1,yes,0,0,0,magic,0,0x0,		KO_ZENKAI,Cast Ninja Spell
+3021,5:6:7:8:9,6,16,0,0x1,0,5,1,no,0,0,0,none,0,0x0,	KO_GENWAKU,Illusion - Bewitch
+3022,0,6,4,0,0x1,0,5,0,no,0,0,0,none,0,0x0,		KO_IZAYOI,16th Night
+3023,0,6,4,0,0x3,2:3:4:5:6,5,0,no,0,0,0,none,0,0x0,	KG_KAGEHUMI,Shadow Trampling
+3024,7,6,1,0,0x1,0,5,1,no,0,0,0,none,0,0x0,		KG_KYOMU,Empty Shadow
+3025,7,6,16,0,0x1,0,5,1,no,0,0,0,none,0,0x0,	KG_KAGEMUSYA,Shadow Warrior
+3026,7,6,16,0,0x1,0,5,1,no,0,0,0,none,0,0x0,	OB_ZANGETSU,Distorted Crescent
+3027,7,6,16,0,0x1,0,5,1,no,0,0,0,none,0,0x0,	OB_OBOROGENSOU,Moonlight Fantasy
+3028,1,6,4,0,0x2,3,1,1,no,0,0,0,weapon,0,0x0,	OB_OBOROGENSOU_TRANSITION_ATK,Moonlight Fantasy Transition Attack
+3029,7,6,1,0,0x1,0,5,0,no,0,0,0,none,0,0x0,		OB_AKAITSUKI,Ominous Moonlight
 
 //****
 // Eclage Skills
