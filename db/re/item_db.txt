@@ -4591,6 +4591,16 @@
 6916,Piece_Of_Soul_Monkey,Piece Of Soul Monkey,3,10,,0,,,,,,,,,,,,,{},{},{}
 6917,Piece_Of_Soul_Chicken,Piece Of Soul Chicken,3,10,,0,,,,,,,,,,,,,{},{},{}
 //
+6943,Attack_Stone(Upper),Attack Stone(Upper),3,10,,0,,,,,,,,,,,,,{ bonus bAtkRate,1; },{},{}
+6944,Magic_Stone(Upper),Magic Stone(Upper),3,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,1; },{},{}
+6945,Strength_Stone(Middle),Strength Stone(Middle),3,10,,0,,,,,,,,,,,,,{ bonus bStr,1; },{},{}
+6946,Intelligence_Stone(Middle),Intelligence Stone(Middle),3,10,,0,,,,,,,,,,,,,{ bonus bInt,1; },{},{}
+6947,Agility_Stone(Middle),Agility Stone(Middle),3,10,,0,,,,,,,,,,,,,{ bonus bAgi,1; },{},{}
+6948,Dexterity_Stone(Middle),Dexterity Stone(Middle),3,10,,0,,,,,,,,,,,,,{ bonus bDex,1; },{},{}
+6949,Vitality_Stone(Middle),Vitality Stone(Middle),3,10,,0,,,,,,,,,,,,,{ bonus bVit,1; },{},{}
+6950,Lucky_Stone(Middle),Lucky Stone(Middle),3,10,,0,,,,,,,,,,,,,{ bonus bLuk,1; },{},{}
+6951,HP_Stone(Lower),HP Stone(Lower),3,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,1; },{},{}
+//
 7001,Mould_Powder,Mould Powder,3,466,,10,,,,,,,,,,,,,{},{},{}
 7002,Ogre_Tooth,Ogre Tooth,3,658,,10,,,,,,,,,,,,,{},{},{}
 7003,Anolian_Skin,Anolian Skin,3,968,,10,,,,,,,,,,,,,{},{},{}
@@ -9918,6 +9928,7 @@
 22844,Sealed_Dracula_Card_Album,Sealed Dracula Card Album,2,10,,10,,,,,,,,,,,,,{/*No Info*/},{},{}
 22845,Sealed_Fortune_Egg,Sealed Fortune Egg,2,10,,10,,,,,,,,,,,,,{ getitem callfunc("F_Rand",4488,4497,4486,4480,4485,4539,4487,4494,4538,4489,4490,4482,4503,22846),1; },{},{}
 22846,Sealed_Dracula_Card,Sealed Dracula Card,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "{ bonus3 bSPDrainRate,50,5,0; }",300; },{},{}
+22868,Costume_Enchantment_Stone_Box_5,Costume Enchantment Stone Box 5,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem callfunc("F_Rand",6908,6943,6944,6945,6946,6947,6948,6949,6950,6951),1; },{},{}
 // Shadow Equip
 24000,T_STR1_Armor_Shadow,T STR1 Armor Shadow,12,10,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,,,{ bonus bStr,1; },{},{}
 24001,T_DEX1_Weapon_Shadow,T DEX1 Weapon Shadow,12,10,,0,,,,0,0xFFFFFFFF,63,2,131072,,1,,,{ bonus bDex,1; },{},{}
