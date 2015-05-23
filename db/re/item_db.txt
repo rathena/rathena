@@ -4528,6 +4528,17 @@
 6846,(Limited)Gym_Membership_Card,(Limited)Gym Membership Card,6,10,,10,,,,,,,,,,,,,{},{},{}
 6847,Very_Small_Box,Very Small Box,3,10,,0,,,,,,,,,,,,,{},{},{}
 6848,Light_Box,Light Box,3,10,,0,,,,,,,,,,,,,{},{},{}
+6849,Request_Complete_Certificate,Request Complete Certificate,3,10,,0,,,,,,,,,,,,,{},{},{}
+6850,Questionable_Box,Questionable Box,3,10,,0,,,,,,,,,,,,,{},{},{}
+6851,Questionable_Document,Questionable Document,3,10,,0,,,,,,,,,,,,,{},{},{}
+6852,Super_Corrector,Super Corrector,3,10,,0,,,,,,,,,,,,,{},{},{}
+6853,Thanks_Bouquet,Thanks Bouquet,3,10,,0,,,,,,,,,,,,,{},{},{}
+6854,Novus_Captured,Novus Captured,3,10,,0,,,,,,,,,,,,,{},{},{}
+6855,Tatacho_Captured,Tatacho Captured,3,10,,0,,,,,,,,,,,,,{},{},{}
+6856,Manuscript_Written_By_Pigoreum,Manuscript Written By Pigoreum,3,10,,0,,,,,,,,,,,,,{},{},{}
+6857,Very_Hard_Stone,Very Hard Stone,3,10,,0,,,,,,,,,,,,,{},{},{}
+6858,Lude_Captured,Lude Captured,3,10,,0,,,,,,,,,,,,,{},{},{}
+6859,Wanderer_Captured,Wanderer Captured,3,10,,0,,,,,,,,,,,,,{},{},{}
 6860,Piece_Of_Soul_Cow,Piece Of Soul Cow,3,10,,0,,,,,,,,,,,,,{},{},{}
 6862,Piece_Of_Soul_Tiger,Piece Of Soul Tiger,3,10,,0,,,,,,,,,,,,,{},{},{}
 6863,Strong_Piece_Of_Soul_Tiger,Strong Piece Of Soul Tiger,3,10,,0,,,,,,,,,,,,,{},{},{}
@@ -9843,9 +9854,12 @@
 22694,Record_Fragment4,Record Fragment,3,10,,0,,,,,,,,,,,,,{},{},{}
 22695,Record_Fragment5,Record Fragment,3,10,,0,,,,,,,,,,,,,{},{},{}
 22699,Test_Reagent,Test Reagent,3,10,,0,,,,,,,,,,,,,{},{},{}
-22700,Jumping_Support_Box,Jumping Support Box,18,10,,0,,,,0,0xFFFFFFFF,63,2,,,,,,{ /*TODO: 1 white slim potion box, Beginners fly wing box(200), Novice Butterfly Wing(50), and 5 boxes that containing quivers + oridecons*/ },{},{}
+22700,Jumping_Support_Box,Jumping Support Box,18,10,,0,,,,0,0xFFFFFFFF,63,2,,,,,,{ /*TODO: getitem 12529,1; getitem 12323,200; getitem 12324,50; and 5 boxes that containing quivers + oridecons*/ },{},{}
 22708,Thrilling_Box,Thrilling Box,2,10,,100,,,,0,0xFFFFFFFF,63,2,,,,,,{ /*No clue the random item yet*/ },{},{}
-//
+22717,Wanderer_Ball,Wanderer Ball,3,10,,0,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
+22718,Lude_Ball,Lude Ball,3,10,,0,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
+22719,Tatacho_Ball,Tatacho Ball,3,10,,0,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
+22720,Novus_Ball,Novus Ball,3,10,,0,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
 22721,?_Box,? Box,18,10,,0,,,,0,0xFFFFFFFF,63,2,,,,,,{ /*No clue the random item yet*/ },{},{}
 22734,Revolution_Quiz_Box,Revolution Quiz Box,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 6635,2; getitem 6423,1; /*1x Enchanted Letter Introduction*/ },{},{}
 22735,Sealed_Moonlight_Flower_Scroll,Sealed Moonlight Flower Scroll,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ /*TODO: Confirm the rates*/ getitem callfunc("F_Rand",6228,6232,24150,19934,6635,17474),1; },{},{}

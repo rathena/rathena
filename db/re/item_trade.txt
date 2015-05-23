@@ -864,17 +864,17 @@
 6846,475,100	// (Limited)Gym_Membership_Card
 6847,499,100	// Very_Small_Box
 6848,499,100	// Light_Box
-//6849,499,100	//
-//6850,499,100	//
-//6851,499,100	//
-//6852,499,100	//
-//6853,499,100	//
-//6854,499,100	//
-//6855,499,100	//
-//6856,499,100	//
-//6857,499,100	//
-//6858,499,100	//
-//6859,499,100	//
+6849,499,100	// Request_Complete_Certificate
+6850,499,100	// Questionable_Box
+6851,499,100	// Questionable_Document
+6852,499,100	// Super_Corrector
+6853,499,100	// Thanks_Bouquet
+6854,499,100	// Novus_Captured
+6855,499,100	// Tatacho_Captured
+6856,499,100	// Manuscript_Written_By_Pigoreum
+6857,499,100	// Very_Hard_Stone
+6858,499,100	// Lude_Captured
+6859,499,100	// Wanderer_Captured
 6860,499,100	// Piece_Of_Soul_Cow
 6862,499,100	// Piece_Of_Soul_Tiger
 6863,499,100	// Strong_Piece_Of_Soul_Tiger
@@ -3762,10 +3762,10 @@
 22695,507,100	// Record_Fragment5
 22700,507,100	// Jumping_Support_Box
 22708,499,100	// Thrilling_Box
-//22717,499,100	//
-//22718,499,100	//
-//22719,499,100	//
-//22720,499,100	//
+22717,499,100	// Wanderer_Ball
+22718,499,100	// Lude_Ball
+22719,499,100	// Tatacho_Ball
+22720,499,100	// Novus_Ball
 22734,507,100	// Revolution_Quiz_Box
 22735,475,100	// Sealed_Moonlight_Flower_Scroll
 //22736,475,100	//
