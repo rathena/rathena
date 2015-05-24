@@ -1680,7 +1680,7 @@ IG_BR_Independence_Scroll,B_Mdef_Potion,100,10,1,0,0,1
 IG_BR_Independence_Scroll,All_In_One_Ring_Box,100,1,1,0,0,1
 IG_BR_Independence_Scroll,Carmen_Miranda's_Hat,30,1,1,0,0,1
 
-IG_All_In_One_Ring_Box,All_In_One_Ring,0,1,0,0,10080,1
+IG_All_In_One_Ring_Box,All_In_One_Ring,0,1,0,0,604800,1
 
 IG_Gemi_Crown_Scroll,Dark_Snake_Lord_Card,1,1,1,0,0,0
 IG_Gemi_Crown_Scroll,Elven_Ears_,2,1,1,0,0,0

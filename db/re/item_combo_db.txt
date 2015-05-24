@@ -337,6 +337,7 @@
 19026:20756:22059:15138,{ bonus bMaxHP,1000; bonus bMaxSP,100; bonus2 bExpAddRace,RC_Fish,20; bonus2 bMagicAddRace,RC_Fish,50; bonus2 bSubEle,Ele_Water,50; }
 19038:19039,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP)+getequiprefinerycnt(EQI_HEAD_MID); if((.@r==7)||(.@r==8)){ bonus bCritical,12; bonus bHit,12; } if(.@r>=9){ bonus bMaxHP,1200; bonus bMaxSP,120; } }
 20135:20136,{ bonus bAllStats,12; }
+//20721:Armor Of Gray:Gray Helmet:Boots Of Gray,{ bonus2 bSubEle,Ele_Neutral,15; bonus bMaxHPrate,25; bonus bMaxSPrate,25; bonus bMatkRate,10; bonus3 bAutoSpellWhenHit,"WL_DRAINLIFE",3,1; }
 20756:19026,{ bonus2 bSPGainRace,RC_Fish,10; bonus bHPrecovRate,(getequiprefinerycnt(EQI_GARMENT)*5); bonus3 bAddMonsterDropItem,551,RC_Fish,(1+getequiprefinerycnt(EQI_GARMENT)); bonus2 bAddItemHealRate,551,5; }
 22059:19026,{ bonus2 bCriticalAddRace,RC_Fish,(10+getequiprefinerycnt(EQI_SHOES)); }
 24012:24013:24014:24015:24016:24017,{ bonus bAllStats,9; }
