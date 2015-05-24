@@ -404,7 +404,7 @@
 24168:24169:24178,{ bonus bMatk,5; if(getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L)>=25) bonus bIgnoreMDefRace,RC_Undead; }
 24168:24169:24179,{ bonus bMatk,5; if(getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L)>=25) bonus bIgnoreMDefRace,RC_Plant; }
 28326:28327,{ bonus bInt,8; bonus bStr,8; }
-24180:24181:24182:24183:24184:24185,{ .@refine = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_SHOES)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L); bonus bAllStats,1; if(.@refine>=45) { bonus bMaxHPrate,(.@refine-60); sc_start4 SC_ENDURE,1,10,0,0,1;} }
+24180:24181:24182:24183:24184:24185,{ .@r = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_SHOES)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L); bonus bAllStats,1; if(.@r>=45) { bonus bMaxHPrate,(.@r-60); sc_start4 SC_ENDURE,1,10,0,0,1;} }
 24186:24198,{ bonus2 bSubEle,Ele_Neutral,2; }
 24187:24199,{ bonus2 bSubEle,Ele_Dark,2; }
 24188:24200,{ bonus2 bSubEle,Ele_Water,2; }
@@ -421,7 +421,11 @@
 24212:24213,{ bonus2 bExpAddRace,RC_All,((getequiprefinerycnt(EQI_SHADOW_SHOES)+getequiprefinerycnt(EQI_SHADOW_SHIELD))>=15?10:5); }
 24214:24215,{ bonus2 bExpAddRace,RC_All,((getequiprefinerycnt(EQI_SHADOW_SHOES)+getequiprefinerycnt(EQI_SHADOW_SHIELD))>=15?4:2); }
 24217:24218,{ if(getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L)>=15) bonus bAspd,1; }
-//24223:Enhanced Force Shadow Earring:Enhanced Force Shadow Pendant,{ .@refine = getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L); if(.@refine)>=25 {bonus bAtkRate,2;} else if(.@refine)>=20 {bonus bAtkRate,1;} bonus bAtkRate,1; }
-24224:24225:24226,{ .@refine = getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L); if(.@refine)>=25 {bonus bAtkRate,2;} else if(.@refine)>=20 {bonus bAtkRate,1;} bonus bAtk2,10; }
-//24227:Enhanced Soul Earring:Enhanced Soul Pendant,{ .@refine = getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L); if(.@refine)>=25 {bonus bMatkRate,2;} else if(.@refine)>=20 {bonus bMatkRate,1;} bonus bMatkRate,1; }
-24228:24229:24230,{ .@refine = getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L); if(.@refine)>=25 {bonus bMatkRate,2;} else if(.@refine)>=20 {bonus bMatkRate,1;} bonus bMatk,10; }
+//24223:Enhanced Force Shadow Earring:Enhanced Force Shadow Pendant,{ .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L); if(.@r)>=25 {bonus bAtkRate,2;} else if(.@r)>=20 {bonus bAtkRate,1;} bonus bAtkRate,1; }
+24224:24225:24226,{ .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L); if(.@r)>=25 {bonus bAtkRate,2;} else if(.@r)>=20 {bonus bAtkRate,1;} bonus bAtk2,10; }
+//24227:Enhanced Soul Earring:Enhanced Soul Pendant,{ .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L); if(.@r)>=25 {bonus bMatkRate,2;} else if(.@r)>=20 {bonus bMatkRate,1;} bonus bMatkRate,1; }
+24228:24229:24230,{ .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L); if(.@r)>=25 {bonus bMatkRate,2;} else if(.@r)>=20 {bonus bMatkRate,1;} bonus bMatk,10; }
+24231:24232,{ bonus bFlee,5; if (getequiprefinerycnt(EQI_SHADOW_SHOES)+getequiprefinerycnt(EQI_SHADOW_SHIELD)>=15) { bonus bAspd,1; } }
+24234:24235,{ bonus bBaseAtk,5; if (getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L)>=15) { bonus2 bAddSize,Size_Large,2; bonus2 bMagicAddSize,Size_Large,2; } }
+24236:24237,{ bonus bBaseAtk,5; if (getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L)>=15) { bonus2 bAddSize,Size_Medium,2; bonus2 bMagicAddSize,Size_Medium,2; } }
+24238:24239,{ bonus bBaseAtk,5; if (getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L)>=15) { bonus2 bAddSize,Size_Small,2; bonus2 bMagicAddSize,Size_Small,2; } }
