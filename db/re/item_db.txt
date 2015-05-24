@@ -9713,7 +9713,7 @@
 20206,C_Chicken_Hat,Costume Chicken Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,7168,,1,1,432,{},{},{}
 20210,C_Chicken_Hat,Costume Chicken Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,7168,,1,1,432,{},{},{}
 20211,C_Chicken_Hat,Costume Chicken Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,7168,,1,1,432,{},{},{}
-20223,C_Romantic_Leaf,Costume_Romantic_Leaf,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,1,432,{},{},{}
+20223,C_Romantic_Leaf,Costume Romantic Leaf,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,1,432,{},{},{}
 20224,C_Red_Tailed_Ribbon,Costume Red Tailed Ribbon,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,167,{},{},{}
 20225,C_Pumpkin-Head,Costume Pumpkin-Head,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,206,{},{},{}
 20226,C_Red_Comb,Costume Red Comb,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,,{/*TODO: View ID*/},{},{}
