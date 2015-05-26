@@ -3588,7 +3588,7 @@
 17522,475,100	// Three_Master_Package_V(10)
 17524,475,100	// Limited_Power_Booster_Box
 17525,475,100	// Limited_Power_Booster_Box(100)
-//17527,475,100	//
+17527,475,100	// Actinidia_Cat_Fruit_Box(200)
 //17544,475,100	//
 //17545,475,100	//
 //17547,475,100	//
