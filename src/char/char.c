@@ -2140,7 +2140,7 @@ bool char_checkdb(void){
 	};
 	ShowInfo("Start checking DB integrity\n");
 	for (i=0; i<ARRAYLENGTH(sqltable); i++){ //check if they all exist and we can acces them in sql-server
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  * from `%s`;", sqltable[i]) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` LIMIT 1;", sqltable[i]) )
 			return false;
 	}
 	//checking char_db
@@ -2151,46 +2151,46 @@ bool char_checkdb(void){
 		"`shield`,`head_top`,`head_mid`,`head_bottom`,`robe`,`last_map`,`last_x`,`last_y`,`save_map`,"
 		"`save_x`,`save_y`,`partner_id`,`online`,`father`,`mother`,`child`,`fame`,`rename`,`delete_date`,"
 		"`moves`,`unban_time`,`font`"
-		" from `%s`;", schema_config.char_db) ){
+		" FROM `%s` LIMIT 1;", schema_config.char_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
 	//checking charlog_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `time`,`char_msg`,`account_id`,`char_num`,`name`,"
-			 "`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hair`,`hair_color`"
-		" from `%s`;", schema_config.charlog_db) ){
+		"`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hair`,`hair_color`"
+		" FROM `%s` LIMIT 1;", schema_config.charlog_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
 	//checking reg_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`str`,`value`,`type`,`account_id` from `%s`;", schema_config.reg_db) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`str`,`value`,`type`,`account_id` FROM `%s` LIMIT 1;", schema_config.reg_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
 	//checking hotkey_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `char_id`,`hotkey`,`type`,`itemskill_id`,`skill_lvl`"
-		" from `%s`;", schema_config.hotkey_db) ){
+		" FROM `%s` LIMIT 1;", schema_config.hotkey_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
 	//checking scdata_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `account_id`,`char_id`,`type`,`tick`,`val1`,`val2`,`val3`,`val4`"
-		" from `%s`;", schema_config.scdata_db) ){
+		" FROM `%s` LIMIT 1;", schema_config.scdata_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
 	//checking skill_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `char_id`,`id`,`lv`,`flag` from `%s`;", schema_config.skill_db) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `char_id`,`id`,`lv`,`flag` FROM `%s` LIMIT 1;", schema_config.skill_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
 	//checking interlog_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `time`,`log` from `%s`;", schema_config.interlog_db) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `time`,`log` FROM `%s` LIMIT 1;", schema_config.interlog_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
 	//checking memo_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `memo_id`,`char_id`,`map`,`x`,`y` from `%s`;", schema_config.memo_db) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `memo_id`,`char_id`,`map`,`x`,`y` FROM `%s` LIMIT 1;", schema_config.memo_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
@@ -2198,12 +2198,12 @@ bool char_checkdb(void){
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `guild_id`,`name`,`char_id`,`master`,`guild_lv`,"
 			"`connect_member`,`max_member`,`average_lv`,`exp`,`next_exp`,`skill_point`,`mes1`,`mes2`,"
 			"`emblem_len`,`emblem_id`,`emblem_data`"
-			" from `%s`;", schema_config.guild_db) ){
+			" FROM `%s` LIMIT 1;", schema_config.guild_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
 	//checking guild_alliance_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `guild_id`,`opposition`,`alliance_id`,`name` from `%s`;", schema_config.guild_alliance_db) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `guild_id`,`opposition`,`alliance_id`,`name` FROM `%s` LIMIT 1;", schema_config.guild_alliance_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
@@ -2211,46 +2211,46 @@ bool char_checkdb(void){
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `castle_id`,`guild_id`,`economy`,`defense`,`triggerE`,"
 			"`triggerD`,`nextTime`,`payTime`,`createTime`,`visibleC`,`visibleG0`,`visibleG1`,`visibleG2`,"
 			"`visibleG3`,`visibleG4`,`visibleG5`,`visibleG6`,`visibleG7` "
-			" from `%s`;", schema_config.guild_castle_db) ){
+			" FROM `%s` LIMIT 1;", schema_config.guild_castle_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
 	//checking guild_expulsion_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `guild_id`,`account_id`,`name`,`mes` from `%s`;", schema_config.guild_expulsion_db) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `guild_id`,`account_id`,`name`,`mes` FROM `%s` LIMIT 1;", schema_config.guild_expulsion_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
 	//checking guild_member_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `guild_id`,`account_id`,`char_id`,`hair`,"
 			"`hair_color`,`gender`,`class`,`lv`,`exp`,`exp_payper`,`online`,`position`,`name`"
-			" from `%s`;", schema_config.guild_member_db) ){
+			" FROM `%s` LIMIT 1;", schema_config.guild_member_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
 	//checking guild_skill_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `guild_id`,`id`,`lv` from `%s`;", schema_config.guild_skill_db) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `guild_id`,`id`,`lv` FROM `%s` LIMIT 1;", schema_config.guild_skill_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
 	//checking guild_position_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `guild_id`,`position`,`name`,`mode`,`exp_mode` from `%s`;", schema_config.guild_position_db) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `guild_id`,`position`,`name`,`mode`,`exp_mode` FROM `%s` LIMIT 1;", schema_config.guild_position_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
 	//checking party_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `party_id`,`name`,`exp`,`item`,`leader_id`,`leader_char` from `%s`;", schema_config.party_db) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `party_id`,`name`,`exp`,`item`,`leader_id`,`leader_char` FROM `%s` LIMIT 1;", schema_config.party_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
 	//checking pet_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `pet_id`,`class`,`name`,`account_id`,`char_id`,`level`,"
 			"`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incubate`"
-			" from `%s`;", schema_config.pet_db) ){
+			" FROM `%s` LIMIT 1;", schema_config.pet_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
 	//checking friend_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `char_id`,`friend_account`,`friend_id` from `%s`;", schema_config.friend_db) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `char_id`,`friend_account`,`friend_id` FROM `%s` LIMIT 1;", schema_config.friend_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
@@ -2258,7 +2258,7 @@ bool char_checkdb(void){
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `id`,`send_name`,`send_id`,`dest_name`,`dest_id`,"
 			"`title`,`message`,`time`,`status`,`zeny`,`nameid`,`amount`,`refine`,`attribute`,`identify`,"
 			"`card0`,`card1`,`card2`,`card3`,`unique_id`, `bound`"
-			" from `%s`;", schema_config.mail_db) ){
+			" FROM `%s` LIMIT 1;", schema_config.mail_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
@@ -2266,7 +2266,7 @@ bool char_checkdb(void){
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `auction_id`,`seller_id`,`seller_name`,`buyer_id`,`buyer_name`,"
 			"`price`,`buynow`,`hours`,`timestamp`,`nameid`,`item_name`,`type`,`refine`,`attribute`,`card0`,`card1`,"
 			"`card2`,`card3`,`unique_id` "
-			"from `%s`;", schema_config.auction_db) ){
+			"FROM `%s` LIMIT 1;", schema_config.auction_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
@@ -2277,80 +2277,80 @@ bool char_checkdb(void){
 	}
 	//checking homunculus_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `homun_id`,`char_id`,`class`,`prev_class`,`name`,`level`,`exp`,`intimacy`,`hunger`,"
-			"`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hp`,`max_hp`,`sp`,`max_sp`,`skill_point`,`alive`,`rename_flag`,`vaporize` "
-			" from `%s`;", schema_config.homunculus_db) ){
+		"`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hp`,`max_hp`,`sp`,`max_sp`,`skill_point`,`alive`,`rename_flag`,`vaporize` "
+		" FROM `%s` LIMIT 1;", schema_config.homunculus_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
 	//checking skill_homunculus_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `homun_id`,`id`,`lv` from `%s`;", schema_config.skill_homunculus_db) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `homun_id`,`id`,`lv` FROM `%s` LIMIT 1;", schema_config.skill_homunculus_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
 	//checking mercenary_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `mer_id`,`char_id`,`class`,`hp`,`sp`,`kill_counter`,`life_time` from `%s`;", schema_config.mercenary_db) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `mer_id`,`char_id`,`class`,`hp`,`sp`,`kill_counter`,`life_time` FROM `%s` LIMIT 1;", schema_config.mercenary_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
 	//checking mercenary_owner_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `char_id`,`merc_id`,`arch_calls`,`arch_faith`,"
-			"`spear_calls`,`spear_faith`,`sword_calls`,`sword_faith`"
-			" from `%s`;", schema_config.mercenary_owner_db) ){
+		"`spear_calls`,`spear_faith`,`sword_calls`,`sword_faith`"
+		" FROM `%s` LIMIT 1;", schema_config.mercenary_owner_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
 	//checking elemental_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `ele_id`,`char_id`,`class`,`mode`,`hp`,`sp`,`max_hp`,`max_sp`,"
-			"`atk1`,`atk2`,`matk`,`aspd`,`def`,`mdef`,`flee`,`hit`,`life_time` "
-			" from `%s`;", schema_config.elemental_db) ){
+		"`atk1`,`atk2`,`matk`,`aspd`,`def`,`mdef`,`flee`,`hit`,`life_time` "
+		" FROM `%s` LIMIT 1;", schema_config.elemental_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
 	//checking ragsrvinfo_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `index`,`name`,`exp`,`jexp`,`drop` from `%s`;", schema_config.ragsrvinfo_db) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `index`,`name`,`exp`,`jexp`,`drop` FROM `%s` LIMIT 1;", schema_config.ragsrvinfo_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
 	//checking skillcooldown_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `account_id`,`char_id`,`skill`,`tick` from `%s`;", schema_config.skillcooldown_db) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `account_id`,`char_id`,`skill`,`tick` FROM `%s` LIMIT 1;", schema_config.skillcooldown_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
 	//checking bonus_script_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `char_id`,`script`,`tick`,`flag`,`type`,`icon` from `%s`;", schema_config.bonus_script_db) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `char_id`,`script`,`tick`,`flag`,`type`,`icon` FROM `%s` LIMIT 1;", schema_config.bonus_script_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
 	
 	//checking cart_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `id`,`char_id`,`nameid`,`amount`,`equip`,`identify`,`refine`,"
-			"`attribute`,`card0`,`card1`,`card2`,`card3`,`expire_time`,`bound`,`unique_id`"
-		" from `%s`;", schema_config.cart_db) ){
+		"`attribute`,`card0`,`card1`,`card2`,`card3`,`expire_time`,`bound`,`unique_id`"
+		" FROM `%s` LIMIT 1;", schema_config.cart_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
 	//checking inventory_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `id`,`char_id`,`nameid`,`amount`,`equip`,`identify`,`refine`,"
-			"`attribute`,`card0`,`card1`,`card2`,`card3`,`expire_time`,`favorite`,`bound`,`unique_id`"
-		" from `%s`;", schema_config.inventory_db) ){
+		"`attribute`,`card0`,`card1`,`card2`,`card3`,`expire_time`,`favorite`,`bound`,`unique_id`"
+		" FROM `%s` LIMIT 1;", schema_config.inventory_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
 	//checking storage_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `id`,`account_id`,`nameid`,`amount`,`equip`,`identify`,`refine`,"
-			"`attribute`,`card0`,`card1`,`card2`,`card3`,`expire_time`,`bound`,`unique_id`"
-		" from `%s`;", schema_config.storage_db) ){
+		"`attribute`,`card0`,`card1`,`card2`,`card3`,`expire_time`,`bound`,`unique_id`"
+		" FROM `%s` LIMIT 1;", schema_config.storage_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
 	//checking guild_storage_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `id`,`guild_id`,`nameid`,`amount`,`equip`,`identify`,`refine`,"
-			"`attribute`,`card0`,`card1`,`card2`,`card3`,`expire_time`,`bound`,`unique_id`"
-		" from `%s`;", schema_config.guild_storage_db) ){
+		"`attribute`,`card0`,`card1`,`card2`,`card3`,`expire_time`,`bound`,`unique_id`"
+		" FROM `%s` LIMIT 1;", schema_config.guild_storage_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
-	
+	Sql_FreeResult(sql_handle);
 	ShowInfo("DB integrity check finished with success\n");
 	return true;
 }
