@@ -628,6 +628,9 @@ bAddMaxWeight	2072
 bAddItemGroupHealRate	2073
 bHPVanishRaceRate	2074
 bSPVanishRaceRate	2075
+bHPGainRaceAttackRate	2076
+bSPGainRaceAttackRate	2077
+bAbsorbDmgMaxHP	2078
 
 EQI_HEAD_TOP	1
 EQI_ARMOR	2

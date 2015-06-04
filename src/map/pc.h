@@ -349,6 +349,8 @@ struct map_session_data {
 	short sp_gain_race[RC_MAX];
 	short sp_gain_race_attack[RC_MAX];
 	short hp_gain_race_attack[RC_MAX];
+	short hp_gain_race_attack_rate[RC_MAX];
+	short sp_gain_race_attack_rate[RC_MAX];
 	// zeroed arrays end here.
 
 	// zeroed structures start here
@@ -433,6 +435,7 @@ struct map_session_data {
 		int add_fixcast, add_varcast; // in milliseconds
 		int ematk; // matk bonus from equipment
 		int eatk; // atk bonus from equipment
+		uint8 absorb_dmg_maxhp; // [Cydh]
 	} bonus;
 	// zeroed vars end here.
 

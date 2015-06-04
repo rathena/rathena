@@ -784,6 +784,52 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 }
 
 /**
+* Absorb damage based on criteria
+* @param bl
+* @param d Damage
+**/
+static void battle_absorb_damage(struct block_list *bl, struct Damage *d) {
+	int64 dmg_ori = 0, dmg_new = 0;
+
+	nullpo_retv(bl);
+	nullpo_retv(d);
+
+	if (!d->damage && !d->damage2)
+		return;
+
+	switch (bl->type) {
+		case BL_PC:
+			{
+				struct map_session_data *sd = BL_CAST(BL_PC, bl);
+				if (!sd)
+					return;
+				if (sd->bonus.absorb_dmg_maxhp) {
+					int hp = sd->bonus.absorb_dmg_maxhp * status_get_max_hp(bl) / 100;
+					dmg_ori = dmg_new = d->damage + d->damage2;
+					if (dmg_ori > hp)
+						dmg_new = dmg_ori - hp;
+				}
+			}
+			break;
+	}
+
+	if (dmg_ori == dmg_new)
+		return;
+
+	if (!d->damage2)
+		d->damage = dmg_new;
+	else if (!d->damage)
+		d->damage2 = dmg_new;
+	else {
+		d->damage = dmg_new;
+		d->damage2 = dmg_new * d->damage2 / dmg_ori / 100;
+		if (d->damage2 < 1)
+			d->damage2 = 1;
+		d->damage = d->damage - d->damage2;
+	}
+}
+
+/**
  * Check damage through status.
  * ATK may be MISS, BLOCKED FAIL, reduc, increase, end status.
  * After this we apply bg/gvg reduction
@@ -5299,6 +5345,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 	wd = battle_calc_weapon_final_atk_modifiers(wd, src, target, skill_id, skill_lv);
 
+	battle_absorb_damage(target, &wd);
+
 	battle_do_reflect(BF_WEAPON,&wd, src, target, skill_id, skill_lv); //WIP [lighta]
 
 	return wd;
@@ -6059,6 +6107,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		MATK_ADDRATE(skill_damage);
 #endif
 
+	battle_absorb_damage(target, &ad);
+
 	//battle_do_reflect(BF_MAGIC,&ad, src, target, skill_id, skill_lv); //WIP [lighta] Magic skill has own handler at skill_attack
 	return ad;
 }
@@ -6428,6 +6478,8 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		md.damage += (int64)md.damage * skill_damage / 100;
 #endif
 
+	battle_absorb_damage(target, &md);
+
 	battle_do_reflect(BF_MISC,&md, src, target, skill_id, skill_lv); //WIP [lighta]
 
 	return md;
@@ -6569,7 +6621,11 @@ void battle_drain(TBL_PC *sd, struct block_list *tbl, int64 rdamage, int64 ldama
 {
 	struct weapon_data *wd;
 	int64 *damage;
-	int thp = 0, tsp = 0, rhp = 0, rsp = 0, hp = 0, sp = 0;
+	int thp = 0, // HP gained by attacked
+		tsp = 0, // SP gained by attacked
+		rhp = 0, // HP reduced from target
+		rsp = 0, // SP reduced from target
+		hp = 0, sp = 0;
 	uint8 i = 0;
 	short vrate_hp = 0, vrate_sp = 0, v_hp = 0, v_sp = 0;
 
@@ -6577,11 +6633,15 @@ void battle_drain(TBL_PC *sd, struct block_list *tbl, int64 rdamage, int64 ldama
 		return;
 
 	// Check for vanish HP/SP. !CHECKME: Which first, drain or vanish?
-	vrate_hp = cap_value(sd->bonus.hp_vanish_rate + sd->vanish_race[race].hp_rate + sd->vanish_race[RC_ALL].hp_rate, SHRT_MIN, SHRT_MAX);
-	v_hp = cap_value(sd->bonus.hp_vanish_per + sd->vanish_race[race].hp_per + sd->vanish_race[RC_ALL].hp_per, INT8_MIN, INT8_MAX);
+	hp = sd->bonus.hp_vanish_rate + sd->vanish_race[race].hp_rate + sd->vanish_race[RC_ALL].hp_rate;
+	vrate_hp = cap_value(hp, SHRT_MIN, SHRT_MAX);
+	hp = sd->bonus.hp_vanish_per + sd->vanish_race[race].hp_per + sd->vanish_race[RC_ALL].hp_per;
+	v_hp = cap_value(hp, INT8_MIN, INT8_MAX);
 
-	vrate_sp = cap_value(sd->bonus.sp_vanish_rate + sd->vanish_race[race].sp_rate + sd->vanish_race[RC_ALL].sp_rate, SHRT_MIN, SHRT_MAX);
-	v_sp = cap_value(sd->bonus.sp_vanish_per + sd->vanish_race[race].sp_per + sd->vanish_race[RC_ALL].sp_per, INT8_MIN, INT8_MAX);
+	sp = sd->bonus.sp_vanish_rate + sd->vanish_race[race].sp_rate + sd->vanish_race[RC_ALL].sp_rate;
+	vrate_sp = cap_value(sp, SHRT_MIN, SHRT_MAX);
+	sp = sd->bonus.sp_vanish_per + sd->vanish_race[race].sp_per + sd->vanish_race[RC_ALL].sp_per;
+	v_sp = cap_value(sp, INT8_MIN, INT8_MAX);
 
 	if (v_hp > 0 && vrate_hp > 0 && (vrate_hp >= 10000 || rnd()%10000 < vrate_hp))
 		i |= 1;
@@ -6590,12 +6650,14 @@ void battle_drain(TBL_PC *sd, struct block_list *tbl, int64 rdamage, int64 ldama
 	if (i)
 		status_percent_damage(&sd->bl, tbl, (i&1 ? (int8)v_hp: 0), (i&2 ? (int8)v_sp : 0), false);
 
-	i = 0;
+	hp = sp = i = 0;
 	for (i = 0; i < 4; i++) {
 		//First two iterations: Right hand
 		if (i < 2) { wd = &sd->right_weapon; damage = &rdamage; }
 		else { wd = &sd->left_weapon; damage = &ldamage; }
+
 		if (*damage <= 0) continue;
+
 		if( i == 1 || i == 3 ) {
 			hp = wd->hp_drain_class[class_].value + wd->hp_drain_class[CLASS_ALL].value;
 			if (wd->hp_drain_class[class_].rate)
@@ -6659,10 +6721,21 @@ void battle_drain(TBL_PC *sd, struct block_list *tbl, int64 rdamage, int64 ldama
 		tsp += sd->sp_gain_race_attack[race];
 	if( sd->sp_gain_race_attack[RC_ALL] )
 		tsp += sd->sp_gain_race_attack[RC_ALL];
+
 	if( sd->hp_gain_race_attack[race] )
 		thp += sd->hp_gain_race_attack[race];
 	if( sd->hp_gain_race_attack[RC_ALL] )
 		thp += sd->hp_gain_race_attack[RC_ALL];
+
+	if (sd->hp_gain_race_attack_rate[race])
+		thp += (int)((rdamage+ldamage) * sd->hp_gain_race_attack_rate[race] / 100);
+	if (sd->hp_gain_race_attack_rate[RC_ALL])
+		thp += (int)((rdamage+ldamage) * sd->hp_gain_race_attack_rate[RC_ALL] / 100);
+
+	if (sd->sp_gain_race_attack_rate[race])
+		tsp += (int)((rdamage+ldamage) * sd->sp_gain_race_attack_rate[race] / 100);
+	if (sd->sp_gain_race_attack_rate[RC_ALL])
+		tsp += (int)((rdamage+ldamage) * sd->sp_gain_race_attack_rate[RC_ALL] / 100);
 
 	if (!thp && !tsp)
 		return;

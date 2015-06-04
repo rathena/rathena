@@ -2977,6 +2977,9 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 			if (sd->state.lr_flag != 2)
 				sd->max_weight += val;
 			break;
+		case SP_ABSORB_DMG_MAXHP:
+			sd->bonus.absorb_dmg_maxhp = max(sd->bonus.absorb_dmg_maxhp, val);
+			break;
 		default:
 			ShowWarning("pc_bonus: unknown type %d %d !\n",type,val);
 			break;
@@ -3641,6 +3644,14 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->skillusesp[i].id = type2;
 			sd->skillusesp[i].val = val;
 		}
+		break;
+	case SP_HP_GAIN_RACE_ATTACK_RATE: // bonus2 bHPGainRaceAttackRate,r,n;
+		PC_BONUS_CHK_RACE(type2,SP_HP_GAIN_RACE_ATTACK_RATE);
+		sd->hp_gain_race_attack_rate[type2] += val;
+		break;
+	case SP_SP_GAIN_RACE_ATTACK_RATE: // bonus2 bSPGainRaceAttackRate,r,n;
+		PC_BONUS_CHK_RACE(type2,SP_SP_GAIN_RACE_ATTACK_RATE);
+		sd->sp_gain_race_attack_rate[type2] += val;
 		break;
 	default:
 		ShowWarning("pc_bonus2: unknown type %d %d %d!\n",type,type2,val);

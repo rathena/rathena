@@ -230,6 +230,8 @@ bonus2 bAddMDefMonster,mid,x;     	+x% magical damage reduction against monster 
 bonus2 bAddRace2,mr,x;			+x% damage against monster race mr
 bonus2 bSubRace2,mr,x;			+x% damage reduction against monster race mr
 
+bonus bAbsorbDmgMaxHP,n;		If the damage received is more than n% of Max HP, the damage received is [TotalDamage] - [n% of MaxHP]
+
 Atk/Def
 -------
 bonus bAtkEle,e;          		Gives the player's attacks element e
@@ -341,6 +343,9 @@ bonus3 bSPVanishRaceRate,r,n,x;		Add a n/100% chance of decreasing enemy's SP am
 
 bonus2 bHPGainRaceAttack,r,n;		Heals +n HP on every hit when attacking an enemy of race r
 bonus2 bSPGainRaceAttack,r,n;		Heals +n SP on every hit when attacking an enemy of race r
+
+bonus2 bHPGainRaceAttackRate,r,n;		Heals +n% HP of inflicted damage on every hit when attacking an enemy of race r
+bonus2 bSPGainRaceAttackRate,r,n;		Heals +n% SP of inflicted damage on every hit when attacking an enemy of race r
 
 bonus bHPGainValue,n;     		Heals +n HP when killing an enemy with a physical attack
 bonus bSPGainValue,n;     		Heals +n SP when killing an enemy with a physical attack
