@@ -8917,6 +8917,8 @@ bool pc_setreg2(struct map_session_data *sd, const char *reg, int val) {
 			return pc_setreg(sd, add_str(reg), val);
 		case '#':
 			return (reg[1] == '#') ? pc_setaccountreg2(sd, reg, val) : pc_setaccountreg(sd, reg, val);
+		default:
+			return pc_setglobalreg(sd, reg, val);
 	}
 
 	return false;
@@ -8948,6 +8950,8 @@ int pc_readreg2(struct map_session_data *sd, const char *reg) {
 			return pc_readreg(sd, add_str(reg));
 		case '#':
 			return (reg[1] == '#') ? pc_readaccountreg2(sd, reg) : pc_readaccountreg(sd, reg);
+		default:
+			return pc_readglobalreg(sd, reg);
 	}
 
 	return 0;
