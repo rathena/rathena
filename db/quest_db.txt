@@ -966,7 +966,7 @@
 7149,0,1023,10,0,0,0,0,"The training course 'conquer the orc village!' - A real battle 2"
 7150,0,1273,10,0,0,0,0,"The training course 'conquer the orc village!' - A real battle 3"
 7151,0,0,0,0,0,0,0,"The training course 'conquer the orc village!' - Complete a quest"
-7152,0,0,0,0,0,0,0,"bThe training course 'conquer the orc dungeon!' - start"
+7152,0,0,0,0,0,0,0,"The training course 'conquer the orc dungeon!' - start"
 7153,0,1153,20,0,0,0,0,"The training course 'conquer the orc dungeon!' - A real battle 1"
 7154,0,1152,20,0,0,0,0,"The training course 'conquer the orc dungeon!'- A real battle 2"
 7155,0,0,0,0,0,0,0,"The training course 'conquer the orc dungeon!' - complete a quest"
