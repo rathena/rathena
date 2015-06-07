@@ -8495,6 +8495,7 @@ BUILDIN_FUNC(bonus)
 		case SP_VARCASTRATE:
 		case SP_FIXCASTRATE:
 		case SP_SKILL_USE_SP:
+		case SP_SUB_SKILL:
 			// these bonuses support skill names
 			data = script_getdata(st, 3);
 			get_val(st, data); // Convert into value in case of a variable

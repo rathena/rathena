@@ -1551,16 +1551,16 @@ int64 battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int64 
 
 /**
  * HP/SP drain calculation
- * @param damage
- * @param rate
- * @param per
+ * @param damage Damage inflicted to the enemy
+ * @param rate Success chance 1000 = 100%
+ * @param per HP/SP drained
  * @return diff
  */
 static int battle_calc_drain(int64 damage, int rate, int per)
 {
 	int64 diff = 0;
 
-	if (per && rnd()%1000 < rate) {
+	if (per && (rate > 1000 || rnd()%1000 < rate)) {
 		diff = (damage * per) / 100;
 		if (diff == 0) {
 			if (per > 0)
@@ -5112,6 +5112,10 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			ATK_ADDRATE(wd.damage, wd.damage2, i);
 			RE_ALLATK_ADDRATE(wd, i);
 		}
+		if (tsd && (i = pc_sub_skillatk_bonus(tsd, skill_id))) {
+			ATK_ADDRATE(wd.damage, wd.damage2, -i);
+			RE_ALLATK_ADDRATE(wd, -i);
+		}
 
 #ifdef RENEWAL
 		// In Renewal we only cardfix to the weapon and equip ATK
@@ -5981,6 +5985,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				flag.imdef = 1;
 		}
 
+		if (tsd && (i = pc_sub_skillatk_bonus(tsd, skill_id)))
+			ad.damage -= (int64)ad.damage*i/100;
+
 		if(!flag.imdef){
 			defType mdef = tstatus->mdef;
 			int mdef2= tstatus->mdef2;
@@ -6433,6 +6440,9 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	if (sd && (i = pc_skillatk_bonus(sd, skill_id)))
 		md.damage += (int64)md.damage*i/100;
 
+	if (tsd && (i = pc_sub_skillatk_bonus(tsd, skill_id)))
+		md.damage -= (int64)md.damage*i/100;
+
 	if(!(nk&NK_NO_ELEFIX))
 		md.damage=battle_attr_fix(src, target, md.damage, s_ele, tstatus->def_ele, tstatus->ele_lv);
 
@@ -6633,14 +6643,14 @@ void battle_drain(TBL_PC *sd, struct block_list *tbl, int64 rdamage, int64 ldama
 		return;
 
 	// Check for vanish HP/SP. !CHECKME: Which first, drain or vanish?
-	hp = sd->bonus.hp_vanish_rate + sd->vanish_race[race].hp_rate + sd->vanish_race[RC_ALL].hp_rate;
-	vrate_hp = cap_value(hp, SHRT_MIN, SHRT_MAX);
-	hp = sd->bonus.hp_vanish_per + sd->vanish_race[race].hp_per + sd->vanish_race[RC_ALL].hp_per;
+	hp = sd->bonus.hp_vanish_rate + sd->hp_vanish_race[race].rate + sd->hp_vanish_race[RC_ALL].rate;
+	vrate_hp = cap_value(hp, 0, SHRT_MAX);
+	hp = sd->bonus.hp_vanish_per + sd->hp_vanish_race[race].per + sd->hp_vanish_race[RC_ALL].per;
 	v_hp = cap_value(hp, INT8_MIN, INT8_MAX);
 
-	sp = sd->bonus.sp_vanish_rate + sd->vanish_race[race].sp_rate + sd->vanish_race[RC_ALL].sp_rate;
-	vrate_sp = cap_value(sp, SHRT_MIN, SHRT_MAX);
-	sp = sd->bonus.sp_vanish_per + sd->vanish_race[race].sp_per + sd->vanish_race[RC_ALL].sp_per;
+	sp = sd->bonus.sp_vanish_rate + sd->sp_vanish_race[race].rate + sd->sp_vanish_race[RC_ALL].rate;
+	vrate_sp = cap_value(sp, 0, SHRT_MAX);
+	sp = sd->bonus.sp_vanish_per + sd->sp_vanish_race[race].per + sd->sp_vanish_race[RC_ALL].per;
 	v_sp = cap_value(sp, INT8_MIN, INT8_MAX);
 
 	if (v_hp > 0 && vrate_hp > 0 && (vrate_hp >= 10000 || rnd()%10000 < vrate_hp))
@@ -6650,6 +6660,7 @@ void battle_drain(TBL_PC *sd, struct block_list *tbl, int64 rdamage, int64 ldama
 	if (i)
 		status_percent_damage(&sd->bl, tbl, (i&1 ? (int8)v_hp: 0), (i&2 ? (int8)v_sp : 0), false);
 
+	// Check for drain HP/SP
 	hp = sp = i = 0;
 	for (i = 0; i < 4; i++) {
 		//First two iterations: Right hand
@@ -6659,63 +6670,52 @@ void battle_drain(TBL_PC *sd, struct block_list *tbl, int64 rdamage, int64 ldama
 		if (*damage <= 0) continue;
 
 		if( i == 1 || i == 3 ) {
-			hp = wd->hp_drain_class[class_].value + wd->hp_drain_class[CLASS_ALL].value;
-			if (wd->hp_drain_class[class_].rate)
-				hp += battle_calc_drain(*damage, wd->hp_drain_class[class_].rate, wd->hp_drain_class[class_].per);
-			if (wd->hp_drain_class[CLASS_ALL].rate)
-				hp += battle_calc_drain(*damage, wd->hp_drain_class[CLASS_ALL].rate, wd->hp_drain_class[CLASS_ALL].per);
+			hp = wd->hp_drain_class[class_] + wd->hp_drain_class[CLASS_ALL];
+			hp += battle_calc_drain(*damage, wd->hp_drain_rate.rate, wd->hp_drain_rate.per);
 
-			sp = wd->sp_drain_class[class_].value + wd->sp_drain_class[CLASS_ALL].value;
-			if (wd->sp_drain_class[class_].rate)
-				sp += battle_calc_drain(*damage, wd->sp_drain_class[class_].rate, wd->sp_drain_class[class_].per);
-			if (wd->sp_drain_class[CLASS_ALL].rate)
-				sp += battle_calc_drain(*damage, wd->sp_drain_class[CLASS_ALL].rate, wd->sp_drain_class[CLASS_ALL].per);
+			sp = wd->sp_drain_class[class_] + wd->sp_drain_class[CLASS_ALL];
+			sp += battle_calc_drain(*damage, wd->sp_drain_rate.rate, wd->sp_drain_rate.per);
 
 			if( hp ) {
-				if( wd->hp_drain_class[class_].type )
-					rhp += hp;
-				if( wd->hp_drain_class[CLASS_ALL].type )
-					rhp += hp;
+				rhp += hp;
 				thp += hp;
 			}
 
 			if( sp ) {
-				if( wd->sp_drain_class[class_].type )
-					rsp += sp;
-				if( wd->sp_drain_class[CLASS_ALL].type )
-					rsp += sp;
+				rsp += sp;
 				tsp += sp;
 			}
 		} else {
-			hp = wd->hp_drain_race[race].value + wd->hp_drain_race[RC_ALL].value;
-			if (wd->hp_drain_race[race].rate)
-				hp += battle_calc_drain(*damage, wd->hp_drain_race[race].rate, wd->hp_drain_race[race].per);
-			if (wd->hp_drain_race[RC_ALL].rate)
-				hp += battle_calc_drain(*damage, wd->hp_drain_race[RC_ALL].rate, wd->hp_drain_race[RC_ALL].per);
-
-			sp = wd->sp_drain_race[race].value + wd->sp_drain_race[RC_ALL].value;
-			if (wd->sp_drain_race[race].rate)
-				sp += battle_calc_drain(*damage, wd->sp_drain_race[race].rate, wd->sp_drain_race[race].per);
-			if (wd->sp_drain_race[RC_ALL].rate)
-				sp += battle_calc_drain(*damage, wd->sp_drain_race[RC_ALL].rate, wd->sp_drain_race[RC_ALL].per);
+			hp = wd->hp_drain_race[race] + wd->hp_drain_race[RC_ALL];
+			sp = wd->sp_drain_race[race] + wd->sp_drain_race[RC_ALL];
 
 			if( hp ) {
-				if( wd->hp_drain_race[race].type )
-					rhp += hp;
-				if( wd->hp_drain_race[RC_ALL].type )
-					rhp += hp;
+				rhp += hp;
 				thp += hp;
 			}
 
 			if( sp ) {
-				if( wd->sp_drain_race[race].type )
-					rsp += sp;
-				if( wd->sp_drain_race[RC_ALL].type )
-					rsp += sp;
+				rsp += sp;
 				tsp += sp;
 			}
 		}
 	}
+
+	// Check for gain HP/SP
+	if (sd->bonus.hp_gain_attack)
+		thp += sd->bonus.hp_gain_attack;
+	if (sd->bonus.sp_gain_attack)
+		tsp += sd->bonus.sp_gain_attack;
+
+	if (sd->bonus.hp_gain_attack_rate)
+		thp += (int)((rdamage+ldamage) * sd->bonus.hp_gain_attack_rate / 100);
+	if (sd->bonus.sp_gain_attack_rate)
+		tsp += (int)((rdamage+ldamage) * sd->bonus.sp_gain_attack_rate / 100);
+
+	if (sd->hp_gain_attack.rate)
+		thp += battle_calc_drain(rdamage+ldamage, sd->hp_gain_attack.rate, sd->hp_gain_attack.per);
+	if (sd->sp_gain_attack.rate)
+		tsp += battle_calc_drain(rdamage+ldamage, sd->sp_gain_attack.rate, sd->sp_gain_attack.per);
 
 	if( sd->sp_gain_race_attack[race] )
 		tsp += sd->sp_gain_race_attack[race];

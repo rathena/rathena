@@ -2432,7 +2432,7 @@ SC_MTF_MLEATKED	(SI_MTF_MLEATKED)
 
 SC_MTF_CRIDAMAGE	(SI_MTF_CRIDAMAGE)
 	desc: Bonus critical rate of monster transformation
-	val1: +$ Critical
+	val1: +% Critical
 
 SC_OKTOBERFEST	()
 	desc: Costume

@@ -1633,7 +1633,7 @@
 2551,Rider_Insignia_M,Crest of the Rider,4,20,,500,,4,,1,0xFFFFFFFE,18,2,4,,55,1,0,{ bonus bAgi,2; },{},{}
 2552,Mithril_Magic_Cape_M,Mithril Magic Manteau,4,20,,400,,3,,1,0x00098B1C,18,2,4,,70,1,0,{ bonus bMdef,3; bonus5 bAutoSpellWhenHit,"NPC_ANTIMAGIC",6,200,BF_MAGIC,0; },{},{}
 2553,Dragon_Manteau,Dragon Manteau,4,20,,1000,,14,,1,0xFFFFFFFE,18,2,4,,0,1,0,{ bonus bAgi,1; bonus bMdef,5; },{},{}
-2554,Piece_Of_Angent_Skin,Nydhorgg's Shadow Garb,4,20,,400,,25,,1,0xFFFFFFFE,18,2,4,,90,1,0,{ bonus2 bSubEle,Ele_Neutral,7; bonus2 bSubEle,Ele_Water,7; bonus2 bSubEle,Ele_Earth,7; bonus2 bSubEle,Ele_Fire,7; bonus2 bSubEle,Ele_Wind,7; bonus2 bSubEle,Ele_Poison,7; bonus2 bSubEle,Ele_Holy,7; bonus2 bSubEle,Ele_Dark,7; bonus2 bSubEle,Ele_Ghost,7; bonus2 bSubEle,Ele_Undead,7; bonus bMaxSP,(BaseLevel/3)+(getrefine()*10); bonus3 bSPDrainRate,10,1,0; bonus bMdef,3; },{},{}
+2554,Piece_Of_Angent_Skin,Nydhorgg's Shadow Garb,4,20,,400,,25,,1,0xFFFFFFFE,18,2,4,,90,1,0,{ bonus2 bSubEle,Ele_Neutral,7; bonus2 bSubEle,Ele_Water,7; bonus2 bSubEle,Ele_Earth,7; bonus2 bSubEle,Ele_Fire,7; bonus2 bSubEle,Ele_Wind,7; bonus2 bSubEle,Ele_Poison,7; bonus2 bSubEle,Ele_Holy,7; bonus2 bSubEle,Ele_Dark,7; bonus2 bSubEle,Ele_Ghost,7; bonus2 bSubEle,Ele_Undead,7; bonus bMaxSP,(BaseLevel/3)+(getrefine()*10); bonus2 bSPGainAttackRate,100,1; bonus bMdef,3; },{},{}
 2555,Freyja_SScarf7,Freyja Soul Scarf,4,20,,400,,4,,0,0xFFFFFFFF,63,2,4,,20,0,0,{ bonus bFlee,15; bonus2 bSubEle,Ele_Neutral,15; },{},{}
 2556,Freyja_SScarf30,Freyja Soul Scarf,4,20,,400,,4,,0,0xFFFFFFFF,63,2,4,,20,0,0,{ bonus bFlee,15; bonus2 bSubEle,Ele_Neutral,15; },{},{}
 2557,Freyja_SScarf60,Freyja Soul Scarf,4,20,,400,,4,,0,0xFFFFFFFF,63,2,4,,20,0,0,{ bonus bFlee,15; bonus2 bSubEle,Ele_Neutral,15; },{},{}
@@ -2158,7 +2158,7 @@
 4112,Marduk_Card,Marduk Card,6,20,,10,,,,,,,,769,,,,,{ bonus2 bResEff,Eff_Silence,10000; },{},{}
 4113,Marionette_Card,Marionette Card,6,20,,10,,,,,,,,4,,,,,{ bonus2 bSubEle,Ele_Ghost,30; bonus bFlee,5; },{},{}
 4114,Argiope_Card,Argiope Card,6,20,,10,,,,,,,,16,,,,,{ bonus bDefEle,Ele_Poison; bonus bDef,1; },{},{}
-4115,Hunter_Fly_Card,Hunter Fly Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bHpDrainRate,30,15; },{},{}
+4115,Hunter_Fly_Card,Hunter Fly Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bHPDrainRate,30,15; },{},{}
 4116,Isis_Card,Isis Card,6,20,,10,,,,,,,,4,,,,,{ bonus2 bSubEle,Ele_Dark,30; bonus bFlee,5; },{},{}
 4117,Side_Winder_Card,Sidewinder Card,6,20,,10,,,,,,,,2,,,,,{ skill "TF_DOUBLE",1; bonus bDoubleRate,5; },{},{}
 4118,Petit_Card,Earth Petite Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bAddRace,RC_Dragon,20; },{},{}
@@ -2177,7 +2177,7 @@
 4131,Moonlight_Flower_Card,Moonlight Flower Card,6,20,,10,,,,,,,,64,,,,,{ bonus bSpeedRate,25; },{},{}
 4132,Mistress_Card,Mistress Card,6,20,,10,,,,,,,,769,,,,,{ bonus bNoGemStone,0; bonus bUseSPrate,25; },{},{}
 4133,Daydric_Card,Raydric Card,6,20,,10,,,,,,,,4,,,,,{ bonus2 bSubEle,Ele_Neutral,20; },{},{}
-4134,Dracula_Card,Dracula Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bSpDrainRate,100,5; },{},{}
+4134,Dracula_Card,Dracula Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bSPDrainRate,100,5; },{},{}
 4135,Orc_Load_Card,Orc Lord Card,6,20,,10,,,,,,,,16,,,,,{ bonus bShortWeaponDamageReturn,30; },{},{}
 4136,Khalitzburg_Card,Khalitzburg Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubRace,RC_Demon,30; },{},{}
 4137,Drake_Card,Drake Card,6,20,,10,,,,,,,,2,,,,,{ bonus bNoSizeFix,0; },{},{}
@@ -2215,7 +2215,7 @@
 4169,Dark_Illusion_Card,Dark Illusion Card,6,20,,10,,,,,,,,769,,,,,{ bonus bMaxHPrate,-10; bonus bMaxSPrate,-10; bonus bVariableCastrate,-10; },{},{}
 4170,Dark_Frame_Card,Dark Frame Card,6,20,,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Stone,600; },{},{}
 4171,Dark_Priest_Card,Dark Priest Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bSPVanishRate,50,10; if(BaseJob==Job_Sage) bonus bSPDrainValue,1; },{},{}
-4172,The_Paper_Card,The Paper Card,6,20,,10,,,,,,,,2,,,,,{ bonus bCritAtkRate,20; bonus2 bSPDrainValue,-1,0; },{},{}
+4172,The_Paper_Card,The Paper Card,6,20,,10,,,,,,,,2,,,,,{ bonus bCritAtkRate,20; bonus bSPGainAttack,-1; },{},{}
 4173,Demon_Pungus_Card,Demon Pungus Card,6,20,,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Sleep,600; },{},{}
 4174,Deviling_Card,Deviling Card,6,20,,10,,,,,,,,4,,,,,{ bonus2 bSubEle,Ele_Neutral,50; bonus2 bSubEle,Ele_Water,-50; bonus2 bSubEle,Ele_Earth,-50; bonus2 bSubEle,Ele_Fire,-50; bonus2 bSubEle,Ele_Wind,-50; bonus2 bSubEle,Ele_Poison,-50; bonus2 bSubEle,Ele_Holy,-50; bonus2 bSubEle,Ele_Dark,-50; bonus2 bSubEle,Ele_Ghost,-50; bonus2 bSubEle,Ele_Undead,-50; },{},{}
 4175,Poison_Toad_Card,Poisonous Toad Card,6,20,,10,,,,,,,,136,,,,,{ bonus3 bAutoSpell,"TF_POISON",1,20; bonus2 bAddSkillBlow,52,5; },{},{}
@@ -2324,7 +2324,7 @@
 4278,Gibbet_Card,Gibbet Card,6,20,,10,,,,,,,,769,,,,,{ if(getrefine()<6) bonus bMdef,5; },{},{}
 4279,Deleter_Card,Earth Deleter Card,6,20,,10,,,,,,,,16,,,,,{ bonus bSPrecovRate,-100; bonus bSPGainValue,10; },{},{ heal 0,-100; }
 4280,Geographer_Card,Geographer Card,6,20,,10,,,,,,,,16,,,,,{ bonus3 bAutoSpellWhenHit,"AL_BLESSING",2+8*(getskilllv("AL_BLESSING")==10),30; },{},{}
-4281,Zipper_Bear_Card,Zipper Bear Card,6,20,,10,,,,,,,,2,,,,,{ bonus bBaseAtk,30; bonus2 bSPDrainValue,-1,0; if(BaseClass==Job_Merchant) bonus bUnbreakableWeapon,0; },{},{}
+4281,Zipper_Bear_Card,Zipper Bear Card,6,20,,10,,,,,,,,2,,,,,{ bonus bBaseAtk,30; bonus bSPGainAttack,-1; if(BaseClass==Job_Merchant) bonus bUnbreakableWeapon,0; },{},{}
 4282,Tengu_Card,Tengu Card,6,20,,10,,,,,,,,136,,,,,{ bonus2 bAddMonsterDropItemGroup,IG_Recovery,600; },{},{}
 4283,Greatest_General_Card,Greatest General Card,6,20,,10,,,,,,,,136,,,,,{ bonus3 bAutoSpell,"MO_CALLSPIRITS",5,2+18*(BaseClass==Job_Acolyte); },{},{}
 4284,Chepet_Card,Chepet Card,6,20,,10,,,,,,,,2,,,,,{ bonus4 bAutoSpell,"AL_HEAL",5,50,1; },{},{}
@@ -2410,7 +2410,7 @@
 4364,Magaleta_Card,Margaretha Sorin Card,6,20,,10,,,,,,,,769,,,,,{ bonus bInt,1; bonus5 bAutoSpellWhenHit,"PR_LEXDIVINA",5,150,BF_MAGIC,1; },{},{}
 4365,B_Katrinn_Card,High Wizard Card,6,20,,10,,,,,,,,769,,,,,{ bonus2 bIgnoreMdefClassRate,Class_Normal,100; bonus bVariableCastrate,100; bonus bSPrecovRate,-100; },{},{ heal 0,-2000; }
 4366,Katrinn_Card,Kathryne Keyron Card,6,20,,10,,,,,,,,769,,,,,{ .@r = getrefine(); bonus bVariableCastrate,.@r*-1; if(.@r>=9) { bonus bMatkRate,2; } },{},{}
-4367,B_Shecil_Card,Sniper Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bHpDrainRate,100,20; bonus bHPrecovRate,-10; },{},{}
+4367,B_Shecil_Card,Sniper Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bHPDrainRate,100,20; bonus bHPrecovRate,-10; },{},{}
 4368,Shecil_Card,Cecil Damon Card,6,20,,10,,,,,,,,2,,,,,{ bonus bAspdRate,5; bonus bHit,-30; },{},{}
 4369,Venatu_Card,Venatu Card,6,20,,10,,,,,,,,16,,,,,{ bonus bLuk,readparam(bAgi)/18; },{},{}
 4370,Dimik_Card,Dimik Card,6,20,,10,,,,,,,,16,,,,,{ bonus bVit,getrefine()-5; },{},{}
@@ -2525,7 +2525,7 @@
 4480,Sealed_Kiel_Card,Sealed Kiel Card,6,20,,10,,,,,,,,769,,,,,{ bonus bDelayRate,((getrefine()>14)?-20:-15); },{},{}
 4481,Sealed_Ktullanux_Card,Sealed Ktullanux Card,6,20,,10,,,,,,,,16,,,,,{ bonus2 bAddEle,Ele_Fire,((getrefine()>14)?35:25); bonus5 bAutoSpellWhenHit,"WZ_FROSTNOVA",10,10,BF_WEAPON|BF_MAGIC,0; },{},{}
 4482,Sealed_B_Ygnizem_Card,Sealed General Egnigem Cenia Card,6,20,,10,,,,,,,,64,,,,,{ set .@rate,((getrefine()>14)?7:5); bonus bMaxHPrate,.@rate; bonus bMaxSPrate,.@rate; bonus2 bHPRegenRate,50,10000; bonus2 bSPRegenRate,10,10000; },{},{}
-4483,Sealed_Dracula_Card,Sealed Dracula Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bSpDrainRate,((getrefine()>14)?70:50),5; },{},{}
+4483,Sealed_Dracula_Card,Sealed Dracula Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bSPDrainRate,((getrefine()>14)?70:50),5; },{},{}
 4484,Sealed_Mistress_Card,Sealed Mistress Card,6,20,,10,,,,,,,,769,,,,,{ bonus bNoGemStone,0; bonus bUseSPrate,((getrefine()>14)?35:50); },{},{}
 4485,Sealed_Gloom_Card,Sealed Gloom Under Night Card,6,20,,10,,,,,,,,16,,,,,{ set .@rate,((getrefine()>14)?30:20); bonus2 bAddEle,Ele_Holy,.@rate; bonus2 bAddEle,Ele_Dark,.@rate; bonus2 bAddRace,RC_Angel,.@rate; bonus2 bAddRace,RC_Demon,.@rate; },{},{}
 4486,Sealed_Berz_Card,Sealed Berzebub Card,6,20,,10,,,,,,,,136,,,,,{ bonus bVariableCastrate,-15; },{},{}
@@ -2533,7 +2533,7 @@
 4488,Sealed_D_Lord_Card,Sealed Dark Lord Card,6,20,,10,,,,,,,,64,,,,,{ bonus3 bAutoSpellWhenHit,"WZ_METEOR",5,50; },{},{}
 4489,Sealed_Pharaoh_Card,Sealed Pharaoh Card,6,20,,10,,,,,,,,769,,,,,{ bonus bUseSPrate,-15; },{},{}
 4490,Sealed_M_Flower_Card,Sealed Moonlight Flower Card,6,20,,10,,,,,,,,64,,,,,{ skill "AL_INCAGI",((getrefine()>14)?5:1); },{},{}
-4491,Sealed_B_Shecil_Card,Sealed Sniper Card,6,20,,10,,,,,,,,2,,,,,{ bonus bHPrecovRate,-100; bonus2 bHpDrainRate,50,((getrefine()>14)?15:10); },{},{}
+4491,Sealed_B_Shecil_Card,Sealed Sniper Card,6,20,,10,,,,,,,,2,,,,,{ bonus bHPrecovRate,-100; bonus2 bHPDrainRate,50,((getrefine()>14)?15:10); },{},{}
 4492,Sealed_Orc_Hero_Card,Sealed Orc Hero Card,6,20,,10,,,,,,,,769,,,,,{ bonus bVit,3; bonus2 bResEff,Eff_Stun,((getrefine()>14)?6000:4000); },{},{}
 4493,Sealed_Tao_Card,Sealed Tao Gunka Card,6,20,,10,,,,,,,,16,,,,,{ bonus bMaxHPrate,((getrefine()>14)?75:50); bonus bDefRate,-50; bonus bMdefRate,-50; },{},{}
 4494,Sealed_TurtleG_Card,Sealed Turtle General Card,6,20,,10,,,,,,,,2,,,,,{ set .@rate, ((getrefine()>14)?15:10); bonus2 bAddClass,Class_All,.@rate; bonus3 bAutoSpell,"SM_MAGNUM",10,15; },{},{}
@@ -6887,7 +6887,7 @@
 13064,Academy_Knife,Academy Knife,5,0,,700,110,,1,1,0x02021040,63,2,2,1,1,1,1,{ bonus bUnbreakableWeapon,0; },{},{}
 13065,Academy_Eti_Knife,Academy Eti Knife,5,0,,1200,120,,1,1,0x00000001,63,2,2,1,1,1,1,{ bonus bUnbreakableWeapon,0; },{},{}
 13066,P_Dagger3,Eden Dagger III,5,0,,0,165:80,,1,0,0x3E9F7EEF,63,2,2,3,60,0,1,{},{},{}
-13067,Caress,Keris,5,20,,700,107:70,,1,1,0x3E9F7EEF,18,2,2,3,30,1,1,{ bonus2 bHpDrainRate,20,10; },{},{}
+13067,Caress,Keris,5,20,,700,107:70,,1,1,0x3E9F7EEF,18,2,2,3,30,1,1,{ bonus2 bHPDrainRate,20,10; },{},{}
 13068,Saurel,Pompano,5,0,,0,160:100,,3,0,0x3E9F7EEF,63,2,2,1,50,0,1,{ bonus bUnbreakableWeapon,0; autobonus "{ bonus bBaseAtk,30; }",10,7000,BF_WEAPON,"{ specialeffect2 EF_ENHANCE; }"; autobonus "{ bonus bMatk,20; }",10,7000,BF_MAGIC,"{ specialeffect2 EF_SUFFRAGIUM; }"; if(BaseLevel>99) { bonus bBaseAtk,10; bonus bMatk,10; } },{},{}
 13069,Aztoe_Nail,As-nail,5,56000,,500,160:80,,1,0,0x000654E2,63,2,2,4,110,1,1,{ bonus bAtkEle,Ele_Wind; bonus2 bAddEff,Eff_Freeze,100+(getrefine()*50); },{},{}
 13070,Scarletto_Nail,Scarlet-nail,5,56000,,500,160:80,,1,0,0x000654E2,63,2,2,4,110,1,1,{ bonus bAtkEle,Ele_Fire; bonus2 bAddEff,Eff_Stone,100+(getrefine()*50); },{},{}
@@ -7085,7 +7085,7 @@
 13400,Cutlas_,Cutlus,5,20,,900,150,,1,1,0x000654E2,63,2,2,4,40,1,2,{ skill "SM_BASH",5; bonus bStr,2; bonus bDef,1; },{},{}
 13401,Excalibur_C,Excalibur,5,1,,0,199,,1,0,0x000654E2,63,2,2,4,1,0,2,{ bonus bInt,10; bonus bLuk,10; bonus bAtkEle,Ele_Holy; },{},{}
 13402,Cutlas_C,Cutlus,5,2,,0,185,,1,0,0x000654E2,63,2,2,4,0,0,2,{ skill "SM_BASH",5; bonus bStr,2; bonus bDef,1; },{},{}
-13403,Solar_Sword_C,Solar Sword,5,2,,0,120,,1,0,0x000654E2,63,2,2,4,0,0,2,{ bonus bAtkEle,Ele_Fire; bonus2 bSPLossRate,15,10; /*bonus3 bHPDrainRate,1000,1,0;*/},{},{}
+13403,Solar_Sword_C,Solar Sword,5,2,,0,120,,1,0,0x000654E2,63,2,2,4,0,0,2,{ bonus bAtkEle,Ele_Fire; bonus2 bSPLossRate,15,10; bonus bHPGainAttackRate,1; },{},{}
 13404,Platinum_Shotel,Platinum Shotel,5,20,,1500,130,,1,1,0x000654E2,63,2,2,4,55,1,2,{ bonus bCritical,50; },{},{}
 13405,Curved_Sword,Curved Sword,5,20,,800,125,,1,2,0x000654E2,63,2,2,4,55,1,2,{ bonus bAspdRate,10; bonus2 bAddEff,Eff_Curse,300; },{},{}
 13406,Edger,Edger,5,20,,0,120,,1,0,0x000654E2,63,2,2,1,0,0,2,{ bonus2 bAddClass,Class_All,50; },{},{}
@@ -9157,7 +9157,7 @@
 18649,Lude_Mask,Lude Mask,4,10,,100,,1,,0,0xFFFFFFFF,63,2,513,,0,1,802,{},{},{}
 18650,RWC_Shouting_Mouth,RWC Shouting Mouth,4,20,,50,,0,,0,0xFFFFFFFF,63,2,1,,1,0,194,{},{},{}
 18651,Ignis_Cap,Ignis Cap,4,20,,800,,8,,1,0xFFFFFFFF,63,2,256,,40,1,803,{},{},{}
-18652,Vanargandr_Helm,Vanargandr Helm,4,20,,1500,,10,,1,0xFFFFFFFF,63,2,256,,80,1,804,{},{},{}
+18652,Vanargandr_Helm,Vanargandr Helm,4,20,,1500,,10,,1,0xFFFFFFFF,63,2,256,,80,1,804,{ bonus bMdef,5; .@r = getrefine(); if (.@r >= 9 ) { bonus2 bHPGainAttackRate,100,8; bonus2 bSPGainAttackRate,100,4; } else if (.@r >= 8 ) { bonus2 bHPGainAttackRate,100,5; bonus2 bSPGainAttackRate,100,2; } else if (.@r >= 7 ) { bonus2 bHPGainAttackRate,100,5; bonus2 bSPGainAttackRate,100,2; } else if (.@r >= 5 ) { bonus2 bHPGainAttackRate,100,3; bonus2 bSPGainAttackRate,100,1; } else { bonus2 bHPGainAttackRate,100,1; bonus2 bSPGainAttackRate,100,1; } /* Confirm: Success rate? */ },{},{}
 18653,Deviruchi_Headphone,Deviruchi Headphone,4,20,,200,,8,,1,0xFFFFFFFF,63,2,256,,30,1,805,{ bonus bAgi,2; },{},{}
 18655,Goedo_Monocle,Goedo Monocle,4,20,,100,,0,,0,0xFFFFFFFF,63,2,512,,50,0,23,{},{},{}
 18656,Witch's_Pumpkin_Hat,Witch's Pumpkin Hat,4,20,,300,,10,,0,0xFFFFFFFF,63,2,256,,20,1,717,{ bonus bMdef,10; bonus bStr,2; bonus bInt,2; bonus2 bMagicAddRace,RC_Undead,15; bonus2 bMagicAddRace,RC_Demon,15; },{},{}
@@ -9240,7 +9240,7 @@
 18749,Majoruros_Horn,Majoruros Horn,4,20,,500,,8,,1,0xFFFFFFFF,63,2,256,,0,1,888,{ bonus bStr,2; bonus bMaxHP,100; },{},{}
 18750,Poker_Card_In_Mouth,Poker Card In Mouth,4,20,,50,,0,,0,0xFFFFFFFF,63,2,1,,10,0,889,{ bonus2 bAddRace,RC_DemiHuman,2; },{},{}
 18753,Tw_Rice_Ball,Tw Rice Ball,4,20,,100,,6,,0,0xFFFFFFFF,63,2,256,,0,0,892,{ bonus bLuk,1; bonus2 bAddMonsterDropItem,564,100; },{},{}
-18754,Blood_Sucker,Blood Sucker,4,20,,300,,0,,0,0xFFFFFFFF,63,2,1,,40,0,893,{ bonus bUnbreakableHelm,0; bonus2 bHpDrainRate,30,5; bonus bHPrecovRate,-100; bonus bSPrecovRate,-100; },{},{}
+18754,Blood_Sucker,Blood Sucker,4,20,,300,,0,,0,0xFFFFFFFF,63,2,1,,40,0,893,{ bonus bUnbreakableHelm,0; bonus2 bHPDrainRate,30,5; bonus bHPrecovRate,-100; bonus bSPrecovRate,-100; },{},{}
 18756,Black_Shiba_Inu_Hat,Black Shiba Inu Hat,4,20,,400,,6,,1,0xFFFFFFFF,63,2,256,,50,1,894,{ bonus bBaseAtk,30; bonus2 bAddRace,RC_Brute,10; },{},{}
 18758,Hat_Of_Scrat,Hat Of Scrat,4,20,,200,,3,,1,0xFFFFFFFF,63,2,256,,0,1,896,{},{},{}
 18759,Stretched_Nose_M,Wood Goblin's Nose,4,20,,200,,0,,0,0xFFFFFFFF,63,2,512,,50,0,737,{ bonus bUnbreakableHelm,0; bonus2 bAddMonsterDropItem,1032,400; bonus2 bAddMonsterDropItem,1033,100; bonus3 bAddMonsterDropItem,576,RC_Plant,40; },{},{}
@@ -9947,7 +9947,7 @@
 22843,Superstar_Snack,Superstar Snack,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "{ bonus bAtk2,50; bonus bMatk,50; }",300; },{},{}
 22844,Sealed_Dracula_Card_Album,Sealed Dracula Card Album,2,10,,10,,,,,,,,,,,,,{/*No Info*/},{},{}
 22845,Sealed_Fortune_Egg,Sealed Fortune Egg,2,10,,10,,,,,,,,,,,,,{ getitem callfunc("F_Rand",4488,4497,4486,4480,4485,4539,4487,4494,4538,4489,4490,4482,4503,22846),1; },{},{}
-22846,Sealed_Dracula_Card,Sealed Dracula Card,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "{ bonus3 bSPDrainRate,50,5,0; }",300; },{},{}
+22846,Sealed_Dracula_Card,Sealed Dracula Card,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "{ bonus2 bSPDrainRate,50,5; }",300; },{},{}
 22868,Costume_Enchantment_Stone_Box_5,Costume Enchantment Stone Box 5,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem callfunc("F_Rand",6908,6943,6944,6945,6946,6947,6948,6949,6950,6951),1; },{},{}
 22873,Sealed_Beelzebub_Scroll_II,Sealed Beelzebub Scroll II,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem callfunc("F_Rand",22875,6238,6239,6228,6232,24231,24232,17474,6635),1; },{},{}
 22874,Sealed_Beelzebub_Card_Album,Sealed Beelzebub Card Album,2,10,,50,,,,,0xFFFFFFFF,63,2,,,,,,{/*No Info*/},{},{}

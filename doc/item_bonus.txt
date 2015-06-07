@@ -230,7 +230,9 @@ bonus2 bAddMDefMonster,mid,x;     	+x% magical damage reduction against monster 
 bonus2 bAddRace2,mr,x;			+x% damage against monster race mr
 bonus2 bSubRace2,mr,x;			+x% damage reduction against monster race mr
 
-bonus bAbsorbDmgMaxHP,n;		If the damage received is more than n% of Max HP, the damage received is [TotalDamage] - [n% of MaxHP]
+bonus2 bSubSkill,sk,n;  		Reduces n% damage received from skill sk
+
+bonus bAbsorbDmgMaxHP,n;		If the damage received is more than n% of Max HP, the damage received is [TotalDamage] - [n% of MaxHP] (Doesn't stack, will use the highest value)
 
 Atk/Def
 -------
@@ -322,28 +324,36 @@ bonus5 bAutoSpellOnSkill,sk,x,y,n,i;	Adds a n/10% chance to autospell skill x at
 HP/SP drain
 -----------
 bonus bHPDrainValue,n;        		Heals +n HP with a normal attack
-bonus2 bHPDrainValue,n,x;     		Heals +n HP with a normal attack (x: 0=gain n SP, 1=drain n SP from target)
 bonus2 bHPDrainValueRace,r,n; 		Heals +n HP when attacking a monster of race r with normal attack
 bonus2 bHpDrainValueClass,c,n;		Heals +n HP when attacking a monster of class c with normal attack
+
 bonus bSPDrainValue,n;        		Heals +n SP with a normal attack
-bonus2 bSPDrainValue,n,x;     		Heals +n SP with a normal attack (x: 0=gain n SP, 1=drain n SP from target)
 bonus2 bSPDrainValueRace,r,n; 		Heals +n SP when attacking a monster of race r with normal attack
 bonus2 bSpDrainValueClass,c,n;		Heals +n SP when attacking a monster of class c with normal attack
 
-bonus2 bHPDrainRate,n,x;		Adds a n/10% chance to drain x% HP when attacking
-bonus2 bSPDrainRate,n,x;		Adds a n/10% chance to drain x% SP when attacking
-bonus3 bSPDrainRate,n,x,y;		Adds a n/10% chance to either gain SP equivalent to x% of damage dealt, OR drain the amount of SP from the enemy
-                          		(y: 0=gain SP, 1=drain SP from target)
+bonus2 bHPDrainRate,x,n;		Adds a x/10% chance to drain n% HP when attacking
+bonus2 bSPDrainRate,x,n;		Adds a x/10% chance to drain n% SP when attacking
 
-bonus2 bHPVanishRate,n,x;		Add a n/100% chance of decreasing enemy's HP amount by x% when attacking
-bonus2 bSPVanishRate,n,x;		Add a n/100% chance of decreasing enemy's SP amount by x% when attacking
+HP/SP vanish
+------------
+bonus2 bHPVanishRate,x,n;		Add a x/100% chance of decreasing enemy's HP amount by n% when attacking
+bonus2 bSPVanishRate,x,n;		Add a x/100% chance of decreasing enemy's SP amount by n% when attacking
 
-bonus3 bHPVanishRaceRate,r,n,x;		Add a n/100% chance of decreasing enemy's HP amount by x% when attacking, depends on enemy race r
-bonus3 bSPVanishRaceRate,r,n,x;		Add a n/100% chance of decreasing enemy's SP amount by x% when attacking, depends on enemy race r
+bonus3 bHPVanishRaceRate,r,x,n;		Add a x/100% chance of decreasing enemy's HP amount by n% when attacking, depends on enemy race r
+bonus3 bSPVanishRaceRate,r,x,n;		Add a x/100% chance of decreasing enemy's SP amount by n% when attacking, depends on enemy race r
+
+HP/SP gain
+------------
+bonus bHPGainAttack,n;      		Heals +n HP with a normal attack
+bonus bSPGainAttack,n;      		Heals +n SP with a normal attack
+
+bonus bHPGainAttackRate,n;  		Heals +n% HP of inflicted damage on every hit when attacking an enemy
+bonus bSPGainAttackRate,n;  		Heals +n% SP of inflicted damage on every hit when attacking an enemy
+bonus2 bHPGainAttackRate,x,n;		Has chance x/10% to heals +n% HP of inflicted damage on every hit when attacking an enemy
+bonus2 bSPGainAttackRate,x,n;		Has chance x/10% to heals +n% SP of inflicted damage on every hit when attacking an enemy
 
 bonus2 bHPGainRaceAttack,r,n;		Heals +n HP on every hit when attacking an enemy of race r
 bonus2 bSPGainRaceAttack,r,n;		Heals +n SP on every hit when attacking an enemy of race r
-
 bonus2 bHPGainRaceAttackRate,r,n;		Heals +n% HP of inflicted damage on every hit when attacking an enemy of race r
 bonus2 bSPGainRaceAttackRate,r,n;		Heals +n% SP of inflicted damage on every hit when attacking an enemy of race r
 
