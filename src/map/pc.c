@@ -3638,7 +3638,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		sd->sp_gain_attack.per += val;
 		break;
 	case SP_SUB_SKILL: // bonus2 bSubSkill,sk,n;
-		ARR_FIND(0, ARRAYLENGTH(sd->subskill), i, sd->subskill[i].id == type || sd->subskill[i].id == 0);
+		ARR_FIND(0, ARRAYLENGTH(sd->subskill), i, sd->subskill[i].id == type2 || sd->subskill[i].id == 0);
 		if (i == ARRAYLENGTH(sd->subskill)) {
 			ShowError("pc_bonus2: SP_SUB_SKILL: Reached max (%d) number of skills per character, bonus skill %d (%d) lost.\n", ARRAYLENGTH(sd->subskill), type2, val);
 			break;

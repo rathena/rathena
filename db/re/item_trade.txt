@@ -3811,7 +3811,7 @@
 //22860,475,100	//
 //22861,475,100	//
 //22869,507,100	//
-//22870,467,100	//
+22870,467,100	// Christmas_Package
 22873,475,100	// Sealed_Beelzebub_Scroll_II
 22874,475,100	// Sealed_Beelzebub_Card_Album
 22875,475,100	// Sealed_Beelzebub_Card
