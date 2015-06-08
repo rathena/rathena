@@ -12,6 +12,7 @@
 #include <stdlib.h> // atoi
 
 struct cash_item_db cash_shop_items[CASHSHOP_TAB_SEARCH];
+bool cash_shop_defined = false;
 
 extern char item_cash_db_db[32];
 extern char item_cash_db2_db[32];
@@ -51,7 +52,7 @@ static int cashshop_parse_dbrow( char** str, const char* source, int line ){
 
 		cid->nameid = nameid;
 		cid->price = price;
-
+		cash_shop_defined = true;
 		return 1;
 	}else{
 		ShowWarning( "cashshop_parse_dbrow: Invalid ID %hu in line %d of \"%s\", skipping...\n", nameid, line, source );
@@ -201,7 +202,7 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 	uint32 totalweight = 0;
 	int i,new_;
 
-	if( sd == NULL || item_list == NULL ){
+	if( sd == NULL || item_list == NULL || !cash_shop_defined){
 		clif_cashshop_result( sd, 0, CASHSHOP_RESULT_ERROR_UNKNOWN );
 		return false;
 	}else if( sd->state.trading ){
@@ -329,5 +330,6 @@ void do_final_cashshop( void ){
  *  0 : success
  */
 void do_init_cashshop( void ){
+	cash_shop_defined = false;
 	cashshop_read_db();
 }
