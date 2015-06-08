@@ -1606,8 +1606,10 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		sc_start4(src,bl,SC_BURNING,55+5*skill_lv,skill_lv,1000,src->id,0,skill_get_time(skill_id,skill_lv));
 		break;
 	case NC_MAGMA_ERUPTION:
-		sc_start4(src, bl, SC_BURNING, 10 * skill_lv, skill_lv, 1000, src->id, 0, skill_get_time2(skill_id, skill_lv));
-		sc_start(src, bl, SC_STUN, 10 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
+		if (attack_type == BF_WEAPON) // Stun effect from 'slam'
+			sc_start(src, bl, SC_STUN, 90, skill_lv, skill_get_time(skill_id, skill_lv));
+		if (attack_type == BF_MISC) // Burning effect from 'eruption'
+			sc_start4(src, bl, SC_BURNING, 10 * skill_lv, skill_lv, 1000, src->id, 0, skill_get_time2(skill_id, skill_lv));
 		break;
 	case GC_DARKCROW:
 		sc_start(src,bl,SC_DARKCROW,100,skill_lv,skill_get_time(skill_id,skill_lv));
@@ -3972,6 +3974,9 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 						skill_unitsetting(src,skl->skill_id,skl->skill_lv,skl->x,skl->y,0);
 					}
 					break;
+				case NC_MAGMA_ERUPTION:
+					skill_unitsetting(src,skl->skill_id,skl->skill_lv,skl->x,skl->y,0);
+					break;
 			}
 		}
 	} while (0);
@@ -4212,6 +4217,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case RA_AIMEDBOLT:
 	case NC_AXEBOOMERANG:
 	case NC_POWERSWING:
+	case NC_MAGMA_ERUPTION:
 	case GC_CROSSIMPACT:
 	case GC_VENOMPRESSURE:
 	case SC_TRIANGLESHOT:
@@ -11182,7 +11188,6 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case MH_POISON_MIST:
 	case MH_STEINWAND:
 	case MH_XENO_SLASHER:
-	case NC_MAGMA_ERUPTION:
 	case LG_KINGS_GRACE:
 	case SO_ELEMENTAL_SHIELD:
 	case RL_B_TRAP:
@@ -11746,6 +11751,17 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 				}
 				skill_addtimerskill(src,gettick() + (40 * w),0,sx,sy,skill_id,skill_lv,dir,flag);
 			}
+		}
+		break;
+
+	case NC_MAGMA_ERUPTION:
+		// 1st, AoE 'slam' damage
+		i = skill_get_splash(skill_id, skill_lv);
+		map_foreachinarea(skill_area_sub, src->m, x-i, y-i, x+i, y+i, BL_CHAR,
+			src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
+		if (skill_get_unit_id(NC_MAGMA_ERUPTION,0)) {
+			// 2nd, AoE 'eruption' unit
+			skill_addtimerskill(src,gettick()+500,0,x,y,skill_id,skill_lv,BF_MISC,flag);
 		}
 		break;
 
@@ -12347,6 +12363,11 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 		val1 = x;
 		val2 = y;
 		val3 = 0; // Suck target at n seconds.
+		break;
+	case NC_MAGMA_ERUPTION:
+		// Since we have no 'place' anymore. time1 for Stun duration, time2 for burning duration
+		// Officially, duration (limit) is 5secs, interval 0.5secs damage interval.
+		limit = interval * 10;
 		break;
 	}
 

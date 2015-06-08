@@ -3735,6 +3735,10 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			RE_LVL_DMOD(100);
 			skillratio += 200 + 100 * skill_lv;
 			break;
+		case NC_MAGMA_ERUPTION: // 'Slam' damage
+			skillratio += 450 + 50 * skill_lv;
+			RE_LVL_DMOD(100);
+			break;
 		case NC_AXETORNADO:
 			skillratio += 100 + 100 * skill_lv + status_get_vit(src);
 			RE_LVL_DMOD(100);
@@ -6182,8 +6186,8 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	md.flag |= battle_range_type(src, target, skill_id, skill_lv);
 
 	switch (skill_id) {
-	case NC_MAGMA_ERUPTION:
-		md.damage = 1200 + 400 * skill_lv;
+	case NC_MAGMA_ERUPTION: // 'Eruption' damage
+		md.damage = 800 + 200 * skill_lv;
 		break;
 #ifdef RENEWAL
 	case HT_LANDMINE:
