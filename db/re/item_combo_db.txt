@@ -345,10 +345,10 @@
 19019:1731,{ bonus bLongAtkRate,45; }
 19019:1732,{ bonus bLongAtkRate,45; }
 19019:1733,{ bonus bLongAtkRate,45; }
-19020:1617,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMatk,.@r; if (.@r >= 10) { autobonus "{ bonus bVariableCastrate,-50; }",1000,5000,BF_MAGIC; /* Confirm: Success rate? */ } }
-19020:1618,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMatk,.@r; if (.@r >= 10) { autobonus "{ bonus bVariableCastrate,-50; }",1000,5000,BF_MAGIC; /* Confirm: Success rate? */ } }
-19020:1619,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMatk,.@r; if (.@r >= 10) { autobonus "{ bonus bVariableCastrate,-50; }",1000,5000,BF_MAGIC; /* Confirm: Success rate? */ } }
-19020:1620,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMatk,.@r; if (.@r >= 10) { autobonus "{ bonus bVariableCastrate,-50; }",1000,5000,BF_MAGIC; /* Confirm: Success rate? */ } }
+19020:1617,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMatk,.@r; if (.@r >= 10) { autobonus "{ bonus bVariableCastrate,-50; }",100,5000,BF_MAGIC; /* Confirm: Success rate? */ } }
+19020:1618,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMatk,.@r; if (.@r >= 10) { autobonus "{ bonus bVariableCastrate,-50; }",100,5000,BF_MAGIC; /* Confirm: Success rate? */ } }
+19020:1619,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMatk,.@r; if (.@r >= 10) { autobonus "{ bonus bVariableCastrate,-50; }",100,5000,BF_MAGIC; /* Confirm: Success rate? */ } }
+19020:1620,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMatk,.@r; if (.@r >= 10) { autobonus "{ bonus bVariableCastrate,-50; }",100,5000,BF_MAGIC; /* Confirm: Success rate? */ } }
 19021:2160,{ bonus2 bSubSize,Size_Large,5+(getequiprefinerycnt(EQI_HAND_L)*2); }
 19021:1387,{ /* What is 'High Speed Cart Ram'? +15%+(1387_refine*5%) */ }
 19021:1490,{ bonus2 bSkillAtk,"LK_SPIRALPIERCE",getequiprefinerycnt(EQI_HAND_R)*5; .@lv = getskilllv("LK_SPIRALPIERCE"); bonus4 bAutoSpellOnSkill,"LK_JOINTBEAT","LK_SPIRALPIERCE",(.@lv ? .@lv : 1),50+(getskilllv("LK_JOINTBEAT")*10); /* Confirm: Success rate */ }
