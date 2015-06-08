@@ -5668,37 +5668,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				return skill_castend_damage_id (src, bl, skill_id, skill_lv, tick, flag);
 			}
 			break;
-		case SO_ELEMENTAL_SHIELD: {
-				struct party_data *p;
-				short ret = 0;
-				int x0, y0, x1, y1, range;
-
-				if(sd == NULL || !sd->ed)
-					break;
-				range = skill_get_splash(skill_id,skill_lv);
-				x0 = sd->bl.x - range;
-				y0 = sd->bl.y - range;
-				x1 = sd->bl.x + range;
-				y1 = sd->bl.y + range;
-				clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-				elemental_delete(sd->ed,0);
-				skill_unitsetting(src,MG_SAFETYWALL,skill_lv + 5,src->x,src->y,0);
-				skill_unitsetting(src,AL_PNEUMA,1,src->x,src->y,0);
-				if((p = party_search(sd->status.party_id))) {
-					for(i = 0; i < MAX_PARTY; i++) {
-						struct map_session_data *psd = p->data[i].sd;
-
-						if(!psd || psd->bl.m != sd->bl.m || !psd->bl.prev || psd->bl.id == sd->bl.id)
-							continue;
-						if(range && (psd->bl.x < x0 || psd->bl.y < y0 || psd->bl.x > x1 || psd->bl.y > y1))
-							continue;
-						skill_unitsetting(&psd->bl,MG_SAFETYWALL,skill_lv + 5,psd->bl.x,psd->bl.y,0);
-						skill_unitsetting(&psd->bl,AL_PNEUMA,1,psd->bl.x,psd->bl.y,0);
-					}
-				}
-				return 0;
-			}
-			break;
 		case NPC_SMOKING: //Since it is a self skill, this one ends here rather than in damage_id. [Skotlex]
 			return skill_castend_damage_id (src, bl, skill_id, skill_lv, tick, flag);
 		case MH_STEINWAND: {
@@ -10383,6 +10352,18 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if ((i = pc_checkskill(sd, RL_H_MINE)))
 				map_foreachinrange(skill_area_sub, src, splash, BL_CHAR, src, RL_H_MINE, i, tick, flag|BCT_ENEMY|SD_SPLASH, skill_castend_damage_id);
 			sd->flicker = false;
+		}
+		break;
+
+	case SO_ELEMENTAL_SHIELD:
+		if (flag&1) {
+			skill_unitsetting(bl, MG_SAFETYWALL, skill_lv + 5, bl->x, bl->y, 0);
+			skill_unitsetting(bl, AL_PNEUMA, 1, bl->x, bl->y, 0);
+		}
+		else {
+			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
+			elemental_delete(sd->ed,0);
+			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id,skill_lv), src, skill_id, skill_lv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
 		}
 		break;
 
