@@ -1314,7 +1314,7 @@
 5005,0,6,4,0,0x3,3,1,1,no,0,0,0,none,0,0x0, RK_LUXANIMA,Lux Anima
 5006,1,6,2,3,0,0,5,1,no,0,0,3,misc,0,0x0, NC_MAGMA_ERUPTION,Magma Eruption
 5007,0,6,4,0,0x3,5:6:7:8:9,5,1,no,0,0,0,none,0,0x0, WM_FRIGG_SONG,Frigg's Song
-5008,0,6,4,0,0x3,15,5,1,no,0,0,0,none,0,0x0, SO_ELEMENTAL_SHIELD,Elemental Shield
+5008,0,6,4,0,0x3,11,5,1,no,0,0,0,none,0,0x0, SO_ELEMENTAL_SHIELD,Elemental Shield
 5009,1,6,1,0,0x1,0,5,1,no,0,0,0,none,0,0x0, SR_FLASHCOMBO,Flash Combo
 5010,0,6,2,0,0x1,0,5,1,no,0,0,0,none,0,0x0, SC_ESCAPE,Emergency Escape
 5011,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0, AB_OFFERTORIUM,Offertorium

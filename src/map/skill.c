@@ -3424,8 +3424,7 @@ static int skill_check_unit_range_sub(struct block_list *bl, va_list ap)
 		case MH_STEINWAND:
 		case MG_SAFETYWALL:
 		case SC_MAELSTROM:
-		case SO_ELEMENTAL_SHIELD:
-			if(g_skill_id != MH_STEINWAND && g_skill_id != MG_SAFETYWALL && g_skill_id != AL_PNEUMA && g_skill_id != SC_MAELSTROM && g_skill_id != SO_ELEMENTAL_SHIELD)
+			if(g_skill_id != MH_STEINWAND && g_skill_id != MG_SAFETYWALL && g_skill_id != AL_PNEUMA && g_skill_id != SC_MAELSTROM)
 				return 0;
 			break;
 		case AL_WARP:
@@ -5676,30 +5675,28 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 				if(sd == NULL || !sd->ed)
 					break;
-				if((p = party_search(sd->status.party_id)) == NULL)
-					break;
 				range = skill_get_splash(skill_id,skill_lv);
 				x0 = sd->bl.x - range;
 				y0 = sd->bl.y - range;
 				x1 = sd->bl.x + range;
 				y1 = sd->bl.y + range;
+				clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 				elemental_delete(sd->ed,0);
-				if(!skill_check_unit_range(src,src->x,src->y,skill_id,skill_lv))
-					ret = skill_castend_pos2(src,src->x,src->y,skill_id,skill_lv,tick,flag);
-				for(i = 0; i < MAX_PARTY; i++) {
-					struct map_session_data *psd = p->data[i].sd;
+				skill_unitsetting(src,MG_SAFETYWALL,skill_lv + 5,src->x,src->y,0);
+				skill_unitsetting(src,AL_PNEUMA,1,src->x,src->y,0);
+				if((p = party_search(sd->status.party_id))) {
+					for(i = 0; i < MAX_PARTY; i++) {
+						struct map_session_data *psd = p->data[i].sd;
 
-					if(!psd)
-						continue;
-					if(psd->bl.m != sd->bl.m || !psd->bl.prev)
-						continue;
-					if(range && (psd->bl.x < x0 || psd->bl.y < y0 ||
-						psd->bl.x > x1 || psd->bl.y > y1))
-						continue;
-					if(!skill_check_unit_range(bl,psd->bl.x,psd->bl.y,skill_id,skill_lv))
-						ret |= skill_castend_pos2(bl,psd->bl.x,psd->bl.y,skill_id,skill_lv,tick,flag);
+						if(!psd || psd->bl.m != sd->bl.m || !psd->bl.prev || psd->bl.id == sd->bl.id)
+							continue;
+						if(range && (psd->bl.x < x0 || psd->bl.y < y0 || psd->bl.x > x1 || psd->bl.y > y1))
+							continue;
+						skill_unitsetting(&psd->bl,MG_SAFETYWALL,skill_lv + 5,psd->bl.x,psd->bl.y,0);
+						skill_unitsetting(&psd->bl,AL_PNEUMA,1,psd->bl.x,psd->bl.y,0);
+					}
 				}
-				return ret;
+				return 0;
 			}
 			break;
 		case NPC_SMOKING: //Since it is a self skill, this one ends here rather than in damage_id. [Skotlex]
@@ -10389,10 +10386,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 
-	case SO_ELEMENTAL_SHIELD:
-		// Used to avoid displaying the warning below.
-		break;
-
 	default:
 		ShowWarning("skill_castend_nodamage_id: Unknown skill used:%d\n",skill_id);
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
@@ -11189,7 +11182,6 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case MH_STEINWAND:
 	case MH_XENO_SLASHER:
 	case LG_KINGS_GRACE:
-	case SO_ELEMENTAL_SHIELD:
 	case RL_B_TRAP:
 		flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
 	case GS_GROUNDDRIFT: //Ammo should be deleted right away.
@@ -13701,7 +13693,6 @@ int skill_unit_onleft(uint16 skill_id, struct block_list *bl, unsigned int tick)
 		case GN_FIRE_EXPANSION_SMOKE_POWDER:
 		case GN_FIRE_EXPANSION_TEAR_GAS:
 		case LG_KINGS_GRACE:
-		case SO_ELEMENTAL_SHIELD:
 			if (sce)
 				status_change_end(bl, type, INVALID_TIMER);
 			break;

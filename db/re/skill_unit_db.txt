@@ -171,7 +171,6 @@
 3020,0xf8,    ,  0, 2, 500,all, 0x018   //KO_ZENKAI
 
 5006,0x101,   ,  0, 3, 500,enemy, 0x018	//NC_MAGMA_ERUPTION
-5008,0x85,    ,  0, 0,  -1,all,   0x003	//SO_ELEMENTAL_SHIELD
 5010,0xfe,    ,  0, 2,  -1,enemy, 0x000	//SC_ESCAPE
 5013,0x102,   ,  3, 0,  -1,all,   0x2002	//LG_KINGS_GRACE
 
