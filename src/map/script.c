@@ -3030,7 +3030,7 @@ const char* conv_str_(struct script_state* st, struct script_data* data, struct 
 
 const char* conv_str(struct script_state* st, struct script_data* data)
 {
-	conv_str_(st, data, NULL);
+	return conv_str_(st, data, NULL);
 }
 
 /**
@@ -3096,7 +3096,7 @@ int conv_num_(struct script_state* st, struct script_data* data, struct map_sess
 
 int conv_num(struct script_state* st, struct script_data* data)
 {
-	conv_num_(st, data, NULL);
+	return conv_num_(st, data, NULL);
 }
 
 //
@@ -17008,7 +17008,7 @@ BUILDIN_FUNC(unitwalk)
 {
 	struct block_list* bl;
 	struct unit_data *ud = NULL;
-	const char *cmd = script_getfuncname(st), *done_label = "", *fail_label = "";
+	const char *cmd = script_getfuncname(st), *done_label = "";
 	uint8 off = 5;
 
 	bl = map_id2bl(script_getnum(st,2));
@@ -20221,7 +20221,6 @@ BUILDIN_FUNC(getvar) {
 		script_pushint(st, conv_num_(st, data, sd));
 	else
 		script_pushstrcopy(st, conv_str_(st, data, sd));
-
 
 	push_val2(st->stack, C_NAME, reference_getuid(data), reference_getref(data));
 	return SCRIPT_CMD_SUCCESS;
