@@ -2707,16 +2707,17 @@ TBL_PC *script_rid2sd(struct script_state *st)
 	return sd;
 }
 
-/// Dereferences a variable/constant, replacing it with a copy of the value.
-///
-/// @param st Script state
-/// @param data Variable/constant
-void get_val(struct script_state* st, struct script_data* data)
+/**
+ * Dereferences a variable/constant, replacing it with a copy of the value.
+ * @param st Script state
+ * @param data Variable/constant
+ * @param sd If NULL, will try to use sd from st->rid (for player's variables)
+ */
+void get_val_(struct script_state* st, struct script_data* data, struct map_session_data *sd)
 {
 	const char* name;
 	char prefix;
 	char postfix;
-	TBL_PC* sd = NULL;
 
 	if( !data_isreference(data) )
 		return;// not a variable/constant
@@ -2728,7 +2729,8 @@ void get_val(struct script_state* st, struct script_data* data)
 	//##TODO use reference_tovariable(data) when it's confirmed that it works [FlavioJS]
 	if( !reference_toconstant(data) && not_server_variable(prefix) )
 	{
-		sd = script_rid2sd(st);
+		if (sd == NULL)
+			sd = script_rid2sd(st);
 		if( sd == NULL )
 		{// needs player attached
 			if( postfix == '$' )
@@ -2865,6 +2867,11 @@ void get_val(struct script_state* st, struct script_data* data)
 	return;
 }
 
+void get_val(struct script_state* st, struct script_data* data)
+{
+	get_val_(st,data,NULL);
+}
+
 struct script_data* push_val2(struct script_stack* stack, enum c_op type, int val, struct DBMap** ref);
 
 /// Retrieves the value of a reference identified by uid (variable, constant, param)
@@ -2982,12 +2989,17 @@ void setd_sub(struct script_state *st, TBL_PC *sd, const char *varname, int elem
 	set_reg(st, sd, reference_uid(add_str(varname),elem), varname, value, ref);
 }
 
-/// Converts the data to a string
-const char* conv_str(struct script_state* st, struct script_data* data)
+/**
+ * Converts the data to a string
+ * @param st
+ * @param data
+ * @param sd
+ */
+const char* conv_str_(struct script_state* st, struct script_data* data, struct map_session_data *sd)
 {
 	char* p;
 
-	get_val(st, data);
+	get_val_(st, data, sd);
 	if( data_isstring(data) )
 	{// nothing to convert
 	}
@@ -3016,10 +3028,20 @@ const char* conv_str(struct script_state* st, struct script_data* data)
 	return data->u.str;
 }
 
-/// Converts the data to an int
-int conv_num(struct script_state* st, struct script_data* data)
+const char* conv_str(struct script_state* st, struct script_data* data)
 {
-	get_val(st, data);
+	conv_str_(st, data, NULL);
+}
+
+/**
+ * Converts the data to an int
+ * @param st
+ * @param data
+ * @param sd
+ */
+int conv_num_(struct script_state* st, struct script_data* data, struct map_session_data *sd)
+{
+	get_val_(st, data, sd);
 	if( data_isint(data) )
 	{// nothing to convert
 		
@@ -3070,6 +3092,11 @@ int conv_num(struct script_state* st, struct script_data* data)
 	}
 #endif
 	return data->u.num;
+}
+
+int conv_num(struct script_state* st, struct script_data* data)
+{
+	conv_num_(st, data, NULL);
 }
 
 //
@@ -16391,6 +16418,35 @@ BUILDIN_FUNC(pcstopfollow)
 // <--- [zBuffer] List of player cont commands
 // [zBuffer] List of unit control commands --->
 
+/// Gets the type of the given Game ID.
+///
+/// getunittype <unit id>;
+BUILDIN_FUNC(getunittype)
+{
+	struct block_list* bl;
+	uint8 value = 0;
+
+	bl = map_id2bl(script_getnum(st, 2));
+
+	if (!bl) {
+		ShowWarning("buildin_getunittype: Error in finding object with given game ID %d!\n", script_getnum(st, 2));
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	switch (bl->type) {
+		case BL_MOB:  value = 0; break;
+		case BL_HOM:  value = 1; break;
+		case BL_PET:  value = 2; break;
+		case BL_MER:  value = 3; break;
+		case BL_ELEM: value = 4; break;
+		case BL_NPC:  value = 5; break;
+	}
+
+	script_pushint(st, value);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /// Gets specific live information of a bl.
 ///
 /// getunitdata <unit id>,<arrayname>;
@@ -16946,17 +17002,26 @@ BUILDIN_FUNC(setunitname)
 /// Makes the unit walk to target position or map.
 /// Returns if it was successful.
 ///
-/// unitwalk(<unit_id>,<x>,<y>) -> <bool>
-/// unitwalk(<unit_id>,<target_id>) -> <bool>
+/// unitwalk(<unit_id>,<x>,<y>{,<event_label>}) -> <bool>
+/// unitwalkto(<unit_id>,<target_id>{,<event_label>}) -> <bool>
 BUILDIN_FUNC(unitwalk)
 {
 	struct block_list* bl;
+	struct unit_data *ud = NULL;
+	const char *cmd = script_getfuncname(st), *done_label = "", *fail_label = "";
+	uint8 off = 5;
 
 	bl = map_id2bl(script_getnum(st,2));
 
-	if (!bl)
+	if (!bl) {
+		ShowError("buildin_unitwalk: Invalid unit with ID '%d'.\n", script_getnum(st,2));
 		script_pushint(st, 0);
-	else if( script_hasdata(st,4) ) {
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	ud = unit_bl2ud(bl);
+
+	if (strcmp(cmd,"unitwalk")) {
 		int x = script_getnum(st,3);
 		int y = script_getnum(st,4);
 
@@ -16971,6 +17036,13 @@ BUILDIN_FUNC(unitwalk)
 			return SCRIPT_CMD_FAILURE;
 		} else if (script_pushint(st, unit_can_reach_bl(bl, tbl, distance_bl(bl, tbl)+1, 0, NULL, NULL)))
 			add_timer(gettick()+50, unit_delay_walktobl_timer, bl->id, tbl->id); // Need timer to avoid mismatches
+		off = 3;
+	}
+
+	if (ud && script_hasdata(st, off)) {
+		done_label = script_getstr(st, off);
+		check_event(st, done_label);
+		safestrncpy(ud->walk_done_event, done_label, sizeof(ud->walk_done_event));
 	}
 
 	return SCRIPT_CMD_SUCCESS;
@@ -17194,8 +17266,15 @@ BUILDIN_FUNC(unitskilluseid)
 	casttime = ( script_hasdata(st,6) ? script_getnum(st,6) : 0 );
 	bl = map_id2bl(unit_id);
 
-	if (bl != NULL)
+	if (bl != NULL) {
+		if (bl->type == BL_NPC) {
+			if (!((TBL_NPC*)bl)->status.hp)
+				status_calc_npc(((TBL_NPC*)bl), true);
+			else
+				status_calc_npc(((TBL_NPC*)bl), false);
+		}
 		unit_skilluse_id2(bl, target_id, skill_id, skill_lv, (casttime * 1000) + skill_castfix(bl, skill_id, skill_lv), skill_get_castcancel(skill_id));
+	}
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -17221,8 +17300,15 @@ BUILDIN_FUNC(unitskillusepos)
 	casttime = ( script_hasdata(st,7) ? script_getnum(st,7) : 0 );
 	bl = map_id2bl(unit_id);
 
-	if (bl != NULL)
+	if (bl != NULL) {
+		if (bl->type == BL_NPC) {
+			if (!((TBL_NPC*)bl)->status.hp)
+				status_calc_npc(((TBL_NPC*)bl), true);
+			else
+				status_calc_npc(((TBL_NPC*)bl), false);
+		}
 		unit_skilluse_pos2(bl, skill_x, skill_y, skill_id, skill_lv, (casttime * 1000) + skill_castfix(bl, skill_id, skill_lv), skill_get_castcancel(skill_id));
+	}
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -20097,6 +20183,50 @@ BUILDIN_FUNC(getattachedrid) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Get variable from a Player
+ * getvar <variable>,<char_id>;
+ */
+BUILDIN_FUNC(getvar) {
+	int char_id = script_getnum(st, 3);
+	struct map_session_data *sd = map_charid2sd(char_id);
+	struct script_data *data = NULL;
+	const char *name = NULL;
+
+	if (!sd) {
+		ShowError("buildin_getvar: No player found with char id '%d'.\n", char_id);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	data = script_getdata(st, 2);
+	if (!data_isreference(data)) {
+		ShowError("buildin_getvar: Not a variable\n");
+		script_reportdata(data);
+		script_pushnil(st);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	name = reference_getname(data);
+	if (name[0] == '.' || name[0] == '$' || name[0] == '\'') { // Not a PC variable
+		ShowError("buildin_getvar: Invalid scope (not PC variable)\n");
+		script_reportdata(data);
+		script_pushnil(st);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	get_val_(st, data, sd);
+	if (data_isint(data))
+		script_pushint(st, conv_num_(st, data, sd));
+	else
+		script_pushstrcopy(st, conv_str_(st, data, sd));
+
+
+	push_val2(st->stack, C_NAME, reference_getuid(data), reference_getref(data));
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -20497,11 +20627,13 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(pcblockmove,"ii"),
 	// <--- [zBuffer] List of player cont commands
 	// [zBuffer] List of mob control commands --->
+	BUILDIN_DEF(getunittype,"i"),
 	BUILDIN_DEF(getunitname,"i"),
 	BUILDIN_DEF(setunitname,"is"),
 	BUILDIN_DEF(getunitdata,"i*"),
 	BUILDIN_DEF(setunitdata,"iii"),
-	BUILDIN_DEF(unitwalk,"ii?"),
+	BUILDIN_DEF(unitwalk,"ii??"),
+	BUILDIN_DEF2(unitwalk,"unitwalkto","ii?"),
 	BUILDIN_DEF(unitkill,"i"),
 	BUILDIN_DEF(unitwarp,"isii"),
 	BUILDIN_DEF(unitattack,"iv?"),
@@ -20648,6 +20780,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(mergeitem,"??"),
 	BUILDIN_DEF(npcshopupdate,"sii?"),
 	BUILDIN_DEF(getattachedrid,""),
+	BUILDIN_DEF(getvar,"vi"),
 
 #include "../custom/script_def.inc"
 

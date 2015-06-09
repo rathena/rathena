@@ -52,7 +52,9 @@ struct unit_data {
 		unsigned walk_easy : 1 ;
 		unsigned running : 1;
 		unsigned speed_changed : 1;
+		unsigned walk_script : 1;
 	} state;
+	char walk_done_event[EVENT_NAME_LENGTH];
 };
 
 struct view_data {

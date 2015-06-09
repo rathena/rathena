@@ -168,6 +168,7 @@ void npc_event_do_oninit(void);
 int npc_do_ontimer(int npc_id, int option);
 
 int npc_event_do(const char* name);
+int npc_event_do_id(const char* name, int rid);
 int npc_event_doall(const char* name);
 int npc_event_doall_id(const char* name, int rid);
 

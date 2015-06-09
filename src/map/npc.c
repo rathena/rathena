@@ -385,33 +385,37 @@ static int npc_event_do_sub(DBKey key, DBData *data, va_list ap)
 {
 	const char* p = key.str;
 	struct event_data* ev;
-	int* c;
+	int* c, rid;
 	const char* name;
 
 	nullpo_ret(ev = db_data2ptr(data));
 	nullpo_ret(c = va_arg(ap, int *));
 	nullpo_ret(name = va_arg(ap, const char *));
+	rid = va_arg(ap, int);
 
 	if( p && strcmpi(name, p) == 0 )
 	{
-		run_script(ev->nd->u.scr.script,ev->pos,0,ev->nd->bl.id);
+		run_script(ev->nd->u.scr.script,ev->pos,rid,ev->nd->bl.id);
 		(*c)++;
 	}
 
 	return 0;
 }
 
-// runs the specified event (supports both single-npc and global events)
-int npc_event_do(const char* name)
-{
+int npc_event_do_id(const char* name, int rid) {
 	int c = 0;
 
 	if( name[0] == ':' && name[1] == ':' )
-		ev_db->foreach(ev_db,npc_event_doall_sub,&c,name,0);
+		ev_db->foreach(ev_db,npc_event_doall_sub,&c,name,0,rid);
 	else
-		ev_db->foreach(ev_db,npc_event_do_sub,&c,name);
+		ev_db->foreach(ev_db,npc_event_do_sub,&c,name,rid);
 
 	return c;
+}
+
+// runs the specified event (supports both single-npc and global events)
+int npc_event_do(const char* name) {
+	return npc_event_do_id(name, 0);
 }
 
 // runs the specified event (global only)
