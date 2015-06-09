@@ -1713,8 +1713,8 @@ int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int flag)
  * If a mob is killed this way and there is no src, no EXP/Drops will be awarded.
  * @param src: Object initiating HP/SP modification [PC|MOB|PET|HOM|MER|ELEM]
  * @param target: Object to modify HP/SP
- * @param hp_rate: Percentage of HP to modify
- * @param sp_rate: Percentage of SP to modify
+ * @param hp_rate: Percentage of HP to modify. If > 0:percent is of current HP, if < 0:percent is of max HP
+ * @param sp_rate: Percentage of SP to modify. If > 0:percent is of current SP, if < 0:percent is of max SP
  * @param flag: \n
  *		0: Heal target \n 
  *		1: Use status_damage \n 

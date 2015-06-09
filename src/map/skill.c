@@ -10356,7 +10356,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case SO_ELEMENTAL_SHIELD:
-		if (flag&1) {
+		if (!sd || sd->status.party_id == 0 || flag&1) {
 			skill_unitsetting(bl, MG_SAFETYWALL, skill_lv + 5, bl->x, bl->y, 0);
 			skill_unitsetting(bl, AL_PNEUMA, 1, bl->x, bl->y, 0);
 		}

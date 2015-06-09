@@ -1403,6 +1403,8 @@ void clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 	int htype;
 
 	nullpo_retv(hd);
+	if (!sd)
+		return;
 
 	status  = &hd->battle_status;
 	htype = hom_class2type(hd->homunculus.class_);

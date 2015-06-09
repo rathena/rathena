@@ -6642,12 +6642,12 @@ void battle_drain(TBL_PC *sd, struct block_list *tbl, int64 rdamage, int64 ldama
 		return;
 
 	// Check for vanish HP/SP. !CHECKME: Which first, drain or vanish?
-	hp = sd->bonus.hp_vanish_rate + sd->hp_vanish_race[race].rate + sd->hp_vanish_race[RC_ALL].rate;
+	hp = (sd->bonus.hp_vanish_rate*10) + sd->hp_vanish_race[race].rate + sd->hp_vanish_race[RC_ALL].rate;
 	vrate_hp = cap_value(hp, 0, SHRT_MAX);
 	hp = sd->bonus.hp_vanish_per + sd->hp_vanish_race[race].per + sd->hp_vanish_race[RC_ALL].per;
 	v_hp = cap_value(hp, INT8_MIN, INT8_MAX);
 
-	sp = sd->bonus.sp_vanish_rate + sd->sp_vanish_race[race].rate + sd->sp_vanish_race[RC_ALL].rate;
+	sp = (sd->bonus.sp_vanish_rate*10) + sd->sp_vanish_race[race].rate + sd->sp_vanish_race[RC_ALL].rate;
 	vrate_sp = cap_value(sp, 0, SHRT_MAX);
 	sp = sd->bonus.sp_vanish_per + sd->sp_vanish_race[race].per + sd->sp_vanish_race[RC_ALL].per;
 	v_sp = cap_value(sp, INT8_MIN, INT8_MAX);
