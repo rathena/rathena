@@ -529,6 +529,7 @@ enum e_require_state {
 	ST_RIDINGWUG,
 	ST_MADO,
 	ST_ELEMENTALSPIRIT,
+	ST_ELEMENTALSPIRIT2,
 	ST_PECO,
 };
 

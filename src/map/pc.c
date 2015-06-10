@@ -3650,6 +3650,10 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->subskill[i].val = val;
 		}
 		break;
+	case SP_SUBDEF_ELE: // bonus2 bSubDefEle,e,x;
+		PC_BONUS_CHK_ELEMENT(type2,SP_SUBDEF_ELE);
+		sd->subdefele[type2] += val;
+		break;
 	default:
 		ShowWarning("pc_bonus2: unknown type %d %d %d!\n",type,type2,val);
 		break;
@@ -11427,43 +11431,6 @@ void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag) {
 	pc_bonus_script_check_final(sd);
 
 	if (count && !(flag&BSF_REM_ON_LOGOUT)) //Don't need to do this if log out
-		status_calc_pc(sd,SCO_NONE);
-}
-
-/**
-* Clear all bonus script from player
-* @param sd
-* @param flag &1 - Remove permanent bonus_script, &2 - Logout
-* @author [Cydh]
-**/
-void pc_bonus_script_clear_all(struct map_session_data *sd, uint8 flag) {
-	struct linkdb_node *node = NULL;
-	uint16 count = 0;
-
-	if (!sd || !(node = sd->bonus_script.head))
-		return;
-
-	while (node) {
-		struct linkdb_node *next = node->next;
-		struct s_bonus_script_entry *entry = (struct s_bonus_script_entry *)node->data;
-
-		if (entry && (
-				!(entry->flag&BSF_PERMANENT) ||
-				((flag&1) && entry->flag&BSF_PERMANENT)
-				)
-			)
-		{
-			linkdb_erase(&sd->bonus_script.head, (void *)((intptr_t)entry));
-			pc_bonus_script_free_entry(sd, entry);
-			count++;
-		}
-
-		node = next;
-	}
-
-	pc_bonus_script_check_final(sd);
-
-	if (count && !(flag&2))
 		status_calc_pc(sd,SCO_NONE);
 }
 

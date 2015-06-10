@@ -20,6 +20,7 @@
 //  ridingwarg = Requires to ride a Warg
 //  mado = Requires to have an active mado
 //  elementalspirit = Requires to have an Elemental Spirit summoned.
+//  elementalspirit2 = Requires to have an Elemental Spirit summoned, and will be removed.
 //  peco = Requires riding a peco
 //
 // 'RequiredStatuses'
@@ -963,7 +964,7 @@
 5005,0,0,1,0,0,0,99,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0								//RK_LUXANIMA
 5006,0,0,60:70:80:90:100,0,0,0,99,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0				//NC_MAGMA_ERUPTION
 5007,0,0,200:230:260:290:320,0,0,0,13:14,0,0,none,0,0,6144,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0		//WM_FRIGG_SONG
-5008,0,0,120,0,0,0,99,0,0,elementalspirit,0,0,717,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0					//SO_ELEMENTAL_SHIELD
+5008,0,0,120,0,0,0,99,0,0,elementalspirit2,0,0,717,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0					//SO_ELEMENTAL_SHIELD
 5009,0,0,65,0,0,0,99,0,0,none,0,5:5:4:4:3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0						//SR_FLASHCOMBO
 5010,0,0,30:26:22:18:14,0,0,0,99,0,0,none,0,0,7940,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0				//SC_ESCAPE
 5011,0,0,30:60:90:120:150,0,0,0,99,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0				//AB_OFFERTORIUM
