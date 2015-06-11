@@ -913,13 +913,6 @@ int mapif_wis_end(struct WisData *wd, int flag)
 	return 0;
 }
 
-// Account registry transfer to map-server
-static void mapif_account_reg(int fd, unsigned char *src)
-{
-	WBUFW(src,0)=0x3804; //NOTE: writing to RFIFO
-	chmapif_sendallwos(fd, src, WBUFW(src,2));
-}
-
 // Send the requested account_reg
 int mapif_account_reg_reply(int fd, uint32 account_id, uint32 char_id, int type)
 {
