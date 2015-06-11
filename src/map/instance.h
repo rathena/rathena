@@ -4,6 +4,11 @@
 #ifndef _INSTANCE_H_
 #define _INSTANCE_H_
 
+#include "../common/mmo.h" // struct point
+#include "script.h" // struct reg_db
+
+struct block_list;
+
 #define MAX_INSTANCE_DATA	300	// Essentially how many instances we can create, but instance creation is primarily decided by MAX_MAP_PER_SERVER	
 #define MAX_MAP_PER_INSTANCE 	10	// Max number of maps per instance
 
@@ -21,7 +26,8 @@ struct instance_data {
 	unsigned int idle_limit;
 	int idle_timer;
 
-	struct DBMap* vars; // Instance Variable for scripts
+	struct reg_db regs; ///< Instance variables for scripts
+
 	struct {
 		int m;
 		int src_m;

@@ -13,16 +13,16 @@
  *  If it has reusable entries (freed entry), it uses one.                   *
  *  So no assumption should be made about the data of the entry.             *
  *  Entries should be freed in the manager they where allocated from.        *
- *  Failure to do so can lead to unexpected behaviours.                      *
+ *  Failure to do so can lead to unexpected behaviors.                      *
  *                                                                           *
  *  <H2>Advantages:</H2>                                                     *
  *  - The same manager is used for entries of the same size.                 *
  *    So entries freed in one instance of the manager can be used by other   *
  *    instances of the manager.                                              *
  *  - Much less memory allocation/deallocation - program will be faster.     *
- *  - Avoids memory fragmentaion - program will run better for longer.       *
+ *  - Avoids memory fragmentation - program will run better for longer.       *
  *                                                                           *
- *  <H2>Disavantages:</H2>                                                   *
+ *  <H2>Disadvantages:</H2>                                                   *
  *  - Unused entries are almost inevitable - memory being wasted.            *
  *  - A  manager will only auto-destroy when all of its instances are        *
  *    destroyed so memory will usually only be recovered near the end.       *
@@ -55,7 +55,7 @@
 /**
  * Define this to disable the Entry Reusage System.
  * All code except the typedef of ERInterface will be disabled.
- * To allow a smooth transition, 
+ * To allow a smooth transition,
  */
 //#define DISABLE_ERS
 
@@ -63,8 +63,8 @@
  * Entries are aligned to ERS_ALIGNED bytes in the blocks of entries.
  * By default it aligns to one byte, using the "natural order" of the entries.
  * This should NEVER be set to zero or less.
- * If greater than one, some memory can be wasted. This should never be needed 
- * but is here just in case some aligment issues arise.
+ * If greater than one, some memory can be wasted. This should never be needed
+ * but is here just in case some alignment issues arise.
  */
 #ifndef ERS_ALIGNED
 #	define ERS_ALIGNED 1
@@ -95,7 +95,7 @@ typedef struct eri {
 	/**
 	 * Free an entry allocated from this manager.
 	 * WARNING: Does not check if the entry was allocated by this manager.
-	 * Freeing such an entry can lead to unexpected behaviour.
+	 * Freeing such an entry can lead to unexpected behavior.
 	 * @param self Interface of the entry manager
 	 * @param entry Entry to be freed
 	 */
@@ -111,7 +111,7 @@ typedef struct eri {
 	/**
 	 * Destroy this instance of the manager.
 	 * The manager is actually only destroyed when all the instances are destroyed.
-	 * When destroying the manager a warning is shown if the manager has 
+	 * When destroying the manager a warning is shown if the manager has
 	 * missing/extra entries.
 	 * @param self Interface of the entry manager
 	 */
@@ -130,7 +130,7 @@ typedef struct eri {
 #	define ers_report()
 #	define ers_force_destroy_all()
 #else /* not DISABLE_ERS */
-// These defines should be used to allow the code to keep working whenever 
+// These defines should be used to allow the code to keep working whenever
 // the system is disabled
 #	define ers_alloc(obj,type) (type *)(obj)->alloc(obj)
 #	define ers_free(obj,entry) (obj)->free((obj),(entry))
@@ -140,9 +140,9 @@ typedef struct eri {
 /**
  * Get a new instance of the manager that handles the specified entry size.
  * Size has to greater than 0.
- * If the specified size is smaller than a pointer, the size of a pointer is 
+ * If the specified size is smaller than a pointer, the size of a pointer is
  * used instead.
- * It's also aligned to ERS_ALIGNED bytes, so the smallest multiple of 
+ * It's also aligned to ERS_ALIGNED bytes, so the smallest multiple of
  * ERS_ALIGNED that is greater or equal to size is what's actually used.
  * @param The requested size of the entry in bytes
  * @return Interface of the object
@@ -152,7 +152,7 @@ ERS ers_new(uint32 size, char *name, enum ERSOptions options);
 /**
  * Print a report about the current state of the Entry Reusage System.
  * Shows information about the global system and each entry manager.
- * The number of entries are checked and a warning is shown if extra reusable 
+ * The number of entries are checked and a warning is shown if extra reusable
  * entries are found.
  * The extra entries are included in the count of reusable entries.
  */

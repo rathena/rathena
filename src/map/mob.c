@@ -2662,11 +2662,11 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				{
 					pc_addfame(sd, battle_config.fame_taekwon_mission);
 					sd->mission_mobid = temp;
-					pc_setglobalreg(sd,"TK_MISSION_ID", temp);
+					pc_setglobalreg(sd, add_str("TK_MISSION_ID"), temp);
 					sd->mission_count = 0;
 					clif_mission_info(sd, temp, 0);
 				}
-				pc_setglobalreg(sd,"TK_MISSION_COUNT", sd->mission_count);
+				pc_setglobalreg(sd, add_str("TK_MISSION_COUNT"), sd->mission_count);
 			}
 
 			if( sd->status.party_id )

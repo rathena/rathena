@@ -28,6 +28,7 @@
 #include "mercenary.h"
 #include "elemental.h"
 #include "party.h"
+#include "script.h"
 #include "storage.h"
 #include "trade.h"
 #include "mapreg.h"
@@ -8978,12 +8979,12 @@ ACMD_FUNC(set) {
 				break;
 			case '#':
 				if( reg[1] == '#' )
-					data->u.str = pc_readaccountreg2str(sd, reg);// global
+					data->u.str = pc_readaccountreg2str(sd, add_str(reg));// global
 				else
-					data->u.str = pc_readaccountregstr(sd, reg);// local
+					data->u.str = pc_readaccountregstr(sd, add_str(reg));// local
 				break;
 			default:
-				data->u.str = pc_readglobalreg_str(sd, reg);
+				data->u.str = pc_readglobalreg_str(sd, add_str(reg));
 				break;
 		}
 
@@ -9007,17 +9008,16 @@ ACMD_FUNC(set) {
 				break;
 			case '#':
 				if( reg[1] == '#' )
-					data->u.num = pc_readaccountreg2(sd, reg);// global
+					data->u.num = pc_readaccountreg2(sd, add_str(reg));// global
 				else
-					data->u.num = pc_readaccountreg(sd, reg);// local
+					data->u.num = pc_readaccountreg(sd, add_str(reg));// local
 				break;
 			default:
-				data->u.num = pc_readglobalreg(sd, reg);
+				data->u.num = pc_readglobalreg(sd, add_str(reg));
 				break;
 		}
 
 	}
-
 
 	switch( data->type ) {
 		case C_INT:
@@ -9353,7 +9353,7 @@ ACMD_FUNC(langtype)
 		lang = msg_langstr2langtype(langstr); //Switch langstr to associated langtype
 		if( msg_checklangtype(lang,false) == 1 ){ //Verify it's enabled and set it
 			char output[100];
-			pc_setaccountreg(sd, "#langtype", lang); //For login/char
+			pc_setaccountreg(sd, add_str("#langtype"), lang); //For login/char
 			sd->langtype = lang;
 			sprintf(output,msg_txt(sd,461),msg_langtype2langstr(lang)); // Language is now set to %s.
 			clif_displaymessage(fd,output);

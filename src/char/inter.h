@@ -4,7 +4,6 @@
 #ifndef _INTER_SQL_H_
 #define _INTER_SQL_H_
 
-struct accreg;
 #include "../common/sql.h"
 
 int inter_init_sql(const char *file);
@@ -26,6 +25,7 @@ extern unsigned int party_share_level;
 extern Sql* sql_handle;
 extern Sql* lsql_handle;
 
-int inter_accreg_tosql(uint32 account_id, uint32 char_id, struct accreg *reg, int type);
+void inter_savereg(uint32 account_id, uint32 char_id, const char *key, unsigned int index, intptr_t val, bool is_string);
+int inter_accreg_fromsql(uint32 account_id, uint32 char_id, int fd, int type);
 
 #endif /* _INTER_SQL_H_ */

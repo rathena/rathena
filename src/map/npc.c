@@ -3523,8 +3523,7 @@ static const char* npc_parse_function(char* w1, char* w2, char* w3, char* w4, co
 
 	script_start = strstr(start,"\t{");
 	end = strchr(start,'\n');
-	if( *w4 != '{' || script_start == NULL || (end != NULL && script_start > end) )
-	{
+	if (*w4 != '{' || script_start == NULL || (end != NULL && script_start > end)) {
 		ShowError("npc_parse_function: Missing left curly '%%TAB%%{' in file '%s', line '%d'. Skipping the rest of the file.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 		return NULL;// can't continue
 	}
@@ -3539,11 +3538,11 @@ static const char* npc_parse_function(char* w1, char* w2, char* w3, char* w4, co
 		return end;
 
 	func_db = script_get_userfunc_db();
-	if (func_db->put(func_db, db_str2key(w3), db_ptr2data(script), &old_data))
-	{
+	if (func_db->put(func_db, db_str2key(w3), db_ptr2data(script), &old_data)) {
 		struct script_code *oldscript = (struct script_code*)db_data2ptr(&old_data);
+
 		ShowInfo("npc_parse_function: Overwriting user function [%s] (%s:%d)\n", w3, filepath, strline(buffer,start-buffer));
-		script_free_vars(oldscript->script_vars);
+		script_free_vars(oldscript->local.vars);
 		aFree(oldscript->script_buf);
 		aFree(oldscript);
 	}

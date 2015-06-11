@@ -13,16 +13,16 @@
  *  If it has reusable entries (freed entry), it uses one.                   *
  *  So no assumption should be made about the data of the entry.             *
  *  Entries should be freed in the manager they where allocated from.        *
- *  Failure to do so can lead to unexpected behaviours.                      *
+ *  Failure to do so can lead to unexpected behaviors.                      *
  *                                                                           *
  *  <H2>Advantages:</H2>                                                     *
  *  - The same manager is used for entries of the same size.                 *
  *    So entries freed in one instance of the manager can be used by other   *
  *    instances of the manager.                                              *
  *  - Much less memory allocation/deallocation - program will be faster.     *
- *  - Avoids memory fragmentaion - program will run better for longer.       *
+ *  - Avoids memory fragmentation - program will run better for longer.       *
  *                                                                           *
- *  <H2>Disavantages:</H2>                                                   *
+ *  <H2>Disadvantages:</H2>                                                   *
  *  - Unused entries are almost inevitable - memory being wasted.            *
  *  - A  manager will only auto-destroy when all of its instances are        *
  *    destroyed so memory will usually only be recovered near the end.       *
@@ -70,12 +70,12 @@ typedef struct ers_cache
 	// Memory blocks array
 	unsigned char **Blocks;
 
-	// Max number of blocks 
+	// Max number of blocks
 	unsigned int Max;
 
 	// Free objects count
 	unsigned int Free;
-	
+
 	// Used objects count
 	unsigned int Used;
 

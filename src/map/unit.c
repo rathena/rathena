@@ -3168,24 +3168,6 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			for(i = 1; i < 5; i++)
 				pc_del_talisman(sd, sd->talisman[i], i);
 
-			if( sd->reg ) {	// Double logout already freed pointer fix... [Skotlex]
-				aFree(sd->reg);
-				sd->reg = NULL;
-				sd->reg_num = 0;
-			}
-
-			if( sd->regstr ) {
-				int j;
-
-				for( j = 0; j < sd->regstr_num; ++j )
-					if( sd->regstr[j].data )
-						aFree(sd->regstr[j].data);
-
-				aFree(sd->regstr);
-				sd->regstr = NULL;
-				sd->regstr_num = 0;
-			}
-
 			if( sd->st && sd->st->state != RUN ) {// free attached scripts that are waiting
 				script_free_state(sd->st);
 				sd->st = NULL;
