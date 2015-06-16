@@ -3163,10 +3163,8 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			guild_send_memberinfoshort(sd,0);
 			pc_cleareventtimer(sd);
 			pc_inventory_rental_clear(sd);
-			pc_delspiritball(sd,sd->spiritball,1);
-
-			for(i = 1; i < 5; i++)
-				pc_del_talisman(sd, sd->talisman[i], i);
+			pc_delspiritball(sd, sd->spiritball, 1);
+			pc_delspiritcharm(sd, sd->spiritcharm, sd->spiritcharm_type);
 
 			if( sd->reg ) {	// Double logout already freed pointer fix... [Skotlex]
 				aFree(sd->reg);

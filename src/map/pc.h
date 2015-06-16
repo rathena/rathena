@@ -28,6 +28,7 @@
 #define DAMAGELOG_SIZE_PC 100	/// Damage log
 #define MAX_SPIRITBALL 15 /// Max spirit balls
 #define MAX_DEVOTION 5 /// Max Devotion slots
+#define MAX_SPIRITCHARM 10 /// Max spirit charms
 
 #define BANK_VAULT_VAR "#BANKVAULT"
 
@@ -456,8 +457,9 @@ struct map_session_data {
 
 	int8 spiritball, spiritball_old;
 	int spirit_timer[MAX_SPIRITBALL];
-	short talisman[ELE_POISON+1]; // There are actually 5 talisman Fire, Ice, Wind, Earth & Poison maybe because its color violet.
-	int talisman_timer[ELE_POISON+1][10];
+	short spiritcharm; //No. of spirit
+	int spiritcharm_type; //Spirit type
+	int spiritcharm_timer[MAX_SPIRITCHARM];
 
 	unsigned char potion_success_counter; //Potion successes in row counter
 	unsigned char mission_count; //Stores the bounty kill count for TK_MISSION
@@ -1144,8 +1146,8 @@ void pc_itemcd_do(struct map_session_data *sd, bool load);
 
 int pc_load_combo(struct map_session_data *sd);
 
-void pc_add_talisman(struct map_session_data *sd,int interval,int max,int type);
-void pc_del_talisman(struct map_session_data *sd,int count,int type);
+void pc_addspiritcharm(struct map_session_data *sd, int interval, int max, int type);
+void pc_delspiritcharm(struct map_session_data *sd, int count, int type);
 
 void pc_baselevelchanged(struct map_session_data *sd);
 

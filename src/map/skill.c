@@ -6491,8 +6491,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		i = 0;
 		if (dstsd && dstsd->spiritball && (sd == dstsd || map_flag_vs(src->m) || (sd && sd->duel_group && sd->duel_group == dstsd->duel_group)) &&
 			((dstsd->class_&MAPID_BASEMASK) != MAPID_GUNSLINGER || (dstsd->class_&MAPID_UPPERMASK) != MAPID_REBELLION)) { // split the if for readability, and included gunslingers in the check so that their coins cannot be removed [Reddozen]
-			i = dstsd->spiritball * 7;
-			pc_delspiritball(dstsd,dstsd->spiritball,0);
+			if (dstsd->spiritball > 0) {
+				i = dstsd->spiritball * 7;
+				pc_delspiritball(dstsd,dstsd->spiritball,0);
+			}
+			if (dstsd->spiritcharm_type != CHARM_TYPE_NONE && dstsd->spiritcharm > 0) {
+				i += dstsd->spiritcharm * 7;
+				pc_delspiritcharm(dstsd,dstsd->spiritcharm,dstsd->spiritcharm_type);
+			}
 		} else if (dstmd && !(tstatus->mode&MD_BOSS) && rnd() % 100 < 20) { // check if target is a monster and not a Boss, for the 20% chance to absorb 2 SP per monster's level [Reddozen]
 			i = 2 * dstmd->level;
 			mob_target(dstmd,src,0);
@@ -9445,14 +9451,20 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case SR_ASSIMILATEPOWER:
-		if( flag&1 ) {
+		if (flag&1) {
 			i = 0;
-			if( dstsd && dstsd->spiritball && (sd == dstsd || map_flag_vs(src->m)) && (dstsd->class_&MAPID_BASEMASK)!=MAPID_GUNSLINGER )
-			{
-				i = dstsd->spiritball; //1%sp per spiritball.
-				pc_delspiritball(dstsd, dstsd->spiritball, 0);
+			if (dstsd && dstsd->spiritball && (sd == dstsd || map_flag_vs(src->m)) && (dstsd->class_&MAPID_BASEMASK)!=MAPID_GUNSLINGER) {
+				if (dstsd->spiritball > 0) {
+					i = dstsd->spiritball;
+					pc_delspiritball(dstsd,dstsd->spiritball,0);
+				}
+				if (dstsd->spiritcharm_type != CHARM_TYPE_NONE && dstsd->spiritcharm > 0) {
+					i += dstsd->spiritcharm;
+					pc_delspiritcharm(dstsd,dstsd->spiritcharm,dstsd->spiritcharm_type);
+				}
 			}
-			if( i ) status_percent_heal(src, 0, i);
+			if (i)
+				status_percent_heal(src, 0, i);
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, i ? 1:0);
 		} else {
 			clif_skill_damage(src,bl,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, 6);
@@ -10037,13 +10049,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case KO_HYOUHU_HUBUKI:
 	case KO_KAZEHU_SEIRAN:
 	case KO_DOHU_KOUKAI:
-		if(sd) {
-			int i_tal, ttype = skill_get_ele(skill_id, skill_lv);
-			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-			ARR_FIND(1, 6, i_tal, sd->talisman[i_tal] > 0 && ttype != i_tal);
-			if( i_tal < 6 )
-				pc_del_talisman(sd, sd->talisman[i_tal], i_tal); // Replace talisman
-			pc_add_talisman(sd, skill_get_time(skill_id, skill_lv), 10, ttype);
+		if (sd) {
+			int type = skill_get_ele(skill_id,skill_lv);
+
+			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
+			pc_addspiritcharm(sd,skill_get_time(skill_id,skill_lv),MAX_SPIRITCHARM,type);
 		}
 		break;
 	case KO_ZANZOU:
@@ -12322,15 +12332,12 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 		limit = ((sd ? pc_checkskill(sd,GN_DEMONIC_FIRE) : 1) + 1) * limit;
 		break;
 	case KO_ZENKAI:
-		if( sd ){
-			ARR_FIND(1, 6, i, sd->talisman[i] > 0);
-			if( i < 5 ){
-				val1 = sd->talisman[i]; // no. of aura
-				val2 = i; // aura type
-				limit += val1 * 1000;
-				subunt = i - 1;
-				pc_del_talisman(sd, sd->talisman[i], i);
-			}
+		if (sd && sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0) {
+			val1 = sd->spiritcharm;
+			val2 = sd->spiritcharm_type;
+			limit = 6000 * val1;
+			subunt = sd->spiritcharm_type - 1;
+			pc_delspiritcharm(sd,sd->spiritcharm,sd->spiritcharm_type);
 		}
 		break;
 	case HW_GRAVITATION:
@@ -14779,20 +14786,15 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 		case KO_HYOUHU_HUBUKI:
 		case KO_KAZEHU_SEIRAN:
 		case KO_DOHU_KOUKAI:
-			{
-				int ttype = skill_get_ele(skill_id, skill_lv);
-				ARR_FIND(1, 5, i, sd->talisman[i] > 0 && i != ttype);
-				if( sd->talisman[ttype] >= 10 ) {
-					clif_skill_fail(sd, skill_id, USESKILL_FAIL_SUMMON, 0);
-					return false;
-				}
+			if (sd->spiritcharm_type == skill_get_ele(skill_id,skill_lv) && sd->spiritcharm >= MAX_SPIRITCHARM) {
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_SUMMON,0);
+				return false;
 			}
 			break;
 		case KO_KAIHOU:
 		case KO_ZENKAI:
-			ARR_FIND(1, 6, i, sd->talisman[i] > 0);
-			if( i > 4 ) {
-				clif_skill_fail(sd, skill_id, USESKILL_FAIL_SUMMON, 0);
+			if (sd->spiritcharm_type == CHARM_TYPE_NONE || sd->spiritcharm <= 0) {
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_SUMMON_NONE,0);
 				return false;
 			}
 			break;

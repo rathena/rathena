@@ -370,6 +370,18 @@ enum e_element {
 
 #define MAX_ELE_LEVEL 4 /// Maximum Element level
 
+/**
+ * Types of spirit charms
+ * NOTE: Code assumes that this matches the first entries in enum elements
+ */
+enum spirit_charm_types {
+	CHARM_TYPE_NONE = 0,
+	CHARM_TYPE_WATER,
+	CHARM_TYPE_LAND,
+	CHARM_TYPE_FIRE,
+	CHARM_TYPE_WIND
+};
+
 enum mob_ai {
 	AI_NONE = 0,
 	AI_ATTACK,

@@ -9614,7 +9614,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC__ENERVATION:
 			val2 = 20 + 10 * val1; // ATK Reduction
-			if( sd ) pc_delspiritball(sd,sd->spiritball,0);
+			if (sd) {
+				pc_delspiritball(sd,sd->spiritball,0);
+				pc_delspiritcharm(sd,sd->spiritcharm,sd->spiritcharm_type);
+			}
 			break;
 		case SC__GROOMY:
 			val2 = 20 + 10 * val1; // ASPD

@@ -2638,7 +2638,6 @@ static int battle_get_weapon_element(struct Damage wd, struct block_list *src, s
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
 	struct status_change *sc = status_get_sc(src);
 	struct status_data *sstatus = status_get_status_data(src);
-	uint8 i;
 	int element = skill_get_ele(skill_id, skill_lv);
 
 	//Take weapon's element
@@ -2649,16 +2648,11 @@ static int battle_get_weapon_element(struct Damage wd, struct block_list *src, s
 			element = sstatus->lhw.ele;
 		if(is_skill_using_arrow(src, skill_id) && sd && sd->bonus.arrow_ele && weapon_position == EQI_HAND_R)
 			element = sd->bonus.arrow_ele;
+		if(sd && sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm >= MAX_SPIRITCHARM)
+			element = sd->spiritcharm_type; // Summoning 10 spiritcharm will endow your weapon
 		// on official endows override all other elements [helvetica]
-		if (sd) { //Summoning 10 talisman will endow your weapon.
-			ARR_FIND(1, 6, i, sd->talisman[i] >= 10);
-			if (i < 5)
-				element = i;
-			if (sc) { // check for endows
-				if(sc->data[SC_ENCHANTARMS])
-					element = sc->data[SC_ENCHANTARMS]->val2;
-			}
-		}
+		if(sc && sc->data[SC_ENCHANTARMS]) // Check for endows
+			element = sc->data[SC_ENCHANTARMS]->val2;
 	} else if( element == -2 ) //Use enchantment's element
 		element = status_get_attack_sc_element(src,sc);
 	else if( element == -3 ) //Use random element
@@ -4286,17 +4280,12 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 #endif
 	int inf3 = skill_get_inf3(skill_id);
 
-	if (sd) {
-		int type;
-
-		// Kagerou/Oboro Earth Charm effect +15% wATK
-		ARR_FIND(1, 6, type, sd->talisman[type] > 0);
-		if (type == 2) { //KO Earth Charm effect +15% wATK
-			ATK_ADDRATE(wd.damage, wd.damage2, 15 * sd->talisman[type]);
+	// Kagerou/Oboro Earth Charm effect +15% wATK
+	if(sd && sd->spiritcharm_type == CHARM_TYPE_LAND && sd->spiritcharm > 0) {
+		ATK_ADDRATE(wd.damage, wd.damage2, 15 * sd->spiritcharm);
 #ifdef RENEWAL
-			ATK_ADDRATE(wd.weaponAtk, wd.weaponAtk2, 15 * sd->talisman[type]);
+		ATK_ADDRATE(wd.weaponAtk, wd.weaponAtk2, 15 * sd->spiritcharm);
 #endif
-		}
 	}
 
 	//The following are applied on top of current damage and are stackable.
@@ -4453,7 +4442,6 @@ struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list 
 #endif
 
 	if (sd) {
-		int type;
 		int i = sd->ignore_def_by_race[tstatus->race] + sd->ignore_def_by_race[RC_ALL];
 
 		if (i) {
@@ -4462,11 +4450,11 @@ struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list 
 			def2 -= def2 * i / 100;
 		}
 
-		//Kagerou/Oboro Earth Charm effect +5% eDEF
-		ARR_FIND(1, 6, type, sd->talisman[type] > 0);
-		if (type == 2) {
-			short j = 5 * sd->talisman[type];
-			def1 = (def1 * (100 + j)) / 100;
+		//Kagerou/Oboro Earth Charm effect +10% eDEF
+		if(sd->spiritcharm_type == CHARM_TYPE_LAND && sd->spiritcharm > 0) {
+			short i = 10 * sd->spiritcharm;
+
+			def1 = (def1 * (100 + i)) / 100;
 		}
 	}
 
@@ -5480,10 +5468,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 
 	if (s_ele == -1){ // pl=-1 : the skill takes the weapon's element
 		s_ele = sstatus->rhw.ele;
-		if( sd ){ //Summoning 10 talisman will endow your weapon
-			ARR_FIND(1, 6, i, sd->talisman[i] >= 10);
-			if( i < 5 ) s_ele = i;
-		}
+		if(sd && sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm >= MAX_SPIRITCHARM)
+			s_ele = sd->spiritcharm_type; // Summoning 10 spiritcharm will endow your weapon
 	}else if (s_ele == -2) //Use status element
 		s_ele = status_get_attack_sc_element(src,status_get_sc(src));
 	else if( s_ele == -3 ) //Use random element
@@ -5503,11 +5489,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			}
 			break;
 		case KO_KAIHOU:
-			if(sd) {
-				ARR_FIND(1, 6, i, sd->talisman[i] > 0);
-				if(i < 5)
-					s_ele = i;
-			}
+			if(sd && sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0)
+				s_ele = sd->spiritcharm_type;
 			break;
 	}
 
@@ -5698,22 +5681,50 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case NJ_KOUENKA:
 						skillratio -= 10;
+						if(sd && sd->spiritcharm_type == CHARM_TYPE_FIRE && sd->spiritcharm > 0)
+							skillratio += 20 * sd->spiritcharm;
 						break;
 					case NJ_KAENSIN:
 						skillratio -= 50;
+						if(sd && sd->spiritcharm_type == CHARM_TYPE_FIRE && sd->spiritcharm > 0)
+							skillratio += 10 * sd->spiritcharm;
 						break;
 					case NJ_BAKUENRYU:
-						skillratio += 50*(skill_lv-1);
+						skillratio += 50 * (skill_lv - 1);
+						if(sd && sd->spiritcharm_type == CHARM_TYPE_FIRE && sd->spiritcharm > 0)
+							skillratio += 15 * sd->spiritcharm;
+						break;
+					case NJ_HYOUSENSOU:
+#ifdef RENEWAL
+						skillratio -= 30;
+#endif
+						if(sd && sd->spiritcharm_type == CHARM_TYPE_WATER && sd->spiritcharm > 0)
+							skillratio += 5 * sd->spiritcharm;
 						break;
 					case NJ_HYOUSYOURAKU:
-						skillratio += 50*skill_lv;
+						skillratio += 50 * skill_lv;
+						if(sd && sd->spiritcharm_type == CHARM_TYPE_WATER && sd->spiritcharm > 0)
+							skillratio += 25 * sd->spiritcharm;
 						break;
 					case NJ_RAIGEKISAI:
-						skillratio += 60 + 40*skill_lv;
+						skillratio += 60 + 40 * skill_lv;
+						if(sd && sd->spiritcharm_type == CHARM_TYPE_WIND && sd->spiritcharm > 0)
+							skillratio += 15 * sd->spiritcharm;
 						break;
 					case NJ_KAMAITACHI:
+						skillratio += 100 * skill_lv;
+						if(sd && sd->spiritcharm_type == CHARM_TYPE_WIND && sd->spiritcharm > 0)
+							skillratio += 10 * sd->spiritcharm;
+						break;
+					case NJ_HUUJIN:
+#ifdef RENEWAL
+						skillratio += 50;
+#endif
+						if(sd && sd->spiritcharm_type == CHARM_TYPE_WIND && sd->spiritcharm > 0)
+							skillratio += 20 * sd->spiritcharm;
+						break;
 					case NPC_ENERGYDRAIN:
-						skillratio += 100*skill_lv;
+						skillratio += 100 * skill_lv;
 						break;
 					case NPC_EARTHQUAKE:
 						skillratio += 100 +100*skill_lv +100*(skill_lv/2);
@@ -5734,9 +5745,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 								ratio -= 10;
 							skillratio += ratio;
 						}
-						break;
-					case NJ_HUUJIN:
-						skillratio += 50;
 						break;
 #else
 					case WZ_VERMILION:
@@ -5921,18 +5929,13 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							skillratio += 10 + 20 * skill_lv;
 						break;
 					case KO_KAIHOU:
-						if(sd) {
-							int ttype;
-
-							ARR_FIND(1, 6, ttype, sd->talisman[ttype] > 0);
-							if(ttype < 5) {
-								skillratio += -100 + 200 * sd->talisman[ttype];
-								RE_LVL_DMOD(100);
-								pc_del_talisman(sd, sd->talisman[ttype], ttype);
-							}
+						if(sd && sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0) {
+							skillratio += -100 + 200 * sd->spiritcharm;
+							RE_LVL_DMOD(100);
+							pc_delspiritcharm(sd, sd->spiritcharm, sd->spiritcharm_type);
 						}
 						break;
-						// Magical Elemental Spirits Attack Skills
+					// Magical Elemental Spirits Attack Skills
 					case EL_FIRE_MANTLE:
 					case EL_WATER_SCREW:
 						skillratio += 900;
@@ -5966,62 +5969,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case MH_POISON_MIST:
 						skillratio += -100 + 40 * skill_lv * status_get_lv(src) / 100;
 						break;
-				}
-
-				if (sd) {
-					int sd_charm;
-
-					ARR_FIND(1, 6, sd_charm, sd->talisman[sd_charm] > 0);
-					if(sd_charm < 5 && s_ele == sd_charm) {
-						switch(skill_id) {
-							case NJ_HYOUSYOURAKU:
-								skillratio += 25 * sd->talisman[sd_charm];
-								break;
-							case NJ_KOUENKA:
-							case NJ_HUUJIN:
-								skillratio += 20 * sd->talisman[sd_charm];
-								break;
-							case NJ_BAKUENRYU:
-							case NJ_RAIGEKISAI:
-								skillratio += 15 * sd->talisman[sd_charm];
-								break;
-							case NJ_KAMAITACHI:
-								skillratio += 10 * sd->talisman[sd_charm];
-								break;
-							case NJ_KAENSIN:
-							case NJ_HYOUSENSOU:
-								skillratio += 5 * sd->talisman[sd_charm];
-								break;
-						}
-					}
-				}
-
-				if (tsd) {
-					int tsd_charm;
-
-					ARR_FIND(1, 6, tsd_charm, tsd->talisman[tsd_charm] > 0);
-					if(tsd_charm < 5 && s_ele == tsd_charm) {
-						switch(skill_id) {
-							case NJ_HYOUSYOURAKU:
-								skillratio -= 25 * tsd->talisman[tsd_charm];
-								break;
-							case NJ_KOUENKA:
-							case NJ_HUUJIN:
-								skillratio -= 20 * tsd->talisman[tsd_charm];
-								break;
-							case NJ_BAKUENRYU:
-							case NJ_RAIGEKISAI:
-								skillratio -= 15 * tsd->talisman[tsd_charm];
-								break;
-							case NJ_KAMAITACHI:
-								skillratio -= 10 * tsd->talisman[tsd_charm];
-								break;
-							case NJ_KAENSIN:
-							case NJ_HYOUSENSOU:
-								skillratio -= 5 * tsd->talisman[tsd_charm];
-								break;
-						}
-					}
 				}
 
 				MATK_RATE(skillratio);
