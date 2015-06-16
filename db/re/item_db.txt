@@ -483,7 +483,7 @@
 1129,Flamberge,Flamberge,5,60000,,1500,150,,1,0,0x00004080,63,2,2,3,27,1,2,{},{},{}
 1130,Nagan,Nagan,5,20,,500,120,,1,0,0x000654E2,63,2,2,4,40,1,2,{ skill "TF_DOUBLE",5; bonus bDoubleRate,25; bonus2 bAddRace,RC_DemiHuman,5; bonus2 bAddRace,RC_Player,5; },{},{}
 1131,Ice_Falchon,Ice Falchion,5,20,,600,100,,1,0,0x000654E2,63,2,2,4,40,1,2,{ bonus bAtkEle,Ele_Water; bonus2 bAddEff,Eff_Freeze,500; bonus2 bAddEff2,Eff_Freeze,10; skill "MG_COLDBOLT",3; bonus3 bAutoSpell,"MG_COLDBOLT",3,100; },{},{}
-1132,Edge,Edge,5,20,,700,115,,1,0,0x000654E2,63,2,2,4,40,1,2,{ bonus2 bAddEff,Eff_Curse,30; bonus2 bWeaponComaClass,Class_Normal,10; },{},{}
+1132,Edge,Edge,5,20,,700,115,,1,0,0x000654E2,63,2,2,4,40,1,2,{ bonus2 bAddEff,Eff_Curse,30; bonus2 bComaClass,Class_Normal,10; },{},{}
 1133,Fire_Brand,Fireblend,5,20,,500,100,,1,0,0x000654E2,63,2,2,4,40,1,2,{ bonus bAtkEle,Ele_Fire; skill "MG_FIREBOLT",3; bonus3 bAutoSpell,"MG_FIREBOLT",3,100; },{},{}
 1134,Scissores_Sword,Caesar's Sword,5,20,,700,140,,1,0,0x000654E2,63,2,2,4,40,1,2,{ bonus2 bAddRace,RC_Plant,25; bonus bIgnoreDefRace,RC_Plant; },{},{}
 1135,Cutlas,Cutlus,5,20,,900,150,,1,0,0x000654E2,63,2,2,4,40,1,2,{ skill "SM_BASH",5; bonus bStr,2; bonus bDef,1; },{},{}
@@ -687,11 +687,11 @@
 1362,Two_Handed_Axe__,Two-Handed Axe,5,55000,,2500,185,,1,0,0x000444A2,63,2,34,3,30,1,7,{},{},{}
 1363,Brood_Axe,Bloody Axe,5,20,,4000,170,,1,0,0x000444A2,63,2,34,4,44,1,7,{ bonus bStr,10; bonus bSpeedRate,25; },{},{}
 1364,Great_Axe,Great Axe,5,20,,1800,187,,1,0,0x000444A2,63,2,34,4,44,1,7,{ bonus2 bAddSkillBlow,"MC_MAMMONITE",5; bonus2 bAddEff,Eff_Stun,1500; },{},{}
-1365,Sabbath,Sabbath,5,20,,2300,120,,1,0,0x000444A2,63,2,34,4,44,1,7,{ bonus bAtkEle,Ele_Dark; bonus2 bWeaponComaRace,RC_Demon,50; bonus2 bCriticalAddRace,RC_Undead,50; },{},{}
+1365,Sabbath,Sabbath,5,20,,2300,120,,1,0,0x000444A2,63,2,34,4,44,1,7,{ bonus bAtkEle,Ele_Dark; bonus2 bComaRace,RC_Demon,50; bonus2 bCriticalAddRace,RC_Undead,50; },{},{}
 1366,Right_Epsilon,Light Epsilon,5,20,,2300,180,,1,0,0x000444A2,63,2,34,4,44,1,7,{ bonus bAtkEle,Ele_Holy; skill "AL_HEAL",3; bonus2 bAddRace,RC_Demon,3; },{},{}
-1367,Slaughter,Slaughter,5,20,,2500,120,,1,0,0x000444A2,63,2,34,4,44,1,7,{ bonus bAtkEle,Ele_Earth; bonus bIgnoreDefRace,RC_Brute; bonus2 bWeaponComaRace,RC_Brute,40; },{},{}
+1367,Slaughter,Slaughter,5,20,,2500,120,,1,0,0x000444A2,63,2,34,4,44,1,7,{ bonus bAtkEle,Ele_Earth; bonus bIgnoreDefRace,RC_Brute; bonus2 bComaRace,RC_Brute,40; },{},{}
 1368,Tomahawk,Tomahawk,5,20,,2500,165,,1,0,0x000444A2,63,2,34,4,44,1,7,{ bonus bAtkEle,Ele_Wind; skill "ITM_TOMAHAWK",1; },{},{}
-1369,Guillotine,Guillotine,5,20,,3000,215,,1,0,0x000444A2,63,2,34,4,44,1,7,{ bonus2 bWeaponComaRace,RC_DemiHuman,30; bonus2 bWeaponComaRace,RC_Player,30; bonus2 bSPGainRaceAttack,RC_DemiHuman,2; bonus2 bSPGainRaceAttack,RC_Player,2; bonus2 bSPGainRace,RC_DemiHuman,20; bonus2 bSPGainRace,RC_Player,20; },{},{}
+1369,Guillotine,Guillotine,5,20,,3000,215,,1,0,0x000444A2,63,2,34,4,44,1,7,{ bonus2 bComaRace,RC_DemiHuman,30; bonus2 bComaRace,RC_Player,30; bonus2 bSPGainRaceAttack,RC_DemiHuman,2; bonus2 bSPGainRaceAttack,RC_Player,2; bonus2 bSPGainRace,RC_DemiHuman,20; bonus2 bSPGainRace,RC_Player,20; },{},{}
 1370,Doom_Slayer,Doom Slayer,5,20,,6000,10,,1,0,0x000444A2,63,2,34,4,80,1,7,{ bonus bAspdRate,-40; bonus bUseSPrate,100; if(readparam(bStr)>=95){ bonus bBaseAtk,340; bonus2 bAddEff,Eff_Stun,3000; bonus bBreakArmorRate,500; } },{},{}
 1371,Doom_Slayer_,Doom Slayer,5,20,,6000,10,,1,1,0x000444A2,63,2,34,4,80,1,7,{ bonus bAspdRate,-40; bonus bUseSPrate,100; if(readparam(bStr)>=95){ bonus bBaseAtk,340; bonus2 bAddEff,Eff_Stun,3000; bonus bBreakArmorRate,500; } },{},{}
 1372,Right_Epsilon_C,Light Epsilon,5,1,,0,229,,1,0,0x000444A2,63,2,34,4,1,0,7,{ bonus bAtkEle,Ele_Holy; skill "AL_HEAL",3; bonus2 bAddRace,RC_Demon,3; bonus bStr,10; bonus bSpeedRate,25; /*Gold PC Room: bonus bBaseAtk,10; bonus bMatk,10; */},{},{}
@@ -836,7 +836,7 @@
 1523,Spike,Spike,5,20,,700,85,,1,0,0x00008110,63,2,2,4,40,1,8,{ bonus bCritical,40; bonus bDefRate,-67; bonus bDef2Rate,-67; },{},{}
 1524,Golden_Mace,Golden Mace,5,20,,800,110,,1,1,0x00008110,63,2,2,4,40,1,8,{ bonus2 bAddRace,RC_Undead,10; bonus bUnbreakableWeapon,0; },{},{}
 1525,Long_Mace,Long Mace,5,20,,800,135,,3,0,0x00008110,63,2,2,4,40,1,8,{ bonus bLongAtkDef,10; },{},{}
-1526,Slash,Slash,5,20,,1000,145,,1,0,0x00008110,63,2,2,4,40,1,8,{ bonus2 bAddRace,RC_Undead,15; bonus2 bWeaponComaRace,RC_Undead,10; bonus2 bExpAddRace,RC_Undead,5; },{},{}
+1526,Slash,Slash,5,20,,1000,145,,1,0,0x00008110,63,2,2,4,40,1,8,{ bonus2 bAddRace,RC_Undead,15; bonus2 bComaRace,RC_Undead,10; bonus2 bExpAddRace,RC_Undead,5; },{},{}
 1527,Quadrille,Quadrille,5,20,,900,165,,1,0,0x00008110,63,2,2,4,40,1,8,{ bonus2 bAddRace,RC_Undead,10; bonus2 bAddRace,RC_DemiHuman,10; bonus2 bAddRace,RC_Player,10; bonus2 bAddEle,Ele_Earth,10; },{},{}
 1528,Grand_Cross,Grand Cross,5,20,,1500,140,,1,0,0x00008110,63,2,2,4,40,1,8,{ bonus bAtkEle,Ele_Holy; skill "PR_TURNUNDEAD",3; bonus3 bAutoSpell,"PR_TURNUNDEAD",3,100; bonus2 bSPDrainValueRace,RC_Undead,1; bonus2 bSPGainRace,RC_Undead,3; },{},{}
 1529,Iron_Driver,Iron Driver,5,20,,3000,155,,2,0,0x00008100,63,2,2,3,78,1,8,{},{},{}
@@ -876,7 +876,7 @@
 1562,Bible_Of_Battlefield,Battlefield Textbook,5,20,,700,110,,1,1,0x00410100,63,2,2,4,80,0,15,{ bonus bInt,3; bonus3 bAutoSpell,"AL_BLESSING",3+(getskilllv("AL_BLESSING")>3)*(getskilllv("AL_BLESSING")-3),20; },{},{}
 1563,Diary_Of_Great_Sage_C,Sage's Diary,5,1,,0,135,,1,0,0x00410100,63,2,2,3,1,0,15,{ bonus bMatk,140; bonus bAspdRate,5; /*Gold PC Room: bonus bBaseAtk,10; bonus bMatk,10;*/ },{},{}
 1564,Encyclopedia,Encyclopedia,5,20,,2000,110:100,,1,2,0x00410100,63,2,2,3,70,1,15,{ bonus bInt,3; bonus bDex,2; bonus bCritical,20+((readparam(bLuk)*2)/10); },{},{}
-1565,Death_Note,Ledger of Death,5,20,,1000,137:100,,1,2,0x00410100,63,2,2,4,85,1,15,{ bonus bStr,3; bonus bInt,3; bonus bLuk,-20; bonus2 bWeaponComaRace,RC_DemiHuman,10; bonus2 bWeaponComaRace,RC_Player,10; bonus bAspdRate,getrefine(); if(BaseJob==Job_Sage) bonus3 bAutoSpell,"NPC_HELLJUDGEMENT",5,20; },{},{}
+1565,Death_Note,Ledger of Death,5,20,,1000,137:100,,1,2,0x00410100,63,2,2,4,85,1,15,{ bonus bStr,3; bonus bInt,3; bonus bLuk,-20; bonus2 bComaRace,RC_DemiHuman,10; bonus2 bComaRace,RC_Player,10; bonus bAspdRate,getrefine(); if(BaseJob==Job_Sage) bonus3 bAutoSpell,"NPC_HELLJUDGEMENT",5,20; },{},{}
 1566,Diary_Of_Great_Basil,Diary Of Great Basil,5,20,,0,120:125,,1,0,0x00410100,63,2,2,1,0,0,15,{ bonus2 bAddClass,Class_All,50; },{},{}
 1567,Hardback_C,Refined Hardcover Book,5,1,,0,168:100,,1,0,0x00410100,63,2,2,4,0,0,15,{ bonus bStr,5; bonus bDex,2; bonus bMatkRate,20; },{},{}
 1568,Book_Of_Billows_,Book of Billows,5,35000,,750,90,,1,3,0x00410100,63,2,2,3,27,1,15,{ bonus bAtkEle,Ele_Water; },{},{}
@@ -890,7 +890,7 @@
 1576,Krieger_Book1,Glorious Tablet,5,20,,0,90:115,,1,0,0x00410100,63,2,2,4,80,1,15,{ bonus bMatkRate,15; bonus2 bAddRace,RC_DemiHuman,80; bonus2 bAddRace,RC_Player,80; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,25; bonus2 bIgnoreDefRaceRate,RC_Player,25; bonus bUnbreakableWeapon,0; .@r = getrefine(); if(.@r>5) { bonus2 bAddRace,RC_DemiHuman,pow(((.@r>14)?14:.@r)-4,2); bonus2 bAddRace,RC_Player,pow(((.@r>14)?14:.@r)-4,2); bonus2 bIgnoreDefRaceRate,RC_DemiHuman,5; bonus2 bIgnoreDefRaceRate,RC_Player,5; } if(.@r>8) autobonus "{ bonus bBaseAtk,200; }",30,3000,BF_WEAPON,"{ specialeffect2 EF_BASH3D; }"; },{},{}
 1577,Krieger_Book2,Glorious Apocalypse,5,20,,0,90:115,,1,0,0x00410100,63,2,2,4,80,1,15,{ bonus2 bAddRace,RC_DemiHuman,80; bonus2 bAddRace,RC_Player,80; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,25; bonus2 bIgnoreDefRaceRate,RC_Player,25; bonus bUnbreakableWeapon,0; .@r = getrefine(); if(.@r>5) bonus2 bIgnoreDefRaceRate,RC_DemiHuman,5; bonus2 bIgnoreDefRaceRate,RC_Player,5; if(.@r>8) { bonus bMatkRate,5; bonus bVariableCastrate,-5; bonus bDelayRate,-5; } },{},{}
 1578,Book_Of_Prayer,Book Of Prayer,5,20,,0,140,,1,0,0x00410100,63,2,2,3,0,0,15,{ bonus bVit,2; bonus bMdef,2; bonus bMaxSPrate,10; },{},{}
-1579,Death_Note_M,Book of the Dead,5,20,,1000,137,,1,2,0x00410100,63,2,2,4,85,1,15,{ bonus bMatkRate,15; bonus bStr,3; bonus bInt,3; bonus bLuk,-20; bonus2 bWeaponComaRace,RC_DemiHuman,10; bonus2 bWeaponComaRace,RC_Player,10; bonus bAspdRate,getrefine(); if(BaseJob==Job_Sage) bonus3 bAutoSpell,"NPC_HELLJUDGEMENT",5,20; },{},{}
+1579,Death_Note_M,Book of the Dead,5,20,,1000,137,,1,2,0x00410100,63,2,2,4,85,1,15,{ bonus bMatkRate,15; bonus bStr,3; bonus bInt,3; bonus bLuk,-20; bonus2 bComaRace,RC_DemiHuman,10; bonus2 bComaRace,RC_Player,10; bonus bAspdRate,getrefine(); if(BaseJob==Job_Sage) bonus3 bAutoSpell,"NPC_HELLJUDGEMENT",5,20; },{},{}
 1580,Encyclopedia_C,Giant Encyclopedia,5,0,,0,145:100,,1,0,0x00410100,63,2,2,3,0,0,15,{ bonus bMatkRate,15; bonus bInt,3; bonus bDex,2; bonus bCritical,20+((readparam(bLuk)*2)/10); bonus2 bAddSize,Size_All,40; },{},{}
 1581,F_Diary_Of_Great_Sage_C,Diary Of Great Sage,5,1,,0,135,,1,2,0x00410100,63,2,2,3,1,0,15,{},{},{}
 1582,E_Diary_Of_Great_Sage_C,Diary Of Great Sage,5,1,,0,135,,1,2,0x00410100,63,2,2,3,1,0,15,{},{},{}
@@ -2329,7 +2329,7 @@
 4273,Shellfish_Card,Shell Fish Card,6,20,,10,,,,,,,,2,,,,,{ bonus bBaseAtk,5; bonus2 bAddDamageClass,1073,30; },{},{}
 4274,Zombie_Master_Card,Zombie Master Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bSPGainRace,RC_Undead,5; },{},{ heal 0,-5; }
 4275,Zombie_Prisoner_Card,Zombie Prisoner Card,6,20,,10,,,,,,,,64,,,,,{ bonus2 bSubRace,RC_Undead,-20; bonus2 bExpAddRace,RC_Undead,10; },{},{}
-4276,Lord_Of_Death_Card,Lord of The Dead Card,6,20,,10,,,,,,,,2,,,,,{ bonus3 bAddEff,Eff_Stun,500,ATF_SHORT; bonus3 bAddEff,Eff_Curse,500,ATF_SHORT; bonus3 bAddEff,Eff_Silence,500,ATF_SHORT; bonus3 bAddEff,Eff_Poison,500,ATF_SHORT; bonus3 bAddEff,Eff_Bleeding,500,ATF_SHORT; bonus2 bWeaponComaClass,Class_Normal,1; },{},{}
+4276,Lord_Of_Death_Card,Lord of The Dead Card,6,20,,10,,,,,,,,2,,,,,{ bonus3 bAddEff,Eff_Stun,500,ATF_SHORT; bonus3 bAddEff,Eff_Curse,500,ATF_SHORT; bonus3 bAddEff,Eff_Silence,500,ATF_SHORT; bonus3 bAddEff,Eff_Poison,500,ATF_SHORT; bonus3 bAddEff,Eff_Bleeding,500,ATF_SHORT; bonus2 bComaClass,Class_Normal,1; },{},{}
 4277,Zherlthsh_Card,Zealotus Card,6,20,,10,,,,,,,,32,,,,,{ bonus bLuk,2; bonus2 bSkillAtk,"BA_MUSICALSTRIKE",10; bonus2 bSkillAtk,"DC_THROWARROW",10; },{},{}
 4278,Gibbet_Card,Gibbet Card,6,20,,10,,,,,,,,769,,,,,{ if(getrefine()<6) bonus bMdef,5; },{},{}
 4279,Deleter_Card,Earth Deleter Card,6,20,,10,,,,,,,,16,,,,,{ bonus bSPrecovRate,-100; bonus bSPGainValue,10; },{},{ heal 0,-100; }
@@ -2592,7 +2592,7 @@
 4537,Sealed_Phreeoni_Card,Sealed Phreeoni Card,6,20,,10,,,,,,,,2,,,,,{ bonus bHit,((getrefine()>14)?75:50); },{},{}
 4538,Sealed_Bacsojin_Card,Sealed White Lady Card,6,20,,10,,,,,,,,769,,,,,{ if (getrefine()>14) { bonus bHealPower,25; bonus bUseSPrate,20; } else { bonus bHealPower,15; bonus bUseSPrate,30; } },{},{}
 4539,Sealed_F_Bishop_Card,Sealed Fallen Bishop Hibram Card,6,20,,10,,,,,,,,64,,,,,{ .@r = getrefine(); bonus bMatkRate,((.@r>14)?8:5); bonus bMaxSPrate,-50; set .@rate,((.@r>14)?33:25); bonus2 bMagicAddRace,RC_Angel,.@rate; bonus2 bMagicAddRace,RC_DemiHuman,.@rate; bonus2 bMagicAddRace,RC_Player,.@rate; },{},{}
-4540,SLD_Lord_Of_Death_Card,Sealed Lord of The Dead Card,6,20,,10,,,,,,,,2,,,,,{ set .@rate, ((getrefine()>14)?350:250); bonus3 bAddEff,Eff_Stun,.@rate,ATF_SHORT; bonus3 bAddEff,Eff_Curse,.@rate,ATF_SHORT; bonus3 bAddEff,Eff_Silence,.@rate,ATF_SHORT; bonus3 bAddEff,Eff_Poison,.@rate,ATF_SHORT; bonus3 bAddEff,Eff_Bleeding,.@rate,ATF_SHORT; bonus2 bWeaponComaClass,Class_Normal,1; },{},{}
+4540,SLD_Lord_Of_Death_Card,Sealed Lord of The Dead Card,6,20,,10,,,,,,,,2,,,,,{ set .@rate, ((getrefine()>14)?350:250); bonus3 bAddEff,Eff_Stun,.@rate,ATF_SHORT; bonus3 bAddEff,Eff_Curse,.@rate,ATF_SHORT; bonus3 bAddEff,Eff_Silence,.@rate,ATF_SHORT; bonus3 bAddEff,Eff_Poison,.@rate,ATF_SHORT; bonus3 bAddEff,Eff_Bleeding,.@rate,ATF_SHORT; bonus2 bComaClass,Class_Normal,1; },{},{}
 4541,SLD_B_Katrinn_Card,Sealed High Wizard Card,6,20,,10,,,,,,,,769,,,,,{ bonus2 bIgnoreMdefClassRate,Class_Normal,100; .@r = getrefine(); if (.@r>14) { bonus bVariableCastrate,120; bonus bSPrecovRate,-120; } else { bonus bVariableCastrate,150; bonus bSPrecovRate,-150; } },{},{ heal 0,((.@r>14)?-2000:-3000); }
 4542,SLD_Detale_Card,Sealed Detale Card,6,20,,10,,,,,,,,16,,,,,{},{},{}
 4543,SLD_Garm_Card,Sealed Hatii Card,6,20,,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Freeze,((getrefine()>14)?4000:2500); },{},{}
@@ -6397,7 +6397,7 @@
 12536,NY_Rice_Cake_Soup,NY Rice Cake Soup,2,20,,100,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12537,Solo_Gift_Basket,Solo Gift Basket,2,1000,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /*getgroupitem(IG_Solo_Gift_Basket);*/ getitem 597,5; getitem 596,3; getitem 561,3; getitem 573,4; getitem 559,10; getitem 560,10; },{},{}
 12538,Couple_Event_Basket,Couple Event Basket,2,2000,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /*getgroupitem(IG_Couple_Event_Basket);*/ getitem 14546,10; getitem 14547,10; getitem 14548,10; getitem 14549,10; getitem 14550,10; },{},{}
-12539,Splendid_Box,Splendid Box,2,20,,100,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+12539,Splendid_Box,Splendid Box,2,20,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Splendid_Box); },{},{}
 12540,GM_Warp_Box,GM Warp Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_GM_Warp_Box); },{},{}
 12541,Fortune_Cookie1,Fortune Cookie1,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_Fortune_Cookie1,1); },{},{}
 12542,Fortune_Cookie2,Fortune Cookie2,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Fortune_Cookie2); },{},{}

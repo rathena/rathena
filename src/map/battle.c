@@ -7346,55 +7346,25 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			TBL_SKILL *su = (TBL_SKILL*)target;
 			if( !su || !su->group)
 				return 0;
-			if( skill_get_inf2(su->group->skill_id)&INF2_TRAP && su->group->unit_id != UNT_USED_TRAPS) { //Only a few skills can target traps...
-				switch( battle_getcurrentskill(src) ) {
-					case RK_DRAGONBREATH:// it can only hit traps in pvp/gvg maps
-					case RK_DRAGONBREATH_WATER:
-						if( !map[m].flag.pvp && !map[m].flag.gvg )
-							break;
-					case 0://you can hit them without skills
-					case MA_REMOVETRAP:
-					case HT_REMOVETRAP:
-					case AC_SHOWER:
-					case MA_SHOWER:
-					case WZ_SIGHTRASHER:
-					case WZ_SIGHTBLASTER:
-					case SM_MAGNUM:
-					case MS_MAGNUM:
-					case RA_DETONATOR:
-					case RA_SENSITIVEKEEN:
-					case GN_CRAZYWEED_ATK:
-					case RK_STORMBLAST:
-					case SR_RAMPAGEBLASTER:
-					case NC_COLDSLOWER:
-					case NC_SELFDESTRUCTION:
-#ifdef RENEWAL
-					case KN_BOWLINGBASH:
-					case KN_SPEARSTAB:
-					case LK_SPIRALPIERCE:
-					case ML_SPIRALPIERCE:
-					case MO_FINGEROFFENSIVE:
-					case MO_INVESTIGATE:
-					case MO_TRIPLEATTACK:
-					case MO_EXTREMITYFIST:
-					case CR_HOLYCROSS:
-					case ASC_METEORASSAULT:
-					case RG_RAID:
-					case MC_CARTREVOLUTION:
-					case HT_CLAYMORETRAP:
-					case RA_ICEBOUNDTRAP:
-					case RA_FIRINGTRAP:
-#endif
-						state |= BCT_ENEMY;
-						strip_enemy = 0;
-						break;
-					default:
-						if(su->group->skill_id == WM_REVERBERATION || su->group->skill_id == WM_POEMOFNETHERWORLD){
-							state |= BCT_ENEMY;
-							strip_enemy = 0;
-						}else
-							return 0;
+			if( skill_get_inf2(su->group->skill_id)&INF2_TRAP && su->group->unit_id != UNT_USED_TRAPS) {
+				uint16 skill_id = battle_getcurrentskill(src);
+
+				if (!skill_id || su->group->skill_id == WM_REVERBERATION || su->group->skill_id == WM_POEMOFNETHERWORLD) {
+					;
 				}
+				else if (skill_get_inf2(skill_id)&INF2_HIT_TRAP) { // Only a few skills can target traps
+					switch (skill_id) {
+						case RK_DRAGONBREATH:
+						case RK_DRAGONBREATH_WATER:
+							// Can only hit traps in PVP/GVG maps
+							if( !map[m].flag.pvp && !map[m].flag.gvg )
+								return 0;
+					}
+				}
+				else
+					return 0;
+				state |= BCT_ENEMY;
+				strip_enemy = 0;
 			} else if (su->group->skill_id == WZ_ICEWALL || su->group->skill_id == GN_WALLOFTHORN) {
 				state |= BCT_ENEMY;
 				strip_enemy = 0;

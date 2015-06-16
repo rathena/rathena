@@ -638,6 +638,8 @@ bHPGainAttackRate	2081
 bSPGainAttackRate	2082
 bSubSkill	2083
 bSubDefEle	2084
+bComaClass	2085
+bComaRace	2086
 
 EQI_HEAD_TOP	1
 EQI_ARMOR	2

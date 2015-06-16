@@ -1791,7 +1791,7 @@ enum scb_flag
 
 enum e_status_calc_opt {
 	SCO_NONE  = 0x0,
-	SCO_FIRST = 0x1, ///< Trigger the calculations that should take place only onspawn/once
+	SCO_FIRST = 0x1, ///< Trigger the calculations that should take place only onspawn/once, process base status initialization code
 	SCO_FORCE = 0x2, ///< Only relevant to BL_PC types, ensures call bypasses the queue caused by delayed damage
 };
 

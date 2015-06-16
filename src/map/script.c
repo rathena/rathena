@@ -16462,8 +16462,9 @@ BUILDIN_FUNC(getunitdata)
 	TBL_NPC* nd = NULL;
 	int num;
 	char* name;
+	struct script_data *data = script_getdata(st, 3);
 
-	if (!data_isreference(script_getdata(st, 3))) {
+	if (!data_isreference(data)) {
 		ShowWarning("buildin_getunitdata: Error in argument! Please give a variable to store values in.\n");
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -16484,10 +16485,10 @@ BUILDIN_FUNC(getunitdata)
 		case BL_NPC:  nd = map_id2nd(bl->id); break;
 	}
 
-	num = st->stack->stack_data[st->start+3].u.num;
-	name = (char *)(str_buf+str_data[num&0x00ffffff].str);
+	num = reference_getuid(data);
+	name = reference_getname(data);
 
-#define getunitdata_sub(idx__,var__) setd_sub(st,sd,name,(idx__),(void *)__64BPRTSIZE((int)(var__)),script_getref(st,3))
+#define getunitdata_sub(idx__,var__) setd_sub(st,sd,name,(idx__),(void *)__64BPRTSIZE((int)(var__)),data->ref)
 
 	switch(bl->type) {
 		case BL_MOB:
@@ -16698,7 +16699,16 @@ BUILDIN_FUNC(setunitdata)
 		case BL_PET:  pd = map_id2pd(bl->id); break;
 		case BL_MER:  mc = map_id2mc(bl->id); break;
 		case BL_ELEM: ed = map_id2ed(bl->id); break;
-		case BL_NPC:  nd = map_id2nd(bl->id); break;
+		case BL_NPC:
+			nd = map_id2nd(bl->id);
+			if (!nd->status.hp)
+				status_calc_npc(nd, SCO_FIRST);
+			else
+				status_calc_npc(nd, SCO_NONE);
+			break;
+		default:
+			ShowError("buildin_setunitdata: Invalid object!");
+			return SCRIPT_CMD_FAILURE;
 	}
 
 	type = script_getnum(st, 3);
@@ -16889,7 +16899,7 @@ BUILDIN_FUNC(setunitdata)
 		break;
 
 	case BL_NPC:
-		if (!md) {
+		if (!nd) {
 			ShowWarning("buildin_setunitdata: Error in finding object BL_NPC!\n");
 			return SCRIPT_CMD_FAILURE;
 		}
@@ -16902,12 +16912,12 @@ BUILDIN_FUNC(setunitdata)
 			case 5: if (!unit_walktoxy(bl, (short)value, nd->bl.y, 2)) unit_movepos(bl, (short)value, nd->bl.x, 0, 0); break;
 			case 6: if (!unit_walktoxy(bl, nd->bl.x, (short)value, 2)) unit_movepos(bl, nd->bl.x, (short)value, 0, 0); break;
 			case 7: unit_setdir(bl, (uint8)value); break;
-			case 8: nd->status.str = (unsigned short)value; status_calc_bl(bl, SCB_ALL); break;
-			case 9: nd->status.agi = (unsigned short)value; status_calc_bl(bl, SCB_ALL); break;
-			case 10: nd->status.vit = (unsigned short)value; status_calc_bl(bl, SCB_ALL); break;
-			case 11: nd->status.int_ = (unsigned short)value; status_calc_bl(bl, SCB_ALL); break;
-			case 12: nd->status.dex = (unsigned short)value; status_calc_bl(bl, SCB_ALL); break;
-			case 13: nd->status.luk = (unsigned short)value; status_calc_bl(bl, SCB_ALL); break;
+			case 8: nd->params.str = (unsigned short)value; status_calc_bl(bl, SCB_ALL); break;
+			case 9: nd->params.agi = (unsigned short)value; status_calc_bl(bl, SCB_ALL); break;
+			case 10: nd->params.vit = (unsigned short)value; status_calc_bl(bl, SCB_ALL); break;
+			case 11: nd->params.int_ = (unsigned short)value; status_calc_bl(bl, SCB_ALL); break;
+			case 12: nd->params.dex = (unsigned short)value; status_calc_bl(bl, SCB_ALL); break;
+			case 13: nd->params.luk = (unsigned short)value; status_calc_bl(bl, SCB_ALL); break;
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_NPC.\n", type);
 				return SCRIPT_CMD_FAILURE;
@@ -17269,9 +17279,9 @@ BUILDIN_FUNC(unitskilluseid)
 	if (bl != NULL) {
 		if (bl->type == BL_NPC) {
 			if (!((TBL_NPC*)bl)->status.hp)
-				status_calc_npc(((TBL_NPC*)bl), true);
+				status_calc_npc(((TBL_NPC*)bl), SCO_FIRST);
 			else
-				status_calc_npc(((TBL_NPC*)bl), false);
+				status_calc_npc(((TBL_NPC*)bl), SCO_NONE);
 		}
 		unit_skilluse_id2(bl, target_id, skill_id, skill_lv, (casttime * 1000) + skill_castfix(bl, skill_id, skill_lv), skill_get_castcancel(skill_id));
 	}

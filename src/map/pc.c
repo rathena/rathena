@@ -3654,6 +3654,16 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		PC_BONUS_CHK_ELEMENT(type2,SP_SUBDEF_ELE);
 		sd->subdefele[type2] += val;
 		break;
+	case SP_COMA_CLASS: // bonus2 bComaClass,c,n;
+		PC_BONUS_CHK_CLASS(type2,SP_COMA_CLASS);
+		sd->coma_class[type2] += val;
+		sd->special_state.bonus_coma = 1;
+		break;
+	case SP_COMA_RACE: // bonus2 bComaRace,r,n;
+		PC_BONUS_CHK_RACE(type2,SP_COMA_RACE);
+		sd->coma_race[type2] += val;
+		sd->special_state.bonus_coma = 1;
+		break;
 	default:
 		ShowWarning("pc_bonus2: unknown type %d %d %d!\n",type,type2,val);
 		break;

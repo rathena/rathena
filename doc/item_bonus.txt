@@ -288,6 +288,9 @@ bonus4 bAddEffOnSkill,sk,eff,n,y;	Adds a n/100% chance to cause status eff when 
                                  	  ATF_SELF   = trigger effect on self
                                  	  ATF_TARGET = trigger effect on target
 
+bonus2 bComaClass,c,n;      		Adds a n/100% chance to cause Coma when attacking a target of class c (regardless the type of attack)
+bonus2 bComaRace,r,n;       		Adds a n/100% chance to cause Coma when attacking a target of race r (regardless the type of attack)
+
 bonus2 bWeaponComaEle,e,n;  		Adds a n/100% chance to cause Coma when attacking a target of element e with a normal attack
 bonus2 bWeaponComaClass,c,n;		Adds a n/100% chance to cause Coma when attacking a target of class c with a normal attack
 bonus2 bWeaponComaRace,r,n; 		Adds a n/100% chance to cause Coma when attacking a target of race r with a normal attack

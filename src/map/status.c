@@ -1286,13 +1286,16 @@ static inline void status_cpy(struct status_data* a, const struct status_data* b
 int status_set_hp(struct block_list *bl, unsigned int hp, int flag)
 {
 	struct status_data *status;
-	if (hp < 1) return 0;
+	if (hp < 1)
+		return 0;
 	status = status_get_status_data(bl);
 	if (status == &dummy_status)
 		return 0;
 
-	if (hp > status->max_hp) hp = status->max_hp;
-	if (hp == status->hp) return 0;
+	if (hp > status->max_hp)
+		hp = status->max_hp;
+	if (hp == status->hp)
+		return 0;
 	if (hp > status->hp)
 		return status_heal(bl, hp - status->hp, 0, 1|flag);
 	return status_zap(bl, status->hp - hp, 0);
@@ -1309,15 +1312,17 @@ int status_set_hp(struct block_list *bl, unsigned int hp, int flag)
 int status_set_maxhp(struct block_list *bl, unsigned int maxhp, int flag)
 {
 	struct status_data *status;
-	if (maxhp < 1) return 0;
+	if (maxhp < 1)
+		return 0;
 	status = status_get_status_data(bl);
 	if (status == &dummy_status)
 		return 0;
 
-	if (maxhp == status->max_hp) return 0;
-	if (maxhp > status->max_hp) {
+	if (maxhp == status->max_hp)
+		return 0;
+	if (maxhp > status->max_hp)
 		status_heal(bl, maxhp - status->max_hp, 0, 1|flag);
-	} else
+	else
 		status_zap(bl, status->max_hp - maxhp, 0);
 
 	status->max_hp = maxhp;
@@ -1340,8 +1345,10 @@ int status_set_sp(struct block_list *bl, unsigned int sp, int flag)
 	if (status == &dummy_status)
 		return 0;
 
-	if (sp > status->max_sp) sp = status->max_sp;
-	if (sp == status->sp) return 0;
+	if (sp > status->max_sp)
+		sp = status->max_sp;
+	if (sp == status->sp)
+		return 0;
 	if (sp > status->sp)
 		return status_heal(bl, 0, sp - status->sp, 1|flag);
 	return status_zap(bl, 0, status->sp - sp);
@@ -1358,15 +1365,17 @@ int status_set_sp(struct block_list *bl, unsigned int sp, int flag)
 int status_set_maxsp(struct block_list *bl, unsigned int maxsp, int flag)
 {
 	struct status_data *status;
-	if (maxsp < 1) return 0;
+	if (maxsp < 1)
+		return 0;
 	status = status_get_status_data(bl);
 	if (status == &dummy_status)
 		return 0;
 
-	if (maxsp == status->max_sp) return 0;
-	if (maxsp > status->max_sp) {
+	if (maxsp == status->max_sp)
+		return 0;
+	if (maxsp > status->max_sp)
 		status_heal(bl, maxsp - status->max_sp, 0, 1|flag);
-	} else
+	else
 		status_zap(bl, status->max_sp - maxsp, 0);
 
 	status->max_sp = maxsp;
@@ -2986,6 +2995,8 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		+ sizeof(sd->subrace2)
 		+ sizeof(sd->subsize)
 		+ sizeof(sd->reseff)
+		+ sizeof(sd->coma_class)
+		+ sizeof(sd->coma_race)
 		+ sizeof(sd->weapon_coma_ele)
 		+ sizeof(sd->weapon_coma_race)
 		+ sizeof(sd->weapon_coma_class)
@@ -3958,12 +3969,12 @@ int status_calc_npc_(struct npc_data *nd, enum e_status_calc_opt opt)
 		status->speed = nd->speed;
 	}
 
-	status->str = nd->stat_point;
-	status->agi = nd->stat_point;
-	status->vit = nd->stat_point;
-	status->int_= nd->stat_point;
-	status->dex = nd->stat_point;
-	status->luk = nd->stat_point;
+	status->str = nd->stat_point + nd->params.str;
+	status->agi = nd->stat_point + nd->params.agi;
+	status->vit = nd->stat_point + nd->params.vit;
+	status->int_= nd->stat_point + nd->params.int_;
+	status->dex = nd->stat_point + nd->params.dex;
+	status->luk = nd->stat_point + nd->params.luk;
 
 	status_calc_misc(&nd->bl, status, nd->level);
 	status_cpy(&nd->status, status);

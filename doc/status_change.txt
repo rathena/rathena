@@ -751,8 +751,9 @@ SC_SPIRIT	()
 	val1:
 
 SC_COMA	()
-	desc:
-	val1:
+	desc: Vanish HP to 1 and SP to 0
+	val1: (meaningless)
+	val2: If 1 means do not remove SP
 
 SC_INTRAVISION	()
 	desc:
