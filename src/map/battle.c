@@ -3881,17 +3881,6 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			if( sc && sc->data[SC_INSPIRATION] )
 				skillratio += 600;
 			break;
-		case SR_DRAGONCOMBO:
-			skillratio += 40 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
-		case SR_SKYNETBLOW:
-			//ATK [{(Skill Level x 80) + (Caster AGI)} x Caster Base Level / 100] %
-			skillratio = 80 * skill_lv + status_get_agi(src);
-			if( sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_DRAGONCOMBO )//ATK [{(Skill Level x 100) + (Caster AGI) + 150} x Caster Base Level / 100] %
-				skillratio = 100 * skill_lv + status_get_agi(src) + 150;
-			RE_LVL_DMOD(100);
-			break;
 		case SR_EARTHSHAKER:
 			if( tsc && (tsc->data[SC_HIDING] || tsc->data[SC_CLOAKING] || // [(Skill Level x 150) x (Caster Base Level / 100) + (Caster INT x 3)] %
 				tsc->data[SC_CHASEWALK] || tsc->data[SC_CLOAKINGEXCEED] || tsc->data[SC__INVISIBILITY]) ){
@@ -3904,21 +3893,43 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 				skillratio += status_get_int(src) * 2;
 			}
 			break;
-		case SR_FALLENEMPIRE:// ATK [(Skill Level x 150 + 100) x Caster Base Level / 150] %
-			skillratio += 150 *skill_lv;
+
+		case SR_DRAGONCOMBO:
+		case SR_FLASHCOMBO_ATK_STEP1:
+			skillratio += 40 * skill_lv;
+			RE_LVL_DMOD(100);
+			break;
+		case SR_FALLENEMPIRE:
+		case SR_FLASHCOMBO_ATK_STEP2:
+			// ATK [(Skill Level x 150 + 100) x Caster Base Level / 150] %
+			skillratio += 150 * skill_lv;
 			RE_LVL_DMOD(150);
  			break;
-		case SR_TIGERCANNON:// ATK [((Caster consumed HP + SP) / 4) x Caster Base Level / 100] %
+		case SR_TIGERCANNON:
+		case SR_FLASHCOMBO_ATK_STEP3:
 			{
-				int hp = (int64)status_get_max_hp(src) * (10 + 2 * skill_lv) / 100,
-					sp = (int64)status_get_max_sp(src) * (5 + 1 * skill_lv) / 100;
-				if( sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE ) // ATK [((Caster consumed HP + SP) / 2) x Caster Base Level / 100] %
-					skillratio = ((int64)hp+sp) / 2;
+				int hp = sstatus->max_hp * (10 + 2 * skill_lv) / 100, // skill_get_hp_rate(SR_TIGERCANNON, skill_lv)
+					sp = sstatus->max_sp * (5 + 1 * skill_lv) / 100; // skill_get_sp_rate(SR_TIGERCANNON, skill_lv)
+				if( sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE )
+					// Base_Damage = [((Caster consumed HP + SP) / 2) x Caster Base Level / 100] %
+					skillratio += ((hp+sp) / 2);
 				else
-					skillratio = ((int64)hp+sp) / 4;
+					// Base_Damage = [((Caster consumed HP + SP) / 4) x Caster Base Level / 100] %
+					skillratio += ((hp+sp) / 4);
 				RE_LVL_DMOD(100);
 			}
 			break;
+		case SR_SKYNETBLOW:
+		case SR_FLASHCOMBO_ATK_STEP4:
+			if( sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_DRAGONCOMBO )
+				//ATK [{(Skill Level x 100) + (Caster AGI) + 150} x Caster Base Level / 100] %
+				skillratio += (100 * skill_lv + sstatus->agi + 150);
+			else
+				//ATK [{(Skill Level x 80) + (Caster AGI)} x Caster Base Level / 100] %
+				skillratio += (80 * skill_lv + sstatus->agi);
+			RE_LVL_DMOD(100);
+			break;
+
 		case SR_RAMPAGEBLASTER:
 			skillratio = 20 * skill_lv * ((sd) ? sd->spiritball_old : 5);
 			if( sc && sc->data[SC_EXPLOSIONSPIRITS] ) {
@@ -4245,16 +4256,20 @@ static int battle_calc_skill_constant_addition(struct Damage wd, struct block_li
 				atk = damagevalue;
 			}
 			break;
-		case SR_TIGERCANNON: // (Tiger Cannon skill level x 240) + (Target Base Level x 40)
-			if( sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE ) // (Tiger Cannon skill level x 500) + (Target Base Level x 40)
+		case SR_TIGERCANNON:
+		case SR_FLASHCOMBO_ATK_STEP3:
+			// (Tiger Cannon skill level x 240) + (Target Base Level x 40)
+			if( skill_id == SR_FLASHCOMBO_ATK_STEP3 || (sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE) )
 				atk = ( skill_lv * 500 + status_get_lv(target) * 40 );
 			else
 				atk = ( skill_lv * 240 + status_get_lv(target) * 40 );
 			break;
-		case SR_FALLENEMPIRE:// [(Target Size value + Skill Level - 1) x Caster STR] + [(Target current weight x Caster DEX / 120)]
-			atk = ( ((tstatus->size+1)*2 + skill_lv - 1) * status_get_str(src));
+		case SR_FALLENEMPIRE:
+		case SR_FLASHCOMBO_ATK_STEP2:
+			// [(Target Size value + Skill Level - 1) x Caster STR] + [(Target current weight x Caster DEX / 120)]
+			atk = ( ((tstatus->size+1)*2 + skill_lv - 1) * sstatus->str);
 			if( tsd && tsd->weight )
-				atk += ( (tsd->weight/10) * status_get_dex(src) / 120 );
+				atk += ( (tsd->weight/10) * sstatus->dex / 120 );
 			else
 				atk += ( status_get_lv(target) * 50 ); //mobs
 			break;
@@ -4399,6 +4414,14 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 					break;
 			}
 		}
+
+		if (sc->data[SC_FLASHCOMBO]) {
+			ATK_ADD(wd.damage, wd.damage2, sc->data[SC_FLASHCOMBO]->val2);
+#ifdef RENEWAL
+			ATK_ADD(wd.equipAtk, wd.equipAtk2, sc->data[SC_FLASHCOMBO]->val2);
+#endif
+		}
+
 		if((wd.flag&(BF_LONG|BF_MAGIC)) == BF_LONG) { // Monster Transformation bonus
 			if (sc->data[SC_MTF_RANGEATK]) {
 				ATK_ADDRATE(wd.damage, wd.damage2, sc->data[SC_MTF_RANGEATK]->val1);
@@ -5140,7 +5163,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	// check if we're landing a hit
 	if(!is_attack_hitting(wd, src, target, skill_id, skill_lv, true))
 		wd.dmg_lv = ATK_FLEE;
-	else if(!is_infinite_defense(target, wd.flag)) { //no need for math against plants
+	else if(wd.miscflag&8 || !is_infinite_defense(target, wd.flag)) { //no need for math against plants
 		int ratio, i = 0;
 
 		wd = battle_calc_skill_base_damage(wd, src, target, skill_id, skill_lv); // base skill damage
@@ -5382,7 +5405,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	DAMAGE_DIV_FIX_RENEWAL(wd, wd.div_);
 #endif
 	// only do 1 dmg to plant, no need to calculate rest
-	if(is_infinite_defense(target, wd.flag))
+	if(!(wd.miscflag&8) && is_infinite_defense(target, wd.flag))
 		return battle_calc_attack_plant(wd, src, target, skill_id, skill_lv);
 
 	//Apply DAMAGE_DIV_FIX and check for min damage
