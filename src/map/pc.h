@@ -353,10 +353,6 @@ struct map_session_data {
 	int ignore_mdef_by_class[CLASS_MAX];
 	int ignore_def_by_race[RC_MAX];
 	short sp_gain_race[RC_MAX];
-	short sp_gain_race_attack[RC_MAX];
-	short hp_gain_race_attack[RC_MAX];
-	short hp_gain_race_attack_rate[RC_MAX];
-	short sp_gain_race_attack_rate[RC_MAX];
 	// zeroed arrays end here.
 
 	// zeroed structures start here
@@ -394,7 +390,7 @@ struct map_session_data {
 	struct s_bonus_vanish_gain {
 		short rate,	///< Success rate 0 - 1000 (100%)
 			per;	///< % HP/SP vanished/gained
-	} hp_vanish_race[RC_MAX], sp_vanish_race[RC_MAX], hp_gain_attack, sp_gain_attack;
+	} hp_vanish_race[RC_MAX], sp_vanish_race[RC_MAX];
 	// zeroed structures end here
 
 	// manually zeroed structures start here.
@@ -442,8 +438,6 @@ struct map_session_data {
 		int ematk; // matk bonus from equipment
 		int eatk; // atk bonus from equipment
 		uint8 absorb_dmg_maxhp; // [Cydh]
-		short hp_gain_attack, sp_gain_attack;
-		short hp_gain_attack_rate, sp_gain_attack_rate;
 	} bonus;
 	// zeroed vars end here.
 

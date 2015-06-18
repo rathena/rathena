@@ -3019,10 +3019,6 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		+ sizeof(sd->ignore_mdef_by_class)
 		+ sizeof(sd->ignore_def_by_race)
 		+ sizeof(sd->sp_gain_race)
-		+ sizeof(sd->sp_gain_race_attack)
-		+ sizeof(sd->hp_gain_race_attack)
-		+ sizeof(sd->hp_gain_race_attack_rate)
-		+ sizeof(sd->sp_gain_race_attack_rate)
 		);
 
 	memset (&sd->right_weapon.overrefine, 0, sizeof(sd->right_weapon) - sizeof(sd->right_weapon.atkmods));
@@ -3094,8 +3090,6 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		+ sizeof(sd->mdef_set_race)
 		+ sizeof(sd->hp_vanish_race)
 		+ sizeof(sd->sp_vanish_race)
-		+ sizeof(sd->hp_gain_attack)
-		+ sizeof(sd->sp_gain_attack)
 	);
 
 	memset (&sd->bonus, 0, sizeof(sd->bonus));

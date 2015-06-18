@@ -3338,9 +3338,9 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		(dmg.flag&BF_MISC && (skill_id == RA_CLUSTERBOMB || skill_id == RA_FIRINGTRAP || skill_id == RA_ICEBOUNDTRAP)) ) )
 	{
 		if (battle_config.left_cardfix_to_right)
-			battle_drain(sd, bl, dmg.damage, dmg.damage, tstatus->race, tstatus->class_);
+			battle_drain(sd, bl, dmg.damage, dmg.damage, tstatus->race, tstatus->class_, is_infinite_defense(bl,dmg.flag));
 		else
-			battle_drain(sd, bl, dmg.damage, dmg.damage2, tstatus->race, tstatus->class_);
+			battle_drain(sd, bl, dmg.damage, dmg.damage2, tstatus->race, tstatus->class_, is_infinite_defense(bl,dmg.flag));
 	}
 
 	if( damage > 0 ) { // Post-damage effects

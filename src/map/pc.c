@@ -2980,18 +2980,6 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 		case SP_ABSORB_DMG_MAXHP: // bonus bAbsorbDmgMaxHP,n;
 			sd->bonus.absorb_dmg_maxhp = max(sd->bonus.absorb_dmg_maxhp, val);
 			break;
-		case SP_HP_GAIN_ATTACK: // bonus bHPGainAttack,n;
-			sd->bonus.hp_gain_attack += val;
-			break;
-		case SP_SP_GAIN_ATTACK: // bonus bSPGainAttack,n;
-			sd->bonus.sp_gain_attack += val;
-			break;
-		case SP_HP_GAIN_ATTACK_RATE: // bonus bHPGainAttackRate,n;
-			sd->bonus.hp_gain_attack_rate += val;
-			break;
-		case SP_SP_GAIN_ATTACK_RATE: // bonus bSPGainAttackRate,n;
-			sd->bonus.sp_gain_attack_rate += val;
-			break;
 		default:
 			ShowWarning("pc_bonus: unknown type %d %d !\n",type,val);
 			break;
@@ -3474,16 +3462,6 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag != 2)
 			sd->ignore_def_by_race[type2] += val;
 		break;
-	case SP_SP_GAIN_RACE_ATTACK: // bonus2 bSPGainRaceAttack,r,n;
-		PC_BONUS_CHK_RACE(type2,SP_SP_GAIN_RACE_ATTACK);
-		if(sd->state.lr_flag != 2)
-			sd->sp_gain_race_attack[type2] = cap_value(sd->sp_gain_race_attack[type2] + val, 0, INT16_MAX);
-		break;
-	case SP_HP_GAIN_RACE_ATTACK: // bonus2 bHPGainRaceAttack,r,n;
-		PC_BONUS_CHK_RACE(type2,SP_HP_GAIN_RACE_ATTACK);
-		if(sd->state.lr_flag != 2)
-			sd->hp_gain_race_attack[type2] = cap_value(sd->hp_gain_race_attack[type2] + val, 0, INT16_MAX);
-		break;
 	case SP_SKILL_USE_SP_RATE: // bonus2 bSkillUseSPrate,sk,n;
 		if(sd->state.lr_flag == 2)
 			break;
@@ -3620,22 +3598,6 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->skillusesp[i].id = type2;
 			sd->skillusesp[i].val = val;
 		}
-		break;
-	case SP_HP_GAIN_RACE_ATTACK_RATE: // bonus2 bHPGainRaceAttackRate,r,n;
-		PC_BONUS_CHK_RACE(type2,SP_HP_GAIN_RACE_ATTACK_RATE);
-		sd->hp_gain_race_attack_rate[type2] += val;
-		break;
-	case SP_SP_GAIN_RACE_ATTACK_RATE: // bonus2 bSPGainRaceAttackRate,r,n;
-		PC_BONUS_CHK_RACE(type2,SP_SP_GAIN_RACE_ATTACK_RATE);
-		sd->sp_gain_race_attack_rate[type2] += val;
-		break;
-	case SP_HP_GAIN_ATTACK_RATE: // bonus2 bHPGainAttackRate,x,n;
-		sd->hp_gain_attack.rate += type2;
-		sd->hp_gain_attack.per += val;
-		break;
-	case SP_SP_GAIN_ATTACK_RATE: // bonus2 bSPGainAttackRate,x,n;
-		sd->sp_gain_attack.rate += type2;
-		sd->sp_gain_attack.per += val;
 		break;
 	case SP_SUB_SKILL: // bonus2 bSubSkill,sk,n;
 		ARR_FIND(0, ARRAYLENGTH(sd->subskill), i, sd->subskill[i].id == type2 || sd->subskill[i].id == 0);

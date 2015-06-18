@@ -4833,7 +4833,7 @@ struct Damage battle_calc_attack_gvg_bg(struct Damage wd, struct block_list *src
 
 					rdelay = clif_damage(src, (!d_bl) ? src : d_bl, tick, wd.amotion, sstatus->dmotion, rdamage, 1, DMG_ENDURE, 0);
 					if( tsd )
-						battle_drain(tsd, src, rdamage, rdamage, sstatus->race, sstatus->class_);
+						battle_drain(tsd, src, rdamage, rdamage, sstatus->race, sstatus->class_, is_infinite_defense(src,wd.flag));
 					//Use Reflect Shield to signal this kind of skill trigger [Skotlex]
 					battle_delay_damage(tick, wd.amotion, target, (!d_bl) ? src : d_bl, 0, CR_REFLECTSHIELD, 0, rdamage, ATK_DEF, rdelay, true);
 					skill_additional_effect(target, (!d_bl) ? src : d_bl, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL, ATK_DEF, tick);
@@ -5094,11 +5094,11 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 			struct block_list *d_bl = battle_check_devotion(src);
 
 			if( attack_type == BF_WEAPON && tsc->data[SC_REFLECTDAMAGE] ) // Don't reflect your own damage (Grand Cross)
-				map_foreachinshootrange(battle_damage_area,target,skill_get_splash(LG_REFLECTDAMAGE,1),BL_CHAR,tick,target,wd->amotion,sstatus->dmotion,rdamage,status_get_race(target));
+				map_foreachinshootrange(battle_damage_area,target,skill_get_splash(LG_REFLECTDAMAGE,1),BL_CHAR,tick,target,wd->amotion,sstatus->dmotion,rdamage,wd->flag);
 			else if( attack_type == BF_WEAPON || attack_type == BF_MISC) {
 				rdelay = clif_damage(src, (!d_bl) ? src : d_bl, tick, wd->amotion, sstatus->dmotion, rdamage, 1, DMG_ENDURE, 0);
 				if( tsd )
-					battle_drain(tsd, src, rdamage, rdamage, sstatus->race, sstatus->class_);
+					battle_drain(tsd, src, rdamage, rdamage, sstatus->race, sstatus->class_, is_infinite_defense(src,wd->flag));
 				// It appears that official servers give skill reflect damage a longer delay
 				battle_delay_damage(tick, wd->amotion, target, (!d_bl) ? src : d_bl, 0, CR_REFLECTSHIELD, 0, rdamage, ATK_DEF, rdelay ,true);
 				skill_additional_effect(target, (!d_bl) ? src : d_bl, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL, ATK_DEF, tick);
@@ -5123,6 +5123,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	struct status_change *tsc = status_get_sc(target);
 	struct status_data *tstatus = status_get_status_data(target);
 	int right_element, left_element;
+	bool infdef = false;
 
 	memset(&wd,0,sizeof(wd));
 
@@ -5163,7 +5164,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	// check if we're landing a hit
 	if(!is_attack_hitting(wd, src, target, skill_id, skill_lv, true))
 		wd.dmg_lv = ATK_FLEE;
-	else if(wd.miscflag&8 || !is_infinite_defense(target, wd.flag)) { //no need for math against plants
+	else if(wd.miscflag&8 || !(infdef = is_infinite_defense(target, wd.flag))) { //no need for math against plants
 		int ratio, i = 0;
 
 		wd = battle_calc_skill_base_damage(wd, src, target, skill_id, skill_lv); // base skill damage
@@ -5405,7 +5406,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	DAMAGE_DIV_FIX_RENEWAL(wd, wd.div_);
 #endif
 	// only do 1 dmg to plant, no need to calculate rest
-	if(!(wd.miscflag&8) && is_infinite_defense(target, wd.flag))
+	if(!(wd.miscflag&8) && infdef)
 		return battle_calc_attack_plant(wd, src, target, skill_id, skill_lv);
 
 	//Apply DAMAGE_DIV_FIX and check for min damage
@@ -6666,14 +6667,14 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 /*===========================================
  * Perform battle drain effects (HP/SP loss)
  *-------------------------------------------*/
-void battle_drain(TBL_PC *sd, struct block_list *tbl, int64 rdamage, int64 ldamage, int race, int class_)
+void battle_drain(struct map_session_data *sd, struct block_list *tbl, int64 rdamage, int64 ldamage, int race, int class_, bool infdef)
 {
 	struct weapon_data *wd;
 	int64 *damage;
-	int thp = 0, // HP gained by attacked
-		tsp = 0, // SP gained by attacked
-		rhp = 0, // HP reduced from target
-		rsp = 0, // SP reduced from target
+	int thp = 0, // HP gained
+		tsp = 0, // SP gained
+		//rhp = 0, // HP reduced from target
+		//rsp = 0, // SP reduced from target
 		hp = 0, sp = 0;
 	uint8 i = 0;
 	short vrate_hp = 0, vrate_sp = 0, v_hp = 0, v_sp = 0;
@@ -6685,7 +6686,7 @@ void battle_drain(TBL_PC *sd, struct block_list *tbl, int64 rdamage, int64 ldama
 	hp = (sd->bonus.hp_vanish_rate*10) + sd->hp_vanish_race[race].rate + sd->hp_vanish_race[RC_ALL].rate;
 	vrate_hp = cap_value(hp, 0, SHRT_MAX);
 	hp = sd->bonus.hp_vanish_per + sd->hp_vanish_race[race].per + sd->hp_vanish_race[RC_ALL].per;
-	v_hp = cap_value(hp, INT8_MIN, INT8_MAX);
+	v_hp = cap_value(hp, SHRT_MIN, SHRT_MAX);
 
 	sp = (sd->bonus.sp_vanish_rate*10) + sd->sp_vanish_race[race].rate + sd->sp_vanish_race[RC_ALL].rate;
 	vrate_sp = cap_value(sp, 0, SHRT_MAX);
@@ -6696,17 +6697,28 @@ void battle_drain(TBL_PC *sd, struct block_list *tbl, int64 rdamage, int64 ldama
 		i |= 1;
 	if (v_sp > 0 && vrate_sp > 0 && (vrate_sp >= 10000 || rnd()%10000 < vrate_sp))
 		i |= 2;
-	if (i)
-		status_percent_damage(&sd->bl, tbl, (i&1 ? (int8)v_hp: 0), (i&2 ? (int8)v_sp : 0), false);
+	if (i) {
+		if (infdef)
+			status_zap(tbl, v_hp ? v_hp/100 : 0, v_sp ? v_sp/100 : 0);
+		else
+			status_percent_damage(&sd->bl, tbl, (i&1 ? (int8)(-v_hp): 0), (i&2 ? (int8)(-v_sp) : 0), false);
+	}
 
 	// Check for drain HP/SP
 	hp = sp = i = 0;
 	for (i = 0; i < 4; i++) {
 		//First two iterations: Right hand
-		if (i < 2) { wd = &sd->right_weapon; damage = &rdamage; }
-		else { wd = &sd->left_weapon; damage = &ldamage; }
+		if (i < 2) {
+			wd = &sd->right_weapon;
+			damage = &rdamage;
+		}
+		else {
+			wd = &sd->left_weapon;
+			damage = &ldamage;
+		}
 
-		if (*damage <= 0) continue;
+		if (*damage <= 0)
+			continue;
 
 		if( i == 1 || i == 3 ) {
 			hp = wd->hp_drain_class[class_] + wd->hp_drain_class[CLASS_ALL];
@@ -6716,12 +6728,12 @@ void battle_drain(TBL_PC *sd, struct block_list *tbl, int64 rdamage, int64 ldama
 			sp += battle_calc_drain(*damage, wd->sp_drain_rate.rate, wd->sp_drain_rate.per);
 
 			if( hp ) {
-				rhp += hp;
+				//rhp += hp;
 				thp += hp;
 			}
 
 			if( sp ) {
-				rsp += sp;
+				//rsp += sp;
 				tsp += sp;
 			}
 		} else {
@@ -6729,60 +6741,24 @@ void battle_drain(TBL_PC *sd, struct block_list *tbl, int64 rdamage, int64 ldama
 			sp = wd->sp_drain_race[race] + wd->sp_drain_race[RC_ALL];
 
 			if( hp ) {
-				rhp += hp;
+				//rhp += hp;
 				thp += hp;
 			}
 
 			if( sp ) {
-				rsp += sp;
+				//rsp += sp;
 				tsp += sp;
 			}
 		}
 	}
-
-	// Check for gain HP/SP
-	if (sd->bonus.hp_gain_attack)
-		thp += sd->bonus.hp_gain_attack;
-	if (sd->bonus.sp_gain_attack)
-		tsp += sd->bonus.sp_gain_attack;
-
-	if (sd->bonus.hp_gain_attack_rate)
-		thp += (int)((rdamage+ldamage) * sd->bonus.hp_gain_attack_rate / 100);
-	if (sd->bonus.sp_gain_attack_rate)
-		tsp += (int)((rdamage+ldamage) * sd->bonus.sp_gain_attack_rate / 100);
-
-	if (sd->hp_gain_attack.rate)
-		thp += battle_calc_drain(rdamage+ldamage, sd->hp_gain_attack.rate, sd->hp_gain_attack.per);
-	if (sd->sp_gain_attack.rate)
-		tsp += battle_calc_drain(rdamage+ldamage, sd->sp_gain_attack.rate, sd->sp_gain_attack.per);
-
-	if( sd->sp_gain_race_attack[race] )
-		tsp += sd->sp_gain_race_attack[race];
-	if( sd->sp_gain_race_attack[RC_ALL] )
-		tsp += sd->sp_gain_race_attack[RC_ALL];
-
-	if( sd->hp_gain_race_attack[race] )
-		thp += sd->hp_gain_race_attack[race];
-	if( sd->hp_gain_race_attack[RC_ALL] )
-		thp += sd->hp_gain_race_attack[RC_ALL];
-
-	if (sd->hp_gain_race_attack_rate[race])
-		thp += (int)((rdamage+ldamage) * sd->hp_gain_race_attack_rate[race] / 100);
-	if (sd->hp_gain_race_attack_rate[RC_ALL])
-		thp += (int)((rdamage+ldamage) * sd->hp_gain_race_attack_rate[RC_ALL] / 100);
-
-	if (sd->sp_gain_race_attack_rate[race])
-		tsp += (int)((rdamage+ldamage) * sd->sp_gain_race_attack_rate[race] / 100);
-	if (sd->sp_gain_race_attack_rate[RC_ALL])
-		tsp += (int)((rdamage+ldamage) * sd->sp_gain_race_attack_rate[RC_ALL] / 100);
 
 	if (!thp && !tsp)
 		return;
 
 	status_heal(&sd->bl, thp, tsp, battle_config.show_hp_sp_drain?3:1);
 
-	if (rhp || rsp)
-		status_zap(tbl, rhp, rsp);
+	//if (rhp || rsp)
+	//	status_zap(tbl, rhp, rsp);
 }
 /*===========================================
  * Deals the same damage to targets in area.
@@ -6793,22 +6769,24 @@ void battle_drain(TBL_PC *sd, struct block_list *tbl, int64 rdamage, int64 ldama
 int battle_damage_area( struct block_list *bl, va_list ap) {
 	unsigned int tick;
 	int64 damage;
-	int amotion, dmotion;
+	int amotion, dmotion, flag;
 	struct block_list *src;
 
 	nullpo_ret(bl);
 
-	tick=va_arg(ap, unsigned int);
-	src=va_arg(ap,struct block_list *);
-	amotion=va_arg(ap,int);
-	dmotion=va_arg(ap,int);
-	damage=va_arg(ap,int);
+	tick = va_arg(ap, unsigned int);
+	src = va_arg(ap,struct block_list *);
+	amotion = va_arg(ap,int);
+	dmotion = va_arg(ap,int);
+	damage = va_arg(ap,int);
+	flag = va_arg(ap,int);
+
 	if( bl->type == BL_MOB && ((TBL_MOB*)bl)->mob_id == MOBID_EMPERIUM )
 		return 0;
 	if( bl != src && battle_check_target(src,bl,BCT_ENEMY) > 0 ) {
 		map_freeblock_lock();
 		if( src->type == BL_PC )
-			battle_drain((TBL_PC*)src, bl, damage, damage, status_get_race(bl), status_get_class_(bl));
+			battle_drain((TBL_PC*)src, bl, damage, damage, status_get_race(bl), status_get_class_(bl), is_infinite_defense(bl,flag));
 		if( amotion )
 			battle_delay_damage(tick, amotion,src,bl,0,CR_REFLECTSHIELD,0,damage,ATK_DEF,0,true);
 		else
@@ -7192,9 +7170,9 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 
 		if (wd.flag & BF_WEAPON && src != target && damage > 0) {
 			if (battle_config.left_cardfix_to_right)
-				battle_drain(sd, target, wd.damage, wd.damage, tstatus->race, tstatus->class_);
+				battle_drain(sd, target, wd.damage, wd.damage, tstatus->race, tstatus->class_, is_infinite_defense(target,wd.flag));
 			else
-				battle_drain(sd, target, wd.damage, wd.damage2, tstatus->race, tstatus->class_);
+				battle_drain(sd, target, wd.damage, wd.damage2, tstatus->race, tstatus->class_, is_infinite_defense(target,wd.flag));
 		}
 	}
 
