@@ -443,7 +443,7 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 			if( tsc->data[SC_SPIDERWEB]) {
 				tsc->data[SC_SPIDERWEB]->val1 = 0; // free to move now
 				if( tsc->data[SC_SPIDERWEB]->val2-- > 0 )
-					ratio += 200; // double damage
+					ratio += 100; // double damage
 				if( tsc->data[SC_SPIDERWEB]->val2 == 0 )
 					status_change_end(target, SC_SPIDERWEB, INVALID_TIMER);
 			}
@@ -451,8 +451,8 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 				status_change_end(target, SC_THORNSTRAP, INVALID_TIMER);
 			if( tsc->data[SC_CRYSTALIZE] && target->type != BL_MOB)
 				status_change_end(target, SC_CRYSTALIZE, INVALID_TIMER);
-			if( tsc->data[SC_EARTH_INSIGNIA]) ratio += 150;
-			if( tsc->data[SC_ASH]) ratio += 150; //150%
+			if( tsc->data[SC_EARTH_INSIGNIA]) ratio += 50;
+			if( tsc->data[SC_ASH]) ratio += 50; //150%
 			break;
 		case ELE_HOLY:
 			if( tsc->data[SC_ORATIO]) ratio += tsc->data[SC_ORATIO]->val1 * 2;
@@ -461,14 +461,14 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 			if( tsc->data[SC_VENOMIMPRESS]) ratio += tsc->data[SC_VENOMIMPRESS]->val2;
 			break;
 		case ELE_WIND:
-			if( tsc->data[SC_CRYSTALIZE] && target->type != BL_MOB) ratio += 150;
-			if( tsc->data[SC_WATER_INSIGNIA]) ratio += 150;
+			if( tsc->data[SC_CRYSTALIZE] && target->type != BL_MOB) ratio += 50;
+			if( tsc->data[SC_WATER_INSIGNIA]) ratio += 50;
 			break;
 		case ELE_WATER:
-			if( tsc->data[SC_FIRE_INSIGNIA]) ratio += 150;
+			if( tsc->data[SC_FIRE_INSIGNIA]) ratio += 50;
 			break;
 		case ELE_EARTH:
-			if( tsc->data[SC_WIND_INSIGNIA]) ratio += 150;
+			if( tsc->data[SC_WIND_INSIGNIA]) ratio += 50;
 			status_change_end(target, SC_MAGNETICFIELD, INVALID_TIMER); //freed if received earth dmg
 			break;
 		case ELE_NEUTRAL:
