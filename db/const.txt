@@ -1167,6 +1167,7 @@ IG_Lucky_Silvervine_Fruit_Box_III110        421
 IG_Old_Ore_Box	422
 
 SC_ALL	-1
+SC_NONE	-1
 SC_STONE	0
 SC_FREEZE	1
 SC_STUN	2

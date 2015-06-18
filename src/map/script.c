@@ -19801,7 +19801,6 @@ BUILDIN_FUNC(montransform) {
 		val4 = script_getnum(st, 8);
 
 	if (tick != 0) {
-		char msg[CHAT_SIZE_MAX];
 		struct mob_db *monster =  mob_db(mob_id);
 
 		if (battle_config.mon_trans_disable_in_gvg && map_flag_gvg2(sd->bl.m)) {
@@ -19814,11 +19813,9 @@ BUILDIN_FUNC(montransform) {
 			return SCRIPT_CMD_FAILURE;
 		}
 
-		sprintf(msg, msg_txt(sd,728), monster->name); // Traaaansformation-!! %s form!!
-		clif_showscript(&sd->bl, msg);
 		status_change_end(&sd->bl, SC_MONSTER_TRANSFORM, INVALID_TIMER); // Clear previous
 		sc_start2(NULL, &sd->bl, SC_MONSTER_TRANSFORM, 100, mob_id, type, tick);
-		if (script_hasdata(st, 4))
+		if (type != SC_NONE)
 			sc_start4(NULL, &sd->bl, type, 100, val1, val2, val3, val4, tick);
 	}
 
@@ -20233,6 +20230,35 @@ BUILDIN_FUNC(getvar) {
 		script_pushstrcopy(st, conv_str_(st, data, sd));
 
 	push_val2(st->stack, C_NAME, reference_getuid(data), reference_getref(data));
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Display script message
+ * showscript "<message>"{,<GID>};
+ **/
+BUILDIN_FUNC(showscript) {
+	struct block_list *bl = NULL;
+	const char *msg = script_getstr(st,2);
+	int id = 0;
+
+	if (script_hasdata(st,3)) {
+		id = script_getnum(st,3);
+		bl = map_id2bl(id);
+	}
+	else {
+		bl = st->rid ? map_id2bl(st->rid) : map_id2bl(st->oid);
+	}
+
+	if (!bl) {
+		ShowError("buildin_showscript: Script not attached. (id=%, rid=%d, oid=%d)\n", id, st->rid, st->oid);
+		script_pushint(st,0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_showscript(bl, msg);
+
+	script_pushint(st,1);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -20790,6 +20816,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(npcshopupdate,"sii?"),
 	BUILDIN_DEF(getattachedrid,""),
 	BUILDIN_DEF(getvar,"vi"),
+	BUILDIN_DEF(showscript,"s?"),
 
 #include "../custom/script_def.inc"
 
