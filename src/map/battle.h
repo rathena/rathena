@@ -57,7 +57,7 @@ enum e_battle_check_target {
 /// Damage structure
 struct Damage {
 #ifdef RENEWAL
-	int statusAtk, statusAtk2, weaponAtk, weaponAtk2, equipAtk, equipAtk2, masteryAtk, masteryAtk2;
+	int64 statusAtk, statusAtk2, weaponAtk, weaponAtk2, equipAtk, equipAtk2, masteryAtk, masteryAtk2;
 #endif
 	int64 damage, /// Right hand damage
 		damage2; /// Left hand damage

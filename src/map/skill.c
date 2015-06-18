@@ -4145,8 +4145,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 	map_freeblock_lock();
 
-	switch(skill_id)
-	{
+	switch(skill_id) {
 	case MER_CRASH:
 	case SM_BASH:
 	case MS_BASH:
@@ -4216,7 +4215,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case TK_COUNTER:
 	case GS_CHAINACTION:
 	case GS_TRIPLEACTION:
+#ifndef RENEWAL
 	case GS_MAGICALBULLET:
+#endif
 	case GS_TRACKING:
 	case GS_PIERCINGSHOT:
 	case GS_RAPIDSHOWER:
@@ -4812,6 +4813,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case TF_THROWSTONE:
 #ifdef RENEWAL
 	case ASC_BREAKER:
+	case GS_MAGICALBULLET:
 #endif
 	case NPC_SMOKING:
 	case GS_FLING:

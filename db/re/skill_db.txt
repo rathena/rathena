@@ -727,7 +727,7 @@
 504,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,0x0,		GS_MADNESSCANCEL,Madness Canceller
 505,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,0x0,		GS_ADJUSTMENT,AdJustment
 506,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,0x0,		GS_INCREASING,Increasing Accuracy
-507,-9,6,1,8,0,0,1,1,no,0,0,0,weapon,0,0x0,		GS_MAGICALBULLET,Magical Bullet
+507,-9,6,1,8,0x20,0,1,1,no,0,0,0,misc,0,0x0,		GS_MAGICALBULLET,Magical Bullet
 508,-9,6,1,-1,0x1,0,1,1,no,0,0,0,weapon,0,0x0,	GS_CRACKER,Cracker
 509,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,		GS_SINGLEACTION,Single Action
 510,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,		GS_SNAKEEYE,Snake Eye
