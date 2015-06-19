@@ -70,6 +70,7 @@ static struct s_packet_keys *packet_keys[MAX_PACKET_VER + 1];
 static unsigned int clif_cryptKey[3]; // Used keys
 #endif
 static unsigned short clif_parse_cmd(int fd, struct map_session_data *sd);
+static bool clif_session_isValid(struct map_session_data *sd);
 
 /** Converts item type to display it on client if necessary.
 * @param nameid: Item ID
@@ -283,6 +284,12 @@ static inline unsigned char clif_bl_type(struct block_list *bl) {
 	}
 }
 #endif
+
+static bool clif_session_isValid(struct map_session_data *sd) {
+	if (sd != NULL && sd->packet_ver <= MAX_PACKET_VER && session_isActive(sd->fd))
+		return true;
+	return false;
+}
 
 /*==========================================
  * sub process of clif_send
@@ -1401,7 +1408,7 @@ void clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 	int htype;
 
 	nullpo_retv(hd);
-	if (!sd)
+	if (!clif_session_isValid(sd))
 		return;
 
 	status  = &hd->battle_status;
@@ -15730,7 +15737,7 @@ void clif_mercenary_updatestatus(struct map_session_data *sd, int type)
 	struct mercenary_data *md;
 	struct status_data *status;
 	int fd;
-	if( sd == NULL || (md = sd->md) == NULL )
+	if( !clif_session_isValid(sd) || (md = sd->md) == NULL )
 		return;
 
 	fd = sd->fd;
@@ -15800,7 +15807,7 @@ void clif_mercenary_info(struct map_session_data *sd)
 	struct status_data *status;
 	int atk;
 
-	if( sd == NULL || (md = sd->md) == NULL )
+	if( !clif_session_isValid(sd) || (md = sd->md) == NULL )
 		return;
 
 	fd = sd->fd;
@@ -16328,7 +16335,7 @@ void clif_elemental_updatestatus(struct map_session_data *sd, int type) {
 	struct status_data *status;
 	int fd;
 
-	if( sd == NULL || (ed = sd->ed) == NULL )
+	if( !clif_session_isValid(sd) || (ed = sd->ed) == NULL )
 		return;
 
 	fd = sd->fd;
@@ -16358,7 +16365,7 @@ void clif_elemental_info(struct map_session_data *sd) {
 	struct elemental_data *ed;
 	struct status_data *status;
 
-	if( sd == NULL || (ed = sd->ed) == NULL )
+	if( !clif_session_isValid(sd) || (ed = sd->ed) == NULL )
 		return;
 
 	fd = sd->fd;
