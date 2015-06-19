@@ -1071,34 +1071,32 @@ bool itemdb_parse_roulette_db(void)
 		return false;
 	}
 
-	for (i = 0; i < MAX_ROULETTE_LEVEL; i++) {
+	for (i = 0; i < MAX_ROULETTE_LEVEL; i++)
 		rd.items[i] = 0;
-	}
 
-	// process rows one by one
-	while (SQL_SUCCESS == Sql_NextRow(mmysql_handle)) {
-		char* str[4];
-		char* dummy = "";
-		int i;
+	for (i = 0; i < MAX_ROULETTE_LEVEL; i++) {
+		int k, limit = MAX_ROULETTE_COLUMNS - i;
 
-		for (i = 0; i < MAX_ROULETTE_LEVEL; i++) {
-			struct item_data * data = NULL;
+		for (k = 0; k < limit && SQL_SUCCESS == Sql_NextRow(mmysql_handle); k++) {
+			char* data;
+			unsigned short item_id, amount;
+			int level, flag;
 
-			Sql_GetData(mmysql_handle, i, &str[i], NULL);
+			Sql_GetData(mmysql_handle, 1, &data, NULL); level = atoi(data);
+			Sql_GetData(mmysql_handle, 2, &data, NULL); item_id = atoi(data);
+			Sql_GetData(mmysql_handle, 3, &data, NULL); amount = atoi(data);
+			Sql_GetData(mmysql_handle, 4, &data, NULL); flag = atoi(data);
 
-			if (str[i] == NULL)
-				str[i] = dummy; // get rid of NULL columns
-
-			if (!(data = itemdb_exists(atoi(str[2])))) {
-				ShowWarning("itemdb_parse_roulette_db: Unknown item_id '%hu' in level '%d'\n", atoi(str[2]), atoi(str[1]));
+			if (!itemdb_exists(item_id)) {
+				ShowWarning("itemdb_parse_roulette_db: Unknown item ID '%hu' in level '%d'\n", item_id, level);
 				continue;
 			}
-			if (atoi(str[3]) < 1) {
-				ShowWarning("itemdb_parse_roulette_db: Unsupported amount '%hu' for item_id '%hu' in level '%d'\n", atoi(str[3]), atoi(str[2]), atoi(str[1]));
+			if (amount < 1) {
+				ShowWarning("itemdb_parse_roulette_db: Unsupported amount '%hu' for item ID '%hu' in level '%d'\n", amount, item_id, level);
 				continue;
 			}
-			if (atoi(str[4]) < 0 || atoi(str[4]) > 1) {
-				ShowWarning("itemdb_parse_roueltte_db: Unsupported flag '%d' for item_id '%hu' in level '%d'\n", atoi(str[4]), atoi(str[2]), atoi(str[1]));
+			if (flag < 0 || flag > 1) {
+				ShowWarning("itemdb_parse_roulette_db: Unsupported flag '%d' for item ID '%hu' in level '%d'\n", flag, item_id, level);
 				continue;
 			}
 
@@ -1107,9 +1105,9 @@ bool itemdb_parse_roulette_db(void)
 			RECREATE(rd.qty[i], unsigned short, rd.items[i]);
 			RECREATE(rd.flag[i], int, rd.items[i]);
 
-			rd.nameid[i][j] = data->nameid;
-			rd.qty[i][j] = atoi(str[3]);
-			rd.flag[i][j] = atoi(str[4]);
+			rd.nameid[i][j] = item_id;
+			rd.qty[i][j] = amount;
+			rd.flag[i][j] = flag;
 
 			++count;
 		}
@@ -1131,7 +1129,7 @@ bool itemdb_parse_roulette_db(void)
 		}
 
 		/** this scenario = rd.items[i] < limit **/
-		ShowWarning("itemdb_parse_roulette_db: Level %d has %d items, %d are required. filling with apples\n", i + 1, rd.items[i], limit);
+		ShowWarning("itemdb_parse_roulette_db: Level %d has %d items, %d are required. Filling with Apples...\n", i + 1, rd.items[i], limit);
 
 		rd.items[i] = limit;
 		RECREATE(rd.nameid[i], unsigned short, rd.items[i]);
@@ -1144,7 +1142,7 @@ bool itemdb_parse_roulette_db(void)
 
 			rd.nameid[i][j] = ITEMID_APPLE;
 			rd.qty[i][j] = 1;
-			rd.flag[i][j] = 1;
+			rd.flag[i][j] = 0;
 		}
 	}
 
