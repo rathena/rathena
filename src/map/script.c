@@ -19831,8 +19831,6 @@ BUILDIN_FUNC(montransform) {
 		val4 = script_getnum(st, 8);
 
 	if (tick != 0) {
-		struct mob_db *monster =  mob_db(mob_id);
-
 		if (battle_config.mon_trans_disable_in_gvg && map_flag_gvg2(sd->bl.m)) {
 			clif_displaymessage(sd->fd, msg_txt(sd,731)); // Transforming into monster is not allowed in Guild Wars.
 			return SCRIPT_CMD_FAILURE;

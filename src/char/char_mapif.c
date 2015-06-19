@@ -807,11 +807,7 @@ int chmapif_parse_fwlog_changestatus(int fd){
 						break;
 					case 7: // changecharsex
 						answer = false;
-						WFIFOHEAD(login_fd,6);
-						WFIFOW(login_fd,0) = 0x2727;
-						WFIFOL(login_fd,2) = t_aid;
-						WFIFOL(login_fd,6) = t_cid;
-						WFIFOSET(login_fd,10);
+						chlogif_parse_ackchangecharsex(t_cid, sex);
 						break;
 				} //end switch operation
 			} //login is connected

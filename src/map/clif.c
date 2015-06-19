@@ -17768,15 +17768,15 @@ void clif_parse_RouletteOpen(int fd, struct map_session_data* sd)
 	}
 
 	WFIFOHEAD(fd,packet_len(0xa1a));
-	WBUFW(fd,0) = 0xa1a;
-	WBUFW(fd,2) = 0; // result
-	WBUFL(fd,3) = 0; // serial
-	WBUFW(fd,7) = sd->roulette.stage - 1;
-	WBUFW(fd,8) = (char)sd->roulette.prizeIdx;
-	WBUFW(fd,9) = -1; // TODO
-	WBUFL(fd,11) = sd->roulette_point.gold;
-	WBUFL(fd,15) = sd->roulette_point.silver;
-	WBUFL(fd,19) = sd->roulette_point.bronze;
+	WFIFOW(fd,0) = 0xa1a;
+	WFIFOW(fd,2) = 0; // result
+	WFIFOL(fd,3) = 0; // serial
+	WFIFOW(fd,7) = sd->roulette.stage - 1;
+	WFIFOW(fd,8) = (char)sd->roulette.prizeIdx;
+	WFIFOW(fd,9) = -1; // TODO
+	WFIFOL(fd,11) = sd->roulette_point.gold;
+	WFIFOL(fd,15) = sd->roulette_point.silver;
+	WFIFOL(fd,19) = sd->roulette_point.bronze;
 	WFIFOSET(fd,packet_len(0xa1a));
 }
 
@@ -17798,16 +17798,16 @@ void clif_parse_RouletteInfo(int fd, struct map_session_data* sd)
 	}
 
 	WFIFOHEAD(fd,len);
-	WBUFW(fd,0) = 0xa1c;
-	WBUFW(fd,2) = len;
-	WBUFL(fd,6) = 1; // serial
+	WFIFOW(fd,0) = 0xa1c;
+	WFIFOW(fd,2) = len;
+	WFIFOL(fd,6) = 1; // serial
 
 	for(i = 0; i < MAX_ROULETTE_LEVEL; i++) {
 		for(j = 0; j < MAX_ROULETTE_COLUMNS - i; j++) {
-			WBUFW(fd,8 + i * 8) = i;
-			WBUFW(fd,8 + i * 8 + 2) = j;
-			WBUFW(fd,8 + i * 8 + 4) = rd.nameid[i][j];
-			WBUFW(fd,8 + i * 8 + 6) = rd.qty[i][j];
+			WFIFOW(fd,8 + i * 8) = i;
+			WFIFOW(fd,8 + i * 8 + 2) = j;
+			WFIFOW(fd,8 + i * 8 + 4) = rd.nameid[i][j];
+			WFIFOW(fd,8 + i * 8 + 6) = rd.qty[i][j];
 			count++;
 		}
 	}
@@ -17909,7 +17909,7 @@ void clif_parse_RouletteRecvItem(int fd, struct map_session_data* sd)
 	}
 
 	WFIFOHEAD(fd,packet_len(0xa22));
-	WBUFW(fd,0) = 0xa22;
+	WFIFOW(fd,0) = 0xa22;
 
 	if (sd->roulette.claimPrize) {
 		struct item it;
@@ -17920,7 +17920,7 @@ void clif_parse_RouletteRecvItem(int fd, struct map_session_data* sd)
 
 		switch (pc_additem(sd, &it, rd.qty[sd->roulette.prizeStage][sd->roulette.prizeIdx], LOG_TYPE_OTHER)) {
 			case 0:
-				WBUFW(fd,2) = RECV_ITEM_SUCCESS;
+				WFIFOW(fd,2) = RECV_ITEM_SUCCESS;
 				sd->roulette.claimPrize = false;
 				sd->roulette.prizeStage = 0;
 				sd->roulette.prizeIdx = 0;
@@ -17929,20 +17929,20 @@ void clif_parse_RouletteRecvItem(int fd, struct map_session_data* sd)
 			case 1:
 			case 4:
 			case 5:
-				WBUFW(fd,2) = RECV_ITEM_OVERCOUNT;
+				WFIFOW(fd,2) = RECV_ITEM_OVERCOUNT;
 				break;
 			case 2:
-				WBUFW(fd,2) = RECV_ITEM_OVERWEIGHT;
+				WFIFOW(fd,2) = RECV_ITEM_OVERWEIGHT;
 				break;
 			default:
 			case 7:
-				WBUFW(fd,2) = RECV_ITEM_FAILED;
+				WFIFOW(fd,2) = RECV_ITEM_FAILED;
 				break;
 		}
 	} else
-		WBUFW(fd,2) = RECV_ITEM_FAILED;
+		WFIFOW(fd,2) = RECV_ITEM_FAILED;
 
-	WBUFL(fd,3) = 0; // additional item TODO
+	WFIFOL(fd,3) = 0; // additional item TODO
 	WFIFOSET(fd,packet_len(0xa22));
 	return;
 }
@@ -17962,14 +17962,14 @@ void clif_roulette_generate_ack(struct map_session_data *sd, unsigned char resul
 	nullpo_retv(sd);
 
 	WFIFOHEAD(fd,packet_len(0xa20));
-	WBUFW(fd,0) = 0xa20;
-	WBUFW(fd,2) = result;
-	WBUFW(fd,3) = stage;
-	WBUFW(fd,5) = prizeIdx;
-	WBUFW(fd,7) = bonusItemID;
-	WBUFL(fd,9) = sd->roulette_point.gold;
-	WBUFL(fd,13) = sd->roulette_point.silver;
-	WBUFL(fd,17) = sd->roulette_point.bronze;
+	WFIFOW(fd,0) = 0xa20;
+	WFIFOW(fd,2) = result;
+	WFIFOW(fd,3) = stage;
+	WFIFOW(fd,5) = prizeIdx;
+	WFIFOW(fd,7) = bonusItemID;
+	WFIFOL(fd,9) = sd->roulette_point.gold;
+	WFIFOL(fd,13) = sd->roulette_point.silver;
+	WFIFOL(fd,17) = sd->roulette_point.bronze;
 	WFIFOSET(fd,packet_len(0xa20));
 }
 

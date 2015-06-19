@@ -1089,16 +1089,16 @@ bool itemdb_parse_roulette_db(void)
 			if (str[i] == NULL)
 				str[i] = dummy; // get rid of NULL columns
 
-			if (!(data = itemdb_exists(atoi(str[1])))) {
-				ShowWarning("itemdb_parse_roulette_db: Unknown item_id '%hu' in level '%d'\n", atoi(str[1]), atoi(str[0]));
+			if (!(data = itemdb_exists(atoi(str[2])))) {
+				ShowWarning("itemdb_parse_roulette_db: Unknown item_id '%hu' in level '%d'\n", atoi(str[2]), atoi(str[1]));
 				continue;
 			}
-			if (atoi(str[2]) < 1) {
-				ShowWarning("itemdb_parse_roulette_db: Unsupported amount '%hu' for item_id '%hu' in level '%d'\n", atoi(str[2]), atoi(str[1]), atoi(str[0]));
+			if (atoi(str[3]) < 1) {
+				ShowWarning("itemdb_parse_roulette_db: Unsupported amount '%hu' for item_id '%hu' in level '%d'\n", atoi(str[3]), atoi(str[2]), atoi(str[1]));
 				continue;
 			}
-			if (atoi(str[3]) < 0 || atoi(str[3]) > 1) {
-				ShowWarning("itemdb_parse_roueltte_db: Unsupported flag '%d' for item_id '%hu' in level '%d'\n", atoi(str[3]), atoi(str[1]), atoi(str[0]));
+			if (atoi(str[4]) < 0 || atoi(str[4]) > 1) {
+				ShowWarning("itemdb_parse_roueltte_db: Unsupported flag '%d' for item_id '%hu' in level '%d'\n", atoi(str[4]), atoi(str[2]), atoi(str[1]));
 				continue;
 			}
 
@@ -1108,8 +1108,8 @@ bool itemdb_parse_roulette_db(void)
 			RECREATE(rd.flag[i], int, rd.items[i]);
 
 			rd.nameid[i][j] = data->nameid;
-			rd.qty[i][j] = atoi(str[2]);
-			rd.flag[i][j] = atoi(str[3]);
+			rd.qty[i][j] = atoi(str[3]);
+			rd.flag[i][j] = atoi(str[4]);
 
 			++count;
 		}
