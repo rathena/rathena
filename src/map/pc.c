@@ -1344,6 +1344,12 @@ void pc_reg_received(struct map_session_data *sd)
 	if (battle_config.feature_banking)
 		sd->bank_vault = pc_readreg2(sd, BANK_VAULT_VAR);
 
+	if (battle_config.feature_roulette) {
+		sd->roulette_point.bronze = pc_readreg2(sd, ROULETTE_BRONZE_VAR);
+		sd->roulette_point.silver = pc_readreg2(sd, ROULETTE_SILVER_VAR);
+		sd->roulette_point.gold = pc_readreg2(sd, ROULETTE_GOLD_VAR);
+	}
+
 	//SG map and mob read [Komurka]
 	for(i=0;i<MAX_PC_FEELHATE;i++) { //for now - someone need to make reading from txt/sql
 		uint16 j;
@@ -7602,7 +7608,10 @@ int pc_readparam(struct map_session_data* sd,int type)
 		case SP_CHARMOVE:		 val = sd->status.character_moves; break;
 		case SP_CHARRENAME:		 val = sd->status.rename; break;
 		case SP_CHARFONT:		 val = sd->status.font; break;
-		case SP_BANK_VAULT:			 val = sd->bank_vault; break;
+		case SP_BANK_VAULT:      val = sd->bank_vault; break;
+		case SP_ROULETTE_BRONZE: val = sd->roulette_point.bronze; break;
+		case SP_ROULETTE_SILVER: val = sd->roulette_point.silver; break;
+		case SP_ROULETTE_GOLD:   val = sd->roulette_point.gold; break;
 		case SP_CRITICAL:        val = sd->battle_status.cri/10; break;
 		case SP_ASPD:            val = (2000-sd->battle_status.amotion)/10; break;
 		case SP_BASE_ATK:	     val = sd->battle_status.batk; break;
@@ -7860,6 +7869,18 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 		log_zeny(sd, LOG_TYPE_BANK, sd, -(sd->bank_vault - cap_value(val, 0, MAX_BANK_ZENY)));
 		sd->bank_vault = cap_value(val, 0, MAX_BANK_ZENY);
 		pc_setreg2(sd, BANK_VAULT_VAR, sd->bank_vault);
+		return true;
+	case SP_ROULETTE_BRONZE:
+		sd->roulette_point.bronze = val;
+		pc_setreg2(sd, ROULETTE_BRONZE_VAR, sd->roulette_point.bronze);
+		return true;
+	case SP_ROULETTE_SILVER:
+		sd->roulette_point.silver = val;
+		pc_setreg2(sd, ROULETTE_SILVER_VAR, sd->roulette_point.silver);
+		return true;
+	case SP_ROULETTE_GOLD:
+		sd->roulette_point.gold = val;
+		pc_setreg2(sd, ROULETTE_GOLD_VAR, sd->roulette_point.gold);
 		return true;
 	default:
 		ShowError("pc_setparam: Attempted to set unknown parameter '%d'.\n", type);

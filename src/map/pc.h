@@ -31,6 +31,9 @@
 #define MAX_SPIRITCHARM 10 /// Max spirit charms
 
 #define BANK_VAULT_VAR "#BANKVAULT"
+#define ROULETTE_BRONZE_VAR "RouletteBronze"
+#define ROULETTE_SILVER_VAR "RouletteSilver"
+#define ROULETTE_GOLD_VAR "RouletteGold"
 
 //Update this max as necessary. 55 is the value needed for Super Baby currently
 //Raised to 84 since Expanded Super Novice needs it.
@@ -640,6 +643,17 @@ struct map_session_data {
 #ifdef PACKET_OBFUSCATION
 	unsigned int cryptKey; ///< Packet obfuscation key to be used for the next received packet
 #endif
+
+	struct {
+		int bronze, silver, gold; ///< Roulette Coin
+	} roulette_point;
+
+	struct {
+		short stage;
+		short prizeIdx;
+		short prizeStage;
+		bool claimPrize;
+	} roulette;
 };
 
 struct eri *pc_sc_display_ers; /// Player's SC display table

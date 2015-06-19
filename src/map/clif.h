@@ -33,9 +33,9 @@ struct party_booking_ad_info;
 #include <stdarg.h>
 
 enum { // packet DB
-	MIN_PACKET_DB  = 0x0064,
-	MAX_PACKET_DB  = 0xf00,
-	MAX_PACKET_VER = 46,
+	MIN_PACKET_DB  = 0x064,
+	MAX_PACKET_DB  = 0xAFF,
+	MAX_PACKET_VER = 51,
 	MAX_PACKET_POS = 20,
 };
 
@@ -73,11 +73,40 @@ enum e_BANKING_DEPOSIT_ACK {
 	BDA_NO_MONEY = 0x2,
 	BDA_OVERFLOW = 0x3,
 };
- 
+
 enum e_BANKING_WITHDRAW_ACK {
 	BWA_SUCCESS       = 0x0,
 	BWA_NO_MONEY      = 0x1,
 	BWA_UNKNOWN_ERROR = 0x2,
+};
+
+enum RECV_ROULETTE_ITEM_REQ {
+	RECV_ITEM_SUCCESS    = 0x0,
+	RECV_ITEM_FAILED     = 0x1,
+	RECV_ITEM_OVERCOUNT  = 0x2,
+	RECV_ITEM_OVERWEIGHT = 0x3,
+};
+
+enum RECV_ROULETTE_ITEM_ACK {
+	RECV_ITEM_NORMAL =  0x0,
+	RECV_ITEM_LOSING =  0x1,
+};
+
+enum GENERATE_ROULETTE_ACK {
+	GENERATE_ROULETTE_SUCCESS         = 0x0,
+	GENERATE_ROULETTE_FAILED          = 0x1,
+	GENERATE_ROULETTE_NO_ENOUGH_POINT = 0x2,
+	GENERATE_ROULETTE_LOSING          = 0x3,
+};
+
+enum OPEN_ROULETTE_ACK {
+	OPEN_ROULETTE_SUCCESS = 0x0,
+	OPEN_ROULETTE_FAILED  = 0x1,
+};
+
+enum CLOSE_ROULETTE_ACK {
+	CLOSE_ROULETTE_SUCCESS = 0x0,
+	CLOSE_ROULETTE_FAILED  = 0x1,
 };
 
 // packet_db[SERVER] is reserved for server use
@@ -861,6 +890,14 @@ void clif_cashshop_open( struct map_session_data* sd );
 
 void clif_display_pinfo(struct map_session_data *sd, int type);
 
+/// Roulette
+void clif_roulette_generate_ack(struct map_session_data *sd, unsigned char result, short stage, short prizeIdx, short bonusItemID);
+void clif_parse_RouletteOpen(int fd, struct map_session_data *sd);
+void clif_parse_RouletteInfo(int fd, struct map_session_data *sd);
+void clif_parse_RouletteClose(int fd, struct map_session_data *sd);
+void clif_parse_RouletteGenerate(int fd, struct map_session_data *sd);
+void clif_parse_RouletteRecvItem(int fd, struct map_session_data *sd);
+
 /**
  * 3CeAM
  **/
@@ -892,6 +929,7 @@ void clif_monster_hp_bar( struct mob_data* md, int fd );
  * Color Table
  **/
 enum clif_colors {
+	COLOR_DEFAULT,
 	COLOR_RED,
 	COLOR_WHITE,
 	COLOR_YELLOW,

@@ -929,6 +929,7 @@ static int itemdb_combo_split_atoi (char *str, int *val) {
 
 	return i;
 }
+
 /**
  * <combo{:combo{:combo:{..}}}>,<{ script }>
  **/
@@ -1056,7 +1057,101 @@ static void itemdb_read_combos(const char* basedir, bool silent) {
 	return;
 }
 
+/**
+ * Process Roulette items
+ */
+bool itemdb_parse_roulette_db(void)
+{
+	int i, j;
+	uint32 count = 0;
 
+	// retrieve all rows from the item database
+	if (SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", db_roulette_table)) {
+		Sql_ShowDebug(mmysql_handle);
+		return false;
+	}
+
+	for (i = 0; i < MAX_ROULETTE_LEVEL; i++) {
+		rd.items[i] = 0;
+	}
+
+	// process rows one by one
+	while (SQL_SUCCESS == Sql_NextRow(mmysql_handle)) {
+		char* str[4];
+		char* dummy = "";
+		int i;
+
+		for (i = 0; i < MAX_ROULETTE_LEVEL; i++) {
+			struct item_data * data = NULL;
+
+			Sql_GetData(mmysql_handle, i, &str[i], NULL);
+
+			if (str[i] == NULL)
+				str[i] = dummy; // get rid of NULL columns
+
+			if (!(data = itemdb_exists(atoi(str[1])))) {
+				ShowWarning("itemdb_parse_roulette_db: Unknown item_id '%hu' in level '%d'\n", atoi(str[1]), atoi(str[0]));
+				continue;
+			}
+			if (atoi(str[2]) < 1) {
+				ShowWarning("itemdb_parse_roulette_db: Unsupported amount '%hu' for item_id '%hu' in level '%d'\n", atoi(str[2]), atoi(str[1]), atoi(str[0]));
+				continue;
+			}
+			if (atoi(str[3]) < 0 || atoi(str[3]) > 1) {
+				ShowWarning("itemdb_parse_roueltte_db: Unsupported flag '%d' for item_id '%hu' in level '%d'\n", atoi(str[3]), atoi(str[1]), atoi(str[0]));
+				continue;
+			}
+
+			j = rd.items[i];
+			RECREATE(rd.nameid[i], unsigned short, ++rd.items[i]);
+			RECREATE(rd.qty[i], unsigned short, rd.items[i]);
+			RECREATE(rd.flag[i], int, rd.items[i]);
+
+			rd.nameid[i][j] = data->nameid;
+			rd.qty[i][j] = atoi(str[2]);
+			rd.flag[i][j] = atoi(str[3]);
+
+			++count;
+		}
+	}
+
+	// free the query result
+	Sql_FreeResult(mmysql_handle);
+
+	for (i = 0; i < MAX_ROULETTE_LEVEL; i++) {
+		int limit = MAX_ROULETTE_COLUMNS - i;
+
+		if (rd.items[i] == limit)
+			continue;
+
+		if (rd.items[i] > limit) {
+			ShowWarning("itemdb_parse_roulette_db: level %d has %d items, only %d supported, capping...\n", i + 1, rd.items[i], limit);
+			rd.items[i] = limit;
+			continue;
+		}
+
+		/** this scenario = rd.items[i] < limit **/
+		ShowWarning("itemdb_parse_roulette_db: Level %d has %d items, %d are required. filling with apples\n", i + 1, rd.items[i], limit);
+
+		rd.items[i] = limit;
+		RECREATE(rd.nameid[i], unsigned short, rd.items[i]);
+		RECREATE(rd.qty[i], unsigned short, rd.items[i]);
+		RECREATE(rd.flag[i], int, rd.items[i]);
+
+		for (j = 0; j < MAX_ROULETTE_COLUMNS - i; j++) {
+			if (rd.qty[i][j])
+				continue;
+
+			rd.nameid[i][j] = ITEMID_APPLE;
+			rd.qty[i][j] = 1;
+			rd.flag[i][j] = 1;
+		}
+	}
+
+	ShowStatus("Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, db_roulette_table);
+
+	return true;
+}
 
 /*======================================
  * Applies gender restrictions according to settings. [Skotlex]
@@ -1074,6 +1169,7 @@ static char itemdb_gendercheck(struct item_data *id)
 
 	return (battle_config.ignore_items_gender) ? 2 : id->sex;
 }
+
 /**
  * [RRInd]
  * For backwards compatibility, in Renewal mode, MATK from weapons comes from the atk slot
@@ -1579,6 +1675,9 @@ void itemdb_reload(void) {
 	itemdb_read();
 	cashshop_reloaddb();
 
+	if (!itemdb_parse_roulette_db())
+		battle_config.feature_roulette = 0;
+
 	//Epoque's awesome @reloaditemdb fix - thanks! [Ind]
 	//- Fixes the need of a @reloadmobdb after a @reloaditemdb to re-link monster drop data
 	for( i = 0; i < MAX_MOB_DB; i++ ) {
@@ -1649,4 +1748,7 @@ void do_init_itemdb(void) {
 	itemdb_group = uidb_alloc(DB_OPT_BASE);
 	itemdb_create_dummy();
 	itemdb_read();
+
+	if (!itemdb_parse_roulette_db())
+		battle_config.feature_roulette = 0;
 }

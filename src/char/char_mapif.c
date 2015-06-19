@@ -717,7 +717,7 @@ int chmapif_parse_reqnewemail(int fd){
 
 /**
  * Forward a change of status for account to login-serv
- * @param fd: wich fd to parse from
+ * @param fd: which fd to parse from
  * @return : 0 not enough data received, 1 success
  */
 int chmapif_parse_fwlog_changestatus(int fd){
@@ -730,14 +730,19 @@ int chmapif_parse_fwlog_changestatus(int fd){
 
 		int aid = RFIFOL(fd,2); // account_id of who ask (-1 if server itself made this request)
 		const char* name = (char*)RFIFOP(fd,6); // name of the target character
-		int operation = RFIFOW(fd,30); // type of operation: 1-block, 2-ban, 3-unblock, 4-unban, 5-changesex, 6-vip
-		int32 timediff = RFIFOL(fd,32);
-		int val1 = RFIFOL(fd,36);
-		//int val2 = RFIFOL(fd,40); // Since BankVault is moved out, this value is unused for now
+		int operation = RFIFOW(fd,30); // type of operation: 1-block, 2-ban, 3-unblock, 4-unban, 5-changesex, 6-vip, 7-changecharsex
+		int32 timediff = 0;
+		int val1 = 0, sex = SEX_MALE;
+
+		if (operation == 2) {
+			timediff = RFIFOL(fd, 32);
+			val1 = RFIFOL(fd, 36);
+		} else if (operation == 7)
+			sex = RFIFOB(fd, 32);
 		RFIFOSKIP(fd,44);
 
 		Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id` FROM `%s` WHERE `name` = '%s'", schema_config.char_db, esc_name) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`, `char_id` FROM `%s` WHERE `name` = '%s'", schema_config.char_db, esc_name) )
 			Sql_ShowDebug(sql_handle);
 		else if( Sql_NumRows(sql_handle) == 0 ) {
 			result = 1; // 1-player not found
@@ -746,10 +751,12 @@ int chmapif_parse_fwlog_changestatus(int fd){
 			Sql_ShowDebug(sql_handle);
 			result = 1;
 		} else {
-			int t_aid; //targit account id
+			int t_aid; // target account id
+			int t_cid; // target char id
 			char* data;
 
 			Sql_GetData(sql_handle, 0, &data, NULL); t_aid = atoi(data);
+			Sql_GetData(sql_handle, 0, &data, NULL); t_cid = atoi(data);
 			Sql_FreeResult(sql_handle);
 
 			if(!chlogif_isconnected())
@@ -794,16 +801,24 @@ int chmapif_parse_fwlog_changestatus(int fd){
 						WFIFOL(login_fd,2) = t_aid;
 						WFIFOSET(login_fd,6);
 						break;
-					case 6:
+					case 6: // vip
 						answer = (val1&4); // vip_req val1=type, &1 login send return, &2 update timestamp, &4 map send answer
 						chlogif_reqvipdata(t_aid, val1, timediff, fd);
+						break;
+					case 7: // changecharsex
+						answer = false;
+						WFIFOHEAD(login_fd,6);
+						WFIFOW(login_fd,0) = 0x2727;
+						WFIFOL(login_fd,2) = t_aid;
+						WFIFOL(login_fd,6) = t_cid;
+						WFIFOSET(login_fd,10);
 						break;
 				} //end switch operation
 			} //login is connected
 		}
 
 		// send answer if a player asks, not if the server asks
-		if( aid != -1 && answer) { // Don't send answer for changesex
+		if( aid != -1 && answer) { // Don't send answer for changesex/changecharsex
 			WFIFOHEAD(fd,34);
 			WFIFOW(fd, 0) = 0x2b0f;
 			WFIFOL(fd, 2) = aid;
@@ -817,7 +832,7 @@ int chmapif_parse_fwlog_changestatus(int fd){
 }
 
 /**
- * Transmit the acknolegement of divorce of partner_id1 and partner_id2
+ * Transmit the acknowledgement of divorce of partner_id1 and partner_id2
  * Update the list associated and transmit the new ranking
  * @param partner_id1: char id1 divorced
  * @param partner_id2: char id2 divorced
@@ -1047,7 +1062,8 @@ int chmapif_parse_reqauth(int fd, int id){
             node->ip == ip*/ )
         {// auth ok
             uint16 mmo_charstatus_len = sizeof(struct mmo_charstatus) + 25;
-            cd->sex = sex;
+			if (cd->sex == 99)
+				cd->sex = sex;
 
             WFIFOHEAD(fd,mmo_charstatus_len);
             WFIFOW(fd,0) = 0x2afd;

@@ -219,7 +219,7 @@ extern struct fame_list chemist_fame_list[MAX_FAME_LIST];
 extern struct fame_list taekwon_fame_list[MAX_FAME_LIST];
 
 #define DEFAULT_AUTOSAVE_INTERVAL 300*1000
-#define MAX_CHAR_BUF 144 //Max size (for WFIFOHEAD calls)
+#define MAX_CHAR_BUF 150 //Max size (for WFIFOHEAD calls)
 
 int char_search_mapserver(unsigned short map, uint32 ip, uint16 port);
 int char_lan_subnetcheck(uint32 ip);
@@ -233,6 +233,7 @@ void char_set_all_offline(int id);
 void char_disconnect_player(uint32 account_id);
 int char_chardb_waiting_disconnect(int tid, unsigned int tick, int id, intptr_t data);
 
+int char_mmo_gender(const struct char_session_data *sd, const struct mmo_charstatus *p, char sex);
 int char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p);
 int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p);
 int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_everything);

@@ -340,76 +340,79 @@ int chlogif_parse_keepalive(int fd, struct char_session_data* sd){
 	return 1;
 }
 
-int chlogif_parse_ackchangesex(int fd, struct char_session_data* sd){
+/**
+ * Performs the necessary operations when changing a character's sex, such as
+ * correcting the job class and unequipping items, and propagating the
+ * information to the guild data.
+ *
+ * @param sex      The new sex (SEX_MALE or SEX_FEMALE).
+ * @param acc      The character's account ID.
+ * @param char_id  The character ID.
+ * @param class_   The character's current job class.
+ * @param guild_id The character's guild ID.
+ */
+void chlogif_parse_change_sex_sub(int sex, int acc, int char_id, int class_, int guild_id)
+{
+	// job modification
+	if (class_ == JOB_BARD || class_ == JOB_DANCER)
+		class_ = (sex == SEX_MALE ? JOB_BARD : JOB_DANCER);
+	else if (class_ == JOB_CLOWN || class_ == JOB_GYPSY)
+		class_ = (sex == SEX_MALE ? JOB_CLOWN : JOB_GYPSY);
+	else if (class_ == JOB_BABY_BARD || class_ == JOB_BABY_DANCER)
+		class_ = (sex == SEX_MALE ? JOB_BABY_BARD : JOB_BABY_DANCER);
+	else if (class_ == JOB_MINSTREL || class_ == JOB_WANDERER)
+		class_ = (sex == SEX_MALE ? JOB_MINSTREL : JOB_WANDERER);
+	else if (class_ == JOB_MINSTREL_T || class_ == JOB_WANDERER_T)
+		class_ = (sex == SEX_MALE ? JOB_MINSTREL_T : JOB_WANDERER_T);
+	else if (class_ == JOB_BABY_MINSTREL || class_ == JOB_BABY_WANDERER)
+		class_ = (sex == SEX_MALE ? JOB_BABY_MINSTREL : JOB_BABY_WANDERER);
+	else if (class_ == JOB_KAGEROU || class_ == JOB_OBORO)
+		class_ = (sex == SEX_MALE ? JOB_KAGEROU : JOB_OBORO);
+
+	if (SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `equip` = '0' WHERE `char_id` = '%d'", schema_config.inventory_db, char_id))
+		Sql_ShowDebug(sql_handle);
+
+	if (SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `class` = '%d', `weapon` = '0', `shield` = '0', `head_top` = '0', `head_mid` = '0', `head_bottom` = '0' WHERE `char_id` = '%d'", schema_config.char_db, class_, char_id))
+		Sql_ShowDebug(sql_handle);
+	if (guild_id) // If there is a guild, update the guild_member data [Skotlex]
+		inter_guild_sex_changed(guild_id, acc, char_id, sex);
+}
+
+int chlogif_parse_ackchangesex(int fd, struct char_session_data* sd)
+{
 	if (RFIFOREST(fd) < 7)
 		return 0;
 	{
 		unsigned char buf[7];
-
 		int acc = RFIFOL(fd,2);
 		int sex = RFIFOB(fd,6);
 		RFIFOSKIP(fd,7);
 
-		if( acc > 0 )
-		{// TODO: Is this even possible?
-			uint32 char_id[MAX_CHARS];
-			int class_[MAX_CHARS];
-			int guild_id[MAX_CHARS];
-			unsigned char num, i;
-			char* data;
-			DBMap*  auth_db = char_get_authdb();
-
+		if (acc > 0) { // TODO: Is this even possible?
+			unsigned char i;
+			int char_id = 0, class_ = 0, guild_id = 0;
+			DBMap* auth_db = char_get_authdb();
 			struct auth_node* node = (struct auth_node*)idb_get(auth_db, acc);
-			if( node != NULL )
+			SqlStmt *stmt;
+
+			if (node != NULL)
 				node->sex = sex;
 
 			// get characters
-			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`class`,`guild_id` FROM `%s` WHERE `account_id` = '%d'", schema_config.char_db, acc) )
-				Sql_ShowDebug(sql_handle);
-			for( i = 0; i < MAX_CHARS && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
-			{
-				Sql_GetData(sql_handle, 0, &data, NULL); char_id[i] = atoi(data);
-				Sql_GetData(sql_handle, 1, &data, NULL); class_[i] = atoi(data);
-				Sql_GetData(sql_handle, 2, &data, NULL); guild_id[i] = atoi(data);
+			stmt = SqlStmt_Malloc(sql_handle);
+			if (SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `char_id`, `class`, `guild_id` FROM `%s` WHERE `account_id` = '%d'", schema_config.char_db, acc) || SqlStmt_Execute(stmt)) {
+				SqlStmt_ShowDebug(stmt);
+				SqlStmt_Free(stmt);
 			}
-			num = i;
-			for( i = 0; i < num; ++i )
-			{
-				if( class_[i] == JOB_BARD || class_[i] == JOB_DANCER ||
-					class_[i] == JOB_CLOWN || class_[i] == JOB_GYPSY ||
-					class_[i] == JOB_BABY_BARD || class_[i] == JOB_BABY_DANCER ||
-					class_[i] == JOB_MINSTREL || class_[i] == JOB_WANDERER ||
-					class_[i] == JOB_MINSTREL_T || class_[i] == JOB_WANDERER_T ||
-					class_[i] == JOB_BABY_MINSTREL || class_[i] == JOB_BABY_WANDERER ||
-					class_[i] == JOB_KAGEROU || class_[i] == JOB_OBORO )
-				{
-					// job modification
-					if( class_[i] == JOB_BARD || class_[i] == JOB_DANCER )
-						class_[i] = (sex ? JOB_BARD : JOB_DANCER);
-					else if( class_[i] == JOB_CLOWN || class_[i] == JOB_GYPSY )
-						class_[i] = (sex ? JOB_CLOWN : JOB_GYPSY);
-					else if( class_[i] == JOB_BABY_BARD || class_[i] == JOB_BABY_DANCER )
-						class_[i] = (sex ? JOB_BABY_BARD : JOB_BABY_DANCER);
-					else if( class_[i] == JOB_MINSTREL || class_[i] == JOB_WANDERER )
-						class_[i] = (sex ? JOB_MINSTREL : JOB_WANDERER);
-					else if( class_[i] == JOB_MINSTREL_T || class_[i] == JOB_WANDERER_T )
-						class_[i] = (sex ? JOB_MINSTREL_T : JOB_WANDERER_T);
-					else if( class_[i] == JOB_BABY_MINSTREL || class_[i] == JOB_BABY_WANDERER )
-						class_[i] = (sex ? JOB_BABY_MINSTREL : JOB_BABY_WANDERER);
-					else if( class_[i] == JOB_KAGEROU || class_[i] == JOB_OBORO )
-						class_[i] = (sex ? JOB_KAGEROU : JOB_OBORO);
-				}
 
-				if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `class`='%d', `weapon`='0', `shield`='0', `head_top`='0', `head_mid`='0', `head_bottom`='0' WHERE `char_id`='%d'", schema_config.char_db, class_[i], char_id[i]) )
-					Sql_ShowDebug(sql_handle);
+			SqlStmt_BindColumn(stmt, 0, SQLDT_INT,   &char_id,  0, NULL, NULL);
+			SqlStmt_BindColumn(stmt, 1, SQLDT_SHORT, &class_,   0, NULL, NULL);
+			SqlStmt_BindColumn(stmt, 2, SQLDT_INT,   &guild_id, 0, NULL, NULL);
 
-				if( guild_id[i] )// If there is a guild, update the guild_member data [Skotlex]
-					inter_guild_sex_changed(guild_id[i], acc, char_id[i], sex);
+			for (i = 0; i < MAX_CHARS && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i) {
+				chlogif_parse_change_sex_sub(sex, acc, char_id, class_, guild_id);
 			}
-			Sql_FreeResult(sql_handle);
-
-			// disconnect player if online on char-server
-			char_disconnect_player(acc);
+			SqlStmt_Free(stmt);
 		}
 
 		// notify all mapservers about this change
@@ -419,6 +422,54 @@ int chlogif_parse_ackchangesex(int fd, struct char_session_data* sd){
 		chmapif_sendall(buf, 7);
 	}
 	return 1;
+}
+
+/**
+ * Changes a character's sex.
+ * The information is updated on database, and the character is kicked if it
+ * currently is online.
+ *
+ * @param char_id The character's ID.
+ * @param sex     The new sex.
+ * @retval 0 in case of success.
+ * @retval 1 in case of failure.
+ */
+int chlogif_parse_ackchangecharsex(int char_id, int sex)
+{
+	int class_ = 0, guild_id = 0, account_id = 0;
+	unsigned char buf[7];
+	char *data;
+
+	// get character data
+	if (SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`class`,`guild_id` FROM `%s` WHERE `char_id` = '%d'", schema_config.char_db, char_id)) {
+		Sql_ShowDebug(sql_handle);
+		return 1;
+	}
+	if (Sql_NumRows(sql_handle) != 1 || SQL_ERROR == Sql_NextRow(sql_handle)) {
+		Sql_FreeResult(sql_handle);
+		return 1;
+	}
+
+	Sql_GetData(sql_handle, 0, &data, NULL); account_id = atoi(data);
+	Sql_GetData(sql_handle, 1, &data, NULL); class_ = atoi(data);
+	Sql_GetData(sql_handle, 2, &data, NULL); guild_id = atoi(data);
+	Sql_FreeResult(sql_handle);
+
+	if (SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `sex` = '%c' WHERE `char_id` = '%d'", schema_config.char_db, sex == SEX_MALE ? 'M' : 'F', char_id)) {
+		Sql_ShowDebug(sql_handle);
+		return 1;
+	}
+	chlogif_parse_change_sex_sub(sex, account_id, char_id, class_, guild_id);
+
+	// disconnect player if online on char-server
+	char_disconnect_player(account_id);
+
+	// notify all mapservers about this change
+	WBUFW(buf,0) = 0x2b0d;
+	WBUFL(buf,2) = account_id;
+	WBUFB(buf,6) = sex;
+	chmapif_sendall(buf, 7);
+	return 0;
 }
 
 int chlogif_parse_ackacc2req(int fd, struct char_session_data* sd){

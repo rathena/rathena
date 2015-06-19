@@ -663,6 +663,9 @@ void clif_authok(struct map_session_data *sd)
 #if PACKETVER >= 20080102
 	WFIFOW(fd,11) = sd->status.font;
 #endif
+#if PACKETVER >= 20141016
+	WFIFOB(fd,13) = sd->status.sex;
+#endif
 	WFIFOSET(fd,packet_len(cmd));
 }
 
@@ -5751,6 +5754,11 @@ void clif_displaymessage(const int fd, const char* mes)
 	if (fd == 0)
 		;
 	else {
+#if PACKETVER == 20141022
+		/** for some reason game client crashes depending on message pattern (only for this packet) **/
+		/** so we redirect to ZC_NPC_CHAT **/
+		clif_colormes(fd, color_table[COLOR_DEFAULT], mes);
+#else
 		char *message, *line;
 
 		message = aStrdup(mes);
@@ -5769,6 +5777,7 @@ void clif_displaymessage(const int fd, const char* mes)
 			line = strtok(NULL, "\n");
 		}
 		aFree(message);
+#endif
 	}
 }
 
@@ -6833,6 +6842,14 @@ void clif_openvending(struct map_session_data* sd, int id, struct s_vending* ven
 		clif_addcards(WFIFOP(fd,22+i*22), &sd->status.cart[index]);
 	}
 	WFIFOSET(fd,WFIFOW(fd,2));
+
+#if PACKETVER >= 20141022
+	// Should go elsewhere perhaps? It has to be bundled with this however.
+	WFIFOHEAD(fd, 3);
+	WFIFOW(fd, 0) = 0xa28;
+	WFIFOB(fd, 2) = 0; // 1 is failure. Our current responses to failure are working so not yet implemented.
+	WFIFOSET(fd, 3);
+#endif
 }
 
 
@@ -10114,18 +10131,22 @@ void clif_hotkeys_send(struct map_session_data *sd) {
 #ifdef HOTKEY_SAVING
 	const int fd = sd->fd;
 	int i;
+	int offset = 2;
 #if PACKETVER < 20090603
 	const int cmd = 0x2b9;
-#else
+#elif PACKETVER < 20141022
 	const int cmd = 0x7d9;
+#else
+	const int cmd = 0xa00;
+	offset = 3;
 #endif
 	if (!fd) return;
-	WFIFOHEAD(fd, 2+MAX_HOTKEYS*7);
+	WFIFOHEAD(fd, offset + MAX_HOTKEYS * 7);
 	WFIFOW(fd, 0) = cmd;
 	for(i = 0; i < MAX_HOTKEYS; i++) {
-		WFIFOB(fd, 2 + 0 + i * 7) = sd->status.hotkeys[i].type; // type: 0: item, 1: skill
-		WFIFOL(fd, 2 + 1 + i * 7) = sd->status.hotkeys[i].id; // item or skill ID
-		WFIFOW(fd, 2 + 5 + i * 7) = sd->status.hotkeys[i].lv; // skill level
+		WFIFOB(fd, offset + 0 + i * 7) = sd->status.hotkeys[i].type; // type: 0: item, 1: skill
+		WFIFOL(fd, offset + 1 + i * 7) = sd->status.hotkeys[i].id; // item or skill ID
+		WFIFOW(fd, offset + 5 + i * 7) = sd->status.hotkeys[i].lv; // item qty or skill level
 	}
 	WFIFOSET(fd, packet_len(cmd));
 #endif
@@ -17729,6 +17750,229 @@ void DumpUnknown(int fd,TBL_PC *sd,int cmd,int packet_len)
 }
 #endif
 
+/// Roulette System
+/// Author: Yommy
+
+/**
+ * Opens Roulette window
+ * @param fd
+ * @param sd
+ */
+void clif_parse_RouletteOpen(int fd, struct map_session_data* sd)
+{
+	nullpo_retv(sd);
+
+	if (!battle_config.feature_roulette) {
+		clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,1497)); //Roulette is disabled
+		return;
+	}
+
+	WFIFOHEAD(fd,packet_len(0xa1a));
+	WBUFW(fd,0) = 0xa1a;
+	WBUFW(fd,2) = 0; // result
+	WBUFL(fd,3) = 0; // serial
+	WBUFW(fd,7) = sd->roulette.stage - 1;
+	WBUFW(fd,8) = (char)sd->roulette.prizeIdx;
+	WBUFW(fd,9) = -1; // TODO
+	WBUFL(fd,11) = sd->roulette_point.gold;
+	WBUFL(fd,15) = sd->roulette_point.silver;
+	WBUFL(fd,19) = sd->roulette_point.bronze;
+	WFIFOSET(fd,packet_len(0xa1a));
+}
+
+/**
+ * Generates information to be displayed
+ * @param fd
+ * @param sd
+ */
+void clif_parse_RouletteInfo(int fd, struct map_session_data* sd)
+{
+	unsigned short i, j, count = 0;
+	int len = 8 + (42 * 8);
+
+	nullpo_retv(sd);
+
+	if (!battle_config.feature_roulette) {
+		clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,1497)); //Roulette is disabled
+		return;
+	}
+
+	WFIFOHEAD(fd,len);
+	WBUFW(fd,0) = 0xa1c;
+	WBUFW(fd,2) = len;
+	WBUFL(fd,6) = 1; // serial
+
+	for(i = 0; i < MAX_ROULETTE_LEVEL; i++) {
+		for(j = 0; j < MAX_ROULETTE_COLUMNS - i; j++) {
+			WBUFW(fd,8 + i * 8) = i;
+			WBUFW(fd,8 + i * 8 + 2) = j;
+			WBUFW(fd,8 + i * 8 + 4) = rd.nameid[i][j];
+			WBUFW(fd,8 + i * 8 + 6) = rd.qty[i][j];
+			count++;
+		}
+	}
+
+	WFIFOSET(fd,len);
+	return;
+}
+
+/**
+ * Closes Roulette window
+ * @param fd
+ * @param sd
+ */
+void clif_parse_RouletteClose(int fd, struct map_session_data* sd)
+{
+	nullpo_retv(sd);
+
+	if (!battle_config.feature_roulette) {
+		clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,1497)); //Roulette is disabled
+		return;
+	}
+
+	/** What do we need this for? (other than state tracking), game client closes the window without our response. **/
+	return;
+}
+
+/**
+ * Process the stage and attempt to give a prize
+ * @param fd
+ * @param sd
+ */
+void clif_parse_RouletteGenerate(int fd, struct map_session_data* sd)
+{
+	unsigned char result = GENERATE_ROULETTE_SUCCESS;
+	short stage = sd->roulette.stage;
+
+	nullpo_retv(sd);
+
+	if (!battle_config.feature_roulette) {
+		clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,1497)); //Roulette is disabled
+		return;
+	}
+
+	if (sd->roulette.stage >= MAX_ROULETTE_LEVEL)
+		stage = sd->roulette.stage = 0;
+
+	if (!stage) {
+		if (sd->roulette_point.bronze <= 0 && sd->roulette_point.silver < 10 && sd->roulette_point.gold < 10)
+			result = GENERATE_ROULETTE_NO_ENOUGH_POINT;
+	}
+
+	if (result == GENERATE_ROULETTE_SUCCESS) {
+		if (!stage) {
+			if (sd->roulette_point.bronze > 0) {
+				sd->roulette_point.bronze -= 1;
+			} else if (sd->roulette_point.silver > 9) {
+				sd->roulette_point.silver -= 10;
+				stage = sd->roulette.stage = 2;
+			} else if (sd->roulette_point.gold > 9) {
+				sd->roulette_point.gold -= 10;
+				stage = sd->roulette.stage = 4;
+			}
+		}
+
+		sd->roulette.prizeStage = stage;
+		sd->roulette.prizeIdx = rnd()%rd.items[stage];
+		if (sd->roulette.prizeIdx == 0) {
+			struct item it;
+			memset(&it, 0, sizeof(it));
+
+			it.nameid = rd.nameid[stage][0];
+			it.identify = 1;
+
+			pc_additem(sd, &it, rd.qty[stage][0], LOG_TYPE_ROULETTE);
+
+			sd->roulette.stage = 0;
+			result = GENERATE_ROULETTE_LOSING;
+		} else
+			sd->roulette.claimPrize = true;
+	}
+
+	clif_roulette_generate_ack(sd,result,stage,sd->roulette.prizeIdx,0);
+	if (result == GENERATE_ROULETTE_SUCCESS)
+		sd->roulette.stage++;
+}
+
+/**
+ * Request to cash in prize
+ * @param fd
+ * @param sd
+ */
+void clif_parse_RouletteRecvItem(int fd, struct map_session_data* sd)
+{
+	nullpo_retv(sd);
+
+	if (!battle_config.feature_roulette) {
+		clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,1497)); //Roulette is disabled
+		return;
+	}
+
+	WFIFOHEAD(fd,packet_len(0xa22));
+	WBUFW(fd,0) = 0xa22;
+
+	if (sd->roulette.claimPrize) {
+		struct item it;
+		memset(&it, 0, sizeof(it));
+
+		it.nameid = rd.nameid[sd->roulette.prizeStage][sd->roulette.prizeIdx];
+		it.identify = 1;
+
+		switch (pc_additem(sd, &it, rd.qty[sd->roulette.prizeStage][sd->roulette.prizeIdx], LOG_TYPE_OTHER)) {
+			case 0:
+				WBUFW(fd,2) = RECV_ITEM_SUCCESS;
+				sd->roulette.claimPrize = false;
+				sd->roulette.prizeStage = 0;
+				sd->roulette.prizeIdx = 0;
+				sd->roulette.stage = 0;
+				break;
+			case 1:
+			case 4:
+			case 5:
+				WBUFW(fd,2) = RECV_ITEM_OVERCOUNT;
+				break;
+			case 2:
+				WBUFW(fd,2) = RECV_ITEM_OVERWEIGHT;
+				break;
+			default:
+			case 7:
+				WBUFW(fd,2) = RECV_ITEM_FAILED;
+				break;
+		}
+	} else
+		WBUFW(fd,2) = RECV_ITEM_FAILED;
+
+	WBUFL(fd,3) = 0; // additional item TODO
+	WFIFOSET(fd,packet_len(0xa22));
+	return;
+}
+
+/**
+ * Update Roulette window with current stats
+ * @param sd
+ * @param result
+ * @param stage
+ * @param prizeIdx
+ * @param bonusItemID
+ */
+void clif_roulette_generate_ack(struct map_session_data *sd, unsigned char result, short stage, short prizeIdx, short bonusItemID)
+{
+	int fd = sd->fd;
+
+	nullpo_retv(sd);
+
+	WFIFOHEAD(fd,packet_len(0xa20));
+	WBUFW(fd,0) = 0xa20;
+	WBUFW(fd,2) = result;
+	WBUFW(fd,3) = stage;
+	WBUFW(fd,5) = prizeIdx;
+	WBUFW(fd,7) = bonusItemID;
+	WBUFL(fd,9) = sd->roulette_point.gold;
+	WBUFL(fd,13) = sd->roulette_point.silver;
+	WBUFL(fd,17) = sd->roulette_point.bronze;
+	WFIFOSET(fd,packet_len(0xa20));
+}
+
 /*==========================================
  * Main client packet processing function
  *------------------------------------------*/
@@ -18120,8 +18364,17 @@ void packetdb_readdb(bool reload)
 	//#0x09C0
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 23,  0,  0,  0,102,  0,
 		0,  0,  0,  0,  2,  0, -1, -1,  2,  0,  0,  0,  0,  0,  0,  7,
-		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+		0,  0,  0,  0,  0,  0,  0,  3, 11,  0, 11, -1,  0,  3, 11,  0,
+		0, 11, 12, 11,  0,  0,  0,  0,  0,143,  0,  0,  0,  0,  0,  0,
+	//#0x0a00
+#if PACKETVER >= 20141022
+	  269,  0,  0,  2,  6, 49,  6,  9, 26, 45, 47, 47, 56, -1,  0,  0,
+#else
+	  269,  0,  0,  2,  6, 48,  6,  9, 26, 45, 47, 47, 56, -1,  0,  0,
+#endif
+		0,  0,  0, 26,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+		0,  3,  5,  0, 66,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+ 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	};
 	struct {
 		void (*func)(int, struct map_session_data *);
@@ -18344,9 +18597,15 @@ void packetdb_readdb(bool reload)
 		{ clif_parse_client_version, "clientversion"},
 		{ clif_parse_blocking_playcancel, "booking_playcancel"},
 		{ clif_parse_ranklist, "ranklist"},
-		/* Market NPC */
+		// Market NPC
 		{ clif_parse_NPCMarketClosed, "npcmarketclosed" },
 		{ clif_parse_NPCMarketPurchase, "npcmarketpurchase" },
+		// Roulette
+		{ clif_parse_RouletteOpen, "rouletteopen" },
+		{ clif_parse_RouletteInfo, "rouletteinfo" },
+		{ clif_parse_RouletteClose, "rouletteclose" },
+		{ clif_parse_RouletteGenerate, "roulettegenerate" },
+		{ clif_parse_RouletteRecvItem, "rouletterecvitem" },
 		{NULL,NULL}
 	};
 	struct {
@@ -18591,6 +18850,7 @@ void packetdb_readdb(bool reload)
  *------------------------------------------*/
 void do_init_clif(void) {
 	const char* colors[COLOR_MAX] = {
+		"0x00FF00",
 		"0xFF0000",
 		"0xFFFFFF",
 		"0xFFFF00",

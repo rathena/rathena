@@ -459,6 +459,9 @@ enum _sp {
 	SP_CHARRENAME=125,
 	SP_CHARFONT=126,
 	SP_BANK_VAULT = 127,
+	SP_ROULETTE_BRONZE = 128,
+	SP_ROULETTE_SILVER = 129,
+	SP_ROULETTE_GOLD = 130,
 
 	// Mercenaries
 	SP_MERCFLEE=165, SP_MERCKILLS=189, SP_MERCFAITH=190,
@@ -1006,6 +1009,7 @@ extern char mob_skill_db2_db[32];
 extern char vendings_db[32];
 extern char vending_items_db[32];
 extern char market_table[32];
+extern char db_roulette_table[32];
 
 void do_shutdown(void);
 

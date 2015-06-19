@@ -63,7 +63,7 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 //2b0a: Outgoing, chrif_skillcooldown_request -> requesting the list of skillcooldown for char
 //2b0b: Incoming, chrif_skillcooldown_load -> received the list of cooldown for char
 //2b0c: Outgoing, chrif_changeemail -> 'change mail address ...'
-//2b0d: Incoming, chrif_changedsex -> 'Change sex of acc XY'
+//2b0d: Incoming, chrif_changedsex -> 'Change sex of acc XY' (or char)
 //2b0e: Outgoing, chrif_req_login_operation -> 'Do some operations (change sex, ban / unban etc)'
 //2b0f: Incoming, chrif_ack_login_req -> 'answer of the 2b0e'
 //2b10: Outgoing, chrif_updatefamelist -> 'Update the fame ranking lists and send them'
@@ -864,17 +864,19 @@ int chrif_req_login_operation(int aid, const char* character_name, unsigned shor
 
 /**
  * S 2b0e <accid>.l <name>.24B <operation_type>.w <timediff>L <val1>L <val2>L
- * Send an account modification (changesex) request to the login server (via char server).
+ * Send a sex change (for account or character) request to the login server (via char server).
  * @sd : Player requesting operation
  */
-int chrif_changesex(struct map_session_data *sd) {
+int chrif_changesex(struct map_session_data *sd, bool change_account) {
 	chrif_check(-1);
 
 	WFIFOHEAD(char_fd,44);
 	WFIFOW(char_fd,0) = 0x2b0e;
 	WFIFOL(char_fd,2) = sd->status.account_id;
 	safestrncpy((char*)WFIFOP(char_fd,6), sd->status.name, NAME_LENGTH);
-	WFIFOW(char_fd,30) = CHRIF_OP_LOGIN_CHANGESEX;
+	WFIFOW(char_fd,30) = (change_account ? CHRIF_OP_LOGIN_CHANGESEX : CHRIF_OP_LOGIN_CHANGECHARSEX);
+	if (!change_account)
+		WFIFOB(char_fd,32) = sd->status.sex == SEX_MALE ? SEX_FEMALE : SEX_MALE;
 	WFIFOSET(char_fd,44);
 
 	clif_displaymessage(sd->fd, msg_txt(sd,408)); //"Need disconnection to perform change-sex request..."
@@ -917,6 +919,9 @@ static void chrif_ack_login_req(int aid, const char* player_name, uint16 type, u
 		case CHRIF_OP_LOGIN_UNBLOCK:
 		case CHRIF_OP_LOGIN_UNBAN:
 		case CHRIF_OP_LOGIN_CHANGESEX:
+		case CHRIF_OP_LOGIN_CHANGECHARSEX:
+			if (type == CHRIF_OP_LOGIN_CHANGECHARSEX)
+				type--; // So we don't have to create a new msgstring.
 			snprintf(action,25,"%s",msg_txt(sd,427+type)); //block|ban|unblock|unban|change the sex of
 			break;
 		case CHRIF_OP_LOGIN_VIP:
@@ -929,7 +934,7 @@ static void chrif_ack_login_req(int aid, const char* player_name, uint16 type, u
 			break;
 	}
 
-	switch( answer ) {
+	switch (answer) {
 		case 0: sprintf(output, msg_txt(sd,424), action, NAME_LENGTH, player_name); break; //Login-serv has been asked to %s '%.*s'.
 		case 1: sprintf(output, msg_txt(sd,425), NAME_LENGTH, player_name); break;
 		case 2: sprintf(output, msg_txt(sd,426), action, NAME_LENGTH, player_name); break;

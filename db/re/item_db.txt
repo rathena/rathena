@@ -165,11 +165,11 @@
 668,Handsei,Red Envelope,2,0,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ set Zeny,Zeny+rand(1000,10000); },{},{}
 669,Rice_Cake_Soup,Tempting Rice-Cake Soup,0,500,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal -100,-100; },{},{}
 670,Gold_Coin_Moneybag,Bag of Gold Coins,3,100000,,400,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-671,Gold_Coin,Gold Coin,3,10000,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ /*goldpoint++; (For Roulette game)*/ },{},{}
+671,Gold_Coin,Gold Coin,3,10000,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ RouletteGold++; },{},{}
 672,Copper_Coin_Moneybag,Bag of Bronze Coins,3,1000,,400,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-673,Copper_Coin,Bronze Coin,3,100,,40,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+673,Copper_Coin,Bronze Coin,3,100,,40,,,,,0xFFFFFFFF,63,2,,,,,,{ RouletteBronze++; },{},{}
 674,Mithril_Coin,Mithril Coin,3,5000,,40,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-675,Silver_Coin,Silver Coin,3,5000,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ /*silverpoint++; (For Roulette game)*/ },{},{}
+675,Silver_Coin,Silver Coin,3,5000,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ RouletteSilver++; },{},{}
 676,Silver_Coin_Moneybag,Bag of Silver Coins,3,50000,,400,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 677,White_Gold_Coin,Platinum Coin,3,2000,,40,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 678,Poison_Bottle,Poison Bottle,2,5000,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ if(Class == Job_Assassin_Cross || Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T) { sc_start SC_DPOISON,60000,0; sc_start SC_ASPDPOTION3,60000,9; } else percentheal -100,-100; },{},{}
