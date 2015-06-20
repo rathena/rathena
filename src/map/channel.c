@@ -339,7 +339,7 @@ int channel_send(struct Channel *channel, struct map_session_data *sd, const cha
 		return -1;
 
 	if(!pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) && channel->msg_delay != 0 && DIFF_TICK(sd->channel_tick + ( channel->msg_delay * 1000 ), gettick()) > 0) {
-		clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,1455)); //You're talking too fast!
+		clif_colormes(sd->fd,color_table[COLOR_RED],msg_txt(sd,1455)); //You're talking too fast!
 		return -2;
 	}
 	else {
@@ -483,7 +483,7 @@ int channel_display_list(struct map_session_data *sd, char *options){
 		for( k = 0; k < channel_config.colors_count; k++ ) {
 			if (channel_config.colors[k]) {
 				sprintf(msg, msg_txt(sd,1445),channel_config.colors_name[k]);// - '%s'
-				clif_colormes(sd,channel_config.colors[k],msg);
+				clif_colormes(sd->fd,channel_config.colors[k],msg);
 			}
 		}
 	}

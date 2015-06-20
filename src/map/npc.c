@@ -1253,7 +1253,7 @@ int npc_click(struct map_session_data* sd, struct npc_data* nd)
 				}
 
 				if (i == nd->u.shop.count) {
-					clif_colormes(sd, color_table[COLOR_RED], msg_txt(sd, 534));
+					clif_colormes(sd->fd, color_table[COLOR_RED], msg_txt(sd, 534));
 					return false;
 				}
 
@@ -1670,7 +1670,7 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 				struct item_data *id = itemdb_exists(nd->u.shop.itemshop_nameid);
 
 				sprintf(output,msg_txt(sd,712),id->jname,id->nameid); // You do not have enough %s %d.
-				clif_colormes(sd,color_table[COLOR_RED],output);
+				clif_colormes(sd->fd,color_table[COLOR_RED],output);
 				return 1;
 			}
 			break;
@@ -1678,7 +1678,7 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 			count = pc_readreg2(sd, nd->u.shop.pointshop_str);
 			if (z > (double)count) {
 				sprintf(output,msg_txt(sd,713),nd->u.shop.pointshop_str); // You do not have enough '%s'.
-				clif_colormes(sd,color_table[COLOR_RED],output);
+				clif_colormes(sd->fd,color_table[COLOR_RED],output);
 				return 1;
 			}
 			break;

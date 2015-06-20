@@ -936,7 +936,7 @@ enum clif_colors {
 	COLOR_MAX
 };
 unsigned long color_table[COLOR_MAX];
-int clif_colormes(struct map_session_data * sd, unsigned long color, const char* msg);
+int clif_colormes(int fd, unsigned long color, const char* msg);
 
 void clif_channel_msg(struct Channel *channel, struct map_session_data *sd, char *msg, short color);
 

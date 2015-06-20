@@ -6471,7 +6471,7 @@ void clif_parse_BankOpen(int fd, struct map_session_data* sd) {
 	//also mark something in case char ain't available for saving, should we check now ?
 	nullpo_retv(sd);
 	if( !battle_config.feature_banking ) {
-		clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,1496)); //Banking is disabled
+		clif_colormes(sd->fd,color_table[COLOR_RED],msg_txt(sd,1496)); //Banking is disabled
 		return;
 	}
 	else {
@@ -6511,7 +6511,7 @@ void clif_parse_BankClose(int fd, struct map_session_data* sd) {
 
 	nullpo_retv(sd);
 	if( !battle_config.feature_banking ) {
-		clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,1496)); //Banking is disabled
+		clif_colormes(sd->fd,color_table[COLOR_RED],msg_txt(sd,1496)); //Banking is disabled
 		//still allow to go trough to not stuck player if we have disable it while they was in
 	}
 	if(sd->status.account_id == aid){
@@ -6553,7 +6553,7 @@ void clif_parse_BankCheck(int fd, struct map_session_data* sd) {
 	nullpo_retv(sd);
 
 	if( !battle_config.feature_banking ) {
-		clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,1496)); //Banking is disabled
+		clif_colormes(sd->fd,color_table[COLOR_RED],msg_txt(sd,1496)); //Banking is disabled
 		return;
 	}
 	else {
@@ -6597,7 +6597,7 @@ void clif_bank_deposit(struct map_session_data *sd, enum e_BANKING_DEPOSIT_ACK r
 void clif_parse_BankDeposit(int fd, struct map_session_data* sd) {
 	nullpo_retv(sd);
 	if( !battle_config.feature_banking ) {
-		clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,1496)); //Banking is disabled
+		clif_colormes(sd->fd,color_table[COLOR_RED],msg_txt(sd,1496)); //Banking is disabled
 		return;
 	}
 	else {
@@ -6645,7 +6645,7 @@ void clif_bank_withdraw(struct map_session_data *sd,enum e_BANKING_WITHDRAW_ACK 
 void clif_parse_BankWithdraw(int fd, struct map_session_data* sd) {
         nullpo_retv(sd);
 	if( !battle_config.feature_banking ) {
-		clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,1496)); //Banking is disabled
+		clif_colormes(sd->fd,color_table[COLOR_RED],msg_txt(sd,1496)); //Banking is disabled
 		return;
 	}
 	else {
@@ -8801,16 +8801,16 @@ void clif_specialeffect_value(struct block_list* bl, int effect_id, int num, sen
 }
 // Modification of clif_messagecolor to send colored messages to players to chat log only (doesn't display overhead)
 /// 02c1 <packet len>.W <id>.L <color>.L <message>.?B
-int clif_colormes(struct map_session_data * sd, unsigned long color, const char* msg) {
+int clif_colormes(int fd, unsigned long color, const char* msg) {
 	unsigned short msg_len = strlen(msg) + 1;
 
-	WFIFOHEAD(sd->fd,msg_len + 12);
-	WFIFOW(sd->fd,0) = 0x2C1;
-	WFIFOW(sd->fd,2) = msg_len + 12;
-	WFIFOL(sd->fd,4) = 0;
-	WFIFOL(sd->fd,8) = color; //either color_table or channel_table
-	safestrncpy((char*)WFIFOP(sd->fd,12), msg, msg_len);
-	WFIFOSET(sd->fd, msg_len + 12);
+	WFIFOHEAD(fd,msg_len + 12);
+	WFIFOW(fd,0) = 0x2C1;
+	WFIFOW(fd,2) = msg_len + 12;
+	WFIFOL(fd,4) = 0;
+	WFIFOL(fd,8) = color; //either color_table or channel_table
+	safestrncpy((char*)WFIFOP(fd,12), msg, msg_len);
+	WFIFOSET(fd, msg_len + 12);
 
 	return 0;
 }
@@ -12892,18 +12892,18 @@ void clif_parse_GuildChangeEmblem(int fd,struct map_session_data *sd){
 		return;
 
 	if(!(battle_config.emblem_woe_change) && (agit_flag || agit2_flag) ){
-		clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,385)); //"You not allowed to change emblem during woe"
+		clif_colormes(sd->fd,color_table[COLOR_RED],msg_txt(sd,385)); //"You not allowed to change emblem during woe"
 		return;
 	}
 	emb_val = clif_validate_emblem(emblem, emblem_len);
 	if(emb_val ==-1 ){
 		ShowWarning("clif_parse_GuildChangeEmblem: Rejected malformed guild emblem (size=%lu, accound_id=%d, char_id=%d, guild_id=%d).\n", emblem_len, sd->status.account_id, sd->status.char_id, sd->status.guild_id);
-		clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,386)); //"The chosen emblem was detected invalid\n"
+		clif_colormes(sd->fd,color_table[COLOR_RED],msg_txt(sd,386)); //"The chosen emblem was detected invalid\n"
 		return;
 	} else if(emb_val == -2){
 		char output[128];
 		safesnprintf(output,sizeof(output),msg_txt(sd,387),battle_config.emblem_transparency_limit);
-		clif_colormes(sd,color_table[COLOR_RED],output); //"The chosen emblem was detected invalid as it contain too much transparency (limit=%d)\n"
+		clif_colormes(sd->fd,color_table[COLOR_RED],output); //"The chosen emblem was detected invalid as it contain too much transparency (limit=%d)\n"
 		return;
 	}
 
@@ -17763,7 +17763,7 @@ void clif_parse_RouletteOpen(int fd, struct map_session_data* sd)
 	nullpo_retv(sd);
 
 	if (!battle_config.feature_roulette) {
-		clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,1497)); //Roulette is disabled
+		clif_colormes(sd->fd,color_table[COLOR_RED],msg_txt(sd,1497)); //Roulette is disabled
 		return;
 	}
 
@@ -17793,7 +17793,7 @@ void clif_parse_RouletteInfo(int fd, struct map_session_data* sd)
 	nullpo_retv(sd);
 
 	if (!battle_config.feature_roulette) {
-		clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,1497)); //Roulette is disabled
+		clif_colormes(sd->fd,color_table[COLOR_RED],msg_txt(sd,1497)); //Roulette is disabled
 		return;
 	}
 
@@ -17826,7 +17826,7 @@ void clif_parse_RouletteClose(int fd, struct map_session_data* sd)
 	nullpo_retv(sd);
 
 	if (!battle_config.feature_roulette) {
-		clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,1497)); //Roulette is disabled
+		clif_colormes(sd->fd,color_table[COLOR_RED],msg_txt(sd,1497)); //Roulette is disabled
 		return;
 	}
 
@@ -17847,7 +17847,7 @@ void clif_parse_RouletteGenerate(int fd, struct map_session_data* sd)
 	nullpo_retv(sd);
 
 	if (!battle_config.feature_roulette) {
-		clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,1497)); //Roulette is disabled
+		clif_colormes(sd->fd,color_table[COLOR_RED],msg_txt(sd,1497)); //Roulette is disabled
 		return;
 	}
 
@@ -17904,7 +17904,7 @@ void clif_parse_RouletteRecvItem(int fd, struct map_session_data* sd)
 	nullpo_retv(sd);
 
 	if (!battle_config.feature_roulette) {
-		clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,1497)); //Roulette is disabled
+		clif_colormes(sd->fd,color_table[COLOR_RED],msg_txt(sd,1497)); //Roulette is disabled
 		return;
 	}
 

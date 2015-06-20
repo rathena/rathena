@@ -10271,7 +10271,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				if(hd->master && hd->sc.data[SC_STYLE_CHANGE]) {
 					char output[128];
 					safesnprintf(output,sizeof(output),msg_txt(sd,378),(sce->val1==MH_MD_FIGHTING?"fighthing":"grappling"));
-					clif_colormes(hd->master,color_table[COLOR_RED],output);
+					clif_colormes(hd->master->fd, color_table[COLOR_RED], output);
 				}
 			}
 			else sc_start(&hd->bl,&hd->bl, SC_STYLE_CHANGE, 100, MH_MD_FIGHTING, -1);
@@ -14751,7 +14751,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				    MOBID_EMPERIUM, MOBID_GUARDIAN_STONE1, MOBID_GUARDIAN_STONE2)) {
 				char output[128];
 				sprintf(output,"%s",msg_txt(sd,382)); // You're too close to a stone or emperium to use this skill.
-				clif_colormes(sd,color_table[COLOR_RED], output);
+				clif_colormes(sd->fd,color_table[COLOR_RED], output);
 				return false;
 			    }
 			}
@@ -14958,7 +14958,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				char output[CHAT_SIZE_MAX];
 				//Official use msgstringtable.txt for each skill failure
 				sprintf(output,msg_txt(sd,722),itemdb_jname(reqeqit));
-				clif_colormes(sd,color_table[COLOR_RED],output);
+				clif_colormes(sd->fd, color_table[COLOR_RED], output);
 				return false;
 			}
 		}
@@ -15139,7 +15139,7 @@ bool skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id,
 						skill_get_desc(skill_id),
 						require.ammo_qty,
 						itemdb_jname(sd->status.inventory[i].nameid));
-			clif_colormes(sd,color_table[COLOR_RED],e_msg);
+			clif_colormes(sd->fd,color_table[COLOR_RED],e_msg);
 			return false;
 		}
 		if (!(require.ammo&1<<sd->inventory_data[i]->look)) { //Ammo type check. Send the "wrong weapon type" message
@@ -15170,7 +15170,7 @@ bool skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id,
 				//Official is using msgstringtable.txt for each requirement failure
 				//clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				sprintf(output, msg_txt(sd,720), itemdb_jname(require.itemid[i])); // %s is required.
-				clif_colormes(sd,color_table[COLOR_RED],output);
+				clif_colormes(sd->fd,color_table[COLOR_RED],output);
 			}
 			return false;
 		}
@@ -18850,7 +18850,7 @@ int skill_poisoningweapon(struct map_session_data *sd, unsigned short nameid)
 		type, chance, 0, skill_get_time(GC_POISONINGWEAPON, sd->menuskill_val));
 
 	sprintf(output, msg_txt(sd,721), msg);
-	clif_colormes(sd,color_table[COLOR_WHITE],output);
+	clif_colormes(sd->fd,color_table[COLOR_WHITE],output);
 
 /*#if PACKETVER >= 20110208 //! TODO: Check the correct PACKVETVER
 	clif_msg(sd,msg);

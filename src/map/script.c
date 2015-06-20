@@ -15841,7 +15841,7 @@ BUILDIN_FUNC(callshop)
 		}
 
 		if (i == nd->u.shop.count) {
-			clif_colormes(sd, color_table[COLOR_RED], msg_txt(sd, 534));
+			clif_colormes(sd->fd, color_table[COLOR_RED], msg_txt(sd, 534));
 			return false;
 		}
 
@@ -17570,7 +17570,7 @@ BUILDIN_FUNC(openauction)
 		return SCRIPT_CMD_FAILURE;
 
 	if( !battle_config.feature_auction ) {
-		clif_colormes(sd, color_table[COLOR_RED], msg_txt(sd, 517));
+		clif_colormes(sd->fd, color_table[COLOR_RED], msg_txt(sd, 517));
 		return 0;
 	}
 

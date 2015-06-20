@@ -4572,7 +4572,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 	}
 
 	if (sd->state.storage_flag && item->type != IT_CASH) {
-		clif_colormes(sd, color_table[COLOR_RED], msg_txt(sd,388));
+		clif_colormes(sd->fd, color_table[COLOR_RED], msg_txt(sd,388));
 		return false; // You cannot use this item while storage is open.
 	}
 
@@ -4669,7 +4669,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 			return false;
 		}
 		if( !pc_inventoryblank(sd) ) {
-			clif_colormes(sd, color_table[COLOR_RED], msg_txt(sd, 732)); //Item cannot be open when inventory is full
+			clif_colormes(sd->fd, color_table[COLOR_RED], msg_txt(sd, 732)); //Item cannot be open when inventory is full
 			return false;
 		}
 	}
@@ -4784,7 +4784,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 					else
 						sprintf(e_msg,msg_txt(sd,380), // Item Failed. [%s] is cooling down. Wait %d seconds.
 										itemdb_jname(sd->item_delay[i].nameid), e_tick+1);
-					clif_colormes(sd,color_table[COLOR_YELLOW],e_msg);
+					clif_colormes(sd->fd,color_table[COLOR_YELLOW],e_msg);
 					return 0; // Delay has not expired yet
 				}
 			} else {// not yet used item (all slots are initially empty)
@@ -11205,7 +11205,7 @@ enum e_BANKING_WITHDRAW_ACK pc_bank_withdraw(struct map_session_data *sd, int mo
 		return BWA_NO_MONEY;
 	} else if ( limit_check > MAX_ZENY ) {
 		/* no official response for this scenario exists. */
-		clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,1495)); //You can't withdraw that much money
+		clif_colormes(sd->fd,color_table[COLOR_RED],msg_txt(sd,1495)); //You can't withdraw that much money
 		return BWA_UNKNOWN_ERROR;
 	}
 	
