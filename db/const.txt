@@ -632,8 +632,8 @@ bAddItemGroupHealRate	2073
 bHPVanishRaceRate	2074
 bSPVanishRaceRate	2075
 bAbsorbDmgMaxHP	2076
-bSubSkill	2078
-bSubDefEle	2079
+bSubSkill	2077
+bSubDefEle	2078
 
 EQI_HEAD_TOP	1
 EQI_ARMOR	2

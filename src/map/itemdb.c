@@ -1151,6 +1151,26 @@ bool itemdb_parse_roulette_db(void)
 	return true;
 }
 
+/**
+ * Free Roulette items
+ */
+static void itemdb_roulette_free(void) {
+	int i, j;
+
+	for (i = 0; i < MAX_ROULETTE_LEVEL; i++) {
+		if (rd.nameid[i])
+			aFree(rd.nameid[i]);
+		if (rd.qty[i])
+			aFree(rd.qty[i]);
+		if (rd.flag[i])
+			aFree(rd.flag[i]);
+		rd.nameid[i] = NULL;
+		rd.qty[i] = NULL;
+		rd.flag[i] = NULL;
+		rd.items[i] = 0;
+	}
+}
+
 /*======================================
  * Applies gender restrictions according to settings. [Skotlex]
  *======================================*/
@@ -1668,6 +1688,7 @@ void itemdb_reload(void) {
 	itemdb_group->clear(itemdb_group, itemdb_group_free);
 	itemdb->clear(itemdb, itemdb_final_sub);
 	db_clear(itemdb_combo);
+	itemdb_roulette_free();
 
 	// read new data
 	itemdb_read();
@@ -1735,6 +1756,7 @@ void do_final_itemdb(void) {
 	itemdb_group->destroy(itemdb_group, itemdb_group_free);
 	itemdb->destroy(itemdb, itemdb_final_sub);
 	destroy_item_data(dummy_item);
+	itemdb_roulette_free();
 }
 
 /**
