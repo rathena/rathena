@@ -756,7 +756,7 @@ int chmapif_parse_fwlog_changestatus(int fd){
 			char* data;
 
 			Sql_GetData(sql_handle, 0, &data, NULL); t_aid = atoi(data);
-			Sql_GetData(sql_handle, 0, &data, NULL); t_cid = atoi(data);
+			Sql_GetData(sql_handle, 1, &data, NULL); t_cid = atoi(data);
 			Sql_FreeResult(sql_handle);
 
 			if(!chlogif_isconnected())
@@ -1033,7 +1033,8 @@ int chmapif_parse_reqauth(int fd, int id){
         }
         if( runflag == CHARSERVER_ST_RUNNING && autotrade && cd ){
             uint16 mmo_charstatus_len = sizeof(struct mmo_charstatus) + 25;
-            cd->sex = sex;
+			if (cd->sex == 99)
+				cd->sex = sex;
 
             WFIFOHEAD(fd,mmo_charstatus_len);
             WFIFOW(fd,0) = 0x2afd;
@@ -1053,9 +1054,12 @@ int chmapif_parse_reqauth(int fd, int id){
             node != NULL &&
             node->account_id == account_id &&
             node->char_id == char_id &&
-            node->login_id1 == login_id1 &&
-            node->sex == sex /*&&
-            node->ip == ip*/ )
+            node->login_id1 == login_id1
+            //&& node->ip == ip
+#ifdef PACKETVER < 20141016
+			&& node->sex == sex
+#endif
+			)
         {// auth ok
             uint16 mmo_charstatus_len = sizeof(struct mmo_charstatus) + 25;
 			if (cd->sex == 99)

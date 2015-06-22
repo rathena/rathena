@@ -1155,7 +1155,7 @@ bool itemdb_parse_roulette_db(void)
  * Free Roulette items
  */
 static void itemdb_roulette_free(void) {
-	int i, j;
+	int i;
 
 	for (i = 0; i < MAX_ROULETTE_LEVEL; i++) {
 		if (rd.nameid[i])
