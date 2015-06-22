@@ -1056,7 +1056,7 @@ int chmapif_parse_reqauth(int fd, int id){
             node->char_id == char_id &&
             node->login_id1 == login_id1
             //&& node->ip == ip
-#ifdef PACKETVER < 20141016
+#if PACKETVER < 20141016
 			&& node->sex == sex
 #endif
 			)
