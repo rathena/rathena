@@ -11093,6 +11093,49 @@ BUILDIN_FUNC(delwaitingroom)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/// Kick the specified player from the waiting room of the target npc.
+///
+/// waitingroomkick "<npc_name>", <kickusername>;
+BUILDIN_FUNC(waitingroomkick)
+{
+	struct npc_data* nd;
+	struct chat_data* cd;
+	const char* kickusername;
+	
+	nd = npc_name2id(script_getstr(st,2));
+	kickusername = script_getstr(st,3);
+
+	if( nd != NULL && (cd=(struct chat_data *)map_id2bl(nd->chat_id)) != NULL )
+		chat_npckickchat(cd, kickusername);
+	return 0;
+}
+
+/// Get Users in waiting room and stores gids in .@waitingroom_users[]
+/// Num users stored in .@waitingroom_usercount
+///
+/// getwaitingroomusers "<npc_name>";
+BUILDIN_FUNC(getwaitingroomusers)
+{
+	struct npc_data* nd;
+	struct chat_data* cd;
+
+	int i, j=0;
+
+	if( script_hasdata(st,2) )
+		nd = npc_name2id(script_getstr(st, 2));
+	else
+		nd = (struct npc_data *)map_id2bl(st->oid);
+	
+	if( nd != NULL && (cd=(struct chat_data *)map_id2bl(nd->chat_id)) != NULL ) {
+		for(i = 0; i < cd->users; ++i) {
+			setd_sub(st, NULL, ".@waitingroom_users", j, (void *)cd->usersd[i]->status.account_id, NULL);
+			j++;
+		}
+		setd_sub(st, NULL, ".@waitingroom_usercount", 0, (void *)j, NULL);
+	}
+	return 0;
+}
+
 /// Kicks all the players from the waiting room of the current or target npc.
 ///
 /// kickwaitingroomall "<npc_name>";
@@ -20517,6 +20560,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(changecharsex,"?"),
 	BUILDIN_DEF(waitingroom,"si?????"),
 	BUILDIN_DEF(delwaitingroom,"?"),
+	BUILDIN_DEF(waitingroomkick,"ss"),
+	BUILDIN_DEF(getwaitingroomusers, "?"),
 	BUILDIN_DEF2(waitingroomkickall,"kickwaitingroomall","?"),
 	BUILDIN_DEF(enablewaitingroomevent,"?"),
 	BUILDIN_DEF(disablewaitingroomevent,"?"),
