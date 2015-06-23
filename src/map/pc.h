@@ -650,7 +650,7 @@ struct map_session_data {
 
 	struct {
 		short stage;
-		short prizeIdx;
+		int8 prizeIdx;
 		short prizeStage;
 		bool claimPrize;
 	} roulette;

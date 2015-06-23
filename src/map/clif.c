@@ -17769,11 +17769,11 @@ void clif_parse_RouletteOpen(int fd, struct map_session_data* sd)
 
 	WFIFOHEAD(fd,packet_len(0xa1a));
 	WFIFOW(fd,0) = 0xa1a;
-	WFIFOW(fd,2) = 0; // result
+	WFIFOB(fd,2) = 0; // result
 	WFIFOL(fd,3) = 0; // serial
-	WFIFOW(fd,7) = sd->roulette.stage - 1;
-	WFIFOW(fd,8) = (char)sd->roulette.prizeIdx;
-	WFIFOW(fd,9) = -1; // TODO
+	WFIFOB(fd,7) = (sd->roulette.claimPrize) ? sd->roulette.stage - 1 : 0;
+	WFIFOB(fd,8) = (sd->roulette.claimPrize) ? sd->roulette.prizeIdx : -1;
+	WFIFOW(fd,9) = -1; //! TODO: Display bonus item
 	WFIFOL(fd,11) = sd->roulette_point.gold;
 	WFIFOL(fd,15) = sd->roulette_point.silver;
 	WFIFOL(fd,19) = sd->roulette_point.bronze;
@@ -17800,14 +17800,14 @@ void clif_parse_RouletteInfo(int fd, struct map_session_data* sd)
 	WFIFOHEAD(fd,len);
 	WFIFOW(fd,0) = 0xa1c;
 	WFIFOW(fd,2) = len;
-	WFIFOL(fd,6) = 1; // serial
+	WFIFOL(fd,4) = 1; // serial
 
 	for(i = 0; i < MAX_ROULETTE_LEVEL; i++) {
 		for(j = 0; j < MAX_ROULETTE_COLUMNS - i; j++) {
-			WFIFOW(fd,8 + i * 8) = i;
-			WFIFOW(fd,8 + i * 8 + 2) = j;
-			WFIFOW(fd,8 + i * 8 + 4) = rd.nameid[i][j];
-			WFIFOW(fd,8 + i * 8 + 6) = rd.qty[i][j];
+			WFIFOW(fd,8 * count + 8) = i;
+			WFIFOW(fd,8 * count + 10) = j;
+			WFIFOW(fd,8 * count + 12) = rd.nameid[i][j];
+			WFIFOW(fd,8 * count + 14) = rd.qty[i][j];
 			count++;
 		}
 	}
@@ -17835,13 +17835,63 @@ void clif_parse_RouletteClose(int fd, struct map_session_data* sd)
 }
 
 /**
+ *
+ **/
+static void clif_roulette_recvitem_ack(struct map_session_data *sd, enum RECV_ROULETTE_ITEM_REQ type) {
+#if PACKETVER >= 20141016
+	uint16 cmd = 0xa22;
+	unsigned char buf[5];
+
+	nullpo_retv(sd);
+
+	if (packet_db[sd->packet_ver][cmd].len == 0)
+		return;
+
+	WBUFW(buf,0) = cmd;
+	WBUFB(buf,2) = type;
+	WBUFW(buf,3) = 0; //! TODO: Additional item
+	clif_send(buf, sizeof(buf), &sd->bl, SELF);
+#endif
+}
+
+/**
+ * Claim roulette reward
+ * @param sd Player
+ * @return 0:Success
+ **/
+static uint8 clif_roulette_getitem(struct map_session_data *sd) {
+	struct item it;
+	uint8 res = 1;
+
+	nullpo_retr(1, sd);
+
+	if (sd->roulette.prizeIdx < 0)
+		return RECV_ITEM_FAILED;
+
+	memset(&it, 0, sizeof(it));
+
+	it.nameid = rd.nameid[sd->roulette.prizeStage][sd->roulette.prizeIdx];
+	it.identify = 1;
+
+	if ((res = pc_additem(sd, &it, rd.qty[sd->roulette.prizeStage][sd->roulette.prizeIdx], LOG_TYPE_ROULETTE)) == 0) {
+		; // onSuccess
+	}
+
+	sd->roulette.claimPrize = false;
+	sd->roulette.prizeStage = 0;
+	sd->roulette.prizeIdx = -1;
+	sd->roulette.stage = 0;
+	return res;
+}
+
+/**
  * Process the stage and attempt to give a prize
  * @param fd
  * @param sd
  */
 void clif_parse_RouletteGenerate(int fd, struct map_session_data* sd)
 {
-	unsigned char result = GENERATE_ROULETTE_SUCCESS;
+	enum GENERATE_ROULETTE_ACK result = GENERATE_ROULETTE_SUCCESS;
 	short stage = sd->roulette.stage;
 
 	nullpo_retv(sd);
@@ -17863,35 +17913,34 @@ void clif_parse_RouletteGenerate(int fd, struct map_session_data* sd)
 		if (!stage) {
 			if (sd->roulette_point.bronze > 0) {
 				sd->roulette_point.bronze -= 1;
+				pc_setreg2(sd, ROULETTE_BRONZE_VAR, sd->roulette_point.bronze);
 			} else if (sd->roulette_point.silver > 9) {
 				sd->roulette_point.silver -= 10;
 				stage = sd->roulette.stage = 2;
+				pc_setreg2(sd, ROULETTE_SILVER_VAR, sd->roulette_point.silver);
 			} else if (sd->roulette_point.gold > 9) {
 				sd->roulette_point.gold -= 10;
 				stage = sd->roulette.stage = 4;
+				pc_setreg2(sd, ROULETTE_GOLD_VAR, sd->roulette_point.gold);
 			}
 		}
 
 		sd->roulette.prizeStage = stage;
 		sd->roulette.prizeIdx = rnd()%rd.items[stage];
-		if (sd->roulette.prizeIdx == 0) {
-			struct item it;
-			memset(&it, 0, sizeof(it));
 
-			it.nameid = rd.nameid[stage][0];
-			it.identify = 1;
-
-			pc_additem(sd, &it, rd.qty[stage][0], LOG_TYPE_ROULETTE);
-
-			sd->roulette.stage = 0;
-			result = GENERATE_ROULETTE_LOSING;
-		} else
+		if (rd.flag[stage][sd->roulette.prizeIdx]&1) {
+			clif_roulette_generate_ack(sd,GENERATE_ROULETTE_LOSING,stage,sd->roulette.prizeIdx,0);
+			clif_roulette_getitem(sd);
+			clif_roulette_recvitem_ack(sd, RECV_ITEM_SUCCESS);
+			return;
+		}
+		else {
 			sd->roulette.claimPrize = true;
+			sd->roulette.stage++;
+		}
 	}
 
-	clif_roulette_generate_ack(sd,result,stage,sd->roulette.prizeIdx,0);
-	if (result == GENERATE_ROULETTE_SUCCESS)
-		sd->roulette.stage++;
+	clif_roulette_generate_ack(sd,result,stage,(sd->roulette.prizeIdx == -1 ? 0 : sd->roulette.prizeIdx),0);
 }
 
 /**
@@ -17901,6 +17950,7 @@ void clif_parse_RouletteGenerate(int fd, struct map_session_data* sd)
  */
 void clif_parse_RouletteRecvItem(int fd, struct map_session_data* sd)
 {
+	enum RECV_ROULETTE_ITEM_REQ type = RECV_ITEM_FAILED;
 	nullpo_retv(sd);
 
 	if (!battle_config.feature_roulette) {
@@ -17908,42 +17958,27 @@ void clif_parse_RouletteRecvItem(int fd, struct map_session_data* sd)
 		return;
 	}
 
-	WFIFOHEAD(fd,packet_len(0xa22));
-	WFIFOW(fd,0) = 0xa22;
-
-	if (sd->roulette.claimPrize) {
-		struct item it;
-		memset(&it, 0, sizeof(it));
-
-		it.nameid = rd.nameid[sd->roulette.prizeStage][sd->roulette.prizeIdx];
-		it.identify = 1;
-
-		switch (pc_additem(sd, &it, rd.qty[sd->roulette.prizeStage][sd->roulette.prizeIdx], LOG_TYPE_OTHER)) {
+	if (sd->roulette.claimPrize && sd->roulette.prizeIdx != -1) {
+		switch (clif_roulette_getitem(sd)) {
 			case 0:
-				WFIFOW(fd,2) = RECV_ITEM_SUCCESS;
-				sd->roulette.claimPrize = false;
-				sd->roulette.prizeStage = 0;
-				sd->roulette.prizeIdx = 0;
-				sd->roulette.stage = 0;
+				type = RECV_ITEM_SUCCESS;
 				break;
 			case 1:
 			case 4:
 			case 5:
-				WFIFOW(fd,2) = RECV_ITEM_OVERCOUNT;
+				type = RECV_ITEM_OVERCOUNT;
 				break;
 			case 2:
-				WFIFOW(fd,2) = RECV_ITEM_OVERWEIGHT;
+				type = RECV_ITEM_OVERWEIGHT;
 				break;
-			default:
 			case 7:
-				WFIFOW(fd,2) = RECV_ITEM_FAILED;
+			default:
+				type = RECV_ITEM_FAILED;
 				break;
 		}
-	} else
-		WFIFOW(fd,2) = RECV_ITEM_FAILED;
+	}
 
-	WFIFOL(fd,3) = 0; // additional item TODO
-	WFIFOSET(fd,packet_len(0xa22));
+	clif_roulette_recvitem_ack(sd,type);
 	return;
 }
 
@@ -17963,7 +17998,7 @@ void clif_roulette_generate_ack(struct map_session_data *sd, unsigned char resul
 
 	WFIFOHEAD(fd,packet_len(0xa20));
 	WFIFOW(fd,0) = 0xa20;
-	WFIFOW(fd,2) = result;
+	WFIFOB(fd,2) = result;
 	WFIFOW(fd,3) = stage;
 	WFIFOW(fd,5) = prizeIdx;
 	WFIFOW(fd,7) = bonusItemID;

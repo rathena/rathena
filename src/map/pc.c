@@ -1349,6 +1349,7 @@ void pc_reg_received(struct map_session_data *sd)
 		sd->roulette_point.silver = pc_readreg2(sd, ROULETTE_SILVER_VAR);
 		sd->roulette_point.gold = pc_readreg2(sd, ROULETTE_GOLD_VAR);
 	}
+	sd->roulette.prizeIdx = -1;
 
 	//SG map and mob read [Komurka]
 	for(i=0;i<MAX_PC_FEELHATE;i++) { //for now - someone need to make reading from txt/sql
