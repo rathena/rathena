@@ -1511,6 +1511,9 @@ int clif_homskillinfoblock(struct map_session_data *sd)
 	struct homun_data *hd;
 	int fd = sd->fd;
 	int i, len=4;
+
+	nullpo_ret(sd);
+
 	WFIFOHEAD(fd, 4+37*MAX_HOMUNSKILL);
 
 	hd = sd->hd;
@@ -11525,7 +11528,8 @@ static void clif_parse_UseSkillToPos_mercenary(struct mercenary_data *md, struct
 		return;
 	if( DIFF_TICK(tick, md->ud.canact_tick) < 0 )
 	{
-		clif_skill_fail(md->master, skill_id, USESKILL_FAIL_SKILLINTERVAL, 0);
+		if (md->master)
+			clif_skill_fail(md->master, skill_id, USESKILL_FAIL_SKILLINTERVAL, 0);
 		return;
 	}
 
