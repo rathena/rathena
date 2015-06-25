@@ -5760,7 +5760,19 @@ void clif_displaymessage(const int fd, const char* mes)
 #if PACKETVER == 20141022
 		/** for some reason game client crashes depending on message pattern (only for this packet) **/
 		/** so we redirect to ZC_NPC_CHAT **/
-		clif_colormes(fd, color_table[COLOR_DEFAULT], mes);
+		//clif_colormes(fd, color_table[COLOR_DEFAULT], mes);
+		unsigned long color = color_table[COLOR_DEFAULT]; // RGB to BGR
+		int len = strnlen(mes, 255);
+
+		if (len > 0) { 
+			WFIFOHEAD(fd, 13 + len);
+			WFIFOW(fd, 0) = 0x2C1;
+			WFIFOW(fd, 2) = 13 + len;
+			WFIFOL(fd, 4) = 0;
+			WFIFOL(fd, 8) = color;
+			safestrncpy((char*)WFIFOP(fd, 12), mes, len + 1);
+			WFIFOSET(fd, WFIFOW(fd, 2));
+		}
 #else
 		char *message, *line;
 
