@@ -2632,7 +2632,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- cmd : packet identification (0x2b0e)
 		- aid
 		- name
-		- operation_type
+		- operation_type: 1:block account, 2:ban account, 3:unblock account, 4:unban account, 5:changesex, 6:VIP, 7:changecharsex
 		- timediff
 		- val1
 		- val2

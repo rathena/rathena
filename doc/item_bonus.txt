@@ -288,6 +288,9 @@ bonus4 bAddEffOnSkill,sk,eff,n,y;	Adds a n/100% chance to cause status eff when 
                                  	  ATF_SELF   = trigger effect on self
                                  	  ATF_TARGET = trigger effect on target
 
+bonus2 bComaClass,c,n;      		Adds a n/100% chance to cause Coma when attacking a target of class c (regardless the type of attack)
+bonus2 bComaRace,r,n;       		Adds a n/100% chance to cause Coma when attacking a target of race r (regardless the type of attack)
+
 bonus2 bWeaponComaEle,e,n;  		Adds a n/100% chance to cause Coma when attacking a target of element e with a normal attack
 bonus2 bWeaponComaClass,c,n;		Adds a n/100% chance to cause Coma when attacking a target of class c with a normal attack
 bonus2 bWeaponComaRace,r,n; 		Adds a n/100% chance to cause Coma when attacking a target of race r with a normal attack
@@ -332,8 +335,8 @@ bonus bSPDrainValue,n;        		Heals +n SP with a normal attack
 bonus2 bSPDrainValueRace,r,n; 		Heals +n SP when attacking a monster of race r with normal attack
 bonus2 bSpDrainValueClass,c,n;		Heals +n SP when attacking a monster of class c with normal attack
 
-bonus2 bHPDrainRate,x,n;		Adds a x/10% chance to drain n% HP when attacking
-bonus2 bSPDrainRate,x,n;		Adds a x/10% chance to drain n% SP when attacking
+bonus2 bHPDrainRate,x,n;		Adds a x/10% chance to drain n% HP from inflicted damage when attacking
+bonus2 bSPDrainRate,x,n;		Adds a x/10% chance to drain n% SP from inflicted damage when attacking
 
 HP/SP vanish
 ------------
@@ -345,19 +348,6 @@ bonus3 bSPVanishRaceRate,r,x,n;		Add a x/100% chance of decreasing enemy's SP am
 
 HP/SP gain
 ------------
-bonus bHPGainAttack,n;      		Heals +n HP with a normal attack
-bonus bSPGainAttack,n;      		Heals +n SP with a normal attack
-
-bonus bHPGainAttackRate,n;  		Heals +n% HP of inflicted damage on every hit when attacking an enemy
-bonus bSPGainAttackRate,n;  		Heals +n% SP of inflicted damage on every hit when attacking an enemy
-bonus2 bHPGainAttackRate,x,n;		Has chance x/10% to heals +n% HP of inflicted damage on every hit when attacking an enemy
-bonus2 bSPGainAttackRate,x,n;		Has chance x/10% to heals +n% SP of inflicted damage on every hit when attacking an enemy
-
-bonus2 bHPGainRaceAttack,r,n;		Heals +n HP on every hit when attacking an enemy of race r
-bonus2 bSPGainRaceAttack,r,n;		Heals +n SP on every hit when attacking an enemy of race r
-bonus2 bHPGainRaceAttackRate,r,n;		Heals +n% HP of inflicted damage on every hit when attacking an enemy of race r
-bonus2 bSPGainRaceAttackRate,r,n;		Heals +n% SP of inflicted damage on every hit when attacking an enemy of race r
-
 bonus bHPGainValue,n;     		Heals +n HP when killing an enemy with a physical attack
 bonus bSPGainValue,n;     		Heals +n SP when killing an enemy with a physical attack
 bonus2 bSPGainRace,r,n;   		Heals +n SP when killing an enemy of race r with a physical attack

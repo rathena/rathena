@@ -1353,6 +1353,13 @@ void pc_reg_received(struct map_session_data *sd)
 	if (battle_config.feature_banking)
 		sd->bank_vault = pc_readreg2(sd, BANK_VAULT_VAR);
 
+	if (battle_config.feature_roulette) {
+		sd->roulette_point.bronze = pc_readreg2(sd, ROULETTE_BRONZE_VAR);
+		sd->roulette_point.silver = pc_readreg2(sd, ROULETTE_SILVER_VAR);
+		sd->roulette_point.gold = pc_readreg2(sd, ROULETTE_GOLD_VAR);
+	}
+	sd->roulette.prizeIdx = -1;
+
 	//SG map and mob read [Komurka]
 	for(i=0;i<MAX_PC_FEELHATE;i++) { //for now - someone need to make reading from txt/sql
 		uint16 j;
@@ -2989,18 +2996,6 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 		case SP_ABSORB_DMG_MAXHP: // bonus bAbsorbDmgMaxHP,n;
 			sd->bonus.absorb_dmg_maxhp = max(sd->bonus.absorb_dmg_maxhp, val);
 			break;
-		case SP_HP_GAIN_ATTACK: // bonus bHPGainAttack,n;
-			sd->bonus.hp_gain_attack += val;
-			break;
-		case SP_SP_GAIN_ATTACK: // bonus bSPGainAttack,n;
-			sd->bonus.sp_gain_attack += val;
-			break;
-		case SP_HP_GAIN_ATTACK_RATE: // bonus bHPGainAttackRate,n;
-			sd->bonus.hp_gain_attack_rate += val;
-			break;
-		case SP_SP_GAIN_ATTACK_RATE: // bonus bSPGainAttackRate,n;
-			sd->bonus.sp_gain_attack_rate += val;
-			break;
 		default:
 			ShowWarning("pc_bonus: unknown type %d %d !\n",type,val);
 			break;
@@ -3483,16 +3478,6 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag != 2)
 			sd->ignore_def_by_race[type2] += val;
 		break;
-	case SP_SP_GAIN_RACE_ATTACK: // bonus2 bSPGainRaceAttack,r,n;
-		PC_BONUS_CHK_RACE(type2,SP_SP_GAIN_RACE_ATTACK);
-		if(sd->state.lr_flag != 2)
-			sd->sp_gain_race_attack[type2] = cap_value(sd->sp_gain_race_attack[type2] + val, 0, INT16_MAX);
-		break;
-	case SP_HP_GAIN_RACE_ATTACK: // bonus2 bHPGainRaceAttack,r,n;
-		PC_BONUS_CHK_RACE(type2,SP_HP_GAIN_RACE_ATTACK);
-		if(sd->state.lr_flag != 2)
-			sd->hp_gain_race_attack[type2] = cap_value(sd->hp_gain_race_attack[type2] + val, 0, INT16_MAX);
-		break;
 	case SP_SKILL_USE_SP_RATE: // bonus2 bSkillUseSPrate,sk,n;
 		if(sd->state.lr_flag == 2)
 			break;
@@ -3630,22 +3615,6 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->skillusesp[i].val = val;
 		}
 		break;
-	case SP_HP_GAIN_RACE_ATTACK_RATE: // bonus2 bHPGainRaceAttackRate,r,n;
-		PC_BONUS_CHK_RACE(type2,SP_HP_GAIN_RACE_ATTACK_RATE);
-		sd->hp_gain_race_attack_rate[type2] += val;
-		break;
-	case SP_SP_GAIN_RACE_ATTACK_RATE: // bonus2 bSPGainRaceAttackRate,r,n;
-		PC_BONUS_CHK_RACE(type2,SP_SP_GAIN_RACE_ATTACK_RATE);
-		sd->sp_gain_race_attack_rate[type2] += val;
-		break;
-	case SP_HP_GAIN_ATTACK_RATE: // bonus2 bHPGainAttackRate,x,n;
-		sd->hp_gain_attack.rate += type2;
-		sd->hp_gain_attack.per += val;
-		break;
-	case SP_SP_GAIN_ATTACK_RATE: // bonus2 bSPGainAttackRate,x,n;
-		sd->sp_gain_attack.rate += type2;
-		sd->sp_gain_attack.per += val;
-		break;
 	case SP_SUB_SKILL: // bonus2 bSubSkill,sk,n;
 		ARR_FIND(0, ARRAYLENGTH(sd->subskill), i, sd->subskill[i].id == type2 || sd->subskill[i].id == 0);
 		if (i == ARRAYLENGTH(sd->subskill)) {
@@ -3662,6 +3631,16 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 	case SP_SUBDEF_ELE: // bonus2 bSubDefEle,e,x;
 		PC_BONUS_CHK_ELEMENT(type2,SP_SUBDEF_ELE);
 		sd->subdefele[type2] += val;
+		break;
+	case SP_COMA_CLASS: // bonus2 bComaClass,c,n;
+		PC_BONUS_CHK_CLASS(type2,SP_COMA_CLASS);
+		sd->coma_class[type2] += val;
+		sd->special_state.bonus_coma = 1;
+		break;
+	case SP_COMA_RACE: // bonus2 bComaRace,r,n;
+		PC_BONUS_CHK_RACE(type2,SP_COMA_RACE);
+		sd->coma_race[type2] += val;
+		sd->special_state.bonus_coma = 1;
 		break;
 	default:
 		ShowWarning("pc_bonus2: unknown type %d %d %d!\n",type,type2,val);
@@ -4603,7 +4582,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 	}
 
 	if (sd->state.storage_flag && item->type != IT_CASH) {
-		clif_colormes(sd, color_table[COLOR_RED], msg_txt(sd,388));
+		clif_colormes(sd->fd, color_table[COLOR_RED], msg_txt(sd,388));
 		return false; // You cannot use this item while storage is open.
 	}
 
@@ -4700,7 +4679,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 			return false;
 		}
 		if( !pc_inventoryblank(sd) ) {
-			clif_colormes(sd, color_table[COLOR_RED], msg_txt(sd, 732)); //Item cannot be open when inventory is full
+			clif_colormes(sd->fd, color_table[COLOR_RED], msg_txt(sd, 732)); //Item cannot be open when inventory is full
 			return false;
 		}
 	}
@@ -4815,7 +4794,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 					else
 						sprintf(e_msg,msg_txt(sd,380), // Item Failed. [%s] is cooling down. Wait %d seconds.
 										itemdb_jname(sd->item_delay[i].nameid), e_tick+1);
-					clif_colormes(sd,color_table[COLOR_YELLOW],e_msg);
+					clif_colormes(sd->fd,color_table[COLOR_YELLOW],e_msg);
 					return 0; // Delay has not expired yet
 				}
 			} else {// not yet used item (all slots are initially empty)
@@ -7206,7 +7185,7 @@ void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int h
 		clif_progressbar_abort(sd);
 
 	if( sd->status.pet_id > 0 && sd->pd && battle_config.pet_damage_support )
-		pet_target_check(sd,src,1);
+		pet_target_check(sd->pd,src,1);
 
 	if( sd->status.ele_id > 0 )
 		elemental_set_target(sd,src);
@@ -7354,8 +7333,8 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	if ( sd->spiritball !=0 )
 		pc_delspiritball(sd,sd->spiritball,0);
 
-	for(i = 1; i < 5; i++)
-		pc_del_talisman(sd, sd->talisman[i], i);
+	if (sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0)
+		pc_delspiritcharm(sd,sd->spiritcharm,sd->spiritcharm_type);
 
 	if (src)
 	switch (src->type) {
@@ -7639,7 +7618,10 @@ int pc_readparam(struct map_session_data* sd,int type)
 		case SP_CHARMOVE:		 val = sd->status.character_moves; break;
 		case SP_CHARRENAME:		 val = sd->status.rename; break;
 		case SP_CHARFONT:		 val = sd->status.font; break;
-		case SP_BANK_VAULT:			 val = sd->bank_vault; break;
+		case SP_BANK_VAULT:      val = sd->bank_vault; break;
+		case SP_ROULETTE_BRONZE: val = sd->roulette_point.bronze; break;
+		case SP_ROULETTE_SILVER: val = sd->roulette_point.silver; break;
+		case SP_ROULETTE_GOLD:   val = sd->roulette_point.gold; break;
 		case SP_CRITICAL:        val = sd->battle_status.cri/10; break;
 		case SP_ASPD:            val = (2000-sd->battle_status.amotion)/10; break;
 		case SP_BASE_ATK:	     val = sd->battle_status.batk; break;
@@ -7897,6 +7879,18 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 		log_zeny(sd, LOG_TYPE_BANK, sd, -(sd->bank_vault - cap_value(val, 0, MAX_BANK_ZENY)));
 		sd->bank_vault = cap_value(val, 0, MAX_BANK_ZENY);
 		pc_setreg2(sd, BANK_VAULT_VAR, sd->bank_vault);
+		return true;
+	case SP_ROULETTE_BRONZE:
+		sd->roulette_point.bronze = val;
+		pc_setreg2(sd, ROULETTE_BRONZE_VAR, sd->roulette_point.bronze);
+		return true;
+	case SP_ROULETTE_SILVER:
+		sd->roulette_point.silver = val;
+		pc_setreg2(sd, ROULETTE_SILVER_VAR, sd->roulette_point.silver);
+		return true;
+	case SP_ROULETTE_GOLD:
+		sd->roulette_point.gold = val;
+		pc_setreg2(sd, ROULETTE_GOLD_VAR, sd->roulette_point.gold);
 		return true;
 	default:
 		ShowError("pc_setparam: Attempted to set unknown parameter '%d'.\n", type);
@@ -10150,102 +10144,138 @@ bool pc_should_log_commands(struct map_session_data *sd)
 	return pc_group_should_log_commands(pc_get_group_id(sd));
 }
 
-static int pc_talisman_timer(int tid, unsigned int tick, int id, intptr_t data)
+/**
+ * Spirit Charm expiration timer.
+ * @see TimerFunc
+ */
+static int pc_spiritcharm_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct map_session_data *sd;
-	int i, type;
+	int i;
 
-	if( (sd=(struct map_session_data *)map_id2sd(id)) == NULL || sd->bl.type!=BL_PC )
+	if ((sd = (struct map_session_data *)map_id2sd(id)) == NULL || sd->bl.type != BL_PC)
 		return 1;
 
-	ARR_FIND(1, 5, type, sd->talisman[type] > 0);
-
-	if( sd->talisman[type] <= 0 )
-	{
-		ShowError("pc_talisman_timer: %d talisman's available. (aid=%d cid=%d tid=%d)\n", sd->talisman[type], sd->status.account_id, sd->status.char_id, tid);
-		sd->talisman[type] = 0;
+	if (sd->spiritcharm <= 0) {
+		ShowError("pc_spiritcharm_timer: %d spiritcharm's available. (aid=%d cid=%d tid=%d)\n", sd->spiritcharm, sd->status.account_id, sd->status.char_id, tid);
+		sd->spiritcharm = 0;
+		sd->spiritcharm_type = CHARM_TYPE_NONE;
 		return 0;
 	}
 
-	ARR_FIND(0, sd->talisman[type], i, sd->talisman_timer[type][i] == tid);
-	if( i == sd->talisman[type] )
-	{
-		ShowError("pc_talisman_timer: timer not found (aid=%d cid=%d tid=%d)\n", sd->status.account_id, sd->status.char_id, tid);
+	ARR_FIND(0, sd->spiritcharm, i, sd->spiritcharm_timer[i] == tid);
+
+	if (i == sd->spiritcharm) {
+		ShowError("pc_spiritcharm_timer: timer not found (aid=%d cid=%d tid=%d)\n", sd->status.account_id, sd->status.char_id, tid);
 		return 0;
 	}
 
-	sd->talisman[type]--;
-	if( i != sd->talisman[type] )
-		memmove(sd->talisman_timer[type]+i, sd->talisman_timer[type]+i+1, (sd->talisman[type]-i)*sizeof(int));
-	sd->talisman_timer[type][sd->talisman[type]] = INVALID_TIMER;
+	sd->spiritcharm--;
 
-	clif_talisman(sd, type);
+	if (i != sd->spiritcharm)
+		memmove(sd->spiritcharm_timer + i, sd->spiritcharm_timer + i + 1, (sd->spiritcharm - i) * sizeof(int));
+
+	sd->spiritcharm_timer[sd->spiritcharm] = INVALID_TIMER;
+
+	if (sd->spiritcharm <= 0)
+		sd->spiritcharm_type = CHARM_TYPE_NONE;
+
+	clif_spiritcharm(sd);
 
 	return 0;
 }
 
-void pc_add_talisman(struct map_session_data *sd,int interval,int max,int type)
+/**
+ * Adds a spirit charm.
+ * @param sd: Target character
+ * @param interval: Duration
+ * @param max: Maximum amount of charms to add
+ * @param type: Charm type (@see spirit_charm_types)
+ */
+void pc_addspiritcharm(struct map_session_data *sd, int interval, int max, int type)
 {
 	int tid, i;
 
 	nullpo_retv(sd);
 
-	if(max > 10)
-		max = 10;
-	if(sd->talisman[type] < 0)
-		sd->talisman[type] = 0;
+	if (sd->spiritcharm_type != CHARM_TYPE_NONE && type != sd->spiritcharm_type)
+		pc_delspiritcharm(sd, sd->spiritcharm, sd->spiritcharm_type);
 
-	if( sd->talisman[type] && sd->talisman[type] >= max )
-	{
-		if(sd->talisman_timer[type][0] != INVALID_TIMER)
-			delete_timer(sd->talisman_timer[type][0],pc_talisman_timer);
-		sd->talisman[type]--;
-		if( sd->talisman[type] != 0 )
-			memmove(sd->talisman_timer[type]+0, sd->talisman_timer[type]+1, (sd->talisman[type])*sizeof(int));
-		sd->talisman_timer[type][sd->talisman[type]] = INVALID_TIMER;
+	if (max > MAX_SPIRITCHARM)
+		max = MAX_SPIRITCHARM;
+
+	if (sd->spiritcharm < 0)
+		sd->spiritcharm = 0;
+
+	if (sd->spiritcharm && sd->spiritcharm >= max) {
+		if (sd->spiritcharm_timer[0] != INVALID_TIMER)
+			delete_timer(sd->spiritcharm_timer[0], pc_spiritcharm_timer);
+		sd->spiritcharm--;
+		if (sd->spiritcharm != 0)
+			memmove(sd->spiritcharm_timer + 0, sd->spiritcharm_timer + 1, (sd->spiritcharm) * sizeof(int));
+		sd->spiritcharm_timer[sd->spiritcharm] = INVALID_TIMER;
 	}
 
-	tid = add_timer(gettick()+interval, pc_talisman_timer, sd->bl.id, 0);
-	ARR_FIND(0, sd->talisman[type], i, sd->talisman_timer[type][i] == INVALID_TIMER || DIFF_TICK(get_timer(tid)->tick, get_timer(sd->talisman_timer[type][i])->tick) < 0);
-	if( i != sd->talisman[type] )
-		memmove(sd->talisman_timer[type]+i+1, sd->talisman_timer[type]+i, (sd->talisman[type]-i)*sizeof(int));
-	sd->talisman_timer[type][i] = tid;
-	sd->talisman[type]++;
+	tid = add_timer(gettick() + interval, pc_spiritcharm_timer, sd->bl.id, 0);
+	ARR_FIND(0, sd->spiritcharm, i, sd->spiritcharm_timer[i] == INVALID_TIMER || DIFF_TICK(get_timer(tid)->tick, get_timer(sd->spiritcharm_timer[i])->tick) < 0);
 
-	clif_talisman(sd, type);
+	if (i != sd->spiritcharm)
+		memmove(sd->spiritcharm_timer + i + 1, sd->spiritcharm_timer + i, (sd->spiritcharm - i) * sizeof(int));
+
+	sd->spiritcharm_timer[i] = tid;
+	sd->spiritcharm++;
+	sd->spiritcharm_type = type;
+
+	clif_spiritcharm(sd);
 }
 
-void pc_del_talisman(struct map_session_data *sd,int count,int type)
+/**
+ * Removes one or more spirit charms.
+ * @param sd: The target character
+ * @param count: Amount of charms to remove
+ * @param type: Type of charm to remove
+ */
+void pc_delspiritcharm(struct map_session_data *sd, int count, int type)
 {
 	int i;
 
 	nullpo_retv(sd);
 
-	if( sd->talisman[type] <= 0 ) {
-		sd->talisman[type] = 0;
+	if (sd->spiritcharm_type != type)
+		return;
+
+	if (sd->spiritcharm <= 0) {
+		sd->spiritcharm = 0;
 		return;
 	}
 
-	if( count <= 0 )
+	if (count <= 0)
 		return;
-	if( count > sd->talisman[type] )
-		count = sd->talisman[type];
-	sd->talisman[type] -= count;
-	if( count > 10 )
-		count = 10;
 
-	for(i = 0; i < count; i++) {
-		if(sd->talisman_timer[type][i] != INVALID_TIMER) {
-			delete_timer(sd->talisman_timer[type][i],pc_talisman_timer);
-			sd->talisman_timer[type][i] = INVALID_TIMER;
+	if (count > sd->spiritcharm)
+		count = sd->spiritcharm;
+
+	sd->spiritcharm -= count;
+
+	if (count > MAX_SPIRITCHARM)
+		count = MAX_SPIRITCHARM;
+
+	for (i = 0; i < count; i++) {
+		if (sd->spiritcharm_timer[i] != INVALID_TIMER) {
+			delete_timer(sd->spiritcharm_timer[i], pc_spiritcharm_timer);
+			sd->spiritcharm_timer[i] = INVALID_TIMER;
 		}
 	}
-	for(i = count; i < 10; i++) {
-		sd->talisman_timer[type][i-count] = sd->talisman_timer[type][i];
-		sd->talisman_timer[type][i] = INVALID_TIMER;
+
+	for (i = count; i < MAX_SPIRITCHARM; i++) {
+		sd->spiritcharm_timer[i - count] = sd->spiritcharm_timer[i];
+		sd->spiritcharm_timer[i] = INVALID_TIMER;
 	}
 
-	clif_talisman(sd, type);
+	if (sd->spiritcharm <= 0)
+		sd->spiritcharm_type = CHARM_TYPE_NONE;
+
+	clif_spiritcharm(sd);
 }
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
@@ -11119,7 +11149,7 @@ enum e_BANKING_WITHDRAW_ACK pc_bank_withdraw(struct map_session_data *sd, int mo
 		return BWA_NO_MONEY;
 	} else if ( limit_check > MAX_ZENY ) {
 		/* no official response for this scenario exists. */
-		clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,1495)); //You can't withdraw that much money
+		clif_colormes(sd->fd,color_table[COLOR_RED],msg_txt(sd,1495)); //You can't withdraw that much money
 		return BWA_UNKNOWN_ERROR;
 	}
 	
@@ -11574,7 +11604,7 @@ void do_init_pc(void) {
 	add_timer_func_list(pc_spiritball_timer, "pc_spiritball_timer");
 	add_timer_func_list(pc_follow_timer, "pc_follow_timer");
 	add_timer_func_list(pc_endautobonus, "pc_endautobonus");
-	add_timer_func_list(pc_talisman_timer, "pc_talisman_timer");
+	add_timer_func_list(pc_spiritcharm_timer, "pc_spiritcharm_timer");
 	add_timer_func_list(pc_global_expiration_timer, "pc_global_expiration_timer");
 	add_timer_func_list(pc_expiration_timer, "pc_expiration_timer");
 	add_timer_func_list(pc_autotrade_timer, "pc_autotrade_timer");

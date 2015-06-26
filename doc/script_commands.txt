@@ -3784,6 +3784,13 @@ by default green
 
 ---------------------------------------
 
+*showscript "<message>"{,<GID>};
+
+Makes attached player or GID says a message like shouting a skill name, the message
+will be seen to everyone around but not in chat window.
+
+---------------------------------------
+
 *warp "<map name>",<x>,<y>;
 
 This command will take the invoking character to the specified map, and if 
@@ -4128,6 +4135,20 @@ be the opposite sex.
 
 If there are any Dancer/Gypsy or Bard/Clown characters on the account, 
 they will also have their skills reset upon 'changesex'.
+
+---------------------------------------
+
+*changecharsex({<char_id>});
+
+This command will change the gender of the attached character. If it 
+was male, it will become female, if it was female, it will become male. The 
+change will be written to the character server, the player will receive the 
+message: "Need disconnection to perform change-sex request..." and the player 
+will be immediately kicked to the login screen. When they log back in, they will 
+be the opposite sex.
+
+If the character being changed is a Dancer/Gypsy or Bard/Clown class type, 
+the character will also have their skills reset upon 'changecharsex'.
 
 ---------------------------------------
 

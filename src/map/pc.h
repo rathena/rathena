@@ -28,8 +28,12 @@
 #define DAMAGELOG_SIZE_PC 100	/// Damage log
 #define MAX_SPIRITBALL 15 /// Max spirit balls
 #define MAX_DEVOTION 5 /// Max Devotion slots
+#define MAX_SPIRITCHARM 10 /// Max spirit charms
 
 #define BANK_VAULT_VAR "#BANKVAULT"
+#define ROULETTE_BRONZE_VAR "RouletteBronze"
+#define ROULETTE_SILVER_VAR "RouletteSilver"
+#define ROULETTE_GOLD_VAR "RouletteGold"
 
 //Update this max as necessary. 55 is the value needed for Super Baby currently
 //Raised to 84 since Expanded Super Novice needs it.
@@ -327,9 +331,11 @@ struct map_session_data {
 	int subrace2[RC2_MAX];
 	int subsize[SZ_MAX];
 	short reseff[SC_COMMON_MAX-SC_COMMON_MIN+1]; //TODO: Make this for all SC?
-	int weapon_coma_ele[ELE_MAX];
-	int weapon_coma_race[RC_MAX];
-	int weapon_coma_class[CLASS_MAX];
+	short coma_class[CLASS_MAX];
+	short coma_race[RC_MAX];
+	short weapon_coma_ele[ELE_MAX];
+	short weapon_coma_race[RC_MAX];
+	short weapon_coma_class[CLASS_MAX];
 	int weapon_atk[16];
 	int weapon_atk_rate[16];
 	int arrow_addele[ELE_MAX];
@@ -348,10 +354,6 @@ struct map_session_data {
 	int ignore_mdef_by_class[CLASS_MAX];
 	int ignore_def_by_race[RC_MAX];
 	short sp_gain_race[RC_MAX];
-	short sp_gain_race_attack[RC_MAX];
-	short hp_gain_race_attack[RC_MAX];
-	short hp_gain_race_attack_rate[RC_MAX];
-	short sp_gain_race_attack_rate[RC_MAX];
 	// zeroed arrays end here.
 
 	// zeroed structures start here
@@ -389,7 +391,7 @@ struct map_session_data {
 	struct s_bonus_vanish_gain {
 		short rate,	///< Success rate 0 - 1000 (100%)
 			per;	///< % HP/SP vanished/gained
-	} hp_vanish_race[RC_MAX], sp_vanish_race[RC_MAX], hp_gain_attack, sp_gain_attack;
+	} hp_vanish_race[RC_MAX], sp_vanish_race[RC_MAX];
 	// zeroed structures end here
 
 	// manually zeroed structures start here.
@@ -437,8 +439,6 @@ struct map_session_data {
 		int ematk; // matk bonus from equipment
 		int eatk; // atk bonus from equipment
 		uint8 absorb_dmg_maxhp; // [Cydh]
-		short hp_gain_attack, sp_gain_attack;
-		short hp_gain_attack_rate, sp_gain_attack_rate;
 	} bonus;
 	// zeroed vars end here.
 
@@ -454,8 +454,9 @@ struct map_session_data {
 
 	int8 spiritball, spiritball_old;
 	int spirit_timer[MAX_SPIRITBALL];
-	short talisman[ELE_POISON+1]; // There are actually 5 talisman Fire, Ice, Wind, Earth & Poison maybe because its color violet.
-	int talisman_timer[ELE_POISON+1][10];
+	short spiritcharm; //No. of spirit
+	int spiritcharm_type; //Spirit type
+	int spiritcharm_timer[MAX_SPIRITCHARM];
 
 	unsigned char potion_success_counter; //Potion successes in row counter
 	unsigned char mission_count; //Stores the bounty kill count for TK_MISSION
@@ -643,6 +644,17 @@ struct map_session_data {
 #ifdef PACKET_OBFUSCATION
 	unsigned int cryptKey; ///< Packet obfuscation key to be used for the next received packet
 #endif
+
+	struct {
+		int bronze, silver, gold; ///< Roulette Coin
+	} roulette_point;
+
+	struct {
+		short stage;
+		int8 prizeIdx;
+		short prizeStage;
+		bool claimPrize;
+	} roulette;
 };
 
 struct eri *pc_sc_display_ers; /// Player's SC display table
@@ -1153,8 +1165,8 @@ void pc_itemcd_do(struct map_session_data *sd, bool load);
 
 int pc_load_combo(struct map_session_data *sd);
 
-void pc_add_talisman(struct map_session_data *sd,int interval,int max,int type);
-void pc_del_talisman(struct map_session_data *sd,int count,int type);
+void pc_addspiritcharm(struct map_session_data *sd, int interval, int max, int type);
+void pc_delspiritcharm(struct map_session_data *sd, int count, int type);
 
 void pc_baselevelchanged(struct map_session_data *sd);
 

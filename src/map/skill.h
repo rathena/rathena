@@ -72,6 +72,7 @@ enum e_skill_inf2 {
 	INF2_NO_BG_DMG		 = 0x08000, // Skill that ignore bg reduction
 	INF2_NO_GVG_DMG		 = 0x10000, // Skill that ignore gvg reduction
 	INF2_NO_NEARNPC      = 0x20000, // disable to cast skill if near with NPC [Cydh]
+	INF2_HIT_TRAP        = 0x40000, // can hit trap-type skill (INF2_TRAP) [Cydh]
 };
 
 /// Skill info type 3
@@ -172,8 +173,8 @@ struct s_skill_db {
 	int16 cast_def_rate;						 ///< Def rate during cast a skill
 	uint16 skill_type;							 ///< Skill type
 	int blewcount[MAX_SKILL_LEVEL];				 ///< Blew count
-	uint32 inf2;								 ///<
-	uint32 inf3;								 ///<
+	uint32 inf2;								 ///< Skill flags @see enum e_skill_inf2
+	uint32 inf3;								 ///< Skill flags @see enum e_skill_inf3
 	int maxcount[MAX_SKILL_LEVEL];				 ///< Max number skill can be casted in same map
 
 	// skill_castnodex_db.txt
@@ -1719,10 +1720,10 @@ enum e_skill {
 	WL_TELEKINESIS_INTENSE,
 	LG_KINGS_GRACE,
 	ALL_FULL_THROTTLE,
-	SR_FLASHCOMBO_ATK_STEP1,
-	SR_FLASHCOMBO_ATK_STEP2,
-	SR_FLASHCOMBO_ATK_STEP3,
-	SR_FLASHCOMBO_ATK_STEP4,
+	SR_FLASHCOMBO_ATK_STEP1, // SR_DRAGONCOMBO
+	SR_FLASHCOMBO_ATK_STEP2, // SR_FALLENEMPIRE
+	SR_FLASHCOMBO_ATK_STEP3, // SR_TIGERCANNON
+	SR_FLASHCOMBO_ATK_STEP4, // SR_SKYNETBLOW
 
 	HLIF_HEAL = 8001,
 	HLIF_AVOID,

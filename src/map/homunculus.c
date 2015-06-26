@@ -184,7 +184,8 @@ void hom_delspiritball(TBL_HOM *hd, int count, int type) {
 * @param hd
 */
 void hom_damage(struct homun_data *hd) {
-	clif_hominfo(hd->master,hd,0);
+	if (hd->master)
+		clif_hominfo(hd->master,hd,0);
 }
 
 /**
@@ -513,7 +514,7 @@ int hom_levelup(struct homun_data *hd)
 
 	APPLY_HOMUN_LEVEL_STATWEIGHT();
 
-	if ( battle_config.homunculus_show_growth ) {
+	if ( hd->master && battle_config.homunculus_show_growth ) {
 		char output[256] ;
 		sprintf(output,
 			"Growth: hp:%d sp:%d str(%.2f) agi(%.2f) vit(%.2f) int(%.2f) dex(%.2f) luk(%.2f) ",
@@ -683,7 +684,7 @@ void hom_gainexp(struct homun_data *hd,int exp)
 
 	hd->homunculus.exp += exp;
 
-	if (hd->homunculus.exp < hd->exp_next) {
+	if (hd->master && hd->homunculus.exp < hd->exp_next) {
 		clif_hominfo(hd->master,hd,0);
 		return;
 	}
@@ -745,7 +746,8 @@ int hom_decrease_intimacy(struct homun_data * hd, unsigned int value)
 * @param hd
 */
 void hom_heal(struct homun_data *hd) {
-	clif_hominfo(hd->master,hd,0);
+	if (hd->master)
+		clif_hominfo(hd->master,hd,0);
 }
 
 /**

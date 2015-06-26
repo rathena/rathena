@@ -56,7 +56,7 @@ static char log_picktype2char(e_log_pick_type type)
 	{
 		case LOG_TYPE_TRADE:            return 'T';  // (T)rade
 		case LOG_TYPE_VENDING:          return 'V';  // (V)ending
-		case LOG_TYPE_PICKDROP_PLAYER:  return 'P';  // (P)player
+		case LOG_TYPE_PICKDROP_PLAYER:  return 'P';  // (P)layer
 		case LOG_TYPE_PICKDROP_MONSTER: return 'M';  // (M)onster
 		case LOG_TYPE_NPC:              return 'S';  // NPC (S)hop
 		case LOG_TYPE_SCRIPT:           return 'N';  // (N)PC Script
@@ -75,6 +75,7 @@ static char log_picktype2char(e_log_pick_type type)
 		case LOG_TYPE_OTHER:			return 'X';  // Other
 		case LOG_TYPE_CASH:				return '$';  // Cash
 		case LOG_TYPE_BOUND_REMOVAL:	return 'F';  // Removed bound items when guild/party is broken
+		case LOG_TYPE_ROULETTE:			return 'Y';  // Roulette Lotter(Y)
 	}
 
 	// should not get here, fallback

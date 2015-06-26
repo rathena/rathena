@@ -408,6 +408,8 @@ bool mercenary_recv_data(struct s_mercenary *merc, bool flag)
 * @param sp SP amount
 **/
 void mercenary_heal(struct mercenary_data *md, int hp, int sp) {
+	if (md->master == NULL)
+		return;
 	if( hp )
 		clif_mercenary_updatestatus(md->master, SP_HP);
 	if( sp )

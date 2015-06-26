@@ -432,6 +432,9 @@ CharMoves	124	1
 CharRename	125	1
 Font		126	1
 BankVault	127	1
+RouletteBronze	128	1
+RouletteSilver	129	1
+RouletteGold	130	1
 
 bMaxHP	6
 bMaxSP	8
@@ -595,8 +598,8 @@ bMagicSPGainValue	2043
 bMagicHPGainValue	2044
 bAddMonsterIdDropItem	2045
 bMatk	2046
-bSPGainRaceAttack	2047
-bHPGainRaceAttack	2048
+bComaClass	2047
+bComaRace	2048
 bSkillUseSPrate	2049
 bSkillCooldown	2050
 
@@ -628,16 +631,9 @@ bAddMaxWeight	2072
 bAddItemGroupHealRate	2073
 bHPVanishRaceRate	2074
 bSPVanishRaceRate	2075
-bHPGainRaceAttackRate	2076
-bSPGainRaceAttackRate	2077
-bAbsorbDmgMaxHP	2078
-
-bHPGainAttack	2079
-bSPGainAttack	2080
-bHPGainAttackRate	2081
-bSPGainAttackRate	2082
-bSubSkill	2083
-bSubDefEle	2084
+bAbsorbDmgMaxHP	2076
+bSubSkill	2077
+bSubDefEle	2078
 
 EQI_HEAD_TOP	1
 EQI_ARMOR	2
@@ -1174,6 +1170,7 @@ IG_Lucky_Silvervine_Fruit_Box_III110        421
 IG_Old_Ore_Box	422
 
 SC_ALL	-1
+SC_NONE	-1
 SC_STONE	0
 SC_FREEZE	1
 SC_STUN	2

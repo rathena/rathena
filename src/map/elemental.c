@@ -526,6 +526,8 @@ int elemental_change_mode(struct elemental_data *ed, int mode) {
 }
 
 void elemental_heal(struct elemental_data *ed, int hp, int sp) {
+	if (ed->master == NULL)
+		return;
 	if( hp )
 		clif_elemental_updatestatus(ed->master, SP_HP);
 	if( sp )
