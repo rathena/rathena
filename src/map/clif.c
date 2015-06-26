@@ -5761,7 +5761,8 @@ void clif_displaymessage(const int fd, const char* mes)
 		/** for some reason game client crashes depending on message pattern (only for this packet) **/
 		/** so we redirect to ZC_NPC_CHAT **/
 		//clif_colormes(fd, color_table[COLOR_DEFAULT], mes);
-		unsigned long color = color_table[COLOR_DEFAULT]; // RGB to BGR
+		unsigned long color = (color_table[COLOR_DEFAULT] & 0x0000FF) << 16 | (color_table[COLOR_DEFAULT] & 0x00FF00) | (color_table[COLOR_DEFAULT] & 0xFF0000) >> 16; // RGB to BGR
+
 		int len = strnlen(mes, 255);
 
 		if (len > 0) { 
