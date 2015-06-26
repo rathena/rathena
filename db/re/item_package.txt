@@ -891,7 +891,7 @@ IG_Lucky_Scroll08,Bunny_Band_,3,0,0,0,0,1
 IG_Lucky_Scroll08,Drooping_Kitty_,5,0,0,0,0,1
 IG_Lucky_Scroll08,Tulip_Hairpin,65,0,0,0,0,1
 IG_Lucky_Scroll08,Insurance_Package,60,0,0,0,0,1
-IG_Lucky_Scroll08,Leaf_Of_Yggdrasil,110,05,0,0,0,1
+IG_Lucky_Scroll08,Leaf_Of_Yggdrasil,110,15,0,0,0,1
 
 IG_Br_SwordPackage,Plate_Armor_,0,1,0,0,0,1
 IG_Br_SwordPackage,Shield_,0,1,0,0,0,1
