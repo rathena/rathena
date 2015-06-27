@@ -11,8 +11,6 @@
 #include "unit.h" // unit_stop_walking(), unit_stop_attack()
 #include "npc.h"
 
-#define MAX_RANDOMMONSTER 5
-
 // Change this to increase the table size in your mob_db to accomodate a larger mob database.
 // Be sure to note that IDs 4001 to 4048 are reserved for advanced/baby/expanded classes.
 // Notice that the last 1000 entries are used for player clones, so always set this to desired value +1000
@@ -73,6 +71,13 @@ enum size {
 	SZ_MAX
 };
 
+/// Used hardcoded Random Monster group in src
+enum e_Random_Monster {
+	MOBG_Branch_Of_Dead_Tree = 0,
+	MOBG_Bloody_Dead_Branch  = 2,
+	MOBG_ClassChange         = 4,
+};
+
 struct mob_skill {
 	enum MobSkillState state;
 	uint16 skill_id,skill_lv;
@@ -115,7 +120,6 @@ struct mob_db {
 	struct status_data status;
 	struct view_data vd;
 	unsigned int option;
-	int summonper[MAX_RANDOMMONSTER];
 	int maxskill;
 	struct mob_skill skill[MAX_MOBSKILL];
 	struct spawn_info spawn[10];
