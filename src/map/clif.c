@@ -649,8 +649,10 @@ void clif_authok(struct map_session_data *sd)
 {
 #if PACKETVER < 20080102
 	const int cmd = 0x73;
-#else
+#elif PACKETVER < 20141022
 	const int cmd = 0x2eb;
+#else
+	const int cmd = 0xa18;
 #endif
 	int fd = sd->fd;
 
@@ -18423,7 +18425,7 @@ void packetdb_readdb(bool reload)
 #else
 	  269,  0,  0,  2,  6, 48,  6,  9, 26, 45, 47, 47, 56, -1,  0,  0,
 #endif
-		0,  0,  0, 26,  0,  0,  0,  0,  0,  2, 23,  2, -1,  2,  3,  2,
+		0,  0,  0, 26,  0,  0,  0,  0,  14,  2, 23,  2, -1,  2,  3,  2,
 	   21,  3,  5,  0, 66,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
  		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	};

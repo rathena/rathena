@@ -2420,6 +2420,7 @@ packet_keys: 0x290551EA,0x2B952C75,0x2D67669B // [YomRawr]
 0x0a0c,56
 0x0a0d,-1
 0x0a13,26
+0x0A18,14			// HEADER_ZC_ACCEPT_ENTER3
 0x0a24,66
 
 //Add new packets here
