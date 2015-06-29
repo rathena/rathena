@@ -4163,7 +4163,7 @@ static int mob_read_randommonster_sub(const char* filename, bool silent) {
 	}
 
 	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s/%s"CL_RESET"'.\n", entries, db_path, filename);
+	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", entries, filename);
 	return 0;
 }
 
