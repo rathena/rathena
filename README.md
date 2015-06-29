@@ -1,4 +1,3 @@
-Hello rAthena
 rAthena
 =======
 
