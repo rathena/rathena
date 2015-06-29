@@ -1,336 +1,336 @@
 // Red Pouch of Surprise Summonable Monsters Database
 //
 // Structure of Database:
-// MobID,DummyName,Rate
+// MobRandomGroupID,MobID,DummyName,Rate
 
-0,Poring,1002
-1001,Scorpion,214285
-1002,Poring,1000000
-1004,Hornet,357142
-1005,Familiar,357142
-1007,Fabre,428571
-1008,Pupa,71428
-1009,Condor,357142
-1010,Willow,357142
-1011,Chonchon,357142
-1012,Roda Frog,357142
-1013,Wolf,357142
-1014,Spore,357142
-1015,Zombie,357142
-1016,Archer Skeleton,214285
-1018,Creamy,357142
-1019,Peco Peco,357142
-1020,Mandragora,357142
-1023,Orc Warrior,214285
-1024,Wormtail,357142
-1025,Boa,357142
-1026,Munak,214285
-1028,Soldier Skeleton,214285
-1029,Isis,71428
-1030,Anacondaq,214285
-1031,Poporing,357142
-1032,Verit,214285
-1033,Elder Willow,214285
-1034,Thara Frog,214285
-1035,Hunter Fly,71428
-1036,Ghoul,214285
-1037,Side Winder,71428
-1040,Golem,214285
-1041,Mummy,214285
-1042,Steel Chonchon,357142
-1044,Obeaune,214285
-1045,Marc,214285
-1047,Peco Peco Egg,71428
-1048,Thief Bug Egg,71428
-1049,Picky,357142
-1050,Picky,357142
-1051,Thief Bug,357142
-1052,Rocker,357142
-1053,Thief Bug Female,357142
-1054,Thief Bug Male,357142
-1055,Muka,357142
-1056,Smokie,357142
-1057,Yoyo,357142
-1058,Metaller,214285
-1060,Bigfoot,214285
-1061,Nightmare,71428
-1062,Santa Poring,357142
-1063,Lunatic,357142
-1064,Megalodon,214285
-1065,Strouf,214285
-1066,Vadon,357142
-1067,Cornutus,214285
-1068,Hydra,357142
-1069,Swordfish,214285
-1070,Kukre,357142
-1071,Pirate Skeleton,214285
-1072,Kaho,71428
-1073,Crab,214285
-1074,Shellfish,357142
-1076,Skeleton,357142
-1077,Poison Spore,357142
-1078,Red Plant,71428
-1079,Blue Plant,71428
-1080,Green Plant,71428
-1081,Yellow Plant,71428
-1082,White Plant,71428
-1083,Shining Plant,71428
-1084,Black Mushroom,71428
-1085,Red Mushroom,71428
-1088,Vocal,71428
-1089,Toad,71428
-1090,Mastering,71428
-1091,Dragon Fly,71428
-1092,Vagabond Wolf,71428
-1093,Eclipse,71428
-1094,Ambernite,357142
-1095,Andre,357142
-1096,Angeling,71428
-1097,Ant Egg,71428
-1099,Argiope,71428
-1100,Argos,214285
-1101,Baphomet Jr.,71428
-1102,Bathory,71428
-1103,Caramel,214285
-1104,Coco,357142
-1105,Deniro,357142
-1106,Desert Wolf,214285
-1107,Baby Desert Wolf,71428
-1108,Deviace,71428
-1109,Deviruchi,71428
-1110,Dokebi,214285
-1111,Drainliar,214285
-1113,Drops,357142
-1114,Dustiness,214285
-1116,Eggyra,214285
-1117,Evil Druid,71428
-1118,Flora,214285
-1119,Frilldora,214285
-1120,Ghostring,71428
-1121,Giearth,214285
-1122,Goblin,214285
-1123,Goblin,214285
-1124,Goblin,214285
-1125,Goblin,214285
-1126,Goblin,214285
-1127,Hode,214285
-1128,Horn,357142
-1129,Horong,214285
-1130,Jakk,214285
-1131,Joker,71428
-1132,Khalitzburg,71428
-1133,Kobold,214285
-1134,Kobold,214285
-1135,Kobold,214285
-1138,Magnolia,214285
-1139,Mantis,214285
-1140,Marduk,214285
-1141,Marina,214285
-1142,Marine Sphere,214285
-1143,Marionette,71428
-1144,Marse,214285
-1145,Martin,357142
-1146,Matyr,214285
-1148,Medusa,71428
-1149,Minorous,71428
-1151,Myst,214285
-1152,Orc Skeleton,214285
-1153,Orc Zombie,214285
-1154,Pasana,71428
-1155,Petite,71428
-1156,Petite,71428
-1158,Phen,214285
-1160,Piere,357142
-1161,Plankton,357142
-1163,Raydric,71428
-1164,Requiem,214285
-1165,Sandman,214285
-1166,Savage,214285
-1167,Savage Babe,357142
-1169,Skeleton Worker,214285
-1170,Sohee,214285
-1174,Stainer,357142
-1175,Tarou,357142
-1176,Vitata,214285
-1177,Zenorc,214285
-1178,Zerom,214285
-1179,Whisper,71428
-1180,Nine Tail,71428
-1182,Thief Mushroom,71428
-1185,Whisper,71428
-1186,Giant Whisper,71428
-1188,Bongun,214285
-1189,Orc Archer,71428
-1191,Mimic,71428
-1192,Wraith,71428
-1193,Alarm,71428
-1194,Arclouze,71428
-1195,Rideword,71428
-1196,Skeleton Prisoner,71428
-1197,Zombie Prisoner,71428
-1199,Punk,71428
-1200,Zealotus,71428
-1201,Rybio,71428
-1202,Phendark,71428
-1203,Mysteltainn,71428
-1204,Ogretooth,71428
-1205,Executioner,71428
-1206,Anolian,71428
-1207,Sting,71428
-1208,Wanderer,71428
-1209,Cramp,71428
-1211,Brilight,71428
-1212,Iron Fist,71428
-1213,High Orc,71428
-1214,Choco,71428
-1215,Stem Worm,214285
-1216,Penomena,71428
-1219,Abysmal Knight,71428
-1242,Marin,357142
-1243,Sasquatch,214285
-1245,Christmas Goblin,71428
-1246,Christmas Cookie,214285
-1248,Cruiser,214285
-1249,Myst Case,214285
-1250,Chepet,71428
-1253,Gargoyle,71428
-1254,Raggler,214285
-1255,Nereid,214285
-1256,Pest,214285
-1257,Injustice,71428
-1258,Goblin Archer,214285
-1259,Gryphon,71428
-1260,Dark Frame,71428
-1261,Wild Rose,214285
-1262,Mutant Dragonoid,71428
-1263,Wind Ghost,71428
-1264,Merman,71428
-1265,Cookie,214285
-1266,Aster,357142
-1267,Carat,71428
-1268,Bloody Knight,71428
-1269,Clock,71428
-1270,Clock Tower Manager,71428
-1271,Alligator,71428
-1273,Orc Lady,214285
-1274,Megalith,71428
-1275,Alice,71428
-1276,Raydric Archer,71428
-1277,Greatest General,214285
-1278,Stalactic Golem,71428
-1279,Tri Joint,214285
-1280,Goblin Steamrider,214285
-1281,Sage Worm,71428
-1282,Kobold Archer,214285
-1283,Chimera,71428
-1289,Maya Purple,71428
-1290,Skeleton General,71428
-1291,Wraith Dead,71428
-1292,Mini Demon,71428
-1293,Creamy Fear,71428
-1294,Killer Mantis,71428
-1295,Owl Baron,71428
-1296,Kobold Leader,71428
-1297,Ancient Mummy,71428
-1298,Zombie Master,71428
-1299,Goblin Leader,71428
-1300,Caterpillar,71428
-1301,Am Mut,71428
-1302,Dark Illusion,71428
-1303,Giant Hornet,71428
-1304,Giant Spider,71428
-1305,Ancient Worm,71428
-1306,Leib Olmai,71428
-1307,Cat o' Nine Tails,71428
-1308,Panzer Goblin,71428
-1309,Gajomart,71428
-1310,Majoruros,71428
-1311,Gullinbursti,71428
-1313,Mobster,71428
-1314,Permeter,71428
-1315,Assaulter,71428
-1316,Solider,71428
-1317,Seal,71428
-1318,Heater,71428
-1319,Freezer,71428
-1320,Owl Duke,71428
-1321,Dragon Tail,71428
-1322,Spring Rabbit,71428
-1323,Sea Otter,71428
-1365,Apocalypse,71428
-1366,Lava Golem,71428
-1367,Blazer,71428
-1368,Geographer,71428
-1369,Grand Peco,71428
-1370,Succubus,71428
-1371,False Angel,71428
-1372,Goat,71428
-1374,Incubus,71428
-1375,The Paper,71428
-1376,Harpy,71428
-1377,Elder,71428
-1378,Demon Pungus,71428
-1379,Nightmare Terror,71428
-1380,Driller,71428
-1381,Grizzly,71428
-1382,Diabolic,71428
-1383,Explosion,71428
-1384,Deleter,71428
-1385,Deleter,71428
-1386,Sleeper,71428
-1387,Gig,71428
-1390,Violy,71428
-1391,Galapago,71428
-1392,Rotar Zairo,214285
-1400,Karakasa,214285
-1401,Shinobi,71428
-1402,Poison Toad,71428
-1403,Firelock Soldier,71428
-1404,Miyabi Doll,214285
-1405,Tengu,71428
-1406,Kapha,71428
-1408,Bloody Butterfly,71428
-1409,Dumpling Child,214285
-1410,Enchanted Peach Tree,71428
-1412,Taoist Hermit,71428
-1413,Hermit Plant,71428
-1415,Baby Leopard,214285
-1416,Evil Nymph,71428
-1417,Zipper Bear,214285
-1493,Dryad,71428
-1494,Beetle King,214285
-1495,Stone Shooter,71428
-1497,Wooden Golem,71428
-1498,Wootan Shooter,214285
-1499,Wootan Fighter,71428
-1500,Parasite,214285
-1503,Gibbet,71428
-1504,Dullahan,71428
-1505,Loli Ruri,71428
-1506,Disguise,71428
-1507,Bloody Murderer,71428
-1508,Quve,214285
-1509,Lude,214285
-1510,Heirozoist,71428
-1512,Yao Jun,71428
-1513,Mao Guai,71428
-1514,Zhu Po Long,71428
-1515,Baby Hatii,71428
-1516,Mi Gao,71428
-1517,Jing Guai,71428
-1519,Green Maiden,71428
-1520,Boiled Rice,71428
-1582,Deviling,71428
-1584,Tamruan,71428
-1586,Leaf Cat,71428
-1587,Kraben,71428
-1613,Metaling,71428
-1614,Mineral,71428
-1615,Obsidian,71428
-1616,Pitman,71428
-1617,Old Stove,71428
-1618,Ungoliant,71428
-1619,Porcellio,71428
-1620,Noxious,71428
-1621,Venomous,71428
-1622,Teddy Bear,142857
+MOBG_Red_Pouch_Of_Surprise,0,Poring,1002
+MOBG_Red_Pouch_Of_Surprise,1001,Scorpion,214285
+MOBG_Red_Pouch_Of_Surprise,1002,Poring,1000000
+MOBG_Red_Pouch_Of_Surprise,1004,Hornet,357142
+MOBG_Red_Pouch_Of_Surprise,1005,Familiar,357142
+MOBG_Red_Pouch_Of_Surprise,1007,Fabre,428571
+MOBG_Red_Pouch_Of_Surprise,1008,Pupa,71428
+MOBG_Red_Pouch_Of_Surprise,1009,Condor,357142
+MOBG_Red_Pouch_Of_Surprise,1010,Willow,357142
+MOBG_Red_Pouch_Of_Surprise,1011,Chonchon,357142
+MOBG_Red_Pouch_Of_Surprise,1012,Roda Frog,357142
+MOBG_Red_Pouch_Of_Surprise,1013,Wolf,357142
+MOBG_Red_Pouch_Of_Surprise,1014,Spore,357142
+MOBG_Red_Pouch_Of_Surprise,1015,Zombie,357142
+MOBG_Red_Pouch_Of_Surprise,1016,Archer Skeleton,214285
+MOBG_Red_Pouch_Of_Surprise,1018,Creamy,357142
+MOBG_Red_Pouch_Of_Surprise,1019,Peco Peco,357142
+MOBG_Red_Pouch_Of_Surprise,1020,Mandragora,357142
+MOBG_Red_Pouch_Of_Surprise,1023,Orc Warrior,214285
+MOBG_Red_Pouch_Of_Surprise,1024,Wormtail,357142
+MOBG_Red_Pouch_Of_Surprise,1025,Boa,357142
+MOBG_Red_Pouch_Of_Surprise,1026,Munak,214285
+MOBG_Red_Pouch_Of_Surprise,1028,Soldier Skeleton,214285
+MOBG_Red_Pouch_Of_Surprise,1029,Isis,71428
+MOBG_Red_Pouch_Of_Surprise,1030,Anacondaq,214285
+MOBG_Red_Pouch_Of_Surprise,1031,Poporing,357142
+MOBG_Red_Pouch_Of_Surprise,1032,Verit,214285
+MOBG_Red_Pouch_Of_Surprise,1033,Elder Willow,214285
+MOBG_Red_Pouch_Of_Surprise,1034,Thara Frog,214285
+MOBG_Red_Pouch_Of_Surprise,1035,Hunter Fly,71428
+MOBG_Red_Pouch_Of_Surprise,1036,Ghoul,214285
+MOBG_Red_Pouch_Of_Surprise,1037,Side Winder,71428
+MOBG_Red_Pouch_Of_Surprise,1040,Golem,214285
+MOBG_Red_Pouch_Of_Surprise,1041,Mummy,214285
+MOBG_Red_Pouch_Of_Surprise,1042,Steel Chonchon,357142
+MOBG_Red_Pouch_Of_Surprise,1044,Obeaune,214285
+MOBG_Red_Pouch_Of_Surprise,1045,Marc,214285
+MOBG_Red_Pouch_Of_Surprise,1047,Peco Peco Egg,71428
+MOBG_Red_Pouch_Of_Surprise,1048,Thief Bug Egg,71428
+MOBG_Red_Pouch_Of_Surprise,1049,Picky,357142
+MOBG_Red_Pouch_Of_Surprise,1050,Picky,357142
+MOBG_Red_Pouch_Of_Surprise,1051,Thief Bug,357142
+MOBG_Red_Pouch_Of_Surprise,1052,Rocker,357142
+MOBG_Red_Pouch_Of_Surprise,1053,Thief Bug Female,357142
+MOBG_Red_Pouch_Of_Surprise,1054,Thief Bug Male,357142
+MOBG_Red_Pouch_Of_Surprise,1055,Muka,357142
+MOBG_Red_Pouch_Of_Surprise,1056,Smokie,357142
+MOBG_Red_Pouch_Of_Surprise,1057,Yoyo,357142
+MOBG_Red_Pouch_Of_Surprise,1058,Metaller,214285
+MOBG_Red_Pouch_Of_Surprise,1060,Bigfoot,214285
+MOBG_Red_Pouch_Of_Surprise,1061,Nightmare,71428
+MOBG_Red_Pouch_Of_Surprise,1062,Santa Poring,357142
+MOBG_Red_Pouch_Of_Surprise,1063,Lunatic,357142
+MOBG_Red_Pouch_Of_Surprise,1064,Megalodon,214285
+MOBG_Red_Pouch_Of_Surprise,1065,Strouf,214285
+MOBG_Red_Pouch_Of_Surprise,1066,Vadon,357142
+MOBG_Red_Pouch_Of_Surprise,1067,Cornutus,214285
+MOBG_Red_Pouch_Of_Surprise,1068,Hydra,357142
+MOBG_Red_Pouch_Of_Surprise,1069,Swordfish,214285
+MOBG_Red_Pouch_Of_Surprise,1070,Kukre,357142
+MOBG_Red_Pouch_Of_Surprise,1071,Pirate Skeleton,214285
+MOBG_Red_Pouch_Of_Surprise,1072,Kaho,71428
+MOBG_Red_Pouch_Of_Surprise,1073,Crab,214285
+MOBG_Red_Pouch_Of_Surprise,1074,Shellfish,357142
+MOBG_Red_Pouch_Of_Surprise,1076,Skeleton,357142
+MOBG_Red_Pouch_Of_Surprise,1077,Poison Spore,357142
+MOBG_Red_Pouch_Of_Surprise,1078,Red Plant,71428
+MOBG_Red_Pouch_Of_Surprise,1079,Blue Plant,71428
+MOBG_Red_Pouch_Of_Surprise,1080,Green Plant,71428
+MOBG_Red_Pouch_Of_Surprise,1081,Yellow Plant,71428
+MOBG_Red_Pouch_Of_Surprise,1082,White Plant,71428
+MOBG_Red_Pouch_Of_Surprise,1083,Shining Plant,71428
+MOBG_Red_Pouch_Of_Surprise,1084,Black Mushroom,71428
+MOBG_Red_Pouch_Of_Surprise,1085,Red Mushroom,71428
+MOBG_Red_Pouch_Of_Surprise,1088,Vocal,71428
+MOBG_Red_Pouch_Of_Surprise,1089,Toad,71428
+MOBG_Red_Pouch_Of_Surprise,1090,Mastering,71428
+MOBG_Red_Pouch_Of_Surprise,1091,Dragon Fly,71428
+MOBG_Red_Pouch_Of_Surprise,1092,Vagabond Wolf,71428
+MOBG_Red_Pouch_Of_Surprise,1093,Eclipse,71428
+MOBG_Red_Pouch_Of_Surprise,1094,Ambernite,357142
+MOBG_Red_Pouch_Of_Surprise,1095,Andre,357142
+MOBG_Red_Pouch_Of_Surprise,1096,Angeling,71428
+MOBG_Red_Pouch_Of_Surprise,1097,Ant Egg,71428
+MOBG_Red_Pouch_Of_Surprise,1099,Argiope,71428
+MOBG_Red_Pouch_Of_Surprise,1100,Argos,214285
+MOBG_Red_Pouch_Of_Surprise,1101,Baphomet Jr.,71428
+MOBG_Red_Pouch_Of_Surprise,1102,Bathory,71428
+MOBG_Red_Pouch_Of_Surprise,1103,Caramel,214285
+MOBG_Red_Pouch_Of_Surprise,1104,Coco,357142
+MOBG_Red_Pouch_Of_Surprise,1105,Deniro,357142
+MOBG_Red_Pouch_Of_Surprise,1106,Desert Wolf,214285
+MOBG_Red_Pouch_Of_Surprise,1107,Baby Desert Wolf,71428
+MOBG_Red_Pouch_Of_Surprise,1108,Deviace,71428
+MOBG_Red_Pouch_Of_Surprise,1109,Deviruchi,71428
+MOBG_Red_Pouch_Of_Surprise,1110,Dokebi,214285
+MOBG_Red_Pouch_Of_Surprise,1111,Drainliar,214285
+MOBG_Red_Pouch_Of_Surprise,1113,Drops,357142
+MOBG_Red_Pouch_Of_Surprise,1114,Dustiness,214285
+MOBG_Red_Pouch_Of_Surprise,1116,Eggyra,214285
+MOBG_Red_Pouch_Of_Surprise,1117,Evil Druid,71428
+MOBG_Red_Pouch_Of_Surprise,1118,Flora,214285
+MOBG_Red_Pouch_Of_Surprise,1119,Frilldora,214285
+MOBG_Red_Pouch_Of_Surprise,1120,Ghostring,71428
+MOBG_Red_Pouch_Of_Surprise,1121,Giearth,214285
+MOBG_Red_Pouch_Of_Surprise,1122,Goblin,214285
+MOBG_Red_Pouch_Of_Surprise,1123,Goblin,214285
+MOBG_Red_Pouch_Of_Surprise,1124,Goblin,214285
+MOBG_Red_Pouch_Of_Surprise,1125,Goblin,214285
+MOBG_Red_Pouch_Of_Surprise,1126,Goblin,214285
+MOBG_Red_Pouch_Of_Surprise,1127,Hode,214285
+MOBG_Red_Pouch_Of_Surprise,1128,Horn,357142
+MOBG_Red_Pouch_Of_Surprise,1129,Horong,214285
+MOBG_Red_Pouch_Of_Surprise,1130,Jakk,214285
+MOBG_Red_Pouch_Of_Surprise,1131,Joker,71428
+MOBG_Red_Pouch_Of_Surprise,1132,Khalitzburg,71428
+MOBG_Red_Pouch_Of_Surprise,1133,Kobold,214285
+MOBG_Red_Pouch_Of_Surprise,1134,Kobold,214285
+MOBG_Red_Pouch_Of_Surprise,1135,Kobold,214285
+MOBG_Red_Pouch_Of_Surprise,1138,Magnolia,214285
+MOBG_Red_Pouch_Of_Surprise,1139,Mantis,214285
+MOBG_Red_Pouch_Of_Surprise,1140,Marduk,214285
+MOBG_Red_Pouch_Of_Surprise,1141,Marina,214285
+MOBG_Red_Pouch_Of_Surprise,1142,Marine Sphere,214285
+MOBG_Red_Pouch_Of_Surprise,1143,Marionette,71428
+MOBG_Red_Pouch_Of_Surprise,1144,Marse,214285
+MOBG_Red_Pouch_Of_Surprise,1145,Martin,357142
+MOBG_Red_Pouch_Of_Surprise,1146,Matyr,214285
+MOBG_Red_Pouch_Of_Surprise,1148,Medusa,71428
+MOBG_Red_Pouch_Of_Surprise,1149,Minorous,71428
+MOBG_Red_Pouch_Of_Surprise,1151,Myst,214285
+MOBG_Red_Pouch_Of_Surprise,1152,Orc Skeleton,214285
+MOBG_Red_Pouch_Of_Surprise,1153,Orc Zombie,214285
+MOBG_Red_Pouch_Of_Surprise,1154,Pasana,71428
+MOBG_Red_Pouch_Of_Surprise,1155,Petite,71428
+MOBG_Red_Pouch_Of_Surprise,1156,Petite,71428
+MOBG_Red_Pouch_Of_Surprise,1158,Phen,214285
+MOBG_Red_Pouch_Of_Surprise,1160,Piere,357142
+MOBG_Red_Pouch_Of_Surprise,1161,Plankton,357142
+MOBG_Red_Pouch_Of_Surprise,1163,Raydric,71428
+MOBG_Red_Pouch_Of_Surprise,1164,Requiem,214285
+MOBG_Red_Pouch_Of_Surprise,1165,Sandman,214285
+MOBG_Red_Pouch_Of_Surprise,1166,Savage,214285
+MOBG_Red_Pouch_Of_Surprise,1167,Savage Babe,357142
+MOBG_Red_Pouch_Of_Surprise,1169,Skeleton Worker,214285
+MOBG_Red_Pouch_Of_Surprise,1170,Sohee,214285
+MOBG_Red_Pouch_Of_Surprise,1174,Stainer,357142
+MOBG_Red_Pouch_Of_Surprise,1175,Tarou,357142
+MOBG_Red_Pouch_Of_Surprise,1176,Vitata,214285
+MOBG_Red_Pouch_Of_Surprise,1177,Zenorc,214285
+MOBG_Red_Pouch_Of_Surprise,1178,Zerom,214285
+MOBG_Red_Pouch_Of_Surprise,1179,Whisper,71428
+MOBG_Red_Pouch_Of_Surprise,1180,Nine Tail,71428
+MOBG_Red_Pouch_Of_Surprise,1182,Thief Mushroom,71428
+MOBG_Red_Pouch_Of_Surprise,1185,Whisper,71428
+MOBG_Red_Pouch_Of_Surprise,1186,Giant Whisper,71428
+MOBG_Red_Pouch_Of_Surprise,1188,Bongun,214285
+MOBG_Red_Pouch_Of_Surprise,1189,Orc Archer,71428
+MOBG_Red_Pouch_Of_Surprise,1191,Mimic,71428
+MOBG_Red_Pouch_Of_Surprise,1192,Wraith,71428
+MOBG_Red_Pouch_Of_Surprise,1193,Alarm,71428
+MOBG_Red_Pouch_Of_Surprise,1194,Arclouze,71428
+MOBG_Red_Pouch_Of_Surprise,1195,Rideword,71428
+MOBG_Red_Pouch_Of_Surprise,1196,Skeleton Prisoner,71428
+MOBG_Red_Pouch_Of_Surprise,1197,Zombie Prisoner,71428
+MOBG_Red_Pouch_Of_Surprise,1199,Punk,71428
+MOBG_Red_Pouch_Of_Surprise,1200,Zealotus,71428
+MOBG_Red_Pouch_Of_Surprise,1201,Rybio,71428
+MOBG_Red_Pouch_Of_Surprise,1202,Phendark,71428
+MOBG_Red_Pouch_Of_Surprise,1203,Mysteltainn,71428
+MOBG_Red_Pouch_Of_Surprise,1204,Ogretooth,71428
+MOBG_Red_Pouch_Of_Surprise,1205,Executioner,71428
+MOBG_Red_Pouch_Of_Surprise,1206,Anolian,71428
+MOBG_Red_Pouch_Of_Surprise,1207,Sting,71428
+MOBG_Red_Pouch_Of_Surprise,1208,Wanderer,71428
+MOBG_Red_Pouch_Of_Surprise,1209,Cramp,71428
+MOBG_Red_Pouch_Of_Surprise,1211,Brilight,71428
+MOBG_Red_Pouch_Of_Surprise,1212,Iron Fist,71428
+MOBG_Red_Pouch_Of_Surprise,1213,High Orc,71428
+MOBG_Red_Pouch_Of_Surprise,1214,Choco,71428
+MOBG_Red_Pouch_Of_Surprise,1215,Stem Worm,214285
+MOBG_Red_Pouch_Of_Surprise,1216,Penomena,71428
+MOBG_Red_Pouch_Of_Surprise,1219,Abysmal Knight,71428
+MOBG_Red_Pouch_Of_Surprise,1242,Marin,357142
+MOBG_Red_Pouch_Of_Surprise,1243,Sasquatch,214285
+MOBG_Red_Pouch_Of_Surprise,1245,Christmas Goblin,71428
+MOBG_Red_Pouch_Of_Surprise,1246,Christmas Cookie,214285
+MOBG_Red_Pouch_Of_Surprise,1248,Cruiser,214285
+MOBG_Red_Pouch_Of_Surprise,1249,Myst Case,214285
+MOBG_Red_Pouch_Of_Surprise,1250,Chepet,71428
+MOBG_Red_Pouch_Of_Surprise,1253,Gargoyle,71428
+MOBG_Red_Pouch_Of_Surprise,1254,Raggler,214285
+MOBG_Red_Pouch_Of_Surprise,1255,Nereid,214285
+MOBG_Red_Pouch_Of_Surprise,1256,Pest,214285
+MOBG_Red_Pouch_Of_Surprise,1257,Injustice,71428
+MOBG_Red_Pouch_Of_Surprise,1258,Goblin Archer,214285
+MOBG_Red_Pouch_Of_Surprise,1259,Gryphon,71428
+MOBG_Red_Pouch_Of_Surprise,1260,Dark Frame,71428
+MOBG_Red_Pouch_Of_Surprise,1261,Wild Rose,214285
+MOBG_Red_Pouch_Of_Surprise,1262,Mutant Dragonoid,71428
+MOBG_Red_Pouch_Of_Surprise,1263,Wind Ghost,71428
+MOBG_Red_Pouch_Of_Surprise,1264,Merman,71428
+MOBG_Red_Pouch_Of_Surprise,1265,Cookie,214285
+MOBG_Red_Pouch_Of_Surprise,1266,Aster,357142
+MOBG_Red_Pouch_Of_Surprise,1267,Carat,71428
+MOBG_Red_Pouch_Of_Surprise,1268,Bloody Knight,71428
+MOBG_Red_Pouch_Of_Surprise,1269,Clock,71428
+MOBG_Red_Pouch_Of_Surprise,1270,Clock Tower Manager,71428
+MOBG_Red_Pouch_Of_Surprise,1271,Alligator,71428
+MOBG_Red_Pouch_Of_Surprise,1273,Orc Lady,214285
+MOBG_Red_Pouch_Of_Surprise,1274,Megalith,71428
+MOBG_Red_Pouch_Of_Surprise,1275,Alice,71428
+MOBG_Red_Pouch_Of_Surprise,1276,Raydric Archer,71428
+MOBG_Red_Pouch_Of_Surprise,1277,Greatest General,214285
+MOBG_Red_Pouch_Of_Surprise,1278,Stalactic Golem,71428
+MOBG_Red_Pouch_Of_Surprise,1279,Tri Joint,214285
+MOBG_Red_Pouch_Of_Surprise,1280,Goblin Steamrider,214285
+MOBG_Red_Pouch_Of_Surprise,1281,Sage Worm,71428
+MOBG_Red_Pouch_Of_Surprise,1282,Kobold Archer,214285
+MOBG_Red_Pouch_Of_Surprise,1283,Chimera,71428
+MOBG_Red_Pouch_Of_Surprise,1289,Maya Purple,71428
+MOBG_Red_Pouch_Of_Surprise,1290,Skeleton General,71428
+MOBG_Red_Pouch_Of_Surprise,1291,Wraith Dead,71428
+MOBG_Red_Pouch_Of_Surprise,1292,Mini Demon,71428
+MOBG_Red_Pouch_Of_Surprise,1293,Creamy Fear,71428
+MOBG_Red_Pouch_Of_Surprise,1294,Killer Mantis,71428
+MOBG_Red_Pouch_Of_Surprise,1295,Owl Baron,71428
+MOBG_Red_Pouch_Of_Surprise,1296,Kobold Leader,71428
+MOBG_Red_Pouch_Of_Surprise,1297,Ancient Mummy,71428
+MOBG_Red_Pouch_Of_Surprise,1298,Zombie Master,71428
+MOBG_Red_Pouch_Of_Surprise,1299,Goblin Leader,71428
+MOBG_Red_Pouch_Of_Surprise,1300,Caterpillar,71428
+MOBG_Red_Pouch_Of_Surprise,1301,Am Mut,71428
+MOBG_Red_Pouch_Of_Surprise,1302,Dark Illusion,71428
+MOBG_Red_Pouch_Of_Surprise,1303,Giant Hornet,71428
+MOBG_Red_Pouch_Of_Surprise,1304,Giant Spider,71428
+MOBG_Red_Pouch_Of_Surprise,1305,Ancient Worm,71428
+MOBG_Red_Pouch_Of_Surprise,1306,Leib Olmai,71428
+MOBG_Red_Pouch_Of_Surprise,1307,Cat o' Nine Tails,71428
+MOBG_Red_Pouch_Of_Surprise,1308,Panzer Goblin,71428
+MOBG_Red_Pouch_Of_Surprise,1309,Gajomart,71428
+MOBG_Red_Pouch_Of_Surprise,1310,Majoruros,71428
+MOBG_Red_Pouch_Of_Surprise,1311,Gullinbursti,71428
+MOBG_Red_Pouch_Of_Surprise,1313,Mobster,71428
+MOBG_Red_Pouch_Of_Surprise,1314,Permeter,71428
+MOBG_Red_Pouch_Of_Surprise,1315,Assaulter,71428
+MOBG_Red_Pouch_Of_Surprise,1316,Solider,71428
+MOBG_Red_Pouch_Of_Surprise,1317,Seal,71428
+MOBG_Red_Pouch_Of_Surprise,1318,Heater,71428
+MOBG_Red_Pouch_Of_Surprise,1319,Freezer,71428
+MOBG_Red_Pouch_Of_Surprise,1320,Owl Duke,71428
+MOBG_Red_Pouch_Of_Surprise,1321,Dragon Tail,71428
+MOBG_Red_Pouch_Of_Surprise,1322,Spring Rabbit,71428
+MOBG_Red_Pouch_Of_Surprise,1323,Sea Otter,71428
+MOBG_Red_Pouch_Of_Surprise,1365,Apocalypse,71428
+MOBG_Red_Pouch_Of_Surprise,1366,Lava Golem,71428
+MOBG_Red_Pouch_Of_Surprise,1367,Blazer,71428
+MOBG_Red_Pouch_Of_Surprise,1368,Geographer,71428
+MOBG_Red_Pouch_Of_Surprise,1369,Grand Peco,71428
+MOBG_Red_Pouch_Of_Surprise,1370,Succubus,71428
+MOBG_Red_Pouch_Of_Surprise,1371,False Angel,71428
+MOBG_Red_Pouch_Of_Surprise,1372,Goat,71428
+MOBG_Red_Pouch_Of_Surprise,1374,Incubus,71428
+MOBG_Red_Pouch_Of_Surprise,1375,The Paper,71428
+MOBG_Red_Pouch_Of_Surprise,1376,Harpy,71428
+MOBG_Red_Pouch_Of_Surprise,1377,Elder,71428
+MOBG_Red_Pouch_Of_Surprise,1378,Demon Pungus,71428
+MOBG_Red_Pouch_Of_Surprise,1379,Nightmare Terror,71428
+MOBG_Red_Pouch_Of_Surprise,1380,Driller,71428
+MOBG_Red_Pouch_Of_Surprise,1381,Grizzly,71428
+MOBG_Red_Pouch_Of_Surprise,1382,Diabolic,71428
+MOBG_Red_Pouch_Of_Surprise,1383,Explosion,71428
+MOBG_Red_Pouch_Of_Surprise,1384,Deleter,71428
+MOBG_Red_Pouch_Of_Surprise,1385,Deleter,71428
+MOBG_Red_Pouch_Of_Surprise,1386,Sleeper,71428
+MOBG_Red_Pouch_Of_Surprise,1387,Gig,71428
+MOBG_Red_Pouch_Of_Surprise,1390,Violy,71428
+MOBG_Red_Pouch_Of_Surprise,1391,Galapago,71428
+MOBG_Red_Pouch_Of_Surprise,1392,Rotar Zairo,214285
+MOBG_Red_Pouch_Of_Surprise,1400,Karakasa,214285
+MOBG_Red_Pouch_Of_Surprise,1401,Shinobi,71428
+MOBG_Red_Pouch_Of_Surprise,1402,Poison Toad,71428
+MOBG_Red_Pouch_Of_Surprise,1403,Firelock Soldier,71428
+MOBG_Red_Pouch_Of_Surprise,1404,Miyabi Doll,214285
+MOBG_Red_Pouch_Of_Surprise,1405,Tengu,71428
+MOBG_Red_Pouch_Of_Surprise,1406,Kapha,71428
+MOBG_Red_Pouch_Of_Surprise,1408,Bloody Butterfly,71428
+MOBG_Red_Pouch_Of_Surprise,1409,Dumpling Child,214285
+MOBG_Red_Pouch_Of_Surprise,1410,Enchanted Peach Tree,71428
+MOBG_Red_Pouch_Of_Surprise,1412,Taoist Hermit,71428
+MOBG_Red_Pouch_Of_Surprise,1413,Hermit Plant,71428
+MOBG_Red_Pouch_Of_Surprise,1415,Baby Leopard,214285
+MOBG_Red_Pouch_Of_Surprise,1416,Evil Nymph,71428
+MOBG_Red_Pouch_Of_Surprise,1417,Zipper Bear,214285
+MOBG_Red_Pouch_Of_Surprise,1493,Dryad,71428
+MOBG_Red_Pouch_Of_Surprise,1494,Beetle King,214285
+MOBG_Red_Pouch_Of_Surprise,1495,Stone Shooter,71428
+MOBG_Red_Pouch_Of_Surprise,1497,Wooden Golem,71428
+MOBG_Red_Pouch_Of_Surprise,1498,Wootan Shooter,214285
+MOBG_Red_Pouch_Of_Surprise,1499,Wootan Fighter,71428
+MOBG_Red_Pouch_Of_Surprise,1500,Parasite,214285
+MOBG_Red_Pouch_Of_Surprise,1503,Gibbet,71428
+MOBG_Red_Pouch_Of_Surprise,1504,Dullahan,71428
+MOBG_Red_Pouch_Of_Surprise,1505,Loli Ruri,71428
+MOBG_Red_Pouch_Of_Surprise,1506,Disguise,71428
+MOBG_Red_Pouch_Of_Surprise,1507,Bloody Murderer,71428
+MOBG_Red_Pouch_Of_Surprise,1508,Quve,214285
+MOBG_Red_Pouch_Of_Surprise,1509,Lude,214285
+MOBG_Red_Pouch_Of_Surprise,1510,Heirozoist,71428
+MOBG_Red_Pouch_Of_Surprise,1512,Yao Jun,71428
+MOBG_Red_Pouch_Of_Surprise,1513,Mao Guai,71428
+MOBG_Red_Pouch_Of_Surprise,1514,Zhu Po Long,71428
+MOBG_Red_Pouch_Of_Surprise,1515,Baby Hatii,71428
+MOBG_Red_Pouch_Of_Surprise,1516,Mi Gao,71428
+MOBG_Red_Pouch_Of_Surprise,1517,Jing Guai,71428
+MOBG_Red_Pouch_Of_Surprise,1519,Green Maiden,71428
+MOBG_Red_Pouch_Of_Surprise,1520,Boiled Rice,71428
+MOBG_Red_Pouch_Of_Surprise,1582,Deviling,71428
+MOBG_Red_Pouch_Of_Surprise,1584,Tamruan,71428
+MOBG_Red_Pouch_Of_Surprise,1586,Leaf Cat,71428
+MOBG_Red_Pouch_Of_Surprise,1587,Kraben,71428
+MOBG_Red_Pouch_Of_Surprise,1613,Metaling,71428
+MOBG_Red_Pouch_Of_Surprise,1614,Mineral,71428
+MOBG_Red_Pouch_Of_Surprise,1615,Obsidian,71428
+MOBG_Red_Pouch_Of_Surprise,1616,Pitman,71428
+MOBG_Red_Pouch_Of_Surprise,1617,Old Stove,71428
+MOBG_Red_Pouch_Of_Surprise,1618,Ungoliant,71428
+MOBG_Red_Pouch_Of_Surprise,1619,Porcellio,71428
+MOBG_Red_Pouch_Of_Surprise,1620,Noxious,71428
+MOBG_Red_Pouch_Of_Surprise,1621,Venomous,71428
+MOBG_Red_Pouch_Of_Surprise,1622,Teddy Bear,142857
