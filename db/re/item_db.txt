@@ -10287,4 +10287,16 @@
 28700,Ru_Gold_Dagger,Ru Gold Dagger,5,0,,1000,160,,1,2,0x00020000,56,2,2,3,120,1,1,{ bonus bStr,8; bonus bInt,8; },{},{}
 28701,Ru_Gold_Knife,Ru Gold Knife,5,0,,500,160,,1,2,0x00010000,56,2,2,3,120,1,0,{ bonus bVit,8; bonus bInt,8; },{},{}
 28702,Ru_Gold_Ashura,Ru Gold Ashura,5,0,,1000,150:150,,1,2,0x2000000,63,2,2,3,120,1,1,{},{},{}
+
+//  New Daggers
+// ===================================================================
 28703,Infinity_Dagger,Infinity Dagger,5,10,,500,125,,1,1,0x0280026B,7,2,2,4,100,1,1,{},{},{}
+28704,Twilight_Desert_,Desert Twilight,4,20,,600,130,,1,4,0x00001000,15,2,2,2,70,,1,{},{},{}
+28705,Crimson_Dagger,Crimson Dagger,4,20,,550,55,,1,2,0x228F5EEF,15,2,2,3,70,,1,{},{},{}
+28706,Dagger_of_Vicious_Mind,Dagger of Vicious Mind,4,20,,1050,105,,1,1,0x228F5EEF,15,2,2,3,160,,1,{},{},{}
+
+//  New Shields
+// ===================================================================
+28900,Praetorian_Shield,Praetorian Shield,5,20,,3000,,30,,1,0,0xFFFFFFFF,15,2,32,0,100,,2,{},{},{}
+28901,Cursed_Mad_Bunny,Cursed Mad Bunny,5,0,,100,,30,,1,0,0xFFFFFFFF,15,2,32,0,0,,1,{},{},{}
+28902,Mad_Bunny_,Mad Bunny,5,0,,100,,30,,1,0,0xFFFFFFFF,15,2,32,0,0,,1,{},{},{}
