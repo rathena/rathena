@@ -24,6 +24,10 @@ This list contains all available constants referenced in the 'bonus' commands.
 	RC_Formless, RC_Undead, RC_Brute, RC_Plant, RC_Insect, RC_Fish,
 	RC_Demon, RC_DemiHuman, RC_Angel, RC_Dragon, RC_Player, RC_All
 
+* Monster Race (mr)
+	RC2_Goblin, RC2_Kobold, RC2_Orc, RC2_Golem, RC2_Guardian, RC2_Ninja.
+	See 'db/(pre-)re/mob_race2_db.txt'
+
 * Class (c)
 	Class_Normal, Class_Boss, Class_Guardian, Class_All
 
@@ -46,7 +50,6 @@ This list contains all available constants referenced in the 'bonus' commands.
 
 * Other values:
 	Skill (sk): see 'db/(pre-)re/skill_db.txt' (NOTE: Both skill IDs and names, in quotes, are supported.)
-	Monster race (mr): see 'db/(pre-)re/mob_race2_db.txt'
 	Monster id (mid): see 'db/(pre-)re/mob_db.txt'
 	Item id (iid): see 'db/(pre-)re/item_db.txt'
 	Item group (ig): see 'db/(pre-)re/item_group_db.txt' and the constants in 'db/const.txt', prefixed with IG_*
@@ -171,16 +174,18 @@ bonus2 bAddItemGroupHealRate,ig,n;	Increases HP recovered by n% for items of ite
 
 Cast time/delay
 ---------------
-bonus bCastrate,n;             		Skill cast time rate + n%
-bonus2 bCastrate,sk,n;         		Adjust casting time of skill sk by n%
-bonus bFixedCastrate,n;        		Increases fixed cast time of all skills by n%
-bonus2 bFixedCastrate,sk,n;    		Increases fixed cast time of skill sk by n%
-bonus bVariableCastrate,n;     		Increases variable cast time of all skills by n%
-bonus2 bVariableCastrate,sk,n; 		Increases variable cast time of skill sk by n%
-bonus bFixedCast,t;            		Increases fixed cast time of all skills by t milliseconds
-bonus2 bSkillFixedCast,sk,t;   		Increases fixed cast time of skill sk by t milliseconds
-bonus bVariableCast,t;         		Increases variable cast time of all skills by t milliseconds
-bonus2 bSkillVariableCast,sk,t;		Increases variable cast time of skill sk by t milliseconds
+bonus bCastrate,n;             		Skill cast time rate + n%. (If RENEWAL_CAST is defined, this bonus is equal to bVariableCastrate)
+bonus2 bCastrate,sk,n;         		Adjust casting time of skill sk by n%.(If RENEWAL_CAST is defined, this bonus is equal to bVariableCastrate)
+
+bonus bFixedCastrate,n;        		Increases fixed cast time of all skills by n% (has effect in RENEWAL_CAST only)
+bonus2 bFixedCastrate,sk,n;    		Increases fixed cast time of skill sk by n% (has effect in RENEWAL_CAST only)
+bonus bVariableCastrate,n;     		Increases variable cast time of all skills by n%. (If RENEWAL_CAST is NOT defined, this bonus is equal to bCastrate)
+bonus2 bVariableCastrate,sk,n; 		Increases variable cast time of skill sk by n% (If RENEWAL_CAST is NOT defined, this bonus is equal to bCastrate)
+
+bonus bFixedCast,t;            		Increases fixed cast time of all skills by t milliseconds (has effect in RENEWAL_CAST only)
+bonus2 bSkillFixedCast,sk,t;   		Increases fixed cast time of skill sk by t milliseconds (has effect in RENEWAL_CAST only)
+bonus bVariableCast,t;         		Increases variable cast time of all skills by t milliseconds (has effect in RENEWAL_CAST only)
+bonus2 bSkillVariableCast,sk,t;		Increases variable cast time of skill sk by t milliseconds (has effect in RENEWAL_CAST only)
 
 bonus bNoCastCancel,n; 			Prevents casting from being interrupted when hit (does not work in GvG | n is meaningless)
 bonus bNoCastCancel2,n;			Prevents casting from being interrupted when hit (works even in GvG | n is meaningless)
@@ -328,8 +333,11 @@ bonus2 bSPDrainRate,n,x;		Adds a n/10% chance to drain x% SP when attacking
 bonus3 bSPDrainRate,n,x,y;		Adds a n/10% chance to either gain SP equivalent to x% of damage dealt, OR drain the amount of SP from the enemy
                           		(y: 0=gain SP, 1=drain SP from target)
 
-bonus2 bHPVanishRate,n,x;		Add a n/10% chance of decreasing enemy's HP (player) amount by x% when attacking
-bonus2 bSPVanishRate,n,x;		Add a n/10% chance of decreasing enemy's SP (player) amount by x% when attacking
+bonus2 bHPVanishRate,n,x;		Add a n/100% chance of decreasing enemy's HP amount by x% when attacking
+bonus2 bSPVanishRate,n,x;		Add a n/100% chance of decreasing enemy's SP amount by x% when attacking
+
+bonus3 bHPVanishRaceRate,r,n,x;		Add a n/100% chance of decreasing enemy's HP amount by x% when attacking, depends on enemy race r
+bonus3 bSPVanishRaceRate,r,n,x;		Add a n/100% chance of decreasing enemy's SP amount by x% when attacking, depends on enemy race r
 
 bonus2 bHPGainRaceAttack,r,n;		Heals +n HP on every hit when attacking an enemy of race r
 bonus2 bSPGainRaceAttack,r,n;		Heals +n SP on every hit when attacking an enemy of race r

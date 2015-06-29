@@ -495,9 +495,9 @@ lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
 					callsub L_Reward, 15044, 100, 50, 30; //Green_Operation_Coat
 					break;
 				case 8:
-					mes "<<Green Operating Gown[1]>>";
-					mes "DEX + 1, MSP + 30. Equipping with Scalpel will let to drop 'Immortal Heart', 'Alcohol' with a certain chance when hunting Human, Animal type monsters. Refine Lv affects the drop rate.";
-					mes "Armor / Def 66 / Weight 66 / Required Lv 100 / Socket 1 / for Generic";
+					mes "<<Ancient Gold Decoration[1]>>";
+					mes "If the base lv is 150, All State + 2. for Swordman, Merchant, Thief Classes ATK + 8%, for Magician, Acolyte classes MATK + 8%, Heal Power + 7%, for Archer classes DEX + 3, Long Distance ATK power + 10%.";
+					mes "Helm / Def 7 / Location - Upper / Weight 40 / Required Lv 100 / Socket 1 / for 3rd Job Classes";
 					callsub L_Reward, 18570, 300, 300, 400; //Ancient_Gold_Deco
 					break;
 				}
@@ -937,6 +937,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 	} else if (.@equip_item == 2160 || .@equip_item == 2161 || .@equip_item == 2162 ||
 	           .@equip_item == 2582 || .@equip_item == 2892 || .@equip_item == 15044 || 
 	           .@equip_item == 18570) {
+		.@type = 4;
 		if (.@equip_item == 2582 || .@equip_item == 18570)
 			.@lhz_max_num = 4200;
 	} else {

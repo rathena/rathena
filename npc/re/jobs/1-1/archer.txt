@@ -39,10 +39,10 @@ payon_in02,64,71,4	script	Archer Guildsman#archer	85,{
 			mes "need to say anything else.";
 			mes "I know you'll make a great Archer...";
 			next;
-			skill "NV_TRICKDEAD",0,0;
+			skill "NV_TRICKDEAD",0,SKILL_PERM;
 			jobchange Job_Archer_high;
-			skill "AC_MAKINGARROW",1,0;
-			skill "AC_CHARGEARROW",1,0;
+			skill "AC_MAKINGARROW",1,SKILL_PERM;
+			skill "AC_CHARGEARROW",1,SKILL_PERM;
 			mes "[Archer Guildsman]";
 			mes "Although there's no special";
 			mes "reward for you this time, I hope you understand. Take care of yourself.";

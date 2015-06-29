@@ -10,7 +10,7 @@
 	#include <sys/types.h>
 	#include <unistd.h>
 #endif
-#include <time.h> // time
+
 #include <mt19937ar.h> // init_genrand, genrand_int32, genrand_res53
 
 

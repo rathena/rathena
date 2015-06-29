@@ -14,15 +14,13 @@
 #include "char_mapif.h"
 #include "char_logif.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 //early declaration
 void chlogif_on_ready(void);
 void chlogif_on_disconnect(void);
 
-int chlogif_pincode_notifyLoginPinError( int account_id ){
+int chlogif_pincode_notifyLoginPinError( uint32 account_id ){
 	if (login_fd > 0 && session[login_fd] && !session[login_fd]->flag.eof){
 		WFIFOHEAD(login_fd,6);
 		WFIFOW(login_fd,0) = 0x2739;
@@ -33,7 +31,7 @@ int chlogif_pincode_notifyLoginPinError( int account_id ){
 	return 0;
 }
 
-int chlogif_pincode_notifyLoginPinUpdate( int account_id, char* pin ){
+int chlogif_pincode_notifyLoginPinUpdate( uint32 account_id, char* pin ){
 	if (login_fd > 0 && session[login_fd] && !session[login_fd]->flag.eof){
 		int size = 8 + PINCODE_LENGTH+1;
 		WFIFOHEAD(login_fd,size);
@@ -49,7 +47,7 @@ int chlogif_pincode_notifyLoginPinUpdate( int account_id, char* pin ){
 
 void chlogif_pincode_start(int fd, struct char_session_data* sd){
 	if( charserv_config.pincode_config.pincode_enabled ){
-		ShowInfo("Asking to start pincode to AID: %d\n", sd->account_id);
+		//ShowInfo("Asking to start pincode to AID: %d\n", sd->account_id);
 		// PIN code system enabled
 		if( sd->pincode[0] == '\0' ){
 			// No PIN code has been set yet
@@ -179,7 +177,7 @@ int chlogif_save_accreg2(unsigned char* buf, int len){
 	return 0;
 }
 
-int chlogif_request_accreg2(int account_id, int char_id){
+int chlogif_request_accreg2(uint32 account_id, uint32 char_id){
 	if (login_fd > 0) {
 		WFIFOHEAD(login_fd,10);
 		WFIFOW(login_fd,0) = 0x272e;
@@ -257,7 +255,7 @@ int chlogif_parse_ackaccreq(int fd, struct char_session_data* sd){
 	if (RFIFOREST(fd) < 25)
 		return 0;
 	{
-		int account_id = RFIFOL(fd,2);
+		uint32 account_id = RFIFOL(fd,2);
 		uint32 login_id1 = RFIFOL(fd,6);
 		uint32 login_id2 = RFIFOL(fd,10);
 		uint8 sex = RFIFOB(fd,14);
@@ -283,10 +281,7 @@ int chlogif_parse_ackaccreq(int fd, struct char_session_data* sd){
 				char_auth_ok(client_fd, sd);
 				break;
 			case 1:// auth failed
-				WFIFOHEAD(client_fd,3);
-				WFIFOW(client_fd,0) = 0x6c;
-				WFIFOB(client_fd,2) = 0;// rejected from server
-				WFIFOSET(client_fd,3);
+				chclif_reject(client_fd,0); // rejected from server
 				break;
 			}
 		}
@@ -326,10 +321,7 @@ int chlogif_parse_reqaccdata(int fd, struct char_session_data* sd){
 			(charserv_config.max_connect_user == 0 && sd->group_id != charserv_config.gm_allow_group) ||
 			( charserv_config.max_connect_user > 0 && char_count_users() >= charserv_config.max_connect_user && sd->group_id != charserv_config.gm_allow_group ) ) {
 			// refuse connection (over populated)
-			WFIFOHEAD(u_fd,3);
-			WFIFOW(u_fd,0) = 0x6c;
-			WFIFOW(u_fd,2) = 0;
-			WFIFOSET(u_fd,3);
+			chclif_reject(u_fd,0);
 		} else {
 			// send characters to player
 			chclif_mmo_char_send(u_fd, sd);
@@ -361,7 +353,7 @@ int chlogif_parse_ackchangesex(int fd, struct char_session_data* sd){
 
 		if( acc > 0 )
 		{// TODO: Is this even possible?
-			int char_id[MAX_CHARS];
+			uint32 char_id[MAX_CHARS];
 			int class_[MAX_CHARS];
 			int guild_id[MAX_CHARS];
 			unsigned char num, i;
@@ -609,10 +601,52 @@ int chlogif_reqvipdata(uint32 aid, uint8 type, int32 timediff, int mapfd) {
 	return 0;
 }
 
+/**
+* HA 0x2720
+* Request account info to login-server
+*/
+int chlogif_req_accinfo(int fd, int u_fd, int u_aid, int u_group, int account_id, int8 type) {
+	loginif_check(-1);
+	//ShowInfo("%d request account info for %d (type %d)\n", u_aid, account_id, type);
+	WFIFOHEAD(login_fd,23);
+	WFIFOW(login_fd,0) = 0x2720;
+	WFIFOL(login_fd,2) = fd;
+	WFIFOL(login_fd,6) = u_fd;
+	WFIFOL(login_fd,10) = u_aid;
+	WFIFOL(login_fd,14) = u_group;
+	WFIFOL(login_fd,18) = account_id;
+	WFIFOB(login_fd,22) = type;
+	WFIFOSET(login_fd,23);
+	return 1;
+}
+
+/**
+ * AH 0x2721
+ * Retrieve account info from login-server, ask inter-server to tell player
+ */
+int chlogif_parse_AccInfoAck(int fd) {
+	if (RFIFOREST(fd) < 19)
+		return 0;
+	else {
+		int8 type = RFIFOB(fd, 18);
+		if (type == 0 || RFIFOREST(fd) < 155+PINCODE_LENGTH+NAME_LENGTH) {
+			mapif_accinfo_ack(false, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), RFIFOL(fd,14), 0, -1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+			RFIFOSKIP(fd,19);
+			return 1;
+		}
+		type>>=1;
+		mapif_accinfo_ack(true, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), RFIFOL(fd,14), type, RFIFOL(fd,19), RFIFOL(fd,23), RFIFOL(fd,27),
+			(char*)RFIFOP(fd,31), (char*)RFIFOP(fd,71), (char*)RFIFOP(fd,87), (char*)RFIFOP(fd,111),
+			(char*)RFIFOP(fd,122), (char*)RFIFOP(fd,155), (char*)RFIFOP(fd,155+PINCODE_LENGTH));
+		RFIFOSKIP(fd,155+PINCODE_LENGTH+NAME_LENGTH);
+	}
+	return 1;
+}
+
 
 int chlogif_parse(int fd) {
 	struct char_session_data* sd = NULL;
-        
+
 	// only process data from the login-server
 	if( fd != login_fd ) {
 		ShowDebug("parse_fromlogin: Disconnecting invalid session #%d (is not the login-server)\n", fd);
@@ -645,26 +679,28 @@ int chlogif_parse(int fd) {
 		uint16 command = RFIFOW(fd,0);
 		switch( command )
 		{
-			case 0x2741: next=chlogif_parse_BankingAck(fd); break;
-			case 0x2743: next=chlogif_parse_vipack(fd); break;
+			case 0x2741: next = chlogif_parse_BankingAck(fd); break;
+			case 0x2743: next = chlogif_parse_vipack(fd); break;
 			// acknowledgement of connect-to-loginserver request
-			case 0x2711: next=chlogif_parse_ackconnect(fd,sd); break;
+			case 0x2711: next = chlogif_parse_ackconnect(fd,sd); break;
 			// acknowledgement of account authentication request
-			case 0x2713: next=chlogif_parse_ackaccreq(fd, sd); break;
+			case 0x2713: next = chlogif_parse_ackaccreq(fd, sd); break;
 			// account data
-			case 0x2717: next=chlogif_parse_reqaccdata(fd, sd); break;
+			case 0x2717: next = chlogif_parse_reqaccdata(fd, sd); break;
 			// login-server alive packet
-			case 0x2718: next=chlogif_parse_keepalive(fd, sd); break;
+			case 0x2718: next = chlogif_parse_keepalive(fd, sd); break;
 			// changesex reply
-			case 0x2723: next=chlogif_parse_ackchangesex(fd, sd); break;
+			case 0x2723: next = chlogif_parse_ackchangesex(fd, sd); break;
 			// reply to an account_reg2 registry request
-			case 0x2729: next=chlogif_parse_ackacc2req(fd, sd); break;
+			case 0x2729: next = chlogif_parse_ackacc2req(fd, sd); break;
 			// State change of account/ban notification (from login-server)
-			case 0x2731: next=chlogif_parse_accbannotification(fd, sd); break;
+			case 0x2731: next = chlogif_parse_accbannotification(fd, sd); break;
 			// Login server request to kick a character out. [Skotlex]
-			case 0x2734: next=chlogif_parse_askkick(fd,sd); break;
+			case 0x2734: next = chlogif_parse_askkick(fd,sd); break;
 			// ip address update signal from login server
-			case 0x2735: next=chlogif_parse_updip(fd,sd); break;
+			case 0x2735: next = chlogif_parse_updip(fd,sd); break;
+			// @accinfo result
+			case 0x2721: next = chlogif_parse_AccInfoAck(fd); break;
 			default:
 				ShowError("Unknown packet 0x%04x received from login-server, disconnecting.\n", command);
 				set_eof(fd);

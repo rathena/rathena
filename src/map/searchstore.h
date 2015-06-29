@@ -19,7 +19,7 @@ struct s_search_store_search {
 
 struct s_search_store_info_item {
 	int store_id;
-	int account_id;
+	uint32 account_id;
 	char store_name[MESSAGE_SIZE];
 	unsigned short nameid;
 	unsigned short amount;
@@ -46,9 +46,9 @@ bool searchstore_querynext(struct map_session_data* sd);
 void searchstore_next(struct map_session_data* sd);
 void searchstore_clear(struct map_session_data* sd);
 void searchstore_close(struct map_session_data* sd);
-void searchstore_click(struct map_session_data* sd, int account_id, int store_id, unsigned short nameid);
-bool searchstore_queryremote(struct map_session_data* sd, int account_id);
+void searchstore_click(struct map_session_data* sd, uint32 account_id, int store_id, unsigned short nameid);
+bool searchstore_queryremote(struct map_session_data* sd, uint32 account_id);
 void searchstore_clearremote(struct map_session_data* sd);
-bool searchstore_result(struct map_session_data* sd, int store_id, int account_id, const char* store_name, unsigned short nameid, unsigned short amount, unsigned int price, const unsigned short* card, unsigned char refine);
+bool searchstore_result(struct map_session_data* sd, int store_id, uint32 account_id, const char* store_name, unsigned short nameid, unsigned short amount, unsigned int price, const unsigned short* card, unsigned char refine);
 
 #endif  // _SEARCHSTORE_H_

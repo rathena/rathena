@@ -56,6 +56,8 @@ Weight: Item's weight. Each 10 is 1 weight.
 
 ATK: Weapon's attack
 
+MATK: Weapon's magic attack (Renewal only)
+
 ---------------------------------------
 
 DEF: Armor's defense
@@ -153,6 +155,8 @@ wLV: Weapon level.
 ---------------------------------------
 
 eLV: Base level required to be able to equip.
+
+maxLevel: Only able to equip if base level is lower than this.
 
 ---------------------------------------
 

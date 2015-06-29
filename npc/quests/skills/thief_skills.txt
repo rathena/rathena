@@ -148,7 +148,7 @@ moc_prydb1,154,128,4	script	Alcouskou	118,{
 				mes "I hope that this skill will";
 				mes "aid you in the future. -";
 				delitem 7042,1; //Leather_Bag_Of_Infinity
-				skill "TF_SPRINKLESAND",1,0;
+				skill "TF_SPRINKLESAND",1,SKILL_PERM;
 				close;
 			}
 	case 2:
@@ -170,7 +170,7 @@ moc_prydb1,154,128,4	script	Alcouskou	118,{
 			mes "I am sure you can increase";
 			mes "your skill on your own.";
 			delitem 940,20; //Grasshopper's_Leg
-			skill "TF_BACKSLIDING",1,0;
+			skill "TF_BACKSLIDING",1,SKILL_PERM;
 			close;
 		}
 		mes "[Alcouskou]";
@@ -262,7 +262,7 @@ moc_prydb1,154,128,4	script	Alcouskou	118,{
 			delitem 912,1; //Zargon
 			delitem 948,1; //Bear's_Foot
 			delitem 908,5; //Spawn
-			skill "TF_PICKSTONE",1,0;
+			skill "TF_PICKSTONE",1,SKILL_PERM;
 			close;
 		}
 		mes "[Alcouskou]";
@@ -344,7 +344,7 @@ moc_prydb1,154,128,4	script	Alcouskou	118,{
 			mes "I wish you luck!";
 			delitem 910,2; //Garlet
 			delitem 911,2; //Scell
-			skill "TF_THROWSTONE",1,0;
+			skill "TF_THROWSTONE",1,SKILL_PERM;
 			close;
 		}
 		mes "[Alcouskou]";

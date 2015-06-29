@@ -312,7 +312,8 @@ enum npc_subtype {
 	NPCTYPE_CASHSHOP, /// Cashshop
 	NPCTYPE_ITEMSHOP, /// Itemshop
 	NPCTYPE_POINTSHOP, /// Pointshop
-	NPCTYPE_TOMB /// Monster tomb
+	NPCTYPE_TOMB, /// Monster tomb
+	NPCTYPE_MARKETSHOP, /// Marketshop
 };
 
 enum e_race {
@@ -445,6 +446,8 @@ enum _sp {
 	SP_KILLEDRID=122,
 	SP_SITTING=123,
 	SP_CHARMOVE=124,
+	SP_CHARRENAME=125,
+	SP_CHARFONT=126,
 
 	// Mercenaries
 	SP_MERCFLEE=165, SP_MERCKILLS=189, SP_MERCFAITH=190,
@@ -496,7 +499,8 @@ enum _sp {
 
 	SP_IGNORE_DEF_CLASS, SP_DEF_RATIO_ATK_CLASS, SP_ADDCLASS, SP_SUBCLASS, SP_MAGIC_ADDCLASS, //2062-2066
 	SP_WEAPON_COMA_CLASS, SP_IGNORE_MDEF_CLASS_RATE, SP_EXP_ADDCLASS, SP_ADD_CLASS_DROP_ITEM, //2067-2070
-	SP_ADD_CLASS_DROP_ITEMGROUP, SP_ADDMAXWEIGHT, SP_ADD_ITEMGROUP_HEAL_RATE  // 2071-2073
+	SP_ADD_CLASS_DROP_ITEMGROUP, SP_ADDMAXWEIGHT, SP_ADD_ITEMGROUP_HEAL_RATE,  // 2071-2073
+	SP_HP_VANISH_RACE_RATE, SP_SP_VANISH_RACE_RATE, // 2074-2075
 };
 
 enum _look {
@@ -587,16 +591,18 @@ struct iwall_data {
 };
 
 #ifdef ADJUST_SKILL_DAMAGE
+/// Struct of skill damage adjustment
 struct s_skill_damage {
-	uint16 map, skill_id;
-	/* additional rates */
-	int pc,
-		mob,
-		boss,
-		other;
-	uint8 caster;	/* caster type */
+	unsigned int map; ///< Maps (used for skill_damage_db.txt)
+	uint16 skill_id; ///< Skill ID (used for mapflag)
+	// Additional rates
+	int pc, ///< Rate to Player
+		mob, ///< Rate to Monster
+		boss, ///< Rate to Boss-Monster
+		other; ///< Rate to Other target
+	uint8 caster; ///< Caster type
 };
-#define MAX_MAP_SKILL_MODIFIER 5
+struct eri *map_skill_damage_ers;
 #endif
 
 struct questinfo {
@@ -701,15 +707,11 @@ struct map_data {
 #endif
 	} adjust;
 #ifdef ADJUST_SKILL_DAMAGE
-	struct s_skill_damage skill_damage[MAX_MAP_SKILL_MODIFIER];
+	struct {
+		struct s_skill_damage **entries;
+		uint8 count;
+	} skill_damage;
 #endif
-	/**
-	 * Ice wall reference counter for bugreport:3574
-	 * - since there are a thounsand mobs out there in a lot of maps checking on,
-	 * - every targetting for icewall on attack path would just be a waste, so,
-	 * - this counter allows icewall checking be only run when there is a actual ice wall on the map
-	 **/
-	int icewall_num;
 	// Instance Variables
 	int instance_id;
 	int instance_src_map;
@@ -745,7 +747,7 @@ extern int map_num;
 
 extern int autosave_interval;
 extern int minsave_interval;
-extern int save_settings;
+extern unsigned char save_settings;
 extern int agit_flag;
 extern int agit2_flag;
 extern int night_flag; // 0=day, 1=night [Yor]
@@ -757,6 +759,27 @@ extern char help2_txt[];
 extern char charhelp_txt[];
 
 extern char wisp_server_name[];
+
+struct s_map_default {
+	char mapname[MAP_NAME_LENGTH];
+	unsigned short x;
+	unsigned short y;
+};
+extern struct s_map_default map_default;
+
+/// Type of 'save_settings'
+enum save_settings_type {
+	CHARSAVE_NONE = 0,
+	CHARSAVE_TRADE   = 0x01, /// After trading
+	CHARSAVE_VENDING = 0x02, /// After vending (open/transaction)
+	CHARSAVE_STORAGE = 0x04, /// After closing storage/guild storage.
+	CHARSAVE_PET     = 0x08, /// After hatching/returning to egg a pet.
+	CHARSAVE_MAIL    = 0x10, /// After successfully sending a mail with attachment
+	CHARSAVE_AUCTION = 0x20, /// After successfully submitting an item for auction
+	CHARSAVE_QUEST   = 0x40, /// After successfully get/delete/complete a quest
+	CHARSAVE_BANK    = 0x80, /// After every bank transaction (deposit/withdraw)
+	CHARSAVE_ALL     = 0xFF,
+};
 
 // users
 void map_setusers(int);
@@ -781,11 +804,12 @@ int map_foreachincell(int (*func)(struct block_list*,va_list), int16 m, int16 x,
 int map_foreachinpath(int (*func)(struct block_list*,va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int16 range, int length, int type, ...);
 int map_foreachinmap(int (*func)(struct block_list*,va_list), int16 m, int type, ...);
 //blocklist nb in one cell
-int map_count_oncell(int16 m,int16 x,int16 y,int type);
+int map_count_oncell(int16 m,int16 x,int16 y,int type,int flag);
 struct skill_unit *map_find_skill_unit_oncell(struct block_list *,int16 x,int16 y,uint16 skill_id,struct skill_unit *, int flag);
 // search and creation
 int map_get_new_object_id(void);
 int map_search_freecell(struct block_list *src, int16 m, int16 *x, int16 *y, int16 rx, int16 ry, int flag);
+bool map_closest_freecell(int16 m, int16 *x, int16 *y, int type, int flag);
 //
 int map_quit(struct map_session_data *);
 // npc
@@ -813,6 +837,8 @@ struct mob_data * map_id2md(int id);
 struct npc_data * map_id2nd(int id);
 struct homun_data* map_id2hd(int id);
 struct mercenary_data* map_id2mc(int id);
+struct pet_data* map_id2pd(int id);
+struct elemental_data* map_id2ed(int id);
 struct chat_data* map_id2cd(int id);
 struct block_list * map_id2bl(int id);
 bool map_blid_exists( int id );
@@ -863,7 +889,8 @@ bool                    mapit_exists(struct s_mapiterator* mapit);
 #define mapit_geteachiddb() mapit_alloc(MAPIT_NORMAL,BL_ALL)
 
 int map_check_dir(int s_dir,int t_dir);
-uint8 map_calc_dir( struct block_list *src,int16 x,int16 y);
+uint8 map_calc_dir(struct block_list *src,int16 x,int16 y);
+uint8 map_calc_dir_xy(int16 srcx, int16 srcy, int16 x, int16 y, uint8 srcdir);
 int map_random_dir(struct block_list *bl, short *x, short *y); // [Skotlex]
 
 int cleanup_sub(struct block_list *bl, va_list ap);
@@ -881,6 +908,11 @@ void map_removemobs(int16 m); // [Wizputer]
 void do_reconnect_map(void); //Invoked on map-char reconnection [Skotlex]
 void map_addmap2db(struct map_data *m);
 void map_removemapdb(struct map_data *m);
+
+#ifdef ADJUST_SKILL_DAMAGE
+void map_skill_damage_free(struct map_data *m);
+void map_skill_damage_add(struct map_data *m, uint16 skill_id, int pc, int mob, int boss, int other, uint8 caster);
+#endif
 
 #define CHK_ELEMENT(ele) ((ele) > ELE_NONE && (ele) < ELE_MAX) /// Check valid Element
 #define CHK_ELEMENT_LEVEL(lv) ((lv) >= 1 && (lv) <= MAX_ELE_LEVEL) /// Check valid element level
@@ -946,6 +978,7 @@ extern char log_db_db[32];
 extern int db_use_sqldbs;
 
 extern Sql* mmysql_handle;
+extern Sql* qsmysql_handle;
 extern Sql* logmysql_handle;
 
 extern char buyingstores_db[32];
@@ -961,6 +994,7 @@ extern char mob_skill_db_re_db[32];
 extern char mob_skill_db2_db[32];
 extern char vendings_db[32];
 extern char vending_items_db[32];
+extern char market_table[32];
 
 void do_shutdown(void);
 

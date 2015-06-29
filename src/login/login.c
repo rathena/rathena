@@ -19,7 +19,6 @@
 #include "../common/timer.h"
 #include "../common/msg_conf.h"
 #include "../common/cli.h"
-#include "../common/ers.h"
 #include "../common/utils.h"
 #include "../common/mmo.h"
 #include "../config/core.h"
@@ -31,9 +30,7 @@
 #include "loginchrif.h"
 #include "logincnslif.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #define LOGIN_MAX_MSG 30				/// Max number predefined in msg_conf
 static char* msg_table[LOGIN_MAX_MSG];	/// Login Server messages_conf
@@ -93,7 +90,7 @@ DBData login_create_online_user(DBKey key, va_list args) {
  * @param account_id : aid connected
  * @return the new online_login_data for that user
  */
-struct online_login_data* login_add_online_user(int char_server, int account_id){
+struct online_login_data* login_add_online_user(int char_server, uint32 account_id){
 	struct online_login_data* p;
 	p = idb_ensure(online_db, account_id, login_create_online_user);
 	p->char_server = char_server;
@@ -110,7 +107,7 @@ struct online_login_data* login_add_online_user(int char_server, int account_id)
  *  Checking if user was already scheduled for deletion, and remove that timer if found.
  * @param account_id : aid to remove from db
  */
-void login_remove_online_user(int account_id) {
+void login_remove_online_user(uint32 account_id) {
 	struct online_login_data* p;
 	p = (struct online_login_data*)idb_get(online_db, account_id);
 	if( p == NULL )

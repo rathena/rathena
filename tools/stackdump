@@ -1,4 +1,5 @@
 #!/bin/bash
+# !TODO upd me
 
 case "$1" in
 	map|char|login)

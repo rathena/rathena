@@ -13,11 +13,8 @@
 #include "clif.h"
 #include "npc.h" // npc_event_do()
 #include "pc.h"
-#include "skill.h" // ext_skill_unit_onplace()
 #include "chat.h"
 
-#include <stdio.h>
-#include <string.h>
 
 int chat_triggerevent(struct chat_data *cd); // forward declaration
 
@@ -26,7 +23,6 @@ int chat_triggerevent(struct chat_data *cd); // forward declaration
 static struct chat_data* chat_createchat(struct block_list* bl, const char* title, const char* pass, int limit, bool pub, int trigger, const char* ev, int zeny, int minLvl, int maxLvl)
 {
 	struct chat_data* cd;
-
 	nullpo_retr(NULL, bl);
 
 	cd = (struct chat_data *) aMalloc(sizeof(struct chat_data));

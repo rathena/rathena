@@ -8,20 +8,6 @@
 //
 //
 
-#include <stdio.h>
-#include <errno.h>
-#include <string.h>
-#include <stdlib.h>
-#include <unistd.h>
-
-#include <sys/epoll.h>
-#include <sys/fcntl.h>
-#include <sys/socket.h>
-
-#include "../common/cbasetypes.h"
-#include "../common/showmsg.h"
-#include "../common/evdp.h"
-
 
 #define EPOLL_MAX_PER_CYCLE 10	// Max Events to coalesc. per cycle. 
 

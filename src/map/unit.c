@@ -12,34 +12,22 @@
 #include "map.h"
 #include "path.h"
 #include "pc.h"
-#include "mob.h"
 #include "pet.h"
 #include "homunculus.h"
-#include "instance.h"
 #include "mercenary.h"
 #include "elemental.h"
-#include "skill.h"
 #include "channel.h"
-#include "clif.h"
 #include "duel.h"
-#include "npc.h"
-#include "guild.h"
-#include "status.h"
-#include "unit.h"
-#include "battle.h"
 #include "battleground.h"
 #include "chat.h"
 #include "trade.h"
-#include "vending.h"
 #include "party.h"
 #include "intif.h"
-#include "chrif.h"
-#include "script.h"
 #include "storage.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 
 // Directions values
 // 1 0 7
@@ -92,6 +80,13 @@ int unit_walktoxy_sub(struct block_list *bl)
 	if( !path_search(&wpd,bl->m,bl->x,bl->y,ud->to_x,ud->to_y,ud->state.walk_easy,CELL_CHKNOPASS) )
 		return 0;
 
+#ifdef OFFICIAL_WALKPATH
+	if( !path_search_long(NULL, bl->m, bl->x, bl->y, ud->to_x, ud->to_y, CELL_CHKNOPASS) // Check if there is an obstacle between
+		&& wpd.path_len > 14	// Official number of walkable cells is 14 if and only if there is an obstacle between. [malufett]
+		&& (bl->type != BL_NPC) ) // If type is a NPC, please disregard.
+			return 0;
+#endif
+
 	memcpy(&ud->walkpath,&wpd,sizeof(wpd));
 
 	if (ud->target_to && ud->chaserange>1) {
@@ -100,11 +95,11 @@ int unit_walktoxy_sub(struct block_list *bl)
 		uint8 dir;
 		// Trim the last part of the path to account for range,
 		// but always move at least one cell when requested to move.
-		for (i = ud->chaserange*10; i > 0 && ud->walkpath.path_len>1;) {
-		   ud->walkpath.path_len--;
+		for (i = (ud->chaserange*10)-10; i > 0 && ud->walkpath.path_len>1;) {
+			ud->walkpath.path_len--;
 			dir = ud->walkpath.path[ud->walkpath.path_len];
 			if(dir&1)
-				i -= MOVE_DIAGONAL_COST;
+				i -= MOVE_COST*20; //When chasing, units will target a diamond-shaped area in range [Playtester]
 			else
 				i -= MOVE_COST;
 			ud->to_x -= dirx[dir];
@@ -241,17 +236,86 @@ int unit_check_start_teleport_timer(struct block_list *sbl)
 }
 
 /**
+ * Triggered on full step if stepaction is true and executes remembered action.
+ * @param tid: Timer ID
+ * @param tick: Unused
+ * @param id: ID of bl to do the action
+ * @param data: Not used
+ * @return 1: Success 0: Fail (No valid bl)
+ */
+int unit_step_timer(int tid, unsigned int tick, int id, intptr_t data)
+{
+	struct block_list *bl;
+	struct unit_data *ud;
+	int target_id;
+
+	bl = map_id2bl(id);
+
+	if (!bl || bl->prev == NULL)
+		return 0;
+
+	ud = unit_bl2ud(bl);
+
+	if(!ud)
+		return 0;
+
+	if(ud->steptimer != tid) {
+		ShowError("unit_step_timer mismatch %d != %d\n",ud->steptimer,tid);
+		return 0;
+	}
+
+	ud->steptimer = INVALID_TIMER;
+
+	if(!ud->stepaction)
+		return 0;
+
+	//Set to false here because if an error occurs, it should not be executed again
+	ud->stepaction = false;
+
+	if(!ud->target_to)
+		return 0;
+
+	//Flush target_to as it might contain map coordinates which should not be used by other functions
+	target_id = ud->target_to;
+	ud->target_to = 0;
+
+	//If stepaction is set then we remembered a client request that should be executed on the next step
+	//Execute request now if target is in attack range
+	if(ud->stepskill_id && skill_get_inf(ud->stepskill_id) & INF_GROUND_SKILL) {
+		//Execute ground skill
+		struct map_data *md = &map[bl->m];			
+		unit_skilluse_pos(bl, target_id%md->xs, target_id/md->xs, ud->stepskill_id, ud->stepskill_lv);
+	} else {
+		//If a player has target_id set and target is in range, attempt attack
+		struct block_list *tbl = map_id2bl(target_id);
+		if (!tbl || !status_check_visibility(bl, tbl)) {
+			return 0;
+		}
+		if(ud->stepskill_id == 0) {
+			//Execute normal attack
+			unit_attack(bl, tbl->id, (ud->state.attack_continue) + 2);
+		} else {
+			//Execute non-ground skill
+			unit_skilluse_id(bl, tbl->id, ud->stepskill_id, ud->stepskill_lv);
+		}
+	}
+
+	return 1;
+}
+
+/**
  * Defines when to refresh the walking character to object and restart the timer if applicable
  * Also checks for speed update, target location, and slave teleport timers
  * @param tid: Timer ID
  * @param tick: Current tick to decide next timer update
  * @param data: Data used in timer calls
- * @return 0 or unit_walktoxy_sub()
+ * @return 0 or unit_walktoxy_sub() or unit_walktoxy()
  */
 static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	int i;
 	int x,y,dx,dy;
+	unsigned char icewall_walk_block;
 	uint8 dir;
 	struct block_list *bl;
 	struct unit_data *ud;
@@ -298,8 +362,33 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	dx = dirx[(int)dir];
 	dy = diry[(int)dir];
 
-	if(map_getcell(bl->m,x+dx,y+dy,CELL_CHKNOPASS))
+	//Get icewall walk block depending on boss mode (players can't be trapped)
+	if(md && md->status.mode&MD_BOSS)
+		icewall_walk_block = battle_config.boss_icewall_walk_block;
+	else if(md)
+		icewall_walk_block = battle_config.mob_icewall_walk_block;
+	else
+		icewall_walk_block = 0;
+
+	//Monsters will walk into an icewall from the west and south if they already started walking
+	if(map_getcell(bl->m,x+dx,y+dy,CELL_CHKNOPASS) 
+		&& (icewall_walk_block == 0 || !map_getcell(bl->m,x+dx,y+dy,CELL_CHKICEWALL) || dx < 0 || dy < 0))
 		return unit_walktoxy_sub(bl);
+
+	//Monsters can only leave icewalls to the west and south
+	//But if movement fails more than icewall_walk_block times, they can ignore this rule
+	if(md && md->walktoxy_fail_count < icewall_walk_block && map_getcell(bl->m,x,y,CELL_CHKICEWALL) && (dx > 0 || dy > 0)) {
+		//Needs to be done here so that rudeattack skills are invoked
+		md->walktoxy_fail_count++;
+		clif_fixpos(bl);
+		//Monsters in this situation first use a chase skill, then unlock target and then use an idle skill
+		if (!(++ud->walk_count%WALK_SKILL_INTERVAL))
+			mobskill_use(md, tick, -1);
+		mob_unlocktarget(md, tick);
+		if (!(++ud->walk_count%WALK_SKILL_INTERVAL))
+			mobskill_use(md, tick, -1);
+		return 0;
+	}
 
 	// Refresh view for all those we lose sight
 	map_foreachinmovearea(clif_outsight, bl, AREA_SIZE, dx, dy, sd?BL_ALL:BL_PC, bl);
@@ -330,6 +419,8 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 			pc_cell_basilica(sd);
 			break;
 		case BL_MOB:
+			//Movement was successful, reset walktoxy_fail_count
+			md->walktoxy_fail_count = 0;
 			if( map_getcell(bl->m,x,y,CELL_CHKNPC) ) {
 				if( npc_touch_areanpc2(md) )
 					return 0; // Warped
@@ -341,8 +432,11 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 			// But avoid triggering on stop-walk calls.
 			if(tid != INVALID_TIMER &&
 				!(ud->walk_count%WALK_SKILL_INTERVAL) &&
+				map[bl->m].users > 0 &&
 				mobskill_use(md, tick, -1)) {
-				if (!(ud->skill_id == NPC_SELFDESTRUCTION && ud->skilltimer != INVALID_TIMER)) { // Skill used, abort walking
+				if (!(ud->skill_id == NPC_SELFDESTRUCTION && ud->skilltimer != INVALID_TIMER)
+					&& md->state.skillstate != MSS_WALK) //Walk skills are supposed to be used while walking
+				{ // Skill used, abort walking
 					clif_fixpos(bl); // Fix position as walk has been cancelled.
 					return 0;
 				}
@@ -355,8 +449,29 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	if(tid == INVALID_TIMER) // A directly invoked timer is from battle_stop_walking, therefore the rest is irrelevant.
 		return 0;
 
-	if(ud->state.change_walk_target)
-		return unit_walktoxy_sub(bl);
+	//If stepaction is set then we remembered a client request that should be executed on the next step
+	if (ud->stepaction && ud->target_to) {
+		//Delete old stepaction even if not executed yet, the latest command is what counts
+		if(ud->steptimer != INVALID_TIMER) {
+			delete_timer(ud->steptimer, unit_step_timer);
+			ud->steptimer = INVALID_TIMER;
+		}
+		//Delay stepactions by half a step (so they are executed at full step)
+		if(ud->walkpath.path[ud->walkpath.path_pos]&1)
+			i = status_get_speed(bl)*14/20;
+		else
+			i = status_get_speed(bl)/2;
+		ud->steptimer = add_timer(tick+i, unit_step_timer, bl->id, 0);
+	}
+
+	if(ud->state.change_walk_target) {
+		if(unit_walktoxy_sub(bl)) {
+			return 1;	
+		} else {
+			clif_fixpos(bl);
+			return 0;
+		}
+	}
 
 	ud->walkpath.path_pos++;
 
@@ -371,11 +486,10 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 		ud->walktimer = add_timer(tick+i,unit_walktoxy_timer,id,i);
 		if( md && DIFF_TICK(tick,md->dmgtick) < 3000 ) // Not required not damaged recently
 			clif_move(ud);
-	} else if(ud->state.running) {
-		// Keep trying to run.
-		if ( !(unit_run(bl) || unit_wugdash(bl,sd)) )
+	} else if(ud->state.running) { // Keep trying to run.
+		if (!(unit_run(bl, NULL, SC_RUN) || unit_run(bl, sd, SC_WUGDASH)) )
 			ud->state.running = 0;
-	} else if (ud->target_to) {
+	} else if (!ud->stepaction && ud->target_to) {
 		// Update target trajectory.
 		struct block_list *tbl = map_id2bl(ud->target_to);
 		if (!tbl || !status_check_visibility(bl, tbl)) { // Cancel chase.
@@ -405,6 +519,17 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	} else { // Stopped walking. Update to_x and to_y to current location [Skotlex]
 		ud->to_x = bl->x;
 		ud->to_y = bl->y;
+
+		if(battle_config.official_cell_stack_limit > 0
+			&& map_count_oncell(bl->m, x, y, BL_CHAR|BL_NPC, 1) > battle_config.official_cell_stack_limit) {
+			//Walked on occupied cell, call unit_walktoxy again
+			if(ud->steptimer != INVALID_TIMER) {
+				//Execute step timer on next step instead
+				delete_timer(ud->steptimer, unit_step_timer);
+				ud->steptimer = INVALID_TIMER;
+			}
+			return unit_walktoxy(bl, x, y, 8);
+		}
 	}
 
 	return 0;
@@ -463,6 +588,7 @@ int unit_delay_walktobl_timer(int tid, unsigned int tick, int id, intptr_t data)
  *	&1: Easy walk (fail if CELL_CHKNOPASS is in direct path)
  *	&2: Force walking (override can_move)
  *	&4: Delay walking for can_move
+ *	&8: Search for an unoccupied cell and cancel if none available
  * @return 1: Success 0: Fail or unit_walktoxy_sub()
  */
 int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
@@ -481,6 +607,9 @@ int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
 
 	if (bl->type == BL_PC)
 		sd = BL_CAST(BL_PC, bl);
+
+	if ((flag&8) && !map_closest_freecell(bl->m, &x, &y, BL_CHAR|BL_NPC, 1)) //This might change x and y
+		return 0;
 
 	if (!path_search(&wpd, bl->m, bl->x, bl->y, x, y, flag&1, CELL_CHKNOPASS)) // Count walk path cells
 		return 0;
@@ -511,7 +640,7 @@ int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
 	ud->state.walk_easy = flag&1;
 	ud->to_x = x;
 	ud->to_y = y;
-	unit_set_target(ud, 0);
+	unit_stop_attack(bl); //Sets target to 0
 
 	sc = status_get_sc(bl);
 	if (sc && sc->data[SC_CONFUSION]) // Randomize the target position
@@ -522,11 +651,6 @@ int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
 		// Call a function from a timer unit_walktoxy_sub
 		ud->state.change_walk_target = 1;
 		return 1;
-	}
-
-	if(ud->attacktimer != INVALID_TIMER) {
-		delete_timer( ud->attacktimer, unit_attack_timer );
-		ud->attacktimer = INVALID_TIMER;
 	}
 
 	// Start timer to recall summon
@@ -587,7 +711,7 @@ static int unit_walktobl_sub(int tid, unsigned int tick, int id, intptr_t data)
  * @param tbl: Target object
  * @param range: How close to get to target (or attack range if flag&2)
  * @param flag: Extra behaviour
- *	&1: Use hard path seek (obstacles will be walked around if possible)
+ *	&1: Use easy path seek (obstacles will not be walked around)
  *	&2: Start attacking upon arrival within range, otherwise just walk to target
  * @return 1: Started walking or set timer 0: Failed
  */
@@ -613,13 +737,17 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, unsi
 		ud->target_to = 0;
 
 		return 0;
+	} else if (range == 0) {
+		//Should walk on the same cell as target (for looters)
+		ud->to_x = tbl->x;
+		ud->to_y = tbl->y;
 	}
 
 	ud->state.walk_easy = flag&1;
 	ud->target_to = tbl->id;
 	ud->chaserange = range; // Note that if flag&2, this SHOULD be attack-range
 	ud->state.attack_continue = flag&2?1:0; // Chase to attack.
-	unit_set_target(ud, 0);
+	unit_stop_attack(bl); //Sets target to 0
 
 	sc = status_get_sc(bl);
 	if (sc && sc->data[SC_CONFUSION]) // Randomize the target position
@@ -640,11 +768,6 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, unsi
 	if(!unit_can_move(bl))
 		return 0;
 
-	if(ud->attacktimer != INVALID_TIMER) {
-		delete_timer( ud->attacktimer, unit_attack_timer );
-		ud->attacktimer = INVALID_TIMER;
-	}
-
 	if (unit_walktoxy_sub(bl)) {
 		set_mobstate(bl, flag&2);
 
@@ -655,62 +778,83 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, unsi
 }
 
 /**
+ * Called by unit_run when an object is hit.
+ * @param sd Required only when using SC_WUGDASH
+ */
+void unit_run_hit(struct block_list *bl, struct status_change *sc, struct map_session_data *sd, enum sc_type type)
+{
+	int lv = sc->data[type]->val1;
+
+	// If you can't run forward, you must be next to a wall, so bounce back. [Skotlex]
+	if (type == SC_RUN)
+		clif_status_change(bl, SI_BUMP, 1, 0, 0, 0, 0);
+
+	// Set running to 0 beforehand so status_change_end knows not to enable spurt [Kevin]
+	unit_bl2ud(bl)->state.running = 0;
+	status_change_end(bl, type, INVALID_TIMER);
+
+	if (type == SC_RUN) {
+		skill_blown(bl, bl, skill_get_blewcount(TK_RUN, lv), unit_getdir(bl), 0);
+		clif_status_change(bl, SI_BUMP, 0, 0, 0, 0, 0);
+	} else if (sd) {
+		clif_fixpos(bl);
+		skill_castend_damage_id(bl, &sd->bl, RA_WUGDASH, lv, gettick(), SD_LEVEL);
+	}
+	return;
+}
+
+/**
  * Set a unit to run, checking for obstacles
  * @param bl: Object that is running
- * @return 1: Success 0: Fail
+ * @param sd: Required only when using SC_WUGDASH
+ * @return true: Success (Finished running) false: Fail (Hit an object/Couldn't run)
  */
-int unit_run(struct block_list *bl)
+bool unit_run(struct block_list *bl, struct map_session_data *sd, enum sc_type type)
 {
-	struct status_change *sc = status_get_sc(bl);
-	short to_x,to_y,dir_x,dir_y;
-	int lv;
+	struct status_change *sc;
+	short to_x, to_y, dir_x, dir_y;
 	int i;
 
-	if (!(sc && sc->data[SC_RUN]))
-		return 0;
+	nullpo_retr(false, bl);
+
+	sc = status_get_sc(bl);
+
+	if (!(sc && sc->data[type]))
+		return false;
 
 	if (!unit_can_move(bl)) {
-		status_change_end(bl, SC_RUN, INVALID_TIMER);
-
-		return 0;
+		status_change_end(bl, type, INVALID_TIMER);
+		return false;
 	}
 
-	lv = sc->data[SC_RUN]->val1;
-	dir_x = dirx[sc->data[SC_RUN]->val2];
-	dir_y = diry[sc->data[SC_RUN]->val2];
+	dir_x = dirx[sc->data[type]->val2];
+	dir_y = diry[sc->data[type]->val2];
 
 	// Determine destination cell
 	to_x = bl->x;
 	to_y = bl->y;
+
+	// Search for available path
 	for(i = 0; i < AREA_SIZE; i++) {
-		if(!map_getcell(bl->m,to_x+dir_x,to_y+dir_y,CELL_CHKPASS))
+		if(!map_getcell(bl->m, to_x + dir_x, to_y + dir_y, CELL_CHKPASS))
 			break;
 
 		// If sprinting and there's a PC/Mob/NPC, block the path [Kevin]
-		if(sc->data[SC_RUN] && map_count_oncell(bl->m, to_x+dir_x, to_y+dir_y, BL_PC|BL_MOB|BL_NPC))
+		if(map_count_oncell(bl->m, to_x + dir_x, to_y + dir_y, BL_PC|BL_MOB|BL_NPC, 0))
 			break;
 
 		to_x += dir_x;
 		to_y += dir_y;
 	}
 
-	if( (to_x == bl->x && to_y == bl->y ) || (to_x == (bl->x+1) || to_y == (bl->y+1)) || (to_x == (bl->x-1) || to_y == (bl->y-1))) {
-		// If you can't run forward, you must be next to a wall, so bounce back. [Skotlex]
-		clif_status_change(bl, SI_BUMP, 1, 0, 0, 0, 0);
-
-		// Set running to 0 beforehand so status_change_end knows not to enable spurt [Kevin]
-		unit_bl2ud(bl)->state.running = 0;
-		status_change_end(bl, SC_RUN, INVALID_TIMER);
-
-		skill_blown(bl,bl,skill_get_blewcount(TK_RUN,lv),unit_getdir(bl),0);
-		clif_fixpos(bl); // Why is a clif_slide (skill_blown) AND a fixpos needed? Ask Aegis.
-		clif_status_change(bl, SI_BUMP, 0, 0, 0, 0, 0);
-
-		return 0;
+	// Can't run forward.
+	if( (to_x == bl->x && to_y == bl->y) || (to_x == (bl->x + 1) || to_y == (bl->y + 1)) || (to_x == (bl->x - 1) || to_y == (bl->y - 1))) {
+		unit_run_hit(bl, sc, sd, type);
+		return false;
 	}
 
 	if (unit_walktoxy(bl, to_x, to_y, 1))
-		return 1;
+		return true;
 
 	// There must be an obstacle nearby. Attempt walking one cell at a time.
 	do {
@@ -719,97 +863,11 @@ int unit_run(struct block_list *bl)
 	} while (--i > 0 && !unit_walktoxy(bl, to_x, to_y, 1));
 
 	if (i == 0) {
-		// Copy-paste from above
-		clif_status_change(bl, SI_BUMP, 1, 0, 0, 0, 0);
-
-		// Set running to 0 beforehand so status_change_end knows not to enable spurt [Kevin]
-		unit_bl2ud(bl)->state.running = 0;
-		status_change_end(bl, SC_RUN, INVALID_TIMER);
-
-		skill_blown(bl,bl,skill_get_blewcount(TK_RUN,lv),unit_getdir(bl),0);
-		clif_fixpos(bl);
-		clif_status_change(bl, SI_BUMP, 0, 0, 0, 0, 0);
-
-		return 0;
+		unit_run_hit(bl, sc, sd, type);
+		return false;
 	}
 
-	return 1;
-}
-
-/**
- * Character movement with Warg Dash
- * @author [Jobbie/3CeAM]
- * @param bl: Object that is dashing
- * @param sd: Player
- * @return 1: Success 0: Fail
- */
-int unit_wugdash(struct block_list *bl, struct map_session_data *sd)
-{
-	struct status_change *sc = status_get_sc(bl);
-	short to_x,to_y,dir_x,dir_y;
-	int lv, i;
-
-	if (!(sc && sc->data[SC_WUGDASH]))
-		return 0;
-
-	nullpo_ret(sd); //FIXME do we really need that check since we rechecking afterward
-	nullpo_ret(bl);
-
-	if (!unit_can_move(bl)) {
-		status_change_end(bl,SC_WUGDASH,INVALID_TIMER);
-		return 0;
-	}
-
-	lv = sc->data[SC_WUGDASH]->val1;
-	dir_x = dirx[sc->data[SC_WUGDASH]->val2];
-	dir_y = diry[sc->data[SC_WUGDASH]->val2];
-
-	to_x = bl->x;
-	to_y = bl->y;
-	for(i = 0; i < AREA_SIZE; i++) {
-		if(!map_getcell(bl->m,to_x+dir_x,to_y+dir_y,CELL_CHKPASS))
-			break;
-
-		if(sc->data[SC_WUGDASH] && map_count_oncell(bl->m, to_x+dir_x, to_y+dir_y, BL_PC|BL_MOB|BL_NPC))
-			break;
-
-		to_x += dir_x;
-		to_y += dir_y;
-	}
-
-	if(to_x == bl->x && to_y == bl->y) {
-		unit_bl2ud(bl)->state.running = 0;
-		status_change_end(bl,SC_WUGDASH,INVALID_TIMER);
-
-		if( sd ) {
-			clif_fixpos(bl);
-			skill_castend_damage_id(bl, &sd->bl, RA_WUGDASH, lv, gettick(), SD_LEVEL);
-		}
-
-		return 0;
-	}
-
-	if (unit_walktoxy(bl, to_x, to_y, 1))
-		return 1;
-
-	do {
-		to_x -= dir_x;
-		to_y -= dir_y;
-	} while (--i > 0 && !unit_walktoxy(bl, to_x, to_y, 1));
-
-	if (i==0) {
-		unit_bl2ud(bl)->state.running = 0;
-		status_change_end(bl,SC_WUGDASH,INVALID_TIMER);
-
-		if( sd ) {
-			clif_fixpos(bl);
-			skill_castend_damage_id(bl, &sd->bl, RA_WUGDASH, lv, gettick(), SD_LEVEL);
-		}
-
-		return 0;
-	}
-
-	return 1;
+	return true;
 }
 
 /**
@@ -853,7 +911,7 @@ int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool
 	if(ud == NULL)
 		return 0;
 
-	unit_stop_walking(bl,1);
+	unit_stop_walking(bl, 1);
 	unit_stop_attack(bl);
 
 	if( checkpath && (map_getcell(bl->m,dst_x,dst_y,CELL_CHKNOPASS) || !path_search(NULL,bl->m,bl->x,bl->y,dst_x,dst_y,easy,CELL_CHKNOREACH)) )
@@ -868,12 +926,12 @@ int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool
 	dx = dst_x - bl->x;
 	dy = dst_y - bl->y;
 
-	map_foreachinmovearea(clif_outsight, bl, AREA_SIZE, dx, dy, sd?BL_ALL:BL_PC, bl);
+	map_foreachinmovearea(clif_outsight, bl, AREA_SIZE, dx, dy, (sd ? BL_ALL : BL_PC), bl);
 
 	map_moveblock(bl, dst_x, dst_y, gettick());
 
 	ud->walktimer = CLIF_WALK_TIMER; // Arbitrary non-INVALID_TIMER value to make the clif code send walking packets
-	map_foreachinmovearea(clif_insight, bl, AREA_SIZE, -dx, -dy, sd?BL_ALL:BL_PC, bl);
+	map_foreachinmovearea(clif_insight, bl, AREA_SIZE, -dx, -dy, (sd ? BL_ALL : BL_PC), bl);
 	ud->walktimer = INVALID_TIMER;
 
 	if(sd) {
@@ -881,14 +939,14 @@ int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool
 			npc_touchnext_areanpc(sd,false);
 
 		if(map_getcell(bl->m,bl->x,bl->y,CELL_CHKNPC)) {
-			npc_touch_areanpc(sd,bl->m,bl->x,bl->y);
+			npc_touch_areanpc(sd, bl->m, bl->x, bl->y);
 
 			if (bl->prev == NULL) // Script could have warped char, abort remaining of the function.
 				return 0;
 		} else
 			sd->areanpc_id=0;
 
-		if( sd->status.pet_id > 0 && sd->pd && sd->pd->pet.intimate > 0 ){
+		if( sd->status.pet_id > 0 && sd->pd && sd->pd->pet.intimate > 0 ) {
 			// Check if pet needs to be teleported. [Skotlex]
 			int flag = 0;
 			struct block_list* pbl = &sd->pd->bl;
@@ -914,7 +972,7 @@ int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool
  * @param dir: Direction (0-7)
  * @return 0
  */
-int unit_setdir(struct block_list *bl,unsigned char dir)
+int unit_setdir(struct block_list *bl, unsigned char dir)
 {
 	struct unit_data *ud;
 
@@ -983,6 +1041,7 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag)
 			unit_stop_walking(bl, 0);
 
 		if( sd ) {
+			unit_stop_stepaction(bl); //Stop stepaction when knocked back
 			sd->ud.to_x = nx;
 			sd->ud.to_y = ny;
 		}
@@ -1021,6 +1080,64 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag)
 	}
 
 	return count;  // Return amount of knocked back cells
+}
+
+/**
+ * Checks if unit can be knocked back / stopped by skills.
+ * @param bl: Object to check
+ * @param flag
+ *		0x1 - Offensive (not set: self skill, e.g. Backslide)
+ *		0x2 - Knockback type (not set: Stop type, e.g. Ankle Snare)
+ *		0x4 - Boss attack
+ * @return reason for immunity
+ *		0 - can be knocked back / stopped
+ *		1 - at WOE/BG map;
+ *		2 - target is emperium
+ *		3 - target is MD_KNOCKBACK_IMMUNE|MD_BOSS;
+ *		4 - target is in Basilica area;
+ *		5 - target has 'special_state.no_knockback';
+ *		6 - target is trap that cannot be knocked back
+ */
+uint8 unit_blown_immune(struct block_list* bl, uint8 flag)
+{
+	if ((flag&0x1)
+		&& (map_flag_gvg(bl->m) || map[bl->m].flag.battleground)
+		&& ((flag&0x2) || !(battle_config.skill_trap_type&0x1)))
+		return 1; // No knocking back in WoE / BG
+
+	switch (bl->type) {
+		case BL_MOB: {
+				struct mob_data* md = BL_CAST(BL_MOB, bl);
+				// Emperium can't be knocked back
+				if( md->mob_id == MOBID_EMPERIUM )
+					return 2;
+				// Bosses or immune can't be knocked back
+				if((flag&0x1) && status_get_mode(bl)&(MD_KNOCKBACK_IMMUNE|MD_BOSS)
+					&& ((flag&0x2) || !(battle_config.skill_trap_type&0x2)))
+					return 3;
+			}
+			break;
+		case BL_PC: {
+				struct map_session_data *sd = BL_CAST(BL_PC, bl);
+				// Basilica caster can't be knocked-back by normal monsters.
+				if( !(flag&0x4) && &sd->sc && sd->sc.data[SC_BASILICA] && sd->sc.data[SC_BASILICA]->val4 == sd->bl.id)
+					return 4;
+				// Target has special_state.no_knockback (equip)
+				if( (flag&(0x1|0x2)) && sd->special_state.no_knockback )
+					return 5;
+			}
+			break;
+		case BL_SKILL: {
+				struct skill_unit* su = (struct skill_unit *)bl;
+				// Trap cannot be knocked back
+				if (su && su->group && skill_get_unit_flag(su->group->skill_id)&UF_NOKNOCKBACK)
+					return 6;
+			}
+			break;
+	}
+
+	//Object can be knocked back / stopped
+	return 0;
 }
 
 /**
@@ -1237,6 +1354,16 @@ bool unit_can_move(struct block_list *bl) {
 	if (sc && sc->cant.move)
 		return false;
 
+	// Icewall walk block special trapped monster mode
+	if(bl->type == BL_MOB) {
+		struct mob_data *md = BL_CAST(BL_MOB, bl);
+		if(md && ((md->status.mode&MD_BOSS && battle_config.boss_icewall_walk_block == 1 && map_getcell(bl->m,bl->x,bl->y,CELL_CHKICEWALL))
+			|| (!(md->status.mode&MD_BOSS) && battle_config.mob_icewall_walk_block == 1 && map_getcell(bl->m,bl->x,bl->y,CELL_CHKICEWALL)))) {
+			md->walktoxy_fail_count = 1; //Make sure rudeattacked skills are invoked
+			return 0;
+		}
+	}
+
 	return true;
 }
 
@@ -1249,13 +1376,12 @@ bool unit_can_move(struct block_list *bl) {
  */
 int unit_resume_running(int tid, unsigned int tick, int id, intptr_t data)
 {
-
 	struct unit_data *ud = (struct unit_data *)data;
-	TBL_PC * sd = map_id2sd(id);
+	TBL_PC *sd = map_id2sd(id);
 
-	if(sd && pc_isridingwug(sd))
+	if (sd && pc_isridingwug(sd))
 		clif_skill_nodamage(ud->bl,ud->bl,RA_WUGDASH,ud->skill_lv,
-			sc_start4(ud->bl,ud->bl,skill_get_sc(RA_WUGDASH),100,ud->skill_lv,unit_getdir(ud->bl),0,0,1));
+		sc_start4(ud->bl,ud->bl,skill_get_sc(RA_WUGDASH),100,ud->skill_lv,unit_getdir(ud->bl),0,0,1));
 	else
 		clif_skill_nodamage(ud->bl,ud->bl,TK_RUN,ud->skill_lv,
 			sc_start4(ud->bl,ud->bl,skill_get_sc(TK_RUN),100,ud->skill_lv,unit_getdir(ud->bl),0,0,0));
@@ -1283,16 +1409,19 @@ int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int 
 	if (delay <= 0 || !ud)
 		return 0;
 
-	// /MvP mobs have no walk delay
-	if( bl->type == BL_MOB && (((TBL_MOB*)bl)->status.mode&MD_BOSS) )
-		return 0;
-
 	if (type) {
+		//Bosses can ignore skill induced walkdelay (but not damage induced)
+		if(bl->type == BL_MOB && (((TBL_MOB*)bl)->status.mode&MD_BOSS))
+			return 0;
+		//Make sure walk delay is not decreased
 		if (DIFF_TICK(ud->canmove_tick, tick+delay) > 0)
 			return 0;
 	} else {
 		// Don't set walk delays when already trapped.
 		if (!unit_can_move(bl))
+			return 0;
+		//Immune to being stopped for double the flinch time
+		if (DIFF_TICK(ud->canmove_tick, tick-delay) > 0)
 			return 0;
 	}
 
@@ -1306,7 +1435,7 @@ int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int 
 			if(ud->state.running)
 				add_timer(ud->canmove_tick, unit_resume_running, bl->id, (intptr_t)ud);
 			else {
-				unit_stop_walking(bl,2|4);
+				unit_stop_walking(bl,4);
 
 				if(ud->target)
 					add_timer(ud->canmove_tick+1, unit_walktobl_sub, bl->id, ud->target);
@@ -1336,6 +1465,8 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	struct block_list * target = NULL;
 	unsigned int tick = gettick();
 	int combo = 0, range;
+	uint8 inf = 0;
+	uint32 inf2 = 0;
 
 	nullpo_ret(src);
 
@@ -1353,6 +1484,9 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	if (sc && !sc->count)
 		sc = NULL; // Unneeded
 
+	inf = skill_get_inf(skill_id);
+	inf2 = skill_get_inf2(skill_id);
+
 	// temp: used to signal combo-skills right now.
 	if (sc && sc->data[SC_COMBO] &&
 		skill_is_combo(skill_id) &&
@@ -1360,16 +1494,16 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		(sd?skill_check_condition_castbegin(sd,skill_id,skill_lv):0) )) {
 		if (sc->data[SC_COMBO]->val2)
 			target_id = sc->data[SC_COMBO]->val2;
-		else
+		else if (target_id == src->id || ud->target > 0)
 			target_id = ud->target;
 
-		if( skill_get_inf(skill_id)&INF_SELF_SKILL && skill_get_nk(skill_id)&NK_NO_DAMAGE )// exploit fix
+		if( inf&INF_SELF_SKILL && skill_get_nk(skill_id)&NK_NO_DAMAGE )// exploit fix
 			target_id = src->id;
 
 		combo = 1;
 	} else if ( target_id == src->id &&
-		skill_get_inf(skill_id)&INF_SELF_SKILL &&
-		(skill_get_inf2(skill_id)&INF2_NO_TARGET_SELF ||
+		inf&INF_SELF_SKILL &&
+		(inf2&INF2_NO_TARGET_SELF ||
 		(skill_id == RL_QD_SHOT && sc && sc->data[SC_QD_SHOT_READY])) ) {
 		target_id = ud->target; // Auto-select target. [Skotlex]
 		combo = 1;
@@ -1443,14 +1577,14 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	if(ud->skilltimer != INVALID_TIMER && skill_id != SA_CASTCANCEL && skill_id != SO_SPELLFIST)
 		return 0;
 
-	if(skill_get_inf2(skill_id)&INF2_NO_TARGET_SELF && src->id == target_id)
+	if(inf2&INF2_NO_TARGET_SELF && src->id == target_id)
 		return 0;
 
 	if(!status_check_skilluse(src, target, skill_id, 0))
 		return 0;
 
 	// Fail if the targetted skill is near NPC [Cydh]
-	if(skill_get_inf2(skill_id)&INF2_NO_NEARNPC && skill_isNotOk_npcRange(src,skill_id,skill_lv,target->x,target->y)) {
+	if(inf2&INF2_NO_NEARNPC && skill_isNotOk_npcRange(src,skill_id,skill_lv,target->x,target->y)) {
 		if (sd)
 			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 
@@ -1536,6 +1670,18 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		range = AREA_SIZE; // Maximum visible distance before NPC goes out of sight
 	else
 		range = skill_get_range2(src, skill_id, skill_lv); // Skill cast distance from database
+
+	// New action request received, delete previous action request if not executed yet
+	if(ud->stepaction || ud->steptimer != INVALID_TIMER)
+		unit_stop_stepaction(src);
+	// Remember the skill request from the client while walking to the next cell
+	if(src->type == BL_PC && ud->walktimer != INVALID_TIMER && !battle_check_range(src, target, range-1)) {
+		ud->stepaction = true;
+		ud->target_to = target_id;
+		ud->stepskill_id = skill_id;
+		ud->stepskill_lv = skill_lv;
+		return 0; // Attacking will be handled by unit_walktoxy_timer in this case
+	}
 
 	// Check range when not using skill on yourself or is a combo-skill during attack
 	// (these are supposed to always have the same range as your attack)
@@ -1639,7 +1785,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 
 	// Moved here to prevent Suffragium from ending if skill fails
 #ifndef RENEWAL_CAST
-	if (!(skill_get_castnodex(skill_id, skill_lv)&2))
+	if (!(skill_get_castnodex(skill_id)&2))
 		casttime = skill_castfix_sc(src, casttime);
 #else
 	casttime = skill_vfcastfix(src, casttime, skill_id, skill_lv);
@@ -1649,7 +1795,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		casttime = 0;
 
 	if(!ud->state.running) // Need TK_RUN or WUGDASH handler to be done before that, see bugreport:6026
-		unit_stop_walking(src,1);// Even though this is not how official works but this will do the trick. bugreport:6829
+		unit_stop_walking(src, 1); // Even though this is not how official works but this will do the trick. bugreport:6829
 
 	// In official this is triggered even if no cast time.
 	clif_skillcasting(src, src->id, target_id, 0,0, skill_id, skill_get_ele(skill_id, skill_lv), casttime);
@@ -1796,15 +1942,6 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 	if( sd ) {
 		if( skill_isNotOk(skill_id, sd) || !skill_check_condition_castbegin(sd, skill_id, skill_lv) )
 			return 0;
-
-		/**
-		 * Pneuma cannot be cancelled past this point, the client displays the animation even,
-		 * if we cancel it from nodamage_id, so it has to be here for it to not display the animation.
-		 */
-		if( skill_id == AL_PNEUMA && map_getcell(src->m, skill_x, skill_y, CELL_CHKLANDPROTECTOR) ) {
-			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-			return 0;
-		}
 	}
 
 	if( (skill_id >= SC_MANHOLE && skill_id <= SC_FEINTBOMB) && map_getcell(src->m, skill_x, skill_y, CELL_CHKMAELSTROM) ) {
@@ -1841,17 +1978,31 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 	else
 		range = skill_get_range2(src, skill_id, skill_lv); // Skill cast distance from database
 
+	// New action request received, delete previous action request if not executed yet
+	if(ud->stepaction || ud->steptimer != INVALID_TIMER)
+		unit_stop_stepaction(src);
+	// Remember the skill request from the client while walking to the next cell
+	if(src->type == BL_PC && ud->walktimer != INVALID_TIMER && !battle_check_range(src, &bl, range-1)) {
+		struct map_data *md = &map[src->m];
+		// Convert coordinates to target_to so we can use it as target later
+		ud->stepaction = true;
+		ud->target_to = (skill_x + skill_y*md->xs);
+		ud->stepskill_id = skill_id;
+		ud->stepskill_lv = skill_lv;
+		return 0; // Attacking will be handled by unit_walktoxy_timer in this case
+	}
+
 	if( skill_get_state(ud->skill_id) == ST_MOVE_ENABLE ) {
 		if( !unit_can_reach_bl(src, &bl, range + 1, 1, NULL, NULL) )
 			return 0; // Walk-path check failed.
-	}else if( !battle_check_range(src, &bl, range + 1) )
+	}else if( !battle_check_range(src, &bl, range) )
 		return 0; // Arrow-path check failed.
 
 	unit_stop_attack(src);
 
 	// Moved here to prevent Suffragium from ending if skill fails
 #ifndef RENEWAL_CAST
-	if (!(skill_get_castnodex(skill_id, skill_lv)&2))
+	if (!(skill_get_castnodex(skill_id)&2))
 		casttime = skill_castfix_sc(src, casttime);
 #else
 	casttime = skill_vfcastfix(src, casttime, skill_id, skill_lv );
@@ -1873,11 +2024,11 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 // 		}
 // 	}
 
-	ud->skill_id      = skill_id;
-	ud->skill_lv      = skill_lv;
-	ud->skillx       = skill_x;
-	ud->skilly       = skill_y;
-	ud->skilltarget  = 0;
+	ud->skill_id    = skill_id;
+	ud->skill_lv    = skill_lv;
+	ud->skillx      = skill_x;
+	ud->skilly      = skill_y;
+	ud->skilltarget = 0;
 
 	if( sc ) {
 		// These 3 status do not stack, so it's efficient to use if-else
@@ -1944,22 +2095,48 @@ int unit_set_target(struct unit_data* ud, int target_id)
 /**
  * Stop a unit's attacks
  * @param bl: Object to stop
- * @return 0
  */
-int unit_stop_attack(struct block_list *bl)
+void unit_stop_attack(struct block_list *bl)
 {
-	struct unit_data *ud = unit_bl2ud(bl);
+	struct unit_data *ud;
+	nullpo_retv(bl);
+	ud = unit_bl2ud(bl);
+	nullpo_retv(ud);
 
-	nullpo_ret(bl);
-
-	if(!ud || ud->attacktimer == INVALID_TIMER)
-		return 0;
-
-	delete_timer( ud->attacktimer, unit_attack_timer );
-	ud->attacktimer = INVALID_TIMER;
+	//Clear target
 	unit_set_target(ud, 0);
 
-	return 0;
+	if(ud->attacktimer == INVALID_TIMER)
+		return;
+
+	//Clear timer
+	delete_timer(ud->attacktimer, unit_attack_timer);
+	ud->attacktimer = INVALID_TIMER;
+}
+
+/**
+ * Stop a unit's step action
+ * @param bl: Object to stop
+ */
+void unit_stop_stepaction(struct block_list *bl)
+{
+	struct unit_data *ud;
+	nullpo_retv(bl);
+	ud = unit_bl2ud(bl);
+	nullpo_retv(ud);
+
+	//Clear remembered step action
+	ud->stepaction = false;
+	ud->target_to = 0;
+	ud->stepskill_id = 0;
+	ud->stepskill_lv = 0;
+
+	if(ud->steptimer == INVALID_TIMER)
+		return;
+
+	//Clear timer
+	delete_timer(ud->steptimer, unit_step_timer);
+	ud->steptimer = INVALID_TIMER;
 }
 
 /**
@@ -1973,12 +2150,13 @@ int unit_unattackable(struct block_list *bl)
 
 	if (ud) {
 		ud->state.attack_continue = 0;
+		ud->state.step_attack = 0;
 		ud->target_to = 0;
 		unit_set_target(ud, 0);
 	}
 
 	if(bl->type == BL_MOB)
-		mob_unlocktarget((struct mob_data*)bl, gettick()) ;
+		mob_unlocktarget((struct mob_data*)bl, gettick());
 	else if(bl->type == BL_PET)
 		pet_unlocktarget((struct pet_data*)bl);
 
@@ -1989,14 +2167,17 @@ int unit_unattackable(struct block_list *bl)
  * Requests a unit to attack a target
  * @param src: Object initiating attack
  * @param target_id: Target ID (bl->id)
- * @param continuous: Whether or not the attack is ongoing
+ * @param continuous: 
+ *		0x1 - Whether or not the attack is ongoing
+ *		0x2 - Whether function was called from unit_step_timer or not
  * @return Success(0); Fail(1);
  */
 int unit_attack(struct block_list *src,int target_id,int continuous)
 {
 	struct block_list *target;
 	struct unit_data  *ud;
-	struct status_change *sc;
+	struct status_change *sc = NULL;
+	int range;
 
 	nullpo_ret(ud = unit_bl2ud(src));
 
@@ -2031,20 +2212,31 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 		return 1;
 	}
 
-	ud->state.attack_continue = continuous;
+	ud->state.attack_continue = (continuous&1)?1:0;
+	ud->state.step_attack = (continuous&2)?1:0;
 	unit_set_target(ud, target_id);
 
+	range = status_get_range(src);
+
 	if (continuous) // If you're to attack continously, set to auto-chase character
-		ud->chaserange = status_get_range(src);
+		ud->chaserange = range;
 
 	// Just change target/type. [Skotlex]
 	if(ud->attacktimer != INVALID_TIMER)
 		return 0;
 
-	// Set Mob's ANGRY/BERSERK states.
-	if(src->type == BL_MOB)
-		((TBL_MOB*)src)->state.skillstate = ((TBL_MOB*)src)->state.aggressive?MSS_ANGRY:MSS_BERSERK;
-
+	// New action request received, delete previous action request if not executed yet
+	if(ud->stepaction || ud->steptimer != INVALID_TIMER)
+		unit_stop_stepaction(src);
+	// Remember the attack request from the client while walking to the next cell
+	if(src->type == BL_PC && ud->walktimer != INVALID_TIMER && !battle_check_range(src, target, range-1)) {
+		ud->stepaction = true;
+		ud->target_to = ud->target;
+		ud->stepskill_id = 0;
+		ud->stepskill_lv = 0;
+		return 0; // Attacking will be handled by unit_walktoxy_timer in this case
+	}
+	
 	if(DIFF_TICK(ud->attackabletime, gettick()) > 0) // Do attack next time it is possible. [Skotlex]
 		ud->attacktimer=add_timer(ud->attackabletime,unit_attack_timer,src->id,0);
 	else // Attack NOW.
@@ -2134,9 +2326,9 @@ bool unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int range, 
 	if (map_getcell(tbl->m,tbl->x-dx,tbl->y-dy,CELL_CHKNOPASS)) { // Look for a suitable cell to place in.
 		int i;
 
-		for(i = 0; i < 9 && map_getcell(tbl->m,tbl->x-dirx[i],tbl->y-diry[i],CELL_CHKNOPASS); i++);
+		for(i = 0; i < 8 && map_getcell(tbl->m,tbl->x-dirx[i],tbl->y-diry[i],CELL_CHKNOPASS); i++);
 
-		if (i == 9)
+		if (i == 8)
 			return false; // No valid cells.
 
 		dx = dirx[i];
@@ -2310,17 +2502,19 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 	}
 
 	sstatus = status_get_status_data(src);
-	range = sstatus->rhw.range + 1;
+	range = sstatus->rhw.range;
 
-	if( unit_is_walking(target) )
-		range++; // Extra range when chasing
+	if( (unit_is_walking(target) || ud->state.step_attack)
+		&& (target->type == BL_PC || !map_getcell(target->m,target->x,target->y,CELL_CHKICEWALL)) )
+		range++; // Extra range when chasing (does not apply to mobs locked in an icewall)
 
-	if( !check_distance_bl(src,target,range) ) { // Chase if required.
-		if(sd)
-			clif_movetoattack(sd,target);
-		else if(ud->state.attack_continue)
-			unit_walktobl(src,target,ud->chaserange,ud->state.walk_easy|2);
-
+	if(sd && !check_distance_client_bl(src,target,range)) {
+		// Player tries to attack but target is too far, notify client
+		clif_movetoattack(sd,target);
+		return 1;
+	} else if(md && !check_distance_bl(src,target,range)) {
+		// Monster: Chase if required
+		unit_walktobl(src,target,ud->chaserange,ud->state.walk_easy|2);
 		return 1;
 	}
 
@@ -2343,14 +2537,20 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 
 	if( DIFF_TICK(ud->attackabletime,tick) <= 0 ) {
 		if (battle_config.attack_direction_change && (src->type&battle_config.attack_direction_change))
-			ud->dir = map_calc_dir(src, target->x,target->y );
+			ud->dir = map_calc_dir(src, target->x, target->y);
 
 		if(ud->walktimer != INVALID_TIMER)
 			unit_stop_walking(src,1);
 
 		if(md) {
-			if (mobskill_use(md,tick,-1))
-				return 1;
+			//First attack is always a normal attack
+			if(md->state.skillstate == MSS_ANGRY || md->state.skillstate == MSS_BERSERK) {
+				if (mobskill_use(md,tick,-1))
+					return 1;
+			} else {
+				// Set mob's ANGRY/BERSERK states.
+				md->state.skillstate = md->state.aggressive?MSS_ANGRY:MSS_BERSERK;
+			}
 
 			if (sstatus->mode&MD_ASSIST && DIFF_TICK(md->last_linktime, tick) < MIN_MOBLINKTIME) { 
 				// Link monsters nearby [Skotlex]
@@ -2520,6 +2720,7 @@ void unit_dataset(struct block_list *bl)
 	ud->walktimer      = INVALID_TIMER;
 	ud->skilltimer     = INVALID_TIMER;
 	ud->attacktimer    = INVALID_TIMER;
+	ud->steptimer      = INVALID_TIMER;
 	ud->attackabletime =
 	ud->canact_tick    =
 	ud->canmove_tick   = gettick();
@@ -2587,16 +2788,19 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 
 	map_freeblock_lock();
 
-	unit_set_target(ud, 0);
-
 	if (ud->walktimer != INVALID_TIMER)
 		unit_stop_walking(bl,0);
 
-	if (ud->attacktimer != INVALID_TIMER)
-		unit_stop_attack(bl);
-
 	if (ud->skilltimer != INVALID_TIMER)
 		unit_skillcastcancel(bl,0);
+
+	//Clear target even if there is no timer
+	if (ud->target || ud->attacktimer != INVALID_TIMER)
+		unit_stop_attack(bl);
+
+	//Clear stepaction even if there is no timer
+	if (ud->stepaction || ud->steptimer != INVALID_TIMER)
+		unit_stop_stepaction(bl);
 
 	// Do not reset can-act delay. [Skotlex]
 	ud->attackabletime = ud->canmove_tick /*= ud->canact_tick*/ = gettick();
@@ -2646,7 +2850,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 				if (sd->state.storage_flag == 1)
 					storage_storage_quit(sd,0);
 				else if (sd->state.storage_flag == 2)
-					storage_guild_storage_quit(sd,0);
+					gstorage_storage_quit(sd,0);
 
 				sd->state.storage_flag = 0; //Force close it when being warped.
 			}
@@ -2941,6 +3145,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			if( sd->combos.count ) {
 				aFree(sd->combos.bonus);
 				aFree(sd->combos.id);
+				aFree(sd->combos.pos);
 				sd->combos.count = 0;
 			}
 
@@ -2961,6 +3166,12 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				sd->quest_log = NULL;
 				sd->num_quests = sd->avail_quests = 0;
 			}
+
+			// Clearing...
+			if (sd->bonus_script.head)
+				pc_bonus_script_clear(sd, BSF_REM_ALL);
+
+			pc_itemgrouphealrate_clear(sd);
 			break;
 		}
 		case BL_PET: {
@@ -3166,6 +3377,7 @@ void do_init_unit(void){
 	add_timer_func_list(unit_delay_walktoxy_timer,"unit_delay_walktoxy_timer");
 	add_timer_func_list(unit_delay_walktobl_timer,"unit_delay_walktobl_timer");
 	add_timer_func_list(unit_teleport_timer,"unit_teleport_timer");
+	add_timer_func_list(unit_step_timer,"unit_step_timer");
 }
 
 /**

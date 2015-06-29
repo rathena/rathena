@@ -3,15 +3,16 @@
 // Structure of Database:
 // ID,Name,LimitTime,EnterMap,EnterX,EnterY,Map1,Map2,Map3,Map4,Map5,Map6,Map7,Map8
 
-0,Endless Tower,14400,1@tower,50,355,1@tower,2@tower,3@tower,4@tower,5@tower,6@tower
-1,Sealed Catacomb,7200,1@cata,100,224,1@cata,2@cata
-2,Orc's Memory,3600,1@orcs,179,15,1@orcs,2@orcs
-3,Nidhoggur's Nest,14400,1@nyd,32,36,1@nyd,2@nyd
-4,Mistwood Maze,7200,1@mist,89,29,1@mist
-5,Culvert,3600,1@pump,63,98,1@pump,2@pump
-6,Octopus Cave,3600,1@cash,199,99,1@cash
-7,Bangungot Hospital 2F,3600,1@ma_h,40,157,1@ma_h
-8,Buwaya Cave,3600,1@ma_c,35,57,1@ma_c
-9,Bakonawa Lake,7200,1@ma_b,64,51,1@ma_b
-10,Wolfchev's Laboratory,14400,1@lhz,45,148,1@lhz
-11,Old Glast Heim,3600,1@gl_k,150,20,1@gl_k,2@gl_k
+1,Endless Tower,14400,1@tower,50,355,1@tower,2@tower,3@tower,4@tower,5@tower,6@tower
+2,Sealed Catacomb,7200,1@cata,100,224,1@cata,2@cata
+3,Orc's Memory,3600,1@orcs,179,15,1@orcs,2@orcs
+4,Nidhoggur's Nest,14400,1@nyd,32,36,1@nyd,2@nyd
+5,Mistwood Maze,7200,1@mist,89,29,1@mist
+6,Culvert,3600,1@pump,63,98,1@pump,2@pump
+7,Octopus Cave,3600,1@cash,199,99,1@cash
+8,Bangungot Hospital 2F,3600,1@ma_h,40,157,1@ma_h
+9,Buwaya Cave,3600,1@ma_c,35,57,1@ma_c
+10,Bakonawa Lake,7200,1@ma_b,64,51,1@ma_b
+11,Wolfchev's Laboratory,14400,1@lhz,45,148,1@lhz
+12,Old Glast Heim,3600,1@gl_k,150,20,1@gl_k,2@gl_k
+13,Eclage Interior,1200,1@ecl,60,50,1@ecl

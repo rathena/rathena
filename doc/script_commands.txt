@@ -282,6 +282,8 @@ these floating NPC objects are for. More on that below.
 -%TAB%pointshop%TAB%<NPC Name>%TAB%<sprite id>,<costvariable>{:<discount>},<itemid>:<price>{,<itemid>:<price>...}
 <map name>,<x>,<y>,<facing>%TAB%pointshop%TAB%<NPC Name>%TAB%<sprite id>,<costvariable>{:<discount>},<itemid>:<price>{,<itemid>:<price>...}
 
+<map name>,<x>,<y>,<facing>%TAB%marketshop%TAB%<NPC Name>%TAB%<sprite id>,<itemid>:<price>:<quantity>{,<itemid>:<price>:<quantity>...}
+
 This will define a shop NPC, which, when triggered (which can only be done by 
 clicking) will cause a shop window to come up. No code whatsoever runs in shop 
 NPCs and you can't change the prices otherwise than by editing the script 
@@ -368,7 +370,7 @@ return 0 if the there is no player attached or the attached player no longer
 is logged on to the map-server).
 
 But what about GID?
---- ---- ----- ----
+-------------------
 
 GID stands for the Game ID of something, this can either be the GID obtained
 through mobspawn (mob control commands) or the account ID of a character.
@@ -643,7 +645,7 @@ the '$', normally denoting a string variable, before the square brackets that
 denotes an array index.
 
 Resume of the allowed variable and array scopes
------- -- --- ------- -------- --- ----- ------
+-----------------------------------------------
 
 +==========+======+=======+
 |VarType   | Norm | Array |
@@ -1044,6 +1046,7 @@ From here on, we will have the commands sorted as follow:
 8.- Quest Log commands.
 9.- Battleground commands.
 10.- Pet commands.
+10.1.- The Pet AI commands.
 11.- Homunculus commands.
 12.- Mercenary commands.
 13.- Party commands.
@@ -2333,11 +2336,11 @@ character name is specified, of that player.
 
 Type is the kind of associated ID number required:
 
- 0 - Character ID number.
- 1 - Party ID number.
- 2 - Guild ID number.
- 3 - Account ID number.
- 4 - Battle ground ID
+ 0 - Character ID
+ 1 - Party ID
+ 2 - Guild ID
+ 3 - Account ID
+ 4 - Battle Ground ID
 
 For most purposes other than printing it, a number is better to have than a name 
 (people do horrifying things to their character names).
@@ -2362,7 +2365,7 @@ Retrieves IDs of the currently invoked NPC. If a unique npc name is
 given, IDs of that NPC are retrieved instead. Type specifies what ID
 to retrieve and can be one of the following:
 
-    0 - Unit ID (GID)
+    0 - NPC Game ID
 
 If an invalid type is given or the NPC does not exist, 0 is returned.
 
@@ -2828,7 +2831,8 @@ Valid types are:
 	12 - eLV
 	13 - wLV
 	14 - SpriteID from 'db/item_avail.txt'
-	15 - matk if RENEWAL is defined
+	15 - eLVMax
+	16 - matk if RENEWAL is defined
 
 See the sample in 'doc/sample/getiteminfo.txt'.
 
@@ -2840,6 +2844,17 @@ Returns value from equipped item slot in the indicated slot (0, 1, 2, or 3).
 
 This function returns CARD ID, 255,254,-255 (for card 0, if the item is produced).
 It's useful for when you want to check whether an item contains cards or if it's signed.
+
+---------------------------------------
+
+*mergeitem({<item_id>});
+*mergeitem({"<item name>"});
+
+Merge all stackable items that separated by GUID flags
+(either by flag 4 item_flag.txt or GUID  in item_group).
+If no item ID/name given, all possible items in player's inventory will be merged.
+
+Example, just see the NPC 'npc/re/other/merge_item.txt'.
 
 ---------------------------------------
 //
@@ -2859,7 +2874,7 @@ Type is the type of object to search for:
   0 - Character object
   1 - NPC object
   2 - Pet object
-  3 - Monster object
+  3 - Monster object -- See 'getunitdata' for monster.
   4 - Homunculus object
   5 - Mercenary object
   6 - Elemental object
@@ -2894,6 +2909,13 @@ Example:
    }
 
 Notice that NPC objects disabled with 'disablenpc' will still be located.
+
+---------------------------------------
+
+*mapid2name(<map ID>)
+
+Returns the map name of the given map ID. Returns an empty string if given
+map ID doesn't exist.
 
 ---------------------------------------
 
@@ -2995,16 +3017,6 @@ within the specified area - an x1/y1-x2/y2 square on the specified map.
 
 This is useful for maps that are split into many buildings, such as all the 
 "*_in" maps, due to all the shops and houses.
-
----------------------------------------
-
-*getusersname;
-
-This command will give the invoking character a list of names of the connected 
-characters (including themselves) into an NPC script message window (see 'mes') 
-paging it by 10 names as if with the 'next' command.
-
-You need to put a 'close' after that yourself.
 
 ---------------------------------------
 \\
@@ -3577,24 +3589,36 @@ warg and 0 if they don't.
 ---------------------------------------
 
 *checkvending({"<Player Name>"})
-*checkchatting({"<Player Name>"})
 
-Checks if the player is vending or in a chatroom.
+Checks if the player is vending or has has a buyingstore. Additionally
+it gives you the information whether the player uses autotrade or not.
 Name is optional, and defaults to the attached player if omitted.
 
-Return values for 'checkvending' are
-  0 = not vending
+The returned value is bitmask of.
+  0 = doesn't have a vending or buyingstore (which also means he can't use autotrade)
   1 = normal vending
-  2 = vending using @autotrade
-
-'checkchatting' returns 1 if they are in a chat room, 0 if they are not.
+  2 = using @autotrade
+  4 = has a buyingstore
 
 Examples:
-	//This will check if Aaron is vending, and if so, put a message in front
-	//of the attached player saying Aaron is vending.
-	if (checkvending("Aaron"))
+	//This will check Aaron's state
+	.@state = checkvending("Aaron");
+	if (.@state&1)
 		mes "Aaron is currently vending!";
+	if (.@state&4)
+		mes "Aaron has a buying store!";
+	if (.@state&2)
+		mes "Aaron is autotrading!";
 
+---------------------------------------
+
+*checkchatting({"<Player Name>"})
+
+Checks if the player is in a chatroom.
+Name is optional, and defaults to the attached player if omitted.
+Returns 1 if they are in a chat room, 0 if they are not.
+
+Examples:
 	//This will check if the attached player in a chat room or not.
 	if (checkchatting())
 		mes "You are currently in a chat room!";
@@ -3762,10 +3786,11 @@ be seen by anyone else.
 
 ---------------------------------------
 
-*dispbottom "<message>";
+*dispbottom "<message>"{,<color>};
 
-This command will send the given message into the invoking character's chat 
-window.
+This command will send the given message with color into the invoking character's chat 
+window. The color format is in RGB (0xRRGGBB). The color is
+by default green
 
 ---------------------------------------
 
@@ -5335,9 +5360,6 @@ After that time, the script will automatically expire. The same bonus cannot be
 stacked. By default, this bonus will be stored on `bonus_script` table when player
 logs out.
 
-Note that the maximum number of 'bonus_script' commands that can run simultaneously
-for a player is 10 (MAX_PC_BONUS_SCRIPT in 'src/map/pc.h').
-
 Flags (bitmask):
 	1   : Remove when dead.
 	2   : Removable by Dispell.
@@ -5345,10 +5367,13 @@ Flags (bitmask):
 	8   : Remove when player logs out.
 	16  : Removeable by Banishing Buster.
 	32  : Removable by Refresh.
-	128 : Removable by Luxanima.
-	256 : Remove when Madogear is activated or deactivated.
-	512 : Remove when receive damage.
-	1024: Script is permanent, cannot be cleared by bonus_script_clear
+	64  : Removable by Luxanima.
+	128 : Remove when Madogear is activated or deactivated.
+	256 : Remove when receive damage.
+	512 : Script is permanent, cannot be cleared by bonus_script_clear.
+	1024: Force to replace duplicated script by expanding the duration.
+	2048: Force to add duplicated script. This flag cannot be stacked with 1024,
+	      if both are defined, 1024 will be checked first and ignore this flag.
 
 Types:
 	This will be used to decide negative or positive buff for 'debuff_on_logout'.
@@ -5396,8 +5421,14 @@ Flag 2 means that the level parameter is to be interpreted as a stackable
 additional bonus to the skill level. If the character did not have that skill 
 previously, they will now at 0+the level given.
 
-Flag 4 is the same as flag 1 in that it saves to the database.  However, these skills
+Flag 3 is the same as flag 1 in that it saves to the database.  However, these skills
 are ignored when any action is taken that adjusts the skill tree (reset/job change).
+
+Flag contants:
+	0 - SKILL_PERM
+	1 - SKILL_TEMP
+	2 - SKILL_TEMPLEVEL
+	3 - SKILL_PERM_GRANT
 
 // This will permanently give the character Stone Throw (TF_THROWSTONE,152), at 
 // level 1.
@@ -5436,11 +5467,13 @@ undisguise; // Return to normal character sprite.
 
 ---------------------------------------
 
-*transform <monster name/ID>,<duration>,<sc type>{,<val1>,<val2>,<val3>,<val4>};
+*transform <monster ID>,<duration>,<sc type>{,<val1>,<val2>,<val3>,<val4>};
+*transform "<monster name>",<duration>,<sc type>{,<val1>,<val2>,<val3>,<val4>};
 
 This command will turn a player into a monster for a given duration and grants an
 SC attribute effect while transformed. Note that players cannot be transformed
 during War of Emperium or if already disguised.
+Can only be removed when you die or the duration ends.
 
 ---------------------------------------
 \\
@@ -5563,6 +5596,9 @@ The coordinates of 0,0 will spawn the monster on a random place on the map.
 The 'areamonster' command works much like the 'monster' command and is not 
 significantly different, but spawns the monsters within a square defined by 
 x1/y1-x2/y2.
+
+Returned value is an array with the game ID of the spawned monster(s) depending
+on the amount spawned. Array is stored in $@mobid[].
 
 Simple monster killing script:
 
@@ -5732,6 +5768,8 @@ to 60000 (1 minute). Note that also the value 0 will set the timer to default,
 and it is not possible to create a spawn that lasts forever.
 If an event label is given, upon the monster being killed, the event label will
 run as if by 'donpcevent'.
+
+Returned value is the game ID of the spawned monster.
 
 // Will summon a dead branch-style monster to fight for the character.
 summon "--ja--",-1;
@@ -6203,7 +6241,10 @@ specified will be for sale.
 
 The function returns 1 if shop was updated successfully, or 0 if not found.
 
-Note that you cannot use -1 to specify default selling price!
+NOTES:
+ - That you cannot use -1 to specify default selling price!
+ - If attached shop type is market shop, need an extra param after price, it's <qty>
+   and make sure don't add duplication item!
 
 ---------------------------------------
 
@@ -6215,7 +6256,10 @@ appear twice on the sell list.
 
 The function returns 1 if shop was updated successfully, or 0 if not found.
 
-Note that you cannot use -1 to specify default selling price!
+NOTES:
+ - That you cannot use -1 to specify default selling price!
+ - If attached shop type is market shop, need an extra param after price, it's <qty>
+   and make sure don't add duplication item!
 
 ---------------------------------------
 
@@ -6245,6 +6289,17 @@ attached to the shop, even if it's from another script, while attaching will
 override any other script that may be already attached.
 
 The function returns 0 if the shop was not found, 1 otherwise.
+
+NOTES:
+ - If attached shop type is market shop, will be default to call the 'buy' window.
+
+---------------------------------------
+
+*npcshopupdate "<name>",<item_id>,<price>{,<stock>}
+
+Update an entry from shop. If price is 0 means don't change the price, maybe used for
+marketshop to update the stock quantity. Except marketshop type, 'stock' value means
+nothing.
 
 ---------------------------------------
 
@@ -6630,7 +6685,7 @@ and given spot. Direction can be used to change the NPC's facing direction.
 
 Example:
 
-// This will move Bugga from to the coordinates 100,20 (if those coordinates are legit).
+// This will move Bugga from it's old coordinates to the new coordinates at 100,20 (if those coordinates are legit).
 	moveNPC "Bugga",100,20;
 
 ---------------------------------------
@@ -6975,9 +7030,15 @@ OnTouch:
 
 ---------------------------------------
 
-*unitstop <GID>;
+*unitstopattack <GID>;
 
-This command will make a <GID> stop attacking and moving.
+This command will make a <GID> stop attacking.
+
+---------------------------------------
+
+*unitstopwalk <GID>;
+
+This command will make a <GID> stop moving.
 
 ---------------------------------------
 
@@ -6994,16 +7055,125 @@ For a full list of emotion numbers, see 'db/const.txt' under 'e_'.
 
 ---------------------------------------
 
-*unitskilluseid <GID>,<skill id>,<skill lvl>{,<target id>};
-*unitskilluseid <GID>,"<skill name>",<skill lvl>{,<target id>};
-*unitskillusepos <GID>,<skill id>,<skill lvl>,<x>,<y>;
-*unitskillusepos <GID>,"<skill name>",<skill lvl>,<x>,<y>;
+*unitskilluseid <GID>,<skill id>,<skill lvl>{,<target id>,<casttime>};
+*unitskilluseid <GID>,"<skill name>",<skill lvl>{,<target id>,<casttime>};
+*unitskillusepos <GID>,<skill id>,<skill lvl>,<x>,<y>{,<casttime>};
+*unitskillusepos <GID>,"<skill name>",<skill lvl>,<x>,<y>{,<casttime>};
 
 This is the replacement of the older commands, these use the same values for
 GID as the other unit* commands (See 'GID').
 
 Skill ID is the ID of the skill, skill level is the level of the skill.
-For the position, the x and y are given in the unitSkillUsePos.
+Cast time is the amount of seconds to add or remove from the skill. Use a positive value to
+add and negative value to subtract. Using 0 or no value will use the default skill cast time.
+For the position, the x and y are given in the UnitSkillUsePos.
+
+---------------------------------------
+
+*getunitname <GID>;
+
+Gets the name of the given unit. Supported types are monster, homunculus, pet, and NPC.
+Mercenary and Elemental don't support custom names.
+
+Returns "Unknown" if unit is not found.
+
+---------------------------------------
+
+*setunitname <GID>,"<new name>";
+
+Changes the name of the given unit to the new name given. Supported types are monster,
+homunculus, and pet. To change an NPC's name, see 'setnpcdisplay'. Mercenary and
+Elemental don't support custom names.
+
+Changing a homunculus or pet name will be permanent.
+
+---------------------------------------
+
+*getunitdata <GID>,<arrayname>;
+*setunitdata <GID>,<parameter>,<new value>;
+
+This is used to get and set special data related to the unit.
+With getunitdata, the array given will be filled with the current data. In setunitdata
+the indexes in the array would be used to set that data on the unit. 
+
+Parameters (indexes) for monsters are:
+
+	0 - size (big, small, normal)	7  - y							14 - hair style			21 - weapon			28 - LUK
+	1 - level						8  - speed						15 - hair color			22 - looking dir	29 - for slave to copy master's mode
+	2 - HP							9  - mode 						16 - head gear bottom	23 - STR			30 - immune from attacks state
+	3 - max HP						10 - special AI state	 		17 - head gear middle	24 - AGI
+	4 - master AID					11 - SC option					18 - head gear top		25 - VIT
+	5 - map ID						12 - sex						19 - cloth color		26 - INT
+	6 - x							13 - class (Monster ID, Job ID)	20 - shield				27 - DEX
+
+Parameter (indexes) for homunculi are:
+
+	0 - size (big, small, normal)	7  - map ID			14 - canmove_tick	21 - immune from attacks state
+	1 - level						8  - x				15 - STR
+	2 - HP							9  - y				16 - AGI
+	3 - max HP						10 - hunger			17 - VIT
+	4 - SP							11 - intimacy		18 - INT
+	5 - max SP						12 - speed			19 - DEX
+	6 - master Character ID			13 - looking dir	20 - LUK
+
+Parameter (indexes) for pets are:
+
+	0 - size (big, small, normal)	7  - y				14 - AGI
+	1 - level						8  - hunger			15 - VIT
+	2 - HP							9  - intimacy		16 - INT
+	3 - max HP						10 - speed			17 - DEX
+	4 - master AID					11 - looking dir	18 - LUK
+	5 - map ID						12 - canmove_tick	19 - immune from attacks state
+	6 - x							13 - STR
+
+Parameter (indexes) for mercenaries are:
+
+	0 - size (big, small, normal)	7  - kill count		14 - VIT
+	1 - HP							8  - life time		15 - INT
+	2 - max HP						9  - speed 			16 - DEX
+	3 - master Character ID			10 - looking dir	17 - LUK
+	4 - map ID						11 - canmove_tick	18 - immune from attacks state
+	5 - x							12 - STR
+	6 - y							13 - AGI
+
+Parameter (indexes) for elementals are:
+
+	0 - size (big, small, normal)	7  - x				14 - STR
+	1 - HP							8  - y				15 - AGI
+	2 - max HP						9  - life time		16 - VIT
+	3 - SP							10 - mode			17 - INT
+	4 - max SP						11 - speed			18 - DEX
+	5 - master Character ID			12 - looking dir	19 - LUK
+	6 - map ID						13 - canmove_tick	20 - immune from attacks state
+
+Parameter (indexes) for NPCs are:
+
+	0 - display		7  - looking dir
+	1 - level		8  - STR
+	2 - HP			9  - AGI
+	3 - max HP		10 - VIT
+	4 - map ID		11 - INT
+	5 - x			12 - DEX
+	6 - y			13 - LUK
+
+*Notes: For mode, see doc/mob_db_mode_list.txt
+	    For map ID, this refers to the map_data index (from src/map/map.c), not the mapindex_db index (from src/common/mapindex.c)
+	    For 'setunitdata', map name can also be passed in as a valid value instead of map ID
+
+Example:
+	// Spawn some Porings and save the Game ID.
+	// - Keep in mind, when the 'monster' script command is used,
+	// - all the spawned monster GID's are stored in an array
+	// - called $@mobid[].
+	monster "prontera",149,190,"Poring",1002,10;
+	.GID = $@mobid[9]; // Store and modify the 10th Poring spawned to make him stronger!
+
+	// Save the strong Poring's mob data in the @por_arr[] variable. (@por_arr[1] being level, @por_arr[13] being class, etc.)
+	// With this data we can have the NPC display or manipulate it how we want. This does not have to be ran before 'setunitdata'.
+	getunitdata .GID,@por_arr;
+
+	// Set the max HP of the Poring to 1000 (current HP will also get updated to 1000).
+	setunitdata .GID,3,1000;
 
 ---------------------------------------
 \\
@@ -8020,9 +8190,7 @@ server and the egg will disappear when anyone tries to hatch it.
 This function will return pet information for the pet the invoking character 
 currently has active. Valid types are:
 
- 0 - Unique pet ID number as stored by the char server and distinguishing it 
-     from all other pets the characters actually have. This value is currently 
-     useless, at most you can use it to tell pets apart reliably.
+ 0 - Pet Game ID
  1 - Pet class number as per 'db/pet_db.txt' - will tell you what kind of a pet it 
      is.
  2 - Pet name. Will return "null" if there's no pet. 
@@ -8031,11 +8199,12 @@ currently has active. Valid types are:
  5 - Pet rename flag. 0 means this pet has not been named yet.
  6 - Pet level
 
-
 ---------------------------------------
 
-* The Pet AI commands
-  -------------------
+=============================
+|10.1.- The Pet AI commands.|
+=============================
+---------------------------------------
 
 These commands will only work if the invoking character has a pet, and are meant 
 to be executed from pet scripts. They will modify the pet AI decision-making for 
@@ -8072,9 +8241,11 @@ Nobody tried this before, so you're essentially on your own here.
 
 *petskillbonus <bonus type>,<value>,<duration>,<delay>;
 
-This command will make the pet give a bonus to the owner's stat (bonus type -
-bInt,bVit,bDex,bAgi,bLuk,bStr,bSpeedRate - for a full list, see the values 
-starting with 'b' in 'db/const.txt')
+This command will make the pet give a bonus to the owner's stat in certain
+duration in seconds and will be repeated for certain delay in seconds.
+
+For a full bonus list, see 'doc/item_bonus.txt'
+NOTE: Currently ONLY supported for bonuses that used by 'bonus' script.
 
 ---------------------------------------
 
@@ -8103,7 +8274,7 @@ This will make the pet use a specified support skill on the owner whenever the
 HP and SP are below the given percent values, with a specified delay time 
 between activations. The skill numbers are as per 'db/(pre-)re/skill_db.txt'.
 'petheal' works the same as 'petskillsupport' but has the skill ID hard-coded to 
-28 (Heal). This command is deprecated.
+AL_HEAL (ID:28). This command is deprecated.
 It's not quite certain who's stats will be used for the skills cast, the 
 character's or the pets. Probably, Skotlex can answer that question.
 
@@ -8118,6 +8289,8 @@ These two commands will make the pet cast an attack skill on the enemy the pet's
 owner is currently fighting. Skill IDs and levels are as per 'petskillsupport'. 
 'petskillattack2' will make the pet cast the skill with a fixed amount of damage 
 inflicted and the specified number of attacks.
+
+Value of 'rate' is between 1 and 100. 100 = 100%
 
 ---------------------------------------
 
@@ -8187,12 +8360,12 @@ invoking character, regardless of its vaporize state. It returns zero or
 "null" if the player does not own a Homunculus.
 
 Valid types are:
- 0 - Homunculus unique ID
+ 0 - Homunculus Game ID
  1 - Homunculus Class
- 2 - Name
- 3 - Friendly level (intimacy score). 100000 is full loyalty.
- 4 - Hungry level. 100 is completely full.
- 5 - Rename flag. 0 means this homunculus has not been named yet.
+ 2 - Homunculus Name
+ 3 - Homunculus friendly level (intimacy score). 100000 is full loyalty.
+ 4 - Homunculus hungry level. 100 is completely full.
+ 5 - Homunculus rename flag. 0 means this homunculus has not been named yet.
  6 - Homunculus level
 
 ---------------------------------------
@@ -8263,14 +8436,14 @@ character. If char id is given, the information of that character is
 retrieved instead. Type specifies what information to retrieve and
 can be one of the following:
 
-    0 - Database ID
-    1 - Class
-    2 - Name
-    3 - Faith value for this mercenary's guild, if any
-    4 - Calls value for this mercenary's guild, if any
-    5 - Kill count
-    6 - Remaining life time in msec
-    7 - Level
+    0 - Mercenary Game ID
+    1 - Mercenary Class
+    2 - Mercenary Name
+    3 - Mercenary faith value for this mercenary's guild, if any
+    4 - Mercenary calls value for this mercenary's guild, if any
+    5 - Mercenary kill count
+    6 - Mercenary remaining life time in msec
+    7 - Mercenary level
 
 If the character does not have a mercenary, the command returns ""
 for name and 0 for all other types.

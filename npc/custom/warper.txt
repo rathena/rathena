@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Euphy
 //===== Current Version: =====================================
-//= 1.4a
+//= 1.4b
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: ========================================= 
@@ -17,6 +17,7 @@
 //=     Aligned coordinates with @go.
 //= 1.4 Added new Guild Dungeons.
 //= 1.4a Slight edits.
+//= 1.4b Added Wolfchev's Laboratory warp.
 //============================================================
 
 -	script	Warper	-1,{
@@ -345,7 +346,7 @@ D31: Restrict("RE",7,8);
 	 setarray @c[2],192,9,10,192,100,92,181,11,94,96,192,8,94,96,192,8;
 	 Disp("Pyramids 1:Pyramids 2:Pyramids 3:Pyramids 4:Basement 1:Basement 2:Basement 1 - Nightmare Mode:Basement 2 - Nightmare Mode");
 	 Pick("","moc_pryd01","moc_pryd02","moc_pryd03","moc_pryd04","moc_pryd05","moc_pryd06","moc_prydn1","moc_prydn2");
-D32: setarray @c[2],140,11,32,21,4,149,204,218,150,9;
+D32: setarray @c[2],140,11,32,21,8,149,204,218,150,9;
 	 Disp("Rachel Sanctuary",1,5); Pick("ra_san");
 D33: Restrict("RE");
 	 setarray @c[2],364,44,101,141;
@@ -425,7 +426,8 @@ G6: Go("schg_dun01",200,124);
 // --------------------------------------------------
 menu	"Bakonawa Lake",I1, "Bangungot Hospital 2F",I2, "Buwaya Cave",I3,
     	"Endless Tower",I4, "Hazy Forest",I5, "Malangdo Culvert",I6, "Nidhoggur's Nest",I7,
-    	"Octopus Cave",I8, "Old Glast Heim",I9, "Orc's Memory",I10, "Sealed Shrine",I11;
+    	"Octopus Cave",I8, "Old Glast Heim",I9, "Orc's Memory",I10, "Sealed Shrine",I11,
+    	"Wolfchev's Laboratory",I12;
 
 I1: Restrict("RE");
 	Go("ma_scene01",172,175);
@@ -445,6 +447,8 @@ I9: Restrict("RE");
 	Go("glast_01",204,268);
 I10: Go("gef_fild10",240,198);
 I11: Go("monk_test",306,143);
+I12: Restrict("RE");
+	Go("lhz_dun04",148,269);
 
 // --------------------------------------------------
 	Special:

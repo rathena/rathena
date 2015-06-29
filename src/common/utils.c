@@ -2,14 +2,10 @@
 // For more information, see LICENCE in the main folder
 
 #include "../common/cbasetypes.h"
-#include "../common/mmo.h"
-#include "../common/malloc.h"
 #include "../common/showmsg.h"
 #include "socket.h"
 #include "utils.h"
 
-#include <stdio.h>
-#include <stdarg.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h> // floor()

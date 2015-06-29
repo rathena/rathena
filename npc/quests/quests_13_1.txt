@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 3.4
+//= 3.5
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: ========================================= 
@@ -27,6 +27,7 @@
 //= 3.3 Updated to match the latest official script. [Euphy]
 //= 3.3a Added Izlude RE coordinates. [Euphy]
 //= 3.4 Added GM management function and NPC. [Euphy]
+//= 3.5 Updated turn-in requirements for Tripatriate Union's Feud. [Euphy]
 //============================================================ 
 
 // Onward to the New World :: ep13_gogo
@@ -5948,7 +5949,7 @@ mid_camp,165,245,0	script	Ryosen#ep131_rhea01	748,{
 			mes "I heard you can get this thing from a monster named, 'Cornus' found in the fields.";
 			next;
 			mes "[Ryosen]";
-			mes "Or... do you have any ^0000ffMystic Horns^000000 with you? Of course, I'm not saying that I want it for free. If you'd give me 5 ^0000ff5 Mystic Horns^000000, I'd give you my Rune-Midgart's Strawberry Cake.";
+			mes "Or... do you have any ^0000ffMystic Horns^000000 with you? Of course, I'm not saying that I want it for free. If you'd give me ^0000ff2 Mystic Horns^000000, I'd give you my Rune-Midgart's Strawberry Cake.";
 			next;
 			switch(select("I haven't seen such a thing.:Oh, ok, I'll give you!")) {
 			case 1:
@@ -5979,7 +5980,7 @@ mid_camp,165,245,0	script	Ryosen#ep131_rhea01	748,{
 			mes "[Ryosen]";
 			mes "... Haha, I'm joking...";
 			next;
-			if (countitem(6023) > 4) {
+			if (countitem(6023) > 1) {
 				mes "[Ryosen]";
 				mes "Are you really, honestly, positively sure you want to exchange them for my cake?";
 				next;
@@ -5997,7 +5998,7 @@ mid_camp,165,245,0	script	Ryosen#ep131_rhea01	748,{
 				next;
 				mes "[Ryosen]";
 				mes "I heard you could extract some magical energy form Mystic Horns and use it. Anyway, thank you!";
-				delitem 6023,5; //Mystic_Horn
+				delitem 6023,2; //Mystic_Horn
 				getitem 12319,1; //Strawberry_Cake
 				close;
 			}
@@ -6345,7 +6346,7 @@ mid_camp,247,255,1	script	Hue#ep131_rhea02	868,{
 			next;
 			mes "[Hue]";
 			mes "Could you bring ^0000ffFur^000000 if you get some? I'm not asking it for free.";
-			mes "I'll give you my Pineapple Jubilee from Schwartzvalt, if you bring me ^0000ff5 Furs^000000.";
+			mes "I'll give you my Pineapple Jubilee from Schwartzvalt, if you bring me ^0000ff2 Furs^000000.";
 			next;
 			switch(select("I don't have any, right now.:Oh, I'll give you Fur.")) {
 			case 1:
@@ -6372,7 +6373,7 @@ mid_camp,247,255,1	script	Hue#ep131_rhea02	868,{
 			mes "[Hue]";
 			mes "Ah, are you sure you want to exchange?";
 			next;
-			if (countitem(6020) > 4) {
+			if (countitem(6020) > 1) {
 				mes "[Hue]";
 				mes "Oh, so it's the thing called, Fur??";
 				next;
@@ -6392,7 +6393,7 @@ mid_camp,247,255,1	script	Hue#ep131_rhea02	868,{
 				next;
 				mes "[Hue]";
 				mes "I always needed this because the weather here is colder then I expected. I'm sure this will keep me warm.";
-				delitem 6020,5; //Fur
+				delitem 6020,2; //Fur
 				getitem 12320,1; //Pineapple_Juice
 				close;
 			}
@@ -6808,7 +6809,7 @@ mid_camp,222,218,3	script	Hansenne#ep131_rhea03	931,{
 			next;
 			mes "[Hansenne]";
 			mes "Can you give me a ^0000ffPeaked Hat^000000 if you have any? I'm not asking for free.";
-			mes "For ^0000ff5 Peaked Hats^000000, I'll give you my special dessert!";
+			mes "For ^0000ff2 Peaked Hats^000000, I'll give you my special dessert!";
 			next;
 			switch(select("No way.:Sure.")) {
 			case 1:
@@ -6837,7 +6838,7 @@ mid_camp,222,218,3	script	Hansenne#ep131_rhea03	931,{
 			mes "[Hansenne]";
 			mes "Ah!!! You have it?";
 			next;
-			if (countitem(6021) > 4) {
+			if (countitem(6021) > 1) {
 				mes "[Hansenne]";
 				mes "Oh, you really have those!";
 				next;
@@ -6858,7 +6859,7 @@ mid_camp,222,218,3	script	Hansenne#ep131_rhea03	931,{
 				mes "Ehhmmm, thank you!";
 				mes "Geeeee, thank you!";
 				mes "Haha, hahaha, hahahahahahahahaha.";
-				delitem 6021,5; //Peaked_Hat
+				delitem 6021,2; //Peaked_Hat
 				getitem 12321,1; //Spicy_Sandwich
 				close;
 			}

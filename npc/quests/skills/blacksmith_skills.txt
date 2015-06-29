@@ -31,7 +31,7 @@ geffen,178,72,3	script	Akkie#qsk_bs	726,{
 			mes "Dubious Salesmanship? You";
 			mes "should be able to use it now...";
 			set BLACK_SK,8;
-			skill "BS_UNFAIRLYTRICK",1,0;
+			skill "BS_UNFAIRLYTRICK",1,SKILL_PERM;
 			close;
 		}
 		else if (BLACK_SK == 8) {
@@ -371,7 +371,7 @@ geffen,178,72,3	script	Akkie#qsk_bs	726,{
 				mes "this... Isn't it easy? Of course, you can only use this in battle to";
 				mes "reduce Mammonite's zeny cost...";
 				set BLACK_SK,7;
-				skill "BS_UNFAIRLYTRICK",1,0;
+				skill "BS_UNFAIRLYTRICK",1,SKILL_PERM;
 				next;
 				mes "[Akkie]";
 				mes "Also, 90% of the cost of";
@@ -490,7 +490,7 @@ geffen,172,52,1	script	Goodman#qsk_bs	826,{
 			mes "just looking at me should";
 			mes "jog the memories you require";
 			mes "to use this skill once again~";
-			skill "BS_GREED",1,0;
+			skill "BS_GREED",1,SKILL_PERM;
 			set BLACK_SK2,3;
 			close;
 		}
@@ -608,7 +608,7 @@ geffen,172,52,1	script	Goodman#qsk_bs	826,{
 					mes "is different than its name.";
 					mes "Don't forget that, and I hope";
 					mes "you craft true masterpieces.";
-					skill "BS_GREED",1,0;
+					skill "BS_GREED",1,SKILL_PERM;
 					set BLACK_SK2,2;
 					close;
 				}

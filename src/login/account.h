@@ -22,7 +22,7 @@ typedef struct AccountDBIterator AccountDBIterator;
 AccountDB* account_db_sql(void);
 
 struct mmo_account {
-	int account_id;
+	uint32 account_id;
 	char userid[NAME_LENGTH];
 	char pass[32+1];        // 23+1 for plaintext, 32+1 for md5-ed passwords
 	char sex;               // gender (M/F/S)
@@ -108,7 +108,7 @@ struct AccountDB {
 	/// @param self Database
 	/// @param account_id Account id
 	/// @return true if successful
-	bool (*remove)(AccountDB* self, const int account_id);
+	bool (*remove)(AccountDB* self, const uint32 account_id);
 
 	/// Modifies the data of an existing account.
 	/// Uses acc->account_id to identify the account.
@@ -124,7 +124,7 @@ struct AccountDB {
 	/// @param acc Pointer that receives the account data
 	/// @param account_id Target account id
 	/// @return true if successful
-	bool (*load_num)(AccountDB* self, struct mmo_account* acc, const int account_id);
+	bool (*load_num)(AccountDB* self, struct mmo_account* acc, const uint32 account_id);
 
 	/// Finds an account with userid and copies it to acc.
 	///

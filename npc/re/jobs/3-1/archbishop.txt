@@ -55,7 +55,7 @@ prt_church,103,88,3	script	Praying Minister#arch	60,{
 		mes "I'm going to make them ministers worthy of serving Odin.";
 		close;
 	}
-	if ((BaseLevel == 99) && (JobLevel > 49)) {
+	if ((BaseLevel > 98) && (JobLevel > 49)) {
 		if (job_arch == 0) {
 			if (SkillPoint) {
 				mes "You can't change jobs without using all your skill points. Please use all of your skill points before applying to change jobs~";

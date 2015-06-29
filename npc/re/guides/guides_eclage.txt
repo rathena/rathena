@@ -12,7 +12,7 @@
 //= 1.0 First version. [Euphy]
 //============================================================ 
 
-ecl_in01,48,60,4	script	Eclage Guard#obb	447,{
+ecl_in01,48,60,5	script	Eclage Guard#obb	447,{
 	mes "[Eclage Guard]";
 	mes "Welcome, Adventurer. This is the plaza of Eclage, a great and sacred tree. How can I help you?";
 	next;

@@ -2,20 +2,15 @@
 // For more information, see LICENCE in the main folder
 
 #include "../common/mmo.h"
-#include "../common/db.h"
 #include "../common/malloc.h"
-#include "../common/showmsg.h"
 #include "../common/socket.h"
 #include "../common/strlib.h"
 #include "../common/sql.h"
-#include "../common/timer.h"
 
 #include "char.h"
 #include "inter.h"
 #include "int_quest.h"
 
-#include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
 
 /**
@@ -26,7 +21,7 @@
  * @return Array of found entries. It has *count entries, and it is care of the
  *         caller to aFree() it afterwards.
  */
-struct quest *mapif_quests_fromsql(int char_id, int *count) {
+struct quest *mapif_quests_fromsql(uint32 char_id, int *count) {
 	struct quest *questlog = NULL;
 	struct quest tmp_quest;
 	SqlStmt *stmt;
@@ -87,7 +82,7 @@ struct quest *mapif_quests_fromsql(int char_id, int *count) {
  * @param quest_id Quest ID
  * @return false in case of errors, true otherwise
  */
-bool mapif_quest_delete(int char_id, int quest_id) {
+bool mapif_quest_delete(uint32 char_id, int quest_id) {
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `quest_id` = '%d' AND `char_id` = '%d'", schema_config.quest_db, quest_id, char_id) )
 	{
 		Sql_ShowDebug(sql_handle);
@@ -104,7 +99,7 @@ bool mapif_quest_delete(int char_id, int quest_id) {
  * @param qd      Quest data
  * @return false in case of errors, true otherwise
  */
-bool mapif_quest_add(int char_id, struct quest qd) {
+bool mapif_quest_add(uint32 char_id, struct quest qd) {
 	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s`(`quest_id`, `char_id`, `state`, `time`, `count1`, `count2`, `count3`) VALUES ('%d', '%d', '%d','%d', '%d', '%d', '%d')", schema_config.quest_db, qd.quest_id, char_id, qd.state, qd.time, qd.count[0], qd.count[1], qd.count[2]) )
 	{
 		Sql_ShowDebug(sql_handle);
@@ -121,7 +116,7 @@ bool mapif_quest_add(int char_id, struct quest qd) {
  * @param qd      Quest data
  * @return false in case of errors, true otherwise
  */
-bool mapif_quest_update(int char_id, struct quest qd) {
+bool mapif_quest_update(uint32 char_id, struct quest qd) {
 	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `state`='%d', `count1`='%d', `count2`='%d', `count3`='%d' WHERE `quest_id` = '%d' AND `char_id` = '%d'", schema_config.quest_db, qd.state, qd.count[0], qd.count[1], qd.count[2], qd.quest_id, char_id) ) 
 	{
 		Sql_ShowDebug(sql_handle);
@@ -140,7 +135,7 @@ bool mapif_quest_update(int char_id, struct quest qd) {
  */
 int mapif_parse_quest_save(int fd) {
 	int i, j, k, old_n, new_n = (RFIFOW(fd,2) - 8) / sizeof(struct quest);
-	int char_id = RFIFOL(fd,4);
+	uint32 char_id = RFIFOL(fd,4);
 	struct quest *old_qd = NULL, *new_qd = NULL;
 	bool success = true;
 
@@ -191,7 +186,7 @@ int mapif_parse_quest_save(int fd) {
  * @see inter_parse_frommap
  */
 int mapif_parse_quest_load(int fd) {
-	int char_id = RFIFOL(fd,2);
+	uint32 char_id = RFIFOL(fd,2);
 	struct quest *tmp_questlog = NULL;
 	int num_quests;
 

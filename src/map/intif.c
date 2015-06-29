@@ -3,42 +3,34 @@
 
 #include "../common/showmsg.h"
 #include "../common/socket.h"
-#include "../common/timer.h"
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
 #include "../common/strlib.h"
+#include "../common/mmo.h"
 #include "map.h"
 #include "battle.h"
 #include "chrif.h"
 #include "clif.h"
 #include "pc.h"
 #include "intif.h"
-#include "log.h"
 #include "storage.h"
 #include "party.h"
-#include "guild.h"
 #include "pet.h"
-#include "atcommand.h"
 #include "mercenary.h"
 #include "homunculus.h"
 #include "elemental.h"
 #include "mail.h"
 #include "quest.h"
 
-#include <sys/types.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <signal.h>
-#include <fcntl.h>
-#include <string.h>
 
 static const int packet_len_table[]={
-	-1,-1,27,-1, -1, 0,37,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3800-0x380f
+	-1,-1,27,-1, -1, 0,37,-1, 10+NAME_LENGTH, 0, 0, 0,  0, 0,  0, 0, //0x3800-0x380f
 	 0, 0, 0, 0,  0, 0, 0, 0, -1,11, 0, 0,  0, 0,  0, 0, //0x3810
 	39,-1,15,15, 14,19, 7,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3820
 	10,-1,15, 0, 79,19, 7,-1,  0,-1,-1,-1, 14,67,186,-1, //0x3830
 	-1, 0, 0,14,  0, 0, 0, 0, -1,74,-1,11, 11,-1,  0, 0, //0x3840
-	-1,-1, 7, 7,  7,11, 8, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3850  Auctions [Zephyrus] itembound[Akinari]
+	-1,-1, 7, 7,  7,11, 8,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3850  Auctions [Zephyrus] itembound[Akinari]
 	-1, 7, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3860  Quests [Kevin] [Inkfish]
 	-1, 3, 3, 0,  0, 0, 0, 0,  0, 0, 0, 0, -1, 3,  3, 0, //0x3870  Mercenaries [Zephyrus] / Elemental [pakpil]
 	12,-1, 7, 3,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3880
@@ -75,7 +67,7 @@ int CheckForCharServer(void)
  * @param pet_name
  * @return 
  */
-int intif_create_pet(int account_id,int char_id,short pet_class,short pet_lv,short pet_egg_id,
+int intif_create_pet(uint32 account_id,uint32 char_id,short pet_class,short pet_lv,short pet_egg_id,
 	short pet_equip,short intimate,short hungry,char rename_flag,char incubate,char *pet_name)
 {
 	if (CheckForCharServer())
@@ -105,7 +97,7 @@ int intif_create_pet(int account_id,int char_id,short pet_class,short pet_lv,sho
  * @param pet_id
  * @return 
  */
-int intif_request_petdata(int account_id,int char_id,int pet_id)
+int intif_request_petdata(uint32 account_id,uint32 char_id,int pet_id)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -125,7 +117,7 @@ int intif_request_petdata(int account_id,int char_id,int pet_id)
  * @param p
  * @return 
  */
-int intif_save_petdata(int account_id,struct s_pet *p)
+int intif_save_petdata(uint32 account_id,struct s_pet *p)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -462,7 +454,7 @@ int intif_request_registry(struct map_session_data *sd, int flag)
  * @param guild_id : Guild of player
  * @return 0:error, 1=msg sent
  */
-int intif_request_guild_storage(int account_id,int guild_id)
+int intif_request_guild_storage(uint32 account_id,int guild_id)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -480,7 +472,7 @@ int intif_request_guild_storage(int account_id,int guild_id)
  * @param gstor : Guild storage struct to save
  * @return 
  */
-int intif_send_guild_storage(int account_id,struct guild_storage *gstor)
+int intif_send_guild_storage(uint32 account_id,struct guild_storage *gstor)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -525,7 +517,7 @@ int intif_create_party(struct party_member *member,char *name,int item,int item2
  * @param char_id : Player id requesting
  * @return 0=error, 1=msg sent
  */
-int intif_request_partyinfo(int party_id, int char_id)
+int intif_request_partyinfo(int party_id, uint32 char_id)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -564,7 +556,7 @@ int intif_party_addmember(int party_id,struct party_member *member)
  * @param item :  sharing item option
  * @return 0=error, 1=msg sent
  */
-int intif_party_changeoption(int party_id,int account_id,int exp,int item)
+int intif_party_changeoption(int party_id,uint32 account_id,int exp,int item)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -585,7 +577,7 @@ int intif_party_changeoption(int party_id,int account_id,int exp,int item)
  * @param char_id : cid of player to leave
  * @return 0:char-serv disconected, 1=msg sent
  */
-int intif_party_leave(int party_id,int account_id, int char_id)
+int intif_party_leave(int party_id,uint32 account_id, uint32 char_id)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -657,7 +649,7 @@ int intif_break_party(int party_id)
  * @param len : Size of the message
  * @return 0=error, 1=msg sent
  */
-int intif_party_message(int party_id,int account_id,const char *mes,int len)
+int intif_party_message(int party_id,uint32 account_id,const char *mes,int len)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -682,7 +674,7 @@ int intif_party_message(int party_id,int account_id,const char *mes,int len)
  * @param char_id : player to set as new leader
  * @return  0=error, 1=msg sent
  */
-int intif_party_leaderchange(int party_id,int account_id,int char_id)
+int intif_party_leaderchange(int party_id,uint32 account_id,uint32 char_id)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -797,7 +789,7 @@ int intif_guild_change_gm(int guild_id, const char* name, int len)
  * @param mes : quitting message (max 40)
  * @return 0=error, 1=msg_sent
  */
-int intif_guild_leave(int guild_id,int account_id,int char_id,int flag,const char *mes)
+int intif_guild_leave(int guild_id,uint32 account_id,uint32 char_id,int flag,const char *mes)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -822,7 +814,7 @@ int intif_guild_leave(int guild_id,int account_id,int char_id,int flag,const cha
  * @param class_ : player class
  * @return 0=error, 1=msg_sent
  */
-int intif_guild_memberinfoshort(int guild_id,int account_id,int char_id,int online,int lv,int class_)
+int intif_guild_memberinfoshort(int guild_id,uint32 account_id,uint32 char_id,int online,int lv,int class_)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -863,7 +855,7 @@ int intif_guild_break(int guild_id)
  * @param len : Size of the message
  * @return 0=error, 1=msg_sent
  */
-int intif_guild_message(int guild_id,int account_id,const char *mes,int len)
+int intif_guild_message(int guild_id,uint32 account_id,const char *mes,int len)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -914,7 +906,7 @@ int intif_guild_change_basicinfo(int guild_id,int type,const void *data,int len)
  * @param len : Size of value
  * @return 0=error, 1=msg_sent
  */
-int intif_guild_change_memberinfo(int guild_id,int account_id,int char_id,
+int intif_guild_change_memberinfo(int guild_id,uint32 account_id,uint32 char_id,
 	int type,const void *data,int len)
 {
 	if (CheckForCharServer())
@@ -960,7 +952,7 @@ int intif_guild_position(int guild_id,int idx,struct guild_position *p)
  * @param max : skill max level
  * @return 0=error, 1=msg_sent
  */
-int intif_guild_skillup(int guild_id, uint16 skill_id, int account_id, int max)
+int intif_guild_skillup(int guild_id, uint16 skill_id, uint32 account_id, int max)
 {
 	if( CheckForCharServer() )
 		return 0;
@@ -983,7 +975,7 @@ int intif_guild_skillup(int guild_id, uint16 skill_id, int account_id, int max)
  * @param flag : (GUILD_ALLIANCE_REMOVE|0|1)
  * @return  0=error, 1=msg_sent
  */
-int intif_guild_alliance(int guild_id1,int guild_id2,int account_id1,int account_id2,int flag)
+int intif_guild_alliance(int guild_id1,int guild_id2,uint32 account_id1,uint32 account_id2,int flag)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -1088,7 +1080,7 @@ int intif_guild_castle_datasave(int castle_id,int index, int value)
  * @param sh : TMp homunlus data
  * @return 0=error, 1=msg_sent
  */
-int intif_homunculus_create(int account_id, struct s_homunculus *sh)
+int intif_homunculus_create(uint32 account_id, struct s_homunculus *sh)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -1107,7 +1099,7 @@ int intif_homunculus_create(int account_id, struct s_homunculus *sh)
  * @param homun_id
  * @return 0=error, 1=msg sent
  */
-int intif_homunculus_requestload(int account_id, int homun_id)
+int intif_homunculus_requestload(uint32 account_id, int homun_id)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -1125,7 +1117,7 @@ int intif_homunculus_requestload(int account_id, int homun_id)
  * @param sh : homunculus struct
  * @return : 0=error, 1=msg sent
  */
-int intif_homunculus_requestsave(int account_id, struct s_homunculus* sh)
+int intif_homunculus_requestsave(uint32 account_id, struct s_homunculus* sh)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -1280,7 +1272,7 @@ int intif_parse_Registers(int fd)
 	struct map_session_data *sd;
 	struct global_reg *reg;
 	int *qty;
-	int account_id = RFIFOL(fd,4), char_id = RFIFOL(fd,8);
+	uint32 account_id = RFIFOL(fd,4), char_id = RFIFOL(fd,8);
 	struct auth_node *node = chrif_auth_check(account_id, char_id, ST_LOGIN);
 	if (node)
 		sd = node->sd;
@@ -1341,22 +1333,22 @@ int intif_parse_LoadGuildStorage(int fd)
 
 	guild_id = RFIFOL(fd,8);
 	flag = RFIFOL(fd,12);
-	if(guild_id <= 0)
+	if (guild_id <= 0)
 		return 0;
 
-	sd=map_id2sd( RFIFOL(fd,4) );
-	if( flag ){ //If flag != 0, we attach a player and open the storage
-		if(sd==NULL){
-			ShowError("intif_parse_LoadGuildStorage: user not found %d\n",RFIFOL(fd,4));
+	sd = map_id2sd( RFIFOL(fd,4) );
+	if (flag){ //If flag != 0, we attach a player and open the storage
+		if(sd == NULL){
+			ShowError("intif_parse_LoadGuildStorage: user not found (AID: %d)\n",RFIFOL(fd,4));
 			return 0;
 		}
 	}
-	gstor=guild2storage(guild_id);
-	if(!gstor) {
+	gstor = gstorage_guild2storage(guild_id);
+	if (!gstor) {
 		ShowWarning("intif_parse_LoadGuildStorage: error guild_id %d not exist\n",guild_id);
 		return 0;
 	}
-	if (gstor->storage_status == 1) { // Already open.. lets ignore this update
+	if (gstor->opened) { // Already open.. lets ignore this update
 		ShowWarning("intif_parse_LoadGuildStorage: storage received for a client already open (User %d:%d)\n", flag?sd->status.account_id:1, flag?sd->status.char_id:1);
 		return 0;
 	}
@@ -1366,13 +1358,13 @@ int intif_parse_LoadGuildStorage(int fd)
 	}
 	if( RFIFOW(fd,2)-13 != sizeof(struct guild_storage) ){
 		ShowError("intif_parse_LoadGuildStorage: data size error %d %d\n",RFIFOW(fd,2)-13 , sizeof(struct guild_storage));
-		gstor->storage_status = 0;
+		gstor->opened = 0;
 		return 0;
 	}
 
 	memcpy(gstor,RFIFOP(fd,13),sizeof(struct guild_storage));
 	if( flag )
-		storage_guild_storageopen(sd);
+		gstorage_storageopen(sd);
 
 	return 1;
 }
@@ -1384,7 +1376,7 @@ int intif_parse_LoadGuildStorage(int fd)
  */
 int intif_parse_SaveGuildStorage(int fd)
 {
-	storage_guild_storagesaved(/*RFIFOL(fd,2), */RFIFOL(fd,6));
+	gstorage_storagesaved(/*RFIFOL(fd,2), */RFIFOL(fd,6));
 	return 1;
 }
 
@@ -1601,8 +1593,8 @@ int intif_parse_GuildMemberInfoChanged(int fd)
 {
 	//int len = RFIFOW(fd,2) - 18;
 	int guild_id = RFIFOL(fd,4);
-	int account_id = RFIFOL(fd,8);
-	int char_id = RFIFOL(fd,12);
+	uint32 account_id = RFIFOL(fd,8);
+	uint32 char_id = RFIFOL(fd,12);
 	int type = RFIFOW(fd,16);
 	//void* data = RFIFOP(fd,18);
 
@@ -1895,7 +1887,7 @@ void intif_request_questlog(TBL_PC *sd)
  */
 void intif_parse_questlog(int fd)
 {
-	int char_id = RFIFOL(fd,4), num_received = (RFIFOW(fd,2) - 8) / sizeof(struct quest);
+	uint32 char_id = RFIFOL(fd,4), num_received = (RFIFOW(fd,2) - 8) / sizeof(struct quest);
 	TBL_PC *sd = map_charid2sd(char_id);
 
 	if(!sd) // User not online anymore
@@ -1918,7 +1910,7 @@ void intif_parse_questlog(int fd)
 			CREATE(sd->quest_log, struct quest, num_received);
 
 		for(i = 0; i < num_received; i++) {
-			if(quest_db(received[i].quest_id) == &quest_dummy) {
+			if(quest_search(received[i].quest_id) == &quest_dummy) {
 				ShowError("intif_parse_QuestLog: quest %d not found in DB.\n", received[i].quest_id);
 				continue;
 			}
@@ -1990,7 +1982,7 @@ int intif_quest_save(TBL_PC *sd)
  * @param flag 0 Update Inbox | 1 OpenMail
  * @return 0=errur, 1=msg_sent
  */
-int intif_Mail_requestinbox(int char_id, unsigned char flag)
+int intif_Mail_requestinbox(uint32 char_id, unsigned char flag)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -2068,7 +2060,7 @@ int intif_Mail_read(int mail_id)
  * @param mail_id : Mail identification
  * @return 0=error, 1=msg sent
  */
-int intif_Mail_getattach(int char_id, int mail_id)
+int intif_Mail_getattach(uint32 char_id, int mail_id)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -2119,7 +2111,7 @@ int intif_parse_Mail_getattach(int fd)
  * @param mail_id : mail to delete
  * @return 0=error, 1=msg sent
  */
-int intif_Mail_delete(int char_id, int mail_id)
+int intif_Mail_delete(uint32 char_id, int mail_id)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -2140,7 +2132,7 @@ int intif_Mail_delete(int char_id, int mail_id)
  */
 int intif_parse_Mail_delete(int fd)
 {
-	int char_id = RFIFOL(fd,2);
+	uint32 char_id = RFIFOL(fd,2);
 	int mail_id = RFIFOL(fd,6);
 	bool failed = RFIFOB(fd,10);
 
@@ -2179,7 +2171,7 @@ int intif_parse_Mail_delete(int fd)
  * @param mail_id : mail to return
  * @return 0=error, 1=msg sent
  */
-int intif_Mail_return(int char_id, int mail_id)
+int intif_Mail_return(uint32 char_id, int mail_id)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -2238,7 +2230,7 @@ int intif_parse_Mail_return(int fd)
  * @param msg : mail struct
  * @return 0=error, 1=msg sent
  */
-int intif_Mail_send(int account_id, struct mail_message *msg)
+int intif_Mail_send(uint32 account_id, struct mail_message *msg)
 {
 	int len = sizeof(struct mail_message) + 8;
 
@@ -2283,7 +2275,7 @@ static void intif_parse_Mail_send(int fd)
 		else
 		{
 			clif_Mail_send(sd->fd, false);
-			if( save_settings&16 )
+			if( save_settings&CHARSAVE_MAIL )
 				chrif_save(sd, 0);
 		}
 	}
@@ -2321,7 +2313,7 @@ static void intif_parse_Mail_new(int fd)
  * @param page : in case of huge result list display 5 entry per page, (kinda suck that we redo the request atm)
  * @return 0=error, 1=msg sent
  */
-int intif_Auction_requestlist(int char_id, short type, int price, const char* searchtext, short page)
+int intif_Auction_requestlist(uint32 char_id, short type, int price, const char* searchtext, short page)
 {
 	int len = NAME_LENGTH + 16;
 
@@ -2401,7 +2393,7 @@ static void intif_parse_Auction_register(int fd)
 	if( auction.auction_id > 0 )
 	{
 		clif_Auction_message(sd->fd, 1); // Confirmation Packet ??
-		if( save_settings&32 )
+		if( save_settings&CHARSAVE_AUCTION )
 			chrif_save(sd,0);
 	}
 	else
@@ -2421,7 +2413,7 @@ static void intif_parse_Auction_register(int fd)
  * @param auction_id : auction to cancel
  * @return 0=error, 1=msg sent
  */
-int intif_Auction_cancel(int char_id, unsigned int auction_id)
+int intif_Auction_cancel(uint32 char_id, unsigned int auction_id)
 {
 	if( CheckForCharServer() )
 		return 0;
@@ -2462,7 +2454,7 @@ static void intif_parse_Auction_cancel(int fd)
  * @param auction_id : auction to stop
  * @return 0=error, 1=msg sent
  */
-int intif_Auction_close(int char_id, unsigned int auction_id)
+int intif_Auction_close(uint32 char_id, unsigned int auction_id)
 {
 	if( CheckForCharServer() )
 		return 0;
@@ -2505,7 +2497,7 @@ static void intif_parse_Auction_close(int fd)
  * @param bid
  * @return 0=error, 1=msg sent
  */
-int intif_Auction_bid(int char_id, const char* name, unsigned int auction_id, int bid)
+int intif_Auction_bid(uint32 char_id, const char* name, unsigned int auction_id, int bid)
 {
 	int len = 16 + NAME_LENGTH;
 
@@ -2614,7 +2606,7 @@ int intif_parse_mercenary_received(int fd)
  * @param char_id : player cid requesting data
  * @return 0=error, 1=msg sent
  */
-int intif_mercenary_request(int merc_id, int char_id)
+int intif_mercenary_request(int merc_id, uint32 char_id)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -2739,7 +2731,7 @@ int intif_parse_elemental_received(int fd)
  * @param char_id : player identification
  * @return 0=error, 1=msg sent
  */
-int intif_elemental_request(int ele_id, int char_id)
+int intif_elemental_request(int ele_id, uint32 char_id)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -2821,23 +2813,37 @@ int intif_parse_elemental_saved(int fd)
  * @param aid : requesting player aid
  * @param group_lv : requesting player lv
  * @param query : name or aid of player we want info
+ * @param type : 1 - Only return account id & userid, 0 - Full info
  * @return : 0=errur, 1=msg sent
  */
-int intif_request_accinfo( int u_fd, int aid, int group_lv, char* query ) {
+int intif_request_accinfo(int u_fd, int aid, int group_lv, char* query, char type) {
 
 	if( CheckForCharServer() )
 		return 0;
 	
-	WFIFOHEAD(inter_fd,2 + 4 + 4 + 4 + NAME_LENGTH);
+	WFIFOHEAD(inter_fd,2 + 4 + 4 + 4 + 1 + NAME_LENGTH);
 
 	WFIFOW(inter_fd,0) = 0x3007;
 	WFIFOL(inter_fd,2) = u_fd;
 	WFIFOL(inter_fd,6) = aid;
 	WFIFOL(inter_fd,10) = group_lv;
-	safestrncpy((char *)WFIFOP(inter_fd,14), query, NAME_LENGTH);
+	WFIFOB(inter_fd,14) = type;
+	safestrncpy((char *)WFIFOP(inter_fd,15), query, NAME_LENGTH);
 
-	WFIFOSET(inter_fd,2 + 4 + 4 + 4 + NAME_LENGTH);
+	WFIFOSET(inter_fd,2 + 4 + 4 + 4 + 1 + NAME_LENGTH);
 	return 1;
+}
+
+/**
+ * Receive the reply of a request_accinfo with type 1
+ * @param fd : char-serv link
+ */
+void intif_parse_accinfo_ack( int fd ) {
+	char acc_name[NAME_LENGTH];
+	int u_fd = RFIFOL(fd,2);
+	int acc_id = RFIFOL(fd,6);
+	safestrncpy(acc_name, (char*)RFIFOP(fd,10), NAME_LENGTH);
+	clif_account_name(u_fd, acc_id, acc_name);
 }
 
 /**
@@ -2869,13 +2875,14 @@ void intif_parse_MessageToFD(int fd) {
 #ifdef BOUND_ITEMS
 
 /**
- * Request char-serv to delete some bound item, for non connected cid
+ * ZI 0x3056 <char_id>.L <account_id>.L <guild_id>.W
+ * Request inter-serv to delete some bound item, for non connected cid
  * @param char_id : Char to delete item ID
  * @param aid : Account to delete item ID
  * @param guild_id : Guild of char
  */
-void intif_itembound_req(int char_id,int aid,int guild_id) {
-	struct guild_storage *gstor = guild2storage2(guild_id);
+void intif_itembound_guild_retrieve(uint32 char_id,uint32 account_id,int guild_id) {
+	struct guild_storage *gstor = gstorage_get_storage(guild_id);
 	
 	if( CheckForCharServer() )
 		return;
@@ -2883,10 +2890,12 @@ void intif_itembound_req(int char_id,int aid,int guild_id) {
 	WFIFOHEAD(inter_fd,12);
 	WFIFOW(inter_fd,0) = 0x3056;
 	WFIFOL(inter_fd,2) = char_id;
-	WFIFOL(inter_fd,6) = aid;
+	WFIFOL(inter_fd,6) = account_id;
 	WFIFOW(inter_fd,10) = guild_id;
 	WFIFOSET(inter_fd,12);
-	if(gstor) gstor->lock = 1; //Lock for retrieval process
+	if (gstor)
+		gstor->locked = true; //Lock for retrieval process
+	ShowInfo("Request guild bound item(s) retrieval for CID = "CL_WHITE"%d"CL_RESET", AID = %d, Guild ID = "CL_WHITE"%d"CL_RESET".\n", char_id, account_id, guild_id);
 }
 
 /**
@@ -2897,8 +2906,38 @@ void intif_itembound_req(int char_id,int aid,int guild_id) {
  */
 void intif_parse_itembound_ack(int fd) {
 	int guild_id = RFIFOW(fd,6);
-	struct guild_storage *gstor = guild2storage2(guild_id);
-	if(gstor) gstor->lock = 0; //Unlock now that operation is completed
+	struct guild_storage *gstor = gstorage_get_storage(guild_id);
+	if (gstor)
+		gstor->locked = false; //Unlock now that operation is completed
+}
+
+/**
+* IZ 0x3857 <size>.W <count>.W <guild_id>.W { <item>.?B }.*MAX_INVENTORY
+* Received the retrieved guild bound items from inter-server, store them to guild storage.
+* @param fd
+* @author [Cydh]
+*/
+void intif_parse_itembound_store2gstorage(int fd) {
+	unsigned short i, failed = 0;
+	short count = RFIFOW(fd, 4), guild_id = RFIFOW(fd, 6);
+	struct guild_storage *gstor = gstorage_guild2storage(guild_id);
+
+	if (!gstor) {
+		ShowError("intif_parse_itembound_store2gstorage: Guild '%d' not found.\n", guild_id);
+		return;
+	}
+
+	//@TODO: Gives some actions for item(s) that cannot be stored because storage is full or reach the limit of stack amount
+	for (i = 0; i < count; i++) {
+		struct item *item = (struct item*)RFIFOP(fd, 8 + i*sizeof(struct item));
+		if (!item)
+			continue;
+		if (!gstorage_additem2(gstor, item, item->amount))
+			failed++;
+	}
+	ShowInfo("Retrieved '"CL_WHITE"%d"CL_RESET"' (failed: %d) guild bound item(s) for Guild ID = "CL_WHITE"%d"CL_RESET".\n", count, failed, guild_id);
+	gstor->locked = false;
+	gstor->opened = 0;
 }
 #endif
 
@@ -2945,6 +2984,7 @@ int intif_parse(int fd)
 	case 0x3804:	intif_parse_Registers(fd); break;
 	case 0x3806:	intif_parse_ChangeNameOk(fd); break;
 	case 0x3807:	intif_parse_MessageToFD(fd); break;
+	case 0x3808:	intif_parse_accinfo_ack(fd); break;
 	case 0x3818:	intif_parse_LoadGuildStorage(fd); break;
 	case 0x3819:	intif_parse_SaveGuildStorage(fd); break;
 	case 0x3820:	intif_parse_PartyCreated(fd); break;
@@ -2991,6 +3031,7 @@ int intif_parse(int fd)
 	//Bound items
 #ifdef BOUND_ITEMS
 	case 0x3856:	intif_parse_itembound_ack(fd); break;
+	case 0x3857:	intif_parse_itembound_store2gstorage(fd); break;
 #endif
 
 	//Quest system

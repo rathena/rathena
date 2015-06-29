@@ -19,7 +19,7 @@ arena_room,147,42,1	script	Lv80 Waiting Room	124,{
 	end;
 
 OnInit:
-	waitingroom "Individual; Level 80 to "+(checkre(0)?"160":"99"),50,"Lv80 Waiting Room::OnStartArena",1,1000,80;
+	waitingroom "Individual; Level 80 to " + MAX_LEVEL,50,"Lv80 Waiting Room::OnStartArena",1,1000,80;
 	enablewaitingroomevent;
 	end;
 

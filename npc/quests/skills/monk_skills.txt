@@ -59,8 +59,8 @@ prt_monk,270,198,3	script	Apprentice Monk#qsk_mo	753,{
 			mes "tap-tap-tap-tap-tap-tap-tap-tap- tap-tap-tap-tap-tap-tap-tap-tap-";
 			mes "tap-tap-tap-tap-tap-tap* *POKE*^000000";
 			set MONK_SK,7;
-			skill "MO_KITRANSLATION",1,0;
-			skill "MO_BALKYOUNG",1,0;
+			skill "MO_KITRANSLATION",1,SKILL_PERM;
+			skill "MO_BALKYOUNG",1,SKILL_PERM;
 			next;
 			mes "[Monk]";
 			mes "It is done. Please";
@@ -147,7 +147,7 @@ prt_monk,270,198,3	script	Apprentice Monk#qsk_mo	753,{
 				mes "times, but it is a means to an";
 				mes "end, and not an end in itself.";
 				set MONK_SK,3;
-				skill "MO_KITRANSLATION",1,0;
+				skill "MO_KITRANSLATION",1,SKILL_PERM;
 				next;
 				mes "[Monk]";
 				mes "Our skills should not be";
@@ -252,7 +252,7 @@ monk_test,316,69,5	script	Monk#qsk_mo	823,{
 			mes "to do it since you've learned";
 			mes "Spiritual Endowment.";
 			set MONK_SK,6;
-			skill "MO_BALKYOUNG",1,0;
+			skill "MO_BALKYOUNG",1,SKILL_PERM;
 			next;
 			mes "[Monk]";
 			mes "Well, we've completed";

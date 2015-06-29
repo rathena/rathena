@@ -4,7 +4,6 @@
 #include "../common/conf.h"
 #include "../common/db.h"
 #include "../common/malloc.h"
-#include "../common/nullpo.h"
 #include "../common/showmsg.h"
 #include "../common/strlib.h" // strcmp
 #include "../common/socket.h"
@@ -369,9 +368,7 @@ void pc_group_pc_load(struct map_session_data * sd) {
 bool pc_group_has_permission(int group_id, int permission)
 {
 	GroupSettings *group = NULL;
-	if ((group = id2group(group_id)) == NULL) 
-		return false;
-	return ((group->e_permissions&permission) != 0);
+	return (group = id2group(group_id)) == NULL ? false : (group->e_permissions&permission) != 0;
 }
 
 /**
@@ -381,9 +378,7 @@ bool pc_group_has_permission(int group_id, int permission)
 bool pc_group_should_log_commands(int group_id)
 {
 	GroupSettings *group = NULL;
-	if ((group = id2group(group_id)) == NULL) 
-		return false;
-	return group->log_commands;
+	return (group = id2group(group_id)) == NULL ? false : group->log_commands;
 }
 
 /**

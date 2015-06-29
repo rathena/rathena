@@ -2,20 +2,16 @@
 // For more information, see LICENCE in the main folder
 
 #include "../common/mmo.h"
-#include "../common/malloc.h"
 #include "../common/strlib.h"
 #include "../common/showmsg.h"
 #include "../common/socket.h"
-#include "../common/utils.h"
 #include "../common/sql.h"
 #include "char.h"
 #include "inter.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
-bool mercenary_owner_fromsql(int char_id, struct mmo_charstatus *status)
+bool mercenary_owner_fromsql(uint32 char_id, struct mmo_charstatus *status)
 {
 	char* data;
 
@@ -43,7 +39,7 @@ bool mercenary_owner_fromsql(int char_id, struct mmo_charstatus *status)
 	return true;
 }
 
-bool mercenary_owner_tosql(int char_id, struct mmo_charstatus *status)
+bool mercenary_owner_tosql(uint32 char_id, struct mmo_charstatus *status)
 {
 	if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`char_id`, `merc_id`, `arch_calls`, `arch_faith`, `spear_calls`, `spear_faith`, `sword_calls`, `sword_faith`) VALUES ('%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
 		schema_config.mercenary_owner_db, char_id, status->mer_id, status->arch_calls, status->arch_faith, status->spear_calls, status->spear_faith, status->sword_calls, status->sword_faith) )
@@ -55,7 +51,7 @@ bool mercenary_owner_tosql(int char_id, struct mmo_charstatus *status)
 	return true;
 }
 
-bool mercenary_owner_delete(int char_id)
+bool mercenary_owner_delete(uint32 char_id)
 {
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%d'", schema_config.mercenary_owner_db, char_id) )
 		Sql_ShowDebug(sql_handle);
@@ -93,7 +89,7 @@ bool mapif_mercenary_save(struct s_mercenary* merc)
 	return flag;
 }
 
-bool mapif_mercenary_load(int merc_id, int char_id, struct s_mercenary *merc)
+bool mapif_mercenary_load(int merc_id, uint32 char_id, struct s_mercenary *merc)
 {
 	char* data;
 
@@ -120,7 +116,7 @@ bool mapif_mercenary_load(int merc_id, int char_id, struct s_mercenary *merc)
 	Sql_GetData(sql_handle,  4, &data, NULL); merc->life_time = atoi(data);
 	Sql_FreeResult(sql_handle);
 	if( charserv_config.save_log )
-		ShowInfo("Mercenary loaded (%d - %d).\n", merc->mercenary_id, merc->char_id);
+		ShowInfo("Mercenary loaded (ID: %d / Class: %d / CID: %d).\n", merc->mercenary_id, merc->class_, merc->char_id);
 
 	return true;
 }
@@ -154,7 +150,7 @@ static void mapif_parse_mercenary_create(int fd, struct s_mercenary* merc)
 	mapif_mercenary_send(fd, merc, result);
 }
 
-static void mapif_parse_mercenary_load(int fd, int merc_id, int char_id)
+static void mapif_parse_mercenary_load(int fd, int merc_id, uint32 char_id)
 {
 	struct s_mercenary merc;
 	bool result = mapif_mercenary_load(merc_id, char_id, &merc);

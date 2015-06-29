@@ -40,7 +40,7 @@ prt_church,111,112,1	script	Sister Linus	79,{
 				mes "with your light. Give us the";
 				mes "strength to walk the path of";
 				mes "love and sacrifice. Redemptio!^000000";
-				skill "PR_REDEMPTIO",1,0;
+				skill "PR_REDEMPTIO",1,SKILL_PERM;
 				next;
 				mes "[Sister Linus]";
 				mes "There...";
@@ -310,7 +310,7 @@ prt_church,111,112,1	script	Sister Linus	79,{
 						delitem 717,20; //Blue_Gemstone
 						delitem 523,30; //Holy_Water
 						set PRIEST_SK,100;
-						skill "PR_REDEMPTIO",1,0;
+						skill "PR_REDEMPTIO",1,SKILL_PERM;
 						close;
 					}
 					else {

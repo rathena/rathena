@@ -1,12 +1,6 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Quest NPCs related to Prontera
-//===== By: ================================================== 
-//= kobra_k88; L0ne_W0lf
-//===== Current Version: ===================================== 
-//= 2.9
-//===== Compatible With: ===================================== 
-//= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Collection of Prontera-based quests.
 //= * Culvert Access
 //= * Ph.D Hat Quest
@@ -21,7 +15,8 @@
 //= Gaebolg Family Curse:
 //= - [Official Conversion]
 //= - Variable in use: prt_curse (max 61)
-//===== Additional Comments: ================================= 
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [kobra_k88] [L0ne_W0lf]
 //= Fixed flower name Dreamy -> Illusion
 //= 1.2 Fixed exploit [Lupus]
 //= 1.3 Removed Duplicates [Silent]
@@ -49,10 +44,10 @@
 //= 2.7 Corrected 'IProntera' typo. (bugreport:4522) [L0ne_W0lf]
 //= 2.8 Updated RE/Pre-RE EXP. [Euphy]
 //= 2.9 Updated Nameless Island addition and added questlog support. [Euphy]
-//============================================================ 
+//============================================================
 
 // Prontera Culvert :: prt_npc
-//============================================================ 
+//============================================================
 prt_in,88,105,2	script	Recruiter	105,{
 	if (MISC_QUEST & 8) {
 		mes "[Recruiter]";
@@ -167,7 +162,7 @@ prt_fild05,270,212,5	script	Culvert Guardian	105,{
 }
 
 // Ph.D Hat Quest :: npc_6cript
-//============================================================ 
+//============================================================
 prt_in,38,108,4	script	Teacher	53,{
 	if ((countitem(710) > 0) && (countitem(703) > 0) && (countitem(704) > 0) && (countitem(708) > 0)) {
 		mes "[Teacher]";
@@ -251,7 +246,7 @@ prt_in,38,108,4	script	Teacher	53,{
 }
 
 // Gaebolg Family Curse :: prt_curse
-//============================================================ 
+//============================================================
 prontera,248,212,3	script	Busy Boy#prt	706,3,3,{
 	callsub S_CheckWeight; //Check Player's weight
 	if (BaseLevel > 59) {
@@ -565,6 +560,7 @@ S_GetBooks:
 		mes "thanks for doing this for me.";
 		mes "I was really at my wit's end...";
 		set prt_curse,3;
+		setquest 18030;// custom addition to make the script consistent
 		getitem 7431,1; //Books
 		close;
 	}
@@ -864,6 +860,7 @@ yuno,311,195,3	script	Historian#prt01	754,{
 		mes "somewhere in that desert town.";
 		set prt_curse,6;
 		getitem 7342,1; //File01
+		changequest 18030,18031;// custom addition to make the script consistent
 		close;
 	}
 	else if (prt_curse == 6) {

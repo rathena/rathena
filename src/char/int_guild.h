@@ -26,12 +26,12 @@ struct guild_castle;
 int inter_guild_parse_frommap(int fd);
 int inter_guild_sql_init(void);
 void inter_guild_sql_final(void);
-int inter_guild_leave(int guild_id,int account_id,int char_id);
+int inter_guild_leave(int guild_id,uint32 account_id,uint32 char_id);
 int mapif_parse_BreakGuild(int fd,int guild_id);
 int inter_guild_broken(int guild_id);
-int inter_guild_sex_changed(int guild_id,int account_id,int char_id, short gender);
-int inter_guild_charname_changed(int guild_id,int account_id, int char_id, char *name);
-int inter_guild_CharOnline(int char_id, int guild_id);
-int inter_guild_CharOffline(int char_id, int guild_id);
+int inter_guild_sex_changed(int guild_id,uint32 account_id,uint32 char_id, short gender);
+int inter_guild_charname_changed(int guild_id,uint32 account_id, uint32 char_id, char *name);
+int inter_guild_CharOnline(uint32 char_id, int guild_id);
+int inter_guild_CharOffline(uint32 char_id, int guild_id);
 
 #endif /* _INT_GUILD_SQL_H_ */

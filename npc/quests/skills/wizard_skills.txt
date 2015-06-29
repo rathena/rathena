@@ -42,7 +42,7 @@ gef_tower,115,36,4	script	Meow#q_wiz	876,{
 				mes "Meow can administer another";
 				mes "vicious beating to you.";
 				specialeffect2 EF_ABSORBSPIRITS;
-				skill "WZ_SIGHTBLASTER",1,0;
+				skill "WZ_SIGHTBLASTER",1,SKILL_PERM;
 				next;
 				mes "[Meow]";
 				mes "Remember now?";
@@ -295,7 +295,7 @@ gef_tower,115,36,4	script	Meow#q_wiz	876,{
 			delitem 990,10; //Boody_Red
 			delitem 992,10; //Wind_Of_Verdure
 			set WIZ_SK,100;
-			skill "WZ_SIGHTBLASTER",1,0;
+			skill "WZ_SIGHTBLASTER",1,SKILL_PERM;
 			next;
 			mes "[Meow]";
 			mes "I'm so tired from all of";

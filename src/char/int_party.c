@@ -3,7 +3,6 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/mmo.h"
-#include "../common/db.h"
 #include "../common/malloc.h"
 #include "../common/strlib.h"
 #include "../common/socket.h"
@@ -15,9 +14,7 @@
 #include "inter.h"
 #include "int_party.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 struct party_data {
 	struct party party;
@@ -31,9 +28,9 @@ static DBMap* party_db_; // int party_id -> struct party_data*
 
 int mapif_party_broken(int party_id,int flag);
 int party_check_empty(struct party_data *p);
-int mapif_parse_PartyLeave(int fd, int party_id, int account_id, int char_id);
+int mapif_parse_PartyLeave(int fd, int party_id, uint32 account_id, uint32 char_id);
 int party_check_exp_share(struct party_data *p);
-int mapif_party_optionchanged(int fd,struct party *p, int account_id, int flag);
+int mapif_party_optionchanged(int fd,struct party *p, uint32 account_id, int flag);
 
 //Updates party's level range and unsets even share if broken.
 static int int_party_check_lv(struct party_data *p) {
@@ -328,7 +325,7 @@ int party_check_empty(struct party_data *p)
 
 
 // Create a party whether or not
-int mapif_party_created(int fd,int account_id,int char_id,struct party *p)
+int mapif_party_created(int fd,uint32 account_id,uint32 char_id,struct party *p)
 {
 	WFIFOHEAD(fd, 39);
 	WFIFOW(fd,0)=0x3820;
@@ -350,7 +347,7 @@ int mapif_party_created(int fd,int account_id,int char_id,struct party *p)
 }
 
 //Party information not found
-static void mapif_party_noinfo(int fd, int party_id, int char_id)
+static void mapif_party_noinfo(int fd, int party_id, uint32 char_id)
 {
 	WFIFOHEAD(fd, 12);
 	WFIFOW(fd,0) = 0x3821;
@@ -362,7 +359,7 @@ static void mapif_party_noinfo(int fd, int party_id, int char_id)
 }
 
 //Digest party information
-static void mapif_party_info(int fd, struct party* p, int char_id)
+static void mapif_party_info(int fd, struct party* p, uint32 char_id)
 {
 	unsigned char buf[8 + sizeof(struct party)];
 	WBUFW(buf,0) = 0x3821;
@@ -377,7 +374,7 @@ static void mapif_party_info(int fd, struct party* p, int char_id)
 }
 
 //Whether or not additional party members
-int mapif_party_memberadded(int fd, int party_id, int account_id, int char_id, int flag) {
+int mapif_party_memberadded(int fd, int party_id, uint32 account_id, uint32 char_id, int flag) {
 	WFIFOHEAD(fd, 15);
 	WFIFOW(fd,0) = 0x3822;
 	WFIFOL(fd,2) = party_id;
@@ -390,7 +387,7 @@ int mapif_party_memberadded(int fd, int party_id, int account_id, int char_id, i
 }
 
 // Party setting change notification
-int mapif_party_optionchanged(int fd,struct party *p,int account_id,int flag)
+int mapif_party_optionchanged(int fd,struct party *p,uint32 account_id,int flag)
 {
 	unsigned char buf[16];
 	WBUFW(buf,0)=0x3823;
@@ -407,7 +404,7 @@ int mapif_party_optionchanged(int fd,struct party *p,int account_id,int flag)
 }
 
 //Withdrawal notification party
-int mapif_party_withdraw(int party_id,int account_id, int char_id) {
+int mapif_party_withdraw(int party_id,uint32 account_id, uint32 char_id) {
 	unsigned char buf[16];
 
 	WBUFW(buf,0) = 0x3824;
@@ -447,7 +444,7 @@ int mapif_party_broken(int party_id,int flag)
 }
 
 //Remarks in the party
-int mapif_party_message(int party_id,int account_id,char *mes,int len, int sfd)
+int mapif_party_message(int party_id,uint32 account_id,char *mes,int len, int sfd)
 {
 	unsigned char buf[512];
 	WBUFW(buf,0)=0x3827;
@@ -518,7 +515,7 @@ int mapif_parse_CreateParty(int fd, char *name, int item, int item2, struct part
 }
 
 // Party information request
-static void mapif_parse_PartyInfo(int fd, int party_id, int char_id)
+static void mapif_parse_PartyInfo(int fd, int party_id, uint32 char_id)
 {
 	struct party_data *p;
 	p = inter_party_fromsql(party_id);
@@ -568,7 +565,7 @@ int mapif_parse_PartyAddMember(int fd, int party_id, struct party_member *member
 }
 
 //Party setting change request
-int mapif_parse_PartyChangeOption(int fd,int party_id,int account_id,int exp,int item)
+int mapif_parse_PartyChangeOption(int fd,int party_id,uint32 account_id,int exp,int item)
 {
 	struct party_data *p;
 	int flag = 0;
@@ -589,7 +586,7 @@ int mapif_parse_PartyChangeOption(int fd,int party_id,int account_id,int exp,int
 }
 
 //Request leave party
-int mapif_parse_PartyLeave(int fd, int party_id, int account_id, int char_id)
+int mapif_parse_PartyLeave(int fd, int party_id, uint32 account_id, uint32 char_id)
 {
 	struct party_data *p;
 	int i,j=-1;
@@ -640,7 +637,7 @@ int mapif_parse_PartyLeave(int fd, int party_id, int account_id, int char_id)
 	return 0;
 }
 // When member goes to other map or levels up.
-int mapif_parse_PartyChangeMap(int fd, int party_id, int account_id, int char_id, unsigned short map, int online, unsigned int lv)
+int mapif_parse_PartyChangeMap(int fd, int party_id, uint32 account_id, uint32 char_id, unsigned short map, int online, unsigned int lv)
 {
 	struct party_data *p;
 	int i;
@@ -711,12 +708,12 @@ int mapif_parse_BreakParty(int fd,int party_id)
 }
 
 //Party sending the message
-int mapif_parse_PartyMessage(int fd,int party_id,int account_id,char *mes,int len)
+int mapif_parse_PartyMessage(int fd,int party_id,uint32 account_id,char *mes,int len)
 {
 	return mapif_party_message(party_id,account_id,mes,len, fd);
 }
 
-int mapif_parse_PartyLeaderChange(int fd,int party_id,int account_id,int char_id)
+int mapif_parse_PartyLeaderChange(int fd,int party_id,uint32 account_id,uint32 char_id)
 {
 	struct party_data *p;
 	int i;
@@ -791,12 +788,12 @@ int inter_party_parse_frommap(int fd)
 }
 
 //Leave request from the server (for delete character)
-int inter_party_leave(int party_id,int account_id, int char_id)
+int inter_party_leave(int party_id,uint32 account_id, uint32 char_id)
 {
 	return mapif_parse_PartyLeave(-1,party_id,account_id, char_id);
 }
 
-int inter_party_CharOnline(int char_id, int party_id)
+int inter_party_CharOnline(uint32 char_id, int party_id)
 {
 	struct party_data* p;
 	int i;
@@ -843,7 +840,7 @@ int inter_party_CharOnline(int char_id, int party_id)
 	return 1;
 }
 
-int inter_party_CharOffline(int char_id, int party_id) {
+int inter_party_CharOffline(uint32 char_id, int party_id) {
 	struct party_data *p=NULL;
 	int i;
 

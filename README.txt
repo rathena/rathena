@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20131112
+//= 20150104
 //===== Description: =========================================
 //= Basic information and installation guide with links to
 //= various forum posts and Wiki articles.
@@ -95,7 +95,7 @@ Linux
 	* Insert SQL files:
 		mysql --user=root -p rathena_rag < trunk/sql-files/main.sql (and others)
 	* Configure and compile:
-		./configure && make clean && make sql
+		./configure && make clean && make server
 	* When you're ready, start the servers:
 		./athena-start start
 
@@ -149,25 +149,25 @@ Examples:
 || 5. Helpful Links       ||
 ============================
 * rAthena Forums
-	http://rathena.org/
+	https://rathena.org/
 
 * GIT Repository
 	https://github.com/rathena/rathena
 
 * Full Installation Instructions
-	Windows 	http://rathena.org/wiki/Installation_on_Windows
-	CentOS  	http://rathena.org/wiki/Installation_(CentOS)
-	Debian  	http://rathena.org/wiki/Installation_(Debian)
-	FreeBSD 	http://rathena.org/wiki/Installation_(FreeBSD)
+	Windows 	https://rathena.org/wiki/Installation_on_Windows
+	CentOS  	https://rathena.org/wiki/Installation_(CentOS)
+	Debian  	https://rathena.org/wiki/Installation_(Debian)
+	FreeBSD 	https://rathena.org/wiki/Installation_(FreeBSD)
 	
 * rAthena IRC Channel
 	irc://irc.rizon.net/rathena
 
 * rAthena Wiki
-	http://rathena.org/board/index.php?app=ipbwiki
+	https://rathena.org/board/index.php?app=ipbwiki
 
 * Fork and Pull Request Q&A
-	http://rathena.org/board/topic/86913-pull-request-qa/
+	https://rathena.org/board/topic/86913-pull-request-qa/
 
 
 ============================

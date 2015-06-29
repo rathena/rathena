@@ -7,20 +7,14 @@
 #include "core.h"
 #include "strlib.h"
 #ifndef MINICORE
-#include "db.h"
 #include "socket.h"
 #include "timer.h"
 #include "thread.h"
 #include "mempool.h"
 #include "sql.h"
-#include "cbasetypes.h"
-#include "msg_conf.h"
 #endif
-
-#include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
-#include <string.h>
 #ifndef _WIN32
 #include <unistd.h>
 #else
@@ -37,8 +31,6 @@ void (*shutdown_callback)(void) = NULL;
 #endif
 
 int runflag = CORE_ST_RUN;
-int arg_c = 0;
-char **arg_v = NULL;
 char db_path[12] = "db"; /// relative path for db from server
 
 char *SERVER_NAME = NULL;
@@ -326,7 +318,7 @@ void usercheck(void)
 int main (int argc, char **argv)
 {
 	{// initialize program arguments
-		char *p1 = SERVER_NAME = argv[0];
+		char *p1;
 		if((p1 = strrchr(argv[0], '/')) != NULL ||  (p1 = strrchr(argv[0], '\\')) != NULL ){
 			char *pwd = NULL; //path working directory
 			int n=0;
@@ -337,10 +329,6 @@ int main (int argc, char **argv)
 				ShowError("Couldn't change working directory to %s for %s, runtime will probably fail",pwd,SERVER_NAME);
 			free(pwd);
 		}
-		
-		arg_c = argc;
-		arg_v = argv;
-		
 	}
 
 	malloc_init();// needed for Show* in display_title() [FlavioJS]

@@ -37,11 +37,11 @@ alberta_in,53,43,6	script	Merchant#mer	86,{
 			mes "[Chief Mahnsoo]";
 			mes "I guess it's destiny that we meet like this once more. Alright. Once again, let me change you into a Merchant!";
 			next;
-			skill "NV_TRICKDEAD",0,0;
+			skill "NV_TRICKDEAD",0,SKILL_PERM;
 			jobchange Job_Merchant_High;
-			skill "MC_CARTREVOLUTION",1,0;
-			skill "MC_CHANGECART",1,0;
-			skill "MC_LOUD",1,0;
+			skill "MC_CARTREVOLUTION",1,SKILL_PERM;
+			skill "MC_CHANGECART",1,SKILL_PERM;
+			skill "MC_LOUD",1,SKILL_PERM;
 			mes "[Chief Mahnsoo]";
 			mes "Ah~ How nostalgic. Just like old times! Alright, do your best!";
 			close;

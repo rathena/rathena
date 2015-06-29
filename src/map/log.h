@@ -43,6 +43,7 @@ typedef enum e_log_pick_type
 	LOG_TYPE_OTHER            = 0x10000,
 	LOG_TYPE_CASH             = 0x20000,
 	LOG_TYPE_BANK             = 0x40000,
+	LOG_TYPE_BOUND_REMOVAL    = 0x80000,
 	// combinations
 	LOG_TYPE_LOOT             = LOG_TYPE_PICKDROP_MONSTER|LOG_TYPE_CONSUME,
 	// all

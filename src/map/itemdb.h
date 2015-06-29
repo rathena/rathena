@@ -40,6 +40,7 @@ enum item_itemid
 	ITEMID_WHITE_POTION					= 504,
 	ITEMID_BLUE_POTION					= 505,
 	ITEMID_HOLY_WATER					= 523,
+	ITEMID_PUMPKIN						= 535,
 	ITEMID_RED_SLIM_POTION				= 545,
 	ITEMID_YELLOW_SLIM_POTION			= 546,
 	ITEMID_WHITE_SLIM_POTION			= 547,
@@ -325,7 +326,11 @@ enum e_item_ammo
 	AMMO_KUNAI,
 	AMMO_CANNONBALL,
 	AMMO_THROWABLE_ITEM, ///Sling items
+
+	MAX_AMMO_TYPE,
 };
+
+#define AMMO_TYPE_ALL ((1<<MAX_AMMO_TYPE)-1)
 
 ///Item combo struct
 struct item_combo
@@ -345,6 +350,7 @@ struct s_item_group_entry
 		duration, /// Duration if item as rental item (in minutes)
 		amount; /// Amount of item will be obtained
 	bool isAnnounced, /// Broadcast if player get this item
+		GUID, /// Gives Unique ID for items in each box opened
 		isNamed; /// Named the item (if possible)
 	char bound; /// Makes the item as bound item (according to bound type)
 };
@@ -387,9 +393,9 @@ struct item_data
 	int elv;
 	int wlv;
 	int view_id;
+	int elvmax; ///< Maximum level for this item
 #ifdef RENEWAL
 	int matk;
-	int elvmax;/* maximum level for this item */
 #endif
 
 	int delay;
@@ -398,7 +404,7 @@ struct item_data
 	unsigned int class_base[3];	//Specifies if the base can wear this item (split in 3 indexes per type: 1-1, 2-1, 2-2)
 	unsigned class_upper : 6; //Specifies if the class-type can equip it (0x01: normal, 0x02: trans, 0x04: baby, 0x08:third, 0x10:trans-third, 0x20-third-baby)
 	struct {
-		unsigned short chance;
+		int chance;
 		int id;
 	} mob[MAX_SEARCH]; //Holds the mobs that have the highest drop rate for this item. [Skotlex]
 	struct script_code *script;	//Default script for everything.
@@ -414,6 +420,8 @@ struct item_data
 		unsigned buyingstore : 1;
 		unsigned dead_branch : 1; // As dead branch item. Logged at `branchlog` table and cannot be used at 'nobranch' mapflag [Cydh]
 		unsigned group : 1; // As item group container [Cydh]
+		unsigned guid : 1; // This item always be attached with GUID and make it as bound item! [Cydh]
+		bool bindOnEquip; ///< Set item as bound when equipped
 	} flag;
 	struct {// item stacking limitation
 		unsigned short amount;

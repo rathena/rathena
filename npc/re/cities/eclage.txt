@@ -1,469 +1,88 @@
 //===== rAthena Script ======================================= 
-//= Eclage Town
+//= General Eclage NPC.
 //===== By: ================================================== 
-//= Euphy
+//= Dastgir
 //===== Current Version: ===================================== 
-//= 1.0
+//= 2.0
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: ========================================= 
-//= Eclage Town Script
+//= Eclage Town NPC
 //===== Additional Comments: ================================= 
-//= 1.0 Nearly complete iRO town NPCs. [Euphy]
+//= 1.0 Generic NPC place holders. [Euphy]
+//= 2.0 Converted from the official Aegis script. [Dastgir]
 //============================================================ 
 
-// Generic Eclage NPCs - Set 1
-//============================================================
-ecl_fild01,92,316,4	script	Tourist#ep14_2f2	545,{
-	mes "[Tourist]";
-	mes "I can't believe I have to wait this long......";
-	mes "When is it going to be my turn?";
-	emotion e_sob;
-	close;
-}
-
-ecl_fild01,106,312,4	script	Tourist#ep14_2f3	525,{
-	mes "[Tourist]";
-	mes "I'm actually done with my documentation, but I'm just sticking around to appreciate all of these flowers.";
-	emotion e_lv2;
-	next;
-	mes "[Tourist]";
-	mes "I'm just getting through the night with my sleeping bag!";
-	mes "It's alright as long as you can withstand the security guard's annoyance with you.";
-	close;
-}
-
-ecl_fild01,108,320,6	script	Tourist#ep14_2f4	941,{
-	mes "[Tourist]";
-	mes "I wonder how beautiful of a city Eclage would be.";
-	mes "It just makes my heart beat thinking about it.";
-	emotion e_lv;
-	close;
-}
-
-ecl_fild01,105,320,2	script	Tourist#ep14_2f5	436,{
-	mes "[Tourist]";
-	mes "No, I'm not a visitor. I'm an Eclage citizen!";
-	emotion e_an;
-	next;
-	mes "[Tourist]";
-	mes "I can't believe I can't even enter because of all these tourists!";
-	emotion e_omg;
-	close;
-}
-
-ecl_fild01,103,319,4	script	Tourist#ep14_2f6	900,{
-	mes "[Tourist]";
-	mes "I hear their acorns are delicious without a hint of bitterness.";
-	next;
-	mes "[Tourist]";
-	mes "You could probably make the world's best acorn jello.";
-	emotion e_omg;
-	close;
-}
-
-ecl_fild01,110,316,2	script	Tourist#ep14_2f7	896,{
-	mes "[Tourist]";
-	mes "It's important to keep your belongings light when traveling.";
-	next;
-	mes "[Tourist]";
-	mes "It's going to increase as you go along anyways.";
-	next;
-	mes "[Tourist]";
-	mes "Perhaps you could consider it as the weight of life?";
-	emotion e_awsm,0;
-	close;
-}
-
-ecl_fild01,92,318,4	script	Tourist#ep14_2f8	517,{
-	mes "[Tourist]";
-	mes "Cool cool.";
-	close;
-}
-
-ecl_fild01,93,318,2	script	Tourist#ep14_2f9	107,{
-	mes "[Tourist]";
-	mes "Snorrrreee....Erhem....";
-	next;
-	mes "[Tourist]";
-	mes "Err.... No.....";
-	mes "Curry.... Curry rice.... Snorrreeeee";
-	emotion e_hlp;
-	close;
-}
-
-ecl_fild01,94,313,4	script	Tourist#ep14_2f10	715,{
-	mes "[Tourist]";
-	mes "Oh! Are you also from Midgard?";
-	next;
-	mes "[Tourist]";
-	mes "It's encouraging to see so many Midgard people nowadays.";
-	emotion e_com;
-	close;
-}
-
-ecl_fild01,101,320,4	script	Tourist#ep14_2f11	522,{
-	mes "[Tourist]";
-	mes "Ow.... My legs...";
-	mes "You're saying I have to wait after all this traveling through Bifrost?!";
-	emotion e_an;
-	close;
-}
-
-ecl_fild01,88,315,4	script	Tourist#ep14_2f12	957,{
-	mes "[Tourist]";
-	mes "Ahh...";
-	mes "Why are there so many people...?";
-	next;
-	mes "[Tourist]";
-	mes "I want to be alone......Sniff!";
-	emotion e_otl;
-	close;
-}
-
-// Generic Eclage NPCs - Set 2
-//============================================================
-ecl_fild01,183,190,4	script	Catering#eclbig	447,{
-	mes "[Catering]";
-	mes "Wahahaha! How do you do!";
-	mes "It's perfect weather for a picnic, no?";
-	next;
-	emotion e_wah;
-	mes "[Catering]";
-	mes "You say it's hard to pack for a picnic?";
-	next;
-	emotion e_no1;
-	mes "[Catering]";
-	mes "Don't you worry!";
-	next;
-	emotion e_gasp;
-	mes "[Catering]";
-	mes "This is a specialty combining acorns with 7 different kinds and 7 different levels of flavor collected by squirrels of Eclage!";
-	next;
-	emotion e_cash;
-	mes "[Catering]";
-	mes "This specialty to-go box is only 2,999 coins!!!";
-	next;
-	emotion e_omg;
-	mes "[Catering]";
-	mes "Such a remarkable price!";
-	next;
-	emotion e_lv;
-	mes "[Catering]";
-	mes "If you order now, we also give you a disposable fork that feels like new even with a hundred uses!";
-	close;
-}
-
-ecl_fild01,134,109,4	script	Warao#eclbig	446,{
-	mes "[Warao]";
-	mes "Ah~ I'm so hungry. What should I eat today?";
-	next;
-	mes "[Warao]";
-	mes "Come to think of it, I wonder how this foreigner will taste?";
-	next;
-	emotion e_gg;
-	mes "[Warao]";
-	mes "Hey hey, you know I'm kidding, right?";
-	close;
-}
-
-ecl_fild01,70,285,4	script	Giranni#eclbig	611,{
-	mes "[Giranni]";
-	mes "I wonder where he went. It should be around here...";
-	close;
-}
-
-eclage,106,61,4	script	Markoza#eclbig	444,{
-	mes "[Markoza]";
-	mes "I also want to visit foreign lands.";
-	next;
-	mes "[Markoza]";
-	mes "But would foreigners leave me be when I am this adorable?";
-	next;
-	emotion e_pif;
-	mes "[Markoza]";
-	mes "Man, wherever I go, my cuteness just complicates everything...";
-	close;
-}
-
-eclage,101,130,5	script	Wutapoa#eclbig	435,{
-	mes "[Wutapoa]";
-	mes "I recently moved out of my parent's place!";
-	mes "I am so glad I finally have my own Yai!";
-	next;
-	mes "[Wutapoa]";
-	mes "I'm going to make it the most decorative, beautiful Yai in Eclage!";
-	next;
-	emotion e_heh;
-	mes "[Wutapoa]";
-	mes "Yay, woohoo!!!";
-	close;
-}
-
-eclage,200,272,4	script	Masione#eclbig	437,{
-	mes "[Masione]";
-	mes "Whoa! Hey!";
-	mes "Would you please stop appearing out of nowhere?";
-	emotion e_omg;
-	next;
-	mes "[Masione]";
-	mes "I'm a fragile, sensitive being!";
-	close;
-}
-
-ecl_in01,55,25,3	script	Mijani#eclbig	520,{
-	mes "[Mijani]";
-	mes "You are not from around here?";
-	mes "Welcome.";
-	next;
-	mes "[Mijani]";
-	mes "Of course, as long as you don't disrupt Eclage.";
-	close;
-}
-
-ecl_in01,38,37,4	script	A kneeling boy#eclbig	441,{
-	mes "[A kneeling boy]";
-	mes "Why am I kneeling like this?";
-	next;
-	mes "[A kneeling boy]";
-	mes "At first, it was because it was comfortable. Now it's because I can't stretch my legs out anymore.";
-	next;
-	emotion e_sob;
-	mes "[A kneeling boy]";
-	mes "I try to stretch them out, and my legs are all asleep!!";
-	mes "Does that mean I have to fly around with my legs flexed like this?";
-	close;
-}
-
-ecl_in02,168,41,2	script	Pambo#eclbig	438,{
-	mes "[Pambo]";
-	mes "Do you like things that twinkle?";
-	next;
-	emotion e_lv2;
-	mes "[Pambo]";
-	mes "I love them so much!";
-	next;
-	mes "[Pambo]";
-	mes "Twinkle twinkle~ Twinkle twinkle~";
-	next;
-	mes "[Pambo]";
-	mes "Twinkle twinkle~ Twinkle twinkle~";
-	mes "Sparkle sparkle~ Sparkle sparkle~";
-	next;
-	mes "[Pambo]";
-	mes "Twinkle twinkle~ Twinkle twinkle~";
-	mes "Sparkle sparkle~ Sparkle sparkle~";
-	mes "Mmhahah~ Hahaha~ Hehehe~";
-	mes "Heh heh heh~ Huhuhe~ Hoho~";
-	mes "Kehehe~ Halala~ Fufu~";
-	next;
-	emotion e_sob;
-	mes "[Pambo]";
-	mes "But there's nothing twinkling here...";
-	close;
-}
-
-ecl_in01,41,103,1	script	A blushing girl#eclbig	439,{
-	mes "[A blushing girl]";
-	mes "Do you see this balcony up top?";
-	mes "Mayor Jun appears there everytime there is an important occasion!";
-	next;
-	emotion e_lv2;
-	mes "[A blushing girl]";
-	mes "He's so handome!! Ahhh~";
-	close;
-}
-
-ecl_in01,53,92,4	script	Lafiki#eclbig	444,{
-	mes "[Lafiki]";
-	mes "My fashion sense today is excellent as usual. Heh-";
-	next;
-	emotion e_lv2;
-	mes "[Lafiki]";
-	mes "Hello~ My beautiful body~";
-	mes "Every strand of hair is so beautiful!";
-	next;
-	mes "[Dandy]";
-	mes "Yes, it's definitely your garbage fashion sense that wreaks of trash as usual.";
-	emotion e_gg,0,"Dandy#eclbig";
-	close;
-}
-
-ecl_in01,54,91,2	script	Dandy#eclbig	443,{
-	mes "[Dandy]";
-	mes "Take a look at me! How's this? Am I not so fabulous?";
-	next;
-	mes "[Dandy]";
-	mes "A Laphine can freely change in between different clothes, but not any Laphine looks this great!";
-	next;
-	mes "[Lafiki]";
-	mes "What nonsensical nonsense are you saying? No matter who looks at it, this region's best looker is me!";
-	emotion e_pif,0,"Lafiki#eclbig";
-	close;
-}
-
-ecl_in01,52,102,4	script	Choir Conductor#eclbig	442,{
-	mes "[Choir conductor]";
-	mes "We are Eclage's Tree Wing Choir~";
-	mes "We bring you heavenly harmonies~";
-	next;
-	mes "[Choir conductor]";
-	mes "Hello foreigner, we'll give you a taste of our harmony~";
-	next;
-	emotion e_ho;
-	mes "[Choir]";
-	mes "Aaa~";
-	next;
-	emotion e_ho,0,"Choir member#eclbig01";
-	mes "[Choir]";
-	mes "Aaa~~";
-	mes "Aaa~";
-	next;
-	emotion e_ho,0,"Choir member#eclbig02";
-	mes "[Choir]";
-	mes "Aaa~~~";
-	mes "Aaa~~";
-	mes "Aaa~";
-	next;
-	emotion e_ho,0,"Choir member#eclbig03";
-	mes "[Choir]";
-	mes "Aaa~~~~";
-	mes "Aaa~~~";
-	mes "Aaa~~";
-	mes "Aaa~";
-	next;
-	emotion e_ho,0,"Choir member#eclbig04";
-	mes "[Choir]";
-	mes "Aaa~~~~~";
-	mes "Aaa~~~~";
-	mes "Aaa~~~";
-	mes "Aaa~~";
-	mes "Aaa~";
-	next;
-	emotion e_ho,0,"Choir member#eclbig05";
-	mes "[Choir]";
-	mes "Aaa~~~~~~";
-	mes "Aaa~~~~~";
-	mes "Aaa~~~~";
-	mes "Aaa~~~";
-	mes "Aaa~~";
-	mes "Aaa~";
-	next;
-	emotion e_ho;
-	emotion e_ho,0,"Choir member#eclbig01";
-	emotion e_ho,0,"Choir member#eclbig02";
-	emotion e_ho,0,"Choir member#eclbig03";
-	emotion e_ho,0,"Choir member#eclbig04";
-	emotion e_ho,0,"Choir member#eclbig05";
-	mes "[Choir]";
-	mes "Uhhurukukuruhuuhhurukukuruhuuh";
-	mes "Try to feel this~ The melody that flows~";
-	next;
-	mes "[Choir conductor]";
-	mes "How is it!! Our harmony!!";
-	close;
-}
-
-ecl_in01,51,103,4	script	Choir member#eclbig01	442,{
-	mes "[Choir member]";
-	mes "Aaa~";
-	emotion e_ho;
-	close;
-}
-ecl_in01,53,103,4	duplicate(Choir member#eclbig01)	Choir member#eclbig02	442
-ecl_in01,50,104,4	duplicate(Choir member#eclbig01)	Choir member#eclbig03	442
-ecl_in01,52,104,4	duplicate(Choir member#eclbig01)	Choir member#eclbig04	442
-ecl_in01,54,104,4	duplicate(Choir member#eclbig01)	Choir member#eclbig05	442
-
-// Generic Eclage NPCs - Set 3
-//============================================================
-ecl_fild01,190,93,4	script	Fili#1	617,{
-	mes "[Fili]";
-	mes "Looking at this beautiful field, the song sings itself~";
-	emotion e_ho;
-	close;
-}
-
-ecl_fild01,83,263,4	script	Watering Laphine#1	444,{
-	mes "[Watering Laphine]";
-	mes "I think the earth is running dry.";
-	close;
-}
-
-ecl_fild01,163,196,4	script	Dancing Laphine#1	438,{
-	mes "[Dancing Laphine]";
-	mes "It's important to warm up like this before you start dancing. One, two, three, four....";
-	close;
-}
-
-// Eclage Prison & Clinic
-//============================================================
-ecl_in01,8,71,4	script	Eclage Guard#pri_inn	447,{
-	mes "[Eclage Guard]";
-	mes "This path will take you to the lower parts of Eclage. You'll find a prison and a clinic there.";
-	close;
-}
-
-ecl_in02,96,22,2	script	Sign#prison_inn	835,{
+ecl_in02,96,22,3	script	sign#prison_inn	545,{
 	mes "[North] Prison";
 	mes "[West] Clinic";
 	close;
 }
 
-ecl_in02,164,56,2	script	Receptionist#Laphine	437,{
+ecl_in01,8,71,5	script	Eclage Guard#pri_inn	447,{
+	mes "[Eclage Guard]";
+	mes "This path will take you to the lower parts of Eclage. You'll find a prison and a clinic there.";
+	close;
+}
+
+ecl_in02,164,56,3	script	Receptionist#Laphine	835,{
 	mes "[Receptionist]";
 	mes "Welcome to Eclage Clinic.";
 	next;
-	switch(select("Save Location:Rest:Finish the conversation")) {
+	switch (select("Save Location:Rest:Finish the conversation")) {
 	case 1:
-		mes "[Receptionist]";
+		mes "[Receptionist}";
 		mes "Clinic has been set as your save point. Be careful though~";
-		savepoint "ecl_in02",162,49;
+		savepoint "ecl_in02",162,50;
 		close;
 	case 2:
-		mes "[Receptionist]";
+		mes "[Receptionist}";
 		mes "Restore your mind and body at our clinic. It's filled with Eclage's clean energy.";
-		mes "We charge 1 Splendide Coin normally, but we offer a special discount for travelers. Your total is 5,000 zeny.";
+		mes "We charge 1 Splendide Coin normally, but we offer a special discount for travelers. Your total is 5,000 zeny. ";
 		next;
-		switch(select("Pay with Splendide Coin:Pay with Zeny:Forget it")) {
+		switch (select("Pay with Splendide Coin:Pay with Zeny:Forget it")) {
 		case 1:
-			if (countitem(6081) == 0) {
-				mes "[Receptionist]";
+			if (!countitem(6081)) {
+				mes "[Receptionist}";
 				mes "It seems like you don't have enough coins. Would you check your account again, please?";
 				close;
 			}
-			delitem 6081,1; //Splendide_Coin
-			break;
+			mes "[Receptionist}";
+			mes "Make yourself at home~";
+			close2;
+			delitem 6081,1; //6081
+			percentheal 100,100;
+			warp "ecl_in02",167,49;
+			end;
 		case 2:
 			if (Zeny < 5000) {
 				mes "[Receptionist]";
-				mes "It seems like you don't have enough zeny. Would you check your account again, please?";
+				mes "Looks like you don't have enough resources to proceed. Do you mind checking your account again?";
 				close;
 			}
-			set Zeny, Zeny-5000;
-			break;
+			mes "[Receptionist}";
+			mes "Make yourself at home~";
+			close2;
+			Zeny = Zeny - 5000;
+			percentheal 100,100;
+			warp "ecl_in02",167,49;
+			end;
 		case 3:
 			close;
 		}
-		mes "[Receptionist]";
-		mes "Make yourself at home~";
-		close2;
-		percentheal 100,100;
-		warp "ecl_in02",167,49;
-		end;
 	case 3:
 		close;
 	}
 }
 
-ecl_in02,137,44,2	script	Doctor Laphine#doctor	442,{
+ecl_in02,135,45,5	script	Injured Laphine	442,{
 	mes "[Injured Laphine]";
 	mes "Ooww...";
 	mes "Where...am...I?";
 	next;
 	mes "[Doctor]";
 	mes "You're at a clinic. Don't worry.";
-	mes "We stopped the bleeding and casted emergency spells.";
+	mes "We stopped the bleeding and cast emergency spells.";
 	mes "You were bleeding a lot. That was close, you know.";
 	next;
 	mes "[Injured Laphine]";
@@ -474,14 +93,14 @@ ecl_in02,137,44,2	script	Doctor Laphine#doctor	442,{
 	mes "Umm...the arrow damaged your wing pretty badly...";
 	next;
 	mes "[Injured Laphine]";
-	mes "...what do you mean??";
+	mes "...what do you mean?";
 	next;
 	mes "[Doctor]";
-	mes "Well...I was going to tell you after you recover, but you should know. You can't decorate the Yai anymore.";
+	mes "Well...I was going to tell you after you recover, but you should know. You can't decorate the Yai anymore. ";
 	mes "In other words, you injured your wing. The arrow went through the most critical part in the wing.";
 	next;
 	mes "[Injured Laphine]";
 	mes "What? No way...please...doctor!! No!!";
 	close;
 }
-ecl_in02,135,45,4	duplicate(Doctor Laphine#doctor)	Injured Laphine	441
+ecl_in02,137,44,3	duplicate(Injured Laphine)	Doctor Laphine#doctor	441

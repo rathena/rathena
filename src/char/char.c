@@ -2,11 +2,9 @@
 // For more information, see LICENCE in the main folder
 
 #include <time.h>
-#include <signal.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/types.h>
 #include <string.h>
 
 #include "../common/cbasetypes.h"
@@ -19,10 +17,7 @@
 #include "../common/socket.h"
 #include "../common/strlib.h"
 #include "../common/timer.h"
-#include "../common/utils.h"
 #include "../common/cli.h"
-#include "../common/random.h"
-#include "../common/ers.h"
 #include "int_guild.h"
 #include "int_homun.h"
 #include "int_mercenary.h"
@@ -34,7 +29,6 @@
 #include "char_mapif.h"
 #include "char_cnslif.h"
 #include "char_clif.h"
-#include "char.h"
 
 //definition of exported var declared in .h
 int login_fd=-1; //login file descriptor
@@ -76,9 +70,9 @@ int subnet_count = 0;
 
 int char_chardb_waiting_disconnect(int tid, unsigned int tick, int id, intptr_t data);
 
-DBMap* auth_db; // int account_id -> struct auth_node*
-DBMap* online_char_db; // int account_id -> struct online_char_data*
-DBMap* char_db_; // int char_id -> struct mmo_charstatus*
+DBMap* auth_db; // uint32 account_id -> struct auth_node*
+DBMap* online_char_db; // uint32 account_id -> struct online_char_data*
+DBMap* char_db_; // uint32 char_id -> struct mmo_charstatus*
 DBMap* char_get_authdb() { return auth_db; }
 DBMap* char_get_onlinedb() { return online_char_db; }
 DBMap* char_get_chardb() { return char_db_; }
@@ -97,7 +91,7 @@ DBData char_create_online_data(DBKey key, va_list args){
 	return db_ptr2data(character);
 }
 
-void char_set_charselect(int account_id) {
+void char_set_charselect(uint32 account_id) {
 	struct online_char_data* character;
 
 	character = (struct online_char_data*)idb_ensure(online_char_db, account_id, char_create_online_data);
@@ -118,7 +112,7 @@ void char_set_charselect(int account_id) {
 
 }
 
-void char_set_char_online(int map_id, int char_id, int account_id) {
+void char_set_char_online(int map_id, uint32 char_id, uint32 account_id) {
 	struct online_char_data* character;
 	struct mmo_charstatus *cp;
 
@@ -156,7 +150,7 @@ void char_set_char_online(int map_id, int char_id, int account_id) {
 	chlogif_send_setacconline(account_id);
 }
 
-void char_set_char_offline(int char_id, int account_id){
+void char_set_char_offline(uint32 char_id, uint32 account_id){
 	struct online_char_data* character;
 
 	if ( char_id == -1 )
@@ -277,7 +271,7 @@ static DBData char_create_charstatus(DBKey key, va_list args) {
 
 int char_inventory_to_sql(const struct item items[], int max, int id);
 
-int char_mmo_char_tosql(int char_id, struct mmo_charstatus* p){
+int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 	int i = 0;
 	int count = 0;
 	int diff = 0;
@@ -439,12 +433,6 @@ int char_mmo_char_tosql(int char_id, struct mmo_charstatus* p){
 		}
 		strcat(save_status, " memo");
 	}
-
-	//FIXME: is this neccessary? [ultramage]
-	for(i=0;i<MAX_SKILL;i++)
-		if ((p->skill[i].lv != 0) && (p->skill[i].id == 0))
-			p->skill[i].id = i; // Fix skill tree
-
 
 	//skills
 	if( memcmp(p->skill, cp->skill, sizeof(p->skill)) )
@@ -948,9 +936,8 @@ int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf) {
 }
 
 //=====================================================================================================
-int char_mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything) {
+int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_everything) {
 	int i,j;
-	char t_msg[128] = "";
 	struct mmo_charstatus* cp;
 	StringBuf buf;
 	SqlStmt* stmt;
@@ -960,11 +947,13 @@ int char_mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_every
 	struct point tmp_point;
 	struct item tmp_item;
 	struct s_skill tmp_skill;
+	uint16 skill_count = 0;
 	struct s_friend tmp_friend;
 #ifdef HOTKEY_SAVING
 	struct hotkey tmp_hotkey;
 	int hotkey_num;
 #endif
+	StringBuf msg_buf;
 
 	memset(p, 0, sizeof(struct mmo_charstatus));
 
@@ -1060,22 +1049,24 @@ int char_mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_every
 	p->save_point.map = mapindex_name2id(save_map);
 
 	if( p->last_point.map == 0 ) {
-		p->last_point.map = mapindex_name2id(MAP_DEFAULT);
-		p->last_point.x = MAP_DEFAULT_X;
-		p->last_point.y = MAP_DEFAULT_Y;
+		p->last_point.map = mapindex_name2id(charserv_config.default_map);
+		p->last_point.x = charserv_config.default_map_x;
+		p->last_point.y = charserv_config.default_map_y;
 	}
 
 	if( p->save_point.map == 0 ) {
-		p->save_point.map = mapindex_name2id(MAP_DEFAULT);
-		p->save_point.x = MAP_DEFAULT_X;
-		p->save_point.y = MAP_DEFAULT_Y;
+		p->save_point.map = mapindex_name2id(charserv_config.default_map);
+		p->save_point.x = charserv_config.default_map_x;
+		p->save_point.y = charserv_config.default_map_y;
 	}
 
-	strcat(t_msg, " status");
+	StringBuf_Init(&msg_buf);
+	StringBuf_AppendStr(&msg_buf, " status");
 
 	if (!load_everything) // For quick selection of data when displaying the char menu
 	{
 		SqlStmt_Free(stmt);
+		StringBuf_Destroy(&msg_buf);
 		return 1;
 	}
 
@@ -1094,7 +1085,7 @@ int char_mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_every
 		tmp_point.map = mapindex_name2id(point_map);
 		memcpy(&p->memo_point[i], &tmp_point, sizeof(tmp_point));
 	}
-	strcat(t_msg, " memo");
+	StringBuf_AppendStr(&msg_buf, " memo");
 
 	//read inventory
 	//`inventory` (`id`,`char_id`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `card0`, `card1`, `card2`, `card3`, `expire_time`, `favorite`, `unique_id`)
@@ -1126,7 +1117,7 @@ int char_mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_every
 	for( i = 0; i < MAX_INVENTORY && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
 		memcpy(&p->inventory[i], &tmp_item, sizeof(tmp_item));
 
-	strcat(t_msg, " inventory");
+	StringBuf_AppendStr(&msg_buf, " inventory");
 
 	//read cart
 	//`cart_inventory` (`id`,`char_id`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `card0`, `card1`, `card2`, `card3`, expire_time`, `unique_id`)
@@ -1156,33 +1147,34 @@ int char_mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_every
 
 	for( i = 0; i < MAX_CART && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
 		memcpy(&p->cart[i], &tmp_item, sizeof(tmp_item));
-	strcat(t_msg, " cart");
+	StringBuf_AppendStr(&msg_buf, " cart");
 
 	//read storage
 	storage_fromsql(p->account_id, &p->storage);
-	strcat(t_msg, " storage");
+	StringBuf_AppendStr(&msg_buf, " storage");
 
 	//read skill
 	//`skill` (`char_id`, `id`, `lv`)
 	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `id`, `lv`,`flag` FROM `%s` WHERE `char_id`=? LIMIT %d", schema_config.skill_db, MAX_SKILL)
-	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
-	||	SQL_ERROR == SqlStmt_Execute(stmt)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_USHORT, &tmp_skill.id  , 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_UCHAR , &tmp_skill.lv  , 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_UCHAR , &tmp_skill.flag, 0, NULL, NULL) )
+		||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
+		||	SQL_ERROR == SqlStmt_Execute(stmt)
+		||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_UINT16, &tmp_skill.id  , 0, NULL, NULL)
+		||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_UINT8 , &tmp_skill.lv  , 0, NULL, NULL)
+		||	SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_UINT8 , &tmp_skill.flag, 0, NULL, NULL) )
 		SqlStmt_ShowDebug(stmt);
 
 	if( tmp_skill.flag != SKILL_FLAG_PERM_GRANTED )
 		tmp_skill.flag = SKILL_FLAG_PERMANENT;
 
-	for( i = 0; i < MAX_SKILL && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
-	{
-		if( tmp_skill.id < ARRAYLENGTH(p->skill) )
-			memcpy(&p->skill[tmp_skill.id], &tmp_skill, sizeof(tmp_skill));
+	for( i = 0; skill_count < MAX_SKILL && SQL_SUCCESS == SqlStmt_NextRow(stmt); i++ ) {
+		if( tmp_skill.id > 0 && tmp_skill.id < MAX_SKILL_ID ) {
+			memcpy(&p->skill[i], &tmp_skill, sizeof(tmp_skill));
+			skill_count++;
+		}
 		else
 			ShowWarning("mmo_char_fromsql: ignoring invalid skill (id=%u,lv=%u) of character %s (AID=%d,CID=%d)\n", tmp_skill.id, tmp_skill.lv, p->name, p->account_id, p->char_id);
 	}
-	strcat(t_msg, " skills");
+	StringBuf_Printf(&msg_buf, " %d skills", skill_count);
 
 	//read friends
 	//`friends` (`char_id`, `friend_account`, `friend_id`)
@@ -1196,7 +1188,7 @@ int char_mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_every
 
 	for( i = 0; i < MAX_FRIENDS && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
 		memcpy(&p->friends[i], &tmp_friend, sizeof(tmp_friend));
-	strcat(t_msg, " friends");
+	StringBuf_AppendStr(&msg_buf, " friends");
 
 #ifdef HOTKEY_SAVING
 	//read hotkeys
@@ -1217,20 +1209,21 @@ int char_mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_every
 		else
 			ShowWarning("mmo_char_fromsql: ignoring invalid hotkey (hotkey=%d,type=%u,id=%u,lv=%u) of character %s (AID=%d,CID=%d)\n", hotkey_num, tmp_hotkey.type, tmp_hotkey.id, tmp_hotkey.lv, p->name, p->account_id, p->char_id);
 	}
-	strcat(t_msg, " hotkeys");
+	StringBuf_AppendStr(&msg_buf, " hotkeys");
 #endif
 
 	/* Mercenary Owner DataBase */
 	mercenary_owner_fromsql(char_id, p);
-	strcat(t_msg, " mercenary");
+	StringBuf_AppendStr(&msg_buf, " mercenary");
 
 
-	if (charserv_config.save_log) ShowInfo("Loaded char (%d - %s): %s\n", char_id, p->name, t_msg);	//ok. all data load successfuly!
+	if (charserv_config.save_log) ShowInfo("Loaded char (%d - %s): %s\n", char_id, p->name, StringBuf_Value(&msg_buf));	//ok. all data load successfuly!
 	SqlStmt_Free(stmt);
 	StringBuf_Destroy(&buf);
 
 	cp = idb_ensure(char_db_, char_id, char_create_charstatus);
 	memcpy(cp, p, sizeof(struct mmo_charstatus));
+	StringBuf_Destroy(&msg_buf);
 	return 1;
 }
 
@@ -1255,7 +1248,7 @@ int char_mmo_sql_init(void) {
 //-----------------------------------
 // Function to change chararcter's names
 //-----------------------------------
-int char_rename_char_sql(struct char_session_data *sd, int char_id)
+int char_rename_char_sql(struct char_session_data *sd, uint32 char_id)
 {
 	struct mmo_charstatus char_dat;
 	char esc_name[NAME_LENGTH*2+1];
@@ -1365,7 +1358,8 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 #endif
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1];
-	int char_id, flag, k;
+	uint32 char_id;
+	int flag, k;
 
 	safestrncpy(name, name_, NAME_LENGTH);
 	normalize_name(name,TRIM_CHARS);
@@ -1465,10 +1459,11 @@ int char_divorce_char_sql(int partner_id1, int partner_id2){
 /* Returns 0 if successful
  * Returns < 0 for error
  */
-int char_delete_char_sql(int char_id){
+int char_delete_char_sql(uint32 char_id){
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1]; //Name needs be escaped.
-	int account_id, party_id, guild_id, hom_id, base_level, partner_id, father_id, mother_id, elemental_id;
+	uint32 account_id;
+	int party_id, guild_id, hom_id, base_level, partner_id, father_id, mother_id, elemental_id;
 	char *data;
 	size_t len;
 
@@ -1802,7 +1797,7 @@ int char_family(int cid1, int cid2, int cid3)
 //----------------------------------------------------------------------
 // Force disconnection of an online player (with account value) by [Yor]
 //----------------------------------------------------------------------
-void char_disconnect_player(int account_id)
+void char_disconnect_player(uint32 account_id)
 {
 	int i;
 	struct char_session_data* sd;
@@ -1813,7 +1808,24 @@ void char_disconnect_player(int account_id)
 		set_eof(i);
 }
 
+/**
+* Set 'flag' value of char_session_data
+* @param account_id
+* @param value
+* @param set True: set the value by using '|= val', False: unset the value by using '&= ~val'
+**/
+void char_set_session_flag_(int account_id, int val, bool set) {
+	int i;
+	struct char_session_data* sd;
 
+	ARR_FIND(0, fd_max, i, session[i] && (sd = (struct char_session_data*)session[i]->session_data) && sd->account_id == account_id);
+	if (i < fd_max) {
+		if (set)
+			sd->flag |= val;
+		else
+			sd->flag &= ~val;
+	}
+}
 
 void char_auth_ok(int fd, struct char_session_data *sd) {
 	struct online_char_data* character;
@@ -1907,7 +1919,7 @@ void char_read_fame_list(void)
 
 //Loads a character's name and stores it in the buffer given (must be NAME_LENGTH in size)
 //Returns 1 on found, 0 on not found (buffer is filled with Unknown char name)
-int char_loadName(int char_id, char* name){
+int char_loadName(uint32 char_id, char* name){
 	char* data;
 	size_t len;
 
@@ -2524,6 +2536,10 @@ void char_set_defaults(){
 	charserv_config.autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
 	charserv_config.start_zeny = 0;
 	charserv_config.guild_exp_rate = 100;
+
+	safestrncpy(charserv_config.default_map, "prontera", MAP_NAME_LENGTH);
+	charserv_config.default_map_x = 156;
+	charserv_config.default_map_y = 191;
 }
 
 bool char_config_read(const char* cfgName, bool normal){
@@ -2713,6 +2729,12 @@ bool char_config_read(const char* cfgName, bool normal){
 			charserv_config.charmove_config.char_moves_unlimited = config_switch(w2);
 		} else if (strcmpi(w1, "char_checkdb") == 0) {
 			charserv_config.char_check_db = config_switch(w2);
+		} else if (strcmpi(w1, "default_map") == 0) {
+			safestrncpy(charserv_config.default_map, w2, MAP_NAME_LENGTH);
+		} else if (strcmpi(w1, "default_map_x") == 0) {
+			charserv_config.default_map_x = atoi(w2);
+		} else if (strcmpi(w1, "default_map_y") == 0) {
+			charserv_config.default_map_y = atoi(w2);
 		} else if (strcmpi(w1, "import") == 0) {
 			char_config_read(w2, normal);
 		}
@@ -2900,6 +2922,8 @@ int do_init(int argc, char **argv)
 	}
 
 	do_init_chcnslif();
+	mapindex_check_mapdefault(charserv_config.default_map);
+	ShowInfo("Default map: '"CL_WHITE"%s %d,%d"CL_RESET"'\n", charserv_config.default_map, charserv_config.default_map_x, charserv_config.default_map_y);
 
 	ShowStatus("The char-server is "CL_GREEN"ready"CL_RESET" (Server is listening on the port %d).\n\n", charserv_config.char_port);
 

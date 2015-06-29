@@ -1,15 +1,8 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Quest NPCs located in Lighthalzen
-//===== By: ================================================== 
-//= Persian, Vicious_Pucca, aoa00, Evera, MasterOfMupppets,
-//= Lupus, Lord Gywall
-//===== Current Version: ===================================== 
-//= 5.1
-//===== Compatible With: ===================================== 
-//= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Quests related to Lighthalzen City.
-//===== Additional Comments: ================================= 
+//===== Changelogs: ==========================================
 //= 4.0 Updated several NPCs to Official (iRO) dialog, and restrucured. [L0ne_W0lf]
 //= 4.1 Updated Dungeon quest, and Friendhsip quest to 10.3 standards. [L0ne_W0lf]
 //= 4.2 Fixed wrong variable type in use in "Box#cube1". [L0ne_W0lf]
@@ -29,7 +22,7 @@
 //= 4.9 Fixed incorrect use of 'close'. [Joseph]
 //= 5.0 Updated RE/Pre-RE EXP. [Euphy]
 //= 5.1 Added GM management NPCs. [Euphy]
-//============================================================ 
+//============================================================
 
 // Gangster Alert [Official Conversion]
 //============================================================
@@ -913,7 +906,7 @@ lhz_cube,237,183,0	script	Barrel#cube	111,{
 			mes "you can only enter single";
 			mes "digit numbers at one time...^000000";
 			next;
-			for( set $@i, 0; .@i < 9; set .@i, .@i + 1 )
+			for( set .@i, 0; .@i < 9; set .@i, .@i + 1 )
 				input .@input;
 			mes "^3355FFNothing happened...^000000";
 			close;
@@ -930,7 +923,7 @@ lhz_cube,237,183,0	script	Barrel#cube	111,{
 			mes "metal plate on top of the box";
 			mes "you found inside the keg.^000000";
 			next;
-			for( set $@i, 0; .@i < 9; set .@i, .@i + 1 ) {
+			for( set .@i, 0; .@i < 9; set .@i, .@i + 1 ) {
 				input .@input;
 				if (.@input == .@numbers[.@i]) set .@number_line,.@number_line+1;
 			}
@@ -2518,9 +2511,9 @@ lhz_in02,201,210,5	script	Digotz	869,{
 }
 
 lighthalzen,337,232,3	script	Maku	870,{
+	mes "[Maku]";
 	if (friendship > 14) {
 		cutin "lhz_macu07",2;
-		mes "[Maku]";
 		mes "Why is this guy so";
 		mes "late? Once he shows";
 		mes "up, I swear, I'm gonna...!";
@@ -2532,24 +2525,16 @@ lighthalzen,337,232,3	script	Maku	870,{
 		mes "I've been saving a whole";
 		mes "six pack of kickass to open,";
 		mes "just for him. Heh heh heh~";
-		close2;
-		cutin "lhz_macu07",255;
-		end;
 	}
-	if (friendship == 14) {
+	else if (friendship == 14) {
 		cutin "lhz_macu05",2;
-		mes "[Maku]";
 		mes "Why is Digotz";
 		mes "so late? This isn't";
 		mes "like him at all. Maybe";
 		mes "something's wrong?";
-		close2;
-		cutin "lhz_macu05",255;
-		end;
 	}
-	if (friendship == 13 && countitem(7351) > 0) {
+	else if (friendship == 13 && countitem(7351) > 0) {
 		cutin "lhz_macu06",2;
-		mes "[Maku]";
 		mes "Hey, what is that? You want";
 		mes "I should read this journal?";
 		mes "Er, okay, but I'm none too";
@@ -2590,7 +2575,7 @@ lighthalzen,337,232,3	script	Maku	870,{
 		mes "wings and Digotz always";
 		mes "wanted to wear them too.";
 		next;
-		cutin "lhz_macu03",255;
+		cutin "",255;
 		mes "[Benkaistein's Journal]";
 		mes "^856363Maku, Digotz and me went";
 		mes "outside of town. Of course,";
@@ -2616,7 +2601,7 @@ lighthalzen,337,232,3	script	Maku	870,{
 		mes "But I gotta say, he was also";
 		mes "the most fearless of us.";
 		next;
-		cutin "lhz_macu03",255;
+		cutin "",255;
 		mes "[Benkaistein's Journal]";
 		mes "^856363Digot's been sick for three";
 		mes "days now. It's just a normal";
@@ -2633,7 +2618,7 @@ lighthalzen,337,232,3	script	Maku	870,{
 		mes "that, uh, horrible disease. No";
 		mes "one should have that one!";
 		next;
-		cutin "lhz_macu04",255;
+		cutin "",255;
 		mes "[Benkaistein's Journal]";
 		mes "^856363Mom and dad keep telling";
 		mes "me not to hang out with Maku";
@@ -2654,7 +2639,7 @@ lighthalzen,337,232,3	script	Maku	870,{
 		mes "...";
 		mes "......";
 		next;
-		cutin "lhz_macu01",255;
+		cutin "",255;
 		mes "[Benkaistein's Journal]";
 		mes "^856363Today, the three of us";
 		mes "made an oath of brotherhood,";
@@ -2713,13 +2698,9 @@ lighthalzen,337,232,3	script	Maku	870,{
 		mes "Um, now I gotta get";
 		mes "ready for something.";
 		mes "^333333(But not to see Digotz!)^000000";
-		close2;
-		cutin "lhz_macu04",255;
-		end;
 	}
-	if (friendship > 5 && friendship < 13) {
+	else if (friendship > 5 && friendship < 13) {
 		cutin "lhz_macu06",2;
-		mes "[Maku]";
 		mes "Arrrrgh! Whenever I hear";
 		mes "about that Digotz, I get so";
 		mes "peeved! Is that guy giving";
@@ -2733,12 +2714,8 @@ lighthalzen,337,232,3	script	Maku	870,{
 		mes "all those freakin' guards!";
 		mes "Arrrrrrrgh! Man, where's";
 		mes "Benkaistein when I need him?";
-		close2;
-		cutin "lhz_macu06",255;
-		end;
 	}
-	if (friendship == 5) {
-		mes "[Maku]";
+	else if (friendship == 5) {
 		mes "RrrrRrrrr....";
 		mes "RrrrrRRRrrRR....";
 		mes "GGGGGRRRRR...";
@@ -2793,13 +2770,9 @@ lighthalzen,337,232,3	script	Maku	870,{
 		mes "I could just go over and";
 		mes "kick Digotz's ass! I swear,";
 		mes "if it weren't for them...!";
-		close2;
-		cutin "lhz_macu06",255;
-		end;
 	}
-	if (friendship == 4) {
+	else if (friendship == 4) {
 		cutin "lhz_macu05",2;
-		mes "[Maku]";
 		mes "What the hell are you";
 		mes "still doing around here?";
 		mes "You must have better things";
@@ -2895,13 +2868,9 @@ lighthalzen,337,232,3	script	Maku	870,{
 		mes "him carefully enough? It's";
 		mes "been a while, but I know";
 		mes "how Digotz talks, man.";
-		close2;
-		cutin "lhz_macu01",255;
-		end;
 	}
-	if (friendship == 3) {
+	else if (friendship == 3) {
 		cutin "lhz_macu03",2;
-		mes "[Maku]";
 		mes "Man, I need to blow off some";
 		mes "steam! Sure, me and Digotz";
 		mes "were buds before and maybe";
@@ -2923,12 +2892,8 @@ lighthalzen,337,232,3	script	Maku	870,{
 		mes "I mean, I'm not the one";
 		mes "holding a grudge. It's all";
 		mes "that guy's fault! Sheeeesh!";
-		close2;
-		cutin "lhz_macu03",255;
-		end;
 	}
-	if (friendship == 2) {
-		mes "[Maku]";
+	else if (friendship == 2) {
 		mes "Hey, what are you";
 		mes "doing back over here?";
 		mes "I thought I recommended";
@@ -2946,7 +2911,6 @@ lighthalzen,337,232,3	script	Maku	870,{
 		mes "who usedta be my buddy,";
 		mes "but obviously not anymore.";
 		next;
-		cutin "lhz_macu05",255;
 		cutin "lhz_macu02",2;
 		mes "[Maku]";
 		mes "Sure, we were real close";
@@ -2965,13 +2929,9 @@ lighthalzen,337,232,3	script	Maku	870,{
 		mes "I hate the guy, one hundred";
 		mes "percent! The next time I see";
 		mes "him, I'll beat him to a pulp!";
-		close2;
-		cutin "lhz_macu02",255;
-		end;
 	}
-	if (friendship == 1) {
+	else {
 		cutin "lhz_macu01",2;
-		mes "[Maku]";
 		mes "Hey, you're one of";
 		mes "those adventurers, eh?";
 		mes "Welcome to the ghetto.";
@@ -3011,7 +2971,8 @@ lighthalzen,337,232,3	script	Maku	870,{
 		mes "anyway? Sure, we all";
 		mes "do it, but still...";
 		set friendship,1;
-		setquest 12000;
+		if (isbegin_quest(12000) == 0)
+			setquest 12000;
 		next;
 		mes "[Maku]";
 		mes "Well, when you get";
@@ -3020,67 +2981,9 @@ lighthalzen,337,232,3	script	Maku	870,{
 		mes "out the rich section of town.";
 		mes "I'm bitter, but I'll also admit";
 		mes "it's way nicer than this place.";
-		close2;
-		cutin "lhz_macu01",255;
-		end;
 	}
-	cutin "lhz_macu01",2;
-	mes "[Maku]";
-	mes "Hey, you're one of";
-	mes "those adventurers, eh?";
-	mes "Welcome to the ghetto.";
-	mes "Nothing too adventurous";
-	mes "here, but hey, you can";
-	mes "explore all you want.";
-	next;
-	mes "[Maku]";
-	mes "I don't know if you know,";
-	mes "but actually, the people who";
-	mes "live here ain't allowed to";
-	mes "explore this whole city. It's";
-	mes "kind of taboo to talk about,";
-	mes "but what do I care, right?";
-	next;
-	mes "[Maku]";
-	mes "Yeah, basically the rich";
-	mes "people here are too afraid";
-	mes "of the poor people comin' to";
-	mes "see them, so the security in";
-	mes "this city is pretty tight! Those";
-	mes "upper class guys are trash...";
-	next;
-	mes "[Maku]";
-	mes "I didn't used to think";
-	mes "this way. I actually used";
-	mes "to have a pretty rich friend";
-	mes "till I found out he's not all";
-	mes "I thought he was. That";
-	mes "moron! Why's he like that?!";
-	next;
-	mes "[Maku]";
-	mes "Eh, forget about it.";
-	mes "Why am I even talking";
-	mes "about my personal life";
-	mes "to someone I just met";
-	mes "anyway? Sure, we all";
-	mes "do it, but still...";
-	set friendship,1;
-	next;
-	mes "[Maku]";
-	mes "Well, when you get";
-	mes "bored of the ghetto,";
-	mes "you really oughta check";
-	mes "out the rich section of town.";
-	mes "I'm bitter, but I'll also admit";
-	mes "it's way nicer than this place.";
 	close2;
-	cutin "lhz_macu01",255;
-	cutin "lhz_macu02",255;
-	cutin "lhz_macu03",255;
-	cutin "lhz_macu04",255;
-	cutin "lhz_macu05",255;
-	cutin "lhz_macu06",255;
-	cutin "lhz_macu07",255;
+	cutin "",255;
 	end;
 }
 
@@ -6734,7 +6637,7 @@ lighthalzen,179,170,4	script	Ordinary Man	98,{
 				{
 					case 1:
 						break;
-	
+
 					case 2:
 						mes "[Ghalstein]";
 						mes "Very good.";
@@ -7056,7 +6959,7 @@ OnTouch:
 				mes "awfully familiar...";
 				mes "But what do I care?)";
 				close;
-			
+
 			case 2:
 				mes "["+strcharinfo(0)+"]";
 				mes "(This is too weird.";
@@ -9097,7 +9000,7 @@ lhz_fild02,228,214,0	script	Wounded Man	849,{
 				mes "Jargeah just passed";
 				mes "out in a very ugly way.";
 				close;
-			
+
 			case 2:
 				mes "^3355FFAnd so you left the";
 				mes "wounded man alone. Not";
@@ -11180,7 +11083,7 @@ einbroch,55,52,3	script	Laboratory Guard#reken	 852,{
 						changequest 12008,12010;
 						close;
 				}
-				
+
 			case 2:
 				mes "[" + strcharinfo(0) + "]";
 				mes "Whoa, I'm leaving!";
@@ -11829,7 +11732,7 @@ airplane_01,1,1,1	script	#bully1	-1,{
 OnInit:
 	disablenpc "#bully1";
 	end;
-	
+
 OnEnter:
 	enablenpc "#bully1";
 	initnpctimer;
@@ -11837,7 +11740,7 @@ OnEnter:
 	monster "airplane_01",87,47,"Thug",1592,1,"#bully1::OnMyMobDead";
 	set .bullymobs,2;
 	end;
-	
+
 OnReset:
 	killmonster "airplane_01","#bully1::OnMyMobDead";
 	end;
@@ -11858,7 +11761,7 @@ OnMyMobDead:
 		stopnpctimer;
 	}
 	end;
-	
+
 OnTimer120000:
 	donpcevent "#bully1::OnReset";
 	donpcevent "#bully1::OnInit";
@@ -11872,7 +11775,7 @@ airplane_01,2,2,1	script	#bully2	-1,{
 OnInit:
 	disablenpc "#bully2";
 	end;
-	
+
 OnEnter:
 	enablenpc "#bully2";
 	initnpctimer;
@@ -11881,7 +11784,7 @@ OnEnter:
 	monster "airplane_01",97,43,"Thug",1592,1,"#bully2::OnMyMobDead";
 	set .bullymobs,3;
 	end;
-	
+
 OnReset:
 	killmonster "airplane_01","#bully2::OnMyMobDead";
 	end;
@@ -11901,7 +11804,7 @@ OnMyMobDead:
 		stopnpctimer;
 	}
 	end;
-	
+
 OnTimer120000:
 	donpcevent "#bully2::OnReset";
 	donpcevent "#bully2::OnInit";
@@ -11912,7 +11815,7 @@ OnTimer120000:
 
 airplane_01,99,47,3	script	#packidentity	139,2,2,{
 	end;
-	
+
 OnInit:
 	disablenpc "#packidentity";
 	end;
@@ -12052,12 +11955,12 @@ airplane_01,10,10,3	script	#LyozienSwitch	111,{
 	}
 }
 
-//============================================================ 
+//============================================================
 // Old changelog
-//============================================================ 
+//============================================================
 //= Grammar/script check please. This was a quick job.
 //= Things to add: Look at the thread "Lighthalzen Guard" in SVN script
-//= 0.3 Initial Release
+//= 0.3 Initial Release. [Persian] [Vicious_Pucca] [aoa00] [Evera] [MasterOfMupppets] [Lupus] [Lord Gywall]
 //= 0.5 Added mobsters spawn and Einbroch pollution. Alert lasts either 10 minutes or all mob killed.
 //= 0.6-0.9 fix small bug. Added Bio-lab entrance Quest. Added Getting security-card Quest.
 //= 1.0 Patched "mobsters spawn & Alert" like Real-RO.

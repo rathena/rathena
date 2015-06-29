@@ -8,15 +8,11 @@
 #include "../common/strlib.h"
 #include "../common/utils.h"
 #include "itemdb.h"
-#include "map.h"
 #include "battle.h" // struct battle_config
 #include "cashshop.h"
-#include "script.h" // item script processing
-#include "pc.h"     // W_MUSICAL, W_WHIP
+#include "intif.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 static DBMap *itemdb; /// Item DB
 static DBMap *itemdb_combo; /// Item Combo DB
@@ -198,12 +194,17 @@ static void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, struct s_it
 	// Do loop for non-stackable item
 	for (i = 0; i < data->amount; i++) {
 		char flag = 0;
+#ifdef ENABLE_ITEM_GUID
+		tmp.unique_id = data->GUID ? pc_generate_unique_id(sd) : 0; // Generate UID
+#endif
 		if ((flag = pc_additem(sd, &tmp, tmp.amount, LOG_TYPE_SCRIPT)))
 			clif_additem(sd, 0, 0, flag);
-		else if (!flag && data->isAnnounced) { ///TODO: Move this broadcast to proper behavior (it should on at different packet)
+		else if (!flag && data->isAnnounced) {
 			char output[CHAT_SIZE_MAX];
 			sprintf(output, msg_txt(NULL, 717), sd->status.name, itemdb_jname(data->nameid), itemdb_jname(sd->itemid));
-			clif_broadcast(&sd->bl, output, strlen(output), BC_DEFAULT, ALL_CLIENT);
+
+			//! TODO: Move this broadcast to proper packet
+			intif_broadcast(output, strlen(output) + 1, BC_DEFAULT);
 			//clif_broadcast_obtain_special_item();
 		}
 		if (itemdb_isstackable(data->nameid))
@@ -224,7 +225,7 @@ char itemdb_pc_get_itemgroup(uint16 group_id, struct map_session_data *sd) {
 	nullpo_retr(1,sd);
 	
 	if (!(group = (struct s_item_group_db *) uidb_get(itemdb_group, group_id))) {
-		ShowError("itemdb_pc_get_itemgroup: Invalid group id '%d' specified.",group_id);
+		ShowError("itemdb_pc_get_itemgroup: Invalid group id '%d' specified.\n",group_id);
 		return 2;
 	}
 	
@@ -418,10 +419,9 @@ struct item_data* itemdb_search(unsigned short nameid) {
 * @param id Item data
 * @return True if item is equip, false otherwise
 */
-bool itemdb_isequip2(struct item_data *id)
-{
+bool itemdb_isequip2(struct item_data *id) {
 	nullpo_ret(id);
-	switch(id->type) {
+	switch (id->type) {
 		case IT_WEAPON:
 		case IT_ARMOR:
 		case IT_AMMO:
@@ -438,17 +438,17 @@ bool itemdb_isequip2(struct item_data *id)
 */
 bool itemdb_isstackable2(struct item_data *id)
 {
-  nullpo_ret(id);
-  switch(id->type) {
-	  case IT_WEAPON:
-	  case IT_ARMOR:
-	  case IT_PETEGG:
-	  case IT_PETARMOR:
-	  case IT_SHADOWGEAR:
-		  return false;
-	  default:
-		  return true;
-  }
+	nullpo_ret(id);
+	switch(id->type) {
+		case IT_WEAPON:
+		case IT_ARMOR:
+		case IT_PETEGG:
+		case IT_PETARMOR:
+		case IT_SHADOWGEAR:
+			return false;
+		default:
+			return true;
+	}
 }
 
 
@@ -556,13 +556,15 @@ static bool itemdb_read_itemavail(char* str[], int columns, int current) {
 	return true;
 }
 
+static int itemdb_group_free(DBKey key, DBData *data, va_list ap);
+
 /** Read item group data
-* Structure: GroupID,ItemID,Rate{,Amount,isMust,isAnnounced,Duration,isNamed,isBound}
+* Structure: GroupID,ItemID,Rate{,Amount,isMust,isAnnounced,Duration,GUID,isBound,isNamed}
 */
 static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 {
 	FILE *fp;
-	int ln=0, entries=0;
+	int ln = 0, entries = 0;
 	char line[1024];
 
 	if ((fp=fopen(filename,"r")) == NULL) {
@@ -571,10 +573,11 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 	}
 	
 	while (fgets(line,sizeof(line),fp)) {
+		DBData data;
 		int group_id = -1;
 		unsigned int j, prob = 1;
 		uint8 rand_group = 1;
-		char *str[9], *p;
+		char *str[10], *p;
 		struct s_item_group_random *random = NULL;
 		struct s_item_group_db *group = NULL;
 		struct s_item_group_entry entry;
@@ -619,7 +622,14 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 			script_get_constant(trim(str[0]), &group_id);
 
 		if (group_id < 0) {
-			ShowWarning("itemdb_read_itemgroup: Invlaid Group ID '%s' (%s:%d)\n", str[0], filename, ln);
+			ShowWarning("itemdb_read_itemgroup: Invalid Group ID '%s' (%s:%d)\n", str[0], filename, ln);
+			continue;
+		}
+
+		// Remove from DB
+		if (strcmpi(str[1], "clear") == 0 && itemdb_group->remove(itemdb_group, db_ui2key(group_id), &data)) {
+			itemdb_group_free(db_ui2key(group_id), &data, 0);
+			ShowNotice("Item Group '%s' has been cleared.\n", str[0]);
 			continue;
 		}
 
@@ -639,10 +649,8 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 
 		// Checking item
 		trim(str[1]);
-		if (ISDIGIT(str[1][0])) {
-			if (itemdb_exists((entry.nameid = atoi(str[1]))))
-				found = true;
-		}
+		if (ISDIGIT(str[1][0]) && ISDIGIT(str[1][1]) && itemdb_exists((entry.nameid = atoi(str[1]))))
+			found = true;
 		else {
 			struct item_data *id = itemdb_searchname(str[1]);
 			if (id) {
@@ -650,6 +658,7 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 				found = true;
 			}
 		}
+
 		if (!found) {
 			ShowWarning("itemdb_read_itemgroup: Non-existant item '%s' in %s:%d\n", str[1], filename, ln);
 			continue;
@@ -658,8 +667,11 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 		if (str[3] != NULL) entry.amount = cap_value(atoi(str[3]),1,MAX_AMOUNT);
 		if (str[5] != NULL) entry.isAnnounced= atoi(str[5]);
 		if (str[6] != NULL) entry.duration = cap_value(atoi(str[6]),0,UINT16_MAX);
-		if (str[7] != NULL) entry.isNamed = atoi(str[7]);
+#ifdef ENABLE_ITEM_GUID
+		if (str[7] != NULL) entry.GUID = atoi(str[7]);
+#endif
 		if (str[8] != NULL) entry.bound = cap_value(atoi(str[8]),BOUND_NONE,BOUND_MAX-1);
+		if (str[9] != NULL) entry.isNamed = atoi(str[9]);
 
 		if (!(group = (struct s_item_group_db *) uidb_get(itemdb_group, group_id))) {
 			CREATE(group, struct s_item_group_db, 1);
@@ -669,14 +681,8 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 
 		// Must item (rand_group == 0), place it here
 		if (!rand_group) {
-			uint16 idx = group->must_qty;
-			if (!idx)
-				CREATE(group->must, struct s_item_group_entry, 1);
-			else
-				RECREATE(group->must, struct s_item_group_entry, idx+1);
-
-			group->must[idx] = entry;
-			group->must_qty++;
+			RECREATE(group->must, struct s_item_group_entry, group->must_qty+1);
+			group->must[group->must_qty++] = entry;
 
 			// If 'must' item isn't set as random item, skip the next process
 			if (!prob) {
@@ -690,13 +696,7 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 
 		random = &group->random[rand_group];
 
-		// Check, if the entry for this random group already created or not
-		if (!random->data_qty) {
-			CREATE(random->data, struct s_item_group_entry, prob);
-			random->data_qty = 0;
-		}
-		else
-			RECREATE(random->data, struct s_item_group_entry, random->data_qty+prob);
+		RECREATE(random->data, struct s_item_group_entry, random->data_qty+prob);
 
 		// Put the entry to its rand_group
 		for (j = random->data_qty; j < random->data_qty+prob; j++)
@@ -894,6 +894,7 @@ static bool itemdb_read_nouse(char* fields[], int columns, int current) {
 * <item_id>,<flag>
 * &1 - As dead branch item
 * &2 - As item container
+* &4 - GUID item, cannot be stacked even same or stackable item
 */
 static bool itemdb_read_flag(char* fields[], int columns, int current) {
 	unsigned short nameid = atoi(fields[0]);
@@ -911,6 +912,10 @@ static bool itemdb_read_flag(char* fields[], int columns, int current) {
 
 	if (flag&1) id->flag.dead_branch = set ? 1 : 0;
 	if (flag&2) id->flag.group = set ? 1 : 0;
+#ifdef ENABLE_ITEM_GUID
+	if (flag&4 && itemdb_isstackable2(id)) id->flag.guid = set ? 1 : 0;
+#endif
+	if (flag&8) id->flag.bindOnEquip = true;
 
 	return true;
 }
@@ -1087,8 +1092,7 @@ static char itemdb_gendercheck(struct item_data *id)
  * For backwards compatibility, in Renewal mode, MATK from weapons comes from the atk slot
  * We use a ':' delimiter which, if not found, assumes the weapon does not provide any matk.
  **/
-#ifdef RENEWAL
-static void itemdb_re_split_atoi(char *str, int *atk, int *matk) {
+static void itemdb_re_split_atoi(char *str, int *val1, int *val2) {
 	int i, val[2];
 
 	for (i=0; i<2; i++) {
@@ -1099,20 +1103,20 @@ static void itemdb_re_split_atoi(char *str, int *atk, int *matk) {
 			*str++=0;
 	}
 	if( i == 0 ) {
-		*atk = *matk = 0;
+		*val1 = *val2 = 0;
 		return;//no data found
 	}
-	if( i == 1 ) {//Single Value, we assume it's the ATK
-		*atk = val[0];
-		*matk = 0;
+	if( i == 1 ) {//Single Value
+		*val1 = val[0];
+		*val2 = 0;
 		return;
 	}
 	//We assume we have 2 values.
-	*atk = val[0];
-	*matk = val[1];
+	*val1 = val[0];
+	*val2 = val[1];
 	return;
 }
-#endif
+
 /**
 * Processes one itemdb entry
 */
@@ -1213,11 +1217,7 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 	}
 
 	id->wlv = cap_value(atoi(str[15]), REFINE_TYPE_ARMOR, REFINE_TYPE_MAX);
-#ifdef RENEWAL
 	itemdb_re_split_atoi(str[16],&id->elv,&id->elvmax);
-#else
-	id->elv = atoi(str[16]);
-#endif
 	id->flag.no_refine = atoi(str[17]) ? 0 : 1; //FIXME: verify this
 	id->look = atoi(str[18]);
 
@@ -1459,9 +1459,7 @@ bool itemdb_is_spellbook2(unsigned short nameid) {
 	if (!nameid || !itemdb_exists(nameid) || !skill_spellbook_count)
 		return false;
 	ARR_FIND(0, MAX_SKILL_SPELLBOOK_DB, i, skill_spellbook_db[i].nameid == nameid);
-	if (i == MAX_SKILL_SPELLBOOK_DB)
-		return false;
-	return true;
+	return i == MAX_SKILL_SPELLBOOK_DB ? false : true;
 }
 
 /**
@@ -1598,7 +1596,7 @@ void itemdb_reload(void) {
 	//- Fixes the need of a @reloadmobdb after a @reloaditemdb to re-link monster drop data
 	for( i = 0; i < MAX_MOB_DB; i++ ) {
 		struct mob_db *entry;
-		if( !((i < 1324 || i > 1363) && (i < 1938 || i > 1946)) )
+		if( !((i < MOBID_TREAS01 || i > MOBID_TREAS40) && (i < MOBID_TREAS41 || i > MOBID_TREAS49)) )
 			continue;
 		entry = mob_db(i);
 		for(d = 0; d < MAX_MOB_DROP; d++) {
@@ -1632,8 +1630,10 @@ void itemdb_reload(void) {
 		if( sd->combos.count ) {
 			aFree(sd->combos.bonus);
 			aFree(sd->combos.id);
+			aFree(sd->combos.pos);
 			sd->combos.bonus = NULL;
 			sd->combos.id = NULL;
+			sd->combos.pos = NULL;
 			sd->combos.count = 0;
 			if( pc_load_combo(sd) > 0 )
 				status_calc_pc(sd, SCO_FORCE);

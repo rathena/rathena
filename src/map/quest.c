@@ -3,46 +3,32 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/socket.h"
-#include "../common/timer.h"
 #include "../common/malloc.h"
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
-#include "../common/utils.h"
 
 #include "map.h"
 #include "pc.h"
-#include "npc.h"
-#include "itemdb.h"
-#include "script.h"
-#include "intif.h"
-#include "battle.h"
-#include "mob.h"
 #include "party.h"
-#include "unit.h"
-#include "log.h"
-#include "clif.h"
 #include "quest.h"
-#include "intif.h"
 #include "chrif.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
-#include <time.h>
+
+static DBMap *questdb;
 
 /**
  * Searches a quest by ID.
  * @param quest_id : ID to lookup
  * @return Quest entry (equals to &quest_dummy if the ID is invalid)
  */
-struct quest_db *quest_db(int quest_id)
+struct quest_db *quest_search(int quest_id)
 {
-  if( quest_id < 0 || quest_id > MAX_QUEST_DB || quest_db_data[quest_id] == NULL )
-    return &quest_dummy;
-
-  return quest_db_data[quest_id];
+	struct quest_db *quest = (struct quest_db *)idb_get(questdb, quest_id);
+	if (!quest)
+		return &quest_dummy;
+	return quest;
 }
 
 /**
@@ -77,7 +63,7 @@ int quest_pc_login(TBL_PC *sd)
 int quest_add(TBL_PC *sd, int quest_id)
 {
 	int n;
-	struct quest_db *qi = quest_db(quest_id);
+	struct quest_db *qi = quest_search(quest_id);
 
 	if( qi == &quest_dummy ) {
 		ShowError("quest_add: quest %d not found in DB.\n", quest_id);
@@ -111,7 +97,7 @@ int quest_add(TBL_PC *sd, int quest_id)
 	clif_quest_add(sd, &sd->quest_log[n]);
 	clif_quest_update_objective(sd, &sd->quest_log[n]);
 
-	if( save_settings&64 )
+	if( save_settings&CHARSAVE_QUEST )
 		chrif_save(sd,0);
 
 	return 0;
@@ -127,7 +113,7 @@ int quest_add(TBL_PC *sd, int quest_id)
 int quest_change(TBL_PC *sd, int qid1, int qid2)
 {
 	int i;
-	struct quest_db *qi = quest_db(qid2);
+	struct quest_db *qi = quest_search(qid2);
 
 	if( qi == &quest_dummy ) {
 		ShowError("quest_change: quest %d not found in DB.\n", qid2);
@@ -164,7 +150,7 @@ int quest_change(TBL_PC *sd, int qid1, int qid2)
 	clif_quest_add(sd, &sd->quest_log[i]);
 	clif_quest_update_objective(sd, &sd->quest_log[i]);
 
-	if( save_settings&64 )
+	if( save_settings&CHARSAVE_QUEST )
 		chrif_save(sd,0);
 
 	return 0;
@@ -203,7 +189,7 @@ int quest_delete(TBL_PC *sd, int quest_id)
 
 	clif_quest_delete(sd, quest_id);
 
-	if( save_settings&64 )
+	if( save_settings&CHARSAVE_QUEST )
 		chrif_save(sd,0);
 
 	return 0;
@@ -252,7 +238,7 @@ void quest_update_objective(TBL_PC *sd, int mob)
 		if( sd->quest_log[i].state != Q_ACTIVE ) // Skip inactive quests
 			continue;
 
-		qi = quest_db(sd->quest_log[i].quest_id);
+		qi = quest_search(sd->quest_log[i].quest_id);
 
 		for( j = 0; j < qi->num_objectives; j++ ) {
 			if( qi->mob[j] == mob && sd->quest_log[i].count[j] < qi->count[j] )  {
@@ -287,7 +273,7 @@ int quest_update_status(TBL_PC *sd, int quest_id, enum quest_state status)
 	sd->save_quest = true;
 
 	if( status < Q_COMPLETE ) {
-		clif_quest_update_status(sd, quest_id, status == Q_ACTIVE ? true : false);
+		clif_quest_update_status(sd, quest_id, status == Q_ACTIVE);
 		return 0;
 	}
 
@@ -302,7 +288,7 @@ int quest_update_status(TBL_PC *sd, int quest_id, enum quest_state status)
 
 	clif_quest_delete(sd, quest_id);
 
-	if( save_settings&64 )
+	if( save_settings&CHARSAVE_QUEST )
 		chrif_save(sd,0);
 
 	return 0;
@@ -338,7 +324,7 @@ int quest_check(TBL_PC *sd, int quest_id, enum quest_check_type type)
 		case HUNTING:
 			if( sd->quest_log[i].state == Q_INACTIVE || sd->quest_log[i].state == Q_ACTIVE ) {
 				int j;
-				struct quest_db *qi = quest_db(sd->quest_log[i].quest_id);
+				struct quest_db *qi = quest_search(sd->quest_log[i].quest_id);
 
 				ARR_FIND(0, MAX_QUEST_OBJECTIVES, j, sd->quest_log[i].count[j] < qi->count[j]);
 				if( j == MAX_QUEST_OBJECTIVES )
@@ -365,15 +351,13 @@ int quest_read_db(void)
 		"",
 		DBIMPORT"/",
 	};
-	int f;
+	uint8 f;
 
 	for (f = 0; f < ARRAYLENGTH(dbsubpath); f++) {
 		FILE *fp;
 		char line[1024];
-		int i, count = 0;
-		char *str[20], *p, *np;
+		uint32 count = 0;
 		char filename[256];
-		struct quest_db entry;
 
 		sprintf(filename, "%s/%s%s", db_path, dbsubpath[f], "quest_db.txt");
 		if( (fp = fopen(filename, "r")) == NULL ) {
@@ -384,6 +368,10 @@ int quest_read_db(void)
 		}
 
 		while( fgets(line, sizeof(line), fp) ) {
+			struct quest_db *quest = NULL, entry;
+			char *str[9], *p, *np;
+			uint8 i;
+
 			if( line[0] == '/' && line[1] == '/' )
 				continue;
 
@@ -405,31 +393,36 @@ int quest_read_db(void)
 			if( str[0] == NULL )
 				continue;
 
-			memset(&entry, 0, sizeof(entry));
-
+			memset(&entry, 0, sizeof(struct quest_db));
 			entry.id = atoi(str[0]);
 
-			if( entry.id < 0 || entry.id >= MAX_QUEST_DB ) {
-				ShowError("quest_read_db: Invalid quest ID '%d' in line '%s' (min: 0, max: %d.)\n", entry.id, line, MAX_QUEST_DB);
+			if( entry.id < 0 || entry.id >= INT_MAX ) {
+				ShowError("quest_read_db: Invalid quest ID '%d' in line '%s' (min: 0, max: %d.)\n", entry.id, line, INT_MAX);
 				continue;
+			}
+
+			if (!(quest = (struct quest_db *)idb_get(questdb, entry.id))) {
+				CREATE(quest, struct quest_db, 1);
 			}
 
 			entry.time = atoi(str[1]);
 
 			for( i = 0; i < MAX_QUEST_OBJECTIVES; i++ ) {
-				entry.mob[i] = atoi(str[2 * i + 2]);
-				entry.count[i] = atoi(str[2 * i + 3]);
+				entry.mob[i] = (uint16)atoi(str[2 * i + 2]);
+				entry.count[i] = (uint16)atoi(str[2 * i + 3]);
 
 				if( !entry.mob[i] || !entry.count[i] )
 					break;
 			}
-
 			entry.num_objectives = i;
 
-			if( quest_db_data[entry.id] == NULL )
-				quest_db_data[entry.id] = aMalloc(sizeof(struct quest_db));
+			//StringBuf_Init(&entry.name);
+			//StringBuf_Printf(&entry.name, "%s", str[7]);
 
-			memcpy(quest_db_data[entry.id], &entry, sizeof(struct quest_db));
+			if (!quest->id) {
+				memcpy(quest, &entry, sizeof(entry));
+				idb_put(questdb, quest->id, quest);
+			}
 			count++;
 		}
 
@@ -455,7 +448,7 @@ int quest_reload_check_sub(struct map_session_data *sd, va_list ap)
 
 	j = 0;
 	for( i = 0; i < sd->num_quests; i++ ) {
-		struct quest_db *qi = quest_db(sd->quest_log[i].quest_id);
+		struct quest_db *qi = quest_search(sd->quest_log[i].quest_id);
 
 		if( qi == &quest_dummy ) { //Remove no longer existing entries
 			if( sd->quest_log[i].state != Q_COMPLETE ) //And inform the client if necessary
@@ -481,16 +474,15 @@ int quest_reload_check_sub(struct map_session_data *sd, va_list ap)
 /**
  * Clears the quest database for shutdown or reload.
  */
-void quest_clear_db(void)
-{
-	int i;
 
-	for( i = 0; i < MAX_QUEST_DB; i++ ) {
-		if( quest_db_data[i] ) {
-			aFree(quest_db_data[i]);
-			quest_db_data[i] = NULL;
-		}
-	}
+static int questdb_free(DBKey key, DBData *data, va_list ap) {
+	struct quest_db *quest = db_data2ptr(data);
+	if (!quest)
+		return 0;
+	//if (&quest->name)
+	//	StringBuf_Destroy(&quest->name);
+	aFree(quest);
+	return 1;
 }
 
 /**
@@ -498,6 +490,7 @@ void quest_clear_db(void)
  */
 void do_init_quest(void)
 {
+	questdb = idb_alloc(DB_OPT_BASE);
 	quest_read_db();
 }
 
@@ -507,8 +500,7 @@ void do_init_quest(void)
 void do_final_quest(void)
 {
 	memset(&quest_dummy, 0, sizeof(quest_dummy));
-
-	quest_clear_db();
+	questdb->destroy(questdb, questdb_free);
 }
 
 /**
@@ -517,8 +509,7 @@ void do_final_quest(void)
 void do_reload_quest(void)
 {
 	memset(&quest_dummy, 0, sizeof(quest_dummy));
-
-	quest_clear_db();
+	questdb->clear(questdb, questdb_free);
 
 	quest_read_db();
 

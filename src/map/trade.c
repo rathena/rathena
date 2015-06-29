@@ -5,17 +5,12 @@
 #include "../common/socket.h"
 #include "clif.h"
 #include "itemdb.h"
-#include "map.h"
 #include "path.h"
 #include "trade.h"
 #include "pc.h"
-#include "npc.h"
-#include "battle.h"
 #include "chrif.h"
 #include "storage.h"
 #include "intif.h"
-#include "atcommand.h"
-#include "log.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -210,13 +205,13 @@ int impossible_trade_check(struct map_session_data *sd)
 			intif_wis_message_to_gm(wisp_server_name, PC_PERM_RECEIVE_HACK_INFO, message_to_gm);
 			// if we block people
 			if (battle_config.ban_hack_trade < 0) {
-				chrif_req_login_operation(-1, sd->status.name, 1, 0, 0, 0); // type: 1 - block
+				chrif_req_login_operation(-1, sd->status.name, CHRIF_OP_LOGIN_BLOCK, 0, 0, 0); // type: 1 - block
 				set_eof(sd->fd); // forced to disconnect because of the hack
 				// message about the ban
 				strcpy(message_to_gm, msg_txt(sd,540)); //  This player has been definitively blocked.
 			// if we ban people
 			} else if (battle_config.ban_hack_trade > 0) {
-				chrif_req_login_operation(-1, sd->status.name, 2, battle_config.ban_hack_trade*60, 0, 0); // type: 2 - ban (year, month, day, hour, minute, second)
+				chrif_req_login_operation(-1, sd->status.name, CHRIF_OP_LOGIN_BAN, battle_config.ban_hack_trade*60, 0, 0); // type: 2 - ban (year, month, day, hour, minute, second)
 				set_eof(sd->fd); // forced to disconnect because of the hack
 				// message about the ban
 				sprintf(message_to_gm, msg_txt(sd,507), battle_config.ban_hack_trade); //  This player has been banned for %d minute(s).
@@ -396,6 +391,9 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 		return;
 	}
 
+	if (item->bound)
+		sd->state.isBoundTrading |= (1<<item->bound);
+
 	// Locate a trade position
 	ARR_FIND( 0, 10, trade_i, sd->deal.item[trade_i].index == index || sd->deal.item[trade_i].amount == 0 );
 	if( trade_i == 10 ) { // No space left
@@ -488,7 +486,10 @@ void trade_tradecancel(struct map_session_data *sd)
 	struct map_session_data *target_sd;
 	int trade_i;
 
+	nullpo_retv(sd);
+
 	target_sd = map_id2sd(sd->trade_partner);
+	sd->state.isBoundTrading = 0;
 
 	if(!sd->state.trading) { // Not trade accepted
 		if( target_sd ) {
@@ -550,6 +551,8 @@ void trade_tradecommit(struct map_session_data *sd)
 {
 	struct map_session_data *tsd;
 	int trade_i;
+
+	nullpo_retv(sd);
 
 	if (!sd->state.trading || !sd->state.deal_locked) //Locked should be 1 (pressed ok) before you can press trade.
 		return;
@@ -629,16 +632,18 @@ void trade_tradecommit(struct map_session_data *sd)
 	sd->state.deal_locked = 0;
 	sd->trade_partner = 0;
 	sd->state.trading = 0;
+	sd->state.isBoundTrading = 0;
 
 	tsd->state.deal_locked = 0;
 	tsd->trade_partner = 0;
 	tsd->state.trading = 0;
+	tsd->state.isBoundTrading = 0;
 
 	clif_tradecompleted(sd, 0);
 	clif_tradecompleted(tsd, 0);
 
 	// save both player to avoid crash: they always have no advantage/disadvantage between the 2 players
-	if (save_settings&1) {
+	if (save_settings&CHARSAVE_TRADE) {
 		chrif_save(sd,0);
 		chrif_save(tsd,0);
 	}

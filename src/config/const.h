@@ -99,10 +99,12 @@
 
 // Renewal variable cast time reduction
 #ifdef RENEWAL_CAST
-	#define VARCAST_REDUCTION(val){ \
-		if( (varcast_r += (val)) != 0 && varcast_r >= 0 ) \
-			time = time * (1 - (float)min((val), 100) / 100); \
-	}
+	// Multiply the Variable CastTime
+	#define VARCAST_REDUCTION(val) ( time = time * (1 + (val) * 0.01) )
+
+	// Get the highest rate TO REDUCE Fixed CastTime
+	// -100 is "the highest" rate than 100.
+	#define FIXEDCASTRATE(fcast,val) ( ((fcast) == 0) ? ((fcast) = (val)) : ((fcast) = min((fcast),(val))) )
 #endif
 /**
  * End of File

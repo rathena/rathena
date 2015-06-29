@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 #define SET_OPEN 0
 #define SET_CLOSED 1
@@ -142,9 +143,6 @@ bool path_search_long(struct shootpath_data *spd,int16 m,int16 x0,int16 y0,int16
 	spd->x[0] = x0;
 	spd->y[0] = y0;
 
-	if (map_getcellp(md,x1,y1,cell))
-		return false;
-
 	if (dx > abs(dy)) {
 		weight = dx;
 		spd->ry = 1;
@@ -155,8 +153,6 @@ bool path_search_long(struct shootpath_data *spd,int16 m,int16 x0,int16 y0,int16
 
 	while (x0 != x1 || y0 != y1)
 	{
-		if (map_getcellp(md,x0,y0,cell))
-			return false;
 		wx += dx;
 		wy += dy;
 		if (wx >= weight) {
@@ -176,6 +172,8 @@ bool path_search_long(struct shootpath_data *spd,int16 m,int16 x0,int16 y0,int16
 			spd->y[spd->len] = y0;
 			spd->len++;
 		}
+		if (map_getcellp(md,x0,y0,cell))
+			return false;
 	}
 
 	return true;
@@ -265,12 +263,8 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 
 	md = &map[m];
 
-#ifdef CELL_NOSTACK
 	//Do not check starting cell as that would get you stuck.
-	if (x0 < 0 || x0 >= md->xs || y0 < 0 || y0 >= md->ys)
-#else
 	if (x0 < 0 || x0 >= md->xs || y0 < 0 || y0 >= md->ys /*|| map_getcellp(md,x0,y0,cell)*/)
-#endif
 		return false;
 
 	// Check destination cell
@@ -425,7 +419,7 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 
 
 //Distance functions, taken from http://www.flipcode.com/articles/article_fastdistance.shtml
-int check_distance(int dx, int dy, int distance)
+bool check_distance(int dx, int dy, int distance)
 {
 #ifdef CIRCULAR_AREA
 	//In this case, we just do a square comparison. Add 1 tile grace for diagonal range checks.
@@ -464,4 +458,39 @@ unsigned int distance(int dx, int dy)
 	if (dy < 0) dy = -dy;
 	return (dx<dy?dy:dx);
 #endif
+}
+
+/**
+ * The client uses a circular distance instead of the square one. The circular distance
+ * is only used by units sending their attack commands via the client (not monsters).
+ * @param dx: Horizontal distance
+ * @param dy: Vertical distance
+ * @param distance: Distance to check against
+ * @return Within distance(1); Not within distance(0);
+ */
+bool check_distance_client(int dx, int dy, int distance)
+{
+	if(distance < 0) distance = 0;
+
+	return (distance_client(dx,dy) <= distance);
+}
+
+/**
+ * The client uses a circular distance instead of the square one. The circular distance
+ * is only used by units sending their attack commands via the client (not monsters).
+ * @param dx: Horizontal distance
+ * @param dy: Vertical distance
+ * @return Circular distance
+ */
+int distance_client(int dx, int dy)
+{
+	double temp_dist = sqrt((double)(dx*dx + dy*dy));
+
+	//Bonus factor used by client
+	//This affects even horizontal/vertical lines so they are one cell longer than expected
+	temp_dist -= 0.0625;
+
+	if(temp_dist < 0) temp_dist = 0;
+
+	return ((int)temp_dist);
 }

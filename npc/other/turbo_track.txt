@@ -1977,7 +1977,7 @@ OnTouch:
 	mapannounce strnpcinfo(4),strcharinfo(0) +" is second to reach the Finish Line! Congratulations!",bc_map,"0xFFFF00";
 	if (.@w$ == "e8" || .@w$ == "n8") setarray .@pts, 28961,40;
 	if (.@w$ == "e16" || .@w$ == "n16") setarray .@pts, 28951,50;
-	if (tt_points < .@pts[0]) set tt_point,tt_point+.@pts[1];
+	if (tt_point < .@pts[0]) set tt_point,tt_point+.@pts[1];
 	warp "turbo_room",72,89;
 	disablenpc "#cos_"+.@w$+"_end2";
 	enablenpc "#cos_"+.@w$+"_end3";
@@ -4257,9 +4257,9 @@ turbo_room,93,117,5	script	Point Exchange Helper	125,{
 					}
 					set tt_point,tt_point-40;
 					if (BaseLevel < 70) getexp 3000,0;
-					else if (BaseLevel < 80) getexp 9000,0;
-					else if (BaseLevel < 90) getexp 10000,0;
-					else if (BaseLevel < 100) getexp 30000,0;
+					else if (BaseLevel < 80) getexp (checkre(3))?900:9000,0;
+					else if (BaseLevel < 90) getexp (checkre(3))?1000:10000,0;
+					else if (BaseLevel < MAX_LEVEL) getexp (checkre(3))?3000:30000,0;
 					mes "[Item Exchange Helper]";
 					mes "Thank you, your";
 					mes "Turbo Track Points";

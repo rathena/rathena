@@ -5,7 +5,9 @@
 #define	_VENDING_H_
 
 #include "../common/cbasetypes.h"
+#include "buyingstore.h"
 //#include "map.h"
+
 struct map_session_data;
 struct s_search_store_search;
 
@@ -22,7 +24,7 @@ void do_init_vending_autotrade( void );
  
 void vending_reopen( struct map_session_data* sd );
 void vending_closevending(struct map_session_data* sd);
-char vending_openvending(struct map_session_data* sd, const char* message, const uint8* data, int count);
+int8 vending_openvending(struct map_session_data* sd, const char* message, const uint8* data, int count, struct s_autotrader *at);
 void vending_vendinglistreq(struct map_session_data* sd, int id);
 void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const uint8* data, int count);
 bool vending_search(struct map_session_data* sd, unsigned short nameid);

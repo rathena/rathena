@@ -53,7 +53,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\3rdparty\mysql\include;..\3rdparty\zlib\include;..\3rdparty\pcre\include;..\3rdparty\msinttypes\include;..\3rdparty\mt19937ar;..\3rdparty\libconfig;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_WIN32;__WIN32;_DEBUG;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;LIBCONFIG_STATIC;YY_USE_CONST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WIN32;__WIN32;_DEBUG;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;LIBCONFIG_STATIC;YY_USE_CONST;_WINSOCK_DEPRECATED_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
       <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
       <ExceptionHandling>
@@ -329,6 +329,8 @@
     <Copy SourceFiles="..\db\import-tmpl\job_param_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\job_param_db.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\level_penalty.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\level_penalty.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\magicmushroom_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\magicmushroom_db.txt')" />
+    <Copy SourceFiles="..\db\import-tmpl\map_cache.dat" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\map_cache.dat')" />
+    <Copy SourceFiles="..\db\import-tmpl\map_index.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\map_index.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\mercenary_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\mercenary_db.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\mercenary_skill_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\mercenary_skill_db.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\mob_avail.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\mob_avail.txt')" />

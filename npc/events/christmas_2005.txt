@@ -159,7 +159,7 @@ xmas_in,89,92,5	script	Louise Kim#designer	714,{
 				else {
 					mes "[Designer Louise Kim]";
 					mes "Come on~If you just get me the materials,";
-					mes "I won't chage anything,";
+					mes "I won't charge anything,";
 					mes "Call me if you change your mind.";
 					emotion e_lv;
 					close;

@@ -82,7 +82,7 @@ int channel_pcleave(struct map_session_data *sd, char *chname);
 int channel_pccolor(struct map_session_data *sd, char *chname, char *color);
 int channel_pcbind(struct map_session_data *sd, char *chname);
 int channel_pcunbind(struct map_session_data *sd);
-int channel_pcban(struct map_session_data *sd, char *chname, struct map_session_data *tsd, int flag);
+int channel_pcban(struct map_session_data *sd, char *chname, char *pname, int flag);
 int channel_pcsetopt(struct map_session_data *sd, char *chname, const char *option, const char *val);
 
 void do_init_channel(void);

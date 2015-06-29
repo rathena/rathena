@@ -12,18 +12,18 @@
 #include "../common/socket.h"
 #include "../common/sql.h"
 #include "../common/strlib.h"
-#include <string.h>
+#include "../common/showmsg.h"
 #include <stdlib.h> // exit
 
 // global sql settings (in ipban_sql.c)
-static char   global_db_hostname[32] = "127.0.0.1";
+static char   global_db_hostname[64] = "127.0.0.1"; // Doubled to reflect the change on commit #0f2dd7f
 static uint16 global_db_port = 3306;
 static char   global_db_username[32] = "ragnarok";
 static char   global_db_password[32] = ""; //empty by default since mysql is empty by default as well
 static char   global_db_database[32] = "ragnarok";
 static char   global_codepage[32] = "";
 // local sql settings
-static char   log_db_hostname[32] = "";
+static char   log_db_hostname[64] = ""; // Doubled to reflect the change on commit #0f2dd7f
 static uint16 log_db_port = 0;
 static char   log_db_username[32] = "";
 static char   log_db_password[32] = "";
@@ -188,6 +188,8 @@ bool loginlog_init(void) {
 
 	if( SQL_ERROR == Sql_Connect(sql_handle, username, password, hostname, port, database) )
 	{
+        ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
+                        username, password, hostname, port, database);
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(sql_handle);
 		exit(EXIT_FAILURE);

@@ -1,4 +1,8 @@
 #!/usr/bin/perl
+# rAthena Item Type Converter
+# Fixes incorrect weapon and armor item types.
+# https://rathena.org/board/topic/90738-itemtype-update-read-this-very-important/
+
 use strict;
 use warnings;
 use Getopt::Long;
@@ -36,7 +40,7 @@ sub GetArgs {
 		@aFileout = split(",",$sFileouts);
 	}
 	unless(scalar(@aFileout)==scalar(@aFilein)){
-		print "ERROR: number of filein doesn't match number of fileout, you must speficy each fileout for each filein:\n"
+		print "ERROR: Number of input files doesn't match number of output files. You must specify an output for each input:\n"
 			."afilein = [ @aFilein ] \n"
 			."afileout = [ @aFileout ] \n";
 		exit;
@@ -48,8 +52,8 @@ sub Main {
 	my($filename, $dir, $suffix) = fileparse($0);
 	chdir $dir; #put ourself like was called in tool folder
 	GetArgs();
-	print "Welcome to rA itemtype converter\n";
-	print "Were going to convert those files : @aFilein into @aFileout \n";
+	print "Running rAthena's item type converter...\n";
+	print "Files to be converted: '@aFilein' into '@aFileout'.\n";
 	foreach my $sFile (@aFilein){
 		my $sReplace=0; #should we replace file when finished
 		my $sFileouttmp=$aFileout[$sI];
@@ -59,7 +63,7 @@ sub Main {
 			print "Asking to replace file tmp fileout= $sFileouttmp \n";
 		}
 		unless(open FHIN,"$sFile"){
-			print "Error, can't read or locate $sFile.\n";
+			print "ERROR: Can't read or locate $sFile.\n";
 			next;
 		}
 		unless(open FHOUT,">$sFileouttmp"){

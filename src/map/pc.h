@@ -7,6 +7,7 @@
 #include "../common/mmo.h" // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus
 #include "../common/ers.h"
 #include "../common/timer.h" // INVALID_TIMER
+#include "../common/strlib.h"// StringBuf
 #include "map.h" // RC_ALL
 #include "atcommand.h" // AtCommandType
 #include "battle.h" // battle_config
@@ -130,7 +131,7 @@ struct s_autobonus {
 	unsigned int duration;
 	char *bonus_script, *other_script;
 	int active;
-	unsigned short pos;
+	unsigned int pos;
 };
 
 struct skill_cooldown_entry {
@@ -158,13 +159,13 @@ struct s_pc_itemgrouphealrate {
 };
 
 ///Timed bonus 'bonus_script' struct [Cydh]
-struct s_bonus_script {
+struct s_bonus_script_entry {
 	struct script_code *script;
-	char script_str[MAX_BONUS_SCRIPT_LENGTH]; //Used for comparing and storing on table
+	StringBuf *script_buf; //Used for comparing and storing on table
 	uint32 tick;
-	uint8 flag;
-	char type; //0 - Ignore; 1 - Buff; 2 - Debuff
-	int16 icon;
+	uint16 flag;
+	enum si_type icon;
+	uint8 type; //0 - Ignore; 1 - Buff; 2 - Debuff
 	int tid;
 };
 
@@ -191,7 +192,7 @@ struct map_session_data {
 		unsigned int snovice_dead_flag : 1; //Explosion spirits on death: 0 off, 1 used.
 		unsigned int abra_flag : 2; // Abracadabra bugfix by Aru
 		unsigned int autocast : 1; // Autospell flag [Inkfish]
-		unsigned int autotrade : 1;	//By Fantik
+		unsigned int autotrade : 3;	//By Fantik. &2 Requested by vending autotrade; &4 Requested by buyingstore autotrade
 		unsigned int reg_dirty : 4; //By Skotlex (marks whether registry variables have been saved or not yet)
 		unsigned int showdelay :1;
 		unsigned int showexp :1;
@@ -221,7 +222,7 @@ struct map_session_data {
 		unsigned short autolootid[AUTOLOOTITEM_SIZE]; // [Zephyrus]
 		unsigned short autoloottype;
 		unsigned int autolooting : 1; //performance-saver, autolooting state for @alootid
-		unsigned short autobonus; //flag to indicate if an autobonus is activated. [Inkfish]
+		unsigned int autobonus; //flag to indicate if an autobonus is activated. [Inkfish]
 		unsigned int gmaster_flag : 1;
 		unsigned int prevend : 1;//used to flag wheather you've spent 40sp to open the vending or not.
 		unsigned int warping : 1;//states whether you're in the middle of a warp processing
@@ -230,6 +231,7 @@ struct map_session_data {
 		unsigned int banking : 1; //1 when we using the banking system 0 when closed
 		unsigned int hpmeter_visible : 1;
 		unsigned disable_atcommand_on_npc : 1; //Prevent to use atcommand while talking with NPC [Kichi]
+		uint8 isBoundTrading; // Player is currently add bound item to trade list [Cydh]
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -243,7 +245,7 @@ struct map_session_data {
 		unsigned int no_knockback : 1;
 		unsigned int bonus_coma : 1;
 	} special_state;
-	int login_id1, login_id2;
+	uint32 login_id1, login_id2;
 	unsigned short class_;	//This is the internal job ID used by the map server to simplify comparisons/queries/etc. [Skotlex]
 	int group_id, group_pos, group_level;
 	unsigned int permissions;/* group permissions */
@@ -347,6 +349,7 @@ struct map_session_data {
 	short sp_gain_race_attack[RC_MAX];
 	short hp_gain_race_attack[RC_MAX];
 	// zeroed arrays end here.
+
 	// zeroed structures start here
 	struct s_autospell autospell[MAX_PC_BONUS], autospell2[MAX_PC_BONUS], autospell3[MAX_PC_BONUS];
 	struct s_addeffect addeff[MAX_PC_BONUS], addeff2[MAX_PC_BONUS];
@@ -355,7 +358,7 @@ struct map_session_data {
 	struct s_skill_bonus { //skillatk raises bonus dmg% of skills, skillheal increases heal%, skillblown increases bonus blewcount for some skills.
 		unsigned short id;
 		short val;
-	} skillatk[MAX_PC_BONUS], skillusesprate[MAX_PC_BONUS], skillusesp[MAX_PC_BONUS], skillheal[5], skillheal2[5], skillblown[MAX_PC_BONUS], skillcast[MAX_PC_BONUS], skillcooldown[MAX_PC_BONUS], skillfixcast[MAX_PC_BONUS], skillvarcast[MAX_PC_BONUS], skillfixcastrate[MAX_PC_BONUS];
+	} skillatk[MAX_PC_BONUS], skillusesprate[MAX_PC_BONUS], skillusesp[MAX_PC_BONUS], skillheal[MAX_PC_BONUS], skillheal2[MAX_PC_BONUS], skillblown[MAX_PC_BONUS], skillcastrate[MAX_PC_BONUS], skillcooldown[MAX_PC_BONUS], skillfixcast[MAX_PC_BONUS], skillvarcast[MAX_PC_BONUS], skillfixcastrate[MAX_PC_BONUS];
 	struct s_regen {
 		short value;
 		int rate;
@@ -377,10 +380,18 @@ struct map_session_data {
 		short value;
 		int rate, tick;
 	} def_set_race[RC_MAX], mdef_set_race[RC_MAX];
+	struct s_bonus_vanish_race {
+		short hp_rate, ///< Rate 0 - 10000 (100%)
+			hp_per,	   ///< % HP vanished
+			sp_rate,   ///< Rate 0 - 10000 (100%)
+			sp_per;	   ///< % SP vanished
+	} vanish_race[RC_MAX];
 	// zeroed structures end here
+
 	// manually zeroed structures start here.
 	struct s_autobonus autobonus[MAX_PC_BONUS], autobonus2[MAX_PC_BONUS], autobonus3[MAX_PC_BONUS]; //Auto script on attack, when attacked, on skill usage
 	// manually zeroed structures end here.
+
 	// zeroed vars start here.
 	struct s_bonus {
 		int hp, sp;
@@ -417,12 +428,11 @@ struct map_session_data {
 		unsigned short unbreakable;	// chance to prevent ANY equipment breaking [celest]
 		unsigned short unbreakable_equip; //100% break resistance on certain equipment
 		unsigned short unstripable_equip;
-		int fixcastrate,varcastrate;
-		int add_fixcast,add_varcast;
+		int fixcastrate, varcastrate; // n/100
+		int add_fixcast, add_varcast; // in milliseconds
 		int ematk; // matk bonus from equipment
 		int eatk; // atk bonus from equipment
 	} bonus;
-
 	// zeroed vars end here.
 
 	int castrate,delayrate,hprate,sprate,dsprate;
@@ -435,7 +445,7 @@ struct map_session_data {
 
 	short catch_target_class; // pet catching, stores a pet class to catch (short now) [zzo]
 
-	short spiritball, spiritball_old;
+	int8 spiritball, spiritball_old;
 	int spirit_timer[MAX_SPIRITBALL];
 	short talisman[ELE_POISON+1]; // There are actually 5 talisman Fire, Ice, Wind, Earth & Poison maybe because its color violet.
 	int talisman_timer[ELE_POISON+1][10];
@@ -562,6 +572,7 @@ struct map_session_data {
 	struct s_combos {
 		struct script_code **bonus;/* the script */
 		unsigned short *id;/* array of combo ids */
+		unsigned int *pos;/* array of positions*/
 		unsigned char count;
 	} combos;
 
@@ -600,8 +611,13 @@ struct map_session_data {
 	struct vip_info vip;
 	bool disableshowrate; //State to disable clif_display_pinfo(). [Cydh]
 #endif
-	struct s_bonus_script bonus_script[MAX_PC_BONUS_SCRIPT]; ///Bonus Script [Cydh]
-	
+
+	/// Bonus Script [Cydh]
+	struct s_bonus_script_list {
+		struct linkdb_node *head; ///< Bonus script head node. data: struct s_bonus_script_entry *entry, key: (intptr_t)entry
+		uint16 count;
+	} bonus_script;
+
 	struct s_pc_itemgrouphealrate **itemgrouphealrate; /// List of Item Group Heal rate bonus
 	uint8 itemgrouphealrate_count; /// Number of rate bonuses
 
@@ -613,6 +629,10 @@ struct map_session_data {
 
 	short last_addeditem_index; /// Index of latest item added
 	int autotrade_tid;
+
+#ifdef PACKET_OBFUSCATION
+	unsigned int cryptKey; ///< Packet obfuscation key to be used for the next received packet
+#endif
 };
 
 struct eri *pc_sc_display_ers; /// Player's SC display table
@@ -655,6 +675,8 @@ enum weapon_type {
 	W_DOUBLE_DA, // dagger + axe
 	W_DOUBLE_SA, // sword + axe
 };
+
+#define WEAPON_TYPE_ALL ((1<<MAX_WEAPON_TYPE)-1)
 
 enum ammo_type {
 	A_ARROW = 1,
@@ -799,8 +821,8 @@ short pc_maxaspd(struct map_session_data *sd);
 	#define pc_rightside_def(sd) ((sd)->battle_status.def)
 	#define pc_leftside_mdef(sd) ((sd)->battle_status.mdef2)
 	#define pc_rightside_mdef(sd) ((sd)->battle_status.mdef)
-#define pc_leftside_matk(sd) (status_base_matk(status_get_status_data(&(sd)->bl), (sd)->status.base_level))
-#define pc_rightside_matk(sd) ((sd)->battle_status.rhw.matk+(sd)->battle_status.lhw.matk+(sd)->bonus.ematk)
+	#define pc_leftside_matk(sd) (status_base_matk(&(sd)->bl, status_get_status_data(&(sd)->bl), (sd)->status.base_level))
+	#define pc_rightside_matk(sd) ((sd)->battle_status.rhw.matk+(sd)->battle_status.lhw.matk+(sd)->bonus.ematk)
 #else
 	#define pc_leftside_atk(sd) ((sd)->battle_status.batk + (sd)->battle_status.rhw.atk + (sd)->battle_status.lhw.atk)
 	#define pc_rightside_atk(sd) ((sd)->battle_status.rhw.atk2 + (sd)->battle_status.lhw.atk2)
@@ -837,14 +859,14 @@ bool pc_should_log_commands(struct map_session_data *sd);
 void pc_setrestartvalue(struct map_session_data *sd, char type);
 void pc_makesavestatus(struct map_session_data *sd);
 void pc_respawn(struct map_session_data* sd, clr_type clrtype);
-void pc_setnewpc(struct map_session_data *sd, int account_id, int char_id, int login_id1, unsigned int client_tick, int sex, int fd);
-bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_time, int group_id, struct mmo_charstatus *st, bool changing_mapservers);
+void pc_setnewpc(struct map_session_data *sd, uint32 account_id, uint32 char_id, int login_id1, unsigned int client_tick, int sex, int fd);
+bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_time, int group_id, struct mmo_charstatus *st, bool changing_mapservers);
 void pc_authfail(struct map_session_data *sd);
 void pc_reg_received(struct map_session_data *sd);
 void pc_close_npc(struct map_session_data *sd,int flag);
 int pc_close_npc_timer(int tid, unsigned int tick, int id, intptr_t data);
 
-bool pc_isequip(struct map_session_data *sd,int n);
+uint8 pc_isequip(struct map_session_data *sd,int n);
 int pc_equippoint(struct map_session_data *sd,int n);
 void pc_setinventorydata(struct map_session_data *sd);
 
@@ -903,7 +925,7 @@ bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd,
 
 void pc_updateweightstatus(struct map_session_data *sd);
 
-bool pc_addautobonus(struct s_autobonus *bonus,char max,const char *script,short rate,unsigned int dur,short atk_type,const char *o_script,unsigned short pos,bool onskill);
+bool pc_addautobonus(struct s_autobonus *bonus,char max,const char *script,short rate,unsigned int dur,short atk_type,const char *o_script,unsigned int pos,bool onskill);
 void pc_exeautobonus(struct map_session_data* sd,struct s_autobonus *bonus);
 int pc_endautobonus(int tid, unsigned int tick, int id, intptr_t data);
 void pc_delautobonus(struct map_session_data* sd,struct s_autobonus *bonus,char max,bool restore);
@@ -913,7 +935,15 @@ void pc_bonus2(struct map_session_data *sd, int type, int type2, int val);
 void pc_bonus3(struct map_session_data *sd, int type, int type2, int type3, int val);
 void pc_bonus4(struct map_session_data *sd, int type, int type2, int type3, int type4, int val);
 void pc_bonus5(struct map_session_data *sd, int type, int type2, int type3, int type4, int type5, int val);
-int pc_skill(struct map_session_data *sd, int id, int level, int flag);
+
+enum e_addskill_type {
+	ADDSKILL_PERMANENT			= 0,	///< Permanent skill. Remove the skill if level is 0
+	ADDSKILL_TEMP				= 1,	///< Temporary skill. If player learned the skill and the given level is higher, level will be replaced and learned level will be palced in skill flag. `flag = learned + SKILL_FLAG_REPLACED_LV_0; learned_level = level;`
+	ADDSKILL_TEMP_ADDLEVEL		= 2,	///< Like PCSKILL_TEMP, except the level will be stacked. `learned_level += level`. The flag is used to store original learned level
+	ADDSKILL_PERMANENT_GRANTED	= 3,	///< Grant permanent skill, ignore skill tree and learned level
+};
+
+bool pc_skill(struct map_session_data *sd, uint16 skill_id, int level, enum e_addskill_type type);
 
 int pc_insert_card(struct map_session_data *sd,int idx_card,int idx_equip);
 
@@ -940,7 +970,7 @@ int pc_need_status_point(struct map_session_data *,int,int);
 int pc_maxparameterincrease(struct map_session_data*,int);
 bool pc_statusup(struct map_session_data*,int,int);
 int pc_statusup2(struct map_session_data*,int,int);
-int pc_skillup(struct map_session_data*,uint16 skill_id);
+void pc_skillup(struct map_session_data*,uint16 skill_id);
 int pc_allskillup(struct map_session_data*);
 int pc_resetlvl(struct map_session_data*,int type);
 int pc_resetstate(struct map_session_data*);
@@ -1024,12 +1054,12 @@ int pc_mapid2jobid(unsigned short class_, int sex);	// Skotlex
 const char * job_name(int class_);
 
 struct skill_tree_entry {
-	short id;
-	unsigned char max;
-	unsigned char joblv;
+	uint16 id;
+	uint8 max;
+	uint8 joblv;
 	struct {
-		short id;
-		unsigned char lv;
+		uint16 id;
+		uint8 lv;
 	} need[MAX_PC_SKILL_REQUIRE];
 }; // Celest
 extern struct skill_tree_entry skill_tree[CLASS_COUNT][MAX_SKILL_TREE];
@@ -1050,7 +1080,7 @@ void pc_delinvincibletimer(struct map_session_data* sd);
 void pc_addspiritball(struct map_session_data *sd,int interval,int max);
 void pc_delspiritball(struct map_session_data *sd,int count,int type);
 void pc_addfame(struct map_session_data *sd,int count);
-unsigned char pc_famerank(int char_id, int job);
+unsigned char pc_famerank(uint32 char_id, int job);
 bool pc_set_hate_mob(struct map_session_data *sd, int pos, struct block_list *bl);
 
 extern struct fame_list smith_fame_list[MAX_FAME_LIST];
@@ -1116,9 +1146,9 @@ void pc_crimson_marker_clear(struct map_session_data *sd);
 void pc_show_version(struct map_session_data *sd);
 
 int pc_bonus_script_timer(int tid, unsigned int tick, int id, intptr_t data);
-void pc_bonus_script_remove(struct s_bonus_script *bscript);
+void pc_bonus_script(struct map_session_data *sd);
+struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, const char *script_str, uint32 dur, enum si_type icon, uint16 flag, uint8 type);
 void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag);
-void pc_bonus_script_clear_all(struct map_session_data *sd, bool permanent);
 
 void pc_cell_basilica(struct map_session_data *sd);
 
@@ -1131,6 +1161,8 @@ bool pc_is_same_equip_index(enum equip_index eqi, short *equip_index, short inde
 #define pc_is_taekwon_ranker(sd) (((sd)->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && (sd)->status.base_level >= battle_config.taekwon_ranker_min_lv && pc_famerank((sd)->status.char_id,MAPID_TAEKWON))
 
 int pc_autotrade_timer(int tid, unsigned int tick, int id, intptr_t data);
+
+void pc_validate_skill(struct map_session_data *sd);
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_class, int type);

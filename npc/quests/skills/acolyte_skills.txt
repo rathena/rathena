@@ -79,7 +79,7 @@ prt_church,173,23,4	script	Cleric	79,{
 			delitem 727,1; //White_Jewel
 			delitem 991,1; //Crystal_Blue
 			delitem 2608,1; //Rosary
-			skill "AL_HOLYLIGHT",1,0;
+			skill "AL_HOLYLIGHT",1,SKILL_PERM;
 			mes "[Acolyte Klift]";
 			mes "You now know ' Holy Light '";
 			mes "May you use this skill only in the";

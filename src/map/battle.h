@@ -113,6 +113,9 @@ int battle_check_target(struct block_list *src, struct block_list *target,int fl
 bool battle_check_range(struct block_list *src,struct block_list *bl,int range);
 
 void battle_consume_ammo(struct map_session_data* sd, int skill, int lv);
+
+bool is_infinite_defense(struct block_list *target, int flag);
+
 // Settings
 
 #define MIN_HAIR_STYLE battle_config.min_hair_style
@@ -314,6 +317,7 @@ extern struct Battle_Config
 	int item_drop_card_min,item_drop_card_max;
 	int item_drop_equip_min,item_drop_equip_max;
 	int item_drop_mvp_min,item_drop_mvp_max;	// End Addition
+	int item_drop_mvp_mode; //rAthena addition [Playtester]
 	int item_drop_heal_min,item_drop_heal_max;	// Added by Valatris
 	int item_drop_use_min,item_drop_use_max;	//End
 	int item_drop_treasure_min,item_drop_treasure_max; //by [Skotlex]
@@ -402,7 +406,6 @@ extern struct Battle_Config
 	int berserk_cancels_buffs; // [Aru]
 	int debuff_on_logout; // Removes a few "official" negative Scs on logout. [Skotlex]
 	int mob_ai; //Configures various mob_ai settings to make them smarter or dumber(official). [Skotlex]
-	int mob_chase_refresh; //How often a monster should refresh its chase [Playtester]
 	int hom_setting; //Configures various homunc settings which make them behave unlike normal characters.. [Skotlex]
 	int dynamic_mobs; // Dynamic Mobs [Wizputer] - battle_athena flag implemented by [random]
 	int mob_remove_damaged; // Dynamic Mobs - Remove mobs even if damaged [Wizputer]
@@ -432,7 +435,8 @@ extern struct Battle_Config
 	int allow_skill_without_day; // [Komurka]
 	int allow_es_magic_pc; // [Skotlex]
 	int skill_wall_check; // [Skotlex]
-	int cell_stack_limit; // [Skotlex]
+	int official_cell_stack_limit; // [Playtester]
+	int custom_cell_stack_limit; // [Skotlex]
 	int skill_caster_check; // [Skotlex]
 	int sc_castcancel; // [Skotlex]
 	int pc_sc_def_rate; // [Skotlex]
@@ -467,6 +471,7 @@ extern struct Battle_Config
 	int invincible_nodamage;
 	int mob_slave_keep_target;
 	int autospell_check_range;	//Enable range check for autospell bonus. [L0ne_W0lf]
+	int knockback_left;
 	int client_reshuffle_dice;  // Reshuffle /dice
 	int client_sort_storage;
 	int feature_buying_store;
@@ -553,6 +558,7 @@ extern struct Battle_Config
 	int fame_pharmacy_10;
 
 	int disp_serverbank_msg;
+	int disp_servervip_msg;
 	int warg_can_falcon;
 	int path_blown_halt;
 	int rental_mount_speed_boost;
@@ -571,6 +577,16 @@ extern struct Battle_Config
 	int arrow_shower_knockback;
 	int devotion_rdamage_skill_only;
 	int max_extended_aspd;
+	int mob_chase_refresh; //How often a monster should refresh its chase [Playtester]
+	int mob_icewall_walk_block; //How a normal monster should be trapped in icewall [Playtester]
+	int boss_icewall_walk_block; //How a boss monster should be trapped in icewall [Playtester]
+	int snap_dodge; // Enable or disable dodging damage snapping away [csnv]
+	int stormgust_knockback;
+	int default_fixed_castrate;
+	int default_bind_on_equip;
+	int pet_ignore_infinite_def; // Makes fixed damage of petskillattack2 ignores infinite defense
+	int homunculus_evo_intimacy_need;
+	int homunculus_evo_intimacy_reset;
 } battle_config;
 
 void do_init_battle(void);

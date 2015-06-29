@@ -6,9 +6,7 @@
 #include "../common/showmsg.h"
 #include "strlib.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <errno.h>
 
 
 #define J_MAX_MALLOC_SIZE 65535

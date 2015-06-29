@@ -1,13 +1,16 @@
 rAthena
 =======
+
+Build Status: [![Build Status](https://travis-ci.org/rathena/rathena.png?branch=master)](https://travis-ci.org/rathena/rathena)
+
 Table of Contents
 ---------
-* 1 What is rAthena?
-* 2 Prerequisites
-* 3 Installation
-* 4 Troubleshooting
-* 5 Helpful Links
-* 6 More Documentation
+1. What is rAthena?
+2. Prerequisites
+3. Installation
+4. Troubleshooting
+5. Helpful Links
+6. More Documentation
 
 1. What is rAthena?
 ---------
@@ -87,7 +90,7 @@ relevant to your Operation System, please refer to the Wiki (links at the end of
 				mysql --user=root -p rathena_rag < trunk/sql-files/main.sql (and others)
 	* Configure and compile:
 
-				./configure && make clean && make sql
+				./configure && make clean && make server
 	* When you're ready, start the servers:
 
 				./athena-start start
@@ -145,26 +148,26 @@ Examples:
 5. Helpful Links
 ---------
 * rAthena Forums
-	* http://rathena.org/
+	* https://rathena.org/
 
 * GIT Repository
 	* https://github.com/rathena/rathena
 
 * Full Installation Instructions
-	* Windows: http://rathena.org/wiki/Installation_on_Windows
-	* CentOS: http://rathena.org/wiki/Installation_(CentOS)
-	* Debian: http://rathena.org/wiki/Installation_(Debian)
-	* FreeBSD: http://rathena.org/wiki/Installation_(FreeBSD)
+	* Windows: https://rathena.org/wiki/Installation_on_Windows
+	* CentOS: https://rathena.org/wiki/Installation_(CentOS)
+	* Debian: https://rathena.org/wiki/Installation_(Debian)
+	* FreeBSD: https://rathena.org/wiki/Installation_(FreeBSD)
 	
 * rAthena IRC Channel
 	* irc://irc.rizon.net/rathena
-	* Web Chat: http://rathena.org/board/page/chat.html
+	* Web Chat: https://rathena.org/board/page/chat.html
 
 * rAthena Wiki
-	http://rathena.org/board/index.php?app=ipbwiki
+	https://rathena.org/board/index.php?app=ipbwiki
 
 * Fork and Pull Request Q&A
-	http://rathena.org/board/topic/86913-pull-request-qa/
+	https://rathena.org/board/topic/86913-pull-request-qa/
 
 
 6. More Documentation

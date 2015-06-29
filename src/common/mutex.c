@@ -5,8 +5,7 @@
 #include "../common/winapi.h"
 #else
 #include <pthread.h>
-#include <time.h>
-#include <sys/time.h>
+
 #endif
 
 #include "../common/cbasetypes.h"

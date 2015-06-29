@@ -3,13 +3,9 @@
 
 #include "../common/cbasetypes.h" // uint16, uint32
 #include "../common/malloc.h" // CREATE, RECREATE, aFree
-#include "../common/nullpo.h" // nullpo_retv
 #include "../common/showmsg.h" // ShowWarning, ShowStatus
 
 #include "cashshop.h"
-#include "clif.h" // clif_cashshop_result
-#include "itemdb.h" // itemdb_exists, itemdb_isstackable, itemdb_weight, itemdb_type
-#include "pc.h" // struct map_session_data, pc_checkadditem, pc_paycash, pc_additem
 #include "pet.h" // pet_create_egg
 
 #include <string.h> // memset

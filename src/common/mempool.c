@@ -13,7 +13,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 
 #ifdef WIN32
 #include "../common/winapi.h"
@@ -26,7 +25,6 @@
 #include "../common/mempool.h"
 #include "../common/atomic.h"
 #include "../common/spinlock.h"
-#include "../common/thread.h"
 #include "../common/malloc.h"
 #include "../common/mutex.h"
 

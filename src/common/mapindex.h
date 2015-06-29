@@ -4,9 +4,6 @@
 #ifndef _MAPINDEX_H_
 #define _MAPINDEX_H_
 
-//File in charge of assigning a numberic ID to each map in existance for space saving when passing map info between servers.
-extern char mapindex_cfgfile[80];
-
 #define MAX_MAPINDEX 2000
 
 //Some definitions for the mayor city maps.
@@ -48,19 +45,21 @@ extern char mapindex_cfgfile[80];
 #define MAP_ECLAGE "eclage"
 #define MAP_ECLAGE_IN "ecl_in01"
 
-// When a map index search fails, return results from what map?
-#define MAP_DEFAULT MAP_PRONTERA
-#define MAP_DEFAULT_X 150
-#define MAP_DEFAULT_Y 150
-
 const char* mapindex_getmapname(const char* string, char* output);
 const char* mapindex_getmapname_ext(const char* string, char* output);
-unsigned short mapindex_name2id(const char*);
-const char* mapindex_id2name(unsigned short);
-void mapindex_init(void);
-void mapindex_final(void);
+
+unsigned short mapindex_name2idx(const char* name, const char *func);
+#define mapindex_name2id(mapname) mapindex_name2idx((mapname), __FUNCTION__)
+
+const char* mapindex_idx2name(unsigned short id, const char *func);
+#define mapindex_id2name(mapindex) mapindex_idx2name((mapindex), __FUNCTION__)
 
 int mapindex_addmap(int index, const char* name);
 int mapindex_removemap(int index);
+
+void mapindex_check_mapdefault(const char *mapname);
+
+void mapindex_init(void);
+void mapindex_final(void);
 
 #endif /* _MAPINDEX_H_ */
