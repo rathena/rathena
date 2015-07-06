@@ -323,6 +323,24 @@ int chat_changechatstatus(struct map_session_data* sd, const char* title, const 
 }
 
 /**
+ * Kicks a user from the chat room.
+ * @param cd : chat to be kicked from
+ * @param kickusername : player name to be kicked
+ * @retur 1:success, 0:failure
+ */
+int chat_npckickchat(struct chat_data* cd, const char* kickusername)
+{
+	int i;
+	nullpo_ret(cd);
+
+	ARR_FIND( 0, cd->users, i, strncmp(cd->usersd[i]->status.name, kickusername, NAME_LENGTH) == 0 );
+	if( i == cd->users )
+		return -1;
+	chat_leavechat(cd->usersd[i],1);
+	return 0;
+}
+
+/**
  * Kick a member from a chat room.
  * @param sd : player requesting
  * @param kickusername : player name to be kicked

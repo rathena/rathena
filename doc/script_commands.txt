@@ -6447,6 +6447,20 @@ example.
 
 ---------------------------------------
 
+*waitingroomkick "<NPC object name>" , "<character name>";
+
+This command kicks the given character from the waiting room attached to the given NPC.
+
+---------------------------------------
+
+*getwaitingroomusers "<NPC object name>";
+
+This command get all the characters in the waiting room of the given NPC and stores
+their gids in the array .@waitingroom_users[]. Also, stores the the number of characters
+in the variable .@waitingroom_usercount
+
+---------------------------------------
+
 *kickwaitingroomall {"<NPC object name>"};
 
 This command kicks everybody out of a specified waiting room chat.

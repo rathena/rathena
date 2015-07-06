@@ -45,6 +45,8 @@ int chat_enableevent(struct chat_data* cd);
 int chat_disableevent(struct chat_data* cd);
 int chat_npckickall(struct chat_data* cd);
 
+int chat_npckickchat(struct chat_data* cd, const char* kickusername);
+
 #ifdef	__cplusplus
 }
 #endif
