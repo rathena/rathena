@@ -2862,7 +2862,7 @@
 4897,MATK_+_3%,MATK + 3%,6,10,,0,,,,0,0xFFFFFFFF,63,2,,,,,,{ bonus bMatkRate,3; },{},{}
 4898,MATK_+_4%,MATK + 4%,6,10,,0,,,,0,0xFFFFFFFF,63,2,,,,,,{ bonus bMatkRate,4; },{},{}
 4899,MATK_+_5%,MATK + 5%,6,10,,0,,,,0,0xFFFFFFFF,63,2,,,,,,{ bonus bMatkRate,5; },{},{}
-4900,MHP+5%,MHP+5%,6,10,,,,,,,,,,,,,,,{ bonus bMaxSPrate,5; },{},{}
+4900,MHP+5%,MHP+5%,6,10,,,,,,,,,,,,,,,{ bonus bMaxHPrate,5; },{},{}
 4902,DEF+18,DEF+18,6,10,,0,,,,0,0xFFFFFFFF,63,2,,,,,,{ bonus bMdef,18; },{},{}
 4903,DEF+21,DEF+21,6,10,,0,,,,0,0xFFFFFFFF,63,2,,,,,,{ bonus bMdef,21; },{},{}
 4904,ATK_+_6%,ATK + 6%,6,10,,0,,,,0,0xFFFFFFFF,63,2,,,,,,{ bonus bAtkRate,6; },{},{}
