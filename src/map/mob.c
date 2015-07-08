@@ -2877,7 +2877,7 @@ int mob_class_change (struct mob_data *md, int mob_id)
 
 	hp_rate = get_percentage(md->status.hp, md->status.max_hp);
 	md->mob_id = mob_id;
-	md->db = mobdb;
+	md->db = mob_db(mob_id);
 	if (battle_config.override_mob_names==1)
 		memcpy(md->name,md->db->name,NAME_LENGTH);
 	else

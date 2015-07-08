@@ -5764,7 +5764,7 @@ void clif_displaymessage(const int fd, const char* mes)
 		/** so we redirect to ZC_NPC_CHAT **/
 		//clif_colormes(fd, color_table[COLOR_DEFAULT], mes);
 		unsigned long color = (color_table[COLOR_DEFAULT] & 0x0000FF) << 16 | (color_table[COLOR_DEFAULT] & 0x00FF00) | (color_table[COLOR_DEFAULT] & 0xFF0000) >> 16; // RGB to BGR
-		unsigned short len = strnlen(mes, 255);
+		unsigned short len = strnlen(mes, CHAT_SIZE_MAX);
 
 		if (len > 0) { 
 			WFIFOHEAD(fd, 13 + len);
@@ -5772,7 +5772,7 @@ void clif_displaymessage(const int fd, const char* mes)
 			WFIFOW(fd, 2) = 13 + len;
 			WFIFOL(fd, 4) = 0;
 			WFIFOL(fd, 8) = color;
-			safestrncpy((char*)WFIFOP(fd, 12), mes, len);
+			safestrncpy((char*)WFIFOP(fd, 12), mes, len+1);
 			WFIFOSET(fd, WFIFOW(fd, 2));
 		}
 #else
