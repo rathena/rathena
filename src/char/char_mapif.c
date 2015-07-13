@@ -734,7 +734,7 @@ int chmapif_parse_fwlog_changestatus(int fd){
 		int32 timediff = 0;
 		int val1 = 0, sex = SEX_MALE;
 
-		if (operation == 2) {
+		if (operation == 2 || operation == 6) {
 			timediff = RFIFOL(fd, 32);
 			val1 = RFIFOL(fd, 36);
 		} else if (operation == 7)
