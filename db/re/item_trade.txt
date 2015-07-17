@@ -3747,13 +3747,13 @@
 22618,475,100	// Clear_Box_A
 22619,499,100	// Ghost_Summon_Scroll
 22623,499,100	// New_Start_Box
-//22626,475,100	//
-//22627,475,100	//
+22626,475,100	// January_Gift_Box
+22627,475,100	// February_Gift_Box
 22652,475,100	// Briliant_Hat_Box
-//22671,475,100	//
-//22672,475,100	//
-//22673,475,100	//
-//22674,475,100	//
+22671,475,100	// March_Gift_Box
+22672,475,100	// April_Gift_Box
+22673,475,100	// May_Gift_Box
+22674,475,100	// June_Gift_Box
 22685,467,100	// Solo_Christmas_Gift
 22691,507,100	// Record_Fragment1
 22692,507,100	// Record_Fragment2
@@ -3768,8 +3768,8 @@
 22720,499,100	// Novus_Ball
 22734,507,100	// Revolution_Quiz_Box
 22735,475,100	// Sealed_Moonlight_Flower_Scroll
-//22736,475,100	//
-//22756,475,100	//
+22736,475,100	// July_Gift_Box
+22756,475,100	// August_Gift_Box
 22760,507,100	// Argiope_Transportin
 22761,507,100	// Luciola_Vespa_Transportin
 22762,507,100	// Centipede_Transportin
@@ -3798,28 +3798,28 @@
 22844,475,100	// Sealed_Dracula_Card_Album
 22845,475,100	// Sealed_Fortune_Egg
 22846,467,100	// Sealed_Dracula_Card
-//22850,475,100	//
-//22851,475,100	//
-//22852,475,100	//
-//22853,475,100	//
-//22854,475,100	//
-//22855,475,100	//
-//22856,475,100	//
-//22857,475,100	//
-//22858,475,100	//
-//22859,475,100	//
-//22860,475,100	//
-//22861,475,100	//
-//22869,507,100	//
+22850,475,100	// January_Gift_Box
+22851,475,100	// February_Gift_Box
+22852,475,100	// March_Gift_Box
+22853,475,100	// April_Gift_Box
+22854,475,100	// May_Gift_Box
+22855,475,100	// June_Gift_Box
+22856,475,100	// July_Gift_Box
+22857,475,100	// August_Gift_Box
+22858,475,100	// September_Gift_Box
+22859,475,100	// October_Gift_Box
+22860,475,100	// November_Gift_Box
+22861,475,100	// December_Gift_Box
+22869,507,100	// Lucky_Roulette_Tickets
 22870,467,100	// Christmas_Package
 22873,475,100	// Sealed_Beelzebub_Scroll_II
 22874,475,100	// Sealed_Beelzebub_Card_Album
 22875,475,100	// Sealed_Beelzebub_Card
 //22881,499,100	//
-//22883,475,100	//
-//22884,475,100	//
-//22885,475,100	//
-//22886,475,100	//
+22883,475,100	// September_Gift_Box
+22884,475,100	// October_Gift_Box
+22885,475,100	// November_Gift_Box
+22886,475,100	// December_Gift_Box
 //22887,507,100	//
 //22888,475,100	//
 //22893,475,100	//

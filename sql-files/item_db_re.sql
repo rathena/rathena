@@ -9444,6 +9444,7 @@ REPLACE INTO `item_db_re` VALUES (19038,'12_Anniversary_Crown_Of_Saint','12 Anni
 REPLACE INTO `item_db_re` VALUES (19039,'12_Anniversary_Elf_Ears','12 Anniversary Elf Ears',4,10,NULL,120,NULL,0,NULL,0,0xFFFFFFFF,63,2,512,NULL,'0',1,875,'bonus2 bSubRace,RC_All,4; bonus2 bSubRace,RC_Player,-4;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19047,'Angeling_KnitCap','Angeling KnitCap',4,0,NULL,300,NULL,5,NULL,1,0xFFFFFFFF,63,2,256,NULL,'20',1,953,'bonus2 bSPGainRace,RC_Angel,5; bonus bHPGainValue,100; .@r = getrefine(); if (.@r >= 5) { bonus2 bSubRace,RC_Angel,5+((.@r >= 7) ? 5 : 0); }',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19048,'Elemental_Clothes','Elemental Clothes',4,0,NULL,500,NULL,45,NULL,1,0xFFFFFFFF,63,2,16,NULL,'80',1,NULL,'.@r = getrefine(); bonus bLongAtkRate,2+((.@r >= 9) ? 3 : 0)+((.@r >= 7) ? 2 : 0); if (.@r >= 7) bonus bUnbreakableArmor,1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (19052,'Sigruns_Wing','Rental Sigrun\'s Wing',4,10,NULL,0,NULL,2,NULL,0,0xFFFFFFFF,63,2,512,NULL,'1',0,568,'if (Class == Job_Swordman || Class == Job_Thief || Class == Job_Merchant || Class == Job_Taekwon || Class == Job_Star_Gladiator || Class == Job_Star_Gladiator2) bonus bAspd,1; else if (Class == Job_Mage || Class == Job_Acolyte || Class == Job_Ninja || Class == Job_Soul_Linker) { bonus bMatk,5; bonus bHealPower,2; } else if (Class == Job_Archer || Class == Job_Gunslinger) bonus bLongAtkRate,2; else if (Class == Job_Novice || Class == Job_SuperNovice) { bonus bMaxHP,120; bonus bMaxSP,60; }',NULL,NULL);
 #
 # Costume System
 REPLACE INTO `item_db_re` VALUES (19500,'T_Mr_Smile','T Mr Smile',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,6144,NULL,'0',0,65,'bonus bStr,2;',NULL,NULL);
@@ -9676,6 +9677,7 @@ REPLACE INTO `item_db_re` VALUES (19889,'C_Small_Ribbons','Costume Small Ribbons
 REPLACE INTO `item_db_re` VALUES (19902,'C_Cigarette','Costume Cigarette',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,NULL,NULL,54,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19903,'C_Witchs_Hat','Costume Witch\'s Hat',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,717,'bonus bVariableCastrate,-10;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19910,'C_Halloween_Hat','Costume Halloween Hat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,NULL,1,1098,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (19913,'C_Poo_Poo_Hat','Costume Poo Poo Hat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,NULL,1,76,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19914,'C_Tarlock\'s_Hat','Costume Tarlock\'s Hat',4,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,1101,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19917,'C_Gloomy_Pumpkin_Hat','Costume Pumpkin Hat',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,691,'bonus bSpeedRate,25;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19918,'C_Lude_Mask','Costume Lude Mask',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,6144,NULL,'1',0,802,'bonus bAddItemHealRate,20;',NULL,NULL);
@@ -9686,10 +9688,11 @@ REPLACE INTO `item_db_re` VALUES (19929,'C_Classical_Ribbon','Costume Classical 
 REPLACE INTO `item_db_re` VALUES (19931,'C_Lazy_Smokie','Costume Lazy Smokie',4,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,NULL,1,168,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19932,'C_Model_Training_Hat','Costume Model Training Hat',4,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,NULL,1,157,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19934,'C_Lolita_Ten_Gallon_Hat','Costume Alive Ten Gallon Hat Of Flame',4,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,1048,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (19935,'C_Hunting_Cap_Of_Gust','Costume Hunting Cap Of Gust',4,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,1024,NULL,'1',NULL,1076,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (19936,'C_Knit_Cap_Of_Water','Costume Knit Cap Of Water',4,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,1024,NULL,'1',NULL,1077,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (19937,'C_Silk_Hat_of_Earth','Costume Silk Hat of Earth',4,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,1024,NULL,'1',NULL,1078,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (19938,'C_Love_Rabbit_Hood','Costume Love Rabbit Hood',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,7168,NULL,'1',0,549,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (19935,'C_Hunting_Cap_Of_Gust','Costume Hunting Cap Of Gust',4,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,1024,NULL,'1',1,1076,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (19936,'C_Knit_Cap_Of_Water','Costume Knit Cap Of Water',4,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,1024,NULL,'1',1,1077,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (19937,'C_Silk_Hat_of_Earth','Costume Silk Hat of Earth',4,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,1024,NULL,'1',1,1078,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (19938,'C_Love_Rabbit_Hood','Costume Love Rabbit Hood',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,7168,NULL,'1',1,549,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (19941,'C_Ear_Muffs','Costume Ear Muffs',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,70,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19955,'C_Mini_Tree_J','Mini Tree J Costume',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,NULL,1,727,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19961,'C_Rune_Circlet','Costume Rune Circlet',4,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,623,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19962,'C_Mitra','Costume Mitra',4,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,624,NULL,NULL,NULL);
@@ -9722,6 +9725,7 @@ REPLACE INTO `item_db_re` VALUES (20003,'C_Mouse_Hat5','Costume Mouse Hat 5',4,1
 REPLACE INTO `item_db_re` VALUES (20014,'C_Lincoln_Hat','Costume Lincoln Hat',4,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,NULL,1,1204,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20015,'C_Lincoln_Beard','Costume Lincoln Beard',4,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,NULL,1,1205,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20016,'C_Cool_Dinner_Hat','Costume Cool Dinner Hat',4,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,NULL,1,1206,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (20017,'C_Marionette_Doll','Costume Marionette Doll',4,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,NULL,1,212,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20018,'C_Holo_Ear','Costume Holo Ear',4,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,NULL,1,1208,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20019,'C_Beret_Of_Artist','Costume Beret Of Artist',4,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,NULL,1,1209,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20025,'C_Cow_Hat1','Costume Cow Hat 1',4,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,1211,'bonus bDex,2; bonus2 bAddMonsterDropItem,519,100;',NULL,NULL);
@@ -9756,6 +9760,7 @@ REPLACE INTO `item_db_re` VALUES (20096,'C_Blue_Ribbon','Costume Blue Ribbon',4,
 REPLACE INTO `item_db_re` VALUES (20097,'C_White_Ribbon','Costume White Ribbon',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,442,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20099,'C_Flying_Ljosalfar','Flying Ljosalfar',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,1,'1',1,1239,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20110,'C_Coiledup_Snake','Costume Coiledup Snake',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,1258,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (20114,'C_Funeral_Hat','Costume Funeral Hat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,77,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20118,'C_Cake_Hat','Costume Cake Hat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,109,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20119,'C_Beanie','Costume Beanie',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,160,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20120,'C_Aerial','Costume Aerial',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,97,NULL,NULL,NULL);
@@ -9798,8 +9803,11 @@ REPLACE INTO `item_db_re` VALUES (20203,'C_Bandana','Costume Bandana',4,0,NULL,0
 REPLACE INTO `item_db_re` VALUES (20204,'C_Hunter_Hat','Costume Hunter Hat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,389,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20205,'C_Fancy_Flower','Costume Fancy Flower',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,4,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20206,'C_Chicken_Hat','Costume Chicken Hat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,7168,NULL,'1',1,432,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (20207,'C_Striped_Hairband','Costume Striped Hairband',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,133,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (20208,'C_Neck_Tie','Costume Neck Tie',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,443,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20210,'C_Chicken_Hat','Costume Chicken Hat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,7168,NULL,'1',1,432,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20211,'C_Chicken_Hat','Costume Chicken Hat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,7168,NULL,'1',1,432,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (20212,'C_Loki_&_Nidhoggur\'s_Hat','Costume Loki & Nidhoggur\'s Hat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,NULL,'/*TODO: View ID*/',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20222,'C_Blue_Pigtail_Santa_Hat','Blue Pigtail Santa Hat Costume',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,NULL,1,395,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20223,'C_Romantic_Leaf','Costume Romantic Leaf',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',1,432,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20224,'C_Red_Tailed_Ribbon','Costume Red Tailed Ribbon',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,167,NULL,NULL,NULL);
@@ -9937,6 +9945,8 @@ REPLACE INTO `item_db_re` VALUES (22621,'Squid_Bbq','Barbecued Squid',2,5000,NUL
 REPLACE INTO `item_db_re` VALUES (22623,'New_Start_Box','New Start Box',18,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 12803,1; getitem 12802,1; getitem 12809,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22624,'Riesen_Bretzel','Riesen Bretzel',0,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'percentheal 100,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22625,'Oktoberfest_Bag','Oktoberfest Bag',2,0,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_OKTOBERFEST,600000,0;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22626,'January_Gift_Box','January Gift Box',2,0,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'rentitem 19052,604800;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22627,'February_Gift_Box','February Gift Box',2,0,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 12105,2;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22628,'Green_Package','Green Package',18,0,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 17162,1; getitem 14534,5; getitem 12323,20; getitem 12324,20; getitem 12325,10; getitem 14533,2; getitem 22629,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22629,'Green_Package40','Green Package 40',18,0,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 14289,1; getitem 12215,10; getitem 12216,10; getitem 14534,10; getitem 14533,5; getitem 12766,5; getitem 22630,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22630,'Green_Package80','Green Package 80',18,0,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 7621,5; getitem 12209,5; getitem 14527,10; getitem 14533,5; getitem 12766,5; getitem 22631,1;',NULL,NULL);
@@ -9959,6 +9969,10 @@ REPLACE INTO `item_db_re` VALUES (22659,'Pig_Steamed_Ribs','Pig Steamed Ribs',0,
 REPLACE INTO `item_db_re` VALUES (22658,'Cow_Steamed_Ribs','Cow Steamed Ribs',0,20,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'bonus_script "{ bonus bVariableCastrate,5; bonus bUseSPrate,-3; }",180;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22669,'HALLOWEEN_G_BOX','Halloween Box',2,0,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_HALLOWEEN_G_BOX);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22670,'DARK_INVITATION','Invitation of Darkness',2,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'set .@r,rand(1,3); if(.@r==1){ specialeffect2 EF_DEVIL; warp "niflheim",193,186; }else if(.@r==2){ heal -500,-1000; sc_start SC_STUN,3000,0; }else{ specialeffect2 EF_DEVIL; warp "niflheim",347,255; }',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22671,'March_Gift_Box','March Gift Box',2,10,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*2 Lucky Eggs*/',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22672,'April_Gift_Box','April Gift Box',2,10,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'rentitem callfunc("F_Rand",2566,2856,2857,15023),1209600;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22673,'May_Gift_Box','May Gift Box',2,10,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 22777,2;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22674,'June_Gift_Box','June Gift Box',2,10,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*1 Potion Box*/',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22676,'Hangul_Day_Event_Box','Hangul Day Event Box',2,20,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,'0',NULL,NULL,'getitem 22675,10; getitem 607,9;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22675,'Mysterious_Scroll','Mysterious Scroll',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_INTFOOD,3600000,30;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22679,'Death_Bin','Death Bin',18,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,'170',NULL,NULL,'/*TODO*/',NULL,NULL);
@@ -9980,6 +9994,7 @@ REPLACE INTO `item_db_re` VALUES (22720,'Novus_Ball','Novus Ball',3,10,NULL,0,NU
 REPLACE INTO `item_db_re` VALUES (22721,'?_Box','? Box',18,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*No clue the random item yet*/',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22734,'Revolution_Quiz_Box','Revolution Quiz Box',18,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 6635,2; getitem 6423,1; /*1x Enchanted Letter Introduction*/',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22735,'Sealed_Moonlight_Flower_Scroll','Sealed Moonlight Flower Scroll',18,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*TODO: Confirm the rates*/ getitem callfunc("F_Rand",6228,6232,24150,19934,6635,17474),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22736,'July_Gift_Box','July Gift Box',2,10,NULL,100,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 20212,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22737,'Bloody_Cartridge','Bloody Cartridge',18,10,NULL,250,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 13222,500;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22738,'Silver_Cartridge','Silver Cartridge',18,10,NULL,250,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 13221,500;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22739,'Lightning_Sphere_Pack','Lightning Sphere Pack',18,10,NULL,350,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 13224,500;',NULL,NULL);
@@ -9999,6 +10014,7 @@ REPLACE INTO `item_db_re` VALUES (22752,'Trans_Scroll_Gazeti','Transformation Sc
 REPLACE INTO `item_db_re` VALUES (22753,'Trans_Scroll_Kobold_Archer','Transformation Scroll(Kobold Archer)',2,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'transform 1282,1200000,SC_MTF_RANGEATK2,30;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22754,'Trans_Scroll_Necromancer','Transformation Scroll(Necromancer)',2,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'transform 1870,1200000,SC_MTF_RANGEATK2,30;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22755,'Trans_Scroll_Wind_Ghost','Transformation Scroll(Wind Ghost)',2,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'transform 1263,1200000,SC_MTF_MATK2,50;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22756,'August_Gift_Box','August Gift Box',2,10,NULL,100,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 12246,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22757,'Collection_Of_Scrolls_Magical_Transformation','Collection Of Scrolls Magical Transformation',18,10,NULL,200,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 22755,1; getitem 22754,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22758,'Collection_Of_Scrolls_Shooting_Transformation','Collection Of Scrolls Shooting Transformation',18,10,NULL,200,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 22753,1; getitem 22752,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22759,'Collection_Of_Scrolls_Attack_Speed_Transformation','Collection Of Scrolls Attack Speed Transformation',18,10,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 22751,1; getitem 22750,1;',NULL,NULL);
@@ -10035,11 +10051,29 @@ REPLACE INTO `item_db_re` VALUES (22843,'Superstar_Snack','Superstar Snack',2,10
 REPLACE INTO `item_db_re` VALUES (22844,'Sealed_Dracula_Card_Album','Sealed Dracula Card Album',2,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'/*No Info*/',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22845,'Sealed_Fortune_Egg','Sealed Fortune Egg',2,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'getitem callfunc("F_Rand",4488,4497,4486,4480,4485,4539,4487,4494,4538,4489,4490,4482,4503,22846),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22846,'Sealed_Dracula_Card','Sealed Dracula Card',2,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'bonus_script "{ bonus2 bSPDrainRate,50,5; }",300;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22850,'January_Gift_Box','January Gift Box',2,10,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'rentitem 19052,604800;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22851,'February_Gift_Box','February Gift Box',2,10,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 12105,2;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22852,'March_Gift_Box','March Gift Box',2,10,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*2 Lucky Eggs*/',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22853,'April_Gift_Box','April Gift Box',2,10,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'rentitem callfunc("F_Rand",2566,2856,2857,15023),1209600;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22854,'May_Gift_Box','May Gift Box',2,10,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 22777,2;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22855,'June_Gift_Box','June Gift Box',2,10,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*1 Potion Box*/',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22856,'July_Gift_Box','July Gift Box',2,10,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 20212,1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22857,'August_Gift_Box','August Gift Box',2,10,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 12246,1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22858,'September_Gift_Box','September Gift Box',2,10,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*2 Lucky Eggs*/',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22859,'October_Gift_Box','October Gift Box',2,10,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 12529,5;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22860,'November_Gift_Box','November Gift Box',2,10,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'rentitem callfunc("F_Rand",2566,2856,2857,15023),1209600;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22861,'December_Gift_Box','December Gift Box',2,10,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 22869,10;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22868,'Costume_Enchantment_Stone_Box_5','Costume Enchantment Stone Box 5',2,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem callfunc("F_Rand",6908,6943,6944,6945,6946,6947,6948,6949,6950,6951),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22869,'Lucky_Roulette_Tickets','Lucky Roulette Ticket',2,10,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,'50',NULL,NULL,'RouletteBronze++;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22870,'Christmas_Package','Christmas Package',3,0,NULL,10,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22873,'Sealed_Beelzebub_Scroll_II','Sealed Beelzebub Scroll II',2,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem callfunc("F_Rand",22875,6238,6239,6228,6232,24231,24232,17474,6635),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22874,'Sealed_Beelzebub_Card_Album','Sealed Beelzebub Card Album',2,10,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*No Info*/',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22875,'Sealed_Beelzebub_Card','Sealed Beelzebub Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,769,NULL,NULL,NULL,NULL,'bonus bVariableCastrate,-15; /*Item removed on 2014-12-17*/',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22876,'Old_Money_Pocket','Old Money Pocket',3,0,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22883,'September_Gift_Box','September Gift Box',2,10,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*2 Lucky Eggs*/',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22884,'October_Gift_Box','October Gift Box',2,10,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 12529,5;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22885,'November_Gift_Box','November Gift Box',2,10,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'rentitem callfunc("F_Rand",2566,2856,2857,15023),1209600;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22886,'December_Gift_Box','December Gift Box',2,10,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 22869,10;',NULL,NULL);
 # Shadow Equip
 REPLACE INTO `item_db_re` VALUES (24000,'T_STR1_Armor_Shadow','T STR1 Armor Shadow',12,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,65536,NULL,'1',NULL,NULL,'bonus bStr,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (24001,'T_DEX1_Weapon_Shadow','T DEX1 Weapon Shadow',12,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,131072,NULL,'1',NULL,NULL,'bonus bDex,1;',NULL,NULL);
