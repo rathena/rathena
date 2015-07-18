@@ -1682,6 +1682,7 @@
 2593,Flow_Manteau,Flow Manteau,4,20,,700,,20,,1,0xFFFFFFFF,63,2,4,,65,1,0,{},{},{}
 2594,Wrapping_Manteau,Wrapping Manteau,4,20,,100,,0,,1,0xFFFFFFFF,63,2,4,,0,1,0,{},{},{}
 2597,Scarlet_Poncho,Scarlet Poncho,5,0,,500,,10,,1,0xFFFFFFFF,63,2,1024,,,1,0,{ bonus bCritAtkRate,3; /* Confirm: The location. If the location is changed, also change the combo script! */ },{},{}
+2598,Ramor_Manteau,Ramor Manteau,4,20,,700,,20,,,0xFFFFFFFF,63,2,4,,65,1,0,{ bonus2 bSubRace,RC_Undead,5; bonus2 bSubRace,RC_DemiHuman,-5; /*Gold PC Room: bonus bFlee,20;*/ },{},{}
 // Accessories
 //===================================================================
 2601,Ring,Ring,4,30000,,100,,0,,0,0xFFFFFFFE,63,2,136,,20,0,0,{ bonus bStr,2; },{},{}
@@ -4612,6 +4613,7 @@
 6949,Vitality_Stone(Middle),Vitality Stone(Middle),6,10,,100,,,,,,,,,,,,,{ bonus bVit,1; },{},{}
 6950,Lucky_Stone(Middle),Lucky Stone(Middle),6,10,,100,,,,,,,,,,,,,{ bonus bLuk,1; },{},{}
 6951,HP_Stone(Lower),HP Stone(Lower),6,10,,100,,,,,,,,,,,,,{ bonus bMaxHPrate,1; },{},{}
+6953,Ramor_Refine_Ticket,Ramor Refine Ticket,3,10,,0,,,,,,,,,,,,,{/*Refine succeed guarantee until +9 for item 2598 only*/},{},{}
 6954,Piece_Of_Soul_Dog,Piece Of Soul Dog,3,10,,0,,,,,,,,,,,,,{},{},{}
 //
 7001,Mould_Powder,Mould Powder,3,466,,10,,,,,,,,,,,,,{},{},{}
@@ -9530,13 +9532,13 @@
 19685,C_ShineSantaPoring,Costume Shining Santa Poring,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,961,{},{},{}
 19686,C_Santa_Doll_Headband,Costume Santa Doll Headband,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,964,{},{},{}
 19687,C_Fresh_Roses,Costume Fresh Roses,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,963,{},{},{}
-19689,C_Ati_Atihan,Outfit Ati Atihan,4,10,,0,,,,0,0xFFFFFFFF,63,2,7168,,1,0,303,{},{},{}
-19690,C_Dark_Snake_Lord_Hat,Outfit Dark Snake Lord Hat,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,372,{},{},{}
-19695,C_Kettle_Hat,Outfit Kettle Hat,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,318,{},{},{}
-19696,C_Friend_Mochiring_Hat,Outfit Friend Mochiring Hat,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,965,{},{},{}
-19697,C_Rudolph_Santa_Hat,Rudolph Santa Hat Costume,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,,1,619,{},{},{}
+19689,C_Ati_Atihan,Costume Ati Atihan,4,10,,0,,,,0,0xFFFFFFFF,63,2,7168,,1,0,303,{},{},{}
+19690,C_Dark_Snake_Lord_Hat,Costume Dark Snake Lord Hat,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,372,{},{},{}
+19695,C_Kettle_Hat,Costume Kettle Hat,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,318,{},{},{}
+19696,C_Friend_Mochiring_Hat,Costume Friend Mochiring Hat,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,965,{},{},{}
+19697,C_Rudolph_Santa_Hat,Costume Rudolph Santa Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,,1,619,{},{},{}
 //
-19701,C_Red_Bonnet,Costumes Red Bonnet,4,10,,100,,,,0,0xFFFFFFFF,63,2,1024,,100,1,190,{},{},{}
+19701,C_Red_Bonnet,Costume Red Bonnet,4,10,,100,,,,0,0xFFFFFFFF,63,2,1024,,100,1,190,{},{},{}
 19702,C_Twin_Pompom_By_JB,Costume Twin Pompom By JB,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,390,{},{},{}
 19706,C_Red_Dress_Hat,Costume Red Dress Hat,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,670,{},{},{}
 19707,C_Polar_Bear_Cap,Costume Polar Bear Cap,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,0,0,966,{ bonus bUnbreakableHelm,0; },{},{}
@@ -9662,7 +9664,7 @@
 19937,C_Silk_Hat_of_Earth,Costume Silk Hat of Earth,4,0,,0,,,,,0xFFFFFFFF,63,2,1024,,1,1,1078,{},{},{}
 19938,C_Love_Rabbit_Hood,Costume Love Rabbit Hood,4,0,,0,,0,,0,0xFFFFFFFF,63,2,7168,,1,1,549,{},{},{}
 19941,C_Ear_Muffs,Costume Ear Muffs,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,1,70,{},{},{}
-19955,C_Mini_Tree_J,Mini Tree J Costume,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,,1,727,{},{},{}
+19955,C_Mini_Tree_J,Costume Mini Tree J,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,,1,727,{},{},{}
 19961,C_Rune_Circlet,Costume Rune Circlet,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,623,{},{},{}
 19962,C_Mitra,Costume Mitra,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,624,{},{},{}
 19963,C_Driver_Band(Red),Costume Driver Band(Red),4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,626,{},{},{}
@@ -9682,7 +9684,7 @@
 19978,C_Silver_Exclamation_Mark,Costume Silver Exclamation Mark,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,1146,{},{},{}
 19979,C_Golden_Question_Mark,Costume Golden Question Mark,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,1147,{},{},{}
 19980,C_Silver_Question_Mark,Costume Silver Question Mark,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,1148,{},{},{}
-19982,C_Santa_Hat,Santa Hat Costume,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,,1,20,{},{},{}
+19982,C_Santa_Hat,Costume Santa Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,,1,20,{},{},{}
 19983,C_Flower_Hairpin,Costume Flower Hairpin,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,145,{},{},{}
 19984,C_Fashion_Winter_Hat,Costume Fashion Winter Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,196,{},{},{}
 19996,Horse_King,Horse King,4,10,,0,,,,0,0xFFFFFFFF,63,2,7168,,1,,1189,{},{},{}
