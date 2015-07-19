@@ -8189,8 +8189,8 @@
 14689,Sealed_Kiel-D-01_Scroll,Sealed Kiel-D-01 Scroll,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
 14695,Costume_Enchant_Stone_Box_3,Costume Enchant Stone Box III,18,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem rand(6790,6792),1; getitem 4936,1; getitem 4937,1; getitem 4938,1; },{},{}
 14696,Sealed_Gloom_Under_Night_Gachapon,Sealed Gloom Under Night Gachapon,18,0,,10,,,,,,,,,,,,,{ /* getitem callfunc("F_Rand",Sealed Cards Gloom Under Night, 9 weapons smelting ticket, Armor 9 smelting ticket, medium armor Shadow, Shadow Weapon Medium, costume Wings of the Kirin, costume enchant stone box); */ },{},{}
-14699,Memorial_Garuda_Lucky_Egg,Memorial Garuda Lucky Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ /*TODO: Many items. xD*/ },{},{}
-14701,Rune_Imortal_Lucky_Egg,Rune Imortal Lucky Egg,18,0,,0,,,,0,,,,,,,,,{ getitem callfunc("F_Rand",4302,4497,2181,18930,2979,18613,5506,18729),1; /* Confirm: Rates and other items */ },{},{}
+14699,Memorial_Garuda_Lucky_Egg,Memorial Garuda Lucky Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Memorial_Garuda_Lucky_Egg); },{},{}
+14701,Rune_Midgard_Imortal_Lucky_Egg,Rune Midgard Imortal Lucky Egg,18,0,,0,,,,0,,,,,,,,,{ getgroupitem(IG_Rune_Midgard_Imortal_Lucky_Egg); },{},{}
 14704,Gemstone_Shadow_Box,Gemstone Shadow Box,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 24084,1; getitem 24085,1; getitem 24086,1; getitem 24087,1; getitem 24088,1; getitem 24089,1; },{},{}
 14705,Sealed_Fallen_Bishop_Hibram_Scroll,Sealed Fallen Bishop Hibram Scroll,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ /*TODO: COnfirm the rates*/ getitem callfunc("F_Rand",6228,6232,14704,19884,14695,6697),1; },{},{}
 14713,Sealed_Ifrit_Scroll,Sealed Ifrit Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /* getitem callfunc("F_Rand",Sealed ifrit card, 9 weapons smelting ticket, Armor 9 smelting ticket, costume Noah's hats, costumes Enchantment Stone Box); */ },{},{}
@@ -8209,8 +8209,8 @@
 14733,Sealed_Pharaoh_Scroll,Sealed Pharaoh Scroll,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ /*TODO: Confirm the rates*/ getitem callfunc("F_Rand",6228,6232,14726,20034,17474),1; },{},{}
 14739,Sealed_General_Egnigem_Cenia_Scroll,Sealed General Egnigem Cenia Scroll,18,10,,10,,,,,,,,,,,,,{ /*TODO: Confirm the rates*/ getitem callfunc("F_Rand",4482,6228,6232,24156,19935),1; },{},{}
 14740,Sealed_Vesper_Scroll,Sealed Vesper Scroll,18,10,,10,,,,,,,,,,,,,{},{},{}
-14741,Midgard_Celebration_Lucky_Egg,Midgard Celebration Lucky Egg,18,0,,10,,,,0,,,,,,,,,{ getitem callfunc("F_Rand",4145,4499,4493,6239,6238,6232,6228,2168,18673,18744,5547,6439,6438,14621,12411,14620,12901,14616,14617/*,Megaphone*/),1; /* Confirm: Rates and other items */ },{},{}
-14753,Hero_Midgard_Egg,Hero Midgard Egg,18,0,,10,,,,0,,,,,,,,,{ /*No Info yet*/ },{},{}
+14741,Midgard_Celebration_Lucky_Egg,Midgard Celebration Lucky Egg,18,0,,10,,,,0,,,,,,,,,{ getgroupitem(IG_Midgard_Celebration_Lucky_Egg); },{},{}
+14753,Hero_Midgard_Egg,Hero Midgard Egg,18,0,,10,,,,0,,,,,,,,,{ getgroupitem(IG_Hero_Midgard_Egg); },{},{}
 14758,Safe_To_Smelting_Scroll,Safe To Smelting Scroll,18,10,,10,,,,,,,,,,,,,{ getitem callfunc("F_Rand",6238,6239,6228,6232,24216,17474,969),1; },{},{}
 14765,Limited_Edition_JOB_Battle_Manual,Limited Edition JOB Battle Manual,18,10,,10,,,,,,,,,,,,,{ sc_start SC_JEXPBOOST,3600000,35; },{},{}
 14766,Limited_Power_Booster,Limited Power Booster,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ bonus_script "{ bonus bBaseAtk,30; bonus bMatk,30; bonus bAtkRate,1; bonus bMatkRate,1; bonus bHit,30; bonus bFlee,30; bonus bAspd,1; bonus bUseSPrate,-5; bonus bFixedCastrate,-30; }",1800,1,1; },{},{}
@@ -8886,20 +8886,20 @@
 17303,Shadow_Set_Box_II,Shadow Set Box II,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
 17304,Neuralizer_Box_3,Neuralizer Box 3,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 12213,3; },{},{}
 17306,Status_Reset_Coupon_Box,Status Reset Coupon Box,18,10,,0,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getitem callfunc("F_Rand",6720,6721),1; },{},{}
-17307,Midgard_Egg,Midgard Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ /*TODO, confirm the rates*/ getitem callfunc("F_Rand",4441,4352,4498,6228,6232,6234,18508,1549),1; },{},{}
+17307,Midgard_Egg,Midgard Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Midgard_Egg); },{},{}
 17308,Half_Asprika_box1,Half Asprika box1,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ rentitem 2566,86400; },{},{}
 17311,Half_Brynhild_box1,Half Brynhild box1,2,20,,0,,,,,0xFFFFFFFF,63,2,,,47,,,{ rentitem 15023,86400; },{},{}
 17314,Infinite_Giant_Fly_Wing_Box,Infinite Giant Fly Wing Box,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ rentitem 12212,86400; },{},{}
 17315,Lucky_Silvervine_Fruit_Box(10),Lucky Silvervine Fruit Box(10),18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 6417,10; },{},{}
 17316,Lucky_Silvervine_Fruit_Box(110),Lucky Silvervine Fruit Box(110),18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 6417,110; },{},{}
-17317,Sweet_Midgard_Egg,Sweet Midgard Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ /*TODO, confirm the rates*/ getitem callfunc("F_Rand",4302,4047,4169,6229,6233,18516),1; },{},{}
-17320,Brithday_IdRO10th_Scroll,Brithday IdRO10th Scroll,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ /*TODO, confirm the rates*/ getitem callfunc("F_Rand",4305,4492,4500,18742,18744,18756,2176,2959,18745,19574,18567),1; },{},{}
+17317,Sweet_Midgard_Egg,Sweet Midgard Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Sweet_Midgard_Egg); },{},{}
+17320,Birthday_IdRO10th_Scroll,Birthday IdRO10th Scroll,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Birthday_IdRO10th_Scroll); },{},{}
 17321,Three_Master_Package,Three Master Package,18,10,,10,,,,0,0x0,0,2,,,,,,{ /*TODO: Confirm the items and rates*/ getitem 14534,20; getitem 14535,20; },{},{}
 17322,Three_Master_Package(10),Three Master Package(10),18,10,,10,,,,0,0x0,0,2,,,,,,{ /*TODO: Confirm the items and rates*/ getitem 14534,200; getitem 14535,200; },{},{}
-17326,Requiem_Egg,Requiem Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ /*TODO, confirm the rates*/ getitem callfunc("F_Rand",4145,4480,4384,2720,2721,2722,6238,6239),1; },{},{}
+17326,Requiem_Egg,Requiem Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Requiem_Egg); },{},{}
 17331,Event_Almighty_Box,Event Almighty Box,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Event_Almighty_Box); },{},{}
 17332,Event_Almighty_Box(100),Event Almighty Box(100),18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Event_Almighty_Box10); },{},{}
-17337,Holy_Spirit_Egg,Holy Spirit Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ /*TODO, confirm the rates*/ getitem callfunc("F_Rand",4441,4549,6238,6239),1; },{},{}
+17337,Holy_Spirit_Egg,Holy Spirit Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Holy_Spirit_Egg); },{},{}
 17338,Ore_Box_V,Ore Box V,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 7619,5; getitem 7620,5; getitem 14696,1; },{},{}
 17339,Ore_Box_V(10),Ore Box V(10),18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 7619,50; getitem 7620,50; getitem 14696,11; },{},{}
 17394,Event_Old_Headgear_Box,Event Old Headgear Box,2,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
@@ -8937,42 +8937,42 @@
 17427,Half_BF_Shotgun1_Box7,Half BF Shotgun1 Box7,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ rentitem 28204,604800; },{},{}
 17429,11_Anniversary_Shadow_Box,11 Anniversary Shadow Box,18,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /* getitem callfunc("F_Rand",Ritual's Flute (weapon, earrings, pendants), every risyeo's (shields, armor, shoes)),1; */ },{},{}
 17430,11_Anniversary_Shadow_Package,11 Anniversary Shadow Package,18,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /* getitem Ritual's Flute (weapon, earrings, pendants),1; getitem every risyeo's (shields, armor, shoes)),1; */ },{},{}
-17431,Miracle_Lucky_Egg,Miracle Lucky Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ /*TODO: Many items. xD*/ },{},{}
+17431,Miracle_Lucky_Egg,Miracle Lucky Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Miracle_Lucky_Egg); },{},{}
 17432,Lucky_Silvervine_Fruit_Box_II(10),Lucky Silvervine Fruit Box II(10),18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ /*getgroupitem(Lucky_Silvervine_Fruit_Box_II10);*/ getitem 6417,10; getitem 14705,1; },{},{}
 17433,Lucky_Silvervine_Fruit_Box_II(110),Lucky Silvervine Fruit Box II(110),18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ /*getgroupitem(Lucky_Silvervine_Fruit_Box_II110);*/ getitem 6417,110; getitem 14705,11; },{},{}
-17435,Legend_Hero_Lucky_Egg,Legend Hero Lucky Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ /*TODO: Many items. xD*/ },{},{}
+17435,Legend_Hero_Lucky_Egg,Legend Hero Lucky Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Legend_Hero_Lucky_Egg); },{},{}
 17438,Three_Master_Package_II,Three Master Package II,3,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
 17439,Three_Master_Package_II10,Three Master Package II(10),3,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
 17440,Name_Change_Card_Box,Name Change Card Box,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 12790,1; },{},{}
 17441,Halter_Lead_Box,Halter Lead Box,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 12622,1; },{},{}
 17443,Reinforcement_Buckler_Box,Reinforcement Buckler Box,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 2150,1; },{},{}
 17442,Emperium_G_Box,Emperium G Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 6444,1; },{},{}
-17447,Blessing_Midgard_Lucky_Egg,Blessing Midgard Lucky Egg,18,10,,0,,,,0,0xFFFFFFFF,63,2,,,1,,,{ /*TODO: Many items. xD*/ },{},{}
+17447,Blessing_Midgard_Lucky_Egg,Blessing Midgard Lucky Egg,18,10,,0,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Blessing_Midgard_Lucky_Egg); },{},{}
 17449,Cookies_Bar_Set,Set Bar Cookies,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ for (set .@i,14616; .@i <= 14621; set .@i,.@i+1) getitem .@i,1; },{},{}
 17455,Premium_Battle_Manual_Box,Premium Battle Manual Box,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 22614,1; },{},{}
 17456,Support_Package_II,Support Package II,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Support_Package_II); },{},{}
 17457,Support_Package_II(10),Support Package II(10),18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Support_Package_II10); },{},{}
-17464,Winter_Midgard_Egg,Winter Midgard Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ /*TODO: Many items. xD*/ },{},{}
+17464,Winter_Midgard_Egg,Winter Midgard Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Winter_Midgard_Egg); },{},{}
 17465,Refinement_Ore_Box_VI,Refinement Ore Box VI,3,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 7619,5; getitem 7620,5; getitem 14718,1; },{},{}
 17466,Refinement_Ore_Box_VI(10),Refinement Ore Box VI(10),3,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 7619,50; getitem 7620,50; getitem 14718,11; },{},{}
 17467,(Limited)_Token_of_Ziegfried_Box(50),(Limited) Token of Ziegfried Box(50),18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 6833,50; },{},{}
 17468,Neuralizer_II_Box_3,Neuralizer II Box (3),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 14724,3;},{},{}
 17469,Neuralizer_I_Box,Neuralizer I Box,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 14723,1;},{},{}
-17471,Spring_Festival_Lucky_Egg,Spring Festival Lucky Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ /*TODO: Many items. xD*/ },{},{}
+17471,Spring_Festival_Lucky_Egg,Spring Festival Lucky Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Spring_Festival_Lucky_Egg); },{},{}
 17472,Support_Package_III,Support Package III,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Support_Package_III); },{},{}
 17473,Support_Package_III(10),Support Package III(10),18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Support_Package_III10); },{},{}
 17474,Infinite_Giant_Fly_Wing_Box_V,Infinite Giant Fly Wing Box V,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ rentitem 12212,86400; },{},{}
 17475,(Limited)Gym_Membership_Card_Box(10),(Limited)Gym Membership Card Box(10),18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 17475,10; },{},{}
 17477,Unlimited_Box_II,Unlimited Box II,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Unlimited_Box_II); },{},{}
 17478,Unlimited_Box_II(10),Unlimited Box II(10),18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Unlimited_Box_II10); },{},{}
-17479,Midgard_Festival_Egg,Midgard Festival Egg,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem callfunc("F_Rand",6439,6423,19721,18878,2181,18932,18908,5873,19728,6228,6232,6238,6239,4493,4499,4486),1; },{},{}
-17482,Solaris_Festival_Scroll,Solaris Festival Scroll,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem callfunc("F_Rand",4480,4487,4539,6238,6239,6228,6232,2565,18863,18891,19729,5464,13444,2188),1; },{},{}
+17479,Midgard_Festival_Egg,Midgard Festival Egg,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Midgard_Festival_Egg); },{},{}
+17482,Solaris_Festival_Scroll,Solaris Festival Scroll,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Solaris_Festival_Scroll); },{},{}
 17483,Three_Master_Package_III,Three Master Package III,3,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Three_Master_Package_III); },{},{}
 17484,Three_Master_Package_III(10),Three Master Package III(10),3,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Three_Master_Package_III10); },{},{}
-17490,Time_Travel_Lucky_Egg,Time Travel Lucky Egg,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem callfunc("F_Rand",4486,4488,4498,6238,6239,6228,6232,2190,19661,5822,18832,18754),1; },{},{}
+17490,Time_Travel_Lucky_Egg,Time Travel Lucky Egg,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Time_Travel_Lucky_Egg); },{},{}
 17491,Refinement_Ore_Box_VII,Refinement Ore Box VII,3,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 7619,5; getitem 7620,5; getitem 4482,1; },{},{}
 17492,Refinement_Ore_Box_VII(10),Refinement Ore Box VII(10),3,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 7619,50; getitem 7620,50; getitem 4482,11; },{},{}
-17494,Rise_Midgard_Lucky_Egg,Rise Midgard Lucky Egg,18,10,,10,,,,,,,,,,,,,{/*TODO*/},{},{}
+17494,Rise_Midgard_Lucky_Egg,Rise Midgard Lucky Egg,18,10,,10,,,,,,,,,,,,,{ getgroupitem(IG_Rise_Midgard_Lucky_Egg); },{},{}
 17495,Lucky_Silvervine_Fruit_Box_III10,Lucky Silvervine Fruit Box III(10),18,10,,10,,,,,,,,,,,,,{ getgroupitem(IG_Lucky_Silvervine_Fruit_Box_III10); },{},{}
 17496,Lucky_Silvervine_Fruit_Box_III110,Lucky Silvervine Fruit Box III(110),18,10,,10,,,,,,,,,,,,,{ getgroupitem(IG_Lucky_Silvervine_Fruit_Box_III110); },{},{}
 17498,Three_Master_Package_IV,Three Master Package IV,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 14534,20; getitem 14535,20; getitem 12578,20; getitem 22812,1; },{},{}
@@ -8988,20 +8988,20 @@
 17513,(Limited)Purified_Oridecon_Box(30),(Limited) Purified Oridecon Box(30),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 6910,30; getitem 6635,1; },{},{}
 17515,Unlimited_Box_III,Unlimited Box III,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 12684,5; getitem 12796,10; if(!rand(30)) getitem 14758,1; },{},{}
 17516,Unlimited_Box_III(10),Unlimited Box III(10),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 12684,50; getitem 12796,100; if(!rand(30)) getitem 14758,11; },{},{}
-17519,Epic_Heroes_Scroll,Epic Heroes Scroll,18,0,,10,,,,0,,,,,,,,,{/*TODO*/},{},{}
+17519,Epic_Heroes_Scroll,Epic Heroes Scroll,18,0,,10,,,,0,,,,,,,,,{ getgroupitem(IG_Epic_Heroes_Lucky_Egg); },{},{}
 17520,Limited_Edition_Manual_Box,Limited Edition Manual Box,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 14765,3; /*getitem (limited edition battle manual),2;*/ },{},{}
 17521,Three_Master_Package_V,Three Master Package V,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 14534,20; getitem 14535,20; /*getitem Mysterious Water of Life,20;*/ getitem 22842,1; },{},{}
 17522,Three_Master_Package_V(10),Three Master Package V(10),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 14534,200; getitem 14535,200; /*getitem Mysterious Water of Life,200;*/ getitem 22842,11; },{},{}
 17524,Limited_Power_Booster_Box,Limited Power Booster Box,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 14766,1; getitem 22873,1; },{},{}
 17525,Limited_Power_Booster_Box(100),Limited Power Booster Box(100),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 14766,100; getitem 22873,11; },{},{}
-17526,Majestic_Lucky_Egg,Majestic Lucky Egg,18,0,,10,,,,0,,,,,,,,,{/*TODO*/},{},{}
+17526,Majestic_Lucky_Egg,Majestic Lucky Egg,18,0,,10,,,,0,,,,,,,,,{ getgroupitem(IG_Majestic_Lucky_Egg); },{},{}
 17527,Actinidia_Cat_Fruit_Box(200),Actinidia Cat Fruit Box(200),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 6909,200; getitem 12636,rand(1,5); /*TODO: Fix the 12636 amount*/},{},{}
-17532,Blessing_Lucky_Egg,Blessing Lucky Egg,18,0,,10,,,,0,,,,,,,,,{/*TODO*/},{},{}
-17552,Garnet Lucky Egg,Garnet Lucky Egg,18,0,,10,,,,0,,,,,,,,,{/*TODO*/},{},{}
-17572,Erzulie_Lucky_Egg,Erzulie Lucky Egg,18,0,,10,,,,0,,,,,,,,,{/*TODO*/},{},{}
-17584,Venus_Lucky_Egg,Venus Lucky Egg,18,0,,10,,,,0,,,,,,,,,{/*TODO*/},{},{}
-17588,Amora_Lucky_Egg,Amora Lucky Egg,18,0,,10,,,,0,,,,,,,,,{/*TODO*/},{},{}
-17598,Sograt_Lucky_Scroll,Sograt Lucky Scroll,18,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem callfunc("F_Rand",20099,19024,2899,19910),1; /* and others. */ },{},{}
+17532,Blessing_Lucky_Egg,Blessing Lucky Egg,18,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Blessing_Lucky_Egg); },{},{}
+17552,Garnet_Lucky_Egg,Garnet Lucky Egg,18,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Garnet_Lucky_Egg); },{},{}
+17572,Erzulie_Lucky_Egg,Erzulie Lucky Egg,18,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Erzulie_Lucky_Egg); },{},{}
+17584,Venus_Lucky_Egg,Venus Lucky Egg,18,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Venus_Lucky_Egg); },{},{}
+17588,Amora_Lucky_Egg,Amora Lucky Egg,18,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Amora_Lucky_Egg); },{},{}
+17598,Sograt_Lucky_Scroll,Sograt Lucky Scroll,18,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Sograt_Lucky_Egg); },{},{}
 // Mechanic/Genetic Cannonballs
 18000,Cannon_Ball,Cannon Ball,10,100,,10,100,,,,0x00040400,56,2,32768,,99,,8,{},{},{}
 18001,Holy_Cannon_Ball,Holy Cannon Ball,10,200,,10,120,,,,0x00040400,56,2,32768,,99,,8,{ bonus bAtkEle,Ele_Holy; },{},{}
