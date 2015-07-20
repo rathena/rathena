@@ -4615,6 +4615,10 @@
 6951,HP_Stone(Lower),HP Stone(Lower),6,10,,100,,,,,,,,,,,,,{ bonus bMaxHPrate,1; },{},{}
 6953,Ramor_Refine_Ticket,Ramor Refine Ticket,3,10,,0,,,,,,,,,,,,,{/*Refine succeed guarantee until +9 for item 2598 only*/},{},{}
 6954,Piece_Of_Soul_Dog,Piece Of Soul Dog,3,10,,0,,,,,,,,,,,,,{},{},{}
+6955,Piece_Of_Soul_Pig,Piece Of Soul Pig,3,10,,0,,,,,,,,,,,,,{},{},{}
+6956,Captured_Sheep,Captured Sheep,3,10,,0,,,,,,,,,,,,,{},{},{}
+6957,Lamb_Fleece,Lamb Fleece,3,10,,0,,,,,,,,,,,,,{},{},{}
+6958,Lamb_Horns,Lamb Horns,3,10,,0,,,,,,,,,,,,,{},{},{}
 //
 7001,Mould_Powder,Mould Powder,3,466,,10,,,,,,,,,,,,,{},{},{}
 7002,Ogre_Tooth,Ogre Tooth,3,658,,10,,,,,,,,,,,,,{},{},{}
@@ -8997,6 +9001,8 @@
 17526,Majestic_Lucky_Egg,Majestic Lucky Egg,18,0,,10,,,,0,,,,,,,,,{ getgroupitem(IG_Majestic_Lucky_Egg); },{},{}
 17527,Actinidia_Cat_Fruit_Box(200),Actinidia Cat Fruit Box(200),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 6909,200; getitem 12636,rand(1,5); /*TODO: Fix the 12636 amount*/},{},{}
 17532,Blessing_Lucky_Egg,Blessing Lucky Egg,18,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Blessing_Lucky_Egg); },{},{}
+17544,Smelting_Ore_Box_IX,Smelting Ore Box IX,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 7619,5; getitem 7620,5; getitem 22888,1; },{},{}
+17545,Smelting_Ore_Box_IX(10),Smelting Ore Box IX(10),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 7619,50; getitem 7620,50; getitem 22888,11; },{},{}
 17552,Garnet_Lucky_Egg,Garnet Lucky Egg,18,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Garnet_Lucky_Egg); },{},{}
 17572,Erzulie_Lucky_Egg,Erzulie Lucky Egg,18,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Erzulie_Lucky_Egg); },{},{}
 17584,Venus_Lucky_Egg,Venus Lucky Egg,18,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Venus_Lucky_Egg); },{},{}
@@ -9785,10 +9791,12 @@
 20225,C_Pumpkin-Head,Costume Pumpkin-Head,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,206,{},{},{}
 20226,C_Red_Comb,Costume Red Comb,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,445,{},{},{}
 20227,C_Puppy_Hat,Costume Puppy Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,234,{},{},{}
+20228,C_Pig_MoneyBox,Costume Pig MoneyBox,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,603,{},{},{}
 20230,C_Bankruptcy_Mask,Costume Bankruptcy Mask,4,0,,0,,,,0,0xFFFFFFFF,63,2,6144,,1,1,936,{},{},{}
 20231,C_Snowman_Hat,Costume Snowman Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,616,{},{},{}
 20232,C_Celines_Ribbon,Costume Celine Ribbon,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,967,{},{},{}
 20233,C_Golden_Angel,Costume Golden Angel,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,646,{},{},{}
+20234,C_Baphomet_Hat,Costume Baphomet Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,7168,,1,1,,{/*TODO: View ID*/ bonus bMaxHPrate,15; bonus bMaxSPrate,15; bonus2 bAddRace,RC_All,15; bonus2 bMagicAddRace,RC_All,15; bonus2 bAddItemHealRate,519,2015; },{},{}
 //
 20500,T_Archangel_Wing,Archangel Wing,4,0,,0,,0,,0,0xFFFFFFFF,63,2,8192,,1,0,1,{ bonus bUnbreakableHelm,0; },{},{}
 20600,Fantastic_Aura,Fantastic Aura,4,0,,0,,0,,0,0xFFFFFFFF,63,2,8192,,1,0,0,{ /*View ID*/ bonus bUnbreakableHelm,0; },{},{}
@@ -10041,10 +10049,13 @@
 22874,Sealed_Beelzebub_Card_Album,Sealed Beelzebub Card Album,2,10,,50,,,,,0xFFFFFFFF,63,2,,,,,,{/*No Info*/},{},{}
 22875,Sealed_Beelzebub_Card,Sealed Beelzebub Card,6,20,,10,,,,,,,,769,,,,,{ bonus bVariableCastrate,-15; /*Item removed on 2014-12-17*/ },{},{}
 22876,Old_Money_Pocket,Old Money Pocket,3,0,,0,,,,,,,,,,,,,{},{},{}
+22881,Rope_Gallows,Rope Gallows,2,10,,0,,,,,0xFFFFFFFF,63,2,,,,,,{/*Used to catch a Lost Sheep*/},{},{}
+22882,Chocolate_Rice_Cake_Soup,Chocolate Rice Cake Soup,2,10,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 10,10; },{},{}
 22883,September_Gift_Box,September Gift Box,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{/*2 Lucky Eggs*/},{},{}
 22884,October_Gift_Box,October Gift Box,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12529,5; },{},{}
 22885,November_Gift_Box,November Gift Box,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ rentitem callfunc("F_Rand",2566,2856,2857,15023),1209600; },{},{}
 22886,December_Gift_Box,December Gift Box,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 22869,10; },{},{}
+22888,New_Year's_Scroll,New Year's Scroll,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem callfunc("F_Rand",6238,6239,6228,6232,24240,24241,24242,17474),1; },{},{}
 // Shadow Equip
 24000,T_STR1_Armor_Shadow,T STR1 Armor Shadow,12,10,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,,,{ bonus bStr,1; },{},{}
 24001,T_DEX1_Weapon_Shadow,T DEX1 Weapon Shadow,12,10,,0,,,,0,0xFFFFFFFF,63,2,131072,,1,,,{ bonus bDex,1; },{},{}
