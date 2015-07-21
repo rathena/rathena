@@ -2849,7 +2849,6 @@ int mob_class_change (struct mob_data *md, int mob_id)
 {
 	unsigned int tick = gettick();
 	int i, c, hp_rate;
-	struct mob_db *mobdb = NULL;
 
 	nullpo_ret(md);
 
