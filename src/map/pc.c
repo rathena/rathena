@@ -4328,9 +4328,7 @@ char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_p
 			if( sd->status.inventory[i].nameid == item->nameid &&
 				sd->status.inventory[i].bound == item->bound &&
 				sd->status.inventory[i].expire_time == 0 &&
-#ifdef ENABLE_ITEM_GUID
 				sd->status.inventory[i].unique_id == item->unique_id &&
-#endif
 				memcmp(&sd->status.inventory[i].card, &item->card, sizeof(item->card)) == 0
 				)
 			{
@@ -4343,8 +4341,7 @@ char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_p
 		}
 	}
 
-	if( i >= MAX_INVENTORY )
-	{
+	if (i >= MAX_INVENTORY) {
 		i = pc_search_inventory(sd,0);
 		if( i < 0 )
 			return ADDITEM_OVERITEM;
@@ -4361,8 +4358,10 @@ char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_p
 		sd->last_addeditem_index = i;
 		clif_additem(sd,i,amount,0);
 	}
-	if( !itemdb_isstackable2(id) && !item->unique_id )
-		item->unique_id = pc_generate_unique_id(sd);
+
+	if (!itemdb_isstackable2(id) && !item->unique_id)
+		sd->status.inventory[i].unique_id = pc_generate_unique_id(sd);
+
 	log_pick_pc(sd, log_type, amount, &sd->status.inventory[i]);
 
 	sd->weight += w;
@@ -4896,9 +4895,7 @@ unsigned char pc_cart_additem(struct map_session_data *sd,struct item *item,int 
 		for (i = 0; i < MAX_CART; i++) {
 			if (sd->status.cart[i].nameid == item->nameid
 				&& sd->status.cart[i].bound == item->bound
-#ifdef ENABLE_ITEM_GUID
 				&& sd->status.cart[i].unique_id == item->unique_id
-#endif
 				&& memcmp(sd->status.cart[i].card, item->card, sizeof(item->card)) == 0
 				)
 				break;

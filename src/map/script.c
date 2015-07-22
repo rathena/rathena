@@ -17102,7 +17102,7 @@ BUILDIN_FUNC(unitwalk)
 
 	ud = unit_bl2ud(bl);
 
-	if (strcmp(cmd,"unitwalk")) {
+	if (!strcmp(cmd,"unitwalk")) {
 		int x = script_getnum(st,3);
 		int y = script_getnum(st,4);
 
@@ -17117,7 +17117,7 @@ BUILDIN_FUNC(unitwalk)
 			return SCRIPT_CMD_FAILURE;
 		} else if (script_pushint(st, unit_can_reach_bl(bl, tbl, distance_bl(bl, tbl)+1, 0, NULL, NULL)))
 			add_timer(gettick()+50, unit_delay_walktobl_timer, bl->id, tbl->id); // Need timer to avoid mismatches
-		off = 3;
+		off = 4;
 	}
 
 	if (ud && script_hasdata(st, off)) {
@@ -17247,7 +17247,6 @@ BUILDIN_FUNC(unitstopattack)
 	struct block_list* bl;
 
 	unit_id = script_getnum(st,2);
-
 	bl = map_id2bl(unit_id);
 
 	if (bl != NULL) {
@@ -17268,14 +17267,10 @@ BUILDIN_FUNC(unitstopwalk)
 	struct block_list* bl;
 
 	unit_id = script_getnum(st,2);
-
 	bl = map_id2bl(unit_id);
 
-	if (bl != NULL) {
-		unit_stop_walking(bl,4);
-		if (bl->type == BL_MOB)
-			((TBL_MOB*)bl)->target_id = 0;
-	}
+	if (bl != NULL)
+		unit_stop_walking(bl, 0);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -20741,7 +20736,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(setunitname,"is"),
 	BUILDIN_DEF(getunitdata,"i*"),
 	BUILDIN_DEF(setunitdata,"iii"),
-	BUILDIN_DEF(unitwalk,"ii??"),
+	BUILDIN_DEF(unitwalk,"iii?"),
 	BUILDIN_DEF2(unitwalk,"unitwalkto","ii?"),
 	BUILDIN_DEF(unitkill,"i"),
 	BUILDIN_DEF(unitwarp,"isii"),

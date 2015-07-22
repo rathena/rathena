@@ -1688,14 +1688,15 @@ void itemdb_reload(void) {
 	itemdb_group->clear(itemdb_group, itemdb_group_free);
 	itemdb->clear(itemdb, itemdb_final_sub);
 	db_clear(itemdb_combo);
-	itemdb_roulette_free();
+	if (battle_config.feature_roulette)
+		itemdb_roulette_free();
 
 	// read new data
 	itemdb_read();
 	cashshop_reloaddb();
 
-	if (!itemdb_parse_roulette_db())
-		battle_config.feature_roulette = 0;
+	if (battle_config.feature_roulette)
+		itemdb_parse_roulette_db();
 
 	//Epoque's awesome @reloaditemdb fix - thanks! [Ind]
 	//- Fixes the need of a @reloadmobdb after a @reloaditemdb to re-link monster drop data
@@ -1756,7 +1757,8 @@ void do_final_itemdb(void) {
 	itemdb_group->destroy(itemdb_group, itemdb_group_free);
 	itemdb->destroy(itemdb, itemdb_final_sub);
 	destroy_item_data(dummy_item);
-	itemdb_roulette_free();
+	if (battle_config.feature_roulette)
+		itemdb_roulette_free();
 }
 
 /**
@@ -1769,6 +1771,6 @@ void do_init_itemdb(void) {
 	itemdb_create_dummy();
 	itemdb_read();
 
-	if (!itemdb_parse_roulette_db())
-		battle_config.feature_roulette = 0;
+	if (battle_config.feature_roulette)
+		itemdb_parse_roulette_db();
 }

@@ -5221,8 +5221,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case NC_MAGNETICFIELD:
-		if( flag&1 && !map[src->m].flag.pvp ) // Doesn't affect enemies on PvP maps
-			sc_start2(src,bl,SC_MAGNETICFIELD,100,skill_lv,src->id,skill_get_time(skill_id,skill_lv));
+		sc_start2(src,bl,SC_MAGNETICFIELD,100,skill_lv,src->id,skill_get_time(skill_id,skill_lv));
 		break;
 	case SC_FATALMENACE:
 		if( flag&1 )
@@ -9176,13 +9175,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case NC_MAGNETICFIELD:
-		if( (i = sc_start2(src,bl,type,100,skill_lv,src->id,skill_get_time(skill_id,skill_lv))) )
-		{
-			map_foreachinrange(skill_area_sub,src,skill_get_splash(skill_id,skill_lv),splash_target(src),src,skill_id,skill_lv,tick,flag|BCT_ENEMY|SD_SPLASH|1,skill_castend_damage_id);
-			clif_skill_damage(src,src,tick,status_get_amotion(src),0,-30000,1,skill_id,skill_lv,6);
-			if (sd) pc_overheat(sd,1);
-		}
-		clif_skill_nodamage(src,src,skill_id,skill_lv,i);
+		clif_skill_damage(src,bl,tick,status_get_amotion(src),0,-30000,1,skill_id,skill_lv,DMG_SKILL);
+		if (map_flag_vs(src->m)) // Doesn't affect the caster in non-PVP maps [exneval]
+			sc_start2(src,bl,type,100,skill_lv,src->id,skill_get_time(skill_id,skill_lv));
+		map_foreachinrange(skill_area_sub,bl,skill_get_splash(skill_id,skill_lv),splash_target(src),src,skill_id,skill_lv,tick,flag|BCT_ENEMY|SD_SPLASH|1,skill_castend_damage_id);
+		if (sd)
+			pc_overheat(sd,1);
 		break;
 
 	case NC_REPAIR:
@@ -9453,7 +9451,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if( sc_start2(src,bl, type, 100, skill_lv, src->id, skill_get_time(skill_id, skill_lv))) {
 				if( bl->type == BL_MOB )
 					mob_unlocktarget((TBL_MOB*)bl,gettick());
-				unit_stop_attack(bl);
 				clif_bladestop(src, bl->id, 1);
 				map_freeblock_unlock();
 				return 1;
@@ -10052,7 +10049,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case EL_WATER_BARRIER:
 	case EL_ZEPHYR:
 	case EL_POWER_OF_GAIA:
-		clif_skill_nodamage(src,src,skill_id,skill_lv,1);
 		clif_skill_damage(src, bl, tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, 6);
 		skill_unitsetting(src,skill_id,skill_lv,bl->x,bl->y,0);
 		break;
@@ -10420,9 +10416,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		return 1;
 	}
 
-	if(skill_id != SR_CURSEDCIRCLE){
+	if (skill_id != SR_CURSEDCIRCLE) {
 		struct status_change *sc = status_get_sc(src);
-		if( sc && sc->data[SC_CURSEDCIRCLE_ATKER] )//Should only remove after the skill had been casted.
+
+		if (sc && sc->data[SC_CURSEDCIRCLE_ATKER]) // Should only remove after the skill had been casted.
 			status_change_end(src,SC_CURSEDCIRCLE_ATKER,INVALID_TIMER);
 	}
 
@@ -12687,6 +12684,15 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, un
 				sc_start(ss, bl,type,100,sg->skill_lv,sg->limit);
 			break;
 
+		case UNT_WATER_BARRIER:
+		case UNT_ZEPHYR:
+		case UNT_POWER_OF_GAIA:
+			if (bl->id == ss->id)
+				break; // Doesn't affect the Elemental
+			if (!sce)
+				sc_start(ss, bl, type, 100, sg->skill_lv, sg->limit);
+			break;
+
 		case UNT_SUITON:
 			if(!sce)
 				sc_start4(ss, bl,type,100,sg->skill_lv,
@@ -14735,13 +14741,14 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			break;
 		case SR_CURSEDCIRCLE:
 			if (map_flag_gvg(sd->bl.m)) {
-			    if (map_foreachinrange(mob_count_sub, &sd->bl, skill_get_splash(skill_id, skill_lv), BL_MOB,
-				    MOBID_EMPERIUM, MOBID_GUARDIAN_STONE1, MOBID_GUARDIAN_STONE2)) {
-				char output[128];
-				sprintf(output,"%s",msg_txt(sd,382)); // You're too close to a stone or emperium to use this skill.
-				clif_colormes(sd->fd,color_table[COLOR_RED], output);
-				return false;
-			    }
+				if (map_foreachinrange(mob_count_sub, &sd->bl, skill_get_splash(skill_id, skill_lv), BL_MOB,
+					MOBID_EMPERIUM, MOBID_GUARDIAN_STONE1, MOBID_GUARDIAN_STONE2)) {
+					char output[128];
+
+					sprintf(output,"%s",msg_txt(sd,382)); // You're too close to a stone or emperium to use this skill.
+					clif_colormes(sd->fd,color_table[COLOR_RED], output);
+					return false;
+				}
 			}
 			if( sd->spiritball > 0 )
 				sd->spiritball_old = require.spiritball = sd->spiritball;
