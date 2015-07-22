@@ -11128,10 +11128,10 @@ BUILDIN_FUNC(getwaitingroomusers)
 	
 	if( nd != NULL && (cd=(struct chat_data *)map_id2bl(nd->chat_id)) != NULL ) {
 		for(i = 0; i < cd->users; ++i) {
-			setd_sub(st, NULL, ".@waitingroom_users", j, (void *)cd->usersd[i]->status.account_id, NULL);
+			setd_sub(st, NULL, ".@waitingroom_users", j, (void *)__64BPRTSIZE(cd->usersd[i]->status.account_id), NULL);
 			j++;
 		}
-		setd_sub(st, NULL, ".@waitingroom_usercount", 0, (void *)j, NULL);
+		setd_sub(st, NULL, ".@waitingroom_usercount", 0, (void *)__64BPRTSIZE(j), NULL);
 	}
 	return 0;
 }
