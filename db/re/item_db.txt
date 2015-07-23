@@ -1094,6 +1094,7 @@
 1836,Tanos_Knuckles,Tanos Knuckles,5,10,,600,160:100,,,1,0x00008100,63,2,2,4,120,1,12,{ bonus bInt,6; bonus bVit,6; bonus bLuk,-6; bonus bAtkRate,5; bonus2 bHPLossRate,100,10000; },{},{}
 1837,Iron_nail,Iron nail,5,10,,1500,100,,,0,0x00008100,63,2,2,3,50,1,12,{ bonus bAspdRate,-5; bonus bAspdRate,((getrefine()+1)/2); },{},{}
 1838,Half_BF_Knuckle1,Half BF Knuckle1,5,20,,0,30,,1,0,0x00008100,63,2,2,3,80,1,12,{ bonus bStr,2; bonus bAgi,1; bonus2 bAddRace,RC_DemiHuman,30; bonus2 bAddRace,RC_Player,30; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,10; bonus2 bIgnoreDefRaceRate,RC_Player,10; bonus4 bAutoSpell,"CH_SOULCOLLECT",1,5,0; bonus bUnbreakableWeapon,0; },{},{}
+1839,Crimson_Knuckles,Crimson Knuckles,5,20,,1000,100,,1,0,0x00008100,63,2,2,3,70,1,12,{ .@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225); bonus bUnbreakableWeapon,1; },{},{}
 // Instruments
 1901,Violin,Violin,5,4000,,700,50,,1,3,0x00080000,63,1,2,1,2,1,13,{},{},{}
 1902,Violin_,Violin,5,4000,,700,50,,1,4,0x00080000,63,1,2,1,2,1,13,{},{},{}
@@ -9052,6 +9053,7 @@
 18126,Blue_Bow,Blue Bow,5,10,,1200,150,,5,1,0x00000800,56,2,2,3,100,1,11,{ bonus bAgi,5; bonus bDex,5; },{},{}
 18127,Ru_Gold_Bow,Ru Gold Bow,5,0,,1200,150,,5,2,0x00000800,56,2,34,3,120,1,11,{ bonus bAgi,8; bonus bDex,8; },{},{}
 18128,Infinity_Bow,Infinity Bow,5,20,,500,160,,5,1,0x00020048,63,2,34,4,100,1,11,{},{},{}
+18130,Crimson_Bow,Crimson Bow,5,20,,1200,120,,5,0,0x00080048,63,2,34,3,70,1,11,{ .@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225); },{},{}
 // More Headgears
 18500,Cheer_Scarf6,Cheer Scarf6,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1,,1,0,369,{ bonus2 bExpAddClass,Class_All,60; },{},{}
 18501,Cheer_Scarf8,Cheer Scarf8,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1,,1,0,369,{ bonus2 bExpAddClass,Class_All,80; },{},{}
@@ -10067,6 +10069,7 @@
 22885,November_Gift_Box,November Gift Box,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ rentitem callfunc("F_Rand",2566,2856,2857,15023),1209600; },{},{}
 22886,December_Gift_Box,December Gift Box,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 22869,10; },{},{}
 22888,New_Year's_Scroll,New Year's Scroll,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem callfunc("F_Rand",6238,6239,6228,6232,24240,24241,24242,17474),1; },{},{}
+22893,New_Year's_Shadow_Cube,New Year's Shadow Cube,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{/*Get a random Shadow Equip (No info which one)*/},{},{}
 // Shadow Equip
 24000,T_STR1_Armor_Shadow,T STR1 Armor Shadow,12,10,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,,,{ bonus bStr,1; },{},{}
 24001,T_DEX1_Weapon_Shadow,T DEX1 Weapon Shadow,12,10,,0,,,,0,0xFFFFFFFF,63,2,131072,,1,,,{ bonus bDex,1; },{},{}
@@ -10314,6 +10317,7 @@
 28002,Half_BF_Katar2,Half BF Katar2,5,20,,0,130,,1,0,0x00001000,63,2,34,3,80,1,16,{ bonus bStr,1; bonus bDex,1; bonus bLuk,1; bonus2 bAddRace,RC_DemiHuman,35; bonus2 bAddRace,RC_Player,35; bonus bCritAtkRate,10; bonus bAspdRate,3; bonus bUnbreakableWeapon,0; },{},{}
 28005,Blue_Katar,Blue Katar,5,10,,1200,190,,1,1,0x00001000,56,2,2,3,100,1,16,{ bonus bAgi,5; bonus bStr,5; },{},{}
 28006,Ru_Gold_Katar,Ru Gold Katar,5,0,,1200,190,,1,2,0x00001000,56,2,34,3,120,1,16,{ bonus bAgi,8; bonus bStr,8; },{},{}
+28007,Crimson_Katar,Crimson Katar,5,20,,1300,130,,1,0,0x00001000,63,2,34,3,70,1,16,{ .@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225); },{},{}
 //
 28100,Tanos_Axe,Tanos Axe,5,10,,4000,300:80,,,1,0x00000400,63,2,2,4,120,1,6,{ bonus bInt,6; bonus bVit,6; bonus bLuk,-6; bonus bAtkRate,5; bonus2 bHPLossRate,100,10000; },{},{}
 28101,Axe_Tornado,Axe Tornado,5,10,,4000,320,,,1,0x00000400,56,2,2,4,130,,6,{ bonus bAtkEle,4; bonus2 bSkillCooldown,"NC_AXETORNADO",-1000; },{},{}
@@ -10321,6 +10325,7 @@
 28103,Blue_Twohand_Axe,Blue Twohand Axe,5,10,,3000,330,,1,1,0x00000400,56,2,2,3,1,1,7,{ bonus bStr,5; bonus bVit,5; },{},{}
 28104,Ru_Gold_Axe_M,Ru Gold Axe M,5,0,,3000,330,,1,2,0x00000400,56,2,34,3,120,1,7,{ bonus bStr,8; bonus bVit,8; },{},{}
 28105,Infinity_Axe,Infinity Axe,5,10,,500,265,,1,1,0x00000022,7,2,34,4,100,1,7,{},{},{}
+28106,Crimson_Two-Handed_Axe,Crimson Two-Handed Axe,5,20,,2000,200,,1,0,0x00000022,63,2,34,3,70,1,7,{ .@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225); bonus bUnbreakableWeapon,1; },{},{}
 //
 28200,End_Of_The_Horizon,End Of The Horizon,5,2700000,,2400,410,,9,1,0x40000000,63,2,34,4,110,1,21,{},{},{}
 28201,Southern_Cross,Southern Cross,5,2800000,,2000,480,,9,0,0x40000000,63,2,34,4,141,1,21,{ bonus3 bAutoSpell,"GC_CROSSIMPACT",1,50; },{},{}
@@ -10347,3 +10352,4 @@
 28701,Ru_Gold_Knife,Ru Gold Knife,5,0,,500,160,,1,2,0x00010000,56,2,2,3,120,1,0,{ bonus bVit,8; bonus bInt,8; },{},{}
 28702,Ru_Gold_Ashura,Ru Gold Ashura,5,0,,1000,150:150,,1,2,0x2000000,63,2,2,3,120,1,1,{},{},{}
 28703,Infinity_Dagger,Infinity Dagger,5,10,,500,125,,1,1,0x0280026B,7,2,2,4,100,1,1,{},{},{}
+28705,Crimson_Dagger,Crimson Dagger,5,20,,550,55,,1,0,0x02800271,63,2,2,3,70,1,1,{ .@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225); bonus bMatk,(.@r<=15?(pow(.@r,2)/2):225); },{},{}
