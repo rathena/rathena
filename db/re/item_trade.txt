@@ -664,7 +664,7 @@
 6307,507,100	// Suspicious_Magic_Stone
 6308,475,100	// Unidentified_Relic
 6320,475,100	// Premium_Reset_Stone
-//6327,475,100	//
+6327,475,100	// (Limited)High_Density_Bradium
 6345,499,100	// Love_Ball
 6347,499,100	// Bless_Word_Paper1
 6348,499,100	// Bless_Word_Paper2
@@ -901,7 +901,7 @@
 6885,499,100	// Piece_Of_Soul_Dragon
 6886,499,100	// Strong_Piece_Of_Soul_Dragon
 6904,499,100	// Piece_Of_Soul_Snake
-//6906,475,100	//
+6906,475,100	// (Limited)High_Density_Kalunium
 6907,499,100	// Piece_Of_Soul_Horse
 6909,475,100	// Actinidia_Cat_Fruit
 6910,475,100	// (Limited)Purified_Oridecon
@@ -3593,8 +3593,8 @@
 17545,475,100	// Smelting_Ore_Box_IX(10)
 //17547,475,100	//
 //17548,475,100	//
-//17549,475,100	//
-//17550,475,100	//
+17549,475,100	// (Limited)High_Density_Bradium_Box(30)
+17550,475,100	// (Limited)High_Density_Kalunium_Box(30)
 //17567,475,100	//
 //17568,475,100	//
 //17569,475,100	//
@@ -3820,7 +3820,7 @@
 22884,475,100	// October_Gift_Box
 22885,475,100	// November_Gift_Box
 22886,475,100	// December_Gift_Box
-//22887,507,100	//
+22887,507,100	// PC-Room_Box
 22888,475,100	// New_Year's_Scroll
 22893,475,100	// New_Year's_Shadow_Cube
 //22894,507,100	//
