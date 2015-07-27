@@ -9016,6 +9016,8 @@
 17532,Blessing_Lucky_Egg,Blessing Lucky Egg,18,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Blessing_Lucky_Egg); },{},{}
 17544,Smelting_Ore_Box_IX,Smelting Ore Box IX,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 7619,5; getitem 7620,5; getitem 22888,1; },{},{}
 17545,Smelting_Ore_Box_IX(10),Smelting Ore Box IX(10),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 7619,50; getitem 7620,50; getitem 22888,11; },{},{}
+17547,(Limited)2015_Neuralizer_Box,(Limited)2015 Neuralizer Box,2,20,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 22894,1; },{},{}
+17548,(Limited)2015_Status_Initialization_Volume_Box,(Limited)2015 Status Initialization Volume Box,2,20,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 22895,1; },{},{}
 17549,(Limited)High_Density_Bradium_Box(30),(Limited)High Density Bradium Box(30),2,20,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 6327,30; },{},{}
 17550,(Limited)High_Density_Kalunium_Box(30),(Limited)High Density Kalunium Box(30),2,20,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 6906,30; },{},{}
 17552,Garnet_Lucky_Egg,Garnet Lucky Egg,18,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Garnet_Lucky_Egg); },{},{}
@@ -10075,6 +10077,9 @@
 22887,PC-Room_Box,PC-Room Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12531,1; getitem callfunc("F_Rand",6230,6234,22654),1; },{},{}
 22888,New_Year's_Scroll,New Year's Scroll,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem callfunc("F_Rand",6238,6239,6228,6232,24240,24241,24242,17474),1; },{},{}
 22893,New_Year's_Shadow_Cube,New Year's Shadow Cube,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{/*Get a random Shadow Equip (No info which one)*/},{},{}
+22894,(Limited)2015_Neuralizer,(Limited)2015 Neuralizer,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_CashReset"; },{},{}
+22895,(Limited)2015_Status_Initialization_Volume,(Limited)2015 Status Initialization Volume,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ /*Works like item 6320, can reset up to 3x within 1 hour*/ },{},{}
+22896,(Limited)Old_Status_Initialization_Volume,(Limited)Old Status Initialization Volume,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ /*Works like item 6320, can reset up to 3x within 1 hour*/ },{},{}
 // Shadow Equip
 24000,T_STR1_Armor_Shadow,T STR1 Armor Shadow,12,10,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,,,{ bonus bStr,1; },{},{}
 24001,T_DEX1_Weapon_Shadow,T DEX1 Weapon Shadow,12,10,,0,,,,0,0xFFFFFFFF,63,2,131072,,1,,,{ bonus bDex,1; },{},{}
