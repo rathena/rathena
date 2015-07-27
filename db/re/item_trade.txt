@@ -3591,8 +3591,8 @@
 17527,475,100	// Actinidia_Cat_Fruit_Box(200)
 17544,475,100	// Smelting_Ore_Box_IX
 17545,475,100	// Smelting_Ore_Box_IX(10)
-//17547,475,100	//
-//17548,475,100	//
+17547,475,100	// (Limited)2015_Neuralizer_Box
+17548,475,100	// (Limited)2015_Status_Initialization_Volume_Box
 17549,475,100	// (Limited)High_Density_Bradium_Box(30)
 17550,475,100	// (Limited)High_Density_Kalunium_Box(30)
 //17567,475,100	//
@@ -3823,9 +3823,9 @@
 22887,507,100	// PC-Room_Box
 22888,475,100	// New_Year's_Scroll
 22893,475,100	// New_Year's_Shadow_Cube
-//22894,507,100	//
-//22895,507,100	//
-//22896,507,100	//
+22894,507,100	// (Limited)2015_Neuralizer
+22895,507,100	// (Limited)2015_Status_Initialization_Volume
+22896,507,100	// (Limited)Old_Status_Initialization_Volume
 //22901,499,100	//
 //22902,475,100	//
 //22906,475,100	//
