@@ -287,6 +287,12 @@ comodo,198,148,3	duplicate(idRO_kafra)	Kafra Shop#cmd	721
 comodo,200,148,3	duplicate(idRO_kafra2)	Kafra Shop 2#cmd	80
 comodo,202,148,3	duplicate(idRO_rental)	Rental Shop#cmd	874
 
+// Comodo Pharos Beacon
+//============================================================
+cmd_fild07,139,134,3	duplicate(idRO_kafra)	Kafra Shop#cmd	721
+cmd_fild07,138,134,3	duplicate(idRO_kafra2)	Kafra Shop 2#cmd	80
+cmd_fild07,141,134,3	duplicate(idRO_rental)	Rental Shop#cmd	874
+
 // Umbala
 //============================================================
 umbala,90,159,3	duplicate(idRO_kafra)	Kafra Shop#um	721
