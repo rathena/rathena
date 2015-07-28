@@ -7119,7 +7119,7 @@ REPLACE INTO `item_db_re` VALUES (13290,'Black_Thing_To_Throw','Throwing Black M
 REPLACE INTO `item_db_re` VALUES (13291,'Starfish','Starfish',10,0,NULL,5,'110',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'50',NULL,7,'bonus bAtkEle,Ele_Neutral; bonus2 bAddEff,Eff_Stun,1000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13292,'Dried_Squid','Dried Squid',10,10,NULL,20,'50',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'1',NULL,7,'bonus bAtkEle,Ele_Neutral; bonus2 bAddEff,Eff_Stun,1000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13293,'Flying_Fish','Flying Fish',10,10,NULL,20,'50',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'1',NULL,6,'bonus bAtkEle,Ele_Neutral; bonus3 bAutoSpell,"NPC_CRITICALWOUND",1,3;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (13294,'Explosive_Kunai','Explosive Kunai',10,100,NULL,30,'50',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'1:100',NULL,7,'bonus bAtkEle,Ele_Neutral;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (13294,'Explosive_Kunai','Explosive Kunai',10,100,NULL,30,'50',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'100',NULL,7,'bonus bAtkEle,Ele_Neutral;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13295,'Light_Shuriken','Light Shuriken',10,0,NULL,5,'5',NULL,NULL,NULL,0xFFFFFFFF,63,2,32768,NULL,NULL,NULL,0,NULL,NULL,NULL);
 # Ninja Fuuma Shurikens
 REPLACE INTO `item_db_re` VALUES (13300,'Huuma_Bird_Wing','Huuma Wing Shuriken',5,90000,NULL,3000,'150',NULL,1,0,0x02000000,63,2,34,4,'65',1,22,'bonus bUnbreakableWeapon,0; bonus bAtkEle,Ele_Wind; bonus bDex,-2; bonus bAgi,-1;',NULL,NULL);
