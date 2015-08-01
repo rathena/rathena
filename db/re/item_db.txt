@@ -1567,7 +1567,7 @@
 2465,Dance_Shoes,Dance Shoes,4,20,,300,,15,,1,0x00080000,63,2,64,,105,1,0,{ bonus bAgi,1; bonus bAspdRate,2; bonus2 bSkillUseSP,"WA_SWING_DANCE",32; },{},{}
 2466,Training_Shoes,Training Shoes,4,20,,300,,0,,0,0xFFFFFFFF,63,2,64,,1,1,0,{},{},{}
 2467,Golden_Rod_Shoes,Golden Rod Shoes,4,20,,500,,12,,0,0x00000200,63,2,64,,100,1,0,{ bonus bMdef,2; bonus bMaxHP,500; bonus2 bSubEle,Ele_Wind,15; },{},{}
-2468,Aqua_Shoes,Aqua Shoes,4,20,,500,,12,,1,0x00000200,63,2,64,,100,1,0,{ bonus bMdef,2; bonus bMaxHP,500; bonus2 bSubEle,Ele_Water,15; },{},{}
+2468,Aqua_Shoes,Aqua Shoes,4,20,,500,,12,,0,0x00000200,63,2,64,,100,1,0,{ bonus bMdef,2; bonus bMaxHP,500; bonus2 bSubEle,Ele_Water,15; },{},{}
 2469,Crimson_Shoes,Crismons Shoes,4,20,,500,,12,,0,0x00000200,63,2,64,,100,1,0,{ bonus bMdef,2; bonus bMaxHP,500; bonus2 bSubEle,Ele_Fire,15; },{},{}
 2470,Forest_Shoes,Forest Shoes,4,20,,500,,12,,0,0x00000200,63,2,64,,100,1,0,{ bonus bMdef,2; bonus bMaxHP,500; bonus2 bSubEle,Ele_Earth,15; },{},{}
 2471,Shoes_Of_Affection,Shoes Of Affection,4,20,,300,,12,,0,0x00000100,63,2,64,,100,1,0,{ bonus bMaxHP,500; bonus2 bSubRace,RC_DemiHuman,10; bonus2 bSubRace,RC_Player,10; bonus2 bSubRace,RC_Formless,-10; bonus2 bSubRace,RC_Undead,-10; bonus2 bSubRace,RC_Brute,-10; bonus2 bSubRace,RC_Plant,-10; bonus2 bSubRace,RC_Insect,-10; bonus2 bSubRace,RC_Fish,-10; bonus2 bSubRace,RC_Demon,-10; bonus2 bSubRace,RC_Angel,-10; bonus2 bSubRace,RC_Dragon,-10; },{},{}
@@ -1950,7 +1950,7 @@
 2857,Half_Brysing,Half Brisingamen,4,20,,0,,1,,0,0xFFFFFFFF,63,2,136,,47,0,0,{ bonus bStr,3; bonus bInt,5; bonus bVit,3; bonus bDex,3; bonus bAgi,3; bonus bLuk,5; bonus bMdef,2; },{},{}
 2858,Pendant_Of_Guardian,Pendant Of Guardian,4,0,,0,,0,,0,0xFFFFFFFF,63,2,136,,70,0,0,{ skill "ALL_GUARDIAN_RECALL",1; },{},{}
 2859,Golden_Rod_Orb,Golden Rod Orb,4,20,,200,,2,,0,0x00000200,63,2,136,,100,0,0,{ bonus bMdef,2; bonus bInt,1; bonus2 bSubEle,Ele_Wind,15; bonus3 bAutoSpellWhenHit,"WZ_JUPITEL",3,30; },{},{}
-2860,Aqua_Orb,Aqua Orb,4,20,,200,,2,,1,0x00000200,63,2,136,,100,0,0,{ bonus bMdef,2; bonus bInt,1; bonus2 bSubEle,Ele_Water,15; bonus3 bAutoSpellWhenHit,"WZ_FROSTNOVA",3,30; },{},{}
+2860,Aqua_Orb,Aqua Orb,4,20,,200,,2,,0,0x00000200,63,2,136,,100,0,0,{ bonus bMdef,2; bonus bInt,1; bonus2 bSubEle,Ele_Water,15; bonus3 bAutoSpellWhenHit,"WZ_FROSTNOVA",3,30; },{},{}
 2861,Crimson_Orb,Crismon Orb,4,20,,200,,2,,0,0x00000200,63,2,136,,100,0,0,{ bonus bMdef,2; bonus bInt,1; bonus2 bSubEle,Ele_Fire,15; bonus3 bAutoSpellWhenHit,"WZ_SIGHTRASHER",3,30; },{},{}
 2862,Forest_Orb,Forest Orb,4,20,,200,,2,,0,0x00000200,63,2,136,,100,0,0,{ bonus bMdef,2; bonus bInt,1; bonus2 bSubEle,Ele_Earth,15; bonus3 bAutoSpellWhenHit,"WZ_QUAGMIRE",3,30; },{},{}
 2863,Ring_Of_Valkyrie,Ring Of Valkyrie,4,0,,0,,2,,0,0xFFFFFFFF,63,2,136,,1,0,0,{ bonus2 bExpAddClass,Class_All,5; },{},{}
@@ -3710,7 +3710,7 @@
 5785,Green_Bunny_Hairband,Green Bunny Hairband,4,20,,200,,0,,0,0xFFFFFFFF,63,2,256,,1,1,664,{ bonus bStr,2; bonus bInt,1; bonus bDex,1; },{},{}
 5786,Ancient_Elven_Ear,Ancient Elven Ear,4,10,,200,,1,,0,0xFFFFFFFF,63,2,512,,1,0,665,{ bonus bLuk,1; bonus bMaxHP,100; bonus bMaxSP,30; },{},{}
 5787,Tha_Maero_Mask,Tha Maero Mask,4,20,,100,,0,,0,0xFFFFFFFF,63,2,513,,30,0,666,{ bonus bMdef,2; },{},{}
-5788,3D_Glasses,3D Glasses,4,20,,100,,1,,0,0xFFFFFFFF,63,2,512,,1,0,661,{ bonus2 bMagicAddRace,RC_Formless,4; bonus2 bSubEle,Ele_Neutral,5; },{},{}
+5788,3D_Glasses,3D Glasses,4,20,,100,,1,,0,0xFFFFFFFF,63,2,512,,1,0,661,{ .@eac = eaclass()&EAJ_BASEMASK; if((.@eac==EAJ_SWORDMAN) || (.@eac==EAJ_MERCHANT) || (.@eac==EAJ_ARCHER) || (.@eac==EAJ_GUNSLINGER)) bonus bAtkRate,3; if((Class==Job_Soul_Linker) || (.@eac==EAJ_MAGE) || (.@eac==EAJ_NINJA)) bonus bMatkRate,3; if(.@eac==EAJ_THIEF) bonus bFleeRate,3; if((.@eac==EAJ_NOVICE) || (.@eac==EAJ_TAEKWON) || (Class==Job_Star_Gladiator) || (Class=Job_Star_Gladiator2)) bonus bMaxHPrate,3; bonus bMaxSPrate,3; },{},{}
 5789,Thanatos_Mal_Mask,Thanatos Mal Mask,4,20,,100,,3,,0,0xFFFFFFFF,63,2,513,,30,0,667,{ bonus bVit,1; },{},{}
 5790,Holy_Mom_Love,TM,4,20,,500,,0,,1,0xFFFFFFFF,63,2,768,,45,1,610,{ bonus2 bSubRace,RC_Demon,-5; bonus2 bSubRace,RC_Undead,-5; bonus3 bAutoSpell,"MG_COLDBOLT",1,20; },{},{}
 5791,Tenkaippin_Ramen,Tenkaippin Ramen,4,20,,500,,1,,0,0xFFFFFFFF,63,2,256,,30,0,668,{ bonus bInt,-1; bonus bDex,4; },{},{}
