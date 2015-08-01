@@ -9440,7 +9440,9 @@
 19039,12_Anniversary_Elf_Ears,12 Anniversary Elf Ears,4,10,,120,,0,,0,0xFFFFFFFF,63,2,512,,0,1,875,{ bonus2 bSubRace,RC_All,4; bonus2 bSubRace,RC_Player,-4; },{},{}
 19047,Angeling_KnitCap,Angeling KnitCap,4,0,,300,,5,,1,0xFFFFFFFF,63,2,256,,20,1,953,{ bonus2 bSPGainRace,RC_Angel,5; bonus bHPGainValue,100; .@r = getrefine(); if (.@r >= 5) { bonus2 bSubRace,RC_Angel,5+((.@r >= 7) ? 5 : 0); } },{},{}
 19048,Elemental_Clothes,Elemental Clothes,4,0,,500,,45,,1,0xFFFFFFFF,63,2,16,,80,1,,{ .@r = getrefine(); bonus bLongAtkRate,2+((.@r >= 9) ? 3 : 0)+((.@r >= 7) ? 2 : 0); if (.@r >= 7) bonus bUnbreakableArmor,1; },{},{}
+19051,Warrior_Moon_Cat,Warrior Moon Cat,4,20,,100,,5,,1,0xFFFFFFFF,63,2,256,,1,1,1308,{ /*Enables use of Level 1 Monster's Cry*/ bonus bAllStats,3; bonus2 bHPDrainRate,40,5; bonus2 bSPDrainRate,10,2; },{},{}
 19052,Sigruns_Wing,Rental Sigrun's Wing,4,10,,0,,2,,0,0xFFFFFFFF,63,2,512,,1,0,568,{ if (Class == Job_Swordman || Class == Job_Thief || Class == Job_Merchant || Class == Job_Taekwon || Class == Job_Star_Gladiator || Class == Job_Star_Gladiator2) bonus bAspd,1; else if (Class == Job_Mage || Class == Job_Acolyte || Class == Job_Ninja || Class == Job_Soul_Linker) { bonus bMatk,5; bonus bHealPower,2; } else if (Class == Job_Archer || Class == Job_Gunslinger) bonus bLongAtkRate,2; else if (Class == Job_Novice || Class == Job_SuperNovice) { bonus bMaxHP,120; bonus bMaxSP,60; } },{},{}
+19053,Fighter_Moon_Cat,Fighter_Moon_Cat,4,20,,100,,5,,1,0xFFFFFFFF,63,2,256,,1,1,1308,{ /*Enables use of Level 1 Monster's Cry*/ .@r = getrefine(); bonus bAllStats,3; bonus2 bAddEff,Eff_Stun,500+(.@r*100); },{},{}
 //
 // Costume System
 19500,T_Mr_Smile,T Mr Smile,4,0,,0,,0,,0,0xFFFFFFFF,63,2,6144,,0,0,65,{ bonus bStr,2; },{},{}
@@ -9626,6 +9628,7 @@
 19825,C_Vicious_Stop_Bandage,Costume Vicious Stop Bandage,4,0,,0,,,,,0xFFFFFFFF,63,2,1024,,1,,1054,{},{},{}
 19826,C_Ice_Wing_Ear,Costume Ice Wing Ear,4,20,,10,,0,,0,0xFFFFFFFF,63,2,2048,,1,0,584,{},{},{}
 19827,C_Amistr,Costume Amistr,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,643,{},{},{}
+19828,C_Bucket_Hat,Costume Bucket Hat,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,195,{},{},{}
 19829,C_Straw_Hat,Costume Straw Hat,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,0,0,146,{},{},{}
 19830,C_Sunglasses,Costume Sunglasses,4,10,,0,,,,,0xFFFFFFFF,63,2,2048,,1,,12,{},{},{}
 19831,C_Filir_Hat,Costume Filir Hat,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,408,{},{},{}
@@ -9651,6 +9654,7 @@
 19854,C_Ear_Of_Black_Cat_,Costume Black Cat Ears,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,141,{},{},{}
 19856,C_Iceflake_Hat,Costume Snow Cone Hat,4,10,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1080,{ bonus2 bAddEle,Ele_Fire,5; bonus2 bMagicAddEle,Ele_Fire,5; bonus2 bAddMonsterDropItem,11589,5; },{},{}
 19857,C_King_Prawn_Hat,Costume Crayfish Hat,4,10,,10,,0,,,0xFFFFFFFF,63,2,1024,,1,0,728,{},{},{}
+19858,C_Smokie_Leaf,Costume Smokie Leaf,4,20,,,,,,,0xFFFFFFFF,63,2,1024,,1,0,148,{},{},{}
 19859,C_Flying_Angel,Costume Flying Angel,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,0,0,264,{},{},{}
 19860,C_School_Criatura_Hat,Costume School Criatura Hat,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,0,0,872,{},{},{}
 19861,C_Heart_Hairpin,Costume Heart Hairpin,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,0,0,126,{},{},{}
@@ -9789,8 +9793,9 @@
 20180,C_Western_Grace,Costume Western Grace,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,32,{},{},{}
 20181,C_Mystic_Rose,Costume Mystic Rose,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,198,{},{},{}
 20182,C_Rainbow_Eggshell,Costume Rainbow Eggshell,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,124,{},{},{}
-20183,C_There's..Something..,Costume There's..Something..,4,0,,0,,,,0,0xFFFFFFFF,63,2,2048,,1,1,,{},{},{}
+20183,C_There's..Something..,Costume There's..Something..,4,0,,0,,,,0,0xFFFFFFFF,63,2,3072,,1,1,1091,{},{},{}
 20184,C_Party_Hat,Costume Party Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,144,{},{},{}
+20186,C_Magni's_Cap,Costume Magni's Cap,4,20,,,,,,,0xFFFFFFFF,63,2,1024,,1,1,250,{},{},{}
 20195,C_Scratching_Cat,C Scratching Cat,4,0,,0,,,,0,0xFFFFFFFF,63,2,6144,,,1,1292,{},{},{}
 20199,C_Evil_Marcher_Hat,Costume Evil Marcher Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,687,{},{},{}
 20200,C_Rabbit_Head_Dress,Costume Rabbit Head Dress,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,1095,{},{},{}

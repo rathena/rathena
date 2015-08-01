@@ -3648,9 +3648,9 @@
 18983,475,100	// Old_Protect_Of_Crown
 18984,475,100	// Old_Camouflage_Rabbit_Hood
 19033,467,100	// Ancient_Decoration_Of_The_Goddess
-//19051,475,100	//
-//19052,507,100	//
-//19053,475,100	//
+19051,475,100	// Warrior_Moon_Cat
+19052,507,100	// Sigruns_Wing
+19053,475,100	// Fighter_Moon_Cat
 19523,475,100	// Donation_Ribbon
 19531,475,100	// C_Cube_Mask
 19532,475,100	// C_Red_Bunny_Band
