@@ -9021,6 +9021,8 @@
 17549,(Limited)High_Density_Bradium_Box(30),(Limited)High Density Bradium Box(30),2,20,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 6327,30; },{},{}
 17550,(Limited)High_Density_Kalunium_Box(30),(Limited)High Density Kalunium Box(30),2,20,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 6906,30; },{},{}
 17552,Garnet_Lucky_Egg,Garnet Lucky Egg,18,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Garnet_Lucky_Egg); },{},{}
+17567,Event_Almighty_Box,Event Almighty Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 22902,1; bonus_script "{ bonus bAllStats,10; bonus bBaseAtk,30; bonus bMatk,30; }",1800; },{},{}
+17568,Event_Almighty_Box(100),Event Almighty Box(100),18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 22902,11; bonus_script "{ bonus bAllStats,10; bonus bBaseAtk,30; bonus bMatk,30; }",1800; },{},{}
 17572,Erzulie_Lucky_Egg,Erzulie Lucky Egg,18,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Erzulie_Lucky_Egg); },{},{}
 17584,Venus_Lucky_Egg,Venus Lucky Egg,18,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Venus_Lucky_Egg); },{},{}
 17588,Amora_Lucky_Egg,Amora Lucky Egg,18,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Amora_Lucky_Egg); },{},{}
@@ -10089,6 +10091,7 @@
 22894,(Limited)2015_Neuralizer,(Limited)2015 Neuralizer,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_CashReset"; },{},{}
 22895,(Limited)2015_Status_Initialization_Volume,(Limited)2015 Status Initialization Volume,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ /*Works like item 6320, can reset up to 3x within 1 hour*/ },{},{}
 22896,(Limited)Old_Status_Initialization_Volume,(Limited)Old Status Initialization Volume,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ /*Works like item 6320, can reset up to 3x within 1 hour*/ },{},{}
+22902,Sealed_Card_Album_Scroll_II,Sealed Card Album Scroll II,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem callfunc("F_Rand",6238,6239,17474,22829,24243,24244,24245),1; },{},{}
 // Shadow Equip
 24000,T_STR1_Armor_Shadow,T STR1 Armor Shadow,12,10,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,,,{ bonus bStr,1; },{},{}
 24001,T_DEX1_Weapon_Shadow,T DEX1 Weapon Shadow,12,10,,0,,,,0,0xFFFFFFFF,63,2,131072,,1,,,{ bonus bDex,1; },{},{}

@@ -3595,8 +3595,8 @@
 17548,475,100	// (Limited)2015_Status_Initialization_Volume_Box
 17549,475,100	// (Limited)High_Density_Bradium_Box(30)
 17550,475,100	// (Limited)High_Density_Kalunium_Box(30)
-//17567,475,100	//
-//17568,475,100	//
+17567,475,100	// Event_Almighty_Box
+17568,475,100	// Event_Almighty_Box(100)
 //17569,475,100	//
 //17570,475,100	//
 //17573,475,100	//
@@ -3827,7 +3827,7 @@
 22895,507,100	// (Limited)2015_Status_Initialization_Volume
 22896,507,100	// (Limited)Old_Status_Initialization_Volume
 //22901,499,100	//
-//22902,475,100	//
+22902,475,100	// Sealed_Card_Album_Scroll_II
 //22906,475,100	//
 //22946,475,100	//
 //22947,475,100	//
