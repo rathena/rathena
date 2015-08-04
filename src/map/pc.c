@@ -11041,7 +11041,7 @@ uint8 pc_itemcd_check(struct map_session_data *sd, struct item_data *id, unsigne
 		return 1;
 	}
 
-	sc_start(&sd->bl, &sd->bl, id->delay_sc, 100, id->nameid, id->delay);
+	sc_start(&sd->bl, &sd->bl, (sc_type)id->delay_sc, 100, id->nameid, id->delay);
 	return 0;
 }
 

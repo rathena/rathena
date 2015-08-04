@@ -789,7 +789,7 @@ static bool itemdb_read_itemdelay(char* str[], int columns, int current) {
 	if (columns == 2)
 		id->delay_sc = SC_NONE;
 	else
-		id->delay_sc = (sc_type)atoi(str[2]);
+		id->delay_sc = atoi(str[2]);
 
 	return true;
 }
