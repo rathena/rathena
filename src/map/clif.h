@@ -50,6 +50,8 @@ enum e_packet_ack {
 	ZC_C_MARKERINFO,
 	ZC_NOTIFY_BIND_ON_EQUIP,
 	ZC_WEAR_EQUIP_ACK,
+	ZC_MERGE_ITEM_OPEN,
+	ZC_ACK_MERGE_ITEM,
 	//add other here
 	MAX_ACK_FUNC //auto upd len
 };
@@ -107,6 +109,12 @@ enum OPEN_ROULETTE_ACK {
 enum CLOSE_ROULETTE_ACK {
 	CLOSE_ROULETTE_SUCCESS = 0x0,
 	CLOSE_ROULETTE_FAILED  = 0x1,
+};
+
+enum MERGE_ITEM_ACK {
+	MERGE_ITEM_SUCCESS = 0x0,
+	MERGE_ITEM_FAILED_NOT_MERGE = 0x1,
+	MERGE_ITEM_FAILED_MAX_COUNT = 0x2,
 };
 
 // packet_db[SERVER] is reserved for server use
@@ -431,6 +439,7 @@ enum clif_messages {
 	ITEM_REUSE_LIMIT = 0x746,
 	USAGE_FAIL = 0x783,
 	NEED_REINS_OF_MOUNT = 0x78c,
+	MERGE_ITEM_NOT_AVAILABLE = 0x887,
 };
 
 enum e_personalinfo {
@@ -899,12 +908,6 @@ void clif_parse_RouletteClose(int fd, struct map_session_data *sd);
 void clif_parse_RouletteGenerate(int fd, struct map_session_data *sd);
 void clif_parse_RouletteRecvItem(int fd, struct map_session_data *sd);
 
-/**
- * 3CeAM
- **/
-void clif_msgtable(int fd, int line);
-void clif_msgtable_num(int fd, int line, int num);
-
 int clif_elementalconverter_list(struct map_session_data *sd);
 
 void clif_millenniumshield(struct block_list *bl, short shields);
@@ -953,6 +956,8 @@ void clif_party_leaderchanged(struct map_session_data *sd, int prev_leader_aid, 
 
 void clif_account_name(int fd, uint32 account_id, const char* accname);
 void clif_notify_bindOnEquip(struct map_session_data *sd, int n);
+
+void clif_merge_item_open(struct map_session_data *sd);
 
 //void clif_broadcast_obtain_special_item(); ///TODO!
 

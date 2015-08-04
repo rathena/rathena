@@ -2,7 +2,8 @@
 # Players (T)rade Give/Take, Players (V)ending Sell/Take, (S)hop Sell/Take, (N)PC Give/Take,
 # (C)onsumable Items, (A)dministrators Create/Delete, Sto(R)age, (G)uild Storage,
 # (E)mail attachment,(B)uying Store, Pr(O)duced Items/Ingredients, Auct(I)oned Items,
-# (X) Other, (D) Stolen from mobs, (U) MVP Prizes, F:Guild/Party Bound retrieval
+# (X) Other, (D) Stolen from mobs, (U) MVP Prizes, (F) Guild/Party Bound retrieval
+# Lotter(Y), (Z) Merged Items
 
 #Database: ragnarok
 #Table: picklog
@@ -10,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `picklog` (
   `id` int(11) NOT NULL auto_increment,
   `time` datetime NOT NULL default '0000-00-00 00:00:00',
   `char_id` int(11) NOT NULL default '0',
-  `type` enum('M','P','L','T','V','S','N','C','A','R','G','E','B','O','I','X','D','U','$','F') NOT NULL default 'P',
+  `type` enum('M','P','L','T','V','S','N','C','A','R','G','E','B','O','I','X','D','U','$','F','Z') NOT NULL default 'P',
   `nameid` smallint(5) unsigned NOT NULL default '0',
   `amount` int(11) NOT NULL default '1',
   `refine` tinyint(3) unsigned NOT NULL default '0',

@@ -8782,29 +8782,36 @@
 17076,Empty_Bottle_Box500,Empty Bottle Box500,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 713,500; },{},{}
 17077,Taurus_Crown_Scroll,Taurus Crown Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Taurus_Crown_Scroll); },{},{}
 17078,Taurus_Crown_Scroll_Box,Taurus Crown Scroll Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Taurus_Crown_Scroll_Box); },{},{}
-17079,Indonesia_Box2,Indonesia Box2,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 602,1; getitem 601,50; getitem 12118,3; getitem 12119,3; getitem 12120,3; getitem 12121,3; },{},{}
+17079,Indonesia_Box2,Indonesia Box2,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 602,5; getitem 601,50; getitem 12118,3; getitem 12119,3; getitem 12120,3; getitem 12121,3; },{},{}
 17080,Scorpio_Scroll3,Scorpio Scroll3,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 17081,Yggdrasil_Crown_Box,Yggdrasil Crown Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 18580,1; },{},{}
 17082,Gemi_Diadem_Scroll,Gemi Diadem Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Gemi_Diadem_Scroll); },{},{}
 17083,Gemi_Diadem_Scroll_Box,Gemi Diadem Scroll Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Gemi_Diadem_Scroll_Box); },{},{}
-17084,Upg_Katar_Box,Upg Katar Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 1292,1; },{},{}
-17085,Upg_Two_Handed_Axe_Box,Upg Two Handed Axe Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 1394,1; },{},{}
-17086,Upg_Lance_Box,Upg Lance Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 1491,1; },{},{}
-17087,Upg_Book_Box,Upg Book Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 1585,1; },{},{}
-17088,Upg_Staff_Box,Upg Staff Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 2015,1; },{},{}
-17089,Upg_Dagger_Box,Upg Dagger Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 13071,1; },{},{}
-17090,Upg_Revolver_Box,Upg Revolver,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 13115,1; },{},{}
-17091,Upg_Mace_Box,Upg Mace Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 16019,1; },{},{}
-17092,Upg_Bow_Box,Upg Bow Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 18112,1; },{},{}
-17093,Upg_Twohand_Sword_Box,Upg Two-Handed Sword Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 21000,1; },{},{}
-17094,Upg_Katar_Box2,Upg Katar Box,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-17095,Upg_Two_Handed_Axe_Box2,Upg Two-Hand Axe Box,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-17096,Upg_Lance_Box2,Upg Lance Box,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-17104,HD_Oridecon_50Box,HD Oridecon 50 Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 6240,50; },{},{}
-17105,HD_Elunium_50Box,HD Elunium 50 Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 6241,50; },{},{}
+17084,Upg_Katar_Box,Upg Katar Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 1292,1; },{},{}
+17085,Upg_Two_Handed_Axe_Box,Upg Two Handed Axe Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 1394,1; },{},{}
+17086,Upg_Lance_Box,Upg Lance Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 1491,1; },{},{}
+17087,Upg_Book_Box,Upg Book Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 1585,1; },{},{}
+17088,Upg_Staff_Box,Upg Staff Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 2015,1; },{},{}
+17089,Upg_Dagger_Box,Upg Dagger Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 13071,1; },{},{}
+17090,Upg_Revolver_Box,Upg Revolver,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 13115,1; },{},{}
+17091,Upg_Mace_Box,Upg Mace Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 16019,1; },{},{}
+17092,Upg_Bow_Box,Upg Bow Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 18112,1; },{},{}
+17093,Upg_Twohand_Sword_Box,Upg Two-Handed Sword Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 21000,1; },{},{}
+17094,Upg_Katar_Box2,Upg Katar Box,18,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+17095,Upg_Two_Handed_Axe_Box2,Upg Two-Hand Axe Box2,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+17096,Upg_Lance_Box2,Upg Lance Box2,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+17097,Upg_Book_Box2,Upg_Book_Box2,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+17098,Upg_Staff_Box2,Upg_Staff_Box2,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+17099,Upg_Dagger_Box2,Upg_Dagger_Box2,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+17100,Upg_Revolver_Box2,Upg_Revolver_Box2,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+17101,Upg_Mace_Box2,Upg_Mace_Box2,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+17102,Upg_Bow_Box2,Upg_Bow_Box2,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+17103,Upg_Twohand_Sword_Box2,Upg_Twohand_Sword_Box2,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+17104,HD_Oridecon_50Box,HD Oridecon 50 Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 6240,50; },{},{}
+17105,HD_Elunium_50Box,HD Elunium 50 Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 6241,50; },{},{}
 17106,Max_Weight_Up_10Box,Heavy Lifter Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 7776,10; },{},{}
-17107,Gemi_Crown_Scroll,Gemi Crown Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Gemi_Crown_Scroll); },{},{}
-17108,Gemi_Crown_Scroll_Box,Gemi Crown Scroll Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Gemi_Crown_Scroll_Box); },{},{}
+17107,Gemi_Crown_Scroll,Gemi Crown Scroll,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Gemi_Crown_Scroll); },{},{}
+17108,Gemi_Crown_Scroll_Box,Gemi Crown Scroll Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Gemi_Crown_Scroll_Box); },{},{}
 17109,Capri_Scroll,Capri Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 17110,Aquarius_Scroll,Aquarius Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 17113,Pisces_Scroll,Pisces Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}

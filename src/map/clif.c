@@ -13443,11 +13443,9 @@ void clif_parse_GM_Item_Monster(int fd, struct map_session_data *sd)
 		if( !itemdb_isstackable2(id) ) //Nonstackable
 			StringBuf_Printf(&command, "%citem2 %d 1 0 0 0 0 0 0 0", atcommand_symbol, id->nameid);
 		else {
-#ifdef ENABLE_ITEM_GUID
 			if (id->flag.guid)
 				StringBuf_Printf(&command, "%citem %d 1", atcommand_symbol, id->nameid);
 			else
-#endif
 				StringBuf_Printf(&command, "%citem %d 20", atcommand_symbol, id->nameid);
 		}
 		is_atcommand(fd, sd, StringBuf_Value(&command), 1);
@@ -16331,7 +16329,9 @@ void clif_parse_LessEffect(int fd, struct map_session_data* sd){
 	sd->state.lesseffect = ( isLess != 0 );
 }
 
-/// S 07e4 <length>.w <option>.l <val>.l {<index>.w <amount>.w).4b*
+/// S 07e4 <length>.w <option>.l <val>.l {<index>.w <amount>.w).4b* (CZ_ITEMLISTWIN_RES)
+/// S 0945 <length>.w <option>.l <val>.l {<index>.w <amount>.w).4b* (CZ_* RagexeRE 2012-04-10a)
+/// S 0281 <length>.w <option>.l <val>.l {<index>.w <amount>.w).4b* (CZ_* Ragexe 2013-08-07)
 void clif_parse_ItemListWindowSelected(int fd, struct map_session_data* sd) {
 	struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
 	int n = (RFIFOW(fd,info->pos[0])-12) / 4;
@@ -17160,27 +17160,6 @@ int clif_skill_itemlistwindow( struct map_session_data *sd, uint16 skill_id, uin
 	return 1;
 }
 
-
-// msgstringtable.txt
-// 0x291 <line>.W
-void clif_msgtable(int fd, int line) {
-	WFIFOHEAD(fd, packet_len(0x291));
-	WFIFOW(fd, 0) = 0x291;
-	WFIFOW(fd, 2) = line;
-	WFIFOSET(fd, packet_len(0x291));
-}
-
-// msgstringtable.txt
-// 0x7e2 <line>.W <value>.L
-void clif_msgtable_num(int fd, int line, int num) {
-#if PACKETVER >= 20090805
-	WFIFOHEAD(fd, packet_len(0x7e2));
-	WFIFOW(fd, 0) = 0x7e2;
-	WFIFOW(fd, 2) = line;
-	WFIFOL(fd, 4) = num;
-	WFIFOSET(fd, packet_len(0x7e2));
-#endif
-}
 /*==========================================
  * Select a skill into a given list (used by SC_AUTOSHADOWSPELL)
  * 0443 <type>.L <skill_id>.W (CZ_SKILL_SELECT_RESPONSE)
@@ -18026,6 +18005,188 @@ void clif_roulette_generate_ack(struct map_session_data *sd, unsigned char resul
 	WFIFOSET(fd,packet_len(0xa20));
 }
 
+/// MERGE ITEM
+
+/**
+ * Acknowledge the client about item merger result
+ * ZC 096F <index>.W <total>.W <result>.B (ZC_ACK_MERGE_ITEM)
+ * @param fd
+ * @param sd
+ **/
+void clif_merge_item_ack(struct map_session_data *sd, unsigned short index, unsigned short count, enum MERGE_ITEM_ACK type) {
+	unsigned char buf[9];
+	struct s_packet_db *info = NULL;
+	short cmd = 0;
+
+	nullpo_retv(sd);
+
+	if (!clif_session_isValid(sd))
+		return;
+	if (!(cmd = packet_db_ack[sd->packet_ver][ZC_ACK_MERGE_ITEM]))
+		return;
+	if (!(info = &packet_db[sd->packet_ver][cmd]) || info->len == 0)
+		return;
+
+	WBUFW(buf, 0) = cmd;
+	WBUFW(buf, info->pos[0]) = index;
+	WBUFW(buf, info->pos[1]) = count;
+	WBUFB(buf, info->pos[2]) = type;
+	clif_send(buf, info->len, &sd->bl, SELF);
+}
+
+/**
+ * Check if item has the pair to be merged
+ * @param sd
+ * @param it Item
+ * @return True if has pair, False if not
+ **/
+static bool clif_merge_item_has_pair(struct map_session_data *sd, struct item *it) {
+	struct item *it_;
+	unsigned short i;
+
+	nullpo_retr(false, sd);
+
+	ARR_FIND(0, MAX_INVENTORY, i, (it_ = &sd->status.inventory[i]) && it->nameid == it_->nameid && it->bound == it_->bound && memcmp(it_, it, sizeof(struct item)) != 0);
+	if (i < MAX_INVENTORY)
+		return true;
+
+	return false;
+}
+
+/**
+ * Check if item can be merged
+ * @param id Item Data
+ * @param it Item
+ * @return True if can be merged, False if not
+ **/
+static bool clif_merge_item_check(struct item_data *id, struct item *it) {
+	if (!id || !it)
+		return false;
+	if (id->type == IT_CASH)
+		return false;
+	if (!itemdb_isstackable2(id))
+		return false;
+	if (itemdb_isspecial(it->card[0]))
+		return false;
+	if (!it->unique_id)
+		return false;
+	return true;
+}
+
+/**
+ * Open available item to be merged.
+ * Only show 1 item in 1 process.
+ * ZC 096D <size>.W { <index>.W }* (ZC_MERGE_ITEM_OPEN)
+ * @param sd
+ **/
+void clif_merge_item_open(struct map_session_data *sd) {
+	unsigned char buf[4 + MAX_INVENTORY*2] = { 0 };
+	unsigned short cmd = 0, n = 0, i = 0, indexes[MAX_INVENTORY] = { 0 };
+	int len = 0;
+	struct s_packet_db *info = NULL;
+	struct item *it;
+
+	nullpo_retv(sd);
+	if (!clif_session_isValid(sd))
+		return;
+	if (!(cmd = packet_db_ack[sd->packet_ver][ZC_MERGE_ITEM_OPEN]))
+		return;
+	if (!(info = &packet_db[sd->packet_ver][cmd]) || info->len == 0)
+		return;
+
+	// Get entries
+	for (i = 0; i < MAX_INVENTORY; i++) {
+		if (!clif_merge_item_check(sd->inventory_data[i], (it = &sd->status.inventory[i])))
+			continue;
+		if (clif_merge_item_has_pair(sd, it))
+			indexes[n++] = i;
+	}
+
+	if (n < 2) { // No item need to be merged
+		clif_msg(sd, MERGE_ITEM_NOT_AVAILABLE);
+		return;
+	}
+
+	WBUFW(buf, 0) = cmd;
+	WBUFW(buf, info->pos[0]) = (len = 4 + n*2);
+	for (i = 0; i < n; i++) {
+		WBUFW(buf, info->pos[1] + i*2) = indexes[i]+2;
+	}
+
+	clif_send(buf, len, &sd->bl, SELF);
+}
+
+/**
+ * Process item merger
+ * CZ 096E <size>.W { <index>.W }* (CZ_REQ_MERGE_ITEM)
+ * @param fd
+ * @param sd
+ **/
+void clif_parse_merge_item_req(int fd, struct map_session_data* sd) {
+	struct s_packet_db *info = NULL;
+	unsigned short n = 0, indexes[MAX_INVENTORY] = { 0 }, i, j;
+	unsigned int count = 0;
+	struct item_data *id = NULL;
+
+	nullpo_retv(sd);
+	if (!clif_session_isValid(sd))
+		return;
+	if (!(info = &packet_db[sd->packet_ver][RFIFOW(fd,0)]) || info->len == 0)
+		return;
+
+	n = (RFIFOW(fd, info->pos[0]) - 4) / 2;
+
+	if (n < 2) { // No item need to be merged
+		clif_msg(sd, MERGE_ITEM_NOT_AVAILABLE);
+		return;
+	}
+
+	for (i = 0, j = 0; i < n; i++) {
+		unsigned short idx = RFIFOW(fd, info->pos[1] + i*2) - 2;
+		if (!clif_merge_item_check((id = sd->inventory_data[idx]), &sd->status.inventory[idx]))
+			continue;
+		indexes[j] = idx;
+		if (j && id->nameid != sd->inventory_data[indexes[0]]->nameid) { // Only can merge 1 kind at once
+			clif_merge_item_ack(sd, 0, 0, MERGE_ITEM_FAILED_NOT_MERGE);
+			return;
+		}
+		count += sd->status.inventory[idx].amount;
+		j++;
+	}
+
+	if (n != j || !(id = sd->inventory_data[indexes[0]])) {
+		clif_msg(sd, MERGE_ITEM_NOT_AVAILABLE);
+		return;
+	}
+
+	if (count >= (id->stack.amount ? id->stack.amount : MAX_AMOUNT)) {
+		clif_merge_item_ack(sd, 0, 0, MERGE_ITEM_FAILED_MAX_COUNT);
+		return;
+	}
+
+	// Merrrrge!!!!
+	for (i = 1; i < n; i++) {
+		unsigned short idx = indexes[i], amt = sd->status.inventory[idx].amount;
+		log_pick_pc(sd, LOG_TYPE_MERGE_ITEM, -amt, &sd->status.inventory[idx]);
+		memset(&sd->status.inventory[idx], 0, sizeof(sd->status.inventory[0]));
+		sd->inventory_data[idx] = NULL;
+		clif_delitem(sd, idx, amt, 0);
+	}
+	sd->status.inventory[indexes[0]].amount = count;
+
+	clif_merge_item_ack(sd, indexes[0]+2, count, MERGE_ITEM_SUCCESS);
+}
+
+/**
+ * Cancel item merge
+ * CZ 0974 (CZ_CANCEL_MERGE_ITEM)
+ * @param fd
+ * @param sd
+ **/
+void clif_parse_merge_item_cancel(int fd, struct map_session_data* sd) {
+	return; // Nothing todo yet
+}
+
 /*==========================================
  * Main client packet processing function
  *------------------------------------------*/
@@ -18407,8 +18568,8 @@ void packetdb_readdb(bool reload)
 	//#0x0940
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-		0,  0,  0,  0,  0,  0,  0, 14,  6, 50,  0,  0,  0,  0,  0,  0,
+		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1, -1,  7,
+		0,  0,  0,  0,  2,  0,  0, 14,  6, 50,  0,  0,  0,  0,  0,  0,
 	//#0x0980
 		0,  0,  0, 29,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 		31, 0,  0,  0,  0,  0,  0, -1,  8, 11,  9,  8,  0,  0,  0, 22,
@@ -18659,6 +18820,9 @@ void packetdb_readdb(bool reload)
 		{ clif_parse_RouletteClose, "rouletteclose" },
 		{ clif_parse_RouletteGenerate, "roulettegenerate" },
 		{ clif_parse_RouletteRecvItem, "rouletterecvitem" },
+		// Merge Item
+		{ clif_parse_merge_item_req, "mergeitem_req"},
+		{ clif_parse_merge_item_cancel, "mergeitem_cancel"},
 		{NULL,NULL}
 	};
 	struct {
@@ -18676,6 +18840,8 @@ void packetdb_readdb(bool reload)
 		{ "ZC_C_MARKERINFO", ZC_C_MARKERINFO},
 		{ "ZC_NOTIFY_BIND_ON_EQUIP", ZC_NOTIFY_BIND_ON_EQUIP },
 		{ "ZC_WEAR_EQUIP_ACK", ZC_WEAR_EQUIP_ACK },
+		{ "ZC_MERGE_ITEM_OPEN", ZC_MERGE_ITEM_OPEN },
+		{ "ZC_ACK_MERGE_ITEM", ZC_ACK_MERGE_ITEM },
 	};
 	const char *filename[] = { "packet_db.txt", DBIMPORT"/packet_db.txt"};
 	int f;

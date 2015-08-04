@@ -2860,14 +2860,26 @@ It's useful for when you want to check whether an item contains cards or if it's
 
 ---------------------------------------
 
-*mergeitem({<item_id>{,<char_id>}});
-*mergeitem({"<item name>"{,<char_id>}});
+*mergeitem({,<char_id>});
+
+Open merge item window to merge available item can be merged.
+
+Examples
+1. See the NPC 'npc/re/other/merge_item.txt'.
+2. Simple usage:
+    mes "Let's check if any item can be merged.";
+    close2;
+    mergeitem;
+    end;
+
+---------------------------------------
+
+*mergeitem2({<item_id>{,<char_id>}});
+*mergeitem2({"<item name>"{,<char_id>}});
 
 Merge all stackable items that separated by GUID flags
 (either by flag 4 item_flag.txt or GUID  in item_group).
 If no item ID/name given, all possible items in player's inventory will be merged.
-
-Example, just see the NPC 'npc/re/other/merge_item.txt'.
 
 ---------------------------------------
 //

@@ -18237,7 +18237,7 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 			for (i = 0; i < MAX_INVENTORY; i++) {
 				if (sd->status.inventory[i].nameid == nameid) {
 					if (sd->status.inventory[i].amount >= data->stack.amount) {
-						clif_msgtable(sd->fd,RUNE_CANT_CREATE);
+						clif_msg(sd,RUNE_CANT_CREATE);
 						return 0;
 					} else {
 						// The amount fits, say we got temp_qty 4 and 19 runes, we trim temp_qty to 1.

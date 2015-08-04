@@ -18937,7 +18937,7 @@ BUILDIN_FUNC(setmounting) {
 	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 	if( &sd->sc && sd->sc.option&(OPTION_WUGRIDER|OPTION_RIDING|OPTION_DRAGON|OPTION_MADOGEAR) ) {
-		clif_msgtable(sd->fd, NEED_REINS_OF_MOUNT);
+		clif_msg(sd, NEED_REINS_OF_MOUNT);
 		script_pushint(st,0); //can't mount with one of these
 	} else {
 		if( &sd->sc && sd->sc.data[SC_ALL_RIDING] )
@@ -20125,12 +20125,27 @@ BUILDIN_FUNC(countspiritball) {
 }
 
 /** Merges separated stackable items because of guid
-* mergeitem {<item_id>,{<char_id>}};
-* mergeitem {"<item name>",{<char_id>}};
-* @param item Item ID/Name for merging specific item (Optional)
+* mergeitem {<char_id>};
+* @param char_id Char ID (Optional)
 * @author [Cydh]
 */
 BUILDIN_FUNC(mergeitem) {
+	struct map_session_data *sd;
+
+	if (!script_charid2sd(2, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	clif_merge_item_open(sd);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/** Merges separated stackable items because of guid (Unofficial)
+* mergeitem2 {<item_id>,{<char_id>}};
+* mergeitem2 {"<item name>",{<char_id>}};
+* @param item Item ID/Name for merging specific item (Optional)
+* @author [Cydh]
+*/
+BUILDIN_FUNC(mergeitem2) {
 	struct map_session_data *sd;
 	struct item *items = NULL;
 	uint16 i, count = 0;
@@ -20147,7 +20162,7 @@ BUILDIN_FUNC(mergeitem) {
 		if (data_isstring(data)) {// "<item name>"
 			const char *name = conv_str(st,data);
 			if (!(id = itemdb_searchname(name))) {
-				ShowError("buildin_mergeitem: Nonexistant item %s requested.\n", name);
+				ShowError("buildin_mergeitem2: Nonexistant item %s requested.\n", name);
 				script_pushint(st, count);
 				return SCRIPT_CMD_FAILURE;
 			}
@@ -20156,7 +20171,7 @@ BUILDIN_FUNC(mergeitem) {
 		else if (data_isint(data)) {// <item id>
 			nameid = conv_num(st,data);
 			if (!(id = itemdb_exists(nameid))) {
-				ShowError("buildin_mergeitem: Nonexistant item %d requested.\n", nameid);
+				ShowError("buildin_mergeitem2: Nonexistant item %d requested.\n", nameid);
 				script_pushint(st, count);
 				return SCRIPT_CMD_FAILURE;
 			}
@@ -20887,7 +20902,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(addspiritball,"ii?"),
 	BUILDIN_DEF(delspiritball,"i?"),
 	BUILDIN_DEF(countspiritball,"?"),
-	BUILDIN_DEF(mergeitem,"??"),
+	BUILDIN_DEF(mergeitem,"?"),
+	BUILDIN_DEF(mergeitem2,"??"),
 	BUILDIN_DEF(npcshopupdate,"sii?"),
 	BUILDIN_DEF(getattachedrid,""),
 	BUILDIN_DEF(getvar,"vi"),

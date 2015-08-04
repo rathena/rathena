@@ -1428,20 +1428,23 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, uns
 	pc_paycash(sd,vt,points, LOG_TYPE_NPC);
 
 	// Delivery Process ----------------------------------------------------
-	for( i = 0; i < count; i++ )
-	{
-		struct item item_tmp;
-
+	for( i = 0; i < count; i++ ) {
 		nameid = item_list[i*2+1];
 		amount = item_list[i*2+0];
 
-		memset(&item_tmp,0,sizeof(item_tmp));
+		if( !pet_create_egg(sd,nameid) ) {
+			struct item item_tmp;
+			unsigned short get_amt = amount;
 
-		if( !pet_create_egg(sd,nameid) )
-		{
+			memset(&item_tmp, 0, sizeof(item_tmp));
 			item_tmp.nameid = nameid;
 			item_tmp.identify = 1;
-			pc_additem(sd,&item_tmp,amount,LOG_TYPE_NPC);
+
+			if ((itemdb_search(nameid))->flag.guid)
+				get_amt = 1;
+
+			for (j = 0; j < amount; j += get_amt)
+				pc_additem(sd,&item_tmp,get_amt,LOG_TYPE_NPC);
 		}
 	}
 
@@ -1548,14 +1551,19 @@ int npc_cashshop_buy(struct map_session_data *sd, unsigned short nameid, int amo
 
 	pc_paycash(sd, price, points, LOG_TYPE_NPC);
 
-	if( !pet_create_egg(sd, nameid) )
-	{
+	if( !pet_create_egg(sd, nameid) ) {
 		struct item item_tmp;
-		memset(&item_tmp, 0, sizeof(struct item));
+		unsigned short get_amt = amount, j;
+
+		memset(&item_tmp, 0, sizeof(item_tmp));
 		item_tmp.nameid = nameid;
 		item_tmp.identify = 1;
 
-		pc_additem(sd,&item_tmp, amount, LOG_TYPE_NPC);
+		if (item->flag.guid)
+			get_amt = 1;
+
+		for (j = 0; j < amount; j += get_amt)
+			pc_additem(sd,&item_tmp, get_amt, LOG_TYPE_NPC);
 	}
 
 	return 0;
@@ -1705,7 +1713,6 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 	for( i = 0; i < n; ++i ) {
 		unsigned short nameid = item_list[i].nameid;
 		unsigned short amount = item_list[i].qty;
-		struct item item_tmp;
 
 #if PACKETVER >= 20131223
 		if (nd->subtype == NPCTYPE_MARKETSHOP) {
@@ -1720,11 +1727,19 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 		if (itemdb_type(nameid) == IT_PETEGG)
 			pet_create_egg(sd, nameid);
 		else {
-			memset(&item_tmp,0,sizeof(item_tmp));
-			item_tmp.nameid = nameid;
-			item_tmp.identify = 1;
+			unsigned short get_amt = amount;
 
-			pc_additem(sd,&item_tmp,amount,LOG_TYPE_NPC);
+			if ((itemdb_search(nameid))->flag.guid)
+				get_amt = 1;
+
+			for (k = 0; k < amount; k += get_amt) {
+				struct item item_tmp;
+				memset(&item_tmp, 0, sizeof(item_tmp));
+				item_tmp.nameid = nameid;
+				item_tmp.identify = 1;
+
+				pc_additem(sd,&item_tmp,get_amt,LOG_TYPE_NPC);
+			}
 		}
 	}
 

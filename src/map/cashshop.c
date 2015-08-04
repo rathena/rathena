@@ -268,30 +268,40 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 	for( i = 0; i < n; ++i ){
 		unsigned short nameid = *( item_list + i * 5 );
 		uint32 quantity = *( item_list + i * 5 + 2 );
+		struct item_data *id = itemdb_search(nameid);
 
-		if (!itemdb_isstackable(nameid) && quantity > 1)
+		if (!id)
+			continue;
+
+		if (!itemdb_isstackable2(id) && quantity > 1)
 			quantity = 1;
 
 		if (!pet_create_egg(sd, nameid)) {
-			struct item item_tmp;
-			memset( &item_tmp, 0, sizeof( item_tmp ) );
+			unsigned short get_amt = quantity, j;
 
-			item_tmp.nameid = nameid;
-			item_tmp.identify = 1;
+			if (id->flag.guid)
+				get_amt = 1;
 
-			switch( pc_additem( sd, &item_tmp, quantity, LOG_TYPE_CASH ) ){
-				case ADDITEM_OVERWEIGHT:
-					clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_INVENTORY_WEIGHT );
-					return false;
-				case ADDITEM_OVERITEM:
-					clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_INVENTORY_ITEMCNT );
-					return false;
-				case ADDITEM_OVERAMOUNT:
-					clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_OVER_PRODUCT_TOTAL_CNT );
-					return false;
-				case ADDITEM_STACKLIMIT:
-					clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_RUNE_OVERCOUNT );
-					return false;
+			for (j = 0; j < quantity; j += get_amt) {
+				struct item item_tmp = { 0 };
+
+				item_tmp.nameid = nameid;
+				item_tmp.identify = 1;
+
+				switch( pc_additem( sd, &item_tmp, get_amt, LOG_TYPE_CASH ) ){
+					case ADDITEM_OVERWEIGHT:
+						clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_INVENTORY_WEIGHT );
+						return false;
+					case ADDITEM_OVERITEM:
+						clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_INVENTORY_ITEMCNT );
+						return false;
+					case ADDITEM_OVERAMOUNT:
+						clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_OVER_PRODUCT_TOTAL_CNT );
+						return false;
+					case ADDITEM_STACKLIMIT:
+						clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_RUNE_OVERCOUNT );
+						return false;
+				}
 			}
 		}
 	}

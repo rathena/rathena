@@ -4317,10 +4317,8 @@ char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_p
 
 	i = MAX_INVENTORY;
 
-#ifdef ENABLE_ITEM_GUID
 	if (id->flag.guid && !item->unique_id)
 		item->unique_id = pc_generate_unique_id(sd);
-#endif
 
 	// Stackable | Non Rental
 	if( itemdb_isstackable2(id) && item->expire_time == 0 ) {
@@ -4356,11 +4354,12 @@ char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_p
 		sd->status.inventory[i].amount = amount;
 		sd->inventory_data[i] = id;
 		sd->last_addeditem_index = i;
+
+		if (!itemdb_isstackable2(id) || id->flag.guid)
+			sd->status.inventory[i].unique_id = item->unique_id ? item->unique_id : pc_generate_unique_id(sd);
+
 		clif_additem(sd,i,amount,0);
 	}
-
-	if (!itemdb_isstackable2(id) && !item->unique_id)
-		sd->status.inventory[i].unique_id = pc_generate_unique_id(sd);
 
 	log_pick_pc(sd, log_type, amount, &sd->status.inventory[i]);
 
@@ -4567,7 +4566,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 		return false;
 
 	if( (item->item_usage.flag&NOUSE_SITTING) && (pc_issit(sd) == 1) && (pc_get_group_level(sd) < item->item_usage.override) ) {
-		clif_msgtable(sd->fd,ITEM_NOUSE_SITTING);
+		clif_msg(sd,ITEM_NOUSE_SITTING);
 		return false; // You cannot use this item while sitting.
 	}
 
@@ -4665,7 +4664,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 
 	if( item->flag.group || item->type == IT_CASH) {	//safe check type cash disappear when overweight [Napster]
 		if( pc_is90overweight(sd) ) {
-			clif_msgtable(sd->fd, ITEM_CANT_OBTAIN_WEIGHT);
+			clif_msg(sd, ITEM_CANT_OBTAIN_WEIGHT);
 			return false;
 		}
 		if( !pc_inventoryblank(sd) ) {

@@ -181,18 +181,18 @@ static void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, struct s_it
 	// Do loop for non-stackable item
 	for (i = 0; i < data->amount; i++) {
 		char flag = 0;
-#ifdef ENABLE_ITEM_GUID
 		tmp.unique_id = data->GUID ? pc_generate_unique_id(sd) : 0; // Generate UID
-#endif
-		if ((flag = pc_additem(sd, &tmp, tmp.amount, LOG_TYPE_SCRIPT)))
+		if ((flag = pc_additem(sd, &tmp, tmp.amount, LOG_TYPE_SCRIPT))) {
 			clif_additem(sd, 0, 0, flag);
+			if (pc_candrop(sd, &tmp))
+				map_addflooritem(&tmp, tmp.amount, sd->bl.m, sd->bl.x,sd->bl.y, 0, 0, 0, 0);
+		}
 		else if (!flag && data->isAnnounced) {
 			char output[CHAT_SIZE_MAX];
 			sprintf(output, msg_txt(NULL, 717), sd->status.name, itemdb_jname(data->nameid), itemdb_jname(sd->itemid));
 
-			//! TODO: Move this broadcast to proper packet
+			//! TODO: Move this broadcast to proper packet. ZI -> IZ (all Zones) -> ZC (clif_broadcast_obtain_special_item)
 			intif_broadcast(output, strlen(output) + 1, BC_DEFAULT);
-			//clif_broadcast_obtain_special_item();
 		}
 		if (itemdb_isstackable(data->nameid))
 			break;
@@ -654,9 +654,7 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 		if (str[3] != NULL) entry.amount = cap_value(atoi(str[3]),1,MAX_AMOUNT);
 		if (str[5] != NULL) entry.isAnnounced= atoi(str[5]);
 		if (str[6] != NULL) entry.duration = cap_value(atoi(str[6]),0,UINT16_MAX);
-#ifdef ENABLE_ITEM_GUID
 		if (str[7] != NULL) entry.GUID = atoi(str[7]);
-#endif
 		if (str[8] != NULL) entry.bound = cap_value(atoi(str[8]),BOUND_NONE,BOUND_MAX-1);
 		if (str[9] != NULL) entry.isNamed = atoi(str[9]);
 
@@ -904,9 +902,7 @@ static bool itemdb_read_flag(char* fields[], int columns, int current) {
 
 	if (flag&1) id->flag.dead_branch = set ? 1 : 0;
 	if (flag&2) id->flag.group = set ? 1 : 0;
-#ifdef ENABLE_ITEM_GUID
 	if (flag&4 && itemdb_isstackable2(id)) id->flag.guid = set ? 1 : 0;
-#endif
 	if (flag&8) id->flag.bindOnEquip = true;
 
 	return true;
