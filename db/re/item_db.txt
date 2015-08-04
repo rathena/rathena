@@ -6320,7 +6320,7 @@
 12441,F_Bubble_Gum,F Old Bubble Gum,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12442,F_Kafra_Card,F Kafra Card,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12443,F_Neuralizer,F Neuralizer,2,2,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12444,F_Dun_Tele_Scroll1,WoE Telport Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_CashSeigeTele"; },{},{}
+12444,F_Dun_Tele_Scroll1,WoE Telport Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_CashSiegeTele"; },{},{}
 12445,F_Str_Dish10_,F Str Dish10,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12446,F_Agi_Dish10_,F Agi Dish10,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12447,F_Int_Dish10_,F Int Dish10,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
@@ -8153,7 +8153,7 @@
 14588,Pty_Blessing_Scroll,Party Blessing 10 Scroll,11,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "CASH_BLESSING",10; },{},{}
 14589,Pty_Inc_Agi_Scroll,Party Increase Agi 10 Scroll,11,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "CASH_INCAGI",10; },{},{}
 14590,Pty_Assumptio_Scroll,Party Assumptio 5 Scroll,11,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "CASH_ASSUMPTIO",5; },{},{}
-14591,Siege_Teleport_Scroll,WoE Teleport Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_CashSeigeTele"; },{},{}
+14591,Siege_Teleport_Scroll,WoE Teleport Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_CashSiegeTele"; },{},{}
 14592,Job_Manual50,JOB Battle Manual,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_JEXPBOOST,1800000,50; },{},{}
 14593,Magic_Power_Scroll,Mystical Amplification Scroll,11,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "HW_MAGICPOWER",10; },{},{}
 14594,Quagmire_Scroll,Quagmire Scroll,11,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WZ_QUAGMIRE",5; },{},{}

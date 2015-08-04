@@ -6405,7 +6405,7 @@
 14588,Pty_Blessing_Scroll,Party Blessing 10 Scroll,11,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "CASH_BLESSING",10; },{},{}
 14589,Pty_Inc_Agi_Scroll,Party Increase Agi 10 Scroll,11,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "CASH_INCAGI",10; },{},{}
 14590,Pty_Assumptio_Scroll,Party Assumptio 5 Scroll,11,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "CASH_ASSUMPTIO",5; },{},{}
-14591,Siege_Teleport_Scroll,WoE Teleport Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc "F_CashSeigeTele"; },{},{}
+14591,Siege_Teleport_Scroll,WoE Teleport Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc "F_CashSiegeTele"; },{},{}
 14592,Job_Manual50,JOB Battle Manual,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_JEXPBOOST,1800000,50; },{},{}
 14593,Magic_Power_Scroll,Mystical Amplification Scroll,11,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "HW_MAGICPOWER",10; },{},{}
 14594,Quagmire_Scroll,Quagmire Scroll,11,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "WZ_QUAGMIRE",5; },{},{}

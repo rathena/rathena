@@ -93,7 +93,7 @@ OnEnable:
 			enablenpc "Tire"+.@c+"#2";
 			enablenpc "Tire"+.@c+"#3";
 			if (.@tired < 30) enablenpc "Tire"+.@c+"#4";
-		} else if (.@line) <= 60 {
+		} else if (.@line <= 60) {
 			.@tired = rand(10,30);
 			for ( .@i = 1; .@i <= 3; .@i++ )
 				enablenpc "Luk"+.@c+"#"+.@i;
