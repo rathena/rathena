@@ -912,13 +912,13 @@
 6915,499,100	// Captured_Soul
 6916,499,100	// Piece_Of_Soul_Monkey
 6917,499,100	// Piece_Of_Soul_Chicken
-//6919,499,100	//
+6919,499,100	// Honor_Proof
 //6920,467,100	//
-//6923,499,100	//
-//6925,499,100	//
-//6926,499,100	//
-//6927,499,100	//
-//6928,499,100	//
+6923,499,100	// Bright_Fire_Lights
+6925,499,100	// Letter_Of_Prisoner
+6926,499,100	// Rune-Midgard_History_Book
+6927,499,100	// Stone_That_Contained_Sea
+6928,499,100	// Poring_Scourer
 //6929,499,100	//
 //6930,499,100	//
 //6931,499,100	//
