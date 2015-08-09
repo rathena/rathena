@@ -4612,11 +4612,11 @@
 6915,Captured_Soul,Captured Soul,3,10,,0,,,,,,,,,,,,,{},{},{}
 6916,Piece_Of_Soul_Monkey,Piece Of Soul Monkey,3,10,,0,,,,,,,,,,,,,{},{},{}
 6917,Piece_Of_Soul_Chicken,Piece Of Soul Chicken,3,10,,0,,,,,,,,,,,,,{},{},{}
-6919,Honor_Proof,Honor Proof,3,10,,0,,,,,,,,,,,,,{},{},{}
-6921,Dehumidifiers,Dehumidifiers,3,10,,0,,,,,,,,,,,,,{},{},{}
-6922,Sandpaper,Sandpaper,3,10,,0,,,,,,,,,,,,,{},{},{}
-6923,Bright_Fire_Lights,Bright Fire Lights,3,10,,0,,,,,,,,,,,,,{},{},{}
-6924,Red_Eye,Red Eye,3,10,,0,,,,,,,,,,,,,{},{},{}
+6919,Honor_Proof,Honor Proof,3,10,,10,,,,,,,,,,,,,{},{},{}
+6921,Dehumidifiers,Dehumidifiers,3,10,,10,,,,,,,,,,,,,{},{},{}
+6922,Sandpaper,Sandpaper,3,10,,10,,,,,,,,,,,,,{},{},{}
+6923,Bright_Fire_Lights,Bright Fire Lights,3,10,,10,,,,,,,,,,,,,{},{},{}
+6924,Red_Eye,Red Eye,3,10,,10,,,,,,,,,,,,,{},{},{}
 6925,Letter_Of_Prisoner,Letter Of Prisoner,3,10,,0,,,,,,,,,,,,,{},{},{}
 6926,Rune-Midgard_History_Book,Rune-Midgard History Book,3,10,,0,,,,,,,,,,,,,{},{},{}
 6927,Stone_That_Contained_Sea,Stone That Contained Sea,3,10,,0,,,,,,,,,,,,,{},{},{}
