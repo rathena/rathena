@@ -3295,9 +3295,9 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				md->deletetimer = INVALID_TIMER;
 			}
 
-			if( md->lootitem ) {
-				aFree(md->lootitem);
-				md->lootitem = NULL;
+			if (md->lootitems) {
+				aFree(md->lootitems);
+				md->lootitems = NULL;
 			}
 
 			if( md->guardian_data ) {

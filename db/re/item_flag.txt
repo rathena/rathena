@@ -2,10 +2,11 @@
 // <ItemID>,<Flag>
 //
 // <Flag>:
-// 1 - As Dead Branch item (will be logged at `branchlog` table and cannot be used at 'nobranch' mapflag)
-// 2 - As item group container, check player's inventory and weight before consumed
-// 4 - GUID Item: When this item is obtained, will generates GUID that cannot be stacked even same or stackable item
-// 8 - Item will be bound item when equipped
+//  1 - As Dead Branch item (will be logged at `branchlog` table and cannot be used at 'nobranch' mapflag)
+//  2 - As item group container, check player's inventory and weight before consumed
+//  4 - GUID Item: When this item is obtained, will generates GUID that cannot be stacked even same or stackable item
+//  8 - Item will be bound item when equipped
+// 16 - Special Broadcast: When item dropped by monster and player loot it, will be broadcasted!
 // NOTE: For removing flag by import file, use "-" to remove the flag. Example, 604,-1 will removes flag 1 from Branch_Of_Dead_Tree
 
 // Logged as Dead Branch item
@@ -1698,3 +1699,7 @@
 //17330,4 //Fashion_Costume_Box4
 //17335,4 //Mysterious_Ingredient_B
 22558,4 //Lucky_Bag
+
+// Special Broadcast
+7782,16 //Gold_Key77
+7783,16 //Silver_Key77

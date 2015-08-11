@@ -594,6 +594,22 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	desc:
 		- Request acc info
 
+0x3009
+	Type: ZI
+	Structure: <cmd>.W <len>.W <nameid>.W <source>.W <type>.B <name>.24B <srcname>.24B
+	index: 0,2,6,4,8,9,24
+	len: 9+NAME_LENGTH+NAME_LENGTH
+	parameter:
+		- cmd : packet identification (0x3009)
+		- len : Packet length
+		- nameid : ID of obtained item
+		- source : Source from where the item obtained
+		- type : Obtained type. 0: Box/Package, 1: Monster, 2: NPC
+		- name : Name of player who obtained the item
+		- srcname : Source name as alternative of source id
+	desc:
+		- Send broadcasts request if player get special items.
+
 0x3018
 	Type: ZI
 	Structure: <cmd>.W <aid>.L <gid>.L
@@ -1476,6 +1492,22 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- acc_name
 	desc:
 		- Transmit the result of a account_information request from map-serv, with type 1
+
+0x3809
+	Type: IZ
+	Structure: <cmd>.W <len>.W <nameid>.W <source>.W <type>.B <name>.24B <srcname>.24B
+	index: 0,2,6,4,8,9,24
+	len: 9+NAME_LENGTH+NAME_LENGTH
+	parameter:
+		- cmd : packet identification (0x3809)
+		- len : Packet length
+		- nameid : ID of obtained item
+		- source : Source from where the item obtained
+		- type : Obtained type. 0: Box/Package, 1: Monster, 2: NPC
+		- name : Name of player who obtained the item
+		- srcname : Source name as alternative of source
+	desc:
+		- Broadcasts if player get special items.
 
 0x3818
 	Type: IZ

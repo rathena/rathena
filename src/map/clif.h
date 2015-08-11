@@ -52,6 +52,7 @@ enum e_packet_ack {
 	ZC_WEAR_EQUIP_ACK,
 	ZC_MERGE_ITEM_OPEN,
 	ZC_ACK_MERGE_ITEM,
+	ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN,
 	//add other here
 	MAX_ACK_FUNC //auto upd len
 };
@@ -115,6 +116,12 @@ enum MERGE_ITEM_ACK {
 	MERGE_ITEM_SUCCESS = 0x0,
 	MERGE_ITEM_FAILED_NOT_MERGE = 0x1,
 	MERGE_ITEM_FAILED_MAX_COUNT = 0x2,
+};
+
+enum BROADCASTING_SPECIAL_ITEM_OBTAIN {
+	ITEMOBTAIN_TYPE_BOXITEM =  0x0,
+	ITEMOBTAIN_TYPE_MONSTER_ITEM =  0x1,
+	ITEMOBTAIN_TYPE_NPC =  0x2,
 };
 
 // packet_db[SERVER] is reserved for server use
@@ -959,6 +966,6 @@ void clif_notify_bindOnEquip(struct map_session_data *sd, int n);
 
 void clif_merge_item_open(struct map_session_data *sd);
 
-//void clif_broadcast_obtain_special_item(); ///TODO!
+void clif_broadcast_obtain_special_item(const char *char_name, unsigned short nameid, unsigned short container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type, const char *srcname);
 
 #endif /* _CLIF_H_ */

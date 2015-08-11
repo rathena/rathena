@@ -25,7 +25,7 @@
 #include <stdlib.h>
 
 static const int packet_len_table[]={
-	-1,-1,27,-1, -1, 0,37,-1, 10+NAME_LENGTH, 0, 0, 0,  0, 0,  0, 0, //0x3800-0x380f
+	-1,-1,27,-1, -1, 0,37,-1, 10+NAME_LENGTH,-1, 0, 0,  0, 0,  0, 0, //0x3800-0x380f
 	 0, 0, 0, 0,  0, 0, 0, 0, -1,11, 0, 0,  0, 0,  0, 0, //0x3810
 	39,-1,15,15, 14,19, 7,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3820
 	10,-1,15, 0, 79,19, 7,-1,  0,-1,-1,-1, 14,67,186,-1, //0x3830
@@ -2868,6 +2868,97 @@ void intif_parse_MessageToFD(int fd) {
 	return;
 }
 
+/// BROADCAST OBTAIN SPECIAL ITEM
+
+/**
+ * Request to send broadcast item to all servers
+ * ZI 3009 <cmd>.W <len>.W <nameid>.W <source>.W <type>.B <name>.?B
+ * @param sd Player who obtain the item
+ * @param nameid Obtained item
+ * @param sourceid Source of item, another item ID or monster ID
+ * @param type Obtain type @see enum BROADCASTING_SPECIAL_ITEM_OBTAIN
+ * @return
+ **/
+int intif_broadcast_obtain_special_item(struct map_session_data *sd, unsigned short nameid, unsigned int sourceid, unsigned char type) {
+	nullpo_retr(0, sd);
+
+	// Should not be here!
+	if (type == ITEMOBTAIN_TYPE_NPC) {
+		intif_broadcast_obtain_special_item_npc(sd, nameid, NULL /*wisp_server_name*/);
+		return 0;
+	}
+
+	// Send local
+	clif_broadcast_obtain_special_item(sd->status.name, nameid, sourceid, (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type, NULL);
+
+	if (CheckForCharServer())
+		return 0;
+
+	if (other_mapserver_count < 1)
+		return 0;
+
+	WFIFOHEAD(inter_fd, 9 + NAME_LENGTH);
+	WFIFOW(inter_fd, 0) = 0x3009;
+	WFIFOW(inter_fd, 2) = 9 + NAME_LENGTH;
+	WFIFOW(inter_fd, 4) = nameid;
+	WFIFOW(inter_fd, 6) = sourceid;
+	WFIFOB(inter_fd, 8) = type;
+	safestrncpy((char *)WFIFOP(inter_fd, 9), sd->status.name, NAME_LENGTH);
+	WFIFOSET(inter_fd, WFIFOW(inter_fd, 2));
+
+	return 1;
+}
+
+/**
+ * Request to send broadcast item to all servers.
+ * TODO: Confirm the usage. Maybe on getitem-like command?
+ * ZI 3009 <cmd>.W <len>.W <nameid>.W <source>.W <type>.B <name>.24B <npcname>.24B
+ * @param sd Player who obtain the item
+ * @param nameid Obtained item
+ * @param srcname Source name
+ * @return
+ **/
+int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigned short nameid, const char *srcname) {
+	nullpo_retr(0, sd);
+
+	// Send local
+	clif_broadcast_obtain_special_item(sd->status.name, nameid, 0, ITEMOBTAIN_TYPE_NPC, srcname);
+
+	if (CheckForCharServer())
+		return 0;
+
+	if (other_mapserver_count < 1)
+		return 0;
+
+	WFIFOHEAD(inter_fd, 9 + NAME_LENGTH*2);
+	WFIFOW(inter_fd, 0) = 0x3009;
+	WFIFOW(inter_fd, 2) = 9 + NAME_LENGTH*2;
+	WFIFOW(inter_fd, 4) = nameid;
+	WFIFOW(inter_fd, 6) = 0;
+	WFIFOB(inter_fd, 8) = ITEMOBTAIN_TYPE_NPC;
+	safestrncpy((char *)WFIFOP(inter_fd, 9), sd->status.name, NAME_LENGTH);
+	safestrncpy((char *)WFIFOP(inter_fd, 9 + NAME_LENGTH), srcname, NAME_LENGTH);
+	WFIFOSET(inter_fd, WFIFOW(inter_fd, 2));
+
+	return 1;
+}
+
+/**
+ * Received broadcast item and broadcast on local map.
+ * IZ 3809 <cmd>.W <len>.W <nameid>.W <source>.W <type>.B <name>.24B <srcname>.24B
+ * @param fd
+ **/
+void intif_parse_broadcast_obtain_special_item(int fd) {
+	int type = RFIFOB(fd, 8);
+	char name[NAME_LENGTH], srcname[NAME_LENGTH];
+
+	safestrncpy(name, (char *)RFIFOP(fd, 9), NAME_LENGTH);
+	if (type == ITEMOBTAIN_TYPE_NPC)
+		safestrncpy(name, (char *)RFIFOP(fd, 9 + NAME_LENGTH), NAME_LENGTH);
+
+	clif_broadcast_obtain_special_item(name, RFIFOW(fd, 4), RFIFOW(fd, 6), (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type, srcname);
+}
+
 /*==========================================
  * Item Bound System
  *------------------------------------------*/
@@ -2985,6 +3076,7 @@ int intif_parse(int fd)
 	case 0x3806:	intif_parse_ChangeNameOk(fd); break;
 	case 0x3807:	intif_parse_MessageToFD(fd); break;
 	case 0x3808:	intif_parse_accinfo_ack(fd); break;
+	case 0x3809:	intif_parse_broadcast_obtain_special_item(fd); break;
 	case 0x3818:	intif_parse_LoadGuildStorage(fd); break;
 	case 0x3819:	intif_parse_SaveGuildStorage(fd); break;
 	case 0x3820:	intif_parse_PartyCreated(fd); break;

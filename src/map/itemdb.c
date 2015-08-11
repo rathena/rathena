@@ -160,15 +160,16 @@ unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group) {
 * @param *group: struct s_item_group from itemgroup_db[group_id].random[idx] or itemgroup_db[group_id].must[sub_group][idx]
 */
 static void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, struct s_item_group_entry *data) {
-	uint16 i;
+	uint16 i, get_amt = 0;
 	struct item tmp;
+	struct item_data *id = NULL;
 
 	nullpo_retv(data);
 
 	memset(&tmp, 0, sizeof(tmp));
+	id = itemdb_search(data->nameid);
 
 	tmp.nameid = data->nameid;
-	tmp.amount = (itemdb_isstackable(data->nameid)) ? data->amount : 1;
 	tmp.bound = data->bound;
 	tmp.identify = 1;
 	tmp.expire_time = (data->duration) ? (unsigned int)(time(NULL) + data->duration*60) : 0;
@@ -178,24 +179,23 @@ static void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, struct s_it
 		tmp.card[2] = GetWord(sd->status.char_id, 0);
 		tmp.card[3] = GetWord(sd->status.char_id, 1);
 	}
+
+	if (!itemdb_isstackable(data->nameid))
+		get_amt = 1;
+	else
+		get_amt = data->amount;
+
 	// Do loop for non-stackable item
-	for (i = 0; i < data->amount; i++) {
+	for (i = 0; i < data->amount; i += get_amt) {
 		char flag = 0;
-		tmp.unique_id = data->GUID ? pc_generate_unique_id(sd) : 0; // Generate UID
-		if ((flag = pc_additem(sd, &tmp, tmp.amount, LOG_TYPE_SCRIPT))) {
+		tmp.unique_id = data->GUID ? pc_generate_unique_id(sd) : 0; // Generate GUID
+		if ((flag = pc_additem(sd, &tmp, get_amt, LOG_TYPE_SCRIPT))) {
 			clif_additem(sd, 0, 0, flag);
 			if (pc_candrop(sd, &tmp))
-				map_addflooritem(&tmp, tmp.amount, sd->bl.m, sd->bl.x,sd->bl.y, 0, 0, 0, 0);
+				map_addflooritem(&tmp, tmp.amount, sd->bl.m, sd->bl.x,sd->bl.y, 0, 0, 0, 0, 0);
 		}
-		else if (!flag && data->isAnnounced) {
-			char output[CHAT_SIZE_MAX];
-			sprintf(output, msg_txt(NULL, 717), sd->status.name, itemdb_jname(data->nameid), itemdb_jname(sd->itemid));
-
-			//! TODO: Move this broadcast to proper packet. ZI -> IZ (all Zones) -> ZC (clif_broadcast_obtain_special_item)
-			intif_broadcast(output, strlen(output) + 1, BC_DEFAULT);
-		}
-		if (itemdb_isstackable(data->nameid))
-			break;
+		else if (!flag && data->isAnnounced)
+			intif_broadcast_obtain_special_item(sd, data->nameid, sd->itemid, ITEMOBTAIN_TYPE_BOXITEM);
 	}
 }
 
@@ -904,6 +904,7 @@ static bool itemdb_read_flag(char* fields[], int columns, int current) {
 	if (flag&2) id->flag.group = set ? 1 : 0;
 	if (flag&4 && itemdb_isstackable2(id)) id->flag.guid = set ? 1 : 0;
 	if (flag&8) id->flag.bindOnEquip = true;
+	if (flag&16) id->flag.broadcast = 1;
 
 	return true;
 }

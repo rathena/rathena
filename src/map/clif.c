@@ -17703,12 +17703,6 @@ static unsigned short clif_parse_cmd(int fd, struct map_session_data *sd) {
 #endif
 }
 
-/**
-* !TODO: Special item that obtained, must be broadcasted by this packet
-* 07fd ?? (ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN)
-*/
-//void clif_broadcast_obtain_special_item() {}
-
 #ifdef DUMP_UNKNOWN_PACKET
 void DumpUnknown(int fd,TBL_PC *sd,int cmd,int packet_len)
 {
@@ -18185,6 +18179,54 @@ void clif_parse_merge_item_req(int fd, struct map_session_data* sd) {
  **/
 void clif_parse_merge_item_cancel(int fd, struct map_session_data* sd) {
 	return; // Nothing todo yet
+}
+
+/**
+ * 07fd <size>.W <type>.B <itemid>.W <charname_len>.B <charname>.24B <source_len>.B <containerid>.W (ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN)
+ * 07fd <size>.W <type>.B <itemid>.W <charname_len>.B <charname>.24B <source_len>.B <srcname>.24B (ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN)
+ * type: ITEMOBTAIN_TYPE_BOXITEM & ITEMOBTAIN_TYPE_MONSTER_ITEM "[playername] ... [surcename] ... [itemname]" -> MsgStringTable[1629]
+ * type: ITEMOBTAIN_TYPE_NPC "[playername] ... [itemname]" -> MsgStringTable[1870]
+ **/
+void clif_broadcast_obtain_special_item(const char *char_name, unsigned short nameid, unsigned short container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type, const char *srcname) {
+	unsigned char buf[9 + NAME_LENGTH * 2];
+	unsigned short pos = 0, cmd = 0;
+	struct s_packet_db *info = NULL;
+
+	if (!(cmd = packet_db_ack[clif_config.packet_db_ver][ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN]))
+		return;
+
+	if (!(info = &packet_db[clif_config.packet_db_ver][cmd]) || info->len == 0)
+		return;
+
+	WBUFW(buf, 0) = 0x7fd;
+	WBUFB(buf, 4) = type;
+	WBUFW(buf, 5) = nameid;
+	WBUFB(buf, 7) = NAME_LENGTH;
+	safestrncpy((char *)WBUFP(buf, 8), char_name, NAME_LENGTH);
+
+	switch (type) {
+		case ITEMOBTAIN_TYPE_BOXITEM:
+			WBUFW(buf, 2) = 11 + NAME_LENGTH;
+			WBUFB(buf, 8 + NAME_LENGTH) = 0;
+			WBUFW(buf, 9 + NAME_LENGTH) = container;
+			break;
+
+		case ITEMOBTAIN_TYPE_MONSTER_ITEM:
+			{
+				struct mob_db *db = mob_db(container);
+				WBUFW(buf, 2) = 9 + NAME_LENGTH * 2;
+				WBUFB(buf, 8 + NAME_LENGTH) = NAME_LENGTH;
+				safestrncpy((char *)WBUFP(buf, 9 + NAME_LENGTH), db->name, NAME_LENGTH);
+			}
+			break;
+
+		case ITEMOBTAIN_TYPE_NPC:
+		default:
+			WBUFW(buf, 2) = 8 + NAME_LENGTH;
+			break;
+	}
+
+	clif_send(buf, WBUFW(buf, 2), NULL, ALL_CLIENT);
 }
 
 /*==========================================
@@ -18842,6 +18884,7 @@ void packetdb_readdb(bool reload)
 		{ "ZC_WEAR_EQUIP_ACK", ZC_WEAR_EQUIP_ACK },
 		{ "ZC_MERGE_ITEM_OPEN", ZC_MERGE_ITEM_OPEN },
 		{ "ZC_ACK_MERGE_ITEM", ZC_ACK_MERGE_ITEM },
+		{ "ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN", ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN },
 	};
 	const char *filename[] = { "packet_db.txt", DBIMPORT"/packet_db.txt"};
 	int f;

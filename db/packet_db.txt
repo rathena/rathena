@@ -1477,7 +1477,7 @@ packet_ver: 25
 
 //2009-12-01aRagexeRE
 0x07fc,10
-//0x07fd,-1
+0x07fd,-1,ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN,0
 0x07fe,26
 //0x07ff,-1
 
