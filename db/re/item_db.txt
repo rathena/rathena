@@ -9842,6 +9842,7 @@
 20232,C_Celines_Ribbon,Costume Celine Ribbon,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,967,{},{},{}
 20233,C_Golden_Angel,Costume Golden Angel,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,646,{},{},{}
 20234,C_Baphomet_Hat,Costume Baphomet Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,7168,,1,1,1311,{ bonus bMaxHPrate,15; bonus bMaxSPrate,15; bonus2 bAddRace,RC_All,15; bonus2 bMagicAddRace,RC_All,15; bonus2 bAddItemHealRate,519,2015; },{},{}
+20247,C_Fate_Of_Black_Hand,Costume Fate Of Black Hand,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,1310,{},{},{}
 20271,C_Sunflower,Costume Sunflower,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,37,{},{},{}
 20272,C_Unicorn_Horn,Costume Unicorn Horn,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,42,{},{},{}
 //
@@ -10078,6 +10079,9 @@
 22844,Sealed_Dracula_Card_Album,Sealed Dracula Card Album,2,10,,10,,,,,,,,,,,,,{/*No Info*/},{},{}
 22845,Sealed_Fortune_Egg,Sealed Fortune Egg,2,10,,10,,,,,,,,,,,,,{ getitem callfunc("F_Rand",4488,4497,4486,4480,4485,4539,4487,4494,4538,4489,4490,4482,4503,22846),1; },{},{}
 22846,Sealed_Dracula_Card,Sealed Dracula Card,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "{ bonus2 bSPDrainRate,50,5; }",300; },{},{}
+22847,Prontera_Medal,Prontera Medal,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ warp "prontera",0,0; /*No coord info*/ },{},{}
+22848,Prison_Key,Prison Key,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ warp "prt_prison",0,0; /*No coord info*/ },{},{}
+22849,Prontera_Time_Crystal,Prontera Time Crystal,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ warp "prt_lib_q",0,0; /*No map+coord info*/ },{},{}
 22850,January_Gift_Box,January Gift Box,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ rentitem 19052,604800; },{},{}
 22851,February_Gift_Box,February Gift Box,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12105,2; },{},{}
 22852,March_Gift_Box,March Gift Box,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{/*2 Lucky Eggs*/},{},{}

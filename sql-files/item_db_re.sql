@@ -9873,6 +9873,7 @@ REPLACE INTO `item_db_re` VALUES (20231,'C_Snowman_Hat','Costume Snowman Hat',4,
 REPLACE INTO `item_db_re` VALUES (20232,'C_Celines_Ribbon','Costume Celine Ribbon',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,967,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20233,'C_Golden_Angel','Costume Golden Angel',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,646,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20234,'C_Baphomet_Hat','Costume Baphomet Hat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,7168,NULL,'1',1,1311,'bonus bMaxHPrate,15; bonus bMaxSPrate,15; bonus2 bAddRace,RC_All,15; bonus2 bMagicAddRace,RC_All,15; bonus2 bAddItemHealRate,519,2015;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (20247,'C_Fate_Of_Black_Hand','Costume Fate Of Black Hand',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,1310,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20271,'C_Sunflower','Costume Sunflower',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,37,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20272,'C_Unicorn_Horn','Costume Unicorn Horn',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,42,NULL,NULL,NULL);
 #
@@ -10109,6 +10110,9 @@ REPLACE INTO `item_db_re` VALUES (22843,'Superstar_Snack','Superstar Snack',2,10
 REPLACE INTO `item_db_re` VALUES (22844,'Sealed_Dracula_Card_Album','Sealed Dracula Card Album',2,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'/*No Info*/',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22845,'Sealed_Fortune_Egg','Sealed Fortune Egg',2,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'getitem callfunc("F_Rand",4488,4497,4486,4480,4485,4539,4487,4494,4538,4489,4490,4482,4503,22846),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22846,'Sealed_Dracula_Card','Sealed Dracula Card',2,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'bonus_script "{ bonus2 bSPDrainRate,50,5; }",300;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22847,'Prontera_Medal','Prontera Medal',2,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'warp "prontera",0,0; /*No coord info*/',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22848,'Prison_Key','Prison Key',2,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'warp "prt_prison",0,0; /*No coord info*/',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22849,'Prontera_Time_Crystal','Prontera Time Crystal',2,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'warp "prt_lib_q",0,0; /*No map+coord info*/',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22850,'January_Gift_Box','January Gift Box',2,10,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'rentitem 19052,604800;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22851,'February_Gift_Box','February Gift Box',2,10,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 12105,2;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22852,'March_Gift_Box','March Gift Box',2,10,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*2 Lucky Eggs*/',NULL,NULL);
