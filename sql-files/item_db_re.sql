@@ -5807,8 +5807,8 @@ REPLACE INTO `item_db_re` VALUES (11055,'Basic_Adventure','Basic Adventure',3,20
 REPLACE INTO `item_db_re` VALUES (11056,'Elemental_Spirit_Guide','Elemental Spirit Guide',3,1000,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (11057,'Feb_Sweets','February Sweets',3,20,NULL,50,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (11058,'Novice_Combi_Book','Novice Combi Book',3,0,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#
 REPLACE INTO `item_db_re` VALUES (11060,'Energy_Xtal_Combi_Book','Energy Crystal Book',3,0,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (11061,'Honor_Proof_Exchange_List','Honor Proof Exchange List',3,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 # More Usable Items
 #===================================================================
 REPLACE INTO `item_db_re` VALUES (11500,'Light_Yellow_Pot','Light Yellow Potion',0,550,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(175,235),0;',NULL,NULL);
@@ -8109,7 +8109,9 @@ REPLACE INTO `item_db_re` VALUES (14496,'Aquarius_Crown_Box','Aquarius Crown Box
 REPLACE INTO `item_db_re` VALUES (14497,'Pisces_Diadem_Box','Pisces Diadem Box',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 5514,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (14498,'Pisces_Crown_Box','Pisces Crown Box',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 5515,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (14499,'Peacock_Feather_Box','Peacock Feather Box',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 5519,1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (14500,'Insurance60','Life Insurrance Certificate',2,2,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_LIFEINSURANCE,3600000,0;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (14500,'Insurance60','Life Insurrance Certificate',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_LIFEINSURANCE,3600000,0;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (14505,'Dungeon_1_hour_Ticket','Dungeon 1 Hour Ticket',2,20,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'warp "1@sthb",0,0; /*No map+coord info*/',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (14506,'Dungeon_Ticket','Dungeon Ticket',2,20,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,145,NULL,'warp "1@sthc",0,0; /*No map+coord info*/',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (14508,'Zeny_Scroll','Zeny Pet Egg Scroll',2,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'Zeny += rand(1000,77777);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (14509,'Light_Center_Pot','Light Concentration Potion',2,800,NULL,20,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_ASPDPOTION0,1800000,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (14510,'Light_Awakening_Pot','Light Awakening Potion',2,1500,NULL,20,NULL,NULL,NULL,NULL,0xFFF7FEEF,63,2,NULL,NULL,'40',NULL,NULL,'sc_start SC_ASPDPOTION1,1800000,0;',NULL,NULL);
@@ -8362,6 +8364,9 @@ REPLACE INTO `item_db_re` VALUES (15123,'Whikebain_Suit','Whikebain Suit',4,0,NU
 REPLACE INTO `item_db_re` VALUES (15138,'Aegir_Armor','Aegir Armor',4,10,NULL,1600,NULL,25,NULL,0,0xFFFFFFFF,63,2,16,NULL,'40',1,NULL,'bonus bMaxHP,500; bonus bMaxSP,50;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (15141,'Ancient_Armor_Of_The_Goddess','Ancient Armor Of The Goddess',4,10,NULL,2000,NULL,55,NULL,0,0xFFFFFFFF,63,2,16,NULL,'100',1,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (15145,'Evil_Dragon_Armor','Evil Dragon Armor',4,0,NULL,4000,NULL,60,NULL,1,0xFFFFFFFF,63,2,16,NULL,NULL,1,NULL,'.@r = getrefine(); if (.@r >= 10 ) { bonus2 bHPDrainRate,100,3; bonus2 bSPDrainRate,100,5; } else if (.@r >= 9 ) { bonus2 bHPDrainRate,100,4; bonus2 bSPDrainRate,100,3; } else if (.@r >= 8 ) { bonus2 bHPDrainRate,100,6; bonus2 bSPDrainRate,100,2; } /* Confirm: Success rate and it says no effect if with Rideword, Vanargandr Helm, or Piece Of Angent Skin */',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (15146,'Flattery_Robe','Flattery_Robe',4,20,NULL,100,NULL,0,NULL,1,0xFFFFFFFF,63,2,16,NULL,'100',1,NULL,'skill "SM_ENDURE",1,1; .@i = BaseLevel; bonus bMatk,(.@i>=140)?(150):((.@i>=120)?(100):(50));',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (15147,'Invective_Robe','Invective_Robe',4,20,NULL,100,NULL,0,NULL,1,0xFFFFFFFF,63,2,16,NULL,'100',1,NULL,'skill "AC_CONCENTRATION",1,1; .@i = getrefine()*4; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,.@i; bonus2 bIgnoreDefRaceRate,RC_Demon,.@i; bonus2 bIgnoreDefRaceRate,RC_Undead,.@i;',NULL,NULL);
+
 # More Maces
 REPLACE INTO `item_db_re` VALUES (16000,'Erde','Erde',5,20,NULL,500,'130',NULL,1,2,0x0004C5B2,18,2,2,3,'50',1,8,'bonus2 bSkillAtk,"AM_ACIDTERROR",20; bonus2 bSkillAtk,"AM_DEMONSTRATION",20; bonus bMaxSP,50; bonus bHealPower,10;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (16001,'Red_Square_Bag','Red Square Bag',5,20,NULL,500,'130',NULL,1,2,0x0004C5B2,18,2,2,3,'50',1,8,'bonus bMaxHP,200; bonus2 bSkillAtk,"AM_ACIDTERROR",20; bonus2 bSkillAtk,"AM_DEMONSTRATION",20; bonus2 bAddMonsterDropItem,501,50; bonus2 bAddMonsterDropItem,502,20; bonus2 bAddMonsterDropItem,503,20; bonus2 bAddMonsterDropItem,504,20; bonus2 bAddMonsterDropItem,505,10; if(readparam(bStr)>=95) bonus2 bAddEff,Eff_Stun,500;',NULL,NULL);

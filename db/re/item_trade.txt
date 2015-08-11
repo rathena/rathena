@@ -2669,8 +2669,8 @@
 14494,475,100	// Samambaia_Box
 14499,475,100	// Peacock_Feather_Box
 14500,475,100	// Insurance60
-//14505,507,100	//
-//14506,507,100	//
+14505,507,100	// Dungeon_1_hour_Ticket
+14506,507,100	// Dungeon_Ticket
 14508,475,100	// Zeny_Scroll
 14509,475,100	// Light_Center_Pot
 14510,475,100	// Light_Awakening_Pot
