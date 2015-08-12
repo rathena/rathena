@@ -1,3 +1,6 @@
+CREATE SCHEMA IF NOT EXISTS `ragnarok` ;
+
+USE `ragnarok`;
 
 --
 -- Table structure for table `skillcooldown`
@@ -466,13 +469,14 @@ CREATE TABLE IF NOT EXISTS `login` (
   `vip_time` int(11) unsigned NOT NULL default '0',
   `old_group` tinyint(3) NOT NULL default '0',
   PRIMARY KEY  (`account_id`),
-  KEY `name` (`userid`)
+  KEY `name` (`userid`),
+  CONSTRAINT UNIQUE (`account_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2000000; 
 
 -- added standard accounts for servers, VERY INSECURE!!!
 -- inserted into the table called login which is above
 
-INSERT INTO `login` (`account_id`, `userid`, `user_pass`, `sex`, `email`) VALUES ('1', 's1', 'p1', 'S','athena@athena.com');
+INSERT IGNORE INTO `login` (`account_id`, `userid`, `user_pass`, `sex`, `email`) VALUES ('1', 's1', 'p1', 'S','athena@athena.com');
 
 --
 -- Table structure for table `mapreg`
@@ -639,72 +643,6 @@ CREATE TABLE IF NOT EXISTS `ragsrvinfo` (
 ) ENGINE=MyISAM;
 
 --
--- Table structure for `db_roulette`
---
-CREATE TABLE `db_roulette` (
-  `index` int(11) NOT NULL default '0',
-  `level` smallint(5) unsigned NOT NULL,
-  `item_id` smallint(5) unsigned NOT NULL,
-  `amount` smallint(5) unsigned NOT NULL DEFAULT '1',
-  `flag` smallint(5) unsigned NOT NULL DEFAULT '1',
-  PRIMARY KEY (`index`)
-) ENGINE=MyISAM;
-
--- ----------------------------
--- Records of db_roulette
--- ----------------------------
--- Info: http://ro.gnjoy.com/news/update/View.asp?seq=157&curpage=1
-
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 0, 1, 675, 1, 1 ); -- Silver_Coin
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 1, 1, 671, 1, 0 ); -- Gold_Coin
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 2, 1, 678, 1, 0 ); -- Poison_Bottle
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 3, 1, 604, 1, 0 ); -- Branch_Of_Dead_Tree
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 4, 1, 522, 1, 0 ); -- Fruit_Of_Mastela
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 5, 1, 671, 1, 0 ); -- Old_Ore_Box
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 6, 1, 12523, 1, 0 ); -- E_Inc_Agi_10_Scroll
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 7, 1, 985, 1, 0 ); -- Elunium
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 8, 1, 984, 1, 0 ); -- Oridecon
-
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 9, 2, 675, 1, 1 ); -- Silver_Coin
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 10, 2, 671, 1, 0 ); -- Gold_Coin
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 11, 2, 603, 1, 0 ); -- Old_Blue_Box
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 12, 2, 608, 1, 0 ); -- Seed_Of_Yggdrasil
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 13, 2, 607, 1, 0 ); -- Yggdrasilberry
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 14, 2, 12522, 1, 0 ); -- E_Blessing_10_Scroll
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 15, 2, 6223, 1, 0 ); -- Carnium
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 16, 2, 6224, 1, 0 ); -- Bradium
-
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 17, 3, 675, 1, 1 ); -- Silver_Coin
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 18, 3, 671, 1, 0 ); -- Gold_Coin
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 19, 3, 12108, 1, 0 ); -- Bundle_Of_Magic_Scroll
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 20, 3, 617, 1, 0 ); -- Old_Violet_Box
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 21, 3, 12514, 1, 0 ); -- E_Abrasive
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 22, 3, 7444, 1, 0 ); -- Treasure_Box
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 23, 3, 969, 1, 0 ); -- Gold
-
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 24, 4, 675, 1, 1 ); -- Silver_Coin
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 25, 4, 671, 1, 0 ); -- Gold_Coin
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 26, 4, 616, 1, 0 ); -- Old_Card_Album
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 27, 4, 12516, 1, 0 ); -- E_Small_Life_Potion
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 28, 4, 22777, 1, 0 ); -- Gift_Buff_Set
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 29, 4, 6231, 1, 0 ); -- Guarantee_Weapon_6Up
-
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 30, 5, 671, 1, 1 ); -- Gold_Coin
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 31, 5, 12246, 1, 0 ); -- Magic_Card_Album
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 32, 5, 12263, 1, 0 ); -- Comp_Battle_Manual
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 33, 5, 671, 1, 0 ); -- Potion_Box
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 34, 5, 6235, 1, 0 ); -- Guarantee_Armor_6Up
-
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 35, 6, 671, 1, 1 ); -- Gold_Coin
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 36, 6, 12766, 1, 0 ); -- Reward_Job_BM25
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 37, 6, 6234, 1, 0 ); -- Guarantee_Armor_7Up
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 38, 6, 6233, 1, 0 ); -- Guarantee_Armor_8Up
-
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 39, 7, 671, 1, 1 ); -- Gold_Coin
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 40, 7, 6233, 1, 0 ); -- Guarantee_Armor_8Up
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 41, 7, 6233, 1, 0 ); -- Guarantee_Armor_8Up	// KRO lists this twice
-
---
 -- Table structure for table `skill`
 --
 
@@ -861,3 +799,221 @@ CREATE TABLE IF NOT EXISTS `market` (
   `flag` TINYINT(2) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY  (`name`,`nameid`)
 ) ENGINE = MyISAM;
+
+--
+-- Table structure for `db_roulette`
+--
+
+CREATE TABLE IF NOT EXISTS `db_roulette` (
+  `index` int(11) NOT NULL default '0',
+  PRIMARY KEY (`index`),
+  `level` smallint(5) unsigned NOT NULL,
+  `item_id` smallint(5) unsigned NOT NULL,
+  `amount` smallint(5) unsigned NOT NULL DEFAULT '1',
+  `flag` smallint(5) unsigned NOT NULL DEFAULT '1',
+  CONSTRAINT UNIQUE (`index`)
+) ENGINE=MyISAM;
+
+-- ----------------------------
+-- Records of db_roulette
+-- ----------------------------
+-- Info: http://ro.gnjoy.com/news/update/View.asp?seq=157&curpage=1
+
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 0, 1, 675, 1, 1 ); -- Silver_Coin
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 1, 1, 671, 1, 0 ); -- Gold_Coin
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 2, 1, 678, 1, 0 ); -- Poison_Bottle
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 3, 1, 604, 1, 0 ); -- Branch_Of_Dead_Tree
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 4, 1, 522, 1, 0 ); -- Fruit_Of_Mastela
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 5, 1, 671, 1, 0 ); -- Old_Ore_Box
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 6, 1, 12523, 1, 0 ); -- E_Inc_Agi_10_Scroll
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 7, 1, 985, 1, 0 ); -- Elunium
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 8, 1, 984, 1, 0 ); -- Oridecon
+
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 9, 2, 675, 1, 1 ); -- Silver_Coin
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 10, 2, 671, 1, 0 ); -- Gold_Coin
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 11, 2, 603, 1, 0 ); -- Old_Blue_Box
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 12, 2, 608, 1, 0 ); -- Seed_Of_Yggdrasil
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 13, 2, 607, 1, 0 ); -- Yggdrasilberry
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 14, 2, 12522, 1, 0 ); -- E_Blessing_10_Scroll
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 15, 2, 6223, 1, 0 ); -- Carnium
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 16, 2, 6224, 1, 0 ); -- Bradium
+
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 17, 3, 675, 1, 1 ); -- Silver_Coin
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 18, 3, 671, 1, 0 ); -- Gold_Coin
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 19, 3, 12108, 1, 0 ); -- Bundle_Of_Magic_Scroll
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 20, 3, 617, 1, 0 ); -- Old_Violet_Box
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 21, 3, 12514, 1, 0 ); -- E_Abrasive
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 22, 3, 7444, 1, 0 ); -- Treasure_Box
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 23, 3, 969, 1, 0 ); -- Gold
+
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 24, 4, 675, 1, 1 ); -- Silver_Coin
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 25, 4, 671, 1, 0 ); -- Gold_Coin
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 26, 4, 616, 1, 0 ); -- Old_Card_Album
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 27, 4, 12516, 1, 0 ); -- E_Small_Life_Potion
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 28, 4, 22777, 1, 0 ); -- Gift_Buff_Set
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 29, 4, 6231, 1, 0 ); -- Guarantee_Weapon_6Up
+
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 30, 5, 671, 1, 1 ); -- Gold_Coin
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 31, 5, 12246, 1, 0 ); -- Magic_Card_Album
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 32, 5, 12263, 1, 0 ); -- Comp_Battle_Manual
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 33, 5, 671, 1, 0 ); -- Potion_Box
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 34, 5, 6235, 1, 0 ); -- Guarantee_Armor_6Up
+
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 35, 6, 671, 1, 1 ); -- Gold_Coin
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 36, 6, 12766, 1, 0 ); -- Reward_Job_BM25
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 37, 6, 6234, 1, 0 ); -- Guarantee_Armor_7Up
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 38, 6, 6233, 1, 0 ); -- Guarantee_Armor_8Up
+
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 39, 7, 671, 1, 1 ); -- Gold_Coin
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 40, 7, 6233, 1, 0 ); -- Guarantee_Armor_8Up
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 41, 7, 6233, 1, 0 ); -- Guarantee_Armor_8Up	// KRO lists this twice
+
+
+CREATE SCHEMA IF NOT EXISTS `log` ;
+
+USE `log`;
+
+#PickLog types (M)onsters Drop, (P)layers Drop/Take, Mobs Drop (L)oot Drop/Take,
+# Players (T)rade Give/Take, Players (V)ending Sell/Take, (S)hop Sell/Take, (N)PC Give/Take,
+# (C)onsumable Items, (A)dministrators Create/Delete, Sto(R)age, (G)uild Storage,
+# (E)mail attachment,(B)uying Store, Pr(O)duced Items/Ingredients, Auct(I)oned Items,
+# (X) Other, (D) Stolen from mobs, (U) MVP Prizes, (F) Guild/Party Bound retrieval
+# Lotter(Y), (Z) Merged Items
+
+#Database: ragnarok
+#Table: picklog
+CREATE TABLE IF NOT EXISTS `picklog` (
+  `id` int(11) NOT NULL auto_increment,
+  `time` datetime NOT NULL default '0000-00-00 00:00:00',
+  `char_id` int(11) NOT NULL default '0',
+  `type` enum('M','P','L','T','V','S','N','C','A','R','G','E','B','O','I','X','D','U','$','F','Z') NOT NULL default 'P',
+  `nameid` smallint(5) unsigned NOT NULL default '0',
+  `amount` int(11) NOT NULL default '1',
+  `refine` tinyint(3) unsigned NOT NULL default '0',
+  `card0` smallint(5) unsigned NOT NULL default '0',
+  `card1` smallint(5) unsigned NOT NULL default '0',
+  `card2` smallint(5) unsigned NOT NULL default '0',
+  `card3` smallint(5) unsigned NOT NULL default '0',
+  `unique_id` bigint(20) unsigned NOT NULL default '0',
+  `map` varchar(11) NOT NULL default '',
+  `bound` tinyint(1) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`id`),
+  INDEX (`type`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 ;
+
+#ZenyLog types (M)onsters,(T)rade,(V)ending Sell/Buy,(S)hop Sell/Buy,(N)PC Change amount,(A)dministrators,(E)Mail,(B)uying Store,Ban(K) Transactions
+#Database: ragnarok
+#Table: zenylog
+CREATE TABLE IF NOT EXISTS `zenylog` (
+  `id` int(11) NOT NULL auto_increment,
+  `time` datetime NOT NULL default '0000-00-00 00:00:00',
+  `char_id` int(11) NOT NULL default '0',
+  `src_id` int(11) NOT NULL default '0',
+  `type` enum('T','V','P','M','S','N','D','C','A','E','I','B','K') NOT NULL default 'S',
+  `amount` int(11) NOT NULL default '0',
+  `map` varchar(11) NOT NULL default '',
+  PRIMARY KEY  (`id`),
+  INDEX (`type`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 ;
+
+#Database: ragnarok
+#Table: branchlog
+CREATE TABLE IF NOT EXISTS `branchlog` (
+  `branch_id` mediumint(9) unsigned NOT NULL auto_increment,
+  `branch_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `account_id` int(11) NOT NULL default '0',
+  `char_id` int(11) NOT NULL default '0',
+  `char_name` varchar(25) NOT NULL default '',
+  `map` varchar(11) NOT NULL default '',
+  PRIMARY KEY  (`branch_id`),
+  INDEX (`account_id`),
+  INDEX (`char_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 ;
+
+#Database: ragnarok
+#Table: mvplog
+CREATE TABLE IF NOT EXISTS `mvplog` (
+  `mvp_id` mediumint(9) unsigned NOT NULL auto_increment,
+  `mvp_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `kill_char_id` int(11) NOT NULL default '0',
+  `monster_id` smallint(6) NOT NULL default '0',
+  `prize` smallint(5) unsigned NOT NULL default '0',
+  `mvpexp` mediumint(9) NOT NULL default '0',
+  `map` varchar(11) NOT NULL default '',
+  PRIMARY KEY  (`mvp_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 ;
+
+#Database: ragnarok
+#Table: atcommandlog
+CREATE TABLE IF NOT EXISTS `atcommandlog` (
+  `atcommand_id` mediumint(9) unsigned NOT NULL auto_increment,
+  `atcommand_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `account_id` int(11) unsigned NOT NULL default '0',
+  `char_id` int(11) unsigned NOT NULL default '0',
+  `char_name` varchar(25) NOT NULL default '',
+  `map` varchar(11) NOT NULL default '',
+  `command` varchar(255) NOT NULL default '',
+  PRIMARY KEY  (`atcommand_id`),
+  INDEX (`account_id`),
+  INDEX (`char_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 ;
+
+#Database: ragnarok
+#Table: npclog
+CREATE TABLE IF NOT EXISTS `npclog` (
+  `npc_id` mediumint(9) unsigned NOT NULL auto_increment,
+  `npc_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `account_id` int(11) unsigned NOT NULL default '0',
+  `char_id` int(11) unsigned NOT NULL default '0',
+  `char_name` varchar(25) NOT NULL default '',
+  `map` varchar(11) NOT NULL default '',
+  `mes` varchar(255) NOT NULL default '',
+  PRIMARY KEY  (`npc_id`),
+  INDEX (`account_id`),
+  INDEX (`char_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 ;
+
+#ChatLog types Gl(O)bal,(W)hisper,(P)arty,(G)uild,(M)ain chat
+#Database: ragnarok
+#Table: chatlog
+CREATE TABLE IF NOT EXISTS `chatlog` (
+  `id` bigint(20) NOT NULL auto_increment,
+  `time` datetime NOT NULL default '0000-00-00 00:00:00',
+  `type` enum('O','W','P','G','M') NOT NULL default 'O',
+  `type_id` int(11) NOT NULL default '0',
+  `src_charid` int(11) NOT NULL default '0',
+  `src_accountid` int(11) NOT NULL default '0',
+  `src_map` varchar(11) NOT NULL default '',
+  `src_map_x` smallint(4) NOT NULL default '0',
+  `src_map_y` smallint(4) NOT NULL default '0',
+  `dst_charname` varchar(25) NOT NULL default '',
+  `message` varchar(150) NOT NULL default '',
+  PRIMARY KEY  (`id`),
+  INDEX (`src_accountid`),
+  INDEX (`src_charid`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 ;
+
+#Database: ragnarok
+#Table: loginlog
+CREATE TABLE IF NOT EXISTS `loginlog` (
+  `time` datetime NOT NULL default '0000-00-00 00:00:00',
+  `ip` varchar(15) NOT NULL default '',
+  `user` varchar(23) NOT NULL default '',
+  `rcode` tinyint(4) NOT NULL default '0',
+  `log` varchar(255) NOT NULL default '',
+  INDEX (`ip`)
+) ENGINE=MyISAM ;
+
+#Database: ragnarok
+#Table: cashlog
+CREATE TABLE IF NOT EXISTS `cashlog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `char_id` int(11) NOT NULL DEFAULT '0',
+  `type` enum('T','V','P','M','S','N','D','C','A','E','I','B','$') NOT NULL DEFAULT 'S',
+  `cash_type` enum('O','K','C') NOT NULL DEFAULT 'O',
+  `amount` int(11) NOT NULL DEFAULT '0',
+  `map` varchar(11) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  INDEX `type` (`type`)
+) ENGINE=MyISAM AUTO_INCREMENT=1;
