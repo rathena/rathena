@@ -196,8 +196,7 @@ CREATE TABLE IF NOT EXISTS `db_roulette` (
   `item_id` smallint(5) unsigned NOT NULL,
   `amount` smallint(5) unsigned NOT NULL DEFAULT '1',
   `flag` smallint(5) unsigned NOT NULL DEFAULT '1',
-   PRIMARY KEY (`index`),
-  CONSTRAINT UNIQUE (`index`)
+   PRIMARY KEY (`index`)
 ) ENGINE=MyISAM;
 
 -- ----------------------------
@@ -576,8 +575,7 @@ CREATE TABLE IF NOT EXISTS `login` (
   `vip_time` int(11) unsigned NOT NULL default '0',
   `old_group` tinyint(3) NOT NULL default '0',
   PRIMARY KEY  (`account_id`),
-  KEY `name` (`userid`),
-  CONSTRAINT UNIQUE (`account_id`)
+  KEY `name` (`userid`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2000000; 
 
 -- added standard accounts for servers, VERY INSECURE!!!
