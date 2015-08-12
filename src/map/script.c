@@ -11113,7 +11113,7 @@ BUILDIN_FUNC(waitingroomkick)
 
 	if( nd != NULL && (cd=(struct chat_data *)map_id2bl(nd->chat_id)) != NULL )
 		chat_npckickchat(cd, kickusername);
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Get Users in waiting room and stores gids in .@waitingroom_users[]
@@ -11139,7 +11139,7 @@ BUILDIN_FUNC(getwaitingroomusers)
 		}
 		setd_sub(st, NULL, ".@waitingroom_usercount", 0, (void *)__64BPRTSIZE(j), NULL);
 	}
-	return 0;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Kicks all the players from the waiting room of the current or target npc.
@@ -20338,7 +20338,7 @@ BUILDIN_FUNC(showscript) {
 	}
 
 	if (!bl) {
-		ShowError("buildin_showscript: Script not attached. (id=%, rid=%d, oid=%d)\n", id, st->rid, st->oid);
+		ShowError("buildin_showscript: Script not attached. (id=%d, rid=%d, oid=%d)\n", id, st->rid, st->oid);
 		script_pushint(st,0);
 		return SCRIPT_CMD_FAILURE;
 	}

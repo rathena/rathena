@@ -5759,30 +5759,32 @@ void clif_displaymessage(const int fd, const char* mes)
 	if (fd == 0)
 		;
 	else {
-#if PACKETVER == 20141022
-		/** for some reason game client crashes depending on message pattern (only for this packet) **/
-		/** so we redirect to ZC_NPC_CHAT **/
-		//clif_colormes(fd, color_table[COLOR_DEFAULT], mes);
-		unsigned long color = (color_table[COLOR_DEFAULT] & 0x0000FF) << 16 | (color_table[COLOR_DEFAULT] & 0x00FF00) | (color_table[COLOR_DEFAULT] & 0xFF0000) >> 16; // RGB to BGR
-		unsigned short len = strnlen(mes, CHAT_SIZE_MAX);
-
-		if (len > 0) { 
-			WFIFOHEAD(fd, 13 + len);
-			WFIFOW(fd, 0) = 0x2C1;
-			WFIFOW(fd, 2) = 13 + len;
-			WFIFOL(fd, 4) = 0;
-			WFIFOL(fd, 8) = color;
-			safestrncpy((char*)WFIFOP(fd, 12), mes, len+1);
-			WFIFOSET(fd, WFIFOW(fd, 2));
-		}
-#else
 		char *message, *line;
 
 		message = aStrdup(mes);
 		line = strtok(message, "\n");
+
+#if PACKETVER == 20141022
+		/** for some reason game client crashes depending on message pattern (only for this packet) **/
+		/** so we redirect to ZC_NPC_CHAT **/
+		//clif_colormes(fd, color_table[COLOR_DEFAULT], mes);
+		while(line != NULL) {
+			unsigned long color = (color_table[COLOR_DEFAULT] & 0x0000FF) << 16 | (color_table[COLOR_DEFAULT] & 0x00FF00) | (color_table[COLOR_DEFAULT] & 0xFF0000) >> 16; // RGB to BGR
+			unsigned short len = strnlen(line, CHAT_SIZE_MAX);
+
+			if (len > 0) { 
+				WFIFOHEAD(fd, 13 + len);
+				WFIFOW(fd, 0) = 0x2C1;
+				WFIFOW(fd, 2) = 13 + len;
+				WFIFOL(fd, 4) = 0;
+				WFIFOL(fd, 8) = color;
+				safestrncpy((char*)WFIFOP(fd, 12), line, len + 1);
+				WFIFOSET(fd, WFIFOW(fd, 2));
+			}
+#else
 		while(line != NULL) {
 			// Limit message to 255+1 characters (otherwise it causes a buffer overflow in the client)
-			int len = strnlen(line, 255);
+			int len = strnlen(line, CHAT_SIZE_MAX);
 
 			if (len > 0) { // don't send a void message (it's not displaying on the client chat). @help can send void line.
 				WFIFOHEAD(fd, 5 + len);
@@ -5791,10 +5793,10 @@ void clif_displaymessage(const int fd, const char* mes)
 				safestrncpy((char *)WFIFOP(fd,4), line, len + 1);
 				WFIFOSET(fd, 5 + len);
 			}
+#endif
 			line = strtok(NULL, "\n");
 		}
 		aFree(message);
-#endif
 	}
 }
 
