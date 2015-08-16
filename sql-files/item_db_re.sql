@@ -9878,6 +9878,7 @@ REPLACE INTO `item_db_re` VALUES (20231,'C_Snowman_Hat','Costume Snowman Hat',4,
 REPLACE INTO `item_db_re` VALUES (20232,'C_Celines_Ribbon','Costume Celine Ribbon',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,967,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20233,'C_Golden_Angel','Costume Golden Angel',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,646,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20234,'C_Baphomet_Hat','Costume Baphomet Hat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,7168,NULL,'1',1,1311,'bonus bMaxHPrate,15; bonus bMaxSPrate,15; bonus2 bAddRace,RC_All,15; bonus2 bMagicAddRace,RC_All,15; bonus2 bAddItemHealRate,519,2015;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (20246,'C_Decoration_Time','Costume Decoration Time',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'1',1,1309,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20247,'C_Fate_Of_Black_Hand','Costume Fate Of Black Hand',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,1310,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20271,'C_Sunflower','Costume Sunflower',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,37,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20272,'C_Unicorn_Horn','Costume Unicorn Horn',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,42,NULL,NULL,NULL);
