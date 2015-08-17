@@ -5873,6 +5873,7 @@
 11597,Iron_Worm,Iron Worm,0,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
 11598,Bitter_Cacao_Bean,Bitter Cacao Bean,0,10,,0,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
 11599,Superstar_Potion,Superstar Potion,0,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
+11600,Shining_Holy_Water,Shining Holy Water,0,10,,15,,,,0,0xFFFFFFFF,63,2,,,,,,{ if(strcharinfo(3)=="prt_q") { bonus_script "{ bonus2 bSubSize,Size_All,10; }",600; sc_end SC_SILENCE; sc_end SC_POISON; sc_end SC_CURSE; heal 1000,0; } },{},{}
 //
 11701,Girl_Bunch_Of_Flower,Girl's Bouquet,0,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(105,145),0; },{},{}
 11702,Moon_Cookie,Moon Cookie,0,0,,300,,,,,0xFFFFFFFF,63,2,,,,,,{ },{},{}
