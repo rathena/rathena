@@ -3676,23 +3676,21 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			skillratio += -100 + (skill_lv + 2) * 50;
 			RE_LVL_DMOD(100);
 			break;
-		case RK_IGNITIONBREAK: {
-				// 3x3 cell Damage = ATK [{(Skill Level x 300) x (1 + [(Caster's Base Level - 100) / 100])}] %
-				// 7x7 cell Damage = ATK [{(Skill Level x 250) x (1 + [(Caster's Base Level - 100) / 100])}] %
-				// 11x11 cell Damage = ATK [{(Skill Level x 200) x (1 + [(Caster's Base Level - 100) / 100])}] %
-				int celldamage = 300; // Maximum base damage of 3x3 cell.
-
-				i = distance_bl(src,target);
-				if (i > 1 && i <= 3)
-					celldamage -= 50; // 7x7 cell
-				else if (i > 3 && i <= 5)
-					celldamage -= 100; // 11x11 cell
-				celldamage = (skill_lv * celldamage) * (1 + (status_get_lv(src) - 100) / 100);
-				// Elemental check, 1.5x damage if your element is fire.
-				if (sstatus->rhw.ele == ELE_FIRE)
-					celldamage += 100 * skill_lv;
-				skillratio += -100 + celldamage;
-			}
+		case RK_IGNITIONBREAK:
+			// 3x3 cell Damage = ATK [{(Skill Level x 300) x (1 + [(Caster's Base Level - 100) / 100])}] %
+			// 7x7 cell Damage = ATK [{(Skill Level x 250) x (1 + [(Caster's Base Level - 100) / 100])}] %
+			// 11x11 cell Damage = ATK [{(Skill Level x 200) x (1 + [(Caster's Base Level - 100) / 100])}] %
+			i = distance_bl(src,target);
+			if (i < 2)
+				skillratio += -100 + 300 * skill_lv;
+			else if (i < 4)
+				skillratio += -100 + 250 * skill_lv;
+			else
+				skillratio += -100 + 200 * skill_lv;
+			skillratio = skillratio * status_get_lv(src) / 100;
+			// Elemental check, 1.5x damage if your weapon element is fire.
+			if (sstatus->rhw.ele == ELE_FIRE)
+				skillratio += 100 * skill_lv;
 			break;
 		case RK_STORMBLAST:
 			skillratio += -100 + (((sd) ? pc_checkskill(sd,RK_RUNEMASTERY) : 0) + (status_get_int(src) / 8)) * 100; // ATK = [{Rune Mastery Skill Level + (Caster's INT / 8)} x 100] %
@@ -7818,7 +7816,7 @@ static const struct _battle_data {
 	{ "max_heal_lv",                        &battle_config.max_heal_lv,                     11,     1,      INT_MAX,        },
 	{ "max_heal",                           &battle_config.max_heal,                        9999,   0,      INT_MAX,        },
 	{ "combo_delay_rate",                   &battle_config.combo_delay_rate,                100,    0,      INT_MAX,        },
-	{ "item_check",                         &battle_config.item_check,                      0,      0,      7,              },
+	{ "item_check",                         &battle_config.item_check,                      0x0,    0x0,    0x7,            },
 	{ "item_use_interval",                  &battle_config.item_use_interval,               100,    0,      INT_MAX,        },
 	{ "cashfood_use_interval",              &battle_config.cashfood_use_interval,           60000,  0,      INT_MAX,        },
 	{ "wedding_modifydisplay",              &battle_config.wedding_modifydisplay,           0,      0,      1,              },

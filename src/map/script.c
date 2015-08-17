@@ -16440,19 +16440,20 @@ BUILDIN_FUNC(rid2name)
 
 BUILDIN_FUNC(pcblockmove)
 {
-	int id, flag;
-	TBL_PC *sd = NULL;
+	struct block_list *bl = NULL;
 
-	id = script_getnum(st,2);
-	flag = script_getnum(st,3);
-
-	if(id)
-		sd = map_id2sd(id);
+	if (script_getnum(st, 2))
+		bl = map_id2bl(script_getnum(st,2));
 	else
-		sd = script_rid2sd(st);
+		bl = map_id2bl(st->rid);
 
-	if(sd)
-		sd->state.blockedmove = flag > 0;
+	if (bl) {
+		struct unit_data *ud = unit_bl2ud(bl);
+
+		if (ud)
+			ud->state.blockedmove = script_getnum(st,3) > 0;
+	}
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -20349,6 +20350,31 @@ BUILDIN_FUNC(showscript) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Ignore the SECURE_NPCTIMEOUT function.
+ * ignoretimeout <flag>{,<char_id>};
+ */
+BUILDIN_FUNC(ignoretimeout)
+{
+#ifdef SECURE_NPCTIMEOUT
+	struct map_session_data *sd = NULL;
+
+	if (script_hasdata(st,3)) {
+		if (!script_isstring(st,3))
+			sd = map_charid2sd(script_getnum(st,3));
+		else
+			sd = map_nick2sd(script_getstr(st,3));
+	} else
+		sd = script_rid2sd(st);
+
+	if (!sd)
+		return SCRIPT_CMD_FAILURE;
+
+	sd->state.ignoretimeout = script_getnum(st,2) > 0;
+#endif
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -20751,7 +20777,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(pcstopfollow,"i"),
 	BUILDIN_DEF(pcblockmove,"ii"),
 	// <--- [zBuffer] List of player cont commands
-	// [zBuffer] List of mob control commands --->
+	// [zBuffer] List of unit control commands --->
 	BUILDIN_DEF(getunittype,"i"),
 	BUILDIN_DEF(getunitname,"i"),
 	BUILDIN_DEF(setunitname,"is"),
@@ -20764,11 +20790,12 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(unitattack,"iv?"),
 	BUILDIN_DEF(unitstopattack,"i"),
 	BUILDIN_DEF(unitstopwalk,"i"),
+	BUILDIN_DEF2(pcblockmove,"unitblockmove","ii"),
 	BUILDIN_DEF(unittalk,"is"),
 	BUILDIN_DEF(unitemote,"ii"),
 	BUILDIN_DEF(unitskilluseid,"ivi??"), // originally by Qamera [Celest]
 	BUILDIN_DEF(unitskillusepos,"iviii?"), // [Celest]
-// <--- [zBuffer] List of mob control commands
+// <--- [zBuffer] List of unit control commands
 	BUILDIN_DEF(sleep,"i"),
 	BUILDIN_DEF(sleep2,"i"),
 	BUILDIN_DEF(awake,"s"),
@@ -20908,6 +20935,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getattachedrid,""),
 	BUILDIN_DEF(getvar,"vi"),
 	BUILDIN_DEF(showscript,"s?"),
+	BUILDIN_DEF(ignoretimeout,"i?"),
 
 #include "../custom/script_def.inc"
 

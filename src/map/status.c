@@ -698,6 +698,7 @@ void initChangeTables(void)
 	add_sc( SC_CHAOSPANIC		, SC_CONFUSION		);
 	add_sc( SC_BLOODYLUST		, SC_BERSERK		);
 	add_sc( SC_FEINTBOMB		, SC__FEINTBOMB		);
+	add_sc( SC_ESCAPE			, SC_ANKLE			);
 
 	/* Sura */
 	add_sc( SR_DRAGONCOMBO			, SC_STUN		);
@@ -7273,28 +7274,6 @@ void status_change_init(struct block_list *bl)
 }
 
 /**
- * Get base level of bl, cap the value by level_limit
- * @param bl Object [BL_PC|BL_MOB|BL_HOM|BL_MER|BL_ELEM]
- * @param level_limit Level cap
- * @return Base level or level_limit
- **/
-int status_get_baselevel_limit(struct block_list *bl, int level_limit) {
-	int lvl = status_get_lv(bl);
-	return min(lvl, level_limit);
-}
-
-/**
- * Get job level of player, cap the value by level_limit.
- * @param sd Player
- * @param level_limit Level cap
- * @return Job level or level_limit or 0 if not a player
- **/
-int status_get_joblevel_limit(struct map_session_data *sd, int level_limit) {
-	int lvl = sd ? sd->status.job_level : 0;
-	return min(lvl, level_limit);
-}
-
-/**
  * Applies SC defense to a given status change
  * This function also determines whether or not the status change will be applied
  * @param src: Source of the status change [PC|MOB|HOM|MER|ELEM|NPC]
@@ -7465,8 +7444,8 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			tick_def2 = (b_status->int_ + status_get_lv(bl))*50; // kRO balance update lists this formula
 			break;
 		case SC_NETHERWORLD:
-			// Resistance: {(Target’s Base Level / 50) + (Target’s Job Level / 10)} seconds
-			tick_def2 = status_get_baselevel_limit(bl, 150) * 20 + status_get_joblevel_limit(sd, 50) * 100;
+			// Resistance: {(Target's Base Level / 50) + (Target's Job Level / 10)} seconds
+			tick_def2 = status_get_lv(bl) * 20 + (sd ? sd->status.job_level : 1) * 100;
 			break;
 		case SC_MARSHOFABYSS:
 			// 5 second (Fixed) + 25 second - {( INT + LUK ) / 20 second }
@@ -7513,8 +7492,8 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			tick_def2 = (status->vit + status->luk)*50;
 			break;
 		case SC_VOICEOFSIREN:
-			// Resistance: {(Target’s Base Level / 10) + (Target’s Job Level / 5)} seconds
-			tick_def2 = status_get_baselevel_limit(bl, 150) * 100 + status_get_joblevel_limit(sd, 50) * 200;
+			// Resistance: {(Target's Base Level / 10) + (Target's Job Level / 5)} seconds
+			tick_def2 = status_get_lv(bl) * 100 + (sd ? sd->status.job_level : 1) * 200;
 			break;
 		case SC_B_TRAP:
 			tick_def = b_status->str * 50; // (custom)
@@ -11269,11 +11248,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_SATURDAYNIGHTFEVER: // Sit down force of Saturday Night Fever has the duration of only 3 seconds.
 			sc_start(bl, bl,SC_SITDOWN_FORCE,100,sce->val1,skill_get_time2(WM_SATURDAY_NIGHT_FEVER,sce->val1));
 			break;
-		case SC_SITDOWN_FORCE:
-			if( sd && pc_issit(sd) && pc_setstand(sd, false) ) {
-				clif_standing(bl);
-			}
-			break;
 		case SC_NEUTRALBARRIER_MASTER:
 		case SC_STEALTHFIELD_MASTER:
 			if( sce->val2 ) {
@@ -11329,11 +11303,10 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_TEARGAS:
 			status_change_end(bl,SC_TEARGAS_SOB,INVALID_TIMER);
 			break;
+		case SC_SITDOWN_FORCE:
 		case SC_BANANA_BOMB_SITDOWN:
-			if( sd && pc_issit(sd) && pc_setstand(sd, false) ) {
+			if( sd && pc_issit(sd) && pc_setstand(sd, false) )
 				skill_sit(sd,0);
-				clif_standing(bl);
-			}
 			break;
 		case SC_KYOUGAKU:
 			clif_status_load(bl, SI_KYOUGAKU, 0); // Avoid client crash
@@ -11978,14 +11951,13 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 
 	case SC_LEECHESEND:
 		if( --(sce->val4) >= 0 ) {
-			int damage = status->max_hp/100; // {Target VIT x (New Poison Research Skill Level - 3)} + (Target HP/100)
-			damage += status->vit * (sce->val1 - 3);
-			unit_skillcastcancel(bl,2);
+			int damage = status->vit * (sce->val1 - 3) + status->max_hp / 100; // {Target VIT x (New Poison Research Skill Level - 3)} + (Target HP/100)
+
 			map_freeblock_lock();
-			status_damage(bl, bl, damage, 0, clif_damage(bl,bl,tick,status_get_amotion(bl),status_get_dmotion(bl)+500,damage,1,DMG_NORMAL,0), 1);
-			if( sc->data[type] ) {
+			status_damage(bl, bl, damage, 0, clif_damage(bl,bl,tick,status_get_amotion(bl),status_get_dmotion(bl)+500,damage,1,DMG_NORMAL,0), 0);
+			unit_skillcastcancel(bl, 2);
+			if (sc->data[type])
 				sc_timer_next(1000 + tick, status_change_timer, bl->id, data );
-			}
 			map_freeblock_unlock();
 			return 0;
 		}
@@ -12158,7 +12130,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 
 	case SC__SHADOWFORM:
 		if( --(sce->val4) >= 0 ) {
-			if( !status_charge(bl, 0, sce->val1 - (sce->val1 - 1)) )
+			if( !status_charge(bl, 0, 11 - sce->val1) )
 				break;
 			sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
 			return 0;

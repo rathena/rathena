@@ -2489,6 +2489,19 @@ Deletes the spirit ball(s) from player.
 Counts the spirit ball that player has.
 
 ---------------------------------------
+
+*ignoretimeout <flag>{,<char_id>};
+
+Disables the SECURE_NPCTIMEOUT function on the character invoking the script,
+or by the given character ID/character name.
+
+Valid flag:
+ 0 - Enabled SECURE_NPCTIMEOUT.
+ 1 - Disable SECURE_NPCTIMEOUT.
+
+Note: SECURE_NPCTIMEOUT must be enabled for this to work.
+
+---------------------------------------
 \\
 2,2 Item-related commands
 \\
@@ -5563,9 +5576,10 @@ Examples:
 ---------------------------------------
 
 *pcblockmove <id>,<option>;
+*unitblockmove <id>,<option>;
 
 Prevents the given GID from moving when the option is 1, and enables the ID to
-move again when the option is 0. This command will run for the attached player
+move again when the option is 0. This command will run for the attached unit
 if the given GID is zero.
 
 Examples:
@@ -7086,6 +7100,10 @@ This command will make a <GID> stop attacking.
 *unitstopwalk <GID>;
 
 This command will make a <GID> stop moving.
+
+Note: If this is called from OnTouch, then the walktimer attached to the unit is
+removed from OnTouch which causes this command to not stop the unit from walking.
+Suggest to use 'unitblockmove' to forcefully stop the unit with OnTouch.
 
 ---------------------------------------
 
