@@ -9857,23 +9857,21 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_GT_CHANGE:
 			{ // Take note there is no def increase as skill desc says. [malufett]
-				struct status_data *sstatus = src ? status_get_status_data(src) : NULL;
-				val2 = ((sstatus?sstatus->dex:4) / 4 + (sstatus?sstatus->str:2) / 2) * val1 / 5; // ATK increase: ATK [{(Caster DEX / 4) + (Caster STR / 2)} x Skill Level / 5]
-				val3 = status->agi * val1 / 60; // ASPD increase: [(Target AGI x Skill Level) / 60] %
-				val4 = (200/(sstatus?sstatus->int_:1)) * val1; // MDEF decrease: MDEF [(200 / Caster INT) x Skill Level]
+				int stat = status_get_int(src);
 
-				if (val4 < 0)
-					val4 = 0;
+				if (stat <= 0)
+					stat = 1; // Prevent divide by zero.
+				val2 = (status_get_dex(src) / 4 + status_get_str(src) / 2) * val1 / 5; // ATK increase: ATK [{(Caster DEX / 4) + (Caster STR / 2)} x Skill Level / 5]
+				val3 = status->agi * val1 / 60; // ASPD increase: [(Target AGI x Skill Level) / 60] %
+				val4 = 200 / stat * val1; // MDEF decrease: MDEF [(200 / Caster INT) x Skill Level]
 			}
 			break;
 		case SC_GT_REVITALIZE:
-			{ // Take note there is no vit,aspd,speed increase as skill desc says. [malufett]
-				struct status_data *sstatus = src ? status_get_status_data(src) : NULL;
-				val2 = 2 * val1; // MaxHP: [(Skill Level * 2)]%
-				val3 = val1 * 30 + 50; // Natural HP recovery increase: [(Skill Level x 30) + 50] %
-				// The stat def is not shown in the status window and it is process differently
-				val4 = ((sstatus?sstatus->vit:4)/4 ) * val1; // STAT DEF increase: [(Caster VIT / 4) x Skill Level]
-			}
+			// Take note there is no vit, aspd, speed increase as skill desc says. [malufett]
+			val2 = 2 * val1; // MaxHP: [(Skill Level * 2)]%
+			val3 = val1 * 30 + 50; // Natural HP recovery increase: [(Skill Level x 30) + 50] %
+			// The stat def is not shown in the status window and it is processed differently
+			val4 = status_get_vit(src) / 4 * val1; // STAT DEF increase: [(Caster VIT / 4) x Skill Level]
 			break;
 		case SC_PYROTECHNIC_OPTION:
 			val2 = 60; // Eatk Renewal (Atk2)

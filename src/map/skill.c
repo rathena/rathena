@@ -15487,7 +15487,7 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
 					req.itemid[i] = skill_db[idx]->require.itemid[i];
 					req.amount[i] = skill_db[idx]->require.amount[i];
 
-					if (skill_id >= HT_SKIDTRAP && skill_id <= HT_TALKIEBOX && pc_checkskill(sd, RA_RESEARCHTRAP) > 0 || skill_id == SC_ESCAPE) {
+					if ((skill_id >= HT_SKIDTRAP && skill_id <= HT_TALKIEBOX && pc_checkskill(sd, RA_RESEARCHTRAP) > 0) || skill_id == SC_ESCAPE) {
 						int16 itIndex;
 
 						if ((itIndex = pc_search_inventory(sd,req.itemid[i])) < 0 || ( itIndex >= 0 && sd->status.inventory[itIndex].amount < req.amount[i])) {
