@@ -11831,6 +11831,8 @@ void clif_parse_ProduceMix(int fd,struct map_session_data *sd){
 	int slot1  = RFIFOW(fd,info->pos[1]);
 	int slot2  = RFIFOW(fd,info->pos[2]);
 	int slot3  = RFIFOW(fd,info->pos[3]);
+	short produce_idx = -1;
+
 	switch( sd->menuskill_id ) {
 		case -1:
 		case AM_PHARMACY:
@@ -11846,8 +11848,8 @@ void clif_parse_ProduceMix(int fd,struct map_session_data *sd){
 		clif_menuskill_clear(sd);
 		return;
 	}
-	if( skill_can_produce_mix(sd,nameid,sd->menuskill_val, 1) )
-		skill_produce_mix(sd,0,nameid,slot1,slot2,slot3, 1);
+	if( (produce_idx = skill_can_produce_mix(sd,nameid,sd->menuskill_val, 1)) )
+		skill_produce_mix(sd,0,nameid,slot1,slot2,slot3,1,produce_idx-1);
 	clif_menuskill_clear(sd);
 }
 
@@ -11866,6 +11868,8 @@ void clif_parse_Cooking(int fd,struct map_session_data *sd) {
 	int type = RFIFOW(fd,info->pos[0]);
 	unsigned short nameid = RFIFOW(fd,info->pos[1]);
 	int amount = sd->menuskill_val2 ? sd->menuskill_val2 : 1;
+	short food_idx = -1;
+
 	if( type == 6 && sd->menuskill_id != GN_MIX_COOKING && sd->menuskill_id != GN_S_PHARMACY )
 		return;
 
@@ -11875,8 +11879,8 @@ void clif_parse_Cooking(int fd,struct map_session_data *sd) {
 		clif_menuskill_clear(sd);
 		return;
 	}
-	if( skill_can_produce_mix(sd,nameid,sd->menuskill_val, amount) )
-		skill_produce_mix(sd,(type>1?sd->menuskill_id:0),nameid,0,0,0,amount);
+	if( (food_idx = skill_can_produce_mix(sd,nameid,sd->menuskill_val, amount)) )
+		skill_produce_mix(sd,(type>1?sd->menuskill_id:0),nameid,0,0,0,amount,food_idx-1);
 	clif_menuskill_clear(sd);
 }
 
@@ -12033,7 +12037,7 @@ void clif_parse_SelectArrow(int fd,struct map_session_data *sd){
 			skill_arrow_create(sd,nameid);
 			break;
 		case SA_CREATECON:
-			skill_produce_mix(sd,SA_CREATECON,nameid,0,0,0, 1);
+			skill_produce_mix(sd,SA_CREATECON,nameid,0,0,0,1,-1);
 			break;
 		case WL_READING_SB:
 			skill_spellbook(sd,nameid);

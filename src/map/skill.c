@@ -309,6 +309,7 @@ int skill_tree_get_max(uint16 skill_id, int b_class)
 	else
 		return skill_get_max(skill_id);
 }
+
 int skill_frostjoke_scream(struct block_list *bl,va_list ap);
 int skill_attack_area(struct block_list *bl,va_list ap);
 struct skill_unit_group *skill_locate_element_field(struct block_list *bl); // [Skotlex]
@@ -7110,7 +7111,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case AL_HOLYWATER:
 		if(sd) {
-			if (skill_produce_mix(sd, skill_id, ITEMID_HOLY_WATER, 0, 0, 0, 1))
+			if (skill_produce_mix(sd, skill_id, ITEMID_HOLY_WATER, 0, 0, 0, 1, -1))
 				clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 			else
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
@@ -7142,7 +7143,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case ASC_CDP:
 		if(sd) {
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-			skill_produce_mix(sd, skill_id, 678, 0, 0, 0, 1); //Produce a Deadly Poison Bottle.
+			skill_produce_mix(sd, skill_id, ITEMID_POISON_BOTTLE, 0, 0, 0, 1, -1); //Produce a Poison Bottle.
 		}
 		break;
 
@@ -7349,7 +7350,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if (sd) {
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 			//Prepare 200 White Potions.
-			if (!skill_produce_mix(sd, skill_id, ITEMID_WHITE_POTION, 0, 0, 0, 200))
+			if (!skill_produce_mix(sd, skill_id, ITEMID_WHITE_POTION, 0, 0, 0, 200, -1))
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 		}
 		break;
@@ -7357,28 +7358,29 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if (sd) {
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 			//Prepare 200 Slim White Potions.
-			if (!skill_produce_mix(sd, skill_id, ITEMID_WHITE_SLIM_POTION, 0, 0, 0, 200))
+			if (!skill_produce_mix(sd, skill_id, ITEMID_WHITE_SLIM_POTION, 0, 0, 0, 200, -1))
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 		}
 		break;
 	case AM_TWILIGHT3:
 		if (sd) {
 			int ebottle = pc_search_inventory(sd,ITEMID_EMPTY_BOTTLE);
+			short alcohol_idx = -1, acid_idx = -1, fire_idx = -1;
 			if( ebottle >= 0 )
 				ebottle = sd->status.inventory[ebottle].amount;
 			//check if you can produce all three, if not, then fail:
-			if (!skill_can_produce_mix(sd,ITEMID_ALCOHOL,-1, 100) //100 Alcohol
-				|| !skill_can_produce_mix(sd,ITEMID_ACID_BOTTLE,-1, 50) //50 Acid Bottle
-				|| !skill_can_produce_mix(sd,ITEMID_FIRE_BOTTLE,-1, 50) //50 Flame Bottle
+			if (!(alcohol_idx = skill_can_produce_mix(sd,ITEMID_ALCOHOL,-1, 100)) //100 Alcohol
+				|| !(acid_idx = skill_can_produce_mix(sd,ITEMID_ACID_BOTTLE,-1, 50)) //50 Acid Bottle
+				|| !(fire_idx = skill_can_produce_mix(sd,ITEMID_FIRE_BOTTLE,-1, 50)) //50 Flame Bottle
 				|| ebottle < 200 //200 empty bottle are required at total.
 			) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				break;
 			}
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-			skill_produce_mix(sd, skill_id, ITEMID_ALCOHOL, 0, 0, 0, 100);
-			skill_produce_mix(sd, skill_id, ITEMID_ACID_BOTTLE, 0, 0, 0, 50);
-			skill_produce_mix(sd, skill_id, ITEMID_FIRE_BOTTLE, 0, 0, 0, 50);
+			skill_produce_mix(sd, skill_id, ITEMID_ALCOHOL, 0, 0, 0, 100, alcohol_idx-1);
+			skill_produce_mix(sd, skill_id, ITEMID_ACID_BOTTLE, 0, 0, 0, 50, acid_idx-1);
+			skill_produce_mix(sd, skill_id, ITEMID_FIRE_BOTTLE, 0, 0, 0, 50, fire_idx-1);
 		}
 		break;
 	case SA_DISPELL:
@@ -8779,7 +8781,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case AB_ANCILLA:
 	 	if( sd ) {
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-			skill_produce_mix(sd, skill_id, ITEMID_ANCILLA, 0, 0, 0, 1);
+			skill_produce_mix(sd, skill_id, ITEMID_ANCILLA, 0, 0, 0, 1, -1);
 		}
 		break;
 
@@ -9557,8 +9559,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		{
 			int heal;
 
-			heal = (120 * skill_lv) + (status_get_max_hp(bl) * skill_lv / 100);
-			status_heal(bl, heal, 0, 0);
+			if (!dstmd || dstmd->mob_id != MOBID_EMPERIUM || !mob_is_battleground(dstmd)) {
+				heal = (120 * skill_lv) + (status_get_max_hp(bl) * skill_lv / 100);
+				status_heal(bl, heal, 0, 0);
+			}
 
 			if( (tsc && tsc->opt1) && (rnd()%100 < ((skill_lv * 5) + (status_get_dex(src) + status_get_lv(src)) / 4) - (1 + (rnd() % 10))) ) {
 				status_change_end(bl, SC_STONE, INVALID_TIMER);
@@ -10925,7 +10929,7 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr_t data)
 			skill_check_unit_range(src,ud->skillx,ud->skilly,ud->skill_id,ud->skill_lv)
 		  )
 		{
-			if (sd) clif_skill_fail(sd,ud->skill_id,USESKILL_FAIL_LEVEL,0);
+			if (sd) clif_skill_fail(sd,ud->skill_id,USESKILL_FAIL_DUPLICATE_RANGEIN,0);
 			break;
 		}
 		if( src->type&battle_config.skill_nofootset &&
@@ -12331,30 +12335,37 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 
 	case GS_GROUNDDRIFT:
 		{
-		int element[5]={ELE_WIND,ELE_DARK,ELE_POISON,ELE_WATER,ELE_FIRE};
+			// Ground Drift Element is decided when it's placed.
+			int ele = skill_get_ele(skill_id, skill_lv);
+			int element[5] = { ELE_WIND, ELE_DARK, ELE_POISON, ELE_WATER, ELE_FIRE };
 
-		val1 = status->rhw.ele;
-		if (!val1)
-			val1=element[rnd()%5];
+			if (ele == -3)
+				val1 = element[rnd()%5]; // Use random from available unit visual?
+			else if (ele == -2)
+				val1 = status_get_attack_sc_element(src,sc);
+			else if (ele == -1) {
+				val1 = status->rhw.ele;
+				if (sc && sc->data[SC_ENCHANTARMS])
+					val1 = sc->data[SC_ENCHANTARMS]->val2;
+			}
 
-		switch (val1)
-		{
-			case ELE_FIRE:
-				subunt++;
-			case ELE_WATER:
-				subunt++;
-			case ELE_POISON:
-				subunt++;
-			case ELE_DARK:
-				subunt++;
-			case ELE_WIND:
-				break;
-			default:
-				subunt=rnd()%5;
-				break;
-		}
+			switch (val1) {
+				case ELE_FIRE:
+					subunt++;
+				case ELE_WATER:
+					subunt++;
+				case ELE_POISON:
+					subunt++;
+				case ELE_DARK:
+					subunt++;
+				case ELE_WIND:
+					break;
+				default:
+					subunt = rnd()%5;
+					break;
+			}
 
-		break;
+			break;
 		}
 	case GC_POISONSMOKE:
 		if( !(sc && sc->data[SC_POISONINGWEAPON]) )
@@ -12859,6 +12870,14 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, un
 				if (battle_check_target(&unit->bl, bl, BCT_SELF|BCT_PARTY|state) > 0)
 					sc_start4(ss, bl, type, 100, sg->skill_lv, 0, ss->id, 0, sg->limit);
 			}
+			break;
+
+		case UNT_STEALTHFIELD:
+			if( bl->id == sg->src_id )
+				break; // Dont work on Self (video shows that)
+		case UNT_NEUTRALBARRIER:
+			if (!sce)
+				sc_start(ss, bl,type,100,sg->skill_lv,sg->limit);
 			break;
 
 		case UNT_GD_LEADERSHIP:
@@ -13397,13 +13416,6 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 				skill_castend_damage_id(&src->bl, bl, sg->skill_id, sg->skill_lv, 0, 0);*/
 			break;
 
-		case UNT_STEALTHFIELD:
-			if( bl->id == sg->src_id )
-				break; // Dont work on Self (video shows that)
-		case UNT_NEUTRALBARRIER:
-			sc_start(ss, bl,type,100,sg->skill_lv,sg->interval + 100);
-			break;
-
 		case UNT_DIMENSIONDOOR:
 			if( tsd && !map[bl->m].flag.noteleport )
 				pc_randomwarp(tsd,CLR_TELEPORT);
@@ -13470,6 +13482,8 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 			break;
 
 		case UNT_HELLS_PLANT:
+			if (tsc && tsc->data[SC__MANHOLE])
+				break;
 			if( battle_check_target(&unit->bl,bl,BCT_ENEMY) > 0 )
 				skill_attack(skill_get_type(GN_HELLS_PLANT_ATK), ss, &unit->bl, bl, GN_HELLS_PLANT_ATK, sg->skill_lv, tick, SCSTART_NONE);
 			if( ss != bl) // The caster is the only one who can step on the Plants without destroying them
@@ -13658,8 +13672,6 @@ int skill_unit_onout(struct skill_unit *src, struct block_list *bl, unsigned int
 		case UNT_SAFETYWALL:
 		case UNT_PNEUMA:
 		case UNT_EPICLESIS://Arch Bishop
-		case UNT_NEUTRALBARRIER:
-		case UNT_STEALTHFIELD:
 			if (sce)
 				status_change_end(bl, type, INVALID_TIMER);
 			break;
@@ -13768,6 +13780,8 @@ int skill_unit_onleft(uint16 skill_id, struct block_list *bl, unsigned int tick)
 		case GN_FIRE_EXPANSION_SMOKE_POWDER:
 		case GN_FIRE_EXPANSION_TEAR_GAS:
 		case LG_KINGS_GRACE:
+		case NC_STEALTHFIELD:
+		case NC_NEUTRALBARRIER:
 			if (sce)
 				status_change_end(bl, type, INVALID_TIMER);
 			break;
@@ -17842,6 +17856,7 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 
 	return 0;
 }
+
 /*==========================================
  * Executes on all skill units every SKILLUNITTIMER_INTERVAL miliseconds.
  *------------------------------------------*/
@@ -18203,9 +18218,10 @@ short skill_can_produce_mix(struct map_session_data *sd, unsigned short nameid, 
  * @param slot2
  * @param slot3
  * @param qty Amount of requested item
+ * @param produce_idx Index of produce entry in skill_produce_db[]. (Optional. Assumed the requirements are complete, checked somewhere)
  * @return True is success, False if failed
  */
-bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned short nameid, int slot1, int slot2, int slot3, int qty)
+bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned short nameid, int slot1, int slot2, int slot3, int qty, short produce_idx)
 {
 	int slot[3];
 	int i, sc, ele, idx, equip, wlv, make_per = 0, flag = 0, skill_lv = 0;
@@ -18220,9 +18236,14 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 	if( sd->skill_id_old == skill_id )
 		skill_lv = sd->skill_lv_old;
 
-	if( !(idx = skill_can_produce_mix(sd,nameid,-1, qty)) )
-		return false;
-	idx--;
+	if (produce_idx == -1) {
+		if( !(idx = skill_can_produce_mix(sd,nameid,-1, qty)) )
+			return false;
+
+		idx--;
+	}
+	else
+		idx = produce_idx;
 
 	if (qty < 1)
 		qty = 1;
@@ -19166,7 +19187,7 @@ int skill_changematerial(struct map_session_data *sd, int n, unsigned short *ite
 			} while(n == j && c == n);
 			p--;
 			if ( p > 0 ) {
-				skill_produce_mix(sd,GN_CHANGEMATERIAL,skill_produce_db[i].nameid,0,0,0,p);
+				skill_produce_mix(sd,GN_CHANGEMATERIAL,skill_produce_db[i].nameid,0,0,0,p,i);
 				return 1;
 			}
 		}

@@ -487,7 +487,7 @@ bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skil
 
 // Item creation
 short skill_can_produce_mix( struct map_session_data *sd, unsigned short nameid, int trigger, int qty);
-bool skill_produce_mix( struct map_session_data *sd, uint16 skill_id, unsigned short nameid, int slot1, int slot2, int slot3, int qty );
+bool skill_produce_mix( struct map_session_data *sd, uint16 skill_id, unsigned short nameid, int slot1, int slot2, int slot3, int qty, short produce_idx );
 
 bool skill_arrow_create( struct map_session_data *sd, unsigned short nameid);
 

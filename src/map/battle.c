@@ -930,6 +930,13 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 		status_change_end(target, SC_SAFETYWALL, INVALID_TIMER);
 	}
 
+	if( (sc->data[SC_NEUTRALBARRIER] || sc->data[SC_NEUTRALBARRIER_MASTER]) && !(skill_get_nk(skill_id)&NK_IGNORE_FLEE) &&
+		(skill_id == NPC_EARTHQUAKE || (d->flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON)) )
+	{
+		d->dmg_lv = ATK_MISS;
+		return false;
+	}
+
 	if( sc->data[SC_PNEUMA] && (d->flag&(BF_MAGIC|BF_LONG)) == BF_LONG ) {
 		d->dmg_lv = ATK_BLOCK;
 		skill_blown(src,target,skill_get_blewcount(skill_id,skill_lv),-1,0);
@@ -1103,11 +1110,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 		if(sc->data[SC_TATAMIGAESHI] && (flag&(BF_MAGIC|BF_LONG)) == BF_LONG)
 			return 0;
-
-		if( sc->data[SC_NEUTRALBARRIER] && (skill_id == NPC_EARTHQUAKE || (flag&(BF_LONG|BF_MAGIC)) == BF_LONG) ) {
-			d->dmg_lv = ATK_MISS;
-			return 0;
-		}
 
 		//Kaupe blocks damage (skill or otherwise) from players, mobs, homuns, mercenaries.
 		if ((sce = sc->data[SC_KAUPE]) && rnd()%100 < sce->val2) {
@@ -2418,7 +2420,7 @@ static bool is_attack_hitting(struct Damage wd, struct block_list *src, struct b
 	else if (nk&NK_IGNORE_FLEE)
 		return true;
 
-	if( sc && (sc->data[SC_NEUTRALBARRIER] || sc->data[SC_NEUTRALBARRIER_MASTER]) && (wd.flag&(BF_LONG|BF_MAGIC)) == BF_LONG )
+	if( sc && (sc->data[SC_NEUTRALBARRIER] || sc->data[SC_NEUTRALBARRIER_MASTER]) && (wd.flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON) )
 		return false;
 
 	flee = tstatus->flee;
@@ -2742,10 +2744,6 @@ static struct Damage battle_calc_element_damage(struct Damage wd, struct block_l
 				case KO_BAKURETSU:
 					//Forced to neutral element
 					wd.damage = battle_attr_fix(src, target, wd.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
-					break;
-				case GS_GROUNDDRIFT:
-					//Additional 50 * lv neutral damage
-					wd.damage += battle_attr_fix(src, target, 50 * skill_lv, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 					break;
 				case GN_CARTCANNON:
 				case KO_HAPPOKUNAI:
@@ -6438,10 +6436,9 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			break;
 		case GS_GROUNDDRIFT:
 			// Official formula [helvetica]
-			// damage = 50 * skill level
-			// fixed damage, ignores DEF and benefits from weapon +%ATK cards
-			md.damage = 50 * skill_lv;
-			md.damage += battle_calc_cardfix(BF_WEAPON, src, target, nk, s_ele, 0, md.damage, 0, md.flag|NK_NO_CARDFIX_DEF); // ground drift benefits from weapon atk cards, ignore DEF cards so we don't apply twice
+			// bonus damage = 50 * skill level (fixed damage)
+			s_ele = ELE_NEUTRAL;
+			md.damage = battle_attr_fix(src, target, 50 * skill_lv, s_ele, tstatus->def_ele, tstatus->ele_lv);
 			break;
 		case HVAN_EXPLOSION: //[orn]
 			md.damage = (int64)sstatus->max_hp * (50 + 50 * skill_lv) / 100;
@@ -6575,6 +6572,17 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 				if (md.damage > sd->status.zeny)
 					md.damage = sd->status.zeny;
 				pc_payzeny(sd,(int)cap_value(md.damage, INT_MIN, INT_MAX),LOG_TYPE_STEAL,NULL);
+			}
+			break;
+		case GS_GROUNDDRIFT:
+			{
+				struct Damage wd = battle_calc_weapon_attack(src,target,skill_id,skill_lv,mflag);
+				int blewcount = skill_get_blewcount(skill_id, skill_lv);
+
+				md.damage += wd.damage;
+				// Knockback only from Fire Element (except from bonuses?)
+				if (mflag != ELE_FIRE && md.blewcount >= blewcount)
+					md.blewcount -= blewcount;
 			}
 			break;
 	}

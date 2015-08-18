@@ -5886,7 +5886,7 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 	if( sc->data[SC_ANALYZE] )
 		def -= def * (14 * sc->data[SC_ANALYZE]->val1) / 100;
 	if( sc->data[SC_NEUTRALBARRIER] )
-		def += def * (10 + sc->data[SC_NEUTRALBARRIER]->val1 * 5) / 100;
+		def += def * sc->data[SC_NEUTRALBARRIER]->val2 / 100;
 	if( sc->data[SC_SHIELDSPELL_REF] && sc->data[SC_SHIELDSPELL_REF]->val1 == 2 )
 		def += sc->data[SC_SHIELDSPELL_REF]->val2;
 	if( sc->data[SC_PRESTIGE] )
@@ -6021,7 +6021,7 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 	if(sc->data[SC_BURNING])
 		mdef -= 25 * mdef / 100;
 	if( sc->data[SC_NEUTRALBARRIER] )
-		mdef += mdef * (10 + sc->data[SC_NEUTRALBARRIER]->val1 * 5) / 100;
+		mdef += mdef * sc->data[SC_NEUTRALBARRIER]->val3 / 100;
 	if(sc->data[SC_ANALYZE])
 		mdef -= mdef * ( 14 * sc->data[SC_ANALYZE]->val1 ) / 100;
 	if(sc->data[SC_SYMPHONYOFLOVER])
@@ -10174,6 +10174,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			}
 			else
 				val4 = 0;
+			break;
+		case SC_NEUTRALBARRIER:
+			val2 = 10 + val1 * 5; // Def
+			val3 = 10 + val1 * 5; // Mdef
 			break;
 
 		/* Rebellion */
