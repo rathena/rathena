@@ -8407,6 +8407,7 @@ REPLACE INTO `item_db_re` VALUES (16035,'Half_BF_Morning_Star1','Half BF Morning
 REPLACE INTO `item_db_re` VALUES (16036,'Blue_Mace','Blue Mace',5,10,NULL,1500,'170',NULL,1,1,0x00008000,56,2,2,3,'100',1,8,'bonus bVit,5; bonus bInt,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (16037,'Ru_Gold_Mace','Ru Gold Mace',5,0,NULL,1500,'170',NULL,1,2,0x00008000,56,2,2,3,'120',1,8,'bonus bVit,8; bonus bInt,8;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (16038,'Infinity_Mace','Infinity Mace',5,10,NULL,500,'155',NULL,1,1,0x00000032,40,2,2,4,'100',1,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (16039,'Spoon','Spoon',5,10,NULL,1000,'80',NULL,1,1,0x00000033,63,2,2,3,'40',1,8,'bonus bAspd,10; bonus2 bAddEff,Eff_Curse,1000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (16040,'Crimson_Mace','Crimson Mace',5,20,NULL,800,'80',NULL,1,2,0x00000033,63,2,2,3,'70',1,NULL,'.@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);',NULL,NULL);
 # More Rental Boxes
 REPLACE INTO `item_db_re` VALUES (16131,'Lady_Tanee_Doll_Box','Lady Tanee Doll Box',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 5526,1;',NULL,NULL);
