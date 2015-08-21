@@ -18195,7 +18195,7 @@ void clif_parse_merge_item_cancel(int fd, struct map_session_data* sd) {
  **/
 void clif_broadcast_obtain_special_item(const char *char_name, unsigned short nameid, unsigned short container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type, const char *srcname) {
 	unsigned char buf[9 + NAME_LENGTH * 2];
-	unsigned short pos = 0, cmd = 0;
+	unsigned short cmd = 0;
 	struct s_packet_db *info = NULL;
 
 	if (!(cmd = packet_db_ack[clif_config.packet_db_ver][ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN]))

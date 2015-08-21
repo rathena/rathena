@@ -162,12 +162,10 @@ unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group) {
 static void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, struct s_item_group_entry *data) {
 	uint16 i, get_amt = 0;
 	struct item tmp;
-	struct item_data *id = NULL;
 
 	nullpo_retv(data);
 
 	memset(&tmp, 0, sizeof(tmp));
-	id = itemdb_search(data->nameid);
 
 	tmp.nameid = data->nameid;
 	tmp.bound = data->bound;
