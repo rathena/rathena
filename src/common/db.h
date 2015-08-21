@@ -70,10 +70,10 @@
  * @see #db_custom_release(DBRelease)
  */
 typedef enum DBRelease {
-	DB_RELEASE_NOTHING = 0,
-	DB_RELEASE_KEY     = 1,
-	DB_RELEASE_DATA    = 2,
-	DB_RELEASE_BOTH    = 3
+	DB_RELEASE_NOTHING = 0x0,
+	DB_RELEASE_KEY     = 0x1,
+	DB_RELEASE_DATA    = 0x2,
+	DB_RELEASE_BOTH    = DB_RELEASE_KEY|DB_RELEASE_DATA,
 } DBRelease;
 
 /**
@@ -126,13 +126,13 @@ typedef enum DBType {
  * @see #db_alloc(const char *,int,DBType,DBOptions,unsigned short)
  */
 typedef enum DBOptions {
-	DB_OPT_BASE            = 0,
-	DB_OPT_DUP_KEY         = 1,
-	DB_OPT_RELEASE_KEY     = 2,
-	DB_OPT_RELEASE_DATA    = 4,
-	DB_OPT_RELEASE_BOTH    = 6,
-	DB_OPT_ALLOW_NULL_KEY  = 8,
-	DB_OPT_ALLOW_NULL_DATA = 16,
+	DB_OPT_BASE            = 0x00,
+	DB_OPT_DUP_KEY         = 0x01,
+	DB_OPT_RELEASE_KEY     = 0x02,
+	DB_OPT_RELEASE_DATA    = 0x04,
+	DB_OPT_RELEASE_BOTH    = DB_OPT_RELEASE_KEY|DB_OPT_RELEASE_DATA,
+	DB_OPT_ALLOW_NULL_KEY  = 0x08,
+	DB_OPT_ALLOW_NULL_DATA = 0x10,
 } DBOptions;
 
 /**
@@ -165,7 +165,7 @@ typedef union DBKey {
 typedef enum DBDataType {
 	DB_DATA_INT,
 	DB_DATA_UINT,
-	DB_DATA_PTR
+	DB_DATA_PTR,
 } DBDataType;
 
 /**
@@ -679,22 +679,22 @@ struct DBMap {
 #define ui64db_ensure(db,k,f) ( db_data2ptr((db)->ensure((db),db_ui642key(k),(f))) )
 
 // Database creation and destruction macros
-#define idb_alloc(opt)            db_alloc(__FILE__,__LINE__,DB_INT,(opt),sizeof(int))
-#define uidb_alloc(opt)           db_alloc(__FILE__,__LINE__,DB_UINT,(opt),sizeof(unsigned int))
-#define strdb_alloc(opt,maxlen)   db_alloc(__FILE__,__LINE__,DB_STRING,(opt),(maxlen))
-#define stridb_alloc(opt,maxlen)  db_alloc(__FILE__,__LINE__,DB_ISTRING,(opt),(maxlen))
-#define i64db_alloc(opt)          db_alloc(__FILE__,__LINE__,DB_INT64,(opt),sizeof(int64))
-#define ui64db_alloc(opt)         db_alloc(__FILE__,__LINE__,DB_UINT64,(opt),sizeof(uint64))
+#define idb_alloc(opt)            db_alloc(__FILE__,__func__,__LINE__,DB_INT,(opt),sizeof(int))
+#define uidb_alloc(opt)           db_alloc(__FILE__,__func__,__LINE__,DB_UINT,(opt),sizeof(unsigned int))
+#define strdb_alloc(opt,maxlen)   db_alloc(__FILE__,__func__,__LINE__,DB_STRING,(opt),(maxlen))
+#define stridb_alloc(opt,maxlen)  db_alloc(__FILE__,__func__,__LINE__,DB_ISTRING,(opt),(maxlen))
+#define i64db_alloc(opt)          db_alloc(__FILE__,__func__,__LINE__,DB_INT64,(opt),sizeof(int64))
+#define ui64db_alloc(opt)         db_alloc(__FILE__,__func__,__LINE__,DB_UINT64,(opt),sizeof(uint64))
 #define db_destroy(db)            ( (db)->destroy((db),NULL) )
 // Other macros
-#define db_clear(db)        ( (db)->clear(db,NULL) )
+#define db_clear(db)        ( (db)->clear((db),NULL) )
 #define db_size(db)         ( (db)->size(db) )
 #define db_iterator(db)     ( (db)->iterator(db) )
-#define dbi_first(dbi)      ( db_data2ptr((dbi)->first(dbi,NULL)) )
-#define dbi_last(dbi)       ( db_data2ptr((dbi)->last(dbi,NULL)) )
-#define dbi_next(dbi)       ( db_data2ptr((dbi)->next(dbi,NULL)) )
-#define dbi_prev(dbi)       ( db_data2ptr((dbi)->prev(dbi,NULL)) )
-#define dbi_remove(dbi)     ( (dbi)->remove(dbi,NULL) )
+#define dbi_first(dbi)      ( db_data2ptr((dbi)->first((dbi),NULL)) )
+#define dbi_last(dbi)       ( db_data2ptr((dbi)->last((dbi),NULL)) )
+#define dbi_next(dbi)       ( db_data2ptr((dbi)->next((dbi),NULL)) )
+#define dbi_prev(dbi)       ( db_data2ptr((dbi)->prev((dbi),NULL)) )
+#define dbi_remove(dbi)     ( (dbi)->remove((dbi),NULL) )
 #define dbi_exists(dbi)     ( (dbi)->exists(dbi) )
 #define dbi_destroy(dbi)    ( (dbi)->destroy(dbi) )
 
@@ -786,7 +786,7 @@ DBReleaser db_custom_release(DBRelease which);
 
 /**
  * Allocate a new database of the specified type.
- * It uses the default comparator, hasher and releaser of the specified 
+ * It uses the default comparator, hasher and releaser of the specified
  * database type and fixed options.
  * NOTE: the options are fixed by {@link #db_fix_options(DBType,DBOptions)}
  * before creating the database.
@@ -794,7 +794,7 @@ DBReleaser db_custom_release(DBRelease which);
  * @param line Line of the file where the database is being allocated
  * @param type Type of database
  * @param options Options of the database
- * @param maxlen Maximum length of the string to be used as key in string 
+ * @param maxlen Maximum length of the string to be used as key in string
  *          databases. If 0, the maximum number of maxlen is used (64K).
  * @return The interface of the database
  * @public
@@ -805,7 +805,7 @@ DBReleaser db_custom_release(DBRelease which);
  * @see #db_default_release(DBType,DBOptions)
  * @see #db_fix_options(DBType,DBOptions)
  */
-DBMap* db_alloc(const char *file, int line, DBType type, DBOptions options, unsigned short maxlen);
+DBMap* db_alloc(const char *file, const char *func, int line, DBType type, DBOptions options, unsigned short maxlen);
 
 /**
  * Manual cast from 'int' to the union DBKey.
@@ -921,15 +921,15 @@ struct linkdb_node {
 	void               *data;
 };
 
-typedef int (*LinkDBFunc)(void* key, void* data, va_list args);
+typedef void (*LinkDBFunc)(void* key, void* data, va_list args);
 
-void  linkdb_insert ( struct linkdb_node** head, void *key, void* data); // 重複を考慮しない
-void  linkdb_replace( struct linkdb_node** head, void *key, void* data); // 重複を考慮する
-void* linkdb_search ( struct linkdb_node** head, void *key);
-void* linkdb_erase  ( struct linkdb_node** head, void *key);
-void  linkdb_final  ( struct linkdb_node** head );
-int   linkdb_vforeach(struct linkdb_node** head, LinkDBFunc func, va_list ap);
-int   linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
+void  linkdb_insert  (struct linkdb_node** head, void *key, void* data); // Doesn't take into account duplicate keys
+void  linkdb_replace (struct linkdb_node** head, void *key, void* data); // Takes into account duplicate keys
+void* linkdb_search  (struct linkdb_node** head, void *key);
+void* linkdb_erase   (struct linkdb_node** head, void *key);
+void  linkdb_final   (struct linkdb_node** head);
+void  linkdb_vforeach(struct linkdb_node** head, LinkDBFunc func, va_list ap);
+void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 
 
 
@@ -1132,8 +1132,8 @@ int   linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 	do{ \
 		if( (__n) > VECTOR_CAPACITY(__vec) ) \
 		{ /* increase size */ \
-			if( VECTOR_CAPACITY(__vec) == 0 ) SET_POINTER(VECTOR_DATA(__vec), aMalloc((__n)*sizeof(VECTOR_FIRST(__vec)))); /* allocate new */ \
-			else SET_POINTER(VECTOR_DATA(__vec), aRealloc(VECTOR_DATA(__vec),(__n)*sizeof(VECTOR_FIRST(__vec)))); /* reallocate */ \
+			if( VECTOR_CAPACITY(__vec) == 0 ) VECTOR_DATA(__vec) = aMalloc((__n)*sizeof(VECTOR_FIRST(__vec))); /* allocate new */ \
+			else VECTOR_DATA(__vec) = aRealloc(VECTOR_DATA(__vec),(__n)*sizeof(VECTOR_FIRST(__vec))); /* reallocate */ \
 			memset(VECTOR_DATA(__vec)+VECTOR_LENGTH(__vec), 0, (VECTOR_CAPACITY(__vec)-VECTOR_LENGTH(__vec))*sizeof(VECTOR_FIRST(__vec))); /* clear new data */ \
 			VECTOR_CAPACITY(__vec) = (__n); /* update capacity */ \
 		} \
@@ -1145,7 +1145,7 @@ int   linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 		} \
 		else if( (__n) < VECTOR_CAPACITY(__vec) ) \
 		{ /* reduce size */ \
-			SET_POINTER(VECTOR_DATA(__vec), aRealloc(VECTOR_DATA(__vec),(__n)*sizeof(VECTOR_FIRST(__vec)))); /* reallocate */ \
+			VECTOR_DATA(__vec) = aRealloc(VECTOR_DATA(__vec),(__n)*sizeof(VECTOR_FIRST(__vec))); /* reallocate */ \
 			VECTOR_CAPACITY(__vec) = (__n); /* update capacity */ \
 			if( VECTOR_LENGTH(__vec) > (__n) ) VECTOR_LENGTH(__vec) = (__n); /* update length */ \
 		} \
@@ -1162,8 +1162,10 @@ int   linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 #define VECTOR_ENSURE(__vec,__n,__step) \
 	do{ \
 		size_t _empty_ = VECTOR_CAPACITY(__vec)-VECTOR_LENGTH(__vec); \
-		while( (__n) > _empty_ ) _empty_ += (__step); \
-		if( _empty_ != VECTOR_CAPACITY(__vec)-VECTOR_LENGTH(__vec) ) VECTOR_RESIZE(__vec,_empty_+VECTOR_LENGTH(__vec)); \
+		if( (__n) > _empty_ ) { \
+			while( (__n) > _empty_ ) _empty_ += (__step); \
+			VECTOR_RESIZE(__vec,_empty_+VECTOR_LENGTH(__vec)); \
+		} \
 	}while(0)
 
 

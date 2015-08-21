@@ -48,6 +48,7 @@
  *
  *  HISTORY:
  *    2013/08/25 - Added int64/uint64 support for keys [Ind/Hercules]
+ *    2013/04/27 - Added ERS to speed up iterator memory allocation [Ind/Hercules]
  *    2012/03/09 - Added enum for data types (int, uint, void*)
  *    2008/02/19 - Fixed db_obj_get not handling deleted entries correctly.
  *    2007/11/09 - Added an iterator to the database.
@@ -66,14 +67,17 @@
  * @encoding US-ASCII
  * @see #db.h
 \*****************************************************************************/
-#include <stdio.h>
-#include <stdlib.h>
 
 #include "db.h"
-#include "../common/malloc.h"
-#include "../common/showmsg.h"
+
 #include "../common/ers.h"
+#include "../common/malloc.h"
+#include "../common/mmo.h"
+#include "../common/showmsg.h"
 #include "../common/strlib.h"
+
+#include <stdio.h>
+#include <stdlib.h>
 
 /*****************************************************************************\
  *  (1) Private typedefs, enums, structures, defines and global variables of *
@@ -139,7 +143,7 @@ typedef struct dbn {
 	// Other
 	node_color color;
 	unsigned deleted : 1;
-} *DBNode;
+} DBNode;
 
 /**
  * Structure that holds a deleted node.
@@ -149,8 +153,8 @@ typedef struct dbn {
  * @see DBMap_impl#free_list
  */
 struct db_free {
-	DBNode node;
-	DBNode *root;
+	DBNode *node;
+	DBNode **root;
 };
 
 /**
@@ -187,12 +191,12 @@ typedef struct DBMap_impl {
 	unsigned int free_max;
 	unsigned int free_lock;
 	// Other
-	ERS nodes;
+	ERS *nodes;
 	DBComparator cmp;
 	DBHasher hash;
 	DBReleaser release;
-	DBNode ht[HASH_SIZE];
-	DBNode cache;
+	DBNode *ht[HASH_SIZE];
+	DBNode *cache;
 	DBType type;
 	DBOptions options;
 	uint32 item_count;
@@ -216,7 +220,7 @@ typedef struct DBIterator_impl {
 	struct DBIterator vtable;
 	DBMap_impl* db;
 	int ht_index;
-	DBNode node;
+	DBNode *node;
 } DBIterator_impl;
 
 #if defined(DB_ENABLE_STATS)
@@ -324,10 +328,14 @@ static struct db_stats {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0
 };
-#define DB_COUNTSTAT(token) if (stats. ## token != UINT32_MAX) ++stats. ## token
+#define DB_COUNTSTAT(token) do { if ((stats.token) != UINT32_MAX) ++(stats.token); } while(0)
 #else /* !defined(DB_ENABLE_STATS) */
 #define DB_COUNTSTAT(token)
 #endif /* !defined(DB_ENABLE_STATS) */
+
+/* [Ind/Hercules] */
+struct eri *db_iterator_ers;
+struct eri *db_alloc_ers;
 
 /*****************************************************************************\
  *  (2) Section of private functions used by the database system.            *
@@ -351,12 +359,12 @@ static struct db_stats {
  * @param node Node to be rotated
  * @param root Pointer to the root of the tree
  * @private
- * @see #db_rebalance(DBNode,DBNode *)
- * @see #db_rebalance_erase(DBNode,DBNode *)
+ * @see #db_rebalance(DBNode *,DBNode **)
+ * @see #db_rebalance_erase(DBNode *,DBNode **)
  */
-static void db_rotate_left(DBNode node, DBNode *root)
+static void db_rotate_left(DBNode *node, DBNode **root)
 {
-	DBNode y = node->right;
+	DBNode *y = node->right;
 
 	DB_COUNTSTAT(db_rotate_left);
 	// put the left of y at the right of node
@@ -382,12 +390,12 @@ static void db_rotate_left(DBNode node, DBNode *root)
  * @param node Node to be rotated
  * @param root Pointer to the root of the tree
  * @private
- * @see #db_rebalance(DBNode,DBNode *)
- * @see #db_rebalance_erase(DBNode,DBNode *)
+ * @see #db_rebalance(DBNode *,DBNode **)
+ * @see #db_rebalance_erase(DBNode *,DBNode **)
  */
-static void db_rotate_right(DBNode node, DBNode *root)
+static void db_rotate_right(DBNode *node, DBNode **root)
 {
-	DBNode y = node->left;
+	DBNode *y = node->left;
 
 	DB_COUNTSTAT(db_rotate_right);
 	// put the right of y at the left of node
@@ -414,13 +422,13 @@ static void db_rotate_right(DBNode node, DBNode *root)
  * @param node Node to be rebalanced
  * @param root Pointer to the root of the tree
  * @private
- * @see #db_rotate_left(DBNode,DBNode *)
- * @see #db_rotate_right(DBNode,DBNode *)
+ * @see #db_rotate_left(DBNode *,DBNode **)
+ * @see #db_rotate_right(DBNode *,DBNode **)
  * @see #db_obj_put(DBMap*,DBKey,DBData)
  */
-static void db_rebalance(DBNode node, DBNode *root)
+static void db_rebalance(DBNode *node, DBNode **root)
 {
-	DBNode y;
+	DBNode *y;
 
 	DB_COUNTSTAT(db_rebalance);
 	// Restore the RED-BLACK properties
@@ -476,15 +484,15 @@ static void db_rebalance(DBNode node, DBNode *root)
  * @param node Node to be erased from the tree
  * @param root Root of the tree
  * @private
- * @see #db_rotate_left(DBNode,DBNode *)
- * @see #db_rotate_right(DBNode,DBNode *)
+ * @see #db_rotate_left(DBNode *,DBNode **)
+ * @see #db_rotate_right(DBNode *,DBNode **)
  * @see #db_free_unlock(DBMap_impl*)
  */
-static void db_rebalance_erase(DBNode node, DBNode *root)
+static void db_rebalance_erase(DBNode *node, DBNode **root)
 {
-	DBNode y = node;
-	DBNode x = NULL;
-	DBNode x_parent = NULL;
+	DBNode *y = node;
+	DBNode *x = NULL;
+	DBNode *x_parent = NULL;
 
 	DB_COUNTSTAT(db_rebalance_erase);
 	// Select where to change the tree
@@ -552,7 +560,7 @@ static void db_rebalance_erase(DBNode node, DBNode *root)
 	// Restore the RED-BLACK properties
 	if (y->color != RED) {
 		while (x != *root && (x == NULL || x->color == BLACK)) {
-			DBNode w;
+			DBNode *w;
 			if (x == x_parent->left) {
 				w = x_parent->right;
 				if (w->color == RED) {
@@ -640,8 +648,8 @@ static int db_is_key_null(DBType type, DBKey key)
  * @param key Key to be duplicated
  * @param Duplicated key
  * @private
- * @see #db_free_add(DBMap_impl*,DBNode,DBNode *)
- * @see #db_free_remove(DBMap_impl*,DBNode)
+ * @see #db_free_add(DBMap_impl*,DBNode *,DBNode **)
+ * @see #db_free_remove(DBMap_impl*,DBNode *)
  * @see #db_obj_put(DBMap*,DBKey,void *)
  * @see #db_dup_key_free(DBMap_impl*,DBKey)
  */
@@ -700,9 +708,9 @@ static void db_dup_key_free(DBMap_impl* db, DBKey key)
  * @see DBMap_impl#free_count
  * @see DBMap_impl#free_max
  * @see #db_obj_remove(DBMap*,DBKey)
- * @see #db_free_remove(DBMap_impl*,DBNode)
+ * @see #db_free_remove(DBMap_impl*,DBNode *)
  */
-static void db_free_add(DBMap_impl* db, DBNode node, DBNode *root)
+static void db_free_add(DBMap_impl* db, DBNode *node, DBNode **root)
 {
 	DBKey old_key;
 
@@ -749,9 +757,9 @@ static void db_free_add(DBMap_impl* db, DBNode node, DBNode *root)
  * @see DBMap_impl#free_list
  * @see DBMap_impl#free_count
  * @see #db_obj_put(DBMap*,DBKey,DBData)
- * @see #db_free_add(DBMap_impl*,DBNode*,DBNode)
+ * @see #db_free_add(DBMap_impl*,DBNode**,DBNode*)
  */
-static void db_free_remove(DBMap_impl* db, DBNode node)
+static void db_free_remove(DBMap_impl* db, DBNode *node)
 {
 	unsigned int i;
 
@@ -800,7 +808,7 @@ static void db_free_lock(DBMap_impl* db)
  * @param db Target database
  * @private
  * @see DBMap_impl#free_lock
- * @see #db_free_dbn(DBNode)
+ * @see #db_free_dbn(DBNode*)
  * @see #db_lock(DBMap_impl*)
  */
 static void db_free_unlock(DBMap_impl* db)
@@ -1145,7 +1153,10 @@ static void db_release_data(DBKey key, DBData data, DBRelease which)
 {
 	(void)key;//not used
 	DB_COUNTSTAT(db_release_data);
-	if (which&DB_RELEASE_DATA && data.type == DB_DATA_PTR) aFree(data.u.ptr);
+	if (which&DB_RELEASE_DATA && data.type == DB_DATA_PTR) {
+		aFree(data.u.ptr);
+		data.u.ptr = NULL;
+	}
 }
 
 /**
@@ -1164,7 +1175,10 @@ static void db_release_both(DBKey key, DBData data, DBRelease which)
 {
 	DB_COUNTSTAT(db_release_both);
 	if (which&DB_RELEASE_KEY) aFree((char*)key.str); // needs to be a pointer
-	if (which&DB_RELEASE_DATA && data.type == DB_DATA_PTR) aFree(data.u.ptr);
+	if (which&DB_RELEASE_DATA && data.type == DB_DATA_PTR) {
+		aFree(data.u.ptr);
+		data.u.ptr = NULL;
+	}
 }
 
 /*****************************************************************************\
@@ -1257,8 +1271,8 @@ DBData* dbit_obj_last(DBIterator* self, DBKey* out_key)
 DBData* dbit_obj_next(DBIterator* self, DBKey* out_key)
 {
 	DBIterator_impl* it = (DBIterator_impl*)self;
-	DBNode node;
-	DBNode parent;
+	DBNode *node;
+	DBNode *parent;
 	struct dbn fake;
 
 	DB_COUNTSTAT(dbit_next);
@@ -1333,8 +1347,8 @@ DBData* dbit_obj_next(DBIterator* self, DBKey* out_key)
 DBData* dbit_obj_prev(DBIterator* self, DBKey* out_key)
 {
 	DBIterator_impl* it = (DBIterator_impl*)self;
-	DBNode node;
-	DBNode parent;
+	DBNode *node;
+	DBNode *parent;
 	struct dbn fake;
 
 	DB_COUNTSTAT(dbit_prev);
@@ -1417,7 +1431,7 @@ bool dbit_obj_exists(DBIterator* self)
  * Removes the current entry from the database.
  * NOTE: {@link DBIterator#exists} will return false until another entry
  *       is fetched
- * Puts data of the removed entry in out_data, if out_data is not NULL.
+ * Puts data of the removed entry in out_data, if out_data is not NULL (unless data has been released)
  * @param self Iterator
  * @param out_data Data of the removed entry.
  * @return 1 if entry was removed, 0 otherwise
@@ -1428,7 +1442,7 @@ bool dbit_obj_exists(DBIterator* self)
 int dbit_obj_remove(DBIterator* self, DBData *out_data)
 {
 	DBIterator_impl* it = (DBIterator_impl*)self;
-	DBNode node;
+	DBNode *node;
 	int retval = 0;
 
 	DB_COUNTSTAT(dbit_remove);
@@ -1438,10 +1452,10 @@ int dbit_obj_remove(DBIterator* self, DBData *out_data)
 		DBMap_impl* db = it->db;
 		if( db->cache == node )
 			db->cache = NULL;
+		db->release(node->key, node->data, DB_RELEASE_DATA);
 		if( out_data )
 			memcpy(out_data, &node->data, sizeof(DBData));
 		retval = 1;
-		db->release(node->key, node->data, DB_RELEASE_DATA);
 		db_free_add(db, node, &db->ht[it->ht_index]);
 	}
 	return retval;
@@ -1460,7 +1474,7 @@ void dbit_obj_destroy(DBIterator* self)
 	// unlock the database
 	db_free_unlock(it->db);
 	// free iterator
-	aFree(self);
+	ers_free(db_iterator_ers,self);
 }
 
 /**
@@ -1478,7 +1492,7 @@ static DBIterator* db_obj_iterator(DBMap* self)
 	DBIterator_impl* it;
 
 	DB_COUNTSTAT(db_iterator);
-	CREATE(it, struct DBIterator_impl, 1);
+	it = ers_alloc(db_iterator_ers, struct DBIterator_impl);
 	/* Interface of the iterator **/
 	it->vtable.first   = dbit_obj_first;
 	it->vtable.last    = dbit_obj_last;
@@ -1507,7 +1521,7 @@ static DBIterator* db_obj_iterator(DBMap* self)
 static bool db_obj_exists(DBMap* self, DBKey key)
 {
 	DBMap_impl* db = (DBMap_impl*)self;
-	DBNode node;
+	DBNode *node;
 	bool found = false;
 
 	DB_COUNTSTAT(db_exists);
@@ -1557,7 +1571,7 @@ static bool db_obj_exists(DBMap* self, DBKey key)
 static DBData* db_obj_get(DBMap* self, DBKey key)
 {
 	DBMap_impl* db = (DBMap_impl*)self;
-	DBNode node;
+	DBNode *node;
 	DBData *data = NULL;
 
 	DB_COUNTSTAT(db_get);
@@ -1617,8 +1631,8 @@ static unsigned int db_obj_vgetall(DBMap* self, DBData **buf, unsigned int max, 
 {
 	DBMap_impl* db = (DBMap_impl*)self;
 	unsigned int i;
-	DBNode node;
-	DBNode parent;
+	DBNode *node;
+	DBNode *parent;
 	unsigned int ret = 0;
 
 	DB_COUNTSTAT(db_vgetall);
@@ -1714,8 +1728,8 @@ static unsigned int db_obj_getall(DBMap* self, DBData **buf, unsigned int max, D
 static DBData* db_obj_vensure(DBMap* self, DBKey key, DBCreateData create, va_list args)
 {
 	DBMap_impl* db = (DBMap_impl*)self;
-	DBNode node;
-	DBNode parent = NULL;
+	DBNode *node;
+	DBNode *parent = NULL;
 	unsigned int hash;
 	int c = 0;
 	DBData *data = NULL;
@@ -1783,7 +1797,7 @@ static DBData* db_obj_vensure(DBMap* self, DBKey key, DBCreateData create, va_li
 		if (db->options&DB_OPT_DUP_KEY) {
 			node->key = db_dup_key(db, key);
 			if (db->options&DB_OPT_RELEASE_KEY)
-				db->release(key, *data, DB_RELEASE_KEY);
+				db->release(key, node->data, DB_RELEASE_KEY);
 		} else {
 			node->key = key;
 		}
@@ -1827,7 +1841,7 @@ static DBData* db_obj_ensure(DBMap* self, DBKey key, DBCreateData create, ...)
 
 /**
  * Put the data identified by the key in the database.
- * Puts the previous data in out_data, if out_data is not NULL.
+ * Puts the previous data in out_data, if out_data is not NULL. (unless data has been released)
  * NOTE: Uses the new key, the old one is released.
  * @param self Interface of the database
  * @param key Key that identifies the data
@@ -1837,12 +1851,14 @@ static DBData* db_obj_ensure(DBMap* self, DBKey key, DBCreateData create, ...)
  * @protected
  * @see #db_malloc_dbn(void)
  * @see DBMap#put
+ * FIXME: If this method fails shouldn't it return another value?
+ *        Other functions rely on this to know if they were able to put something [Panikon]
  */
 static int db_obj_put(DBMap* self, DBKey key, DBData data, DBData *out_data)
 {
 	DBMap_impl* db = (DBMap_impl*)self;
-	DBNode node;
-	DBNode parent = NULL;
+	DBNode *node;
+	DBNode *parent = NULL;
 	int c = 0, retval = 0;
 	unsigned int hash;
 
@@ -1933,20 +1949,20 @@ static int db_obj_put(DBMap* self, DBKey key, DBData data, DBData *out_data)
 
 /**
  * Remove an entry from the database.
- * Puts the previous data in out_data, if out_data is not NULL.
- * NOTE: The key (of the database) is released in {@link #db_free_add(DBMap_impl*,DBNode,DBNode *)}.
+ * Puts the previous data in out_data, if out_data is not NULL. (unless data has been released)
+ * NOTE: The key (of the database) is released in {@link #db_free_add(DBMap_impl*,DBNode*,DBNode **)}.
  * @param self Interface of the database
  * @param key Key that identifies the entry
  * @param out_data Previous data if the entry exists
  * @return 1 if if the entry already exists, 0 otherwise
  * @protected
- * @see #db_free_add(DBMap_impl*,DBNode,DBNode *)
+ * @see #db_free_add(DBMap_impl*,DBNode*,DBNode **)
  * @see DBMap#remove
  */
 static int db_obj_remove(DBMap* self, DBKey key, DBData *out_data)
 {
 	DBMap_impl* db = (DBMap_impl*)self;
-	DBNode node;
+	DBNode *node;
 	unsigned int hash;
 	int retval = 0;
 
@@ -1971,10 +1987,10 @@ static int db_obj_remove(DBMap* self, DBKey key, DBData *out_data)
 			if (!(node->deleted)) {
 				if (db->cache == node)
 					db->cache = NULL;
+				db->release(node->key, node->data, DB_RELEASE_DATA);
 				if (out_data)
 					memcpy(out_data, &node->data, sizeof(*out_data));
 				retval = 1;
-				db->release(node->key, node->data, DB_RELEASE_DATA);
 				db_free_add(db, node, &db->ht[hash]);
 			}
 			break;
@@ -2003,8 +2019,8 @@ static int db_obj_vforeach(DBMap* self, DBApply func, va_list args)
 	DBMap_impl* db = (DBMap_impl*)self;
 	unsigned int i;
 	int sum = 0;
-	DBNode node;
-	DBNode parent;
+	DBNode *node;
+	DBNode *parent;
 
 	DB_COUNTSTAT(db_vforeach);
 	if (db == NULL) return 0; // nullpo candidate
@@ -2089,8 +2105,8 @@ static int db_obj_vclear(DBMap* self, DBApply func, va_list args)
 	DBMap_impl* db = (DBMap_impl*)self;
 	int sum = 0;
 	unsigned int i;
-	DBNode node;
-	DBNode parent;
+	DBNode *node;
+	DBNode *parent;
 
 	DB_COUNTSTAT(db_vclear);
 	if (db == NULL) return 0; // nullpo candidate
@@ -2221,7 +2237,7 @@ static int db_obj_vdestroy(DBMap* self, DBApply func, va_list args)
 	db->free_max = 0;
 	ers_destroy(db->nodes);
 	db_free_unlock(db);
-	aFree(db);
+	ers_free(db_alloc_ers, db);
 	return sum;
 }
 
@@ -2501,10 +2517,10 @@ DBReleaser db_custom_release(DBRelease which)
  * @see #DBMap_impl
  * @see #db_fix_options(DBType,DBOptions)
  */
-DBMap* db_alloc(const char *file, int line, DBType type, DBOptions options, unsigned short maxlen)
-{
+DBMap* db_alloc(const char *file, const char *func, int line, DBType type, DBOptions options, unsigned short maxlen) {
 	DBMap_impl* db;
 	unsigned int i;
+	char ers_name[50];
 
 #ifdef DB_ENABLE_STATS
 	DB_COUNTSTAT(db_alloc);
@@ -2517,7 +2533,7 @@ DBMap* db_alloc(const char *file, int line, DBType type, DBOptions options, unsi
 		case DB_UINT64: DB_COUNTSTAT(db_uint64_alloc); break;
 	}
 #endif /* DB_ENABLE_STATS */
-	CREATE(db, struct DBMap_impl, 1);
+	db = ers_alloc(db_alloc_ers, struct DBMap_impl);
 
 	options = db_fix_options(type, options);
 	/* Interface of the database */
@@ -2548,7 +2564,8 @@ DBMap* db_alloc(const char *file, int line, DBType type, DBOptions options, unsi
 	db->free_max = 0;
 	db->free_lock = 0;
 	/* Other */
-	db->nodes = ers_new(sizeof(struct dbn),"db.c::db_alloc",ERS_OPT_NONE);
+	snprintf(ers_name, 50, "db_alloc:nodes:%s:%s:%d",func,file,line);
+	db->nodes = ers_new(sizeof(struct dbn),ers_name,ERS_OPT_WAIT|ERS_OPT_FREE_NAME|ERS_OPT_CLEAN);
 	db->cmp = db_default_cmp(type);
 	db->hash = db_default_hash(type);
 	db->release = db_default_release(type, options);
@@ -2740,8 +2757,11 @@ void* db_data2ptr(DBData *data)
  * @public
  * @see #db_final(void)
  */
-void db_init(void)
-{
+void db_init(void) {
+	db_iterator_ers = ers_new(sizeof(struct DBIterator_impl),"db.c::db_iterator_ers",ERS_OPT_CLEAN|ERS_OPT_FLEX_CHUNK);
+	db_alloc_ers = ers_new(sizeof(struct DBMap_impl),"db.c::db_alloc_ers",ERS_OPT_CLEAN|ERS_OPT_FLEX_CHUNK);
+	ers_chunk_size(db_alloc_ers, 50);
+	ers_chunk_size(db_iterator_ers, 10);
 	DB_COUNTSTAT(db_init);
 }
 
@@ -2844,6 +2864,8 @@ void db_final(void)
 			stats.db_data2ui,         stats.db_data2ptr,
 			stats.db_init,            stats.db_final);
 #endif /* DB_ENABLE_STATS */
+	ers_destroy(db_iterator_ers);
+	ers_destroy(db_alloc_ers);
 }
 
 // Link DB System - jAthena
@@ -2868,29 +2890,24 @@ void linkdb_insert( struct linkdb_node** head, void *key, void* data)
 	node->data = data;
 }
 
-int linkdb_vforeach( struct linkdb_node** head, LinkDBFunc func, va_list ap) {
+void linkdb_vforeach( struct linkdb_node** head, LinkDBFunc func, va_list ap) {
 	struct linkdb_node *node;
-	int retCount = 0;
-	if( head == NULL )
-		return 0;
+	if( head == NULL ) return;
 	node = *head;
 	while ( node ) {
 		va_list argscopy;
 		va_copy(argscopy, ap);
-		retCount += func(node->key, node->data, argscopy);
+		func(node->key, node->data, argscopy);
 		va_end(argscopy);
 		node = node->next;
 	}
-	return retCount;
 }
 
-int linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  ) {
+void linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...) {
 	va_list ap;
-	int retCount = 0;
 	va_start(ap, func);
-	retCount = linkdb_vforeach(head, func, ap);
+	linkdb_vforeach(head, func, ap);
 	va_end(ap);
-	return retCount;
 }
 
 void* linkdb_search( struct linkdb_node** head, void *key)
