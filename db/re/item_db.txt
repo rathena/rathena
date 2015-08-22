@@ -2649,7 +2649,7 @@
 4590,Bangungot_Card,Bangungot Card,6,20,,10,,,,,,,,16,,,,,{ bonus bInt,4; bonus5 bAutoSpellWhenHit,"NPC_WIDESLEEP",5,70,BF_MAGIC,0; },{},{}
 4591,Bakonawa_Card,Bakonawa Card,6,20,,10,,,,,,,,16,,,,,{ bonus bStr,4; bonus5 bAutoSpellWhenHit,"NPC_WIDEBLEEDING",5,70,BF_WEAPON,0; },{},{}
 4592,Buwaya_Card,Buwaya Card,6,20,,10,,,,,,,,16,,,,,{ bonus bVit,4; bonus5 bAutoSpellWhenHit,"NPC_WIDESTONE",5,70,BF_MAGIC,0; },{},{}
-4593,Menblatt_Card,Menblatt Card,6,20,,10,,,,,,,,4,,,,,{ bonus bLongAtkDef,readparam(bDex)/10; },{},{}
+4593,Menblatt_Card,Menblatt Card,6,20,,10,,,,,,,,4,,,,,{ bonus bLongAtkRate,readparam(bDex)/10; },{},{}
 4594,Petal_Card,Petal Card,6,20,,10,,,,,,,,4,,,,,{ bonus bCritAtkRate,2*(readparam(bLuk)/10); },{},{}
 4595,Cenere_Card,Cenere Card,6,20,,10,,,,,,,,4,,,,,{ bonus bAspdRate,2*(readparam(bAgi)/10); bonus bDelayrate,-2*(readparam(bAgi)/10); },{},{}
 4596,Antique_Book_Card,Antique Book Card,6,20,,10,,,,,,,,4,,,,,{ bonus bMatk,5*(readparam(bInt)/10); },{},{}
