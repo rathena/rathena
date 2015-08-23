@@ -9179,7 +9179,7 @@
 18590,Gemma_Hairband,Gemma Hairband,4,20,,200,,3,,1,0xFFFFFFFF,63,2,256,,10,1,564,{ bonus bMdef,3; },{},{}
 18591,Mini_Glasses_,Mini Glasses,4,20,,100,,2,,1,0xFFFFFFFE,63,2,512,,0,0,47,{},{},{}
 18592,Nestea_Hat,Nestea Hat,4,20,,200,,5,,0,0xFFFFFFFF,63,2,256,,0,1,756,{ bonus bMdef,5; },{},{}
-18593,Fancy_Mini_Crown,Fancy Mini Crown,4,20,,100,,2,,1,0xFFFFFFFF,63,2,256,,30,1,707,{ bonus bInt,1; bonus bMdef,5; bonus bVariableCast,-3000; bonus bMatkRate,3; bonus bHealPower,4; bonus bSkillUseSP,-3; .@r = getrefine(); bonus bMatkRate,(.@r>6)?(3):((.@r>4)?(1):(0)); },{},{}
+18593,Fancy_Mini_Crown,Fancy Mini Crown,4,20,,100,,2,,1,0xFFFFFFFF,63,2,256,,30,1,707,{ bonus bInt,1; bonus bMdef,5; bonus bVariableCastRate,-3; bonus bHealPower,3; bonus bSkillUseSP,-3; .@r = getrefine(); bonus bMatkRate,(.@r>6)?(5):((.@r>4)?(4):(3)); },{},{}
 18594,Magni_Cap_,Magni Cap,4,30000,,1000,,9,,1,0xFFFFFFFE,63,2,256,,0,1,250,{ bonus bStr,2; },{},{}
 18595,Horn_Of_Ancient,Horn of Ancient,4,40,,200,,8,,1,0xFFFFFFFF,63,2,256,,50,1,757,{ bonus2 bSubClass,Class_Boss,10; bonus2 bAddClass,Class_Boss,10; .@r = getrefine(); if (.@r > 6) { autobonus "{ bonus bBaseAtk,100; }",10,10000,BF_WEAPON,"{ specialeffect2 EF_ENHANCE; }"; } if (.@r > 8) { bonus2 bSubClass,Class_Boss,10; bonus2 bAddClass,Class_Boss,10; } },{},{}
 18596,Sprout_Hat,Sprout Hat,4,20,,200,,4,,0,0xFFFFFFFF,63,2,256,,70,1,758,{ skill "WZ_HEAVENDRIVE",3; },{},{}
