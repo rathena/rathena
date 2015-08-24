@@ -2363,6 +2363,7 @@ packet_keys: 0x2DFF467C,0x444B37EE,0x2C1B634F // [YomRawr]
 0x09DF,7
 0x0a00,269
 // Roulette System [Yommy]
+0x0A01,3,rouletteopen,0
 0x0A19,2,rouletteopen,0 // HEADER_CZ_REQ_OPEN_ROULETTE
 0x0A1A,23 // HEADER_ZC_ACK_OPEN_ROULETTE
 0x0A1B,2,rouletteinfo,0 // HEADER_CZ_REQ_ROULETTE_INFO
