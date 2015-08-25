@@ -39,13 +39,13 @@
  * @encoding US-ASCII                                                        *
  * @see common#ers.h                                                         *
 \*****************************************************************************/
-#include <stdlib.h>
+
+#include "ers.h"
 
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h" // CREATE, RECREATE, aMalloc, aFree
 #include "../common/nullpo.h"
 #include "../common/showmsg.h" // ShowMessage, ShowError, ShowFatalError, CL_BOLD, CL_NORMAL
-#include "ers.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -174,6 +174,7 @@ static void ers_free_cache(ers_cache_t *cache, bool remove)
 		CacheList = cache->Next;
 
 	aFree(cache->Blocks);
+
 	aFree(cache);
 }
 
@@ -331,21 +332,6 @@ ERS *ers_new(uint32 size, char *name, enum ERSOptions options)
 void ers_report(void) {
 	ers_cache_t *cache;
 	unsigned int cache_c = 0, blocks_u = 0, blocks_a = 0, memory_b = 0, memory_t = 0;
-#ifdef DEBUG
-	struct ers_instance_t *instance;
-	unsigned int instance_c = 0, instance_c_d = 0;
-
-	for (instance = InstanceList; instance; instance = instance->Next) {
-		instance_c++;
-		if( (instance->Options & ERS_OPT_WAIT) && !instance->Count )
-			continue;
-		instance_c_d++;
-		ShowMessage(CL_BOLD"[ERS Instance "CL_NORMAL""CL_WHITE"%s"CL_NORMAL""CL_BOLD" report]\n"CL_NORMAL, instance->Name);
-		ShowMessage("\tblock size        : %u\n", instance->Cache->ObjectSize);
-		ShowMessage("\tblocks being used : %u\n", instance->Count);
-		ShowMessage("\tmemory in use     : %.2f MB\n", instance->Count == 0 ? 0. : (double)((instance->Count * instance->Cache->ObjectSize)/1024)/1024);
-	}
-#endif
 
 	for (cache = CacheList; cache; cache = cache->Next) {
 		cache_c++;

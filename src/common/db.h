@@ -43,6 +43,7 @@
 #define _DB_H_
 
 #include "../common/cbasetypes.h"
+
 #include <stdarg.h>
 
 /*****************************************************************************\
@@ -757,7 +758,7 @@ DBComparator db_default_cmp(DBType type);
 DBHasher db_default_hash(DBType type);
 
 /**
- * Returns the default releaser for the specified type of database with the 
+ * Returns the default releaser for the specified type of database with the
  * specified options.
  * NOTE: the options are fixed by {@link #db_fix_options(DBType,DBOptions)}
  * before choosing the releaser

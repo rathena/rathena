@@ -11627,8 +11627,12 @@ void do_init_pc(void) {
 
 	do_init_pc_groups();
 
-	pc_sc_display_ers = ers_new(sizeof(struct sc_display_entry), "pc.c:pc_sc_display_ers", ERS_OPT_NONE);
+	pc_sc_display_ers = ers_new(sizeof(struct sc_display_entry), "pc.c:pc_sc_display_ers", ERS_OPT_FLEX_CHUNK);
 	pc_itemgrouphealrate_ers = ers_new(sizeof(struct s_pc_itemgrouphealrate), "pc.c:pc_itemgrouphealrate_ers", ERS_OPT_NONE);
-	num_reg_ers = ers_new(sizeof(struct script_reg_num), "pc.c:num_reg_ers", ERS_OPT_NONE);
-	str_reg_ers = ers_new(sizeof(struct script_reg_str), "pc.c:str_reg_ers", ERS_OPT_NONE);
+	num_reg_ers = ers_new(sizeof(struct script_reg_num), "pc.c:num_reg_ers", ERS_OPT_CLEAN|ERS_OPT_FLEX_CHUNK);
+	str_reg_ers = ers_new(sizeof(struct script_reg_str), "pc.c:str_reg_ers", ERS_OPT_CLEAN|ERS_OPT_FLEX_CHUNK);
+
+	ers_chunk_size(pc_sc_display_ers, 150);
+	ers_chunk_size(num_reg_ers, 300);
+	ers_chunk_size(str_reg_ers, 50);
 }

@@ -204,19 +204,13 @@ static void script_load_mapreg(void)
 		int s = add_str(varname);
 		int i = index;
 
+		if( i64db_exists(regs.vars, reference_uid(s, i)) ) {
+			ShowWarning("load_mapreg: duplicate! '%s' => '%s' skipping...\n",varname,value);
+			continue;
+		}
 		if( varname[length-1] == '$' ) {
-			if( i64db_exists(regs.vars, reference_uid(s, i)) ) {
-				ShowWarning("load_mapreg: Duplicate! '%s' => '%s' skipping...\n",varname,value);
-				continue;
-			}
-
 			mapreg_setregstr(reference_uid(s, i), value);
 		} else {
-			if( i64db_exists(regs.vars, reference_uid(s, i)) ) {
-				ShowWarning("load_mapreg: Duplicate! '%s' => '%s' skipping...\n",varname,value);
-				continue;
-			}
-
 			mapreg_setreg(reference_uid(s, i), atoi(value));
 		}
 	}
@@ -301,8 +295,10 @@ void mapreg_reload(void)
 
 	regs.vars->clear(regs.vars, mapreg_destroyreg);
 
-	if (regs.arrays)
+	if (regs.arrays) {
 		regs.arrays->destroy(regs.arrays, script_free_array_db);
+		regs.arrays = NULL;
+	}
 
 	script_load_mapreg();
 }
@@ -314,7 +310,7 @@ void mapreg_final(void)
 {
 	script_save_mapreg();
 
-	regs.vars->clear(regs.vars, mapreg_destroyreg);
+	regs.vars->destroy(regs.vars, mapreg_destroyreg);
 
 	ers_destroy(mapreg_ers);
 
@@ -328,7 +324,7 @@ void mapreg_final(void)
 void mapreg_init(void)
 {
 	regs.vars = i64db_alloc(DB_OPT_BASE);
-	mapreg_ers = ers_new(sizeof(struct mapreg_save), "mapreg.c:mapreg_ers", ERS_OPT_NONE);
+	mapreg_ers = ers_new(sizeof(struct mapreg_save), "mapreg.c:mapreg_ers", ERS_OPT_CLEAN);
 
 	skip_insert = false;
 	regs.arrays = NULL;

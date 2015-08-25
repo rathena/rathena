@@ -164,11 +164,11 @@ int str_hash[SCRIPT_HASH_SIZE];
 //#define SCRIPT_HASH_SDBM
 #define SCRIPT_HASH_ELF
 
-static DBMap* scriptlabel_db=NULL; // const char* label_name -> int script_pos
-static DBMap* userfunc_db=NULL; // const char* func_name -> struct script_code*
-static int parse_options=0;
-DBMap* script_get_label_db(void){ return scriptlabel_db; }
-DBMap* script_get_userfunc_db(void){ return userfunc_db; }
+static DBMap* scriptlabel_db = NULL; // const char* label_name -> int script_pos
+static DBMap* userfunc_db = NULL; // const char* func_name -> struct script_code*
+static int parse_options = 0;
+DBMap* script_get_label_db(void) { return scriptlabel_db; }
+DBMap* script_get_userfunc_db(void) { return userfunc_db; }
 
 // important buildin function references for usage in scripts
 static int buildin_set_ref = 0;
@@ -178,7 +178,7 @@ static int buildin_getelementofarray_ref = 0;
 
 // Caches compiled autoscript item code.
 // Note: This is not cleared when reloading itemdb.
-static DBMap* autobonus_db=NULL; // char* script -> char* bytecode
+static DBMap* autobonus_db = NULL; // char* script -> char* bytecode
 
 struct Script_Config script_config = {
 	1, // warn_func_mismatch_argtypes
@@ -3942,24 +3942,6 @@ void run_script(struct script_code *rootscript, int pos, int rid, int oid)
 	run_script_main(st);
 }
 
-void script_stop_instances(int id)
-{
-	DBIterator *iter;
-	struct script_state* st;
-
-	if (!active_scripts)
-		return; // Don't even bother.
-
-	iter = db_iterator(st_db);
-
-	for(st = dbi_first(iter); dbi_exists(iter); st = dbi_next(iter)) {
-		if (st->oid == id)
-			script_free_state(st);
-	}
-
-	dbi_destroy(iter);
-}
-
 /*==========================================
  * Timer function for sleep
  *------------------------------------------*/
@@ -4640,11 +4622,12 @@ void do_final_script() {
 	mapreg_final();
 
 	db_destroy(scriptlabel_db);
+	userfunc_db->destroy(userfunc_db, db_script_free_code_sub);
+	autobonus_db->destroy(autobonus_db, db_script_free_code_sub);
+
 	ers_destroy(array_ers);
 	if (generic_ui_array)
 		aFree(generic_ui_array);
-	userfunc_db->destroy(userfunc_db, db_script_free_code_sub);
-	autobonus_db->destroy(autobonus_db, db_script_free_code_sub);
 
 	iter = db_iterator(st_db);
 	for(st = dbi_first(iter); dbi_exists(iter); st = dbi_next(iter))
@@ -4699,12 +4682,16 @@ void do_init_script(void) {
 	userfunc_db = strdb_alloc(DB_OPT_DUP_KEY,0);
 	scriptlabel_db = strdb_alloc(DB_OPT_DUP_KEY,50);
 	autobonus_db = strdb_alloc(DB_OPT_DUP_KEY,0);
-	array_ers = ers_new(sizeof(struct script_array), "script.c:array_ers", ERS_OPT_NONE);
-	st_ers = ers_new(sizeof(struct script_state), "script.c::st_ers", ERS_OPT_NONE);
-	stack_ers = ers_new(sizeof(struct script_stack), "script.c::script_stack", ERS_OPT_NONE);
+
+	st_ers = ers_new(sizeof(struct script_state), "script.c::st_ers", ERS_OPT_CLEAN|ERS_OPT_FLEX_CHUNK);
+	stack_ers = ers_new(sizeof(struct script_stack), "script.c::script_stack", ERS_OPT_NONE|ERS_OPT_FLEX_CHUNK);
+	array_ers = ers_new(sizeof(struct script_array), "script.c:array_ers", ERS_OPT_CLEAN|ERS_OPT_CLEAR);
 
 	ers_chunk_size(st_ers, 10);
 	ers_chunk_size(stack_ers, 10);
+
+	active_scripts = 0;
+	next_id = 0;
 
 	mapreg_init();
 #ifdef BETA_THREAD_TEST
