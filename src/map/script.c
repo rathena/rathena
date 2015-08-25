@@ -3391,6 +3391,8 @@ void script_free_code(struct script_code* code)
 {
 	nullpo_retv(code);
 
+	if (code->instances)
+		script_stop_instances(code);
 	script_free_vars(code->local.vars);
 	if (code->local.arrays)
 		code->local.arrays->destroy(code->local.arrays, script_free_array_db);
@@ -3424,6 +3426,14 @@ struct script_state* script_alloc_state(struct script_code* rootscript, int pos,
 	st->oid = oid;
 	st->sleep.timer = INVALID_TIMER;
 	st->npc_item_flag = battle_config.item_enabled_npc;
+	
+	if( st->script->instances != USHRT_MAX )
+		st->script->instances++;
+	else {
+		struct npc_data *nd = map_id2nd(oid);
+
+		ShowError("Over 65k instances of '%s' script are being run!\n",nd ? nd->name : "unknown");
+	}
 
 	if (!st->script->local.vars)
 		st->script->local.vars = i64db_alloc(DB_OPT_RELEASE_DATA);
@@ -3442,8 +3452,19 @@ struct script_state* script_alloc_state(struct script_code* rootscript, int pos,
 void script_free_state(struct script_state* st)
 {
 	if (idb_exists(st_db, st->id)) {
+		struct map_session_data *sd = st->rid ? map_id2sd(st->rid) : NULL;
+
 		if (st->bk_st) // backup was not restored
 			ShowDebug("script_free_state: Previous script state lost (rid=%d, oid=%d, state=%d, bk_npcid=%d).\n", st->bk_st->rid, st->bk_st->oid, st->bk_st->state, st->bk_npcid);
+
+		if (sd && sd->st == st) { // Current script is aborted.
+			if(sd->state.using_fake_npc) {
+				clif_clearunit_single(sd->npc_id, CLR_OUTSIGHT, sd->fd);
+				sd->state.using_fake_npc = 0;
+			}
+			sd->st = NULL;
+			sd->npc_id = 0;
+		}
 
 		if (st->sleep.timer != INVALID_TIMER)
 			delete_timer(st->sleep.timer, run_script_timer);
@@ -3456,7 +3477,7 @@ void script_free_state(struct script_state* st)
 			ers_free(stack_ers, st->stack);
 			st->stack = NULL;
 		}
-		if (st->script) {
+		if (st->script && st->script->instances != USHRT_MAX && --st->script->instances == 0) {
 			if (st->script->local.vars && !db_size(st->script->local.vars)) {
 				script_free_vars(st->script->local.vars);
 				st->script->local.vars = NULL;
@@ -3940,6 +3961,23 @@ void run_script(struct script_code *rootscript, int pos, int rid, int oid)
 	// NOTE At the time of this change, this function wasn't capable of taking over the script state because st->scriptroot was never set.
 	st = script_alloc_state(rootscript, pos, rid, oid);
 	run_script_main(st);
+}
+
+void script_stop_instances(struct script_code *code) {
+	DBIterator *iter;
+	struct script_state* st;
+
+	if( !active_scripts )
+		return; // Don't even bother.
+
+	iter = db_iterator(st_db);
+
+	for( st = dbi_first(iter); dbi_exists(iter); st = dbi_next(iter) ) {
+		if( st->script == code )
+			script_free_state(st);
+	}
+
+	dbi_destroy(iter);
 }
 
 /*==========================================
@@ -9053,6 +9091,18 @@ BUILDIN_FUNC(end)
 	sd = map_id2sd(st->rid);
 
 	st->state = END;
+
+	if (st->stack->defsp >= 1 && st->stack->stack_data[st->stack->defsp-1].type == C_RETINFO) {
+		int i;
+
+		for(i = 0; i < st->stack->sp; i++) {
+			if (st->stack->stack_data[i].type == C_RETINFO) { // Grab the first, aka the original
+				struct script_retinfo *ri = st->stack->stack_data[i].u.ri;
+				st->script = ri->script;
+				break;
+			}
+		}
+	}
 
 	if( st->mes_active )
 		st->mes_active = 0;

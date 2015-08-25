@@ -1278,11 +1278,14 @@ int npc_click(struct map_session_data* sd, struct npc_data* nd)
  *------------------------------------------*/
 int npc_scriptcont(struct map_session_data* sd, int id, bool closing)
 {
+	struct block_list *target = map_id2bl(id);
+
 	nullpo_retr(1, sd);
 
 	if( id != sd->npc_id ){
-		TBL_NPC* nd_sd=(TBL_NPC*)map_id2bl(sd->npc_id);
-		TBL_NPC* nd=(TBL_NPC*)map_id2bl(id);
+		TBL_NPC* nd_sd = (TBL_NPC*)map_id2bl(sd->npc_id);
+		TBL_NPC* nd = BL_CAST(BL_NPC, target);
+
 		ShowDebug("npc_scriptcont: %s (sd->npc_id=%d) is not %s (id=%d).\n",
 			nd_sd?(char*)nd_sd->name:"'Unknown NPC'", (int)sd->npc_id,
 			nd?(char*)nd->name:"'Unknown NPC'", (int)id);
@@ -1290,7 +1293,7 @@ int npc_scriptcont(struct map_session_data* sd, int id, bool closing)
 	}
 
 	if(id != fake_nd->bl.id) { // Not item script
-		if ((npc_checknear(sd,map_id2bl(id))) == NULL){
+		if ((npc_checknear(sd, target)) == NULL) {
 			ShowWarning("npc_scriptcont: failed npc_checknear test.\n");
 			return 1;
 		}
@@ -1303,6 +1306,9 @@ int npc_scriptcont(struct map_session_data* sd, int id, bool closing)
 	 * WPE can get to this point with a progressbar; we deny it.
 	 **/
 	if( sd->progressbar.npc_id && DIFF_TICK(sd->progressbar.timeout,gettick()) > 0 )
+		return 1;
+
+	if (!sd->st)
 		return 1;
 
 	if( closing && sd->st && sd->st->state == CLOSE )
