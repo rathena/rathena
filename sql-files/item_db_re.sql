@@ -10405,6 +10405,7 @@ REPLACE INTO `item_db_re` VALUES (28002,'Half_BF_Katar2','Half BF Katar2',5,20,N
 REPLACE INTO `item_db_re` VALUES (28005,'Blue_Katar','Blue Katar',5,10,NULL,1200,'190',NULL,1,1,0x00001000,56,2,2,3,'100',1,16,'bonus bAgi,5; bonus bStr,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28006,'Ru_Gold_Katar','Ru Gold Katar',5,0,NULL,1200,'190',NULL,1,2,0x00001000,56,2,34,3,'120',1,16,'bonus bAgi,8; bonus bStr,8;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28007,'Crimson_Katar','Crimson Katar',5,20,NULL,1300,'130',NULL,1,2,0x00001000,63,2,34,3,'70',1,16,'.@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (28010,'Juliette_D._Rachel','Juliette D. Rachel',5,20,NULL,2500,'300',NULL,1,2,0x00001000,56,2,34,4,'170',1,16,'.@r = getrefine(); bonus bAtkRate,(.@r/2); bonus bAspdRate,.@r; bonus bUnbreakableWeapon,1;',NULL,NULL);
 #
 REPLACE INTO `item_db_re` VALUES (28100,'Tanos_Axe','Tanos Axe',5,10,NULL,4000,'300:80',NULL,NULL,1,0x00000400,63,2,2,4,'120',1,6,'bonus bInt,6; bonus bVit,6; bonus bLuk,-6; bonus bAtkRate,5; bonus2 bHPLossRate,100,10000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28101,'Axe_Tornado','Axe Tornado',5,10,NULL,4000,'320',NULL,NULL,1,0x00000400,56,2,2,4,'130',NULL,6,'bonus bAtkEle,4; bonus2 bSkillCooldown,"NC_AXETORNADO",-1000;',NULL,NULL);
