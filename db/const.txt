@@ -1194,6 +1194,7 @@ IG_Memorial_Garuda_Lucky_Egg	445
 IG_Miracle_Lucky_Egg	446
 IG_Legend_Hero_Lucky_Egg	447
 IG_Blessing_Midgard_Lucky_Egg	448
+IG_Chronosian_Lucky_Egg	449
 
 SC_ALL	-1
 SC_NONE	-1

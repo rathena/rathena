@@ -3935,3 +3935,28 @@ IG_Blessing_Midgard_Lucky_Egg,6438,1,3 // 3x Blessed_Weapon_Ore
 IG_Blessing_Midgard_Lucky_Egg,6439,1,3 // 3x Blessed_Armor_Ore
 IG_Blessing_Midgard_Lucky_Egg,12902,1,1 // 1x Bubble Gum Box
 IG_Blessing_Midgard_Lucky_Egg,12901,1,1 // Insurance Package
+
+//! TODO: Confirm the rates
+IG_Chronosian_Lucky_Egg,4481,1,1 // 1x Sealed Ktullanux Card
+IG_Chronosian_Lucky_Egg,4374,1,1 // 1x Vesper Card
+IG_Chronosian_Lucky_Egg,4302,1,1 // 1x Tao Gunka Card
+IG_Chronosian_Lucky_Egg,4047,1,1 // 1x Ghosting Card
+IG_Chronosian_Lucky_Egg,6239,1,1 // 1x Guarantee_Armor_11Up
+IG_Chronosian_Lucky_Egg,6238,1,1 // 1x Guarantee_Weapon_11Up
+IG_Chronosian_Lucky_Egg,6232,1,1 // 1x Guarantee_Armor_9Up
+IG_Chronosian_Lucky_Egg,6228,1,1 // 1x Guarantee_Weapon_9Up
+IG_Chronosian_Lucky_Egg,6233,1,1 // 1x Guarantee_Armor_8Up
+IG_Chronosian_Lucky_Egg,6229,1,1 // 1x Guarantee_Weapon_8Up
+IG_Chronosian_Lucky_Egg,1682,1,1 // 1x Shadow_Staff
+IG_Chronosian_Lucky_Egg,20220,1,1 // 1x C_Dark_Night_Veil
+IG_Chronosian_Lucky_Egg,5943,1,1 // 1x Owl_viscount_Silk_Hat
+IG_Chronosian_Lucky_Egg,1940,1,1 // 1x Trumpet_Shell
+IG_Chronosian_Lucky_Egg,6438,1,3 // 3x Blessed_Weapon_Ore
+IG_Chronosian_Lucky_Egg,6439,1,3 // 3x Blessed_Armor_Ore
+IG_Chronosian_Lucky_Egg,17126,1,1 // 1x ASPD Intensifying Potion Box
+IG_Chronosian_Lucky_Egg,14620,1,20 // 20x DEX Biscuit Stick
+IG_Chronosian_Lucky_Egg,14621,1,20 // 20x LUK Biscuit Stick
+IG_Chronosian_Lucky_Egg,14616,1,20 // 20x STR Biscuit Stick
+IG_Chronosian_Lucky_Egg,14617,1,20 // 20x VIT Biscuit Stick
+IG_Chronosian_Lucky_Egg,14619,1,20 // 20x INT Biscuit Stick
+IG_Chronosian_Lucky_Egg,14618,1,20 // 20x AGI Biscuit Stick
