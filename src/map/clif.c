@@ -10146,6 +10146,7 @@ void clif_parse_TickSend(int fd, struct map_session_data *sd)
 /// 02b9 { <is skill>.B <id>.L <count>.W }*27 (ZC_SHORTCUT_KEY_LIST)
 /// 07d9 { <is skill>.B <id>.L <count>.W }*36 (ZC_SHORTCUT_KEY_LIST_V2, PACKETVER >= 20090603)
 /// 07d9 { <is skill>.B <id>.L <count>.W }*38 (ZC_SHORTCUT_KEY_LIST_V2, PACKETVER >= 20090617)
+/// 0a00 <rotate>.B { <is skill>.B <id>.L <count>.W }*38 (ZC_SHORTCUT_KEY_LIST_V3, PACKETVER >= 20141022)
 void clif_hotkeys_send(struct map_session_data *sd) {
 #ifdef HOTKEY_SAVING
 	const int fd = sd->fd;
@@ -10156,12 +10157,16 @@ void clif_hotkeys_send(struct map_session_data *sd) {
 #elif PACKETVER < 20141022
 	const int cmd = 0x7d9;
 #else
+	char Rotate = sd->status.hotkey_rowshift;
 	const int cmd = 0xa00;
 	offset = 3;
 #endif
 	if (!fd) return;
 	WFIFOHEAD(fd, offset + MAX_HOTKEYS * 7);
 	WFIFOW(fd, 0) = cmd;
+#if PACKETVER >= 20141022
+	WFIFOB(fd, 2) = Rotate;
+#endif
 	for(i = 0; i < MAX_HOTKEYS; i++) {
 		WFIFOB(fd, offset + 0 + i * 7) = sd->status.hotkeys[i].type; // type: 0: item, 1: skill
 		WFIFOL(fd, offset + 1 + i * 7) = sd->status.hotkeys[i].id; // item or skill ID
@@ -10171,6 +10176,11 @@ void clif_hotkeys_send(struct map_session_data *sd) {
 #endif
 }
 
+/// Request to update a position on the hotkey row bar
+void clif_parse_HotkeyRowShift(int fd, struct map_session_data *sd) {
+	int cmd = RFIFOW(fd, 0);
+	sd->status.hotkey_rowshift = RFIFOB(fd, packet_db[sd->packet_ver][cmd].pos[0]);
+}
 
 /// Request to update a position on the hotkey bar (CZ_SHORTCUT_KEY_CHANGE).
 /// 02ba <index>.W <is skill>.B <id>.L <count>.W
@@ -18871,6 +18881,8 @@ void packetdb_readdb(bool reload)
 		// Merge Item
 		{ clif_parse_merge_item_req, "mergeitem_req"},
 		{ clif_parse_merge_item_cancel, "mergeitem_cancel"},
+		// HotkeyRowShift
+		{ clif_parse_HotkeyRowShift, "hotkeyrowshift"},
 		{NULL,NULL}
 	};
 	struct {

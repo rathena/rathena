@@ -431,6 +431,8 @@ struct mmo_charstatus {
 	bool cashshop_sent; // Whether the player has received the CashShop list
 
 	uint32 uniqueitem_counter;
+
+	unsigned char hotkey_rowshift;
 };
 
 typedef enum mail_status {
