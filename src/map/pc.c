@@ -5480,7 +5480,7 @@ uint8 pc_checkskill(struct map_session_data *sd, uint16 skill_id)
 }
 
 /**
- * Chk if we still have the correct weapon to continue the skill (actually status)
+ * Check if we still have the correct weapon to continue the skill (actually status)
  * If not ending it
  * @param sd
  * @return 0:error, 1:check done
@@ -5497,7 +5497,6 @@ static void pc_checkallowskill(struct map_session_data *sd)
 		SC_ADRENALINE2,
 		SC_DANCING,
 		SC_GATLINGFEVER,
-		SC_FEARBREEZE
 	};
 	uint8 i;
 	nullpo_retv(sd);
@@ -9468,45 +9467,38 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos)
  * 2 - force unequip
  * return: false - fail; true - success
  *------------------------------------------*/
-bool pc_unequipitem(struct map_session_data *sd,int n,int flag) {
-	int i,iflag;
+bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
+	int i, iflag;
 	bool status_cacl = false;
+
 	nullpo_retr(false,sd);
 
-	if( n < 0 || n >= MAX_INVENTORY ) {
+	if (n < 0 || n >= MAX_INVENTORY) {
 		clif_unequipitemack(sd,0,0,0);
 		return false;
 	}
-
+	if (!sd->status.inventory[n].equip) {
+		clif_unequipitemack(sd,n,0,0);
+		return false; //Nothing to unequip
+	}
 	// status change that makes player cannot unequip equipment
-	if( !(flag&2) && sd->sc.count && (
-		sd->sc.data[SC_BERSERK] ||
+	if (!(flag&2) && sd->sc.count &&
+		(sd->sc.data[SC_BERSERK] ||
 		sd->sc.data[SC_SATURDAYNIGHTFEVER] ||
 		sd->sc.data[SC__BLOODYLUST] ||
 		sd->sc.data[SC_KYOUGAKU] ||
-		(sd->sc.data[SC_PYROCLASTIC] && sd->inventory_data[n]->type == IT_WEAPON)) )	// can't switch weapon
+		(sd->sc.data[SC_PYROCLASTIC] &&
+		sd->inventory_data[n]->type == IT_WEAPON)))	// can't switch weapon
 	{
 		clif_unequipitemack(sd,n,0,0);
 		return false;
 	}
-	if (&sd->sc) {
-		if (sd->sc.data[SC_HOVERING] && sd->inventory_data[n]->type == IT_ARMOR && sd->inventory_data[n]->nameid == ITEMID_HOVERING_BOOSTER)
-			status_change_end(&sd->bl, SC_HOVERING, INVALID_TIMER);
-		if (sd->sc.data[SC_HEAT_BARREL])
-			status_change_end(&sd->bl,SC_HEAT_BARREL,INVALID_TIMER);
-		if (sd->sc.data[SC_P_ALTER] && (sd->inventory_data[n]->type == IT_WEAPON || sd->inventory_data[n]->type == IT_AMMO))
-			status_change_end(&sd->bl,SC_P_ALTER,INVALID_TIMER);
-	}
 
-	if(battle_config.battle_log)
+	if (battle_config.battle_log)
 		ShowInfo("unequip %d %x:%x\n",n,pc_equippoint(sd,n),sd->status.inventory[n].equip);
 
-	if(!sd->status.inventory[n].equip){ //Nothing to unequip
-		clif_unequipitemack(sd,n,0,0);
-		return false;
-	}
-	for(i=0;i<EQI_MAX;i++) {
-		if(sd->status.inventory[n].equip & equip_pos[i])
+	for(i = 0; i < EQI_MAX; i++) {
+		if (sd->status.inventory[n].equip & equip_pos[i])
 			sd->equip_index[i] = -1;
 	}
 
@@ -9566,20 +9558,32 @@ bool pc_unequipitem(struct map_session_data *sd,int n,int flag) {
 
 	clif_unequipitemack(sd,n,sd->status.inventory[n].equip,1);
 
-	if((sd->status.inventory[n].equip & EQP_ARMS) && sd->inventory_data[n]->type == IT_WEAPON && //On weapon change (right and left hand)
-		(!sd->sc.data[SC_SEVENWIND] || sd->sc.data[SC_ASPERSIO])) //Check for seven wind (but not level seven!)
-		skill_enchant_elemental_end(&sd->bl,SC_NONE);
+	status_change_end(&sd->bl,SC_HEAT_BARREL,INVALID_TIMER);
+	// On weapon change (right and left hand)
+	if ((sd->status.inventory[n].equip & EQP_ARMS) && sd->inventory_data[n]->type == IT_WEAPON) {
+		if (!sd->sc.data[SC_SEVENWIND] || sd->sc.data[SC_ASPERSIO]) //Check for seven wind (but not level seven!)
+			skill_enchant_elemental_end(&sd->bl, SC_NONE);
+		status_change_end(&sd->bl, SC_FEARBREEZE, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_EXEEDBREAK, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_P_ALTER, INVALID_TIMER);
+	}
 
-	if(sd->status.inventory[n].equip & EQP_ARMOR) {
-		// On Armor Change...
-		status_change_end(&sd->bl, SC_BENEDICTIO, INVALID_TIMER);
+	// On armor change
+	if (sd->status.inventory[n].equip & EQP_ARMOR) {
+		if (sd->sc.data[SC_HOVERING] && sd->inventory_data[n]->nameid == ITEMID_HOVERING_BOOSTER)
+			status_change_end(&sd->bl, SC_HOVERING, INVALID_TIMER);
+		//status_change_end(&sd->bl, SC_BENEDICTIO, INVALID_TIMER); // No longer is removed? Need confirmation
 		status_change_end(&sd->bl, SC_ARMOR_RESIST, INVALID_TIMER);
 	}
+
+	// On ammo change
+	if (sd->inventory_data[n]->type == IT_AMMO)
+		status_change_end(&sd->bl, SC_P_ALTER, INVALID_TIMER);
 
 	if( sd->state.autobonus&sd->status.inventory[n].equip )
 		sd->state.autobonus &= ~sd->status.inventory[n].equip; //Check for activated autobonus [Inkfish]
 
-	sd->status.inventory[n].equip=0;
+	sd->status.inventory[n].equip = 0;
 	iflag = sd->npc_item_flag;
 
 	/* check for combos (MUST be before status_calc_pc) */
@@ -9592,6 +9596,7 @@ bool pc_unequipitem(struct map_session_data *sd,int n,int flag) {
 		else {
 			for( i = 0; i < sd->inventory_data[n]->slot; i++ ) {
 				struct item_data *data;
+
 				if (!sd->status.inventory[n].card[i])
 					continue;
 				if ( ( data = itemdb_exists(sd->status.inventory[n].card[i]) ) != NULL ) {

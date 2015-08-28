@@ -536,7 +536,12 @@ void initChangeTables(void)
 	set_sc( HLIF_CHANGE		, SC_CHANGE		, SI_BLANK		, SCB_VIT|SCB_INT );
 	set_sc( HFLI_FLEET		, SC_FLEET		, SI_BLANK		, SCB_ASPD|SCB_BATK|SCB_WATK );
 	set_sc( HFLI_SPEED		, SC_SPEED		, SI_BLANK		, SCB_FLEE );
-	set_sc( HAMI_DEFENCE		, SC_DEFENCE		, SI_BLANK		, SCB_DEF );
+	set_sc( HAMI_DEFENCE		, SC_DEFENCE		, SI_BLANK		,
+#ifndef RENEWAL
+		SCB_DEF );
+#else
+		SCB_VIT );
+#endif
 	set_sc( HAMI_BLOODLUST		, SC_BLOODLUST		, SI_BLANK		, SCB_BATK|SCB_WATK );
 
 	/* Homunculus S */
@@ -5853,7 +5858,7 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 		def += sc->data[SC_DRUMBATTLE]->val3;
 #ifndef RENEWAL
 	if(sc->data[SC_DEFENCE])
-		def += sc->data[SC_DEFENCE]->val2 ;
+		def += sc->data[SC_DEFENCE]->val2;
 #endif
 	if(sc->data[SC_INCDEFRATE])
 		def += def * sc->data[SC_INCDEFRATE]->val1/100;
@@ -8194,10 +8199,14 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	case SC_BLESSING:
 		// !TODO: Blessing and Agi up should do 1 damage against players on Undead Status, even on PvM
 		// !but cannot be plagiarized (this requires aegis investigation on packets and official behavior) [Brainstorm]
-		if ((!undead_flag && status->race!=RC_DEMON) || bl->type == BL_PC) {
+		if ((!undead_flag && status->race != RC_DEMON) || bl->type == BL_PC) {
 			status_change_end(bl, SC_CURSE, INVALID_TIMER);
 			if (sc->data[SC_STONE] && sc->opt1 == OPT1_STONE)
 				status_change_end(bl, SC_STONE, INVALID_TIMER);
+			if (sc->data[SC_CURSE]) {
+					status_change_end(bl, SC_CURSE, INVALID_TIMER);
+					return 1; // End Curse and do not give stat boost
+			}
 		}
 		if(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_HIGH)
 			status_change_end(bl, SC_SPIRIT, INVALID_TIMER);
@@ -9815,14 +9824,14 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = 10000; // [GodLesZ] tick time
 			break;
 		case SC_EXEEDBREAK:
-			{
-				short idx = -1;
-				val1 *= 100; // 100 * skill_lv
-				if( sd && (idx = sd->equip_index[EQI_HAND_R]) >= 0 && sd->inventory_data[idx] ) {
-					val1 += (sd->inventory_data[idx]->weight/10 * sd->inventory_data[idx]->wlv * status_get_lv(bl) / 100);
-					val1 += 10 * sd->status.job_level;
-				}
-			}
+			val1 = 100 * val1;
+			if (sd) { // Players
+				short index = sd->equip_index[EQI_HAND_R];
+
+				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_WEAPON)
+					val1 += 10 * sd->status.job_level + sd->inventory_data[index]->weight / 10 * sd->inventory_data[index]->wlv * status_get_lv(bl) / 100;
+			} else // Monster
+				val1 += 500;
 			break;
 		case SC_PRESTIGE:
 			val2 = (status->int_ + status->luk) * val1 / 20 * status_get_lv(bl) / 200 + val1;	// Chance to evade magic damage.

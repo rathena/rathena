@@ -2766,10 +2766,10 @@ static void skill_do_copy(struct block_list* src,struct block_list *bl, uint16 s
 			case 1: //Copied by Plagiarism
 				{
 					if (tsd->cloneskill_idx > 0 && tsd->status.skill[tsd->cloneskill_idx].flag == SKILL_FLAG_PLAGIARIZED) {
-						clif_deleteskill(tsd,tsd->status.skill[tsd->cloneskill_idx].id);
 						tsd->status.skill[tsd->cloneskill_idx].id = 0;
 						tsd->status.skill[tsd->cloneskill_idx].lv = 0;
 						tsd->status.skill[tsd->cloneskill_idx].flag = SKILL_FLAG_PERMANENT;
+						clif_deleteskill(tsd,tsd->status.skill[tsd->cloneskill_idx].id);
 					}
 
 					lv = min(skill_lv,pc_checkskill(tsd,RG_PLAGIARISM)); //Copied level never be > player's RG_PLAGIARISM level
@@ -2786,10 +2786,10 @@ static void skill_do_copy(struct block_list* src,struct block_list *bl, uint16 s
 					//Skill level copied depends on Reproduce skill that used
 					lv = (tsc) ? tsc->data[SC__REPRODUCE]->val1 : 1;
 					if( tsd->reproduceskill_idx > 0 && tsd->status.skill[tsd->reproduceskill_idx].flag == SKILL_FLAG_PLAGIARIZED ) {
-						clif_deleteskill(tsd,tsd->status.skill[tsd->reproduceskill_idx].id);
 						tsd->status.skill[tsd->reproduceskill_idx].id = 0;
 						tsd->status.skill[tsd->reproduceskill_idx].lv = 0;
 						tsd->status.skill[tsd->reproduceskill_idx].flag = SKILL_FLAG_PERMANENT;
+						clif_deleteskill(tsd,tsd->status.skill[tsd->reproduceskill_idx].id);
 					}
 
 					//Level dependent and limitation.
@@ -8779,7 +8779,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case AB_ANCILLA:
-	 	if( sd ) {
+		if( sd ) {
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 			skill_produce_mix(sd, skill_id, ITEMID_ANCILLA, 0, 0, 0, 1, -1);
 		}
@@ -8799,16 +8799,16 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case AB_PRAEFATIO:
-		if( sd == NULL || sd->status.party_id == 0 || flag&1 )
-			clif_skill_nodamage(bl, bl, skill_id, skill_lv, sc_start4(src, bl, type, 100, skill_lv, 0, 0, ( sd->status.party_id ? party_foreachsamemap(party_sub_count, sd, 0) : 1 ), skill_get_time(skill_id, skill_lv)));
+		if( !sd || sd->status.party_id == 0 || flag&1 )
+			clif_skill_nodamage(bl, bl, skill_id, skill_lv, sc_start4(src, bl, type, 100, skill_lv, 0, 0, (sd && sd->status.party_id ? party_foreachsamemap(party_sub_count, sd, 0) : 1 ), skill_get_time(skill_id, skill_lv)));
 		else if( sd )
 			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
 		break;
 
 	case AB_CHEAL:
-		if( sd == NULL || sd->status.party_id == 0 || flag&1 ) {
+		if( !sd || sd->status.party_id == 0 || flag&1 ) {
 			if( sd && tstatus && !battle_check_undead(tstatus->race, tstatus->def_ele) && !tsc->data[SC_BERSERK] ) {
-				int partycount = ( sd->status.party_id ? party_foreachsamemap(party_sub_count, sd, 0) : 0 );
+				int partycount = (sd->status.party_id ? party_foreachsamemap(party_sub_count, sd, 0) : 0);
 
 				i = skill_calc_heal(src, bl, AL_HEAL, pc_checkskill(sd, AL_HEAL), true);
 
@@ -8822,16 +8822,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					i = ~i + 1;
 				status_heal(bl, i, 0, 0);
 			}
-		}
-		else if( sd )
+		} else if( sd )
 			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
 		break;
 
 	case AB_ORATIO:
 		if( flag&1 )
 			sc_start(src,bl, type, 40 + 5 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
-		else
-		{
+		else {
 			map_foreachinrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_CHAR,
 				src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
@@ -8839,7 +8837,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case AB_LAUDAAGNUS:
-		if( flag&1 || sd == NULL || !sd->status.party_id ) {
+		if( flag&1 || !sd || !sd->status.party_id ) {
 			if( tsc && (tsc->data[SC_FREEZE] || tsc->data[SC_STONE] || tsc->data[SC_BLIND] ||
 				tsc->data[SC_BURNING] || tsc->data[SC_FREEZING] || tsc->data[SC_CRYSTALIZE])) {
 				// Success Chance: (40 + 10 * Skill Level) %
@@ -8850,7 +8848,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				status_change_end(bl, SC_BURNING, INVALID_TIMER);
 				status_change_end(bl, SC_FREEZING, INVALID_TIMER);
 				status_change_end(bl, SC_CRYSTALIZE, INVALID_TIMER);
-			}else //Success rate only applies to the curing effect and not stat bonus. Bonus status only applies to non infected targets
+			} else //Success rate only applies to the curing effect and not stat bonus. Bonus status only applies to non infected targets
 				clif_skill_nodamage(bl, bl, skill_id, skill_lv,
 					sc_start(src,bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
 		} else if( sd )
@@ -8859,7 +8857,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case AB_LAUDARAMUS:
-		if( flag&1 || sd == NULL || !sd->status.party_id ) {
+		if( flag&1 || !sd || !sd->status.party_id ) {
 			if( tsc && (tsc->data[SC_SLEEP] || tsc->data[SC_STUN] || tsc->data[SC_MANDRAGORA] || tsc->data[SC_SILENCE] || tsc->data[SC_DEEPSLEEP]) ){
 				// Success Chance: (40 + 10 * Skill Level) %
 				if( rnd()%100 > 40+10*skill_lv )  break;
@@ -8868,7 +8866,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				status_change_end(bl, SC_MANDRAGORA, INVALID_TIMER);
 				status_change_end(bl, SC_SILENCE, INVALID_TIMER);
 				status_change_end(bl, SC_DEEPSLEEP, INVALID_TIMER);
-			}else // Success rate only applies to the curing effect and not stat bonus. Bonus status only applies to non infected targets
+			} else // Success rate only applies to the curing effect and not stat bonus. Bonus status only applies to non infected targets
 				clif_skill_nodamage(bl, bl, skill_id, skill_lv,
 					sc_start(src,bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
 		} else if( sd )
@@ -8877,8 +8875,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case AB_CLEARANCE:
-		if( flag&1 || (i = skill_get_splash(skill_id, skill_lv)) < 1 )
-		{ //As of the behavior in official server Clearance is just a super version of Dispell skill. [Jobbie]
+		if( flag&1 || (i = skill_get_splash(skill_id, skill_lv)) < 1 ) { // As of the behavior in official server Clearance is just a super version of Dispell skill. [Jobbie]
 
 			if( bl->type != BL_MOB && battle_check_target(src,bl,BCT_PARTY) <= 0 ) // Only affect mob or party.
 				break;
