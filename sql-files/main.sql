@@ -1,17 +1,3 @@
-
---
--- Table structure for table `skillcooldown`
---
-
-CREATE TABLE IF NOT EXISTS `skillcooldown` (
-  `account_id` int(11) unsigned NOT NULL,
-  `char_id` int(11) unsigned NOT NULL,
-  `skill` smallint(11) unsigned NOT NULL DEFAULT '0',
-  `tick` int(11) NOT NULL,
-  KEY `account_id` (`account_id`),
-  KEY `char_id` (`char_id`)
-) ENGINE=MyISAM;
-
 --
 -- Table structure for table `auction`
 --
@@ -37,6 +23,52 @@ CREATE TABLE IF NOT EXISTS `auction` (
   `card3` smallint(5) unsigned NOT NULL default '0',
   `unique_id` bigint(20) unsigned NOT NULL default '0',
   PRIMARY KEY  (`auction_id`)
+) ENGINE=MyISAM;
+
+--
+-- Table structure for table `bonus_script`
+--
+
+CREATE TABLE IF NOT EXISTS `bonus_script` (
+  `char_id` INT(11) UNSIGNED NOT NULL,
+  `script` TEXT NOT NULL,
+  `tick` INT(11) UNSIGNED NOT NULL DEFAULT '0',
+  `flag` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0',
+  `type` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
+  `icon` SMALLINT(3) NOT NULL DEFAULT '-1'
+) ENGINE=InnoDB;
+
+--
+-- Table structure for table `buyingstores`
+--
+
+CREATE TABLE IF NOT EXISTS `buyingstores` (
+  `id` int(10) unsigned NOT NULL,
+  `account_id` int(11) unsigned NOT NULL,
+  `char_id` int(10) unsigned NOT NULL,
+  `sex` enum('F','M') NOT NULL DEFAULT 'M',
+  `map` varchar(20) NOT NULL,
+  `x` smallint(5) unsigned NOT NULL,
+  `y` smallint(5) unsigned NOT NULL,
+  `title` varchar(80) NOT NULL,
+  `limit` int(10) unsigned NOT NULL,
+  `body_direction` CHAR( 1 ) NOT NULL DEFAULT '4',
+  `head_direction` CHAR( 1 ) NOT NULL DEFAULT '0',
+  `sit` CHAR( 1 ) NOT NULL DEFAULT '1',
+  `autotrade` tinyint(4) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM;
+
+--
+-- Table structure for table `buyingstore_items`
+--
+
+CREATE TABLE IF NOT EXISTS `buyingstore_items` (
+  `buyingstore_id` int(10) unsigned NOT NULL,
+  `index` smallint(5) unsigned NOT NULL,
+  `item_id` int(10) unsigned NOT NULL,
+  `amount` smallint(5) unsigned NOT NULL,
+  `price` int(10) unsigned NOT NULL
 ) ENGINE=MyISAM;
 
 --
@@ -154,6 +186,73 @@ CREATE TABLE IF NOT EXISTS `charlog` (
   `hair` tinyint(4) NOT NULL default '0',
   `hair_color` int(11) NOT NULL default '0'
 ) ENGINE=MyISAM; 
+
+--
+-- Table structure for `db_roulette`
+--
+
+CREATE TABLE IF NOT EXISTS `db_roulette` (
+  `index` int(11) NOT NULL default '0',
+  `level` smallint(5) unsigned NOT NULL,
+  `item_id` smallint(5) unsigned NOT NULL,
+  `amount` smallint(5) unsigned NOT NULL DEFAULT '1',
+  `flag` smallint(5) unsigned NOT NULL DEFAULT '1',
+   PRIMARY KEY (`index`)
+) ENGINE=MyISAM;
+
+-- ----------------------------
+-- Records of db_roulette
+-- ----------------------------
+-- Info: http://ro.gnjoy.com/news/update/View.asp?seq=157&curpage=1
+
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 0, 1, 675, 1, 1 ); -- Silver_Coin
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 1, 1, 671, 1, 0 ); -- Gold_Coin
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 2, 1, 678, 1, 0 ); -- Poison_Bottle
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 3, 1, 604, 1, 0 ); -- Branch_Of_Dead_Tree
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 4, 1, 522, 1, 0 ); -- Fruit_Of_Mastela
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 5, 1, 671, 1, 0 ); -- Old_Ore_Box
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 6, 1, 12523, 1, 0 ); -- E_Inc_Agi_10_Scroll
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 7, 1, 985, 1, 0 ); -- Elunium
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 8, 1, 984, 1, 0 ); -- Oridecon
+
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 9, 2, 675, 1, 1 ); -- Silver_Coin
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 10, 2, 671, 1, 0 ); -- Gold_Coin
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 11, 2, 603, 1, 0 ); -- Old_Blue_Box
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 12, 2, 608, 1, 0 ); -- Seed_Of_Yggdrasil
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 13, 2, 607, 1, 0 ); -- Yggdrasilberry
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 14, 2, 12522, 1, 0 ); -- E_Blessing_10_Scroll
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 15, 2, 6223, 1, 0 ); -- Carnium
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 16, 2, 6224, 1, 0 ); -- Bradium
+
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 17, 3, 675, 1, 1 ); -- Silver_Coin
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 18, 3, 671, 1, 0 ); -- Gold_Coin
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 19, 3, 12108, 1, 0 ); -- Bundle_Of_Magic_Scroll
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 20, 3, 617, 1, 0 ); -- Old_Violet_Box
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 21, 3, 12514, 1, 0 ); -- E_Abrasive
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 22, 3, 7444, 1, 0 ); -- Treasure_Box
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 23, 3, 969, 1, 0 ); -- Gold
+
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 24, 4, 675, 1, 1 ); -- Silver_Coin
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 25, 4, 671, 1, 0 ); -- Gold_Coin
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 26, 4, 616, 1, 0 ); -- Old_Card_Album
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 27, 4, 12516, 1, 0 ); -- E_Small_Life_Potion
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 28, 4, 22777, 1, 0 ); -- Gift_Buff_Set
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 29, 4, 6231, 1, 0 ); -- Guarantee_Weapon_6Up
+
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 30, 5, 671, 1, 1 ); -- Gold_Coin
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 31, 5, 12246, 1, 0 ); -- Magic_Card_Album
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 32, 5, 12263, 1, 0 ); -- Comp_Battle_Manual
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 33, 5, 671, 1, 0 ); -- Potion_Box
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 34, 5, 6235, 1, 0 ); -- Guarantee_Armor_6Up
+
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 35, 6, 671, 1, 1 ); -- Gold_Coin
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 36, 6, 12766, 1, 0 ); -- Reward_Job_BM25
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 37, 6, 6234, 1, 0 ); -- Guarantee_Armor_7Up
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 38, 6, 6233, 1, 0 ); -- Guarantee_Armor_8Up
+
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 39, 7, 671, 1, 1 ); -- Gold_Coin
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 40, 7, 6233, 1, 0 ); -- Guarantee_Armor_8Up
+INSERT IGNORE INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 41, 7, 6233, 1, 0 ); -- Guarantee_Armor_8Up	// KRO lists this twice
 
 --
 -- Table structure for table `elemental`
@@ -444,6 +543,16 @@ CREATE TABLE IF NOT EXISTS `ipbanlist` (
 ) ENGINE=MyISAM;
 
 --
+-- Table structure for table `interreg`
+--
+
+CREATE TABLE IF NOT EXISTS `interreg` (
+  `varname` varchar(11) NOT NULL,
+  `value` varchar(20) NOT NULL,
+   PRIMARY KEY (`varname`)
+) ENGINE=InnoDB;
+
+--
 -- Table structure for table `login`
 --
 
@@ -473,7 +582,7 @@ CREATE TABLE IF NOT EXISTS `login` (
 -- added standard accounts for servers, VERY INSECURE!!!
 -- inserted into the table called login which is above
 
-INSERT INTO `login` (`account_id`, `userid`, `user_pass`, `sex`, `email`) VALUES ('1', 's1', 'p1', 'S','athena@athena.com');
+INSERT IGNORE INTO `login` (`account_id`, `userid`, `user_pass`, `sex`, `email`) VALUES ('1', 's1', 'p1', 'S','athena@athena.com');
 
 --
 -- Table structure for table `mapreg`
@@ -485,23 +594,6 @@ CREATE TABLE IF NOT EXISTS `mapreg` (
   `value` varchar(255) NOT NULL,
   KEY `varname` (`varname`),
   KEY `index` (`index`)
-) ENGINE=MyISAM;
-
---
--- Table structure for table `sc_data`
---
-
-CREATE TABLE IF NOT EXISTS `sc_data` (
-  `account_id` int(11) unsigned NOT NULL,
-  `char_id` int(11) unsigned NOT NULL,
-  `type` smallint(11) unsigned NOT NULL,
-  `tick` int(11) NOT NULL,
-  `val1` int(11) NOT NULL default '0',
-  `val2` int(11) NOT NULL default '0',
-  `val3` int(11) NOT NULL default '0',
-  `val4` int(11) NOT NULL default '0',
-  KEY (`account_id`),
-  KEY (`char_id`)
 ) ENGINE=MyISAM;
 
 --
@@ -532,6 +624,19 @@ CREATE TABLE IF NOT EXISTS `mail` (
   `bound` tinyint(1) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM;
+
+--
+-- Table `market` for market shop persistency
+--
+
+CREATE TABLE IF NOT EXISTS `market` (
+  `name` varchar(32) NOT NULL DEFAULT '',
+  `nameid` SMALLINT(5) UNSIGNED NOT NULL,
+  `price` INT(11) UNSIGNED NOT NULL,
+  `amount` SMALLINT(5) UNSIGNED NOT NULL,
+  `flag` TINYINT(2) UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY  (`name`,`nameid`)
+) ENGINE = MyISAM;
 
 --
 -- Table structure for table `memo`
@@ -640,72 +745,6 @@ CREATE TABLE IF NOT EXISTS `ragsrvinfo` (
 ) ENGINE=MyISAM;
 
 --
--- Table structure for `db_roulette`
---
-CREATE TABLE `db_roulette` (
-  `index` int(11) NOT NULL default '0',
-  `level` smallint(5) unsigned NOT NULL,
-  `item_id` smallint(5) unsigned NOT NULL,
-  `amount` smallint(5) unsigned NOT NULL DEFAULT '1',
-  `flag` smallint(5) unsigned NOT NULL DEFAULT '1',
-  PRIMARY KEY (`index`)
-) ENGINE=MyISAM;
-
--- ----------------------------
--- Records of db_roulette
--- ----------------------------
--- Info: http://ro.gnjoy.com/news/update/View.asp?seq=157&curpage=1
-
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 0, 1, 675, 1, 1 ); -- Silver_Coin
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 1, 1, 671, 1, 0 ); -- Gold_Coin
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 2, 1, 678, 1, 0 ); -- Poison_Bottle
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 3, 1, 604, 1, 0 ); -- Branch_Of_Dead_Tree
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 4, 1, 522, 1, 0 ); -- Fruit_Of_Mastela
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 5, 1, 671, 1, 0 ); -- Old_Ore_Box
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 6, 1, 12523, 1, 0 ); -- E_Inc_Agi_10_Scroll
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 7, 1, 985, 1, 0 ); -- Elunium
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 8, 1, 984, 1, 0 ); -- Oridecon
-
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 9, 2, 675, 1, 1 ); -- Silver_Coin
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 10, 2, 671, 1, 0 ); -- Gold_Coin
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 11, 2, 603, 1, 0 ); -- Old_Blue_Box
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 12, 2, 608, 1, 0 ); -- Seed_Of_Yggdrasil
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 13, 2, 607, 1, 0 ); -- Yggdrasilberry
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 14, 2, 12522, 1, 0 ); -- E_Blessing_10_Scroll
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 15, 2, 6223, 1, 0 ); -- Carnium
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 16, 2, 6224, 1, 0 ); -- Bradium
-
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 17, 3, 675, 1, 1 ); -- Silver_Coin
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 18, 3, 671, 1, 0 ); -- Gold_Coin
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 19, 3, 12108, 1, 0 ); -- Bundle_Of_Magic_Scroll
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 20, 3, 617, 1, 0 ); -- Old_Violet_Box
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 21, 3, 12514, 1, 0 ); -- E_Abrasive
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 22, 3, 7444, 1, 0 ); -- Treasure_Box
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 23, 3, 969, 1, 0 ); -- Gold
-
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 24, 4, 675, 1, 1 ); -- Silver_Coin
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 25, 4, 671, 1, 0 ); -- Gold_Coin
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 26, 4, 616, 1, 0 ); -- Old_Card_Album
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 27, 4, 12516, 1, 0 ); -- E_Small_Life_Potion
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 28, 4, 22777, 1, 0 ); -- Gift_Buff_Set
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 29, 4, 6231, 1, 0 ); -- Guarantee_Weapon_6Up
-
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 30, 5, 671, 1, 1 ); -- Gold_Coin
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 31, 5, 12246, 1, 0 ); -- Magic_Card_Album
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 32, 5, 12263, 1, 0 ); -- Comp_Battle_Manual
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 33, 5, 671, 1, 0 ); -- Potion_Box
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 34, 5, 6235, 1, 0 ); -- Guarantee_Armor_6Up
-
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 35, 6, 671, 1, 1 ); -- Gold_Coin
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 36, 6, 12766, 1, 0 ); -- Reward_Job_BM25
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 37, 6, 6234, 1, 0 ); -- Guarantee_Armor_7Up
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 38, 6, 6233, 1, 0 ); -- Guarantee_Armor_8Up
-
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 39, 7, 671, 1, 1 ); -- Gold_Coin
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 40, 7, 6233, 1, 0 ); -- Guarantee_Armor_8Up
-INSERT INTO `db_roulette`(`index`, `level`, `item_id`, `amount`, `flag` ) VALUES ( 41, 7, 6233, 1, 0 ); -- Guarantee_Armor_8Up	// KRO lists this twice
-
---
 -- Table structure for table `skill`
 --
 
@@ -715,6 +754,36 @@ CREATE TABLE IF NOT EXISTS `skill` (
   `lv` tinyint(4) unsigned NOT NULL default '0',
   `flag` TINYINT(1) UNSIGNED NOT NULL default 0,
   PRIMARY KEY  (`char_id`,`id`)
+) ENGINE=MyISAM;
+
+--
+-- Table structure for table `sc_data`
+--
+
+CREATE TABLE IF NOT EXISTS `sc_data` (
+  `account_id` int(11) unsigned NOT NULL,
+  `char_id` int(11) unsigned NOT NULL,
+  `type` smallint(11) unsigned NOT NULL,
+  `tick` int(11) NOT NULL,
+  `val1` int(11) NOT NULL default '0',
+  `val2` int(11) NOT NULL default '0',
+  `val3` int(11) NOT NULL default '0',
+  `val4` int(11) NOT NULL default '0',
+  KEY (`account_id`),
+  KEY (`char_id`)
+) ENGINE=MyISAM;
+
+--
+-- Table structure for table `skillcooldown`
+--
+
+CREATE TABLE IF NOT EXISTS `skillcooldown` (
+  `account_id` int(11) unsigned NOT NULL,
+  `char_id` int(11) unsigned NOT NULL,
+  `skill` smallint(11) unsigned NOT NULL DEFAULT '0',
+  `tick` int(11) NOT NULL,
+  KEY `account_id` (`account_id`),
+  KEY `char_id` (`char_id`)
 ) ENGINE=MyISAM;
 
 --
@@ -763,29 +832,6 @@ CREATE TABLE IF NOT EXISTS `storage` (
 ) ENGINE=MyISAM;
 
 --
--- Table structure for table `interreg`
---
-
-CREATE TABLE IF NOT EXISTS `interreg` (
-  `varname` varchar(11) NOT NULL,
-  `value` varchar(20) NOT NULL,
-   PRIMARY KEY (`varname`)
-) ENGINE=InnoDB;
-
---
--- Table structure for table `bonus_script`
---
-
-CREATE TABLE IF NOT EXISTS `bonus_script` (
-  `char_id` INT(11) UNSIGNED NOT NULL,
-  `script` TEXT NOT NULL,
-  `tick` INT(11) UNSIGNED NOT NULL DEFAULT '0',
-  `flag` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0',
-  `type` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
-  `icon` SMALLINT(3) NOT NULL DEFAULT '-1'
-) ENGINE=InnoDB;
-
---
 -- Table structure for table `vending_items`
 --
 
@@ -816,49 +862,3 @@ CREATE TABLE IF NOT EXISTS `vendings` (
   `autotrade` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
-
---
--- Table structure for table `buyingstore_items`
---
-
-CREATE TABLE IF NOT EXISTS `buyingstore_items` (
-  `buyingstore_id` int(10) unsigned NOT NULL,
-  `index` smallint(5) unsigned NOT NULL,
-  `item_id` int(10) unsigned NOT NULL,
-  `amount` smallint(5) unsigned NOT NULL,
-  `price` int(10) unsigned NOT NULL
-) ENGINE=MyISAM;
-
---
--- Table structure for table `buyingstores`
---
-
-CREATE TABLE IF NOT EXISTS `buyingstores` (
-  `id` int(10) unsigned NOT NULL,
-  `account_id` int(11) unsigned NOT NULL,
-  `char_id` int(10) unsigned NOT NULL,
-  `sex` enum('F','M') NOT NULL DEFAULT 'M',
-  `map` varchar(20) NOT NULL,
-  `x` smallint(5) unsigned NOT NULL,
-  `y` smallint(5) unsigned NOT NULL,
-  `title` varchar(80) NOT NULL,
-  `limit` int(10) unsigned NOT NULL,
-  `body_direction` CHAR( 1 ) NOT NULL DEFAULT '4',
-  `head_direction` CHAR( 1 ) NOT NULL DEFAULT '0',
-  `sit` CHAR( 1 ) NOT NULL DEFAULT '1',
-  `autotrade` tinyint(4) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM;
-
---
--- Table `market` for market shop persistency
---
-
-CREATE TABLE IF NOT EXISTS `market` (
-  `name` varchar(32) NOT NULL DEFAULT '',
-  `nameid` SMALLINT(5) UNSIGNED NOT NULL,
-  `price` INT(11) UNSIGNED NOT NULL,
-  `amount` SMALLINT(5) UNSIGNED NOT NULL,
-  `flag` TINYINT(2) UNSIGNED NOT NULL DEFAULT '0',
-  PRIMARY KEY  (`name`,`nameid`)
-) ENGINE = MyISAM;
