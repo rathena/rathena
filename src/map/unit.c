@@ -3161,24 +3161,6 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			pc_delspiritball(sd, sd->spiritball, 1);
 			pc_delspiritcharm(sd, sd->spiritcharm, sd->spiritcharm_type);
 
-			if( sd->reg ) {	// Double logout already freed pointer fix... [Skotlex]
-				aFree(sd->reg);
-				sd->reg = NULL;
-				sd->reg_num = 0;
-			}
-
-			if( sd->regstr ) {
-				int j;
-
-				for( j = 0; j < sd->regstr_num; ++j )
-					if( sd->regstr[j].data )
-						aFree(sd->regstr[j].data);
-
-				aFree(sd->regstr);
-				sd->regstr = NULL;
-				sd->regstr_num = 0;
-			}
-
 			if( sd->st && sd->st->state != RUN ) {// free attached scripts that are waiting
 				script_free_state(sd->st);
 				sd->st = NULL;

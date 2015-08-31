@@ -2775,8 +2775,8 @@ static void skill_do_copy(struct block_list* src,struct block_list *bl, uint16 s
 					lv = min(skill_lv,pc_checkskill(tsd,RG_PLAGIARISM)); //Copied level never be > player's RG_PLAGIARISM level
 
 					tsd->cloneskill_idx = idx;
-					pc_setglobalreg(tsd,SKILL_VAR_PLAGIARISM,skill_id);
-					pc_setglobalreg(tsd,SKILL_VAR_PLAGIARISM_LV,lv);
+					pc_setglobalreg(tsd, add_str(SKILL_VAR_PLAGIARISM), skill_id);
+					pc_setglobalreg(tsd, add_str(SKILL_VAR_PLAGIARISM_LV), lv);
 				}
 				break;
 			case 2: //Copied by Reproduce
@@ -2799,8 +2799,8 @@ static void skill_do_copy(struct block_list* src,struct block_list *bl, uint16 s
 						lv = min(lv,skill_lv);
 
 					tsd->reproduceskill_idx = idx;
-					pc_setglobalreg(tsd,SKILL_VAR_REPRODUCE,skill_id);
-					pc_setglobalreg(tsd,SKILL_VAR_REPRODUCE_LV,lv);
+					pc_setglobalreg(tsd, add_str(SKILL_VAR_REPRODUCE), skill_id);
+					pc_setglobalreg(tsd, add_str(SKILL_VAR_REPRODUCE_LV), lv);
 				}
 				break;
 			default: return;
@@ -6397,7 +6397,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			}
 			sd->mission_mobid = id;
 			sd->mission_count = 0;
-			pc_setglobalreg(sd,"TK_MISSION_ID", id);
+			pc_setglobalreg(sd, add_str("TK_MISSION_ID"), id);
 			clif_mission_info(sd, id, 0);
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		}
@@ -8232,7 +8232,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if (skill_id == SL_SUPERNOVICE && dstsd && dstsd->die_counter && !(rnd()%100))
 		{	//Erase death count 1% of the casts
 			dstsd->die_counter = 0;
-			pc_setglobalreg(dstsd,"PC_DIE_COUNTER", 0);
+			pc_setglobalreg(dstsd, add_str("PC_DIE_COUNTER"), 0);
 			clif_specialeffect(bl, 0x152, AREA);
 			//SC_SPIRIT invokes status_calc_pc for us.
 		}
@@ -18709,7 +18709,7 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 					if (skill_produce_db[idx].itemlv > 10 && skill_produce_db[idx].itemlv <= 20) { //Cooking items.
 						clif_specialeffect(&sd->bl, 608, AREA);
 						if (sd->cook_mastery < 1999)
-							pc_setglobalreg(sd, "COOK_MASTERY",sd->cook_mastery + ( 1 << ( (skill_produce_db[idx].itemlv - 11) / 2 ) ) * 5);
+							pc_setglobalreg(sd, add_str("COOK_MASTERY"), sd->cook_mastery + ( 1 << ( (skill_produce_db[idx].itemlv - 11) / 2 ) ) * 5);
 					}
 					break;
 			}
@@ -18821,7 +18821,7 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 				if (skill_produce_db[idx].itemlv > 10 && skill_produce_db[idx].itemlv <= 20 ) { //Cooking items.
 					clif_specialeffect(&sd->bl, 609, AREA);
 					if (sd->cook_mastery > 0)
-						pc_setglobalreg(sd, "COOK_MASTERY", sd->cook_mastery - ( 1 << ((skill_produce_db[idx].itemlv - 11) / 2) ) - ( ( ( 1 << ((skill_produce_db[idx].itemlv - 11) / 2) ) >> 1 ) * 3 ));
+						pc_setglobalreg(sd, add_str("COOK_MASTERY"), sd->cook_mastery - ( 1 << ((skill_produce_db[idx].itemlv - 11) / 2) ) - ( ( ( 1 << ((skill_produce_db[idx].itemlv - 11) / 2) ) >> 1 ) * 3 ));
 				}
 				break;
 		}
@@ -20843,8 +20843,11 @@ void do_init_skill(void)
 	skillunit_db = idb_alloc(DB_OPT_BASE);
 	skillusave_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	bowling_db = idb_alloc(DB_OPT_BASE);
-	skill_unit_ers = ers_new(sizeof(struct skill_unit_group),"skill.c::skill_unit_ers",ERS_OPT_NONE);
-	skill_timer_ers  = ers_new(sizeof(struct skill_timerskill),"skill.c::skill_timer_ers",ERS_OPT_NONE);
+	skill_unit_ers = ers_new(sizeof(struct skill_unit_group),"skill.c::skill_unit_ers",ERS_OPT_CLEAN|ERS_OPT_FLEX_CHUNK);
+	skill_timer_ers  = ers_new(sizeof(struct skill_timerskill),"skill.c::skill_timer_ers",ERS_OPT_CLEAN|ERS_OPT_FLEX_CHUNK);
+
+	ers_chunk_size(skill_unit_ers, 150);
+	ers_chunk_size(skill_timer_ers, 150);
 
 	add_timer_func_list(skill_unit_timer,"skill_unit_timer");
 	add_timer_func_list(skill_castend_id,"skill_castend_id");

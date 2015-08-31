@@ -164,17 +164,67 @@ int chlogif_broadcast_user_count(int tid, unsigned int tick, int id, intptr_t da
 	return 0;
 }
 
-//Send packet forward to login-server for account saving
-int chlogif_save_accreg2(unsigned char* buf, int len){
-	if (login_fd > 0) {
-		WFIFOHEAD(login_fd,len+4);
-		memcpy(WFIFOP(login_fd,4), buf, len);
-		WFIFOW(login_fd,0) = 0x2728;
-		WFIFOW(login_fd,2) = len+4;
-		WFIFOSET(login_fd,len+4);
-		return 1;
+void chlogif_request_global_accreg(uint32 account_id, uint32 char_id) {
+	WFIFOHEAD(login_fd, 60000 + 300);
+	WFIFOW(login_fd, 0) = 0x2728;
+	WFIFOW(login_fd, 2) = 14;
+	WFIFOL(login_fd, 4) = account_id;
+	WFIFOL(login_fd, 8) = char_id;
+	WFIFOW(login_fd, 12) = 0; // count
+}
+
+void chlogif_prepsend_global_accreg(void) {
+	WFIFOSET(login_fd, WFIFOW(login_fd,2));
+}
+
+void chlogif_send_global_accreg(const char *key, unsigned int index, intptr_t val, bool is_string) {
+	int nlen = WFIFOW(login_fd, 2);
+	size_t len;
+
+	len = strlen(key)+1;
+
+	WFIFOB(login_fd, nlen) = (unsigned char)len; // won't be higher; the column size is 32
+	nlen += 1;
+
+	safestrncpy((char*)WFIFOP(login_fd,nlen), key, len);
+	nlen += len;
+
+	WFIFOL(login_fd, nlen) = index;
+	nlen += 4;
+
+	if( is_string ) {
+		WFIFOB(login_fd, nlen) = val ? 2 : 3;
+		nlen += 1;
+
+		if( val ) {
+			char *sval = (char*)val;
+			len = strlen(sval)+1;
+
+			WFIFOB(login_fd, nlen) = (unsigned char)len; // won't be higher; the column size is 254
+			nlen += 1;
+
+			safestrncpy((char*)WFIFOP(login_fd,nlen), sval, len);
+			nlen += len;
+		}
+	} else {
+		WFIFOB(login_fd, nlen) = val ? 0 : 1;
+		nlen += 1;
+
+		if( val ) {
+			WFIFOL(login_fd, nlen) = (int)val;
+			nlen += 4;
+		}
 	}
-	return 0;
+
+	WFIFOW(login_fd,12) += 1;
+	WFIFOW(login_fd, 2) = nlen;
+
+	if( WFIFOW(login_fd, 2) > 60000 ) {
+		int account_id = WFIFOL(login_fd,4), char_id = WFIFOL(login_fd,8);
+
+		chlogif_prepsend_global_accreg();
+		chlogif_request_global_accreg(account_id, char_id); // prepare next
+	}
 }
 
 int chlogif_request_accreg2(uint32 account_id, uint32 char_id){
@@ -477,10 +527,7 @@ int chlogif_parse_ackacc2req(int fd, struct char_session_data* sd){
 		return 0;
 
 	{	//Receive account_reg2 registry, forward to map servers.
-		unsigned char buf[13+ACCOUNT_REG2_NUM*sizeof(struct global_reg)];
-		memcpy(buf,RFIFOP(fd,0), RFIFOW(fd,2));
-		WBUFW(buf,0) = 0x3804; //Map server can now receive all kinds of reg values with the same packet. [Skotlex]
-		chmapif_sendall(buf, WBUFW(buf,2));
+		chmapif_sendall(RFIFOP(fd,0), RFIFOW(fd,2));
 		RFIFOSKIP(fd, RFIFOW(fd,2));
 	}
 	return 1;
@@ -702,7 +749,7 @@ int chlogif_parse(int fd) {
 			// changesex reply
 			case 0x2723: next = chlogif_parse_ackchangesex(fd, sd); break;
 			// reply to an account_reg2 registry request
-			case 0x2729: next = chlogif_parse_ackacc2req(fd, sd); break;
+			case 0x3804: next = chlogif_parse_ackacc2req(fd, sd); break;
 			// State change of account/ban notification (from login-server)
 			case 0x2731: next = chlogif_parse_accbannotification(fd, sd); break;
 			// Login server request to kick a character out. [Skotlex]
