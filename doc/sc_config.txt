@@ -70,7 +70,7 @@ SCB: Flag to indicates which status calculation need to be performed. Use "|" as
      SCB_MDEF2   = Magic Defense
      SCB_SPEED   = Walk speed
      SCB_ASPD    = Attack speed
-     SCB_DSPD	= 
+     SCB_DSPD    = 
      SCB_CRI     = Critical rate
      SCB_FLEE2   = Perfect dodge rate
      SCB_ATK_ELE = Attack Element
@@ -165,14 +165,14 @@ Flag: Various status flags for specifc usage
       SCF_BLEFFECT            = Status should has BL_SCEFFECT as relevant effect, must has SI. (display on BL_PC|BL_HOM|BL_MER|BL_MOB|BL_ELEM) By defaut effect only for BL_PC.
       SCF_DISPLAY             = Displays status effect when player logged in.
       SCF_PERMANENT           = As permanent effect, avoid to be removed by 'sc_end SC_ALL', 'status_change_clear(block_list,3)'.
-	  SCF_DEBUFF              = SC considered as debuff.
+      SCF_DEBUFF              = SC considered as debuff.
       SCF_SET_STAND           = Sets player to stand.
       SCF_FAILED_MADO         = Cannot be applied if Madogear is active.
-	  SCF_FAILED_IMMUNITY     = Failed to be applied if target has immunity by Golden Thief Bug Card's effect or Wand of Hermode
+      SCF_FAILED_IMMUNITY     = Failed to be applied if target has immunity by Golden Thief Bug Card's effect or Wand of Hermode.
 
-      SCF_NO_CLEARBUFF        = Cannot be removed on status_change_clear_buffs(). This has priority check than SCF_REM_ON_REFRESH, SCF_REM_ON_LUXANIMA, and .
-      SCF_NO_REM_ONDEAD       = Cannot be romoved when dead. 'status_change_clear(block_list,0)'.
-      SCF_NO_MADO             = Cannot be removed when Madogear is activated/deactivated.
+      SCF_NO_CLEARBUFF        = Cannot be removed on status_change_clear_buffs().
+      SCF_NO_REM_ONDEAD       = Cannot be removed when dead. 'status_change_clear(block_list,0)'.
+      SCF_NO_REM_ONMADOGEAR   = Cannot be removed while activating/deactivating Madogear.
       SCF_NO_DISPELL          = Cannot be removed by Dispell (SA_DISPELL).
       SCF_NO_CLEARANCE        = Cannot be removed by Clearance (AB_CLEARANCE).
       SCF_NO_BANISHING_BUSTER = Cannot be removed by Banishing Buster (RL_BANISHING_BUSTER).
@@ -181,7 +181,8 @@ Flag: Various status flags for specifc usage
       SCF_REM_ON_DAMAGED      = Removed when receives damage.
       SCF_REM_ON_REFRESH      = Removed by Refresh (RK_REFRESH) on status_change_clear_buffs().
       SCF_REM_ON_LUXANIMA     = Removed by Luxanima (RK_LUXANIMA) on status_change_clear_buffs().
-      SCF_REM_ON_CHANGEMAP    = Removed if map-server is changed
+      SCF_REM_ON_MAPWARP      = Removed when warp to another map.
+      SCF_REM_ON_CHANGEMAP    = Removed when change map-server.
 
       SCF_STOP_ATTACKING      = Makes unit stop attacking for a while.
       SCF_STOP_CASTING        = Stops casting process.

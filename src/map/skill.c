@@ -5655,9 +5655,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	type = skill_get_sc(skill_id);
 	tsc = status_get_sc(bl);
-	tsce = (tsc && type != -1)?tsc->data[type]:NULL;
+	tsce = (tsc && type != SC_NONE)?tsc->data[type]:NULL;
 
-	if (src!=bl && type > -1 &&
+	if (src!=bl && type > SC_NONE &&
 		(i = skill_get_ele(skill_id, skill_lv)) > ELE_NEUTRAL &&
 		skill_get_inf(skill_id) != INF_SUPPORT_SKILL &&
 		battle_attr_fix(NULL, NULL, 100, i, tstatus->def_ele, tstatus->ele_lv) <= 0)
@@ -10779,7 +10779,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 
 	sc = status_get_sc(src);
 	type = skill_get_sc(skill_id);
-	sce = (sc && type != -1)?sc->data[type]:NULL;
+	sce = (sc && type != SC_NONE)?sc->data[type]:NULL;
 
 	switch (skill_id) { //Skill effect.
 		case WZ_METEOR:
@@ -13333,7 +13333,7 @@ int skill_unit_onout(struct skill_unit *src, struct block_list *bl, unsigned int
 	nullpo_ret(sg=src->group);
 	sc = status_get_sc(bl);
 	type = skill_get_sc(sg->skill_id);
-	sce = (sc && type != -1)?sc->data[type]:NULL;
+	sce = (sc && type != SC_NONE)?sc->data[type]:NULL;
 
 	if( bl->prev==NULL || (status_isdead(bl) && sg->unit_id != UNT_ANKLESNARE && sg->unit_id != UNT_SPIDERWEB) ) //Need to delete the trap if the source died.
 		return 0;
@@ -13375,7 +13375,7 @@ int skill_unit_onout(struct skill_unit *src, struct block_list *bl, unsigned int
 				for(i = BA_WHISTLE; i <= DC_SERVICEFORYOU; i++) {
 					if(skill_get_inf2(i)&(INF2_SONG_DANCE)) {
 						type = skill_get_sc(i);
-						sce = (sc && type != -1)?sc->data[type]:NULL;
+						sce = (sc && type != SC_NONE)?sc->data[type]:NULL;
 						if(sce)
 							return i;
 					}
@@ -13412,7 +13412,7 @@ int skill_unit_onleft(uint16 skill_id, struct block_list *bl, unsigned int tick)
 		sc = NULL;
 
 	type = skill_get_sc(skill_id);
-	sce = (sc && type != -1)?sc->data[type]:NULL;
+	sce = (sc && type != SC_NONE)?sc->data[type]:NULL;
 
 	switch (skill_id)
 	{
@@ -13473,7 +13473,7 @@ int skill_unit_onleft(uint16 skill_id, struct block_list *bl, unsigned int tick)
 				for(i = BA_WHISTLE; i <= DC_SERVICEFORYOU; i++){
 					if(skill_get_inf2(i)&(INF2_SONG_DANCE)){
 						type = skill_get_sc(i);
-						sce = (sc && type != -1)?sc->data[type]:NULL;
+						sce = (sc && type != SC_NONE)?sc->data[type]:NULL;
 						if(sce && !sce->val4){ //We don't want dissonance updating this anymore
 							delete_timer(sce->timer, status_change_timer);
 							sce->val4 = 1; //Store the fact that this is a "reduced" duration effect.
@@ -19672,6 +19672,9 @@ int skill_block_check(struct block_list *bl, sc_type type , uint16 skill_id) {
  */
 int skill_disable_check(struct status_change *sc, uint16 skill_id)
 {
+	enum sc_type type = skill_get_sc(skill_id);
+	if (type <= SC_NONE || type >= SC_MAX)
+		return 0;
 	switch( skill_id ) { //HP & SP Consumption Check
 		case BS_MAXIMIZE:
 		case NV_TRICKDEAD:
@@ -19695,8 +19698,8 @@ int skill_disable_check(struct status_change *sc, uint16 skill_id)
 		case KO_YAMIKUMO:
 		case RA_WUGDASH:
 		case RA_CAMOUFLAGE:
-			if( sc->data[skill_get_sc(skill_id)] )
-					return 1;
+			if( sc->data[type] )
+				return 1;
 			break;
 
 		// These 2 skills contain a master and are not correctly pulled using skill2sc
@@ -20423,7 +20426,6 @@ static void skill_db_destroy(void) {
  * Returns the SC for skill
  * @param skill_id
  * @return SC_ID or SC_NONE if skill is invalid or doesn't have SC
- * !TODO: Some skill_get_sc() usages are careless, not checking if will be used on array or not!!
  **/
 enum sc_type skill_get_sc(int16 skill_id) {
 	uint16 idx = skill_get_index(skill_id);
@@ -20467,6 +20469,7 @@ static bool skill_parse_row_skillscassocdb(char* split[], int columns, int curre
 	if (ISDIGIT(split[1][0]))
 		sc = atoi(split[1]);
 	else {
+		// For Soul Linker
 		if (strlen(split[1]) > 3 && split[1][0] == 'E' && split[1][1] == 'A' && split[1][2] == 'J')
 			eaj = true;
 		script_get_constant(split[1], &sc);

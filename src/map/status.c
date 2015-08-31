@@ -102,10 +102,10 @@ struct s_status_change_db *status_sc_exists(enum sc_type type) {
 //}
 
 #define CHK_SC2(type, var, ret) {\
-	struct s_status_change_db *sc = status_sc_exists((type));\
-	if (!sc)\
+	struct s_status_change_db *scdb = status_sc_exists((type));\
+	if (!scdb)\
 		return (ret);\
-	return sc->var;\
+	return (scdb)->var;\
 }
 
 /**
@@ -200,7 +200,7 @@ bool status_sc_get_end_return(enum sc_type type) { CHK_SC2(type, end_return, 0);
  **/
 enum sc_type *status_sc_get_end_list(enum sc_type type, uint8 *count) {
 	struct s_status_change_db *sc = NULL;
-	*count  = 0;
+	*count = 0;
 	if (!(sc = status_sc_exists(type)) || !sc->end)
 		return NULL;
 	*count = sc->end_count;
@@ -215,7 +215,7 @@ enum sc_type *status_sc_get_end_list(enum sc_type type, uint8 *count) {
  **/
 enum sc_type *status_sc_get_fail_list(enum sc_type type, uint8 *count) {
 	struct s_status_change_db *sc = NULL;
-	*count  = 0;
+	*count = 0;
 	if (!(sc = status_sc_exists(type)) || !sc->fail)
 		return NULL;
 	*count = sc->fail_count;
@@ -6388,7 +6388,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 	if (src == NULL)
 		return tick?tick:1; // This should not happen in current implementation, but leave it anyway
 
-	// Status that are blocked by Golden Thief Bug card or Wand of Hermod
+	// Status that are blocked by Golden Thief Bug card or Wand of Hermode
 	if (status_isimmune(bl) && status_sc_get_flag(type)&SCF_FAILED_IMMUNITY)
 		return 0;
 
@@ -7043,10 +7043,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 	}
 
-	// End the SCs from the list
 	if (type == SC_BERSERK && val3 == SC__BLOODYLUST) //There is some reasons that using SC_BERSERK first before SC__BLOODYLUST itself on Akinari's fix
 		use_sc = SC__BLOODYLUST;
 
+	// End the SCs from the list
 	if ((list = status_sc_get_end_list(use_sc, &count_list))) {
 		uint8 i;
 		bool isRemoving = false;
@@ -10675,8 +10675,9 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
  * @param bl: Object to clear [PC|MOB|HOM|MER|ELEM]
  * @param type: Type to remove
  *	&1: Clear Buffs
- *	$2: Clear Debuffs
- *	&4: Specific debuffs with a refresh
+ *	&2: Clear Debuffs
+ *	&4: Specific debuffs with a Refresh
+ *	&8: Specific debuffs with a Luxanima
  */
 void status_change_clear_buffs(struct block_list* bl, uint8 type)
 {

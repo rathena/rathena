@@ -1849,7 +1849,7 @@ enum e_status_change_flag {
 	SCF_PERMANENT			= 0x000004,
 	SCF_NO_CLEARBUFF		= 0x000008,
 	SCF_NO_REM_ONDEAD		= 0x000010,
-	SCF_NO_MADO				= 0x000020,
+	SCF_NO_REM_ONMADOGEAR	= 0x000020,
 	SCF_NO_DISPELL			= 0x000040,
 	SCF_NO_CLEARANCE		= 0x000080,
 	SCF_NO_BANISHING_BUSTER	= 0x000100,
@@ -1867,6 +1867,7 @@ enum e_status_change_flag {
 	SCF_DEBUFF				= 0x100000,
 	SCF_FAILED_IMMUNITY		= 0x200000,
 	SCF_REM_ON_CHANGEMAP	= 0x400000,
+	SCF_REM_ON_MAPWARP		= 0x800000,
 };
 
 //Define to determine who gets HP/SP consumed on doing skills/etc. [Skotlex]
@@ -2156,14 +2157,8 @@ unsigned short status_base_atk(const struct block_list *bl, const struct status_
 
 // Status changes accessors for StatusChange database
 enum si_type status_sc_get_icon(enum sc_type sc);
-//uint32 status_sc_get_state(enum sc_type sc);
 uint32 status_sc_get_calc_flag(enum sc_type sc);
-//uint8 status_sc_get_opt1(enum sc_type sc);
-//uint16 status_sc_get_opt2(enum sc_type sc);
-//uint32 status_sc_get_opt3(enum sc_type sc);
-//uint32 status_sc_get_look(enum sc_type sc);
 uint32 status_sc_get_flag(enum sc_type sc);
-//bool status_sc_isDebuff(enum sc_type sc);
 uint16 status_sc_get_skill(enum sc_type sc_type);
 uint16 status_si_get_bl_type(enum si_type si);
 
